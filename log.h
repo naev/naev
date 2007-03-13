@@ -2,13 +2,19 @@
 
 
 #ifndef LOG_H
-#   define LOG_H
+#  define LOG_H
 
+#include <stdio.h>
 
-void printlog( const char *fmt, ... );
-void printerr( const int errnum, const char *fmt, ... );
-void printwarn( const char *fmt, ... );
-void printdebug( const char *fmt, ... );
+#define LOG(str, args...)	(fprintf(stdout,str"\n", ## args))
+#define WARN(str,args...)	(fprintf(stderr,"[%d] "str"\n", 0, ## args))
+#ifdef DEBUG
+#  undef DEBUG
+#  define DEBUG(str, args...)	LOG(str, ## args)
+#  define DEBUGGING
+#else /* DEBUG */
+#  define DEBUG(str, args...)	do {;} while(0)
+#endif /* DEBUG */
 
 
 #endif /* LOG_H */

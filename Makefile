@@ -1,20 +1,20 @@
 
-#DEBUG = 1
+DEBUG = 1
 
 APPNAME = main
 
 OBJS := main.o		\
-		log.o			\
-		physics.o
+		physics.o	\
+		opengl.o
 
-CFLAGS = -Wall
+CFLAGS = -Wall `sdl-config --cflags`
 ifdef DEBUG
-CFLAGS += -g3
+CFLAGS += -g3 -DDEBUG
 else # DEBUG
 CFLAGS += -O2
 endif # DEBUG
 
-LDFLAGS = -lm
+LDFLAGS = -lm `sdl-config --libs` -lSDL_image -lGL
 
 
 %.o:	%.c

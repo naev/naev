@@ -1,7 +1,7 @@
 
 
 #ifndef TRIG_H
-#   define TRIG_H
+#  define TRIG_H
 
 
 #include "all.h"
