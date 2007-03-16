@@ -11,9 +11,14 @@
 #define M_PI	3.14159265358979323846f
 #endif /* M_PI */
 
+/* pretty efficient these days, no need for sine table */
 #define SIN(dir)	(sinf(dir))
 #define COS(dir)	(cosf(dir))
 
+
+/* Update methods */
+static void simple_update (Solid *obj, const FP dt); /* simple integration */
+static void rk4_update (Solid *obj, const FP dt); /* Runge-Kutta 4 */
 
 /*
  * Simple method
@@ -32,8 +37,8 @@ static void simple_update (Solid *obj, const FP dt)
 {
 	if (obj->force) { /* force applied on object */
 		Vector2d acc;
-		acc.x = obj->force*COS(obj->dir);
-		acc.y = obj->force*SIN(obj->dir);
+		acc.x = obj->force/obj->mass*COS(obj->dir);
+		acc.y = obj->force/obj->mass*SIN(obj->dir);
 
 		obj->vel.x += acc.x*dt;
 		obj->vel.y += acc.y*dt;
@@ -73,8 +78,8 @@ static void rk4_update (Solid *obj, const FP dt)
 		Vector2d initial, temp;
 
 		Vector2d acc;
-		acc.x = obj->force*COS(obj->dir);
-		acc.y = obj->force*SIN(obj->dir);
+		acc.x = obj->force/obj->mass*COS(obj->dir);
+		acc.y = obj->force/obj->mass*SIN(obj->dir);
 
 		for (i=0; i < RK4_N; i++) { /* iterations */
 
@@ -116,11 +121,19 @@ void solid_init( Solid* dest, const FP mass, const Vector2d* vel, const Vector2d
 	dest->force = 0;
 	dest->dir = 0;
 
-	dest->vel.x = vel->x;
-	dest->vel.y = vel->y;
+	if (vel == NULL)
+		dest->vel.x = dest->vel.y = 0.0;
+	else {
+		dest->vel.x = vel->x;
+		dest->vel.y = vel->y;
+	}
 
-	dest->pos.x = pos->x;
-	dest->pos.y = pos->y;
+	if (pos == NULL)
+		dest->pos.x = dest->pos.y = 0.0;
+	else {
+		dest->pos.x = pos->x;
+		dest->pos.y = pos->y;
+	}
 
 	dest->update = rk4_update;
 }
@@ -131,7 +144,16 @@ void solid_init( Solid* dest, const FP mass, const Vector2d* vel, const Vector2d
 Solid* solid_create( const FP mass, const Vector2d* vel, const Vector2d* pos )
 {
 	Solid* dyn = MALLOC_ONE(Solid);
-	assert(dyn != 0);
+	assert(dyn != NULL);
 	solid_init( dyn, mass, vel, pos );
 	return dyn;
+}
+
+/*
+ * Frees an existing solid
+ */
+void solid_free( Solid* src )
+{
+	free( src );
+	src = NULL;
 }

@@ -9,6 +9,9 @@
 #include "physics.h"
 
 
+#define WINDOW_CAPTION	"game"
+
+
 /*
  * Contains info about the opengl screen
  */
@@ -19,15 +22,16 @@ typedef struct {
 	int r, g, b, a; /* framebuffer values in bits */
 	int doublebuf; /* doublebuffer? */
 } gl_info;
-
+extern gl_info gl_screen; /* local structure set with gl_init and co */
 
 /*
  * Spritesheet info
  */
 typedef struct {
-	int w,h; /* real size of the image (excluding POT buffer) */
-	int rw,rh; /* size of POT surface */
-	int sx, sy; /* number of sprites on x axis and y axis */
+	FP w,h; /* real size of the image (excluding POT buffer) */
+	FP rw,rh; /* size of POT surface */
+	FP sx, sy; /* number of sprites on x axis and y axis */
+	FP sw, sh; /* size of each sprite */
 	GLuint texture; /* the opengl texture itself */
 } gl_texture;
 
@@ -42,12 +46,14 @@ void gl_free( gl_texture* texture );
 /*
  * opengl drawing
  */
+void gl_blitSprite( gl_texture* sprite, Vector2d* pos, const int sx, const int sy );
 void gl_blit( gl_texture* texture, Vector2d* pos );
+void gl_bindCamera( Vector2d* pos );
 
 /*
  * initialization / cleanup
  */
-int gl_init(gl_info* info);
+int gl_init(void);
 void gl_exit(void);
 
 

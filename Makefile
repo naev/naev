@@ -5,7 +5,9 @@ APPNAME = main
 
 OBJS := main.o		\
 		physics.o	\
-		opengl.o
+		opengl.o		\
+		ship.o		\
+		pilot.o
 
 CFLAGS = -Wall `sdl-config --cflags`
 ifdef DEBUG

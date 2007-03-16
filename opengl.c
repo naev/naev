@@ -9,6 +9,7 @@
 #include "log.h"
 
 
+/* Recommended for compatibility and such */
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 #  define RMASK	0xff000000
 #  define GMASK	0x00ff0000
@@ -23,7 +24,14 @@
 #define RGBAMASK	RMASK,GMASK,BMASK,AMASK
 
 
-int flip_surface( SDL_Surface* surface );
+/* the screen info, gives data of current opengl settings */
+gl_info gl_screen;
+
+/* the camera */
+Vector2d* gl_camera;
+
+
+static int flip_surface( SDL_Surface* surface );
 
 
 /*
@@ -31,7 +39,7 @@ int flip_surface( SDL_Surface* surface );
  *
  * returns 0 on success
  */
-int flip_surface( SDL_Surface* surface )
+static int flip_surface( SDL_Surface* surface )
 {
 	/* flip the image */
 	Uint8 *rowhi, *rowlo, *tmpbuf;
@@ -67,6 +75,7 @@ gl_texture*  gl_newImage( const char* path )
 	SDL_Surface *temp, *surface;
 	Uint32 saved_flags;
 	Uint8  saved_alpha;
+	int potw, poth;
 
 	temp = IMG_Load( path ); /* loads the surface */
 	if (temp == 0) {
@@ -86,26 +95,26 @@ gl_texture*  gl_newImage( const char* path )
 
 	/* set up the texture defaults */
 	gl_texture *texture = MALLOC_ONE(gl_texture);
-	texture->w = surface->w;
-	texture->h = surface->h;
-	texture->sx = 1;
-	texture->sy = 1;
+	texture->w = (FP)surface->w;
+	texture->h = (FP)surface->h;
+	texture->sx = 1.0;
+	texture->sy = 1.0;
 
 	/* Make size power of two */
-	texture->rw = surface->w;
-	if ((texture->rw & (texture->rw - 1)) != 0) {
-		texture->rw = 1;
-		while (texture->rw < surface->w)
-			texture->rw <<= 1;
-	}
-	texture->rh = surface->h;
-	if ((texture->rh & (texture->rh - 1)) != 0) {
-		texture->rh = 1;
-		while (texture->rh < surface->h)
-			texture->rh <<= 1;
-	}
+	potw = surface->w;
+	if ((potw & (potw - 1)) != 0) {
+		potw = 1;
+		while (potw < surface->w)
+			potw <<= 1;
+	} texture->rw = potw;
+	poth = surface->h;
+	if ((poth & (poth - 1)) != 0) {
+		poth = 1;
+		while (poth < surface->h)
+			poth <<= 1;
+	} texture->rh = poth;
 
-	if (surface->w != texture->rw || surface->h != texture->rh ) { /* size isn't original */
+	if (surface->w != potw || surface->h != poth ) { /* size isn't original */
 		SDL_Rect rtemp;
 		rtemp.x = rtemp.y = 0;
 		rtemp.w = surface->w;
@@ -125,11 +134,10 @@ gl_texture*  gl_newImage( const char* path )
 			WARN("Unable to create POT surface: %s", SDL_GetError());
 			return 0;
 		}
-		if (SDL_FillRect( temp, NULL, SDL_MapRGB( surface->format, 0, 255, 255 ))) {
+		if (SDL_FillRect( temp, NULL, SDL_MapRGBA(surface->format,0,0,0,SDL_ALPHA_TRANSPARENT))) {
 			WARN("Unable to fill rect: %s", SDL_GetError());
 			return 0;
 		}
-		
 
 		SDL_BlitSurface( surface, &rtemp, temp, &rtemp);
 		SDL_FreeSurface( surface );
@@ -144,7 +152,8 @@ gl_texture*  gl_newImage( const char* path )
 	glGenTextures( 1, &texture->texture ); /* Creates the texture */
 	glBindTexture( GL_TEXTURE_2D, texture->texture ); /* Loads the texture */
 
-	/* Filtering, LINEAR is better for scaling, nearest looks nicer */
+	/* Filtering, LINEAR is better for scaling, nearest looks nicer, LINEAR
+	 * also seems to create a bit of artifacts around the edges */
 /*	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);*/
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -169,8 +178,10 @@ gl_texture* gl_newSprite( const char* path, const int sx, const int sy )
 	gl_texture* texture;
 	if ((texture = gl_newImage(path)) == NULL)
 		return NULL;
-	texture->sx = sx;
-	texture->sy = sy;
+	texture->sx = (FP)sx;
+	texture->sy = (FP)sy;
+	texture->sw = texture->w/texture->sx;
+	texture->sh = texture->h/texture->sy;
 	return texture;
 }
 
@@ -185,21 +196,61 @@ void gl_free( gl_texture* texture )
 }
 
 
+/*
+ * blits a sprite at pos
+ */
+void gl_blitSprite( gl_texture* sprite, Vector2d* pos, const int sx, const int sy )
+{
+	glMatrixMode(GL_TEXTURE);
+	glPushMatrix();
+		glTranslatef( sprite->sw*(FP)(sx)/sprite->rw,
+				sprite->sh*(sprite->sy-(FP)sy-1)/sprite->rh, 0.0f );
+
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix(); /* projection translation matrix */
+		glTranslatef( gl_camera->x - pos->x - sprite->sw/2.0,
+				gl_camera->y - pos->y - sprite->sh/2.0, 0.0f);
+
+	/* actual blitting */
+	glBindTexture( GL_TEXTURE_2D, sprite->texture);
+	glBegin( GL_TRIANGLE_STRIP );
+		glTexCoord2f( 0.0f, 0.0f);
+			glVertex2f( 0.0f, 0.0f );
+		glTexCoord2f( sprite->sw/sprite->rw, 0.0f);
+			glVertex2f( sprite->sw, 0.0f );
+		glTexCoord2f( 0.0f, sprite->sh/sprite->rh);
+			glVertex2f( 0.0f, sprite->sh );
+		glTexCoord2f( sprite->sw/sprite->rw, sprite->sh/sprite->rh);
+			glVertex2f( sprite->sw, sprite->sh );
+	glEnd();
+
+	glPopMatrix(); /* projection translation matrix */
+
+	glMatrixMode(GL_TEXTURE);
+	glPopMatrix(); /* sprite translation matrix */
+}
+
+
+/*
+ * straight out blits a texture at position
+ */
 void gl_blit( gl_texture* texture, Vector2d* pos )
 {
+	glMatrixMode(GL_PROJECTION);
 	glPushMatrix(); /* set up translation matrix */
-		glTranslated( pos->x, pos->y, 0);
+		glTranslatef( pos->x, pos->y, 0);
 
+	/* actual blitting */
 	glBindTexture( GL_TEXTURE_2D, texture->texture);
 	glBegin( GL_TRIANGLE_STRIP );
 		glTexCoord2f( 0.0f, 0.0f);
 			glVertex2f( 0.0f, 0.0f );
-		glTexCoord2f( (FP)texture->w/(FP)texture->rw, 0.0f);
-			glVertex2f( (FP)texture->w, 0.0f );
-		glTexCoord2f( 0.0f, (FP)texture->h/(FP)texture->rh);
-			glVertex2f( 0.0f, (FP)texture->h );
-		glTexCoord2f( (FP)texture->w/(FP)texture->rw, (FP)texture->h/(FP)texture->rh);
-			glVertex2f( (FP)texture->w, (FP)texture->h );
+		glTexCoord2f( texture->w/texture->rw, 0.0f);
+			glVertex2f( texture->w, 0.0f );
+		glTexCoord2f( 0.0f, texture->h/texture->rh);
+			glVertex2f( 0.0f, texture->h );
+		glTexCoord2f( texture->w/texture->rw, texture->h/texture->rh);
+			glVertex2f( texture->w, texture->h );
 	glEnd();
 
 	glPopMatrix(); /* pop the translation matrix */
@@ -207,9 +258,18 @@ void gl_blit( gl_texture* texture, Vector2d* pos )
 
 
 /*
+ * Binds the camero to a vector
+ */
+void gl_bindCamera( Vector2d* pos )
+{
+	gl_camera = pos;
+}
+
+
+/*
  * Initializes SDL/OpenGL and the works
  */
-int gl_init( gl_info* info )
+int gl_init()
 {
 	int depth;
 	int flags = SDL_OPENGL;
@@ -223,64 +283,54 @@ int gl_init( gl_info* info )
 	/* we don't want none of that ugly cursor */
 	SDL_ShowCursor(SDL_DISABLE);
 
-	flags |= SDL_FULLSCREEN * info->fullscreen;
-	depth = SDL_VideoModeOK( info->w, info->h, info->depth, flags); /* test set up */
-	if (depth != info->depth)
-		WARN("Depth %d bpp unavailable, will use %d bpp", info->depth, depth);
+	flags |= SDL_FULLSCREEN * gl_screen.fullscreen;
+	depth = SDL_VideoModeOK( gl_screen.w, gl_screen.h, gl_screen.depth, flags); /* test set up */
+	if (depth != gl_screen.depth)
+		WARN("Depth %d bpp unavailable, will use %d bpp", gl_screen.depth, depth);
 
-	info->depth = depth;
+	gl_screen.depth = depth;
 
 	/* actually creating the screen */
-	if (SDL_SetVideoMode( info->w, info->h, info->depth, flags) == NULL) {
+	if (SDL_SetVideoMode( gl_screen.w, gl_screen.h, gl_screen.depth, flags) == NULL) {
 		WARN("Unable to create OpenGL window: %s", SDL_GetError());
 		SDL_Quit();
 		return -1;
 	}
-	DEBUG("OpenGL Window Created: %dx%d@%dbpp %s", info->w, info->h, info->depth, 
-			info->fullscreen?"fullscreen":"window");
-
 
 	/* Get info about the OpenGL window */
-	SDL_GL_GetAttribute( SDL_GL_RED_SIZE, &info->r );
-	SDL_GL_GetAttribute( SDL_GL_GREEN_SIZE, &info->g );
-	SDL_GL_GetAttribute( SDL_GL_BLUE_SIZE, &info->b );
-	SDL_GL_GetAttribute( SDL_GL_ALPHA_SIZE, &info->a );
-	SDL_GL_GetAttribute( SDL_GL_DOUBLEBUFFER, &info->doublebuf );
+	SDL_GL_GetAttribute( SDL_GL_RED_SIZE, &gl_screen.r );
+	SDL_GL_GetAttribute( SDL_GL_GREEN_SIZE, &gl_screen.g );
+	SDL_GL_GetAttribute( SDL_GL_BLUE_SIZE, &gl_screen.b );
+	SDL_GL_GetAttribute( SDL_GL_ALPHA_SIZE, &gl_screen.a );
+	SDL_GL_GetAttribute( SDL_GL_DOUBLEBUFFER, &gl_screen.doublebuf );
+	gl_screen.depth = gl_screen.r + gl_screen.g + gl_screen.b + gl_screen.a;
 
+	/* Debug happiness */
+	DEBUG("OpenGL Window Created: %dx%d@%dbpp %s", gl_screen.w, gl_screen.h, gl_screen.depth,
+			gl_screen.fullscreen?"fullscreen":"window");
 	DEBUG("r: %d, g: %d, b: %d, a: %d, doublebuffer: %s",
-			info->r, info->g, info->b, info->a, info->doublebuf?"yes":"no");
+			gl_screen.r, gl_screen.g, gl_screen.b, gl_screen.a, gl_screen.doublebuf?"yes":"no");
 	DEBUG("Renderer: %s", glGetString(GL_RENDERER));
 
 	/* some OpenGL options */
 	glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
 	glDisable( GL_DEPTH_TEST ); /* set for doing 2d */
+	glEnable( GL_TEXTURE_2D );
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity();
-	glEnable( GL_TEXTURE_2D );
-	glOrtho( 0.0f, /* left edge */
-			info->w, /* right edge */
-			0.0f, /* bottom edge */
-			info->h, /* top edge */
+	glOrtho( -gl_screen.w/2, /* left edge */
+			gl_screen.w/2, /* right edge */
+			-gl_screen.h/2, /* bottom edge */
+			gl_screen.h/2, /* top edge */
 			-1.0f, /* near */
 			1.0f ); /* far */
+	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* alpha */
+	glEnable( GL_BLEND );
 
 	glClear( GL_COLOR_BUFFER_BIT );
 
 
-	gl_texture *llama;
-	if ((llama = gl_newImage("llama.png")) == NULL) {
-		WARN("Unable to load image");
-		return -1;
-	}
-	SDL_GL_SwapBuffers();
-
-	Vector2d pos = { .x=100.0, .y=100.0 };
-	gl_blit( llama, &pos ); 
-	SDL_GL_SwapBuffers();
-	gl_free(llama);
-
-
-	SDL_WM_SetCaption( "GAME", NULL );
+	SDL_WM_SetCaption( WINDOW_CAPTION, NULL );
 
 	return 0;
 
