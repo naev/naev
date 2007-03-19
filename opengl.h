@@ -47,7 +47,7 @@ void gl_free( gl_texture* texture );
  * opengl drawing
  */
 void gl_blitSprite( gl_texture* sprite, Vector2d* pos, const int sx, const int sy );
-void gl_blit( gl_texture* texture, Vector2d* pos );
+void gl_blitStatic( gl_texture* texture, Vector2d* pos );
 void gl_bindCamera( Vector2d* pos );
 
 /*

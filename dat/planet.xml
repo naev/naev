@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Planets>
+<planet name="Caladan">
+<pos>
+<x>10</x>
+<y>15</y>
+</pos>
+<general>
+<class>1</class>
+<services>1</services>
+<tech>0</tech>
+<commodities>1</commodities>
+</general>
+<GFX>Caladan</GFX>
+</planet>
+<planet name="Dune">
+<pos>
+<x>125</x>
+<y>-345</y>
+</pos>
+<general>
+<class>1</class>
+<services>1</services>
+<tech>0</tech>
+<commodities>1</commodities>
+</general>
+<GFX>Dune</GFX>
+</planet>
+</Planets>

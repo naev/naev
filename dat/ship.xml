@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Ships>
+<ship name="Llama">
+<GFX>llama.png</GFX>
+<class>1</class>
+<movement>
+<thrust>240</thrust>
+<turn>120</turn>
+<speed>360</speed>
+</movement>
+<health>
+<shield>50</shield>
+<armor>80</armor>
+<energy>240</energy>
+<shield_regen>80</shield_regen>
+<armor_regen>50</armor_regen>
+<energy_regen>40</energy_regen>
+</health>
+<caracteristics>
+<crew>2</crew>
+<mass>30</mass>
+<cap_weapon>20</cap_weapon>
+<cap_cargo>20</cap_cargo>
+</caracteristics>
+<outfits>
+<outfit quantity='2'>laser</outfit>
+</outfits>
+</ship>
+<ship name="Mr. Test">
+<GFX>lancelot.png</GFX>
+<class>1</class>
+<movement>
+<thrust>180</thrust>
+<turn>100</turn>
+<speed>260</speed>
+</movement>
+<health>
+<shield>160</shield>
+<armor>120</armor>
+<energy>360</energy>
+<shieldregen>90</shieldregen>
+<armorregen>60</armorregen>
+<energyregen>50</energyregen>
+</health>
+<caracteristics>
+<crew>9</crew>
+<mass>130</mass>
+<cap_weapon>60</cap_weapon>
+<cap_cargo>40</cap_cargo>
+</caracteristics>
+<outfits>
+</outfits>
+</ship>
+</Ships>

@@ -18,6 +18,8 @@
 
 struct Pilot {
 
+	struct Pilot* next;
+
 	int id; /* pilot's id, used for many functions */
 	char* name; /* pilot's name (if unique) */
 

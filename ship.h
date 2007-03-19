@@ -35,9 +35,15 @@ typedef struct {
 
 	/* capacity */
 	int cap_cargo, cap_weapon; 
-	
 
 } Ship;
+
+
+int ships_load(void);
+void ships_free(void);
+
+
+Ship* get_ship( const char* name );
 
 
 #endif /* SHIP_H */

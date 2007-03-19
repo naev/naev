@@ -80,18 +80,21 @@ gl_texture*  gl_newImage( const char* path )
 	temp = IMG_Load( path ); /* loads the surface */
 	if (temp == 0) {
 		WARN("'%s' could not be opened: %s", path, IMG_GetError());
-		return 0;
+		return NULL;
 	}
 
 	surface = SDL_DisplayFormatAlpha( temp ); /* sets the surface to what we use */
 	if (surface == 0) {
 		WARN( "Error converting image to screen format: %s", SDL_GetError() );
-		return 0;
+		return NULL;
 	}
 
-	SDL_FreeSurface( temp ); /* free the temporary surface */
+	SDL_FreeSurface(temp); /* free the temporary surface */
 
-	flip_surface( surface );
+	if (flip_surface(surface)) {
+		WARN( "Error flipping surface" );
+		return NULL;
+	}
 
 	/* set up the texture defaults */
 	gl_texture *texture = MALLOC_ONE(gl_texture);
@@ -132,11 +135,11 @@ gl_texture*  gl_newImage( const char* path )
 				texture->rw, texture->rh, surface->format->BytesPerPixel*8, RGBAMASK );
 		if (temp == NULL) {
 			WARN("Unable to create POT surface: %s", SDL_GetError());
-			return 0;
+			return NULL;
 		}
 		if (SDL_FillRect( temp, NULL, SDL_MapRGBA(surface->format,0,0,0,SDL_ALPHA_TRANSPARENT))) {
 			WARN("Unable to fill rect: %s", SDL_GetError());
-			return 0;
+			return NULL;
 		}
 
 		SDL_BlitSurface( surface, &rtemp, temp, &rtemp);
@@ -208,8 +211,8 @@ void gl_blitSprite( gl_texture* sprite, Vector2d* pos, const int sx, const int s
 
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix(); /* projection translation matrix */
-		glTranslatef( gl_camera->x - pos->x - sprite->sw/2.0,
-				gl_camera->y - pos->y - sprite->sh/2.0, 0.0f);
+		glTranslatef( pos->x - gl_camera->x - sprite->sw/2.0,
+				pos->y - gl_camera->y - sprite->sh/2.0, 0.0f);
 
 	/* actual blitting */
 	glBindTexture( GL_TEXTURE_2D, sprite->texture);
@@ -234,7 +237,7 @@ void gl_blitSprite( gl_texture* sprite, Vector2d* pos, const int sx, const int s
 /*
  * straight out blits a texture at position
  */
-void gl_blit( gl_texture* texture, Vector2d* pos )
+void gl_blitStatic( gl_texture* texture, Vector2d* pos )
 {
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix(); /* set up translation matrix */
@@ -279,9 +282,6 @@ int gl_init()
 		WARN("Unable to initialize SDL: %s", SDL_GetError());
 		return -1;
 	}
-
-	/* we don't want none of that ugly cursor */
-	SDL_ShowCursor(SDL_DISABLE);
 
 	flags |= SDL_FULLSCREEN * gl_screen.fullscreen;
 	depth = SDL_VideoModeOK( gl_screen.w, gl_screen.h, gl_screen.depth, flags); /* test set up */
@@ -333,7 +333,6 @@ int gl_init()
 	SDL_WM_SetCaption( WINDOW_CAPTION, NULL );
 
 	return 0;
-
 }
 
 
@@ -342,6 +341,5 @@ int gl_init()
  */
 void gl_exit()
 {
-	SDL_ShowCursor(SDL_ENABLE);
 	SDL_Quit();
 }

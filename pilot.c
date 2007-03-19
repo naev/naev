@@ -11,6 +11,10 @@
 static unsigned int pilot_id = 0;
 
 
+/* stack of pilots */
+static Pilot* pilot_stack = NULL;
+
+
 static void pilot_update( Pilot* pilot, const FP dt );
 static void pilot_render( Pilot* pilot );
 

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Systems>
+<ssys name="Delta Pavonis">
+<pos>
+<x>15</x>
+<y>8</y>
+</pos>
+<general>
+<stars>50</stars>
+<asteroids>0</asteroids>
+<interference>0</interference>
+<faction>2</faction>
+</general>
+<planets>
+<planet>Caladan</planet>
+</planets>
+<fleets>
+<fleet chance="100">Test</fleet>
+<fleet chance="60">Merchant Llama</fleet>
+<fleet chance="50">Merchant Llama</fleet>
+<fleet chance="40">Merchant Llama</fleet>
+<fleet chance="50">Sml Merchant Convoy</fleet>
+<fleet chance="40">Sml Merchant Convoy</fleet>
+</fleets>
+<paths>
+<path>Arrakis</path>
+</paths>
+</ssys>
+<ssys name="Arrakis">
+<pos>
+<x>47</x>
+<y>33</y>
+</pos>
+<general>
+<stars>27</stars>
+<asteroids>0</asteroids>
+<interference>0</interference>
+<faction>2</faction>
+</general>
+<planets>
+<planet>Dune</planet>
+</planets>
+<fleets>
+<fleet chance="80">Merchant Llama</fleet>
+<fleet chance="60">Merchant Llama</fleet>
+</fleets>
+<paths>
+<path>Delta Pavonis</path>
+</paths>
+</ssys>
+</Systems>

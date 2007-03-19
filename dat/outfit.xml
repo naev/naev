@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Outfits>
+<outfit name="laser">
+<general>
+<max>0</max>
+<type>1</type>
+<tech>0</tech>
+</general>
+<sound>laser</sound>
+<GFX>
+<game>laser_green</game>
+</GFX>
+<parameters>
+<parameter>7</parameter>
+<parameter>7</parameter>
+<parameter>600</parameter>
+<parameter>400</parameter>
+<parameter>18</parameter>
+<parameter>500</parameter>
+</parameters>
+</outfit>
+</Outfits>
