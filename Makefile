@@ -7,7 +7,9 @@ OBJS := main.o		\
 		physics.o	\
 		opengl.o		\
 		ship.o		\
-		pilot.o
+		pilot.o		\
+		player.o		\
+		joystick.o
 
 CFLAGS = -Wall `sdl-config --cflags` `xml2-config --cflags`
 ifdef DEBUG
@@ -30,12 +32,12 @@ DOBJS = ship.xml	\
 %.xml:
 	@sed -e '/^<?xml.*/d' dat/$@ >> data
 %.o:	%.c
-	@gcc -c $(CFLAGS) -o $@ $<
+	@$(CC) -c $(CFLAGS) -o $@ $<
 	@echo -e "\tCC   $@"
 
 
 all:	data $(OBJS)
-	@gcc $(LDFLAGS) -o $(APPNAME) $(OBJS)
+	@$(CC) $(LDFLAGS) -o $(APPNAME) $(OBJS)
 	@echo -e "\tLD   $(APPNAME)"
 
 

@@ -4,8 +4,8 @@
 <GFX>llama.png</GFX>
 <class>1</class>
 <movement>
-<thrust>240</thrust>
-<turn>120</turn>
+<thrust>400</thrust>
+<turn>960</turn>
 <speed>360</speed>
 </movement>
 <health>
@@ -18,7 +18,7 @@
 </health>
 <caracteristics>
 <crew>2</crew>
-<mass>30</mass>
+<mass>7</mass>
 <cap_weapon>20</cap_weapon>
 <cap_cargo>20</cap_cargo>
 </caracteristics>

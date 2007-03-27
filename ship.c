@@ -9,6 +9,9 @@
 #include "log.h"
 
 
+#define MAX_PATH_NAME	20	/* maximum size of the path */
+
+
 #define XML_NODE_START	1
 #define XML_NODE_TEXT	3
 #define XML_NODE_CLOSE	15
@@ -28,11 +31,12 @@ static int ships;
 Ship* get_ship( const char* name )
 {
 	Ship* temp = ship_stack;
+	int i;
 
-	while (temp != NULL)
-		if (strcmp((temp++)->name, name)==0) break;
+	for (i=0; i < ships; i++)
+		if (strcmp((temp+i)->name, name)==0) break;
 
-	return temp;
+	return temp+i;
 }
 
 
@@ -41,6 +45,8 @@ Ship* ship_parse( xmlNodePtr node )
 	xmlNodePtr cur;
 	Ship* temp = CALLOC_ONE(Ship);
 
+	char str[MAX_PATH_NAME] = "\0";
+
 	temp->name = (char*)xmlGetProp(node,(xmlChar*)"name");
 
 	node = node->xmlChildrenNode;
@@ -48,8 +54,10 @@ Ship* ship_parse( xmlNodePtr node )
 	while ((node = node->next)) {
 		if (strcmp((char*)node->name, "GFX")==0) {
 			cur = node->children;
-			if (strcmp((char*)cur->name,"text")==0)
+			if (strcmp((char*)cur->name,"text")==0) {
+				snprintf( str, sizeof(cur->content)+4, "gfx/%s", (char*)cur->content);
 				temp->gfx_ship = gl_newSprite((char*)cur->content, 6, 6);
+			}
 		}
 		else if (strcmp((char*)node->name, "class")==0) {
 			cur = node->children;
@@ -98,6 +106,7 @@ Ship* ship_parse( xmlNodePtr node )
 			}
 		}
 	}
+	temp->thrust *= temp->mass; /* helps keep numbers sane */
 
 	DEBUG("Loaded ship '%s'", temp->name);
 	return temp;

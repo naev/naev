@@ -18,9 +18,7 @@
 
 struct Pilot {
 
-	struct Pilot* next;
-
-	int id; /* pilot's id, used for many functions */
+	unsigned int id; /* pilot's id, used for many functions */
 	char* name; /* pilot's name (if unique) */
 
 	Ship* ship; /* ship pilot is flying */
@@ -33,17 +31,33 @@ struct Pilot {
 	void (*update)(struct Pilot*, const FP); /* updates the pilot */
 	void (*think)(struct Pilot*); /* AI thinking for the pilot */
 
-	unsigned int flags; /* used for AI and others */
+	unsigned int properties; /* used for AI and others */
 
 };
 typedef struct Pilot Pilot;
 
 
+Pilot* get_pilot( unsigned int id );
+
+
+/*
+ * creation
+ */
 void pilot_init( Pilot* dest, Ship* ship, char* name,
 		const Vector2d* vel, const Vector2d* pos, const int flags );
-Pilot* pilot_create( Ship* ship, char* name,
+unsigned int pilot_create( Ship* ship, char* name,
 		const Vector2d* vel, const Vector2d* pos, const int flags );
-void pilot_free( Pilot* src );
+
+/*
+ * cleanup
+ */
+void pilots_free(void);
+
+
+/*
+ * update
+ */
+void pilots_update( FP dt );
 
 
 #endif /* PILOT_H */

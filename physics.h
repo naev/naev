@@ -16,7 +16,7 @@ typedef struct {
  * used to describe any Solid in 2d space
  */
 struct Solid {
-	FP mass, force, dir; /* properties */
+	FP mass, force, dir, dir_vel; /* properties */
 	Vector2d vel, pos; /* position/velocity vectors */
 	void (*update)( struct Solid*, const FP ); /* update method */
 };

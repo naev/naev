@@ -16,10 +16,6 @@
 #define COS(dir)	(cosf(dir))
 
 
-/* Update methods */
-static void simple_update (Solid *obj, const FP dt); /* simple integration */
-static void rk4_update (Solid *obj, const FP dt); /* Runge-Kutta 4 */
-
 /*
  * Simple method
  *
@@ -33,8 +29,14 @@ static void rk4_update (Solid *obj, const FP dt); /* Runge-Kutta 4 */
  *   so watch out with big values for dt
  *
  */
+#if	0
 static void simple_update (Solid *obj, const FP dt)
 {
+	/* make sure angle doesn't flip */
+	obj->dir += obj->dir_vel/360.*dt;
+	if (obj->dir > 2*M_PI) obj->dir -= 2*M_PI;
+	if (obj->dir < 0.) obj->dir += 2*M_PI;
+
 	if (obj->force) { /* force applied on object */
 		Vector2d acc;
 		acc.x = obj->force/obj->mass*COS(obj->dir);
@@ -43,14 +45,15 @@ static void simple_update (Solid *obj, const FP dt)
 		obj->vel.x += acc.x*dt;
 		obj->vel.y += acc.y*dt;
 
-		obj->pos.x += obj->vel.x*dt + 0.5*acc.x / obj->mass*dt*dt;
-		obj->pos.y += obj->vel.y*dt + 0.5*acc.y / obj->mass*dt*dt;
+		obj->pos.x += obj->vel.x*dt + 0.5*acc.x * dt*dt;
+		obj->pos.y += obj->vel.y*dt + 0.5*acc.y * dt*dt;
 	}
 	else {
 		obj->pos.x += obj->vel.x*dt;
 		obj->pos.y += obj->vel.y*dt;
 	}
 }
+#endif
 
 /*
  * Runge-Kutta 4 method
@@ -71,6 +74,11 @@ static void simple_update (Solid *obj, const FP dt)
 #define RK4_N	4
 static void rk4_update (Solid *obj, const FP dt)
 {
+	/* make sure angle doesn't flip */
+	obj->dir += obj->dir_vel/360.*dt;
+	if (obj->dir > 2*M_PI) obj->dir -= 2*M_PI;
+	if (obj->dir < 0.) obj->dir += 2*M_PI;
+
 	FP h = dt / RK4_N; /* step */
 
 	if (obj->force) { /* force applied on object */

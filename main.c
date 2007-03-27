@@ -8,7 +8,6 @@
 
 /* global */
 #include <stdlib.h>
-#include <math.h>
 
 /* local */
 #include "all.h"
@@ -17,10 +16,14 @@
 #include "opengl.h"
 #include "ship.h"
 #include "pilot.h"
+#include "player.h"
+#include "joystick.h"
 
 
 
 static int quit = 0;
+
+static unsigned int time = 0;
 
 /*
  * prototypes
@@ -54,6 +57,13 @@ int main ( int argc, const char** argv )
 		exit(EXIT_FAILURE);
 	}
 
+
+	/*
+	 * Input
+	 */
+	if (joystick_init())
+		WARN("Error initializing joystick input");
+
 	
 	/*
 	 * data loading
@@ -61,6 +71,17 @@ int main ( int argc, const char** argv )
 	ships_load();
 
 
+	/*
+	 * testing
+	 */
+	unsigned int player_id;
+	player_id = pilot_create( get_ship("Llama"), "Player", NULL, NULL, PILOT_PLAYER );
+	gl_bindCamera( &get_pilot(player_id)->solid->pos );
+
+	pilot_create( get_ship("Mr. Test"), NULL, NULL, NULL, 0 );
+
+	
+	time = SDL_GetTicks();
 	/* 
 	 * main loop
 	 */
@@ -86,6 +107,7 @@ int main ( int argc, const char** argv )
 	/*
 	 * data unloading
 	 */
+	pilots_free();
 	ships_free();
 
 	gl_exit(); /* kills video output */
@@ -103,6 +125,15 @@ static void handle_keydown(SDLKey key)
 		case SDLK_ESCAPE:
 			quit = 1;
 			break;
+		case SDLK_LEFT:
+			player_setFlag(PLAYER_FLAG_MOV_LEFT);
+			break;
+		case SDLK_RIGHT:
+			player_setFlag(PLAYER_FLAG_MOV_RIGHT);
+			break;
+		case SDLK_UP:
+			player_setFlag(PLAYER_FLAG_MOV_ACC);
+			break;
 
 		default:
 			break;
@@ -115,6 +146,15 @@ static void handle_keydown(SDLKey key)
 static void handle_keyup(SDLKey key)
 {
 	switch (key) {
+		case SDLK_LEFT:
+			player_rmFlag(PLAYER_FLAG_MOV_LEFT);
+			break;        
+		case SDLK_RIGHT: 
+			player_rmFlag(PLAYER_FLAG_MOV_RIGHT);
+			break;        
+		case SDLK_UP:                     
+			player_rmFlag(PLAYER_FLAG_MOV_ACC);
+			break;
 		
 		default:
 			break;
@@ -124,10 +164,19 @@ static void handle_keyup(SDLKey key)
 
 /*
  * updates everything
+ *
+ * @pilots
+ *  -> pilot think (AI)
+ *  -> pliot solid
  */
 static void update_all(void)
 {
+	FP dt = (FP)(SDL_GetTicks() - time) / 1000.;
+	time = SDL_GetTicks();
+
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	pilots_update(dt);
 
 	SDL_GL_SwapBuffers();
 }
