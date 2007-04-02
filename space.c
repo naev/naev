@@ -117,12 +117,13 @@ void space_init (void)
 void space_render( FP dt )
 {
 	int i;
-	Vector2d temp = { .x = starPos[0].x };
+	Vector2d temp;
+	FP f;
 
 	for (i=0; i < STAR_LAYERS; i++) {
 		/* movement */
-		starPos[i].x -= player->solid->vel.x/(FP)(2*i+4)*dt;
-		starPos[i].y -= player->solid->vel.y/(FP)(2*i+4)*dt;
+		starPos[i].x -= player->solid->vel.x/(FP)(2*i+10)*dt;
+		starPos[i].y -= player->solid->vel.y/(FP)(2*i+10)*dt;
 
 		/* displaces X if reaches edge */
 		if (starPos[i].x > 0)
@@ -142,37 +143,28 @@ void space_render( FP dt )
 		temp.x = starPos[i].x;
 		temp.y = starPos[i].y;
 
-		/*
-		 * TODO OPTIMIZATION
-		 */
-		temp.x -= starBG[i]->w;
-		gl_blitStatic( starBG[i], &temp );
-		temp.y += starBG[i]->h;
-		gl_blitStatic( starBG[i], &temp );
-		temp.x += starBG[i]->w;
-		gl_blitStatic( starBG[i], &temp );
-		temp.x += starBG[i]->w;
-		gl_blitStatic( starBG[i], &temp );
-		temp.y -= starBG[i]->h;
-		gl_blitStatic( starBG[i], &temp );
-		temp.y -= starBG[i]->h;
-		gl_blitStatic( starBG[i], &temp );
-		temp.x -= starBG[i]->w;
-		gl_blitStatic( starBG[i], &temp );
-		temp.x -= starBG[i]->w;
-		gl_blitStatic( starBG[i], &temp );
-
-		/*if (starPos[i].x < starBG[i]->w/4.)
-			temp.x = starPos[i].x + starBG[i]->w;
+		/* more blits if part of the screen is blank */
+		if (starPos[i].x < starBG[i]->w/4.)
+			temp.x += starBG[i]->w;
 		else if (starPos[i].x < starBG[i]->w*3./4.)
-			temp.x = starPos[i].x - starBG[i]->w;
+			temp.x -= starBG[i]->w;
 
 		if (starPos[i].y < starBG[i]->h/4.)
-			temp.y = starPos[i].y + starBG[i]->h;
+			temp.y += starBG[i]->h;
 		else if (starPos[i].y < starBG[i]->h*3./4.)
-			temp.y = starPos[i].y - starBG[i]->h;
-
-		gl_blitStatic( starBG[i], &temp );*/
+			temp.y -= starBG[i]->h;
+		
+		if (temp.x != starPos[i].x && temp.y != starPos[i].y) {
+			gl_blitStatic( starBG[i], &temp );
+			f = temp.x;
+			temp.x = starPos[i].x;
+			gl_blitStatic( starBG[i], &temp );
+			temp.x = f;
+			temp.y = starPos[i].y;
+			gl_blitStatic( starBG[i], &temp );
+		}
+		else if (temp.x != starPos[i].x || temp.y != starPos[i].y)
+			gl_blitStatic( starBG[i], &temp );
 	}
 }
 
