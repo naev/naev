@@ -7,8 +7,10 @@
 #include "log.h"
 
 
+Pilot* player = NULL;
 static unsigned int player_flags = PLAYER_FLAG_NULL;
-
+static FP player_turn = 0.;
+static FP player_acc = 0.;
 
 /*
  * used in pilot.c
@@ -16,12 +18,16 @@ static unsigned int player_flags = PLAYER_FLAG_NULL;
 void player_think( Pilot* player, const FP dt )
 {
 	player->solid->dir_vel = 0.;
+	if (player_turn)
+		player->solid->dir_vel -= player->ship->turn*player_turn/(FP)(1<<15);
+/*
 	if (player_isFlag(PLAYER_FLAG_MOV_LEFT))
 		player->solid->dir_vel += player->ship->turn;
 	if (player_isFlag(PLAYER_FLAG_MOV_RIGHT))
 		player->solid->dir_vel -= player->ship->turn;
+*/
 
-	player->solid->force = (player_isFlag(PLAYER_FLAG_MOV_ACC))?player->ship->thrust:0.;
+	player->solid->force = player->ship->thrust*player_acc/(FP)(1<<15);
 }
 
 
@@ -42,5 +48,108 @@ void player_rmFlag( unsigned int flag )
 	if (player_isFlag(flag))
 		player_flags ^= flag;
 }
+
+
+/*
+ * events
+ */
+
+/*
+ * joystick
+ */
+static void handle_joyaxis( int axis, int value )
+{
+	switch (axis) {
+		case 0:
+			player_turn = (FP)value;
+			break;
+
+		case 1:
+			if (value <= 0)
+				player_acc = (FP)-value;
+			break;
+	}
+}
+static void handle_joybutton( int button )
+{
+	switch (button) {
+		case 0:
+			break;
+
+		case 1:
+			break;
+
+	}
+}
+
+
+/*
+ * keyboard
+ */
+static void handle_keydown(SDLKey key)
+{
+	SDL_Event quit;
+	switch (key) {
+		case SDLK_ESCAPE:
+			quit.type = SDL_QUIT;
+			SDL_PushEvent(&quit);
+			break;
+		case SDLK_LEFT:
+			player_turn -= (FP)(1<<15);
+			break;
+		case SDLK_RIGHT:
+			player_turn += (FP)(1<<15);
+			break;
+		case SDLK_UP:
+			player_acc += (FP)(1<<15);
+			break;
+
+		default:
+			break;
+	}
+}
+static void handle_keyup(SDLKey key)
+{  
+	switch (key) {
+		case SDLK_LEFT:
+			player_turn += (FP)(1<<15);
+			break;
+		case SDLK_RIGHT:
+			player_turn -= (FP)(1<<15);
+			break;
+		case SDLK_UP:
+			player_acc -= (FP)(1<<15);
+			break;
+
+		default:
+			break;
+	}
+}
+
+
+/*
+ * gloabal input
+ */
+void handle_input( SDL_Event* event )
+{
+	switch (event->type) {
+		case SDL_JOYAXISMOTION:
+			handle_joyaxis(event->jaxis.axis, event->jaxis.value);
+			break;
+
+		case SDL_JOYBUTTONDOWN:
+			handle_joybutton(event->jbutton.button);
+			break;
+
+		case SDL_KEYDOWN:
+			handle_keydown(event->key.keysym.sym);
+			break;
+
+		case SDL_KEYUP:
+			handle_keyup(event->key.keysym.sym);
+			break;
+	}
+}
+
 
 

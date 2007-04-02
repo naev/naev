@@ -8,16 +8,35 @@
 #include "log.h"
 
 
-static SDL_Joystick* joystick;
+static SDL_Joystick* joystick = NULL;
+
+
+int joystick_use( int indjoystick )
+{
+	/* start using joystick */
+	LOG("Using joystick %d", indjoystick);
+	joystick = SDL_JoystickOpen(indjoystick);
+	if (joystick==NULL) {
+		WARN("Error opening joystick %d [%s]", indjoystick, SDL_JoystickName(indjoystick));
+		return -1;
+	}
+	DEBUG("  with %d axes, %d buttons, %d balls and %d hats",
+			SDL_JoystickNumAxes(joystick), SDL_JoystickNumButtons(joystick),
+			SDL_JoystickNumBalls(joystick), SDL_JoystickNumHats(joystick));
+
+	return 0;
+}
 
 
 int joystick_init()
 {
-	int indjoystick, numjoysticks, i;
-	indjoystick = 1;
+	int numjoysticks, i;
 
 	/* initialize the sdl subsystem */
-	SDL_InitSubSystem( SDL_INIT_JOYSTICK );
+	if (SDL_InitSubSystem(SDL_INIT_JOYSTICK)) {
+		WARN("Unable to initialize the joystick subsystem");
+		return -1;
+	}
 
 
 	/* figure out how many joysticks there are */
@@ -26,9 +45,16 @@ int joystick_init()
 	for ( i=0; i < numjoysticks; i++ )
 		LOG("  %d. %s", i, SDL_JoystickName(i));
 
-	/* start using joystick */
-	LOG("Using joystick %d", indjoystick);
-	joystick = SDL_JoystickOpen(indjoystick);
+	/* enables joystick events */
+	SDL_JoystickEventState(SDL_ENABLE);
 
 	return 0;
 }
+
+
+void joystick_exit()
+{
+	SDL_JoystickClose(joystick);
+}
+
+

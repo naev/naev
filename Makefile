@@ -3,15 +3,19 @@ DEBUG = 1
 
 APPNAME = main
 
+VERSION = -DVMAJOR=0 -DVMINOR=0 -DVREV=1
+
 OBJS := main.o		\
 		physics.o	\
 		opengl.o		\
 		ship.o		\
 		pilot.o		\
 		player.o		\
-		joystick.o
+		joystick.o	\
+		space.o		\
+		rng.o
 
-CFLAGS = -Wall `sdl-config --cflags` `xml2-config --cflags`
+CFLAGS = -Wall `sdl-config --cflags` `xml2-config --cflags` $(VERSION)
 ifdef DEBUG
 CFLAGS += -g3 -DDEBUG
 else # DEBUG

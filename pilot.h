@@ -37,6 +37,7 @@ struct Pilot {
 typedef struct Pilot Pilot;
 
 
+extern Pilot* player; /* the player */
 Pilot* get_pilot( unsigned int id );
 
 

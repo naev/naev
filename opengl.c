@@ -9,19 +9,9 @@
 #include "log.h"
 
 
-/* Recommended for compatibility and such */
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-#  define RMASK	0xff000000
-#  define GMASK	0x00ff0000
-#  define BMASK	0x0000ff00
-#  define AMASK	0x000000ff
-#else
-#  define RMASK	0x000000ff
-#  define GMASK	0x0000ff00
-#  define BMASK	0x00ff0000
-#  define AMASK	0xff000000
-#endif
-#define RGBAMASK	RMASK,GMASK,BMASK,AMASK
+#define	SCREEN_W	gl_screen.w
+#define	SCREEN_H gl_screen.h
+
 
 
 /* the screen info, gives data of current opengl settings */
@@ -68,40 +58,21 @@ static int flip_surface( SDL_Surface* surface )
 
 
 /*
- * loads the image as an opengl texture directly
+ * loads the SDL_Surface to an opengl texture
  */
-gl_texture*  gl_newImage( const char* path )
+gl_texture* gl_loadImage( SDL_Surface* surface )
 {
-	SDL_Surface *temp, *surface;
+	SDL_Surface* temp;
 	Uint32 saved_flags;
 	Uint8  saved_alpha;
 	int potw, poth;
-
-	temp = IMG_Load( path ); /* loads the surface */
-	if (temp == 0) {
-		WARN("'%s' could not be opened: %s", path, IMG_GetError());
-		return NULL;
-	}
-
-	surface = SDL_DisplayFormatAlpha( temp ); /* sets the surface to what we use */
-	if (surface == 0) {
-		WARN( "Error converting image to screen format: %s", SDL_GetError() );
-		return NULL;
-	}
-
-	SDL_FreeSurface(temp); /* free the temporary surface */
-
-	if (flip_surface(surface)) {
-		WARN( "Error flipping surface" );
-		return NULL;
-	}
 
 	/* set up the texture defaults */
 	gl_texture *texture = MALLOC_ONE(gl_texture);
 	texture->w = (FP)surface->w;
 	texture->h = (FP)surface->h;
-	texture->sx = 1.0;
-	texture->sy = 1.0;
+	texture->sx = 1.;
+	texture->sy = 1.;
 
 	/* Make size power of two */
 	potw = surface->w;
@@ -129,7 +100,29 @@ gl_texture*  gl_newImage( const char* path )
 		if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
 			SDL_SetAlpha( surface, 0, 0 );
 
-		
+
+		/* create the temp POT surface */
+		temp = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
+				texture->rw, texture->rh, surface->format->BytesPerPixel*8, RGBAMASK );
+		if (temp == NULL) {
+			WARN("Unable to create POT surface: %s", SDL_GetError());
+			return NULL;
+		}
+		if (SDL_FillRect( temp, NULL, SDL_MapRGBA(surface->format,0,0,0,SDL_ALPHA_TRANSPARENT))) {
+			WARN("Unable to fill rect: %s", SDL_GetError());
+			return NULL;
+		}
+
+		SDL_BlitSurface( surface, &rtemp, temp, &rtemp);
+		SDL_FreeSurface( surface );
+
+		surface = temp;
+
+		/* set saved alpha */
+		if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
+			SDL_SetAlpha( surface, 0, 0 );
+
+
 		/* create the temp POT surface */
 		temp = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
 				texture->rw, texture->rh, surface->format->BytesPerPixel*8, RGBAMASK );
@@ -157,19 +150,55 @@ gl_texture*  gl_newImage( const char* path )
 
 	/* Filtering, LINEAR is better for scaling, nearest looks nicer, LINEAR
 	 * also seems to create a bit of artifacts around the edges */
-/*	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);*/
+	/* glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);*/
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	SDL_LockSurface( surface );
 	glTexImage2D( GL_TEXTURE_2D, 0, surface->format->BytesPerPixel,
-			 surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
+			surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
 	SDL_UnlockSurface( surface );
 
 	SDL_FreeSurface( surface );
 
+	texture->sx = 1.;
+	texture->sy = 1.;
+	texture->sw = texture->w;
+	texture->sh = texture->h;
+
 	return texture;
+
+}
+
+
+/*
+ * loads the image as an opengl texture directly
+ */
+gl_texture*  gl_newImage( const char* path )
+{
+	SDL_Surface *temp, *surface;
+
+	temp = IMG_Load( path ); /* loads the surface */
+	if (temp == 0) {
+		WARN("'%s' could not be opened: %s", path, IMG_GetError());
+		return NULL;
+	}
+
+	surface = SDL_DisplayFormatAlpha( temp ); /* sets the surface to what we use */
+	if (surface == 0) {
+		WARN( "Error converting image to screen format: %s", SDL_GetError() );
+		return NULL;
+	}
+
+	SDL_FreeSurface(temp); /* free the temporary surface */
+
+	if (flip_surface(surface)) {
+		WARN( "Error flipping surface" );
+		return NULL;
+	}
+
+	return gl_loadImage(surface);
 }
 
 
@@ -207,22 +236,23 @@ void gl_blitSprite( gl_texture* sprite, Vector2d* pos, const int sx, const int s
 	glMatrixMode(GL_TEXTURE);
 	glPushMatrix();
 		glTranslatef( sprite->sw*(FP)(sx)/sprite->rw,
-				sprite->sh*(sprite->sy-(FP)sy-1)/sprite->rh, 0.0f );
+				sprite->sh*(sprite->sy-(FP)sy-1)/sprite->rh, 0. );
 
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix(); /* projection translation matrix */
-		glTranslatef( pos->x - gl_camera->x - sprite->sw/2.0,
-				pos->y - gl_camera->y - sprite->sh/2.0, 0.0f);
+		glTranslatef( pos->x - gl_camera->x - sprite->sw/2.,
+				pos->y - gl_camera->y - sprite->sh/2., 0.);
+		glScalef( (FP)gl_screen.w/SCREEN_W, (FP)gl_screen.h/SCREEN_H, 0. );
 
 	/* actual blitting */
 	glBindTexture( GL_TEXTURE_2D, sprite->texture);
 	glBegin( GL_TRIANGLE_STRIP );
-		glTexCoord2f( 0.0f, 0.0f);
-			glVertex2f( 0.0f, 0.0f );
-		glTexCoord2f( sprite->sw/sprite->rw, 0.0f);
-			glVertex2f( sprite->sw, 0.0f );
-		glTexCoord2f( 0.0f, sprite->sh/sprite->rh);
-			glVertex2f( 0.0f, sprite->sh );
+		glTexCoord2f( 0., 0.);
+			glVertex2f( 0., 0. );
+		glTexCoord2f( sprite->sw/sprite->rw, 0.);
+			glVertex2f( sprite->sw, 0. );
+		glTexCoord2f( 0., sprite->sh/sprite->rh);
+			glVertex2f( 0., sprite->sh );
 		glTexCoord2f( sprite->sw/sprite->rw, sprite->sh/sprite->rh);
 			glVertex2f( sprite->sw, sprite->sh );
 	glEnd();
@@ -241,17 +271,18 @@ void gl_blitStatic( gl_texture* texture, Vector2d* pos )
 {
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix(); /* set up translation matrix */
-		glTranslatef( pos->x, pos->y, 0);
+		glTranslatef( pos->x - (FP)gl_screen.w/2., pos->y - (FP)gl_screen.h/2., 0);
+		glScalef( (FP)gl_screen.w/SCREEN_W, (FP)gl_screen.h/SCREEN_H, 0. );
 
 	/* actual blitting */
 	glBindTexture( GL_TEXTURE_2D, texture->texture);
 	glBegin( GL_TRIANGLE_STRIP );
-		glTexCoord2f( 0.0f, 0.0f);
-			glVertex2f( 0.0f, 0.0f );
-		glTexCoord2f( texture->w/texture->rw, 0.0f);
-			glVertex2f( texture->w, 0.0f );
-		glTexCoord2f( 0.0f, texture->h/texture->rh);
-			glVertex2f( 0.0f, texture->h );
+		glTexCoord2f( 0., 0.);
+			glVertex2f( 0., 0. );
+		glTexCoord2f( texture->w/texture->rw, 0.);
+			glVertex2f( texture->w, 0. );
+		glTexCoord2f( 0., texture->h/texture->rh);
+			glVertex2f( 0., texture->h );
 		glTexCoord2f( texture->w/texture->rw, texture->h/texture->rh);
 			glVertex2f( texture->w, texture->h );
 	glEnd();
@@ -274,8 +305,10 @@ void gl_bindCamera( Vector2d* pos )
  */
 int gl_init()
 {
-	int depth;
+	int depth, i, supported = 0;
+	SDL_Rect** modes;
 	int flags = SDL_OPENGL;
+	flags |= SDL_FULLSCREEN * gl_screen.fullscreen;
 
 	/* Initializes Video */
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -283,12 +316,41 @@ int gl_init()
 		return -1;
 	}
 
-	flags |= SDL_FULLSCREEN * gl_screen.fullscreen;
-	depth = SDL_VideoModeOK( gl_screen.w, gl_screen.h, gl_screen.depth, flags); /* test set up */
+	/* get available fullscreen modes */
+	modes = SDL_ListModes( NULL, SDL_OPENGL | SDL_FULLSCREEN );
+	if (modes == NULL) {
+		WARN("No fullscreen modes available");
+		if (flags & SDL_FULLSCREEN) {
+			WARN("Disabling fullscreen mode");
+			flags ^= SDL_FULLSCREEN;
+		}
+	}
+	else if (modes == (SDL_Rect **)-1)
+		DEBUG("All fullscreen modes available");
+	else {
+		DEBUG("Available fullscreen modes:");
+		for (i=0;modes[i];++i) {
+			DEBUG("  %d x %d", modes[i]->w, modes[i]->h);
+			if (flags & SDL_FULLSCREEN && modes[i]->w == gl_screen.w && modes[i]->h == gl_screen.h)
+				supported = 1;
+		}
+	}
+	/* makes sure fullscreen mode is supported */
+	if (flags & SDL_FULLSCREEN && !supported) {
+		WARN("Fullscreen mode %d x %d is not supported by your setup, switching to another mode",
+				gl_screen.w, gl_screen.h);
+		gl_screen.w = modes[0]->w;
+		gl_screen.h = modes[0]->h;
+	}
+
+	
+	/* test the setup */
+	depth = SDL_VideoModeOK( gl_screen.w, gl_screen.h, gl_screen.depth, flags);
 	if (depth != gl_screen.depth)
 		WARN("Depth %d bpp unavailable, will use %d bpp", gl_screen.depth, depth);
 
 	gl_screen.depth = depth;
+
 
 	/* actually creating the screen */
 	if (SDL_SetVideoMode( gl_screen.w, gl_screen.h, gl_screen.depth, flags) == NULL) {
@@ -313,17 +375,17 @@ int gl_init()
 	DEBUG("Renderer: %s", glGetString(GL_RENDERER));
 
 	/* some OpenGL options */
-	glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
+	glClearColor( 0., 0., 0., 0. );
 	glDisable( GL_DEPTH_TEST ); /* set for doing 2d */
 	glEnable( GL_TEXTURE_2D );
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity();
-	glOrtho( -gl_screen.w/2, /* left edge */
-			gl_screen.w/2, /* right edge */
-			-gl_screen.h/2, /* bottom edge */
-			gl_screen.h/2, /* top edge */
-			-1.0f, /* near */
-			1.0f ); /* far */
+	glOrtho( -SCREEN_W/2, /* left edge */
+			SCREEN_W/2,//gl_screen.w/2, /* right edge */
+			-SCREEN_H/2,//-gl_screen.h/2, /* bottom edge */
+			SCREEN_H/2,//gl_screen.h/2, /* top edge */
+			-1., /* near */
+			1. ); /* far */
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* alpha */
 	glEnable( GL_BLEND );
 

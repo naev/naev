@@ -106,6 +106,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name,
 	if (flags & PILOT_PLAYER) {
 		pilot->think = (void*)player_think; /* players don't need to think! :P */
 		pilot->properties |= PILOT_PLAYER;
+		player = pilot;
 	}
 	else
 		pilot->think = NULL;

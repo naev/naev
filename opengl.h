@@ -4,9 +4,25 @@
 #  define OPENGL_H
 
 
+#include "SDL.h"
 #include "SDL_opengl.h"
 
 #include "physics.h"
+
+
+/* Recommended for compatibility and such */
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+#  define RMASK   0xff000000
+#  define GMASK   0x00ff0000
+#  define BMASK   0x0000ff00
+#  define AMASK   0x000000ff
+#else
+#  define RMASK   0x000000ff
+#  define GMASK   0x0000ff00
+#  define BMASK   0x00ff0000
+#  define AMASK   0xff000000
+#endif
+#define RGBAMASK  RMASK,GMASK,BMASK,AMASK
 
 
 #define WINDOW_CAPTION	"game"
@@ -40,6 +56,7 @@ typedef struct {
 /*
  * gl_texture loading / freeing
  */
+gl_texture* gl_loadImage( SDL_Surface* surface ); /* frees the surface */
 gl_texture* gl_newImage( const char* path );
 gl_texture* gl_newSprite( const char* path, const int sx, const int sy );
 void gl_free( gl_texture* texture );
@@ -54,8 +71,8 @@ void gl_bindCamera( Vector2d* pos );
 /*
  * initialization / cleanup
  */
-int gl_init(void);
-void gl_exit(void);
+int gl_init (void);
+void gl_exit (void);
 
 
 #endif /* OPENGL_H */
