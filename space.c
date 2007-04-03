@@ -19,43 +19,46 @@ static Vector2d starPos[STAR_LAYERS];
  */
 static gl_texture* starBG_create( const int density );
 static void put_pixel( SDL_Surface* surface, const int x, const int y,
-		const Uint8 R, const Uint8 G, const Uint8 B );
+		const Uint8 R, const Uint8 G, const Uint8 B, const Uint8 A );
 
 
 /*
  * modifies the pixel at x,y of surface to be of color R G B
  */
 static void put_pixel( SDL_Surface* surface, const int x, const int y,
-		const Uint8 R, const Uint8 G, const Uint8 B )
+		const Uint8 R, const Uint8 G, const Uint8 B, const Uint8 A )
 {
-	Uint32  color = SDL_MapRGB(surface->format, R, G, B);
+	Uint32 pixel = SDL_MapRGBA(surface->format, R, G, B, A);
+	int bpp = surface->format->BytesPerPixel;
+	/* Here p is the address to the pixel we want to set */
+	Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
 
-	Uint8 *bufp8;
-	Uint16 *bufp16;
-	Uint32 *bufp32;
+	switch(bpp) {
+		case 1:
+			*p = pixel;
+			break;
 
-	switch ( surface->format->BytesPerPixel ) {
-		case 1: // 8 bpp
-			bufp8 = (Uint8 *)surface->pixels + y*surface->pitch + x;
-			*bufp8 = color;
+		case 2:
+			*(Uint16 *)p = pixel;
 			break;
-		case 2: // 15 or 16 bpp
-			bufp16 = (Uint16 *)surface->pixels + 
-				y*surface->pitch/2 + x;
-			*bufp16 = color;
+
+		case 3:
+			if(SDL_BYTEORDER == SDL_BIG_ENDIAN) {
+				p[0] = (pixel >> 16) & 0xff;
+				p[1] = (pixel >> 8) & 0xff;
+				p[2] = pixel & 0xff;
+			} else {
+				p[0] = pixel & 0xff;
+				p[1] = (pixel >> 8) & 0xff;
+				p[2] = (pixel >> 16) & 0xff;
+			}
 			break;
-		case 3: // 24 bpp, SLOW
-			bufp8 = (Uint8 *)surface->pixels + y*surface->pitch + x;
-			*(bufp8+surface->format->Rshift/8) = R;
-			*(bufp8+surface->format->Gshift/8) = G;
-			*(bufp8+surface->format->Bshift/8) = B;
-			break;
-		case 4: // 32 bpp
-			bufp32 = (Uint32 *)surface->pixels +  
-				y*surface->pitch/4 + x;
-			*bufp32 = color;
+
+		case 4:
+			*(Uint32 *)p = pixel;
 			break;
 	}
+
 }
 
 
@@ -67,7 +70,7 @@ static gl_texture* starBG_create( const int density )
 {
 	SDL_Surface *surface;
 	int w, h;
-	int i, b, d, x, y;
+	int i, d;
 
 	w = (int)((float)gl_screen.w*1.5);
 	if ((w & (w - 1)) != 0) {
@@ -91,13 +94,13 @@ static gl_texture* starBG_create( const int density )
 		return NULL;
 	}
 
+	SDL_LockSurface(surface);
+
 	d = (int)((FP)(density)*(FP)(gl_screen.w)*(FP)(gl_screen.h)/1000./1000.);
-	for (i=0; i < d; i++) {
-		b = RNG(50,255);
-		x = RNG(0,w-1);
-		y = RNG(0,h-1);
-		put_pixel(surface, x, y,b,b,b);
-	}
+	for (i=0; i < d; i++)
+		put_pixel(surface,RNG(0,w-1),RNG(0,h-1),255,255,255,RNG(50,255));
+
+	SDL_UnlockSurface(surface);
 
 	return gl_loadImage(surface);
 }
