@@ -8,6 +8,7 @@
 
 /* global */
 #include <unistd.h>	/* getopt */
+#include <string.h> /* strdup */
 
 /* local */
 #include "all.h"
@@ -40,12 +41,13 @@ static void update_all (void);
  */
 void print_usage( char **argv )
 {
-	LOG("USAGE: %s [-f] [-j n] [-hv]", argv[0]);
+	LOG("Usage: %s [-f] [-j n | -J s] [-hv]", argv[0]);
 	LOG("Options are:");
 	LOG("   -f         fullscreen");
 /*	LOG("   -w n       set width to n");
 	LOG("   -h n       set height to n");*/
 	LOG("   -j n       use joystick n");
+	LOG("   -J s       use joystick whose name contains s");
 	LOG("   -h         display this message and exit");
 	LOG("   -v         print the version and exit");
 }
@@ -67,18 +69,22 @@ int main ( int argc, char** argv )
 	gl_screen.fullscreen = 0;
 	/* joystick */
 	int indjoystick = -1;
+	char* namjoystick = NULL;
 
 	/*
 	 * parse arguments
 	 */
 	int c = 0;
-	while ((c = getopt(argc, argv, "fj:hv")) != -1) {
+	while ((c = getopt(argc, argv, "fJ:j:hv")) != -1) {
 		switch (c) {
 			case 'f':
 				gl_screen.fullscreen = 1;
 				break;
 			case 'j':
 				indjoystick = atoi(optarg);
+				break;
+			case 'J':
+				namjoystick = strdup(optarg);
 				break;
 
 			case 'v':
@@ -106,10 +112,15 @@ int main ( int argc, char** argv )
 	/*
 	 * Input
 	 */
-	if (indjoystick >= 0) {
+	if (indjoystick >= 0 || namjoystick != NULL) {
 		if (joystick_init())
 			WARN("Error initializing joystick input");
-		joystick_use(indjoystick);
+		if (namjoystick != NULL) {
+			joystick_use(joystick_get(namjoystick));
+			free(namjoystick);
+		}
+		else if (indjoystick >= 0)
+			joystick_use(indjoystick);
 	}
 
 	

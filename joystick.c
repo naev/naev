@@ -2,6 +2,7 @@
 
 #include "joystick.h"
 
+#include <string.h>
 #include "SDL.h"
 
 #include "all.h"
@@ -11,8 +12,36 @@
 static SDL_Joystick* joystick = NULL;
 
 
+/*
+ * Gets the first joystick whose name contains namjoystick
+ */
+int joystick_get( char* namjoystick )
+{
+	int i;
+	for (i=0; i < SDL_NumJoysticks(); i++)
+		if (strstr(SDL_JoystickName(i),namjoystick))
+			return i;
+
+	WARN("Joystick '%s' not found, using default joystick '%s'",
+			namjoystick, SDL_JoystickName(0));
+	return 0;
+}
+
+
+/*
+ * sets the game to use joystick of index indjoystick
+ */
 int joystick_use( int indjoystick )
 {
+	if (indjoystick < 0 || indjoystick >= SDL_NumJoysticks()) {
+		WARN("Joystick of index number %d does not existing, switching to default 0",
+				indjoystick);
+		indjoystick = 0;
+	}
+
+	if (joystick) /* close the joystick if it's already open */
+		SDL_JoystickClose(joystick);
+
 	/* start using joystick */
 	LOG("Using joystick %d", indjoystick);
 	joystick = SDL_JoystickOpen(indjoystick);
