@@ -5,6 +5,9 @@
  */
 /* localised global */
 #include "SDL.h"
+#include "lua.h"
+#include "lauxlib.h"
+#include "lualib.h"
 
 /* global */
 #include <unistd.h>	/* getopt */
@@ -23,6 +26,8 @@
 #include "rng.h"
 
 
+#define CONF_FILE	"conf"
+
 
 static int quit = 0;
 
@@ -31,6 +36,7 @@ static unsigned int time = 0;
 /*
  * prototypes
  */
+void print_usage( char **argv );
 
 /* update */
 static void update_all (void);
@@ -58,10 +64,8 @@ void print_usage( char **argv )
  */
 int main ( int argc, char** argv )
 {
-	SDL_Event event;
-
 	/*
-	 * defaulte values
+	 * default values
 	 */
 	/* opengl */
 	gl_screen.w = 800;
@@ -70,6 +74,33 @@ int main ( int argc, char** argv )
 	/* joystick */
 	int indjoystick = -1;
 	char* namjoystick = NULL;
+
+
+	/*
+	 * Lua to parse the configuration file
+	 */
+	lua_State *L = luaL_newstate();
+	if (luaL_dofile(L, CONF_FILE) == 0) {
+		/* opengl */
+		lua_getglobal(L, "width");
+		if (lua_isnumber(L, -1))
+			gl_screen.w = (int)lua_tonumber(L, -1);
+		lua_getglobal(L, "height");
+		if (lua_isnumber(L, -1))
+			gl_screen.h = (int)lua_tonumber(L, -1);
+		lua_getglobal(L, "fullscreen");
+		if (lua_isnumber(L, -1))
+			if ((int)lua_tonumber(L, -1) == 1)
+				gl_screen.fullscreen = 1;
+		/* joystick */
+		lua_getglobal(L, "joystick");
+		if (lua_isnumber(L, -1))
+			indjoystick = (int)lua_tonumber(L, -1);
+		else if (lua_isstring(L, -1))
+			namjoystick = strdup((char*)lua_tostring(L, -1));
+	}
+	lua_close(L);
+
 
 	/*
 	 * parse arguments
@@ -145,6 +176,7 @@ int main ( int argc, char** argv )
 	/* 
 	 * main loop
 	 */
+	SDL_Event event;
 	while (!quit) {
 		while  (SDL_PollEvent(&event)) { /* event loop */
 			if (event.type == SDL_QUIT) quit = 1; /* quit is handled here */

@@ -317,30 +317,32 @@ int gl_init()
 	}
 
 	/* get available fullscreen modes */
-	modes = SDL_ListModes( NULL, SDL_OPENGL | SDL_FULLSCREEN );
-	if (modes == NULL) {
-		WARN("No fullscreen modes available");
-		if (flags & SDL_FULLSCREEN) {
-			WARN("Disabling fullscreen mode");
-			flags ^= SDL_FULLSCREEN;
+	if (gl_screen.fullscreen) {
+		modes = SDL_ListModes( NULL, SDL_OPENGL | SDL_FULLSCREEN );
+		if (modes == NULL) {
+			WARN("No fullscreen modes available");
+			if (flags & SDL_FULLSCREEN) {
+				WARN("Disabling fullscreen mode");
+				flags ^= SDL_FULLSCREEN;
+			}
 		}
-	}
-	else if (modes == (SDL_Rect **)-1)
-		DEBUG("All fullscreen modes available");
-	else {
-		DEBUG("Available fullscreen modes:");
-		for (i=0;modes[i];++i) {
-			DEBUG("  %d x %d", modes[i]->w, modes[i]->h);
-			if (flags & SDL_FULLSCREEN && modes[i]->w == gl_screen.w && modes[i]->h == gl_screen.h)
-				supported = 1;
+		else if (modes == (SDL_Rect **)-1)
+			DEBUG("All fullscreen modes available");
+		else {
+			DEBUG("Available fullscreen modes:");
+			for (i=0;modes[i];++i) {
+				DEBUG("  %d x %d", modes[i]->w, modes[i]->h);
+				if (flags & SDL_FULLSCREEN && modes[i]->w == gl_screen.w && modes[i]->h == gl_screen.h)
+					supported = 1;
+			}
 		}
-	}
-	/* makes sure fullscreen mode is supported */
-	if (flags & SDL_FULLSCREEN && !supported) {
-		WARN("Fullscreen mode %d x %d is not supported by your setup, switching to another mode",
-				gl_screen.w, gl_screen.h);
-		gl_screen.w = modes[0]->w;
-		gl_screen.h = modes[0]->h;
+		/* makes sure fullscreen mode is supported */
+		if (flags & SDL_FULLSCREEN && !supported) {
+			WARN("Fullscreen mode %d x %d is not supported by your setup, switching to another mode",
+					gl_screen.w, gl_screen.h);
+			gl_screen.w = modes[0]->w;
+			gl_screen.h = modes[0]->h;
+		}
 	}
 
 	

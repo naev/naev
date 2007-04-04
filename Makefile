@@ -15,14 +15,22 @@ OBJS := main.o		\
 		space.o		\
 		rng.o
 
-CFLAGS = -Wall `sdl-config --cflags` `xml2-config --cflags` $(VERSION)
+CLUA = -I/usr/include/lua5.1
+CSDL = `sdl-config --cflags`
+CXML = `xml2-config --cflags`
+CGL = 
+CFLAGS = -Wall $(CLUA) $(CSDL) $(CXML) $(CGL) $(VERSION)
 ifdef DEBUG
 CFLAGS += -g3 -DDEBUG
 else # DEBUG
 CFLAGS += -O2
 endif # DEBUG
 
-LDFLAGS = -lm `sdl-config --libs` `xml2-config --libs` -lSDL_image -lGL
+LDLUA = -llua5.1
+LDSDL = `sdl-config --libs` -lSDL_image
+LDXML = `xml2-config --libs`
+LDGL = -lGL
+LDFLAGS = -lm $(LDLUA) $(LDSDL) $(LDXML) $(LDGL)
 
 
 DOBJS = ship.xml	\
