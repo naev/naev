@@ -29,6 +29,7 @@
 
 #define CONF_FILE	"conf"
 
+static gl_font fdefault;
 
 static int quit = 0;
 
@@ -37,8 +38,8 @@ static unsigned int time = 0;
 /*
  * prototypes
  */
-void print_usage( char **argv );
-
+static void print_usage( char **argv );
+static void display_fps( const FP dt );
 /* update */
 static void update_all (void);
 
@@ -46,7 +47,7 @@ static void update_all (void);
 /*
  * usage
  */
-void print_usage( char **argv )
+static void print_usage( char **argv )
 {
 	LOG("Usage: %s [-f] [-j n | -J s] [-hv]", argv[0]);
 	LOG("Options are:");
@@ -163,6 +164,8 @@ int main ( int argc, char** argv )
 	if (ai_init())
 		WARN("Error initializing AI");
 
+	gl_fontInit( &fdefault, "/usr/share/fonts/truetype/freefont/FreeSans.ttf", 16 );
+
 	
 	/*
 	 * data loading
@@ -204,6 +207,8 @@ int main ( int argc, char** argv )
 	pilots_free();
 	ships_free();
 
+	gl_freeFont(&fdefault);
+
 	/*
 	 * exit subsystems
 	 */
@@ -233,7 +238,24 @@ static void update_all(void)
 
 	pilots_update(dt);
 
+	display_fps(dt);
+
 	SDL_GL_SwapBuffers();
+}
+
+static FP fps = 0.;
+static FP fps_cur = 0.;
+static FP fps_dt = 1.;
+static void display_fps( const FP dt )
+{
+	fps_dt += dt;
+	fps_cur += 1.;
+	if (fps_dt > 1.) {
+		fps = fps_cur;
+		fps_dt = fps_cur = 0.;
+	}
+	Vector2d pos = { .x = 10., .y = (FP)(gl_screen.h-20)  };
+	gl_print( &fdefault, &pos, "%3.2f", fps );
 }
 
 

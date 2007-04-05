@@ -3,9 +3,14 @@
 #include "opengl.h"
 
 #include <math.h>
+#include <stdarg.h> /* va_list for gl_print */
+#include <string.h>
 
 #include "SDL.h"
 #include "SDL_image.h"
+#include "ft2build.h"
+#include "freetype/freetype.h"
+#include "freetype/ftglyph.h"
 
 #include "all.h"
 #include "log.h"
@@ -23,7 +28,34 @@ gl_info gl_screen;
 Vector2d* gl_camera;
 
 
+/*
+ * prototypes
+ */
+/* misc */
 static int flip_surface( SDL_Surface* surface );
+static int pot( int n );
+/* gl_texture */
+static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh );
+/* gl_font */
+static void gl_fontMakeDList( FT_Face face, char ch, GLuint list_base, GLuint *tex_base );
+
+
+
+/*
+ *
+ * M I S C
+ *
+ */
+/*
+ * gets the closest power of two
+ */
+static int pot( int n )
+{
+	int i = 1;
+	while (i < n)
+		i <<= 1;
+	return i;
+}
 
 
 /*
@@ -60,37 +92,26 @@ static int flip_surface( SDL_Surface* surface )
 
 
 /*
- * loads the SDL_Surface to an opengl texture
+ *
+ * G L _ T E X T U R E
+ *
  */
-gl_texture* gl_loadImage( SDL_Surface* surface )
+/*
+ * returns the texture ID
+ * stores real sizes in rw/rh (from POT padding)
+ */
+static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
 {
+	GLuint texture;
 	SDL_Surface* temp;
 	Uint32 saved_flags;
 	Uint8  saved_alpha;
-	int potw, poth;
-
-	/* set up the texture defaults */
-	gl_texture *texture = MALLOC_ONE(gl_texture);
-	texture->w = (FP)surface->w;
-	texture->h = (FP)surface->h;
-	texture->sx = 1.;
-	texture->sy = 1.;
 
 	/* Make size power of two */
-	potw = surface->w;
-	if ((potw & (potw - 1)) != 0) {
-		potw = 1;
-		while (potw < surface->w)
-			potw <<= 1;
-	} texture->rw = potw;
-	poth = surface->h;
-	if ((poth & (poth - 1)) != 0) {
-		poth = 1;
-		while (poth < surface->h)
-			poth <<= 1;
-	} texture->rh = poth;
+	if (rw) *rw = pot(surface->w);
+	if (rh) *rh = pot(surface->h);
 
-	if (surface->w != potw || surface->h != poth ) { /* size isn't original */
+	if (surface->w != *rw || surface->h != *rh ) { /* size isn't original */
 		SDL_Rect rtemp;
 		rtemp.x = rtemp.y = 0;
 		rtemp.w = surface->w;
@@ -105,14 +126,14 @@ gl_texture* gl_loadImage( SDL_Surface* surface )
 
 		/* create the temp POT surface */
 		temp = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
-				texture->rw, texture->rh, surface->format->BytesPerPixel*8, RGBAMASK );
+				*rw, *rh, surface->format->BytesPerPixel*8, RGBAMASK );
 		if (temp == NULL) {
 			WARN("Unable to create POT surface: %s", SDL_GetError());
-			return NULL;
+			return 0;
 		}
 		if (SDL_FillRect( temp, NULL, SDL_MapRGBA(surface->format,0,0,0,SDL_ALPHA_TRANSPARENT))) {
 			WARN("Unable to fill rect: %s", SDL_GetError());
-			return NULL;
+			return 0;
 		}
 
 		SDL_BlitSurface( surface, &rtemp, temp, &rtemp);
@@ -127,14 +148,14 @@ gl_texture* gl_loadImage( SDL_Surface* surface )
 
 		/* create the temp POT surface */
 		temp = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
-				texture->rw, texture->rh, surface->format->BytesPerPixel*8, RGBAMASK );
+				*rw, *rh, surface->format->BytesPerPixel*8, RGBAMASK );
 		if (temp == NULL) {
 			WARN("Unable to create POT surface: %s", SDL_GetError());
-			return NULL;
+			return 0;
 		}
 		if (SDL_FillRect( temp, NULL, SDL_MapRGBA(surface->format,0,0,0,SDL_ALPHA_TRANSPARENT))) {
 			WARN("Unable to fill rect: %s", SDL_GetError());
-			return NULL;
+			return 0;
 		}
 
 		SDL_BlitSurface( surface, &rtemp, temp, &rtemp);
@@ -147,8 +168,8 @@ gl_texture* gl_loadImage( SDL_Surface* surface )
 			SDL_SetAlpha( surface, saved_flags, saved_alpha );
 	}
 
-	glGenTextures( 1, &texture->texture ); /* Creates the texture */
-	glBindTexture( GL_TEXTURE_2D, texture->texture ); /* Loads the texture */
+	glGenTextures( 1, &texture ); /* Creates the texture */
+	glBindTexture( GL_TEXTURE_2D, texture ); /* Loads the texture */
 
 	/* Filtering, LINEAR is better for scaling, nearest looks nicer, LINEAR
 	 * also seems to create a bit of artifacts around the edges */
@@ -164,8 +185,27 @@ gl_texture* gl_loadImage( SDL_Surface* surface )
 
 	SDL_FreeSurface( surface );
 
+	return texture;
+}
+
+/*
+ * loads the SDL_Surface to an opengl texture
+ */
+gl_texture* gl_loadImage( SDL_Surface* surface )
+{
+	int rw, rh;
+
+	/* set up the texture defaults */
+	gl_texture *texture = MALLOC_ONE(gl_texture);
+	texture->w = (FP)surface->w;
+	texture->h = (FP)surface->h;
 	texture->sx = 1.;
 	texture->sy = 1.;
+
+	texture->texture = gl_loadSurface( surface, &rw, &rh );
+
+	texture->rw = (FP)rw;
+	texture->rh = (FP)rh;
 	texture->sw = texture->w;
 	texture->sh = texture->h;
 
@@ -223,17 +263,23 @@ gl_texture* gl_newSprite( const char* path, const int sx, const int sy )
 /*
  * frees the texture
  */
-void gl_free( gl_texture* texture )
+void gl_freeTexture( gl_texture* texture )
 {
 	glDeleteTextures( 1, &texture->texture );
 	free(texture);
 }
 
 
+
+/*
+ *
+ * B L I T T I N G
+ *
+ */
 /*
  * blits a sprite at pos
  */
-void gl_blitSprite( gl_texture* sprite, Vector2d* pos, const int sx, const int sy )
+void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos, const int sx, const int sy )
 {
 	/* don't draw if offscreen */
 	if (fabs(pos->x-gl_camera->x) > gl_screen.w/2+sprite->sw/2 ||
@@ -274,7 +320,7 @@ void gl_blitSprite( gl_texture* sprite, Vector2d* pos, const int sx, const int s
 /*
  * straight out blits a texture at position
  */
-void gl_blitStatic( gl_texture* texture, Vector2d* pos )
+void gl_blitStatic( const gl_texture* texture, const Vector2d* pos )
 {
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix(); /* set up translation matrix */
@@ -301,12 +347,175 @@ void gl_blitStatic( gl_texture* texture, Vector2d* pos )
 /*
  * Binds the camero to a vector
  */
-void gl_bindCamera( Vector2d* pos )
+void gl_bindCamera( const Vector2d* pos )
 {
-	gl_camera = pos;
+	gl_camera = (Vector2d*)pos;
+}
+
+/*
+ * prints text on screen like printf
+ */
+void gl_print( const gl_font *ft_font, Vector2d *pos, const char *fmt, ...)
+{
+	/*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
+	char text[256]; /* holds the string */
+	va_list ap;
+	/*int i;*/
+
+	if (fmt == NULL)
+		*text = 0;
+	else { /* convert the symbols to text */
+		va_start(ap, fmt);
+		vsprintf(text, fmt, ap);
+		va_end(ap);
+	}
+
+	glListBase(ft_font->list_base);
+
+	glMatrixMode(GL_PROJECTION);
+	//for (i=0; i < strlen(text); i++) {
+		glPushMatrix();
+			glTranslatef( pos->x - (FP)gl_screen.w/2., pos->y - (FP)gl_screen.h/2., 0);
+		glCallLists(strlen(text), GL_UNSIGNED_BYTE, &text);
+		glPopMatrix();
+	//}
 }
 
 
+/*
+ *
+ * G L _ F O N T
+ *
+ */
+/*
+ * basically taken from NeHe lesson 43
+ * http://nehe.gamedev.net/data/lessons/lesson.asp?lesson=43
+ */
+static void gl_fontMakeDList( FT_Face face, char ch, GLuint list_base, GLuint *tex_base )
+{
+	FT_Glyph glyph;
+	FT_Bitmap bitmap;
+	GLubyte* expanded_data;
+	int w,h;
+	int i,j;
+
+	if (FT_Load_Glyph( face, FT_Get_Char_Index( face, ch ), FT_LOAD_DEFAULT ))
+		WARN("FT_Load_Glyph failed");
+
+	if (FT_Get_Glyph( face->glyph, &glyph ))
+		WARN("FT_Ge_Glyph failed");
+
+	/* converting our glyph to a bitmap */
+	FT_Glyph_To_Bitmap( &glyph, ft_render_mode_normal, 0, 1 );
+	FT_BitmapGlyph bitmap_glyph = (FT_BitmapGlyph)glyph;
+
+	bitmap = bitmap_glyph->bitmap; /* to simplify */
+
+	/* need the POT wrapping for opengl */
+	w = pot(bitmap.width);
+	h = pot(bitmap.rows);
+
+	/* memory for textured data
+	 * bitmap is using two channels, one for luminosity and one for alpha */
+	expanded_data = (GLubyte*) malloc(sizeof(GLubyte)*2* w*h);
+	for (j=0; j < h; j++) {
+		for (i=0; i < w; i++ ) {
+			expanded_data[2*(i+j*w)]= expanded_data[2*(i+j*w)+1] = 
+				(i>=bitmap.width || j>=bitmap.rows) ?
+				0 : bitmap.buffer[i + bitmap.width*j];
+		}
+	}
+
+	/* creating the opengl texture */
+	glBindTexture( GL_TEXTURE_2D, tex_base[(int)ch]);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,
+			GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, expanded_data );
+
+	free(expanded_data); /* no use for this anymore */
+
+	/* creating of the display list */
+	glNewList(list_base+ch,GL_COMPILE);
+
+	glBindTexture(GL_TEXTURE_2D,tex_base[(int)ch]);
+
+	glPushMatrix();
+
+	/* corrects a spacing flaw between letters */
+	glTranslatef(bitmap_glyph->left,0,0);
+
+	/* downwards correction for letters like g or y */
+	glTranslatef(0,bitmap_glyph->top-bitmap.rows,0);
+
+	/* take into account opengl POT wrapping */
+	FP x = (FP)bitmap.width/(FP)w;
+	FP y = (FP)bitmap.rows/(FP)h;
+
+	/* draw the texture mapped QUAD */
+	glBegin(GL_QUADS);
+		glTexCoord2d(0,0);
+			glVertex2f(0,bitmap.rows);
+		glTexCoord2d(0,y);
+			glVertex2f(0,0);
+		glTexCoord2d(x,y);
+			glVertex2f(bitmap.width,0);
+		glTexCoord2d(x,0);
+			glVertex2f(bitmap.width,bitmap.rows);
+	glEnd();
+
+	glPopMatrix();
+	glTranslatef(face->glyph->advance.x >> 6 ,0,0);
+
+	/* end of display list */
+	glEndList();
+}
+void gl_fontInit( gl_font* font, const char *fname, unsigned int h )
+{
+	font->textures = malloc(sizeof(GLuint)*128);
+	font->h = h;
+
+	/* create a FreeType font library */
+	FT_Library library;
+	if (FT_Init_FreeType(&library)) 
+		WARN("FT_Init_FreeType failed");
+
+	/* object which freetype uses to store font info */
+	FT_Face face;
+	if (FT_New_Face( library, fname, 0, &face ))
+		WARN("FT_New_Face failed loading library from %s", fname );
+
+	/* FreeType is cool and measures using 1/64 of a pixel, therefore expand */
+	FT_Set_Char_Size( face, h << 6, h << 6, 96, 96);
+
+	/* have OpenGL allocate space for the textures / display list */
+	font->list_base = glGenLists(128);
+	glGenTextures( 128, font->textures );
+
+
+	/* create each of the font display lists */
+	unsigned char i;
+	for (i=0; i<128; i++)
+		gl_fontMakeDList( face, i, font->list_base, font->textures );
+
+	/* we can now free the face and library */
+	FT_Done_Face(face);
+	FT_Done_FreeType(library);
+}
+void gl_freeFont( gl_font* font )
+{
+	glDeleteLists(font->list_base,128);
+	glDeleteTextures(128,font->textures);
+	free(font->textures);
+}
+
+
+
+/*
+ *
+ * G L O B A L
+ *
+ */
 /*
  * Initializes SDL/OpenGL and the works
  */

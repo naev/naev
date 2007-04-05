@@ -160,7 +160,7 @@ void ships_free()
 	for (i = 0; i < ships; i++) {
 		if ((ship_stack+i)->name) 
 			free((ship_stack+i)->name);
-		gl_free((ship_stack+i)->gfx_ship);
+		gl_freeTexture((ship_stack+i)->gfx_ship);
 	}
 	free(ship_stack);
 	ship_stack = NULL;

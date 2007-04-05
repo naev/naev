@@ -176,6 +176,6 @@ void space_exit (void)
 {
 	int i;
 	for (i=0; i < STAR_LAYERS; i++)
-		gl_free(starBG[i]);
+		gl_freeTexture(starBG[i]);
 }
 

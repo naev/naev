@@ -19,8 +19,9 @@ OBJS := main.o		\
 CLUA = -I/usr/include/lua5.1
 CSDL = `sdl-config --cflags`
 CXML = `xml2-config --cflags`
+CTTF = `freetype-config --cflags`
 CGL = 
-CFLAGS = -Wall $(CLUA) $(CSDL) $(CXML) $(CGL) $(VERSION)
+CFLAGS = -Wall $(CLUA) $(CSDL) $(CXML) $(CTTF) $(CGL) $(VERSION)
 ifdef DEBUG
 CFLAGS += -g3 -DDEBUG
 else # DEBUG
@@ -30,8 +31,9 @@ endif # DEBUG
 LDLUA = -llua5.1
 LDSDL = `sdl-config --libs` -lSDL_image
 LDXML = `xml2-config --libs`
+LDTTF = `freetype-config --libs`
 LDGL = -lGL
-LDFLAGS = -lm $(LDLUA) $(LDSDL) $(LDXML) $(LDGL)
+LDFLAGS = -lm $(LDLUA) $(LDSDL) $(LDXML) $(LDTTF) $(LDGL)
 
 
 DOBJS = ship.xml	\

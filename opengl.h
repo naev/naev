@@ -54,19 +54,37 @@ typedef struct {
 
 
 /*
+ * Font info
+ */
+typedef struct {
+	float h; /* height */
+	GLuint *textures;
+	GLuint list_base;
+} gl_font;
+
+
+/*
+ * gl_font loading / freeing
+ */
+void gl_fontInit( gl_font* font, const char *fname, unsigned int h );
+void gl_freeFont( gl_font* font );
+
+
+/*
  * gl_texture loading / freeing
  */
 gl_texture* gl_loadImage( SDL_Surface* surface ); /* frees the surface */
 gl_texture* gl_newImage( const char* path );
 gl_texture* gl_newSprite( const char* path, const int sx, const int sy );
-void gl_free( gl_texture* texture );
+void gl_freeTexture( gl_texture* texture );
 
 /*
  * opengl drawing
  */
-void gl_blitSprite( gl_texture* sprite, Vector2d* pos, const int sx, const int sy );
-void gl_blitStatic( gl_texture* texture, Vector2d* pos );
-void gl_bindCamera( Vector2d* pos );
+void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos, const int sx, const int sy );
+void gl_blitStatic( const gl_texture* texture, const Vector2d* pos );
+void gl_bindCamera( const Vector2d* pos );
+void gl_print( const gl_font *ft_font, Vector2d *pos, const char *fmt, ...);
 
 /*
  * initialization / cleanup
