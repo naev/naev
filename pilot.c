@@ -6,6 +6,7 @@
 #include <math.h>
 #include <stdlib.h>
 
+#include "all.h"
 #include "log.h"
 
 
@@ -19,6 +20,7 @@ static int pilots = 0;
 
 
 extern void player_think( Pilot* pilot, const FP dt ); /* player.c */
+extern void ai_think( Pilot* pilot ); /* ai.c */
 static void pilot_update( Pilot* pilot, const FP dt );
 static void pilot_render( Pilot* pilot );
 
@@ -99,9 +101,13 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name,
 
 	pilot->solid = solid_create(ship->mass, vel, pos);
 
+	/* max shields/armor */
 	pilot->armor = ship->armor;
 	pilot->shield = ship->shield;
 	pilot->energy = ship->energy;
+
+	/* initially idle */
+	pilot->action = NULL;
 
 	if (flags & PILOT_PLAYER) {
 		pilot->think = (void*)player_think; /* players don't need to think! :P */
@@ -109,7 +115,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name,
 		player = pilot;
 	}
 	else
-		pilot->think = NULL;
+		pilot->think = ai_think;
 
 	pilot->update = pilot_update;
 }
@@ -167,3 +173,4 @@ void pilots_update( FP dt )
 		pilot_stack[i]->update( pilot_stack[i], dt );
 	}
 }
+

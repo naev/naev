@@ -119,7 +119,6 @@ static void handle_keyup(SDLKey key)
 			break;
 		case SDLK_UP:
 			player_acc -= (FP)(1<<15);
-			break;
 
 		default:
 			break;

@@ -13,7 +13,8 @@ OBJS := main.o		\
 		player.o		\
 		joystick.o	\
 		space.o		\
-		rng.o
+		rng.o			\
+		ai.o
 
 CLUA = -I/usr/include/lua5.1
 CSDL = `sdl-config --cflags`

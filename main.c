@@ -24,6 +24,7 @@
 #include "joystick.h"
 #include "space.h"
 #include "rng.h"
+#include "ai.h"
 
 
 #define CONF_FILE	"conf"
@@ -154,6 +155,12 @@ int main ( int argc, char** argv )
 			joystick_use(indjoystick);
 	}
 
+	/*
+	 * Misc
+	 */
+	if (ai_init())
+		WARN("Error initializing AI");
+
 	
 	/*
 	 * data loading
@@ -198,6 +205,7 @@ int main ( int argc, char** argv )
 	/*
 	 * exit subsystems
 	 */
+	ai_exit();
 	joystick_exit();
 	gl_exit(); /* kills video output */
 

@@ -2,6 +2,8 @@
 
 #include "opengl.h"
 
+#include <math.h>
+
 #include "SDL.h"
 #include "SDL_image.h"
 
@@ -233,6 +235,11 @@ void gl_free( gl_texture* texture )
  */
 void gl_blitSprite( gl_texture* sprite, Vector2d* pos, const int sx, const int sy )
 {
+	/* don't draw if offscreen */
+	if (fabs(pos->x-gl_camera->x) > gl_screen.w/2+sprite->sw/2 ||
+			fabs(pos->y-gl_camera->y) > gl_screen.h/2+sprite->sh/2 )
+		return;
+
 	glMatrixMode(GL_TEXTURE);
 	glPushMatrix();
 		glTranslatef( sprite->sw*(FP)(sx)/sprite->rw,
