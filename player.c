@@ -70,15 +70,25 @@ static void handle_joyaxis( int axis, int value )
 			break;
 	}
 }
-static void handle_joybutton( int button )
+static void handle_joydown( int button )
 {
 	switch (button) {
 		case 0:
+			player_acc += (FP)(1<<15);
 			break;
-
 		case 1:
 			break;
 
+	}
+}
+static void handle_joyup( int button )
+{
+	switch (button) {
+		case 0:
+			player_acc -= (FP)(1<<15);
+			break;
+		case 1:
+			break;
 	}
 }
 
@@ -137,8 +147,11 @@ void handle_input( SDL_Event* event )
 			break;
 
 		case SDL_JOYBUTTONDOWN:
-			handle_joybutton(event->jbutton.button);
+			handle_joydown(event->jbutton.button);
 			break;
+
+		case SDL_JOYBUTTONUP:
+			handle_joyup(event->jbutton.button);
 
 		case SDL_KEYDOWN:
 			handle_keydown(event->key.keysym.sym);

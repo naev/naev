@@ -54,16 +54,12 @@ Pilot* get_pilot( unsigned int id )
 static void pilot_render( Pilot* pilot )
 {
 	int sprite;
-	Vector2d pos;
 	gl_texture* texture = pilot->ship->gfx_ship;
-
-	pos.x = pilot->solid->pos.x;
-	pos.y = pilot->solid->pos.y;
 
 	/* get the sprite corresponding to the direction facing */
 	sprite = (int)(pilot->solid->dir / (2.0*M_PI / (texture->sy*texture->sx)));
 	
-	gl_blitSprite( texture, &pos, sprite % (int)texture->sx, sprite / (int)texture->sy );
+	gl_blitSprite( texture, &pilot->solid->pos, sprite % (int)texture->sx, sprite / (int)texture->sy );
 }
 
 

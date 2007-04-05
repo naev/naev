@@ -133,8 +133,10 @@ int main ( int argc, char** argv )
 
 	/*
 	 * OpenGL
+	 * 
+	 * SDL_Init is first called here, so it's important to be first
+	 * initializaction
 	 */
-	/* default window parameters */
 	if (gl_init()) { /* initializes video output */
 		WARN("Error initializing video output, exiting...");
 		exit(EXIT_FAILURE);
