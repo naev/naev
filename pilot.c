@@ -58,7 +58,7 @@ static void pilot_render( Pilot* pilot )
 
 	/* get the sprite corresponding to the direction facing */
 	sprite = (int)(pilot->solid->dir / (2.0*M_PI / (texture->sy*texture->sx)));
-	
+
 	gl_blitSprite( texture, &pilot->solid->pos, sprite % (int)texture->sx, sprite / (int)texture->sy );
 }
 

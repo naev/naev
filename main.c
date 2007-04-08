@@ -27,7 +27,10 @@
 #include "ai.h"
 
 
+#define WINDOW_CAPTION  "game"
+
 #define CONF_FILE	"conf"
+
 
 static gl_font fdefault;
 
@@ -145,6 +148,12 @@ int main ( int argc, char** argv )
 
 
 	/*
+	 * Window
+	 */
+	SDL_WM_SetCaption( WINDOW_CAPTION, NULL );
+
+
+	/*
 	 * Input
 	 */
 	if (indjoystick >= 0 || namjoystick != NULL) {
@@ -251,7 +260,7 @@ static void display_fps( const double dt )
 	fps_dt += dt;
 	fps_cur += 1.;
 	if (fps_dt > 1.) {
-		fps = fps_cur;
+		fps = fps_cur / fps_dt;
 		fps_dt = fps_cur = 0.;
 	}
 	Vector2d pos = { .x = 10., .y = (double)(gl_screen.h-20)  };

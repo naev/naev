@@ -25,9 +25,6 @@
 #define RGBAMASK  RMASK,GMASK,BMASK,AMASK
 
 
-#define WINDOW_CAPTION	"game"
-
-
 /*
  * Contains info about the opengl screen
  */
@@ -84,7 +81,7 @@ void gl_freeTexture( gl_texture* texture );
 void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos, const int sx, const int sy );
 void gl_blitStatic( const gl_texture* texture, const Vector2d* pos );
 void gl_bindCamera( const Vector2d* pos );
-void gl_print( const gl_font *ft_font, Vector2d *pos, const char *fmt, ...);
+void gl_print( const gl_font *ft_font, const Vector2d *pos, const char *fmt, ...);
 
 /*
  * initialization / cleanup

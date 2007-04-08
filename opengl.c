@@ -105,13 +105,16 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
 	GLuint texture;
 	SDL_Surface* temp;
 	Uint32 saved_flags;
-	Uint8  saved_alpha;
+	Uint8 saved_alpha;
+	int potw, poth;
 
 	/* Make size power of two */
-	if (rw) *rw = pot(surface->w);
-	if (rh) *rh = pot(surface->h);
+	potw = pot(surface->w);
+	poth = pot(surface->h);
+	if (rw) *rw = potw;
+	if (rh) *rh = poth;
 
-	if (surface->w != *rw || surface->h != *rh ) { /* size isn't original */
+	if (surface->w != potw || surface->h != poth ) { /* size isn't original */
 		SDL_Rect rtemp;
 		rtemp.x = rtemp.y = 0;
 		rtemp.w = surface->w;
@@ -126,7 +129,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
 
 		/* create the temp POT surface */
 		temp = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
-				*rw, *rh, surface->format->BytesPerPixel*8, RGBAMASK );
+				potw, poth, surface->format->BytesPerPixel*8, RGBAMASK );
 		if (temp == NULL) {
 			WARN("Unable to create POT surface: %s", SDL_GetError());
 			return 0;
@@ -148,7 +151,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
 
 		/* create the temp POT surface */
 		temp = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
-				*rw, *rh, surface->format->BytesPerPixel*8, RGBAMASK );
+				potw, poth, surface->format->BytesPerPixel*8, RGBAMASK );
 		if (temp == NULL) {
 			WARN("Unable to create POT surface: %s", SDL_GetError());
 			return 0;
@@ -285,6 +288,8 @@ void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos, const int sx,
 	if (fabs(pos->x-gl_camera->x) > gl_screen.w/2+sprite->sw/2 ||
 			fabs(pos->y-gl_camera->y) > gl_screen.h/2+sprite->sh/2 )
 		return;
+	
+	glEnable(GL_TEXTURE_2D);
 
 	glMatrixMode(GL_TEXTURE);
 	glPushMatrix();
@@ -299,8 +304,8 @@ void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos, const int sx,
 
 	/* actual blitting */
 	glBindTexture( GL_TEXTURE_2D, sprite->texture);
-	glColor4ub( 255, 255, 255, 255 );
-	glBegin( GL_TRIANGLE_STRIP );
+	glBegin(GL_TRIANGLE_STRIP);
+		glColor4d( 1., 1., 1., 1. );
 		glTexCoord2d( 0., 0.);
 			glVertex2d( 0., 0. );
 		glTexCoord2d( sprite->sw/sprite->rw, 0.);
@@ -315,6 +320,8 @@ void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos, const int sx,
 
 	glMatrixMode(GL_TEXTURE);
 	glPopMatrix(); /* sprite translation matrix */
+
+	glDisable(GL_TEXTURE_2D);
 }
 
 
@@ -323,6 +330,8 @@ void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos, const int sx,
  */
 void gl_blitStatic( const gl_texture* texture, const Vector2d* pos )
 {
+	glEnable(GL_TEXTURE_2D);
+
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix(); /* set up translation matrix */
 		glTranslated( pos->x - (double)gl_screen.w/2., pos->y - (double)gl_screen.h/2., 0);
@@ -330,8 +339,8 @@ void gl_blitStatic( const gl_texture* texture, const Vector2d* pos )
 
 	/* actual blitting */
 	glBindTexture( GL_TEXTURE_2D, texture->texture);
-	glColor4ub( 255, 255, 255, 255 );
 	glBegin( GL_TRIANGLE_STRIP );
+		glColor4ub( 1., 1., 1., 1. );
 		glTexCoord2d( 0., 0.);
 			glVertex2d( 0., 0. );
 		glTexCoord2d( texture->w/texture->rw, 0.);
@@ -343,6 +352,8 @@ void gl_blitStatic( const gl_texture* texture, const Vector2d* pos )
 	glEnd();
 
 	glPopMatrix(); /* pop the translation matrix */
+
+	glDisable(GL_TEXTURE_2D);
 }
 
 
@@ -357,31 +368,33 @@ void gl_bindCamera( const Vector2d* pos )
 /*
  * prints text on screen like printf
  */
-void gl_print( const gl_font *ft_font, Vector2d *pos, const char *fmt, ...)
+void gl_print( const gl_font *ft_font, const Vector2d *pos, const char *fmt, ...)
 {
 	/*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
 	char text[256]; /* holds the string */
 	va_list ap;
-	/*int i;*/
 
-	if (fmt == NULL)
-		*text = 0;
+	if (fmt == NULL) return;
 	else { /* convert the symbols to text */
 		va_start(ap, fmt);
 		vsprintf(text, fmt, ap);
 		va_end(ap);
 	}
 
+	glEnable(GL_TEXTURE_2D);
+
 	glListBase(ft_font->list_base);
 
 	glMatrixMode(GL_PROJECTION);
-	//for (i=0; i < strlen(text); i++) {
-		glPushMatrix();
-			glTranslated( pos->x - (double)gl_screen.w/2., pos->y - (double)gl_screen.h/2., 0);
-		glColor4ub( 255, 255, 255, 255 );
-		glCallLists(strlen(text), GL_UNSIGNED_BYTE, &text);
-		glPopMatrix();
-	//}
+	glPushMatrix(); /* translation matrix */
+		glTranslated( pos->x - (double)gl_screen.w/2., pos->y - (double)gl_screen.h/2., 0);
+
+	glColor4d( 1., 1., 1., 1. );
+	glCallLists(strlen(text), GL_UNSIGNED_BYTE, &text);
+
+	glPopMatrix(); /* translation matrx */
+
+	glDisable(GL_TEXTURE_2D);
 }
 
 
@@ -441,30 +454,27 @@ static void gl_fontMakeDList( FT_Face face, char ch, GLuint list_base, GLuint *t
 	/* creating of the display list */
 	glNewList(list_base+ch,GL_COMPILE);
 
-	glBindTexture(GL_TEXTURE_2D,tex_base[(int)ch]);
-
+	/* corrects a spacing flaw between letters and
+	 * downwards correction for letters like g or y */
 	glPushMatrix();
+		glTranslated(bitmap_glyph->left,bitmap_glyph->top-bitmap.rows,0);
 
-	/* corrects a spacing flaw between letters */
-	glTranslated(bitmap_glyph->left,0,0);
-
-	/* downwards correction for letters like g or y */
-	glTranslated(0,bitmap_glyph->top-bitmap.rows,0);
 
 	/* take into account opengl POT wrapping */
 	double x = (double)bitmap.width/(double)w;
 	double y = (double)bitmap.rows/(double)h;
 
 	/* draw the texture mapped QUAD */
-	glBegin(GL_QUADS);
+	glBindTexture(GL_TEXTURE_2D,tex_base[(int)ch]);
+	glBegin( GL_TRIANGLE_STRIP );
 		glTexCoord2d(0,0);
 			glVertex2d(0,bitmap.rows);
+		glTexCoord2d(x,0);
+			glVertex2d(bitmap.width,bitmap.rows);
 		glTexCoord2d(0,y);
 			glVertex2d(0,0);
 		glTexCoord2d(x,y);
 			glVertex2d(bitmap.width,0);
-		glTexCoord2d(x,0);
-			glVertex2d(bitmap.width,bitmap.rows);
 	glEnd();
 
 	glPopMatrix();
@@ -596,24 +606,25 @@ int gl_init()
 	DEBUG("Renderer: %s", glGetString(GL_RENDERER));
 
 	/* some OpenGL options */
-	glClearColor( 0., 0., 0., 0. );
-	glDisable( GL_DEPTH_TEST ); /* set for doing 2d */
-	glEnable( GL_TEXTURE_2D );
-	glMatrixMode( GL_PROJECTION );
+	glClearColor( 0., 0., 0., 1. );
+	glDisable(GL_DEPTH_TEST); /* set for doing 2d */
+//	glEnable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING); /* no lighting, it's done when rendered */
+	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho( -SCREEN_W/2, /* left edge */
-			SCREEN_W/2,//gl_screen.w/2, /* right edge */
-			-SCREEN_H/2,//-gl_screen.h/2, /* bottom edge */
-			SCREEN_H/2,//gl_screen.h/2, /* top edge */
+			SCREEN_W/2, /* right edge */
+			-SCREEN_H/2, /* bottom edge */
+			SCREEN_H/2, /* top edge */
 			-1., /* near */
 			1. ); /* far */
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* alpha */
 	glEnable( GL_BLEND );
 
+/*	glPointSize(1.);*/ /* default is 1. */
+
 	glClear( GL_COLOR_BUFFER_BIT );
 
-
-	SDL_WM_SetCaption( WINDOW_CAPTION, NULL );
 
 	return 0;
 }
