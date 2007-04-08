@@ -10,7 +10,7 @@
 void space_init (void);
 void space_exit (void);
 
-void space_render( FP dt );
+void space_render( double dt );
 
 
 #endif /* SPACE_H */

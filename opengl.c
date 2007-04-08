@@ -197,15 +197,15 @@ gl_texture* gl_loadImage( SDL_Surface* surface )
 
 	/* set up the texture defaults */
 	gl_texture *texture = MALLOC_ONE(gl_texture);
-	texture->w = (FP)surface->w;
-	texture->h = (FP)surface->h;
+	texture->w = (double)surface->w;
+	texture->h = (double)surface->h;
 	texture->sx = 1.;
 	texture->sy = 1.;
 
 	texture->texture = gl_loadSurface( surface, &rw, &rh );
 
-	texture->rw = (FP)rw;
-	texture->rh = (FP)rh;
+	texture->rw = (double)rw;
+	texture->rh = (double)rh;
 	texture->sw = texture->w;
 	texture->sh = texture->h;
 
@@ -252,8 +252,8 @@ gl_texture* gl_newSprite( const char* path, const int sx, const int sy )
 	gl_texture* texture;
 	if ((texture = gl_newImage(path)) == NULL)
 		return NULL;
-	texture->sx = (FP)sx;
-	texture->sy = (FP)sy;
+	texture->sx = (double)sx;
+	texture->sy = (double)sy;
 	texture->sw = texture->w/texture->sx;
 	texture->sh = texture->h/texture->sy;
 	return texture;
@@ -288,26 +288,27 @@ void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos, const int sx,
 
 	glMatrixMode(GL_TEXTURE);
 	glPushMatrix();
-		glTranslatef( sprite->sw*(FP)(sx)/sprite->rw,
-				sprite->sh*(sprite->sy-(FP)sy-1)/sprite->rh, 0. );
+		glTranslated( sprite->sw*(double)(sx)/sprite->rw,
+				sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh, 0. );
 
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix(); /* projection translation matrix */
-		glTranslatef( pos->x - gl_camera->x - sprite->sw/2.,
+		glTranslated( pos->x - gl_camera->x - sprite->sw/2.,
 				pos->y - gl_camera->y - sprite->sh/2., 0.);
-		glScalef( (FP)gl_screen.w/SCREEN_W, (FP)gl_screen.h/SCREEN_H, 0. );
+		glScaled( (double)gl_screen.w/SCREEN_W, (double)gl_screen.h/SCREEN_H, 0. );
 
 	/* actual blitting */
 	glBindTexture( GL_TEXTURE_2D, sprite->texture);
+	glColor4ub( 255, 255, 255, 255 );
 	glBegin( GL_TRIANGLE_STRIP );
-		glTexCoord2f( 0., 0.);
-			glVertex2f( 0., 0. );
-		glTexCoord2f( sprite->sw/sprite->rw, 0.);
-			glVertex2f( sprite->sw, 0. );
-		glTexCoord2f( 0., sprite->sh/sprite->rh);
-			glVertex2f( 0., sprite->sh );
-		glTexCoord2f( sprite->sw/sprite->rw, sprite->sh/sprite->rh);
-			glVertex2f( sprite->sw, sprite->sh );
+		glTexCoord2d( 0., 0.);
+			glVertex2d( 0., 0. );
+		glTexCoord2d( sprite->sw/sprite->rw, 0.);
+			glVertex2d( sprite->sw, 0. );
+		glTexCoord2d( 0., sprite->sh/sprite->rh);
+			glVertex2d( 0., sprite->sh );
+		glTexCoord2d( sprite->sw/sprite->rw, sprite->sh/sprite->rh);
+			glVertex2d( sprite->sw, sprite->sh );
 	glEnd();
 
 	glPopMatrix(); /* projection translation matrix */
@@ -324,20 +325,21 @@ void gl_blitStatic( const gl_texture* texture, const Vector2d* pos )
 {
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix(); /* set up translation matrix */
-		glTranslatef( pos->x - (FP)gl_screen.w/2., pos->y - (FP)gl_screen.h/2., 0);
-		glScalef( (FP)gl_screen.w/SCREEN_W, (FP)gl_screen.h/SCREEN_H, 0. );
+		glTranslated( pos->x - (double)gl_screen.w/2., pos->y - (double)gl_screen.h/2., 0);
+		glScaled( (double)gl_screen.w/SCREEN_W, (double)gl_screen.h/SCREEN_H, 0. );
 
 	/* actual blitting */
 	glBindTexture( GL_TEXTURE_2D, texture->texture);
+	glColor4ub( 255, 255, 255, 255 );
 	glBegin( GL_TRIANGLE_STRIP );
-		glTexCoord2f( 0., 0.);
-			glVertex2f( 0., 0. );
-		glTexCoord2f( texture->w/texture->rw, 0.);
-			glVertex2f( texture->w, 0. );
-		glTexCoord2f( 0., texture->h/texture->rh);
-			glVertex2f( 0., texture->h );
-		glTexCoord2f( texture->w/texture->rw, texture->h/texture->rh);
-			glVertex2f( texture->w, texture->h );
+		glTexCoord2d( 0., 0.);
+			glVertex2d( 0., 0. );
+		glTexCoord2d( texture->w/texture->rw, 0.);
+			glVertex2d( texture->w, 0. );
+		glTexCoord2d( 0., texture->h/texture->rh);
+			glVertex2d( 0., texture->h );
+		glTexCoord2d( texture->w/texture->rw, texture->h/texture->rh);
+			glVertex2d( texture->w, texture->h );
 	glEnd();
 
 	glPopMatrix(); /* pop the translation matrix */
@@ -375,7 +377,8 @@ void gl_print( const gl_font *ft_font, Vector2d *pos, const char *fmt, ...)
 	glMatrixMode(GL_PROJECTION);
 	//for (i=0; i < strlen(text); i++) {
 		glPushMatrix();
-			glTranslatef( pos->x - (FP)gl_screen.w/2., pos->y - (FP)gl_screen.h/2., 0);
+			glTranslated( pos->x - (double)gl_screen.w/2., pos->y - (double)gl_screen.h/2., 0);
+		glColor4ub( 255, 255, 255, 255 );
 		glCallLists(strlen(text), GL_UNSIGNED_BYTE, &text);
 		glPopMatrix();
 	//}
@@ -443,29 +446,29 @@ static void gl_fontMakeDList( FT_Face face, char ch, GLuint list_base, GLuint *t
 	glPushMatrix();
 
 	/* corrects a spacing flaw between letters */
-	glTranslatef(bitmap_glyph->left,0,0);
+	glTranslated(bitmap_glyph->left,0,0);
 
 	/* downwards correction for letters like g or y */
-	glTranslatef(0,bitmap_glyph->top-bitmap.rows,0);
+	glTranslated(0,bitmap_glyph->top-bitmap.rows,0);
 
 	/* take into account opengl POT wrapping */
-	FP x = (FP)bitmap.width/(FP)w;
-	FP y = (FP)bitmap.rows/(FP)h;
+	double x = (double)bitmap.width/(double)w;
+	double y = (double)bitmap.rows/(double)h;
 
 	/* draw the texture mapped QUAD */
 	glBegin(GL_QUADS);
 		glTexCoord2d(0,0);
-			glVertex2f(0,bitmap.rows);
+			glVertex2d(0,bitmap.rows);
 		glTexCoord2d(0,y);
-			glVertex2f(0,0);
+			glVertex2d(0,0);
 		glTexCoord2d(x,y);
-			glVertex2f(bitmap.width,0);
+			glVertex2d(bitmap.width,0);
 		glTexCoord2d(x,0);
-			glVertex2f(bitmap.width,bitmap.rows);
+			glVertex2d(bitmap.width,bitmap.rows);
 	glEnd();
 
 	glPopMatrix();
-	glTranslatef(face->glyph->advance.x >> 6 ,0,0);
+	glTranslated(face->glyph->advance.x >> 6 ,0,0);
 
 	/* end of display list */
 	glEndList();

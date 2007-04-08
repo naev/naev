@@ -47,10 +47,10 @@ struct Pilot {
 	/* Outfit* outfit; */
 
 	/* current health */
-	FP armor, shield, energy;
+	double armor, shield, energy;
 
 	/* associated functions */
-	void (*update)(struct Pilot*, const FP); /* updates the pilot */
+	void (*update)(struct Pilot*, const double); /* updates the pilot */
 
 	unsigned int properties; /* used for AI and others */
 
@@ -82,7 +82,7 @@ void pilots_free(void);
 /*
  * update
  */
-void pilots_update( FP dt );
+void pilots_update( double dt );
 
 
 #endif /* PILOT_H */

@@ -19,9 +19,9 @@ static Pilot** pilot_stack;
 static int pilots = 0;
 
 
-extern void player_think( Pilot* pilot, const FP dt ); /* player.c */
+extern void player_think( Pilot* pilot, const double dt ); /* player.c */
 extern void ai_think( Pilot* pilot ); /* ai.c */
-static void pilot_update( Pilot* pilot, const FP dt );
+static void pilot_update( Pilot* pilot, const double dt );
 static void pilot_render( Pilot* pilot );
 
 
@@ -66,7 +66,7 @@ static void pilot_render( Pilot* pilot )
 /*
  * updates the Pilot
  */
-static void pilot_update( Pilot* pilot, const FP dt )
+static void pilot_update( Pilot* pilot, const double dt )
 {
 	if (pilot->solid->dir > 2*M_PI) pilot->solid->dir -= 2*M_PI;
 	if (pilot->solid->dir < 0.0) pilot->solid->dir += 2*M_PI;
@@ -160,7 +160,7 @@ void pilots_free()
 /*
  * updates all the pilots
  */
-void pilots_update( FP dt )
+void pilots_update( double dt )
 {
 	int i;
 	for ( i=pilots-1; i >= 0; i-- ) {

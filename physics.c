@@ -30,7 +30,7 @@
  *
  */
 #if	0
-static void simple_update (Solid *obj, const FP dt)
+static void simple_update (Solid *obj, const double dt)
 {
 	/* make sure angle doesn't flip */
 	obj->dir += obj->dir_vel/360.*dt;
@@ -72,14 +72,14 @@ static void simple_update (Solid *obj, const FP dt)
  *   x_{n+1} = x_n + h/6*(6x'_n + 3*h*a, 4*a)
  */
 #define RK4_N	4
-static void rk4_update (Solid *obj, const FP dt)
+static void rk4_update (Solid *obj, const double dt)
 {
 	/* make sure angle doesn't flip */
 	obj->dir += obj->dir_vel/360.*dt;
 	if (obj->dir > 2*M_PI) obj->dir -= 2*M_PI;
 	if (obj->dir < 0.) obj->dir += 2*M_PI;
 
-	FP h = dt / RK4_N; /* step */
+	double h = dt / RK4_N; /* step */
 
 	if (obj->force) { /* force applied on object */
 		int i;
@@ -122,7 +122,7 @@ static void rk4_update (Solid *obj, const FP dt)
 /*
  * Initializes a new Solid
  */
-void solid_init( Solid* dest, const FP mass, const Vector2d* vel, const Vector2d* pos )
+void solid_init( Solid* dest, const double mass, const Vector2d* vel, const Vector2d* pos )
 {
 	dest->mass = mass;
 
@@ -149,7 +149,7 @@ void solid_init( Solid* dest, const FP mass, const Vector2d* vel, const Vector2d
 /*
  * Creates a new Solid
  */
-Solid* solid_create( const FP mass, const Vector2d* vel, const Vector2d* pos )
+Solid* solid_create( const double mass, const Vector2d* vel, const Vector2d* pos )
 {
 	Solid* dyn = MALLOC_ONE(Solid);
 	assert(dyn != NULL);

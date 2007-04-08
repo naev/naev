@@ -45,10 +45,10 @@ extern gl_info gl_screen; /* local structure set with gl_init and co */
  * Spritesheet info
  */
 typedef struct {
-	FP w, h; /* real size of the image (excluding POT buffer) */
-	FP rw, rh; /* size of POT surface */
-	FP sx, sy; /* number of sprites on x axis and y axis */
-	FP sw, sh; /* size of each sprite */
+	double w, h; /* real size of the image (excluding POT buffer) */
+	double rw, rh; /* size of POT surface */
+	double sx, sy; /* number of sprites on x axis and y axis */
+	double sw, sh; /* size of each sprite */
 	GLuint texture; /* the opengl texture itself */
 } gl_texture;
 

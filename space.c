@@ -2,6 +2,9 @@
 
 #include "space.h"
 
+#include <malloc.h>
+
+#include "all.h"
 #include "log.h"
 #include "physics.h"
 #include "opengl.h"
@@ -9,9 +12,18 @@
 #include "pilot.h"
 
 
-#define	STAR_LAYERS	3
+#define	STAR_LAYERS	1
 static gl_texture* starBG[STAR_LAYERS];
 static Vector2d starPos[STAR_LAYERS];
+
+
+#define STAR_BUF	100	/* area to leave around screen */
+typedef struct {
+	Vector2d pos;
+	Uint8 brightness;
+} Star;
+Star *stars;
+int nstars;
 
 
 /*
@@ -96,7 +108,7 @@ static gl_texture* starBG_create( const int density )
 
 	SDL_LockSurface(surface);
 
-	d = (int)((FP)(density)*(FP)(gl_screen.w)*(FP)(gl_screen.h)/1000./1000.);
+	d = (int)((double)(density)*(double)(gl_screen.w)*(double)(gl_screen.h)/1000./1000.);
 	for (i=0; i < d; i++)
 		put_pixel(surface,RNG(0,w-1),RNG(0,h-1),255,255,255,RNG(50,255));
 
@@ -109,24 +121,45 @@ static gl_texture* starBG_create( const int density )
 void space_init (void)
 {
 	int i;
+	nstars = 2000;
+	stars = malloc(sizeof(Star)*nstars);
+	for (i=0; i < nstars; i++) {
+		stars[i].brightness = RNG( 50, 255 );
+		stars[i].pos.x = RNG( STAR_BUF, gl_screen.w + STAR_BUF );
+		stars[i].pos.y = RNG( -STAR_BUF, gl_screen.h + STAR_BUF );
+	}
+#if 0
 	for (i=0; i < STAR_LAYERS; i++) {
 		starBG[i] = starBG_create(1000);
 		starPos[i].x = 0.;
 		starPos[i].y = 0.;
 	}
+#endif
 }
 
 
-void space_render( FP dt )
+void space_render( double dt )
 {
 	int i;
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+//		glTranslated( -(double)gl_screen.w/2., -(double)gl_screen.h/2., 0.);
+	glBegin( GL_POINTS );
+	for (i=0; i < nstars; i++) {
+		glColor4ub( 255, 255, 255, stars[i].brightness );
+		glVertex2d( stars[i].pos.x, stars[i].pos.y );
+	}
+	glEnd();
+	glPopMatrix();
+#if 0
+	int i;
 	Vector2d temp;
-	FP f;
+	double f;
 
 	for (i=0; i < STAR_LAYERS; i++) {
 		/* movement */
-		starPos[i].x -= player->solid->vel.x/(FP)(2*i+10)*dt;
-		starPos[i].y -= player->solid->vel.y/(FP)(2*i+10)*dt;
+		starPos[i].x -= player->solid->vel.x/(double)(2*i+10)*dt;
+		starPos[i].y -= player->solid->vel.y/(double)(2*i+10)*dt;
 
 		/* displaces X if reaches edge */
 		if (starPos[i].x > 0)
@@ -169,13 +202,17 @@ void space_render( FP dt )
 		else if (temp.x != starPos[i].x || temp.y != starPos[i].y)
 			gl_blitStatic( starBG[i], &temp );
 	}
+#endif
 }
 
 
 void space_exit (void)
 {
+	free(stars);
+#if 0
 	int i;
 	for (i=0; i < STAR_LAYERS; i++)
 		gl_freeTexture(starBG[i]);
+#endif
 }
 

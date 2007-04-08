@@ -9,8 +9,6 @@
 #define ABS(X)					((X<0)?-X:X)
 #define FABS(X)				((X<0.)?-X:X)
 
-typedef float FP;
-
 #define DATA	"data"
 
 #endif /* ALL_H */

@@ -19,7 +19,7 @@ typedef struct {
 	ship_class class; /* ship class */
 
 	/* movement */
-	FP thrust, turn, speed;
+	double thrust, turn, speed;
 
 	/* graphics */
 	gl_texture *gfx_ship, *gfx_target;
@@ -29,9 +29,9 @@ typedef struct {
 	int mass;
 
 	/* health */
-	FP armor, armor_regen;
-	FP shield, shield_regen;
-	FP energy, energy_regen;
+	double armor, armor_regen;
+	double shield, shield_regen;
+	double energy, energy_regen;
 
 	/* capacity */
 	int cap_cargo, cap_weapon; 

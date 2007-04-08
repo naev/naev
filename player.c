@@ -9,17 +9,17 @@
 
 Pilot* player = NULL;
 static unsigned int player_flags = PLAYER_FLAG_NULL;
-static FP player_turn = 0.;
-static FP player_acc = 0.;
+static double player_turn = 0.;
+static double player_acc = 0.;
 
 /*
  * used in pilot.c
  */
-void player_think( Pilot* player, const FP dt )
+void player_think( Pilot* player, const double dt )
 {
 	player->solid->dir_vel = 0.;
 	if (player_turn)
-		player->solid->dir_vel -= player->ship->turn*player_turn/(FP)(1<<15);
+		player->solid->dir_vel -= player->ship->turn*player_turn/(double)(1<<15);
 /*
 	if (player_isFlag(PLAYER_FLAG_MOV_LEFT))
 		player->solid->dir_vel += player->ship->turn;
@@ -27,7 +27,7 @@ void player_think( Pilot* player, const FP dt )
 		player->solid->dir_vel -= player->ship->turn;
 */
 
-	player->solid->force = player->ship->thrust*player_acc/(FP)(1<<15);
+	player->solid->force = player->ship->thrust*player_acc/(double)(1<<15);
 }
 
 
@@ -61,12 +61,12 @@ static void handle_joyaxis( int axis, int value )
 {
 	switch (axis) {
 		case 0:
-			player_turn = (FP)value;
+			player_turn = (double)value;
 			break;
 
 		case 1:
 			if (value <= 0)
-				player_acc = (FP)-value;
+				player_acc = (double)-value;
 			break;
 	}
 }
@@ -74,7 +74,7 @@ static void handle_joydown( int button )
 {
 	switch (button) {
 		case 0:
-			player_acc += (FP)(1<<15);
+			player_acc += (double)(1<<15);
 			break;
 		case 1:
 			break;
@@ -85,7 +85,7 @@ static void handle_joyup( int button )
 {
 	switch (button) {
 		case 0:
-			player_acc -= (FP)(1<<15);
+			player_acc -= (double)(1<<15);
 			break;
 		case 1:
 			break;
@@ -105,13 +105,13 @@ static void handle_keydown(SDLKey key)
 			SDL_PushEvent(&quit);
 			break;
 		case SDLK_LEFT:
-			player_turn -= (FP)(1<<15);
+			player_turn -= (double)(1<<15);
 			break;
 		case SDLK_RIGHT:
-			player_turn += (FP)(1<<15);
+			player_turn += (double)(1<<15);
 			break;
 		case SDLK_UP:
-			player_acc += (FP)(1<<15);
+			player_acc += (double)(1<<15);
 			break;
 
 		default:
@@ -122,13 +122,13 @@ static void handle_keyup(SDLKey key)
 {  
 	switch (key) {
 		case SDLK_LEFT:
-			player_turn += (FP)(1<<15);
+			player_turn += (double)(1<<15);
 			break;
 		case SDLK_RIGHT:
-			player_turn -= (FP)(1<<15);
+			player_turn -= (double)(1<<15);
 			break;
 		case SDLK_UP:
-			player_acc -= (FP)(1<<15);
+			player_acc -= (double)(1<<15);
 
 		default:
 			break;

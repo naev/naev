@@ -79,17 +79,17 @@ Ship* ship_parse( xmlNodePtr node )
 			cur = node->children;
 			while ((cur = cur->next)) {
 				if (strcmp((char*)cur->name,"armor")==0)
-					temp->armor = (FP)atoi((char*)cur->children->content);
+					temp->armor = (double)atoi((char*)cur->children->content);
 				else if (strcmp((char*)cur->name,"shield")==0)
-					temp->shield = (FP)atoi((char*)cur->children->content);
+					temp->shield = (double)atoi((char*)cur->children->content);
 				else if (strcmp((char*)cur->name,"energy")==0)
-					temp->energy = (FP)atoi((char*)cur->children->content);
+					temp->energy = (double)atoi((char*)cur->children->content);
 				else if (strcmp((char*)cur->name,"armor_regen")==0)
-					temp->armor_regen = (FP)(atoi((char*)cur->children->content))/60.0;
+					temp->armor_regen = (double)(atoi((char*)cur->children->content))/60.0;
 				else if (strcmp((char*)cur->name,"shield_regen")==0)
-					temp->shield_regen = (FP)(atoi((char*)cur->children->content))/60.0;
+					temp->shield_regen = (double)(atoi((char*)cur->children->content))/60.0;
 				else if (strcmp((char*)cur->name,"energy_regen")==0)
-					temp->energy_regen = (FP)(atoi((char*)cur->children->content))/60.0;
+					temp->energy_regen = (double)(atoi((char*)cur->children->content))/60.0;
 			}
 		}
 		else if (strcmp((char*)node->name,"caracteristics")==0) {
@@ -98,7 +98,7 @@ Ship* ship_parse( xmlNodePtr node )
 				if (strcmp((char*)cur->name,"crew")==0)
 					temp->crew = atoi((char*)cur->children->content);
 				else if (strcmp((char*)cur->name,"mass")==0)
-					temp->mass = (FP)atoi((char*)cur->children->content);
+					temp->mass = (double)atoi((char*)cur->children->content);
 				else if (strcmp((char*)cur->name,"cap_weapon")==0)
 					temp->cap_weapon = atoi((char*)cur->children->content);
 				else if (strcmp((char*)cur->name,"cap_cargo")==0)

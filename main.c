@@ -39,7 +39,7 @@ static unsigned int time = 0;
  * prototypes
  */
 static void print_usage( char **argv );
-static void display_fps( const FP dt );
+static void display_fps( const double dt );
 /* update */
 static void update_all (void);
 
@@ -229,7 +229,7 @@ int main ( int argc, char** argv )
  */
 static void update_all(void)
 {
-	FP dt = (FP)(SDL_GetTicks() - time) / 1000.;
+	double dt = (double)(SDL_GetTicks() - time) / 1000.;
 	time = SDL_GetTicks();
 
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -243,10 +243,10 @@ static void update_all(void)
 	SDL_GL_SwapBuffers();
 }
 
-static FP fps = 0.;
-static FP fps_cur = 0.;
-static FP fps_dt = 1.;
-static void display_fps( const FP dt )
+static double fps = 0.;
+static double fps_cur = 0.;
+static double fps_dt = 1.;
+static void display_fps( const double dt )
 {
 	fps_dt += dt;
 	fps_cur += 1.;
@@ -254,7 +254,7 @@ static void display_fps( const FP dt )
 		fps = fps_cur;
 		fps_dt = fps_cur = 0.;
 	}
-	Vector2d pos = { .x = 10., .y = (FP)(gl_screen.h-20)  };
+	Vector2d pos = { .x = 10., .y = (double)(gl_screen.h-20)  };
 	gl_print( &fdefault, &pos, "%3.2f", fps );
 }
 
