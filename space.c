@@ -48,6 +48,10 @@ void space_render( double dt )
 		/* update position */
 		stars[i].pos.x -= player->solid->vel.x/(15.-10.*stars[i].brightness)*dt;
 		stars[i].pos.y -= player->solid->vel.y/(15.-10.*stars[i].brightness)*dt;
+		if (stars[i].pos.x > gl_screen.w + STAR_BUF) stars[i].pos.x = -STAR_BUF;
+		else if (stars[i].pos.x < -STAR_BUF) stars[i].pos.x = gl_screen.w + STAR_BUF;
+		if (stars[i].pos.y > gl_screen.h + STAR_BUF) stars[i].pos.y = -STAR_BUF;
+		else if (stars[i].pos.y < -STAR_BUF) stars[i].pos.y = gl_screen.h + STAR_BUF;
 		/* render */
 		glColor4d( 1., 1., 1., stars[i].brightness );
 		glVertex2d( stars[i].pos.x, stars[i].pos.y );
