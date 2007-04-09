@@ -29,14 +29,17 @@
 
 #define WINDOW_CAPTION  "game"
 
-#define CONF_FILE	"conf"
+#define CONF_FILE			"conf"
+
+#define MINIMUM_FPS		0.5
 
 
-static gl_font fdefault;
+extern const char *keybindNames[]; /* keybindings */
 
-static int quit = 0;
 
-static unsigned int time = 0;
+static int quit = 0; /* for primary loop */
+static unsigned int time = 0; /* used to calculate FPS and movement */
+
 
 /*
  * prototypes
@@ -69,6 +72,13 @@ static void print_usage( char **argv )
  */
 int main ( int argc, char** argv )
 {
+	int i;
+
+	/*
+	 * initializes SDL for possible warnings
+	 */
+	SDL_Init(0);
+
 	/*
 	 * default values
 	 */
@@ -79,14 +89,20 @@ int main ( int argc, char** argv )
 	/* joystick */
 	int indjoystick = -1;
 	char* namjoystick = NULL;
+	/* input */
+	input_init();
+	input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, 0 );
+	input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, 0 ); 
+	input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, 0 );
 
 
 	/*
 	 * Lua to parse the configuration file
 	 */
 	lua_State *L = luaL_newstate();
-	if (luaL_dofile(L, CONF_FILE) == 0) {
-		/* opengl */
+	if (luaL_dofile(L, CONF_FILE) == 0) { /* configuration file exists */
+
+		/* opengl properties*/
 		lua_getglobal(L, "width");
 		if (lua_isnumber(L, -1))
 			gl_screen.w = (int)lua_tonumber(L, -1);
@@ -97,12 +113,53 @@ int main ( int argc, char** argv )
 		if (lua_isnumber(L, -1))
 			if ((int)lua_tonumber(L, -1) == 1)
 				gl_screen.fullscreen = 1;
+
 		/* joystick */
 		lua_getglobal(L, "joystick");
 		if (lua_isnumber(L, -1))
 			indjoystick = (int)lua_tonumber(L, -1);
 		else if (lua_isstring(L, -1))
 			namjoystick = strdup((char*)lua_tostring(L, -1));
+
+		/* grab the keybindings if there are any */
+		char *str;
+		int type, key, reverse;
+		for (i=0; keybindNames[i]; i++) {
+			lua_getglobal(L, keybindNames[i]);
+			str = NULL;
+			key = -1;
+			reverse = 0;
+			if (lua_istable(L, -1)) { /* it's a table */
+				/* gets the event type */
+				lua_pushstring(L, "type");
+				lua_gettable(L, -2);
+				if (lua_isstring(L, -1))
+					str = (char*)lua_tostring(L, -1);
+
+				/* gets the key */
+				lua_pushstring(L, "key");
+				lua_gettable(L, -3);
+				if (lua_isnumber(L, -1))
+					key = (int)lua_tonumber(L, -1);
+
+				/* is reversed, only useful for axis */
+				lua_pushstring(L, "reverse");
+				lua_gettable(L, -4);
+				if (lua_isnumber(L, -1))
+					reverse = 1;
+
+				if (key != -1 && str != NULL) { /* keybind is valid */
+					/* get type */
+					if (strcmp(str,"null")==0) type = KEYBIND_NULL;
+					else if (strcmp(str,"keyboard")==0) type = KEYBIND_KEYBOARD;
+					else if (strcmp(str,"jaxis")==0) type = KEYBIND_JAXIS;
+					else if (strcmp(str,"jbutton")==0) type = KEYBIND_JBUTTON;
+					/* set the keybind */
+					input_setKeybind( (char*)keybindNames[i], type, key, reverse );
+				}
+				else WARN("Malformed keybind in %s", CONF_FILE);
+			}
+		}
 	}
 	lua_close(L);
 
@@ -137,9 +194,6 @@ int main ( int argc, char** argv )
 
 	/*
 	 * OpenGL
-	 * 
-	 * SDL_Init is first called here, so it's important to be first
-	 * initializaction
 	 */
 	if (gl_init()) { /* initializes video output */
 		WARN("Error initializing video output, exiting...");
@@ -173,7 +227,7 @@ int main ( int argc, char** argv )
 	if (ai_init())
 		WARN("Error initializing AI");
 
-	gl_fontInit( &fdefault, "/usr/share/fonts/truetype/freefont/FreeSans.ttf", 16 );
+	gl_fontInit( NULL, "/usr/share/fonts/truetype/freefont/FreeSans.ttf", 16 );
 
 	
 	/*
@@ -198,31 +252,35 @@ int main ( int argc, char** argv )
 	 * main loop
 	 */
 	SDL_Event event;
+	/* flushes the event loop since I noticed that when the joystick is loaded it
+	 * creates button events that results in the player starting out acceling */
+	while (SDL_PollEvent(&event));
+	/* primary loop */
 	while (!quit) {
-		while  (SDL_PollEvent(&event)) { /* event loop */
+		while (SDL_PollEvent(&event)) { /* event loop */
 			if (event.type == SDL_QUIT) quit = 1; /* quit is handled here */
 
-			handle_input(&event);
+			input_handle(&event); /* handles all the events and player keybinds */
 		}
 		update_all();
 	}
 
 
-	space_exit();
-
 	/*
 	 * data unloading
 	 */
-	pilots_free();
+	space_exit(); /* cleans up the universe itself */
+	pilots_free(); /* frees the pilots, they were locked up :( */
 	ships_free();
 
-	gl_freeFont(&fdefault);
+	gl_freeFont(NULL);
 
 	/*
 	 * exit subsystems
 	 */
-	ai_exit();
-	joystick_exit();
+	ai_exit(); /* stops the Lua AI magic */
+	joystick_exit(); /* releases joystick */
+	input_exit(); /* cleans up keybindings */
 	gl_exit(); /* kills video output */
 
 	exit(EXIT_SUCCESS);
@@ -232,6 +290,10 @@ int main ( int argc, char** argv )
 /*
  * updates everything
  *
+ * @space
+ *  -> stars
+ *    -> move
+ *    -> render
  * @pilots
  *  -> pilot think (AI)
  *  -> pliot solid
@@ -240,6 +302,12 @@ static void update_all(void)
 {
 	double dt = (double)(SDL_GetTicks() - time) / 1000.;
 	time = SDL_GetTicks();
+
+	if (dt > MINIMUM_FPS) {
+		Vector2d pos = { .x = 10., .y = gl_screen.h-40 };
+		gl_print( NULL, &pos, "FPS very low, skipping frames" );
+		SDL_GL_SwapBuffers();
+	}
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -252,6 +320,10 @@ static void update_all(void)
 	SDL_GL_SwapBuffers();
 }
 
+
+/*
+ * displays FPS on the screen
+ */
 static double fps = 0.;
 static double fps_cur = 0.;
 static double fps_dt = 1.;
@@ -264,7 +336,7 @@ static void display_fps( const double dt )
 		fps_dt = fps_cur = 0.;
 	}
 	Vector2d pos = { .x = 10., .y = (double)(gl_screen.h-20)  };
-	gl_print( &fdefault, &pos, "%3.2f", fps );
+	gl_print( NULL, &pos, "%3.2f", fps );
 }
 
 

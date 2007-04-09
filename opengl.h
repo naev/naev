@@ -62,6 +62,8 @@ typedef struct {
 
 /*
  * gl_font loading / freeing
+ *
+ * if font is NULL it uses the internal default font same with gl_print
  */
 void gl_fontInit( gl_font* font, const char *fname, unsigned int h );
 void gl_freeFont( gl_font* font );

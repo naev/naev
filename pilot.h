@@ -76,7 +76,7 @@ unsigned int pilot_create( Ship* ship, char* name,
 /*
  * cleanup
  */
-void pilots_free(void);
+void pilots_free (void);
 
 
 /*

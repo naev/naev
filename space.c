@@ -2,8 +2,6 @@
 
 #include "space.h"
 
-#include "SDL.h"
-#include "SDL_opengl.h"
 #include <malloc.h>
 
 #include "all.h"
@@ -29,9 +27,9 @@ void space_init (void)
 	nstars = (500*gl_screen.w*gl_screen.h+STAR_BUF*STAR_BUF)/(800*640);
 	stars = malloc(sizeof(Star)*nstars);
 	for (i=0; i < nstars; i++) {
-		stars[i].brightness = (float)RNG( 50, 200 )/256.;
-		stars[i].pos.x = (float)RNG( -STAR_BUF, gl_screen.w + STAR_BUF );
-		stars[i].pos.y = (float)RNG( -STAR_BUF, gl_screen.h + STAR_BUF );
+		stars[i].brightness = (double)RNG( 50, 200 )/256.;
+		stars[i].pos.x = (double)RNG( -STAR_BUF, gl_screen.w + STAR_BUF );
+		stars[i].pos.y = (double)RNG( -STAR_BUF, gl_screen.h + STAR_BUF );
 	}
 }
 

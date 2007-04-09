@@ -8,7 +8,8 @@
 #include "SDL.h"
 
 #define LOG(str, args...)	(fprintf(stdout,str"\n", ## args))
-#define WARN(str,args...)	(fprintf(stderr,"[%d] "str"\n", SDL_GetTicks(), ## args))
+#define WARN(str, args...)	(fprintf(stderr,"[%d] "str"\n", SDL_GetTicks(), ## args))
+#define ERR(str, args...)	(fprintf(stderr,"%s:%d: "str"\n", __FILE__, __LINE__, ## args))
 #ifdef DEBUG
 #  undef DEBUG
 #  define DEBUG(str, args...)	LOG(str, ## args)

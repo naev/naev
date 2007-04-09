@@ -1,0 +1,17 @@
+
+-- WINDOW
+width = 800
+height = 640
+fullscreen = 0
+
+-- JOYSTICK
+-- can be by number or substring of joystick name
+joystick = "Precision"
+
+
+-- KEYBINDINGS
+-- type can be keyboard, jaxis or jbutton
+accel = { type = "jbutton", key = 0 }
+left = { type = "jaxis", key = 0 }
+right = { type = "jaxis", key = 0 }
+

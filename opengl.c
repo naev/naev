@@ -27,13 +27,16 @@ gl_info gl_screen;
 /* the camera */
 Vector2d* gl_camera;
 
+/* default font */
+gl_font gl_defFont;
+
 
 /*
  * prototypes
  */
 /* misc */
-static int flip_surface( SDL_Surface* surface );
-static int pot( int n );
+static int _flipSurface( SDL_Surface* surface );
+static int _pot( int n );
 /* gl_texture */
 static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh );
 /* gl_font */
@@ -49,7 +52,7 @@ static void gl_fontMakeDList( FT_Face face, char ch, GLuint list_base, GLuint *t
 /*
  * gets the closest power of two
  */
-static int pot( int n )
+static int _pot( int n )
 {
 	int i = 1;
 	while (i < n)
@@ -63,7 +66,7 @@ static int pot( int n )
  *
  * returns 0 on success
  */
-static int flip_surface( SDL_Surface* surface )
+static int _flipSurface( SDL_Surface* surface )
 {
 	/* flip the image */
 	Uint8 *rowhi, *rowlo, *tmpbuf;
@@ -109,8 +112,8 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
 	int potw, poth;
 
 	/* Make size power of two */
-	potw = pot(surface->w);
-	poth = pot(surface->h);
+	potw = _pot(surface->w);
+	poth = _pot(surface->h);
 	if (rw) *rw = potw;
 	if (rh) *rh = poth;
 
@@ -238,7 +241,7 @@ gl_texture*  gl_newImage( const char* path )
 
 	SDL_FreeSurface(temp); /* free the temporary surface */
 
-	if (flip_surface(surface)) {
+	if (_flipSurface(surface)) {
 		WARN( "Error flipping surface" );
 		return NULL;
 	}
@@ -367,12 +370,16 @@ void gl_bindCamera( const Vector2d* pos )
 
 /*
  * prints text on screen like printf
+ *
+ * defaults ft_font to gl_defFont if NULL
  */
 void gl_print( const gl_font *ft_font, const Vector2d *pos, const char *fmt, ...)
 {
 	/*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
 	char text[256]; /* holds the string */
 	va_list ap;
+
+	if (ft_font == NULL) ft_font = &gl_defFont;
 
 	if (fmt == NULL) return;
 	else { /* convert the symbols to text */
@@ -428,8 +435,8 @@ static void gl_fontMakeDList( FT_Face face, char ch, GLuint list_base, GLuint *t
 	bitmap = bitmap_glyph->bitmap; /* to simplify */
 
 	/* need the POT wrapping for opengl */
-	w = pot(bitmap.width);
-	h = pot(bitmap.rows);
+	w = _pot(bitmap.width);
+	h = _pot(bitmap.rows);
 
 	/* memory for textured data
 	 * bitmap is using two channels, one for luminosity and one for alpha */
@@ -485,6 +492,8 @@ static void gl_fontMakeDList( FT_Face face, char ch, GLuint list_base, GLuint *t
 }
 void gl_fontInit( gl_font* font, const char *fname, unsigned int h )
 {
+	if (font == NULL) font = &gl_defFont;
+
 	font->textures = malloc(sizeof(GLuint)*128);
 	font->h = h;
 
@@ -517,6 +526,7 @@ void gl_fontInit( gl_font* font, const char *fname, unsigned int h )
 }
 void gl_freeFont( gl_font* font )
 {
+	if (font == NULL) font = &gl_defFont;
 	glDeleteLists(font->list_base,128);
 	glDeleteTextures(128,font->textures);
 	free(font->textures);
@@ -540,7 +550,7 @@ int gl_init()
 	flags |= SDL_FULLSCREEN * gl_screen.fullscreen;
 
 	/* Initializes Video */
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+	if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
 		WARN("Unable to initialize SDL: %s", SDL_GetError());
 		return -1;
 	}

@@ -145,7 +145,7 @@ unsigned int pilot_create( Ship* ship, char* name,
 /*
  * frees the pilot
  */
-void pilots_free()
+void pilots_free (void)
 {
 	int i;
 	for (i=0; i < pilots; i++) {
