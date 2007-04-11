@@ -10,10 +10,6 @@
 #include "log.h"
 
 
-#define VMOD(v)	(v.x*v.x+v.y*v.y)
-#define NMOD(n)	(n*n)
-
-
 /* stack of pilot ids to assure uniqueness */
 static unsigned int pilot_id = 0;
 
@@ -78,9 +74,8 @@ static void pilot_update( Pilot* pilot, const double dt )
 	/* update the solid */
 	pilot->solid->update( pilot->solid, dt );
 
-	if (VMOD(pilot->solid->vel) > NMOD(pilot->ship->speed)) { /* shouldn't go faster */
-	}
-
+	if (VMOD(pilot->solid->vel) > pilot->ship->speed) /* shouldn't go faster */
+		VMOD(pilot->solid->vel) = pilot->ship->speed;
 
 	pilot_render( pilot );
 }

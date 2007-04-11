@@ -11,10 +11,23 @@
 #define M_PI	3.14159265358979323846f
 #endif /* M_PI */
 
-/* pretty efficient these days, no need for sine table */
-#define SIN(dir)	(sinf(dir))
-#define COS(dir)	(cosf(dir))
 
+/*
+ * initialize cartesian vector
+ */
+void vect_cinit( Vector2d* v, double x, double y )
+{
+	v->mod = MOD(x,y);
+	v->angle = ANGLE(x,y);
+}
+/*
+ * initialize polarized vector
+ */
+void vect_pinit( Vector2d* v, double mod, double angle )
+{
+	v->mod = mod;
+	v->angle = angle;
+}
 
 /*
  * Simple method
@@ -29,7 +42,7 @@
  *   so watch out with big values for dt
  *
  */
-#if	0
+#if 0
 static void simple_update (Solid *obj, const double dt)
 {
 	/* make sure angle doesn't flip */
@@ -37,21 +50,32 @@ static void simple_update (Solid *obj, const double dt)
 	if (obj->dir > 2*M_PI) obj->dir -= 2*M_PI;
 	if (obj->dir < 0.) obj->dir += 2*M_PI;
 
-	if (obj->force) { /* force applied on object */
-		Vector2d acc;
-		acc.x = obj->force/obj->mass*COS(obj->dir);
-		acc.y = obj->force/obj->mass*SIN(obj->dir);
+	double px, py, vx, vy;
+	px = VX(obj->pos);
+	py = VY(obj->pos);
+	vx = VX(obj->vel);
+	vy = VY(obj->vel);
 
-		obj->vel.x += acc.x*dt;
-		obj->vel.y += acc.y*dt;
+	if (obj->force.mod) { /* force applied on object */
+		double ax, ay;
+		ax = VX(obj->force)/obj->mass;
+		ay = VY(obj->force)/obj->mass;
 
-		obj->pos.x += obj->vel.x*dt + 0.5*acc.x * dt*dt;
-		obj->pos.y += obj->vel.y*dt + 0.5*acc.y * dt*dt;
+		vx += ax*dt;
+		vy += ay*dt;
+
+		px += vx*dt + 0.5*ax * dt*dt;
+		py += vy*dt + 0.5*ay * dt*dt;
+
+		obj->vel.mod = MOD(vx,vy);
+		obj->vel.angle = ANGLE(vx,vy);
 	}
 	else {
-		obj->pos.x += obj->vel.x*dt;
-		obj->pos.y += obj->vel.y*dt;
+		px += vx*dt;
+		py += vy*dt;
 	}
+	obj->pos.mod = MOD(px,py);
+	obj->pos.angle = ANGLE(px,py);
 }
 #endif
 
@@ -71,7 +95,7 @@ static void simple_update (Solid *obj, const double dt)
  *
  *   x_{n+1} = x_n + h/6*(6x'_n + 3*h*a, 4*a)
  */
-#define RK4_N	4
+#define RK4_MIN_H	0.01 /* minimal pass we want */
 static void rk4_update (Solid *obj, const double dt)
 {
 	/* make sure angle doesn't flip */
@@ -79,43 +103,55 @@ static void rk4_update (Solid *obj, const double dt)
 	if (obj->dir > 2*M_PI) obj->dir -= 2*M_PI;
 	if (obj->dir < 0.) obj->dir += 2*M_PI;
 
-	double h = dt / RK4_N; /* step */
+	int N = (dt>RK4_MIN_H) ? (int)(dt/RK4_MIN_H) : 1 ;
+	double h = dt / (double)N; /* step */
 
-	if (obj->force) { /* force applied on object */
+	double px, py, vx, vy;
+	px = VX(obj->pos);
+	py = VY(obj->pos);
+	vx = VX(obj->vel);
+	vy = VY(obj->vel);
+
+
+	if (obj->force.mod) { /* force applied on object */
 		int i;
-		Vector2d initial, temp;
+		double ix, iy, tx, ty; /* initial and temporary cartesian vector values */
 
-		Vector2d acc;
-		acc.x = obj->force/obj->mass*COS(obj->dir);
-		acc.y = obj->force/obj->mass*SIN(obj->dir);
+		double ax, ay;
+		ax = VX(obj->force)/obj->mass;
+		ay = VY(obj->force)/obj->mass;
 
-		for (i=0; i < RK4_N; i++) { /* iterations */
+		for (i=0; i < N; i++) { /* iterations */
 
 			/* x component */
-			temp.x = initial.x = obj->vel.x;
-			temp.x += 2*initial.x + h*temp.x;
-			temp.x += 2*initial.x + h*temp.x;
-			temp.x += initial.x + h*temp.x;
-			temp.x *= h/6;
+			tx = ix = vx;
+			tx += 2*ix + h*tx;
+			tx += 2*ix + h*tx;
+			tx += ix + h*tx;
+			tx *= h/6;
 
-			obj->pos.x += temp.x;
-			obj->vel.x += acc.x*h;
+			px += tx;
+			vx += ax*h;
 
 			/* y component */
-			temp.y = initial.y = obj->vel.y; 
-			temp.y += 2*(initial.y + h/2*temp.y);
-			temp.y += 2*(initial.y + h/2*temp.y);
-			temp.y += initial.y + h*temp.y;
-			temp.y *= h/6;
+			ty = iy = vy; 
+			ty += 2*(iy + h/2*ty);
+			ty += 2*(iy + h/2*ty);
+			ty += iy + h*ty;
+			ty *= h/6;
 
-			obj->pos.y += temp.y;
-			obj->vel.y += acc.y*h;
+			py += ty;
+			vy += ay*h;
 		}
+		obj->vel.mod = MOD(vx,vy);
+		obj->vel.angle = ANGLE(vx,vy);
 	}
 	else {
-		obj->pos.x += dt*obj->vel.x;
-		obj->pos.y += dt*obj->vel.y;
+		px += dt*vx;
+		py += dt*vy;
 	}
+	obj->pos.mod = MOD(px,py);
+	obj->pos.angle = ANGLE(px,py);
 }
 
 
@@ -126,24 +162,21 @@ void solid_init( Solid* dest, const double mass, const Vector2d* vel, const Vect
 {
 	dest->mass = mass;
 
-	dest->force = 0;
+	dest->force.mod = 0;
 	dest->dir = 0;
 
 	if (vel == NULL)
-		dest->vel.x = dest->vel.y = 0.0;
-	else {
-		dest->vel.x = vel->x;
-		dest->vel.y = vel->y;
-	}
+		vect_cinit(&dest->vel, 0., 0.);
+	else 
+		vect_pinit(&dest->vel, vel->mod, vel->angle);
 
 	if (pos == NULL)
-		dest->pos.x = dest->pos.y = 0.0;
-	else {
-		dest->pos.x = pos->x;
-		dest->pos.y = pos->y;
-	}
+		vect_cinit(&dest->pos, 0., 0.);
+	else
+		vect_pinit(&dest->pos, pos->mod, pos->angle);
 
 	dest->update = rk4_update;
+	//dest->update = simple_update;
 }
 
 /*

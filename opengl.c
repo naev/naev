@@ -288,8 +288,8 @@ void gl_freeTexture( gl_texture* texture )
 void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos, const int sx, const int sy )
 {
 	/* don't draw if offscreen */
-	if (fabs(pos->x-gl_camera->x) > gl_screen.w/2+sprite->sw/2 ||
-			fabs(pos->y-gl_camera->y) > gl_screen.h/2+sprite->sh/2 )
+	if (fabs(VX(*pos)-VX(*gl_camera)) > gl_screen.w/2+sprite->sw/2 ||
+			fabs(VY(*pos)-VY(*gl_camera)) > gl_screen.h/2+sprite->sh/2 )
 		return;
 	
 	glEnable(GL_TEXTURE_2D);
@@ -301,8 +301,8 @@ void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos, const int sx,
 
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix(); /* projection translation matrix */
-		glTranslated( pos->x - gl_camera->x - sprite->sw/2.,
-				pos->y - gl_camera->y - sprite->sh/2., 0.);
+		glTranslated( VX(*pos) - VX(*gl_camera) - sprite->sw/2.,
+				VY(*pos) - VY(*gl_camera) - sprite->sh/2., 0.);
 		glScaled( (double)gl_screen.w/SCREEN_W, (double)gl_screen.h/SCREEN_H, 0. );
 
 	/* actual blitting */
@@ -337,7 +337,7 @@ void gl_blitStatic( const gl_texture* texture, const Vector2d* pos )
 
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix(); /* set up translation matrix */
-		glTranslated( pos->x - (double)gl_screen.w/2., pos->y - (double)gl_screen.h/2., 0);
+		glTranslated( VX(*pos) - (double)gl_screen.w/2., VY(*pos) - (double)gl_screen.h/2., 0);
 		glScaled( (double)gl_screen.w/SCREEN_W, (double)gl_screen.h/SCREEN_H, 0. );
 
 	/* actual blitting */
@@ -394,7 +394,7 @@ void gl_print( const gl_font *ft_font, const Vector2d *pos, const char *fmt, ...
 
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix(); /* translation matrix */
-		glTranslated( pos->x - (double)gl_screen.w/2., pos->y - (double)gl_screen.h/2., 0);
+		glTranslated( VX(*pos) - (double)gl_screen.w/2., VY(*pos) - (double)gl_screen.h/2., 0);
 
 	glColor4d( 1., 1., 1., 1. );
 	glCallLists(strlen(text), GL_UNSIGNED_BYTE, &text);

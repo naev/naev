@@ -3,6 +3,7 @@
 #include "space.h"
 
 #include <malloc.h>
+#include <math.h>
 
 #include "all.h"
 #include "log.h"
@@ -14,7 +15,7 @@
 
 #define STAR_BUF	100	/* area to leave around screen */
 typedef struct {
-	Vector2d pos;
+	double x,y;
 	double brightness;
 } Star;
 Star *stars;
@@ -28,8 +29,8 @@ void space_init (void)
 	stars = malloc(sizeof(Star)*nstars);
 	for (i=0; i < nstars; i++) {
 		stars[i].brightness = (double)RNG( 50, 200 )/256.;
-		stars[i].pos.x = (double)RNG( -STAR_BUF, gl_screen.w + STAR_BUF );
-		stars[i].pos.y = (double)RNG( -STAR_BUF, gl_screen.h + STAR_BUF );
+		stars[i].x = (double)RNG( -STAR_BUF, gl_screen.w + STAR_BUF );
+		stars[i].y = (double)RNG( -STAR_BUF, gl_screen.h + STAR_BUF );
 	}
 }
 
@@ -44,15 +45,15 @@ void space_render( double dt )
 	glBegin(GL_POINTS);
 	for (i=0; i < nstars; i++) {
 		/* update position */
-		stars[i].pos.x -= player->solid->vel.x/(15.-10.*stars[i].brightness)*dt;
-		stars[i].pos.y -= player->solid->vel.y/(15.-10.*stars[i].brightness)*dt;
-		if (stars[i].pos.x > gl_screen.w + STAR_BUF) stars[i].pos.x = -STAR_BUF;
-		else if (stars[i].pos.x < -STAR_BUF) stars[i].pos.x = gl_screen.w + STAR_BUF;
-		if (stars[i].pos.y > gl_screen.h + STAR_BUF) stars[i].pos.y = -STAR_BUF;
-		else if (stars[i].pos.y < -STAR_BUF) stars[i].pos.y = gl_screen.h + STAR_BUF;
+		stars[i].x -= VX(player->solid->vel)/(15.-10.*stars[i].brightness)*dt;
+		stars[i].y -= VY(player->solid->vel)/(15.-10.*stars[i].brightness)*dt;
+		if (stars[i].x > gl_screen.w + STAR_BUF) stars[i].x = -STAR_BUF;
+		else if (stars[i].x < -STAR_BUF) stars[i].x = gl_screen.w + STAR_BUF;
+		if (stars[i].y > gl_screen.h + STAR_BUF) stars[i].y = -STAR_BUF;
+		else if (stars[i].y < -STAR_BUF) stars[i].y = gl_screen.h + STAR_BUF;
 		/* render */
 		glColor4d( 1., 1., 1., stars[i].brightness );
-		glVertex2d( stars[i].pos.x, stars[i].pos.y );
+		glVertex2d( stars[i].x, stars[i].y );
 	}
 	glEnd();
 

@@ -154,6 +154,10 @@ int main ( int argc, char** argv )
 					else if (strcmp(str,"keyboard")==0) type = KEYBIND_KEYBOARD;
 					else if (strcmp(str,"jaxis")==0) type = KEYBIND_JAXIS;
 					else if (strcmp(str,"jbutton")==0) type = KEYBIND_JBUTTON;
+					else {
+						WARN("Unkown keybinding of type %s", str);
+						continue;
+					}
 					/* set the keybind */
 					input_setKeybind( (char*)keybindNames[i], type, key, reverse );
 				}
@@ -306,9 +310,11 @@ static void update_all(void)
 	time = SDL_GetTicks();
 
 	if (dt > MINIMUM_FPS) {
-		Vector2d pos = { .x = 10., .y = gl_screen.h-40 };
+		Vector2d pos;
+		vect_cinit(&pos, 10., (double)(gl_screen.h-40));
 		gl_print( NULL, &pos, "FPS very low, skipping frames" );
 		SDL_GL_SwapBuffers();
+		return;
 	}
 
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -337,7 +343,8 @@ static void display_fps( const double dt )
 		fps = fps_cur / fps_dt;
 		fps_dt = fps_cur = 0.;
 	}
-	Vector2d pos = { .x = 10., .y = (double)(gl_screen.h-20)  };
+	Vector2d pos;
+	vect_cinit(&pos, 10., (double)(gl_screen.h-20));
 	gl_print( NULL, &pos, "%3.2f", fps );
 }
 
