@@ -10,6 +10,10 @@
 #include "log.h"
 
 
+#define VMOD(v)	(v.x*v.x+v.y*v.y)
+#define NMOD(n)	(n*n)
+
+
 /* stack of pilot ids to assure uniqueness */
 static unsigned int pilot_id = 0;
 
@@ -74,6 +78,10 @@ static void pilot_update( Pilot* pilot, const double dt )
 	/* update the solid */
 	pilot->solid->update( pilot->solid, dt );
 
+	if (VMOD(pilot->solid->vel) > NMOD(pilot->ship->speed)) { /* shouldn't go faster */
+	}
+
+
 	pilot_render( pilot );
 }
 
@@ -93,7 +101,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name,
 	pilot->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
 
 	pilot->ship = ship;
-	pilot->name = strdup((name==NULL)?ship->name:name);
+	pilot->name = strdup( (name==NULL) ? ship->name : name );
 
 	pilot->solid = solid_create(ship->mass, vel, pos);
 

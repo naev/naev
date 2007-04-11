@@ -239,9 +239,8 @@ int main ( int argc, char** argv )
 	/*
 	 * testing
 	 */
-	unsigned int player_id;
-	player_id = pilot_create( get_ship("Llama"), "Player", NULL, NULL, PILOT_PLAYER );
-	gl_bindCamera( &get_pilot(player_id)->solid->pos );
+	pilot_create( get_ship("Llama"), "Player", NULL, NULL, PILOT_PLAYER );
+	gl_bindCamera( &player->solid->pos );
 	space_init();
 
 	pilot_create( get_ship("Mr. Test"), NULL, NULL, NULL, 0 );
@@ -290,13 +289,16 @@ int main ( int argc, char** argv )
 /*
  * updates everything
  *
- * @space
- *  -> stars
- *    -> move
- *    -> render
- * @pilots
- *  -> pilot think (AI)
- *  -> pliot solid
+ *	Blitting order (layers):
+ *	  BG | @ stars and planets
+ *	     | @ background particles
+ *      X
+ *	  N  | @ NPC ships
+ *	     | @ normal layer particles (above ships)
+ *      X
+ *	  FG | @ player
+ *	     | @ foreground particles
+ *	     | @ text and GUI
  */
 static void update_all(void)
 {

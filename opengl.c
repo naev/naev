@@ -35,8 +35,8 @@ gl_font gl_defFont;
  * prototypes
  */
 /* misc */
-static int _flipSurface( SDL_Surface* surface );
-static int _pot( int n );
+static int SDL_VFlipSurface( SDL_Surface* surface );
+static int pot( int n );
 /* gl_texture */
 static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh );
 /* gl_font */
@@ -52,7 +52,7 @@ static void gl_fontMakeDList( FT_Face face, char ch, GLuint list_base, GLuint *t
 /*
  * gets the closest power of two
  */
-static int _pot( int n )
+static int pot( int n )
 {
 	int i = 1;
 	while (i < n)
@@ -66,7 +66,7 @@ static int _pot( int n )
  *
  * returns 0 on success
  */
-static int _flipSurface( SDL_Surface* surface )
+static int SDL_VFlipSurface( SDL_Surface* surface )
 {
 	/* flip the image */
 	Uint8 *rowhi, *rowlo, *tmpbuf;
@@ -112,8 +112,8 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
 	int potw, poth;
 
 	/* Make size power of two */
-	potw = _pot(surface->w);
-	poth = _pot(surface->h);
+	potw = pot(surface->w);
+	poth = pot(surface->h);
 	if (rw) *rw = potw;
 	if (rh) *rh = poth;
 
@@ -241,7 +241,7 @@ gl_texture*  gl_newImage( const char* path )
 
 	SDL_FreeSurface(temp); /* free the temporary surface */
 
-	if (_flipSurface(surface)) {
+	if (SDL_VFlipSurface(surface)) {
 		WARN( "Error flipping surface" );
 		return NULL;
 	}
@@ -435,8 +435,8 @@ static void gl_fontMakeDList( FT_Face face, char ch, GLuint list_base, GLuint *t
 	bitmap = bitmap_glyph->bitmap; /* to simplify */
 
 	/* need the POT wrapping for opengl */
-	w = _pot(bitmap.width);
-	h = _pot(bitmap.rows);
+	w = pot(bitmap.width);
+	h = pot(bitmap.rows);
 
 	/* memory for textured data
 	 * bitmap is using two channels, one for luminosity and one for alpha */
