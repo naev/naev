@@ -40,8 +40,7 @@ void player_think( Pilot* player, const double dt )
 	if (player_turn)
 		player->solid->dir_vel -= player->ship->turn * player_turn;
 
-	player->solid->force.angle = player->solid->dir;
-	player->solid->force.mod = player->ship->thrust * player_acc;
+	vect_pset( &player->solid->force, player->ship->thrust * player_acc, player->solid->dir );
 }
 
 

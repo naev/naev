@@ -13,21 +13,43 @@
 
 
 /*
- * initialize cartesian vector
+ * set the vector value using cartesian coordinates
  */
-void vect_cinit( Vector2d* v, double x, double y )
+void vect_cset( Vector2d* v, double x, double y )
 {
+	v->x = x;
+	v->y = y;
 	v->mod = MOD(x,y);
 	v->angle = ANGLE(x,y);
 }
 /*
- * initialize polarized vector
+ * set the vector value using polar coordinates
  */
-void vect_pinit( Vector2d* v, double mod, double angle )
+void vect_pset( Vector2d* v, double mod, double angle )
 {
 	v->mod = mod;
 	v->angle = angle;
+	v->x = v->mod*cos(v->angle);
+	v->y = v->mod*sin(v->angle);
 }
+/*
+ * copies vector src to dest
+ */
+void vectcpy( Vector2d* dest, const Vector2d* src )
+{
+	dest->x = src->x;
+	dest->y = src->y;
+	dest->mod = src->mod;
+	dest->angle = src->angle;
+}
+/*
+ * makes a vector NULL
+ */
+void vectnull( Vector2d* v )
+{
+	v->x = v->y = v->mod = v->angle = 0.;
+}
+
 
 /*
  * Simple method
@@ -143,15 +165,13 @@ static void rk4_update (Solid *obj, const double dt)
 			py += ty;
 			vy += ay*h;
 		}
-		obj->vel.mod = MOD(vx,vy);
-		obj->vel.angle = ANGLE(vx,vy);
+		vect_cset( &obj->vel, vx, vy );
 	}
 	else {
 		px += dt*vx;
 		py += dt*vy;
 	}
-	obj->pos.mod = MOD(px,py);
-	obj->pos.angle = ANGLE(px,py);
+	vect_cset( &obj->pos, px, py );
 }
 
 
@@ -165,18 +185,13 @@ void solid_init( Solid* dest, const double mass, const Vector2d* vel, const Vect
 	dest->force.mod = 0;
 	dest->dir = 0;
 
-	if (vel == NULL)
-		vect_cinit(&dest->vel, 0., 0.);
-	else 
-		vect_pinit(&dest->vel, vel->mod, vel->angle);
+	if (vel == NULL) vectnull( &dest->vel );
+	else vectcpy( &dest->vel, vel );
 
-	if (pos == NULL)
-		vect_cinit(&dest->pos, 0., 0.);
-	else
-		vect_pinit(&dest->pos, pos->mod, pos->angle);
+	if (pos == NULL) vectnull( &dest->pos );
+	else vectcpy( &dest->pos, pos);
 
 	dest->update = rk4_update;
-	//dest->update = simple_update;
 }
 
 /*

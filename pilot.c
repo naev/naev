@@ -35,16 +35,14 @@ Pilot* get_pilot( unsigned int id )
 	for ( i=0; i < pilots; i++ )
 		if (pilot_stack[i]->id == id)
 			return pilot_stack[i];
-	return NULL;
-*/
+	return NULL;*/
 
 /* Dichotomical search */
 	int i,n;
 	for (i=0, n=pilots/2; n > 0; n /= 2 )
 		i += (pilot_stack[i+n]->id > id) ? 0 : n ;
 
-	return (pilot_stack[i]->id == id) ? pilot_stack[i] : NULL;
-
+	return (pilot_stack[i]->id == id) ? pilot_stack[i] : NULL ;
 }
 
 
@@ -75,7 +73,7 @@ static void pilot_update( Pilot* pilot, const double dt )
 	pilot->solid->update( pilot->solid, dt );
 
 	if (VMOD(pilot->solid->vel) > pilot->ship->speed) /* shouldn't go faster */
-		VMOD(pilot->solid->vel) = pilot->ship->speed;
+		vect_pset( &pilot->solid->vel, pilot->ship->speed, VANGLE(pilot->solid->vel) );
 
 	pilot_render( pilot );
 }

@@ -5,8 +5,8 @@
 
 #include "all.h"
 
-#define VX(v)		((v).mod*cos((v).angle))
-#define VY(v)		((v).mod*sin((v).angle))
+#define VX(v)		((v).x)
+#define VY(v)		((v).y)
 #define VMOD(v)	((v).mod)
 #define VANGLE(v)	((v).angle)
 
@@ -18,14 +18,17 @@
  * base of all 2d Vector work
  */
 typedef struct {
-	double mod, angle;
+	double x, y; /* cartesian values */
+	double mod, angle; /* polar values */
 } Vector2d;
 
 /*
  * vector manipulation
  */
-void vect_cinit( Vector2d* v, double x, double y );
-void vect_pinit( Vector2d* v, double mod, double angle );
+void vect_cset( Vector2d* v, double x, double y );
+void vect_pset( Vector2d* v, double mod, double angle );
+void vectcpy( Vector2d* dest, const Vector2d* src );
+void vectnull( Vector2d* v );
 
 
 /*
@@ -47,3 +50,5 @@ Solid* solid_create( const double mass, const Vector2d* vel, const Vector2d* pos
 void solid_free( Solid* src );
 
 #endif /* PHYSICS_H */
+
+

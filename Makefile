@@ -23,7 +23,7 @@ CTTF = `freetype-config --cflags`
 CGL = 
 CFLAGS = -Wall $(CLUA) $(CSDL) $(CXML) $(CTTF) $(CGL) $(VERSION)
 ifdef DEBUG
-CFLAGS += -g3 -DDEBUG
+CFLAGS += -g3 -DDEBUG -DLUA_USE_APICHECK
 else # DEBUG
 CFLAGS += -O2
 endif # DEBUG
