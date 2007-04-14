@@ -20,6 +20,9 @@
 #define XML_ID		"Ships"	/* XML section identifier */
 #define XML_SHIP	"ship"
 
+#define SHIP_DATA		"dat/ship.xml"
+#define SHIP_GFX		"gfx/ship/"
+
 static Ship* ship_stack = NULL;
 static int ships;
 
@@ -55,8 +58,9 @@ Ship* ship_parse( xmlNodePtr node )
 		if (strcmp((char*)node->name, "GFX")==0) {
 			cur = node->children;
 			if (strcmp((char*)cur->name,"text")==0) {
-				snprintf( str, sizeof(cur->content)+4, "gfx/%s", (char*)cur->content);
-				temp->gfx_ship = gl_newSprite((char*)cur->content, 6, 6);
+				snprintf( str, strlen((char*)cur->content)+sizeof(SHIP_GFX),
+						SHIP_GFX"%s", (char*)cur->content);
+				temp->gfx_ship = gl_newSprite(str, 6, 6);
 			}
 		}
 		else if (strcmp((char*)node->name, "class")==0) {
@@ -119,8 +123,8 @@ int ships_load(void)
 	xmlNodePtr node;
 	Ship* temp = NULL;
 
-	if ((reader=xmlNewTextReaderFilename(DATA))==NULL) {
-		WARN("XML error reading "DATA);
+	if ((reader=xmlNewTextReaderFilename(SHIP_DATA))==NULL) {
+		WARN("XML error reading "SHIP_DATA);
 		return -1;
 	}
 

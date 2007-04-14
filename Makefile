@@ -5,16 +5,8 @@ APPNAME = main
 
 VERSION = -DVMAJOR=0 -DVMINOR=0 -DVREV=1
 
-OBJS := main.o		\
-		physics.o	\
-		opengl.o		\
-		ship.o		\
-		pilot.o		\
-		player.o		\
-		joystick.o	\
-		space.o		\
-		rng.o			\
-		ai.o
+OBJS := $(shell find src/ -name '*.c' -print)
+OBJS := $(OBJS:%.c=%.o)
 
 CLUA = -I/usr/include/lua5.1
 CSDL = `sdl-config --cflags`
@@ -35,17 +27,10 @@ LDTTF = `freetype-config --libs`
 LDGL = -lGL
 LDFLAGS = -lm $(LDLUA) $(LDSDL) $(LDXML) $(LDTTF) $(LDGL)
 
-
-DOBJS = ship.xml	\
-		faction.xml	\
-		fleet.xml	\
-		outfit.xml	\
-		planet.xml	\
-		ssys.xml
+DATA = data
+DATAFILES = $(shell find ai/ gfx/ dat/ -name '*.lua' -o -name '*.png' -o -name '*.xml' -print)
 
 
-%.xml:
-	@sed -e '/^<?xml.*/d' dat/$@ >> data
 %.o:	%.c
 	@$(CC) -c $(CFLAGS) -o $@ $<
 	@echo -e "\tCC   $@"
@@ -56,13 +41,15 @@ all:	data $(OBJS)
 	@echo -e "\tLD   $(APPNAME)"
 
 
-
-data_init:
-	@echo -e '<?xml version="1.0" encoding="UTF-8"?>\n<Data>' > data
-data: data_init $(DOBJS)
-	@echo -e '</Data>' >> data
+data: $(DATAFILES)
 	@echo -e "\tCreating data\n"
+	@ls -1 $(DATAFILES) | cpio --quiet -o > $(DATA)
 
 
 clean:
-	rm -f $(OBJS)
+	@echo -e "\tRemoving data"
+	@rm -f $(DATA)
+	@echo -e "\tRemoving object files"
+	@rm -f $(OBJS)
+
+
