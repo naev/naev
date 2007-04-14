@@ -1,0 +1,74 @@
+
+	T A S K S
+
+pushtask( number pos, string name, int/pointer target )
+	@desc pushes a task onto the queue
+	@param pos puts it at the beginning if 0, or end if 1
+	@param name is the function name (should be defined in the lua file)
+	@param target is an int or pointer containing target info (can be for example
+	pilot ID or a Vector2d*)
+	@return nil
+
+poptask()
+	@desc pops the current task from the list
+	@return nil
+
+taskname()
+	@desc returns the currnt task's name
+	@return string name of the current task
+
+
+	C O N S U L T
+
+gettarget()
+	@desc gets the current target
+	@return pointer to the current target
+
+gettargetid()
+	@desc gets the current targets ID
+	@return numbe the current target's ID
+
+getdist( Vector2d vect )
+	@desc gets the distance from the position of the Vector2d vect
+	@param vect point to calculate the distance from
+	@return nil
+
+getpos( [number/Pilot pilot] )
+	@desc gets the pilot's position or the current pilot's position if no pilot is specified
+	@param pilot ID or Pointer to the pilot to get the position of, if no params are
+	called it uses the current pilot as target
+	@return Vector2d
+
+minbrakedist()
+	@desc returns the minimum required braking distance assuming all goes well
+	@return number distance needed to brake
+
+
+	M O V E M E N T
+
+accel( [number mod] )
+	@desc accelerates the pilot
+	@param mod float that represents acceleration ratio between 0 (stopped) and 1 (max accel)
+	@return nil
+
+turn( number mod )
+	@desc turns the pilot
+	@param mod float that represents  the turning ratio between -1 (max right) and 1 (max left)
+	@return nil
+
+face( number/Vector2d target, [number invert] )
+	@desc turns to face target
+	@param target pilot ID or Vector2d to face
+	@param invert faces away if 1
+	@return nil
+
+
+	M I S C
+
+createvect( number x, number y )
+	@desc creates a vector from cartesian coordinates
+	@param x x coordinate of the vector
+	@param y y coordinate of the vector
+	@return pointer to the Vector2d
+
+
