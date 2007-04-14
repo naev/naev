@@ -7,15 +7,24 @@
 #include <assert.h>
 
 
-#ifndef M_PI
-#define M_PI	3.14159265358979323846f
-#endif /* M_PI */
+/*
+ * M I S C
+ */
+double angle_diff( const double ref, double a )
+{
+	if (a < M_PI) a += 2*M_PI;
+	double d = fmod((a-ref),2*M_PI);
+	return (d <= M_PI) ? d : d - 2*M_PI ;
+}
 
 
 /*
+ * V E C T O R 2 D
+ */
+/*
  * set the vector value using cartesian coordinates
  */
-void vect_cset( Vector2d* v, double x, double y )
+void vect_cset( Vector2d* v, const double x, const double y )
 {
 	v->x = x;
 	v->y = y;
@@ -25,7 +34,7 @@ void vect_cset( Vector2d* v, double x, double y )
 /*
  * set the vector value using polar coordinates
  */
-void vect_pset( Vector2d* v, double mod, double angle )
+void vect_pset( Vector2d* v, const double mod, const double angle )
 {
 	v->mod = mod;
 	v->angle = angle;
@@ -35,7 +44,7 @@ void vect_pset( Vector2d* v, double mod, double angle )
 /*
  * copies vector src to dest
  */
-void vectcpy( Vector2d* dest, const Vector2d* src )
+void vectcpy( Vector2d* dest, const const Vector2d* src )
 {
 	dest->x = src->x;
 	dest->y = src->y;
@@ -50,7 +59,18 @@ void vectnull( Vector2d* v )
 	v->x = v->y = v->mod = v->angle = 0.;
 }
 
+/*
+ * get the direction pointed to by two vectors (from ref to v)
+ */
+double vect_angle( const Vector2d* ref, const Vector2d* v )
+{
+	return ANGLE( VX(*v)-VX(*ref), VY(*v)-VY(*ref));
+}
 
+
+/*
+ * S O L I D
+ */
 /*
  * Simple method
  *
@@ -68,7 +88,7 @@ void vectnull( Vector2d* v )
 static void simple_update (Solid *obj, const double dt)
 {
 	/* make sure angle doesn't flip */
-	obj->dir += obj->dir_vel/360.*dt;
+	obj->dir += M_PI/360.*obj->dir_vel*dt;
 	if (obj->dir > 2*M_PI) obj->dir -= 2*M_PI;
 	if (obj->dir < 0.) obj->dir += 2*M_PI;
 
@@ -121,7 +141,7 @@ static void simple_update (Solid *obj, const double dt)
 static void rk4_update (Solid *obj, const double dt)
 {
 	/* make sure angle doesn't flip */
-	obj->dir += obj->dir_vel/360.*dt;
+	obj->dir += M_PI/360.*obj->dir_vel*dt;
 	if (obj->dir > 2*M_PI) obj->dir -= 2*M_PI;
 	if (obj->dir < 0.) obj->dir += 2*M_PI;
 
@@ -147,20 +167,20 @@ static void rk4_update (Solid *obj, const double dt)
 
 			/* x component */
 			tx = ix = vx;
-			tx += 2*ix + h*tx;
-			tx += 2*ix + h*tx;
+			tx += 2.*ix + h*tx;
+			tx += 2.*ix + h*tx;
 			tx += ix + h*tx;
-			tx *= h/6;
+			tx *= h/6.;
 
 			px += tx;
 			vx += ax*h;
 
 			/* y component */
 			ty = iy = vy; 
-			ty += 2*(iy + h/2*ty);
-			ty += 2*(iy + h/2*ty);
+			ty += 2.*(iy + h/2.*ty);
+			ty += 2.*(iy + h/2.*ty);
 			ty += iy + h*ty;
-			ty *= h/6;
+			ty *= h/6.;
 
 			py += ty;
 			vy += ay*h;
@@ -182,8 +202,8 @@ void solid_init( Solid* dest, const double mass, const Vector2d* vel, const Vect
 {
 	dest->mass = mass;
 
-	dest->force.mod = 0;
-	dest->dir = 0;
+	vect_cset( &dest->force, 0., 0.);
+	dest->dir = 0.;
 
 	if (vel == NULL) vectnull( &dest->vel );
 	else vectcpy( &dest->vel, vel );
@@ -213,3 +233,4 @@ void solid_free( Solid* src )
 	free( src );
 	src = NULL;
 }
+

@@ -104,7 +104,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name,
 	pilot->energy = ship->energy;
 
 	/* initially idle */
-	pilot->action = NULL;
+	pilot->task = NULL;
 
 	if (flags & PILOT_PLAYER) {
 		pilot->think = (void*)player_think; /* players don't need to think! :P */

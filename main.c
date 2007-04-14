@@ -306,6 +306,7 @@ int main ( int argc, char** argv )
  */
 static void update_all(void)
 {
+	/* dt in us */
 	double dt = (double)(SDL_GetTicks() - time) / 1000.;
 	time = SDL_GetTicks();
 

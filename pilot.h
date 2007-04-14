@@ -8,6 +8,7 @@
 #include "all.h"
 #include "physics.h"
 #include "ship.h"
+#include "ai.h"
 /*#include "outfit.h"
 #include "faction.h"*/
 
@@ -15,22 +16,6 @@
 /* creation flags */
 #define PILOT_PLAYER		1 /* pilot is a player */
 
-
-/*
- * AI
- *
- * AI is based on an action list which contains the current action (FIFO)
- * actions will run the appropriate Lua code
- */
-typedef enum { ACT_ATTACK, ACT_TRAVEL, ACT_BRAKE } action_type;
-
-/* actions */
-struct Action {
-	struct Action *next;
-	action_type type;
-	void* target;
-};
-typedef struct Action Action;
 
 
 /*
@@ -56,7 +41,7 @@ struct Pilot {
 
 	/* AI */
 	void (*think)(struct Pilot*); /* AI thinking for the pilot */
-	Action* action; /* current action */
+	Task* task; /* current action */
 };
 typedef struct Pilot Pilot;
 

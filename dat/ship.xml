@@ -5,7 +5,7 @@
 <class>1</class>
 <movement>
 <thrust>400</thrust>
-<turn>960</turn>
+<turn>360</turn>
 <speed>360</speed>
 </movement>
 <health>
@@ -30,8 +30,8 @@
 <GFX>lancelot.png</GFX>
 <class>1</class>
 <movement>
-<thrust>180</thrust>
-<turn>100</turn>
+<thrust>280</thrust>
+<turn>260</turn>
 <speed>260</speed>
 </movement>
 <health>

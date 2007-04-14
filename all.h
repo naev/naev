@@ -7,7 +7,6 @@
 #define CALLOC_ONE(type)	(calloc(1,sizeof(type)))
 
 #define ABS(X)					((X<0)?-X:X)
-#define FABS(X)				((X<0.)?-X:X)
 
 #define DATA	"data"
 

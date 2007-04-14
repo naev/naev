@@ -1,0 +1,12 @@
+
+	N O T E S
+
+units
+	thrust, speed is in pixels/second
+	turn is in degrees per half a second
+
+	energy, armor and shield regen are in points a minute
+	
+	crew is in people
+	mass is in tons
+	cargo and weapon capacity are in tons
