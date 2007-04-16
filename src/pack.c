@@ -278,7 +278,8 @@ void* pack_readfile( char* packfile, char* filename, uint32_t *filesize )
 	void* buf;
 	int size, bytes;
 
-	*filesize = 0;
+	if (filesize)
+		*filesize = 0;
 
 	if (pack_open( file, packfile, filename )) {
 		ERR("Opening packfile");
@@ -322,7 +323,8 @@ void* pack_readfile( char* packfile, char* filename, uint32_t *filesize )
 	DEBUG("Closed '%s' in '%s'", filename, packfile );
 	free(file);
 
-	*filesize = size;
+	if (filesize)
+		*filesize = size;
 	return buf;
 }
 

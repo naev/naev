@@ -3,7 +3,11 @@ DEBUG = 1
 
 APPNAME = main
 
-VERSION = -DVMAJOR=0 -DVMINOR=0 -DVREV=1
+
+VMAJOR = 0
+VMINOR = 0
+VREV = 1
+VERSION = -DVMAJOR=$(VMAJOR) -DVMINOR=$(VMINOR) -DVREV=$(VREV)
 
 OBJS := $(shell find src/ -name '*.c' -print)
 OBJS := $(OBJS:%.c=%.o)

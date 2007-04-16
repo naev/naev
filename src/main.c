@@ -63,7 +63,7 @@ static void print_usage( char **argv )
 	LOG("   -h n                  set height to n");*/
 	LOG("   -j n, --joystick n    use joystick n");
 	LOG("   -J s, --Joystick s    use joystick whose name contains s");
-	LOG("   --help                display this message and exit");
+	LOG("   -h, --help            display this message and exit");
 	LOG("   -v, --version         print the version and exit");
 }
 

@@ -13,6 +13,7 @@
 #include "log.h"
 #include "pilot.h"
 #include "physics.h"
+#include "pack.h"
 
 
 /*
@@ -97,10 +98,20 @@ int ai_init (void)
 	lua_register(L, "face", ai_face);
 	lua_register(L, "createvect", ai_createvect);
 
-	if (luaL_dofile(L, "ai/basic.lua") != 0) {
-		WARN("Unable to load AI file: %s","ai_basic.lua");
+	char *buf = pack_readfile( DATA, "ai/basic.lua", NULL );
+	
+	if (luaL_dostring(L, buf) != 0) {
+		WARN("Unable to load AI file: %s","ai/basic.lua");
 		return -1;
 	}
+
+	free(buf);
+
+
+/*	if (luaL_dofile(L, "ai/basic.lua") != 0) {
+		WARN("Unable to load AI file: %s","ai_basic.lua");
+		return -1;
+	}*/
 
 	return 0;
 }
