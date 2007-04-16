@@ -8,6 +8,7 @@
 #include <string.h> /* strlen() and friends */
 #include <malloc.h> /* malloc */
 
+#include "log.h"
 #include "md5.h"
 
 
@@ -37,26 +38,15 @@
  */
 
 
+#undef DEBUG /* mucho spamo */
+#define DEBUG(str, args...)		do {;} while(0)
+
+
 /* the read/WRITE block size */
 #define BLOCKSIZE 	128*1024
 
 /* maximum filename length */
 #define MAX_FILENAME	100
-
-
-/*
- * my favorite logging routines :)
- */
-#define LOG(str, args...)  (fprintf(stdout,str"\n", ## args))
-#define WARN(str, args...) (fprintf(stderr,"WARNING: "str"\n", ## args))
-#define ERR(str, args...)  (fprintf(stderr,"ERROR %s:%d: "str"\n", __FILE__, __LINE__, ## args))
-#ifdef DEBUG
-#  undef DEBUG
-#  define DEBUG(str, args...) LOG(str, ## args)
-#  define DEBUGGING
-#else /* DEBUG */
-#  define DEBUG(str, args...) do {;} while(0)
-#endif /* DEBUG */
 
 
 #define PERMS	 S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH
@@ -161,7 +151,7 @@ int pack_files( char* outfile, char** infiles, uint32_t nfiles )
 		DEBUG("Fie '%s' at %d", infiles[i], pointer);
 		WRITE( outfd, &b, 1 );
 		WRITE( outfd, &pointer, 4 );
-		pointer += getfilesize( infiles[i] ) + 8; /* set pointer to be next file pos */
+		pointer += 4 + getfilesize( infiles[i] ) + 16; /* set pointer to be next file pos */
 	}
 	/*
 	 * DATA
@@ -179,7 +169,7 @@ int pack_files( char* outfile, char** infiles, uint32_t nfiles )
 			md5_append( &md5, buf, bytes );
 		}
 		md5_finish(&md5, md5val);
-		WRITE( outfd, md5val, sizeof(md5val) );
+		WRITE( outfd, md5val, 16 );
 		close(infd);
 		DEBUG("Wrote file '%s'", infiles[i]);
 	}
@@ -205,8 +195,6 @@ int pack_open( Packfile* file, char* packfile, char* filename )
 	int i, j;
 	uint32_t nfiles;
 	char* buf = (char*)malloc(MAX_FILENAME);
-
-	file = (Packfile*)malloc(sizeof(Packfile));
 
 	file->start = file->end = 0;
 
@@ -251,6 +239,10 @@ int pack_open( Packfile* file, char* packfile, char* filename )
 		file->pos = file->start;
 		file->end += file->start;
 	}
+	else {
+		ERR("File '%s' not found in packfile '%s'", filename, packfile);
+		return -1;
+	}
 
 	return 0;
 }
@@ -267,10 +259,71 @@ ssize_t pack_read( Packfile* file, void* buf, size_t count )
 
 	int bytes;
 
-	bytes = read( file->fd, buf, count );
+	if ((bytes = read( file->fd, buf, count )) == -1) {
+		ERR("Error while reading file: %s", strerror(errno));
+		return -1;
+	}
 	file->pos += bytes;
 
 	return bytes;
+}
+
+
+/*
+ * loads an entire file inte memory and returns a pointer to it
+ */
+void* pack_readfile( char* packfile, char* filename, uint32_t *filesize )
+{
+	Packfile* file = (Packfile*)malloc(sizeof(Packfile));
+	void* buf;
+	int size, bytes;
+
+	*filesize = 0;
+
+	if (pack_open( file, packfile, filename )) {
+		ERR("Opening packfile");
+		return NULL;
+	}
+	DEBUG("Opened file '%s' from '%s'", filename, packfile );
+
+	/* read the entire file */
+	size = file->end - file->start;
+	buf = malloc( size );
+	if ((bytes = pack_read( file, buf, size)) != size) {
+		ERR("Reading '%s' from packfile '%s'.  Expected %d bytes got %d bytes",
+				filename, packfile, size, bytes );
+		free(buf);
+		free(file);
+		return NULL;
+	}
+	DEBUG("Read %d bytes from '%s'", bytes, filename );
+
+	/* check the md5 */
+	md5_state_t md5;
+	md5_byte_t *md5val = malloc(16);
+	md5_byte_t *md5fd = malloc(16);
+	md5_init(&md5);
+	md5_append( &md5, buf, bytes );
+	md5_finish(&md5, md5val);
+	if ((bytes = read( file->fd, md5fd, 16 ))== -1)
+		WARN("Failure to read MD5, continuing anyways...");
+	else if (memcmp( md5val, md5fd, 16 ))
+		WARN("MD5 gives different value, possible memory corruption, continuing...");
+	free(md5val);
+	free(md5fd);
+
+
+	/* cleanup */
+	if (pack_close( file ) == -1) {
+		ERR("Closing packfile");
+		free(file);
+		return NULL;
+	}
+	DEBUG("Closed '%s' in '%s'", filename, packfile );
+	free(file);
+
+	*filesize = size;
+	return buf;
 }
 
 
@@ -280,7 +333,6 @@ ssize_t pack_read( Packfile* file, void* buf, size_t count )
 int pack_close( Packfile* file )
 {
 	int i = close( file->fd );
-	free( file );
 	return (i) ? -1 : 0 ;
 }
 

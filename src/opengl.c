@@ -14,6 +14,7 @@
 
 #include "all.h"
 #include "log.h"
+#include "pack.h"
 
 
 #define	SCREEN_W	gl_screen.w
@@ -226,10 +227,18 @@ gl_texture* gl_loadImage( SDL_Surface* surface )
 gl_texture*  gl_newImage( const char* path )
 {
 	SDL_Surface *temp, *surface;
+	uint32_t filesize;
+	char *buf = pack_readfile( DATA, (char*)path, &filesize );
+	if (buf == NULL) {
+		ERR("Loading surface from packfile");
+		return NULL;
+	}
+	SDL_RWops *rw = SDL_RWFromMem(buf, filesize);
+	temp = IMG_Load_RW( rw, 1 );
+	free(buf);
 
-	temp = IMG_Load( path ); /* loads the surface */
 	if (temp == 0) {
-		WARN("'%s' could not be opened: %s", path, IMG_GetError());
+		ERR("'%s' could not be opened: %s", path, IMG_GetError());
 		return NULL;
 	}
 

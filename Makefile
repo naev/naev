@@ -41,9 +41,13 @@ all:	data $(OBJS)
 	@echo -e "\tLD   $(APPNAME)"
 
 
-data: $(DATAFILES)
+pack: src/pack.c
+	@( cd utils/pack; $(MAKE) )
+
+
+data: pack $(DATAFILES) src/pack.c
 	@echo -e "\tCreating data\n"
-	@ls -1 $(DATAFILES) | cpio --quiet --format crc -o > $(DATA)
+	@./pack $(DATA) $(DATAFILES)
 
 
 clean:
