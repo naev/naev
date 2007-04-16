@@ -12,6 +12,7 @@
 /* global */
 #include <unistd.h>	/* getopt */
 #include <string.h> /* strdup */
+#include <getopt.h> /* getopt_long */
 
 /* local */
 #include "all.h"
@@ -55,15 +56,15 @@ static void update_all (void);
  */
 static void print_usage( char **argv )
 {
-	LOG("Usage: %s [-f] [-j n | -J s] [-hv]", argv[0]);
+	LOG("Usage: %s [OPTION]", argv[0]);
 	LOG("Options are:");
-	LOG("   -f         fullscreen");
-/*	LOG("   -w n       set width to n");
-	LOG("   -h n       set height to n");*/
-	LOG("   -j n       use joystick n");
-	LOG("   -J s       use joystick whose name contains s");
-	LOG("   -h         display this message and exit");
-	LOG("   -v         print the version and exit");
+	LOG("   -f, --fullscreen      fullscreen");
+	/*LOG("   -w n                  set width to n");
+	LOG("   -h n                  set height to n");*/
+	LOG("   -j n, --joystick n    use joystick n");
+	LOG("   -J s, --Joystick s    use joystick whose name contains s");
+	LOG("   --help                display this message and exit");
+	LOG("   -v, --version         print the version and exit");
 }
 
 
@@ -171,8 +172,16 @@ int main ( int argc, char** argv )
 	/*
 	 * parse arguments
 	 */
+	static struct option long_options[] = {
+			{ "fullscreen", no_argument, 0, 'f' },
+			{ "joystick", required_argument, 0, 'j' },
+			{ "Joystick", required_argument, 0, 'J' },
+			{ "help", no_argument, 0, 'h' },
+			{ "version", no_argument, 0, 'v' },
+			{ 0, 0, 0, 0 } };
+	int option_index = 0;
 	int c = 0;
-	while ((c = getopt(argc, argv, "fJ:j:hv")) != -1) {
+	while ((c = getopt_long(argc, argv, "fJ:j:hv", long_options, &option_index)) != -1) {
 		switch (c) {
 			case 'f':
 				gl_screen.fullscreen = 1;

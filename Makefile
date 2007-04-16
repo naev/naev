@@ -9,9 +9,9 @@ OBJS := $(shell find src/ -name '*.c' -print)
 OBJS := $(OBJS:%.c=%.o)
 
 CLUA = -I/usr/include/lua5.1
-CSDL = `sdl-config --cflags`
-CXML = `xml2-config --cflags`
-CTTF = `freetype-config --cflags`
+CSDL = $(shell sdl-config --cflags)
+CXML = $(shell xml2-config --cflags)
+CTTF = $(shell freetype-config --cflags)
 CGL = 
 CFLAGS = -Wall $(CLUA) $(CSDL) $(CXML) $(CTTF) $(CGL) $(VERSION)
 ifdef DEBUG
@@ -28,7 +28,7 @@ LDGL = -lGL
 LDFLAGS = -lm $(LDLUA) $(LDSDL) $(LDXML) $(LDTTF) $(LDGL)
 
 DATA = data
-DATAFILES = $(shell find ai/ gfx/ dat/ -name '*.lua' -o -name '*.png' -o -name '*.xml' -print)
+DATAFILES = $(shell find ai/ gfx/ dat/ -name '*.lua' -o -name '*.png' -o -name '*.xml')
 
 
 %.o:	%.c
@@ -43,7 +43,7 @@ all:	data $(OBJS)
 
 data: $(DATAFILES)
 	@echo -e "\tCreating data\n"
-	@ls -1 $(DATAFILES) | cpio --quiet -o > $(DATA)
+	@ls -1 $(DATAFILES) | cpio --quiet --format crc -o > $(DATA)
 
 
 clean:
