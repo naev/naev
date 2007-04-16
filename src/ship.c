@@ -58,7 +58,7 @@ Ship* ship_parse( xmlNodePtr parent )
 
 	node  = parent->xmlChildrenNode;
 
-	while ((node = node->next)) {
+	while ((node = node->next)) { /* load all the data */
 		if (strcmp((char*)node->name, "GFX")==0) {
 			cur = node->children;
 			if (strcmp((char*)cur->name,"text")==0) {
@@ -115,6 +115,27 @@ Ship* ship_parse( xmlNodePtr parent )
 		}
 	}
 	temp->thrust *= temp->mass; /* helps keep numbers sane */
+
+	/* ship validator */
+#define MELEMENT(o,s)		if (o == 0) WARN("Ship '%s' missing '"s"' element", temp->name)
+	if (temp->name == NULL) WARN("Ship '%s' missing 'name' tag", temp->name);
+	if (temp->gfx_ship == NULL) WARN("Ship '%s' missing 'GFX' element", temp->name);
+	MELEMENT(temp->thrust,"thrust");
+	MELEMENT(temp->turn,"turn");
+	MELEMENT(temp->speed,"speed");
+	MELEMENT(temp->crew,"crew");
+	MELEMENT(temp->mass,"mass");
+	MELEMENT(temp->armor,"armor");
+	MELEMENT(temp->armor_regen,"armor_regen");
+	MELEMENT(temp->shield,"shield");
+	MELEMENT(temp->shield_regen,"shield_regen");
+	MELEMENT(temp->energy,"energy");
+	MELEMENT(temp->energy_regen,"energy_regen");
+	MELEMENT(temp->cap_cargo,"cap_cargo");
+	MELEMENT(temp->cap_weapon,"cap_weapon");
+#undef MELEMENT
+
+
 
 	DEBUG("Loaded ship '%s'", temp->name);
 	return temp;

@@ -38,9 +38,9 @@
 <shield>160</shield>
 <armor>120</armor>
 <energy>360</energy>
-<shieldregen>90</shieldregen>
-<armorregen>60</armorregen>
-<energyregen>50</energyregen>
+<shield_regen>90</shield_regen>
+<armor_regen>60</armor_regen>
+<energy_regen>50</energy_regen>
 </health>
 <caracteristics>
 <crew>9</crew>
