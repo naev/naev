@@ -7,6 +7,7 @@
 #include "libxml/xmlreader.h"
 
 #include "log.h"
+#include "pack.h"
 
 
 #define MAX_PATH_NAME	20	/* maximum size of the path */
@@ -46,16 +47,16 @@ Ship* get_ship( const char* name )
 }
 
 
-Ship* ship_parse( xmlNodePtr node )
+Ship* ship_parse( xmlNodePtr parent )
 {
-	xmlNodePtr cur;
+	xmlNodePtr cur, node;
 	Ship* temp = CALLOC_ONE(Ship);
 
 	char str[MAX_PATH_NAME] = "\0";
 
-	temp->name = (char*)xmlGetProp(node,(xmlChar*)"name");
+	temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name");
 
-	node = node->xmlChildrenNode;
+	node  = parent->xmlChildrenNode;
 
 	while ((node = node->next)) {
 		if (strcmp((char*)node->name, "GFX")==0) {
@@ -122,28 +123,30 @@ Ship* ship_parse( xmlNodePtr node )
 
 int ships_load(void)
 {
-	xmlTextReaderPtr reader;
 	xmlNodePtr node;
+
+	uint32_t bufsize;
+	char *buf = pack_readfile(DATA, SHIP_DATA, &bufsize);
+	xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+
 	Ship* temp = NULL;
 
-	if ((reader=xmlNewTextReaderFilename(SHIP_DATA))==NULL) {
-		WARN("XML error reading "SHIP_DATA);
+	node = doc->xmlChildrenNode; /* Ships node */
+	if (strcmp((char*)node->name,XML_ID)) {
+		ERR("Malformed ships xml file: missing tag %s", XML_ID);
 		return -1;
 	}
 
-	/* get to the start of the "Ships" section */
-	while (xmlTextReaderRead(reader)==1) {
-		if (xmlTextReaderNodeType(reader)==XML_NODE_START &&
-				strcmp((char*)xmlTextReaderConstName(reader),XML_ID)==0) break;
+	node = node->xmlChildrenNode; /* first ship node */
+	if (node == NULL) {
+		ERR("Malformed ships xml file: is missing ships");
+		return -1;
 	}
-	xmlTextReaderRead(reader); /* at Ships node */
 
-	while (xmlTextReaderRead(reader)==1) {
-		if (xmlTextReaderNodeType(reader)==XML_NODE_START &&
-				strcmp((char*)xmlTextReaderConstName(reader),XML_SHIP)==0) {
+	do {
+		if (node->type ==XML_NODE_START &&
+				strcmp((char*)node->name,XML_SHIP)==0) {
 
-			node = xmlTextReaderCurrentNode(reader); /* node to process */
-			if (node == NULL) break; /* no node */
 			if (ship_stack==NULL) {
 				ship_stack = temp = ship_parse(node);
 				ships = 1;
@@ -155,9 +158,10 @@ int ships_load(void)
 				free(temp);
 			}
 		}
-	}
+	} while ((node = node->next));
 
-	xmlFreeTextReader(reader);
+	xmlFreeDoc(doc);
+	free(buf);
 
 	return 0;
 }
