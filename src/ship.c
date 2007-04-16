@@ -24,7 +24,7 @@
 #define SHIP_GFX		"gfx/ship/"
 
 static Ship* ship_stack = NULL;
-static int ships;
+static int ships = 0;
 
 
 
@@ -162,4 +162,11 @@ int ships_load(void)
 void ships_free()
 {
 	int i;
-	for (i = 0; i < ships; i++) 
+	for (i = 0; i < ships; i++) {
+		if ((ship_stack+i)->name)
+			free((ship_stack+i)->name);
+		gl_freeTexture((ship_stack+i)->gfx_ship);
+	}
+	free(ship_stack);
+	ship_stack = NULL;
+}
