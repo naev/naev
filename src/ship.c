@@ -39,6 +39,9 @@ Ship* get_ship( const char* name )
 	for (i=0; i < ships; i++)
 		if (strcmp((temp+i)->name, name)==0) break;
 
+	if (i == ships) /* ship does not exist, game will probably crash now */
+		WARN("Ship %s does not exist", name);
+
 	return temp+i;
 }
 
