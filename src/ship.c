@@ -140,6 +140,7 @@ int ships_load(void)
 				strcmp((char*)xmlTextReaderConstName(reader),XML_SHIP)==0) {
 
 			node = xmlTextReaderCurrentNode(reader); /* node to process */
+			if (node == NULL) break; /* no node */
 			if (ship_stack==NULL) {
 				ship_stack = temp = ship_parse(node);
 				ships = 1;
@@ -161,12 +162,4 @@ int ships_load(void)
 void ships_free()
 {
 	int i;
-	for (i = 0; i < ships; i++) {
-		if ((ship_stack+i)->name) 
-			free((ship_stack+i)->name);
-		gl_freeTexture((ship_stack+i)->gfx_ship);
-	}
-	free(ship_stack);
-	ship_stack = NULL;
-}
-
+	for (i = 0; i < ships; i++) 
