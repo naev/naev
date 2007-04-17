@@ -6,7 +6,7 @@
 <y>8</y>
 </pos>
 <general>
-<stars>50</stars>
+<stars>500</stars>
 <asteroids>0</asteroids>
 <interference>0</interference>
 <faction>2</faction>
@@ -22,9 +22,6 @@
 <fleet chance="50">Sml Merchant Convoy</fleet>
 <fleet chance="40">Sml Merchant Convoy</fleet>
 </fleets>
-<paths>
-<path>Arrakis</path>
-</paths>
 </ssys>
 <ssys name="Arrakis">
 <pos>
@@ -44,8 +41,5 @@
 <fleet chance="80">Merchant Llama</fleet>
 <fleet chance="60">Merchant Llama</fleet>
 </fleets>
-<paths>
-<path>Delta Pavonis</path>
-</paths>
 </ssys>
 </Systems>

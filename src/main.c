@@ -15,7 +15,7 @@
 #include <getopt.h> /* getopt_long */
 
 /* local */
-#include "all.h"
+#include "main.h"
 #include "log.h"
 #include "physics.h"
 #include "opengl.h"
@@ -247,6 +247,7 @@ int main ( int argc, char** argv )
 	 * data loading
 	 */
 	ships_load();
+	space_load();
 
 
 	/*
@@ -254,7 +255,7 @@ int main ( int argc, char** argv )
 	 */
 	pilot_create( get_ship("Llama"), "Player", NULL, NULL, PILOT_PLAYER );
 	gl_bindCamera( &player->solid->pos );
-	space_init();
+	space_init("Delta Pavonis");
 
 	pilot_create( get_ship("Mr. Test"), NULL, NULL, NULL, 0 );
 
@@ -330,6 +331,8 @@ static void update_all(void)
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	space_render(dt);
+
+	planets_render();
 
 	pilots_update(dt);
 

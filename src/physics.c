@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <assert.h>
 
+#include "main.h"
+
 
 /*
  * M I S C

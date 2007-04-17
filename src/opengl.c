@@ -12,7 +12,7 @@
 #include "freetype/freetype.h"
 #include "freetype/ftglyph.h"
 
-#include "all.h"
+#include "main.h"
 #include "log.h"
 #include "pack.h"
 

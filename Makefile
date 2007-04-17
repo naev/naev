@@ -35,7 +35,7 @@ DATA = data
 DATAFILES = $(shell find ai/ gfx/ dat/ -name '*.lua' -o -name '*.png' -o -name '*.xml')
 
 
-%.o:	%.c
+%.o:	%.c %.h
 	@$(CC) -c $(CFLAGS) -o $@ $<
 	@echo -e "\tCC   $@"
 

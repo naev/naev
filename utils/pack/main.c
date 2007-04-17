@@ -23,7 +23,7 @@ int main( int argc, char** argv )
 	uint32_t nfiles = (uint32_t)argc - 2;
 	argv+=2;
 
-	pack_files( outfile, argv, nfiles );
+	pack_files( outfile, (const char**)argv, nfiles );
 	exit(EXIT_SUCCESS);
 
 usage:

@@ -6,7 +6,7 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "all.h"
+#include "main.h"
 #include "log.h"
 
 

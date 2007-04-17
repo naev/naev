@@ -3,7 +3,6 @@
 #ifndef PHYSICS_H
 #  define PHYSICS_H
 
-#include "all.h"
 
 #define VX(v)		((v).x)
 #define VY(v)		((v).y)

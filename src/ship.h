@@ -4,7 +4,6 @@
 #  define SHIP_H
 
 
-#include "all.h"
 #include "opengl.h"
 
 

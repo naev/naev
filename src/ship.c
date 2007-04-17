@@ -3,20 +3,19 @@
 #include "ship.h"
 
 #include <string.h>
-/* libxml2 needed later then 2.6 */
-#include "libxml/xmlreader.h"
 
+#include "libxml/parser.h"
+
+#include "main.h"
 #include "log.h"
 #include "pack.h"
 
 
-#define MAX_PATH_NAME	20	/* maximum size of the path */
+#define MAX_PATH_NAME	30	/* maximum size of the path */
 
 
 #define XML_NODE_START	1
 #define XML_NODE_TEXT	3
-#define XML_NODE_CLOSE	15
-#define XML_NODE_CDATA	4
 
 #define XML_ID		"Ships"	/* XML section identifier */
 #define XML_SHIP	"ship"
@@ -135,54 +134,46 @@ Ship* ship_parse( xmlNodePtr parent )
 	MELEMENT(temp->cap_weapon,"cap_weapon");
 #undef MELEMENT
 
-
-
-	DEBUG("Loaded ship '%s'", temp->name);
+	DEBUG("Loaded Ship '%s'", temp->name);
 	return temp;
 }
 
 
 int ships_load(void)
 {
-	xmlNodePtr node;
-
 	uint32_t bufsize;
 	char *buf = pack_readfile(DATA, SHIP_DATA, &bufsize);
+
+	xmlNodePtr node;
 	xmlDocPtr doc = xmlParseMemory( buf, bufsize );
 
 	Ship* temp = NULL;
 
 	node = doc->xmlChildrenNode; /* Ships node */
 	if (strcmp((char*)node->name,XML_ID)) {
-		ERR("Malformed ships xml file: missing tag %s", XML_ID);
+		ERR("Malformed "SHIP_DATA" file: missing root element '"XML_ID"'");
 		return -1;
 	}
 
 	node = node->xmlChildrenNode; /* first ship node */
 	if (node == NULL) {
-		ERR("Malformed ships xml file: is missing ships");
+		ERR("Malformed "SHIP_DATA" file: does not contain elements");
 		return -1;
 	}
 
 	do {
 		if (node->type ==XML_NODE_START &&
 				strcmp((char*)node->name,XML_SHIP)==0) {
-
-			if (ship_stack==NULL) {
-				ship_stack = temp = ship_parse(node);
-				ships = 1;
-			}
-			else {
-				temp = ship_parse(node);
-				ship_stack = realloc(ship_stack, sizeof(Ship)*(++ships));
-				memcpy(ship_stack+ships-1, temp, sizeof(Ship));
-				free(temp);
-			}
+			temp = ship_parse(node);
+			ship_stack = realloc(ship_stack, sizeof(Ship)*(++ships));
+			memcpy(ship_stack+ships-1, temp, sizeof(Ship));
+			free(temp);
 		}
 	} while ((node = node->next));
 
 	xmlFreeDoc(doc);
 	free(buf);
+	xmlCleanupParser();
 
 	return 0;
 }

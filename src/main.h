@@ -1,13 +1,15 @@
 
 
-#ifndef ALL_H
-#  define ALL_H
+#ifndef MAIN_H
+#  define MAIN_H
+
 
 #define MALLOC_ONE(type)   (malloc(sizeof(type)))
 #define CALLOC_ONE(type)	(calloc(1,sizeof(type)))
 
 #define ABS(X)					((X<0)?-X:X)
 
-#define DATA	"data"
+#define DATA	"data" /* data file */
 
-#endif /* ALL_H */
+
+#endif /* MAIN_H */

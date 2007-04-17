@@ -11,7 +11,7 @@
 <tech>0</tech>
 <commodities>1</commodities>
 </general>
-<GFX>Caladan</GFX>
+<GFX>Caladan.png</GFX>
 </planet>
 <planet name="Dune">
 <pos>
@@ -24,6 +24,6 @@
 <tech>0</tech>
 <commodities>1</commodities>
 </general>
-<GFX>Dune</GFX>
+<GFX>Dune.png</GFX>
 </planet>
 </Planets>

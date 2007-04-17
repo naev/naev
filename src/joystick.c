@@ -5,7 +5,7 @@
 #include <string.h>
 #include "SDL.h"
 
-#include "all.h"
+#include "main.h"
 #include "log.h"
 
 

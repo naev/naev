@@ -4,7 +4,7 @@
 
 #include <malloc.h>
 
-#include "all.h"
+#include "main.h"
 #include "pilot.h"
 #include "log.h"
 

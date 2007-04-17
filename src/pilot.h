@@ -5,7 +5,6 @@
 #  define PILOT_H
 
 
-#include "all.h"
 #include "physics.h"
 #include "ship.h"
 #include "ai.h"

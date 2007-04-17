@@ -73,7 +73,7 @@ static off_t getfilesize( const char* filename )
 /*
  * returns true if filename is a Packfile
  */
-int pack_check( char* filename )
+int pack_check( const char* filename )
 {
 	int fd = open( filename, O_RDONLY );
 	if (fd == -1) {
@@ -100,7 +100,7 @@ int pack_check( char* filename )
 #define WRITE(f,b,n)    if (write(f,b,n)==-1) { \
 	ERR("Error writing to file: %s", strerror(errno)); \
 	free(buf); return -1; }
-int pack_files( char* outfile, char** infiles, uint32_t nfiles )
+int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles )
 {
 	void *buf;
 	struct stat file;
@@ -190,7 +190,7 @@ int pack_files( char* outfile, char** infiles, uint32_t nfiles )
 #define READ(f,b,n)  if (read(f,b,n)!=n) { \
 	ERR("Fewer bytes read then expected"); \
 	free(buf); return -1; }
-int pack_open( Packfile* file, char* packfile, char* filename )
+int pack_open( Packfile* file, const char* packfile, const char* filename )
 {
 	int i, j;
 	uint32_t nfiles;
@@ -272,7 +272,7 @@ ssize_t pack_read( Packfile* file, void* buf, size_t count )
 /*
  * loads an entire file inte memory and returns a pointer to it
  */
-void* pack_readfile( char* packfile, char* filename, uint32_t *filesize )
+void* pack_readfile( const char* packfile, const char* filename, uint32_t *filesize )
 {
 	Packfile* file = (Packfile*)malloc(sizeof(Packfile));
 	void* buf;
