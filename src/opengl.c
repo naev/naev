@@ -536,6 +536,7 @@ void gl_fontInit( gl_font* font, const char *fname, unsigned int h )
 	/* we can now free the face and library */
 	FT_Done_Face(face);
 	FT_Done_FreeType(library);
+	free(buf);
 }
 void gl_freeFont( gl_font* font )
 {
