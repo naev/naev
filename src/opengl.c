@@ -20,6 +20,7 @@
 #define	SCREEN_W	gl_screen.w
 #define	SCREEN_H gl_screen.h
 
+#define FONT_DEF	"dat/FreeSans.ttf"
 
 
 /* the screen info, gives data of current opengl settings */
@@ -503,6 +504,9 @@ void gl_fontInit( gl_font* font, const char *fname, unsigned int h )
 {
 	if (font == NULL) font = &gl_defFont;
 
+	uint32_t bufsize;
+	FT_Byte* buf = pack_readfile( DATA, (fname) ? fname : FONT_DEF, &bufsize );
+
 	font->textures = malloc(sizeof(GLuint)*128);
 	font->h = h;
 
@@ -513,7 +517,7 @@ void gl_fontInit( gl_font* font, const char *fname, unsigned int h )
 
 	/* object which freetype uses to store font info */
 	FT_Face face;
-	if (FT_New_Face( library, fname, 0, &face ))
+	if (FT_New_Memory_Face( library, buf, bufsize, 0, &face ))
 		WARN("FT_New_Face failed loading library from %s", fname );
 
 	/* FreeType is cool and measures using 1/64 of a pixel, therefore expand */

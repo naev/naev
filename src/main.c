@@ -240,7 +240,7 @@ int main ( int argc, char** argv )
 	if (ai_init())
 		WARN("Error initializing AI");
 
-	gl_fontInit( NULL, "/usr/share/fonts/truetype/freefont/FreeSans.ttf", 16 );
+	gl_fontInit( NULL, NULL, 16 );
 
 	
 	/*

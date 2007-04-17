@@ -32,7 +32,7 @@ LDGL = -lGL
 LDFLAGS = -lm $(LDLUA) $(LDSDL) $(LDXML) $(LDTTF) $(LDGL)
 
 DATA = data
-DATAFILES = $(shell find ai/ gfx/ dat/ -name '*.lua' -o -name '*.png' -o -name '*.xml')
+DATAFILES = $(shell find ai/ gfx/ dat/ -name '*.lua' -o -name '*.png' -o -name '*.xml' -o -name '*.ttf')
 
 
 %.o:	%.c %.h
