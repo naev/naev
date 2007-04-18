@@ -60,6 +60,7 @@ unsigned int pilot_create( Ship* ship, char* name,
 /*
  * cleanup
  */
+void pilot_destroy(Pilot* p);
 void pilots_free (void);
 
 

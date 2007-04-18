@@ -10,7 +10,7 @@
 #include "lualib.h"
 
 /* global */
-#include <unistd.h>	/* getopt */
+#include <unistd.h> /* getopt */
 #include <string.h> /* strdup */
 #include <getopt.h> /* getopt_long */
 
@@ -40,6 +40,8 @@ extern const char *keybindNames[]; /* keybindings */
 
 static int quit = 0; /* for primary loop */
 static unsigned int time = 0; /* used to calculate FPS and movement */
+
+static int show_fps = 1; /* shows fps - default yes */
 
 
 /*
@@ -107,13 +109,19 @@ int main ( int argc, char** argv )
 		lua_getglobal(L, "width");
 		if (lua_isnumber(L, -1))
 			gl_screen.w = (int)lua_tonumber(L, -1);
+
 		lua_getglobal(L, "height");
 		if (lua_isnumber(L, -1))
 			gl_screen.h = (int)lua_tonumber(L, -1);
+
 		lua_getglobal(L, "fullscreen");
 		if (lua_isnumber(L, -1))
 			if ((int)lua_tonumber(L, -1) == 1)
 				gl_screen.fullscreen = 1;
+
+		lua_getglobal(L, "fps");
+		if (lua_isnumber(L, -1))
+			show_fps = (int)lua_tonumber(L, -1);
 
 		/* joystick */
 		lua_getglobal(L, "joystick");
@@ -174,17 +182,22 @@ int main ( int argc, char** argv )
 	 */
 	static struct option long_options[] = {
 			{ "fullscreen", no_argument, 0, 'f' },
+			{ "fps", optional_argument, 0, 'F' },
 			{ "joystick", required_argument, 0, 'j' },
 			{ "Joystick", required_argument, 0, 'J' },
 			{ "help", no_argument, 0, 'h' },
 			{ "version", no_argument, 0, 'v' },
-			{ 0, 0, 0, 0 } };
+			{ NULL, 0, 0, 0 } };
 	int option_index = 0;
 	int c = 0;
-	while ((c = getopt_long(argc, argv, "fJ:j:hv", long_options, &option_index)) != -1) {
+	while ((c = getopt_long(argc, argv, "fFJ:j:hv", long_options, &option_index)) != -1) {
 		switch (c) {
 			case 'f':
 				gl_screen.fullscreen = 1;
+				break;
+			case 'F':
+				if (optarg != NULL) show_fps = atoi(optarg);
+				else show_fps = !show_fps;
 				break;
 			case 'j':
 				indjoystick = atoi(optarg);
@@ -322,7 +335,7 @@ static void update_all(void)
 
 	if (dt > MINIMUM_FPS) {
 		Vector2d pos;
-		vect_cset(&pos, 10., (double)(gl_screen.h-40));
+		vect_csetmin(&pos, 10., (double)(gl_screen.h-40));
 		gl_print( NULL, &pos, "FPS very low, skipping frames" );
 		SDL_GL_SwapBuffers();
 		return;
@@ -330,12 +343,13 @@ static void update_all(void)
 
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	/* BG */
 	space_render(dt);
-
 	planets_render();
-
+	/* N */
 	pilots_update(dt);
-
+	/* FG */
+	player_renderGUI();
 	display_fps(dt);
 
 	SDL_GL_SwapBuffers();
@@ -357,8 +371,9 @@ static void display_fps( const double dt )
 		fps_dt = fps_cur = 0.;
 	}
 	Vector2d pos;
-	vect_cset(&pos, 10., (double)(gl_screen.h-20));
-	gl_print( NULL, &pos, "%3.2f", fps );
+	vect_csetmin(&pos, 10., (double)(gl_screen.h-20));
+	if (show_fps)
+		gl_print( NULL, &pos, "%3.2f", fps );
 }
 
 

@@ -19,8 +19,14 @@ static Pilot** pilot_stack;
 static int pilots = 0;
 
 
+/*
+ * prototyes
+ */
+/* external */
+extern void ai_destroy( Pilot* p ); /* ai.c */
 extern void player_think( Pilot* pilot, const double dt ); /* player.c */
 extern void ai_think( Pilot* pilot ); /* ai.c */
+/* internal */
 static void pilot_update( Pilot* pilot, const double dt );
 static void pilot_render( Pilot* pilot );
 
@@ -144,7 +150,31 @@ unsigned int pilot_create( Ship* ship, char* name,
 
 
 /*
- * frees the pilot
+ * frees and cleans up a pilot
+ */
+void pilot_destroy(Pilot* p)
+{
+	int i;
+
+	solid_free(p->solid);
+	free(p->name);
+	ai_destroy(p);
+
+	for (i=0; i < pilots; i++)
+		if (pilot_stack[i]==p)
+			break;
+
+	while (i < pilots) {
+		pilot_stack[i] = pilot_stack[i+1];
+		i++;
+	}
+
+	free(p);
+}
+
+
+/*
+ * frees the pilots
  */
 void pilots_free (void)
 {

@@ -499,6 +499,8 @@ static void gl_fontMakeDList( FT_Face face, char ch, GLuint list_base, GLuint *t
 
 	/* end of display list */
 	glEndList();
+
+	FT_Done_Glyph(glyph);
 }
 void gl_fontInit( gl_font* font, const char *fname, unsigned int h )
 {

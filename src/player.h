@@ -11,6 +11,12 @@ typedef enum { KEYBIND_NULL, KEYBIND_KEYBOARD, KEYBIND_JAXIS, KEYBIND_JBUTTON } 
 
 
 /*
+ * GUI
+ */
+void player_renderGUI (void);
+
+
+/*
  * input
  */
 void input_init (void);

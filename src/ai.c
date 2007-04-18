@@ -74,7 +74,18 @@ static double pilot_acc = 0.;
 static double pilot_turn = 0.;
 
 
-/* initializes the AI stuff which is basically Lua */
+/*
+ * destroys the ai part of the pilot
+ */
+void ai_destroy( Pilot* p )
+{
+	ai_freetask( p->task );
+}
+
+
+/* 
+ * initializes the AI stuff which is basically Lua
+ */
 int ai_init (void)
 {  
 	L = luaL_newstate();
@@ -107,15 +118,12 @@ int ai_init (void)
 
 	free(buf);
 
-
-/*	if (luaL_dofile(L, "ai/basic.lua") != 0) {
-		WARN("Unable to load AI file: %s","ai_basic.lua");
-		return -1;
-	}*/
-
 	return 0;
 }
 
+/*
+ * cleans up global AI
+ */
 void ai_exit (void)
 {
 	lua_close(L);
@@ -181,6 +189,7 @@ static int ai_pushtask( lua_State *L )
 	Task* t = MALLOC_ONE(Task);
 	t->name = (lua_isstring(L,2)) ? strdup((char*)lua_tostring(L,2)) : NULL;
 	t->next = NULL;
+	t->target = NULL;
 
 	if (lua_gettop(L) > 2) {
 		if (lua_isnumber(L,3))
@@ -294,8 +303,7 @@ static int ai_minbrakedist( lua_State *L )
  */
 static int ai_accel( lua_State *L )
 {
-	MIN_ARGS(1);
-	pilot_acc = (lua_isnumber(L,1)) ? ABS((double)lua_tonumber(L,1)) : 1. ;
+	pilot_acc = (lua_gettop(L) > 1 && lua_isnumber(L,1)) ? ABS((double)lua_tonumber(L,1)) : 1. ;
 	return 0;
 }
 
@@ -324,13 +332,16 @@ static int ai_face( lua_State *L )
 	double mod = -10;
 	if (lua_gettop(L) > 1 && lua_isnumber(L,2))
 		switch ((int)lua_tonumber(L,2)) {
+			case 0: break;
 			case 1: mod *= -1; break;
 			case 2: break;
 		}
+	double diff = angle_diff(cur_pilot->solid->dir,vect_angle(&cur_pilot->solid->pos, v));
 
-	pilot_turn = mod*angle_diff(cur_pilot->solid->dir,vect_angle(&cur_pilot->solid->pos, v));
+	pilot_turn = mod*diff;
 
-	return 0;
+	lua_pushnumber(L, ABS(diff*180./M_PI));
+	return 1;
 }
 
 

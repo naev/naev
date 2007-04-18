@@ -21,7 +21,6 @@ struct Task {
 };
 typedef struct Task Task;
 
-
 int ai_init (void);
 void ai_exit (void);
 

@@ -34,6 +34,14 @@ void vect_cset( Vector2d* v, const double x, const double y )
 	v->angle = ANGLE(x,y);
 }
 /*
+ * creates a minimal vector only valid for blitting and not other operations
+ */
+void vect_csetmin( Vector2d* v, const double x, const double y )
+{
+	v->x = x;
+	v->y = y;
+}
+/*
  * set the vector value using polar coordinates
  */
 void vect_pset( Vector2d* v, const double mod, const double angle )

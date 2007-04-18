@@ -31,6 +31,7 @@ typedef struct {
  * vector manipulation
  */
 void vect_cset( Vector2d* v, const double x, const double y );
+void vect_csetmin( Vector2d* v, const double x, const double y ); /* does not set mod nor angle */
 void vect_pset( Vector2d* v, const double mod, const double angle );
 void vectcpy( Vector2d* dest, const Vector2d* src );
 void vectnull( Vector2d* v );

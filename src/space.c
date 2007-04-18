@@ -30,6 +30,12 @@
 
 #define PLANET_GFX     "gfx/planet/"
 
+/* used to overcome warnings due to 0 values */
+#define FLAG_XSET				   (1<<0)
+#define FLAG_YSET    			(1<<1)
+#define FLAG_ASTEROIDSSET		(1<<2)
+#define FLAG_INTERFERENCESET	(1<<3)
+
 
 /*
  * Planets types, taken from
@@ -63,7 +69,7 @@ typedef enum { PLANET_CLASS_NULL=0, /* Null/Not defined */
 typedef struct {
 	char* name;
 
-	double x, y; /* position in star system */
+	Vector2d pos; /* position in star system */
 
 	PlanetClass class;
 	
@@ -78,7 +84,7 @@ typedef struct {
 typedef struct {
 	char* name;
 
-	double x, y; /* position */
+	Vector2d pos; /* position */
 	int stars, asteroids; /* in number */
 	double interference; /* in % */
 
@@ -142,6 +148,9 @@ static Planet* planet_get( const char* name )
 	Planet* temp = NULL;
 
 	char str[MAX_PATH_NAME] = "\0";
+	char* tstr;
+
+	uint32_t flags = 0;
 
 	uint32_t bufsize;
 	char *buf = pack_readfile( DATA, PLANET_DATA, &bufsize );
@@ -165,9 +174,11 @@ static Planet* planet_get( const char* name )
 	do {
 		if (node->type == XML_NODE_START &&
 				strcmp((char*)node->name,XML_PLANET_TAG)==0) {
-			if (strcmp((char*)xmlGetProp(node,(xmlChar*)"name"),name)==0) { /* found */
+
+			tstr = (char*)xmlGetProp(node,(xmlChar*)"name");
+			if (strcmp(tstr,name)==0) { /* found */
 				temp = CALLOC_ONE(Planet);
-				temp->name = strdup(name);
+				temp->name = tstr;
 
 				node = node->xmlChildrenNode;
 
@@ -183,10 +194,14 @@ static Planet* planet_get( const char* name )
 					else if (strcmp((char*)node->name,"pos")==0) {
 						cur = node->children;
 						while((cur = cur->next)) {
-							if (strcmp((char*)cur->name,"x")==0)
-								temp->x = atof((char*)cur->children->content);
-							else if (strcmp((char*)cur->name,"y")==0)
-								temp->y = atof((char*)cur->children->content);
+							if (strcmp((char*)cur->name,"x")==0) {
+								flags |= FLAG_XSET;
+								temp->pos.x = atof((char*)cur->children->content);
+							}
+							else if (strcmp((char*)cur->name,"y")==0) {
+								flags |= FLAG_YSET;
+								temp->pos.y = atof((char*)cur->children->content);
+							}
 						}
 					}
 					else if (strcmp((char*)node->name,"general")==0) {
@@ -199,6 +214,7 @@ static Planet* planet_get( const char* name )
 				}
 				break;
 			}
+			else free(tstr); /* xmlGetProp mallocs the string */
 		}
 	} while ((node = node->next));
 	
@@ -207,9 +223,9 @@ static Planet* planet_get( const char* name )
 	xmlCleanupParser();
 
 	if (temp) {
-#define MELEMENT(o,s)	if (o == 0) WARN("Planet '%s' missing '"s"' element", temp->name)
-		MELEMENT(temp->x,"x");
-		MELEMENT(temp->x,"y");
+#define MELEMENT(o,s)	if ((o) == 0) WARN("Planet '%s' missing '"s"' element", temp->name)
+		MELEMENT(flags&FLAG_XSET,"x");
+		MELEMENT(flags&FLAG_YSET,"y");
 		MELEMENT(temp->class,"class");
 #undef MELEMENT
 	}
@@ -230,7 +246,9 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 	StarSystem* temp = CALLOC_ONE(StarSystem);
 	xmlNodePtr cur, node;
 
-	temp->name = strdup((char*)xmlGetProp(parent,(xmlChar*)"name"));
+	uint32_t flags;
+
+	temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name"); /* already mallocs */
 
 	node  = parent->xmlChildrenNode;
 
@@ -238,21 +256,29 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 		if (strcmp((char*)node->name,"pos")==0) {
 			cur = node->children;
 			while((cur = cur->next)) {
-				if (strcmp((char*)cur->name,"x")==0)
-					temp->x = atof((char*)cur->children->content);
-				else if (strcmp((char*)cur->name,"y")==0)
-					temp->y = atof((char*)cur->children->content);
+				if (strcmp((char*)cur->name,"x")==0) {
+					flags |= FLAG_XSET;
+					temp->pos.x = atof((char*)cur->children->content);
+				}
+				else if (strcmp((char*)cur->name,"y")==0) {
+					flags |= FLAG_YSET;
+					temp->pos.y = atof((char*)cur->children->content);
+				}
 			}
 		}
 		else if (strcmp((char*)node->name,"general")==0) {
 			cur = node->children;
 			while ((cur = cur->next)) {
-				if (strcmp((char*)cur->name,"stars")==0)
+				if (strcmp((char*)cur->name,"stars")==0) /* non-zero */
 					temp->stars = atoi((char*)cur->children->content);
-				else if (strcmp((char*)cur->name,"asteroids")==0)
+				else if (strcmp((char*)cur->name,"asteroids")==0) {
+					flags |= FLAG_ASTEROIDSSET;
 					temp->asteroids = atoi((char*)cur->children->content);
-				else if (strcmp((char*)cur->name,"interference")==0)
+				}
+				else if (strcmp((char*)cur->name,"interference")==0) {
+					flags |= FLAG_INTERFERENCESET;
 					temp->interference = atof((char*)cur->children->content)/100.;
+				}
 			}
 		}
 		else if (strcmp((char*)node->name,"planets")==0) {
@@ -268,13 +294,13 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 		}
 	}
 
-#define MELEMENT(o,s)      if (o == 0) WARN("Star System '%s' missing '"s"' element", temp->name)
+#define MELEMENT(o,s)      if ((o) == 0) WARN("Star System '%s' missing '"s"' element", temp->name)
 	if (temp->name == NULL) WARN("Star System '%s' missing 'name' tag", temp->name);
-	MELEMENT(temp->x,"x");
-	MELEMENT(temp->y,"y");
+	MELEMENT(flags&FLAG_XSET,"x");
+	MELEMENT(flags&FLAG_YSET,"y");
 	MELEMENT(temp->stars,"stars");
-	/*MELEMENT(temp->asteroids,"asteroids"); can be 0
-	MELEMENT(temp->interference,"inteference");*/
+	MELEMENT(flags&FLAG_ASTEROIDSSET,"asteroids");
+	MELEMENT(flags&FLAG_INTERFERENCESET,"inteference");
 #undef MELEMENT
 
 	DEBUG("Loaded Star System '%s' with %d Planet%s", temp->name,
@@ -369,12 +395,8 @@ void space_render( double dt )
 void planets_render (void)
 {
 	int i;
-	Vector2d v;
-	for (i=0; i < cur_system->nplanets; i++) {
-		v.x = cur_system->planets[i].x;
-		v.y = cur_system->planets[i].y;
-		gl_blitSprite( cur_system->planets[i].gfx_space, &v, 0, 0 );
-	}
+	for (i=0; i < cur_system->nplanets; i++)
+		gl_blitSprite( cur_system->planets[i].gfx_space, &cur_system->planets[i].pos, 0, 0 );
 }
 
 

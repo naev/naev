@@ -60,7 +60,7 @@ face( number/Vector2d target, [number invert] )
 	@desc turns to face target
 	@param target pilot ID or Vector2d to face
 	@param invert faces away if 1
-	@return nil
+	@return number offset from target in grad
 
 
 	M I S C

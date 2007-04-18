@@ -45,6 +45,24 @@ void player_think( Pilot* player, const double dt )
 
 
 /*
+ *
+ * 	G U I
+ *
+ */
+void player_renderGUI (void)
+{
+	
+}
+
+
+
+/*
+ *
+ *
+ *		I N P U T
+ *
+ */
+/*
  * initialization/exit functions (does not assign keys)
  */
 void input_init (void)
@@ -213,6 +231,7 @@ void input_handle( SDL_Event* event )
 
 		case SDL_JOYBUTTONUP:
 			input_joyup(event->jbutton.button);
+			break;
 
 		case SDL_KEYDOWN:
 			input_keydown(event->key.keysym.sym);
