@@ -9,7 +9,8 @@
 
 #define ABS(X)					((X<0)?-X:X)
 
-#define DATA	"data" /* data file */
+extern char* data; /* modifiable datafile */
+#define DATA	data /* data file */
 
 
 #endif /* MAIN_H */

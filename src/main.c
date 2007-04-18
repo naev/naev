@@ -41,6 +41,8 @@ extern const char *keybindNames[]; /* keybindings */
 static int quit = 0; /* for primary loop */
 static unsigned int time = 0; /* used to calculate FPS and movement */
 
+#define DATA_DEF		"data"
+char* data = NULL;
 static int show_fps = 1; /* shows fps - default yes */
 
 
@@ -61,6 +63,8 @@ static void print_usage( char **argv )
 	LOG("Usage: %s [OPTION]", argv[0]);
 	LOG("Options are:");
 	LOG("   -f, --fullscreen      fullscreen");
+	LOG("   -F, --fps n           toggle frames per second");
+	LOG("   -d s, --data s        set the data file to be s");
 	/*LOG("   -w n                  set width to n");
 	LOG("   -h n                  set height to n");*/
 	LOG("   -j n, --joystick n    use joystick n");
@@ -85,6 +89,8 @@ int main ( int argc, char** argv )
 	/*
 	 * default values
 	 */
+	/* global */
+	data = DATA_DEF;
 	/* opengl */
 	gl_screen.w = 800;
 	gl_screen.h = 640;
@@ -104,6 +110,11 @@ int main ( int argc, char** argv )
 	 */
 	lua_State *L = luaL_newstate();
 	if (luaL_dofile(L, CONF_FILE) == 0) { /* configuration file exists */
+
+		/* global */
+		lua_getglobal(L, "data");
+		if (lua_isstring(L, -1))
+			data = strdup((char*)lua_tostring(L, -1));
 
 		/* opengl properties*/
 		lua_getglobal(L, "width");
@@ -183,6 +194,7 @@ int main ( int argc, char** argv )
 	static struct option long_options[] = {
 			{ "fullscreen", no_argument, 0, 'f' },
 			{ "fps", optional_argument, 0, 'F' },
+			{ "data", required_argument, 0, 'd' },
 			{ "joystick", required_argument, 0, 'j' },
 			{ "Joystick", required_argument, 0, 'J' },
 			{ "help", no_argument, 0, 'h' },
@@ -190,7 +202,7 @@ int main ( int argc, char** argv )
 			{ NULL, 0, 0, 0 } };
 	int option_index = 0;
 	int c = 0;
-	while ((c = getopt_long(argc, argv, "fFJ:j:hv", long_options, &option_index)) != -1) {
+	while ((c = getopt_long(argc, argv, "fFd:J:j:hv", long_options, &option_index)) != -1) {
 		switch (c) {
 			case 'f':
 				gl_screen.fullscreen = 1;
@@ -198,6 +210,9 @@ int main ( int argc, char** argv )
 			case 'F':
 				if (optarg != NULL) show_fps = atoi(optarg);
 				else show_fps = !show_fps;
+				break;
+			case 'd':
+				data = strdup(optarg);
 				break;
 			case 'j':
 				indjoystick = atoi(optarg);

@@ -5,7 +5,7 @@ function follow ()
 	dir = face(target)
 	dist = getdist(getpos(target))
 	if dir < 10 and dist > 100 then
-		accel()
+		accel( dist/100-1 )
 	end
 end
 

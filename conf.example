@@ -4,6 +4,9 @@ width = 800
 height = 640
 fullscreen = 0
 
+-- SCREEN
+fps = 0
+
 -- JOYSTICK
 -- can be by number or substring of joystick name
 joystick = "Precision"
@@ -11,6 +14,10 @@ joystick = "Precision"
 
 -- KEYBINDINGS
 -- type can be keyboard, jaxis or jbutton
+--
+-- if left is an axis it'll automatically set right to the same axis
+-- therefore you set both to the same axis (key).  You can use the reverse = 1
+-- option to reverse them
 accel = { type = "jbutton", key = 0 }
 left = { type = "jaxis", key = 0 }
 right = { type = "jaxis", key = 0 }
