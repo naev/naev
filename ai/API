@@ -44,6 +44,17 @@ minbrakedist()
 	@return number distance needed to brake
 
 
+	B O O L E A N
+
+ismaxvel()
+	@desc checks if velocity is maximum
+	@return true if velocity is maximum, false otherwise
+
+isstopped()
+	@desc checks if is stopped
+	@return true if stopped, false otherwise
+
+
 	M O V E M E N T
 
 accel( [number mod] )

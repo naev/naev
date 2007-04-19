@@ -19,6 +19,23 @@
 /*
  * AI Overview
  *
+ *	Concept: Goal (Task) Based AI with additional Optimization
+ *
+ *	  AI uses the goal (task) based AI approach with tasks scripted in lua,
+ *	additionally there is a task that is hardcoded and obligatory in any AI
+ *	script, the 'control' task, whose sole purpose is to assign tasks if there
+ *	is no current tasks and optimizes or changes tasks if there are.
+ *	  For example: Pilot A is attacking Pilot B.  Say that Pilot C then comes in
+ *	the same system and is of the same faction as Pilot B, and therefore attacks
+ *	Pilot A.  Pilot A would keep on fighting Pilot B until the control task kicks
+ *	in.  Then he/she could run if it deems that Pilot C and Pilot B together are too
+ *	strong for him/her, or attack Pilot C because it's an easier target to finish off
+ *	then Pilot B.  Therefore there are endless possibilities and it's up to the AI
+ *	coder to set up.
+ *
+ *
+ * Specification
+ *
  * @ AI will follow basic tasks defined from Lua AI script.  
  *   @ if Task is NULL, AI will run "control" task
  *   @ Task is continued every frame
@@ -32,10 +49,14 @@
 
 
 /* calls the AI function with name f */
-#define AI_LCALL(f)	      (lua_getglobal(L, f), lua_call(L, 0, 0))
+#define AI_LCALL(f)	      (lua_getglobal(L, f), lua_pcall(L, 0, 0, 0))
 
 /* makes the function not run if n minimum parameters aren't passed */
 #define MIN_ARGS(n)			if (lua_gettop(L) < n) return 0
+
+
+#define MAX_DIR_ERR		5.0*M_PI/180.
+#define MIN_VEL_ERR		2.5
 
 
 /*
@@ -54,10 +75,14 @@ static int ai_gettargetid( lua_State *L ); /* number gettargetid() */
 static int ai_getdistance( lua_State *L ); /* number getdist(Vector2d) */
 static int ai_getpos( lua_State *L ); /* getpos(number/Pilot) */
 static int ai_minbrakedist( lua_State *L ); /* number minbrakedist() */
+/* boolean expressions */
+static int ai_ismaxvel( lua_State *L ); /* boolean ismaxvel() */
+static int ai_isstopped( lua_State *L ); /* boolean isstopped() */
 /* movement */
 static int ai_accel( lua_State *L ); /* accel(number); number <= 1. */
 static int ai_turn( lua_State *L ); /* turn(number); abs(number) <= 1. */
 static int ai_face( lua_State *L ); /* face(number/pointer) */
+static int ai_brake( lua_State *L ); /* brake() */
 /* misc */
 static int ai_createvect( lua_State *L ); /* createvect( number, number ) */
 
@@ -89,30 +114,41 @@ void ai_destroy( Pilot* p )
 int ai_init (void)
 {  
 	L = luaL_newstate();
-	if (L == NULL)
+	if (L == NULL) {
+		ERR("Unable to create a new Lua state");
 		return -1;
+	}
 
 	/* opens the standard lua libraries */
 	luaL_openlibs(L);
 
 	/* Register C functions in Lua */
+	/* tasks */
 	lua_register(L, "pushtask", ai_pushtask);
 	lua_register(L, "poptask", ai_poptask);
 	lua_register(L, "taskname", ai_taskname);
+	/* consult values */
 	lua_register(L, "gettarget", ai_gettarget);
 	lua_register(L, "gettargetid", ai_gettargetid);
 	lua_register(L, "getdist", ai_getdistance);
 	lua_register(L, "getpos", ai_getpos);
 	lua_register(L, "minbrakedist", ai_minbrakedist);
+	/* boolean expressions */
+	lua_register(L, "ismaxvel", ai_ismaxvel);
+	lua_register(L, "isstopped", ai_isstopped);
+	/* movement */
 	lua_register(L, "accel", ai_accel);
 	lua_register(L, "turn", ai_turn);
 	lua_register(L, "face", ai_face);
+	lua_register(L, "brake", ai_brake);
+	/* misc */
 	lua_register(L, "createvect", ai_createvect);
 
 	char *buf = pack_readfile( DATA, "ai/basic.lua", NULL );
 	
 	if (luaL_dostring(L, buf) != 0) {
-		WARN("Unable to load AI file: %s","ai/basic.lua");
+		ERR("Error loading AI file: %s","ai/basic.lua");
+		WARN("Most likely Lua file has improper syntax, please check");
 		return -1;
 	}
 
@@ -299,6 +335,26 @@ static int ai_minbrakedist( lua_State *L )
 
 
 /*
+ * is at maximum velocity?
+ */
+static int ai_ismaxvel( lua_State *L )
+{
+	lua_pushboolean(L,(VMOD(cur_pilot->solid->vel) == cur_pilot->ship->speed));
+	return 1;
+}
+
+
+/*
+ * is stopped?
+ */
+static int ai_isstopped( lua_State *L )
+{
+	lua_pushboolean(L,(VMOD(cur_pilot->solid->vel) < MIN_VEL_ERR));
+	return 1;
+}
+
+
+/*
  * starts accelerating the pilot based on a parameter
  */
 static int ai_accel( lua_State *L )
@@ -342,6 +398,19 @@ static int ai_face( lua_State *L )
 
 	lua_pushnumber(L, ABS(diff*180./M_PI));
 	return 1;
+}
+
+
+/*
+ * brakes the pilot
+ */
+static int ai_brake( lua_State *L )
+{
+	double diff = angle_diff(cur_pilot->solid->dir,VANGLE(cur_pilot->solid->vel));
+	pilot_turn = 10*diff;
+	if (diff < MAX_DIR_ERR && VMOD(cur_pilot->solid->vel) > MIN_VEL_ERR)
+		pilot_acc = 1.;
+	return 0;
 }
 
 

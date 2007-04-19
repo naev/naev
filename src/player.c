@@ -70,7 +70,7 @@ void input_init (void)
 	Keybind *temp;
 	int i;
 	for (i=0; keybindNames[i]; i++); /* gets number of bindings */
-	player_input = (Keybind**)malloc(i*sizeof(Keybind*));
+	player_input = malloc(i*sizeof(Keybind*));
 
 	/* creates a null keybinding for each */
 	for (i=0; keybindNames[i]; i++) {

@@ -194,7 +194,7 @@ int pack_open( Packfile* file, const char* packfile, const char* filename )
 {
 	int i, j;
 	uint32_t nfiles;
-	char* buf = (char*)malloc(MAX_FILENAME);
+	char* buf = malloc(MAX_FILENAME);
 
 	file->start = file->end = 0;
 
@@ -274,7 +274,7 @@ ssize_t pack_read( Packfile* file, void* buf, size_t count )
  */
 void* pack_readfile( const char* packfile, const char* filename, uint32_t *filesize )
 {
-	Packfile* file = (Packfile*)malloc(sizeof(Packfile));
+	Packfile* file = malloc(sizeof(Packfile));
 	void* buf;
 	int size, bytes;
 

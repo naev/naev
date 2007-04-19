@@ -74,7 +74,7 @@ static int SDL_VFlipSurface( SDL_Surface* surface )
 	Uint8 *rowhi, *rowlo, *tmpbuf;
 	int y;
 
-	tmpbuf = (Uint8 *)malloc(surface->pitch);
+	tmpbuf = malloc(surface->pitch);
 	if ( tmpbuf == NULL ) {
 		WARN("Out of memory");
 		return -1;
