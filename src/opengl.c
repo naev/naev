@@ -634,7 +634,7 @@ int gl_init()
 	/* some OpenGL options */
 	glClearColor( 0., 0., 0., 1. );
 	glDisable(GL_DEPTH_TEST); /* set for doing 2d */
-//	glEnable(GL_TEXTURE_2D);
+/*	glEnable(GL_TEXTURE_2D); never enable globally, breaks non-tetxrue blits */
 	glDisable(GL_LIGHTING); /* no lighting, it's done when rendered */
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();

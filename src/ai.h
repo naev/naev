@@ -9,7 +9,7 @@
  *  @name is the task's name (function name in Lua)
  *  @target is the target which will depend on the task itself
  */
-struct Task {
+typedef struct Task {
 	struct Task* next;
 
 	char *name;
@@ -18,8 +18,7 @@ struct Task {
 		void *target; /* Vector2d, etc... */
 		unsigned int ID; /* Pilot ID, etc... */
 	};
-};
-typedef struct Task Task;
+} Task;
 
 int ai_init (void);
 void ai_exit (void);

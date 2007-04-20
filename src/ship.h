@@ -5,13 +5,30 @@
 
 
 #include "opengl.h"
+#include "outfit.h"
 
 
 enum ship_class { SHIP_CLASS_NULL,
-	SHIP_CLASS_CIVILIAN };
+	SHIP_CLASS_CIV_LIGHT,
+	SHIP_CLASS_CIV_MEDIUM,
+	SHIP_CLASS_CIV_HEAVY
+};
 typedef enum ship_class ship_class;
 
 
+/*
+ * little wrapper for outfits
+ */
+typedef struct ShipOutfit {
+	struct ShipOutfit* next; /* linked list */
+	Outfit* data; /* data itself */
+	int quantity; /* important difference */
+} ShipOutfit;
+
+
+/*
+ * ship class itself
+ */
 typedef struct {
 
 	char* name; /* ship name */
@@ -34,6 +51,9 @@ typedef struct {
 
 	/* capacity */
 	int cap_cargo, cap_weapon; 
+
+	/* outfits */
+	ShipOutfit* outfit;
 
 } Ship;
 

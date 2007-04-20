@@ -26,6 +26,7 @@
 #include "space.h"
 #include "rng.h"
 #include "ai.h"
+#include "outfit.h"
 
 
 #define WINDOW_CAPTION  "game"
@@ -274,6 +275,7 @@ int main ( int argc, char** argv )
 	/*
 	 * data loading
 	 */
+	outfit_load();
 	ships_load();
 	space_load();
 
@@ -313,6 +315,7 @@ int main ( int argc, char** argv )
 	space_exit(); /* cleans up the universe itself */
 	pilots_free(); /* frees the pilots, they were locked up :( */
 	ships_free();
+	outfit_free();
 
 	gl_freeFont(NULL);
 

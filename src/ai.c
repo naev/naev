@@ -254,6 +254,7 @@ static int ai_pushtask( lua_State *L )
  */
 static int ai_poptask( lua_State *L )
 {
+	(void)L; /* hack to avoid -W -Wall warnings */
 	Task* t = cur_pilot->task;
 	cur_pilot->task = t->next;
 	t->next = NULL;
@@ -406,6 +407,7 @@ static int ai_face( lua_State *L )
  */
 static int ai_brake( lua_State *L )
 {
+	(void)L; /* hack to avoid -W -Wall warnings */
 	double diff = angle_diff(cur_pilot->solid->dir,VANGLE(cur_pilot->solid->vel));
 	pilot_turn = 10*diff;
 	if (diff < MAX_DIR_ERR && VMOD(cur_pilot->solid->vel) > MIN_VEL_ERR)

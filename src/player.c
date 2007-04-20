@@ -15,7 +15,7 @@
 typedef struct {
 	char *name; /* keybinding name, taken from keybindNames */
 	KeybindType type; /* type, defined in playe.h */
-	int key; /* key/axis/button event number */
+	unsigned int key; /* key/axis/button event number */
 	double reverse; /* 1. if normal, -1. if reversed, only useful for joystick axis */
 } Keybind;
 static Keybind** player_input; /* contains the players keybindings */
@@ -34,7 +34,7 @@ static double player_acc = 0.; /* accel velocity from input */
  *
  * basically uses keyboard input instead of AI input
  */
-void player_think( Pilot* player, const double dt )
+void player_think( Pilot* player )
 {
 	player->solid->dir_vel = 0.;
 	if (player_turn)
@@ -139,9 +139,9 @@ static void input_key( int keynum, double value, int abs )
  * events
  */
 /* prototypes */
-static void input_joyaxis( int axis, int value );
-static void input_joydown( int button );
-static void input_joyup( int button );
+static void input_joyaxis( const unsigned int axis, const int value );
+static void input_joydown( const unsigned int button );
+static void input_joyup( const unsigned int button );
 static void input_keydown( SDLKey key );
 static void input_keyup( SDLKey key );
 
@@ -149,7 +149,7 @@ static void input_keyup( SDLKey key );
  * joystick
  */
 /* joystick axis */
-static void input_joyaxis( int axis, int value )
+static void input_joyaxis( const unsigned int axis, const int value )
 {
 	int i;
 	for (i=0; keybindNames[i]; i++)
@@ -159,7 +159,7 @@ static void input_joyaxis( int axis, int value )
 		}
 }
 /* joystick button down */
-static void input_joydown( int button )
+static void input_joydown( const unsigned int button )
 {
 	int i;
 	for (i=0; keybindNames[i]; i++)
@@ -169,7 +169,7 @@ static void input_joydown( int button )
 		}  
 }
 /* joystick button up */
-static void input_joyup( int button )
+static void input_joyup( const unsigned int button )
 {
 	int i;
 	for (i=0; keybindNames[i]; i++)

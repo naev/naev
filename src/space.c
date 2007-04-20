@@ -14,7 +14,6 @@
 #include "pilot.h"
 #include "pack.h"
 
-#define MAX_PATH_NAME   30 /* maximum size of the path */
 
 #define XML_NODE_START  1
 #define XML_NODE_TEXT   3
@@ -26,7 +25,7 @@
 #define XML_SYSTEM_TAG	"ssys"
 
 #define PLANET_DATA	"dat/planet.xml"
-#define SPACE_DATA	"dat/ssys.xml"
+#define SYSTEM_DATA	"dat/ssys.xml"
 
 #define PLANET_GFX     "gfx/planet/"
 
@@ -147,7 +146,7 @@ static Planet* planet_get( const char* name )
 {
 	Planet* temp = NULL;
 
-	char str[MAX_PATH_NAME] = "\0";
+	char str[PATH_MAX] = "\0";
 	char* tstr;
 
 	uint32_t flags = 0;
@@ -316,7 +315,7 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 int space_load (void)
 {
 	uint32_t bufsize;
-	char *buf = pack_readfile( DATA, SPACE_DATA, &bufsize );
+	char *buf = pack_readfile( DATA, SYSTEM_DATA, &bufsize );
 
 	StarSystem *temp;
 
@@ -325,13 +324,13 @@ int space_load (void)
 
 	node = doc->xmlChildrenNode;
 	if (strcmp((char*)node->name,XML_SYSTEM_ID)) {
-		ERR("Malformed "SPACE_DATA"file: missing root element '"XML_SYSTEM_ID"'");
+		ERR("Malformed "SYSTEM_DATA"file: missing root element '"XML_SYSTEM_ID"'");
 		return -1;
 	}
 
 	node = node->xmlChildrenNode; /* first system node */
 	if (node == NULL) {
-		ERR("Malformed "SPACE_DATA" file: does not contain elements");
+		ERR("Malformed "SYSTEM_DATA" file: does not contain elements");
 		return -1;
 	}
 
@@ -339,16 +338,10 @@ int space_load (void)
 		if (node->type == XML_NODE_START &&           
 				strcmp((char*)node->name,XML_SYSTEM_TAG)==0) {
 
-			if (systems==NULL) {
-				systems = temp = system_parse(node);
-				nsystems = 1;
-			}    
-			else {
-				temp = system_parse(node);               
-				systems = realloc(systems, sizeof(StarSystem)*(++nsystems));
-				memcpy(systems+nsystems-1, temp, sizeof(StarSystem));
-				free(temp);
-			}
+			temp = system_parse(node);               
+			systems = realloc(systems, sizeof(StarSystem)*(++nsystems));
+			memcpy(systems+nsystems-1, temp, sizeof(StarSystem));
+			free(temp);
 		}                                                                             
 	} while ((node = node->next));                                                   
 

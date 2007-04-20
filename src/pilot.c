@@ -24,7 +24,7 @@ static int pilots = 0;
  */
 /* external */
 extern void ai_destroy( Pilot* p ); /* ai.c */
-extern void player_think( Pilot* pilot, const double dt ); /* player.c */
+extern void player_think( Pilot* pilot ); /* player.c */
 extern void ai_think( Pilot* pilot ); /* ai.c */
 /* internal */
 static void pilot_update( Pilot* pilot, const double dt );
@@ -113,7 +113,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name,
 	pilot->task = NULL;
 
 	if (flags & PILOT_PLAYER) {
-		pilot->think = (void*)player_think; /* players don't need to think! :P */
+		pilot->think = player_think; /* players don't need to think! :P */
 		pilot->properties |= PILOT_PLAYER;
 		player = pilot;
 	}

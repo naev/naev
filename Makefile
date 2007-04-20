@@ -17,9 +17,9 @@ CSDL = $(shell sdl-config --cflags)
 CXML = $(shell xml2-config --cflags)
 CTTF = $(shell freetype-config --cflags)
 CGL = 
-CFLAGS = -Wall $(CLUA) $(CSDL) $(CXML) $(CTTF) $(CGL) $(VERSION)
+CFLAGS = $(CLUA) $(CSDL) $(CXML) $(CTTF) $(CGL) $(VERSION)
 ifdef DEBUG
-CFLAGS += -g3 -DDEBUG -DLUA_USE_APICHECK
+CFLAGS += -W -Wall -g3 -DDEBUG -DLUA_USE_APICHECK
 else # DEBUG
 CFLAGS += -O2
 endif # DEBUG

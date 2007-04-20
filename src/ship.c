@@ -11,9 +11,6 @@
 #include "pack.h"
 
 
-#define MAX_PATH_NAME	30	/* maximum size of the path */
-
-
 #define XML_NODE_START	1
 #define XML_NODE_TEXT	3
 
@@ -26,6 +23,11 @@
 static Ship* ship_stack = NULL;
 static int ships = 0;
 
+
+/*
+ * Prototypes
+ */
+static Ship* ship_parse( xmlNodePtr parent );
 
 
 /*
@@ -46,12 +48,14 @@ Ship* get_ship( const char* name )
 }
 
 
-Ship* ship_parse( xmlNodePtr parent )
+static Ship* ship_parse( xmlNodePtr parent )
 {
 	xmlNodePtr cur, node;
 	Ship* temp = CALLOC_ONE(Ship);
+	ShipOutfit *otemp, *ocur;
 
-	char str[MAX_PATH_NAME] = "\0";
+	char str[PATH_MAX] = "\0";
+	xmlChar* xstr;
 
 	temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name");
 
@@ -59,18 +63,12 @@ Ship* ship_parse( xmlNodePtr parent )
 
 	while ((node = node->next)) { /* load all the data */
 		if (strcmp((char*)node->name, "GFX")==0) {
-			cur = node->children;
-			if (strcmp((char*)cur->name,"text")==0) {
-				snprintf( str, strlen((char*)cur->content)+sizeof(SHIP_GFX),
-						SHIP_GFX"%s", (char*)cur->content);
-				temp->gfx_ship = gl_newSprite(str, 6, 6);
-			}
+			snprintf( str, strlen((char*)node->children->content)+sizeof(SHIP_GFX),
+					SHIP_GFX"%s", (char*)node->children->content);
+			temp->gfx_ship = gl_newSprite(str, 6, 6);
 		}
-		else if (strcmp((char*)node->name, "class")==0) {
-			cur = node->children;
-			if (strcmp((char*)cur->name,"text")==0)
-				temp->class = atoi((char*)cur->content);
-		}
+		else if (strcmp((char*)node->name, "class")==0)
+			temp->class = atoi((char*)node->children->content);
 		else if (strcmp((char*)node->name, "movement")==0) {
 			cur = node->children;
 			while ((cur = cur->next)) {
@@ -101,7 +99,7 @@ Ship* ship_parse( xmlNodePtr parent )
 		}
 		else if (strcmp((char*)node->name,"caracteristics")==0) {
 			cur = node->children;
-			while((cur = cur->next)) {
+			while ((cur = cur->next)) {
 				if (strcmp((char*)cur->name,"crew")==0)
 					temp->crew = atoi((char*)cur->children->content);
 				else if (strcmp((char*)cur->name,"mass")==0)
@@ -112,6 +110,25 @@ Ship* ship_parse( xmlNodePtr parent )
 					temp->cap_cargo = atoi((char*)cur->children->content);
 			}
 		}
+		else if (strcmp((char*)node->name,"outfits")==0) {
+			cur = node->children;
+			while ((cur == cur->next)) {
+				if (strcmp((char*)cur->name,"outfit")==0) {
+					otemp = MALLOC_ONE(ShipOutfit);
+					otemp->data = outfit_get((char*)cur->children->content);
+					xstr = xmlGetProp(parent,(xmlChar*)"name");
+					otemp->quantity = atoi((char*)xstr);
+					free(xstr);
+					
+					if ((ocur=temp->outfit) == NULL) temp->outfit = otemp;
+					else {
+						while (ocur->next);
+						ocur->next = otemp;
+					}
+				}
+			}
+		}
+
 	}
 	temp->thrust *= temp->mass; /* helps keep numbers sane */
 

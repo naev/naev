@@ -2,21 +2,19 @@
 <Outfits>
 <outfit name="laser">
 <general>
-<max>0</max>
-<type>1</type>
-<tech>0</tech>
+<max>5</max>
+<tech>2</tech>
+<mass>1</mass>
 </general>
-<sound>laser</sound>
-<GFX>
-<game>laser_green</game>
-</GFX>
-<parameters>
-<parameter>7</parameter>
-<parameter>7</parameter>
-<parameter>600</parameter>
-<parameter>400</parameter>
-<parameter>18</parameter>
-<parameter>500</parameter>
-</parameters>
+<specific type="1">
+<sound>laser.wav</sound>
+<gfx>lasergreen.png</gfx>
+<speed>450</speed>
+<accuracy>30</accuracy>
+<damage>
+<armor>20</armor>
+<shield>10</shield>
+</damage>
+</specific>
 </outfit>
 </Outfits>

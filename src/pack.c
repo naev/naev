@@ -104,7 +104,8 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
 {
 	void *buf;
 	struct stat file;
-	int i, namesize;
+	uint32_t i;
+	int namesize;
 	int outfd, infd;
 	uint32_t indexsize, pointer;
 	int bytes;
@@ -192,8 +193,8 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
 	free(buf); return -1; }
 int pack_open( Packfile* file, const char* packfile, const char* filename )
 {
-	int i, j;
-	uint32_t nfiles;
+	int j;
+	uint32_t nfiles, i;
 	char* buf = malloc(MAX_FILENAME);
 
 	file->start = file->end = 0;
@@ -227,7 +228,7 @@ int pack_open( Packfile* file, const char* packfile, const char* filename )
 	free(buf);
 	
 	if (file->start) { /* go to the beginning of the file */
-		if (lseek( file->fd, file->start, SEEK_SET ) != file->start) {
+		if ((uint32_t)lseek( file->fd, file->start, SEEK_SET ) != file->start) {
 			ERR("Failure to seek to file start: %s", strerror(errno));
 			return -1;
 		}

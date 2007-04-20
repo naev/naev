@@ -20,7 +20,7 @@
 /*
  * primary pilot structure
  */
-struct Pilot {
+typedef struct Pilot {
 
 	unsigned int id; /* pilot's id, used for many functions */
 	char* name; /* pilot's name (if unique) */
@@ -41,8 +41,7 @@ struct Pilot {
 	/* AI */
 	void (*think)(struct Pilot*); /* AI thinking for the pilot */
 	Task* task; /* current action */
-};
-typedef struct Pilot Pilot;
+} Pilot;
 
 
 extern Pilot* player; /* the player */
