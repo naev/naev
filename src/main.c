@@ -27,8 +27,11 @@
 #include "rng.h"
 #include "ai.h"
 #include "outfit.h"
+#include "pack.h"
+#include "weapon.h"
 
 
+#define APPNAME			"GAME"
 #define WINDOW_CAPTION  "game"
 
 #define CONF_FILE			"conf"
@@ -45,6 +48,7 @@ static unsigned int time = 0; /* used to calculate FPS and movement */
 #define DATA_DEF		"data"
 char* data = NULL;
 static int show_fps = 1; /* shows fps - default yes */
+static int max_fps = 0;
 
 
 /*
@@ -64,7 +68,7 @@ static void print_usage( char **argv )
 	LOG("Usage: %s [OPTION]", argv[0]);
 	LOG("Options are:");
 	LOG("   -f, --fullscreen      fullscreen");
-	LOG("   -F, --fps n           toggle frames per second");
+	LOG("   -F n, --fps n         limit frames per second");
 	LOG("   -d s, --data s        set the data file to be s");
 	/*LOG("   -w n                  set width to n");
 	LOG("   -h n                  set height to n");*/
@@ -81,6 +85,13 @@ static void print_usage( char **argv )
 int main ( int argc, char** argv )
 {
 	int i;
+
+
+	/*
+	 * print the version
+	 */
+	LOG( " "APPNAME" v%d.%d.%d", VMAJOR, VMINOR, VREV );
+
 
 	/*
 	 * initializes SDL for possible warnings
@@ -104,6 +115,7 @@ int main ( int argc, char** argv )
 	input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, 0 );
 	input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, 0 ); 
 	input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, 0 );
+	input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, 0 );
 
 
 	/*
@@ -133,7 +145,7 @@ int main ( int argc, char** argv )
 
 		lua_getglobal(L, "fps");
 		if (lua_isnumber(L, -1))
-			show_fps = (int)lua_tonumber(L, -1);
+			max_fps = (int)lua_tonumber(L, -1);
 
 		/* joystick */
 		lua_getglobal(L, "joystick");
@@ -194,7 +206,7 @@ int main ( int argc, char** argv )
 	 */
 	static struct option long_options[] = {
 			{ "fullscreen", no_argument, 0, 'f' },
-			{ "fps", optional_argument, 0, 'F' },
+			{ "fps", required_argument, 0, 'F' },
 			{ "data", required_argument, 0, 'd' },
 			{ "joystick", required_argument, 0, 'j' },
 			{ "Joystick", required_argument, 0, 'J' },
@@ -203,14 +215,13 @@ int main ( int argc, char** argv )
 			{ NULL, 0, 0, 0 } };
 	int option_index = 0;
 	int c = 0;
-	while ((c = getopt_long(argc, argv, "fFd:J:j:hv", long_options, &option_index)) != -1) {
+	while ((c = getopt_long(argc, argv, "fF:d:J:j:hv", long_options, &option_index)) != -1) {
 		switch (c) {
 			case 'f':
 				gl_screen.fullscreen = 1;
 				break;
 			case 'F':
-				if (optarg != NULL) show_fps = atoi(optarg);
-				else show_fps = !show_fps;
+				max_fps = atoi(optarg);
 				break;
 			case 'd':
 				data = strdup(optarg);
@@ -230,6 +241,16 @@ int main ( int argc, char** argv )
 		}
 	}
 
+
+	/* check to see if data file is valid */
+	if (pack_check(data)) {
+		ERR("Data file '%s' not found",data);
+		WARN("You should specify which data file to use with '-d'");
+		WARN("See -h or --help for more information");
+		SDL_Quit();
+		exit(EXIT_FAILURE);
+	}
+
 	/* random numbers */
 	rng_init();
 
@@ -239,6 +260,7 @@ int main ( int argc, char** argv )
 	 */
 	if (gl_init()) { /* initializes video output */
 		WARN("Error initializing video output, exiting...");
+		SDL_Quit();
 		exit(EXIT_FAILURE);
 	}
 
@@ -283,11 +305,11 @@ int main ( int argc, char** argv )
 	/*
 	 * testing
 	 */
-	pilot_create( get_ship("Llama"), "Player", NULL, NULL, PILOT_PLAYER );
+	pilot_create( get_ship("Llama"), "Player", 0.,  NULL, NULL, PILOT_PLAYER );
 	gl_bindCamera( &player->solid->pos );
 	space_init("Delta Pavonis");
 
-	pilot_create( get_ship("Mr. Test"), NULL, NULL, NULL, 0 );
+	pilot_create( get_ship("Mr. Test"), NULL, 2., NULL, NULL, 0 );
 
 	
 	time = SDL_GetTicks();
@@ -337,26 +359,35 @@ int main ( int argc, char** argv )
  *	Blitting order (layers):
  *	  BG | @ stars and planets
  *	     | @ background particles
+ *	     | @ back layer weapons
  *      X
  *	  N  | @ NPC ships
  *	     | @ normal layer particles (above ships)
+ *	     | @ front layer weapons
  *      X
  *	  FG | @ player
  *	     | @ foreground particles
  *	     | @ text and GUI
  */
+static double fps_dt = 1.;
 static void update_all(void)
 {
 	/* dt in us */
 	double dt = (double)(SDL_GetTicks() - time) / 1000.;
 	time = SDL_GetTicks();
 
-	if (dt > MINIMUM_FPS) {
+	if (dt > MINIMUM_FPS) { /* TODO needs work */
 		Vector2d pos;
 		vect_csetmin(&pos, 10., (double)(gl_screen.h-40));
 		gl_print( NULL, &pos, "FPS very low, skipping frames" );
 		SDL_GL_SwapBuffers();
 		return;
+	}
+	/* if fps is limited */
+	else if ( max_fps != 0 && dt < 1./max_fps) {
+		double delay = 1./max_fps - dt;
+		SDL_Delay( delay );
+		fps_dt += delay; /* makes sure it displays the proper fps */
 	}
 
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -364,8 +395,10 @@ static void update_all(void)
 	/* BG */
 	space_render(dt);
 	planets_render();
+	weapons_update(dt,WEAPON_LAYER_BG);
 	/* N */
 	pilots_update(dt);
+	weapons_update(dt,WEAPON_LAYER_FG);
 	/* FG */
 	player_renderGUI();
 	display_fps(dt);
@@ -379,7 +412,6 @@ static void update_all(void)
  */
 static double fps = 0.;
 static double fps_cur = 0.;
-static double fps_dt = 1.;
 static void display_fps( const double dt )
 {
 	fps_dt += dt;

@@ -48,9 +48,33 @@ Outfit* outfit_get( const char* name )
 /*
  * return 1 if o is a weapon
  */
-int outfit_isweapon( const Outfit* o )
+int outfit_isWeapon( const Outfit* o )
 {
-	return (o->type > OUTFIT_TYPE_NULL && o->type <= OUTFIT_TYPE_MISSILE_SWARM_SMART);
+	return ( (o->type==OUTFIT_TYPE_BOLT)		||
+			(o->type==OUTFIT_TYPE_BEAM) );
+}
+/*
+ * return 1 if o is a launcher
+ */
+int outfit_isLauncher( const Outfit* o )
+{
+	return ( (o->type==OUTFIT_TYPE_MISSILE_DUMB) ||
+			(o->type==OUTFIT_TYPE_MISSILE_SEEK) ||
+			(o->type==OUTFIT_TYPE_MISSILE_SEEK_SMART) ||
+			(o->type==OUTFIT_TYPE_MISSILE_SWARM) ||
+			(o->type==OUTFIT_TYPE_MISSILE_SWARM_SMART) );
+}
+
+/*
+ * return 1 if o is weapon ammunition
+ */
+int outfit_isAmmo( const Outfit* o )
+{
+	return ( (o->type==OUTFIT_TYPE_MISSILE_DUMB_AMMO)	||
+			(o->type==OUTFIT_TYPE_MISSILE_SEEK_AMMO)		||
+			(o->type==OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO) ||
+			(o->type==OUTFIT_TYPE_MISSILE_SWARM_AMMO)		||
+			(o->type==OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO) );
 }
 
 /*
@@ -60,10 +84,15 @@ const char* outfit_typename[] = { "NULL",
 		"Bolt Cannon",
 		"Beam Cannon",
 		"Dumb Missile",
+		"Dumb Missile Ammunition",
 		"Seeker Missile",
+		"Seeker Missile Ammunition",
 		"Smart Seeker Missile",
+		"Smart Seeker Missile Ammunition",
 		"Swarm Missile",
-		"Smart Swarm Missile"
+		"Swarm Missile Ammunition Pack",
+		"Smart Swarm Missile",
+		"Smart Swarm Missile Ammunition Pack"
 };
 const char* outfit_getType( const Outfit* o )
 {
@@ -84,6 +113,8 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
 	while ((node = node->next)) { /* load all the data */
 		if (strcmp((char*)node->name,"speed")==0)
 			temp->speed = (double)atoi((char*)node->children->content);
+		else if (strcmp((char*)node->name,"delay")==0)
+			temp->delay = atoi((char*)node->children->content);
 		else if (strcmp((char*)node->name,"accuracy")==0)
 			temp->accuracy = atof((char*)node->children->content)*M_PI/180.; /* to rad */
 		else if (strcmp((char*)node->name, "gfx")==0) {
@@ -105,6 +136,7 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
 #define MELEMENT(o,s)      if ((o) == 0) WARN("Outfit '%s' missing '"s"' element", temp->name)
 	MELEMENT(temp->speed,"speed");
 	MELEMENT(temp->accuracy,"tech");
+	MELEMENT(temp->delay,"delay");
 	MELEMENT(temp->damage_armor,"armor' from element 'damage");
 	MELEMENT(temp->damage_shield,"shield' from element 'damage");
 #undef MELEMENT
@@ -221,7 +253,7 @@ void outfit_free (void)
 {
 	int i;
 	for (i=0; i < outfits; i++) {
-		if (outfit_isweapon(&outfit_stack[i]) && outfit_stack[i].gfx_space)
+		if (outfit_isWeapon(&outfit_stack[i]) && outfit_stack[i].gfx_space)
 			gl_freeTexture(outfit_stack[i].gfx_space);
 		free(outfit_stack[i].name);
 	}

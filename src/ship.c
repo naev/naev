@@ -112,13 +112,14 @@ static Ship* ship_parse( xmlNodePtr parent )
 		}
 		else if (strcmp((char*)node->name,"outfits")==0) {
 			cur = node->children;
-			while ((cur == cur->next)) {
+			while ((cur = cur->next)) {
 				if (strcmp((char*)cur->name,"outfit")==0) {
 					otemp = MALLOC_ONE(ShipOutfit);
 					otemp->data = outfit_get((char*)cur->children->content);
 					xstr = xmlGetProp(parent,(xmlChar*)"name");
 					otemp->quantity = atoi((char*)xstr);
 					free(xstr);
+					otemp->next = NULL;
 					
 					if ((ocur=temp->outfit) == NULL) temp->outfit = otemp;
 					else {

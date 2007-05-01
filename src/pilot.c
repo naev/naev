@@ -8,6 +8,7 @@
 
 #include "main.h"
 #include "log.h"
+#include "weapon.h"
 
 
 /* stack of pilot ids to assure uniqueness */
@@ -29,6 +30,7 @@ extern void ai_think( Pilot* pilot ); /* ai.c */
 /* internal */
 static void pilot_update( Pilot* pilot, const double dt );
 static void pilot_render( Pilot* pilot );
+static void pilot_free( Pilot* p );
 
 
 /*
@@ -53,17 +55,52 @@ Pilot* get_pilot( unsigned int id )
 
 
 /*
+ * makes the pilot shoot
+ *
+ * @param p the pilot which is shooting
+ * @param secondary whether they are shooting secondary weapons or primary weapons
+ */
+void pilot_shoot( Pilot* p, int secondary )
+{
+	int i;
+	if (!secondary) { /* primary weapons */
+
+		if (!p->outfits) return; /* no outfits */
+
+		for (i=0; p->outfits[i].outfit; i++) /* cycles through outfits to find weapons */
+			if (outfit_isWeapon(p->outfits[i].outfit) || /* is a weapon or launche */
+					outfit_isLauncher(p->outfits[i].outfit))
+				/* ready to shoot again */
+				if ((SDL_GetTicks()-p->outfits[i].timer) > p->outfits[i].outfit->delay)
+
+					/* different weapons, different behaviours */
+					switch (p->outfits[i].outfit->type) {
+						case OUTFIT_TYPE_BOLT:
+							weapon_add( p->outfits[i].outfit, p->solid->dir,
+									&p->solid->pos, &p->solid->vel,
+									(p==player) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG );
+							p->outfits[i].timer = SDL_GetTicks();
+							break;
+
+						default:
+							break;
+					}
+	}
+}
+
+
+/*
  * renders the pilot
  */
-static void pilot_render( Pilot* pilot )
+static void pilot_render( Pilot* p )
 {
 	int sprite;
-	gl_texture* texture = pilot->ship->gfx_ship;
+	gl_texture* t = p->ship->gfx_ship;
 
 	/* get the sprite corresponding to the direction facing */
-	sprite = (int)(pilot->solid->dir / (2.0*M_PI / (texture->sy*texture->sx)));
+	sprite = (int)(p->solid->dir / (2.0*M_PI / (t->sy*t->sx)));
 
-	gl_blitSprite( texture, &pilot->solid->pos, sprite % (int)texture->sx, sprite / (int)texture->sy );
+	gl_blitSprite( t, &p->solid->pos, sprite % (int)t->sx, sprite / (int)t->sy );
 }
 
 
@@ -90,19 +127,20 @@ static void pilot_update( Pilot* pilot, const double dt )
  *
  * @ ship : ship pilot will be flying
  * @ name : pilot's name, if NULL ship's name will be used
+ * @ dir : initial direction to face (radians)
  * @ vel : initial velocity
  * @ pos : initial position
  * @ flags : used for tweaking the pilot
  */
-void pilot_init( Pilot* pilot, Ship* ship, char* name,
-		const Vector2d* vel, const Vector2d* pos, const int flags )
+void pilot_init( Pilot* pilot, Ship* ship, char* name, const double dir,
+		const Vector2d* pos, const Vector2d* vel, const int flags )
 {
 	pilot->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
 
 	pilot->ship = ship;
 	pilot->name = strdup( (name==NULL) ? ship->name : name );
 
-	pilot->solid = solid_create(ship->mass, vel, pos);
+	pilot->solid = solid_create(ship->mass, dir, pos, vel);
 
 	/* max shields/armor */
 	pilot->armor = ship->armor;
@@ -111,6 +149,26 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name,
 
 	/* initially idle */
 	pilot->task = NULL;
+
+	/* outfits */
+	pilot->outfits = NULL;
+	ShipOutfit* so;
+	if (ship->outfit) {
+		int noutfits = 0;
+		for (so=ship->outfit; so; so=so->next) {
+			pilot->outfits = realloc(pilot->outfits, (noutfits+1)*sizeof(PilotOutfit));
+			pilot->outfits[noutfits].outfit = so->data;
+			pilot->outfits[noutfits].quantity = so->quantity;
+			pilot->outfits[noutfits].timer = 0;
+			noutfits++;
+		}
+		/* sentinal */
+		pilot->outfits = realloc(pilot->outfits, (noutfits+1)*sizeof(PilotOutfit));
+		pilot->outfits[noutfits].outfit = NULL;
+		pilot->outfits[noutfits].quantity = 0;
+		pilot->outfits[noutfits].timer = 0;
+	}
+
 
 	if (flags & PILOT_PLAYER) {
 		pilot->think = player_think; /* players don't need to think! :P */
@@ -131,15 +189,15 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name,
  *
  * returns pilot's id
  */
-unsigned int pilot_create( Ship* ship, char* name,
-		const Vector2d* vel, const Vector2d* pos, const int flags )
+unsigned int pilot_create( Ship* ship, char* name, const double dir,
+		const Vector2d* pos, const Vector2d* vel, const int flags )
 {
 	Pilot* dyn = MALLOC_ONE(Pilot);
 	if (dyn == NULL) {
 		WARN("Unable to allocate memory");
 		return 0;;
 	}
-	pilot_init( dyn, ship, name, vel, pos, flags );
+	pilot_init( dyn, ship, name, dir, pos, vel, flags );
 
 	/* add to the stack */
 	pilot_stack = realloc( pilot_stack, ++pilots*sizeof(Pilot*) );
@@ -152,13 +210,22 @@ unsigned int pilot_create( Ship* ship, char* name,
 /*
  * frees and cleans up a pilot
  */
+static void pilot_free( Pilot* p )
+{
+	solid_free(p->solid);
+	free(p->outfits);
+	free(p->name);
+	ai_destroy(p);
+	free(p);
+}
+
+
+/*
+ * destroys pilot from stack
+ */
 void pilot_destroy(Pilot* p)
 {
 	int i;
-
-	solid_free(p->solid);
-	free(p->name);
-	ai_destroy(p);
 
 	for (i=0; i < pilots; i++)
 		if (pilot_stack[i]==p)
@@ -169,7 +236,7 @@ void pilot_destroy(Pilot* p)
 		i++;
 	}
 
-	free(p);
+	pilot_free(p);
 }
 
 
@@ -179,11 +246,8 @@ void pilot_destroy(Pilot* p)
 void pilots_free (void)
 {
 	int i;
-	for (i=0; i < pilots; i++) {
-		solid_free(pilot_stack[i]->solid);
-		free(pilot_stack[i]->name);
-		free(pilot_stack[i]);
-	}
+	for (i=0; i < pilots; i++)
+		pilot_free(pilot_stack[i]);
 	free(pilot_stack);
 }
 

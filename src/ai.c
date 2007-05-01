@@ -104,7 +104,8 @@ static double pilot_turn = 0.;
  */
 void ai_destroy( Pilot* p )
 {
-	ai_freetask( p->task );
+	if (p->task)
+		ai_freetask( p->task );
 }
 
 

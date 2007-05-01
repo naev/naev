@@ -20,12 +20,13 @@ typedef struct {
 } Keybind;
 static Keybind** player_input; /* contains the players keybindings */
 /* name of each keybinding */
-const char *keybindNames[] = { "accel", "left", "right" };
+const char *keybindNames[] = { "accel", "left", "right", "primary" };
 
 
 Pilot* player = NULL; /* in pilot.h as extern */
 static double player_turn = 0.; /* turn velocity from input */
 static double player_acc = 0.; /* accel velocity from input */
+static int player_primary = 0; /* player is shooting primary weapon */
 
 
 
@@ -39,6 +40,8 @@ void player_think( Pilot* player )
 	player->solid->dir_vel = 0.;
 	if (player_turn)
 		player->solid->dir_vel -= player->ship->turn * player_turn;
+
+	if (player_primary) pilot_shoot(player,0);
 
 	vect_pset( &player->solid->force, player->ship->thrust * player_acc, player->solid->dir );
 }
@@ -93,6 +96,11 @@ void input_exit (void)
 
 /*
  * binds key of type type to action keybind
+ *
+ * @param keybind is the name of the keybind defined above
+ * @param type is the type of the keybind
+ * @param key is the key to bind to
+ * @param reverse is whether to reverse it or not
  */
 void input_setKeybind( char *keybind, KeybindType type, int key, int reverse )
 {
@@ -110,21 +118,28 @@ void input_setKeybind( char *keybind, KeybindType type, int key, int reverse )
 /*
  * runs the input command
  *
- * @keynum is the index of the player_input keybind
- * @value is the value of the keypress (defined above)
- * @abs is whether or not it's an absolute value (for them joystick)
+ * @param keynum is the index of the player_input keybind
+ * @param value is the value of the keypress (defined above)
+ * @param abs is whether or not it's an absolute value (for them joystick)
  */
 static void input_key( int keynum, double value, int abs )
 {
+	/* accelerating */
 	if (strcmp(player_input[keynum]->name,"accel")==0) {
 		if (abs) player_acc = value;
 		else player_acc += value;
+	/* turning left */
 	} else if (strcmp(player_input[keynum]->name,"left")==0) {
 		if (abs) player_turn = -value;
 		else player_turn -= value;
+	/* turning right */
 	} else if (strcmp(player_input[keynum]->name,"right")==0) {
 		if (abs)	player_turn = value;
 		else player_turn += value;
+	/* shooting primary weapon */
+	} else if (strcmp(player_input[keynum]->name, "primary")==0) {
+		if (value==KEY_PRESS) player_primary = 1;
+		else if (value==KEY_RELEASE) player_primary = 0;
 	}
 
 	/* make sure values are sane */

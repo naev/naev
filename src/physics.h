@@ -52,8 +52,10 @@ typedef struct Solid Solid;
 /*
  * solid manipulation
  */
-void solid_init( Solid* dest, const double mass, const Vector2d* vel, const Vector2d* pos );
-Solid* solid_create( const double mass, const Vector2d* vel, const Vector2d* pos );
+void solid_init( Solid* dest, const double mass, const double dir,
+		const Vector2d* pos, const Vector2d* vel );
+Solid* solid_create( const double mass, const double dir,
+		const Vector2d* pos, const Vector2d* vel );
 void solid_free( Solid* src );
 
 #endif /* PHYSICS_H */

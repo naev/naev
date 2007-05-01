@@ -8,13 +8,20 @@
 #include "physics.h"
 #include "ship.h"
 #include "ai.h"
-/*#include "outfit.h"
-#include "faction.h"*/
+#include "outfit.h"
+/*#include "faction.h"*/
 
 
 /* creation flags */
 #define PILOT_PLAYER		1 /* pilot is a player */
 
+
+typedef struct {
+	Outfit* outfit; /* associated outfit */
+	unsigned int quantity; /* number of outfits of this type pilot has */
+
+	unsigned int timer; /* used to store when it was last used */
+} PilotOutfit;
 
 
 /*
@@ -28,13 +35,15 @@ typedef struct Pilot {
 	/* object caracteristics */
 	Ship* ship; /* ship pilot is flying */
 	Solid* solid; /* associated solid (physics) */
-	/* Outfit* outfit; */
 
 	/* current health */
 	double armor, shield, energy;
 
 	/* associated functions */
 	void (*update)(struct Pilot*, const double); /* updates the pilot */
+
+	/* outfit management */
+	PilotOutfit* outfits;
 
 	unsigned int properties; /* used for AI and others */
 
@@ -47,14 +56,16 @@ typedef struct Pilot {
 extern Pilot* player; /* the player */
 Pilot* get_pilot( unsigned int id );
 
+void pilot_shoot( Pilot* p, int secondary );
+
 
 /*
  * creation
  */
-void pilot_init( Pilot* dest, Ship* ship, char* name,
-		const Vector2d* vel, const Vector2d* pos, const int flags );
-unsigned int pilot_create( Ship* ship, char* name,
-		const Vector2d* vel, const Vector2d* pos, const int flags );
+void pilot_init( Pilot* dest, Ship* ship, char* name, const double dir,
+		const Vector2d* pos, const Vector2d* vel, const int flags );
+unsigned int pilot_create( Ship* ship, char* name, const double dir,
+		const Vector2d* pos, const Vector2d* vel, const int flags );
 
 /*
  * cleanup

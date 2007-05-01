@@ -11,6 +11,7 @@
 <gfx>lasergreen.png</gfx>
 <speed>450</speed>
 <accuracy>30</accuracy>
+<delay>500</delay>
 <damage>
 <armor>20</armor>
 <shield>10</shield>

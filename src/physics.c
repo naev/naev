@@ -208,12 +208,13 @@ static void rk4_update (Solid *obj, const double dt)
 /*
  * Initializes a new Solid
  */
-void solid_init( Solid* dest, const double mass, const Vector2d* vel, const Vector2d* pos )
+void solid_init( Solid* dest, const double mass, const double dir,
+		const Vector2d* pos, const Vector2d* vel )
 {
 	dest->mass = mass;
 
 	vect_cset( &dest->force, 0., 0.);
-	dest->dir = 0.;
+	dest->dir = dir;
 
 	if (vel == NULL) vectnull( &dest->vel );
 	else vectcpy( &dest->vel, vel );
@@ -227,11 +228,12 @@ void solid_init( Solid* dest, const double mass, const Vector2d* vel, const Vect
 /*
  * Creates a new Solid
  */
-Solid* solid_create( const double mass, const Vector2d* vel, const Vector2d* pos )
+Solid* solid_create( const double mass, const double dir,
+		const Vector2d* pos, const Vector2d* vel )
 {
 	Solid* dyn = MALLOC_ONE(Solid);
 	assert(dyn != NULL);
-	solid_init( dyn, mass, vel, pos );
+	solid_init( dyn, mass, dir, pos, vel );
 	return dyn;
 }
 
