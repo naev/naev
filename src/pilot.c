@@ -18,6 +18,7 @@ static unsigned int pilot_id = 0;
 /* stack of pilots */
 static Pilot** pilot_stack;
 static int pilots = 0;
+extern Pilot* player;
 
 
 /*
@@ -29,7 +30,7 @@ extern void player_think( Pilot* pilot ); /* player.c */
 extern void ai_think( Pilot* pilot ); /* ai.c */
 /* internal */
 static void pilot_update( Pilot* pilot, const double dt );
-static void pilot_render( Pilot* pilot );
+void pilot_render( Pilot* pilot ); /* externed in player.c */
 static void pilot_free( Pilot* p );
 
 
@@ -44,6 +45,8 @@ Pilot* get_pilot( unsigned int id )
 		if (pilot_stack[i]->id == id)
 			return pilot_stack[i];
 	return NULL;*/
+
+	if (id==0) return player;
 
 /* Dichotomical search */
 	int i,n;
@@ -92,7 +95,7 @@ void pilot_shoot( Pilot* p, int secondary )
 /*
  * renders the pilot
  */
-static void pilot_render( Pilot* p )
+void pilot_render( Pilot* p )
 {
 	int sprite;
 	gl_texture* t = p->ship->gfx_ship;
@@ -135,7 +138,10 @@ static void pilot_update( Pilot* pilot, const double dt )
 void pilot_init( Pilot* pilot, Ship* ship, char* name, const double dir,
 		const Vector2d* pos, const Vector2d* vel, const int flags )
 {
-	pilot->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
+	if (flags & PILOT_PLAYER) /* player is ID 0 */
+		pilot->id = 0;
+	else
+		pilot->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
 
 	pilot->ship = ship;
 	pilot->name = strdup( (name==NULL) ? ship->name : name );
@@ -172,11 +178,14 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, const double dir,
 
 	if (flags & PILOT_PLAYER) {
 		pilot->think = player_think; /* players don't need to think! :P */
+		pilot->render = NULL;
 		pilot->properties |= PILOT_PLAYER;
 		player = pilot;
 	}
-	else
+	else {
 		pilot->think = ai_think;
+		pilot->render = pilot_render;
+	}
 
 	pilot->update = pilot_update;
 }
@@ -199,9 +208,17 @@ unsigned int pilot_create( Ship* ship, char* name, const double dir,
 	}
 	pilot_init( dyn, ship, name, dir, pos, vel, flags );
 
-	/* add to the stack */
-	pilot_stack = realloc( pilot_stack, ++pilots*sizeof(Pilot*) );
-	pilot_stack[pilots-1] = dyn;
+	if (flags & PILOT_PLAYER) { /* player */
+		if (!pilot_stack) {
+			pilot_stack = MALLOC_ONE(Pilot*);
+			pilots = 1;
+		}
+		pilot_stack[0] = dyn;
+	}
+	else { /* add to the stack */
+		pilot_stack = realloc( pilot_stack, ++pilots*sizeof(Pilot*) );
+		pilot_stack[pilots-1] = dyn;
+	}
 
 	return dyn->id;
 }
@@ -258,10 +275,13 @@ void pilots_free (void)
 void pilots_update( double dt )
 {
 	int i;
-	for ( i=pilots-1; i >= 0; i-- ) {
-		if ( pilot_stack[i]->think != NULL )
+	for ( i=0; i < pilots; i++ ) {
+		if ( pilot_stack[i]->think)
 			pilot_stack[i]->think(pilot_stack[i]);
-		pilot_stack[i]->update( pilot_stack[i], dt );
+		if (pilot_stack[i]->update)
+			pilot_stack[i]->update( pilot_stack[i], dt );
+		if (pilot_stack[i]->render)
+			pilot_stack[i]->render(pilot_stack[i]);
 	}
 }
 

@@ -40,7 +40,9 @@ typedef struct Pilot {
 	double armor, shield, energy;
 
 	/* associated functions */
+	void (*think)(struct Pilot*); /* AI thinking for the pilot */
 	void (*update)(struct Pilot*, const double); /* updates the pilot */
+	void (*render)(struct Pilot*); /* for rendering the pilot */
 
 	/* outfit management */
 	PilotOutfit* outfits;
@@ -48,7 +50,6 @@ typedef struct Pilot {
 	unsigned int properties; /* used for AI and others */
 
 	/* AI */
-	void (*think)(struct Pilot*); /* AI thinking for the pilot */
 	Task* task; /* current action */
 } Pilot;
 

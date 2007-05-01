@@ -5,15 +5,19 @@
 
 
 #include "SDL.h"
+#include "pilot.h"
+
+
+extern Pilot* player;
 
 
 typedef enum { KEYBIND_NULL, KEYBIND_KEYBOARD, KEYBIND_JAXIS, KEYBIND_JBUTTON } KeybindType;
 
 
 /*
- * GUI
+ * render
  */
-void player_renderGUI (void);
+void player_render (void);
 
 
 /*

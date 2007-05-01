@@ -23,11 +23,29 @@ static Keybind** player_input; /* contains the players keybindings */
 const char *keybindNames[] = { "accel", "left", "right", "primary" };
 
 
-Pilot* player = NULL; /* in pilot.h as extern */
+Pilot* player = NULL; /* ze player */
 static double player_turn = 0.; /* turn velocity from input */
 static double player_acc = 0.; /* accel velocity from input */
 static int player_primary = 0; /* player is shooting primary weapon */
 
+
+/* 
+ * prototypes
+ */
+extern void pilot_render( Pilot* pilot ); /* from pilot.c */
+static void player_renderGUI (void);
+
+
+
+/*
+ * renders the player
+ */
+void player_render (void)
+{
+	pilot_render(player);
+
+	player_renderGUI();
+}
 
 
 /*
@@ -52,7 +70,7 @@ void player_think( Pilot* player )
  * 	G U I
  *
  */
-void player_renderGUI (void)
+static void player_renderGUI (void)
 {
 	
 }

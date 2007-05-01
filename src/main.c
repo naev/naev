@@ -400,7 +400,7 @@ static void update_all(void)
 	pilots_update(dt);
 	weapons_update(dt,WEAPON_LAYER_FG);
 	/* FG */
-	player_renderGUI();
+	player_render();
 	display_fps(dt);
 
 	SDL_GL_SwapBuffers();
