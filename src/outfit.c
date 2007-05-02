@@ -115,8 +115,10 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
 			temp->speed = (double)atoi((char*)node->children->content);
 		else if (strcmp((char*)node->name,"delay")==0)
 			temp->delay = atoi((char*)node->children->content);
+		else if (strcmp((char*)node->name,"range")==0)
+			temp->range = atof((char*)node->children->content);
 		else if (strcmp((char*)node->name,"accuracy")==0)
-			temp->accuracy = atof((char*)node->children->content)*M_PI/180.; /* to rad */
+			temp->accuracy = atof((char*)node->children->content);
 		else if (strcmp((char*)node->name, "gfx")==0) {
 			snprintf( str, strlen((char*)node->children->content)+sizeof(OUTFIT_GFX),
 					OUTFIT_GFX"%s", (char*)node->children->content);
@@ -134,9 +136,11 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
 	}
 
 #define MELEMENT(o,s)      if ((o) == 0) WARN("Outfit '%s' missing '"s"' element", temp->name)
-	MELEMENT(temp->speed,"speed");
 	MELEMENT(temp->accuracy,"tech");
 	MELEMENT(temp->delay,"delay");
+	MELEMENT(temp->speed,"speed");
+	MELEMENT(temp->range,"range");
+	MELEMENT(temp->accuracy,"accuracy");
 	MELEMENT(temp->damage_armor,"armor' from element 'damage");
 	MELEMENT(temp->damage_shield,"shield' from element 'damage");
 #undef MELEMENT

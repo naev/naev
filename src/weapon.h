@@ -14,5 +14,8 @@ void weapon_add( const Outfit* outfit, const double dir,
 
 void weapons_update( const double dt, WeaponLayer layer );
 
+void weapon_clear (void);
+void weapon_exit (void);
+
 
 #endif /* WEAPON_H */

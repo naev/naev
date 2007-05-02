@@ -116,7 +116,10 @@ static Ship* ship_parse( xmlNodePtr parent )
 				if (strcmp((char*)cur->name,"outfit")==0) {
 					otemp = MALLOC_ONE(ShipOutfit);
 					otemp->data = outfit_get((char*)cur->children->content);
-					xstr = xmlGetProp(parent,(xmlChar*)"name");
+					xstr = xmlGetProp(cur,(xmlChar*)"quantity");
+					if (!xstr)
+						WARN("Ship '%s' is missing tag 'quantity' for outfit '%s'",
+								temp->name, otemp->data->name);
 					otemp->quantity = atoi((char*)xstr);
 					free(xstr);
 					otemp->next = NULL;
@@ -198,10 +201,18 @@ int ships_load(void)
 
 void ships_free()
 {
+	ShipOutfit *so, *sot;
 	int i;
 	for (i = 0; i < ships; i++) {
-		if ((ship_stack+i)->name)
+		if ((ship_stack+i)->name) /* free the name */
 			free((ship_stack+i)->name);
+		so=(ship_stack+i)->outfit;
+		while (so) { /* free the outfits */
+			sot = so;
+			so = so->next;
+			free(sot);
+		}
+
 		gl_freeTexture((ship_stack+i)->gfx_ship);
 	}
 	free(ship_stack);

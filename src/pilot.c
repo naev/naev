@@ -74,7 +74,8 @@ void pilot_shoot( Pilot* p, int secondary )
 			if (outfit_isWeapon(p->outfits[i].outfit) || /* is a weapon or launche */
 					outfit_isLauncher(p->outfits[i].outfit))
 				/* ready to shoot again */
-				if ((SDL_GetTicks()-p->outfits[i].timer) > p->outfits[i].outfit->delay)
+				if ((SDL_GetTicks()-p->outfits[i].timer) >
+						(p->outfits[i].outfit->delay/p->outfits[i].quantity))
 
 					/* different weapons, different behaviours */
 					switch (p->outfits[i].outfit->type) {

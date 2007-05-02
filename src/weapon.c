@@ -8,6 +8,7 @@
 
 #include "main.h"
 #include "log.h"
+#include "rng.h"
 
 
 typedef struct Weapon {
@@ -40,6 +41,7 @@ static Weapon* weapon_create( const Outfit* outfit, const double dir,
 		const Vector2d* pos, const Vector2d* vel );
 static void weapon_render( const Weapon* w );
 static void weapon_update( Weapon* w, const double dt );
+static void weapon_destroy( Weapon* w, WeaponLayer layer );
 static void weapon_free( Weapon* w );
 
 
@@ -63,8 +65,23 @@ void weapons_update( const double dt, WeaponLayer layer )
 	}
 
 	int i;
-	for (i=0; i<nlayer; i++)
+	for (i=0; i<nlayer; i++) {
+
+		switch (wlayer[i]->outfit->type) {
+			case OUTFIT_TYPE_BOLT:
+				if (SDL_GetTicks() >
+						(wlayer[i]->timer + 1000*(unsigned int)
+						wlayer[i]->outfit->range/wlayer[i]->outfit->speed)) {
+					weapon_destroy(wlayer[i],layer);
+					continue;
+				}
+				break;
+
+			default:
+				break;
+		}
 		weapon_update(wlayer[i],dt);
+	}
 }
 
 
@@ -88,8 +105,7 @@ static void weapon_render( const Weapon* w )
  */
 static void weapon_update( Weapon* w, const double dt )
 {
-	if (w->think)
-		(*w->think)(w);
+	if (w->think) (*w->think)(w);
 	
 	(*w->solid->update)(w->solid, dt);
 
@@ -105,16 +121,19 @@ static Weapon* weapon_create( const Outfit* outfit, const double dir,
 {
 	Vector2d v;
 	double mass = 1; /* presume lasers have a mass of 1 */
+	double rdir = dir; /* real direction (accuracy) */
 	Weapon* w = MALLOC_ONE(Weapon);
 	w->outfit = outfit; /* non-changeable */
 	w->update = weapon_update;
+	w->timer = SDL_GetTicks();
 	w->think = NULL;
 
 	switch (outfit->type) {
 		case OUTFIT_TYPE_BOLT:
-			vect_cset( &v, VX(*vel)+outfit->speed*cos(dir),
-					VANGLE(*vel)+outfit->speed*sin(dir));
-			w->solid = solid_create( mass, dir, pos, &v );
+			rdir += RNG(-outfit->accuracy/2.,outfit->accuracy/2.)/180.*M_PI;
+			vect_cset( &v, VX(*vel)+outfit->speed*cos(rdir),
+					VANGLE(*vel)+outfit->speed*sin(rdir));
+			w->solid = solid_create( mass, rdir, pos, &v );
 			break;
 
 		default:
@@ -175,6 +194,35 @@ void weapon_add( const Outfit* outfit, const double dir,
 	}
 }
 
+
+/*
+ * destroys the weapon
+ */
+static void weapon_destroy( Weapon* w, WeaponLayer layer )
+{
+	int i;
+	Weapon** wlayer;
+	int *nlayer;
+	switch (layer) {
+		case WEAPON_LAYER_BG:
+			wlayer = backLayer;
+			nlayer = &nbackLayer;
+			break;
+		case WEAPON_LAYER_FG:
+			wlayer = frontLayer;
+			nlayer = &nfrontLayer;
+			break;
+	}
+
+	for (i=0; wlayer[i] != w; i++); /* get to the current position */
+	weapon_free(wlayer[i]);
+	(*nlayer)--;
+
+	for ( ; i < (*nlayer); i++)
+		wlayer[i] = wlayer[i+1];
+}
+
+
 /*
  * clears the weapon
  */
@@ -193,11 +241,16 @@ void weapon_clear (void)
 	for (i=0; i < nbackLayer; i++)
 		weapon_free(backLayer[i]);
 	nbackLayer = 0;
-	backLayer = NULL;
 	for (i=0; i < nfrontLayer; i++)
 		weapon_free(frontLayer[i]);                                          
 	nfrontLayer = 0;
-	frontLayer = NULL;
+}
+
+void weapon_exit (void)
+{
+	weapon_clear();
+	free(backLayer);
+	free(frontLayer);
 }
 
 

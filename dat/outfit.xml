@@ -9,9 +9,10 @@
 <specific type="1">
 <sound>laser.wav</sound>
 <gfx>lasergreen.png</gfx>
-<speed>450</speed>
-<accuracy>30</accuracy>
 <delay>500</delay>
+<speed>550</speed>
+<range>300</range>
+<accuracy>30</accuracy>
 <damage>
 <armor>20</armor>
 <shield>10</shield>
