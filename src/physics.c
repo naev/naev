@@ -215,6 +215,8 @@ void solid_init( Solid* dest, const double mass, const double dir,
 
 	vect_cset( &dest->force, 0., 0.);
 	dest->dir = dir;
+	if ((dest->dir > 2.*M_PI) || (dest->dir < 0.))
+		dest->dir = fmod(dest->dir,2*M_PI);
 
 	if (vel == NULL) vectnull( &dest->vel );
 	else vectcpy( &dest->vel, vel );

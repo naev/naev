@@ -113,8 +113,8 @@ void pilot_render( Pilot* p )
  */
 static void pilot_update( Pilot* pilot, const double dt )
 {
-	if (pilot->solid->dir > 2*M_PI) pilot->solid->dir -= 2*M_PI;
-	if (pilot->solid->dir < 0.0) pilot->solid->dir += 2*M_PI;
+	if ((pilot->solid->dir > 2.*M_PI) || (pilot->solid->dir < 0.0))
+		pilot->solid->dir = fmod(pilot->solid->dir,2.*M_PI);
 
 	/* update the solid */
 	pilot->solid->update( pilot->solid, dt );
