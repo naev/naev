@@ -16,8 +16,8 @@ static unsigned int pilot_id = 0;
 
 
 /* stack of pilots */
-static Pilot** pilot_stack;
-static int pilots = 0;
+Pilot** pilot_stack;
+int pilots = 0;
 extern Pilot* player;
 
 
@@ -81,7 +81,7 @@ void pilot_shoot( Pilot* p, int secondary )
 					switch (p->outfits[i].outfit->type) {
 						case OUTFIT_TYPE_BOLT:
 							weapon_add( p->outfits[i].outfit, p->solid->dir,
-									&p->solid->pos, &p->solid->vel,
+									&p->solid->pos, &p->solid->vel, p->id,
 									(p==player) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG );
 							p->outfits[i].timer = SDL_GetTicks();
 							break;
@@ -89,6 +89,20 @@ void pilot_shoot( Pilot* p, int secondary )
 						default:
 							break;
 					}
+	}
+}
+
+
+/*
+ * damages the pilot
+ */
+void pilot_hit( Pilot* p, double damage_shield, double damage_armor )
+{
+	if (p->shield-damage_shield > 0.)
+		p->shield -= damage_shield;
+	else if (p->shield > 0.) { /* shields can take part of the blow */
+		p->armor -= p->shield/damage_shield*damage_armor;
+		p->shield = 0.;
 	}
 }
 

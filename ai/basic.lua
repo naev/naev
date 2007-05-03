@@ -8,11 +8,13 @@ function control ()
 end
 
 function follow ()
-	target = 1
+	target = 0
 	dir = face(target)
 	dist = getdist(getpos(target))
 
 	if dir < 10 and dist > 100 then
 		accel( dist/100-1 )
+	elseif dir < 10 and dist < 100 then
+		shoot()
 	end
 end

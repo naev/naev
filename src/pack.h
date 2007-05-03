@@ -26,6 +26,7 @@ ssize_t pack_read( Packfile* file, void* buf, const size_t count );
 int pack_close( Packfile* file );
 /* fancy */
 void* pack_readfile( const char* packfile, const char* filename, uint32_t *filesize );
+void pack_listfiles( const char* packfile, char** filenames, uint32_t* nfiles );
 
 
 #endif /* PACK_H */

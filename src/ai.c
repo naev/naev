@@ -83,6 +83,8 @@ static int ai_accel( lua_State *L ); /* accel(number); number <= 1. */
 static int ai_turn( lua_State *L ); /* turn(number); abs(number) <= 1. */
 static int ai_face( lua_State *L ); /* face(number/pointer) */
 static int ai_brake( lua_State *L ); /* brake() */
+/* combat */
+static int ai_shoot( lua_State *L ); /* shoot(number); number = 1,2,3 */
 /* misc */
 static int ai_createvect( lua_State *L ); /* createvect( number, number ) */
 
@@ -97,6 +99,7 @@ static lua_State *L = NULL;
 static Pilot *cur_pilot = NULL;
 static double pilot_acc = 0.;
 static double pilot_turn = 0.;
+static int pilot_primary = 0;
 
 
 /*
@@ -142,6 +145,8 @@ int ai_init (void)
 	lua_register(L, "turn", ai_turn);
 	lua_register(L, "face", ai_face);
 	lua_register(L, "brake", ai_brake);
+	/* combat */
+	lua_register(L, "shoot", ai_shoot);
 	/* misc */
 	lua_register(L, "createvect", ai_createvect);
 
@@ -192,6 +197,7 @@ void ai_think( Pilot* pilot )
 	vect_pset( &cur_pilot->solid->force, /* set the velocity vector */
 			cur_pilot->ship->thrust * pilot_acc, cur_pilot->solid->dir );
 
+	if (pilot_primary) pilot_shoot(pilot, 0); /* is shooting */
 }
 
 
@@ -297,7 +303,7 @@ static int ai_getdistance( lua_State *L )
 {
 	MIN_ARGS(1);
 	Vector2d *vect = (Vector2d*)lua_topointer(L,1);
-	lua_pushnumber(L, MOD(vect->x-cur_pilot->solid->pos.x,vect->y-cur_pilot->solid->pos.y));
+	lua_pushnumber(L, DIST(*vect,cur_pilot->solid->pos));
 	return 1;
 }
 
@@ -433,3 +439,18 @@ static int ai_createvect( lua_State *L )
 	return 1;
 }
 
+
+/*
+ * makes the pilot shoot
+ */
+static int ai_shoot( lua_State *L )
+{
+	int n = 1;
+	if (lua_isnumber(L,1)) n = (int)lua_tonumber(L,1);
+	
+	if (n==1) pilot_primary = 1;
+	/* else if (n==2) pilot_secondary = 1;
+	 else if  (n==3) pilot_primary = pilot_secondary = 1; */
+
+	return 0;
+}

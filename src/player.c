@@ -33,7 +33,6 @@ static int player_primary = 0; /* player is shooting primary weapon */
  * prototypes
  */
 extern void pilot_render( Pilot* pilot ); /* from pilot.c */
-static void player_renderGUI (void);
 
 
 
@@ -44,7 +43,11 @@ void player_render (void)
 {
 	pilot_render(player);
 
-	player_renderGUI();
+	/*
+	 *    G U I
+	 */
+
+
 }
 
 
@@ -63,18 +66,6 @@ void player_think( Pilot* player )
 
 	vect_pset( &player->solid->force, player->ship->thrust * player_acc, player->solid->dir );
 }
-
-
-/*
- *
- * 	G U I
- *
- */
-static void player_renderGUI (void)
-{
-	
-}
-
 
 
 /*

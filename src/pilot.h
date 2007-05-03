@@ -54,10 +54,19 @@ typedef struct Pilot {
 } Pilot;
 
 
+
+/*
+ * getting pilot stuff
+ */
 extern Pilot* player; /* the player */
 Pilot* get_pilot( unsigned int id );
 
+
+/*
+ * misc
+ */
 void pilot_shoot( Pilot* p, int secondary );
+void pilot_hit( Pilot* p, double damage_shield, double damage_armor );
 
 
 /*

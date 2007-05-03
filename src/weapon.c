@@ -9,16 +9,28 @@
 #include "main.h"
 #include "log.h"
 #include "rng.h"
+#include "pilot.h"
 
+
+#define SIZE_APROX	0.8	/* aproximation for circle collision detection */
+
+
+/*
+ * pilot stuff
+ */
+extern Pilot** pilot_stack;
+extern int pilots;
 
 typedef struct Weapon {
 	Solid* solid; /* actually has its own solid :) */
 
+	unsigned int parent; /* pilot that shot it */
 	const Outfit* outfit; /* related outfit that fired it or whatnot */
 
 	unsigned int timer; /* mainly used to see when the weapon was fired */
 
-	void (*update)(struct Weapon*, const double); /* position update and render */
+	/* position update and render */
+	void (*update)(struct Weapon*, const double, WeaponLayer);
 	void (*think)(struct Weapon*); /* for the smart missiles */
 
 } Weapon;
@@ -38,9 +50,9 @@ static int mfrontLayer = 0; /* alloced memory size */
  * Prototypes
  */
 static Weapon* weapon_create( const Outfit* outfit, const double dir,
-		const Vector2d* pos, const Vector2d* vel );
+		const Vector2d* pos, const Vector2d* vel, unsigned int parent );
 static void weapon_render( const Weapon* w );
-static void weapon_update( Weapon* w, const double dt );
+static void weapon_update( Weapon* w, const double dt, WeaponLayer layer );
 static void weapon_destroy( Weapon* w, WeaponLayer layer );
 static void weapon_free( Weapon* w );
 
@@ -80,7 +92,7 @@ void weapons_update( const double dt, WeaponLayer layer )
 			default:
 				break;
 		}
-		weapon_update(wlayer[i],dt);
+		weapon_update(wlayer[i],dt,layer);
 	}
 }
 
@@ -103,8 +115,18 @@ static void weapon_render( const Weapon* w )
 /*
  * updates the weapon
  */
-static void weapon_update( Weapon* w, const double dt )
+static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
+	int i;
+	for (i=0; i<pilots; i++)
+		if ( (w->parent != pilot_stack[i]->id) &&
+				(DIST(w->solid->pos,pilot_stack[i]->solid->pos) < (SIZE_APROX *
+					w->outfit->gfx_space->sw/2. + pilot_stack[i]->ship->gfx_ship->sw/2.))) {
+			pilot_hit(pilot_stack[i], w->outfit->damage_shield, w->outfit->damage_armor);
+			weapon_destroy(w,layer);
+			return;
+		}
+
 	if (w->think) (*w->think)(w);
 	
 	(*w->solid->update)(w->solid, dt);
@@ -117,12 +139,13 @@ static void weapon_update( Weapon* w, const double dt )
  * creates a new weapon
  */
 static Weapon* weapon_create( const Outfit* outfit, const double dir,
-		const Vector2d* pos, const Vector2d* vel )
+		const Vector2d* pos, const Vector2d* vel, unsigned int parent )
 {
 	Vector2d v;
 	double mass = 1; /* presume lasers have a mass of 1 */
 	double rdir = dir; /* real direction (accuracy) */
 	Weapon* w = MALLOC_ONE(Weapon);
+	w->parent = parent; /* non-changeable */
 	w->outfit = outfit; /* non-changeable */
 	w->update = weapon_update;
 	w->timer = SDL_GetTicks();
@@ -131,6 +154,7 @@ static Weapon* weapon_create( const Outfit* outfit, const double dir,
 	switch (outfit->type) {
 		case OUTFIT_TYPE_BOLT:
 			rdir += RNG(-outfit->accuracy/2.,outfit->accuracy/2.)/180.*M_PI;
+			if ((rdir > 2.*M_PI) || (rdir < 0.)) rdir = fmod(rdir, 2.*M_PI);
 			vect_cset( &v, VX(*vel)+outfit->speed*cos(rdir),
 					VANGLE(*vel)+outfit->speed*sin(rdir));
 			w->solid = solid_create( mass, rdir, pos, &v );
@@ -149,14 +173,15 @@ static Weapon* weapon_create( const Outfit* outfit, const double dir,
  * adds a new weapon
  */
 void weapon_add( const Outfit* outfit, const double dir,
-		const Vector2d* pos, const Vector2d* vel, WeaponLayer layer )
+		const Vector2d* pos, const Vector2d* vel,
+		unsigned int parent, WeaponLayer layer )
 {
 	if (!outfit_isWeapon(outfit)) {
 		ERR("Trying to create a Weapon from a non-Weapon type Outfit");
 		return;
 	}
 
-	Weapon* w = weapon_create( outfit, dir, pos, vel );
+	Weapon* w = weapon_create( outfit, dir, pos, vel, parent );
 
 	/* set the proper layer */
 	Weapon** curLayer = NULL;

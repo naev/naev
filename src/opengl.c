@@ -591,6 +591,10 @@ int gl_init()
 					supported = 1;
 			}
 		}
+		for (i=0;modes[i];++i)
+			free(modes[i]);
+		free(modes);
+
 		/* makes sure fullscreen mode is supported */
 		if (flags & SDL_FULLSCREEN && !supported) {
 			WARN("Fullscreen mode %d x %d is not supported by your setup, switching to another mode",

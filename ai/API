@@ -74,6 +74,14 @@ face( number/Vector2d target, [number invert] )
 	@return number offset from target in grad
 
 
+	C O M B A T
+
+shoot( [number weapon] )
+	@desc makes the pilot shoot weapons
+	@param weapon weapons to shoot, 1 if primary, 2 if secondary, 3 if both.  Defaults to 1.
+	@return nil
+
+
 	M I S C
 
 createvect( number x, number y )

@@ -331,6 +331,53 @@ void* pack_readfile( const char* packfile, const char* filename, uint32_t *files
 
 
 /*
+ * loads the filenames in the packfile to filenames
+ * filenames should be freed after use
+ * on error it filenames is (char**)-1
+ */
+#define READ(f,b,n)  if (read(f,b,n)!=n) { \
+	ERR("Fewer bytes read then expected"); \
+	return; }
+void pack_listfiles( const char* packfile, char** filenames, uint32_t* nfiles )
+{
+	int fd, j;
+	uint32_t i;
+	char* buf = malloc(sizeof(magic));
+
+	*nfiles = 0;
+	filenames = malloc(sizeof(char*));
+	filenames = (char**)-1;
+
+	fd = open( packfile, O_RDONLY );
+	if (fd == -1) {
+		ERR("Erroring opening %s: %s", packfile, strerror(errno));
+		return;
+	}
+
+	READ( fd, buf, sizeof(magic)); /* make sure it's a packfile */
+	if (memcmp(buf, &magic, sizeof(magic))) {
+		ERR("File %s is not a valid packfile", packfile);
+		return;
+	}
+	free(buf);
+
+	READ( fd, &nfiles, 4 );
+	filenames = realloc(filenames,(*nfiles+1)*sizeof(char*));
+	for (i=0; i<*nfiles; i++) { /* start to search files */
+		j = 0;
+		filenames[i] = malloc(MAX_FILENAME*sizeof(char));
+		READ( fd, &filenames[i][j], 1 ); /* get the name */
+		while ( filenames[i][j++] != '\0' )
+			READ( fd, &filenames[i][j], 1 );
+	}
+	filenames[i] = NULL;
+	close(fd);
+}
+#undef READ
+
+
+
+/*
  * closes the packfile
  */
 int pack_close( Packfile* file )

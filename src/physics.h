@@ -12,6 +12,8 @@
 #define MOD(x,y)	(sqrt((x)*(x)+(y)*(y)))
 #define ANGLE(x,y) (((x)==0.) ? 0. : (((x)<0.) ? atan((y)/(x))+M_PI : atan((y)/(x))))
 
+#define DIST(v,u)	MOD((v).x-(u).x,(v).y-(u).y)
+
 
 /*
  * misc

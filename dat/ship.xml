@@ -23,7 +23,7 @@
 <cap_cargo>20</cap_cargo>
 </caracteristics>
 <outfits>
-<outfit quantity='2'>laser</outfit>
+<outfit quantity='3'>laser</outfit>
 </outfits>
 </ship>
 <ship name="Mr. Test">
@@ -49,6 +49,7 @@
 <cap_cargo>40</cap_cargo>
 </caracteristics>
 <outfits>
+<outfit quantity='1'>laser</outfit>
 </outfits>
 </ship>
 </Ships>
