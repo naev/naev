@@ -7,6 +7,10 @@
 #include "main.h"
 #include "pilot.h"
 #include "log.h"
+#include "opengl.h"
+
+
+#define POW2(x)	((x)*(x))
 
 
 #define KEY_PRESS		1.
@@ -23,10 +27,61 @@ static Keybind** player_input; /* contains the players keybindings */
 const char *keybindNames[] = { "accel", "left", "right", "primary" };
 
 
+/*
+ * player stuff
+ */
 Pilot* player = NULL; /* ze player */
 static double player_turn = 0.; /* turn velocity from input */
 static double player_acc = 0.; /* accel velocity from input */
 static int player_primary = 0; /* player is shooting primary weapon */
+
+
+/*
+ * pilot stuff for GUI
+ */
+extern Pilot** pilot_stack;
+extern int pilots;
+
+
+/*
+ * GUI stuff
+ */
+/*  colors */
+typedef struct {
+	double r, g, b, a;
+} Color;
+#define COLOR(x)		(x).r, (x).g, (x).b, (x).a
+Color cRadar_player	=	{ .r = 0.4, .g = 0.8, .b = 0.4, .a = 1. };
+Color cRadar_neut		=	{ .r = 0.8, .g = 0.8, .b = 0.8, .a = 1. };
+Color cShield			=	{ .r = 0.2, .g = 0.2, .b = 0.8, .a = 1. };
+Color cArmor			=	{ .r = 0.5, .g = 0.5, .b = 0.5, .a = 1. };
+Color cEnergy			=	{ .r = 0.2, .g = 0.8, .b = 0.2, .a = 1. };
+typedef enum { RADAR_RECT, RADAR_CIRCLE } RadarShape;
+typedef struct {
+	double w,h; /* dimensions */
+	RadarShape shape;
+	double res; /* resolution */
+} Radar;
+
+typedef struct {
+	double w,h;
+} Rect;
+
+typedef struct {
+	/* graphics */
+	gl_texture* gfx_frame;
+	Radar radar;
+	Rect shield, armor, energy;
+
+	/* positions */
+	Vector2d pos_frame;
+	Vector2d pos_radar;
+	Vector2d pos_shield, pos_armor, pos_energy;
+} GUI;
+GUI gui; /* ze GUI */
+/* needed to render properly */
+double gui_xoff = 0.;
+double gui_yoff = 0.;
 
 
 /* 
@@ -46,8 +101,158 @@ void player_render (void)
 	/*
 	 *    G U I
 	 */
+	/* frame */
+	gl_blitStatic( gui.gfx_frame, &gui.pos_frame );
+
+	/* radar */
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+		glTranslated( VX(gui.pos_radar) - gl_screen.w/2. + gui.radar.w/2.,
+				VY(gui.pos_radar) - gl_screen.h/2. - gui.radar.h/2., 0.);
+	glBegin(GL_POINTS);
+		/* player */
+		glColor4d( COLOR(cRadar_player) );
+		glVertex2d(  0.,  2. );
+		glVertex2d(  0.,  1. );
+		glVertex2d(  0.,  0. );
+		glVertex2d(  0., -1. );
+		glVertex2d(  0., -2. );
+		glVertex2d(  2.,  0. );
+		glVertex2d(  1.,  0. );
+		glVertex2d( -1.,  0. );
+		glVertex2d( -2.,  0. );
+
+	int i;
+	double x,y,sx,sy;
+	Pilot* p;
+	switch (gui.radar.shape) {
+		case RADAR_RECT:
+			glEnd(); /* GL_POINTS */
+			for (i=1; i<pilots; i++) {
+				p = pilot_stack[i];
+				x = (p->solid->pos.x - player->solid->pos.x) / gui.radar.res;
+				y = (p->solid->pos.y - player->solid->pos.y) / gui.radar.res;
+				sx = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sw / gui.radar.res;
+				sy = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sh / gui.radar.res;
+
+				if ( (ABS(x) > gui.radar.w/2+sx) || (ABS(y) > gui.radar.h/2.+sy) )
+					continue; /* pilot not in range */
+
+				glBegin(GL_QUADS);
+					glColor4d( COLOR(cRadar_neut) );
+					glVertex2d( MAX(x-sx,-gui.radar.w/2.),/* top-left */
+							MIN(y+sy, gui.radar.h/2.) );
+					glVertex2d( MIN(x+sx, gui.radar.w/2.), /* top-right */
+							MIN(y+sy, gui.radar.h/2.) );
+					glVertex2d( MIN(x+sx, gui.radar.w/2.), /* bottom-right */
+							MAX(y-sy,-gui.radar.h/2.) );
+					glVertex2d( MAX(x-sx,-gui.radar.w/2.), /* bottom-left */
+							MAX(y-sy,-gui.radar.h/2.) );
+				glEnd(); /* GL_QUADS */
+			}
+			break;
+
+		case RADAR_CIRCLE:
+			for  (i=1; i<pilots; i++) {
+				p = pilot_stack[i];
+				glColor4d( COLOR(cRadar_neut) );
+				glVertex2d( (p->solid->pos.x - player->solid->pos.x) / gui.radar.res,
+						(p->solid->pos.y - player->solid->pos.y) / gui.radar.res );
+			}
+			glEnd(); /* GL_POINTS */
+			break;
+	}
+	glPopMatrix(); /* GL_PROJECTION */
+
+	/* health */
+	glBegin(GL_QUADS); /* shield */
+		glColor4d( COLOR(cShield) );
+		x = VX(gui.pos_shield) - gl_screen.w/2.;
+		y = VY(gui.pos_shield) - gl_screen.h/2.;
+		sx = player->shield / player->shield_max * gui.shield.w;
+		sy = gui.shield.h;
+		glVertex2d( x, y );
+		glVertex2d( x + sx, y );
+		glVertex2d( x + sx, y - sy );
+		glVertex2d( x, y - sy );
+	glEnd(); /* GL_QUADS */
+	glBegin(GL_QUADS); /* armor */
+		glColor4d( COLOR(cArmor) );
+		x = VX(gui.pos_armor) - gl_screen.w/2.;
+		y = VY(gui.pos_armor) - gl_screen.h/2.;
+		sx = player->armor / player->armor_max * gui.armor.w;
+		sy = gui.armor.h;
+		glVertex2d( x, y );
+		glVertex2d( x + sx, y );
+		glVertex2d( x + sx, y - sy );
+		glVertex2d( x, y - sy );
+	glEnd(); /* GL_QUADS */
+	glBegin(GL_QUADS); /* energy */
+		glColor4d( COLOR(cEnergy) );
+		x = VX(gui.pos_energy) - gl_screen.w/2.;
+		y = VY(gui.pos_energy) - gl_screen.h/2.;
+		sx = player->energy / player->energy_max * gui.energy.w;
+		sy = gui.energy.h;
+		glVertex2d( x, y );
+		glVertex2d( x + sx, y );
+		glVertex2d( x + sx, y - sy );
+		glVertex2d( x, y - sy );
+	glEnd(); /* GL_QUADS */
 
 
+
+}
+
+/*
+ * initializes the GUI
+ */
+int gui_init (void)
+{
+
+	/*
+	 * frame
+	 */
+	gui.gfx_frame = gl_newImage( "gfx/gui/frame.png" );
+	vect_csetmin( &gui.pos_frame,
+			gl_screen.w - gui.gfx_frame->w,		/* x */
+			gl_screen.h - gui.gfx_frame->h );	/* y */
+	gui_xoff = - gui.gfx_frame->w/2.; /* offset is only horizontal and on right side */
+
+
+	/*
+	 * radar
+	 */
+	gui.radar.res = 10.;
+	gui.radar.w = 128.;
+	gui.radar.h = 128.;
+	gui.radar.shape = RADAR_RECT;
+	vect_csetmin( &gui.pos_radar,
+			VX(gui.pos_frame) + 11, 						/* x */
+			VY(gui.pos_frame) + gui.gfx_frame->h - 10 );	/* y */
+
+	/*
+	 * bars
+	 */
+	gui.shield.w = gui.armor.w = gui.energy.w = 128;
+	gui.shield.h = gui.armor.h = gui.energy.h = 10;
+	vect_csetmin( &gui.pos_shield,
+			VX(gui.pos_frame) + 10,
+			VY(gui.pos_frame) + gui.gfx_frame->h - 201 );
+	vect_csetmin( &gui.pos_armor,
+			VX(gui.pos_frame) + 10,
+			VY(gui.pos_frame) + gui.gfx_frame->h - 218 );
+	vect_csetmin( &gui.pos_energy,
+			VX(gui.pos_frame) + 10,
+			VY(gui.pos_frame) + gui.gfx_frame->h - 236 );
+
+	return 0;
+}
+/*
+ * frees the GUI
+ */
+void gui_free (void)
+{
+	gl_freeTexture( gui.gfx_frame );
 }
 
 

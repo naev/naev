@@ -65,7 +65,7 @@ static Ship* ship_parse( xmlNodePtr parent )
 		if (strcmp((char*)node->name, "GFX")==0) {
 			snprintf( str, strlen((char*)node->children->content)+sizeof(SHIP_GFX),
 					SHIP_GFX"%s", (char*)node->children->content);
-			temp->gfx_ship = gl_newSprite(str, 6, 6);
+			temp->gfx_space = gl_newSprite(str, 6, 6);
 		}
 		else if (strcmp((char*)node->name, "class")==0)
 			temp->class = atoi((char*)node->children->content);
@@ -139,7 +139,7 @@ static Ship* ship_parse( xmlNodePtr parent )
 	/* ship validator */
 #define MELEMENT(o,s)		if (o == 0) WARN("Ship '%s' missing '"s"' element", temp->name)
 	if (temp->name == NULL) WARN("Ship '%s' missing 'name' tag", temp->name);
-	if (temp->gfx_ship == NULL) WARN("Ship '%s' missing 'GFX' element", temp->name);
+	if (temp->gfx_space == NULL) WARN("Ship '%s' missing 'GFX' element", temp->name);
 	MELEMENT(temp->thrust,"thrust");
 	MELEMENT(temp->turn,"turn");
 	MELEMENT(temp->speed,"speed");
@@ -213,7 +213,7 @@ void ships_free()
 			free(sot);
 		}
 
-		gl_freeTexture((ship_stack+i)->gfx_ship);
+		gl_freeTexture((ship_stack+i)->gfx_space);
 	}
 	free(ship_stack);
 	ship_stack = NULL;

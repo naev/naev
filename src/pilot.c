@@ -104,6 +104,10 @@ void pilot_hit( Pilot* p, double damage_shield, double damage_armor )
 		p->armor -= p->shield/damage_shield*damage_armor;
 		p->shield = 0.;
 	}
+	else if (p->armor-damage_armor > 0.)
+		p->armor -= damage_armor;
+	else
+		p->armor = 0.;
 }
 
 
@@ -113,7 +117,7 @@ void pilot_hit( Pilot* p, double damage_shield, double damage_armor )
 void pilot_render( Pilot* p )
 {
 	int sprite;
-	gl_texture* t = p->ship->gfx_ship;
+	gl_texture* t = p->ship->gfx_space;
 
 	/* get the sprite corresponding to the direction facing */
 	sprite = (int)(p->solid->dir / (2.0*M_PI / (t->sy*t->sx)));
@@ -127,6 +131,15 @@ void pilot_render( Pilot* p )
  */
 static void pilot_update( Pilot* pilot, const double dt )
 {
+	/* regeneration */
+	if (pilot->armor < pilot->armor_max)
+		pilot->armor += pilot->ship->armor_regen * dt;
+	else
+		pilot->shield += pilot->ship->shield_regen * dt;
+	
+	if (pilot->armor > pilot->armor_max) pilot->armor = pilot->armor_max;
+	if (pilot->shield > pilot->shield_max) pilot->shield = pilot->shield_max;
+
 	if ((pilot->solid->dir > 2.*M_PI) || (pilot->solid->dir < 0.0))
 		pilot->solid->dir = fmod(pilot->solid->dir,2.*M_PI);
 
@@ -164,9 +177,12 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, const double dir,
 	pilot->solid = solid_create(ship->mass, dir, pos, vel);
 
 	/* max shields/armor */
-	pilot->armor = ship->armor;
-	pilot->shield = ship->shield;
-	pilot->energy = ship->energy;
+	pilot->armor_max = ship->armor;
+	pilot->shield_max = ship->shield;
+	pilot->energy_max = ship->energy;
+	pilot->armor = pilot->armor_max;
+	pilot->shield = pilot->shield_max;
+	pilot->energy = pilot->energy_max;
 
 	/* initially idle */
 	pilot->task = NULL;

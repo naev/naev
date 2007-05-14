@@ -38,7 +38,7 @@ typedef struct {
 	double thrust, turn, speed;
 
 	/* graphics */
-	gl_texture *gfx_ship, *gfx_target;
+	gl_texture *gfx_space, *gfx_target;
 
 	/* characteristics */
 	int crew;

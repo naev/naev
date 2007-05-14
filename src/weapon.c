@@ -12,9 +12,6 @@
 #include "pilot.h"
 
 
-#define SIZE_APROX	0.8	/* aproximation for circle collision detection */
-
-
 /*
  * pilot stuff
  */
@@ -120,8 +117,8 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 	int i;
 	for (i=0; i<pilots; i++)
 		if ( (w->parent != pilot_stack[i]->id) &&
-				(DIST(w->solid->pos,pilot_stack[i]->solid->pos) < (SIZE_APROX *
-					w->outfit->gfx_space->sw/2. + pilot_stack[i]->ship->gfx_ship->sw/2.))) {
+				(DIST(w->solid->pos,pilot_stack[i]->solid->pos) < (PILOT_SIZE_APROX *
+					w->outfit->gfx_space->sw/2. + pilot_stack[i]->ship->gfx_space->sw/2.))) {
 			pilot_hit(pilot_stack[i], w->outfit->damage_shield, w->outfit->damage_armor);
 			weapon_destroy(w,layer);
 			return;

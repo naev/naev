@@ -12,6 +12,9 @@
 /*#include "faction.h"*/
 
 
+#define PILOT_SIZE_APROX	0.8	/* aproximation for pilot size */
+
+
 /* creation flags */
 #define PILOT_PLAYER		1 /* pilot is a player */
 
@@ -38,6 +41,7 @@ typedef struct Pilot {
 
 	/* current health */
 	double armor, shield, energy;
+	double armor_max, shield_max, energy_max;
 
 	/* associated functions */
 	void (*think)(struct Pilot*); /* AI thinking for the pilot */

@@ -277,11 +277,11 @@ int main ( int argc, char** argv )
 	if (indjoystick >= 0 || namjoystick != NULL) {
 		if (joystick_init())
 			WARN("Error initializing joystick input");
-		if (namjoystick != NULL) {
+		if (namjoystick != NULL) { /* use the joystick name to find a joystick */
 			joystick_use(joystick_get(namjoystick));
 			free(namjoystick);
 		}
-		else if (indjoystick >= 0)
+		else if (indjoystick >= 0) /* use a joystick id instead */
 			joystick_use(indjoystick);
 	}
 
@@ -292,6 +292,7 @@ int main ( int argc, char** argv )
 		WARN("Error initializing AI");
 
 	gl_fontInit( NULL, NULL, 16 );
+	gui_init(); /* initializes the GUI graphics */
 
 	
 	/*
@@ -337,6 +338,7 @@ int main ( int argc, char** argv )
 	weapon_exit(); /* destroys all active weapons */
 	space_exit(); /* cleans up the universe itself */
 	pilots_free(); /* frees the pilots, they were locked up :( */
+	gui_free(); /* frees up the player's GUI */
 	ships_free();
 	outfit_free();
 

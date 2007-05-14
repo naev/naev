@@ -32,6 +32,12 @@ Vector2d* gl_camera;
 /* default font */
 gl_font gl_defFont;
 
+/*
+ * used to adjust the pilot's place onscreen to be in the middle even with the GUI
+ */
+extern double gui_xoff;
+extern double gui_yoff;
+
 
 /*
  * prototypes
@@ -139,7 +145,8 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
 			WARN("Unable to create POT surface: %s", SDL_GetError());
 			return 0;
 		}
-		if (SDL_FillRect( temp, NULL, SDL_MapRGBA(surface->format,0,0,0,SDL_ALPHA_TRANSPARENT))) {
+		if (SDL_FillRect( temp, NULL,
+				SDL_MapRGBA(surface->format,0,0,0,SDL_ALPHA_TRANSPARENT))) {
 			WARN("Unable to fill rect: %s", SDL_GetError());
 			return 0;
 		}
@@ -311,8 +318,8 @@ void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos, const int sx,
 
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix(); /* projection translation matrix */
-		glTranslated( VX(*pos) - VX(*gl_camera) - sprite->sw/2.,
-				VY(*pos) - VY(*gl_camera) - sprite->sh/2., 0.);
+		glTranslated( VX(*pos) - VX(*gl_camera) - sprite->sw/2. + gui_xoff,
+				VY(*pos) - VY(*gl_camera) - sprite->sh/2. + gui_yoff, 0.);
 		glScaled( (double)gl_screen.w/SCREEN_W, (double)gl_screen.h/SCREEN_H, 0. );
 
 	/* actual blitting */
@@ -346,25 +353,26 @@ void gl_blitStatic( const gl_texture* texture, const Vector2d* pos )
 	glEnable(GL_TEXTURE_2D);
 
 	glMatrixMode(GL_PROJECTION);
-	glPushMatrix(); /* set up translation matrix */
-		glTranslated( VX(*pos) - (double)gl_screen.w/2., VY(*pos) - (double)gl_screen.h/2., 0);
+	glPushMatrix(); /* projection translation matrix */
+		glTranslated( VX(*pos) - (double)gl_screen.w/2.,
+				VY(*pos) - (double)gl_screen.h/2.,0.);
 		glScaled( (double)gl_screen.w/SCREEN_W, (double)gl_screen.h/SCREEN_H, 0. );
 
 	/* actual blitting */
 	glBindTexture( GL_TEXTURE_2D, texture->texture);
-	glBegin( GL_TRIANGLE_STRIP );
-		glColor4ub( 1., 1., 1., 1. );
+	glBegin(GL_TRIANGLE_STRIP);
+		glColor4d( 1., 1., 1., 1. );
 		glTexCoord2d( 0., 0.);
 			glVertex2d( 0., 0. );
-		glTexCoord2d( texture->w/texture->rw, 0.);
-			glVertex2d( texture->w, 0. );
-		glTexCoord2d( 0., texture->h/texture->rh);
-			glVertex2d( 0., texture->h );
-		glTexCoord2d( texture->w/texture->rw, texture->h/texture->rh);
-			glVertex2d( texture->w, texture->h );
+		glTexCoord2d( texture->sw/texture->rw, 0.);
+			glVertex2d( texture->sw, 0. );
+		glTexCoord2d( 0., texture->sh/texture->rh);
+			glVertex2d( 0., texture->sh );
+		glTexCoord2d( texture->sw/texture->rw, texture->sh/texture->rh);
+			glVertex2d( texture->sw, texture->sh );
 	glEnd();
 
-	glPopMatrix(); /* pop the translation matrix */
+	glPopMatrix(); /* projection translation matrix */
 
 	glDisable(GL_TEXTURE_2D);
 }
