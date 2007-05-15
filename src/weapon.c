@@ -34,13 +34,13 @@ typedef struct Weapon {
 
 
 /* behind pilots layer */
-static Weapon** backLayer = NULL; /* behind pilots */
-static int nbackLayer = 0; /* number of elements */
-static int mbacklayer = 0; /* alloced memory size */
+static Weapon** wbackLayer = NULL; /* behind pilots */
+static int nwbackLayer = 0; /* number of elements */
+static int mwbacklayer = 0; /* alloced memory size */
 /* behind player layer */
-static Weapon** frontLayer = NULL; /* infront of pilots, behind player */
-static int nfrontLayer = 0; /* number of elements */
-static int mfrontLayer = 0; /* alloced memory size */
+static Weapon** wfrontLayer = NULL; /* infront of pilots, behind player */
+static int nwfrontLayer = 0; /* number of elements */
+static int mwfrontLayer = 0; /* alloced memory size */
 
 
 /*
@@ -55,6 +55,28 @@ static void weapon_free( Weapon* w );
 
 
 /*
+ * draws the minimap weapons (used in player.c)
+ */
+void weapon_minimap( double res, double w, double h )
+{
+	int i;
+	double x, y;
+	for (i=0; i<nwbackLayer; i++) {
+		x = (wbackLayer[i]->solid->pos.x - player->solid->pos.x) / res;
+		y = (wbackLayer[i]->solid->pos.y - player->solid->pos.y) / res;
+		if (ABS(x) < w/2. && ABS(y) < h/2.)
+			glVertex2d( x, y );
+	}
+	for (i=0; i<nwfrontLayer; i++) {
+		x = (wfrontLayer[i]->solid->pos.x - player->solid->pos.x) / res;
+		y = (wfrontLayer[i]->solid->pos.y - player->solid->pos.y) / res;
+		if (ABS(x) < w/2. && ABS(y) < h/2.)
+			glVertex2d( x, y );
+	}
+}
+
+
+/*
  * updates all the weapons in the layer
  */
 void weapons_update( const double dt, WeaponLayer layer )
@@ -64,12 +86,12 @@ void weapons_update( const double dt, WeaponLayer layer )
 
 	switch (layer) {
 		case WEAPON_LAYER_BG:
-			wlayer = backLayer;
-			nlayer = nbackLayer;
+			wlayer = wbackLayer;
+			nlayer = nwbackLayer;
 			break;
 		case WEAPON_LAYER_FG:
-			wlayer = frontLayer;
-			nlayer = nfrontLayer;
+			wlayer = wfrontLayer;
+			nlayer = nwfrontLayer;
 			break;
 	}
 
@@ -186,14 +208,14 @@ void weapon_add( const Outfit* outfit, const double dir,
 	int *nLayer = NULL;
 	switch (layer) {
 		case WEAPON_LAYER_BG:
-			curLayer = backLayer;
-			nLayer = &nbackLayer;
-			mLayer = &mbacklayer;
+			curLayer = wbackLayer;
+			nLayer = &nwbackLayer;
+			mLayer = &mwbacklayer;
 			break;
 		case WEAPON_LAYER_FG:
-			curLayer = frontLayer;
-			nLayer = &nfrontLayer;
-			mLayer = &mfrontLayer;
+			curLayer = wfrontLayer;
+			nLayer = &nwfrontLayer;
+			mLayer = &mwfrontLayer;
 			break;
 
 		default:
@@ -206,10 +228,10 @@ void weapon_add( const Outfit* outfit, const double dir,
 	else { /* need to allocate more memory */
 		switch (layer) {
 			case WEAPON_LAYER_BG:
-				curLayer = backLayer = realloc(curLayer, (++(*mLayer))*sizeof(Weapon*));
+				curLayer = wbackLayer = realloc(curLayer, (++(*mLayer))*sizeof(Weapon*));
 				break;
 			case WEAPON_LAYER_FG:
-				curLayer = frontLayer = realloc(curLayer, (++(*mLayer))*sizeof(Weapon*));
+				curLayer = wfrontLayer = realloc(curLayer, (++(*mLayer))*sizeof(Weapon*));
 				break;
 		}
 		curLayer[(*nLayer)++] = w;
@@ -227,12 +249,12 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
 	int *nlayer;
 	switch (layer) {
 		case WEAPON_LAYER_BG:
-			wlayer = backLayer;
-			nlayer = &nbackLayer;
+			wlayer = wbackLayer;
+			nlayer = &nwbackLayer;
 			break;
 		case WEAPON_LAYER_FG:
-			wlayer = frontLayer;
-			nlayer = &nfrontLayer;
+			wlayer = wfrontLayer;
+			nlayer = &nwfrontLayer;
 			break;
 	}
 
@@ -260,19 +282,19 @@ static void weapon_free( Weapon* w )
 void weapon_clear (void)
 {
 	int i;
-	for (i=0; i < nbackLayer; i++)
-		weapon_free(backLayer[i]);
-	nbackLayer = 0;
-	for (i=0; i < nfrontLayer; i++)
-		weapon_free(frontLayer[i]);                                          
-	nfrontLayer = 0;
+	for (i=0; i < nwbackLayer; i++)
+		weapon_free(wbackLayer[i]);
+	nwbackLayer = 0;
+	for (i=0; i < nwfrontLayer; i++)
+		weapon_free(wfrontLayer[i]);                                          
+	nwfrontLayer = 0;
 }
 
 void weapon_exit (void)
 {
 	weapon_clear();
-	free(backLayer);
-	free(frontLayer);
+	free(wbackLayer);
+	free(wfrontLayer);
 }
 
 

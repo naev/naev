@@ -24,7 +24,8 @@ typedef struct {
 } Keybind;
 static Keybind** player_input; /* contains the players keybindings */
 /* name of each keybinding */
-const char *keybindNames[] = { "accel", "left", "right", "primary" };
+const char *keybindNames[] = { "accel", "left", "right", "primary",
+		"mapzoomin", "mapzoomout" };
 
 
 /*
@@ -42,6 +43,11 @@ static int player_primary = 0; /* player is shooting primary weapon */
 extern Pilot** pilot_stack;
 extern int pilots;
 
+/*
+ * weapon stuff for GUI
+ */
+extern void weapon_minimap( double res, double w, double h );
+
 
 /*
  * GUI stuff
@@ -53,6 +59,8 @@ typedef struct {
 #define COLOR(x)		(x).r, (x).g, (x).b, (x).a
 Color cRadar_player	=	{ .r = 0.4, .g = 0.8, .b = 0.4, .a = 1. };
 Color cRadar_neut		=	{ .r = 0.8, .g = 0.8, .b = 0.8, .a = 1. };
+Color cRadar_weap		=	{ .r = 0.8, .g = 0,2, .b = 0.2, .a = 1. };
+
 Color cShield			=	{ .r = 0.2, .g = 0.2, .b = 0.8, .a = 1. };
 Color cArmor			=	{ .r = 0.5, .g = 0.5, .b = 0.5, .a = 1. };
 Color cEnergy			=	{ .r = 0.2, .g = 0.8, .b = 0.2, .a = 1. };
@@ -62,6 +70,10 @@ typedef struct {
 	RadarShape shape;
 	double res; /* resolution */
 } Radar;
+/* radar resolutions */
+#define RADAR_RES_MAX		100.
+#define RADAR_RES_MIN		10.
+#define RADAR_RES_INTERVAL	10.
 
 typedef struct {
 	double w,h;
@@ -127,13 +139,20 @@ void player_render (void)
 	Pilot* p;
 	switch (gui.radar.shape) {
 		case RADAR_RECT:
+
+			glColor4d( COLOR(cRadar_weap) );
+			weapon_minimap(gui.radar.res, gui.radar.w, gui.radar.h);
 			glEnd(); /* GL_POINTS */
+
+
 			for (i=1; i<pilots; i++) {
 				p = pilot_stack[i];
 				x = (p->solid->pos.x - player->solid->pos.x) / gui.radar.res;
 				y = (p->solid->pos.y - player->solid->pos.y) / gui.radar.res;
 				sx = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sw / gui.radar.res;
 				sy = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sh / gui.radar.res;
+				if (sx < 1.) sx = 1.;
+				if (sy < 1.) sy = 1.;
 
 				if ( (ABS(x) > gui.radar.w/2+sx) || (ABS(y) > gui.radar.h/2.+sy) )
 					continue; /* pilot not in range */
@@ -354,6 +373,12 @@ static void input_key( int keynum, double value, int abs )
 	} else if (strcmp(player_input[keynum]->name, "primary")==0) {
 		if (value==KEY_PRESS) player_primary = 1;
 		else if (value==KEY_RELEASE) player_primary = 0;
+	} else if (strcmp(player_input[keynum]->name, "mapzoomin")==0) {
+		if (value==KEY_PRESS && gui.radar.res < RADAR_RES_MAX)
+			gui.radar.res += RADAR_RES_INTERVAL;
+	} else if (strcmp(player_input[keynum]->name, "mapzoomout")==0) {
+		if (value==KEY_PRESS && gui.radar.res > RADAR_RES_MIN)
+			gui.radar.res -= RADAR_RES_INTERVAL;
 	}
 
 	/* make sure values are sane */
