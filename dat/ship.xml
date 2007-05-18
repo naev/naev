@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Ships>
 <ship name="Llama">
-<GFX>llama.png</GFX>
+<GFX>llama</GFX>
 <class>1</class>
 <movement>
 <thrust>400</thrust>
@@ -27,7 +27,7 @@
 </outfits>
 </ship>
 <ship name="Mr. Test">
-<GFX>lancelot.png</GFX>
+<GFX>lancelot</GFX>
 <class>1</class>
 <movement>
 <thrust>280</thrust>

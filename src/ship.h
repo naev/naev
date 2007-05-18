@@ -7,6 +7,10 @@
 #include "opengl.h"
 #include "outfit.h"
 
+/* target gfx dimensions */
+#define SHIP_TARGET_W	128
+#define SHIP_TARGET_H	96
+
 
 enum ship_class { SHIP_CLASS_NULL,
 	SHIP_CLASS_CIV_LIGHT,

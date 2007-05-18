@@ -16,8 +16,8 @@ static unsigned int pilot_id = 0;
 
 
 /* stack of pilots */
-Pilot** pilot_stack;
-int pilots = 0;
+Pilot** pilot_stack; /* not static, used in player.c and weapon.c */
+int pilots = 0; /* same */
 extern Pilot* player;
 
 
@@ -32,6 +32,21 @@ extern void ai_think( Pilot* pilot ); /* ai.c */
 static void pilot_update( Pilot* pilot, const double dt );
 void pilot_render( Pilot* pilot ); /* externed in player.c */
 static void pilot_free( Pilot* p );
+
+
+/*
+ * gets the next pilot based on player_id
+ */
+unsigned int pilot_getNext( unsigned int id )
+{
+	int i,n;
+	for (i=0, n=pilots/2; n > 0; n /= 2 ) 
+		i += (pilot_stack[i+n]->id > id) ? 0 : n ;
+	
+	if (i==pilots-1) return 0;
+
+	return pilot_stack[i+1]->id;
+}
 
 
 /*

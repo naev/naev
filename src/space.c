@@ -187,7 +187,7 @@ static Planet* planet_get( const char* name )
 						if (strcmp((char*)cur->name,"text")==0) {
 							snprintf( str, strlen((char*)cur->content)+sizeof(PLANET_GFX),
 									PLANET_GFX"%s", (char*)cur->content);
-							temp->gfx_space = gl_newSprite(str, 1, 1);
+							temp->gfx_space = gl_newImage(str);
 						}
 					}
 					else if (strcmp((char*)node->name,"pos")==0) {

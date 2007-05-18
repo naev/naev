@@ -19,6 +19,8 @@
 
 #define SHIP_DATA		"dat/ship.xml"
 #define SHIP_GFX		"gfx/ship/"
+#define SHIP_EXT		".png"
+#define SHIP_TARGET	"_target"
 
 static Ship* ship_stack = NULL;
 static int ships = 0;
@@ -63,9 +65,14 @@ static Ship* ship_parse( xmlNodePtr parent )
 
 	while ((node = node->next)) { /* load all the data */
 		if (strcmp((char*)node->name, "GFX")==0) {
-			snprintf( str, strlen((char*)node->children->content)+sizeof(SHIP_GFX),
-					SHIP_GFX"%s", (char*)node->children->content);
+			snprintf( str, strlen((char*)node->children->content)+
+					sizeof(SHIP_GFX)+sizeof(SHIP_EXT),
+					SHIP_GFX"%s"SHIP_EXT, (char*)node->children->content);
 			temp->gfx_space = gl_newSprite(str, 6, 6);
+			snprintf( str, strlen((char*)node->children->content)+
+					sizeof(SHIP_GFX)+sizeof(SHIP_TARGET)+sizeof(SHIP_EXT),
+					SHIP_GFX"%s"SHIP_TARGET SHIP_EXT, (char*)node->children->content);
+			temp->gfx_target = gl_newImage(str);
 		}
 		else if (strcmp((char*)node->name, "class")==0)
 			temp->class = atoi((char*)node->children->content);
@@ -214,6 +221,7 @@ void ships_free()
 		}
 
 		gl_freeTexture((ship_stack+i)->gfx_space);
+		gl_freeTexture((ship_stack+i)->gfx_target);
 	}
 	free(ship_stack);
 	ship_stack = NULL;

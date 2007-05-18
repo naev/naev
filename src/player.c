@@ -13,6 +13,11 @@
 #define POW2(x)	((x)*(x))
 
 
+#define GFX_GUI_FRAME		"gfx/gui/frame.png"
+#define GFX_GUI_TARG_PILOT	"gfx/gui/pilot.png"
+#define GFX_GUI_TARG_PLANET "gfx/gui/planet.png"
+
+
 #define KEY_PRESS		1.
 #define KEY_RELEASE	-1.
 /* keybinding structure */
@@ -24,7 +29,7 @@ typedef struct {
 } Keybind;
 static Keybind** player_input; /* contains the players keybindings */
 /* name of each keybinding */
-const char *keybindNames[] = { "accel", "left", "right", "primary",
+const char *keybindNames[] = { "accel", "left", "right", "primary", "target",
 		"mapzoomin", "mapzoomout" };
 
 
@@ -35,6 +40,7 @@ Pilot* player = NULL; /* ze player */
 static double player_turn = 0.; /* turn velocity from input */
 static double player_acc = 0.; /* accel velocity from input */
 static int player_primary = 0; /* player is shooting primary weapon */
+static unsigned int player_target = 0; /* targetted pilot */
 
 
 /*
@@ -74,6 +80,7 @@ typedef struct {
 #define RADAR_RES_MAX		100.
 #define RADAR_RES_MIN		10.
 #define RADAR_RES_INTERVAL	10.
+#define RADAR_RES_DEFAULT	40.
 
 typedef struct {
 	double w,h;
@@ -82,6 +89,7 @@ typedef struct {
 typedef struct {
 	/* graphics */
 	gl_texture* gfx_frame;
+	gl_texture* gfx_targetPilot, *gfx_targetPlanet;
 	Radar radar;
 	Rect shield, armor, energy;
 
@@ -89,6 +97,8 @@ typedef struct {
 	Vector2d pos_frame;
 	Vector2d pos_radar;
 	Vector2d pos_shield, pos_armor, pos_energy;
+	Vector2d pos_target, pos_target_health;
+
 } GUI;
 GUI gui; /* ze GUI */
 /* needed to render properly */
@@ -102,12 +112,31 @@ double gui_yoff = 0.;
 extern void pilot_render( Pilot* pilot ); /* from pilot.c */
 
 
-
 /*
  * renders the player
  */
 void player_render (void)
 {
+	int i; 
+	double x,y,sx,sy;
+	Pilot* p;
+	Vector2d v;
+
+	if (player_target) {
+		p = get_pilot(player_target);
+
+		vect_csetmin( &v, VX(p->solid->pos) - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.,
+				VY(p->solid->pos) + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2. );
+		gl_blitSprite( gui.gfx_targetPilot, &v, 0, 0 );
+		VX(v) += p->ship->gfx_space->sw * PILOT_SIZE_APROX;
+		gl_blitSprite( gui.gfx_targetPilot, &v, 1, 0 );
+		VY(v) -= p->ship->gfx_space->sh * PILOT_SIZE_APROX;
+		gl_blitSprite( gui.gfx_targetPilot, &v, 1, 1 );
+		VX(v) -= p->ship->gfx_space->sw * PILOT_SIZE_APROX;
+		gl_blitSprite( gui.gfx_targetPilot, &v, 0, 1 );
+	}
+
+	/* render the player */
 	pilot_render(player);
 
 	/*
@@ -134,9 +163,6 @@ void player_render (void)
 		glVertex2d( -1.,  0. );
 		glVertex2d( -2.,  0. );
 
-	int i;
-	double x,y,sx,sy;
-	Pilot* p;
 	switch (gui.radar.shape) {
 		case RADAR_RECT:
 
@@ -219,7 +245,19 @@ void player_render (void)
 	glEnd(); /* GL_QUADS */
 
 
+	/* target */
+	if (player_target) {
 
+		gl_blitStatic( p->ship->gfx_target, &gui.pos_target );
+		if (p->armor < p->armor_max*PILOT_DISABLED) /* pilot is disabled */
+			gl_print( NULL, &gui.pos_target_health, "Disabled" );
+		else if (p->shield > p->shield_max/100.) /* on shields */
+			gl_print( NULL, &gui.pos_target_health, "%s: %.0f%%",
+				"Shield", p->shield/p->shield_max*100. );
+		else /* on armour */
+			gl_print( NULL, &gui.pos_target_health, "%s: %.0f%%",
+				"Armour", p->armor/p->armor_max*100. );
+	}
 }
 
 /*
@@ -229,9 +267,15 @@ int gui_init (void)
 {
 
 	/*
+	 * targetting
+	 */
+	gui.gfx_targetPilot = gl_newSprite( GFX_GUI_TARG_PILOT, 2, 2 );
+	gui.gfx_targetPlanet = gl_newSprite( GFX_GUI_TARG_PLANET, 2, 2 );
+
+	/*
 	 * frame
 	 */
-	gui.gfx_frame = gl_newImage( "gfx/gui/frame.png" );
+	gui.gfx_frame = gl_newImage( GFX_GUI_FRAME );
 	vect_csetmin( &gui.pos_frame,
 			gl_screen.w - gui.gfx_frame->w,		/* x */
 			gl_screen.h - gui.gfx_frame->h );	/* y */
@@ -241,7 +285,7 @@ int gui_init (void)
 	/*
 	 * radar
 	 */
-	gui.radar.res = 10.;
+	gui.radar.res = RADAR_RES_DEFAULT;
 	gui.radar.w = 128.;
 	gui.radar.h = 128.;
 	gui.radar.shape = RADAR_RECT;
@@ -263,6 +307,16 @@ int gui_init (void)
 	vect_csetmin( &gui.pos_energy,
 			VX(gui.pos_frame) + 10,
 			VY(gui.pos_frame) + gui.gfx_frame->h - 236 );
+
+	/*
+	 * target
+	 */
+	vect_csetmin( &gui.pos_target,
+			VX(gui.pos_frame) + 10,
+			VY(gui.pos_frame) + gui.gfx_frame->h - 256 - SHIP_TARGET_H);
+	vect_csetmin( &gui.pos_target_health,
+			VX(gui.pos_frame) + 10 + 10,
+			VY(gui.pos_frame) + gui.gfx_frame->h - 256 - SHIP_TARGET_H + 10);
 
 	return 0;
 }
@@ -373,6 +427,8 @@ static void input_key( int keynum, double value, int abs )
 	} else if (strcmp(player_input[keynum]->name, "primary")==0) {
 		if (value==KEY_PRESS) player_primary = 1;
 		else if (value==KEY_RELEASE) player_primary = 0;
+	} else if (strcmp(player_input[keynum]->name, "target")==0) {
+		if (value==KEY_PRESS) player_target = pilot_getNext(player_target);
 	} else if (strcmp(player_input[keynum]->name, "mapzoomin")==0) {
 		if (value==KEY_PRESS && gui.radar.res < RADAR_RES_MAX)
 			gui.radar.res += RADAR_RES_INTERVAL;

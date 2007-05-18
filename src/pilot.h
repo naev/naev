@@ -13,6 +13,7 @@
 
 
 #define PILOT_SIZE_APROX	0.8	/* aproximation for pilot size */
+#define PILOT_DISABLED		0.2	/* armour % that gets it disabled */
 
 
 /* creation flags */
@@ -64,6 +65,7 @@ typedef struct Pilot {
  */
 extern Pilot* player; /* the player */
 Pilot* get_pilot( unsigned int id );
+unsigned int pilot_getNext( unsigned int id );
 
 
 /*
