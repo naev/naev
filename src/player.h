@@ -31,5 +31,10 @@ void input_setKeybind( char *keybind, KeybindType type, int key, int reverse );
 void input_handle( SDL_Event* event );
 
 
+/*
+ * misc
+ */
+void player_message ( const char *fmt, ... );
+
 
 #endif /* PLAYER_H */

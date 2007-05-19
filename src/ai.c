@@ -12,6 +12,7 @@
 #include "main.h"
 #include "log.h"
 #include "pilot.h"
+#include "player.h"
 #include "physics.h"
 #include "pack.h"
 
@@ -87,6 +88,7 @@ static int ai_brake( lua_State *L ); /* brake() */
 static int ai_shoot( lua_State *L ); /* shoot(number); number = 1,2,3 */
 /* misc */
 static int ai_createvect( lua_State *L ); /* createvect( number, number ) */
+static int ai_say( lua_State *L ); /* say( string ) */
 
 
 /* Global AI Lua interpreter */
@@ -149,6 +151,7 @@ int ai_init (void)
 	lua_register(L, "shoot", ai_shoot);
 	/* misc */
 	lua_register(L, "createvect", ai_createvect);
+	lua_register(L, "say", ai_say);
 
 	char *buf = pack_readfile( DATA, "ai/basic.lua", NULL );
 	
@@ -437,6 +440,16 @@ static int ai_createvect( lua_State *L )
 
 	lua_pushlightuserdata(L, (void*)v);
 	return 1;
+}
+
+static int ai_say( lua_State *L )
+{
+	MIN_ARGS(1);
+	
+	if (lua_isstring(L,1))
+		player_message( "Comm %s> \"%s\"", cur_pilot->name, lua_tostring(L,1));
+
+	return 0;
 }
 
 

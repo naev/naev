@@ -213,6 +213,8 @@ void solid_init( Solid* dest, const double mass, const double dir,
 {
 	dest->mass = mass;
 
+	dest->dir_vel = 0.;
+
 	vect_cset( &dest->force, 0., 0.);
 	dest->dir = dir;
 	if ((dest->dir > 2.*M_PI) || (dest->dir < 0.))

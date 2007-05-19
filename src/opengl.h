@@ -58,6 +58,7 @@ typedef struct {
 	GLuint *textures;
 	GLuint list_base;
 } gl_font;
+extern gl_font gl_defFont; /* default font */
 
 
 /*

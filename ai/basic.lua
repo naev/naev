@@ -4,10 +4,11 @@ control_rate = 2
 
 -- Required "control" function
 function control ()
-	pushtask(0,"follow");
+	say("I'm going to kill you!");
+	pushtask(0,"attack");
 end
 
-function follow ()
+function attack ()
 	target = 0
 	dir = face(target)
 	dist = getdist(getpos(target))

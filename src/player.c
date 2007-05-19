@@ -98,6 +98,7 @@ typedef struct {
 	Vector2d pos_radar;
 	Vector2d pos_shield, pos_armor, pos_energy;
 	Vector2d pos_target, pos_target_health;
+	Vector2d pos_mesg;
 
 } GUI;
 GUI gui; /* ze GUI */
@@ -105,12 +106,45 @@ GUI gui; /* ze GUI */
 double gui_xoff = 0.;
 double gui_yoff = 0.;
 
+/* messages */
+#define MESG_SIZE_MAX	80
+int mesg_timeout = 2000;
+int mesg_max = 5; /* maximum messages onscreen */
+typedef struct {
+	char str[MESG_SIZE_MAX];
+	unsigned int t;
+} Mesg;
+static Mesg* mesg_stack;
+
 
 /* 
  * prototypes
  */
 extern void pilot_render( Pilot* pilot ); /* from pilot.c */
 
+
+/*
+ * adds a mesg to the queue to be displayed on screen
+ */
+void player_message ( const char *fmt, ... )
+{
+	va_list ap;
+	int i;
+
+	if (fmt == NULL) return; /* message not valid */
+
+	for (i=1; i<mesg_max; i++)
+		if (mesg_stack[mesg_max-i-1].str[0] != '\0') {
+			strcpy(mesg_stack[mesg_max-i].str, mesg_stack[mesg_max-i-1].str);
+			mesg_stack[mesg_max-i].t = mesg_stack[mesg_max-i-1].t;
+		}
+	
+	va_start(ap, fmt);
+	vsprintf( mesg_stack[0].str, fmt, ap );
+	va_end(ap);
+
+	mesg_stack[0].t = SDL_GetTicks() + mesg_timeout;
+}
 
 /*
  * renders the player
@@ -122,18 +156,19 @@ void player_render (void)
 	Pilot* p;
 	Vector2d v;
 
+	/* renders the player target graphics */
 	if (player_target) {
 		p = get_pilot(player_target);
 
 		vect_csetmin( &v, VX(p->solid->pos) - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.,
 				VY(p->solid->pos) + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2. );
-		gl_blitSprite( gui.gfx_targetPilot, &v, 0, 0 );
+		gl_blitSprite( gui.gfx_targetPilot, &v, 0, 0 ); /* top left */
 		VX(v) += p->ship->gfx_space->sw * PILOT_SIZE_APROX;
-		gl_blitSprite( gui.gfx_targetPilot, &v, 1, 0 );
+		gl_blitSprite( gui.gfx_targetPilot, &v, 1, 0 ); /* top right */
 		VY(v) -= p->ship->gfx_space->sh * PILOT_SIZE_APROX;
-		gl_blitSprite( gui.gfx_targetPilot, &v, 1, 1 );
+		gl_blitSprite( gui.gfx_targetPilot, &v, 1, 1 ); /* bottom right */
 		VX(v) -= p->ship->gfx_space->sw * PILOT_SIZE_APROX;
-		gl_blitSprite( gui.gfx_targetPilot, &v, 0, 1 );
+		gl_blitSprite( gui.gfx_targetPilot, &v, 0, 1 ); /* bottom left */
 	}
 
 	/* render the player */
@@ -150,24 +185,13 @@ void player_render (void)
 	glPushMatrix();
 		glTranslated( VX(gui.pos_radar) - gl_screen.w/2. + gui.radar.w/2.,
 				VY(gui.pos_radar) - gl_screen.h/2. - gui.radar.h/2., 0.);
-	glBegin(GL_POINTS);
-		/* player */
-		glColor4d( COLOR(cRadar_player) );
-		glVertex2d(  0.,  2. );
-		glVertex2d(  0.,  1. );
-		glVertex2d(  0.,  0. );
-		glVertex2d(  0., -1. );
-		glVertex2d(  0., -2. );
-		glVertex2d(  2.,  0. );
-		glVertex2d(  1.,  0. );
-		glVertex2d( -1.,  0. );
-		glVertex2d( -2.,  0. );
 
 	switch (gui.radar.shape) {
 		case RADAR_RECT:
 
-			glColor4d( COLOR(cRadar_weap) );
-			weapon_minimap(gui.radar.res, gui.radar.w, gui.radar.h);
+			glBegin(GL_POINTS);
+				glColor4d( COLOR(cRadar_weap) );
+				weapon_minimap(gui.radar.res, gui.radar.w, gui.radar.h);
 			glEnd(); /* GL_POINTS */
 
 
@@ -195,18 +219,33 @@ void player_render (void)
 							MAX(y-sy,-gui.radar.h/2.) );
 				glEnd(); /* GL_QUADS */
 			}
+			glBegin(GL_POINTS); /* for the player */
 			break;
 
 		case RADAR_CIRCLE:
+			glBegin(GL_POINTS);
 			for  (i=1; i<pilots; i++) {
 				p = pilot_stack[i];
 				glColor4d( COLOR(cRadar_neut) );
 				glVertex2d( (p->solid->pos.x - player->solid->pos.x) / gui.radar.res,
 						(p->solid->pos.y - player->solid->pos.y) / gui.radar.res );
 			}
-			glEnd(); /* GL_POINTS */
 			break;
 	}
+
+		/* player - drawn last*/
+		glColor4d( COLOR(cRadar_player) );
+		glVertex2d(  0.,  2. ); /* we represent the player with a small + */
+		glVertex2d(  0.,  1. ); 
+		glVertex2d(  0.,  0. );
+		glVertex2d(  0., -1. );                                             
+		glVertex2d(  0., -2. );
+		glVertex2d(  2.,  0. );
+		glVertex2d(  1.,  0. );
+		glVertex2d( -1.,  0. );
+		glVertex2d( -2.,  0. );
+	glEnd(); /* GL_POINTS */
+
 	glPopMatrix(); /* GL_PROJECTION */
 
 	/* health */
@@ -258,6 +297,19 @@ void player_render (void)
 			gl_print( NULL, &gui.pos_target_health, "%s: %.0f%%",
 				"Armour", p->armor/p->armor_max*100. );
 	}
+
+	/* messages */
+	VX(v) = VX(gui.pos_mesg);
+	VY(v) = VY(gui.pos_mesg) + (double)(gl_defFont.h*mesg_max)*1.2;
+	for (i=0; i<mesg_max; i++) {
+		VY(v) -= (double)gl_defFont.h*1.2;
+		if (mesg_stack[mesg_max-i-1].str[0]!='\0') {
+			if (mesg_stack[mesg_max-i-1].t < SDL_GetTicks())
+				mesg_stack[mesg_max-i-1].str[0] = '\0';
+			else gl_print( NULL, &v, "%s", mesg_stack[mesg_max-i-1].str );
+		}
+	}
+
 }
 
 /*
@@ -318,6 +370,12 @@ int gui_init (void)
 			VX(gui.pos_frame) + 10 + 10,
 			VY(gui.pos_frame) + gui.gfx_frame->h - 256 - SHIP_TARGET_H + 10);
 
+	/*
+	 * message system
+	 */
+	vect_csetmin( &gui.pos_mesg, 20, 30 );
+	mesg_stack = calloc(mesg_max, sizeof(Mesg));
+
 	return 0;
 }
 /*
@@ -326,6 +384,10 @@ int gui_init (void)
 void gui_free (void)
 {
 	gl_freeTexture( gui.gfx_frame );
+	gl_freeTexture( gui.gfx_targetPilot );
+	gl_freeTexture( gui.gfx_targetPlanet );
+
+	free(mesg_stack);
 }
 
 

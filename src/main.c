@@ -38,7 +38,7 @@
 
 #define MINIMUM_FPS		0.5
 
-#define FONT_SIZE			10
+#define FONT_SIZE			12
 
 
 extern const char *keybindNames[]; /* keybindings */
@@ -47,6 +47,7 @@ extern const char *keybindNames[]; /* keybindings */
 static int quit = 0; /* for primary loop */
 static unsigned int time = 0; /* used to calculate FPS and movement */
 
+/* some defaults */
 #define DATA_DEF		"data"
 char* data = NULL;
 static int show_fps = 1; /* shows fps - default yes */
@@ -316,6 +317,10 @@ int main ( int argc, char** argv )
 	space_init("Delta Pavonis");
 
 	pilot_create( get_ship("Mr. Test"), NULL, 2., NULL, NULL, 0 );
+
+
+	player_message( "Welcome to "APPNAME"!" );
+	player_message( " v%d.%d.%d", VMAJOR, VMINOR, VREV );
 
 	
 	time = SDL_GetTicks();
