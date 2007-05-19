@@ -53,6 +53,7 @@ extern int pilots;
  * weapon stuff for GUI
  */
 extern void weapon_minimap( double res, double w, double h );
+extern void planets_minimap( double res, double w, double h );
 
 
 /*
@@ -62,9 +63,12 @@ extern void weapon_minimap( double res, double w, double h );
 typedef struct {
 	double r, g, b, a;
 } Color;
-#define COLOR(x)		(x).r, (x).g, (x).b, (x).a
+#define COLOR(x)		glColor4d((x).r,(x).g,(x).b,(x).a)
 Color cRadar_player	=	{ .r = 0.4, .g = 0.8, .b = 0.4, .a = 1. };
-Color cRadar_neut		=	{ .r = 0.8, .g = 0.8, .b = 0.8, .a = 1. };
+Color cRadar_inert	=	{ .r = 0.6, .g = 0.6, .b = 0.6, .a = 1. };
+Color cRadar_neut		=	{ .r = 0.9, .g = 1.0, .b = 0.3, .a = 1. };
+Color cRadar_friend	=	{ .r = 0.0, .g = 1.0, .b = 0.0, .a = 1. };
+Color cRadar_targ		=	{ .r = 0.0,	.g = 0.7, .b = 1.0, .a = 1. };
 Color cRadar_weap		=	{ .r = 0.8, .g = 0,2, .b = 0.2, .a = 1. };
 
 Color cShield			=	{ .r = 0.2, .g = 0.2, .b = 0.8, .a = 1. };
@@ -189,8 +193,13 @@ void player_render (void)
 	switch (gui.radar.shape) {
 		case RADAR_RECT:
 
+			/* planets */
+			COLOR(cRadar_friend);
+			planets_minimap(gui.radar.res, gui.radar.w, gui.radar.h);
+
+			/* weapons */
 			glBegin(GL_POINTS);
-				glColor4d( COLOR(cRadar_weap) );
+				COLOR(cRadar_weap);
 				weapon_minimap(gui.radar.res, gui.radar.w, gui.radar.h);
 			glEnd(); /* GL_POINTS */
 
@@ -208,7 +217,9 @@ void player_render (void)
 					continue; /* pilot not in range */
 
 				glBegin(GL_QUADS);
-					glColor4d( COLOR(cRadar_neut) );
+					/* colors */
+					if (p->id == player_target) COLOR(cRadar_targ);
+					else COLOR(cRadar_neut);
 					glVertex2d( MAX(x-sx,-gui.radar.w/2.),/* top-left */
 							MIN(y+sy, gui.radar.h/2.) );
 					glVertex2d( MIN(x+sx, gui.radar.w/2.), /* top-right */
@@ -226,7 +237,7 @@ void player_render (void)
 			glBegin(GL_POINTS);
 			for  (i=1; i<pilots; i++) {
 				p = pilot_stack[i];
-				glColor4d( COLOR(cRadar_neut) );
+				COLOR(cRadar_neut);
 				glVertex2d( (p->solid->pos.x - player->solid->pos.x) / gui.radar.res,
 						(p->solid->pos.y - player->solid->pos.y) / gui.radar.res );
 			}
@@ -234,7 +245,7 @@ void player_render (void)
 	}
 
 		/* player - drawn last*/
-		glColor4d( COLOR(cRadar_player) );
+		COLOR(cRadar_player);
 		glVertex2d(  0.,  2. ); /* we represent the player with a small + */
 		glVertex2d(  0.,  1. ); 
 		glVertex2d(  0.,  0. );
@@ -250,7 +261,7 @@ void player_render (void)
 
 	/* health */
 	glBegin(GL_QUADS); /* shield */
-		glColor4d( COLOR(cShield) );
+		COLOR(cShield);
 		x = VX(gui.pos_shield) - gl_screen.w/2.;
 		y = VY(gui.pos_shield) - gl_screen.h/2.;
 		sx = player->shield / player->shield_max * gui.shield.w;
@@ -261,7 +272,7 @@ void player_render (void)
 		glVertex2d( x, y - sy );
 	glEnd(); /* GL_QUADS */
 	glBegin(GL_QUADS); /* armor */
-		glColor4d( COLOR(cArmor) );
+		COLOR(cArmor);
 		x = VX(gui.pos_armor) - gl_screen.w/2.;
 		y = VY(gui.pos_armor) - gl_screen.h/2.;
 		sx = player->armor / player->armor_max * gui.armor.w;
@@ -272,7 +283,7 @@ void player_render (void)
 		glVertex2d( x, y - sy );
 	glEnd(); /* GL_QUADS */
 	glBegin(GL_QUADS); /* energy */
-		glColor4d( COLOR(cEnergy) );
+		COLOR(cEnergy);
 		x = VX(gui.pos_energy) - gl_screen.w/2.;
 		y = VY(gui.pos_energy) - gl_screen.h/2.;
 		sx = player->energy / player->energy_max * gui.energy.w;

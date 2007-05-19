@@ -116,6 +116,70 @@ static StarSystem* system_parse( const xmlNodePtr parent );
 
 
 /*
+ * draws the planets. used in player.c
+ */
+#define PIXEL(x,y)		if (ABS(x)<w/2. && ABS(y)<h/2.) glVertex2i((x),(y))
+void planets_minimap( double res, double w, double h )
+{
+	int i;
+	int cx, cy, x, y, r;
+	double p;
+
+	glBegin(GL_POINTS);
+	glMatrixMode(GL_PROJECTION);
+	for (i=0; i<cur_system->nplanets; i++) {
+		r = (int)(cur_system->planets[i].gfx_space->sw / res);
+		cx = (int)((cur_system->planets[i].pos.x - player->solid->pos.x) / res);
+		cy = (int)((cur_system->planets[i].pos.y - player->solid->pos.y) / res);
+
+		x = 0;
+		y = r;
+		p = (5. - (double)(r*4)) / 4.;
+
+		PIXEL( cx,   cy+y );
+		PIXEL( cx,   cy-y );
+		PIXEL( cx+y, cy   );
+		PIXEL( cx-y, cy   );
+
+		while (x<y) {
+			x++;
+			if (p < 0) p += 2*(double)(x)+1;
+			else p += 2*(double)(x-(--y))+1;
+
+			if (x==0) {
+				PIXEL( cx,   cy+y );
+				PIXEL( cx,   cy-y );
+				PIXEL( cx+y, cy   );
+				PIXEL( cx-y, cy   );
+			}
+			else 
+				if (x==y) {
+					PIXEL( cx+x, cy+y );
+					PIXEL( cx-x, cy+y );
+					PIXEL( cx+x, cy-y );
+					PIXEL( cx-x, cy-y );
+				}
+				else 
+					if (x<y) {
+					PIXEL( cx+x, cy+y );
+					PIXEL( cx-x, cy+y );
+					PIXEL( cx+x, cy-y );
+					PIXEL( cx-x, cy-y );
+					PIXEL( cx+y, cy+x );
+					PIXEL( cx-y, cy+x );
+					PIXEL( cx+y, cy-x );
+					PIXEL( cx-y, cy-x );
+				}
+			}
+		}
+
+		if (ABS(x) < w/2. && ABS(y) < h/2.) {}
+	glEnd(); /* GL_POINTS */
+}
+#undef PIXEL
+
+
+/*
  * initializes the system
  */
 void space_init ( const char* sysname )
