@@ -20,4 +20,5 @@ extern char* data; /* modifiable datafile */
 #  define PATH_MAX				100
 #endif /* PATH_MAX */
 
+
 #endif /* MAIN_H */

@@ -29,6 +29,7 @@
 #include "outfit.h"
 #include "pack.h"
 #include "weapon.h"
+#include "faction.h"
 
 
 #define APPNAME			"GAME"
@@ -304,6 +305,7 @@ int main ( int argc, char** argv )
 	/*
 	 * data loading
 	 */
+	factions_load();
 	outfit_load();
 	ships_load();
 	space_load();
@@ -351,6 +353,7 @@ int main ( int argc, char** argv )
 	gui_free(); /* frees up the player's GUI */
 	ships_free();
 	outfit_free();
+	factions_free();
 
 	gl_freeFont(NULL);
 

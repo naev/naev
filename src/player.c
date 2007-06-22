@@ -112,7 +112,7 @@ double gui_yoff = 0.;
 
 /* messages */
 #define MESG_SIZE_MAX	80
-int mesg_timeout = 2000;
+int mesg_timeout = 3000;
 int mesg_max = 5; /* maximum messages onscreen */
 typedef struct {
 	char str[MESG_SIZE_MAX];

@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Factions>
-<faction id='1'>
-<name>Player</name>
+<faction name="Player">
 </faction>
-<faction id='2'>
-<name>Merchant</name>
+<faction name="Merchant">
+</faction>
+<faction name="Pirate">
+</faction>
+<alliances>
+</alliances>
 <enemies>
-<enemy>'3'</enemy>
 </enemies>
-<allies>
-</allies>
-</faction>
-<faction id='3'>
-<name>Pirate</name>
-<enemies>
-<enemy>2</enemy>
-</enemies>
-<allies>
-</allies>
-</faction>
 </Factions>

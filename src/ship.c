@@ -61,7 +61,7 @@ static Ship* ship_parse( xmlNodePtr parent )
 
 	temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name");
 
-	node  = parent->xmlChildrenNode;
+	node = parent->xmlChildrenNode;
 
 	while ((node = node->next)) { /* load all the data */
 		if (strcmp((char*)node->name, "GFX")==0) {

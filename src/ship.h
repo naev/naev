@@ -62,8 +62,8 @@ typedef struct {
 } Ship;
 
 
-int ships_load(void);
-void ships_free(void);
+int ships_load (void);
+void ships_free (void);
 
 
 Ship* get_ship( const char* name );

@@ -9,6 +9,7 @@
 
 		X.2) Combat
 			X.2.1) primary : fires primary weapons. default: spacebar.
+			X.2.2) target : targets next ship. default: tab
 
 		X.3) Gui
 			X.3.1) mapzoomin : zooms in the minimap. default: 9.
