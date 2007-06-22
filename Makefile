@@ -12,7 +12,7 @@ VERSION = -DVMAJOR=$(VMAJOR) -DVMINOR=$(VMINOR) -DVREV=$(VREV)
 OBJS := $(shell find src/ -name '*.c' -print)
 OBJS := $(OBJS:%.c=%.o)
 
-CLUA = -I/usr/include/lua5.1
+CLUA = -Ilib/lua
 CSDL = $(shell sdl-config --cflags)
 CXML = $(shell xml2-config --cflags)
 CTTF = $(shell freetype-config --cflags)
@@ -24,7 +24,7 @@ else # DEBUG
 CFLAGS += -O2
 endif # DEBUG
 
-LDLUA = -llua5.1
+LDLUA = lib/lua/liblua.a
 LDSDL = `sdl-config --libs` -lSDL_image
 LDXML = `xml2-config --libs`
 LDTTF = `freetype-config --libs`
@@ -40,16 +40,19 @@ DATAFILES = $(shell find ai/ gfx/ dat/ -name '*.lua' -o -name '*.png' -o -name '
 	@echo -e "\tCC   $@"
 
 
-all:	data $(OBJS)
-	@$(CC) $(LDFLAGS) -o $(APPNAME) $(OBJS)
+all:	data lua $(OBJS)
+	@$(CC) $(LDFLAGS) -o $(APPNAME) $(OBJS) lib/lua/liblua.a
 	@echo -e "\tLD   $(APPNAME)"
 
 
-pack: src/pack.c
+lua:
+	@if [ ! -e lib/lua/lua ];then ( cd lib/lua; $(MAKE) a ); fi
+
+pack: src/pack.c utils/pack/main.c
 	@( cd utils/pack; $(MAKE) )
 
 
-data: pack $(DATAFILES) src/pack.c
+data: pack $(DATAFILES) src/pack.c utils/pack/main.c
 	@echo -e "\tCreating data\n"
 	@./pack $(DATA) $(DATAFILES)
 
