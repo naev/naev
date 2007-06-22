@@ -46,7 +46,7 @@ all:	data lua $(OBJS)
 
 
 lua:
-	@if [ ! -e lib/lua/lua ];then ( cd lib/lua; $(MAKE) a ); fi
+	@if [ ! -e lib/lua/liblua.a ];then ( cd lib/lua; $(MAKE) a ); fi
 
 pack: src/pack.c utils/pack/main.c
 	@( cd utils/pack; $(MAKE) )
