@@ -14,7 +14,7 @@ function attack ()
 	dist = getdist(getpos(target))
 
 	if dir < 10 and dist > 100 then
-		accel( dist/100-1 )
+		accel()
 	elseif dir < 10 and dist < 100 then
 		shoot()
 	end

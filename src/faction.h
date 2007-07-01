@@ -14,7 +14,7 @@ typedef struct Faction {
 } Faction;
 
 
-Faction* get_faction( const char* name );
+Faction* faction_get( const char* name );
 
 int areEnemeis( Faction* a, Faction* b );
 int areAllies( Faction* a, Faction* b );

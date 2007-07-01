@@ -13,6 +13,7 @@
 #include "rng.h"
 #include "pilot.h"
 #include "pack.h"
+#include "faction.h"
 
 
 #define XML_NODE_START  1
@@ -24,10 +25,10 @@
 #define XML_SYSTEM_ID	"Systems"
 #define XML_SYSTEM_TAG	"ssys"
 
-#define PLANET_DATA	"dat/planet.xml"
-#define SYSTEM_DATA	"dat/ssys.xml"
+#define PLANET_DATA		"dat/planet.xml"
+#define SYSTEM_DATA		"dat/ssys.xml"
 
-#define PLANET_GFX     "gfx/planet/"
+#define PLANET_GFX		"gfx/planet/"
 
 /* used to overcome warnings due to 0 values */
 #define FLAG_XSET				   (1<<0)
@@ -66,14 +67,12 @@ typedef enum { PLANET_CLASS_NULL=0, /* Null/Not defined */
 		PLANET_CLASS_Z		/* Demon */
 } PlanetClass;
 typedef struct {
-	char* name;
-
+	char* name; /* planet name */
 	Vector2d pos; /* position in star system */
 
-	PlanetClass class;
-	
+	PlanetClass class; /* planet type */
+	Faction* faction; /* planet faction */
 	gl_texture* gfx_space; /* graphic in space */
-
 } Planet;
 
 
@@ -81,28 +80,32 @@ typedef struct {
  * star systems
  */
 typedef struct {
-	char* name;
+	Fleet* fleet; /* fleet to appear */
+	int chance; /* chance of fleet appearing in the system */
+} SystemFleet;
+typedef struct {
+	char* name; /* star system identifier */
 
 	Vector2d pos; /* position */
 	int stars, asteroids; /* in number */
 	double interference; /* in % */
 
-	/* faction; */
-
 	Planet *planets; /* planets */
-	int nplanets;
+	int nplanets; /* total number of planets */
 
-	/* fleets; */
+	SystemFleet* fleets; /* fleets that can appear in the current system */
+	int nfleets; /* total number of fleets */
 } StarSystem;
+
 static StarSystem *systems = NULL;
 static int nsystems = 0;
 static StarSystem *cur_system = NULL; /* Current star system */
 
 
-#define STAR_BUF	100	/* area to leave around screen */
+#define STAR_BUF	100	/* area to leave around screen, more = less repitition */
 typedef struct {
 	double x,y; /* position, lighter to use to doubles then the physics system */
-	double brightness;
+	double brightness; /* self-explanatory */
 } Star;
 static Star *stars = NULL; /* star array */
 static int nstars = 0; /* total stars */
@@ -113,10 +116,12 @@ static int nstars = 0; /* total stars */
  */
 static Planet* planet_get( const char* name );
 static StarSystem* system_parse( const xmlNodePtr parent );
+static PlanetClass planetclass_get( const char a );
 
 
 /*
  * draws the planets. used in player.c
+ * matrix mode is already displaced to center of the minimap
  */
 #define PIXEL(x,y)		if (ABS(x)<w/2. && ABS(y)<h/2.) glVertex2i((x),(y))
 void planets_minimap( double res, double w, double h )
@@ -177,6 +182,41 @@ void planets_minimap( double res, double w, double h )
 	glEnd(); /* GL_POINTS */
 }
 #undef PIXEL
+
+
+/*
+ * basically returns a PlanetClass integer from a char
+ */
+static PlanetClass planetclass_get( const char a )
+{
+	switch (a) {
+		case 'A': return PLANET_CLASS_A;
+		case 'B': return PLANET_CLASS_B;
+		case 'C': return PLANET_CLASS_C;
+		case 'D': return PLANET_CLASS_D;
+		case 'E': return PLANET_CLASS_E;
+		case 'F': return PLANET_CLASS_F;
+		case 'G': return PLANET_CLASS_G;
+		case 'H': return PLANET_CLASS_H;
+		case 'I': return PLANET_CLASS_I;
+		case 'J': return PLANET_CLASS_J;
+		case 'K': return PLANET_CLASS_K;
+		case 'L': return PLANET_CLASS_L;
+		case 'M': return PLANET_CLASS_M;
+		case 'N': return PLANET_CLASS_N;
+		case 'O': return PLANET_CLASS_O;
+		case 'P': return PLANET_CLASS_P;
+		case 'Q': return PLANET_CLASS_Q;
+		case 'R': return PLANET_CLASS_R;
+		case 'S': return PLANET_CLASS_S;
+		case 'T': return PLANET_CLASS_T;
+		case 'X': return PLANET_CLASS_X;
+		case 'Y': return PLANET_CLASS_Y;
+		case 'Z': return PLANET_CLASS_Z;
+
+		default: return PLANET_CLASS_NULL;
+	};
+}
 
 
 /*
@@ -271,7 +311,10 @@ static Planet* planet_get( const char* name )
 						cur = node->children;
 						while((cur = cur->next)) {
 							if (strcmp((char*)cur->name,"class")==0)
-								temp->class = atoi((char*)cur->children->content);
+								temp->class =
+									planetclass_get(cur->children->content[0]);
+							else if (strcmp((char*)cur->name,"faction")==0)
+								temp->faction = faction_get( (char*)cur->children->content);
 						}
 					}
 				}
@@ -290,6 +333,7 @@ static Planet* planet_get( const char* name )
 		MELEMENT(flags&FLAG_XSET,"x");
 		MELEMENT(flags&FLAG_YSET,"y");
 		MELEMENT(temp->class,"class");
+		MELEMENT(temp->faction,"faction");
 #undef MELEMENT
 	}
 	else
@@ -306,7 +350,9 @@ static Planet* planet_get( const char* name )
 static StarSystem* system_parse( const xmlNodePtr parent )
 {
 	Planet* planet = NULL;
+	SystemFleet* fleet = NULL;
 	StarSystem* temp = CALLOC_ONE(StarSystem);
+	char* ptrc;
 	xmlNodePtr cur, node;
 
 	uint32_t flags;
@@ -344,14 +390,40 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 				}
 			}
 		}
+		/* loads all the planets */
 		else if (strcmp((char*)node->name,"planets")==0) {
 			cur = node->children;
-			while((cur = cur->next)) {
+			while ((cur = cur->next)) {
 				if (strcmp((char*)cur->name,"planet")==0) {
 					planet = planet_get((const char*)cur->children->content);
 					temp->planets = realloc(temp->planets, sizeof(Planet)*(++temp->nplanets));
-					memcpy(temp->planets+temp->nplanets-1, planet, sizeof(Planet));
+					memcpy(temp->planets+(temp->nplanets-1), planet, sizeof(Planet));
 					free(planet);
+				}
+			}
+		}
+		/* loads all the fleets */
+		else if (strcmp((char*)node->name,"fleets")==0) {
+			cur = node->children;
+			while ((cur = cur->next)) {
+				if (strcmp((char*)cur->name,"fleet")==0) {
+					fleet = CALLOC_ONE(SystemFleet);
+
+					fleet->fleet = fleet_get((const char*)cur->children->content);
+					if (fleet->fleet==NULL)
+						WARN("Fleet %s for Star System %s not found",
+								(char*)cur->children->content, temp->name);
+
+					ptrc = (char*)xmlGetProp(cur,(xmlChar*)"chance"); /* mallocs ptrc */
+					fleet->chance = atoi(ptrc);
+					if (fleet->chance == 0)
+						WARN("Fleet %s for Star System %s has 0%% chance to appear",
+							fleet->fleet->name, temp->name);
+					if (ptrc) free(ptrc); /* free the ptrc */
+
+					temp->fleets = realloc(temp->fleets, sizeof(SystemFleet)*(++temp->nfleets));
+					memcpy(temp->fleets+(temp->nfleets-1), fleet, sizeof(SystemFleet));
+					free(fleet);
 				}
 			}
 		}
@@ -469,6 +541,8 @@ void space_exit (void)
 			free(systems[i].planets[j].name);
 			if (systems[i].planets[j].gfx_space)
 				gl_freeTexture(systems[i].planets[j].gfx_space);
+			if (systems[i].fleets)
+				free(systems[i].fleets);
 		}
 		free(systems[i].planets);
 	}

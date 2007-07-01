@@ -9,7 +9,6 @@
 <stars>500</stars>
 <asteroids>0</asteroids>
 <interference>0</interference>
-<faction>2</faction>
 </general>
 <planets>
 <planet>Caladan</planet>
@@ -32,7 +31,6 @@
 <stars>27</stars>
 <asteroids>0</asteroids>
 <interference>0</interference>
-<faction>2</faction>
 </general>
 <planets>
 <planet>Dune</planet>

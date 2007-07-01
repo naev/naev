@@ -162,7 +162,7 @@ void player_render (void)
 
 	/* renders the player target graphics */
 	if (player_target) {
-		p = get_pilot(player_target);
+		p = pilot_get(player_target);
 
 		vect_csetmin( &v, VX(p->solid->pos) - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.,
 				VY(p->solid->pos) + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2. );

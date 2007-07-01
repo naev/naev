@@ -33,7 +33,7 @@ static Faction* faction_parse( xmlNodePtr parent );
 /*
  * returns the faction of name name
  */
-Faction* get_faction( const char* name )
+Faction* faction_get( const char* name )
 {
 	int i;
 	for (i=0; i<nfactions; i++) 
@@ -77,6 +77,7 @@ static Faction* faction_parse( xmlNodePtr parent )
 	Faction* temp = CALLOC_ONE(Faction);
 
 	temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name");
+	if (temp->name == NULL) WARN("Faction from "FACTION_DATA" has invalid or no name");
 
 	return temp;
 }
@@ -92,13 +93,13 @@ int factions_load (void)
 
 	Faction* temp = NULL;
 
-	node = doc->xmlChildrenNode; /* Ships node */
+	node = doc->xmlChildrenNode; /* Factions node */
 	if (strcmp((char*)node->name,XML_FACTION_ID)) {
 		ERR("Malformed "FACTION_DATA" file: missing root element '"XML_FACTION_ID"'");
 		return -1;
 	}
 
-	node = node->xmlChildrenNode; /* first ship node */
+	node = node->xmlChildrenNode; /* first faction node */
 	if (node == NULL) {
 		ERR("Malformed "FACTION_DATA" file: does not contain elements");
 		return -1;
@@ -125,6 +126,9 @@ int factions_load (void)
 
 void factions_free (void)
 {
+	int i;
+	for (i=0; i<nfactions; i++)
+		free(faction_stack[i].name);
 	free(faction_stack);
 	nfactions = 0;
 }

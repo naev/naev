@@ -6,9 +6,21 @@
 #include <math.h>
 #include <stdlib.h>
 
+#include "libxml/parser.h"
+
 #include "main.h"
 #include "log.h"
 #include "weapon.h"
+#include "pack.h"
+
+
+#define XML_NODE_START  1
+#define XML_NODE_TEXT   3
+
+#define XML_ID				"Fleets"  /* XML section identifier */
+#define XML_FLEET			"fleet"
+
+#define FLEET_DATA		"dat/fleet.xml"
 
 
 /* stack of pilot ids to assure uniqueness */
@@ -16,9 +28,13 @@ static unsigned int pilot_id = 0;
 
 
 /* stack of pilots */
-Pilot** pilot_stack; /* not static, used in player.c and weapon.c */
+Pilot** pilot_stack = NULL; /* not static, used in player.c and weapon.c */
 int pilots = 0; /* same */
 extern Pilot* player;
+
+/* stack of fleets */
+static Fleet* fleet_stack = NULL;
+static int nfleets = 0;
 
 
 /*
@@ -32,12 +48,13 @@ extern void ai_think( Pilot* pilot ); /* ai.c */
 static void pilot_update( Pilot* pilot, const double dt );
 void pilot_render( Pilot* pilot ); /* externed in player.c */
 static void pilot_free( Pilot* p );
+static Fleet* fleet_parse( const xmlNodePtr parent );
 
 
 /*
  * gets the next pilot based on player_id
  */
-unsigned int pilot_getNext( unsigned int id )
+unsigned int pilot_getNext( const unsigned int id )
 {
 	int i,n;
 	for (i=0, n=pilots/2; n > 0; n /= 2 ) 
@@ -52,7 +69,7 @@ unsigned int pilot_getNext( unsigned int id )
 /*
  * pulls a pilot out of the pilot_stack based on id
  */
-Pilot* get_pilot( unsigned int id )
+Pilot* pilot_get( const unsigned int id )
 {
 /* Regular search */
 /*	int i;
@@ -78,7 +95,7 @@ Pilot* get_pilot( unsigned int id )
  * @param p the pilot which is shooting
  * @param secondary whether they are shooting secondary weapons or primary weapons
  */
-void pilot_shoot( Pilot* p, int secondary )
+void pilot_shoot( Pilot* p, const int secondary )
 {
 	int i;
 	if (!secondary) { /* primary weapons */
@@ -111,7 +128,7 @@ void pilot_shoot( Pilot* p, int secondary )
 /*
  * damages the pilot
  */
-void pilot_hit( Pilot* p, double damage_shield, double damage_armor )
+void pilot_hit( Pilot* p, const double damage_shield, const double damage_armor )
 {
 	if (p->shield-damage_shield > 0.)
 		p->shield -= damage_shield;
@@ -331,3 +348,130 @@ void pilots_update( double dt )
 	}
 }
 
+
+/* returns the fleet based on name */
+Fleet* fleet_get( const char* name )
+{
+	int i;
+	for (i=0; i<nfleets; i++)
+		if (strcmp(name, fleet_stack[i].name)==0)
+			return fleet_stack+i;
+	return NULL;
+}
+
+
+/* parses the fleet node */
+static Fleet* fleet_parse( const xmlNodePtr parent )
+{
+	xmlNodePtr cur, node;
+	FleetPilot* pilot;
+	char* c;
+	node  = parent->xmlChildrenNode;
+
+	Fleet* temp = CALLOC_ONE(Fleet);
+
+	temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name"); /* already mallocs */
+	if (temp->name == NULL) WARN("Fleet in "FLEET_DATA" has invalid or no name");
+
+	while ((node = node->next)) { /* load all the data */
+		if (strcmp((char*)node->name,"faction")==0)
+			temp->faction = faction_get((char*)node->children->content);
+		else if (strcmp((char*)node->name,"pilots")==0) {
+			cur = node->children;     
+			while ((cur = cur->next)) {
+				if (strcmp((char*)cur->name,"pilot")==0) {
+					temp->npilots++; /* pilot count */
+					pilot = MALLOC_ONE(FleetPilot);
+
+					/* name is not obligatory, will only override ship name */
+					c = (char*)xmlGetProp(cur,(xmlChar*)"name"); /* mallocs */
+					pilot->name = c; /* no need to free here though */
+
+					pilot->ship = ship_get((char*)cur->children->content);
+					if (pilot->ship == NULL)
+						WARN("Pilot %s in Fleet %s has null ship", pilot->name, temp->name);
+
+					c = (char*)xmlGetProp(cur,(xmlChar*)"chance"); /* mallocs */
+					pilot->chance = atoi(c);
+					if (pilot->chance == 0)
+						WARN("Pilot %s in Fleet %s has 0%% chance of appearing",
+							pilot->name, temp->name );
+					if (c) free(c); /* free the external malloc */
+
+					/* memory silliness */
+					temp->pilots = realloc(temp->pilots, sizeof(FleetPilot)*temp->npilots);
+					memcpy(temp->pilots+(temp->npilots-1), pilot, sizeof(FleetPilot));
+					free(pilot);
+				}
+			}
+		}
+	}
+
+#define MELEMENT(o,s)      if ((o) == NULL) WARN("Fleet '%s' missing '"s"' element", temp->name)
+	MELEMENT(temp->faction,"faction");
+	MELEMENT(temp->pilots,"pilots");
+#undef MELEMENT
+
+	return temp;
+}
+
+
+/* loads the fleets */
+int fleet_load (void)
+{
+	uint32_t bufsize;
+	char *buf = pack_readfile(DATA, FLEET_DATA, &bufsize);
+
+	xmlNodePtr node;
+	xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+
+	Fleet* temp = NULL;
+
+	node = doc->xmlChildrenNode; /* Ships node */
+	if (strcmp((char*)node->name,XML_ID)) {
+		ERR("Malformed "FLEET_DATA" file: missing root element '"XML_ID"'");
+		return -1;
+	}
+
+	node = node->xmlChildrenNode; /* first ship node */
+	if (node == NULL) {
+		ERR("Malformed "FLEET_DATA" file: does not contain elements");
+		return -1;
+	}
+
+	do {  
+		if (node->type ==XML_NODE_START &&         
+				strcmp((char*)node->name,XML_FLEET)==0) {
+			temp = fleet_parse(node);
+			fleet_stack = realloc(fleet_stack, sizeof(Fleet)*(++nfleets));
+			memcpy(fleet_stack+nfleets-1, temp, sizeof(Fleet));
+			free(temp);
+		}
+	} while ((node = node->next));
+
+	xmlFreeDoc(doc);
+	free(buf);
+	xmlCleanupParser();
+
+	DEBUG("Loaded %d fleets", nfleets);
+
+	return 0;
+}
+
+
+/* frees the fleets */
+void fleet_free (void)
+{
+	int i,j;
+	if (fleet_stack != NULL) {
+		for (i=0; i<nfleets; i++) {
+			for (j=0; j<fleet_stack[i].npilots; j++)
+				if (fleet_stack[i].pilots[j].name)
+					free(fleet_stack[i].pilots[j].name);
+			free(fleet_stack[i].name);
+			free(fleet_stack[i].pilots);
+		}
+		free(fleet_stack);
+	}
+	nfleets = 0;
+}

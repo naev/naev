@@ -316,7 +316,7 @@ static int ai_getdistance( lua_State *L )
 static int ai_getpos( lua_State *L )
 {
 	Pilot *p;
-	if (lua_isnumber(L,1)) p = get_pilot((int)lua_tonumber(L,1)); /* Pilot ID */
+	if (lua_isnumber(L,1)) p = pilot_get((int)lua_tonumber(L,1)); /* Pilot ID */
 	else if (lua_islightuserdata(L,1)) p = (Pilot*)lua_topointer(L,1); /* Pilot pointer */
 	else p = cur_pilot; /* default to self */
 
@@ -393,7 +393,7 @@ static int ai_face( lua_State *L )
 {
 	MIN_ARGS(1);
 	Vector2d* v; /* get the position to face */
-	if (lua_isnumber(L,1)) v = &get_pilot((unsigned int)lua_tonumber(L,1))->solid->pos;
+	if (lua_isnumber(L,1)) v = &pilot_get((unsigned int)lua_tonumber(L,1))->solid->pos;
 	else if (lua_islightuserdata(L,1)) v = (Vector2d*)lua_topointer(L,1);
 
 	double mod = -10;

@@ -66,7 +66,7 @@ int ships_load (void);
 void ships_free (void);
 
 
-Ship* get_ship( const char* name );
+Ship* ship_get( const char* name );
 
 
 #endif /* SHIP_H */

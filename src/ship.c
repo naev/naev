@@ -35,7 +35,7 @@ static Ship* ship_parse( xmlNodePtr parent );
 /*
  * Gets a ship based on its name
  */
-Ship* get_ship( const char* name )
+Ship* ship_get( const char* name )
 {
 	Ship* temp = ship_stack;
 	int i;
@@ -60,6 +60,7 @@ static Ship* ship_parse( xmlNodePtr parent )
 	xmlChar* xstr;
 
 	temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name");
+	if (temp->name == NULL) WARN("Ship in "SHIP_DATA" has invalid or no name");
 
 	node = parent->xmlChildrenNode;
 

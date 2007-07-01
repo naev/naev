@@ -2,6 +2,8 @@
 <Factions>
 <faction name="Player">
 </faction>
+<faction name="Independent">
+</faction>
 <faction name="Merchant">
 </faction>
 <faction name="Pirate">

@@ -157,6 +157,7 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
 	xmlChar* prop;
 
 	temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name"); /* already mallocs */
+	if (temp->name == NULL) WARN("Outfit in "OUTFIT_DATA" has invalid or no name");
 
 	node  = parent->xmlChildrenNode;
 

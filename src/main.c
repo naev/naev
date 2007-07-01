@@ -308,17 +308,18 @@ int main ( int argc, char** argv )
 	factions_load();
 	outfit_load();
 	ships_load();
+	fleet_load();
 	space_load();
 
 
 	/*
 	 * testing
 	 */
-	pilot_create( get_ship("Llama"), "Player", 0.,  NULL, NULL, PILOT_PLAYER );
+	pilot_create( ship_get("Llama"), "Player", 0.,  NULL, NULL, PILOT_PLAYER );
 	gl_bindCamera( &player->solid->pos );
 	space_init("Delta Pavonis");
 
-	pilot_create( get_ship("Mr. Test"), NULL, 2., NULL, NULL, 0 );
+	pilot_create( ship_get("Mr. Test"), NULL, 2., NULL, NULL, 0 );
 
 
 	player_message( "Welcome to "APPNAME"!" );
@@ -351,6 +352,7 @@ int main ( int argc, char** argv )
 	space_exit(); /* cleans up the universe itself */
 	pilots_free(); /* frees the pilots, they were locked up :( */
 	gui_free(); /* frees up the player's GUI */
+	fleet_free();
 	ships_free();
 	outfit_free();
 	factions_free();

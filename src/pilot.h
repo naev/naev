@@ -9,7 +9,7 @@
 #include "ship.h"
 #include "ai.h"
 #include "outfit.h"
-/*#include "faction.h"*/
+#include "faction.h"
 
 
 #define PILOT_SIZE_APROX	0.8	/* aproximation for pilot size */
@@ -59,20 +59,37 @@ typedef struct Pilot {
 } Pilot;
 
 
+/*    
+ * fleets
+ */   
+typedef struct {
+	Ship* ship; /* ship the pilot is flying */
+	char* name; /* used if they have a special name like uniques */
+	int chance; /* chance of this pilot appearing in the leet */
+} FleetPilot;
+typedef struct {
+	char* name; /* fleet name, used as the identifier */
+	Faction* faction; /* faction of the fleet */
+
+	FleetPilot* pilots; /* the pilots in the fleet */
+	int npilots; /* total number of pilots */
+} Fleet;
+
 
 /*
  * getting pilot stuff
  */
 extern Pilot* player; /* the player */
-Pilot* get_pilot( unsigned int id );
+Pilot* pilot_get( const unsigned int id );
 unsigned int pilot_getNext( unsigned int id );
+Fleet* fleet_get( const char* name );
 
 
 /*
  * misc
  */
-void pilot_shoot( Pilot* p, int secondary );
-void pilot_hit( Pilot* p, double damage_shield, double damage_armor );
+void pilot_shoot( Pilot* p, const int secondary );
+void pilot_hit( Pilot* p, const double damage_shield, const double damage_armor );
 
 
 /*
@@ -84,10 +101,12 @@ unsigned int pilot_create( Ship* ship, char* name, const double dir,
 		const Vector2d* pos, const Vector2d* vel, const int flags );
 
 /*
- * cleanup
+ * init/cleanup
  */
 void pilot_destroy(Pilot* p);
 void pilots_free (void);
+int fleet_load (void);
+void fleet_free (void);
 
 
 /*

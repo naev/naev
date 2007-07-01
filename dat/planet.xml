@@ -6,7 +6,8 @@
 <y>15</y>
 </pos>
 <general>
-<class>1</class>
+<class>A</class>
+<faction>Independent</faction>
 <services>1</services>
 <tech>0</tech>
 <commodities>1</commodities>
@@ -19,7 +20,8 @@
 <y>-345</y>
 </pos>
 <general>
-<class>1</class>
+<class>A</class>
+<faction>Independent</faction>
 <services>1</services>
 <tech>0</tech>
 <commodities>1</commodities>
