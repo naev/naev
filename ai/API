@@ -90,4 +90,13 @@ createvect( number x, number y )
 	@param y y coordinate of the vector
 	@return pointer to the Vector2d
 
+say( string message )
+	@desc makes the pilot say something to the player
+	@param message string to say to the player
+	@return nil
 
+rng( number low, number high )
+	@desc returns a random number between low and high
+	@param low minimum to return
+	@param high maximum to return
+	@return random number between low and high

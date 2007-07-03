@@ -15,6 +15,7 @@
 #include "player.h"
 #include "physics.h"
 #include "pack.h"
+#include "rng.h"
 
 
 /*
@@ -89,6 +90,7 @@ static int ai_shoot( lua_State *L ); /* shoot(number); number = 1,2,3 */
 /* misc */
 static int ai_createvect( lua_State *L ); /* createvect( number, number ) */
 static int ai_say( lua_State *L ); /* say( string ) */
+static int ai_rng( lua_State *L ); /* rng( number, number ) */
 
 
 /* Global AI Lua interpreter */
@@ -152,6 +154,7 @@ int ai_init (void)
 	/* misc */
 	lua_register(L, "createvect", ai_createvect);
 	lua_register(L, "say", ai_say);
+	lua_register(L, "rng", ai_rng);
 
 	char *buf = pack_readfile( DATA, "ai/basic.lua", NULL );
 	
@@ -442,6 +445,9 @@ static int ai_createvect( lua_State *L )
 	return 1;
 }
 
+/*
+ * makes the pilot say something to the player
+ */
 static int ai_say( lua_State *L )
 {
 	MIN_ARGS(1);
@@ -450,6 +456,22 @@ static int ai_say( lua_State *L )
 		player_message( "Comm %s> \"%s\"", cur_pilot->name, lua_tostring(L,1));
 
 	return 0;
+}
+
+/*
+ * returns a random number between low and high
+ */
+static int ai_rng( lua_State *L )
+{
+	MIN_ARGS(2);
+
+	int l,h;
+
+	if (lua_isnumber(L,1)) l = (int)lua_tonumber(L,1);
+	if (lua_isnumber(L,2)) h = (int)lua_tonumber(L,2);
+
+	lua_pushnumber(L,RNG(l,h));
+	return 1;
 }
 
 

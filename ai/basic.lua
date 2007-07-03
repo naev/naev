@@ -4,8 +4,8 @@ control_rate = 2
 
 -- Required "control" function
 function control ()
-	say("I'm going to kill you!");
-	pushtask(0,"attack");
+	say("I'm going to kill you!")
+	pushtask(0,"attack")
 end
 
 function attack ()
