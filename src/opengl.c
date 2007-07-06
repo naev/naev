@@ -599,9 +599,6 @@ int gl_init()
 					supported = 1;
 			}
 		}
-		for (i=0;modes[i];++i)
-			free(modes[i]);
-		free(modes);
 
 		/* makes sure fullscreen mode is supported */
 		if (flags & SDL_FULLSCREEN && !supported) {
@@ -610,6 +607,11 @@ int gl_init()
 			gl_screen.w = modes[0]->w;
 			gl_screen.h = modes[0]->h;
 		}
+
+		/* free the modes */
+		for (i=0;modes[i];++i)
+			free(modes[i]);
+		free(modes);
 	}
 
 	
