@@ -56,10 +56,17 @@ static Fleet* fleet_parse( const xmlNodePtr parent );
  */
 unsigned int pilot_getNext( const unsigned int id )
 {
-	int i,n;
+/* Regular Search */
+	int i;
+	for ( i=0; i < pilots; i++ )
+		if (pilot_stack[i]->id == id)
+			break;
+
+/* Dichotomical search */
+	/*int i,n;
 	for (i=0, n=pilots/2; n > 0; n /= 2 ) 
-		i += (pilot_stack[i+n]->id > id) ? 0 : n ;
-	
+		i += (pilot_stack[i+n]->id > id) ? 0 : n ;*/
+
 	if (i==pilots-1) return 0;
 
 	return pilot_stack[i+1]->id;
@@ -72,20 +79,22 @@ unsigned int pilot_getNext( const unsigned int id )
 Pilot* pilot_get( const unsigned int id )
 {
 /* Regular search */
-/*	int i;
+	int i;
 	for ( i=0; i < pilots; i++ )
 		if (pilot_stack[i]->id == id)
 			return pilot_stack[i];
-	return NULL;*/
+	return NULL;
 
 	if (id==0) return player;
 
+	DEBUG("id=%d",id);
+
 /* Dichotomical search */
-	int i,n;
+	/*int i,n;
 	for (i=0, n=pilots/2; n > 0; n /= 2 )
 		i += (pilot_stack[i+n]->id > id) ? 0 : n ;
 
-	return (pilot_stack[i]->id == id) ? pilot_stack[i] : NULL ;
+	return (pilot_stack[i]->id == id) ? pilot_stack[i] : NULL ;*/
 }
 
 
@@ -195,8 +204,8 @@ static void pilot_update( Pilot* pilot, const double dt )
  * @ pos : initial position
  * @ flags : used for tweaking the pilot
  */
-void pilot_init( Pilot* pilot, Ship* ship, char* name, const double dir,
-		const Vector2d* pos, const Vector2d* vel, const int flags )
+void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction,
+		const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
 {
 	if (flags & PILOT_PLAYER) /* player is ID 0 */
 		pilot->id = 0;
@@ -206,6 +215,10 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, const double dir,
 	pilot->ship = ship;
 	pilot->name = strdup( (name==NULL) ? ship->name : name );
 
+	/* faction */
+	pilot->faction = faction;
+
+	/* solid */
 	pilot->solid = solid_create(ship->mass, dir, pos, vel);
 
 	/* max shields/armor */
@@ -261,15 +274,15 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, const double dir,
  *
  * returns pilot's id
  */
-unsigned int pilot_create( Ship* ship, char* name, const double dir,
-		const Vector2d* pos, const Vector2d* vel, const int flags )
+unsigned int pilot_create( Ship* ship, char* name, Faction* faction,
+		const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
 {
 	Pilot* dyn = MALLOC_ONE(Pilot);
 	if (dyn == NULL) {
 		WARN("Unable to allocate memory");
 		return 0;;
 	}
-	pilot_init( dyn, ship, name, dir, pos, vel, flags );
+	pilot_init( dyn, ship, name, faction, dir, pos, vel, flags );
 
 	if (flags & PILOT_PLAYER) { /* player */
 		if (!pilot_stack) {

@@ -1,4 +1,3 @@
-
 -- Required control rate
 control_rate = 2
 

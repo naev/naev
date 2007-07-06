@@ -82,22 +82,23 @@ void weapon_minimap( double res, double w, double h )
 void weapons_update( const double dt, WeaponLayer layer )
 {
 	Weapon** wlayer;
-	int nlayer;
+	int* nlayer;
 
 	switch (layer) {
 		case WEAPON_LAYER_BG:
 			wlayer = wbackLayer;
-			nlayer = nwbackLayer;
+			nlayer = &nwbackLayer;
 			break;
 		case WEAPON_LAYER_FG:
 			wlayer = wfrontLayer;
-			nlayer = nwfrontLayer;
+			nlayer = &nwfrontLayer;
 			break;
 	}
 
 	int i;
-	for (i=0; i<nlayer; i++) {
-
+	Weapon* w;
+	for (i=0; i<(*nlayer); i++) {
+		w = wlayer[i];
 		switch (wlayer[i]->outfit->type) {
 			case OUTFIT_TYPE_BOLT:
 				if (SDL_GetTicks() >
@@ -112,6 +113,9 @@ void weapons_update( const double dt, WeaponLayer layer )
 				break;
 		}
 		weapon_update(wlayer[i],dt,layer);
+
+		/* if the weapon has been deleted we have to hold back one */
+		if (w != wlayer[i]) i--;
 	}
 }
 
@@ -138,7 +142,8 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
 	int i;
 	for (i=0; i<pilots; i++)
-		if ( (w->parent != pilot_stack[i]->id) &&
+		if ( (w->parent != pilot_stack[i]->id) && /* pilot didn't shoot it */
+				!areAllies(pilot_get(w->parent)->faction,pilot_stack[i]->faction) &&
 				(DIST(w->solid->pos,pilot_stack[i]->solid->pos) < (PILOT_SIZE_APROX *
 					w->outfit->gfx_space->sw/2. + pilot_stack[i]->ship->gfx_space->sw/2.))) {
 			pilot_hit(pilot_stack[i], w->outfit->damage_shield, w->outfit->damage_armor);
@@ -260,6 +265,7 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
 
 	for (i=0; wlayer[i] != w; i++); /* get to the current position */
 	weapon_free(wlayer[i]);
+	wlayer[i] = NULL;
 	(*nlayer)--;
 
 	for ( ; i < (*nlayer); i++)

@@ -36,6 +36,8 @@ typedef struct Pilot {
 	unsigned int id; /* pilot's id, used for many functions */
 	char* name; /* pilot's name (if unique) */
 
+	Faction* faction;
+
 	/* object caracteristics */
 	Ship* ship; /* ship pilot is flying */
 	Solid* solid; /* associated solid (physics) */
@@ -95,10 +97,10 @@ void pilot_hit( Pilot* p, const double damage_shield, const double damage_armor 
 /*
  * creation
  */
-void pilot_init( Pilot* dest, Ship* ship, char* name, const double dir,
-		const Vector2d* pos, const Vector2d* vel, const int flags );
-unsigned int pilot_create( Ship* ship, char* name, const double dir,
-		const Vector2d* pos, const Vector2d* vel, const int flags );
+void pilot_init( Pilot* dest, Ship* ship, char* name, Faction* faction,
+		const double dir, const Vector2d* pos, const Vector2d* vel, const int flags );
+unsigned int pilot_create( Ship* ship, char* name, Faction* faction,
+		const double dir, const Vector2d* pos, const Vector2d* vel, const int flags );
 
 /*
  * init/cleanup

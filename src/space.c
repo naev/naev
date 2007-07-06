@@ -224,7 +224,7 @@ static PlanetClass planetclass_get( const char a )
  */
 void space_init ( const char* sysname )
 {
-	int i;
+	int i,j;
 
 	for (i=0; i < nsystems; i++)
 		if (strcmp(sysname, systems[i].name)==0)
@@ -233,13 +233,27 @@ void space_init ( const char* sysname )
 	if (i==nsystems) ERR("System %s not found in stack", sysname);
 	cur_system = systems+i;
 
+	/* set up stars */
 	nstars = (cur_system->stars*gl_screen.w*gl_screen.h+STAR_BUF*STAR_BUF)/(800*640);
-	stars = malloc(sizeof(Star)*nstars);
+	stars = realloc(stars,sizeof(Star)*nstars); /* should realloc, not malloc */
 	for (i=0; i < nstars; i++) {
 		stars[i].brightness = (double)RNG( 50, 200 )/256.;
 		stars[i].x = (double)RNG( -STAR_BUF, gl_screen.w + STAR_BUF );
 		stars[i].y = (double)RNG( -STAR_BUF, gl_screen.h + STAR_BUF );
 	}
+
+	/* set up fleets -> pilots */
+	for (i=0; i < cur_system->nfleets; i++)
+		if (RNG(0,100) <= cur_system->fleets[i].chance) /* fleet check */
+			for (j=0; j < cur_system->fleets[i].fleet->npilots; j++)
+				if (RNG(0,100) <= cur_system->fleets[i].fleet->pilots[j].chance)
+					pilot_create( cur_system->fleets[i].fleet->pilots[j].ship,
+							cur_system->fleets[i].fleet->pilots[j].name,
+							cur_system->fleets[i].fleet->faction,
+							RNG(0,360),
+							NULL,
+							NULL,
+							0 );
 }
 
 

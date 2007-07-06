@@ -297,6 +297,7 @@ void player_render (void)
 
 	/* target */
 	if (player_target) {
+		p = pilot_get(player_target);
 
 		gl_blitStatic( p->ship->gfx_target, &gui.pos_target );
 		if (p->armor < p->armor_max*PILOT_DISABLED) /* pilot is disabled */
@@ -500,11 +501,14 @@ static void input_key( int keynum, double value, int abs )
 	} else if (strcmp(player_input[keynum]->name, "primary")==0) {
 		if (value==KEY_PRESS) player_primary = 1;
 		else if (value==KEY_RELEASE) player_primary = 0;
+	/* targetting */
 	} else if (strcmp(player_input[keynum]->name, "target")==0) {
 		if (value==KEY_PRESS) player_target = pilot_getNext(player_target);
+	/* zooming in */
 	} else if (strcmp(player_input[keynum]->name, "mapzoomin")==0) {
 		if (value==KEY_PRESS && gui.radar.res < RADAR_RES_MAX)
 			gui.radar.res += RADAR_RES_INTERVAL;
+	/* zooming out */
 	} else if (strcmp(player_input[keynum]->name, "mapzoomout")==0) {
 		if (value==KEY_PRESS && gui.radar.res > RADAR_RES_MIN)
 			gui.radar.res -= RADAR_RES_INTERVAL;

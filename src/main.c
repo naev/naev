@@ -315,18 +315,17 @@ int main ( int argc, char** argv )
 	/*
 	 * testing
 	 */
-	pilot_create( ship_get("Llama"), "Player", 0.,  NULL, NULL, PILOT_PLAYER );
+	pilot_create( ship_get("Llama"), "Player", faction_get("Player"),
+			0.,  NULL, NULL, PILOT_PLAYER );
 	gl_bindCamera( &player->solid->pos );
 	space_init("Delta Pavonis");
 
-	pilot_create( ship_get("Mr. Test"), NULL, 2., NULL, NULL, 0 );
-
-
+	/* welcome message */
 	player_message( "Welcome to "APPNAME"!" );
 	player_message( " v%d.%d.%d", VMAJOR, VMINOR, VREV );
 
 	
-	time = SDL_GetTicks();
+	time = SDL_GetTicks(); /* initializes the time */
 	/* 
 	 * main loop
 	 */

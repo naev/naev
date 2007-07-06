@@ -8,8 +8,16 @@
 </faction>
 <faction name="Pirate">
 </faction>
-<alliances>
-</alliances>
+<Alliances>
+<alliance name="Neutral">
+<ally>Independent</ally>
+<ally>Merchant</ally>
+</alliance>
+</Alliances>
+<Enemies>
 <enemies>
+<enemy type="alliance">Neutral</enemy>
+<enemy type="faction">Pirate</enemy>
 </enemies>
+</Enemies>
 </Factions>

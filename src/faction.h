@@ -9,14 +9,16 @@ typedef struct Faction {
 	char* name;
 
 	struct Faction** enemies;
+	int nenemies;
 	struct Faction** allies;
+	int nallies;
 
 } Faction;
 
 
 Faction* faction_get( const char* name );
 
-int areEnemeis( Faction* a, Faction* b );
+int areEnemies( Faction* a, Faction* b );
 int areAllies( Faction* a, Faction* b );
 
 int factions_load (void);
