@@ -54,6 +54,16 @@ isstopped()
 	@desc checks if is stopped
 	@return true if stopped, false otherwise
 
+isenemy( Pilot pilot )
+	@desc checks if p is an enemy of current pilot
+	@param p Pilot to see if he is an enemy
+	@return true if p is an enemy
+
+isally( Pilot p )
+	@desc checks if p is an ally of the current pilot
+	@param p Pilot to check if he is an ally
+	@return true if p is an ally
+
 
 	M O V E M E N T
 
@@ -80,6 +90,10 @@ shoot( [number weapon] )
 	@desc makes the pilot shoot weapons
 	@param weapon weapons to shoot, 1 if primary, 2 if secondary, 3 if both.  Defaults to 1.
 	@return nil
+
+getenemy()
+	@desc returns the id of the nearest enemy
+	@return Pilot id of the closest enemy
 
 
 	M I S C

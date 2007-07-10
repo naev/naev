@@ -80,6 +80,8 @@ static int ai_minbrakedist( lua_State *L ); /* number minbrakedist() */
 /* boolean expressions */
 static int ai_ismaxvel( lua_State *L ); /* boolean ismaxvel() */
 static int ai_isstopped( lua_State *L ); /* boolean isstopped() */
+static int ai_isenemy( lua_State *L ); /* bool isenemy( pointer ) */
+static int ai_isally( lua_State *L ); /* bool isally( pointer ) */
 /* movement */
 static int ai_accel( lua_State *L ); /* accel(number); number <= 1. */
 static int ai_turn( lua_State *L ); /* turn(number); abs(number) <= 1. */
@@ -87,6 +89,7 @@ static int ai_face( lua_State *L ); /* face(number/pointer) */
 static int ai_brake( lua_State *L ); /* brake() */
 /* combat */
 static int ai_shoot( lua_State *L ); /* shoot(number); number = 1,2,3 */
+static int ai_getenemy( lua_State *L ); /* pointer getenemy() */
 /* misc */
 static int ai_createvect( lua_State *L ); /* createvect( number, number ) */
 static int ai_say( lua_State *L ); /* say( string ) */
@@ -144,6 +147,8 @@ int ai_init (void)
 	/* boolean expressions */
 	lua_register(L, "ismaxvel", ai_ismaxvel);
 	lua_register(L, "isstopped", ai_isstopped);
+	lua_register(L, "isenemy", ai_isenemy);
+	lua_register(L, "isally", ai_isally);
 	/* movement */
 	lua_register(L, "accel", ai_accel);
 	lua_register(L, "turn", ai_turn);
@@ -151,6 +156,7 @@ int ai_init (void)
 	lua_register(L, "brake", ai_brake);
 	/* combat */
 	lua_register(L, "shoot", ai_shoot);
+	lua_register(L, "getenemy", ai_getenemy);
 	/* misc */
 	lua_register(L, "createvect", ai_createvect);
 	lua_register(L, "say", ai_say);
@@ -241,10 +247,15 @@ static int ai_pushtask( lua_State *L )
 	t->target = NULL;
 
 	if (lua_gettop(L) > 2) {
-		if (lua_isnumber(L,3))
+		if (lua_isnumber(L,3)) {
+			t->dtype = TYPE_INT;
 			t->ID = (unsigned int)lua_tonumber(L,3);
-		else if (lua_islightuserdata(L,3))
+		}
+		else if (lua_islightuserdata(L,3)) {
+			t->dtype = TYPE_PTR;
 			t->target = (void*)lua_topointer(L,3);
+		}
+		else t->dtype = TYPE_NULL;
 	}
 
 	if (cur_pilot->task == NULL) /* no other tasks */
@@ -290,16 +301,22 @@ static int ai_taskname( lua_State *L )
  */
 static int ai_gettarget( lua_State *L )
 {
-	lua_pushlightuserdata(L, cur_pilot->task->target);
-	return 1;
+	if (cur_pilot->task->dtype == TYPE_PTR) {
+		lua_pushlightuserdata(L, cur_pilot->task->target);
+		return 1;
+	}
+	return 0;
 }
 /*
  * gets the target ID
  */
 static int ai_gettargetid( lua_State *L )
 {
-	lua_pushnumber(L, cur_pilot->task->ID);
-	return 1;
+	if (cur_pilot->task->dtype == TYPE_INT) {
+		lua_pushnumber(L, cur_pilot->task->ID);
+		return 1;
+	}
+	return 0;
 }
 
 /*
@@ -369,6 +386,24 @@ static int ai_isstopped( lua_State *L )
 
 
 /*
+ * checks if pilot is an enemy
+ */
+static int ai_isenemy( lua_State *L )
+{
+	return 1;
+}
+
+
+/*
+ * checks if pillot is an ally
+ */
+static int ai_isally( lua_State *L )
+{
+	return 1;
+}
+
+
+/*
  * starts accelerating the pilot based on a parameter
  */
 static int ai_accel( lua_State *L )
@@ -430,6 +465,31 @@ static int ai_brake( lua_State *L )
 
 
 /*
+ * makes the pilot shoot
+ */
+static int ai_shoot( lua_State *L )
+{
+	int n = 1;
+	if (lua_isnumber(L,1)) n = (int)lua_tonumber(L,1);
+
+	if (n==1) pilot_primary = 1;
+	/* else if (n==2) pilot_secondary = 1;
+		else if  (n==3) pilot_primary = pilot_secondary = 1; */
+
+	return 0;
+}
+
+
+/*
+ * gets the nearest enemy
+ */
+static int ai_getenemy( lua_State *L )
+{
+	return 0;
+}
+
+
+/*
  * creates a Vector2d
  */
 static int ai_createvect( lua_State *L )
@@ -474,18 +534,3 @@ static int ai_rng( lua_State *L )
 	return 1;
 }
 
-
-/*
- * makes the pilot shoot
- */
-static int ai_shoot( lua_State *L )
-{
-	int n = 1;
-	if (lua_isnumber(L,1)) n = (int)lua_tonumber(L,1);
-	
-	if (n==1) pilot_primary = 1;
-	/* else if (n==2) pilot_secondary = 1;
-	 else if  (n==3) pilot_primary = pilot_secondary = 1; */
-
-	return 0;
-}

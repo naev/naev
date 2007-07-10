@@ -4,6 +4,8 @@
 #  define AI_H
 
 
+typedef enum { TYPE_NULL, TYPE_INT, TYPE_PTR } TaskData;
+
 /* 
  * Basic task
  *  @name is the task's name (function name in Lua)
@@ -14,6 +16,8 @@ typedef struct Task {
 
 	char *name;
 
+	
+	TaskData dtype;
 	union {
 		void *target; /* Vector2d, etc... */
 		unsigned int ID; /* Pilot ID, etc... */
