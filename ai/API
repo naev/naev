@@ -54,14 +54,14 @@ isstopped()
 	@desc checks if is stopped
 	@return true if stopped, false otherwise
 
-isenemy( Pilot pilot )
-	@desc checks if p is an enemy of current pilot
-	@param p Pilot to see if he is an enemy
+isenemy( number p )
+	@desc checks if p is an enemy of current pilot 
+	@param p ID of a pilot to see if he is an enemy
 	@return true if p is an enemy
 
-isally( Pilot p )
+isally( number p )
 	@desc checks if p is an ally of the current pilot
-	@param p Pilot to check if he is an ally
+	@param p ID of a pilot to check if he is an ally
 	@return true if p is an ally
 
 

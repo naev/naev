@@ -163,6 +163,9 @@ void pilot_render( Pilot* p )
 	/* get the sprite corresponding to the direction facing */
 	sprite = (int)(p->solid->dir / (2.0*M_PI / (t->sy*t->sx)));
 
+	/* ugly hack to make sure it always is "inbounds" */
+	if (sprite > (int)(t->sy*t->sx)-1) sprite = (int)(t->sy*t->sx)-1;
+
 	gl_blitSprite( t, &p->solid->pos, sprite % (int)t->sx, sprite / (int)t->sy );
 }
 

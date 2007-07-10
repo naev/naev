@@ -80,8 +80,8 @@ static int ai_minbrakedist( lua_State *L ); /* number minbrakedist() */
 /* boolean expressions */
 static int ai_ismaxvel( lua_State *L ); /* boolean ismaxvel() */
 static int ai_isstopped( lua_State *L ); /* boolean isstopped() */
-static int ai_isenemy( lua_State *L ); /* bool isenemy( pointer ) */
-static int ai_isally( lua_State *L ); /* bool isally( pointer ) */
+static int ai_isenemy( lua_State *L ); /* bool isenemy( number ) */
+static int ai_isally( lua_State *L ); /* bool isally( number ) */
 /* movement */
 static int ai_accel( lua_State *L ); /* accel(number); number <= 1. */
 static int ai_turn( lua_State *L ); /* turn(number); abs(number) <= 1. */
@@ -390,6 +390,9 @@ static int ai_isstopped( lua_State *L )
  */
 static int ai_isenemy( lua_State *L )
 {
+	if (lua_isnumber(L,1))
+		lua_pushboolean(L,areEnemies(cur_pilot->faction,
+				pilot_get(lua_tonumber(L,1))->faction));
 	return 1;
 }
 
@@ -399,6 +402,9 @@ static int ai_isenemy( lua_State *L )
  */
 static int ai_isally( lua_State *L )
 {
+	if (lua_isnumber(L,1))
+		lua_pushboolean(L,areAllies(cur_pilot->faction,
+				pilot_get(lua_tonumber(L,1))->faction));
 	return 1;
 }
 
@@ -485,7 +491,8 @@ static int ai_shoot( lua_State *L )
  */
 static int ai_getenemy( lua_State *L )
 {
-	return 0;
+	lua_pushnumber(L,1);
+	return 1;
 }
 
 
