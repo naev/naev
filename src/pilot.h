@@ -16,8 +16,15 @@
 #define PILOT_DISABLED		0.2	/* armour % that gets it disabled */
 
 
-/* creation flags */
-#define PILOT_PLAYER		1 /* pilot is a player */
+/* flags */
+/* creation */
+#define PILOT_PLAYER		(1<<0) /* pilot is a player */
+/* dynamic */
+/* flags */
+#define pilot_isFlag(p,f)  (p->flags & f)
+#define pilot_setFlag(p,f) (p->flags |= f)
+#define pilot_rmFlag(p,f)  (p->flags ^= f)
+#define PILOT_ATTACKED	(1<<9) /* pilot is under attack */
 
 
 typedef struct {
@@ -53,8 +60,9 @@ typedef struct Pilot {
 
 	/* outfit management */
 	PilotOutfit* outfits;
+	int noutfits;
 
-	unsigned int properties; /* used for AI and others */
+	unsigned int flags; /* used for AI and others */
 
 	/* AI */
 	Task* task; /* current action */

@@ -18,6 +18,11 @@
  */
 extern Pilot** pilot_stack;
 extern int pilots;
+/*
+ * ai stuff
+ */
+extern void ai_attacked( Pilot* attacked, const unsigned int attacker );
+
 
 typedef struct Weapon {
 	Solid* solid; /* actually has its own solid :) */
@@ -151,7 +156,12 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 				!areAllies(pilot_get(w->parent)->faction,pilot_stack[i]->faction) &&
 				CollideSprite( w->outfit->gfx_space, wsx, wsy, &w->solid->pos,
 						pilot_stack[i]->ship->gfx_space, psx, psy, &pilot_stack[i]->solid->pos)) {
+
+			if (i!=0) /* inform the ai it has been attacked, useless if  player */
+				ai_attacked( pilot_stack[i], w->parent );
+			/* inform the ship that it should take some damage */
 			pilot_hit(pilot_stack[i], w->outfit->damage_shield, w->outfit->damage_armor);
+			/* no need for the weapon particle anymore */
 			weapon_destroy(w,layer);
 			return;
 		}

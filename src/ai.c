@@ -66,6 +66,8 @@
  */
 /* Internal C routines */
 static void ai_freetask( Task* t );
+/* External C routines */
+void ai_attacked( Pilot* attacked, const unsigned int attacker ); /* weapon.c */
 /* AI routines for Lua */
 /* tasks */
 static int ai_pushtask( lua_State *L ); /* pushtask( string, number/pointer, number ) */
@@ -74,6 +76,10 @@ static int ai_taskname( lua_State *L ); /* number taskname() */
 /* consult values */
 static int ai_gettarget( lua_State *L ); /* pointer gettarget() */
 static int ai_gettargetid( lua_State *L ); /* number gettargetid() */
+static int ai_armor( lua_State *L ); /* armor() */
+static int ai_shield( lua_State *L ); /* shield() */
+static int ai_parmor( lua_State *L ); /* parmor() */
+static int ai_pshield( lua_State *L ); /* pshield() */
 static int ai_getdistance( lua_State *L ); /* number getdist(Vector2d) */
 static int ai_getpos( lua_State *L ); /* getpos(number/Pilot) */
 static int ai_minbrakedist( lua_State *L ); /* number minbrakedist() */
@@ -141,6 +147,10 @@ int ai_init (void)
 	/* consult values */
 	lua_register(L, "gettarget", ai_gettarget);
 	lua_register(L, "gettargetid", ai_gettargetid);
+	lua_register(L, "armor", ai_armor);
+	lua_register(L, "shield", ai_shield);
+	lua_register(L, "parmor", ai_parmor);
+	lua_register(L, "pshield", ai_pshield);
 	lua_register(L, "getdist", ai_getdistance);
 	lua_register(L, "getpos", ai_getpos);
 	lua_register(L, "minbrakedist", ai_minbrakedist);
@@ -217,6 +227,18 @@ void ai_think( Pilot* pilot )
 
 
 /*
+ * pilot is attacked
+ */
+void ai_attacked( Pilot* attacked, const unsigned int attacker )
+{
+	cur_pilot = attacked;
+	lua_getglobal(L, "attacked");
+	lua_pushnumber(L, attacker);
+	lua_pcall(L, 1, 0, 0);
+}
+
+
+/*
  * internal use C functions
  */
 /*
@@ -227,7 +249,7 @@ static void ai_freetask( Task* t )
 	if (t->next) ai_freetask(t->next); /* yay recursive freeing */
 
 	if (t->name) free(t->name);
-	if (t->target) free(t->target);
+	if (t->dtype == TYPE_PTR) free(t->target);
 	free(t);
 }
 
@@ -295,7 +317,7 @@ static int ai_poptask( lua_State *L )
 static int ai_taskname( lua_State *L )
 {
 	if (cur_pilot->task) lua_pushstring(L, cur_pilot->task->name);
-	else lua_pushnil(L);
+	else lua_pushstring(L, "none");
 	return 1;
 }
 
@@ -310,6 +332,7 @@ static int ai_gettarget( lua_State *L )
 	}
 	return 0;
 }
+
 /*
  * gets the target ID
  */
@@ -321,6 +344,42 @@ static int ai_gettargetid( lua_State *L )
 	}
 	return 0;
 }
+
+/*
+ * gets the pilot's armor
+ */
+static int ai_armor( lua_State *L )
+{
+	lua_pushnumber(L, cur_pilot->armor);
+	return 1;
+}
+
+/*
+ * gets the pilot's shield
+ */
+static int ai_shield( lua_State *L )
+{
+	lua_pushnumber(L, cur_pilot->shield);
+	return 1;
+}
+
+/*
+ * gets the pilot's armor in percent
+ */
+static int ai_parmor( lua_State *L )
+{
+	lua_pushnumber(L, cur_pilot->armor / cur_pilot->ship->armor * 100.);
+	return 1;
+}
+
+/* 
+ * gets the pilot's shield in percent
+ */              
+static int ai_pshield( lua_State *L )
+{                               
+	lua_pushnumber(L, cur_pilot->shield / cur_pilot->ship->shield * 100.);
+	return 1;
+} 
 
 /*
  * gets the distance from the pointer

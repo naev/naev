@@ -24,6 +24,10 @@ typedef struct Task {
 	};
 } Task;
 
+
+/*
+ * init/exit
+ */
 int ai_init (void);
 void ai_exit (void);
 

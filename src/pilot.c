@@ -111,7 +111,7 @@ void pilot_shoot( Pilot* p, const int secondary )
 
 		if (!p->outfits) return; /* no outfits */
 
-		for (i=0; p->outfits[i].outfit; i++) /* cycles through outfits to find weapons */
+		for (i=0; i<p->noutfits; i++) /* cycles through outfits to find weapons */
 			if (outfit_isWeapon(p->outfits[i].outfit) || /* is a weapon or launche */
 					outfit_isLauncher(p->outfits[i].outfit))
 				/* ready to shoot again */
@@ -235,26 +235,21 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction,
 	pilot->outfits = NULL;
 	ShipOutfit* so;
 	if (ship->outfit) {
-		int noutfits = 0;
+		pilot->noutfits = 0;
 		for (so=ship->outfit; so; so=so->next) {
-			pilot->outfits = realloc(pilot->outfits, (noutfits+1)*sizeof(PilotOutfit));
-			pilot->outfits[noutfits].outfit = so->data;
-			pilot->outfits[noutfits].quantity = so->quantity;
-			pilot->outfits[noutfits].timer = 0;
-			noutfits++;
+			pilot->outfits = realloc(pilot->outfits, (pilot->noutfits+1)*sizeof(PilotOutfit));
+			pilot->outfits[pilot->noutfits].outfit = so->data;
+			pilot->outfits[pilot->noutfits].quantity = so->quantity;
+			pilot->outfits[pilot->noutfits].timer = 0;
+			(pilot->noutfits)++;
 		}
-		/* sentinal */
-		pilot->outfits = realloc(pilot->outfits, (noutfits+1)*sizeof(PilotOutfit));
-		pilot->outfits[noutfits].outfit = NULL;
-		pilot->outfits[noutfits].quantity = 0;
-		pilot->outfits[noutfits].timer = 0;
 	}
 
 
 	if (flags & PILOT_PLAYER) {
 		pilot->think = player_think; /* players don't need to think! :P */
 		pilot->render = NULL;
-		pilot->properties |= PILOT_PLAYER;
+		pilot_setFlag(pilot,PILOT_PLAYER); /* it is a player! */
 		player = pilot;
 	}
 	else {
