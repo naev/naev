@@ -393,8 +393,6 @@ static void update_all(void)
 	double dt = (double)(SDL_GetTicks() - time) / 1000.;
 	time = SDL_GetTicks();
 
-	dt /= 2.;
-
 	if (dt > MINIMUM_FPS) { /* TODO needs work */
 		Vector2d pos;
 		vect_csetmin(&pos, 10., (double)(gl_screen.h-40));
