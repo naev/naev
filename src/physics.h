@@ -38,6 +38,7 @@ void vect_pset( Vector2d* v, const double mod, const double angle );
 void vectcpy( Vector2d* dest, const Vector2d* src );
 void vectnull( Vector2d* v );
 double vect_angle( const Vector2d* ref, const Vector2d* v );
+void vect_cadd( Vector2d* v, const double x, const double y );
 
 
 /*
@@ -59,6 +60,7 @@ void solid_init( Solid* dest, const double mass, const double dir,
 Solid* solid_create( const double mass, const double dir,
 		const Vector2d* pos, const Vector2d* vel );
 void solid_free( Solid* src );
+
 
 #endif /* PHYSICS_H */
 

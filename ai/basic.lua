@@ -12,9 +12,9 @@ function attack ()
 	dir = face(target)
 	dist = getdist(getpos(target))
 
-	if dir < 10 and dist > 100 then
+	if dir < 10 and dist > 300 then
 		accel()
-	elseif dir < 10 and dist < 100 then
+	elseif dir < 10 and dist < 300 then
 		shoot()
 	end
 end

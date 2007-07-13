@@ -157,16 +157,12 @@ void pilot_hit( Pilot* p, const double damage_shield, const double damage_armor 
  */
 void pilot_render( Pilot* p )
 {
-	int sprite;
-	gl_texture* t = p->ship->gfx_space;
+	int sx,sy;
 
 	/* get the sprite corresponding to the direction facing */
-	sprite = (int)(p->solid->dir / (2.0*M_PI / (t->sy*t->sx)));
+	gl_getSpriteFromDir( &sx, &sy, p->ship->gfx_space, p->solid->dir );
 
-	/* ugly hack to make sure it always is "inbounds" */
-	if (sprite > (int)(t->sy*t->sx)-1) sprite = (int)(t->sy*t->sx)-1;
-
-	gl_blitSprite( t, &p->solid->pos, sprite % (int)t->sx, sprite / (int)t->sy );
+	gl_blitSprite( p->ship->gfx_space, &p->solid->pos, sx, sy );
 }
 
 

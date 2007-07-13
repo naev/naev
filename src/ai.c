@@ -190,7 +190,10 @@ void ai_exit (void)
 void ai_think( Pilot* pilot )
 {  
 	cur_pilot = pilot; /* set current pilot being processed */
-	pilot_acc = pilot_turn = 0.; /* clean up some variables */
+
+	/* clean up some variables */
+	pilot_acc = pilot_turn = 0.;
+	pilot_primary = 0;
 
 	if (cur_pilot->task == NULL) /* pilot is IDLE */
 		AI_LCALL("control");

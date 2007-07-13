@@ -21,7 +21,9 @@ double angle_diff( const double ref, double a )
 
 
 /*
+ *
  * V E C T O R 2 D
+ *
  */
 /*
  * set the vector value using cartesian coordinates
@@ -75,6 +77,18 @@ void vectnull( Vector2d* v )
 double vect_angle( const Vector2d* ref, const Vector2d* v )
 {
 	return ANGLE( VX(*v)-VX(*ref), VY(*v)-VY(*ref));
+}
+
+
+/*
+ * adds x and y to the current vector
+ */
+void vect_cadd( Vector2d* v, const double x, const double y )
+{
+	v->x -= x;
+	v->y -= y;
+	v->mod = MOD(v->x,v->y);
+	v->angle = ANGLE(v->x,v->y);
 }
 
 

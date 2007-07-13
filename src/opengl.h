@@ -47,6 +47,7 @@ typedef struct {
 	double sx, sy; /* number of sprites on x axis and y axis */
 	double sw, sh; /* size of each sprite */
 	GLuint texture; /* the opengl texture itself */
+	uint8_t* trans; /* maps the transparency */
 } gl_texture;
 
 
@@ -91,6 +92,12 @@ void gl_print( const gl_font *ft_font, const Vector2d *pos, const char *fmt, ...
  */
 int gl_init (void);
 void gl_exit (void);
+
+/*
+ * misc
+ */
+int gl_isTrans( const gl_texture* t, const int x, const int y );
+void gl_getSpriteFromDir( int* x, int* y, const gl_texture* t, const double dir );
 
 
 #endif /* OPENGL_H */

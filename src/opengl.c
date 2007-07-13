@@ -44,6 +44,8 @@ extern double gui_yoff;
  */
 /* misc */
 static int SDL_VFlipSurface( SDL_Surface* surface );
+static int SDL_IsTrans( SDL_Surface* s, int x, int y );
+static uint8_t* SDL_MapTrans( SDL_Surface* s );
 static int pot( int n );
 /* gl_texture */
 static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh );
@@ -100,6 +102,70 @@ static int SDL_VFlipSurface( SDL_Surface* surface )
 
 	return 0;
 }
+
+
+/*
+ * returns true if position (x,y) of s is transparent
+ */
+static int SDL_IsTrans( SDL_Surface* s, int x, int y )
+{
+	int bpp = s->format->BytesPerPixel; 
+	// here p is the address to the pixel we want to retrieve 
+	Uint8 *p = (Uint8 *)s->pixels + y*s->pitch + x*bpp; 
+
+	Uint32 pixelcolor = 0; 
+
+	switch(bpp) {        
+		case 1: 
+			pixelcolor = *p; 
+			break; 
+
+		case 2: 
+			pixelcolor = *(Uint16 *)p; 
+			break; 
+
+		case 3: 
+			if(SDL_BYTEORDER == SDL_BIG_ENDIAN) 
+				pixelcolor = p[0] << 16 | p[1] << 8 | p[2]; 
+			else     
+				pixelcolor = p[0] | p[1] << 8 | p[2] << 16; 
+			break; 
+
+		case 4: 
+			pixelcolor = *(Uint32 *)p; 
+			break; 
+	} 
+
+	// test whether pixels color == color of transparent pixels for that surface 
+	return (pixelcolor == s->format->colorkey);
+}
+
+
+/*
+ * maps the surface transparency
+ *
+ * returns 0 on success
+ */
+static uint8_t* SDL_MapTrans( SDL_Surface* s )
+{
+	/* alloc memory for just enough bits to hold all the data we need */
+	int size = s->w*s->h/8 + ((s->w*s->h%8)?1:0);
+	uint8_t* t = malloc(size);
+	bzero(t,size); /* important, must be set to zero */
+
+	if (t==NULL) {
+		WARN("Out of Memory");
+		return NULL;
+	}
+
+	int i,j;
+	for (i=0; i<s->h; i++)
+		for (j=0; j<s->w; j++) /* sets each bit to be 1 if not transparent or 0 if is */
+			t[(i*s->w+j)/8] |= (SDL_IsTrans(s,j,i)) ? 0 : (1<<((i*s->w+j)%8));
+
+	return t;
+}
+
 
 
 /*
@@ -224,8 +290,9 @@ gl_texture* gl_loadImage( SDL_Surface* surface )
 	texture->sw = texture->w;
 	texture->sh = texture->h;
 
-	return texture;
+	texture->trans = NULL;
 
+	return texture;
 }
 
 
@@ -235,6 +302,8 @@ gl_texture* gl_loadImage( SDL_Surface* surface )
 gl_texture*  gl_newImage( const char* path )
 {
 	SDL_Surface *temp, *surface;
+	gl_texture* t;
+	void* trans = NULL;
 	uint32_t filesize;
 	char *buf = pack_readfile( DATA, (char*)path, &filesize );
 	if (buf == NULL) {
@@ -258,12 +327,18 @@ gl_texture*  gl_newImage( const char* path )
 
 	SDL_FreeSurface(temp); /* free the temporary surface */
 
+	SDL_LockSurface(surface);
+	trans = SDL_MapTrans(surface);
+	SDL_UnlockSurface(surface);
+
 	if (SDL_VFlipSurface(surface)) {
 		WARN( "Error flipping surface" );
 		return NULL;
 	}
 
-	return gl_loadImage(surface);
+	t = gl_loadImage(surface);
+	t->trans = trans;
+	return t;
 }
 
 
@@ -289,7 +364,32 @@ gl_texture* gl_newSprite( const char* path, const int sx, const int sy )
 void gl_freeTexture( gl_texture* texture )
 {
 	glDeleteTextures( 1, &texture->texture );
+	if (texture->trans) free(texture->trans);
 	free(texture);
+}
+
+
+/*
+ * returns true if pixel at pos (x,y) is transparent
+ */
+int gl_isTrans( const gl_texture* t, const int x, const int y )
+{
+	return !(t->trans[(y*(int)(t->w)+x)/8] & (1<<((y*(int)(t->w)+x)%8)));
+}
+
+
+/*
+ * sets x and y to be the appropriate sprite for gl_texture using dir
+ */
+void gl_getSpriteFromDir( int* x, int* y, const gl_texture* t, const double dir )
+{
+	int s = (int)(dir / (2.0*M_PI / (t->sy*t->sx)));
+
+	/* makes sure the sprite is "in range" */
+	if (s > (int)(t->sy*t->sx)-1) s = s % (int)(t->sy*t->sx);
+
+	*x = s % (int)t->sx;
+	*y = s / (int)t->sy;
 }
 
 

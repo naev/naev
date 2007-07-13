@@ -10,6 +10,7 @@
 #include "log.h"
 #include "rng.h"
 #include "pilot.h"
+#include "collision.h"
 
 
 /*
@@ -125,13 +126,12 @@ void weapons_update( const double dt, WeaponLayer layer )
  */
 static void weapon_render( const Weapon* w )
 {
-	int sprite;
-	gl_texture* t = w->outfit->gfx_space;
+	int sx, sy;
 
 	/* get the sprite corresponding to the direction facing */
-	sprite = (int)(w->solid->dir / (2.0*M_PI / (t->sy*t->sx)));
+	gl_getSpriteFromDir( &sx, &sy, w->outfit->gfx_space, w->solid->dir );
 
-	gl_blitSprite( t, &w->solid->pos, sprite % (int)t->sx, sprite / (int)t->sy );
+	gl_blitSprite( w->outfit->gfx_space, &w->solid->pos, sx, sy );
 }
 
 
@@ -140,16 +140,22 @@ static void weapon_render( const Weapon* w )
  */
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
-	int i;
-	for (i=0; i<pilots; i++)
+	int i, wsx,wsy, psx,psy;
+	gl_getSpriteFromDir( &wsx, &wsy, w->outfit->gfx_space, w->solid->dir );
+
+	for (i=0; i<pilots; i++) {
+		gl_getSpriteFromDir( &psx, &psy, pilot_stack[i]->ship->gfx_space,
+				pilot_stack[i]->solid->dir );
+
 		if ( (w->parent != pilot_stack[i]->id) && /* pilot didn't shoot it */
 				!areAllies(pilot_get(w->parent)->faction,pilot_stack[i]->faction) &&
-				(DIST(w->solid->pos,pilot_stack[i]->solid->pos) < (PILOT_SIZE_APROX *
-					w->outfit->gfx_space->sw/2. + pilot_stack[i]->ship->gfx_space->sw/2.))) {
+				CollideSprite( w->outfit->gfx_space, wsx, wsy, &w->solid->pos,
+						pilot_stack[i]->ship->gfx_space, psx, psy, &pilot_stack[i]->solid->pos)) {
 			pilot_hit(pilot_stack[i], w->outfit->damage_shield, w->outfit->damage_armor);
 			weapon_destroy(w,layer);
 			return;
 		}
+	}
 
 	if (w->think) (*w->think)(w);
 	

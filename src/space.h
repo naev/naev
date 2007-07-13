@@ -4,6 +4,8 @@
 #  define SPACE_H
 
 
+#define MIN_HYPERSPACE_DIST	1500
+
 /*
  * loading/exiting
  */
