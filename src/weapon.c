@@ -192,15 +192,15 @@ static Weapon* weapon_create( const Outfit* outfit, const double dir,
 	w->think = NULL;
 
 	switch (outfit->type) {
-		case OUTFIT_TYPE_BOLT:
+		case OUTFIT_TYPE_BOLT: /* needs "accuracy" and speed based on player */
 			rdir += RNG(-outfit->accuracy/2.,outfit->accuracy/2.)/180.*M_PI;
 			if ((rdir > 2.*M_PI) || (rdir < 0.)) rdir = fmod(rdir, 2.*M_PI);
-			vect_cset( &v, VX(*vel)+outfit->speed*cos(rdir),
-					VANGLE(*vel)+outfit->speed*sin(rdir));
+			vectcpy( &v, vel );
+			vect_cadd( &v, outfit->speed*cos(rdir), outfit->speed*sin(rdir));
 			w->solid = solid_create( mass, rdir, pos, &v );
 			break;
 
-		default:
+		default: /* just dump it where the player is */
 			w->solid = solid_create( mass, dir, pos, vel );
 			break;
 	}

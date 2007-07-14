@@ -1,4 +1,13 @@
 
+
+		C O N S T A N T S
+
+	
+
+
+		F U N C T I O N S
+
+
 	T A S K S
 
 pushtask( number pos, string name, int/pointer target )
@@ -33,9 +42,9 @@ getdist( Vector2d vect )
 	@param vect point to calculate the distance from
 	@return nil
 
-getpos( [number/Pilot pilot] )
+getpos( [number pilot] )
 	@desc gets the pilot's position or the current pilot's position if no pilot is specified
-	@param pilot ID or Pointer to the pilot to get the position of, if no params are
+	@param pilot ID of the pilot to get the position of, if no params are
 	called it uses the current pilot as target
 	@return Vector2d
 
@@ -100,6 +109,18 @@ face( number/Vector2d target, [number invert] )
 	@param target pilot ID or Vector2d to face
 	@param invert faces away if 1
 	@return number offset from target in grad
+
+brake()
+	@desc makes the pilot brake
+	@return nil
+
+getnearestplanet()
+	@desc gets the nearest friendly planet's position
+	@return position to the nearest friendly planet
+
+getrndplanet()
+	@desc gets the position of a random friendly planet
+	@return position to a random friendly planet
 
 
 	C O M B A T

@@ -65,6 +65,7 @@ typedef struct Pilot {
 	unsigned int flags; /* used for AI and others */
 
 	/* AI */
+	AI_Profile* ai; /* ai personality profile */
 	Task* task; /* current action */
 } Pilot;
 
@@ -80,6 +81,8 @@ typedef struct {
 typedef struct {
 	char* name; /* fleet name, used as the identifier */
 	Faction* faction; /* faction of the fleet */
+
+	AI_Profile* ai; /* AI profile to use */
 
 	FleetPilot* pilots; /* the pilots in the fleet */
 	int npilots; /* total number of pilots */
@@ -105,9 +108,9 @@ void pilot_hit( Pilot* p, const double damage_shield, const double damage_armor 
 /*
  * creation
  */
-void pilot_init( Pilot* dest, Ship* ship, char* name, Faction* faction,
+void pilot_init( Pilot* dest, Ship* ship, char* name, Faction* faction, AI_Profile* ai,
 		const double dir, const Vector2d* pos, const Vector2d* vel, const int flags );
-unsigned int pilot_create( Ship* ship, char* name, Faction* faction,
+unsigned int pilot_create( Ship* ship, char* name, Faction* faction, AI_Profile* ai,
 		const double dir, const Vector2d* pos, const Vector2d* vel, const int flags );
 
 /*

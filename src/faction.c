@@ -222,7 +222,7 @@ int factions_load (void)
 	free(buf);
 	xmlCleanupParser();
 
-	DEBUG("Loaded %d factions",nfactions);
+	DEBUG("Loaded %d faction%c", nfactions, (nfactions==1)?' ':'s');
 
 	return 0;
 }

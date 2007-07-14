@@ -4,8 +4,7 @@
 
 #include <math.h>
 
-/* yay lua */
-#include "lua.h"
+/* yay more lua */
 #include "lauxlib.h"
 #include "lualib.h"
 
@@ -16,6 +15,8 @@
 #include "physics.h"
 #include "pack.h"
 #include "rng.h"
+#include "space.h"
+#include "faction.h"
 
 
 /*
@@ -51,7 +52,8 @@
 
 
 /* calls the AI function with name f */
-#define AI_LCALL(f)	      (lua_getglobal(L, f), lua_pcall(L, 0, 0, 0))
+#define AI_LCALL(f)				(lua_getglobal(L, f), lua_pcall(L, 0, 0, 0))
+#define lua_regnumber(s,n)		(lua_pushnumber(L,n), lua_setglobal(L,s))
 
 /* makes the function not run if n minimum parameters aren't passed */
 #define MIN_ARGS(n)			if (lua_gettop(L) < n) return 0
@@ -62,12 +64,30 @@
 
 
 /*
+ * file info
+ */
+#define AI_PREFIX			"ai/"
+#define AI_SUFFIX			".lua"
+
+
+/*
+ * all the AI profiles
+ */
+static AI_Profile* profiles = NULL;
+static int nprofiles = 0;
+/* Current AI Lua interpreter */
+static lua_State *L = NULL;
+
+
+/*
  * prototypes
  */
 /* Internal C routines */
+static int ai_loadProfile( char* filename );
 static void ai_freetask( Task* t );
 /* External C routines */
 void ai_attacked( Pilot* attacked, const unsigned int attacker ); /* weapon.c */
+
 /* AI routines for Lua */
 /* tasks */
 static int ai_pushtask( lua_State *L ); /* pushtask( string, number/pointer, number ) */
@@ -81,7 +101,7 @@ static int ai_shield( lua_State *L ); /* shield() */
 static int ai_parmor( lua_State *L ); /* parmor() */
 static int ai_pshield( lua_State *L ); /* pshield() */
 static int ai_getdistance( lua_State *L ); /* number getdist(Vector2d) */
-static int ai_getpos( lua_State *L ); /* getpos(number/Pilot) */
+static int ai_getpos( lua_State *L ); /* getpos(number) */
 static int ai_minbrakedist( lua_State *L ); /* number minbrakedist() */
 /* boolean expressions */
 static int ai_ismaxvel( lua_State *L ); /* boolean ismaxvel() */
@@ -93,17 +113,15 @@ static int ai_accel( lua_State *L ); /* accel(number); number <= 1. */
 static int ai_turn( lua_State *L ); /* turn(number); abs(number) <= 1. */
 static int ai_face( lua_State *L ); /* face(number/pointer) */
 static int ai_brake( lua_State *L ); /* brake() */
+static int ai_getnearestplanet( lua_State *L ); /* pointer getnearestplanet() */
+static int ai_getrndplanet( lua_State *L ); /* pointor getrndplanet() */
 /* combat */
 static int ai_shoot( lua_State *L ); /* shoot(number); number = 1,2,3 */
-static int ai_getenemy( lua_State *L ); /* pointer getenemy() */
+static int ai_getenemy( lua_State *L ); /* number getenemy() */
 /* misc */
 static int ai_createvect( lua_State *L ); /* createvect( number, number ) */
 static int ai_say( lua_State *L ); /* say( string ) */
 static int ai_rng( lua_State *L ); /* rng( number, number ) */
-
-
-/* Global AI Lua interpreter */
-static lua_State *L = NULL;
 
 
 /*
@@ -129,15 +147,57 @@ void ai_destroy( Pilot* p )
  * initializes the AI stuff which is basically Lua
  */
 int ai_init (void)
-{  
-	L = luaL_newstate();
-	if (L == NULL) {
+{
+	char** files;
+	uint32_t nfiles,i;
+
+	/* get the file list */
+	files = pack_listfiles( data, &nfiles );
+
+	/* load the profiles */
+	for (i=0; i<nfiles; i++)
+		if ((strncmp( files[i], AI_PREFIX, strlen(AI_PREFIX))==0) &&
+				(strncmp( files[i] + strlen(files[i]) - strlen(AI_SUFFIX),
+					AI_SUFFIX, strlen(AI_SUFFIX))==0))
+			if (ai_loadProfile(files[i]))
+				WARN("Error loading AI profile '%s'", files[i]);
+
+	/* free the char* allocated by pack */
+	for (i=0; i<nfiles; i++)
+		free(files[i]);
+	free(files);
+
+	DEBUG("Loaded %d AI Profile%c", nprofiles, (nprofiles==1)?' ':'s');
+
+	return 0;
+}
+
+
+/*
+ * initializes an AI_Profile and adds it to the stack
+ */
+static int ai_loadProfile( char* filename )
+{
+	char* buf;
+
+	profiles = realloc( profiles, sizeof(AI_Profile)*(++nprofiles) );
+	profiles[nprofiles-1].name = strndup( filename+strlen(AI_PREFIX),
+			strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX));
+
+	profiles[nprofiles-1].L = luaL_newstate();
+
+	if (profiles[nprofiles-1].L == NULL) {
 		ERR("Unable to create a new Lua state");
 		return -1;
 	}
 
+	L = profiles[nprofiles-1].L;
+
 	/* opens the standard lua libraries */
-	luaL_openlibs(L);
+	/* luaL_openlibs(L); */
+
+	/* constants */
+	lua_regnumber("player", PLAYER_ID); /* player ID */
 
 	/* Register C functions in Lua */
 	/* tasks */
@@ -164,6 +224,8 @@ int ai_init (void)
 	lua_register(L, "turn", ai_turn);
 	lua_register(L, "face", ai_face);
 	lua_register(L, "brake", ai_brake);
+	lua_register(L, "getnearestplanet", ai_getnearestplanet);
+	lua_register(L, "getrndplanet", ai_getrndplanet);
 	/* combat */
 	lua_register(L, "shoot", ai_shoot);
 	lua_register(L, "getenemy", ai_getenemy);
@@ -172,10 +234,11 @@ int ai_init (void)
 	lua_register(L, "say", ai_say);
 	lua_register(L, "rng", ai_rng);
 
-	char *buf = pack_readfile( DATA, "ai/basic.lua", NULL );
+	buf = pack_readfile( DATA, filename, NULL );
 	
 	if (luaL_dostring(L, buf) != 0) {
 		ERR("Error loading AI file: %s","ai/basic.lua");
+		ERR("%s",lua_tostring(L,-1));
 		WARN("Most likely Lua file has improper syntax, please check");
 		return -1;
 	}
@@ -184,6 +247,25 @@ int ai_init (void)
 
 	return 0;
 }
+
+
+/*
+ * gets the AI_Profile with name
+ */
+AI_Profile* ai_getProfile( char* name )
+{
+	if (profiles == NULL) return NULL;
+
+	int i;
+
+	for (i=0; i<nprofiles; i++)
+		if (strcmp(name,profiles[i].name)==0)
+			return &profiles[i];
+
+	WARN("AI Profile '%s' not found in AI stack", name);
+	return NULL;
+}
+
 
 /*
  * cleans up global AI
@@ -198,8 +280,9 @@ void ai_exit (void)
  * heart of the AI, brains of the pilot
  */
 void ai_think( Pilot* pilot )
-{  
+{
 	cur_pilot = pilot; /* set current pilot being processed */
+	L = cur_pilot->ai->L; /* set the AI profile to the current pilot's */
 
 	/* clean up some variables */
 	pilot_acc = pilot_turn = 0.;
@@ -232,6 +315,7 @@ void ai_think( Pilot* pilot )
 void ai_attacked( Pilot* attacked, const unsigned int attacker )
 {
 	cur_pilot = attacked;
+	L = cur_pilot->ai->L;
 	lua_getglobal(L, "attacked");
 	lua_pushnumber(L, attacker);
 	lua_pcall(L, 1, 0, 0);
@@ -276,9 +360,10 @@ static int ai_pushtask( lua_State *L )
 			t->dtype = TYPE_INT;
 			t->ID = (unsigned int)lua_tonumber(L,3);
 		}
-		else if (lua_islightuserdata(L,3)) {
+		else if (lua_islightuserdata(L,3)) { /* only pointer valid is Vector2d* in Lua */
 			t->dtype = TYPE_PTR;
-			t->target = (void*)lua_topointer(L,3);
+			t->target = MALLOC_ONE(Vector2d);
+			vectcpy( t->target, (Vector2d*)lua_topointer(L,3) );
 		}
 		else t->dtype = TYPE_NULL;
 	}
@@ -388,7 +473,7 @@ static int ai_getdistance( lua_State *L )
 {
 	MIN_ARGS(1);
 	Vector2d *vect = (Vector2d*)lua_topointer(L,1);
-	lua_pushnumber(L, DIST(*vect,cur_pilot->solid->pos));
+	lua_pushnumber(L, vect_dist(vect,&cur_pilot->solid->pos));
 	return 1;
 }
 
@@ -399,7 +484,6 @@ static int ai_getpos( lua_State *L )
 {
 	Pilot *p;
 	if (lua_isnumber(L,1)) p = pilot_get((int)lua_tonumber(L,1)); /* Pilot ID */
-	else if (lua_islightuserdata(L,1)) p = (Pilot*)lua_topointer(L,1); /* Pilot pointer */
 	else p = cur_pilot; /* default to self */
 
 	lua_pushlightuserdata(L, &p->solid->pos );
@@ -531,6 +615,60 @@ static int ai_brake( lua_State *L )
 	return 0;
 }
 
+/*
+ * returns the nearest friendly planet's position to the pilot
+ */
+static int ai_getnearestplanet( lua_State *L )
+{
+	if (cur_system->nplanets == 0) return 0; /* no planets */
+
+	double dist, d;
+	int i, j;
+
+	/* cycle through planets */
+	for (dist=0., j=-1, i=0; i<cur_system->nplanets; i++) {
+		d = vect_dist( &cur_system->planets[i].pos, &cur_pilot->solid->pos );
+		if ((!areEnemies(cur_pilot->faction,cur_system->planets[i].faction)) &&
+				(d < dist)) { /* closer friendly planet */
+			j = i;
+			dist = d;
+		}
+	}
+
+	/* no friendly planet found */
+	if (j == -1) return 0;
+
+	lua_pushlightuserdata( L, &cur_system->planets[j].pos );
+	return 1;
+}
+
+/*
+ * returns a random friendly planet's position to the pilot
+ */
+static int ai_getrndplanet( lua_State *L )
+{
+	if (cur_system->nplanets == 0) return 0; /* no planets */
+
+	Planet** planets;
+	int nplanets, i;
+	planets = malloc( sizeof(Planet*) * cur_system->nplanets );
+
+	for (nplanets=0, i=0; i<cur_system->nplanets; i++)
+		if (!areEnemies(cur_pilot->faction,cur_system->planets[i].faction))
+			planets[nplanets++] = &cur_system->planets[i];
+
+	/* no planet to land on found */
+	if (nplanets==0) {
+		free(planets);
+		return 0;
+	}
+
+	/* we can actually get a random planet now */
+	i = RNG(0,nplanets-1);
+	lua_pushlightuserdata( L, &planets[i]->pos );
+	free(planets);
+	return 1;
+}
 
 /*
  * makes the pilot shoot

@@ -337,41 +337,42 @@ void* pack_readfile( const char* packfile, const char* filename, uint32_t *files
  */
 #define READ(f,b,n)  if (read(f,b,n)!=n) { \
 	ERR("Fewer bytes read then expected"); \
-	return; }
-void pack_listfiles( const char* packfile, char** filenames, uint32_t* nfiles )
+	return NULL; }
+char** pack_listfiles( const char* packfile, uint32_t* nfiles )
 {
 	int fd, j;
 	uint32_t i;
+	char** filenames;
 	char* buf = malloc(sizeof(magic));
 
 	*nfiles = 0;
-	filenames = malloc(sizeof(char*));
-	filenames = (char**)-1;
 
 	fd = open( packfile, O_RDONLY );
 	if (fd == -1) {
 		ERR("Erroring opening %s: %s", packfile, strerror(errno));
-		return;
+		return NULL;
 	}
 
 	READ( fd, buf, sizeof(magic)); /* make sure it's a packfile */
 	if (memcmp(buf, &magic, sizeof(magic))) {
 		ERR("File %s is not a valid packfile", packfile);
-		return;
+		return NULL;
 	}
-	free(buf);
 
-	READ( fd, &nfiles, 4 );
-	filenames = realloc(filenames,(*nfiles+1)*sizeof(char*));
+	READ( fd, nfiles, 4 );
+	filenames = malloc(((*nfiles)+1)*sizeof(char*));
 	for (i=0; i<*nfiles; i++) { /* start to search files */
 		j = 0;
 		filenames[i] = malloc(MAX_FILENAME*sizeof(char));
 		READ( fd, &filenames[i][j], 1 ); /* get the name */
 		while ( filenames[i][j++] != '\0' )
 			READ( fd, &filenames[i][j], 1 );
+		READ( fd, buf, 4 ); /* skip the location */
 	}
-	filenames[i] = NULL;
+	free(buf);
 	close(fd);
+
+	return filenames;
 }
 #undef READ
 

@@ -203,7 +203,7 @@ static void pilot_update( Pilot* pilot, const double dt )
  * @ pos : initial position
  * @ flags : used for tweaking the pilot
  */
-void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction,
+void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction, AI_Profile* ai,
 		const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
 {
 	if (flags & PILOT_PLAYER) /* player is ID 0 */
@@ -216,6 +216,9 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction,
 
 	/* faction */
 	pilot->faction = faction;
+
+	/* AI */
+	pilot->ai = ai;
 
 	/* solid */
 	pilot->solid = solid_create(ship->mass, dir, pos, vel);
@@ -268,7 +271,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction,
  *
  * returns pilot's id
  */
-unsigned int pilot_create( Ship* ship, char* name, Faction* faction,
+unsigned int pilot_create( Ship* ship, char* name, Faction* faction, AI_Profile* ai,
 		const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
 {
 	Pilot* dyn = MALLOC_ONE(Pilot);
@@ -276,7 +279,7 @@ unsigned int pilot_create( Ship* ship, char* name, Faction* faction,
 		WARN("Unable to allocate memory");
 		return 0;;
 	}
-	pilot_init( dyn, ship, name, faction, dir, pos, vel, flags );
+	pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags );
 
 	if (flags & PILOT_PLAYER) { /* player */
 		if (!pilot_stack) {
@@ -383,6 +386,8 @@ static Fleet* fleet_parse( const xmlNodePtr parent )
 	while ((node = node->next)) { /* load all the data */
 		if (strcmp((char*)node->name,"faction")==0)
 			temp->faction = faction_get((char*)node->children->content);
+		else if (strcmp((char*)node->name,"ai")==0)
+			temp->ai = ai_getProfile((char*)node->children->content);
 		else if (strcmp((char*)node->name,"pilots")==0) {
 			cur = node->children;     
 			while ((cur = cur->next)) {
@@ -415,6 +420,7 @@ static Fleet* fleet_parse( const xmlNodePtr parent )
 	}
 
 #define MELEMENT(o,s)      if ((o) == NULL) WARN("Fleet '%s' missing '"s"' element", temp->name)
+	MELEMENT(temp->ai,"ai");
 	MELEMENT(temp->faction,"faction");
 	MELEMENT(temp->pilots,"pilots");
 #undef MELEMENT

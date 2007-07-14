@@ -9,11 +9,8 @@
 
 #include "main.h"
 #include "log.h"
-#include "opengl.h"
 #include "rng.h"
-#include "pilot.h"
 #include "pack.h"
-#include "faction.h"
 
 
 #define XML_NODE_START  1
@@ -37,69 +34,9 @@
 #define FLAG_INTERFERENCESET	(1<<3)
 
 
-/*
- * Planets types, taken from
- * http://en.wikipedia.org/wiki/Star_Trek_planet_classifications
- */
-typedef enum { PLANET_CLASS_NULL=0, /* Null/Not defined */
-		PLANET_CLASS_A,	/* Geothermal */
-		PLANET_CLASS_B,	/* Geomorteus */
-		PLANET_CLASS_C,	/* Geoinactive */
-		PLANET_CLASS_D,	/* Asteroid/Moon */
-		PLANET_CLASS_E,	/* Geoplastic */
-		PLANET_CLASS_F,	/* Geometallic */
-		PLANET_CLASS_G,	/* GeoCrystaline */
-		PLANET_CLASS_H,	/* Desert */
-		PLANET_CLASS_I,	/* Gas Supergiant */
-		PLANET_CLASS_J,	/* Gas Giant */
-		PLANET_CLASS_K,	/* Adaptable */
-		PLANET_CLASS_L,	/* Marginal */
-		PLANET_CLASS_M,	/* Terrestrial */
-		PLANET_CLASS_N,	/* Reducing */
-		PLANET_CLASS_O,	/* Pelagic */
-		PLANET_CLASS_P,	/* Glaciated */
-		PLANET_CLASS_Q,	/* Variable */
-		PLANET_CLASS_R,	/* Rogue */
-		PLANET_CLASS_S,	/* Ultragiant */
-		PLANET_CLASS_T,	/* Ultragiant */
-		PLANET_CLASS_X,	/* Demon */
-		PLANET_CLASS_Y,	/* Demon */
-		PLANET_CLASS_Z		/* Demon */
-} PlanetClass;
-typedef struct {
-	char* name; /* planet name */
-	Vector2d pos; /* position in star system */
-
-	PlanetClass class; /* planet type */
-	Faction* faction; /* planet faction */
-	gl_texture* gfx_space; /* graphic in space */
-} Planet;
-
-
-/*
- * star systems
- */
-typedef struct {
-	Fleet* fleet; /* fleet to appear */
-	int chance; /* chance of fleet appearing in the system */
-} SystemFleet;
-typedef struct {
-	char* name; /* star system identifier */
-
-	Vector2d pos; /* position */
-	int stars, asteroids; /* in number */
-	double interference; /* in % */
-
-	Planet *planets; /* planets */
-	int nplanets; /* total number of planets */
-
-	SystemFleet* fleets; /* fleets that can appear in the current system */
-	int nfleets; /* total number of fleets */
-} StarSystem;
-
 static StarSystem *systems = NULL;
 static int nsystems = 0;
-static StarSystem *cur_system = NULL; /* Current star system */
+StarSystem *cur_system = NULL; /* Current star system */
 
 
 #define STAR_BUF	100	/* area to leave around screen, more = less repitition */
@@ -258,6 +195,7 @@ void space_init ( const char* sysname )
 					pilot_create( cur_system->fleets[i].fleet->pilots[j].ship,
 							cur_system->fleets[i].fleet->pilots[j].name,
 							cur_system->fleets[i].fleet->faction,
+							cur_system->fleets[i].fleet->ai,
 							vect_angle(&v,&vn),
 							&v,
 							NULL,

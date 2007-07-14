@@ -10,6 +10,18 @@ end
 function attacked ( attacker )
 	task = taskname()
 	if task ~= "attack" and task ~= "runaway" then
+
+		-- some taunts
+		if attacker == player then
+			msg = rng(0,4)
+			if msg == 0 then say("You dare attack me!")
+			elseif msg == 1 then say("You think that you can take me on?")
+			elseif msg == 2 then say("Die!")
+			elseif msg == 3 then say("You'll regret this!")
+			end
+		end
+
+		-- now pilot fights back
 		pushtask(0, "attack", attacker)
 	end
 end
@@ -20,10 +32,6 @@ function runaway ()
 	dir = face( target, 1 )
 	accel()
 	dist = getdist( getpos(target) )
-
-	if dist > 800 then
-		say("So longer sucker!")
-	end
 end
 
 -- attacks

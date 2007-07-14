@@ -85,8 +85,8 @@ double vect_angle( const Vector2d* ref, const Vector2d* v )
  */
 void vect_cadd( Vector2d* v, const double x, const double y )
 {
-	v->x -= x;
-	v->y -= y;
+	v->x += x;
+	v->y += y;
 	v->mod = MOD(v->x,v->y);
 	v->angle = ANGLE(v->x,v->y);
 }

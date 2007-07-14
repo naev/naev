@@ -315,7 +315,7 @@ int main ( int argc, char** argv )
 	/*
 	 * testing
 	 */
-	pilot_create( ship_get("Llama"), "Player", faction_get("Player"),
+	pilot_create( ship_get("Llama"), "Player", faction_get("Player"), NULL,
 			0.,  NULL, NULL, PILOT_PLAYER );
 	gl_bindCamera( &player->solid->pos );
 	space_init("Delta Pavonis");

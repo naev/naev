@@ -4,6 +4,10 @@
 #  define AI_H
 
 
+/* yay lua */
+#include "lua.h"
+
+
 typedef enum { TYPE_NULL, TYPE_INT, TYPE_PTR } TaskData;
 
 /* 
@@ -23,6 +27,21 @@ typedef struct Task {
 		unsigned int ID; /* Pilot ID, etc... */
 	};
 } Task;
+
+
+/*
+ * the AI profile
+ */
+typedef struct {
+	char* name;
+	lua_State *L;
+} AI_Profile;
+
+
+/*
+ * misc
+ */
+AI_Profile* ai_getProfile( char* name );
 
 
 /*
