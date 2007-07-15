@@ -64,12 +64,15 @@ typedef struct {
 	double r, g, b, a;
 } Color;
 #define COLOR(x)		glColor4d((x).r,(x).g,(x).b,(x).a)
-Color cRadar_player	=	{ .r = 0.4, .g = 0.8, .b = 0.4, .a = 1. };
-Color cRadar_inert	=	{ .r = 0.6, .g = 0.6, .b = 0.6, .a = 1. };
-Color cRadar_neut		=	{ .r = 0.9, .g = 1.0, .b = 0.3, .a = 1. };
-Color cRadar_friend	=	{ .r = 0.0, .g = 1.0, .b = 0.0, .a = 1. };
+/* standard colors */
+Color cInert			=	{ .r = 0.6, .g = 0.6, .b = 0.6, .a = 1. };
+Color cNeutral			=	{ .r = 0.9, .g = 1.0, .b = 0.3, .a = 1. };
+Color cFriend			=	{ .r = 0.0, .g = 1.0, .b = 0.0, .a = 1. };
+Color cHostile			=	{ .r = 0.9, .g = 0.2, .b = 0.2, .a = 1. };
+
+Color cRadar_player  =  { .r = 0.4, .g = 0.8, .b = 0.4, .a = 1. };
 Color cRadar_targ		=	{ .r = 0.0,	.g = 0.7, .b = 1.0, .a = 1. };
-Color cRadar_weap		=	{ .r = 0.8, .g = 0,2, .b = 0.2, .a = 1. };
+Color cRadar_weap		=	{ .r = 0.8, .g = 0.2, .b = 0.2, .a = 1. };
 
 Color cShield			=	{ .r = 0.2, .g = 0.2, .b = 0.8, .a = 1. };
 Color cArmor			=	{ .r = 0.5, .g = 0.5, .b = 0.5, .a = 1. };
@@ -124,7 +127,11 @@ static Mesg* mesg_stack;
 /* 
  * prototypes
  */
+/* external */
 extern void pilot_render( Pilot* pilot ); /* from pilot.c */
+/* internal */
+void gui_renderPilot( Pilot* p );
+void gui_renderBar( Color* c, Vector2d* p, Rect* r, double w );
 
 
 /*
@@ -155,8 +162,7 @@ void player_message ( const char *fmt, ... )
  */
 void player_render (void)
 {
-	int i; 
-	double x,y,sx,sy;
+	int i, j;
 	Pilot* p;
 	Vector2d v;
 
@@ -194,7 +200,7 @@ void player_render (void)
 		case RADAR_RECT:
 
 			/* planets */
-			COLOR(cRadar_friend);
+			COLOR(cFriend);
 			planets_minimap(gui.radar.res, gui.radar.w, gui.radar.h);
 
 			/* weapons */
@@ -204,32 +210,15 @@ void player_render (void)
 			glEnd(); /* GL_POINTS */
 
 
-			for (i=1; i<pilots; i++) {
-				p = pilot_stack[i];
-				x = (p->solid->pos.x - player->solid->pos.x) / gui.radar.res;
-				y = (p->solid->pos.y - player->solid->pos.y) / gui.radar.res;
-				sx = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sw / gui.radar.res;
-				sy = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sh / gui.radar.res;
-				if (sx < 1.) sx = 1.;
-				if (sy < 1.) sy = 1.;
-
-				if ( (ABS(x) > gui.radar.w/2+sx) || (ABS(y) > gui.radar.h/2.+sy) )
-					continue; /* pilot not in range */
-
-				glBegin(GL_QUADS);
-					/* colors */
-					if (p->id == player_target) COLOR(cRadar_targ);
-					else COLOR(cRadar_neut);
-					glVertex2d( MAX(x-sx,-gui.radar.w/2.),/* top-left */
-							MIN(y+sy, gui.radar.h/2.) );
-					glVertex2d( MIN(x+sx, gui.radar.w/2.), /* top-right */
-							MIN(y+sy, gui.radar.h/2.) );
-					glVertex2d( MIN(x+sx, gui.radar.w/2.), /* bottom-right */
-							MAX(y-sy,-gui.radar.h/2.) );
-					glVertex2d( MAX(x-sx,-gui.radar.w/2.), /* bottom-left */
-							MAX(y-sy,-gui.radar.h/2.) );
-				glEnd(); /* GL_QUADS */
+			/* render the pilots */
+			for (j=0, i=1; i<pilots; i++) { /* skip the player */
+				if (pilot_stack[i]->id == player_target) j = i;
+				else gui_renderPilot(pilot_stack[i]);
 			}
+			/* render the targetted pilot */
+			if (j!=0) gui_renderPilot(pilot_stack[j]);
+			
+
 			glBegin(GL_POINTS); /* for the player */
 			break;
 
@@ -237,7 +226,7 @@ void player_render (void)
 			glBegin(GL_POINTS);
 			for  (i=1; i<pilots; i++) {
 				p = pilot_stack[i];
-				COLOR(cRadar_neut);
+				COLOR(cNeutral);
 				glVertex2d( (p->solid->pos.x - player->solid->pos.x) / gui.radar.res,
 						(p->solid->pos.y - player->solid->pos.y) / gui.radar.res );
 			}
@@ -260,39 +249,12 @@ void player_render (void)
 	glPopMatrix(); /* GL_PROJECTION */
 
 	/* health */
-	glBegin(GL_QUADS); /* shield */
-		COLOR(cShield);
-		x = VX(gui.pos_shield) - gl_screen.w/2.;
-		y = VY(gui.pos_shield) - gl_screen.h/2.;
-		sx = player->shield / player->shield_max * gui.shield.w;
-		sy = gui.shield.h;
-		glVertex2d( x, y );
-		glVertex2d( x + sx, y );
-		glVertex2d( x + sx, y - sy );
-		glVertex2d( x, y - sy );
-	glEnd(); /* GL_QUADS */
-	glBegin(GL_QUADS); /* armor */
-		COLOR(cArmor);
-		x = VX(gui.pos_armor) - gl_screen.w/2.;
-		y = VY(gui.pos_armor) - gl_screen.h/2.;
-		sx = player->armor / player->armor_max * gui.armor.w;
-		sy = gui.armor.h;
-		glVertex2d( x, y );
-		glVertex2d( x + sx, y );
-		glVertex2d( x + sx, y - sy );
-		glVertex2d( x, y - sy );
-	glEnd(); /* GL_QUADS */
-	glBegin(GL_QUADS); /* energy */
-		COLOR(cEnergy);
-		x = VX(gui.pos_energy) - gl_screen.w/2.;
-		y = VY(gui.pos_energy) - gl_screen.h/2.;
-		sx = player->energy / player->energy_max * gui.energy.w;
-		sy = gui.energy.h;
-		glVertex2d( x, y );
-		glVertex2d( x + sx, y );
-		glVertex2d( x + sx, y - sy );
-		glVertex2d( x, y - sy );
-	glEnd(); /* GL_QUADS */
+	gui_renderBar( &cShield, &gui.pos_shield, &gui.shield,
+			player->shield / player->shield_max );
+	gui_renderBar( &cArmor, &gui.pos_armor, &gui.armor, 
+			player->armor / player->armor_max );
+	gui_renderBar( &cEnergy, &gui.pos_energy, &gui.energy,
+			player->energy / player->energy_max );
 
 
 	/* target */
@@ -321,8 +283,65 @@ void player_render (void)
 			else gl_print( NULL, &v, "%s", mesg_stack[mesg_max-i-1].str );
 		}
 	}
+}
+
+/*
+ * renders a pilot
+ */
+void gui_renderPilot( Pilot* p )
+{
+	int x, y, sx, sy;
+
+	x = (p->solid->pos.x - player->solid->pos.x) / gui.radar.res;
+	y = (p->solid->pos.y - player->solid->pos.y) / gui.radar.res;
+	sx = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sw / gui.radar.res;
+	sy = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sh / gui.radar.res;
+	if (sx < 1.) sx = 1.;
+	if (sy < 1.) sy = 1.;
+
+	if ( (ABS(x) > gui.radar.w/2+sx) || (ABS(y) > gui.radar.h/2.+sy) )
+		return; /* pilot not in range */
+
+	glBegin(GL_QUADS);
+		/* colors */
+		if (p->id == player_target) COLOR(cRadar_targ);
+		else if (pilot_isFlag(p,PILOT_HOSTILE)) COLOR(cHostile);
+		else COLOR(cNeutral);
+
+		/* image */
+		glVertex2d( MAX(x-sx,-gui.radar.w/2.),/* top-left */
+			MIN(y+sy, gui.radar.h/2.) );
+		glVertex2d( MIN(x+sx, gui.radar.w/2.), /* top-right */
+			MIN(y+sy, gui.radar.h/2.) );
+		glVertex2d( MIN(x+sx, gui.radar.w/2.), /* bottom-right */
+			MAX(y-sy,-gui.radar.h/2.) );
+		glVertex2d( MAX(x-sx,-gui.radar.w/2.), /* bottom-left */
+			MAX(y-sy,-gui.radar.h/2.) );
+	glEnd(); /* GL_QUADS */
+}
+
+
+/*
+ * renders a bar (health)
+ */
+void gui_renderBar( Color* c, Vector2d* p, Rect* r, double w )
+{
+	int x, y, sx, sy;
+
+	glBegin(GL_QUADS); /* shield */
+		COLOR(*c); 
+		x = VX(*p) - gl_screen.w/2.;
+		y = VY(*p) - gl_screen.h/2.;
+		sx = w * r->w;
+		sy = r->h;
+		glVertex2d( x, y );
+		glVertex2d( x + sx, y );
+		glVertex2d( x + sx, y - sy );
+		glVertex2d( x, y - sy );                                            
+	glEnd(); /* GL_QUADS */
 
 }
+
 
 /*
  * initializes the GUI

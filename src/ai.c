@@ -237,7 +237,7 @@ static int ai_loadProfile( char* filename )
 	buf = pack_readfile( DATA, filename, NULL );
 	
 	if (luaL_dostring(L, buf) != 0) {
-		ERR("Error loading AI file: %s","ai/basic.lua");
+		ERR("Error loading AI file: %s",filename);
 		ERR("%s",lua_tostring(L,-1));
 		WARN("Most likely Lua file has improper syntax, please check");
 		return -1;
@@ -288,10 +288,16 @@ void ai_think( Pilot* pilot )
 	pilot_acc = pilot_turn = 0.;
 	pilot_primary = 0;
 
-	if (cur_pilot->task == NULL) /* pilot is IDLE */
-		AI_LCALL("control");
+	
+	/* control function if pilot is idle or tick is up */
+	if ((cur_pilot->tcontrol < SDL_GetTicks()) || (cur_pilot->task == NULL)) {
+		AI_LCALL("control"); /* run control */
+		lua_getglobal(L,"control_rate");
+		cur_pilot->tcontrol = SDL_GetTicks() +  1000*(int)lua_tonumber(L,-1);
+	}
 
-	else /* pilot has a currently running task */
+	/* pilot has a currently running task */
+	if (cur_pilot->task != NULL)
 		AI_LCALL(cur_pilot->task->name);
 
 	/* make sure pilot_acc and pilot_turn are legal */
@@ -453,7 +459,7 @@ static int ai_shield( lua_State *L )
  */
 static int ai_parmor( lua_State *L )
 {
-	lua_pushnumber(L, cur_pilot->armor / cur_pilot->ship->armor * 100.);
+	lua_pushnumber(L, cur_pilot->armor / cur_pilot->armor_max * 100.);
 	return 1;
 }
 
@@ -462,7 +468,7 @@ static int ai_parmor( lua_State *L )
  */              
 static int ai_pshield( lua_State *L )
 {                               
-	lua_pushnumber(L, cur_pilot->shield / cur_pilot->ship->shield * 100.);
+	lua_pushnumber(L, cur_pilot->shield / cur_pilot->shield_max * 100.);
 	return 1;
 } 
 

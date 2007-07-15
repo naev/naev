@@ -219,6 +219,8 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction, AI_Prof
 
 	/* AI */
 	pilot->ai = ai;
+	pilot->tcontrol = 0;
+	pilot->flags = 0;
 
 	/* solid */
 	pilot->solid = solid_create(ship->mass, dir, pos, vel);
@@ -466,7 +468,7 @@ int fleet_load (void)
 	free(buf);
 	xmlCleanupParser();
 
-	DEBUG("Loaded %d fleets", nfleets);
+	DEBUG("Loaded %d fleet%c", nfleets, (nfleets==1)?' ':'s');
 
 	return 0;
 }

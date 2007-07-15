@@ -3,13 +3,14 @@ control_rate = 2
 
 -- Required "control" function
 function control ()
-	pushtask(0, "fly")
+	if taskname() == "none" then
+		pushtask(0, "fly")
+	end
 end
 
 -- Required "attacked" function
 function attacked ( attacker )
-	task = taskname()
-	if task ~= "attack" and task ~= "runaway" then
+	if taskname() ~= "attack" and task ~= "runaway" then
 
 		-- some taunts
 		if attacker == player then
@@ -31,7 +32,6 @@ function runaway ()
 	target = gettargetid()
 	dir = face( target, 1 )
 	accel()
-	dist = getdist( getpos(target) )
 end
 
 -- attacks

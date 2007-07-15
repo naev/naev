@@ -3,13 +3,14 @@ control_rate = 2
 
 -- Required "control" function
 function control ()
-	pushtask(0, "fly")
+	if taskname() == "none" then
+		pushtask(0, "fly")
+	end
 end
 
 -- Required "attacked" function
 function attacked ( attacker )
-	task = taskname()
-	if task ~= "runaway" then
+	if taskname() ~= "runaway" then
 
 		-- some messages
 		if attacker == player then
@@ -20,7 +21,7 @@ function attacked ( attacker )
 			end
 		end
 
-
+		-- Sir Robin bravely ran away
 		pushtask(0, "runaway", attacker)
 	end
 end

@@ -157,8 +157,11 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 				CollideSprite( w->outfit->gfx_space, wsx, wsy, &w->solid->pos,
 						pilot_stack[i]->ship->gfx_space, psx, psy, &pilot_stack[i]->solid->pos)) {
 
-			if (i!=0) /* inform the ai it has been attacked, useless if  player */
+			if (i!=0) { /* inform the ai it has been attacked, useless if  player */
 				ai_attacked( pilot_stack[i], w->parent );
+				pilot_setFlag( pilot_stack[i], PILOT_HOSTILE);
+			}
+
 			/* inform the ship that it should take some damage */
 			pilot_hit(pilot_stack[i], w->outfit->damage_shield, w->outfit->damage_armor);
 			/* no need for the weapon particle anymore */

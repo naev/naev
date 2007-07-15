@@ -17,14 +17,13 @@
 
 
 /* flags */
+#define pilot_isFlag(p,f)  ((p)->flags & f)
+#define pilot_setFlag(p,f) ((p)->flags |= f)
+#define pilot_rmFlag(p,f)  ((p)->flags ^= f)
 /* creation */
 #define PILOT_PLAYER		(1<<0) /* pilot is a player */
 /* dynamic */
-/* flags */
-#define pilot_isFlag(p,f)  (p->flags & f)
-#define pilot_setFlag(p,f) (p->flags |= f)
-#define pilot_rmFlag(p,f)  (p->flags ^= f)
-#define PILOT_ATTACKED	(1<<9) /* pilot is under attack */
+#define PILOT_HOSTILE   (1<<1) /* pilot is hostile to the player */
 
 
 typedef struct {
@@ -66,6 +65,7 @@ typedef struct Pilot {
 
 	/* AI */
 	AI_Profile* ai; /* ai personality profile */
+	unsigned int tcontrol; /* timer for control tick */
 	Task* task; /* current action */
 } Pilot;
 
