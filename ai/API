@@ -2,7 +2,9 @@
 
 		C O N S T A N T S
 
-	
+
+number player
+	@desc players pilot ID
 
 
 		F U N C T I O N S
@@ -133,6 +135,20 @@ shoot( [number weapon] )
 getenemy()
 	@desc returns the id of the nearest enemy
 	@return Pilot id of the closest enemy
+
+
+	T I M E R S
+
+settimer( number t, number delay )
+	@desc sets timer t to wait for delay ms
+	@param t timer to set
+	@param delay time in ms to wait
+	@return nil
+
+timeup( number t )
+	@desc returns true if time is up for timer t
+	@param t timer to check
+	@return boolean true if timer t is up
 
 
 	M I S C

@@ -14,7 +14,7 @@ function attacked ( attacker )
 
 		-- some taunts
 		if attacker == player then
-			msg = rng(0,4)
+			local msg = rng(0,4)
 			if msg == 0 then say("You dare attack me!")
 			elseif msg == 1 then say("You think that you can take me on?")
 			elseif msg == 2 then say("Die!")
@@ -29,16 +29,16 @@ end
 
 -- runs away
 function runaway ()
-	target = gettargetid()
-	dir = face( target, 1 )
+	local target = gettargetid()
+	local dir = face( target, 1 )
 	accel()
 end
 
 -- attacks
 function attack ()
-	target = gettargetid()
-	dir = face( target )
-	dist = getdist( getpos(target) )
+	local target = gettargetid()
+	local dir = face( target )
+	local dist = getdist( getpos(target) )
 
 	if parmor() < 70 then
 		poptask()
@@ -52,9 +52,9 @@ end
 
 -- flies to the player
 function fly ()
-	target = 0
-	dir = face(target)
-	dist = getdist( getpos(target) )
+	local target = 0
+	local dir = face(target)
+	local dist = getdist( getpos(target) )
 	if dir < 10 and dist > 300 then
 		accel()
 	end

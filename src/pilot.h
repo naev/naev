@@ -66,6 +66,7 @@ typedef struct Pilot {
 	/* AI */
 	AI_Profile* ai; /* ai personality profile */
 	unsigned int tcontrol; /* timer for control tick */
+	unsigned int timer[MAX_AI_TIMERS]; /* timers for AI */
 	Task* task; /* current action */
 } Pilot;
 

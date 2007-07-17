@@ -8,6 +8,10 @@
 #include "lua.h"
 
 
+/* maximum number of AI timers */
+#define MAX_AI_TIMERS	2
+
+
 typedef enum { TYPE_NULL, TYPE_INT, TYPE_PTR } TaskData;
 
 /* 

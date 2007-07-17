@@ -57,9 +57,10 @@ Faction* faction_get( const char* name )
  */
 int areEnemies( Faction* a, Faction* b)
 {
+	int i;
+
 	if (a==b) return 0;
 
-	int i = 0;
 	for (i=0;i<a->nenemies;i++)
 		if (a->enemies[i] == b)
 			return 1;
@@ -75,9 +76,10 @@ int areEnemies( Faction* a, Faction* b)
  */
 int areAllies( Faction* a, Faction* b )
 {
+	int i;
+
 	if (a==b) return 1;
 
-	int i = 0;
 	for (i=0;i<a->nallies;i++)
 		if (a->allies[i] == b)                               
 			return 1;

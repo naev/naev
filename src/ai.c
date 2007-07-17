@@ -53,13 +53,16 @@
 
 /* calls the AI function with name f */
 #define AI_LCALL(f)				(lua_getglobal(L, f), lua_pcall(L, 0, 0, 0))
-#define lua_regnumber(s,n)		(lua_pushnumber(L,n), lua_setglobal(L,s))
+#define lua_regnumber(l,s,n)	(lua_pushnumber(l,n), lua_setglobal(l,s))
+#define luaL_dobuffer(L, b, n, s) \
+	(luaL_loadbuffer(L, b, n, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
 
 /* makes the function not run if n minimum parameters aren't passed */
 #define MIN_ARGS(n)			if (lua_gettop(L) < n) return 0
 
 
-#define MAX_DIR_ERR		5.0*M_PI/180.
+#define MIN_DIR_ERR		5.0*M_PI/180.
+#define MAX_DIR_ERR		2.5*M_PI/180.
 #define MIN_VEL_ERR		2.5
 
 
@@ -76,7 +79,7 @@
 static AI_Profile* profiles = NULL;
 static int nprofiles = 0;
 /* Current AI Lua interpreter */
-static lua_State *L = NULL;
+static lua_State* L = NULL;
 
 
 /*
@@ -118,6 +121,9 @@ static int ai_getrndplanet( lua_State *L ); /* pointor getrndplanet() */
 /* combat */
 static int ai_shoot( lua_State *L ); /* shoot(number); number = 1,2,3 */
 static int ai_getenemy( lua_State *L ); /* number getenemy() */
+/* timers */
+static int ai_settimer( lua_State *L ); /* settimer( number, number ) */
+static int ai_timeup( lua_State *L ); /* bool timeup( number ) */
 /* misc */
 static int ai_createvect( lua_State *L ); /* createvect( number, number ) */
 static int ai_say( lua_State *L ); /* say( string ) */
@@ -178,7 +184,8 @@ int ai_init (void)
  */
 static int ai_loadProfile( char* filename )
 {
-	char* buf;
+	char* buf = NULL;
+	uint32_t bufsize = 0;
 
 	profiles = realloc( profiles, sizeof(AI_Profile)*(++nprofiles) );
 	profiles[nprofiles-1].name = strndup( filename+strlen(AI_PREFIX),
@@ -197,7 +204,7 @@ static int ai_loadProfile( char* filename )
 	/* luaL_openlibs(L); */
 
 	/* constants */
-	lua_regnumber("player", PLAYER_ID); /* player ID */
+	lua_regnumber(L, "player", PLAYER_ID); /* player ID */
 
 	/* Register C functions in Lua */
 	/* tasks */
@@ -229,20 +236,22 @@ static int ai_loadProfile( char* filename )
 	/* combat */
 	lua_register(L, "shoot", ai_shoot);
 	lua_register(L, "getenemy", ai_getenemy);
+	/* timers */
+	lua_register(L, "settimer", ai_settimer);
+	lua_register(L, "timeup", ai_timeup);
 	/* misc */
 	lua_register(L, "createvect", ai_createvect);
 	lua_register(L, "say", ai_say);
 	lua_register(L, "rng", ai_rng);
 
-	buf = pack_readfile( DATA, filename, NULL );
-	
-	if (luaL_dostring(L, buf) != 0) {
+	/* now load the file since all the functions have been previously loaded */
+	buf = pack_readfile( DATA, filename, &bufsize );
+	if (luaL_dobuffer(L, buf, bufsize, filename) != 0) {
 		ERR("Error loading AI file: %s",filename);
 		ERR("%s",lua_tostring(L,-1));
 		WARN("Most likely Lua file has improper syntax, please check");
 		return -1;
 	}
-
 	free(buf);
 
 	return 0;
@@ -272,7 +281,12 @@ AI_Profile* ai_getProfile( char* name )
  */
 void ai_exit (void)
 {
-	lua_close(L);
+	int i;
+	for (i=0; i<nprofiles; i++) {
+		free(profiles[i].name);
+		lua_close(profiles[i].L);
+	}
+	free(profiles);
 }
 
 
@@ -700,6 +714,37 @@ static int ai_getenemy( lua_State *L )
 	lua_pushnumber(L,1);
 	return 1;
 }
+
+
+/*
+ * sets the timer
+ */
+static int ai_settimer( lua_State *L )
+{
+	MIN_ARGS(2);
+
+	int n; /* get the timer */
+	if (lua_isnumber(L,1)) n = lua_tonumber(L,1);
+
+	cur_pilot->timer[n] = (lua_isnumber(L,2)) ? lua_tonumber(L,2) + SDL_GetTicks() : 0;
+
+	return 0;
+}
+
+/*
+ * checks the timer
+ */
+static int ai_timeup( lua_State *L )
+{
+	MIN_ARGS(1);
+
+	int n; /* get the timer */
+	if (lua_isnumber(L,1)) n = lua_tonumber(L,1);
+
+	lua_pushboolean(L, cur_pilot->timer[n] < SDL_GetTicks());
+	return 1;
+}
+
 
 
 /*

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Fleets>
 <fleet name="Test">
-<ai>basic</ai>
+<ai>test</ai>
 <faction>Independent</faction>
 <pilots>
 <pilot chance='100'>Mr. Test</pilot>
