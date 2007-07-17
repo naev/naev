@@ -24,4 +24,11 @@
 <pilot chance='60'>Llama</pilot>
 </pilots>
 </fleet>
+<fleet name="Pirate Hyena">
+<ai>pirate</ai>
+<faction>Pirate</faction>
+<pilots>
+<pilot chance='100'>Llama</pilot>
+</pilots>
+</fleet>
 </Fleets>

@@ -15,6 +15,7 @@
 </planets>
 <fleets>
 <fleet chance="100">Test</fleet>
+<fleet chance="60">Pirate Hyena</fleet>
 <fleet chance="60">Merchant Llama</fleet>
 <fleet chance="50">Merchant Llama</fleet>
 <fleet chance="40">Merchant Llama</fleet>

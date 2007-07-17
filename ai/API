@@ -134,7 +134,7 @@ shoot( [number weapon] )
 
 getenemy()
 	@desc returns the id of the nearest enemy
-	@return Pilot id of the closest enemy
+	@return Pilot id of the closest enemy or -1 if none is found
 
 
 	T I M E R S
@@ -159,9 +159,15 @@ createvect( number x, number y )
 	@param y y coordinate of the vector
 	@return pointer to the Vector2d
 
-say( string message )
-	@desc makes the pilot say something to the player
+comm( number id, string message )
+	@desc makes the pilot say something to the pilot of id id
+	@param id id of the pilot to talk to
 	@param message string to say to the player
+	@return nil
+
+broadcast( string message )
+	@desc makes the pilot broadcast a message to everyone in the system
+	@param message string to say to everyone in the system
 	@return nil
 
 rng( number low, number high )

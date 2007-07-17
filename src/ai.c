@@ -83,6 +83,13 @@ static lua_State* L = NULL;
 
 
 /*
+ * extern pilot hacks
+ */
+extern Pilot** pilot_stack;
+extern int pilots;
+
+
+/*
  * prototypes
  */
 /* Internal C routines */
@@ -126,7 +133,8 @@ static int ai_settimer( lua_State *L ); /* settimer( number, number ) */
 static int ai_timeup( lua_State *L ); /* bool timeup( number ) */
 /* misc */
 static int ai_createvect( lua_State *L ); /* createvect( number, number ) */
-static int ai_say( lua_State *L ); /* say( string ) */
+static int ai_comm( lua_State *L ); /* say( number, string ) */
+static int ai_broadcast( lua_State *L ); /* broadcast( string ) */
 static int ai_rng( lua_State *L ); /* rng( number, number ) */
 
 
@@ -241,7 +249,8 @@ static int ai_loadProfile( char* filename )
 	lua_register(L, "timeup", ai_timeup);
 	/* misc */
 	lua_register(L, "createvect", ai_createvect);
-	lua_register(L, "say", ai_say);
+	lua_register(L, "comm", ai_comm);
+	lua_register(L, "broadcast", ai_broadcast);
 	lua_register(L, "rng", ai_rng);
 
 	/* now load the file since all the functions have been previously loaded */
@@ -711,7 +720,17 @@ static int ai_shoot( lua_State *L )
  */
 static int ai_getenemy( lua_State *L )
 {
-	lua_pushnumber(L,1);
+	int i, p;
+	double d, td;
+	for (p=-1,i=0; i<pilots; i++)
+		if (areEnemies(cur_pilot->faction, pilot_stack[i]->faction)) {
+			td = vect_dist(&pilot_stack[i]->solid->pos, &cur_pilot->solid->pos);
+			if ((p == -1) || (td < d)) {
+				d = td;
+				p = pilot_stack[i]->id;
+			}
+		}
+	lua_pushnumber(L,p);
 	return 1;
 }
 
@@ -766,12 +785,25 @@ static int ai_createvect( lua_State *L )
 /*
  * makes the pilot say something to the player
  */
-static int ai_say( lua_State *L )
+static int ai_comm( lua_State *L )
+{
+	MIN_ARGS(2);
+	
+	if (lua_isnumber(L,1) && (lua_tonumber(L,1)==PLAYER_ID) && lua_isstring(L,2))
+		player_message( "Comm %s> \"%s\"", cur_pilot->name, lua_tostring(L,2));
+
+	return 0;
+}
+
+/*
+ * broadcasts to the entire area
+ */
+static int ai_broadcast( lua_State *L )
 {
 	MIN_ARGS(1);
-	
+
 	if (lua_isstring(L,1))
-		player_message( "Comm %s> \"%s\"", cur_pilot->name, lua_tostring(L,1));
+		player_message( "Broadcast %s> \"%s\"", cur_pilot->name, lua_tostring(L,1));
 
 	return 0;
 }

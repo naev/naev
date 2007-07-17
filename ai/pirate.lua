@@ -3,8 +3,13 @@ control_rate = 2
 
 -- Required "control" function
 function control ()
-	if taskname() == "none" then
-		pushtask(0, "fly")
+	if taskname() ~= "attack" then
+		enemy = getenemy()
+		if enemy ~= -1 then
+			pushtask(0, "attack", enemy)
+		else
+			pushtask(0, "fly")
+		end
 	end
 end
 
@@ -12,7 +17,17 @@ end
 function attacked ( attacker )
 	task = taskname()
 	if task ~= "attack" and task ~= "runaway" then
+		taunt()
+		pushtask(0, "attack", attacker)
+	elseif task == "attack" then
+		if gettargetid() ~= attacker then
+			pushtask(0, "attack", attacker)
+		end
+	end
+end
 
+
+function taunt ()
 		-- some taunts
 		num = rng(0,4)
 		if num == 0 then msg = "You dare attack me!"
@@ -21,11 +36,8 @@ function attacked ( attacker )
 		elseif num == 3 then msg = "You'll regret this!"
 		end
 		if msg then comm(attacker, msg) end
-
-		-- now pilot fights back
-		pushtask(0, "attack", attacker)
-	end
 end
+
 
 -- runs away
 function runaway ()

@@ -379,7 +379,7 @@ int gui_init (void)
 	/*
 	 * bars
 	 */
-	gui.shield.w = gui.armor.w = gui.energy.w = 128;
+	gui.shield.w = gui.armor.w = gui.energy.w = 129;
 	gui.shield.h = gui.armor.h = gui.energy.h = 10;
 	vect_csetmin( &gui.pos_shield,
 			VX(gui.pos_frame) + 10,

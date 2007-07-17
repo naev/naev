@@ -4,7 +4,7 @@ control_rate = 2
 -- Required "control" function
 function control ()
 	if taskname() == "none" then
-		local planet = getrndplanet()
+		planet = getrndplanet()
 		pushtask(0, "goto", planet)
 	end
 end
@@ -14,13 +14,12 @@ function attacked ( attacker )
 	if taskname() ~= "runaway" then
 
 		-- some messages
-		if attacker == player then
-			local msg = rng(0,4)
-			if msg == 0 then say("Why don't you pick on someone your own size")
-			elseif msg == 1 then say("We are just a merchant vessle")
-			elseif msg == 2 then say("Don't kill us please")
-			end
+		num = rng(0,3)
+		if num == 0 then msg = "Mayday! We are under attack!"
+		elseif num == 1 then msg = "Requesting assistance.  We are under attack!"
+		elseif num == 2 then msg = "Merchant vessle here under attack! Help!"
 		end
+		if msg then broadcast(msg) end
 
 		-- Sir Robin bravely ran away
 		pushtask(0, "runaway", attacker)
@@ -29,17 +28,17 @@ end
 
 -- runs away
 function runaway ()
-	local target = gettargetid()
-	local dir = face( target, 1 )
+	target = gettargetid()
+	dir = face( target, 1 )
 	accel()
 end
 
 -- flies to the target
 function goto ()
-	local target = gettarget()
-	local dir = face(target)
-	local dist = getdist( target )
-	local bdist = minbrakedist()
+	target = gettarget()
+	dir = face(target)
+	dist = getdist( target )
+	bdist = minbrakedist()
 	if dir < 10 and dist > bdist then
 		accel()
 	elseif dir < 10 and dist < bdist then

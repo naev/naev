@@ -400,8 +400,8 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 	MELEMENT(flags&FLAG_INTERFERENCESET,"inteference");
 #undef MELEMENT
 
-	DEBUG("Loaded Star System '%s' with %d Planet%s", temp->name,
-			temp->nplanets, (temp->nplanets > 1) ? "s" : "" );
+	DEBUG("Loaded Star System '%s' with %d Planet%c", temp->name,
+			temp->nplanets, (temp->nplanets == 1) ? ' ' : 's' );
 
 	return temp;
 }
