@@ -12,6 +12,9 @@
 #include "faction.h"
 
 
+#define PLAYER_ID			0
+
+
 #define PILOT_SIZE_APROX	0.8	/* aproximation for pilot size */
 #define PILOT_DISABLED		0.2	/* armour % that gets it disabled */
 

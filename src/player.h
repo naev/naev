@@ -8,8 +8,6 @@
 #include "pilot.h"
 
 
-#define PLAYER_ID			0
-
 extern Pilot* player;
 
 
