@@ -62,14 +62,28 @@ unsigned int pilot_getNext( const unsigned int id )
 		if (pilot_stack[i]->id == id)
 			break;
 
-/* Dichotomical search */
-	/*int i,n;
-	for (i=0, n=pilots/2; n > 0; n /= 2 ) 
-		i += (pilot_stack[i+n]->id > id) ? 0 : n ;*/
-
 	if (i==pilots-1) return 0;
 
 	return pilot_stack[i+1]->id;
+}
+
+
+/*
+ * gets the nearest enemy to the pilot
+ */
+unsigned int pilot_getNearest( Pilot* p )
+{
+	int i, tp;
+	double d, td;
+	for (tp=-1,i=0; i<pilots; i++)
+		if (areEnemies(p->faction, pilot_stack[i]->faction)) {
+			td = vect_dist(&pilot_stack[i]->solid->pos, &p->solid->pos);
+			if ((tp == -1) || (td < d)) {
+				d = td;
+				tp = pilot_stack[i]->id;
+			}
+		}
+	return tp;
 }
 
 

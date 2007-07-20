@@ -121,6 +121,7 @@ int main ( int argc, char** argv )
 	input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, 0 );
 	input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, 0 );
 	input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, 0 );
+	input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_r, 0 );
 	input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_9, 0 );
 	input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_0, 0 );
 

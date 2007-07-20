@@ -96,6 +96,7 @@ typedef struct {
 extern Pilot* player; /* the player */
 Pilot* pilot_get( const unsigned int id );
 unsigned int pilot_getNext( unsigned int id );
+unsigned int pilot_getNearest( Pilot* p );
 Fleet* fleet_get( const char* name );
 
 

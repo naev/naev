@@ -30,7 +30,7 @@ typedef struct {
 static Keybind** player_input; /* contains the players keybindings */
 /* name of each keybinding */
 const char *keybindNames[] = { "accel", "left", "right", "primary", "target",
-		"mapzoomin", "mapzoomout" };
+		"target_nearest", "mapzoomin", "mapzoomout" };
 
 
 /*
@@ -95,6 +95,7 @@ typedef struct {
 
 typedef struct {
 	/* graphics */
+	gl_font smallFont;
 	gl_texture* gfx_frame;
 	gl_texture* gfx_targetPilot, *gfx_targetPlanet;
 	Radar radar;
@@ -104,7 +105,7 @@ typedef struct {
 	Vector2d pos_frame;
 	Vector2d pos_radar;
 	Vector2d pos_shield, pos_armor, pos_energy;
-	Vector2d pos_target, pos_target_health;
+	Vector2d pos_target, pos_target_health, pos_target_name, pos_target_faction;
 	Vector2d pos_mesg;
 
 } GUI;
@@ -262,13 +263,19 @@ void player_render (void)
 		p = pilot_get(player_target);
 
 		gl_blitStatic( p->ship->gfx_target, &gui.pos_target );
+
+		/* target name */
+		gl_print( NULL, &gui.pos_target_name, "%s", p->name );
+		gl_print( &gui.smallFont, &gui.pos_target_faction, "%s", p->faction->name );
+
+		/* target status */
 		if (p->armor < p->armor_max*PILOT_DISABLED) /* pilot is disabled */
-			gl_print( NULL, &gui.pos_target_health, "Disabled" );
+			gl_print( &gui.smallFont, &gui.pos_target_health, "Disabled" );
 		else if (p->shield > p->shield_max/100.) /* on shields */
-			gl_print( NULL, &gui.pos_target_health, "%s: %.0f%%",
+			gl_print( &gui.smallFont, &gui.pos_target_health, "%s: %.0f%%",
 				"Shield", p->shield/p->shield_max*100. );
 		else /* on armour */
-			gl_print( NULL, &gui.pos_target_health, "%s: %.0f%%",
+			gl_print( &gui.smallFont, &gui.pos_target_health, "%s: %.0f%%",
 				"Armour", p->armor/p->armor_max*100. );
 	}
 
@@ -350,6 +357,11 @@ int gui_init (void)
 {
 
 	/*
+	 * font
+	 */
+	gl_fontInit( &gui.smallFont, NULL, 10 );
+
+	/*
 	 * targetting
 	 */
 	gui.gfx_targetPilot = gl_newSprite( GFX_GUI_TARG_PILOT, 2, 2 );
@@ -397,9 +409,15 @@ int gui_init (void)
 	vect_csetmin( &gui.pos_target,
 			VX(gui.pos_frame) + 10,
 			VY(gui.pos_frame) + gui.gfx_frame->h - 256 - SHIP_TARGET_H);
+	vect_csetmin( &gui.pos_target_name,
+			VX(gui.pos_target) + 10,
+			VY(gui.pos_target) + SHIP_TARGET_H - 10 - gl_defFont.h);
+	vect_csetmin( &gui.pos_target_faction,
+			VX(gui.pos_target_name),
+			VY(gui.pos_target_name) - gui.smallFont.h - 4);
 	vect_csetmin( &gui.pos_target_health,
-			VX(gui.pos_frame) + 10 + 10,
-			VY(gui.pos_frame) + gui.gfx_frame->h - 256 - SHIP_TARGET_H + 10);
+			VX(gui.pos_target) + 10,
+			VY(gui.pos_target) + 10);
 
 	/*
 	 * message system
@@ -414,6 +432,8 @@ int gui_init (void)
  */
 void gui_free (void)
 {
+	gl_freeFont( &gui.smallFont );
+
 	gl_freeTexture( gui.gfx_frame );
 	gl_freeTexture( gui.gfx_targetPilot );
 	gl_freeTexture( gui.gfx_targetPlanet );
@@ -523,6 +543,8 @@ static void input_key( int keynum, double value, int abs )
 	/* targetting */
 	} else if (strcmp(player_input[keynum]->name, "target")==0) {
 		if (value==KEY_PRESS) player_target = pilot_getNext(player_target);
+	} else if (strcmp(player_input[keynum]->name, "target_nearest")==0) {
+		if (value==KEY_PRESS) player_target = pilot_getNearest(player);
 	/* zooming in */
 	} else if (strcmp(player_input[keynum]->name, "mapzoomin")==0) {
 		if (value==KEY_PRESS && gui.radar.res < RADAR_RES_MAX)

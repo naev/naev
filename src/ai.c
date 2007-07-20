@@ -53,7 +53,9 @@
 
 /* calls the AI function with name f */
 #define AI_LCALL(f)				(lua_getglobal(L, f), lua_pcall(L, 0, 0, 0))
+/* registers a number constant n to name s (syntax like lua_register) */
 #define lua_regnumber(l,s,n)	(lua_pushnumber(l,n), lua_setglobal(l,s))
+/* L state, void* buf, int n size, char* s identifier */
 #define luaL_dobuffer(L, b, n, s) \
 	(luaL_loadbuffer(L, b, n, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
 
@@ -720,17 +722,7 @@ static int ai_shoot( lua_State *L )
  */
 static int ai_getenemy( lua_State *L )
 {
-	int i, p;
-	double d, td;
-	for (p=-1,i=0; i<pilots; i++)
-		if (areEnemies(cur_pilot->faction, pilot_stack[i]->faction)) {
-			td = vect_dist(&pilot_stack[i]->solid->pos, &cur_pilot->solid->pos);
-			if ((p == -1) || (td < d)) {
-				d = td;
-				p = pilot_stack[i]->id;
-			}
-		}
-	lua_pushnumber(L,p);
+	lua_pushnumber(L,pilot_getNearest(cur_pilot));
 	return 1;
 }
 
@@ -778,7 +770,7 @@ static int ai_createvect( lua_State *L )
 
 	vect_cset(v, x, y);
 
-	lua_pushlightuserdata(L, (void*)v);
+	lua_pushlightuserdata(L, v);
 	return 1;
 }
 

@@ -303,7 +303,7 @@ gl_texture*  gl_newImage( const char* path )
 {
 	SDL_Surface *temp, *surface;
 	gl_texture* t;
-	void* trans = NULL;
+	uint8_t* trans = NULL;
 	uint32_t filesize;
 	char *buf = pack_readfile( DATA, (char*)path, &filesize );
 	if (buf == NULL) {
