@@ -207,15 +207,15 @@ static void enemies_parse( xmlNodePtr parent )
 	int i, *j, n, m, x, y, z, e;
 	char* type;
 
-	i = 0;
-	f = NULL;
-	j = NULL;
-
 	node = parent->xmlChildrenNode;
 
 	do {
 		if ((node->type==XML_NODE_START) &&
 				(strcmp((char*)node->name,XML_ENEMIES_TAG)==0)) {
+
+			i = 0;
+			f = NULL;
+			j = NULL;
 
 			cur = node->xmlChildrenNode;
 			do {

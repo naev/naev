@@ -40,7 +40,7 @@ Pilot* player = NULL; /* ze player */
 static double player_turn = 0.; /* turn velocity from input */
 static double player_acc = 0.; /* accel velocity from input */
 static int player_primary = 0; /* player is shooting primary weapon */
-static unsigned int player_target = 0; /* targetted pilot */
+static unsigned int player_target = PLAYER_ID; /* targetted pilot */
 
 
 /*
@@ -168,7 +168,7 @@ void player_render (void)
 	Vector2d v;
 
 	/* renders the player target graphics */
-	if (player_target) {
+	if (player_target != PLAYER_ID) {
 		p = pilot_get(player_target);
 
 		vect_csetmin( &v, VX(p->solid->pos) - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.,
@@ -259,7 +259,7 @@ void player_render (void)
 
 
 	/* target */
-	if (player_target) {
+	if (player_target != PLAYER_ID) {
 		p = pilot_get(player_target);
 
 		gl_blitStatic( p->ship->gfx_target, &gui.pos_target );
@@ -544,7 +544,7 @@ static void input_key( int keynum, double value, int abs )
 	} else if (strcmp(player_input[keynum]->name, "target")==0) {
 		if (value==KEY_PRESS) player_target = pilot_getNext(player_target);
 	} else if (strcmp(player_input[keynum]->name, "target_nearest")==0) {
-		if (value==KEY_PRESS) player_target = pilot_getNearest(player);
+		if (value==KEY_PRESS) player_target = pilot_getHostile();
 	/* zooming in */
 	} else if (strcmp(player_input[keynum]->name, "mapzoomin")==0) {
 		if (value==KEY_PRESS && gui.radar.res < RADAR_RES_MAX)

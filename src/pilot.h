@@ -12,7 +12,7 @@
 #include "faction.h"
 
 
-#define PLAYER_ID			0
+#define PLAYER_ID			1
 
 
 #define PILOT_SIZE_APROX	0.8	/* aproximation for pilot size */
@@ -27,6 +27,9 @@
 #define PILOT_PLAYER		(1<<0) /* pilot is a player */
 /* dynamic */
 #define PILOT_HOSTILE   (1<<1) /* pilot is hostile to the player */
+
+/* makes life easier */
+#define pilot_isPlayer(p)	((p)->flags & PILOT_PLAYER)
 
 
 typedef struct {
@@ -98,8 +101,9 @@ typedef struct {
  */
 extern Pilot* player; /* the player */
 Pilot* pilot_get( const unsigned int id );
-unsigned int pilot_getNext( unsigned int id );
-unsigned int pilot_getNearest( Pilot* p );
+unsigned int pilot_getNext( const unsigned int id );
+unsigned int pilot_getNearest( const Pilot* p );
+unsigned int pilot_getHostile (void); /* only for the player */
 Fleet* fleet_get( const char* name );
 
 

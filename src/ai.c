@@ -63,9 +63,9 @@
 #define MIN_ARGS(n)			if (lua_gettop(L) < n) return 0
 
 
-#define MIN_DIR_ERR		5.0*M_PI/180.
-#define MAX_DIR_ERR		2.5*M_PI/180.
-#define MIN_VEL_ERR		2.5
+#define MIN_DIR_ERR		1.0*M_PI/180.
+#define MAX_DIR_ERR		0.1*M_PI/180.
+#define MIN_VEL_ERR		0.5
 
 
 /*
@@ -128,8 +128,9 @@ static int ai_brake( lua_State *L ); /* brake() */
 static int ai_getnearestplanet( lua_State *L ); /* pointer getnearestplanet() */
 static int ai_getrndplanet( lua_State *L ); /* pointor getrndplanet() */
 /* combat */
-static int ai_shoot( lua_State *L ); /* shoot(number); number = 1,2,3 */
+static int ai_shoot( lua_State *L ); /* shoot( number ); number = 1,2,3 */
 static int ai_getenemy( lua_State *L ); /* number getenemy() */
+static int ai_hostile( lua_State *L ); /* hostile( number ) */
 /* timers */
 static int ai_settimer( lua_State *L ); /* settimer( number, number ) */
 static int ai_timeup( lua_State *L ); /* bool timeup( number ) */
@@ -246,6 +247,7 @@ static int ai_loadProfile( char* filename )
 	/* combat */
 	lua_register(L, "shoot", ai_shoot);
 	lua_register(L, "getenemy", ai_getenemy);
+	lua_register(L, "hostile", ai_hostile);
 	/* timers */
 	lua_register(L, "settimer", ai_settimer);
 	lua_register(L, "timeup", ai_timeup);
@@ -466,7 +468,12 @@ static int ai_gettargetid( lua_State *L )
  */
 static int ai_armor( lua_State *L )
 {
-	lua_pushnumber(L, cur_pilot->armor);
+	double d;
+
+	if (lua_isnumber(L,1)) d = pilot_get((unsigned int)lua_tonumber(L,1))->armor;
+	else d = cur_pilot->armor;
+
+	lua_pushnumber(L, d);
 	return 1;
 }
 
@@ -475,7 +482,12 @@ static int ai_armor( lua_State *L )
  */
 static int ai_shield( lua_State *L )
 {
-	lua_pushnumber(L, cur_pilot->shield);
+	double d;
+
+	if (lua_isnumber(L,1)) d = pilot_get((unsigned int)lua_tonumber(L,1))->shield;
+	else d = cur_pilot->shield;
+
+	lua_pushnumber(L, d);
 	return 1;
 }
 
@@ -484,7 +496,16 @@ static int ai_shield( lua_State *L )
  */
 static int ai_parmor( lua_State *L )
 {
-	lua_pushnumber(L, cur_pilot->armor / cur_pilot->armor_max * 100.);
+	double d;
+	Pilot* p;
+
+	if (lua_isnumber(L,1)) {
+		p = pilot_get((unsigned int)lua_tonumber(L,1));
+		d = p->armor / p->armor_max * 100.;
+	}
+	else d = cur_pilot->armor / cur_pilot->armor_max * 100.;
+
+	lua_pushnumber(L, d);
 	return 1;
 }
 
@@ -492,8 +513,16 @@ static int ai_parmor( lua_State *L )
  * gets the pilot's shield in percent
  */              
 static int ai_pshield( lua_State *L )
-{                               
-	lua_pushnumber(L, cur_pilot->shield / cur_pilot->shield_max * 100.);
+{
+	double d;
+	Pilot* p;
+
+	if (lua_isnumber(L,1)) {
+		p = pilot_get((unsigned int)lua_tonumber(L,1));
+		d = p->shield / p->shield_max * 100.;
+	}
+	else d = cur_pilot->shield / cur_pilot->shield_max * 100.;
+
 	return 1;
 } 
 
@@ -523,7 +552,7 @@ static int ai_getpos( lua_State *L )
 }
 
 /*
- * gets the minimum breaking distance
+ * gets the minimum braking distance
  *
  * braking vel ==> 0 = v - a*dt
  * add turn around time (to inital vel) ==> 180.*360./cur_pilot->ship->turn
@@ -534,7 +563,7 @@ static int ai_minbrakedist( lua_State *L )
 {
 	double time = VMOD(cur_pilot->solid->vel) /
 			(cur_pilot->ship->thrust / cur_pilot->solid->mass);
-	double dist =  VMOD(cur_pilot->solid->vel)*(time+cur_pilot->ship->turn/360.) -
+	double dist =  VMOD(cur_pilot->solid->vel)*(time+cur_pilot->ship->turn/180.) -
 			0.5*(cur_pilot->ship->thrust/cur_pilot->solid->mass)*time*time;
 
 	lua_pushnumber(L, dist); /* return */
@@ -639,10 +668,17 @@ static int ai_face( lua_State *L )
 static int ai_brake( lua_State *L )
 {
 	(void)L; /* hack to avoid -W -Wall warnings */
-	double diff = angle_diff(cur_pilot->solid->dir,VANGLE(cur_pilot->solid->vel));
-	pilot_turn = 10*diff;
-	if (diff < MAX_DIR_ERR && VMOD(cur_pilot->solid->vel) > MIN_VEL_ERR)
+	double diff, d;
+
+	d = cur_pilot->solid->dir+M_PI;
+	if (d >= 2*M_PI) d = fmodf(d, 2*M_PI);
+	
+	diff = angle_diff(d,VANGLE(cur_pilot->solid->vel));
+	pilot_turn = -10*diff;
+
+	if (ABS(diff) < MAX_DIR_ERR && VMOD(cur_pilot->solid->vel) > MIN_VEL_ERR)
 		pilot_acc = 1.;
+
 	return 0;
 }
 
@@ -724,6 +760,20 @@ static int ai_getenemy( lua_State *L )
 {
 	lua_pushnumber(L,pilot_getNearest(cur_pilot));
 	return 1;
+}
+
+
+/*
+ * sets the enemy hostile (basically notifies of an impending attack)
+ */
+static int ai_hostile( lua_State *L )
+{
+	MIN_ARGS(1);
+
+	if (lua_isnumber(L,1) && ((unsigned int)lua_tonumber(L,1) == PLAYER_ID))
+		pilot_setFlag(cur_pilot, PILOT_HOSTILE);
+
+	return 0;
 }
 
 

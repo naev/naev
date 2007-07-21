@@ -16,9 +16,12 @@
 </Alliances>
 <Enemies>
 <enemies>
-<enemy type="faction">Player</enemy>
 <enemy type="alliance">Neutral</enemy>
 <enemy type="faction">Pirate</enemy>
+</enemies>
+<enemies>
+<enemy type="faction">Pirate</enemy>
+<enemy type="faction">Player</enemy>
 </enemies>
 </Enemies>
 </Factions>

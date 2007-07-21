@@ -52,7 +52,7 @@ end
 
 -- flies to the player
 function fly ()
-	target = 0
+	target = player
 	dir = face(target)
 	dist = getdist( getpos(target) )
 	if dir < 10 and dist > 300 then

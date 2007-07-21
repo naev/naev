@@ -157,7 +157,8 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 				CollideSprite( w->outfit->gfx_space, wsx, wsy, &w->solid->pos,
 						pilot_stack[i]->ship->gfx_space, psx, psy, &pilot_stack[i]->solid->pos)) {
 
-			if (i != PLAYER_ID) /* inform the ai it has been attacked, useless if  player */
+			/* inform the ai it has been attacked, useless if  player */
+			if (!pilot_isPlayer(pilot_stack[i]))
 				ai_attacked( pilot_stack[i], w->parent );
 			if (w->parent == PLAYER_ID) /* make hostile to player */
 				pilot_setFlag( pilot_stack[i], PILOT_HOSTILE);

@@ -3,9 +3,25 @@ control_rate = 2
 
 -- Required "control" function
 function control ()
-	if taskname() ~= "attack" then
+	task = taskname()
+	if task ~= "attack" and task ~= "runaway" then
+
+		-- if getenemy() is 0 then there is no enemy around
 		enemy = getenemy()
-		if enemy ~= -1 then
+		if enemy ~= 0 then
+
+			-- taunts!
+			num = rng(0,4)
+			if num == 0 then msg = "Prepare to be boarded!"
+			elseif num == 1 then msg = "Yohoho!"
+			elseif num == 2 then msg = "What's a ship like you doing in a place like this?"
+			end
+			comm(enemy, msg)
+
+			-- make hostile to the enemy (mainly for player)
+			hostile(enemy)
+
+			-- proceed to the attack
 			pushtask(0, "attack", enemy)
 		else
 			pushtask(0, "fly")
@@ -16,6 +32,7 @@ end
 -- Required "attacked" function
 function attacked ( attacker )
 	task = taskname()
+
 	if task ~= "attack" and task ~= "runaway" then
 		taunt()
 		pushtask(0, "attack", attacker)
@@ -39,22 +56,25 @@ function taunt ()
 end
 
 
--- runs away
+-- runs away from the target
 function runaway ()
 	target = gettargetid()
 	dir = face( target, 1 )
 	accel()
 end
 
--- attacks
+-- attacks the target
 function attack ()
 	target = gettargetid()
 	dir = face( target )
 	dist = getdist( getpos(target) )
 
+	-- must know when to run away
 	if parmor() < 70 then
 		poptask()
 		pushtask(0, "runaway", target)
+
+	-- should try to hurt the target
 	elseif dir < 10 and dist > 300 then
 		accel()
 	elseif dir < 10 and dist < 300 then
@@ -62,9 +82,9 @@ function attack ()
 	end
 end
 
--- flies to the player
+-- flies to the player, pointless until hyperspace is implemented
 function fly ()
-	target = 0
+	target = player
 	dir = face(target)
 	dist = getdist( getpos(target) )
 	if dir < 10 and dist > 300 then

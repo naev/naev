@@ -52,7 +52,7 @@ function stop ()
 	brake()
 	if isstopped() then
 		poptask()
-		settimer(0, rng(3000,5000))
+		settimer(0, rng(8000,15000))
 		pushtask(0,"land")
 	end
 end

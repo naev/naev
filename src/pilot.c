@@ -24,7 +24,7 @@
 
 
 /* stack of pilot ids to assure uniqueness */
-static unsigned int pilot_id = 0;
+static unsigned int pilot_id = PLAYER_ID;
 
 
 /* stack of pilots */
@@ -52,7 +52,7 @@ static Fleet* fleet_parse( const xmlNodePtr parent );
 
 
 /*
- * gets the next pilot based on player_id
+ * gets the next pilot based on id
  */
 unsigned int pilot_getNext( const unsigned int id )
 {
@@ -62,7 +62,7 @@ unsigned int pilot_getNext( const unsigned int id )
 		if (pilot_stack[i]->id == id)
 			break;
 
-	if (i==pilots-1) return 0;
+	if (i==pilots-1) return PLAYER_ID;
 
 	return pilot_stack[i+1]->id;
 }
@@ -71,14 +71,35 @@ unsigned int pilot_getNext( const unsigned int id )
 /*
  * gets the nearest enemy to the pilot
  */
-unsigned int pilot_getNearest( Pilot* p )
+unsigned int pilot_getNearest( const Pilot* p )
 {
-	int i, tp;
+	unsigned int tp;
+	int i;
 	double d, td;
-	for (tp=-1,i=0; i<pilots; i++)
+	for (tp=0,d=0.,i=0; i<pilots; i++)
 		if (areEnemies(p->faction, pilot_stack[i]->faction)) {
 			td = vect_dist(&pilot_stack[i]->solid->pos, &p->solid->pos);
-			if ((tp == -1) || (td < d)) {
+			if ((!tp) || (td < d)) {
+				d = td;
+				tp = pilot_stack[i]->id;
+			}
+		}
+	return tp;
+}
+
+
+/*
+ * gets the nearest hostile enemy to the playr
+ */
+unsigned pilot_getHostile (void)
+{
+	unsigned int tp;
+	int i;                                                                 
+	double d, td;
+	for (tp=PLAYER_ID,d=0.,i=0; i<pilots; i++)
+		if (pilot_isFlag(pilot_stack[i],PILOT_HOSTILE)) {
+			td = vect_dist(&pilot_stack[i]->solid->pos, &player->solid->pos);
+			if ((tp==PLAYER_ID) || (td < d)) {
 				d = td;
 				tp = pilot_stack[i]->id;
 			}
@@ -100,8 +121,6 @@ Pilot* pilot_get( const unsigned int id )
 	return NULL;
 
 	if (id==0) return player;
-
-	DEBUG("id=%d",id);
 
 /* Dichotomical search */
 	/*int i,n;
@@ -221,7 +240,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction, AI_Prof
 		const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
 {
 	if (flags & PILOT_PLAYER) /* player is ID 0 */
-		pilot->id = 0;
+		pilot->id = PLAYER_ID;
 	else
 		pilot->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
 

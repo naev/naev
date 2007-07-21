@@ -165,8 +165,8 @@ static void simple_update (Solid *obj, const double dt)
 static void rk4_update (Solid *obj, const double dt)
 {
 	/* make sure angle doesn't flip */
-	obj->dir += M_PI/360.*obj->dir_vel*dt;
-	if (obj->dir > 2*M_PI) obj->dir -= 2*M_PI;
+	obj->dir += M_PI/180.*obj->dir_vel*dt;
+	if (obj->dir >= 2*M_PI) obj->dir -= 2*M_PI;
 	if (obj->dir < 0.) obj->dir += 2*M_PI;
 
 	int N = (dt>RK4_MIN_H) ? (int)(dt/RK4_MIN_H) : 1 ;

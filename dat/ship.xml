@@ -5,7 +5,7 @@
 <class>1</class>
 <movement>
 <thrust>400</thrust>
-<turn>360</turn>
+<turn>180</turn>
 <speed>360</speed>
 </movement>
 <health>
@@ -23,7 +23,7 @@
 <cap_cargo>20</cap_cargo>
 </caracteristics>
 <outfits>
-<outfit quantity='3'>laser</outfit>
+<outfit quantity='2'>laser</outfit>
 </outfits>
 </ship>
 <ship name="Mr. Test">
@@ -31,7 +31,7 @@
 <class>1</class>
 <movement>
 <thrust>280</thrust>
-<turn>260</turn>
+<turn>130</turn>
 <speed>260</speed>
 </movement>
 <health>
