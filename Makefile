@@ -40,7 +40,7 @@ DATAFILES = $(shell find ai/ gfx/ dat/ -name '*.lua' -o -name '*.png' -o -name '
 	@echo -e "\tCC   $@"
 
 
-all:	data lua $(OBJS)
+all:	utils data lua $(OBJS)
 	@$(CC) $(LDFLAGS) -o $(APPNAME) $(OBJS) lib/lua/liblua.a
 	@echo -e "\tLD   $(APPNAME)"
 
@@ -51,10 +51,15 @@ lua:
 pack: src/pack.c utils/pack/main.c
 	@( cd utils/pack; $(MAKE) )
 
+mkspr: utils/mkspr/main.c
+	@( cd utils/mkspr; $(MAKE) )
+
 
 data: pack $(DATAFILES) src/pack.c utils/pack/main.c
 	@echo -e "\tCreating data\n"
 	@./pack $(DATA) $(DATAFILES)
+
+utils: mkspr
 
 
 clean:

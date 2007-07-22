@@ -185,12 +185,15 @@ void space_init ( const char* sysname )
 	for (i=0; i < cur_system->nfleets; i++)
 		if (RNG(0,100) <= cur_system->fleets[i].chance) { /* fleet check */
 
+			/* simulate they came from hyperspace */
 			vect_pset( &v, 2*RNG(MIN_HYPERSPACE_DIST/2,MIN_HYPERSPACE_DIST),
 					RNG(0,360)*M_PI/180.);
 
 			for (j=0; j < cur_system->fleets[i].fleet->npilots; j++)
 				if (RNG(0,100) <= cur_system->fleets[i].fleet->pilots[j].chance) {
-					vect_cadd(&v, RNG(-50,50), RNG(-50,50));
+					/* other ships in the fleet should start split up */
+					vect_cadd(&v, RNG(50,150) * (RNG(0,1) ? 1 : -1),
+							RNG(50,150) * (RNG(0,1) ? 1 : -1));
 
 					pilot_create( cur_system->fleets[i].fleet->pilots[j].ship,
 							cur_system->fleets[i].fleet->pilots[j].name,
