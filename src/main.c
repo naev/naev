@@ -32,8 +32,8 @@
 #include "faction.h"
 
 
-#define APPNAME			"GAME"
-#define WINDOW_CAPTION  "game"
+#define APPNAME			"NAEV"
+#define WINDOW_CAPTION  "NAEV - Sea of Darkness"
 
 #define CONF_FILE			"conf"
 

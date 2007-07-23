@@ -1,8 +1,7 @@
 
 DEBUG = 1
 
-APPNAME = main
-
+APPNAME = naev
 
 VMAJOR = 0
 VMINOR = 0
