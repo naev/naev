@@ -1,0 +1,79 @@
+This is a readme for the planet.scm script included in this directory of the source.
+
+0.) INSTALLATION
+
+	In order to use this script you must copy it into the proper directory. 
+In most cases that directory will be '~/.gimp-2.2/scripts/'. Take note: if you have a 
+different version of gimp the directory may be different. Once the script has been
+copied it should be installed and ready to go! Just start up Gimp (or if you already
+have it running go to 'Xtns -> Script-Fu -> Refresh Scripts').
+
+1.) USEAGE
+	
+	Using the script is fairly straight forward. If it has been loaded properly it
+should have created a menu in your toolbar named 'NAEV.' Load it up and a window will
+pop up. Here you have a few different options:
+   
+   0.1) PLANET SIZE
+   	Obviously this is the size of the planet. So far the standard in the is 80 pixels,
+	but depending on the system the planets may be smaller/larger.
+   
+   0.2) PLANET COLOR
+   	Fairly self-explanatory. Choose the color of your planet here.
+   
+   0.3) SUN OREINTATION
+   	This is where the main light source will be coming from. Right now 0 degrees is
+	at the top, and increasing the orientation goes in a clockwise direction. So 90
+	degrees would be coming from the right, 270 from the left, and so on.
+
+   0.4) SUN TILT
+   	This changes how much of the planet is illuminated by the sun. A value between
+	8 and 9 makes a planet that is pretty much halt lit and half darkened. Again,
+	this can be played around with.
+
+   0.5) GLOW SIZE
+   	This function changes how much glow there will be around the planet. 4 creates a
+	decent amount of glow, 0.1 makes very very little, and 10 makes a ton. 4 is the 
+	default, but Bobbens thinks that the glow looks funny, so maybe turn it down to
+	a low value unless its a gaseous planet.
+
+	Hit 'OK' and see what happens! Hopefully you will generate a planet that can be
+	used in game. Remember to save it as a .png with transparency on.
+
+2.) ADDITIONAL INFORMATION
+
+	If you are so inclined you can add textures to your planets as well. It really does
+make them look a lot better. This is a brief tutorial on how to do so, taken from the
+website of the guy who originally wrote the script. 
+	http://home.tele2.fr/auroreblender/gimp/planet_en.html
+
+   0.1) First step is to find a good texture image.
+
+   0.2) Open up the image in Gimp and from the menu select 'Layer -> Transparency -> Add
+   	Alpha Channel'
+
+   0.3) In the menu select 'Filters -> Glass Effects -> Apply Lens'. When the menu comes
+   	up click on 'Make surroundings transparent' and make the Lens Refraction Index
+	to 1.6. Hit OK.
+
+   0.4) The web tutorial says to scale the image down by half, but that doesn't really
+   	make any sense when you're just going to scale it down to the size of the planet.
+	That said, scale the image to the size of your planet (default is 80 pixels).
+
+   0.5) Select everything in the texture image and copy it over. Place that layer
+   	between the 'planet atmosphere' and 'planet base' layers. Then, change the layer
+	mode to whichever looks best. (Grain merge is a good choice.)
+
+	Yay! Hopefully you just made a purdy planet. Now get it into cvs so we can do
+	something with it.
+
+3.) THE END
+
+	More thanks to Rore for his script and his tutorials. You can find his website at:
+
+	http://home.tele2.fr/auroreblender/index_en.html
+
+	aurore.d@gmail.com
+
+
+	Whew this is quite the README. Wolorf is quitting for now.
