@@ -116,10 +116,12 @@ static int ai_getdistance( lua_State *L ); /* number getdist(Vector2d) */
 static int ai_getpos( lua_State *L ); /* getpos(number) */
 static int ai_minbrakedist( lua_State *L ); /* number minbrakedist() */
 /* boolean expressions */
+static int ai_exists( lua_State *L ); /* boolean exists */
 static int ai_ismaxvel( lua_State *L ); /* boolean ismaxvel() */
 static int ai_isstopped( lua_State *L ); /* boolean isstopped() */
-static int ai_isenemy( lua_State *L ); /* bool isenemy( number ) */
-static int ai_isally( lua_State *L ); /* bool isally( number ) */
+static int ai_isenemy( lua_State *L ); /* boolean isenemy( number ) */
+static int ai_isally( lua_State *L ); /* boolean isally( number ) */
+static int ai_incombat( lua_State *L ); /* boolean incombat( [number] ) */
 /* movement */
 static int ai_accel( lua_State *L ); /* accel(number); number <= 1. */
 static int ai_turn( lua_State *L ); /* turn(number); abs(number) <= 1. */
@@ -127,13 +129,15 @@ static int ai_face( lua_State *L ); /* face(number/pointer) */
 static int ai_brake( lua_State *L ); /* brake() */
 static int ai_getnearestplanet( lua_State *L ); /* pointer getnearestplanet() */
 static int ai_getrndplanet( lua_State *L ); /* pointor getrndplanet() */
+static int ai_hyperspace( lua_State *L ); /* [number] hyperspace() */
 /* combat */
+static int ai_combat( lua_State *L ); /* combat( number ) */
 static int ai_shoot( lua_State *L ); /* shoot( number ); number = 1,2,3 */
 static int ai_getenemy( lua_State *L ); /* number getenemy() */
 static int ai_hostile( lua_State *L ); /* hostile( number ) */
 /* timers */
 static int ai_settimer( lua_State *L ); /* settimer( number, number ) */
-static int ai_timeup( lua_State *L ); /* bool timeup( number ) */
+static int ai_timeup( lua_State *L ); /* boolean timeup( number ) */
 /* misc */
 static int ai_createvect( lua_State *L ); /* createvect( number, number ) */
 static int ai_comm( lua_State *L ); /* say( number, string ) */
@@ -233,10 +237,12 @@ static int ai_loadProfile( char* filename )
 	lua_register(L, "getpos", ai_getpos);
 	lua_register(L, "minbrakedist", ai_minbrakedist);
 	/* boolean expressions */
+	lua_register(L, "exists", ai_exists);
 	lua_register(L, "ismaxvel", ai_ismaxvel);
 	lua_register(L, "isstopped", ai_isstopped);
 	lua_register(L, "isenemy", ai_isenemy);
 	lua_register(L, "isally", ai_isally);
+	lua_register(L, "incombat", ai_incombat);
 	/* movement */
 	lua_register(L, "accel", ai_accel);
 	lua_register(L, "turn", ai_turn);
@@ -244,7 +250,9 @@ static int ai_loadProfile( char* filename )
 	lua_register(L, "brake", ai_brake);
 	lua_register(L, "getnearestplanet", ai_getnearestplanet);
 	lua_register(L, "getrndplanet", ai_getrndplanet);
+	lua_register(L, "hyperspace", ai_hyperspace);
 	/* combat */
+	lua_register(L, "combat", ai_combat);
 	lua_register(L, "shoot", ai_shoot);
 	lua_register(L, "getenemy", ai_getenemy);
 	lua_register(L, "hostile", ai_hostile);
@@ -543,7 +551,11 @@ static int ai_getdistance( lua_State *L )
 static int ai_getpos( lua_State *L )
 {
 	Pilot *p;
-	if (lua_isnumber(L,1)) p = pilot_get((int)lua_tonumber(L,1)); /* Pilot ID */
+
+	if (lua_isnumber(L,1)) {
+		p = pilot_get((int)lua_tonumber(L,1)); /* Pilot ID */
+		if (p==NULL) return 0;
+	}
 	else p = cur_pilot; /* default to self */
 
 	lua_pushlightuserdata(L, &p->solid->pos );
@@ -568,6 +580,21 @@ static int ai_minbrakedist( lua_State *L )
 
 	lua_pushnumber(L, dist); /* return */
 	return 1; /* returns one thing */
+}
+
+
+/*
+ * pilot exists?
+ */
+static int ai_exists( lua_State *L )
+{
+	MIN_ARGS(1);
+
+	if (lua_isnumber(L,1)) {
+		lua_pushboolean(L, (int)pilot_get((unsigned int)lua_tonumber(L,1)));
+		return 1;
+	}
+	return 0;
 }
 
 
@@ -602,7 +629,6 @@ static int ai_isenemy( lua_State *L )
 	return 1;
 }
 
-
 /*
  * checks if pillot is an ally
  */
@@ -614,6 +640,19 @@ static int ai_isally( lua_State *L )
 	return 1;
 }
 
+/*
+ * checks to see if the pilot is in combat, defaults to self
+ */
+static int ai_incombat( lua_State *L )
+{
+	Pilot* p;
+
+	if (lua_isnumber(L,1)) p = pilot_get((unsigned int)lua_tonumber(L,1));
+	else p = cur_pilot;
+
+	lua_pushboolean(L, pilot_isFlag(p, PILOT_COMBAT));
+	return 1;
+}
 
 /*
  * starts accelerating the pilot based on a parameter
@@ -643,7 +682,13 @@ static int ai_face( lua_State *L )
 {
 	MIN_ARGS(1);
 	Vector2d* v; /* get the position to face */
-	if (lua_isnumber(L,1)) v = &pilot_get((unsigned int)lua_tonumber(L,1))->solid->pos;
+	Pilot* p;
+
+	if (lua_isnumber(L,1)) {
+		p = pilot_get((unsigned int)lua_tonumber(L,1));
+		if (p==NULL) return 0; /* make sure pilot is valid */
+		v = &p->solid->pos;
+	}
 	else if (lua_islightuserdata(L,1)) v = (Vector2d*)lua_topointer(L,1);
 
 	double mod = -10;
@@ -735,6 +780,37 @@ static int ai_getrndplanet( lua_State *L )
 	lua_pushlightuserdata( L, &planets[i]->pos );
 	free(planets);
 	return 1;
+}
+
+/*
+ * tries to enter the pilot in hyperspace, returns the distance if too far away
+ */
+static int ai_hyperspace( lua_State *L )
+{
+	int dist;
+	
+	dist = space_hyperspace(cur_pilot);
+	if (dist == 0.) return 0;
+
+	lua_pushnumber(L,dist);
+	return 1;
+}
+
+/*
+ * toggles the combat flag, default is on
+ */
+static int ai_combat( lua_State *L )
+{
+	int i;
+
+	if (lua_isnumber(L,1)) {
+		i = (int)lua_tonumber(L,1);
+		if (i==1) pilot_setFlag(cur_pilot, PILOT_COMBAT);
+		else if (i==0) pilot_rmFlag(cur_pilot, PILOT_COMBAT);
+	}
+	else pilot_setFlag(cur_pilot, PILOT_COMBAT);
+
+	return 0;
 }
 
 /*

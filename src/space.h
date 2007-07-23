@@ -89,5 +89,11 @@ void space_exit (void);
 void space_render( double dt );
 void planets_render (void);
 
+/*
+ * misc
+ */
+int space_hyperspace( Pilot* p );
+extern char* stardate;
+
 
 #endif /* SPACE_H */

@@ -384,11 +384,11 @@ void pilots_update( double dt )
 {
 	int i;
 	for ( i=0; i < pilots; i++ ) {
-		if ( pilot_stack[i]->think)
+		if (pilot_stack[i]->think) /* think */
 			pilot_stack[i]->think(pilot_stack[i]);
-		if (pilot_stack[i]->update)
+		if (pilot_stack[i]->update) /* update */
 			pilot_stack[i]->update( pilot_stack[i], dt );
-		if (pilot_stack[i]->render)
+		if (pilot_stack[i]->render) /* render */
 			pilot_stack[i]->render(pilot_stack[i]);
 	}
 }
@@ -523,3 +523,4 @@ void fleet_free (void)
 	}
 	nfleets = 0;
 }
+

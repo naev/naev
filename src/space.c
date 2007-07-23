@@ -38,6 +38,10 @@ static StarSystem *systems = NULL;
 static int nsystems = 0;
 StarSystem *cur_system = NULL; /* Current star system */
 
+/* current stardate in nice format */
+char* stardate = "Stardate";
+unsigned int date = 0; /* time since epoch */
+
 
 #define STAR_BUF	100	/* area to leave around screen, more = less repitition */
 typedef struct {
@@ -51,9 +55,12 @@ static int nstars = 0; /* total stars */
 /* 
  * Prototypes
  */
+/* intern */
 static Planet* planet_get( const char* name );
 static StarSystem* system_parse( const xmlNodePtr parent );
 static PlanetClass planetclass_get( const char a );
+/* extern */
+extern void player_message ( const char *fmt, ... );
 
 
 /*
@@ -157,6 +164,33 @@ static PlanetClass planetclass_get( const char a )
 
 
 /*
+ * hyperspaces, returns 0 if entering hyperspace, or distance otherwise
+ */
+int space_hyperspace( Pilot* p )
+{
+	int i;
+	double d;
+	for (i=0; i < cur_system->nplanets; i++) {
+		d = vect_dist(&p->solid->pos, &cur_system->planets[i].pos);
+		if (d < MIN_HYPERSPACE_DIST)
+			return (int)(MIN_HYPERSPACE_DIST - d);;
+	}
+
+	/*
+	 * TODO hyperspace stuff
+	 */
+	if (p == player) {
+		/* player stuff */
+	}
+	else {
+
+	}
+
+	return 0;
+}
+
+
+/*
  * initializes the system
  */
 void space_init ( const char* sysname )
@@ -170,6 +204,8 @@ void space_init ( const char* sysname )
 
 	if (i==nsystems) ERR("System %s not found in stack", sysname);
 	cur_system = systems+i;
+
+	player_message("Entering System %s on %s", sysname, stardate);
 
 	/* set up stars */
 	nstars = (cur_system->stars*gl_screen.w*gl_screen.h+STAR_BUF*STAR_BUF)/(800*640);
@@ -515,4 +551,5 @@ void space_exit (void)
 
 	if (stars) free(stars);
 }
+
 

@@ -24,9 +24,11 @@
 #define pilot_setFlag(p,f) ((p)->flags |= f)
 #define pilot_rmFlag(p,f)  ((p)->flags ^= f)
 /* creation */
-#define PILOT_PLAYER		(1<<0) /* pilot is a player */
+#define PILOT_PLAYER			(1<<0) /* pilot is a player */
 /* dynamic */
-#define PILOT_HOSTILE   (1<<1) /* pilot is hostile to the player */
+#define PILOT_HOSTILE	   (1<<1) /* pilot is hostile to the player */
+#define PILOT_COMBAT			(1<<2) /* pilot is engaged in combat */
+#define PILOT_HYPERSPACE	(1<<3) /* pilot is in hyperspace */
 
 /* makes life easier */
 #define pilot_isPlayer(p)	((p)->flags & PILOT_PLAYER)

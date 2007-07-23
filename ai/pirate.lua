@@ -4,11 +4,20 @@ control_rate = 2
 -- Required "control" function
 function control ()
 	task = taskname()
-	if task ~= "attack" and task ~= "runaway" then
+
+	-- running pirate has healed up some
+	if task == "runaway" then
+		if parmor() == 100 then
+			-- "attack" should be running after "runaway"
+			poptask()
+		end
+
+	-- nothing to do
+	elseif task ~= "attack" and task ~= "runaway" then
 
 		-- if getenemy() is 0 then there is no enemy around
 		enemy = getenemy()
-		if enemy ~= 0 then
+		if parmor() == 100 and enemy ~= 0 then
 
 			-- taunts!
 			num = rng(0,4)
@@ -22,7 +31,10 @@ function control ()
 			hostile(enemy)
 
 			-- proceed to the attack
-			pushtask(0, "attack", enemy)
+			combat() -- set to be fighting
+			pushtask(0, "attack", enemy) -- actually begin the attack
+
+		-- nothing to attack
 		else
 			pushtask(0, "fly")
 		end
@@ -33,9 +45,12 @@ end
 function attacked ( attacker )
 	task = taskname()
 
+	-- pirate isn't fighting or fleeing already
 	if task ~= "attack" and task ~= "runaway" then
 		taunt()
 		pushtask(0, "attack", attacker)
+
+	-- pirate is fighting, but switches to new target (doesn't forget the old one though)
 	elseif task == "attack" then
 		if gettargetid() ~= attacker then
 			pushtask(0, "attack", attacker)
@@ -59,6 +74,13 @@ end
 -- runs away from the target
 function runaway ()
 	target = gettargetid()
+
+	-- make sure target exists
+	if not exists(target) then
+		poptask()
+		return
+	end
+
 	dir = face( target, 1 )
 	accel()
 end
@@ -66,12 +88,18 @@ end
 -- attacks the target
 function attack ()
 	target = gettargetid()
+
+	-- make sure the pilot target exists
+	if not exists(target) then
+		poptask()
+		return
+	end
+
 	dir = face( target )
 	dist = getdist( getpos(target) )
 
 	-- must know when to run away
 	if parmor() < 70 then
-		poptask()
 		pushtask(0, "runaway", target)
 
 	-- should try to hurt the target
@@ -80,6 +108,7 @@ function attack ()
 	elseif dir < 10 and dist < 300 then
 		shoot()
 	end
+
 end
 
 -- flies to the player, pointless until hyperspace is implemented

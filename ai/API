@@ -79,6 +79,11 @@ pshield( [number pilot] )
 
 	B O O L E A N
 
+exists( number id )
+	@desc checks to see if pilot id is vald
+	@param id pilot to check
+	@return true if the pilot is valid
+
 ismaxvel()
 	@desc checks if velocity is maximum
 	@return true if velocity is maximum, false otherwise
@@ -96,6 +101,11 @@ isally( number p )
 	@desc checks if p is an ally of the current pilot
 	@param p ID of a pilot to check if he is an ally
 	@return true if p is an ally
+
+incombat( [number id] )
+	@desc queries whether a pilot is in combat
+	@param id pilot to check whether is in combat or not, defaults to self
+	@return if pilot is in combat or not
 
 
 	M O V E M E N T
@@ -130,6 +140,11 @@ getrndplanet()
 
 
 	C O M B A T
+
+combat( [number b] )
+	@desc makes the pilot be set as either in combat or out of combat (for comm and such)
+	@param b if 0 sets the pilot to be in combat, if 1 or ommitted sets it to be in combat
+	@return nil
 
 shoot( [number weapon] )
 	@desc makes the pilot shoot weapons

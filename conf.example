@@ -23,6 +23,7 @@ left = { type = "jaxis", key = 0 }
 right = { type = "jaxis", key = 0 }
 primary = { type = "jbutton", key = 1 }
 target = { type = "jbutton", key = 4 }
+target_nearest = { type = "jbutton", key = 3 }
 mapzoomin = { type = "jbutton", key = 7 }
 mapzoomout = { type = "jbutton", key = 6 }
 

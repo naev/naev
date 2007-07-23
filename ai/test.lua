@@ -30,6 +30,13 @@ end
 -- runs away
 function runaway ()
 	target = gettargetid()
+
+	-- make sure pilot exists
+	if not exists(target) then
+		poptask()
+		return
+	end
+		
 	dir = face( target, 1 )
 	accel()
 end
@@ -37,6 +44,13 @@ end
 -- attacks
 function attack ()
 	target = gettargetid()
+
+	-- make sure pilot exists
+	if not exists(target) then
+		poptask()
+		return
+	end
+
 	dir = face( target )
 	dist = getdist( getpos(target) )
 
