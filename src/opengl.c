@@ -412,7 +412,7 @@ void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos, const int sx,
 	glEnable(GL_TEXTURE_2D);
 
 	glMatrixMode(GL_TEXTURE);
-	glPushMatrix();
+	glPushMatrix(); /* sprite translation matrix */
 		glTranslated( sprite->sw*(double)(sx)/sprite->rw,
 				sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh, 0. );
 
@@ -695,7 +695,8 @@ int gl_init()
 			DEBUG("Available fullscreen modes:");
 			for (i=0;modes[i];++i) {
 				DEBUG("  %d x %d", modes[i]->w, modes[i]->h);
-				if (flags & SDL_FULLSCREEN && modes[i]->w == gl_screen.w && modes[i]->h == gl_screen.h)
+				if ((flags & SDL_FULLSCREEN) && (modes[i]->w == gl_screen.w) &&
+						(modes[i]->h == gl_screen.h))
 					supported = 1;
 			}
 		}

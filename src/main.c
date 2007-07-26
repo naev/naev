@@ -165,7 +165,7 @@ int main ( int argc, char** argv )
 		/* grab the keybindings if there are any */
 		char *str;
 		int type, key, reverse;
-		for (i=0; keybindNames[i]; i++) {
+		for (i=0; strcmp(keybindNames[i],"end"); i++) {
 			lua_getglobal(L, keybindNames[i]);
 			str = NULL;
 			key = -1;

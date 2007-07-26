@@ -30,7 +30,8 @@ typedef struct {
 static Keybind** player_input; /* contains the players keybindings */
 /* name of each keybinding */
 const char *keybindNames[] = { "accel", "left", "right", "primary", "target",
-		"target_nearest", "mapzoomin", "mapzoomout" };
+		"target_nearest", "mapzoomin", "mapzoomout", 
+		"end" }; /* must terminate in "end" */
 
 
 /*
@@ -476,7 +477,7 @@ void input_init (void)
 	player_input = malloc(i*sizeof(Keybind*));
 
 	/* creates a null keybinding for each */
-	for (i=0; keybindNames[i]; i++) {
+	for (i=0; strcmp(keybindNames[i],"end"); i++) {
 		temp = MALLOC_ONE(Keybind);
 		temp->name = (char*)keybindNames[i];
 		temp->type = KEYBIND_NULL;
