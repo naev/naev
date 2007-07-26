@@ -116,14 +116,7 @@ int main ( int argc, char** argv )
 	char* namjoystick = NULL;
 	/* input */
 	input_init();
-	input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, 0 );
-	input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, 0 ); 
-	input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, 0 );
-	input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, 0 );
-	input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, 0 );
-	input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_r, 0 );
-	input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_9, 0 );
-	input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_0, 0 );
+	input_setDefault();
 
 
 	/*
@@ -267,7 +260,7 @@ int main ( int argc, char** argv )
 	 * OpenGL
 	 */
 	if (gl_init()) { /* initializes video output */
-		WARN("Error initializing video output, exiting...");
+		ERR("Initializing video output failed, exiting...");
 		SDL_Quit();
 		exit(EXIT_FAILURE);
 	}
@@ -286,11 +279,17 @@ int main ( int argc, char** argv )
 		if (joystick_init())
 			WARN("Error initializing joystick input");
 		if (namjoystick != NULL) { /* use the joystick name to find a joystick */
-			joystick_use(joystick_get(namjoystick));
+			if (joystick_use(joystick_get(namjoystick))) {
+				WARN("Failure to open any joystick, falling back to default keybinds");
+				input_setDefault();
+			}
 			free(namjoystick);
 		}
 		else if (indjoystick >= 0) /* use a joystick id instead */
-			joystick_use(indjoystick);
+			if (joystick_use(indjoystick)) {
+				WARN("Failure to open any joystick, falling back to default keybinds");
+				input_setDefault();
+			}
 	}
 
 	/*

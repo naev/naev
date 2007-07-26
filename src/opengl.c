@@ -682,7 +682,7 @@ int gl_init()
 	/* get available fullscreen modes */
 	if (gl_screen.fullscreen) {
 		modes = SDL_ListModes( NULL, SDL_OPENGL | SDL_FULLSCREEN );
-		if (modes == NULL) {
+		if (modes == NULL) { /* rare case, but could happen */
 			WARN("No fullscreen modes available");
 			if (flags & SDL_FULLSCREEN) {
 				WARN("Disabling fullscreen mode");
@@ -697,14 +697,14 @@ int gl_init()
 				DEBUG("  %d x %d", modes[i]->w, modes[i]->h);
 				if ((flags & SDL_FULLSCREEN) && (modes[i]->w == gl_screen.w) &&
 						(modes[i]->h == gl_screen.h))
-					supported = 1;
+					supported = 1; /* mode we asked for is supported */
 			}
 		}
 
 		/* makes sure fullscreen mode is supported */
 		if (flags & SDL_FULLSCREEN && !supported) {
-			WARN("Fullscreen mode %d x %d is not supported by your setup, switching to another mode",
-					gl_screen.w, gl_screen.h);
+			WARN("Fullscreen mode %dx%d is not supported by your setup, attempting %dx%d",
+					gl_screen.w, gl_screen.h, modes[0]->w, modes[0]->h);
 			gl_screen.w = modes[0]->w;
 			gl_screen.h = modes[0]->h;
 		}
@@ -726,7 +726,7 @@ int gl_init()
 
 	/* actually creating the screen */
 	if (SDL_SetVideoMode( gl_screen.w, gl_screen.h, gl_screen.depth, flags) == NULL) {
-		WARN("Unable to create OpenGL window: %s", SDL_GetError());
+		ERR("Unable to create OpenGL window: %s", SDL_GetError());
 		SDL_Quit();
 		return -1;
 	}

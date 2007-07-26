@@ -27,6 +27,7 @@ void player_render (void);
  */
 void input_init (void);
 void input_exit (void);
+void input_setDefault (void);
 void input_setKeybind( char *keybind, KeybindType type, int key, int reverse );
 void input_handle( SDL_Event* event );
 

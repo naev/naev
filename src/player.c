@@ -467,13 +467,28 @@ void player_think( Pilot* player )
  *
  */
 /*
+ * sets the default input keys
+ */
+void input_setDefault (void)
+{
+	input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, 0 );
+	input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, 0 );
+	input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, 0 );
+	input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, 0 );
+	input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, 0 );
+	input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_r, 0 );
+	input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_9, 0 );
+	input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_0, 0 );
+}
+
+/*
  * initialization/exit functions (does not assign keys)
  */
 void input_init (void)
 {
 	Keybind *temp;
 	int i;
-	for (i=0; keybindNames[i]; i++); /* gets number of bindings */
+	for (i=0; strcmp(keybindNames[i],"end"); i++); /* gets number of bindings */
 	player_input = malloc(i*sizeof(Keybind*));
 
 	/* creates a null keybinding for each */
@@ -489,7 +504,7 @@ void input_init (void)
 void input_exit (void)
 {
 	int i;
-	for (i=0; keybindNames[i]; i++)
+	for (i=0; strcmp(keybindNames[i],"end"); i++)
 		free(player_input[i]);
 	free(player_input);
 }
@@ -506,13 +521,14 @@ void input_exit (void)
 void input_setKeybind( char *keybind, KeybindType type, int key, int reverse )
 {
 	int i;
-	for (i=0; keybindNames[i]; i++)
+	for (i=0; strcmp(keybindNames[i],"end"); i++)
 		if (strcmp(keybind, player_input[i]->name)==0) {
 			player_input[i]->type = type;
 			player_input[i]->key = key;
 			player_input[i]->reverse = (reverse) ? -1. : 1. ;
 			return;
 		}
+	WARN("Unable to set keybinding '%s', that command doesn't exist", keybind);
 }
 
 
@@ -581,7 +597,7 @@ static void input_keyup( SDLKey key );
 static void input_joyaxis( const unsigned int axis, const int value )
 {
 	int i;
-	for (i=0; keybindNames[i]; i++)
+	for (i=0; strcmp(keybindNames[i],"end"); i++)
 		if (player_input[i]->type == KEYBIND_JAXIS && player_input[i]->key == axis) {
 			input_key(i,-(player_input[i]->reverse)*(double)value/32767.,1);
 			return;
@@ -591,7 +607,7 @@ static void input_joyaxis( const unsigned int axis, const int value )
 static void input_joydown( const unsigned int button )
 {
 	int i;
-	for (i=0; keybindNames[i]; i++)
+	for (i=0; strcmp(keybindNames[i],"end"); i++)
 		if (player_input[i]->type == KEYBIND_JBUTTON && player_input[i]->key == button) {
 			input_key(i,KEY_PRESS,0);
 			return;
@@ -601,7 +617,7 @@ static void input_joydown( const unsigned int button )
 static void input_joyup( const unsigned int button )
 {
 	int i;
-	for (i=0; keybindNames[i]; i++)
+	for (i=0; strcmp(keybindNames[i],"end"); i++)
 		if (player_input[i]->type == KEYBIND_JBUTTON && player_input[i]->key == button) {
 			input_key(i,KEY_RELEASE,0);
 			return;
@@ -616,7 +632,7 @@ static void input_joyup( const unsigned int button )
 static void input_keydown( SDLKey key )
 {
 	int i;
-	for (i=0; keybindNames[i]; i++)
+	for (i=0; strcmp(keybindNames[i],"end"); i++)
 		if (player_input[i]->type == KEYBIND_KEYBOARD && player_input[i]->key == key) {
 			input_key(i,KEY_PRESS,0);
 			return;
@@ -634,7 +650,7 @@ static void input_keydown( SDLKey key )
 static void input_keyup( SDLKey key )
 {
 	int i;
-	for (i=0; keybindNames[i]; i++)
+	for (i=0; strcmp(keybindNames[i],"end"); i++)
 		if (player_input[i]->type == KEYBIND_KEYBOARD && player_input[i]->key == key) {
 			input_key(i,KEY_RELEASE,0);
 			return;
