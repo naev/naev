@@ -4,14 +4,26 @@
 
 #include <malloc.h>
 
+#include "libxml/parser.h"
+
 #include "main.h"
 #include "pilot.h"
 #include "log.h"
 #include "opengl.h"
+#include "pack.h"
+
+
+#define XML_NODE_START	1
+#define XML_NODE_TEXT	3
+
+#define XML_GUI_ID	"GUIs"   /* XML section identifier */
+#define XML_GUI_TAG	"gui"
+
+#define GUI_DATA	"dat/gui.xml"
+#define GUI_GFX	"gfx/gui/"
 
 
 #define POW2(x)	((x)*(x))
-
 
 #define GFX_GUI_FRAME		"gfx/gui/frame.png"
 #define GFX_GUI_TARG_PILOT	"gfx/gui/pilot.png"
@@ -132,8 +144,12 @@ static Mesg* mesg_stack;
 /* external */
 extern void pilot_render( Pilot* pilot ); /* from pilot.c */
 /* internal */
-void gui_renderPilot( Pilot* p );
-void gui_renderBar( Color* c, Vector2d* p, Rect* r, double w );
+static void rect_parse( const xmlNodePtr parent,
+		double *x, double *y, double *w, double *h );
+static int gui_parse( const xmlNodePtr parent, const char *name );
+static void gui_renderPilot( const Pilot* p );
+static void gui_renderBar( const Color* c, const Vector2d* p,
+		const Rect* r, const double w );
 
 
 /*
@@ -146,12 +162,14 @@ void player_message ( const char *fmt, ... )
 
 	if (fmt == NULL) return; /* message not valid */
 
+	/* copy old messages back */
 	for (i=1; i<mesg_max; i++)
 		if (mesg_stack[mesg_max-i-1].str[0] != '\0') {
 			strcpy(mesg_stack[mesg_max-i].str, mesg_stack[mesg_max-i-1].str);
 			mesg_stack[mesg_max-i].t = mesg_stack[mesg_max-i-1].t;
 		}
-	
+
+	/* add the new one */
 	va_start(ap, fmt);
 	vsprintf( mesg_stack[0].str, fmt, ap );
 	va_end(ap);
@@ -296,7 +314,7 @@ void player_render (void)
 /*
  * renders a pilot
  */
-void gui_renderPilot( Pilot* p )
+static void gui_renderPilot( const Pilot* p )
 {
 	int x, y, sx, sy;
 
@@ -332,7 +350,8 @@ void gui_renderPilot( Pilot* p )
 /*
  * renders a bar (health)
  */
-void gui_renderBar( Color* c, Vector2d* p, Rect* r, double w )
+static void gui_renderBar( const Color* c, const Vector2d* p,
+		const Rect* r, const double w )
 {
 	int x, y, sx, sy;
 
@@ -356,75 +375,269 @@ void gui_renderBar( Color* c, Vector2d* p, Rect* r, double w )
  */
 int gui_init (void)
 {
-
 	/*
 	 * font
 	 */
 	gl_fontInit( &gui.smallFont, NULL, 10 );
 
 	/*
-	 * targetting
-	 */
-	gui.gfx_targetPilot = gl_newSprite( GFX_GUI_TARG_PILOT, 2, 2 );
-	gui.gfx_targetPlanet = gl_newSprite( GFX_GUI_TARG_PLANET, 2, 2 );
-
-	/*
-	 * frame
-	 */
-	gui.gfx_frame = gl_newImage( GFX_GUI_FRAME );
-	vect_csetmin( &gui.pos_frame,
-			gl_screen.w - gui.gfx_frame->w,		/* x */
-			gl_screen.h - gui.gfx_frame->h );	/* y */
-	gui_xoff = - gui.gfx_frame->w/2.; /* offset is only horizontal and on right side */
-
-
-	/*
 	 * radar
 	 */
 	gui.radar.res = RADAR_RES_DEFAULT;
-	gui.radar.w = 128.;
-	gui.radar.h = 128.;
-	gui.radar.shape = RADAR_RECT;
-	vect_csetmin( &gui.pos_radar,
-			VX(gui.pos_frame) + 11, 						/* x */
-			VY(gui.pos_frame) + gui.gfx_frame->h - 10 );	/* y */
 
 	/*
-	 * bars
+	 * messages
 	 */
-	gui.shield.w = gui.armor.w = gui.energy.w = 129;
-	gui.shield.h = gui.armor.h = gui.energy.h = 10;
-	vect_csetmin( &gui.pos_shield,
-			VX(gui.pos_frame) + 10,
-			VY(gui.pos_frame) + gui.gfx_frame->h - 201 );
-	vect_csetmin( &gui.pos_armor,
-			VX(gui.pos_frame) + 10,
-			VY(gui.pos_frame) + gui.gfx_frame->h - 218 );
-	vect_csetmin( &gui.pos_energy,
-			VX(gui.pos_frame) + 10,
-			VY(gui.pos_frame) + gui.gfx_frame->h - 236 );
+   vect_csetmin( &gui.pos_mesg, 20, 30 );
+   mesg_stack = calloc(mesg_max, sizeof(Mesg));
+
+	return 0;
+}
+
+
+/*
+ * attempts to load the actual gui
+ */
+int gui_load (const char* name)
+{
+	uint32_t bufsize;
+	char *buf = pack_readfile( DATA, GUI_DATA, &bufsize );
+	char *tmp;
+	int found = 0;
+
+	xmlNodePtr node;
+	xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+
+	node = doc->xmlChildrenNode;
+	if (strcmp((char*)node->name,XML_GUI_ID)) {
+		ERR("Malformed '"GUI_DATA"' file: missing root element '"XML_GUI_ID"'");
+		return -1;
+	}
+
+	node = node->xmlChildrenNode; /* first system node */
+	if (node == NULL) {
+		ERR("Malformed '"GUI_DATA"' file: does not contain elements");
+		return -1;
+	}                                                                                       
+	do {
+		if (node->type == XML_NODE_START &&
+				strcmp((char*)node->name,XML_GUI_TAG)==0) {
+
+			tmp = (char*)xmlGetProp(node,(xmlChar*)"name"); /* mallocs */
+
+			/* is the gui we are looking for? */
+			if (strcmp(tmp,name)==0) {
+				found = 1;
+
+				/* parse the xml node */
+				if (gui_parse(node,name)) WARN("Trouble loading GUI '%s'", name);
+				free(tmp);
+				break;
+			}
+
+			free(tmp);
+		}
+	} while ((node = node->next));
+
+	xmlFreeDoc(doc);
+	free(buf);
+	xmlCleanupParser();
+
+	if (!found) {
+		WARN("GUI '%s' not found in '"GUI_DATA"'",name);
+		return -1;
+	}
+
+	return 0;
+}
+
+
+/*
+ * used to pull out a rect from an xml node (<x><y><w><h>)
+ */
+static void rect_parse( const xmlNodePtr parent,
+		double *x, double *y, double *w, double *h )
+{
+	xmlNodePtr cur;
+	int param;
+
+	param = 0;
+
+	cur = parent->children;
+	do {
+		if (strcmp((char*)cur->name,"x")==0) {
+			if (x!=NULL) {
+				*x = (double)atoi((char*)cur->children->content);
+				param |= (1<<0);
+			}
+			else WARN("Extra parameter 'x' found for GUI node '%s'", parent->name);
+		}
+		else if (strcmp((char*)cur->name,"y")==0) {
+			if (y!=NULL) {
+				*y = (double)atoi((char*)cur->children->content);
+				param |= (1<<1);
+			}
+			else WARN("Extra parameter 'y' found for GUI node '%s'", parent->name);
+		}
+		else if (strcmp((char*)cur->name,"w")==0) {
+			if (w!=NULL) {
+				*w = (double)atoi((char*)cur->children->content);
+				param |= (1<<2);
+			}
+			else WARN("Extra parameter 'w' found for GUI node '%s'", parent->name);
+		}
+		else if (strcmp((char*)cur->name,"h")==0) {
+			if (h!=NULL) {
+				*h = (double)atoi((char*)cur->children->content);
+				param |= (1<<3);
+			}
+			else WARN("Extra parameter 'h' found for GUI node '%s'", parent->name);
+		}
+	} while ((cur = cur->next));
+
+	/* check to see if we got everything we asked for */
+	if (x && !(param & (1<<0)))
+		WARN("Missing parameter 'x' for GUI node '%s'", parent->name);
+	else if (y && !(param & (1<<1))) 
+		WARN("Missing parameter 'y' for GUI node '%s'", parent->name);
+	else if (w && !(param & (1<<2))) 
+		WARN("Missing parameter 'w' for GUI node '%s'", parent->name);
+	else if (h && !(param & (1<<3))) 
+		WARN("Missing parameter 'h' for GUI node '%s'", parent->name);
+}
+
+
+/*
+ * parse a gui node
+ */
+static int gui_parse( const xmlNodePtr parent, const char *name )
+{
+	xmlNodePtr cur, node;
+	double x, y;
+	char *tmp, *tmp2;
+
 
 	/*
-	 * target
+	 * gfx
 	 */
-	vect_csetmin( &gui.pos_target,
-			VX(gui.pos_frame) + 10,
-			VY(gui.pos_frame) + gui.gfx_frame->h - 256 - SHIP_TARGET_H);
-	vect_csetmin( &gui.pos_target_name,
-			VX(gui.pos_target) + 10,
-			VY(gui.pos_target) + SHIP_TARGET_H - 10 - gl_defFont.h);
-	vect_csetmin( &gui.pos_target_faction,
-			VX(gui.pos_target_name),
-			VY(gui.pos_target_name) - gui.smallFont.h - 4);
-	vect_csetmin( &gui.pos_target_health,
-			VX(gui.pos_target) + 10,
-			VY(gui.pos_target) + 10);
+	/* set as a property and not a node because it must be loaded first */
+	tmp2 = (char*)xmlGetProp(parent,(xmlChar*)"gfx");
+	if (tmp2==NULL) {
+		ERR("GUI '%s' has no gfx property",name);
+		return -1;
+	}
+
+	/* load gfx */
+	tmp = malloc( (strlen(tmp2)+strlen(GUI_GFX)+12) * sizeof(char) );
+	/* frame */
+	snprintf( tmp, strlen(tmp2)+strlen(GUI_GFX)+5, GUI_GFX"%s.png", tmp2 );
+	gui.gfx_frame = gl_newImage( tmp );
+	/* pilot */
+	snprintf( tmp, strlen(tmp2)+strlen(GUI_GFX)+11, GUI_GFX"%s_pilot.png", tmp2 );
+	gui.gfx_targetPilot = gl_newSprite( tmp, 2, 2 );
+	/* planet */
+	snprintf( tmp, strlen(tmp2)+strlen(GUI_GFX)+12, GUI_GFX"%s_planet.png", tmp2 );
+	gui.gfx_targetPlanet = gl_newSprite( tmp, 2, 2 );
+	free(tmp);
+	free(tmp2);
 
 	/*
-	 * message system
+	 * frame (based on gfx)
 	 */
-	vect_csetmin( &gui.pos_mesg, 20, 30 );
-	mesg_stack = calloc(mesg_max, sizeof(Mesg));
+	vect_csetmin( &gui.pos_frame,
+			gl_screen.w - gui.gfx_frame->w,     /* x */
+			gl_screen.h - gui.gfx_frame->h );   /* y */
+	/* used for rendering the player, displaces him a bit so he's centered onscreen */
+	gui_xoff = - gui.gfx_frame->w/2.;
+
+
+	/* now actually parse the data */
+	node = parent->children;
+	do { /* load all the data */
+
+		/*
+		 * radar
+		 */
+		if (strcmp((char*)node->name,"radar")==0) {
+
+			tmp = (char*)xmlGetProp(node,(xmlChar*)"type");
+
+			/* make sure type is valid */
+			if (strcmp(tmp,"rectangle")==0) gui.radar.shape = RADAR_RECT;
+			else if (strcmp(tmp,"circle")==0) gui.radar.shape = RADAR_CIRCLE;
+			else {
+				WARN("Radar for GUI '%s' is missing 'type' tag or has invalid 'type' tag",name);
+				gui.radar.shape = RADAR_RECT;
+			}
+
+			free(tmp);
+
+			rect_parse( node, &x, &y, &gui.radar.w, &gui.radar.h );
+			vect_csetmin( &gui.pos_radar,
+					VX(gui.pos_frame) + x,
+					VY(gui.pos_frame) + gui.gfx_frame->h - y );
+		}
+
+		/*
+		 * health bars
+		 */
+		else if (strcmp((char*)node->name,"health")==0) {
+			cur = node->children;
+			do {
+				if (strcmp((char*)cur->name,"shield")==0) {
+					rect_parse( cur, &x, &y, &gui.shield.w, &gui.shield.h );
+					vect_csetmin( &gui.pos_shield,
+						VX(gui.pos_frame) + x,
+						VY(gui.pos_frame) + gui.gfx_frame->h - y );
+				}
+				else if (strcmp((char*)cur->name,"armor")==0) {
+					rect_parse( cur, &x, &y, &gui.armor.w, &gui.armor.h );
+					vect_csetmin( &gui.pos_armor,              
+							VX(gui.pos_frame) + x,                   
+							VY(gui.pos_frame) + gui.gfx_frame->h - y );
+				}
+				else if (strcmp((char*)cur->name,"energy")==0) {
+					rect_parse( cur, &x, &y, &gui.energy.w, &gui.energy.h );
+					vect_csetmin( &gui.pos_energy,              
+							VX(gui.pos_frame) + x,                   
+							VY(gui.pos_frame) + gui.gfx_frame->h - y );
+				}
+			} while ((cur = cur->next));
+		}
+
+		/*
+		 * target
+		 */
+		else if (strcmp((char*)node->name,"target")==0) {
+			cur = node->children;
+			do {
+				if (strcmp((char*)cur->name,"gfx")==0) {
+					rect_parse( cur, &x, &y, NULL, NULL );
+					vect_csetmin( &gui.pos_target,
+							VX(gui.pos_frame) + x,
+							VY(gui.pos_frame) + gui.gfx_frame->h - y - SHIP_TARGET_H );
+				}
+				else if (strcmp((char*)cur->name,"name")==0) {
+					rect_parse( cur, &x, &y, NULL, NULL );
+					vect_csetmin( &gui.pos_target_name,
+							VX(gui.pos_frame) + x,
+							VY(gui.pos_frame) + gui.gfx_frame->h - y - gl_defFont.h);
+				}
+				else if (strcmp((char*)cur->name,"faction")==0) {
+					rect_parse( cur, &x, &y, NULL, NULL );
+					vect_csetmin( &gui.pos_target_faction,
+							VX(gui.pos_frame) + x,
+							VY(gui.pos_frame) + gui.gfx_frame->h - y - gui.smallFont.h );
+				}
+				else if (strcmp((char*)cur->name,"health")==0) {
+					rect_parse( cur, &x, &y, NULL, NULL );
+					vect_csetmin( &gui.pos_target_health,
+							VX(gui.pos_frame) + x,
+							VY(gui.pos_frame) + gui.gfx_frame->h - y - gui.smallFont.h );
+				}
+			} while ((cur = cur->next));
+		}
+	} while ((node = node->next));
 
 	return 0;
 }

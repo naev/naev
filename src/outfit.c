@@ -159,7 +159,7 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
 	temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name"); /* already mallocs */
 	if (temp->name == NULL) WARN("Outfit in "OUTFIT_DATA" has invalid or no name");
 
-	node  = parent->xmlChildrenNode;
+	node = parent->xmlChildrenNode;
 
 	while ((node = node->next)) { /* load all the data */
 		if (strcmp((char*)node->name,"general")==0) {
@@ -222,13 +222,13 @@ int outfit_load (void)
 
 	node = doc->xmlChildrenNode;
 	if (strcmp((char*)node->name,XML_OUTFIT_ID)) {
-		ERR("Malformed "OUTFIT_DATA"file: missing root element '"XML_OUTFIT_ID"'");
+		ERR("Malformed '"OUTFIT_DATA"' file: missing root element '"XML_OUTFIT_ID"'");
 		return -1;
 	}        
 
 	node = node->xmlChildrenNode; /* first system node */
 	if (node == NULL) {
-		ERR("Malformed "OUTFIT_DATA" file: does not contain elements");
+		ERR("Malformed '"OUTFIT_DATA"' file: does not contain elements");
 		return -1;
 	}        
 

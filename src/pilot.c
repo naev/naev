@@ -42,8 +42,9 @@ static int nfleets = 0;
  */
 /* external */
 extern void ai_destroy( Pilot* p ); /* ai.c */
-extern void player_think( Pilot* pilot ); /* player.c */
 extern void ai_think( Pilot* pilot ); /* ai.c */
+extern void player_think( Pilot* pilot ); /* player.c */
+extern int gui_load( const char *name ); /* player.c */
 /* internal */
 static void pilot_update( Pilot* pilot, const double dt );
 void pilot_render( Pilot* pilot ); /* externed in player.c */
@@ -289,6 +290,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction, AI_Prof
 		pilot->render = NULL;
 		pilot_setFlag(pilot,PILOT_PLAYER); /* it is a player! */
 		player = pilot;
+		gui_load( pilot->ship->gui ); /* load the gui */
 	}
 	else {
 		pilot->think = ai_think;

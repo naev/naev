@@ -44,6 +44,9 @@ typedef struct {
 	/* graphics */
 	gl_texture *gfx_space, *gfx_target;
 
+	/* GUI interface */
+	char* gui;
+
 	/* characteristics */
 	int crew;
 	int mass;

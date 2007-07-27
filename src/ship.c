@@ -75,6 +75,8 @@ static Ship* ship_parse( xmlNodePtr parent )
 					SHIP_GFX"%s"SHIP_TARGET SHIP_EXT, (char*)node->children->content);
 			temp->gfx_target = gl_newImage(str);
 		}
+		else if (strcmp((char*)node->name, "GUI")==0)
+			temp->gui = strdup((char*)node->children->content);
 		else if (strcmp((char*)node->name, "class")==0)
 			temp->class = atoi((char*)node->children->content);
 		else if (strcmp((char*)node->name, "movement")==0) {

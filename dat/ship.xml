@@ -2,6 +2,7 @@
 <Ships>
 <ship name="Llama">
 <GFX>llama</GFX>
+<GUI>simple</GUI>
 <class>1</class>
 <movement>
 <thrust>400</thrust>
@@ -28,6 +29,7 @@
 </ship>
 <ship name="Mr. Test">
 <GFX>lancelot</GFX>
+<GUI>simple</GUI>
 <class>1</class>
 <movement>
 <thrust>280</thrust>
