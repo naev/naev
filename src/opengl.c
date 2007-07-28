@@ -406,8 +406,8 @@ void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos,
 		const int sx, const int sy, const glColor* c )
 {
 	/* don't draw if offscreen */
-	if (fabs(VX(*pos)-VX(*gl_camera)) > gl_screen.w/2+sprite->sw/2 ||
-			fabs(VY(*pos)-VY(*gl_camera)) > gl_screen.h/2+sprite->sh/2 )
+	if (fabs(VX(*pos)-VX(*gl_camera)+gui_xoff) > gl_screen.w/2+sprite->sw/2 ||
+			fabs(VY(*pos)-VY(*gl_camera)+gui_yoff) > gl_screen.h/2+sprite->sh/2 )
 		return;
 	
 	glEnable(GL_TEXTURE_2D);
