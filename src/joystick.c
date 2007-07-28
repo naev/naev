@@ -70,7 +70,7 @@ int joystick_init()
 
 	/* figure out how many joysticks there are */
 	numjoysticks = SDL_NumJoysticks();
-	LOG("%d joysticks detected", numjoysticks);
+	LOG("%d joystick%s detected", numjoysticks, (numjoysticks==1)?"":"s" );
 	for ( i=0; i < numjoysticks; i++ )
 		LOG("  %d. %s", i, SDL_JoystickName(i));
 
