@@ -8,10 +8,18 @@
 #include "pilot.h"
 
 
+/*
+ * the player
+ */
 extern Pilot* player;
 
 
+/*
+ * enums
+ */
+typedef enum { RADAR_RECT, RADAR_CIRCLE } RadarShape; /* for rendering fucntions */
 typedef enum { KEYBIND_NULL, KEYBIND_KEYBOARD, KEYBIND_JAXIS, KEYBIND_JBUTTON } KeybindType;
+
 
 
 /*

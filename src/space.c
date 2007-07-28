@@ -11,6 +11,7 @@
 #include "log.h"
 #include "rng.h"
 #include "pack.h"
+#include "player.h"
 
 
 #define XML_NODE_START  1
@@ -67,12 +68,18 @@ extern void player_message ( const char *fmt, ... );
  * draws the planets. used in player.c
  * matrix mode is already displaced to center of the minimap
  */
-#define PIXEL(x,y)		if (ABS(x)<w/2. && ABS(y)<h/2.) glVertex2i((x),(y))
-void planets_minimap( double res, double w, double h )
+#define PIXEL(x,y)      \
+	if ((shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
+			(shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y))<rc)))	\
+	glVertex2i((x),(y))
+void planets_minimap( const double res, const double w, const double h,
+		const RadarShape shape )
 {
 	int i;
-	int cx, cy, x, y, r;
+	int cx, cy, x, y, r, rc;
 	double p;
+
+	if (shape==RADAR_CIRCLE) rc = (int)(w*w);
 
 	glBegin(GL_POINTS);
 	glMatrixMode(GL_PROJECTION);

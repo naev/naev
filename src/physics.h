@@ -4,6 +4,9 @@
 #  define PHYSICS_H
 
 
+#include <math.h>
+
+
 #define VX(v)		((v).x)
 #define VY(v)		((v).y)
 #define VMOD(v)	((v).mod)
@@ -13,6 +16,7 @@
 #define ANGLE(x,y) (((x)==0.) ? 0. : (((x)<0.) ? atan((y)/(x))+M_PI : atan((y)/(x))))
 
 #define vect_dist(v,u)	MOD((v)->x-(u)->x,(v)->y-(u)->y)
+#define vect_odist(v)	MOD((v)->x,(v)->y)
 
 
 /*

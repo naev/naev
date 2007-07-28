@@ -1,5 +1,9 @@
 <GUIs>
 <gui name="simple" gfx="simple">
+<offset>
+<x>-75</x>
+<y>0</y>
+</offset>
 <radar type="rectangle">
 <w>128</w>
 <h>128</h>
@@ -42,6 +46,55 @@
 <health>
 <x>16</x>
 <y>334</y>
+</health>
+</target>
+</gui>
+<gui name="minimal" gfx="minimal">
+<offset>
+<x>-65</x>
+<y>0</y>
+</offset>
+<radar type="circle">
+<w>70</w>
+<x>72</x>
+<y>72</y>
+</radar>
+<health>
+<shield>
+<w>98</w>
+<h>8</h>
+<x>52</x>
+<y>186</y>
+</shield>
+<armor>
+<w>98</w>
+<h>8</h>
+<x>52</x>
+<y>197</y>
+</armor>
+<energy>
+<w>98</w>
+<h>8</h>
+<x>52</x>
+<y>207</y>
+</energy>
+</health>
+<target>
+<gfx>
+<x>34</x>
+<y>273</y>                                                                
+</gfx>
+<name>
+<x>40</x>
+<y>260</y>
+</name>
+<faction>
+<x>40</x>
+<y>273</y>
+</faction>
+<health>
+<x>40</x>
+<y>370</y>
 </health>
 </target>
 </gui>

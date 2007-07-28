@@ -2,7 +2,7 @@
 <Ships>
 <ship name="Llama">
 <GFX>llama</GFX>
-<GUI>simple</GUI>
+<GUI>minimal</GUI>
 <class>1</class>
 <movement>
 <thrust>400</thrust>

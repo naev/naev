@@ -10,6 +10,7 @@
 #include "log.h"
 #include "rng.h"
 #include "pilot.h"
+#include "player.h"
 #include "collision.h"
 
 
@@ -63,23 +64,30 @@ static void weapon_free( Weapon* w );
 /*
  * draws the minimap weapons (used in player.c)
  */
-void weapon_minimap( double res, double w, double h )
+#define PIXEL(x,y)      \
+	if ((shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
+			(shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y))<rc)))   \
+	glVertex2i((x),(y))
+void weapon_minimap( const double res, const double w, const double h,
+		const RadarShape shape )
 {
-	int i;
+	int i, rc;
 	double x, y;
+
+	if (shape==RADAR_CIRCLE) rc = (int)(w*w);
+
 	for (i=0; i<nwbackLayer; i++) {
 		x = (wbackLayer[i]->solid->pos.x - player->solid->pos.x) / res;
 		y = (wbackLayer[i]->solid->pos.y - player->solid->pos.y) / res;
-		if (ABS(x) < w/2. && ABS(y) < h/2.)
-			glVertex2d( x, y );
+		PIXEL(x,y);
 	}
 	for (i=0; i<nwfrontLayer; i++) {
 		x = (wfrontLayer[i]->solid->pos.x - player->solid->pos.x) / res;
 		y = (wfrontLayer[i]->solid->pos.y - player->solid->pos.y) / res;
-		if (ABS(x) < w/2. && ABS(y) < h/2.)
-			glVertex2d( x, y );
+		PIXEL(x,y);
 	}
 }
+#undef PIXEL
 
 
 /*

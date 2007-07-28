@@ -62,12 +62,6 @@ static unsigned int player_target = PLAYER_ID; /* targetted pilot */
 extern Pilot** pilot_stack;
 extern int pilots;
 
-/*
- * weapon stuff for GUI
- */
-extern void weapon_minimap( double res, double w, double h );
-extern void planets_minimap( double res, double w, double h );
-
 
 /*
  * GUI stuff
@@ -90,7 +84,6 @@ Color cRadar_weap		=	{ .r = 0.8, .g = 0.2, .b = 0.2, .a = 1. };
 Color cShield			=	{ .r = 0.2, .g = 0.2, .b = 0.8, .a = 1. };
 Color cArmor			=	{ .r = 0.5, .g = 0.5, .b = 0.5, .a = 1. };
 Color cEnergy			=	{ .r = 0.2, .g = 0.8, .b = 0.2, .a = 1. };
-typedef enum { RADAR_RECT, RADAR_CIRCLE } RadarShape;
 typedef struct {
 	double w,h; /* dimensions */
 	RadarShape shape;
@@ -142,7 +135,11 @@ static Mesg* mesg_stack;
  * prototypes
  */
 /* external */
-extern void pilot_render( Pilot* pilot ); /* from pilot.c */
+extern void pilot_render( const Pilot* pilot ); /* from pilot.c */
+extern void weapon_minimap( const double res, const double w, const double h,
+		const RadarShape shape ); /* from weapon.c */
+extern void planets_minimap( const double res, const double w, const double h,
+		const RadarShape shape ); /* from space.c */
 /* internal */
 static void rect_parse( const xmlNodePtr parent,
 		double *x, double *y, double *w, double *h );
@@ -213,46 +210,36 @@ void player_render (void)
 	/* radar */
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
+	if (gui.radar.shape==RADAR_RECT)
 		glTranslated( VX(gui.pos_radar) - gl_screen.w/2. + gui.radar.w/2.,
 				VY(gui.pos_radar) - gl_screen.h/2. - gui.radar.h/2., 0.);
-
-	switch (gui.radar.shape) {
-		case RADAR_RECT:
-
-			/* planets */
-			COLOR(cFriend);
-			planets_minimap(gui.radar.res, gui.radar.w, gui.radar.h);
-
-			/* weapons */
-			glBegin(GL_POINTS);
-				COLOR(cRadar_weap);
-				weapon_minimap(gui.radar.res, gui.radar.w, gui.radar.h);
-			glEnd(); /* GL_POINTS */
+	else if (gui.radar.shape==RADAR_CIRCLE)
+		glTranslated( VX(gui.pos_radar) - gl_screen.w/2.,
+				VY(gui.pos_radar) - gl_screen.h/2., 0.);
 
 
-			/* render the pilots */
-			for (j=0, i=1; i<pilots; i++) { /* skip the player */
-				if (pilot_stack[i]->id == player_target) j = i;
-				else gui_renderPilot(pilot_stack[i]);
-			}
-			/* render the targetted pilot */
-			if (j!=0) gui_renderPilot(pilot_stack[j]);
-			
 
-			glBegin(GL_POINTS); /* for the player */
-			break;
+	/* planets */
+	COLOR(cFriend);
+	planets_minimap(gui.radar.res, gui.radar.w, gui.radar.h, gui.radar.shape);
 
-		case RADAR_CIRCLE:
-			glBegin(GL_POINTS);
-			for  (i=1; i<pilots; i++) {
-				p = pilot_stack[i];
-				COLOR(cNeutral);
-				glVertex2d( (p->solid->pos.x - player->solid->pos.x) / gui.radar.res,
-						(p->solid->pos.y - player->solid->pos.y) / gui.radar.res );
-			}
-			break;
+	/* weapons */
+	glBegin(GL_POINTS);
+		COLOR(cRadar_weap);
+		weapon_minimap(gui.radar.res, gui.radar.w, gui.radar.h, gui.radar.shape);
+	glEnd(); /* GL_POINTS */
+
+
+	/* render the pilots */
+	for (j=0, i=1; i<pilots; i++) { /* skip the player */
+		if (pilot_stack[i]->id == player_target) j = i;
+		else gui_renderPilot(pilot_stack[i]);
 	}
+	/* render the targetted pilot */
+	if (j!=0) gui_renderPilot(pilot_stack[j]);
 
+
+	glBegin(GL_POINTS); /* for the player */
 		/* player - drawn last*/
 		COLOR(cRadar_player);
 		glVertex2d(  0.,  2. ); /* we represent the player with a small + */
@@ -317,6 +304,7 @@ void player_render (void)
 static void gui_renderPilot( const Pilot* p )
 {
 	int x, y, sx, sy;
+	double w, h;
 
 	x = (p->solid->pos.x - player->solid->pos.x) / gui.radar.res;
 	y = (p->solid->pos.y - player->solid->pos.y) / gui.radar.res;
@@ -325,8 +313,20 @@ static void gui_renderPilot( const Pilot* p )
 	if (sx < 1.) sx = 1.;
 	if (sy < 1.) sy = 1.;
 
-	if ( (ABS(x) > gui.radar.w/2+sx) || (ABS(y) > gui.radar.h/2.+sy) )
+	if ( ((gui.radar.shape==RADAR_RECT) &&
+				((ABS(x) > gui.radar.w/2+sx) || (ABS(y) > gui.radar.h/2.+sy)) ) ||
+			((gui.radar.shape==RADAR_CIRCLE) &&
+				((x*x+y*y) > (int)(gui.radar.w*gui.radar.w))) )
 		return; /* pilot not in range */
+
+	if (gui.radar.shape==RADAR_RECT) {
+		w = gui.radar.w/2.;
+		h = gui.radar.h/2.;
+	}
+	else if (gui.radar.shape==RADAR_CIRCLE) {
+		w = gui.radar.w;
+		h = gui.radar.w;
+	}
 
 	glBegin(GL_QUADS);
 		/* colors */
@@ -335,14 +335,10 @@ static void gui_renderPilot( const Pilot* p )
 		else COLOR(cNeutral);
 
 		/* image */
-		glVertex2d( MAX(x-sx,-gui.radar.w/2.),/* top-left */
-			MIN(y+sy, gui.radar.h/2.) );
-		glVertex2d( MIN(x+sx, gui.radar.w/2.), /* top-right */
-			MIN(y+sy, gui.radar.h/2.) );
-		glVertex2d( MIN(x+sx, gui.radar.w/2.), /* bottom-right */
-			MAX(y-sy,-gui.radar.h/2.) );
-		glVertex2d( MAX(x-sx,-gui.radar.w/2.), /* bottom-left */
-			MAX(y-sy,-gui.radar.h/2.) );
+		glVertex2d( MAX(x-sx,-w), MIN(y+sy, h) ); /* top-left */
+		glVertex2d( MIN(x+sx, w), MIN(y+sy, h) );/* top-right */
+		glVertex2d( MIN(x+sx, w), MAX(y-sy,-h) );/* bottom-right */
+		glVertex2d( MAX(x-sx,-w), MAX(y-sy,-h) );/* bottom-left */
 	glEnd(); /* GL_QUADS */
 }
 
@@ -547,18 +543,25 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 	vect_csetmin( &gui.pos_frame,
 			gl_screen.w - gui.gfx_frame->w,     /* x */
 			gl_screen.h - gui.gfx_frame->h );   /* y */
-	/* used for rendering the player, displaces him a bit so he's centered onscreen */
-	gui_xoff = - gui.gfx_frame->w/2.;
-
 
 	/* now actually parse the data */
 	node = parent->children;
 	do { /* load all the data */
 
 		/*
+		 * offset
+		 */
+		if  (strcmp((char*)node->name,"offset")==0) {
+			rect_parse( node, &x, &y, NULL, NULL );
+			gui_xoff = x;
+			gui_yoff = y;
+		}
+
+
+		/*
 		 * radar
 		 */
-		if (strcmp((char*)node->name,"radar")==0) {
+		else if (strcmp((char*)node->name,"radar")==0) {
 
 			tmp = (char*)xmlGetProp(node,(xmlChar*)"type");
 
@@ -571,8 +574,12 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 			}
 
 			free(tmp);
-
-			rect_parse( node, &x, &y, &gui.radar.w, &gui.radar.h );
+		
+			/* load the appropriate measurements */
+			if (gui.radar.shape == RADAR_RECT)
+				rect_parse( node, &x, &y, &gui.radar.w, &gui.radar.h );
+			else if (gui.radar.shape == RADAR_CIRCLE)
+				rect_parse( node, &x, &y, &gui.radar.w, NULL );
 			vect_csetmin( &gui.pos_radar,
 					VX(gui.pos_frame) + x,
 					VY(gui.pos_frame) + gui.gfx_frame->h - y );
