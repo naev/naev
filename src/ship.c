@@ -4,15 +4,12 @@
 
 #include <string.h>
 
-#include "libxml/parser.h"
+#include "xml.h"
 
 #include "main.h"
 #include "log.h"
 #include "pack.h"
 
-
-#define XML_NODE_START	1
-#define XML_NODE_TEXT	3
 
 #define XML_ID		"Ships"	/* XML section identifier */
 #define XML_SHIP	"ship"
@@ -64,7 +61,7 @@ static Ship* ship_parse( xmlNodePtr parent )
 
 	node = parent->xmlChildrenNode;
 
-	while ((node = node->next)) { /* load all the data */
+	do { /* load all the data */
 		if (strcmp((char*)node->name, "GFX")==0) {
 			snprintf( str, strlen((char*)node->children->content)+
 					sizeof(SHIP_GFX)+sizeof(SHIP_EXT),
@@ -81,18 +78,18 @@ static Ship* ship_parse( xmlNodePtr parent )
 			temp->class = atoi((char*)node->children->content);
 		else if (strcmp((char*)node->name, "movement")==0) {
 			cur = node->children;
-			while ((cur = cur->next)) {
+			do {
 				if (strcmp((char*)cur->name,"thrust")==0)
 					temp->thrust = atoi((char*)cur->children->content);
 				else if (strcmp((char*)cur->name,"turn")==0)
 					temp->turn = atoi((char*)cur->children->content);
 				else if (strcmp((char*)cur->name,"speed")==0)
 					temp->speed = atoi((char*)cur->children->content);
-			}
+			} while ((cur = cur->next));
 		}
 		else if (strcmp((char*)node->name,"health")==0) {
 			cur = node->children;
-			while ((cur = cur->next)) {
+			do {
 				if (strcmp((char*)cur->name,"armor")==0)
 					temp->armor = (double)atoi((char*)cur->children->content);
 				else if (strcmp((char*)cur->name,"shield")==0)
@@ -105,11 +102,11 @@ static Ship* ship_parse( xmlNodePtr parent )
 					temp->shield_regen = (double)(atoi((char*)cur->children->content))/60.0;
 				else if (strcmp((char*)cur->name,"energy_regen")==0)
 					temp->energy_regen = (double)(atoi((char*)cur->children->content))/60.0;
-			}
+			} while ((cur = cur->next));
 		}
 		else if (strcmp((char*)node->name,"caracteristics")==0) {
 			cur = node->children;
-			while ((cur = cur->next)) {
+			do {
 				if (strcmp((char*)cur->name,"crew")==0)
 					temp->crew = atoi((char*)cur->children->content);
 				else if (strcmp((char*)cur->name,"mass")==0)
@@ -118,11 +115,11 @@ static Ship* ship_parse( xmlNodePtr parent )
 					temp->cap_weapon = atoi((char*)cur->children->content);
 				else if (strcmp((char*)cur->name,"cap_cargo")==0)
 					temp->cap_cargo = atoi((char*)cur->children->content);
-			}
+			} while ((cur = cur->next));
 		}
 		else if (strcmp((char*)node->name,"outfits")==0) {
 			cur = node->children;
-			while ((cur = cur->next)) {
+			do {
 				if (strcmp((char*)cur->name,"outfit")==0) {
 					otemp = MALLOC_ONE(ShipOutfit);
 					otemp->data = outfit_get((char*)cur->children->content);
@@ -140,10 +137,9 @@ static Ship* ship_parse( xmlNodePtr parent )
 						ocur->next = otemp;
 					}
 				}
-			}
+			} while ((cur = cur->next));
 		}
-
-	}
+	} while ((node = node->next));
 	temp->thrust *= temp->mass; /* helps keep numbers sane */
 
 	/* ship validator */

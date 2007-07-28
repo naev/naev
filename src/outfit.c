@@ -5,14 +5,12 @@
 #include <math.h>
 #include <string.h>
 
-#include "libxml/parser.h"
+#include "xml.h"
 
 #include "main.h"
 #include "log.h"
 #include "pack.h"
 
-#define XML_NODE_START  1
-#define XML_NODE_TEXT   3
 
 #define XML_OUTFIT_ID		"Outfits"	/* XML section identifier */
 #define XML_OUTFIT_TAG		"outfit"
@@ -110,7 +108,7 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
 
 	char str[PATH_MAX] = "\0";
 
-	while ((node = node->next)) { /* load all the data */
+	do { /* load all the data */
 		if (strcmp((char*)node->name,"speed")==0)
 			temp->speed = (double)atoi((char*)node->children->content);
 		else if (strcmp((char*)node->name,"delay")==0)
@@ -133,7 +131,7 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
 					temp->damage_shield = atof((char*)cur->children->content);
 			}
 		}
-	}
+	} while ((node = node->next));
 
 #define MELEMENT(o,s)      if ((o) == 0) WARN("Outfit '%s' missing '"s"' element", temp->name)
 	MELEMENT(temp->accuracy,"tech");
@@ -161,7 +159,7 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
 
 	node = parent->xmlChildrenNode;
 
-	while ((node = node->next)) { /* load all the data */
+	do { /* load all the data */
 		if (strcmp((char*)node->name,"general")==0) {
 			cur = node->children;
 			while ((cur = cur->next)) {
@@ -191,7 +189,7 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
 					break;
 			}
 		}
-	}
+	} while ((node = node->next));
 
 #define MELEMENT(o,s)      if ((o) == 0) WARN("Outfit '%s' missing '"s"' element", temp->name)
 	if (temp->name == NULL) WARN("Outfit '%s' missing 'name' tag", temp->name);

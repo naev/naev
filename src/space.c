@@ -5,7 +5,7 @@
 #include <malloc.h>
 #include <math.h>
 
-#include "libxml/parser.h"
+#include "xml.h"
 
 #include "main.h"
 #include "log.h"
@@ -13,9 +13,6 @@
 #include "pack.h"
 #include "player.h"
 
-
-#define XML_NODE_START  1
-#define XML_NODE_TEXT   3
 
 #define XML_PLANET_ID	"Planets"
 #define XML_PLANET_TAG	"planet"
@@ -293,7 +290,7 @@ static Planet* planet_get( const char* name )
 
 				node = node->xmlChildrenNode;
 
-				while ((node = node->next)) {
+				do {
 					if (strcmp((char*)node->name,"GFX")==0) {
 						cur = node->children;
 						if (strcmp((char*)cur->name,"text")==0) {
@@ -304,7 +301,7 @@ static Planet* planet_get( const char* name )
 					}
 					else if (strcmp((char*)node->name,"pos")==0) {
 						cur = node->children;
-						while((cur = cur->next)) {
+						do {
 							if (strcmp((char*)cur->name,"x")==0) {
 								flags |= FLAG_XSET;
 								temp->pos.x = atof((char*)cur->children->content);
@@ -313,19 +310,19 @@ static Planet* planet_get( const char* name )
 								flags |= FLAG_YSET;
 								temp->pos.y = atof((char*)cur->children->content);
 							}
-						}
+						} while((cur = cur->next));
 					}
 					else if (strcmp((char*)node->name,"general")==0) {
 						cur = node->children;
-						while((cur = cur->next)) {
+						do {
 							if (strcmp((char*)cur->name,"class")==0)
 								temp->class =
 									planetclass_get(cur->children->content[0]);
 							else if (strcmp((char*)cur->name,"faction")==0)
 								temp->faction = faction_get( (char*)cur->children->content);
-						}
+						} while((cur = cur->next));
 					}
-				}
+				} while ((node = node->next));
 				break;
 			}
 			else free(tstr); /* xmlGetProp mallocs the string */
@@ -369,10 +366,10 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 
 	node  = parent->xmlChildrenNode;
 
-	while ((node = node->next)) { /* load all the data */
+	do { /* load all the data */
 		if (strcmp((char*)node->name,"pos")==0) {
 			cur = node->children;
-			while((cur = cur->next)) {
+			do {
 				if (strcmp((char*)cur->name,"x")==0) {
 					flags |= FLAG_XSET;
 					temp->pos.x = atof((char*)cur->children->content);
@@ -381,11 +378,11 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 					flags |= FLAG_YSET;
 					temp->pos.y = atof((char*)cur->children->content);
 				}
-			}
+			} while ((cur = cur->next));
 		}
 		else if (strcmp((char*)node->name,"general")==0) {
 			cur = node->children;
-			while ((cur = cur->next)) {
+			do {
 				if (strcmp((char*)cur->name,"stars")==0) /* non-zero */
 					temp->stars = atoi((char*)cur->children->content);
 				else if (strcmp((char*)cur->name,"asteroids")==0) {
@@ -396,24 +393,24 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 					flags |= FLAG_INTERFERENCESET;
 					temp->interference = atof((char*)cur->children->content)/100.;
 				}
-			}
+			} while ((cur = cur->next));
 		}
 		/* loads all the planets */
 		else if (strcmp((char*)node->name,"planets")==0) {
 			cur = node->children;
-			while ((cur = cur->next)) {
+			do {
 				if (strcmp((char*)cur->name,"planet")==0) {
 					planet = planet_get((const char*)cur->children->content);
 					temp->planets = realloc(temp->planets, sizeof(Planet)*(++temp->nplanets));
 					memcpy(temp->planets+(temp->nplanets-1), planet, sizeof(Planet));
 					free(planet);
 				}
-			}
+			} while ((cur = cur->next));
 		}
 		/* loads all the fleets */
 		else if (strcmp((char*)node->name,"fleets")==0) {
 			cur = node->children;
-			while ((cur = cur->next)) {
+			do {
 				if (strcmp((char*)cur->name,"fleet")==0) {
 					fleet = CALLOC_ONE(SystemFleet);
 
@@ -433,9 +430,9 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 					memcpy(temp->fleets+(temp->nfleets-1), fleet, sizeof(SystemFleet));
 					free(fleet);
 				}
-			}
+			} while ((cur = cur->next));
 		}
-	}
+	} while ((node = node->next));
 
 #define MELEMENT(o,s)      if ((o) == 0) WARN("Star System '%s' missing '"s"' element", temp->name)
 	if (temp->name == NULL) WARN("Star System '%s' missing 'name' tag", temp->name);

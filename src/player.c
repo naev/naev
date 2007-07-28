@@ -4,7 +4,7 @@
 
 #include <malloc.h>
 
-#include "libxml/parser.h"
+#include "xml.h"
 
 #include "main.h"
 #include "pilot.h"
@@ -404,7 +404,7 @@ int gui_load (const char* name)
 	xmlDocPtr doc = xmlParseMemory( buf, bufsize );
 
 	node = doc->xmlChildrenNode;
-	if (strcmp((char*)node->name,XML_GUI_ID)) {
+	if (!xml_isNode(node,XML_GUI_ID)) {
 		ERR("Malformed '"GUI_DATA"' file: missing root element '"XML_GUI_ID"'");
 		return -1;
 	}
@@ -415,10 +415,9 @@ int gui_load (const char* name)
 		return -1;
 	}                                                                                       
 	do {
-		if (node->type == XML_NODE_START &&
-				strcmp((char*)node->name,XML_GUI_TAG)==0) {
+		if (xml_isNode(node, XML_GUI_TAG)) {
 
-			tmp = (char*)xmlGetProp(node,(xmlChar*)"name"); /* mallocs */
+			tmp = xml_nodeProp(node,"name"); /* mallocs */
 
 			/* is the gui we are looking for? */
 			if (strcmp(tmp,name)==0) {
@@ -460,28 +459,28 @@ static void rect_parse( const xmlNodePtr parent,
 
 	cur = parent->children;
 	do {
-		if (strcmp((char*)cur->name,"x")==0) {
+		if (xml_isNode(cur,"x")) {
 			if (x!=NULL) {
 				*x = (double)atoi((char*)cur->children->content);
 				param |= (1<<0);
 			}
 			else WARN("Extra parameter 'x' found for GUI node '%s'", parent->name);
 		}
-		else if (strcmp((char*)cur->name,"y")==0) {
+		else if (xml_isNode(cur,"y")) {
 			if (y!=NULL) {
 				*y = (double)atoi((char*)cur->children->content);
 				param |= (1<<1);
 			}
 			else WARN("Extra parameter 'y' found for GUI node '%s'", parent->name);
 		}
-		else if (strcmp((char*)cur->name,"w")==0) {
+		else if (xml_isNode(cur,"w")) {
 			if (w!=NULL) {
 				*w = (double)atoi((char*)cur->children->content);
 				param |= (1<<2);
 			}
 			else WARN("Extra parameter 'w' found for GUI node '%s'", parent->name);
 		}
-		else if (strcmp((char*)cur->name,"h")==0) {
+		else if (xml_isNode(cur,"h")) {
 			if (h!=NULL) {
 				*h = (double)atoi((char*)cur->children->content);
 				param |= (1<<3);
@@ -516,7 +515,7 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 	 * gfx
 	 */
 	/* set as a property and not a node because it must be loaded first */
-	tmp2 = (char*)xmlGetProp(parent,(xmlChar*)"gfx");
+	tmp2 = xml_nodeProp(parent,"gfx");
 	if (tmp2==NULL) {
 		ERR("GUI '%s' has no gfx property",name);
 		return -1;
@@ -550,7 +549,7 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 		/*
 		 * offset
 		 */
-		if  (strcmp((char*)node->name,"offset")==0) {
+		if (xml_isNode(node,"offset")) {
 			rect_parse( node, &x, &y, NULL, NULL );
 			gui_xoff = x;
 			gui_yoff = y;
@@ -560,9 +559,9 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 		/*
 		 * radar
 		 */
-		else if (strcmp((char*)node->name,"radar")==0) {
+		else if (xml_isNode(node,"radar")) {
 
-			tmp = (char*)xmlGetProp(node,(xmlChar*)"type");
+			tmp = xml_nodeProp(node,"type");
 
 			/* make sure type is valid */
 			if (strcmp(tmp,"rectangle")==0) gui.radar.shape = RADAR_RECT;
@@ -587,22 +586,22 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 		/*
 		 * health bars
 		 */
-		else if (strcmp((char*)node->name,"health")==0) {
+		else if (xml_isNode(node,"health")) {
 			cur = node->children;
 			do {
-				if (strcmp((char*)cur->name,"shield")==0) {
+				if (xml_isNode(cur,"shield")) {
 					rect_parse( cur, &x, &y, &gui.shield.w, &gui.shield.h );
 					vect_csetmin( &gui.pos_shield,
 						VX(gui.pos_frame) + x,
 						VY(gui.pos_frame) + gui.gfx_frame->h - y );
 				}
-				else if (strcmp((char*)cur->name,"armor")==0) {
+				if (xml_isNode(cur,"armor")) {
 					rect_parse( cur, &x, &y, &gui.armor.w, &gui.armor.h );
 					vect_csetmin( &gui.pos_armor,              
 							VX(gui.pos_frame) + x,                   
 							VY(gui.pos_frame) + gui.gfx_frame->h - y );
 				}
-				else if (strcmp((char*)cur->name,"energy")==0) {
+				if (xml_isNode(cur,"energy")) {
 					rect_parse( cur, &x, &y, &gui.energy.w, &gui.energy.h );
 					vect_csetmin( &gui.pos_energy,              
 							VX(gui.pos_frame) + x,                   
@@ -614,28 +613,28 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 		/*
 		 * target
 		 */
-		else if (strcmp((char*)node->name,"target")==0) {
+		else if (xml_isNode(node,"target")) {
 			cur = node->children;
 			do {
-				if (strcmp((char*)cur->name,"gfx")==0) {
+				if (xml_isNode(cur,"gfx")) {
 					rect_parse( cur, &x, &y, NULL, NULL );
 					vect_csetmin( &gui.pos_target,
 							VX(gui.pos_frame) + x,
 							VY(gui.pos_frame) + gui.gfx_frame->h - y - SHIP_TARGET_H );
 				}
-				else if (strcmp((char*)cur->name,"name")==0) {
+				else if (xml_isNode(cur,"name")) {
 					rect_parse( cur, &x, &y, NULL, NULL );
 					vect_csetmin( &gui.pos_target_name,
 							VX(gui.pos_frame) + x,
 							VY(gui.pos_frame) + gui.gfx_frame->h - y - gl_defFont.h);
 				}
-				else if (strcmp((char*)cur->name,"faction")==0) {
+				else if (xml_isNode(cur,"faction")) {
 					rect_parse( cur, &x, &y, NULL, NULL );
 					vect_csetmin( &gui.pos_target_faction,
 							VX(gui.pos_frame) + x,
 							VY(gui.pos_frame) + gui.gfx_frame->h - y - gui.smallFont.h );
 				}
-				else if (strcmp((char*)cur->name,"health")==0) {
+				else if (xml_isNode(cur,"health")) {
 					rect_parse( cur, &x, &y, NULL, NULL );
 					vect_csetmin( &gui.pos_target_health,
 							VX(gui.pos_frame) + x,

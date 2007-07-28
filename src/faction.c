@@ -5,14 +5,12 @@
 #include <malloc.h>
 #include <string.h>
 
-#include "libxml/parser.h"
+#include "xml.h"
 
 #include "main.h"
 #include "log.h"
 #include "pack.h"
 
-#define XML_NODE_START	1
-#define XML_NODE_TEXT	3
 
 #define XML_FACTION_ID		"Factions"   /* XML section identifier */
 #define XML_FACTION_TAG		"faction"

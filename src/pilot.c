@@ -6,16 +6,13 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "libxml/parser.h"
+#include "xml.h"
 
 #include "main.h"
 #include "log.h"
 #include "weapon.h"
 #include "pack.h"
 
-
-#define XML_NODE_START  1
-#define XML_NODE_TEXT   3
 
 #define XML_ID				"Fleets"  /* XML section identifier */
 #define XML_FLEET			"fleet"
@@ -420,14 +417,14 @@ static Fleet* fleet_parse( const xmlNodePtr parent )
 	temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name"); /* already mallocs */
 	if (temp->name == NULL) WARN("Fleet in "FLEET_DATA" has invalid or no name");
 
-	while ((node = node->next)) { /* load all the data */
+	do { /* load all the data */
 		if (strcmp((char*)node->name,"faction")==0)
 			temp->faction = faction_get((char*)node->children->content);
 		else if (strcmp((char*)node->name,"ai")==0)
 			temp->ai = ai_getProfile((char*)node->children->content);
 		else if (strcmp((char*)node->name,"pilots")==0) {
 			cur = node->children;     
-			while ((cur = cur->next)) {
+			do {
 				if (strcmp((char*)cur->name,"pilot")==0) {
 					temp->npilots++; /* pilot count */
 					pilot = MALLOC_ONE(FleetPilot);
@@ -452,9 +449,9 @@ static Fleet* fleet_parse( const xmlNodePtr parent )
 					memcpy(temp->pilots+(temp->npilots-1), pilot, sizeof(FleetPilot));
 					free(pilot);
 				}
-			}
+			} while ((cur = cur->next));
 		}
-	}
+	} while ((node = node->next));
 
 #define MELEMENT(o,s)      if ((o) == NULL) WARN("Fleet '%s' missing '"s"' element", temp->name)
 	MELEMENT(temp->ai,"ai");
