@@ -39,6 +39,15 @@ extern gl_info gl_screen; /* local structure set with gl_init and co */
 
 
 /*
+ * Colors
+ */
+typedef struct {
+	double r, g, b, a;
+} glColor;
+#define COLOR(x)     glColor4d((x).r,(x).g,(x).b,(x).a)
+
+
+/*
  * Spritesheet info
  */
 typedef struct {
@@ -82,10 +91,12 @@ void gl_freeTexture( gl_texture* texture );
 /*
  * opengl drawing
  */
-void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos, const int sx, const int sy );
-void gl_blitStatic( const gl_texture* texture, const Vector2d* pos );
+void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos,
+		const int sx, const int sy, const glColor *c );
+void gl_blitStatic( const gl_texture* texture, const Vector2d* pos, const glColor *c );
 void gl_bindCamera( const Vector2d* pos );
-void gl_print( const gl_font *ft_font, const Vector2d *pos, const char *fmt, ...);
+void gl_print( const gl_font *ft_font, const Vector2d *pos,
+		const glColor *c, const char *fmt, ... );
 
 /*
  * initialization / cleanup

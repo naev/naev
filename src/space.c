@@ -533,7 +533,8 @@ void planets_render (void)
 {
 	int i;
 	for (i=0; i < cur_system->nplanets; i++)
-		gl_blitSprite( cur_system->planets[i].gfx_space, &cur_system->planets[i].pos, 0, 0 );
+		gl_blitSprite( cur_system->planets[i].gfx_space, &cur_system->planets[i].pos,
+				0, 0, NULL );
 }
 
 

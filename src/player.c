@@ -66,24 +66,19 @@ extern int pilots;
 /*
  * GUI stuff
  */
-/*  colors */
-typedef struct {
-	double r, g, b, a;
-} Color;
-#define COLOR(x)		glColor4d((x).r,(x).g,(x).b,(x).a)
 /* standard colors */
-Color cInert			=	{ .r = 0.6, .g = 0.6, .b = 0.6, .a = 1. };
-Color cNeutral			=	{ .r = 0.9, .g = 1.0, .b = 0.3, .a = 1. };
-Color cFriend			=	{ .r = 0.0, .g = 1.0, .b = 0.0, .a = 1. };
-Color cHostile			=	{ .r = 0.9, .g = 0.2, .b = 0.2, .a = 1. };
+glColor cInert				=	{ .r = 0.6, .g = 0.6, .b = 0.6, .a = 1. };
+glColor cNeutral			=	{ .r = 0.9, .g = 1.0, .b = 0.3, .a = 1. };
+glColor cFriend			=	{ .r = 0.0, .g = 1.0, .b = 0.0, .a = 1. };
+glColor cHostile			=	{ .r = 0.9, .g = 0.2, .b = 0.2, .a = 1. };
 
-Color cRadar_player  =  { .r = 0.4, .g = 0.8, .b = 0.4, .a = 1. };
-Color cRadar_targ		=	{ .r = 0.0,	.g = 0.7, .b = 1.0, .a = 1. };
-Color cRadar_weap		=	{ .r = 0.8, .g = 0.2, .b = 0.2, .a = 1. };
+glColor cRadar_player	=  { .r = 0.4, .g = 0.8, .b = 0.4, .a = 1. };
+glColor cRadar_targ		=	{ .r = 0.0,	.g = 0.7, .b = 1.0, .a = 1. };
+glColor cRadar_weap		=	{ .r = 0.8, .g = 0.2, .b = 0.2, .a = 1. };
 
-Color cShield			=	{ .r = 0.2, .g = 0.2, .b = 0.8, .a = 1. };
-Color cArmor			=	{ .r = 0.5, .g = 0.5, .b = 0.5, .a = 1. };
-Color cEnergy			=	{ .r = 0.2, .g = 0.8, .b = 0.2, .a = 1. };
+glColor cShield			=	{ .r = 0.2, .g = 0.2, .b = 0.8, .a = 1. };
+glColor cArmor				=	{ .r = 0.5, .g = 0.5, .b = 0.5, .a = 1. };
+glColor cEnergy			=	{ .r = 0.2, .g = 0.8, .b = 0.2, .a = 1. };
 typedef struct {
 	double w,h; /* dimensions */
 	RadarShape shape;
@@ -145,7 +140,7 @@ static void rect_parse( const xmlNodePtr parent,
 		double *x, double *y, double *w, double *h );
 static int gui_parse( const xmlNodePtr parent, const char *name );
 static void gui_renderPilot( const Pilot* p );
-static void gui_renderBar( const Color* c, const Vector2d* p,
+static void gui_renderBar( const glColor* c, const Vector2d* p,
 		const Rect* r, const double w );
 
 
@@ -182,20 +177,24 @@ void player_render (void)
 	int i, j;
 	Pilot* p;
 	Vector2d v;
+	glColor* c;
 
 	/* renders the player target graphics */
 	if (player_target != PLAYER_ID) {
 		p = pilot_get(player_target);
 
+		if (pilot_isFlag(p,PILOT_HOSTILE)) c = &cHostile;
+		else c = &cNeutral;
+
 		vect_csetmin( &v, VX(p->solid->pos) - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.,
 				VY(p->solid->pos) + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2. );
-		gl_blitSprite( gui.gfx_targetPilot, &v, 0, 0 ); /* top left */
+		gl_blitSprite( gui.gfx_targetPilot, &v, 0, 0, c ); /* top left */
 		VX(v) += p->ship->gfx_space->sw * PILOT_SIZE_APROX;
-		gl_blitSprite( gui.gfx_targetPilot, &v, 1, 0 ); /* top right */
+		gl_blitSprite( gui.gfx_targetPilot, &v, 1, 0, c ); /* top right */
 		VY(v) -= p->ship->gfx_space->sh * PILOT_SIZE_APROX;
-		gl_blitSprite( gui.gfx_targetPilot, &v, 1, 1 ); /* bottom right */
+		gl_blitSprite( gui.gfx_targetPilot, &v, 1, 1, c ); /* bottom right */
 		VX(v) -= p->ship->gfx_space->sw * PILOT_SIZE_APROX;
-		gl_blitSprite( gui.gfx_targetPilot, &v, 0, 1 ); /* bottom left */
+		gl_blitSprite( gui.gfx_targetPilot, &v, 0, 1, c ); /* bottom left */
 	}
 
 	/* render the player */
@@ -205,7 +204,7 @@ void player_render (void)
 	 *    G U I
 	 */
 	/* frame */
-	gl_blitStatic( gui.gfx_frame, &gui.pos_frame );
+	gl_blitStatic( gui.gfx_frame, &gui.pos_frame, NULL );
 
 	/* radar */
 	glMatrixMode(GL_PROJECTION);
@@ -268,21 +267,21 @@ void player_render (void)
 	if (player_target != PLAYER_ID) {
 		p = pilot_get(player_target);
 
-		gl_blitStatic( p->ship->gfx_target, &gui.pos_target );
+		gl_blitStatic( p->ship->gfx_target, &gui.pos_target, NULL );
 
 		/* target name */
-		gl_print( NULL, &gui.pos_target_name, "%s", p->name );
-		gl_print( &gui.smallFont, &gui.pos_target_faction, "%s", p->faction->name );
+		gl_print( NULL, &gui.pos_target_name, NULL, "%s", p->name );
+		gl_print( &gui.smallFont, &gui.pos_target_faction, NULL, "%s", p->faction->name );
 
 		/* target status */
 		if (p->armor < p->armor_max*PILOT_DISABLED) /* pilot is disabled */
-			gl_print( &gui.smallFont, &gui.pos_target_health, "Disabled" );
+			gl_print( &gui.smallFont, &gui.pos_target_health, NULL, "Disabled" );
 		else if (p->shield > p->shield_max/100.) /* on shields */
-			gl_print( &gui.smallFont, &gui.pos_target_health, "%s: %.0f%%",
-				"Shield", p->shield/p->shield_max*100. );
+			gl_print( &gui.smallFont, &gui.pos_target_health, NULL,
+					"%s: %.0f%%", "Shield", p->shield/p->shield_max*100. );
 		else /* on armour */
-			gl_print( &gui.smallFont, &gui.pos_target_health, "%s: %.0f%%",
-				"Armour", p->armor/p->armor_max*100. );
+			gl_print( &gui.smallFont, &gui.pos_target_health, NULL, 
+					"%s: %.0f%%", "Armour", p->armor/p->armor_max*100. );
 	}
 
 	/* messages */
@@ -293,7 +292,7 @@ void player_render (void)
 		if (mesg_stack[mesg_max-i-1].str[0]!='\0') {
 			if (mesg_stack[mesg_max-i-1].t < SDL_GetTicks())
 				mesg_stack[mesg_max-i-1].str[0] = '\0';
-			else gl_print( NULL, &v, "%s", mesg_stack[mesg_max-i-1].str );
+			else gl_print( NULL, &v, NULL, "%s", mesg_stack[mesg_max-i-1].str );
 		}
 	}
 }
@@ -346,7 +345,7 @@ static void gui_renderPilot( const Pilot* p )
 /*
  * renders a bar (health)
  */
-static void gui_renderBar( const Color* c, const Vector2d* p,
+static void gui_renderBar( const glColor* c, const Vector2d* p,
 		const Rect* r, const double w )
 {
 	int x, y, sx, sy;

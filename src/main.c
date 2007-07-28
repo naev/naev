@@ -396,7 +396,6 @@ static void update_all(void)
 	if (dt > MINIMUM_FPS) { /* TODO needs work */
 		Vector2d pos;
 		vect_csetmin(&pos, 10., (double)(gl_screen.h-40));
-		gl_print( NULL, &pos, "FPS very low, skipping frames" );
 		SDL_GL_SwapBuffers();
 		return;
 	}
@@ -440,7 +439,7 @@ static void display_fps( const double dt )
 	Vector2d pos;
 	vect_csetmin(&pos, 10., (double)(gl_screen.h-20));
 	if (show_fps)
-		gl_print( NULL, &pos, "%3.2f", fps );
+		gl_print( NULL, &pos, NULL, "%3.2f", fps );
 }
 
 

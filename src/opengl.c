@@ -402,7 +402,8 @@ void gl_getSpriteFromDir( int* x, int* y, const gl_texture* t, const double dir 
 /*
  * blits a sprite at pos
  */
-void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos, const int sx, const int sy )
+void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos,
+		const int sx, const int sy, const glColor* c )
 {
 	/* don't draw if offscreen */
 	if (fabs(VX(*pos)-VX(*gl_camera)) > gl_screen.w/2+sprite->sw/2 ||
@@ -420,12 +421,13 @@ void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos, const int sx,
 	glPushMatrix(); /* projection translation matrix */
 		glTranslated( VX(*pos) - VX(*gl_camera) - sprite->sw/2. + gui_xoff,
 				VY(*pos) - VY(*gl_camera) - sprite->sh/2. + gui_yoff, 0.);
-		glScaled( (double)gl_screen.w/SCREEN_W, (double)gl_screen.h/SCREEN_H, 0. );
+		/*glScaled( (double)gl_screen.w/SCREEN_W, (double)gl_screen.h/SCREEN_H, 0. );*/
 
 	/* actual blitting */
 	glBindTexture( GL_TEXTURE_2D, sprite->texture);
 	glBegin(GL_TRIANGLE_STRIP);
-		glColor4d( 1., 1., 1., 1. );
+		if (c==NULL) glColor4d( 1., 1., 1., 1. );
+		else COLOR(*c);
 		glTexCoord2d( 0., 0.);
 			glVertex2d( 0., 0. );
 		glTexCoord2d( sprite->sw/sprite->rw, 0.);
@@ -448,7 +450,7 @@ void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos, const int sx,
 /*
  * straight out blits a texture at position
  */
-void gl_blitStatic( const gl_texture* texture, const Vector2d* pos )
+void gl_blitStatic( const gl_texture* texture, const Vector2d* pos, const glColor* c )
 {
 	glEnable(GL_TEXTURE_2D);
 
@@ -456,12 +458,13 @@ void gl_blitStatic( const gl_texture* texture, const Vector2d* pos )
 	glPushMatrix(); /* projection translation matrix */
 		glTranslated( VX(*pos) - (double)gl_screen.w/2.,
 				VY(*pos) - (double)gl_screen.h/2.,0.);
-		glScaled( (double)gl_screen.w/SCREEN_W, (double)gl_screen.h/SCREEN_H, 0. );
+		/*glScaled( (double)gl_screen.w/SCREEN_W, (double)gl_screen.h/SCREEN_H, 0. );*/
 
 	/* actual blitting */
 	glBindTexture( GL_TEXTURE_2D, texture->texture);
 	glBegin(GL_TRIANGLE_STRIP);
-		glColor4d( 1., 1., 1., 1. );
+		if (c==NULL) glColor4d( 1., 1., 1., 1. );
+		else COLOR(*c);
 		glTexCoord2d( 0., 0.);
 			glVertex2d( 0., 0. );
 		glTexCoord2d( texture->sw/texture->rw, 0.);
@@ -491,7 +494,8 @@ void gl_bindCamera( const Vector2d* pos )
  *
  * defaults ft_font to gl_defFont if NULL
  */
-void gl_print( const gl_font *ft_font, const Vector2d *pos, const char *fmt, ...)
+void gl_print( const gl_font *ft_font, const Vector2d *pos,
+		const glColor* c, const char *fmt, ...)
 {
 	/*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
 	char text[256]; /* holds the string */
@@ -512,9 +516,10 @@ void gl_print( const gl_font *ft_font, const Vector2d *pos, const char *fmt, ...
 
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix(); /* translation matrix */
-		glTranslated( VX(*pos) - (double)gl_screen.w/2., VY(*pos) - (double)gl_screen.h/2., 0);
+		glTranslated( VX(*pos)-(double)gl_screen.w/2., VY(*pos)-(double)gl_screen.h/2., 0);
 
-	glColor4d( 1., 1., 1., 1. );
+	if (c==NULL) glColor4d( 1., 1., 1., 1. );
+	else COLOR(*c);
 	glCallLists(strlen(text), GL_UNSIGNED_BYTE, &text);
 
 	glPopMatrix(); /* translation matrx */

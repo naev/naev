@@ -196,7 +196,7 @@ void pilot_render( Pilot* p )
 	/* get the sprite corresponding to the direction facing */
 	gl_getSpriteFromDir( &sx, &sy, p->ship->gfx_space, p->solid->dir );
 
-	gl_blitSprite( p->ship->gfx_space, &p->solid->pos, sx, sy );
+	gl_blitSprite( p->ship->gfx_space, &p->solid->pos, sx, sy, NULL );
 }
 
 
