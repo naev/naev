@@ -50,7 +50,8 @@ static int pot( int n );
 /* gl_texture */
 static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh );
 /* gl_font */
-static void gl_fontMakeDList( FT_Face face, char ch, GLuint list_base, GLuint *tex_base );
+static void gl_fontMakeDList( FT_Face face, char ch,
+		GLuint list_base, GLuint *tex_base, int *width_base );
 
 
 
@@ -495,7 +496,7 @@ void gl_bindCamera( const Vector2d* pos )
  * defaults ft_font to gl_defFont if NULL
  */
 void gl_print( const gl_font *ft_font, const Vector2d *pos,
-		const glColor* c, const char *fmt, ...)
+		const glColor* c, const char *fmt, ... )
 {
 	/*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
 	char text[256]; /* holds the string */
@@ -527,6 +528,30 @@ void gl_print( const gl_font *ft_font, const Vector2d *pos,
 	glDisable(GL_TEXTURE_2D);
 }
 
+/*
+ * gets the width of the text about to be printed
+ */
+int gl_printWidth( const gl_font *ft_font, const char *fmt, ... )
+{
+	int i, n;
+	char text[256]; /* holds the string */
+	va_list ap;
+
+	if (ft_font == NULL) ft_font = &gl_defFont;
+
+	if (fmt == NULL) return 0;
+	else { /* convert the symbols to text */
+		va_start(ap, fmt);
+		vsprintf(text, fmt, ap);
+		va_end(ap);
+	}
+
+	for (n=0,i=0; i<(int)strlen(text); i++)
+		n += ft_font->w[ (int)text[i] ];
+
+	return n;
+}
+
 
 /*
  *
@@ -537,7 +562,8 @@ void gl_print( const gl_font *ft_font, const Vector2d *pos,
  * basically taken from NeHe lesson 43
  * http://nehe.gamedev.net/data/lessons/lesson.asp?lesson=43
  */
-static void gl_fontMakeDList( FT_Face face, char ch, GLuint list_base, GLuint *tex_base )
+static void gl_fontMakeDList( FT_Face face, char ch,
+		GLuint list_base, GLuint *tex_base, int* width_base )
 {
 	FT_Glyph glyph;
 	FT_Bitmap bitmap;
@@ -594,6 +620,9 @@ static void gl_fontMakeDList( FT_Face face, char ch, GLuint list_base, GLuint *t
 	double x = (double)bitmap.width/(double)w;
 	double y = (double)bitmap.rows/(double)h;
 
+	/* give the width a value */
+	width_base[(int)ch] = bitmap.width;
+
 	/* draw the texture mapped QUAD */
 	glBindTexture(GL_TEXTURE_2D,tex_base[(int)ch]);
 	glBegin( GL_TRIANGLE_STRIP );
@@ -615,15 +644,21 @@ static void gl_fontMakeDList( FT_Face face, char ch, GLuint list_base, GLuint *t
 
 	FT_Done_Glyph(glyph);
 }
-void gl_fontInit( gl_font* font, const char *fname, unsigned int h )
+void gl_fontInit( gl_font* font, const char *fname, const unsigned int h )
 {
 	if (font == NULL) font = &gl_defFont;
 
 	uint32_t bufsize;
 	FT_Byte* buf = pack_readfile( DATA, (fname) ? fname : FONT_DEF, &bufsize );
 
+	/* allocage */
 	font->textures = malloc(sizeof(GLuint)*128);
-	font->h = h;
+	font->w = malloc(sizeof(int)*128);
+	font->h = (int)h;
+	if (font->textures==NULL || font->w==NULL) {
+		WARN("Out of memory!");
+		return;
+	}
 
 	/* create a FreeType font library */
 	FT_Library library;
@@ -646,7 +681,7 @@ void gl_fontInit( gl_font* font, const char *fname, unsigned int h )
 	/* create each of the font display lists */
 	unsigned char i;
 	for (i=0; i<128; i++)
-		gl_fontMakeDList( face, i, font->list_base, font->textures );
+		gl_fontMakeDList( face, i, font->list_base, font->textures, font->w );
 
 	/* we can now free the face and library */
 	FT_Done_Face(face);
@@ -659,6 +694,7 @@ void gl_freeFont( gl_font* font )
 	glDeleteLists(font->list_base,128);
 	glDeleteTextures(128,font->textures);
 	free(font->textures);
+	free(font->w);
 }
 
 

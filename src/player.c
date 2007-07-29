@@ -100,12 +100,17 @@ typedef struct {
 	gl_texture* gfx_frame;
 	gl_texture* gfx_targetPilot, *gfx_targetPlanet;
 	Radar radar;
+	Rect nav;
 	Rect shield, armor, energy;
+	Rect weapon;
+	
 
 	/* positions */
 	Vector2d pos_frame;
 	Vector2d pos_radar;
+	Vector2d pos_nav;
 	Vector2d pos_shield, pos_armor, pos_energy;
+	Vector2d pos_weapon;
 	Vector2d pos_target, pos_target_health, pos_target_name, pos_target_faction;
 	Vector2d pos_mesg;
 
@@ -555,7 +560,6 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 			gui_yoff = y;
 		}
 
-
 		/*
 		 * radar
 		 */
@@ -579,6 +583,16 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 			else if (gui.radar.shape == RADAR_CIRCLE)
 				rect_parse( node, &x, &y, &gui.radar.w, NULL );
 			vect_csetmin( &gui.pos_radar,
+					VX(gui.pos_frame) + x,
+					VY(gui.pos_frame) + gui.gfx_frame->h - y );
+		}
+
+		/*
+		 * nav computer
+		 */
+		else if (xml_isNode(node,"nav")) {
+			rect_parse( node, &x, &y, &gui.nav.w, &gui.nav.h );
+			vect_csetmin( &gui.pos_nav,
 					VX(gui.pos_frame) + x,
 					VY(gui.pos_frame) + gui.gfx_frame->h - y );
 		}
@@ -608,6 +622,16 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 							VY(gui.pos_frame) + gui.gfx_frame->h - y );
 				}
 			} while ((cur = cur->next));
+		}
+
+		/*
+		 * secondary weapon
+		 */
+		else if (xml_isNode(node,"weapon")) {
+			rect_parse( node, &x, &y, &gui.weapon.w, &gui.weapon.h );
+			vect_csetmin( &gui.pos_weapon,
+					VX(gui.pos_frame) + x,
+					VY(gui.pos_frame) + gui.gfx_frame->h - y - gui.smallFont.h );
 		}
 
 		/*

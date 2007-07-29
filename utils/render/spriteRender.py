@@ -38,18 +38,8 @@ from Blender.Scene import Render
 ###########################
 # random initialization
 ###########################
-objList = Blender.Object.Get()
-print objList
-fileName = Blender.Get('filename')
-scn = Blender.Scene.GetCurrent()
-context = scn.getRenderingContext()
-Render.EnableDispWin()
-context.extensions = True
-context.imageType = Render.PNG
-context.enableOversampling(0)
-osaafter = 1
-ypos=5
-
+filename = Blender.Get('filename')
+scn = Blender.Scene.GetCurrent() # global scene
 sliderLight = Create(0)
 
 ###########################
@@ -58,7 +48,8 @@ sliderLight = Create(0)
 def draw() :
 	global Button3, Button2, Button1 
 	global sliderWidth, sliderLight, sliderSpriteSize, sliderObjectSize
-	global ypos
+	ypos = 0
+
 
 	glClearColor(0.753, 0.753, 0.753, 0.0)
 	Blender.BGL.glClear(Blender.BGL.GL_COLOR_BUFFER_BIT)
@@ -77,7 +68,7 @@ def draw() :
 
 	sliderWidth = 300
 
-	sliderLight = Slider('Light Intensity   ', 5, 10, ypos, sliderWidth, 25, sliderLight.val, 0, 10, .1, 'Light Itensity')
+	sliderLight = Slider('Light Intensity   ', 5, 10, ypos, sliderWidth, 25, sliderLight.val, 1, 10, .1, 'Intensity of the light')
 	ypos = ypos + 40
 
 	glColor3f(0.000, 0.000, 0.000)
@@ -119,9 +110,9 @@ Blender.Draw.Register(draw,event,bevent)
 # variables that should be put into gui but will remain in the script for now
 ###########################
 spriteSize = 500
-context.renderPath = "/home/joel/src/naev/utils/mksprite/"
 
 def initialize() :
+	objList = Blender.Object.Get()
 	
 	####################
 	# orienting the object(s) in the correct position
@@ -150,7 +141,7 @@ def initialize() :
 	###########################
 	for obj in objList :
 		if obj.getType() == 'Lamp' :
-			scn.unlink(obj)
+			scn.objects.unlink(obj)
 	lamp = Blender.Lamp.New()
 	Lamp1 = Blender.Object.New('Lamp', 'Lamp1')
 	Lamp2 = Blender.Object.New('Lamp', 'Lamp2')
@@ -163,44 +154,55 @@ def initialize() :
 	Lamp1.link(lamp)
 	Lamp2.link(lamp)
 	lamp.setEnergy(sliderLight.val)
-	scn.link (Lamp1)
-	scn.link (Lamp2)
+	scn.objects.link (Lamp1)
+	scn.objects.link (Lamp2)
 
 def test() :
+	context = scn.getRenderingContext()
+	Render.EnableDispWin()
+
 	context.imageSizeX(spriteSize)
 	context.imageSizeY(spriteSize)
 	context.render()
 
 def render() :
 	###########################
-	# rendering the first frame
+	# preparations
 	###########################
+	context = scn.getRenderingContext()
+	Render.EnableDispWin()
+	context.extensions = True
+	context.setImageType(Render.PNG)
+	context.enablePremultiply()
+	context.enableRGBAColor()
+	context.renderPath = "./"
+
+	objList = Blender.Object.Get()
+
 	origSX = context.imageSizeX()
 	origSY = context.imageSizeY()
 	context.imageSizeX(spriteSize)
 	context.imageSizeY(spriteSize)
-	spriteName = '001'
-	context.render()
-	context.saveRenderedImage(spriteName)
-	Render.CloseRenderWindow()
 	
 	###########################
-	# rendering the rest of the frames
+	# rendering
 	###########################
-	for i in range(1,35+1) :
-		n = str(i + 1)
+	for i in range(0,36) :
+		n = str(i)
 		for obj in objList :
 			if obj.getType() == 'Mesh' :
 				obj.RotZ = ((pi * 2) / 36) * i 
-		spriteName = n.zfill(3)
 
+		spriteName = n.zfill(3)
 		context.render()
 		context.saveRenderedImage(spriteName)
-		Render.CloseRenderWindow()
 
 	###########################
 	# returning settings to normal
 	###########################
+	for obj in objList :
+		if obj.getType() == 'Mesh' :
+			obj.RotZ = 0
 	context.imageSizeX(origSX)
 	context.imageSizeY(origSY)
-	context.enableOversampling(osaafter)
+

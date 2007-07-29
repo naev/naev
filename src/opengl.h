@@ -64,7 +64,8 @@ typedef struct {
  * Font info
  */
 typedef struct {
-	float h; /* height */
+	int h; /* height */
+	int* w;
 	GLuint *textures;
 	GLuint list_base;
 } gl_font;
@@ -76,7 +77,7 @@ extern gl_font gl_defFont; /* default font */
  *
  * if font is NULL it uses the internal default font same with gl_print
  */
-void gl_fontInit( gl_font* font, const char *fname, unsigned int h );
+void gl_fontInit( gl_font* font, const char *fname, const unsigned int h );
 void gl_freeFont( gl_font* font );
 
 
@@ -97,6 +98,7 @@ void gl_blitStatic( const gl_texture* texture, const Vector2d* pos, const glColo
 void gl_bindCamera( const Vector2d* pos );
 void gl_print( const gl_font *ft_font, const Vector2d *pos,
 		const glColor *c, const char *fmt, ... );
+int gl_printWidth( const gl_font *ft_font, const char *fmt, ... );
 
 /*
  * initialization / cleanup

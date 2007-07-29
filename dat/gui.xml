@@ -59,6 +59,12 @@
 <x>72</x>
 <y>72</y>
 </radar>
+<nav>
+<x>40</x>
+<y>151</y>
+<w>112</w>
+<h>26</h>
+</nav>
 <health>
 <shield>
 <w>98</w>
@@ -79,6 +85,12 @@
 <y>207</y>
 </energy>
 </health>
+<weapon>
+<x>40</x>
+<y>224</y>
+<w>112</w>
+<h>26</h>
+</weapon>
 <target>
 <gfx>
 <x>34</x>
