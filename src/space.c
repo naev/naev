@@ -180,6 +180,9 @@ int space_hyperspace( Pilot* p )
 			return (int)(MIN_HYPERSPACE_DIST - d);;
 	}
 
+	/* too fast */
+	if (VMOD(p->solid->vel) > MAX_HYPERSPACE_VEL) return -1;
+
 	/*
 	 * TODO hyperspace stuff
 	 */

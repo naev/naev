@@ -54,15 +54,19 @@ static Fleet* fleet_parse( const xmlNodePtr parent );
  */
 unsigned int pilot_getNext( const unsigned int id )
 {
-/* Regular Search */
-	int i;
-	for ( i=0; i < pilots; i++ )
-		if (pilot_stack[i]->id == id)
-			break;
+	/* Dichotomical search */
+	int l,m,h;
+	l = 0;
+	h = pilots-1;
+	while (l <= h) {
+		m = (l+h)/2;
+		if (pilot_stack[m]->id > id) h = m-1;
+		else if (pilot_stack[m]->id < id) l = m+1;
+		else break;
+	}
 
-	if (i==pilots-1) return PLAYER_ID;
-
-	return pilot_stack[i+1]->id;
+	if (m == (pilots-1)) return PLAYER_ID;
+	else return pilot_stack[m+1]->id;
 }
 
 
@@ -87,7 +91,7 @@ unsigned int pilot_getNearest( const Pilot* p )
 
 
 /*
- * gets the nearest hostile enemy to the playr
+ * gets the nearest hostile enemy to the player
  */
 unsigned pilot_getHostile (void)
 {
@@ -112,20 +116,27 @@ unsigned pilot_getHostile (void)
 Pilot* pilot_get( const unsigned int id )
 {
 /* Regular search */
-	int i;
+/*	int i;
 	for ( i=0; i < pilots; i++ )
 		if (pilot_stack[i]->id == id)
 			return pilot_stack[i];
 	return NULL;
 
-	if (id==0) return player;
+	if (id==0) return player;*/
 
-/* Dichotomical search */
-	/*int i,n;
-	for (i=0, n=pilots/2; n > 0; n /= 2 )
-		i += (pilot_stack[i+n]->id > id) ? 0 : n ;
-
-	return (pilot_stack[i]->id == id) ? pilot_stack[i] : NULL ;*/
+	if (id==PLAYER_ID) return player; /* special case player */
+	
+	/* Dichotomical search */
+	int l,m,h;
+	l = 0;
+	h = pilots-1;
+	while (l <= h) {
+		m = (l+h)/2;
+		if (pilot_stack[m]->id > id) h = m-1;
+		else if (pilot_stack[m]->id < id) l = m+1;
+		else return pilot_stack[m];
+	}
+	return NULL;
 }
 
 

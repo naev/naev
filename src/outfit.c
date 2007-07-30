@@ -56,10 +56,10 @@ int outfit_isWeapon( const Outfit* o )
  */
 int outfit_isLauncher( const Outfit* o )
 {
-	return ( (o->type==OUTFIT_TYPE_MISSILE_DUMB) ||
-			(o->type==OUTFIT_TYPE_MISSILE_SEEK) ||
+	return ( (o->type==OUTFIT_TYPE_MISSILE_DUMB)	||
+			(o->type==OUTFIT_TYPE_MISSILE_SEEK)		||
 			(o->type==OUTFIT_TYPE_MISSILE_SEEK_SMART) ||
-			(o->type==OUTFIT_TYPE_MISSILE_SWARM) ||
+			(o->type==OUTFIT_TYPE_MISSILE_SWARM)	||
 			(o->type==OUTFIT_TYPE_MISSILE_SWARM_SMART) );
 }
 
@@ -109,27 +109,21 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
 	char str[PATH_MAX] = "\0";
 
 	do { /* load all the data */
-		if (strcmp((char*)node->name,"speed")==0)
-			temp->speed = (double)atoi((char*)node->children->content);
-		else if (strcmp((char*)node->name,"delay")==0)
-			temp->delay = atoi((char*)node->children->content);
-		else if (strcmp((char*)node->name,"range")==0)
-			temp->range = atof((char*)node->children->content);
-		else if (strcmp((char*)node->name,"accuracy")==0)
-			temp->accuracy = atof((char*)node->children->content);
-		else if (strcmp((char*)node->name, "gfx")==0) {
-			snprintf( str, strlen((char*)node->children->content)+sizeof(OUTFIT_GFX),
-					OUTFIT_GFX"%s", (char*)node->children->content);
+		if (xml_isNode(node,"speed")) temp->speed = xml_getFloat(node);
+		else if (xml_isNode(node,"delay")) temp->delay = xml_getInt(node);
+		else if (xml_isNode(node,"range")) temp->range = xml_getFloat(node);
+		else if (xml_isNode(node,"accuracy")) temp->accuracy = xml_getFloat(node);
+		else if (xml_isNode(node,"gfx")) {
+			snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+4,
+					OUTFIT_GFX"%s.png", xml_get(node));
 			temp->gfx_space = gl_newSprite(str, 6, 6);
 		}
-		if (strcmp((char*)node->name,"damage")==0) {
+		else if (xml_isNode(node,"damage")) {
 			cur = node->children;
-			while ((cur = cur->next)) {
-				if (strcmp((char*)cur->name,"armor")==0)
-					temp->damage_armor = atof((char*)cur->children->content);
-				else if (strcmp((char*)cur->name,"shield")==0)
-					temp->damage_shield = atof((char*)cur->children->content);
-			}
+			do {
+				if (xml_isNode(cur,"armor")) temp->damage_armor = xml_getFloat(cur);
+				else if (xml_isNode(cur,"shield")) temp->damage_shield = xml_getFloat(cur);
+			} while ((cur = cur->next));
 		}
 	} while ((node = node->next));
 
@@ -152,30 +146,27 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
 {
 	Outfit* temp = CALLOC_ONE(Outfit);
 	xmlNodePtr cur, node;
-	xmlChar* prop;
+	char *prop;
 
-	temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name"); /* already mallocs */
+	temp->name = xml_nodeProp(parent,"name"); /* already mallocs */
 	if (temp->name == NULL) WARN("Outfit in "OUTFIT_DATA" has invalid or no name");
 
 	node = parent->xmlChildrenNode;
 
 	do { /* load all the data */
-		if (strcmp((char*)node->name,"general")==0) {
+		if (xml_isNode(node,"general")) {
 			cur = node->children;
-			while ((cur = cur->next)) {
-				if (strcmp((char*)cur->name,"max")==0)
-					temp->max = atoi((char*)cur->children->content);
-				else if (strcmp((char*)cur->name,"tech")==0)
-					temp->tech = atoi((char*)cur->children->content);
-				else if (strcmp((char*)cur->name,"mass")==0)
-					temp->mass = atoi((char*)cur->children->content);
-			}
+			do {
+				if (xml_isNode(cur,"max")) temp->max = xml_getInt(cur);
+				else if (xml_isNode(cur,"tech")) temp->tech = xml_getInt(cur);
+				else if (xml_isNode(cur,"mass")) temp->mass = xml_getInt(cur);
+			} while ((cur = cur->next));
 		}
-		else if (strcmp((char*)node->name,"specific")==0) { /* has to be processed seperately */
-			prop = xmlGetProp(node,(xmlChar*)"type");
+		else if (xml_isNode(node,"specific")) { /* has to be processed seperately */
+			prop = xml_nodeProp(node,"type");
 			if (prop == NULL)
 				ERR("Outfit '%s' element 'specific' missing property 'type'",temp->name);
-			temp->type = atoi((char*)prop);
+			temp->type = atoi(prop);
 			free(prop);
 			switch (temp->type) {
 				case OUTFIT_TYPE_NULL:
@@ -219,7 +210,7 @@ int outfit_load (void)
 	xmlDocPtr doc = xmlParseMemory( buf, bufsize );
 
 	node = doc->xmlChildrenNode;
-	if (strcmp((char*)node->name,XML_OUTFIT_ID)) {
+	if (!xml_isNode(node,XML_OUTFIT_ID)) {
 		ERR("Malformed '"OUTFIT_DATA"' file: missing root element '"XML_OUTFIT_ID"'");
 		return -1;
 	}        
@@ -231,8 +222,7 @@ int outfit_load (void)
 	}        
 
 	do {
-		if (node->type == XML_NODE_START &&
-				strcmp((char*)node->name,XML_OUTFIT_TAG)==0) {
+		if (xml_isNode(node,XML_OUTFIT_TAG)) {
 
 			temp = outfit_parse(node);               
 			outfit_stack = realloc(outfit_stack, sizeof(Outfit)*(++outfits));
@@ -262,3 +252,4 @@ void outfit_free (void)
 	}
 	free(outfit_stack);
 }
+

@@ -7,8 +7,8 @@
 <mass>1</mass>
 </general>
 <specific type="1">
-<sound>laser.wav</sound>
-<gfx>lasergreen.png</gfx>
+<sound>laser</sound>
+<gfx>lasergreen</gfx>
 <delay>500</delay>
 <speed>550</speed>
 <range>300</range>

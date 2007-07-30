@@ -575,7 +575,7 @@ static int ai_minbrakedist( lua_State *L )
 {
 	double time = VMOD(cur_pilot->solid->vel) /
 			(cur_pilot->ship->thrust / cur_pilot->solid->mass);
-	double dist =  VMOD(cur_pilot->solid->vel)*(time+cur_pilot->ship->turn/180.) -
+	double dist =  VMOD(cur_pilot->solid->vel)*(time+180./cur_pilot->ship->turn) -
 			0.5*(cur_pilot->ship->thrust/cur_pilot->solid->mass)*time*time;
 
 	lua_pushnumber(L, dist); /* return */

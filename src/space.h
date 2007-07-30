@@ -10,6 +10,7 @@
 
 
 #define MIN_HYPERSPACE_DIST	1500
+#define MAX_HYPERSPACE_VEL		3
 
 
 /*
