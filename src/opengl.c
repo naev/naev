@@ -23,6 +23,12 @@
 #define FONT_DEF	"dat/FreeSans.ttf"
 
 
+/*
+ * default colors
+ */
+glColor cGrey		= { .r=0.75, .g=0.75, .b=0.75, .a=1. };
+
+
 /* the screen info, gives data of current opengl settings */
 gl_info gl_screen;
 

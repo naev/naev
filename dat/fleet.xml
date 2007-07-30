@@ -4,7 +4,7 @@
 <ai>test</ai>
 <faction>Independent</faction>
 <pilots>
-<pilot chance='100'>Mr. Test</pilot>
+<pilot chance='100' name="Mr. Test">Lancelot</pilot>
 </pilots>
 </fleet>
 <fleet name="Merchant Llama">

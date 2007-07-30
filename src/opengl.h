@@ -45,6 +45,8 @@ typedef struct {
 	double r, g, b, a;
 } glColor;
 #define COLOR(x)     glColor4d((x).r,(x).g,(x).b,(x).a)
+/* default colors */
+extern glColor cGrey;
 
 
 /*

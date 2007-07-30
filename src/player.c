@@ -13,9 +13,6 @@
 #include "pack.h"
 
 
-#define XML_NODE_START	1
-#define XML_NODE_TEXT	3
-
 #define XML_GUI_ID	"GUIs"   /* XML section identifier */
 #define XML_GUI_TAG	"gui"
 
@@ -53,7 +50,10 @@ Pilot* player = NULL; /* ze player */
 static double player_turn = 0.; /* turn velocity from input */
 static double player_acc = 0.; /* accel velocity from input */
 static int player_primary = 0; /* player is shooting primary weapon */
+/*static int player_secondary = 0; *//* player is shooting secondary weapon */
 static unsigned int player_target = PLAYER_ID; /* targetted pilot */
+static int planet_target = -1; /* targetted planet */
+static int weapon = -1; /* secondary weapon in use */
 
 
 /*
@@ -208,10 +208,14 @@ void player_render (void)
 	/*
 	 *    G U I
 	 */
-	/* frame */
+	/*
+	 * frame
+	 */
 	gl_blitStatic( gui.gfx_frame, &gui.pos_frame, NULL );
 
-	/* radar */
+	/*
+	 * radar
+	 */
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	if (gui.radar.shape==RADAR_RECT)
@@ -221,13 +225,15 @@ void player_render (void)
 		glTranslated( VX(gui.pos_radar) - gl_screen.w/2.,
 				VY(gui.pos_radar) - gl_screen.h/2., 0.);
 
-
-
-	/* planets */
+	/*
+	 * planets
+	 */
 	COLOR(cFriend);
 	planets_minimap(gui.radar.res, gui.radar.w, gui.radar.h, gui.radar.shape);
 
-	/* weapons */
+	/*
+	 * weapons
+	 */
 	glBegin(GL_POINTS);
 		COLOR(cRadar_weap);
 		weapon_minimap(gui.radar.res, gui.radar.w, gui.radar.h, gui.radar.shape);
@@ -259,7 +265,9 @@ void player_render (void)
 
 	glPopMatrix(); /* GL_PROJECTION */
 
-	/* health */
+	/*
+	 * health
+	 */
 	gui_renderBar( &cShield, &gui.pos_shield, &gui.shield,
 			player->shield / player->shield_max );
 	gui_renderBar( &cArmor, &gui.pos_armor, &gui.armor, 
@@ -268,7 +276,26 @@ void player_render (void)
 			player->energy / player->energy_max );
 
 
-	/* target */
+	/*
+	 * NAV 
+	 */
+	if (planet_target != -1) {
+	}
+	else {
+		i = gl_printWidth( NULL, "Nav" );
+		vect_csetmin( &v, VX(gui.pos_nav) + (gui.nav.w - i)/2. ,
+				VY(gui.pos_nav) - 5);
+		gl_print( NULL, &v, &cGrey, "NAV" );
+		i = gl_printWidth( &gui.smallFont, "No Target" );
+		vect_csetmin( &v, VX(gui.pos_nav) + (gui.nav.w - i)/2. ,
+				VY(gui.pos_nav) - 10 - gui.smallFont.h );
+		gl_print( &gui.smallFont, &v, &cGrey, "No Target" );
+	}
+
+
+	/*
+	 * target
+	 */
 	if (player_target != PLAYER_ID) {
 		p = pilot_get(player_target);
 
@@ -289,7 +316,27 @@ void player_render (void)
 					"%s: %.0f%%", "Armour", p->armor/p->armor_max*100. );
 	}
 
-	/* messages */
+
+	/*
+	 * weapon
+	 */
+	if (weapon == -1) {
+		i = gl_printWidth( NULL, "Secondary" );
+		vect_csetmin( &v, VX(gui.pos_weapon) + (gui.weapon.w - i)/2.,
+				VY(gui.pos_weapon) - 5);
+		gl_print( NULL, &v, &cGrey, "Secondary" );
+		i = gl_printWidth( &gui.smallFont, "None" );
+		vect_csetmin( &v, VX(gui.pos_weapon) + (gui.weapon.w - i)/2.,
+				VY(gui.pos_weapon) - 10 - gl_defFont.h);
+		gl_print( &gui.smallFont, &v, &cGrey, "None");
+	}
+	else {
+	}
+
+
+	/*
+	 * messages
+	 */
 	VX(v) = VX(gui.pos_mesg);
 	VY(v) = VY(gui.pos_mesg) + (double)(gl_defFont.h*mesg_max)*1.2;
 	for (i=0; i<mesg_max; i++) {
@@ -375,6 +422,13 @@ static void gui_renderBar( const glColor* c, const Vector2d* p,
  */
 int gui_init (void)
 {
+	/*
+	 * set gfx to NULL
+	 */
+	gui.gfx_frame = NULL;
+	gui.gfx_targetPilot = NULL;
+	gui.gfx_targetPlanet = NULL;
+
 	/*
 	 * font
 	 */
@@ -530,12 +584,15 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 	tmp = malloc( (strlen(tmp2)+strlen(GUI_GFX)+12) * sizeof(char) );
 	/* frame */
 	snprintf( tmp, strlen(tmp2)+strlen(GUI_GFX)+5, GUI_GFX"%s.png", tmp2 );
+	if (gui.gfx_frame) gl_freeTexture(gui.gfx_frame); /* free if needed */
 	gui.gfx_frame = gl_newImage( tmp );
 	/* pilot */
 	snprintf( tmp, strlen(tmp2)+strlen(GUI_GFX)+11, GUI_GFX"%s_pilot.png", tmp2 );
+	if (gui.gfx_targetPilot) gl_freeTexture(gui.gfx_targetPilot); /* free if needed */
 	gui.gfx_targetPilot = gl_newSprite( tmp, 2, 2 );
 	/* planet */
 	snprintf( tmp, strlen(tmp2)+strlen(GUI_GFX)+12, GUI_GFX"%s_planet.png", tmp2 );
+	if (gui.gfx_targetPlanet) gl_freeTexture(gui.gfx_targetPlanet); /* free if needed */
 	gui.gfx_targetPlanet = gl_newSprite( tmp, 2, 2 );
 	free(tmp);
 	free(tmp2);
@@ -594,7 +651,7 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 			rect_parse( node, &x, &y, &gui.nav.w, &gui.nav.h );
 			vect_csetmin( &gui.pos_nav,
 					VX(gui.pos_frame) + x,
-					VY(gui.pos_frame) + gui.gfx_frame->h - y );
+					VY(gui.pos_frame) + gui.gfx_frame->h - y - gl_defFont.h);
 		}
 
 		/*
@@ -631,7 +688,7 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 			rect_parse( node, &x, &y, &gui.weapon.w, &gui.weapon.h );
 			vect_csetmin( &gui.pos_weapon,
 					VX(gui.pos_frame) + x,
-					VY(gui.pos_frame) + gui.gfx_frame->h - y - gui.smallFont.h );
+					VY(gui.pos_frame) + gui.gfx_frame->h - y - gl_defFont.h);
 		}
 
 		/*

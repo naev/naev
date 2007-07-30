@@ -54,10 +54,10 @@
 <outfit quantity='2'>laser</outfit>
 </outfits>
 </ship>
-<ship name="Mr. Test">
+<ship name="Lancelot">
 <GFX>lancelot</GFX>
 <GUI>simple</GUI>
-<class>1</class>
+<class>2</class>
 <movement>
 <thrust>280</thrust>
 <turn>130</turn>

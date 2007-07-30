@@ -12,10 +12,10 @@
 #define SHIP_TARGET_H	96
 
 
-enum ship_class { SHIP_CLASS_NULL,
-	SHIP_CLASS_CIV_LIGHT,
-	SHIP_CLASS_CIV_MEDIUM,
-	SHIP_CLASS_CIV_HEAVY
+enum ship_class { SHIP_CLASS_NULL=0,
+	SHIP_CLASS_CIV_LIGHT=1,
+	SHIP_CLASS_CIV_MEDIUM=2,
+	SHIP_CLASS_CIV_HEAVY=3
 };
 typedef enum ship_class ship_class;
 
