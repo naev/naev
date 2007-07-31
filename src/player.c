@@ -172,7 +172,8 @@ void player_new (void)
 	uint32_t bufsize;
 	char *buf = pack_readfile( DATA, START_DATA, &bufsize );
 	int l,h;
-	double x,y;
+	double x,y,d;
+	Vector2d v;
 
 	xmlNodePtr node, cur, tmp;
 	xmlDocPtr doc = xmlParseMemory( buf, bufsize );
@@ -219,10 +220,15 @@ void player_new (void)
 	xmlCleanupParser();
 
 
+	/* monies */
 	credits = RNG(l,h);
 
+	/* pos and dir */
+	vect_cset( &v, x, y );
+	d = RNG(0,359)/180.*M_PI;
+
 	pilot_create( ship, "Player", faction_get("Player"), NULL,
-			0.,  NULL, NULL, PILOT_PLAYER );
+			d,  &v, NULL, PILOT_PLAYER );
 	gl_bindCamera( &player->solid->pos );
 	space_init(system);
 
