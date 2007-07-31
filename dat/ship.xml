@@ -56,7 +56,7 @@
 </ship>
 <ship name="Lancelot">
 <GFX>lancelot</GFX>
-<GUI>simple</GUI>
+<GUI>minimal</GUI>
 <class>2</class>
 <movement>
 <thrust>280</thrust>

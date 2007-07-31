@@ -15,8 +15,8 @@
 #define PLAYER_ID			1
 
 
-#define PILOT_SIZE_APROX	0.8	/* aproximation for pilot size */
-#define PILOT_DISABLED		0.2	/* armour % that gets it disabled */
+#define PILOT_SIZE_APROX		0.8	/* aproximation for pilot size */
+#define PILOT_DISABLED_ARMOR	0.2	/* armour % that gets it disabled */
 
 
 /* flags */
@@ -29,6 +29,7 @@
 #define PILOT_HOSTILE	   (1<<1) /* pilot is hostile to the player */
 #define PILOT_COMBAT			(1<<2) /* pilot is engaged in combat */
 #define PILOT_HYPERSPACE	(1<<3) /* pilot is in hyperspace */
+#define PILOT_DISABLED		(1<<4) /* pilot is disabled */
 
 /* makes life easier */
 #define pilot_isPlayer(p)	((p)->flags & PILOT_PLAYER)

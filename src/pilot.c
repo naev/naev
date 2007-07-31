@@ -54,7 +54,7 @@ static Fleet* fleet_parse( const xmlNodePtr parent );
  */
 unsigned int pilot_getNext( const unsigned int id )
 {
-	/* Dichotomical search */
+	/* binary search */
 	int l,m,h;
 	l = 0;
 	h = pilots-1;
@@ -115,18 +115,9 @@ unsigned pilot_getHostile (void)
  */
 Pilot* pilot_get( const unsigned int id )
 {
-/* Regular search */
-/*	int i;
-	for ( i=0; i < pilots; i++ )
-		if (pilot_stack[i]->id == id)
-			return pilot_stack[i];
-	return NULL;
-
-	if (id==0) return player;*/
-
 	if (id==PLAYER_ID) return player; /* special case player */
 	
-	/* Dichotomical search */
+	/* binary */
 	int l,m,h;
 	l = 0;
 	h = pilots-1;
@@ -213,8 +204,22 @@ void pilot_render( Pilot* p )
  */
 static void pilot_update( Pilot* pilot, const double dt )
 {
-	/* regeneration */
-	if (pilot->armor < pilot->armor_max)
+	if (pilot != player && 
+			pilot->armor < PILOT_DISABLED_ARMOR*pilot->armor_max) { /* disabled */
+		pilot_setFlag(pilot,PILOT_DISABLED);
+		vect_pset( &pilot->solid->vel, /* slowly brake */
+			VMOD(pilot->solid->vel) * (1. - dt*0.10),
+			VANGLE(pilot->solid->vel) );
+		vectnull( &pilot->solid->force );
+		pilot->solid->dir_vel = 0.; /* no more turning */
+
+		/* update the solid */
+		pilot->solid->update( pilot->solid, dt );
+		return;
+	}
+
+	/* still alive */
+	else if (pilot->armor < pilot->armor_max)
 		pilot->armor += pilot->ship->armor_regen * dt;
 	else
 		pilot->shield += pilot->ship->shield_regen * dt;
@@ -222,16 +227,11 @@ static void pilot_update( Pilot* pilot, const double dt )
 	if (pilot->armor > pilot->armor_max) pilot->armor = pilot->armor_max;
 	if (pilot->shield > pilot->shield_max) pilot->shield = pilot->shield_max;
 
-	if ((pilot->solid->dir > 2.*M_PI) || (pilot->solid->dir < 0.0))
-		pilot->solid->dir = fmod(pilot->solid->dir,2.*M_PI);
-
 	/* update the solid */
-	pilot->solid->update( pilot->solid, dt );
+	(*pilot->solid->update)( pilot->solid, dt );
 
 	if (VMOD(pilot->solid->vel) > pilot->ship->speed) /* shouldn't go faster */
 		vect_pset( &pilot->solid->vel, pilot->ship->speed, VANGLE(pilot->solid->vel) );
-
-	pilot_render( pilot );
 }
 
 
@@ -394,7 +394,8 @@ void pilots_update( double dt )
 {
 	int i;
 	for ( i=0; i < pilots; i++ ) {
-		if (pilot_stack[i]->think) /* think */
+		if (pilot_stack[i]->think && /* think */
+				!pilot_isFlag(pilot_stack[i],PILOT_DISABLED))
 			pilot_stack[i]->think(pilot_stack[i]);
 		if (pilot_stack[i]->update) /* update */
 			pilot_stack[i]->update( pilot_stack[i], dt );

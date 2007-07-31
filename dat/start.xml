@@ -1,0 +1,14 @@
+<Start>
+<player>
+<ship>Lancelot</ship>
+<credits>
+<low>500</low>
+<high>1500</high>
+</credits>
+<system>
+<name>Delta Pavonis</name>
+<x>50</x>
+<y>50</y>
+</system>
+</player>
+</Start>

@@ -11,13 +11,19 @@
 #include "log.h"
 #include "opengl.h"
 #include "pack.h"
+#include "space.h"
+#include "rng.h"
 
 
 #define XML_GUI_ID	"GUIs"   /* XML section identifier */
 #define XML_GUI_TAG	"gui"
 
+#define XML_START_ID	"Start"
+
 #define GUI_DATA	"dat/gui.xml"
 #define GUI_GFX	"gfx/gui/"
+
+#define START_DATA "dat/start.xml"
 
 
 #define POW2(x)	((x)*(x))
@@ -154,6 +160,78 @@ static void gui_renderBar( const glColor* c, const Vector2d* p,
 		const Rect* r, const double w );
 
 
+
+
+/*
+ * creates a new player
+ */
+void player_new (void)
+{
+	Ship *ship;
+	char system[20];
+	uint32_t bufsize;
+	char *buf = pack_readfile( DATA, START_DATA, &bufsize );
+	int l,h;
+	double x,y;
+
+	xmlNodePtr node, cur, tmp;
+	xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+
+	node = doc->xmlChildrenNode;
+	if (!xml_isNode(node,XML_START_ID)) {
+		ERR("Malformed '"START_DATA"' file: missing root element '"XML_START_ID"'");
+		return;
+	}
+
+	node = node->xmlChildrenNode; /* first system node */
+	if (node == NULL) {
+		ERR("Malformed '"START_DATA"' file: does not contain elements");
+		return;
+	}
+	do {
+		if (xml_isNode(node, "player")) { /* we are interested in the player */
+			cur = node->children;
+			do {
+				if (xml_isNode(cur,"ship")) ship = ship_get( xml_get(cur) );
+				else if (xml_isNode(cur,"credits")) { /* monies range */
+					tmp = cur->children;
+					do { 
+						if (xml_isNode(tmp,"low")) l = xml_getInt(tmp);
+						else if (xml_isNode(tmp,"high")) h = xml_getInt(tmp);
+					} while ((tmp = tmp->next));
+				}
+				else if (xml_isNode(cur,"system")) {
+					tmp = cur->children;
+					do {
+						/* system name, TODO percent chance */
+						if (xml_isNode(tmp,"name")) snprintf(system,20,xml_get(tmp));
+						/* position */
+						else if (xml_isNode(tmp,"x")) x = xml_getFloat(tmp);
+						else if (xml_isNode(tmp,"y")) y = xml_getFloat(tmp);
+					} while ((tmp = tmp->next));
+				}
+			} while ((cur = cur->next));
+		}
+	} while ((node = node->next));
+
+	xmlFreeDoc(doc);
+	free(buf);
+	xmlCleanupParser();
+
+
+	credits = RNG(l,h);
+
+	pilot_create( ship, "Player", faction_get("Player"), NULL,
+			0.,  NULL, NULL, PILOT_PLAYER );
+	gl_bindCamera( &player->solid->pos );
+	space_init(system);
+
+	/* welcome message */
+	player_message( "Welcome to "APPNAME"!" );
+	player_message( " v%d.%d.%d", VMAJOR, VMINOR, VREV );
+}
+
+
 /*
  * adds a mesg to the queue to be displayed on screen
  */
@@ -194,7 +272,8 @@ void player_render (void)
 	if (player_target != PLAYER_ID) {
 		p = pilot_get(player_target);
 
-		if (pilot_isFlag(p,PILOT_HOSTILE)) c = &cHostile;
+		if (pilot_isFlag(p,PILOT_DISABLED)) c = &cInert;
+		else if (pilot_isFlag(p,PILOT_HOSTILE)) c = &cHostile;
 		else c = &cNeutral;
 
 		vect_csetmin( &v, VX(p->solid->pos) - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.,
@@ -330,7 +409,7 @@ void player_render (void)
 		gl_print( &gui.smallFont, &gui.pos_target_faction, NULL, "%s", p->faction->name );
 
 		/* target status */
-		if (p->armor < p->armor_max*PILOT_DISABLED) /* pilot is disabled */
+		if (pilot_isFlag(p,PILOT_DISABLED)) /* pilot is disabled */
 			gl_print( &gui.smallFont, &gui.pos_target_health, NULL, "Disabled" );
 		else if (p->shield > p->shield_max/100.) /* on shields */
 			gl_print( &gui.smallFont, &gui.pos_target_health, NULL,
@@ -413,6 +492,7 @@ static void gui_renderPilot( const Pilot* p )
 	glBegin(GL_QUADS);
 		/* colors */
 		if (p->id == player_target) COLOR(cRadar_targ);
+		else if (pilot_isFlag(p,PILOT_DISABLED)) COLOR(cInert);
 		else if (pilot_isFlag(p,PILOT_HOSTILE)) COLOR(cHostile);
 		else COLOR(cNeutral);
 

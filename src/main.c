@@ -32,7 +32,6 @@
 #include "faction.h"
 
 
-#define APPNAME			"NAEV"
 #define WINDOW_CAPTION  "NAEV - Sea of Darkness"
 
 #define CONF_FILE			"conf"
@@ -313,16 +312,9 @@ int main ( int argc, char** argv )
 
 
 	/*
-	 * testing
+	 * create new player, TODO start menu
 	 */
-	pilot_create( ship_get("Llama"), "Player", faction_get("Player"), NULL,
-			0.,  NULL, NULL, PILOT_PLAYER );
-	gl_bindCamera( &player->solid->pos );
-	space_init("Delta Pavonis");
-
-	/* welcome message */
-	player_message( "Welcome to "APPNAME"!" );
-	player_message( " v%d.%d.%d", VMAJOR, VMINOR, VREV );
+	player_new();
 
 	
 	time = SDL_GetTicks(); /* initializes the time */

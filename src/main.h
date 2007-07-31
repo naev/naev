@@ -4,6 +4,8 @@
 #  define MAIN_H
 
 
+#define APPNAME         "NAEV"
+
 #define MALLOC_ONE(type)   (malloc(sizeof(type)))
 #define CALLOC_ONE(type)	(calloc(1,sizeof(type)))
 
