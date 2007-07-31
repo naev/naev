@@ -27,6 +27,7 @@
  * default colors
  */
 glColor cGrey		= { .r=0.75, .g=0.75, .b=0.75, .a=1. };
+glColor cGreen		= { .r=0.20, .g=0.80, .b=0.20, .a=1. };
 
 
 /* the screen info, gives data of current opengl settings */

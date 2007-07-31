@@ -109,5 +109,11 @@
 <y>401</y>
 </health>
 </target>
+<misc>
+<x>40</x>
+<y>424</y>
+<w>112</w>
+<h>100</h>
+</misc>
 </gui>
 </GUIs>

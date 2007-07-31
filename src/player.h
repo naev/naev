@@ -12,6 +12,7 @@
  * the player
  */
 extern Pilot* player;
+extern unsigned int credits;
 
 
 /*

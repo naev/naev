@@ -47,6 +47,7 @@ const char *keybindNames[] = { "accel", "left", "right", "primary", "target",
  * player stuff
  */
 Pilot* player = NULL; /* ze player */
+unsigned int credits = 0;
 static double player_turn = 0.; /* turn velocity from input */
 static double player_acc = 0.; /* accel velocity from input */
 static int player_primary = 0; /* player is shooting primary weapon */
@@ -67,6 +68,8 @@ extern int pilots;
  * GUI stuff
  */
 /* standard colors */
+glColor cConsole			=	{ .r = 0.5, .g = 0.8, .b = 0.5, .a = 1. };
+
 glColor cInert				=	{ .r = 0.6, .g = 0.6, .b = 0.6, .a = 1. };
 glColor cNeutral			=	{ .r = 0.9, .g = 1.0, .b = 0.3, .a = 1. };
 glColor cFriend			=	{ .r = 0.0, .g = 1.0, .b = 0.0, .a = 1. };
@@ -103,6 +106,7 @@ typedef struct {
 	Rect nav;
 	Rect shield, armor, energy;
 	Rect weapon;
+	Rect misc;
 	
 
 	/* positions */
@@ -112,6 +116,7 @@ typedef struct {
 	Vector2d pos_shield, pos_armor, pos_energy;
 	Vector2d pos_weapon;
 	Vector2d pos_target, pos_target_health, pos_target_name, pos_target_faction;
+	Vector2d pos_misc;
 	Vector2d pos_mesg;
 
 } GUI;
@@ -180,6 +185,7 @@ void player_message ( const char *fmt, ... )
 void player_render (void)
 {
 	int i, j;
+	char str[10];
 	Pilot* p;
 	Vector2d v;
 	glColor* c;
@@ -265,16 +271,6 @@ void player_render (void)
 
 	glPopMatrix(); /* GL_PROJECTION */
 
-	/*
-	 * health
-	 */
-	gui_renderBar( &cShield, &gui.pos_shield, &gui.shield,
-			player->shield / player->shield_max );
-	gui_renderBar( &cArmor, &gui.pos_armor, &gui.armor, 
-			player->armor / player->armor_max );
-	gui_renderBar( &cEnergy, &gui.pos_energy, &gui.energy,
-			player->energy / player->energy_max );
-
 
 	/*
 	 * NAV 
@@ -282,15 +278,43 @@ void player_render (void)
 	if (planet_target != -1) {
 	}
 	else {
-		i = gl_printWidth( NULL, "Nav" );
+		i = gl_printWidth( NULL, "NAV" );
 		vect_csetmin( &v, VX(gui.pos_nav) + (gui.nav.w - i)/2. ,
 				VY(gui.pos_nav) - 5);
-		gl_print( NULL, &v, &cGrey, "NAV" );
+		gl_print( NULL, &v, &cConsole, "NAV" );
 		i = gl_printWidth( &gui.smallFont, "No Target" );
 		vect_csetmin( &v, VX(gui.pos_nav) + (gui.nav.w - i)/2. ,
 				VY(gui.pos_nav) - 10 - gui.smallFont.h );
 		gl_print( &gui.smallFont, &v, &cGrey, "No Target" );
 	}
+
+
+	/*
+	 * health
+	 */
+	gui_renderBar( &cShield, &gui.pos_shield, &gui.shield,
+			player->shield / player->shield_max );
+	gui_renderBar( &cArmor, &gui.pos_armor, &gui.armor,
+			player->armor / player->armor_max );
+	gui_renderBar( &cEnergy, &gui.pos_energy, &gui.energy,
+			player->energy / player->energy_max );
+
+
+	/* 
+	 * weapon 
+	 */ 
+	if (weapon == -1) { /* no secondary weapon */ 
+		i = gl_printWidth( NULL, "Secondary" ); 
+		vect_csetmin( &v, VX(gui.pos_weapon) + (gui.weapon.w - i)/2., 
+				VY(gui.pos_weapon) - 5); 
+		gl_print( NULL, &v, &cConsole, "Secondary" ); 
+		i = gl_printWidth( &gui.smallFont, "None" ); 
+		vect_csetmin( &v, VX(gui.pos_weapon) + (gui.weapon.w - i)/2., 
+				VY(gui.pos_weapon) - 10 - gl_defFont.h); 
+		gl_print( &gui.smallFont, &v, &cGrey, "None"); 
+	}  
+	else { 
+	} 
 
 
 	/*
@@ -315,30 +339,37 @@ void player_render (void)
 			gl_print( &gui.smallFont, &gui.pos_target_health, NULL, 
 					"%s: %.0f%%", "Armour", p->armor/p->armor_max*100. );
 	}
+	else { /* no target */
+		i = gl_printWidth( NULL, "No Target" );
+		vect_csetmin( &v, VX(gui.pos_target) + (SHIP_TARGET_W - i)/2.,
+				VY(gui.pos_target) + (SHIP_TARGET_H - gl_defFont.h)/2.);
+		gl_print( NULL, &v, &cGrey, "No Target" );
+	}
 
 
 	/*
-	 * weapon
+	 * misc
 	 */
-	if (weapon == -1) {
-		i = gl_printWidth( NULL, "Secondary" );
-		vect_csetmin( &v, VX(gui.pos_weapon) + (gui.weapon.w - i)/2.,
-				VY(gui.pos_weapon) - 5);
-		gl_print( NULL, &v, &cGrey, "Secondary" );
-		i = gl_printWidth( &gui.smallFont, "None" );
-		vect_csetmin( &v, VX(gui.pos_weapon) + (gui.weapon.w - i)/2.,
-				VY(gui.pos_weapon) - 10 - gl_defFont.h);
-		gl_print( &gui.smallFont, &v, &cGrey, "None");
-	}
-	else {
-	}
+	vect_csetmin( &v, VX(gui.pos_misc) + 10,
+			VY(gui.pos_misc) - 10 - gl_defFont.h );
+	gl_print( NULL, &v, &cConsole, "Credits:" );
+	if (credits >= 1000000)
+		snprintf( str, 10, "%.2fM", (double)credits / 1000000.);
+	else if (credits >= 1000)
+		snprintf( str, 10, "%.2fK", (double)credits / 1000.);
+	else snprintf (str, 10, "%d", credits );
+	i = gl_printWidth( &gui.smallFont, "%s", str );
+	vect_csetmin( &v, VX(gui.pos_misc) + gui.misc.w - 10 - i,
+			VY(gui.pos_misc) - 10 - gl_defFont.h );
+	gl_print( &gui.smallFont, &v, NULL, "%s", str );
+
 
 
 	/*
 	 * messages
 	 */
-	VX(v) = VX(gui.pos_mesg);
-	VY(v) = VY(gui.pos_mesg) + (double)(gl_defFont.h*mesg_max)*1.2;
+	vect_csetmin( &v, VX(gui.pos_mesg),
+			VY(gui.pos_mesg) + (double)(gl_defFont.h*mesg_max)*1.2 );
 	for (i=0; i<mesg_max; i++) {
 		VY(v) -= (double)gl_defFont.h*1.2;
 		if (mesg_stack[mesg_max-i-1].str[0]!='\0') {
@@ -722,6 +753,16 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 							VY(gui.pos_frame) + gui.gfx_frame->h - y - gui.smallFont.h );
 				}
 			} while ((cur = cur->next));
+		}
+
+		/*
+		 * misc
+		 */
+		else if (xml_isNode(node,"misc")) {
+			rect_parse( node, &x, &y, &gui.misc.w, &gui.misc.h );
+			vect_csetmin( &gui.pos_misc,
+					VX(gui.pos_frame) + x,
+					VY(gui.pos_frame) + gui.gfx_frame->h - y );
 		}
 	} while ((node = node->next));
 

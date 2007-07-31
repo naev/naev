@@ -4,9 +4,9 @@
 
 #include <math.h>
 #include <stdlib.h>
-#include <assert.h>
 
 #include "main.h"
+#include "log.h"
 
 
 /*
@@ -250,7 +250,7 @@ Solid* solid_create( const double mass, const double dir,
 		const Vector2d* pos, const Vector2d* vel )
 {
 	Solid* dyn = MALLOC_ONE(Solid);
-	assert(dyn != NULL);
+	if (dyn==NULL) ERR("Out of Memory");
 	solid_init( dyn, mass, dir, pos, vel );
 	return dyn;
 }
@@ -260,7 +260,7 @@ Solid* solid_create( const double mass, const double dir,
  */
 void solid_free( Solid* src )
 {
-	free( src );
+	free(src);
 	src = NULL;
 }
 
