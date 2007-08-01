@@ -26,34 +26,44 @@ int CollideSprite( const gl_texture* at, const int asx, const int asy, const Vec
 	int x,y;
 
 	/* a - cube coordinates */ 
-	int ax1 = (int)VX(*ap) - (int)(at->sw)/2; 
-	int ay1 = (int)VY(*ap) - (int)(at->sh)/2; 
-	int ax2 = ax1 + (int)(at->sw) - 1; 
-	int ay2 = ay1 + (int)(at->sh) - 1; 
+	int ax1 = (int)VX(*ap) - (int)(at->sw)/2;
+	int ay1 = (int)VY(*ap) - (int)(at->sh)/2;
+	int ax2 = ax1 + (int)(at->sw) - 1;
+	int ay2 = ay1 + (int)(at->sh) - 1;
 
 	/* b - cube coordinates */ 
-	int bx1 = (int)VX(*bp) - (int)(bt->sw)/2; 
-	int by1 = (int)VY(*bp) - (int)(bt->sh)/2; 
-	int bx2 = bx1 + bt->sw - 1; 
-	int by2 = by1 + bt->sh - 1; 
+	int bx1 = (int)VX(*bp) - (int)(bt->sw)/2;
+	int by1 = (int)VY(*bp) - (int)(bt->sh)/2;
+	int bx2 = bx1 + bt->sw - 1;
+	int by2 = by1 + bt->sh - 1;
 
 	/* check if bounding boxes intersect */ 
-	if((bx2 < ax1) || (ax2 < bx1)) return 0; 
-	if((by2 < ay1) || (ay2 < by1)) return 0; 
+	if((bx2 < ax1) || (ax2 < bx1)) return 0;
+	if((by2 < ay1) || (ay2 < by1)) return 0;
 
 
 	/* define the remaining binding box */ 
-	int inter_x0 = MAX( ax1, bx1 ); 
-	int inter_x1 = MIN( ax2, bx2 ); 
-	int inter_y0 = MAX( ay1, by1 ); 
-	int inter_y1 = MIN( ay2, by2 ); 
+	int inter_x0 = MAX( ax1, bx1 );
+	int inter_x1 = MIN( ax2, bx2 );
+	int inter_y0 = MAX( ay1, by1 );
+	int inter_y1 = MIN( ay2, by2 );
 
-	for (y=inter_y0; y<=inter_y1; y++) 
+	/* real vertical sprite value (flipped) */
+	int rasy = at->sy - asy - 1;
+	int rbsy = bt->sy - bsy - 1;
+
+	/* set up the base points */
+	int abx =  asx*(int)(at->sw) - ax1;
+	int aby = rasy*(int)(at->sh) - ay1;
+	int bbx =  bsx*(int)(bt->sw) - bx1;
+	int bby = rbsy*(int)(bt->sh) - by1;
+
+	for (y=inter_y0; y<=inter_y1; y++)
 		for (x=inter_x0; x<=inter_x1; x++)
 			/* compute offsets for surface before pass to TransparentPixel test */ 
-			if ((!gl_isTrans(at, asx*(int)(at->sw) + x-ax1, asy*(int)(at->sh) + y-ay1)) && 
-					(!gl_isTrans(bt, bsx*(int)(bt->sw) + x-bx1, bsy*(int)(bt->sh) + y-by1))) 
-				return 1; 
+			if ((!gl_isTrans(at, abx + x, aby + y)) &&
+					(!gl_isTrans(bt, bbx + x, bby + y)))
+				return 1;
 
-	return 0; 
+	return 0;
 } 

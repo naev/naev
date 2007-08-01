@@ -222,7 +222,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
 	if (rw) *rw = potw;
 	if (rh) *rh = poth;
 
-	if (surface->w != potw || surface->h != poth ) { /* size isn't original */
+	if ((surface->w != potw) || (surface->h != poth)) { /* size isn't original */
 		SDL_Rect rtemp;
 		rtemp.x = rtemp.y = 0;
 		rtemp.w = surface->w;
@@ -358,14 +358,15 @@ gl_texture*  gl_newImage( const char* path )
 
 	SDL_FreeSurface(temp); /* free the temporary surface */
 
-	SDL_LockSurface(surface);
-	trans = SDL_MapTrans(surface);
-	SDL_UnlockSurface(surface);
-
 	if (SDL_VFlipSurface(surface)) {
 		WARN( "Error flipping surface" );
 		return NULL;
 	}
+
+	/* do after flipping for collision detection */
+	SDL_LockSurface(surface);
+	trans = SDL_MapTrans(surface);
+	SDL_UnlockSurface(surface);
 
 	t = gl_loadImage(surface);
 	t->trans = trans;
