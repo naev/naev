@@ -30,14 +30,15 @@
 #include "pack.h"
 #include "weapon.h"
 #include "faction.h"
+#include "xml.h"
 
 
-#define WINDOW_CAPTION  "NAEV - Sea of Darkness"
+/* to get data info */
+#define XML_START_ID "Start"
+#define START_DATA "dat/start.xml"
 
 #define CONF_FILE			"conf"
-
 #define MINIMUM_FPS		0.5
-
 #define FONT_SIZE			12
 
 
@@ -48,8 +49,10 @@ static int quit = 0; /* for primary loop */
 static unsigned int time = 0; /* used to calculate FPS and movement */
 
 /* some defaults */
-#define DATA_DEF		"data"
+#define DATA_DEF		"data" /* default data packfile */
+#define DATA_NAME_LEN	25 /* max length of data name */
 char* data = NULL;
+char dataname[DATA_NAME_LEN];
 static int show_fps = 1; /* shows fps - default yes */
 static int max_fps = 0;
 
@@ -59,6 +62,8 @@ static int max_fps = 0;
  */
 static void print_usage( char **argv );
 static void display_fps( const double dt );
+static void window_caption (void);
+static void data_name (void);
 /* update */
 static void update_all (void);
 
@@ -94,7 +99,7 @@ int main ( int argc, char** argv )
 	 * print the version
 	 */
 	LOG( " "APPNAME" v%d.%d.%d", VMAJOR, VMINOR, VREV );
-
+	
 
 	/*
 	 * initializes SDL for possible warnings
@@ -234,7 +239,7 @@ int main ( int argc, char** argv )
 				break;
 
 			case 'v':
-				LOG("main: version %d.%d.%d\n", VMAJOR, VMINOR, VREV);
+				LOG(APPNAME": version %d.%d.%d", VMAJOR, VMINOR, VREV);
 			case 'h':
 				print_usage(argv);
 				exit(EXIT_SUCCESS);
@@ -250,6 +255,9 @@ int main ( int argc, char** argv )
 		SDL_Quit();
 		exit(EXIT_FAILURE);
 	}
+	data_name(); /* loads the data's name and friends */
+	LOG(" %s", dataname);
+	DEBUG();
 
 	/* random numbers */
 	rng_init();
@@ -263,18 +271,13 @@ int main ( int argc, char** argv )
 		SDL_Quit();
 		exit(EXIT_FAILURE);
 	}
-
-
-	/*
-	 * Window
-	 */
-	SDL_WM_SetCaption( WINDOW_CAPTION, NULL );
+	window_caption();
 
 
 	/*
 	 * Input
 	 */
-	if (indjoystick >= 0 || namjoystick != NULL) {
+	if ((indjoystick >= 0) || (namjoystick != NULL)) {
 		if (joystick_init())
 			WARN("Error initializing joystick input");
 		if (namjoystick != NULL) { /* use the joystick name to find a joystick */
@@ -381,7 +384,7 @@ int main ( int argc, char** argv )
 static double fps_dt = 1.;
 static void update_all(void)
 {
-	/* dt in us */
+	/* dt in ms/1000 */
 	double dt = (double)(SDL_GetTicks() - time) / 1000.;
 	time = SDL_GetTicks();
 
@@ -392,7 +395,7 @@ static void update_all(void)
 		return;
 	}
 	/* if fps is limited */
-	else if ( max_fps != 0 && dt < 1./max_fps) {
+	else if ((max_fps != 0) && (dt < 1./max_fps)) {
 		double delay = 1./max_fps - dt;
 		SDL_Delay( delay );
 		fps_dt += delay; /* makes sure it displays the proper fps */
@@ -424,7 +427,7 @@ static void display_fps( const double dt )
 {
 	fps_dt += dt;
 	fps_cur += 1.;
-	if (fps_dt > 1.) {
+	if (fps_dt > 1.) { /* recalculate every second */
 		fps = fps_cur / fps_dt;
 		fps_dt = fps_cur = 0.;
 	}
@@ -432,6 +435,51 @@ static void display_fps( const double dt )
 	vect_csetmin(&pos, 10., (double)(gl_screen.h-20));
 	if (show_fps)
 		gl_print( NULL, &pos, NULL, "%3.2f", fps );
+}
+
+
+/*
+ * gets the data module's name
+ */
+static void data_name (void)
+{
+	uint32_t bufsize;
+	char *buf = pack_readfile( DATA, START_DATA, &bufsize );
+
+	xmlNodePtr node;
+	xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+
+	node = doc->xmlChildrenNode;
+	if (!xml_isNode(node,XML_START_ID)) {
+		ERR("Malformed '"START_DATA"' file: missing root element '"XML_START_ID"'");
+		return;
+	}
+
+	node = node->xmlChildrenNode; /* first system node */
+	if (node == NULL) {
+		ERR("Malformed '"START_DATA"' file: does not contain elements");
+		return;
+	}
+	do {
+		if (xml_isNode(node,"name"))
+			strncpy(dataname,xml_get(node),DATA_NAME_LEN);
+	} while ((node = node->next));
+
+	xmlFreeDoc(doc);
+	free(buf);
+	xmlCleanupParser();
+}
+
+
+/*
+ * sets the window caption
+ */
+static void window_caption (void)
+{
+	char tmp[DATA_NAME_LEN+10];
+
+	snprintf(tmp,DATA_NAME_LEN+10,APPNAME" - %s",dataname);
+	SDL_WM_SetCaption(tmp, NULL );
 }
 
 

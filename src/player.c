@@ -26,7 +26,7 @@
 #define START_DATA "dat/start.xml"
 
 
-#define POW2(x)	((x)*(x))
+#define pow2(x)	((x)*(x))
 
 #define GFX_GUI_FRAME		"gfx/gui/frame.png"
 #define GFX_GUI_TARG_PILOT	"gfx/gui/pilot.png"
@@ -44,8 +44,9 @@ typedef struct {
 } Keybind;
 static Keybind** player_input; /* contains the players keybindings */
 /* name of each keybinding */
-const char *keybindNames[] = { "accel", "left", "right", "primary", "target",
-		"target_nearest", "mapzoomin", "mapzoomout", 
+const char *keybindNames[] = { "accel", "left", "right", /* movement */
+		"primary", "target", "target_nearest", "board", /* fighting */
+		"mapzoomin", "mapzoomout", "screenshot",  /* misc */
 		"end" }; /* must terminate in "end" */
 
 
@@ -158,7 +159,8 @@ static int gui_parse( const xmlNodePtr parent, const char *name );
 static void gui_renderPilot( const Pilot* p );
 static void gui_renderBar( const glColor* c, const Vector2d* p,
 		const Rect* r, const double w );
-
+static void player_board (void);
+static void player_screenshot (void);
 
 
 
@@ -637,28 +639,28 @@ static void rect_parse( const xmlNodePtr parent,
 	do {
 		if (xml_isNode(cur,"x")) {
 			if (x!=NULL) {
-				*x = (double)atoi((char*)cur->children->content);
+				*x = xml_getFloat(cur);
 				param |= (1<<0);
 			}
 			else WARN("Extra parameter 'x' found for GUI node '%s'", parent->name);
 		}
 		else if (xml_isNode(cur,"y")) {
 			if (y!=NULL) {
-				*y = (double)atoi((char*)cur->children->content);
+				*y = xml_getFloat(cur);
 				param |= (1<<1);
 			}
 			else WARN("Extra parameter 'y' found for GUI node '%s'", parent->name);
 		}
 		else if (xml_isNode(cur,"w")) {
 			if (w!=NULL) {
-				*w = (double)atoi((char*)cur->children->content);
+				*w = xml_getFloat(cur);
 				param |= (1<<2);
 			}
 			else WARN("Extra parameter 'w' found for GUI node '%s'", parent->name);
 		}
 		else if (xml_isNode(cur,"h")) {
 			if (h!=NULL) {
-				*h = (double)atoi((char*)cur->children->content);
+				*h = xml_getFloat(cur);
 				param |= (1<<3);
 			}
 			else WARN("Extra parameter 'h' found for GUI node '%s'", parent->name);
@@ -887,6 +889,51 @@ void player_think( Pilot* player )
 
 
 /*
+ * attempt to board the player's target
+ */
+void player_board (void)
+{
+	Pilot *p;
+	
+	if (player_target==PLAYER_ID) {
+		player_message("You need a target to board first!");
+		return;
+	}
+
+	p = pilot_get(player_target);
+
+	if (!pilot_isFlag(p,PILOT_DISABLED)) {
+		player_message("You cannot board a ship that isn't disabled!");
+		return;
+	} if (vect_dist(&player->solid->pos,&p->solid->pos) > 
+			p->ship->gfx_space->sw * PILOT_SIZE_APROX) {
+		player_message("You are too far away to board your target");
+		return;
+	} if ((pow2(VX(player->solid->vel)-VX(p->solid->vel)) +
+				pow2(VY(player->solid->vel)-VY(p->solid->vel))) >
+			(double)pow2(MAX_HYPERSPACE_VEL)) {
+		player_message("You are going to fast to board the ship");
+		return;
+	}
+
+	player_message("Ship boarding not implemented yet");
+}
+
+
+/*
+ * take a screenshot
+ */
+static void player_screenshot (void)
+{
+	char filename[20];
+
+	/* TODO not overwrite old screenshots */
+	strncpy(filename,"screenshot.png",20);
+	gl_screenshot(filename);
+}
+
+
+/*
  *
  *
  *		I N P U T
@@ -903,8 +950,10 @@ void input_setDefault (void)
 	input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, 0 );
 	input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, 0 );
 	input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_r, 0 );
+	input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, 0 );
 	input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_9, 0 );
 	input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_0, 0 );
+	input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_s, 0 );
 }
 
 /*
@@ -988,6 +1037,9 @@ static void input_key( int keynum, double value, int abs )
 		if (value==KEY_PRESS) player_target = pilot_getNext(player_target);
 	} else if (strcmp(player_input[keynum]->name, "target_nearest")==0) {
 		if (value==KEY_PRESS) player_target = pilot_getHostile();
+	/* board them ships */
+	} else if (strcmp(player_input[keynum]->name, "board")==0) {
+		if (value==KEY_PRESS) player_board();
 	/* zooming in */
 	} else if (strcmp(player_input[keynum]->name, "mapzoomin")==0) {
 		if (value==KEY_PRESS && gui.radar.res < RADAR_RES_MAX)
@@ -996,6 +1048,8 @@ static void input_key( int keynum, double value, int abs )
 	} else if (strcmp(player_input[keynum]->name, "mapzoomout")==0) {
 		if (value==KEY_PRESS && gui.radar.res > RADAR_RES_MIN)
 			gui.radar.res -= RADAR_RES_INTERVAL;
+	} else if (strcmp(player_input[keynum]->name, "screenshot")==0) {
+		if (value==KEY_PRESS) player_screenshot();
 	}
 
 	/* make sure values are sane */

@@ -508,6 +508,9 @@ void space_render( double dt )
 	glPushMatrix(); /* projection translation matrix */
 		glTranslated( -(double)gl_screen.w/2., -(double)gl_screen.h/2., 0.);
 
+	/*
+	 * gprof claims it's the slowest thing in the game!
+	 */
 	glBegin(GL_POINTS);
 	for (i=0; i < nstars; i++) {
 		/* update position */

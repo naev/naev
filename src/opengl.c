@@ -6,6 +6,8 @@
 #include <stdarg.h> /* va_list for gl_print */
 #include <string.h>
 
+#include <png.h>
+
 #include "SDL.h"
 #include "SDL_image.h"
 #include "ft2build.h"
@@ -59,7 +61,9 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh );
 /* gl_font */
 static void gl_fontMakeDList( FT_Face face, char ch,
 		GLuint list_base, GLuint *tex_base, int *width_base );
-
+/* png */
+int write_png( const char *file_name, png_bytep *rows,
+		int w, int h, int colortype, int bitdepth );
 
 
 /*
@@ -172,6 +176,25 @@ static uint8_t* SDL_MapTrans( SDL_Surface* s )
 			t[(i*s->w+j)/8] |= (SDL_IsTrans(s,j,i)) ? 0 : (1<<((i*s->w+j)%8));
 
 	return t;
+}
+
+
+/*
+ * takes a screenshot
+ */
+void gl_screenshot( const char *filename )
+{
+	SDL_Surface *screen = SDL_GetVideoSurface();
+	unsigned rowbytes = screen->w * 4;
+	unsigned char screenbuf[screen->h][rowbytes], *rows[screen->h];
+	int i;
+
+	glReadPixels( 0, 0, screen->w, screen->h,
+			GL_RGBA, GL_UNSIGNED_BYTE, screenbuf );
+
+	for (i = 0; i < screen->h; i++) rows[i] = screenbuf[screen->h - i - 1];
+	write_png( filename, rows, screen->w, screen->h,
+			PNG_COLOR_TYPE_RGBA, 8);
 }
 
 
@@ -388,6 +411,8 @@ int gl_isTrans( const gl_texture* t, const int x, const int y )
 
 /*
  * sets x and y to be the appropriate sprite for gl_texture using dir
+ *
+ * gprof claims to be second slowest thing in the game
  */
 void gl_getSpriteFromDir( int* x, int* y, const gl_texture* t, const double dir )
 {
@@ -826,3 +851,52 @@ void gl_exit()
 {
 	SDL_Quit();
 }
+
+
+/*
+ * saves a png
+ */
+int write_png( const char *file_name, png_bytep *rows,
+		int w, int h, int colortype, int bitdepth )
+{
+
+	png_structp png_ptr;
+	png_infop info_ptr;
+	FILE *fp = NULL;
+	char *doing = "open for writing";
+
+	if (!(fp = fopen(file_name, "wb"))) goto fail;
+
+	doing = "create png write struct";
+	if (!(png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL))) goto fail;
+
+	doing = "create png info struct";
+	if (!(info_ptr = png_create_info_struct(png_ptr))) goto fail;
+	if (setjmp(png_jmpbuf(png_ptr))) goto fail;
+
+	doing = "init IO";
+	png_init_io(png_ptr, fp);
+
+	doing = "write header";
+	png_set_IHDR(png_ptr, info_ptr, w, h, bitdepth, colortype, 
+			PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE,
+			PNG_FILTER_TYPE_BASE);
+
+	doing = "write info";
+	png_write_info(png_ptr, info_ptr);
+
+	doing = "write image";
+	png_write_image(png_ptr, rows);
+
+	doing = "write end";
+	png_write_end(png_ptr, NULL);
+
+	doing = "closing file";
+	if(0 != fclose(fp)) goto fail;
+
+	return 0;
+
+fail:
+	WARN( "Write_png: could not %s", doing );
+	return -1;
+}   
