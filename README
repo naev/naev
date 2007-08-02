@@ -10,7 +10,11 @@
 		X.2) Combat
 			X.2.1) primary : fires primary weapons. default: spacebar.
 			X.2.2) target : targets next ship. default: tab
+			X.2.3) target_nearest : targets closest hostile ship. default: r
+			X.2.4) face : faces the target. default: a
+			X.2.5) board : board the target. default: b
 
 		X.3) Gui
 			X.3.1) mapzoomin : zooms in the minimap. default: 9.
 			X.3.2) mapzoomout : zooms out in the minimap. default: 0.
+			X.3.3) screenshot : takes a screenshot. default: s

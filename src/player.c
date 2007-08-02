@@ -28,13 +28,19 @@
 
 #define pow2(x)	((x)*(x))
 
-#define GFX_GUI_FRAME		"gfx/gui/frame.png"
-#define GFX_GUI_TARG_PILOT	"gfx/gui/pilot.png"
-#define GFX_GUI_TARG_PLANET "gfx/gui/planet.png"
+
+/* flag defines */
+#define PLAYER_TURN_LEFT	(1<<0)	/* player is turning left */
+#define PLAYER_TURN_RIGHT	(1<<1)	/* player is turning right */
+#define PLAYER_FACE			(1<<2)	/* player is facing target */
+/* flag functions */
+#define player_isFlag(f)	(player_flags & f)
+#define player_setFlag(f)	(player_flags |= f)
+#define player_rmFlag(f)	(player_flags ^= f)
 
 
-#define KEY_PRESS		1.
-#define KEY_RELEASE	-1.
+#define KEY_PRESS		( 1.)
+#define KEY_RELEASE	(-1.)
 /* keybinding structure */
 typedef struct {
 	char *name; /* keybinding name, taken from keybindNames */
@@ -45,7 +51,7 @@ typedef struct {
 static Keybind** player_input; /* contains the players keybindings */
 /* name of each keybinding */
 const char *keybindNames[] = { "accel", "left", "right", /* movement */
-		"primary", "target", "target_nearest", "board", /* fighting */
+		"primary", "target", "target_nearest", "face", "board", /* fighting */
 		"mapzoomin", "mapzoomout", "screenshot",  /* misc */
 		"end" }; /* must terminate in "end" */
 
@@ -55,6 +61,7 @@ const char *keybindNames[] = { "accel", "left", "right", /* movement */
  */
 Pilot* player = NULL; /* ze player */
 unsigned int credits = 0;
+static int player_flags = 0; /* player flags */
 static double player_turn = 0.; /* turn velocity from input */
 static double player_acc = 0.; /* accel velocity from input */
 static int player_primary = 0; /* player is shooting primary weapon */
@@ -159,6 +166,7 @@ static int gui_parse( const xmlNodePtr parent, const char *name );
 static void gui_renderPilot( const Pilot* p );
 static void gui_renderBar( const glColor* c, const Vector2d* p,
 		const Rect* r, const double w );
+/* keybind actions */
 static void player_board (void);
 static void player_screenshot (void);
 
@@ -878,6 +886,14 @@ void gui_free (void)
  */
 void player_think( Pilot* player )
 {
+	if (player_isFlag(PLAYER_FACE) && (player_target != PLAYER_ID)) {
+		double diff = angle_diff(player->solid->dir,
+				vect_angle(&player->solid->pos, &pilot_get(player_target)->solid->pos));
+		player_turn = -10.*diff;
+		if (player_turn > 1.) player_turn = 1.;
+		else if (player_turn < -1.) player_turn = -1.;
+	}
+
 	player->solid->dir_vel = 0.;
 	if (player_turn)
 		player->solid->dir_vel -= player->ship->turn * player_turn;
@@ -950,6 +966,7 @@ void input_setDefault (void)
 	input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, 0 );
 	input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, 0 );
 	input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_r, 0 );
+	input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, 0 );
 	input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, 0 );
 	input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_9, 0 );
 	input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_0, 0 );
@@ -1020,43 +1037,79 @@ static void input_key( int keynum, double value, int abs )
 	if (strcmp(player_input[keynum]->name,"accel")==0) {
 		if (abs) player_acc = value;
 		else player_acc += value;
+		player_acc = ABS(player_acc); /* make sure value is sane */
+
+
 	/* turning left */
 	} else if (strcmp(player_input[keynum]->name,"left")==0) {
+
+		/* set flags for facing correction */
+		if (value==KEY_PRESS) player_setFlag(PLAYER_TURN_LEFT);
+		else if (value==KEY_RELEASE) player_rmFlag(PLAYER_TURN_LEFT);
+
 		if (abs) player_turn = -value;
 		else player_turn -= value;
+		if (player_turn < -1.) player_turn = -1.; /* make sure value is sane */
+
+
 	/* turning right */
 	} else if (strcmp(player_input[keynum]->name,"right")==0) {
+
+		/* set flags for facing correction */
+		if (value==KEY_PRESS) player_setFlag(PLAYER_TURN_RIGHT);
+		else if (value==KEY_RELEASE) player_rmFlag(PLAYER_TURN_RIGHT);
+
 		if (abs)	player_turn = value;
 		else player_turn += value;
+		if (player_turn > 1.) player_turn = 1.; /* make sure value is sane */
+
+
 	/* shooting primary weapon */
 	} else if (strcmp(player_input[keynum]->name, "primary")==0) {
 		if (value==KEY_PRESS) player_primary = 1;
 		else if (value==KEY_RELEASE) player_primary = 0;
+
+
 	/* targetting */
 	} else if (strcmp(player_input[keynum]->name, "target")==0) {
 		if (value==KEY_PRESS) player_target = pilot_getNext(player_target);
+
 	} else if (strcmp(player_input[keynum]->name, "target_nearest")==0) {
 		if (value==KEY_PRESS) player_target = pilot_getHostile();
+
+	/* face the target */
+	} else if (strcmp(player_input[keynum]->name, "face")==0) {
+		if (value==KEY_PRESS) player_setFlag(PLAYER_FACE);
+		else if (value==KEY_RELEASE) {
+			player_rmFlag(PLAYER_FACE);
+
+			/* turning corrections */
+			player_turn = 0;
+			if (player_isFlag(PLAYER_TURN_LEFT)) player_turn -= 1;
+			if (player_isFlag(PLAYER_TURN_RIGHT)) player_turn += 1;
+		}
+
+
 	/* board them ships */
 	} else if (strcmp(player_input[keynum]->name, "board")==0) {
 		if (value==KEY_PRESS) player_board();
+
+
 	/* zooming in */
 	} else if (strcmp(player_input[keynum]->name, "mapzoomin")==0) {
 		if (value==KEY_PRESS && gui.radar.res < RADAR_RES_MAX)
 			gui.radar.res += RADAR_RES_INTERVAL;
+
+
 	/* zooming out */
 	} else if (strcmp(player_input[keynum]->name, "mapzoomout")==0) {
 		if (value==KEY_PRESS && gui.radar.res > RADAR_RES_MIN)
 			gui.radar.res -= RADAR_RES_INTERVAL;
+
+
 	} else if (strcmp(player_input[keynum]->name, "screenshot")==0) {
 		if (value==KEY_PRESS) player_screenshot();
 	}
-
-	/* make sure values are sane */
-	player_acc = ABS(player_acc);
-	if (player_acc > 1.) player_acc = 1.;
-	if (player_turn > 1.) player_turn = 1.;
-	else if (player_turn < -1.) player_turn = -1.;
 }
 
 
