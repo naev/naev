@@ -90,14 +90,14 @@ static Ship* ship_parse( xmlNodePtr parent )
 		else if (strcmp((char*)node->name,"health")==0) {
 			cur = node->children;
 			do {
-				if (strcmp((char*)cur->name,"armor")==0)
-					temp->armor = (double)atoi((char*)cur->children->content);
+				if (strcmp((char*)cur->name,"armour")==0)
+					temp->armour = (double)atoi((char*)cur->children->content);
 				else if (strcmp((char*)cur->name,"shield")==0)
 					temp->shield = (double)atoi((char*)cur->children->content);
 				else if (strcmp((char*)cur->name,"energy")==0)
 					temp->energy = (double)atoi((char*)cur->children->content);
-				else if (strcmp((char*)cur->name,"armor_regen")==0)
-					temp->armor_regen = (double)(atoi((char*)cur->children->content))/60.0;
+				else if (strcmp((char*)cur->name,"armour_regen")==0)
+					temp->armour_regen = (double)(atoi((char*)cur->children->content))/60.0;
 				else if (strcmp((char*)cur->name,"shield_regen")==0)
 					temp->shield_regen = (double)(atoi((char*)cur->children->content))/60.0;
 				else if (strcmp((char*)cur->name,"energy_regen")==0)
@@ -133,7 +133,7 @@ static Ship* ship_parse( xmlNodePtr parent )
 					
 					if ((ocur=temp->outfit) == NULL) temp->outfit = otemp;
 					else {
-						while (ocur->next);
+						while (ocur->next) ocur = ocur->next;
 						ocur->next = otemp;
 					}
 				}
@@ -151,8 +151,8 @@ static Ship* ship_parse( xmlNodePtr parent )
 	MELEMENT(temp->speed,"speed");
 	MELEMENT(temp->crew,"crew");
 	MELEMENT(temp->mass,"mass");
-	MELEMENT(temp->armor,"armor");
-	MELEMENT(temp->armor_regen,"armor_regen");
+	MELEMENT(temp->armour,"armour");
+	MELEMENT(temp->armour_regen,"armour_regen");
 	MELEMENT(temp->shield,"shield");
 	MELEMENT(temp->shield_regen,"shield_regen");
 	MELEMENT(temp->energy,"energy");

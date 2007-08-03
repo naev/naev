@@ -13,6 +13,8 @@
 			X.2.3) target_nearest : targets closest hostile ship. default: r
 			X.2.4) face : faces the target. default: a
 			X.2.5) board : board the target. default: b
+			X.2.6) secondary : fires secondary weapon. default: left shift
+			X.2.7) secondary_next : switches to the next secondary weapon. default: w
 
 		X.3) Gui
 			X.3.1) mapzoomin : zooms in the minimap. default: 9.

@@ -33,6 +33,8 @@
 #define PLAYER_TURN_LEFT	(1<<0)	/* player is turning left */
 #define PLAYER_TURN_RIGHT	(1<<1)	/* player is turning right */
 #define PLAYER_FACE			(1<<2)	/* player is facing target */
+#define PLAYER_PRIMARY		(1<<3)	/* player is shooting primary weapon */
+#define PLAYER_SECONDARY	(1<<4)	/* player is shooting secondary weapon */
 /* flag functions */
 #define player_isFlag(f)	(player_flags & f)
 #define player_setFlag(f)	(player_flags |= f)
@@ -52,6 +54,7 @@ static Keybind** player_input; /* contains the players keybindings */
 /* name of each keybinding */
 const char *keybindNames[] = { "accel", "left", "right", /* movement */
 		"primary", "target", "target_nearest", "face", "board", /* fighting */
+		"secondary", "secondary_next", /* secondary weapons */
 		"mapzoomin", "mapzoomout", "screenshot",  /* misc */
 		"end" }; /* must terminate in "end" */
 
@@ -61,14 +64,11 @@ const char *keybindNames[] = { "accel", "left", "right", /* movement */
  */
 Pilot* player = NULL; /* ze player */
 unsigned int credits = 0;
-static int player_flags = 0; /* player flags */
+static unsigned int player_flags = 0; /* player flags */
 static double player_turn = 0.; /* turn velocity from input */
 static double player_acc = 0.; /* accel velocity from input */
-static int player_primary = 0; /* player is shooting primary weapon */
-/*static int player_secondary = 0; *//* player is shooting secondary weapon */
 static unsigned int player_target = PLAYER_ID; /* targetted pilot */
 static int planet_target = -1; /* targetted planet */
-static int weapon = -1; /* secondary weapon in use */
 
 
 /*
@@ -82,20 +82,20 @@ extern int pilots;
  * GUI stuff
  */
 /* standard colors */
-glColor cConsole			=	{ .r = 0.5, .g = 0.8, .b = 0.5, .a = 1. };
+glColour cConsole			=	{ .r = 0.5, .g = 0.8, .b = 0.5, .a = 1. };
 
-glColor cInert				=	{ .r = 0.6, .g = 0.6, .b = 0.6, .a = 1. };
-glColor cNeutral			=	{ .r = 0.9, .g = 1.0, .b = 0.3, .a = 1. };
-glColor cFriend			=	{ .r = 0.0, .g = 1.0, .b = 0.0, .a = 1. };
-glColor cHostile			=	{ .r = 0.9, .g = 0.2, .b = 0.2, .a = 1. };
+glColour cInert			=	{ .r = 0.6, .g = 0.6, .b = 0.6, .a = 1. };
+glColour cNeutral			=	{ .r = 0.9, .g = 1.0, .b = 0.3, .a = 1. };
+glColour cFriend			=	{ .r = 0.0, .g = 1.0, .b = 0.0, .a = 1. };
+glColour cHostile			=	{ .r = 0.9, .g = 0.2, .b = 0.2, .a = 1. };
 
-glColor cRadar_player	=  { .r = 0.4, .g = 0.8, .b = 0.4, .a = 1. };
-glColor cRadar_targ		=	{ .r = 0.0,	.g = 0.7, .b = 1.0, .a = 1. };
-glColor cRadar_weap		=	{ .r = 0.8, .g = 0.2, .b = 0.2, .a = 1. };
+glColour cRadar_player	=  { .r = 0.4, .g = 0.8, .b = 0.4, .a = 1. };
+glColour cRadar_targ		=	{ .r = 0.0,	.g = 0.7, .b = 1.0, .a = 1. };
+glColour cRadar_weap		=	{ .r = 0.8, .g = 0.2, .b = 0.2, .a = 1. };
 
-glColor cShield			=	{ .r = 0.2, .g = 0.2, .b = 0.8, .a = 1. };
-glColor cArmor				=	{ .r = 0.5, .g = 0.5, .b = 0.5, .a = 1. };
-glColor cEnergy			=	{ .r = 0.2, .g = 0.8, .b = 0.2, .a = 1. };
+glColour cShield			=	{ .r = 0.2, .g = 0.2, .b = 0.8, .a = 1. };
+glColour cArmour			=	{ .r = 0.5, .g = 0.5, .b = 0.5, .a = 1. };
+glColour cEnergy			=	{ .r = 0.2, .g = 0.8, .b = 0.2, .a = 1. };
 typedef struct {
 	double w,h; /* dimensions */
 	RadarShape shape;
@@ -118,7 +118,7 @@ typedef struct {
 	gl_texture* gfx_targetPilot, *gfx_targetPlanet;
 	Radar radar;
 	Rect nav;
-	Rect shield, armor, energy;
+	Rect shield, armour, energy;
 	Rect weapon;
 	Rect misc;
 	
@@ -127,7 +127,7 @@ typedef struct {
 	Vector2d pos_frame;
 	Vector2d pos_radar;
 	Vector2d pos_nav;
-	Vector2d pos_shield, pos_armor, pos_energy;
+	Vector2d pos_shield, pos_armour, pos_energy;
 	Vector2d pos_weapon;
 	Vector2d pos_target, pos_target_health, pos_target_name, pos_target_faction;
 	Vector2d pos_misc;
@@ -164,10 +164,11 @@ static void rect_parse( const xmlNodePtr parent,
 		double *x, double *y, double *w, double *h );
 static int gui_parse( const xmlNodePtr parent, const char *name );
 static void gui_renderPilot( const Pilot* p );
-static void gui_renderBar( const glColor* c, const Vector2d* p,
+static void gui_renderBar( const glColour* c, const Vector2d* p,
 		const Rect* r, const double w );
 /* keybind actions */
 static void player_board (void);
+static void player_secondaryNext (void);
 static void player_screenshot (void);
 
 
@@ -282,13 +283,13 @@ void player_render (void)
 	char str[10];
 	Pilot* p;
 	Vector2d v;
-	glColor* c;
+	glColour* c;
 
 	/* renders the player target graphics */
 	if (player_target != PLAYER_ID) {
 		p = pilot_get(player_target);
 
-		if (pilot_isFlag(p,PILOT_DISABLED)) c = &cInert;
+		if (pilot_isDisabled(p)) c = &cInert;
 		else if (pilot_isFlag(p,PILOT_HOSTILE)) c = &cHostile;
 		else c = &cNeutral;
 
@@ -329,14 +330,14 @@ void player_render (void)
 	/*
 	 * planets
 	 */
-	COLOR(cFriend);
+	COLOUR(cFriend);
 	planets_minimap(gui.radar.res, gui.radar.w, gui.radar.h, gui.radar.shape);
 
 	/*
 	 * weapons
 	 */
 	glBegin(GL_POINTS);
-		COLOR(cRadar_weap);
+		COLOUR(cRadar_weap);
 		weapon_minimap(gui.radar.res, gui.radar.w, gui.radar.h, gui.radar.shape);
 	glEnd(); /* GL_POINTS */
 
@@ -352,7 +353,7 @@ void player_render (void)
 
 	glBegin(GL_POINTS); /* for the player */
 		/* player - drawn last*/
-		COLOR(cRadar_player);
+		COLOUR(cRadar_player);
 		glVertex2d(  0.,  2. ); /* we represent the player with a small + */
 		glVertex2d(  0.,  1. ); 
 		glVertex2d(  0.,  0. );
@@ -389,8 +390,8 @@ void player_render (void)
 	 */
 	gui_renderBar( &cShield, &gui.pos_shield, &gui.shield,
 			player->shield / player->shield_max );
-	gui_renderBar( &cArmor, &gui.pos_armor, &gui.armor,
-			player->armor / player->armor_max );
+	gui_renderBar( &cArmour, &gui.pos_armour, &gui.armour,
+			player->armour / player->armour_max );
 	gui_renderBar( &cEnergy, &gui.pos_energy, &gui.energy,
 			player->energy / player->energy_max );
 
@@ -398,7 +399,7 @@ void player_render (void)
 	/* 
 	 * weapon 
 	 */ 
-	if (weapon == -1) { /* no secondary weapon */ 
+	if (player->secondary==NULL) { /* no secondary weapon */ 
 		i = gl_printWidth( NULL, "Secondary" ); 
 		vect_csetmin( &v, VX(gui.pos_weapon) + (gui.weapon.w - i)/2., 
 				VY(gui.pos_weapon) - 5); 
@@ -408,7 +409,23 @@ void player_render (void)
 				VY(gui.pos_weapon) - 10 - gl_defFont.h); 
 		gl_print( &gui.smallFont, &v, &cGrey, "None"); 
 	}  
-	else { 
+	else {
+		if (player->ammo==NULL) {
+			i = gl_printWidth( &gui.smallFont, "%s", player->secondary->outfit->name);
+			vect_csetmin( &v, VX(gui.pos_weapon) + (gui.weapon.w - i)/2.,
+					VY(gui.pos_weapon) - (gui.weapon.h - gui.smallFont.h)/2.);
+			gl_print( &gui.smallFont, &v, &cConsole, "%s", player->secondary->outfit->name );
+		}
+		else {
+			i = gl_printWidth( &gui.smallFont, "%s", player->ammo->outfit->name);
+			vect_csetmin( &v, VX(gui.pos_weapon) + (gui.weapon.w - i)/2.,
+					VY(gui.pos_weapon) - 5);
+			gl_print( &gui.smallFont, &v, NULL, "%s", player->ammo->outfit->name );
+			i = gl_printWidth( NULL, "%d", player->ammo->quantity );
+			vect_csetmin( &v, VX(gui.pos_weapon) + (gui.weapon.w - i)/2.,
+					VY(gui.pos_weapon) - 10 - gl_defFont.h);
+			gl_print( NULL, &v, &cConsole, "%d", player->ammo->quantity );
+		}
 	} 
 
 
@@ -425,14 +442,14 @@ void player_render (void)
 		gl_print( &gui.smallFont, &gui.pos_target_faction, NULL, "%s", p->faction->name );
 
 		/* target status */
-		if (pilot_isFlag(p,PILOT_DISABLED)) /* pilot is disabled */
+		if (pilot_isDisabled(p)) /* pilot is disabled */
 			gl_print( &gui.smallFont, &gui.pos_target_health, NULL, "Disabled" );
 		else if (p->shield > p->shield_max/100.) /* on shields */
 			gl_print( &gui.smallFont, &gui.pos_target_health, NULL,
 					"%s: %.0f%%", "Shield", p->shield/p->shield_max*100. );
 		else /* on armour */
 			gl_print( &gui.smallFont, &gui.pos_target_health, NULL, 
-					"%s: %.0f%%", "Armour", p->armor/p->armor_max*100. );
+					"%s: %.0f%%", "Armour", p->armour/p->armour_max*100. );
 	}
 	else { /* no target */
 		i = gl_printWidth( NULL, "No Target" );
@@ -507,10 +524,10 @@ static void gui_renderPilot( const Pilot* p )
 
 	glBegin(GL_QUADS);
 		/* colors */
-		if (p->id == player_target) COLOR(cRadar_targ);
-		else if (pilot_isFlag(p,PILOT_DISABLED)) COLOR(cInert);
-		else if (pilot_isFlag(p,PILOT_HOSTILE)) COLOR(cHostile);
-		else COLOR(cNeutral);
+		if (p->id == player_target) COLOUR(cRadar_targ);
+		else if (pilot_isDisabled(p)) COLOUR(cInert);
+		else if (pilot_isFlag(p,PILOT_HOSTILE)) COLOUR(cHostile);
+		else COLOUR(cNeutral);
 
 		/* image */
 		glVertex2d( MAX(x-sx,-w), MIN(y+sy, h) ); /* top-left */
@@ -524,13 +541,13 @@ static void gui_renderPilot( const Pilot* p )
 /*
  * renders a bar (health)
  */
-static void gui_renderBar( const glColor* c, const Vector2d* p,
+static void gui_renderBar( const glColour* c, const Vector2d* p,
 		const Rect* r, const double w )
 {
 	int x, y, sx, sy;
 
 	glBegin(GL_QUADS); /* shield */
-		COLOR(*c); 
+		COLOUR(*c); 
 		x = VX(*p) - gl_screen.w/2.;
 		y = VY(*p) - gl_screen.h/2.;
 		sx = w * r->w;
@@ -793,9 +810,9 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 						VX(gui.pos_frame) + x,
 						VY(gui.pos_frame) + gui.gfx_frame->h - y );
 				}
-				if (xml_isNode(cur,"armor")) {
-					rect_parse( cur, &x, &y, &gui.armor.w, &gui.armor.h );
-					vect_csetmin( &gui.pos_armor,              
+				if (xml_isNode(cur,"armour")) {
+					rect_parse( cur, &x, &y, &gui.armour.w, &gui.armour.h );
+					vect_csetmin( &gui.pos_armour,              
 							VX(gui.pos_frame) + x,                   
 							VY(gui.pos_frame) + gui.gfx_frame->h - y );
 				}
@@ -898,7 +915,9 @@ void player_think( Pilot* player )
 	if (player_turn)
 		player->solid->dir_vel -= player->ship->turn * player_turn;
 
-	if (player_primary) pilot_shoot(player,0);
+	if (player_isFlag(PLAYER_PRIMARY)) pilot_shoot(player,0,0);
+	if (player_isFlag(PLAYER_SECONDARY) && (player_target != PLAYER_ID)) /* needs target */
+		pilot_shoot(player,player_target,1);
 
 	vect_pset( &player->solid->force, player->ship->thrust * player_acc, player->solid->dir );
 }
@@ -918,7 +937,7 @@ void player_board (void)
 
 	p = pilot_get(player_target);
 
-	if (!pilot_isFlag(p,PILOT_DISABLED)) {
+	if (!pilot_isDisabled(p)) {
 		player_message("You cannot board a ship that isn't disabled!");
 		return;
 	} if (vect_dist(&player->solid->pos,&p->solid->pos) > 
@@ -933,6 +952,37 @@ void player_board (void)
 	}
 
 	player_message("Ship boarding not implemented yet");
+}
+
+
+/*
+ * get the next secondary weapon
+ */
+static void player_secondaryNext (void)
+{
+	int i = 0;
+	
+	/* get current secondary weapon pos */
+	if (player->secondary != NULL)	
+		for (i=0; i<player->noutfits; i++)
+			if (&player->outfits[i] == player->secondary) {
+				i++;
+				break;
+			}
+
+	/* get next secondary weapon */
+	for (; i<player->noutfits; i++)
+		if (outfit_isProp(player->outfits[i].outfit, OUTFIT_PROP_WEAP_SECONDARY)) {
+			player->secondary = player->outfits + i;
+			break;
+		}
+
+	/* found no bugger outfit */
+	if (i >= player->noutfits)
+		player->secondary = NULL;
+
+	/* set ammo */
+	pilot_setAmmo(player);
 }
 
 
@@ -968,9 +1018,11 @@ void input_setDefault (void)
 	input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_r, 0 );
 	input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, 0 );
 	input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, 0 );
+	input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, 0 );
+	input_setKeybind( "secondary_next", KEYBIND_KEYBOARD, SDLK_w, 0 );
 	input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_9, 0 );
 	input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_0, 0 );
-	input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_s, 0 );
+	input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MINUS, 0 );
 }
 
 /*
@@ -1066,8 +1118,8 @@ static void input_key( int keynum, double value, int abs )
 
 	/* shooting primary weapon */
 	} else if (strcmp(player_input[keynum]->name, "primary")==0) {
-		if (value==KEY_PRESS) player_primary = 1;
-		else if (value==KEY_RELEASE) player_primary = 0;
+		if (value==KEY_PRESS) player_setFlag(PLAYER_PRIMARY);
+		else if (value==KEY_RELEASE) player_rmFlag(PLAYER_PRIMARY);
 
 
 	/* targetting */
@@ -1076,6 +1128,7 @@ static void input_key( int keynum, double value, int abs )
 
 	} else if (strcmp(player_input[keynum]->name, "target_nearest")==0) {
 		if (value==KEY_PRESS) player_target = pilot_getHostile();
+
 
 	/* face the target */
 	} else if (strcmp(player_input[keynum]->name, "face")==0) {
@@ -1095,18 +1148,30 @@ static void input_key( int keynum, double value, int abs )
 		if (value==KEY_PRESS) player_board();
 
 
+	/* shooting secondary weapon */
+	} else if (strcmp(player_input[keynum]->name, "secondary")==0) {
+		if (value==KEY_PRESS) player_setFlag(PLAYER_SECONDARY);
+		else if (value==KEY_RELEASE) player_rmFlag(PLAYER_SECONDARY);
+	
+
+	/* selecting secondary weapon */
+	} else if (strcmp(player_input[keynum]->name, "secondary_next")==0) {
+		if (value==KEY_PRESS) player_secondaryNext();
+
+
 	/* zooming in */
 	} else if (strcmp(player_input[keynum]->name, "mapzoomin")==0) {
-		if (value==KEY_PRESS && gui.radar.res < RADAR_RES_MAX)
+		if ((value==KEY_PRESS) && (gui.radar.res < RADAR_RES_MAX))
 			gui.radar.res += RADAR_RES_INTERVAL;
 
 
 	/* zooming out */
 	} else if (strcmp(player_input[keynum]->name, "mapzoomout")==0) {
-		if (value==KEY_PRESS && gui.radar.res > RADAR_RES_MIN)
+		if ((value==KEY_PRESS) && (gui.radar.res > RADAR_RES_MIN))
 			gui.radar.res -= RADAR_RES_INTERVAL;
 
 
+	/* take a screenshot */
 	} else if (strcmp(player_input[keynum]->name, "screenshot")==0) {
 		if (value==KEY_PRESS) player_screenshot();
 	}

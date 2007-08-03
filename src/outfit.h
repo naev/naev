@@ -10,8 +10,9 @@
 /*
  * properties
  */
-#define OUTFIT_PROP_WEAP_PRIMARY		(1<<0)
-#define OUTFIT_PROP_WEAP_SECONDARY	(1<<1)
+#define outfit_isProp(o,p)				((o)->properties & p)
+/* property flags */
+#define OUTFIT_PROP_WEAP_SECONDARY	(1<<0)
 
 
 /*
@@ -55,18 +56,20 @@ typedef struct {
 			double speed; /* how fast it goes (not applicable to beam) */
 			double range; /* how far it goes */
 			double accuracy; /* desviation accuracy */
-			double damage_armor, damage_shield; /* damage */
+			double damage_armour, damage_shield; /* damage */
 
 			gl_texture* gfx_space; /* graphic */
 		};
 		struct { /* launcher */
 			unsigned int delay; /* delay between shots */
+			char *ammo; /* the ammo to use */
 		};
 		struct { /* ammo */
 			double speed; /* maximum speed */
 			double turn; /* turn velocity */
 			double thrust; /* acceleration */
-			double damage_armor, damage_shield; /* damage */
+			unsigned int duration; /* duration */
+			double damage_armour, damage_shield; /* damage */
 
 			gl_texture* gfx_space; /* graphic */
 		};

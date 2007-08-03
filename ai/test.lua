@@ -54,7 +54,7 @@ function attack ()
 	dir = face( target )
 	dist = getdist( getpos(target) )
 
-	if parmor() < 70 then
+	if parmour() < 70 then
 		poptask()
 		pushtask(0, "runaway", target)
 	elseif dir < 10 and dist > 300 then

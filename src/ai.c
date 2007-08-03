@@ -53,8 +53,10 @@
 
 /* calls the AI function with name f */
 #define AI_LCALL(f)				(lua_getglobal(L, f), lua_pcall(L, 0, 0, 0))
-/* registers a number constant n to name s (syntax like lua_register) */
+/* registers a number constant n to name s (syntax like lua_regfunc) */
 #define lua_regnumber(l,s,n)	(lua_pushnumber(l,n), lua_setglobal(l,s))
+/* registers a C function */
+#define lua_regfunc(l,s,f)		(lua_pushcfunction(l,f), lua_setglobal(L,s))
 /* L state, void* buf, int n size, char* s identifier */
 #define luaL_dobuffer(L, b, n, s) \
 	(luaL_loadbuffer(L, b, n, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
@@ -66,6 +68,16 @@
 #define MIN_DIR_ERR		1.0*M_PI/180.
 #define MAX_DIR_ERR		0.1*M_PI/180.
 #define MIN_VEL_ERR		0.5
+
+
+/*
+ * ai flags
+ */
+#define ai_setFlag(f)	(pilot_flags |= f )
+#define ai_isFlag(f)		(pilot_flags & f )
+/* flags */
+#define AI_PRIMARY		(1<<0)	/* firing primary weapon */
+#define AI_SECONDARY		(1<<1)	/* firing secondary weapon */
 
 
 /*
@@ -108,9 +120,9 @@ static int ai_taskname( lua_State *L ); /* number taskname() */
 /* consult values */
 static int ai_gettarget( lua_State *L ); /* pointer gettarget() */
 static int ai_gettargetid( lua_State *L ); /* number gettargetid() */
-static int ai_armor( lua_State *L ); /* armor() */
+static int ai_armour( lua_State *L ); /* armour() */
 static int ai_shield( lua_State *L ); /* shield() */
-static int ai_parmor( lua_State *L ); /* parmor() */
+static int ai_parmour( lua_State *L ); /* parmour() */
 static int ai_pshield( lua_State *L ); /* pshield() */
 static int ai_getdistance( lua_State *L ); /* number getdist(Vector2d) */
 static int ai_getpos( lua_State *L ); /* getpos(number) */
@@ -132,6 +144,7 @@ static int ai_getrndplanet( lua_State *L ); /* pointor getrndplanet() */
 static int ai_hyperspace( lua_State *L ); /* [number] hyperspace() */
 /* combat */
 static int ai_combat( lua_State *L ); /* combat( number ) */
+static int ai_settarget( lua_State *L ); /* settarget( number ) */
 static int ai_shoot( lua_State *L ); /* shoot( number ); number = 1,2,3 */
 static int ai_getenemy( lua_State *L ); /* number getenemy() */
 static int ai_hostile( lua_State *L ); /* hostile( number ) */
@@ -151,7 +164,8 @@ static int ai_rng( lua_State *L ); /* rng( number, number ) */
 static Pilot *cur_pilot = NULL;
 static double pilot_acc = 0.;
 static double pilot_turn = 0.;
-static int pilot_primary = 0;
+static int pilot_flags = 0;
+static int pilot_target = 0;
 
 
 /*
@@ -223,47 +237,48 @@ static int ai_loadProfile( char* filename )
 
 	/* Register C functions in Lua */
 	/* tasks */
-	lua_register(L, "pushtask", ai_pushtask);
-	lua_register(L, "poptask", ai_poptask);
-	lua_register(L, "taskname", ai_taskname);
+	lua_regfunc(L, "pushtask", ai_pushtask);
+	lua_regfunc(L, "poptask", ai_poptask);
+	lua_regfunc(L, "taskname", ai_taskname);
 	/* consult values */
-	lua_register(L, "gettarget", ai_gettarget);
-	lua_register(L, "gettargetid", ai_gettargetid);
-	lua_register(L, "armor", ai_armor);
-	lua_register(L, "shield", ai_shield);
-	lua_register(L, "parmor", ai_parmor);
-	lua_register(L, "pshield", ai_pshield);
-	lua_register(L, "getdist", ai_getdistance);
-	lua_register(L, "getpos", ai_getpos);
-	lua_register(L, "minbrakedist", ai_minbrakedist);
+	lua_regfunc(L, "gettarget", ai_gettarget);
+	lua_regfunc(L, "gettargetid", ai_gettargetid);
+	lua_regfunc(L, "armour", ai_armour);
+	lua_regfunc(L, "shield", ai_shield);
+	lua_regfunc(L, "parmour", ai_parmour);
+	lua_regfunc(L, "pshield", ai_pshield);
+	lua_regfunc(L, "getdist", ai_getdistance);
+	lua_regfunc(L, "getpos", ai_getpos);
+	lua_regfunc(L, "minbrakedist", ai_minbrakedist);
 	/* boolean expressions */
-	lua_register(L, "exists", ai_exists);
-	lua_register(L, "ismaxvel", ai_ismaxvel);
-	lua_register(L, "isstopped", ai_isstopped);
-	lua_register(L, "isenemy", ai_isenemy);
-	lua_register(L, "isally", ai_isally);
-	lua_register(L, "incombat", ai_incombat);
+	lua_regfunc(L, "exists", ai_exists);
+	lua_regfunc(L, "ismaxvel", ai_ismaxvel);
+	lua_regfunc(L, "isstopped", ai_isstopped);
+	lua_regfunc(L, "isenemy", ai_isenemy);
+	lua_regfunc(L, "isally", ai_isally);
+	lua_regfunc(L, "incombat", ai_incombat);
 	/* movement */
-	lua_register(L, "accel", ai_accel);
-	lua_register(L, "turn", ai_turn);
-	lua_register(L, "face", ai_face);
-	lua_register(L, "brake", ai_brake);
-	lua_register(L, "getnearestplanet", ai_getnearestplanet);
-	lua_register(L, "getrndplanet", ai_getrndplanet);
-	lua_register(L, "hyperspace", ai_hyperspace);
+	lua_regfunc(L, "accel", ai_accel);
+	lua_regfunc(L, "turn", ai_turn);
+	lua_regfunc(L, "face", ai_face);
+	lua_regfunc(L, "brake", ai_brake);
+	lua_regfunc(L, "getnearestplanet", ai_getnearestplanet);
+	lua_regfunc(L, "getrndplanet", ai_getrndplanet);
+	lua_regfunc(L, "hyperspace", ai_hyperspace);
 	/* combat */
-	lua_register(L, "combat", ai_combat);
-	lua_register(L, "shoot", ai_shoot);
-	lua_register(L, "getenemy", ai_getenemy);
-	lua_register(L, "hostile", ai_hostile);
+	lua_regfunc(L, "combat", ai_combat);
+	lua_regfunc(L, "settarget", ai_settarget);
+	lua_regfunc(L, "shoot", ai_shoot);
+	lua_regfunc(L, "getenemy", ai_getenemy);
+	lua_regfunc(L, "hostile", ai_hostile);
 	/* timers */
-	lua_register(L, "settimer", ai_settimer);
-	lua_register(L, "timeup", ai_timeup);
+	lua_regfunc(L, "settimer", ai_settimer);
+	lua_regfunc(L, "timeup", ai_timeup);
 	/* misc */
-	lua_register(L, "createvect", ai_createvect);
-	lua_register(L, "comm", ai_comm);
-	lua_register(L, "broadcast", ai_broadcast);
-	lua_register(L, "rng", ai_rng);
+	lua_regfunc(L, "createvect", ai_createvect);
+	lua_regfunc(L, "comm", ai_comm);
+	lua_regfunc(L, "broadcast", ai_broadcast);
+	lua_regfunc(L, "rng", ai_rng);
 
 	/* now load the file since all the functions have been previously loaded */
 	buf = pack_readfile( DATA, filename, &bufsize );
@@ -321,7 +336,8 @@ void ai_think( Pilot* pilot )
 
 	/* clean up some variables */
 	pilot_acc = pilot_turn = 0.;
-	pilot_primary = 0;
+	pilot_flags = 0;
+	pilot_target = 0;
 
 	
 	/* control function if pilot is idle or tick is up */
@@ -346,7 +362,9 @@ void ai_think( Pilot* pilot )
 	vect_pset( &cur_pilot->solid->force, /* set the velocity vector */
 			cur_pilot->ship->thrust * pilot_acc, cur_pilot->solid->dir );
 
-	if (pilot_primary) pilot_shoot(pilot, 0); /* is shooting */
+	/* fire weapons if needed */
+	if (ai_isFlag(AI_PRIMARY)) pilot_shoot(pilot,pilot_target,0); /* primary */
+	if (ai_isFlag(AI_SECONDARY)) pilot_shoot(pilot,pilot_target,1); /* secondary */
 }
 
 
@@ -472,14 +490,14 @@ static int ai_gettargetid( lua_State *L )
 }
 
 /*
- * gets the pilot's armor
+ * gets the pilot's armour
  */
-static int ai_armor( lua_State *L )
+static int ai_armour( lua_State *L )
 {
 	double d;
 
-	if (lua_isnumber(L,1)) d = pilot_get((unsigned int)lua_tonumber(L,1))->armor;
-	else d = cur_pilot->armor;
+	if (lua_isnumber(L,1)) d = pilot_get((unsigned int)lua_tonumber(L,1))->armour;
+	else d = cur_pilot->armour;
 
 	lua_pushnumber(L, d);
 	return 1;
@@ -500,18 +518,18 @@ static int ai_shield( lua_State *L )
 }
 
 /*
- * gets the pilot's armor in percent
+ * gets the pilot's armour in percent
  */
-static int ai_parmor( lua_State *L )
+static int ai_parmour( lua_State *L )
 {
 	double d;
 	Pilot* p;
 
 	if (lua_isnumber(L,1)) {
 		p = pilot_get((unsigned int)lua_tonumber(L,1));
-		d = p->armor / p->armor_max * 100.;
+		d = p->armour / p->armour_max * 100.;
 	}
-	else d = cur_pilot->armor / cur_pilot->armor_max * 100.;
+	else d = cur_pilot->armour / cur_pilot->armour_max * 100.;
 
 	lua_pushnumber(L, d);
 	return 1;
@@ -813,6 +831,19 @@ static int ai_combat( lua_State *L )
 	return 0;
 }
 
+
+/*
+ * sets the pilot's target
+ */
+static int ai_settarget( lua_State *L )
+{
+	MIN_ARGS(1);
+
+	if (lua_isnumber(L,1)) pilot_target = (int)lua_tonumber(L,1);
+	return 0;
+}
+
+
 /*
  * makes the pilot shoot
  */
@@ -821,9 +852,9 @@ static int ai_shoot( lua_State *L )
 	int n = 1;
 	if (lua_isnumber(L,1)) n = (int)lua_tonumber(L,1);
 
-	if (n==1) pilot_primary = 1;
-	/* else if (n==2) pilot_secondary = 1;
-		else if  (n==3) pilot_primary = pilot_secondary = 1; */
+	if (n==1) ai_setFlag(AI_PRIMARY);
+	else if (n==2) ai_setFlag(AI_SECONDARY);
+	else if  (n==3) ai_setFlag(AI_PRIMARY | AI_SECONDARY );
 
 	return 0;
 }

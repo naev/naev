@@ -14,6 +14,10 @@
 #include "collision.h"
 
 
+#define weapon_isSmart(w)		(w->think)
+
+
+
 /*
  * pilot stuff
  */
@@ -29,6 +33,7 @@ typedef struct Weapon {
 	Solid* solid; /* actually has its own solid :) */
 
 	unsigned int parent; /* pilot that shot it */
+	unsigned int target; /* target to hit, only used by seeking things */
 	const Outfit* outfit; /* related outfit that fired it or whatnot */
 
 	unsigned int timer; /* mainly used to see when the weapon was fired */
@@ -53,12 +58,16 @@ static int mwfrontLayer = 0; /* alloced memory size */
 /*
  * Prototypes
  */
-static Weapon* weapon_create( const Outfit* outfit, const double dir,
-		const Vector2d* pos, const Vector2d* vel, unsigned int parent );
+static Weapon* weapon_create( const Outfit* outfit,
+		const double dir, const Vector2d* pos, const Vector2d* vel,
+		const unsigned int parent, const unsigned int target );
 static void weapon_render( const Weapon* w );
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer );
+static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer );
 static void weapon_destroy( Weapon* w, WeaponLayer layer );
 static void weapon_free( Weapon* w );
+/* think */
+static void think_seeker( Weapon* w );
 
 
 /*
@@ -91,6 +100,29 @@ void weapon_minimap( const double res, const double w, const double h,
 
 
 /*
+ * seeker brain
+ */
+static void think_seeker( Weapon* w )
+{
+	if (w->target == w->parent) return; /* no self shooting */
+
+	Pilot* p = pilot_get(w->target); /* no null pilots */
+	if (p==NULL) return;
+
+	double diff = angle_diff(w->solid->dir,
+			vect_angle(&w->solid->pos, &p->solid->pos));
+	w->solid->dir_vel = 10 * diff *  w->outfit->turn; /* face the target */
+	if (w->solid->dir_vel > w->outfit->turn) w->solid->dir_vel = w->outfit->turn;
+	else if (w->solid->dir_vel < -w->outfit->turn) w->solid->dir_vel = -w->outfit->turn;
+
+	vect_pset( &w->solid->force, w->outfit->thrust, w->solid->dir );
+
+	if (VMOD(w->solid->vel) > w->outfit->speed) /* shouldn't go faster */
+		vect_pset( &w->solid->vel, w->outfit->speed, VANGLE(w->solid->vel) );
+}
+
+
+/*
  * updates all the weapons in the layer
  */
 void weapons_update( const double dt, WeaponLayer layer )
@@ -114,16 +146,21 @@ void weapons_update( const double dt, WeaponLayer layer )
 	for (i=0; i<(*nlayer); i++) {
 		w = wlayer[i];
 		switch (wlayer[i]->outfit->type) {
-			case OUTFIT_TYPE_BOLT:
+
+			case OUTFIT_TYPE_MISSILE_SEEK_AMMO:
+				if (SDL_GetTicks() > (wlayer[i]->timer + wlayer[i]->outfit->duration)) {
+					weapon_destroy(wlayer[i],layer);
+					continue;
+				}
+				break;
+
+			default: /* check to see if exceeded distance */
 				if (SDL_GetTicks() >
 						(wlayer[i]->timer + 1000*(unsigned int)
 						wlayer[i]->outfit->range/wlayer[i]->outfit->speed)) {
 					weapon_destroy(wlayer[i],layer);
 					continue;
 				}
-				break;
-
-			default:
 				break;
 		}
 		weapon_update(wlayer[i],dt,layer);
@@ -160,26 +197,26 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 		gl_getSpriteFromDir( &psx, &psy, pilot_stack[i]->ship->gfx_space,
 				pilot_stack[i]->solid->dir );
 
-		if ( (w->parent != pilot_stack[i]->id) && /* pilot didn't shoot it */
+		if (w->parent == pilot_stack[i]->id) continue; /* pilot is self */
+
+		if ( (weapon_isSmart(w)) && (pilot_stack[i]->id == w->target) &&
+				CollideSprite( w->outfit->gfx_space, wsx, wsy, &w->solid->pos,
+						pilot_stack[i]->ship->gfx_space, psx, psy, &pilot_stack[i]->solid->pos)) {
+
+			weapon_hit( w, pilot_stack[i], layer );
+			return;
+		}
+		else if ( !weapon_isSmart(w) &&
 				!areAllies(pilot_get(w->parent)->faction,pilot_stack[i]->faction) &&
 				CollideSprite( w->outfit->gfx_space, wsx, wsy, &w->solid->pos,
 						pilot_stack[i]->ship->gfx_space, psx, psy, &pilot_stack[i]->solid->pos)) {
 
-			/* inform the ai it has been attacked, useless if  player */
-			if (!pilot_isPlayer(pilot_stack[i]))
-				ai_attacked( pilot_stack[i], w->parent );
-			if (w->parent == PLAYER_ID) /* make hostile to player */
-				pilot_setFlag( pilot_stack[i], PILOT_HOSTILE);
-
-			/* inform the ship that it should take some damage */
-			pilot_hit(pilot_stack[i], w->outfit->damage_shield, w->outfit->damage_armor);
-			/* no need for the weapon particle anymore */
-			weapon_destroy(w,layer);
+			weapon_hit( w, pilot_stack[i], layer );
 			return;
 		}
 	}
 
-	if (w->think) (*w->think)(w);
+	if (weapon_isSmart(w)) (*w->think)(w);
 	
 	(*w->solid->update)(w->solid, dt);
 
@@ -188,16 +225,36 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
 
 /*
+ * weapon hit the player
+ */
+static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer )
+{
+	/* inform the ai it has been attacked, useless if  player */
+	if (!pilot_isPlayer(p))
+		ai_attacked( p, w->parent );
+	if (w->parent == PLAYER_ID) /* make hostile to player */
+		pilot_setFlag( p, PILOT_HOSTILE);
+
+	/* inform the ship that it should take some damage */
+	pilot_hit( p, w->outfit->damage_shield, w->outfit->damage_armour );
+	/* no need for the weapon particle anymore */
+	weapon_destroy(w,layer);
+}
+
+
+/*
  * creates a new weapon
  */
-static Weapon* weapon_create( const Outfit* outfit, const double dir,
-		const Vector2d* pos, const Vector2d* vel, unsigned int parent )
+static Weapon* weapon_create( const Outfit* outfit,
+		const double dir, const Vector2d* pos, const Vector2d* vel,
+		const unsigned int parent, const unsigned int target )
 {
 	Vector2d v;
 	double mass = 1; /* presume lasers have a mass of 1 */
 	double rdir = dir; /* real direction (accuracy) */
 	Weapon* w = MALLOC_ONE(Weapon);
 	w->parent = parent; /* non-changeable */
+	w->target = target; /* non-changeable */
 	w->outfit = outfit; /* non-changeable */
 	w->update = weapon_update;
 	w->timer = SDL_GetTicks();
@@ -210,6 +267,12 @@ static Weapon* weapon_create( const Outfit* outfit, const double dir,
 			vectcpy( &v, vel );
 			vect_cadd( &v, outfit->speed*cos(rdir), outfit->speed*sin(rdir));
 			w->solid = solid_create( mass, rdir, pos, &v );
+			break;
+
+		case OUTFIT_TYPE_MISSILE_SEEK_AMMO:
+			mass = w->outfit->mass;
+			w->solid = solid_create( mass, dir, pos, vel );
+			w->think = think_seeker; /* eet's a seeker */
 			break;
 
 		default: /* just dump it where the player is */
@@ -226,14 +289,14 @@ static Weapon* weapon_create( const Outfit* outfit, const double dir,
  */
 void weapon_add( const Outfit* outfit, const double dir,
 		const Vector2d* pos, const Vector2d* vel,
-		unsigned int parent, WeaponLayer layer )
+		unsigned int parent, unsigned int target, WeaponLayer layer )
 {
-	if (!outfit_isWeapon(outfit)) {
+	if (!outfit_isWeapon(outfit) && !outfit_isAmmo(outfit)) {
 		ERR("Trying to create a Weapon from a non-Weapon type Outfit");
 		return;
 	}
 
-	Weapon* w = weapon_create( outfit, dir, pos, vel, parent );
+	Weapon* w = weapon_create( outfit, dir, pos, vel, parent, target );
 
 	/* set the proper layer */
 	Weapon** curLayer = NULL;

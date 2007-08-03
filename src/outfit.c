@@ -12,6 +12,9 @@
 #include "pack.h"
 
 
+#define outfit_setProp(o,p)		((o)->properties |= p)
+
+
 #define XML_OUTFIT_ID		"Outfits"	/* XML section identifier */
 #define XML_OUTFIT_TAG		"outfit"
 
@@ -28,6 +31,8 @@ static int outfits = 0;
  */
 static Outfit* outfit_parse( const xmlNodePtr parent );
 static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent );
+static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent );
+static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent );
 
 
 /*
@@ -121,19 +126,84 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
 		else if (xml_isNode(node,"damage")) {
 			cur = node->children;
 			do {
-				if (xml_isNode(cur,"armor")) temp->damage_armor = xml_getFloat(cur);
+				if (xml_isNode(cur,"armour")) temp->damage_armour = xml_getFloat(cur);
 				else if (xml_isNode(cur,"shield")) temp->damage_shield = xml_getFloat(cur);
 			} while ((cur = cur->next));
 		}
 	} while ((node = node->next));
 
 #define MELEMENT(o,s)      if ((o) == 0) WARN("Outfit '%s' missing '"s"' element", temp->name)
-	MELEMENT(temp->accuracy,"tech");
+	if (temp->gfx_space==NULL)
+		WARN("Outfit '%s' missing 'gfx' element", temp->name);
 	MELEMENT(temp->delay,"delay");
 	MELEMENT(temp->speed,"speed");
 	MELEMENT(temp->range,"range");
 	MELEMENT(temp->accuracy,"accuracy");
-	MELEMENT(temp->damage_armor,"armor' from element 'damage");
+	MELEMENT(temp->damage_armour,"armour' from element 'damage");
+	MELEMENT(temp->damage_shield,"shield' from element 'damage");
+#undef MELEMENT
+}
+
+
+/*
+ * parses the specific area for a launcher and loads it into Outfit
+ */
+static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
+{
+	xmlNodePtr node;
+	node  = parent->xmlChildrenNode;
+
+
+	do { /* load all the data */
+		if (xml_isNode(node,"delay")) temp->delay = xml_getInt(node);
+		else if (xml_isNode(node,"ammo")) temp->ammo = strdup(xml_get(node));
+	} while ((node = node->next));
+
+#define MELEMENT(o,s)      if ((o) == 0) WARN("Outfit '%s' missing '"s"' element", temp->name)
+	if (temp->ammo==NULL) WARN("Outfit '%s' missing 'ammo' element", temp->name);
+	MELEMENT(temp->delay,"delay");
+#undef MELEMENT
+}
+
+
+/*
+ * parses the specific area for a weapon and loads it into Outfit
+ */
+static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
+{
+	xmlNodePtr cur, node;
+	node  = parent->xmlChildrenNode;
+
+	char str[PATH_MAX] = "\0";
+
+	do { /* load all the data */
+		if (xml_isNode(node,"thrust")) temp->thrust = xml_getFloat(node);
+		else if (xml_isNode(node,"turn")) temp->turn = xml_getFloat(node);
+		else if (xml_isNode(node,"speed")) temp->speed = xml_getFloat(node);
+		else if (xml_isNode(node,"duration"))
+			temp->duration = 1000*(unsigned int)xml_getFloat(node);
+		else if (xml_isNode(node,"gfx")) {
+			snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+4,
+					OUTFIT_GFX"%s.png", xml_get(node));
+			temp->gfx_space = gl_newSprite(str, 6, 6);
+		}
+		else if (xml_isNode(node,"damage")) {
+			cur = node->children;
+			do {
+				if (xml_isNode(cur,"armour")) temp->damage_armour = xml_getFloat(cur);
+				else if (xml_isNode(cur,"shield")) temp->damage_shield = xml_getFloat(cur);
+			} while ((cur = cur->next));
+		}
+	} while ((node = node->next));
+
+#define MELEMENT(o,s)      if ((o) == 0) WARN("Outfit '%s' missing '"s"' element", temp->name)
+	if (temp->gfx_space==NULL)
+		WARN("Outfit '%s' missing 'gfx' element", temp->name);
+	MELEMENT(temp->thrust,"thrust");
+	MELEMENT(temp->turn,"turn");
+	MELEMENT(temp->speed,"speed");
+	MELEMENT(temp->range,"duration");
+	MELEMENT(temp->damage_armour,"armour' from element 'damage");
 	MELEMENT(temp->damage_shield,"shield' from element 'damage");
 #undef MELEMENT
 }
@@ -163,22 +233,29 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
 			} while ((cur = cur->next));
 		}
 		else if (xml_isNode(node,"specific")) { /* has to be processed seperately */
+
+			/* get the type */
 			prop = xml_nodeProp(node,"type");
 			if (prop == NULL)
 				ERR("Outfit '%s' element 'specific' missing property 'type'",temp->name);
 			temp->type = atoi(prop);
 			free(prop);
-			switch (temp->type) {
-				case OUTFIT_TYPE_NULL:
-					WARN("Outfit '%s' is of type NONE", temp->name);
-					break;
-				case OUTFIT_TYPE_BOLT:
-					outfit_parseSWeapon( temp, node );
-					break;
 
-				default:
-					break;
+			/* is secondary weapon? */
+			prop = xml_nodeProp(node,"secondary");
+			if (prop != NULL) {
+				if ((int)atoi(prop)) outfit_setProp(temp, OUTFIT_PROP_WEAP_SECONDARY);
+				free(prop);
 			}
+
+			if (temp->type==OUTFIT_TYPE_NULL)
+				WARN("Outfit '%s' is of type NONE", temp->name);
+			else if (outfit_isWeapon(temp))
+				outfit_parseSWeapon( temp, node );
+			else if (outfit_isLauncher(temp))
+				outfit_parseSLauncher( temp, node );
+			else if (outfit_isAmmo(temp))
+				outfit_parseSAmmo( temp, node );
 		}
 	} while ((node = node->next));
 
@@ -248,6 +325,10 @@ void outfit_free (void)
 	for (i=0; i < outfits; i++) {
 		if (outfit_isWeapon(&outfit_stack[i]) && outfit_stack[i].gfx_space)
 			gl_freeTexture(outfit_stack[i].gfx_space);
+
+		if (outfit_isLauncher(&outfit_stack[i]) && outfit_stack[i].ammo)
+			free(outfit_stack[i].ammo);
+
 		free(outfit_stack[i].name);
 	}
 	free(outfit_stack);

@@ -33,6 +33,7 @@
 
 /* makes life easier */
 #define pilot_isPlayer(p)	((p)->flags & PILOT_PLAYER)
+#define pilot_isDisabled(p) ((p)->flags & PILOT_DISABLED)
 
 
 typedef struct {
@@ -58,8 +59,8 @@ typedef struct Pilot {
 	Solid* solid; /* associated solid (physics) */
 
 	/* current health */
-	double armor, shield, energy;
-	double armor_max, shield_max, energy_max;
+	double armour, shield, energy;
+	double armour_max, shield_max, energy_max;
 
 	/* associated functions */
 	void (*think)(struct Pilot*); /* AI thinking for the pilot */
@@ -69,6 +70,8 @@ typedef struct Pilot {
 	/* outfit management */
 	PilotOutfit* outfits;
 	int noutfits;
+	PilotOutfit* secondary; /* secondary weapon */
+	PilotOutfit* ammo; /* secondary ammo if needed */
 
 	unsigned int flags; /* used for AI and others */
 
@@ -113,8 +116,9 @@ Fleet* fleet_get( const char* name );
 /*
  * misc
  */
-void pilot_shoot( Pilot* p, const int secondary );
-void pilot_hit( Pilot* p, const double damage_shield, const double damage_armor );
+void pilot_shoot( Pilot* p, const unsigned int target, const int secondary );
+void pilot_hit( Pilot* p, const double damage_shield, const double damage_armour );
+void pilot_setAmmo( Pilot* p );
 
 
 /*

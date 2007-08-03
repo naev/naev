@@ -81,7 +81,7 @@ unsigned int pilot_getNearest( const Pilot* p )
 	for (tp=0,d=0.,i=0; i<pilots; i++)
 		if (areEnemies(p->faction, pilot_stack[i]->faction)) {
 			td = vect_dist(&pilot_stack[i]->solid->pos, &p->solid->pos);
-			if ((!tp) || (td < d)) {
+			if (!pilot_isDisabled(pilot_stack[i]) &&  ((!tp) || (td < d))) {
 				d = td;
 				tp = pilot_stack[i]->id;
 			}
@@ -137,16 +137,16 @@ Pilot* pilot_get( const unsigned int id )
  * @param p the pilot which is shooting
  * @param secondary whether they are shooting secondary weapons or primary weapons
  */
-void pilot_shoot( Pilot* p, const int secondary )
+void pilot_shoot( Pilot* p, const unsigned int target, const int secondary )
 {
 	int i;
+
 	if (!secondary) { /* primary weapons */
 
 		if (!p->outfits) return; /* no outfits */
 
 		for (i=0; i<p->noutfits; i++) /* cycles through outfits to find weapons */
-			if (outfit_isWeapon(p->outfits[i].outfit) || /* is a weapon or launche */
-					outfit_isLauncher(p->outfits[i].outfit))
+			if (outfit_isWeapon(p->outfits[i].outfit)) /* is a weapon */
 				/* ready to shoot again */
 				if ((SDL_GetTicks()-p->outfits[i].timer) >
 						(p->outfits[i].outfit->delay/p->outfits[i].quantity))
@@ -155,14 +155,31 @@ void pilot_shoot( Pilot* p, const int secondary )
 					switch (p->outfits[i].outfit->type) {
 						case OUTFIT_TYPE_BOLT:
 							weapon_add( p->outfits[i].outfit, p->solid->dir,
-									&p->solid->pos, &p->solid->vel, p->id,
+									&p->solid->pos, &p->solid->vel, p->id, target,
 									(p==player) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG );
-							p->outfits[i].timer = SDL_GetTicks();
+							p->outfits[i].timer = SDL_GetTicks(); /* can't shoot it for a bit */
 							break;
 
 						default:
 							break;
 					}
+	}
+	else { /* secondary weapon */
+
+		if (!p->secondary) return; /* no secondary weapon */
+
+		if (outfit_isLauncher(p->secondary->outfit)) {
+			if (((SDL_GetTicks()-p->secondary->timer) >
+						(p->secondary->outfit->delay/p->secondary->quantity)) && 
+					p->ammo && (p->ammo->quantity > 0)) {
+				weapon_add( p->ammo->outfit, p->solid->dir,
+						&p->solid->pos, &p->solid->vel, p->id, target,
+						(p==player) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG );
+
+				p->secondary->timer = SDL_GetTicks(); /* can't shoot it for a bit */
+				p->ammo->quantity -= 1; /* we just shot it */
+			}
+		}
 	}
 }
 
@@ -170,18 +187,43 @@ void pilot_shoot( Pilot* p, const int secondary )
 /*
  * damages the pilot
  */
-void pilot_hit( Pilot* p, const double damage_shield, const double damage_armor )
+void pilot_hit( Pilot* p, const double damage_shield, const double damage_armour )
 {
 	if (p->shield-damage_shield > 0.)
 		p->shield -= damage_shield;
 	else if (p->shield > 0.) { /* shields can take part of the blow */
-		p->armor -= p->shield/damage_shield*damage_armor;
+		p->armour -= p->shield/damage_shield*damage_armour;
 		p->shield = 0.;
 	}
-	else if (p->armor-damage_armor > 0.)
-		p->armor -= damage_armor;
+	else if (p->armour-damage_armour > 0.)
+		p->armour -= damage_armour;
 	else
-		p->armor = 0.;
+		p->armour = 0.;
+}
+
+
+/*
+ * sets the pilot's ammo based on their secondary weapon
+ */
+void pilot_setAmmo( Pilot* p )
+{
+	int i;
+	char *name;
+
+	if ((p->secondary == NULL) || !outfit_isLauncher(p->secondary->outfit)) {
+		p->ammo = NULL;
+		return;
+	}
+
+	name = p->secondary->outfit->ammo;
+
+	for (i=0; i<p->noutfits; i++)
+		if (strcmp(p->outfits[i].outfit->name,name)==0) {
+			p->ammo = p->outfits + i;
+			return;
+		}
+
+	p->ammo = NULL;
 }
 
 
@@ -204,8 +246,8 @@ void pilot_render( Pilot* p )
  */
 static void pilot_update( Pilot* pilot, const double dt )
 {
-	if (pilot != player && 
-			pilot->armor < PILOT_DISABLED_ARMOR*pilot->armor_max) { /* disabled */
+	if ((pilot != player) && 
+			(pilot->armour < PILOT_DISABLED_ARMOR*pilot->armour_max)) { /* disabled */
 		pilot_setFlag(pilot,PILOT_DISABLED);
 		vect_pset( &pilot->solid->vel, /* slowly brake */
 			VMOD(pilot->solid->vel) * (1. - dt*0.10),
@@ -219,12 +261,12 @@ static void pilot_update( Pilot* pilot, const double dt )
 	}
 
 	/* still alive */
-	else if (pilot->armor < pilot->armor_max)
-		pilot->armor += pilot->ship->armor_regen * dt;
+	else if (pilot->armour < pilot->armour_max)
+		pilot->armour += pilot->ship->armour_regen * dt;
 	else
 		pilot->shield += pilot->ship->shield_regen * dt;
 	
-	if (pilot->armor > pilot->armor_max) pilot->armor = pilot->armor_max;
+	if (pilot->armour > pilot->armour_max) pilot->armour = pilot->armour_max;
 	if (pilot->shield > pilot->shield_max) pilot->shield = pilot->shield_max;
 
 	/* update the solid */
@@ -267,11 +309,11 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction, AI_Prof
 	/* solid */
 	pilot->solid = solid_create(ship->mass, dir, pos, vel);
 
-	/* max shields/armor */
-	pilot->armor_max = ship->armor;
+	/* max shields/armour */
+	pilot->armour_max = ship->armour;
 	pilot->shield_max = ship->shield;
 	pilot->energy_max = ship->energy;
-	pilot->armor = pilot->armor_max;
+	pilot->armour = pilot->armour_max;
 	pilot->shield = pilot->shield_max;
 	pilot->energy = pilot->energy_max;
 
@@ -280,6 +322,8 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction, AI_Prof
 
 	/* outfits */
 	pilot->outfits = NULL;
+	pilot->secondary = NULL;
+	pilot->ammo = NULL;
 	ShipOutfit* so;
 	if (ship->outfit) {
 		pilot->noutfits = 0;
@@ -291,7 +335,6 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction, AI_Prof
 			(pilot->noutfits)++;
 		}
 	}
-
 
 	if (flags & PILOT_PLAYER) {
 		pilot->think = player_think; /* players don't need to think! :P */
@@ -395,7 +438,7 @@ void pilots_update( double dt )
 	int i;
 	for ( i=0; i < pilots; i++ ) {
 		if (pilot_stack[i]->think && /* think */
-				!pilot_isFlag(pilot_stack[i],PILOT_DISABLED))
+				!pilot_isDisabled(pilot_stack[i]))
 			pilot_stack[i]->think(pilot_stack[i]);
 		if (pilot_stack[i]->update) /* update */
 			pilot_stack[i]->update( pilot_stack[i], dt );

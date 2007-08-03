@@ -52,7 +52,7 @@ typedef struct {
 	int mass;
 
 	/* health */
-	double armor, armor_regen;
+	double armour, armour_regen;
 	double shield, shield_regen;
 	double energy, energy_regen;
 

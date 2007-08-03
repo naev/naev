@@ -11,10 +11,10 @@
 </movement>
 <health>
 <shield>70</shield>
-<armor>80</armor>
+<armour>80</armour>
 <energy>240</energy>
 <shield_regen>80</shield_regen>
-<armor_regen>50</armor_regen>
+<armour_regen>50</armour_regen>
 <energy_regen>40</energy_regen>
 </health>
 <caracteristics>
@@ -24,7 +24,7 @@
 <cap_cargo>25</cap_cargo>
 </caracteristics>
 <outfits>
-<outfit quantity='1'>laser</outfit>
+<outfit quantity='1'>Laser</outfit>
 </outfits>
 </ship>
 <ship name="Hyena">
@@ -38,10 +38,10 @@
 </movement>
 <health>
 <shield>50</shield>
-<armor>60</armor>
+<armour>60</armour>
 <energy>180</energy>
 <shield_regen>100</shield_regen>
-<armor_regen>60</armor_regen>
+<armour_regen>60</armour_regen>
 <energy_regen>40</energy_regen>
 </health>
 <caracteristics>
@@ -51,7 +51,7 @@
 <cap_cargo>10</cap_cargo>
 </caracteristics>
 <outfits>
-<outfit quantity='2'>laser</outfit>
+<outfit quantity='2'>Laser</outfit>
 </outfits>
 </ship>
 <ship name="Lancelot">
@@ -65,10 +65,10 @@
 </movement>
 <health>
 <shield>160</shield>
-<armor>120</armor>
+<armour>120</armour>
 <energy>360</energy>
 <shield_regen>90</shield_regen>
-<armor_regen>60</armor_regen>
+<armour_regen>60</armour_regen>
 <energy_regen>50</energy_regen>
 </health>
 <caracteristics>
@@ -78,7 +78,9 @@
 <cap_cargo>40</cap_cargo>
 </caracteristics>
 <outfits>
-<outfit quantity='4'>laser</outfit>
+<outfit quantity='3'>Laser</outfit>
+<outfit quantity='2'>Missile Launcher</outfit>
+<outfit quantity='20'>Missile</outfit>
 </outfits>
 </ship>
 </Ships>

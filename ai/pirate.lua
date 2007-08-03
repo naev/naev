@@ -7,7 +7,7 @@ function control ()
 
 	-- running pirate has healed up some
 	if task == "runaway" then
-		if parmor() == 100 then
+		if parmour() == 100 then
 			-- "attack" should be running after "runaway"
 			poptask()
 		end
@@ -17,7 +17,7 @@ function control ()
 
 		-- if getenemy() is 0 then there is no enemy around
 		enemy = getenemy()
-		if parmor() == 100 and enemy ~= 0 then
+		if parmour() == 100 and enemy ~= 0 then
 
 			-- taunts!
 			num = rng(0,4)
@@ -99,7 +99,7 @@ function attack ()
 	dist = getdist( getpos(target) )
 
 	-- must know when to run away
-	if parmor() < 70 then
+	if parmour() < 70 then
 		pushtask(0, "runaway", target)
 
 	-- should try to hurt the target

@@ -18,10 +18,8 @@
 <ai>merchant</ai>
 <faction>Merchant</faction>
 <pilots>
+<pilot chance='100'>Llama</pilot>
 <pilot chance='80'>Llama</pilot>
-<pilot chance='80'>Llama</pilot>
-<pilot chance='60'>Llama</pilot>
-<pilot chance='60'>Llama</pilot>
 </pilots>
 </fleet>
 <fleet name="Pirate Hyena">

@@ -26,10 +26,10 @@
 
 
 /*
- * default colors
+ * default colours
  */
-glColor cGrey		= { .r=0.75, .g=0.75, .b=0.75, .a=1. };
-glColor cGreen		= { .r=0.20, .g=0.80, .b=0.20, .a=1. };
+glColour cGrey		= { .r=0.75, .g=0.75, .b=0.75, .a=1. };
+glColour cGreen		= { .r=0.20, .g=0.80, .b=0.20, .a=1. };
 
 
 /* the screen info, gives data of current opengl settings */
@@ -63,7 +63,7 @@ static void gl_fontMakeDList( FT_Face face, char ch,
 		GLuint list_base, GLuint *tex_base, int *width_base );
 /* png */
 int write_png( const char *file_name, png_bytep *rows,
-		int w, int h, int colortype, int bitdepth );
+		int w, int h, int colourtype, int bitdepth );
 
 
 /*
@@ -125,31 +125,31 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
 	// here p is the address to the pixel we want to retrieve 
 	Uint8 *p = (Uint8 *)s->pixels + y*s->pitch + x*bpp; 
 
-	Uint32 pixelcolor = 0; 
+	Uint32 pixelcolour = 0; 
 
 	switch(bpp) {        
 		case 1: 
-			pixelcolor = *p; 
+			pixelcolour = *p; 
 			break; 
 
 		case 2: 
-			pixelcolor = *(Uint16 *)p; 
+			pixelcolour = *(Uint16 *)p; 
 			break; 
 
 		case 3: 
 			if(SDL_BYTEORDER == SDL_BIG_ENDIAN) 
-				pixelcolor = p[0] << 16 | p[1] << 8 | p[2]; 
+				pixelcolour = p[0] << 16 | p[1] << 8 | p[2]; 
 			else     
-				pixelcolor = p[0] | p[1] << 8 | p[2] << 16; 
+				pixelcolour = p[0] | p[1] << 8 | p[2] << 16; 
 			break; 
 
 		case 4: 
-			pixelcolor = *(Uint32 *)p; 
+			pixelcolour = *(Uint32 *)p; 
 			break; 
 	} 
 
-	// test whether pixels color == color of transparent pixels for that surface 
-	return (pixelcolor == s->format->colorkey);
+	// test whether pixels colour == colour of transparent pixels for that surface 
+	return (pixelcolour == s->format->colorkey);
 }
 
 
@@ -437,7 +437,7 @@ void gl_getSpriteFromDir( int* x, int* y, const gl_texture* t, const double dir 
  * blits a sprite at pos
  */
 void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos,
-		const int sx, const int sy, const glColor* c )
+		const int sx, const int sy, const glColour* c )
 {
 	/* don't draw if offscreen */
 	if (fabs(VX(*pos)-VX(*gl_camera)+gui_xoff) > gl_screen.w/2+sprite->sw/2 ||
@@ -461,7 +461,7 @@ void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos,
 	glBindTexture( GL_TEXTURE_2D, sprite->texture);
 	glBegin(GL_TRIANGLE_STRIP);
 		if (c==NULL) glColor4d( 1., 1., 1., 1. );
-		else COLOR(*c);
+		else COLOUR(*c);
 		glTexCoord2d( 0., 0.);
 			glVertex2d( 0., 0. );
 		glTexCoord2d( sprite->sw/sprite->rw, 0.);
@@ -484,7 +484,7 @@ void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos,
 /*
  * straight out blits a texture at position
  */
-void gl_blitStatic( const gl_texture* texture, const Vector2d* pos, const glColor* c )
+void gl_blitStatic( const gl_texture* texture, const Vector2d* pos, const glColour* c )
 {
 	glEnable(GL_TEXTURE_2D);
 
@@ -498,7 +498,7 @@ void gl_blitStatic( const gl_texture* texture, const Vector2d* pos, const glColo
 	glBindTexture( GL_TEXTURE_2D, texture->texture);
 	glBegin(GL_TRIANGLE_STRIP);
 		if (c==NULL) glColor4d( 1., 1., 1., 1. );
-		else COLOR(*c);
+		else COLOUR(*c);
 		glTexCoord2d( 0., 0.);
 			glVertex2d( 0., 0. );
 		glTexCoord2d( texture->sw/texture->rw, 0.);
@@ -529,7 +529,7 @@ void gl_bindCamera( const Vector2d* pos )
  * defaults ft_font to gl_defFont if NULL
  */
 void gl_print( const gl_font *ft_font, const Vector2d *pos,
-		const glColor* c, const char *fmt, ... )
+		const glColour* c, const char *fmt, ... )
 {
 	/*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
 	char text[256]; /* holds the string */
@@ -553,7 +553,7 @@ void gl_print( const gl_font *ft_font, const Vector2d *pos,
 		glTranslated( VX(*pos)-(double)gl_screen.w/2., VY(*pos)-(double)gl_screen.h/2., 0);
 
 	if (c==NULL) glColor4d( 1., 1., 1., 1. );
-	else COLOR(*c);
+	else COLOUR(*c);
 	glCallLists(strlen(text), GL_UNSIGNED_BYTE, &text);
 
 	glPopMatrix(); /* translation matrx */
@@ -858,7 +858,7 @@ void gl_exit()
  * saves a png
  */
 int write_png( const char *file_name, png_bytep *rows,
-		int w, int h, int colortype, int bitdepth )
+		int w, int h, int colourtype, int bitdepth )
 {
 
 	png_structp png_ptr;
@@ -879,7 +879,7 @@ int write_png( const char *file_name, png_bytep *rows,
 	png_init_io(png_ptr, fp);
 
 	doing = "write header";
-	png_set_IHDR(png_ptr, info_ptr, w, h, bitdepth, colortype, 
+	png_set_IHDR(png_ptr, info_ptr, w, h, bitdepth, colourtype, 
 			PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE,
 			PNG_FILTER_TYPE_BASE);
 

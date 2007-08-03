@@ -1,21 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Outfits>
-<outfit name="laser">
+<outfit name="Laser">
 <general>
 <max>5</max>
 <tech>2</tech>
-<mass>1</mass>
+<mass>5</mass>
 </general>
 <specific type="1">
-<sound>laser</sound>
 <gfx>lasergreen</gfx>
 <delay>500</delay>
 <speed>550</speed>
 <range>300</range>
 <accuracy>30</accuracy>
 <damage>
-<armor>20</armor>
+<armour>20</armour>
 <shield>10</shield>
+</damage>
+</specific>
+</outfit>
+<outfit name="Missile Launcher">
+<general>
+<max>2</max>
+<tech>4</tech>
+<mass>10</mass>
+</general>
+<specific type="5" secondary="1">
+<ammo>Missile</ammo>
+<delay>1200</delay>
+</specific>
+</outfit>
+<outfit name="Missile">
+<general>
+<max>60</max>
+<tech>2</tech>
+<mass>1</mass>
+</general>
+<specific type="6">
+<gfx>missile</gfx>
+<duration>5</duration>
+<thrust>1200</thrust>
+<turn>200</turn>
+<speed>600</speed>
+<damage>
+<armour>40</armour>
+<shield>30</shield>
 </damage>
 </specific>
 </outfit>

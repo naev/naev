@@ -54,20 +54,20 @@ minbrakedist()
 	@desc returns the minimum required braking distance assuming all goes well
 	@return number distance needed to brake
 
-armor( [number pilot] )
-	@desc returns the total amount of armor left
+armour( [number pilot] )
+	@desc returns the total amount of armour left
 	@param pilot optional pilot id, if not the current pilot is used
-	@return pilots current amount of armor
+	@return pilots current amount of armour
 
 shield( [number pilot] )
 	@desc returns the total amount of shield left
 	@param pilot optional pilot id, if not the current pilot is used
 	@return pilots current amount of shield
 
-parmor( [number pilot] )
-	@desc returns the percent of armor left
+parmour( [number pilot] )
+	@desc returns the percent of armour left
 	@param pilot optional pilot id, if not the current pilot is used
-	@return percent of armor the pilot has left
+	@return percent of armour the pilot has left
 
 pshield( [number pilot] )
 	@desc returns the percent of shield left
