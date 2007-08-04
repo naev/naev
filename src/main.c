@@ -66,6 +66,7 @@ static void window_caption (void);
 static void data_name (void);
 /* update */
 static void update_all (void);
+static void render_all (void);
 
 
 /*
@@ -336,6 +337,7 @@ int main ( int argc, char** argv )
 			input_handle(&event); /* handles all the events and player keybinds */
 		}
 		update_all();
+		render_all();
 	}
 
 
@@ -367,25 +369,13 @@ int main ( int argc, char** argv )
 
 /*
  * updates everything
- *
- *	Blitting order (layers):
- *	  BG | @ stars and planets
- *	     | @ background particles
- *	     | @ back layer weapons
- *      X
- *	  N  | @ NPC ships
- *	     | @ normal layer particles (above ships)
- *	     | @ front layer weapons
- *      X
- *	  FG | @ player
- *	     | @ foreground particles
- *	     | @ text and GUI
  */
 static double fps_dt = 1.;
-static void update_all(void)
+static double dt = 0.; /* used also a bit in render_all */
+static void update_all (void)
 {
 	/* dt in ms/1000 */
-	double dt = (double)(SDL_GetTicks() - time) / 1000.;
+	dt = (double)(SDL_GetTicks() - time) / 1000.;
 	time = SDL_GetTicks();
 
 	if (dt > MINIMUM_FPS) { /* TODO needs work */
@@ -401,15 +391,38 @@ static void update_all(void)
 		fps_dt += delay; /* makes sure it displays the proper fps */
 	}
 
+	weapons_update(dt);
+	pilots_update(dt);
+}
+
+
+/*
+ * Renders everything
+ *
+ * Blitting order (layers):
+ *   BG | @ stars and planets
+ *      | @ background particles
+ *      | @ back layer weapons
+ *      X
+ *   N  | @ NPC ships
+ *      | @ normal layer particles (above ships)
+ *      | @ front layer weapons
+ *      X
+ *   FG | @ player
+ *      | @ foreground particles
+ *      | @ text and GUI
+ */
+static void render_all (void)
+{
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	/* BG */
 	space_render(dt);
 	planets_render();
-	weapons_update(dt,WEAPON_LAYER_BG);
+	weapons_render(WEAPON_LAYER_BG);
 	/* N */
-	pilots_update(dt);
-	weapons_update(dt,WEAPON_LAYER_FG);
+	pilots_render();
+	weapons_render(WEAPON_LAYER_FG);
 	/* FG */
 	player_render();
 	display_fps(dt);

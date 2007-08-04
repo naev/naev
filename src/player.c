@@ -55,6 +55,7 @@ static Keybind** player_input; /* contains the players keybindings */
 const char *keybindNames[] = { "accel", "left", "right", /* movement */
 		"primary", "target", "target_nearest", "face", "board", /* fighting */
 		"secondary", "secondary_next", /* secondary weapons */
+		"target_planet", "land", /* space navigation */
 		"mapzoomin", "mapzoomout", "screenshot",  /* misc */
 		"end" }; /* must terminate in "end" */
 
@@ -169,6 +170,8 @@ static void gui_renderBar( const glColour* c, const Vector2d* p,
 /* keybind actions */
 static void player_board (void);
 static void player_secondaryNext (void);
+static void player_targetPlanet (void);
+static void player_land (void);
 static void player_screenshot (void);
 
 
@@ -282,6 +285,7 @@ void player_render (void)
 	int i, j;
 	char str[10];
 	Pilot* p;
+	Planet* planet;
 	Vector2d v;
 	glColour* c;
 	gl_font* f;
@@ -303,6 +307,24 @@ void player_render (void)
 		gl_blitSprite( gui.gfx_targetPilot, &v, 1, 1, c ); /* bottom right */
 		VX(v) -= p->ship->gfx_space->sw * PILOT_SIZE_APROX;
 		gl_blitSprite( gui.gfx_targetPilot, &v, 0, 1, c ); /* bottom left */
+	}
+	/* renders the planet target graphics */
+	if (planet_target >= 0) {
+		planet = &cur_system->planets[planet_target];
+
+		if (areEnemies(player->faction,planet->faction)) c = &cHostile;
+		else c = &cNeutral;
+
+		vect_csetmin( &v, VX(planet->pos) - planet->gfx_space->sw/2.,
+				VY(planet->pos) + planet->gfx_space->sh/2. );
+		gl_blitSprite( gui.gfx_targetPlanet, &v, 0, 0, c ); /* top left */
+		VX(v) += planet->gfx_space->sw;
+		gl_blitSprite( gui.gfx_targetPlanet, &v, 1, 0, c ); /* top right */
+		VY(v) -= planet->gfx_space->sh;
+		gl_blitSprite( gui.gfx_targetPlanet, &v, 1, 1, c ); /* bottom right */
+		VX(v) -= planet->gfx_space->sw;
+		gl_blitSprite( gui.gfx_targetPlanet, &v, 0, 1, c ); /* bottom left */
+
 	}
 
 	/* render the player */
@@ -372,17 +394,27 @@ void player_render (void)
 	/*
 	 * NAV 
 	 */
-	if (planet_target != -1) {
-	}
-	else {
-		i = gl_printWidth( NULL, "NAV" );
+	if (planet_target >= 0) { /* planet landing target */
+		i = gl_printWidth( NULL, "Land" );
 		vect_csetmin( &v, VX(gui.pos_nav) + (gui.nav.w - i)/2. ,
-				VY(gui.pos_nav) - 5);
-		gl_print( NULL, &v, &cConsole, "NAV" );
-		i = gl_printWidth( &gui.smallFont, "No Target" );
+				VY(gui.pos_nav) - 5);     
+		gl_print( NULL, &v, &cConsole, "Land" );
+		i = gl_printWidth( &gui.smallFont, "%s",
+				cur_system->planets[planet_target].name );
 		vect_csetmin( &v, VX(gui.pos_nav) + (gui.nav.w - i)/2. ,
 				VY(gui.pos_nav) - 10 - gui.smallFont.h );
-		gl_print( &gui.smallFont, &v, &cGrey, "No Target" );
+		gl_print( &gui.smallFont, &v, NULL, "%s",
+				cur_system->planets[planet_target].name );
+	}
+	else if (planet_target == -1) { /* no planet target */
+		i = gl_printWidth( NULL, "Navigation" );
+		vect_csetmin( &v, VX(gui.pos_nav) + (gui.nav.w - i)/2. ,
+				VY(gui.pos_nav) - 5);
+		gl_print( NULL, &v, &cConsole, "Navigation" );
+		i = gl_printWidth( &gui.smallFont, "Off" );
+		vect_csetmin( &v, VX(gui.pos_nav) + (gui.nav.w - i)/2. ,
+				VY(gui.pos_nav) - 10 - gui.smallFont.h );
+		gl_print( &gui.smallFont, &v, &cGrey, "Off" );
 	}
 
 
@@ -964,6 +996,7 @@ void player_board (void)
 		return;
 	}
 
+	/* TODO boarding */
 	player_message("Ship boarding not implemented yet");
 }
 
@@ -1000,6 +1033,61 @@ static void player_secondaryNext (void)
 
 
 /*
+ * cycle through planet targets
+ */
+static void player_targetPlanet (void)
+{
+	/* no target */
+	if ((planet_target==-1) && (cur_system->nplanets > 0)) {
+		planet_target = 0;
+		return;
+	}
+	
+	planet_target++;
+
+	if (planet_target >= cur_system->nplanets) /* last system */
+		planet_target = -1;
+}
+
+
+/*
+ * try to land or target closest planet if no land target
+ */
+static void player_land (void)
+{
+	Planet* planet = &cur_system->planets[planet_target];
+	if (planet_target >= 0) { /* attempt to land */
+		if (vect_dist(&player->solid->vel,&planet->pos) > planet->gfx_space->sw) {
+			player_message("You are too far away to land on %s", planet->name);
+			return;
+		} else if ((pow2(VX(player->solid->vel)) + pow2(VY(player->solid->vel))) >
+				(double)pow2(MAX_HYPERSPACE_VEL)) {
+			player_message("You are going to fast to land on %s", planet->name);
+			return;
+		}
+
+		/* TODO landing */
+		player_message("Landing not implemented yet");
+	}
+	else { /* get nearest planet target */
+
+		int i;
+		int tp;
+		double td, d;
+
+		for (i=0,tp=-1; i<cur_system->nplanets; i++) {
+			d = vect_dist(&player->solid->vel,&planet->pos);
+			if ((tp==-1) || (td > d)) {
+				tp = i;
+				td = d;
+			}
+		}
+		planet_target = tp;
+	}
+}
+
+
+/*
  * take a screenshot
  */
 static void player_screenshot (void)
@@ -1023,16 +1111,23 @@ static void player_screenshot (void)
  */
 void input_setDefault (void)
 {
+	/* movement */
 	input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, 0 );
 	input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, 0 );
 	input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, 0 );
+	/* combat */
 	input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, 0 );
 	input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, 0 );
 	input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_r, 0 );
 	input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, 0 );
 	input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, 0 );
+	/* secondary weap */
 	input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, 0 );
 	input_setKeybind( "secondary_next", KEYBIND_KEYBOARD, SDLK_w, 0 );
+	/* space */
+	input_setKeybind( "target_planet", KEYBIND_KEYBOARD, SDLK_p, 0 );
+	input_setKeybind( "land", KEYBIND_KEYBOARD, SDLK_l, 0 );
+	/* misc */
 	input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_9, 0 );
 	input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_0, 0 );
 	input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MINUS, 0 );
@@ -1098,12 +1193,14 @@ void input_setKeybind( char *keybind, KeybindType type, int key, int reverse )
  */
 static void input_key( int keynum, double value, int abs )
 {
+	/*
+	 * movement
+	 */
 	/* accelerating */
 	if (strcmp(player_input[keynum]->name,"accel")==0) {
 		if (abs) player_acc = value;
 		else player_acc += value;
 		player_acc = ABS(player_acc); /* make sure value is sane */
-
 
 	/* turning left */
 	} else if (strcmp(player_input[keynum]->name,"left")==0) {
@@ -1115,7 +1212,6 @@ static void input_key( int keynum, double value, int abs )
 		if (abs) player_turn = -value;
 		else player_turn -= value;
 		if (player_turn < -1.) player_turn = -1.; /* make sure value is sane */
-
 
 	/* turning right */
 	} else if (strcmp(player_input[keynum]->name,"right")==0) {
@@ -1129,61 +1225,68 @@ static void input_key( int keynum, double value, int abs )
 		if (player_turn > 1.) player_turn = 1.; /* make sure value is sane */
 
 
+	/*
+	 * combat
+	 */
 	/* shooting primary weapon */
 	} else if (strcmp(player_input[keynum]->name, "primary")==0) {
 		if (value==KEY_PRESS) player_setFlag(PLAYER_PRIMARY);
 		else if (value==KEY_RELEASE) player_rmFlag(PLAYER_PRIMARY);
-
-
 	/* targetting */
 	} else if (strcmp(player_input[keynum]->name, "target")==0) {
 		if (value==KEY_PRESS) player_target = pilot_getNext(player_target);
 
 	} else if (strcmp(player_input[keynum]->name, "target_nearest")==0) {
 		if (value==KEY_PRESS) player_target = pilot_getHostile();
-
-
 	/* face the target */
 	} else if (strcmp(player_input[keynum]->name, "face")==0) {
 		if (value==KEY_PRESS) player_setFlag(PLAYER_FACE);
 		else if (value==KEY_RELEASE) {
 			player_rmFlag(PLAYER_FACE);
-
-			/* turning corrections */
-			player_turn = 0;
+			player_turn = 0; /* turning corrections */
 			if (player_isFlag(PLAYER_TURN_LEFT)) player_turn -= 1;
 			if (player_isFlag(PLAYER_TURN_RIGHT)) player_turn += 1;
 		}
-
-
 	/* board them ships */
 	} else if (strcmp(player_input[keynum]->name, "board")==0) {
 		if (value==KEY_PRESS) player_board();
 
 
+	/*
+	 * secondary weapons
+	 */
 	/* shooting secondary weapon */
 	} else if (strcmp(player_input[keynum]->name, "secondary")==0) {
 		if (value==KEY_PRESS) player_setFlag(PLAYER_SECONDARY);
 		else if (value==KEY_RELEASE) player_rmFlag(PLAYER_SECONDARY);
 	
-
 	/* selecting secondary weapon */
 	} else if (strcmp(player_input[keynum]->name, "secondary_next")==0) {
 		if (value==KEY_PRESS) player_secondaryNext();
 
 
+	/*
+	 * space
+	 */
+	/* target planet (cycles like target) */
+	} else if (strcmp(player_input[keynum]->name, "target_planet")==0) {
+		if (value==KEY_PRESS) player_targetPlanet();
+	/* target nearest planet or attempt to land */
+	} else if (strcmp(player_input[keynum]->name, "land")==0) {
+		if (value==KEY_PRESS) player_land();
+
+
+	/*
+	 * misc
+	 */
 	/* zooming in */
 	} else if (strcmp(player_input[keynum]->name, "mapzoomin")==0) {
 		if ((value==KEY_PRESS) && (gui.radar.res < RADAR_RES_MAX))
 			gui.radar.res += RADAR_RES_INTERVAL;
-
-
 	/* zooming out */
 	} else if (strcmp(player_input[keynum]->name, "mapzoomout")==0) {
 		if ((value==KEY_PRESS) && (gui.radar.res > RADAR_RES_MIN))
 			gui.radar.res -= RADAR_RES_INTERVAL;
-
-
 	/* take a screenshot */
 	} else if (strcmp(player_input[keynum]->name, "screenshot")==0) {
 		if (value==KEY_PRESS) player_screenshot();

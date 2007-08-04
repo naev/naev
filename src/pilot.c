@@ -442,9 +442,19 @@ void pilots_update( double dt )
 			pilot_stack[i]->think(pilot_stack[i]);
 		if (pilot_stack[i]->update) /* update */
 			pilot_stack[i]->update( pilot_stack[i], dt );
+	}
+}
+
+
+/*
+ * renders all the pilots
+ */
+void pilots_render (void)
+{
+	int i;
+	for (i=1; i<pilots; i++) /* skip player */
 		if (pilot_stack[i]->render) /* render */
 			pilot_stack[i]->render(pilot_stack[i]);
-	}
 }
 
 

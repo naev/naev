@@ -142,6 +142,7 @@ void fleet_free (void);
  * update
  */
 void pilots_update( double dt );
+void pilots_render (void);
 
 
 #endif /* PILOT_H */

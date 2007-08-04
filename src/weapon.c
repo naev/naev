@@ -62,6 +62,7 @@ static Weapon* weapon_create( const Outfit* outfit,
 		const double dir, const Vector2d* pos, const Vector2d* vel,
 		const unsigned int parent, const unsigned int target );
 static void weapon_render( const Weapon* w );
+static void weapons_updateLayer( const double dt, const WeaponLayer layer );
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer );
 static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer );
 static void weapon_destroy( Weapon* w, WeaponLayer layer );
@@ -123,9 +124,19 @@ static void think_seeker( Weapon* w )
 
 
 /*
+ * updates all the weapon layers
+ */
+void weapons_update( const double dt )
+{
+	weapons_updateLayer(dt,WEAPON_LAYER_BG);
+	weapons_updateLayer(dt,WEAPON_LAYER_FG);
+}
+
+
+/*
  * updates all the weapons in the layer
  */
-void weapons_update( const double dt, WeaponLayer layer )
+static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 {
 	Weapon** wlayer;
 	int* nlayer;
@@ -168,6 +179,31 @@ void weapons_update( const double dt, WeaponLayer layer )
 		/* if the weapon has been deleted we have to hold back one */
 		if (w != wlayer[i]) i--;
 	}
+}
+
+
+/*
+ * renders all the weapons
+ */
+void weapons_render( const WeaponLayer layer )
+{
+   Weapon** wlayer;
+   int* nlayer;
+	int i;
+
+   switch (layer) {
+      case WEAPON_LAYER_BG:
+         wlayer = wbackLayer;
+         nlayer = &nwbackLayer;
+         break;
+      case WEAPON_LAYER_FG:
+         wlayer = wfrontLayer;
+         nlayer = &nwfrontLayer;
+         break;
+   }
+   
+   for (i=0; i<(*nlayer); i++)
+		weapon_render( wlayer[i] );
 }
 
 
@@ -219,8 +255,6 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 	if (weapon_isSmart(w)) (*w->think)(w);
 	
 	(*w->solid->update)(w->solid, dt);
-
-	weapon_render(w);
 }
 
 
@@ -289,7 +323,7 @@ static Weapon* weapon_create( const Outfit* outfit,
  */
 void weapon_add( const Outfit* outfit, const double dir,
 		const Vector2d* pos, const Vector2d* vel,
-		unsigned int parent, unsigned int target, WeaponLayer layer )
+		unsigned int parent, unsigned int target, const WeaponLayer layer )
 {
 	if (!outfit_isWeapon(outfit) && !outfit_isAmmo(outfit)) {
 		ERR("Trying to create a Weapon from a non-Weapon type Outfit");
