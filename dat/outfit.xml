@@ -42,8 +42,8 @@
 <turn>200</turn>
 <speed>600</speed>
 <damage>
-<armour>40</armour>
-<shield>30</shield>
+<armour>25</armour>
+<shield>20</shield>
 </damage>
 </specific>
 </outfit>

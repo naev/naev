@@ -284,6 +284,7 @@ void player_render (void)
 	Pilot* p;
 	Vector2d v;
 	glColour* c;
+	gl_font* f;
 
 	/* renders the player target graphics */
 	if (player_target != PLAYER_ID) {
@@ -410,21 +411,33 @@ void player_render (void)
 		gl_print( &gui.smallFont, &v, &cGrey, "None"); 
 	}  
 	else {
+		f = &gl_defFont;
 		if (player->ammo==NULL) {
-			i = gl_printWidth( &gui.smallFont, "%s", player->secondary->outfit->name);
+			i = gl_printWidth( f, "%s", player->secondary->outfit->name);
+			if (i > gui.weapon.w) { /* font is too big */
+				f = &gui.smallFont;
+				i = gl_printWidth( f, "%s", player->secondary->outfit->name);
+			}
 			vect_csetmin( &v, VX(gui.pos_weapon) + (gui.weapon.w - i)/2.,
-					VY(gui.pos_weapon) - (gui.weapon.h - gui.smallFont.h)/2.);
-			gl_print( &gui.smallFont, &v, &cConsole, "%s", player->secondary->outfit->name );
+					VY(gui.pos_weapon) - (gui.weapon.h - f->h)/2.);
+			gl_print( f, &v, &cConsole, "%s", player->secondary->outfit->name );
 		}
 		else {
-			i = gl_printWidth( &gui.smallFont, "%s", player->ammo->outfit->name);
+			/* use the ammunition's name */
+			i = gl_printWidth( f, "%s", player->ammo->outfit->name);
+			if (i > gui.weapon.w) { /* font is too big */
+				f = &gui.smallFont;
+				i = gl_printWidth( f, "%s", player->ammo->outfit->name);
+			} 
 			vect_csetmin( &v, VX(gui.pos_weapon) + (gui.weapon.w - i)/2.,
 					VY(gui.pos_weapon) - 5);
-			gl_print( &gui.smallFont, &v, NULL, "%s", player->ammo->outfit->name );
-			i = gl_printWidth( NULL, "%d", player->ammo->quantity );
+			gl_print( f, &v, &cConsole, "%s", player->ammo->outfit->name );
+
+			/* print ammo left underneath */
+			i = gl_printWidth( &gui.smallFont, "%d", player->ammo->quantity );
 			vect_csetmin( &v, VX(gui.pos_weapon) + (gui.weapon.w - i)/2.,
 					VY(gui.pos_weapon) - 10 - gl_defFont.h);
-			gl_print( NULL, &v, &cConsole, "%d", player->ammo->quantity );
+			gl_print( &gui.smallFont, &v, NULL, "%d", player->ammo->quantity );
 		}
 	} 
 
