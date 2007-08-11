@@ -609,7 +609,8 @@ static int ai_exists( lua_State *L )
 	MIN_ARGS(1);
 
 	if (lua_isnumber(L,1)) {
-		lua_pushboolean(L, (int)pilot_get((unsigned int)lua_tonumber(L,1)));
+		lua_pushboolean(L,
+			(pilot_get((unsigned int)lua_tonumber(L,1))!=NULL)?1:0);
 		return 1;
 	}
 	return 0;

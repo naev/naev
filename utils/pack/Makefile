@@ -16,3 +16,6 @@ APPNAME = pack
 all: $(COBJS)
 	@$(CC) $(CFLAGS) -o $(ROOTDIR)$(APPNAME) main.c $(COBJS)
 	@echo -e "\tLD   $(APPNAME)"
+
+clean:
+	@rm -fr *.o

@@ -16,3 +16,6 @@ APPNAME = mkspr
 all: $(COBJS)
 	@$(CC) $(LFLAGS) $(CFLAGS) -o $(ROOTDIR)$(APPNAME) main.c $(COBJS)
 	@echo -e "\tLD   $(APPNAME)"
+
+clean:
+	

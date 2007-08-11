@@ -18,12 +18,26 @@ joystick = "Precision"
 -- if left is an axis it'll automatically set right to the same axis
 -- therefore you set both to the same axis (key).  You can use the reverse = 1
 -- option to reverse them
+
+-- movement
 accel = { type = "jbutton", key = 0 }
 left = { type = "jaxis", key = 0 }
 right = { type = "jaxis", key = 0 }
+
+-- combat
 primary = { type = "jbutton", key = 1 }
 target = { type = "jbutton", key = 4 }
 target_nearest = { type = "jbutton", key = 3 }
-mapzoomin = { type = "jbutton", key = 7 }
-mapzoomout = { type = "jbutton", key = 6 }
+face = { type = "keyboard", key = 38 }
+board = { type = "keyboard", key = 57 }
+secondary = { type = "jbutton", key = 7 }
+secondary_next = { type = "jbutton", key = 5 }
+
+-- space
+
+
+--gui
+--mapzoomin = { type = "jbutton", key = 4 }
+--mapzoomout = { type = "jbutton", key = 6 }
+screenshot = { type = "keyboard", key = 82 }
 

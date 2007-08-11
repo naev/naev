@@ -2,6 +2,30 @@
 
  	X.) KEYBINDINGS
 
+		X.0) Introduction
+			X.0.0) About
+				NAEV uses a dynamic keybinding system that allows you to configure 
+				the keybinds to joystick, keyboard or a mixture of both.
+			X.0.1) Joystick
+				If you are using a joystick you'll have to tell NAEV which joystick
+				to use.  You can either use the -j or -J parameter from the
+				commandline or put it in the conf file.
+				Examples:
+					naev -j 0
+					naev -J "Precision"
+					joystick = "Precision" # in conf file
+			X.0.2) Syntax
+				KEY_IDENTIFIER = { type = KEY_TYPE, key = KEY_NUMBER,
+						[reverse = KEY_REVERSE] }
+				KEY_IDENTIFIER is the identifier given below
+				KEY_TYPE can be one of keyboard, jaxis or jbutton
+				KEY_NUMBER is the number of the key (found with xev usually)
+				KEY_REVERSE is whether it is reversed or not, which is only useful
+					in the case of jaxis
+			X.0.3) Example
+				accel = { type = "jbutton", key = 0 }
+				see conf.example for more examples
+
   		X.1) Movement
   			X.1.1) accel : accelerates the ship. default: up arrow.
 			X.1.2) left : turns the ship left. default: left arrow.
@@ -14,9 +38,16 @@
 			X.2.4) face : faces the target. default: a
 			X.2.5) board : board the target. default: b
 			X.2.6) secondary : fires secondary weapon. default: left shift
-			X.2.7) secondary_next : switches to the next secondary weapon. default: w
+			X.2.7) secondary_next : switches to the next secondary weapon.
+				default: w
 
-		X.3) Gui
-			X.3.1) mapzoomin : zooms in the minimap. default: 9.
-			X.3.2) mapzoomout : zooms out in the minimap. default: 0.
-			X.3.3) screenshot : takes a screenshot. default: s
+		X.3) Space
+			X.3.1) target_planet : cycles through planets. default: p
+			X.3.2) land : attempts to land or targets nearest planet. default: l
+
+		X.4) Gui
+			X.4.1) mapzoomin : zooms in the minimap. default: 9.
+			X.4.2) mapzoomout : zooms out in the minimap. default: 0.
+			X.4.3) screenshot : takes a screenshot. default: s
+
+

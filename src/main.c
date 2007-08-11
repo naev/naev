@@ -132,33 +132,47 @@ int main ( int argc, char** argv )
 
 		/* global */
 		lua_getglobal(L, "data");
-		if (lua_isstring(L, -1))
+		if (lua_isstring(L, -1)) {
 			data = strdup((char*)lua_tostring(L, -1));
+			lua_remove(L,-1);
+		}
 
 		/* opengl properties*/
 		lua_getglobal(L, "width");
-		if (lua_isnumber(L, -1))
+		if (lua_isnumber(L, -1)) {
 			gl_screen.w = (int)lua_tonumber(L, -1);
+			lua_remove(L,-1);
+		}
 
 		lua_getglobal(L, "height");
-		if (lua_isnumber(L, -1))
+		if (lua_isnumber(L, -1)) {
 			gl_screen.h = (int)lua_tonumber(L, -1);
+			lua_remove(L,-1);
+		}
 
 		lua_getglobal(L, "fullscreen");
 		if (lua_isnumber(L, -1))
-			if ((int)lua_tonumber(L, -1) == 1)
+			if ((int)lua_tonumber(L, -1) == 1) {
 				gl_screen.fullscreen = 1;
+				lua_remove(L,-1);
+			}
 
 		lua_getglobal(L, "fps");
-		if (lua_isnumber(L, -1))
+		if (lua_isnumber(L, -1)) {
 			max_fps = (int)lua_tonumber(L, -1);
+			lua_remove(L,-1);
+		}
 
 		/* joystick */
 		lua_getglobal(L, "joystick");
-		if (lua_isnumber(L, -1))
+		if (lua_isnumber(L, -1)) {
 			indjoystick = (int)lua_tonumber(L, -1);
-		else if (lua_isstring(L, -1))
+			lua_remove(L,-1);
+			}
+		else if (lua_isstring(L, -1)) {
 			namjoystick = strdup((char*)lua_tostring(L, -1));
+			lua_remove(L,-1);
+			}
 
 		/* grab the keybindings if there are any */
 		char *str;
@@ -201,6 +215,12 @@ int main ( int argc, char** argv )
 					input_setKeybind( (char*)keybindNames[i], type, key, reverse );
 				}
 				else WARN("Malformed keybind in %s", CONF_FILE);
+
+				/* clean up after table stuff */
+				lua_remove(L,-1);
+				lua_remove(L,-1);
+				lua_remove(L,-1);
+				lua_remove(L,-1);
 			}
 		}
 	}

@@ -67,4 +67,11 @@ clean:
 	@echo -e "\tRemoving object files"
 	@rm -f $(OBJS)
 
+purge: clean
+	@echo -e "\tCleaning utilities"
+	@( cd utils/pack; $(MAKE) clean )
+	@( cd utils/mkspr; $(MAKE) clean )
+	@echo -e "\tCleaning Lua"
+	@( cd lib/lua; $(MAKE) clean )
+
 
