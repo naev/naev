@@ -47,7 +47,7 @@ function attacked ( attacker )
 
 	-- pirate isn't fighting or fleeing already
 	if task ~= "attack" and task ~= "runaway" then
-		taunt()
+		taunt(attacker)
 		pushtask(0, "attack", attacker)
 
 	-- pirate is fighting, but switches to new target (doesn't forget the old one though)
@@ -59,7 +59,7 @@ function attacked ( attacker )
 end
 
 
-function taunt ()
+function taunt ( target )
 		-- some taunts
 		num = rng(0,4)
 		if num == 0 then msg = "You dare attack me!"
@@ -67,7 +67,7 @@ function taunt ()
 		elseif num == 2 then msg = "Die!"
 		elseif num == 3 then msg = "You'll regret this!"
 		end
-		if msg then comm(attacker, msg) end
+		if msg then comm(target, msg) end
 end
 
 

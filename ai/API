@@ -146,6 +146,15 @@ combat( [number b] )
 	@param b if 0 sets the pilot to be in combat, if 1 or ommitted sets it to be in combat
 	@return nil
 
+settarget( number target )
+	@desc sets the target for the pilot, should be called each frame
+	@param target pilot to be targetted
+	@return nil
+
+secondary()
+	@desc attempts to set the best secondary weapon (defaults to launchers)
+	@return the type of the secondary weapon set ("None","Weapon","Launcher")
+
 shoot( [number weapon] )
 	@desc makes the pilot shoot weapons
 	@param weapon weapons to shoot, 1 if primary, 2 if secondary, 3 if both.  Defaults to 1.

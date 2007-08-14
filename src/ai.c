@@ -112,11 +112,15 @@ static void ai_freetask( Task* t );
 /* External C routines */
 void ai_attacked( Pilot* attacked, const unsigned int attacker ); /* weapon.c */
 
-/* AI routines for Lua */
+
+/*
+ * AI routines for Lua
+ */
 /* tasks */
 static int ai_pushtask( lua_State *L ); /* pushtask( string, number/pointer, number ) */
 static int ai_poptask( lua_State *L ); /* poptask() */
 static int ai_taskname( lua_State *L ); /* number taskname() */
+
 /* consult values */
 static int ai_gettarget( lua_State *L ); /* pointer gettarget() */
 static int ai_gettargetid( lua_State *L ); /* number gettargetid() */
@@ -127,13 +131,15 @@ static int ai_pshield( lua_State *L ); /* pshield() */
 static int ai_getdistance( lua_State *L ); /* number getdist(Vector2d) */
 static int ai_getpos( lua_State *L ); /* getpos(number) */
 static int ai_minbrakedist( lua_State *L ); /* number minbrakedist() */
+
 /* boolean expressions */
-static int ai_exists( lua_State *L ); /* boolean exists */
+static int ai_exists( lua_State *L ); /* boolean exists() */
 static int ai_ismaxvel( lua_State *L ); /* boolean ismaxvel() */
 static int ai_isstopped( lua_State *L ); /* boolean isstopped() */
 static int ai_isenemy( lua_State *L ); /* boolean isenemy( number ) */
 static int ai_isally( lua_State *L ); /* boolean isally( number ) */
 static int ai_incombat( lua_State *L ); /* boolean incombat( [number] ) */
+
 /* movement */
 static int ai_accel( lua_State *L ); /* accel(number); number <= 1. */
 static int ai_turn( lua_State *L ); /* turn(number); abs(number) <= 1. */
@@ -142,15 +148,19 @@ static int ai_brake( lua_State *L ); /* brake() */
 static int ai_getnearestplanet( lua_State *L ); /* pointer getnearestplanet() */
 static int ai_getrndplanet( lua_State *L ); /* pointor getrndplanet() */
 static int ai_hyperspace( lua_State *L ); /* [number] hyperspace() */
+
 /* combat */
 static int ai_combat( lua_State *L ); /* combat( number ) */
 static int ai_settarget( lua_State *L ); /* settarget( number ) */
+static int ai_secondary( lua_State *L ); /* string secondary() */
 static int ai_shoot( lua_State *L ); /* shoot( number ); number = 1,2,3 */
 static int ai_getenemy( lua_State *L ); /* number getenemy() */
 static int ai_hostile( lua_State *L ); /* hostile( number ) */
+
 /* timers */
 static int ai_settimer( lua_State *L ); /* settimer( number, number ) */
 static int ai_timeup( lua_State *L ); /* boolean timeup( number ) */
+
 /* misc */
 static int ai_createvect( lua_State *L ); /* createvect( number, number ) */
 static int ai_comm( lua_State *L ); /* say( number, string ) */
@@ -268,6 +278,7 @@ static int ai_loadProfile( char* filename )
 	/* combat */
 	lua_regfunc(L, "combat", ai_combat);
 	lua_regfunc(L, "settarget", ai_settarget);
+	lua_regfunc(L, "secondary", ai_secondary);
 	lua_regfunc(L, "shoot", ai_shoot);
 	lua_regfunc(L, "getenemy", ai_getenemy);
 	lua_regfunc(L, "hostile", ai_hostile);
@@ -842,6 +853,39 @@ static int ai_settarget( lua_State *L )
 
 	if (lua_isnumber(L,1)) pilot_target = (int)lua_tonumber(L,1);
 	return 0;
+}
+
+
+/*
+ * sets the secondary weapon, biased towards launchers
+ */
+static int ai_secondary( lua_State *L )
+{
+	if (cur_pilot->secondary) {
+		lua_pushstring( L, outfit_getTypeBroad(cur_pilot->secondary->outfit) );
+		return 1;
+	}
+
+	PilotOutfit* po = NULL;
+	int i;
+	for (i=0; i<cur_pilot->noutfits; i++) {
+		if ((po==NULL) && (outfit_isWeapon(cur_pilot->outfits[i].outfit) ||
+					outfit_isLauncher(cur_pilot->outfits[i].outfit)))
+			po = &cur_pilot->outfits[i];
+		else if ((po!=NULL) && outfit_isWeapon(po->outfit) && /* launcher > weapon */
+				outfit_isLauncher(cur_pilot->outfits[i].outfit))
+			po = &cur_pilot->outfits[i];
+	}
+
+	if (po) {
+		cur_pilot->secondary = po;
+		pilot_setAmmo(cur_pilot);
+		lua_pushstring( L, outfit_getTypeBroad(po->outfit) );
+		return 1;
+	}
+
+	lua_pushstring( L, "None" );
+	return 1;
 }
 
 

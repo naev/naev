@@ -83,6 +83,8 @@ int outfit_isWeapon( const Outfit* o );
 int outfit_isLauncher( const Outfit* o );
 int outfit_isAmmo( const Outfit* o );
 const char* outfit_getType( const Outfit* o );
+const char* outfit_getTypeBroad( const Outfit* o );
+
 /*
  * loading/freeing outfit stack
  */

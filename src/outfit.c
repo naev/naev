@@ -102,6 +102,24 @@ const char* outfit_getType( const Outfit* o )
 	return outfit_typename[o->type];
 }
 
+/*
+ * returns the broad outfit type
+ */
+const char* outfit_typenamebroad[] = { "NULL",
+		"Weapon",
+		"Launcher",
+		"Ammo"
+};
+const char* outfit_getTypeBroad( const Outfit* o )
+{
+	int i = 0;
+	if (outfit_isWeapon(o)) i = 1;
+	else if (outfit_isLauncher(o)) i = 2;
+	else if (outfit_isAmmo(o)) i = 3;
+
+	return outfit_typenamebroad[i];
+}
+
 
 /*
  * parses the specific area for a weapon and loads it into Outfit
