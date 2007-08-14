@@ -5,9 +5,6 @@
  */
 /* localised global */
 #include "SDL.h"
-#include "lua.h"
-#include "lauxlib.h"
-#include "lualib.h"
 
 /* global */
 #include <unistd.h> /* getopt */
@@ -16,6 +13,7 @@
 
 /* local */
 #include "main.h"
+#include "conf.h"
 #include "log.h"
 #include "physics.h"
 #include "opengl.h"
@@ -34,27 +32,28 @@
 
 
 /* to get data info */
-#define XML_START_ID "Start"
-#define START_DATA "dat/start.xml"
+#define XML_START_ID		"Start"
+#define START_DATA		"dat/start.xml"
 
 #define CONF_FILE			"conf"
+#define VERSION_FILE		"VERSION"
+#define VERSION_LEN		10
 #define MINIMUM_FPS		0.5
 #define FONT_SIZE			12
 
 
-extern const char *keybindNames[]; /* keybindings */
-
-
 static int quit = 0; /* for primary loop */
 static unsigned int time = 0; /* used to calculate FPS and movement */
+static char version[VERSION_LEN];
 
 /* some defaults */
-#define DATA_DEF		"data" /* default data packfile */
 #define DATA_NAME_LEN	25 /* max length of data name */
 char* data = NULL;
 char dataname[DATA_NAME_LEN];
-static int show_fps = 1; /* shows fps - default yes */
-static int max_fps = 0;
+int show_fps = 1; /* shows fps - default yes */
+int max_fps = 0;
+int indjoystick = -1;
+char* namjoystick = NULL;
 
 
 /*
@@ -93,139 +92,21 @@ static void print_usage( char **argv )
  */
 int main ( int argc, char** argv )
 {
-	int i;
+	/* print the version */
+	snprintf( version, VERSION_LEN, "%d.%d.%d", VMAJOR, VMINOR, VREV );
+	LOG( " "APPNAME" v%s", version );
 
-
-	/*
-	 * print the version
-	 */
-	LOG( " "APPNAME" v%d.%d.%d", VMAJOR, VMINOR, VREV );
-	
-
-	/*
-	 * initializes SDL for possible warnings
-	 */
+	/* initializes SDL for possible warnings */
 	SDL_Init(0);
 
-	/*
-	 * default values
-	 */
-	/* global */
-	data = DATA_DEF;
-	/* opengl */
-	gl_screen.w = 800;
-	gl_screen.h = 640;
-	gl_screen.fullscreen = 0;
-	/* joystick */
-	int indjoystick = -1;
-	char* namjoystick = NULL;
-	/* input */
-	input_init();
-	input_setDefault();
+	/* input must be initialized for config to work */
+	input_init(); 
 
+	/* set the default config values */
+	conf_setDefaults();
 
-	/*
-	 * Lua to parse the configuration file
-	 */
-	lua_State *L = luaL_newstate();
-	if (luaL_dofile(L, CONF_FILE) == 0) { /* configuration file exists */
-
-		/* global */
-		lua_getglobal(L, "data");
-		if (lua_isstring(L, -1)) {
-			data = strdup((char*)lua_tostring(L, -1));
-			lua_remove(L,-1);
-		}
-
-		/* opengl properties*/
-		lua_getglobal(L, "width");
-		if (lua_isnumber(L, -1)) {
-			gl_screen.w = (int)lua_tonumber(L, -1);
-			lua_remove(L,-1);
-		}
-
-		lua_getglobal(L, "height");
-		if (lua_isnumber(L, -1)) {
-			gl_screen.h = (int)lua_tonumber(L, -1);
-			lua_remove(L,-1);
-		}
-
-		lua_getglobal(L, "fullscreen");
-		if (lua_isnumber(L, -1))
-			if ((int)lua_tonumber(L, -1) == 1) {
-				gl_screen.fullscreen = 1;
-				lua_remove(L,-1);
-			}
-
-		lua_getglobal(L, "fps");
-		if (lua_isnumber(L, -1)) {
-			max_fps = (int)lua_tonumber(L, -1);
-			lua_remove(L,-1);
-		}
-
-		/* joystick */
-		lua_getglobal(L, "joystick");
-		if (lua_isnumber(L, -1)) {
-			indjoystick = (int)lua_tonumber(L, -1);
-			lua_remove(L,-1);
-			}
-		else if (lua_isstring(L, -1)) {
-			namjoystick = strdup((char*)lua_tostring(L, -1));
-			lua_remove(L,-1);
-			}
-
-		/* grab the keybindings if there are any */
-		char *str;
-		int type, key, reverse;
-		for (i=0; strcmp(keybindNames[i],"end"); i++) {
-			lua_getglobal(L, keybindNames[i]);
-			str = NULL;
-			key = -1;
-			reverse = 0;
-			if (lua_istable(L, -1)) { /* it's a table */
-				/* gets the event type */
-				lua_pushstring(L, "type");
-				lua_gettable(L, -2);
-				if (lua_isstring(L, -1))
-					str = (char*)lua_tostring(L, -1);
-
-				/* gets the key */
-				lua_pushstring(L, "key");
-				lua_gettable(L, -3);
-				if (lua_isnumber(L, -1))
-					key = (int)lua_tonumber(L, -1);
-
-				/* is reversed, only useful for axis */
-				lua_pushstring(L, "reverse");
-				lua_gettable(L, -4);
-				if (lua_isnumber(L, -1))
-					reverse = 1;
-
-				if (key != -1 && str != NULL) { /* keybind is valid */
-					/* get type */
-					if (strcmp(str,"null")==0) type = KEYBIND_NULL;
-					else if (strcmp(str,"keyboard")==0) type = KEYBIND_KEYBOARD;
-					else if (strcmp(str,"jaxis")==0) type = KEYBIND_JAXIS;
-					else if (strcmp(str,"jbutton")==0) type = KEYBIND_JBUTTON;
-					else {
-						WARN("Unkown keybinding of type %s", str);
-						continue;
-					}
-					/* set the keybind */
-					input_setKeybind( (char*)keybindNames[i], type, key, reverse );
-				}
-				else WARN("Malformed keybind in %s", CONF_FILE);
-
-				/* clean up after table stuff */
-				lua_remove(L,-1);
-				lua_remove(L,-1);
-				lua_remove(L,-1);
-				lua_remove(L,-1);
-			}
-		}
-	}
-	lua_close(L);
-
+	/* Lua to parse the configuration file */
+	conf_loadConfig( CONF_FILE );
 
 	/*
 	 * parse arguments
@@ -477,7 +358,25 @@ static void display_fps( const double dt )
 static void data_name (void)
 {
 	uint32_t bufsize;
-	char *buf = pack_readfile( DATA, START_DATA, &bufsize );
+	char *buf;
+
+	/*
+	 * check the version
+	 */
+	buf = pack_readfile( DATA, VERSION_FILE, &bufsize );
+
+	if (strncmp(buf, version, bufsize) != 0) {
+		WARN("NAEV version and data module version differ!");
+		WARN("NAEV is v%s, data is for v%s", version, buf );
+	}
+	
+	free(buf);
+	
+	
+	/*
+	 * load the datafiles name
+	 */
+	buf = pack_readfile( DATA, START_DATA, &bufsize );
 
 	xmlNodePtr node;
 	xmlDocPtr doc = xmlParseMemory( buf, bufsize );

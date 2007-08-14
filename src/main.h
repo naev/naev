@@ -14,8 +14,9 @@
 #define MAX(x,y)				(((x)>(y))?(x):(y))
 #define MIN(x,y)				(((x)>(y))?(y):(x))
 
+#define DATA_DEF				"data" /* default data packfile */
 extern char* data; /* modifiable datafile */
-#define DATA	data /* data file */
+#define DATA					data /* data file */
 
 /* maximum filename path */
 #ifndef PATH_MAX

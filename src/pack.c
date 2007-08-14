@@ -290,7 +290,7 @@ void* pack_readfile( const char* packfile, const char* filename, uint32_t *files
 
 	/* read the entire file */
 	size = file->end - file->start;
-	buf = malloc( size );
+	buf = malloc( size + 1 );
 	if ((bytes = pack_read( file, buf, size)) != size) {
 		ERR("Reading '%s' from packfile '%s'.  Expected %d bytes got %d bytes",
 				filename, packfile, size, bytes );
@@ -299,6 +299,7 @@ void* pack_readfile( const char* packfile, const char* filename, uint32_t *files
 		return NULL;
 	}
 	DEBUG("Read %d bytes from '%s'", bytes, filename );
+	memset(buf+size,'\0',1); /* append size '\0' for it to validate as a string */
 
 	/* check the md5 */
 	md5_state_t md5;

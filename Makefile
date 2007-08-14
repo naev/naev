@@ -7,6 +7,7 @@ VMAJOR = 0
 VMINOR = 0
 VREV = 1
 VERSION = -DVMAJOR=$(VMAJOR) -DVMINOR=$(VMINOR) -DVREV=$(VREV)
+VERSIONFILE = VERSION
 
 OBJS := $(shell find src/ -name '*.c' -print)
 OBJS := $(OBJS:%.c=%.o)
@@ -31,7 +32,7 @@ LDGL = -lGL
 LDFLAGS = -lm $(LDLUA) $(LDSDL) $(LDXML) $(LDTTF) $(LDGL)
 
 DATA = data
-DATAFILES = $(shell find ai/ gfx/ dat/ -name '*.lua' -o -name '*.png' -o -name '*.xml' -o -name '*.ttf')
+DATAFILES = $(VERSIONFILE) $(shell find ai/ gfx/ dat/ -name '*.lua' -o -name '*.png' -o -name '*.xml' -o -name '*.ttf')
 
 
 %.o:	%.c %.h
@@ -54,7 +55,12 @@ mkspr: utils/mkspr/main.c
 	@( cd utils/mkspr; $(MAKE) )
 
 
+$(VERSIONFILE):
+	@echo -n "$(VMAJOR).$(VMINOR).$(VREV)" > $(VERSIONFILE)
+
+
 data: pack $(DATAFILES) src/pack.c utils/pack/main.c
+	@echo -n "$(VMAJOR).$(VMINOR).$(VREV)" > $(VERSIONFILE)
 	@echo -e "\tCreating data\n"
 	@./pack $(DATA) $(DATAFILES)
 
