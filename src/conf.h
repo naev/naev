@@ -5,7 +5,8 @@
 
 
 void conf_setDefaults (void);
-int conf_loadConfig ( const char* file );
+int conf_loadConfig( const char* file );
+void conf_parseCLI( int argc, char** argv );
 
 
 #endif /* CONF_H */

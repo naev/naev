@@ -7,9 +7,7 @@
 #include "SDL.h"
 
 /* global */
-#include <unistd.h> /* getopt */
 #include <string.h> /* strdup */
-#include <getopt.h> /* getopt_long */
 
 /* local */
 #include "main.h"
@@ -42,6 +40,7 @@
 #define FONT_SIZE			12
 
 
+static int space = 1; /* global value that controls whether or not playir is flying */
 static int quit = 0; /* for primary loop */
 static unsigned int time = 0; /* used to calculate FPS and movement */
 static char version[VERSION_LEN];
@@ -59,32 +58,12 @@ char* namjoystick = NULL;
 /*
  * prototypes
  */
-static void print_usage( char **argv );
 static void display_fps( const double dt );
 static void window_caption (void);
 static void data_name (void);
 /* update */
-static void update_all (void);
-static void render_all (void);
-
-
-/*
- * usage
- */
-static void print_usage( char **argv )
-{
-	LOG("Usage: %s [OPTION]", argv[0]);
-	LOG("Options are:");
-	LOG("   -f, --fullscreen      fullscreen");
-	LOG("   -F n, --fps n         limit frames per second");
-	LOG("   -d s, --data s        set the data file to be s");
-	/*LOG("   -w n                  set width to n");
-	LOG("   -h n                  set height to n");*/
-	LOG("   -j n, --joystick n    use joystick n");
-	LOG("   -J s, --Joystick s    use joystick whose name contains s");
-	LOG("   -h, --help            display this message and exit");
-	LOG("   -v, --version         print the version and exit");
-}
+static void update_space (void);
+static void render_space (void);
 
 
 /*
@@ -102,62 +81,13 @@ int main ( int argc, char** argv )
 	/* input must be initialized for config to work */
 	input_init(); 
 
-	/* set the default config values */
-	conf_setDefaults();
+	/* set the configuration */
+	conf_setDefaults(); /* set the default config values */
+	conf_loadConfig( CONF_FILE ); /* Lua to parse the configuration file */
+	conf_parseCLI( argc, argv ); /* parse CLI arguments */
 
-	/* Lua to parse the configuration file */
-	conf_loadConfig( CONF_FILE );
-
-	/*
-	 * parse arguments
-	 */
-	static struct option long_options[] = {
-			{ "fullscreen", no_argument, 0, 'f' },
-			{ "fps", required_argument, 0, 'F' },
-			{ "data", required_argument, 0, 'd' },
-			{ "joystick", required_argument, 0, 'j' },
-			{ "Joystick", required_argument, 0, 'J' },
-			{ "help", no_argument, 0, 'h' },
-			{ "version", no_argument, 0, 'v' },
-			{ NULL, 0, 0, 0 } };
-	int option_index = 0;
-	int c = 0;
-	while ((c = getopt_long(argc, argv, "fF:d:J:j:hv", long_options, &option_index)) != -1) {
-		switch (c) {
-			case 'f':
-				gl_screen.fullscreen = 1;
-				break;
-			case 'F':
-				max_fps = atoi(optarg);
-				break;
-			case 'd':
-				data = strdup(optarg);
-				break;
-			case 'j':
-				indjoystick = atoi(optarg);
-				break;
-			case 'J':
-				namjoystick = strdup(optarg);
-				break;
-
-			case 'v':
-				LOG(APPNAME": version %d.%d.%d", VMAJOR, VMINOR, VREV);
-			case 'h':
-				print_usage(argv);
-				exit(EXIT_SUCCESS);
-		}
-	}
-
-
-	/* check to see if data file is valid */
-	if (pack_check(data)) {
-		ERR("Data file '%s' not found",data);
-		WARN("You should specify which data file to use with '-d'");
-		WARN("See -h or --help for more information");
-		SDL_Quit();
-		exit(EXIT_FAILURE);
-	}
-	data_name(); /* loads the data's name and friends */
+	/* load the data basics */
+	data_name();
 	LOG(" %s", dataname);
 	DEBUG();
 
@@ -180,8 +110,7 @@ int main ( int argc, char** argv )
 	 * Input
 	 */
 	if ((indjoystick >= 0) || (namjoystick != NULL)) {
-		if (joystick_init())
-			WARN("Error initializing joystick input");
+		if (joystick_init()) WARN("Error initializing joystick input");
 		if (namjoystick != NULL) { /* use the joystick name to find a joystick */
 			if (joystick_use(joystick_get(namjoystick))) {
 				WARN("Failure to open any joystick, falling back to default keybinds");
@@ -196,19 +125,15 @@ int main ( int argc, char** argv )
 			}
 	}
 
-	/*
-	 * Misc
-	 */
-	if (ai_init())
-		WARN("Error initializing AI");
+	/* Misc */
+	if (ai_init()) WARN("Error initializing AI");
 
+	/* Misc opengl init */
 	gl_fontInit( NULL, NULL, FONT_SIZE ); /* initializes default font to size */
 	gui_init(); /* initializes the GUI graphics */
 
 	
-	/*
-	 * data loading
-	 */
+	/*  data loading */
 	factions_load();
 	outfit_load();
 	ships_load();
@@ -216,9 +141,7 @@ int main ( int argc, char** argv )
 	space_load();
 
 
-	/*
-	 * create new player, TODO start menu
-	 */
+	/* create new player, TODO start menu */
 	player_new();
 
 	
@@ -235,16 +158,21 @@ int main ( int argc, char** argv )
 		while (SDL_PollEvent(&event)) { /* event loop */
 			if (event.type == SDL_QUIT) quit = 1; /* quit is handled here */
 
-			input_handle(&event); /* handles all the events and player keybinds */
+			if (space) /* player is flying around */
+				input_handle(&event); /* handles all the events and player keybinds */
 		}
-		update_all();
-		render_all();
+
+		if (space) { /* player is fling around */
+			update_space();
+
+			glClear(GL_COLOR_BUFFER_BIT);
+			render_space();
+			SDL_GL_SwapBuffers();
+		}
 	}
 
 
-	/*
-	 * data unloading
-	 */
+	/* data unloading */
 	weapon_exit(); /* destroys all active weapons */
 	space_exit(); /* cleans up the universe itself */
 	pilots_free(); /* frees the pilots, they were locked up :( */
@@ -253,27 +181,26 @@ int main ( int argc, char** argv )
 	ships_free();
 	outfit_free();
 	factions_free();
-
 	gl_freeFont(NULL);
 
-	/*
-	 * exit subsystems
-	 */
+
+	/* exit subsystems */
 	ai_exit(); /* stops the Lua AI magic */
 	joystick_exit(); /* releases joystick */
 	input_exit(); /* cleans up keybindings */
 	gl_exit(); /* kills video output */
 
+	/* all is well */
 	exit(EXIT_SUCCESS);
 }
 
 
 /*
- * updates everything
+ * updates the game itself (player flying around and friends)
  */
 static double fps_dt = 1.;
 static double dt = 0.; /* used also a bit in render_all */
-static void update_all (void)
+static void update_space (void)
 {
 	/* dt in ms/1000 */
 	dt = (double)(SDL_GetTicks() - time) / 1000.;
@@ -298,7 +225,7 @@ static void update_all (void)
 
 
 /*
- * Renders everything
+ * Renders the game itself (player flying around and friends)
  *
  * Blitting order (layers):
  *   BG | @ stars and planets
@@ -313,10 +240,8 @@ static void update_all (void)
  *      | @ foreground particles
  *      | @ text and GUI
  */
-static void render_all (void)
+static void render_space (void)
 {
-	glClear(GL_COLOR_BUFFER_BIT);
-
 	/* BG */
 	space_render(dt);
 	planets_render();
@@ -327,8 +252,6 @@ static void render_all (void)
 	/* FG */
 	player_render();
 	display_fps(dt);
-
-	SDL_GL_SwapBuffers();
 }
 
 
@@ -359,6 +282,19 @@ static void data_name (void)
 {
 	uint32_t bufsize;
 	char *buf;
+
+
+   /* 
+	 * check to see if data file is valid
+	 */
+   if (pack_check(DATA)) {
+      ERR("Data file '%s' not found",data);
+      WARN("You should specify which data file to use with '-d'");
+      WARN("See -h or --help for more information");
+      SDL_Quit();
+      exit(EXIT_FAILURE);
+   }
+
 
 	/*
 	 * check the version

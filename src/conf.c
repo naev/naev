@@ -2,6 +2,10 @@
 
 #include "conf.h"
 
+#include <unistd.h> /* getopt */
+#include <string.h> /* strdup */
+#include <getopt.h> /* getopt_long */
+
 #include "lua.h"
 #include "lauxlib.h"
 #include "lualib.h"
@@ -42,6 +46,32 @@ extern int indjoystick;
 extern char* namjoystick;
 /* from player.c */
 extern const char *keybindNames[]; /* keybindings */
+
+
+/*
+ * prototypes
+ */
+static void print_usage( char **argv );
+
+
+/*
+ * prints usage
+ */
+static void print_usage( char **argv )
+{
+	LOG("Usage: %s [OPTION]", argv[0]);
+	LOG("Options are:");
+	LOG("   -f, --fullscreen      fullscreen");
+	LOG("   -F n, --fps n         limit frames per second");
+	LOG("   -d s, --data s        set the data file to be s");
+	/*LOG("   -w n                  set width to n");
+	  LOG("   -h n                  set height to n");*/
+	LOG("   -j n, --joystick n    use joystick n");
+	LOG("   -J s, --Joystick s    use joystick whose name contains s");
+	LOG("   -h, --help            display this message and exit");
+	LOG("   -v, --version         print the version and exit");
+}
+
 
 
 /*
@@ -152,3 +182,49 @@ int conf_loadConfig ( const char* file )
 	lua_close(L);
 	return 0;
 }
+
+
+/*
+ * parses the CLI options
+ */
+void conf_parseCLI( int argc, char** argv )
+{
+	static struct option long_options[] = {
+		{ "fullscreen", no_argument, 0, 'f' },
+		{ "fps", required_argument, 0, 'F' },
+		{ "data", required_argument, 0, 'd' },
+		{ "joystick", required_argument, 0, 'j' },
+		{ "Joystick", required_argument, 0, 'J' },
+		{ "help", no_argument, 0, 'h' }, 
+		{ "version", no_argument, 0, 'v' },
+		{ NULL, 0, 0, 0 } };
+	int option_index = 0;
+	int c = 0;
+	while ((c = getopt_long(argc, argv, "fF:d:J:j:hv", long_options, &option_index)) != -1) {
+		switch (c) {
+			case 'f':
+				gl_screen.fullscreen = 1;
+				break;
+			case 'F':
+				max_fps = atoi(optarg);
+				break;
+			case 'd': 
+				data = strdup(optarg);
+				break;
+			case 'j':
+				indjoystick = atoi(optarg);
+				break;
+			case 'J':
+				namjoystick = strdup(optarg);
+				break;
+
+			case 'v':
+				LOG(APPNAME": version %d.%d.%d", VMAJOR, VMINOR, VREV);
+			case 'h':
+				print_usage(argv);
+				exit(EXIT_SUCCESS);
+		}
+	}
+}
+
+
