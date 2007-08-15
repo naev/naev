@@ -29,47 +29,16 @@
 #define pow2(x)	((x)*(x))
 
 
-/* flag defines */
-#define PLAYER_TURN_LEFT	(1<<0)	/* player is turning left */
-#define PLAYER_TURN_RIGHT	(1<<1)	/* player is turning right */
-#define PLAYER_FACE			(1<<2)	/* player is facing target */
-#define PLAYER_PRIMARY		(1<<3)	/* player is shooting primary weapon */
-#define PLAYER_SECONDARY	(1<<4)	/* player is shooting secondary weapon */
-/* flag functions */
-#define player_isFlag(f)	(player_flags & f)
-#define player_setFlag(f)	(player_flags |= f)
-#define player_rmFlag(f)	(player_flags ^= f)
-
-
-#define KEY_PRESS		( 1.)
-#define KEY_RELEASE	(-1.)
-/* keybinding structure */
-typedef struct {
-	char *name; /* keybinding name, taken from keybindNames */
-	KeybindType type; /* type, defined in playe.h */
-	unsigned int key; /* key/axis/button event number */
-	double reverse; /* 1. if normal, -1. if reversed, only useful for joystick axis */
-} Keybind;
-static Keybind** player_input; /* contains the players keybindings */
-/* name of each keybinding */
-const char *keybindNames[] = { "accel", "left", "right", /* movement */
-		"primary", "target", "target_nearest", "face", "board", /* fighting */
-		"secondary", "secondary_next", /* secondary weapons */
-		"target_planet", "land", /* space navigation */
-		"mapzoomin", "mapzoomout", "screenshot",  /* misc */
-		"end" }; /* must terminate in "end" */
-
-
 /*
  * player stuff
  */
 Pilot* player = NULL; /* ze player */
 unsigned int credits = 0;
-static unsigned int player_flags = 0; /* player flags */
-static double player_turn = 0.; /* turn velocity from input */
-static double player_acc = 0.; /* accel velocity from input */
-static unsigned int player_target = PLAYER_ID; /* targetted pilot */
-static int planet_target = -1; /* targetted planet */
+unsigned int player_flags = 0; /* player flags */
+double player_turn = 0.; /* turn velocity from input */
+double player_acc = 0.; /* accel velocity from input */
+unsigned int player_target = PLAYER_ID; /* targetted pilot */
+int planet_target = -1; /* targetted planet */
 
 
 /*
@@ -167,13 +136,6 @@ static int gui_parse( const xmlNodePtr parent, const char *name );
 static void gui_renderPilot( const Pilot* p );
 static void gui_renderBar( const glColour* c, const Vector2d* p,
 		const Rect* r, const double w );
-/* keybind actions */
-static void player_board (void);
-static void player_secondaryNext (void);
-static void player_targetPlanet (void);
-static void player_land (void);
-static void player_screenshot (void);
-
 
 
 /*
@@ -969,6 +931,26 @@ void player_think( Pilot* player )
 
 
 /*
+ *
+ * 	For use in keybindings
+ *
+ */
+/*
+ * modifies the radar resolution
+ */
+void player_setRadarRel( int mod )
+{
+	if (mod > 0) {
+		gui.radar.res += mod * RADAR_RES_INTERVAL;
+		if (gui.radar.res > RADAR_RES_MAX) gui.radar.res = RADAR_RES_MAX;
+	}
+	else {
+		gui.radar.res -= mod * RADAR_RES_INTERVAL;
+		if (gui.radar.res < RADAR_RES_MIN) gui.radar.res = RADAR_RES_MIN;
+	}
+}
+
+/*
  * attempt to board the player's target
  */
 void player_board (void)
@@ -1004,7 +986,7 @@ void player_board (void)
 /*
  * get the next secondary weapon
  */
-static void player_secondaryNext (void)
+void player_secondaryNext (void)
 {
 	int i = 0;
 	
@@ -1035,7 +1017,7 @@ static void player_secondaryNext (void)
 /*
  * cycle through planet targets
  */
-static void player_targetPlanet (void)
+void player_targetPlanet (void)
 {
 	/* no target */
 	if ((planet_target==-1) && (cur_system->nplanets > 0)) {
@@ -1053,7 +1035,7 @@ static void player_targetPlanet (void)
 /*
  * try to land or target closest planet if no land target
  */
-static void player_land (void)
+void player_land (void)
 {
 	Planet* planet = &cur_system->planets[planet_target];
 	if (planet_target >= 0) { /* attempt to land */
@@ -1090,7 +1072,7 @@ static void player_land (void)
 /*
  * take a screenshot
  */
-static void player_screenshot (void)
+void player_screenshot (void)
 {
 	char filename[20];
 
@@ -1098,309 +1080,4 @@ static void player_screenshot (void)
 	strncpy(filename,"screenshot.png",20);
 	gl_screenshot(filename);
 }
-
-
-/*
- *
- *
- *		I N P U T
- *
- */
-/*
- * sets the default input keys
- */
-void input_setDefault (void)
-{
-	/* movement */
-	input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, 0 );
-	input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, 0 );
-	input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, 0 );
-	/* combat */
-	input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, 0 );
-	input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, 0 );
-	input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_r, 0 );
-	input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, 0 );
-	input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, 0 );
-	/* secondary weap */
-	input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, 0 );
-	input_setKeybind( "secondary_next", KEYBIND_KEYBOARD, SDLK_w, 0 );
-	/* space */
-	input_setKeybind( "target_planet", KEYBIND_KEYBOARD, SDLK_p, 0 );
-	input_setKeybind( "land", KEYBIND_KEYBOARD, SDLK_l, 0 );
-	/* misc */
-	input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_9, 0 );
-	input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_0, 0 );
-	input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MINUS, 0 );
-}
-
-/*
- * initialization/exit functions (does not assign keys)
- */
-void input_init (void)
-{
-	Keybind *temp;
-	int i;
-	for (i=0; strcmp(keybindNames[i],"end"); i++); /* gets number of bindings */
-	player_input = malloc(i*sizeof(Keybind*));
-
-	/* creates a null keybinding for each */
-	for (i=0; strcmp(keybindNames[i],"end"); i++) {
-		temp = MALLOC_ONE(Keybind);
-		temp->name = (char*)keybindNames[i];
-		temp->type = KEYBIND_NULL;
-		temp->key = 0;
-		temp->reverse = 1.;
-		player_input[i] = temp;
-	}
-}
-void input_exit (void)
-{
-	int i;
-	for (i=0; strcmp(keybindNames[i],"end"); i++)
-		free(player_input[i]);
-	free(player_input);
-}
-
-
-/*
- * binds key of type type to action keybind
- *
- * @param keybind is the name of the keybind defined above
- * @param type is the type of the keybind
- * @param key is the key to bind to
- * @param reverse is whether to reverse it or not
- */
-void input_setKeybind( char *keybind, KeybindType type, int key, int reverse )
-{
-	int i;
-	for (i=0; strcmp(keybindNames[i],"end"); i++)
-		if (strcmp(keybind, player_input[i]->name)==0) {
-			player_input[i]->type = type;
-			player_input[i]->key = key;
-			player_input[i]->reverse = (reverse) ? -1. : 1. ;
-			return;
-		}
-	WARN("Unable to set keybinding '%s', that command doesn't exist", keybind);
-}
-
-
-/*
- * runs the input command
- *
- * @param keynum is the index of the player_input keybind
- * @param value is the value of the keypress (defined above)
- * @param abs is whether or not it's an absolute value (for them joystick)
- */
-static void input_key( int keynum, double value, int abs )
-{
-	/*
-	 * movement
-	 */
-	/* accelerating */
-	if (strcmp(player_input[keynum]->name,"accel")==0) {
-		if (abs) player_acc = value;
-		else player_acc += value;
-		player_acc = ABS(player_acc); /* make sure value is sane */
-
-	/* turning left */
-	} else if (strcmp(player_input[keynum]->name,"left")==0) {
-
-		/* set flags for facing correction */
-		if (value==KEY_PRESS) player_setFlag(PLAYER_TURN_LEFT);
-		else if (value==KEY_RELEASE) player_rmFlag(PLAYER_TURN_LEFT);
-
-		if (abs) player_turn = -value;
-		else player_turn -= value;
-		if (player_turn < -1.) player_turn = -1.; /* make sure value is sane */
-
-	/* turning right */
-	} else if (strcmp(player_input[keynum]->name,"right")==0) {
-
-		/* set flags for facing correction */
-		if (value==KEY_PRESS) player_setFlag(PLAYER_TURN_RIGHT);
-		else if (value==KEY_RELEASE) player_rmFlag(PLAYER_TURN_RIGHT);
-
-		if (abs)	player_turn = value;
-		else player_turn += value;
-		if (player_turn > 1.) player_turn = 1.; /* make sure value is sane */
-
-
-	/*
-	 * combat
-	 */
-	/* shooting primary weapon */
-	} else if (strcmp(player_input[keynum]->name, "primary")==0) {
-		if (value==KEY_PRESS) player_setFlag(PLAYER_PRIMARY);
-		else if (value==KEY_RELEASE) player_rmFlag(PLAYER_PRIMARY);
-	/* targetting */
-	} else if (strcmp(player_input[keynum]->name, "target")==0) {
-		if (value==KEY_PRESS) player_target = pilot_getNext(player_target);
-
-	} else if (strcmp(player_input[keynum]->name, "target_nearest")==0) {
-		if (value==KEY_PRESS) player_target = pilot_getHostile();
-	/* face the target */
-	} else if (strcmp(player_input[keynum]->name, "face")==0) {
-		if (value==KEY_PRESS) player_setFlag(PLAYER_FACE);
-		else if (value==KEY_RELEASE) {
-			player_rmFlag(PLAYER_FACE);
-			player_turn = 0; /* turning corrections */
-			if (player_isFlag(PLAYER_TURN_LEFT)) player_turn -= 1;
-			if (player_isFlag(PLAYER_TURN_RIGHT)) player_turn += 1;
-		}
-	/* board them ships */
-	} else if (strcmp(player_input[keynum]->name, "board")==0) {
-		if (value==KEY_PRESS) player_board();
-
-
-	/*
-	 * secondary weapons
-	 */
-	/* shooting secondary weapon */
-	} else if (strcmp(player_input[keynum]->name, "secondary")==0) {
-		if (value==KEY_PRESS) player_setFlag(PLAYER_SECONDARY);
-		else if (value==KEY_RELEASE) player_rmFlag(PLAYER_SECONDARY);
-	
-	/* selecting secondary weapon */
-	} else if (strcmp(player_input[keynum]->name, "secondary_next")==0) {
-		if (value==KEY_PRESS) player_secondaryNext();
-
-
-	/*
-	 * space
-	 */
-	/* target planet (cycles like target) */
-	} else if (strcmp(player_input[keynum]->name, "target_planet")==0) {
-		if (value==KEY_PRESS) player_targetPlanet();
-	/* target nearest planet or attempt to land */
-	} else if (strcmp(player_input[keynum]->name, "land")==0) {
-		if (value==KEY_PRESS) player_land();
-
-
-	/*
-	 * misc
-	 */
-	/* zooming in */
-	} else if (strcmp(player_input[keynum]->name, "mapzoomin")==0) {
-		if ((value==KEY_PRESS) && (gui.radar.res < RADAR_RES_MAX))
-			gui.radar.res += RADAR_RES_INTERVAL;
-	/* zooming out */
-	} else if (strcmp(player_input[keynum]->name, "mapzoomout")==0) {
-		if ((value==KEY_PRESS) && (gui.radar.res > RADAR_RES_MIN))
-			gui.radar.res -= RADAR_RES_INTERVAL;
-	/* take a screenshot */
-	} else if (strcmp(player_input[keynum]->name, "screenshot")==0) {
-		if (value==KEY_PRESS) player_screenshot();
-	}
-}
-
-
-/*
- * events
- */
-/* prototypes */
-static void input_joyaxis( const unsigned int axis, const int value );
-static void input_joydown( const unsigned int button );
-static void input_joyup( const unsigned int button );
-static void input_keydown( SDLKey key );
-static void input_keyup( SDLKey key );
-
-/*
- * joystick
- */
-/* joystick axis */
-static void input_joyaxis( const unsigned int axis, const int value )
-{
-	int i;
-	for (i=0; strcmp(keybindNames[i],"end"); i++)
-		if (player_input[i]->type == KEYBIND_JAXIS && player_input[i]->key == axis) {
-			input_key(i,-(player_input[i]->reverse)*(double)value/32767.,1);
-			return;
-		}
-}
-/* joystick button down */
-static void input_joydown( const unsigned int button )
-{
-	int i;
-	for (i=0; strcmp(keybindNames[i],"end"); i++)
-		if (player_input[i]->type == KEYBIND_JBUTTON && player_input[i]->key == button) {
-			input_key(i,KEY_PRESS,0);
-			return;
-		}  
-}
-/* joystick button up */
-static void input_joyup( const unsigned int button )
-{
-	int i;
-	for (i=0; strcmp(keybindNames[i],"end"); i++)
-		if (player_input[i]->type == KEYBIND_JBUTTON && player_input[i]->key == button) {
-			input_key(i,KEY_RELEASE,0);
-			return;
-		} 
-}
-
-
-/*
- * keyboard
- */
-/* key down */
-static void input_keydown( SDLKey key )
-{
-	int i;
-	for (i=0; strcmp(keybindNames[i],"end"); i++)
-		if (player_input[i]->type == KEYBIND_KEYBOARD && player_input[i]->key == key) {
-			input_key(i,KEY_PRESS,0);
-			return;
-		}
-
-	/* ESC = quit */
-	SDL_Event quit;
-	if (key == SDLK_ESCAPE) {
-		quit.type = SDL_QUIT;
-		SDL_PushEvent(&quit);
-	}
-
-}
-/* key up */
-static void input_keyup( SDLKey key )
-{
-	int i;
-	for (i=0; strcmp(keybindNames[i],"end"); i++)
-		if (player_input[i]->type == KEYBIND_KEYBOARD && player_input[i]->key == key) {
-			input_key(i,KEY_RELEASE,0);
-			return;
-		}
-}
-
-
-/*
- * global input
- *
- * basically seperates the event types
- */
-void input_handle( SDL_Event* event )
-{
-	switch (event->type) {
-		case SDL_JOYAXISMOTION:
-			input_joyaxis(event->jaxis.axis, event->jaxis.value);
-			break;
-
-		case SDL_JOYBUTTONDOWN:
-			input_joydown(event->jbutton.button);
-			break;
-
-		case SDL_JOYBUTTONUP:
-			input_joyup(event->jbutton.button);
-			break;
-
-		case SDL_KEYDOWN:
-			input_keydown(event->key.keysym.sym);
-			break;
-
-		case SDL_KEYUP:
-			input_keyup(event->key.keysym.sym);
-			break;
-	}
-}
-
-
 

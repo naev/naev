@@ -18,6 +18,7 @@
 #include "ship.h"
 #include "pilot.h"
 #include "player.h"
+#include "input.h"
 #include "joystick.h"
 #include "space.h"
 #include "rng.h"
@@ -40,7 +41,7 @@
 #define FONT_SIZE			12
 
 
-static int space = 1; /* global value that controls whether or not playir is flying */
+int toolkit = 0; /* toolkit has a window open */
 static int quit = 0; /* for primary loop */
 static unsigned int time = 0; /* used to calculate FPS and movement */
 static char version[VERSION_LEN];
@@ -158,11 +159,12 @@ int main ( int argc, char** argv )
 		while (SDL_PollEvent(&event)) { /* event loop */
 			if (event.type == SDL_QUIT) quit = 1; /* quit is handled here */
 
-			if (space) /* player is flying around */
-				input_handle(&event); /* handles all the events and player keybinds */
+			input_handle(&event); /* handles all the events and player keybinds */
 		}
 
-		if (space) { /* player is fling around */
+		if (toolkit) {
+		}
+		else { /* player is flying around */
 			update_space();
 
 			glClear(GL_COLOR_BUFFER_BIT);

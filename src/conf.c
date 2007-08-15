@@ -13,6 +13,7 @@
 #include "main.h"
 #include "log.h"
 #include "player.h"
+#include "input.h"
 #include "opengl.h"
 
 
