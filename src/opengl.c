@@ -22,7 +22,7 @@
 #define	SCREEN_W	gl_screen.w
 #define	SCREEN_H gl_screen.h
 
-#define FONT_DEF	"dat/FreeSans.ttf"
+#define FONT_DEF	"dat/font.ttf"
 
 
 /*
