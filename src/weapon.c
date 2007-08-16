@@ -101,6 +101,29 @@ void weapon_minimap( const double res, const double w, const double h,
 
 
 /*
+ * pauses the weapon system
+ */
+void weapons_pause (void)
+{
+	int i;
+	unsigned int t = SDL_GetTicks();
+	for (i=0; i<nwbackLayer; i++)
+		wbackLayer[i]->timer -= t;
+	for (i=0; i<nwfrontLayer; i++)
+		wfrontLayer[i]->timer -= t;
+}
+void weapons_unpause (void)
+{
+	int i;                            
+	unsigned int t = SDL_GetTicks();
+	for (i=0; i<nwbackLayer; i++) 
+		wbackLayer[i]->timer += t;
+	for (i=0; i<nwfrontLayer; i++) 
+		wfrontLayer[i]->timer += t;
+}
+
+
+/*
  * seeker brain
  */
 static void think_seeker( Weapon* w )

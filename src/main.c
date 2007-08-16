@@ -28,6 +28,8 @@
 #include "weapon.h"
 #include "faction.h"
 #include "xml.h"
+#include "toolkit.h"
+#include "pause.h"
 
 
 /* to get data info */
@@ -41,9 +43,8 @@
 #define FONT_SIZE			12
 
 
-int toolkit = 0; /* toolkit has a window open */
 static int quit = 0; /* for primary loop */
-static unsigned int time = 0; /* used to calculate FPS and movement */
+unsigned int time = 0; /* used to calculate FPS and movement, in pause.c */
 static char version[VERSION_LEN];
 
 /* some defaults */
@@ -129,9 +130,10 @@ int main ( int argc, char** argv )
 	/* Misc */
 	if (ai_init()) WARN("Error initializing AI");
 
-	/* Misc opengl init */
+	/* Misc graphics init */
 	gl_fontInit( NULL, NULL, FONT_SIZE ); /* initializes default font to size */
 	gui_init(); /* initializes the GUI graphics */
+	toolkit_init(); /* initializes the toolkit */
 
 	
 	/*  data loading */
@@ -162,15 +164,14 @@ int main ( int argc, char** argv )
 			input_handle(&event); /* handles all the events and player keybinds */
 		}
 
-		if (toolkit) {
-		}
-		else { /* player is flying around */
-			update_space();
+		glClear(GL_COLOR_BUFFER_BIT);
 
-			glClear(GL_COLOR_BUFFER_BIT);
-			render_space();
-			SDL_GL_SwapBuffers();
-		}
+		if (!paused) update_space(); /* update game */
+
+		render_space();
+		if (toolkit) toolkit_render();
+
+		SDL_GL_SwapBuffers();
 	}
 
 
@@ -187,6 +188,7 @@ int main ( int argc, char** argv )
 
 
 	/* exit subsystems */
+	toolkit_exit(); /* kills the toolkit */
 	ai_exit(); /* stops the Lua AI magic */
 	joystick_exit(); /* releases joystick */
 	input_exit(); /* cleans up keybindings */

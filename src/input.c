@@ -5,6 +5,7 @@
 #include "main.h"
 #include "log.h"
 #include "player.h"
+#include "pause.h"
 
 
 #define KEY_PRESS    ( 1.)
@@ -27,7 +28,7 @@ const char *keybindNames[] = { "accel", "left", "right", /* movement */
 	"primary", "target", "target_nearest", "face", "board", /* fighting */
 	"secondary", "secondary_next", /* secondary weapons */
 	"target_planet", "land", /* space navigation */
-	"mapzoomin", "mapzoomout", "screenshot",  /* misc */
+	"mapzoomin", "mapzoomout", "screenshot", "pause",  /* misc */
 	"end" }; /* must terminate in "end" */
 
 
@@ -65,6 +66,7 @@ void input_setDefault (void)
 	input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_9, 0 );
 	input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_0, 0 );
 	input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MINUS, 0 );
+	input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_z, 0 );
 }
 
 
@@ -184,7 +186,7 @@ static void input_key( int keynum, double value, int abs )
 			if (player_isFlag(PLAYER_TURN_RIGHT)) player_turn += 1;
 		}
 	/* board them ships */
-	} else if (KEY("board")) {
+	} else if (KEY("board") && !paused) {
 		if (value==KEY_PRESS) player_board();
 
 
@@ -192,12 +194,12 @@ static void input_key( int keynum, double value, int abs )
 	 * secondary weapons
 	 */
 	/* shooting secondary weapon */
-	} else if (KEY("secondary")) {
+	} else if (KEY("secondary") && !paused) {
 		if (value==KEY_PRESS) player_setFlag(PLAYER_SECONDARY);
 		else if (value==KEY_RELEASE) player_rmFlag(PLAYER_SECONDARY);
 
 	/* selecting secondary weapon */
-	} else if (KEY("secondary_next")) {
+	} else if (KEY("secondary_next") && !paused) {
 		if (value==KEY_PRESS) player_secondaryNext();
 
 
@@ -210,7 +212,7 @@ static void input_key( int keynum, double value, int abs )
 		else if (value==KEY_RELEASE) player_rmFlag(PLAYER_SECONDARY);
 
 	/* selecting secondary weapon */
-	} else if (KEY("secondary_next")) {
+	} else if (KEY("secondary_next") && !paused) {
 		if (value==KEY_PRESS) player_secondaryNext();
 
 
@@ -218,10 +220,10 @@ static void input_key( int keynum, double value, int abs )
 	 * space
 	 */
 	/* target planet (cycles like target) */
-	} else if (KEY("target_planet")) {
+	} else if (KEY("target_planet") && !paused) {
 		if (value==KEY_PRESS) player_targetPlanet();
 	/* target nearest planet or attempt to land */
-	} else if (KEY("land")) {
+	} else if (KEY("land") && !paused) {
 		if (value==KEY_PRESS) player_land();
 
 
@@ -234,10 +236,18 @@ static void input_key( int keynum, double value, int abs )
 	/* zooming out */
 	} else if (KEY("mapzoomout")) {
 		if (value==KEY_PRESS) player_setRadarRel(-1);
+	}
 	/* take a screenshot */
-	} else if (KEY("screenshot")) {
+	if (KEY("screenshot")) {
 		if (value==KEY_PRESS) player_screenshot();
 	}
+	/* pause the games */
+	if (KEY("pause")) {
+		if (value==KEY_PRESS) {
+			if (paused) unpause();
+         else pause();
+      }
+   }
 }
 #undef KEY
 

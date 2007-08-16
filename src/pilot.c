@@ -25,7 +25,7 @@ static unsigned int pilot_id = PLAYER_ID;
 
 
 /* stack of pilots */
-Pilot** pilot_stack = NULL; /* not static, used in player.c, weapon.c and ai.c */
+Pilot** pilot_stack = NULL; /* not static, used in player.c, weapon.c, pause.c and ai.c */
 int pilots = 0; /* same */
 extern Pilot* player;
 

@@ -12,6 +12,7 @@
 #include "rng.h"
 #include "pack.h"
 #include "player.h"
+#include "pause.h"
 
 
 #define XML_PLANET_ID	"Planets"
@@ -513,13 +514,15 @@ void space_render( double dt )
 	 */
 	glBegin(GL_POINTS);
 	for (i=0; i < nstars; i++) {
-		/* update position */
-		stars[i].x -= VX(player->solid->vel)/(15.-10.*stars[i].brightness)*dt;
-		stars[i].y -= VY(player->solid->vel)/(15.-10.*stars[i].brightness)*dt;
-		if (stars[i].x > gl_screen.w + STAR_BUF) stars[i].x = -STAR_BUF;
-		else if (stars[i].x < -STAR_BUF) stars[i].x = gl_screen.w + STAR_BUF;
-		if (stars[i].y > gl_screen.h + STAR_BUF) stars[i].y = -STAR_BUF;
-		else if (stars[i].y < -STAR_BUF) stars[i].y = gl_screen.h + STAR_BUF;
+		if (!paused) {
+			/* update position */
+			stars[i].x -= VX(player->solid->vel)/(15.-10.*stars[i].brightness)*dt;
+			stars[i].y -= VY(player->solid->vel)/(15.-10.*stars[i].brightness)*dt;
+			if (stars[i].x > gl_screen.w + STAR_BUF) stars[i].x = -STAR_BUF;
+			else if (stars[i].x < -STAR_BUF) stars[i].x = gl_screen.w + STAR_BUF;
+			if (stars[i].y > gl_screen.h + STAR_BUF) stars[i].y = -STAR_BUF;
+			else if (stars[i].y < -STAR_BUF) stars[i].y = gl_screen.h + STAR_BUF;
+		}
 		/* render */
 		glColor4d( 1., 1., 1., stars[i].brightness );
 		glVertex2d( stars[i].x, stars[i].y );
