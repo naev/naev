@@ -177,6 +177,7 @@ int conf_loadConfig ( const char* file )
 	}
 	else { /* failed to load the config file */
 		DEBUG("config file '%s' not found", file);
+		lua_close(L);
 		return 1;
 	}
 

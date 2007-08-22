@@ -210,8 +210,10 @@ void ships_free()
 	ShipOutfit *so, *sot;
 	int i;
 	for (i = 0; i < ships; i++) {
-		if ((ship_stack+i)->name) /* free the name */
-			free((ship_stack+i)->name);
+		/* free stored strings */
+		if ((ship_stack+i)->name) free(ship_stack[i].name);
+		if ((ship_stack+i)->gui) free(ship_stack[i].gui);
+
 		so=(ship_stack+i)->outfit;
 		while (so) { /* free the outfits */
 			sot = so;

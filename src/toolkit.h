@@ -5,6 +5,7 @@
 
 
 #include "opengl.h"
+#include "SDL.h"
 
 
 extern int toolkit;
@@ -13,17 +14,27 @@ extern int toolkit;
 /*
  * creation
  */
-unsigned int window_create( int x, int y, int w, int h, gl_texture* t );
+unsigned int window_create( const int x, const int y, const int w, const int h );
+void window_addButton( const unsigned int wid,
+		const int x, const int y,
+		const int w, const int h,
+		char* name, char* display,
+		void (*call) (char*) );
 
 /*
  * destruction
  */
-void window_destroy( unsigned int wid );
+void window_destroy( const unsigned int wid );
 
 /*
  * render
  */
 void toolkit_render (void);
+
+/*
+ * input
+ */
+void toolkit_mouseEvent( SDL_Event* event );
 
 /*
  * init/exit
@@ -33,3 +44,4 @@ void toolkit_exit (void);
 
 
 #endif
+

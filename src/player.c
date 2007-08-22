@@ -13,6 +13,7 @@
 #include "pack.h"
 #include "space.h"
 #include "rng.h"
+#include "land.h"
 
 
 #define XML_GUI_ID	"GUIs"   /* XML section identifier */
@@ -52,20 +53,20 @@ extern int pilots;
  * GUI stuff
  */
 /* standard colors */
-glColour cConsole			=	{ .r = 0.5, .g = 0.8, .b = 0.5, .a = 1. };
+gl_colour cConsole			=	{ .r = 0.5, .g = 0.8, .b = 0.5, .a = 1. };
 
-glColour cInert			=	{ .r = 0.6, .g = 0.6, .b = 0.6, .a = 1. };
-glColour cNeutral			=	{ .r = 0.9, .g = 1.0, .b = 0.3, .a = 1. };
-glColour cFriend			=	{ .r = 0.0, .g = 1.0, .b = 0.0, .a = 1. };
-glColour cHostile			=	{ .r = 0.9, .g = 0.2, .b = 0.2, .a = 1. };
+gl_colour cInert			=	{ .r = 0.6, .g = 0.6, .b = 0.6, .a = 1. };
+gl_colour cNeutral			=	{ .r = 0.9, .g = 1.0, .b = 0.3, .a = 1. };
+gl_colour cFriend			=	{ .r = 0.0, .g = 1.0, .b = 0.0, .a = 1. };
+gl_colour cHostile			=	{ .r = 0.9, .g = 0.2, .b = 0.2, .a = 1. };
 
-glColour cRadar_player	=  { .r = 0.4, .g = 0.8, .b = 0.4, .a = 1. };
-glColour cRadar_targ		=	{ .r = 0.0,	.g = 0.7, .b = 1.0, .a = 1. };
-glColour cRadar_weap		=	{ .r = 0.8, .g = 0.2, .b = 0.2, .a = 1. };
+gl_colour cRadar_player	=  { .r = 0.4, .g = 0.8, .b = 0.4, .a = 1. };
+gl_colour cRadar_targ		=	{ .r = 0.0,	.g = 0.7, .b = 1.0, .a = 1. };
+gl_colour cRadar_weap		=	{ .r = 0.8, .g = 0.2, .b = 0.2, .a = 1. };
 
-glColour cShield			=	{ .r = 0.2, .g = 0.2, .b = 0.8, .a = 1. };
-glColour cArmour			=	{ .r = 0.5, .g = 0.5, .b = 0.5, .a = 1. };
-glColour cEnergy			=	{ .r = 0.2, .g = 0.8, .b = 0.2, .a = 1. };
+gl_colour cShield			=	{ .r = 0.2, .g = 0.2, .b = 0.8, .a = 1. };
+gl_colour cArmour			=	{ .r = 0.5, .g = 0.5, .b = 0.5, .a = 1. };
+gl_colour cEnergy			=	{ .r = 0.2, .g = 0.8, .b = 0.2, .a = 1. };
 typedef struct {
 	double w,h; /* dimensions */
 	RadarShape shape;
@@ -134,7 +135,7 @@ static void rect_parse( const xmlNodePtr parent,
 		double *x, double *y, double *w, double *h );
 static int gui_parse( const xmlNodePtr parent, const char *name );
 static void gui_renderPilot( const Pilot* p );
-static void gui_renderBar( const glColour* c, const Vector2d* p,
+static void gui_renderBar( const gl_colour* c, const Vector2d* p,
 		const Rect* r, const double w );
 
 
@@ -249,7 +250,7 @@ void player_render (void)
 	Pilot* p;
 	Planet* planet;
 	Vector2d v;
-	glColour* c;
+	gl_colour* c;
 	gl_font* f;
 
 	/* renders the player target graphics */
@@ -548,7 +549,7 @@ static void gui_renderPilot( const Pilot* p )
 /*
  * renders a bar (health)
  */
-static void gui_renderBar( const glColour* c, const Vector2d* p,
+static void gui_renderBar( const gl_colour* c, const Vector2d* p,
 		const Rect* r, const double w )
 {
 	int x, y, sx, sy;
@@ -1037,6 +1038,11 @@ void player_targetPlanet (void)
  */
 void player_land (void)
 {
+	if (landed) { /* player is already landed */
+		takeoff();
+		return;
+	}
+	
 	Planet* planet = &cur_system->planets[planet_target];
 	if (planet_target >= 0) { /* attempt to land */
 		if (vect_dist(&player->solid->vel,&planet->pos) > planet->gfx_space->sw) {
@@ -1048,8 +1054,7 @@ void player_land (void)
 			return;
 		}
 
-		/* TODO landing */
-		player_message("Landing not implemented yet");
+		land(planet); /* land the player */
 	}
 	else { /* get nearest planet target */
 

@@ -341,8 +341,8 @@ void outfit_free (void)
 {
 	int i;
 	for (i=0; i < outfits; i++) {
-		if (outfit_isWeapon(&outfit_stack[i]) && outfit_stack[i].gfx_space)
-			gl_freeTexture(outfit_stack[i].gfx_space);
+		/* free graphics */
+		if (outfit_stack[i].gfx_space) gl_freeTexture(outfit_stack[i].gfx_space);
 
 		if (outfit_isLauncher(&outfit_stack[i]) && outfit_stack[i].ammo)
 			free(outfit_stack[i].ammo);

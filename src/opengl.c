@@ -28,8 +28,11 @@
 /*
  * default colours
  */
-glColour cGrey		= { .r=0.75, .g=0.75, .b=0.75, .a=1. };
-glColour cGreen		= { .r=0.20, .g=0.80, .b=0.20, .a=1. };
+gl_colour cLightGrey	= { .r=0.80, .g=0.80, .b=0.80, .a=1. };
+gl_colour cGrey		= { .r=0.65, .g=0.65, .b=0.65, .a=1. };
+gl_colour cDarkGrey	= { .r=0.50, .g=0.50, .b=0.50, .a=1. };
+gl_colour cGreen		= { .r=0.20, .g=0.80, .b=0.20, .a=1. };
+gl_colour cRed			= { .r=0.80, .g=0.20, .b=0.20, .a=1. };
 
 
 /* the screen info, gives data of current opengl settings */
@@ -437,7 +440,7 @@ void gl_getSpriteFromDir( int* x, int* y, const gl_texture* t, const double dir 
  * blits a sprite at pos
  */
 void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos,
-		const int sx, const int sy, const glColour* c )
+		const int sx, const int sy, const gl_colour* c )
 {
 	/* don't draw if offscreen */
 	if (fabs(VX(*pos)-VX(*gl_camera)+gui_xoff) > gl_screen.w/2+sprite->sw/2 ||
@@ -460,16 +463,22 @@ void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos,
 	/* actual blitting */
 	glBindTexture( GL_TEXTURE_2D, sprite->texture);
 	glBegin(GL_TRIANGLE_STRIP);
+
 		if (c==NULL) glColor4d( 1., 1., 1., 1. );
 		else COLOUR(*c);
+
 		glTexCoord2d( 0., 0.);
 			glVertex2d( 0., 0. );
+
 		glTexCoord2d( sprite->sw/sprite->rw, 0.);
 			glVertex2d( sprite->sw, 0. );
+
 		glTexCoord2d( 0., sprite->sh/sprite->rh);
 			glVertex2d( 0., sprite->sh );
+
 		glTexCoord2d( sprite->sw/sprite->rw, sprite->sh/sprite->rh);
 			glVertex2d( sprite->sw, sprite->sh );
+
 	glEnd();
 
 	glPopMatrix(); /* projection translation matrix */
@@ -484,7 +493,7 @@ void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos,
 /*
  * straight out blits a texture at position
  */
-void gl_blitStatic( const gl_texture* texture, const Vector2d* pos, const glColour* c )
+void gl_blitStatic( const gl_texture* texture, const Vector2d* pos, const gl_colour* c )
 {
 	glEnable(GL_TEXTURE_2D);
 
@@ -529,7 +538,7 @@ void gl_bindCamera( const Vector2d* pos )
  * defaults ft_font to gl_defFont if NULL
  */
 void gl_print( const gl_font *ft_font, const Vector2d *pos,
-		const glColour* c, const char *fmt, ... )
+		const gl_colour* c, const char *fmt, ... )
 {
 	/*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
 	char text[256]; /* holds the string */
@@ -543,6 +552,7 @@ void gl_print( const gl_font *ft_font, const Vector2d *pos,
 		vsprintf(text, fmt, ap);
 		va_end(ap);
 	}
+
 
 	glEnable(GL_TEXTURE_2D);
 

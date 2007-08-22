@@ -6,6 +6,7 @@
 #include "log.h"
 #include "player.h"
 #include "pause.h"
+#include "toolkit.h"
 
 
 #define KEY_PRESS    ( 1.)
@@ -128,7 +129,7 @@ void input_setKeybind( char *keybind, KeybindType type, int key, int reverse )
  * @param value is the value of the keypress (defined above)
  * @param abs is whether or not it's an absolute value (for them joystick)
  */
-#define KEY(s)		strcmp(input_keybinds[keynum]->name,s)==0
+#define KEY(s)		(strcmp(input_keybinds[keynum]->name,s)==0)
 static void input_key( int keynum, double value, int abs )
 {
 	/*
@@ -244,8 +245,10 @@ static void input_key( int keynum, double value, int abs )
 	/* pause the games */
 	if (KEY("pause")) {
 		if (value==KEY_PRESS) {
-			if (paused) unpause();
-         else pause();
+			if (!toolkit) {
+				if (paused) unpause();
+   	      else pause();
+			}
       }
    }
 }
@@ -338,6 +341,10 @@ static void input_keyup( SDLKey key )
 void input_handle( SDL_Event* event )
 {
 	switch (event->type) {
+
+		/*
+		 * game itself
+		 */
 		case SDL_JOYAXISMOTION:
 			input_joyaxis(event->jaxis.axis, event->jaxis.value);
 			break;
@@ -356,6 +363,16 @@ void input_handle( SDL_Event* event )
 
 		case SDL_KEYUP:
 			input_keyup(event->key.keysym.sym);
+			break;
+
+
+		/*
+		 * toolkit
+		 */
+		case SDL_MOUSEMOTION:
+		case SDL_MOUSEBUTTONDOWN:
+		case SDL_MOUSEBUTTONUP:
+			if (toolkit) toolkit_mouseEvent(event);
 			break;
 	}
 }

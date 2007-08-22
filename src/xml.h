@@ -18,9 +18,9 @@
 #define xml_nodeProp(n,s)		(char*)xmlGetProp(n,(xmlChar*)s)
 
 /* get data different ways */
-#define xml_get(n)				(char*)(n)->children->content
-#define xml_getInt(n)			atoi((char*)(n)->children->content)
-#define xml_getFloat(n)			atof((char*)(n)->children->content)
+#define xml_get(n)				((char*)(n)->children->content)
+#define xml_getInt(n)			(atoi((char*)(n)->children->content))
+#define xml_getFloat(n)			(atof((char*)(n)->children->content))
 
 
 #endif /* XML_H */

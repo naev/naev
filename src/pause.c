@@ -35,7 +35,6 @@ void pause (void)
 {
 	if (paused) return; /* already paused */
 
-	time -= SDL_GetTicks();
 	pilots_pause();
 	weapons_pause();
 
@@ -50,7 +49,6 @@ void unpause (void)
 {
 	if (!paused) return; /* already unpaused */
 
-	time += SDL_GetTicks();
 	pilots_unpause();
 	weapons_unpause();
 

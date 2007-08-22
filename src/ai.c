@@ -403,7 +403,7 @@ static void ai_freetask( Task* t )
 	if (t->next) ai_freetask(t->next); /* yay recursive freeing */
 
 	if (t->name) free(t->name);
-	if (t->dtype == TYPE_PTR) free(t->target);
+	if (t->dtype==TYPE_PTR) free(t->target);
 	free(t);
 }
 

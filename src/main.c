@@ -64,6 +64,7 @@ static void display_fps( const double dt );
 static void window_caption (void);
 static void data_name (void);
 /* update */
+static void fps_control (void);
 static void update_space (void);
 static void render_space (void);
 
@@ -166,6 +167,7 @@ int main ( int argc, char** argv )
 
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		fps_control(); /* everyone loves fps control */
 		if (!paused) update_space(); /* update game */
 
 		render_space();
@@ -204,25 +206,29 @@ int main ( int argc, char** argv )
  */
 static double fps_dt = 1.;
 static double dt = 0.; /* used also a bit in render_all */
-static void update_space (void)
+static void fps_control (void)
 {
 	/* dt in ms/1000 */
 	dt = (double)(SDL_GetTicks() - time) / 1000.;
 	time = SDL_GetTicks();
 
-	if (dt > MINIMUM_FPS) { /* TODO needs work */
-		Vector2d pos;
-		vect_csetmin(&pos, 10., (double)(gl_screen.h-40));
-		SDL_GL_SwapBuffers();
-		return;
-	}
-	/* if fps is limited */
-	else if ((max_fps != 0) && (dt < 1./max_fps)) {
+//	if (dt > MINIMUM_FPS) /* TODO needs work */
+//		return;
+
+	/* if fps is limited */                       
+	if ((max_fps != 0) && (dt < 1./max_fps)) {
 		double delay = 1./max_fps - dt;
 		SDL_Delay( delay );
 		fps_dt += delay; /* makes sure it displays the proper fps */
 	}
+}
 
+
+/*
+ * updates the game itself (player flying around and friends)
+ */
+static void update_space (void)
+{
 	weapons_update(dt);
 	pilots_update(dt);
 }
