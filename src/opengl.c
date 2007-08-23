@@ -446,45 +446,37 @@ void gl_blitSprite( const glTexture* sprite, const Vector2d* pos,
 	if (fabs(VX(*pos)-VX(*gl_camera)+gui_xoff) > gl_screen.w/2+sprite->sw/2 ||
 			fabs(VY(*pos)-VY(*gl_camera)+gui_yoff) > gl_screen.h/2+sprite->sh/2 )
 		return;
+
+	double x,y, tx,ty;
 	
 	glEnable(GL_TEXTURE_2D);
 
-	glMatrixMode(GL_TEXTURE);
-	glPushMatrix(); /* sprite translation matrix */
-		glTranslated( sprite->sw*(double)(sx)/sprite->rw,
-				sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh, 0. );
+	x = VX(*pos) - VX(*gl_camera) - sprite->sw/2. + gui_xoff;
+	y = VY(*pos) - VY(*gl_camera) - sprite->sh/2. + gui_yoff;
 
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix(); /* projection translation matrix */
-		glTranslated( VX(*pos) - VX(*gl_camera) - sprite->sw/2. + gui_xoff,
-				VY(*pos) - VY(*gl_camera) - sprite->sh/2. + gui_yoff, 0.);
-		/*glScaled( (double)gl_screen.w/SCREEN_W, (double)gl_screen.h/SCREEN_H, 0. );*/
-
+	tx = sprite->sw*(double)(sx)/sprite->rw;
+	ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
+	
 	/* actual blitting */
 	glBindTexture( GL_TEXTURE_2D, sprite->texture);
-	glBegin(GL_TRIANGLE_STRIP);
+	glBegin(GL_QUADS);
 
 		if (c==NULL) glColor4d( 1., 1., 1., 1. );
 		else COLOUR(*c);
 
-		glTexCoord2d( 0., 0.);
-			glVertex2d( 0., 0. );
+		glTexCoord2d( tx, ty);
+			glVertex2d( x, y );
 
-		glTexCoord2d( sprite->sw/sprite->rw, 0.);
-			glVertex2d( sprite->sw, 0. );
+		glTexCoord2d( tx + sprite->sw/sprite->rw, ty);
+			glVertex2d( x + sprite->sw, y );
 
-		glTexCoord2d( 0., sprite->sh/sprite->rh);
-			glVertex2d( 0., sprite->sh );
+		glTexCoord2d( tx + sprite->sw/sprite->rw, ty + sprite->sh/sprite->rh);
+			glVertex2d( x + sprite->sw, y + sprite->sh );
 
-		glTexCoord2d( sprite->sw/sprite->rw, sprite->sh/sprite->rh);
-			glVertex2d( sprite->sw, sprite->sh );
+		glTexCoord2d( tx, ty + sprite->sh/sprite->rh);
+			glVertex2d( x, y + sprite->sh );
 
-	glEnd();
-
-	glPopMatrix(); /* projection translation matrix */
-
-	glMatrixMode(GL_TEXTURE);
-	glPopMatrix(); /* sprite translation matrix */
+	glEnd(); /* GL_QUADS */
 
 	glDisable(GL_TEXTURE_2D);
 }
@@ -495,30 +487,32 @@ void gl_blitSprite( const glTexture* sprite, const Vector2d* pos,
  */
 void gl_blitStatic( const glTexture* texture, const Vector2d* pos, const glColour* c )
 {
+	double x,y;
 	glEnable(GL_TEXTURE_2D);
 
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix(); /* projection translation matrix */
-		glTranslated( VX(*pos) - (double)gl_screen.w/2.,
-				VY(*pos) - (double)gl_screen.h/2.,0.);
-		/*glScaled( (double)gl_screen.w/SCREEN_W, (double)gl_screen.h/SCREEN_H, 0. );*/
+	x = VX(*pos) - (double)gl_screen.w/2.;
+	y = VY(*pos) - (double)gl_screen.h/2.;
 
 	/* actual blitting */
 	glBindTexture( GL_TEXTURE_2D, texture->texture);
-	glBegin(GL_TRIANGLE_STRIP);
+	glBegin(GL_QUADS);
+
 		if (c==NULL) glColor4d( 1., 1., 1., 1. );
 		else COLOUR(*c);
-		glTexCoord2d( 0., 0.);
-			glVertex2d( 0., 0. );
-		glTexCoord2d( texture->sw/texture->rw, 0.);
-			glVertex2d( texture->sw, 0. );
-		glTexCoord2d( 0., texture->sh/texture->rh);
-			glVertex2d( 0., texture->sh );
-		glTexCoord2d( texture->sw/texture->rw, texture->sh/texture->rh);
-			glVertex2d( texture->sw, texture->sh );
-	glEnd();
 
-	glPopMatrix(); /* projection translation matrix */
+		glTexCoord2d( 0., 0.);
+			glVertex2d( x, y );
+
+		glTexCoord2d( texture->sw/texture->rw, 0.);
+			glVertex2d( x + texture->sw, y );
+
+		glTexCoord2d( texture->sw/texture->rw, texture->sh/texture->rh);
+			glVertex2d( x + texture->sw, y + texture->sh );
+
+		glTexCoord2d( 0., texture->sh/texture->rh);
+			glVertex2d( x, y +texture->sh );
+
+	glEnd(); /* GL_QUADS */
 
 	glDisable(GL_TEXTURE_2D);
 }
@@ -559,7 +553,7 @@ void gl_print( const glFont *ft_font,
 
 	glListBase(ft_font->list_base);
 
-	glMatrixMode(GL_PROJECTION);
+	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix(); /* translation matrix */
 		glTranslated( x-(double)gl_screen.w/2., y-(double)gl_screen.h/2., 0);
 
@@ -619,7 +613,7 @@ static void glFontMakeDList( FT_Face face, char ch,
 		WARN("FT_Load_Glyph failed");
 
 	if (FT_Get_Glyph( face->glyph, &glyph ))
-		WARN("FT_Ge_Glyph failed");
+		WARN("FT_Get_Glyph failed");
 
 	/* converting our glyph to a bitmap */
 	FT_Glyph_To_Bitmap( &glyph, ft_render_mode_normal, 0, 1 );
@@ -833,9 +827,11 @@ int gl_init()
 
 	/* some OpenGL options */
 	glClearColor( 0., 0., 0., 1. );
-	glDisable(GL_DEPTH_TEST); /* set for doing 2d */
-/*	glEnable(GL_TEXTURE_2D); never enable globally, breaks non-tetxrue blits */
-	glDisable(GL_LIGHTING); /* no lighting, it's done when rendered */
+	glDisable( GL_DEPTH_TEST ); /* set for doing 2d */
+/*	glEnable(  GL_TEXTURE_2D ); never enable globally, breaks non-texture blits */
+	glDisable( GL_LIGHTING ); /* no lighting, it's done when rendered */
+	glEnable(  GL_BLEND );
+	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* alpha */
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho( -SCREEN_W/2, /* left edge */
@@ -844,10 +840,6 @@ int gl_init()
 			SCREEN_H/2, /* top edge */
 			-1., /* near */
 			1. ); /* far */
-	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* alpha */
-	glEnable( GL_BLEND );
-
-/*	glPointSize(1.);*/ /* default is 1. */
 
 	glClear( GL_COLOR_BUFFER_BIT );
 
