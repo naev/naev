@@ -1045,7 +1045,7 @@ void player_land (void)
 	
 	Planet* planet = &cur_system->planets[planet_target];
 	if (planet_target >= 0) { /* attempt to land */
-		if (vect_dist(&player->solid->vel,&planet->pos) > planet->gfx_space->sw) {
+		if (vect_dist(&player->solid->pos,&planet->pos) > planet->gfx_space->sw) {
 			player_message("You are too far away to land on %s", planet->name);
 			return;
 		} else if ((pow2(VX(player->solid->vel)) + pow2(VY(player->solid->vel))) >
