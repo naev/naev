@@ -20,8 +20,8 @@
  *    @param bsy position of y of sprite b
  *    @param bp position in space of sprite b
  */
-int CollideSprite( const gl_texture* at, const int asx, const int asy, const Vector2d* ap,
-		const gl_texture* bt, const int bsx, const int bsy, const Vector2d* bp )
+int CollideSprite( const glTexture* at, const int asx, const int asy, const Vector2d* ap,
+		const glTexture* bt, const int bsx, const int bsy, const Vector2d* bp )
 {
 	int x,y;
 

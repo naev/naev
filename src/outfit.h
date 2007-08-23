@@ -44,7 +44,7 @@ typedef struct {
 	int tech;
 	int mass;
 
-	gl_texture gfx_store; /* store graphic */
+	glTexture gfx_store; /* store graphic */
 
 	int properties; /* properties stored bitwise */
 
@@ -58,7 +58,7 @@ typedef struct {
 			double accuracy; /* desviation accuracy */
 			double damage_armour, damage_shield; /* damage */
 
-			gl_texture* gfx_space; /* graphic */
+			glTexture* gfx_space; /* graphic */
 		};
 		struct { /* launcher */
 			unsigned int delay; /* delay between shots */
@@ -71,7 +71,7 @@ typedef struct {
 			unsigned int duration; /* duration */
 			double damage_armour, damage_shield; /* damage */
 
-			gl_texture* gfx_space; /* graphic */
+			glTexture* gfx_space; /* graphic */
 		};
 	};
 } Outfit;

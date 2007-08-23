@@ -272,16 +272,19 @@ static double fps = 0.;
 static double fps_cur = 0.;
 static void display_fps( const double dt )
 {
+	double x,y;
+
 	fps_dt += dt;
 	fps_cur += 1.;
 	if (fps_dt > 1.) { /* recalculate every second */
 		fps = fps_cur / fps_dt;
 		fps_dt = fps_cur = 0.;
 	}
-	Vector2d pos;
-	vect_csetmin(&pos, 10., (double)(gl_screen.h-20));
+
+	x = 10.;
+	y = (double)(gl_screen.h-20);
 	if (show_fps)
-		gl_print( NULL, &pos, NULL, "%3.2f", fps );
+		gl_print( NULL, x, y, NULL, "%3.2f", fps );
 }
 
 

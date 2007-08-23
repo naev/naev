@@ -42,7 +42,7 @@ typedef struct {
 	double thrust, turn, speed;
 
 	/* graphics */
-	gl_texture *gfx_space, *gfx_target;
+	glTexture *gfx_space, *gfx_target;
 
 	/* GUI interface */
 	char* gui;

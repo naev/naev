@@ -28,21 +28,21 @@
 /*
  * default colours
  */
-gl_colour cLightGrey	= { .r=0.80, .g=0.80, .b=0.80, .a=1. };
-gl_colour cGrey		= { .r=0.65, .g=0.65, .b=0.65, .a=1. };
-gl_colour cDarkGrey	= { .r=0.50, .g=0.50, .b=0.50, .a=1. };
-gl_colour cGreen		= { .r=0.20, .g=0.80, .b=0.20, .a=1. };
-gl_colour cRed			= { .r=0.80, .g=0.20, .b=0.20, .a=1. };
+glColour cLightGrey	= { .r=0.80, .g=0.80, .b=0.80, .a=1. };
+glColour cGrey		= { .r=0.65, .g=0.65, .b=0.65, .a=1. };
+glColour cDarkGrey	= { .r=0.50, .g=0.50, .b=0.50, .a=1. };
+glColour cGreen		= { .r=0.20, .g=0.80, .b=0.20, .a=1. };
+glColour cRed			= { .r=0.80, .g=0.20, .b=0.20, .a=1. };
 
 
 /* the screen info, gives data of current opengl settings */
-gl_info gl_screen;
+glInfo gl_screen;
 
 /* the camera */
 Vector2d* gl_camera;
 
 /* default font */
-gl_font gl_defFont;
+glFont gl_defFont;
 
 /*
  * used to adjust the pilot's place onscreen to be in the middle even with the GUI
@@ -59,10 +59,10 @@ static int SDL_VFlipSurface( SDL_Surface* surface );
 static int SDL_IsTrans( SDL_Surface* s, int x, int y );
 static uint8_t* SDL_MapTrans( SDL_Surface* s );
 static int pot( int n );
-/* gl_texture */
+/* glTexture */
 static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh );
-/* gl_font */
-static void gl_fontMakeDList( FT_Face face, char ch,
+/* glFont */
+static void glFontMakeDList( FT_Face face, char ch,
 		GLuint list_base, GLuint *tex_base, int *width_base );
 /* png */
 int write_png( const char *file_name, png_bytep *rows,
@@ -306,12 +306,12 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
 /*
  * loads the SDL_Surface to an opengl texture
  */
-gl_texture* gl_loadImage( SDL_Surface* surface )
+glTexture* gl_loadImage( SDL_Surface* surface )
 {
 	int rw, rh;
 
 	/* set up the texture defaults */
-	gl_texture *texture = MALLOC_ONE(gl_texture);
+	glTexture *texture = MALLOC_ONE(glTexture);
 	texture->w = (double)surface->w;
 	texture->h = (double)surface->h;
 	texture->sx = 1.;
@@ -333,10 +333,10 @@ gl_texture* gl_loadImage( SDL_Surface* surface )
 /*
  * loads the image as an opengl texture directly
  */
-gl_texture*  gl_newImage( const char* path )
+glTexture*  gl_newImage( const char* path )
 {
 	SDL_Surface *temp, *surface;
-	gl_texture* t;
+	glTexture* t;
 	uint8_t* trans = NULL;
 	uint32_t filesize;
 	char *buf = pack_readfile( DATA, (char*)path, &filesize );
@@ -380,9 +380,9 @@ gl_texture*  gl_newImage( const char* path )
 /*
  * Loads the texture immediately, but also sets it as a sprite
  */
-gl_texture* gl_newSprite( const char* path, const int sx, const int sy )
+glTexture* gl_newSprite( const char* path, const int sx, const int sy )
 {
-	gl_texture* texture;
+	glTexture* texture;
 	if ((texture = gl_newImage(path)) == NULL)
 		return NULL;
 	texture->sx = (double)sx;
@@ -396,7 +396,7 @@ gl_texture* gl_newSprite( const char* path, const int sx, const int sy )
 /*
  * frees the texture
  */
-void gl_freeTexture( gl_texture* texture )
+void gl_freeTexture( glTexture* texture )
 {
 	glDeleteTextures( 1, &texture->texture );
 	if (texture->trans) free(texture->trans);
@@ -407,18 +407,18 @@ void gl_freeTexture( gl_texture* texture )
 /*
  * returns true if pixel at pos (x,y) is transparent
  */
-int gl_isTrans( const gl_texture* t, const int x, const int y )
+int gl_isTrans( const glTexture* t, const int x, const int y )
 {
 	return !(t->trans[(y*(int)(t->w)+x)/8] & (1<<((y*(int)(t->w)+x)%8)));
 }
 
 
 /*
- * sets x and y to be the appropriate sprite for gl_texture using dir
+ * sets x and y to be the appropriate sprite for glTexture using dir
  *
  * gprof claims to be second slowest thing in the game
  */
-void gl_getSpriteFromDir( int* x, int* y, const gl_texture* t, const double dir )
+void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 {
 	int s = (int)(dir / (2.0*M_PI / (t->sy*t->sx)));
 
@@ -439,8 +439,8 @@ void gl_getSpriteFromDir( int* x, int* y, const gl_texture* t, const double dir 
 /*
  * blits a sprite at pos
  */
-void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos,
-		const int sx, const int sy, const gl_colour* c )
+void gl_blitSprite( const glTexture* sprite, const Vector2d* pos,
+		const int sx, const int sy, const glColour* c )
 {
 	/* don't draw if offscreen */
 	if (fabs(VX(*pos)-VX(*gl_camera)+gui_xoff) > gl_screen.w/2+sprite->sw/2 ||
@@ -493,7 +493,7 @@ void gl_blitSprite( const gl_texture* sprite, const Vector2d* pos,
 /*
  * straight out blits a texture at position
  */
-void gl_blitStatic( const gl_texture* texture, const Vector2d* pos, const gl_colour* c )
+void gl_blitStatic( const glTexture* texture, const Vector2d* pos, const glColour* c )
 {
 	glEnable(GL_TEXTURE_2D);
 
@@ -537,8 +537,9 @@ void gl_bindCamera( const Vector2d* pos )
  *
  * defaults ft_font to gl_defFont if NULL
  */
-void gl_print( const gl_font *ft_font, const Vector2d *pos,
-		const gl_colour* c, const char *fmt, ... )
+void gl_print( const glFont *ft_font,
+		const double x, const double y,
+		const glColour* c, const char *fmt, ... )
 {
 	/*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
 	char text[256]; /* holds the string */
@@ -560,7 +561,7 @@ void gl_print( const gl_font *ft_font, const Vector2d *pos,
 
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix(); /* translation matrix */
-		glTranslated( VX(*pos)-(double)gl_screen.w/2., VY(*pos)-(double)gl_screen.h/2., 0);
+		glTranslated( x-(double)gl_screen.w/2., y-(double)gl_screen.h/2., 0);
 
 	if (c==NULL) glColor4d( 1., 1., 1., 1. );
 	else COLOUR(*c);
@@ -574,7 +575,7 @@ void gl_print( const gl_font *ft_font, const Vector2d *pos,
 /*
  * gets the width of the text about to be printed
  */
-int gl_printWidth( const gl_font *ft_font, const char *fmt, ... )
+int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
 {
 	int i, n;
 	char text[256]; /* holds the string */
@@ -605,7 +606,7 @@ int gl_printWidth( const gl_font *ft_font, const char *fmt, ... )
  * basically taken from NeHe lesson 43
  * http://nehe.gamedev.net/data/lessons/lesson.asp?lesson=43
  */
-static void gl_fontMakeDList( FT_Face face, char ch,
+static void glFontMakeDList( FT_Face face, char ch,
 		GLuint list_base, GLuint *tex_base, int* width_base )
 {
 	FT_Glyph glyph;
@@ -687,7 +688,7 @@ static void gl_fontMakeDList( FT_Face face, char ch,
 
 	FT_Done_Glyph(glyph);
 }
-void gl_fontInit( gl_font* font, const char *fname, const unsigned int h )
+void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
 {
 	if (font == NULL) font = &gl_defFont;
 
@@ -724,14 +725,14 @@ void gl_fontInit( gl_font* font, const char *fname, const unsigned int h )
 	/* create each of the font display lists */
 	unsigned char i;
 	for (i=0; i<128; i++)
-		gl_fontMakeDList( face, i, font->list_base, font->textures, font->w );
+		glFontMakeDList( face, i, font->list_base, font->textures, font->w );
 
 	/* we can now free the face and library */
 	FT_Done_Face(face);
 	FT_Done_FreeType(library);
 	free(buf);
 }
-void gl_freeFont( gl_font* font )
+void gl_freeFont( glFont* font )
 {
 	if (font == NULL) font = &gl_defFont;
 	glDeleteLists(font->list_base,128);

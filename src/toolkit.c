@@ -60,7 +60,9 @@ static int mwindows = 0;
  */
 static Widget* window_newWidget( const unsigned int wid );
 static void widget_cleanup( Widget *widget );
+/* render */
 static void window_render( Window* w );
+static void toolkit_renderButton( Widget* btn, double bx, double by );
 
 
 /*
@@ -197,34 +199,24 @@ void window_destroy( unsigned int wid )
  */
 static void window_render( Window* w )
 {
-	int i,j;
+	int i;
 	double x, y;
-	Widget* wgt;
-	Vector2d v;
 
 	x = w->x - (double)gl_screen.w/2.;
 	y = w->y - (double)gl_screen.h/2.;
 
-	/* translate to window position (bottom left) */
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix(); /* projection translation matrix */
-		glTranslated( x, y, 0.);
-
-
 	/*
 	 * window bg
 	 */
-	glBegin(GL_TRIANGLE_STRIP);
+	glBegin(GL_QUADS);
 		COLOUR(cLightGrey);
 
-		glVertex2d( 0.,	0. );
-		glVertex2d( w->w,	0. );          
-		glVertex2d( 0.,	w->h );
-		glVertex2d( w->w,	w->h );
+		glVertex2d( x,				y        );
+		glVertex2d( x + w->w,	y        );
+		glVertex2d( x + w->w,   y + w->h );
+		glVertex2d( x,				y + w->h );
 
-	glEnd(); /* GL_TRIANGLE_STRIP */
-
-	glPopMatrix(); /* GL_PROJECTION */
+	glEnd(); /* GL_QUADS */
 
 
 	/*
@@ -232,44 +224,63 @@ static void window_render( Window* w )
 	 */
 	for (i=0; i<w->nwidgets; i++) {
 
-		wgt = &w->widgets[i];
-
-		switch (wgt->type) {
+		switch (w->widgets[i].type) {
 			case WIDGET_NULL: break;
 
 			case WIDGET_BUTTON:
-
-				glMatrixMode(GL_PROJECTION);
-				glPushMatrix(); /* projection translation matrix */
-					glTranslated( x + wgt->x, y + wgt->y, 0. );
-
-				glBegin(GL_TRIANGLE_STRIP);
-
-					switch (wgt->status) { /* set the colour */
-						case WIDGET_STATUS_NORMAL: COLOUR(cDarkGrey); break;
-						case WIDGET_STATUS_MOUSEOVER: COLOUR(cGrey); break;
-						case WIDGET_STATUS_MOUSEDOWN: COLOUR(cGreen); break;
-					}
-
-					glVertex2d( 0,			0.     );
-					glVertex2d( wgt->w,	0.     );
-					glVertex2d( 0,			wgt->h );
-					glVertex2d( wgt->w,	wgt->h );
-
-				glEnd(); /* GL_TRIANGLE_STRIP */
-
-				glPopMatrix(); /* GL_PROJECTION */
-
-				j = gl_printWidth( NULL, wgt->string );
-				vect_csetmin( &v, w->x + wgt->x + (wgt->w - (double)j)/2.,
-						w->y + wgt->y + (wgt->h - gl_defFont.h)/2. );
-				gl_print( NULL, &v, &cRed, wgt->string );
+				toolkit_renderButton( &w->widgets[i], x, y );
 				break;
 
 			case WIDGET_TEXT:
 				break;
 		}
 	}
+}
+
+
+static void toolkit_renderButton( Widget* btn, double bx, double by )
+{
+	glColour *c;
+	double x, y;
+	int j;
+
+	x = bx + btn->x;
+	y = by + btn->y;
+
+	switch (btn->status) { /* set the colour */
+		case WIDGET_STATUS_NORMAL: c = &cDarkGrey; break;
+		case WIDGET_STATUS_MOUSEOVER: c = &cGrey; break;
+		case WIDGET_STATUS_MOUSEDOWN: c = &cGreen; break;
+	}  
+
+
+	glShadeModel(GL_SMOOTH);
+	glBegin(GL_QUADS);
+		COLOUR(*c);
+
+		glVertex2d( x,				y              );
+		glVertex2d( x + btn->w,	y              );
+		glVertex2d( x + btn->w, y + 2/3*btn->h );
+		glVertex2d( x,				y + 2/3*btn->h );
+
+	glEnd(); /* GL_QUADS */
+
+	glShadeModel(GL_FLAT);
+	glBegin(GL_QUADS);
+		COLOUR(*c);
+		
+		glVertex2d( x,          y + 2/3*btn->h );
+		glVertex2d( x + btn->w, y + 2/3*btn->h );
+		glVertex2d( x + btn->w, y + btn->h     );
+		glVertex2d( x,          y + btn->h     );
+
+	glEnd(); /* GL_QUADS */
+
+	j = gl_printWidth( NULL, btn->string );
+	gl_print( NULL,
+			bx + (double)gl_screen.w/2. + btn->x + (btn->w - (double)j)/2.,
+			by + (double)gl_screen.h/2. + btn->y + (btn->h - gl_defFont.h)/2.,
+			&cRed, btn->string );
 }
 
 

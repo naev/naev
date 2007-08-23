@@ -53,21 +53,22 @@ extern int pilots;
  * GUI stuff
  */
 /* standard colors */
-gl_colour cConsole			=	{ .r = 0.5, .g = 0.8, .b = 0.5, .a = 1. };
+glColour cConsole			=	{ .r = 0.5, .g = 0.8, .b = 0.5, .a = 1. };
 
-gl_colour cInert			=	{ .r = 0.6, .g = 0.6, .b = 0.6, .a = 1. };
-gl_colour cNeutral			=	{ .r = 0.9, .g = 1.0, .b = 0.3, .a = 1. };
-gl_colour cFriend			=	{ .r = 0.0, .g = 1.0, .b = 0.0, .a = 1. };
-gl_colour cHostile			=	{ .r = 0.9, .g = 0.2, .b = 0.2, .a = 1. };
+glColour cInert			=	{ .r = 0.6, .g = 0.6, .b = 0.6, .a = 1. };
+glColour cNeutral			=	{ .r = 0.9, .g = 1.0, .b = 0.3, .a = 1. };
+glColour cFriend			=	{ .r = 0.0, .g = 1.0, .b = 0.0, .a = 1. };
+glColour cHostile			=	{ .r = 0.9, .g = 0.2, .b = 0.2, .a = 1. };
 
-gl_colour cRadar_player	=  { .r = 0.4, .g = 0.8, .b = 0.4, .a = 1. };
-gl_colour cRadar_targ		=	{ .r = 0.0,	.g = 0.7, .b = 1.0, .a = 1. };
-gl_colour cRadar_weap		=	{ .r = 0.8, .g = 0.2, .b = 0.2, .a = 1. };
+glColour cRadar_player	=  { .r = 0.4, .g = 0.8, .b = 0.4, .a = 1. };
+glColour cRadar_targ		=	{ .r = 0.0,	.g = 0.7, .b = 1.0, .a = 1. };
+glColour cRadar_weap		=	{ .r = 0.8, .g = 0.2, .b = 0.2, .a = 1. };
 
-gl_colour cShield			=	{ .r = 0.2, .g = 0.2, .b = 0.8, .a = 1. };
-gl_colour cArmour			=	{ .r = 0.5, .g = 0.5, .b = 0.5, .a = 1. };
-gl_colour cEnergy			=	{ .r = 0.2, .g = 0.8, .b = 0.2, .a = 1. };
+glColour cShield			=	{ .r = 0.2, .g = 0.2, .b = 0.8, .a = 1. };
+glColour cArmour			=	{ .r = 0.5, .g = 0.5, .b = 0.5, .a = 1. };
+glColour cEnergy			=	{ .r = 0.2, .g = 0.8, .b = 0.2, .a = 1. };
 typedef struct {
+	double x,y; /* position */
 	double w,h; /* dimensions */
 	RadarShape shape;
 	double res; /* resolution */
@@ -79,30 +80,29 @@ typedef struct {
 #define RADAR_RES_DEFAULT	40.
 
 typedef struct {
+	double x,y;
 	double w,h;
 } Rect;
 
 typedef struct {
 	/* graphics */
-	gl_font smallFont;
-	gl_texture* gfx_frame;
-	gl_texture* gfx_targetPilot, *gfx_targetPlanet;
+	glFont smallFont;
+	glTexture* gfx_frame;
+	glTexture* gfx_targetPilot, *gfx_targetPlanet;
+
+
 	Radar radar;
 	Rect nav;
 	Rect shield, armour, energy;
 	Rect weapon;
+	Rect target_health, target_name, target_faction;
 	Rect misc;
+	Rect mesg;
 	
 
 	/* positions */
-	Vector2d pos_frame;
-	Vector2d pos_radar;
-	Vector2d pos_nav;
-	Vector2d pos_shield, pos_armour, pos_energy;
-	Vector2d pos_weapon;
-	Vector2d pos_target, pos_target_health, pos_target_name, pos_target_faction;
-	Vector2d pos_misc;
-	Vector2d pos_mesg;
+	Vector2d frame;
+	Vector2d target;
 
 } GUI;
 GUI gui; /* ze GUI */
@@ -135,7 +135,7 @@ static void rect_parse( const xmlNodePtr parent,
 		double *x, double *y, double *w, double *h );
 static int gui_parse( const xmlNodePtr parent, const char *name );
 static void gui_renderPilot( const Pilot* p );
-static void gui_renderBar( const gl_colour* c, const Vector2d* p,
+static void gui_renderBar( const glColour* c,
 		const Rect* r, const double w );
 
 
@@ -246,12 +246,13 @@ void player_message ( const char *fmt, ... )
 void player_render (void)
 {
 	int i, j;
+	double x, y;
 	char str[10];
 	Pilot* p;
 	Planet* planet;
+	glColour* c;
+	glFont* f;
 	Vector2d v;
-	gl_colour* c;
-	gl_font* f;
 
 	/* renders the player target graphics */
 	if (player_target != PLAYER_ID) {
@@ -299,7 +300,7 @@ void player_render (void)
 	/*
 	 * frame
 	 */
-	gl_blitStatic( gui.gfx_frame, &gui.pos_frame, NULL );
+	gl_blitStatic( gui.gfx_frame, &gui.frame, NULL );
 
 	/*
 	 * radar
@@ -307,11 +308,11 @@ void player_render (void)
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	if (gui.radar.shape==RADAR_RECT)
-		glTranslated( VX(gui.pos_radar) - gl_screen.w/2. + gui.radar.w/2.,
-				VY(gui.pos_radar) - gl_screen.h/2. - gui.radar.h/2., 0.);
+		glTranslated( gui.radar.x - gl_screen.w/2. + gui.radar.w/2.,
+				gui.radar.y - gl_screen.h/2. - gui.radar.h/2., 0.);
 	else if (gui.radar.shape==RADAR_CIRCLE)
-		glTranslated( VX(gui.pos_radar) - gl_screen.w/2.,
-				VY(gui.pos_radar) - gl_screen.h/2., 0.);
+		glTranslated( gui.radar.x - gl_screen.w/2.,
+				gui.radar.y - gl_screen.h/2., 0.);
 
 	/*
 	 * planets
@@ -359,36 +360,40 @@ void player_render (void)
 	 */
 	if (planet_target >= 0) { /* planet landing target */
 		i = gl_printWidth( NULL, "Land" );
-		vect_csetmin( &v, VX(gui.pos_nav) + (gui.nav.w - i)/2. ,
-				VY(gui.pos_nav) - 5);     
-		gl_print( NULL, &v, &cConsole, "Land" );
+		gl_print( NULL,
+				gui.nav.x + (gui.nav.w - i)/2.,
+				gui.nav.y - 5,
+				&cConsole, "Land" );
+
 		i = gl_printWidth( &gui.smallFont, "%s",
 				cur_system->planets[planet_target].name );
-		vect_csetmin( &v, VX(gui.pos_nav) + (gui.nav.w - i)/2. ,
-				VY(gui.pos_nav) - 10 - gui.smallFont.h );
-		gl_print( &gui.smallFont, &v, NULL, "%s",
-				cur_system->planets[planet_target].name );
+		gl_print( &gui.smallFont,
+				gui.nav.x + (gui.nav.w - i)/2.,
+				gui.nav.y - 10 - gui.smallFont.h,
+				NULL, "%s", cur_system->planets[planet_target].name );
 	}
 	else if (planet_target == -1) { /* no planet target */
 		i = gl_printWidth( NULL, "Navigation" );
-		vect_csetmin( &v, VX(gui.pos_nav) + (gui.nav.w - i)/2. ,
-				VY(gui.pos_nav) - 5);
-		gl_print( NULL, &v, &cConsole, "Navigation" );
+		gl_print( NULL, gui.nav.x + (gui.nav.w - i)/2.,
+				gui.nav.y - 5,
+				&cConsole, "Navigation" );
+
 		i = gl_printWidth( &gui.smallFont, "Off" );
-		vect_csetmin( &v, VX(gui.pos_nav) + (gui.nav.w - i)/2. ,
-				VY(gui.pos_nav) - 10 - gui.smallFont.h );
-		gl_print( &gui.smallFont, &v, &cGrey, "Off" );
+		gl_print( &gui.smallFont,
+				gui.nav.x + (gui.nav.w - i)/2.,
+				gui.nav.y - 10 - gui.smallFont.h,
+				&cGrey, "Off" );
 	}
 
 
 	/*
 	 * health
 	 */
-	gui_renderBar( &cShield, &gui.pos_shield, &gui.shield,
+	gui_renderBar( &cShield,  &gui.shield,
 			player->shield / player->shield_max );
-	gui_renderBar( &cArmour, &gui.pos_armour, &gui.armour,
+	gui_renderBar( &cArmour, &gui.armour,
 			player->armour / player->armour_max );
-	gui_renderBar( &cEnergy, &gui.pos_energy, &gui.energy,
+	gui_renderBar( &cEnergy, &gui.energy,
 			player->energy / player->energy_max );
 
 
@@ -397,13 +402,16 @@ void player_render (void)
 	 */ 
 	if (player->secondary==NULL) { /* no secondary weapon */ 
 		i = gl_printWidth( NULL, "Secondary" ); 
-		vect_csetmin( &v, VX(gui.pos_weapon) + (gui.weapon.w - i)/2., 
-				VY(gui.pos_weapon) - 5); 
-		gl_print( NULL, &v, &cConsole, "Secondary" ); 
+		gl_print( NULL,
+				gui.weapon.x + (gui.weapon.w - i)/2.,
+				gui.weapon.y - 5,
+				&cConsole, "Secondary" ); 
+
 		i = gl_printWidth( &gui.smallFont, "None" ); 
-		vect_csetmin( &v, VX(gui.pos_weapon) + (gui.weapon.w - i)/2., 
-				VY(gui.pos_weapon) - 10 - gl_defFont.h); 
-		gl_print( &gui.smallFont, &v, &cGrey, "None"); 
+		gl_print( &gui.smallFont,
+				gui.weapon.x + (gui.weapon.w - i)/2.,
+				gui.weapon.y - 10 - gl_defFont.h,
+				&cGrey, "None"); 
 	}  
 	else {
 		f = &gl_defFont;
@@ -413,9 +421,10 @@ void player_render (void)
 				f = &gui.smallFont;
 				i = gl_printWidth( f, "%s", player->secondary->outfit->name);
 			}
-			vect_csetmin( &v, VX(gui.pos_weapon) + (gui.weapon.w - i)/2.,
-					VY(gui.pos_weapon) - (gui.weapon.h - f->h)/2.);
-			gl_print( f, &v, &cConsole, "%s", player->secondary->outfit->name );
+			gl_print( f,
+					gui.weapon.x + (gui.weapon.w - i)/2.,
+					gui.weapon.y - (gui.weapon.h - f->h)/2.,
+					&cConsole, "%s", player->secondary->outfit->name );
 		}
 		else {
 			/* use the ammunition's name */
@@ -424,15 +433,17 @@ void player_render (void)
 				f = &gui.smallFont;
 				i = gl_printWidth( f, "%s", player->ammo->outfit->name);
 			} 
-			vect_csetmin( &v, VX(gui.pos_weapon) + (gui.weapon.w - i)/2.,
-					VY(gui.pos_weapon) - 5);
-			gl_print( f, &v, &cConsole, "%s", player->ammo->outfit->name );
+			gl_print( f, 
+					gui.weapon.x + (gui.weapon.w - i)/2.,
+					gui.weapon.y - 5,
+					&cConsole, "%s", player->ammo->outfit->name );
 
 			/* print ammo left underneath */
 			i = gl_printWidth( &gui.smallFont, "%d", player->ammo->quantity );
-			vect_csetmin( &v, VX(gui.pos_weapon) + (gui.weapon.w - i)/2.,
-					VY(gui.pos_weapon) - 10 - gl_defFont.h);
-			gl_print( &gui.smallFont, &v, NULL, "%d", player->ammo->quantity );
+			gl_print( &gui.smallFont,
+					gui.weapon.x + (gui.weapon.w - i)/2.,
+					gui.weapon.y - 10 - gl_defFont.h,
+					NULL, "%d", player->ammo->quantity );
 		}
 	} 
 
@@ -443,59 +454,76 @@ void player_render (void)
 	if (player_target != PLAYER_ID) {
 		p = pilot_get(player_target);
 
-		gl_blitStatic( p->ship->gfx_target, &gui.pos_target, NULL );
+		gl_blitStatic( p->ship->gfx_target, &gui.target, NULL );
 
 		/* target name */
-		gl_print( NULL, &gui.pos_target_name, NULL, "%s", p->name );
-		gl_print( &gui.smallFont, &gui.pos_target_faction, NULL, "%s", p->faction->name );
+		gl_print( NULL,
+				gui.target_name.x,
+				gui.target_name.y,
+				NULL, "%s", p->name );
+		gl_print( &gui.smallFont,
+				gui.target_faction.x,
+				gui.target_faction.y,
+				NULL, "%s", p->faction->name );
 
 		/* target status */
 		if (pilot_isDisabled(p)) /* pilot is disabled */
-			gl_print( &gui.smallFont, &gui.pos_target_health, NULL, "Disabled" );
+			gl_print( &gui.smallFont,
+					gui.target_health.x,
+					gui.target_health.y,
+					NULL, "Disabled" );
+
 		else if (p->shield > p->shield_max/100.) /* on shields */
-			gl_print( &gui.smallFont, &gui.pos_target_health, NULL,
+			gl_print( &gui.smallFont,
+				gui.target_health.x,
+					gui.target_health.y, NULL,
 					"%s: %.0f%%", "Shield", p->shield/p->shield_max*100. );
+
 		else /* on armour */
-			gl_print( &gui.smallFont, &gui.pos_target_health, NULL, 
+			gl_print( &gui.smallFont,
+					gui.target_health.x,
+					gui.target_health.y, NULL, 
 					"%s: %.0f%%", "Armour", p->armour/p->armour_max*100. );
 	}
 	else { /* no target */
 		i = gl_printWidth( NULL, "No Target" );
-		vect_csetmin( &v, VX(gui.pos_target) + (SHIP_TARGET_W - i)/2.,
-				VY(gui.pos_target) + (SHIP_TARGET_H - gl_defFont.h)/2.);
-		gl_print( NULL, &v, &cGrey, "No Target" );
+		gl_print( NULL,
+				gui.target.x + (SHIP_TARGET_W - i)/2.,
+				gui.target.y  + (SHIP_TARGET_H - gl_defFont.h)/2.,
+				&cGrey, "No Target" );
 	}
 
 
 	/*
 	 * misc
 	 */
-	vect_csetmin( &v, VX(gui.pos_misc) + 10,
-			VY(gui.pos_misc) - 10 - gl_defFont.h );
-	gl_print( NULL, &v, &cConsole, "Credits:" );
+	gl_print( NULL,
+			gui.misc.x + 10,
+			gui.misc.y - 10 - gl_defFont.h,
+			&cConsole, "Credits:" );
 	if (credits >= 1000000)
 		snprintf( str, 10, "%.2fM", (double)credits / 1000000.);
 	else if (credits >= 1000)
 		snprintf( str, 10, "%.2fK", (double)credits / 1000.);
 	else snprintf (str, 10, "%d", credits );
 	i = gl_printWidth( &gui.smallFont, "%s", str );
-	vect_csetmin( &v, VX(gui.pos_misc) + gui.misc.w - 10 - i,
-			VY(gui.pos_misc) - 10 - gl_defFont.h );
-	gl_print( &gui.smallFont, &v, NULL, "%s", str );
+	gl_print( &gui.smallFont,
+			gui.misc.x + gui.misc.w - 10 - i,
+			gui.misc.y - 10 - gl_defFont.h, NULL, "%s", str );
 
 
 
 	/*
 	 * messages
 	 */
-	vect_csetmin( &v, VX(gui.pos_mesg),
-			VY(gui.pos_mesg) + (double)(gl_defFont.h*mesg_max)*1.2 );
+	x = gui.mesg.x;
+	y = gui.mesg.y + (double)(gl_defFont.h*mesg_max)*1.2;
 	for (i=0; i<mesg_max; i++) {
-		VY(v) -= (double)gl_defFont.h*1.2;
+		y -= (double)gl_defFont.h*1.2;
 		if (mesg_stack[mesg_max-i-1].str[0]!='\0') {
 			if (mesg_stack[mesg_max-i-1].t < SDL_GetTicks())
 				mesg_stack[mesg_max-i-1].str[0] = '\0';
-			else gl_print( NULL, &v, NULL, "%s", mesg_stack[mesg_max-i-1].str );
+			else gl_print( NULL, x, y, NULL, "%s", mesg_stack[mesg_max-i-1].str );
 		}
 	}
 }
@@ -549,15 +577,15 @@ static void gui_renderPilot( const Pilot* p )
 /*
  * renders a bar (health)
  */
-static void gui_renderBar( const gl_colour* c, const Vector2d* p,
+static void gui_renderBar( const glColour* c,
 		const Rect* r, const double w )
 {
 	int x, y, sx, sy;
 
 	glBegin(GL_QUADS); /* shield */
 		COLOUR(*c); 
-		x = VX(*p) - gl_screen.w/2.;
-		y = VY(*p) - gl_screen.h/2.;
+		x = r->x - gl_screen.w/2.;
+		y = r->y - gl_screen.h/2.;
 		sx = w * r->w;
 		sy = r->h;
 		glVertex2d( x, y );
@@ -594,7 +622,8 @@ int gui_init (void)
 	/*
 	 * messages
 	 */
-   vect_csetmin( &gui.pos_mesg, 20, 30 );
+	gui.mesg.x = 20;
+	gui.mesg.y = 30;
    mesg_stack = calloc(mesg_max, sizeof(Mesg));
 
 	return 0;
@@ -715,10 +744,11 @@ static void rect_parse( const xmlNodePtr parent,
 /*
  * parse a gui node
  */
+#define RELATIVIZE(a)	\
+{(a).x+=VX(gui.frame); (a).y=VY(gui.frame)+gui.gfx_frame->h-(a).y;}
 static int gui_parse( const xmlNodePtr parent, const char *name )
 {
 	xmlNodePtr cur, node;
-	double x, y;
 	char *tmp, *tmp2;
 
 
@@ -752,7 +782,7 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 	/*
 	 * frame (based on gfx)
 	 */
-	vect_csetmin( &gui.pos_frame,
+	vect_csetmin( &gui.frame,
 			gl_screen.w - gui.gfx_frame->w,     /* x */
 			gl_screen.h - gui.gfx_frame->h );   /* y */
 
@@ -763,11 +793,8 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 		/*
 		 * offset
 		 */
-		if (xml_isNode(node,"offset")) {
-			rect_parse( node, &x, &y, NULL, NULL );
-			gui_xoff = x;
-			gui_yoff = y;
-		}
+		if (xml_isNode(node,"offset"))
+			rect_parse( node, &gui_xoff, &gui_yoff, NULL, NULL );
 
 		/*
 		 * radar
@@ -788,22 +815,19 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 		
 			/* load the appropriate measurements */
 			if (gui.radar.shape == RADAR_RECT)
-				rect_parse( node, &x, &y, &gui.radar.w, &gui.radar.h );
+				rect_parse( node, &gui.radar.x, &gui.radar.y, &gui.radar.w, &gui.radar.h );
 			else if (gui.radar.shape == RADAR_CIRCLE)
-				rect_parse( node, &x, &y, &gui.radar.w, NULL );
-			vect_csetmin( &gui.pos_radar,
-					VX(gui.pos_frame) + x,
-					VY(gui.pos_frame) + gui.gfx_frame->h - y );
+				rect_parse( node, &gui.radar.x, &gui.radar.y, &gui.radar.w, NULL );
+			RELATIVIZE(gui.radar);
 		}
 
 		/*
 		 * nav computer
 		 */
 		else if (xml_isNode(node,"nav")) {
-			rect_parse( node, &x, &y, &gui.nav.w, &gui.nav.h );
-			vect_csetmin( &gui.pos_nav,
-					VX(gui.pos_frame) + x,
-					VY(gui.pos_frame) + gui.gfx_frame->h - y - gl_defFont.h);
+			rect_parse( node, &gui.nav.x, &gui.nav.y, &gui.nav.w, &gui.nav.h );
+			RELATIVIZE(gui.nav);
+			gui.nav.y -= gl_defFont.h;
 		}
 
 		/*
@@ -813,22 +837,19 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 			cur = node->children;
 			do {
 				if (xml_isNode(cur,"shield")) {
-					rect_parse( cur, &x, &y, &gui.shield.w, &gui.shield.h );
-					vect_csetmin( &gui.pos_shield,
-						VX(gui.pos_frame) + x,
-						VY(gui.pos_frame) + gui.gfx_frame->h - y );
+					rect_parse( cur, &gui.shield.x, &gui.shield.y,
+							&gui.shield.w, &gui.shield.h );
+					RELATIVIZE(gui.shield);
 				}
 				if (xml_isNode(cur,"armour")) {
-					rect_parse( cur, &x, &y, &gui.armour.w, &gui.armour.h );
-					vect_csetmin( &gui.pos_armour,              
-							VX(gui.pos_frame) + x,                   
-							VY(gui.pos_frame) + gui.gfx_frame->h - y );
+					rect_parse( cur, &gui.armour.x, &gui.armour.y,
+							&gui.armour.w, &gui.armour.h );
+					RELATIVIZE(gui.armour);
 				}
 				if (xml_isNode(cur,"energy")) {
-					rect_parse( cur, &x, &y, &gui.energy.w, &gui.energy.h );
-					vect_csetmin( &gui.pos_energy,              
-							VX(gui.pos_frame) + x,                   
-							VY(gui.pos_frame) + gui.gfx_frame->h - y );
+					rect_parse( cur, &gui.energy.x, &gui.energy.y,
+							&gui.energy.w, &gui.energy.h );
+					RELATIVIZE(gui.energy);
 				}
 			} while ((cur = cur->next));
 		}
@@ -837,10 +858,10 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 		 * secondary weapon
 		 */
 		else if (xml_isNode(node,"weapon")) {
-			rect_parse( node, &x, &y, &gui.weapon.w, &gui.weapon.h );
-			vect_csetmin( &gui.pos_weapon,
-					VX(gui.pos_frame) + x,
-					VY(gui.pos_frame) + gui.gfx_frame->h - y - gl_defFont.h);
+			rect_parse( node, &gui.weapon.x, &gui.weapon.y,
+					&gui.weapon.w, &gui.weapon.h );
+			RELATIVIZE(gui.weapon);
+			gui.weapon.y -= gl_defFont.h;
 		}
 
 		/*
@@ -850,28 +871,24 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 			cur = node->children;
 			do {
 				if (xml_isNode(cur,"gfx")) {
-					rect_parse( cur, &x, &y, NULL, NULL );
-					vect_csetmin( &gui.pos_target,
-							VX(gui.pos_frame) + x,
-							VY(gui.pos_frame) + gui.gfx_frame->h - y - SHIP_TARGET_H );
+					rect_parse( cur, &gui.target.x, &gui.target.y, NULL, NULL );
+					RELATIVIZE(gui.target);
+					gui.target.y -= SHIP_TARGET_H;
 				}
 				else if (xml_isNode(cur,"name")) {
-					rect_parse( cur, &x, &y, NULL, NULL );
-					vect_csetmin( &gui.pos_target_name,
-							VX(gui.pos_frame) + x,
-							VY(gui.pos_frame) + gui.gfx_frame->h - y - gl_defFont.h);
+					rect_parse( cur, &gui.target_name.x, &gui.target_name.y, NULL, NULL );
+					RELATIVIZE(gui.target_name);
+					gui.target_name.y -= gl_defFont.h;
 				}
 				else if (xml_isNode(cur,"faction")) {
-					rect_parse( cur, &x, &y, NULL, NULL );
-					vect_csetmin( &gui.pos_target_faction,
-							VX(gui.pos_frame) + x,
-							VY(gui.pos_frame) + gui.gfx_frame->h - y - gui.smallFont.h );
+					rect_parse( cur, &gui.target_faction.x, &gui.target_faction.y, NULL, NULL );
+					RELATIVIZE(gui.target_faction);
+					gui.target_faction.y -= gui.smallFont.h;
 				}
 				else if (xml_isNode(cur,"health")) {
-					rect_parse( cur, &x, &y, NULL, NULL );
-					vect_csetmin( &gui.pos_target_health,
-							VX(gui.pos_frame) + x,
-							VY(gui.pos_frame) + gui.gfx_frame->h - y - gui.smallFont.h );
+					rect_parse( cur, &gui.target_health.x, &gui.target_health.y, NULL, NULL );
+					RELATIVIZE(gui.target_health);
+					gui.target_health.y -= gui.smallFont.h;
 				}
 			} while ((cur = cur->next));
 		}
@@ -880,15 +897,14 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 		 * misc
 		 */
 		else if (xml_isNode(node,"misc")) {
-			rect_parse( node, &x, &y, &gui.misc.w, &gui.misc.h );
-			vect_csetmin( &gui.pos_misc,
-					VX(gui.pos_frame) + x,
-					VY(gui.pos_frame) + gui.gfx_frame->h - y );
+			rect_parse( node, &gui.misc.x, &gui.misc.y, &gui.misc.w, &gui.misc.h );
+			RELATIVIZE(gui.misc);
 		}
 	} while ((node = node->next));
 
 	return 0;
 }
+#undef RELATIVIZE
 /*
  * frees the GUI
  */

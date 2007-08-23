@@ -48,7 +48,7 @@ typedef struct {
 
 	PlanetClass class; /* planet type */
 	Faction* faction; /* planet faction */
-	gl_texture* gfx_space; /* graphic in space */
+	glTexture* gfx_space; /* graphic in space */
 } Planet;
 
 
