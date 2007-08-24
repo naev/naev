@@ -85,7 +85,7 @@ void conf_setDefaults (void)
 	/* opengl */
 	gl_screen.w = 800;
 	gl_screen.h = 640;
-	gl_screen.fullscreen = 0;
+	gl_screen.flags = 0;
 	/* joystick */
 	indjoystick = -1;
 	namjoystick = NULL;
@@ -99,7 +99,7 @@ void conf_setDefaults (void)
  */
 int conf_loadConfig ( const char* file )
 {
-	int i;
+	int i = 0;
 
 	lua_State *L = luaL_newstate();
 	if (luaL_dofile(L, file) == 0) { /* configuration file exists */
@@ -110,7 +110,16 @@ int conf_loadConfig ( const char* file )
 		/* opengl properties*/
 		conf_loadInt("width",gl_screen.w);
 		conf_loadInt("height",gl_screen.h);
-		conf_loadBool("fullscreen",gl_screen.fullscreen);
+		conf_loadBool("fullscreen",i);
+		if (i) gl_screen.flags |= OPENGL_FULLSCREEN;
+		conf_loadBool("aa",i);
+		if (i) gl_screen.flags |= OPENGL_AA_POINT | OPENGL_AA_LINE | OPENGL_AA_POLYGON;
+		conf_loadBool("aa_point",i);
+		if (i) gl_screen.flags |= OPENGL_AA_POINT;
+		conf_loadBool("aa_line",i);
+		if (i) gl_screen.flags |= OPENGL_AA_LINE;
+		conf_loadBool("aa_polygon",i);
+		if (i) gl_screen.flags |= OPENGL_AA_POLYGON;
 		conf_loadBool("showfps",show_fps);
 		conf_loadInt("maxfps",max_fps);
 
@@ -205,7 +214,7 @@ void conf_parseCLI( int argc, char** argv )
 	while ((c = getopt_long(argc, argv, "fF:d:J:j:hv", long_options, &option_index)) != -1) {
 		switch (c) {
 			case 'f':
-				gl_screen.fullscreen = 1;
+				gl_screen.flags |= OPENGL_FULLSCREEN;
 				break;
 			case 'F':
 				max_fps = atoi(optarg);

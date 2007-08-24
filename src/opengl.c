@@ -28,9 +28,19 @@
 /*
  * default colours
  */
-glColour cLightGrey	= { .r=0.80, .g=0.80, .b=0.80, .a=1. };
-glColour cGrey		= { .r=0.65, .g=0.65, .b=0.65, .a=1. };
-glColour cDarkGrey	= { .r=0.50, .g=0.50, .b=0.50, .a=1. };
+/* grey */
+glColour cWhite		= { .r=1.00, .g=1.00, .b=1.00, .a=1. };
+glColour cGrey90		= { .r=0.90, .g=0.90, .b=0.90, .a=1. };
+glColour cGrey80		= { .r=0.80, .g=0.80, .b=0.80, .a=1. };
+glColour cGrey70		= { .r=0.70, .g=0.70, .b=0.70, .a=1. };
+glColour cGrey60		= { .r=0.60, .g=0.60, .b=0.60, .a=1. };
+glColour cGrey50		= { .r=0.50, .g=0.50, .b=0.50, .a=1. };
+glColour cGrey40		= { .r=0.40, .g=0.40, .b=0.40, .a=1. };
+glColour cGrey30		= { .r=0.30, .g=0.30, .b=0.30, .a=1. };
+glColour cGrey20		= { .r=0.20, .g=0.20, .b=0.20, .a=1. };
+glColour cGrey10		= { .r=0.10, .g=0.10, .b=0.10, .a=1. };
+glColour cBlack		= { .r=0.00, .g=0.00, .b=0.00, .a=1. };
+
 glColour cGreen		= { .r=0.20, .g=0.80, .b=0.20, .a=1. };
 glColour cRed			= { .r=0.80, .g=0.20, .b=0.20, .a=1. };
 
@@ -565,7 +575,118 @@ void gl_print( const glFont *ft_font,
 
 	glDisable(GL_TEXTURE_2D);
 }
+/*
+ * behaves exactly like gl_print but prints to a maximum length of max
+ * returns how many characters it had to suppress
+ */
+int gl_printMax( const glFont *ft_font, const int max,
+      const double x, const double y,
+      const glColour* c, const char *fmt, ... )
+{
+   /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
+   char text[256]; /* holds the string */
+   va_list ap;
+	int i, n, len, ret;
 
+	ret = 0; /* default return value */
+
+   if (ft_font == NULL) ft_font = &gl_defFont;
+
+		if (fmt == NULL) return -1;
+   else { /* convert the symbols to text */
+      va_start(ap, fmt);
+      vsprintf(text, fmt, ap);
+      va_end(ap);
+   }
+
+
+	/* limit size */
+	len = (int)strlen(text);
+	for (n=0,i=0; i<len; i++) {
+		n += ft_font->w[ (int)text[i] ];
+		if (n > max) {
+			ret = len - i; /* difference */
+			text[i] = '\0';
+			break;
+		}
+	}
+
+	/* display the text */
+   glEnable(GL_TEXTURE_2D);
+   
+   glListBase(ft_font->list_base);
+
+   glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
+   glPushMatrix(); /* translation matrix */
+      glTranslated( x-(double)gl_screen.w/2., y-(double)gl_screen.h/2., 0);
+
+   if (c==NULL) glColor4d( 1., 1., 1., 1. );
+   else COLOUR(*c);
+   glCallLists(i, GL_UNSIGNED_BYTE, &text);
+   
+   glPopMatrix(); /* translation matrx */
+   
+   glDisable(GL_TEXTURE_2D);
+
+	return ret;
+}
+/*
+ * functions like gl_printMax but centers the text in the width
+ */
+int gl_printMid( const glFont *ft_font, const int width,
+		double x, const double y,
+		const glColour* c, const char *fmt, ... )
+{
+	/*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
+	char text[256]; /* holds the string */
+	va_list ap;
+	int i, n, len, ret;
+
+	ret = 0; /* default return value */
+
+	if (ft_font == NULL) ft_font = &gl_defFont;
+
+	if (fmt == NULL) return -1;
+	else { /* convert the symbols to text */
+		va_start(ap, fmt);
+		vsprintf(text, fmt, ap);
+		va_end(ap);
+	}
+
+
+	/* limit size */
+	len = (int)strlen(text);  
+	for (n=0,i=0; i<len; i++) {
+		n += ft_font->w[ (int)text[i] ];
+		if (n > width) {
+			ret = len - i; /* difference */
+			n -= ft_font->w[ (int)text[i] ]; /* actual size */
+			text[i] = '\0';
+			break;
+		}
+	}
+
+	x += (double)(width - n)/2.;
+
+	/* display the text */
+	glEnable(GL_TEXTURE_2D);
+
+	glListBase(ft_font->list_base);
+
+	glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
+	glPushMatrix(); /* translation matrix */
+	glTranslated( x-(double)gl_screen.w/2., y-(double)gl_screen.h/2., 0);
+
+	if (c==NULL) glColor4d( 1., 1., 1., 1. );
+	else COLOUR(*c);
+	glCallLists(i, GL_UNSIGNED_BYTE, &text);
+
+	glPopMatrix(); /* translation matrx */
+
+	glDisable(GL_TEXTURE_2D);
+
+	return ret;
+}
 /*
  * gets the width of the text about to be printed
  */
@@ -747,10 +868,10 @@ void gl_freeFont( glFont* font )
  */
 int gl_init()
 {
-	int depth, i, supported = 0;
+	int doublebuf, depth, i, supported = 0;
 	SDL_Rect** modes;
 	int flags = SDL_OPENGL;
-	flags |= SDL_FULLSCREEN * gl_screen.fullscreen;
+	flags |= SDL_FULLSCREEN * (gl_has(OPENGL_FULLSCREEN) ? 1 : 0);
 
 	/* Initializes Video */
 	if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
@@ -759,7 +880,7 @@ int gl_init()
 	}
 
 	/* get available fullscreen modes */
-	if (gl_screen.fullscreen) {
+	if (gl_has(OPENGL_FULLSCREEN)) {
 		modes = SDL_ListModes( NULL, SDL_OPENGL | SDL_FULLSCREEN );
 		if (modes == NULL) { /* rare case, but could happen */
 			WARN("No fullscreen modes available");
@@ -815,14 +936,16 @@ int gl_init()
 	SDL_GL_GetAttribute( SDL_GL_GREEN_SIZE, &gl_screen.g );
 	SDL_GL_GetAttribute( SDL_GL_BLUE_SIZE, &gl_screen.b );
 	SDL_GL_GetAttribute( SDL_GL_ALPHA_SIZE, &gl_screen.a );
-	SDL_GL_GetAttribute( SDL_GL_DOUBLEBUFFER, &gl_screen.doublebuf );
+	SDL_GL_GetAttribute( SDL_GL_DOUBLEBUFFER, &doublebuf );
+	if (doublebuf) gl_screen.flags |= OPENGL_DOUBLEBUF;
 	gl_screen.depth = gl_screen.r + gl_screen.g + gl_screen.b + gl_screen.a;
 
 	/* Debug happiness */
 	DEBUG("OpenGL Window Created: %dx%d@%dbpp %s", gl_screen.w, gl_screen.h, gl_screen.depth,
-			gl_screen.fullscreen?"fullscreen":"window");
+			(gl_has(OPENGL_FULLSCREEN))?"fullscreen":"window");
 	DEBUG("r: %d, g: %d, b: %d, a: %d, doublebuffer: %s",
-			gl_screen.r, gl_screen.g, gl_screen.b, gl_screen.a, gl_screen.doublebuf?"yes":"no");
+			gl_screen.r, gl_screen.g, gl_screen.b, gl_screen.a,
+			(gl_has(OPENGL_DOUBLEBUF)) ? "yes" : "no");
 	DEBUG("Renderer: %s", glGetString(GL_RENDERER));
 
 	/* some OpenGL options */

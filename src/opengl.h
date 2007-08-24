@@ -28,12 +28,17 @@
 /*
  * Contains info about the opengl screen
  */
+#define OPENGL_FULLSCREEN	(1<<0)
+#define OPENGL_DOUBLEBUF	(1<<1)
+#define OPENGL_AA_POINT		(1<<2)
+#define OPENGL_AA_LINE		(1<<3)
+#define OPENGL_AA_POLYGON	(1<<4)
+#define gl_has(f)		(gl_screen.flags & (f)) /* check for the flag */
 typedef struct {
 	int w, h; /* window dimensions */
 	int depth; /* depth in bpp */
-	int fullscreen; /* 1 = fullscreen, 0 = not fullscreen */
 	int r, g, b, a; /* framebuffer values in bits */
-	int doublebuf; /* doublebuffer? */
+	int flags; /* stores different propertiers */
 } glInfo;
 extern glInfo gl_screen; /* local structure set with gl_init and co */
 
@@ -45,10 +50,24 @@ typedef struct {
 	double r, g, b, a;
 } glColour;
 #define COLOUR(x)     glColor4d((x).r,(x).g,(x).b,(x).a)
-/* default colors */
-extern glColour cLightGrey;
-extern glColour cGrey;
-extern glColour cDarkGrey;
+/*
+ * default colors
+ */
+/* greyscale */
+extern glColour cWhite;
+#define cGrey	cGrey70
+extern glColour cBlack;
+
+extern glColour cGrey90;
+extern glColour cGrey80;
+extern glColour cGrey70;
+extern glColour cGrey60;
+extern glColour cGrey50;
+extern glColour cGrey40;
+extern glColour cGrey30;
+extern glColour cGrey20;
+extern glColour cGrey10;
+
 extern glColour cGreen;
 extern glColour cRed;
 
@@ -104,6 +123,12 @@ void gl_blitStatic( const glTexture* texture, const Vector2d* pos, const glColou
 void gl_bindCamera( const Vector2d* pos );
 void gl_print( const glFont *ft_font, const double x, const double y,
 		const glColour *c, const char *fmt, ... );
+int gl_printMax( const glFont *ft_font, const int max,
+		const double x, const double y,
+		const glColour *c, const char *fmt, ... );
+int gl_printMid( const glFont *ft_font, const int width,
+		double x, const double y,
+		const glColour* c, const char *fmt, ... );
 int gl_printWidth( const glFont *ft_font, const char *fmt, ... );
 
 /*

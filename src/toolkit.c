@@ -29,8 +29,16 @@ typedef struct {
 
 	WidgetStatus status;
 
-	void (*fptr) (char*); /* callback */
-	char *string; /* stored text */
+	union {
+		struct { /* WIDGET_BUTTON */
+			void (*fptr) (char*); /* callback */
+			char *string; /* stored text */
+		};
+		struct { /* WIDGET_TEXT */
+			glFont* font;
+			glColour* colour;
+		};
+	};
 } Widget;
 
 
@@ -63,6 +71,7 @@ static void widget_cleanup( Widget *widget );
 /* render */
 static void window_render( Window* w );
 static void toolkit_renderButton( Widget* btn, double bx, double by );
+static void toolkit_renderText( Widget* txt, double bx, double by );
 
 
 /*
@@ -75,18 +84,38 @@ void window_addButton( const unsigned int wid,
 		char* name, char* display,
 		void (*call) (char*) )
 {
-	Widget *widget = window_newWidget(wid);
+	Widget *wgt = window_newWidget(wid);
 
-	widget->type = WIDGET_BUTTON;
-	widget->name = strdup(name);
-	widget->string = strdup(display);
+	wgt->type = WIDGET_BUTTON;
+	wgt->name = strdup(name);
+	wgt->string = strdup(display);
 
 	/* set the properties */
-	widget->x = (double) x;
-	widget->y = (double) y;
-	widget->w = (double) w;
-	widget->h = (double) h;
-	widget->fptr = call;
+	wgt->x = (double) x;
+	wgt->y = (double) y;
+	wgt->w = (double) w;
+	wgt->h = (double) h;
+	wgt->fptr = call;
+}
+
+
+void window_addText( const unsigned int wid,
+		const int x, const int y,
+		const int w, const int h,
+		char* name, glFont* font, glColour* colour )
+{
+	Widget *wgt = window_newWidget(wid);
+
+	wgt->type = WIDGET_TEXT;
+	wgt->name = strdup(name); /* displays it's name */
+
+	/* set the properties */
+	wgt->x = (double) x;
+	wgt->y = (double) y;
+	wgt->w = (double) w;
+	wgt->h = (double) h;
+	wgt->font = font;
+	wgt->colour = colour;
 }
 
 
@@ -132,8 +161,8 @@ unsigned int window_create( const int x, const int y, const int w, const int h )
 	windows[nwindows].w = (double) w;
 	windows[nwindows].h = (double) h;
 	if ((x==-1) && (y==-1)) { /* center */
-		windows[nwindows].x = windows[nwindows].w/2.;
-		windows[nwindows].y = windows[nwindows].h/2.;
+		windows[nwindows].x = gl_screen.w/2. - windows[nwindows].w/2.;
+		windows[nwindows].y = gl_screen.h/2. - windows[nwindows].h/2.;
 	}
 	else {
 		windows[nwindows].x = (double) x;
@@ -190,6 +219,7 @@ void window_destroy( unsigned int wid )
 	if (nwindows==0) { /* no windows left */
 		SDL_ShowCursor(SDL_DISABLE);
 		toolkit = 0; /* disable toolkit */
+		if (paused) unpause();
 	}
 }
 
@@ -201,22 +231,172 @@ static void window_render( Window* w )
 {
 	int i;
 	double x, y;
+	glColour *lc, *c, *dc, *oc;
 
+	/* position */
 	x = w->x - (double)gl_screen.w/2.;
 	y = w->y - (double)gl_screen.h/2.;
 
-	/*
-	 * window bg
-	 */
-	glBegin(GL_QUADS);
-		COLOUR(cLightGrey);
+	/* colours */
+	lc = &cGrey90;
+	c = &cGrey70;
+	dc = &cGrey50;
+	oc = &cGrey30;
 
-		glVertex2d( x,				y        );
-		glVertex2d( x + w->w,	y        );
-		glVertex2d( x + w->w,   y + w->h );
-		glVertex2d( x,				y + w->h );
+	/*
+	 * window shaded bg
+	 */
+	/* main body */
+	glShadeModel(GL_SMOOTH);
+	glBegin(GL_QUADS);
+		COLOUR(*dc);
+		glVertex2d( x + 21.,        y            );
+		glVertex2d( x + w->w - 21., y            );
+
+		COLOUR(*c);
+		glVertex2d( x + w->w - 21., y + 0.6*w->h );
+		glVertex2d( x + 21.,        y + 0.6*w->h );
 
 	glEnd(); /* GL_QUADS */
+	glShadeModel(GL_FLAT);
+	glBegin(GL_QUADS);
+		COLOUR(*c);
+		glVertex2d( x + 21.,        y + 0.6*w->h );
+		glVertex2d( x + w->w - 21., y + 0.6*w->h );
+		glVertex2d( x + w->w - 21., y + w->h     );
+		glVertex2d( x + 21.,        y + w->h     );
+	glEnd(); /* GL_QUADS */
+	glShadeModel(GL_SMOOTH);
+	/* left side */
+	glBegin(GL_POLYGON);
+		COLOUR(*c);
+		glVertex2d( x + 21., y + 0.6*w->h ); /* center */
+		COLOUR(*dc);
+		glVertex2d( x + 21., y       );
+		glVertex2d( x + 15., y + 1.  );
+		glVertex2d( x + 10., y + 3.  );
+		glVertex2d( x + 6.,  y + 6.  );
+		glVertex2d( x + 3.,  y + 10. );
+		glVertex2d( x + 1.,  y + 15. );
+		glVertex2d( x,       y + 21. );
+		COLOUR(*c);
+		glVertex2d( x,       y + 0.6*w->h ); /* infront of center */
+		glVertex2d( x,       y + w->h - 21. );
+		glVertex2d( x + 1.,  y + w->h - 15. );
+		glVertex2d( x + 3.,  y + w->h - 10. );
+		glVertex2d( x + 6.,  y + w->h - 6.  );
+		glVertex2d( x + 10., y + w->h - 3.  );
+		glVertex2d( x + 15., y + w->h - 1.  );
+		glVertex2d( x + 21., y + w->h       );
+	glEnd(); /* GL_POLYGON */
+	/* right side */
+	glBegin(GL_POLYGON);
+		COLOUR(*c);
+		glVertex2d( x + w->w - 21., y + 0.6*w->h ); /* center */
+		COLOUR(*dc);
+		glVertex2d( x + w->w - 21., y       );
+		glVertex2d( x + w->w - 15., y + 1.  );
+		glVertex2d( x + w->w - 10., y + 3.  );
+		glVertex2d( x + w->w - 6.,  y + 6.  );
+		glVertex2d( x + w->w - 3.,  y + 10. );
+		glVertex2d( x + w->w - 1.,  y + 15. );
+		glVertex2d( x + w->w,       y + 21. );
+		COLOUR(*c);
+		glVertex2d( x + w->w,       y + 0.6*w->h ); /* infront of center */
+		glVertex2d( x + w->w,       y + w->h - 21. );
+		glVertex2d( x + w->w - 1.,  y + w->h - 15. );
+		glVertex2d( x + w->w - 3.,  y + w->h - 10. );
+		glVertex2d( x + w->w - 6.,  y + w->h - 6.  );
+		glVertex2d( x + w->w - 10., y + w->h - 3.  );
+		glVertex2d( x + w->w - 15., y + w->h - 1.  );
+		glVertex2d( x + w->w - 21., y + w->h       );
+	glEnd(); /* GL_POLYGON */
+
+
+	/* 
+	 * inner outline
+	 */
+	glShadeModel(GL_SMOOTH);
+	glBegin(GL_LINE_LOOP);
+		/* left side */
+		COLOUR(*c);
+		glVertex2d( x + 21., y       );
+		glVertex2d( x + 15., y + 1.  ); 
+		glVertex2d( x + 10., y + 3.  ); 
+		glVertex2d( x + 6.,  y + 6.  ); 
+		glVertex2d( x + 3.,  y + 10. ); 
+		glVertex2d( x + 1.,  y + 15. ); 
+		glVertex2d( x,       y + 21. ); 
+		COLOUR(*lc);
+		glVertex2d( x,       y + 0.6*w->h ); /* infront of center */
+		glVertex2d( x,       y + w->h - 21. ); 
+		glVertex2d( x + 1.,  y + w->h - 15. ); 
+		glVertex2d( x + 3.,  y + w->h - 10. ); 
+		glVertex2d( x + 6.,  y + w->h - 6.  ); 
+		glVertex2d( x + 10., y + w->h - 3.  ); 
+		glVertex2d( x + 15., y + w->h - 1.  ); 
+		glVertex2d( x + 21., y + w->h       ); 
+		/* switch to right via top */
+		glVertex2d( x + w->w - 21., y + w->h       ); 
+		glVertex2d( x + w->w - 15., y + w->h - 1.  ); 
+		glVertex2d( x + w->w - 10., y + w->h - 3.  ); 
+		glVertex2d( x + w->w - 6.,  y + w->h - 6.  ); 
+		glVertex2d( x + w->w - 3.,  y + w->h - 10. ); 
+		glVertex2d( x + w->w - 1.,  y + w->h - 15. ); 
+		glVertex2d( x + w->w,       y + w->h - 21. ); 
+		glVertex2d( x + w->w,       y + 0.6*w->h ); /* infront of center */ 
+		COLOUR(*c);
+		glVertex2d( x + w->w,       y + 21. ); 
+		glVertex2d( x + w->w - 1.,  y + 15. ); 
+		glVertex2d( x + w->w - 3.,  y + 10. ); 
+		glVertex2d( x + w->w - 6.,  y + 6.  ); 
+		glVertex2d( x + w->w - 10., y + 3.  ); 
+		glVertex2d( x + w->w - 15., y + 1.  ); 
+		glVertex2d( x + w->w - 21., y       ); 
+		glVertex2d( x + 21., y       ); /* back to beginning */
+	glEnd(); /* GL_LINE_LOOP */
+
+
+	/*
+	 * outter outline
+	 */
+	glShadeModel(GL_SMOOTH);
+	glBegin(GL_LINE_LOOP);
+		/* left side */
+		COLOUR(*oc);
+		glVertex2d( x + 21.-1., y-1.       );
+		glVertex2d( x + 15.-1., y + 1.-1.  );
+		glVertex2d( x + 10.-1., y + 3.-1.  );
+		glVertex2d( x + 6.-1.,  y + 6.-1.  );
+		glVertex2d( x + 3.-1.,  y + 10.-1. );
+		glVertex2d( x + 1.-1.,  y + 15.-1. );
+		glVertex2d( x-1.,       y + 21.-1. );
+		glVertex2d( x-1.,       y + 0.6*w->h ); /* infront of center */
+		glVertex2d( x-1.,       y + w->h - 21.+1. );
+		glVertex2d( x + 1.-1.,  y + w->h - 15.+1. );
+		glVertex2d( x + 3.-1.,  y + w->h - 10.+1. );
+		glVertex2d( x + 6.-1.,  y + w->h - 6.+1.  );
+		glVertex2d( x + 10.-1., y + w->h - 3.+1.  );
+		glVertex2d( x + 15.-1., y + w->h - 1.+1.  );
+		glVertex2d( x + 21.-1., y + w->h+1.       );
+		/* switch to right via top */
+		glVertex2d( x + w->w - 21.+1., y + w->h+1.       );
+		glVertex2d( x + w->w - 15.+1., y + w->h - 1.+1.  );
+		glVertex2d( x + w->w - 10.+1., y + w->h - 3.+1.  );
+		glVertex2d( x + w->w - 6.+1.,  y + w->h - 6.+1.  );
+		glVertex2d( x + w->w - 3.+1.,  y + w->h - 10.+1. );
+		glVertex2d( x + w->w - 1.+1.,  y + w->h - 15.+1. );
+		glVertex2d( x + w->w+1.,       y + w->h - 21.+1. );
+		glVertex2d( x + w->w+1.,       y + 0.6*w->h ); /* infront of center */
+		glVertex2d( x + w->w+1.,       y + 21.-1. );
+		glVertex2d( x + w->w - 1.+1.,  y + 15.-1. );
+		glVertex2d( x + w->w - 3.+1.,  y + 10.-1. );
+		glVertex2d( x + w->w - 6.+1.,  y + 6.-1.  );
+		glVertex2d( x + w->w - 10.+1., y + 3.-1.  );
+		glVertex2d( x + w->w - 15.+1., y + 1.-1.  );
+		glVertex2d( x + w->w - 21.+1., y-1.       );
+		glVertex2d( x + 21.-1., y-1.       ); /* back to beginning */
+	glEnd(); /* GL_LINE_LOOP */
 
 
 	/*
@@ -232,6 +412,7 @@ static void window_render( Window* w )
 				break;
 
 			case WIDGET_TEXT:
+				toolkit_renderText( &w->widgets[i], x, y );
 				break;
 		}
 	}
@@ -240,28 +421,48 @@ static void window_render( Window* w )
 
 static void toolkit_renderButton( Widget* btn, double bx, double by )
 {
-	glColour *c;
+	glColour *c, *dc, *oc, *lc;
 	double x, y;
-	int j;
 
 	x = bx + btn->x;
 	y = by + btn->y;
 
-	switch (btn->status) { /* set the colour */
-		case WIDGET_STATUS_NORMAL: c = &cDarkGrey; break;
-		case WIDGET_STATUS_MOUSEOVER: c = &cGrey; break;
-		case WIDGET_STATUS_MOUSEDOWN: c = &cGreen; break;
+	/* set the colours */
+	switch (btn->status) {
+		case WIDGET_STATUS_NORMAL:
+			lc = &cGrey80;
+			c = &cGrey60;
+			dc = &cGrey40;
+			oc = &cGrey20;
+			break;
+		case WIDGET_STATUS_MOUSEOVER:
+			lc = &cWhite;
+			c = &cGrey80;
+			dc = &cGrey60;
+			oc = &cGrey40;
+			break;
+		case WIDGET_STATUS_MOUSEDOWN:
+			lc = &cGreen;
+			c = &cGreen;
+			dc = &cGrey40;
+			oc = &cGrey20;
+			break;
 	}  
 
 
+	/*
+	 * shaded base
+	 */
 	glShadeModel(GL_SMOOTH);
 	glBegin(GL_QUADS);
-		COLOUR(*c);
 
+		COLOUR(*dc);
 		glVertex2d( x,				y              );
 		glVertex2d( x + btn->w,	y              );
-		glVertex2d( x + btn->w, y + 2/3*btn->h );
-		glVertex2d( x,				y + 2/3*btn->h );
+
+		COLOUR(*c);
+		glVertex2d( x + btn->w, y + 0.6*btn->h );
+		glVertex2d( x,				y + 0.6*btn->h );
 
 	glEnd(); /* GL_QUADS */
 
@@ -269,18 +470,79 @@ static void toolkit_renderButton( Widget* btn, double bx, double by )
 	glBegin(GL_QUADS);
 		COLOUR(*c);
 		
-		glVertex2d( x,          y + 2/3*btn->h );
-		glVertex2d( x + btn->w, y + 2/3*btn->h );
+		glVertex2d( x,          y + 0.6*btn->h );
+		glVertex2d( x + btn->w, y + 0.6*btn->h );
 		glVertex2d( x + btn->w, y + btn->h     );
 		glVertex2d( x,          y + btn->h     );
 
 	glEnd(); /* GL_QUADS */
 
-	j = gl_printWidth( NULL, btn->string );
-	gl_print( NULL,
-			bx + (double)gl_screen.w/2. + btn->x + (btn->w - (double)j)/2.,
+
+	/*
+	 * inner outline
+	 */
+	glShadeModel(GL_SMOOTH);
+	/* left */
+	glBegin(GL_LINES);
+		COLOUR(*c);
+		glVertex2d( x,          y          );
+		COLOUR(*lc);
+		glVertex2d( x,          y + btn->h );
+	glEnd(); /* GL_LINES */
+	/* right */
+	glBegin(GL_LINES);
+		COLOUR(*c);
+		glVertex2d( x + btn->w, y          );
+		COLOUR(*lc);
+		glVertex2d( x + btn->w, y + btn->h );
+	glEnd(); /* GL_LINES */
+
+	glShadeModel(GL_FLAT);
+	/* bottom */
+	glBegin(GL_LINES);
+		COLOUR(*c);
+		glVertex2d( x,          y          );
+		glVertex2d( x + btn->w, y          );
+	glEnd(); /* GL_LINES */
+	/* top */
+	glBegin(GL_LINES);
+		COLOUR(*lc);
+		glVertex2d( x,          y + btn->h );
+		glVertex2d( x + btn->w, y + btn->h );
+	glEnd(); /* GL_LINES */
+
+
+	/*
+	 * outter outline
+	 */
+	glBegin(GL_LINE_LOOP);
+		COLOUR(cBlack);
+		/* left */
+		glVertex2d( x - 1.,          y               );
+		glVertex2d( x - 1.,          y + btn->h      );
+		/* top */
+		glVertex2d( x,               y + btn->h + 1. );
+		glVertex2d( x + btn->w,      y + btn->h + 1. );
+		/* right */
+		glVertex2d( x + btn->w + 1., y + btn->h      );
+		glVertex2d( x + btn->w + 1., y               );
+		/* bottom */
+		glVertex2d( x + btn->w,      y - 1.          );
+		glVertex2d( x,               y - 1.          );
+	glEnd(); /* GL_LINE_LOOP */
+
+
+	gl_printMid( NULL, (int)btn->w,
+			bx + (double)gl_screen.w/2. + btn->x,
 			by + (double)gl_screen.h/2. + btn->y + (btn->h - gl_defFont.h)/2.,
 			&cRed, btn->string );
+}
+static void toolkit_renderText( Widget* txt, double bx, double by )
+{
+	gl_printMax( txt->font, txt->w,
+			bx + (double)gl_screen.w/2. + txt->x,
+			by + (double)gl_screen.h/2. + txt->y,
+			txt->colour, txt->name );
 }
 
 
@@ -291,8 +553,14 @@ void toolkit_render (void)
 {
 	int i;
 
+	if (gl_has(OPENGL_AA_LINE)) glEnable(GL_LINE_SMOOTH);
+	if (gl_has(OPENGL_AA_POLYGON)) glEnable(GL_POLYGON_SMOOTH);
+
 	for (i=0; i<nwindows; i++)
 		window_render(&windows[i]);
+	
+	if (gl_has(OPENGL_AA_LINE)) glDisable(GL_LINE_SMOOTH);
+	if (gl_has(OPENGL_AA_POLYGON)) glDisable(GL_POLYGON_SMOOTH);
 }
 
 

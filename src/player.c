@@ -359,29 +359,21 @@ void player_render (void)
 	 * NAV 
 	 */
 	if (planet_target >= 0) { /* planet landing target */
-		i = gl_printWidth( NULL, "Land" );
-		gl_print( NULL,
-				gui.nav.x + (gui.nav.w - i)/2.,
-				gui.nav.y - 5,
+		gl_printMid( NULL, (int)gui.nav.w,
+				gui.nav.x, gui.nav.y - 5,
 				&cConsole, "Land" );
 
-		i = gl_printWidth( &gui.smallFont, "%s",
-				cur_system->planets[planet_target].name );
-		gl_print( &gui.smallFont,
-				gui.nav.x + (gui.nav.w - i)/2.,
-				gui.nav.y - 10 - gui.smallFont.h,
+		gl_printMid( &gui.smallFont, (int)gui.nav.w,
+				gui.nav.x, gui.nav.y - 10 - gui.smallFont.h,
 				NULL, "%s", cur_system->planets[planet_target].name );
 	}
 	else if (planet_target == -1) { /* no planet target */
-		i = gl_printWidth( NULL, "Navigation" );
-		gl_print( NULL, gui.nav.x + (gui.nav.w - i)/2.,
-				gui.nav.y - 5,
+		gl_printMid( NULL, (int)gui.nav.w,
+				gui.nav.x, gui.nav.y - 5,
 				&cConsole, "Navigation" );
 
-		i = gl_printWidth( &gui.smallFont, "Off" );
-		gl_print( &gui.smallFont,
-				gui.nav.x + (gui.nav.w - i)/2.,
-				gui.nav.y - 10 - gui.smallFont.h,
+		gl_printMid( &gui.smallFont, (int)gui.nav.w,
+				gui.nav.x, gui.nav.y - 10 - gui.smallFont.h,
 				&cGrey, "Off" );
 	}
 
@@ -401,48 +393,36 @@ void player_render (void)
 	 * weapon 
 	 */ 
 	if (player->secondary==NULL) { /* no secondary weapon */ 
-		i = gl_printWidth( NULL, "Secondary" ); 
-		gl_print( NULL,
-				gui.weapon.x + (gui.weapon.w - i)/2.,
-				gui.weapon.y - 5,
+		gl_printMid( NULL, (int)gui.weapon.w,
+				gui.weapon.x, gui.weapon.y - 5,
 				&cConsole, "Secondary" ); 
 
-		i = gl_printWidth( &gui.smallFont, "None" ); 
-		gl_print( &gui.smallFont,
-				gui.weapon.x + (gui.weapon.w - i)/2.,
-				gui.weapon.y - 10 - gl_defFont.h,
+		gl_printMid( &gui.smallFont, (int)gui.weapon.w,
+				gui.weapon.x, gui.weapon.y - 10 - gl_defFont.h,
 				&cGrey, "None"); 
 	}  
 	else {
 		f = &gl_defFont;
 		if (player->ammo==NULL) {
 			i = gl_printWidth( f, "%s", player->secondary->outfit->name);
-			if (i > gui.weapon.w) { /* font is too big */
+			if (i > (int)gui.weapon.w) /* font is too big */
 				f = &gui.smallFont;
-				i = gl_printWidth( f, "%s", player->secondary->outfit->name);
-			}
-			gl_print( f,
-					gui.weapon.x + (gui.weapon.w - i)/2.,
-					gui.weapon.y - (gui.weapon.h - f->h)/2.,
+			gl_printMid( f, (int)gui.weapon.w,
+					gui.weapon.x, gui.weapon.y - (gui.weapon.h - f->h)/2.,
 					&cConsole, "%s", player->secondary->outfit->name );
 		}
 		else {
 			/* use the ammunition's name */
 			i = gl_printWidth( f, "%s", player->ammo->outfit->name);
-			if (i > gui.weapon.w) { /* font is too big */
+			if (i > gui.weapon.w) /* font is too big */
 				f = &gui.smallFont;
-				i = gl_printWidth( f, "%s", player->ammo->outfit->name);
-			} 
-			gl_print( f, 
-					gui.weapon.x + (gui.weapon.w - i)/2.,
-					gui.weapon.y - 5,
+			gl_printMid( f, (int)gui.weapon.w,
+					gui.weapon.x, gui.weapon.y - 5,
 					&cConsole, "%s", player->ammo->outfit->name );
 
 			/* print ammo left underneath */
-			i = gl_printWidth( &gui.smallFont, "%d", player->ammo->quantity );
-			gl_print( &gui.smallFont,
-					gui.weapon.x + (gui.weapon.w - i)/2.,
-					gui.weapon.y - 10 - gl_defFont.h,
+			gl_printMid( &gui.smallFont, (int)gui.weapon.w,
+					gui.weapon.x, gui.weapon.y - 10 - gl_defFont.h,
 					NULL, "%d", player->ammo->quantity );
 		}
 	} 
@@ -486,10 +466,8 @@ void player_render (void)
 					"%s: %.0f%%", "Armour", p->armour/p->armour_max*100. );
 	}
 	else { /* no target */
-		i = gl_printWidth( NULL, "No Target" );
-		gl_print( NULL,
-				gui.target.x + (SHIP_TARGET_W - i)/2.,
-				gui.target.y  + (SHIP_TARGET_H - gl_defFont.h)/2.,
+		gl_printMid( NULL, SHIP_TARGET_W,
+				gui.target.x, gui.target.y  + (SHIP_TARGET_H - gl_defFont.h)/2.,
 				&cGrey, "No Target" );
 	}
 
@@ -1099,6 +1077,7 @@ void player_screenshot (void)
 
 	/* TODO not overwrite old screenshots */
 	strncpy(filename,"screenshot.png",20);
+	DEBUG("Taking screenshot...");
 	gl_screenshot(filename);
 }
 

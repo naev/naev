@@ -20,6 +20,10 @@ void window_addButton( const unsigned int wid,
 		const int w, const int h,
 		char* name, char* display,
 		void (*call) (char*) );
+void window_addText( const unsigned int wid,
+		const int x, const int y,
+		const int w, const int h,
+		char* name, glFont* font, glColour* colour );
 
 /*
  * destruction
