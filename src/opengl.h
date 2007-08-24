@@ -8,6 +8,7 @@
 #include "SDL_opengl.h"
 
 #include "physics.h"
+#include "colour.h"
 
 
 /* Recommended for compatibility and such */
@@ -44,32 +45,9 @@ extern glInfo gl_screen; /* local structure set with gl_init and co */
 
 
 /*
- * Colours
+ * used with colour.h
  */
-typedef struct {
-	double r, g, b, a;
-} glColour;
 #define COLOUR(x)     glColor4d((x).r,(x).g,(x).b,(x).a)
-/*
- * default colors
- */
-/* greyscale */
-extern glColour cWhite;
-#define cGrey	cGrey70
-extern glColour cBlack;
-
-extern glColour cGrey90;
-extern glColour cGrey80;
-extern glColour cGrey70;
-extern glColour cGrey60;
-extern glColour cGrey50;
-extern glColour cGrey40;
-extern glColour cGrey30;
-extern glColour cGrey20;
-extern glColour cGrey10;
-
-extern glColour cGreen;
-extern glColour cRed;
 
 
 /*

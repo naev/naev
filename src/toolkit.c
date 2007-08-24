@@ -11,7 +11,8 @@
 typedef enum {
 	WIDGET_NULL,
 	WIDGET_BUTTON,
-	WIDGET_TEXT
+	WIDGET_TEXT,
+	WIDGET_IMAGE
 } WidgetType;
 
 typedef enum {
@@ -37,6 +38,10 @@ typedef struct {
 		struct { /* WIDGET_TEXT */
 			glFont* font;
 			glColour* colour;
+			int centered;
+		};
+		struct { /* WIDGET_IMAGE */
+			glTexture* texture;
 		};
 	};
 } Widget;
@@ -66,8 +71,9 @@ static int mwindows = 0;
 /*
  * prototypes
  */
-static Widget* window_newWidget( const unsigned int wid );
+static Widget* window_newWidget( Window* w );
 static void widget_cleanup( Widget *widget );
+static Window* window_get( const unsigned int wid );
 /* render */
 static void window_render( Window* w );
 static void toolkit_renderButton( Widget* btn, double bx, double by );
@@ -84,63 +90,77 @@ void window_addButton( const unsigned int wid,
 		char* name, char* display,
 		void (*call) (char*) )
 {
-	Widget *wgt = window_newWidget(wid);
+	Window *wdw = window_get(wid);
+	Widget *wgt = window_newWidget(wdw);
 
 	wgt->type = WIDGET_BUTTON;
 	wgt->name = strdup(name);
 	wgt->string = strdup(display);
 
 	/* set the properties */
-	wgt->x = (double) x;
-	wgt->y = (double) y;
 	wgt->w = (double) w;
 	wgt->h = (double) h;
+	if (x < 0) wgt->x = wdw->w - wgt->w + x;
+	else wgt->x = (double) x;
+	if (y < 0) wgt->y = wdw->h - wgt->h + y;
+	else wgt->y = (double) y;
 	wgt->fptr = call;
 }
 
 
 void window_addText( const unsigned int wid,
 		const int x, const int y,
-		const int w, const int h,
+		const int w, const int centered,
 		char* name, glFont* font, glColour* colour )
 {
-	Widget *wgt = window_newWidget(wid);
+	Window *wdw = window_get(wid);
+	Widget *wgt = window_newWidget(wdw);
 
 	wgt->type = WIDGET_TEXT;
 	wgt->name = strdup(name); /* displays it's name */
 
 	/* set the properties */
-	wgt->x = (double) x;
-	wgt->y = (double) y;
 	wgt->w = (double) w;
-	wgt->h = (double) h;
-	wgt->font = font;
+	if (font==NULL) wgt->font = &gl_defFont;
+	else wgt->font = font;
+	if (x < 0) wgt->x = wdw->w - wgt->w + x;
+	else wgt->x = (double) x;
+	if (y < 0) wgt->y = wdw->h - wgt->font->h + y;
+	else wgt->y = (double) y;
 	wgt->colour = colour;
+	wgt->centered = centered;
 }
 
 
 /*
  * returns pointer to a newly alloced Widget
  */
-static Widget* window_newWidget( const unsigned int wid )
+static Widget* window_newWidget( Window* w )
+{
+	Widget* wgt = NULL;
+
+	w->widgets = realloc( w->widgets,
+			sizeof(Widget)*(++w->nwidgets) );
+	if (w->widgets == NULL) WARN("Out of Memory");
+
+	wgt = &w->widgets[ w->nwidgets - 1 ]; 
+
+	wgt->type = WIDGET_NULL;
+	wgt->status = WIDGET_STATUS_NORMAL;
+	return wgt;
+}
+
+
+/*
+ * returns the window of id wid
+ */
+static Window* window_get( const unsigned int wid )
 {
 	int i;
 	for (i=0; i<nwindows; i++)
 		if (windows[i].id == wid)
-			break;
-	if (i == nwindows) return NULL;
-
-	Widget* w = NULL;
-
-	windows[i].widgets = realloc( windows[i].widgets,
-			sizeof(Widget)*(++windows[i].nwidgets) );
-	if (windows[i].widgets == NULL) WARN("Out of Memory");
-
-	w = &windows[i].widgets[ windows[i].nwidgets - 1 ]; 
-
-	w->type = WIDGET_NULL;
-	w->status = WIDGET_STATUS_NORMAL;
-	return w;
+			return &windows[i];
+	return NULL;
 }
 
 
@@ -190,7 +210,7 @@ static void widget_cleanup( Widget *widget )
 {
 	if (widget->name) free(widget->name);
 
-	if ((widget->type==WIDGET_TEXT) && widget->string)
+	if ((widget->type==WIDGET_BUTTON) && widget->string)
 		free(widget->string);
 }
 
@@ -414,6 +434,9 @@ static void window_render( Window* w )
 			case WIDGET_TEXT:
 				toolkit_renderText( &w->widgets[i], x, y );
 				break;
+
+			case WIDGET_IMAGE:
+				break;
 		}
 	}
 }
@@ -537,12 +560,21 @@ static void toolkit_renderButton( Widget* btn, double bx, double by )
 			by + (double)gl_screen.h/2. + btn->y + (btn->h - gl_defFont.h)/2.,
 			&cRed, btn->string );
 }
+/*
+ * renders the text
+ */
 static void toolkit_renderText( Widget* txt, double bx, double by )
 {
-	gl_printMax( txt->font, txt->w,
-			bx + (double)gl_screen.w/2. + txt->x,
-			by + (double)gl_screen.h/2. + txt->y,
-			txt->colour, txt->name );
+	if (txt->centered)
+		gl_printMid( txt->font, txt->w,
+				bx + (double)gl_screen.w/2. + txt->x,
+				by + (double)gl_screen.h/2. + txt->y,
+				txt->colour, txt->name );
+	else
+		gl_printMax( txt->font, txt->w,
+				bx + (double)gl_screen.w/2. + txt->x,
+				by + (double)gl_screen.h/2. + txt->y,
+				txt->colour, txt->name );
 }
 
 

@@ -5,6 +5,12 @@
 #include "toolkit.h"
 
 
+#define LAND_WIDTH	500
+#define LAND_HEIGHT	400
+#define BUTTON_WIDTH  80
+#define BUTTON_HEIGHT 40
+
+
 int landed = 0;
 
 static int land_wid = 0;
@@ -19,9 +25,19 @@ void land( Planet* p )
 	if (landed) return;
 
 	planet = p;
-	land_wid = window_create( -1, -1, 400, 300 );
-	window_addButton( land_wid, 400-80-20, 20, 80, 40,
-			"takeoff", "Takeoff", (void(*)(char*))takeoff );
+	land_wid = window_create( -1, -1, LAND_WIDTH, LAND_HEIGHT );
+
+	/*
+	 * pretty display
+	 */
+	window_addText( land_wid, 0., -20., LAND_WIDTH, 1, p->name, NULL, &cBlack );
+
+	/*
+	 * buttons
+	 */
+	window_addButton( land_wid, -20., 20.,
+			BUTTON_WIDTH, BUTTON_HEIGHT, "takeoff",
+			"Takeoff", (void(*)(char*))takeoff );
 	landed = 1;
 }
 
