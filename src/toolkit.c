@@ -33,15 +33,16 @@ typedef struct {
 	union {
 		struct { /* WIDGET_BUTTON */
 			void (*fptr) (char*); /* callback */
-			char *string; /* stored text */
+			char *display; /* stored text */
 		};
 		struct { /* WIDGET_TEXT */
+			char *text;
 			glFont* font;
 			glColour* colour;
-			int centered;
+			int centered; /* is centered? */
 		};
 		struct { /* WIDGET_IMAGE */
-			glTexture* texture;
+			glTexture* image;
 		};
 	};
 } Widget;
@@ -78,6 +79,7 @@ static Window* window_get( const unsigned int wid );
 static void window_render( Window* w );
 static void toolkit_renderButton( Widget* btn, double bx, double by );
 static void toolkit_renderText( Widget* txt, double bx, double by );
+static void toolkit_renderImage( Widget* img, double bx, double by );
 
 
 /*
@@ -95,7 +97,7 @@ void window_addButton( const unsigned int wid,
 
 	wgt->type = WIDGET_BUTTON;
 	wgt->name = strdup(name);
-	wgt->string = strdup(display);
+	wgt->display = strdup(display);
 
 	/* set the properties */
 	wgt->w = (double) w;
@@ -108,10 +110,13 @@ void window_addButton( const unsigned int wid,
 }
 
 
+/*
+ * adds text to the window
+ */
 void window_addText( const unsigned int wid,
 		const int x, const int y,
-		const int w, const int centered,
-		char* name, glFont* font, glColour* colour )
+		const int w, const int centered, char* name,
+		glFont* font, glColour* colour, char* string )
 {
 	Window *wdw = window_get(wid);
 	Widget *wgt = window_newWidget(wdw);
@@ -125,10 +130,33 @@ void window_addText( const unsigned int wid,
 	else wgt->font = font;
 	if (x < 0) wgt->x = wdw->w - wgt->w + x;
 	else wgt->x = (double) x;
-	if (y < 0) wgt->y = wdw->h - wgt->font->h + y;
+	if (y < 0) wgt->y = wdw->h + y;
 	else wgt->y = (double) y;
 	wgt->colour = colour;
 	wgt->centered = centered;
+	wgt->text = strdup(string);
+}
+
+
+/*
+ * adds a graphic to the window
+ */
+void window_addImage( const unsigned int wid,
+		const int x, const int y,
+		char* name, glTexture* image )
+{
+	Window *wdw = window_get(wid);
+	Widget *wgt = window_newWidget(wdw);
+
+	wgt->type = WIDGET_IMAGE;
+	wgt->name = strdup(name);
+
+	/* set the properties */
+	wgt->image = image;
+	if (x < 0) wgt->x = wdw->w - wgt->image->sw + x;
+	else wgt->x = (double) x;
+	if (y < 0) wgt->y = wdw->h + y;
+	else wgt->y = (double) y;
 }
 
 
@@ -210,8 +238,18 @@ static void widget_cleanup( Widget *widget )
 {
 	if (widget->name) free(widget->name);
 
-	if ((widget->type==WIDGET_BUTTON) && widget->string)
-		free(widget->string);
+	switch (widget->type) {
+		case WIDGET_BUTTON:
+			if (widget->display) free(widget->display);
+			break;
+
+		case WIDGET_TEXT:
+			if (widget->text) free(widget->text);
+			break;
+
+		default:
+			break;
+	}
 }
 
 
@@ -230,7 +268,7 @@ void window_destroy( unsigned int wid )
 			free(windows[i].widgets);
 			break;
 		}
-	
+
 	/* move other windows down a layer */
 	for ( ; i<(nwindows-1); i++)
 		windows[i] = windows[i+1];
@@ -241,6 +279,29 @@ void window_destroy( unsigned int wid )
 		toolkit = 0; /* disable toolkit */
 		if (paused) unpause();
 	}
+}
+
+
+/*
+ * destroys a widget on a window
+ */
+void window_destroyWidget( unsigned int wid, const char* wgtname )
+{
+	Window *w = window_get(wid);
+	int i;
+
+	for (i=0; i<w->nwidgets; i++)
+		if (strcmp(wgtname,w->widgets[i].name)==0)
+			break;
+	if (i >= w->nwidgets) {
+		DEBUG("widget '%s' not found in window %d", wgtname, wid);
+		return;
+	}
+	
+	widget_cleanup(&w->widgets[i]);
+	if (i<w->nwidgets-1) /* not last widget */
+		w->widgets[i] = w->widgets[i-1];
+	w->nwidgets--; /* note that we don't actually realloc the space */
 }
 
 
@@ -340,82 +401,82 @@ static void window_render( Window* w )
 	glBegin(GL_LINE_LOOP);
 		/* left side */
 		COLOUR(*c);
-		glVertex2d( x + 21., y       );
-		glVertex2d( x + 15., y + 1.  ); 
-		glVertex2d( x + 10., y + 3.  ); 
-		glVertex2d( x + 6.,  y + 6.  ); 
-		glVertex2d( x + 3.,  y + 10. ); 
-		glVertex2d( x + 1.,  y + 15. ); 
-		glVertex2d( x,       y + 21. ); 
+		glVertex2d( x + 21.+1., y+1.       );
+		glVertex2d( x + 15.+1., y + 1.+1.  );
+		glVertex2d( x + 10.+1., y + 3.+1.  );
+		glVertex2d( x + 6.+1.,  y + 6.+1.  );
+		glVertex2d( x + 3.+1.,  y + 10.+1. );
+		glVertex2d( x + 1.+1.,  y + 15.+1. );
+		glVertex2d( x+1.,       y + 21.+1. );
 		COLOUR(*lc);
-		glVertex2d( x,       y + 0.6*w->h ); /* infront of center */
-		glVertex2d( x,       y + w->h - 21. ); 
-		glVertex2d( x + 1.,  y + w->h - 15. ); 
-		glVertex2d( x + 3.,  y + w->h - 10. ); 
-		glVertex2d( x + 6.,  y + w->h - 6.  ); 
-		glVertex2d( x + 10., y + w->h - 3.  ); 
-		glVertex2d( x + 15., y + w->h - 1.  ); 
-		glVertex2d( x + 21., y + w->h       ); 
+		glVertex2d( x+1.,       y + 0.6*w->h ); /* infront of center */
+		glVertex2d( x+1.,       y + w->h - 21.-1. );
+		glVertex2d( x + 1.+1.,  y + w->h - 15.-1. );
+		glVertex2d( x + 3.+1.,  y + w->h - 10.-1. );
+		glVertex2d( x + 6.+1.,  y + w->h - 6.-1.  );
+		glVertex2d( x + 10.+1., y + w->h - 3.-1.  );
+		glVertex2d( x + 15.+1., y + w->h - 1.-1.  );
+		glVertex2d( x + 21.+1., y + w->h-1.       );
 		/* switch to right via top */
-		glVertex2d( x + w->w - 21., y + w->h       ); 
-		glVertex2d( x + w->w - 15., y + w->h - 1.  ); 
-		glVertex2d( x + w->w - 10., y + w->h - 3.  ); 
-		glVertex2d( x + w->w - 6.,  y + w->h - 6.  ); 
-		glVertex2d( x + w->w - 3.,  y + w->h - 10. ); 
-		glVertex2d( x + w->w - 1.,  y + w->h - 15. ); 
-		glVertex2d( x + w->w,       y + w->h - 21. ); 
-		glVertex2d( x + w->w,       y + 0.6*w->h ); /* infront of center */ 
+		glVertex2d( x + w->w - 21.-1., y + w->h-1.       );
+		glVertex2d( x + w->w - 15.-1., y + w->h - 1.-1.  );
+		glVertex2d( x + w->w - 10.-1., y + w->h - 3.-1.  );
+		glVertex2d( x + w->w - 6.-1.,  y + w->h - 6.-1.  );
+		glVertex2d( x + w->w - 3.-1.,  y + w->h - 10.-1. );
+		glVertex2d( x + w->w - 1.-1.,  y + w->h - 15.-1. );
+		glVertex2d( x + w->w-1.,       y + w->h - 21.-1. );
+		glVertex2d( x + w->w-1.,       y + 0.6*w->h ); /* infront of center */
 		COLOUR(*c);
-		glVertex2d( x + w->w,       y + 21. ); 
-		glVertex2d( x + w->w - 1.,  y + 15. ); 
-		glVertex2d( x + w->w - 3.,  y + 10. ); 
-		glVertex2d( x + w->w - 6.,  y + 6.  ); 
-		glVertex2d( x + w->w - 10., y + 3.  ); 
-		glVertex2d( x + w->w - 15., y + 1.  ); 
-		glVertex2d( x + w->w - 21., y       ); 
-		glVertex2d( x + 21., y       ); /* back to beginning */
+		glVertex2d( x + w->w-1.,       y + 21.+1. );
+		glVertex2d( x + w->w - 1.-1.,  y + 15.+1. );
+		glVertex2d( x + w->w - 3.-1.,  y + 10.+1. );
+		glVertex2d( x + w->w - 6.-1.,  y + 6.+1.  );
+		glVertex2d( x + w->w - 10.-1., y + 3.+1.  );
+		glVertex2d( x + w->w - 15.-1., y + 1.+1.  );
+		glVertex2d( x + w->w - 21.-1., y+1.       );
+		glVertex2d( x + 21.+1., y+1.       ); /* back to beginning */
 	glEnd(); /* GL_LINE_LOOP */
 
 
 	/*
 	 * outter outline
 	 */
-	glShadeModel(GL_SMOOTH);
+	glShadeModel(GL_FLAT);
 	glBegin(GL_LINE_LOOP);
 		/* left side */
 		COLOUR(*oc);
-		glVertex2d( x + 21.-1., y-1.       );
-		glVertex2d( x + 15.-1., y + 1.-1.  );
-		glVertex2d( x + 10.-1., y + 3.-1.  );
-		glVertex2d( x + 6.-1.,  y + 6.-1.  );
-		glVertex2d( x + 3.-1.,  y + 10.-1. );
-		glVertex2d( x + 1.-1.,  y + 15.-1. );
-		glVertex2d( x-1.,       y + 21.-1. );
-		glVertex2d( x-1.,       y + 0.6*w->h ); /* infront of center */
-		glVertex2d( x-1.,       y + w->h - 21.+1. );
-		glVertex2d( x + 1.-1.,  y + w->h - 15.+1. );
-		glVertex2d( x + 3.-1.,  y + w->h - 10.+1. );
-		glVertex2d( x + 6.-1.,  y + w->h - 6.+1.  );
-		glVertex2d( x + 10.-1., y + w->h - 3.+1.  );
-		glVertex2d( x + 15.-1., y + w->h - 1.+1.  );
-		glVertex2d( x + 21.-1., y + w->h+1.       );
+		glVertex2d( x + 21., y       );
+		glVertex2d( x + 15., y + 1.  );
+		glVertex2d( x + 10., y + 3.  );
+		glVertex2d( x + 6.,  y + 6.  );
+		glVertex2d( x + 3.,  y + 10. );
+		glVertex2d( x + 1.,  y + 15. );
+		glVertex2d( x,       y + 21. );
+		glVertex2d( x,       y + 0.6*w->h ); /* infront of center */
+		glVertex2d( x,       y + w->h - 21. );
+		glVertex2d( x + 1.,  y + w->h - 15. );
+		glVertex2d( x + 3.,  y + w->h - 10. );
+		glVertex2d( x + 6.,  y + w->h - 6.  );
+		glVertex2d( x + 10., y + w->h - 3.  );
+		glVertex2d( x + 15., y + w->h - 1.  );
+		glVertex2d( x + 21., y + w->h       );
 		/* switch to right via top */
-		glVertex2d( x + w->w - 21.+1., y + w->h+1.       );
-		glVertex2d( x + w->w - 15.+1., y + w->h - 1.+1.  );
-		glVertex2d( x + w->w - 10.+1., y + w->h - 3.+1.  );
-		glVertex2d( x + w->w - 6.+1.,  y + w->h - 6.+1.  );
-		glVertex2d( x + w->w - 3.+1.,  y + w->h - 10.+1. );
-		glVertex2d( x + w->w - 1.+1.,  y + w->h - 15.+1. );
-		glVertex2d( x + w->w+1.,       y + w->h - 21.+1. );
-		glVertex2d( x + w->w+1.,       y + 0.6*w->h ); /* infront of center */
-		glVertex2d( x + w->w+1.,       y + 21.-1. );
-		glVertex2d( x + w->w - 1.+1.,  y + 15.-1. );
-		glVertex2d( x + w->w - 3.+1.,  y + 10.-1. );
-		glVertex2d( x + w->w - 6.+1.,  y + 6.-1.  );
-		glVertex2d( x + w->w - 10.+1., y + 3.-1.  );
-		glVertex2d( x + w->w - 15.+1., y + 1.-1.  );
-		glVertex2d( x + w->w - 21.+1., y-1.       );
-		glVertex2d( x + 21.-1., y-1.       ); /* back to beginning */
+		glVertex2d( x + w->w - 21., y + w->h       );
+		glVertex2d( x + w->w - 15., y + w->h - 1.  );
+		glVertex2d( x + w->w - 10., y + w->h - 3.  );
+		glVertex2d( x + w->w - 6.,  y + w->h - 6.  );
+		glVertex2d( x + w->w - 3.,  y + w->h - 10. );
+		glVertex2d( x + w->w - 1.,  y + w->h - 15. );
+		glVertex2d( x + w->w,       y + w->h - 21. );
+		glVertex2d( x + w->w,       y + 0.6*w->h ); /* infront of center */
+		glVertex2d( x + w->w,       y + 21. );
+		glVertex2d( x + w->w - 1.,  y + 15. );
+		glVertex2d( x + w->w - 3.,  y + 10. );
+		glVertex2d( x + w->w - 6.,  y + 6.  );
+		glVertex2d( x + w->w - 10., y + 3.  );
+		glVertex2d( x + w->w - 15., y + 1.  );
+		glVertex2d( x + w->w - 21., y       );
+		glVertex2d( x + 21., y       ); /* back to beginning */
 	glEnd(); /* GL_LINE_LOOP */
 
 
@@ -436,6 +497,7 @@ static void window_render( Window* w )
 				break;
 
 			case WIDGET_IMAGE:
+				toolkit_renderImage( &w->widgets[i], x, y );
 				break;
 		}
 	}
@@ -505,39 +567,26 @@ static void toolkit_renderButton( Widget* btn, double bx, double by )
 	 * inner outline
 	 */
 	glShadeModel(GL_SMOOTH);
-	/* left */
-	glBegin(GL_LINES);
+	glBegin(GL_LINE_LOOP);
+		/* left */
 		COLOUR(*c);
 		glVertex2d( x,          y          );
 		COLOUR(*lc);
 		glVertex2d( x,          y + btn->h );
-	glEnd(); /* GL_LINES */
-	/* right */
-	glBegin(GL_LINES);
+		/* top */
+		glVertex2d( x + btn->w, y + btn->h );
+		/* right */
 		COLOUR(*c);
 		glVertex2d( x + btn->w, y          );
-		COLOUR(*lc);
-		glVertex2d( x + btn->w, y + btn->h );
-	glEnd(); /* GL_LINES */
-
-	glShadeModel(GL_FLAT);
-	/* bottom */
-	glBegin(GL_LINES);
-		COLOUR(*c);
+		/* bottom */
 		glVertex2d( x,          y          );
-		glVertex2d( x + btn->w, y          );
-	glEnd(); /* GL_LINES */
-	/* top */
-	glBegin(GL_LINES);
-		COLOUR(*lc);
-		glVertex2d( x,          y + btn->h );
-		glVertex2d( x + btn->w, y + btn->h );
 	glEnd(); /* GL_LINES */
 
 
 	/*
 	 * outter outline
 	 */
+	glShadeModel(GL_FLAT);
 	glBegin(GL_LINE_LOOP);
 		COLOUR(cBlack);
 		/* left */
@@ -552,13 +601,14 @@ static void toolkit_renderButton( Widget* btn, double bx, double by )
 		/* bottom */
 		glVertex2d( x + btn->w,      y - 1.          );
 		glVertex2d( x,               y - 1.          );
+		glVertex2d( x - 1.,          y               );
 	glEnd(); /* GL_LINE_LOOP */
 
 
 	gl_printMid( NULL, (int)btn->w,
 			bx + (double)gl_screen.w/2. + btn->x,
 			by + (double)gl_screen.h/2. + btn->y + (btn->h - gl_defFont.h)/2.,
-			&cRed, btn->string );
+			&cDarkRed, btn->display );
 }
 /*
  * renders the text
@@ -569,12 +619,70 @@ static void toolkit_renderText( Widget* txt, double bx, double by )
 		gl_printMid( txt->font, txt->w,
 				bx + (double)gl_screen.w/2. + txt->x,
 				by + (double)gl_screen.h/2. + txt->y,
-				txt->colour, txt->name );
+				txt->colour, txt->text );
 	else
 		gl_printMax( txt->font, txt->w,
 				bx + (double)gl_screen.w/2. + txt->x,
 				by + (double)gl_screen.h/2. + txt->y,
-				txt->colour, txt->name );
+				txt->colour, txt->text );
+}
+/*
+ * renders the image
+ */
+static void toolkit_renderImage( Widget* img, double bx, double by )
+{
+	glColour *lc, *c, *oc;
+	double x,y;
+	x = bx + img->x;
+	y = by + img->y;
+
+	lc = &cGrey90;
+	c = &cGrey70;
+	oc = &cGrey30;
+
+	/*
+	 * image
+	 */
+	gl_blitStatic( img->image,
+			x + (double)gl_screen.w/2.,
+			y + (double)gl_screen.h/2., NULL );
+
+	/*
+	 * inner outline (outwards)
+	 */
+	glShadeModel(GL_SMOOTH);
+	glBegin(GL_LINE_LOOP);
+		COLOUR(*lc);
+		/* top */
+		glVertex2d( x-1.,                  y + img->image->sh+1. );
+		glVertex2d( x + img->image->sw   , y + img->image->sh+1. );
+		/* right */
+		COLOUR(*c);
+		glVertex2d( x + img->image->sw,    y                     );
+		/* bottom */
+		glVertex2d( x-1.,                  y                     );
+		/* left */
+		COLOUR(*lc);
+		glVertex2d( x-1.,                  y + img->image->sh+1. );
+	glEnd(); /* GL_LINE_LOOP */
+
+
+	/*
+	 * outter outline
+	 */
+	glShadeModel(GL_FLAT);
+	glBegin(GL_LINE_LOOP);
+		COLOUR(*oc);
+		/* top */
+		glVertex2d( x-2.,                  y + img->image->sh+2. );
+		glVertex2d( x + img->image->sw+1., y + img->image->sh+2. );
+		/* right */
+		glVertex2d( x + img->image->sw+1., y-1.                  );
+		/* bottom */
+		glVertex2d( x-2.,                  y-1.                  );
+		/* left */
+		glVertex2d( x-2.,                  y + img->image->sh+2. );
+	glEnd(); /* GL_LINE_LOOP */
 }
 
 

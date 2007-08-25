@@ -15,16 +15,20 @@
 #include "pause.h"
 
 
-#define XML_PLANET_ID	"Planets"
-#define XML_PLANET_TAG	"planet"
+#define XML_PLANET_ID			"Planets"
+#define XML_PLANET_TAG			"planet"
 
-#define XML_SYSTEM_ID	"Systems"
-#define XML_SYSTEM_TAG	"ssys"
+#define XML_SYSTEM_ID			"Systems"
+#define XML_SYSTEM_TAG			"ssys"
 
-#define PLANET_DATA		"dat/planet.xml"
-#define SYSTEM_DATA		"dat/ssys.xml"
+#define PLANET_DATA				"dat/planet.xml"
+#define SYSTEM_DATA				"dat/ssys.xml"
 
-#define PLANET_GFX		"gfx/planet/"
+#define PLANET_GFX_SPACE		"gfx/planet/space/"
+#define PLANET_GFX_EXTERIOR	"gfx/planet/exterior/"
+
+#define PLANET_GFX_EXTERIOR_W	400
+#define PLANET_GFX_EXTERIOR_H	400
 
 /* used to overcome warnings due to 0 values */
 #define FLAG_XSET				   (1<<0)
@@ -284,10 +288,9 @@ static Planet* planet_get( const char* name )
 
 
 	do {
-		if (node->type == XML_NODE_START &&
-				strcmp((char*)node->name,XML_PLANET_TAG)==0) {
+		if (xml_isNode(node,XML_PLANET_TAG)) {
 
-			tstr = (char*)xmlGetProp(node,(xmlChar*)"name");
+			tstr = xml_nodeProp(node,"name");
 			if (strcmp(tstr,name)==0) { /* found */
 				temp = CALLOC_ONE(Planet);
 				temp->name = tstr;
@@ -295,35 +298,42 @@ static Planet* planet_get( const char* name )
 				node = node->xmlChildrenNode;
 
 				do {
-					if (strcmp((char*)node->name,"GFX")==0) {
-						cur = node->children;
-						if (strcmp((char*)cur->name,"text")==0) {
-							snprintf( str, strlen((char*)cur->content)+sizeof(PLANET_GFX),
-									PLANET_GFX"%s", (char*)cur->content);
-							temp->gfx_space = gl_newImage(str);
-						}
-					}
-					else if (strcmp((char*)node->name,"pos")==0) {
+					if (xml_isNode(node,"GFX")) {
 						cur = node->children;
 						do {
-							if (strcmp((char*)cur->name,"x")==0) {
-								flags |= FLAG_XSET;
-								temp->pos.x = atof((char*)cur->children->content);
+							if (xml_isNode(cur,"space")) { /* load space gfx */
+								snprintf( str, strlen(xml_get(cur))+sizeof(PLANET_GFX_SPACE),
+										PLANET_GFX_SPACE"%s", xml_get(cur));
+								temp->gfx_space = gl_newImage(str);
 							}
-							else if (strcmp((char*)cur->name,"y")==0) {
+							else if (xml_isNode(cur,"exterior")) { /* load land gfx */
+								snprintf( str, strlen(xml_get(cur))+sizeof(PLANET_GFX_EXTERIOR),
+										PLANET_GFX_EXTERIOR"%s", xml_get(cur));
+								temp->gfx_exterior = gl_newImage(str);
+							}
+						} while ((cur = cur->next));
+					}
+					else if (xml_isNode(node,"pos")) {
+						cur = node->children;
+						do {
+							if (xml_isNode(cur,"x")) {
+								flags |= FLAG_XSET;
+								temp->pos.x = xml_getFloat(cur);
+							}
+							else if (xml_isNode(cur,"y")) {
 								flags |= FLAG_YSET;
-								temp->pos.y = atof((char*)cur->children->content);
+								temp->pos.y = xml_getFloat(cur);
 							}
 						} while((cur = cur->next));
 					}
-					else if (strcmp((char*)node->name,"general")==0) {
+					else if (xml_isNode(node,"general")) {
 						cur = node->children;
 						do {
-							if (strcmp((char*)cur->name,"class")==0)
+							if (xml_isNode(cur,"class"))
 								temp->class =
 									planetclass_get(cur->children->content[0]);
-							else if (strcmp((char*)cur->name,"faction")==0)
-								temp->faction = faction_get( (char*)cur->children->content);
+							else if (xml_isNode(cur,"faction"))
+								temp->faction = faction_get( xml_get(cur) );
 						} while((cur = cur->next));
 					}
 				} while ((node = node->next));
@@ -339,6 +349,8 @@ static Planet* planet_get( const char* name )
 
 	if (temp) {
 #define MELEMENT(o,s)	if ((o) == 0) WARN("Planet '%s' missing '"s"' element", temp->name)
+		MELEMENT(temp->gfx_space,"GFX space");
+		MELEMENT(temp->gfx_exterior,"GFX exterior");
 		MELEMENT(flags&FLAG_XSET,"x");
 		MELEMENT(flags&FLAG_YSET,"y");
 		MELEMENT(temp->class,"class");
@@ -366,45 +378,45 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 
 	uint32_t flags;
 
-	temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name"); /* already mallocs */
+	temp->name = xml_nodeProp(parent,"name"); /* already mallocs */
 
 	node  = parent->xmlChildrenNode;
 
 	do { /* load all the data */
-		if (strcmp((char*)node->name,"pos")==0) {
+		if (xml_isNode(node,"pos")) {
 			cur = node->children;
 			do {
-				if (strcmp((char*)cur->name,"x")==0) {
+				if (xml_isNode(cur,"x")) {
 					flags |= FLAG_XSET;
-					temp->pos.x = atof((char*)cur->children->content);
+					temp->pos.x = xml_getFloat(cur);
 				}
-				else if (strcmp((char*)cur->name,"y")==0) {
+				else if (xml_isNode(cur,"y")) {
 					flags |= FLAG_YSET;
-					temp->pos.y = atof((char*)cur->children->content);
+					temp->pos.y = xml_getFloat(cur);
 				}
 			} while ((cur = cur->next));
 		}
-		else if (strcmp((char*)node->name,"general")==0) {
+		else if (xml_isNode(node,"general")) {
 			cur = node->children;
 			do {
-				if (strcmp((char*)cur->name,"stars")==0) /* non-zero */
-					temp->stars = atoi((char*)cur->children->content);
-				else if (strcmp((char*)cur->name,"asteroids")==0) {
+				if (xml_isNode(cur,"stars")) /* non-zero */
+					temp->stars = xml_getInt(cur);
+				else if (xml_isNode(cur,"asteroids")) {
 					flags |= FLAG_ASTEROIDSSET;
-					temp->asteroids = atoi((char*)cur->children->content);
+					temp->asteroids = xml_getInt(cur);
 				}
-				else if (strcmp((char*)cur->name,"interference")==0) {
+				else if (xml_isNode(cur,"interference")) {
 					flags |= FLAG_INTERFERENCESET;
-					temp->interference = atof((char*)cur->children->content)/100.;
+					temp->interference = xml_getFloat(cur)/100.;
 				}
 			} while ((cur = cur->next));
 		}
 		/* loads all the planets */
-		else if (strcmp((char*)node->name,"planets")==0) {
+		else if (xml_isNode(node,"planets")) {
 			cur = node->children;
 			do {
-				if (strcmp((char*)cur->name,"planet")==0) {
-					planet = planet_get((const char*)cur->children->content);
+				if (xml_isNode(cur,"planet")) {
+					planet = planet_get(xml_get(cur));
 					temp->planets = realloc(temp->planets, sizeof(Planet)*(++temp->nplanets));
 					memcpy(temp->planets+(temp->nplanets-1), planet, sizeof(Planet));
 					free(planet);
@@ -412,18 +424,18 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 			} while ((cur = cur->next));
 		}
 		/* loads all the fleets */
-		else if (strcmp((char*)node->name,"fleets")==0) {
+		else if (xml_isNode(node,"fleets")) {
 			cur = node->children;
 			do {
-				if (strcmp((char*)cur->name,"fleet")==0) {
+				if (xml_isNode(cur,"fleet")) {
 					fleet = CALLOC_ONE(SystemFleet);
 
-					fleet->fleet = fleet_get((const char*)cur->children->content);
+					fleet->fleet = fleet_get(xml_get(cur));
 					if (fleet->fleet==NULL)
 						WARN("Fleet %s for Star System %s not found",
-								(char*)cur->children->content, temp->name);
+								xml_get(cur), temp->name);
 
-					ptrc = (char*)xmlGetProp(cur,(xmlChar*)"chance"); /* mallocs ptrc */
+					ptrc = xml_nodeProp(cur,"chance"); /* mallocs ptrc */
 					fleet->chance = atoi(ptrc);
 					if (fleet->chance == 0)
 						WARN("Fleet %s for Star System %s has 0%% chance to appear",
@@ -468,7 +480,7 @@ int space_load (void)
 	xmlDocPtr doc = xmlParseMemory( buf, bufsize );
 
 	node = doc->xmlChildrenNode;
-	if (strcmp((char*)node->name,XML_SYSTEM_ID)) {
+	if (!xml_isNode(node,XML_SYSTEM_ID)) {
 		ERR("Malformed "SYSTEM_DATA"file: missing root element '"XML_SYSTEM_ID"'");
 		return -1;
 	}
@@ -480,8 +492,7 @@ int space_load (void)
 	}
 
 	do {
-		if (node->type == XML_NODE_START &&           
-				strcmp((char*)node->name,XML_SYSTEM_TAG)==0) {
+		if (xml_isNode(node,XML_SYSTEM_TAG)) {
 
 			temp = system_parse(node);               
 			systems = realloc(systems, sizeof(StarSystem)*(++nsystems));
@@ -505,10 +516,6 @@ void space_render( double dt )
 {
 	int i;
 
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix(); /* projection translation matrix */
-		glTranslated( -(double)gl_screen.w/2., -(double)gl_screen.h/2., 0.);
-
 	/*
 	 * gprof claims it's the slowest thing in the game!
 	 */
@@ -525,11 +532,10 @@ void space_render( double dt )
 		}
 		/* render */
 		glColor4d( 1., 1., 1., stars[i].brightness );
-		glVertex2d( stars[i].x, stars[i].y );
+		glVertex2d( stars[i].x - (double)gl_screen.w/2.,
+				stars[i].y - (double)gl_screen.h/2. );
 	}
 	glEnd();
-
-	glPopMatrix(); /* projection translation matrix */
 }
 
 /*
@@ -539,7 +545,8 @@ void planets_render (void)
 {
 	int i;
 	for (i=0; i < cur_system->nplanets; i++)
-		gl_blitSprite( cur_system->planets[i].gfx_space, &cur_system->planets[i].pos,
+		gl_blitSprite( cur_system->planets[i].gfx_space,
+				cur_system->planets[i].pos.x, cur_system->planets[i].pos.y,
 				0, 0, NULL );
 }
 
@@ -556,6 +563,8 @@ void space_exit (void)
 			free(systems[i].planets[j].name);
 			if (systems[i].planets[j].gfx_space)
 				gl_freeTexture(systems[i].planets[j].gfx_space);
+			if (systems[i].planets[j].gfx_exterior)
+				gl_freeTexture(systems[i].planets[j].gfx_exterior);
 			if (systems[i].fleets)
 				free(systems[i].fleets);
 		}

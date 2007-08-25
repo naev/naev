@@ -30,6 +30,7 @@ extern glColour cGrey20;
 extern glColour cGrey10;
 
 extern glColour cGreen;
+extern glColour cDarkRed;
 extern glColour cRed;
 
 

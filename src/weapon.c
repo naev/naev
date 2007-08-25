@@ -240,7 +240,8 @@ static void weapon_render( const Weapon* w )
 	/* get the sprite corresponding to the direction facing */
 	gl_getSpriteFromDir( &sx, &sy, w->outfit->gfx_space, w->solid->dir );
 
-	gl_blitSprite( w->outfit->gfx_space, &w->solid->pos, sx, sy, NULL );
+	gl_blitSprite( w->outfit->gfx_space,
+			w->solid->pos.x, w->solid->pos.y, sx, sy, NULL );
 }
 
 

@@ -427,27 +427,28 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
  *
  */
 /*
- * blits a sprite at pos
+ * blits a sprite at pos (blits relative to player)
  */
-void gl_blitSprite( const glTexture* sprite, const Vector2d* pos,
+void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
 		const int sx, const int sy, const glColour* c )
 {
 	/* don't draw if offscreen */
-	if (fabs(VX(*pos)-VX(*gl_camera)+gui_xoff) > gl_screen.w/2+sprite->sw/2 ||
-			fabs(VY(*pos)-VY(*gl_camera)+gui_yoff) > gl_screen.h/2+sprite->sh/2 )
+	if (fabs(bx-VX(*gl_camera)+gui_xoff) > gl_screen.w/2+sprite->sw/2 ||
+			fabs(by-VY(*gl_camera)+gui_yoff) > gl_screen.h/2+sprite->sh/2 )
 		return;
 
 	double x,y, tx,ty;
 	
 	glEnable(GL_TEXTURE_2D);
 
-	x = VX(*pos) - VX(*gl_camera) - sprite->sw/2. + gui_xoff;
-	y = VY(*pos) - VY(*gl_camera) - sprite->sh/2. + gui_yoff;
+	x = bx - VX(*gl_camera) - sprite->sw/2. + gui_xoff;
+	y = by - VY(*gl_camera) - sprite->sh/2. + gui_yoff;
 
 	tx = sprite->sw*(double)(sx)/sprite->rw;
 	ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
 	
 	/* actual blitting */
+	glShadeModel(GL_FLAT);
 	glBindTexture( GL_TEXTURE_2D, sprite->texture);
 	glBegin(GL_QUADS);
 
@@ -475,13 +476,14 @@ void gl_blitSprite( const glTexture* sprite, const Vector2d* pos,
 /*
  * straight out blits a texture at position
  */
-void gl_blitStatic( const glTexture* texture, const Vector2d* pos, const glColour* c )
+void gl_blitStatic( const glTexture* texture, 
+		const double bx, const double by, const glColour* c )
 {
 	double x,y;
 	glEnable(GL_TEXTURE_2D);
 
-	x = VX(*pos) - (double)gl_screen.w/2.;
-	y = VY(*pos) - (double)gl_screen.h/2.;
+	x = bx - (double)gl_screen.w/2.;
+	y = by - (double)gl_screen.h/2.;
 
 	/* actual blitting */
 	glBindTexture( GL_TEXTURE_2D, texture->texture);
@@ -934,6 +936,7 @@ int gl_init()
 /*	glEnable(  GL_TEXTURE_2D ); never enable globally, breaks non-texture blits */
 	glDisable( GL_LIGHTING ); /* no lighting, it's done when rendered */
 	glEnable(  GL_BLEND );
+	glShadeModel( GL_FLAT ); /* default shade model, functions should keep this when done */
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* alpha */
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();

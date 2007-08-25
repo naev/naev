@@ -95,18 +95,27 @@ void gl_freeTexture( glTexture* texture );
 /*
  * opengl drawing
  */
-void gl_blitSprite( const glTexture* sprite, const Vector2d* pos,
+/* blits a sprite */
+void gl_blitSprite( const glTexture* sprite,
+		const double bx, const double by,
 		const int sx, const int sy, const glColour *c );
-void gl_blitStatic( const glTexture* texture, const Vector2d* pos, const glColour *c );
+/* blits the entire image */
+void gl_blitStatic( const glTexture* texture,
+		const double bx, const double by, const glColour *c );
+/* binds the camera to a vector */
 void gl_bindCamera( const Vector2d* pos );
+/* prints text normally */
 void gl_print( const glFont *ft_font, const double x, const double y,
 		const glColour *c, const char *fmt, ... );
+/* prints text to a max length */
 int gl_printMax( const glFont *ft_font, const int max,
 		const double x, const double y,
 		const glColour *c, const char *fmt, ... );
+/* prints text centered in width at x */
 int gl_printMid( const glFont *ft_font, const int width,
 		double x, const double y,
 		const glColour* c, const char *fmt, ... );
+/* gets the width of the text wanting to be printed */
 int gl_printWidth( const glFont *ft_font, const char *fmt, ... );
 
 /*

@@ -252,7 +252,6 @@ void player_render (void)
 	Planet* planet;
 	glColour* c;
 	glFont* f;
-	Vector2d v;
 
 	/* renders the player target graphics */
 	if (player_target != PLAYER_ID) {
@@ -262,15 +261,18 @@ void player_render (void)
 		else if (pilot_isFlag(p,PILOT_HOSTILE)) c = &cHostile;
 		else c = &cNeutral;
 
-		vect_csetmin( &v, VX(p->solid->pos) - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.,
-				VY(p->solid->pos) + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2. );
-		gl_blitSprite( gui.gfx_targetPilot, &v, 0, 0, c ); /* top left */
-		VX(v) += p->ship->gfx_space->sw * PILOT_SIZE_APROX;
-		gl_blitSprite( gui.gfx_targetPilot, &v, 1, 0, c ); /* top right */
-		VY(v) -= p->ship->gfx_space->sh * PILOT_SIZE_APROX;
-		gl_blitSprite( gui.gfx_targetPilot, &v, 1, 1, c ); /* bottom right */
-		VX(v) -= p->ship->gfx_space->sw * PILOT_SIZE_APROX;
-		gl_blitSprite( gui.gfx_targetPilot, &v, 0, 1, c ); /* bottom left */
+		x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.;
+		y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2.;
+		gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 0, c ); /* top left */
+
+		x += p->ship->gfx_space->sw * PILOT_SIZE_APROX;
+		gl_blitSprite( gui.gfx_targetPilot, x, y, 1, 0, c ); /* top right */
+
+		y -= p->ship->gfx_space->sh * PILOT_SIZE_APROX;
+		gl_blitSprite( gui.gfx_targetPilot, x, y, 1, 1, c ); /* bottom right */
+
+		x -= p->ship->gfx_space->sw * PILOT_SIZE_APROX;
+		gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 1, c ); /* bottom left */
 	}
 	/* renders the planet target graphics */
 	if (planet_target >= 0) {
@@ -279,16 +281,18 @@ void player_render (void)
 		if (areEnemies(player->faction,planet->faction)) c = &cHostile;
 		else c = &cNeutral;
 
-		vect_csetmin( &v, VX(planet->pos) - planet->gfx_space->sw/2.,
-				VY(planet->pos) + planet->gfx_space->sh/2. );
-		gl_blitSprite( gui.gfx_targetPlanet, &v, 0, 0, c ); /* top left */
-		VX(v) += planet->gfx_space->sw;
-		gl_blitSprite( gui.gfx_targetPlanet, &v, 1, 0, c ); /* top right */
-		VY(v) -= planet->gfx_space->sh;
-		gl_blitSprite( gui.gfx_targetPlanet, &v, 1, 1, c ); /* bottom right */
-		VX(v) -= planet->gfx_space->sw;
-		gl_blitSprite( gui.gfx_targetPlanet, &v, 0, 1, c ); /* bottom left */
+		x = planet->pos.x - planet->gfx_space->sw/2.;
+		y = planet->pos.y + planet->gfx_space->sh/2.;
+		gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 0, c ); /* top left */
 
+		x += planet->gfx_space->sw;
+		gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 0, c ); /* top right */
+		
+		y -= planet->gfx_space->sh;
+		gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 1, c ); /* bottom right */
+		
+		x -= planet->gfx_space->sw;
+		gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 1, c ); /* bottom left */
 	}
 
 	/* render the player */
@@ -300,7 +304,7 @@ void player_render (void)
 	/*
 	 * frame
 	 */
-	gl_blitStatic( gui.gfx_frame, &gui.frame, NULL );
+	gl_blitStatic( gui.gfx_frame, gui.frame.x, gui.frame.y, NULL );
 
 	/*
 	 * radar
@@ -434,7 +438,7 @@ void player_render (void)
 	if (player_target != PLAYER_ID) {
 		p = pilot_get(player_target);
 
-		gl_blitStatic( p->ship->gfx_target, &gui.target, NULL );
+		gl_blitStatic( p->ship->gfx_target, gui.target.x, gui.target.y, NULL );
 
 		/* target name */
 		gl_print( NULL,
