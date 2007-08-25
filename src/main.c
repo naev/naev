@@ -162,6 +162,14 @@ int main ( int argc, char** argv )
 		while (SDL_PollEvent(&event)) { /* event loop */
 			if (event.type == SDL_QUIT) quit = 1; /* quit is handled here */
 
+			/* pause the game if it is unfocused */
+			if (event.type == SDL_ACTIVEEVENT) {
+				if (event.active.state != SDL_APPMOUSEFOCUS) { /* we don't need mouse focus */
+					if ((event.active.gain==0) && !paused) pause();
+					else if ((event.active.gain==1) && paused) unpause();
+				}
+			}
+
 			input_handle(&event); /* handles all the events and player keybinds */
 		}
 
@@ -211,6 +219,8 @@ static void fps_control (void)
 	/* dt in ms/1000 */
 	dt = (double)(SDL_GetTicks() - time) / 1000.;
 	time = SDL_GetTicks();
+
+	if (paused) SDL_Delay(10); /* drop paused FPS - we are nice to the CPU :) */
 
 //	if (dt > MINIMUM_FPS) /* TODO needs work */
 //		return;
