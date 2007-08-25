@@ -240,6 +240,33 @@ void player_message ( const char *fmt, ... )
 	mesg_stack[0].t = SDL_GetTicks() + mesg_timeout;
 }
 
+void player_renderBG (void)
+{
+	double x,y;
+	glColour *c;
+	Planet* planet;
+
+	if (planet_target >= 0) {
+		planet = &cur_system->planets[planet_target];
+
+		if (areEnemies(player->faction,planet->faction)) c = &cHostile;
+		else c = &cNeutral;
+
+		x = planet->pos.x - planet->gfx_space->sw/2.;
+		y = planet->pos.y + planet->gfx_space->sh/2.;
+		gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 0, c ); /* top left */
+
+		x += planet->gfx_space->sw;
+		gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 0, c ); /* top right */
+
+		y -= planet->gfx_space->sh;
+		gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 1, c ); /* bottom right */
+
+		x -= planet->gfx_space->sw;
+		gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 1, c ); /* bottom left */
+	}
+}
+
 /*
  * renders the player
  */
@@ -249,7 +276,6 @@ void player_render (void)
 	double x, y;
 	char str[10];
 	Pilot* p;
-	Planet* planet;
 	glColour* c;
 	glFont* f;
 
@@ -273,26 +299,6 @@ void player_render (void)
 
 		x -= p->ship->gfx_space->sw * PILOT_SIZE_APROX;
 		gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 1, c ); /* bottom left */
-	}
-	/* renders the planet target graphics */
-	if (planet_target >= 0) {
-		planet = &cur_system->planets[planet_target];
-
-		if (areEnemies(player->faction,planet->faction)) c = &cHostile;
-		else c = &cNeutral;
-
-		x = planet->pos.x - planet->gfx_space->sw/2.;
-		y = planet->pos.y + planet->gfx_space->sh/2.;
-		gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 0, c ); /* top left */
-
-		x += planet->gfx_space->sw;
-		gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 0, c ); /* top right */
-		
-		y -= planet->gfx_space->sh;
-		gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 1, c ); /* bottom right */
-		
-		x -= planet->gfx_space->sw;
-		gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 1, c ); /* bottom left */
 	}
 
 	/* render the player */

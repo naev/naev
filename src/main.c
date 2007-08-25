@@ -239,6 +239,7 @@ static void update_space (void)
  *
  * Blitting order (layers):
  *   BG | @ stars and planets
+ *      | @ background player stuff (planet targetting)
  *      | @ background particles
  *      | @ back layer weapons
  *      X
@@ -255,6 +256,7 @@ static void render_space (void)
 	/* BG */
 	space_render(dt);
 	planets_render();
+	player_renderBG();
 	weapons_render(WEAPON_LAYER_BG);
 	/* N */
 	pilots_render();
