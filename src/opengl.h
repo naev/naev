@@ -63,26 +63,6 @@ typedef struct {
 } glTexture;
 
 
-/*
- * Font info
- */
-typedef struct {
-	int h; /* height */
-	int* w;
-	GLuint *textures;
-	GLuint list_base;
-} glFont;
-extern glFont gl_defFont; /* default font */
-
-
-/*
- * glFont loading / freeing
- *
- * if font is NULL it uses the internal default font same with gl_print
- */
-void gl_fontInit( glFont* font, const char *fname, const unsigned int h );
-void gl_freeFont( glFont* font );
-
 
 /*
  * glTexture loading / freeing
@@ -104,19 +84,7 @@ void gl_blitStatic( const glTexture* texture,
 		const double bx, const double by, const glColour *c );
 /* binds the camera to a vector */
 void gl_bindCamera( const Vector2d* pos );
-/* prints text normally */
-void gl_print( const glFont *ft_font, const double x, const double y,
-		const glColour *c, const char *fmt, ... );
-/* prints text to a max length */
-int gl_printMax( const glFont *ft_font, const int max,
-		const double x, const double y,
-		const glColour *c, const char *fmt, ... );
-/* prints text centered in width at x */
-int gl_printMid( const glFont *ft_font, const int width,
-		double x, const double y,
-		const glColour* c, const char *fmt, ... );
-/* gets the width of the text wanting to be printed */
-int gl_printWidth( const glFont *ft_font, const char *fmt, ... );
+
 
 /*
  * initialization / cleanup

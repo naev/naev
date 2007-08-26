@@ -15,6 +15,7 @@
 #include "log.h"
 #include "physics.h"
 #include "opengl.h"
+#include "font.h"
 #include "ship.h"
 #include "pilot.h"
 #include "player.h"

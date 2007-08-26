@@ -10,6 +10,7 @@
 #include "pilot.h"
 #include "log.h"
 #include "opengl.h"
+#include "font.h"
 #include "pack.h"
 #include "space.h"
 #include "rng.h"
@@ -21,10 +22,10 @@
 
 #define XML_START_ID	"Start"
 
-#define GUI_DATA	"dat/gui.xml"
-#define GUI_GFX	"gfx/gui/"
+#define GUI_DATA		"dat/gui.xml"
+#define GUI_GFX		"gfx/gui/"
 
-#define START_DATA "dat/start.xml"
+#define START_DATA 	"dat/start.xml"
 
 
 #define pow2(x)	((x)*(x))

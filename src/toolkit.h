@@ -4,8 +4,10 @@
 #  define TOOLKIT_H
 
 
-#include "opengl.h"
 #include "SDL.h"
+
+#include "opengl.h"
+#include "font.h"
 
 
 extern int toolkit;
