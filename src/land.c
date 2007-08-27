@@ -14,6 +14,10 @@
 #define NEWS_WIDTH	400
 #define NEWS_HEIGHT	400
 
+/* bar window */
+#define BAR_WIDTH		600
+#define BAR_HEIGHT	400
+
 
 int landed = 0;
 
@@ -29,8 +33,9 @@ static void commodity_exchange (void);
 static void outfits (void);
 static void shipyard (void);
 static void spaceport_bar (void);
+static void spaceport_bar_close( char* str );
 static void news (void);
-static void news_close (char* str);
+static void news_close( char* str );
 
 
 static void commodity_exchange (void)
@@ -48,11 +53,35 @@ static void shipyard (void)
 }
 
 
+/*
+ * the spaceport bar
+ */
 static void spaceport_bar (void)
 {
+	secondary_wid = window_create( -1, -1, BAR_WIDTH, BAR_HEIGHT );
+
+	window_addText( secondary_wid, 0, -20, BAR_WIDTH, 0, 1,
+			"txtTitle", NULL, &cBlack, "Spaceport Bar" );
+
+	window_addText( secondary_wid, 20, 20 + BUTTON_HEIGHT + 20,
+			BAR_WIDTH - 140, BAR_HEIGHT - 40 - BUTTON_HEIGHT - 60, 0,
+			"txtDescription", &gl_smallFont, &cBlack, planet->bar_description );
+	
+	window_addButton( secondary_wid, -20, 20,
+			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseBar",
+			"Close", spaceport_bar_close );
+}
+static void spaceport_bar_close (char* str)
+{
+	if (strcmp(str,"btnCloseBar")==0)
+		window_destroy(secondary_wid);
 }
 
 
+
+/*
+ * the planetary news reports
+ */
 static void news (void)
 {
 	secondary_wid = window_create( -1, -1, NEWS_WIDTH, NEWS_HEIGHT );

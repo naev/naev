@@ -57,9 +57,11 @@ typedef struct {
 	Vector2d pos; /* position in star system */
 
 	PlanetClass class; /* planet type */
-	char* description; /* planet description */
-	int services; /* what services they offer */
 	Faction* faction; /* planet faction */
+	
+	char* description; /* planet description */
+	char* bar_description; /* spaceport bar description */
+	int services; /* what services they offer */
 
 	glTexture* gfx_space; /* graphic in space */
 	glTexture* gfx_exterior; /* graphic in the exterior */
