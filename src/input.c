@@ -25,7 +25,7 @@ typedef struct {
 static Keybind** input_keybinds; /* contains the players keybindings */
 
 /* name of each keybinding */
-const char *keybindNames[] = { "accel", "left", "right", /* movement */
+const char *keybindNames[] = { "accel", "left", "right", "reverse", /* movement */
 	"primary", "target", "target_nearest", "face", "board", /* fighting */
 	"secondary", "secondary_next", /* secondary weapons */
 	"target_planet", "land", /* space navigation */
@@ -40,6 +40,10 @@ extern double player_turn;
 extern double player_acc;
 extern unsigned int player_target;
 extern int planet_target;
+/*
+ * from main.c
+ */
+extern int show_fps;
 
 
 /*
@@ -51,6 +55,7 @@ void input_setDefault (void)
 	input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, 0 );
 	input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, 0 );
 	input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, 0 );
+	input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, 0 );
 	/* combat */
 	input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, 0 );
 	input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, 0 );
@@ -162,6 +167,16 @@ static void input_key( int keynum, double value, int abs )
 		if (abs) player_turn = value;
 		else player_turn += value;
 		if (player_turn > 1.) player_turn = 1.; /* make sure value is sane */
+	
+	/* turn around to face vel */
+	} else if (KEY("reverse")) {
+		if (value==KEY_PRESS) player_setFlag(PLAYER_REVERSE);
+		else if (value==KEY_RELEASE) {
+			player_rmFlag(PLAYER_REVERSE);
+			player_turn = 0; /* turning corrections */
+			if (player_isFlag(PLAYER_TURN_LEFT)) player_turn -= 1;
+			if (player_isFlag(PLAYER_TURN_RIGHT)) player_turn += 1;
+		}
 
 
 	/*
@@ -237,20 +252,18 @@ static void input_key( int keynum, double value, int abs )
 	/* zooming out */
 	} else if (KEY("mapzoomout")) {
 		if (value==KEY_PRESS) player_setRadarRel(-1);
-	}
 	/* take a screenshot */
-	if (KEY("screenshot")) {
+	} else if (KEY("screenshot")) {
 		if (value==KEY_PRESS) player_screenshot();
-	}
 	/* pause the games */
-	if (KEY("pause")) {
+	} else if (KEY("pause")) {
 		if (value==KEY_PRESS) {
 			if (!toolkit) {
 				if (paused) unpause();
    	      else pause();
 			}
       }
-   }
+	}
 }
 #undef KEY
 

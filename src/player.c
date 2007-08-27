@@ -892,13 +892,23 @@ void gui_free (void)
  */
 void player_think( Pilot* player )
 {
+	double diff;
+
 	if (player_isFlag(PLAYER_FACE) && (player_target != PLAYER_ID)) {
-		double diff = angle_diff(player->solid->dir,
+		diff = angle_diff(player->solid->dir,
 				vect_angle(&player->solid->pos, &pilot_get(player_target)->solid->pos));
 		player_turn = -10.*diff;
 		if (player_turn > 1.) player_turn = 1.;
 		else if (player_turn < -1.) player_turn = -1.;
 	}
+	else if (player_isFlag(PLAYER_REVERSE)) {
+		diff = angle_diff(player->solid->dir, VANGLE(player->solid->vel));
+		DEBUG("%f->%f = %f",player->solid->dir,VANGLE(player->solid->vel),diff);
+		player_turn = 10.*diff;
+		if (player_turn >= 0.) player_turn = 1.;
+		else if (player_turn < 0.) player_turn = -1.;
+	}
+
 
 	player->solid->dir_vel = 0.;
 	if (player_turn)
