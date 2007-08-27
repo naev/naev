@@ -903,7 +903,6 @@ void player_think( Pilot* player )
 	}
 	else if (player_isFlag(PLAYER_REVERSE) && (VMOD(player->solid->vel) > 0.)) {
 		diff = angle_diff(player->solid->dir, VANGLE(player->solid->vel));
-		DEBUG("%f->%f = %f",player->solid->dir,VANGLE(player->solid->vel),diff);
 		player_turn = 10.*diff;
 		if (player_turn >= 0.) player_turn = 1.;
 		else if (player_turn < 0.) player_turn = -1.;

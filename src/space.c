@@ -338,6 +338,9 @@ static Planet* planet_get( const char* name )
 							else if (xml_isNode(cur, "description"))
 								temp->description = strdup( xml_get(cur) );
 
+							else if (xml_isNode(cur, "services"))
+								temp->services = xml_getInt(cur); /* flags gotten by data */
+
 						} while((cur = cur->next));
 					}
 				} while ((node = node->next));
