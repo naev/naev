@@ -43,6 +43,7 @@ extern void ai_think( Pilot* pilot ); /* ai.c */
 extern void player_think( Pilot* pilot ); /* player.c */
 extern int gui_load( const char *name ); /* player.c */
 /* internal */
+static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t );
 static void pilot_update( Pilot* pilot, const double dt );
 void pilot_render( Pilot* pilot ); /* externed in player.c */
 static void pilot_free( Pilot* p );
@@ -141,44 +142,61 @@ void pilot_shoot( Pilot* p, const unsigned int target, const int secondary )
 {
 	int i;
 
+	if (!p->outfits) return; /* no outfits */
+
 	if (!secondary) { /* primary weapons */
 
-		if (!p->outfits) return; /* no outfits */
-
-		for (i=0; i<p->noutfits; i++) /* cycles through outfits to find weapons */
-			if (outfit_isWeapon(p->outfits[i].outfit)) /* is a weapon */
-				/* ready to shoot again */
-				if ((SDL_GetTicks()-p->outfits[i].timer) >
-						(p->outfits[i].outfit->delay/p->outfits[i].quantity))
-
-					/* different weapons, different behaviours */
-					switch (p->outfits[i].outfit->type) {
-						case OUTFIT_TYPE_BOLT:
-							weapon_add( p->outfits[i].outfit, p->solid->dir,
-									&p->solid->pos, &p->solid->vel, p->id, target,
-									(p==player) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG );
-							p->outfits[i].timer = SDL_GetTicks(); /* can't shoot it for a bit */
-							break;
-
-						default:
-							break;
-					}
+		for (i=0; i<p->noutfits; i++) /* cycles through outfits to find primary weapons */
+			if (!outfit_isProp(p->outfits[i].outfit,OUTFIT_PROP_WEAP_SECONDARY))
+				pilot_shootWeapon( p, &p->outfits[i], target );
 	}
 	else { /* secondary weapon */
 
 		if (!p->secondary) return; /* no secondary weapon */
+		pilot_shootWeapon( p, p->secondary, target );
 
-		if (outfit_isLauncher(p->secondary->outfit)) {
-			if (((SDL_GetTicks()-p->secondary->timer) >
-						(p->secondary->outfit->delay/p->secondary->quantity)) && 
-					p->ammo && (p->ammo->quantity > 0)) {
-				weapon_add( p->ammo->outfit, p->solid->dir,
-						&p->solid->pos, &p->solid->vel, p->id, target,
-						(p==player) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG );
+	}
+}
+static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
+{
+	/* check to see if weapon is ready */
+	if ((SDL_GetTicks() - w->timer) < (w->outfit->delay / w->quantity)) return;
 
-				p->secondary->timer = SDL_GetTicks(); /* can't shoot it for a bit */
-				p->ammo->quantity -= 1; /* we just shot it */
-			}
+	/*
+	 * regular weapons
+	 */
+	if (outfit_isWeapon(w->outfit)) {
+		
+		/* different weapons, different behaviours */
+		switch (w->outfit->type) {
+			case OUTFIT_TYPE_BOLT:
+				weapon_add( w->outfit, p->solid->dir,
+						&p->solid->pos, &p->solid->vel, p->id, t );
+
+				/* can't shoot it for a bit */      
+				w->timer = SDL_GetTicks();
+				break;
+
+			default:
+				break;
+		}
+
+	}
+
+	/*
+	 * missile launchers
+	 *
+	 * @must be a secondary weapon
+	 * @shooter can't be the target - sanity check for the player
+	 */
+	else if (outfit_isLauncher(w->outfit) && (w==p->secondary) && (p->id!=t)) {
+		if (p->ammo && (p->ammo->quantity > 0)) {
+
+			weapon_add( p->ammo->outfit, p->solid->dir,
+					&p->solid->pos, &p->solid->vel, p->id, t );
+
+			w->timer = SDL_GetTicks(); /* can't shoot it for a bit */
+			p->ammo->quantity -= 1; /* we just shot it */
 		}
 	}
 }

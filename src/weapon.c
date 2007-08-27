@@ -347,13 +347,14 @@ static Weapon* weapon_create( const Outfit* outfit,
  */
 void weapon_add( const Outfit* outfit, const double dir,
 		const Vector2d* pos, const Vector2d* vel,
-		unsigned int parent, unsigned int target, const WeaponLayer layer )
+		unsigned int parent, unsigned int target )
 {
 	if (!outfit_isWeapon(outfit) && !outfit_isAmmo(outfit)) {
 		ERR("Trying to create a Weapon from a non-Weapon type Outfit");
 		return;
 	}
 
+	WeaponLayer layer = (parent==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
 	Weapon* w = weapon_create( outfit, dir, pos, vel, parent, target );
 
 	/* set the proper layer */
