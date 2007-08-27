@@ -61,6 +61,7 @@ typedef struct Pilot {
 	/* current health */
 	double armour, shield, energy;
 	double armour_max, shield_max, energy_max;
+	double fuel; /* used only for jumps, TODO make it matter :) */
 
 	/* associated functions */
 	void (*think)(struct Pilot*); /* AI thinking for the pilot */
