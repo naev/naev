@@ -21,7 +21,7 @@ CFLAGS = $(CLUA) $(CSDL) $(CXML) $(CTTF) $(CGL) $(VERSION)
 ifdef DEBUG
 CFLAGS += -W -Wall -g3 -DDEBUG -DLUA_USE_APICHECK
 else # DEBUG
-CFLAGS += -O2
+CFLAGS += -O2 -funroll-loops
 endif # DEBUG
 
 LDLUA = lib/lua/liblua.a
