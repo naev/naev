@@ -24,7 +24,8 @@ void window_addButton( const unsigned int wid,
 		void (*call) (char*) );
 void window_addText( const unsigned int wid,
 		const int x, const int y,
-		const int w, const int centered, char* name,
+		const int w, const int h,
+		const int centered, char* name,
 		glFont* font, glColour* colour, char* string);
 void window_addImage( const unsigned int wid,
 		const int x, const int y,

@@ -87,10 +87,8 @@ typedef struct {
 
 typedef struct {
 	/* graphics */
-	glFont smallFont;
 	glTexture* gfx_frame;
 	glTexture* gfx_targetPilot, *gfx_targetPlanet;
-
 
 	Radar radar;
 	Rect nav;
@@ -374,8 +372,8 @@ void player_render (void)
 				gui.nav.x, gui.nav.y - 5,
 				&cConsole, "Land" );
 
-		gl_printMid( &gui.smallFont, (int)gui.nav.w,
-				gui.nav.x, gui.nav.y - 10 - gui.smallFont.h,
+		gl_printMid( &gl_smallFont, (int)gui.nav.w,
+				gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
 				NULL, "%s", cur_system->planets[planet_target].name );
 	}
 	else if (planet_target == -1) { /* no planet target */
@@ -383,8 +381,8 @@ void player_render (void)
 				gui.nav.x, gui.nav.y - 5,
 				&cConsole, "Navigation" );
 
-		gl_printMid( &gui.smallFont, (int)gui.nav.w,
-				gui.nav.x, gui.nav.y - 10 - gui.smallFont.h,
+		gl_printMid( &gl_smallFont, (int)gui.nav.w,
+				gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
 				&cGrey, "Off" );
 	}
 
@@ -408,7 +406,7 @@ void player_render (void)
 				gui.weapon.x, gui.weapon.y - 5,
 				&cConsole, "Secondary" ); 
 
-		gl_printMid( &gui.smallFont, (int)gui.weapon.w,
+		gl_printMid( &gl_smallFont, (int)gui.weapon.w,
 				gui.weapon.x, gui.weapon.y - 10 - gl_defFont.h,
 				&cGrey, "None"); 
 	}  
@@ -417,7 +415,7 @@ void player_render (void)
 		if (player->ammo==NULL) {
 			i = gl_printWidth( f, "%s", player->secondary->outfit->name);
 			if (i > (int)gui.weapon.w) /* font is too big */
-				f = &gui.smallFont;
+				f = &gl_smallFont;
 			gl_printMid( f, (int)gui.weapon.w,
 					gui.weapon.x, gui.weapon.y - (gui.weapon.h - f->h)/2.,
 					&cConsole, "%s", player->secondary->outfit->name );
@@ -426,13 +424,13 @@ void player_render (void)
 			/* use the ammunition's name */
 			i = gl_printWidth( f, "%s", player->ammo->outfit->name);
 			if (i > gui.weapon.w) /* font is too big */
-				f = &gui.smallFont;
+				f = &gl_smallFont;
 			gl_printMid( f, (int)gui.weapon.w,
 					gui.weapon.x, gui.weapon.y - 5,
 					&cConsole, "%s", player->ammo->outfit->name );
 
 			/* print ammo left underneath */
-			gl_printMid( &gui.smallFont, (int)gui.weapon.w,
+			gl_printMid( &gl_smallFont, (int)gui.weapon.w,
 					gui.weapon.x, gui.weapon.y - 10 - gl_defFont.h,
 					NULL, "%d", player->ammo->quantity );
 		}
@@ -452,26 +450,26 @@ void player_render (void)
 				gui.target_name.x,
 				gui.target_name.y,
 				NULL, "%s", p->name );
-		gl_print( &gui.smallFont,
+		gl_print( &gl_smallFont,
 				gui.target_faction.x,
 				gui.target_faction.y,
 				NULL, "%s", p->faction->name );
 
 		/* target status */
 		if (pilot_isDisabled(p)) /* pilot is disabled */
-			gl_print( &gui.smallFont,
+			gl_print( &gl_smallFont,
 					gui.target_health.x,
 					gui.target_health.y,
 					NULL, "Disabled" );
 
 		else if (p->shield > p->shield_max/100.) /* on shields */
-			gl_print( &gui.smallFont,
+			gl_print( &gl_smallFont,
 				gui.target_health.x,
 					gui.target_health.y, NULL,
 					"%s: %.0f%%", "Shield", p->shield/p->shield_max*100. );
 
 		else /* on armour */
-			gl_print( &gui.smallFont,
+			gl_print( &gl_smallFont,
 					gui.target_health.x,
 					gui.target_health.y, NULL, 
 					"%s: %.0f%%", "Armour", p->armour/p->armour_max*100. );
@@ -495,8 +493,8 @@ void player_render (void)
 	else if (credits >= 1000)
 		snprintf( str, 10, "%.2fK", (double)credits / 1000.);
 	else snprintf (str, 10, "%d", credits );
-	i = gl_printWidth( &gui.smallFont, "%s", str );
-	gl_print( &gui.smallFont,
+	i = gl_printWidth( &gl_smallFont, "%s", str );
+	gl_print( &gl_smallFont,
 			gui.misc.x + gui.misc.w - 10 - i,
 			gui.misc.y - 10 - gl_defFont.h, NULL, "%s", str );
 
@@ -597,11 +595,6 @@ int gui_init (void)
 	gui.gfx_frame = NULL;
 	gui.gfx_targetPilot = NULL;
 	gui.gfx_targetPlanet = NULL;
-
-	/*
-	 * font
-	 */
-	gl_fontInit( &gui.smallFont, NULL, 10 );
 
 	/*
 	 * radar
@@ -872,12 +865,12 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 				else if (xml_isNode(cur,"faction")) {
 					rect_parse( cur, &gui.target_faction.x, &gui.target_faction.y, NULL, NULL );
 					RELATIVIZE(gui.target_faction);
-					gui.target_faction.y -= gui.smallFont.h;
+					gui.target_faction.y -= gl_smallFont.h;
 				}
 				else if (xml_isNode(cur,"health")) {
 					rect_parse( cur, &gui.target_health.x, &gui.target_health.y, NULL, NULL );
 					RELATIVIZE(gui.target_health);
-					gui.target_health.y -= gui.smallFont.h;
+					gui.target_health.y -= gl_smallFont.h;
 				}
 			} while ((cur = cur->next));
 		}
@@ -899,8 +892,6 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
  */
 void gui_free (void)
 {
-	gl_freeFont( &gui.smallFont );
-
 	gl_freeTexture( gui.gfx_frame );
 	gl_freeTexture( gui.gfx_targetPilot );
 	gl_freeTexture( gui.gfx_targetPlanet );
@@ -1067,9 +1058,11 @@ void player_land (void)
 		int tp;
 		double td, d;
 
-		for (i=0,tp=-1; i<cur_system->nplanets; i++) {
-			d = vect_dist(&player->solid->vel,&planet->pos);
-			if ((tp==-1) || (td > d)) {
+		td = -1; /* temporary distance */
+		tp = -1; /* temporary planet */
+		for (i=0; i<cur_system->nplanets; i++) {
+			d = vect_dist(&player->solid->pos,&cur_system->planets[i].pos);
+			if ((tp==-1) || ((td == -1) || (td > d))) {
 				tp = i;
 				td = d;
 			}

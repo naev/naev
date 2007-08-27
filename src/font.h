@@ -17,6 +17,7 @@ typedef struct {
 	GLuint list_base;
 } glFont;
 extern glFont gl_defFont; /* default font */
+extern glFont gl_smallFont; /* small font */
 
 
 /*
@@ -39,6 +40,11 @@ int gl_printMax( const glFont *ft_font, const int max,
 int gl_printMid( const glFont *ft_font, const int width,
 		double x, const double y,
 		const glColour* c, const char *fmt, ... );
+/* respects \n -> bx,by is TOP LEFT POSITION */
+int gl_printText( const glFont *ft_font,
+		const int width, const int height,
+		double bx, double by,
+		glColour* c, const char *fmt, ... );
 /* gets the width of the text wanting to be printed */
 int gl_printWidth( const glFont *ft_font, const char *fmt, ... );
 

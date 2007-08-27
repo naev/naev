@@ -115,7 +115,8 @@ void window_addButton( const unsigned int wid,
  */
 void window_addText( const unsigned int wid,
 		const int x, const int y,
-		const int w, const int centered, char* name,
+		const int w, const int h,
+		const int centered, char* name,
 		glFont* font, glColour* colour, char* string )
 {
 	Window *wdw = window_get(wid);
@@ -126,6 +127,7 @@ void window_addText( const unsigned int wid,
 
 	/* set the properties */
 	wgt->w = (double) w;
+	wgt->h = (double) h;
 	if (font==NULL) wgt->font = &gl_defFont;
 	else wgt->font = font;
 	if (x < 0) wgt->x = wdw->w - wgt->w + x;
@@ -621,7 +623,7 @@ static void toolkit_renderText( Widget* txt, double bx, double by )
 				by + (double)gl_screen.h/2. + txt->y,
 				txt->colour, txt->text );
 	else
-		gl_printMax( txt->font, txt->w,
+		gl_printText( txt->font, txt->w, txt->h,
 				bx + (double)gl_screen.w/2. + txt->x,
 				by + (double)gl_screen.h/2. + txt->y,
 				txt->colour, txt->text );

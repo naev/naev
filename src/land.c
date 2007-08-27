@@ -30,8 +30,11 @@ void land( Planet* p )
 	/*
 	 * pretty display
 	 */
-	window_addText( land_wid, 0., -20., LAND_WIDTH, 1, "txtPlanet", NULL, &cBlack, p->name );
+	window_addText( land_wid, 0., -20., LAND_WIDTH, 0, 1,
+			"txtPlanet", NULL, &cBlack, p->name );
 	window_addImage( land_wid, 20., -440., "imgPlanet", p->gfx_exterior );
+	window_addText( land_wid, 440., 80., 200, 460, 0, 
+			"txtPlanetDesc", &gl_smallFont, &cBlack, p->description);
 
 	/*
 	 * buttons

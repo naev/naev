@@ -12,6 +12,7 @@
 </general>
 <planets>
 <planet>Caladan</planet>
+<planet>Dune</planet>
 </planets>
 <fleets>
 <fleet chance="100">Test</fleet>

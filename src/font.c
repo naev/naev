@@ -14,8 +14,26 @@
 #define FONT_DEF  "dat/font.ttf"
 
 
+/*
+ *
+ *		OpenGL font rendering routines
+ *
+ * Use a displaylist to store ASCII chars rendered with freefont
+ * There are several drawing methods depending on whether you want
+ * print it all, print to a max width, print centered or print a
+ * block of text.
+ *
+ * There are hardcoded size limits.  256 characters for all routines
+ * except gl_printText which has a 1024 limit.
+ *
+ * TODO check if length is too long
+ */
+
+
+
 /* default font */
 glFont gl_defFont;
+glFont gl_smallFont;
 
 
 /* 
@@ -67,7 +85,7 @@ void gl_print( const glFont *ft_font,
 
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix(); /* translation matrix */
-	glTranslated( x-(double)gl_screen.w/2., y-(double)gl_screen.h/2., 0);
+		glTranslated( x-(double)gl_screen.w/2., y-(double)gl_screen.h/2., 0);
 
 	if (c==NULL) glColor4d( 1., 1., 1., 1. );
 	else COLOUR(*c);
@@ -121,7 +139,7 @@ int gl_printMax( const glFont *ft_font, const int max,
 
 	glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
 	glPushMatrix(); /* translation matrix */
-	glTranslated( x-(double)gl_screen.w/2., y-(double)gl_screen.h/2., 0);
+		glTranslated( x-(double)gl_screen.w/2., y-(double)gl_screen.h/2., 0);
 
 	if (c==NULL) glColor4d( 1., 1., 1., 1. );
 	else COLOUR(*c);
@@ -178,13 +196,89 @@ int gl_printMid( const glFont *ft_font, const int width,
 
 	glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
 	glPushMatrix(); /* translation matrix */
-	glTranslated( x-(double)gl_screen.w/2., y-(double)gl_screen.h/2., 0);
+		glTranslated( x-(double)gl_screen.w/2., y-(double)gl_screen.h/2., 0);
 
 	if (c==NULL) glColor4d( 1., 1., 1., 1. );
 	else COLOUR(*c);
 	glCallLists(i, GL_UNSIGNED_BYTE, &text);
 
 	glPopMatrix(); /* translation matrx */
+
+	glDisable(GL_TEXTURE_2D);
+
+	return ret;
+}
+/*
+ * prints text with line breaks included to a maximum width and height preset
+ */
+int gl_printText( const glFont *ft_font,
+		const int width, const int height,
+		double bx, double by,
+		glColour* c, const char *fmt, ... )
+{
+	/*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
+	char text[1024]; /* holds the string */
+	char buf[128];
+	va_list ap;
+	int p, i, j, n, len, ret, lastspace;
+	double x,y;
+
+	ret = 0; /* default return value */
+
+	if (ft_font == NULL) ft_font = &gl_defFont;
+
+	if (fmt == NULL) return -1;
+	else { /* convert the symbols to text */
+		va_start(ap, fmt);
+		vsprintf(text, fmt, ap);
+		va_end(ap);
+	}
+	bx -= (double)gl_screen.w/2.;
+	by -= (double)gl_screen.h/2.;
+	x = bx;
+	y = by + height - (double)ft_font->h; /* y is top left corner */
+
+	/* prepare ze opengl */
+	glEnable(GL_TEXTURE_2D);
+	glListBase(ft_font->list_base);
+	if (c==NULL) glColor4d( 1., 1., 1., 1. );
+	else COLOUR(*c);
+
+	len = (int)strlen(text);
+	/* limit size per line */
+	lastspace = 0; /* last ' ' or '\n' in the text */
+	n = 0; /* current width */
+	i = 0; /* current position */
+	p = -1; /* where we last drew up to */
+	while (i<len+1) {
+		
+		if (by - y > (double)height) return len-lastspace; /* past height */
+
+		n += ft_font->w[ (int)text[i] ];
+
+		if ((text[i]==' ') || (text[i]=='\n') || (text[i]=='\0')) lastspace = i;
+
+		if ((n > width) || (text[i]=='\n') || (text[i]=='\0')) {
+			/* time to draw the line */	
+			for (j=0; j<(lastspace-p-1); j++)
+				buf[j] = text[p+j+1];
+			/* no need for NUL termination */
+
+			glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
+			glPushMatrix(); /* translation matrix */                               
+				glTranslated( x, y, 0);
+
+			glCallLists(lastspace-p-1, GL_UNSIGNED_BYTE, &buf); /* the actual displaying */
+
+			glPopMatrix(); /* translation matrx */
+
+			p = lastspace;
+			n = 0;
+			i = lastspace;
+			y -= 1.5*(double)ft_font->h; /* move position down */
+		}
+		i++;
+	}
 
 	glDisable(GL_TEXTURE_2D);
 
@@ -233,15 +327,15 @@ static void glFontMakeDList( FT_Face face, char ch,
 	int w,h;
 	int i,j;
 
-	if (FT_Load_Glyph( face, FT_Get_Char_Index( face, ch ), FT_LOAD_DEFAULT ))
+	if (FT_Load_Glyph( face, FT_Get_Char_Index( face, ch ), FT_LOAD_FORCE_AUTOHINT))//FT_LOAD_DEFAULT ))
 		WARN("FT_Load_Glyph failed");                                       
 
 	if (FT_Get_Glyph( face->glyph, &glyph ))
 		WARN("FT_Get_Glyph failed");
 
 	/* converting our glyph to a bitmap */
-	FT_Glyph_To_Bitmap( &glyph, ft_render_mode_normal, 0, 1 );
-	FT_BitmapGlyph bitmap_glyph = (FT_BitmapGlyph)glyph;
+	FT_Glyph_To_Bitmap( &glyph, FT_RENDER_MODE_NORMAL, 0, 1 );
+	FT_BitmapGlyph bitmap_glyph = (FT_BitmapGlyph) glyph;
 
 	bitmap = bitmap_glyph->bitmap; /* to simplify */
 
@@ -275,7 +369,7 @@ static void glFontMakeDList( FT_Face face, char ch,
 	/* corrects a spacing flaw between letters and
 	 * downwards correction for letters like g or y */
 	glPushMatrix();                                                        
-	glTranslated(bitmap_glyph->left,bitmap_glyph->top-bitmap.rows,0);
+		glTranslated( bitmap_glyph->left, bitmap_glyph->top-bitmap.rows, 0);
 
 
 	/* take into account opengl POT wrapping */
@@ -288,18 +382,23 @@ static void glFontMakeDList( FT_Face face, char ch,
 	/* draw the texture mapped QUAD */
 	glBindTexture(GL_TEXTURE_2D,tex_base[(int)ch]);
 	glBegin( GL_QUADS );
-	glTexCoord2d(0,0);
-	glVertex2d(0,bitmap.rows);
-	glTexCoord2d(x,0);
-	glVertex2d(bitmap.width,bitmap.rows);
-	glTexCoord2d(x,y);
-	glVertex2d(bitmap.width,0);
-	glTexCoord2d(0,y);
-	glVertex2d(0,0);
+
+		glTexCoord2d( 0, 0 );
+			glVertex2d( 0, bitmap.rows );
+		
+		glTexCoord2d( x, 0);
+			glVertex2d( bitmap.width, bitmap.rows );
+
+		glTexCoord2d( x, y );
+			glVertex2d( bitmap.width, 0 );
+		
+		glTexCoord2d( 0, y );
+			glVertex2d( 0, 0 );
+
 	glEnd(); /* GL_QUADS */
 
-	glPopMatrix();
-	glTranslated(face->glyph->advance.x >> 6 ,0,0);
+	glPopMatrix(); /* translation matrix */
+	glTranslated( face->glyph->advance.x >> 6 , 0, 0);
 
 	/* end of display list */
 	glEndList();

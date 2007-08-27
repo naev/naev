@@ -334,6 +334,10 @@ static Planet* planet_get( const char* name )
 									planetclass_get(cur->children->content[0]);
 							else if (xml_isNode(cur,"faction"))
 								temp->faction = faction_get( xml_get(cur) );
+
+							else if (xml_isNode(cur, "description"))
+								temp->description = strdup( xml_get(cur) );
+
 						} while((cur = cur->next));
 					}
 				} while ((node = node->next));
@@ -559,15 +563,19 @@ void space_exit (void)
 	int i,j;
 	for (i=0; i < nsystems; i++) {
 		free(systems[i].name);
+		if (systems[i].fleets)
+			free(systems[i].fleets);
+
 		for (j=0; j < systems[i].nplanets; j++) {
 			free(systems[i].planets[j].name);
+			if (systems[i].planets[j].description)
+				free(systems[i].planets[j].description);
 			if (systems[i].planets[j].gfx_space)
 				gl_freeTexture(systems[i].planets[j].gfx_space);
 			if (systems[i].planets[j].gfx_exterior)
 				gl_freeTexture(systems[i].planets[j].gfx_exterior);
-			if (systems[i].fleets)
-				free(systems[i].fleets);
 		}
+
 		free(systems[i].planets);
 	}
 	free(systems);

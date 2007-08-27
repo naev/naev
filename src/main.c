@@ -42,6 +42,7 @@
 #define VERSION_LEN		10
 #define MINIMUM_FPS		0.5
 #define FONT_SIZE			12
+#define FONT_SIZE_SMALL	10
 
 
 static int quit = 0; /* for primary loop */
@@ -134,6 +135,7 @@ int main ( int argc, char** argv )
 
 	/* Misc graphics init */
 	gl_fontInit( NULL, NULL, FONT_SIZE ); /* initializes default font to size */
+	gl_fontInit( &gl_smallFont, NULL, FONT_SIZE_SMALL ); /* small font */
 	gui_init(); /* initializes the GUI graphics */
 	toolkit_init(); /* initializes the toolkit */
 
@@ -196,6 +198,7 @@ int main ( int argc, char** argv )
 	outfit_free();
 	factions_free();
 	gl_freeFont(NULL);
+	gl_freeFont(&gl_smallFont);
 
 
 	/* exit subsystems */
