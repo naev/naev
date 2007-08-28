@@ -32,6 +32,10 @@ void window_addImage( const unsigned int wid,
 		const int x, const int y,
 		char* name, glTexture* image );
 
+/*
+ * get
+ */
+unsigned int window_get( const char* wdwname );
 
 /*
  * destruction

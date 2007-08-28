@@ -75,7 +75,7 @@ static int mwindows = 0;
  */
 static Widget* window_newWidget( Window* w );
 static void widget_cleanup( Widget *widget );
-static Window* window_get( const unsigned int wid );
+static Window* window_wget( const unsigned int wid );
 /* render */
 static void window_render( Window* w );
 static void toolkit_renderButton( Widget* btn, double bx, double by );
@@ -93,7 +93,7 @@ void window_addButton( const unsigned int wid,
 		char* name, char* display,
 		void (*call) (char*) )
 {
-	Window *wdw = window_get(wid);
+	Window *wdw = window_wget(wid);
 	Widget *wgt = window_newWidget(wdw);
 
 	wgt->type = WIDGET_BUTTON;
@@ -120,7 +120,7 @@ void window_addText( const unsigned int wid,
 		const int centered, char* name,
 		glFont* font, glColour* colour, char* string )
 {
-	Window *wdw = window_get(wid);
+	Window *wdw = window_wget(wid);
 	Widget *wgt = window_newWidget(wdw);
 
 	wgt->type = WIDGET_TEXT;
@@ -148,7 +148,7 @@ void window_addImage( const unsigned int wid,
 		const int x, const int y,
 		char* name, glTexture* image )
 {
-	Window *wdw = window_get(wid);
+	Window *wdw = window_wget(wid);
 	Widget *wgt = window_newWidget(wdw);
 
 	wgt->type = WIDGET_IMAGE;
@@ -185,13 +185,28 @@ static Widget* window_newWidget( Window* w )
 /*
  * returns the window of id wid
  */
-static Window* window_get( const unsigned int wid )
+static Window* window_wget( const unsigned int wid )
 {
 	int i;
 	for (i=0; i<nwindows; i++)
 		if (windows[i].id == wid)
 			return &windows[i];
+	DEBUG("Window '%d' not found in windows stack", wid);
 	return NULL;
+}
+
+
+/*
+ *	returns the id of a window
+ */
+unsigned int window_get( const char* wdwname )
+{
+	int i;
+	for (i=0; i<nwindows; i++)
+		if (strcmp(windows[i].name,wdwname)==0)
+			return windows[i].id;
+	DEBUG("Window '%s' not found in windows stack", wdwname);
+	return 0;
 }
 
 
@@ -261,7 +276,7 @@ static void widget_cleanup( Widget *widget )
 /* 
  * destroys a window
  */
-void window_destroy( unsigned int wid )
+void window_destroy( const unsigned int wid )
 {
 	int i,j;
 
@@ -293,7 +308,7 @@ void window_destroy( unsigned int wid )
  */
 void window_destroyWidget( unsigned int wid, const char* wgtname )
 {
-	Window *w = window_get(wid);
+	Window *w = window_wget(wid);
 	int i;
 
 	for (i=0; i<w->nwidgets; i++)

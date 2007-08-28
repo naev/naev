@@ -14,6 +14,7 @@
 #include "player.h"
 #include "pause.h"
 #include "weapon.h"
+#include "toolkit.h"
 
 
 #define XML_PLANET_ID			"Planets"
@@ -543,7 +544,7 @@ void space_render( double dt )
 	 */
 	glBegin(GL_POINTS);
 	for (i=0; i < nstars; i++) {
-		if (!paused) {
+		if (!paused && !toolkit) {
 			/* update position */
 			stars[i].x -= VX(player->solid->vel)/(15.-10.*stars[i].brightness)*dt;
 			stars[i].y -= VY(player->solid->vel)/(15.-10.*stars[i].brightness)*dt;
