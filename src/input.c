@@ -7,6 +7,7 @@
 #include "player.h"
 #include "pause.h"
 #include "toolkit.h"
+#include "menu.h"
 
 
 #define KEY_PRESS    ( 1.)
@@ -29,7 +30,7 @@ const char *keybindNames[] = { "accel", "left", "right", "reverse", /* movement 
 	"primary", "target", "target_nearest", "face", "board", /* fighting */
 	"secondary", "secondary_next", /* secondary weapons */
 	"target_planet", "land", /* space navigation */
-	"mapzoomin", "mapzoomout", "screenshot", "pause",  /* misc */
+	"mapzoomin", "mapzoomout", "screenshot", "pause", "menu",  /* misc */
 	"end" }; /* must terminate in "end" */
 
 
@@ -73,6 +74,7 @@ void input_setDefault (void)
 	input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_0, 0 );
 	input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MINUS, 0 );
 	input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_z, 0 );
+	input_setKeybind( "menu", KEYBIND_KEYBOARD, SDLK_ESCAPE, 0 );
 }
 
 
@@ -263,6 +265,10 @@ static void input_key( int keynum, double value, int abs )
    	      else pause();
 			}
       }
+	/* opens a small menu */
+	} else if (KEY("menu")) {
+		if (value==KEY_PRESS)
+			menu_small();
 	}
 }
 #undef KEY
@@ -325,14 +331,6 @@ static void input_keydown( SDLKey key )
 			input_key(i,KEY_PRESS,0);
 			return;
 		}
-
-	/* ESC = quit */
-	SDL_Event quit;
-	if (key == SDLK_ESCAPE) {
-		quit.type = SDL_QUIT;
-		SDL_PushEvent(&quit);
-	}
-
 }
 /* key up */
 static void input_keyup( SDLKey key )
