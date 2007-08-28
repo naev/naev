@@ -135,7 +135,8 @@ unsigned int pilot_create( Ship* ship, char* name, Faction* faction, AI_Profile*
  */
 void pilot_destroy(Pilot* p);
 void pilots_free (void);
-int fleet_load (void);
+void pilots_clean (void);
+int fleet_load (void); /* TODO make this fleet stuff actually matter */
 void fleet_free (void);
 
 

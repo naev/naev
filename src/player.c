@@ -224,6 +224,20 @@ void player_message ( const char *fmt, ... )
 	mesg_stack[0].t = SDL_GetTicks() + mesg_timeout;
 }
 
+
+/*
+ * clears the targets
+ */
+void player_clear (void)
+{
+	player_target = PLAYER_ID;
+	planet_target = -1;
+}
+
+
+/*
+ * renders the background player stuff, namely planet target gfx
+ */
 void player_renderBG (void)
 {
 	double x,y;

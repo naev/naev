@@ -50,6 +50,7 @@ typedef struct {
 
 typedef struct {
 	unsigned int id; /* unique id */
+	char *name; /* name */
 
 	double x,y; /* position */
 	double w,h; /* dimensions */
@@ -197,7 +198,8 @@ static Window* window_get( const unsigned int wid )
 /*
  * creates a window
  */
-unsigned int window_create( const int x, const int y, const int w, const int h )
+unsigned int window_create( char* name,
+		const int x, const int y, const int w, const int h )
 {
 	if (nwindows >= mwindows) { /* at memory limit */
 		windows = realloc(windows, sizeof(Window)*(++mwindows));
@@ -207,6 +209,7 @@ unsigned int window_create( const int x, const int y, const int w, const int h )
 	const int wid = (++genwid); /* unique id */
 
 	windows[nwindows].id = wid;
+	windows[nwindows].name = strdup(name);
 
 	windows[nwindows].w = (double) w;
 	windows[nwindows].h = (double) h;
@@ -265,6 +268,7 @@ void window_destroy( unsigned int wid )
 	/* destroy the window */
 	for (i=0; i<nwindows; i++)
 		if (windows[i].id == wid) {
+			if (windows[i].name) free(windows[i].name);
 			for (j=0; j<windows[i].nwidgets; j++)
 				widget_cleanup(&windows[i].widgets[j]);
 			free(windows[i].widgets);
@@ -481,6 +485,13 @@ static void window_render( Window* w )
 		glVertex2d( x + 21., y       ); /* back to beginning */
 	glEnd(); /* GL_LINE_LOOP */
 
+	/*
+	 * render window name
+	 */
+	gl_printMid( &gl_defFont, w->w,
+			x + (double)gl_screen.w/2.,
+			y + w->h - 20. + (double)gl_screen.h/2.,
+			&cBlack, w->name );
 
 	/*
 	 * widgets

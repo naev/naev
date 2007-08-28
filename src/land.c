@@ -3,12 +3,19 @@
 #include "land.h"
 
 #include "toolkit.h"
+#include "player.h"
+#include "rng.h"
+
 
 /* global/main window */
 #define LAND_WIDTH	700
 #define LAND_HEIGHT	600
 #define BUTTON_WIDTH 200
 #define BUTTON_HEIGHT 40
+
+/* commodity window */
+#define COMMODITY_WIDTH 400
+#define COMMODITY_HEIGHT 400
 
 /* news window */
 #define NEWS_WIDTH	400
@@ -30,6 +37,7 @@ static Planet* planet = NULL;
  * prototypes
  */
 static void commodity_exchange (void);
+static void commodity_exchange_close( char* str );
 static void outfits (void);
 static void shipyard (void);
 static void spaceport_bar (void);
@@ -38,8 +46,22 @@ static void news (void);
 static void news_close( char* str );
 
 
+/*
+ * the local market
+ */
 static void commodity_exchange (void)
 {
+	secondary_wid = window_create( "Commodity Exchange",
+			-1, -1, COMMODITY_WIDTH, COMMODITY_HEIGHT );
+
+	window_addButton( secondary_wid, -20, 20,
+			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCommodityClose",
+			"Close", commodity_exchange_close );
+}
+static void commodity_exchange_close( char* str )
+{
+	if (strcmp(str, "btnCommodityClose")==0)
+		window_destroy(secondary_wid);
 }
 
 
@@ -58,10 +80,8 @@ static void shipyard (void)
  */
 static void spaceport_bar (void)
 {
-	secondary_wid = window_create( -1, -1, BAR_WIDTH, BAR_HEIGHT );
-
-	window_addText( secondary_wid, 0, -20, BAR_WIDTH, 0, 1,
-			"txtTitle", NULL, &cBlack, "Spaceport Bar" );
+	secondary_wid = window_create( "Spaceport Bar",
+			-1, -1, BAR_WIDTH, BAR_HEIGHT );
 
 	window_addText( secondary_wid, 20, 20 + BUTTON_HEIGHT + 20,
 			BAR_WIDTH - 140, BAR_HEIGHT - 40 - BUTTON_HEIGHT - 60, 0,
@@ -71,7 +91,7 @@ static void spaceport_bar (void)
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseBar",
 			"Close", spaceport_bar_close );
 }
-static void spaceport_bar_close (char* str)
+static void spaceport_bar_close( char* str )
 {
 	if (strcmp(str,"btnCloseBar")==0)
 		window_destroy(secondary_wid);
@@ -84,11 +104,8 @@ static void spaceport_bar_close (char* str)
  */
 static void news (void)
 {
-	secondary_wid = window_create( -1, -1, NEWS_WIDTH, NEWS_HEIGHT );
-
-	/* window title */
-	window_addText( secondary_wid, 0, -20, NEWS_WIDTH, 0, 1,
-			"txtTitle", NULL, &cBlack, "News Reports" );
+	secondary_wid = window_create( "News Reports",
+			-1, -1, NEWS_WIDTH, NEWS_HEIGHT );
 
 	window_addText( secondary_wid, 20, 20 + BUTTON_HEIGHT + 20,
 			NEWS_WIDTH-40, NEWS_HEIGHT - 20 - BUTTON_HEIGHT - 20 - 20 - 20,
@@ -100,7 +117,7 @@ static void news (void)
 			"Close", news_close );
 
 }
-static void news_close (char* str)
+static void news_close( char* str )
 {
 	if (strcmp(str,"btnCloseNews")==0)
 		window_destroy(secondary_wid);
@@ -115,17 +132,14 @@ void land( Planet* p )
 	if (landed) return;
 
 	planet = p;
-	land_wid = window_create( -1, -1, LAND_WIDTH, LAND_HEIGHT );
+	land_wid = window_create( p->name, -1, -1, LAND_WIDTH, LAND_HEIGHT );
 	
 	/*
 	 * pretty display
 	 */
-	window_addText( land_wid, 0., -20, LAND_WIDTH, 0, 1,
-			"txtPlanet", NULL, &cBlack, p->name );
 	window_addImage( land_wid, 20, -440, "imgPlanet", p->gfx_exterior );
 	window_addText( land_wid, 440, 80, 200, 460, 0, 
 			"txtPlanetDesc", &gl_smallFont, &cBlack, p->description);
-
 
 	/*
 	 * buttons
@@ -167,6 +181,18 @@ void land( Planet* p )
 void takeoff (void)
 {
 	if (!landed) return;
+
+	int sw, sh;
+	sw = planet->gfx_space->w;
+	sh = planet->gfx_space->h;
+
+	/* set player to another position with random facing direction and no vel */
+	vect_cset( &player->solid->pos,
+			planet->pos.x + RNG(-sw/2,sw/2), planet->pos.y + RNG(-sh/2,sh/2) );
+	vect_pset( &player->solid->vel, 0., 0. );
+	player->solid->dir = RNG(0,359) * M_PI/180.;
+
+	space_init(NULL);
 
 	planet = NULL;
 	window_destroy( land_wid );

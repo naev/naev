@@ -50,8 +50,8 @@ void player_renderBG (void); /* renders BG layer player stuff */
 /*
  * misc
  */
-void player_message ( const char *fmt, ... );
-
+void player_message( const char *fmt, ... );
+void player_clear (void);
 
 /* 
  * keybind actions

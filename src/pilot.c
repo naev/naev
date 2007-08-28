@@ -27,6 +27,7 @@ static unsigned int pilot_id = PLAYER_ID;
 /* stack of pilots */
 Pilot** pilot_stack = NULL; /* not static, used in player.c, weapon.c, pause.c and ai.c */
 int pilots = 0; /* same */
+static int mpilots = 0;
 extern Pilot* player;
 
 /* stack of fleets */
@@ -159,8 +160,11 @@ void pilot_shoot( Pilot* p, const unsigned int target, const int secondary )
 }
 static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
 {
+	/* will segfault when trying to launch with 0 ammo otherwise */
+	int quantity = outfit_isAmmo(w->outfit) ? p->secondary->quantity : w->quantity ;
+	
 	/* check to see if weapon is ready */
-	if ((SDL_GetTicks() - w->timer) < (w->outfit->delay / w->quantity)) return;
+	if ((SDL_GetTicks() - w->timer) < (w->outfit->delay / quantity)) return;
 
 	/*
 	 * regular weapons
@@ -392,11 +396,17 @@ unsigned int pilot_create( Ship* ship, char* name, Faction* faction, AI_Profile*
 		if (!pilot_stack) {
 			pilot_stack = MALLOC_ONE(Pilot*);
 			pilots = 1;
+			mpilots = 1;
 		}
 		pilot_stack[0] = dyn;
 	}
 	else { /* add to the stack */
-		pilot_stack = realloc( pilot_stack, ++pilots*sizeof(Pilot*) );
+
+		pilots++; /* there's a new pilot */
+
+		if (pilots >= mpilots) /* needs to grow */
+			pilot_stack = realloc( pilot_stack, ++mpilots*sizeof(Pilot*) );
+
 		pilot_stack[pilots-1] = dyn;
 	}
 
@@ -446,6 +456,20 @@ void pilots_free (void)
 	for (i=0; i < pilots; i++)
 		pilot_free(pilot_stack[i]);
 	free(pilot_stack);
+	pilot_stack = NULL;
+	pilots = 0;
+}
+
+
+/*
+ * cleans up the pilots - leaves the player
+ */
+void pilots_clean (void)
+{
+	int i;
+	for (i=1; i < pilots; i++)
+		pilot_free(pilot_stack[i]);
+	pilots = 1;
 }
 
 
@@ -603,6 +627,7 @@ void fleet_free (void)
 			free(fleet_stack[i].pilots);
 		}
 		free(fleet_stack);
+		fleet_stack = NULL;
 	}
 	nfleets = 0;
 }

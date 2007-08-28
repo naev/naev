@@ -16,7 +16,8 @@ extern int toolkit;
 /*
  * creation
  */
-unsigned int window_create( const int x, const int y, const int w, const int h );
+unsigned int window_create( char* name,
+		const int x, const int y, const int w, const int h );
 void window_addButton( const unsigned int wid,
 		const int x, const int y,
 		const int w, const int h,

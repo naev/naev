@@ -13,6 +13,7 @@
 #include "pack.h"
 #include "player.h"
 #include "pause.h"
+#include "weapon.h"
 
 
 #define XML_PLANET_ID			"Planets"
@@ -53,6 +54,7 @@ typedef struct {
 } Star;
 static Star *stars = NULL; /* star array */
 static int nstars = 0; /* total stars */
+static int mstars = 0;
 
 
 /* 
@@ -210,22 +212,32 @@ void space_init ( const char* sysname )
 	int i,j;
 	Vector2d v,vn;
 
-	for (i=0; i < nsystems; i++)
-		if (strcmp(sysname, systems[i].name)==0)
-			break;
+	/* cleanup some stuff */
+	player_clear(); /* clears targets */
+	pilots_clean(); /* destroy all the current pilots, except player */
+	weapon_clear(); /* get rid of all the weapons */
 
-	if (i==nsystems) ERR("System %s not found in stack", sysname);
-	cur_system = systems+i;
+	if ((sysname==NULL) && (cur_system==NULL))
+		ERR("Cannot reinit system if there is no system previously loaded");
+	else if (sysname!=NULL) {
+		for (i=0; i < nsystems; i++)
+			if (strcmp(sysname, systems[i].name)==0)
+				break;
 
-	player_message("Entering System %s on %s", sysname, stardate);
+		if (i==nsystems) ERR("System %s not found in stack", sysname);
+		cur_system = systems+i;
 
-	/* set up stars */
-	nstars = (cur_system->stars*gl_screen.w*gl_screen.h+STAR_BUF*STAR_BUF)/(800*640);
-	stars = realloc(stars,sizeof(Star)*nstars); /* should realloc, not malloc */
-	for (i=0; i < nstars; i++) {
-		stars[i].brightness = (double)RNG( 50, 200 )/256.;
-		stars[i].x = (double)RNG( -STAR_BUF, gl_screen.w + STAR_BUF );
-		stars[i].y = (double)RNG( -STAR_BUF, gl_screen.h + STAR_BUF );
+		player_message("Entering System %s on %s", sysname, stardate);
+
+		/* set up stars */
+		nstars = (cur_system->stars*gl_screen.w*gl_screen.h+STAR_BUF*STAR_BUF)/(800*640);
+		if (mstars < nstars)
+			stars = realloc(stars,sizeof(Star)*nstars); /* should realloc, not malloc */
+		for (i=0; i < nstars; i++) {
+			stars[i].brightness = (double)RNG( 50, 200 )/256.;
+			stars[i].x = (double)RNG( -STAR_BUF, gl_screen.w + STAR_BUF );
+			stars[i].y = (double)RNG( -STAR_BUF, gl_screen.h + STAR_BUF );
+		}
 	}
 
 	/* set up fleets -> pilots */
@@ -240,8 +252,8 @@ void space_init ( const char* sysname )
 			for (j=0; j < cur_system->fleets[i].fleet->npilots; j++)
 				if (RNG(0,100) <= cur_system->fleets[i].fleet->pilots[j].chance) {
 					/* other ships in the fleet should start split up */
-					vect_cadd(&v, RNG(50,150) * (RNG(0,1) ? 1 : -1),
-							RNG(50,150) * (RNG(0,1) ? 1 : -1));
+					vect_cadd(&v, RNG(75,150) * (RNG(0,1) ? 1 : -1),
+							RNG(75,150) * (RNG(0,1) ? 1 : -1));
 
 					pilot_create( cur_system->fleets[i].fleet->pilots[j].ship,
 							cur_system->fleets[i].fleet->pilots[j].name,
