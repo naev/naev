@@ -161,7 +161,8 @@ void pilot_shoot( Pilot* p, const unsigned int target, const int secondary )
 static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
 {
 	/* will segfault when trying to launch with 0 ammo otherwise */
-	int quantity = outfit_isAmmo(w->outfit) ? p->secondary->quantity : w->quantity ;
+	int quantity = (outfit_isAmmo(w->outfit) && p->secondary) ?
+			p->secondary->quantity : w->quantity ;
 	
 	/* check to see if weapon is ready */
 	if ((SDL_GetTicks() - w->timer) < (w->outfit->delay / quantity)) return;

@@ -9,6 +9,7 @@
 #include "toolkit.h"
 #include "log.h"
 #include "main.h"
+#include "pause.h"
 
 
 #define MENU_WIDTH	120
@@ -49,6 +50,7 @@ void menu_small (void)
 			BUTTON_WIDTH, BUTTON_HEIGHT,
 			"btnResume", "Resume", menu_small_close );
 
+	pause();
 	menu_open = 1;
 }
 void menu_small_close( char* str )
@@ -56,6 +58,7 @@ void menu_small_close( char* str )
 	if (strcmp(str,"btnResume")==0)
 		window_destroy( window_get("Menu") );
 
+	unpause();
 	menu_open = 0;
 }
 
