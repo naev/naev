@@ -12,7 +12,6 @@
 </general>
 <planets>
 <planet>Caladan</planet>
-<planet>Dune</planet>
 </planets>
 <fleets>
 <fleet chance="100">Test</fleet>
@@ -23,6 +22,9 @@
 <fleet chance="50">Sml Merchant Convoy</fleet>
 <fleet chance="40">Sml Merchant Convoy</fleet>
 </fleets>
+<jumps>
+<jump>Arrakis</jump>
+</jumps>
 </ssys>
 <ssys name="Arrakis">
 <pos>
@@ -41,5 +43,8 @@
 <fleet chance="80">Merchant Llama</fleet>
 <fleet chance="60">Merchant Llama</fleet>
 </fleets>
+<jumps>
+<jump>Delta Pavonis</jump>
+</jumps>
 </ssys>
 </Systems>

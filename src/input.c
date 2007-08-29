@@ -29,7 +29,7 @@ static Keybind** input_keybinds; /* contains the players keybindings */
 const char *keybindNames[] = { "accel", "left", "right", "reverse", /* movement */
 	"primary", "target", "target_nearest", "face", "board", /* fighting */
 	"secondary", "secondary_next", /* secondary weapons */
-	"target_planet", "land", /* space navigation */
+	"target_planet", "land", "thyperspace", "jump", /* space navigation */
 	"mapzoomin", "mapzoomout", "screenshot", "pause", "menu",  /* misc */
 	"end" }; /* must terminate in "end" */
 
@@ -40,7 +40,6 @@ const char *keybindNames[] = { "accel", "left", "right", "reverse", /* movement 
 extern double player_turn;
 extern double player_acc;
 extern unsigned int player_target;
-extern int planet_target;
 /*
  * from main.c
  */
@@ -69,6 +68,8 @@ void input_setDefault (void)
 	/* space */
 	input_setKeybind( "target_planet", KEYBIND_KEYBOARD, SDLK_p, 0 );
 	input_setKeybind( "land", KEYBIND_KEYBOARD, SDLK_l, 0 );
+	input_setKeybind( "thyperspace", KEYBIND_KEYBOARD, SDLK_h, 0 );
+	input_setKeybind( "jump", KEYBIND_KEYBOARD, SDLK_j, 0 );
 	/* misc */
 	input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_9, 0 );
 	input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_0, 0 );
@@ -179,7 +180,7 @@ static void input_key( int keynum, double value, int abs )
 			if (player_isFlag(PLAYER_TURN_LEFT)) player_turn -= 1;
 			if (player_isFlag(PLAYER_TURN_RIGHT)) player_turn += 1;
 		}
-
+	
 
 	/*
 	 * combat
@@ -221,19 +222,6 @@ static void input_key( int keynum, double value, int abs )
 		if (value==KEY_PRESS) player_secondaryNext();
 
 
-	/*
-	 * secondary weapons
-	 */
-	/* shooting secondary weapon */
-	} else if (KEY("secondary")) {
-		if (value==KEY_PRESS) player_setFlag(PLAYER_SECONDARY);
-		else if (value==KEY_RELEASE) player_rmFlag(PLAYER_SECONDARY);
-
-	/* selecting secondary weapon */
-	} else if (KEY("secondary_next") && !paused) {
-		if (value==KEY_PRESS) player_secondaryNext();
-
-
 	/*                                                                     
 	 * space
 	 */
@@ -243,6 +231,10 @@ static void input_key( int keynum, double value, int abs )
 	/* target nearest planet or attempt to land */
 	} else if (KEY("land") && !paused) {
 		if (value==KEY_PRESS) player_land();
+	} else if (KEY("thyperspace") && !paused) {
+		if (value==KEY_PRESS) player_targetHyperspace();
+	} else if (KEY("jump") && !paused) {
+		if (value==KEY_PRESS) player_jump();
 
 
 	/*

@@ -12,7 +12,8 @@ typedef enum {
 	WIDGET_NULL,
 	WIDGET_BUTTON,
 	WIDGET_TEXT,
-	WIDGET_IMAGE
+	WIDGET_IMAGE,
+	WIDGET_LIST
 } WidgetType;
 
 typedef enum {
@@ -36,13 +37,18 @@ typedef struct {
 			char *display; /* stored text */
 		};
 		struct { /* WIDGET_TEXT */
-			char *text;
+			char *text; /* text to display, using printMid if centered, else printText */
 			glFont* font;
 			glColour* colour;
 			int centered; /* is centered? */
 		};
 		struct { /* WIDGET_IMAGE */
 			glTexture* image;
+		};
+		struct { /* WIDGET_LIST */
+			char **options; /* pointer to the options */
+			int noptions; /* total number of options */
+			int selected; /* which option is currently selected */
 		};
 	};
 } Widget;
@@ -159,6 +165,32 @@ void window_addImage( const unsigned int wid,
 	if (x < 0) wgt->x = wdw->w - wgt->image->sw + x;
 	else wgt->x = (double) x;
 	if (y < 0) wgt->y = wdw->h + y;
+	else wgt->y = (double) y;
+}
+
+
+/*
+ * adds a list to the window
+ */
+void window_addList( const unsigned int wid,
+		const int x, const int y,
+		const int w, const int h,
+		char* name, char **items, int nitems, int defitem )
+{
+	Window *wdw = window_wget(wid);
+	Widget *wgt = window_newWidget(wdw);
+
+	wgt->type = WIDGET_LIST;
+	wgt->name = strdup(name);
+
+	wgt->options = items;
+	wgt->noptions = nitems;
+	wgt->selected = defitem; /* -1 would be none */
+	wgt->w = (double) w;
+	wgt->h = (double) h;
+	if (x < 0) wgt->x = wdw->w - wgt->w + x;
+	else wgt->x = (double) x;
+	if (y < 0) wgt->y = wdw->h - wgt->h + y;
 	else wgt->y = (double) y;
 }
 
@@ -526,6 +558,10 @@ static void window_render( Window* w )
 
 			case WIDGET_IMAGE:
 				toolkit_renderImage( &w->widgets[i], x, y );
+				break;
+
+			case WIDGET_LIST:
+				/* TODO widget list rendering */
 				break;
 		}
 	}

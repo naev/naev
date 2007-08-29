@@ -39,7 +39,7 @@
 #define FLAG_INTERFERENCESET	(1<<3)
 
 
-static StarSystem *systems = NULL;
+StarSystem *systems = NULL;
 static int nsystems = 0;
 StarSystem *cur_system = NULL; /* Current star system */
 
@@ -64,6 +64,7 @@ static int mstars = 0;
 /* intern */
 static Planet* planet_get( const char* name );
 static StarSystem* system_parse( const xmlNodePtr parent );
+static void system_parseJumps( const xmlNodePtr parent );
 static PlanetClass planetclass_get( const char a );
 /* extern */
 extern void player_message ( const char *fmt, ... );
@@ -176,30 +177,31 @@ static PlanetClass planetclass_get( const char a )
 
 
 /*
- * hyperspaces, returns 0 if entering hyperspace, or distance otherwise
+ * checks to make sure if player is far enough away to hyperspace
  */
-int space_hyperspace( Pilot* p )
+int space_canHyperspace( Pilot* p)
 {
 	int i;
 	double d;
 	for (i=0; i < cur_system->nplanets; i++) {
 		d = vect_dist(&p->solid->pos, &cur_system->planets[i].pos);
 		if (d < MIN_HYPERSPACE_DIST)
-			return (int)(MIN_HYPERSPACE_DIST - d);;
+			return 0;
 	}
+	return 1;
+}
+/*
+ * hyperspaces, returns 0 if entering hyperspace, or distance otherwise
+ */
+int space_hyperspace( Pilot* p )
+{
+	if (!space_canHyperspace(p)) return -1;
 
 	/* too fast */
-	if (VMOD(p->solid->vel) > MAX_HYPERSPACE_VEL) return -1;
+	if (VMOD(p->solid->vel) > MAX_HYPERSPACE_VEL) return -2;
 
-	/*
-	 * TODO hyperspace stuff
-	 */
-	if (p == player) {
-		/* player stuff */
-	}
-	else {
-
-	}
+	/* pilot is now going to get automatically ready for hyperspace */
+	pilot_setFlag(p, PILOT_HYP_PREP);
 
 	return 0;
 }
@@ -365,11 +367,18 @@ static Planet* planet_get( const char* name )
 			else free(tstr); /* xmlGetProp mallocs the string */
 		}
 	} while ((node = node->next));
-	
+
+
+	/*
+	 * free stuff
+	 */
 	xmlFreeDoc(doc);
 	free(buf);
 	xmlCleanupParser();
 
+	/* 
+	 * verification
+	 */
 	if (temp) {
 #define MELEMENT(o,s)	if ((o) == 0) WARN("Planet '%s' missing '"s"' element", temp->name)
 		MELEMENT(temp->gfx_space,"GFX space");
@@ -490,7 +499,51 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 
 
 /*
+ * loads the jumps into a system
+ */
+static void system_parseJumps( const xmlNodePtr parent )
+{
+	int i;
+	StarSystem *system;
+	char* name;
+	xmlNodePtr cur, node;
+
+	name = xml_nodeProp(parent,"name"); /* already mallocs */
+	for (i=0; i<nsystems; i++)
+		if (strcmp( systems[i].name, name)==0) {
+			system = &systems[i];
+			break;
+		}
+	if (i==nsystems) WARN("System '%s' was not found in the stack for some reason",name);
+	free(name); /* no more need for it */
+
+	node  = parent->xmlChildrenNode;
+
+	do { /* load all the data */
+		if (xml_isNode(node,"jumps")) {
+			cur = node->children;
+			do {
+				if (xml_isNode(cur,"jump")) {
+					for (i=0; i<nsystems; i++)
+						if (strcmp( systems[i].name, xml_get(cur))==0) {
+							system->njumps++;
+							system->jumps = realloc(system->jumps, system->njumps*sizeof(int));
+							system->jumps[system->njumps-1] = i;
+							break;
+						}
+					if (i==nsystems)
+						WARN("System '%s' not found for jump linking",xml_get(cur));
+				}
+			} while ((cur = cur->next));
+		}
+	} while ((node = node->next));
+}
+
+
+/*
  * LOADS THE ENTIRE UNIVERSE INTO RAM - pretty big feat eh?
+ *
+ * uses a two system pass to first load the star systems and then set jump routes
  */
 int space_load (void)
 {
@@ -514,16 +567,34 @@ int space_load (void)
 		return -1;
 	}
 
+	/*
+	 * first pass - loads all the star systems
+	 */
 	do {
 		if (xml_isNode(node,XML_SYSTEM_TAG)) {
 
-			temp = system_parse(node);               
+			temp = system_parse(node);
 			systems = realloc(systems, sizeof(StarSystem)*(++nsystems));
 			memcpy(systems+nsystems-1, temp, sizeof(StarSystem));
 			free(temp);
 		}                                                                             
-	} while ((node = node->next));                                                   
+	} while ((node = node->next));                                       
 
+	/*
+	 * second pass - loads all the jump routes
+	 */
+	node = doc->xmlChildrenNode->xmlChildrenNode;
+	do {
+
+		if (xml_isNode(node,XML_SYSTEM_TAG))
+			system_parseJumps(node); /* will automatically load the jumps into the system */
+
+	} while ((node = node->next));
+
+
+	/*
+	 * cleanup
+	 */
 	xmlFreeDoc(doc);
 	free(buf);
 	xmlCleanupParser();
@@ -584,11 +655,19 @@ void space_exit (void)
 		free(systems[i].name);
 		if (systems[i].fleets)
 			free(systems[i].fleets);
+		if (systems[i].jumps)
+			free(systems[i].jumps);
+
 
 		for (j=0; j < systems[i].nplanets; j++) {
 			free(systems[i].planets[j].name);
+
 			if (systems[i].planets[j].description)
 				free(systems[i].planets[j].description);
+			if (systems[i].planets[j].bar_description)
+				free(systems[i].planets[j].bar_description);
+
+			/* graphics */
 			if (systems[i].planets[j].gfx_space)
 				gl_freeTexture(systems[i].planets[j].gfx_space);
 			if (systems[i].planets[j].gfx_exterior)

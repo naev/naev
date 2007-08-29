@@ -187,8 +187,7 @@ void takeoff (void)
 	sh = planet->gfx_space->h;
 
 	/* set player to another position with random facing direction and no vel */
-	vect_cset( &player->solid->pos,
-			planet->pos.x + RNG(-sw/2,sw/2), planet->pos.y + RNG(-sh/2,sh/2) );
+	player_warp( planet->pos.x + RNG(-sw/2,sw/2), planet->pos.y + RNG(-sh/2,sh/2) );
 	vect_pset( &player->solid->vel, 0., 0. );
 	player->solid->dir = RNG(0,359) * M_PI/180.;
 

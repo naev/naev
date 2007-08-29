@@ -21,8 +21,8 @@
 </planet>
 <planet name="Dune">
 <pos>
-<x>125</x>
-<y>-345</y>
+<x>0</x>
+<y>0</y>
 </pos>
 <general>
 <class>A</class>

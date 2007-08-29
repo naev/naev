@@ -42,10 +42,12 @@ static int nfleets = 0;
 extern void ai_destroy( Pilot* p ); /* ai.c */
 extern void ai_think( Pilot* pilot ); /* ai.c */
 extern void player_think( Pilot* pilot ); /* player.c */
+extern void player_brokeHyperspace (void); /* player.c */
 extern int gui_load( const char *name ); /* player.c */
 /* internal */
 static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t );
 static void pilot_update( Pilot* pilot, const double dt );
+static void pilot_hyperspace( Pilot* pilot );
 void pilot_render( Pilot* pilot ); /* externed in player.c */
 static void pilot_free( Pilot* p );
 static Fleet* fleet_parse( const xmlNodePtr parent );
@@ -130,6 +132,27 @@ Pilot* pilot_get( const unsigned int id )
 		else return pilot_stack[m];
 	}
 	return NULL;
+}
+
+
+/*
+ * tries to turn the pilot to face dir
+ */
+double pilot_face( Pilot* p, const float dir )
+{
+	double diff, turn;
+	
+	diff = angle_diff( p->solid->dir, dir );
+
+	turn = -10.*diff;
+	if (turn > 1.) turn = 1.;
+	else if (turn < -1.) turn = -1.;
+
+	p->solid->dir_vel = 0.;
+	if (turn)
+		p->solid->dir_vel -= p->ship->turn * turn;
+
+	return diff;
 }
 
 
@@ -296,8 +319,49 @@ static void pilot_update( Pilot* pilot, const double dt )
 	/* update the solid */
 	(*pilot->solid->update)( pilot->solid, dt );
 
-	if (VMOD(pilot->solid->vel) > pilot->ship->speed) /* shouldn't go faster */
+	if (!pilot_isFlag(pilot, PILOT_HYPERSPACE) && 
+			VMOD(pilot->solid->vel) > pilot->ship->speed) /* shouldn't go faster */
 		vect_pset( &pilot->solid->vel, pilot->ship->speed, VANGLE(pilot->solid->vel) );
+}
+
+
+/*
+ * pilot is actually getting ready or in hyperspace
+ */
+static void pilot_hyperspace( Pilot* p )
+{
+	if (pilot_isFlag(p, PILOT_HYPERSPACE)) { /* pilot is actually in hyperspace */
+
+		if (SDL_GetTicks() > p->ptimer) {
+			if (p == player) { /* player just broke hyperspace */
+				player_brokeHyperspace();
+			}
+			else
+				pilot_setFlag(p, PILOT_DELETE); /* set flag to delete pilot */
+			return;
+		}
+
+		vect_pset( &p->solid->force, p->ship->thrust * 3., p->solid->dir );
+	}
+	else if (pilot_isFlag(p, PILOT_HYP_BEGIN)) {
+
+		if (SDL_GetTicks() > p->ptimer) { /* engines ready */
+			p->ptimer = SDL_GetTicks() + HYPERSPACE_FLY_DELAY;
+			pilot_setFlag(p, PILOT_HYPERSPACE);
+		}
+	}
+	else { /* pilot is getting ready for hyperspace */
+
+		/* TODO hyperspace preperation autobreak */
+
+		double diff = pilot_face( p, VANGLE(player->solid->pos) );
+
+		if (diff < MAX_DIR_ERR) { /* we can now prepare the jump */
+			p->solid->dir_vel = 0.;
+			p->ptimer = SDL_GetTicks() + HYPERSPACE_ENGINE_DELAY;
+			pilot_setFlag(p, PILOT_HYP_BEGIN);
+		}
+	}
 }
 
 
@@ -362,7 +426,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction, AI_Prof
 
 	if (flags & PILOT_PLAYER) {
 		pilot->think = player_think; /* players don't need to think! :P */
-		pilot->render = NULL;
+		pilot->render = NULL; /* render will get called from player_think */
 		pilot_setFlag(pilot,PILOT_PLAYER); /* it is a player! */
 		player = pilot;
 		gui_load( pilot->ship->gui ); /* load the gui */
@@ -482,10 +546,21 @@ void pilots_update( double dt )
 	int i;
 	for ( i=0; i < pilots; i++ ) {
 		if (pilot_stack[i]->think && /* think */
-				!pilot_isDisabled(pilot_stack[i]))
-			pilot_stack[i]->think(pilot_stack[i]);
-		if (pilot_stack[i]->update) /* update */
-			pilot_stack[i]->update( pilot_stack[i], dt );
+				!pilot_isDisabled(pilot_stack[i])) {
+
+			/* hyperspace gets special treatment */
+			if (pilot_isFlag(pilot_stack[i], PILOT_HYP_PREP))
+				pilot_hyperspace(pilot_stack[i]);
+			else
+				pilot_stack[i]->think(pilot_stack[i]);
+
+		}
+		if (pilot_stack[i]->update) { /* update */
+			if (pilot_isFlag(pilot_stack[i], PILOT_DELETE))
+				pilot_destroy(pilot_stack[i]);
+			else
+				pilot_stack[i]->update( pilot_stack[i], dt );
+		}
 	}
 }
 

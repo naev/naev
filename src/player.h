@@ -10,7 +10,7 @@
 /* flag defines */
 #define PLAYER_TURN_LEFT   (1<<0)   /* player is turning left */
 #define PLAYER_TURN_RIGHT  (1<<1)   /* player is turning right */
-#define PLAYER_REVERSE		(1<<2)
+#define PLAYER_REVERSE		(1<<2)	/* player is facing opposite of vel */
 #define PLAYER_FACE        (1<<10)   /* player is facing target */
 #define PLAYER_PRIMARY     (1<<11)   /* player is shooting primary weapon */
 #define PLAYER_SECONDARY   (1<<12)   /* player is shooting secondary weapon */
@@ -52,6 +52,7 @@ void player_renderBG (void); /* renders BG layer player stuff */
  */
 void player_message( const char *fmt, ... );
 void player_clear (void);
+void player_warp( const double x, const double y );
 
 /* 
  * keybind actions
@@ -61,6 +62,8 @@ void player_board (void);
 void player_secondaryNext (void);
 void player_targetPlanet (void);
 void player_land (void);
+void player_targetHyperspace (void);
+void player_jump (void);
 void player_screenshot (void);
 
 

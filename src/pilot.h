@@ -15,6 +15,10 @@
 #define PLAYER_ID			1
 
 
+#define HYPERSPACE_FLY_DELAY		5000
+#define HYPERSPACE_ENGINE_DELAY	3000
+
+
 #define PILOT_SIZE_APROX		0.8	/* aproximation for pilot size */
 #define PILOT_DISABLED_ARMOR	0.2	/* armour % that gets it disabled */
 
@@ -28,8 +32,11 @@
 /* dynamic */
 #define PILOT_HOSTILE	   (1<<1) /* pilot is hostile to the player */
 #define PILOT_COMBAT			(1<<2) /* pilot is engaged in combat */
-#define PILOT_HYPERSPACE	(1<<3) /* pilot is in hyperspace */
-#define PILOT_DISABLED		(1<<4) /* pilot is disabled */
+#define PILOT_HYP_PREP		(1<<5) /* pilot is getting ready for hyperspace */
+#define PILOT_HYP_BEGIN		(1<<6) /* pilot is starting engines */
+#define PILOT_HYPERSPACE	(1<<7) /* pilot is in hyperspace */
+#define PILOT_DISABLED		(1<<9) /* pilot is disabled */
+#define PILOT_DELETE			(1<<10) /* pilot will get deleted asap */
 
 /* makes life easier */
 #define pilot_isPlayer(p)	((p)->flags & PILOT_PLAYER)
@@ -75,6 +82,7 @@ typedef struct Pilot {
 	PilotOutfit* ammo; /* secondary ammo if needed */
 
 	unsigned int flags; /* used for AI and others */
+	unsigned int ptimer; /* generic timer for internal pilot use */
 
 	/* AI */
 	AI_Profile* ai; /* ai personality profile */
@@ -120,6 +128,7 @@ Fleet* fleet_get( const char* name );
 void pilot_shoot( Pilot* p, const unsigned int target, const int secondary );
 void pilot_hit( Pilot* p, const double damage_shield, const double damage_armour );
 void pilot_setAmmo( Pilot* p );
+double pilot_face( Pilot* p, const float dir );
 
 
 /*

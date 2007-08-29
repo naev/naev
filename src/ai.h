@@ -8,6 +8,11 @@
 #include "lua.h"
 
 
+#define MIN_DIR_ERR		1.0*M_PI/180.
+#define MAX_DIR_ERR		0.1*M_PI/180.
+#define MIN_VEL_ERR		0.5
+
+
 /* maximum number of AI timers */
 #define MAX_AI_TIMERS	2
 
@@ -21,9 +26,7 @@ typedef enum { TYPE_NULL, TYPE_INT, TYPE_PTR } TaskData;
  */
 typedef struct Task {
 	struct Task* next;
-
 	char *name;
-
 	
 	TaskData dtype;
 	union {

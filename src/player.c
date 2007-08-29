@@ -44,7 +44,8 @@ unsigned int player_flags = 0; /* player flags */
 double player_turn = 0.; /* turn velocity from input */
 double player_acc = 0.; /* accel velocity from input */
 unsigned int player_target = PLAYER_ID; /* targetted pilot */
-int planet_target = -1; /* targetted planet */
+static int planet_target = -1; /* targetted planet */
+static int hyperspace_target = -1; /* targetted hyperspace route */
 
 
 /*
@@ -52,6 +53,11 @@ int planet_target = -1; /* targetted planet */
  */
 extern Pilot** pilot_stack;
 extern int pilots;
+
+/*
+ * space stuff for GUI
+ */
+extern StarSystem *systems;
 
 
 /*
@@ -231,12 +237,22 @@ void player_message ( const char *fmt, ... )
 
 
 /*
+ * warps the player to the new position
+ */
+void player_warp( const double x, const double y )
+{
+	vect_cset( &player->solid->pos, x, y );
+}
+
+
+/*
  * clears the targets
  */
 void player_clear (void)
 {
 	player_target = PLAYER_ID;
 	planet_target = -1;
+	hyperspace_target = -1;
 }
 
 
@@ -380,7 +396,18 @@ void player_render (void)
 				gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
 				NULL, "%s", cur_system->planets[planet_target].name );
 	}
-	else if (planet_target == -1) { /* no planet target */
+	else if (hyperspace_target >= 0) { /* hyperspace target */
+
+		c = space_canHyperspace(player) ? &cConsole : NULL ;
+		gl_printMid( NULL, (int)gui.nav.w,
+				gui.nav.x, gui.nav.y - 5,
+				c, "Hyperspace" );
+
+		gl_printMid( &gl_smallFont, (int)gui.nav.w,
+				gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
+				NULL, "%s", systems[cur_system->jumps[hyperspace_target]].name );
+	}
+	else { /* no NAV target */
 		gl_printMid( NULL, (int)gui.nav.w,
 				gui.nav.x, gui.nav.y - 5,
 				&cConsole, "Navigation" );
@@ -911,32 +938,28 @@ void gui_free (void)
  */
 void player_think( Pilot* player )
 {
-	double diff;
-
-	if (player_isFlag(PLAYER_FACE) && (player_target != PLAYER_ID)) {
-		diff = angle_diff(player->solid->dir,
+	/* turning taken over by PLAYER_FACE */
+	if (player_isFlag(PLAYER_FACE) && (player_target != PLAYER_ID))
+		pilot_face( player,
 				vect_angle(&player->solid->pos, &pilot_get(player_target)->solid->pos));
-		player_turn = -10.*diff;
-		if (player_turn > 1.) player_turn = 1.;
-		else if (player_turn < -1.) player_turn = -1.;
-	}
-	else if (player_isFlag(PLAYER_REVERSE) && (VMOD(player->solid->vel) > 0.)) {
-		diff = angle_diff(player->solid->dir, VANGLE(player->solid->vel));
-		player_turn = 10.*diff;
-		if (player_turn >= 0.) player_turn = 1.;
-		else if (player_turn < 0.) player_turn = -1.;
-	}
 
+	/* turning taken over by PLAYER_REVERSE */
+	else if (player_isFlag(PLAYER_REVERSE) && (VMOD(player->solid->vel) > 0.))
+		pilot_face( player, VANGLE(player->solid->vel) + M_PI );
 
-	player->solid->dir_vel = 0.;
-	if (player_turn)
-		player->solid->dir_vel -= player->ship->turn * player_turn;
+	/* normal turning scheme */
+	else {
+		player->solid->dir_vel = 0.;
+		if (player_turn)
+			player->solid->dir_vel -= player->ship->turn * player_turn;
+	}
 
 	if (player_isFlag(PLAYER_PRIMARY)) pilot_shoot(player,0,0);
 	if (player_isFlag(PLAYER_SECONDARY)) /* needs target */
 		pilot_shoot(player,player_target,1);
 
-	vect_pset( &player->solid->force, player->ship->thrust * player_acc, player->solid->dir );
+	vect_pset( &player->solid->force, player->ship->thrust * player_acc,
+			player->solid->dir );
 }
 
 
@@ -1042,6 +1065,8 @@ void player_secondaryNext (void)
  */
 void player_targetPlanet (void)
 {
+	hyperspace_target = -1;
+
 	/* no target */
 	if ((planet_target==-1) && (cur_system->nplanets > 0)) {
 		planet_target = 0;
@@ -1095,6 +1120,54 @@ void player_land (void)
 		}
 		planet_target = tp;
 	}
+}
+
+
+/*
+ * gets a hyperspace target
+ */
+void player_targetHyperspace (void)
+{
+	planet_target = -1; /* get rid of planet target */
+	hyperspace_target++;
+
+	if (hyperspace_target >= cur_system->njumps)
+		hyperspace_target = -1;
+}
+
+
+/*
+ * actually attempts to jump in hyperspace
+ */
+void player_jump (void)
+{
+	if (hyperspace_target == -1) return;
+
+	int i = space_hyperspace(player);
+
+	if (i == -1)
+		player_message("You are too close to gravity centers to initiate hyperspace");
+	else if (i == -2)
+		player_message("You are moving too fast to enter hyperspace.");
+	else
+		player_message("Preparing for hyperspace");
+}
+
+
+/*
+ * player actually broke hyperspace (entering new system)
+ */
+void player_brokeHyperspace (void)
+{
+	/* enter the new system */
+	space_init( systems[cur_system->jumps[hyperspace_target]].name );
+
+	/* set position, the pilot_update will handle lowering vel */
+	player_warp( -cos( player->solid->dir ) * MIN_HYPERSPACE_DIST * 1.2,
+			-sin( player->solid->dir ) * MIN_HYPERSPACE_DIST * 1.2 );
+
+	/* stop hyperspace */
+	pilot_rmFlag( player, PILOT_HYPERSPACE | PILOT_HYP_BEGIN | PILOT_HYP_PREP ); 
 }
 
 

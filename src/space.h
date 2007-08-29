@@ -10,7 +10,7 @@
 
 
 #define MIN_HYPERSPACE_DIST	1500
-#define MAX_HYPERSPACE_VEL		15
+#define MAX_HYPERSPACE_VEL		25
 
 
 /*
@@ -87,6 +87,9 @@ typedef struct {
 
 	SystemFleet* fleets; /* fleets that can appear in the current system */
 	int nfleets; /* total number of fleets */
+
+	int *jumps; /* adjacent star system index numbers */
+	int njumps; /* number of adjacent jumps */
 } StarSystem;
 
 
@@ -109,6 +112,7 @@ void planets_render (void);
 /*
  * misc
  */
+int space_canHyperspace( Pilot* p);
 int space_hyperspace( Pilot* p );
 extern char* stardate;
 
