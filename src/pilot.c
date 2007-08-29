@@ -352,14 +352,25 @@ static void pilot_hyperspace( Pilot* p )
 	}
 	else { /* pilot is getting ready for hyperspace */
 
-		/* TODO hyperspace preperation autobreak */
+		double diff;
 
-		double diff = pilot_face( p, VANGLE(player->solid->pos) );
+		if (VMOD(p->solid->vel) > MIN_VEL_ERR) {
+			diff = pilot_face( p, VANGLE(player->solid->vel) + M_PI );
 
-		if (diff < MAX_DIR_ERR) { /* we can now prepare the jump */
-			p->solid->dir_vel = 0.;
-			p->ptimer = SDL_GetTicks() + HYPERSPACE_ENGINE_DELAY;
-			pilot_setFlag(p, PILOT_HYP_BEGIN);
+			if (ABS(diff) < MAX_DIR_ERR) /* brake */
+				vect_pset( &p->solid->force, p->ship->thrust, p->solid->dir );
+
+		}
+		else {
+
+			vectnull( &p->solid->force ); /* stop accel */
+			diff = pilot_face( p, VANGLE(player->solid->pos) );
+
+			if (ABS(diff) < MAX_DIR_ERR) { /* we can now prepare the jump */
+				p->solid->dir_vel = 0.;
+				p->ptimer = SDL_GetTicks() + HYPERSPACE_ENGINE_DELAY;
+				pilot_setFlag(p, PILOT_HYP_BEGIN);
+			}
 		}
 	}
 }

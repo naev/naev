@@ -198,7 +198,7 @@ int space_hyperspace( Pilot* p )
 	if (!space_canHyperspace(p)) return -1;
 
 	/* too fast */
-	if (VMOD(p->solid->vel) > MAX_HYPERSPACE_VEL) return -2;
+	//if (VMOD(p->solid->vel) > MAX_HYPERSPACE_VEL) return -2;
 
 	/* pilot is now going to get automatically ready for hyperspace */
 	pilot_setFlag(p, PILOT_HYP_PREP);
@@ -617,8 +617,8 @@ void space_render( double dt )
 	for (i=0; i < nstars; i++) {
 		if (!paused && !toolkit) {
 			/* update position */
-			stars[i].x -= VX(player->solid->vel)/(15.-10.*stars[i].brightness)*dt;
-			stars[i].y -= VY(player->solid->vel)/(15.-10.*stars[i].brightness)*dt;
+			stars[i].x -= VX(player->solid->vel)/(13.-10.*stars[i].brightness)*dt;
+			stars[i].y -= VY(player->solid->vel)/(13.-10.*stars[i].brightness)*dt;
 			if (stars[i].x > gl_screen.w + STAR_BUF) stars[i].x = -STAR_BUF;
 			else if (stars[i].x < -STAR_BUF) stars[i].x = gl_screen.w + STAR_BUF;
 			if (stars[i].y > gl_screen.h + STAR_BUF) stars[i].y = -STAR_BUF;
