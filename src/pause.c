@@ -64,8 +64,10 @@ static void pilots_pause (void)
 	int i, j;
 	unsigned int t = SDL_GetTicks();
 	for (i=0; i<pilots; i++) {
-		pilot_stack[i]->tcontrol -= t;
 
+		pilot_stack[i]->ptimer -= t;
+
+		pilot_stack[i]->tcontrol -= t;
 		for (j=0; j<MAX_AI_TIMERS; j++)
 			pilot_stack[i]->timer[j] -= t;
 	}
@@ -75,8 +77,10 @@ static void pilots_unpause (void)
 	int i, j;
 	unsigned int t = SDL_GetTicks();
 	for (i=0; i<pilots; i++) {
-		pilot_stack[i]->tcontrol += t;
+	
+		 pilot_stack[i]->ptimer += t;
 
+		pilot_stack[i]->tcontrol += t;
 		for (j=0; j<MAX_AI_TIMERS; j++)
 			pilot_stack[i]->timer[j] += t;
 	}

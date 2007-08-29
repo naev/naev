@@ -321,7 +321,8 @@ static void pilot_update( Pilot* pilot, const double dt )
 
 	if (!pilot_isFlag(pilot, PILOT_HYPERSPACE) && 
 			VMOD(pilot->solid->vel) > pilot->ship->speed) /* shouldn't go faster */
-		vect_pset( &pilot->solid->vel, pilot->ship->speed, VANGLE(pilot->solid->vel) );
+		vect_pset( &pilot->solid->vel, VMOD(pilot->solid->vel) - 0.3*pilot->ship->thrust*dt,
+				VANGLE(pilot->solid->vel) );
 }
 
 
