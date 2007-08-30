@@ -16,6 +16,7 @@
 #include "rng.h"
 #include "land.h"
 #include "toolkit.h"
+#include "sound.h"
 
 
 #define XML_GUI_ID	"GUIs"   /* XML section identifier */
@@ -201,7 +202,7 @@ void player_new (void)
 
 	pilot_create( ship, "Player", faction_get("Player"), NULL,
 			d,  &v, NULL, PILOT_PLAYER );
-	gl_bindCamera( &player->solid->pos );
+	gl_bindCamera( &player->solid->pos ); /* set opengl camera */
 	space_init(system);
 
 	/* welcome message */

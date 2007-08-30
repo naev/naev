@@ -1,7 +1,7 @@
 
 -- WINDOW
-width = 800
-height = 640
+width = 1024
+height = 768
 fullscreen = 0
 
 -- SCREEN

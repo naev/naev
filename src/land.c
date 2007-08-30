@@ -5,6 +5,7 @@
 #include "toolkit.h"
 #include "player.h"
 #include "rng.h"
+#include "music.h"
 
 
 /* global/main window */
@@ -24,6 +25,10 @@
 /* bar window */
 #define BAR_WIDTH		600
 #define BAR_HEIGHT	400
+
+
+#define MUSIC_TAKEOFF	"liftoff"
+#define MUSIC_LAND		"agriculture"
 
 
 int landed = 0;
@@ -131,6 +136,10 @@ void land( Planet* p )
 {
 	if (landed) return;
 
+	/* change music */
+	music_load( MUSIC_LAND );
+	music_play();
+
 	planet = p;
 	land_wid = window_create( p->name, -1, -1, LAND_WIDTH, LAND_HEIGHT );
 	
@@ -181,6 +190,9 @@ void land( Planet* p )
 void takeoff (void)
 {
 	if (!landed) return;
+
+	music_load( MUSIC_TAKEOFF );
+	music_play();
 
 	int sw, sh;
 	sw = planet->gfx_space->w;

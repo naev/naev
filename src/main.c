@@ -31,6 +31,8 @@
 #include "xml.h"
 #include "toolkit.h"
 #include "pause.h"
+#include "sound.h"
+#include "music.h"
 
 
 /* to get data info */
@@ -109,6 +111,14 @@ int main ( int argc, char** argv )
 		exit(EXIT_FAILURE);
 	}
 	window_caption();
+
+
+	/*
+	 * OpenAL - Sound
+	 */
+	if (sound_init()) WARN("Problem setting up sound!");
+	music_load( "Machina" );
+	music_play();
 
 
 	/*
@@ -207,6 +217,9 @@ int main ( int argc, char** argv )
 	joystick_exit(); /* releases joystick */
 	input_exit(); /* cleans up keybindings */
 	gl_exit(); /* kills video output */
+	sound_exit(); /* kills the sound */
+	SDL_Quit(); /* quits SDL */
+
 
 	/* all is well */
 	exit(EXIT_SUCCESS);

@@ -628,7 +628,6 @@ int gl_init()
  */
 void gl_exit()
 {
-	SDL_Quit();
 }
 
 

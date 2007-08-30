@@ -16,8 +16,10 @@ CLUA = -Ilib/lua
 CSDL = $(shell sdl-config --cflags)
 CXML = $(shell xml2-config --cflags)
 CTTF = $(shell freetype-config --cflags)
-CGL = 
-CFLAGS = $(CLUA) $(CSDL) $(CXML) $(CTTF) $(CGL) $(VERSION)
+CAL = $(shell openal-config --cflags)
+CVORBIS =
+CGL =
+CFLAGS = $(CLUA) $(CSDL) $(CXML) $(CTTF) $(CGL) $(CAL) $(CVORBIS) $(VERSION)
 ifdef DEBUG
 CFLAGS += -W -Wall -g3 -DDEBUG -DLUA_USE_APICHECK
 else # DEBUG
@@ -25,14 +27,21 @@ CFLAGS += -O2 -funroll-loops
 endif # DEBUG
 
 LDLUA = lib/lua/liblua.a
-LDSDL = `sdl-config --libs` -lSDL_image
-LDXML = `xml2-config --libs`
-LDTTF = `freetype-config --libs`
+LDSDL = $(shell sdl-config --libs) -lSDL_image
+LDXML = $(shell xml2-config --libs)
+LDTTF = $(shell freetype-config --libs)
 LDGL = -lGL
-LDFLAGS = -lm $(LDLUA) $(LDSDL) $(LDXML) $(LDTTF) $(LDGL)
+LDAL = $(shell openal-config --libs)
+LDVORBIS = -lvorbisfile
+LDFLAGS = -lm $(LDLUA) $(LDSDL) $(LDXML) $(LDTTF) $(LDGL) $(LDAL) $(LDVORBIS)
 
+
+DATA_AI = $(shell find ai/ -name '*.lua')
+DATA_GFX = $(shell find gfx/ -name '*png')
+DATA_XML = $(shell find dat/ -name '*.xml' -o -name '*.ttf')
+DATA_SND = $(shell find snd/ -name '*.ogg')
 DATA = data
-DATAFILES = $(VERSIONFILE) $(shell find ai/ gfx/ dat/ -name '*.lua' -o -name '*.png' -o -name '*.xml' -o -name '*.ttf')
+DATAFILES = $(VERSIONFILE) $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND)
 
 
 %.o:	%.c %.h
