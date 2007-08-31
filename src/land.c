@@ -203,6 +203,10 @@ void takeoff (void)
 	vect_pset( &player->solid->vel, 0., 0. );
 	player->solid->dir = RNG(0,359) * M_PI/180.;
 
+	/* heal the player */
+	player->armour = player->armour_max;
+	player->shield = player->shield_max;
+
 	space_init(NULL);
 
 	planet = NULL;
