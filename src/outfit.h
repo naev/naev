@@ -5,6 +5,7 @@
 
 
 #include "opengl.h"
+#include "sound.h"
 
 
 /*
@@ -59,6 +60,7 @@ typedef struct {
 			double damage_armour, damage_shield; /* damage */
 
 			glTexture* gfx_space; /* graphic */
+			ALuint sound; /* sound to play */
 		};
 		struct { /* launcher */
 			unsigned int delay; /* delay between shots */
@@ -72,6 +74,7 @@ typedef struct {
 			double damage_armour, damage_shield; /* damage */
 
 			glTexture* gfx_space; /* graphic */
+			ALuint sound; /* sound to play */
 		};
 	};
 } Outfit;

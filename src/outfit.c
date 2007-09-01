@@ -205,6 +205,8 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 					OUTFIT_GFX"%s.png", xml_get(node));
 			temp->gfx_space = gl_newSprite(str, 6, 6);
 		}
+		else if (xml_isNode(node,"sound"))
+			temp->sound = sound_get( xml_get(node) );
 		else if (xml_isNode(node,"damage")) {
 			cur = node->children;
 			do {
@@ -217,6 +219,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 #define MELEMENT(o,s)      if ((o) == 0) WARN("Outfit '%s' missing '"s"' element", temp->name)
 	if (temp->gfx_space==NULL)
 		WARN("Outfit '%s' missing 'gfx' element", temp->name);
+	MELEMENT(temp->sound,"sound");
 	MELEMENT(temp->thrust,"thrust");
 	MELEMENT(temp->turn,"turn");
 	MELEMENT(temp->speed,"speed");

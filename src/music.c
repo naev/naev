@@ -185,6 +185,8 @@ void music_exit()
 	for (i=0; i<nmusic_selection; i++)
 		free(music_selection[i]);
 	free(music_selection);
+
+	SDL_DestroyMutex( music_vorbis_lock );
 }
 
 
@@ -264,6 +266,10 @@ static void music_free (void)
 /*
  * music control functions
  */
+void music_volume( const double vol )
+{
+	alSourcef( music_source, AL_GAIN, (ALfloat)vol );
+}
 void music_load( const char* name )
 {
 	int i;

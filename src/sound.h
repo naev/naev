@@ -9,6 +9,10 @@
 #include "physics.h"
 
 
+#define SOUND_REFERENCE_DIST	500.
+#define SOUND_MAX_DIST			1000.
+
+
 /*
  * sound subsystem
  */
@@ -19,15 +23,13 @@ void sound_exit (void);
 /*
  * sound manipulation functions
  */
-ALuint sound_sndCreate( char* filename );
-void sound_sndFree( const ALuint snd );
+ALuint sound_get( char* name );
 
 
 /*
  * source manipulation function
  */
-#define sound_initSource(s)		(alGenSources(1,&(s)))
-#define sound_delSource(s)			(alDeleteSources(1,&(s))
+ALuint sound_dynSource( double px, double py, double vx, double vy, int looping );
 
 
 #endif /* SOUND_H */

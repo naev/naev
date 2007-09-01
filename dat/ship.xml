@@ -3,6 +3,7 @@
 <ship name="Llama">
 <GFX>llama</GFX>
 <GUI>minimal</GUI>
+<sound>engine</sound>
 <class>1</class>
 <movement>
 <thrust>320</thrust>
@@ -30,6 +31,7 @@
 <ship name="Hyena">
 <GFX>hyena</GFX>
 <GUI>minimal</GUI>
+<sound>engine</sound>
 <class>1</class>
 <movement>
 <thrust>400</thrust>
@@ -57,6 +59,7 @@
 <ship name="Lancelot">
 <GFX>lancelot</GFX>
 <GUI>minimal</GUI>
+<sound>engine</sound>
 <class>2</class>
 <movement>
 <thrust>280</thrust>

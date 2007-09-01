@@ -37,6 +37,7 @@
 </general>
 <specific type="6">
 <gfx>missile</gfx>
+<sound>missile</sound>
 <duration>5</duration>
 <thrust>1200</thrust>
 <turn>200</turn>

@@ -6,6 +6,8 @@
 
 #include "opengl.h"
 #include "outfit.h"
+#include "sound.h"
+
 
 /* target gfx dimensions */
 #define SHIP_TARGET_W	128
@@ -46,6 +48,9 @@ typedef struct {
 
 	/* GUI interface */
 	char* gui;
+
+	/* sound */
+	ALuint sound;
 
 	/* characteristics */
 	int crew;

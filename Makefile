@@ -39,7 +39,7 @@ LDFLAGS = -lm $(LDLUA) $(LDSDL) $(LDXML) $(LDTTF) $(LDGL) $(LDAL) $(LDVORBIS)
 DATA_AI = $(shell find ai/ -name '*.lua')
 DATA_GFX = $(shell find gfx/ -name '*png')
 DATA_XML = $(shell find dat/ -name '*.xml' -o -name '*.ttf')
-DATA_SND = $(shell find snd/ -name '*.ogg')
+DATA_SND = $(shell find snd/ -name '*.ogg' -o -name '*.wav')
 DATA = data
 DATAFILES = $(VERSIONFILE) $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND)
 

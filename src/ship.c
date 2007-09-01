@@ -54,81 +54,83 @@ static Ship* ship_parse( xmlNodePtr parent )
 	ShipOutfit *otemp, *ocur;
 
 	char str[PATH_MAX] = "\0";
-	xmlChar* xstr;
+	char* stmp;
 
-	temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name");
+	temp->name = xml_nodeProp(parent,"name");
 	if (temp->name == NULL) WARN("Ship in "SHIP_DATA" has invalid or no name");
 
 	node = parent->xmlChildrenNode;
 
 	do { /* load all the data */
-		if (strcmp((char*)node->name, "GFX")==0) {
-			snprintf( str, strlen((char*)node->children->content)+
+		if (xml_isNode(node,"GFX")) {
+			snprintf( str, strlen(xml_get(node))+
 					sizeof(SHIP_GFX)+sizeof(SHIP_EXT),
-					SHIP_GFX"%s"SHIP_EXT, (char*)node->children->content);
+					SHIP_GFX"%s"SHIP_EXT, xml_get(node));
 			temp->gfx_space = gl_newSprite(str, 6, 6);
-			snprintf( str, strlen((char*)node->children->content)+
+			snprintf( str, strlen(xml_get(node))+
 					sizeof(SHIP_GFX)+sizeof(SHIP_TARGET)+sizeof(SHIP_EXT),
-					SHIP_GFX"%s"SHIP_TARGET SHIP_EXT, (char*)node->children->content);
+					SHIP_GFX"%s"SHIP_TARGET SHIP_EXT, xml_get(node));
 			temp->gfx_target = gl_newImage(str);
 		}
-		else if (strcmp((char*)node->name, "GUI")==0)
-			temp->gui = strdup((char*)node->children->content);
-		else if (strcmp((char*)node->name, "class")==0)
-			temp->class = atoi((char*)node->children->content);
-		else if (strcmp((char*)node->name, "movement")==0) {
+		else if (xml_isNode(node,"GUI"))
+			temp->gui = strdup(xml_get(node));
+		else if (xml_isNode(node,"sound"))
+			temp->sound = sound_get( xml_get(node) );
+		else if (xml_isNode(node,"class"))
+			temp->class = atoi(xml_get(node));
+		else if (xml_isNode(node,"movement")) {
 			cur = node->children;
 			do {
-				if (strcmp((char*)cur->name,"thrust")==0)
-					temp->thrust = atoi((char*)cur->children->content);
-				else if (strcmp((char*)cur->name,"turn")==0)
-					temp->turn = atoi((char*)cur->children->content);
-				else if (strcmp((char*)cur->name,"speed")==0)
-					temp->speed = atoi((char*)cur->children->content);
+				if (xml_isNode(cur,"thrust"))
+					temp->thrust = xml_getInt(cur);
+				else if (xml_isNode(cur,"turn"))
+					temp->turn = xml_getInt(cur);
+				else if (xml_isNode(cur,"speed"))
+					temp->speed = xml_getInt(cur);
 			} while ((cur = cur->next));
 		}
-		else if (strcmp((char*)node->name,"health")==0) {
+		else if (xml_isNode(node,"health")) {
 			cur = node->children;
 			do {
-				if (strcmp((char*)cur->name,"armour")==0)
-					temp->armour = (double)atoi((char*)cur->children->content);
-				else if (strcmp((char*)cur->name,"shield")==0)
-					temp->shield = (double)atoi((char*)cur->children->content);
-				else if (strcmp((char*)cur->name,"energy")==0)
-					temp->energy = (double)atoi((char*)cur->children->content);
-				else if (strcmp((char*)cur->name,"armour_regen")==0)
-					temp->armour_regen = (double)(atoi((char*)cur->children->content))/60.0;
-				else if (strcmp((char*)cur->name,"shield_regen")==0)
-					temp->shield_regen = (double)(atoi((char*)cur->children->content))/60.0;
-				else if (strcmp((char*)cur->name,"energy_regen")==0)
-					temp->energy_regen = (double)(atoi((char*)cur->children->content))/60.0;
+				if (xml_isNode(cur,"armour"))
+					temp->armour = (double)xml_getInt(cur);
+				else if (xml_isNode(cur,"shield"))
+					temp->shield = (double)xml_getInt(cur);
+				else if (xml_isNode(cur,"energy"))
+					temp->energy = (double)xml_getInt(cur);
+				else if (xml_isNode(cur,"armour_regen"))
+					temp->armour_regen = (double)(xml_getInt(cur))/60.0;
+				else if (xml_isNode(cur,"shield_regen"))
+					temp->shield_regen = (double)(xml_getInt(cur))/60.0;
+				else if (xml_isNode(cur,"energy_regen"))
+					temp->energy_regen = (double)(xml_getInt(cur))/60.0;
 			} while ((cur = cur->next));
 		}
-		else if (strcmp((char*)node->name,"caracteristics")==0) {
+		else if (xml_isNode(node,"caracteristics")) {
 			cur = node->children;
 			do {
-				if (strcmp((char*)cur->name,"crew")==0)
-					temp->crew = atoi((char*)cur->children->content);
-				else if (strcmp((char*)cur->name,"mass")==0)
-					temp->mass = (double)atoi((char*)cur->children->content);
-				else if (strcmp((char*)cur->name,"cap_weapon")==0)
-					temp->cap_weapon = atoi((char*)cur->children->content);
-				else if (strcmp((char*)cur->name,"cap_cargo")==0)
-					temp->cap_cargo = atoi((char*)cur->children->content);
+				if (xml_isNode(cur,"crew"))
+					temp->crew = xml_getInt(cur);
+				else if (xml_isNode(cur,"mass"))
+					temp->mass = (double)xml_getInt(cur);
+				else if (xml_isNode(cur,"cap_weapon"))
+					temp->cap_weapon = xml_getInt(cur);
+				else if (xml_isNode(cur,"cap_cargo"))
+					temp->cap_cargo = xml_getInt(cur);
 			} while ((cur = cur->next));
 		}
-		else if (strcmp((char*)node->name,"outfits")==0) {
+		else if (xml_isNode(node,"outfits")) {
 			cur = node->children;
 			do {
-				if (strcmp((char*)cur->name,"outfit")==0) {
+				if (xml_isNode(cur,"outfit")) {
 					otemp = MALLOC_ONE(ShipOutfit);
-					otemp->data = outfit_get((char*)cur->children->content);
-					xstr = xmlGetProp(cur,(xmlChar*)"quantity");
-					if (!xstr)
+					otemp->data = outfit_get(xml_get(cur));
+					stmp = xml_nodeProp(cur,"quantity");
+					if (!stmp)
 						WARN("Ship '%s' is missing tag 'quantity' for outfit '%s'",
 								temp->name, otemp->data->name);
-					otemp->quantity = atoi((char*)xstr);
-					free(xstr);
+					otemp->quantity = atoi(stmp);
+					free(stmp);
 					otemp->next = NULL;
 					
 					if ((ocur=temp->outfit) == NULL) temp->outfit = otemp;
@@ -146,17 +148,18 @@ static Ship* ship_parse( xmlNodePtr parent )
 #define MELEMENT(o,s)		if (o == 0) WARN("Ship '%s' missing '"s"' element", temp->name)
 	if (temp->name == NULL) WARN("Ship '%s' missing 'name' tag", temp->name);
 	if (temp->gfx_space == NULL) WARN("Ship '%s' missing 'GFX' element", temp->name);
+	if (temp->gui == NULL) WARN("Ship '%s' missing 'GUI' element", temp->name);
 	MELEMENT(temp->thrust,"thrust");
 	MELEMENT(temp->turn,"turn");
 	MELEMENT(temp->speed,"speed");
-	MELEMENT(temp->crew,"crew");
-	MELEMENT(temp->mass,"mass");
 	MELEMENT(temp->armour,"armour");
 	MELEMENT(temp->armour_regen,"armour_regen");
 	MELEMENT(temp->shield,"shield");
 	MELEMENT(temp->shield_regen,"shield_regen");
 	MELEMENT(temp->energy,"energy");
 	MELEMENT(temp->energy_regen,"energy_regen");
+	MELEMENT(temp->crew,"crew");
+	MELEMENT(temp->mass,"mass");
 	MELEMENT(temp->cap_cargo,"cap_cargo");
 	MELEMENT(temp->cap_weapon,"cap_weapon");
 #undef MELEMENT

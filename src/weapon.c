@@ -38,6 +38,8 @@ typedef struct Weapon {
 
 	unsigned int timer; /* mainly used to see when the weapon was fired */
 
+	ALuint source; /* source for sound */
+
 	/* position update and render */
 	void (*update)(struct Weapon*, const double, WeaponLayer);
 	void (*think)(struct Weapon*); /* for the smart missiles */
@@ -58,6 +60,7 @@ static int mwfrontLayer = 0; /* alloced memory size */
 /*
  * Prototypes
  */
+static void weapon_sound( Weapon* w );
 static Weapon* weapon_create( const Outfit* outfit,
 		const double dir, const Vector2d* pos, const Vector2d* vel,
 		const unsigned int parent, const unsigned int target );
@@ -153,6 +156,18 @@ void weapons_update( const double dt )
 {
 	weapons_updateLayer(dt,WEAPON_LAYER_BG);
 	weapons_updateLayer(dt,WEAPON_LAYER_FG);
+}
+
+
+/*
+ * plays the weapon sound
+ */
+static void weapon_sound( Weapon* w )
+{
+	w->source = sound_dynSource( w->solid->pos.x, w->solid->pos.y,
+			w->solid->vel.x, w->solid->vel.y, 0 );
+	alSourcei( w->source, AL_BUFFER, w->outfit->sound );
+	alSourcePlay( w->source );
 }
 
 
@@ -279,6 +294,10 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 	if (weapon_isSmart(w)) (*w->think)(w);
 	
 	(*w->solid->update)(w->solid, dt);
+
+	/* update the sound */
+	alSource3f( w->source, AL_POSITION, w->solid->pos.x, w->solid->pos.y, 0. );
+	alSource3f( w->source, AL_VELOCITY, w->solid->vel.x, w->solid->vel.y, 0. );
 }
 
 
@@ -325,15 +344,18 @@ static Weapon* weapon_create( const Outfit* outfit,
 			vectcpy( &v, vel );
 			vect_cadd( &v, outfit->speed*cos(rdir), outfit->speed*sin(rdir));
 			w->solid = solid_create( mass, rdir, pos, &v );
+			weapon_sound(w);
 			break;
 
 		case OUTFIT_TYPE_MISSILE_SEEK_AMMO:
 			mass = w->outfit->mass;
 			w->solid = solid_create( mass, dir, pos, vel );
 			w->think = think_seeker; /* eet's a seeker */
+			weapon_sound(w);
 			break;
 
 		default: /* just dump it where the player is */
+			w->source = 0;
 			w->solid = solid_create( mass, dir, pos, vel );
 			break;
 	}
@@ -414,6 +436,10 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
 	}
 
 	for (i=0; wlayer[i] != w; i++); /* get to the current position */
+	if (w->source) {
+		alSourceStop( wlayer[i]->source );
+		alDeleteSources( 1, &wlayer[i]->source );
+	}
 	weapon_free(wlayer[i]);
 	wlayer[i] = NULL;
 	(*nlayer)--;

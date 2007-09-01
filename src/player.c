@@ -202,6 +202,7 @@ void player_new (void)
 
 	pilot_create( ship, "Player", faction_get("Player"), NULL,
 			d,  &v, NULL, PILOT_PLAYER );
+	alSourcef( player->source, AL_GAIN, 0.5 );
 	gl_bindCamera( &player->solid->pos ); /* set opengl camera */
 	space_init(system);
 
@@ -961,6 +962,15 @@ void player_think( Pilot* player )
 
 	vect_pset( &player->solid->force, player->ship->thrust * player_acc,
 			player->solid->dir );
+
+	/* set the listener stuff */
+	ALfloat ori[] = { 0., 0., 0.,  0., 0., 1. };
+	ori[0] = cos(player->solid->dir);
+	ori[1] = sin(player->solid->dir);
+	alListenerfv( AL_ORIENTATION, ori );
+	alListener3f( AL_POSITION, player->solid->pos.x, player->solid->pos.y, 0. );
+	alListener3f( AL_VELOCITY, player->solid->vel.x, player->solid->vel.y, 0. );
+
 }
 
 
