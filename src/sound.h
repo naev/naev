@@ -14,10 +14,29 @@
 
 
 /*
+ * virtual voice
+ */
+typedef struct {
+	ALuint source; /* source itself, 0 if not set */
+	ALuint buffer; /* buffer */
+
+	int priority; /* base priority */
+
+	double px, py; /* position */
+	double vx, vy; /* velocity */
+
+	unsigned int start; /* time started in ms */
+	unsigned int flags; /* flags to set properties */
+} alVoice;
+
+
+
+/*
  * sound subsystem
  */
 int sound_init (void);
 void sound_exit (void);
+void sound_update (void);
 
 
 /*
@@ -27,9 +46,13 @@ ALuint sound_get( char* name );
 
 
 /*
- * source manipulation function
+ * voice manipulation function
  */
-ALuint sound_dynSource( double px, double py, double vx, double vy, int looping );
+alVoice* sound_addVoice( int priority, double px, double py,
+		double vx, double vy, const ALuint buffer, const int looping );
+void sound_delVoice( alVoice* voice );
+void voice_update( alVoice* voice, double px, double py, 
+		double vx, double vy );
 
 
 #endif /* SOUND_H */

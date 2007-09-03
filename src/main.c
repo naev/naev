@@ -118,7 +118,7 @@ int main ( int argc, char** argv )
 	 */
 	if (sound_init()) WARN("Problem setting up sound!");
 	music_load( "Machina" );
-	music_play();
+	//music_play();
 
 
 	/*
@@ -185,6 +185,8 @@ int main ( int argc, char** argv )
 
 			input_handle(&event); /* handles all the events and player keybinds */
 		}
+
+		sound_update(); /* do sound stuff */
 
 		glClear(GL_COLOR_BUFFER_BIT);
 

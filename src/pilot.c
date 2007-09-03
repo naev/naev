@@ -321,14 +321,14 @@ static void pilot_update( Pilot* pilot, const double dt )
 
 	if (!pilot_isFlag(pilot, PILOT_HYPERSPACE) && 
 			VMOD(pilot->solid->vel) > pilot->ship->speed) /* shouldn't go faster */
-		vect_pset( &pilot->solid->vel, VMOD(pilot->solid->vel) - 0.3*pilot->ship->thrust*dt,
+		vect_pset( &pilot->solid->vel, pilot->ship->speed,
 				VANGLE(pilot->solid->vel) );
 
 	/* update the source */
-	alSource3f( pilot->source, AL_POSITION,
+	/*alSource3f( pilot->source, AL_POSITION,
 			pilot->solid->pos.x, pilot->solid->pos.y, 0. );
 	alSource3f( pilot->source, AL_VELOCITY,
-			pilot->solid->vel.x, pilot->solid->vel.y, 0. );
+			pilot->solid->vel.x, pilot->solid->vel.y, 0. );*/
 }
 
 
@@ -453,7 +453,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction, AI_Prof
 
 	/* set flags and functions */
 	if (flags & PILOT_PLAYER) {
-		alSourcef( pilot->source, AL_GAIN, 0. );
+		/*alSourcef( pilot->source, AL_GAIN, 0. );*/
 		pilot->think = player_think; /* players don't need to think! :P */
 		pilot->render = NULL; /* render will get called from player_think */
 		pilot_setFlag(pilot,PILOT_PLAYER); /* it is a player! */

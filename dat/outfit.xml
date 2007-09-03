@@ -8,6 +8,7 @@
 </general>
 <specific type="1">
 <gfx>lasergreen</gfx>
+<sound>laser</sound>
 <delay>500</delay>
 <speed>550</speed>
 <range>300</range>

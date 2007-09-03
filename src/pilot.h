@@ -83,7 +83,7 @@ typedef struct Pilot {
 	PilotOutfit* ammo; /* secondary ammo if needed */
 
 	/* sound source */
-	ALuint source;
+	/*ALuint source;*/
 
 	/* misc */
 	unsigned int flags; /* used for AI and others */

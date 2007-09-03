@@ -19,10 +19,19 @@
 #define SOUND_SUFFIX ".wav"
 
 
+/*
+ * gives the buffers a name
+ */
 typedef struct {
-	char *name;
-	ALuint buffer;
+	char *name; /* buffer's name */
+	ALuint buffer; /* assosciated OpenAL buffer */
 } alSound;
+
+
+#define VOICE_PLAYING		(1<<0)	/* voice is playing */
+#define VOICE_LOOPING		(1<<1)	/* voice is looping */
+#define voice_set(v,f)		((v)->flags |= f)
+#define voice_is(v,f)		((v)->flags & f)
 
 
 /*
@@ -45,6 +54,14 @@ static int nsound_list = 0;
 
 
 /*
+ * currenty sources playing
+ */
+static alVoice **voice_stack = NULL;
+static int nvoice_stack = 0;
+static int mvoice_stack = 0;
+
+
+/*
  * prototypes
  */
 static int sound_makeList (void);
@@ -57,6 +74,9 @@ static void sound_free( alSound *snd );
  */
 int sound_init (void)
 {
+	const ALchar* device = alcGetString( NULL, ALC_DEFAULT_DEVICE_SPECIFIER );
+	DEBUG("OpenAL using device '%s'", device );
+
 	/* opening the default device */
 	al_device = alcOpenDevice(NULL);
 	if (al_device == NULL) {
@@ -70,6 +90,9 @@ int sound_init (void)
 		WARN("Unable to create OpenAL context");
 		return -2;
 	}
+
+	/* clear the errors */
+	alGetError(); 
 
 	/* set active context */
 	if (alcMakeContextCurrent( al_context )==AL_FALSE) {
@@ -204,21 +227,117 @@ static void sound_free( alSound *snd )
 
 
 /*
- * creates a dynamic moving source
+ * updates the sounds and prioritizes sounds
  */
-ALuint sound_dynSource( double px, double py, double vx, double vy, int looping )
+void sound_update (void)
 {
-	ALuint tmp;
+	int i;
 
-	alGenSources( 1, &tmp );
+	/* TODO prioritize sounds */
+
+	for (i=0; i<nvoice_stack; i++) {
+		if (voice_is(voice_stack[i], VOICE_PLAYING)) {
+
+			/* update position */
+			alSource3f( voice_stack[i]->source, AL_POSITION,
+					voice_stack[i]->px, voice_stack[i]->py, 0. );
+			alSource3f( voice_stack[i]->source, AL_VELOCITY,
+					voice_stack[i]->vx, voice_stack[i]->vy, 0. );
+		}
+	}
+}
+
+
+/*
+ * creates a dynamic moving voice
+ */
+alVoice* sound_addVoice( int priority, double px, double py,
+		double vx, double vy, const ALuint buffer, const int looping )
+{
+	alVoice *voc;
+	ALenum err;
+
+	nvoice_stack++;
+	if (nvoice_stack > mvoice_stack)
+		voice_stack = realloc( voice_stack, ++mvoice_stack * sizeof(alVoice*) );
 	
-	alSourcei( tmp, AL_SOURCE_RELATIVE, AL_TRUE );
-	alSource3f( tmp, AL_POSITION, px, py, 0. );
-	alSource3f( tmp, AL_VELOCITY, vx, vy, 0. );
+	voc = malloc(sizeof(alVoice));
+	voice_stack[nvoice_stack-1] = voc;
 
-	if (looping) alSourcei( tmp, AL_LOOPING, AL_TRUE );
+	/* try to grab a source */
+	voc->source = 0;
+	alGenSources( 1, &voc->source );
+	err = alGetError();
+	if (err != AL_NO_ERROR) voc->source = 0;
 
-	return tmp;
+	/* set the data */
+	voc->priority = priority;
+	voc->start = SDL_GetTicks();
+	voc->buffer = buffer;
+	if (looping) voice_set( voc, VOICE_LOOPING );
+	voc->px = px;
+	voc->py = py;
+	voc->vx = vx;
+	voc->vy = vy;
+	
+	/* set the source */
+	if (voc->source) {
+		alSourcei( voc->source, AL_SOURCE_RELATIVE, AL_TRUE );
+		alSourcef( voc->source, AL_GAIN, 1. );
+		alSourcei( voc->source, AL_BUFFER, buffer );
+		alSource3f( voc->source, AL_POSITION, voc->px, voc->py, 0. );
+		alSource3f( voc->source, AL_VELOCITY, voc->vx, voc->vy, 0. );
+		if (voice_is( voc, VOICE_LOOPING ))
+			alSourcei( voc->source, AL_LOOPING, AL_TRUE );
+
+		/* try to play the source */
+		alSourcePlay( voc->source );
+		err = alGetError();
+		if (err == AL_NO_ERROR) voice_set( voc, VOICE_PLAYING );
+		else DEBUG("source play failure");
+	}
+
+	return voc;
+}
+
+/*
+ * deletes the voice
+ */
+void sound_delVoice( alVoice* voice )
+{
+	ALint stat;
+	int i;
+
+	for (i=0; i<nvoice_stack; i++)
+		if (voice == voice_stack[i])
+			break;
+	
+	/* no match is found */
+	if (i>=nvoice_stack) {
+		WARN("Unable to find voice  to free from stack");
+		return;
+	}
+
+	if (voice->source) {
+		alGetSourcei( voice->source, AL_SOURCE_STATE, &stat );
+		if (stat == AL_PLAYING) alSourceStop( voice->source );
+		alDeleteSources( 1, &voice->source );
+		voice->source = 0;
+	}
+
+	nvoice_stack--;
+	for ( ; i<nvoice_stack; i++)
+		voice_stack[i] = voice_stack[i+1];
+}
+
+
+void voice_update( alVoice* voice, double px, double py,
+		double vx, double vy )
+{
+	voice->px = px;
+	voice->py = py;
+	voice->vx = vx;
+	voice->vy = vy;
 }
 
 
