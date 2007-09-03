@@ -323,12 +323,6 @@ static void pilot_update( Pilot* pilot, const double dt )
 			VMOD(pilot->solid->vel) > pilot->ship->speed) /* shouldn't go faster */
 		vect_pset( &pilot->solid->vel, pilot->ship->speed,
 				VANGLE(pilot->solid->vel) );
-
-	/* update the source */
-	/*alSource3f( pilot->source, AL_POSITION,
-			pilot->solid->pos.x, pilot->solid->pos.y, 0. );
-	alSource3f( pilot->source, AL_VELOCITY,
-			pilot->solid->vel.x, pilot->solid->vel.y, 0. );*/
 }
 
 
@@ -442,18 +436,8 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction, AI_Prof
 		}
 	}
 
-	/* sound source */
-	/*if (pilot->ship->sound) {
-		pilot->source = sound_dynSource( pilot->solid->pos.x, pilot->solid->pos.y,
-				pilot->solid->vel.x, pilot->solid->vel.y, 1 );
-		alSourcei( pilot->source, AL_BUFFER, pilot->ship->sound );
-		alSourcePlay( pilot->source );
-	}*/
-
-
 	/* set flags and functions */
 	if (flags & PILOT_PLAYER) {
-		/*alSourcef( pilot->source, AL_GAIN, 0. );*/
 		pilot->think = player_think; /* players don't need to think! :P */
 		pilot->render = NULL; /* render will get called from player_think */
 		pilot_setFlag(pilot,PILOT_PLAYER); /* it is a player! */
@@ -513,10 +497,6 @@ unsigned int pilot_create( Ship* ship, char* name, Faction* faction, AI_Profile*
  */
 static void pilot_free( Pilot* p )
 {
-	/*if (p->ship->sound) {
-		alSourceStop( p->source );
-		alDeleteSources( 1, &p->source );
-	}*/
 	solid_free(p->solid);
 	free(p->outfits);
 	free(p->name);

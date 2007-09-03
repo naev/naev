@@ -82,9 +82,6 @@ typedef struct Pilot {
 	PilotOutfit* secondary; /* secondary weapon */
 	PilotOutfit* ammo; /* secondary ammo if needed */
 
-	/* sound source */
-	/*ALuint source;*/
-
 	/* misc */
 	unsigned int flags; /* used for AI and others */
 	unsigned int ptimer; /* generic timer for internal pilot use */

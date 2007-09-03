@@ -53,6 +53,8 @@ alVoice* sound_addVoice( int priority, double px, double py,
 void sound_delVoice( alVoice* voice );
 void voice_update( alVoice* voice, double px, double py, 
 		double vx, double vy );
+void sound_listener( double dir, double px, double py,
+		double vx, double vy );
 
 
 #endif /* SOUND_H */

@@ -963,12 +963,9 @@ void player_think( Pilot* player )
 			player->solid->dir );
 
 	/* set the listener stuff */
-	ALfloat ori[] = { 0., 0., 0.,  0., 0., 1. };
-	ori[0] = cos(player->solid->dir);
-	ori[1] = sin(player->solid->dir);
-	alListenerfv( AL_ORIENTATION, ori );
-	alListener3f( AL_POSITION, player->solid->pos.x, player->solid->pos.y, 0. );
-	alListener3f( AL_VELOCITY, player->solid->vel.x, player->solid->vel.y, 0. );
+	sound_listener( player->solid->dir,
+			player->solid->pos.x, player->solid->pos.y,
+			player->solid->vel.x, player->solid->vel.y );
 }
 
 

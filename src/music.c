@@ -26,6 +26,12 @@
 
 
 /*
+ * global sound mutex
+ */
+extern SDL_mutex *sound_lock;
+
+
+/*
  * saves the music to ram in this structure
  */
 typedef struct {
@@ -92,6 +98,7 @@ int music_thread( void* unused )
 		
 		if (music_is(MUSIC_PLAYING)) {
 			SDL_mutexP( music_vorbis_lock ); /* lock the mutex */
+			SDL_mutexP( sound_lock );
 
 			/* start playing current song */
 			active = 0; /* load first buffer */
@@ -105,8 +112,12 @@ int music_thread( void* unused )
 			if (stream_loadBuffer( music_buffer[active] )) music_rm(MUSIC_PLAYING);
 			alSourceQueueBuffers( music_source, 1, &music_buffer[active] );
 
+			SDL_mutexV( sound_lock );
+
 			active = 0; /* dive into loop */
 			while (music_is(MUSIC_PLAYING)) {
+
+				SDL_mutexP( sound_lock );
 
 				alGetSourcei( music_source, AL_BUFFERS_PROCESSED, &stat );
 				if (stat > 0) {
@@ -118,11 +129,18 @@ int music_thread( void* unused )
 
 					active = 1 - active;
 				}
+				
+				SDL_mutexV( sound_lock );
+
 				SDL_Delay(0);
 			}
+
+			SDL_mutexP( sound_lock );
+
 			alSourceStop( music_source );
 			alSourceUnqueueBuffers( music_source, 2, music_buffer );
 
+			SDL_mutexV( sound_lock );
 			SDL_mutexV( music_vorbis_lock );
 		}
 
@@ -166,10 +184,16 @@ int music_init()
 	music_vorbis_lock = SDL_CreateMutex();
 	music_find();
 	music_vorbis.file.fd = 0; /* indication it's not loaded */
+
+	SDL_mutexP( sound_lock );
+
 	alGenBuffers( 2, music_buffer );
 	alGenSources( 1, &music_source );
 	alSourcef( music_source, AL_ROLLOFF_FACTOR, 0. );
 	alSourcei( music_source, AL_SOURCE_RELATIVE, AL_TRUE );
+
+	SDL_mutexV( sound_lock );
+
 	return 0;
 }
 void music_exit()
@@ -268,7 +292,11 @@ static void music_free (void)
  */
 void music_volume( const double vol )
 {
+	SDL_mutexP( sound_lock );
+
 	alSourcef( music_source, AL_GAIN, (ALfloat)vol );
+
+	SDL_mutexV( sound_lock );
 }
 void music_load( const char* name )
 {

@@ -40,7 +40,7 @@ typedef struct Weapon {
 
 	unsigned int timer; /* mainly used to see when the weapon was fired */
 
-	/*alVoice* voice;*/ /* virtual voice */
+	alVoice* voice; /* virtual voice */
 
 	/* position update and render */
 	void (*update)(struct Weapon*, const double, WeaponLayer);
@@ -285,9 +285,9 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 	(*w->solid->update)(w->solid, dt);
 
 	/* update the sound */
-	/*if (w->voice)
+	if (w->voice)
 		voice_update( w->voice, w->solid->pos.x, w->solid->pos.y,
-				w->solid->vel.x, w->solid->vel.y );*/
+				w->solid->vel.x, w->solid->vel.y );
 }
 
 
@@ -334,22 +334,22 @@ static Weapon* weapon_create( const Outfit* outfit,
 			vectcpy( &v, vel );
 			vect_cadd( &v, outfit->speed*cos(rdir), outfit->speed*sin(rdir));
 			w->solid = solid_create( mass, rdir, pos, &v );
-			/*w->voice = sound_addVoice( VOICE_PRIORITY_BOLT,
+			w->voice = sound_addVoice( VOICE_PRIORITY_BOLT,
 					w->solid->pos.x, w->solid->pos.y,
-					w->solid->vel.x, w->solid->vel.y,  w->outfit->sound, 0 );*/
+					w->solid->vel.x, w->solid->vel.y,  w->outfit->sound, 0 );
 			break;
 
 		case OUTFIT_TYPE_MISSILE_SEEK_AMMO:
 			mass = w->outfit->mass;
 			w->solid = solid_create( mass, dir, pos, vel );
 			w->think = think_seeker; /* eet's a seeker */
-			/*w->voice = sound_addVoice( VOICE_PRIORITY_AMMO,
+			w->voice = sound_addVoice( VOICE_PRIORITY_AMMO,
 					w->solid->pos.x, w->solid->pos.y,
-					w->solid->vel.x, w->solid->vel.y,  w->outfit->sound, 0 );*/
+					w->solid->vel.x, w->solid->vel.y,  w->outfit->sound, 0 );
 			break;
 
 		default: /* just dump it where the player is */
-			/*w->voice = NULL;*/
+			w->voice = NULL;
 			w->solid = solid_create( mass, dir, pos, vel );
 			break;
 	}
@@ -444,7 +444,7 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
  */
 static void weapon_free( Weapon* w )
 {
-	/*sound_delVoice( w->voice );*/
+	sound_delVoice( w->voice );
 	solid_free(w->solid);
 	free(w);
 }
