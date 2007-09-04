@@ -15,6 +15,14 @@
 #include "music.h"
 
 
+/*
+ * this file controls all the routines for using a virtual voice
+ * wrapper system around the openal library to get 3d sound.
+ *
+ * currently it is only using positional sound and no doppler effect
+ */
+
+
 #define SOUND_PREFIX	"snd/sounds/"
 #define SOUND_SUFFIX ".wav"
 
@@ -73,6 +81,7 @@ static int mvoice_stack = 0;
 static int sound_makeList (void);
 static int sound_load( ALuint *buffer, char *filename );
 static void sound_free( alSound *snd );
+static int voice_getSource( alVoice* voc );
 
 
 /*
@@ -284,21 +293,12 @@ void sound_update (void)
 }
 
 
-/*
- * creates a dynamic moving voice
- */
-alVoice* sound_addVoice( int priority, double px, double py,
-		double vx, double vy, const ALuint buffer, const int looping )
+static int voice_getSource( alVoice* voc )
 {
-	alVoice *voc;
+	int ret;
 	ALenum err;
 
-	nvoice_stack++;
-	if (nvoice_stack > mvoice_stack)
-		voice_stack = realloc( voice_stack, ++mvoice_stack * sizeof(alVoice*) );
-	
-	voc = malloc(sizeof(alVoice));
-	voice_stack[nvoice_stack-1] = voc;
+	ret = 0; /* default return */
 
 	SDL_mutexP( sound_lock );
 
@@ -306,7 +306,56 @@ alVoice* sound_addVoice( int priority, double px, double py,
 	voc->source = 0;
 	alGenSources( 1, &voc->source );
 	err = alGetError();
-	if (err != AL_NO_ERROR) voc->source = 0;
+	if (err != AL_NO_ERROR) {
+		voc->source = 0;
+		ret = 1;
+	}
+	else { /* set the properties */
+		alSourcei( voc->source, AL_BUFFER, voc->buffer );
+
+		/* distance model */
+		alSourcef( voc->source, AL_MAX_DISTANCE, 200. );
+		alSourcef( voc->source, AL_REFERENCE_DISTANCE, 50. );
+
+		alSourcei( voc->source, AL_SOURCE_RELATIVE, AL_FALSE );
+		alSourcef( voc->source, AL_GAIN, 0.5 );
+		alSource3f( voc->source, AL_POSITION, voc->px, voc->py, 0. );
+		/*    alSource3f( voc->source, AL_VELOCITY, voc->vx, voc->vy, 0. ); */
+		if (voice_is( voc, VOICE_LOOPING ))
+			alSourcei( voc->source, AL_LOOPING, AL_TRUE );
+		else
+			alSourcei( voc->source, AL_LOOPING, AL_FALSE );
+
+		/* try to play the source */
+		alSourcePlay( voc->source );
+		err = alGetError();
+		if (err == AL_NO_ERROR) voice_set( voc, VOICE_PLAYING );
+		else ret = 2;
+	}
+
+	SDL_mutexV( sound_lock );
+
+	return 0;
+}
+
+
+/*
+ * creates a dynamic moving voice
+ */
+alVoice* sound_addVoice( int priority, double px, double py,
+		double vx, double vy, const ALuint buffer, const int looping )
+{
+	(void) vx;
+	(void) vy;
+
+	alVoice *voc;
+
+	nvoice_stack++;
+	if (nvoice_stack > mvoice_stack)
+		voice_stack = realloc( voice_stack, ++mvoice_stack * sizeof(alVoice*) );
+	
+	voc = malloc(sizeof(alVoice));
+	voice_stack[nvoice_stack-1] = voc;
 
 	/* set the data */
 	voc->priority = priority;
@@ -317,32 +366,8 @@ alVoice* sound_addVoice( int priority, double px, double py,
 	voc->py = py;
 /*	voc->vx = vx;
 	voc->vy = vy; */
-	
-	/* set the source */
-	if (voc->source) {
-		alSourcei( voc->source, AL_BUFFER, buffer );
 
-		/* distance model */
-		alSourcef( voc->source, AL_MAX_DISTANCE, 1000. );
-		alSourcef( voc->source, AL_REFERENCE_DISTANCE, 250. );
-
-		alSourcei( voc->source, AL_SOURCE_RELATIVE, AL_FALSE );
-		alSourcef( voc->source, AL_GAIN, 0.5 );
-		alSource3f( voc->source, AL_POSITION, voc->px, voc->py, 0. );
-/*		alSource3f( voc->source, AL_VELOCITY, voc->vx, voc->vy, 0. ); */
-		if (voice_is( voc, VOICE_LOOPING ))
-			alSourcei( voc->source, AL_LOOPING, AL_TRUE );
-		else
-			alSourcei( voc->source, AL_LOOPING, AL_FALSE );
-
-		/* try to play the source */
-		alSourcePlay( voc->source );
-		err = alGetError();
-		if (err == AL_NO_ERROR) voice_set( voc, VOICE_PLAYING );
-		else DEBUG("source play failure");
-	}
-
-	SDL_mutexV( sound_lock );
+	voice_getSource( voc );
 
 	return voc;
 }
@@ -386,6 +411,8 @@ void sound_delVoice( alVoice* voice )
 void voice_update( alVoice* voice, double px, double py,
 		double vx, double vy )
 {
+	(void) vx;
+	(void) vy;
 	voice->px = px;
 	voice->py = py;
 /*	voice->vx = vx;
@@ -399,6 +426,8 @@ void voice_update( alVoice* voice, double px, double py,
 void sound_listener( double dir, double px, double py,
 		double vx, double vy )
 {
+	(void) vx;
+	(void) vy;
 	SDL_mutexP( sound_lock );
 
 	ALfloat ori[] = { 0., 0., 0.,  0., 0., 1. };
