@@ -122,9 +122,8 @@ int sound_init (void)
 	/* set the master gain */
 	alListenerf( AL_GAIN, .5 );
 
+	/* set the distance model */
 	alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED );
-	ALenum err = alGetError();
-	DEBUG("%d", err);
 
 	SDL_mutexV( sound_lock );
 
