@@ -1,4 +1,26 @@
 
+	X.) DEPENDENCIES
+
+		X.1) Debian
+			X.1.1) Binary
+				* libsdl1.2debian
+				* libsdl-image1.2
+				* libgl1-mesa-dri
+				* libopenal0a
+				* libvorbis0a
+				* libvorbisfile3
+				* libxml2
+				* libttf2
+
+			X.1.2) Source
+				* libsdl1.2-dev
+				* libsdl-image1.2-dev
+				* libgl1-mesa-dev
+				* libopenal-dev
+				* libvorbis-dev
+				* libxml2-dev
+				* libttf-dev
+
 
  	X.) KEYBINDINGS
 
