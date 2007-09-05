@@ -3,91 +3,91 @@ control_rate = 2
 
 -- Required "control" function
 function control ()
-	if taskname() == "none" then
-		pushtask(0, "fly")
+	if ai.taskname() == "none" then
+		ai.pushtask(0, "fly")
 	end
 end
 
 -- Required "attacked" function
 function attacked ( attacker )
-	task = taskname()
+	task = ai.taskname()
 	if task ~= "attack" and task ~= "runaway" then
 
 		-- some taunting
 		taunt( attacker )
 
 		-- now pilot fights back
-		pushtask(0, "attack", attacker)
+		ai.pushtask(0, "attack", attacker)
 
 	elseif task == "attack" then
-			if gettargetid() ~= attacker then
-				pushtask(0, "attack", attacker)
+			if ai.targetid() ~= attacker then
+				ai.pushtask(0, "attack", attacker)
 			end
 	end
 end
 
 -- taunts
 function taunt ( target )
-num = rng(0,4)
+	num = ai.rnd(0,4)
 	if num == 0 then msg = "You dare attack me!"
 	elseif num == 1 then msg = "You think that you can take me on?"
 	elseif num == 2 then msg = "Die!"
 	elseif num == 3 then msg = "You'll regret this!"
 	end
-	if msg then comm(attacker, msg) end
+	if msg then ai.comm(attacker, msg) end
 end
 
 -- runs away
 function runaway ()
-	target = gettargetid()
+	target = ai.targetid()
 
 	-- make sure pilot exists
-	if not exists(target) then
-		poptask()
+	if not ai.exists(target) then
+		ai.poptask()
 		return
 	end
 		
-	dir = face( target, 1 )
-	accel()
+	dir = ai.face( target, 1 )
+	ai.accel()
 end
 
 -- attacks
 function attack ()
-	target = gettargetid()
+	target = ai.targetid()
 
 	-- make sure pilot exists
-	if not exists(target) then
-		poptask()
+	if not ai.exists(target) then
+		ai.poptask()
 		return
 	end
 
-	dir = face( target )
-	dist = getdist( getpos(target) )
-	second = secondary()
+	dir = ai.face( target )
+	dist = ai.dist( ai.pos(target) )
+	second = ai.secondary()
 
-	if secondary() == "Launcher" then
-		settarget(target)
-		shoot(2)
+	if ai.secondary() == "Launcher" then
+		ai.settarget(target)
+		ai.shoot(2)
 	end
 
 
-	if parmour() < 70 then
-		poptask()
-		pushtask(0, "runaway", target)
+	if ai.parmour() < 70 then
+		ai.poptask()
+		ai.pushtask(0, "runaway", target)
 	elseif dir < 10 and dist > 300 then
-		accel()
+		ai.accel()
 	elseif dir < 10 and dist < 300 then
-		shoot()
+		ai.shoot()
 	end
 end
 
 -- flies to the player
 function fly ()
 	target = player
-	dir = face(target)
-	dist = getdist( getpos(target) )
+	dir = ai.face(target)
+	dist = ai.dist( ai.pos(target) )
 	if dir < 10 and dist > 300 then
-		accel()
+		ai.accel()
 	end
 end
 

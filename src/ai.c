@@ -51,12 +51,16 @@
  */
 
 
+/* creates a new lua table */
+#define newtable(L) (lua_newtable(L), lua_gettop(L))
 /* calls the AI function with name f */
 #define AI_LCALL(f)				(lua_getglobal(L, f), lua_pcall(L, 0, 0, 0))
 /* registers a number constant n to name s (syntax like lua_regfunc) */
-#define lua_regnumber(l,s,n)	(lua_pushnumber(l,n), lua_setglobal(l,s))
+#define lua_regnumber(l,s,n)	\
+(lua_pushnumber(l,n), lua_setglobal(l,s))
 /* registers a C function */
-#define lua_regfunc(l,s,f)		(lua_pushcfunction(l,f), lua_setglobal(L,s))
+#define lua_regfunc(l,s,f)		\
+(lua_pushcfunction(l,f), lua_setglobal(L,s))
 /* L state, void* buf, int n size, char* s identifier */
 #define luaL_dobuffer(L, b, n, s) \
 	(luaL_loadbuffer(L, b, n, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
@@ -143,6 +147,7 @@ static int ai_brake( lua_State *L ); /* brake() */
 static int ai_getnearestplanet( lua_State *L ); /* pointer getnearestplanet() */
 static int ai_getrndplanet( lua_State *L ); /* pointor getrndplanet() */
 static int ai_hyperspace( lua_State *L ); /* [number] hyperspace() */
+static int ai_stop( lua_State *L ); /* stop() */
 
 /* combat */
 static int ai_combat( lua_State *L ); /* combat( number ) */
@@ -157,10 +162,52 @@ static int ai_settimer( lua_State *L ); /* settimer( number, number ) */
 static int ai_timeup( lua_State *L ); /* boolean timeup( number ) */
 
 /* misc */
-static int ai_createvect( lua_State *L ); /* createvect( number, number ) */
 static int ai_comm( lua_State *L ); /* say( number, string ) */
 static int ai_broadcast( lua_State *L ); /* broadcast( string ) */
 static int ai_rng( lua_State *L ); /* rng( number, number ) */
+
+
+static const luaL_reg ai_methods[] = {
+	{ "pushtask", ai_pushtask },
+	{ "poptask", ai_poptask },
+	{ "taskname", ai_taskname },
+	{ "exists", ai_exists },
+	{ "ismaxvel", ai_ismaxvel },
+	{ "isstopped", ai_isstopped },
+	{ "isenemy", ai_isenemy },
+	{ "isally", ai_isally },
+	{ "incombat", ai_incombat },
+	{ "target", ai_gettarget },
+	{ "targetid", ai_gettargetid },
+	{ "armour", ai_armour },
+	{ "shield", ai_shield },
+	{ "parmour", ai_parmour },
+	{ "pshield", ai_pshield },
+	{ "dist", ai_getdistance },
+	{ "pos", ai_getpos },
+	{ "minbrakedist", ai_minbrakedist },
+	{ "nearestplanet", ai_getnearestplanet },
+	{ "rndplanet", ai_getrndplanet },
+	{ "accel", ai_accel },
+	{ "turn", ai_turn },
+	{ "face", ai_face },
+	{ "brake", ai_brake },
+	{ "stop", ai_stop },
+	{ "hyperspace", ai_hyperspace },
+	{ "combat", ai_combat },
+	{ "settarget", ai_settarget },
+	{ "secondary", ai_secondary },
+	{ "shoot", ai_shoot },
+	{ "getenemy", ai_getenemy },
+	{ "hostile", ai_hostile },
+	{ "settimer", ai_settimer },
+	{ "timeup", ai_timeup },
+	{ "comm", ai_comm },
+	{ "broadcast", ai_broadcast },
+	{ "rnd", ai_rng },
+	{0,0} /* end */
+};
+
 
 
 /*
@@ -241,50 +288,8 @@ static int ai_loadProfile( char* filename )
 	lua_regnumber(L, "player", PLAYER_ID); /* player ID */
 
 	/* Register C functions in Lua */
-	/* tasks */
-	lua_regfunc(L, "pushtask", ai_pushtask);
-	lua_regfunc(L, "poptask", ai_poptask);
-	lua_regfunc(L, "taskname", ai_taskname);
-	/* consult values */
-	lua_regfunc(L, "gettarget", ai_gettarget);
-	lua_regfunc(L, "gettargetid", ai_gettargetid);
-	lua_regfunc(L, "armour", ai_armour);
-	lua_regfunc(L, "shield", ai_shield);
-	lua_regfunc(L, "parmour", ai_parmour);
-	lua_regfunc(L, "pshield", ai_pshield);
-	lua_regfunc(L, "getdist", ai_getdistance);
-	lua_regfunc(L, "getpos", ai_getpos);
-	lua_regfunc(L, "minbrakedist", ai_minbrakedist);
-	/* boolean expressions */
-	lua_regfunc(L, "exists", ai_exists);
-	lua_regfunc(L, "ismaxvel", ai_ismaxvel);
-	lua_regfunc(L, "isstopped", ai_isstopped);
-	lua_regfunc(L, "isenemy", ai_isenemy);
-	lua_regfunc(L, "isally", ai_isally);
-	lua_regfunc(L, "incombat", ai_incombat);
-	/* movement */
-	lua_regfunc(L, "accel", ai_accel);
-	lua_regfunc(L, "turn", ai_turn);
-	lua_regfunc(L, "face", ai_face);
-	lua_regfunc(L, "brake", ai_brake);
-	lua_regfunc(L, "getnearestplanet", ai_getnearestplanet);
-	lua_regfunc(L, "getrndplanet", ai_getrndplanet);
-	lua_regfunc(L, "hyperspace", ai_hyperspace);
-	/* combat */
-	lua_regfunc(L, "combat", ai_combat);
-	lua_regfunc(L, "settarget", ai_settarget);
-	lua_regfunc(L, "secondary", ai_secondary);
-	lua_regfunc(L, "shoot", ai_shoot);
-	lua_regfunc(L, "getenemy", ai_getenemy);
-	lua_regfunc(L, "hostile", ai_hostile);
-	/* timers */
-	lua_regfunc(L, "settimer", ai_settimer);
-	lua_regfunc(L, "timeup", ai_timeup);
-	/* misc */
-	lua_regfunc(L, "createvect", ai_createvect);
-	lua_regfunc(L, "comm", ai_comm);
-	lua_regfunc(L, "broadcast", ai_broadcast);
-	lua_regfunc(L, "rng", ai_rng);
+	luaL_register(L, "ai", ai_methods);
+
 
 	/* now load the file since all the functions have been previously loaded */
 	buf = pack_readfile( DATA, filename, &bufsize );
@@ -821,6 +826,21 @@ static int ai_hyperspace( lua_State *L )
 	return 1;
 }
 
+
+/*
+ * completely stops the pilot if it is below minimum vel error (no instastops)
+ */
+static int ai_stop( lua_State *L )
+{
+	(void) L; /* avoid gcc warning */
+
+	if (VMOD(cur_pilot->solid->vel) < MIN_VEL_ERR)
+		vect_pset( &cur_pilot->solid->vel, 0., 0. );
+
+	return 0;
+}
+
+
 /*
  * toggles the combat flag, default is on
  */
@@ -953,23 +973,6 @@ static int ai_timeup( lua_State *L )
 	return 1;
 }
 
-
-
-/*
- * creates a Vector2d
- */
-static int ai_createvect( lua_State *L )
-{
-	MIN_ARGS(2);
-	Vector2d* v = MALLOC_ONE(Vector2d);
-	double x = (lua_isnumber(L,1)) ? (double)lua_tonumber(L,1) : 0. ;
-	double y = (lua_isnumber(L,2)) ? (double)lua_tonumber(L,2) : 0. ;
-
-	vect_cset(v, x, y);
-
-	lua_pushlightuserdata(L, v);
-	return 1;
-}
 
 /*
  * makes the pilot say something to the player

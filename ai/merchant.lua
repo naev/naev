@@ -3,65 +3,67 @@ control_rate = 2
 
 -- Required "control" function
 function control ()
-	if taskname() == "none" then
-		planet = getrndplanet()
-		pushtask(0, "goto", planet)
+	if ai.taskname() == "none" then
+		planet = ai.rndplanet()
+		ai.pushtask(0, "goto", planet)
 	end
 end
 
 -- Required "attacked" function
 function attacked ( attacker )
-	if taskname() ~= "runaway" then
+	if ai.taskname() ~= "runaway" then
 
 		-- some messages
-		num = rng(0,3)
+		num = ai.rnd(0,3)
 		if num == 0 then msg = "Mayday! We are under attack!"
 		elseif num == 1 then msg = "Requesting assistance.  We are under attack!"
 		elseif num == 2 then msg = "Merchant vessle here under attack! Help!"
 		end
-		if msg then broadcast(msg) end
+		if msg then ai.broadcast(msg) end
 
 		-- Sir Robin bravely ran away
-		pushtask(0, "runaway", attacker)
+		ai.pushtask(0, "runaway", attacker)
 	end
 end
 
 -- runs away
 function runaway ()
-	target = gettargetid()
-	dir = face( target, 1 )
-	accel()
+	target = ai.targetid()
+	dir = ai.face( target, 1 )
+	ai.accel()
 end
 
 -- flies to the target
 function goto ()
-	target = gettarget()
-	dir = face(target)
-	dist = getdist( target )
-	bdist = minbrakedist()
+	target = ai.target()
+	dir = ai.face(target)
+	dist = ai.dist( target )
+	bdist = ai.minbrakedist()
 	if dir < 10 and dist > bdist then
-		accel()
+		ai.accel()
 	elseif dir < 10 and dist < bdist then
-		poptask()
-		pushtask(0,"stop")
+		ai.poptask()
+		ai.pushtask(0,"stop")
 	end
 end
 
 -- brakes
 function stop ()
-	brake()
-	if isstopped() then
-		poptask()
-		settimer(0, rng(8000,15000))
-		pushtask(0,"land")
+	if ai.isstopped() then
+		ai.stop()
+		ai.poptask()
+		ai.settimer(0, ai.rnd(8000,15000))
+		ai.pushtask(0,"land")
+	else
+		ai.brake()
 	end
 end
 
 
 -- waits
 function land ()
-	if timeup(0) then
-		pushtask(0,"runaway",player)
+	if ai.timeup(0) then
+		ai.pushtask(0,"runaway",player)
 	end
 end
 
