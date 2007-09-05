@@ -60,6 +60,7 @@ const uint64_t magic =  0x25524573; /* sER% */
  */
 static off_t getfilesize( const char* filename )
 {
+#ifdef _POSIX_SOURCE
 	struct stat file;
 
 	if (!stat( filename, &file ))
@@ -67,6 +68,18 @@ static off_t getfilesize( const char* filename )
 
 	ERR( "Unable to get filesize of %s", filename );
 	return 0;
+#else  /* not _POSIX_SOURCE */
+	long size;
+	FILE* fp = fopen( filename, "rb" );
+	if (fp == NULL) return 0;
+
+	fseek( fp, 0, SEEK_END );
+	size = ftell(fp);
+
+	fclose(fp);
+
+	return size;
+#endif /* _POSIX_SOURCE */
 }
 
 
@@ -75,21 +88,46 @@ static off_t getfilesize( const char* filename )
  */
 int pack_check( const char* filename )
 {
+	int ret;
+	char *buf;
+	
+	buf = malloc(sizeof(magic));
+
+#ifdef _POSIX_SOURCE
 	int fd = open( filename, O_RDONLY );
 	if (fd == -1) {
 		ERR("Erroring opening %s: %s", filename, strerror(errno));
 		return -1;
 	}
 
-	char* buf = malloc(sizeof(magic));
 	if (read( fd, buf, sizeof(magic) ) != sizeof(magic)) {
 		ERR("Error reading magic number: %s", strerror(errno));
 		free(buf);
 		return -1;
 	}
 
-	int ret = (memcmp(buf,&magic,sizeof(magic))==0) ? 0 : 1 ;
+	ret = (memcmp(buf,&magic,sizeof(magic))==0) ? 0 : 1 ;
+	close(fd);
+#else /* not _POSIX_SOURCE */
+	FILE* file = fopen( filename, "rb" );
+	if (file == NULL) {
+		ERR("Erroring opening '%s': %s", filename, strerror(errno));
+		return -1;
+	}
+
+	buf = malloc(sizeof(magic));
+	if (fread( buf, 1, sizeof(magic), file ) != sizeof(magic)) {
+		ERR("Error reading magic number: %s", strerror(errno));
+		free(buf);
+		return -1;
+	}
+
+	ret = (memcmp(buf,&magic,sizeof(magic))==0) ? 0 : 1 ;
+	fclose( file );
+#endif /* _POSIX_SOURCE */
+
 	free(buf);
+
 	return ret;
 }
 
@@ -97,22 +135,36 @@ int pack_check( const char* filename )
 /* 
  * packs nfiles infiles into outfile
  */
-#define WRITE(f,b,n)    if (write(f,b,n)==-1) { \
+#ifdef _POSIX_SOURCE
+#define WRITE(b,n)    if (write(outfd,b,n)==-1) { \
 	ERR("Error writing to file: %s", strerror(errno)); \
 	free(buf); return -1; }
+#else /* not _POSIX_SOURCE */
+#define WRITE(b,n)    if (fwrite(b,1,n,outf)==0) { \
+	ERR("Error writing to file: %s", strerror(errno)); \
+	free(buf); return -1; }
+#endif /* _POSIX_SOURCE */
 int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles )
 {
 	void *buf;
+#ifdef _POSIX_SOURCE
 	struct stat file;
+	int outfd, infd;
+#else /* _POSIX_SOURCE */
+	FILE *outf, *inf;
+#endif /* _POSIX_SOURCE */
 	uint32_t i;
 	int namesize;
-	int outfd, infd;
 	uint32_t indexsize, pointer;
 	int bytes;
 	const uint8_t b = '\0';
 
 	for (namesize=0,i=0; i < nfiles; i++) {/* make sure files exist before writing */
+#ifdef _POSIX_SOURCE
 		if (stat(infiles[i], &file)) {
+#else /* not _POSIX_SOURCE */
+		if (getfilesize(infiles[i]) == 0) {
+#endif /* _POSIX_SOURCE */
 			ERR("File %s does not exist", infiles[i]);
 			return -1;
 		}
@@ -129,8 +181,13 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
 	DEBUG("Index size is %d", indexsize );
 
 	/* creates the output file */
+#ifdef _POSIX_SOURCE
 	outfd = creat( outfile, PERMS );
 	if (outfd == -1) {
+#else /* not _POSIX_SOURCE */
+	outf = fopen( outfile, "wb" );
+	if (outf == NULL) {
+#endif /* _POSIX_SOURCE */
 		ERR("Unable to open %s for writing", outfile);
 		return -1;
 	}
@@ -140,18 +197,18 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
 	 */
 	buf = malloc(BLOCKSIZE);
 	/* magic number */
-	WRITE( outfd, &magic, sizeof(magic));
+	WRITE( &magic, sizeof(magic));
 	DEBUG("Wrote magic number");
 	/* number of files */
-	WRITE( outfd, &nfiles, sizeof(nfiles));
+	WRITE( &nfiles, sizeof(nfiles));
 	DEBUG("Wrote number of files: %d", nfiles);
 	/* create file dependent index part */
 	pointer = indexsize;
 	for (i=0; i<nfiles; i++) {
-		WRITE( outfd, infiles[i], strlen(infiles[i]) );
+		WRITE( infiles[i], strlen(infiles[i]) );
 		DEBUG("Fie '%s' at %d", infiles[i], pointer);
-		WRITE( outfd, &b, 1 );
-		WRITE( outfd, &pointer, 4 );
+		WRITE( &b, 1 );
+		WRITE( &pointer, 4 );
 		pointer += 4 + getfilesize( infiles[i] ) + 16; /* set pointer to be next file pos */
 	}
 	/*
@@ -161,22 +218,35 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
 	md5_byte_t *md5val = malloc(16);
 	for (i=0; i<nfiles; i++) {
 		bytes = (uint32_t)getfilesize( infiles[i] );
-		WRITE( outfd, &bytes, 4  ); /* filesize */
+		WRITE( &bytes, 4 ); /* filesize */
 		DEBUG("About to write file '%s' of %d bytes", infiles[i], bytes);
-		infd = open( infiles[i], O_RDONLY );
 		md5_init(&md5);
+#ifdef _POSIX_SOURCE
+		infd = open( infiles[i], O_RDONLY );
 		while ((bytes = read( infd, buf, BLOCKSIZE ))) {
-			WRITE( outfd, buf, bytes ); /* data */
+#else /* not _POSIX_SOURCE */
+		inf = fopen( infiles[i], "rb" );
+		while ((bytes = fread( buf, 1, BLOCKSIZE, inf ))) {
+#endif /* _POSIX_SOURCE */
+			WRITE( buf, bytes ); /* data */
 			md5_append( &md5, buf, bytes );
 		}
 		md5_finish(&md5, md5val);
-		WRITE( outfd, md5val, 16 );
+		WRITE( md5val, 16 );
+#ifdef _POSIX_SOURCE
 		close(infd);
+#else /* not _POSIX_SOURCE */
+		fclose(inf);
+#endif /* _POSIX_SOURCE */
 		DEBUG("Wrote file '%s'", infiles[i]);
 	}
 	free(md5val);
 
+#ifdef _POSIX_SOURCE
 	close( outfd );
+#else /* not _POSIX_SOURCE */
+	fclose( outf );
+#endif /* _POSIX_SOURCE */
 	free(buf);
 
 	DEBUG("Packfile success\n\t%d files\n\t%d bytes", nfiles, (int)getfilesize(outfile));
@@ -188,9 +258,15 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
 /*
  * opens the filename in packfile for reading
  */
-#define READ(f,b,n)  if (read(f,b,n)!=n) { \
+#ifdef _POSIX_SOURCE
+#define READ(b,n)  if (read(file->fd,(b),(n))!=(n)) { \
 	ERR("Fewer bytes read then expected"); \
 	free(buf); return -1; }
+#else /* not _POSIX_SOURCE */
+#define READ(b,n)  if (fread((b),1,(n),file->fp)!=(n)) { \
+	ERR("Fewer bytes read then expected"); \
+	free(buf); return -1; }
+#endif /* _POSIX_SOURCE */
 int pack_open( Packfile* file, const char* packfile, const char* filename )
 {
 	int j;
@@ -199,43 +275,54 @@ int pack_open( Packfile* file, const char* packfile, const char* filename )
 
 	file->start = file->end = 0;
 
+#ifdef _POSIX_SOURCE
 	file->fd = open( packfile, O_RDONLY );
 	if (file->fd == -1) {
+#else /* not _POSIX_SOURCE */
+	file->fp = fopen( packfile, "rb" );
+	if (file->fp == NULL) {
+#endif /* _POSIX_SOURCE */
 		ERR("Erroring opening %s: %s", filename, strerror(errno));
 		return -1;
 	}
 
-	READ( file->fd, buf, sizeof(magic)); /* make sure it's a packfile */
+	READ( buf, sizeof(magic)); /* make sure it's a packfile */
 	if (memcmp(buf, &magic, sizeof(magic))) {
 		ERR("File %s is not a valid packfile", filename);
 		return -1;
 	}
 
-	READ( file->fd, &nfiles, 4 );
+	READ( &nfiles, 4 );
 	for (i=0; i<nfiles; i++) { /* start to search files */
 		j = 0;
-		READ( file->fd, &buf[j], 1 ); /* get the name */
+		READ( &buf[j], 1 ); /* get the name */
 		while ( buf[j++] != '\0' )
-			READ( file->fd, &buf[j], 1 );
+			READ( &buf[j], 1 );
 
 		if (strcmp(filename, buf)==0) { /* found file */
-			READ( file->fd, &file->start, 4 );
+			READ( &file->start, 4 );
 			DEBUG("'%s' found at %d", filename, file->start);
 			break;
 		}
+#ifdef _POSIX_SOURCE
 		lseek( file->fd, 4, SEEK_CUR ); /* ignore the file location */
+#else /* not _POSIX_SOURCE */
+		fseek( file->fp, 4, SEEK_CUR );
+#endif /* _POSIX_SOURCE */
 	}
 	free(buf);
 	
 	if (file->start) { /* go to the beginning of the file */
+#ifdef _POSIX_SOURCE
 		if ((uint32_t)lseek( file->fd, file->start, SEEK_SET ) != file->start) {
+#else /* not _POSIX_SOURCE */
+		fseek( file->fp, file->start, SEEK_SET );
+		if (errno) {
+#endif /* _POSIX_SOURCE */
 			ERR("Failure to seek to file start: %s", strerror(errno));
 			return -1;
 		}
-		if (read( file->fd, &file->end, 4 ) != 4) {
-			ERR("Fewer bytes read then expected");
-			return -1;
-		}
+		READ( &file->end, 4 );
 		DEBUG("\t%d bytes", file->end);
 		file->pos = file->start;
 		file->end += file->start;
@@ -260,7 +347,11 @@ ssize_t pack_read( Packfile* file, void* buf, size_t count )
 
 	int bytes;
 
+#ifdef _POSIX_SOURCE
 	if ((bytes = read( file->fd, buf, count )) == -1) {
+#else /* not _POSIX_SOURCE */
+	if ((bytes = fread( buf, 1, count, file->fp)) == -1) {
+#endif /* _POSIX_SOURCE */
 		ERR("Error while reading file: %s", strerror(errno));
 		return -1;
 	}
@@ -308,7 +399,11 @@ void* pack_readfile( const char* packfile, const char* filename, uint32_t *files
 	md5_init(&md5);
 	md5_append( &md5, buf, bytes );
 	md5_finish(&md5, md5val);
-	if ((bytes = read( file->fd, md5fd, 16 ))== -1)
+#ifdef _POSIX_SOURCE
+	if ((bytes = read( file->fd, md5fd, 16 )) == -1)
+#else /* not _POSIX_SOURCE */
+	if ((bytes = fread( md5fd, 1, 16, file->fp )) == -1)
+#endif /* _POSIX_SOURCE */
 		WARN("Failure to read MD5, continuing anyways...");
 	else if (memcmp( md5val, md5fd, 16 ))
 		WARN("MD5 gives different value, possible memory corruption, continuing...");
@@ -336,42 +431,62 @@ void* pack_readfile( const char* packfile, const char* filename, uint32_t *files
  * filenames should be freed after use
  * on error it filenames is (char**)-1
  */
-#define READ(f,b,n)  if (read(f,b,n)!=n) { \
+#ifdef _POSIX_SOURCE
+#define READ(b,n)		if (read(fd,(b),(n))!=(n)) { \
 	ERR("Fewer bytes read then expected"); \
 	return NULL; }
+#else /* not _POSIX_SOURCE */
+#define READ(b,n)		if (fread((b),1,(n),fp)!=(n)) { \
+	ERR("Fewer bytes read then expected"); \
+	return NULL; }
+#endif /* _POSIX_SOURCE */
 char** pack_listfiles( const char* packfile, uint32_t* nfiles )
 {
-	int fd, j;
+#ifdef _POSIX_SOURCE
+	int fd;
+#else /* not _POSIX_SOURCE */
+	FILE *fp;
+#endif /* _POSIX_SOURCE */
+	int j;
 	uint32_t i;
 	char** filenames;
 	char* buf = malloc(sizeof(magic));
 
 	*nfiles = 0;
 
+#ifdef _POSIX_SOURCE
 	fd = open( packfile, O_RDONLY );
 	if (fd == -1) {
+#else /* not _POSIX_SOURCE */
+	fp = fopen( packfile, "rb" );
+	if (fp == NULL) {
+#endif /* _POSIX_SOURCE */
 		ERR("Erroring opening %s: %s", packfile, strerror(errno));
 		return NULL;
 	}
 
-	READ( fd, buf, sizeof(magic)); /* make sure it's a packfile */
+	READ( buf, sizeof(magic)); /* make sure it's a packfile */
 	if (memcmp(buf, &magic, sizeof(magic))) {
 		ERR("File %s is not a valid packfile", packfile);
 		return NULL;
 	}
 
-	READ( fd, nfiles, 4 );
+	READ( nfiles, 4 );
 	filenames = malloc(((*nfiles)+1)*sizeof(char*));
 	for (i=0; i<*nfiles; i++) { /* start to search files */
 		j = 0;
 		filenames[i] = malloc(MAX_FILENAME*sizeof(char));
-		READ( fd, &filenames[i][j], 1 ); /* get the name */
+		READ( &filenames[i][j], 1 ); /* get the name */
 		while ( filenames[i][j++] != '\0' )
-			READ( fd, &filenames[i][j], 1 );
-		READ( fd, buf, 4 ); /* skip the location */
+			READ( &filenames[i][j], 1 );
+		READ( buf, 4 ); /* skip the location */
 	}
 	free(buf);
+#ifdef _POSIX_SOURCE
 	close(fd);
+#else /* not _POSIX_SOURCE */
+	fclose(fp);
+#endif /* _POSIX_SOURCE */
 
 	return filenames;
 }
@@ -384,7 +499,12 @@ char** pack_listfiles( const char* packfile, uint32_t* nfiles )
  */
 int pack_close( Packfile* file )
 {
-	int i = close( file->fd );
+	int i;
+#ifdef _POSIX_SOURCE
+	i = close( file->fd );
+#else /* not _POSIX_SOURCE */
+	i = fclose( file->fp );
+#endif /* _POSIX_SOURCE */
 	return (i) ? -1 : 0 ;
 }
 

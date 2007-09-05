@@ -184,7 +184,7 @@ int music_init()
 {
 	music_vorbis_lock = SDL_CreateMutex();
 	music_find();
-	music_vorbis.file.fd = 0; /* indication it's not loaded */
+	music_vorbis.file.end = 0; /* indication it's not loaded */
 
 	SDL_mutexP( sound_lock );
 
@@ -279,7 +279,7 @@ static void music_free (void)
 {
 	SDL_mutexP( music_vorbis_lock );
 
-	if (music_vorbis.file.fd != 0) {
+	if (music_vorbis.file.end != 0) {
 		ov_clear( &music_vorbis.stream );
 		pack_close( &music_vorbis.file );
 	}
