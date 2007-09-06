@@ -15,12 +15,20 @@
 #include "player.h"
 #include "input.h"
 #include "opengl.h"
+#include "music.h"
 
 
 #define	conf_loadInt(n,i)		\
 lua_getglobal(L,n); \
 if (lua_isnumber(L, -1)) { \
 	i = (int)lua_tonumber(L, -1); \
+	lua_remove(L,-1); \
+}
+
+#define	conf_loadFloat(n,f)    \
+lua_getglobal(L,n); \
+if (lua_isnumber(L, -1)) { \
+	f = (double)lua_tonumber(L, -1); \
 	lua_remove(L,-1); \
 }
 
@@ -69,6 +77,8 @@ static void print_usage( char **argv )
 	  LOG("   -h n                  set height to n");*/
 	LOG("   -j n, --joystick n    use joystick n");
 	LOG("   -J s, --Joystick s    use joystick whose name contains s");
+	LOG("   -m f, --music f       sets the music volume to f");
+	LOG("   -s f, --sound f       sets the sound volume to f");
 	LOG("   -h, --help            display this message and exit");
 	LOG("   -v, --version         print the version and exit");
 }
@@ -100,6 +110,7 @@ void conf_setDefaults (void)
 int conf_loadConfig ( const char* file )
 {
 	int i = 0;
+	double d = 0.;
 
 	lua_State *L = luaL_newstate();
 	if (luaL_dofile(L, file) == 0) { /* configuration file exists */
@@ -111,17 +122,28 @@ int conf_loadConfig ( const char* file )
 		conf_loadInt("width",gl_screen.w);
 		conf_loadInt("height",gl_screen.h);
 		conf_loadBool("fullscreen",i);
-		if (i) gl_screen.flags |= OPENGL_FULLSCREEN;
+		if (i) { gl_screen.flags |= OPENGL_FULLSCREEN; i = 0; }
 		conf_loadBool("aa",i);
-		if (i) gl_screen.flags |= OPENGL_AA_POINT | OPENGL_AA_LINE | OPENGL_AA_POLYGON;
+		if (i) {
+			gl_screen.flags |= OPENGL_AA_POINT | OPENGL_AA_LINE | OPENGL_AA_POLYGON;
+			i = 0; }
 		conf_loadBool("aa_point",i);
-		if (i) gl_screen.flags |= OPENGL_AA_POINT;
+		if (i) { gl_screen.flags |= OPENGL_AA_POINT; i = 0; }
 		conf_loadBool("aa_line",i);
-		if (i) gl_screen.flags |= OPENGL_AA_LINE;
+		if (i) { gl_screen.flags |= OPENGL_AA_LINE; i = 0; }
 		conf_loadBool("aa_polygon",i);
-		if (i) gl_screen.flags |= OPENGL_AA_POLYGON;
+		if (i) { gl_screen.flags |= OPENGL_AA_POLYGON; i = 0; }
+
+		/* FPS */
 		conf_loadBool("showfps",show_fps);
 		conf_loadInt("maxfps",max_fps);
+
+		/* sound */
+		conf_loadFloat("sound",d);
+		if (d) { sound_volume(d); d = 0.; }
+		conf_loadFloat("music",d);
+		if (d) { music_volume(d); d = 0.; }
+
 
 		/* joystick */
 		lua_getglobal(L, "joystick");
@@ -206,12 +228,16 @@ void conf_parseCLI( int argc, char** argv )
 		{ "data", required_argument, 0, 'd' },
 		{ "joystick", required_argument, 0, 'j' },
 		{ "Joystick", required_argument, 0, 'J' },
+		{ "music", required_argument, 0, 'm' },
+		{ "sound", required_argument, 0, 's' },
 		{ "help", no_argument, 0, 'h' }, 
 		{ "version", no_argument, 0, 'v' },
 		{ NULL, 0, 0, 0 } };
 	int option_index = 0;
 	int c = 0;
-	while ((c = getopt_long(argc, argv, "fF:d:J:j:hv", long_options, &option_index)) != -1) {
+	while ((c = getopt_long(argc, argv,
+			"fF:d:J:j:V:hv",
+			long_options, &option_index)) != -1) {
 		switch (c) {
 			case 'f':
 				gl_screen.flags |= OPENGL_FULLSCREEN;
@@ -227,6 +253,12 @@ void conf_parseCLI( int argc, char** argv )
 				break;
 			case 'J':
 				namjoystick = strdup(optarg);
+				break;
+			case 'm':
+				music_volume( atof(optarg) );
+				break;
+			case 's':
+				sound_volume( atof(optarg) );
 				break;
 
 			case 'v':

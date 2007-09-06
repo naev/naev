@@ -43,6 +43,7 @@ void sound_update (void);
  * sound manipulation functions
  */
 ALuint sound_get( char* name );
+void sound_volume( const double vol );
 
 
 /*

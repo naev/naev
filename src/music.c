@@ -13,8 +13,9 @@
 #include "pack.h"
 
 
-#define MUSIC_PLAYING		(2<<0)
-#define MUSIC_KILL			(9<<0)
+#define MUSIC_STOPPED		(1<<1)
+#define MUSIC_PLAYING		(1<<2)
+#define MUSIC_KILL			(1<<9)
 #define music_is(f)			(music_state & f)
 #define music_set(f)			(music_state |= f)
 #define music_rm(f)			(music_state ^= f)
@@ -61,6 +62,12 @@ static int nmusic_selection = 0;
 
 
 /*
+ * volume
+ */
+static ALfloat mvolume = 1.;
+
+
+/*
  * vorbis stuff
  */
 static size_t ovpack_read( void *ptr, size_t size, size_t nmemb, void *datasource )
@@ -98,6 +105,8 @@ int music_thread( void* unused )
 	while (!music_is(MUSIC_KILL)) {
 		
 		if (music_is(MUSIC_PLAYING)) {
+			music_rm(MUSIC_STOPPED);
+
 			SDL_mutexP( music_vorbis_lock ); /* lock the mutex */
 			SDL_mutexP( sound_lock );
 
@@ -145,6 +154,7 @@ int music_thread( void* unused )
 			SDL_mutexV( music_vorbis_lock );
 		}
 
+		music_set(MUSIC_STOPPED);
 		SDL_Delay(0); /* we must not kill resources */
 	}
 
@@ -167,6 +177,10 @@ static int stream_loadBuffer( ALuint buffer )
 				&section );             /* current bitstream */
 
 		if (result == 0) return 1;
+		else if (result == OV_HOLE) 
+			WARN("OGG: Vorbis hole detected in music!");
+		else if (result == OV_EBADLINK)
+			WARN("OGG: Invalid stream section or corrupt link in music!");
 
 		size += result;
 		if (size == BUFFER_SIZE) break; /* buffer is full */
@@ -190,6 +204,7 @@ int music_init()
 
 	alGenBuffers( 2, music_buffer );
 	alGenSources( 1, &music_source );
+	alSourcef( music_source, AL_GAIN, mvolume );
 	alSourcef( music_source, AL_ROLLOFF_FACTOR, 0. );
 	alSourcei( music_source, AL_SOURCE_RELATIVE, AL_TRUE );
 
@@ -293,11 +308,18 @@ static void music_free (void)
  */
 void music_volume( const double vol )
 {
-	SDL_mutexP( sound_lock );
+	/* sanity check */
+	ALfloat fvol = ABS(vol);
+	if (fvol > 1.) fvol = 1.;
 
-	alSourcef( music_source, AL_GAIN, (ALfloat)vol );
+	mvolume = fvol;
 
-	SDL_mutexV( sound_lock );
+	/* only needed if playing */
+	if (music_set(MUSIC_PLAYING)) {
+		SDL_mutexP( sound_lock );
+		alSourcef( music_source, AL_GAIN, fvol );
+		SDL_mutexV( sound_lock );
+	}
 }
 void music_load( const char* name )
 {
@@ -305,6 +327,7 @@ void music_load( const char* name )
 	char tmp[64];
 
 	music_stop();
+	while (!music_is(MUSIC_STOPPED)) SDL_Delay(0);
 
 	for (i=0; i<nmusic_selection; i++)
 		if (strcmp(music_selection[i], name)==0) {

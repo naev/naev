@@ -76,6 +76,12 @@ static int mvoice_stack = 0;
 
 
 /*
+ * volume
+ */
+static ALfloat svolume = 0.5;
+
+
+/*
  * prototypes
  */
 static int sound_makeList (void);
@@ -120,7 +126,7 @@ int sound_init (void)
 	}
 
 	/* set the master gain */
-	alListenerf( AL_GAIN, .5 );
+	alListenerf( AL_GAIN, 1. );
 
 	/* set the distance model */
 	alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED );
@@ -292,6 +298,26 @@ void sound_update (void)
 }
 
 
+/*
+ * sets all the sounds volume to vol
+ */
+void sound_volume( const double vol )
+{
+	int i;
+
+	svolume = (ALfloat) vol;
+
+	SDL_mutexP( sound_lock );
+	for (i=0; i<nvoice_stack; i++)
+		if (voice_set(voice_stack[i],VOICE_PLAYING))
+			alSourcef( voice_stack[i]->source, AL_GAIN, svolume );
+	SDL_mutexV( sound_lock );
+}
+
+
+/*
+ * attempts to alloc a source for a voice
+ */
 static int voice_getSource( alVoice* voc )
 {
 	int ret;
@@ -317,7 +343,7 @@ static int voice_getSource( alVoice* voc )
 		alSourcef( voc->source, AL_REFERENCE_DISTANCE, 50. );
 
 		alSourcei( voc->source, AL_SOURCE_RELATIVE, AL_FALSE );
-		alSourcef( voc->source, AL_GAIN, 0.5 );
+		alSourcef( voc->source, AL_GAIN, svolume );
 		alSource3f( voc->source, AL_POSITION, voc->px, voc->py, 0. );
 		/*    alSource3f( voc->source, AL_VELOCITY, voc->vx, voc->vy, 0. ); */
 		if (voice_is( voc, VOICE_LOOPING ))

@@ -192,7 +192,6 @@ void takeoff (void)
 	if (!landed) return;
 
 	music_load( MUSIC_TAKEOFF );
-	music_play();
 
 	int sw, sh;
 	sw = planet->gfx_space->w;
