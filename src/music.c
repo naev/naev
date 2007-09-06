@@ -105,26 +105,31 @@ int music_thread( void* unused )
 	while (!music_is(MUSIC_KILL)) {
 		
 		if (music_is(MUSIC_PLAYING)) {
-			music_rm(MUSIC_STOPPED);
+			if (music_vorbis.file.end == 0)
+				music_rm(MUSIC_PLAYING);
+			else {
 
-			SDL_mutexP( music_vorbis_lock ); /* lock the mutex */
-			SDL_mutexP( sound_lock );
+				music_rm(MUSIC_STOPPED);
 
-			/* start playing current song */
-			active = 0; /* load first buffer */
-			if (stream_loadBuffer( music_buffer[active] )) music_rm(MUSIC_PLAYING);
-			alSourceQueueBuffers( music_source, 1, &music_buffer[active] );
+				SDL_mutexP( music_vorbis_lock ); /* lock the mutex */
+				SDL_mutexP( sound_lock );
 
-			/* start playing with buffer loaded */
-			alSourcePlay( music_source );
+				/* start playing current song */
+				active = 0; /* load first buffer */
+				if (stream_loadBuffer( music_buffer[active] )) music_rm(MUSIC_PLAYING);
+				alSourceQueueBuffers( music_source, 1, &music_buffer[active] );
 
-			active = 1; /* load second buffer */
-			if (stream_loadBuffer( music_buffer[active] )) music_rm(MUSIC_PLAYING);
-			alSourceQueueBuffers( music_source, 1, &music_buffer[active] );
+				/* start playing with buffer loaded */
+				alSourcePlay( music_source );
 
-			SDL_mutexV( sound_lock );
+				active = 1; /* load second buffer */
+				if (stream_loadBuffer( music_buffer[active] )) music_rm(MUSIC_PLAYING);
+				alSourceQueueBuffers( music_source, 1, &music_buffer[active] );
 
-			active = 0; /* dive into loop */
+				SDL_mutexV( sound_lock );
+
+				active = 0; /* dive into loop */
+			}
 			while (music_is(MUSIC_PLAYING)) {
 
 				SDL_mutexP( sound_lock );
