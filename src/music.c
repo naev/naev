@@ -194,7 +194,9 @@ static int stream_loadBuffer( ALuint buffer )
 		size += result;
 		if (size == BUFFER_SIZE) break; /* buffer is full */
 	}
-	alBufferData( buffer, AL_FORMAT_STEREO16, data, BUFFER_SIZE, music_vorbis.info->rate );
+	/* load the buffer up */
+	alBufferData( buffer, music_vorbis.format,
+			data, BUFFER_SIZE, music_vorbis.info->rate );
 
 	return 0;
 }
@@ -306,6 +308,7 @@ static void music_free (void)
 	if (music_vorbis.file.end != 0) {
 		ov_clear( &music_vorbis.stream );
 		pack_close( &music_vorbis.file );
+		music_vorbis.file.end = 0; /* somewhat officially ended */
 	}
 
 	SDL_mutexV( music_vorbis_lock );
