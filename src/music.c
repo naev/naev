@@ -23,7 +23,7 @@
 #define MUSIC_PREFIX			"snd/music/"
 #define MUSIC_SUFFIX			".ogg"
 
-#define BUFFER_SIZE			(4096 * 8)
+#define BUFFER_SIZE			(4096*8)
 
 
 /*
@@ -177,15 +177,19 @@ static int stream_loadBuffer( ALuint buffer )
 				&section );             /* current bitstream */
 
 		if (result == 0) return 1;
-		else if (result == OV_HOLE) 
+		else if (result == OV_HOLE) {
 			WARN("OGG: Vorbis hole detected in music!");
-		else if (result == OV_EBADLINK)
+			return 0;
+		}
+		else if (result == OV_EBADLINK) {
 			WARN("OGG: Invalid stream section or corrupt link in music!");
+			return -1;
+		}
 
 		size += result;
 		if (size == BUFFER_SIZE) break; /* buffer is full */
 	}
-	alBufferData( buffer, AL_FORMAT_STEREO16, data, size, music_vorbis.info->rate );
+	alBufferData( buffer, AL_FORMAT_STEREO16, data, BUFFER_SIZE, music_vorbis.info->rate );
 
 	return 0;
 }
