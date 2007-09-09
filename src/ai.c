@@ -168,15 +168,18 @@ static int ai_rng( lua_State *L ); /* rng( number, number ) */
 
 
 static const luaL_reg ai_methods[] = {
+	/* tasks */
 	{ "pushtask", ai_pushtask },
 	{ "poptask", ai_poptask },
 	{ "taskname", ai_taskname },
+	/* is */
 	{ "exists", ai_exists },
 	{ "ismaxvel", ai_ismaxvel },
 	{ "isstopped", ai_isstopped },
 	{ "isenemy", ai_isenemy },
 	{ "isally", ai_isally },
 	{ "incombat", ai_incombat },
+	/* get */
 	{ "target", ai_gettarget },
 	{ "targetid", ai_gettargetid },
 	{ "armour", ai_armour },
@@ -188,22 +191,27 @@ static const luaL_reg ai_methods[] = {
 	{ "minbrakedist", ai_minbrakedist },
 	{ "nearestplanet", ai_getnearestplanet },
 	{ "rndplanet", ai_getrndplanet },
+	/* movement */
 	{ "accel", ai_accel },
 	{ "turn", ai_turn },
 	{ "face", ai_face },
 	{ "brake", ai_brake },
 	{ "stop", ai_stop },
 	{ "hyperspace", ai_hyperspace },
+	/* combat */
 	{ "combat", ai_combat },
 	{ "settarget", ai_settarget },
 	{ "secondary", ai_secondary },
 	{ "shoot", ai_shoot },
 	{ "getenemy", ai_getenemy },
 	{ "hostile", ai_hostile },
+	/* timers */
 	{ "settimer", ai_settimer },
 	{ "timeup", ai_timeup },
+	/* messages */
 	{ "comm", ai_comm },
 	{ "broadcast", ai_broadcast },
+	/* rng */
 	{ "rnd", ai_rng },
 	{0,0} /* end */
 };
@@ -269,8 +277,12 @@ static int ai_loadProfile( char* filename )
 	uint32_t bufsize = 0;
 
 	profiles = realloc( profiles, sizeof(AI_Profile)*(++nprofiles) );
-	profiles[nprofiles-1].name = strndup( filename+strlen(AI_PREFIX),
-			strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX));
+
+	profiles[nprofiles-1].name =
+			malloc(sizeof(char)*(strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX))+1 );
+	snprintf( profiles[nprofiles-1].name,
+			strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX)+1,
+			"%s", filename+strlen(AI_PREFIX) );
 
 	profiles[nprofiles-1].L = luaL_newstate();
 
