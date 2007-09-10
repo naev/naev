@@ -73,10 +73,11 @@ static ALfloat mvolume = 1.;
 static size_t ovpack_read( void *ptr, size_t size, size_t nmemb, void *datasource )
 {	return (ssize_t) pack_read( datasource, ptr, size*nmemb );	} /* pack_read wrapper */
 static int ovpack_retneg (void) { return -1; } /* must return -1 */
+static int ovpack_retzero (void) { return 0; } /* must return 0 */
 ov_callbacks ovcall = {
 	.read_func = ovpack_read,
 	.seek_func = (int(*)(void*,ogg_int64_t,int)) ovpack_retneg,
-	.close_func = NULL,
+	.close_func = (int(*)(void*)) ovpack_retzero,
 	.tell_func =(long(*)(void*)) ovpack_retneg
 };
 
