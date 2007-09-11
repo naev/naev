@@ -1,3 +1,7 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
 
 
 #include "music.h"
@@ -8,7 +12,7 @@
 #include <AL/alc.h>
 #include <vorbis/vorbisfile.h>
 
-#include "main.h"
+#include "naev.h"
 #include "log.h"
 #include "pack.h"
 

@@ -1,3 +1,7 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
 
 
 #include "toolkit.h"

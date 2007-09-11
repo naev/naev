@@ -1,3 +1,7 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
 
 
 #include "conf.h"
@@ -10,7 +14,7 @@
 #include "lauxlib.h"
 #include "lualib.h"
 
-#include "main.h"
+#include "naev.h"
 #include "log.h"
 #include "player.h"
 #include "input.h"

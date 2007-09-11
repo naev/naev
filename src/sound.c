@@ -1,3 +1,7 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
 
 
 #include "sound.h"
@@ -9,7 +13,7 @@
 #include "SDL.h"
 #include "SDL_thread.h"
 
-#include "main.h"
+#include "naev.h"
 #include "log.h"
 #include "pack.h"
 #include "music.h"

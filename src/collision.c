@@ -1,9 +1,13 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
 
 
 #include "collision.h"
 
 
-#include "main.h"
+#include "naev.h"
 #include "log.h"
 
 

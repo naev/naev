@@ -1,3 +1,7 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
 
 
 #include "font.h"
@@ -6,7 +10,7 @@
 #include "freetype/freetype.h"
 #include "freetype/ftglyph.h"
 
-#include "main.h"
+#include "naev.h"
 #include "log.h"
 #include "pack.h"
 

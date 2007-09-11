@@ -1,3 +1,7 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
 
 
 #include "weapon.h"
@@ -6,7 +10,7 @@
 #include <malloc.h>
 #include <string.h>
 
-#include "main.h"
+#include "naev.h"
 #include "log.h"
 #include "rng.h"
 #include "pilot.h"

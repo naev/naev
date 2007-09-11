@@ -1,3 +1,7 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
 
 
 #include "ai.h"
@@ -8,7 +12,7 @@
 #include "lauxlib.h"
 #include "lualib.h"
 
-#include "main.h"
+#include "naev.h"
 #include "log.h"
 #include "pilot.h"
 #include "player.h"

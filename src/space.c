@@ -1,3 +1,7 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
 
 
 #include "space.h"
@@ -7,7 +11,7 @@
 
 #include "xml.h"
 
-#include "main.h"
+#include "naev.h"
 #include "log.h"
 #include "rng.h"
 #include "pack.h"

@@ -1,3 +1,7 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
 
 
 #include "player.h"
@@ -6,7 +10,7 @@
 
 #include "xml.h"
 
-#include "main.h"
+#include "naev.h"
 #include "pilot.h"
 #include "log.h"
 #include "opengl.h"

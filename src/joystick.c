@@ -1,3 +1,7 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
 
 
 #include "joystick.h"
@@ -5,7 +9,7 @@
 #include <string.h>
 #include "SDL.h"
 
-#include "main.h"
+#include "naev.h"
 #include "log.h"
 
 

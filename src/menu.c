@@ -1,3 +1,7 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
 
 
 #include "menu.h"
@@ -8,7 +12,7 @@
 
 #include "toolkit.h"
 #include "log.h"
-#include "main.h"
+#include "naev.h"
 #include "pause.h"
 
 

@@ -1,8 +1,12 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
 
 
 #include "input.h"
 
-#include "main.h"
+#include "naev.h"
 #include "log.h"
 #include "player.h"
 #include "pause.h"

@@ -1,3 +1,7 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
 
 
 #include "physics.h"
@@ -5,7 +9,7 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "main.h"
+#include "naev.h"
 #include "log.h"
 
 

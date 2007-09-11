@@ -1,3 +1,7 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
 
 
 #include "opengl.h"
@@ -11,7 +15,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 
-#include "main.h"
+#include "naev.h"
 #include "log.h"
 #include "pack.h"
 

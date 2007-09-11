@@ -1,3 +1,7 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
 
 
 #include "pilot.h"
@@ -8,7 +12,7 @@
 
 #include "xml.h"
 
-#include "main.h"
+#include "naev.h"
 #include "log.h"
 #include "weapon.h"
 #include "pack.h"
