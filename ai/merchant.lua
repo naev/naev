@@ -6,6 +6,10 @@ function control ()
 	task = ai.taskname()
 	if task == "hyperspace" then
 		ai.hyperspace() -- try to hyperspace
+	elseif task == "runaway" then
+		if ai.dist( ai.pos( ai.targetid() ) ) > 300 then
+			ai.hyperspace()
+		end
 	elseif task == "none" then
 		planet = ai.rndplanet()
 		ai.pushtask(0, "goto", planet)
