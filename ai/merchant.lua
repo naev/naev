@@ -3,7 +3,10 @@ control_rate = 2
 
 -- Required "control" function
 function control ()
-	if ai.taskname() == "none" then
+	task = ai.taskname()
+	if task == "hyperspace" then
+		ai.hyperspace() -- try to hyperspace
+	elseif task == "none" then
 		planet = ai.rndplanet()
 		ai.pushtask(0, "goto", planet)
 	end
@@ -59,11 +62,18 @@ function stop ()
 	end
 end
 
-
 -- waits
 function land ()
 	if ai.timeup(0) then
-		ai.pushtask(0,"runaway",player)
+		ai.pushtask(0,"hyperspace")
+	end
+end
+
+-- goes hyperspace
+function hyperspace ()
+	dir = ai.face(-1) -- face away from (0,0)
+	if (dir < 10) then
+		ai.accel()
 	end
 end
 

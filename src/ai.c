@@ -729,22 +729,26 @@ static int ai_face( lua_State *L )
 	MIN_ARGS(1);
 	Vector2d* v; /* get the position to face */
 	Pilot* p;
+	double mod, diff;
+	int invert = 0;
+	int n = -2;
 
-	if (lua_isnumber(L,1)) {
-		p = pilot_get((unsigned int)lua_tonumber(L,1));
+	if (lua_isnumber(L,1))
+		n = (int)lua_tonumber(L,1);
+
+	if (n >= 0 ) {
+		p = pilot_get(n);
 		if (p==NULL) return 0; /* make sure pilot is valid */
 		v = &p->solid->pos;
 	}
 	else if (lua_islightuserdata(L,1)) v = (Vector2d*)lua_topointer(L,1);
 
-	double mod = -10;
-	if (lua_gettop(L) > 1 && lua_isnumber(L,2))
-		switch ((int)lua_tonumber(L,2)) {
-			case 0: break;
-			case 1: mod *= -1; break;
-			case 2: break;
-		}
-	double diff = angle_diff(cur_pilot->solid->dir,vect_angle(&cur_pilot->solid->pos, v));
+	mod = -10;
+	if (lua_gettop(L) > 1 && lua_isnumber(L,2)) invert = (int)lua_tonumber(L,2);
+	if (invert) mod *= -1;
+	diff = angle_diff(cur_pilot->solid->dir,
+			(n==-1) ? VANGLE(cur_pilot->solid->pos) :
+				vect_angle(&cur_pilot->solid->pos, v));
 
 	pilot_turn = mod*diff;
 

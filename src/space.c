@@ -201,9 +201,6 @@ int space_hyperspace( Pilot* p )
 {
 	if (!space_canHyperspace(p)) return -1;
 
-	/* too fast */
-	//if (VMOD(p->solid->vel) > MAX_HYPERSPACE_VEL) return -2;
-
 	/* pilot is now going to get automatically ready for hyperspace */
 	pilot_setFlag(p, PILOT_HYP_PREP);
 

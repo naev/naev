@@ -360,7 +360,7 @@ static void pilot_hyperspace( Pilot* p )
 		double diff;
 
 		if (VMOD(p->solid->vel) > MIN_VEL_ERR) {
-			diff = pilot_face( p, VANGLE(player->solid->vel) + M_PI );
+			diff = pilot_face( p, VANGLE(p->solid->vel) + M_PI );
 
 			if (ABS(diff) < MAX_DIR_ERR) /* brake */
 				vect_pset( &p->solid->force, p->ship->thrust, p->solid->dir );
@@ -369,7 +369,7 @@ static void pilot_hyperspace( Pilot* p )
 		else {
 
 			vectnull( &p->solid->force ); /* stop accel */
-			diff = pilot_face( p, VANGLE(player->solid->pos) );
+			diff = pilot_face( p, VANGLE(p->solid->pos) );
 
 			if (ABS(diff) < MAX_DIR_ERR) { /* we can now prepare the jump */
 				p->solid->dir_vel = 0.;
@@ -519,6 +519,7 @@ void pilot_destroy(Pilot* p)
 	for (i=0; i < pilots; i++)
 		if (pilot_stack[i]==p)
 			break;
+	pilots--;
 
 	while (i < pilots) {
 		pilot_stack[i] = pilot_stack[i+1];

@@ -82,7 +82,7 @@ static int mvoice_stack = 0;
 /*
  * volume
  */
-static ALfloat svolume = 0.5;
+static ALfloat svolume = 0.3;
 
 
 /*
