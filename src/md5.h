@@ -1,8 +1,4 @@
 /*
- * See Licensing and Copyright notice in naev.h
- */
-
-/*
   Copyright (C) 1999, 2002 Aladdin Enterprises.  All rights reserved.
 
   This software is provided 'as-is', without any express or implied
