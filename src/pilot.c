@@ -89,7 +89,7 @@ unsigned int pilot_getNearest( const Pilot* p )
 	for (tp=0,d=0.,i=0; i<pilots; i++)
 		if (areEnemies(p->faction, pilot_stack[i]->faction)) {
 			td = vect_dist(&pilot_stack[i]->solid->pos, &p->solid->pos);
-			if (!pilot_isDisabled(pilot_stack[i]) &&  ((!tp) || (td < d))) {
+			if (!pilot_isDisabled(pilot_stack[i]) && ((!tp) || (td < d))) {
 				d = td;
 				tp = pilot_stack[i]->id;
 			}
@@ -109,7 +109,7 @@ unsigned pilot_getHostile (void)
 	for (tp=PLAYER_ID,d=0.,i=0; i<pilots; i++)
 		if (pilot_isFlag(pilot_stack[i],PILOT_HOSTILE)) {
 			td = vect_dist(&pilot_stack[i]->solid->pos, &player->solid->pos);
-			if ((tp==PLAYER_ID) || (td < d)) {
+			if (!pilot_isDisabled(pilot_stack[i]) && ((tp==PLAYER_ID) || (td < d))) {
 				d = td;
 				tp = pilot_stack[i]->id;
 			}
@@ -237,18 +237,33 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
 /*
  * damages the pilot
  */
-void pilot_hit( Pilot* p, const double damage_shield, const double damage_armour )
+void pilot_hit( Pilot* p, const Solid* w,
+		const double damage_shield, const double damage_armour )
 {
-	if (p->shield-damage_shield > 0.)
+	double dam_mod;
+
+	if (p->shield-damage_shield > 0.) {
 		p->shield -= damage_shield;
+		dam_mod = damage_shield/p->shield_max;
+	}
 	else if (p->shield > 0.) { /* shields can take part of the blow */
 		p->armour -= p->shield/damage_shield*damage_armour;
 		p->shield = 0.;
+		dam_mod = (damage_shield+damage_armour) / (p->shield_max+p->armour_max);
 	}
-	else if (p->armour-damage_armour > 0.)
+	else if (p->armour-damage_armour > 0.) {
 		p->armour -= damage_armour;
-	else
+		dam_mod = damage_armour/p->armour_max;
+	}
+	else {
 		p->armour = 0.;
+		dam_mod = 0.;
+	}
+
+	/* knock back effect is dependent on both damage and mass of the weapon */
+	vect_cadd( &p->solid->vel,
+			w->vel.x * (dam_mod/4. + w->mass/p->solid->mass/4.),
+			w->vel.y * (dam_mod/4. + w->mass/p->solid->mass/4.) );
 }
 
 

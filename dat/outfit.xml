@@ -4,7 +4,7 @@
 <general>
 <max>5</max>
 <tech>2</tech>
-<mass>5</mass>
+<mass>0</mass>
 </general>
 <specific type="1">
 <gfx>lasergreen</gfx>

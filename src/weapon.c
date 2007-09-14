@@ -307,7 +307,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer )
 		pilot_setFlag( p, PILOT_HOSTILE);
 
 	/* inform the ship that it should take some damage */
-	pilot_hit( p, w->outfit->damage_shield, w->outfit->damage_armour );
+	pilot_hit( p, w->solid, w->outfit->damage_shield, w->outfit->damage_armour );
 	/* no need for the weapon particle anymore */
 	weapon_destroy(w,layer);
 }

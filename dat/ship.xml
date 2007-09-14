@@ -20,7 +20,7 @@
 </health>
 <caracteristics>
 <crew>2</crew>
-<mass>7</mass>
+<mass>32</mass>
 <cap_weapon>20</cap_weapon>
 <cap_cargo>25</cap_cargo>
 </caracteristics>
@@ -48,7 +48,7 @@
 </health>
 <caracteristics>
 <crew>2</crew>
-<mass>5</mass>
+<mass>25</mass>
 <cap_weapon>25</cap_weapon>
 <cap_cargo>10</cap_cargo>
 </caracteristics>
