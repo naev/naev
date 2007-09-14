@@ -89,7 +89,7 @@ unsigned int pilot_getNearest( const Pilot* p )
 	for (tp=0,d=0.,i=0; i<pilots; i++)
 		if (areEnemies(p->faction, pilot_stack[i]->faction)) {
 			td = vect_dist(&pilot_stack[i]->solid->pos, &p->solid->pos);
-			if (!pilot_isDisabled(pilot_stack[i]) &&  ((!tp) || (td < d))) {
+			if (!pilot_isDisabled(pilot_stack[i]) && ((!tp) || (td < d))) {
 				d = td;
 				tp = pilot_stack[i]->id;
 			}
@@ -109,7 +109,7 @@ unsigned pilot_getHostile (void)
 	for (tp=PLAYER_ID,d=0.,i=0; i<pilots; i++)
 		if (pilot_isFlag(pilot_stack[i],PILOT_HOSTILE)) {
 			td = vect_dist(&pilot_stack[i]->solid->pos, &player->solid->pos);
-			if ((tp==PLAYER_ID) || (td < d)) {
+			if (!pilot_isDisabled(pilot_stack[i]) && ((tp==PLAYER_ID) || (td < d))) {
 				d = td;
 				tp = pilot_stack[i]->id;
 			}
