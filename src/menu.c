@@ -57,6 +57,7 @@ static void info_menu_close( char* str );
 void menu_small (void)
 {
 	if (menu_isOpen(MENU_SMALL)) return; /* menu is already open */
+	pause();
 
 	unsigned int wid;
 	wid = window_create( "Menu", -1, -1, MENU_WIDTH, MENU_HEIGHT );
@@ -70,7 +71,6 @@ void menu_small (void)
 			BUTTON_WIDTH, BUTTON_HEIGHT,
 			"btnResume", "Resume", menu_small_close );
 
-	pause();
 	menu_Open(MENU_SMALL);
 }
 static void menu_small_close( char* str )
@@ -111,6 +111,7 @@ static void exit_game (void)
 void info_menu (void)
 {
 	if (menu_isOpen(MENU_INFO)) return;
+	pause();
 
 	char str[128];
 	unsigned int wid;
@@ -155,5 +156,6 @@ static void info_menu_close( char* str )
 		window_destroy( window_get("Info") );
 
 	menu_Close(MENU_INFO);
+	unpause();
 }
 

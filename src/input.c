@@ -195,10 +195,10 @@ static void input_key( int keynum, double value, int abs )
 		if (value==KEY_PRESS) player_setFlag(PLAYER_PRIMARY);
 		else if (value==KEY_RELEASE) player_rmFlag(PLAYER_PRIMARY);
 	/* targetting */
-	} else if (KEY("target")) {
+	} else if (KEY("target") && !paused) {
 		if (value==KEY_PRESS) player_target = pilot_getNext(player_target);
 
-	} else if (KEY("target_nearest")) {
+	} else if (KEY("target_nearest") && !paused) {
 		if (value==KEY_PRESS) player_target = pilot_getHostile();
 	/* face the target */
 	} else if (KEY("face")) {
