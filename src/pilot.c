@@ -32,7 +32,12 @@ static unsigned int pilot_id = PLAYER_ID;
 Pilot** pilot_stack = NULL; /* not static, used in player.c, weapon.c, pause.c and ai.c */
 int pilots = 0; /* same */
 static int mpilots = 0;
+
+/*
+ * stuff from player.c
+ */
 extern Pilot* player;
+extern unsigned int combat_rating;
 
 /* stack of fleets */
 static Fleet* fleet_stack = NULL;
@@ -237,7 +242,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
 /*
  * damages the pilot
  */
-void pilot_hit( Pilot* p, const Solid* w,
+void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 		const double damage_shield, const double damage_armour )
 {
 	double dam_mod;
@@ -255,9 +260,17 @@ void pilot_hit( Pilot* p, const Solid* w,
 		p->armour -= damage_armour;
 		dam_mod = damage_armour/p->armour_max;
 	}
-	else {
+	else { /* officially dead */
+
 		p->armour = 0.;
 		dam_mod = 0.;
+
+		if (!pilot_isFlag(p, PILOT_DEAD)) {
+			pilot_setFlag(p, PILOT_DEAD);
+
+			/* adjust the combat rating based on pilot mass */
+			if (shooter==PLAYER_ID) combat_rating += MAX( 1, p->ship->mass/50 );
+		}
 	}
 
 	/* knock back effect is dependent on both damage and mass of the weapon */

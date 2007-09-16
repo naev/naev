@@ -28,8 +28,10 @@
  * the player
  */
 extern Pilot* player;
+extern char* player_name;
 extern unsigned int player_flags;
 extern unsigned int credits;
+extern unsigned int combat_rating;
 
 
 /*
@@ -57,6 +59,7 @@ void player_renderBG (void); /* renders BG layer player stuff */
 void player_message( const char *fmt, ... );
 void player_clear (void);
 void player_warp( const double x, const double y );
+const char* player_rating (void);
 
 /* 
  * keybind actions

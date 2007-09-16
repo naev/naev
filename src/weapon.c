@@ -115,6 +115,8 @@ void weapons_pause (void)
 {
 	int i;
 	unsigned int t = SDL_GetTicks();
+
+	/* adjust layer's time */
 	for (i=0; i<nwbackLayer; i++)
 		wbackLayer[i]->timer -= t;
 	for (i=0; i<nwfrontLayer; i++)
@@ -124,6 +126,8 @@ void weapons_unpause (void)
 {
 	int i;                            
 	unsigned int t = SDL_GetTicks();
+
+	/* adjust layer's time */
 	for (i=0; i<nwbackLayer; i++) 
 		wbackLayer[i]->timer += t;
 	for (i=0; i<nwfrontLayer; i++) 
@@ -307,7 +311,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer )
 		pilot_setFlag( p, PILOT_HOSTILE);
 
 	/* inform the ship that it should take some damage */
-	pilot_hit( p, w->solid, w->outfit->damage_shield, w->outfit->damage_armour );
+	pilot_hit( p, w->solid, w->parent, w->outfit->damage_shield, w->outfit->damage_armour );
 	/* no need for the weapon particle anymore */
 	weapon_destroy(w,layer);
 }

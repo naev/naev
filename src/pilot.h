@@ -41,7 +41,8 @@
 #define PILOT_HYP_BEGIN		(1<<6) /* pilot is starting engines */
 #define PILOT_HYPERSPACE	(1<<7) /* pilot is in hyperspace */
 #define PILOT_DISABLED		(1<<9) /* pilot is disabled */
-#define PILOT_DELETE			(1<<10) /* pilot will get deleted asap */
+#define PILOT_DEAD			(1<<10) /* pilot is in it's dying throes */
+#define PILOT_DELETE			(1<<15) /* pilot will get deleted asap */
 
 /* makes life easier */
 #define pilot_isPlayer(p)	((p)->flags & PILOT_PLAYER)
@@ -132,7 +133,7 @@ Fleet* fleet_get( const char* name );
  * misc
  */
 void pilot_shoot( Pilot* p, const unsigned int target, const int secondary );
-void pilot_hit( Pilot* p, const Solid* w,
+void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 		const double damage_shield, const double damage_armour );
 void pilot_setAmmo( Pilot* p );
 double pilot_face( Pilot* p, const float dir );

@@ -16,6 +16,7 @@
 #include "pause.h"
 #include "pilot.h"
 #include "space.h"
+#include "player.h"
 
 
 #define MENU_WIDTH	120
@@ -124,9 +125,9 @@ void info_menu (void)
 			"Combat Rating:\n"
 			);
 	snprintf( str, 128, 
-			"Foobar\n"
-			"Luser\n"
-			);
+			"%s\n"
+			"%s\n"
+			, player_name, player_rating() );
 	window_addText( wid, 120, 20,
 			INFO_WIDTH-120-BUTTON_WIDTH, INFO_HEIGHT-60,
 			0, "txtPilot", &gl_smallFont, &cBlack, str );

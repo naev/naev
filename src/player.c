@@ -44,11 +44,16 @@
  * player stuff
  */
 Pilot* player = NULL; /* ze player */
-unsigned int credits = 0;
+/* player global properties */
+char* player_name = NULL; /* ze name */
+unsigned int credits = 0; /* ze monies */
+unsigned int combat_rating = 0; /* ze rating */
 unsigned int player_flags = 0; /* player flags */
+/* used in input.c */
 double player_turn = 0.; /* turn velocity from input */
 double player_acc = 0.; /* accel velocity from input */
 unsigned int player_target = PLAYER_ID; /* targetted pilot */
+/* pure internal */
 static int planet_target = -1; /* targetted planet */
 static int hyperspace_target = -1; /* targetted hyperspace route */
 
@@ -188,6 +193,9 @@ void player_new (void)
 						else if (xml_isNode(tmp,"y")) y = xml_getFloat(tmp);
 					} while ((tmp = tmp->next));
 				}
+				else if (xml_isNode(cur,"combat_rating"))
+					combat_rating = xml_getInt(cur);
+
 			} while ((cur = cur->next));
 		}
 	} while ((node = node->next));
@@ -258,6 +266,31 @@ void player_clear (void)
 	player_target = PLAYER_ID;
 	planet_target = -1;
 	hyperspace_target = -1;
+}
+
+
+/*
+ * gets the player's combat rating
+ */
+static char* player_ratings[] = { "None",
+		"Smallfry",
+		"Weak",
+		"Minor",
+		"Average",
+		"Major",
+		"Fearsome",
+		"Godlike"
+};
+const char* player_rating (void)
+{
+	if (combat_rating == 0) return player_ratings[0];
+	else if (combat_rating < 50) return player_ratings[1];
+	else if (combat_rating < 200) return player_ratings[2];
+	else if (combat_rating < 500) return player_ratings[3];
+	else if (combat_rating < 1000) return player_ratings[4];
+	else if (combat_rating < 2500) return player_ratings[5];
+	else if (combat_rating < 10000) return player_ratings[6];
+	else return player_ratings[7];
 }
 
 
