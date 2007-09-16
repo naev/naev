@@ -34,7 +34,7 @@ const char *keybindNames[] = { "accel", "left", "right", "reverse", /* movement 
 	"primary", "target", "target_nearest", "face", "board", /* fighting */
 	"secondary", "secondary_next", /* secondary weapons */
 	"target_planet", "land", "thyperspace", "jump", /* space navigation */
-	"mapzoomin", "mapzoomout", "screenshot", "pause", "menu",  /* misc */
+	"mapzoomin", "mapzoomout", "screenshot", "pause", "menu", "info",  /* misc */
 	"end" }; /* must terminate in "end" */
 
 
@@ -80,6 +80,7 @@ void input_setDefault (void)
 	input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MINUS, 0 );
 	input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_z, 0 );
 	input_setKeybind( "menu", KEYBIND_KEYBOARD, SDLK_ESCAPE, 0 );
+	input_setKeybind( "info", KEYBIND_KEYBOARD, SDLK_i, 0 );
 }
 
 
@@ -263,8 +264,11 @@ static void input_key( int keynum, double value, int abs )
       }
 	/* opens a small menu */
 	} else if (KEY("menu")) {
-		if (value==KEY_PRESS)
-			menu_small();
+		if (value==KEY_PRESS) menu_small();
+	
+	/* shows pilot information */
+	} else if (KEY("info")) {
+		if (value==KEY_PRESS) info_menu();
 	}
 }
 #undef KEY

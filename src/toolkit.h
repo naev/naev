@@ -21,24 +21,26 @@ extern int toolkit;
  * creation
  */
 unsigned int window_create( char* name,
-		const int x, const int y, const int w, const int h );
+		const int x, const int y, /* position */
+		const int w, const int h ); /* dimensions */
 void window_addButton( const unsigned int wid,
-		const int x, const int y,
-		const int w, const int h,
-		char* name, char* display,
-		void (*call) (char*) );
+		const int x, const int y, /* position */
+		const int w, const int h, /* size */
+		char* name, char* display, /* label name, display name */
+		void (*call) (char*) ); /* function to call when clicked */
 void window_addText( const unsigned int wid,
-		const int x, const int y,
-		const int w, const int h,
-		const int centered, char* name,
-		glFont* font, glColour* colour, char* string);
+		const int x, const int y, /* position */
+		const int w, const int h, /* size */
+		const int centered, char* name, /* text is centered? label name */
+		glFont* font, glColour* colour, char* string ); /* font, colour and actual text */
 void window_addImage( const unsigned int wid,
-		const int x, const int y,
-		char* name, glTexture* image );
+		const int x, const int y, /* position */
+		char* name, glTexture* image ); /* label and image itself */
 
 /*
  * get
  */
+int window_exists( const char* wdwname );
 unsigned int window_get( const char* wdwname );
 
 /*

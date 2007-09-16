@@ -32,6 +32,7 @@ glColour cRed        = { .r=0.80, .g=0.20, .b=0.20, .a=1. };
  * game specific
  */
 glColour cConsole       =  { .r = 0.1, .g = 0.9, .b = 0.1, .a = 1. };
+glColour cDConsole      =  { .r = 0.0, .g = 0.7, .b = 0.0, .a = 1. };
 /* objects */
 glColour cInert         =  { .r = 0.6, .g = 0.6, .b = 0.6, .a = 1. };
 glColour cNeutral       =  { .r = 0.9, .g = 1.0, .b = 0.3, .a = 1. };

@@ -233,6 +233,19 @@ static Window* window_wget( const unsigned int wid )
 
 
 /*
+ * checks to see if a window exists
+ */
+int window_exists( const char* wdwname )
+{
+	int i;
+	for (i=0; i<nwindows; i++)
+		if (strcmp(windows[i].name,wdwname)==0)
+			return 1; /* exists */
+	return 0; /* doesn't exist */
+}
+
+
+/*
  *	returns the id of a window
  */
 unsigned int window_get( const char* wdwname )

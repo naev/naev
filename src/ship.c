@@ -13,6 +13,7 @@
 #include "naev.h"
 #include "log.h"
 #include "pack.h"
+#include "toolkit.h"
 
 
 #define XML_ID		"Ships"	/* XML section identifier */
@@ -23,6 +24,13 @@
 #define SHIP_EXT		".png"
 #define SHIP_TARGET	"_target"
 
+#define VIEW_WIDTH	300
+#define VIEW_HEIGHT	300
+
+#define BUTTON_WIDTH  80
+#define BUTTON_HEIGHT 30
+
+
 static Ship* ship_stack = NULL;
 static int ships = 0;
 
@@ -30,7 +38,9 @@ static int ships = 0;
 /*
  * Prototypes
  */
+static char* ship_class( Ship* s );
 static Ship* ship_parse( xmlNodePtr parent );
+static void ship_view_close( char* btn );
 
 
 /*
@@ -48,6 +58,18 @@ Ship* ship_get( const char* name )
 		WARN("Ship %s does not exist", name);
 
 	return temp+i;
+}
+
+
+/*
+ * Gets the ship's classname
+ */
+static char* ship_classes[] = { "NULL",
+		"Civilian Light", "Civilian Medium", "Civilian Heavy"
+};
+static char* ship_class( Ship* s )
+{
+	return ship_classes[s->class];
 }
 
 
@@ -149,23 +171,23 @@ static Ship* ship_parse( xmlNodePtr parent )
 	temp->thrust *= temp->mass; /* helps keep numbers sane */
 
 	/* ship validator */
-#define MELEMENT(o,s)		if (o == 0) WARN("Ship '%s' missing '"s"' element", temp->name)
-	if (temp->name == NULL) WARN("Ship '%s' missing 'name' tag", temp->name);
-	if (temp->gfx_space == NULL) WARN("Ship '%s' missing 'GFX' element", temp->name);
-	if (temp->gui == NULL) WARN("Ship '%s' missing 'GUI' element", temp->name);
-	MELEMENT(temp->thrust,"thrust");
-	MELEMENT(temp->turn,"turn");
-	MELEMENT(temp->speed,"speed");
-	MELEMENT(temp->armour,"armour");
-	MELEMENT(temp->armour_regen,"armour_regen");
-	MELEMENT(temp->shield,"shield");
-	MELEMENT(temp->shield_regen,"shield_regen");
-	MELEMENT(temp->energy,"energy");
-	MELEMENT(temp->energy_regen,"energy_regen");
-	MELEMENT(temp->crew,"crew");
-	MELEMENT(temp->mass,"mass");
-	MELEMENT(temp->cap_cargo,"cap_cargo");
-	MELEMENT(temp->cap_weapon,"cap_weapon");
+#define MELEMENT(o,s)		if (o) WARN("Ship '%s' missing '"s"' element", temp->name)
+	MELEMENT(temp->name==NULL,"name");
+	MELEMENT(temp->gfx_space==NULL,"GFX");
+	MELEMENT(temp->gui==NULL,"GUI");
+	MELEMENT(temp->thrust==0,"thrust");
+	MELEMENT(temp->turn==0,"turn");
+	MELEMENT(temp->speed==0,"speed");
+	MELEMENT(temp->armour==0,"armour");
+	MELEMENT(temp->armour_regen==0,"armour_regen");
+	MELEMENT(temp->shield==0,"shield");
+	MELEMENT(temp->shield_regen==0,"shield_regen");
+	MELEMENT(temp->energy==0,"energy");
+	MELEMENT(temp->energy_regen==0,"energy_regen");
+	MELEMENT(temp->crew==0,"crew");
+	MELEMENT(temp->mass==0,"mass");
+	MELEMENT(temp->cap_cargo==0,"cap_cargo");
+	MELEMENT(temp->cap_weapon==0,"cap_weapon");
 #undef MELEMENT
 
 	DEBUG("Loaded Ship '%s'", temp->name);
@@ -234,3 +256,68 @@ void ships_free()
 	free(ship_stack);
 	ship_stack = NULL;
 }
+
+
+/*
+ * used to visualize the ships stats
+ */
+void ship_view( char* shipname )
+{
+	Ship *s;
+	char buf[1024];
+	unsigned int wid;
+	wid = window_create( shipname, -1, -1, VIEW_WIDTH, VIEW_HEIGHT );
+	s = ship_get( shipname );
+
+	window_addText( wid, 20, 0, 100, VIEW_HEIGHT-40,
+			0, "txtLabel", &gl_smallFont, &cDConsole,
+			"Name:\n"
+			"Class:\n"
+			"Crew:\n"
+			"Mass:\n"
+			"\n"
+			"Thrust:\n"
+			"Max Speed:\n"
+			"Turn:\n"
+			"\n"
+			"Shield:\n"
+			"Armour:\n"
+			"Energy:\n"
+			"\n"
+			"Weapon Space:\n"
+			"Cargo Space:\n"
+			);
+	snprintf( buf, 1024,
+			"%s\n"
+			"%s\n"
+			"%d\n"
+			"%d Tons\n"
+			"\n"
+			"%.2f MN\n"
+			"%.2f M/s\n"
+			"%.2f Grad/s\n"
+			"\n"
+			"%.2f MJ (%.2f MJ/s)\n"
+			"%.2f MJ (%.2f MJ/s)\n"
+			"%.2f MJ (%.2f MJ/s)\n"
+			"\n"
+			"%d Tons\n"
+			"%d Tons\n"
+			, s->name, ship_class(s), s->crew, s->mass,
+			s->thrust/s->mass, s->speed, s->turn,
+			s->shield, s->shield_regen, s->armour, s->armour_regen,
+			s->energy, s->energy_regen, s->cap_weapon, s->cap_cargo );
+	window_addText( wid, 120, 0, VIEW_WIDTH-140, VIEW_HEIGHT-40,
+			0, "txtProperties", &gl_smallFont, &cBlack, buf );
+
+	/* close button */
+	snprintf( buf, 37, "close%s", shipname );
+	window_addButton( wid, -20, 20,
+			BUTTON_WIDTH, BUTTON_HEIGHT,
+			buf, "Close", ship_view_close );
+}
+static void ship_view_close( char* btn )
+{
+	window_destroy( window_get( btn+5 /* "closeFoo -> Foo" */ ) );
+}
+

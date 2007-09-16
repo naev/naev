@@ -18,12 +18,12 @@
 #define SHIP_TARGET_H	96
 
 
-enum ship_class { SHIP_CLASS_NULL=0,
+typedef enum {
+	SHIP_CLASS_NULL=0,
 	SHIP_CLASS_CIV_LIGHT=1,
 	SHIP_CLASS_CIV_MEDIUM=2,
 	SHIP_CLASS_CIV_HEAVY=3
-};
-typedef enum ship_class ship_class;
+} ShipClass;
 
 
 /*
@@ -42,7 +42,7 @@ typedef struct ShipOutfit {
 typedef struct {
 
 	char* name; /* ship name */
-	ship_class class; /* ship class */
+	ShipClass class; /* ship class */
 
 	/* movement */
 	double thrust, turn, speed;
@@ -74,11 +74,23 @@ typedef struct {
 } Ship;
 
 
+/*
+ * load/quit
+ */
 int ships_load (void);
 void ships_free (void);
 
 
+/*
+ * get
+ */
 Ship* ship_get( const char* name );
+
+
+/*
+ * toolkit
+ */
+void ship_view( char* shipname );
 
 
 #endif /* SHIP_H */

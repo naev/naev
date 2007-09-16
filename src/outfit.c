@@ -184,9 +184,9 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 		else if (xml_isNode(node,"ammo")) temp->ammo = strdup(xml_get(node));
 	} while ((node = node->next));
 
-#define MELEMENT(o,s)      if ((o) == 0) WARN("Outfit '%s' missing '"s"' element", temp->name)
-	if (temp->ammo==NULL) WARN("Outfit '%s' missing 'ammo' element", temp->name);
-	MELEMENT(temp->delay,"delay");
+#define MELEMENT(o,s)      if (o) WARN("Outfit '%s' missing '"s"' element", temp->name)
+	MELEMENT(temp->ammo==NULL,"ammo");
+	MELEMENT(temp->delay==0,"delay");
 #undef MELEMENT
 }
 
@@ -223,16 +223,15 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 		}
 	} while ((node = node->next));
 
-#define MELEMENT(o,s)      if ((o) == 0) WARN("Outfit '%s' missing '"s"' element", temp->name)
-	if (temp->gfx_space==NULL)
-		WARN("Outfit '%s' missing 'gfx' element", temp->name);
-	MELEMENT(temp->sound,"sound");
-	MELEMENT(temp->thrust,"thrust");
-	MELEMENT(temp->turn,"turn");
-	MELEMENT(temp->speed,"speed");
-	MELEMENT(temp->range,"duration");
-	MELEMENT(temp->damage_armour,"armour' from element 'damage");
-	MELEMENT(temp->damage_shield,"shield' from element 'damage");
+#define MELEMENT(o,s)      if (o) WARN("Outfit '%s' missing '"s"' element", temp->name)
+	MELEMENT(temp->gfx_space==NULL,"gfx");
+	MELEMENT(temp->sound==0,"sound");
+	MELEMENT(temp->thrust==0,"thrust");
+	MELEMENT(temp->turn==0,"turn");
+	MELEMENT(temp->speed==0,"speed");
+	MELEMENT(temp->range==0,"duration");
+	MELEMENT(temp->damage_armour==0,"armour' from element 'damage");
+	MELEMENT(temp->damage_shield==0,"shield' from element 'damage");
 #undef MELEMENT
 }
 
@@ -287,12 +286,12 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
 		}
 	} while ((node = node->next));
 
-#define MELEMENT(o,s)      if ((o) == 0) WARN("Outfit '%s' missing '"s"' element", temp->name)
-	if (temp->name == NULL) WARN("Outfit '%s' missing 'name' tag", temp->name);
-	MELEMENT(temp->max,"max");
-	MELEMENT(temp->tech,"tech");
-	MELEMENT(temp->mass,"mass");
-	MELEMENT(temp->type,"type");
+#define MELEMENT(o,s)      if (o) WARN("Outfit '%s' missing '"s"' element", temp->name)
+	MELEMENT(temp->name==NULL,"name");
+	MELEMENT(temp->max==0,"max");
+	MELEMENT(temp->tech==0,"tech");
+	/*MELEMENT(temp->mass==0,"mass"); Not really needed */
+	MELEMENT(temp->type==0,"type");
 #undef MELEMENT
 
 	DEBUG("Loaded Outfit '%s' of type '%s'", temp->name, outfit_getType(temp));

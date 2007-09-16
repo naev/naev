@@ -44,6 +44,7 @@ extern glColour cRed;
  * game specific
  */
 extern glColour cConsole;
+extern glColour cDConsole;
 /* objects */
 extern glColour cInert;
 extern glColour cNeutral;

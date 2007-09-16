@@ -10,5 +10,7 @@
 
 void menu_small (void);
 
+void info_menu (void);
+
 
 #endif /* MENU_H */
