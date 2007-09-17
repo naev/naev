@@ -99,6 +99,8 @@ static int voice_getSource( alVoice* voc );
  */
 int sound_init (void)
 {
+	int ret = 0;
+
 	sound_lock = SDL_CreateMutex();
 
 	SDL_mutexP( sound_lock );
@@ -110,14 +112,16 @@ int sound_init (void)
 	al_device = alcOpenDevice(NULL);
 	if (al_device == NULL) {
 		WARN("Unable to open default sound device");
-		return -1;
+		ret = -1;
+		goto snderr_dev;
 	}
 
 	/* create the OpenAL context */
 	al_context = alcCreateContext( al_device, NULL );
 	if (al_context == NULL) {
 		WARN("Unable to create OpenAL context");
-		return -2;
+		ret = -2;
+		goto snderr_ctx;
 	}
 
 	/* clear the errors */
@@ -126,7 +130,8 @@ int sound_init (void)
 	/* set active context */
 	if (alcMakeContextCurrent( al_context )==AL_FALSE) {
 		WARN("Failure to set default context");
-		return -4;
+		ret =  -4;
+		goto snderr_act;
 	}
 
 	/* set the master gain */
@@ -145,6 +150,20 @@ int sound_init (void)
 	music_player = SDL_CreateThread( music_thread, NULL );
 
 	return 0;
+
+	/*
+	 * error handling
+	 */
+	snderr_act:
+	alcDestroyContext( al_context );
+	snderr_ctx:
+	al_context = NULL;
+	alcCloseDevice( al_device );
+	snderr_dev:
+	al_device = NULL;
+	SDL_mutexV( sound_lock );
+	SDL_DestroyMutex( sound_lock );
+	return ret;
 }
 /*
  * cleans up after the sound subsytem
