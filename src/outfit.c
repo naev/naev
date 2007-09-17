@@ -10,6 +10,7 @@
 #include <string.h>
 
 #include "xml.h"
+#include "SDL_thread.h"
 
 #include "naev.h"
 #include "log.h"
@@ -26,6 +27,11 @@
 #define OUTFIT_GFX	"gfx/outfit/"
 
 
+extern SDL_mutex* sound_lock; /* from sound.c */
+
+/*
+ * the stack
+ */
 static Outfit* outfit_stack = NULL;
 static int outfits = 0;
 
@@ -223,9 +229,10 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 		}
 	} while ((node = node->next));
 
-#define MELEMENT(o,s)      if (o) WARN("Outfit '%s' missing '"s"' element", temp->name)
+#define MELEMENT(o,s) \
+if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 	MELEMENT(temp->gfx_space==NULL,"gfx");
-	MELEMENT(temp->sound==0,"sound");
+	MELEMENT((sound_lock != NULL) && (temp->sound==0),"sound");
 	MELEMENT(temp->thrust==0,"thrust");
 	MELEMENT(temp->turn==0,"turn");
 	MELEMENT(temp->speed==0,"speed");
@@ -286,7 +293,8 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
 		}
 	} while ((node = node->next));
 
-#define MELEMENT(o,s)      if (o) WARN("Outfit '%s' missing '"s"' element", temp->name)
+#define MELEMENT(o,s) \
+if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 	MELEMENT(temp->name==NULL,"name");
 	MELEMENT(temp->max==0,"max");
 	MELEMENT(temp->tech==0,"tech");

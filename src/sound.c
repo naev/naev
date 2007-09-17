@@ -49,7 +49,7 @@ typedef struct {
 /*
  * global sound lock
  */
-SDL_mutex *sound_lock;
+SDL_mutex *sound_lock = NULL;
 
 
 /*
@@ -118,7 +118,7 @@ int sound_init (void)
 
 	/* create the OpenAL context */
 	al_context = alcCreateContext( al_device, NULL );
-	if (al_context == NULL) {
+	if (sound_lock == NULL) {
 		WARN("Unable to create OpenAL context");
 		ret = -2;
 		goto snderr_ctx;
@@ -163,6 +163,7 @@ int sound_init (void)
 	al_device = NULL;
 	SDL_mutexV( sound_lock );
 	SDL_DestroyMutex( sound_lock );
+	sound_lock = NULL;
 	return ret;
 }
 /*
@@ -179,21 +180,26 @@ void sound_exit (void)
 	nsound_list = 0;
 
 	/* must stop the music before killing it, then thread should commit suicide */
-	music_stop();
-	music_kill();
-	SDL_WaitThread( music_player, NULL );
-	music_exit();
-
-	SDL_mutexP( sound_lock );
-
-	if (al_context) {
-		alcMakeContextCurrent(NULL);
-		alcDestroyContext( al_context );
+	if (music_player) {
+		music_stop();
+		music_kill();
+		SDL_WaitThread( music_player, NULL );
+		music_exit();
 	}
-	if (al_device) alcCloseDevice( al_device );
 
-	SDL_mutexV( sound_lock );
-	SDL_DestroyMutex( sound_lock );
+	/* clean up context and such */
+	if (sound_lock) {
+		SDL_mutexP( sound_lock );
+
+		if (al_context) {
+			alcMakeContextCurrent(NULL);
+			alcDestroyContext( al_context );
+		}
+		if (al_device) alcCloseDevice( al_device );
+
+		SDL_mutexV( sound_lock );
+		SDL_DestroyMutex( sound_lock );
+	}
 }
 
 
@@ -202,6 +208,8 @@ void sound_exit (void)
  */
 ALuint sound_get( char* name ) 
 {
+	if (sound_lock == NULL) return 0;
+
 	int i;
 	for (i=0; i<nsound_list; i++)
 		if (strcmp(name, sound_list[i].name)==0)
@@ -216,6 +224,8 @@ ALuint sound_get( char* name )
  */
 static int sound_makeList (void)
 {
+	if (sound_lock == NULL) return 0;
+
 	char** files;
 	uint32_t nfiles,i;
 	char tmp[64];
@@ -259,6 +269,8 @@ static int sound_makeList (void)
  */
 static int sound_load( ALuint *buffer, char *filename )
 {
+	if (sound_lock == NULL) return 0;
+
 	void* wavdata;
 	unsigned int size;
 	ALenum err;
@@ -286,6 +298,8 @@ static int sound_load( ALuint *buffer, char *filename )
 }
 static void sound_free( alSound *snd )
 {
+	if (sound_lock == NULL) return;
+
 	SDL_mutexP( sound_lock );
 
 	if (snd->name) free(snd->name);
@@ -300,6 +314,8 @@ static void sound_free( alSound *snd )
  */
 void sound_update (void)
 {
+	if (sound_lock == NULL) return;
+
 	int i;
 
 	/* TODO prioritize sounds */
@@ -326,6 +342,8 @@ void sound_update (void)
  */
 void sound_volume( const double vol )
 {
+	if (sound_lock == NULL) return;
+
 	int i;
 
 	svolume = (ALfloat) vol;
@@ -343,6 +361,8 @@ void sound_volume( const double vol )
  */
 static int voice_getSource( alVoice* voc )
 {
+	if (sound_lock == NULL) return -1;
+
 	int ret;
 	ALenum err;
 
@@ -383,7 +403,7 @@ static int voice_getSource( alVoice* voc )
 
 	SDL_mutexV( sound_lock );
 
-	return 0;
+	return ret;
 }
 
 
@@ -395,6 +415,8 @@ alVoice* sound_addVoice( int priority, double px, double py,
 {
 	(void) vx;
 	(void) vy;
+
+	if (sound_lock == NULL) return NULL;
 
 	alVoice *voc;
 
@@ -425,6 +447,8 @@ alVoice* sound_addVoice( int priority, double px, double py,
  */
 void sound_delVoice( alVoice* voice )
 {
+	if (sound_lock == NULL) return;
+
 	ALint stat;
 	int i;
 
@@ -461,6 +485,9 @@ void voice_update( alVoice* voice, double px, double py,
 {
 	(void) vx;
 	(void) vy;
+
+	if (sound_lock == NULL) return;
+
 	voice->px = px;
 	voice->py = py;
 /*	voice->vx = vx;
@@ -476,6 +503,9 @@ void sound_listener( double dir, double px, double py,
 {
 	(void) vx;
 	(void) vy;
+
+	if (sound_lock == NULL) return;
+
 	SDL_mutexP( sound_lock );
 
 	ALfloat ori[] = { 0., 0., 0.,  0., 0., 1. };

@@ -325,6 +325,8 @@ static void music_free (void)
  */
 void music_volume( const double vol )
 {
+	if (sound_lock == NULL) return;
+
 	/* sanity check */
 	ALfloat fvol = ABS(vol);
 	if (fvol > 1.) fvol = 1.;
@@ -340,6 +342,8 @@ void music_volume( const double vol )
 }
 void music_load( const char* name )
 {
+	if (sound_lock == NULL) return;
+
 	int i;
 	char tmp[64];
 
