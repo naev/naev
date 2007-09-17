@@ -53,6 +53,7 @@ if (lua_isstring(L, -1)) {	\
 
 
 /* from main.c */
+extern int nosound;
 extern int show_fps;
 extern int max_fps;
 extern int indjoystick;
@@ -81,6 +82,7 @@ static void print_usage( char **argv )
 	  LOG("   -h n                  set height to n");*/
 	LOG("   -j n, --joystick n    use joystick n");
 	LOG("   -J s, --Joystick s    use joystick whose name contains s");
+	LOG("   -M, --mute            disables sound");
 	LOG("   -m f, --music f       sets the music volume to f");
 	LOG("   -s f, --sound f       sets the sound volume to f");
 	LOG("   -h, --help            display this message and exit");
@@ -100,6 +102,8 @@ void conf_setDefaults (void)
 	gl_screen.w = 800;
 	gl_screen.h = 640;
 	gl_screen.flags = 0;
+	/* openal */
+	nosound = 0;
 	/* joystick */
 	indjoystick = -1;
 	namjoystick = NULL;
@@ -143,6 +147,8 @@ int conf_loadConfig ( const char* file )
 		conf_loadInt("maxfps",max_fps);
 
 		/* sound */
+		conf_loadBool("nosound",i)
+		if (i) { nosound = 1; i = 0; }
 		conf_loadFloat("sound",d);
 		if (d) { sound_volume(d); d = 0.; }
 		conf_loadFloat("music",d);
@@ -232,6 +238,7 @@ void conf_parseCLI( int argc, char** argv )
 		{ "data", required_argument, 0, 'd' },
 		{ "joystick", required_argument, 0, 'j' },
 		{ "Joystick", required_argument, 0, 'J' },
+		{ "mute", no_argument, 0, 'M' },
 		{ "music", required_argument, 0, 'm' },
 		{ "sound", required_argument, 0, 's' },
 		{ "help", no_argument, 0, 'h' }, 
@@ -240,7 +247,7 @@ void conf_parseCLI( int argc, char** argv )
 	int option_index = 0;
 	int c = 0;
 	while ((c = getopt_long(argc, argv,
-			"fF:d:J:j:V:hv",
+			"fF:d:j:J:Mm:s:hv",
 			long_options, &option_index)) != -1) {
 		switch (c) {
 			case 'f':
@@ -257,6 +264,9 @@ void conf_parseCLI( int argc, char** argv )
 				break;
 			case 'J':
 				namjoystick = strdup(optarg);
+				break;
+			case 'M':
+				nosound = 1;
 				break;
 			case 'm':
 				music_volume( atof(optarg) );

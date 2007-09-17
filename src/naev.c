@@ -57,6 +57,7 @@ static char version[VERSION_LEN];
 #define DATA_NAME_LEN	25 /* max length of data name */
 char* data = NULL;
 char dataname[DATA_NAME_LEN];
+int nosound = 0;
 int show_fps = 1; /* shows fps - default yes */
 int max_fps = 0;
 int indjoystick = -1;
@@ -118,8 +119,12 @@ int main ( int argc, char** argv )
 	/*
 	 * OpenAL - Sound
 	 */
-	if (sound_init()) WARN("Problem setting up sound!");
-	music_load( "Machina" );
+	if (nosound)
+		LOG("Sound is disabled!");
+	else {
+		if (sound_init()) WARN("Problem setting up sound!");
+		music_load( "Machina" );
+	}
 
 
 	/*

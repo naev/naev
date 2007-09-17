@@ -162,16 +162,16 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
 		}
 	} while ((node = node->next));
 
-#define MELEMENT(o,s)      if ((o) == 0) WARN("Outfit '%s' missing '"s"' element", temp->name)
-	if (temp->gfx_space==NULL)
-		WARN("Outfit '%s' missing 'gfx' element", temp->name);
-	MELEMENT(temp->sound,"sound");
-	MELEMENT(temp->delay,"delay");
-	MELEMENT(temp->speed,"speed");
-	MELEMENT(temp->range,"range");
-	MELEMENT(temp->accuracy,"accuracy");
-	MELEMENT(temp->damage_armour,"armour' from element 'damage");
-	MELEMENT(temp->damage_shield,"shield' from element 'damage");
+#define MELEMENT(o,s) \
+if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
+	MELEMENT(temp->gfx_space==NULL,"gfx");
+	MELEMENT((sound_lock!=NULL) && (temp->sound==0),"sound");
+	MELEMENT(temp->delay==0,"delay");
+	MELEMENT(temp->speed==0,"speed");
+	MELEMENT(temp->range==0,"range");
+	MELEMENT(temp->accuracy==0,"accuracy");
+	MELEMENT(temp->damage_armour==0,"armour' from element 'damage");
+	MELEMENT(temp->damage_shield==0,"shield' from element 'damage");
 #undef MELEMENT
 }
 
