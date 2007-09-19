@@ -14,7 +14,7 @@
 /*
  * Font info
  */
-typedef struct {
+typedef struct glFont_ {
 	int h; /* height */
 	int* w;
 	GLuint *textures;

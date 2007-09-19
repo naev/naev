@@ -20,7 +20,7 @@
 /*
  * virtual voice
  */
-typedef struct {
+typedef struct alVoice_ {
 	ALuint source; /* source itself, 0 if not set */
 	ALuint buffer; /* buffer */
 

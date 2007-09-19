@@ -33,7 +33,7 @@ int nfactions = 0;
 /*
  * used to save alliances
  */
-typedef struct {
+typedef struct Alliance_ {
 	char* name;
 	Faction** factions;
 	int nfactions;

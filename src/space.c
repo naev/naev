@@ -53,7 +53,7 @@ unsigned int date = 0; /* time since epoch */
 
 
 #define STAR_BUF	100	/* area to leave around screen, more = less repitition */
-typedef struct {
+typedef struct Star_ {
 	double x,y; /* position, lighter to use to doubles then the physics system */
 	double brightness; /* self-explanatory */
 } Star;

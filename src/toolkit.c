@@ -12,7 +12,7 @@
 #include "opengl.h"
 
 
-typedef enum {
+typedef enum WidgetType_ {
 	WIDGET_NULL,
 	WIDGET_BUTTON,
 	WIDGET_TEXT,
@@ -20,13 +20,13 @@ typedef enum {
 	WIDGET_LIST
 } WidgetType;
 
-typedef enum {
+typedef enum WidgetStatus_ {
 	WIDGET_STATUS_NORMAL,
 	WIDGET_STATUS_MOUSEOVER,
 	WIDGET_STATUS_MOUSEDOWN
 } WidgetStatus;
 
-typedef struct {
+typedef struct Widget_ {
 	char* name; /* widget's name */
 	WidgetType type; /* type */
 
@@ -58,7 +58,7 @@ typedef struct {
 } Widget;
 
 
-typedef struct {
+typedef struct Window_ {
 	unsigned int id; /* unique id */
 	char *name; /* name */
 

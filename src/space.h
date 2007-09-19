@@ -21,7 +21,7 @@
  * Planets types, taken from
  * http://en.wikipedia.org/wiki/Star_Trek_planet_classifications
  */
-typedef enum { PLANET_CLASS_NULL=0, /* Null/Not defined */
+typedef enum PlanetClass_ { PLANET_CLASS_NULL=0, /* Null/Not defined */
 	PLANET_CLASS_A,   /* Geothermal */
 	PLANET_CLASS_B,   /* Geomorteus */
 	PLANET_CLASS_C,   /* Geoinactive */
@@ -56,7 +56,7 @@ typedef enum { PLANET_CLASS_NULL=0, /* Null/Not defined */
 #define PLANET_SERVICE_SHIPYARD		(1<<3)
 #define planet_hasService(p,s)		((p)->services & s)
 
-typedef struct {
+typedef struct Planet_ {
 	char* name; /* planet name */
 	Vector2d pos; /* position in star system */
 
@@ -73,13 +73,13 @@ typedef struct {
 
 
 /*
- * star systems                                                           
+ * star systems                                                   
  */
-typedef struct {
+typedef struct SystemFleet_ {
 	Fleet* fleet; /* fleet to appear */
 	int chance; /* chance of fleet appearing in the system */
 } SystemFleet;
-typedef struct {
+typedef struct StarSystem_ {
 	char* name; /* star system identifier */
 
 	Vector2d pos; /* position */

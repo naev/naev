@@ -49,7 +49,7 @@
 #define pilot_isDisabled(p) ((p)->flags & PILOT_DISABLED)
 
 
-typedef struct {
+typedef struct PilotOutfit_ {
 	Outfit* outfit; /* associated outfit */
 	unsigned int quantity; /* number of outfits of this type pilot has */
 
@@ -60,7 +60,7 @@ typedef struct {
 /*
  * primary pilot structure
  */
-typedef struct Pilot {
+typedef struct Pilot_ {
 
 	unsigned int id; /* pilot's id, used for many functions */
 	char* name; /* pilot's name (if unique) */
@@ -77,9 +77,9 @@ typedef struct Pilot {
 	double fuel; /* used only for jumps, TODO make it matter :) */
 
 	/* associated functions */
-	void (*think)(struct Pilot*); /* AI thinking for the pilot */
-	void (*update)(struct Pilot*, const double); /* updates the pilot */
-	void (*render)(struct Pilot*); /* for rendering the pilot */
+	void (*think)(struct Pilot_*); /* AI thinking for the pilot */
+	void (*update)(struct Pilot_*, const double); /* updates the pilot */
+	void (*render)(struct Pilot_*); /* for rendering the pilot */
 
 	/* outfit management */
 	PilotOutfit* outfits;
@@ -102,12 +102,12 @@ typedef struct Pilot {
 /*    
  * fleets
  */   
-typedef struct {
+typedef struct FleetPilot_ {
 	Ship* ship; /* ship the pilot is flying */
 	char* name; /* used if they have a special name like uniques */
 	int chance; /* chance of this pilot appearing in the leet */
 } FleetPilot;
-typedef struct {
+typedef struct Fleet_ {
 	char* name; /* fleet name, used as the identifier */
 	Faction* faction; /* faction of the fleet */
 

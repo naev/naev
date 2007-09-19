@@ -39,7 +39,7 @@
 #define OPENGL_AA_LINE		(1<<3)
 #define OPENGL_AA_POLYGON	(1<<4)
 #define gl_has(f)		(gl_screen.flags & (f)) /* check for the flag */
-typedef struct {
+typedef struct glInfo_ {
 	int w, h; /* window dimensions */
 	int depth; /* depth in bpp */
 	int r, g, b, a; /* framebuffer values in bits */
@@ -57,7 +57,7 @@ extern glInfo gl_screen; /* local structure set with gl_init and co */
 /*
  * Spritesheet info
  */
-typedef struct {
+typedef struct glTexture_ {
 	double w, h; /* real size of the image (excluding POT buffer) */
 	double rw, rh; /* size of POT surface */
 	double sx, sy; /* number of sprites on x axis and y axis */

@@ -34,7 +34,7 @@
 /*
  * gives the buffers a name
  */
-typedef struct {
+typedef struct alSound_ {
 	char *name; /* buffer's name */
 	ALuint buffer; /* assosciated OpenAL buffer */
 } alSound;

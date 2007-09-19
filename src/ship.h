@@ -18,7 +18,7 @@
 #define SHIP_TARGET_H	96
 
 
-typedef enum {
+typedef enum ShipClass_ {
 	SHIP_CLASS_NULL=0,
 	SHIP_CLASS_CIV_LIGHT=1,
 	SHIP_CLASS_CIV_MEDIUM=2,
@@ -29,8 +29,8 @@ typedef enum {
 /*
  * little wrapper for outfits
  */
-typedef struct ShipOutfit {
-	struct ShipOutfit* next; /* linked list */
+typedef struct ShipOutfit_ {
+	struct ShipOutfit_* next; /* linked list */
 	Outfit* data; /* data itself */
 	int quantity; /* important difference */
 } ShipOutfit;
@@ -39,7 +39,7 @@ typedef struct ShipOutfit {
 /*
  * ship class itself
  */
-typedef struct {
+typedef struct Ship_ {
 
 	char* name; /* ship name */
 	ShipClass class; /* ship class */

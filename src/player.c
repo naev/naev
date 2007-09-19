@@ -73,7 +73,7 @@ extern StarSystem *systems;
 /*
  * GUI stuff
  */
-typedef struct {
+typedef struct Radar_ {
 	double x,y; /* position */
 	double w,h; /* dimensions */
 	RadarShape shape;
@@ -85,12 +85,12 @@ typedef struct {
 #define RADAR_RES_INTERVAL	10.
 #define RADAR_RES_DEFAULT	40.
 
-typedef struct {
+typedef struct Rect_ {
 	double x,y;
 	double w,h;
 } Rect;
 
-typedef struct {
+typedef struct GUI_ {
 	/* graphics */
 	glTexture* gfx_frame;
 	glTexture* gfx_targetPilot, *gfx_targetPlanet;
@@ -118,7 +118,7 @@ double gui_yoff = 0.;
 #define MESG_SIZE_MAX	80
 int mesg_timeout = 3000;
 int mesg_max = 5; /* maximum messages onscreen */
-typedef struct {
+typedef struct Mesg_ {
 	char str[MESG_SIZE_MAX];
 	unsigned int t;
 } Mesg;

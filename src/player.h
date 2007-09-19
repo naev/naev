@@ -37,7 +37,8 @@ extern unsigned int combat_rating;
 /*
  * enums
  */
-typedef enum { RADAR_RECT, RADAR_CIRCLE } RadarShape; /* for rendering fucntions */
+typedef enum RadarShape_ { RADAR_RECT, RADAR_CIRCLE
+} RadarShape; /* for rendering fucntions */
 
 
 /*

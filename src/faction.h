@@ -8,13 +8,13 @@
 #  define FACTION_H
 
 
-typedef struct Faction {
+typedef struct Faction_ {
 
 	char* name;
 
-	struct Faction** enemies;
+	struct Faction_** enemies;
 	int nenemies;
-	struct Faction** allies;
+	struct Faction_** allies;
 	int nallies;
 
 } Faction;

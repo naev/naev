@@ -15,7 +15,7 @@
 #include <stdint.h> /* uint32_t */
 
 
-typedef struct {
+typedef struct Packfile_ {
 #ifdef _POSIX_SOURCE
 	int fd; /* file descriptor */
 #else /* not _POSIX_SOURCE */

@@ -39,7 +39,7 @@ extern SDL_mutex *sound_lock;
 /*
  * saves the music to ram in this structure
  */
-typedef struct {
+typedef struct alMusic_ {
 	char name[32]; /* name */
 	Packfile file;
 	OggVorbis_File stream;

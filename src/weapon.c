@@ -35,7 +35,7 @@ extern int pilots;
 extern void ai_attacked( Pilot* attacked, const unsigned int attacker );
 
 
-typedef struct Weapon {
+typedef struct Weapon_ {
 	Solid* solid; /* actually has its own solid :) */
 
 	unsigned int parent; /* pilot that shot it */

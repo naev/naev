@@ -23,7 +23,7 @@
 /*
  * all the different outfit types
  */
-typedef enum { OUTFIT_TYPE_NULL=0,
+typedef enum OutfitType_ { OUTFIT_TYPE_NULL=0,
 		OUTFIT_TYPE_BOLT=1,
 		OUTFIT_TYPE_BEAM=2,
 		OUTFIT_TYPE_MISSILE_DUMB=3,
@@ -41,7 +41,7 @@ typedef enum { OUTFIT_TYPE_NULL=0,
 /*
  * an outfit, depends radically on the type
  */
-typedef struct {
+typedef struct Outfit_ {
 	char* name;
 
 	/* general specs */

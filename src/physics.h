@@ -32,7 +32,7 @@ double angle_diff( const double ref, double a );
 /*
  * base of all 2d Vector work
  */
-typedef struct {
+typedef struct Vector2d_ {
 	double x, y; /* cartesian values */
 	double mod, angle; /* polar values */
 } Vector2d;
@@ -52,12 +52,11 @@ void vect_cadd( Vector2d* v, const double x, const double y );
 /*
  * used to describe any Solid in 2d space
  */
-struct Solid {
+typedef struct Solid_ {
 	double mass, dir, dir_vel; /* properties */
 	Vector2d vel, pos, force; /* position/velocity vectors */
-	void (*update)( struct Solid*, const double ); /* update method */
-};
-typedef struct Solid Solid;
+	void (*update)( struct Solid_*, const double ); /* update method */
+} Solid;
 
 
 /*

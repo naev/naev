@@ -21,15 +21,15 @@
 #define MAX_AI_TIMERS	2
 
 
-typedef enum { TYPE_NULL, TYPE_INT, TYPE_PTR } TaskData;
+typedef enum TaskData_ { TYPE_NULL, TYPE_INT, TYPE_PTR } TaskData;
 
 /* 
  * Basic task
  *  @name is the task's name (function name in Lua)
  *  @target is the target which will depend on the task itself
  */
-typedef struct Task {
-	struct Task* next;
+typedef struct Task_ {
+	struct Task_* next;
 	char *name;
 	
 	TaskData dtype;
@@ -43,7 +43,7 @@ typedef struct Task {
 /*
  * the AI profile
  */
-typedef struct {
+typedef struct AI_Profile_ {
 	char* name;
 	lua_State *L;
 } AI_Profile;
