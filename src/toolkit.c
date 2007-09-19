@@ -39,22 +39,22 @@ typedef struct Widget_ {
 		struct { /* WIDGET_BUTTON */
 			void (*fptr) (char*); /* callback */
 			char *display; /* stored text */
-		};
+		} btn;
 		struct { /* WIDGET_TEXT */
 			char *text; /* text to display, using printMid if centered, else printText */
 			glFont* font;
 			glColour* colour;
 			int centered; /* is centered? */
-		};
+		} txt;
 		struct { /* WIDGET_IMAGE */
 			glTexture* image;
-		};
+		} img;
 		struct { /* WIDGET_LIST */
 			char **options; /* pointer to the options */
 			int noptions; /* total number of options */
 			int selected; /* which option is currently selected */
-		};
-	};
+		} lst;
+	} dat;
 } Widget;
 
 
@@ -108,7 +108,7 @@ void window_addButton( const unsigned int wid,
 
 	wgt->type = WIDGET_BUTTON;
 	wgt->name = strdup(name);
-	wgt->display = strdup(display);
+	wgt->dat.btn.display = strdup(display);
 
 	/* set the properties */
 	wgt->w = (double) w;
@@ -117,7 +117,7 @@ void window_addButton( const unsigned int wid,
 	else wgt->x = (double) x;
 	if (y < 0) wgt->y = wdw->h - wgt->h + y;
 	else wgt->y = (double) y;
-	wgt->fptr = call;
+	wgt->dat.btn.fptr = call;
 }
 
 
@@ -139,15 +139,15 @@ void window_addText( const unsigned int wid,
 	/* set the properties */
 	wgt->w = (double) w;
 	wgt->h = (double) h;
-	if (font==NULL) wgt->font = &gl_defFont;
-	else wgt->font = font;
+	if (font==NULL) wgt->dat.txt.font = &gl_defFont;
+	else wgt->dat.txt.font = font;
 	if (x < 0) wgt->x = wdw->w - wgt->w + x;
 	else wgt->x = (double) x;
 	if (y < 0) wgt->y = wdw->h + y;
 	else wgt->y = (double) y;
-	wgt->colour = colour;
-	wgt->centered = centered;
-	wgt->text = strdup(string);
+	wgt->dat.txt.colour = colour;
+	wgt->dat.txt.centered = centered;
+	wgt->dat.txt.text = strdup(string);
 }
 
 
@@ -165,8 +165,8 @@ void window_addImage( const unsigned int wid,
 	wgt->name = strdup(name);
 
 	/* set the properties */
-	wgt->image = image;
-	if (x < 0) wgt->x = wdw->w - wgt->image->sw + x;
+	wgt->dat.img.image = image;
+	if (x < 0) wgt->x = wdw->w - wgt->dat.img.image->sw + x;
 	else wgt->x = (double) x;
 	if (y < 0) wgt->y = wdw->h + y;
 	else wgt->y = (double) y;
@@ -187,9 +187,9 @@ void window_addList( const unsigned int wid,
 	wgt->type = WIDGET_LIST;
 	wgt->name = strdup(name);
 
-	wgt->options = items;
-	wgt->noptions = nitems;
-	wgt->selected = defitem; /* -1 would be none */
+	wgt->dat.lst.options = items;
+	wgt->dat.lst.noptions = nitems;
+	wgt->dat.lst.selected = defitem; /* -1 would be none */
 	wgt->w = (double) w;
 	wgt->h = (double) h;
 	if (x < 0) wgt->x = wdw->w - wgt->w + x;
@@ -309,11 +309,11 @@ static void widget_cleanup( Widget *widget )
 
 	switch (widget->type) {
 		case WIDGET_BUTTON:
-			if (widget->display) free(widget->display);
+			if (widget->dat.btn.display) free(widget->dat.btn.display);
 			break;
 
 		case WIDGET_TEXT:
-			if (widget->text) free(widget->text);
+			if (widget->dat.txt.text) free(widget->dat.txt.text);
 			break;
 
 		default:
@@ -689,23 +689,23 @@ static void toolkit_renderButton( Widget* btn, double bx, double by )
 	gl_printMid( NULL, (int)btn->w,
 			bx + (double)gl_screen.w/2. + btn->x,
 			by + (double)gl_screen.h/2. + btn->y + (btn->h - gl_defFont.h)/2.,
-			&cDarkRed, btn->display );
+			&cDarkRed, btn->dat.btn.display );
 }
 /*
  * renders the text
  */
 static void toolkit_renderText( Widget* txt, double bx, double by )
 {
-	if (txt->centered)
-		gl_printMid( txt->font, txt->w,
+	if (txt->dat.txt.centered)
+		gl_printMid( txt->dat.txt.font, txt->w,
 				bx + (double)gl_screen.w/2. + txt->x,
 				by + (double)gl_screen.h/2. + txt->y,
-				txt->colour, txt->text );
+				txt->dat.txt.colour, txt->dat.txt.text );
 	else
-		gl_printText( txt->font, txt->w, txt->h,
+		gl_printText( txt->dat.txt.font, txt->w, txt->h,
 				bx + (double)gl_screen.w/2. + txt->x,
 				by + (double)gl_screen.h/2. + txt->y,
-				txt->colour, txt->text );
+				txt->dat.txt.colour, txt->dat.txt.text );
 }
 /*
  * renders the image
@@ -724,7 +724,7 @@ static void toolkit_renderImage( Widget* img, double bx, double by )
 	/*
 	 * image
 	 */
-	gl_blitStatic( img->image,
+	gl_blitStatic( img->dat.img.image,
 			x + (double)gl_screen.w/2.,
 			y + (double)gl_screen.h/2., NULL );
 
@@ -735,16 +735,16 @@ static void toolkit_renderImage( Widget* img, double bx, double by )
 	glBegin(GL_LINE_LOOP);
 		COLOUR(*lc);
 		/* top */
-		glVertex2d( x-1.,                  y + img->image->sh+1. );
-		glVertex2d( x + img->image->sw   , y + img->image->sh+1. );
+		glVertex2d( x-1.,                       y + img->dat.img.image->sh+1.    );
+		glVertex2d( x + img->dat.img.image->sw, y + img->dat.img.image->sh+1.    );
 		/* right */
 		COLOUR(*c);
-		glVertex2d( x + img->image->sw,    y                     );
+		glVertex2d( x + img->dat.img.image->sw, y                                );
 		/* bottom */
-		glVertex2d( x-1.,                  y                     );
+		glVertex2d( x-1.,                       y                                );
 		/* left */
 		COLOUR(*lc);
-		glVertex2d( x-1.,                  y + img->image->sh+1. );
+		glVertex2d( x-1.,                       y + img->dat.img.image->sh+1.    );
 	glEnd(); /* GL_LINE_LOOP */
 
 
@@ -755,14 +755,14 @@ static void toolkit_renderImage( Widget* img, double bx, double by )
 	glBegin(GL_LINE_LOOP);
 		COLOUR(*oc);
 		/* top */
-		glVertex2d( x-2.,                  y + img->image->sh+2. );
-		glVertex2d( x + img->image->sw+1., y + img->image->sh+2. );
+		glVertex2d( x-2.,                          y + img->dat.img.image->sh+2. );
+		glVertex2d( x + img->dat.img.image->sw+1., y + img->dat.img.image->sh+2. );
 		/* right */
-		glVertex2d( x + img->image->sw+1., y-1.                  );
+		glVertex2d( x + img->dat.img.image->sw+1., y-1.                          );
 		/* bottom */
-		glVertex2d( x-2.,                  y-1.                  );
+		glVertex2d( x-2.,                          y-1.                          );
 		/* left */
-		glVertex2d( x-2.,                  y + img->image->sh+2. );
+		glVertex2d( x-2.,                          y + img->dat.img.image->sh+2. );
 	glEnd(); /* GL_LINE_LOOP */
 }
 
@@ -836,7 +836,7 @@ void toolkit_mouseEvent( SDL_Event* event )
 
 				case SDL_MOUSEBUTTONUP:
 					if (wgt->status==WIDGET_STATUS_MOUSEDOWN) {
-						if (wgt->type==WIDGET_BUTTON) (*wgt->fptr)(wgt->name);
+						if (wgt->type==WIDGET_BUTTON) (*wgt->dat.btn.fptr)(wgt->name);
 					}
 					wgt->status = WIDGET_STATUS_NORMAL;
 					break;

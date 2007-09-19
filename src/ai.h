@@ -36,7 +36,7 @@ typedef struct Task_ {
 	union {
 		void *target; /* Vector2d, etc... */
 		unsigned int ID; /* Pilot ID, etc... */
-	};
+	} dat;
 } Task;
 
 

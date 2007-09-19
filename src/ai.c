@@ -419,7 +419,7 @@ static void ai_freetask( Task* t )
 	if (t->next) ai_freetask(t->next); /* yay recursive freeing */
 
 	if (t->name) free(t->name);
-	if (t->dtype==TYPE_PTR) free(t->target);
+	if (t->dtype==TYPE_PTR) free(t->dat.target);
 	free(t);
 }
 
@@ -439,17 +439,17 @@ static int ai_pushtask( lua_State *L )
 	Task* t = MALLOC_ONE(Task);
 	t->name = (lua_isstring(L,2)) ? strdup((char*)lua_tostring(L,2)) : NULL;
 	t->next = NULL;
-	t->target = NULL;
+	t->dat.target = NULL;
 
 	if (lua_gettop(L) > 2) {
 		if (lua_isnumber(L,3)) {
 			t->dtype = TYPE_INT;
-			t->ID = (unsigned int)lua_tonumber(L,3);
+			t->dat.ID = (unsigned int)lua_tonumber(L,3);
 		}
 		else if (lua_islightuserdata(L,3)) { /* only pointer valid is Vector2d* in Lua */
 			t->dtype = TYPE_PTR;
-			t->target = MALLOC_ONE(Vector2d);
-			vectcpy( t->target, (Vector2d*)lua_topointer(L,3) );
+			t->dat.target = MALLOC_ONE(Vector2d);
+			vectcpy( t->dat.target, (Vector2d*)lua_topointer(L,3) );
 		}
 		else t->dtype = TYPE_NULL;
 	}
@@ -498,7 +498,7 @@ static int ai_taskname( lua_State *L )
 static int ai_gettarget( lua_State *L )
 {
 	if (cur_pilot->task->dtype == TYPE_PTR) {
-		lua_pushlightuserdata(L, cur_pilot->task->target);
+		lua_pushlightuserdata(L, cur_pilot->task->dat.target);
 		return 1;
 	}
 	return 0;
@@ -510,7 +510,7 @@ static int ai_gettarget( lua_State *L )
 static int ai_gettargetid( lua_State *L )
 {
 	if (cur_pilot->task->dtype == TYPE_INT) {
-		lua_pushnumber(L, cur_pilot->task->ID);
+		lua_pushnumber(L, cur_pilot->task->dat.ID);
 		return 1;
 	}
 	return 0;
