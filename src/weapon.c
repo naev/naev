@@ -47,8 +47,8 @@ typedef struct Weapon_ {
 	alVoice* voice; /* virtual voice */
 
 	/* position update and render */
-	void (*update)(struct Weapon*, const double, WeaponLayer);
-	void (*think)(struct Weapon*); /* for the smart missiles */
+	void (*update)(struct Weapon_*, const double, WeaponLayer);
+	void (*think)(struct Weapon_*); /* for the smart missiles */
 
 } Weapon;
 
