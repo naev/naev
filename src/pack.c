@@ -21,7 +21,7 @@
  *
  * Format Overview:
  *
- *   1.1) Index (in 512 byte chunks)
+ *   1.1) Index
  *     1.1.1) Magic Number (16 bytes)
  *     1.1.2) Number of Files (uint32_t)
  *     1.1.3) Files in format Name/Location
@@ -42,8 +42,8 @@
  */
 
 
-#undef DEBUG /* mucho spamo */
-#define DEBUG(str, args...)		do {;} while(0)
+//#undef DEBUG /* mucho spamo */
+//#define DEBUG(str, args...)		do {;} while(0)
 
 
 /* the read/WRITE block size */
@@ -346,7 +346,8 @@ int pack_open( Packfile* file, const char* packfile, const char* filename )
  */
 ssize_t pack_read( Packfile* file, void* buf, size_t count )
 {
-	if (file->pos + count > file->end) count = file->end - file->pos; /* can't go past end */
+	if ((file->pos + count) > file->end)
+		count = file->end - file->pos; /* can't go past end */
 	if (count == 0) return 0;
 
 	int bytes;
@@ -362,6 +363,65 @@ ssize_t pack_read( Packfile* file, void* buf, size_t count )
 	file->pos += bytes;
 
 	return bytes;
+}
+
+
+/*
+ * seeks in the packfile
+ */
+off_t pack_seek( Packfile* file, off_t offset, int whence)
+{
+	DEBUG("attempting to seek offset: %d, whence: %d", offset, whence);
+	off_t ret;
+	switch (whence) {
+#ifdef _POSIX_SOURCE
+		case SEEK_SET:
+			if ((file->start + offset) > file->end) return -1;
+			ret = lseek( file->fd, file->start + offset, SEEK_SET );
+			if (ret != (file->start + offset)) return -1;
+			break;
+		case SEEK_CUR:
+			if ((file->pos + offset) > file->end) return -1;
+			ret = lseek( file->fd, file->pos + offset, SEEK_SET );
+			if (ret != (file->pos + offset)) return -1;
+			break;
+		case SEEK_END:
+			if ((file->end - offset) < file->start) return -1;
+			ret = lseek( file->fd, file->end - offset - 1, SEEK_SET );
+			if (ret != (file->end - offset)) return -1;
+			break;
+#else /* not _POSIX_SOURCE */
+		case SEEK_SET:
+			if ((file->start + offset) > file->end) return -1;
+			ret = fseek( file->fp, file->start + offset, SEEK_SET );
+			if (ret == -1) return -1;
+			break;
+		case SEEK_CUR:
+			if ((file->pos + offset) > file->end) return -1;
+			ret = fseek( file->fp, file->pos + offset, SEEK_SET );
+			if (ret == -1) return -1;
+			break;
+		case SEEK_END:
+			if ((file->end - offset) < file->start) return -1;
+			ret = fseek( file->fp, file->end - offset, SEEK_SET );
+			if (ret == -1) return -1;
+			break;
+#endif /* _POSIX_SOURCE */
+
+		default:
+			ERR("Whence is not one of SEEK_SET, SEEK_CUR or SEEK_END");
+			return -1;
+	}
+	return ret - file->start;
+}
+
+
+/*
+ * returns current pointer position
+ */
+long pack_tell( Packfile* file )
+{
+	return file->pos - file->start;
 }
 
 

@@ -34,6 +34,8 @@ int pack_check( const char* filename );
 int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles );
 int pack_open( Packfile* file, const char* packfile, const char* filename );
 ssize_t pack_read( Packfile* file, void* buf, const size_t count );
+off_t pack_seek( Packfile* file, off_t offset, int whence);
+long pack_tell( Packfile* file );
 int pack_close( Packfile* file );
 /* fancy */
 void* pack_readfile( const char* packfile, const char* filename, uint32_t *filesize );
