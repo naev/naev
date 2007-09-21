@@ -360,14 +360,14 @@ void music_load( const char* name )
 }
 void music_play (void)
 {
-	music_set(MUSIC_PLAYING);
+	if (!music_is(MUSIC_PLAYING)) music_set(MUSIC_PLAYING);
 }
 void music_stop (void)
 {
-	music_rm(MUSIC_PLAYING);
+	if (music_is(MUSIC_PLAYING)) music_rm(MUSIC_PLAYING);
 }
 void music_kill (void)
 {
-	music_set(MUSIC_KILL);
+	if (!music_is(MUSIC_KILL)) music_set(MUSIC_KILL);
 }
 
