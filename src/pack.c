@@ -42,8 +42,8 @@
  */
 
 
-//#undef DEBUG /* mucho spamo */
-//#define DEBUG(str, args...)		do {;} while(0)
+#undef DEBUG /* mucho spamo */
+#define DEBUG(str, args...)		do {;} while(0)
 
 
 /* the read/WRITE block size */
