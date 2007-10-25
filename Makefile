@@ -1,17 +1,30 @@
-
+#
+#   OPTIONS
+#
 DEBUG = 1
 
-APPNAME = naev
 
+#
+#   VERSION
+#
 VMAJOR = 0
 VMINOR = 0
 VREV = 1
 VERSION = -DVMAJOR=$(VMAJOR) -DVMINOR=$(VMINOR) -DVREV=$(VREV)
 VERSIONFILE = VERSION
 
+
+#
+#   OBJS
+#
+APPNAME = naev
 OBJS := $(shell find src/ -name '*.c' -print)
 OBJS := $(OBJS:%.c=%.o)
 
+
+#
+#   CFLAGS
+#
 CLUA = -Ilib/lua
 CSDL = $(shell sdl-config --cflags)
 CXML = $(shell xml2-config --cflags)
@@ -26,6 +39,10 @@ else # DEBUG
 CFLAGS += -O2 -funroll-loops -pipe
 endif # DEBUG
 
+
+#
+#   LDFLAGS
+#
 LDLUA = lib/lua/liblua.a
 LDSDL = $(shell sdl-config --libs) -lSDL_image
 LDXML = $(shell xml2-config --libs)
@@ -36,6 +53,9 @@ LDVORBIS = -lvorbisfile
 LDFLAGS = -lm $(LDLUA) $(LDSDL) $(LDXML) $(LDTTF) $(LDGL) $(LDAL) $(LDVORBIS)
 
 
+#
+#   DATA
+#
 DATA_AI = $(shell find ai/ -name '*.lua')
 DATA_GFX = $(shell find gfx/ -name '*png')
 DATA_XML = $(shell find dat/ -name '*.xml' -o -name '*.ttf')
@@ -44,6 +64,10 @@ DATA = data
 DATAFILES = $(VERSIONFILE) $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND)
 
 
+
+#
+#   TARGETS
+#
 %.o:	%.c %.h
 	@$(CC) -c $(CFLAGS) -o $@ $<
 	@echo -e "\tCC   $@"
