@@ -7,6 +7,11 @@ fullscreen = 0
 -- SCREEN
 fps = 0
 
+-- SOUND
+nosound = 0
+sound = 1.
+mosic = 1.
+
 -- JOYSTICK
 -- can be by number or substring of joystick name
 joystick = "Precision"
