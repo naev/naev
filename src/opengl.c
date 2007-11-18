@@ -523,7 +523,7 @@ void gl_bindCamera( const Vector2d* pos )
  */
 int gl_init()
 {
-	int doublebuf, depth, i, supported = 0;
+	int doublebuf, depth, i, j, off, toff, supported = 0;
 	SDL_Rect** modes;
 	int flags = SDL_OPENGL;
 	flags |= SDL_FULLSCREEN * (gl_has(OPENGL_FULLSCREEN) ? 1 : 0);
@@ -548,7 +548,7 @@ int gl_init()
 			DEBUG("All fullscreen modes available");
 		else {
 			DEBUG("Available fullscreen modes:");
-			for (i=0;modes[i];++i) {
+			for (i=0; modes[i]; i++) {
 				DEBUG("  %d x %d", modes[i]->w, modes[i]->h);
 				if ((flags & SDL_FULLSCREEN) && (modes[i]->w == gl_screen.w) &&
 						(modes[i]->h == gl_screen.h))
@@ -557,11 +557,25 @@ int gl_init()
 		}
 
 		/* makes sure fullscreen mode is supported */
-		if (flags & SDL_FULLSCREEN && !supported) {
-			WARN("Fullscreen mode %dx%d is not supported by your setup, attempting %dx%d",
-					gl_screen.w, gl_screen.h, modes[0]->w, modes[0]->h);
-			gl_screen.w = modes[0]->w;
-			gl_screen.h = modes[0]->h;
+		if ((flags & SDL_FULLSCREEN) && !supported) {
+
+			/* try to get closest aproximation to mode asked for */
+			off = -1;
+			j = 0;
+			for (i=0; modes[i]; i++) {
+				toff = ABS(gl_screen.w-modes[i]->w) + ABS(gl_screen.h-modes[i]->h);
+				if ((off == -1) || (toff < off)) {
+					j = i;
+					off = toff;
+				}
+			}
+
+			WARN("Fullscreen mode %dx%d is not supported by your setup\n"
+					"   switching to %dx%d",
+					gl_screen.w, gl_screen.h,
+					modes[j]->w, modes[j]->h );
+			gl_screen.w = modes[j]->w;
+			gl_screen.h = modes[j]->h;
 		}
 
 		/* free the modes */
