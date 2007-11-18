@@ -3,7 +3,6 @@
  */
 
 
-
 #include "space.h"
 
 #include <malloc.h>

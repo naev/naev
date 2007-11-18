@@ -56,6 +56,7 @@ unsigned int player_target = PLAYER_ID; /* targetted pilot */
 /* pure internal */
 static int planet_target = -1; /* targetted planet */
 static int hyperspace_target = -1; /* targetted hyperspace route */
+static double hyperspace_flash = 0.;
 
 
 /*
@@ -582,6 +583,21 @@ void player_render (void)
 				mesg_stack[mesg_max-i-1].str[0] = '\0';
 			else gl_print( NULL, x, y, NULL, "%s", mesg_stack[mesg_max-i-1].str );
 		}
+	}
+
+
+	/*
+	 * hyperspace
+	 */
+	if (pilot_isFlag(player, PILOT_HYPERSPACE)) {
+		x = 1. - (double)(player->ptimer - SDL_GetTicks())/HYPERSPACE_FLY_DELAY;
+		glColor4d(1.,1.,1., pow(x,16) ); /* TODO make more efficient */
+		glBegin(GL_QUADS);
+			glVertex2d( -gl_screen.w/2., -gl_screen.h/2. );
+			glVertex2d( -gl_screen.w/2.,  gl_screen.h/2. );
+			glVertex2d(  gl_screen.w/2.,  gl_screen.h/2. );
+			glVertex2d(  gl_screen.w/2., -gl_screen.h/2. );
+		glEnd(); /* GL_QUADS */
 	}
 }
 
@@ -1211,7 +1227,10 @@ void player_brokeHyperspace (void)
 			-sin( player->solid->dir ) * MIN_HYPERSPACE_DIST * 1.5 );
 
 	/* stop hyperspace */
-	pilot_rmFlag( player, PILOT_HYPERSPACE | PILOT_HYP_BEGIN | PILOT_HYP_PREP ); 
+	pilot_rmFlag( player, PILOT_HYPERSPACE | PILOT_HYP_BEGIN | PILOT_HYP_PREP );
+
+	/* done with the flash */
+	hyperspace_flash = 0.;
 }
 
 

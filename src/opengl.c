@@ -441,7 +441,6 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
 	ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
 	
 	/* actual blitting */
-	glShadeModel(GL_FLAT);
 	glBindTexture( GL_TEXTURE_2D, sprite->texture);
 	glBegin(GL_QUADS);
 
