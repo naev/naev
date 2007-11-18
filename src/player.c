@@ -56,7 +56,6 @@ unsigned int player_target = PLAYER_ID; /* targetted pilot */
 /* pure internal */
 static int planet_target = -1; /* targetted planet */
 static int hyperspace_target = -1; /* targetted hyperspace route */
-static double hyperspace_flash = 0.;
 
 
 /*
@@ -590,14 +589,18 @@ void player_render (void)
 	 * hyperspace
 	 */
 	if (pilot_isFlag(player, PILOT_HYPERSPACE)) {
-		x = 1. - (double)(player->ptimer - SDL_GetTicks())/HYPERSPACE_FLY_DELAY;
-		glColor4d(1.,1.,1., pow(x,16) ); /* TODO make more efficient */
-		glBegin(GL_QUADS);
-			glVertex2d( -gl_screen.w/2., -gl_screen.h/2. );
-			glVertex2d( -gl_screen.w/2.,  gl_screen.h/2. );
-			glVertex2d(  gl_screen.w/2.,  gl_screen.h/2. );
-			glVertex2d(  gl_screen.w/2., -gl_screen.h/2. );
-		glEnd(); /* GL_QUADS */
+		i = (int)player->ptimer-HYPERSPACE_FLY_DELAY/4.;
+		j = (int)SDL_GetTicks();
+		if (i < j) {
+			x = (double)(j-i) / (HYPERSPACE_FLY_DELAY/4.);
+			glColor4d(1.,1.,1., pow(x,4) );
+			glBegin(GL_QUADS);
+				glVertex2d( -gl_screen.w/2., -gl_screen.h/2. );
+				glVertex2d( -gl_screen.w/2.,  gl_screen.h/2. );
+				glVertex2d(  gl_screen.w/2.,  gl_screen.h/2. );
+				glVertex2d(  gl_screen.w/2., -gl_screen.h/2. );
+			glEnd(); /* GL_QUADS */
+		}
 	}
 }
 
@@ -1228,9 +1231,6 @@ void player_brokeHyperspace (void)
 
 	/* stop hyperspace */
 	pilot_rmFlag( player, PILOT_HYPERSPACE | PILOT_HYP_BEGIN | PILOT_HYP_PREP );
-
-	/* done with the flash */
-	hyperspace_flash = 0.;
 }
 
 
