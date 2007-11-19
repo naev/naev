@@ -589,11 +589,11 @@ void player_render (void)
 	 * hyperspace
 	 */
 	if (pilot_isFlag(player, PILOT_HYPERSPACE)) {
-		i = (int)player->ptimer-HYPERSPACE_FLY_DELAY/4.;
+		i = (int)player->ptimer - HYPERSPACE_FADEOUT;
 		j = (int)SDL_GetTicks();
 		if (i < j) {
-			x = (double)(j-i) / (HYPERSPACE_FLY_DELAY/4.);
-			glColor4d(1.,1.,1., pow(x,4) );
+			x = (double)(j-i) / HYPERSPACE_FADEOUT;
+			glColor4d(1.,1.,1., x );
 			glBegin(GL_QUADS);
 				glVertex2d( -gl_screen.w/2., -gl_screen.h/2. );
 				glVertex2d( -gl_screen.w/2.,  gl_screen.h/2. );

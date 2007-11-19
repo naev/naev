@@ -609,27 +609,62 @@ int space_load (void)
 void space_render( double dt )
 {
 	int i;
+	unsigned int t, timer;
+	double x, y, m;
 
 	/*
 	 * gprof claims it's the slowest thing in the game!
 	 */
-	glBegin(GL_POINTS);
-	for (i=0; i < nstars; i++) {
-		if (!paused && !toolkit) {
-			/* update position */
-			stars[i].x -= VX(player->solid->vel)/(13.-10.*stars[i].brightness)*dt;
-			stars[i].y -= VY(player->solid->vel)/(13.-10.*stars[i].brightness)*dt;
-			if (stars[i].x > gl_screen.w + STAR_BUF) stars[i].x = -STAR_BUF;
-			else if (stars[i].x < -STAR_BUF) stars[i].x = gl_screen.w + STAR_BUF;
-			if (stars[i].y > gl_screen.h + STAR_BUF) stars[i].y = -STAR_BUF;
-			else if (stars[i].y < -STAR_BUF) stars[i].y = gl_screen.h + STAR_BUF;
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix(); /* translation matrix */
+		glTranslated( -(double)gl_screen.w/2., -(double)gl_screen.h/2., 0);
+
+	t = SDL_GetTicks();
+	timer = player->ptimer - HYPERSPACE_STARS_BLUR;
+	if (pilot_isFlag(player,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
+			(timer < t)) {
+
+		glShadeModel(GL_SMOOTH);
+
+		glBegin(GL_LINES);
+
+		/* lines will be based on velocity */
+		m = 250*(double)(t-timer) / (HYPERSPACE_STARS_BLUR);
+		x = m*cos(VANGLE(player->solid->vel)+M_PI);
+		y = m*sin(VANGLE(player->solid->vel)+M_PI);
+
+		for (i=0; i < nstars; i++) {
+			glColor4d( 1., 1., 1., stars[i].brightness );
+			glVertex2d( stars[i].x, stars[i].y );
+			glColor4d( 1., 1., 1., 0. );
+			glVertex2d( stars[i].x + x*stars[i].brightness,
+					stars[i].y + y*stars[i].brightness );
 		}
-		/* render */
-		glColor4d( 1., 1., 1., stars[i].brightness );
-		glVertex2d( stars[i].x - (double)gl_screen.w/2.,
-				stars[i].y - (double)gl_screen.h/2. );
+		glEnd(); /* GL_LINES */
+
+		glShadeModel(GL_FLAT);
 	}
-	glEnd();
+	else {
+		glBegin(GL_POINTS);
+		for (i=0; i < nstars; i++) {
+			if (!paused && !toolkit) {
+				/* update position */
+				stars[i].x -= VX(player->solid->vel)/(13.-10.*stars[i].brightness)*dt;
+				stars[i].y -= VY(player->solid->vel)/(13.-10.*stars[i].brightness)*dt;
+				if (stars[i].x > gl_screen.w + STAR_BUF) stars[i].x = -STAR_BUF;
+				else if (stars[i].x < -STAR_BUF) stars[i].x = gl_screen.w + STAR_BUF;
+				if (stars[i].y > gl_screen.h + STAR_BUF) stars[i].y = -STAR_BUF;
+				else if (stars[i].y < -STAR_BUF) stars[i].y = gl_screen.h + STAR_BUF;
+			}
+			/* render */
+			glColor4d( 1., 1., 1., stars[i].brightness );
+			glVertex2d( stars[i].x, stars[i].y );
+		}
+		glEnd();
+	}
+
+	glPopMatrix(); /* translation matrx */
 }
 
 /*
