@@ -630,7 +630,7 @@ void space_render( double dt )
 		glBegin(GL_LINES);
 
 		/* lines will be based on velocity */
-		m = 250*(double)(t-timer) / (HYPERSPACE_STARS_BLUR);
+		m = HYPERSPACE_STARS_LENGTH * (double)(t-timer) / (HYPERSPACE_STARS_BLUR);
 		x = m*cos(VANGLE(player->solid->vel)+M_PI);
 		y = m*sin(VANGLE(player->solid->vel)+M_PI);
 
