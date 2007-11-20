@@ -413,7 +413,7 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 	if (s > (sy*sx-1)) s = s % (sy*sx);
 
 	*x = s % sx;
-	*y = s / sy;
+	*y = s / sx;
 }
 
 
