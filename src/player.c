@@ -1237,13 +1237,33 @@ void player_brokeHyperspace (void)
 /*
  * take a screenshot
  */
+static int screenshot_cur = 0;
 void player_screenshot (void)
 {
-	char filename[20];
+	FILE *fp;
+	int done;
+	char filename[PATH_MAX];
 
-	/* TODO not overwrite old screenshots */
-	strncpy(filename,"screenshot.png",20);
-	DEBUG("Taking screenshot...");
+	done = 0;
+	do {
+		if (screenshot_cur >= 128) { /* in case the crap system breaks :) */
+			WARN("You have reached the maximum amount of screenshots [128]");
+			return;
+		}
+		snprintf( filename, PATH_MAX, "screenshot%03d.png", screenshot_cur );
+		fp = fopen( filename, "r" ); /* yes i know it's a cheesy way to check */
+		if (fp==NULL) done = 1;
+		else { /* next */
+			screenshot_cur++;
+			fclose(fp);
+		}
+		fp = NULL;
+	} while (!done);
+
+
+	/* now proceed to take the screenshot */
+	DEBUG( "Taking screenshot [%03d]...", screenshot_cur );
 	gl_screenshot(filename);
 }
+
 
