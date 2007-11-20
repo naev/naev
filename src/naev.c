@@ -35,6 +35,7 @@
 #include "pause.h"
 #include "sound.h"
 #include "music.h"
+#include "spfx.h"
 
 
 /* to get data info */
@@ -159,6 +160,7 @@ int main ( int argc, char** argv )
 	
 	/*  data loading */
 	factions_load();
+	spfx_load();
 	outfit_load();
 	ships_load();
 	fleet_load();
@@ -215,6 +217,7 @@ int main ( int argc, char** argv )
 	fleet_free();
 	ships_free();
 	outfit_free();
+	spfx_free(); /* gets rid of the special effect */
 	factions_free();
 	gl_freeFont(NULL);
 	gl_freeFont(&gl_smallFont);
@@ -266,6 +269,7 @@ static void fps_control (void)
 static void update_space (void)
 {
 	weapons_update(dt);
+	spfx_update(dt);
 	pilots_update(dt);
 }
 
@@ -280,8 +284,8 @@ static void update_space (void)
  *      | @ back layer weapons
  *      X
  *   N  | @ NPC ships
- *      | @ normal layer particles (above ships)
  *      | @ front layer weapons
+ *      | @ normal layer particles (above ships)
  *      X
  *   FG | @ player
  *      | @ foreground particles
@@ -297,8 +301,10 @@ static void render_space (void)
 	/* N */
 	pilots_render();
 	weapons_render(WEAPON_LAYER_FG);
+	spfx_render(SPFX_LAYER_BACK);
 	/* FG */
 	player_render();
+	spfx_render(SPFX_LAYER_FRONT);
 	display_fps(dt);
 }
 

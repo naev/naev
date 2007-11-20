@@ -8,6 +8,7 @@
 
 #include "weapon.h"
 #include "pilot.h"
+#include "spfx.h"
 
 
 /*
@@ -41,6 +42,7 @@ void pause (void)
 
 	pilots_pause();
 	weapons_pause();
+	spfx_pause();
 
 	paused = 1; /* officially paused */
 }
@@ -55,6 +57,7 @@ void unpause (void)
 
 	pilots_unpause();
 	weapons_unpause();
+	spfx_unpause();
 
 	paused = 0; /* officially unpaused */
 }

@@ -60,7 +60,7 @@ void vect_pset( Vector2d* v, const double mod, const double angle )
 /*
  * copies vector src to dest
  */
-void vectcpy( Vector2d* dest, const const Vector2d* src )
+void vectcpy( Vector2d* dest, const Vector2d* src )
 {
 	dest->x = src->x;
 	dest->y = src->y;

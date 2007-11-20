@@ -16,6 +16,7 @@
 #include "pilot.h"
 #include "player.h"
 #include "collision.h"
+#include "spfx.h"
 
 
 #define weapon_isSmart(w)		(w->think)
@@ -305,8 +306,12 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer )
 {
 	/* inform the ai it has been attacked, useless if  player */
-	if (!pilot_isPlayer(p))
+	if (!pilot_isPlayer(p)) {
 		ai_attacked( p, w->parent );
+		spfx_add( 0, &w->solid->pos, &p->solid->vel, SPFX_LAYER_BACK );
+	}
+	else
+		spfx_add( 0, &w->solid->pos, &p->solid->vel, SPFX_LAYER_FRONT );
 	if (w->parent == PLAYER_ID) /* make hostile to player */
 		pilot_setFlag( p, PILOT_HOSTILE);
 
