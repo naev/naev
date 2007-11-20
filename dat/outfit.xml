@@ -9,6 +9,7 @@
 <specific type="1">
 <gfx>lasergreen</gfx>
 <sound>laser</sound>
+<spfx>ExpS</spfx>
 <delay>500</delay>
 <speed>550</speed>
 <range>300</range>
@@ -39,6 +40,7 @@
 <specific type="6">
 <gfx>missile</gfx>
 <sound>missile</sound>
+<spfx>ExpM</spfx>
 <duration>5</duration>
 <thrust>1200</thrust>
 <turn>200</turn>

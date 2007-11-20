@@ -308,10 +308,10 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer )
 	/* inform the ai it has been attacked, useless if  player */
 	if (!pilot_isPlayer(p)) {
 		ai_attacked( p, w->parent );
-		spfx_add( 0, &w->solid->pos, &p->solid->vel, SPFX_LAYER_BACK );
+		spfx_add( w->outfit->spfx, &w->solid->pos, &p->solid->vel, SPFX_LAYER_BACK );
 	}
 	else
-		spfx_add( 0, &w->solid->pos, &p->solid->vel, SPFX_LAYER_FRONT );
+		spfx_add( w->outfit->spfx, &w->solid->pos, &p->solid->vel, SPFX_LAYER_FRONT );
 	if (w->parent == PLAYER_ID) /* make hostile to player */
 		pilot_setFlag( p, PILOT_HOSTILE);
 

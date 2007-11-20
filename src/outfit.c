@@ -15,6 +15,7 @@
 #include "naev.h"
 #include "log.h"
 #include "pack.h"
+#include "spfx.h"
 
 
 #define outfit_setProp(o,p)		((o)->properties |= p)
@@ -151,6 +152,8 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
 					OUTFIT_GFX"%s.png", xml_get(node));
 			temp->gfx_space = gl_newSprite(str, 6, 6);
 		}
+		else if (xml_isNode(node,"spfx"))
+			temp->spfx = spfx_get(xml_get(node));
 		else if (xml_isNode(node,"sound"))
 			temp->sound = sound_get( xml_get(node) );
 		else if (xml_isNode(node,"damage")) {
@@ -218,6 +221,8 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 					OUTFIT_GFX"%s.png", xml_get(node));
 			temp->gfx_space = gl_newSprite(str, 6, 6);
 		}
+		else if (xml_isNode(node,"spfx"))
+			temp->spfx = spfx_get(xml_get(node));
 		else if (xml_isNode(node,"sound"))
 			temp->sound = sound_get( xml_get(node) );
 		else if (xml_isNode(node,"damage")) {

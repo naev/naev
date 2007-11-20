@@ -69,7 +69,7 @@ static int spfx_base_load( char* name, int anim, char* gfx, int sx, int sy )
 	SPFX_Base *cur;
 	char buf[PATH_MAX];
 
-	spfx_effects = realloc( spfx_effects, ++spfx_neffects );
+	spfx_effects = realloc( spfx_effects, ++spfx_neffects*sizeof(SPFX_Base) );
 	cur = &spfx_effects[spfx_neffects-1];
 
 	cur->name = strdup(name);
@@ -90,12 +90,26 @@ static void spfx_base_free( SPFX_Base *effect )
 	if (effect->gfx) gl_freeTexture(effect->gfx);
 }
 
+
+int spfx_get( char* name )
+{
+	int i;
+	for (i=0; i<spfx_neffects; i++)
+		if (strcmp(spfx_effects[i].name, name)==0)
+			return i;
+	WARN("SPFX '%s' not found!", name );
+	return 0;
+}
+
+
 /*
  * load and unload functions
  */
 int spfx_load (void)
 {
-	spfx_base_load( "ExpS", 600, "exps.png", 6, 5 );
+	spfx_base_load( "ExpS", 400, "exps.png", 6, 5 );
+	spfx_base_load( "ExpM", 450, "expm.png", 6, 5 );
+	spfx_base_load( "ExpL", 500, "expl.png", 6, 5 );
 
 	return 0;
 }

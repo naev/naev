@@ -65,6 +65,7 @@ typedef struct Outfit_ {
 
 			glTexture* gfx_space; /* graphic */
 			ALuint sound; /* sound to play */
+			int spfx; /* special effect on hit */
 		};
 		struct { /* launcher */
 			unsigned int delay; /* delay between shots */
@@ -79,6 +80,7 @@ typedef struct Outfit_ {
 
 			glTexture* gfx_space; /* graphic */
 			ALuint sound; /* sound to play */
+			int spfx; /* special effect on hit */
 		};
 	};
 } Outfit;
