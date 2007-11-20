@@ -403,13 +403,17 @@ int gl_isTrans( const glTexture* t, const int x, const int y )
  */
 void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 {
-	int s = (int)(dir / (2.0*M_PI / (t->sy*t->sx)));
+	int s, sx, sy;
+	
+	s = (int)(dir / (2.0*M_PI / (t->sy*t->sx)));
+	sx = t->sx;
+	sy = t->sy;
 
 	/* makes sure the sprite is "in range" */
-	if (s > (int)(t->sy*t->sx)-1) s = s % (int)(t->sy*t->sx);
+	if (s > (sy*sx-1)) s = s % (sy*sx);
 
-	*x = s % (int)t->sx;
-	*y = s / (int)t->sy;
+	*x = s % sx;
+	*y = s / sy;
 }
 
 
