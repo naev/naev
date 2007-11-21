@@ -52,6 +52,8 @@
   			X.1.1) accel : accelerates the ship. default: up arrow.
 			X.1.2) left : turns the ship left. default: left arrow.
 			X.1.3) right : turns the ship right. default: right arrow.
+			X.1.4) reverse : makes the ship face the direction it's coming from.
+				default: down arrow
 
 		X.2) Combat
 			X.2.1) primary : fires primary weapons. default: spacebar.
@@ -66,10 +68,15 @@
 		X.3) Space
 			X.3.1) target_planet : cycles through planets. default: p
 			X.3.2) land : attempts to land or targets nearest planet. default: l
+			X.3.3) thyperspace : cycle through hyperspace routes. default: h
+			X.3.4) jump : attempt to enter hyperspace. default: j
 
 		X.4) Gui
 			X.4.1) mapzoomin : zooms in the minimap. default: 9.
 			X.4.2) mapzoomout : zooms out in the minimap. default: 0.
-			X.4.3) screenshot : takes a screenshot. default: s
+			X.4.3) screenshot : takes a screenshot. default: keypad -
+			X.4.4) pause : pauses the game. default: z
+			X.4.5) menu : opens the menu. default: escape
+			X.4.6) info : opens the character information window. default: i
 
 
