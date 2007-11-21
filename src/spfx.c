@@ -188,10 +188,8 @@ void spfx_clear (void)
  */
 static void spfx_destroy( SPFX *layer, int *nlayer, int spfx )
 {
-	int i;
 	(*nlayer)--;
-	for (i=spfx; i<*nlayer; i++)
-		memcpy( &layer[i], &layer[i+1], sizeof(SPFX) );
+	memmove( &layer[spfx], &layer[spfx+1], (*nlayer-spfx)*sizeof(SPFX) );
 }
 
 
