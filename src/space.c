@@ -18,6 +18,7 @@
 #include "pause.h"
 #include "weapon.h"
 #include "toolkit.h"
+#include "spfx.h"
 
 
 #define XML_PLANET_ID			"Planets"
@@ -219,6 +220,7 @@ void space_init ( const char* sysname )
 	player_clear(); /* clears targets */
 	pilots_clean(); /* destroy all the current pilots, except player */
 	weapon_clear(); /* get rid of all the weapons */
+	spfx_clear(); /* get rid of the explosions */
 
 	if ((sysname==NULL) && (cur_system==NULL))
 		ERR("Cannot reinit system if there is no system previously loaded");
