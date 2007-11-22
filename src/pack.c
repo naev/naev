@@ -378,17 +378,17 @@ off_t pack_seek( Packfile* file, off_t offset, int whence)
 		case SEEK_SET:
 			if ((file->start + offset) > file->end) return -1;
 			ret = lseek( file->fd, file->start + offset, SEEK_SET );
-			if (ret != (file->start + offset)) return -1;
+			if (ret != ((off_t)file->start + offset)) return -1;
 			break;
 		case SEEK_CUR:
 			if ((file->pos + offset) > file->end) return -1;
 			ret = lseek( file->fd, file->pos + offset, SEEK_SET );
-			if (ret != (file->pos + offset)) return -1;
+			if (ret != ((off_t)file->pos + offset)) return -1;
 			break;
 		case SEEK_END:
 			if ((file->end - offset) < file->start) return -1;
 			ret = lseek( file->fd, file->end - offset - 1, SEEK_SET );
-			if (ret != (file->end - offset)) return -1;
+			if (ret != ((off_t)file->end - offset)) return -1;
 			break;
 #else /* not _POSIX_SOURCE */
 		case SEEK_SET:
