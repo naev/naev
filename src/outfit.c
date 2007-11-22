@@ -91,6 +91,40 @@ int outfit_isAmmo( const Outfit* o )
 			(o->type==OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO) );
 }
 
+
+/*
+ * gets the outfit's gfx
+ */
+glTexture* outfit_gfx( const Outfit* o )
+{
+	if (outfit_isWeapon(o)) return o->u.wpn.gfx_space;
+	else if (outfit_isAmmo(o)) return o->u.amm.gfx_space;
+	return NULL;
+}
+/*
+ * gets the outfit's spfx is applicable
+ */
+int outfit_spfx( const Outfit* o )
+{
+	if (outfit_isWeapon(o)) return o->u.wpn.spfx;
+	else if (outfit_isAmmo(o)) return o->u.amm.spfx;
+	return -1;
+}
+double outfit_dmgShield( const Outfit* o )
+{
+	if (outfit_isWeapon(o)) return o->u.wpn.damage_armour;
+	else if (outfit_isAmmo(o)) return o->u.amm.damage_armour;
+	return -1.;
+}
+double outfit_dmgArmour( const Outfit* o )
+{
+	if (outfit_isWeapon(o)) return o->u.wpn.damage_shield;
+	else if (outfit_isAmmo(o)) return o->u.amm.damage_shield;
+	return -1.;
+}
+
+
+
 /*
  * returns the associated name
  */
@@ -143,38 +177,40 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
 	char str[PATH_MAX] = "\0";
 
 	do { /* load all the data */
-		if (xml_isNode(node,"speed")) temp->speed = xml_getFloat(node);
-		else if (xml_isNode(node,"delay")) temp->delay = xml_getInt(node);
-		else if (xml_isNode(node,"range")) temp->range = xml_getFloat(node);
-		else if (xml_isNode(node,"accuracy")) temp->accuracy = xml_getFloat(node);
+		if (xml_isNode(node,"speed")) temp->u.wpn.speed = xml_getFloat(node);
+		else if (xml_isNode(node,"delay")) temp->u.wpn.delay = xml_getInt(node);
+		else if (xml_isNode(node,"range")) temp->u.wpn.range = xml_getFloat(node);
+		else if (xml_isNode(node,"accuracy")) temp->u.wpn.accuracy = xml_getFloat(node);
 		else if (xml_isNode(node,"gfx")) {
 			snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+4,
 					OUTFIT_GFX"%s.png", xml_get(node));
-			temp->gfx_space = gl_newSprite(str, 6, 6);
+			temp->u.wpn.gfx_space = gl_newSprite(str, 6, 6);
 		}
 		else if (xml_isNode(node,"spfx"))
-			temp->spfx = spfx_get(xml_get(node));
+			temp->u.wpn.spfx = spfx_get(xml_get(node));
 		else if (xml_isNode(node,"sound"))
-			temp->sound = sound_get( xml_get(node) );
+			temp->u.wpn.sound = sound_get( xml_get(node) );
 		else if (xml_isNode(node,"damage")) {
 			cur = node->children;
 			do {
-				if (xml_isNode(cur,"armour")) temp->damage_armour = xml_getFloat(cur);
-				else if (xml_isNode(cur,"shield")) temp->damage_shield = xml_getFloat(cur);
+				if (xml_isNode(cur,"armour"))
+					temp->u.wpn.damage_armour = xml_getFloat(cur);
+				else if (xml_isNode(cur,"shield"))
+					temp->u.wpn.damage_shield = xml_getFloat(cur);
 			} while ((cur = cur->next));
 		}
 	} while ((node = node->next));
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
-	MELEMENT(temp->gfx_space==NULL,"gfx");
-	MELEMENT((sound_lock!=NULL) && (temp->sound==0),"sound");
-	MELEMENT(temp->delay==0,"delay");
-	MELEMENT(temp->speed==0,"speed");
-	MELEMENT(temp->range==0,"range");
-	MELEMENT(temp->accuracy==0,"accuracy");
-	MELEMENT(temp->damage_armour==0,"armour' from element 'damage");
-	MELEMENT(temp->damage_shield==0,"shield' from element 'damage");
+	MELEMENT(temp->u.wpn.gfx_space==NULL,"gfx");
+	MELEMENT((sound_lock!=NULL) && (temp->u.wpn.sound==0),"sound");
+	MELEMENT(temp->u.wpn.delay==0,"delay");
+	MELEMENT(temp->u.wpn.speed==0,"speed");
+	MELEMENT(temp->u.wpn.range==0,"range");
+	MELEMENT(temp->u.wpn.accuracy==0,"accuracy");
+	MELEMENT(temp->u.wpn.damage_armour==0,"armour' from element 'damage");
+	MELEMENT(temp->u.wpn.damage_shield==0,"shield' from element 'damage");
 #undef MELEMENT
 }
 
@@ -189,13 +225,13 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 
 
 	do { /* load all the data */
-		if (xml_isNode(node,"delay")) temp->delay = xml_getInt(node);
-		else if (xml_isNode(node,"ammo")) temp->ammo = strdup(xml_get(node));
+		if (xml_isNode(node,"delay")) temp->u.lau.delay = xml_getInt(node);
+		else if (xml_isNode(node,"ammo")) temp->u.lau.ammo = strdup(xml_get(node));
 	} while ((node = node->next));
 
 #define MELEMENT(o,s)      if (o) WARN("Outfit '%s' missing '"s"' element", temp->name)
-	MELEMENT(temp->ammo==NULL,"ammo");
-	MELEMENT(temp->delay==0,"delay");
+	MELEMENT(temp->u.lau.ammo==NULL,"ammo");
+	MELEMENT(temp->u.lau.delay==0,"delay");
 #undef MELEMENT
 }
 
@@ -211,42 +247,44 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 	char str[PATH_MAX] = "\0";
 
 	do { /* load all the data */
-		if (xml_isNode(node,"thrust")) temp->thrust = xml_getFloat(node);
-		else if (xml_isNode(node,"turn")) temp->turn = xml_getFloat(node);
-		else if (xml_isNode(node,"speed")) temp->speed = xml_getFloat(node);
+		if (xml_isNode(node,"thrust")) temp->u.amm.thrust = xml_getFloat(node);
+		else if (xml_isNode(node,"turn")) temp->u.amm.turn = xml_getFloat(node);
+		else if (xml_isNode(node,"speed")) temp->u.amm.speed = xml_getFloat(node);
 		else if (xml_isNode(node,"duration"))
-			temp->duration = (unsigned int)1000.*xml_getFloat(node);
+			temp->u.amm.duration = (unsigned int)1000.*xml_getFloat(node);
 		else if (xml_isNode(node,"lockon"))
-			temp->lockon = (unsigned int)1000.*xml_getFloat(node);
+			temp->u.amm.lockon = (unsigned int)1000.*xml_getFloat(node);
 		else if (xml_isNode(node,"gfx")) {
 			snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+4,
 					OUTFIT_GFX"%s.png", xml_get(node));
-			temp->gfx_space = gl_newSprite(str, 6, 6);
+			temp->u.amm.gfx_space = gl_newSprite(str, 6, 6);
 		}
 		else if (xml_isNode(node,"spfx"))
-			temp->spfx = spfx_get(xml_get(node));
+			temp->u.amm.spfx = spfx_get(xml_get(node));
 		else if (xml_isNode(node,"sound"))
-			temp->sound = sound_get( xml_get(node) );
+			temp->u.amm.sound = sound_get( xml_get(node) );
 		else if (xml_isNode(node,"damage")) {
 			cur = node->children;
 			do {
-				if (xml_isNode(cur,"armour")) temp->damage_armour = xml_getFloat(cur);
-				else if (xml_isNode(cur,"shield")) temp->damage_shield = xml_getFloat(cur);
+				if (xml_isNode(cur,"armour"))
+					temp->u.amm.damage_armour = xml_getFloat(cur);
+				else if (xml_isNode(cur,"shield"))
+					temp->u.amm.damage_shield = xml_getFloat(cur);
 			} while ((cur = cur->next));
 		}
 	} while ((node = node->next));
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
-	MELEMENT(temp->gfx_space==NULL,"gfx");
-	MELEMENT((sound_lock != NULL) && (temp->sound==0),"sound");
-	MELEMENT(temp->thrust==0,"thrust");
-	MELEMENT(temp->turn==0,"turn");
-	MELEMENT(temp->speed==0,"speed");
-	MELEMENT(temp->range==0,"duration");
-	MELEMENT(temp->lockon==0,"lockon");
-	MELEMENT(temp->damage_armour==0,"armour' from element 'damage");
-	MELEMENT(temp->damage_shield==0,"shield' from element 'damage");
+	MELEMENT(temp->u.amm.gfx_space==NULL,"gfx");
+	MELEMENT((sound_lock != NULL) && (temp->u.amm.sound==0),"sound");
+	MELEMENT(temp->u.amm.thrust==0,"thrust");
+	MELEMENT(temp->u.amm.turn==0,"turn");
+	MELEMENT(temp->u.amm.speed==0,"speed");
+	MELEMENT(temp->u.amm.duration==0,"duration");
+	MELEMENT(temp->u.amm.lockon==0,"lockon");
+	MELEMENT(temp->u.amm.damage_armour==0,"armour' from element 'damage");
+	MELEMENT(temp->u.amm.damage_shield==0,"shield' from element 'damage");
 #undef MELEMENT
 }
 
@@ -367,10 +405,13 @@ void outfit_free (void)
 	int i;
 	for (i=0; i < outfits; i++) {
 		/* free graphics */
-		if (outfit_stack[i].gfx_space) gl_freeTexture(outfit_stack[i].gfx_space);
+		if (outfit_isWeapon(&outfit_stack[i]) && outfit_stack[i].u.wpn.gfx_space)
+			gl_freeTexture(outfit_stack[i].u.wpn.gfx_space);
+		else if (outfit_isAmmo(&outfit_stack[i]) && outfit_stack[i].u.amm.gfx_space)
+				gl_freeTexture(outfit_stack[i].u.amm.gfx_space);
 
-		if (outfit_isLauncher(&outfit_stack[i]) && outfit_stack[i].ammo)
-			free(outfit_stack[i].ammo);
+		if (outfit_isLauncher(&outfit_stack[i]) && outfit_stack[i].u.lau.ammo)
+			free(outfit_stack[i].u.lau.ammo);
 
 		free(outfit_stack[i].name);
 	}

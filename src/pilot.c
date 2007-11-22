@@ -192,12 +192,16 @@ void pilot_shoot( Pilot* p, const unsigned int target, const int secondary )
 }
 static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
 {
+	int quantity, delay;
+	
 	/* will segfault when trying to launch with 0 ammo otherwise */
-	int quantity = (outfit_isAmmo(w->outfit) && p->secondary) ?
+	quantity = (outfit_isAmmo(w->outfit) && p->secondary) ?
 			p->secondary->quantity : w->quantity ;
+	delay = (outfit_isWeapon(w->outfit)) ? w->outfit->u.wpn.delay :
+			w->outfit->u.lau.delay;
 	
 	/* check to see if weapon is ready */
-	if ((SDL_GetTicks() - w->timer) < (w->outfit->delay / quantity)) return;
+	if ((SDL_GetTicks() - w->timer) < (unsigned int)(delay / quantity)) return;
 
 	/*
 	 * regular weapons
@@ -294,7 +298,7 @@ void pilot_setAmmo( Pilot* p )
 		return;
 	}
 
-	name = p->secondary->outfit->ammo;
+	name = p->secondary->outfit->u.lau.ammo;
 
 	for (i=0; i<p->noutfits; i++)
 		if (strcmp(p->outfits[i].outfit->name,name)==0) {

@@ -149,20 +149,21 @@ static void think_seeker( Weapon* w )
 	if (p==NULL) return;
 
 	/* ammo isn't locked on yet */
-	if (SDL_GetTicks() > (w->timer + w->outfit->lockon)) {
+	if (SDL_GetTicks() > (w->timer + w->outfit->u.amm.lockon)) {
 	
 		diff = angle_diff(w->solid->dir,
 				vect_angle(&w->solid->pos, &p->solid->pos));
-		w->solid->dir_vel = 10 * diff *  w->outfit->turn; /* face the target */
-		if (w->solid->dir_vel > w->outfit->turn) w->solid->dir_vel = w->outfit->turn;
-		else if (w->solid->dir_vel < -w->outfit->turn)
-			w->solid->dir_vel = -w->outfit->turn;
+		w->solid->dir_vel = 10 * diff *  w->outfit->u.amm.turn; /* face the target */
+		if (w->solid->dir_vel > w->outfit->u.amm.turn)
+			w->solid->dir_vel = w->outfit->u.amm.turn;
+		else if (w->solid->dir_vel < -w->outfit->u.amm.turn)
+			w->solid->dir_vel = -w->outfit->u.amm.turn;
 	}
 
-	vect_pset( &w->solid->force, w->outfit->thrust, w->solid->dir );
+	vect_pset( &w->solid->force, w->outfit->u.amm.thrust, w->solid->dir );
 
-	if (VMOD(w->solid->vel) > w->outfit->speed) /* shouldn't go faster */
-		vect_pset( &w->solid->vel, w->outfit->speed, VANGLE(w->solid->vel) );
+	if (VMOD(w->solid->vel) > w->outfit->u.amm.speed) /* shouldn't go faster */
+		vect_pset( &w->solid->vel, w->outfit->u.amm.speed, VANGLE(w->solid->vel) );
 }
 
 
@@ -202,19 +203,22 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 		switch (wlayer[i]->outfit->type) {
 
 			case OUTFIT_TYPE_MISSILE_SEEK_AMMO:
-				if (SDL_GetTicks() > (wlayer[i]->timer + wlayer[i]->outfit->duration)) {
+				if (SDL_GetTicks() > (wlayer[i]->timer + wlayer[i]->outfit->u.amm.duration)) {
 					weapon_destroy(wlayer[i],layer);
 					continue;
 				}
 				break;
 
-			default: /* check to see if exceeded distance */
+			case OUTFIT_TYPE_BOLT: /* check to see if exceeded distance */
 				if (SDL_GetTicks() >
 						(wlayer[i]->timer + 1000*(unsigned int)
-						wlayer[i]->outfit->range/wlayer[i]->outfit->speed)) {
+						wlayer[i]->outfit->u.wpn.range/wlayer[i]->outfit->u.wpn.speed)) {
 					weapon_destroy(wlayer[i],layer);
 					continue;
 				}
+				break;
+
+			default:
 				break;
 		}
 		weapon_update(wlayer[i],dt,layer);
@@ -256,12 +260,14 @@ void weapons_render( const WeaponLayer layer )
 static void weapon_render( const Weapon* w )
 {
 	int sx, sy;
+	glTexture *gfx;
+
+	gfx = outfit_gfx(w->outfit);
 
 	/* get the sprite corresponding to the direction facing */
-	gl_getSpriteFromDir( &sx, &sy, w->outfit->gfx_space, w->solid->dir );
+	gl_getSpriteFromDir( &sx, &sy, gfx, w->solid->dir );
 
-	gl_blitSprite( w->outfit->gfx_space,
-			w->solid->pos.x, w->solid->pos.y, sx, sy, NULL );
+	gl_blitSprite( gfx, w->solid->pos.x, w->solid->pos.y, sx, sy, NULL );
 }
 
 
@@ -271,7 +277,11 @@ static void weapon_render( const Weapon* w )
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
 	int i, wsx,wsy, psx,psy;
-	gl_getSpriteFromDir( &wsx, &wsy, w->outfit->gfx_space, w->solid->dir );
+	glTexture *gfx;
+
+	gfx = outfit_gfx(w->outfit);
+
+	gl_getSpriteFromDir( &wsx, &wsy, gfx, w->solid->dir );
 
 	for (i=0; i<pilots; i++) {
 		gl_getSpriteFromDir( &psx, &psy, pilot_stack[i]->ship->gfx_space,
@@ -280,7 +290,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 		if (w->parent == pilot_stack[i]->id) continue; /* pilot is self */
 
 		if ( (weapon_isSmart(w)) && (pilot_stack[i]->id == w->target) &&
-				CollideSprite( w->outfit->gfx_space, wsx, wsy, &w->solid->pos,
+				CollideSprite( gfx, wsx, wsy, &w->solid->pos,
 						pilot_stack[i]->ship->gfx_space, psx, psy, &pilot_stack[i]->solid->pos)) {
 
 			weapon_hit( w, pilot_stack[i], layer );
@@ -288,7 +298,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 		}
 		else if ( !weapon_isSmart(w) &&
 				!areAllies(pilot_get(w->parent)->faction,pilot_stack[i]->faction) &&
-				CollideSprite( w->outfit->gfx_space, wsx, wsy, &w->solid->pos,
+				CollideSprite( gfx, wsx, wsy, &w->solid->pos,
 						pilot_stack[i]->ship->gfx_space, psx, psy, &pilot_stack[i]->solid->pos)) {
 
 			weapon_hit( w, pilot_stack[i], layer );
@@ -315,15 +325,17 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer )
 	/* inform the ai it has been attacked, useless if  player */
 	if (!pilot_isPlayer(p)) {
 		ai_attacked( p, w->parent );
-		spfx_add( w->outfit->spfx, &w->solid->pos, &p->solid->vel, SPFX_LAYER_BACK );
+		spfx_add( outfit_spfx(w->outfit),
+				&w->solid->pos, &p->solid->vel, SPFX_LAYER_BACK );
 	}
 	else
-		spfx_add( w->outfit->spfx, &w->solid->pos, &p->solid->vel, SPFX_LAYER_FRONT );
+		spfx_add( outfit_spfx(w->outfit), &w->solid->pos, &p->solid->vel, SPFX_LAYER_FRONT );
 	if (w->parent == PLAYER_ID) /* make hostile to player */
 		pilot_setFlag( p, PILOT_HOSTILE);
 
 	/* inform the ship that it should take some damage */
-	pilot_hit( p, w->solid, w->parent, w->outfit->damage_shield, w->outfit->damage_armour );
+	pilot_hit( p, w->solid, w->parent, 
+			outfit_dmgShield(w->outfit), outfit_dmgShield(w->outfit) );
 	/* no need for the weapon particle anymore */
 	weapon_destroy(w,layer);
 }
@@ -349,14 +361,15 @@ static Weapon* weapon_create( const Outfit* outfit,
 
 	switch (outfit->type) {
 		case OUTFIT_TYPE_BOLT: /* needs "accuracy" and speed based on player */
-			rdir += RNG(-outfit->accuracy/2.,outfit->accuracy/2.)/180.*M_PI;
+			rdir += RNG(-outfit->u.wpn.accuracy/2.,
+					outfit->u.wpn.accuracy/2.)/180.*M_PI;
 			if ((rdir > 2.*M_PI) || (rdir < 0.)) rdir = fmod(rdir, 2.*M_PI);
 			vectcpy( &v, vel );
-			vect_cadd( &v, outfit->speed*cos(rdir), outfit->speed*sin(rdir));
+			vect_cadd( &v, outfit->u.wpn.speed*cos(rdir), outfit->u.wpn.speed*sin(rdir));
 			w->solid = solid_create( mass, rdir, pos, &v );
 			w->voice = sound_addVoice( VOICE_PRIORITY_BOLT,
 					w->solid->pos.x, w->solid->pos.y,
-					w->solid->vel.x, w->solid->vel.y,  w->outfit->sound, 0 );
+					w->solid->vel.x, w->solid->vel.y,  w->outfit->u.wpn.sound, 0 );
 			break;
 
 		case OUTFIT_TYPE_MISSILE_SEEK_AMMO:
@@ -365,7 +378,7 @@ static Weapon* weapon_create( const Outfit* outfit,
 			w->think = think_seeker; /* eet's a seeker */
 			w->voice = sound_addVoice( VOICE_PRIORITY_AMMO,
 					w->solid->pos.x, w->solid->pos.y,
-					w->solid->vel.x, w->solid->vel.y,  w->outfit->sound, 0 );
+					w->solid->vel.x, w->solid->vel.y,  w->outfit->u.amm.sound, 0 );
 			break;
 
 		default: /* just dump it where the player is */

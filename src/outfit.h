@@ -66,16 +66,16 @@ typedef struct Outfit_ {
 			glTexture* gfx_space; /* graphic */
 			ALuint sound; /* sound to play */
 			int spfx; /* special effect on hit */
-		};
+		} wpn;
 		struct { /* launcher */
 			unsigned int delay; /* delay between shots */
 			char *ammo; /* the ammo to use */
-		};
+		} lau;
 		struct { /* ammo */
+			unsigned int duration; /* duration */
 			double speed; /* maximum speed */
 			double turn; /* turn velocity */
 			double thrust; /* acceleration */
-			unsigned int duration; /* duration */
 			double damage_armour, damage_shield; /* damage */
 
 			glTexture* gfx_space; /* graphic */
@@ -83,8 +83,8 @@ typedef struct Outfit_ {
 			int spfx; /* special effect on hit */
 
 			unsigned int lockon; /* time it takes to lock on the target */
-		};
-	};
+		} amm;
+	} u;
 } Outfit;
 
 
@@ -95,6 +95,14 @@ int outfit_isLauncher( const Outfit* o );
 int outfit_isAmmo( const Outfit* o );
 const char* outfit_getType( const Outfit* o );
 const char* outfit_getTypeBroad( const Outfit* o );
+
+/*
+ * get data from outfit
+ */
+glTexture* outfit_gfx( const Outfit* o );
+int outfit_spfx( const Outfit* o );
+double outfit_dmgShield( const Outfit* o );
+double outfit_dmgArmour( const Outfit* o );
 
 /*
  * loading/freeing outfit stack
