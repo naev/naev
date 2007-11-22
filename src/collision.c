@@ -28,18 +28,23 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
 		const glTexture* bt, const int bsx, const int bsy, const Vector2d* bp )
 {
 	int x,y;
+	int ax1,ax2, ay1,ay2;
+	int bx1,bx2, by1,by2;
+	int inter_x0, inter_x1, inter_y0, inter_y1;
+	int rasy, rbsy;
+	int abx,aby, bbx, bby;
 
 	/* a - cube coordinates */ 
-	int ax1 = (int)VX(*ap) - (int)(at->sw)/2;
-	int ay1 = (int)VY(*ap) - (int)(at->sh)/2;
-	int ax2 = ax1 + (int)(at->sw) - 1;
-	int ay2 = ay1 + (int)(at->sh) - 1;
+	ax1 = (int)VX(*ap) - (int)(at->sw)/2;
+	ay1 = (int)VY(*ap) - (int)(at->sh)/2;
+	ax2 = ax1 + (int)(at->sw) - 1;
+	ay2 = ay1 + (int)(at->sh) - 1;
 
 	/* b - cube coordinates */ 
-	int bx1 = (int)VX(*bp) - (int)(bt->sw)/2;
-	int by1 = (int)VY(*bp) - (int)(bt->sh)/2;
-	int bx2 = bx1 + bt->sw - 1;
-	int by2 = by1 + bt->sh - 1;
+	bx1 = (int)VX(*bp) - (int)(bt->sw)/2;
+	by1 = (int)VY(*bp) - (int)(bt->sh)/2;
+	bx2 = bx1 + bt->sw - 1;
+	by2 = by1 + bt->sh - 1;
 
 	/* check if bounding boxes intersect */ 
 	if((bx2 < ax1) || (ax2 < bx1)) return 0;
@@ -47,20 +52,20 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
 
 
 	/* define the remaining binding box */ 
-	int inter_x0 = MAX( ax1, bx1 );
-	int inter_x1 = MIN( ax2, bx2 );
-	int inter_y0 = MAX( ay1, by1 );
-	int inter_y1 = MIN( ay2, by2 );
+	inter_x0 = MAX( ax1, bx1 );
+	inter_x1 = MIN( ax2, bx2 );
+	inter_y0 = MAX( ay1, by1 );
+	inter_y1 = MIN( ay2, by2 );
 
 	/* real vertical sprite value (flipped) */
-	int rasy = at->sy - asy - 1;
-	int rbsy = bt->sy - bsy - 1;
+	rasy = at->sy - asy - 1;
+	rbsy = bt->sy - bsy - 1;
 
 	/* set up the base points */
-	int abx =  asx*(int)(at->sw) - ax1;
-	int aby = rasy*(int)(at->sh) - ay1;
-	int bbx =  bsx*(int)(bt->sw) - bx1;
-	int bby = rbsy*(int)(bt->sh) - by1;
+	abx =  asx*(int)(at->sw) - ax1;
+	aby = rasy*(int)(at->sh) - ay1;
+	bbx =  bsx*(int)(bt->sw) - bx1;
+	bby = rbsy*(int)(bt->sh) - by1;
 
 	for (y=inter_y0; y<=inter_y1; y++)
 		for (x=inter_x0; x<=inter_x1; x++)
