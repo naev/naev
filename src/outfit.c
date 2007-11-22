@@ -206,7 +206,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 {
 	xmlNodePtr cur, node;
-	node  = parent->xmlChildrenNode;
+	node = parent->xmlChildrenNode;
 
 	char str[PATH_MAX] = "\0";
 
@@ -215,7 +215,9 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 		else if (xml_isNode(node,"turn")) temp->turn = xml_getFloat(node);
 		else if (xml_isNode(node,"speed")) temp->speed = xml_getFloat(node);
 		else if (xml_isNode(node,"duration"))
-			temp->duration = 1000*(unsigned int)xml_getFloat(node);
+			temp->duration = (unsigned int)1000.*xml_getFloat(node);
+		else if (xml_isNode(node,"lockon"))
+			temp->lockon = (unsigned int)1000.*xml_getFloat(node);
 		else if (xml_isNode(node,"gfx")) {
 			snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+4,
 					OUTFIT_GFX"%s.png", xml_get(node));
@@ -242,6 +244,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 	MELEMENT(temp->turn==0,"turn");
 	MELEMENT(temp->speed==0,"speed");
 	MELEMENT(temp->range==0,"duration");
+	MELEMENT(temp->lockon==0,"lockon");
 	MELEMENT(temp->damage_armour==0,"armour' from element 'damage");
 	MELEMENT(temp->damage_shield==0,"shield' from element 'damage");
 #undef MELEMENT

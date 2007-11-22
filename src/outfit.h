@@ -81,6 +81,8 @@ typedef struct Outfit_ {
 			glTexture* gfx_space; /* graphic */
 			ALuint sound; /* sound to play */
 			int spfx; /* special effect on hit */
+
+			unsigned int lockon; /* time it takes to lock on the target */
 		};
 	};
 } Outfit;

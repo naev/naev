@@ -42,6 +42,7 @@
 <sound>missile</sound>
 <spfx>ExpM</spfx>
 <duration>5</duration>
+<lockon>1</lockon>
 <thrust>1200</thrust>
 <turn>200</turn>
 <speed>600</speed>

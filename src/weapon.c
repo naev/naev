@@ -141,16 +141,23 @@ void weapons_unpause (void)
  */
 static void think_seeker( Weapon* w )
 {
+	double diff;
+
 	if (w->target == w->parent) return; /* no self shooting */
 
 	Pilot* p = pilot_get(w->target); /* no null pilots */
 	if (p==NULL) return;
 
-	double diff = angle_diff(w->solid->dir,
-			vect_angle(&w->solid->pos, &p->solid->pos));
-	w->solid->dir_vel = 10 * diff *  w->outfit->turn; /* face the target */
-	if (w->solid->dir_vel > w->outfit->turn) w->solid->dir_vel = w->outfit->turn;
-	else if (w->solid->dir_vel < -w->outfit->turn) w->solid->dir_vel = -w->outfit->turn;
+	/* ammo isn't locked on yet */
+	if (SDL_GetTicks() > (w->timer + w->outfit->lockon)) {
+	
+		diff = angle_diff(w->solid->dir,
+				vect_angle(&w->solid->pos, &p->solid->pos));
+		w->solid->dir_vel = 10 * diff *  w->outfit->turn; /* face the target */
+		if (w->solid->dir_vel > w->outfit->turn) w->solid->dir_vel = w->outfit->turn;
+		else if (w->solid->dir_vel < -w->outfit->turn)
+			w->solid->dir_vel = -w->outfit->turn;
+	}
 
 	vect_pset( &w->solid->force, w->outfit->thrust, w->solid->dir );
 
