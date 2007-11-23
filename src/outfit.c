@@ -391,7 +391,7 @@ int outfit_load (void)
 	free(buf);
 	xmlCleanupParser();
 
-	DEBUG("Loaded %d outfit%s", outfits, (outfits==1) ? "" : "s" );
+	DEBUG("Loaded %d Outfit%s", outfits, (outfits==1) ? "" : "s" );
 
 	return 0;
 }

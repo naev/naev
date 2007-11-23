@@ -600,7 +600,7 @@ int space_load (void)
 	free(buf);
 	xmlCleanupParser();
 
-	DEBUG("Loaded %d star system%s with %d planet%s",
+	DEBUG("Loaded %d Star System%s with %d Planet%s",
 			nsystems, (nsystems==1) ? "" : "s",
 			nplanets, (nplanets==1) ? "" : "s" );
 

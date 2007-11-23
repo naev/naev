@@ -735,7 +735,7 @@ int fleet_load (void)
 	free(buf);
 	xmlCleanupParser();
 
-	DEBUG("Loaded %d fleet%c", nfleets, (nfleets==1)?' ':'s');
+	DEBUG("Loaded %d Fleet%s", nfleets, (nfleets==1) ? "" : "s" );
 
 	return 0;
 }

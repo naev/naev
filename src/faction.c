@@ -323,7 +323,7 @@ int factions_load (void)
 	free(buf);
 	xmlCleanupParser();
 
-	DEBUG("Loaded %d faction%s", nfactions, (nfactions==1) ? "" : "s" );
+	DEBUG("Loaded %d Faction%s", nfactions, (nfactions==1) ? "" : "s" );
 
 	return 0;
 }

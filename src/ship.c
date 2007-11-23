@@ -230,7 +230,7 @@ int ships_load(void)
 	free(buf);
 	xmlCleanupParser();
 
-	DEBUG("Loaded %d ship%s", ships, (ships==1) ? "" : "s" );
+	DEBUG("Loaded %d Ship%s", ships, (ships==1) ? "" : "s" );
 
 	return 0;
 }
