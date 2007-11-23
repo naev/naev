@@ -351,6 +351,11 @@ static void input_keyup( SDLKey key )
  */
 void input_handle( SDL_Event* event )
 {
+	if (toolkit) { /* toolkit handled seperately completely */
+		toolkit_input(event);
+		return;
+	}
+
 	switch (event->type) {
 
 		/*
@@ -374,16 +379,6 @@ void input_handle( SDL_Event* event )
 
 		case SDL_KEYUP:
 			input_keyup(event->key.keysym.sym);
-			break;
-
-
-		/*
-		 * toolkit
-		 */
-		case SDL_MOUSEMOTION:
-		case SDL_MOUSEBUTTONDOWN:
-		case SDL_MOUSEBUTTONUP:
-			if (toolkit) toolkit_mouseEvent(event);
 			break;
 	}
 }

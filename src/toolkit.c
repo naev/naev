@@ -86,6 +86,8 @@ static int mwindows = 0;
 static Widget* window_newWidget( Window* w );
 static void widget_cleanup( Widget *widget );
 static Window* window_wget( const unsigned int wid );
+/* input */
+static void toolkit_mouseEvent( SDL_Event* event );
 /* render */
 static void window_render( Window* w );
 static void toolkit_renderButton( Widget* btn, double bx, double by );
@@ -585,6 +587,9 @@ static void window_render( Window* w )
 }
 
 
+/*
+ * renders a button
+ */
 static void toolkit_renderButton( Widget* btn, double bx, double by )
 {
 	glColour *c, *dc, *oc, *lc;
@@ -786,10 +791,25 @@ void toolkit_render (void)
 
 
 /*
+ * toolkit input handled here
+ */
+void toolkit_input( SDL_Event* event )
+{
+	switch (event->type) {
+		case SDL_MOUSEMOTION:
+		case SDL_MOUSEBUTTONDOWN:
+		case SDL_MOUSEBUTTONUP:
+			toolkit_mouseEvent(event);
+			break;
+	}
+}
+
+
+/*
  * input
  */
 static int mouse_down = 0;
-void toolkit_mouseEvent( SDL_Event* event )
+static void toolkit_mouseEvent( SDL_Event* event )
 {
 	int i;
 	double x, y;
