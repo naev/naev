@@ -20,7 +20,7 @@
 #  define NAEV_H
 
 
-#define APPNAME         "NAEV"
+#define APPNAME         	"NAEV"
 
 #define MALLOC_ONE(type)   (malloc(sizeof(type)))
 #define CALLOC_ONE(type)	(calloc(1,sizeof(type)))
@@ -30,13 +30,15 @@
 #define MAX(x,y)				(((x)>(y))?(x):(y))
 #define MIN(x,y)				(((x)>(y))?(y):(x))
 
+#define pow2(x)				((x)*(x))
+
 #define DATA_DEF				"data" /* default data packfile */
 extern char* data; /* modifiable datafile */
 #define DATA					data /* data file */
 
 /* maximum filename path */
 #ifndef PATH_MAX
-#  define PATH_MAX				100
+#  define PATH_MAX			100
 #endif /* PATH_MAX */
 
 

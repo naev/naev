@@ -12,6 +12,7 @@
 #include "pause.h"
 #include "toolkit.h"
 #include "menu.h"
+#include "board.h"
 
 
 #define KEY_PRESS    ( 1.)

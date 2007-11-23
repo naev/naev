@@ -66,7 +66,6 @@ const char* player_rating (void);
  * keybind actions
  */
 void player_setRadarRel( int mod );
-void player_board (void);
 void player_secondaryNext (void);
 void player_targetPlanet (void);
 void player_land (void);
