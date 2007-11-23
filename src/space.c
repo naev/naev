@@ -43,8 +43,9 @@
 #define FLAG_INTERFERENCESET	(1<<3)
 
 
-StarSystem *systems = NULL;
-static int nsystems = 0;
+StarSystem *systems = NULL; /* star system stack */
+static int nsystems = 0; /* number of star systems */
+static int nplanets = 0; /* total number of loaded planets - pretty silly */
 StarSystem *cur_system = NULL; /* Current star system */
 
 /* current stardate in nice format */
@@ -59,7 +60,7 @@ typedef struct Star_ {
 } Star;
 static Star *stars = NULL; /* star array */
 static int nstars = 0; /* total stars */
-static int mstars = 0;
+static int mstars = 0; /* memory stars are taking */
 
 
 /* 
@@ -450,6 +451,7 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 			cur = node->children;
 			do {
 				if (xml_isNode(cur,"planet")) {
+					nplanets++; /* increase planet counter */
 					planet = planet_get(xml_get(cur));
 					temp->planets = realloc(temp->planets, sizeof(Planet)*(++temp->nplanets));
 					memcpy(temp->planets+(temp->nplanets-1), planet, sizeof(Planet));
@@ -492,9 +494,6 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 	MELEMENT(flags&FLAG_ASTEROIDSSET,"asteroids");
 	MELEMENT(flags&FLAG_INTERFERENCESET,"inteference");
 #undef MELEMENT
-
-	DEBUG("Loaded Star System '%s' with %d Planet%c", temp->name,
-			temp->nplanets, (temp->nplanets == 1) ? ' ' : 's' );
 
 	return temp;
 }
@@ -600,6 +599,10 @@ int space_load (void)
 	xmlFreeDoc(doc);
 	free(buf);
 	xmlCleanupParser();
+
+	DEBUG("Loaded %d star system%s with %d planet%s",
+			nsystems, (nsystems==1) ? "" : "s",
+			nplanets, (nplanets==1) ? "" : "s" );
 
 	return 0;
 }

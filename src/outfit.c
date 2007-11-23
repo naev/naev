@@ -348,8 +348,6 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 	MELEMENT(temp->type==0,"type");
 #undef MELEMENT
 
-	DEBUG("Loaded Outfit '%s' of type '%s'", temp->name, outfit_getType(temp));
-
 	return temp;
 }
 
@@ -392,6 +390,8 @@ int outfit_load (void)
 	xmlFreeDoc(doc);
 	free(buf);
 	xmlCleanupParser();
+
+	DEBUG("Loaded %d outfit%s", outfits, (outfits==1) ? "" : "s" );
 
 	return 0;
 }

@@ -190,7 +190,6 @@ static Ship* ship_parse( xmlNodePtr parent )
 	MELEMENT(temp->cap_weapon==0,"cap_weapon");
 #undef MELEMENT
 
-	DEBUG("Loaded Ship '%s'", temp->name);
 	return temp;
 }
 
@@ -230,6 +229,8 @@ int ships_load(void)
 	xmlFreeDoc(doc);
 	free(buf);
 	xmlCleanupParser();
+
+	DEBUG("Loaded %d ship%s", ships, (ships==1) ? "" : "s" );
 
 	return 0;
 }
