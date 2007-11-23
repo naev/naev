@@ -44,6 +44,8 @@ typedef struct Ship_ {
 	char* name; /* ship name */
 	ShipClass class; /* ship class */
 
+	unsigned int price; /* cost to buy */
+
 	/* movement */
 	double thrust, turn, speed;
 

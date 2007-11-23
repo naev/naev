@@ -103,7 +103,9 @@ static Ship* ship_parse( xmlNodePtr parent )
 		else if (xml_isNode(node,"sound"))
 			temp->sound = sound_get( xml_get(node) );
 		else if (xml_isNode(node,"class"))
-			temp->class = atoi(xml_get(node));
+			temp->class = xml_getInt(node);
+		else if (xml_isNode(node,"price"))
+			temp->price = xml_getInt(node);
 		else if (xml_isNode(node,"movement")) {
 			cur = node->children;
 			do {
@@ -175,6 +177,8 @@ static Ship* ship_parse( xmlNodePtr parent )
 	MELEMENT(temp->name==NULL,"name");
 	MELEMENT(temp->gfx_space==NULL,"GFX");
 	MELEMENT(temp->gui==NULL,"GUI");
+	MELEMENT(temp->class==0,"class");
+	MELEMENT(temp->price==0,"price");
 	MELEMENT(temp->thrust==0,"thrust");
 	MELEMENT(temp->turn==0,"turn");
 	MELEMENT(temp->speed==0,"speed");

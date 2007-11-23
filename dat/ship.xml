@@ -5,6 +5,7 @@
 <GUI>minimal</GUI>
 <sound>engine</sound>
 <class>1</class>
+<price>120000</price>
 <movement>
 <thrust>320</thrust>
 <turn>150</turn>
@@ -33,6 +34,7 @@
 <GUI>minimal</GUI>
 <sound>engine</sound>
 <class>1</class>
+<price>180000</price>
 <movement>
 <thrust>400</thrust>
 <turn>180</turn>
@@ -61,6 +63,7 @@
 <GUI>minimal</GUI>
 <sound>engine</sound>
 <class>2</class>
+<price>600000</price>
 <movement>
 <thrust>280</thrust>
 <turn>130</turn>

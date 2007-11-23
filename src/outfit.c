@@ -310,6 +310,7 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
 				if (xml_isNode(cur,"max")) temp->max = xml_getInt(cur);
 				else if (xml_isNode(cur,"tech")) temp->tech = xml_getInt(cur);
 				else if (xml_isNode(cur,"mass")) temp->mass = xml_getInt(cur);
+				else if (xml_isNode(cur,"price")) temp->price = xml_getInt(cur);
 			} while ((cur = cur->next));
 		}
 		else if (xml_isNode(node,"specific")) { /* has to be processed seperately */
@@ -346,6 +347,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 	MELEMENT(temp->tech==0,"tech");
 	/*MELEMENT(temp->mass==0,"mass"); Not really needed */
 	MELEMENT(temp->type==0,"type");
+	MELEMENT(temp->price==0,"price");
 #undef MELEMENT
 
 	return temp;

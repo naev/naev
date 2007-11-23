@@ -5,6 +5,7 @@
 <max>5</max>
 <tech>2</tech>
 <mass>0</mass>
+<price>5000</price>
 </general>
 <specific type="1">
 <gfx>lasergreen</gfx>
@@ -25,6 +26,7 @@
 <max>2</max>
 <tech>4</tech>
 <mass>10</mass>
+<price>25000</price>
 </general>
 <specific type="5" secondary="1">
 <ammo>Missile</ammo>
@@ -36,6 +38,7 @@
 <max>60</max>
 <tech>2</tech>
 <mass>1</mass>
+<price>800</price>
 </general>
 <specific type="6">
 <gfx>missile</gfx>

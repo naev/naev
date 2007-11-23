@@ -48,6 +48,7 @@ typedef struct Outfit_ {
 	int max;
 	int tech;
 	int mass;
+	unsigned int price;
 
 	glTexture gfx_store; /* store graphic */
 
