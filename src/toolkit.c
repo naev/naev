@@ -143,9 +143,9 @@ void window_addText( const unsigned int wid,
 	wgt->h = (double) h;
 	if (font==NULL) wgt->dat.txt.font = &gl_defFont;
 	else wgt->dat.txt.font = font;
-	if (x < 0) wgt->x = wdw->w - wgt->w + x;
+	if (x < 0) wgt->x = wdw->w - wgt->w + x - w;
 	else wgt->x = (double) x;
-	if (y < 0) wgt->y = wdw->h + y;
+	if (y < 0) wgt->y = wdw->h + y - h;
 	else wgt->y = (double) y;
 	wgt->dat.txt.colour = colour;
 	wgt->dat.txt.centered = centered;
