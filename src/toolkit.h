@@ -38,6 +38,13 @@ void window_addImage( const unsigned int wid,
 		char* name, glTexture* image ); /* label and image itself */
 
 /*
+ * modification
+ */
+void window_modifyText( const unsigned int wid,
+		char* name, char* newstring );
+
+
+/*
  * get
  */
 int window_exists( const char* wdwname );

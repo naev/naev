@@ -43,6 +43,7 @@
 #define PILOT_HYP_PREP		(1<<5) /* pilot is getting ready for hyperspace */
 #define PILOT_HYP_BEGIN		(1<<6) /* pilot is starting engines */
 #define PILOT_HYPERSPACE	(1<<7) /* pilot is in hyperspace */
+#define PILOT_BOARDED		(1<<8) /* pilot has been boarded already */
 #define PILOT_DISABLED		(1<<9) /* pilot is disabled */
 #define PILOT_DEAD			(1<<10) /* pilot is in it's dying throes */
 #define PILOT_DELETE			(1<<15) /* pilot will get deleted asap */

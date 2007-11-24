@@ -23,7 +23,8 @@ typedef enum WidgetType_ {
 typedef enum WidgetStatus_ {
 	WIDGET_STATUS_NORMAL,
 	WIDGET_STATUS_MOUSEOVER,
-	WIDGET_STATUS_MOUSEDOWN
+	WIDGET_STATUS_MOUSEDOWN,
+	WIDGET_STATUS_FOCUS
 } WidgetStatus;
 
 typedef struct Widget_ {
@@ -86,6 +87,7 @@ static int mwindows = 0;
 static Widget* window_newWidget( Window* w );
 static void widget_cleanup( Widget *widget );
 static Window* window_wget( const unsigned int wid );
+static Widget* window_getwgt( const unsigned int wid, char* name );
 /* input */
 static void toolkit_mouseEvent( SDL_Event* event );
 /* render */
@@ -231,6 +233,34 @@ static Window* window_wget( const unsigned int wid )
 			return &windows[i];
 	DEBUG("Window '%d' not found in windows stack", wid);
 	return NULL;
+}
+
+
+/*
+ * gets the wgt from the window
+ */
+static Widget* window_getwgt( const unsigned int wid, char* name )
+{
+	int i;
+	Window *wdw = window_wget(wid);
+
+	for (i=0; i<wdw->nwidgets; i++)
+		if (strcmp(wdw->widgets[i].name, name)==0)
+			return &wdw->widgets[i];
+	return NULL;
+}
+
+
+/*
+ * modifies an existing text string
+ */
+void window_modifyText( const unsigned int wid,
+      char* name, char* newstring )
+{
+	Widget *wgt = window_getwgt(wid,name);
+
+	if (wgt->dat.txt.text) free(wgt->dat.txt.text);
+	wgt->dat.txt.text = strdup(newstring);
 }
 
 
@@ -617,6 +647,8 @@ static void toolkit_renderButton( Widget* btn, double bx, double by )
 			c = &cGreen;
 			dc = &cGrey40;
 			oc = &cGrey20;
+			break;
+		default:
 			break;
 	}  
 
