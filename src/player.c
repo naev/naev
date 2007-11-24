@@ -20,6 +20,7 @@
 #include "rng.h"
 #include "land.h"
 #include "sound.h"
+#include "economy.h"
 
 
 #define XML_GUI_ID	"GUIs"   /* XML section identifier */
@@ -550,11 +551,7 @@ void player_render (void)
 			gui.misc.x + 10,
 			gui.misc.y - 10 - gl_defFont.h,
 			&cConsole, "Credits:" );
-	if (credits >= 1000000)
-		snprintf( str, 10, "%.2fM", (double)credits / 1000000.);
-	else if (credits >= 1000)
-		snprintf( str, 10, "%.2fK", (double)credits / 1000.);
-	else snprintf (str, 10, "%d", credits );
+	credits2str( str, credits );
 	i = gl_printWidth( &gl_smallFont, "%s", str );
 	gl_print( &gl_smallFont,
 			gui.misc.x + gui.misc.w - 10 - i,

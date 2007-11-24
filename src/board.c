@@ -10,6 +10,8 @@
 #include "player.h"
 #include "toolkit.h"
 #include "space.h"
+#include "rng.h"
+#include "economy.h"
 
 
 #define BOARDING_WIDTH  300
@@ -20,6 +22,9 @@
  * externs
  */
 extern unsigned int player_target;
+
+
+static unsigned int board_credits = 0; /* money on the ship */
 
 
 /*
@@ -35,6 +40,8 @@ void player_board (void)
 {  
 	Pilot *p;
 	unsigned int wid;
+	char str[128];
+	char cred[10];
 
 	if (player_target==PLAYER_ID) {
 		player_message("You need a target to board first!");
@@ -57,13 +64,28 @@ void player_board (void)
 		return;
 	}
 
-	/* TODO boarding */
 	player_message("Boarding ship %s", p->name);
+
+	/* calculate credits based on ship price */
+	board_credits = RNG(20*p->ship->price, 50*p->ship->price)/1000;
 
 	/*
 	 * create the boarding window
 	 */
 	wid = window_create( "Boarding", -1, -1, BOARDING_WIDTH, BOARDING_HEIGHT );
+
+	window_addText( wid, 20, -30, 120, 60,
+			0, "txtCargo", &gl_smallFont, &cDConsole,
+			"Credits:\n"
+			"Cargo:\n"
+			);
+	credits2str( cred, board_credits );
+	snprintf( str, 128,
+			"%s\n"
+			"%s\n"
+			, cred, "none" );
+	window_addText( wid, 80, -30, 120, 60,
+			0, "txtData", &gl_smallFont, &cBlack, str );
 
 	window_addButton( wid, 20, 20, 50, 30, "btnStealCredits", "Credits", player_unboard );
 
