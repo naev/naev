@@ -144,6 +144,7 @@ void input_setKeybind( char *keybind, KeybindType type, int key, int reverse )
  * @param abs is whether or not it's an absolute value (for them joystick)
  */
 #define KEY(s)		(strcmp(input_keybinds[keynum]->name,s)==0)
+#define INGAME()	(!paused)
 static void input_key( int keynum, double value, int abs )
 {
 	/*
@@ -211,7 +212,7 @@ static void input_key( int keynum, double value, int abs )
 			if (player_isFlag(PLAYER_TURN_RIGHT)) player_turn += 1;
 		}
 	/* board them ships */
-	} else if (KEY("board") && !paused) {
+	} else if (KEY("board") && INGAME()) {
 		if (value==KEY_PRESS) player_board();
 
 
@@ -219,12 +220,12 @@ static void input_key( int keynum, double value, int abs )
 	 * secondary weapons
 	 */
 	/* shooting secondary weapon */
-	} else if (KEY("secondary") && !paused) {
+	} else if (KEY("secondary") && INGAME()) {
 		if (value==KEY_PRESS) player_setFlag(PLAYER_SECONDARY);
 		else if (value==KEY_RELEASE) player_rmFlag(PLAYER_SECONDARY);
 
 	/* selecting secondary weapon */
-	} else if (KEY("secondary_next") && !paused) {
+	} else if (KEY("secondary_next") && INGAME()) {
 		if (value==KEY_PRESS) player_secondaryNext();
 
 
@@ -232,14 +233,14 @@ static void input_key( int keynum, double value, int abs )
 	 * space
 	 */
 	/* target planet (cycles like target) */
-	} else if (KEY("target_planet") && !paused) {
+	} else if (KEY("target_planet") && INGAME()) {
 		if (value==KEY_PRESS) player_targetPlanet();
 	/* target nearest planet or attempt to land */
-	} else if (KEY("land") && !paused) {
+	} else if (KEY("land") && INGAME()) {
 		if (value==KEY_PRESS) player_land();
-	} else if (KEY("thyperspace") && !paused) {
+	} else if (KEY("thyperspace") && INGAME()) {
 		if (value==KEY_PRESS) player_targetHyperspace();
-	} else if (KEY("jump") && !paused) {
+	} else if (KEY("jump") && INGAME()) {
 		if (value==KEY_PRESS) player_jump();
 
 
@@ -247,10 +248,10 @@ static void input_key( int keynum, double value, int abs )
 	 * misc
 	 */
 	/* zooming in */
-	} else if (KEY("mapzoomin")) {
+	} else if (KEY("mapzoomin") && INGAME()) {
 		if (value==KEY_PRESS) player_setRadarRel(1);
 	/* zooming out */
-	} else if (KEY("mapzoomout")) {
+	} else if (KEY("mapzoomout") && INGAME()) {
 		if (value==KEY_PRESS) player_setRadarRel(-1);
 	/* take a screenshot */
 	} else if (KEY("screenshot")) {
@@ -352,10 +353,8 @@ static void input_keyup( SDLKey key )
  */
 void input_handle( SDL_Event* event )
 {
-	if (toolkit) { /* toolkit handled seperately completely */
+	if (toolkit) /* toolkit handled seperately completely */
 		toolkit_input(event);
-		return;
-	}
 
 	switch (event->type) {
 
