@@ -20,7 +20,8 @@
  */
 int spfx_get( char* name );
 void spfx_add( const int effect,
-		const Vector2d *pos, const Vector2d *vel,
+		const double px, const double py,
+		const double vx, const double vy,
 		const int layer );
 
 

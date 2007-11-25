@@ -139,7 +139,8 @@ void spfx_free (void)
  * adds a new spfx to layer
  */
 void spfx_add( int effect,
-		const Vector2d *pos, const Vector2d *vel,
+		const double px, const double py,
+		const double vx, const double vy,
 		const int layer )
 {
 	SPFX *cur_spfx;
@@ -163,8 +164,8 @@ void spfx_add( int effect,
 
 	/* no actual adding of the spfx */
 	cur_spfx->effect = effect;
-	vectcpy( &cur_spfx->pos, pos );
-	vectcpy( &cur_spfx->vel, vel );
+	vect_csetmin( &cur_spfx->pos, px, py );
+	vect_csetmin( &cur_spfx->vel, vx, vy );
 	cur_spfx->t = SDL_GetTicks();
 }
 

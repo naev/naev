@@ -16,6 +16,8 @@
 #include "log.h"
 #include "weapon.h"
 #include "pack.h"
+#include "spfx.h"
+#include "rng.h"
 
 
 #define XML_ID				"Fleets"  /* XML section identifier */
@@ -60,6 +62,7 @@ static void pilot_hyperspace( Pilot* pilot );
 void pilot_render( Pilot* pilot ); /* externed in player.c */
 static void pilot_free( Pilot* p );
 static Fleet* fleet_parse( const xmlNodePtr parent );
+static void pilot_dead( Pilot* p );
 
 
 /*
@@ -270,7 +273,7 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 		dam_mod = 0.;
 
 		if (!pilot_isFlag(p, PILOT_DEAD)) {
-			pilot_setFlag(p, PILOT_DEAD);
+			pilot_dead(p);
 
 			/* adjust the combat rating based on pilot mass */
 			if (shooter==PLAYER_ID) combat_rating += MAX( 1, p->ship->mass/50 );
@@ -282,6 +285,17 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 	vect_cadd( &p->solid->vel,
 			w->vel.x * (dam_mod/6. + w->mass/p->solid->mass/6.),
 			w->vel.y * (dam_mod/6. + w->mass/p->solid->mass/6.) );
+}
+
+
+void pilot_dead( Pilot* p )
+{
+	/* basically just set timers */
+	p->timer[0] = SDL_GetTicks(); /* no need for AI anymore */
+	p->ptimer = p->timer[0] + 1000 +
+		(unsigned int)sqrt(10*p->armour_max*p->shield_max);
+	p->timer[1] = p->timer[0]; /* explosion timer */
+	pilot_setFlag(p,PILOT_DEAD);
 }
 
 
@@ -330,6 +344,47 @@ void pilot_render( Pilot* p )
  */
 static void pilot_update( Pilot* pilot, const double dt )
 {
+	unsigned int t;
+	double px,py, vx,vy;
+
+	if ((pilot != player) && pilot_isFlag(pilot,PILOT_DEAD)) {
+		t = SDL_GetTicks();
+
+		if (t > pilot->ptimer) {
+			pilot_setFlag(pilot,PILOT_DELETE); /* will get deleted next frame */
+			return;
+		}
+		
+		if (!pilot_isFlag(pilot,PILOT_EXPLODED) && (t > pilot->ptimer - 200)) {
+			spfx_add( spfx_get("ExpL"), 
+					VX(pilot->solid->pos), VY(pilot->solid->pos),
+					VX(pilot->solid->vel), VY(pilot->solid->vel), SPFX_LAYER_BACK );
+			pilot_setFlag(pilot,PILOT_EXPLODED);
+		}
+		else if (t > pilot->timer[1]) {
+			pilot->timer[1] = t + (unsigned int)(100
+					*(double)(pilot->ptimer - pilot->timer[1])
+					/(double)(pilot->ptimer - pilot->timer[0]));
+
+			/* random position on ship */
+			px = VX(pilot->solid->pos) + pilot->ship->gfx_space->sw*RNGF()
+					- pilot->ship->gfx_space->sw/2.;
+			py = VY(pilot->solid->pos) + pilot->ship->gfx_space->sh*RNGF()
+					- pilot->ship->gfx_space->sh/2.;
+			vx = VX(pilot->solid->vel);
+			vy = VY(pilot->solid->vel);
+
+			if (RNGF()>0.8)
+				spfx_add( spfx_get("ExpM"), px, py, vx, vy, SPFX_LAYER_BACK );
+			else
+				spfx_add( spfx_get("ExpS"), px, py, vx, vy, SPFX_LAYER_BACK );
+		}
+	}
+	else if ((pilot != player) && /* TODO player death */
+			(pilot->armour <= 0.)) /* PWNED */
+			pilot_dead(pilot);
+
+	/* purpose fallthrough to get the movement like disabled */
 	if ((pilot != player) && 
 			(pilot->armour < PILOT_DISABLED_ARMOR*pilot->armour_max)) { /* disabled */
 		pilot_setFlag(pilot,PILOT_DISABLED);

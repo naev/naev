@@ -332,7 +332,8 @@ void player_render (void)
 	/* renders the player target graphics */
 	if (player_target != PLAYER_ID) p = pilot_get(player_target);
 	else p = NULL;
-	if (p==NULL) player_target = PLAYER_ID; /* no more pilot_targt */
+	if ((p==NULL) || pilot_isFlag(p,PILOT_DEAD))
+		player_target = PLAYER_ID; /* no more pilot_target */
 	else { /* still is a pilot_target */
 		if (pilot_isDisabled(p)) c = &cInert;
 		else if (pilot_isFlag(p,PILOT_HOSTILE)) c = &cHostile;

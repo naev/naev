@@ -11,7 +11,8 @@
 #include <stdlib.h>
 
 
-#define RNG(L,H)	(rand()%(int)(H-L+1)+L)
+#define RNG(L,H)  ((int)L + (int)((double)(H-L+1) * (rand()/(RAND_MAX+1.))))
+#define RNGF()		(rand()/(RAND_MAX+1.))
 
 
 void rng_init (void);
