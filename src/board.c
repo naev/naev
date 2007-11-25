@@ -113,15 +113,17 @@ static void board_exit( char* str )
 static void board_stealCreds( char* str )
 {
 	(void)str;
+	Pilot* p;
 
-	if (board_credits==0) {
+	p = pilot_get(player_target);
+
+	if (board_credits==0) { /* you can't steal from the poor */
 		player_message("The ship has no credits left");
 		return;
 	}
 
-
-	/* calculate success - TODO make based on crew and such */
-	if (RNG(0,100) < 50) {
+	/* calculate success */
+	if (RNG(0,100) < (int)(50. * (double)p->ship->crew/(double)player->ship->crew)) {
 		board_fail();
 		return;
 	}
@@ -140,12 +142,12 @@ static void board_fail (void)
 {
 	Pilot* p;
 
-	if (RNG(0,2)==0) {
+	if (RNG(0,2)==0) { /* 33% of instadeath */
 		p = pilot_get(player_target);
 		p->armour = -1.;
 		player_message("You have tripped the ship's self destruct mechanism");
 	}
-	else
+	else /* you just got locked out */
 		player_message("The ship's security system locks you out");
 
 	board_exit(NULL);
