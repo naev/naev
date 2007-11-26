@@ -146,7 +146,11 @@ static void think_seeker( Weapon* w )
 	if (w->target == w->parent) return; /* no self shooting */
 
 	Pilot* p = pilot_get(w->target); /* no null pilots */
-	if (p==NULL) return;
+	if (p==NULL) {
+		if (VMOD(w->solid->vel) > w->outfit->u.amm.speed) /* shouldn't go faster */
+			vect_pset( &w->solid->vel, w->outfit->u.amm.speed, VANGLE(w->solid->vel) );
+		return;
+	}
 
 	/* ammo isn't locked on yet */
 	if (SDL_GetTicks() > (w->timer + w->outfit->u.amm.lockon)) {
