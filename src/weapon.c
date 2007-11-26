@@ -137,7 +137,7 @@ void weapons_unpause (void)
 
 
 /*
- * seeker brain
+ * seeker brain, you get what you pay for :)
  */
 static void think_seeker( Weapon* w )
 {
@@ -156,6 +156,41 @@ static void think_seeker( Weapon* w )
 	
 		diff = angle_diff(w->solid->dir,
 				vect_angle(&w->solid->pos, &p->solid->pos));
+		w->solid->dir_vel = 10 * diff *  w->outfit->u.amm.turn; /* face the target */
+		if (w->solid->dir_vel > w->outfit->u.amm.turn)
+			w->solid->dir_vel = w->outfit->u.amm.turn;
+		else if (w->solid->dir_vel < -w->outfit->u.amm.turn)
+			w->solid->dir_vel = -w->outfit->u.amm.turn;
+	}
+
+	vect_pset( &w->solid->force, w->outfit->u.amm.thrust, w->solid->dir );
+
+	limit_speed( &w->solid->vel, w->outfit->u.amm.speed );
+}
+/*
+ * smart seeker brain, much better at homing
+ */
+static void think_smart( Weapon* w )
+{
+	double diff;
+	Vector2d tv, sv;
+
+	if (w->target == w->parent) return; /* no self shooting */
+
+	Pilot* p = pilot_get(w->target); /* no null pilots */
+	if (p==NULL) {
+		limit_speed( &w->solid->vel, w->outfit->u.amm.speed );
+		return;
+	}
+
+	/* ammo isn't locked on yet */
+	if (SDL_GetTicks() > (w->timer + w->outfit->u.amm.lockon)) {
+
+		vect_cset( &tv, VX(p->solid->pos) + VX(p->solid->vel),
+				VY(p->solid->pos) + VY(p->solid->vel));
+		vect_cset( &sv, VX(w->solid->pos) + VX(w->solid->vel),
+				VY(w->solid->pos) + VY(w->solid->vel));
+		diff = angle_diff(w->solid->dir, vect_angle(&tv, &sv));
 		w->solid->dir_vel = 10 * diff *  w->outfit->u.amm.turn; /* face the target */
 		if (w->solid->dir_vel > w->outfit->u.amm.turn)
 			w->solid->dir_vel = w->outfit->u.amm.turn;
@@ -204,7 +239,11 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 		w = wlayer[i];
 		switch (wlayer[i]->outfit->type) {
 
+			/* most missiles behave the same */
 			case OUTFIT_TYPE_MISSILE_SEEK_AMMO:
+			case OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO:
+			case OUTFIT_TYPE_MISSILE_SWARM_AMMO:
+			case OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO:
 				if (SDL_GetTicks() > (wlayer[i]->timer + wlayer[i]->outfit->u.amm.duration)) {
 					weapon_destroy(wlayer[i],layer);
 					continue;
@@ -381,6 +420,15 @@ static Weapon* weapon_create( const Outfit* outfit,
 			mass = w->outfit->mass;
 			w->solid = solid_create( mass, dir, pos, vel );
 			w->think = think_seeker; /* eet's a seeker */
+			w->voice = sound_addVoice( VOICE_PRIORITY_AMMO,
+					w->solid->pos.x, w->solid->pos.y,
+					w->solid->vel.x, w->solid->vel.y,  w->outfit->u.amm.sound, 0 );
+			break;
+
+		case OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO:
+			mass = w->outfit->mass;
+			w->solid = solid_create( mass, dir, pos, vel );
+			w->think = think_smart; /* smartass */
 			w->voice = sound_addVoice( VOICE_PRIORITY_AMMO,
 					w->solid->pos.x, w->solid->pos.y,
 					w->solid->vel.x, w->solid->vel.y,  w->outfit->u.amm.sound, 0 );

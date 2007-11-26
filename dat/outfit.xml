@@ -55,4 +55,38 @@
 </damage>
 </specific>
 </outfit>
+<outfit name="Headhunter Launcher">
+<general>
+<max>2</max>
+<tech>8</tech>
+<mass>12</mass>
+<price>40000</price>
+</general>
+<specific type="5" secondary="1">
+<ammo>Headhunter</ammo>
+<delay>1400</delay>
+</specific>
+</outfit>
+<outfit name="Headhunter">
+<general>
+<max>40</max>
+<tech>4</tech>
+<mass>1</mass>
+<price>2000</price>
+</general>
+<specific type="6">
+<gfx>missile</gfx>
+<sound>missile</sound>
+<spfx>ExpM</spfx>
+<duration>7</duration>
+<lockon>0.5</lockon>
+<thrust>1200</thrust>
+<turn>200</turn>
+<speed>600</speed>
+<damage>
+<armour>23</armour>
+<shield>18</shield>
+</damage>
+</specific>
+</outfit>
 </Outfits>
