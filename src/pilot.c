@@ -741,10 +741,10 @@ static Fleet* fleet_parse( const xmlNodePtr parent )
 		}
 	} while ((node = node->next));
 
-#define MELEMENT(o,s)      if ((o) == NULL) WARN("Fleet '%s' missing '"s"' element", temp->name)
-	MELEMENT(temp->ai,"ai");
-	MELEMENT(temp->faction,"faction");
-	MELEMENT(temp->pilots,"pilots");
+#define MELEMENT(o,s)      if (o) WARN("Fleet '%s' missing '"s"' element", temp->name)
+	MELEMENT(temp->ai==NULL,"ai");
+	MELEMENT(temp->faction==NULL,"faction");
+	MELEMENT(temp->pilots==NULL,"pilots");
 #undef MELEMENT
 
 	return temp;
