@@ -147,8 +147,7 @@ static void think_seeker( Weapon* w )
 
 	Pilot* p = pilot_get(w->target); /* no null pilots */
 	if (p==NULL) {
-		if (VMOD(w->solid->vel) > w->outfit->u.amm.speed) /* shouldn't go faster */
-			vect_pset( &w->solid->vel, w->outfit->u.amm.speed, VANGLE(w->solid->vel) );
+		limit_speed( &w->solid->vel, w->outfit->u.amm.speed );
 		return;
 	}
 
@@ -166,8 +165,7 @@ static void think_seeker( Weapon* w )
 
 	vect_pset( &w->solid->force, w->outfit->u.amm.thrust, w->solid->dir );
 
-	if (VMOD(w->solid->vel) > w->outfit->u.amm.speed) /* shouldn't go faster */
-		vect_pset( &w->solid->vel, w->outfit->u.amm.speed, VANGLE(w->solid->vel) );
+	limit_speed( &w->solid->vel, w->outfit->u.amm.speed );
 }
 
 

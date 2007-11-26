@@ -411,10 +411,8 @@ static void pilot_update( Pilot* pilot, const double dt )
 	/* update the solid */
 	(*pilot->solid->update)( pilot->solid, dt );
 
-	if (!pilot_isFlag(pilot, PILOT_HYPERSPACE) && 
-			VMOD(pilot->solid->vel) > pilot->ship->speed) /* shouldn't go faster */
-		vect_pset( &pilot->solid->vel, pilot->ship->speed,
-				VANGLE(pilot->solid->vel) );
+	if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) /* limit the speed */
+		limit_speed( &pilot->solid->vel, pilot->ship->speed );
 }
 
 

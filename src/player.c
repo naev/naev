@@ -89,6 +89,7 @@ typedef struct GUI_ {
 	glTexture* gfx_frame;
 	glTexture* gfx_targetPilot, *gfx_targetPlanet;
 
+	/* rects */
 	Radar radar;
 	Rect nav;
 	Rect shield, armour, energy;
@@ -97,7 +98,6 @@ typedef struct GUI_ {
 	Rect misc;
 	Rect mesg;
 	
-
 	/* positions */
 	Vector2d frame;
 	Vector2d target;

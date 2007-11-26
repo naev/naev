@@ -24,18 +24,20 @@
 
 
 /*
- * misc
+ * base of all 2d Vector work
  */
-double angle_diff( const double ref, double a );
+typedef struct Vector2d_ {                                          
+	double x, y; /* cartesian values */                              
+	double mod, angle; /* polar values */
+} Vector2d;
 
 
 /*
- * base of all 2d Vector work
+ * misc
  */
-typedef struct Vector2d_ {
-	double x, y; /* cartesian values */
-	double mod, angle; /* polar values */
-} Vector2d;
+double angle_diff( const double ref, double a );
+void limit_speed( Vector2d* vel, const double speed );
+
 
 /*
  * vector manipulation

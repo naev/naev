@@ -22,6 +22,11 @@ double angle_diff( const double ref, double a )
 	double d = fmod((a-ref),2*M_PI);
 	return (d <= M_PI) ? d : d - 2*M_PI ;
 }
+void limit_speed( Vector2d* vel, const double speed )
+{
+	if (VMOD(*vel) > speed) /* shouldn't go faster */
+		vect_pset( vel, speed, VANGLE(*vel) );
+}
 
 
 /*
