@@ -1026,14 +1026,9 @@ void player_think( Pilot* player )
  */
 void player_setRadarRel( int mod )
 {
-	if (mod > 0) {
-		gui.radar.res += mod * RADAR_RES_INTERVAL;
-		if (gui.radar.res > RADAR_RES_MAX) gui.radar.res = RADAR_RES_MAX;
-	}
-	else {
-		gui.radar.res -= mod * RADAR_RES_INTERVAL;
-		if (gui.radar.res < RADAR_RES_MIN) gui.radar.res = RADAR_RES_MIN;
-	}
+	gui.radar.res += mod * RADAR_RES_INTERVAL;
+	if (gui.radar.res > RADAR_RES_MAX) gui.radar.res = RADAR_RES_MAX;
+	else if (gui.radar.res < RADAR_RES_MIN) gui.radar.res = RADAR_RES_MIN;
 }
 
 
