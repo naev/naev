@@ -43,16 +43,31 @@
 #define FLAG_INTERFERENCESET	(1<<3)
 
 
+/* 
+ * star system stack and friends
+ */
 StarSystem *systems = NULL; /* star system stack */
 static int nsystems = 0; /* number of star systems */
 static int nplanets = 0; /* total number of loaded planets - pretty silly */
 StarSystem *cur_system = NULL; /* Current star system */
 
-/* current stardate in nice format */
+
+/* 
+ * current stardate in nice format
+ */
 char* stardate = "Stardate";
 unsigned int date = 0; /* time since epoch */
 
 
+/*
+ * fleet spawn rate
+ */
+unsigned int spawn_timer = 0; /* timer that controls spawn rate */
+
+
+/*
+ * star stack and friends
+ */
 #define STAR_BUF	100	/* area to leave around screen, more = less repitition */
 typedef struct Star_ {
 	double x,y; /* position, lighter to use to doubles then the physics system */
@@ -68,6 +83,7 @@ static int mstars = 0; /* memory stars are taking */
  */
 /* intern */
 static Planet* planet_get( const char* name );
+static void space_addFleet( Fleet* fleet );
 static StarSystem* system_parse( const xmlNodePtr parent );
 static void system_parseJumps( const xmlNodePtr parent );
 static PlanetClass planetclass_get( const char a );
@@ -210,12 +226,75 @@ int space_hyperspace( Pilot* p )
 
 
 /*
+ * basically used for spawning fleets and such
+ */
+void space_update( const double dt )
+{
+	unsigned int t;
+	int i, j, f;
+
+	(void)dt; /* not used for now */
+
+	t = SDL_GetTicks();
+
+	if (cur_system->nfleets == 0) /* stop checking if there are no fleets */
+		spawn_timer = t + 300000;
+	
+	if (spawn_timer < t) { /* time to possibly spawn */
+
+		/* spawn chance is based on overall % */
+		f = RNG(0,100*cur_system->nfleets);
+		j = 0;
+		for (i=0; i < cur_system->nfleets; i++) {
+			j += cur_system->fleets[i].chance;
+			if (f < j) { /* add one fleet */
+				space_addFleet( cur_system->fleets[i].fleet );
+				break;
+			}
+		}
+
+		spawn_timer = t + 120000./(float)cur_system->nfleets;
+	}
+}
+
+
+/*
+ * creates a fleet
+ */
+static void space_addFleet( Fleet* fleet )
+{
+	int i;
+	Vector2d v, vn;
+
+	/* simulate they came from hyperspace */
+	vect_pset( &v, 2*RNG(MIN_HYPERSPACE_DIST/2,MIN_HYPERSPACE_DIST),
+			RNG(0,360)*M_PI/180.);
+	vectnull(&vn);
+
+	for (i=0; i < fleet->npilots; i++)
+		if (RNG(0,100) <= fleet->pilots[i].chance) {
+			/* other ships in the fleet should start split up */
+			vect_cadd(&v, RNG(75,150) * (RNG(0,1) ? 1 : -1),
+					RNG(75,150) * (RNG(0,1) ? 1 : -1));
+
+			pilot_create( fleet->pilots[i].ship,
+					fleet->pilots[i].name,
+					fleet->faction,
+					fleet->ai,
+					vect_angle(&v,&vn),
+					&v,
+					NULL,
+					0 );
+		}
+}
+
+
+/*
  * initializes the system
  */
 void space_init ( const char* sysname )
 {
-	int i,j;
-	Vector2d v,vn;
+	int i;
 
 	/* cleanup some stuff */
 	player_clear(); /* clears targets */
@@ -247,30 +326,12 @@ void space_init ( const char* sysname )
 	}
 
 	/* set up fleets -> pilots */
-	vectnull(&vn);
 	for (i=0; i < cur_system->nfleets; i++)
-		if (RNG(0,100) <= cur_system->fleets[i].chance) { /* fleet check */
-
-			/* simulate they came from hyperspace */
-			vect_pset( &v, 2*RNG(MIN_HYPERSPACE_DIST/2,MIN_HYPERSPACE_DIST),
-					RNG(0,360)*M_PI/180.);
-
-			for (j=0; j < cur_system->fleets[i].fleet->npilots; j++)
-				if (RNG(0,100) <= cur_system->fleets[i].fleet->pilots[j].chance) {
-					/* other ships in the fleet should start split up */
-					vect_cadd(&v, RNG(75,150) * (RNG(0,1) ? 1 : -1),
-							RNG(75,150) * (RNG(0,1) ? 1 : -1));
-
-					pilot_create( cur_system->fleets[i].fleet->pilots[j].ship,
-							cur_system->fleets[i].fleet->pilots[j].name,
-							cur_system->fleets[i].fleet->faction,
-							cur_system->fleets[i].fleet->ai,
-							vect_angle(&v,&vn),
-							&v,
-							NULL,
-							0 );
-				}
-		}
+		if (RNG(0,100) <= cur_system->fleets[i].chance) /* fleet check */
+			space_addFleet( cur_system->fleets[i].fleet );
+	
+	/* start the spawn timer */
+	spawn_timer = SDL_GetTicks() + 120000./(float)(cur_system->nfleets+1);
 }
 
 

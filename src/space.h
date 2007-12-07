@@ -114,6 +114,11 @@ void space_render( double dt );
 void planets_render (void);
 
 /*
+ * update
+ */
+void space_update( const double dt );
+
+/*
  * misc
  */
 int space_canHyperspace( Pilot* p);

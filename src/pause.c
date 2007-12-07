@@ -23,6 +23,8 @@ int paused = 0; /* is paused? */
 /* from pilot.c */
 extern Pilot** pilot_stack;
 extern int pilots;
+/* from space.c */
+extern unsigned int spawn_timer;
 /* from main.c */
 extern unsigned int time;
 
@@ -43,6 +45,7 @@ void pause (void)
 	pilots_pause();
 	weapons_pause();
 	spfx_pause();
+	spawn_timer -= SDL_GetTicks();
 
 	paused = 1; /* officially paused */
 }
@@ -58,6 +61,7 @@ void unpause (void)
 	pilots_unpause();
 	weapons_unpause();
 	spfx_unpause();
+	spawn_timer += SDL_GetTicks();
 
 	paused = 0; /* officially unpaused */
 }

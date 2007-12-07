@@ -268,6 +268,7 @@ static void fps_control (void)
  */
 static void update_space (void)
 {
+	space_update(dt);
 	weapons_update(dt);
 	spfx_update(dt);
 	pilots_update(dt);
