@@ -38,6 +38,13 @@ function runaway ()
 	target = ai.targetid()
 	dir = ai.face( target, 1 )
 	ai.accel()
+	if ai.hasturrets() then
+		dist = ai.dist( ai.pos(target) )
+		if dist < 300 then
+			ai.settarget(target)
+			ai.shoot()
+		end
+	end
 end
 
 -- flies to the target

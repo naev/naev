@@ -17,7 +17,7 @@
 <fleet chance="100">Test</fleet>
 <fleet chance="60">Pirate Hyena</fleet>
 <fleet chance="60">Merchant Llama</fleet>
-<fleet chance="50">Merchant Llama</fleet>
+<fleet chance="50">Merchant Mule</fleet>
 <fleet chance="40">Merchant Llama</fleet>
 <fleet chance="50">Sml Merchant Convoy</fleet>
 <fleet chance="40">Sml Merchant Convoy</fleet>
@@ -41,6 +41,7 @@
 </planets>
 <fleets>
 <fleet chance="80">Merchant Llama</fleet>
+<fleet chance="60">Merchant Mule</fleet>
 <fleet chance="60">Merchant Llama</fleet>
 </fleets>
 <jumps>

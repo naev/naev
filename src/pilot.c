@@ -533,6 +533,8 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction, AI_Prof
 			pilot->outfits[pilot->noutfits].quantity = so->quantity;
 			pilot->outfits[pilot->noutfits].timer = 0;
 			(pilot->noutfits)++;
+			if (outfit_isTurret(so->data)) /* used to speed up AI */
+				pilot_setFlag(pilot, PILOT_HASTURRET);
 		}
 	}
 

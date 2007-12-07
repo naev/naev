@@ -157,6 +157,7 @@ static int ai_stop( lua_State *L ); /* stop() */
 static int ai_combat( lua_State *L ); /* combat( number ) */
 static int ai_settarget( lua_State *L ); /* settarget( number ) */
 static int ai_secondary( lua_State *L ); /* string secondary() */
+static int ai_hasturrets( lua_State *L ); /* bool hasturrets() */
 static int ai_shoot( lua_State *L ); /* shoot( number ); number = 1,2,3 */
 static int ai_getenemy( lua_State *L ); /* number getenemy() */
 static int ai_hostile( lua_State *L ); /* hostile( number ) */
@@ -206,6 +207,7 @@ static const luaL_reg ai_methods[] = {
 	{ "combat", ai_combat },
 	{ "settarget", ai_settarget },
 	{ "secondary", ai_secondary },
+	{ "hasturrets", ai_hasturrets },
 	{ "shoot", ai_shoot },
 	{ "getenemy", ai_getenemy },
 	{ "hostile", ai_hostile },
@@ -920,6 +922,16 @@ static int ai_secondary( lua_State *L )
 	}
 
 	lua_pushstring( L, "None" );
+	return 1;
+}
+
+
+/*
+ * returns true if the pilot has turrets
+ */
+static int ai_hasturrets( lua_State *L )
+{
+	lua_pushboolean( L, pilot_isFlag(cur_pilot, PILOT_HASTURRET) );
 	return 1;
 }
 

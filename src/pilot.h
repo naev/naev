@@ -37,6 +37,7 @@
 #define pilot_rmFlag(p,f)  ((p)->flags ^= f)
 /* creation */
 #define PILOT_PLAYER			(1<<0) /* pilot is a player */
+#define PILOT_HASTURRET		(1<<20) /* pilot has turrets */
 /* dynamic */
 #define PILOT_HOSTILE	   (1<<1) /* pilot is hostile to the player */
 #define PILOT_COMBAT			(1<<2) /* pilot is engaged in combat */
@@ -93,7 +94,7 @@ typedef struct Pilot_ {
 	PilotOutfit* ammo; /* secondary ammo if needed */
 
 	/* misc */
-	unsigned int flags; /* used for AI and others */
+	uint32_t flags; /* used for AI and others */
 	unsigned int ptimer; /* generic timer for internal pilot use */
 
 	/* AI */

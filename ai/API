@@ -76,7 +76,6 @@ pshield( [number pilot] )
 
 
 
-
 	B O O L E A N
 
 exists( number id )
@@ -106,6 +105,7 @@ incombat( [number id] )
 	@desc queries whether a pilot is in combat
 	@param id pilot to check whether is in combat or not, defaults to self
 	@return if pilot is in combat or not
+
 
 
 	M O V E M E N T
@@ -139,6 +139,7 @@ getrndplanet()
 	@return position to a random friendly planet
 
 
+
 	C O M B A T
 
 combat( [number b] )
@@ -153,7 +154,11 @@ settarget( number target )
 
 secondary()
 	@desc attempts to set the best secondary weapon (defaults to launchers)
-	@return the type of the secondary weapon set ("None","Weapon","Launcher")
+	@return the type of the secondary weapon set ("None","Weapon","Launcher","Turret")
+
+hasturrets()
+	@desc checks to see if the pilot has turrets
+	@return true if the pilot has turrets
 
 shoot( [number weapon] )
 	@desc makes the pilot shoot weapons
@@ -163,6 +168,7 @@ shoot( [number weapon] )
 getenemy()
 	@desc returns the id of the nearest enemy
 	@return Pilot id of the closest enemy or -1 if none is found
+
 
 
 	T I M E R S
@@ -177,6 +183,7 @@ timeup( number t )
 	@desc returns true if time is up for timer t
 	@param t timer to check
 	@return boolean true if timer t is up
+
 
 
 	M I S C
