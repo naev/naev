@@ -33,6 +33,7 @@ extern unsigned int time;
  */
 static void pilots_pause (void);
 static void pilots_unpause (void);
+static void pilots_delay( unsigned int delay );
 
 
 /*
@@ -68,6 +69,18 @@ void unpause (void)
 
 
 /*
+ * sets the timers back delay
+ */
+void pause_delay( unsigned int delay )
+{
+	pilots_delay(delay);
+	weapons_delay(delay);
+	spfx_delay(delay);
+	spawn_timer += delay;
+}
+
+
+/*
  * pilots pausing/unpausing
  */
 static void pilots_pause (void)
@@ -96,5 +109,16 @@ static void pilots_unpause (void)
 			pilot_stack[i]->timer[j] += t;
 	}
 }
+static void pilots_delay( unsigned int delay )
+{
+	int i, j;
+	for (i=0; i<pilots; i++) {
 
+		pilot_stack[i]->ptimer += delay;
+
+		pilot_stack[i]->tcontrol += delay;
+		for (j=0; j<MAX_AI_TIMERS; j++)
+			pilot_stack[i]->timer[j] += delay;
+	}
+}
 

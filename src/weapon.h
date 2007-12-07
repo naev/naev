@@ -23,6 +23,7 @@ void weapon_add( const Outfit* outfit,
  */
 void weapons_pause (void);
 void weapons_unpause (void);
+void weapons_delay( unsigned int delay );
 
 /*
  * update

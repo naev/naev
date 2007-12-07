@@ -59,6 +59,7 @@ static void spfx_destroy( SPFX *layer, int *nlayer, int spfx );
 static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt );
 static void spfx_pause_layer( SPFX *layer, int nlayer );
 static void spfx_unpause_layer( SPFX *layer, int nlayer );
+static void spfx_delay_layer( SPFX *layer, int nlayer, unsigned int delay );
 
 
 /*
@@ -296,4 +297,15 @@ static void spfx_unpause_layer( SPFX *layer, int nlayer )
 	unsigned int t = SDL_GetTicks();
 	for (i=0; i<nlayer; i++)
 		layer[i].t += t;
+}
+void spfx_delay( unsigned int delay )
+{
+	spfx_delay_layer( spfx_stack_front, spfx_nstack_front, delay );
+	spfx_delay_layer( spfx_stack_back, spfx_nstack_back, delay );
+}
+static void spfx_delay_layer( SPFX *layer, int nlayer, unsigned int delay )
+{
+	int i;
+	for (i=0; i<nlayer; i++)
+		layer[i].t += delay;
 }

@@ -251,9 +251,6 @@ static void fps_control (void)
 
 	if (paused) SDL_Delay(10); /* drop paused FPS - we are nice to the CPU :) */
 
-//	if (dt > MINIMUM_FPS) /* TODO needs work */
-//		return;
-
 	/* if fps is limited */                       
 	if ((max_fps != 0) && (dt < 1./max_fps)) {
 		double delay = 1./max_fps - dt;
@@ -268,6 +265,10 @@ static void fps_control (void)
  */
 static void update_space (void)
 {
+	if (dt > 1./30.) { /* slow timers down and rerun calculations */
+		pause_delay((unsigned int)dt*1000);
+		return;
+	}
 	space_update(dt);
 	weapons_update(dt);
 	spfx_update(dt);

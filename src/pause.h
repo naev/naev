@@ -14,5 +14,7 @@ extern int paused;
 void pause (void);
 void unpause (void);
 
+void pause_delay( unsigned int delay );
+
 
 #endif /* PAUSE_H */

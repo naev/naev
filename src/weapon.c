@@ -134,6 +134,14 @@ void weapons_unpause (void)
 	for (i=0; i<nwfrontLayer; i++) 
 		wfrontLayer[i]->timer += t;
 }
+void weapons_delay( unsigned int delay )
+{
+	int i;
+	for (i=0; i<nwbackLayer; i++)
+		wbackLayer[i]->timer += delay;
+	for (i=0; i<nwfrontLayer; i++)
+		wfrontLayer[i]->timer += delay;
+}
 
 
 /*

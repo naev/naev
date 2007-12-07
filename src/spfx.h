@@ -46,6 +46,7 @@ void spfx_free (void);
  */
 void spfx_pause (void);
 void spfx_unpause (void);
+void spfx_delay( unsigned int delay );
 
 
 
