@@ -354,7 +354,8 @@ static void input_keyup( SDLKey key )
 void input_handle( SDL_Event* event )
 {
 	if (toolkit) /* toolkit handled seperately completely */
-		toolkit_input(event);
+		if (toolkit_input(event))
+			return; /* we don't process it if toolkit grabs it */
 
 	switch (event->type) {
 

@@ -64,7 +64,7 @@ void toolkit_render (void);
 /*
  * input
  */
-void toolkit_input( SDL_Event* event );
+int toolkit_input( SDL_Event* event );
 
 /*
  * init/exit

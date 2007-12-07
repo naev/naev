@@ -824,16 +824,18 @@ void toolkit_render (void)
 
 /*
  * toolkit input handled here
+ * if return is 1, then the input isn't passed along
  */
-void toolkit_input( SDL_Event* event )
+int toolkit_input( SDL_Event* event )
 {
 	switch (event->type) {
 		case SDL_MOUSEMOTION:
 		case SDL_MOUSEBUTTONDOWN:
 		case SDL_MOUSEBUTTONUP:
 			toolkit_mouseEvent(event);
-			break;
+			return 1; /* block input */
 	}
+	return 0; /* don't block input */
 }
 
 
