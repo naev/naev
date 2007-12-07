@@ -19,14 +19,17 @@
 #include "player.h"
 
 
-#define MENU_WIDTH	120
-#define MENU_HEIGHT	200
+#define MENU_WIDTH		120
+#define MENU_HEIGHT		200
 
-#define INFO_WIDTH	320
-#define INFO_HEIGHT	280
+#define INFO_WIDTH		320
+#define INFO_HEIGHT		280
 
-#define BUTTON_WIDTH  80
-#define BUTTON_HEIGHT 30
+#define OUTFITS_WIDTH	400
+#define OUTFITS_HEIGHT	200
+
+#define BUTTON_WIDTH  	80
+#define BUTTON_HEIGHT 	30
 
 
 #define MENU_SMALL		(1<<0)
@@ -44,6 +47,8 @@ static void menu_small_close( char* str );
 static void edit_options (void);
 static void exit_game (void);
 static void info_menu_close( char* str );
+static void info_outfits_menu( char* str );
+static void info_outfits_menu_close( char* str );
 
 
 
@@ -138,7 +143,7 @@ void info_menu (void)
 			player->ship->name, "Ship", ship_view );
 	window_addButton( wid, -20, (20 + BUTTON_HEIGHT)*3 + 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT,
-			"btnOutfits", "Outfts", NULL );
+			"btnOutfits", "Outfts", info_outfits_menu );
 	window_addButton( wid, -20, (20 + BUTTON_HEIGHT)*2 + 20,      
 			BUTTON_WIDTH, BUTTON_HEIGHT,    
 			"btnCargo", "Cargo", NULL );
@@ -160,3 +165,40 @@ static void info_menu_close( char* str )
 	unpause();
 }
 
+
+/*
+ * shows the player what outfits he has
+ */
+static void info_outfits_menu( char* str )
+{
+	(void)str;
+	int i;
+	char buf[1024], buf2[64];
+	unsigned int wid;
+	wid = window_create( "Outfits", -1, -1, OUTFITS_WIDTH, OUTFITS_HEIGHT );
+
+	window_addText( wid, 20, 0, 100, OUTFITS_HEIGHT-40,
+			0, "txtLabel", &gl_smallFont, &cDConsole,
+			"Ship Outfits:" );
+
+	buf[0] = '\0';
+	if (player->noutfits>0)
+		snprintf( buf, 1024, "%dx %s",
+				player->outfits[0].quantity, player->outfits[0].outfit->name );
+	for (i=1; i<player->noutfits; i++) {
+		snprintf( buf2, 64, ", %dx %s",
+				player->outfits[i].quantity, player->outfits[i].outfit->name );
+		strcat( buf, buf2 );
+	}
+
+	window_addText( wid, 20, 0, OUTFITS_WIDTH-40, OUTFITS_HEIGHT-60,
+			0, "txtOutfits", &gl_smallFont, &cBlack, buf );
+	
+	window_addButton( wid, -20, 20,
+			BUTTON_WIDTH, BUTTON_HEIGHT,
+			"closeOutfits", "Close", info_outfits_menu_close );
+}
+static void info_outfits_menu_close( char* str )
+{
+	window_destroy( window_get( str+5 /* "closeFoo -> Foo" */ ) );
+}
