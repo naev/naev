@@ -1002,7 +1002,7 @@ void player_think( Pilot* player )
 			player->solid->dir_vel -= player->ship->turn * player_turn;
 	}
 
-	if (player_isFlag(PLAYER_PRIMARY)) pilot_shoot(player,0,0);
+	if (player_isFlag(PLAYER_PRIMARY)) pilot_shoot(player,player_target,0);
 	if (player_isFlag(PLAYER_SECONDARY)) /* needs target */
 		pilot_shoot(player,player_target,1);
 

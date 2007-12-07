@@ -60,7 +60,7 @@ Outfit* outfit_get( const char* name )
 
 
 /*
- * return 1 if o is a weapon
+ * return 1 if o is a weapon (beam/bolt)
  */
 int outfit_isWeapon( const Outfit* o )
 {
@@ -78,7 +78,6 @@ int outfit_isLauncher( const Outfit* o )
 			(o->type==OUTFIT_TYPE_MISSILE_SWARM)	||
 			(o->type==OUTFIT_TYPE_MISSILE_SWARM_SMART) );
 }
-
 /*
  * return 1 if o is weapon ammunition
  */
@@ -90,6 +89,14 @@ int outfit_isAmmo( const Outfit* o )
 			(o->type==OUTFIT_TYPE_MISSILE_SWARM_AMMO)		||
 			(o->type==OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO) );
 }
+/*
+ * return 1 if o is a turret
+ */
+int outfit_isTurret( const Outfit* o )
+{
+	return ( (o->type==OUTFIT_TYPE_TURRET_BOLT) ||
+			(o->type==OUTFIT_TYPE_TURRET_BEAM) );
+}
 
 
 /*
@@ -99,6 +106,7 @@ glTexture* outfit_gfx( const Outfit* o )
 {
 	if (outfit_isWeapon(o)) return o->u.wpn.gfx_space;
 	else if (outfit_isAmmo(o)) return o->u.amm.gfx_space;
+	else if (outfit_isTurret(o)) return o->u.wpn.gfx_space;
 	return NULL;
 }
 /*
@@ -108,19 +116,29 @@ int outfit_spfx( const Outfit* o )
 {
 	if (outfit_isWeapon(o)) return o->u.wpn.spfx;
 	else if (outfit_isAmmo(o)) return o->u.amm.spfx;
+	else if (outfit_isTurret(o)) return o->u.wpn.spfx;
 	return -1;
 }
 double outfit_dmgShield( const Outfit* o )
 {
 	if (outfit_isWeapon(o)) return o->u.wpn.damage_armour;
 	else if (outfit_isAmmo(o)) return o->u.amm.damage_armour;
+	else if (outfit_isTurret(o)) return o->u.wpn.damage_armour;
 	return -1.;
 }
 double outfit_dmgArmour( const Outfit* o )
 {
 	if (outfit_isWeapon(o)) return o->u.wpn.damage_shield;
 	else if (outfit_isAmmo(o)) return o->u.amm.damage_shield;
+	else if (outfit_isTurret(o)) return o->u.wpn.damage_shield;
 	return -1.;
+}
+int outfit_delay( const Outfit* o )
+{
+	if (outfit_isWeapon(o)) return o->u.wpn.delay;
+	else if (outfit_isLauncher(o)) return o->u.lau.delay;
+	else if (outfit_isTurret(o)) return o->u.wpn.delay;
+	return -1;
 }
 
 
@@ -140,7 +158,9 @@ const char* outfit_typename[] = { "NULL",
 		"Swarm Missile",
 		"Swarm Missile Ammunition Pack",
 		"Smart Swarm Missile",
-		"Smart Swarm Missile Ammunition Pack"
+		"Smart Swarm Missile Ammunition Pack",
+		"Bolt Turret",
+		"Beam Turret"
 };
 const char* outfit_getType( const Outfit* o )
 {
@@ -153,7 +173,8 @@ const char* outfit_getType( const Outfit* o )
 const char* outfit_typenamebroad[] = { "NULL",
 		"Weapon",
 		"Launcher",
-		"Ammo"
+		"Ammo",
+		"Turret"
 };
 const char* outfit_getTypeBroad( const Outfit* o )
 {
@@ -161,6 +182,7 @@ const char* outfit_getTypeBroad( const Outfit* o )
 	if (outfit_isWeapon(o)) i = 1;
 	else if (outfit_isLauncher(o)) i = 2;
 	else if (outfit_isAmmo(o)) i = 3;
+	else if (outfit_isTurret(o)) i = 4;
 
 	return outfit_typenamebroad[i];
 }
@@ -337,6 +359,8 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
 				outfit_parseSLauncher( temp, node );
 			else if (outfit_isAmmo(temp))
 				outfit_parseSAmmo( temp, node );
+			else if (outfit_isTurret(temp))
+				outfit_parseSWeapon( temp, node );
 		}
 	} while ((node = node->next));
 

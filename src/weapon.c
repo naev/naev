@@ -251,9 +251,8 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 				break;
 
 			case OUTFIT_TYPE_BOLT: /* check to see if exceeded distance */
-				if (SDL_GetTicks() >
-						(wlayer[i]->timer + 1000*(unsigned int)
-						wlayer[i]->outfit->u.wpn.range/wlayer[i]->outfit->u.wpn.speed)) {
+			case OUTFIT_TYPE_TURRET_BOLT:
+				if (SDL_GetTicks() > wlayer[i]->timer) {
 					weapon_destroy(wlayer[i],layer);
 					continue;
 				}
@@ -410,6 +409,7 @@ static Weapon* weapon_create( const Outfit* outfit,
 			if ((rdir > 2.*M_PI) || (rdir < 0.)) rdir = fmod(rdir, 2.*M_PI);
 			vectcpy( &v, vel );
 			vect_cadd( &v, outfit->u.wpn.speed*cos(rdir), outfit->u.wpn.speed*sin(rdir));
+			w->timer += 1000*(unsigned int)outfit->u.wpn.range/outfit->u.wpn.speed;
 			w->solid = solid_create( mass, rdir, pos, &v );
 			w->voice = sound_addVoice( VOICE_PRIORITY_BOLT,
 					w->solid->pos.x, w->solid->pos.y,
@@ -434,6 +434,24 @@ static Weapon* weapon_create( const Outfit* outfit,
 					w->solid->vel.x, w->solid->vel.y,  w->outfit->u.amm.sound, 0 );
 			break;
 
+		case OUTFIT_TYPE_TURRET_BOLT:
+			if (w->parent!=w->target)
+				rdir = vect_angle(pos,&pilot_get(w->target)->solid->pos);
+			rdir += RNG(-outfit->u.wpn.accuracy/2.,
+					outfit->u.wpn.accuracy/2.)/180.*M_PI;
+			if ((rdir > 2.*M_PI) || (rdir < 0.)) rdir = fmod(rdir, 2.*M_PI);
+			vectcpy( &v, vel );
+			vect_cadd( &v, outfit->u.wpn.speed*cos(rdir), outfit->u.wpn.speed*sin(rdir));
+			w->timer += 1000*(unsigned int)outfit->u.wpn.range/outfit->u.wpn.speed;
+			w->solid = solid_create( mass, rdir, pos, &v );
+			w->voice = sound_addVoice( VOICE_PRIORITY_BOLT,
+					w->solid->pos.x, w->solid->pos.y,
+					w->solid->vel.x, w->solid->vel.y,  w->outfit->u.wpn.sound, 0 );
+			break;
+
+
+
+
 		default: /* just dump it where the player is */
 			w->voice = NULL;
 			w->solid = solid_create( mass, dir, pos, vel );
@@ -451,7 +469,9 @@ void weapon_add( const Outfit* outfit, const double dir,
 		const Vector2d* pos, const Vector2d* vel,
 		unsigned int parent, unsigned int target )
 {
-	if (!outfit_isWeapon(outfit) && !outfit_isAmmo(outfit)) {
+	if (!outfit_isWeapon(outfit) && 
+			!outfit_isAmmo(outfit) && 
+			!outfit_isTurret(outfit)) {
 		ERR("Trying to create a Weapon from a non-Weapon type Outfit");
 		return;
 	}

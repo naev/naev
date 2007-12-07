@@ -35,7 +35,9 @@ typedef enum OutfitType_ { OUTFIT_TYPE_NULL=0,
 		OUTFIT_TYPE_MISSILE_SWARM=9,
 		OUTFIT_TYPE_MISSILE_SWARM_AMMO=10,
 		OUTFIT_TYPE_MISSILE_SWARM_SMART=11,
-		OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO=12
+		OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO=12,
+		OUTFIT_TYPE_TURRET_BOLT=13,
+		OUTFIT_TYPE_TURRET_BEAM=14
 } OutfitType;
 
 /*
@@ -94,6 +96,7 @@ Outfit* outfit_get( const char* name );
 int outfit_isWeapon( const Outfit* o );
 int outfit_isLauncher( const Outfit* o );
 int outfit_isAmmo( const Outfit* o );
+int outfit_isTurret( const Outfit* o );
 const char* outfit_getType( const Outfit* o );
 const char* outfit_getTypeBroad( const Outfit* o );
 
@@ -104,6 +107,7 @@ glTexture* outfit_gfx( const Outfit* o );
 int outfit_spfx( const Outfit* o );
 double outfit_dmgShield( const Outfit* o );
 double outfit_dmgArmour( const Outfit* o );
+int outfit_delay( const Outfit* o );
 
 /*
  * loading/freeing outfit stack

@@ -63,6 +63,7 @@ void pilot_render( Pilot* pilot ); /* externed in player.c */
 static void pilot_free( Pilot* p );
 static Fleet* fleet_parse( const xmlNodePtr parent );
 static void pilot_dead( Pilot* p );
+static int pilot_oquantity( Pilot* p, PilotOutfit* w );
 
 
 /*
@@ -169,6 +170,16 @@ double pilot_face( Pilot* p, const float dir )
 
 
 /*
+ * returns the quantity of a pilot outfit
+ */
+static int pilot_oquantity( Pilot* p, PilotOutfit* w )
+{
+	return (outfit_isAmmo(w->outfit) && p->secondary) ?
+		p->secondary->quantity : w->quantity ;
+}
+
+
+/*
  * makes the pilot shoot
  *
  * @param p the pilot which is shooting
@@ -198,10 +209,8 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
 	int quantity, delay;
 	
 	/* will segfault when trying to launch with 0 ammo otherwise */
-	quantity = (outfit_isAmmo(w->outfit) && p->secondary) ?
-			p->secondary->quantity : w->quantity ;
-	delay = (outfit_isWeapon(w->outfit)) ? w->outfit->u.wpn.delay :
-			w->outfit->u.lau.delay;
+	quantity = pilot_oquantity(p,w);
+	delay = outfit_delay(w->outfit);
 	
 	/* check to see if weapon is ready */
 	if ((SDL_GetTicks() - w->timer) < (unsigned int)(delay / quantity)) return;
@@ -209,10 +218,11 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
 	/*
 	 * regular weapons
 	 */
-	if (outfit_isWeapon(w->outfit)) {
+	if (outfit_isWeapon(w->outfit) || (outfit_isTurret(w->outfit))) {
 		
 		/* different weapons, different behaviours */
 		switch (w->outfit->type) {
+			case OUTFIT_TYPE_TURRET_BOLT:
 			case OUTFIT_TYPE_BOLT:
 				weapon_add( w->outfit, p->solid->dir,
 						&p->solid->pos, &p->solid->vel, p->id, t );
