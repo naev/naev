@@ -138,13 +138,13 @@ void info_menu (void)
 			player->ship->name, "Ship", ship_view );
 	window_addButton( wid, -20, (20 + BUTTON_HEIGHT)*3 + 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT,
-			"btnOutfits", "Outfts", ship_view );
+			"btnOutfits", "Outfts", NULL );
 	window_addButton( wid, -20, (20 + BUTTON_HEIGHT)*2 + 20,      
 			BUTTON_WIDTH, BUTTON_HEIGHT,    
-			"btnCargo", "Cargo", ship_view );
+			"btnCargo", "Cargo", NULL );
 	window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT,
-			"btnMissions", "Missions", ship_view );
+			"btnMissions", "Missions", NULL );
 	window_addButton( wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT,
 			"btnClose", "Close", info_menu_close );

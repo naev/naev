@@ -888,7 +888,13 @@ static void toolkit_mouseEvent( SDL_Event* event )
 
 				case SDL_MOUSEBUTTONUP:
 					if (wgt->status==WIDGET_STATUS_MOUSEDOWN) {
-						if (wgt->type==WIDGET_BUTTON) (*wgt->dat.btn.fptr)(wgt->name);
+						if (wgt->type==WIDGET_BUTTON) {
+							if (wgt->dat.btn.fptr==NULL)
+								DEBUG("Toolkit: Button '%s' of Window '%s' "
+										"doesn't have a function trigger",
+										wgt->name, w->name );
+							else (*wgt->dat.btn.fptr)(wgt->name);
+						}
 					}
 					wgt->status = WIDGET_STATUS_NORMAL;
 					break;
