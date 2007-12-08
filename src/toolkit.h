@@ -42,6 +42,8 @@ void window_addImage( const unsigned int wid,
  */
 void window_modifyText( const unsigned int wid,
 		char* name, char* newstring );
+void window_modifyImage( const unsigned int wid,
+		char* name, glTexture* image );
 
 
 /*

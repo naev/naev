@@ -63,6 +63,8 @@ typedef struct Window_ {
 	unsigned int id; /* unique id */
 	char *name; /* name */
 
+	int display; /* is it hidden? */
+
 	double x,y; /* position */
 	double w,h; /* dimensions */
 
@@ -262,6 +264,19 @@ void window_modifyText( const unsigned int wid,
 	if (wgt->dat.txt.text) free(wgt->dat.txt.text);
 	wgt->dat.txt.text = strdup(newstring);
 }
+
+
+/*
+ * modifies an existing image's image
+ */
+void window_modifyImage( const unsigned int wid,
+		char* name, glTexture* image )
+{
+	Widget *wgt = window_getwgt(wid,name);
+
+	wgt->dat.img.image = image;
+}
+
 
 
 /*
@@ -751,6 +766,9 @@ static void toolkit_renderImage( Widget* img, double bx, double by )
 {
 	glColour *lc, *c, *oc;
 	double x,y;
+
+	if (img->dat.img.image == NULL) return;
+
 	x = bx + img->x;
 	y = by + img->y;
 
