@@ -23,8 +23,7 @@ typedef enum WidgetType_ {
 typedef enum WidgetStatus_ {
 	WIDGET_STATUS_NORMAL,
 	WIDGET_STATUS_MOUSEOVER,
-	WIDGET_STATUS_MOUSEDOWN,
-	WIDGET_STATUS_FOCUS
+	WIDGET_STATUS_MOUSEDOWN
 } WidgetStatus;
 
 typedef struct Widget_ {
@@ -63,7 +62,8 @@ typedef struct Window_ {
 	unsigned int id; /* unique id */
 	char *name; /* name */
 
-	int display; /* is it hidden? */
+	int hidden; /* is it hidden? */
+	int focus; /* what bugger is focused? */
 
 	double x,y; /* position */
 	double w,h; /* dimensions */
@@ -92,6 +92,9 @@ static Window* window_wget( const unsigned int wid );
 static Widget* window_getwgt( const unsigned int wid, char* name );
 /* input */
 static void toolkit_mouseEvent( SDL_Event* event );
+static int toolkit_keyEvent( SDL_Event* event );
+static void toolkit_nextFocus (void);
+static void toolkit_triggerFocus (void);
 /* render */
 static void window_render( Window* w );
 static void toolkit_renderButton( Widget* btn, double bx, double by );
@@ -322,6 +325,9 @@ unsigned int window_create( char* name,
 	windows[nwindows].id = wid;
 	windows[nwindows].name = strdup(name);
 
+	windows[nwindows].hidden = 0;
+	windows[nwindows].focus = -1;
+
 	windows[nwindows].w = (double) w;
 	windows[nwindows].h = (double) h;
 	if ((x==-1) && (y==-1)) { /* center */
@@ -342,6 +348,8 @@ unsigned int window_create( char* name,
 		SDL_ShowCursor(SDL_ENABLE);
 		toolkit = 1; /* enable toolkit */
 	}
+
+	toolkit_nextFocus(); /* focus first widget if possible */
 
 	return wid;
 }
@@ -852,6 +860,11 @@ int toolkit_input( SDL_Event* event )
 		case SDL_MOUSEBUTTONUP:
 			toolkit_mouseEvent(event);
 			return 1; /* block input */
+
+		case SDL_KEYDOWN:
+		case SDL_KEYUP:
+			return toolkit_keyEvent(event);
+
 	}
 	return 0; /* don't block input */
 }
@@ -921,6 +934,84 @@ static void toolkit_mouseEvent( SDL_Event* event )
 			}
 		else
 			wgt->status = WIDGET_STATUS_NORMAL;
+	}
+}
+
+
+/*
+ * handles the key events
+ */
+static int toolkit_keyEvent( SDL_Event* event )
+{
+	SDLKey key = event->key.keysym.sym;
+
+	switch (key) {
+		case SDLK_TAB:
+			if (event->type == SDL_KEYDOWN)
+				toolkit_nextFocus();
+			return 1;
+
+		case SDLK_RETURN:
+			if (event->type == SDL_KEYDOWN)
+				toolkit_triggerFocus();
+			return 1;
+
+		default:
+			return 0;
+	}
+}
+
+
+/*
+ * focus next widget
+ */
+static void toolkit_nextFocus (void)
+{
+	Window* wdw = &windows[nwindows-1]; /* get active window */
+
+	if (wdw->nwidgets==0) wdw->focus = -1;
+
+	while (wdw->focus++) {
+
+		/* if it's the last widget, set as off */
+		if (wdw->focus >= wdw->nwidgets) {
+			wdw->focus = -1;
+			break;
+		}
+
+		/* check to see if widget is focusable */
+		switch (wdw->widgets[wdw->focus].type) {
+			case WIDGET_BUTTON:
+				return;
+
+			default:
+				break;
+		}
+	}
+}
+
+
+/*
+ * trigger the focused widget
+ */
+static void toolkit_triggerFocus (void)
+{
+	Window* wdw;
+	Widget* wgt;
+
+	wdw = &windows[nwindows-1];
+
+	if (wdw->focus == -1) return;
+
+	wgt = &wdw->widgets[wdw->focus];
+
+	switch (wgt->type) {
+	
+		case WIDGET_BUTTON:
+			(*wgt->dat.btn.fptr)(wgt->name);
+
+		default:
+			break;
 	}
 }
 
