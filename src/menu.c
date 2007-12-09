@@ -67,15 +67,16 @@ void menu_small (void)
 
 	unsigned int wid;
 	wid = window_create( "Menu", -1, -1, MENU_WIDTH, MENU_HEIGHT );
-	
-	window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, 
-			"btnExit", "Exit", (void(*)(char*)) exit_game );
-	window_addButton( wid, 20, 20 + BUTTON_HEIGHT + 20,
-			BUTTON_WIDTH, BUTTON_HEIGHT,
-			"btnOptions", "Options", (void(*)(char*)) edit_options );
+
+
 	window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2,
 			BUTTON_WIDTH, BUTTON_HEIGHT,
 			"btnResume", "Resume", menu_small_close );
+	window_addButton( wid, 20, 20 + BUTTON_HEIGHT + 20,
+			BUTTON_WIDTH, BUTTON_HEIGHT,
+			"btnOptions", "Options", (void(*)(char*)) edit_options );
+	window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, 
+			"btnExit", "Exit", (void(*)(char*)) exit_game );
 
 	menu_Open(MENU_SMALL);
 }

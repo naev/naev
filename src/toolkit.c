@@ -127,6 +127,9 @@ void window_addButton( const unsigned int wid,
 	if (y < 0) wgt->y = wdw->h - wgt->h + y;
 	else wgt->y = (double) y;
 	wgt->dat.btn.fptr = call;
+
+	if (wdw->focus == -1) /* initialize the focus */
+		toolkit_nextFocus();
 }
 
 
@@ -349,8 +352,6 @@ unsigned int window_create( char* name,
 		toolkit = 1; /* enable toolkit */
 	}
 
-	toolkit_nextFocus(); /* focus first widget if possible */
-
 	return wid;
 }
 
@@ -436,7 +437,7 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
 static void window_render( Window* w )
 {
 	int i;
-	double x, y;
+	double x, y, wid, hei;
 	glColour *lc, *c, *dc, *oc;
 
 	/* position */
@@ -636,6 +637,34 @@ static void window_render( Window* w )
 				/* TODO widget list rendering */
 				break;
 		}
+	}
+
+	/*
+	 * focused widget
+	 */
+	if (w->focus != -1) {
+		x += w->widgets[w->focus].x;
+		y += w->widgets[w->focus].y;
+		wid = w->widgets[w->focus].w;
+		hei = w->widgets[w->focus].h;
+
+		glBegin(GL_LINE_LOOP);
+			COLOUR(cBlack);
+			/* left */
+			glVertex2d( x - 3.,       y            );
+			glVertex2d( x - 3.,       y + hei      );
+			/* top */
+			glVertex2d( x,            y + hei + 3. );
+			glVertex2d( x + wid,      y + hei + 3. );
+			/* right */
+			glVertex2d( x + wid + 3., y + hei      );
+			glVertex2d( x + wid + 3., y            );
+			/* bottom */
+			glVertex2d( x + wid,      y - 3.       );
+			glVertex2d( x,            y - 3.       );
+			glVertex2d( x - 3.,       y            );
+		glEnd(); /* GL_LINE_LOOP */
+
 	}
 }
 
@@ -969,25 +998,15 @@ static void toolkit_nextFocus (void)
 {
 	Window* wdw = &windows[nwindows-1]; /* get active window */
 
-	if (wdw->nwidgets==0) wdw->focus = -1;
-
-	while (wdw->focus++) {
-
-		/* if it's the last widget, set as off */
-		if (wdw->focus >= wdw->nwidgets) {
-			wdw->focus = -1;
-			break;
-		}
-
-		/* check to see if widget is focusable */
-		switch (wdw->widgets[wdw->focus].type) {
-			case WIDGET_BUTTON:
-				return;
-
-			default:
-				break;
-		}
-	}
+	if (wdw->nwidgets==0) 
+		wdw->focus = -1;
+	else if (wdw->focus >= wdw->nwidgets)
+		wdw->focus = -1;
+	else if ((++wdw->focus+1) && /* just increment */
+		(wdw->widgets[wdw->focus].type == WIDGET_BUTTON))
+		return;
+	else
+		toolkit_nextFocus();
 }
 
 
