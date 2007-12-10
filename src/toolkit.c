@@ -100,6 +100,10 @@ static void window_render( Window* w );
 static void toolkit_renderButton( Widget* btn, double bx, double by );
 static void toolkit_renderText( Widget* txt, double bx, double by );
 static void toolkit_renderImage( Widget* img, double bx, double by );
+static void toolkit_drawOutline( double x, double y,
+		double w, double h, double b,
+		glColour* c, glColour* lc );
+
 
 
 /*
@@ -431,6 +435,38 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
 }
 
 
+/* 
+ * draws an outline
+ * if bc is NULL, colour will be flat
+ */
+static void toolkit_drawOutline( double x, double y, 
+		double w, double h, double b,
+		glColour* c, glColour* lc )
+{
+	glShadeModel( (lc==NULL) ? GL_FLAT : GL_SMOOTH );
+	if (!lc) COLOUR(*c);
+	glBegin(GL_LINE_LOOP);
+		/* left */
+		if (lc) COLOUR(*lc);
+		glVertex2d( x - b,      y         );
+		if (lc) COLOUR(*c);
+		glVertex2d( x - b,      y + h     );
+		/* top */
+		glVertex2d( x,          y + h + b );
+		glVertex2d( x + w,      y + h + b );
+		/* right */
+		glVertex2d( x + w + b, y + h      );
+		if (lc) COLOUR(*lc);
+		glVertex2d( x + w + b, y          );
+		/* bottom */
+		glVertex2d( x + w,      y - b     );
+		glVertex2d( x,          y - b     );
+		glVertex2d( x - b,      y         );
+	glEnd(); /* GL_LINES */
+
+}
+
+
 /*
  * renders a window
  */
@@ -647,24 +683,7 @@ static void window_render( Window* w )
 		y += w->widgets[w->focus].y;
 		wid = w->widgets[w->focus].w;
 		hei = w->widgets[w->focus].h;
-
-		glBegin(GL_LINE_LOOP);
-			COLOUR(cBlack);
-			/* left */
-			glVertex2d( x - 3.,       y            );
-			glVertex2d( x - 3.,       y + hei      );
-			/* top */
-			glVertex2d( x,            y + hei + 3. );
-			glVertex2d( x + wid,      y + hei + 3. );
-			/* right */
-			glVertex2d( x + wid + 3., y + hei      );
-			glVertex2d( x + wid + 3., y            );
-			/* bottom */
-			glVertex2d( x + wid,      y - 3.       );
-			glVertex2d( x,            y - 3.       );
-			glVertex2d( x - 3.,       y            );
-		glEnd(); /* GL_LINE_LOOP */
-
+		toolkit_drawOutline( x, y, wid, hei, 3, &cBlack, NULL );
 	}
 }
 
@@ -733,47 +752,10 @@ static void toolkit_renderButton( Widget* btn, double bx, double by )
 	glEnd(); /* GL_QUADS */
 
 
-	/*
-	 * inner outline
-	 */
-	glShadeModel(GL_SMOOTH);
-	glBegin(GL_LINE_LOOP);
-		/* left */
-		COLOUR(*c);
-		glVertex2d( x,          y          );
-		COLOUR(*lc);
-		glVertex2d( x,          y + btn->h );
-		/* top */
-		glVertex2d( x + btn->w, y + btn->h );
-		/* right */
-		COLOUR(*c);
-		glVertex2d( x + btn->w, y          );
-		/* bottom */
-		glVertex2d( x,          y          );
-	glEnd(); /* GL_LINES */
-
-
-	/*
-	 * outter outline
-	 */
-	glShadeModel(GL_FLAT);
-	glBegin(GL_LINE_LOOP);
-		COLOUR(cBlack);
-		/* left */
-		glVertex2d( x - 1.,          y               );
-		glVertex2d( x - 1.,          y + btn->h      );
-		/* top */
-		glVertex2d( x,               y + btn->h + 1. );
-		glVertex2d( x + btn->w,      y + btn->h + 1. );
-		/* right */
-		glVertex2d( x + btn->w + 1., y + btn->h      );
-		glVertex2d( x + btn->w + 1., y               );
-		/* bottom */
-		glVertex2d( x + btn->w,      y - 1.          );
-		glVertex2d( x,               y - 1.          );
-		glVertex2d( x - 1.,          y               );
-	glEnd(); /* GL_LINE_LOOP */
-
+	/* inner outline */
+	toolkit_drawOutline( x, y, btn->w, btn->h, 0., lc, c );
+	/* outter outline */
+	toolkit_drawOutline( x, y, btn->w, btn->h, 1., &cBlack, NULL );
 
 	gl_printMid( NULL, (int)btn->w,
 			bx + (double)gl_screen.w/2. + btn->x,
@@ -820,42 +802,12 @@ static void toolkit_renderImage( Widget* img, double bx, double by )
 			x + (double)gl_screen.w/2.,
 			y + (double)gl_screen.h/2., NULL );
 
-	/*
-	 * inner outline (outwards)
-	 */
-	glShadeModel(GL_SMOOTH);
-	glBegin(GL_LINE_LOOP);
-		COLOUR(*lc);
-		/* top */
-		glVertex2d( x-1.,                       y + img->dat.img.image->sh+1.    );
-		glVertex2d( x + img->dat.img.image->sw, y + img->dat.img.image->sh+1.    );
-		/* right */
-		COLOUR(*c);
-		glVertex2d( x + img->dat.img.image->sw, y                                );
-		/* bottom */
-		glVertex2d( x-1.,                       y                                );
-		/* left */
-		COLOUR(*lc);
-		glVertex2d( x-1.,                       y + img->dat.img.image->sh+1.    );
-	glEnd(); /* GL_LINE_LOOP */
-
-
-	/*
-	 * outter outline
-	 */
-	glShadeModel(GL_FLAT);
-	glBegin(GL_LINE_LOOP);
-		COLOUR(*oc);
-		/* top */
-		glVertex2d( x-2.,                          y + img->dat.img.image->sh+2. );
-		glVertex2d( x + img->dat.img.image->sw+1., y + img->dat.img.image->sh+2. );
-		/* right */
-		glVertex2d( x + img->dat.img.image->sw+1., y-1.                          );
-		/* bottom */
-		glVertex2d( x-2.,                          y-1.                          );
-		/* left */
-		glVertex2d( x-2.,                          y + img->dat.img.image->sh+2. );
-	glEnd(); /* GL_LINE_LOOP */
+	/* inner outline (outwards) */
+	toolkit_drawOutline( x, y+1, img->dat.img.image->sw-1,
+		img->dat.img.image->sh-1, 1., lc, c );
+	/* outter outline */
+	toolkit_drawOutline( x, y+1, img->dat.img.image->sw-1,
+			img->dat.img.image->sh-1, 2., oc, NULL );
 }
 
 
