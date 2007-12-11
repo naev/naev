@@ -100,9 +100,12 @@ static void window_render( Window* w );
 static void toolkit_renderButton( Widget* btn, double bx, double by );
 static void toolkit_renderText( Widget* txt, double bx, double by );
 static void toolkit_renderImage( Widget* img, double bx, double by );
+static void toolkit_renderList( Widget* lst, double bx, double by );
 static void toolkit_drawOutline( double x, double y,
 		double w, double h, double b,
 		glColour* c, glColour* lc );
+static void toolkit_drawRect( double x, double y,
+		double w, double h, glColour* c, glColour* lc );
 
 
 
@@ -463,7 +466,22 @@ static void toolkit_drawOutline( double x, double y,
 		glVertex2d( x,          y - b     );
 		glVertex2d( x - b,      y         );
 	glEnd(); /* GL_LINES */
+}
+static void toolkit_drawRect( double x, double y,
+		double w, double h, glColour* c, glColour* lc )
+{
+	glShadeModel( (lc) ? GL_SMOOTH : GL_FLAT );
+	glBegin(GL_QUADS);
 
+		COLOUR(*c);
+		glVertex2d( x,     y     );
+		glVertex2d( x + w, y     );
+
+		COLOUR( (lc) ? *lc : *c );
+		glVertex2d( x + w, y + h );
+		glVertex2d( x,     y + h );
+
+	glEnd(); /* GL_QUADS */
 }
 
 
@@ -490,25 +508,9 @@ static void window_render( Window* w )
 	 * window shaded bg
 	 */
 	/* main body */
-	glShadeModel(GL_SMOOTH);
-	glBegin(GL_QUADS);
-		COLOUR(*dc);
-		glVertex2d( x + 21.,        y            );
-		glVertex2d( x + w->w - 21., y            );
+	toolkit_drawRect( x+21, y,          w->w-42., 0.6*w->h, dc, c );
+	toolkit_drawRect( x+21, y+0.6*w->h, w->w-42., 0.4*w->h, c, NULL );
 
-		COLOUR(*c);
-		glVertex2d( x + w->w - 21., y + 0.6*w->h );
-		glVertex2d( x + 21.,        y + 0.6*w->h );
-
-	glEnd(); /* GL_QUADS */
-	glShadeModel(GL_FLAT);
-	glBegin(GL_QUADS);
-		COLOUR(*c);
-		glVertex2d( x + 21.,        y + 0.6*w->h );
-		glVertex2d( x + w->w - 21., y + 0.6*w->h );
-		glVertex2d( x + w->w - 21., y + w->h     );
-		glVertex2d( x + 21.,        y + w->h     );
-	glEnd(); /* GL_QUADS */
 	glShadeModel(GL_SMOOTH);
 	/* left side */
 	glBegin(GL_POLYGON);
@@ -670,7 +672,7 @@ static void window_render( Window* w )
 				break;
 
 			case WIDGET_LIST:
-				/* TODO widget list rendering */
+				toolkit_renderList( &w->widgets[i], x, y );
 				break;
 		}
 	}
@@ -724,34 +726,10 @@ static void toolkit_renderButton( Widget* btn, double bx, double by )
 	}  
 
 
-	/*
-	 * shaded base
-	 */
-	glShadeModel(GL_SMOOTH);
-	glBegin(GL_QUADS);
-
-		COLOUR(*dc);
-		glVertex2d( x,				y              );
-		glVertex2d( x + btn->w,	y              );
-
-		COLOUR(*c);
-		glVertex2d( x + btn->w, y + 0.6*btn->h );
-		glVertex2d( x,				y + 0.6*btn->h );
-
-	glEnd(); /* GL_QUADS */
-
-	glShadeModel(GL_FLAT);
-	glBegin(GL_QUADS);
-		COLOUR(*c);
-		
-		glVertex2d( x,          y + 0.6*btn->h );
-		glVertex2d( x + btn->w, y + 0.6*btn->h );
-		glVertex2d( x + btn->w, y + btn->h     );
-		glVertex2d( x,          y + btn->h     );
-
-	glEnd(); /* GL_QUADS */
-
-
+	/* shaded base */
+	toolkit_drawRect( x, y,            btn->w, 0.6*btn->h, dc, c );
+	toolkit_drawRect( x, y+0.6*btn->h, btn->w, 0.4*btn->h, c, NULL );
+	
 	/* inner outline */
 	toolkit_drawOutline( x, y, btn->w, btn->h, 0., lc, c );
 	/* outter outline */
@@ -808,6 +786,21 @@ static void toolkit_renderImage( Widget* img, double bx, double by )
 	/* outter outline */
 	toolkit_drawOutline( x, y+1, img->dat.img.image->sw-1,
 			img->dat.img.image->sh-1, 2., oc, NULL );
+}
+
+
+/*
+ * renders the list
+ */
+static void toolkit_renderList( Widget* lst, double bx, double by )
+{
+	double x,y;
+
+	x = bx + lst->x;
+	y = by + lst->y;
+
+	/* lst bg */
+
 }
 
 
