@@ -36,6 +36,11 @@ void window_addText( const unsigned int wid,
 void window_addImage( const unsigned int wid,
 		const int x, const int y, /* position */
 		char* name, glTexture* image ); /* label and image itself */
+void window_addList( const unsigned int wid,
+		const int x, const int y, /* position */
+		const int w, const int h, /* size */
+		char* name, char **items, int nitems, int defitem );
+
 
 /*
  * modification

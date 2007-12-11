@@ -53,6 +53,7 @@ typedef struct Widget_ {
 			char **options; /* pointer to the options */
 			int noptions; /* total number of options */
 			int selected; /* which option is currently selected */
+			int pos; /* current topmost option (in view) */
 		} lst;
 	} dat;
 } Widget;
@@ -209,8 +210,9 @@ void window_addList( const unsigned int wid,
 	wgt->dat.lst.options = items;
 	wgt->dat.lst.noptions = nitems;
 	wgt->dat.lst.selected = defitem; /* -1 would be none */
+	wgt->dat.lst.pos = 0;
 	wgt->w = (double) w;
-	wgt->h = (double) h;
+	wgt->h = (double) h - ((h % (gl_defFont.h+2)) + 2);
 	if (x < 0) wgt->x = wdw->w - wgt->w + x;
 	else wgt->x = (double) x;
 	if (y < 0) wgt->y = wdw->h - wgt->h + y;
@@ -794,12 +796,35 @@ static void toolkit_renderImage( Widget* img, double bx, double by )
  */
 static void toolkit_renderList( Widget* lst, double bx, double by )
 {
-	double x,y;
+	int i;
+	double x,y, tx,ty;
+	glColour *lc, *c, *oc;
 
 	x = bx + lst->x;
 	y = by + lst->y;
 
+	lc = &cGrey90;
+	c = &cGrey70;
+	oc = &cGrey30;
+
 	/* lst bg */
+	toolkit_drawRect( x, y, lst->w, lst->h, &cWhite, NULL );
+
+	/* inner outline */
+	toolkit_drawOutline( x, y, lst->w, lst->h, 1., lc, c );
+	/* outter outline */
+	toolkit_drawOutline( x, y, lst->w, lst->h, 2., oc, NULL );
+
+	/* draw content */
+	tx = (double)gl_screen.w/2. + x + 2.;
+	ty = (double)gl_screen.h/2. + y + lst->h - 2. - gl_defFont.h;
+	y = ty - 2.;
+	for (i=lst->dat.lst.pos; i<lst->dat.lst.noptions; i++) {
+		gl_printMax( &gl_defFont, (int)lst->w-4,
+				tx, ty, &cBlack, lst->dat.lst.options[i] );
+		ty -= 2 + gl_defFont.h;
+		if (ty-y > lst->h) break;
+	}
 
 }
 
