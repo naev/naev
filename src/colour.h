@@ -45,6 +45,8 @@ extern glColour cRed;
  */
 extern glColour cConsole;
 extern glColour cDConsole;
+/* toolkit */
+extern glColour cHilight;
 /* objects */
 extern glColour cInert;
 extern glColour cNeutral;

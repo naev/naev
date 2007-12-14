@@ -217,6 +217,9 @@ void window_addList( const unsigned int wid,
 	else wgt->x = (double) x;
 	if (y < 0) wgt->y = wdw->h - wgt->h + y;
 	else wgt->y = (double) y;
+
+	if (wdw->focus == -1) /* initialize the focus */
+		toolkit_nextFocus();
 }
 
 
@@ -811,9 +814,14 @@ static void toolkit_renderList( Widget* lst, double bx, double by )
 	toolkit_drawRect( x, y, lst->w, lst->h, &cWhite, NULL );
 
 	/* inner outline */
-	toolkit_drawOutline( x, y, lst->w, lst->h, 1., lc, c );
+	toolkit_drawOutline( x, y, lst->w, lst->h, 0., lc, c );
 	/* outter outline */
-	toolkit_drawOutline( x, y, lst->w, lst->h, 2., oc, NULL );
+	toolkit_drawOutline( x, y, lst->w, lst->h, 1., oc, NULL );
+
+	/* draw selected */
+	toolkit_drawRect( x, y - 1. + lst->h -
+			(1 + lst->dat.lst.selected - lst->dat.lst.pos)*(gl_defFont.h+2.),
+			lst->w, gl_defFont.h + 2., &cHilight, NULL );
 
 	/* draw content */
 	tx = (double)gl_screen.w/2. + x + 2.;
@@ -825,7 +833,6 @@ static void toolkit_renderList( Widget* lst, double bx, double by )
 		ty -= 2 + gl_defFont.h;
 		if (ty-y > lst->h) break;
 	}
-
 }
 
 
@@ -955,6 +962,11 @@ static int toolkit_keyEvent( SDL_Event* event )
 				toolkit_triggerFocus();
 			return 1;
 
+		case SDLK_UP:
+		case SDLK_DOWN:
+			/* TODO list up/down */
+			return 0;
+
 		default:
 			return 0;
 	}
@@ -973,7 +985,8 @@ static void toolkit_nextFocus (void)
 	else if (wdw->focus >= wdw->nwidgets)
 		wdw->focus = -1;
 	else if ((++wdw->focus+1) && /* just increment */
-		(wdw->widgets[wdw->focus].type == WIDGET_BUTTON))
+		((wdw->widgets[wdw->focus].type == WIDGET_BUTTON) ||
+		(wdw->widgets[wdw->focus].type == WIDGET_LIST)))
 		return;
 	else
 		toolkit_nextFocus();
