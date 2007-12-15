@@ -76,6 +76,7 @@ typedef struct Pilot_ {
 	/* object caracteristics */
 	Ship* ship; /* ship pilot is flying */
 	Solid* solid; /* associated solid (physics) */
+	int tsx, tsy; /* current sprite, calculated on update */
 
 	/* current health */
 	double armour, shield, energy;

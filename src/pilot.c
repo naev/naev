@@ -339,13 +339,9 @@ void pilot_setAmmo( Pilot* p )
  */
 void pilot_render( Pilot* p )
 {
-	int sx,sy;
-
-	/* get the sprite corresponding to the direction facing */
-	gl_getSpriteFromDir( &sx, &sy, p->ship->gfx_space, p->solid->dir );
-
 	gl_blitSprite( p->ship->gfx_space,
-			p->solid->pos.x, p->solid->pos.y, sx, sy, NULL );
+			p->solid->pos.x, p->solid->pos.y,
+			p->tsx, p->tsy, NULL );
 }
 
 
@@ -406,6 +402,8 @@ static void pilot_update( Pilot* pilot, const double dt )
 
 		/* update the solid */
 		pilot->solid->update( pilot->solid, dt );
+		gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
+				pilot->ship->gfx_space, pilot->solid->dir );
 		return;
 	}
 
@@ -420,6 +418,8 @@ static void pilot_update( Pilot* pilot, const double dt )
 
 	/* update the solid */
 	(*pilot->solid->update)( pilot->solid, dt );
+	gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,  
+			pilot->ship->gfx_space, pilot->solid->dir );
 
 	if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) /* limit the speed */
 		limit_speed( &pilot->solid->vel, pilot->ship->speed );

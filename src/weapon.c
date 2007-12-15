@@ -332,8 +332,8 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 	gl_getSpriteFromDir( &wsx, &wsy, gfx, w->solid->dir );
 
 	for (i=0; i<pilots; i++) {
-		gl_getSpriteFromDir( &psx, &psy, pilot_stack[i]->ship->gfx_space,
-				pilot_stack[i]->solid->dir );
+		psx = pilot_stack[i]->tsx;
+		psy = pilot_stack[i]->tsy;
 
 		if (w->parent == pilot_stack[i]->id) continue; /* pilot is self */
 
