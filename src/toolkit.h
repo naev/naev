@@ -39,7 +39,8 @@ void window_addImage( const unsigned int wid,
 void window_addList( const unsigned int wid,
 		const int x, const int y, /* position */
 		const int w, const int h, /* size */
-		char* name, char **items, int nitems, int defitem );
+		char* name, char **items, int nitems, int defitem,
+		void (*call) (char*) );
 
 
 /*

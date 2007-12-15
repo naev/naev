@@ -78,7 +78,7 @@ static void commodity_exchange (void)
 
 	window_addList( secondary_wid, 20, -40,
 			COMMODITY_WIDTH-40, COMMODITY_HEIGHT-80-BUTTON_HEIGHT,
-			"lstGoods", goods, ngoods, 0 );
+			"lstGoods", goods, ngoods, 0, NULL );
 }
 static void commodity_exchange_close( char* str )
 {

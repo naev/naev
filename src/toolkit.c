@@ -42,7 +42,7 @@ typedef struct Widget_ {
 
 	union {
 		struct { /* WIDGET_BUTTON */
-			void (*fptr) (char*); /* callback */
+			void (*fptr) (char*); /* activate callback */
 			char *display; /* stored text */
 		} btn;
 		struct { /* WIDGET_TEXT */
@@ -59,6 +59,7 @@ typedef struct Widget_ {
 			int noptions; /* total number of options */
 			int selected; /* which option is currently selected */
 			int pos; /* current topmost option (in view) */
+			void (*fptr) (char*); /* modify callback */
 		} lst;
 	} dat;
 } Widget;
@@ -99,10 +100,12 @@ static Widget* window_getwgt( const unsigned int wid, char* name );
 /* input */
 static void toolkit_mouseEvent( SDL_Event* event );
 static int toolkit_keyEvent( SDL_Event* event );
+/* focus */
 static void toolkit_nextFocus (void);
 static void toolkit_triggerFocus (void);
 static Widget* toolkit_getFocus (void);
 static void toolkit_listScroll( Widget* wgt, int direction );
+static void toolkit_listFocus( Widget* lst, double bx, double by );
 /* render */
 static void window_render( Window* w );
 static void toolkit_renderButton( Widget* btn, double bx, double by );
@@ -206,7 +209,8 @@ void window_addImage( const unsigned int wid,
 void window_addList( const unsigned int wid,
 		const int x, const int y,
 		const int w, const int h,
-		char* name, char **items, int nitems, int defitem )
+		char* name, char **items, int nitems, int defitem,
+		void (*call) (char*) )
 {
 	Window *wdw = window_wget(wid);
 	Widget *wgt = window_newWidget(wdw);
@@ -218,6 +222,7 @@ void window_addList( const unsigned int wid,
 	wgt->dat.lst.noptions = nitems;
 	wgt->dat.lst.selected = defitem; /* -1 would be none */
 	wgt->dat.lst.pos = 0;
+	wgt->dat.lst.fptr = call;
 	wgt->w = (double) w;
 	wgt->h = (double) h - ((h % (gl_defFont.h+2)) + 2);
 	if (x < 0) wgt->x = wdw->w - wgt->w + x;
@@ -931,6 +936,9 @@ static void toolkit_mouseEvent( SDL_Event* event )
 				case SDL_MOUSEBUTTONDOWN:
 					wgt->status = WIDGET_STATUS_MOUSEDOWN;
 					w->focus = i;
+
+					if (wgt->type == WIDGET_LIST)
+						toolkit_listFocus( wgt, x-wgt->x, y-wgt->y );
 					break;
 
 				case SDL_MOUSEBUTTONUP:
@@ -1017,16 +1025,16 @@ static int toolkit_keyEvent( SDL_Event* event )
  * updates the toolkit input for repeating keys
  */
 void toolkit_update (void)
-	{
+{
 	unsigned int t;
-	
+
 	t = SDL_GetTicks();
 
 	if (input_key == 0) return;
 
 	if (input_keyTime + INPUT_DELAY + input_keyCounter*INPUT_FREQ > t)
 		return;
-	
+
 	input_keyCounter++;
 	switch (input_key) {
 
@@ -1055,8 +1063,8 @@ static void toolkit_nextFocus (void)
 	else if (wdw->focus >= wdw->nwidgets)
 		wdw->focus = -1;
 	else if ((++wdw->focus+1) && /* just increment */
-		((wdw->widgets[wdw->focus].type == WIDGET_BUTTON) ||
-		(wdw->widgets[wdw->focus].type == WIDGET_LIST)))
+			((wdw->widgets[wdw->focus].type == WIDGET_BUTTON) ||
+			 (wdw->widgets[wdw->focus].type == WIDGET_LIST)))
 		return;
 	else
 		toolkit_nextFocus();
@@ -1078,7 +1086,7 @@ static void toolkit_triggerFocus (void)
 	wgt = &wdw->widgets[wdw->focus];
 
 	switch (wgt->type) {
-	
+
 		case WIDGET_BUTTON:
 			(*wgt->dat.btn.fptr)(wgt->name);
 
@@ -1101,11 +1109,23 @@ static void toolkit_listScroll( Widget* wgt, int direction )
 			wgt->dat.lst.selected -= direction;
 			wgt->dat.lst.selected = MAX(0,wgt->dat.lst.selected);
 			wgt->dat.lst.selected = MIN(wgt->dat.lst.selected, wgt->dat.lst.noptions-1);
+			if (wgt->dat.lst.fptr) (*wgt->dat.lst.fptr)(wgt->name);
 			break;
 
 		default:
 			break;
 	}
+}
+
+
+/*
+ * mouse event focus on list
+ */
+static void toolkit_listFocus( Widget* lst, double bx, double by )
+{
+	(void)bx;
+	lst->dat.lst.selected = (lst->h - by) / (gl_defFont.h + 2.);
+	toolkit_listScroll( lst, 0 ); /* checks boundries and triggers callback */
 }
 
 
