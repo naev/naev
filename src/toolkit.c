@@ -7,9 +7,14 @@
 #include "toolkit.h"
 
 
+#include "naev.h"
 #include "log.h"
 #include "pause.h"
 #include "opengl.h"
+
+
+#define INPUT_DELAY		500
+#define INPUT_FREQ		100
 
 
 typedef enum WidgetType_ {
@@ -96,6 +101,8 @@ static void toolkit_mouseEvent( SDL_Event* event );
 static int toolkit_keyEvent( SDL_Event* event );
 static void toolkit_nextFocus (void);
 static void toolkit_triggerFocus (void);
+static Widget* toolkit_getFocus (void);
+static void toolkit_listScroll( Widget* wgt, int direction );
 /* render */
 static void window_render( Window* w );
 static void toolkit_renderButton( Widget* btn, double bx, double by );
@@ -947,6 +954,25 @@ static void toolkit_mouseEvent( SDL_Event* event )
 /*
  * handles the key events
  */
+static SDLKey input_key;
+static unsigned int input_keyTime;
+static int input_keyCounter;
+static void toolkit_regKey( SDLKey key )
+{
+	if ((input_key==0) && (input_keyTime==0)) {
+		input_key = key;
+		input_keyTime = SDL_GetTicks();
+		input_keyCounter = 0;
+	}
+}
+static void toolkit_unregKey( SDLKey key )
+{
+	if (input_key == key) {
+		input_key = 0;
+		input_keyTime = 0;
+		input_keyCounter = 0;
+	}
+}
 static int toolkit_keyEvent( SDL_Event* event )
 {
 	SDLKey key = event->key.keysym.sym;
@@ -963,12 +989,55 @@ static int toolkit_keyEvent( SDL_Event* event )
 			return 1;
 
 		case SDLK_UP:
+			if (event->type == SDL_KEYDOWN) {
+				toolkit_regKey(SDLK_UP);
+				toolkit_listScroll( toolkit_getFocus(), +1 );
+			}
+			else if (event->type == SDL_KEYUP)
+				toolkit_unregKey(SDLK_UP);
+			return 0;
+
 		case SDLK_DOWN:
-			/* TODO list up/down */
+			if (event->type == SDL_KEYDOWN) {
+				toolkit_regKey(SDLK_DOWN);
+				toolkit_listScroll( toolkit_getFocus(), -1 );
+			}
+			else if (event->type == SDL_KEYUP)
+				toolkit_unregKey(SDLK_DOWN);
 			return 0;
 
 		default:
 			return 0;
+	}
+}
+
+
+/*
+ * updates the toolkit input for repeating keys
+ */
+void toolkit_update (void)
+	{
+	unsigned int t;
+	
+	t = SDL_GetTicks();
+
+	if (input_key == 0) return;
+
+	if (input_keyTime + INPUT_DELAY + input_keyCounter*INPUT_FREQ > t)
+		return;
+	
+	input_keyCounter++;
+	switch (input_key) {
+
+		case SDLK_UP:
+			toolkit_listScroll( toolkit_getFocus(), +1 );
+			break;
+		case SDLK_DOWN:
+			toolkit_listScroll( toolkit_getFocus(), -1 );
+			break;
+
+		default:
+			break;
 	}
 }
 
@@ -1015,6 +1084,41 @@ static void toolkit_triggerFocus (void)
 		default:
 			break;
 	}
+}
+
+
+/*
+ * tries to scroll up/down by direction
+ */
+static void toolkit_listScroll( Widget* wgt, int direction )
+{
+	if (wgt == NULL) return;
+
+	switch (wgt->type) {
+
+		case WIDGET_LIST:
+			wgt->dat.lst.selected -= direction;
+			wgt->dat.lst.selected = MAX(0,wgt->dat.lst.selected);
+			wgt->dat.lst.selected = MIN(wgt->dat.lst.selected, wgt->dat.lst.noptions-1);
+			break;
+
+		default:
+			break;
+	}
+}
+
+
+/*
+ * returns the focused widget
+ */
+static Widget* toolkit_getFocus (void)
+{
+	Window* wdw;
+	wdw = &windows[nwindows-1];
+	
+	if (wdw->focus == -1) return NULL;
+
+	return &wdw->widgets[wdw->focus];
 }
 
 

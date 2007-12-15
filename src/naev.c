@@ -200,6 +200,7 @@ int main ( int argc, char** argv )
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		fps_control(); /* everyone loves fps control */
+		toolkit_update(); /* to simulate key repetition */
 		if (!paused && !toolkit) update_space(); /* update game */
 
 		render_space();
