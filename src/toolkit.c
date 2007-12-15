@@ -358,14 +358,18 @@ unsigned int window_create( char* name,
 
 	windows[nwindows].w = (double) w;
 	windows[nwindows].h = (double) h;
-	if ((x==-1) && (y==-1)) { /* center */
+	/* x pos */
+	if (x==-1) /* center */
 		windows[nwindows].x = gl_screen.w/2. - windows[nwindows].w/2.;
+	else if (x < 0)
+		windows[nwindows].x = gl_screen.w - windows[nwindows].w + (double) x;
+	else windows[nwindows].x = (double) x;
+	/* y pos */
+	if (y==-1) /* center */
 		windows[nwindows].y = gl_screen.h/2. - windows[nwindows].h/2.;
-	}
-	else {
-		windows[nwindows].x = (double) x;
-		windows[nwindows].y = (double) y;
-	}
+	else if (y < 0)
+		windows[nwindows].x = gl_screen.h - windows[nwindows].h + (double) y;
+	else windows[nwindows].y = (double) y;
 
 	windows[nwindows].widgets = NULL;
 	windows[nwindows].nwidgets = 0;
@@ -1132,6 +1136,17 @@ static void toolkit_listScroll( Widget* wgt, int direction )
 		default:
 			break;
 	}
+}
+
+
+char* toolkit_getList( const unsigned int wid, char* name )
+{
+	Widget *wgt = window_getwgt(wid,name);
+
+	if ((wgt->type != WIDGET_LIST) || (wgt->dat.lst.selected != -1))
+		return NULL;
+
+	return wgt->dat.lst.options[ wgt->dat.lst.selected ];
 }
 
 

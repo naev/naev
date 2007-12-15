@@ -22,6 +22,16 @@
 #define COMMODITY_WIDTH 400
 #define COMMODITY_HEIGHT 400
 
+/* outfits */
+#define OUTFITS_WIDTH	600
+#define OUTFITS_HEIGHT	500
+
+/* shipyard */
+#define SHIPYARD_WIDTH	700
+#define SHIPYARD_HEIGHT	600
+#define SHIPYARD_XPOS	(gl_screen.w-SHIPYARD_WIDTH)/2+100 
+#define SHIPYARD_YPOS	(gl_screen.h-SHIPYARD_HEIGHT)/2-25
+
 /* news window */
 #define NEWS_WIDTH	400
 #define NEWS_HEIGHT	400
@@ -48,7 +58,9 @@ static Planet* planet = NULL;
 static void commodity_exchange (void);
 static void commodity_exchange_close( char* str );
 static void outfits (void);
+static void outfits_close( char* str );
 static void shipyard (void);
+static void shipyard_close( char* str );
 static void spaceport_bar (void);
 static void spaceport_bar_close( char* str );
 static void news (void);
@@ -89,11 +101,35 @@ static void commodity_exchange_close( char* str )
 
 static void outfits (void)
 {
+	secondary_wid = window_create( "Outfits", -1, -1,
+			OUTFITS_WIDTH, OUTFITS_HEIGHT );
+
+	window_addButton( secondary_wid, -20, 20,
+			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseOutfits",
+			"Close", outfits_close );
+
+}
+static void outfits_close( char* str )
+{
+	if (strcmp(str,"btnCloseOutfits")==0)
+		window_destroy(secondary_wid);
 }
 
 
 static void shipyard (void)
 {
+	secondary_wid = window_create( "Shipyard",
+			SHIPYARD_XPOS, SHIPYARD_YPOS,
+			SHIPYARD_WIDTH, SHIPYARD_HEIGHT );
+
+	window_addButton( secondary_wid, -20, 20,
+			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseShipyard",
+			"Close", shipyard_close );
+}
+static void shipyard_close( char* str )
+{
+	if (strcmp(str,"btnCloseShipyard")==0)
+		window_destroy(secondary_wid);
 }
 
 

@@ -57,6 +57,8 @@ void window_modifyImage( const unsigned int wid,
  */
 int window_exists( const char* wdwname );
 unsigned int window_get( const char* wdwname );
+char* toolkit_getList( const unsigned int wid, char* name );
+
 
 /*
  * destruction
@@ -64,10 +66,12 @@ unsigned int window_get( const char* wdwname );
 void window_destroy( const unsigned int wid );
 void window_destroyWidget( unsigned int wid, const char* wgtname );
 
+
 /*
  * render
  */
 void toolkit_render (void);
+
 
 /*
  * input
