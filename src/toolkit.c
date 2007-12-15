@@ -930,6 +930,7 @@ static void toolkit_mouseEvent( SDL_Event* event )
 
 				case SDL_MOUSEBUTTONDOWN:
 					wgt->status = WIDGET_STATUS_MOUSEDOWN;
+					w->focus = i;
 					break;
 
 				case SDL_MOUSEBUTTONUP:
