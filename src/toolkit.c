@@ -102,6 +102,7 @@ static void toolkit_mouseEvent( SDL_Event* event );
 static int toolkit_keyEvent( SDL_Event* event );
 /* focus */
 static void toolkit_nextFocus (void);
+static int toolkit_isFocusable( Widget *wgt );
 static void toolkit_triggerFocus (void);
 static Widget* toolkit_getFocus (void);
 static void toolkit_listScroll( Widget* wgt, int direction );
@@ -935,7 +936,9 @@ static void toolkit_mouseEvent( SDL_Event* event )
 
 				case SDL_MOUSEBUTTONDOWN:
 					wgt->status = WIDGET_STATUS_MOUSEDOWN;
-					w->focus = i;
+
+					if (toolkit_isFocusable(wgt))
+						w->focus = i;
 
 					if (wgt->type == WIDGET_LIST)
 						toolkit_listFocus( wgt, x-wgt->x, y-wgt->y );
@@ -1063,11 +1066,25 @@ static void toolkit_nextFocus (void)
 	else if (wdw->focus >= wdw->nwidgets)
 		wdw->focus = -1;
 	else if ((++wdw->focus+1) && /* just increment */
-			((wdw->widgets[wdw->focus].type == WIDGET_BUTTON) ||
-			 (wdw->widgets[wdw->focus].type == WIDGET_LIST)))
+			toolkit_isFocusable(&wdw->widgets[wdw->focus]) )
 		return;
 	else
 		toolkit_nextFocus();
+}
+
+
+static int toolkit_isFocusable( Widget *wgt )
+{
+	if (wgt==NULL) return 0;
+
+	switch (wgt->type) {
+		case WIDGET_BUTTON:
+		case WIDGET_LIST:
+			return 1;
+
+		default:
+			return 0;
+	}
 }
 
 
