@@ -66,6 +66,7 @@ static void outfits_close( char* str );
 static void shipyard (void);
 static void shipyard_close( char* str );
 static void shipyard_update( char* str );
+static void shipyard_info( char* str );
 /* spaceport bar */
 static void spaceport_bar (void);
 static void spaceport_bar_close( char* str );
@@ -146,15 +147,28 @@ static void shipyard (void)
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnBuyShip",
 			"Buy", NULL );
 
-	window_addText( secondary_wid, 20+200+20, -160,
-			SHIPYARD_WIDTH-260, 200, 0, "txtDescription",
-			&gl_defFont, &cConsole, NULL );
+	window_addButton( secondary_wid, -40-BUTTON_WIDTH, 40+BUTTON_HEIGHT,
+			BUTTON_WIDTH, BUTTON_HEIGHT, "btnInfoShip",
+			"Info", shipyard_info );
+
+	window_addRect( secondary_wid, 20+200+60, -50,
+			128, 96, "rctTarget", &cBlack, 0 );
+	window_addImage( secondary_wid, 20+200+60, -50-96,
+			"imgTarget", NULL );
+
+	window_addText( secondary_wid, 20+200+40, -160,
+			SHIPYARD_WIDTH-360, 200, 0, "txtDescription",
+			&gl_smallFont, NULL, NULL );
+
 
 	/* set up the ships to buy/sell */
 	ships = ship_getAll( &nships );
 	window_addList( secondary_wid, 20, 40,
 			200, SHIPYARD_HEIGHT-120, "lstShipyard",
 			ships, nships, 0, shipyard_update );
+
+	/* write the shipyard stuff */
+	shipyard_update( NULL );
 }
 static void shipyard_close( char* str )
 {
@@ -164,9 +178,22 @@ static void shipyard_close( char* str )
 static void shipyard_update( char* str )
 {
 	(void)str;
-	char *tship;
+	char *shipname;
+	Ship* ship;
 	
-	tship = toolkit_getList( secondary_wid, "lstShipyard" );
+	shipname = toolkit_getList( secondary_wid, "lstShipyard" );
+	ship = ship_get( shipname );
+
+	window_modifyText( secondary_wid, "txtDescription", ship->description );
+	window_modifyImage( secondary_wid, "imgTarget", ship->gfx_target );
+}
+static void shipyard_info( char* str )
+{
+	(void)str;
+	char *shipname;
+
+	shipname = toolkit_getList( secondary_wid, "lstShipyard" );
+	ship_view(shipname);
 }
 
 
@@ -236,7 +263,7 @@ void land( Planet* p )
 	/*
 	 * pretty display
 	 */
-	window_addImage( land_wid, 20, -440, "imgPlanet", p->gfx_exterior );
+	window_addImage( land_wid, 20, -40, "imgPlanet", p->gfx_exterior );
 	window_addText( land_wid, 440, 80, 200, 460, 0, 
 			"txtPlanetDesc", &gl_smallFont, &cBlack, p->description);
 

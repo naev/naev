@@ -120,6 +120,10 @@ static Ship* ship_parse( xmlNodePtr parent )
 			temp->class = xml_getInt(node);
 		else if (xml_isNode(node,"price"))
 			temp->price = xml_getInt(node);
+		else if (xml_isNode(node,"fabricator"))
+			temp->fabricator = strdup(xml_get(node));
+		else if (xml_isNode(node,"description"))
+			temp->description = strdup(xml_get(node));
 		else if (xml_isNode(node,"movement")) {
 			cur = node->children;
 			do {
@@ -193,6 +197,8 @@ static Ship* ship_parse( xmlNodePtr parent )
 	MELEMENT(temp->gui==NULL,"GUI");
 	MELEMENT(temp->class==0,"class");
 	MELEMENT(temp->price==0,"price");
+	MELEMENT(temp->fabricator==NULL,"fabricator");
+	MELEMENT(temp->description==NULL,"description");
 	MELEMENT(temp->thrust==0,"thrust");
 	MELEMENT(temp->turn==0,"turn");
 	MELEMENT(temp->speed==0,"speed");
