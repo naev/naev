@@ -11,6 +11,7 @@
 #include "player.h"
 #include "rng.h"
 #include "music.h"
+#include "economy.h"
 
 
 /* global/main window */
@@ -29,7 +30,7 @@
 
 /* shipyard */
 #define SHIPYARD_WIDTH	700
-#define SHIPYARD_HEIGHT	600
+#define SHIPYARD_HEIGHT	500
 #define SHIPYARD_XPOS	(gl_screen.w-SHIPYARD_WIDTH)/2+100 
 #define SHIPYARD_YPOS	(gl_screen.h-SHIPYARD_HEIGHT)/2-25
 
@@ -67,6 +68,7 @@ static void shipyard (void);
 static void shipyard_close( char* str );
 static void shipyard_update( char* str );
 static void shipyard_info( char* str );
+static void shipyard_buy( char* str );
 /* spaceport bar */
 static void spaceport_bar (void);
 static void spaceport_bar_close( char* str );
@@ -145,16 +147,26 @@ static void shipyard (void)
 
 	window_addButton( secondary_wid, -40-BUTTON_WIDTH, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnBuyShip",
-			"Buy", NULL );
+			"Buy", shipyard_buy );
 
 	window_addButton( secondary_wid, -40-BUTTON_WIDTH, 40+BUTTON_HEIGHT,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnInfoShip",
 			"Info", shipyard_info );
 
-	window_addRect( secondary_wid, 20+200+60, -50,
+	window_addRect( secondary_wid, -40, -50,
 			128, 96, "rctTarget", &cBlack, 0 );
-	window_addImage( secondary_wid, 20+200+60, -50-96,
+	window_addImage( secondary_wid, -40-128, -50-96,
 			"imgTarget", NULL );
+
+	window_addText( secondary_wid, 40+200+40, -80,
+			80, 96, 0, "txtSDesc", &gl_smallFont, &cDConsole,
+			"Name:\n"
+			"Class:\n"
+			"Fabricator:\n"
+			"\n"
+			"Price:\n");
+	window_addText( secondary_wid, 40+200+40+80, -80,
+			128, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
 
 	window_addText( secondary_wid, 20+200+40, -160,
 			SHIPYARD_WIDTH-360, 200, 0, "txtDescription",
@@ -180,12 +192,25 @@ static void shipyard_update( char* str )
 	(void)str;
 	char *shipname;
 	Ship* ship;
+	char buf[80], buf2[32];
 	
 	shipname = toolkit_getList( secondary_wid, "lstShipyard" );
 	ship = ship_get( shipname );
 
 	window_modifyText( secondary_wid, "txtDescription", ship->description );
 	window_modifyImage( secondary_wid, "imgTarget", ship->gfx_target );
+	credits2str( buf2, ship->price, 0 );
+	snprintf( buf, 80,
+			"%s\n"
+			"%s\n"
+			"%s\n"
+			"\n"
+			"%s credits\n",
+			ship->name,
+			ship_class(ship),
+			ship->fabricator,
+			buf2 );
+	window_modifyText( secondary_wid,  "txtDDesc", buf );
 }
 static void shipyard_info( char* str )
 {
@@ -194,6 +219,34 @@ static void shipyard_info( char* str )
 
 	shipname = toolkit_getList( secondary_wid, "lstShipyard" );
 	ship_view(shipname);
+}
+static void shipyard_buy( char* str )
+{
+	(void)str;
+	char *shipname;
+	Ship* ship;
+
+	shipname = toolkit_getList( secondary_wid, "lstShipyard" );
+	ship = ship_get( shipname );
+
+	/* double dir;
+	Vector2d v;
+
+	player->ship = ship;
+	player->armour_max = ship->armour;
+	player->shield_max = ship->shield;
+	player->energy_max = ship->energy;
+	player->armour = player->armour_max;
+	player->shield = player->shield_max;
+	player->energy = player->energy_max;
+
+	vectcpy( &v, &player->solid->pos );
+	solid_free(player->solid);
+	player->solid = solid_create( ship->mass,
+			dir, &v, NULL );
+
+	gui_load( player->ship->gui );
+	*/
 }
 
 

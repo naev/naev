@@ -91,6 +91,7 @@ void ships_free (void);
  */
 Ship* ship_get( const char* name );
 char** ship_getAll( int *n );
+char* ship_class( Ship* s );
 
 
 /*

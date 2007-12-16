@@ -552,7 +552,7 @@ void player_render (void)
 			gui.misc.x + 10,
 			gui.misc.y - 10 - gl_defFont.h,
 			&cConsole, "Credits:" );
-	credits2str( str, credits );
+	credits2str( str, credits, 2 );
 	i = gl_printWidth( &gl_smallFont, "%s", str );
 	gl_print( &gl_smallFont,
 			gui.misc.x + gui.misc.w - 10 - i,

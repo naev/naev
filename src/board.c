@@ -90,7 +90,7 @@ void player_board (void)
 			"Credits:\n"
 			"Cargo:\n"
 			);
-	credits2str( cred, board_credits );
+	credits2str( cred, board_credits, 2 );
 
 	snprintf( str, 128,
 			"%s\n"
@@ -162,7 +162,7 @@ static void board_update (void)
 	char str[128];
 	char cred[10];
 
-	credits2str( cred, board_credits );
+	credits2str( cred, board_credits, 2 );
 
 	snprintf( str, 128,
 			"%s\n"

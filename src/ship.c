@@ -38,7 +38,6 @@ static int ships = 0;
 /*
  * Prototypes
  */
-static char* ship_class( Ship* s );
 static Ship* ship_parse( xmlNodePtr parent );
 static void ship_view_close( char* btn );
 
@@ -81,7 +80,7 @@ char** ship_getAll( int *n )
 static char* ship_classes[] = { "NULL",
 		"Civilian Light", "Civilian Medium", "Civilian Heavy"
 };
-static char* ship_class( Ship* s )
+char* ship_class( Ship* s )
 {
 	return ship_classes[s->class];
 }
