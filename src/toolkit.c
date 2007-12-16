@@ -22,7 +22,8 @@ typedef enum WidgetType_ {
 	WIDGET_BUTTON,
 	WIDGET_TEXT,
 	WIDGET_IMAGE,
-	WIDGET_LIST
+	WIDGET_LIST,
+	WIDGET_RECT
 } WidgetType;
 
 typedef enum WidgetStatus_ {
@@ -61,6 +62,10 @@ typedef struct Widget_ {
 			int pos; /* current topmost option (in view) */
 			void (*fptr) (char*); /* modify callback */
 		} lst;
+		struct { /* WIDGET_RECT */
+			glColour* colour; /* background colour */
+			int border; /* border */
+		} rct;
 	} dat;
 } Widget;
 
@@ -113,6 +118,7 @@ static void toolkit_renderButton( Widget* btn, double bx, double by );
 static void toolkit_renderText( Widget* txt, double bx, double by );
 static void toolkit_renderImage( Widget* img, double bx, double by );
 static void toolkit_renderList( Widget* lst, double bx, double by );
+static void toolkit_renderRect( Widget* rct, double bx, double by );
 static void toolkit_drawOutline( double x, double y,
 		double w, double h, double b,
 		glColour* c, glColour* lc );
@@ -176,7 +182,8 @@ void window_addText( const unsigned int wid,
 	else wgt->x = (double) x;
 	if (y < 0) wgt->y = wdw->h + y - h;
 	else wgt->y = (double) y;
-	wgt->dat.txt.colour = colour;
+	if (colour==NULL) wgt->dat.txt.colour = &cBlack;
+	else wgt->dat.txt.colour = colour;
 	wgt->dat.txt.centered = centered;
 	if (string) wgt->dat.txt.text = strdup(string);
 	else wgt->dat.txt.text = NULL;
@@ -198,9 +205,11 @@ void window_addImage( const unsigned int wid,
 
 	/* set the properties */
 	wgt->dat.img.image = image;
-	if (x < 0) wgt->x = wdw->w - wgt->dat.img.image->sw + x;
+	wgt->w = (image==NULL) ? 0 : wgt->dat.img.image->sw;
+	wgt->h = (image==NULL) ? 0 : wgt->dat.img.image->sh;
+	if (x < 0) wgt->x = wdw->w - wgt->w + x;
 	else wgt->x = (double) x;
-	if (y < 0) wgt->y = wdw->h + y;
+	if (y < 0) wgt->y = wdw->h - wgt->h + y;
 	else wgt->y = (double) y;
 }
 
@@ -225,6 +234,7 @@ void window_addList( const unsigned int wid,
 	wgt->dat.lst.selected = defitem; /* -1 would be none */
 	wgt->dat.lst.pos = 0;
 	wgt->dat.lst.fptr = call;
+
 	wgt->w = (double) w;
 	wgt->h = (double) h - ((h % (gl_defFont.h+2)) + 2);
 	if (x < 0) wgt->x = wdw->w - wgt->w + x;
@@ -235,6 +245,33 @@ void window_addList( const unsigned int wid,
 	if (wdw->focus == -1) /* initialize the focus */
 		toolkit_nextFocus();
 }
+
+
+/*
+ * adds a rectangle to the window
+ */
+void window_addRect( const unsigned int wid,
+		const int x, const int y, /* position */
+		const int w, const int h, /* size */
+		char* name, glColour* colour, int border ) /* properties */
+{
+	Window *wdw = window_wget(wid);
+	Widget *wgt = window_newWidget(wdw);
+
+	wgt->type = WIDGET_RECT;
+	wgt->name = strdup(name);
+
+	wgt->dat.rct.colour = colour;
+	wgt->dat.rct.border = border;
+
+	wgt->w = (double) w;
+	wgt->h = (double) h;
+	if (x < 0) wgt->x = wdw->w - wgt->w + x;
+	else wgt->x = (double) x;
+	if (y < 0) wgt->y = wdw->h - wgt->h + y;
+	else wgt->y = (double) y;
+}
+
 
 
 /*
@@ -707,6 +744,10 @@ static void window_render( Window* w )
 			case WIDGET_LIST:
 				toolkit_renderList( &w->widgets[i], x, y );
 				break;
+
+			case WIDGET_RECT:
+				toolkit_renderRect( &w->widgets[i], x, y );
+				break;
 		}
 	}
 
@@ -862,6 +903,33 @@ static void toolkit_renderList( Widget* lst, double bx, double by )
 				tx, ty, &cBlack, lst->dat.lst.options[i] );
 		ty -= 2 + gl_defFont.h;
 		if (ty-y > lst->h) break;
+	}
+}
+
+
+/*
+ * renders a rectangle
+ */
+static void toolkit_renderRect( Widget* rct, double bx, double by )
+{
+	double x, y;
+	glColour *lc, *c, *oc;
+
+	x = bx + rct->x;
+	y = by + rct->y;
+
+	lc = &cGrey90;
+	c = &cGrey70;
+	oc = &cGrey30;
+
+	if (rct->dat.rct.colour) /* draw rect only if it exists */
+		toolkit_drawRect( x, y, rct->w, rct->h, rct->dat.rct.colour, NULL );
+
+	if (rct->dat.rct.border) {
+		/* inner outline */
+		toolkit_drawOutline( x, y, rct->w, rct->h, 0., lc, c );
+		/* outter outline */
+		toolkit_drawOutline( x, y, rct->w, rct->h, 1., oc, NULL );
 	}
 }
 
@@ -1156,7 +1224,7 @@ char* toolkit_getList( const unsigned int wid, char* name )
 {
 	Widget *wgt = window_getwgt(wid,name);
 
-	if ((wgt->type != WIDGET_LIST) || (wgt->dat.lst.selected != -1))
+	if ((wgt->type != WIDGET_LIST) || (wgt->dat.lst.selected == -1))
 		return NULL;
 
 	return wgt->dat.lst.options[ wgt->dat.lst.selected ];
