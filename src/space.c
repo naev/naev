@@ -253,7 +253,7 @@ void space_update( const double dt )
 			}
 		}
 
-		spawn_timer = t + 120000./(float)cur_system->nfleets;
+		spawn_timer = t + 60000./(float)cur_system->nfleets;
 	}
 }
 
@@ -327,7 +327,7 @@ void space_init ( const char* sysname )
 
 	/* set up fleets -> pilots */
 	for (i=0; i < cur_system->nfleets; i++)
-		if (RNG(0,100) <= cur_system->fleets[i].chance) /* fleet check */
+		if (RNG(0,100) <= (cur_system->fleets[i].chance/2)) /* fleet check (50% chance) */
 			space_addFleet( cur_system->fleets[i].fleet );
 	
 	/* start the spawn timer */
