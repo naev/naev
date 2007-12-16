@@ -62,6 +62,20 @@ Ship* ship_get( const char* name )
 
 
 /*
+ * returns all the ships in  text form
+ */
+char** ship_getAll( int *n )
+{
+	char **shipnames = malloc(sizeof(Ship*) * ships);
+	
+	for ((*n)=0; (*n) < ships; (*n)++)
+		shipnames[*n] = strdup(ship_stack[*n].name);
+	
+	return shipnames;
+}
+
+
+/*
  * Gets the ship's classname
  */
 static char* ship_classes[] = { "NULL",

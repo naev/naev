@@ -6,6 +6,7 @@
 
 #include "land.h"
 
+#include "log.h"
 #include "toolkit.h"
 #include "player.h"
 #include "rng.h"
@@ -55,14 +56,20 @@ static Planet* planet = NULL;
 /*
  * prototypes
  */
+/* commodity exchange */
 static void commodity_exchange (void);
 static void commodity_exchange_close( char* str );
+/* outfits */
 static void outfits (void);
 static void outfits_close( char* str );
+/* shipyard */
 static void shipyard (void);
 static void shipyard_close( char* str );
+static void shipyard_update( char* str );
+/* spaceport bar */
 static void spaceport_bar (void);
 static void spaceport_bar_close( char* str );
+/* news */
 static void news (void);
 static void news_close( char* str );
 
@@ -99,6 +106,9 @@ static void commodity_exchange_close( char* str )
 }
 
 
+/*
+ * ze outfits
+ */
 static void outfits (void)
 {
 	secondary_wid = window_create( "Outfits", -1, -1,
@@ -116,8 +126,14 @@ static void outfits_close( char* str )
 }
 
 
+/*
+ * ze shipyard
+ */
 static void shipyard (void)
 {
+	char **ships;
+	int nships;
+
 	secondary_wid = window_create( "Shipyard",
 			SHIPYARD_XPOS, SHIPYARD_YPOS,
 			SHIPYARD_WIDTH, SHIPYARD_HEIGHT );
@@ -125,11 +141,32 @@ static void shipyard (void)
 	window_addButton( secondary_wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseShipyard",
 			"Close", shipyard_close );
+
+	window_addButton( secondary_wid, -40-BUTTON_WIDTH, 20,
+			BUTTON_WIDTH, BUTTON_HEIGHT, "btnBuyShip",
+			"Buy", NULL );
+
+	window_addText( secondary_wid, 20+200+20, -160,
+			SHIPYARD_WIDTH-260, 200, 0, "txtDescription",
+			&gl_defFont, &cConsole, NULL );
+
+	/* set up the ships to buy/sell */
+	ships = ship_getAll( &nships );
+	window_addList( secondary_wid, 20, 40,
+			200, SHIPYARD_HEIGHT-120, "lstShipyard",
+			ships, nships, 0, shipyard_update );
 }
 static void shipyard_close( char* str )
 {
 	if (strcmp(str,"btnCloseShipyard")==0)
 		window_destroy(secondary_wid);
+}
+static void shipyard_update( char* str )
+{
+	(void)str;
+	char *tship;
+	
+	tship = toolkit_getList( secondary_wid, "lstShipyard" );
 }
 
 

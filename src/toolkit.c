@@ -178,7 +178,8 @@ void window_addText( const unsigned int wid,
 	else wgt->y = (double) y;
 	wgt->dat.txt.colour = colour;
 	wgt->dat.txt.centered = centered;
-	wgt->dat.txt.text = strdup(string);
+	if (string) wgt->dat.txt.text = strdup(string);
+	else wgt->dat.txt.text = NULL;
 }
 
 
@@ -390,15 +391,25 @@ unsigned int window_create( char* name,
  */
 static void widget_cleanup( Widget *widget )
 {
+	int i;
+
 	if (widget->name) free(widget->name);
 
 	switch (widget->type) {
-		case WIDGET_BUTTON:
+		case WIDGET_BUTTON: /* must clear the button display text */
 			if (widget->dat.btn.display) free(widget->dat.btn.display);
 			break;
 
-		case WIDGET_TEXT:
+		case WIDGET_TEXT: /* must clear the text */
 			if (widget->dat.txt.text) free(widget->dat.txt.text);
+			break;
+
+		case WIDGET_LIST: /* must clear the list */
+			if (widget->dat.lst.options) {
+				for (i=0; i<widget->dat.lst.noptions; i++)
+					free(widget->dat.lst.options[i]);
+				free( widget->dat.lst.options );
+			}
 			break;
 
 		default:
@@ -767,6 +778,8 @@ static void toolkit_renderButton( Widget* btn, double bx, double by )
  */
 static void toolkit_renderText( Widget* txt, double bx, double by )
 {
+	if (txt->dat.txt.text==NULL) return;
+	
 	if (txt->dat.txt.centered)
 		gl_printMid( txt->dat.txt.font, txt->w,
 				bx + (double)gl_screen.w/2. + txt->x,

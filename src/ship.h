@@ -87,6 +87,7 @@ void ships_free (void);
  * get
  */
 Ship* ship_get( const char* name );
+char** ship_getAll( int *n );
 
 
 /*
