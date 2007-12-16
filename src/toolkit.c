@@ -1237,8 +1237,13 @@ char* toolkit_getList( const unsigned int wid, char* name )
 static void toolkit_listFocus( Widget* lst, double bx, double by )
 {
 	(void)bx;
-	lst->dat.lst.selected = (lst->h - by) / (gl_defFont.h + 2.);
-	toolkit_listScroll( lst, 0 ); /* checks boundries and triggers callback */
+	int i;
+
+	i = (lst->h - by) / (gl_defFont.h + 2.);
+	if (i < lst->dat.lst.noptions) { /* shouldn't be out of boundries */
+		lst->dat.lst.selected = i;
+		toolkit_listScroll( lst, 0 ); /* checks boundries and triggers callback */
+	}
 }
 
 
