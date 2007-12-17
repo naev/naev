@@ -31,8 +31,6 @@
 /* shipyard */
 #define SHIPYARD_WIDTH	700
 #define SHIPYARD_HEIGHT	500
-#define SHIPYARD_XPOS	(gl_screen.w-SHIPYARD_WIDTH)/2+100 
-#define SHIPYARD_YPOS	(gl_screen.h-SHIPYARD_HEIGHT)/2-25
 
 /* news window */
 #define NEWS_WIDTH	400
@@ -138,8 +136,7 @@ static void shipyard (void)
 	int nships;
 
 	secondary_wid = window_create( "Shipyard",
-			SHIPYARD_XPOS, SHIPYARD_YPOS,
-			SHIPYARD_WIDTH, SHIPYARD_HEIGHT );
+			-1, -1, SHIPYARD_WIDTH, SHIPYARD_HEIGHT );
 
 	window_addButton( secondary_wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseShipyard",
@@ -166,7 +163,7 @@ static void shipyard (void)
 			"\n"
 			"Price:\n");
 	window_addText( secondary_wid, 40+200+40+80, -80,
-			128, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+			110, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
 
 	window_addText( secondary_wid, 20+200+40, -160,
 			SHIPYARD_WIDTH-360, 200, 0, "txtDescription",
