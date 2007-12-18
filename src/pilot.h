@@ -142,9 +142,11 @@ Fleet* fleet_get( const char* name );
 void pilot_shoot( Pilot* p, const unsigned int target, const int secondary );
 void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 		const double damage_shield, const double damage_armour );
+void pilot_setSecondary( Pilot* p, const char* secondary );
 void pilot_setAmmo( Pilot* p );
 double pilot_face( Pilot* p, const float dir );
 void pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity );
+void pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity );
 
 
 /*

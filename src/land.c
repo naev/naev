@@ -53,6 +53,12 @@ static Planet* planet = NULL;
 
 
 /*
+ * extern
+ */
+extern unsigned int player_credits;
+
+
+/*
  * prototypes
  */
 /* commodity exchange */
@@ -63,6 +69,7 @@ static void outfits (void);
 static void outfits_close( char* str );
 static void outfits_update( char* str );
 static void outfits_buy( char* str );
+static void outfits_sell( char* str );
 /* shipyard */
 static void shipyard (void);
 static void shipyard_close( char* str );
@@ -129,19 +136,24 @@ static void outfits (void)
 			"Buy", outfits_buy );
 
 	window_addButton( secondary_wid, -40-BUTTON_WIDTH, 40+BUTTON_HEIGHT,
-			BUTTON_WIDTH, BUTTON_HEIGHT, "btnInfoOutfit",
-			"Info", NULL );
+			BUTTON_WIDTH, BUTTON_HEIGHT, "btnSellOutfit",
+			"Sell", outfits_sell );
 
 	window_addText( secondary_wid, 40+200+40, -80,                         
 			80, 96, 0, "txtSDesc", &gl_smallFont, &cDConsole,
 			"Name:\n"
 			"Type:\n"
+			"Owned:\n"
 			"\n"
-			"Price:\n");
+			"Space taken:\n"
+			"Free Space:\n"
+			"\n"
+			"Price:\n"
+			"Money:\n" );
 	window_addText( secondary_wid, 40+200+40+80, -80,
 			250, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
 
-	window_addText( secondary_wid, 20+200+40, -160,
+	window_addText( secondary_wid, 20+200+40, -200,
 			OUTFITS_WIDTH-360, 200, 0, "txtDescription",
 			&gl_smallFont, NULL, NULL );
 
@@ -165,21 +177,31 @@ static void outfits_update( char* str )
 	(void)str;
 	char *outfitname;
 	Outfit* outfit;
-	char buf[80], buf2[32];
+	char buf[80], buf2[32], buf3[32];
 
 	outfitname = toolkit_getList( secondary_wid, "lstOutfits" );
 	outfit = outfit_get( outfitname );
 
 	window_modifyText( secondary_wid, "txtDescription", outfit->description );
-	credits2str( buf2, outfit->price, 0 );
+	credits2str( buf2, outfit->price, -1 );
+	credits2str( buf3, player_credits, 2 );
 	snprintf( buf, 80,
 			"%s\n"
 			"%s\n"
+			"%d\n"
 			"\n"
+			"%d\n"
+			"%d\n"
+			"\n"
+			"%s credits\n"
 			"%s credits\n",
 			outfit->name,
 			outfit_getType(outfit),
-			buf2 );
+			player_outfitOwned(outfitname),
+			outfit->mass,
+			player_freeSpace(),
+			buf2,
+			buf3 );
 	window_modifyText( secondary_wid,  "txtDDesc", buf );
 }
 static void outfits_buy( char* str )
@@ -195,8 +217,22 @@ static void outfits_buy( char* str )
 	q = 1; /* TODO make q dependent on MOD keys */
 
 	pilot_addOutfit( player, outfit, q );
+	outfits_update(NULL);
 }
+static void outfits_sell( char* str )
+{
+	(void)str;
+	char *outfitname;
+	Outfit* outfit;
+	int q;
 
+	outfitname = toolkit_getList( secondary_wid, "lstOutfits" );
+	outfit = outfit_get( outfitname );
+	q = 1;
+
+	pilot_rmOutfit( player, outfit, q );
+	outfits_update(NULL);
+}
 
 
 

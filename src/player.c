@@ -40,8 +40,8 @@
 Pilot* player = NULL; /* ze player */
 /* player global properties */
 char* player_name = NULL; /* ze name */
-unsigned int credits = 0; /* ze monies */
-unsigned int combat_rating = 0; /* ze rating */
+unsigned int player_credits = 0; /* ze monies */
+unsigned int player_crating = 0; /* ze rating */
 unsigned int player_flags = 0; /* player flags */
 /* used in input.c */
 double player_turn = 0.; /* turn velocity from input */
@@ -185,8 +185,8 @@ void player_new (void)
 						else if (xml_isNode(tmp,"y")) y = xml_getFloat(tmp);
 					} while ((tmp = tmp->next));
 				}
-				else if (xml_isNode(cur,"combat_rating"))
-					combat_rating = xml_getInt(cur);
+				else if (xml_isNode(cur,"player_crating"))
+					player_crating = xml_getInt(cur);
 
 			} while ((cur = cur->next));
 		}
@@ -198,7 +198,7 @@ void player_new (void)
 
 
 	/* monies */
-	credits = RNG(l,h);
+	player_credits = RNG(l,h);
 
 	player_newShip( ship );
 	space_init(system);
@@ -287,15 +287,44 @@ static char* player_ratings[] = { "None",
 };
 const char* player_rating (void)
 {
-	if (combat_rating == 0) return player_ratings[0];
-	else if (combat_rating < 50) return player_ratings[1];
-	else if (combat_rating < 200) return player_ratings[2];
-	else if (combat_rating < 500) return player_ratings[3];
-	else if (combat_rating < 1000) return player_ratings[4];
-	else if (combat_rating < 2500) return player_ratings[5];
-	else if (combat_rating < 10000) return player_ratings[6];
+	if (player_crating == 0) return player_ratings[0];
+	else if (player_crating < 50) return player_ratings[1];
+	else if (player_crating < 200) return player_ratings[2];
+	else if (player_crating < 500) return player_ratings[3];
+	else if (player_crating < 1000) return player_ratings[4];
+	else if (player_crating < 2500) return player_ratings[5];
+	else if (player_crating < 10000) return player_ratings[6];
 	else return player_ratings[7];
 }
+
+
+/*
+ * returns how much space the player has left
+ */
+int player_freeSpace (void)
+{
+	int i,s;
+
+	s = player->ship->cap_weapon;
+	for (i=0; i<player->noutfits; i++)
+		s -= player->outfits[i].quantity * player->outfits[i].outfit->mass;
+	
+	return s;
+}
+
+/*
+ * returns how many of the outfit the player owns
+ */
+int player_outfitOwned( const char* outfitname )
+{
+	int i;
+
+	for (i=0; i<player->noutfits; i++)
+		if (strcmp(outfitname, player->outfits[i].outfit->name)==0)
+			return player->outfits[i].quantity;
+	return 0;
+}
+
 
 
 /*
@@ -563,7 +592,7 @@ void player_render (void)
 			gui.misc.x + 10,
 			gui.misc.y - 10 - gl_defFont.h,
 			&cConsole, "Credits:" );
-	credits2str( str, credits, 2 );
+	credits2str( str, player_credits, 2 );
 	i = gl_printWidth( &gl_smallFont, "%s", str );
 	gl_print( &gl_smallFont,
 			gui.misc.x + gui.misc.w - 10 - i,

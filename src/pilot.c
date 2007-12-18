@@ -39,7 +39,7 @@ static int mpilots = 0;
  * stuff from player.c
  */
 extern Pilot* player;
-extern unsigned int combat_rating;
+extern unsigned int player_crating;
 
 /* stack of fleets */
 static Fleet* fleet_stack = NULL;
@@ -286,7 +286,7 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 			pilot_dead(p);
 
 			/* adjust the combat rating based on pilot mass */
-			if (shooter==PLAYER_ID) combat_rating += MAX( 1, p->ship->mass/50 );
+			if (shooter==PLAYER_ID) player_crating += MAX( 1, p->ship->mass/50 );
 		}
 	}
 
@@ -306,6 +306,34 @@ void pilot_dead( Pilot* p )
 		(unsigned int)sqrt(10*p->armour_max*p->shield_max);
 	p->timer[1] = p->timer[0]; /* explosion timer */
 	pilot_setFlag(p,PILOT_DEAD);
+}
+
+
+/*
+ * sets the pilot's secondary weapon based on it's name
+ */
+void pilot_setSecondary( Pilot* p, const char* secondary )
+{
+	int i;
+
+	if (secondary == NULL) {
+		p->secondary = NULL;
+		p->ammo = NULL;
+		return;
+	}
+
+	for (i=0; i<p->noutfits; i++) {
+		if (strcmp(secondary, p->outfits[i].outfit->name)==0) {
+			p->secondary = &p->outfits[i];
+			pilot_setAmmo( p );
+			return;
+		}
+	}
+
+	WARN("attempted to set pilot '%s' secondary weapon to non-existing '%s'",
+			p->name, secondary );
+	p->secondary = NULL;
+	p->ammo = NULL;
 }
 
 
@@ -502,13 +530,39 @@ void pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 		pilot_setFlag(pilot, PILOT_HASTURRET);
 
 	/* hack due to realloc possibility */
-	if (s) {
-		for (i=0; i<pilot->noutfits; i++)
-			if (strcmp(s, pilot->outfits[i].outfit->name)==0) {
-				pilot->secondary = &pilot->outfits[i];
-				break;
+	pilot_setSecondary( pilot, s );
+}
+
+
+/*
+ * removes an outfit from the pilot
+ */
+void pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
+{
+	int i;
+	char* s;
+
+	for (i=0; i<pilot->noutfits; i++)
+		if (strcmp(outfit->name, pilot->outfits[i].outfit->name)==0) {
+			pilot->outfits[i].quantity -= quantity;
+			if (pilot->outfits[i].quantity <= 0) {
+
+				/* hack in case it reallocs - can happen even when shrinking */
+				s = (pilot->secondary) ? pilot->secondary->outfit->name : NULL;
+
+				/* remove the outfit */
+				memmove( pilot->outfits+i, pilot->outfits+i+1,
+						sizeof(PilotOutfit) * (pilot->noutfits - i) );
+				pilot->noutfits--;
+				pilot->outfits = realloc( pilot->outfits,
+						sizeof(PilotOutfit) * (pilot->noutfits) );
+
+				pilot_setSecondary( pilot, s );
 			}
-	}
+			return;
+		}
+	WARN("Failure attempting to remove %d '%s' from pilot '%s'",
+			quantity, outfit->name, pilot->name );
 }
 
 

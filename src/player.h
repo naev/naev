@@ -30,8 +30,8 @@
 extern Pilot* player;
 extern char* player_name;
 extern unsigned int player_flags;
-extern unsigned int credits;
-extern unsigned int combat_rating;
+extern unsigned int player_credits;
+extern unsigned int player_crating;
 
 
 /*
@@ -62,6 +62,8 @@ void player_message( const char *fmt, ... );
 void player_clear (void);
 void player_warp( const double x, const double y );
 const char* player_rating (void);
+int player_freeSpace (void);
+int player_outfitOwned( const char* outfitname );
 
 /* 
  * keybind actions

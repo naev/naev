@@ -17,11 +17,13 @@
  */
 void credits2str( char *str, unsigned int credits, int decimals )
 {
-	if (credits >= 1000000000)
-		snprintf( str, 10, "%.*fB", decimals, (double)credits / 1000000000. );
+	if (decimals < 0)
+		snprintf( str, 32, "%d", credits );
+	else if (credits >= 1000000000)
+		snprintf( str, 16, "%.*fB", decimals, (double)credits / 1000000000. );
 	else if (credits >= 1000000)                
-		snprintf( str, 10, "%.*fM", decimals, (double)credits / 1000000. );
+		snprintf( str, 16, "%.*fM", decimals, (double)credits / 1000000. );
 	else if (credits >= 1000)              
-		snprintf( str, 10, "%.*fK", decimals, (double)credits / 1000. );
-	else snprintf (str, 10, "%d", credits );
+		snprintf( str, 16, "%.*fK", decimals, (double)credits / 1000. );
+	else snprintf (str, 16, "%d", credits );
 }

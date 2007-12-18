@@ -128,7 +128,7 @@ static void board_stealCreds( char* str )
 		return;
 	}
 
-	credits += board_credits;
+	player_credits += board_credits;
 	board_credits = 0;
 	board_update(); /* update the lack of credits */
 	player_message("You manage to steal the ship's credits");
