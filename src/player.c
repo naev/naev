@@ -86,8 +86,8 @@ typedef struct Rect_ {
 
 typedef struct GUI_ {
 	/* graphics */
-	glTexture* gfx_frame;
-	glTexture* gfx_targetPilot, *gfx_targetPlanet;
+	glTexture *gfx_frame;
+	glTexture *gfx_targetPilot, *gfx_targetPlanet;
 
 	/* rects */
 	Radar radar;
@@ -147,8 +147,7 @@ void player_new (void)
 	uint32_t bufsize;
 	char *buf = pack_readfile( DATA, START_DATA, &bufsize );
 	int l,h;
-	double x,y,d;
-	Vector2d v;
+	double x,y;
 
 	xmlNodePtr node, cur, tmp;
 	xmlDocPtr doc = xmlParseMemory( buf, bufsize );
@@ -201,18 +200,30 @@ void player_new (void)
 	/* monies */
 	credits = RNG(l,h);
 
-	/* pos and dir */
-	vect_cset( &v, x, y );
-	d = RNG(0,359)/180.*M_PI;
-
-	pilot_create( ship, "Player", faction_get("Player"), NULL,
-			d,  &v, NULL, PILOT_PLAYER );
-	gl_bindCamera( &player->solid->pos ); /* set opengl camera */
+	player_newShip( ship );
 	space_init(system);
+
+	/* pos and dir */
+	player_warp( x, y );
+	player->solid->dir = RNG(0,359)/180.*M_PI;
 
 	/* welcome message */
 	player_message( "Welcome to "APPNAME"!" );
 	player_message( " v%d.%d.%d", VMAJOR, VMINOR, VREV );
+}
+
+
+/*
+ * change the player's ship
+ */
+void player_newShip( Ship* ship )
+{
+	if (player)
+		pilot_destroy( player );
+
+	pilot_create( ship, "Player", faction_get("Player"), NULL,
+			0.,  NULL, NULL, PILOT_PLAYER );
+	gl_bindCamera( &player->solid->pos ); /* set opengl camera */
 }
 
 
