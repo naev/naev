@@ -265,6 +265,7 @@ void ships_free()
 	for (i = 0; i < ships; i++) {
 		/* free stored strings */
 		if ((ship_stack+i)->name) free(ship_stack[i].name);
+		if ((ship_stack+i)->description) free(ship_stack[i].description);
 		if ((ship_stack+i)->gui) free(ship_stack[i].gui);
 
 		so=(ship_stack+i)->outfit;
