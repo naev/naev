@@ -139,7 +139,7 @@ static void outfits (void)
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnSellOutfit",
 			"Sell", outfits_sell );
 
-	window_addText( secondary_wid, 40+200+40, -80,                         
+	window_addText( secondary_wid, 40+200+20, -60,
 			80, 96, 0, "txtSDesc", &gl_smallFont, &cDConsole,
 			"Name:\n"
 			"Type:\n"
@@ -150,7 +150,7 @@ static void outfits (void)
 			"\n"
 			"Price:\n"
 			"Money:\n" );
-	window_addText( secondary_wid, 40+200+40+80, -80,
+	window_addText( secondary_wid, 40+200+40+60, -60,
 			250, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
 
 	window_addText( secondary_wid, 20+200+40, -200,
@@ -161,7 +161,7 @@ static void outfits (void)
 	/* set up the outfits to buy/sell */
 	outfits = outfit_getAll( &noutfits );
 	window_addList( secondary_wid, 20, 40,
-			200, OUTFITS_HEIGHT-120, "lstOutfits",
+			200, OUTFITS_HEIGHT-80, "lstOutfits",
 			outfits, noutfits, 0, outfits_update );
 
 	/* write the outfits stuff */
@@ -177,13 +177,13 @@ static void outfits_update( char* str )
 	(void)str;
 	char *outfitname;
 	Outfit* outfit;
-	char buf[80], buf2[32], buf3[32];
+	char buf[80], buf2[16], buf3[16];
 
 	outfitname = toolkit_getList( secondary_wid, "lstOutfits" );
 	outfit = outfit_get( outfitname );
 
 	window_modifyText( secondary_wid, "txtDescription", outfit->description );
-	credits2str( buf2, outfit->price, -1 );
+	credits2str( buf2, outfit->price, 2 );
 	credits2str( buf3, player_credits, 2 );
 	snprintf( buf, 80,
 			"%s\n"
@@ -265,15 +265,16 @@ static void shipyard (void)
 	window_addImage( secondary_wid, -40-128, -50-96,
 			"imgTarget", NULL );
 
-	window_addText( secondary_wid, 40+200+40, -80,
+	window_addText( secondary_wid, 40+200+40, -55,
 			80, 96, 0, "txtSDesc", &gl_smallFont, &cDConsole,
 			"Name:\n"
 			"Class:\n"
 			"Fabricator:\n"
 			"\n"
-			"Price:\n");
-	window_addText( secondary_wid, 40+200+40+80, -80,
-			110, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+			"Price:\n"
+			"Money:\n" );
+	window_addText( secondary_wid, 40+200+40+80, -55,
+			130, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
 
 	window_addText( secondary_wid, 20+200+40, -160,
 			SHIPYARD_WIDTH-360, 200, 0, "txtDescription",
@@ -283,7 +284,7 @@ static void shipyard (void)
 	/* set up the ships to buy/sell */
 	ships = ship_getAll( &nships );
 	window_addList( secondary_wid, 20, 40,
-			200, SHIPYARD_HEIGHT-120, "lstShipyard",
+			200, SHIPYARD_HEIGHT-80, "lstShipyard",
 			ships, nships, 0, shipyard_update );
 
 	/* write the shipyard stuff */
@@ -299,24 +300,27 @@ static void shipyard_update( char* str )
 	(void)str;
 	char *shipname;
 	Ship* ship;
-	char buf[80], buf2[32];
+	char buf[80], buf2[16], buf3[16];
 	
 	shipname = toolkit_getList( secondary_wid, "lstShipyard" );
 	ship = ship_get( shipname );
 
 	window_modifyText( secondary_wid, "txtDescription", ship->description );
 	window_modifyImage( secondary_wid, "imgTarget", ship->gfx_target );
-	credits2str( buf2, ship->price, 0 );
+	credits2str( buf2, ship->price, 2 );
+	credits2str( buf3, player_credits, 2 );
 	snprintf( buf, 80,
 			"%s\n"
 			"%s\n"
 			"%s\n"
 			"\n"
+			"%s credits\n"
 			"%s credits\n",
 			ship->name,
 			ship_class(ship),
 			ship->fabricator,
-			buf2 );
+			buf2,
+			buf3);
 	window_modifyText( secondary_wid,  "txtDDesc", buf );
 }
 static void shipyard_info( char* str )
