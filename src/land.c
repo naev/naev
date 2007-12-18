@@ -229,24 +229,7 @@ static void shipyard_buy( char* str )
 	shipname = toolkit_getList( secondary_wid, "lstShipyard" );
 	ship = ship_get( shipname );
 
-	/* double dir;
-	Vector2d v;
-
-	player->ship = ship;
-	player->armour_max = ship->armour;
-	player->shield_max = ship->shield;
-	player->energy_max = ship->energy;
-	player->armour = player->armour_max;
-	player->shield = player->shield_max;
-	player->energy = player->energy_max;
-
-	vectcpy( &v, &player->solid->pos );
-	solid_free(player->solid);
-	player->solid = solid_create( ship->mass,
-			dir, &v, NULL );
-
-	gui_load( player->ship->gui );
-	*/
+	player_newShip( ship );
 }
 
 
