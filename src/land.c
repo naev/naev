@@ -216,6 +216,13 @@ static void outfits_buy( char* str )
 
 	q = 1; /* TODO make q dependent on MOD keys */
 
+	/* can player actually fit the outfit? */
+	if ((player_freeSpace() - outfit->mass) < 0) {
+		toolkit_alert( "Not enough free space (you need %d more)",
+				outfit->mass - player_freeSpace() );
+		return;
+	}
+
 	pilot_addOutfit( player, outfit, q );
 	outfits_update(NULL);
 }
