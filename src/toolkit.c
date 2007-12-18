@@ -124,6 +124,8 @@ static void toolkit_drawOutline( double x, double y,
 		glColour* c, glColour* lc );
 static void toolkit_drawRect( double x, double y,
 		double w, double h, glColour* c, glColour* lc );
+/* misc */
+static void toolkit_alertClose( char* str );
 
 
 
@@ -1258,6 +1260,38 @@ static Widget* toolkit_getFocus (void)
 	if (wdw->focus == -1) return NULL;
 
 	return &wdw->widgets[wdw->focus];
+}
+
+
+/*
+ * displays an alert popup with only an ok button and a message
+ */
+void toolkit_alert( const char *fmt, ... )
+{
+	char msg[256];
+	va_list ap;
+	unsigned int wdw;
+
+	if (window_exists( "Warning" )) return;
+
+	if (fmt == NULL) return;
+	else { /* get the message */
+		va_start(ap, fmt);
+		vsprintf(msg, fmt, ap);
+		va_end(ap);
+	}
+
+	wdw = window_create( "Warning", -1, -1, 300, 140 );
+	window_addText( wdw, 20, -30, 260, 70,  0, "txtAlert",
+			&gl_smallFont, &cBlack, msg );
+	window_addButton( wdw, 135, 20, 50, 30, "btnOK", "OK",
+			toolkit_alertClose );
+}
+static void toolkit_alertClose( char* str )
+{
+	(void)str;
+	if (window_exists( "Warning" ))
+		window_destroy( window_get( "Warning" ));
 }
 
 

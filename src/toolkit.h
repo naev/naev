@@ -48,6 +48,12 @@ void window_addRect( const unsigned int wid,
 
 
 /*
+ * popups and alerts
+ */
+void toolkit_alert( const char *fmt, ... );
+
+
+/*
  * modification
  */
 void window_modifyText( const unsigned int wid,
