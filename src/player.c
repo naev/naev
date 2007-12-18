@@ -1069,6 +1069,8 @@ void player_setRadarRel( int mod )
 	gui.radar.res += mod * RADAR_RES_INTERVAL;
 	if (gui.radar.res > RADAR_RES_MAX) gui.radar.res = RADAR_RES_MAX;
 	else if (gui.radar.res < RADAR_RES_MIN) gui.radar.res = RADAR_RES_MIN;
+
+	player_message( "Radar set to %dx", (int)gui.radar.res );
 }
 
 
