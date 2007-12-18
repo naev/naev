@@ -78,8 +78,8 @@ One of the Nexus' prize heavy fighters.  Was originally a secret design for the 
 Used by security agencies all over the universe for it's reliability and availability. Proudly enforcing your security since STARDATE.
 </description>
 <movement>
-<thrust>300</thrust>
-<turn>130</turn>
+<thrust>280</thrust>
+<turn>135</turn>
 <speed>320</speed>
 </movement>
 <health>
@@ -115,7 +115,7 @@ A heavy liner specialized in freighting cargo all over the universe.  Also has g
 <movement>
 <thrust>180</thrust>
 <turn>100</turn>
-<speed>220</speed>
+<speed>260</speed>
 </movement>
 <health>
 <shield>200</shield>
