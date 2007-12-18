@@ -60,6 +60,20 @@ Outfit* outfit_get( const char* name )
 
 
 /*
+ * returns all the outfits
+ */
+char** outfit_getAll( int *n )
+{
+	char **outfitnames = malloc(sizeof(Outfit*) * outfits);
+
+	for ((*n)=0; (*n) < outfits; (*n)++)
+		outfitnames[*n] = strdup(outfit_stack[*n].name);
+
+	return outfitnames;
+}
+
+
+/*
  * return 1 if o is a weapon (beam/bolt)
  */
 int outfit_isWeapon( const Outfit* o )
@@ -333,6 +347,8 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
 				else if (xml_isNode(cur,"tech")) temp->tech = xml_getInt(cur);
 				else if (xml_isNode(cur,"mass")) temp->mass = xml_getInt(cur);
 				else if (xml_isNode(cur,"price")) temp->price = xml_getInt(cur);
+				else if (xml_isNode(cur,"description"))
+					temp->description = strdup(xml_get(cur));
 			} while ((cur = cur->next));
 		}
 		else if (xml_isNode(node,"specific")) { /* has to be processed seperately */
@@ -372,6 +388,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 	/*MELEMENT(temp->mass==0,"mass"); Not really needed */
 	MELEMENT(temp->type==0,"type");
 	MELEMENT(temp->price==0,"price");
+	MELEMENT(temp->description==NULL,"description");
 #undef MELEMENT
 
 	return temp;
@@ -431,14 +448,14 @@ void outfit_free (void)
 	int i;
 	for (i=0; i < outfits; i++) {
 		/* free graphics */
-		if (outfit_isWeapon(&outfit_stack[i]) && outfit_stack[i].u.wpn.gfx_space)
-			gl_freeTexture(outfit_stack[i].u.wpn.gfx_space);
-		else if (outfit_isAmmo(&outfit_stack[i]) && outfit_stack[i].u.amm.gfx_space)
-				gl_freeTexture(outfit_stack[i].u.amm.gfx_space);
+		if (outfit_gfx(&outfit_stack[i]))
+			gl_freeTexture(outfit_gfx(&outfit_stack[i]));
 
+		/* strings */
 		if (outfit_isLauncher(&outfit_stack[i]) && outfit_stack[i].u.lau.ammo)
 			free(outfit_stack[i].u.lau.ammo);
-
+		if (outfit_stack[i].description)
+			free(outfit_stack[i].description);
 		free(outfit_stack[i].name);
 	}
 	free(outfit_stack);

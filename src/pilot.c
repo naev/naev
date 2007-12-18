@@ -478,6 +478,41 @@ static void pilot_hyperspace( Pilot* p )
 
 
 /*
+ * adds an outfit to the pilot
+ */
+void pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
+{
+	int i;
+	char *s;
+
+	for (i=0; i<pilot->noutfits; i++)
+		if (strcmp(outfit->name, pilot->outfits[i].outfit->name)==0) {
+			pilot->outfits[i].quantity += quantity;
+			return;
+		}
+
+	s = (pilot->secondary) ? pilot->secondary->outfit->name : NULL;
+	pilot->outfits = realloc(pilot->outfits, (pilot->noutfits+1)*sizeof(PilotOutfit));
+	pilot->outfits[pilot->noutfits].outfit = outfit;
+	pilot->outfits[pilot->noutfits].quantity = quantity;
+	pilot->outfits[pilot->noutfits].timer = 0;
+	(pilot->noutfits)++;
+
+	if (outfit_isTurret(outfit)) /* used to speed up AI */
+		pilot_setFlag(pilot, PILOT_HASTURRET);
+
+	/* hack due to realloc possibility */
+	if (s) {
+		for (i=0; i<pilot->noutfits; i++)
+			if (strcmp(s, pilot->outfits[i].outfit->name)==0) {
+				pilot->secondary = &pilot->outfits[i];
+				break;
+			}
+	}
+}
+
+
+/*
  * Initialize pilot
  *
  * @ ship : ship pilot will be flying

@@ -51,7 +51,10 @@ typedef struct Outfit_ {
 	int max;
 	int tech;
 	int mass;
+
+	/* store stuff */
 	unsigned int price;
+	char* description;
 
 	glTexture gfx_store; /* store graphic */
 
@@ -92,7 +95,11 @@ typedef struct Outfit_ {
 } Outfit;
 
 
+/*
+ * get
+ */
 Outfit* outfit_get( const char* name );
+char** outfit_getAll( int *n );
 /* outfit types */
 int outfit_isWeapon( const Outfit* o );
 int outfit_isLauncher( const Outfit* o );
