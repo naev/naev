@@ -64,6 +64,8 @@ static void outfits_close( char* str );
 static void outfits_update( char* str );
 static void outfits_buy( char* str );
 static void outfits_sell( char* str );
+static int outfits_getMod (void);
+static void outfits_renderMod( double bx, double by, double w, double h );
 /* shipyard */
 static void shipyard (void);
 static void shipyard_close( char* str );
@@ -132,6 +134,9 @@ static void outfits (void)
 	window_addButton( secondary_wid, -40-BUTTON_WIDTH, 40+BUTTON_HEIGHT,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnSellOutfit",
 			"Sell", outfits_sell );
+
+	window_addCust( secondary_wid, -40-BUTTON_WIDTH, 60+2*BUTTON_HEIGHT,
+			BUTTON_WIDTH, BUTTON_HEIGHT, "cstMod", outfits_renderMod );
 
 	window_addText( secondary_wid, 40+200+20, -60,
 			80, 96, 0, "txtSDesc", &gl_smallFont, &cDConsole,
@@ -204,11 +209,12 @@ static void outfits_buy( char* str )
 	char *outfitname;
 	Outfit* outfit;
 	int q;
+	char buf[16];
 
 	outfitname = toolkit_getList( secondary_wid, "lstOutfits" );
 	outfit = outfit_get( outfitname );
 
-	q = 1; /* TODO make q dependent on MOD keys */
+	q = outfits_getMod();
 
 	/* can player actually fit the outfit? */
 	if ((player_freeSpace() - outfit->mass) < 0) {
@@ -222,8 +228,14 @@ static void outfits_buy( char* str )
 				outfit->max );
 		return;
 	}
+	/* not enough $$ */
+	else if (q*(int)outfit->price >= player_credits) {
+		credits2str( buf, q*outfit->price - player_credits, 2 );
+		toolkit_alert( "You need %s more credits.", buf);
+		return;
+	}
 
-	pilot_addOutfit( player, outfit, q );
+	player_credits -= outfit->price * pilot_addOutfit( player, outfit, q );
 	outfits_update(NULL);
 }
 static void outfits_sell( char* str )
@@ -235,7 +247,8 @@ static void outfits_sell( char* str )
 
 	outfitname = toolkit_getList( secondary_wid, "lstOutfits" );
 	outfit = outfit_get( outfitname );
-	q = 1;
+
+	q = outfits_getMod();
 
 	/* has no outfits to sell */
 	if (player_outfitOwned(outfitname) <= 0) {
@@ -245,6 +258,36 @@ static void outfits_sell( char* str )
 
 	player_credits += outfit->price * pilot_rmOutfit( player, outfit, q );
 	outfits_update(NULL);
+}
+/*
+ * returns the current modifier status
+ */
+static int outfits_getMod (void)
+{
+	SDLMod mods;
+	int q;
+
+	mods = SDL_GetModState();
+	q = 1;
+	if (mods & (KMOD_LCTRL | KMOD_RCTRL)) q *= 5;
+	if (mods & (KMOD_LSHIFT | KMOD_RSHIFT)) q *= 10;
+
+	return q;
+}
+static void outfits_renderMod( double bx, double by, double w, double h )
+{
+	(void) h;
+	int q;
+	char buf[8];
+
+	q = outfits_getMod();
+	if (q==1) return;
+
+	snprintf( buf, 8, "%dx", q );
+	gl_printMid( &gl_smallFont, w,
+			bx + (double)gl_screen.w/2.,
+			by + (double)gl_screen.h/2.,
+			&cBlack, buf );
 }
 
 

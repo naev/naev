@@ -68,7 +68,7 @@ typedef struct Widget_ {
 			int border; /* border */
 		} rct;
 		struct { /* WIDGET_CUST */
-			void (*render) (double bx, double by);
+			void (*render) (double bx, double by, double bw, double bh );
 		} cst;
 	} dat;
 } Widget;
@@ -285,7 +285,8 @@ void window_addRect( const unsigned int wid,
 void window_addCust( const unsigned int wid,
 		const int x, const int y, /* position */
 		const int w, const int h, /* size */
-		char* name, void (*render) (double x, double y) )
+		char* name,
+		void (*render) (double x, double y, double w, double h) )
 {
 	Window *wdw = window_wget(wid);
 	Widget *wgt = window_newWidget(wdw);
@@ -784,7 +785,9 @@ static void window_render( Window* w )
 				break;
 
 			case WIDGET_CUST:
-				(*w->widgets[i].dat.cst.render)( x, y );
+				(*w->widgets[i].dat.cst.render)
+						( x+w->widgets[i].x, y+w->widgets[i].y,
+						w->widgets[i].w, w->widgets[i].h );
 				break;
 		}
 	}
