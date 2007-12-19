@@ -23,7 +23,8 @@ typedef enum WidgetType_ {
 	WIDGET_TEXT,
 	WIDGET_IMAGE,
 	WIDGET_LIST,
-	WIDGET_RECT
+	WIDGET_RECT,
+	WIDGET_CUST
 } WidgetType;
 
 typedef enum WidgetStatus_ {
@@ -66,6 +67,9 @@ typedef struct Widget_ {
 			glColour* colour; /* background colour */
 			int border; /* border */
 		} rct;
+		struct { /* WIDGET_CUST */
+			void (*render) (double bx, double by);
+		} cst;
 	} dat;
 } Widget;
 
@@ -266,6 +270,34 @@ void window_addRect( const unsigned int wid,
 	wgt->dat.rct.colour = colour;
 	wgt->dat.rct.border = border;
 
+	wgt->w = (double) w;
+	wgt->h = (double) h;
+	if (x < 0) wgt->x = wdw->w - wgt->w + x;
+	else wgt->x = (double) x;
+	if (y < 0) wgt->y = wdw->h - wgt->h + y;
+	else wgt->y = (double) y;
+}
+
+
+/*
+ * adds a custom widget
+ */
+void window_addCust( const unsigned int wid,
+		const int x, const int y, /* position */
+		const int w, const int h, /* size */
+		char* name, void (*render) (double x, double y) )
+{
+	Window *wdw = window_wget(wid);
+	Widget *wgt = window_newWidget(wdw);
+
+	/* generic */
+	wgt->type = WIDGET_CUST;
+	wgt->name = strdup(name);
+
+	/* specific */
+	wgt->dat.cst.render = render;
+
+	/* position/size */
 	wgt->w = (double) w;
 	wgt->h = (double) h;
 	if (x < 0) wgt->x = wdw->w - wgt->w + x;
@@ -749,6 +781,10 @@ static void window_render( Window* w )
 
 			case WIDGET_RECT:
 				toolkit_renderRect( &w->widgets[i], x, y );
+				break;
+
+			case WIDGET_CUST:
+				(*w->widgets[i].dat.cst.render)( x, y );
 				break;
 		}
 	}

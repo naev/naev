@@ -45,6 +45,11 @@ void window_addRect( const unsigned int wid,
 		const int x, const int y, /* position */
 		const int w, const int h, /* size */
 		char* name, glColour* colour, int border ); /* propertiers */
+void window_addCust( const unsigned int wid,
+		const int x, const int y, /* position */
+		const int w, const int h, /* size */
+		char* name, void (*render) (double x, double y) );
+
 
 
 /*
