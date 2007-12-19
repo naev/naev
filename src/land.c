@@ -53,12 +53,6 @@ static Planet* planet = NULL;
 
 
 /*
- * extern
- */
-extern unsigned int player_credits;
-
-
-/*
  * prototypes
  */
 /* commodity exchange */
@@ -218,8 +212,14 @@ static void outfits_buy( char* str )
 
 	/* can player actually fit the outfit? */
 	if ((player_freeSpace() - outfit->mass) < 0) {
-		toolkit_alert( "Not enough free space (you need %d more)",
+		toolkit_alert( "Not enough free space (you need %d more).",
 				outfit->mass - player_freeSpace() );
+		return;
+	}
+	/* has too many already */
+	else if (player_outfitOwned(outfitname) >= outfit->max) {
+		toolkit_alert( "You can only carry %d of this outfit.",
+				outfit->max );
 		return;
 	}
 
@@ -237,7 +237,13 @@ static void outfits_sell( char* str )
 	outfit = outfit_get( outfitname );
 	q = 1;
 
-	pilot_rmOutfit( player, outfit, q );
+	/* has no outfits to sell */
+	if (player_outfitOwned(outfitname) <= 0) {
+		toolkit_alert( "You can't sell something you don't have." );
+		return;
+	}
+
+	player_credits += outfit->price * pilot_rmOutfit( player, outfit, q );
 	outfits_update(NULL);
 }
 

@@ -40,8 +40,8 @@
 Pilot* player = NULL; /* ze player */
 /* player global properties */
 char* player_name = NULL; /* ze name */
-unsigned int player_credits = 0; /* ze monies */
-unsigned int player_crating = 0; /* ze rating */
+int player_credits = 0; /* ze monies */
+int player_crating = 0; /* ze rating */
 unsigned int player_flags = 0; /* player flags */
 /* used in input.c */
 double player_turn = 0.; /* turn velocity from input */

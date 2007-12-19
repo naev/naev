@@ -508,7 +508,7 @@ static void pilot_hyperspace( Pilot* p )
 /*
  * adds an outfit to the pilot
  */
-void pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
+int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 {
 	int i;
 	char *s;
@@ -516,7 +516,7 @@ void pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 	for (i=0; i<pilot->noutfits; i++)
 		if (strcmp(outfit->name, pilot->outfits[i].outfit->name)==0) {
 			pilot->outfits[i].quantity += quantity;
-			return;
+			return quantity;
 		}
 
 	s = (pilot->secondary) ? pilot->secondary->outfit->name : NULL;
@@ -531,13 +531,15 @@ void pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 
 	/* hack due to realloc possibility */
 	pilot_setSecondary( pilot, s );
+
+	return quantity;
 }
 
 
 /*
  * removes an outfit from the pilot
  */
-void pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
+int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 {
 	int i;
 	char* s;
@@ -546,6 +548,9 @@ void pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 		if (strcmp(outfit->name, pilot->outfits[i].outfit->name)==0) {
 			pilot->outfits[i].quantity -= quantity;
 			if (pilot->outfits[i].quantity <= 0) {
+
+				/* we didn't actually remove the full amount */
+				quantity -= pilot->outfits[i].quantity;
 
 				/* hack in case it reallocs - can happen even when shrinking */
 				s = (pilot->secondary) ? pilot->secondary->outfit->name : NULL;
@@ -559,10 +564,11 @@ void pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 
 				pilot_setSecondary( pilot, s );
 			}
-			return;
+			return quantity;
 		}
 	WARN("Failure attempting to remove %d '%s' from pilot '%s'",
 			quantity, outfit->name, pilot->name );
+	return 0;
 }
 
 

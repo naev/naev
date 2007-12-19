@@ -145,8 +145,8 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 void pilot_setSecondary( Pilot* p, const char* secondary );
 void pilot_setAmmo( Pilot* p );
 double pilot_face( Pilot* p, const float dir );
-void pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity );
-void pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity );
+int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity );
+int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity );
 
 
 /*
