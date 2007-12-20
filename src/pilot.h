@@ -57,7 +57,7 @@
 
 typedef struct PilotOutfit_ {
 	Outfit* outfit; /* associated outfit */
-	unsigned int quantity; /* number of outfits of this type pilot has */
+	int quantity; /* number of outfits of this type pilot has */
 
 	unsigned int timer; /* used to store when it was last used */
 } PilotOutfit;
