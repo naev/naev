@@ -1,3 +1,5 @@
+-- This is a comment
+-- Configuration file is written in lua
 
 -- WINDOW
 width = 1024
@@ -9,8 +11,8 @@ fps = 0
 
 -- SOUND
 nosound = 0
-sound = 1.
-mosic = 1.
+sound = 0.7
+mosic = 0.5
 
 -- JOYSTICK
 -- can be by number or substring of joystick name
@@ -23,6 +25,8 @@ joystick = "Precision"
 -- if left is an axis it'll automatically set right to the same axis
 -- therefore you set both to the same axis (key).  You can use the reverse = 1
 -- option to reverse them
+-- Currently keybindings work with the number of the key only (when doing
+-- keyboard).  Would be nice to have a gui to do it for you someday.
 
 -- movement
 accel = { type = "jbutton", key = 0 }
