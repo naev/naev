@@ -517,12 +517,25 @@ void player_render (void)
 	else {
 		f = &gl_defFont;
 		if (player->ammo==NULL) {
-			i = gl_printWidth( f, "%s", player->secondary->outfit->name);
-			if (i > (int)gui.weapon.w) /* font is too big */
-				f = &gl_smallFont;
-			gl_printMid( f, (int)gui.weapon.w,
-					gui.weapon.x, gui.weapon.y - (gui.weapon.h - f->h)/2.,
-					&cConsole, "%s", player->secondary->outfit->name );
+			if (outfit_isLauncher(player->secondary->outfit)) { /* out of ammo */
+				i = gl_printWidth( f, "%s", player->secondary->outfit->u.lau.ammo);
+				if (i > (int)gui.weapon.w) /* font is too big */
+					f = &gl_smallFont;
+				gl_printMid( f, (int)gui.weapon.w,
+						gui.weapon.x, gui.weapon.y - 5,
+						&cConsole, "%s", player->secondary->outfit->u.lau.ammo );
+				gl_printMid( &gl_smallFont, (int)gui.weapon.w,                   
+						gui.weapon.x, gui.weapon.y - 10 - gl_defFont.h,            
+						NULL, "0" );
+			}
+			else { /* not a launcher */
+				i = gl_printWidth( f, "%s", player->secondary->outfit->name);
+				if (i > (int)gui.weapon.w) /* font is too big */
+					f = &gl_smallFont;
+				gl_printMid( f, (int)gui.weapon.w,
+						gui.weapon.x, gui.weapon.y - (gui.weapon.h - f->h)/2.,
+						&cConsole, "%s", player->secondary->outfit->name );
+			}
 		}
 		else {
 			/* use the ammunition's name */
