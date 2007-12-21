@@ -581,7 +581,7 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
 	ryh = ry+rh;
 
 	/* can be drawn normally? */
-	if ((x-r > rx) && (y-r > ry) && (x+r < rxw) && (y+r < ryh)) {
+	if ((cx-r > rx) && (cy-r > ry) && (cx+r < rxw) && (cy+r < ryh)) {
 		gl_drawCircle( cx, cy, r );
 		return;
 	}
