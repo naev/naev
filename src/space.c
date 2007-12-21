@@ -109,7 +109,6 @@ void planets_minimap( const double res, const double w, const double h,
 	if (shape==RADAR_CIRCLE) rc = (int)(w*w);
 
 	glBegin(GL_POINTS);
-	glMatrixMode(GL_PROJECTION);
 	for (i=0; i<cur_system->nplanets; i++) {
 		r = (int)(cur_system->planets[i].gfx_space->sw / res);
 		cx = (int)((cur_system->planets[i].pos.x - player->solid->pos.x) / res);
