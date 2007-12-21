@@ -36,6 +36,7 @@ extern glColour cGrey10;
 extern glColour cGreen;
 extern glColour cDarkRed;
 extern glColour cRed;
+extern glColour cYellow;
 
 /*
  * game specific
