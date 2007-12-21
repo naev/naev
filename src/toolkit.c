@@ -979,15 +979,15 @@ static void toolkit_renderCust( Widget* cst, double bx, double by )
 {
 	double x,y;
 
-	x = bx+cst->x;
-	y = by+cst->y;
+	x = bx + cst->x;
+	y = by + cst->y;
 
 	if (cst->dat.cst.border) {
 		/* inner outline */
-		toolkit_drawOutline( x, y, cst->w, cst->h, 0.,
+		toolkit_drawOutline( x-1, y+1, cst->w+1, cst->h+1, 0.,
 				toolkit_colLight, toolkit_col );
 		/* outter outline */
-		toolkit_drawOutline( x, y, cst->w, cst->h, 1.,
+		toolkit_drawOutline( x-1, y, cst->w+1, cst->h+1, 1.,
 				toolkit_colDark, NULL );
 	}
 	(*cst->dat.cst.render) ( x, y, cst->w, cst->h );
