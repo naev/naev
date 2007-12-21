@@ -135,4 +135,37 @@ A heavy liner specialized in freighting cargo all over the universe.  Also has g
 <outfit quantity='2'>Laser Turret</outfit>
 </outfits>
 </ship>
+<ship name="Drone">
+<GFX>drone</GFX>
+<GUI>minimal</GUI>
+<sound>engine</sound>
+<class>1</class>
+<price>300000</price>
+<fabricator>Robosys</fabricator>
+<description>
+A robot drone.
+</description>
+<movement>
+<thrust>450</thrust>
+<turn>200</turn>
+<speed>430</speed>
+</movement>
+<health>
+<shield>70</shield>
+<armour>40</armour>
+<energy>300</energy>
+<shield_regen>240</shield_regen>
+<armour_regen>420</armour_regen>
+<energy_regen>240</energy_regen>
+</health>
+<caracteristics>
+<crew>1</crew>
+<mass>15</mass>
+<cap_weapon>24</cap_weapon>
+<cap_cargo>1</cap_cargo>
+</caracteristics>
+<outfits>
+<outfit quantity='3'>Neutron Disruptor</outfit>
+</outfits>
+</ship>
 </Ships>

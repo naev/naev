@@ -412,16 +412,16 @@ static Weapon* weapon_create( const Outfit* outfit,
 
 	switch (outfit->type) {
 		case OUTFIT_TYPE_BOLT: /* needs "accuracy" and speed based on player */
-			rdir += RNG(-outfit->u.wpn.accuracy/2.,
-					outfit->u.wpn.accuracy/2.)/180.*M_PI;
+			rdir += RNG(-outfit->u.blt.accuracy/2.,
+					outfit->u.blt.accuracy/2.)/180.*M_PI;
 			if ((rdir > 2.*M_PI) || (rdir < 0.)) rdir = fmod(rdir, 2.*M_PI);
 			vectcpy( &v, vel );
-			vect_cadd( &v, outfit->u.wpn.speed*cos(rdir), outfit->u.wpn.speed*sin(rdir));
-			w->timer += 1000*(unsigned int)outfit->u.wpn.range/outfit->u.wpn.speed;
+			vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
+			w->timer += 1000*(unsigned int)outfit->u.blt.range/outfit->u.blt.speed;
 			w->solid = solid_create( mass, rdir, pos, &v );
 			w->voice = sound_addVoice( VOICE_PRIORITY_BOLT,
 					w->solid->pos.x, w->solid->pos.y,
-					w->solid->vel.x, w->solid->vel.y,  w->outfit->u.wpn.sound, 0 );
+					w->solid->vel.x, w->solid->vel.y,  w->outfit->u.blt.sound, 0 );
 			break;
 
 		case OUTFIT_TYPE_MISSILE_SEEK_AMMO:
@@ -445,16 +445,16 @@ static Weapon* weapon_create( const Outfit* outfit,
 		case OUTFIT_TYPE_TURRET_BOLT:
 			if (w->parent!=w->target)
 				rdir = vect_angle(pos,&pilot_get(w->target)->solid->pos);
-			rdir += RNG(-outfit->u.wpn.accuracy/2.,
-					outfit->u.wpn.accuracy/2.)/180.*M_PI;
+			rdir += RNG(-outfit->u.blt.accuracy/2.,
+					outfit->u.blt.accuracy/2.)/180.*M_PI;
 			if ((rdir > 2.*M_PI) || (rdir < 0.)) rdir = fmod(rdir, 2.*M_PI);
 			vectcpy( &v, vel );
-			vect_cadd( &v, outfit->u.wpn.speed*cos(rdir), outfit->u.wpn.speed*sin(rdir));
-			w->timer += 1000*(unsigned int)outfit->u.wpn.range/outfit->u.wpn.speed;
+			vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
+			w->timer += 1000*(unsigned int)outfit->u.blt.range/outfit->u.blt.speed;
 			w->solid = solid_create( mass, rdir, pos, &v );
 			w->voice = sound_addVoice( VOICE_PRIORITY_BOLT,
 					w->solid->pos.x, w->solid->pos.y,
-					w->solid->vel.x, w->solid->vel.y,  w->outfit->u.wpn.sound, 0 );
+					w->solid->vel.x, w->solid->vel.y,  w->outfit->u.blt.sound, 0 );
 			break;
 
 

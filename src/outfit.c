@@ -118,9 +118,9 @@ int outfit_isTurret( const Outfit* o )
  */
 glTexture* outfit_gfx( const Outfit* o )
 {
-	if (outfit_isWeapon(o)) return o->u.wpn.gfx_space;
+	if (outfit_isWeapon(o)) return o->u.blt.gfx_space;
 	else if (outfit_isAmmo(o)) return o->u.amm.gfx_space;
-	else if (outfit_isTurret(o)) return o->u.wpn.gfx_space;
+	else if (outfit_isTurret(o)) return o->u.blt.gfx_space;
 	return NULL;
 }
 /*
@@ -128,30 +128,30 @@ glTexture* outfit_gfx( const Outfit* o )
  */
 int outfit_spfx( const Outfit* o )
 {
-	if (outfit_isWeapon(o)) return o->u.wpn.spfx;
+	if (outfit_isWeapon(o)) return o->u.blt.spfx;
 	else if (outfit_isAmmo(o)) return o->u.amm.spfx;
-	else if (outfit_isTurret(o)) return o->u.wpn.spfx;
+	else if (outfit_isTurret(o)) return o->u.blt.spfx;
 	return -1;
 }
 double outfit_dmgShield( const Outfit* o )
 {
-	if (outfit_isWeapon(o)) return o->u.wpn.damage_armour;
+	if (outfit_isWeapon(o)) return o->u.blt.damage_armour;
 	else if (outfit_isAmmo(o)) return o->u.amm.damage_armour;
-	else if (outfit_isTurret(o)) return o->u.wpn.damage_armour;
+	else if (outfit_isTurret(o)) return o->u.blt.damage_armour;
 	return -1.;
 }
 double outfit_dmgArmour( const Outfit* o )
 {
-	if (outfit_isWeapon(o)) return o->u.wpn.damage_shield;
+	if (outfit_isWeapon(o)) return o->u.blt.damage_shield;
 	else if (outfit_isAmmo(o)) return o->u.amm.damage_shield;
-	else if (outfit_isTurret(o)) return o->u.wpn.damage_shield;
+	else if (outfit_isTurret(o)) return o->u.blt.damage_shield;
 	return -1.;
 }
 int outfit_delay( const Outfit* o )
 {
-	if (outfit_isWeapon(o)) return o->u.wpn.delay;
+	if (outfit_isWeapon(o)) return o->u.blt.delay;
 	else if (outfit_isLauncher(o)) return o->u.lau.delay;
-	else if (outfit_isTurret(o)) return o->u.wpn.delay;
+	else if (outfit_isTurret(o)) return o->u.blt.delay;
 	return -1;
 }
 
@@ -213,40 +213,40 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
 	char str[PATH_MAX] = "\0";
 
 	do { /* load all the data */
-		if (xml_isNode(node,"speed")) temp->u.wpn.speed = xml_getFloat(node);
-		else if (xml_isNode(node,"delay")) temp->u.wpn.delay = xml_getInt(node);
-		else if (xml_isNode(node,"range")) temp->u.wpn.range = xml_getFloat(node);
-		else if (xml_isNode(node,"accuracy")) temp->u.wpn.accuracy = xml_getFloat(node);
+		if (xml_isNode(node,"speed")) temp->u.blt.speed = xml_getFloat(node);
+		else if (xml_isNode(node,"delay")) temp->u.blt.delay = xml_getInt(node);
+		else if (xml_isNode(node,"range")) temp->u.blt.range = xml_getFloat(node);
+		else if (xml_isNode(node,"accuracy")) temp->u.blt.accuracy = xml_getFloat(node);
 		else if (xml_isNode(node,"gfx")) {
 			snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+4,
 					OUTFIT_GFX"%s.png", xml_get(node));
-			temp->u.wpn.gfx_space = gl_newSprite(str, 6, 6);
+			temp->u.blt.gfx_space = gl_newSprite(str, 6, 6);
 		}
 		else if (xml_isNode(node,"spfx"))
-			temp->u.wpn.spfx = spfx_get(xml_get(node));
+			temp->u.blt.spfx = spfx_get(xml_get(node));
 		else if (xml_isNode(node,"sound"))
-			temp->u.wpn.sound = sound_get( xml_get(node) );
+			temp->u.blt.sound = sound_get( xml_get(node) );
 		else if (xml_isNode(node,"damage")) {
 			cur = node->children;
 			do {
 				if (xml_isNode(cur,"armour"))
-					temp->u.wpn.damage_armour = xml_getFloat(cur);
+					temp->u.blt.damage_armour = xml_getFloat(cur);
 				else if (xml_isNode(cur,"shield"))
-					temp->u.wpn.damage_shield = xml_getFloat(cur);
+					temp->u.blt.damage_shield = xml_getFloat(cur);
 			} while ((cur = cur->next));
 		}
 	} while ((node = node->next));
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
-	MELEMENT(temp->u.wpn.gfx_space==NULL,"gfx");
-	MELEMENT((sound_lock!=NULL) && (temp->u.wpn.sound==0),"sound");
-	MELEMENT(temp->u.wpn.delay==0,"delay");
-	MELEMENT(temp->u.wpn.speed==0,"speed");
-	MELEMENT(temp->u.wpn.range==0,"range");
-	MELEMENT(temp->u.wpn.accuracy==0,"accuracy");
-	MELEMENT(temp->u.wpn.damage_armour==0,"armour' from element 'damage");
-	MELEMENT(temp->u.wpn.damage_shield==0,"shield' from element 'damage");
+	MELEMENT(temp->u.blt.gfx_space==NULL,"gfx");
+	MELEMENT((sound_lock!=NULL) && (temp->u.blt.sound==0),"sound");
+	MELEMENT(temp->u.blt.delay==0,"delay");
+	MELEMENT(temp->u.blt.speed==0,"speed");
+	MELEMENT(temp->u.blt.range==0,"range");
+	MELEMENT(temp->u.blt.accuracy==0,"accuracy");
+	MELEMENT(temp->u.blt.damage_armour==0,"armour' from element 'damage");
+	MELEMENT(temp->u.blt.damage_shield==0,"shield' from element 'damage");
 #undef MELEMENT
 }
 
