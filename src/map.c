@@ -13,7 +13,7 @@
 #include "opengl.h"
 
 
-#define MAP_WIDTH			500
+#define MAP_WIDTH			550
 #define MAP_HEIGHT		400
 
 #define BUTTON_WIDTH		60
@@ -23,6 +23,7 @@
 static int map_wid = 0;
 static double map_xpos = 0.;
 static double map_ypos = 0.;
+static int map_selected = 0;
 
 /*
  * extern
@@ -34,8 +35,8 @@ extern int systems_nstack;
 /*
  * prototypes
  */
-void map_render( double bx, double by, double w, double h );
-void map_close( char* str );
+static void map_render( double bx, double by, double w, double h );
+static void map_close( char* str );
 
 
 /*
@@ -46,17 +47,17 @@ void map_open (void)
 	if (map_wid) map_close(NULL);
 
 	/* set position to focus on current system */
-	map_xpos = cur_system->pos.x + (MAP_WIDTH-120)/2;
-	map_ypos = cur_system->pos.y + (MAP_HEIGHT-60)/2;
+	map_xpos = cur_system->pos.x;
+	map_ypos = cur_system->pos.y;
 
 	map_wid = window_create( "Star Map", -1, -1, MAP_WIDTH, MAP_HEIGHT );
 
-	window_addCust( map_wid, 20, 20, MAP_WIDTH - 120, MAP_HEIGHT - 60,
+	window_addCust( map_wid, 20, 20, MAP_WIDTH - 150, MAP_HEIGHT - 60,
 			"cstMap", 1, map_render );
 	window_addButton( map_wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
 			"btnClose", "Close", map_close );
 }
-void map_close( char* str )
+static void map_close( char* str )
 {
 	(void)str;
 	if (map_wid) {
@@ -69,7 +70,7 @@ void map_close( char* str )
 /*
  * renders the map as a custom widget
  */
-void map_render( double bx, double by, double w, double h )
+static void map_render( double bx, double by, double w, double h )
 {
 	int i;
 
@@ -83,10 +84,13 @@ void map_render( double bx, double by, double w, double h )
 	glEnd(); /* GL_QUADS */
 
 
-	COLOUR(cYellow);
-	for (i=0; i<systems_nstack; i++)
-		gl_drawCircleInRect( systems_stack[i].pos.x, systems_stack[i].pos.y,
+	for (i=0; i<systems_nstack; i++) {
+		if (i==map_selected) COLOUR(cRadar_targ);
+		else COLOUR(cYellow);
+		gl_drawCircleInRect( bx + systems_stack[i].pos.x - map_xpos + w/2,
+				by + systems_stack[i].pos.y - map_ypos + h/2,
 				5, bx, by, w, h );
+	}
 }
 
 
