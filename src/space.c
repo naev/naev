@@ -154,8 +154,6 @@ void planets_minimap( const double res, const double w, const double h,
 				}
 			}
 		}
-
-		if (ABS(x) < w/2. && ABS(y) < h/2.) {}
 	glEnd(); /* GL_POINTS */
 }
 #undef PIXEL
