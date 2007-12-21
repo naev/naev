@@ -139,7 +139,7 @@ Neutron Disruptor.
 </description>
 </general>
 <specific type="1">
-<gfx>lasergreen</gfx>
+<gfx>neutron</gfx>
 <sound>laser</sound>
 <spfx>ExpS</spfx>
 <delay>400</delay>
