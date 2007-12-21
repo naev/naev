@@ -13,6 +13,7 @@
 #include "toolkit.h"
 #include "menu.h"
 #include "board.h"
+#include "map.h"
 
 
 #define KEY_PRESS    ( 1.)
@@ -34,7 +35,7 @@ static Keybind** input_keybinds; /* contains the players keybindings */
 const char *keybindNames[] = { "accel", "left", "right", "reverse", /* movement */
 	"primary", "target", "target_nearest", "face", "board", /* fighting */
 	"secondary", "secondary_next", /* secondary weapons */
-	"target_planet", "land", "thyperspace", "jump", /* space navigation */
+	"target_planet", "land", "thyperspace", "starmap", "jump", /* space navigation */
 	"mapzoomin", "mapzoomout", "screenshot", "pause", "menu", "info",  /* misc */
 	"end" }; /* must terminate in "end" */
 
@@ -74,6 +75,7 @@ void input_setDefault (void)
 	input_setKeybind( "target_planet", KEYBIND_KEYBOARD, SDLK_p, 0 );
 	input_setKeybind( "land", KEYBIND_KEYBOARD, SDLK_l, 0 );
 	input_setKeybind( "thyperspace", KEYBIND_KEYBOARD, SDLK_h, 0 );
+	input_setKeybind( "starmap", KEYBIND_KEYBOARD, SDLK_m, 0 );
 	input_setKeybind( "jump", KEYBIND_KEYBOARD, SDLK_j, 0 );
 	/* misc */
 	input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_9, 0 );
@@ -240,6 +242,8 @@ static void input_key( int keynum, double value, int abs )
 		if (value==KEY_PRESS) player_land();
 	} else if (KEY("thyperspace") && INGAME()) {
 		if (value==KEY_PRESS) player_targetHyperspace();
+	} else if (KEY("starmap")) {
+		if (value==KEY_PRESS)  map_open();
 	} else if (KEY("jump") && INGAME()) {
 		if (value==KEY_PRESS) player_jump();
 

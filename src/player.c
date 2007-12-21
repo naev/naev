@@ -61,7 +61,7 @@ extern int pilots;
 /*
  * space stuff for GUI
  */
-extern StarSystem *systems;
+extern StarSystem *systems_nstack;
 
 
 /*
@@ -478,7 +478,7 @@ void player_render (void)
 
 		gl_printMid( &gl_smallFont, (int)gui.nav.w,
 				gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
-				NULL, "%s", systems[cur_system->jumps[hyperspace_target]].name );
+				NULL, "%s", systems_nstack[cur_system->jumps[hyperspace_target]].name );
 	}
 	else { /* no NAV target */
 		gl_printMid( NULL, (int)gui.nav.w,
@@ -1218,7 +1218,7 @@ void player_jump (void)
 void player_brokeHyperspace (void)
 {
 	/* enter the new system */
-	space_init( systems[cur_system->jumps[hyperspace_target]].name );
+	space_init( systems_nstack[cur_system->jumps[hyperspace_target]].name );
 
 	/* set position, the pilot_update will handle lowering vel */
 	player_warp( -cos( player->solid->dir ) * MIN_HYPERSPACE_DIST * 1.5,

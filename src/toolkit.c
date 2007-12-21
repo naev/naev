@@ -68,6 +68,7 @@ typedef struct Widget_ {
 			int border; /* border */
 		} rct;
 		struct { /* WIDGET_CUST */
+			int border;
 			void (*render) (double bx, double by, double bw, double bh );
 		} cst;
 	} dat;
@@ -89,7 +90,7 @@ typedef struct Window_ {
 } Window;
 
 
-static unsigned int genwid = 0; /* generates unique window ids */
+static unsigned int genwid = 0; /* generates unique window ids, > 0 */
 
 
 int toolkit = 0; /* toolkit in use */
@@ -98,6 +99,14 @@ int toolkit = 0; /* toolkit in use */
 static Window *windows = NULL;
 static int nwindows = 0;
 static int mwindows = 0;
+
+
+/*
+ * default outline colours
+ */
+static glColour* toolkit_colLight = &cGrey90;
+static glColour* toolkit_col = &cGrey70;
+static glColour* toolkit_colDark = &cGrey30;
 
 /*
  * prototypes
@@ -123,6 +132,7 @@ static void toolkit_renderText( Widget* txt, double bx, double by );
 static void toolkit_renderImage( Widget* img, double bx, double by );
 static void toolkit_renderList( Widget* lst, double bx, double by );
 static void toolkit_renderRect( Widget* rct, double bx, double by );
+static void toolkit_renderCust( Widget* cst, double bx, double by );
 static void toolkit_drawOutline( double x, double y,
 		double w, double h, double b,
 		glColour* c, glColour* lc );
@@ -285,7 +295,7 @@ void window_addRect( const unsigned int wid,
 void window_addCust( const unsigned int wid,
 		const int x, const int y, /* position */
 		const int w, const int h, /* size */
-		char* name,
+		char* name, const int border,
 		void (*render) (double x, double y, double w, double h) )
 {
 	Window *wdw = window_wget(wid);
@@ -296,6 +306,7 @@ void window_addCust( const unsigned int wid,
 	wgt->name = strdup(name);
 
 	/* specific */
+	wgt->dat.cst.border = border;
 	wgt->dat.cst.render = render;
 
 	/* position/size */
@@ -785,9 +796,7 @@ static void window_render( Window* w )
 				break;
 
 			case WIDGET_CUST:
-				(*w->widgets[i].dat.cst.render)
-						( x+w->widgets[i].x, y+w->widgets[i].y,
-						w->widgets[i].w, w->widgets[i].h );
+				toolkit_renderCust( &w->widgets[i], x, y );
 				break;
 		}
 	}
@@ -878,17 +887,12 @@ static void toolkit_renderText( Widget* txt, double bx, double by )
  */
 static void toolkit_renderImage( Widget* img, double bx, double by )
 {
-	glColour *lc, *c, *oc;
 	double x,y;
 
 	if (img->dat.img.image == NULL) return;
 
 	x = bx + img->x;
 	y = by + img->y;
-
-	lc = &cGrey90;
-	c = &cGrey70;
-	oc = &cGrey30;
 
 	/*
 	 * image
@@ -899,10 +903,10 @@ static void toolkit_renderImage( Widget* img, double bx, double by )
 
 	/* inner outline (outwards) */
 	toolkit_drawOutline( x, y+1, img->dat.img.image->sw-1,
-		img->dat.img.image->sh-1, 1., lc, c );
+		img->dat.img.image->sh-1, 1., toolkit_colLight, toolkit_col );
 	/* outter outline */
 	toolkit_drawOutline( x, y+1, img->dat.img.image->sw-1,
-			img->dat.img.image->sh-1, 2., oc, NULL );
+			img->dat.img.image->sh-1, 2., toolkit_colDark, NULL );
 }
 
 
@@ -913,22 +917,18 @@ static void toolkit_renderList( Widget* lst, double bx, double by )
 {
 	int i;
 	double x,y, tx,ty;
-	glColour *lc, *c, *oc;
 
 	x = bx + lst->x;
 	y = by + lst->y;
-
-	lc = &cGrey90;
-	c = &cGrey70;
-	oc = &cGrey30;
 
 	/* lst bg */
 	toolkit_drawRect( x, y, lst->w, lst->h, &cWhite, NULL );
 
 	/* inner outline */
-	toolkit_drawOutline( x, y, lst->w, lst->h, 0., lc, c );
+	toolkit_drawOutline( x, y, lst->w, lst->h, 0.,
+			toolkit_colLight, toolkit_col );
 	/* outter outline */
-	toolkit_drawOutline( x, y, lst->w, lst->h, 1., oc, NULL );
+	toolkit_drawOutline( x, y, lst->w, lst->h, 1., toolkit_colDark, NULL );
 
 	/* draw selected */
 	toolkit_drawRect( x, y - 1. + lst->h -
@@ -954,24 +954,43 @@ static void toolkit_renderList( Widget* lst, double bx, double by )
 static void toolkit_renderRect( Widget* rct, double bx, double by )
 {
 	double x, y;
-	glColour *lc, *c, *oc;
 
 	x = bx + rct->x;
 	y = by + rct->y;
-
-	lc = &cGrey90;
-	c = &cGrey70;
-	oc = &cGrey30;
 
 	if (rct->dat.rct.colour) /* draw rect only if it exists */
 		toolkit_drawRect( x, y, rct->w, rct->h, rct->dat.rct.colour, NULL );
 
 	if (rct->dat.rct.border) {
 		/* inner outline */
-		toolkit_drawOutline( x, y, rct->w, rct->h, 0., lc, c );
+		toolkit_drawOutline( x, y, rct->w, rct->h, 0.,
+				toolkit_colLight, toolkit_col );
 		/* outter outline */
-		toolkit_drawOutline( x, y, rct->w, rct->h, 1., oc, NULL );
+		toolkit_drawOutline( x, y, rct->w, rct->h, 1.,
+				toolkit_colDark, NULL );
 	}
+}
+
+
+/*
+ * renders a custom widget
+ */
+static void toolkit_renderCust( Widget* cst, double bx, double by )
+{
+	double x,y;
+
+	x = bx+cst->x;
+	y = by+cst->y;
+
+	if (cst->dat.cst.border) {
+		/* inner outline */
+		toolkit_drawOutline( x, y, cst->w, cst->h, 0.,
+				toolkit_colLight, toolkit_col );
+		/* outter outline */
+		toolkit_drawOutline( x, y, cst->w, cst->h, 1.,
+				toolkit_colDark, NULL );
+	}
+	(*cst->dat.cst.render) ( x, y, cst->w, cst->h );
 }
 
 
