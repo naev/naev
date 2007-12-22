@@ -35,9 +35,10 @@ extern int systems_nstack;
 /*
  * prototypes
  */
-static void map_render( double bx, double by, double w, double h );
 static void map_close( char* str );
 static void map_update (void);
+static void map_render( double bx, double by, double w, double h );
+static void map_mouse( Uint8 type, double mx, double my );
 
 
 /*
@@ -66,7 +67,7 @@ void map_open (void)
 			
 
 	window_addCust( map_wid, 20, 20, MAP_WIDTH - 150, MAP_HEIGHT - 60,
-			"cstMap", 1, map_render );
+			"cstMap", 1, map_render, map_mouse );
 	window_addButton( map_wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
 			"btnClose", "Close", map_close );
 
@@ -127,6 +128,12 @@ static void map_update (void)
 static void map_render( double bx, double by, double w, double h )
 {
 	int i;
+	double x,y,r;
+	StarSystem* sys;
+
+	r = 5.;
+	x = bx - map_xpos + w/2;
+	y = by - map_ypos + h/2;
 
 	/* background */
 	COLOUR(cBlack);
@@ -141,10 +148,21 @@ static void map_render( double bx, double by, double w, double h )
 	for (i=0; i<systems_nstack; i++) {
 		if (&systems_stack[i]==cur_system) COLOUR(cRadar_targ);
 		else COLOUR(cYellow);
-		gl_drawCircleInRect( bx + systems_stack[i].pos.x - map_xpos + w/2,
-				by + systems_stack[i].pos.y - map_ypos + h/2,
-				5, bx, by, w, h );
+		gl_drawCircleInRect( x + systems_stack[i].pos.x,
+				y + systems_stack[i].pos.y,
+				r, bx, by, w, h );
 	}
+
+	/* selected planet */
+	sys = &systems_stack[ map_selected ];
+	COLOUR(cRed);
+	gl_drawCircleInRect( x + sys->pos.x, y + sys->pos.y, r+3., bx, by, w, h );
+}
+/*
+ * map event handling
+ */
+static void map_mouse( Uint8 type, double mx, double my )
+{
 }
 
 

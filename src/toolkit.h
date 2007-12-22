@@ -49,7 +49,8 @@ void window_addCust( const unsigned int wid,
 		const int x, const int y, /* position */
 		const int w, const int h, /* size */
 		char* name, const int border,
-		void (*render) (double x, double y, double w, double h) );
+		void (*render) (double x, double y, double w, double h),
+		void (*mouse) (Uint8 type, double x, double y) );
 
 
 

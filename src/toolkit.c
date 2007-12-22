@@ -70,6 +70,7 @@ typedef struct Widget_ {
 		struct { /* WIDGET_CUST */
 			int border;
 			void (*render) (double bx, double by, double bw, double bh );
+			void (*mouse) (Uint8 type, double bx, double by );
 		} cst;
 	} dat;
 } Widget;
@@ -296,7 +297,8 @@ void window_addCust( const unsigned int wid,
 		const int x, const int y, /* position */
 		const int w, const int h, /* size */
 		char* name, const int border,
-		void (*render) (double x, double y, double w, double h) )
+		void (*render) (double x, double y, double w, double h),
+		void (*mouse) (Uint8 type, double x, double y) )
 {
 	Window *wdw = window_wget(wid);
 	Widget *wgt = window_newWidget(wdw);
@@ -308,6 +310,7 @@ void window_addCust( const unsigned int wid,
 	/* specific */
 	wgt->dat.cst.border = border;
 	wgt->dat.cst.render = render;
+	wgt->dat.cst.mouse = mouse ;
 
 	/* position/size */
 	wgt->w = (double) w;
@@ -1073,35 +1076,39 @@ static void toolkit_mouseEvent( SDL_Event* event )
 	for (i=0; i<w->nwidgets; i++) {
 		wgt = &w->widgets[i];
 		if ((x > wgt->x) && (x < (wgt->x + wgt->w)) &&
-				(y > wgt->y) && (y < (wgt->y + wgt->h)))
-			switch (event->type) {
-				case SDL_MOUSEMOTION:
-					wgt->status = WIDGET_STATUS_MOUSEOVER;
-					break;
+				(y > wgt->y) && (y < (wgt->y + wgt->h))) {
+			if ((wgt->type==WIDGET_CUST) && wgt->dat.cst.mouse)
+				(*wgt->dat.cst.mouse)( event->type, x, y );
+			else
+				switch (event->type) {
+					case SDL_MOUSEMOTION:
+						wgt->status = WIDGET_STATUS_MOUSEOVER;
+						break;
 
-				case SDL_MOUSEBUTTONDOWN:
-					wgt->status = WIDGET_STATUS_MOUSEDOWN;
+					case SDL_MOUSEBUTTONDOWN:
+						wgt->status = WIDGET_STATUS_MOUSEDOWN;
 
-					if (toolkit_isFocusable(wgt))
-						w->focus = i;
+						if (toolkit_isFocusable(wgt))
+							w->focus = i;
 
-					if (wgt->type == WIDGET_LIST)
-						toolkit_listFocus( wgt, x-wgt->x, y-wgt->y );
-					break;
+						if (wgt->type == WIDGET_LIST)
+							toolkit_listFocus( wgt, x-wgt->x, y-wgt->y );
+						break;
 
-				case SDL_MOUSEBUTTONUP:
-					if (wgt->status==WIDGET_STATUS_MOUSEDOWN) {
-						if (wgt->type==WIDGET_BUTTON) {
-							if (wgt->dat.btn.fptr==NULL)
-								DEBUG("Toolkit: Button '%s' of Window '%s' "
-										"doesn't have a function trigger",
-										wgt->name, w->name );
-							else (*wgt->dat.btn.fptr)(wgt->name);
+					case SDL_MOUSEBUTTONUP:
+						if (wgt->status==WIDGET_STATUS_MOUSEDOWN) {
+							if (wgt->type==WIDGET_BUTTON) {
+								if (wgt->dat.btn.fptr==NULL)
+									DEBUG("Toolkit: Button '%s' of Window '%s' "
+											"doesn't have a function trigger",
+											wgt->name, w->name );
+								else (*wgt->dat.btn.fptr)(wgt->name);
+							}
 						}
-					}
-					wgt->status = WIDGET_STATUS_NORMAL;
-					break;
-			}
+						wgt->status = WIDGET_STATUS_NORMAL;
+						break;
+				}
+		}
 		else
 			wgt->status = WIDGET_STATUS_NORMAL;
 	}
