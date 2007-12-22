@@ -69,8 +69,8 @@ typedef struct Widget_ {
 		} rct;
 		struct { /* WIDGET_CUST */
 			int border;
-			void (*render) (double bx, double by, double bw, double bh );
-			void (*mouse) (Uint8 type, double bx, double by );
+			void (*render) (double bx, double by, double bw, double bh);
+			void (*mouse) (SDL_Event* event, double bx, double by);
 		} cst;
 	} dat;
 } Widget;
@@ -298,7 +298,7 @@ void window_addCust( const unsigned int wid,
 		const int w, const int h, /* size */
 		char* name, const int border,
 		void (*render) (double x, double y, double w, double h),
-		void (*mouse) (Uint8 type, double x, double y) )
+		void (*mouse) (SDL_Event* event, double x, double y) )
 {
 	Window *wdw = window_wget(wid);
 	Widget *wgt = window_newWidget(wdw);
@@ -310,7 +310,7 @@ void window_addCust( const unsigned int wid,
 	/* specific */
 	wgt->dat.cst.border = border;
 	wgt->dat.cst.render = render;
-	wgt->dat.cst.mouse = mouse ;
+	wgt->dat.cst.mouse = mouse;
 
 	/* position/size */
 	wgt->w = (double) w;
@@ -1051,8 +1051,6 @@ static void toolkit_mouseEvent( SDL_Event* event )
 	/* set mouse button status */
 	if (event->type==SDL_MOUSEBUTTONDOWN) mouse_down = 1;
 	else if (event->type==SDL_MOUSEBUTTONUP) mouse_down = 0;
-	/* ignore movements if mouse is down */
-	else if ((event->type==SDL_MOUSEMOTION) && mouse_down) return;
 
 	/* absolute positions */
 	if (event->type==SDL_MOUSEMOTION) {
@@ -1066,7 +1064,9 @@ static void toolkit_mouseEvent( SDL_Event* event )
 
 	w = &windows[nwindows-1];
 
-	if ((x < w->x) || (x > (w->x + w->w)) || (y < w->y) || (y > (w->y + w->h)))
+	/* always treat button ups to stop hanging states */
+	if ((event->type!=SDL_MOUSEBUTTONUP) &&
+		((x < w->x) || (x > (w->x + w->w)) || (y < w->y) || (y > (w->y + w->h))))
 		return; /* not in current window */
 
 	/* relative positions */
@@ -1075,14 +1075,17 @@ static void toolkit_mouseEvent( SDL_Event* event )
 
 	for (i=0; i<w->nwidgets; i++) {
 		wgt = &w->widgets[i];
+		/* widget in range? */
 		if ((x > wgt->x) && (x < (wgt->x + wgt->w)) &&
 				(y > wgt->y) && (y < (wgt->y + wgt->h))) {
-			if ((wgt->type==WIDGET_CUST) && wgt->dat.cst.mouse)
-				(*wgt->dat.cst.mouse)( event->type, x-wgt->x, y-wgt->y );
+			/* custom widgets take it from here */
+			if ((wgt->type==WIDGET_CUST) && wgt->dat.cst.mouse) 
+				(*wgt->dat.cst.mouse)( event, x-wgt->x, y-wgt->y );
 			else
 				switch (event->type) {
 					case SDL_MOUSEMOTION:
-						wgt->status = WIDGET_STATUS_MOUSEOVER;
+						if (!mouse_down)
+							wgt->status = WIDGET_STATUS_MOUSEOVER;
 						break;
 
 					case SDL_MOUSEBUTTONDOWN:
@@ -1109,7 +1112,11 @@ static void toolkit_mouseEvent( SDL_Event* event )
 						break;
 				}
 		}
-		else
+		/* otherwise custom widgets can get stuck on mousedown */
+		else if ((wgt->type==WIDGET_CUST) &&
+				(event->type==SDL_MOUSEBUTTONUP) && wgt->dat.cst.mouse)
+				(*wgt->dat.cst.mouse)( event, x-wgt->x, y-wgt->y );
+		else if (!mouse_down)
 			wgt->status = WIDGET_STATUS_NORMAL;
 	}
 }

@@ -13,8 +13,11 @@
 #include "opengl.h"
 
 
-#define MAP_WIDTH			550
-#define MAP_HEIGHT		400
+#define WINDOW_WIDTH		550
+#define WINDOW_HEIGHT	400
+
+#define MAP_WIDTH			(WINDOW_WIDTH-150)
+#define MAP_HEIGHT		(WINDOW_HEIGHT-60)
 
 #define BUTTON_WIDTH		60
 #define BUTTON_HEIGHT	30
@@ -24,6 +27,8 @@ static int map_wid = 0;
 static double map_xpos = 0.;
 static double map_ypos = 0.;
 static int map_selected = 0;
+
+static int map_drag = 0; /* is the user dragging the map? */
 
 /*
  * extern
@@ -38,7 +43,7 @@ extern int systems_nstack;
 static void map_close( char* str );
 static void map_update (void);
 static void map_render( double bx, double by, double w, double h );
-static void map_mouse( Uint8 type, double mx, double my );
+static void map_mouse( SDL_Event* event, double mx, double my );
 
 
 /*
@@ -52,7 +57,8 @@ void map_open (void)
 	map_xpos = cur_system->pos.x;
 	map_ypos = cur_system->pos.y;
 
-	map_wid = window_create( "Star Map", -1, -1, MAP_WIDTH, MAP_HEIGHT );
+	map_wid = window_create( "Star Map", -1, -1,
+			WINDOW_WIDTH, WINDOW_HEIGHT );
 
 	window_addText( map_wid, -20, -20, 100, 20, 1, "txtSysname",
 			&gl_defFont, &cDConsole, systems_stack[ map_selected ].name );
@@ -66,7 +72,7 @@ void map_open (void)
 			&gl_smallFont, &cBlack, NULL );
 			
 
-	window_addCust( map_wid, 20, 20, MAP_WIDTH - 150, MAP_HEIGHT - 60,
+	window_addCust( map_wid, 20, 20, MAP_WIDTH, MAP_HEIGHT,
 			"cstMap", 1, map_render, map_mouse );
 	window_addButton( map_wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
 			"btnClose", "Close", map_close );
@@ -145,6 +151,7 @@ static void map_render( double bx, double by, double w, double h )
 	glEnd(); /* GL_QUADS */
 
 
+	/* render the star systems */
 	for (i=0; i<systems_nstack; i++) {
 		if (&systems_stack[i]==cur_system) COLOUR(cRadar_targ);
 		else COLOUR(cYellow);
@@ -161,8 +168,50 @@ static void map_render( double bx, double by, double w, double h )
 /*
  * map event handling
  */
-static void map_mouse( Uint8 type, double mx, double my )
+static void map_mouse( SDL_Event* event, double mx, double my )
 {
+	int i;
+	double x,y, t;
+
+	t = 13.*13.; /* threshold */
+
+	mx -= MAP_WIDTH/2 - map_xpos;
+	my -= MAP_HEIGHT/2 - map_ypos;
+
+	switch (event->type) {
+		
+		case SDL_MOUSEBUTTONDOWN:
+			/* selecting star system */
+			if (event->button.button==SDL_BUTTON_LEFT) {
+				for (i=0; i<systems_nstack; i++) {
+					x = systems_stack[i].pos.x;
+					y = systems_stack[i].pos.y;
+
+					if ((pow2(mx-x)+pow2(my-y)) < t) {
+						map_selected = i;
+						map_update();
+						break;
+					}
+				}
+			}
+			/* start dragging */
+			else if (event->button.button==SDL_BUTTON_RIGHT)
+				map_drag = 1;
+			break;
+
+		case SDL_MOUSEBUTTONUP:
+			if ((event->button.button==SDL_BUTTON_RIGHT) && map_drag)
+				map_drag = 0;
+			break;
+
+		case SDL_MOUSEMOTION:
+			if (map_drag) {
+				/* axis is inverted */
+				map_xpos -= event->motion.xrel;
+				map_ypos += event->motion.yrel;
+			}
+			break;
+	}
 }
 
 
