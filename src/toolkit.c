@@ -1078,7 +1078,7 @@ static void toolkit_mouseEvent( SDL_Event* event )
 		if ((x > wgt->x) && (x < (wgt->x + wgt->w)) &&
 				(y > wgt->y) && (y < (wgt->y + wgt->h))) {
 			if ((wgt->type==WIDGET_CUST) && wgt->dat.cst.mouse)
-				(*wgt->dat.cst.mouse)( event->type, x, y );
+				(*wgt->dat.cst.mouse)( event->type, x-wgt->x, y-wgt->y );
 			else
 				switch (event->type) {
 					case SDL_MOUSEMOTION:
