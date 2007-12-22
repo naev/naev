@@ -136,7 +136,7 @@ static void outfits (void)
 			"Sell", outfits_sell );
 
 	window_addCust( secondary_wid, -40-BUTTON_WIDTH, 60+2*BUTTON_HEIGHT,
-			BUTTON_WIDTH, BUTTON_HEIGHT, "cstMod", outfits_renderMod );
+			BUTTON_WIDTH, BUTTON_HEIGHT, "cstMod", 0, outfits_renderMod, NULL );
 
 	window_addText( secondary_wid, 40+200+20, -60,
 			80, 96, 0, "txtSDesc", &gl_smallFont, &cDConsole,

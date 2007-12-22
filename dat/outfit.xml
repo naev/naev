@@ -128,4 +128,28 @@ Headhunters first gained fame in the crush of the Araknoid, a fearsome battle ag
 </damage>
 </specific>
 </outfit>
+<outfit name="Neutron Disruptor">
+<general>
+<max>3</max>
+<tech>12</tech>
+<mass>8</mass>
+<price>25000</price>
+<description>
+Neutron Disruptor.
+</description>
+</general>
+<specific type="1">
+<gfx>neutron</gfx>
+<sound>laser</sound>
+<spfx>ExpS</spfx>
+<delay>400</delay>
+<speed>650</speed>
+<range>200</range>
+<accuracy>15</accuracy>
+<damage>
+<armour>7</armour>
+<shield>7</shield>
+</damage>
+</specific>
+</outfit>
 </Outfits>

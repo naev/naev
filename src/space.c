@@ -46,8 +46,8 @@
 /* 
  * star system stack and friends
  */
-StarSystem *systems = NULL; /* star system stack */
-static int nsystems = 0; /* number of star systems */
+StarSystem *systems_stack = NULL; /* star system stack */
+int systems_nstack = 0; /* number of star systems */
 static int nplanets = 0; /* total number of loaded planets - pretty silly */
 StarSystem *cur_system = NULL; /* Current star system */
 
@@ -109,7 +109,6 @@ void planets_minimap( const double res, const double w, const double h,
 	if (shape==RADAR_CIRCLE) rc = (int)(w*w);
 
 	glBegin(GL_POINTS);
-	glMatrixMode(GL_PROJECTION);
 	for (i=0; i<cur_system->nplanets; i++) {
 		r = (int)(cur_system->planets[i].gfx_space->sw / res);
 		cx = (int)((cur_system->planets[i].pos.x - player->solid->pos.x) / res);
@@ -155,8 +154,6 @@ void planets_minimap( const double res, const double w, const double h,
 				}
 			}
 		}
-
-		if (ABS(x) < w/2. && ABS(y) < h/2.) {}
 	glEnd(); /* GL_POINTS */
 }
 #undef PIXEL
@@ -305,12 +302,12 @@ void space_init ( const char* sysname )
 	if ((sysname==NULL) && (cur_system==NULL))
 		ERR("Cannot reinit system if there is no system previously loaded");
 	else if (sysname!=NULL) {
-		for (i=0; i < nsystems; i++)
-			if (strcmp(sysname, systems[i].name)==0)
+		for (i=0; i < systems_nstack; i++)
+			if (strcmp(sysname, systems_stack[i].name)==0)
 				break;
 
-		if (i==nsystems) ERR("System %s not found in stack", sysname);
-		cur_system = systems+i;
+		if (i==systems_nstack) ERR("System %s not found in stack", sysname);
+		cur_system = systems_stack+i;
 
 		player_message("Entering System %s on %s", sysname, stardate);
 
@@ -571,12 +568,12 @@ static void system_parseJumps( const xmlNodePtr parent )
 	xmlNodePtr cur, node;
 
 	name = xml_nodeProp(parent,"name"); /* already mallocs */
-	for (i=0; i<nsystems; i++)
-		if (strcmp( systems[i].name, name)==0) {
-			system = &systems[i];
+	for (i=0; i<systems_nstack; i++)
+		if (strcmp( systems_stack[i].name, name)==0) {
+			system = &systems_stack[i];
 			break;
 		}
-	if (i==nsystems) WARN("System '%s' was not found in the stack for some reason",name);
+	if (i==systems_nstack) WARN("System '%s' was not found in the stack for some reason",name);
 	free(name); /* no more need for it */
 
 	node  = parent->xmlChildrenNode;
@@ -586,14 +583,14 @@ static void system_parseJumps( const xmlNodePtr parent )
 			cur = node->children;
 			do {
 				if (xml_isNode(cur,"jump")) {
-					for (i=0; i<nsystems; i++)
-						if (strcmp( systems[i].name, xml_get(cur))==0) {
+					for (i=0; i<systems_nstack; i++)
+						if (strcmp( systems_stack[i].name, xml_get(cur))==0) {
 							system->njumps++;
 							system->jumps = realloc(system->jumps, system->njumps*sizeof(int));
 							system->jumps[system->njumps-1] = i;
 							break;
 						}
-					if (i==nsystems)
+					if (i==systems_nstack)
 						WARN("System '%s' not found for jump linking",xml_get(cur));
 				}
 			} while ((cur = cur->next));
@@ -605,7 +602,7 @@ static void system_parseJumps( const xmlNodePtr parent )
 /*
  * LOADS THE ENTIRE UNIVERSE INTO RAM - pretty big feat eh?
  *
- * uses a two system pass to first load the star systems and then set jump routes
+ * uses a two system pass to first load the star systems_stack and then set jump routes
  */
 int space_load (void)
 {
@@ -630,14 +627,14 @@ int space_load (void)
 	}
 
 	/*
-	 * first pass - loads all the star systems
+	 * first pass - loads all the star systems_stack
 	 */
 	do {
 		if (xml_isNode(node,XML_SYSTEM_TAG)) {
 
 			temp = system_parse(node);
-			systems = realloc(systems, sizeof(StarSystem)*(++nsystems));
-			memcpy(systems+nsystems-1, temp, sizeof(StarSystem));
+			systems_stack = realloc(systems_stack, sizeof(StarSystem)*(++systems_nstack));
+			memcpy(systems_stack+systems_nstack-1, temp, sizeof(StarSystem));
 			free(temp);
 		}                                                                             
 	} while ((node = node->next));                                       
@@ -662,7 +659,7 @@ int space_load (void)
 	xmlCleanupParser();
 
 	DEBUG("Loaded %d Star System%s with %d Planet%s",
-			nsystems, (nsystems==1) ? "" : "s",
+			systems_nstack, (systems_nstack==1) ? "" : "s",
 			nplanets, (nplanets==1) ? "" : "s" );
 
 	return 0;
@@ -752,32 +749,32 @@ void planets_render (void)
 void space_exit (void)
 {
 	int i,j;
-	for (i=0; i < nsystems; i++) {
-		free(systems[i].name);
-		if (systems[i].fleets)
-			free(systems[i].fleets);
-		if (systems[i].jumps)
-			free(systems[i].jumps);
+	for (i=0; i < systems_nstack; i++) {
+		free(systems_stack[i].name);
+		if (systems_stack[i].fleets)
+			free(systems_stack[i].fleets);
+		if (systems_stack[i].jumps)
+			free(systems_stack[i].jumps);
 
 
-		for (j=0; j < systems[i].nplanets; j++) {
-			free(systems[i].planets[j].name);
+		for (j=0; j < systems_stack[i].nplanets; j++) {
+			free(systems_stack[i].planets[j].name);
 
-			if (systems[i].planets[j].description)
-				free(systems[i].planets[j].description);
-			if (systems[i].planets[j].bar_description)
-				free(systems[i].planets[j].bar_description);
+			if (systems_stack[i].planets[j].description)
+				free(systems_stack[i].planets[j].description);
+			if (systems_stack[i].planets[j].bar_description)
+				free(systems_stack[i].planets[j].bar_description);
 
 			/* graphics */
-			if (systems[i].planets[j].gfx_space)
-				gl_freeTexture(systems[i].planets[j].gfx_space);
-			if (systems[i].planets[j].gfx_exterior)
-				gl_freeTexture(systems[i].planets[j].gfx_exterior);
+			if (systems_stack[i].planets[j].gfx_space)
+				gl_freeTexture(systems_stack[i].planets[j].gfx_space);
+			if (systems_stack[i].planets[j].gfx_exterior)
+				gl_freeTexture(systems_stack[i].planets[j].gfx_exterior);
 		}
 
-		free(systems[i].planets);
+		free(systems_stack[i].planets);
 	}
-	free(systems);
+	free(systems_stack);
 
 	if (stars) free(stars);
 }

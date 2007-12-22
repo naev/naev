@@ -63,7 +63,7 @@ typedef struct Outfit_ {
 	/* Type dependent */
 	OutfitType type;
 	union {
-		struct { /* beam/bolt */
+		struct { /* bolt */
 			unsigned int delay; /* delay between shots */
 			double speed; /* how fast it goes (not applicable to beam) */
 			double range; /* how far it goes */
@@ -73,7 +73,13 @@ typedef struct Outfit_ {
 			glTexture* gfx_space; /* graphic */
 			ALuint sound; /* sound to play */
 			int spfx; /* special effect on hit */
-		} wpn;
+		} blt;
+		struct { /* beam */
+			double range; /* how far it goes */
+			glColour colour; /* beam colour */
+			double energy; /* energy it drains */
+			double damage_armour, damage_shield; /* damage */
+		} bem;
 		struct { /* launcher */
 			unsigned int delay; /* delay between shots */
 			char *ammo; /* the ammo to use */

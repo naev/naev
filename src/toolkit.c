@@ -68,7 +68,9 @@ typedef struct Widget_ {
 			int border; /* border */
 		} rct;
 		struct { /* WIDGET_CUST */
-			void (*render) (double bx, double by, double bw, double bh );
+			int border;
+			void (*render) (double bx, double by, double bw, double bh);
+			void (*mouse) (SDL_Event* event, double bx, double by);
 		} cst;
 	} dat;
 } Widget;
@@ -89,7 +91,7 @@ typedef struct Window_ {
 } Window;
 
 
-static unsigned int genwid = 0; /* generates unique window ids */
+static unsigned int genwid = 0; /* generates unique window ids, > 0 */
 
 
 int toolkit = 0; /* toolkit in use */
@@ -98,6 +100,14 @@ int toolkit = 0; /* toolkit in use */
 static Window *windows = NULL;
 static int nwindows = 0;
 static int mwindows = 0;
+
+
+/*
+ * default outline colours
+ */
+static glColour* toolkit_colLight = &cGrey90;
+static glColour* toolkit_col = &cGrey70;
+static glColour* toolkit_colDark = &cGrey30;
 
 /*
  * prototypes
@@ -123,6 +133,7 @@ static void toolkit_renderText( Widget* txt, double bx, double by );
 static void toolkit_renderImage( Widget* img, double bx, double by );
 static void toolkit_renderList( Widget* lst, double bx, double by );
 static void toolkit_renderRect( Widget* rct, double bx, double by );
+static void toolkit_renderCust( Widget* cst, double bx, double by );
 static void toolkit_drawOutline( double x, double y,
 		double w, double h, double b,
 		glColour* c, glColour* lc );
@@ -184,7 +195,7 @@ void window_addText( const unsigned int wid,
 	wgt->h = (double) h;
 	if (font==NULL) wgt->dat.txt.font = &gl_defFont;
 	else wgt->dat.txt.font = font;
-	if (x < 0) wgt->x = wdw->w - wgt->w + x - w;
+	if (x < 0) wgt->x = wdw->w - wgt->w + x;
 	else wgt->x = (double) x;
 	if (y < 0) wgt->y = wdw->h + y - h;
 	else wgt->y = (double) y;
@@ -285,8 +296,9 @@ void window_addRect( const unsigned int wid,
 void window_addCust( const unsigned int wid,
 		const int x, const int y, /* position */
 		const int w, const int h, /* size */
-		char* name,
-		void (*render) (double x, double y, double w, double h) )
+		char* name, const int border,
+		void (*render) (double x, double y, double w, double h),
+		void (*mouse) (SDL_Event* event, double x, double y) )
 {
 	Window *wdw = window_wget(wid);
 	Widget *wgt = window_newWidget(wdw);
@@ -296,7 +308,9 @@ void window_addCust( const unsigned int wid,
 	wgt->name = strdup(name);
 
 	/* specific */
+	wgt->dat.cst.border = border;
 	wgt->dat.cst.render = render;
+	wgt->dat.cst.mouse = mouse;
 
 	/* position/size */
 	wgt->w = (double) w;
@@ -785,9 +799,7 @@ static void window_render( Window* w )
 				break;
 
 			case WIDGET_CUST:
-				(*w->widgets[i].dat.cst.render)
-						( x+w->widgets[i].x, y+w->widgets[i].y,
-						w->widgets[i].w, w->widgets[i].h );
+				toolkit_renderCust( &w->widgets[i], x, y );
 				break;
 		}
 	}
@@ -878,17 +890,12 @@ static void toolkit_renderText( Widget* txt, double bx, double by )
  */
 static void toolkit_renderImage( Widget* img, double bx, double by )
 {
-	glColour *lc, *c, *oc;
 	double x,y;
 
 	if (img->dat.img.image == NULL) return;
 
 	x = bx + img->x;
 	y = by + img->y;
-
-	lc = &cGrey90;
-	c = &cGrey70;
-	oc = &cGrey30;
 
 	/*
 	 * image
@@ -899,10 +906,10 @@ static void toolkit_renderImage( Widget* img, double bx, double by )
 
 	/* inner outline (outwards) */
 	toolkit_drawOutline( x, y+1, img->dat.img.image->sw-1,
-		img->dat.img.image->sh-1, 1., lc, c );
+		img->dat.img.image->sh-1, 1., toolkit_colLight, toolkit_col );
 	/* outter outline */
 	toolkit_drawOutline( x, y+1, img->dat.img.image->sw-1,
-			img->dat.img.image->sh-1, 2., oc, NULL );
+			img->dat.img.image->sh-1, 2., toolkit_colDark, NULL );
 }
 
 
@@ -913,22 +920,18 @@ static void toolkit_renderList( Widget* lst, double bx, double by )
 {
 	int i;
 	double x,y, tx,ty;
-	glColour *lc, *c, *oc;
 
 	x = bx + lst->x;
 	y = by + lst->y;
-
-	lc = &cGrey90;
-	c = &cGrey70;
-	oc = &cGrey30;
 
 	/* lst bg */
 	toolkit_drawRect( x, y, lst->w, lst->h, &cWhite, NULL );
 
 	/* inner outline */
-	toolkit_drawOutline( x, y, lst->w, lst->h, 0., lc, c );
+	toolkit_drawOutline( x, y, lst->w, lst->h, 0.,
+			toolkit_colLight, toolkit_col );
 	/* outter outline */
-	toolkit_drawOutline( x, y, lst->w, lst->h, 1., oc, NULL );
+	toolkit_drawOutline( x, y, lst->w, lst->h, 1., toolkit_colDark, NULL );
 
 	/* draw selected */
 	toolkit_drawRect( x, y - 1. + lst->h -
@@ -954,24 +957,43 @@ static void toolkit_renderList( Widget* lst, double bx, double by )
 static void toolkit_renderRect( Widget* rct, double bx, double by )
 {
 	double x, y;
-	glColour *lc, *c, *oc;
 
 	x = bx + rct->x;
 	y = by + rct->y;
-
-	lc = &cGrey90;
-	c = &cGrey70;
-	oc = &cGrey30;
 
 	if (rct->dat.rct.colour) /* draw rect only if it exists */
 		toolkit_drawRect( x, y, rct->w, rct->h, rct->dat.rct.colour, NULL );
 
 	if (rct->dat.rct.border) {
 		/* inner outline */
-		toolkit_drawOutline( x, y, rct->w, rct->h, 0., lc, c );
+		toolkit_drawOutline( x, y, rct->w, rct->h, 0.,
+				toolkit_colLight, toolkit_col );
 		/* outter outline */
-		toolkit_drawOutline( x, y, rct->w, rct->h, 1., oc, NULL );
+		toolkit_drawOutline( x, y, rct->w, rct->h, 1.,
+				toolkit_colDark, NULL );
 	}
+}
+
+
+/*
+ * renders a custom widget
+ */
+static void toolkit_renderCust( Widget* cst, double bx, double by )
+{
+	double x,y;
+
+	x = bx + cst->x;
+	y = by + cst->y;
+
+	if (cst->dat.cst.border) {
+		/* inner outline */
+		toolkit_drawOutline( x-1, y+1, cst->w+1, cst->h+1, 0.,
+				toolkit_colLight, toolkit_col );
+		/* outter outline */
+		toolkit_drawOutline( x-1, y, cst->w+1, cst->h+1, 1.,
+				toolkit_colDark, NULL );
+	}
+	(*cst->dat.cst.render) ( x, y, cst->w, cst->h );
 }
 
 
@@ -1029,8 +1051,6 @@ static void toolkit_mouseEvent( SDL_Event* event )
 	/* set mouse button status */
 	if (event->type==SDL_MOUSEBUTTONDOWN) mouse_down = 1;
 	else if (event->type==SDL_MOUSEBUTTONUP) mouse_down = 0;
-	/* ignore movements if mouse is down */
-	else if ((event->type==SDL_MOUSEMOTION) && mouse_down) return;
 
 	/* absolute positions */
 	if (event->type==SDL_MOUSEMOTION) {
@@ -1044,7 +1064,9 @@ static void toolkit_mouseEvent( SDL_Event* event )
 
 	w = &windows[nwindows-1];
 
-	if ((x < w->x) || (x > (w->x + w->w)) || (y < w->y) || (y > (w->y + w->h)))
+	/* always treat button ups to stop hanging states */
+	if ((event->type!=SDL_MOUSEBUTTONUP) &&
+		((x < w->x) || (x > (w->x + w->w)) || (y < w->y) || (y > (w->y + w->h))))
 		return; /* not in current window */
 
 	/* relative positions */
@@ -1053,37 +1075,48 @@ static void toolkit_mouseEvent( SDL_Event* event )
 
 	for (i=0; i<w->nwidgets; i++) {
 		wgt = &w->widgets[i];
+		/* widget in range? */
 		if ((x > wgt->x) && (x < (wgt->x + wgt->w)) &&
-				(y > wgt->y) && (y < (wgt->y + wgt->h)))
-			switch (event->type) {
-				case SDL_MOUSEMOTION:
-					wgt->status = WIDGET_STATUS_MOUSEOVER;
-					break;
+				(y > wgt->y) && (y < (wgt->y + wgt->h))) {
+			/* custom widgets take it from here */
+			if ((wgt->type==WIDGET_CUST) && wgt->dat.cst.mouse) 
+				(*wgt->dat.cst.mouse)( event, x-wgt->x, y-wgt->y );
+			else
+				switch (event->type) {
+					case SDL_MOUSEMOTION:
+						if (!mouse_down)
+							wgt->status = WIDGET_STATUS_MOUSEOVER;
+						break;
 
-				case SDL_MOUSEBUTTONDOWN:
-					wgt->status = WIDGET_STATUS_MOUSEDOWN;
+					case SDL_MOUSEBUTTONDOWN:
+						wgt->status = WIDGET_STATUS_MOUSEDOWN;
 
-					if (toolkit_isFocusable(wgt))
-						w->focus = i;
+						if (toolkit_isFocusable(wgt))
+							w->focus = i;
 
-					if (wgt->type == WIDGET_LIST)
-						toolkit_listFocus( wgt, x-wgt->x, y-wgt->y );
-					break;
+						if (wgt->type == WIDGET_LIST)
+							toolkit_listFocus( wgt, x-wgt->x, y-wgt->y );
+						break;
 
-				case SDL_MOUSEBUTTONUP:
-					if (wgt->status==WIDGET_STATUS_MOUSEDOWN) {
-						if (wgt->type==WIDGET_BUTTON) {
-							if (wgt->dat.btn.fptr==NULL)
-								DEBUG("Toolkit: Button '%s' of Window '%s' "
-										"doesn't have a function trigger",
-										wgt->name, w->name );
-							else (*wgt->dat.btn.fptr)(wgt->name);
+					case SDL_MOUSEBUTTONUP:
+						if (wgt->status==WIDGET_STATUS_MOUSEDOWN) {
+							if (wgt->type==WIDGET_BUTTON) {
+								if (wgt->dat.btn.fptr==NULL)
+									DEBUG("Toolkit: Button '%s' of Window '%s' "
+											"doesn't have a function trigger",
+											wgt->name, w->name );
+								else (*wgt->dat.btn.fptr)(wgt->name);
+							}
 						}
-					}
-					wgt->status = WIDGET_STATUS_NORMAL;
-					break;
-			}
-		else
+						wgt->status = WIDGET_STATUS_NORMAL;
+						break;
+				}
+		}
+		/* otherwise custom widgets can get stuck on mousedown */
+		else if ((wgt->type==WIDGET_CUST) &&
+				(event->type==SDL_MOUSEBUTTONUP) && wgt->dat.cst.mouse)
+				(*wgt->dat.cst.mouse)( event, x-wgt->x, y-wgt->y );
+		else if (!mouse_down)
 			wgt->status = WIDGET_STATUS_NORMAL;
 	}
 }

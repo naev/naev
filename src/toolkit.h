@@ -48,8 +48,9 @@ void window_addRect( const unsigned int wid,
 void window_addCust( const unsigned int wid,
 		const int x, const int y, /* position */
 		const int w, const int h, /* size */
-		char* name,
-		void (*render) (double x, double y, double w, double h) );
+		char* name, const int border,
+		void (*render) (double x, double y, double w, double h),
+		void (*mouse) (SDL_Event* event, double x, double y) );
 
 
 

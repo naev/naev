@@ -88,6 +88,10 @@ void gl_blitStatic( const glTexture* texture,
 		const double bx, const double by, const glColour *c );
 /* binds the camera to a vector */
 void gl_bindCamera( const Vector2d* pos );
+/* circle drawing */
+void gl_drawCircle( const double x, const double y, const double r );
+void gl_drawCircleInRect( const double x, const double y, const double r,
+      const double rx, const double ry, const double rw, const double rh );
 
 
 /*

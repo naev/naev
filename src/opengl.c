@@ -515,6 +515,121 @@ void gl_bindCamera( const Vector2d* pos )
 }
 
 
+/*
+ * draws a circle
+ */
+void gl_drawCircle( const double cx, const double cy, const double r )
+{
+	double x,y,p;
+
+	x = 0;
+	y = r;
+	p = (5. - (r*4.)) / 4.;
+
+	glBegin(GL_POINTS);
+		glVertex2d( cx,   cy+y );
+		glVertex2d( cx,   cy-y );
+		glVertex2d( cx+y, cy   );
+		glVertex2d( cx-y, cy   );
+
+		while (x<y) {
+			x++;
+			if (p < 0) p += 2*(double)(x)+1;
+			else p += 2*(double)(x-(--y))+1;
+
+			if (x==0) {
+				glVertex2d( cx,   cy+y );
+				glVertex2d( cx,   cy-y );
+				glVertex2d( cx+y, cy   );
+				glVertex2d( cx-y, cy   );
+			}
+			else
+				if (x==y) {
+					glVertex2d( cx+x, cy+y );
+					glVertex2d( cx-x, cy+y );
+					glVertex2d( cx+x, cy-y );
+					glVertex2d( cx-x, cy-y );
+				}
+				else
+					if (x<y) {
+						glVertex2d( cx+x, cy+y );
+						glVertex2d( cx-x, cy+y );
+						glVertex2d( cx+x, cy-y );
+						glVertex2d( cx-x, cy-y );
+						glVertex2d( cx+y, cy+x );
+						glVertex2d( cx-y, cy+x );
+						glVertex2d( cx+y, cy-x );
+						glVertex2d( cx-y, cy-x );
+					}
+		}
+glEnd(); /* GL_POINTS */
+}
+
+
+/*
+ * draws a circle in a rect
+ */
+#define PIXEL(x,y)	\
+if ((x>rx)&&(y>ry)&&(x<rxw)&&(y<ryh))	\
+	glVertex2d(x,y)
+void gl_drawCircleInRect( const double cx, const double cy, const double r,
+		const double rx, const double ry, const double rw, const double rh )
+{
+	double rxw,ryh, x,y,p;
+
+	rxw = rx+rw;
+	ryh = ry+rh;
+
+	/* can be drawn normally? */
+	if ((cx-r > rx) && (cy-r > ry) && (cx+r < rxw) && (cy+r < ryh)) {
+		gl_drawCircle( cx, cy, r );
+		return;
+	}
+
+	x = 0;
+	y = r;    
+	p = (5. - (r*4.)) / 4.;
+
+	glBegin(GL_POINTS);
+		PIXEL( cx,   cy+y );
+		PIXEL( cx,   cy-y );
+		PIXEL( cx+y, cy   );
+		PIXEL( cx-y, cy   );
+
+		while (x<y) {
+			x++;
+			if (p < 0) p += 2*(double)(x)+1;
+			else p += 2*(double)(x-(--y))+1;
+
+			if (x==0) {
+				PIXEL( cx,   cy+y );
+				PIXEL( cx,   cy-y );
+				PIXEL( cx+y, cy   );
+				PIXEL( cx-y, cy   );
+			}         
+			else      
+				if (x==y) {
+					PIXEL( cx+x, cy+y );
+					PIXEL( cx-x, cy+y );
+					PIXEL( cx+x, cy-y );
+					PIXEL( cx-x, cy-y );
+				}        
+				else     
+					if (x<y) {
+						PIXEL( cx+x, cy+y );
+						PIXEL( cx-x, cy+y );
+						PIXEL( cx+x, cy-y );
+						PIXEL( cx-x, cy-y );
+						PIXEL( cx+y, cy+x );
+						PIXEL( cx-y, cy+x );
+						PIXEL( cx+y, cy-x );
+						PIXEL( cx-y, cy-x );
+					}
+		}
+	glEnd(); /* GL_POINTS */
+}
+#undef PIXEL
+
 
 /*
  *
