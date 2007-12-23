@@ -79,9 +79,9 @@ The cheapest missile on the market, what it lacks in a decent tracking system it
 <spfx>ExpM</spfx>
 <duration>5</duration>
 <lockon>1</lockon>
-<thrust>1200</thrust>
+<thrust>1600</thrust>
 <turn>200</turn>
-<speed>600</speed>
+<speed>800</speed>
 <damage>
 <armour>25</armour>
 <shield>20</shield>
@@ -119,9 +119,9 @@ Headhunters first gained fame in the crush of the Araknoid, a fearsome battle ag
 <spfx>ExpM</spfx>
 <duration>7</duration>
 <lockon>0.5</lockon>
-<thrust>1200</thrust>
+<thrust>1300</thrust>
 <turn>200</turn>
-<speed>600</speed>
+<speed>650</speed>
 <damage>
 <armour>23</armour>
 <shield>18</shield>

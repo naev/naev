@@ -6,6 +6,7 @@
 
 #include "land.h"
 
+#include "naev.h"
 #include "log.h"
 #include "toolkit.h"
 #include "player.h"
@@ -235,7 +236,8 @@ static void outfits_buy( char* str )
 		return;
 	}
 
-	player_credits -= outfit->price * pilot_addOutfit( player, outfit, q );
+	player_credits -= outfit->price * pilot_addOutfit( player, outfit,
+			MIN(q,outfit->max) );
 	outfits_update(NULL);
 }
 static void outfits_sell( char* str )

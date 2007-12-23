@@ -510,19 +510,31 @@ static void pilot_hyperspace( Pilot* p )
  */
 int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 {
-	int i;
+	int i, q;
 	char *s;
+
+	q = quantity;
 
 	for (i=0; i<pilot->noutfits; i++)
 		if (strcmp(outfit->name, pilot->outfits[i].outfit->name)==0) {
 			pilot->outfits[i].quantity += quantity;
-			return quantity;
+			/* can't be over max */
+			if (pilot->outfits[i].quantity > outfit->max) {
+				q -= pilot->outfits[i].quantity - outfit->max;
+				pilot->outfits[i].quantity = outfit->max;;
+			}
+			return q;
 		}
 
 	s = (pilot->secondary) ? pilot->secondary->outfit->name : NULL;
 	pilot->outfits = realloc(pilot->outfits, (pilot->noutfits+1)*sizeof(PilotOutfit));
 	pilot->outfits[pilot->noutfits].outfit = outfit;
 	pilot->outfits[pilot->noutfits].quantity = quantity;
+	/* can't be over max */
+	if (pilot->outfits[pilot->noutfits].quantity > outfit->max) {
+		q -= pilot->outfits[pilot->noutfits].quantity - outfit->max;
+		pilot->outfits[i].quantity = outfit->max;; 
+	}
 	pilot->outfits[pilot->noutfits].timer = 0;
 	(pilot->noutfits)++;
 
@@ -532,7 +544,8 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 	/* hack due to realloc possibility */
 	pilot_setSecondary( pilot, s );
 
-	return quantity;
+
+	return q;
 }
 
 
@@ -541,16 +554,17 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
  */
 int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 {
-	int i;
+	int i, q;
 	char* s;
 
+	q = quantity;
 	for (i=0; i<pilot->noutfits; i++)
 		if (strcmp(outfit->name, pilot->outfits[i].outfit->name)==0) {
 			pilot->outfits[i].quantity -= quantity;
 			if (pilot->outfits[i].quantity <= 0) {
 
 				/* we didn't actually remove the full amount */
-				quantity -= pilot->outfits[i].quantity;
+				q += pilot->outfits[i].quantity;
 
 				/* hack in case it reallocs - can happen even when shrinking */
 				s = (pilot->secondary) ? pilot->secondary->outfit->name : NULL;
@@ -564,7 +578,7 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 
 				pilot_setSecondary( pilot, s );
 			}
-			return quantity;
+			return q;
 		}
 	WARN("Failure attempting to remove %d '%s' from pilot '%s'",
 			quantity, outfit->name, pilot->name );
