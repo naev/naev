@@ -12,7 +12,12 @@ function control ()
 		end
 	elseif task == "none" then
 		planet = ai.rndplanet()
-		ai.pushtask(0, "goto", planet)
+		-- planet must exist
+		if planet == nil then
+			ai.pushtask(0, "hyperspace")
+		else
+			ai.pushtask(0, "goto", planet)
+		end
 	end
 end
 

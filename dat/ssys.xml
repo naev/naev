@@ -23,6 +23,7 @@
 <fleet chance="40">Sml Merchant Convoy</fleet>
 </fleets>
 <jumps>
+<jump>NCG-7291</jump>
 <jump>Arrakis</jump>
 </jumps>
 </ssys>
@@ -45,6 +46,30 @@
 <fleet chance="60">Merchant Llama</fleet>
 </fleets>
 <jumps>
+<jump>NCG-7291</jump>
+<jump>Delta Pavonis</jump>
+</jumps>
+</ssys>
+<ssys name="NCG-7291">
+<pos>
+<x>-23</x>
+<y>24</y>
+</pos>
+<general>
+<stars>230</stars>
+<asteroids>0</asteroids>
+<interference>0</interference>
+</general>
+<planets>
+</planets>
+<fleets>
+<fleet chance="80">Merchant Llama</fleet>
+<fleet chance="60">Merchant Mule</fleet>
+<fleet chance="60">Pirate Hyena</fleet>
+<fleet chance="60">Pirate Hyena</fleet>
+</fleets>
+<jumps>
+<jump>Arrakis</jump>
 <jump>Delta Pavonis</jump>
 </jumps>
 </ssys>
