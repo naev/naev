@@ -51,7 +51,10 @@ static void map_mouse( SDL_Event* event, double mx, double my );
  */
 void map_open (void)
 {
-	if (map_wid) map_close(NULL);
+	if (map_wid) {
+		map_close(NULL);
+		return;
+	}
 
 	/* set position to focus on current system */
 	map_xpos = cur_system->pos.x;
