@@ -136,7 +136,7 @@ static void map_update (void)
  */
 static void map_render( double bx, double by, double w, double h )
 {
-	int i;
+	int i,j;
 	double x,y,r;
 	StarSystem* sys;
 
@@ -156,11 +156,35 @@ static void map_render( double bx, double by, double w, double h )
 
 	/* render the star systems */
 	for (i=0; i<systems_nstack; i++) {
-		if (&systems_stack[i]==cur_system) COLOUR(cRadar_targ);
+		
+		sys = &systems_stack[i];
+
+		/* draw the system */
+		if (sys==cur_system) COLOUR(cRadar_targ);
+		else if (sys->nplanets==0) COLOUR(cInert);
 		else COLOUR(cYellow);
-		gl_drawCircleInRect( x + systems_stack[i].pos.x,
-				y + systems_stack[i].pos.y,
+		gl_drawCircleInRect( x + sys->pos.x, y + sys->pos.y,
 				r, bx, by, w, h );
+
+		/* draw the hyperspace paths */
+		glShadeModel(GL_SMOOTH);
+		for (j=0; j<sys->njumps; j++) {
+			/* cheaply use transparency instead of actually calculating
+			 * from where to where the line must go :) */
+			glBegin(GL_LINE_STRIP);
+				COLOUR(cTrans);
+				glVertex2d( x + sys->pos.x, y + sys->pos.y );
+				COLOUR(cInert);
+				glVertex2d( x + sys->pos.x +
+							(systems_stack[ sys->jumps[j] ].pos.x - sys->pos.x)/2.,
+						y + sys->pos.y +
+							(systems_stack[ sys->jumps[j] ].pos.y - sys->pos.y)/2.);
+				COLOUR(cTrans);
+				glVertex2d( x + systems_stack[ sys->jumps[j] ].pos.x,
+						y + systems_stack[ sys->jumps[j] ].pos.y);
+			glEnd(); /* GL_LINE_STRIP */
+		}
+		glShadeModel(GL_FLAT);
 	}
 
 	/* selected planet */
