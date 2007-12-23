@@ -23,6 +23,7 @@ glColour cGrey20     = { .r=0.20, .g=0.20, .b=0.20, .a=1. };
 glColour cGrey10     = { .r=0.10, .g=0.10, .b=0.10, .a=1. };              
 glColour cBlack      = { .r=0.00, .g=0.00, .b=0.00, .a=1. };              
 
+glColour cTrans		= { .r=1.00, .g=1.00, .b=1.00, .a=0. };
 glColour cGreen      = { .r=0.20, .g=0.80, .b=0.20, .a=1. };
 glColour cDarkRed		= { .r=0.60, .g=0.10, .b=0.10, .a=1. };
 glColour cRed        = { .r=0.80, .g=0.20, .b=0.20, .a=1. };
