@@ -51,7 +51,8 @@ extern glInfo gl_screen; /* local structure set with gl_init and co */
 /*
  * used with colour.h
  */
-#define COLOUR(x)     glColor4d((x).r,(x).g,(x).b,(x).a)
+#define COLOUR(x)		glColor4d((x).r,(x).g,(x).b,(x).a)
+#define ACOLOUR(x,a)	glColor4d((x).r,(x).g,(x).b,a)
 
 
 /*
