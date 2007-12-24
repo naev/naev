@@ -580,8 +580,11 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
 	rxw = rx+rw;
 	ryh = ry+rh;
 
+	/* is offscreen? */
+	if ((cx+r < rx) || (cy+r < ry) || (cx-r > rxw) || (cy-r > ryh))
+		return;
 	/* can be drawn normally? */
-	if ((cx-r > rx) && (cy-r > ry) && (cx+r < rxw) && (cy+r < ryh)) {
+	else if ((cx-r > rx) && (cy-r > ry) && (cx+r < rxw) && (cy+r < ryh)) {
 		gl_drawCircle( cx, cy, r );
 		return;
 	}
