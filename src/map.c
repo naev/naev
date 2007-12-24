@@ -14,17 +14,18 @@
 
 
 #define WINDOW_WIDTH		550
-#define WINDOW_HEIGHT	400
+#define WINDOW_HEIGHT	440
 
 #define MAP_WIDTH			(WINDOW_WIDTH-150)
-#define MAP_HEIGHT		(WINDOW_HEIGHT-60)
+#define MAP_HEIGHT		(WINDOW_HEIGHT-100)
 
 #define BUTTON_WIDTH		60
 #define BUTTON_HEIGHT	30
 
 
 static int map_wid = 0;
-static double map_xpos = 0.;
+static double map_zoom = 1.; /* zoom of the map */
+static double map_xpos = 0.; /* map position */
 static double map_ypos = 0.;
 static int map_selected = 0;
 
@@ -48,6 +49,7 @@ static void map_close( char* str );
 static void map_update (void);
 static void map_render( double bx, double by, double w, double h );
 static void map_mouse( SDL_Event* event, double mx, double my );
+static void map_buttonZoom( char* str );
 
 
 /*
@@ -79,10 +81,13 @@ void map_open (void)
 			&gl_smallFont, &cBlack, NULL );
 			
 
-	window_addCust( map_wid, 20, 20, MAP_WIDTH, MAP_HEIGHT,
+	window_addCust( map_wid, 20, -40, MAP_WIDTH, MAP_HEIGHT,
 			"cstMap", 1, map_render, map_mouse );
 	window_addButton( map_wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
 			"btnClose", "Close", map_close );
+
+	window_addButton( map_wid, 40, 20, 30, 30, "btnZoomIn", "+", map_buttonZoom );
+	window_addButton( map_wid, 80, 20, 30, 30, "btnZoomOut", "-", map_buttonZoom );
 
 	map_update();
 }
@@ -146,8 +151,8 @@ static void map_render( double bx, double by, double w, double h )
 	glColour* col;
 
 	r = 5.;
-	x = bx - map_xpos + w/2;
-	y = by - map_ypos + h/2;
+	x = (bx - map_xpos + w/2) * 1.;//map_zoom;
+	y = (by - map_ypos + h/2) * 1.;//map_zoom;
 
 	/* background */
 	COLOUR(cBlack);
@@ -168,7 +173,7 @@ static void map_render( double bx, double by, double w, double h )
 		if (sys==cur_system) COLOUR(cRadar_targ);
 		else if (sys->nplanets==0) COLOUR(cInert);
 		else COLOUR(cYellow);
-		gl_drawCircleInRect( x + sys->pos.x, y + sys->pos.y,
+		gl_drawCircleInRect( x + sys->pos.x*map_zoom, y + sys->pos.y*map_zoom,
 				r, bx, by, w, h );
 
 		/* draw the hyperspace paths */
@@ -186,18 +191,18 @@ static void map_render( double bx, double by, double w, double h )
 
 			glBegin(GL_LINE_STRIP);
 				ACOLOUR(*col,0.);
-				tx = x + sys->pos.x;
-				ty = y + sys->pos.y;
+				tx = x + sys->pos.x * map_zoom;
+				ty = y + sys->pos.y * map_zoom;
 				if (!((tx < bx) || (tx > bx+w) || (ty < by) || (ty > by+h)))
 					glVertex2d( tx, ty );
 				COLOUR(*col);
-				tx += (systems_stack[ sys->jumps[j] ].pos.x - sys->pos.x)/2.;
-				ty += (systems_stack[ sys->jumps[j] ].pos.y - sys->pos.y)/2.;
+				tx += (systems_stack[ sys->jumps[j] ].pos.x - sys->pos.x)/2. * map_zoom;
+				ty += (systems_stack[ sys->jumps[j] ].pos.y - sys->pos.y)/2. * map_zoom;
 				if (!((tx < bx) || (tx > bx+w) || (ty < by) || (ty > by+h)))
 					glVertex2d( tx, ty );
 				ACOLOUR(*col,0.);
-				tx = x + systems_stack[ sys->jumps[j] ].pos.x;
-				ty = y + systems_stack[ sys->jumps[j] ].pos.y;
+				tx = x + systems_stack[ sys->jumps[j] ].pos.x * map_zoom;
+				ty = y + systems_stack[ sys->jumps[j] ].pos.y * map_zoom;
 				if (!((tx < bx) || (tx > bx+w) || (ty < by) || (ty > by+h)))
 					glVertex2d( tx, ty );
 			glEnd(); /* GL_LINE_STRIP */
@@ -208,7 +213,8 @@ static void map_render( double bx, double by, double w, double h )
 	/* selected planet */
 	sys = &systems_stack[ map_selected ];
 	COLOUR(cRed);
-	gl_drawCircleInRect( x + sys->pos.x, y + sys->pos.y, r+3., bx, by, w, h );
+	gl_drawCircleInRect( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
+			r+3., bx, by, w, h );
 }
 /*
  * map event handling
@@ -218,7 +224,7 @@ static void map_mouse( SDL_Event* event, double mx, double my )
 	int i, j;
 	double x,y, t;
 
-	t = 13.*13.; /* threshold */
+	t = 15.*15.; /* threshold */
 
 	mx -= MAP_WIDTH/2 - map_xpos;
 	my -= MAP_HEIGHT/2 - map_ypos;
@@ -229,8 +235,8 @@ static void map_mouse( SDL_Event* event, double mx, double my )
 			/* selecting star system */
 			if (event->button.button==SDL_BUTTON_LEFT) {
 				for (i=0; i<systems_nstack; i++) {
-					x = systems_stack[i].pos.x;
-					y = systems_stack[i].pos.y;
+					x = systems_stack[i].pos.x * map_zoom;
+					y = systems_stack[i].pos.y * map_zoom;
 
 					if ((pow2(mx-x)+pow2(my-y)) < t) {
 						map_selected = i;
@@ -264,6 +270,13 @@ static void map_mouse( SDL_Event* event, double mx, double my )
 			}
 			break;
 	}
+}
+static void map_buttonZoom( char* str )
+{
+	if (strcmp(str,"btnZoomIn")==0)
+		map_zoom = MIN(2., map_zoom+0.5);
+	else if (strcmp(str,"btnZoomOut")==0)
+		map_zoom = MAX(0.5, map_zoom-0.5);
 }
 
 
