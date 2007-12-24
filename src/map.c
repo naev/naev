@@ -141,7 +141,7 @@ static void map_update (void)
 static void map_render( double bx, double by, double w, double h )
 {
 	int i,j;
-	double x,y,r;
+	double x,y,r, tx,ty;
 	StarSystem* sys;
 	glColour* col;
 
@@ -186,15 +186,20 @@ static void map_render( double bx, double by, double w, double h )
 
 			glBegin(GL_LINE_STRIP);
 				ACOLOUR(*col,0.);
-				glVertex2d( x + sys->pos.x, y + sys->pos.y );
+				tx = x + sys->pos.x;
+				ty = y + sys->pos.y;
+				if (!((tx < bx) || (tx > bx+w) || (ty < by) || (ty > by+h)))
+					glVertex2d( tx, ty );
 				COLOUR(*col);
-				glVertex2d( x + sys->pos.x +
-							(systems_stack[ sys->jumps[j] ].pos.x - sys->pos.x)/2.,
-						y + sys->pos.y +
-							(systems_stack[ sys->jumps[j] ].pos.y - sys->pos.y)/2.);
+				tx += (systems_stack[ sys->jumps[j] ].pos.x - sys->pos.x)/2.;
+				ty += (systems_stack[ sys->jumps[j] ].pos.y - sys->pos.y)/2.;
+				if (!((tx < bx) || (tx > bx+w) || (ty < by) || (ty > by+h)))
+					glVertex2d( tx, ty );
 				ACOLOUR(*col,0.);
-				glVertex2d( x + systems_stack[ sys->jumps[j] ].pos.x,
-						y + systems_stack[ sys->jumps[j] ].pos.y);
+				tx = x + systems_stack[ sys->jumps[j] ].pos.x;
+				ty = y + systems_stack[ sys->jumps[j] ].pos.y;
+				if (!((tx < bx) || (tx > bx+w) || (ty < by) || (ty > by+h)))
+					glVertex2d( tx, ty );
 			glEnd(); /* GL_LINE_STRIP */
 		}
 		glShadeModel(GL_FLAT);
