@@ -451,7 +451,11 @@ static int ai_pushtask( lua_State *L )
 		else if (lua_islightuserdata(L,3)) { /* only pointer valid is Vector2d* in Lua */
 			t->dtype = TYPE_PTR;
 			t->dat.target = MALLOC_ONE(Vector2d);
-			vectcpy( t->dat.target, (Vector2d*)lua_topointer(L,3) );
+			/* no idea why vectcpy doesn't work here... */
+			((Vector2d*)t->dat.target)->x = ((Vector2d*)lua_topointer(L,3))->x;
+			((Vector2d*)t->dat.target)->y = ((Vector2d*)lua_topointer(L,3))->y;
+			((Vector2d*)t->dat.target)->mod = ((Vector2d*)lua_topointer(L,3))->mod;
+			((Vector2d*)t->dat.target)->angle = ((Vector2d*)lua_topointer(L,3))->angle;
 		}
 		else t->dtype = TYPE_NULL;
 	}
@@ -815,6 +819,7 @@ static int ai_getrndplanet( lua_State *L )
 
 	Planet** planets;
 	int nplanets, i;
+	Vector2d v;
 	planets = malloc( sizeof(Planet*) * cur_system->nplanets );
 
 	for (nplanets=0, i=0; i<cur_system->nplanets; i++)
@@ -829,7 +834,10 @@ static int ai_getrndplanet( lua_State *L )
 
 	/* we can actually get a random planet now */
 	i = RNG(0,nplanets-1);
-	lua_pushlightuserdata( L, &planets[i]->pos );
+	vectcpy( &v, &planets[i]->pos );
+	vect_cadd( &v, RNG(0, planets[i]->gfx_space->sw)-planets[i]->gfx_space->sw/2.,
+			RNG(0, planets[i]->gfx_space->sh)-planets[i]->gfx_space->sh/2. );
+	lua_pushlightuserdata( L, &v );
 	free(planets);
 	return 1;
 }
