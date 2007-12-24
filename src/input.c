@@ -146,7 +146,7 @@ void input_setKeybind( char *keybind, KeybindType type, int key, int reverse )
  * @param abs is whether or not it's an absolute value (for them joystick)
  */
 #define KEY(s)		(strcmp(input_keybinds[keynum]->name,s)==0)
-#define INGAME()	(!paused)
+#define INGAME()	(!toolkit)
 static void input_key( int keynum, double value, int abs )
 {
 	/*
