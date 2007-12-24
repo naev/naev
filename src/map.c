@@ -175,6 +175,11 @@ static void map_render( double bx, double by, double w, double h )
 		else COLOUR(cYellow);
 		gl_drawCircleInRect( x + sys->pos.x*map_zoom, y + sys->pos.y*map_zoom,
 				r, bx, by, w, h );
+		/* draw the system name */
+		gl_printMax( &gl_smallFont, (bx+w)-(x + 7. + sys->pos.x * map_zoom),
+				x + 7. + sys->pos.x * map_zoom + gl_screen.w/2.,
+				y - 5. + sys->pos.y * map_zoom + gl_screen.h/2.,
+				&cWhite, sys->name );
 
 		/* draw the hyperspace paths */
 		glShadeModel(GL_SMOOTH);
@@ -187,7 +192,7 @@ static void map_render( double bx, double by, double w, double h )
 					((cur_system==&systems_stack[ sys->jumps[j] ]) &&
 					 (sys==&systems_stack[ cur_system->jumps[hyperspace_target] ] )))
 				col = &cRed;
-			else col = &cInert;
+			else col = &cDarkBlue;
 
 			glBegin(GL_LINE_STRIP);
 				ACOLOUR(*col,0.);
