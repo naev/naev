@@ -71,6 +71,29 @@
 <jumps>
 <jump>Arrakis</jump>
 <jump>Delta Pavonis</jump>
+<jump>NCG-7292</jump>
+</jumps>
+</ssys>
+<ssys name="NCG-7292">
+<pos>
+<x>-67</x>
+<y>20</y>
+</pos>
+<general>
+<stars>230</stars>
+<asteroids>0</asteroids>
+<interference>0</interference>
+</general>
+<planets>
+</planets>
+<fleets>
+<fleet chance="80">Merchant Llama</fleet>
+<fleet chance="60">Merchant Mule</fleet>
+<fleet chance="60">Pirate Hyena</fleet>
+<fleet chance="60">Pirate Hyena</fleet>
+</fleets>
+<jumps>
+<jump>NCG-7291</jump>
 </jumps>
 </ssys>
 </Systems>

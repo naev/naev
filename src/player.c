@@ -48,8 +48,8 @@ double player_turn = 0.; /* turn velocity from input */
 double player_acc = 0.; /* accel velocity from input */
 unsigned int player_target = PLAYER_ID; /* targetted pilot */
 /* pure internal */
-static int planet_target = -1; /* targetted planet */
-static int hyperspace_target = -1; /* targetted hyperspace route */
+int planet_target = -1; /* targetted planet */
+int hyperspace_target = -1; /* targetted hyperspace route */
 
 
 /*

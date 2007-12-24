@@ -33,8 +33,12 @@ static int map_drag = 0; /* is the user dragging the map? */
 /*
  * extern
  */
+/* space.c */
 extern StarSystem *systems_stack;
 extern int systems_nstack;
+/* player.c */
+extern int planet_target;
+extern int hyperspace_target;
 
 
 /*
@@ -139,6 +143,7 @@ static void map_render( double bx, double by, double w, double h )
 	int i,j;
 	double x,y,r;
 	StarSystem* sys;
+	glColour* col;
 
 	r = 5.;
 	x = bx - map_xpos + w/2;
@@ -168,18 +173,26 @@ static void map_render( double bx, double by, double w, double h )
 
 		/* draw the hyperspace paths */
 		glShadeModel(GL_SMOOTH);
+		/* cheaply use transparency instead of actually calculating
+		 * from where to where the line must go :) */  
 		for (j=0; j<sys->njumps; j++) {
-			/* cheaply use transparency instead of actually calculating
-			 * from where to where the line must go :) */
+			/* set the colours */
+			/* is the route the current one? */
+			if (((cur_system==sys) && (j==hyperspace_target)) ||
+					((cur_system==&systems_stack[ sys->jumps[j] ]) &&
+					 (sys==&systems_stack[ cur_system->jumps[hyperspace_target] ] )))
+				col = &cRed;
+			else col = &cInert;
+
 			glBegin(GL_LINE_STRIP);
-				COLOUR(cTrans);
+				ACOLOUR(*col,0.);
 				glVertex2d( x + sys->pos.x, y + sys->pos.y );
-				COLOUR(cInert);
+				COLOUR(*col);
 				glVertex2d( x + sys->pos.x +
 							(systems_stack[ sys->jumps[j] ].pos.x - sys->pos.x)/2.,
 						y + sys->pos.y +
 							(systems_stack[ sys->jumps[j] ].pos.y - sys->pos.y)/2.);
-				COLOUR(cTrans);
+				ACOLOUR(*col,0.);
 				glVertex2d( x + systems_stack[ sys->jumps[j] ].pos.x,
 						y + systems_stack[ sys->jumps[j] ].pos.y);
 			glEnd(); /* GL_LINE_STRIP */
@@ -197,7 +210,7 @@ static void map_render( double bx, double by, double w, double h )
  */
 static void map_mouse( SDL_Event* event, double mx, double my )
 {
-	int i;
+	int i, j;
 	double x,y, t;
 
 	t = 13.*13.; /* threshold */
@@ -216,6 +229,13 @@ static void map_mouse( SDL_Event* event, double mx, double my )
 
 					if ((pow2(mx-x)+pow2(my-y)) < t) {
 						map_selected = i;
+						for (j=0; j<cur_system->njumps; j++)
+							if (i==cur_system->jumps[j]) {
+								planet_target = -1; /* override planet_target */
+								hyperspace_target = j;
+								break;
+							}
+
 						map_update();
 						break;
 					}
