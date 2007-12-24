@@ -176,10 +176,12 @@ static void map_render( double bx, double by, double w, double h )
 		gl_drawCircleInRect( x + sys->pos.x*map_zoom, y + sys->pos.y*map_zoom,
 				r, bx, by, w, h );
 		/* draw the system name */
-		if (map_zoom >= 1.) /* can't be tiny */
-			gl_printMax( &gl_smallFont, (bx+w)-(x + 7. + sys->pos.x * map_zoom),
-					x + 7. + sys->pos.x * map_zoom + gl_screen.w/2.,
-					y - 5. + sys->pos.y * map_zoom + gl_screen.h/2.,
+		tx = x + 7. + sys->pos.x * map_zoom;
+		ty = y - 5. + sys->pos.y * map_zoom;
+		if ((map_zoom >= 1.) && /* can't be tiny */
+				((tx > bx) && (ty > by) && (ty < by+h-6.))) /* width checking by print */
+			gl_printMax( &gl_smallFont, (bx+w)-(tx),
+					tx + gl_screen.w/2., ty + gl_screen.h/2.,
 					&cWhite, sys->name );
 
 		/* draw the hyperspace paths */
