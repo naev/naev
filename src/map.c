@@ -279,10 +279,14 @@ static void map_mouse( SDL_Event* event, double mx, double my )
 }
 static void map_buttonZoom( char* str )
 {
-	if (strcmp(str,"btnZoomIn")==0)
-		map_zoom = MIN(2., map_zoom+0.5);
-	else if (strcmp(str,"btnZoomOut")==0)
-		map_zoom = MAX(0.5, map_zoom-0.5);
+	if (strcmp(str,"btnZoomIn")==0) {
+		map_zoom += (map_zoom >= 1.) ? 0.5 : 0.25;
+		map_zoom = MIN(2.5, map_zoom);
+	}
+	else if (strcmp(str,"btnZoomOut")==0) {
+		map_zoom -= (map_zoom > 1.) ? 0.5 : 0.25;
+		map_zoom = MAX(0.5, map_zoom);
+	}
 }
 
 
