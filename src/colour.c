@@ -27,6 +27,8 @@ glColour cGreen      = { .r=0.20, .g=0.80, .b=0.20, .a=1. };
 glColour cDarkRed		= { .r=0.60, .g=0.10, .b=0.10, .a=1. };
 glColour cRed        = { .r=0.80, .g=0.20, .b=0.20, .a=1. };
 glColour cYellow		= { .r=0.80, .g=0.80, .b=0.00, .a=1. };
+glColour cDarkBlue	= { .r=0.10, .g=0.10, .b=0.60, .a=1. };
+glColour cBlue			= { .r=0.20, .g=0.20, .b=0.80, .a=1. };
 
 
 /*
