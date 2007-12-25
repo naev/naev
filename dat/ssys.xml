@@ -115,6 +115,7 @@
 <interference>0</interference>
 </general>
 <planets>
+<planet>S72839</planet>
 </planets>
 <fleets>
 <fleet chance="80">Collective Drone</fleet>

@@ -69,4 +69,24 @@ The Omega Canteen is a dark place that seems calm, although everytime a robotic 
 <exterior>station00.png</exterior>
 </GFX>
 </planet>
+<planet name="S72839">
+<pos>
+<x>0</x>
+<y>0</y>
+</pos>
+<general>
+<class>0</class>
+<description>
+You shouldn't be here, there is no life support module.
+</description>
+<faction>Collective</faction>
+<services>0</services>
+<tech>0</tech>
+<commodities>0</commodities>
+</general>
+<GFX>
+<space>station01.png</space>
+<exterior>station01.png</exterior>
+</GFX>
+</planet>
 </Planets>
