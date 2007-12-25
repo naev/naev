@@ -745,7 +745,7 @@ static int ai_turn( lua_State *L )
 static int ai_face( lua_State *L )
 {
 	MIN_ARGS(1);
-	Vector2d* v; /* get the position to face */
+	Vector2d *v, sv, tv; /* get the position to face */
 	Pilot* p;
 	double mod, diff;
 	int invert = 0;
@@ -757,21 +757,33 @@ static int ai_face( lua_State *L )
 	if (n >= 0 ) {
 		p = pilot_get(n);
 		if (p==NULL) return 0; /* make sure pilot is valid */
-		v = &p->solid->pos;
+		vect_cset( &tv, VX(p->solid->pos) + FACE_WVEL*VX(p->solid->vel),
+				VY(p->solid->pos) + FACE_WVEL*VY(p->solid->vel) );
+		v = NULL;
 	}
 	else if (lua_islightuserdata(L,1)) v = (Vector2d*)lua_topointer(L,1);
 
 	mod = -10;
 	if (lua_gettop(L) > 1 && lua_isnumber(L,2)) invert = (int)lua_tonumber(L,2);
 	if (invert) mod *= -1;
-	diff = angle_diff(cur_pilot->solid->dir,
-			(n==-1) ? VANGLE(cur_pilot->solid->pos) :
+
+	vect_cset( &sv, VX(cur_pilot->solid->pos) + FACE_WVEL*VX(cur_pilot->solid->vel),
+			VY(cur_pilot->solid->pos) + FACE_WVEL*VY(cur_pilot->solid->vel) );
+	if (v!=NULL) /* target is static */
+		diff = angle_diff(cur_pilot->solid->dir,
+				(n==-1) ? VANGLE(cur_pilot->solid->pos) :
 				vect_angle(&cur_pilot->solid->pos, v));
+	else /* target is dynamic */
+		diff = angle_diff(cur_pilot->solid->dir,
+				(n==-1) ? VANGLE(sv) :
+				vect_angle(&sv, &tv));
+
 
 	pilot_turn = mod*diff;
 
 	lua_pushnumber(L, ABS(diff*180./M_PI));
 	return 1;
+
 }
 
 
