@@ -92,8 +92,12 @@
 <planets>
 </planets>
 <fleets>
-<fleet chance="80">Merchant Llama</fleet>
-<fleet chance="60">Merchant Mule</fleet>
+<fleet chance="60">Empire Lancelot</fleet>
+<fleet chance="40">Empire Lancelot</fleet>
+<fleet chance="80">Collective Drone</fleet>
+<fleet chance="80">Collective Drone</fleet>
+<fleet chance="60">Collective Drone</fleet>
+<fleet chance="60">Collective Sml Swarm</fleet>
 </fleets>
 <jumps>
 <jump>NCG-7291</jump>

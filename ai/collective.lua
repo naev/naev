@@ -6,6 +6,8 @@ function control ()
 		enemy = ai.getenemy()
 
 		if enemy ~= 0 then
+			-- make hostile to the enemy (mainly for player)
+			ai.hostile(enemy)
 			ai.pushtask(0, "attack", enemy)
 		end
 	end
