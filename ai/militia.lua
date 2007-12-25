@@ -35,7 +35,7 @@ end
 
 function create ()
 	if ai.rnd(0,2)==0 then
-		ai.broadcast("This area is under survellance, do not attempt anything funny")
+		ai.broadcast("This area is under militia survellance.")
 	end
 end
 
