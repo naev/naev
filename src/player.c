@@ -588,15 +588,15 @@ void player_render (void)
 	/*
 	 * misc
 	 */
-	gl_print( NULL,
-			gui.misc.x + 10,
-			gui.misc.y - 10 - gl_defFont.h,
-			&cConsole, "Credits:" );
+	gl_print( &gl_smallFont,
+			gui.misc.x + 8,
+			gui.misc.y - 8 - gl_smallFont.h,
+			&cConsole, "Creds:" );
 	credits2str( str, player_credits, 2 );
 	i = gl_printWidth( &gl_smallFont, "%s", str );
 	gl_print( &gl_smallFont,
-			gui.misc.x + gui.misc.w - 10 - i,
-			gui.misc.y - 10 - gl_defFont.h, NULL, "%s", str );
+			gui.misc.x + gui.misc.w - 15 - i,
+			gui.misc.y - 8 - gl_smallFont.h, NULL, "%s", str );
 
 
 
