@@ -38,4 +38,23 @@
 <pilot chance='100'>Hyena</pilot>
 </pilots>
 </fleet>
+<fleet name="Collective Drone">
+<ai>collective</ai>
+<faction>Collective</faction>
+<pilots>
+<pilot chance='100'>Drone</pilot>
+</pilots>
+</fleet>
+<fleet name="Collective Sml Swarm">
+<ai>collective</ai>                                                       
+<faction>Collective</faction>
+<pilots>
+<pilot chance='100'>Drone</pilot>
+<pilot chance='90'>Drone</pilot>
+<pilot chance='80'>Drone</pilot>
+<pilot chance='70'>Drone</pilot>
+<pilot chance='60'>Drone</pilot>
+<pilot chance='50'>Drone</pilot>
+</pilots>
+</fleet>
 </Fleets>

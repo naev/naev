@@ -165,7 +165,7 @@ static void alliance_parse( xmlNodePtr parent )
 			do {
 				if (strcmp((char*)cur->name,"ally")==0) {
 
-					/* add the faction (and pointers to make life easier */
+					/* add the faction (and pointers to make life easier) */
 					a = alliances + nalliances-1;
 					i = &a->nfactions;
 					(*i)++;

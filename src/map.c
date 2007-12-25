@@ -171,7 +171,8 @@ static void map_render( double bx, double by, double w, double h )
 
 		/* draw the system */
 		if (sys==cur_system) COLOUR(cRadar_targ);
-		else if (sys->nplanets==0) COLOUR(cInert);
+		else if (sys->nplanets==0) COLOUR(cInert); /* TODO dependent on planet type */
+		else if (areEnemies(player->faction, sys->faction)) COLOUR(cRed);
 		else COLOUR(cYellow);
 		gl_drawCircleInRect( x + sys->pos.x*map_zoom, y + sys->pos.y*map_zoom,
 				r, bx, by, w, h );

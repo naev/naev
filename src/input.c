@@ -162,32 +162,32 @@ static void input_key( int keynum, double value, int abs )
 	} else if (KEY("left")) {
 
 		/* set flags for facing correction */
-		if (value==KEY_PRESS) player_setFlag(PLAYER_TURN_LEFT);
-		else if (value==KEY_RELEASE) player_rmFlag(PLAYER_TURN_LEFT);
+		if (value==KEY_PRESS) { player_setFlag(PLAYER_TURN_LEFT); }
+		else if (value==KEY_RELEASE) { player_rmFlag(PLAYER_TURN_LEFT); }
 
-		if (abs) player_turn = -value;
-		else player_turn -= value;
-		if (player_turn < -1.) player_turn = -1.; /* make sure value is sane */
+		if (abs) { player_turn = -value; }
+		else { player_turn -= value; }
+		if (player_turn < -1.) { player_turn = -1.; } /* make sure value is sane */
 
 	/* turning right */
 	} else if (KEY("right")) {
 
 		/* set flags for facing correction */
-		if (value==KEY_PRESS) player_setFlag(PLAYER_TURN_RIGHT);
-		else if (value==KEY_RELEASE) player_rmFlag(PLAYER_TURN_RIGHT);
+		if (value==KEY_PRESS) { player_setFlag(PLAYER_TURN_RIGHT); }
+		else if (value==KEY_RELEASE) { player_rmFlag(PLAYER_TURN_RIGHT); }
 
-		if (abs) player_turn = value;
-		else player_turn += value;
-		if (player_turn > 1.) player_turn = 1.; /* make sure value is sane */
+		if (abs) { player_turn = value; }
+		else { player_turn += value; }
+		if (player_turn > 1.) { player_turn = 1.; } /* make sure value is sane */
 	
 	/* turn around to face vel */
 	} else if (KEY("reverse")) {
-		if (value==KEY_PRESS) player_setFlag(PLAYER_REVERSE);
+		if (value==KEY_PRESS) { player_setFlag(PLAYER_REVERSE); }
 		else if (value==KEY_RELEASE) {
 			player_rmFlag(PLAYER_REVERSE);
 			player_turn = 0; /* turning corrections */
-			if (player_isFlag(PLAYER_TURN_LEFT)) player_turn -= 1;
-			if (player_isFlag(PLAYER_TURN_RIGHT)) player_turn += 1;
+			if (player_isFlag(PLAYER_TURN_LEFT)) { player_turn -= 1; }
+			if (player_isFlag(PLAYER_TURN_RIGHT)) { player_turn += 1; }
 		}
 	
 
@@ -196,22 +196,21 @@ static void input_key( int keynum, double value, int abs )
 	 */
 	/* shooting primary weapon */
 	} else if (KEY("primary")) {
-		if (value==KEY_PRESS) player_setFlag(PLAYER_PRIMARY);
-		else if (value==KEY_RELEASE) player_rmFlag(PLAYER_PRIMARY);
+		if (value==KEY_PRESS) { player_setFlag(PLAYER_PRIMARY); }
+		else if (value==KEY_RELEASE) { player_rmFlag(PLAYER_PRIMARY); }
 	/* targetting */
 	} else if (KEY("target") && !paused) {
 		if (value==KEY_PRESS) player_target = pilot_getNext(player_target);
-
 	} else if (KEY("target_nearest") && !paused) {
 		if (value==KEY_PRESS) player_target = pilot_getHostile();
 	/* face the target */
 	} else if (KEY("face")) {
-		if (value==KEY_PRESS) player_setFlag(PLAYER_FACE);
+		if (value==KEY_PRESS) { player_setFlag(PLAYER_FACE); }
 		else if (value==KEY_RELEASE) {
 			player_rmFlag(PLAYER_FACE);
 			player_turn = 0; /* turning corrections */
-			if (player_isFlag(PLAYER_TURN_LEFT)) player_turn -= 1;
-			if (player_isFlag(PLAYER_TURN_RIGHT)) player_turn += 1;
+			if (player_isFlag(PLAYER_TURN_LEFT)) { player_turn -= 1; }
+			if (player_isFlag(PLAYER_TURN_RIGHT)) { player_turn += 1; }
 		}
 	/* board them ships */
 	} else if (KEY("board") && INGAME()) {
@@ -223,8 +222,8 @@ static void input_key( int keynum, double value, int abs )
 	 */
 	/* shooting secondary weapon */
 	} else if (KEY("secondary") && INGAME()) {
-		if (value==KEY_PRESS) player_setFlag(PLAYER_SECONDARY);
-		else if (value==KEY_RELEASE) player_rmFlag(PLAYER_SECONDARY);
+		if (value==KEY_PRESS) { player_setFlag(PLAYER_SECONDARY); }
+		else if (value==KEY_RELEASE) { player_rmFlag(PLAYER_SECONDARY); }
 
 	/* selecting secondary weapon */
 	} else if (KEY("secondary_next") && INGAME()) {

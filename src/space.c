@@ -553,6 +553,10 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 	MELEMENT(flags&FLAG_INTERFERENCESET,"inteference");
 #undef MELEMENT
 
+	/* post-processing */
+	if (temp->nplanets > 0) /* TODO make dependent on overall planet faction */
+		temp->faction = temp->planets[0].faction;
+
 	return temp;
 }
 

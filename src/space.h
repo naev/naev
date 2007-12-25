@@ -86,6 +86,8 @@ typedef struct StarSystem_ {
 	int stars, asteroids; /* in number */
 	double interference; /* in % */
 
+	Faction *faction; /* overall faction */
+
 	Planet *planets; /* planets */
 	int nplanets; /* total number of planets */
 

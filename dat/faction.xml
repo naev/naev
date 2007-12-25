@@ -10,16 +10,40 @@
 </faction>
 <faction name="Militia">
 </faction>
+<faction name="Empire">
+</faction>
+<faction name="Collective">
+</faction>
 <Alliances>
 <alliance name="Neutral">
 <ally>Independent</ally>
 <ally>Merchant</ally>
 <ally>Militia</ally>
 </alliance>
+<alliance name="Empire United">
+<ally>Empire</ally>
+<ally>Merchant</ally>
+</alliance>
 </Alliances>
 <Enemies>
 <enemies>
+<enemy type="faction">Collective</enemy>
 <enemy type="alliance">Neutral</enemy>
+</enemies>
+<enemies>
+<enemy type="faction">Collective</enemy>
+<enemy type="alliance">Empire United</enemy>
+</enemies>
+<enemies>
+<enemy type="faction">Collective</enemy>
+<enemy type="faction">Player</enemy>
+</enemies>
+<enemies>
+<enemy type="alliance">Neutral</enemy>
+<enemy type="faction">Pirate</enemy>
+</enemies>
+<enemies>
+<enemy type="alliance">Empire United</enemy>
 <enemy type="faction">Pirate</enemy>
 </enemies>
 <enemies>

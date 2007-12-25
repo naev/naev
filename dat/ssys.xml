@@ -94,6 +94,29 @@
 </fleets>
 <jumps>
 <jump>NCG-7291</jump>
+<jump>C-59</jump>
+</jumps>
+</ssys>
+<ssys name="C-59">
+<pos>
+<x>-90</x>
+<y>50</y>
+</pos>
+<general>
+<stars>200</stars>
+<asteroids>0</asteroids>
+<interference>0</interference>
+</general>
+<planets>
+</planets>
+<fleets>
+<fleet chance="80">Collective Drone</fleet>
+<fleet chance="80">Collective Drone</fleet>
+<fleet chance="80">Collective Drone</fleet>
+<fleet chance="60">Collective Sml Swarm</fleet>
+</fleets>
+<jumps>
+<jump>NCG-7292</jump>
 </jumps>
 </ssys>
 </Systems>
