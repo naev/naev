@@ -66,6 +66,41 @@ The star product of Aerosys, the Hyena quickly has become a favorite of pirates 
 <outfit quantity='2'>Laser</outfit>
 </outfits>
 </ship>
+<ship name="Hawking">
+<GFX>hawking</GFX>
+<GUI>minimal</GUI>
+<sound>engine</sound>
+<class>3</class>
+<price>7500000</price>
+<fabricator>Nexus</fabricator>
+<description>
+A heavy frigate designed for heavy combat.  Used widely by the empire to establish control on it's territory.  Has more then enough firepower to not be taken lightly.
+</description>
+<movement>
+<thrust>200</thrust>
+<turn>90</turn>
+<speed>260</speed>
+</movement>
+<health>
+<shield>1040</shield>
+<armour>720</armour>
+<energy>900</energy>
+<shield_regen>300</shield_regen>
+<armour_regen>80</armour_regen>
+<energy_regen>50</energy_regen>
+</health>
+<caracteristics>
+<crew>35</crew>
+<mass>500</mass>
+<cap_weapon>180</cap_weapon>
+<cap_cargo>70</cap_cargo>
+</caracteristics>
+<outfits>
+<outfit quantity='3'>Laser Turret</outfit>
+<outfit quantity='2'>Headhunter Launcher</outfit>
+<outfit quantity='40'>Headhunter</outfit>
+</outfits>
+</ship>
 <ship name="Lancelot">
 <GFX>lancelot</GFX>
 <GUI>minimal</GUI>
