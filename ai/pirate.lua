@@ -10,6 +10,8 @@ function control ()
 		if ai.parmour() == 100 then
 			-- "attack" should be running after "runaway"
 			ai.poptask()
+		elseif ai.dist( ai.pos( ai.targetid() ) ) > 300 then
+			ai.hyperspace()
 		end
 
 	-- nothing to do

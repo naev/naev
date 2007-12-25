@@ -52,6 +52,7 @@ static int nfleets = 0;
 /* external */
 extern void ai_destroy( Pilot* p ); /* ai.c */
 extern void ai_think( Pilot* pilot ); /* ai.c */
+extern void ai_create( Pilot* pilot ); /* ai.c */
 extern void player_think( Pilot* pilot ); /* player.c */
 extern void player_brokeHyperspace (void); /* player.c */
 extern int gui_load( const char *name ); /* player.c */
@@ -658,8 +659,10 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction, AI_Prof
 	else {
 		pilot->think = ai_think;
 		pilot->render = pilot_render;
+		ai_create(pilot); /* will run the create function in the ai */
 	}
 
+	/* all update the same way */
 	pilot->update = pilot_update;
 }
 

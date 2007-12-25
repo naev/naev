@@ -8,10 +8,13 @@
 </faction>
 <faction name="Pirate">
 </faction>
+<faction name="Militia">
+</faction>
 <Alliances>
 <alliance name="Neutral">
 <ally>Independent</ally>
 <ally>Merchant</ally>
+<ally>Militia</ally>
 </alliance>
 </Alliances>
 <Enemies>

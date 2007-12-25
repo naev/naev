@@ -114,6 +114,7 @@ static int ai_loadProfile( char* filename );
 static void ai_freetask( Task* t );
 /* External C routines */
 void ai_attacked( Pilot* attacked, const unsigned int attacker ); /* weapon.c */
+void ai_create( Pilot* pilot ); /* pilot.c */
 
 
 /*
@@ -407,6 +408,17 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker )
 	lua_getglobal(L, "attacked");
 	lua_pushnumber(L, attacker);
 	lua_pcall(L, 1, 0, 0);
+}
+
+
+/*
+ * pilot was just created
+ */
+void ai_create( Pilot* pilot )
+{
+	cur_pilot = pilot;
+	L = cur_pilot->ai->L;
+	AI_LCALL("create");
 }
 
 

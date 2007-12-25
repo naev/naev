@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Fleets>
-<fleet name="Test">
-<ai>test</ai>
-<faction>Independent</faction>
+<fleet name="Militia Lancelot">
+<ai>militia</ai>
+<faction>Militia</faction>
 <pilots>
-<pilot chance='100' name="Mr. Test">Lancelot</pilot>
+<pilot chance='100'>Lancelot</pilot>
 </pilots>
 </fleet>
 <fleet name="Merchant Llama">
