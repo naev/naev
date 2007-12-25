@@ -71,7 +71,7 @@ The star product of Aerosys, the Hyena quickly has become a favorite of pirates 
 <GUI>minimal</GUI>
 <sound>engine</sound>
 <class>2</class>
-<price>600000</price>
+<price>700000</price>
 <fabricator>Nexus</fabricator>
 <description>
 One of the Nexus' prize heavy fighters.  Was originally a secret design for the Empire military, but then disclosed.  Now a modified version is available for civilians, although it doesn't meet up to the original specifications.
@@ -98,8 +98,8 @@ Used by security agencies all over the universe for it's reliability and availab
 </caracteristics>
 <outfits>
 <outfit quantity='3'>Laser</outfit>
-<outfit quantity='2'>Missile Launcher</outfit>
-<outfit quantity='20'>Missile</outfit>
+<outfit quantity='2'>Headhunter Launcher</outfit>
+<outfit quantity='20'>Headhunter</outfit>
 </outfits>
 </ship>
 <ship name="Mule">
