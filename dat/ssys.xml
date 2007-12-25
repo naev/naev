@@ -61,12 +61,17 @@
 <interference>0</interference>
 </general>
 <planets>
+<planet>Omega Station</planet>
 </planets>
 <fleets>
-<fleet chance="80">Merchant Llama</fleet>
-<fleet chance="60">Merchant Mule</fleet>
-<fleet chance="60">Pirate Hyena</fleet>
-<fleet chance="60">Pirate Hyena</fleet>
+<fleet chance="80">Merchant Mule</fleet>
+<fleet chance="60">Merchant Llama</fleet>
+<fleet chance="80">Empire Lancelot</fleet>
+<fleet chance="60">Empire Lancelot</fleet>
+<fleet chance="50">Empire Sml Defense</fleet>
+<fleet chance="80">Collective Drone</fleet>
+<fleet chance="60">Collective Drone</fleet>
+<fleet chance="50">Collective Sml Swarm</fleet>
 </fleets>
 <jumps>
 <jump>Arrakis</jump>
@@ -89,8 +94,6 @@
 <fleets>
 <fleet chance="80">Merchant Llama</fleet>
 <fleet chance="60">Merchant Mule</fleet>
-<fleet chance="60">Pirate Hyena</fleet>
-<fleet chance="60">Pirate Hyena</fleet>
 </fleets>
 <jumps>
 <jump>NCG-7291</jump>

@@ -165,6 +165,7 @@ void planets_minimap( const double res, const double w, const double h,
 static PlanetClass planetclass_get( const char a )
 {
 	switch (a) {
+		/* planets use letters */
 		case 'A': return PLANET_CLASS_A;
 		case 'B': return PLANET_CLASS_B;
 		case 'C': return PLANET_CLASS_C;
@@ -188,6 +189,8 @@ static PlanetClass planetclass_get( const char a )
 		case 'X': return PLANET_CLASS_X;
 		case 'Y': return PLANET_CLASS_Y;
 		case 'Z': return PLANET_CLASS_Z;
+		/* stations use numbers - not as many types */
+		case '0': return STATION_CLASS_A;
 
 		default: return PLANET_CLASS_NULL;
 	};

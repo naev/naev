@@ -57,4 +57,20 @@
 <pilot chance='50'>Drone</pilot>
 </pilots>
 </fleet>
+<fleet name="Empire Lancelot">
+<ai>empire</ai>
+<faction>Empire</faction>
+<pilots>
+<pilot chance='100'>Lancelot</pilot>
+</pilots>
+</fleet>
+<fleet name="Empire Sml Defense">
+<ai>empire</ai>
+<faction>Empire</faction>
+<pilots>
+<pilot chance='100'>Lancelot</pilot>
+<pilot chance='80'>Lancelot</pilot>
+<pilot chance='60'>Lancelot</pilot>
+</pilots>
+</fleet>
 </Fleets>

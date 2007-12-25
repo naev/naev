@@ -44,7 +44,8 @@ typedef enum PlanetClass_ { PLANET_CLASS_NULL=0, /* Null/Not defined */
 	PLANET_CLASS_T,   /* Ultragiant */
 	PLANET_CLASS_X,   /* Demon */
 	PLANET_CLASS_Y,   /* Demon */
-	PLANET_CLASS_Z    /* Demon */
+	PLANET_CLASS_Z,   /* Demon */
+	STATION_CLASS_A   /* TODO */
 } PlanetClass;
 
 /*
