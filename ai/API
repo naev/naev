@@ -167,7 +167,7 @@ shoot( [number weapon] )
 
 getenemy()
 	@desc returns the id of the nearest enemy
-	@return Pilot id of the closest enemy or -1 if none is found
+	@return Pilot id of the closest enemy or 0 if none is found
 
 
 
