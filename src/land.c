@@ -520,6 +520,9 @@ void takeoff (void)
 	sw = planet->gfx_space->w;
 	sh = planet->gfx_space->h;
 
+	/* no longer authorized to land */
+	player_rmFlag(PLAYER_LANDACK);
+
 	/* set player to another position with random facing direction and no vel */
 	player_warp( planet->pos.x + RNG(-sw/2,sw/2), planet->pos.y + RNG(-sh/2,sh/2) );
 	vect_pset( &player->solid->vel, 0., 0. );

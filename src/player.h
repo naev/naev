@@ -15,13 +15,14 @@
 #define PLAYER_TURN_LEFT   (1<<0)   /* player is turning left */
 #define PLAYER_TURN_RIGHT  (1<<1)   /* player is turning right */
 #define PLAYER_REVERSE		(1<<2)	/* player is facing opposite of vel */
-#define PLAYER_FACE        (1<<10)   /* player is facing target */
-#define PLAYER_PRIMARY     (1<<11)   /* player is shooting primary weapon */
-#define PLAYER_SECONDARY   (1<<12)   /* player is shooting secondary weapon */
+#define PLAYER_FACE        (1<<10)	/* player is facing target */
+#define PLAYER_PRIMARY     (1<<11)	/* player is shooting primary weapon */
+#define PLAYER_SECONDARY   (1<<12)	/* player is shooting secondary weapon */
+#define PLAYER_LANDACK		(1<<13)	/* player has permission to land */
 /* flag functions */
 #define player_isFlag(f)   (player_flags & f)
-#define player_setFlag(f)  (player_flags |= f)                            
-#define player_rmFlag(f)   (player_flags ^= f) 
+#define player_setFlag(f)  if (!player_isFlag(f)) player_flags |= f
+#define player_rmFlag(f)   if (player_isFlag(f)) player_flags ^= f
 
 
 /*

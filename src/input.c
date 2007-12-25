@@ -243,7 +243,7 @@ static void input_key( int keynum, double value, int abs )
 	} else if (KEY("thyperspace") && INGAME()) {
 		if (value==KEY_PRESS) player_targetHyperspace();
 	} else if (KEY("starmap")) {
-		if (value==KEY_PRESS)  map_open();
+		if (value==KEY_PRESS) map_open();
 	} else if (KEY("jump") && INGAME()) {
 		if (value==KEY_PRESS) player_jump();
 

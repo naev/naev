@@ -1112,6 +1112,7 @@ void player_secondaryNext (void)
 void player_targetPlanet (void)
 {
 	hyperspace_target = -1;
+	player_rmFlag(PLAYER_LANDACK);
 
 	/* no target */
 	if ((planet_target==-1) && (cur_system->nplanets > 0)) {
@@ -1135,10 +1136,20 @@ void player_land (void)
 		takeoff();
 		return;
 	}
-	
+
 	Planet* planet = &cur_system->planets[planet_target];
 	if (planet_target >= 0) { /* attempt to land */
-		if (vect_dist(&player->solid->pos,&planet->pos) > planet->gfx_space->sw) {
+		if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
+			if (!areEnemies( player->faction, planet->faction )) {              
+				player_message( "%s> Permission to land cleared.", planet->name );
+				player_setFlag(PLAYER_LANDACK);
+			}
+			else {
+				player_message( "%s> Land request denied.", planet->name );
+			}
+			return;
+		}
+		else if (vect_dist(&player->solid->pos,&planet->pos) > planet->gfx_space->sw) {
 			player_message("You are too far away to land on %s", planet->name);
 			return;
 		} else if ((pow2(VX(player->solid->vel)) + pow2(VY(player->solid->vel))) >
@@ -1165,6 +1176,8 @@ void player_land (void)
 			}
 		}
 		planet_target = tp;
+		player_rmFlag(PLAYER_LANDACK);
+		player_land(); /* rerun land protocol */
 	}
 }
 
@@ -1175,6 +1188,7 @@ void player_land (void)
 void player_targetHyperspace (void)
 {
 	planet_target = -1; /* get rid of planet target */
+	player_rmFlag(PLAYER_LANDACK); /* get rid of landing permission */
 	hyperspace_target++;
 
 	if (hyperspace_target >= cur_system->njumps)
