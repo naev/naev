@@ -110,6 +110,12 @@ void planets_minimap( const double res, const double w, const double h,
 
 	glBegin(GL_POINTS);
 	for (i=0; i<cur_system->nplanets; i++) {
+		if (areEnemies(player->faction, cur_system->planets[i].faction))
+			COLOUR(cHostile);
+		else if (areAllies(player->faction, cur_system->planets[i].faction))
+			COLOUR(cFriend);
+		else COLOUR(cNeutral);
+
 		r = (int)(cur_system->planets[i].gfx_space->sw / res);
 		cx = (int)((cur_system->planets[i].pos.x - player->solid->pos.x) / res);
 		cy = (int)((cur_system->planets[i].pos.y - player->solid->pos.y) / res);

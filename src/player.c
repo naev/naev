@@ -419,7 +419,6 @@ void player_render (void)
 	/*
 	 * planets
 	 */
-	COLOUR(cFriend);
 	planets_minimap(gui.radar.res, gui.radar.w, gui.radar.h, gui.radar.shape);
 
 	/*
