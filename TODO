@@ -5,15 +5,23 @@
 	*) Missions
 	*) Save
 		*) Allow multiple ships in storage
+	*) Tech system
+	*) Commodities
+	*) Main menu
 
 
 	MAJOR
 
-	*) Better AI
+	*) Better AI (boids)
 	*) More sounds (redo sound system?)
+	*) Escorts (boarding taking over too)
 
 
 	MINOR
-	
+
 	*) Real news
 	*) Dynamic Economy
+	*) YAML (when DOM parser is done)
+	*) Cinema scenes
+
+
