@@ -1200,7 +1200,11 @@ void player_targetHyperspace (void)
  */
 void player_jump (void)
 {
-	if (hyperspace_target == -1) return;
+	if ((hyperspace_target == -1) ||
+			pilot_isFlag(player, PILOT_HYP_PREP) ||
+			pilot_isFlag(player, PILOT_HYP_BEGIN) ||
+			pilot_isFlag(player, PILOT_HYPERSPACE))
+		return;
 
 	int i = space_hyperspace(player);
 
@@ -1227,6 +1231,20 @@ void player_brokeHyperspace (void)
 
 	/* stop hyperspace */
 	pilot_rmFlag( player, PILOT_HYPERSPACE | PILOT_HYP_BEGIN | PILOT_HYP_PREP );
+}
+
+
+/*
+ * makes player face his hyperspace target
+ */
+double player_faceHyperspace (void)
+{
+	double a;
+	a = ANGLE( systems_stack[ cur_system->jumps[hyperspace_target] ].pos.x -
+				cur_system->pos.x,
+			systems_stack[ cur_system->jumps[hyperspace_target] ].pos.y -
+				cur_system->pos.y );
+	return pilot_face( player, a );
 }
 
 

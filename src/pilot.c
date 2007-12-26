@@ -55,6 +55,7 @@ extern void ai_think( Pilot* pilot ); /* ai.c */
 extern void ai_create( Pilot* pilot ); /* ai.c */
 extern void player_think( Pilot* pilot ); /* player.c */
 extern void player_brokeHyperspace (void); /* player.c */
+extern double player_faceHyperspace (void); /* player.c */
 extern int gui_load( const char *name ); /* player.c */
 /* internal */
 static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t );
@@ -460,6 +461,8 @@ static void pilot_update( Pilot* pilot, const double dt )
  */
 static void pilot_hyperspace( Pilot* p )
 {
+	double diff;
+
 	if (pilot_isFlag(p, PILOT_HYPERSPACE)) { /* pilot is actually in hyperspace */
 
 		if (SDL_GetTicks() > p->ptimer) {
@@ -482,8 +485,6 @@ static void pilot_hyperspace( Pilot* p )
 	}
 	else { /* pilot is getting ready for hyperspace */
 
-		double diff;
-
 		if (VMOD(p->solid->vel) > MIN_VEL_ERR) {
 			diff = pilot_face( p, VANGLE(p->solid->vel) + M_PI );
 
@@ -494,7 +495,11 @@ static void pilot_hyperspace( Pilot* p )
 		else {
 
 			vectnull( &p->solid->force ); /* stop accel */
-			diff = pilot_face( p, VANGLE(p->solid->pos) );
+
+
+			/* player should actually face the system he's headed to */
+			if (p==player) diff = player_faceHyperspace();
+			else diff = pilot_face( p, VANGLE(p->solid->pos) );
 
 			if (ABS(diff) < MAX_DIR_ERR) { /* we can now prepare the jump */
 				p->solid->dir_vel = 0.;
