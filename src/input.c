@@ -147,6 +147,10 @@ void input_setKeybind( char *keybind, KeybindType type, int key, int reverse )
  */
 #define KEY(s)		(strcmp(input_keybinds[keynum]->name,s)==0)
 #define INGAME()	(!toolkit)
+#define NOHYP()	\
+(!pilot_isFlag(player,PILOT_HYP_PREP) &&\
+!pilot_isFlag(player,PILOT_HYP_BEGIN) &&\
+!pilot_isFlag(player,PILOT_HYPERSPACE))
 static void input_key( int keynum, double value, int abs )
 {
 	/*
@@ -199,9 +203,9 @@ static void input_key( int keynum, double value, int abs )
 		if (value==KEY_PRESS) { player_setFlag(PLAYER_PRIMARY); }
 		else if (value==KEY_RELEASE) { player_rmFlag(PLAYER_PRIMARY); }
 	/* targetting */
-	} else if (KEY("target") && !paused) {
+	} else if (KEY("target") && INGAME()) {
 		if (value==KEY_PRESS) player_target = pilot_getNext(player_target);
-	} else if (KEY("target_nearest") && !paused) {
+	} else if (KEY("target_nearest") && INGAME()) {
 		if (value==KEY_PRESS) player_target = pilot_getHostile();
 	/* face the target */
 	} else if (KEY("face")) {
@@ -213,7 +217,7 @@ static void input_key( int keynum, double value, int abs )
 			if (player_isFlag(PLAYER_TURN_RIGHT)) { player_turn += 1; }
 		}
 	/* board them ships */
-	} else if (KEY("board") && INGAME()) {
+	} else if (KEY("board") && INGAME() && NOHYP()) {
 		if (value==KEY_PRESS) player_board();
 
 
@@ -221,7 +225,7 @@ static void input_key( int keynum, double value, int abs )
 	 * secondary weapons
 	 */
 	/* shooting secondary weapon */
-	} else if (KEY("secondary") && INGAME()) {
+	} else if (KEY("secondary") && INGAME() && NOHYP()) {
 		if (value==KEY_PRESS) { player_setFlag(PLAYER_SECONDARY); }
 		else if (value==KEY_RELEASE) { player_rmFlag(PLAYER_SECONDARY); }
 
@@ -234,14 +238,14 @@ static void input_key( int keynum, double value, int abs )
 	 * space
 	 */
 	/* target planet (cycles like target) */
-	} else if (KEY("target_planet") && INGAME()) {
+	} else if (KEY("target_planet") && INGAME() && NOHYP()) {
 		if (value==KEY_PRESS) player_targetPlanet();
 	/* target nearest planet or attempt to land */
-	} else if (KEY("land") && INGAME()) {
+	} else if (KEY("land") && INGAME() && NOHYP()) {
 		if (value==KEY_PRESS) player_land();
-	} else if (KEY("thyperspace") && INGAME()) {
+	} else if (KEY("thyperspace") && INGAME() && NOHYP()) {
 		if (value==KEY_PRESS) player_targetHyperspace();
-	} else if (KEY("starmap")) {
+	} else if (KEY("starmap") && NOHYP()) {
 		if (value==KEY_PRESS) map_open();
 	} else if (KEY("jump") && INGAME()) {
 		if (value==KEY_PRESS) player_jump();
@@ -260,7 +264,7 @@ static void input_key( int keynum, double value, int abs )
 	} else if (KEY("screenshot")) {
 		if (value==KEY_PRESS) player_screenshot();
 	/* pause the games */
-	} else if (KEY("pause")) {
+	} else if (KEY("pause") && NOHYP()) {
 		if (value==KEY_PRESS) {
 			if (!toolkit) {
 				if (paused) unpause();
@@ -268,11 +272,11 @@ static void input_key( int keynum, double value, int abs )
 			}
       }
 	/* opens a small menu */
-	} else if (KEY("menu")) {
+	} else if (KEY("menu") && NOHYP()) {
 		if (value==KEY_PRESS) menu_small();
 	
 	/* shows pilot information */
-	} else if (KEY("info")) {
+	} else if (KEY("info") && NOHYP()) {
 		if (value==KEY_PRESS) info_menu();
 	}
 }
