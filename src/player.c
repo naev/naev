@@ -21,6 +21,7 @@
 #include "land.h"
 #include "sound.h"
 #include "economy.h"
+#include "pause.h"
 
 
 #define XML_GUI_ID	"GUIs"   /* XML section identifier */
@@ -618,7 +619,7 @@ void player_render (void)
 	/*
 	 * hyperspace
 	 */
-	if (pilot_isFlag(player, PILOT_HYPERSPACE)) {
+	if (pilot_isFlag(player, PILOT_HYPERSPACE) && !paused) {
 		i = (int)player->ptimer - HYPERSPACE_FADEOUT;
 		j = (int)SDL_GetTicks();
 		if (i < j) {

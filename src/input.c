@@ -272,7 +272,7 @@ static void input_key( int keynum, double value, int abs )
 			}
       }
 	/* opens a small menu */
-	} else if (KEY("menu") && NOHYP()) {
+	} else if (KEY("menu")) {
 		if (value==KEY_PRESS) menu_small();
 	
 	/* shows pilot information */

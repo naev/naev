@@ -21,7 +21,8 @@
  * Planets types, taken from
  * http://en.wikipedia.org/wiki/Star_Trek_planet_classifications
  */
-typedef enum PlanetClass_ { PLANET_CLASS_NULL=0, /* Null/Not defined */
+typedef enum PlanetClass_ {
+	PLANET_CLASS_NULL=0, /* Null/Not defined */
 	PLANET_CLASS_A,   /* Geothermal */
 	PLANET_CLASS_B,   /* Geomorteus */
 	PLANET_CLASS_C,   /* Geoinactive */
@@ -68,6 +69,10 @@ typedef struct Planet_ {
 	char* description; /* planet description */
 	char* bar_description; /* spaceport bar description */
 	unsigned int services; /* what services they offer */
+
+	/* tech[0] stores global tech level (everything that and below) while
+	 * tech[1-7] store the "unique" tech levels (only matches */
+	int tech[8];
 
 	glTexture* gfx_space; /* graphic in space */
 	glTexture* gfx_exterior; /* graphic in the exterior */

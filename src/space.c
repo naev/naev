@@ -699,7 +699,7 @@ void space_render( double dt )
 	t = SDL_GetTicks();
 	timer = player->ptimer - HYPERSPACE_STARS_BLUR;
 	if (pilot_isFlag(player,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
-			(timer < t)) {
+			!paused && (timer < t)) {
 
 		glShadeModel(GL_SMOOTH);
 
