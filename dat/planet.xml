@@ -14,7 +14,7 @@ The surface of the planet is predominantly covered with water and the planetary 
 The bar is just off the starport with a great view of the harbour.  You could watch the fishermen run frantically about attending their duties for hours.
 </bar>
 <faction>Independent</faction>
-<services>15</services>
+<services>31</services>
 <tech>0</tech>
 <commodities>1</commodities>
 </general>
@@ -37,7 +37,7 @@ Dune is a desert planet with no natural precipitation.
 The Arrakeen canteen is a shady place.  Many scoundrels and lowlifes make this their home to avoid notice from the universal police.
 </bar>
 <faction>Independent</faction>
-<services>3</services>
+<services>7</services>
 <tech>0</tech>
 <commodities>1</commodities>
 </general>
@@ -60,7 +60,7 @@ Built to defend the Empire from the Collective.  The Omega Station has been the 
 The Omega Canteen is a dark place that seems calm, although everytime a robotic drone approaches an alarm sounds sending pilots to man their ships to  fight off the menace.
 </bar>
 <faction>Empire</faction>
-<services>7</services>
+<services>15</services>
 <tech>0</tech>
 <commodities>1</commodities>
 </general>

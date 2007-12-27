@@ -1138,7 +1138,11 @@ void player_land (void)
 
 	Planet* planet = &cur_system->planets[planet_target];
 	if (planet_target >= 0) { /* attempt to land */
-		if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
+		if (!planet_hasService(planet, PLANET_SERVICE_LAND)) {
+			player_message( "You can't land here." );
+			return;
+		}
+		else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
 			if (!areEnemies( player->faction, planet->faction )) {              
 				player_message( "%s> Permission to land cleared.", planet->name );
 				player_setFlag(PLAYER_LANDACK);

@@ -51,10 +51,11 @@ typedef enum PlanetClass_ { PLANET_CLASS_NULL=0, /* Null/Not defined */
 /*
  * planet services
  */
-#define PLANET_SERVICE_BASIC			(1<<0) /* refueling, spaceport bar, news */
-#define PLANET_SERVICE_COMMODITY		(1<<1)
-#define PLANET_SERVICE_OUTFITS		(1<<2)
-#define PLANET_SERVICE_SHIPYARD		(1<<3)
+#define PLANET_SERVICE_LAND			(1<<0) /* can land */
+#define PLANET_SERVICE_BASIC			(1<<1) /* refueling, spaceport bar, news */
+#define PLANET_SERVICE_COMMODITY		(1<<2)
+#define PLANET_SERVICE_OUTFITS		(1<<3)
+#define PLANET_SERVICE_SHIPYARD		(1<<4)
 #define planet_hasService(p,s)		((p)->services & s)
 
 typedef struct Planet_ {
@@ -66,7 +67,7 @@ typedef struct Planet_ {
 	
 	char* description; /* planet description */
 	char* bar_description; /* spaceport bar description */
-	int services; /* what services they offer */
+	unsigned int services; /* what services they offer */
 
 	glTexture* gfx_space; /* graphic in space */
 	glTexture* gfx_exterior; /* graphic in the exterior */
