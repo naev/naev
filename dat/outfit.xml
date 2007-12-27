@@ -91,7 +91,7 @@ The cheapest missile on the market, what it lacks in a decent tracking system it
 <outfit name="Headhunter Launcher">
 <general>
 <max>2</max>
-<tech>8</tech>
+<tech>5</tech>
 <mass>12</mass>
 <price>40000</price>
 <description>
@@ -106,7 +106,7 @@ The Headhunter Launcher is one of the most used missile launcher by the security
 <outfit name="Headhunter">
 <general>
 <max>40</max>
-<tech>4</tech>
+<tech>5</tech>
 <mass>1</mass>
 <price>2000</price>
 <description>
@@ -131,7 +131,7 @@ Headhunters first gained fame in the crush of the Araknoid, a fearsome battle ag
 <outfit name="Neutron Disruptor">
 <general>
 <max>3</max>
-<tech>12</tech>
+<tech>99</tech>
 <mass>8</mass>
 <price>25000</price>
 <description>

@@ -159,7 +159,7 @@ static void outfits (void)
 
 
 	/* set up the outfits to buy/sell */
-	outfits = outfit_getAll( &noutfits );
+	outfits = outfit_getTech( &noutfits, planet->tech[0] ); /* TODO special tech */
 	window_addList( secondary_wid, 20, 40,
 			200, OUTFITS_HEIGHT-80, "lstOutfits",
 			outfits, noutfits, 0, outfits_update );
@@ -340,7 +340,7 @@ static void shipyard (void)
 
 
 	/* set up the ships to buy/sell */
-	ships = ship_getAll( &nships );
+	ships = ship_getTech( &nships, planet->tech[0] );
 	window_addList( secondary_wid, 20, 40,
 			200, SHIPYARD_HEIGHT-80, "lstShipyard",
 			ships, nships, 0, shipyard_update );

@@ -45,7 +45,8 @@ typedef struct Ship_ {
 	ShipClass class; /* ship class */
 
 	/* store stuff */
-	unsigned int price; /* cost to buy */
+	int price; /* cost to buy */
+	int tech; /* see space.h */
 	char* fabricator; /* company that makes it */
 	char* description; /* selling description */
 
@@ -90,7 +91,7 @@ void ships_free (void);
  * get
  */
 Ship* ship_get( const char* name );
-char** ship_getAll( int *n );
+char** ship_getTech( int *n, const int tech );
 char* ship_class( Ship* s );
 
 

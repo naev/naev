@@ -62,13 +62,19 @@ Outfit* outfit_get( const char* name )
 /*
  * returns all the outfits
  */
-char** outfit_getAll( int *n )
+char** outfit_getTech( int *n, const int tech )
 {
+	int i;
 	char **outfitnames = malloc(sizeof(Outfit*) * outfits);
 
-	for ((*n)=0; (*n) < outfits; (*n)++)
-		outfitnames[*n] = strdup(outfit_stack[*n].name);
+	*n = 0;
+	for (i=0; i < outfits; i++)
+		if (outfit_stack[i].tech <= tech) {
+			outfitnames[*n] = strdup(outfit_stack[i].name);
+			(*n)++;
+		}
 
+	/* actual size is bigger, but it'll just get freed :) */
 	return outfitnames;
 }
 

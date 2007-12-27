@@ -105,7 +105,7 @@ typedef struct Outfit_ {
  * get
  */
 Outfit* outfit_get( const char* name );
-char** outfit_getAll( int *n );
+char** outfit_getTech( int *n, const int tech );
 /* outfit types */
 int outfit_isWeapon( const Outfit* o );
 int outfit_isLauncher( const Outfit* o );

@@ -63,12 +63,17 @@ Ship* ship_get( const char* name )
 /*
  * returns all the ships in  text form
  */
-char** ship_getAll( int *n )
+char** ship_getTech( int *n, const int tech )
 {
+	int i;
 	char **shipnames = malloc(sizeof(Ship*) * ships);
-	
-	for ((*n)=0; (*n) < ships; (*n)++)
-		shipnames[*n] = strdup(ship_stack[*n].name);
+
+	*n = 0;
+	for (i=0; i < ships; i++)
+		if (ship_stack[i].tech <= tech) {
+			shipnames[*n] = strdup(ship_stack[i].name);
+			(*n)++;
+		}
 	
 	return shipnames;
 }
@@ -119,6 +124,8 @@ static Ship* ship_parse( xmlNodePtr parent )
 			temp->class = xml_getInt(node);
 		else if (xml_isNode(node,"price"))
 			temp->price = xml_getInt(node);
+		else if (xml_isNode(node,"tech"))
+			temp->tech = xml_getInt(node);
 		else if (xml_isNode(node,"fabricator"))
 			temp->fabricator = strdup(xml_get(node));
 		else if (xml_isNode(node,"description"))
@@ -196,6 +203,7 @@ static Ship* ship_parse( xmlNodePtr parent )
 	MELEMENT(temp->gui==NULL,"GUI");
 	MELEMENT(temp->class==0,"class");
 	MELEMENT(temp->price==0,"price");
+	MELEMENT(temp->tech==0,"tech");
 	MELEMENT(temp->fabricator==NULL,"fabricator");
 	MELEMENT(temp->description==NULL,"description");
 	MELEMENT(temp->thrust==0,"thrust");

@@ -41,6 +41,8 @@
 #define FLAG_YSET    			(1<<1)
 #define FLAG_ASTEROIDSSET		(1<<2)
 #define FLAG_INTERFERENCESET	(1<<3)
+#define FLAG_SERVICESSET		(1<<4)
+#define FLAG_TECHSET				(1<<5)
 
 
 /* 
@@ -346,6 +348,8 @@ void space_init ( const char* sysname )
  */
 static Planet* planet_get( const char* name )
 {
+	int i;
+
 	Planet* temp = NULL;
 
 	char str[PATH_MAX] = "\0";
@@ -356,7 +360,7 @@ static Planet* planet_get( const char* name )
 	uint32_t bufsize;
 	char *buf = pack_readfile( DATA, PLANET_DATA, &bufsize );
 
-	xmlNodePtr node, cur;
+	xmlNodePtr node, cur, ccur;
 	xmlDocPtr doc = xmlParseMemory( buf, bufsize );
 
 	node = doc->xmlChildrenNode;
@@ -426,9 +430,29 @@ static Planet* planet_get( const char* name )
 							else if (xml_isNode(cur, "bar"))
 								temp->bar_description = strdup( xml_get(cur) );
 
-							else if (xml_isNode(cur, "services"))
+							else if (xml_isNode(cur, "services")) {
+								flags |= FLAG_SERVICESSET;
 								temp->services = xml_getInt(cur); /* flags gotten by data */
+							}
 
+							else if (xml_isNode(cur, "tech")) {
+								ccur = cur->children;
+								do {
+									if (xml_isNode(ccur,"main")) {
+										flags |= FLAG_TECHSET;
+										temp->tech[0] = xml_getInt(ccur);
+									}
+									else if (xml_isNode(ccur,"special")) {
+										for (i=1; i<8; i++)
+											if (temp->tech[i]==0) {
+												temp->tech[i] = xml_getInt(ccur);
+												break;
+											}
+										if (i==8) WARN("Planet '%s' has too many"
+												"'special tech' entries", temp->name);
+									}
+								} while ((ccur = ccur->next));
+							}
 						} while((cur = cur->next));
 					}
 				} while ((node = node->next));
@@ -450,13 +474,17 @@ static Planet* planet_get( const char* name )
 	 * verification
 	 */
 	if (temp) {
-#define MELEMENT(o,s)	if ((o) == 0) WARN("Planet '%s' missing '"s"' element", temp->name)
-		MELEMENT(temp->gfx_space,"GFX space");
-		MELEMENT(temp->gfx_exterior,"GFX exterior");
-		MELEMENT(flags&FLAG_XSET,"x");
-		MELEMENT(flags&FLAG_YSET,"y");
-		MELEMENT(temp->class,"class");
-		MELEMENT(temp->faction,"faction");
+#define MELEMENT(o,s)	if (o) WARN("Planet '%s' missing '"s"' element", temp->name)
+		MELEMENT(temp->gfx_space==NULL,"GFX space");
+		MELEMENT(temp->gfx_exterior==NULL,"GFX exterior");
+		MELEMENT((flags&FLAG_XSET)==0,"x");
+		MELEMENT((flags&FLAG_YSET)==0,"y");
+		MELEMENT(temp->class==PLANET_CLASS_NULL,"class");
+		MELEMENT(temp->faction==NULL,"faction");
+		MELEMENT((flags&FLAG_SERVICESSET)==0,"services");
+		MELEMENT( (planet_hasService(temp,PLANET_SERVICE_OUTFITS) ||
+				planet_hasService(temp,PLANET_SERVICE_SHIPYARD)) &&
+				(flags&FLAG_TECHSET)==0, "tech" );
 #undef MELEMENT
 	}
 	else

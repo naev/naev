@@ -15,7 +15,9 @@ The bar is just off the starport with a great view of the harbour.  You could wa
 </bar>
 <faction>Independent</faction>
 <services>31</services>
-<tech>0</tech>
+<tech>
+<main>3</main>
+</tech>
 <commodities>1</commodities>
 </general>
 <GFX>
@@ -38,7 +40,9 @@ The Arrakeen canteen is a shady place.  Many scoundrels and lowlifes make this t
 </bar>
 <faction>Independent</faction>
 <services>7</services>
-<tech>0</tech>
+<tech>
+<main>4</main>
+</tech>
 <commodities>1</commodities>
 </general>
 <GFX>
@@ -61,8 +65,10 @@ The Omega Canteen is a dark place that seems calm, although everytime a robotic 
 </bar>
 <faction>Empire</faction>
 <services>15</services>
-<tech>0</tech>
 <commodities>1</commodities>
+<tech>
+<main>5</main>
+</tech>
 </general>
 <GFX>
 <space>station00.png</space>
@@ -76,13 +82,8 @@ The Omega Canteen is a dark place that seems calm, although everytime a robotic 
 </pos>
 <general>
 <class>0</class>
-<description>
-You shouldn't be here, there is no life support module.
-</description>
 <faction>Collective</faction>
 <services>0</services>
-<tech>0</tech>
-<commodities>0</commodities>
 </general>
 <GFX>
 <space>station01.png</space>
