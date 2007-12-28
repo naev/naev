@@ -11,6 +11,7 @@
 #include "faction.h"
 #include "opengl.h"
 #include "pilot.h"
+#include "economy.h"
 
 
 #define MIN_HYPERSPACE_DIST	1500
@@ -72,6 +73,8 @@ typedef struct Planet_ {
 	char* description; /* planet description */
 	char* bar_description; /* spaceport bar description */
 	unsigned int services; /* what services they offer */
+	Commodity **commodities; /* what commodities they sell */
+	int ncommodities; /* the amount they have */
 
 	/* tech[0] stores global tech level (everything that and below) while
 	 * tech[1-PLANET_TECH_MAX] store the "unique" tech levels (only matches */

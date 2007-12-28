@@ -86,6 +86,9 @@ static void news_close( char* str );
  */
 static void commodity_exchange (void)
 {
+	int i;
+	char **goods;
+
 	secondary_wid = window_create( "Commodity Exchange",
 			-1, -1, COMMODITY_WIDTH, COMMODITY_HEIGHT );
 
@@ -93,9 +96,12 @@ static void commodity_exchange (void)
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCommodityClose",
 			"Close", commodity_exchange_close );
 
+	goods = malloc(sizeof(char*) * planet->ncommodities);
+	for (i=0; i<planet->ncommodities; i++)
+		goods[i] = strdup(planet->commodities[i]->name);
 	window_addList( secondary_wid, 20, -40,
-			COMMODITY_WIDTH-40, COMMODITY_HEIGHT-80-BUTTON_HEIGHT,
-			"lstGoods", NULL, 0, 0, NULL );
+			100, COMMODITY_HEIGHT-80-BUTTON_HEIGHT,
+			"lstGoods", goods, planet->ncommodities, 0, NULL );
 }
 static void commodity_exchange_close( char* str )
 {

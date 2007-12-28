@@ -453,6 +453,19 @@ static Planet* planet_get( const char* name )
 									}
 								} while ((ccur = ccur->next));
 							}
+							
+							else if (xml_isNode(cur, "commodities")) {
+								ccur = cur->children;
+								do {
+									if (xml_isNode(ccur,"commodity")) {
+										temp->commodities = realloc(temp->commodities,
+												(temp->ncommodities+1) * sizeof(Commodity*));
+										temp->commodities[temp->ncommodities] =
+												commodity_get( xml_get(ccur) );
+										temp->ncommodities++;
+									}
+								} while ((ccur = ccur->next));
+							}
 						} while((cur = cur->next));
 					}
 				} while ((node = node->next));
@@ -485,6 +498,8 @@ static Planet* planet_get( const char* name )
 		MELEMENT( (planet_hasService(temp,PLANET_SERVICE_OUTFITS) ||
 				planet_hasService(temp,PLANET_SERVICE_SHIPYARD)) &&
 				(flags&FLAG_TECHSET)==0, "tech" );
+		MELEMENT( planet_hasService(temp,PLANET_SERVICE_COMMODITY) &&
+				(temp->ncommodities==0),"commodity" );
 #undef MELEMENT
 	}
 	else

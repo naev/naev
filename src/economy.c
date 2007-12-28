@@ -52,6 +52,21 @@ void credits2str( char *str, unsigned int credits, int decimals )
 
 
 /*
+ * gets a commoditiy
+ */
+Commodity* commodity_get( const char* name )
+{
+	int i;
+	for (i=0; i<commodity_nstack; i++)
+		if (strcmp(commodity_stack[i].name,name)==0)
+			return &commodity_stack[i];
+	
+	WARN("Commodity '%s' not found in stack", name);
+	return NULL;
+}
+
+
+/*
  * frees a commodity
  */
 static void commodity_freeOne( Commodity* com )

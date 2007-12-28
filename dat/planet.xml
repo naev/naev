@@ -18,7 +18,10 @@ The bar is just off the starport with a great view of the harbour.  You could wa
 <tech>
 <main>3</main>
 </tech>
-<commodities>1</commodities>
+<commodities>
+<commodity>Food</commodity>
+<commodity>Ore</commodity>
+</commodities>
 </general>
 <GFX>
 <space>caladan.png</space>
@@ -43,7 +46,10 @@ The Arrakeen canteen is a shady place.  Many scoundrels and lowlifes make this t
 <tech>
 <main>4</main>
 </tech>
-<commodities>1</commodities>
+<commodities>
+<commodity>Food</commodity>
+<commodity>Ore</commodity>
+</commodities>
 </general>
 <GFX>
 <space>dune.png</space>
@@ -65,7 +71,9 @@ The Omega Canteen is a dark place that seems calm, although everytime a robotic 
 </bar>
 <faction>Empire</faction>
 <services>15</services>
-<commodities>1</commodities>
+<commodities>
+<commodity>Food</commodity>
+</commodities>
 <tech>
 <main>5</main>
 </tech>
