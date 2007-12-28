@@ -167,9 +167,16 @@ static int ai_hostile( lua_State *L ); /* hostile( number ) */
 static int ai_settimer( lua_State *L ); /* settimer( number, number ) */
 static int ai_timeup( lua_State *L ); /* boolean timeup( number ) */
 
-/* misc */
+/* messages */
 static int ai_comm( lua_State *L ); /* say( number, string ) */
 static int ai_broadcast( lua_State *L ); /* broadcast( string ) */
+
+/* loot */
+static int ai_credits( lua_State *L ); /* credits( number ) */
+static int ai_cargo( lua_State *L ); /* cargo( name, quantity ) */
+static int ai_shipprice( lua_State *L ); /* shipprice() */
+
+/* random */
 static int ai_rng( lua_State *L ); /* rng( number, number ) */
 
 
@@ -218,6 +225,10 @@ static const luaL_reg ai_methods[] = {
 	/* messages */
 	{ "comm", ai_comm },
 	{ "broadcast", ai_broadcast },
+	/* loot */
+	{ "setcredits", ai_credits },
+	{ "setcargo", ai_cargo },
+	{ "shipprice", ai_shipprice },
 	/* rng */
 	{ "rnd", ai_rng },
 	{0,0} /* end */
@@ -233,6 +244,13 @@ static double pilot_acc = 0.;
 static double pilot_turn = 0.;
 static int pilot_flags = 0;
 static int pilot_target = 0;
+
+/*
+ * ai status, used so that create functions can't be used elsewhere
+ */
+#define AI_STATUS_NORMAL		1
+#define AI_STATUS_CREATE		2
+static int ai_status = AI_STATUS_NORMAL;
 
 
 /*
@@ -286,7 +304,7 @@ static int ai_loadProfile( char* filename )
 	profiles = realloc( profiles, sizeof(AI_Profile)*(++nprofiles) );
 
 	profiles[nprofiles-1].name =
-			malloc(sizeof(char)*(strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX))+1 );
+		malloc(sizeof(char)*(strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX))+1 );
 	snprintf( profiles[nprofiles-1].name,
 			strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX)+1,
 			"%s", filename+strlen(AI_PREFIX) );
@@ -418,7 +436,9 @@ void ai_create( Pilot* pilot )
 {
 	cur_pilot = pilot;
 	L = cur_pilot->ai->L;
+	ai_status = AI_STATUS_CREATE;
 	AI_LCALL("create");
+	ai_status = AI_STATUS_NORMAL;
 }
 
 
@@ -1063,6 +1083,48 @@ static int ai_broadcast( lua_State *L )
 
 	return 0;
 }
+
+
+/*
+ * sets the pilots credits
+ */
+static int ai_credits( lua_State *L )
+{
+	MIN_ARGS(1);
+	if (ai_status != AI_STATUS_CREATE) return 0;
+
+	if (lua_isnumber(L,1))
+		cur_pilot->credits = (int)lua_tonumber(L,1);
+	
+	return 0;
+}
+
+
+/*
+ * sets the pilots cargo
+ */
+static int ai_cargo( lua_State *L )
+{
+	MIN_ARGS(2);
+	if (ai_status != AI_STATUS_CREATE) return 0;
+
+	if (lua_isstring(L,1) && lua_isnumber(L,2))
+		pilot_addCargo( cur_pilot, commodity_get(lua_tostring(L,1)),
+				(int)lua_tonumber(L,2));
+
+	return 0;
+}
+
+
+/*
+ * gets the pilot's ship value
+ */
+static int ai_shipprice( lua_State *L )
+{
+	lua_pushnumber(L, cur_pilot->ship->price);
+	return 1;
+}
+
 
 /*
  * returns a random number between low and high

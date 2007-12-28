@@ -527,7 +527,7 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 			/* can't be over max */
 			if (pilot->outfits[i].quantity > outfit->max) {
 				q -= pilot->outfits[i].quantity - outfit->max;
-				pilot->outfits[i].quantity = outfit->max;;
+				pilot->outfits[i].quantity = outfit->max;
 			}
 			return q;
 		}
@@ -539,7 +539,7 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 	/* can't be over max */
 	if (pilot->outfits[pilot->noutfits].quantity > outfit->max) {
 		q -= pilot->outfits[pilot->noutfits].quantity - outfit->max;
-		pilot->outfits[i].quantity = outfit->max;; 
+		pilot->outfits[i].quantity = outfit->max;
 	}
 	pilot->outfits[pilot->noutfits].timer = 0;
 	(pilot->noutfits)++;
@@ -589,6 +589,69 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 	WARN("Failure attempting to remove %d '%s' from pilot '%s'",
 			quantity, outfit->name, pilot->name );
 	return 0;
+}
+
+
+/*
+ * tries to add quantity of cargo to pilot, returns quantity actually added
+ */
+int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )
+{
+	int i, q;
+
+	q = quantity;
+	for (i=0; i<pilot->ncommodities; i++)
+		if (pilot->commodities[i].commodity == cargo) {
+			if (pilot->cargo_free < quantity)
+				q = pilot->cargo_free;
+			pilot->commodities[i].quantity += q;
+			pilot->cargo_free -= q;
+			return q;
+		}
+
+	/* must add another one */
+	pilot->commodities = realloc( pilot->commodities,
+			sizeof(PilotCommodity) * pilot->ncommodities);
+	pilot->commodities[ pilot->ncommodities ].commodity = cargo;
+	if (pilot->cargo_free < quantity)
+		q = pilot->cargo_free;
+	pilot->commodities[ pilot->ncommodities ].quantity = q;
+	pilot->cargo_free -= q;
+	pilot->ncommodities++;
+
+	return q;
+}
+
+
+/*
+ * tries to get rid of quantity cargo from pilot, returns quantity actually removed
+ */
+int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
+{
+	int i, q;
+
+	q = quantity;
+	for (i=0; i<pilot->ncommodities; i++)
+		if (pilot->commodities[i].commodity == cargo) {
+			if (quantity > pilot->commodities[i].quantity) {
+				q = pilot->commodities[i].quantity;
+
+				/* remove cargo */
+				memmove( pilot->commodities+i, pilot->commodities+i+1,
+						sizeof(PilotCommodity) * (pilot->ncommodities - i) );
+				pilot->ncommodities--;
+				pilot->commodities = realloc( pilot->commodities,
+						sizeof(PilotCommodity) * pilot->ncommodities );
+			}
+			else
+				pilot->commodities[i].quantity -= q;
+			pilot->cargo_free += q;
+			return q;
+		}
+	
+	WARN("Trying to remove %d cargo '%s' from pilot '%s' when it doesn't exist",
+			quantity, cargo->name, pilot->name );
+	return -1;
 }
 
 
@@ -652,6 +715,12 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction, AI_Prof
 				pilot_setFlag(pilot, PILOT_HASTURRET);
 		}
 	}
+
+	/* cargo */
+	pilot->credits = 0;
+	pilot->commodities = NULL;
+	pilot->ncommodities = 0;
+	pilot->cargo_free = pilot->ship->cap_cargo;
 
 	/* set flags and functions */
 	if (flags & PILOT_PLAYER) {
@@ -717,8 +786,9 @@ unsigned int pilot_create( Ship* ship, char* name, Faction* faction, AI_Profile*
 static void pilot_free( Pilot* p )
 {
 	solid_free(p->solid);
-	free(p->outfits);
+	if (p->outfits) free(p->outfits);
 	free(p->name);
+	if (p->commodities) free(p->commodities);
 	ai_destroy(p);
 	free(p);
 }

@@ -38,6 +38,11 @@ function attacked ( attacker )
 	end
 end
 
+-- Gives the pilot it's initial stuff
+function create ()
+	ai.setcredits( ai.rnd(200, ai.shipprice()/100) )
+end
+
 -- runs away
 function runaway ()
 	target = ai.targetid()

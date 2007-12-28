@@ -277,7 +277,8 @@ void player_clear (void)
 /*
  * gets the player's combat rating
  */
-static char* player_ratings[] = { "None",
+static char* player_ratings[] = {
+		"None",
 		"Smallfry",
 		"Weak",
 		"Minor",
@@ -589,16 +590,39 @@ void player_render (void)
 	/*
 	 * misc
 	 */
+	/* monies */
+	j = gui.misc.y - 8 - gl_smallFont.h;
 	gl_print( &gl_smallFont,
-			gui.misc.x + 8,
-			gui.misc.y - 8 - gl_smallFont.h,
+			gui.misc.x + 8, j,
 			&cConsole, "Creds:" );
 	credits2str( str, player_credits, 2 );
-	i = gl_printWidth( &gl_smallFont, "%s", str );
+	i = gl_printWidth( &gl_smallFont, str );
 	gl_print( &gl_smallFont,
-			gui.misc.x + gui.misc.w - 15 - i,
-			gui.misc.y - 8 - gl_smallFont.h, NULL, "%s", str );
+			gui.misc.x + gui.misc.w - 15 - i, j,
+			NULL, str );
+	/* cargo and friends */
+	if (player->ncommodities > 0) {
+		j -= gl_smallFont.h - 5;
+		gl_print( &gl_smallFont,
+				gui.misc.x + 8, j,
+				&cConsole, "Cargo:" );
+		for (i=0; i < MIN(player->ncommodities,3); i++) { 
+			j -= gl_smallFont.h + 3;
+			gl_print( &gl_smallFont,
+					gui.misc.x + 13, j,
+					NULL, "%d %s", player->commodities[i].quantity,
+					player->commodities[i].commodity->name );
+		}
+	}
 
+	j -= gl_smallFont.h + 5;
+	gl_print( &gl_smallFont,
+			gui.misc.x + 8, j,
+			&cConsole, "Free:" );
+	i = gl_printWidth( &gl_smallFont, "%d", player->ship->cap_cargo );
+	gl_print( &gl_smallFont,
+			gui.misc.x + gui.misc.w - 8 - i, j,
+			NULL, "%d", player->cargo_free );
 
 
 	/*

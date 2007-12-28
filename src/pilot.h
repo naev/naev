@@ -15,6 +15,7 @@
 #include "outfit.h"
 #include "faction.h"
 #include "sound.h"
+#include "economy.h"
 
 
 #define PLAYER_ID			1
@@ -63,6 +64,12 @@ typedef struct PilotOutfit_ {
 } PilotOutfit;
 
 
+typedef struct PilotCommodity_ {
+	Commodity* commodity;
+	int quantity;
+} PilotCommodity;
+
+
 /*
  * primary pilot structure
  */
@@ -93,6 +100,12 @@ typedef struct Pilot_ {
 	int noutfits;
 	PilotOutfit* secondary; /* secondary weapon */
 	PilotOutfit* ammo; /* secondary ammo if needed */
+
+	/* cargo */
+	int credits; /* monies the pilot has */
+	PilotCommodity *commodities; /* commodity and quantity */
+	int ncommodities;
+	int cargo_free;
 
 	/* misc */
 	uint32_t flags; /* used for AI and others */
@@ -147,6 +160,8 @@ void pilot_setAmmo( Pilot* p );
 double pilot_face( Pilot* p, const float dir );
 int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity );
 int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity );
+int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity );
+int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity );
 
 
 /*

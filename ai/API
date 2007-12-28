@@ -186,13 +186,7 @@ timeup( number t )
 
 
 
-	M I S C
-
-createvect( number x, number y )
-	@desc creates a vector from cartesian coordinates
-	@param x x coordinate of the vector
-	@param y y coordinate of the vector
-	@return pointer to the Vector2d
+	M E S S A G I N G
 
 comm( number id, string message )
 	@desc makes the pilot say something to the pilot of id id
@@ -204,6 +198,29 @@ broadcast( string message )
 	@desc makes the pilot broadcast a message to everyone in the system
 	@param message string to say to everyone in the system
 	@return nil
+
+
+
+	L O O T
+
+setcredits( number creds )
+	@desc sets the pilot's credits to creds, only works during create
+	@param creds pilot's credits
+	@return nil
+
+setcargo( string cargo, number quantity )
+	@desc gives the pilot quantity of cargo, only works during create
+	@param cargo name of cargo to give the pilot
+	@param quantity amount to give the pilot
+	@return nil
+
+shipprice()
+	@desc gets the price of the pilot's ship
+	@return the price of the pilot's ship
+
+
+
+	M I S C
 
 rng( number low, number high )
 	@desc returns a random number between low and high

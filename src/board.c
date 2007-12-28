@@ -24,7 +24,6 @@
 extern unsigned int player_target;
 
 
-static unsigned int board_credits = 0; /* money on the ship */
 static unsigned int board_wid = 0;
 
 
@@ -77,8 +76,6 @@ void player_board (void)
 	pilot_setFlag(p,PILOT_BOARDED); 
 	player_message("Boarding ship %s", p->name);
 
-	/* calculate credits based on ship price */
-	board_credits = RNG(20*p->ship->price, 50*p->ship->price)/1000;
 
 	/*
 	 * create the boarding window
@@ -90,7 +87,7 @@ void player_board (void)
 			"Credits:\n"
 			"Cargo:\n"
 			);
-	credits2str( cred, board_credits, 2 );
+	credits2str( cred, p->credits, 2 );
 
 	snprintf( str, 128,
 			"%s\n"
@@ -117,7 +114,7 @@ static void board_stealCreds( char* str )
 
 	p = pilot_get(player_target);
 
-	if (board_credits==0) { /* you can't steal from the poor */
+	if (p->credits==0) { /* you can't steal from the poor */
 		player_message("The ship has no credits left");
 		return;
 	}
@@ -128,8 +125,8 @@ static void board_stealCreds( char* str )
 		return;
 	}
 
-	player_credits += board_credits;
-	board_credits = 0;
+	player_credits += p->credits;
+	p->credits = 0;
 	board_update(); /* update the lack of credits */
 	player_message("You manage to steal the ship's credits");
 }
@@ -161,8 +158,11 @@ static void board_update (void)
 {
 	char str[128];
 	char cred[10];
+	Pilot* p;
 
-	credits2str( cred, board_credits, 2 );
+	p = pilot_get(player_target);
+
+	credits2str( cred, p->credits, 2 );
 
 	snprintf( str, 128,
 			"%s\n"

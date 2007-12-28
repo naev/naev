@@ -34,6 +34,7 @@ function attacked ( attacker )
 end
 
 function create ()
+	ai.setcredits( ai.rnd(1000, ai.shipprice()/200) )
 	if ai.rnd(0,2)==0 then
 		ai.broadcast("This area is under militia survellance.")
 	end
