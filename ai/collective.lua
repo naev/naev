@@ -26,6 +26,8 @@ function attacked ( attacker )
 			end
 	end
 end
+function create ()
+end
 
 -- attacks
 function attack ()

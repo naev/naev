@@ -259,7 +259,7 @@ static void ai_run( const char *funcname )
 {
 	lua_getglobal(L, funcname);
 	if (lua_pcall(L, 0, 0, 0)) /* error has occured */
-		WARN("%s", lua_tostring(L,-1));
+		WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, funcname, lua_tostring(L,-1));
 }
 
 

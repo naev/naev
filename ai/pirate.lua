@@ -61,6 +61,13 @@ function attacked ( attacker )
 end
 
 
+function create ()
+	if ai.rnd(0,5) ~= 0 then
+		ai.setcredits(0, ai.shipprice()/300 )
+	end
+end
+
+
 function taunt ( target )
 		-- some taunts
 		num = ai.rnd(0,4)

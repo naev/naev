@@ -39,6 +39,9 @@ function attacked ( attacker )
 end
 
 function create ()
+	if ai.rnd(0,2)==0 then -- money less often, but more
+		ai.setcredits( 1000, ai.shipprice()/70 )
+	end
 	if ai.rnd(0,2)==0 then
 		ai.broadcast("The Empire is watching you.")
 	end
