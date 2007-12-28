@@ -47,9 +47,9 @@ function attack ()
 	end
 
 
-	if dir < 10 and dist > 300 then
+	if dir < 10 and dist > 200 then
 		ai.accel()
-	elseif dir < 10 and dist < 300 then
+	elseif dir < 10 and dist < 200 then
 		ai.shoot()
 	end
 end
