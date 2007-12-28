@@ -91,7 +91,10 @@ char** ship_getTech( int *n, const int *tech, const int techmax )
  * Gets the ship's classname
  */
 static char* ship_classes[] = { "NULL",
-		"Civilian Light", "Civilian Medium", "Civilian Heavy"
+		"Civilian Light", "Civilian Medium", "Civilian Heavy",
+		"Military Light", "Military Medium", "Military Heavy",
+		"Robotic Light", "Robotic Medium", "Robotic Heavy",
+		"Hybrid Light", "Hybrid Medium", "Hybrid Heavy"
 };
 char* ship_class( Ship* s )
 {

@@ -179,7 +179,7 @@ A heavy liner specialized in freighting cargo all over the universe.  Also has g
 <GFX>drone</GFX>
 <GUI>minimal</GUI>
 <sound>engine</sound>
-<class>1</class>
+<class>7</class>
 <price>300000</price>
 <fabricator>Robosys</fabricator>
 <tech>99</tech>
