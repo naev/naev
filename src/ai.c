@@ -57,8 +57,6 @@
 
 /* creates a new lua table */
 #define newtable(L) (lua_newtable(L), lua_gettop(L))
-/* calls the AI function with name f */
-#define AI_LCALL(f)				(lua_getglobal(L, f), lua_pcall(L, 0, 0, 0))
 /* registers a number constant n to name s (syntax like lua_regfunc) */
 #define lua_regnumber(l,s,n)	\
 (lua_pushnumber(l,n), lua_setglobal(l,s))
@@ -110,6 +108,7 @@ extern int pilots;
  * prototypes
  */
 /* Internal C routines */
+static void ai_run( const char *funcname );
 static int ai_loadProfile( char* filename );
 static void ai_freetask( Task* t );
 /* External C routines */
@@ -254,6 +253,17 @@ static int ai_status = AI_STATUS_NORMAL;
 
 
 /*
+ * attempts to run a function
+ */
+static void ai_run( const char *funcname )
+{
+	lua_getglobal(L, funcname);
+	if (lua_pcall(L, 0, 0, 0)) /* error has occured */
+		WARN("%s", lua_tostring(L,-1));
+}
+
+
+/*
  * destroys the ai part of the pilot
  */
 void ai_destroy( Pilot* p )
@@ -390,14 +400,14 @@ void ai_think( Pilot* pilot )
 	
 	/* control function if pilot is idle or tick is up */
 	if ((cur_pilot->tcontrol < SDL_GetTicks()) || (cur_pilot->task == NULL)) {
-		AI_LCALL("control"); /* run control */
+		ai_run("control"); /* run control */
 		lua_getglobal(L,"control_rate");
 		cur_pilot->tcontrol = SDL_GetTicks() +  1000*(int)lua_tonumber(L,-1);
 	}
 
 	/* pilot has a currently running task */
 	if (cur_pilot->task != NULL)
-		AI_LCALL(cur_pilot->task->name);
+		ai_run(cur_pilot->task->name);
 
 	/* make sure pilot_acc and pilot_turn are legal */
 	if (pilot_acc > 1.) pilot_acc = 1.; /* value must be <= 1 */
@@ -437,7 +447,7 @@ void ai_create( Pilot* pilot )
 	cur_pilot = pilot;
 	L = cur_pilot->ai->L;
 	ai_status = AI_STATUS_CREATE;
-	AI_LCALL("create");
+	ai_run("create");
 	ai_status = AI_STATUS_NORMAL;
 }
 
