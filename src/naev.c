@@ -36,6 +36,7 @@
 #include "sound.h"
 #include "music.h"
 #include "spfx.h"
+#include "economy.h"
 
 
 /* to get data info */
@@ -159,6 +160,7 @@ int main ( int argc, char** argv )
 
 	
 	/*  data loading */
+	commodity_load();
 	factions_load();
 	spfx_load();
 	outfit_load();
@@ -220,6 +222,7 @@ int main ( int argc, char** argv )
 	outfit_free();
 	spfx_free(); /* gets rid of the special effect */
 	factions_free();
+	commodity_free();
 	gl_freeFont(NULL);
 	gl_freeFont(&gl_smallFont);
 

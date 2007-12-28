@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Commodities>
+<commodity name="Food">
+<high>160</high>
+<medium>140</medium>
+<low>120</low>
+</commodity>
+<commodity name="Ore">
+<high>240</high>
+<medium>210</medium>
+<low>180</low>
+</commodity>
+</Commodities>

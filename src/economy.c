@@ -7,8 +7,30 @@
 #include "economy.h"
 
 #include <stdio.h>
+#include <string.h>
+#include <stdint.h>
 
 #include "naev.h"
+#include "xml.h"
+#include "pack.h"
+#include "log.h"
+
+
+#define XML_COMMODITY_ID		"Commodities"   /* XML section identifier */
+#define XML_COMMODITY_TAG		"commodity"
+#define COMMODITY_DATA			"dat/commodity.xml"
+
+
+/* commodity stack */
+static Commodity* commodity_stack = NULL;
+static int commodity_nstack = 0;
+
+
+/*
+ * prototypes
+ */
+static void commodity_freeOne( Commodity* com );
+static Commodity* commodity_parse( xmlNodePtr parent );
 
 
 /*
@@ -27,3 +49,105 @@ void credits2str( char *str, unsigned int credits, int decimals )
 		snprintf( str, 16, "%.*fK", decimals, (double)credits / 1000. );
 	else snprintf (str, 16, "%d", credits );
 }
+
+
+/*
+ * frees a commodity
+ */
+static void commodity_freeOne( Commodity* com )
+{
+	if (com->name) free(com->name);
+}
+
+
+/*
+ * loads a commodity
+ */
+static Commodity* commodity_parse( xmlNodePtr parent )
+{
+	xmlNodePtr node;
+	Commodity* temp = CALLOC_ONE(Commodity);
+
+	temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name");
+	if (temp->name == NULL) WARN("Commodity from "COMMODITY_DATA" has invalid or no name");
+
+	node = parent->xmlChildrenNode;
+
+	do {
+		if (xml_isNode(node,"high"))
+			temp->high = xml_getInt(node);
+		else if (xml_isNode(node,"medium"))
+			temp->medium = xml_getInt(node);
+		else if (xml_isNode(node,"low"))
+			temp->low = xml_getInt(node);
+	} while ((node = node->next));
+
+#define MELEMENT(o,s)	if (o) WARN("Commodity '%s' missing '"s"' element", temp->name)
+	MELEMENT(temp->high==0,"high");
+	MELEMENT(temp->medium==0,"medium");
+	MELEMENT(temp->low==0,"low");
+#undef MELEMENT
+
+	return temp;
+}
+
+
+/*
+ * init/exit
+ */
+int commodity_load (void)
+{
+	uint32_t bufsize;
+	char *buf = pack_readfile(DATA, COMMODITY_DATA, &bufsize);
+
+	xmlNodePtr node;
+	xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+
+	Commodity* temp = NULL;
+
+	node = doc->xmlChildrenNode; /* Commoditys node */
+	if (strcmp((char*)node->name,XML_COMMODITY_ID)) {
+		ERR("Malformed "COMMODITY_DATA" file: missing root element '"XML_COMMODITY_ID"'");
+		return -1;
+	}
+
+	node = node->xmlChildrenNode; /* first faction node */
+	if (node == NULL) {
+		ERR("Malformed "COMMODITY_DATA" file: does not contain elements");
+		return -1;
+	}
+
+	do {
+		if (node->type==XML_NODE_START) {
+			if (strcmp((char*)node->name,XML_COMMODITY_TAG)==0) {
+				temp = commodity_parse(node);
+				commodity_stack = realloc(commodity_stack,
+						sizeof(Commodity)*(++commodity_nstack));
+				memcpy(commodity_stack+commodity_nstack-1, temp, sizeof(Commodity));
+				free(temp);
+			}
+		}
+	} while ((node = node->next));
+
+	xmlFreeDoc(doc);
+	free(buf);
+	xmlCleanupParser();
+
+	DEBUG("Loaded %d Commodit%s", commodity_nstack, (commodity_nstack==1) ? "y" : "ies" );
+
+	return 0;
+
+
+}
+void commodity_free (void)
+{
+	int i;
+	for (i=0; i<commodity_nstack; i++)
+		commodity_freeOne( &commodity_stack[i] );
+	free( commodity_stack );
+	commodity_stack = NULL;
+	commodity_nstack = 0;
+}
+
+
+
