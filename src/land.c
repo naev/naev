@@ -86,15 +86,6 @@ static void news_close( char* str );
  */
 static void commodity_exchange (void)
 {
-	char** goods;
-	int ngoods;
-
-	goods = malloc(sizeof(char*)*3);
-	goods[0] = strdup("hello");
-	goods[1] = strdup("just");
-	goods[2] = strdup("testing");
-	ngoods = 3;
-
 	secondary_wid = window_create( "Commodity Exchange",
 			-1, -1, COMMODITY_WIDTH, COMMODITY_HEIGHT );
 
@@ -104,7 +95,7 @@ static void commodity_exchange (void)
 
 	window_addList( secondary_wid, 20, -40,
 			COMMODITY_WIDTH-40, COMMODITY_HEIGHT-80-BUTTON_HEIGHT,
-			"lstGoods", goods, ngoods, 0, NULL );
+			"lstGoods", NULL, 0, 0, NULL );
 }
 static void commodity_exchange_close( char* str )
 {
