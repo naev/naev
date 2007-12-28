@@ -17,6 +17,9 @@
 #define MAX_HYPERSPACE_VEL		25
 
 
+#define PLANET_TECH_MAX			8
+
+
 /*
  * Planets types, taken from
  * http://en.wikipedia.org/wiki/Star_Trek_planet_classifications
@@ -71,8 +74,8 @@ typedef struct Planet_ {
 	unsigned int services; /* what services they offer */
 
 	/* tech[0] stores global tech level (everything that and below) while
-	 * tech[1-7] store the "unique" tech levels (only matches */
-	int tech[8];
+	 * tech[1-PLANET_TECH_MAX] store the "unique" tech levels (only matches */
+	int tech[PLANET_TECH_MAX];
 
 	glTexture* gfx_space; /* graphic in space */
 	glTexture* gfx_exterior; /* graphic in the exterior */

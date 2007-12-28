@@ -443,12 +443,12 @@ static Planet* planet_get( const char* name )
 										temp->tech[0] = xml_getInt(ccur);
 									}
 									else if (xml_isNode(ccur,"special")) {
-										for (i=1; i<8; i++)
+										for (i=1; i<PLANET_TECH_MAX; i++)
 											if (temp->tech[i]==0) {
 												temp->tech[i] = xml_getInt(ccur);
 												break;
 											}
-										if (i==8) WARN("Planet '%s' has too many"
+										if (i==PLANET_TECH_MAX) WARN("Planet '%s' has too many"
 												"'special tech' entries", temp->name);
 									}
 								} while ((ccur = ccur->next));

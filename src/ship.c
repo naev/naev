@@ -63,17 +63,25 @@ Ship* ship_get( const char* name )
 /*
  * returns all the ships in  text form
  */
-char** ship_getTech( int *n, const int tech )
+char** ship_getTech( int *n, const int *tech, const int techmax )
 {
-	int i;
+	int i,j;
 	char **shipnames = malloc(sizeof(Ship*) * ships);
 
 	*n = 0;
 	for (i=0; i < ships; i++)
-		if (ship_stack[i].tech <= tech) {
+		if (ship_stack[i].tech <= tech[0]) {
 			shipnames[*n] = strdup(ship_stack[i].name);
 			(*n)++;
 		}
+		else {
+			for (j=0; j<techmax; j++)
+				if (tech[j] == ship_stack[i].tech) {
+					shipnames[*n] = strdup(ship_stack[i].name);
+					(*n)++;
+				}
+		}
+					
 	
 	return shipnames;
 }
