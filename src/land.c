@@ -27,11 +27,11 @@
 
 /* outfits */
 #define OUTFITS_WIDTH	700
-#define OUTFITS_HEIGHT	500
+#define OUTFITS_HEIGHT	600
 
 /* shipyard */
 #define SHIPYARD_WIDTH	700
-#define SHIPYARD_HEIGHT	500
+#define SHIPYARD_HEIGHT	600
 
 /* news window */
 #define NEWS_WIDTH	400
