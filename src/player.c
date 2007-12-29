@@ -1052,9 +1052,16 @@ void gui_free (void)
 void player_think( Pilot* player )
 {
 	/* turning taken over by PLAYER_FACE */
-	if (player_isFlag(PLAYER_FACE) && (player_target != PLAYER_ID))
-		pilot_face( player,
-				vect_angle(&player->solid->pos, &pilot_get(player_target)->solid->pos));
+	if (player_isFlag(PLAYER_FACE)) { 
+		if (player_target != PLAYER_ID)
+			pilot_face( player,
+					vect_angle( &player->solid->pos,
+						&pilot_get(player_target)->solid->pos ));
+		else if (planet_target != -1)
+			pilot_face( player,
+					vect_angle( &player->solid->pos,
+						&cur_system->planets[ planet_target ].pos ));
+	}
 
 	/* turning taken over by PLAYER_REVERSE */
 	else if (player_isFlag(PLAYER_REVERSE) && (VMOD(player->solid->vel) > 0.))
