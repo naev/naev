@@ -602,7 +602,7 @@ void player_render (void)
 			NULL, str );
 	/* cargo and friends */
 	if (player->ncommodities > 0) {
-		j -= gl_smallFont.h - 5;
+		j -= gl_smallFont.h + 5;
 		gl_print( &gl_smallFont,
 				gui.misc.x + 8, j,
 				&cConsole, "Cargo:" );

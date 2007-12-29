@@ -611,7 +611,7 @@ int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )
 
 	/* must add another one */
 	pilot->commodities = realloc( pilot->commodities,
-			sizeof(PilotCommodity) * pilot->ncommodities);
+			sizeof(PilotCommodity) * (pilot->ncommodities+1));
 	pilot->commodities[ pilot->ncommodities ].commodity = cargo;
 	if (pilot->cargo_free < quantity)
 		q = pilot->cargo_free;
@@ -633,7 +633,7 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
 	q = quantity;
 	for (i=0; i<pilot->ncommodities; i++)
 		if (pilot->commodities[i].commodity == cargo) {
-			if (quantity > pilot->commodities[i].quantity) {
+			if (quantity >= pilot->commodities[i].quantity) {
 				q = pilot->commodities[i].quantity;
 
 				/* remove cargo */
@@ -648,10 +648,7 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
 			pilot->cargo_free += q;
 			return q;
 		}
-	
-	WARN("Trying to remove %d cargo '%s' from pilot '%s' when it doesn't exist",
-			quantity, cargo->name, pilot->name );
-	return -1;
+	return 0;
 }
 
 

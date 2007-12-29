@@ -103,7 +103,7 @@ typedef struct Pilot_ {
 
 	/* cargo */
 	int credits; /* monies the pilot has */
-	PilotCommodity *commodities; /* commodity and quantity */
+	PilotCommodity* commodities; /* commodity and quantity */
 	int ncommodities;
 	int cargo_free;
 

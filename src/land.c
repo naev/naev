@@ -59,6 +59,8 @@ static Planet* planet = NULL;
 /* commodity exchange */
 static void commodity_exchange (void);
 static void commodity_exchange_close( char* str );
+static void commodity_buy( char* str );
+static void commodity_sell( char* str );
 /* outfits */
 static void outfits (void);
 static void outfits_close( char* str );
@@ -96,17 +98,63 @@ static void commodity_exchange (void)
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCommodityClose",
 			"Close", commodity_exchange_close );
 
+	window_addButton( secondary_wid, -40-((BUTTON_WIDTH-20)/2), 20*2 + BUTTON_HEIGHT,
+			(BUTTON_WIDTH-20)/2, BUTTON_HEIGHT, "btnCommodityBuy",
+			"Buy", commodity_buy );
+	window_addButton( secondary_wid, -20, 20*2 + BUTTON_HEIGHT,
+			(BUTTON_WIDTH-20)/2, BUTTON_HEIGHT, "btnCommoditySell",
+			"Sell", commodity_sell );
+
+
 	goods = malloc(sizeof(char*) * planet->ncommodities);
 	for (i=0; i<planet->ncommodities; i++)
 		goods[i] = strdup(planet->commodities[i]->name);
 	window_addList( secondary_wid, 20, -40,
-			100, COMMODITY_HEIGHT-80-BUTTON_HEIGHT,
+			COMMODITY_WIDTH-BUTTON_WIDTH-60, COMMODITY_HEIGHT-80-BUTTON_HEIGHT,
 			"lstGoods", goods, planet->ncommodities, 0, NULL );
 }
 static void commodity_exchange_close( char* str )
 {
 	if (strcmp(str, "btnCommodityClose")==0)
 		window_destroy(secondary_wid);
+}
+static void commodity_buy( char* str )
+{
+	(void)str;
+	char *comname;
+	Commodity *com;
+	int q;
+
+	q = 10;
+	comname = toolkit_getList( secondary_wid, "lstGoods" );
+	com = commodity_get( comname );
+
+	if (player_credits <= q * com->medium) {
+		toolkit_alert( "Not enough credits!" );
+		return;
+	}
+	else if (player->cargo_free <= 0) {
+		toolkit_alert( "Not enough free space!" );
+		return;
+	}
+
+
+	q = pilot_addCargo( player, com, q );
+	player_credits -= q * com->medium;
+}
+static void commodity_sell( char* str )
+{
+	(void)str;
+	char *comname;
+	Commodity *com;
+	int q;
+
+	q = 10;
+	comname = toolkit_getList( secondary_wid, "lstGoods" );
+	com = commodity_get( comname );
+
+	q = pilot_rmCargo( player, com, q );
+	player_credits += q * com->medium;
 }
 
 
