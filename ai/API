@@ -74,6 +74,9 @@ pshield( [number pilot] )
 	@param pilot optional pilot id, if not the current pilot is used
 	@return percent of shield the pilot has left
 
+cargofree()
+	@desc returns how much free space the pilot has
+	@return free space of the current pilot (in tons)
 
 
 	B O O L E A N

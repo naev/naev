@@ -134,6 +134,7 @@ static int ai_pshield( lua_State *L ); /* pshield() */
 static int ai_getdistance( lua_State *L ); /* number getdist(Vector2d) */
 static int ai_getpos( lua_State *L ); /* getpos(number) */
 static int ai_minbrakedist( lua_State *L ); /* number minbrakedist() */
+static int ai_cargofree( lua_State *L ); /* number cargofree() */
 
 /* boolean expressions */
 static int ai_exists( lua_State *L ); /* boolean exists() */
@@ -201,6 +202,7 @@ static const luaL_reg ai_methods[] = {
 	{ "dist", ai_getdistance },
 	{ "pos", ai_getpos },
 	{ "minbrakedist", ai_minbrakedist },
+	{ "cargofree", ai_cargofree },
 	{ "nearestplanet", ai_getnearestplanet },
 	{ "rndplanet", ai_getrndplanet },
 	/* movement */
@@ -673,6 +675,15 @@ static int ai_minbrakedist( lua_State *L )
 
 	lua_pushnumber(L, dist); /* return */
 	return 1; /* returns one thing */
+}
+
+/*
+ * gets the pilot's free cargo space
+ */
+static int ai_cargofree( lua_State *L )
+{
+	lua_pushnumber(L, cur_pilot->cargo_free);
+	return 1;
 }
 
 
