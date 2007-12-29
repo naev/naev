@@ -46,6 +46,13 @@ end
 -- runs away
 function runaway ()
 	target = ai.targetid()
+
+	if not ai.exists(target) then
+		ai.pushtask()
+		ai.pushtask(0,"hyperspace")
+		return
+	end
+
 	dir = ai.face( target, 1 )
 	ai.accel()
 	if ai.hasturrets() then
