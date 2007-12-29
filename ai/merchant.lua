@@ -35,6 +35,9 @@ function attacked ( attacker )
 
 		-- Sir Robin bravely ran away
 		ai.pushtask(0, "runaway", attacker)
+	else -- run away from the new baddie
+		ai.poptask()
+		ai.pushtask(0, "runaway", attacker)
 	end
 end
 
