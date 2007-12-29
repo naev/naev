@@ -32,7 +32,8 @@ static unsigned int board_wid = 0;
  */
 static void board_exit( char* str );
 static void board_stealCreds( char* str );
-static void board_fail (void);
+static void board_stealCargo( char* str );
+static int board_fail (void);
 static void board_update (void);
 
 
@@ -42,8 +43,6 @@ static void board_update (void);
 void player_board (void)
 {  
 	Pilot *p;
-	char str[128];
-	char cred[10];
 
 	if (player_target==PLAYER_ID) {
 		player_message("You need a target to board first!");
@@ -87,18 +86,18 @@ void player_board (void)
 			"Credits:\n"
 			"Cargo:\n"
 			);
-	credits2str( cred, p->credits, 2 );
-
-	snprintf( str, 128,
-			"%s\n"
-			"%s\n"
-			, cred, "none" );
 	window_addText( board_wid, 80, -30, 120, 60,
-			0, "txtData", &gl_smallFont, &cBlack, str );
+			0, "txtData", &gl_smallFont, &cBlack, NULL );
 
-	window_addButton( board_wid, 20, 20, 50, 30, "btnStealCredits", "Credits", board_stealCreds);
+	window_addButton( board_wid, 20, 20, 50, 30, "btnStealCredits",
+			"Credits", board_stealCreds);
+	window_addButton( board_wid, 90, 20, 50, 30, "btnStealCargo",
+			"Cargo", board_stealCargo);
 
-	window_addButton( board_wid, -20, 20, 50, 30, "btnBoardingClose", "Leave", board_exit );
+	window_addButton( board_wid, -20, 20, 50, 30, "btnBoardingClose",
+			"Leave", board_exit );
+
+	board_update();
 }
 static void board_exit( char* str )
 {
@@ -119,28 +118,60 @@ static void board_stealCreds( char* str )
 		return;
 	}
 
-	/* calculate success */
-	if (RNG(0,100) < (int)(50. * (double)p->ship->crew/(double)player->ship->crew)) {
-		board_fail();
-		return;
-	}
+	if (board_fail()) return;
 
 	player_credits += p->credits;
 	p->credits = 0;
 	board_update(); /* update the lack of credits */
 	player_message("You manage to steal the ship's credits.");
 }
+static void board_stealCargo( char* str )
+{
+	(void)str;
+	int q;
+	Pilot* p;
+
+	p = pilot_get(player_target);
+
+	if (p->ncommodities==0) { /* no cargo */
+		player_message("The ship has no cargo.");
+		return;
+	}
+	else if (player->cargo_free <= 0) {
+		player_message("You have no room for cargo.");
+		return;
+	}
+
+	if (board_fail()) return;
+
+	/* steal as much as possible until full - TODO let player choose */
+	q = 1;
+	while ((p->ncommodities > 0) && (q!=0)) {
+		q = pilot_addCargo( player, p->commodities[0].commodity,
+				p->commodities[0].quantity );
+		pilot_rmCargo( p, p->commodities[0].commodity, q );
+	}
+
+	board_update();
+	player_message("You manage to steal the ship's cargo.");
+}
 
 
 /*
  * failed to board
  */
-static void board_fail (void)
+static int board_fail (void)
 {
 	Pilot* p;
 
+	p = pilot_get(player_target);
+
+	/* fail chance */
+	return 0;
+	if (RNG(0,100) > (int)(50. * (double)p->ship->crew/(double)player->ship->crew))
+		return 0;
+
 	if (RNG(0,2)==0) { /* 33% of instadeath */
-		p = pilot_get(player_target);
 		p->armour = -1.;
 		player_message("You have tripped the ship's self destruct mechanism!");
 	}
@@ -148,6 +179,7 @@ static void board_fail (void)
 		player_message("The ship's security system locks you out.");
 
 	board_exit(NULL);
+	return 1;
 }
 
 
@@ -156,7 +188,8 @@ static void board_fail (void)
  */
 static void board_update (void)
 {
-	char str[128];
+	int i;
+	char str[128], buf[32];
 	char cred[10];
 	Pilot* p;
 
@@ -164,10 +197,18 @@ static void board_update (void)
 
 	credits2str( cred, p->credits, 2 );
 
-	snprintf( str, 128,
-			"%s\n"
-			"%s\n"
-			, cred, "none" );
+	snprintf( str, 11,
+			"%s\n", cred );
+	if (p->ncommodities==0)
+		snprintf( buf, 128, "none" );
+	else {
+		for (i=0; i<p->ncommodities; i++) {
+			snprintf( buf, 32, 
+					"%d %s\n",
+					p->commodities[i].quantity, p->commodities[i].commodity->name );
+			strncat( str, buf, 32 );
+		}
+	}
 
 	window_modifyText( board_wid, "txtData", str );	
 }
