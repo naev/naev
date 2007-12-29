@@ -115,7 +115,7 @@ static void board_stealCreds( char* str )
 	p = pilot_get(player_target);
 
 	if (p->credits==0) { /* you can't steal from the poor */
-		player_message("The ship has no credits left");
+		player_message("The ship has no credits.");
 		return;
 	}
 
@@ -128,7 +128,7 @@ static void board_stealCreds( char* str )
 	player_credits += p->credits;
 	p->credits = 0;
 	board_update(); /* update the lack of credits */
-	player_message("You manage to steal the ship's credits");
+	player_message("You manage to steal the ship's credits.");
 }
 
 
@@ -142,10 +142,10 @@ static void board_fail (void)
 	if (RNG(0,2)==0) { /* 33% of instadeath */
 		p = pilot_get(player_target);
 		p->armour = -1.;
-		player_message("You have tripped the ship's self destruct mechanism");
+		player_message("You have tripped the ship's self destruct mechanism!");
 	}
 	else /* you just got locked out */
-		player_message("The ship's security system locks you out");
+		player_message("The ship's security system locks you out.");
 
 	board_exit(NULL);
 }
