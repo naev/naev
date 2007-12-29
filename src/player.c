@@ -301,7 +301,7 @@ const char* player_rating (void)
 
 
 /*
- * returns how much space the player has left
+ * returns how much weapon space the player has left
  */
 int player_freeSpace (void)
 {
@@ -314,6 +314,7 @@ int player_freeSpace (void)
 	return s;
 }
 
+
 /*
  * returns how many of the outfit the player owns
  */
@@ -324,6 +325,20 @@ int player_outfitOwned( const char* outfitname )
 	for (i=0; i<player->noutfits; i++)
 		if (strcmp(outfitname, player->outfits[i].outfit->name)==0)
 			return player->outfits[i].quantity;
+	return 0;
+}
+
+
+/*
+ * returns how many of the commodity the player has
+ */
+int player_cargoOwned( const char* commodityname )
+{
+	int i;
+
+	for (i=0; i<player->ncommodities; i++)
+		if (strcmp(commodityname, player->commodities[i].commodity->name)==0)
+			return player->commodities[i].quantity;
 	return 0;
 }
 

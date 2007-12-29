@@ -72,6 +72,7 @@ Commodity* commodity_get( const char* name )
 static void commodity_freeOne( Commodity* com )
 {
 	if (com->name) free(com->name);
+	if (com->description) free(com->description);
 }
 
 
@@ -89,7 +90,9 @@ static Commodity* commodity_parse( xmlNodePtr parent )
 	node = parent->xmlChildrenNode;
 
 	do {
-		if (xml_isNode(node,"high"))
+		if (xml_isNode(node,"description"))
+			temp->description = strdup( xml_get(node) );
+		else if (xml_isNode(node,"high"))
 			temp->high = xml_getInt(node);
 		else if (xml_isNode(node,"medium"))
 			temp->medium = xml_getInt(node);
@@ -98,6 +101,7 @@ static Commodity* commodity_parse( xmlNodePtr parent )
 	} while ((node = node->next));
 
 #define MELEMENT(o,s)	if (o) WARN("Commodity '%s' missing '"s"' element", temp->name)
+	MELEMENT(temp->description==NULL,"description");
 	MELEMENT(temp->high==0,"high");
 	MELEMENT(temp->medium==0,"medium");
 	MELEMENT(temp->low==0,"low");

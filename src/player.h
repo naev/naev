@@ -65,6 +65,7 @@ void player_warp( const double x, const double y );
 const char* player_rating (void);
 int player_freeSpace (void);
 int player_outfitOwned( const char* outfitname );
+int player_cargoOwned( const char* commodityname );
 
 /* 
  * keybind actions

@@ -59,6 +59,7 @@ static Planet* planet = NULL;
 /* commodity exchange */
 static void commodity_exchange (void);
 static void commodity_exchange_close( char* str );
+static void commodity_update( char* str );
 static void commodity_buy( char* str );
 static void commodity_sell( char* str );
 /* outfits */
@@ -105,18 +106,50 @@ static void commodity_exchange (void)
 			(BUTTON_WIDTH-20)/2, BUTTON_HEIGHT, "btnCommoditySell",
 			"Sell", commodity_sell );
 
+	window_addText( secondary_wid, -20, -40, BUTTON_WIDTH, 20, 0,
+			"txtSInfo", &gl_smallFont, &cDConsole, 
+			"You have:\n"
+			"Market price:\n" );
+	window_addText( secondary_wid, -20, -40, BUTTON_WIDTH/2, 20, 0,
+			"txtDInfo", &gl_smallFont, &cBlack, NULL );
+
+	window_addText( secondary_wid, -40, -80, BUTTON_WIDTH-20, 60, 0,
+			"txtDesc", &gl_smallFont, &cBlack, NULL );
+
 
 	goods = malloc(sizeof(char*) * planet->ncommodities);
 	for (i=0; i<planet->ncommodities; i++)
 		goods[i] = strdup(planet->commodities[i]->name);
 	window_addList( secondary_wid, 20, -40,
 			COMMODITY_WIDTH-BUTTON_WIDTH-60, COMMODITY_HEIGHT-80-BUTTON_HEIGHT,
-			"lstGoods", goods, planet->ncommodities, 0, NULL );
+			"lstGoods", goods, planet->ncommodities, 0, commodity_update );
+
+	/* update */
+	commodity_update(NULL);
 }
 static void commodity_exchange_close( char* str )
 {
 	if (strcmp(str, "btnCommodityClose")==0)
 		window_destroy(secondary_wid);
+}
+static void commodity_update( char* str )
+{
+	(void)str;
+	char buf[128];
+	char *comname;
+	Commodity *com;
+
+	comname = toolkit_getList( secondary_wid, "lstGoods" );
+	com = commodity_get( comname );
+
+	snprintf( buf, 128,
+			"%d\n"
+			"%d credits/ton\n",
+			player_cargoOwned( comname ),
+			com->medium );
+	window_modifyText( secondary_wid, "txtDInfo", buf );
+	window_modifyText( secondary_wid, "txtDesc", com->description );
+
 }
 static void commodity_buy( char* str )
 {
@@ -138,9 +171,9 @@ static void commodity_buy( char* str )
 		return;
 	}
 
-
 	q = pilot_addCargo( player, com, q );
 	player_credits -= q * com->medium;
+	commodity_update(NULL);
 }
 static void commodity_sell( char* str )
 {
@@ -155,6 +188,7 @@ static void commodity_sell( char* str )
 
 	q = pilot_rmCargo( player, com, q );
 	player_credits += q * com->medium;
+	commodity_update(NULL);
 }
 
 

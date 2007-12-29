@@ -10,6 +10,7 @@
 
 typedef struct Commodity_ {
 	char* name;
+	char* description;
 	int low, medium, high; /* prices */
 } Commodity;
 
