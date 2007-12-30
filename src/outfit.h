@@ -68,6 +68,7 @@ typedef struct Outfit_ {
 			double speed; /* how fast it goes (not applicable to beam) */
 			double range; /* how far it goes */
 			double accuracy; /* desviation accuracy */
+			double energy; /* energy usage */
 			double damage_armour, damage_shield; /* damage */
 
 			glTexture* gfx_space; /* graphic */
@@ -89,6 +90,7 @@ typedef struct Outfit_ {
 			double speed; /* maximum speed */
 			double turn; /* turn velocity */
 			double thrust; /* acceleration */
+			double energy; /* energy usage */
 			double damage_armour, damage_shield; /* damage */
 
 			glTexture* gfx_space; /* graphic */
@@ -122,6 +124,7 @@ int outfit_spfx( const Outfit* o );
 double outfit_dmgShield( const Outfit* o );
 double outfit_dmgArmour( const Outfit* o );
 int outfit_delay( const Outfit* o );
+double outfit_energy( const Outfit* o );
 
 /*
  * loading/freeing outfit stack

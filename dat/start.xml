@@ -3,8 +3,8 @@
 <player>
 <ship>Lancelot</ship>
 <credits>
-<low>5000</low>
-<high>15000</high>
+<low>50000</low>
+<high>150000</high>
 </credits>
 <system>
 <name>Delta Pavonis</name>

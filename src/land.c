@@ -619,6 +619,7 @@ void takeoff (void)
 	/* heal the player */
 	player->armour = player->armour_max;
 	player->shield = player->shield_max;
+	player->energy = player->energy_max;
 
 	space_init(NULL);
 

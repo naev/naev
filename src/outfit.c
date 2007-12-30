@@ -167,6 +167,13 @@ int outfit_delay( const Outfit* o )
 	else if (outfit_isTurret(o)) return o->u.blt.delay;
 	return -1;
 }
+double outfit_energy( const Outfit* o )
+{
+	if (outfit_isWeapon(o)) return o->u.blt.energy;
+	else if (outfit_isAmmo(o)) return o->u.amm.energy;
+	else if (outfit_isTurret(o)) return o->u.blt.energy;
+	return -1.;
+}
 
 
 
@@ -230,6 +237,7 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
 		else if (xml_isNode(node,"delay")) temp->u.blt.delay = xml_getInt(node);
 		else if (xml_isNode(node,"range")) temp->u.blt.range = xml_getFloat(node);
 		else if (xml_isNode(node,"accuracy")) temp->u.blt.accuracy = xml_getFloat(node);
+		else if (xml_isNode(node,"energy")) temp->u.blt.energy = xml_getFloat(node);
 		else if (xml_isNode(node,"gfx")) {
 			snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+4,
 					OUTFIT_GFX"%s.png", xml_get(node));
@@ -299,6 +307,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 		if (xml_isNode(node,"thrust")) temp->u.amm.thrust = xml_getFloat(node);
 		else if (xml_isNode(node,"turn")) temp->u.amm.turn = xml_getFloat(node);
 		else if (xml_isNode(node,"speed")) temp->u.amm.speed = xml_getFloat(node);
+		else if (xml_isNode(node,"energy")) temp->u.amm.energy = xml_getFloat(node);
 		else if (xml_isNode(node,"duration"))
 			temp->u.amm.duration = (unsigned int)1000.*xml_getFloat(node);
 		else if (xml_isNode(node,"lockon"))

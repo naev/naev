@@ -18,6 +18,7 @@ Your basic laser.
 <speed>550</speed>
 <range>300</range>
 <accuracy>30</accuracy>
+<energy>8</energy>
 <damage>
 <armour>13</armour>
 <shield>10</shield>
@@ -42,6 +43,7 @@ Two laser cannons added on a rotating turret, allowing for 360 degrees of firepo
 <speed>550</speed>
 <range>300</range>
 <accuracy>30</accuracy>
+<energy>10</energy>
 <damage>
 <armour>13</armour>
 <shield>10</shield>
@@ -146,6 +148,7 @@ Neutron Disruptor.
 <speed>650</speed>
 <range>200</range>
 <accuracy>15</accuracy>
+<energy>5</energy>
 <damage>
 <armour>7</armour>
 <shield>7</shield>

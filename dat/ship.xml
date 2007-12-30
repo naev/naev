@@ -22,7 +22,7 @@ One of the most widely used ships in the galaxy.  Reknown for it's stability and
 <energy>240</energy>
 <shield_regen>80</shield_regen>
 <armour_regen>50</armour_regen>
-<energy_regen>40</energy_regen>
+<energy_regen>500</energy_regen>
 </health>
 <caracteristics>
 <crew>2</crew>
@@ -56,7 +56,7 @@ The star product of Aerosys, the Hyena quickly has become a favorite of pirates 
 <energy>180</energy>
 <shield_regen>150</shield_regen>
 <armour_regen>60</armour_regen>
-<energy_regen>40</energy_regen>
+<energy_regen>500</energy_regen>
 </health>
 <caracteristics>
 <crew>2</crew>
@@ -90,7 +90,7 @@ A heavy frigate designed for heavy combat.  Used widely by the empire to establi
 <energy>900</energy>
 <shield_regen>300</shield_regen>
 <armour_regen>80</armour_regen>
-<energy_regen>50</energy_regen>
+<energy_regen>1400</energy_regen>
 </health>
 <caracteristics>
 <crew>35</crew>
@@ -127,7 +127,7 @@ Used by security agencies all over the universe for it's reliability and availab
 <energy>360</energy>
 <shield_regen>180</shield_regen>
 <armour_regen>60</armour_regen>
-<energy_regen>50</energy_regen>
+<energy_regen>1080</energy_regen>
 </health>
 <caracteristics>
 <crew>9</crew>
@@ -163,7 +163,7 @@ A heavy liner specialized in freighting cargo all over the universe.  Also has g
 <energy>300</energy>
 <shield_regen>100</shield_regen>
 <armour_regen>40</armour_regen>
-<energy_regen>50</energy_regen>
+<energy_regen>650</energy_regen>
 </health>
 <caracteristics>                                                          
 <crew>13</crew>
@@ -197,7 +197,7 @@ A robot drone.
 <energy>300</energy>
 <shield_regen>240</shield_regen>
 <armour_regen>420</armour_regen>
-<energy_regen>240</energy_regen>
+<energy_regen>600</energy_regen>
 </health>
 <caracteristics>
 <crew>1</crew>

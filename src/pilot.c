@@ -226,6 +226,11 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
 		switch (w->outfit->type) {
 			case OUTFIT_TYPE_TURRET_BOLT:
 			case OUTFIT_TYPE_BOLT:
+
+				/* enough energy? */
+				if (outfit_energy(w->outfit) > p->energy) return;
+
+				p->energy -= outfit_energy(w->outfit);
 				weapon_add( w->outfit, p->solid->dir,
 						&p->solid->pos, &p->solid->vel, p->id, t );
 
@@ -248,6 +253,10 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
 	else if (outfit_isLauncher(w->outfit) && (w==p->secondary) && (p->id!=t)) {
 		if (p->ammo && (p->ammo->quantity > 0)) {
 
+			/* enough energy? */
+			if (outfit_energy(w->outfit) > p->energy) return;
+	
+			p->energy -= outfit_energy(w->outfit);
 			weapon_add( p->ammo->outfit, p->solid->dir,
 					&p->solid->pos, &p->solid->vel, p->id, t );
 
@@ -438,13 +447,18 @@ static void pilot_update( Pilot* pilot, const double dt )
 	}
 
 	/* still alive */
-	else if (pilot->armour < pilot->armour_max)
+	else if (pilot->armour < pilot->armour_max) {
 		pilot->armour += pilot->ship->armour_regen * dt;
-	else
+		pilot->energy += pilot->ship->energy_regen * dt;
+	}
+	else {
 		pilot->shield += pilot->ship->shield_regen * dt;
+		pilot->energy += pilot->ship->energy_regen * dt;
+	}
 	
 	if (pilot->armour > pilot->armour_max) pilot->armour = pilot->armour_max;
 	if (pilot->shield > pilot->shield_max) pilot->shield = pilot->shield_max;
+	if (pilot->energy > pilot->energy_max) pilot->energy = pilot->energy_max;
 
 	/* update the solid */
 	(*pilot->solid->update)( pilot->solid, dt );
