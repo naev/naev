@@ -201,16 +201,17 @@ void player_new (void)
 	/* monies */
 	player_credits = RNG(l,h);
 
+	/* welcome message - must be before space_init */
+	player_message( "Welcome to "APPNAME"!" );
+	player_message( " v%d.%d.%d", VMAJOR, VMINOR, VREV );
+
+	/* create the player and start the game */
 	player_newShip( ship );
 	space_init(system);
 
 	/* pos and dir */
 	player_warp( x, y );
 	player->solid->dir = RNG(0,359)/180.*M_PI;
-
-	/* welcome message */
-	player_message( "Welcome to "APPNAME"!" );
-	player_message( " v%d.%d.%d", VMAJOR, VMINOR, VREV );
 }
 
 
