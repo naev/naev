@@ -178,7 +178,7 @@ static void info_outfits_menu( char* str )
 	unsigned int wid;
 	wid = window_create( "Outfits", -1, -1, OUTFITS_WIDTH, OUTFITS_HEIGHT );
 
-	window_addText( wid, 20, 0, 100, OUTFITS_HEIGHT-40,
+	window_addText( wid, 20, -40, 100, OUTFITS_HEIGHT-40,
 			0, "txtLabel", &gl_smallFont, &cDConsole,
 			"Ship Outfits:" );
 
@@ -192,7 +192,8 @@ static void info_outfits_menu( char* str )
 		strcat( buf, buf2 );
 	}
 
-	window_addText( wid, 20, 0, OUTFITS_WIDTH-40, OUTFITS_HEIGHT-60,
+	window_addText( wid, 20, -45-gl_smallFont.h,
+			OUTFITS_WIDTH-40, OUTFITS_HEIGHT-60,
 			0, "txtOutfits", &gl_smallFont, &cBlack, buf );
 	
 	window_addButton( wid, -20, 20,

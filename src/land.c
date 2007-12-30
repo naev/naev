@@ -35,11 +35,11 @@
 
 /* news window */
 #define NEWS_WIDTH	400
-#define NEWS_HEIGHT	400
+#define NEWS_HEIGHT	500
 
 /* bar window */
-#define BAR_WIDTH		600
-#define BAR_HEIGHT	400
+#define BAR_WIDTH		460
+#define BAR_HEIGHT	300
 
 
 #define MUSIC_TAKEOFF	"liftoff"
@@ -199,8 +199,10 @@ static void outfits (void)
 {
 	char **outfits;
 	int noutfits;
+	char buf[128];
 
-	secondary_wid = window_create( "Outfits", -1, -1,
+	snprintf(buf,128,"%s - Outfits", planet->name );
+	secondary_wid = window_create( buf, -1, -1,
 			OUTFITS_WIDTH, OUTFITS_HEIGHT );
 
 	window_addButton( secondary_wid, -20, 20,
@@ -381,8 +383,10 @@ static void shipyard (void)
 {
 	char **ships;
 	int nships;
+	char buf[128];
 
-	secondary_wid = window_create( "Shipyard",
+	snprintf( buf, 128, "%s - Shipyard", planet->name );
+	secondary_wid = window_create( buf,
 			-1, -1, SHIPYARD_WIDTH, SHIPYARD_HEIGHT );
 
 	window_addButton( secondary_wid, -20, 20,
@@ -489,13 +493,17 @@ static void spaceport_bar (void)
 	secondary_wid = window_create( "Spaceport Bar",
 			-1, -1, BAR_WIDTH, BAR_HEIGHT );
 
-	window_addText( secondary_wid, 20, 20 + BUTTON_HEIGHT + 20,
-			BAR_WIDTH - 140, BAR_HEIGHT - 40 - BUTTON_HEIGHT - 60, 0,
+	window_addText( secondary_wid, 20, -30,
+			BAR_WIDTH - 140, BAR_HEIGHT - 40 - BUTTON_HEIGHT, 0,
 			"txtDescription", &gl_smallFont, &cBlack, planet->bar_description );
 	
 	window_addButton( secondary_wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseBar",
 			"Close", spaceport_bar_close );
+
+	window_addButton( secondary_wid, 20, 20,
+			BUTTON_WIDTH, BUTTON_HEIGHT, "btnNews",
+			"News", (void(*)(char*))news);
 }
 static void spaceport_bar_close( char* str )
 {
@@ -510,15 +518,16 @@ static void spaceport_bar_close( char* str )
  */
 static void news (void)
 {
-	secondary_wid = window_create( "News Reports",
+	unsigned int news_wid;
+	news_wid = window_create( "News Reports",
 			-1, -1, NEWS_WIDTH, NEWS_HEIGHT );
 
-	window_addText( secondary_wid, 20, 20 + BUTTON_HEIGHT + 20,
+	window_addText( news_wid, 20, 20 + BUTTON_HEIGHT + 20,
 			NEWS_WIDTH-40, NEWS_HEIGHT - 20 - BUTTON_HEIGHT - 20 - 20 - 20,
 			0, "txtNews", &gl_smallFont, &cBlack,
 			"News reporters report that they are on strike!");
 
-	window_addButton( secondary_wid, -20, 20,
+	window_addButton( news_wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseNews",
 			"Close", news_close );
 
@@ -526,7 +535,7 @@ static void news (void)
 static void news_close( char* str )
 {
 	if (strcmp(str,"btnCloseNews")==0)
-		window_destroy(secondary_wid);
+		window_destroy( window_get("News Reports") );
 }
 
 
@@ -572,12 +581,12 @@ void land( Planet* p )
 				"Outfits", (void(*)(char*))outfits);
 
 	if (planet_hasService(planet, PLANET_SERVICE_BASIC)) {
-	window_addButton( land_wid, 20, 20,
-		BUTTON_WIDTH, BUTTON_HEIGHT, "btnNews",
-		"News", (void(*)(char*))news);
-	window_addButton( land_wid, 20, 20 + BUTTON_HEIGHT + 20,
-		BUTTON_WIDTH, BUTTON_HEIGHT, "btnBar",
-		"Spaceport Bar", (void(*)(char*))spaceport_bar);
+		window_addButton( land_wid, 20, 20,
+			BUTTON_WIDTH, BUTTON_HEIGHT, "btnNews",
+			"Mission Terminal", NULL);
+		window_addButton( land_wid, 20, 20 + BUTTON_HEIGHT + 20,
+			BUTTON_WIDTH, BUTTON_HEIGHT, "btnBar",
+			"Spaceport Bar", (void(*)(char*))spaceport_bar);
 	}
 
 
