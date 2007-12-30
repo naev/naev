@@ -44,6 +44,7 @@ static Outfit* outfit_parse( const xmlNodePtr parent );
 static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent );
+static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent );
 
 
 /*
@@ -127,6 +128,15 @@ int outfit_isTurret( const Outfit* o )
 
 
 /*
+ * returns 1 if o is a modification
+ */
+int outfit_isMod( const Outfit* o )
+{
+	return (o->type==OUTFIT_TYPE_MODIFCATION);
+}
+
+
+/*
  * gets the outfit's gfx
  */
 glTexture* outfit_gfx( const Outfit* o )
@@ -194,7 +204,8 @@ const char* outfit_typename[] = { "NULL",
 		"Smart Swarm Missile",
 		"Smart Swarm Missile Ammunition Pack",
 		"Bolt Turret",
-		"Beam Turret"
+		"Beam Turret",
+		"Modification"
 };
 const char* outfit_getType( const Outfit* o )
 {
@@ -208,7 +219,8 @@ const char* outfit_typenamebroad[] = { "NULL",
 		"Weapon",
 		"Launcher",
 		"Ammo",
-		"Turret"
+		"Turret",
+		"Modification"
 };
 const char* outfit_getTypeBroad( const Outfit* o )
 {
@@ -217,6 +229,7 @@ const char* outfit_getTypeBroad( const Outfit* o )
 	else if (outfit_isLauncher(o)) i = 2;
 	else if (outfit_isAmmo(o)) i = 3;
 	else if (outfit_isTurret(o)) i = 4;
+	else if (outfit_isMod(o)) i = 5;
 
 	return outfit_typenamebroad[i];
 }
@@ -348,6 +361,40 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 
 
 /*
+ * parses the modification tidbits of the outfit
+ */
+static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
+{
+	xmlNodePtr node;
+	node = parent->xmlChildrenNode;
+
+	do { /* load all the data */
+		/* movement */
+		if (xml_isNode(node,"thrust"))
+			temp->u.mod.thrust = xml_getFloat(node);
+		else if (xml_isNode(node,"turn"))
+			temp->u.mod.turn = xml_getFloat(node);
+		else if (xml_isNode(node,"speed"))
+			temp->u.mod.speed = xml_getFloat(node);
+		/* health */
+		if (xml_isNode(node,"armour"))
+			temp->u.mod.armour = xml_getFloat(node);
+		else if (xml_isNode(node,"shield"))
+			temp->u.mod.shield = xml_getFloat(node);
+		else if (xml_isNode(node,"energy"))
+			temp->u.mod.energy = xml_getFloat(node);
+		else if (xml_isNode(node,"armour_regen"))
+			temp->u.mod.armour_regen = xml_getFloat(node)/60.0;
+		else if (xml_isNode(node,"shield_regen"))
+			temp->u.mod.shield_regen = xml_getFloat(node)/60.0;
+		else if (xml_isNode(node,"energy_regen"))
+			temp->u.mod.energy_regen = xml_getFloat(node)/60.0;
+
+	} while ((node = node->next));
+}
+
+
+/*
  * parses and returns Outfit from parent node
  */
 static Outfit* outfit_parse( const xmlNodePtr parent )
@@ -399,6 +446,8 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
 				outfit_parseSAmmo( temp, node );
 			else if (outfit_isTurret(temp))
 				outfit_parseSWeapon( temp, node );
+			else if (outfit_isMod(temp))
+				outfit_parseSMod( temp, node );
 		}
 	} while ((node = node->next));
 

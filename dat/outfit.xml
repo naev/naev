@@ -155,4 +155,32 @@ Neutron Disruptor.
 </damage>
 </specific>
 </outfit>
+<outfit name="Battery">
+<general>
+<max>10</max>
+<tech>3</tech>
+<mass>2</mass>
+<price>22500</price>
+<description>
+A heavy battery that will increase your ship's energy to allow you to pack more firepower.
+</description>
+</general>
+<specific type="15">
+<energy>75</energy>
+</specific>
+</outfit>
+<outfit name="Solar Panel">
+<general>
+<max>3</max>
+<tech>5</tech>
+<mass>3</mass>
+<price>55000</price>
+<description>
+A big panel that will generate energy based off solar energy.  This will allow your ship te regenerate it's energy supplies faster.
+</description>
+</general>
+<specific type="15">
+<energy_regen>125</energy_regen>
+</specific>
+</outfit>
 </Outfits>

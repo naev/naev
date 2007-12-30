@@ -38,7 +38,8 @@ typedef enum OutfitType_ {
 	OUTFIT_TYPE_MISSILE_SWARM_SMART=11,
 	OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO=12,
 	OUTFIT_TYPE_TURRET_BOLT=13,
-	OUTFIT_TYPE_TURRET_BEAM=14
+	OUTFIT_TYPE_TURRET_BEAM=14,
+	OUTFIT_TYPE_MODIFCATION=15
 } OutfitType;
 
 /*
@@ -99,6 +100,15 @@ typedef struct Outfit_ {
 
 			unsigned int lockon; /* time it takes to lock on the target */
 		} amm;
+		struct { /* modification */
+			/* movement */
+			double thrust, turn, speed;
+			
+			/* health */
+			double armour, armour_regen;
+			double shield, shield_regen;
+			double energy, energy_regen;
+		} mod;
 	} u;
 } Outfit;
 
@@ -113,6 +123,7 @@ int outfit_isWeapon( const Outfit* o );
 int outfit_isLauncher( const Outfit* o );
 int outfit_isAmmo( const Outfit* o );
 int outfit_isTurret( const Outfit* o );
+int outfit_isMod( const Outfit* o );
 const char* outfit_getType( const Outfit* o );
 const char* outfit_getTypeBroad( const Outfit* o );
 
