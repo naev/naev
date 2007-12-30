@@ -6,6 +6,7 @@
 #include "board.h"
 
 #include "naev.h"
+#include "log.h"
 #include "pilot.h"
 #include "player.h"
 #include "toolkit.h"
@@ -167,8 +168,8 @@ static int board_fail (void)
 	p = pilot_get(player_target);
 
 	/* fail chance */
-	return 0;
-	if (RNG(0,100) > (int)(50. * (double)p->ship->crew/(double)player->ship->crew))
+	if (RNG(0,100) > (int)(50. * 
+				(10. + (double)p->ship->crew)/(10. + (double)player->ship->crew)))
 		return 0;
 
 	if (RNG(0,2)==0) { /* 33% of instadeath */
