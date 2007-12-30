@@ -201,7 +201,7 @@ static void board_update (void)
 	snprintf( str, 11,
 			"%s\n", cred );
 	if (p->ncommodities==0)
-		snprintf( buf, 128, "none" );
+		strncat( str, "none", 10 );
 	else {
 		for (i=0; i<p->ncommodities; i++) {
 			snprintf( buf, 32, 
