@@ -24,8 +24,8 @@ The bar is just off the starport with a great view of the harbour.  You could wa
 </commodities>
 </general>
 <GFX>
-<space>caladan.png</space>
-<exterior>caladan.png</exterior>
+<space>M01.png</space>
+<exterior>oceanic.png</exterior>
 </GFX>
 </planet>
 <planet name="Dune">
@@ -52,8 +52,8 @@ The Arrakeen canteen is a shady place.  Many scoundrels and lowlifes make this t
 </commodities>
 </general>
 <GFX>
-<space>dune.png</space>
-<exterior>dune.png</exterior>
+<space>H00.png</space>
+<exterior>desertic.png</exterior>
 </GFX>
 </planet>
 <planet name="Omega Station">
@@ -79,7 +79,7 @@ The Omega Canteen is a dark place that seems calm, although everytime a robotic 
 </tech>
 </general>
 <GFX>
-<space>station00.png</space>
+<space>000.png</space>
 <exterior>station00.png</exterior>
 </GFX>
 </planet>
@@ -94,7 +94,7 @@ The Omega Canteen is a dark place that seems calm, although everytime a robotic 
 <services>0</services>
 </general>
 <GFX>
-<space>station01.png</space>
+<space>001.png</space>
 <exterior>station01.png</exterior>
 </GFX>
 </planet>
@@ -122,7 +122,7 @@ The Darkshed cantina is decorated with all sorts of odd artifacts that marked di
 </commodities>
 </general>
 <GFX>
-<space>station02.png</space>
+<space>002.png</space>
 <exterior>station02.png</exterior>
 </GFX>
 </planet>
