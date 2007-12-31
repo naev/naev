@@ -888,7 +888,8 @@ static int ai_getrndplanet( lua_State *L )
 	planets = malloc( sizeof(Planet*) * cur_system->nplanets );
 
 	for (nplanets=0, i=0; i<cur_system->nplanets; i++)
-		if (!areEnemies(cur_pilot->faction,cur_system->planets[i].faction))
+		if (planet_hasService(&cur_system->planets[i],PLANET_SERVICE_BASIC) &&
+				!areEnemies(cur_pilot->faction,cur_system->planets[i].faction))
 			planets[nplanets++] = &cur_system->planets[i];
 
 	/* no planet to land on found */

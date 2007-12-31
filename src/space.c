@@ -489,11 +489,17 @@ static Planet* planet_get( const char* name )
 	if (temp) {
 #define MELEMENT(o,s)	if (o) WARN("Planet '%s' missing '"s"' element", temp->name)
 		MELEMENT(temp->gfx_space==NULL,"GFX space");
-		MELEMENT(temp->gfx_exterior==NULL,"GFX exterior");
+		MELEMENT( planet_hasService(temp,PLANET_SERVICE_LAND) &&
+				temp->gfx_exterior==NULL,"GFX exterior");
 		MELEMENT((flags&FLAG_XSET)==0,"x");
 		MELEMENT((flags&FLAG_YSET)==0,"y");
 		MELEMENT(temp->class==PLANET_CLASS_NULL,"class");
-		MELEMENT(temp->faction==NULL,"faction");
+		MELEMENT( planet_hasService(temp,PLANET_SERVICE_LAND) &&
+				temp->description==NULL,"desription");
+		MELEMENT( planet_hasService(temp,PLANET_SERVICE_BASIC) &&
+				temp->bar_description==NULL,"bar");
+		MELEMENT( planet_hasService(temp,PLANET_SERVICE_BASIC) &&
+				temp->faction==NULL,"faction");
 		MELEMENT((flags&FLAG_SERVICESSET)==0,"services");
 		MELEMENT( (planet_hasService(temp,PLANET_SERVICE_OUTFITS) ||
 				planet_hasService(temp,PLANET_SERVICE_SHIPYARD)) &&

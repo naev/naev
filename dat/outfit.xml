@@ -183,4 +183,79 @@ A big panel that will generate energy based off solar energy.  This will allow y
 <energy_regen>125</energy_regen>
 </specific>
 </outfit>
+<outfit name="Shield Capacitator">
+<general>
+<max>12</max>
+<tech>9</tech>
+<mass>3</mass>
+<price>75000</price>
+<description>
+An enhancement for the shield power system, allowing it to resist much heavier fire.
+</description>
+</general>
+<specific type="15">
+<shield>30</shield>
+</specific>
+</outfit>
+<outfit name="Shield Booster">
+<general>
+<max>4</max>
+<tech>10</tech>
+<mass>5</mass>
+<price>145000</price>
+<description>
+A shield generator that feeds off the ship's main energy line.  It will allow you to generate your shield faster and give you a small maximum shield boost at the expense of draining osem of the ship's energy.
+</description>
+</general>
+<specific type="15">
+<shield>15</shield>
+<shield_regen>10</shield_regen>
+<energy>-50</energy>
+</specific>
+</outfit>
+<outfit name="Engine Reroute">
+<general>
+<max>1</max>
+<tech>13</tech>
+<mass>1</mass>
+<price>125000</price>
+<description>
+This enhancement routes energy from the ship's energy supplies to the engine, giving the ship an increased thrust.  It does not increase the ship's max speed nor turn abilities.
+</description>
+</general>
+<specific type="15">
+<thrust>60</thrust>
+<energy>-75</energy>
+</specific>
+</outfit>
+<outfit name="Improved Stabilizer">
+<general>
+<max>1</max>
+<tech>13</tech>
+<mass>1</mass>
+<price>135000</price>
+<description>
+By improving your ship's stabilization systems drastically, this modification will allow you to reach higher speeds while still keeping the ship stable.
+</description>
+</general>
+<specific type="15">
+<speed>50</speed>
+<turn>5</turn>
+<energy>-10</energy>
+</specific>
+</outfit>
+<outfit name="Steering Thrusters">
+<general>
+<max>1</max>
+<tech>13</tech>
+<mass>1</mass>
+<price>130000</price>
+<description>
+</description>
+</general>
+<specific type="15">
+<turn>25</turn>
+<energy>-10</energy>
+</specific>
+</outfit>
 </Outfits>

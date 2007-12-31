@@ -24,13 +24,13 @@
 </fleets>
 <jumps>
 <jump>NCG-7291</jump>
-<jump>Arrakis</jump>
+<jump>Alteris</jump>
 </jumps>
 </ssys>
 <ssys name="Arrakis">
 <pos>
-<x>47</x>
-<y>33</y>
+<x>120</x>
+<y>90</y>
 </pos>
 <general>
 <stars>27</stars>
@@ -46,8 +46,7 @@
 <fleet chance="60">Merchant Llama</fleet>
 </fleets>
 <jumps>
-<jump>NCG-7291</jump>
-<jump>Delta Pavonis</jump>
+<jump>Alteris</jump>
 </jumps>
 </ssys>
 <ssys name="NCG-7291">
@@ -74,7 +73,7 @@
 <fleet chance="50">Collective Sml Swarm</fleet>
 </fleets>
 <jumps>
-<jump>Arrakis</jump>
+<jump>Alteris</jump>
 <jump>Delta Pavonis</jump>
 <jump>NCG-7292</jump>
 </jumps>
@@ -125,6 +124,34 @@
 </fleets>
 <jumps>
 <jump>NCG-7292</jump>
+</jumps>
+</ssys>
+<ssys name="Alteris">
+<pos>
+<x>47</x>
+<y>33</y>
+</pos>
+<general>
+<stars>255</stars>
+<asteroids>0</asteroids>
+<interference>0</interference>
+</general>
+<planets>
+<planet>Darkshed</planet>
+<planet>Ozogo X</planet>
+</planets>
+<fleets>
+<fleet chance="60">Pirate Hyena</fleet>
+<fleet chance="60">Merchant Llama</fleet>
+<fleet chance="50">Merchant Mule</fleet>
+<fleet chance="40">Merchant Llama</fleet>
+<fleet chance="50">Sml Merchant Convoy</fleet>
+<fleet chance="40">Sml Merchant Convoy</fleet>
+</fleets>
+<jumps>
+<jump>Arrakis</jump>
+<jump>NCG-7291</jump>
+<jump>Delta Pavonis</jump>
 </jumps>
 </ssys>
 </Systems>

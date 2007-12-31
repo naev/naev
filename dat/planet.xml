@@ -34,7 +34,7 @@ The bar is just off the starport with a great view of the harbour.  You could wa
 <y>0</y>
 </pos>
 <general>
-<class>A</class>
+<class>H</class>
 <description>
 Dune is a desert planet with no natural precipitation.
 </description>
@@ -96,6 +96,47 @@ The Omega Canteen is a dark place that seems calm, although everytime a robotic 
 <GFX>
 <space>station01.png</space>
 <exterior>station01.png</exterior>
+</GFX>
+</planet>
+<planet name="Darkshed">
+<pos>
+<x>-57</x>
+<y>-33</y>
+</pos>
+<general>
+<class>0</class>
+<description>
+Reknown for it's outfit market and shipyards.  Almost the entire Darkshed station is dedicated to trading outfits and ships.  Mercenaries and bounty hunters from all over the galaxy come here to see the newest enhancements available in the market.  This tends to also attract many of the shadier characters in the universe winding up with frequent fights where they test their newly bought outfits.
+</description>
+<bar>
+The Darkshed cantina is decorated with all sorts of odd artifacts that marked different tendencies in spaceship outfitting.
+</bar>
+<faction>Independent</faction>
+<services>31</services>
+<tech>
+<main>13</main>
+</tech>
+<commodities>
+<commodity>Food</commodity>
+<commodity>Ore</commodity>
+</commodities>
+</general>
+<GFX>
+<space>station02.png</space>
+<exterior>station02.png</exterior>
+</GFX>
+</planet>
+<planet name="Ozogo X">
+<pos>
+<x>23</x>
+<y>17</y>
+</pos>
+<general>
+<class>J</class>
+<services>0</services>
+</general>
+<GFX>
+<space>J00.png</space>
 </GFX>
 </planet>
 </Planets>

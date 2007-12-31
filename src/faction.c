@@ -95,6 +95,7 @@ int areEnemies( Faction* a, Faction* b)
 	int i;
 
 	if (a==b) return 0;
+	else if ((a==NULL) || (b==NULL)) return 0;
 
 	for (i=0;i<a->nenemies;i++)
 		if (a->enemies[i] == b)
@@ -114,6 +115,7 @@ int areAllies( Faction* a, Faction* b )
 	int i;
 
 	if (a==b) return 1;
+	else if ((a==NULL) || (b==NULL)) return 0;
 
 	for (i=0;i<a->nallies;i++)
 		if (a->allies[i] == b)                               
