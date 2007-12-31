@@ -252,8 +252,8 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
 		else if (xml_isNode(node,"accuracy")) temp->u.blt.accuracy = xml_getFloat(node);
 		else if (xml_isNode(node,"energy")) temp->u.blt.energy = xml_getFloat(node);
 		else if (xml_isNode(node,"gfx")) {
-			snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+4,
-					OUTFIT_GFX"%s.png", xml_get(node));
+			snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+10,
+					OUTFIT_GFX"space/%s.png", xml_get(node));
 			temp->u.blt.gfx_space = gl_newSprite(str, 6, 6);
 		}
 		else if (xml_isNode(node,"spfx"))
@@ -326,8 +326,8 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 		else if (xml_isNode(node,"lockon"))
 			temp->u.amm.lockon = (unsigned int)1000.*xml_getFloat(node);
 		else if (xml_isNode(node,"gfx")) {
-			snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+4,
-					OUTFIT_GFX"%s.png", xml_get(node));
+			snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+10,
+					OUTFIT_GFX"space/%s.png", xml_get(node));
 			temp->u.amm.gfx_space = gl_newSprite(str, 6, 6);
 		}
 		else if (xml_isNode(node,"spfx"))
@@ -402,6 +402,7 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
 	Outfit* temp = CALLOC_ONE(Outfit);
 	xmlNodePtr cur, node;
 	char *prop;
+	char str[PATH_MAX] = "\0";
 
 	temp->name = xml_nodeProp(parent,"name"); /* already mallocs */
 	if (temp->name == NULL) WARN("Outfit in "OUTFIT_DATA" has invalid or no name");
@@ -418,6 +419,12 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
 				else if (xml_isNode(cur,"price")) temp->price = xml_getInt(cur);
 				else if (xml_isNode(cur,"description"))
 					temp->description = strdup(xml_get(cur));
+				else if (xml_isNode(cur,"gfx_store")) {
+					snprintf( str, strlen(xml_get(cur))+sizeof(OUTFIT_GFX)+10,
+							OUTFIT_GFX"store/%s.png", xml_get(cur));
+					temp->gfx_store = gl_newImage(str);
+				}
+
 			} while ((cur = cur->next));
 		}
 		else if (xml_isNode(node,"specific")) { /* has to be processed seperately */
@@ -456,6 +463,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 	MELEMENT(temp->name==NULL,"name");
 	MELEMENT(temp->max==0,"max");
 	MELEMENT(temp->tech==0,"tech");
+	MELEMENT(temp->gfx_store==NULL,"gfx_store");
 	/*MELEMENT(temp->mass==0,"mass"); Not really needed */
 	MELEMENT(temp->type==0,"type");
 	MELEMENT(temp->price==0,"price");
@@ -527,6 +535,8 @@ void outfit_free (void)
 			free(outfit_stack[i].u.lau.ammo);
 		if (outfit_stack[i].description)
 			free(outfit_stack[i].description);
+		if (outfit_stack[i].gfx_store)
+			gl_freeTexture(outfit_stack[i].gfx_store);
 		free(outfit_stack[i].name);
 	}
 	free(outfit_stack);

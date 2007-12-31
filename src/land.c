@@ -217,6 +217,10 @@ static void outfits (void)
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnSellOutfit",
 			"Sell", outfits_sell );
 
+	/* fancy 128x128 image */
+	window_addRect( secondary_wid, -20, -50, 128, 128, "rctImage", &cBlack, 0 );
+	window_addImage( secondary_wid, -20-128, -50-128, "imgOutfit", NULL );
+
 	window_addCust( secondary_wid, -40-BUTTON_WIDTH, 60+2*BUTTON_HEIGHT,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "cstMod", 0, outfits_renderMod, NULL );
 
@@ -262,6 +266,8 @@ static void outfits_update( char* str )
 
 	outfitname = toolkit_getList( secondary_wid, "lstOutfits" );
 	outfit = outfit_get( outfitname );
+
+	window_modifyImage( secondary_wid, "imgOutfit", outfit->gfx_store );
 
 	window_modifyText( secondary_wid, "txtDescription", outfit->description );
 	credits2str( buf2, outfit->price, 2 );

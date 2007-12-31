@@ -57,7 +57,7 @@ typedef struct Outfit_ {
 	unsigned int price;
 	char* description;
 
-	glTexture gfx_store; /* store graphic */
+	glTexture* gfx_store; /* store graphic */
 
 	int properties; /* properties stored bitwise */
 

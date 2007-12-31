@@ -9,6 +9,7 @@
 <description>
 Your basic laser.
 </description>
+<gfx_store>laser</gfx_store>
 </general>
 <specific type="1">
 <gfx>lasergreen</gfx>
@@ -34,6 +35,7 @@ Your basic laser.
 <description>
 Two laser cannons added on a rotating turret, allowing for 360 degrees of firepower.
 </description>
+<gfx_store>laser_turret</gfx_store>
 </general>
 <specific type="13">
 <gfx>lasergreen</gfx>
@@ -59,6 +61,7 @@ Two laser cannons added on a rotating turret, allowing for 360 degrees of firepo
 <description>
 Base for launching dumb missiles.
 </description>
+<gfx_store>missile</gfx_store>
 </general>
 <specific type="5" secondary="1">
 <ammo>Missile</ammo>
@@ -74,6 +77,7 @@ Base for launching dumb missiles.
 <description>
 The cheapest missile on the market, what it lacks in a decent tracking system it makes up for in affordability and firepower.
 </description>
+<gfx_store>missile</gfx_store>
 </general>
 <specific type="6">
 <gfx>missile</gfx>
@@ -99,6 +103,7 @@ The cheapest missile on the market, what it lacks in a decent tracking system it
 <description>
 The Headhunter Launcher is one of the most used missile launcher by the security companies.  Much more reliable then the regular missiles, Headhunters feature more sensors and an advanced tracking system making them much better at hitting their targets.
 </description>
+<gfx_store>missile</gfx_store>
 </general>
 <specific type="5" secondary="1">
 <ammo>Headhunter</ammo>
@@ -114,6 +119,7 @@ The Headhunter Launcher is one of the most used missile launcher by the security
 <description>
 Headhunters first gained fame in the crush of the Araknoid, a fearsome battle against a pirate stronghold where the Empire crushed the pirates thanks to the advanced guidance system on the Headhunter.  Now used by mercenaries and bounty hunters all over.
 </description>
+<gfx_store>missile</gfx_store>
 </general>
 <specific type="6">
 <gfx>headhunter</gfx>
@@ -139,6 +145,7 @@ Headhunters first gained fame in the crush of the Araknoid, a fearsome battle ag
 <description>
 Neutron Disruptor.
 </description>
+<gfx_store>neutron</gfx_store>
 </general>
 <specific type="1">
 <gfx>neutron</gfx>
@@ -164,6 +171,7 @@ Neutron Disruptor.
 <description>
 A heavy battery that will increase your ship's energy to allow you to pack more firepower.
 </description>
+<gfx_store>capacitator</gfx_store>
 </general>
 <specific type="15">
 <energy>75</energy>
@@ -178,6 +186,7 @@ A heavy battery that will increase your ship's energy to allow you to pack more 
 <description>
 A big panel that will generate energy based off solar energy.  This will allow your ship te regenerate it's energy supplies faster.
 </description>
+<gfx_store>solar</gfx_store>
 </general>
 <specific type="15">
 <energy_regen>125</energy_regen>
@@ -192,6 +201,7 @@ A big panel that will generate energy based off solar energy.  This will allow y
 <description>
 An enhancement for the shield power system, allowing it to resist much heavier fire.
 </description>
+<gfx_store>capacitator</gfx_store>
 </general>
 <specific type="15">
 <shield>30</shield>
@@ -206,6 +216,7 @@ An enhancement for the shield power system, allowing it to resist much heavier f
 <description>
 A shield generator that feeds off the ship's main energy line.  It will allow you to generate your shield faster and give you a small maximum shield boost at the expense of draining osem of the ship's energy.
 </description>
+<gfx_store>shield</gfx_store>
 </general>
 <specific type="15">
 <shield>15</shield>
@@ -222,6 +233,7 @@ A shield generator that feeds off the ship's main energy line.  It will allow yo
 <description>
 This enhancement routes energy from the ship's energy supplies to the engine, giving the ship an increased thrust.  It does not increase the ship's max speed nor turn abilities.
 </description>
+<gfx_store>reroute</gfx_store>
 </general>
 <specific type="15">
 <thrust>60</thrust>
@@ -237,6 +249,7 @@ This enhancement routes energy from the ship's energy supplies to the engine, gi
 <description>
 By improving your ship's stabilization systems drastically, this modification will allow you to reach higher speeds while still keeping the ship stable.
 </description>
+<gfx_store>stabilizer</gfx_store>
 </general>
 <specific type="15">
 <speed>50</speed>
@@ -252,6 +265,7 @@ By improving your ship's stabilization systems drastically, this modification wi
 <price>130000</price>
 <description>
 </description>
+<gfx_store>thruster</gfx_store>
 </general>
 <specific type="15">
 <turn>25</turn>
