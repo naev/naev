@@ -85,9 +85,13 @@ typedef struct Pilot_ {
 	Solid* solid; /* associated solid (physics) */
 	int tsx, tsy; /* current sprite, calculated on update */
 
+	/* movement */
+	double thrust, turn, speed;
+
 	/* current health */
 	double armour, shield, energy;
 	double armour_max, shield_max, energy_max;
+	double armour_regen, shield_regen, energy_regen;
 	double fuel; /* used only for jumps, TODO make it matter :) */
 
 	/* associated functions */

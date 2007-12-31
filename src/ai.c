@@ -418,9 +418,9 @@ void ai_think( Pilot* pilot )
 
 	cur_pilot->solid->dir_vel = 0.;
 	if (pilot_turn) /* set the turning velocity */
-		cur_pilot->solid->dir_vel -= cur_pilot->ship->turn * pilot_turn;
+		cur_pilot->solid->dir_vel -= cur_pilot->turn * pilot_turn;
 	vect_pset( &cur_pilot->solid->force, /* set the velocity vector */
-			cur_pilot->ship->thrust * pilot_acc, cur_pilot->solid->dir );
+			cur_pilot->thrust * pilot_acc, cur_pilot->solid->dir );
 
 	/* fire weapons if needed */
 	if (ai_isFlag(AI_PRIMARY)) pilot_shoot(pilot,pilot_target,0); /* primary */
@@ -662,16 +662,16 @@ static int ai_getpos( lua_State *L )
  * gets the minimum braking distance
  *
  * braking vel ==> 0 = v - a*dt
- * add turn around time (to inital vel) ==> 180.*360./cur_pilot->ship->turn
+ * add turn around time (to inital vel) ==> 180.*360./cur_pilot->turn
  * add it to general euler equation  x = v * t + 0.5 * a * t^2
  * and voila!
  */
 static int ai_minbrakedist( lua_State *L )
 {
 	double time = VMOD(cur_pilot->solid->vel) /
-			(cur_pilot->ship->thrust / cur_pilot->solid->mass);
-	double dist =  VMOD(cur_pilot->solid->vel)*(time+180./cur_pilot->ship->turn) -
-			0.5*(cur_pilot->ship->thrust/cur_pilot->solid->mass)*time*time;
+			(cur_pilot->thrust / cur_pilot->solid->mass);
+	double dist =  VMOD(cur_pilot->solid->vel)*(time+180./cur_pilot->turn) -
+			0.5*(cur_pilot->thrust/cur_pilot->solid->mass)*time*time;
 
 	lua_pushnumber(L, dist); /* return */
 	return 1; /* returns one thing */
@@ -708,7 +708,7 @@ static int ai_exists( lua_State *L )
  */
 static int ai_ismaxvel( lua_State *L )
 {
-	lua_pushboolean(L,(VMOD(cur_pilot->solid->vel) == cur_pilot->ship->speed));
+	lua_pushboolean(L,(VMOD(cur_pilot->solid->vel) > cur_pilot->speed-MIN_VEL_ERR));
 	return 1;
 }
 

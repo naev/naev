@@ -62,6 +62,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t );
 static void pilot_update( Pilot* pilot, const double dt );
 static void pilot_hyperspace( Pilot* pilot );
 void pilot_render( Pilot* pilot ); /* externed in player.c */
+static void pilot_calcStats( Pilot* pilot );
 static void pilot_free( Pilot* p );
 static Fleet* fleet_parse( const xmlNodePtr parent );
 static void pilot_dead( Pilot* p );
@@ -165,7 +166,7 @@ double pilot_face( Pilot* p, const float dir )
 
 	p->solid->dir_vel = 0.;
 	if (turn)
-		p->solid->dir_vel -= p->ship->turn * turn;
+		p->solid->dir_vel -= p->turn * turn;
 
 	return diff;
 }
@@ -448,12 +449,12 @@ static void pilot_update( Pilot* pilot, const double dt )
 
 	/* still alive */
 	else if (pilot->armour < pilot->armour_max) {
-		pilot->armour += pilot->ship->armour_regen * dt;
-		pilot->energy += pilot->ship->energy_regen * dt;
+		pilot->armour += pilot->armour_regen * dt;
+		pilot->energy += pilot->energy_regen * dt;
 	}
 	else {
-		pilot->shield += pilot->ship->shield_regen * dt;
-		pilot->energy += pilot->ship->energy_regen * dt;
+		pilot->shield += pilot->shield_regen * dt;
+		pilot->energy += pilot->energy_regen * dt;
 	}
 	
 	if (pilot->armour > pilot->armour_max) pilot->armour = pilot->armour_max;
@@ -466,7 +467,7 @@ static void pilot_update( Pilot* pilot, const double dt )
 			pilot->ship->gfx_space, pilot->solid->dir );
 
 	if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) /* limit the speed */
-		limit_speed( &pilot->solid->vel, pilot->ship->speed );
+		limit_speed( &pilot->solid->vel, pilot->speed );
 }
 
 
@@ -488,7 +489,7 @@ static void pilot_hyperspace( Pilot* p )
 			return;
 		}
 
-		vect_pset( &p->solid->force, p->ship->thrust * 3., p->solid->dir );
+		vect_pset( &p->solid->force, p->thrust * 3., p->solid->dir );
 	}
 	else if (pilot_isFlag(p, PILOT_HYP_BEGIN)) {
 
@@ -503,7 +504,7 @@ static void pilot_hyperspace( Pilot* p )
 			diff = pilot_face( p, VANGLE(p->solid->vel) + M_PI );
 
 			if (ABS(diff) < MAX_DIR_ERR) /* brake */
-				vect_pset( &p->solid->force, p->ship->thrust, p->solid->dir );
+				vect_pset( &p->solid->force, p->thrust, p->solid->dir );
 
 		}
 		else {
@@ -543,6 +544,7 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 				q -= pilot->outfits[i].quantity - outfit->max;
 				pilot->outfits[i].quantity = outfit->max;
 			}
+			pilot_calcStats(pilot);
 			return q;
 		}
 
@@ -564,7 +566,7 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 	/* hack due to realloc possibility */
 	pilot_setSecondary( pilot, s );
 
-
+	pilot_calcStats(pilot);
 	return q;
 }
 
@@ -603,6 +605,61 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 	WARN("Failure attempting to remove %d '%s' from pilot '%s'",
 			quantity, outfit->name, pilot->name );
 	return 0;
+}
+
+
+/*
+ * recalculates the pilot's stats based on his outfits
+ */
+static void pilot_calcStats( Pilot* pilot )
+{
+	int i;
+	double q;
+	Outfit* o;
+	double ac, sc, ec; /* temporary health coeficients to set */
+	/*
+	 * set up the basic stuff
+	 */
+	/* movement */
+	pilot->thrust = pilot->ship->thrust;
+	pilot->turn = pilot->ship->turn;
+	pilot->speed = pilot->ship->speed;
+	/* health */
+	ac = pilot->armour / pilot->armour_max;
+	sc = pilot->shield / pilot->shield_max;
+	ec = pilot->energy / pilot->energy_max;
+	pilot->armour_max = pilot->ship->armour;
+	pilot->shield_max = pilot->ship->shield;
+	pilot->energy_max = pilot->ship->energy;
+	pilot->armour_regen = pilot->ship->armour_regen;
+	pilot->shield_regen = pilot->ship->shield_regen;
+	pilot->energy_regen = pilot->ship->energy_regen;
+
+	/*
+	 * now add outfit changes
+	 */
+	for (i=0; i<pilot->noutfits; i++)
+		if (outfit_isMod(pilot->outfits[i].outfit)) {
+			q = (double) pilot->outfits[i].quantity;
+			o = pilot->outfits[i].outfit;
+
+			/* movement */
+			pilot->thrust += o->u.mod.thrust * q;
+			pilot->turn += o->u.mod.turn * q;
+			pilot->speed += o->u.mod.speed * q;
+			/* health */
+			pilot->armour_max += o->u.mod.armour * q;
+			pilot->armour_regen += o->u.mod.armour_regen * q;
+			pilot->shield_max += o->u.mod.shield * q;
+			pilot->shield_regen += o->u.mod.shield_regen * q;
+			pilot->energy_max += o->u.mod.energy * q;
+			pilot->energy_regen += o->u.mod.energy_regen * q;
+		}
+
+	/* give the pilot his health proportion back */
+	pilot->armour = ac * pilot->armour_max;
+	pilot->shield = sc * pilot->shield_max;
+	pilot->energy = ec * pilot->energy_max;
 }
 
 
@@ -698,14 +755,6 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction, AI_Prof
 	/* solid */
 	pilot->solid = solid_create(ship->mass, dir, pos, vel);
 
-	/* max shields/armour */
-	pilot->armour_max = ship->armour;
-	pilot->shield_max = ship->shield;
-	pilot->energy_max = ship->energy;
-	pilot->armour = pilot->armour_max;
-	pilot->shield = pilot->shield_max;
-	pilot->energy = pilot->energy_max;
-
 	/* initially idle */
 	pilot->task = NULL;
 
@@ -726,6 +775,12 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction, AI_Prof
 				pilot_setFlag(pilot, PILOT_HASTURRET);
 		}
 	}
+
+	/* set the pilot stats based on his ship and outfits */
+	pilot->armour = pilot->armour_max = 1.; /* hack to have full armour */
+	pilot->shield = pilot->shield_max = 1.; /* ditto shield */
+	pilot->energy = pilot->energy_max = 1.; /* ditto energy */
+	pilot_calcStats(pilot);
 
 	/* cargo */
 	pilot->credits = 0;
