@@ -37,6 +37,7 @@
 #include "music.h"
 #include "spfx.h"
 #include "economy.h"
+#include "menu.h"
 
 
 /* to get data info */
@@ -169,9 +170,8 @@ int main ( int argc, char** argv )
 	space_load();
 
 
-	/* create new player, TODO start menu */
-	player_new();
-
+	/* start menu */
+	menu_main();
 	
 	time = SDL_GetTicks(); /* initializes the time */
 	/* 
@@ -203,9 +203,10 @@ int main ( int argc, char** argv )
 
 		fps_control(); /* everyone loves fps control */
 		toolkit_update(); /* to simulate key repetition */
-		if (!paused && !toolkit) update_space(); /* update game */
-
-		render_space();
+		if (!menu_isOpen(MENU_MAIN)) {
+			if (!paused && !toolkit) update_space(); /* update game */
+			render_space();
+		}
 		if (toolkit) toolkit_render();
 
 		SDL_GL_SwapBuffers();

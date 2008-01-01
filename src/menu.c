@@ -19,6 +19,9 @@
 #include "player.h"
 
 
+#define MAIN_WIDTH		120
+#define MAIN_HEIGHT		250
+
 #define MENU_WIDTH		120
 #define MENU_HEIGHT		200
 
@@ -34,19 +37,16 @@
 #define BUTTON_WIDTH  	80
 #define BUTTON_HEIGHT 	30
 
-
-#define MENU_SMALL		(1<<0)
-#define MENU_INFO			(1<<1)
-#define MENU_DEATH		(1<<2)
-#define menu_isOpen(f)	(menu_open & (f))
 #define menu_Open(f)		(menu_open |= (f))
 #define menu_Close(f)	(menu_open ^= (f))
-static int menu_open = 0;
+int menu_open = 0;
 
 
 /*
  * prototypes
  */
+static void menu_main_close (void);
+static void menu_main_new( char* str );
 static void menu_small_close( char* str );
 static void edit_options (void);
 static void exit_game (void);
@@ -55,6 +55,46 @@ static void info_outfits_menu( char* str );
 static void info_outfits_menu_close( char* str );
 static void menu_death_respawn( char* str );
 
+
+
+void menu_main (void)
+{
+	unsigned int bwid, wid;
+
+	/* create background image window */
+	bwid = window_create( "BG", -1, -1, gl_screen.w, gl_screen.h );
+	window_addRect( bwid, 0, 0, gl_screen.w, gl_screen.h, "rctBG", &cBlack, 0 );
+
+	/* create menu window */
+	wid = window_create( "Main Menu", -1, -1, MAIN_WIDTH, MAIN_HEIGHT );
+	window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*3,
+			BUTTON_WIDTH, BUTTON_HEIGHT,
+			"btnLoad", "Load Game", NULL );
+	window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*2,
+			BUTTON_WIDTH, BUTTON_HEIGHT,
+			"btnNew", "New Game", menu_main_new );
+	window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20),
+			BUTTON_WIDTH, BUTTON_HEIGHT,
+			"btnOptions", "Options", (void(*)(char*)) edit_options );
+	window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+			"btnExit", "Exit", (void(*)(char*)) exit_game );
+
+	menu_Open(MENU_MAIN);
+}
+static void menu_main_close (void)
+{
+	window_destroy( window_get("Main Menu") );
+	window_destroy( window_get("BG") );
+
+	menu_Close(MENU_MAIN);
+}
+static void menu_main_new( char* str )
+{
+	(void)str;
+
+	menu_main_close();
+	player_new();
+}
 
 
 /*
@@ -67,7 +107,9 @@ static void menu_death_respawn( char* str );
  */
 void menu_small (void)
 {
-	if (menu_isOpen(MENU_SMALL) || menu_isOpen(MENU_DEATH))
+	if ( menu_isOpen(MENU_MAIN) ||
+			menu_isOpen(MENU_SMALL) ||
+			menu_isOpen(MENU_DEATH) )
 		return; /* menu is already open */
 	pause();
 
