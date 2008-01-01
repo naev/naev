@@ -1424,6 +1424,6 @@ void player_destroyed (void)
 	vectcpy( &player_cam, &player->solid->pos );
 	gl_bindCamera( &player_cam );
 	player_setFlag(PLAYER_DESTROYED);
-	player_timer = SDL_GetTicks() + 2000;
+	player_timer = SDL_GetTicks() + 5000;
 }
 
