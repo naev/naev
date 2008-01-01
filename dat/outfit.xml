@@ -7,7 +7,7 @@
 <mass>5</mass>
 <price>5000</price>
 <description>
-Your basic laser.
+Your basic laser.  Fires charged energy beams that do a decent amount of damage to both shield and armour.
 </description>
 <gfx_store>laser</gfx_store>
 </general>
@@ -21,8 +21,8 @@ Your basic laser.
 <accuracy>30</accuracy>
 <energy>8</energy>
 <damage>
-<armour>13</armour>
-<shield>10</shield>
+<armour>10</armour>
+<shield>13</shield>
 </damage>
 </specific>
 </outfit>
@@ -264,6 +264,7 @@ By improving your ship's stabilization systems drastically, this modification wi
 <mass>1</mass>
 <price>130000</price>
 <description>
+With the adding of a couple additional steering thruster you can make it so that your ship is much agile at turning.
 </description>
 <gfx_store>thruster</gfx_store>
 </general>
