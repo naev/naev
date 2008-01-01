@@ -28,12 +28,16 @@
 #define OUTFITS_WIDTH	400
 #define OUTFITS_HEIGHT	200
 
+#define DEATH_WIDTH		120
+#define DEATH_HEIGHT		160
+
 #define BUTTON_WIDTH  	80
 #define BUTTON_HEIGHT 	30
 
 
 #define MENU_SMALL		(1<<0)
 #define MENU_INFO			(1<<1)
+#define MENU_DEATH		(1<<2)
 #define menu_isOpen(f)	(menu_open & (f))
 #define menu_Open(f)		(menu_open |= (f))
 #define menu_Close(f)	(menu_open ^= (f))
@@ -46,9 +50,10 @@ static int menu_open = 0;
 static void menu_small_close( char* str );
 static void edit_options (void);
 static void exit_game (void);
-static void info_menu_close( char* str );
+static void menu_info_close( char* str );
 static void info_outfits_menu( char* str );
 static void info_outfits_menu_close( char* str );
+static void menu_death_respawn( char* str );
 
 
 
@@ -62,7 +67,8 @@ static void info_outfits_menu_close( char* str );
  */
 void menu_small (void)
 {
-	if (menu_isOpen(MENU_SMALL)) return; /* menu is already open */
+	if (menu_isOpen(MENU_SMALL) || menu_isOpen(MENU_DEATH))
+		return; /* menu is already open */
 	pause();
 
 	unsigned int wid;
@@ -115,7 +121,7 @@ static void exit_game (void)
  * information menu
  *
  */
-void info_menu (void)
+void menu_info (void)
 {
 	if (menu_isOpen(MENU_INFO)) return;
 	pause();
@@ -153,11 +159,11 @@ void info_menu (void)
 			"btnMissions", "Missions", NULL );
 	window_addButton( wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT,
-			"btnClose", "Close", info_menu_close );
+			"btnClose", "Close", menu_info_close );
 
 	menu_Open(MENU_INFO);
 }
-static void info_menu_close( char* str )
+static void menu_info_close( char* str )
 {
 	if (strcmp(str,"btnClose")==0)
 		window_destroy( window_get("Info") );
@@ -204,3 +210,31 @@ static void info_outfits_menu_close( char* str )
 {
 	window_destroy( window_get( str+5 /* "closeFoo -> Foo" */ ) );
 }
+
+
+/*
+ * pilot died
+ */
+void menu_death (void)
+{
+	unsigned int wid;
+	wid = window_create( "Death", -1, -1, DEATH_WIDTH, DEATH_HEIGHT );
+
+	window_addButton( wid, 20, 20 + BUTTON_HEIGHT + 20,
+			BUTTON_WIDTH, BUTTON_HEIGHT,
+			"btnNew", "New Game", menu_death_respawn );
+	window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+			"btnExit", "Exit", (void(*)(char*)) exit_game );
+
+	menu_Open(MENU_DEATH);
+}
+static void menu_death_respawn( char* str )
+{
+	(void)str;
+	window_destroy( window_get("Death") );
+	menu_Close(MENU_DEATH);
+
+	player_new();
+}
+
+

@@ -22,6 +22,8 @@
 #include "sound.h"
 #include "economy.h"
 #include "pause.h"
+#include "menu.h"
+#include "toolkit.h"
 
 
 #define XML_GUI_ID	"GUIs"   /* XML section identifier */
@@ -51,6 +53,9 @@ unsigned int player_target = PLAYER_ID; /* targetted pilot */
 /* pure internal */
 int planet_target = -1; /* targetted planet */
 int hyperspace_target = -1; /* targetted hyperspace route */
+/* for death and such */
+static unsigned int player_timer = 0;
+static Vector2d player_cam;
 
 
 /*
@@ -136,6 +141,9 @@ static int gui_parse( const xmlNodePtr parent, const char *name );
 static void gui_renderPilot( const Pilot* p );
 static void gui_renderBar( const glColour* c,
 		const Rect* r, const double w );
+/* externed */
+void player_dead (void);
+void player_destroyed (void);
 
 
 /*
@@ -197,6 +205,8 @@ void player_new (void)
 	free(buf);
 	xmlCleanupParser();
 
+	/* in case we're respawning */
+	player_rmFlag(PLAYER_DESTROYED);
 
 	/* monies */
 	player_credits = RNG(l,h);
@@ -354,6 +364,10 @@ void player_renderBG (void)
 	glColour *c;
 	Planet* planet;
 
+	/* no need to draw if pilot is dead */
+	if (player_isFlag(PLAYER_DESTROYED) ||
+		pilot_isFlag(player,PILOT_DEAD)) return;
+
 	if (planet_target >= 0) {
 		planet = &cur_system->planets[planet_target];
 
@@ -386,6 +400,39 @@ void player_render (void)
 	Pilot* p;
 	glColour* c;
 	glFont* f;
+
+	/* pilot is dead, just render him and stop */
+	if (player_isFlag(PLAYER_DESTROYED) || pilot_isFlag(player,PILOT_DEAD)) {
+		if (player_isFlag(PLAYER_DESTROYED)) {
+			if (!toolkit && (SDL_GetTicks() > player_timer))
+				menu_death();
+		}
+		else
+			pilot_render(player);
+
+		/*
+		 * draw fancy cinematic scene borders
+		 */
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix(); /* translation matrix */
+			glTranslated( x-(double)gl_screen.w/2., y-(double)gl_screen.h/2., 0);
+
+		COLOUR(cBlack);
+		glBegin(GL_QUADS);
+			glVertex2d( 0.,          0.              );
+			glVertex2d( 0.,          gl_screen.h*0.2 );
+			glVertex2d( gl_screen.w, gl_screen.h*0.2 );
+			glVertex2d( gl_screen.w, 0.              );
+			glVertex2d( 0.,          gl_screen.h     );
+			glVertex2d( gl_screen.w, gl_screen.h     );
+			glVertex2d( gl_screen.w, gl_screen.h*0.8 );
+			glVertex2d( 0.,          gl_screen.h*0.8 );
+		glEnd(); /* GL_QUADS */
+
+		glPopMatrix(); /* translation matrx */
+
+		return;
+	}
 
 	/* renders the player target graphics */
 	if (player_target != PLAYER_ID) p = pilot_get(player_target);
@@ -1067,6 +1114,10 @@ void gui_free (void)
  */
 void player_think( Pilot* player )
 {
+
+	/* last i heard, the dead don't think */
+	if (pilot_isFlag(player,PILOT_DEAD)) return;
+
 	/* turning taken over by PLAYER_FACE */
 	if (player_isFlag(PLAYER_FACE)) { 
 		if (player_target != PLAYER_ID)
@@ -1356,4 +1407,23 @@ void player_screenshot (void)
 	gl_screenshot(filename);
 }
 
+
+/*
+ * player got pwned
+ */
+void player_dead (void)
+{
+	gui_xoff = 0.;
+	gui_yoff = 0.;
+}
+/*
+ * player blew up in a fireball
+ */
+void player_destroyed (void)
+{
+	vectcpy( &player_cam, &player->solid->pos );
+	gl_bindCamera( &player_cam );
+	player_setFlag(PLAYER_DESTROYED);
+	player_timer = SDL_GetTicks() + 2000;
+}
 

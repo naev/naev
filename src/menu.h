@@ -9,8 +9,8 @@
 
 
 void menu_small (void);
-
-void info_menu (void);
+void menu_info (void);
+void menu_death (void);
 
 
 #endif /* MENU_H */

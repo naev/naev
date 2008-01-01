@@ -749,10 +749,13 @@ void space_render( double dt )
 	glPushMatrix(); /* translation matrix */
 		glTranslated( -(double)gl_screen.w/2., -(double)gl_screen.h/2., 0);
 
+
 	t = SDL_GetTicks();
-	timer = player->ptimer - HYPERSPACE_STARS_BLUR;
-	if (pilot_isFlag(player,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
-			!paused && (timer < t)) {
+	if (!player_isFlag(PLAYER_DESTROYED) &&
+			pilot_isFlag(player,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
+			!paused && (player->ptimer-HYPERSPACE_STARS_BLUR < t)) {
+
+		timer = player->ptimer - HYPERSPACE_STARS_BLUR;
 
 		glShadeModel(GL_SMOOTH);
 
@@ -778,9 +781,10 @@ void space_render( double dt )
 		glBegin(GL_POINTS);
 		for (i=0; i < nstars; i++) {
 			if (!paused && !toolkit) {
-				/* update position */
-				stars[i].x -= VX(player->solid->vel)/(13.-10.*stars[i].brightness)*dt;
-				stars[i].y -= VY(player->solid->vel)/(13.-10.*stars[i].brightness)*dt;
+				if (!player_isFlag(PLAYER_DESTROYED)) { /* update position */
+					stars[i].x -= VX(player->solid->vel)/(13.-10.*stars[i].brightness)*dt;
+					stars[i].y -= VY(player->solid->vel)/(13.-10.*stars[i].brightness)*dt;
+				}
 				if (stars[i].x > gl_screen.w + STAR_BUF) stars[i].x = -STAR_BUF;
 				else if (stars[i].x < -STAR_BUF) stars[i].x = gl_screen.w + STAR_BUF;
 				if (stars[i].y > gl_screen.h + STAR_BUF) stars[i].y = -STAR_BUF;

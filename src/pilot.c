@@ -50,13 +50,17 @@ static int nfleets = 0;
  * prototyes
  */
 /* external */
-extern void ai_destroy( Pilot* p ); /* ai.c */
-extern void ai_think( Pilot* pilot ); /* ai.c */
-extern void ai_create( Pilot* pilot ); /* ai.c */
-extern void player_think( Pilot* pilot ); /* player.c */
-extern void player_brokeHyperspace (void); /* player.c */
-extern double player_faceHyperspace (void); /* player.c */
-extern int gui_load( const char *name ); /* player.c */
+/* ai.c */
+extern void ai_destroy( Pilot* p );
+extern void ai_think( Pilot* pilot );
+extern void ai_create( Pilot* pilot );
+/* player.c */
+extern void player_think( Pilot* pilot );
+extern void player_brokeHyperspace (void);
+extern double player_faceHyperspace (void);
+extern void player_dead (void);
+extern void player_destroyed (void);
+extern int gui_load( const char *name );
 /* internal */
 static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t );
 static void pilot_update( Pilot* pilot, const double dt );
@@ -313,6 +317,7 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 void pilot_dead( Pilot* p )
 {
 	/* basically just set timers */
+	if (p->id==PLAYER_ID) player_dead();
 	p->timer[0] = SDL_GetTicks(); /* no need for AI anymore */
 	p->ptimer = p->timer[0] + 1000 +
 		(unsigned int)sqrt(10*p->armour_max*p->shield_max);
@@ -393,10 +398,12 @@ static void pilot_update( Pilot* pilot, const double dt )
 	unsigned int t;
 	double px,py, vx,vy;
 
-	if ((pilot != player) && pilot_isFlag(pilot,PILOT_DEAD)) {
+	if (pilot_isFlag(pilot,PILOT_DEAD)) {
 		t = SDL_GetTicks();
 
 		if (t > pilot->ptimer) {
+			if (pilot->id==PLAYER_ID)
+				player_destroyed();
 			pilot_setFlag(pilot,PILOT_DELETE); /* will get deleted next frame */
 			return;
 		}
@@ -426,8 +433,7 @@ static void pilot_update( Pilot* pilot, const double dt )
 				spfx_add( spfx_get("ExpS"), px, py, vx, vy, SPFX_LAYER_BACK );
 		}
 	}
-	else if ((pilot != player) && /* TODO player death */
-			(pilot->armour <= 0.)) /* PWNED */
+	else if (pilot->armour <= 0.) /* PWNED */
 			pilot_dead(pilot);
 
 	/* purpose fallthrough to get the movement like disabled */
@@ -869,6 +875,7 @@ unsigned int pilot_create( Ship* ship, char* name, Faction* faction, AI_Profile*
  */
 static void pilot_free( Pilot* p )
 {
+	if (player==p) player = NULL;
 	solid_free(p->solid);
 	if (p->outfits) free(p->outfits);
 	free(p->name);

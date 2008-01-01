@@ -298,7 +298,7 @@ static void input_key( int keynum, double value, int abs )
 	
 	/* shows pilot information */
 	} else if (KEY("info") && NOHYP()) {
-		if (value==KEY_PRESS) info_menu();
+		if (value==KEY_PRESS) menu_info();
 	}
 }
 #undef KEY

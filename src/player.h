@@ -16,6 +16,7 @@
 #define PLAYER_TURN_RIGHT  (1<<1)   /* player is turning right */
 #define PLAYER_REVERSE		(1<<2)	/* player is facing opposite of vel */
 #define PLAYER_AFTERBURNER	(1<<3)	/* player is afterburning */
+#define PLAYER_DESTROYED	(1<<9)	/* player is destroyed */
 #define PLAYER_FACE        (1<<10)	/* player is facing target */
 #define PLAYER_PRIMARY     (1<<11)	/* player is shooting primary weapon */
 #define PLAYER_SECONDARY   (1<<12)	/* player is shooting secondary weapon */
