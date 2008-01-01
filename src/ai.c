@@ -127,6 +127,7 @@ static int ai_taskname( lua_State *L ); /* number taskname() */
 /* consult values */
 static int ai_gettarget( lua_State *L ); /* pointer gettarget() */
 static int ai_gettargetid( lua_State *L ); /* number gettargetid() */
+static int ai_getrndpilot( lua_State *L ); /* number getrndpilot() */
 static int ai_armour( lua_State *L ); /* armour() */
 static int ai_shield( lua_State *L ); /* shield() */
 static int ai_parmour( lua_State *L ); /* parmour() */
@@ -195,6 +196,7 @@ static const luaL_reg ai_methods[] = {
 	/* get */
 	{ "target", ai_gettarget },
 	{ "targetid", ai_gettargetid },
+	{ "rndpilot", ai_getrndpilot },
 	{ "armour", ai_armour },
 	{ "shield", ai_shield },
 	{ "parmour", ai_parmour },
@@ -564,6 +566,15 @@ static int ai_gettargetid( lua_State *L )
 		return 1;
 	}
 	return 0;
+}
+
+/*
+ * gets a random target's ID
+ */
+static int ai_getrndpilot( lua_State *L )
+{
+	lua_pushnumber(L, pilot_stack[ RNG(0, pilots-1) ]->id );
+	return 1;
 }
 
 /*

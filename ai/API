@@ -31,20 +31,24 @@ taskname()
 
 	C O N S U L T
 
-gettarget()
+target()
 	@desc gets the current target
 	@return pointer to the current target
 
-gettargetid()
+targetid()
 	@desc gets the current targets ID
-	@return numbe the current target's ID
+	@return number the current target's ID
 
-getdist( Vector2d vect )
+rndpilot()
+	@desc gets a random target ID
+	@return number to a random target ID
+
+dist( Vector2d vect )
 	@desc gets the distance from the position of the Vector2d vect
 	@param vect point to calculate the distance from
 	@return nil
 
-getpos( [number pilot] )
+pos( [number pilot] )
 	@desc gets the pilot's position or the current pilot's position if no pilot is specified
 	@param pilot ID of the pilot to get the position of, if no params are
 	called it uses the current pilot as target

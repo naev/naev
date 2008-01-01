@@ -7,10 +7,8 @@ function control ()
 	enemy = ai.getenemy()
 	if task ~= "attack" and enemy ~= 0 then
 		ai.pushtask(0, "attack", enemy)
-
 	elseif ai.taskname() == "none" then
-		
-		ai.pushtask(0, "fly")
+		ai.pushtask(0, "scan", ai.rndpilot())
 	end
 end
 
@@ -95,12 +93,18 @@ function attack ()
 end
 
 -- flies to the player
-function fly ()
-	target = player
+function scan ()
+	target = ai.targetid()
+	if not ai.exists(target) then
+		ai.poptask()
+		return
+	end
 	dir = ai.face(target)
 	dist = ai.dist( ai.pos(target) )
 	if dir < 10 and dist > 300 then
 		ai.accel()
+	elseif dist < 300 then -- scan the target
+		ai.poptask()
 	end
 end
 
