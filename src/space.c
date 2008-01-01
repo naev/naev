@@ -272,26 +272,30 @@ void space_update( const double dt )
 static void space_addFleet( Fleet* fleet )
 {
 	int i;
-	Vector2d v, vn;
+	double a;
+	Vector2d vv,vp, vn;
 
 	/* simulate they came from hyperspace */
-	vect_pset( &v, 2*RNG(MIN_HYPERSPACE_DIST/2,MIN_HYPERSPACE_DIST),
+	vect_pset( &vp, RNG(MIN_HYPERSPACE_DIST, MIN_HYPERSPACE_DIST*1.5),
 			RNG(0,360)*M_PI/180.);
 	vectnull(&vn);
 
 	for (i=0; i < fleet->npilots; i++)
 		if (RNG(0,100) <= fleet->pilots[i].chance) {
 			/* other ships in the fleet should start split up */
-			vect_cadd(&v, RNG(75,150) * (RNG(0,1) ? 1 : -1),
+			vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
 					RNG(75,150) * (RNG(0,1) ? 1 : -1));
+
+			a = vect_angle(&vp,&vn);
+			vectnull(&vv);
 
 			pilot_create( fleet->pilots[i].ship,
 					fleet->pilots[i].name,
 					fleet->faction,
 					fleet->ai,
-					vect_angle(&v,&vn),
-					&v,
-					NULL,
+					a,
+					&vp,
+					&vv,
 					0 );
 		}
 }

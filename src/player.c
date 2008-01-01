@@ -1283,8 +1283,8 @@ void player_brokeHyperspace (void)
 	space_init( systems_stack[cur_system->jumps[hyperspace_target]].name );
 
 	/* set position, the pilot_update will handle lowering vel */
-	player_warp( -cos( player->solid->dir ) * MIN_HYPERSPACE_DIST * 1.5,
-			-sin( player->solid->dir ) * MIN_HYPERSPACE_DIST * 1.5 );
+	player_warp( -cos( player->solid->dir ) * MIN_HYPERSPACE_DIST * 2.5,
+			-sin( player->solid->dir ) * MIN_HYPERSPACE_DIST * 2.5 );
 
 	/* stop hyperspace */
 	pilot_rmFlag( player, PILOT_HYPERSPACE | PILOT_HYP_BEGIN | PILOT_HYP_PREP );

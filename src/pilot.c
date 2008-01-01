@@ -472,11 +472,11 @@ static void pilot_update( Pilot* pilot, const double dt )
 					(player->energy > pilot->afterburner->outfit->u.afb.energy * dt)) {
 			limit_speed( &pilot->solid->vel,
 					pilot->speed * pilot->afterburner->outfit->u.afb.speed_perc + 
-					pilot->afterburner->outfit->u.afb.speed_abs );
+					pilot->afterburner->outfit->u.afb.speed_abs, dt );
 			pilot->energy -= pilot->afterburner->outfit->u.afb.energy * dt;
 		}
 		else
-			limit_speed( &pilot->solid->vel, pilot->speed );
+			limit_speed( &pilot->solid->vel, pilot->speed, dt );
 	}
 }
 

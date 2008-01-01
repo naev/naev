@@ -49,7 +49,7 @@ typedef struct Weapon_ {
 
 	/* position update and render */
 	void (*update)(struct Weapon_*, const double, WeaponLayer);
-	void (*think)(struct Weapon_*); /* for the smart missiles */
+	void (*think)(struct Weapon_*, const double); /* for the smart missiles */
 
 } Weapon;
 
@@ -77,7 +77,8 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer );
 static void weapon_destroy( Weapon* w, WeaponLayer layer );
 static void weapon_free( Weapon* w );
 /* think */
-static void think_seeker( Weapon* w );
+static void think_seeker( Weapon* w, const double dt );
+static void think_smart( Weapon* w, const double dt );
 
 
 /*
@@ -147,7 +148,7 @@ void weapons_delay( unsigned int delay )
 /*
  * seeker brain, you get what you pay for :)
  */
-static void think_seeker( Weapon* w )
+static void think_seeker( Weapon* w, const double dt )
 {
 	double diff;
 
@@ -155,7 +156,7 @@ static void think_seeker( Weapon* w )
 
 	Pilot* p = pilot_get(w->target); /* no null pilots */
 	if (p==NULL) {
-		limit_speed( &w->solid->vel, w->outfit->u.amm.speed );
+		limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );
 		return;
 	}
 
@@ -173,12 +174,12 @@ static void think_seeker( Weapon* w )
 
 	vect_pset( &w->solid->force, w->outfit->u.amm.thrust, w->solid->dir );
 
-	limit_speed( &w->solid->vel, w->outfit->u.amm.speed );
+	limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );
 }
 /*
  * smart seeker brain, much better at homing
  */
-static void think_smart( Weapon* w )
+static void think_smart( Weapon* w, const double dt )
 {
 	double diff;
 	Vector2d tv, sv;
@@ -187,7 +188,7 @@ static void think_smart( Weapon* w )
 
 	Pilot* p = pilot_get(w->target); /* no null pilots */
 	if (p==NULL) {
-		limit_speed( &w->solid->vel, w->outfit->u.amm.speed );
+		limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );
 		return;
 	}
 
@@ -208,7 +209,7 @@ static void think_smart( Weapon* w )
 
 	vect_pset( &w->solid->force, w->outfit->u.amm.thrust, w->solid->dir );
 
-	limit_speed( &w->solid->vel, w->outfit->u.amm.speed );
+	limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );
 }
 
 
@@ -354,7 +355,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 		}
 	}
 
-	if (weapon_isSmart(w)) (*w->think)(w);
+	if (weapon_isSmart(w)) (*w->think)(w,dt);
 	
 	(*w->solid->update)(w->solid, dt);
 

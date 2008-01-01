@@ -665,12 +665,15 @@ static int ai_getpos( lua_State *L )
  * add turn around time (to inital vel) ==> 180.*360./cur_pilot->turn
  * add it to general euler equation  x = v * t + 0.5 * a * t^2
  * and voila!
+ *
+ * I hate this function and it'll probably need to get changed in the future
  */
 static int ai_minbrakedist( lua_State *L )
 {
-	double time = VMOD(cur_pilot->solid->vel) /
+	double time, dist;
+	time = VMOD(cur_pilot->solid->vel) /
 			(cur_pilot->thrust / cur_pilot->solid->mass);
-	double dist =  VMOD(cur_pilot->solid->vel)*(time+180./cur_pilot->turn) -
+	dist =  VMOD(cur_pilot->solid->vel)*0.9*(time+180./cur_pilot->turn) -
 			0.5*(cur_pilot->thrust/cur_pilot->solid->mass)*time*time;
 
 	lua_pushnumber(L, dist); /* return */

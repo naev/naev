@@ -36,7 +36,7 @@ typedef struct Vector2d_ {
  * misc
  */
 double angle_diff( const double ref, double a );
-void limit_speed( Vector2d* vel, const double speed );
+void limit_speed( Vector2d* vel, const double speed, const double dt );
 
 
 /*
