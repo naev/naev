@@ -272,4 +272,42 @@ By improving your ship's stabilization systems drastically, this modification wi
 <energy>-10</energy>
 </specific>
 </outfit>
+<outfit name="Generic Afterburner">
+<general>
+<max>1</max>
+<tech>3</tech>
+<mass>2</mass>
+<price>20000</price>
+<description>
+Being able to run from your enemies is a very powerful ability.  A generic afterburner will allow you to do that.  It may not be as powerful as some of the more high-end afterburners, but they're not nearly as affordable as a generic one.
+</description>
+<gfx_store>afterburner</gfx_store>
+</general>
+<specific type="16">
+<thrust_perc>50</thrust_perc>
+<thrust_abs>30</thrust_abs>
+<speed_perc>50</speed_perc>
+<speed_abs>30</speed_abs>
+<energy>60</energy>
+</specific>
+</outfit>
+<outfit name="Hellburner">
+<general>
+<max>1</max>
+<tech>13</tech>
+<mass>4</mass>
+<price>95000</price>
+<description>
+The Hellburner is one of the best afterburners available in the market.  They have a much better energy to speed ratio then the generics and are much stronger.  A must for any spacefarer whose proud of his ship.
+</description>
+<gfx_store>afterburner2</gfx_store>
+</general>
+<specific type="16">
+<thrust_perc>85</thrust_perc>
+<thrust_abs>50</thrust_abs>
+<speed_perc>85</speed_perc>
+<speed_abs>50</speed_abs>
+<energy>65</energy>
+</specific>
+</outfit>
 </Outfits>

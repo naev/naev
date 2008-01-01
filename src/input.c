@@ -32,7 +32,8 @@ typedef struct Keybind_ {
 static Keybind** input_keybinds; /* contains the players keybindings */
 
 /* name of each keybinding */
-const char *keybindNames[] = { "accel", "left", "right", "reverse", /* movement */
+const char *keybindNames[] = {
+	"accel", "left", "right", "reverse", "afterburn", /* movement */
 	"primary", "target", "target_nearest", "face", "board", /* fighting */
 	"secondary", "secondary_next", /* secondary weapons */
 	"target_planet", "land", "thyperspace", "starmap", "jump", /* space navigation */
@@ -62,6 +63,7 @@ void input_setDefault (void)
 	input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, 0 );
 	input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, 0 );
 	input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, 0 );
+	input_setKeybind( "afterburn", KEYBIND_KEYBOARD, SDLK_x, 0 );
 	/* combat */
 	input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, 0 );
 	input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, 0 );
@@ -193,6 +195,11 @@ static void input_key( int keynum, double value, int abs )
 			if (player_isFlag(PLAYER_TURN_LEFT)) { player_turn -= 1; }
 			if (player_isFlag(PLAYER_TURN_RIGHT)) { player_turn += 1; }
 		}
+
+	/* afterburning */
+	} else if (KEY("afterburn")) {
+		if (value==KEY_PRESS) { player_afterburn(); }
+		else if (value==KEY_RELEASE) { player_afterburnOver(); }
 	
 
 	/*

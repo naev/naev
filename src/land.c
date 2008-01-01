@@ -316,6 +316,11 @@ static void outfits_buy( char* str )
 				outfit->max );
 		return;
 	}
+	/* can only have one afterburner */
+	else if (outfit_isAfterburner(outfit) && (player->afterburner!=NULL)) {
+		toolkit_alert( "You can only have one afterburner." );
+		return;
+	}
 	/* not enough $$ */
 	else if (q*(int)outfit->price >= player_credits) {
 		credits2str( buf, q*outfit->price - player_credits, 2 );

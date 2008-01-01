@@ -39,7 +39,8 @@ typedef enum OutfitType_ {
 	OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO=12,
 	OUTFIT_TYPE_TURRET_BOLT=13,
 	OUTFIT_TYPE_TURRET_BEAM=14,
-	OUTFIT_TYPE_MODIFCATION=15
+	OUTFIT_TYPE_MODIFCATION=15,
+	OUTFIT_TYPE_AFTERBURNER=16
 } OutfitType;
 
 /*
@@ -109,6 +110,11 @@ typedef struct Outfit_ {
 			double shield, shield_regen;
 			double energy, energy_regen;
 		} mod;
+		struct { /* afterburner */
+			double thrust_perc, thrust_abs; /* percent and absolute thrust bonus */
+			double speed_perc, speed_abs; /* percent and absolute speed bonus */
+			double energy; /* energy usage while active */
+		} afb;
 	} u;
 } Outfit;
 
@@ -124,6 +130,7 @@ int outfit_isLauncher( const Outfit* o );
 int outfit_isAmmo( const Outfit* o );
 int outfit_isTurret( const Outfit* o );
 int outfit_isMod( const Outfit* o );
+int outfit_isAfterburner( const Outfit* o );
 const char* outfit_getType( const Outfit* o );
 const char* outfit_getTypeBroad( const Outfit* o );
 

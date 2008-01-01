@@ -15,6 +15,7 @@
 #define PLAYER_TURN_LEFT   (1<<0)   /* player is turning left */
 #define PLAYER_TURN_RIGHT  (1<<1)   /* player is turning right */
 #define PLAYER_REVERSE		(1<<2)	/* player is facing opposite of vel */
+#define PLAYER_AFTERBURNER	(1<<3)	/* player is afterburning */
 #define PLAYER_FACE        (1<<10)	/* player is facing target */
 #define PLAYER_PRIMARY     (1<<11)	/* player is shooting primary weapon */
 #define PLAYER_SECONDARY   (1<<12)	/* player is shooting secondary weapon */
@@ -77,6 +78,8 @@ void player_land (void);
 void player_targetHyperspace (void);
 void player_jump (void);
 void player_screenshot (void);
+void player_afterburn (void);
+void player_afterburnOver (void);
 
 
 #endif /* PLAYER_H */

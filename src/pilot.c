@@ -456,7 +456,7 @@ static void pilot_update( Pilot* pilot, const double dt )
 		pilot->shield += pilot->shield_regen * dt;
 		pilot->energy += pilot->energy_regen * dt;
 	}
-	
+
 	if (pilot->armour > pilot->armour_max) pilot->armour = pilot->armour_max;
 	if (pilot->shield > pilot->shield_max) pilot->shield = pilot->shield_max;
 	if (pilot->energy > pilot->energy_max) pilot->energy = pilot->energy_max;
@@ -466,8 +466,18 @@ static void pilot_update( Pilot* pilot, const double dt )
 	gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,  
 			pilot->ship->gfx_space, pilot->solid->dir );
 
-	if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) /* limit the speed */
-		limit_speed( &pilot->solid->vel, pilot->speed );
+	if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) { /* limit the speed */
+		
+		if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && /* must have enough energy left */
+					(player->energy > pilot->afterburner->outfit->u.afb.energy * dt)) {
+			limit_speed( &pilot->solid->vel,
+					pilot->speed * pilot->afterburner->outfit->u.afb.speed_perc + 
+					pilot->afterburner->outfit->u.afb.speed_abs );
+			pilot->energy -= pilot->afterburner->outfit->u.afb.energy * dt;
+		}
+		else
+			limit_speed( &pilot->solid->vel, pilot->speed );
+	}
 }
 
 
@@ -590,6 +600,9 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 
 				/* hack in case it reallocs - can happen even when shrinking */
 				s = (pilot->secondary) ? pilot->secondary->outfit->name : NULL;
+				/* clear it if it's the afterburner */
+				if (&pilot->outfits[i] == pilot->afterburner)
+					pilot->afterburner = NULL;
 
 				/* remove the outfit */
 				memmove( pilot->outfits+i, pilot->outfits+i+1,
@@ -638,7 +651,7 @@ static void pilot_calcStats( Pilot* pilot )
 	/*
 	 * now add outfit changes
 	 */
-	for (i=0; i<pilot->noutfits; i++)
+	for (i=0; i<pilot->noutfits; i++) {
 		if (outfit_isMod(pilot->outfits[i].outfit)) {
 			q = (double) pilot->outfits[i].quantity;
 			o = pilot->outfits[i].outfit;
@@ -655,6 +668,10 @@ static void pilot_calcStats( Pilot* pilot )
 			pilot->energy_max += o->u.mod.energy * q;
 			pilot->energy_regen += o->u.mod.energy_regen * q;
 		}
+		else if (outfit_isAfterburner(pilot->outfits[i].outfit)) { /* set afterburner */
+			pilot->afterburner = &pilot->outfits[i];
+		}
+	}
 
 	/* give the pilot his health proportion back */
 	pilot->armour = ac * pilot->armour_max;
@@ -762,6 +779,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction, AI_Prof
 	pilot->outfits = NULL;
 	pilot->secondary = NULL;
 	pilot->ammo = NULL;
+	pilot->afterburner = NULL;
 	ShipOutfit* so;
 	if (ship->outfit) {
 		pilot->noutfits = 0;

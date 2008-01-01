@@ -45,6 +45,7 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent );
+static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent );
 
 
 /*
@@ -137,6 +138,15 @@ int outfit_isMod( const Outfit* o )
 
 
 /*
+ * returns 1 if o is an afterburner
+ */
+int outfit_isAfterburner( const Outfit* o )
+{
+	return (o->type==OUTFIT_TYPE_AFTERBURNER);
+}
+
+
+/*
  * gets the outfit's gfx
  */
 glTexture* outfit_gfx( const Outfit* o )
@@ -190,7 +200,8 @@ double outfit_energy( const Outfit* o )
 /*
  * returns the associated name
  */
-const char* outfit_typename[] = { "NULL",
+const char* outfit_typename[] = { 
+		"NULL",
 		"Bolt Cannon",
 		"Beam Cannon",
 		"Dumb Missile",
@@ -205,7 +216,8 @@ const char* outfit_typename[] = { "NULL",
 		"Smart Swarm Missile Ammunition Pack",
 		"Bolt Turret",
 		"Beam Turret",
-		"Modification"
+		"Ship Modification",
+		"Afterburner"
 };
 const char* outfit_getType( const Outfit* o )
 {
@@ -220,7 +232,8 @@ const char* outfit_typenamebroad[] = { "NULL",
 		"Launcher",
 		"Ammo",
 		"Turret",
-		"Modification"
+		"Modification",
+		"Afterburner"
 };
 const char* outfit_getTypeBroad( const Outfit* o )
 {
@@ -230,6 +243,7 @@ const char* outfit_getTypeBroad( const Outfit* o )
 	else if (outfit_isAmmo(o)) i = 3;
 	else if (outfit_isTurret(o)) i = 4;
 	else if (outfit_isMod(o)) i = 5;
+	else if (outfit_isAfterburner(o)) i = 6;
 
 	return outfit_typenamebroad[i];
 }
@@ -366,7 +380,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 {
 	xmlNodePtr node;
-	node = parent->xmlChildrenNode;
+	node = parent->children;
 
 	do { /* load all the data */
 		/* movement */
@@ -390,6 +404,33 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 		else if (xml_isNode(node,"energy_regen"))
 			temp->u.mod.energy_regen = xml_getFloat(node)/60.0;
 
+	} while ((node = node->next));
+}
+
+
+/*
+ * parses the afterburner tidbits of the outfit
+ */
+static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
+{
+	xmlNodePtr node;
+	node = parent->children;
+
+	/* must be >= 1. */
+	temp->u.afb.thrust_perc = 1.;
+	temp->u.afb.speed_perc = 1.;
+	
+	do { /* parse the data */
+		if (xml_isNode(node,"thrust_perc"))
+			temp->u.afb.thrust_perc = 1. + xml_getFloat(node)/100.;
+		else if (xml_isNode(node,"thrust_abs"))
+			temp->u.afb.thrust_abs = xml_getFloat(node);
+		else if (xml_isNode(node,"speed_perc"))
+			temp->u.afb.speed_perc = 1. + xml_getFloat(node)/100.;
+		else if (xml_isNode(node,"speed_abs"))
+			temp->u.afb.speed_abs = xml_getFloat(node);
+		else if (xml_isNode(node,"energy"))
+			temp->u.afb.energy = xml_getFloat(node);
 	} while ((node = node->next));
 }
 
@@ -455,6 +496,8 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
 				outfit_parseSWeapon( temp, node );
 			else if (outfit_isMod(temp))
 				outfit_parseSMod( temp, node );
+			else if (outfit_isAfterburner(temp))
+				outfit_parseSAfterburner( temp, node );
 		}
 	} while ((node = node->next));
 

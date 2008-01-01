@@ -42,6 +42,7 @@
 /* dynamic */
 #define PILOT_HOSTILE	   (1<<1) /* pilot is hostile to the player */
 #define PILOT_COMBAT			(1<<2) /* pilot is engaged in combat */
+#define PILOT_AFTERBURNER	(1<<3) /* pilot has his afterburner activated */
 #define PILOT_HYP_PREP		(1<<5) /* pilot is getting ready for hyperspace */
 #define PILOT_HYP_BEGIN		(1<<6) /* pilot is starting engines */
 #define PILOT_HYPERSPACE	(1<<7) /* pilot is in hyperspace */
@@ -104,6 +105,7 @@ typedef struct Pilot_ {
 	int noutfits;
 	PilotOutfit* secondary; /* secondary weapon */
 	PilotOutfit* ammo; /* secondary ammo if needed */
+	PilotOutfit* afterburner; /* the afterburner */
 
 	/* cargo */
 	int credits; /* monies the pilot has */

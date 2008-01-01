@@ -1094,8 +1094,13 @@ void player_think( Pilot* player )
 	if (player_isFlag(PLAYER_SECONDARY)) /* needs target */
 		pilot_shoot(player,player_target,1);
 
-	vect_pset( &player->solid->force, player->thrust * player_acc,
-			player->solid->dir );
+	if (player_isFlag(PLAYER_AFTERBURNER)) /* afterburn! */
+		vect_pset( &player->solid->force,
+				player->thrust * player->afterburner->outfit->u.afb.thrust_perc + 
+				player->afterburner->outfit->u.afb.thrust_abs, player->solid->dir );
+	else
+		vect_pset( &player->solid->force, player->thrust * player_acc,
+				player->solid->dir );
 
 	/* set the listener stuff */
 	sound_listener( player->solid->dir,
@@ -1299,6 +1304,25 @@ double player_faceHyperspace (void)
 	return pilot_face( player, a );
 }
 
+
+/*
+ * activate the afterburner
+ */
+void player_afterburn (void)
+{
+	/* TODO fancy effect? */
+	if (player->afterburner!=NULL) {
+		player_setFlag(PLAYER_AFTERBURNER);
+		pilot_setFlag(player,PILOT_AFTERBURNER);
+	}
+}
+void player_afterburnOver (void)
+{
+	if (player->afterburner!=NULL) {
+		player_rmFlag(PLAYER_AFTERBURNER);
+		pilot_rmFlag(player,PILOT_AFTERBURNER);
+	}
+}
 
 /*
  * take a screenshot
