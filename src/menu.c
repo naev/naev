@@ -53,7 +53,7 @@ static void exit_game (void);
 static void menu_info_close( char* str );
 static void info_outfits_menu( char* str );
 static void info_outfits_menu_close( char* str );
-static void menu_death_respawn( char* str );
+static void menu_death_main( char* str );
 
 
 
@@ -262,14 +262,14 @@ void menu_death (void)
 	unsigned int wid;
 	
 	wid = window_create( "Death", -1, -1, DEATH_WIDTH, DEATH_HEIGHT );
-	window_addButton( wid, 20, 20 + BUTTON_HEIGHT + 20,
+	window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20),
 			BUTTON_WIDTH, BUTTON_HEIGHT,
-			"btnNew", "New Game", menu_death_respawn );
+			"btnMain", "MainMenu", menu_death_main );
 	window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
 			"btnExit", "Exit", (void(*)(char*)) exit_game );
 	menu_Open(MENU_DEATH);
 }
-static void menu_death_respawn( char* str )
+static void menu_death_main( char* str )
 {
 	(void)str;
 	unsigned int wid;
@@ -278,7 +278,7 @@ static void menu_death_respawn( char* str )
 	window_destroy( wid );
 	menu_Close(MENU_DEATH);
 
-	player_new();
+	menu_main();
 }
 
 
