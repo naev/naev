@@ -221,7 +221,7 @@ A shield generator that feeds off the ship's main energy line.  It will allow yo
 <specific type="15">
 <shield>15</shield>
 <shield_regen>10</shield_regen>
-<energy>-50</energy>
+<energy_regen>-50</energy_regen>
 </specific>
 </outfit>
 <outfit name="Engine Reroute">
@@ -237,7 +237,7 @@ This enhancement routes energy from the ship's energy supplies to the engine, gi
 </general>
 <specific type="15">
 <thrust>60</thrust>
-<energy>-75</energy>
+<energy_regen>-50</energy_regen>
 </specific>
 </outfit>
 <outfit name="Improved Stabilizer">
@@ -254,7 +254,7 @@ By improving your ship's stabilization systems drastically, this modification wi
 <specific type="15">
 <speed>50</speed>
 <turn>5</turn>
-<energy>-10</energy>
+<energy_regen>-10</energy_regen>
 </specific>
 </outfit>
 <outfit name="Steering Thrusters">
@@ -270,7 +270,7 @@ With the adding of a couple additional steering thruster you can make it so that
 </general>
 <specific type="15">
 <turn>25</turn>
-<energy>-10</energy>
+<energy_regen>-10</energy_regen>
 </specific>
 </outfit>
 <outfit name="Generic Afterburner">
