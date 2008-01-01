@@ -505,7 +505,7 @@ static void spaceport_bar (void)
 			-1, -1, BAR_WIDTH, BAR_HEIGHT );
 
 	window_addText( secondary_wid, 20, -30,
-			BAR_WIDTH - 140, BAR_HEIGHT - 40 - BUTTON_HEIGHT, 0,
+			BAR_WIDTH - 40, BAR_HEIGHT - 40 - BUTTON_HEIGHT, 0,
 			"txtDescription", &gl_smallFont, &cBlack, planet->bar_description );
 	
 	window_addButton( secondary_wid, -20, 20,
@@ -568,7 +568,7 @@ void land( Planet* p )
 	 * pretty display
 	 */
 	window_addImage( land_wid, 20, -40, "imgPlanet", p->gfx_exterior );
-	window_addText( land_wid, 440, 80, 200, 460, 0, 
+	window_addText( land_wid, 440, 80, LAND_WIDTH-460, 460, 0, 
 			"txtPlanetDesc", &gl_smallFont, &cBlack, p->description);
 
 	/*

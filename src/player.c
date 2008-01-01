@@ -661,7 +661,7 @@ void player_render (void)
 	credits2str( str, player_credits, 2 );
 	i = gl_printWidth( &gl_smallFont, str );
 	gl_print( &gl_smallFont,
-			gui.misc.x + gui.misc.w - 15 - i, j,
+			gui.misc.x + gui.misc.w - 8 - i, j,
 			NULL, str );
 	/* cargo and friends */
 	if (player->ncommodities > 0) {
