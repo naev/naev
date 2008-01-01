@@ -259,7 +259,7 @@ int gl_printText( const glFont *ft_font,
 		if (by - y > (double)height) return len-lastspace; /* past height */
 
 		n += ft_font->w[ (int)text[i] ];
-
+		
 		if ((text[i]==' ') || (text[i]=='\n') || (text[i]=='\0')) lastspace = i;
 
 		if ((n > width) || (text[i]=='\n') || (text[i]=='\0')) {
@@ -330,6 +330,7 @@ static void glFontMakeDList( FT_Face face, char ch,
 	GLubyte* expanded_data;
 	int w,h;
 	int i,j;
+	double x,y;
 
 	if (FT_Load_Glyph( face, FT_Get_Char_Index( face, ch ), FT_LOAD_FORCE_AUTOHINT))//FT_LOAD_DEFAULT ))
 		WARN("FT_Load_Glyph failed");                                       
@@ -377,11 +378,8 @@ static void glFontMakeDList( FT_Face face, char ch,
 
 
 	/* take into account opengl POT wrapping */
-	double x = (double)bitmap.width/(double)w;
-	double y = (double)bitmap.rows/(double)h;
-
-	/* give the width a value */
-	width_base[(int)ch] = bitmap.width;
+	x = (double)bitmap.width/(double)w;
+	y = (double)bitmap.rows/(double)h;
 
 	/* draw the texture mapped QUAD */
 	glBindTexture(GL_TEXTURE_2D,tex_base[(int)ch]);
@@ -402,7 +400,8 @@ static void glFontMakeDList( FT_Face face, char ch,
 	glEnd(); /* GL_QUADS */
 
 	glPopMatrix(); /* translation matrix */
-	glTranslated( face->glyph->advance.x >> 6 , 0, 0);
+	glTranslated( face->glyph->advance.x >> 6, 0, 0);
+	width_base[(int)ch] = (int)(face->glyph->advance.x >> 6);
 
 	/* end of display list */
 	glEndList();
@@ -420,7 +419,7 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
 	font->textures = malloc(sizeof(GLuint)*128);
 	font->w = malloc(sizeof(int)*128);
 	font->h = (int)h;
-	if (font->textures==NULL || font->w==NULL) {
+	if ((font->textures==NULL) || (font->w==NULL)) {
 		WARN("Out of memory!");
 		return;
 	}
