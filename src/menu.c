@@ -29,7 +29,7 @@
 #define OUTFITS_HEIGHT	200
 
 #define DEATH_WIDTH		120
-#define DEATH_HEIGHT		160
+#define DEATH_HEIGHT		150
 
 #define BUTTON_WIDTH  	80
 #define BUTTON_HEIGHT 	30
@@ -218,20 +218,22 @@ static void info_outfits_menu_close( char* str )
 void menu_death (void)
 {
 	unsigned int wid;
+	
 	wid = window_create( "Death", -1, -1, DEATH_WIDTH, DEATH_HEIGHT );
-
 	window_addButton( wid, 20, 20 + BUTTON_HEIGHT + 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT,
 			"btnNew", "New Game", menu_death_respawn );
 	window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
 			"btnExit", "Exit", (void(*)(char*)) exit_game );
-
 	menu_Open(MENU_DEATH);
 }
 static void menu_death_respawn( char* str )
 {
 	(void)str;
-	window_destroy( window_get("Death") );
+	unsigned int wid;
+
+	wid = window_get( "Death" );
+	window_destroy( wid );
 	menu_Close(MENU_DEATH);
 
 	player_new();
