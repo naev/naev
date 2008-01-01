@@ -330,8 +330,9 @@ static Widget* window_newWidget( Window* w )
 {
 	Widget* wgt = NULL;
 
+	w->nwidgets++;
 	w->widgets = realloc( w->widgets,
-			sizeof(Widget)*(++w->nwidgets) );
+			sizeof(Widget)*w->nwidgets );
 	if (w->widgets == NULL) WARN("Out of Memory");
 
 	wgt = &w->widgets[ w->nwidgets - 1 ]; 
@@ -1056,7 +1057,7 @@ static void toolkit_mouseEvent( SDL_Event* event )
 	int i;
 	double x, y;
 	Window *w;
-	Widget *wgt;
+	Widget *wgt, *wgt_func;
 
 	/* set mouse button status */
 	if (event->type==SDL_MOUSEBUTTONDOWN) mouse_down = 1;
@@ -1083,6 +1084,7 @@ static void toolkit_mouseEvent( SDL_Event* event )
 	x -= w->x;
 	y -= w->y;
 
+	wgt_func = NULL;
 	for (i=0; i<w->nwidgets; i++) {
 		wgt = &w->widgets[i];
 		/* widget in range? */
@@ -1115,7 +1117,8 @@ static void toolkit_mouseEvent( SDL_Event* event )
 									DEBUG("Toolkit: Button '%s' of Window '%s' "
 											"doesn't have a function trigger",
 											wgt->name, w->name );
-								else (*wgt->dat.btn.fptr)(wgt->name);
+								else
+									wgt_func = wgt; /* run it at the end in case of close */
 							}
 						}
 						wgt->status = WIDGET_STATUS_NORMAL;
@@ -1129,6 +1132,7 @@ static void toolkit_mouseEvent( SDL_Event* event )
 		else if (!mouse_down)
 			wgt->status = WIDGET_STATUS_NORMAL;
 	}
+	if (wgt_func) (*wgt_func->dat.btn.fptr)(wgt_func->name);
 }
 
 
