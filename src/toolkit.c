@@ -396,6 +396,16 @@ void window_modifyImage( const unsigned int wid,
 }
 
 
+/*
+ * gets the image from an image widget
+ */
+glTexture* window_getImage( const unsigned int wid, char* name )
+{
+	Widget *wgt = window_getwgt(wid,name);
+	return (wgt) ? wgt->dat.img.image : NULL;
+}
+
+
 
 /*
  * checks to see if a window exists

@@ -68,6 +68,11 @@ void window_modifyText( const unsigned int wid,
 void window_modifyImage( const unsigned int wid,
 		char* name, glTexture* image );
 
+/*
+ * get
+ */
+glTexture* window_getImage( const unsigned int wid, char* name );
+
 
 /*
  * get
