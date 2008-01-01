@@ -60,6 +60,8 @@ extern int indjoystick;
 extern char* namjoystick;
 /* from player.c */
 extern const char *keybindNames[]; /* keybindings */
+/* from input.c */
+extern unsigned int input_afterburnSensibility;
 
 
 /*
@@ -145,6 +147,9 @@ int conf_loadConfig ( const char* file )
 		/* FPS */
 		conf_loadBool("showfps",show_fps);
 		conf_loadInt("maxfps",max_fps);
+
+		/* input */
+		conf_loadInt("afterburn",input_afterburnSensibility);
 
 		/* sound */
 		conf_loadBool("nosound",i)

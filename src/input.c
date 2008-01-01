@@ -33,12 +33,19 @@ static Keybind** input_keybinds; /* contains the players keybindings */
 
 /* name of each keybinding */
 const char *keybindNames[] = {
-	"accel", "left", "right", "reverse", "afterburn", /* movement */
+	"accel", "left", "right", "reverse", /* movement */
 	"primary", "target", "target_nearest", "face", "board", /* fighting */
 	"secondary", "secondary_next", /* secondary weapons */
 	"target_planet", "land", "thyperspace", "starmap", "jump", /* space navigation */
 	"mapzoomin", "mapzoomout", "screenshot", "pause", "menu", "info",  /* misc */
 	"end" }; /* must terminate in "end" */
+
+
+/*
+ * accel hacks
+ */
+static unsigned int input_accelLast = 0; /* used to see if double tap */
+unsigned int input_afterburnSensibility = 500; /* ms between taps to afterburn */
 
 
 /*
@@ -63,7 +70,6 @@ void input_setDefault (void)
 	input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, 0 );
 	input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, 0 );
 	input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, 0 );
-	input_setKeybind( "afterburn", KEYBIND_KEYBOARD, SDLK_x, 0 );
 	/* combat */
 	input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, 0 );
 	input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, 0 );
@@ -155,6 +161,8 @@ void input_setKeybind( char *keybind, KeybindType type, int key, int reverse )
 !pilot_isFlag(player,PILOT_HYPERSPACE))
 static void input_key( int keynum, double value, int abs )
 {
+	unsigned int t;
+
 	/*
 	 * movement
 	 */
@@ -162,7 +170,18 @@ static void input_key( int keynum, double value, int abs )
 	if (KEY("accel")) {
 		if (abs) player_acc = value;
 		else player_acc += value;
-		player_acc = ABS(player_acc); /* make sure value is sane */         
+
+		/* double tap accel = afterburn! */
+		t = SDL_GetTicks();
+		if ((value==KEY_PRESS) && (t-input_accelLast <= input_afterburnSensibility)) {
+			player_afterburn();
+		}
+		else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_AFTERBURNER))
+			player_afterburnOver();
+		else
+			player_acc = ABS(player_acc); /* make sure value is sane */
+
+		if (value==KEY_PRESS) input_accelLast = t;
 
 	/* turning left */
 	} else if (KEY("left")) {
@@ -196,11 +215,6 @@ static void input_key( int keynum, double value, int abs )
 			if (player_isFlag(PLAYER_TURN_RIGHT)) { player_turn += 1; }
 		}
 
-	/* afterburning */
-	} else if (KEY("afterburn")) {
-		if (value==KEY_PRESS) { player_afterburn(); }
-		else if (value==KEY_RELEASE) { player_afterburnOver(); }
-	
 
 	/*
 	 * combat
