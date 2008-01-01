@@ -841,7 +841,9 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction, AI_Prof
 unsigned int pilot_create( Ship* ship, char* name, Faction* faction, AI_Profile* ai,
 		const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
 {
-	Pilot* dyn = MALLOC_ONE(Pilot);
+	Pilot **tp, *dyn;
+	
+	dyn = MALLOC_ONE(Pilot);
 	if (dyn == NULL) {
 		WARN("Unable to allocate memory");
 		return 0;;
@@ -860,8 +862,13 @@ unsigned int pilot_create( Ship* ship, char* name, Faction* faction, AI_Profile*
 
 		pilots++; /* there's a new pilot */
 
-		if (pilots >= mpilots) /* needs to grow */
-			pilot_stack = realloc( pilot_stack, ++mpilots*sizeof(Pilot*) );
+		if (pilots >= mpilots) { /* needs to grow */
+			mpilots += 20; /* grow 20 at a time */
+			tp = pilot_stack;
+			pilot_stack = realloc( pilot_stack, mpilots*sizeof(Pilot*) );
+			if ((pilot_stack != tp) && player) /* take into account possible mem move */
+				player = pilot_stack[0];
+		}
 
 		pilot_stack[pilots-1] = dyn;
 	}
