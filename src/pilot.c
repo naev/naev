@@ -395,8 +395,8 @@ void pilot_render( Pilot* p )
  */
 static void pilot_update( Pilot* pilot, const double dt )
 {
-	unsigned int t;
-	double px,py, vx,vy;
+	unsigned int t, l;
+	double a, px,py, vx,vy;
 
 	if (pilot_isFlag(pilot,PILOT_DEAD)) {
 		t = SDL_GetTicks();
@@ -420,17 +420,16 @@ static void pilot_update( Pilot* pilot, const double dt )
 					/(double)(pilot->ptimer - pilot->timer[0]));
 
 			/* random position on ship */
-			px = VX(pilot->solid->pos) + pilot->ship->gfx_space->sw*RNGF()
-					- pilot->ship->gfx_space->sw/2.;
-			py = VY(pilot->solid->pos) + pilot->ship->gfx_space->sh*RNGF()
-					- pilot->ship->gfx_space->sh/2.;
+			a = RNGF()*2.*M_PI;
+			px = VX(pilot->solid->pos) +  cos(a)*RNGF()*pilot->ship->gfx_space->sw/2.;
+			py = VY(pilot->solid->pos) +  sin(a)*RNGF()*pilot->ship->gfx_space->sh/2.;
 			vx = VX(pilot->solid->vel);
 			vy = VY(pilot->solid->vel);
 
-			if (RNGF()>0.8)
-				spfx_add( spfx_get("ExpM"), px, py, vx, vy, SPFX_LAYER_BACK );
-			else
-				spfx_add( spfx_get("ExpS"), px, py, vx, vy, SPFX_LAYER_BACK );
+			/* set explosions */
+			l = (pilot->id==PLAYER_ID) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
+			if (RNGF() > 0.8) spfx_add( spfx_get("ExpM"), px, py, vx, vy, l );
+			else spfx_add( spfx_get("ExpS"), px, py, vx, vy, l );
 		}
 	}
 	else if (pilot->armour <= 0.) /* PWNED */
