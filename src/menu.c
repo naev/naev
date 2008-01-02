@@ -19,10 +19,10 @@
 #include "player.h"
 
 
-#define MAIN_WIDTH		120
+#define MAIN_WIDTH		130
 #define MAIN_HEIGHT		250
 
-#define MENU_WIDTH		120
+#define MENU_WIDTH		130
 #define MENU_HEIGHT		200
 
 #define INFO_WIDTH		320
@@ -31,10 +31,10 @@
 #define OUTFITS_WIDTH	400
 #define OUTFITS_HEIGHT	200
 
-#define DEATH_WIDTH		120
+#define DEATH_WIDTH		130
 #define DEATH_HEIGHT		150
 
-#define BUTTON_WIDTH  	80
+#define BUTTON_WIDTH  	90
 #define BUTTON_HEIGHT 	30
 
 #define menu_Open(f)		(menu_open |= (f))
