@@ -103,7 +103,7 @@ void conf_setDefaults (void)
 	data = DATA_DEF;
 	/* opengl */
 	gl_screen.w = 800;
-	gl_screen.h = 640;
+	gl_screen.h = 600;
 	gl_screen.flags = 0;
 	/* openal */
 	nosound = 1; /* TODO make sound default when it's sane again */
