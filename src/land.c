@@ -113,8 +113,8 @@ static void commodity_exchange (void)
 	window_addText( secondary_wid, -20, -40, BUTTON_WIDTH/2, 20, 0,
 			"txtDInfo", &gl_smallFont, &cBlack, NULL );
 
-	window_addText( secondary_wid, -40, -80, BUTTON_WIDTH-20, 60, 0,
-			"txtDesc", &gl_smallFont, &cBlack, NULL );
+	window_addText( secondary_wid, -40, -80, BUTTON_WIDTH-20,
+			BUTTON_WIDTH, 0, "txtDesc", &gl_smallFont, &cBlack, NULL );
 
 
 	goods = malloc(sizeof(char*) * planet->ncommodities);
@@ -239,7 +239,7 @@ static void outfits (void)
 			250, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
 
 	window_addText( secondary_wid, 20+200+40, -200,
-			OUTFITS_WIDTH-360, 200, 0, "txtDescription",
+			OUTFITS_WIDTH-300, 200, 0, "txtDescription",
 			&gl_smallFont, NULL, NULL );
 
 
@@ -429,7 +429,7 @@ static void shipyard (void)
 			130, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
 
 	window_addText( secondary_wid, 20+200+40, -160,
-			SHIPYARD_WIDTH-360, 200, 0, "txtDescription",
+			SHIPYARD_WIDTH-300, 200, 0, "txtDescription",
 			&gl_smallFont, NULL, NULL );
 
 
