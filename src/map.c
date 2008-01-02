@@ -242,33 +242,28 @@ static void map_mouse( SDL_Event* event, double mx, double my )
 		
 		case SDL_MOUSEBUTTONDOWN:
 			/* selecting star system */
-			if (event->button.button==SDL_BUTTON_LEFT) {
-				for (i=0; i<systems_nstack; i++) {
-					x = systems_stack[i].pos.x * map_zoom;
-					y = systems_stack[i].pos.y * map_zoom;
+			for (i=0; i<systems_nstack; i++) {
+				x = systems_stack[i].pos.x * map_zoom;
+				y = systems_stack[i].pos.y * map_zoom;
 
-					if ((pow2(mx-x)+pow2(my-y)) < t) {
-						map_selected = i;
-						for (j=0; j<cur_system->njumps; j++)
-							if (i==cur_system->jumps[j]) {
-								planet_target = -1; /* override planet_target */
-								hyperspace_target = j;
-								break;
-							}
-
-						map_update();
-						break;
+				if ((pow2(mx-x)+pow2(my-y)) < t) {
+					map_selected = i;
+					for (j=0; j<cur_system->njumps; j++) {
+						if (i==cur_system->jumps[j]) {
+							planet_target = -1; /* override planet_target */
+							hyperspace_target = j;
+							break;
+						}
 					}
+					map_update();
+					break;
 				}
 			}
-			/* start dragging */
-			else if (event->button.button==SDL_BUTTON_RIGHT)
-				map_drag = 1;
+			map_drag = 1;
 			break;
 
 		case SDL_MOUSEBUTTONUP:
-			if ((event->button.button==SDL_BUTTON_RIGHT) && map_drag)
-				map_drag = 0;
+			if (map_drag) map_drag = 0;
 			break;
 
 		case SDL_MOUSEMOTION:
