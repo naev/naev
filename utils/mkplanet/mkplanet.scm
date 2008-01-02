@@ -18,11 +18,13 @@
 ;
 ; planet-render1-2.scm 
 ; Creates a planet.
-; You'll find this script in the "Xtns >Misc >Planet Render" menu
+; You'll find this script in the "Xtns->Naev->Planet Render" menu
+; December 2007 : Hacked it to add customizeable glow size and changed paths to be
+;                 more naevy :)
 ; February 2007 : Small modifications to make it work on Gimp 2.3 and hopefully 2.4
 ;                 Use planet-render1-1.scm for Gimp 2.2		
 
-(define (script-fu-planet-render planetSize planetColor sunAngle sunTilt glowSize)
+(define (script-fu-naev-mkplanet planetSize planetColor sunAngle sunTilt glowSize)
 
  (let*
 
@@ -119,7 +121,7 @@
    )
  )
 
-(script-fu-register "script-fu-planet-render"
+(script-fu-register "script-fu-naev-mkplanet"
                    _"_mkplanet..."
                    "Creates a planet.(Color, size and sun orientation can be set)"
                    "Aurore D. (Rore) / wolorf / bobbens"
@@ -131,5 +133,5 @@
                    SF-ADJUSTMENT _"Sun orientation (degrees) " '(45 0 360 1 10 1 0) 
 		             SF-ADJUSTMENT _"Sun Tilt " '(10 0 25 1 10 1 0)
                    SF-ADJUSTMENT _"Planet Glow" '(.25 .1 .6667 1 2 1 0) )
-(script-fu-menu-register "script-fu-planet-render"
+(script-fu-menu-register "script-fu-naev-mkplanet"
 			 _"<Toolbox>/Xtns/Naev")
