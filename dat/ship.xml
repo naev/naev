@@ -56,7 +56,7 @@ The star product of Aerosys, the Hyena quickly has become a favorite of pirates 
 <energy>180</energy>
 <shield_regen>150</shield_regen>
 <armour_regen>60</armour_regen>
-<energy_regen>500</energy_regen>
+<energy_regen>550</energy_regen>
 </health>
 <caracteristics>
 <crew>2</crew>
@@ -90,7 +90,7 @@ A heavy frigate designed for heavy combat.  Used widely by the empire to establi
 <energy>900</energy>
 <shield_regen>300</shield_regen>
 <armour_regen>80</armour_regen>
-<energy_regen>1400</energy_regen>
+<energy_regen>1600</energy_regen>
 </health>
 <caracteristics>
 <crew>35</crew>
@@ -163,7 +163,7 @@ A heavy liner specialized in freighting cargo all over the universe.  Also has g
 <energy>300</energy>
 <shield_regen>100</shield_regen>
 <armour_regen>40</armour_regen>
-<energy_regen>650</energy_regen>
+<energy_regen>800</energy_regen>
 </health>
 <caracteristics>                                                          
 <crew>13</crew>
