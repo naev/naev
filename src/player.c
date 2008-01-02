@@ -1118,7 +1118,12 @@ void player_think( Pilot* player )
 {
 
 	/* last i heard, the dead don't think */
-	if (pilot_isFlag(player,PILOT_DEAD)) return;
+	if (pilot_isFlag(player,PILOT_DEAD)) {
+		/* no sense in accelerating or turning */
+		player->solid->dir_vel = 0.;
+		vect_pset( &player->solid->force, 0., 0. );
+		return;
+	}
 
 	/* turning taken over by PLAYER_FACE */
 	if (player_isFlag(PLAYER_FACE)) { 
