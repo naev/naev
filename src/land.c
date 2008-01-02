@@ -106,14 +106,16 @@ static void commodity_exchange (void)
 			(BUTTON_WIDTH-20)/2, BUTTON_HEIGHT, "btnCommoditySell",
 			"Sell", commodity_sell );
 
-	window_addText( secondary_wid, -20, -40, BUTTON_WIDTH, 20, 0,
+	window_addText( secondary_wid, -20, -40, BUTTON_WIDTH, 60, 0,
 			"txtSInfo", &gl_smallFont, &cDConsole, 
 			"You have:\n"
-			"Market price:\n" );
-	window_addText( secondary_wid, -20, -40, BUTTON_WIDTH/2, 20, 0,
+			"Market price:\n"
+			"\n"
+			"Free Space:\n" );
+	window_addText( secondary_wid, -20, -40, BUTTON_WIDTH/2, 60, 0,
 			"txtDInfo", &gl_smallFont, &cBlack, NULL );
 
-	window_addText( secondary_wid, -40, -80, BUTTON_WIDTH-20,
+	window_addText( secondary_wid, -40, -100, BUTTON_WIDTH-20,
 			BUTTON_WIDTH, 0, "txtDesc", &gl_smallFont, &cBlack, NULL );
 
 
@@ -143,10 +145,13 @@ static void commodity_update( char* str )
 	com = commodity_get( comname );
 
 	snprintf( buf, 128,
-			"%d\n"
-			"%d credits/ton\n",
+			"%d tons\n"
+			"%d credits/ton\n"
+			"\n"
+			"%d tons\n",
 			player_cargoOwned( comname ),
-			com->medium );
+			com->medium,
+			player->cargo_free);
 	window_modifyText( secondary_wid, "txtDInfo", buf );
 	window_modifyText( secondary_wid, "txtDesc", com->description );
 
