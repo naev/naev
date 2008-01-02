@@ -1279,7 +1279,8 @@ void player_land (void)
 		tp = -1; /* temporary planet */
 		for (i=0; i<cur_system->nplanets; i++) {
 			d = vect_dist(&player->solid->pos,&cur_system->planets[i].pos);
-			if ((tp==-1) || ((td == -1) || (td > d))) {
+			if (planet_hasService(&cur_system->planets[i],PLANET_SERVICE_LAND) &&
+						((tp==-1) || ((td == -1) || (td > d)))) {
 				tp = i;
 				td = d;
 			}
