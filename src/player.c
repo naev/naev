@@ -109,7 +109,9 @@ typedef struct GUI_ {
 	Vector2d target;
 
 } GUI;
-GUI gui; /* ze GUI */
+GUI gui = { .gfx_frame = NULL,
+		.gfx_targetPilot = NULL,
+		.gfx_targetPlanet = NULL }; /* ze GUI */
 /* needed to render properly */
 double gui_xoff = 0.;
 double gui_yoff = 0.;
@@ -1099,9 +1101,9 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
  */
 void gui_free (void)
 {
-	gl_freeTexture( gui.gfx_frame );
-	gl_freeTexture( gui.gfx_targetPilot );
-	gl_freeTexture( gui.gfx_targetPlanet );
+	if (gui.gfx_frame) gl_freeTexture( gui.gfx_frame );
+	if (gui.gfx_targetPilot) gl_freeTexture( gui.gfx_targetPilot );
+	if (gui.gfx_targetPlanet) gl_freeTexture( gui.gfx_targetPlanet );
 
 	free(mesg_stack);
 }
