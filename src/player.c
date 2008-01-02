@@ -1255,7 +1255,7 @@ void player_land (void)
 		}
 		else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
 			if (!areEnemies( player->faction, planet->faction )) {              
-				player_message( "%s> Permission to land cleared.", planet->name );
+				player_message( "%s> Permission to land granted.", planet->name );
 				player_setFlag(PLAYER_LANDACK);
 			}
 			else {
