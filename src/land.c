@@ -209,11 +209,11 @@ static void outfits (void)
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseOutfits",
 			"Close", outfits_close );
 
-	window_addButton( secondary_wid, -40-BUTTON_WIDTH, 20,
+	window_addButton( secondary_wid, -40-BUTTON_WIDTH, 40+BUTTON_HEIGHT,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnBuyOutfit",
 			"Buy", outfits_buy );
 
-	window_addButton( secondary_wid, -40-BUTTON_WIDTH, 40+BUTTON_HEIGHT,
+	window_addButton( secondary_wid, -40-BUTTON_WIDTH, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnSellOutfit",
 			"Sell", outfits_sell );
 
