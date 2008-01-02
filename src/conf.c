@@ -85,8 +85,9 @@ static void print_usage( char **argv )
 	LOG("   -j n, --joystick n    use joystick n");
 	LOG("   -J s, --Joystick s    use joystick whose name contains s");
 	LOG("   -M, --mute            disables sound");
-	LOG("   -m f, --music f       sets the music volume to f");
-	LOG("   -s f, --sound f       sets the sound volume to f");
+	LOG("   -S, --sound           forces sound");
+	LOG("   -m f, --mvol f        sets the music volume to f");
+	LOG("   -s f, --svol f        sets the sound volume to f");
 	LOG("   -h, --help            display this message and exit");
 	LOG("   -v, --version         print the version and exit");
 }
@@ -105,7 +106,7 @@ void conf_setDefaults (void)
 	gl_screen.h = 640;
 	gl_screen.flags = 0;
 	/* openal */
-	nosound = 0;
+	nosound = 1; /* TODO make sound default when it's sane again */
 	/* joystick */
 	indjoystick = -1;
 	namjoystick = NULL;
@@ -244,15 +245,16 @@ void conf_parseCLI( int argc, char** argv )
 		{ "joystick", required_argument, 0, 'j' },
 		{ "Joystick", required_argument, 0, 'J' },
 		{ "mute", no_argument, 0, 'M' },
-		{ "music", required_argument, 0, 'm' },
-		{ "sound", required_argument, 0, 's' },
+		{ "sound", no_argument, 0, 'S' },
+		{ "mvol", required_argument, 0, 'm' },
+		{ "svol", required_argument, 0, 's' },
 		{ "help", no_argument, 0, 'h' }, 
 		{ "version", no_argument, 0, 'v' },
 		{ NULL, 0, 0, 0 } };
 	int option_index = 0;
 	int c = 0;
 	while ((c = getopt_long(argc, argv,
-			"fF:d:j:J:Mm:s:hv",
+			"fF:d:j:J:MSm:s:hv",
 			long_options, &option_index)) != -1) {
 		switch (c) {
 			case 'f':
@@ -272,6 +274,9 @@ void conf_parseCLI( int argc, char** argv )
 				break;
 			case 'M':
 				nosound = 1;
+				break;
+			case 'S':
+				nosound = 0;
 				break;
 			case 'm':
 				music_volume( atof(optarg) );
