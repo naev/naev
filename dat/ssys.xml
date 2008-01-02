@@ -27,7 +27,7 @@
 <jump>Alteris</jump>
 </jumps>
 </ssys>
-<ssys name="Arrakis">
+<ssys name="Dune">
 <pos>
 <x>120</x>
 <y>90</y>
@@ -38,7 +38,7 @@
 <interference>0</interference>
 </general>
 <planets>
-<planet>Dune</planet>
+<planet>Arrakis</planet>
 </planets>
 <fleets>
 <fleet chance="80">Merchant Llama</fleet>
@@ -149,7 +149,7 @@
 <fleet chance="40">Sml Merchant Convoy</fleet>
 </fleets>
 <jumps>
-<jump>Arrakis</jump>
+<jump>Dune</jump>
 <jump>NCG-7291</jump>
 <jump>Delta Pavonis</jump>
 </jumps>

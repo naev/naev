@@ -28,7 +28,7 @@ The bar is just off the starport with a great view of the harbour.  You could wa
 <exterior>oceanic.png</exterior>
 </GFX>
 </planet>
-<planet name="Dune">
+<planet name="Arrakis">
 <pos>
 <x>0</x>
 <y>0</y>
@@ -36,7 +36,7 @@ The bar is just off the starport with a great view of the harbour.  You could wa
 <general>
 <class>H</class>
 <description>
-Dune is a desert planet with no natural precipitation.
+Arrakis is a desert planet with no natural precipitation.
 </description>
 <bar>
 The Arrakeen canteen is a shady place.  Many scoundrels and lowlifes make this their home to avoid notice from the universal police.
