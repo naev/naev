@@ -174,12 +174,12 @@ A heavy battery that will increase your ship's energy to allow you to pack more 
 <gfx_store>capacitator</gfx_store>
 </general>
 <specific type="15">
-<energy>75</energy>
+<energy>30</energy>
 </specific>
 </outfit>
 <outfit name="Solar Panel">
 <general>
-<max>3</max>
+<max>5</max>
 <tech>5</tech>
 <mass>3</mass>
 <price>55000</price>
@@ -204,7 +204,7 @@ An enhancement for the shield power system, allowing it to resist much heavier f
 <gfx_store>capacitator</gfx_store>
 </general>
 <specific type="15">
-<shield>30</shield>
+<shield>15</shield>
 </specific>
 </outfit>
 <outfit name="Shield Booster">
@@ -220,7 +220,7 @@ A shield generator that feeds off the ship's main energy line.  It will allow yo
 </general>
 <specific type="15">
 <shield>15</shield>
-<shield_regen>10</shield_regen>
+<shield_regen>15</shield_regen>
 <energy_regen>-50</energy_regen>
 </specific>
 </outfit>
@@ -236,7 +236,7 @@ This enhancement routes energy from the ship's energy supplies to the engine, gi
 <gfx_store>reroute</gfx_store>
 </general>
 <specific type="15">
-<thrust>60</thrust>
+<thrust>70</thrust>
 <energy_regen>-50</energy_regen>
 </specific>
 </outfit>

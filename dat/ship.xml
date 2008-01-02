@@ -17,8 +17,8 @@ One of the most widely used ships in the galaxy.  Reknown for it's stability and
 <speed>360</speed>
 </movement>
 <health>
-<shield>90</shield>
-<armour>120</armour>
+<shield>50</shield>
+<armour>60</armour>
 <energy>240</energy>
 <shield_regen>80</shield_regen>
 <armour_regen>50</armour_regen>
@@ -51,8 +51,8 @@ The star product of Aerosys, the Hyena quickly has become a favorite of pirates 
 <speed>480</speed>
 </movement>
 <health>
-<shield>140</shield>
-<armour>100</armour>
+<shield>70</shield>
+<armour>50</armour>
 <energy>180</energy>
 <shield_regen>150</shield_regen>
 <armour_regen>60</armour_regen>
@@ -85,8 +85,8 @@ A heavy frigate designed for heavy combat.  Used widely by the empire to establi
 <speed>260</speed>
 </movement>
 <health>
-<shield>1040</shield>
-<armour>720</armour>
+<shield>600</shield>
+<armour>400</armour>
 <energy>900</energy>
 <shield_regen>300</shield_regen>
 <armour_regen>80</armour_regen>
@@ -122,8 +122,8 @@ Used by security agencies all over the universe for it's reliability and availab
 <speed>320</speed>
 </movement>
 <health>
-<shield>320</shield>
-<armour>220</armour>
+<shield>200</shield>
+<armour>140</armour>
 <energy>360</energy>
 <shield_regen>180</shield_regen>
 <armour_regen>60</armour_regen>
@@ -158,8 +158,8 @@ A heavy liner specialized in freighting cargo all over the universe.  Also has g
 <speed>260</speed>
 </movement>
 <health>
-<shield>200</shield>
-<armour>340</armour>
+<shield>160</shield>
+<armour>200</armour>
 <energy>300</energy>
 <shield_regen>100</shield_regen>
 <armour_regen>40</armour_regen>
