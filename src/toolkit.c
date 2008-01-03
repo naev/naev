@@ -349,12 +349,12 @@ void window_addInput( const unsigned int wid,
 	wgt->name = strdup(name);
 
 	/* specific */
-	wgt->dat.inp.max = max;
+	wgt->dat.inp.max = max+1;
 	wgt->dat.inp.oneline = oneline;
 	wgt->dat.inp.pos = 0;
 	wgt->dat.inp.view = 0;
-	wgt->dat.inp.input = malloc(sizeof(char)*max);
-	memset(wgt->dat.inp.input, 0, max*sizeof(char));
+	wgt->dat.inp.input = malloc(sizeof(char)*wgt->dat.inp.max);
+	memset(wgt->dat.inp.input, 0, wgt->dat.inp.max*sizeof(char));
 
 	/* position/size */
 	wgt->w = (double) w;
@@ -1116,7 +1116,7 @@ static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key )
 		if ((type==SDL_KEYDOWN) && (key=='\b') && (inp->dat.inp.pos > 0))
 			inp->dat.inp.input[ --inp->dat.inp.pos ] = '\0';
 
-		else if ((type==SDL_KEYDOWN) && (inp->dat.inp.pos < inp->dat.inp.max)) {
+		else if ((type==SDL_KEYDOWN) && (inp->dat.inp.pos < inp->dat.inp.max-1)) {
 			
 			if ((key==SDLK_RETURN) && !inp->dat.inp.oneline)
 				inp->dat.inp.input[ inp->dat.inp.pos++ ] = '\n';
@@ -1131,8 +1131,9 @@ static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key )
 
 			/* didn't get a useful key */
 			else return 0;
+
+			return 1;
 		}
-		return 1;
 	}
 	return 0;
 }
@@ -1293,9 +1294,11 @@ static int toolkit_keyEvent( SDL_Event* event )
 	Window *wdw; 
 	Widget *wgt;
 	SDLKey key;
-	
+
+	if (nwindows<=0) return 0;
+
 	wdw = &windows[nwindows-1];
-	wgt = (wdw->focus >= 0) ? &wdw->widgets[ wdw->focus ] : NULL;
+	wgt = (wdw->focus != -1) ? &wdw->widgets[ wdw->focus ] : NULL;
 	key = event->key.keysym.sym;
 
 	/* hack to simulate key repetition */
@@ -1352,9 +1355,6 @@ void toolkit_update (void)
 	Window *wdw;
 	Widget *wgt;
 
-	wdw = &windows[nwindows-1];
-	wgt = (wdw->focus >= 0) ? &wdw->widgets[ wdw->focus ] : NULL;
-
 	t = SDL_GetTicks();
 
 	if (input_key == 0) return;
@@ -1364,9 +1364,13 @@ void toolkit_update (void)
 
 	input_keyCounter++;
 
-	if (wgt && (wgt->type==WIDGET_INPUT) &&
-			(input_key==SDLK_BACKSPACE || isalnum(input_key)))
-		toolkit_inputInput( SDL_KEYDOWN, wgt, input_key );
+	if (nwindows > 0) {
+		wdw = &windows[nwindows-1];
+		wgt = (wdw->focus >= 0) ? &wdw->widgets[ wdw->focus ] : NULL;
+		if (wgt && (wgt->type==WIDGET_INPUT) &&
+				(input_key==SDLK_BACKSPACE || isalnum(input_key)))
+			toolkit_inputInput( SDL_KEYDOWN, wgt, input_key );
+	}
 
 	switch (input_key) {
 
