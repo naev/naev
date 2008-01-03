@@ -497,7 +497,8 @@ static void shipyard_buy( char* str )
 	shipname = toolkit_getList( secondary_wid, "lstShipyard" );
 	ship = ship_get( shipname );
 
-	player_newShip( ship );
+	player_newShip( ship, player->solid->pos.x, player->solid->pos.y,
+			0., 0., player->solid->dir );
 }
 
 

@@ -41,6 +41,8 @@
  * player stuff
  */
 Pilot* player = NULL; /* ze player */
+static Ship* player_ship = NULL; /* temporary ship to hold when naming it */
+static double player_px, player_py, player_vx, player_vy, player_dir; /* more hack */
 /* player global properties */
 char* player_name = NULL; /* ze name */
 int player_credits = 0; /* ze monies */
@@ -139,6 +141,8 @@ extern void planets_minimap( const double res, const double w, const double h,
 /* internal */
 static void player_nameClose( char *str );
 static void player_newMake (void);
+static void player_nameShipClose( char *str );
+static void player_newShipMake( char *name );
 static void rect_parse( const xmlNodePtr parent,
 		double *x, double *y, double *w, double *h );
 static int gui_parse( const xmlNodePtr parent, const char *name );
@@ -159,6 +163,8 @@ void player_new (void)
 	unsigned int wid;
 
 	player_setFlag(PLAYER_DESTROYED);
+	vectnull( &player_cam );
+	gl_bindCamera( &player_cam );
 
 	wid = window_create( "Player Name", -1, -1, 240, 140 );
 
@@ -240,9 +246,6 @@ static void player_newMake (void)
 	free(buf);
 	xmlCleanupParser();
 
-	/* in case we're respawning */
-	player_rmFlag(PLAYER_DESTROYED);
-
 	/* monies */
 	player_credits = RNG(l,h);
 
@@ -251,25 +254,67 @@ static void player_newMake (void)
 	player_message( " v%d.%d.%d", VMAJOR, VMINOR, VREV );
 
 	/* create the player and start the game */
-	player_newShip( ship );
+	player_newShip( ship, x, y, 0., 0., RNG(0,359)/180.*M_PI );
 	space_init(system);
-
-	/* pos and dir */
-	player_warp( x, y );
-	player->solid->dir = RNG(0,359)/180.*M_PI;
 }
 
 
 /*
+ * creates a dialogue to name the new ship
+ */
+void player_newShip( Ship* ship, double px, double py,
+		double vx, double vy, double dir )
+{
+	unsigned int wid;
+
+	/* temporary values while player doesn't exist */
+	player_ship = ship;
+	player_px = px;
+	player_py = py;
+	player_vx = vx;
+	player_vy = vy;
+	player_dir = dir;
+
+	wid = window_create( "Ship Name", -1, -1, 240, 140 );
+
+	window_addText( wid, 30, -30, 180, 20, 0, "txtInfo",
+			&gl_smallFont, &cDConsole, "Please name your ship:" );
+	window_addInput( wid, 20, -50, 200, 20, "inpName", 20, 1 );
+	window_addButton( wid, -20, 20, 80, 30, "btnClose", "Done", player_nameShipClose );
+}
+static void player_nameShipClose( char *str )
+{
+	(void)str;
+	char* ship_name;
+	unsigned int wid;
+
+	wid = window_get("Ship Name");
+	ship_name = window_getInput( wid, "inpName" );
+
+	player_newShipMake(ship_name);
+
+	window_destroy( wid );
+}
+
+/*
  * change the player's ship
  */
-void player_newShip( Ship* ship )
+static void player_newShipMake( char* name )
 {
+	Vector2d vp, vv;
+
 	if (player)
 		pilot_destroy( player );
 
-	pilot_create( ship, "Player", faction_get("Player"), NULL,
-			0.,  NULL, NULL, PILOT_PLAYER );
+	/* in case we're respawning */
+	player_rmFlag(PLAYER_DESTROYED);
+
+	/* hackish position setting */
+	vect_cset( &vp, player_px, player_py );
+	vect_cset( &vv, player_vx, player_vy );
+
+	pilot_create( player_ship, name, faction_get("Player"), NULL,
+			player_dir,  &vp, &vv, PILOT_PLAYER );
 	gl_bindCamera( &player->solid->pos ); /* set opengl camera */
 }
 

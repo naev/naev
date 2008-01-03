@@ -176,13 +176,19 @@ void menu_info (void)
 	window_addText( wid, 20, 20, 120, INFO_HEIGHT-60,
 			0, "txtDPilot", &gl_smallFont, &cDConsole,
 			"Pilot:\n"
-			"Combat Rating:\n"
+			"Combat\n"
+			" Rating:\n"
+			"\n"
+			"Ship:\n"
 			);
 	snprintf( str, 128, 
 			"%s\n"
+			"\n"
 			"%s\n"
-			, player_name, player_rating() );
-	window_addText( wid, 120, 20,
+			"\n"
+			"%s\n"
+			, player_name, player_rating(), player->name );
+	window_addText( wid, 80, 20,
 			INFO_WIDTH-120-BUTTON_WIDTH, INFO_HEIGHT-60,
 			0, "txtPilot", &gl_smallFont, &cBlack, str );
 
