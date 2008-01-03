@@ -1089,7 +1089,7 @@ static void toolkit_renderInput( Widget* inp, double bx, double by )
 
 	gl_printText( &gl_smallFont, inp->w-10., inp->h,
 			x+5. + gl_screen.w/2., ty  + gl_screen.h/2.,
-			&cBlack, inp->dat.inp.input );
+			&cBlack, inp->dat.inp.input + inp->dat.inp.view );
 
 	/* inner outline */
 	toolkit_drawOutline( x, y, inp->w, inp->h, 0.,
@@ -1105,6 +1105,7 @@ static void toolkit_renderInput( Widget* inp, double bx, double by )
  */
 static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key )
 {
+	int n;
 	SDLMod mods;
 
 	if (inp->type != WIDGET_INPUT) return 0;
@@ -1113,8 +1114,16 @@ static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key )
 	if (inp->dat.inp.oneline && isascii(key)) {
 
 		/* backspace -> delete text */
-		if ((type==SDL_KEYDOWN) && (key=='\b') && (inp->dat.inp.pos > 0))
+		if ((type==SDL_KEYDOWN) && (key=='\b') && (inp->dat.inp.pos > 0)) {
 			inp->dat.inp.input[ --inp->dat.inp.pos ] = '\0';
+			
+			if (inp->dat.inp.view > 0) {
+				n = gl_printWidth( &gl_smallFont,
+						inp->dat.inp.input + inp->dat.inp.view - 1 );
+				if (n+10 < inp->w)
+					inp->dat.inp.view--;
+			}
+		}
 
 		else if ((type==SDL_KEYDOWN) && (inp->dat.inp.pos < inp->dat.inp.max-1)) {
 			
@@ -1132,6 +1141,8 @@ static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key )
 			/* didn't get a useful key */
 			else return 0;
 
+			n = gl_printWidth( &gl_smallFont, inp->dat.inp.input+inp->dat.inp.view );
+			if (n+10 > inp->w) inp->dat.inp.view++;
 			return 1;
 		}
 	}

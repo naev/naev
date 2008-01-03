@@ -25,7 +25,7 @@
 #define MENU_WIDTH		130
 #define MENU_HEIGHT		200
 
-#define INFO_WIDTH		320
+#define INFO_WIDTH		360
 #define INFO_HEIGHT		280
 
 #define OUTFITS_WIDTH	400
