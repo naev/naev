@@ -877,6 +877,39 @@ unsigned int pilot_create( Ship* ship, char* name, Faction* faction, AI_Profile*
 
 
 /*
+ * copies src pilot to dest
+ */
+void pilot_copy( Pilot* dest, Pilot* src )
+{
+	memcpy( dest, src, sizeof(Pilot) );
+	if (src->name) dest->name = strdup(src->name);
+
+	/* solid */
+	dest->solid = malloc(sizeof(Solid));
+	memcpy( dest->solid, src->solid, sizeof(Solid) );
+
+	/* copy outfits */
+	dest->outfits = malloc( sizeof(PilotOutfit)*src->noutfits );
+	memcpy( dest->outfits, src->outfits,
+			sizeof(PilotOutfit)*src->noutfits );
+	dest->secondary = NULL;
+	dest->ammo = NULL;
+	dest->afterburner = NULL;
+
+	/* copy commodities */
+	dest->commodities = malloc( sizeof(PilotCommodity)*src->ncommodities );
+	memcpy( dest->commodities, src->commodities,
+			sizeof(PilotCommodity)*src->ncommodities);
+
+	/* ai is not copied */
+	dest->task = NULL;
+
+	/* will set afterburner and correct stats */
+	pilot_calcStats( dest );
+}
+
+
+/*
  * frees and cleans up a pilot
  */
 static void pilot_free( Pilot* p )
