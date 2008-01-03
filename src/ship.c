@@ -286,6 +286,7 @@ void ships_free()
 		if ((ship_stack+i)->name) free(ship_stack[i].name);
 		if ((ship_stack+i)->description) free(ship_stack[i].description);
 		if ((ship_stack+i)->gui) free(ship_stack[i].gui);
+		if ((ship_stack+i)->fabricator) free(ship_stack[i].fabricator);
 
 		so=(ship_stack+i)->outfit;
 		while (so) { /* free the outfits */
