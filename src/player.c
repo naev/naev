@@ -173,6 +173,7 @@ static void player_nameClose( char *str )
 	unsigned int wid;
 
 	wid = window_get("Player Name");
+	if (player_name) free(player_name);
 	player_name = strdup(window_getInput( wid, "inpName" ));
 	window_destroy( wid );
 
