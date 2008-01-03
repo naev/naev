@@ -86,7 +86,7 @@ void vectnull( Vector2d* v )
  */
 double vect_angle( const Vector2d* ref, const Vector2d* v )
 {
-	return ANGLE( VX(*v)-VX(*ref), VY(*v)-VY(*ref));
+	return ANGLE( v->x - ref->x, v->y - ref->y);
 }
 
 
@@ -183,10 +183,10 @@ static void rk4_update (Solid *obj, const double dt)
 	double h = dt / (double)N; /* step */
 
 	double px, py, vx, vy;
-	px = VX(obj->pos);
-	py = VY(obj->pos);
-	vx = VX(obj->vel);
-	vy = VY(obj->vel);
+	px = obj->pos.x;
+	py = obj->pos.y;
+	vx = obj->vel.x;
+	vy = obj->vel.y;
 
 
 	if (obj->force.mod) { /* force applied on object */
