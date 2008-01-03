@@ -224,7 +224,7 @@ int gl_printText( const glFont *ft_font,
 	char text[1024]; /* holds the string */
 	char buf[128];
 	va_list ap;
-	int p, i, j, n, len, ret, lastspace;
+	int p, i, j, n, m, len, ret, lastspace;
 	double x,y;
 
 	ret = 0; /* default return value */
@@ -262,17 +262,23 @@ int gl_printText( const glFont *ft_font,
 		
 		if ((text[i]==' ') || (text[i]=='\n') || (text[i]=='\0')) lastspace = i;
 
-		if ((n > width) || (text[i]=='\n') || (text[i]=='\0')) {
-			/* time to draw the line */	
-			for (j=0; j<(lastspace-p-1); j++)
+		if (((n > width) && ((p!=lastspace) && (p!=-1)))
+				|| (text[i]=='\n') || (text[i]=='\0')) {
+
+			/* time to draw the line */
+			m = 0;
+			for (j=0; j<(lastspace-p-1); j++) {
+				m += ft_font->w[ (int)buf[j] ];
+				if (m > width) break;
 				buf[j] = text[p+j+1];
+			}
 			/* no need for NUL termination */
 
 			glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
 			glPushMatrix(); /* translation matrix */                               
 				glTranslated( x, y, 0);
 
-			glCallLists(lastspace-p-1, GL_UNSIGNED_BYTE, &buf); /* the actual displaying */
+			glCallLists(j, GL_UNSIGNED_BYTE, &buf); /* the actual displaying */
 
 			glPopMatrix(); /* translation matrx */
 
