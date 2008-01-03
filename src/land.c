@@ -50,7 +50,7 @@ int landed = 0;
 
 static int land_wid = 0; /* used for the primary land window */
 static int secondary_wid = 0; /* used for the second opened land window (can only have 2) */
-static Planet* planet = NULL;
+Planet* land_planet = NULL;
 
 
 /*
@@ -119,12 +119,12 @@ static void commodity_exchange (void)
 			BUTTON_WIDTH, 0, "txtDesc", &gl_smallFont, &cBlack, NULL );
 
 
-	goods = malloc(sizeof(char*) * planet->ncommodities);
-	for (i=0; i<planet->ncommodities; i++)
-		goods[i] = strdup(planet->commodities[i]->name);
+	goods = malloc(sizeof(char*) * land_planet->ncommodities);
+	for (i=0; i<land_planet->ncommodities; i++)
+		goods[i] = strdup(land_planet->commodities[i]->name);
 	window_addList( secondary_wid, 20, -40,
 			COMMODITY_WIDTH-BUTTON_WIDTH-60, COMMODITY_HEIGHT-80-BUTTON_HEIGHT,
-			"lstGoods", goods, planet->ncommodities, 0, commodity_update );
+			"lstGoods", goods, land_planet->ncommodities, 0, commodity_update );
 
 	/* update */
 	commodity_update(NULL);
@@ -206,7 +206,7 @@ static void outfits (void)
 	int noutfits;
 	char buf[128];
 
-	snprintf(buf,128,"%s - Outfits", planet->name );
+	snprintf(buf,128,"%s - Outfits", land_planet->name );
 	secondary_wid = window_create( buf, -1, -1,
 			OUTFITS_WIDTH, OUTFITS_HEIGHT );
 
@@ -249,7 +249,7 @@ static void outfits (void)
 
 
 	/* set up the outfits to buy/sell */
-	outfits = outfit_getTech( &noutfits, planet->tech, PLANET_TECH_MAX);
+	outfits = outfit_getTech( &noutfits, land_planet->tech, PLANET_TECH_MAX);
 	window_addList( secondary_wid, 20, 40,
 			200, OUTFITS_HEIGHT-80, "lstOutfits",
 			outfits, noutfits, 0, outfits_update );
@@ -401,7 +401,7 @@ static void shipyard (void)
 	int nships;
 	char buf[128];
 
-	snprintf( buf, 128, "%s - Shipyard", planet->name );
+	snprintf( buf, 128, "%s - Shipyard", land_planet->name );
 	secondary_wid = window_create( buf,
 			-1, -1, SHIPYARD_WIDTH, SHIPYARD_HEIGHT );
 
@@ -439,7 +439,7 @@ static void shipyard (void)
 
 
 	/* set up the ships to buy/sell */
-	ships = ship_getTech( &nships, planet->tech, PLANET_TECH_MAX );
+	ships = ship_getTech( &nships, land_planet->tech, PLANET_TECH_MAX );
 	window_addList( secondary_wid, 20, 40,
 			200, SHIPYARD_HEIGHT-80, "lstShipyard",
 			ships, nships, 0, shipyard_update );
@@ -512,7 +512,7 @@ static void spaceport_bar (void)
 
 	window_addText( secondary_wid, 20, -30,
 			BAR_WIDTH - 40, BAR_HEIGHT - 40 - BUTTON_HEIGHT, 0,
-			"txtDescription", &gl_smallFont, &cBlack, planet->bar_description );
+			"txtDescription", &gl_smallFont, &cBlack, land_planet->bar_description );
 	
 	window_addButton( secondary_wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseBar",
@@ -567,7 +567,7 @@ void land( Planet* p )
 	music_load( MUSIC_LAND );
 	music_play();
 
-	planet = p;
+	land_planet = p;
 	land_wid = window_create( p->name, -1, -1, LAND_WIDTH, LAND_HEIGHT );
 	
 	/*
@@ -583,21 +583,21 @@ void land( Planet* p )
 	window_addButton( land_wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnTakeoff",
 			"Takeoff", (void(*)(char*))takeoff );
-	if (planet_hasService(planet, PLANET_SERVICE_COMMODITY))
+	if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
 		window_addButton( land_wid, -20, 20 + BUTTON_HEIGHT + 20,
 				BUTTON_WIDTH, BUTTON_HEIGHT, "btnCommodity",
 				"Commodity Exchange", (void(*)(char*))commodity_exchange);
 
-	if (planet_hasService(planet, PLANET_SERVICE_SHIPYARD))
+	if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
 		window_addButton( land_wid, -20 - BUTTON_WIDTH - 20, 20,
 				BUTTON_WIDTH, BUTTON_HEIGHT, "btnShipyard",
 				"Shipyard", (void(*)(char*))shipyard);
-	if (planet_hasService(planet, PLANET_SERVICE_OUTFITS))
+	if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS))
 		window_addButton( land_wid, -20 - BUTTON_WIDTH - 20, 20 + BUTTON_HEIGHT + 20,
 				BUTTON_WIDTH, BUTTON_HEIGHT, "btnOutfits",
 				"Outfits", (void(*)(char*))outfits);
 
-	if (planet_hasService(planet, PLANET_SERVICE_BASIC)) {
+	if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
 		window_addButton( land_wid, 20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnNews",
 			"Mission Terminal", NULL);
@@ -622,14 +622,15 @@ void takeoff (void)
 	music_play();
 
 	int sw, sh;
-	sw = planet->gfx_space->w;
-	sh = planet->gfx_space->h;
+	sw = land_planet->gfx_space->w;
+	sh = land_planet->gfx_space->h;
 
 	/* no longer authorized to land */
 	player_rmFlag(PLAYER_LANDACK);
 
 	/* set player to another position with random facing direction and no vel */
-	player_warp( planet->pos.x + RNG(-sw/2,sw/2), planet->pos.y + RNG(-sh/2,sh/2) );
+	player_warp( land_planet->pos.x + RNG(-sw/2,sw/2),
+			land_planet->pos.y + RNG(-sh/2,sh/2) );
 	vect_pset( &player->solid->vel, 0., 0. );
 	player->solid->dir = RNG(0,359) * M_PI/180.;
 
@@ -640,7 +641,7 @@ void takeoff (void)
 
 	space_init(NULL);
 
-	planet = NULL;
+	land_planet = NULL;
 	window_destroy( land_wid );
 	landed = 0;
 }

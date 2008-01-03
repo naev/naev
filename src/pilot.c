@@ -67,7 +67,7 @@ static void pilot_update( Pilot* pilot, const double dt );
 static void pilot_hyperspace( Pilot* pilot );
 void pilot_render( Pilot* pilot ); /* externed in player.c */
 static void pilot_calcStats( Pilot* pilot );
-static void pilot_free( Pilot* p );
+void pilot_free( Pilot* p );
 static Fleet* fleet_parse( const xmlNodePtr parent );
 static void pilot_dead( Pilot* p );
 static int pilot_oquantity( Pilot* p, PilotOutfit* w );
@@ -879,8 +879,10 @@ unsigned int pilot_create( Ship* ship, char* name, Faction* faction, AI_Profile*
 /*
  * copies src pilot to dest
  */
-void pilot_copy( Pilot* dest, Pilot* src )
+Pilot* pilot_copy( Pilot* src )
 {
+	Pilot *dest = malloc(sizeof(Pilot));
+
 	memcpy( dest, src, sizeof(Pilot) );
 	if (src->name) dest->name = strdup(src->name);
 
@@ -906,13 +908,15 @@ void pilot_copy( Pilot* dest, Pilot* src )
 
 	/* will set afterburner and correct stats */
 	pilot_calcStats( dest );
+
+	return dest;
 }
 
 
 /*
  * frees and cleans up a pilot
  */
-static void pilot_free( Pilot* p )
+void pilot_free( Pilot* p )
 {
 	if (player==p) player = NULL;
 	solid_free(p->solid);

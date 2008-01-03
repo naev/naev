@@ -214,6 +214,7 @@ int main ( int argc, char** argv )
 
 
 	/* data unloading */
+	player_cleanup(); /* cleans up the player stuff */
 	weapon_exit(); /* destroys all active weapons */
 	space_exit(); /* cleans up the universe itself */
 	pilots_free(); /* frees the pilots, they were locked up :( */

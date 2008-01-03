@@ -177,7 +177,7 @@ void pilot_init( Pilot* dest, Ship* ship, char* name, Faction* faction, AI_Profi
 		const double dir, const Vector2d* pos, const Vector2d* vel, const int flags );
 unsigned int pilot_create( Ship* ship, char* name, Faction* faction, AI_Profile* ai,
 		const double dir, const Vector2d* pos, const Vector2d* vel, const int flags );
-void pilot_copy( Pilot* dest, Pilot* src );
+Pilot* pilot_copy( Pilot* src );
 
 
 /*
@@ -186,6 +186,7 @@ void pilot_copy( Pilot* dest, Pilot* src );
 void pilot_destroy(Pilot* p);
 void pilots_free (void);
 void pilots_clean (void);
+void pilot_free( Pilot* p );
 int fleet_load (void); /* TODO make this fleet stuff actually matter */
 void fleet_free (void);
 

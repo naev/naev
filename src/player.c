@@ -43,6 +43,10 @@
 Pilot* player = NULL; /* ze player */
 static Ship* player_ship = NULL; /* temporary ship to hold when naming it */
 static double player_px, player_py, player_vx, player_vy, player_dir; /* more hack */
+/* player pilot stack - ships he has */
+static Pilot** player_stack = NULL;
+static char** player_lstack = NULL; /* names of the planet the ships are at */
+static int player_nstack = 0;
 /* player global properties */
 char* player_name = NULL; /* ze name */
 int player_credits = 0; /* ze monies */
@@ -70,6 +74,11 @@ extern int pilots;
  * space stuff for GUI
  */
 extern StarSystem *systems_stack;
+
+/*
+ * land stuff for player_stack
+ */
+extern Planet* land_planet;
 
 
 /*
@@ -162,9 +171,13 @@ void player_new (void)
 {
 	unsigned int wid;
 
+	/* to not segfault due to lack of environment */
 	player_setFlag(PLAYER_DESTROYED);
 	vectnull( &player_cam );
 	gl_bindCamera( &player_cam );
+
+	/* cleanup player stuff if we'll be recreating */
+	player_cleanup();
 
 	wid = window_create( "Player Name", -1, -1, 240, 140 );
 
@@ -179,7 +192,6 @@ static void player_nameClose( char *str )
 	unsigned int wid;
 
 	wid = window_get("Player Name");
-	if (player_name) free(player_name);
 	player_name = strdup(window_getInput( wid, "inpName" ));
 	window_destroy( wid );
 
@@ -246,6 +258,7 @@ static void player_newMake (void)
 	free(buf);
 	xmlCleanupParser();
 
+
 	/* monies */
 	player_credits = RNG(l,h);
 
@@ -303,8 +316,14 @@ static void player_newShipMake( char* name )
 {
 	Vector2d vp, vv;
 
-	if (player)
+	if (player) {
+		player_stack = realloc(player_stack, sizeof(Pilot*)*(player_nstack+1));
+		player_stack[player_nstack] = pilot_copy( player );
+		player_lstack = realloc(player_lstack, sizeof(char*)*(player_nstack+1));
+		player_lstack[player_nstack] = strdup( land_planet->name );
+		player_nstack++;
 		pilot_destroy( player );
+	}
 
 	/* in case we're respawning */
 	player_rmFlag(PLAYER_DESTROYED);
@@ -316,6 +335,32 @@ static void player_newShipMake( char* name )
 	pilot_create( player_ship, name, faction_get("Player"), NULL,
 			player_dir,  &vp, &vv, PILOT_PLAYER );
 	gl_bindCamera( &player->solid->pos ); /* set opengl camera */
+}
+
+
+/*
+ * cleans up player stuff like player_stack
+ */
+void player_cleanup (void)
+{
+	int i;
+
+	/* cleanup name */
+	if (player_name) free(player_name);
+
+	/* clean up the stack */
+	if (player_stack) {                
+		for (i=0; i<player_nstack; i++) {
+			pilot_free(player_stack[i]);
+			free(player_lstack[i]);
+		}
+		free (player_stack);
+		player_stack = NULL;
+		free(player_lstack);
+		player_lstack = NULL;
+		/* nothing left */
+		player_nstack = 0;
+	}
 }
 
 
