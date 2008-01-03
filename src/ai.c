@@ -397,7 +397,8 @@ void ai_think( Pilot* pilot )
 	L = cur_pilot->ai->L; /* set the AI profile to the current pilot's */
 
 	/* clean up some variables */
-	pilot_acc = pilot_turn = 0.;
+	pilot_acc = 0;
+	pilot_turn = 0.;
 	pilot_flags = 0;
 	pilot_target = 0;
 
@@ -410,7 +411,7 @@ void ai_think( Pilot* pilot )
 	}
 
 	/* pilot has a currently running task */
-	if (cur_pilot->task != NULL)
+	if (cur_pilot->task)
 		ai_run(cur_pilot->task->name);
 
 	/* make sure pilot_acc and pilot_turn are legal */
@@ -645,9 +646,13 @@ static int ai_pshield( lua_State *L )
  */
 static int ai_getdistance( lua_State *L )
 {
+	Vector2d *vect;
+
 	MIN_ARGS(1);
-	Vector2d *vect = (Vector2d*)lua_topointer(L,1);
-	lua_pushnumber(L, vect_dist(vect,&cur_pilot->solid->pos));
+
+	vect = (lua_islightuserdata(L,1)) ?
+			(Vector2d*)lua_topointer(L,1) : NULL;
+	lua_pushnumber(L, vect_dist(vect, &cur_pilot->solid->pos));
 	return 1;
 }
 
@@ -824,14 +829,15 @@ static int ai_face( lua_State *L )
 
 	vect_cset( &sv, VX(cur_pilot->solid->pos) + FACE_WVEL*VX(cur_pilot->solid->vel),
 			VY(cur_pilot->solid->pos) + FACE_WVEL*VY(cur_pilot->solid->vel) );
-	if (v!=NULL) /* target is static */
-		diff = angle_diff(cur_pilot->solid->dir,
-				(n==-1) ? VANGLE(cur_pilot->solid->pos) :
-				vect_angle(&cur_pilot->solid->pos, v));
-	else /* target is dynamic */
+
+	if (v==NULL) /* target is dynamic */
 		diff = angle_diff(cur_pilot->solid->dir,
 				(n==-1) ? VANGLE(sv) :
 				vect_angle(&sv, &tv));
+	else /* target is static */
+		diff = angle_diff(cur_pilot->solid->dir,   
+				(n==-1) ? VANGLE(cur_pilot->solid->pos) :
+				vect_angle(&cur_pilot->solid->pos, v));
 
 
 	pilot_turn = mod*diff;
