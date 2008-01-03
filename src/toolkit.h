@@ -35,7 +35,7 @@ void window_addText( const unsigned int wid,
 		glFont* font, glColour* colour, char* string ); /* font, colour and actual text */
 void window_addImage( const unsigned int wid,
 		const int x, const int y, /* position */
-		char* name, glTexture* image ); /* label and image itself */
+		char* name, glTexture* image, int border ); /* label and image itself */
 void window_addList( const unsigned int wid,
 		const int x, const int y, /* position */
 		const int w, const int h, /* size */
@@ -51,6 +51,10 @@ void window_addCust( const unsigned int wid,
 		char* name, const int border,
 		void (*render) (double x, double y, double w, double h),
 		void (*mouse) (SDL_Event* event, double x, double y) );
+void window_addInput( const unsigned int wid,
+		const int x, const int y, /* position */
+		const int w, const int h, /* size */
+		char* name, const int max, const int oneline );
 
 
 
@@ -68,11 +72,6 @@ void window_modifyText( const unsigned int wid,
 void window_modifyImage( const unsigned int wid,
 		char* name, glTexture* image );
 
-/*
- * get
- */
-glTexture* window_getImage( const unsigned int wid, char* name );
-
 
 /*
  * get
@@ -80,6 +79,8 @@ glTexture* window_getImage( const unsigned int wid, char* name );
 int window_exists( const char* wdwname );
 unsigned int window_get( const char* wdwname );
 char* toolkit_getList( const unsigned int wid, char* name );
+glTexture* window_getImage( const unsigned int wid, char* name );
+char* window_getInput( const unsigned int wid, char* name );
 
 
 /*

@@ -137,6 +137,8 @@ extern void weapon_minimap( const double res, const double w, const double h,
 extern void planets_minimap( const double res, const double w, const double h,
 		const RadarShape shape ); /* from space.c */
 /* internal */
+static void player_nameClose( char *str );
+static void player_newMake (void);
 static void rect_parse( const xmlNodePtr parent,
 		double *x, double *y, double *w, double *h );
 static int gui_parse( const xmlNodePtr parent, const char *name );
@@ -148,10 +150,40 @@ void player_dead (void);
 void player_destroyed (void);
 
 
+
+/* 
+ * prompts for player's name
+ */
+void player_new (void)
+{
+	unsigned int wid;
+
+	player_setFlag(PLAYER_DESTROYED);
+
+	wid = window_create( "Player Name", -1, -1, 240, 140 );
+
+	window_addText( wid, 30, -30, 180, 20, 0, "txtInfo",
+			&gl_smallFont, &cDConsole, "Please write your name:" );
+	window_addInput( wid, 20, -50, 200, 20, "inpName", 20, 1 );
+	window_addButton( wid, -20, 20, 80, 30, "btnClose", "Done", player_nameClose );
+}
+static void player_nameClose( char *str )
+{
+	(void)str;
+	unsigned int wid;
+
+	wid = window_get("Player Name");
+	player_name = strdup(window_getInput( wid, "inpName" ));
+	window_destroy( wid );
+
+	player_newMake();
+}
+
+
 /*
  * creates a new player
  */
-void player_new (void)
+static void player_newMake (void)
 {
 	Ship *ship;
 	char system[20];

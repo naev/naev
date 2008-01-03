@@ -24,7 +24,8 @@ typedef enum WidgetType_ {
 	WIDGET_IMAGE,
 	WIDGET_LIST,
 	WIDGET_RECT,
-	WIDGET_CUST
+	WIDGET_CUST,
+	WIDGET_INPUT
 } WidgetType;
 
 typedef enum WidgetStatus_ {
@@ -55,6 +56,7 @@ typedef struct Widget_ {
 		} txt;
 		struct { /* WIDGET_IMAGE */
 			glTexture* image;
+			int border; /* border */
 		} img;
 		struct { /* WIDGET_LIST */
 			char **options; /* pointer to the options */
@@ -72,6 +74,12 @@ typedef struct Widget_ {
 			void (*render) (double bx, double by, double bw, double bh);
 			void (*mouse) (SDL_Event* event, double bx, double by);
 		} cst;
+		struct { /* WIDGET_INPUT */
+			char *input; /* input buffer */
+			int max; /* maximum length */
+			int oneline; /* is it a one-liner? no '\n' and friends */
+			int view, pos; /* view and cursor position */
+		} inp;
 	} dat;
 } Widget;
 
@@ -134,6 +142,7 @@ static void toolkit_renderImage( Widget* img, double bx, double by );
 static void toolkit_renderList( Widget* lst, double bx, double by );
 static void toolkit_renderRect( Widget* rct, double bx, double by );
 static void toolkit_renderCust( Widget* cst, double bx, double by );
+static void toolkit_renderInput( Widget* inp, double bx, double by );
 static void toolkit_drawOutline( double x, double y,
 		double w, double h, double b,
 		glColour* c, glColour* lc );
@@ -212,7 +221,7 @@ void window_addText( const unsigned int wid,
  */
 void window_addImage( const unsigned int wid,
 		const int x, const int y,
-		char* name, glTexture* image )
+		char* name, glTexture* image, int border )
 {
 	Window *wdw = window_wget(wid);
 	Widget *wgt = window_newWidget(wdw);
@@ -222,6 +231,7 @@ void window_addImage( const unsigned int wid,
 
 	/* set the properties */
 	wgt->dat.img.image = image;
+	wgt->dat.img.border = border;
 	wgt->w = (image==NULL) ? 0 : wgt->dat.img.image->sw;
 	wgt->h = (image==NULL) ? 0 : wgt->dat.img.image->sh;
 	if (x < 0) wgt->x = wdw->w - wgt->w + x;
@@ -322,6 +332,38 @@ void window_addCust( const unsigned int wid,
 }
 
 
+/*
+ * adds an input widget
+ */
+void window_addInput( const unsigned int wid,
+		const int x, const int y, /* position */
+		const int w, const int h, /* size */
+		char* name, const int max, const int oneline )
+{
+	Window *wdw = window_wget(wid);
+	Widget *wgt = window_newWidget(wdw);
+
+	/* generic */
+	wgt->type = WIDGET_INPUT;
+	wgt->name = strdup(name);
+
+	/* specific */
+	wgt->dat.inp.max = max;
+	wgt->dat.inp.oneline = oneline;
+	wgt->dat.inp.pos = 0;
+	wgt->dat.inp.view = 0;
+	wgt->dat.inp.input = malloc(sizeof(char)*max);
+	memset(wgt->dat.inp.input, 0, max*sizeof(char));
+
+	/* position/size */
+	wgt->w = (double) w;
+	wgt->h = (double) h;
+	if (x < 0) wgt->x = wdw->w - wgt->w + x;
+	else wgt->x = (double) x;
+	if (y < 0) wgt->y = wdw->h - wgt->h + y;
+	else wgt->y = (double) y;
+}
+
 
 /*
  * returns pointer to a newly alloced Widget
@@ -404,6 +446,16 @@ glTexture* window_getImage( const unsigned int wid, char* name )
 {
 	Widget *wgt = window_getwgt(wid,name);
 	return (wgt) ? wgt->dat.img.image : NULL;
+}
+
+
+/*
+ * gets the input from an input widget
+ */
+char* window_getInput( const unsigned int wid, char* name )
+{
+	Widget *wgt = window_getwgt(wid,name);
+	return (wgt) ? wgt->dat.inp.input : NULL;
 }
 
 
@@ -507,6 +559,10 @@ static void widget_cleanup( Widget *widget )
 					free(widget->dat.lst.options[i]);
 				free( widget->dat.lst.options );
 			}
+			break;
+
+		case WIDGET_INPUT:
+			free(widget->dat.inp.input); /* frees the input buffer */
 			break;
 
 		default:
@@ -812,6 +868,10 @@ static void window_render( Window* w )
 			case WIDGET_CUST:
 				toolkit_renderCust( &w->widgets[i], x, y );
 				break;
+
+			case WIDGET_INPUT:
+				toolkit_renderInput( &w->widgets[i], x, y );
+				break;
 		}
 	}
 
@@ -915,12 +975,14 @@ static void toolkit_renderImage( Widget* img, double bx, double by )
 			x + (double)gl_screen.w/2.,
 			y + (double)gl_screen.h/2., NULL );
 
-	/* inner outline (outwards) */
-	toolkit_drawOutline( x, y+1, img->dat.img.image->sw-1,
-		img->dat.img.image->sh-1, 1., toolkit_colLight, toolkit_col );
-	/* outter outline */
-	toolkit_drawOutline( x, y+1, img->dat.img.image->sw-1,
-			img->dat.img.image->sh-1, 2., toolkit_colDark, NULL );
+	if (img->dat.img.border) {
+		/* inner outline (outwards) */
+		toolkit_drawOutline( x, y+1, img->dat.img.image->sw-1,
+			img->dat.img.image->sh-1, 1., toolkit_colLight, toolkit_col );
+		/* outter outline */
+		toolkit_drawOutline( x, y+1, img->dat.img.image->sw-1,
+				img->dat.img.image->sh-1, 2., toolkit_colDark, NULL );
+	}
 }
 
 
@@ -1005,6 +1067,31 @@ static void toolkit_renderCust( Widget* cst, double bx, double by )
 				toolkit_colDark, NULL );
 	}
 	(*cst->dat.cst.render) ( x, y, cst->w, cst->h );
+}
+
+
+/*
+ * renders an input widget
+ */
+static void toolkit_renderInput( Widget* inp, double bx, double by )
+{
+	double x, y;
+
+	x = bx + inp->x;
+	y = by + inp->y;
+
+	/* main background */
+	toolkit_drawRect( x, y, inp->w, inp->h, &cWhite, NULL );
+
+	gl_printText( &gl_smallFont, inp->w-10., inp->h,
+			x+5., y, &cBlack, inp->dat.inp.input );
+
+	/* inner outline */
+	toolkit_drawOutline( x, y, inp->w, inp->h, 0.,
+			toolkit_colLight, toolkit_col );
+	/* outter outline */
+	toolkit_drawOutline( x, y, inp->w, inp->h, 1.,
+			toolkit_colDark, NULL );
 }
 
 
@@ -1160,7 +1247,22 @@ static void toolkit_unregKey( SDLKey key )
 }
 static int toolkit_keyEvent( SDL_Event* event )
 {
-	SDLKey key = event->key.keysym.sym;
+	Window *wdw; 
+	Widget *wgt;
+	SDLKey key;
+	
+	wdw = &windows[nwindows-1];
+	wgt = (wdw->focus >= 0) ? &wdw->widgets[ wdw->focus ] : NULL;
+	key = event->key.keysym.sym;
+
+	if (wgt && (wgt->type == WIDGET_INPUT)) { /* grabs all the events it wants */
+		if (wgt->dat.inp.oneline && isalnum(key)) {
+			if ((event->type==SDL_KEYDOWN) && (wgt->dat.inp.pos < wgt->dat.inp.max))
+				wgt->dat.inp.input[ wgt->dat.inp.pos++ ] = key;
+			DEBUG("%s", wgt->dat.inp.input );
+			return 1;
+		}
+	}
 
 	switch (key) {
 		case SDLK_TAB:
@@ -1253,6 +1355,7 @@ static int toolkit_isFocusable( Widget *wgt )
 	switch (wgt->type) {
 		case WIDGET_BUTTON:
 		case WIDGET_LIST:
+		case WIDGET_INPUT:
 			return 1;
 
 		default:

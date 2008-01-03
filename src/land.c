@@ -224,7 +224,7 @@ static void outfits (void)
 
 	/* fancy 128x128 image */
 	window_addRect( secondary_wid, -20, -50, 128, 128, "rctImage", &cBlack, 0 );
-	window_addImage( secondary_wid, -20-128, -50-128, "imgOutfit", NULL );
+	window_addImage( secondary_wid, -20-128, -50-128, "imgOutfit", NULL, 1 );
 
 	window_addCust( secondary_wid, -40-BUTTON_WIDTH, 60+2*BUTTON_HEIGHT,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "cstMod", 0, outfits_renderMod, NULL );
@@ -420,7 +420,7 @@ static void shipyard (void)
 	window_addRect( secondary_wid, -40, -50,
 			128, 96, "rctTarget", &cBlack, 0 );
 	window_addImage( secondary_wid, -40-128, -50-96,
-			"imgTarget", NULL );
+			"imgTarget", NULL, 1 );
 
 	window_addText( secondary_wid, 40+200+40, -55,
 			80, 96, 0, "txtSDesc", &gl_smallFont, &cDConsole,
@@ -572,7 +572,7 @@ void land( Planet* p )
 	/*
 	 * pretty display
 	 */
-	window_addImage( land_wid, 20, -40, "imgPlanet", p->gfx_exterior );
+	window_addImage( land_wid, 20, -40, "imgPlanet", p->gfx_exterior, 1 );
 	window_addText( land_wid, 440, 80, LAND_WIDTH-460, 460, 0, 
 			"txtPlanetDesc", &gl_smallFont, &cBlack, p->description);
 

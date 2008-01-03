@@ -805,6 +805,8 @@ void space_render( double dt )
  */
 void planets_render (void)
 {
+	if (cur_system==NULL) return;
+
 	int i;
 	for (i=0; i < cur_system->nplanets; i++)
 		gl_blitSprite( cur_system->planets[i].gfx_space,
