@@ -268,7 +268,7 @@ int gl_printText( const glFont *ft_font,
 			/* time to draw the line */
 			m = 0;
 			for (j=0; j<(lastspace-p-1); j++) {
-				m += ft_font->w[ (int)buf[j] ];
+				m += ft_font->w[ (int)text[p+j+1] ];
 				if (m > width) break;
 				buf[j] = text[p+j+1];
 			}
