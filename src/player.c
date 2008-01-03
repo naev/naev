@@ -190,9 +190,17 @@ static void player_nameClose( char *str )
 {
 	(void)str;
 	unsigned int wid;
+	char *name;
 
 	wid = window_get("Player Name");
-	player_name = strdup(window_getInput( wid, "inpName" ));
+	name = window_getInput( wid, "inpName" );
+
+	if (strlen(name) < 3) {
+		toolkit_alert( "Your name must be at least 3 characters long." );
+		return;
+	}
+
+	player_name = strdup(name);
 	window_destroy( wid );
 
 	player_newMake();
@@ -303,6 +311,11 @@ static void player_nameShipClose( char *str )
 
 	wid = window_get("Ship Name");
 	ship_name = window_getInput( wid, "inpName" );
+
+	if (strlen(ship_name) < 3) {
+		toolkit_alert( "Your ship's name must be at least 3 characters long" );
+		return;
+	}
 
 	player_newShipMake(ship_name);
 

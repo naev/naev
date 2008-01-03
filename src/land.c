@@ -49,7 +49,8 @@
 int landed = 0;
 
 static int land_wid = 0; /* used for the primary land window */
-static int secondary_wid = 0; /* used for the second opened land window (can only have 2) */
+static int secondary_wid = 0; /* used for the second opened land window */
+static int terciary_wid = 0; /* used for fancy things like news, your ships... */
 Planet* land_planet = NULL;
 
 
@@ -76,6 +77,9 @@ static void shipyard_close( char* str );
 static void shipyard_update( char* str );
 static void shipyard_info( char* str );
 static void shipyard_buy( char* str );
+/* your ships */
+static void shipyard_yours( char* str );
+static void shipyard_yoursClose( char* str );
 /* spaceport bar */
 static void spaceport_bar (void);
 static void spaceport_bar_close( char* str );
@@ -409,6 +413,10 @@ static void shipyard (void)
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseShipyard",
 			"Close", shipyard_close );
 
+	window_addButton( secondary_wid, -20, 40+BUTTON_HEIGHT,
+			BUTTON_WIDTH, BUTTON_HEIGHT, "btnYourShips",
+			"Your Ships", shipyard_yours );
+
 	window_addButton( secondary_wid, -40-BUTTON_WIDTH, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnBuyShip",
 			"Buy", shipyard_buy );
@@ -500,6 +508,30 @@ static void shipyard_buy( char* str )
 	player_newShip( ship, player->solid->pos.x, player->solid->pos.y,
 			0., 0., player->solid->dir );
 }
+static void shipyard_yours( char* str )
+{
+	(void)str;
+	char **ships;
+	int nships;
+
+	terciary_wid = window_create( "Your Ships",
+			-1, -1, SHIPYARD_WIDTH, SHIPYARD_HEIGHT );
+	window_addButton( terciary_wid, -20, 20,
+			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseYourShips",
+			"Shipyard", shipyard_yoursClose );
+
+	ships = NULL;
+	nships = 0;
+	window_addList( terciary_wid, 20, 40,
+			200, SHIPYARD_HEIGHT-80, "lstYourShips",
+			ships, nships, 0, NULL );
+
+}
+static void shipyard_yoursClose( char* str )
+{
+	(void)str;
+	window_destroy( terciary_wid );
+}
 
 
 /*
@@ -535,16 +567,15 @@ static void spaceport_bar_close( char* str )
  */
 static void news (void)
 {
-	unsigned int news_wid;
-	news_wid = window_create( "News Reports",
+	terciary_wid = window_create( "News Reports",
 			-1, -1, NEWS_WIDTH, NEWS_HEIGHT );
 
-	window_addText( news_wid, 20, 20 + BUTTON_HEIGHT + 20,
+	window_addText( terciary_wid, 20, 20 + BUTTON_HEIGHT + 20,
 			NEWS_WIDTH-40, NEWS_HEIGHT - 20 - BUTTON_HEIGHT - 20 - 20 - 20,
 			0, "txtNews", &gl_smallFont, &cBlack,
 			"News reporters report that they are on strike!");
 
-	window_addButton( news_wid, -20, 20,
+	window_addButton( terciary_wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseNews",
 			"Close", news_close );
 
@@ -552,7 +583,7 @@ static void news (void)
 static void news_close( char* str )
 {
 	if (strcmp(str,"btnCloseNews")==0)
-		window_destroy( window_get("News Reports") );
+		window_destroy( terciary_wid );
 }
 
 
