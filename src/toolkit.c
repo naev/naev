@@ -125,6 +125,7 @@ static void widget_cleanup( Widget *widget );
 static Window* window_wget( const unsigned int wid );
 static Widget* window_getwgt( const unsigned int wid, char* name );
 /* input */
+static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key );
 static void toolkit_mouseEvent( SDL_Event* event );
 static int toolkit_keyEvent( SDL_Event* event );
 /* focus */
@@ -1075,7 +1076,7 @@ static void toolkit_renderCust( Widget* cst, double bx, double by )
  */
 static void toolkit_renderInput( Widget* inp, double bx, double by )
 {
-	double x, y;
+	double x, y, ty;
 
 	x = bx + inp->x;
 	y = by + inp->y;
@@ -1083,8 +1084,12 @@ static void toolkit_renderInput( Widget* inp, double bx, double by )
 	/* main background */
 	toolkit_drawRect( x, y, inp->w, inp->h, &cWhite, NULL );
 
+	/* center vertically */
+	if (inp->dat.inp.oneline) ty = y - (inp->h - gl_smallFont.h)/2.;
+
 	gl_printText( &gl_smallFont, inp->w-10., inp->h,
-			x+5., y, &cBlack, inp->dat.inp.input );
+			x+5. + gl_screen.w/2., ty  + gl_screen.h/2.,
+			&cBlack, inp->dat.inp.input );
 
 	/* inner outline */
 	toolkit_drawOutline( x, y, inp->w, inp->h, 0.,
@@ -1092,6 +1097,44 @@ static void toolkit_renderInput( Widget* inp, double bx, double by )
 	/* outter outline */
 	toolkit_drawOutline( x, y, inp->w, inp->h, 1.,
 			toolkit_colDark, NULL );
+}
+
+
+/*
+ * handles input for an input widget
+ */
+static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key )
+{
+	SDLMod mods;
+
+	if (inp->type != WIDGET_INPUT) return 0;
+
+	mods = SDL_GetModState();
+	if (inp->dat.inp.oneline && isascii(key)) {
+
+		/* backspace -> delete text */
+		if ((type==SDL_KEYDOWN) && (key=='\b') && (inp->dat.inp.pos > 0))
+			inp->dat.inp.input[ --inp->dat.inp.pos ] = '\0';
+
+		else if ((type==SDL_KEYDOWN) && (inp->dat.inp.pos < inp->dat.inp.max)) {
+			
+			if ((key==SDLK_RETURN) && !inp->dat.inp.oneline)
+				inp->dat.inp.input[ inp->dat.inp.pos++ ] = '\n';
+
+			/* upper case characters */
+			else if (isalpha(key) && (mods & (KMOD_LSHIFT | KMOD_RSHIFT)))
+				inp->dat.inp.input[ inp->dat.inp.pos++ ] = toupper(key);
+
+			/* rest */
+			else if (!iscntrl(key))
+				inp->dat.inp.input[ inp->dat.inp.pos++ ] = key;
+
+			/* didn't get a useful key */
+			else return 0;
+		}
+		return 1;
+	}
+	return 0;
 }
 
 
@@ -1255,14 +1298,15 @@ static int toolkit_keyEvent( SDL_Event* event )
 	wgt = (wdw->focus >= 0) ? &wdw->widgets[ wdw->focus ] : NULL;
 	key = event->key.keysym.sym;
 
-	if (wgt && (wgt->type == WIDGET_INPUT)) { /* grabs all the events it wants */
-		if (wgt->dat.inp.oneline && isalnum(key)) {
-			if ((event->type==SDL_KEYDOWN) && (wgt->dat.inp.pos < wgt->dat.inp.max))
-				wgt->dat.inp.input[ wgt->dat.inp.pos++ ] = key;
-			DEBUG("%s", wgt->dat.inp.input );
-			return 1;
-		}
-	}
+	/* hack to simulate key repetition */
+	if ((key==SDLK_BACKSPACE) || isalnum(key)) {
+		if (event->type==SDL_KEYDOWN) toolkit_regKey(key);
+		else if (event->type==SDL_KEYUP) toolkit_unregKey(key);
+	}   
+
+	/* handle input widgets */
+	if (wgt && (wgt->type==WIDGET_INPUT)) /* grabs all the events it wants */
+		if (toolkit_inputInput( event->type, wgt, key)) return 1;
 
 	switch (key) {
 		case SDLK_TAB:
@@ -1305,6 +1349,11 @@ static int toolkit_keyEvent( SDL_Event* event )
 void toolkit_update (void)
 {
 	unsigned int t;
+	Window *wdw;
+	Widget *wgt;
+
+	wdw = &windows[nwindows-1];
+	wgt = (wdw->focus >= 0) ? &wdw->widgets[ wdw->focus ] : NULL;
 
 	t = SDL_GetTicks();
 
@@ -1314,6 +1363,11 @@ void toolkit_update (void)
 		return;
 
 	input_keyCounter++;
+
+	if (wgt && (wgt->type==WIDGET_INPUT) &&
+			(input_key==SDLK_BACKSPACE || isalnum(input_key)))
+		toolkit_inputInput( SDL_KEYDOWN, wgt, input_key );
+
 	switch (input_key) {
 
 		case SDLK_UP:
