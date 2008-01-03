@@ -156,7 +156,7 @@ void input_setKeybind( char *keybind, KeybindType type, int key, int reverse )
 #define KEY(s)		(strcmp(input_keybinds[keynum]->name,s)==0)
 #define INGAME()	(!toolkit)
 #define NOHYP()	\
-(!pilot_isFlag(player,PILOT_HYP_PREP) &&\
+(player && !pilot_isFlag(player,PILOT_HYP_PREP) &&\
 !pilot_isFlag(player,PILOT_HYP_BEGIN) &&\
 !pilot_isFlag(player,PILOT_HYPERSPACE))
 static void input_key( int keynum, double value, int abs )
