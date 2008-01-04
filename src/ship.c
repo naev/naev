@@ -66,8 +66,9 @@ Ship* ship_get( const char* name )
 char** ship_getTech( int *n, const int *tech, const int techmax )
 {
 	int i,j;
-	char **shipnames = malloc(sizeof(Ship*) * ships);
-
+	char **shipnames;
+	
+	shipnames = malloc(sizeof(char*) * ships);
 	*n = 0;
 	for (i=0; i < ships; i++)
 		if (ship_stack[i].tech <= tech[0]) {
@@ -82,7 +83,6 @@ char** ship_getTech( int *n, const int *tech, const int techmax )
 				}
 		}
 					
-	
 	return shipnames;
 }
 

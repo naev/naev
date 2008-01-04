@@ -161,6 +161,8 @@ static void gui_renderBar( const glColour* c,
 /* externed */
 void player_dead (void);
 void player_destroyed (void);
+char** player_ships( int *nships );
+Pilot* player_getShip( char* shipname );
 
 
 
@@ -1570,4 +1572,38 @@ void player_destroyed (void)
 	player_setFlag(PLAYER_DESTROYED);
 	player_timer = SDL_GetTicks() + 5000;
 }
+
+
+/*
+ * Returns a buffer with all the ships names
+ */
+char** player_ships( int *nships )
+{
+	int i;
+	char **shipnames;
+
+	(*nships) = player_nstack;
+	shipnames = malloc(sizeof(char*) * player_nstack);
+	for (i=0; i < player_nstack; i++)
+		shipnames[i] = strdup(player_stack[i]->name);
+	
+	return shipnames;
+}
+
+
+/*
+ * returns a specific ship
+ */
+Pilot* player_getShip( char* shipname )
+{
+	int i;
+
+	for (i=0; i < player_nstack; i++)
+		if (strcmp(player_stack[i]->name, shipname)==0)
+			return player_stack[i];
+
+	WARN("Player ship '%s' not found in stack", shipname);
+	return NULL;
+}
+
 

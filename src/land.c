@@ -57,6 +57,14 @@ Planet* land_planet = NULL;
 /*
  * prototypes
  */
+/*
+ * extern
+ */
+extern char** player_ships( int *nships );
+extern Pilot* player_getShip( char* shipname );
+/*
+ * static
+ */
 /* commodity exchange */
 static void commodity_exchange (void);
 static void commodity_exchange_close( char* str );
@@ -520,8 +528,7 @@ static void shipyard_yours( char* str )
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseYourShips",
 			"Shipyard", shipyard_yoursClose );
 
-	ships = NULL;
-	nships = 0;
+	ships = player_ships( &nships );
 	window_addList( terciary_wid, 20, 40,
 			200, SHIPYARD_HEIGHT-80, "lstYourShips",
 			ships, nships, 0, NULL );
