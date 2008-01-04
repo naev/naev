@@ -338,7 +338,8 @@ static void glFontMakeDList( FT_Face face, char ch,
 	int i,j;
 	double x,y;
 
-	if (FT_Load_Glyph( face, FT_Get_Char_Index( face, ch ), FT_LOAD_FORCE_AUTOHINT))//FT_LOAD_DEFAULT ))
+	if (FT_Load_Glyph( face, FT_Get_Char_Index( face, ch ),
+		FT_LOAD_FORCE_AUTOHINT)) /* FT_LOAD_DEFAULT )) - looks much better then default */
 		WARN("FT_Load_Glyph failed");                                       
 
 	if (FT_Get_Glyph( face->glyph, &glyph ))
