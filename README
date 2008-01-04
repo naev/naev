@@ -49,11 +49,13 @@
             see conf.example for more examples
 
         X.1) Movement
-           X.1.1) accel : accelerates the ship. default: up arrow.
+         X.1.1) accel : accelerates the ship. default: up arrow.
          X.1.2) left : turns the ship left. default: left arrow.
          X.1.3) right : turns the ship right. default: right arrow.
          X.1.4) reverse : makes the ship face the direction it's coming from.
             default: down arrow
+         X.1.5) afterburner : uses the ship's afetrburner. default: double tap
+            and hold up arrow (NOT CONFIGURABLE YET)
 
       X.2) Combat
          X.2.1) primary : fires primary weapons. default: spacebar.
@@ -70,6 +72,7 @@
          X.3.2) land : attempts to land or targets nearest planet. default: l
          X.3.3) thyperspace : cycle through hyperspace routes. default: h
          X.3.4) jump : attempt to enter hyperspace. default: j
+         X.3.5) starmap : opens the stellar map. default: m
 
       X.4) Gui
          X.4.1) mapzoomin : zooms in the minimap. default: 9.
