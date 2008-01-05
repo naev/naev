@@ -1450,7 +1450,11 @@ static void toolkit_triggerFocus (void)
 	switch (wgt->type) {
 
 		case WIDGET_BUTTON:
-			(*wgt->dat.btn.fptr)(wgt->name);
+			if (wgt->dat.btn.fptr) (*wgt->dat.btn.fptr)(wgt->name);
+			else DEBUG("Toolkit: Button '%s' of Window '%s' "
+					"doesn't have a function trigger",
+					wgt->name, wdw->name );
+			break;
 
 		default:
 			break;
