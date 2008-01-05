@@ -104,13 +104,14 @@ static void commodity_exchange (void)
 	int i;
 	char **goods;
 
+	/* window */
 	secondary_wid = window_create( "Commodity Exchange",
 			-1, -1, COMMODITY_WIDTH, COMMODITY_HEIGHT );
 
+	/* buttons */
 	window_addButton( secondary_wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCommodityClose",
 			"Close", commodity_exchange_close );
-
 	window_addButton( secondary_wid, -40-((BUTTON_WIDTH-20)/2), 20*2 + BUTTON_HEIGHT,
 			(BUTTON_WIDTH-20)/2, BUTTON_HEIGHT, "btnCommodityBuy",
 			"Buy", commodity_buy );
@@ -118,6 +119,7 @@ static void commodity_exchange (void)
 			(BUTTON_WIDTH-20)/2, BUTTON_HEIGHT, "btnCommoditySell",
 			"Sell", commodity_sell );
 
+	/* text */
 	window_addText( secondary_wid, -20, -40, BUTTON_WIDTH, 60, 0,
 			"txtSInfo", &gl_smallFont, &cDConsole, 
 			"You have:\n"
@@ -126,11 +128,10 @@ static void commodity_exchange (void)
 			"Free Space:\n" );
 	window_addText( secondary_wid, -20, -40, BUTTON_WIDTH/2, 60, 0,
 			"txtDInfo", &gl_smallFont, &cBlack, NULL );
-
 	window_addText( secondary_wid, -40, -100, BUTTON_WIDTH-20,
 			BUTTON_WIDTH, 0, "txtDesc", &gl_smallFont, &cBlack, NULL );
 
-
+	/* goods list */
 	goods = malloc(sizeof(char*) * land_planet->ncommodities);
 	for (i=0; i<land_planet->ncommodities; i++)
 		goods[i] = strdup(land_planet->commodities[i]->name);
@@ -156,6 +157,7 @@ static void commodity_update( char* str )
 	comname = toolkit_getList( secondary_wid, "lstGoods" );
 	com = commodity_get( comname );
 
+	/* modify text */
 	snprintf( buf, 128,
 			"%d tons\n"
 			"%d credits/ton\n"
