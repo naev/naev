@@ -187,6 +187,22 @@ static int pilot_oquantity( Pilot* p, PilotOutfit* w )
 
 
 /*
+ * gets pilot's free weapon space
+ */
+int pilot_freeSpace( Pilot* p )
+{
+   int i,s;
+   
+   s = p->ship->cap_weapon;
+   for (i=0; i<p->noutfits; i++)
+      s -= p->outfits[i].quantity * p->outfits[i].outfit->mass;
+   
+   return s;
+}
+
+
+
+/*
  * makes the pilot shoot
  *
  * @param p the pilot which is shooting
@@ -623,6 +639,31 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 	WARN("Failure attempting to remove %d '%s' from pilot '%s'",
 			quantity, outfit->name, pilot->name );
 	return 0;
+}
+
+
+/*
+ * returns all the outfits in nice text form
+ */
+char* pilot_getOutfits( Pilot* pilot )
+{
+	int i;
+	char buf[64], *str;
+
+	str = malloc(sizeof(char)*1024);
+	buf[0] = '\0';
+	/* first outfit */
+	if (pilot->noutfits>0)
+		snprintf( str, 1024, "%dx %s",
+				pilot->outfits[0].quantity, pilot->outfits[0].outfit->name );
+	/* rest of the outfits */
+	for (i=1; i<pilot->noutfits; i++) {
+		snprintf( buf, 64, ", %dx %s",
+				pilot->outfits[i].quantity, pilot->outfits[i].outfit->name );
+		strcat( str, buf );
+	}
+
+	return str;
 }
 
 

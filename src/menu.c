@@ -227,8 +227,7 @@ static void menu_info_close( char* str )
 static void info_outfits_menu( char* str )
 {
 	(void)str;
-	int i;
-	char buf[1024], buf2[64];
+	char *buf;
 	unsigned int wid;
 	wid = window_create( "Outfits", -1, -1, OUTFITS_WIDTH, OUTFITS_HEIGHT );
 
@@ -236,19 +235,11 @@ static void info_outfits_menu( char* str )
 			0, "txtLabel", &gl_smallFont, &cDConsole,
 			"Ship Outfits:" );
 
-	buf[0] = '\0';
-	if (player->noutfits>0)
-		snprintf( buf, 1024, "%dx %s",
-				player->outfits[0].quantity, player->outfits[0].outfit->name );
-	for (i=1; i<player->noutfits; i++) {
-		snprintf( buf2, 64, ", %dx %s",
-				player->outfits[i].quantity, player->outfits[i].outfit->name );
-		strcat( buf, buf2 );
-	}
-
+	buf = pilot_getOutfits( player );
 	window_addText( wid, 20, -45-gl_smallFont.h,
 			OUTFITS_WIDTH-40, OUTFITS_HEIGHT-60,
 			0, "txtOutfits", &gl_smallFont, &cBlack, buf );
+	free(buf);
 	
 	window_addButton( wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT,

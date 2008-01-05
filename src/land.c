@@ -62,6 +62,7 @@ Planet* land_planet = NULL;
  */
 extern char** player_ships( int *nships );
 extern Pilot* player_getShip( char* shipname );
+extern char* player_getLoc( char* shipname );
 /*
  * static
  */
@@ -88,6 +89,7 @@ static void shipyard_buy( char* str );
 /* your ships */
 static void shipyard_yours( char* str );
 static void shipyard_yoursClose( char* str );
+static void shipyard_yoursUpdate( char* str );
 /* spaceport bar */
 static void spaceport_bar (void);
 static void spaceport_bar_close( char* str );
@@ -308,7 +310,7 @@ static void outfits_update( char* str )
 			outfit_getType(outfit),
 			player_outfitOwned(outfitname),
 			outfit->mass,
-			player_freeSpace(),
+			pilot_freeSpace(player),
 			buf2,
 			buf3 );
 	window_modifyText( secondary_wid,  "txtDDesc", buf );
@@ -327,9 +329,9 @@ static void outfits_buy( char* str )
 	q = outfits_getMod();
 
 	/* can player actually fit the outfit? */
-	if ((player_freeSpace() - outfit->mass) < 0) {
+	if ((pilot_freeSpace(player) - outfit->mass) < 0) {
 		toolkit_alert( "Not enough free space (you need %d more).",
-				outfit->mass - player_freeSpace() );
+				outfit->mass - pilot_freeSpace(player) );
 		return;
 	}
 	/* has too many already */
@@ -539,19 +541,93 @@ static void shipyard_yours( char* str )
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseYourShips",
 			"Shipyard", shipyard_yoursClose );
 
+	/* image */
+	window_addRect( terciary_wid, -40, -50,
+			128, 96, "rctTarget", &cBlack, 0 );
+	window_addImage( terciary_wid, -40-128, -50-96,
+			"imgTarget", NULL, 1 );
+
 	/* text */
+	window_addText( terciary_wid, 40+200+40, -55,
+			100, 96, 0, "txtSDesc", &gl_smallFont, &cDConsole,
+			"Name:\n"
+			"Ship:\n"
+			"Class:\n"
+			"Where:\n"
+			"\n"
+			"Cargo free:\n"
+			"Weapons free:\n"
+			"\n"
+			"Transportation:\n"
+			"Sell price:\n"
+			);
+	window_addText( terciary_wid, 40+200+40+100, -55,
+		130, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+	window_addText( terciary_wid, 40+200+40, -215,
+		100, 20, 0, "txtSOutfits", &gl_smallFont, &cDConsole,
+		"Outfits:\n"
+		);
+	window_addText( terciary_wid, 40+200+40, -215-gl_smallFont.h-5,
+		SHIPYARD_WIDTH-40-200-40-20, 200, 0, "txtDOutfits",
+		&gl_smallFont, &cBlack, NULL );
 
 	/* ship list */
 	ships = player_ships( &nships );
 	window_addList( terciary_wid, 20, 40,
 			200, SHIPYARD_HEIGHT-80, "lstYourShips",
-			ships, nships, 0, NULL );
+			ships, nships, 0, shipyard_yoursUpdate );
 
+	shipyard_yoursUpdate(NULL);
 }
 static void shipyard_yoursClose( char* str )
 {
 	(void)str;
 	window_destroy( terciary_wid );
+}
+static void shipyard_yoursUpdate( char* str )
+{
+	(void)str;
+	char buf[256], buf2[16], buf3[16], *buf4;
+	char *shipname;
+	Pilot *ship;
+	char* loc;
+
+	shipname = toolkit_getList( terciary_wid, "lstYourShips" );
+	if (strcmp(shipname,"None")==0) return; /* no ships */
+	ship = player_getShip( shipname );
+	loc = player_getLoc(ship->name);
+
+	/* update image */
+	window_modifyImage( terciary_wid, "imgTarget", ship->ship->gfx_target );
+
+	/* update text */
+	credits2str( buf2, (strcmp(loc,land_planet->name)==0) ? 0 :
+			ship->solid->mass*500, 2 ); /* transport */
+	credits2str( buf3, 0, 2 ); /* sell price */
+	snprintf( buf, 80,
+			"%s\n"
+			"%s\n"
+			"%s\n"
+			"%s\n"
+			"\n"
+			"%d tons\n"
+			"%d tons\n"
+			"\n"
+			"%s credits\n"
+			"%s credits\n",
+			ship->name,
+			ship->ship->name,
+			ship_class(ship->ship),
+			loc,
+			ship->cargo_free,
+			pilot_freeSpace(ship),
+			buf2,
+			buf3);
+	window_modifyText( terciary_wid, "txtDDesc", buf );
+
+	buf4 = pilot_getOutfits( ship );
+	window_modifyText( terciary_wid, "txtDOutfits", buf4 );
+	free(buf4);
 }
 
 
