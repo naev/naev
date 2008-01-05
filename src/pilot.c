@@ -955,7 +955,8 @@ void pilot_destroy(Pilot* p)
 void pilots_free (void)
 {
 	int i;
-	for (i=0; i < pilots; i++)
+	if (player) pilot_free(player);
+	for (i=1; i < pilots; i++)
 		pilot_free(pilot_stack[i]);
 	free(pilot_stack);
 	pilot_stack = NULL;

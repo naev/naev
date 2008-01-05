@@ -91,6 +91,10 @@ typedef struct Window_ {
 	int hidden; /* is it hidden? */
 	int focus; /* what bugger is focused? */
 
+	/* pointer to a function to run if user hits 'enter' and no button is focused
+	 * nor any other input thingy that catches 'enter' */
+	void (*def_fptr)( char* );
+
 	double x,y; /* position */
 	double w,h; /* dimensions */
 
@@ -494,6 +498,8 @@ unsigned int window_get( const char* wdwname )
 unsigned int window_create( char* name,
 		const int x, const int y, const int w, const int h )
 {
+	Window *wdw;
+
 	if (nwindows >= mwindows) { /* at memory limit */
 		windows = realloc(windows, sizeof(Window)*(++mwindows));
 		if (windows==NULL) WARN("Out of memory");
@@ -501,29 +507,32 @@ unsigned int window_create( char* name,
 
 	const int wid = (++genwid); /* unique id */
 
-	windows[nwindows].id = wid;
-	windows[nwindows].name = strdup(name);
+	wdw = &windows[nwindows];
 
-	windows[nwindows].hidden = 0;
-	windows[nwindows].focus = -1;
+	wdw->id = wid;
+	wdw->name = strdup(name);
 
-	windows[nwindows].w = (double) w;
-	windows[nwindows].h = (double) h;
+	wdw->hidden = 0;
+	wdw->focus = -1;
+	wdw->def_fptr = NULL;
+
+	wdw->w = (double) w;
+	wdw->h = (double) h;
 	/* x pos */
 	if (x==-1) /* center */
-		windows[nwindows].x = gl_screen.w/2. - windows[nwindows].w/2.;
+		wdw->x = gl_screen.w/2. - wdw->w/2.;
 	else if (x < 0)
-		windows[nwindows].x = gl_screen.w - windows[nwindows].w + (double) x;
-	else windows[nwindows].x = (double) x;
+		wdw->x = gl_screen.w - wdw->w + (double) x;
+	else wdw->x = (double) x;
 	/* y pos */
 	if (y==-1) /* center */
-		windows[nwindows].y = gl_screen.h/2. - windows[nwindows].h/2.;
+		wdw->y = gl_screen.h/2. - wdw->h/2.;
 	else if (y < 0)
-		windows[nwindows].x = gl_screen.h - windows[nwindows].h + (double) y;
-	else windows[nwindows].y = (double) y;
+		wdw->x = gl_screen.h - wdw->h + (double) y;
+	else wdw->y = (double) y;
 
-	windows[nwindows].widgets = NULL;
-	windows[nwindows].nwidgets = 0;
+	wdw->widgets = NULL;
+	wdw->nwidgets = 0;
 
 	nwindows++;
 	
@@ -533,6 +542,18 @@ unsigned int window_create( char* name,
 	}
 
 	return wid;
+}
+
+
+/*
+ * sets the window's default funcion
+ */
+void window_setFptr( const unsigned int wid, void (*fptr)( char* ) )
+{
+	Window *wdw;
+
+	wdw = window_wget( wid );
+	if (wdw != NULL) wdw->def_fptr = fptr;
 }
 
 
@@ -1417,6 +1438,9 @@ static void toolkit_nextFocus (void)
 }
 
 
+/*
+ * returns 1 if the window is focusable
+ */
 static int toolkit_isFocusable( Widget *wgt )
 {
 	if (wgt==NULL) return 0;
@@ -1442,9 +1466,7 @@ static void toolkit_triggerFocus (void)
 	Widget* wgt;
 
 	wdw = &windows[nwindows-1];
-
 	if (wdw->focus == -1) return;
-
 	wgt = &wdw->widgets[wdw->focus];
 
 	switch (wgt->type) {
@@ -1457,6 +1479,7 @@ static void toolkit_triggerFocus (void)
 			break;
 
 		default:
+			if (wdw->def_fptr) (*wdw->def_fptr)(wgt->name);
 			break;
 	}
 }
@@ -1484,6 +1507,9 @@ static void toolkit_listScroll( Widget* wgt, int direction )
 }
 
 
+/*
+ * gets what is selected currently in a list
+ */
 char* toolkit_getList( const unsigned int wid, char* name )
 {
 	Widget *wgt = window_getwgt(wid,name);

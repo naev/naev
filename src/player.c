@@ -187,6 +187,8 @@ void player_new (void)
 			&gl_smallFont, &cDConsole, "Please write your name:" );
 	window_addInput( wid, 20, -50, 200, 20, "inpName", 20, 1 );
 	window_addButton( wid, -20, 20, 80, 30, "btnClose", "Done", player_nameClose );
+
+	window_setFptr( wid, player_nameClose );
 }
 static void player_nameClose( char *str )
 {
@@ -304,6 +306,8 @@ void player_newShip( Ship* ship, double px, double py,
 			&gl_smallFont, &cDConsole, "Please name your ship:" );
 	window_addInput( wid, 20, -50, 200, 20, "inpName", 20, 1 );
 	window_addButton( wid, -20, 20, 80, 30, "btnClose", "Done", player_nameShipClose );
+
+	window_setFptr( wid, player_nameShipClose );
 }
 static void player_nameShipClose( char *str )
 {
