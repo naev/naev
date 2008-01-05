@@ -218,18 +218,19 @@ static void outfits (void)
 	int noutfits;
 	char buf[128];
 
+	/* create window */
 	snprintf(buf,128,"%s - Outfits", land_planet->name );
 	secondary_wid = window_create( buf, -1, -1,
 			OUTFITS_WIDTH, OUTFITS_HEIGHT );
+	window_setFptr( secondary_wid, outfits_buy ); /* will allow buying from keyboard */
 
+	/* buttons */
 	window_addButton( secondary_wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseOutfits",
 			"Close", outfits_close );
-
 	window_addButton( secondary_wid, -40-BUTTON_WIDTH, 40+BUTTON_HEIGHT,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnBuyOutfit",
 			"Buy", outfits_buy );
-
 	window_addButton( secondary_wid, -40-BUTTON_WIDTH, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnSellOutfit",
 			"Sell", outfits_sell );
@@ -238,9 +239,11 @@ static void outfits (void)
 	window_addRect( secondary_wid, -20, -50, 128, 128, "rctImage", &cBlack, 0 );
 	window_addImage( secondary_wid, -20-128, -50-128, "imgOutfit", NULL, 1 );
 
+	/* cust draws the modifier */
 	window_addCust( secondary_wid, -40-BUTTON_WIDTH, 60+2*BUTTON_HEIGHT,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "cstMod", 0, outfits_renderMod, NULL );
 
+	/* the descriptive text */
 	window_addText( secondary_wid, 40+200+20, -60,
 			80, 96, 0, "txtSDesc", &gl_smallFont, &cDConsole,
 			"Name:\n"
@@ -254,11 +257,9 @@ static void outfits (void)
 			"Money:\n" );
 	window_addText( secondary_wid, 40+200+40+60, -60,
 			250, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-
 	window_addText( secondary_wid, 20+200+40, -200,
 			OUTFITS_WIDTH-300, 200, 0, "txtDescription",
 			&gl_smallFont, NULL, NULL );
-
 
 	/* set up the outfits to buy/sell */
 	outfits = outfit_getTech( &noutfits, land_planet->tech, PLANET_TECH_MAX);
@@ -284,8 +285,10 @@ static void outfits_update( char* str )
 	outfitname = toolkit_getList( secondary_wid, "lstOutfits" );
 	outfit = outfit_get( outfitname );
 
+	/* new image */
 	window_modifyImage( secondary_wid, "imgOutfit", outfit->gfx_store );
 
+	/* new text */
 	window_modifyText( secondary_wid, "txtDescription", outfit->description );
 	credits2str( buf2, outfit->price, 2 );
 	credits2str( buf3, player_credits, 2 );
@@ -413,31 +416,32 @@ static void shipyard (void)
 	int nships;
 	char buf[128];
 
+	/* window creation */
 	snprintf( buf, 128, "%s - Shipyard", land_planet->name );
 	secondary_wid = window_create( buf,
 			-1, -1, SHIPYARD_WIDTH, SHIPYARD_HEIGHT );
 
+	/* buttons */
 	window_addButton( secondary_wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseShipyard",
 			"Close", shipyard_close );
-
 	window_addButton( secondary_wid, -20, 40+BUTTON_HEIGHT,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnYourShips",
 			"Your Ships", shipyard_yours );
-
 	window_addButton( secondary_wid, -40-BUTTON_WIDTH, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnBuyShip",
 			"Buy", shipyard_buy );
-
 	window_addButton( secondary_wid, -40-BUTTON_WIDTH, 40+BUTTON_HEIGHT,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnInfoShip",
 			"Info", shipyard_info );
 
+	/* target gfx */
 	window_addRect( secondary_wid, -40, -50,
 			128, 96, "rctTarget", &cBlack, 0 );
 	window_addImage( secondary_wid, -40-128, -50-96,
 			"imgTarget", NULL, 1 );
 
+	/* text */
 	window_addText( secondary_wid, 40+200+40, -55,
 			80, 96, 0, "txtSDesc", &gl_smallFont, &cDConsole,
 			"Name:\n"
@@ -448,11 +452,9 @@ static void shipyard (void)
 			"Money:\n" );
 	window_addText( secondary_wid, 40+200+40+80, -55,
 			130, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-
 	window_addText( secondary_wid, 20+200+40, -160,
 			SHIPYARD_WIDTH-300, 200, 0, "txtDescription",
 			&gl_smallFont, NULL, NULL );
-
 
 	/* set up the ships to buy/sell */
 	ships = ship_getTech( &nships, land_planet->tech, PLANET_TECH_MAX );
@@ -478,8 +480,11 @@ static void shipyard_update( char* str )
 	shipname = toolkit_getList( secondary_wid, "lstShipyard" );
 	ship = ship_get( shipname );
 
-	window_modifyText( secondary_wid, "txtDescription", ship->description );
+	/* update image */
 	window_modifyImage( secondary_wid, "imgTarget", ship->gfx_target );
+
+	/* update text */
+	window_modifyText( secondary_wid, "txtDescription", ship->description );
 	credits2str( buf2, ship->price, 2 );
 	credits2str( buf3, player_credits, 2 );
 	snprintf( buf, 80,
@@ -513,6 +518,7 @@ static void shipyard_buy( char* str )
 	shipname = toolkit_getList( secondary_wid, "lstShipyard" );
 	ship = ship_get( shipname );
 
+	/* player just gots a new ship */
 	player_newShip( ship, player->solid->pos.x, player->solid->pos.y,
 			0., 0., player->solid->dir );
 }
@@ -522,12 +528,18 @@ static void shipyard_yours( char* str )
 	char **ships;
 	int nships;
 
+	/* create window */
 	terciary_wid = window_create( "Your Ships",
 			-1, -1, SHIPYARD_WIDTH, SHIPYARD_HEIGHT );
+
+	/* buttons */
 	window_addButton( terciary_wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseYourShips",
 			"Shipyard", shipyard_yoursClose );
 
+	/* text */
+
+	/* ship list */
 	ships = player_ships( &nships );
 	window_addList( terciary_wid, 20, 40,
 			200, SHIPYARD_HEIGHT-80, "lstYourShips",
@@ -546,20 +558,22 @@ static void shipyard_yoursClose( char* str )
  */
 static void spaceport_bar (void)
 {
+	/* window */
 	secondary_wid = window_create( "Spaceport Bar",
 			-1, -1, BAR_WIDTH, BAR_HEIGHT );
 
-	window_addText( secondary_wid, 20, -30,
-			BAR_WIDTH - 40, BAR_HEIGHT - 40 - BUTTON_HEIGHT, 0,
-			"txtDescription", &gl_smallFont, &cBlack, land_planet->bar_description );
-	
+	/* buttons */
 	window_addButton( secondary_wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseBar",
 			"Close", spaceport_bar_close );
-
 	window_addButton( secondary_wid, 20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnNews",
 			"News", (void(*)(char*))news);
+
+	/* text */
+	window_addText( secondary_wid, 20, -30,
+			BAR_WIDTH - 40, BAR_HEIGHT - 40 - BUTTON_HEIGHT, 0,
+			"txtDescription", &gl_smallFont, &cBlack, land_planet->bar_description );
 }
 static void spaceport_bar_close( char* str )
 {
@@ -574,18 +588,20 @@ static void spaceport_bar_close( char* str )
  */
 static void news (void)
 {
+	/* create window */
 	terciary_wid = window_create( "News Reports",
 			-1, -1, NEWS_WIDTH, NEWS_HEIGHT );
 
-	window_addText( terciary_wid, 20, 20 + BUTTON_HEIGHT + 20,
-			NEWS_WIDTH-40, NEWS_HEIGHT - 20 - BUTTON_HEIGHT - 20 - 20 - 20,
-			0, "txtNews", &gl_smallFont, &cBlack,
-			"News reporters report that they are on strike!");
-
+	/* buttons */
 	window_addButton( terciary_wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseNews",
 			"Close", news_close );
 
+	/* text */
+	window_addText( terciary_wid, 20, 20 + BUTTON_HEIGHT + 20,
+			NEWS_WIDTH-40, NEWS_HEIGHT - 20 - BUTTON_HEIGHT - 20 - 20 - 20,
+			0, "txtNews", &gl_smallFont, &cBlack,
+			"News reporters report that they are on strike!");
 }
 static void news_close( char* str )
 {
@@ -618,6 +634,7 @@ void land( Planet* p )
 	/*
 	 * buttons
 	 */
+	/* first column */
 	window_addButton( land_wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnTakeoff",
 			"Takeoff", (void(*)(char*))takeoff );
@@ -625,7 +642,7 @@ void land( Planet* p )
 		window_addButton( land_wid, -20, 20 + BUTTON_HEIGHT + 20,
 				BUTTON_WIDTH, BUTTON_HEIGHT, "btnCommodity",
 				"Commodity Exchange", (void(*)(char*))commodity_exchange);
-
+	/* second column */
 	if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
 		window_addButton( land_wid, -20 - BUTTON_WIDTH - 20, 20,
 				BUTTON_WIDTH, BUTTON_HEIGHT, "btnShipyard",
@@ -634,7 +651,7 @@ void land( Planet* p )
 		window_addButton( land_wid, -20 - BUTTON_WIDTH - 20, 20 + BUTTON_HEIGHT + 20,
 				BUTTON_WIDTH, BUTTON_HEIGHT, "btnOutfits",
 				"Outfits", (void(*)(char*))outfits);
-
+	/* third column */
 	if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
 		window_addButton( land_wid, 20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnNews",
@@ -645,6 +662,7 @@ void land( Planet* p )
 	}
 
 
+	/* player is now officially landed */
 	landed = 1;
 }
 
@@ -654,12 +672,15 @@ void land( Planet* p )
  */
 void takeoff (void)
 {
+	int sw, sh;
+
 	if (!landed) return;
 
+	/* ze music */
 	music_load( MUSIC_TAKEOFF );
 	music_play();
 
-	int sw, sh;
+	/* to randomize the takeoff a bit */
 	sw = land_planet->gfx_space->w;
 	sh = land_planet->gfx_space->h;
 
@@ -677,8 +698,10 @@ void takeoff (void)
 	player->shield = player->shield_max;
 	player->energy = player->energy_max;
 
+	/* initialize the new space */
 	space_init(NULL);
 
+	/* cleanup */
 	land_planet = NULL;
 	window_destroy( land_wid );
 	landed = 0;
