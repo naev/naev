@@ -250,7 +250,7 @@ int gl_printText( const glFont *ft_font,
 
 	len = (int)strlen(text);
 	/* limit size per line */
-	lastspace = 0; /* last ' ' or '\n' in the text */
+	lastspace = -1; /* last ' ' or '\n' in the text */
 	n = 0; /* current width */
 	i = 0; /* current position */
 	p = -1; /* where we last drew up to */
@@ -262,11 +262,12 @@ int gl_printText( const glFont *ft_font,
 		
 		if ((text[i]==' ') || (text[i]=='\n') || (text[i]=='\0')) lastspace = i;
 
-		if (((n > width) && ((p!=lastspace) && (p!=-1)))
+		if (((n > width) && (p!=lastspace))
 				|| (text[i]=='\n') || (text[i]=='\0')) {
 
 			/* time to draw the line */
 			m = 0;
+			if (lastspace==-1) lastspace = 0;
 			for (j=0; j<(lastspace-p-1); j++) {
 				m += ft_font->w[ (int)text[p+j+1] ];
 				if (m > width) break;
