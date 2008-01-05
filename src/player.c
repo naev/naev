@@ -163,6 +163,7 @@ void player_dead (void);
 void player_destroyed (void);
 char** player_ships( int *nships );
 Pilot* player_getShip( char* shipname );
+char* player_getLoc( char* shipname );
 
 
 
@@ -312,6 +313,7 @@ void player_newShip( Ship* ship, double px, double py,
 static void player_nameShipClose( char *str )
 {
 	(void)str;
+	int i;
 	char* ship_name;
 	unsigned int wid;
 
@@ -321,6 +323,17 @@ static void player_nameShipClose( char *str )
 	if (strlen(ship_name) < 3) {
 		toolkit_alert( "Your ship's name must be at least 3 characters long" );
 		return;
+	}
+	/* do not repeat names */
+	if (player && (strcmp(ship_name,player->name)==0)) {
+			toolkit_alert( "You cannot name two ships the same!" );
+			return;
+			}
+	for (i=0; i<player_nstack; i++) {
+		if (strcmp(player_stack[i]->name,ship_name)==0) {
+			toolkit_alert( "You cannot name two ships the same!" );
+			return;
+		}
 	}
 
 	player_newShipMake(ship_name);
@@ -452,21 +465,6 @@ const char* player_rating (void)
 	else if (player_crating < 2500) return player_ratings[5];
 	else if (player_crating < 10000) return player_ratings[6];
 	else return player_ratings[7];
-}
-
-
-/*
- * returns how much weapon space the player has left
- */
-int player_freeSpace (void)
-{
-	int i,s;
-
-	s = player->ship->cap_weapon;
-	for (i=0; i<player->noutfits; i++)
-		s -= player->outfits[i].quantity * player->outfits[i].outfit->mass;
-	
-	return s;
 }
 
 
@@ -1579,18 +1577,25 @@ void player_destroyed (void)
 
 
 /*
- * Returns a buffer with all the ships names
+ * Returns a buffer with all the ships names or "None" if there are no ships
  */
 char** player_ships( int *nships )
 {
 	int i;
 	char **shipnames;
 
-	(*nships) = player_nstack;
-	shipnames = malloc(sizeof(char*) * player_nstack);
-	for (i=0; i < player_nstack; i++)
-		shipnames[i] = strdup(player_stack[i]->name);
-	
+	if (player_nstack==0) {
+		(*nships) = 1;
+		shipnames = malloc(sizeof(char*));
+		shipnames[0] = strdup("None");
+	}
+	else {
+		(*nships) = player_nstack;
+		shipnames = malloc(sizeof(char*) * player_nstack);
+		for (i=0; i < player_nstack; i++)
+			shipnames[i] = strdup(player_stack[i]->name);
+	}
+
 	return shipnames;
 }
 
@@ -1608,6 +1613,23 @@ Pilot* player_getShip( char* shipname )
 
 	WARN("Player ship '%s' not found in stack", shipname);
 	return NULL;
+}
+
+
+/*
+ * returns where a specific ship is
+ */
+char* player_getLoc( char* shipname )
+{
+	int i;
+
+	for (i=0; i < player_nstack; i++)
+		if (strcmp(player_stack[i]->name, shipname)==0)
+			return player_lstack[i];
+
+	WARN("Player ship '%s' not found in stack", shipname);
+	return NULL;
+
 }
 
 
