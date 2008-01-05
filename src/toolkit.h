@@ -67,6 +67,7 @@ void toolkit_alert( const char *fmt, ... );
 /*
  * modification
  */
+void window_setFptr( const unsigned int wid, void (*fptr)( char* ) );
 void window_modifyText( const unsigned int wid,
 		char* name, char* newstring );
 void window_modifyImage( const unsigned int wid,
