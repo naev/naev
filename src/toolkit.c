@@ -11,6 +11,7 @@
 #include "log.h"
 #include "pause.h"
 #include "opengl.h"
+#include "input.h"
 
 
 #define INPUT_DELAY		500
@@ -124,6 +125,13 @@ static glColour* toolkit_colDark = &cGrey30;
 /*
  * prototypes
  */
+/*
+ * extern
+ */
+extern void main_loop (void); /* from naev.c */
+/*
+ * static
+ */
 static Widget* window_newWidget( Window* w );
 static void widget_cleanup( Widget *widget );
 static Window* window_wget( const unsigned int wid );
@@ -155,6 +163,10 @@ static void toolkit_drawRect( double x, double y,
 		double w, double h, glColour* c, glColour* lc );
 /* misc */
 static void toolkit_alertClose( char* str );
+static void toolkit_YesNoClose( char* str );
+/* secondary loop hack */
+static int loop_done;
+static void toolkit_loop (void);
 
 
 
@@ -1584,6 +1596,56 @@ static void toolkit_alertClose( char* str )
 
 
 /*
+ * runs a dialogue with a Yes and No button, returns 1 if Yes is clicked, 0 for No
+ */
+static int yesno_result;
+static unsigned int yesno_wid = 0;
+int toolkit_YesNo( char* caption, const char *fmt, ... )
+{
+	char msg[256];
+	va_list ap;
+
+	if (yesno_wid) return -1;
+
+	if (fmt == NULL) return -1;
+	else { /* get the message */
+		va_start(ap, fmt);
+		vsprintf(msg, fmt, ap);
+		va_end(ap);
+	}
+
+	/* create window */
+	yesno_wid = window_create( caption, -1, -1, 300, 140 );
+	/* text */
+	window_addText( yesno_wid, 20, -30, 260, 70,  0, "txtAlert",
+			&gl_smallFont, &cBlack, msg );
+	/* buttons */
+	window_addButton( yesno_wid, 300/2-50-10, 20, 50, 30, "btnYes", "Yes",
+			toolkit_YesNoClose );
+	window_addButton( yesno_wid, 300/2+10, 20, 50, 30, "btnNo", "No",
+			toolkit_YesNoClose );
+
+	/* tricky secondary loop */
+	toolkit_loop();
+
+	/* return the result */
+	return yesno_result;
+}
+static void toolkit_YesNoClose( char* str )
+{
+	/* store the result */
+	if (strcmp(str,"btnYes")==0) yesno_result = 1;
+	else if (strcmp(str,"btnNo")==0) yesno_result = 0;
+
+	/* destroy the window */
+	window_destroy( yesno_wid );
+	yesno_wid = 0;
+
+	loop_done = 1;
+}
+
+
+/*
  * initializes the toolkit
  */
 int toolkit_init (void)
@@ -1606,5 +1668,29 @@ void toolkit_exit (void)
 	for (i=0; i<nwindows; i++)
 		window_destroy(windows[i].id);
 	free(windows);
+}
+
+
+/*
+ * spawns a secondary loop that only works until the toolkit dies,
+ * alot like the main while loop in naev.c
+ */
+static void toolkit_loop (void)
+{
+	SDL_Event event;
+
+	loop_done = 0;
+	while (!loop_done && toolkit) {
+		while (SDL_PollEvent(&event)) { /* event loop */
+			if (event.type == SDL_QUIT) { /* pass quit event to main engine */
+				SDL_PushEvent(&event);
+				return;
+			}
+
+			input_handle(&event); /* handles all the events and player keybinds */
+		}
+
+		main_loop();
+	}
 }
 

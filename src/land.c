@@ -510,11 +510,16 @@ static void shipyard_info( char* str )
 static void shipyard_buy( char* str )
 {
 	(void)str;
-	char *shipname;
+	char *shipname, buf[16];
 	Ship* ship;
 
 	shipname = toolkit_getList( secondary_wid, "lstShipyard" );
 	ship = ship_get( shipname );
+
+	credits2str( buf, ship->price, 2 );
+	if (toolkit_YesNo("Are you sure?", /* confirm */
+			"Do you really want to spend %s on a new ship?", buf )==0)
+		return;
 
 	/* player just gots a new ship */
 	player_newShip( ship, player->solid->pos.x, player->solid->pos.y,

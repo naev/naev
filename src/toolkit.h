@@ -62,6 +62,7 @@ void window_addInput( const unsigned int wid,
  * popups and alerts
  */
 void toolkit_alert( const char *fmt, ... );
+int toolkit_YesNo( char *caption, const char *fmt, ... );
 
 
 /*

@@ -43,3 +43,4 @@ extern char* data; /* modifiable datafile */
 
 
 #endif /* NAEV_H */
+

@@ -70,13 +70,14 @@ char* namjoystick = NULL;
 /*
  * prototypes
  */
+void main_loop (void);
 static void display_fps( const double dt );
 static void window_caption (void);
 static void data_name (void);
 /* update */
 static void fps_control (void);
-static void update_space (void);
-static void render_space (void);
+static void update_all (void);
+static void render_all (void);
 
 
 /*
@@ -186,30 +187,10 @@ int main ( int argc, char** argv )
 		while (SDL_PollEvent(&event)) { /* event loop */
 			if (event.type == SDL_QUIT) quit = 1; /* quit is handled here */
 
-			/* pause the game if it is unfocused */
-			if (event.type == SDL_ACTIVEEVENT) {
-				if (event.active.state != SDL_APPMOUSEFOCUS) { /* we don't need mouse focus */
-					if ((event.active.gain==0) && !paused) pause();
-					else if ((event.active.gain==1) && paused) unpause();
-				}
-			}
-
 			input_handle(&event); /* handles all the events and player keybinds */
 		}
 
-		sound_update(); /* do sound stuff */
-
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		fps_control(); /* everyone loves fps control */
-		if (toolkit) toolkit_update(); /* to simulate key repetition */
-		if (!menu_isOpen(MENU_MAIN)) {
-			if (!paused && !toolkit) update_space(); /* update game */
-			render_space();
-		}
-		if (toolkit) toolkit_render();
-
-		SDL_GL_SwapBuffers();
+		main_loop();
 	}
 
 
@@ -242,6 +223,23 @@ int main ( int argc, char** argv )
 	/* all is well */
 	exit(EXIT_SUCCESS);
 }
+/* split main loop from main() for secondary loop hack in toolkit.c */
+void main_loop (void)
+{
+	sound_update(); /* do sound stuff */
+
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	fps_control(); /* everyone loves fps control */
+	if (toolkit) toolkit_update(); /* to simulate key repetition */
+	if (!menu_isOpen(MENU_MAIN)) {
+		if (!paused && !toolkit) update_all(); /* update game */
+		render_all();
+	}
+	if (toolkit) toolkit_render();
+
+	SDL_GL_SwapBuffers();
+}
 
 
 /*
@@ -269,7 +267,7 @@ static void fps_control (void)
 /*
  * updates the game itself (player flying around and friends)
  */
-static void update_space (void)
+static void update_all (void)
 {
 	if (dt > 1./30.) { /* slow timers down and rerun calculations */
 		pause_delay((unsigned int)dt*1000);
@@ -299,7 +297,7 @@ static void update_space (void)
  *      | @ foreground particles
  *      | @ text and GUI
  */
-static void render_space (void)
+static void render_all (void)
 {
 	/* BG */
 	space_render(dt);
