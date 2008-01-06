@@ -33,7 +33,6 @@
 extern Pilot* player;
 extern char* player_name;
 extern unsigned int player_flags;
-extern int player_credits;
 extern int player_crating;
 
 

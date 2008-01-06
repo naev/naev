@@ -83,7 +83,7 @@ static void shipyard_yoursClose( char* str );
 static void shipyard_yoursUpdate( char* str );
 static void shipyard_yoursChange( char* str );
 static void shipyard_yoursTransport( char* str );
-static char shipyard_yoursTransportPrice( char* shipname );
+static int shipyard_yoursTransportPrice( char* shipname );
 /* spaceport bar */
 static void spaceport_bar (void);
 static void spaceport_bar_close( char* str );
@@ -177,7 +177,7 @@ static void commodity_buy( char* str )
 	comname = toolkit_getList( secondary_wid, "lstGoods" );
 	com = commodity_get( comname );
 
-	if (player_credits <= q * com->medium) {
+	if (player->credits <= q * com->medium) {
 		toolkit_alert( "Not enough credits!" );
 		return;
 	}
@@ -187,7 +187,7 @@ static void commodity_buy( char* str )
 	}
 
 	q = pilot_addCargo( player, com, q );
-	player_credits -= q * com->medium;
+	player->credits -= q * com->medium;
 	commodity_update(NULL);
 }
 static void commodity_sell( char* str )
@@ -202,7 +202,7 @@ static void commodity_sell( char* str )
 	com = commodity_get( comname );
 
 	q = pilot_rmCargo( player, com, q );
-	player_credits += q * com->medium;
+	player->credits += q * com->medium;
 	commodity_update(NULL);
 }
 
@@ -278,7 +278,7 @@ static void outfits_update( char* str )
 	(void)str;
 	char *outfitname;
 	Outfit* outfit;
-	char buf[80], buf2[16], buf3[16];
+	char buf[128], buf2[16], buf3[16];
 
 	outfitname = toolkit_getList( secondary_wid, "lstOutfits" );
 	outfit = outfit_get( outfitname );
@@ -289,8 +289,8 @@ static void outfits_update( char* str )
 	/* new text */
 	window_modifyText( secondary_wid, "txtDescription", outfit->description );
 	credits2str( buf2, outfit->price, 2 );
-	credits2str( buf3, player_credits, 2 );
-	snprintf( buf, 80,
+	credits2str( buf3, player->credits, 2 );
+	snprintf( buf, 128,
 			"%s\n"
 			"%s\n"
 			"%d\n"
@@ -340,13 +340,13 @@ static void outfits_buy( char* str )
 		return;
 	}
 	/* not enough $$ */
-	else if (q*(int)outfit->price >= player_credits) {
-		credits2str( buf, q*outfit->price - player_credits, 2 );
+	else if (q*(int)outfit->price >= player->credits) {
+		credits2str( buf, q*outfit->price - player->credits, 2 );
 		toolkit_alert( "You need %s more credits.", buf);
 		return;
 	}
 
-	player_credits -= outfit->price * pilot_addOutfit( player, outfit,
+	player->credits -= outfit->price * pilot_addOutfit( player, outfit,
 			MIN(q,outfit->max) );
 	outfits_update(NULL);
 }
@@ -368,7 +368,7 @@ static void outfits_sell( char* str )
 		return;
 	}
 
-	player_credits += outfit->price * pilot_rmOutfit( player, outfit, q );
+	player->credits += outfit->price * pilot_rmOutfit( player, outfit, q );
 	outfits_update(NULL);
 }
 /*
@@ -484,7 +484,7 @@ static void shipyard_update( char* str )
 	/* update text */
 	window_modifyText( secondary_wid, "txtDescription", ship->description );
 	credits2str( buf2, ship->price, 2 );
-	credits2str( buf3, player_credits, 2 );
+	credits2str( buf3, player->credits, 2 );
 	snprintf( buf, 80,
 			"%s\n"
 			"%s\n"
@@ -601,10 +601,9 @@ static void shipyard_yoursUpdate( char* str )
 	window_modifyImage( terciary_wid, "imgTarget", ship->ship->gfx_target );
 
 	/* update text */
-	credits2str( buf2, (strcmp(loc,land_planet->name)==0) ? 0 :
-			shipyard_yoursTransportPrice(shipname) , 2 ); /* transport */
+	credits2str( buf2, shipyard_yoursTransportPrice(shipname) , 2 ); /* transport */
 	credits2str( buf3, 0, 2 ); /* sell price */
-	snprintf( buf, 80,
+	snprintf( buf, 256,
 			"%s\n"
 			"%s\n"
 			"%s\n"
@@ -677,10 +676,14 @@ static void shipyard_yoursTransport( char* str )
 		return;
 	}
 
+	/* success */
 	player->credits -= price;
 	player_setLoc( shipname, land_planet->name );
+
+	/* update the window to reflect the change */
+	shipyard_yoursUpdate(NULL);
 }
-static char shipyard_yoursTransportPrice( char* shipname )
+static int shipyard_yoursTransportPrice( char* shipname )
 {
 	char *loc;
 	Pilot* ship;
@@ -690,7 +693,7 @@ static char shipyard_yoursTransportPrice( char* shipname )
 	if (strcmp(loc,land_planet->name)==0) /* already here */
 		return 0;
 
-	return ship->solid->mass*500;
+	return (int)ship->solid->mass*500;
 }
 
 

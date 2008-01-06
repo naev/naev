@@ -121,7 +121,7 @@ static void board_stealCreds( char* str )
 
 	if (board_fail()) return;
 
-	player_credits += p->credits;
+	player->credits += p->credits;
 	p->credits = 0;
 	board_update(); /* update the lack of credits */
 	player_message("You manage to steal the ship's credits.");

@@ -43,13 +43,13 @@
 Pilot* player = NULL; /* ze player */
 static Ship* player_ship = NULL; /* temporary ship to hold when naming it */
 static double player_px, player_py, player_vx, player_vy, player_dir; /* more hack */
+static int player_credits = 0; /* temporary hack */
 /* player pilot stack - ships he has */
 static Pilot** player_stack = NULL;
 static char** player_lstack = NULL; /* names of the planet the ships are at */
 static int player_nstack = 0;
 /* player global properties */
 char* player_name = NULL; /* ze name */
-int player_credits = 0; /* ze monies */
 int player_crating = 0; /* ze rating */
 unsigned int player_flags = 0; /* player flags */
 /* used in input.c */
@@ -351,6 +351,7 @@ static void player_newShipMake( char* name )
 		player_lstack = realloc(player_lstack, sizeof(char*)*(player_nstack+1));
 		player_lstack[player_nstack] = strdup( land_planet->name );
 		player_nstack++;
+		if (!player_credits) player_credits = player->credits;
 		pilot_destroy( player );
 	}
 
@@ -364,6 +365,10 @@ static void player_newShipMake( char* name )
 	pilot_create( player_ship, name, faction_get("Player"), NULL,
 			player_dir,  &vp, &vv, PILOT_PLAYER );
 	gl_bindCamera( &player->solid->pos ); /* set opengl camera */
+
+	/* money */
+	player->credits = player_credits;
+	player_credits = 0;
 }
 
 
@@ -819,7 +824,7 @@ void player_render (void)
 	gl_print( &gl_smallFont,
 			gui.misc.x + 8, j,
 			&cConsole, "Creds:" );
-	credits2str( str, player_credits, 2 );
+	credits2str( str, player->credits, 2 );
 	i = gl_printWidth( &gl_smallFont, str );
 	gl_print( &gl_smallFont,
 			gui.misc.x + gui.misc.w - 8 - i, j,
