@@ -57,15 +57,6 @@ Planet* land_planet = NULL;
 /*
  * prototypes
  */
-/*
- * extern
- */
-extern char** player_ships( int *nships );
-extern Pilot* player_getShip( char* shipname );
-extern char* player_getLoc( char* shipname );
-/*
- * static
- */
 /* commodity exchange */
 static void commodity_exchange (void);
 static void commodity_exchange_close( char* str );
@@ -90,6 +81,9 @@ static void shipyard_buy( char* str );
 static void shipyard_yours( char* str );
 static void shipyard_yoursClose( char* str );
 static void shipyard_yoursUpdate( char* str );
+static void shipyard_yoursChange( char* str );
+static void shipyard_yoursTransport( char* str );
+static char shipyard_yoursTransportPrice( char* shipname );
 /* spaceport bar */
 static void spaceport_bar (void);
 static void spaceport_bar_close( char* str );
@@ -540,6 +534,12 @@ static void shipyard_yours( char* str )
 	window_addButton( terciary_wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseYourShips",
 			"Shipyard", shipyard_yoursClose );
+	window_addButton( terciary_wid, -40-BUTTON_WIDTH, 20,
+			BUTTON_WIDTH, BUTTON_HEIGHT, "btnChangeShip",
+			"Change Ship", shipyard_yoursChange );
+	window_addButton( terciary_wid, -40-BUTTON_WIDTH, 40+BUTTON_HEIGHT,
+			BUTTON_WIDTH, BUTTON_HEIGHT, "btnTransportShip",
+			"Transport Ship", shipyard_yoursTransport );
 
 	/* image */
 	window_addRect( terciary_wid, -40, -50,
@@ -602,7 +602,7 @@ static void shipyard_yoursUpdate( char* str )
 
 	/* update text */
 	credits2str( buf2, (strcmp(loc,land_planet->name)==0) ? 0 :
-			ship->solid->mass*500, 2 ); /* transport */
+			shipyard_yoursTransportPrice(shipname) , 2 ); /* transport */
 	credits2str( buf3, 0, 2 ); /* sell price */
 	snprintf( buf, 80,
 			"%s\n"
@@ -628,6 +628,69 @@ static void shipyard_yoursUpdate( char* str )
 	buf4 = pilot_getOutfits( ship );
 	window_modifyText( terciary_wid, "txtDOutfits", buf4 );
 	free(buf4);
+}
+static void shipyard_yoursChange( char* str )
+{
+	(void)str;
+	char *shipname, *loc;
+
+	shipname = toolkit_getList( terciary_wid, "lstYourShips" );
+	if (strcmp(shipname,"None")==0) { /* no ships */
+		toolkit_alert( "You need another ship to change ships!" );
+		return;
+	}
+	loc = player_getLoc(shipname);
+
+	if (strcmp(loc,land_planet->name)) {
+		toolkit_alert( "You must transport the ship to %s to be able to get in.",
+				land_planet->name );
+		return;
+	}
+
+	player_swapShip(shipname);
+
+	/* recreate the window */
+	shipyard_yoursClose(NULL);
+	shipyard_yours(NULL);
+}
+static void shipyard_yoursTransport( char* str )
+{
+	(void)str;
+	int price;
+	char *shipname, buf[16];
+
+	shipname = toolkit_getList( terciary_wid, "lstYourShips" );
+	if (strcmp(shipname,"None")==0) { /* no ships */
+		toolkit_alert( "You can't transport nothing here!" );
+		return;
+	}
+
+	price = shipyard_yoursTransportPrice( shipname );
+	if (price==0) { /* already here */
+		toolkit_alert( "Your ship '%s' is already here.", shipname );
+		return;
+	}
+	else if (player->credits < price) { /* not enough money */
+		credits2str( buf, price-player->credits, 2 );
+		toolkit_alert( "You need %d more credits to transport '%s' here.",
+				buf, shipname );
+		return;
+	}
+
+	player->credits -= price;
+	player_setLoc( shipname, land_planet->name );
+}
+static char shipyard_yoursTransportPrice( char* shipname )
+{
+	char *loc;
+	Pilot* ship;
+
+	ship = player_getShip(shipname);
+	loc = player_getLoc(shipname);
+	if (strcmp(loc,land_planet->name)==0) /* already here */
+		return 0;
+
+	return ship->solid->mass*500;
 }
 
 

@@ -161,9 +161,6 @@ static void gui_renderBar( const glColour* c,
 /* externed */
 void player_dead (void);
 void player_destroyed (void);
-char** player_ships( int *nships );
-Pilot* player_getShip( char* shipname );
-char* player_getLoc( char* shipname );
 
 
 
@@ -367,6 +364,28 @@ static void player_newShipMake( char* name )
 	pilot_create( player_ship, name, faction_get("Player"), NULL,
 			player_dir,  &vp, &vv, PILOT_PLAYER );
 	gl_bindCamera( &player->solid->pos ); /* set opengl camera */
+}
+
+
+/*
+ * swaps the current ship with shipname
+ */
+void player_swapShip( char* shipname )
+{
+	int i;
+	Pilot* ship;
+
+	for (i=0; i<player_nstack; i++) {
+		if (strcmp(shipname,player_stack[i]->name)==0) { /* swap player and ship */
+			ship = player_stack[i];
+			ship->credits = player->credits;
+			player_stack[i] = player;
+			pilot_stack[0] = player = ship;
+			gl_bindCamera( &player->solid->pos ); /* don't forget the camera */
+			return;
+		}
+	}
+	WARN( "Unable to swap player with ship '%s': ship does not exist!", shipname );
 }
 
 
@@ -1629,7 +1648,25 @@ char* player_getLoc( char* shipname )
 
 	WARN("Player ship '%s' not found in stack", shipname);
 	return NULL;
+}
 
+
+/*
+ * sets the location of a specific ship
+ */
+void player_setLoc( char* shipname, char* loc )
+{
+	int i;
+
+	for (i=0; i < player_nstack; i++) {
+		if (strcmp(player_stack[i]->name, shipname)==0) {
+			free(player_lstack[i]);
+			player_lstack[i] = strdup(loc);
+			return;
+		}
+	}
+	
+	WARN("Player ship '%s' not found in stack", shipname);
 }
 
 

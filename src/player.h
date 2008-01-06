@@ -70,6 +70,16 @@ const char* player_rating (void);
 int player_outfitOwned( const char* outfitname );
 int player_cargoOwned( const char* commodityname );
 
+
+/*
+ * pilot ships
+ */
+char** player_ships( int *nships );
+Pilot* player_getShip( char* shipname );
+char* player_getLoc( char* shipname );
+void player_setLoc( char* shipname, char* loc );
+void player_swapShip( char* shipname );
+
 /* 
  * keybind actions
  */
