@@ -109,6 +109,7 @@ static unsigned int genwid = 0; /* generates unique window ids, > 0 */
 
 int toolkit = 0; /* toolkit in use */
 
+/* window stuff */
 #define MIN_WINDOWS	3
 static Window *windows = NULL;
 static int nwindows = 0;
@@ -161,12 +162,13 @@ static void toolkit_drawOutline( double x, double y,
 		glColour* c, glColour* lc );
 static void toolkit_drawRect( double x, double y,
 		double w, double h, glColour* c, glColour* lc );
-/* misc */
-static void toolkit_alertClose( char* str );
-static void toolkit_YesNoClose( char* str );
+/* dialogues */
+static void dialogue_alertClose( char* str );
+static void dialogue_YesNoClose( char* str );
+static void dialogue_inputClose( char* str );
 /* secondary loop hack */
 static int loop_done;
-static void toolkit_loop (void);
+static int toolkit_loop (void);
 
 
 
@@ -1566,7 +1568,7 @@ static Widget* toolkit_getFocus (void)
 /*
  * displays an alert popup with only an ok button and a message
  */
-void toolkit_alert( const char *fmt, ... )
+void dialogue_alert( const char *fmt, ... )
 {
 	char msg[256];
 	va_list ap;
@@ -1585,9 +1587,9 @@ void toolkit_alert( const char *fmt, ... )
 	window_addText( wdw, 20, -30, 260, 70,  0, "txtAlert",
 			&gl_smallFont, &cBlack, msg );
 	window_addButton( wdw, 135, 20, 50, 30, "btnOK", "OK",
-			toolkit_alertClose );
+			dialogue_alertClose );
 }
-static void toolkit_alertClose( char* str )
+static void dialogue_alertClose( char* str )
 {
 	(void)str;
 	if (window_exists( "Warning" ))
@@ -1600,7 +1602,7 @@ static void toolkit_alertClose( char* str )
  */
 static int yesno_result;
 static unsigned int yesno_wid = 0;
-int toolkit_YesNo( char* caption, const char *fmt, ... )
+int dialogue_YesNo( char* caption, const char *fmt, ... )
 {
 	char msg[256];
 	va_list ap;
@@ -1617,13 +1619,13 @@ int toolkit_YesNo( char* caption, const char *fmt, ... )
 	/* create window */
 	yesno_wid = window_create( caption, -1, -1, 300, 140 );
 	/* text */
-	window_addText( yesno_wid, 20, -30, 260, 70,  0, "txtAlert",
+	window_addText( yesno_wid, 20, -30, 260, 70,  0, "txtYesNo",
 			&gl_smallFont, &cBlack, msg );
 	/* buttons */
 	window_addButton( yesno_wid, 300/2-50-10, 20, 50, 30, "btnYes", "Yes",
-			toolkit_YesNoClose );
+			dialogue_YesNoClose );
 	window_addButton( yesno_wid, 300/2+10, 20, 50, 30, "btnNo", "No",
-			toolkit_YesNoClose );
+			dialogue_YesNoClose );
 
 	/* tricky secondary loop */
 	toolkit_loop();
@@ -1631,7 +1633,7 @@ int toolkit_YesNo( char* caption, const char *fmt, ... )
 	/* return the result */
 	return yesno_result;
 }
-static void toolkit_YesNoClose( char* str )
+static void dialogue_YesNoClose( char* str )
 {
 	/* store the result */
 	if (strcmp(str,"btnYes")==0) yesno_result = 1;
@@ -1641,6 +1643,71 @@ static void toolkit_YesNoClose( char* str )
 	window_destroy( yesno_wid );
 	yesno_wid = 0;
 
+	loop_done = 1;
+}
+
+
+/*
+ * toolkit input boxes, returns the input
+ */
+static unsigned int input_wid = 0;
+char* dialogue_input( char* title, int min, int max, const char *fmt, ... )
+{
+	char msg[256], *input;
+	va_list ap;
+
+	if (input_wid) return NULL;
+
+	if (fmt == NULL) return NULL;
+	else { /* get the message */
+		va_start(ap, fmt);
+		vsprintf(msg, fmt, ap);
+		va_end(ap);
+	}
+
+	   
+	/* create window */
+	input_wid = window_create( title, -1, -1, 240, 160 );
+	window_setFptr( input_wid, dialogue_inputClose );
+	/* text */
+	window_addText( input_wid, 30, -30, 200, 40,  0, "txtInput",
+			&gl_smallFont, &cDConsole, msg );
+	/* input */
+	window_addInput( input_wid, 20, -70, 200, 20, "inpInput", max, 1 );
+	/* button */
+	window_addButton( input_wid, -20, 20, 80, 30,
+			"btnClose", "Done", dialogue_inputClose );
+
+	/* tricky secondary loop */
+	input = NULL;
+	while (!input || ((int)strlen(input) < min)) { /* must be longer then min */
+
+		if (input) {
+			dialogue_alert( "Input must be at least %d characters long!", min );
+			free(input);
+			input = NULL;
+		}
+
+		if (toolkit_loop()) /* error in loop -> quit */
+			return NULL;
+
+		/* save the input */
+		input = strdup( window_getInput( input_wid, "inpInput" ) );
+	}
+
+	/* cleanup */
+	window_destroy( input_wid );
+	input_wid = 0;
+
+	/* return the result */
+	return input;
+
+}
+static void dialogue_inputClose( char* str )
+{
+	(void)str;
+
+	/* break the loop */
 	loop_done = 1;
 }
 
@@ -1675,16 +1742,17 @@ void toolkit_exit (void)
  * spawns a secondary loop that only works until the toolkit dies,
  * alot like the main while loop in naev.c
  */
-static void toolkit_loop (void)
+static int toolkit_loop (void)
 {
-	SDL_Event event;
+	SDL_Event event, quit = { .type = SDL_QUIT };
 
 	loop_done = 0;
 	while (!loop_done && toolkit) {
 		while (SDL_PollEvent(&event)) { /* event loop */
 			if (event.type == SDL_QUIT) { /* pass quit event to main engine */
-				SDL_PushEvent(&event);
-				return;
+				loop_done = 1;
+				SDL_PushEvent(&quit);
+				return -1;
 			}
 
 			input_handle(&event); /* handles all the events and player keybinds */
@@ -1692,5 +1760,7 @@ static void toolkit_loop (void)
 
 		main_loop();
 	}
+
+	return 0;
 }
 

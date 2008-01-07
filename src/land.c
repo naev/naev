@@ -178,11 +178,11 @@ static void commodity_buy( char* str )
 	com = commodity_get( comname );
 
 	if (player->credits <= q * com->medium) {
-		toolkit_alert( "Not enough credits!" );
+		dialogue_alert( "Not enough credits!" );
 		return;
 	}
 	else if (player->cargo_free <= 0) {
-		toolkit_alert( "Not enough free space!" );
+		dialogue_alert( "Not enough free space!" );
 		return;
 	}
 
@@ -324,25 +324,25 @@ static void outfits_buy( char* str )
 
 	/* can player actually fit the outfit? */
 	if ((pilot_freeSpace(player) - outfit->mass) < 0) {
-		toolkit_alert( "Not enough free space (you need %d more).",
+		dialogue_alert( "Not enough free space (you need %d more).",
 				outfit->mass - pilot_freeSpace(player) );
 		return;
 	}
 	/* has too many already */
 	else if (player_outfitOwned(outfitname) >= outfit->max) {
-		toolkit_alert( "You can only carry %d of this outfit.",
+		dialogue_alert( "You can only carry %d of this outfit.",
 				outfit->max );
 		return;
 	}
 	/* can only have one afterburner */
 	else if (outfit_isAfterburner(outfit) && (player->afterburner!=NULL)) {
-		toolkit_alert( "You can only have one afterburner." );
+		dialogue_alert( "You can only have one afterburner." );
 		return;
 	}
 	/* not enough $$ */
 	else if (q*(int)outfit->price >= player->credits) {
 		credits2str( buf, q*outfit->price - player->credits, 2 );
-		toolkit_alert( "You need %s more credits.", buf);
+		dialogue_alert( "You need %s more credits.", buf);
 		return;
 	}
 
@@ -364,7 +364,7 @@ static void outfits_sell( char* str )
 
 	/* has no outfits to sell */
 	if (player_outfitOwned(outfitname) <= 0) {
-		toolkit_alert( "You can't sell something you don't have." );
+		dialogue_alert( "You can't sell something you don't have." );
 		return;
 	}
 
@@ -517,7 +517,7 @@ static void shipyard_buy( char* str )
 	ship = ship_get( shipname );
 
 	credits2str( buf, ship->price, 2 );
-	if (toolkit_YesNo("Are you sure?", /* confirm */
+	if (dialogue_YesNo("Are you sure?", /* confirm */
 			"Do you really want to spend %s on a new ship?", buf )==0)
 		return;
 
@@ -640,13 +640,13 @@ static void shipyard_yoursChange( char* str )
 
 	shipname = toolkit_getList( terciary_wid, "lstYourShips" );
 	if (strcmp(shipname,"None")==0) { /* no ships */
-		toolkit_alert( "You need another ship to change ships!" );
+		dialogue_alert( "You need another ship to change ships!" );
 		return;
 	}
 	loc = player_getLoc(shipname);
 
 	if (strcmp(loc,land_planet->name)) {
-		toolkit_alert( "You must transport the ship to %s to be able to get in.",
+		dialogue_alert( "You must transport the ship to %s to be able to get in.",
 				land_planet->name );
 		return;
 	}
@@ -665,18 +665,18 @@ static void shipyard_yoursTransport( char* str )
 
 	shipname = toolkit_getList( terciary_wid, "lstYourShips" );
 	if (strcmp(shipname,"None")==0) { /* no ships */
-		toolkit_alert( "You can't transport nothing here!" );
+		dialogue_alert( "You can't transport nothing here!" );
 		return;
 	}
 
 	price = shipyard_yoursTransportPrice( shipname );
 	if (price==0) { /* already here */
-		toolkit_alert( "Your ship '%s' is already here.", shipname );
+		dialogue_alert( "Your ship '%s' is already here.", shipname );
 		return;
 	}
 	else if (player->credits < price) { /* not enough money */
 		credits2str( buf, price-player->credits, 2 );
-		toolkit_alert( "You need %d more credits to transport '%s' here.",
+		dialogue_alert( "You need %d more credits to transport '%s' here.",
 				buf, shipname );
 		return;
 	}

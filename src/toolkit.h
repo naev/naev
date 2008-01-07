@@ -61,8 +61,9 @@ void window_addInput( const unsigned int wid,
 /*
  * popups and alerts
  */
-void toolkit_alert( const char *fmt, ... );
-int toolkit_YesNo( char *caption, const char *fmt, ... );
+void dialogue_alert( const char *fmt, ... );
+int dialogue_YesNo( char *caption, const char *fmt, ... );
+char* dialogue_input( char* title, int min, int max, const char *fmt, ... );
 
 
 /*

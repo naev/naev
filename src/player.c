@@ -148,9 +148,7 @@ extern void weapon_minimap( const double res, const double w, const double h,
 extern void planets_minimap( const double res, const double w, const double h,
 		const RadarShape shape ); /* from space.c */
 /* internal */
-static void player_nameClose( char *str );
 static void player_newMake (void);
-static void player_nameShipClose( char *str );
 static void player_newShipMake( char *name );
 static void rect_parse( const xmlNodePtr parent,
 		double *x, double *y, double *w, double *h );
@@ -169,8 +167,6 @@ void player_destroyed (void);
  */
 void player_new (void)
 {
-	unsigned int wid;
-
 	/* to not segfault due to lack of environment */
 	player_setFlag(PLAYER_DESTROYED);
 	vectnull( &player_cam );
@@ -179,32 +175,9 @@ void player_new (void)
 	/* cleanup player stuff if we'll be recreating */
 	player_cleanup();
 
-	wid = window_create( "Player Name", -1, -1, 240, 140 );
-
-	window_addText( wid, 30, -30, 180, 20, 0, "txtInfo",
-			&gl_smallFont, &cDConsole, "Please write your name:" );
-	window_addInput( wid, 20, -50, 200, 20, "inpName", 20, 1 );
-	window_addButton( wid, -20, 20, 80, 30, "btnClose", "Done", player_nameClose );
-
-	window_setFptr( wid, player_nameClose );
-}
-static void player_nameClose( char *str )
-{
-	(void)str;
-	unsigned int wid;
-	char *name;
-
-	wid = window_get("Player Name");
-	name = window_getInput( wid, "inpName" );
-
-	if (strlen(name) < 3) {
-		toolkit_alert( "Your name must be at least 3 characters long." );
-		return;
-	}
-
-	player_name = strdup(name);
-	window_destroy( wid );
-
+	player_name = dialogue_input( "Player Name", 3, 20,
+			"Please write your name:" );
+	
 	player_newMake();
 }
 
@@ -288,7 +261,7 @@ static void player_newMake (void)
 void player_newShip( Ship* ship, double px, double py,
 		double vx, double vy, double dir )
 {
-	unsigned int wid;
+	char* ship_name;
 
 	/* temporary values while player doesn't exist */
 	player_ship = ship;
@@ -297,45 +270,12 @@ void player_newShip( Ship* ship, double px, double py,
 	player_vx = vx;
 	player_vy = vy;
 	player_dir = dir;
-
-	wid = window_create( "Ship Name", -1, -1, 240, 140 );
-
-	window_addText( wid, 30, -30, 180, 20, 0, "txtInfo",
-			&gl_smallFont, &cDConsole, "Please name your ship:" );
-	window_addInput( wid, 20, -50, 200, 20, "inpName", 20, 1 );
-	window_addButton( wid, -20, 20, 80, 30, "btnClose", "Done", player_nameShipClose );
-
-	window_setFptr( wid, player_nameShipClose );
-}
-static void player_nameShipClose( char *str )
-{
-	(void)str;
-	int i;
-	char* ship_name;
-	unsigned int wid;
-
-	wid = window_get("Ship Name");
-	ship_name = window_getInput( wid, "inpName" );
-
-	if (strlen(ship_name) < 3) {
-		toolkit_alert( "Your ship's name must be at least 3 characters long" );
-		return;
-	}
-	/* do not repeat names */
-	if (player && (strcmp(ship_name,player->name)==0)) {
-			toolkit_alert( "You cannot name two ships the same!" );
-			return;
-			}
-	for (i=0; i<player_nstack; i++) {
-		if (strcmp(player_stack[i]->name,ship_name)==0) {
-			toolkit_alert( "You cannot name two ships the same!" );
-			return;
-		}
-	}
+	ship_name = dialogue_input( "Player Name", 3, 20,
+			"Please name your brand new %s:", ship->name );
 
 	player_newShipMake(ship_name);
 
-	window_destroy( wid );
+	free(ship_name);
 }
 
 /*
