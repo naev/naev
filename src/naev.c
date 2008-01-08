@@ -269,10 +269,12 @@ static void fps_control (void)
  */
 static void update_all (void)
 {
+#if 0
 	if (dt > 1./30.) { /* slow timers down and rerun calculations */
 		pause_delay((unsigned int)dt*1000);
 		return;
 	}
+#endif
 	space_update(dt);
 	weapons_update(dt);
 	spfx_update(dt);

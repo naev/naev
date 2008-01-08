@@ -185,43 +185,11 @@ static void think_seeker( Weapon* w, const double dt )
 }
 /*
  * smart seeker brain, much better at homing
- *
- * SYSTEM DYNAMICS
- *
- *   Input
- *     MV = missile velocity
- *     RP = target relative position
- *
- *   Constants
- *     KE = error constant
- *     KF = face constant
- *
- *   Internal Variables
- *     FD = face dir
- *     E = error
- *     PID = PID
- *
- *   Output
- *     T = turn modifier
- *
- *
- *                 
- * MV +   FD  +                        T
- * ---->O----->O--->[PID]----[KF]--+----->
- *     -^     -^                   |
- * RP   |      |                   |
- * -----+      | E                 |
- *             +------[KE]---------+
  */
 static void think_smart( Weapon* w, const double dt )
 {
-	Vector2d tv;
-
-	/* controller stuff */
-	double ke, kf; /* constants */
-	double fd, e, ed, ei; /* internal variables */
-	double t; /* output */
-	double kp, ki, kd; /* PID */
+	Vector2d sv, tv;
+	double t;
 
 	if (w->target == w->parent) return; /* no self shooting */
 
@@ -234,42 +202,19 @@ static void think_smart( Weapon* w, const double dt )
 	/* ammo isn't locked on yet */
 	if (SDL_GetTicks() > (w->timer + w->outfit->u.amm.lockon)) {
 
-		/* 
-		 * begin controller
-		 */
-		/* constants */
-		kp = 1.;
-		kd = 1.;
-		ki = 3.;
+		vect_cset( &tv, VX(p->solid->pos) + dt*VX(p->solid->vel),
+				VY(p->solid->pos) + dt*VY(p->solid->vel));
+		vect_cset( &sv, VX(w->solid->pos) + dt*VX(w->solid->vel),
+				VY(w->solid->pos) + dt*VY(w->solid->vel));
+		t = -angle_diff(w->solid->dir, vect_angle(&tv, &sv));
 
-		/* calculate fd */
-		vect_cset( &tv, p->solid->pos.x - w->solid->pos.x,
-				p->solid->pos.y - w->solid->pos.y);
-		e = angle_diff(VANGLE(w->solid->vel), VANGLE(tv));
+		w->solid->dir_vel = t * w->outfit->u.amm.turn; /* face the target */
 
-		/* PID */
-		e = fd;
-		ed = fd - ke*w->pid_last;
-		w->pid_int += e;
-		if (w->pid_int > IMAX) w->pid_int = IMAX;
-		else if (w->pid_int < IMIN) w->pid_int = IMIN;
-		ei = w->pid_int;
-		t = e*kp + ed*kd + ei*ki;
-
-		/* final output */
-		t *= kf;
-		w->pid_last = t;
-		/*
-		 * end controller
-		 */
-
-		w->solid->dir_vel = t  *  w->outfit->u.amm.turn; /* face the target */
 		if (w->solid->dir_vel > w->outfit->u.amm.turn)
 			w->solid->dir_vel = w->outfit->u.amm.turn;
 		else if (w->solid->dir_vel < -w->outfit->u.amm.turn)
 			w->solid->dir_vel = -w->outfit->u.amm.turn;
 	}
-
 	vect_pset( &w->solid->force, w->outfit->u.amm.thrust, w->solid->dir );
 
 	limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );

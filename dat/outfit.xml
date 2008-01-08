@@ -105,7 +105,7 @@ The Headhunter Launcher is one of the most used missile launcher by the security
 </description>
 <gfx_store>missile</gfx_store>
 </general>
-<specific type="5" secondary="1">
+<specific type="7" secondary="1">
 <ammo>Headhunter</ammo>
 <delay>1400</delay>
 </specific>
@@ -121,7 +121,7 @@ Headhunters first gained fame in the crush of the Araknoid, a fearsome battle ag
 </description>
 <gfx_store>missile</gfx_store>
 </general>
-<specific type="6">
+<specific type="8">
 <gfx>headhunter</gfx>
 <sound>missile</sound>
 <spfx>ExpM</spfx>
