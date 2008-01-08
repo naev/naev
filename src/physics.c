@@ -18,13 +18,17 @@
  */
 double angle_diff( const double ref, double a )
 {
+	double d;
+
 	if (a < M_PI) a += 2*M_PI;
-	double d = fmod((a-ref),2*M_PI);
+	d = fmod((a-ref),2*M_PI);
 	return (d <= M_PI) ? d : d - 2*M_PI ;
 }
 void limit_speed( Vector2d* vel, const double speed, const double dt )
 {
-	double vmod = VMOD(*vel);
+	double vmod;
+	
+	vmod = VMOD(*vel);
 	if (vmod > speed) /* shouldn't go faster */
 		vect_pset( vel, (vmod-speed)*(1. - dt*3.) +  speed, VANGLE(*vel) );
 }
@@ -127,15 +131,15 @@ static void simple_update (Solid *obj, const double dt)
 	if (obj->dir < 0.) obj->dir += 2*M_PI;
 
 	double px, py, vx, vy;
-	px = VX(obj->pos);
-	py = VY(obj->pos);
-	vx = VX(obj->vel);
-	vy = VY(obj->vel);
+	px = obj->pos->x;
+	py = obj->pos->y;
+	vx = obj->vel->x;
+	vy = obj->vel->y;
 
 	if (obj->force.mod) { /* force applied on object */
 		double ax, ay;
-		ax = VX(obj->force)/obj->mass;
-		ay = VY(obj->force)/obj->mass;
+		ax = obj->force->x/obj->mass;
+		ay = obj->force->y/obj->mass;
 
 		vx += ax*dt;
 		vy += ay*dt;
@@ -174,15 +178,18 @@ static void simple_update (Solid *obj, const double dt)
 #define RK4_MIN_H	0.01 /* minimal pass we want */
 static void rk4_update (Solid *obj, const double dt)
 {
+	int i, N; /* for iteration, and pass calcualtion */
+	double h, px,py, vx,vy; /* pass, and position/velocity values */
+	double ix,iy, tx,ty, ax,ay; /* initial and temporary cartesian vector values */
+
 	/* make sure angle doesn't flip */
 	obj->dir += M_PI/180.*obj->dir_vel*dt;
 	if (obj->dir >= 2.*M_PI) obj->dir -= 2*M_PI;
 	else if (obj->dir < 0.) obj->dir += 2*M_PI;
 
-	int N = (dt>RK4_MIN_H) ? (int)(dt/RK4_MIN_H) : 1 ;
-	double h = dt / (double)N; /* step */
+	N = (dt>RK4_MIN_H) ? (int)(dt/RK4_MIN_H) : 1 ;
+	h = dt / (double)N; /* step */
 
-	double px, py, vx, vy;
 	px = obj->pos.x;
 	py = obj->pos.y;
 	vx = obj->vel.x;
@@ -190,12 +197,10 @@ static void rk4_update (Solid *obj, const double dt)
 
 
 	if (obj->force.mod) { /* force applied on object */
-		int i;
-		double ix, iy, tx, ty; /* initial and temporary cartesian vector values */
 
-		double ax, ay;
-		ax = VX(obj->force)/obj->mass;
-		ay = VY(obj->force)/obj->mass;
+		/* Movement Quantity Theorem:  m*a = \sum f */
+		ax = obj->force.x / obj->mass;
+		ay = obj->force.y / obj->mass;
 
 		for (i=0; i < N; i++) { /* iterations */
 
@@ -221,7 +226,7 @@ static void rk4_update (Solid *obj, const double dt)
 		}
 		vect_cset( &obj->vel, vx, vy );
 	}
-	else {
+	else { /* euler method -> p = v*t + 0.5*a*t^2 (no accel, so no error) */
 		px += dt*vx;
 		py += dt*vy;
 	}
