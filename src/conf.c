@@ -286,7 +286,9 @@ void conf_parseCLI( int argc, char** argv )
 				break;
 
 			case 'v':
-				LOG(APPNAME": version %d.%d.%d", VMAJOR, VMINOR, VREV);
+				/* by now it has already displayed the version
+				LOG(APPNAME": version %d.%d.%d", VMAJOR, VMINOR, VREV); */
+				exit(EXIT_SUCCESS);
 			case 'h':
 				print_usage(argv);
 				exit(EXIT_SUCCESS);
