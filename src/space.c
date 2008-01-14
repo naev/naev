@@ -850,8 +850,12 @@ void space_exit (void)
 		free(systems_stack[i].planets);
 	}
 	free(systems_stack);
+	systems_stack = NULL;
+	systems_nstack = 0;
 
 	if (stars) free(stars);
+	stars = NULL;
+	nstars = 0;
 }
 
 

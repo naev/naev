@@ -167,10 +167,16 @@ void player_destroyed (void);
  */
 void player_new (void)
 {
+	int i;
+
 	/* to not segfault due to lack of environment */
 	player_setFlag(PLAYER_DESTROYED);
 	vectnull( &player_cam );
 	gl_bindCamera( &player_cam );
+
+	/* cleanup messages */
+	for (i=0; i<mesg_max; i++)
+		memset( mesg_stack[i].str, '\0', MESG_SIZE_MAX );
 
 	/* cleanup player stuff if we'll be recreating */
 	player_cleanup();
@@ -371,11 +377,12 @@ void player_message ( const char *fmt, ... )
 	if (fmt == NULL) return; /* message not valid */
 
 	/* copy old messages back */
-	for (i=1; i<mesg_max; i++)
+	for (i=1; i<mesg_max; i++) {
 		if (mesg_stack[mesg_max-i-1].str[0] != '\0') {
 			strcpy(mesg_stack[mesg_max-i].str, mesg_stack[mesg_max-i-1].str);
 			mesg_stack[mesg_max-i].t = mesg_stack[mesg_max-i-1].t;
 		}
+	}
 
 	/* add the new one */
 	va_start(ap, fmt);

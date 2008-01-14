@@ -70,6 +70,8 @@ char* namjoystick = NULL;
 /*
  * prototypes
  */
+static void load_all (void);
+static void unload_all (void);
 void main_loop (void);
 static void display_fps( const double dt );
 static void window_caption (void);
@@ -161,14 +163,8 @@ int main ( int argc, char** argv )
 	toolkit_init(); /* initializes the toolkit */
 
 	
-	/*  data loading */
-	commodity_load();
-	factions_load();
-	spfx_load();
-	outfit_load();
-	ships_load();
-	fleet_load();
-	space_load();
+	/* data loading */
+	load_all();
 
 
 	/* start menu */
@@ -194,21 +190,19 @@ int main ( int argc, char** argv )
 	}
 
 
-	/* data unloading */
+	/* cleanup some stuff */
 	player_cleanup(); /* cleans up the player stuff */
+	gui_free(); /* cleans up the player's GUI */
 	weapon_exit(); /* destroys all active weapons */
-	space_exit(); /* cleans up the universe itself */
 	pilots_free(); /* frees the pilots, they were locked up :( */
-	gui_free(); /* frees up the player's GUI */
-	fleet_free();
-	ships_free();
-	outfit_free();
-	spfx_free(); /* gets rid of the special effect */
-	factions_free();
-	commodity_free();
+	space_exit(); /* cleans up the universe itself */
+
+	/* data unloading */
+	unload_all();
+
+	/* cleanup opengl fonts */
 	gl_freeFont(NULL);
 	gl_freeFont(&gl_smallFont);
-
 
 	/* exit subsystems */
 	toolkit_exit(); /* kills the toolkit */
@@ -223,7 +217,38 @@ int main ( int argc, char** argv )
 	/* all is well */
 	exit(EXIT_SUCCESS);
 }
-/* split main loop from main() for secondary loop hack in toolkit.c */
+
+/*
+ * loads all the data, makes main() simpler
+ */
+void load_all (void)
+{
+	/* order is very important as they're interdependent */
+	commodity_load(); /* dep for space */
+	factions_load(); /* dep for fleet, space */
+	spfx_load(); /* no dep */
+	outfit_load(); /* dep for ships */
+	ships_load(); /* dep for fleet */
+	fleet_load(); /* dep for space */
+	space_load();
+}
+/*
+ * unloads all data, simplifies main()
+ */
+void unload_all (void)
+{
+	/* data unloading - order shouldn't matter, but inverse load_all is good */
+	fleet_free();
+	ships_free();
+	outfit_free();
+	spfx_free(); /* gets rid of the special effect */
+	factions_free();
+	commodity_free();
+}
+
+/* 
+ * split main loop from main() for secondary loop hack in toolkit.c
+ */
 void main_loop (void)
 {
 	sound_update(); /* do sound stuff */
