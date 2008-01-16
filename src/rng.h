@@ -8,14 +8,16 @@
 #  define RNG_H
 
 
-#include <stdlib.h>
+#include <limits.h>
 
 
-#define RNG(L,H)  ((int)L + (int)((double)(H-L+1) * (rand()/(RAND_MAX+1.))))
-#define RNGF()		(rand()/(RAND_MAX+1.))
+#define RNG(L,H)  ((int)L + (int)((double)(H-L+1) * randfp()))
+#define RNGF()		(randfp())
 
 
 void rng_init (void);
+unsigned int randint (void);
+double randfp (void);
 
 
 #endif /* RNG_H */

@@ -3,6 +3,10 @@
 #
 DEBUG = 1
 
+# OS
+OS := LINUX
+#OS := WIN32
+
 
 #
 #   VERSION
@@ -32,7 +36,7 @@ CTTF = $(shell freetype-config --cflags)
 CAL = $(shell openal-config --cflags)
 CVORBIS =
 CGL =
-CFLAGS = $(CLUA) $(CSDL) $(CXML) $(CTTF) $(CGL) $(CAL) $(CVORBIS) $(VERSION)
+CFLAGS = $(CLUA) $(CSDL) $(CXML) $(CTTF) $(CGL) $(CAL) $(CVORBIS) $(VERSION) -D$(OS)
 ifdef DEBUG
 CFLAGS += -W -Wall -g3 -DDEBUG -DLUA_USE_APICHECK -std=c99
 else # DEBUG
