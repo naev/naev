@@ -1,0 +1,15 @@
+ - Name  :  Welcome
+   Lua   :  welcome
+   Avail :
+         Location :  None
+ - Name  :  Cargo Freight
+   Lua   :  cargo
+   Avail :
+         Location :  Computer
+         Alliance :  Neutral
+         Alliance :  Empire United
+ - Name  :  Empire Recruitment
+   Lua   :  empire
+   Avail :
+         Location :  Bar
+         Faction  :  Empire
