@@ -108,7 +108,7 @@ static int SDL_VFlipSurface( SDL_Surface* surface )
 static int SDL_IsTrans( SDL_Surface* s, int x, int y )
 {
 	int bpp = s->format->BytesPerPixel; 
-	// here p is the address to the pixel we want to retrieve 
+	/* here p is the address to the pixel we want to retrieve */
 	Uint8 *p = (Uint8 *)s->pixels + y*s->pitch + x*bpp; 
 
 	Uint32 pixelcolour = 0; 
@@ -134,7 +134,7 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
 			break; 
 	} 
 
-	// test whether pixels colour == colour of transparent pixels for that surface 
+	/* test whether pixels colour == colour of transparent pixels for that surface */
 	return (pixelcolour == s->format->colorkey);
 }
 

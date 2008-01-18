@@ -151,8 +151,8 @@ static void map_render( double bx, double by, double w, double h )
 	glColour* col;
 
 	r = 5.;
-	x = (bx - map_xpos + w/2) * 1.;//map_zoom;
-	y = (by - map_ypos + h/2) * 1.;//map_zoom;
+	x = (bx - map_xpos + w/2) * 1.;
+	y = (by - map_ypos + h/2) * 1.;
 
 	/* background */
 	COLOUR(cBlack);

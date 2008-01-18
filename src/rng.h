@@ -8,9 +8,6 @@
 #  define RNG_H
 
 
-#include <limits.h>
-
-
 #define RNG(L,H)  ((int)L + (int)((double)(H-L+1) * randfp()))
 #define RNGF()		(randfp())
 
