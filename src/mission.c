@@ -27,8 +27,8 @@ Mission player_missions[MISSION_MAX];
 /*
  * mission stack
  */
-//static Mission *mission_stack = NULL; /* unmuteable after creation */
-//static int mission_nstack = 0;
+static MissionData *mission_stack = NULL; /* unmuteable after creation */
+static int mission_nstack = 0;
 
 
 /*
@@ -36,7 +36,9 @@ Mission player_missions[MISSION_MAX];
  */
 /* extern */
 extern int misn_run( Mission *misn, char *func );
-
+/* static */
+static void mission_cleanup( Mission* misn );
+static void mission_free( MissionData* mission );
 
 
 /*
@@ -62,6 +64,43 @@ int mission_create( MissionData* misn )
 	misn_loadLibs( player_missions[i].L ); /* load our custom libraries */
 
 	return 0;
+}
+
+/*
+ * cleans up a mission
+ */
+static void mission_cleanup( Mission* misn )
+{
+	misn->data = NULL;
+	if (misn->title) free(misn->title);
+	if (misn->desc) free(misn->desc);
+	if (misn->reward) free(misn->reward);
+	lua_close(misn->L);
+}
+
+
+/*
+ * frees a mission
+ */
+static void mission_free( MissionData* mission )
+{
+	if (mission->name) {
+		free(mission->name);
+		mission->name = NULL;
+	}
+	if (mission->avail.planet) {
+		free(mission->avail.planet);
+		mission->avail.planet = NULL;
+	}
+	if (mission->avail.system) {
+		free(mission->avail.system);
+		mission->avail.system = NULL;
+	}
+	if (mission->avail.factions) {
+		free(mission->avail.factions);
+		mission->avail.factions = NULL;
+		mission->avail.nfactions = 0;
+	}
 }
 
 
@@ -93,6 +132,21 @@ int missions_load (void)
 }
 void missions_free (void)
 {
+	int i;
+
+	/* free the mission data */
+	for (i=0; i<mission_nstack; i++)
+		mission_free( &mission_stack[i] );
+	free( mission_stack );
+	mission_stack = NULL;
+	mission_nstack = 0;
+}
+void missions_cleanup (void)
+{
+	int i;
+
+	for (i=0; i<MISSION_MAX; i++)
+		mission_cleanup( &player_missions[i] );
 }
 
 

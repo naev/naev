@@ -77,6 +77,7 @@ extern Mission player_missions[MISSION_MAX];
  */
 int missions_load (void);
 void missions_free (void);
+void missions_cleanup (void);
 
 
 #endif /* MISSION_H */
