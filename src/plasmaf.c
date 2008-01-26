@@ -1,6 +1,11 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
 
 
 #include "plasmaf.h"
+
+#include "math.h"
 
 #include "SDL.h"
 
@@ -13,11 +18,14 @@
  * prototypes
  */
 static double* pf_genFractalMap( const int w, const int h, double rug );
-static void pf_divFractal( double *map, const int x, const int y,
-		const int w, const int h, const int rw, const int rh,
+static void pf_divFractal( double *map, const double x, const double y,
+		const double w, const double h, const double rw, const double rh,
 		double c1, double c2, double c3, double c4, double rug );
 
 
+/*
+ * actually generates the fractal and loads it up in an opengl texture
+ */
 glTexture* pf_genFractal( const int w, const int h, double rug )
 {
 	int i;
@@ -33,11 +41,8 @@ glTexture* pf_genFractal( const int w, const int h, double rug )
 
 	/* convert from mapping to actual colours */
 	SDL_LockSurface( sur );
-	for (i=0; i<h*w; i++) {
+	for (i=0; i<h*w; i++)
 		pix[i] = RMASK + BMASK + GMASK + (AMASK & (uint32_t)(AMASK*5000*map[i]));
-		//DEBUG("amask [%d]: %f [%u]", i, 1000*map[i],
-		//	(AMASK & (uint32_t)(AMASK*1000*map[i])));
-	}
 	SDL_UnlockSurface( sur );
 
 	free(map);
@@ -54,36 +59,36 @@ glTexture* pf_genFractal( const int w, const int h, double rug )
 static double* pf_genFractalMap( const int w, const int h, double rug )
 {
 	double *map; /* we'll use it to map out the fractal before saving */
-	int cx, cy;
+	double cx, cy;
 
 	map = malloc( w*h * sizeof(double) );
 
 	/* set up initial values */
-	cx = w/2;
-	cy = h/2;
+	cx = (double)w/2.;
+	cy = (double)h/2.;
 
 	/* start by doing the four squares */
-	pf_divFractal( map, 0,  0,  cx,   cy,   w, h, 0., 0., 1., 0., rug );
-	pf_divFractal( map, cx, 0,  w-cx, cy,   w, h, 0., 0., 0., 1., rug );
-	pf_divFractal( map, cx, cy, w-cx, h-cy, w, h, 1., 0., 0., 0., rug );
-	pf_divFractal( map, 0,  cy, cx,   h-cy, w, h, 0., 1., 0., 0., rug );
+	pf_divFractal( map, 0., 0., cx, cy, w, h, 0., 0., 1., 0., rug );
+	pf_divFractal( map, cx, 0., cx, cy, w, h, 0., 0., 0., 1., rug );
+	pf_divFractal( map, cx, cy, cx, cy, w, h, 1., 0., 0., 0., rug );
+	pf_divFractal( map, 0., cy, cx, cy, w, h, 0., 1., 0., 0., rug );
 
 	return map;
 }
 
 
-static void pf_divFractal( double *map, const int x, const int y,
-		const int w, const int h, const int rw, const int rh, 
+static void pf_divFractal( double *map, const double x, const double y,
+		const double w, const double h, const double rw, const double rh, 
 		double c1, double c2, double c3, double c4, double rug )
 {
-	int nw, nh; /* new dimensions */
+	double nw, nh; /* new dimensions */
 	double m, e1,e2,e3,e4; /* middle and edges */
 
 	/* still need to subdivide */
-	if ((w>1) || (h>1)) {
+	if ((w>1.) || (h>1.)) {
 		/* calculate new dimensions */
-		nw = w/2;
-		nh = h/2;
+		nw = w/2.;
+		nh = h/2.;
 
 		/* edges */
 		m = (c1 + c2 + c3 + c4)/4.;
@@ -93,8 +98,7 @@ static void pf_divFractal( double *map, const int x, const int y,
 		e4 = (c4 + c1)/2.;
 
 		/* now change the middle colour */
-		DEBUG("%f + %f", m, rug*(RNGF()-0.5) * ((nw+nh) / (rw+rh) * 1000));
-		m += rug*(RNGF() - rug * ((nw+nh)/(rw+rh) * 1000));
+		m += rug*(RNGF()-0.5) * ((nw+nh)/(rw+rh) * 3.);
 		if (m < 0.) m = 0.;
 		else if (m > 1.) m = 1.;
 
@@ -104,9 +108,12 @@ static void pf_divFractal( double *map, const int x, const int y,
 		pf_divFractal( map, x+nw, y+nh, nw, nh, rw, rh, m,  e2, c3, e3, rug );
 		pf_divFractal( map, x,    y+nh, nw, nh, rw, rh, e4, m,  e3, c4, rug );
 	}
-	else /* actually write the pixel */
-		map[y*rw + x] = (c1 + c2 + c3 + c4)/4.;
+	else { /* actually write the pixel */
+		//map[(int)y*(int)rw + (int)x] = (c1 + c2 + c3 + c4)/4.;
+		map[(int)round(y)*(int)rw + (int)round(x)] = (c1 + c2 + c3 + c4)/4.;
+	}
 }
+
 
 
 

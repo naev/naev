@@ -17,6 +17,7 @@
 #include "pilot.h"
 #include "space.h"
 #include "player.h"
+#include "plasmaf.h"
 
 
 #define MAIN_WIDTH		130
@@ -60,10 +61,14 @@ static void menu_death_main( char* str );
 void menu_main (void)
 {
 	unsigned int bwid, wid;
+	glTexture *tex;
+
+	tex = pf_genFractal( gl_screen.w, gl_screen.h, 10. );
 
 	/* create background image window */
 	bwid = window_create( "BG", -1, -1, gl_screen.w, gl_screen.h );
 	window_addRect( bwid, 0, 0, gl_screen.w, gl_screen.h, "rctBG", &cBlack, 0 );
+	window_addImage( bwid, 0, 0, "imgBG", tex, 0 );
 
 	/* create menu window */
 	wid = window_create( "Main Menu", -1, -1, MAIN_WIDTH, MAIN_HEIGHT );
@@ -84,6 +89,8 @@ void menu_main (void)
 static void menu_main_close (void)
 {
 	window_destroy( window_get("Main Menu") );
+
+	gl_freeTexture( window_getImage( window_get("BG"), "imgBG" ) );
 	window_destroy( window_get("BG") );
 
 	menu_Close(MENU_MAIN);
