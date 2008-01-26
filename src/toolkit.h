@@ -72,8 +72,11 @@ char* dialogue_input( char* title, int min, int max, const char *fmt, ... );
 void window_setFptr( const unsigned int wid, void (*fptr)( char* ) );
 void window_modifyText( const unsigned int wid,
 		char* name, char* newstring );
+/* image */
 void window_modifyImage( const unsigned int wid,
 		char* name, glTexture* image );
+void window_imgColour( const unsigned int wid,
+		char* name, glColour* colour );
 
 
 /*

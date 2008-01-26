@@ -69,6 +69,7 @@ void menu_main (void)
 	bwid = window_create( "BG", -1, -1, gl_screen.w, gl_screen.h );
 	window_addRect( bwid, 0, 0, gl_screen.w, gl_screen.h, "rctBG", &cBlack, 0 );
 	window_addImage( bwid, 0, 0, "imgBG", tex, 0 );
+	window_imgColour( bwid, "imgBG", &cPurple );
 
 	/* create menu window */
 	wid = window_create( "Main Menu", -1, -1, MAIN_WIDTH, MAIN_HEIGHT );

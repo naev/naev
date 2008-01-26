@@ -57,6 +57,7 @@ typedef struct Widget_ {
 		} txt;
 		struct { /* WIDGET_IMAGE */
 			glTexture* image;
+			glColour* colour;
 			int border; /* border */
 		} img;
 		struct { /* WIDGET_LIST */
@@ -251,6 +252,8 @@ void window_addImage( const unsigned int wid,
 	/* set the properties */
 	wgt->dat.img.image = image;
 	wgt->dat.img.border = border;
+	wgt->dat.img.colour = NULL; /* normal colour */
+
 	wgt->w = (image==NULL) ? 0 : wgt->dat.img.image->sw;
 	wgt->h = (image==NULL) ? 0 : wgt->dat.img.image->sh;
 	if (x < 0) wgt->x = wdw->w - wgt->w + x;
@@ -455,6 +458,18 @@ void window_modifyImage( const unsigned int wid,
 	Widget *wgt = window_getwgt(wid,name);
 
 	wgt->dat.img.image = image;
+}
+
+
+/*
+ * changes an existing image's colour
+ */
+void window_imgColour( const unsigned int wid,
+      char* name, glColour* colour )
+{
+	Widget *wgt = window_getwgt(wid,name);
+
+	wgt->dat.img.colour = colour;
 }
 
 
@@ -1009,7 +1024,8 @@ static void toolkit_renderImage( Widget* img, double bx, double by )
 	 */
 	gl_blitStatic( img->dat.img.image,
 			x + (double)gl_screen.w/2.,
-			y + (double)gl_screen.h/2., NULL );
+			y + (double)gl_screen.h/2.,
+			img->dat.img.colour );
 
 	if (img->dat.img.border) {
 		/* inner outline (outwards) */
