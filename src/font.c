@@ -319,6 +319,53 @@ int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
 	return n;
 }
 
+/*
+ * prints the height of the text about to be printed
+ */
+int gl_printHeight( const glFont *ft_font,
+		const int width, const char *fmt, ... )
+{
+   char text[1024]; /* holds the string */
+   va_list ap;
+   int p, i, n, len, lastspace;
+   double x,y;
+   
+   if (ft_font == NULL) ft_font = &gl_defFont;
+   
+   if (fmt == NULL) return -1;
+   else { /* convert the symbols to text */
+      va_start(ap, fmt);
+      vsprintf(text, fmt, ap);
+      va_end(ap);
+   } 
+   x = 0.;
+   y = 0.;
+   
+   len = (int)strlen(text);
+   /* limit size per line */
+   lastspace = -1; /* last ' ' or '\n' in the text */
+   n = 0; /* current width */
+   i = 0; /* current position */
+   p = -1; /* where we last drew up to */
+   while (i<len+1) {
+
+      n += ft_font->w[ (int)text[i] ];
+
+      if ((text[i]==' ') || (text[i]=='\n') || (text[i]=='\0')) lastspace = i;
+
+      if (((n > width) && (p!=lastspace))
+            || (text[i]=='\n') || (text[i]=='\0')) {
+         p = lastspace;
+         n = 0;
+         i = lastspace;
+         y += 1.5*(double)ft_font->h; /* move position down */
+      }
+      i++;
+   }
+	
+	return (int) y;
+}
+
 
 /*
  *

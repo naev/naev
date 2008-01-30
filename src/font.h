@@ -51,6 +51,8 @@ int gl_printText( const glFont *ft_font,
 		glColour* c, const char *fmt, ... );
 /* gets the width of the text wanting to be printed */
 int gl_printWidth( const glFont *ft_font, const char *fmt, ... );
+int gl_printHeight( const glFont *ft_font,
+		const int width, const char *fmt, ... );
 
 
 #endif /* FONT_H */
