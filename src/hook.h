@@ -11,9 +11,9 @@
 
 
 /* add/run hooks */
-int hook_add( lua_State *L, char *parent, char *func, char *stack );
+int hook_add( lua_State *L, unsigned int parent, char *func, char *stack );
 void hook_rm( int id );
-void hook_rmParent( char* parent );
+void hook_rmParent( unsigned int parent );
 
 /* run hooks */
 int hooks_run( char* stack );

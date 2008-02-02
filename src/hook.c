@@ -18,7 +18,7 @@
 typedef struct Hook_ {
 	int id;
 	lua_State *L;
-	char *parent;
+	unsigned int parent;
 	char *func;
 	char *stack;
 } Hook;
@@ -27,7 +27,7 @@ typedef struct Hook_ {
 /* 
  * the stack
  */
-static int hook_id = 0; /* unique hook id */
+static unsigned int hook_id = 0; /* unique hook id */
 static Hook* hook_stack = NULL;
 static int hook_mstack = 0;
 static int hook_nstack = 0;
@@ -44,7 +44,7 @@ int hook_run( Hook *hook )
 	
 	lua_getglobal(L, hook->func);
 	if (lua_pcall(L, 0, 0, 0)) /* error has occured */
-		WARN("Hook [%s] '%s' -> '%s': %s", hook->stack,
+		WARN("Hook [%s] '%d' -> '%s': %s", hook->stack,
 				hook->parent, hook->func, lua_tostring(L,-1));
 
 	return 0;
@@ -54,7 +54,7 @@ int hook_run( Hook *hook )
 /*
  * add/remove hooks
  */
-int hook_add( lua_State *L, char *parent, char *func, char *stack )
+int hook_add( lua_State *L, unsigned int parent, char *func, char *stack )
 {
 	Hook *new_hook;
 
@@ -94,12 +94,12 @@ void hook_rm( int id )
 	memmove( &hook_stack[m+1], &hook_stack[m+2], hook_nstack-(m+1) );
 	hook_nstack--;
 }
-void hook_rmParent( char* parent )
+void hook_rmParent( unsigned int parent)
 {
 	int i;
 
 	for (i=0; i<hook_nstack; i++)
-		if (strcmp(parent,hook_stack[i].parent)==0) {
+		if (parent == hook_stack[i].parent) {
 			hook_rm( hook_stack[i].id );
 			i--;
 		}

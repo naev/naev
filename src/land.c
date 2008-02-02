@@ -13,6 +13,7 @@
 #include "rng.h"
 #include "music.h"
 #include "economy.h"
+#include "hook.h"
 
 
 /* global/main window */
@@ -813,6 +814,7 @@ void land( Planet* p )
 
 	/* player is now officially landed */
 	landed = 1;
+	hooks_run("land");
 }
 
 
@@ -854,5 +856,6 @@ void takeoff (void)
 	land_planet = NULL;
 	window_destroy( land_wid );
 	landed = 0;
+	hooks_run("takeoff");
 }
 

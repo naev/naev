@@ -14,7 +14,7 @@
 
 #include "naev.h"
 #include "log.h"
-
+#include "hook.h"
 
 
 
@@ -71,6 +71,7 @@ int mission_create( MissionData* misn )
  */
 static void mission_cleanup( Mission* misn )
 {
+	hook_rmParent( misn->id ); /* remove existing hooks */
 	misn->data = NULL;
 	if (misn->title) free(misn->title);
 	if (misn->desc) free(misn->desc);

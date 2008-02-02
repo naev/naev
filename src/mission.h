@@ -28,6 +28,9 @@
 #define	MISSION_UNIQUE			1 /* unique missions can't be repeated */
 
 
+/*
+ * static mission data
+ */
 typedef struct MissionData_ {
 	char *name; /* the name of the mission */
 
@@ -56,6 +59,7 @@ typedef struct MissionData_ {
  */
 typedef struct Mission_ {
 	MissionData *data;
+	unsigned int id; /* unique mission identifier, used for keeping track of hooks */
 
 	char *title; /* not to be confused with name */
 	char *desc; /* description of the mission */
