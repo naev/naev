@@ -1,10 +1,13 @@
-
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
 
 #include "misn_lua.h"
 
 #include "lua.h"
 #include "lauxlib.h"
 
+#include "hook.h"
 #include "mission.h"
 #include "log.h"
 #include "naev.h"
@@ -45,6 +48,12 @@ static const luaL_reg rnd_methods[] = {
 	{ "int", rnd_int },
 	{0,0}
 };
+/* hooks */
+static int hook_land( lua_State *L );
+static const luaL_reg hook_methods[] = {
+	{ "land", hook_land },
+	{0,0}
+};
 
 
 /*
@@ -55,6 +64,7 @@ int misn_loadLibs( lua_State *L )
 	luaL_register(L, "misn", misn_methods);
 	luaL_register(L, "space", space_methods);
 	luaL_register(L, "rnd", rnd_methods);
+	luaL_register(L, "hook", hook_methods);
 	return 0;
 }
 
@@ -151,4 +161,23 @@ static int rnd_int( lua_State *L )
 	else return 0;
 
 	return 1; /* unless it's returned 0 already it'll always return a parameter */
+}
+
+/*
+ * H O O K
+ */
+static int hook_land( lua_State *L )
+{
+	char *parent, *func;
+
+	MIN_ARGS(1);
+
+	parent = cur_mission->data->name;
+	if (lua_isstring(L,-1)) func = (char*)lua_tostring(L,-1);
+	else {
+		WARN("mission %s: trying to push non-valid function hook", parent);
+		return 0;
+	}
+	hook_add( L, parent, func, "land" );
+	return 0;
 }

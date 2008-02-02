@@ -1,3 +1,6 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
 
 
 #ifndef MISN_LUA

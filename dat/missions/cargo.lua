@@ -1,6 +1,6 @@
 
 
-
+-- Create the mission
 function create()
 
 	-- target destination
@@ -16,7 +16,27 @@ function create()
 	misn.setDesc( string.format(
 				"%s needs a rush delivery of %d tons of %s by %s.",
 				planet, carg_mass, carg_type, "SOMEDAY" ) )
-	misn.setReward( string.format( "%d credits",
-				carg_mass * 1000 + rnd.int( 0, 5000 ) ) )
+	misn_reward = carg_mass * 1000 + rnd.int( 0, 5000 )
+	misn.setReward( string.format( "%d credits", misn_reward ) )
 
+	-- set the hooks
+	hook.land( "land" )
+end
+
+-- Mission is accepted
+function accept()
+	player.addCargo( carg_type, carg_mass )
+	toolkit.msg( "Mission Accepted",
+			string.format( "The workers load the %d tons of %s onto your ship."
+					carg_mass, carg_type ) )
+end
+
+-- Land hook
+function land()
+	if planet.name() == planet then
+		player.rmCargo( carg_type, carg_mass )
+		player.pay( misn_reward )
+		toolkit.msg( "Mission Accomplished",
+				string.format( "The workers unload the %s at the docks.", carg_type ) )
+	end
 end
