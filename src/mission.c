@@ -21,6 +21,7 @@
 /*
  * current player missions
  */
+static unsigned int mission_id = 0;
 Mission player_missions[MISSION_MAX];
 
 
@@ -56,12 +57,20 @@ int mission_create( MissionData* misn )
 	if (i>=MISSION_MAX) return -1;
 
 
+	player_missions[i].id = ++mission_id;
 	player_missions[i].data = misn;
 
 	/* init lua */
 	player_missions[i].L = luaL_newstate();
 	luaopen_string( player_missions[i].L ); /* string.format can be very useful */
 	misn_loadLibs( player_missions[i].L ); /* load our custom libraries */
+
+	/* run create function */
+	lua_getglobal(player_missions[i].L, "create");
+	if (lua_pcall(player_missions[i].L, 0, 0, 0)) /* error has occured */
+		WARN("Mission '%s' -> 'create': %s",
+				misn->name, lua_tostring(player_missions[i].L,-1));
+
 
 	return 0;
 }
