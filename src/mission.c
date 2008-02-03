@@ -77,10 +77,7 @@ int mission_create( MissionData* misn )
 	misn_loadLibs( player_missions[i].L ); /* load our custom libraries */
 
 	/* run create function */
-	lua_getglobal(player_missions[i].L, "create");
-	if (lua_pcall(player_missions[i].L, 0, 0, 0)) /* error has occured */
-		WARN("Mission '%s' -> 'create': %s",
-				misn->name, lua_tostring(player_missions[i].L,-1));
+	misn_run( &player_missions[i], "create");
 
 	return 0;
 }
