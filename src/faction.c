@@ -94,7 +94,7 @@ int faction_getAlliance( char* name )
 {
 	int i;
 	for (i=0; i<nalliances; i++)
-		if (strcmp(faction_stack[i].name, name)==0)
+		if (strcmp(alliances[i].name, name)==0)
 			break;
 	
 	if (i != nalliances)
