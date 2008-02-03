@@ -1,0 +1,16 @@
+<Missions>
+<mission name="Welcome">
+<lua>welcome</lua>
+<avail>
+<location>None</location>
+</avail>
+</mission>
+<mission name="Cargo Freight">
+<lua>cargo</lua>
+<avail>
+<location>Computer</location>
+<alliance>Neutral</alliance>
+<alliance>Empire United</alliance>
+</avail>
+</mission>
+</Missions>
