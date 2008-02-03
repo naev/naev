@@ -43,6 +43,7 @@
 #define FLAG_INTERFERENCESET	(1<<3)
 #define FLAG_SERVICESSET		(1<<4)
 #define FLAG_TECHSET				(1<<5)
+#define FLAG_FACTIONSET			(1<<6)
 
 
 /* 
@@ -425,9 +426,10 @@ static Planet* planet_get( const char* name )
 							if (xml_isNode(cur,"class"))
 								temp->class =
 									planetclass_get(cur->children->content[0]);
-							else if (xml_isNode(cur,"faction"))
+							else if (xml_isNode(cur,"faction")) {
+								flags |= FLAG_FACTIONSET;
 								temp->faction = faction_get( xml_get(cur) );
-
+							}
 							else if (xml_isNode(cur, "description"))
 								temp->description = strdup( xml_get(cur) );
 
@@ -503,7 +505,7 @@ static Planet* planet_get( const char* name )
 		MELEMENT( planet_hasService(temp,PLANET_SERVICE_BASIC) &&
 				temp->bar_description==NULL,"bar");
 		MELEMENT( planet_hasService(temp,PLANET_SERVICE_BASIC) &&
-				temp->faction==NULL,"faction");
+				(flags&FLAG_FACTIONSET)==0,"faction");
 		MELEMENT((flags&FLAG_SERVICESSET)==0,"services");
 		MELEMENT( (planet_hasService(temp,PLANET_SERVICE_OUTFITS) ||
 				planet_hasService(temp,PLANET_SERVICE_SHIPYARD)) &&

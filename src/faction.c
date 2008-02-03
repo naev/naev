@@ -26,8 +26,19 @@
 #define FACTION_DATA  "dat/faction.xml"
 
 
-Faction* faction_stack = NULL;
-int nfactions = 0;
+typedef struct Faction_ {
+	char* name;
+
+	int* enemies;
+	int nenemies;
+	int* allies;
+	int nallies;
+
+} Faction;
+
+
+static Faction* faction_stack = NULL;
+static int nfactions = 0;
 
 
 /*
@@ -35,7 +46,7 @@ int nfactions = 0;
  */
 typedef struct Alliance_ {
 	char* name;
-	Faction** factions;
+	int* factions;
 	int nfactions;
 } Alliance;
 
@@ -59,7 +70,7 @@ static Alliance* alliance_get( char* name );
 /*
  * returns the faction of name name
  */
-Faction* faction_get( const char* name )
+int faction_get( const char* name )
 {
 	int i;
 	for (i=0; i<nfactions; i++) 
@@ -67,9 +78,20 @@ Faction* faction_get( const char* name )
 			break;
 
 	if (i != nfactions)
-		return faction_stack+i;
-	return NULL;
+		return i;
+	DEBUG("Faction '%s' not found in stack.", name);
+	return -1;
 }
+
+
+/*
+ * returns the faction's name
+ */
+char* faction_name( int f )
+{
+	return faction_stack[f].name;
+}
+
 
 /*
  * returns the alliance of name name
@@ -90,18 +112,22 @@ static Alliance* alliance_get( char* name )
 /*
  * returns 1 if Faction a and b are enemies
  */
-int areEnemies( Faction* a, Faction* b)
+int areEnemies( int a, int b)
 {
+	Faction *fa, *fb;
 	int i;
 
-	if (a==b) return 0;
-	else if ((a==NULL) || (b==NULL)) return 0;
+	if ((a==b) || (a>=nfactions) || (b>=nfactions)
+			|| (a<0) || (b<0)) return 0;
+	
+	fa = &faction_stack[a];
+	fb = &faction_stack[b];
 
-	for (i=0;i<a->nenemies;i++)
-		if (a->enemies[i] == b)
+	for (i=0;i<fa->nenemies;i++)
+		if (fa->enemies[i] == b)
 			return 1;
-	for (i=0;i<b->nenemies;i++)
-		if(b->enemies[i] == a)
+	for (i=0;i<fb->nenemies;i++)
+		if(fb->enemies[i] == a)
 			return 1;
 	return 0;
 }
@@ -110,18 +136,23 @@ int areEnemies( Faction* a, Faction* b)
 /*
  * returns 1 if Faction a and b are allies
  */
-int areAllies( Faction* a, Faction* b )
+int areAllies( int a, int b )
 {
+	Faction *fa, *fb;
 	int i;
 
+	if ((a>=nfactions) || (b>=nfactions)
+		|| (a<0) || (b<0)) return 0;
 	if (a==b) return 1;
-	else if ((a==NULL) || (b==NULL)) return 0;
 
-	for (i=0;i<a->nallies;i++)
-		if (a->allies[i] == b)                               
+	fa = &faction_stack[a];
+	fb = &faction_stack[b];
+
+	for (i=0;i<fa->nallies;i++)
+		if (fa->allies[i] == b)
 			return 1;
-	for (i=0;i<b->nallies;i++)
-		if(b->allies[i] == a)
+	for (i=0;i<fb->nallies;i++)
+		if(fb->allies[i] == a)
 			return 1;
 	return 0;
 }
@@ -148,6 +179,7 @@ static void alliance_parse( xmlNodePtr parent )
 {
 	Alliance* a;
 	int *i,j,n,m;
+	Faction* ft;
 	xmlNodePtr node, cur;
 
 	node = parent->xmlChildrenNode;
@@ -173,11 +205,11 @@ static void alliance_parse( xmlNodePtr parent )
 					(*i)++;
 
 					/* load the faction */
-					a->factions = realloc( a->factions, (*i)*sizeof(Faction*) );
+					a->factions = realloc( a->factions, (*i)*sizeof(int) );
 					a->factions[(*i)-1] = faction_get((char*)cur->children->content);
 							
-					if (a->factions[(*i)-1]==NULL)
-						WARN("Faction %s in alliance %s doesn't exist in "FACTION_DATA,
+					if (a->factions[(*i)-1] == -1)
+						WARN("Faction '%s' in alliance '%s' doesn't exist in "FACTION_DATA,
 								(char*)cur->children->content, a->name );
 				}
 			} while ((cur = cur->next));
@@ -185,14 +217,13 @@ static void alliance_parse( xmlNodePtr parent )
 
 			/* set the stuff needed in faction_stack */
 			for (j=0; j<(*i); j++) {
-				a->factions[j]->nallies += (*i)-1;
-				a->factions[j]->allies = realloc( a->factions[j]->allies, 
-						(a->factions[j]->nallies)*sizeof(Faction*));
+				ft = &faction_stack[ a->factions[j] ];
+				ft->nallies += (*i)-1;
+				ft->allies = realloc( ft->allies, (ft->nallies)*sizeof(int));
 				for (n=0,m=0; n<(*i); n++,m++) { /* add as ally all factions except self */
 					if (n==j) m--;
 					else if (n!=j)
-						a->factions[j]->allies[ a->factions[j]->nallies-(*i)+1+m ] =
-								a->factions[n];
+						ft->allies[ ft->nallies-(*i)+1+m ] = a->factions[n];
 				}
 			}
 		}
@@ -206,7 +237,8 @@ static void alliance_parse( xmlNodePtr parent )
 static void enemies_parse( xmlNodePtr parent )
 {
 	xmlNodePtr node, cur;
-	Faction*** f;
+	int** f;
+	Faction* ft;
 	Alliance* a;
 	int i, *j, n, m, x, y, z, e;
 	char* type;
@@ -229,7 +261,7 @@ static void enemies_parse( xmlNodePtr parent )
 					
 					i++;
 					j = realloc(j, sizeof(int)*i);
-					f = realloc(f, sizeof(Faction**)*i);
+					f = realloc(f, sizeof(int*)*i);
 
 					/* enemy thing is an alliance */
 					if (strcmp(type,"alliance")==0) {
@@ -242,9 +274,9 @@ static void enemies_parse( xmlNodePtr parent )
 					/* enemy thing is only a faction */
 					else if (strcmp(type,"faction")==0) {
 						j[i-1] = 1;
-						f[i-1] = malloc(sizeof(Faction*));
+						f[i-1] = malloc(sizeof(int));
 						f[i-1][0] = faction_get( (char*)cur->children->content );
-						if (f[i-1][0]==NULL)
+						if (f[i-1][0] == -1)
 							WARN("Faction %s not found in stack", (char*)cur->children->content);
 					}
 
@@ -253,22 +285,22 @@ static void enemies_parse( xmlNodePtr parent )
 			} while ((cur = cur->next));
 
 			/* now actually parse and load up the enemies */
-			for (n=0; n<i; n++) { /* Faction** */
-				for (m=0; m<j[n]; m++) { /* Faction* */
+			for (n=0; n<i; n++) { /* unsigned int** */
+				for (m=0; m<j[n]; m++) { /* unsigned int* */
 
 					/* add all the faction enemies to nenemies and alloc */
 					for (e=0,x=0; x<i; x++)
 						if (x!=n) e += j[x]; /* stores the total enemies */
 					/* now alloc the memory */
-					f[n][m]->nenemies += e;
-					f[n][m]->enemies = realloc( f[n][m]->enemies,
-							sizeof(Faction*)*f[n][m]->nenemies );
+					ft = &faction_stack[ f[n][m] ];
+					ft->nenemies += e;
+					ft->enemies = realloc( ft->enemies, sizeof(int)*ft->nenemies );
 
 					/* now add the actual enemies */
 					for (x=0,z=0; x<i; x++)
 						if (x!=n) /* make sure isn't from the same group */
 							for (y=0; y<j[x]; y++,z++)
-								f[n][m]->enemies[ f[n][m]->nenemies-e + z ] = f[x][y];
+								ft->enemies[ ft->nenemies-e + z ] = f[x][y];
 				}
 			}
 			/* free all the temporary memory */

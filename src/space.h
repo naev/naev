@@ -68,7 +68,7 @@ typedef struct Planet_ {
 	Vector2d pos; /* position in star system */
 
 	PlanetClass class; /* planet type */
-	Faction* faction; /* planet faction */
+	int faction; /* planet faction */
 	
 	char* description; /* planet description */
 	char* bar_description; /* spaceport bar description */
@@ -99,7 +99,7 @@ typedef struct StarSystem_ {
 	int stars, asteroids; /* in number */
 	double interference; /* in % */
 
-	Faction *faction; /* overall faction */
+	int faction; /* overall faction */
 
 	Planet *planets; /* planets */
 	int nplanets; /* total number of planets */

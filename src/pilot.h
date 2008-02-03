@@ -79,7 +79,7 @@ typedef struct Pilot_ {
 	unsigned int id; /* pilot's id, used for many functions */
 	char* name; /* pilot's name (if unique) */
 
-	Faction* faction;
+	int faction;
 
 	/* object caracteristics */
 	Ship* ship; /* ship pilot is flying */
@@ -135,7 +135,7 @@ typedef struct FleetPilot_ {
 } FleetPilot;
 typedef struct Fleet_ {
 	char* name; /* fleet name, used as the identifier */
-	Faction* faction; /* faction of the fleet */
+	int faction; /* faction of the fleet */
 
 	AI_Profile* ai; /* AI profile to use */
 
@@ -175,9 +175,9 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity );
 /*
  * creation
  */
-void pilot_init( Pilot* dest, Ship* ship, char* name, Faction* faction, AI_Profile* ai,
+void pilot_init( Pilot* dest, Ship* ship, char* name, int faction, AI_Profile* ai,
 		const double dir, const Vector2d* pos, const Vector2d* vel, const int flags );
-unsigned int pilot_create( Ship* ship, char* name, Faction* faction, AI_Profile* ai,
+unsigned int pilot_create( Ship* ship, char* name, int faction, AI_Profile* ai,
 		const double dir, const Vector2d* pos, const Vector2d* vel, const int flags );
 Pilot* pilot_copy( Pilot* src );
 

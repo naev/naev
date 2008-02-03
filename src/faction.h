@@ -8,22 +8,11 @@
 #  define FACTION_H
 
 
-typedef struct Faction_ {
+int faction_get( const char* name );
+char* faction_name( int f );
 
-	char* name;
-
-	struct Faction_** enemies;
-	int nenemies;
-	struct Faction_** allies;
-	int nallies;
-
-} Faction;
-
-
-Faction* faction_get( const char* name );
-
-int areEnemies( Faction* a, Faction* b );
-int areAllies( Faction* a, Faction* b );
+int areEnemies( int a, int b );
+int areAllies( int a, int b );
 
 int factions_load (void);
 void factions_free (void);

@@ -9,8 +9,6 @@
 
 #include "misn_lua.h"
 
-#include "faction.h"
-
 
 /* availability by location */
 #define	MIS_AVAIL_NONE			0
@@ -45,7 +43,7 @@ typedef struct MissionData_ {
 		char *system;
 
 		/* for generic cases */
-		Faction *factions;
+		int* factions;
 		int nfactions;
 	} avail;
 

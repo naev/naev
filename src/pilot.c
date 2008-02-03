@@ -796,7 +796,7 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
  * @ pos : initial position
  * @ flags : used for tweaking the pilot
  */
-void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction, AI_Profile* ai,
+void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* ai,
 		const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
 {
 	if (flags & PILOT_PLAYER) /* player is ID 0 */
@@ -878,7 +878,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, Faction* faction, AI_Prof
  *
  * returns pilot's id
  */
-unsigned int pilot_create( Ship* ship, char* name, Faction* faction, AI_Profile* ai,
+unsigned int pilot_create( Ship* ship, char* name, int faction, AI_Profile* ai,
 		const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
 {
 	Pilot **tp, *dyn;
@@ -1076,6 +1076,7 @@ static Fleet* fleet_parse( const xmlNodePtr parent )
 	node  = parent->xmlChildrenNode;
 
 	Fleet* temp = CALLOC_ONE(Fleet);
+	temp->faction = -1;
 
 	temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name"); /* already mallocs */
 	if (temp->name == NULL) WARN("Fleet in "FLEET_DATA" has invalid or no name");
@@ -1118,7 +1119,7 @@ static Fleet* fleet_parse( const xmlNodePtr parent )
 
 #define MELEMENT(o,s)      if (o) WARN("Fleet '%s' missing '"s"' element", temp->name)
 	MELEMENT(temp->ai==NULL,"ai");
-	MELEMENT(temp->faction==NULL,"faction");
+	MELEMENT(temp->faction==-1,"faction");
 	MELEMENT(temp->pilots==NULL,"pilots");
 #undef MELEMENT
 

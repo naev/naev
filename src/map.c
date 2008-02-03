@@ -103,7 +103,7 @@ static void map_update (void)
 {
 	int i;
 	StarSystem* sys;
-	Faction* f;
+	int f;
 	char buf[100];
 
 	sys = &systems_stack[ map_selected ];
@@ -113,9 +113,9 @@ static void map_update (void)
 	if (sys->nplanets == 0) /* no planets -> no factions */
 		snprintf( buf, 100, "NA" );
 	else {
-		f = NULL;
+		f = -1;
 		for (i=0; i<sys->nplanets; i++) {
-			if (f==NULL)
+			if (f==-1)
 				f = sys->planets[i].faction;
 			else if (f!= sys->planets[i].faction) { /* TODO more verbosity */
 				snprintf( buf, 100, "Multiple" );
@@ -123,7 +123,7 @@ static void map_update (void)
 			}
 		}
 		if (i==sys->nplanets) /* saw them all and all the same */
-			snprintf( buf, 100, "%s", f->name );
+			snprintf( buf, 100, "%s", faction_name(f) );
 	}
 	window_modifyText( map_wid, "txtFaction", buf );
 

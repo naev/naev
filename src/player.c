@@ -735,7 +735,7 @@ void player_render (void)
 		gl_print( &gl_smallFont,
 				gui.target_faction.x,
 				gui.target_faction.y,
-				NULL, "%s", p->faction->name );
+				NULL, "%s", faction_name(p->faction) );
 
 		/* target status */
 		if (pilot_isDisabled(p)) /* pilot is disabled */

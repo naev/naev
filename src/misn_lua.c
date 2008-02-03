@@ -168,16 +168,16 @@ static int rnd_int( lua_State *L )
  */
 static int hook_land( lua_State *L )
 {
-	char *parent, *func;
+	char *func;
 
 	MIN_ARGS(1);
 
-	parent = cur_mission->data->name;
 	if (lua_isstring(L,-1)) func = (char*)lua_tostring(L,-1);
 	else {
-		WARN("mission %s: trying to push non-valid function hook", parent);
+		WARN("mission '%s': trying to push non-valid function hook",
+				cur_mission->data->name);
 		return 0;
 	}
-	hook_add( L, parent, func, "land" );
+	hook_add( L, cur_mission->id, func, "land" );
 	return 0;
 }
