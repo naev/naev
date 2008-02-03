@@ -1589,6 +1589,7 @@ void dialogue_alert( const char *fmt, ... )
 	char msg[256];
 	va_list ap;
 	unsigned int wdw;
+	int h;
 
 	if (window_exists( "Warning" )) return;
 
@@ -1599,8 +1600,11 @@ void dialogue_alert( const char *fmt, ... )
 		va_end(ap);
 	}
 
-	wdw = window_create( "Warning", -1, -1, 300, 140 );
-	window_addText( wdw, 20, -30, 260, 70,  0, "txtAlert",
+	h = gl_printHeight( &gl_smallFont, 260, msg );
+
+	/* create the window */
+	wdw = window_create( "Warning", -1, -1, 300, 90 + h );
+	window_addText( wdw, 20, -30, 260, h,  0, "txtAlert",
 			&gl_smallFont, &cBlack, msg );
 	window_addButton( wdw, 135, 20, 50, 30, "btnOK", "OK",
 			dialogue_alertClose );
@@ -1622,6 +1626,7 @@ int dialogue_YesNo( char* caption, const char *fmt, ... )
 {
 	char msg[256];
 	va_list ap;
+	int h;
 
 	if (yesno_wid) return -1;
 
@@ -1632,10 +1637,13 @@ int dialogue_YesNo( char* caption, const char *fmt, ... )
 		va_end(ap);
 	}
 
+	/* get text height */
+	h = gl_printHeight( &gl_smallFont, 260, msg );
+
 	/* create window */
-	yesno_wid = window_create( caption, -1, -1, 300, 140 );
+	yesno_wid = window_create( caption, -1, -1, 300, h+90 );
 	/* text */
-	window_addText( yesno_wid, 20, -30, 260, 70,  0, "txtYesNo",
+	window_addText( yesno_wid, 20, -30, 260, h,  0, "txtYesNo",
 			&gl_smallFont, &cBlack, msg );
 	/* buttons */
 	window_addButton( yesno_wid, 300/2-50-10, 20, 50, 30, "btnYes", "Yes",
@@ -1671,6 +1679,7 @@ char* dialogue_input( char* title, int min, int max, const char *fmt, ... )
 {
 	char msg[256], *input;
 	va_list ap;
+	int h;
 
 	if (input_wid) return NULL;
 
@@ -1681,15 +1690,17 @@ char* dialogue_input( char* title, int min, int max, const char *fmt, ... )
 		va_end(ap);
 	}
 
-	   
+	/* get text height */
+	h = gl_printHeight( &gl_smallFont, 200, msg );
+
 	/* create window */
-	input_wid = window_create( title, -1, -1, 240, 160 );
+	input_wid = window_create( title, -1, -1, 240, h+140 );
 	window_setFptr( input_wid, dialogue_inputClose );
 	/* text */
-	window_addText( input_wid, 30, -30, 200, 40,  0, "txtInput",
+	window_addText( input_wid, 30, -30, 200, h,  0, "txtInput",
 			&gl_smallFont, &cDConsole, msg );
 	/* input */
-	window_addInput( input_wid, 20, -70, 200, 20, "inpInput", max, 1 );
+	window_addInput( input_wid, 20, -50-h, 200, 20, "inpInput", max, 1 );
 	/* button */
 	window_addButton( input_wid, -20, 20, 80, 30,
 			"btnClose", "Done", dialogue_inputClose );
