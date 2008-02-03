@@ -26,6 +26,9 @@
 #define FACTION_DATA  "dat/faction.xml"
 
 
+#define ALLIANCE_OFFSET		27182	/* special offset for alliances */
+
+
 typedef struct Faction_ {
 	char* name;
 
@@ -85,6 +88,23 @@ int faction_get( const char* name )
 
 
 /*
+ * returns the id of an alliance
+ */
+int faction_getAlliance( char* name )
+{
+	int i;
+	for (i=0; i<nalliances; i++)
+		if (strcmp(faction_stack[i].name, name)==0)
+			break;
+	
+	if (i != nalliances)
+		return ALLIANCE_OFFSET + i;
+	DEBUG("Alliance '%s' not found in stack.", name);
+	return -1;
+}
+
+
+/*
  * returns the faction's name
  */
 char* faction_name( int f )
@@ -117,18 +137,32 @@ int areEnemies( int a, int b)
 	Faction *fa, *fb;
 	int i;
 
-	if ((a==b) || (a>=nfactions) || (b>=nfactions)
-			|| (a<0) || (b<0)) return 0;
-	
-	fa = &faction_stack[a];
-	fb = &faction_stack[b];
+	if (a==b) return 0; /* luckily our factions aren't masochistic */
 
-	for (i=0;i<fa->nenemies;i++)
-		if (fa->enemies[i] == b)
-			return 1;
-	for (i=0;i<fb->nenemies;i++)
-		if(fb->enemies[i] == a)
-			return 1;
+	/* handle a */
+	if (faction_isFaction(a)) fa = &faction_stack[a];
+	else { /* a isn't valid */
+		DEBUG("areEnemies: %d is an invalid faction/alliance", a);
+		return 0;
+	}
+
+	/* handle b */
+	if (faction_isFaction(b)) fb = &faction_stack[b];
+	else { /* b is invalid */
+		DEBUG("areEnemies: %d is an invalid faction/alliance", b);
+		return 0;
+	}
+
+	/* both are factions */
+	if (fa && fb) {
+		for (i=0;i<fa->nenemies;i++)
+			if (fa->enemies[i] == b)
+				return 1;
+		for (i=0;i<fb->nenemies;i++)
+			if(fb->enemies[i] == a)
+				return 1;
+	}
+
 	return 0;
 }
 
@@ -141,26 +175,88 @@ int areAllies( int a, int b )
 	Faction *fa, *fb;
 	int i;
 
-	if ((a>=nfactions) || (b>=nfactions)
-		|| (a<0) || (b<0)) return 0;
+	/* handle a */
+	if (faction_isFaction(a)) fa = &faction_stack[a];
+	else { /* a isn't valid */
+		DEBUG("areEnemies: %d is an invalid faction/alliance", a);
+		return 0;
+	}
+
+	/* handle b */
+	if (faction_isFaction(b)) fb = &faction_stack[b];
+	else { /* b is invalid */
+		DEBUG("areEnemies: %d is an invalid faction/alliance", b);
+		return 0;
+	}
+
 	if (a==b) return 1;
 
-	fa = &faction_stack[a];
-	fb = &faction_stack[b];
+	/* both are factions */
+	if (fa && fb) {
+		for (i=0;i<fa->nallies;i++)
+			if (fa->allies[i] == b)
+				return 1;
+		for (i=0;i<fb->nallies;i++)
+			if(fb->allies[i] == a)
+				return 1;
+	}
+	return 0;
+}
 
-	for (i=0;i<fa->nallies;i++)
-		if (fa->allies[i] == b)
-			return 1;
-	for (i=0;i<fb->nallies;i++)
-		if(fb->allies[i] == a)
+
+/*
+ * is faction f part of alliance a?
+ */
+int faction_ofAlliance( int f, int a )
+{
+	int i;
+	Alliance* aa;
+
+	/* validize faction and alliance */
+	if (!faction_isFaction(f)) {
+		DEBUG("faction_ofAlliance: invalid faction '%d'", f);
+		return 0;
+	}
+	if (!faction_isAlliance(a)) {
+		DEBUG("faction_ofAlliance: invalid alliance '%d'", a);
+		return 0;
+	}
+
+	aa = &alliances[a];
+
+	for (i=0; i<aa->nfactions; i++)
+		if (aa->factions[i] == f)
 			return 1;
 	return 0;
 }
 
 
 /*
+ * returns true if a is an alliance
+ */
+int faction_isAlliance( int a )
+{
+	if ((a<ALLIANCE_OFFSET) || (a>=ALLIANCE_OFFSET+nalliances))
+		return 0;
+	return 1;
+}
+
+
+/*
+ * returns true if f is a faction
+ */
+int faction_isFaction( int f )
+{
+	if ((f<0) || (f>=nfactions))
+		return 0;
+	return 1;
+}
+
+
+/*
  * parses a single faction, but doesn't set the allies/enemies bit
  */
+
 static Faction* faction_parse( xmlNodePtr parent )
 {
 	Faction* temp = CALLOC_ONE(Faction);
