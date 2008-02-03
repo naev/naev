@@ -18,6 +18,7 @@
 #include "hook.h"
 #include "pack.h"
 #include "xml.h"
+#include "faction.h"
 
 
 #define XML_MISSION_ID			"Missions"   /* XML section identifier */
@@ -166,8 +167,22 @@ static MissionData* mission_parse( const xmlNodePtr parent )
 			do {
 				if (xml_isNode(cur,"location"))
 					temp->avail.loc = mission_location( xml_get(cur) );
-				/*else if (xml_isNode(cur,""))  need to parse other thingies
-					temp->u.amm.damage_shield = xml_getFloat(cur);*/
+				else if (xml_isNode(cur,"planet"))
+					temp->avail.planet = strdup( xml_get(cur) );
+				else if (xml_isNode(cur,"system"))
+					temp->avail.system = strdup( xml_get(cur) );
+				else if (xml_isNode(cur,"alliance")) {
+					temp->avail.factions = realloc( temp->avail.factions,
+							sizeof(int) * ++temp->avail.nfactions );
+					temp->avail.factions[temp->avail.nfactions-1] = 
+							faction_getAlliance( xml_get(cur) );
+				}
+				else if (xml_isNode(cur,"faction")) {
+					temp->avail.factions = realloc( temp->avail.factions, 
+							sizeof(int) * ++temp->avail.nfactions );
+					temp->avail.factions[temp->avail.nfactions-1] =
+							faction_get( xml_get(cur) );
+				}
 			} while ((cur = cur->next));
 		}
 	} while ((node = node->next));
