@@ -13,6 +13,7 @@
 
 
 /* availability by location */
+#define	MIS_AVAIL_NONE			0
 #define	MIS_AVAIL_COMPUTER	1
 #define	MIS_AVAIL_BAR			2
 #define	MIS_AVAIL_OUTFIT		3

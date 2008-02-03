@@ -38,6 +38,7 @@
 #include "spfx.h"
 #include "economy.h"
 #include "menu.h"
+#include "mission.h"
 
 
 /* to get data info */
@@ -225,7 +226,8 @@ void load_all (void)
 {
 	/* order is very important as they're interdependent */
 	commodity_load(); /* dep for space */
-	factions_load(); /* dep for fleet, space */
+	factions_load(); /* dep for fleet, space, missions */
+	missions_load(); /* no dep */
 	spfx_load(); /* no dep */
 	outfit_load(); /* dep for ships */
 	ships_load(); /* dep for fleet */
@@ -242,6 +244,7 @@ void unload_all (void)
 	ships_free();
 	outfit_free();
 	spfx_free(); /* gets rid of the special effect */
+	missions_free();
 	factions_free();
 	commodity_free();
 }
