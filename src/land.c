@@ -184,6 +184,7 @@ static void commodity_exchange_close( char* str )
 {
 	if (strcmp(str, "btnCommodityClose")==0)
 		window_destroy(secondary_wid);
+	secondary_wid = 0;
 }
 static void commodity_update( char* str )
 {
@@ -319,6 +320,7 @@ static void outfits_close( char* str )
 {
 	if (strcmp(str,"btnCloseOutfits")==0)
 		window_destroy(secondary_wid);
+	secondary_wid = 0;
 }
 static void outfits_update( char* str )
 {
@@ -519,6 +521,7 @@ static void shipyard_close( char* str )
 {
 	if (strcmp(str,"btnCloseShipyard")==0)
 		window_destroy(secondary_wid);
+	secondary_wid = 0;
 }
 static void shipyard_update( char* str )
 {
@@ -647,6 +650,7 @@ static void shipyard_yoursClose( char* str )
 {
 	(void)str;
 	window_destroy( terciary_wid );
+	terciary_wid = 0;
 }
 static void shipyard_yoursUpdate( char* str )
 {
@@ -806,6 +810,7 @@ static void spaceport_bar_close( char* str )
 {
 	if (strcmp(str,"btnCloseBar")==0)
 		window_destroy(secondary_wid);
+	secondary_wid = 0;
 }
 
 
@@ -834,6 +839,7 @@ static void news_close( char* str )
 {
 	if (strcmp(str,"btnCloseNews")==0)
 		window_destroy( terciary_wid );
+	terciary_wid = 0;
 }
 
 
@@ -858,7 +864,7 @@ static void misn (void)
 	window_addText( secondary_wid, 300+40, -60,
 			300, 40, 0, "txtSReward",
 			&gl_smallFont, &cDConsole, "Reward:" );
-	window_addText(secondary_wid, 300+100, -60,
+	window_addText( secondary_wid, 300+100, -60,
 			240, 40, 0, "txtReward", &gl_smallFont, &cBlack, NULL );
 	window_addText( secondary_wid, 300+40, -100,
 			300, MISSION_HEIGHT - BUTTON_WIDTH - 120, 0,
@@ -870,6 +876,7 @@ static void misn_close( char* str )
 {
 	if (strcmp(str,"btnCloseMission")==0)
 		window_destroy( secondary_wid );
+	secondary_wid = 0;
 }
 static void misn_accept( char* str )
 {
@@ -906,6 +913,7 @@ static void misn_genList( int first )
 				misn_names[j++] = strdup(mission_computer[i].title);
 	}
 	if ((mission_ncomputer==0) || (j==0)) { /* no missions */
+		if (j==0) free(misn_names);
 		misn_names = malloc(sizeof(char*));
 		misn_names[0] = strdup("No Missions");
 		j = 1;

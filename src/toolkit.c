@@ -694,6 +694,11 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
 	Window *w = window_wget(wid);
 	int i;
 
+	if (w==NULL) {
+		WARN("window '%d' does not exist", wid);
+		return;
+	}
+
 	for (i=0; i<w->nwidgets; i++)
 		if (strcmp(wgtname,w->widgets[i].name)==0)
 			break;
@@ -704,8 +709,8 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
 	
 	widget_cleanup(&w->widgets[i]);
 	if (i<w->nwidgets-1) /* not last widget */
-		w->widgets[i] = w->widgets[i-1];
-	w->nwidgets--; /* note that we don't actually realloc the space */
+		memmove(&w->widgets[i], &w->widgets[i+1], w->nwidgets-i-1);
+	(w->nwidgets)--; /* note that we don't actually realloc the space */
 }
 
 
