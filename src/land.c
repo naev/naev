@@ -125,6 +125,7 @@ static void news_close( char* str );
 static void misn (void);
 static void misn_close( char* str );
 static void misn_accept( char* str );
+static void misn_genList( int first );
 static void misn_update( char* str );
 
 
@@ -820,9 +821,6 @@ static void news_close( char* str )
  */
 static void misn (void)
 {
-	int i;
-	char** misn_names;
-
 	/* create window */
 	secondary_wid = window_create( "Mission Computer",
 			-1, -1, MISSION_WIDTH, MISSION_HEIGHT );
@@ -845,22 +843,7 @@ static void misn (void)
 			300, MISSION_HEIGHT - BUTTON_WIDTH - 120, 0,
 			"txtDesc", &gl_smallFont, &cBlack, NULL );
 
-	/* list */
-	if (mission_ncomputer!=0) { /* there are missions */
-		misn_names = malloc(sizeof(char*) * mission_ncomputer);
-		for (i=0; i<mission_ncomputer; i++)
-			misn_names[i] = strdup(mission_computer[i].title);
-	}
-	else { /* no missions */
-		misn_names = malloc(sizeof(char*));
-		misn_names[0] = strdup("No Missions");
-	}
-
-	window_addList( secondary_wid, 20, -40,
-			300, MISSION_HEIGHT-60,
-			"lstMission", misn_names, mission_ncomputer, 0, misn_update );
-
-	misn_update(NULL);
+	misn_genList(1);
 }
 static void misn_close( char* str )
 {
@@ -869,7 +852,36 @@ static void misn_close( char* str )
 }
 static void misn_accept( char* str )
 {
+	char* misn_name;
 	(void)str;
+
+	misn_name = toolkit_getList( secondary_wid, "lstMission" );
+}
+static void misn_genList( int first )
+{
+	int i,j;
+	char** misn_names;
+
+	if (!first)
+		window_destroyWidget( secondary_wid, "lstMission" );
+
+	/* list */
+	if (mission_ncomputer!=0) { /* there are missions */
+		misn_names = malloc(sizeof(char*) * mission_ncomputer);
+		j = 0;
+		for (i=0; i<mission_ncomputer; i++)
+			if (mission_computer[i].title)
+				misn_names[j++] = strdup(mission_computer[i].title);
+	}
+	else { /* no missions */
+		misn_names = malloc(sizeof(char*));
+		misn_names[0] = strdup("No Missions");
+	}
+	window_addList( secondary_wid, 20, -40,
+			300, MISSION_HEIGHT-60,
+			"lstMission", misn_names, j, 0, misn_update );
+
+	misn_update(NULL);
 }
 static void misn_update( char* str )
 {
@@ -887,7 +899,8 @@ static void misn_update( char* str )
 	}
 
 	for (i=0; i<mission_ncomputer; i++)
-		if (strcmp(active_misn, mission_computer[i].title)==0) {
+		if (mission_computer[i].title &&
+				(strcmp(active_misn, mission_computer[i].title)==0)) {
 			window_modifyText( secondary_wid, "txtReward", mission_computer[i].reward );
 			window_modifyText( secondary_wid, "txtDesc", mission_computer[i].desc );
 			return;

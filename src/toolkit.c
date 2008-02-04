@@ -607,7 +607,8 @@ static void widget_cleanup( Widget *widget )
 		case WIDGET_LIST: /* must clear the list */
 			if (widget->dat.lst.options) {
 				for (i=0; i<widget->dat.lst.noptions; i++)
-					free(widget->dat.lst.options[i]);
+					if (widget->dat.lst.options[i])
+						free(widget->dat.lst.options[i]);
 				free( widget->dat.lst.options );
 			}
 			break;
