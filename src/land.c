@@ -43,6 +43,10 @@
 #define BAR_WIDTH		460
 #define BAR_HEIGHT	300
 
+/* mission computer window */
+#define MISSION_WIDTH	700
+#define MISSION_HEIGHT	600
+
 
 #define MUSIC_TAKEOFF	"liftoff"
 #define MUSIC_LAND		"agriculture"
@@ -117,6 +121,11 @@ static void spaceport_bar_close( char* str );
 /* news */
 static void news (void);
 static void news_close( char* str );
+/* mission computer */
+static void misn (void);
+static void misn_close( char* str );
+static void misn_accept( char* str );
+static void misn_update( char* str );
 
 
 /*
@@ -807,6 +816,86 @@ static void news_close( char* str )
 
 
 /*
+ * mission computer, cuz missions rock
+ */
+static void misn (void)
+{
+	int i;
+	char** misn_names;
+
+	/* create window */
+	secondary_wid = window_create( "Mission Computer",
+			-1, -1, MISSION_WIDTH, MISSION_HEIGHT );
+
+	/* buttons */
+	window_addButton( secondary_wid, -20, 20,
+			BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseMission",
+			"Close", misn_close );
+	window_addButton( secondary_wid, -20, 40+BUTTON_HEIGHT,
+			BUTTON_WIDTH, BUTTON_HEIGHT, "btnAcceptMission",
+			"Accept", misn_accept );
+
+	/* text */
+	window_addText( secondary_wid, 300+40, -60,
+			300, 40, 0, "txtSReward",
+			&gl_smallFont, &cDConsole, "Reward:" );
+	window_addText(secondary_wid, 300+100, -60,
+			240, 40, 0, "txtReward", &gl_smallFont, &cBlack, NULL );
+	window_addText( secondary_wid, 300+40, -100,
+			300, MISSION_HEIGHT - BUTTON_WIDTH - 120, 0,
+			"txtDesc", &gl_smallFont, &cBlack, NULL );
+
+	/* list */
+	if (mission_ncomputer!=0) { /* there are missions */
+		misn_names = malloc(sizeof(char*) * mission_ncomputer);
+		for (i=0; i<mission_ncomputer; i++)
+			misn_names[i] = strdup(mission_computer[i].title);
+	}
+	else { /* no missions */
+		misn_names = malloc(sizeof(char*));
+		misn_names[0] = strdup("No Missions");
+	}
+
+	window_addList( secondary_wid, 20, -40,
+			300, MISSION_HEIGHT-60,
+			"lstMission", misn_names, mission_ncomputer, 0, misn_update );
+
+	misn_update(NULL);
+}
+static void misn_close( char* str )
+{
+	if (strcmp(str,"btnCloseMission")==0)
+		window_destroy( secondary_wid );
+}
+static void misn_accept( char* str )
+{
+	(void)str;
+}
+static void misn_update( char* str )
+{
+	int i;
+	char *active_misn;
+
+	(void)str;
+
+	active_misn = toolkit_getList( secondary_wid, "lstMission" );
+	if (strcmp(active_misn,"No Missions")==0) {
+		window_modifyText( secondary_wid, "txtReward", "None" );
+		window_modifyText( secondary_wid, "txtDesc",
+				"There are no missions available here." );
+		return;
+	}
+
+	for (i=0; i<mission_ncomputer; i++)
+		if (strcmp(active_misn, mission_computer[i].title)==0) {
+			window_modifyText( secondary_wid, "txtReward", mission_computer[i].reward );
+			window_modifyText( secondary_wid, "txtDesc", mission_computer[i].desc );
+			return;
+		}
+}
+
+
+/*
  * lands the player
  */
 void land( Planet* p )
@@ -851,7 +940,7 @@ void land( Planet* p )
 	if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
 		window_addButton( land_wid, 20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnNews",
-			"Mission Terminal", NULL);
+			"Mission Terminal", (void(*)(char*))misn);
 		window_addButton( land_wid, 20, 20 + BUTTON_HEIGHT + 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnBar",
 			"Spaceport Bar", (void(*)(char*))spaceport_bar);
