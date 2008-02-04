@@ -876,6 +876,7 @@ static void misn_genList( int first )
 	else { /* no missions */
 		misn_names = malloc(sizeof(char*));
 		misn_names[0] = strdup("No Missions");
+		j = 1;
 	}
 	window_addList( secondary_wid, 20, -40,
 			300, MISSION_HEIGHT-60,
@@ -895,6 +896,7 @@ static void misn_update( char* str )
 		window_modifyText( secondary_wid, "txtReward", "None" );
 		window_modifyText( secondary_wid, "txtDesc",
 				"There are no missions available here." );
+		window_disableButton( secondary_wid, "btnAcceptMission" );
 		return;
 	}
 
@@ -903,6 +905,7 @@ static void misn_update( char* str )
 				(strcmp(active_misn, mission_computer[i].title)==0)) {
 			window_modifyText( secondary_wid, "txtReward", mission_computer[i].reward );
 			window_modifyText( secondary_wid, "txtDesc", mission_computer[i].desc );
+			window_enableButton( secondary_wid, "btnAcceptMission" );
 			return;
 		}
 }

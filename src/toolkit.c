@@ -48,6 +48,7 @@ typedef struct Widget_ {
 		struct { /* WIDGET_BUTTON */
 			void (*fptr) (char*); /* activate callback */
 			char *display; /* stored text */
+			int disabled;
 		} btn;
 		struct { /* WIDGET_TEXT */
 			char *text; /* text to display, using printMid if centered, else printText */
@@ -186,9 +187,11 @@ void window_addButton( const unsigned int wid,
 	Window *wdw = window_wget(wid);
 	Widget *wgt = window_newWidget(wdw);
 
+	/* specific */
 	wgt->type = WIDGET_BUTTON;
 	wgt->name = strdup(name);
 	wgt->dat.btn.display = strdup(display);
+	wgt->dat.btn.disabled = 0; /* initially enabled */
 
 	/* set the properties */
 	wgt->w = (double) w;
@@ -446,6 +449,35 @@ void window_modifyText( const unsigned int wid,
 
 	if (wgt->dat.txt.text) free(wgt->dat.txt.text);
 	wgt->dat.txt.text = strdup(newstring);
+}
+
+
+/*
+ * disables a button
+ */
+void window_disableButton( const unsigned int wid, char* name )
+{
+	Widget *wgt = window_getwgt(wid,name);
+
+	if (wgt->type!=WIDGET_BUTTON) {
+		DEBUG("Trying to disable a non-button widget '%s'", name);
+		return;
+	}
+	wgt->dat.btn.disabled = 1;
+}
+/* 
+ * enables a button
+ */
+void window_enableButton( const unsigned int wid, char *name )
+{
+	Widget *wgt = window_getwgt(wid,name);
+
+	if (wgt->type!=WIDGET_BUTTON) {
+		DEBUG("Trying to enable a non-button widget '%s'", name);
+		return;
+	}
+	wgt->dat.btn.disabled = 0;
+
 }
 
 
@@ -952,28 +984,36 @@ static void toolkit_renderButton( Widget* btn, double bx, double by )
 	y = by + btn->y;
 
 	/* set the colours */
-	switch (btn->status) {
-		case WIDGET_STATUS_NORMAL:
-			lc = &cGrey80;
-			c = &cGrey60;
-			dc = &cGrey40;
-			oc = &cGrey20;
-			break;
-		case WIDGET_STATUS_MOUSEOVER:
-			lc = &cWhite;
-			c = &cGrey80;
-			dc = &cGrey60;
-			oc = &cGrey40;
-			break;
-		case WIDGET_STATUS_MOUSEDOWN:
-			lc = &cGreen;
-			c = &cGreen;
-			dc = &cGrey40;
-			oc = &cGrey20;
-			break;
-		default:
-			break;
-	}  
+	if (btn->dat.btn.disabled==1) {
+		lc = &cGrey50;
+		c = &cGrey30;
+		dc = &cGrey30;
+		oc = &cGrey10;
+	}
+	else {
+		switch (btn->status) {
+			case WIDGET_STATUS_NORMAL:
+				lc = &cGrey80;
+				c = &cGrey60;
+				dc = &cGrey40;
+				oc = &cGrey20;
+				break;
+			case WIDGET_STATUS_MOUSEOVER:
+				lc = &cWhite;
+				c = &cGrey80;
+				dc = &cGrey60;
+				oc = &cGrey40;
+				break;
+			case WIDGET_STATUS_MOUSEDOWN:
+				lc = &cGreen;
+				c = &cGreen;
+				dc = &cGrey40;
+				oc = &cGrey20;
+				break;
+			default:
+				break;
+		}
+	}
 
 
 	/* shaded base */
@@ -1306,7 +1346,8 @@ static void toolkit_mouseEvent( SDL_Event* event )
 
 					case SDL_MOUSEBUTTONUP:
 						if (wgt->status==WIDGET_STATUS_MOUSEDOWN) {
-							if (wgt->type==WIDGET_BUTTON) {
+							if ((wgt->type==WIDGET_BUTTON) &&
+									(wgt->dat.btn.disabled==0)) {
 								if (wgt->dat.btn.fptr==NULL)
 									DEBUG("Toolkit: Button '%s' of Window '%s' "
 											"doesn't have a function trigger",
@@ -1478,6 +1519,7 @@ static int toolkit_isFocusable( Widget *wgt )
 
 	switch (wgt->type) {
 		case WIDGET_BUTTON:
+			if (wgt->dat.btn.disabled==1) return 0;
 		case WIDGET_LIST:
 		case WIDGET_INPUT:
 			return 1;
