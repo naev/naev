@@ -222,7 +222,7 @@ int faction_ofAlliance( int f, int a )
 		return 0;
 	}
 
-	aa = &alliances[a];
+	aa = &alliances[a-ALLIANCE_OFFSET];
 
 	for (i=0; i<aa->nfactions; i++)
 		if (aa->factions[i] == f)

@@ -64,8 +64,9 @@ DATA_AI = $(shell find ai/ -name '*.lua')
 DATA_GFX = $(shell find gfx/ -name '*png')
 DATA_XML = $(shell find dat/ -name '*.xml' -o -name '*.ttf')
 DATA_SND = $(shell find snd/ -name '*.ogg' -o -name '*.wav')
+DATA_MISN = $(shell find dat/missions/ -name '*.lua')
 DATA = data
-DATAFILES = $(VERSIONFILE) $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND)
+DATAFILES = $(VERSIONFILE) $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN)
 
 
 

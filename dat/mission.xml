@@ -1,6 +1,9 @@
 <Missions>
 <mission name="Welcome">
 <lua>welcome</lua>
+<flags>
+<unique>1</unique>
+</flags>
 <avail>
 <location>None</location>
 </avail>

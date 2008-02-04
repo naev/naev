@@ -28,6 +28,11 @@
 #define MISSION_LUA_PATH		"dat/missions/"
 
 
+/* L state, void* buf, int n size, char* s identifier */
+#define luaL_dobuffer(L, b, n, s) \
+	(luaL_loadbuffer(L, b, n, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
+
+
 /*
  * current player missions
  */
@@ -48,39 +53,71 @@ static int mission_nstack = 0;
 /* extern */
 extern int misn_run( Mission *misn, char *func );
 /* static */
+static int mission_init( Mission* mission, MissionData* misn );
 static void mission_cleanup( Mission* misn );
-static void mission_free( MissionData* mission );
+static void mission_freeData( MissionData* mission );
+static int mission_matchFaction( MissionData* misn, int faction );
 static int mission_location( char* loc );
 static MissionData* mission_parse( const xmlNodePtr parent );
 
 
 /*
- * creates a mission
+ * initializes a mission
  */
-int mission_create( MissionData* misn )
+static int mission_init( Mission* mission, MissionData* misn )
+{
+	char *buf;
+	uint32_t bufsize;
+
+	mission->id = ++mission_id;
+	mission->data = misn;
+
+	/* init lua */
+	mission->L = luaL_newstate();
+	if (mission->L == NULL) {
+		ERR("Unable to create a new lua state.");
+		return -1;
+	}
+	luaopen_string( mission->L ); /* string.format can be very useful */
+	misn_loadLibs( mission->L ); /* load our custom libraries */
+
+	/* load the file */
+	buf = pack_readfile( DATA, misn->lua, &bufsize );
+	if (luaL_dobuffer(mission->L, buf, bufsize, misn->lua) != 0) {
+		ERR("Error loading AI file: %s",misn->lua);
+		ERR("%s",lua_tostring(mission->L,-1));
+		WARN("Most likely Lua file has improper syntax, please check");
+		return -1;
+	}
+	free(buf);
+
+
+	/* run create function */
+	misn_run( mission, "create");
+
+	return mission->id;
+}
+
+
+/*
+ * adds a mission to the player, you can free the current mission safely
+ */
+int mission_add( Mission* mission )
 {
 	int i;
 
 	/* find last mission */
 	for (i=0; i<MISSION_MAX; i++)
 		if (player_missions[i].data == NULL) break;
-	
+
 	/* no missions left */
 	if (i>=MISSION_MAX) return -1;
 
+	/* copy it over */
+	memcpy( &player_missions[i], mission, sizeof(Mission) );
+	memset( mission, 0, sizeof(Mission) );
 
-	player_missions[i].id = ++mission_id;
-	player_missions[i].data = misn;
-
-	/* init lua */
-	player_missions[i].L = luaL_newstate();
-	luaopen_string( player_missions[i].L ); /* string.format can be very useful */
-	misn_loadLibs( player_missions[i].L ); /* load our custom libraries */
-
-	/* run create function */
-	misn_run( &player_missions[i], "create");
-
-	return 0;
+	return player_missions[i].id;
 }
 
 /*
@@ -100,7 +137,7 @@ static void mission_cleanup( Mission* misn )
 /*
  * frees a mission
  */
-static void mission_free( MissionData* mission )
+static void mission_freeData( MissionData* mission )
 {
 	if (mission->name) {
 		free(mission->name);
@@ -119,6 +156,77 @@ static void mission_free( MissionData* mission )
 		mission->avail.factions = NULL;
 		mission->avail.nfactions = 0;
 	}
+}
+
+
+/*
+ * frees an active mission
+ */
+void mission_free( Mission* mission )
+{
+	if (mission->id == 0) return;
+
+	if (mission->title) {
+		free(mission->title);
+		mission->title = NULL;
+	}
+	if (mission->desc) {
+		free(mission->desc);
+		mission->desc = NULL;
+	}
+	if (mission->reward) {
+		free(mission->reward);
+		mission->reward = NULL;
+	}
+	if (mission->L) {
+		lua_close(mission->L);
+		mission->L = NULL;
+	}
+}
+
+
+/*
+ * does mission match faction requirement?
+ */
+static int mission_matchFaction( MissionData* misn, int faction )
+{
+	int i;
+
+	for (i=0; i<misn->avail.nfactions; i++) {
+		if (faction_isFaction(misn->avail.factions[i]) &&
+				(faction == misn->avail.factions[i]))
+			return 1;
+		else if (faction_ofAlliance( faction, misn->avail.factions[i]))
+			return 1;
+	}
+
+	return 0;
+}
+
+
+/*
+ * generates misisons for the computer - special case
+ */
+Mission* missions_computer( int *n, int faction, char* planet, char* system )
+{
+	int i, m;
+	Mission* tmp;
+	MissionData* misn;
+
+	m = 0;
+	for (i=0; i<mission_nstack; i++) {
+		misn = &mission_stack[i];
+		if ((misn->avail.loc==MIS_AVAIL_COMPUTER) &&
+			(((misn->avail.planet && strcmp(misn->avail.planet,planet)==0)) ||
+				(misn->avail.system && (strcmp(misn->avail.system,system)==0)) ||
+				mission_matchFaction(misn,faction))) {
+			tmp = realloc( tmp, sizeof(Mission) * ++m);
+			mission_init( &tmp[m-1], misn );
+		}
+	}
+
+	(*n) = m;
+	return tmp;
 }
 
 
@@ -162,7 +270,14 @@ static MissionData* mission_parse( const xmlNodePtr parent )
 			temp->lua = strdup( str );
 			str[0] = '\0';
 		}
-		else if (xml_isNode(node,"avail")) {
+		else if (xml_isNode(node,"flags")) { /* set the various flags */
+			cur = node->children;
+			do {
+				if (xml_isNode(cur,"unique"))
+					mis_setFlag(temp,MISSION_UNIQUE);
+			} while ((cur = cur->next));
+		}
+		else if (xml_isNode(node,"avail")) { /* mission availability */
 			cur = node->children;
 			do {
 				if (xml_isNode(cur,"location"))
@@ -246,7 +361,7 @@ void missions_free (void)
 
 	/* free the mission data */
 	for (i=0; i<mission_nstack; i++)
-		mission_free( &mission_stack[i] );
+		mission_freeData( &mission_stack[i] );
 	free( mission_stack );
 	mission_stack = NULL;
 	mission_nstack = 0;

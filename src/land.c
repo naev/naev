@@ -14,6 +14,7 @@
 #include "music.h"
 #include "economy.h"
 #include "hook.h"
+#include "mission.h"
 
 
 /* global/main window */
@@ -47,12 +48,37 @@
 #define MUSIC_LAND		"agriculture"
 
 
-int landed = 0;
+/*
+ * we use visited flags to not duplicate missions generated
+ */
+#define VISITED_LAND				(1<<0)
+#define VISITED_COMMODITY		(1<<1)
+#define VISITED_BAR				(1<<2)
+#define VISITED_OUTFITS			(1<<3)
+#define VISITED_SHIPYARD		(1<<4)
+#define visited(f)				(land_visited |= (f))
+#define has_visited(f)			(land_visited & (f))
+static unsigned int land_visited = 0;
 
+
+/*
+ * land variables
+ */
+int landed = 0;
+Planet* land_planet = NULL;
+
+/*
+ * mission computer stack
+ */
+static Mission* mission_computer = NULL;
+static int mission_ncomputer = 0;
+
+/*
+ * window stuff
+ */
 static int land_wid = 0; /* used for the primary land window */
 static int secondary_wid = 0; /* used for the second opened land window */
 static int terciary_wid = 0; /* used for fancy things like news, your ships... */
-Planet* land_planet = NULL;
 
 
 /*
@@ -138,6 +164,11 @@ static void commodity_exchange (void)
 
 	/* update */
 	commodity_update(NULL);
+
+	if (!has_visited(VISITED_COMMODITY)) {
+		/* TODO mission check */
+		visited(VISITED_COMMODITY);
+	}
 }
 static void commodity_exchange_close( char* str )
 {
@@ -268,6 +299,11 @@ static void outfits (void)
 
 	/* write the outfits stuff */
 	outfits_update( NULL );
+
+	if (!has_visited(VISITED_OUTFITS)) {
+		/* TODO mission check */
+		visited(VISITED_OUTFITS);
+	}
 }
 static void outfits_close( char* str )
 {
@@ -463,6 +499,11 @@ static void shipyard (void)
 
 	/* write the shipyard stuff */
 	shipyard_update( NULL );
+
+	if (!has_visited(VISITED_SHIPYARD)) {
+		/* TODO mission check */
+		visited(VISITED_SHIPYARD);
+	}
 }
 static void shipyard_close( char* str )
 {
@@ -724,6 +765,11 @@ static void spaceport_bar (void)
 	window_addText( secondary_wid, 20, -30,
 			BAR_WIDTH - 40, BAR_HEIGHT - 40 - BUTTON_HEIGHT, 0,
 			"txtDescription", &gl_smallFont, &cBlack, land_planet->bar_description );
+
+	if (!has_visited(VISITED_BAR)) {
+		/* TODO mission check */
+		visited(VISITED_BAR);
+	}
 }
 static void spaceport_bar_close( char* str )
 {
@@ -815,6 +861,15 @@ void land( Planet* p )
 	/* player is now officially landed */
 	landed = 1;
 	hooks_run("land");
+
+	/* generate mission computer stuff */
+	mission_computer = missions_computer( &mission_ncomputer,
+			land_planet->faction, land_planet->name, cur_system->name );
+
+	if (!has_visited(VISITED_LAND)) {
+		/* TODO mission check */
+		visited(VISITED_LAND);
+	}
 }
 
 
@@ -823,7 +878,7 @@ void land( Planet* p )
  */
 void takeoff (void)
 {
-	int sw, sh;
+	int sw,sh, i;
 
 	if (!landed) return;
 
@@ -856,6 +911,14 @@ void takeoff (void)
 	land_planet = NULL;
 	window_destroy( land_wid );
 	landed = 0;
-	hooks_run("takeoff");
+	land_visited = 0;
+	hooks_run("takeoff"); 
+
+	/* cleanup mission computer */
+	for (i=0; i<mission_ncomputer; i++)
+		mission_free( &mission_computer[i] );
+	free(mission_computer);
+	mission_computer = NULL;
+	mission_ncomputer = 0;
 }
 

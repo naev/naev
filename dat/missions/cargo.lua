@@ -27,7 +27,7 @@ end
 function accept()
 	player.addCargo( carg_type, carg_mass )
 	toolkit.msg( "Mission Accepted",
-			string.format( "The workers load the %d tons of %s onto your ship."
+			string.format( "The workers load the %d tons of %s onto your ship.",
 					carg_mass, carg_type ) )
 end
 
