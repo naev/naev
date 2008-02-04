@@ -91,7 +91,7 @@ void hook_rm( int id )
 	if (m == (hook_nstack-1)) return;
 
 	/* move it! */
-	memmove( &hook_stack[m+1], &hook_stack[m+2], hook_nstack-(m+1) );
+	memmove( &hook_stack[m+1], &hook_stack[m+2], sizeof(Hook) * (hook_nstack-(m+2)) );
 	hook_nstack--;
 }
 void hook_rmParent( unsigned int parent)
