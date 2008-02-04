@@ -148,6 +148,10 @@ static void mission_freeData( MissionData* mission )
 		free(mission->name);
 		mission->name = NULL;
 	}
+	if (mission->lua) {
+		free(mission->lua);
+		mission->lua = NULL;
+	}
 	if (mission->avail.planet) {
 		free(mission->avail.planet);
 		mission->avail.planet = NULL;
