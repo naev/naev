@@ -54,7 +54,6 @@ static int mission_nstack = 0;
 extern int misn_run( Mission *misn, char *func );
 /* static */
 static int mission_init( Mission* mission, MissionData* misn );
-static void mission_cleanup( Mission* misn );
 static void mission_freeData( MissionData* mission );
 static int mission_matchFaction( MissionData* misn, int faction );
 static int mission_location( char* loc );
@@ -128,14 +127,14 @@ int mission_add( Mission* mission )
 /*
  * cleans up a mission
  */
-static void mission_cleanup( Mission* misn )
+void mission_cleanup( Mission* misn )
 {
 	hook_rmParent( misn->id ); /* remove existing hooks */
-	misn->data = NULL;
 	if (misn->title) free(misn->title);
 	if (misn->desc) free(misn->desc);
 	if (misn->reward) free(misn->reward);
 	lua_close(misn->L);
+	memset(misn, 0, sizeof(Mission));
 }
 
 
@@ -144,53 +143,12 @@ static void mission_cleanup( Mission* misn )
  */
 static void mission_freeData( MissionData* mission )
 {
-	if (mission->name) {
-		free(mission->name);
-		mission->name = NULL;
-	}
-	if (mission->lua) {
-		free(mission->lua);
-		mission->lua = NULL;
-	}
-	if (mission->avail.planet) {
-		free(mission->avail.planet);
-		mission->avail.planet = NULL;
-	}
-	if (mission->avail.system) {
-		free(mission->avail.system);
-		mission->avail.system = NULL;
-	}
-	if (mission->avail.factions) {
-		free(mission->avail.factions);
-		mission->avail.factions = NULL;
-		mission->avail.nfactions = 0;
-	}
-}
-
-
-/*
- * frees an active mission
- */
-void mission_free( Mission* mission )
-{
-	if (mission->id == 0) return;
-
-	if (mission->title) {
-		free(mission->title);
-		mission->title = NULL;
-	}
-	if (mission->desc) {
-		free(mission->desc);
-		mission->desc = NULL;
-	}
-	if (mission->reward) {
-		free(mission->reward);
-		mission->reward = NULL;
-	}
-	if (mission->L) {
-		lua_close(mission->L);
-		mission->L = NULL;
-	}
+	if (mission->name) free(mission->name);
+	if (mission->lua) free(mission->lua);
+	if (mission->avail.planet) free(mission->avail.planet);
+	if (mission->avail.system) free(mission->avail.system);
+	if (mission->avail.factions) free(mission->avail.factions);
+	memset( mission, 0, sizeof(MissionData) );
 }
 
 

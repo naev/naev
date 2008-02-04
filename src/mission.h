@@ -87,7 +87,7 @@ void mission_accept( Mission* misn ); /* player accepted mission - mission compu
  * load/quit
  */
 int missions_load (void);
-void mission_free( Mission* mission );
+void mission_cleanup( Mission* misn );
 void missions_free (void);
 void missions_cleanup (void);
 

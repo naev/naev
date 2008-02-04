@@ -18,9 +18,6 @@ function create()
 				planet, carg_mass, carg_type, "SOMEDAY" ) )
 	misn_reward = carg_mass * 1000 + rnd.int( 0, 5000 )
 	misn.setReward( string.format( "%d credits", misn_reward ) )
-
-	-- set the hooks
-	hook.land( "land" )
 end
 
 -- Mission is accepted
@@ -29,6 +26,7 @@ function accept()
 	toolkit.msg( "Mission Accepted",
 			string.format( "The workers load the %d tons of %s onto your ship.",
 					carg_mass, carg_type ) )
+	hook.land( "land" )
 end
 
 -- Land hook

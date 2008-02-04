@@ -1042,7 +1042,7 @@ void takeoff (void)
 
 	/* cleanup mission computer */
 	for (i=0; i<mission_ncomputer; i++)
-		mission_free( &mission_computer[i] );
+		mission_cleanup( &mission_computer[i] );
 	free(mission_computer);
 	mission_computer = NULL;
 	mission_ncomputer = 0;
