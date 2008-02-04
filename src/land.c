@@ -885,6 +885,7 @@ static void misn_accept( char* str )
 		if (mission_computer[i].title &&
 				(strcmp(misn_name, mission_computer[i].title)==0)) {
 			mission_accept( &mission_computer[i] );
+			misn_genList(0);
 			return;
 		}
 }
@@ -904,7 +905,7 @@ static void misn_genList( int first )
 			if (mission_computer[i].title)
 				misn_names[j++] = strdup(mission_computer[i].title);
 	}
-	else { /* no missions */
+	if ((mission_ncomputer==0) || (j==0)) { /* no missions */
 		misn_names = malloc(sizeof(char*));
 		misn_names[0] = strdup("No Missions");
 		j = 1;

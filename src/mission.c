@@ -130,11 +130,11 @@ void mission_accept( Mission* mission )
  */
 void mission_cleanup( Mission* misn )
 {
-	hook_rmParent( misn->id ); /* remove existing hooks */
+	if (misn->id) hook_rmParent( misn->id ); /* remove existing hooks */
 	if (misn->title) free(misn->title);
 	if (misn->desc) free(misn->desc);
 	if (misn->reward) free(misn->reward);
-	lua_close(misn->L);
+	if (misn->L) lua_close(misn->L);
 	memset(misn, 0, sizeof(Mission));
 }
 
