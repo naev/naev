@@ -708,9 +708,10 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
 	}
 	
 	widget_cleanup(&w->widgets[i]);
-	if (i<w->nwidgets-1) /* not last widget */
-		memmove(&w->widgets[i], &w->widgets[i+1], w->nwidgets-i-1);
-	(w->nwidgets)--; /* note that we don't actually realloc the space */
+	if (i < w->nwidgets-1) /* not last widget */
+		memmove(&w->widgets[i], &w->widgets[i+1],
+				sizeof(Widget) * (w->nwidgets-i-1) );
+	(w->nwidgets)--;
 }
 
 
@@ -1701,7 +1702,7 @@ static void dialogue_msgClose( char* str )
 	(void)str;
 	window_destroy( msg_wid );
 	msg_wid = 0;
-	loop_done = 0;
+	loop_done = 1;
 }
 
 

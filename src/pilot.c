@@ -627,7 +627,7 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 
 				/* remove the outfit */
 				memmove( pilot->outfits+i, pilot->outfits+i+1,
-						sizeof(PilotOutfit) * (pilot->noutfits - i) );
+						sizeof(PilotOutfit) * (pilot->noutfits-i-1) );
 				pilot->noutfits--;
 				pilot->outfits = realloc( pilot->outfits,
 						sizeof(PilotOutfit) * (pilot->noutfits) );
@@ -781,7 +781,7 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
 
 				/* remove cargo */
 				memmove( pilot->commodities+i, pilot->commodities+i+1,
-						sizeof(PilotCommodity) * (pilot->ncommodities - i) );
+						sizeof(PilotCommodity) * (pilot->ncommodities-i-1) );
 				pilot->ncommodities--;
 				pilot->commodities = realloc( pilot->commodities,
 						sizeof(PilotCommodity) * pilot->ncommodities );
