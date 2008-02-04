@@ -550,6 +550,10 @@ static void shipyard_update( char* str )
 			buf2,
 			buf3);
 	window_modifyText( secondary_wid,  "txtDDesc", buf );
+
+	if (ship->price > player->credits)
+		window_disableButton( secondary_wid, "btnBuyShip");
+	else window_enableButton( secondary_wid, "btnBuyShip");
 }
 static void shipyard_info( char* str )
 {
@@ -576,6 +580,9 @@ static void shipyard_buy( char* str )
 	/* player just gots a new ship */
 	player_newShip( ship, player->solid->pos.x, player->solid->pos.y,
 			0., 0., player->solid->dir );
+	player->credits -= ship->price; /* ouch, paying is hard */
+
+	shipyard_update(NULL);
 }
 static void shipyard_yours( char* str )
 {
@@ -648,17 +655,19 @@ static void shipyard_yoursUpdate( char* str )
 	char *shipname;
 	Pilot *ship;
 	char* loc;
+	int price;
 
 	shipname = toolkit_getList( terciary_wid, "lstYourShips" );
 	if (strcmp(shipname,"None")==0) return; /* no ships */
 	ship = player_getShip( shipname );
 	loc = player_getLoc(ship->name);
+	price = shipyard_yoursTransportPrice(shipname);
 
 	/* update image */
 	window_modifyImage( terciary_wid, "imgTarget", ship->ship->gfx_target );
 
 	/* update text */
-	credits2str( buf2, shipyard_yoursTransportPrice(shipname) , 2 ); /* transport */
+	credits2str( buf2, price , 2 ); /* transport */
 	credits2str( buf3, 0, 2 ); /* sell price */
 	snprintf( buf, 256,
 			"%s\n"
@@ -684,6 +693,18 @@ static void shipyard_yoursUpdate( char* str )
 	buf4 = pilot_getOutfits( ship );
 	window_modifyText( terciary_wid, "txtDOutfits", buf4 );
 	free(buf4);
+
+	/* button disabling */
+	if (strcmp(land_planet->name,loc)) { /* ship not here */
+		window_disableButton( terciary_wid, "btnChangeShip" );
+		if (price > player->credits)
+			window_disableButton( terciary_wid, "btnTransportShip" );
+		else window_enableButton( terciary_wid, "btnTransportShip" );
+	}
+	else { /* ship is here */
+		window_enableButton( terciary_wid, "btnChangeShip" );
+		window_disableButton( terciary_wid, "btnTransportShip" );
+	}
 }
 static void shipyard_yoursChange( char* str )
 {
