@@ -727,6 +727,15 @@ static void pilot_calcStats( Pilot* pilot )
 
 
 /*
+ * pilot free cargo space
+ */
+int pilot_freeCargo( Pilot* p )
+{
+	return p->cargo_free;
+}
+
+
+/*
  * tries to add quantity of cargo to pilot, returns quantity actually added
  */
 int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )

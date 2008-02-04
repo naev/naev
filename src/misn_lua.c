@@ -30,16 +30,30 @@ static Mission *cur_mission = NULL;
 static int misn_setTitle( lua_State *L );
 static int misn_setDesc( lua_State *L );
 static int misn_setReward( lua_State *L );
+static int misn_factions( lua_State *L );
 static const luaL_reg misn_methods[] = {
 	{ "setTitle", misn_setTitle },
 	{ "setDesc", misn_setDesc },
 	{ "setReward", misn_setReward },
+	{ "factions", misn_factions },
 	{0,0}
 };
 /* space */
 static int space_getPlanet( lua_State *L );
 static const luaL_reg space_methods[] = {
 	{ "getPlanet", space_getPlanet },
+	{0,0}
+};
+/* player */
+static int player_freeSpace( lua_State *L );
+static int player_addCargo( lua_State *L );
+static int player_rmCargo( lua_State *L );
+static int player_pay( lua_State *L );
+static const luaL_reg player_methods[] = {
+	{ "freeCargo", player_freeSpace },
+	{ "addCargo", player_addCargo },
+	{ "rmCargo", player_rmCargo },
+	{ "pay", player_pay },
 	{0,0}
 };
 /* rnd */
@@ -63,6 +77,7 @@ int misn_loadLibs( lua_State *L )
 {
 	luaL_register(L, "misn", misn_methods);
 	luaL_register(L, "space", space_methods);
+	luaL_register(L, "player", player_methods);
 	luaL_register(L, "rnd", rnd_methods);
 	luaL_register(L, "hook", hook_methods);
 	return 0;
@@ -99,7 +114,7 @@ static int misn_setTitle( lua_State *L )
 	if (lua_isstring(L, -1)) {
 		if (cur_mission->title) /* cleanup old title */
 			free(cur_mission->title);
-		cur_mission->title = strdup(lua_tostring(L, -1));
+		cur_mission->title = strdup((char*)lua_tostring(L, -1));
 	}
 	return 0;
 }
@@ -109,7 +124,7 @@ static int misn_setDesc( lua_State *L )
 	if (lua_isstring(L, -1)) {    
 		if (cur_mission->title) /* cleanup old title */
 			free(cur_mission->title);
-		cur_mission->desc = strdup(lua_tostring(L, -1));
+		cur_mission->desc = strdup((char*)lua_tostring(L, -1));
 	}
 	return 0;
 }
@@ -119,8 +134,14 @@ static int misn_setReward( lua_State *L )
 	if (lua_isstring(L, -1)) {    
 		if (cur_mission->title) /* cleanup old title */
 			free(cur_mission->title);
-		cur_mission->reward = strdup(lua_tostring(L, -1));
+		cur_mission->reward = strdup((char*)lua_tostring(L, -1));
 	}
+	return 0;
+}
+static int misn_factions( lua_State *L )
+{
+	(void)L;
+	/* TODO proper misn.factions() implementation */
 	return 0;
 }
 
@@ -132,6 +153,66 @@ static int misn_setReward( lua_State *L )
 static int space_getPlanet( lua_State *L )
 {
 	(void)L;
+	/* TODO proper getPlanet implementation */
+	lua_pushstring(L, "Arrakis");
+	return 1;
+}
+
+
+
+/* 
+ *   P L A Y E R
+ */
+static int player_freeSpace( lua_State *L )
+{
+	lua_pushnumber(L, pilot_freeCargo(player) );
+	return 1;
+}
+static int player_addCargo( lua_State *L )
+{
+	Commodity *cargo;
+	int quantity, ret;
+
+	MIN_ARGS(2);
+
+	if (lua_isstring(L,-1)) cargo = commodity_get( (char*) lua_tostring(L,-1) );
+	else return 0;
+	if (lua_isnumber(L,-2)) quantity = (int) lua_tonumber(L,-2);
+	else return 0;
+
+	ret = pilot_addCargo( player, cargo, quantity );
+
+	lua_pushnumber(L, ret);
+	return 1;
+}
+static int player_rmCargo( lua_State *L )
+{
+	Commodity *cargo;
+	int quantity, ret;
+
+	MIN_ARGS(2);
+
+	if (lua_isstring(L,-1)) cargo = commodity_get( (char*) lua_tostring(L,-1) );
+	else return 0;
+	if (lua_isnumber(L,-2)) quantity = (int) lua_tonumber(L,-2);
+	else return 0;
+
+	ret = pilot_rmCargo( player, cargo, quantity );
+
+	lua_pushnumber(L, ret);
+	return 1;
+}
+static int player_pay( lua_State *L )
+{
+	int money;
+
+	MIN_ARGS(1);
+
+	if (lua_isnumber(L,-1)) money = (int) lua_tonumber(L,-1);
+	else return 0;
+
+	player->credits += money;
+
 	return 0;
 }
 

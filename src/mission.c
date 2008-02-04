@@ -72,6 +72,11 @@ static int mission_init( Mission* mission, MissionData* misn )
 	mission->id = ++mission_id;
 	mission->data = misn;
 
+	/* sane defaults */
+	mission->title = NULL;
+	mission->desc = NULL;
+	mission->reward = NULL;
+
 	/* init lua */
 	mission->L = luaL_newstate();
 	if (mission->L == NULL) {
@@ -213,6 +218,7 @@ Mission* missions_computer( int *n, int faction, char* planet, char* system )
 	Mission* tmp;
 	MissionData* misn;
 
+	tmp = NULL;
 	m = 0;
 	for (i=0; i<mission_nstack; i++) {
 		misn = &mission_stack[i];
