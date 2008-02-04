@@ -95,7 +95,6 @@ static int mission_init( Mission* mission, MissionData* misn )
 	}
 	free(buf);
 
-
 	/* run create function */
 	misn_run( mission, "create");
 
@@ -104,9 +103,9 @@ static int mission_init( Mission* mission, MissionData* misn )
 
 
 /*
- * adds a mission to the player, you can free the current mission safely
+ * accept a mission, used basically for mission computers
  */
-int mission_add( Mission* mission )
+void mission_accept( Mission* mission )
 {
 	int i;
 
@@ -115,14 +114,16 @@ int mission_add( Mission* mission )
 		if (player_missions[i].data == NULL) break;
 
 	/* no missions left */
-	if (i>=MISSION_MAX) return -1;
+	if (i>=MISSION_MAX) return;
 
 	/* copy it over */
 	memcpy( &player_missions[i], mission, sizeof(Mission) );
 	memset( mission, 0, sizeof(Mission) );
 
-	return player_missions[i].id;
+	/* run the accept command */
+	misn_run( &player_missions[i], "accept" );
 }
+
 
 /*
  * cleans up a mission

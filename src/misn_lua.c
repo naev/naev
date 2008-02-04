@@ -13,6 +13,7 @@
 #include "naev.h"
 #include "rng.h"
 #include "space.h"
+#include "toolkit.h"
 
 
 #define MIN_ARGS(n)		if (lua_gettop(L) < n) return 0
@@ -62,6 +63,16 @@ static const luaL_reg rnd_methods[] = {
 	{ "int", rnd_int },
 	{0,0}
 };
+/* toolkit */
+static int tk_msg( lua_State *L );
+static int tk_yesno( lua_State *L );
+static int tk_input( lua_State *L );
+static const luaL_reg tk_methods[] = {
+	{ "msg", tk_msg },
+	{ "yesno", tk_yesno },
+	{ "input", tk_input },
+	{0,0}
+};
 /* hooks */
 static int hook_land( lua_State *L );
 static const luaL_reg hook_methods[] = {
@@ -79,6 +90,7 @@ int misn_loadLibs( lua_State *L )
 	luaL_register(L, "space", space_methods);
 	luaL_register(L, "player", player_methods);
 	luaL_register(L, "rnd", rnd_methods);
+	luaL_register(L, "tk", tk_methods);
 	luaL_register(L, "hook", hook_methods);
 	return 0;
 }
@@ -175,9 +187,9 @@ static int player_addCargo( lua_State *L )
 
 	MIN_ARGS(2);
 
-	if (lua_isstring(L,-1)) cargo = commodity_get( (char*) lua_tostring(L,-1) );
+	if (lua_isstring(L,-2)) cargo = commodity_get( (char*) lua_tostring(L,-2) );
 	else return 0;
-	if (lua_isnumber(L,-2)) quantity = (int) lua_tonumber(L,-2);
+	if (lua_isnumber(L,-1)) quantity = (int) lua_tonumber(L,-1);
 	else return 0;
 
 	ret = pilot_addCargo( player, cargo, quantity );
@@ -192,9 +204,9 @@ static int player_rmCargo( lua_State *L )
 
 	MIN_ARGS(2);
 
-	if (lua_isstring(L,-1)) cargo = commodity_get( (char*) lua_tostring(L,-1) );
+	if (lua_isstring(L,-2)) cargo = commodity_get( (char*) lua_tostring(L,-2) );
 	else return 0;
-	if (lua_isnumber(L,-2)) quantity = (int) lua_tonumber(L,-2);
+	if (lua_isnumber(L,-1)) quantity = (int) lua_tonumber(L,-1);
 	else return 0;
 
 	ret = pilot_rmCargo( player, cargo, quantity );
@@ -244,8 +256,60 @@ static int rnd_int( lua_State *L )
 	return 1; /* unless it's returned 0 already it'll always return a parameter */
 }
 
+
+
 /*
- * H O O K
+ *   T O O L K I T
+ */
+static int tk_msg( lua_State *L )
+{
+	char *title, *str;
+	MIN_ARGS(2);
+
+	if (lua_isstring(L,-2)) title = (char*) lua_tostring(L,-2);
+	else return 0;
+	if (lua_isstring(L,-1)) str = (char*) lua_tostring(L,-1);
+	else return 0;
+
+	dialogue_msg( title, str );
+	return 0;
+}
+static int tk_yesno( lua_State *L )
+{
+	char *title, *str;
+	MIN_ARGS(2);
+
+	if (lua_isstring(L,-2)) title = (char*) lua_tostring(L,-2);
+	else return 0;
+	if (lua_isstring(L,-1)) str = (char*) lua_tostring(L,-1);
+	else return 0;
+
+	dialogue_YesNo( title, str );
+	return 0;
+}
+static int tk_input( lua_State *L )
+{
+	char *title, *str;
+	int min, max;
+	MIN_ARGS(4);
+
+	if (lua_isstring(L,-4)) title = (char*) lua_tostring(L,-4);
+	else return 0;
+	if (lua_isnumber(L,-3)) min = (int) lua_tonumber(L,-3);
+	else return 0;
+	if (lua_isnumber(L,-2)) max = (int) lua_tonumber(L,-2);
+	else return 0;
+	if (lua_isstring(L,-1)) str = (char*) lua_tostring(L,-1);
+	else return 0;
+
+	dialogue_input( title, min, max, str );
+	return 0;
+}
+
+
+
+/*
+ *   H O O K
  */
 static int hook_land( lua_State *L )
 {

@@ -166,6 +166,7 @@ static void toolkit_drawRect( double x, double y,
 		double w, double h, glColour* c, glColour* lc );
 /* dialogues */
 static void dialogue_alertClose( char* str );
+static void dialogue_msgClose( char* str );
 static void dialogue_YesNoClose( char* str );
 static void dialogue_inputClose( char* str );
 /* secondary loop hack */
@@ -1657,6 +1658,45 @@ static void dialogue_alertClose( char* str )
 	(void)str;
 	if (window_exists( "Warning" ))
 		window_destroy( window_get( "Warning" ));
+}
+
+
+/*
+ * displays an alert popup with only an ok button and a message
+ */
+static unsigned int msg_wid = 0;
+void dialogue_msg( char* caption, const char *fmt, ... )
+{
+	char msg[256];
+	va_list ap;
+	int h;
+
+	if (msg_wid) return;
+
+	if (fmt == NULL) return;
+	else { /* get the message */
+		va_start(ap, fmt);
+		vsprintf(msg, fmt, ap);
+		va_end(ap);
+	}
+
+	h = gl_printHeight( &gl_smallFont, 260, msg );
+
+	/* create the window */
+	msg_wid = window_create( caption, -1, -1, 300, 90 + h );
+	window_addText( msg_wid, 20, -30, 260, h,  0, "txtMsg",
+			&gl_smallFont, &cBlack, msg );
+	window_addButton( msg_wid, 135, 20, 50, 30, "btnOK", "OK",
+			dialogue_msgClose );
+
+	toolkit_loop();
+}
+static void dialogue_msgClose( char* str )
+{
+	(void)str;
+	window_destroy( msg_wid );
+	msg_wid = 0;
+	loop_done = 0;
 }
 
 

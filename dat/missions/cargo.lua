@@ -23,7 +23,7 @@ end
 -- Mission is accepted
 function accept()
 	player.addCargo( carg_type, carg_mass )
-	toolkit.msg( "Mission Accepted",
+	tk.msg( "Mission Accepted",
 			string.format( "The workers load the %d tons of %s onto your ship.",
 					carg_mass, carg_type ) )
 	hook.land( "land" )
@@ -34,7 +34,8 @@ function land()
 	if planet.name() == planet then
 		player.rmCargo( carg_type, carg_mass )
 		player.pay( misn_reward )
-		toolkit.msg( "Mission Accomplished",
+		tk.msg( "Mission Accomplished",
 				string.format( "The workers unload the %s at the docks.", carg_type ) )
 	end
 end
+

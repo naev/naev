@@ -62,6 +62,7 @@ void window_addInput( const unsigned int wid,
  * popups and alerts
  */
 void dialogue_alert( const char *fmt, ... );
+void dialogue_msg( char *caption, const char *fmt, ... );
 int dialogue_YesNo( char *caption, const char *fmt, ... );
 char* dialogue_input( char* title, int min, int max, const char *fmt, ... );
 

@@ -873,10 +873,20 @@ static void misn_close( char* str )
 }
 static void misn_accept( char* str )
 {
+	int i;
 	char* misn_name;
 	(void)str;
 
 	misn_name = toolkit_getList( secondary_wid, "lstMission" );
+
+	if (strcmp(misn_name,"No Missions")==0) return;
+
+	for (i=0; i<mission_ncomputer; i++)
+		if (mission_computer[i].title &&
+				(strcmp(misn_name, mission_computer[i].title)==0)) {
+			mission_accept( &mission_computer[i] );
+			return;
+		}
 }
 static void misn_genList( int first )
 {
