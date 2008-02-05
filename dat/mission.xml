@@ -17,4 +17,13 @@
 <alliance>Empire United</alliance>
 </avail>
 </mission>
+<mission name="Empire Recruitment">
+<lua>empire00</lua>
+<avail>
+<chance>80</chance>
+<location>Bar</location>
+<alliance>Empire United</alliance>
+<alliance>Neutral</alliance>
+</avail>
+</mission>
 </Missions>

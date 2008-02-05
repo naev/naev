@@ -117,10 +117,10 @@ int misn_run( Mission *misn, char *func )
 
 	lua_getglobal( misn->L, func );
 	if ((ret = lua_pcall(misn->L, 0, 0, 0))) { /* error has occured */
-		err = (char*) lua_tostring(misn->L,-1);
+		err = (lua_isstring(misn->L,-1)) ? (char*) lua_tostring(misn->L,-1) : NULL;
 		if (strcmp(err,"Mission Finished"))
 			WARN("Mission '%s' -> '%s': %s",
-					cur_mission->data->name, func, err);
+					cur_mission->data->name, func, (err) ? err : "unknown error");
 		else ret = 0;
 	}
 
@@ -240,40 +240,41 @@ static int space_getPlanet( lua_State *L )
 		lua_pushstring(L, space_getRndPlanet());
 		return 1;
 	}
-	else if (lua_isnumber(L,-1) || lua_istable(L,-1)) { /* faction table or single */
-
-		if (lua_isnumber(L,-1)) { /* faction is just a number */
-			i = lua_tonumber(L,-1);
-			planets = space_getFactionPlanet( &nplanets, &i, 1 );
-		}
-		else if (lua_istable(L,-1)) {
-			/* load up the table */
-			lua_pushnil(L);
-			nfactions = (int) lua_gettop(L);
-			factions = malloc( sizeof(int) * nfactions );
-			i = 0;
-			while (lua_next(L, -2) != 0) {
-				factions[i++] = (int) lua_tonumber(L,-1);
-				lua_pop(L,1);
-			}
-
-			/* get the planets */
-			planets = space_getFactionPlanet( &nplanets, factions, nfactions );
-			free(factions);
-		}
-
-		/* choose random planet */
-		if (nplanets == 0) { /* no suitable planet */
-			free(planets);
-			return 0;
-		}
-		rndplanet = planets[RNG(0,nplanets-1)];
-		free(planets);
-
-		lua_pushstring(L, rndplanet);
-		return 1;
+	else if (lua_isnumber(L,-1)) {
+		i = lua_tonumber(L,-1);
+		planets = space_getFactionPlanet( &nplanets, &i, 1 );
 	}
-	return 0; /* nothing good passed */
+	else if (lua_isstring(L,-1)) {
+		i = faction_get((char*) lua_tostring(L,-1));
+		planets = space_getFactionPlanet( &nplanets, &i, 1 );
+	}
+	else if (lua_istable(L,-1)) { 
+		/* load up the table */
+		lua_pushnil(L);
+		nfactions = (int) lua_gettop(L);
+		factions = malloc( sizeof(int) * nfactions );
+		i = 0;
+		while (lua_next(L, -2) != 0) {
+			factions[i++] = (int) lua_tonumber(L,-1);
+			lua_pop(L,1);
+		}
+
+		/* get the planets */
+		planets = space_getFactionPlanet( &nplanets, factions, nfactions );
+		free(factions);
+	}
+	else return 0; /* nothing useful */
+
+	/* choose random planet */
+	if (nplanets == 0) { /* no suitable planet */
+		free(planets);
+		return 0;
+	}
+	rndplanet = planets[RNG(0,nplanets-1)];
+	free(planets);
+
+	lua_pushstring(L, rndplanet);
+	return 1;
 }
 static int space_landName( lua_State *L )
 {
@@ -388,6 +389,7 @@ static int tk_msg( lua_State *L )
 }
 static int tk_yesno( lua_State *L )
 {
+	int ret;
 	char *title, *str;
 	MIN_ARGS(2);
 
@@ -396,8 +398,9 @@ static int tk_yesno( lua_State *L )
 	if (lua_isstring(L,-1)) str = (char*) lua_tostring(L,-1);
 	else return 0;
 
-	dialogue_YesNo( title, str );
-	return 0;
+	ret = dialogue_YesNo( title, str );
+	lua_pushboolean(L,ret);
+	return 1;
 }
 static int tk_input( lua_State *L )
 {

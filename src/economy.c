@@ -100,12 +100,14 @@ static Commodity* commodity_parse( xmlNodePtr parent )
 			temp->low = xml_getInt(node);
 	} while ((node = node->next));
 
+#if 0 /* shouldn't be needed atm */
 #define MELEMENT(o,s)	if (o) WARN("Commodity '%s' missing '"s"' element", temp->name)
 	MELEMENT(temp->description==NULL,"description");
 	MELEMENT(temp->high==0,"high");
 	MELEMENT(temp->medium==0,"medium");
 	MELEMENT(temp->low==0,"low");
 #undef MELEMENT
+#endif
 
 	return temp;
 }

@@ -1652,7 +1652,7 @@ static Widget* toolkit_getFocus (void)
  */
 void dialogue_alert( const char *fmt, ... )
 {
-	char msg[256];
+	char msg[512];
 	va_list ap;
 	unsigned int wdw;
 	int h;
@@ -1689,7 +1689,7 @@ static void dialogue_alertClose( char* str )
 static unsigned int msg_wid = 0;
 void dialogue_msg( char* caption, const char *fmt, ... )
 {
-	char msg[256];
+	char msg[4096];
 	va_list ap;
 	int h;
 
@@ -1729,7 +1729,7 @@ static int yesno_result;
 static unsigned int yesno_wid = 0;
 int dialogue_YesNo( char* caption, const char *fmt, ... )
 {
-	char msg[256];
+	char msg[4096];
 	va_list ap;
 	int h;
 
@@ -1782,7 +1782,7 @@ static void dialogue_YesNoClose( char* str )
 static unsigned int input_wid = 0;
 char* dialogue_input( char* title, int min, int max, const char *fmt, ... )
 {
-	char msg[256], *input;
+	char msg[512], *input;
 	va_list ap;
 	int h;
 

@@ -81,6 +81,7 @@ extern Mission player_missions[MISSION_MAX];
 Mission* missions_computer( int *n, int faction,
 		char* planet, char* system ); /* for mission computer */
 void mission_accept( Mission* mission ); /* player accepted mission - mission computer */
+void missions_bar( int faction, char* planet, char* system );
 
 
 /*

@@ -810,7 +810,7 @@ static void spaceport_bar (void)
 			"txtDescription", &gl_smallFont, &cBlack, land_planet->bar_description );
 
 	if (!has_visited(VISITED_BAR)) {
-		/* TODO mission check */
+		missions_bar(land_planet->faction, land_planet->name, cur_system->name);
 		visited(VISITED_BAR);
 	}
 }

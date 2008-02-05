@@ -104,9 +104,41 @@ static int mission_init( Mission* mission, MissionData* misn )
 }
 
 
+/*
+ * small wrapper for misn_run
+ */
 void mission_accept( Mission* mission )
 {
 	misn_run( mission, "accept" );
+}
+
+
+/*
+ * runs bar missions, all lua side and one-shot
+ */
+void missions_bar( int faction, char* planet, char* system )
+{
+	MissionData* misn;
+	Mission mission;
+	int i;
+	double chance;
+
+	for (i=0; i<mission_nstack; i++) {
+		misn = &mission_stack[i];
+		if ((misn->avail.loc==MIS_AVAIL_BAR) &&
+				(((misn->avail.planet && strcmp(misn->avail.planet,planet)==0)) ||
+				 (misn->avail.system && (strcmp(misn->avail.system,system)==0)) ||
+				 mission_matchFaction(misn,faction))) {
+
+			chance = (double)(misn->avail.chance % 100)/100.;
+
+			if (RNGF() < chance) {
+				mission_init( &mission, misn );
+				mission_cleanup(&mission); /* it better clean up for itself or we do it */
+			}
+		}
+	}
+
 }
 
 
@@ -181,7 +213,7 @@ Mission* missions_computer( int *n, int faction, char* planet, char* system )
 			rep = misn->avail.chance / 100;
 
 			for (j=0; j<rep; j++) /* random chance of rep appearances */
-				if (RNGF() > chance) {
+				if (RNGF() < chance) {
 					tmp = realloc( tmp, sizeof(Mission) * ++m);
 					mission_init( &tmp[m-1], misn );
 				}

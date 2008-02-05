@@ -221,8 +221,8 @@ int gl_printText( const glFont *ft_font,
 		glColour* c, const char *fmt, ... )
 {
 	/*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
-	char text[1024]; /* holds the string */
-	char buf[128];
+	char text[4096]; /* holds the string */
+	char buf[256];
 	va_list ap;
 	int p, i, j, n, m, len, ret, lastspace;
 	double x,y;

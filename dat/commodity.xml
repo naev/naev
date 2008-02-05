@@ -16,4 +16,12 @@ All sorts of assorted ores.  Needed for all sorts of production processes.
 <medium>210</medium>
 <low>180</low>
 </commodity>
+<commodity name="Parcels">
+</commodity>
+<commodity name="Colonists">
+</commodity>
+<commodity name="Tourists">
+</commodity>
+<commodity name="Pilgrims">
+</commodity>
 </Commodities>
