@@ -8,7 +8,7 @@
 #  define RNG_H
 
 
-#define RNG(L,H)  ((int)L + (int)((double)(H-L+1) * randfp()))
+#define RNG(L,H)  ((int)L + (int)((double)(H-L) * randfp())) /* L <= RNG <= H */
 #define RNGF()		(randfp())
 
 

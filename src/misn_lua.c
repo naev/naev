@@ -34,12 +34,14 @@ static int misn_setTitle( lua_State *L );
 static int misn_setDesc( lua_State *L );
 static int misn_setReward( lua_State *L );
 static int misn_factions( lua_State *L );
+static int misn_accept( lua_State *L );
 static int misn_finish( lua_State *L );
 static const luaL_reg misn_methods[] = {
 	{ "setTitle", misn_setTitle },
 	{ "setDesc", misn_setDesc },
 	{ "setReward", misn_setReward },
 	{ "factions", misn_factions },
+	{ "accept", misn_accept },
 	{ "finish", misn_finish },
 	{0,0}
 };
@@ -166,9 +168,40 @@ static int misn_setReward( lua_State *L )
 }
 static int misn_factions( lua_State *L )
 {
-	(void)L;
-	/* TODO proper misn.factions() implementation */
-	return 0;
+	int i;
+	MissionData *dat;
+
+	dat = cur_mission->data;
+
+	/* we'll push all the factions in table form */
+	lua_newtable(L);
+	for (i=0; i<dat->avail.nfactions; i++) {
+		lua_pushnumber(L,i+1); /* index, starts with 1 */
+		lua_pushnumber(L,dat->avail.factions[i]); /* value */
+		lua_rawset(L,-3); /* store the value in the table */
+	}
+	return 1;
+}
+static int misn_accept( lua_State *L )
+{
+	int i, ret;
+
+	ret = 0;
+
+	/* find last mission */
+	for (i=0; i<MISSION_MAX; i++)
+		if (player_missions[i].data == NULL) break;
+
+	/* no missions left */
+	if (i>=MISSION_MAX) ret = 1;
+	else { /* copy it over */
+		memcpy( &player_missions[i], cur_mission, sizeof(Mission) );
+		memset( cur_mission, 0, sizeof(Mission) );
+		cur_mission = &player_missions[i];
+	}
+
+	lua_pushboolean(L,!ret); /* we'll convert C style return to lua */
+	return 1;
 }
 static int misn_finish( lua_State *L )
 {
@@ -187,9 +220,43 @@ static int misn_finish( lua_State *L )
  */
 static int space_getPlanet( lua_State *L )
 {
-	/* TODO proper getPlanet implementation */
-	lua_pushstring(L, "Caladan");
-	return 1;
+	int i;
+	int *factions;
+	int nfactions;
+	char **planets;
+	int nplanets;
+	char *rndplanet;
+
+	if (lua_gettop(L) == 0) { /* get random planet */
+	}
+	else if (lua_istable(L,-1)) { /* get planet of faction in table */
+
+		/* load up the table */
+		lua_pushnil(L);
+		nfactions = (int) lua_gettop(L);
+		factions = malloc( sizeof(int) * nfactions );
+		i = 0;
+		while (lua_next(L, -2) != 0) {
+			factions[i++] = (int) lua_tonumber(L,-1);
+			lua_pop(L,1);
+		}
+
+		/* get the planets */
+		planets = space_getFactionPlanet( &nplanets, factions, nfactions );
+		free(factions);
+
+		/* choose random planet */
+		if (nplanets == 0) { /* no suitable planet */
+			free(planets);
+			return 0;
+		}
+		rndplanet = planets[RNG(0,nplanets)];
+		free(planets);
+
+		lua_pushstring(L, rndplanet);
+		return 1;
+	}
+	return 0; /* nothing good passed */
 }
 static int space_landName( lua_State *L )
 {

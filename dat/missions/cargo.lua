@@ -4,7 +4,15 @@
 function create()
 
 	-- target destination
-	planet = space.getPlanet( misn.factions() )
+	local i = 0
+	repeat
+		planet = space.getPlanet( misn.factions() )
+		i = i + 1
+	until planet ~= space.landName() or i > 10
+	-- infinite loop protection
+	if i > 10 then
+		misn.finish()
+	end
 
 	-- mission generics
 	misn_type = "Rush"
@@ -22,11 +30,19 @@ end
 
 -- Mission is accepted
 function accept()
-	player.addCargo( carg_type, carg_mass )
-	tk.msg( "Mission Accepted",
-			string.format( "The workers load the %d tons of %s onto your ship.",
-					carg_mass, carg_type ) )
-	hook.land( "land" )
+	if player.freeCargo() < carg_mass then
+		tk.msg( "Ship is full",
+			string.format("Your ship is too full.  You need to make room for %d more tons if you want to be able to accept the mission.",
+				carg_mass-player.freeCargo()) )
+	elseif misn.accept() then -- able to accept the mission, hooks BREAK after accepting
+		player.addCargo( carg_type, carg_mass )
+		tk.msg( "Mission Accepted",
+				string.format( "The workers load the %d tons of %s onto your ship.",
+						carg_mass, carg_type ) )
+		hook.land( "land" ) -- only hook after accepting
+	else
+		tk.msg( "Too many missions", "You have too many active missions." )
+	end
 end
 
 -- Land hook

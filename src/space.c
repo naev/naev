@@ -235,6 +235,43 @@ int space_hyperspace( Pilot* p )
 
 
 /*
+ * returns the name of all the planets that belong to factions
+ */
+char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
+{
+	int i,j,k;
+	Planet* planet;
+	char **tmp;
+	int ntmp;
+	int mtmp;
+
+	ntmp = 0;
+	mtmp = 25;
+	tmp = malloc(sizeof(char*) * mtmp);
+
+	for (i=0; i<systems_nstack; i++)
+		for (j=0; j<systems_stack[i].nplanets; j++) {
+			planet = &systems_stack[i].planets[j];
+			for (k=0; k<nfactions; k++)
+				if ((faction_isFaction(factions[k]) && /* is a faction */
+							(planet->faction == factions[k])) ||
+						(faction_isAlliance(factions[k]) && /* is an alliance */
+							faction_ofAlliance(planet->faction,factions[k]))) {
+					ntmp++;
+					if (ntmp > mtmp) { /* need more space */
+						mtmp += 25;
+						tmp = realloc(tmp, sizeof(char*) * mtmp);
+					}
+					tmp[ntmp-1] = planet->name;
+				}
+		}
+
+	(*nplanets) = ntmp;
+	return tmp;
+}
+
+
+/*
  * basically used for spawning fleets and such
  */
 void space_update( const double dt )

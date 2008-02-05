@@ -82,6 +82,7 @@ static int mission_init( Mission* mission, MissionData* misn )
 		ERR("Unable to create a new lua state.");
 		return -1;
 	}
+	luaopen_base( mission->L ); /* can be useful */
 	luaopen_string( mission->L ); /* string.format can be very useful */
 	misn_loadLibs( mission->L ); /* load our custom libraries */
 
@@ -102,26 +103,9 @@ static int mission_init( Mission* mission, MissionData* misn )
 }
 
 
-/*
- * accept a mission, used basically for mission computers
- */
 void mission_accept( Mission* mission )
 {
-	int i;
-
-	/* find last mission */
-	for (i=0; i<MISSION_MAX; i++)
-		if (player_missions[i].data == NULL) break;
-
-	/* no missions left */
-	if (i>=MISSION_MAX) return;
-
-	/* copy it over */
-	memcpy( &player_missions[i], mission, sizeof(Mission) );
-	memset( mission, 0, sizeof(Mission) );
-
-	/* run the accept command */
-	misn_run( &player_missions[i], "accept" );
+	misn_run( mission, "accept" );
 }
 
 
