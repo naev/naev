@@ -48,11 +48,16 @@ end
 -- Land hook
 function land()
 	if space.landName() == planet then
-		player.rmCargo( carg_id )
-		player.pay( misn_reward )
-		tk.msg( "Mission Accomplished",
-				string.format( "The workers unload the %s at the docks.", carg_type ) )
-		misn.finish()
+		if player.rmCargo( carg_id ) then
+			player.pay( misn_reward )
+			tk.msg( "Mission Accomplished",
+					string.format( "The workers unload the %s at the docks.", carg_type ) )
+			misn.finish()
+		else
+			tk.msg( "Where is the cargo?",
+					string.format( "You are missing the %d tons of %s!.",
+							carg_mass, carg_type ) )
+		end
 	end
 end
 

@@ -791,7 +791,7 @@ unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity
 
 	return pilot->commodities[ pilot->ncommodities-1 ].id;
 }
-void pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id )
+int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id )
 {
 	int i;
 
@@ -799,10 +799,8 @@ void pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id )
 		if (pilot->commodities[i].id == cargo_id)
 			break;
 	
-	if (i>=pilot->ncommodities) {
-		DEBUG("Mission Cargo id '%d' not found on pilot '%s'", cargo_id, pilot->name);
-		return;
-	}
+	if (i>=pilot->ncommodities)
+		return 1;
 
 	/* remove cargo */
 	pilot->cargo_free += pilot->commodities[i].quantity;
@@ -811,6 +809,8 @@ void pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id )
 	pilot->ncommodities--;
 	pilot->commodities = realloc( pilot->commodities,
 			sizeof(PilotCommodity) * pilot->ncommodities );
+
+	return 0;
 }
 
 

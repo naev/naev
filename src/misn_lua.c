@@ -304,6 +304,7 @@ static int player_addCargo( lua_State *L )
 }
 static int player_rmCargo( lua_State *L )
 {
+	int ret;
 	unsigned int id;
 
 	MIN_ARGS(1);
@@ -311,8 +312,9 @@ static int player_rmCargo( lua_State *L )
 	if (lua_isnumber(L,-1)) id = (unsigned int) lua_tonumber(L,-1);
 	else return 0;
 
-	pilot_rmMissionCargo( player, id );
+	ret = pilot_rmMissionCargo( player, id );
 
+	lua_pushboolean(L,!ret);
 	return 0;
 }
 static int player_pay( lua_State *L )

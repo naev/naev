@@ -180,7 +180,7 @@ int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity );
 int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity );
 /* mission cargo - not to be confused with normal cargo */
 unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity );
-void pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id );
+int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id );
 
 
 /*
