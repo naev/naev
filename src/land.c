@@ -475,7 +475,6 @@ static void shipyard (void)
 	window_addButton( secondary_wid, -20, 40+BUTTON_HEIGHT,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnYourShips",
 			"Your Ships", shipyard_yours );
-	if (player_nships()==0) window_disableButton(secondary_wid,"btnYourShips");
 	window_addButton( secondary_wid, -40-BUTTON_WIDTH, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnBuyShip",
 			"Buy", shipyard_buy );
@@ -533,6 +532,10 @@ static void shipyard_update( char* str )
 	
 	shipname = toolkit_getList( secondary_wid, "lstShipyard" );
 	ship = ship_get( shipname );
+
+	/* toggle your shipyard */
+	if (player_nships()==0) window_disableButton(secondary_wid,"btnYourShips");
+	else window_enableButton(secondary_wid,"btnYourShips");
 
 	/* update image */
 	window_modifyImage( secondary_wid, "imgTarget", ship->gfx_target );

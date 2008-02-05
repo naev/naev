@@ -984,7 +984,7 @@ static void window_render( Window* w )
  */
 static void toolkit_renderButton( Widget* btn, double bx, double by )
 {
-	glColour *c, *dc, *oc, *lc;
+	glColour *c, *dc, *lc;
 	double x, y;
 
 	x = bx + btn->x;
@@ -992,10 +992,9 @@ static void toolkit_renderButton( Widget* btn, double bx, double by )
 
 	/* set the colours */
 	if (btn->dat.btn.disabled==1) {
-		lc = &cGrey50;
-		c = &cGrey30;
-		dc = &cGrey30;
-		oc = &cGrey10;
+		lc = &cGrey60;
+		c = &cGrey20;
+		dc = &cGrey40;
 	}
 	else {
 		switch (btn->status) {
@@ -1003,19 +1002,16 @@ static void toolkit_renderButton( Widget* btn, double bx, double by )
 				lc = &cGrey80;
 				c = &cGrey60;
 				dc = &cGrey40;
-				oc = &cGrey20;
 				break;
 			case WIDGET_STATUS_MOUSEOVER:
 				lc = &cWhite;
 				c = &cGrey80;
 				dc = &cGrey60;
-				oc = &cGrey40;
 				break;
 			case WIDGET_STATUS_MOUSEDOWN:
 				lc = &cGreen;
 				c = &cGreen;
 				dc = &cGrey40;
-				oc = &cGrey20;
 				break;
 			default:
 				break;
@@ -1024,8 +1020,14 @@ static void toolkit_renderButton( Widget* btn, double bx, double by )
 
 
 	/* shaded base */
-	toolkit_drawRect( x, y,            btn->w, 0.6*btn->h, dc, c );
-	toolkit_drawRect( x, y+0.6*btn->h, btn->w, 0.4*btn->h, c, NULL );
+	if (btn->dat.btn.disabled==1) {
+		toolkit_drawRect( x, y,            btn->w, 0.4*btn->h, dc, NULL );
+		toolkit_drawRect( x, y+0.4*btn->h, btn->w, 0.6*btn->h, dc, c );
+	}
+	else {
+		toolkit_drawRect( x, y,            btn->w, 0.6*btn->h, dc, c );
+		toolkit_drawRect( x, y+0.6*btn->h, btn->w, 0.4*btn->h, c, NULL );
+	}
 	
 	/* inner outline */
 	toolkit_drawOutline( x, y, btn->w, btn->h, 0., lc, c );
