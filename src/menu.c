@@ -18,6 +18,7 @@
 #include "space.h"
 #include "player.h"
 #include "plasmaf.h"
+#include "mission.h"
 
 
 #define MAIN_WIDTH		130
@@ -31,6 +32,9 @@
 
 #define OUTFITS_WIDTH	400
 #define OUTFITS_HEIGHT	200
+
+#define MISSIONS_WIDTH  600
+#define MISSIONS_HEIGHT 400
 
 #define DEATH_WIDTH		130
 #define DEATH_HEIGHT		150
@@ -46,15 +50,26 @@ int menu_open = 0;
 /*
  * prototypes
  */
+/* main menu */
 static void menu_main_close (void);
 static void menu_main_new( char* str );
+/* small menu */
 static void menu_small_close( char* str );
 static void edit_options (void);
 static void exit_game (void);
+/* information menu */
 static void menu_info_close( char* str );
+/* outfits submenu */
 static void info_outfits_menu( char* str );
-static void info_outfits_menu_close( char* str );
+/* mission submenu */
+static void info_missions_menu( char* str );
+static void mission_menu_abort( char* str );
+static void mission_menu_genList( int first );
+static void mission_menu_update( char* str );
+/* death menu */
 static void menu_death_main( char* str );
+/* generic */
+static void menu_generic_close( char* str );
 
 
 
@@ -212,7 +227,7 @@ void menu_info (void)
 			"btnCargo", "Cargo", NULL );
 	window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT,
-			"btnMissions", "Missions", NULL );
+			"btnMissions", "Missions", info_missions_menu );
 	window_addButton( wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT,
 			"btnClose", "Close", menu_info_close );
@@ -251,12 +266,119 @@ static void info_outfits_menu( char* str )
 	
 	window_addButton( wid, -20, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT,
-			"closeOutfits", "Close", info_outfits_menu_close );
+			"closeOutfits", "Close", menu_generic_close );
 }
-static void info_outfits_menu_close( char* str )
+
+
+/*
+ * shows the player's active missions
+ */
+static void info_missions_menu( char* str )
 {
-	window_destroy( window_get( str+5 /* "closeFoo -> Foo" */ ) );
+	(void)str;
+	unsigned int wid;
+
+	/* create the window */
+	wid = window_create( "Missions", -1, -1, MISSIONS_WIDTH, MISSIONS_HEIGHT );
+
+	/* buttons */
+	window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+			"closeMissions", "Back", menu_generic_close );
+	window_addButton( wid, -20, 40 + BUTTON_HEIGHT,
+			BUTTON_WIDTH, BUTTON_HEIGHT, "btnAbortMission", "Abort",
+			mission_menu_abort );
+	
+	/* text */
+	window_addText( wid, 300+40, -60,
+			200, 40, 0, "txtSReward",
+			&gl_smallFont, &cDConsole, "Reward:" );
+	window_addText( wid, 300+100, -60,
+			140, 40, 0, "txtReward", &gl_smallFont, &cBlack, NULL );
+	window_addText( wid, 300+40, -100,
+			200, MISSIONS_HEIGHT - BUTTON_WIDTH - 120, 0,
+			"txtDesc", &gl_smallFont, &cBlack, NULL );
+
+	/* list */
+	mission_menu_genList(1);
 }
+static void mission_menu_genList( int first )
+{
+	int i,j;
+	char** misn_names;
+	unsigned int wid;
+
+	wid = window_get("Missions");
+
+	if (!first)
+		window_destroyWidget( wid, "lstMission" );
+
+	/* list */
+	misn_names = malloc(sizeof(char*) * MISSION_MAX);
+	j = 0;
+	for (i=0; i<MISSION_MAX; i++)
+		if (player_missions[i].id != 0)
+			misn_names[j++] = strdup(player_missions[i].title);
+	if (j==0) { /* no missions */
+		free(misn_names);
+		misn_names = malloc(sizeof(char*));                                 
+		misn_names[0] = strdup("No Missions");                              
+		j = 1;
+	}
+	window_addList( wid, 20, -40,
+			300, MISSIONS_HEIGHT-60,
+			"lstMission", misn_names, j, 0, mission_menu_update );
+
+	mission_menu_update(NULL);
+}
+static void mission_menu_update( char* str )
+{
+	int i;
+	char *active_misn;
+	unsigned int wid;
+
+	(void)str;
+
+	wid = window_get( "Missions" );
+
+	active_misn = toolkit_getList( wid, "lstMission" );
+	if (strcmp(active_misn,"No Missions")==0) {
+		window_modifyText( wid, "txtReward", "None" );
+		window_modifyText( wid, "txtDesc",
+				"You currently have no active missions." );
+		window_disableButton( wid, "btnAbortMission" );
+		return;
+	}
+
+	for (i=0; i<MISSION_MAX; i++)
+		if (player_missions[i].title &&
+				(strcmp(active_misn, player_missions[i].title)==0)) {
+			window_modifyText( wid, "txtReward", player_missions[i].reward );
+			window_modifyText( wid, "txtDesc", player_missions[i].desc );
+			window_enableButton( wid, "btnAbortMission" );
+			return;
+		}
+}
+static void mission_menu_abort( char* str )
+{
+	(void)str;
+	char *selected_misn;
+	unsigned int wid;
+	int i;
+
+	wid = window_get( "Missions" );
+
+	selected_misn = toolkit_getList( wid, "lstMission" );
+
+	if (dialogue_YesNo( "Abort Mission", "Are you sure you want to abort this mission?" ))
+		for (i=0; i<MISSION_MAX; i++)
+			if (player_missions[i].title &&
+					(strcmp(selected_misn, player_missions[i].title)==0)) {
+				mission_cleanup( &player_missions[i] );
+				mission_menu_genList(0);
+				break;
+			}
+}
+
 
 
 /*
@@ -287,3 +409,10 @@ static void menu_death_main( char* str )
 }
 
 
+/*
+ * generic close approach
+ */
+static void menu_generic_close( char* str )
+{
+	window_destroy( window_get( str+5 /* "closeFoo -> Foo" */ ) );
+}
