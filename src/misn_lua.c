@@ -267,7 +267,7 @@ static int space_getPlanet( lua_State *L )
 			free(planets);
 			return 0;
 		}
-		rndplanet = planets[RNG(0,nplanets)];
+		rndplanet = planets[RNG(0,nplanets-1)];
 		free(planets);
 
 		lua_pushstring(L, rndplanet);

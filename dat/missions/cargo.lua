@@ -16,7 +16,7 @@ function create()
 
 	-- mission generics
 	misn_type = "Cargo"
-	i = rnd.int(0,3)
+	i = rnd.int(3)
 	if i == 0 then
 		misn.setTitle( "Cargo delivery to " .. planet )
 	elseif i == 1 then
@@ -29,11 +29,15 @@ function create()
 
 	-- more mission specifics
 	carg_mass = rnd.int( 10, 30 )
-	carg_type = "Food"
+	i = rnd.int(1)
+	print(i)
+	if i==0 then carg_type = "Food"
+	elseif i==1 then carg_type = "Ore"
+	end
 	misn.setDesc( string.format(
-				"%s needs a rush delivery of %d tons of %s by %s.",
-				planet, carg_mass, carg_type, "SOMEDAY" ) )
-	misn_reward = carg_mass * 1000 + rnd.int( 0, 5000 )
+				"%s needs a delivery of %d tons of %s.",
+				planet, carg_mass, carg_type ) )
+	misn_reward = carg_mass * (750+rnd.int(250)) + rnd.int(5000)
 	misn.setReward( string.format( "%d credits", misn_reward ) )
 end
 
