@@ -1567,6 +1567,15 @@ char** player_ships( int *nships )
 
 
 /*
+ * returns the amount of ships player has in storage
+ */
+int player_nships (void)
+{
+	return player_nstack;
+}
+
+
+/*
  * returns a specific ship
  */
 Pilot* player_getShip( char* shipname )

@@ -74,6 +74,7 @@ int player_cargoOwned( const char* commodityname );
  * pilot ships
  */
 char** player_ships( int *nships );
+int player_nships (void);
 Pilot* player_getShip( char* shipname );
 char* player_getLoc( char* shipname );
 void player_setLoc( char* shipname, char* loc );

@@ -148,7 +148,7 @@ static int misn_setDesc( lua_State *L )
 {
 	MIN_ARGS(1);
 	if (lua_isstring(L, -1)) {    
-		if (cur_mission->desc) /* cleanup old title */
+		if (cur_mission->desc) /* cleanup old description */
 			free(cur_mission->desc);
 		cur_mission->desc = strdup((char*)lua_tostring(L, -1));
 	}
@@ -158,7 +158,7 @@ static int misn_setReward( lua_State *L )
 {
 	MIN_ARGS(1);
 	if (lua_isstring(L, -1)) {    
-		if (cur_mission->reward) /* cleanup old title */
+		if (cur_mission->reward) /* cleanup old reward */
 			free(cur_mission->reward);
 		cur_mission->reward = strdup((char*)lua_tostring(L, -1));
 	}

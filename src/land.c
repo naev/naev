@@ -475,6 +475,7 @@ static void shipyard (void)
 	window_addButton( secondary_wid, -20, 40+BUTTON_HEIGHT,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnYourShips",
 			"Your Ships", shipyard_yours );
+	if (player_nships()==0) window_disableButton(secondary_wid,"btnYourShips");
 	window_addButton( secondary_wid, -40-BUTTON_WIDTH, 20,
 			BUTTON_WIDTH, BUTTON_HEIGHT, "btnBuyShip",
 			"Buy", shipyard_buy );
@@ -662,7 +663,11 @@ static void shipyard_yoursUpdate( char* str )
 	int price;
 
 	shipname = toolkit_getList( terciary_wid, "lstYourShips" );
-	if (strcmp(shipname,"None")==0) return; /* no ships */
+	if (strcmp(shipname,"None")==0) { /* no ships */
+		window_disableButton( terciary_wid, "btnChangeShip" );
+		window_disableButton( terciary_wid, "btnTransportShip" );
+		return;
+	}
 	ship = player_getShip( shipname );
 	loc = player_getLoc(ship->name);
 	price = shipyard_yoursTransportPrice(shipname);
