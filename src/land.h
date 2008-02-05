@@ -12,6 +12,7 @@
 
 
 extern int landed;
+extern Planet* land_planet;
 
 
 void land ( Planet* p );

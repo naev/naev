@@ -17,8 +17,7 @@
  */
 typedef struct Hook_ {
 	int id;
-	lua_State *L;
-	unsigned int parent;
+	Mission* misn;
 	char *func;
 	char *stack;
 } Hook;
@@ -36,16 +35,18 @@ static int hook_nstack = 0;
 /*
  * prototypes
  */
+/* extern */
+extern int misn_run( Mission *misn, char *func );
+
+
+/*
+ * prototypes
+ */
 int hook_run( Hook *hook )
 {
-	lua_State *L;
-
-	L = hook->L;
-	
-	lua_getglobal(L, hook->func);
-	if (lua_pcall(L, 0, 0, 0)) /* error has occured */
-		WARN("Hook [%s] '%d' -> '%s': %s", hook->stack,
-				hook->parent, hook->func, lua_tostring(L,-1));
+	if (misn_run( hook->misn, hook->func )) /* error has occured */
+		WARN("Hook [%s] '%d' -> '%s' failed", hook->stack,
+				hook->id, hook->func);
 
 	return 0;
 }
@@ -54,7 +55,7 @@ int hook_run( Hook *hook )
 /*
  * add/remove hooks
  */
-int hook_add( lua_State *L, unsigned int parent, char *func, char *stack )
+int hook_add( Mission *misn, char *func, char *stack )
 {
 	Hook *new_hook;
 
@@ -67,8 +68,7 @@ int hook_add( lua_State *L, unsigned int parent, char *func, char *stack )
 	/* create the new hook */
 	new_hook = &hook_stack[hook_nstack];
 	new_hook->id = ++hook_id;
-	new_hook->L = L;
-	new_hook->parent = parent;
+	new_hook->misn = misn;
 	new_hook->func = func;
 	new_hook->stack = stack;
 
@@ -88,18 +88,21 @@ void hook_rm( int id )
 		else break;
 	}
 
-	if (m == (hook_nstack-1)) return;
+	if (m == (hook_nstack-1)) {
+		hook_nstack--;
+		return;
+	}
 
 	/* move it! */
 	memmove( &hook_stack[m+1], &hook_stack[m+2], sizeof(Hook) * (hook_nstack-(m+2)) );
 	hook_nstack--;
 }
-void hook_rmParent( unsigned int parent)
+void hook_rmParent( unsigned int parent )
 {
 	int i;
 
 	for (i=0; i<hook_nstack; i++)
-		if (parent == hook_stack[i].parent) {
+		if (parent == hook_stack[i].misn->id) {
 			hook_rm( hook_stack[i].id );
 			i--;
 		}

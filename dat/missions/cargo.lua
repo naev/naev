@@ -31,11 +31,12 @@ end
 
 -- Land hook
 function land()
-	if planet.name() == planet then
+	if space.landName() == planet then
 		player.rmCargo( carg_type, carg_mass )
 		player.pay( misn_reward )
 		tk.msg( "Mission Accomplished",
 				string.format( "The workers unload the %s at the docks.", carg_type ) )
+		misn.finish()
 	end
 end
 

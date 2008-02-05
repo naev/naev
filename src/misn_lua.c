@@ -14,6 +14,7 @@
 #include "rng.h"
 #include "space.h"
 #include "toolkit.h"
+#include "land.h"
 
 
 #define MIN_ARGS(n)		if (lua_gettop(L) < n) return 0
@@ -23,6 +24,7 @@
  * current mission
  */
 static Mission *cur_mission = NULL;
+static int misn_delete = 0; /* if 1 delete current mission */
 
 /*
  * libraries
@@ -32,17 +34,21 @@ static int misn_setTitle( lua_State *L );
 static int misn_setDesc( lua_State *L );
 static int misn_setReward( lua_State *L );
 static int misn_factions( lua_State *L );
+static int misn_finish( lua_State *L );
 static const luaL_reg misn_methods[] = {
 	{ "setTitle", misn_setTitle },
 	{ "setDesc", misn_setDesc },
 	{ "setReward", misn_setReward },
 	{ "factions", misn_factions },
+	{ "finish", misn_finish },
 	{0,0}
 };
 /* space */
 static int space_getPlanet( lua_State *L );
+static int space_landName( lua_State *L );
 static const luaL_reg space_methods[] = {
 	{ "getPlanet", space_getPlanet },
+	{ "landName", space_landName },
 	{0,0}
 };
 /* player */
@@ -102,14 +108,22 @@ int misn_loadLibs( lua_State *L )
 int misn_run( Mission *misn, char *func )
 {
 	int ret;
+	char* err;
 
 	cur_mission = misn;
+	misn_delete = 0;
 
 	lua_getglobal( misn->L, func );
-	if ((ret = lua_pcall(misn->L, 0, 0, 0))) /* error has occured */
-		WARN("Mission '%s' -> '%s': %s",
-				cur_mission->data->name, func, lua_tostring(misn->L,-1));
+	if ((ret = lua_pcall(misn->L, 0, 0, 0))) { /* error has occured */
+		err = (char*) lua_tostring(misn->L,-1);
+		if (strcmp(err,"Mission Finished"))
+			WARN("Mission '%s' -> '%s': %s",
+					cur_mission->data->name, func, err);
+		else ret = 0;
+	}
 
+	/* mission is finished */
+	if (misn_delete) mission_cleanup( cur_mission );
 	cur_mission = NULL;
 
 	return ret;
@@ -156,6 +170,15 @@ static int misn_factions( lua_State *L )
 	/* TODO proper misn.factions() implementation */
 	return 0;
 }
+static int misn_finish( lua_State *L )
+{
+	misn_delete = 1;
+
+	lua_pushstring(L, "Mission Finished");
+	lua_error(L); /* shouldn't return */
+
+	return 0;
+}
 
 
 
@@ -164,10 +187,17 @@ static int misn_factions( lua_State *L )
  */
 static int space_getPlanet( lua_State *L )
 {
-	(void)L;
 	/* TODO proper getPlanet implementation */
-	lua_pushstring(L, "Arrakis");
+	lua_pushstring(L, "Caladan");
 	return 1;
+}
+static int space_landName( lua_State *L )
+{
+	if (landed) {
+		lua_pushstring(L, land_planet->name);
+		return 1;
+	}
+	return 0;
 }
 
 
@@ -323,6 +353,6 @@ static int hook_land( lua_State *L )
 				cur_mission->data->name);
 		return 0;
 	}
-	hook_add( L, cur_mission->id, func, "land" );
+	hook_add( cur_mission, func, "land" );
 	return 0;
 }

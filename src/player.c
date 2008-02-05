@@ -75,11 +75,6 @@ extern int pilots;
  */
 extern StarSystem *systems_stack;
 
-/*
- * land stuff for player_stack
- */
-extern Planet* land_planet;
-
 
 /*
  * GUI stuff
