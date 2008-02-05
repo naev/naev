@@ -30,7 +30,6 @@ function create()
 	-- more mission specifics
 	carg_mass = rnd.int( 10, 30 )
 	i = rnd.int(1)
-	print(i)
 	if i==0 then carg_type = "Food"
 	elseif i==1 then carg_type = "Ore"
 	end
