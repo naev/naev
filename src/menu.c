@@ -373,6 +373,7 @@ static void mission_menu_abort( char* str )
 		for (i=0; i<MISSION_MAX; i++)
 			if (player_missions[i].title &&
 					(strcmp(selected_misn, player_missions[i].title)==0)) {
+				/* TODO handle lost cargo */
 				mission_cleanup( &player_missions[i] );
 				mission_menu_genList(0);
 				break;

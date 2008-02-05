@@ -782,8 +782,9 @@ void player_render (void)
 			j -= gl_smallFont.h + 3;
 			gl_print( &gl_smallFont,
 					gui.misc.x + 13, j,
-					NULL, "%d %s", player->commodities[i].quantity,
-					player->commodities[i].commodity->name );
+					NULL, "%d %s%s", player->commodities[i].quantity,
+					player->commodities[i].commodity->name,
+					(player->commodities[i].id) ? "*" : "" );
 		}
 	}
 
