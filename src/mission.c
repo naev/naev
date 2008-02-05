@@ -13,6 +13,7 @@
 #include "lauxlib.h"
 #include "lualib.h"
 
+#include "rng.h"
 #include "naev.h"
 #include "log.h"
 #include "hook.h"
@@ -161,7 +162,9 @@ static int mission_matchFaction( MissionData* misn, int faction )
  */
 Mission* missions_computer( int *n, int faction, char* planet, char* system )
 {
-	int i, m;
+	int i,j, m;
+	double chance;
+	int rep;
 	Mission* tmp;
 	MissionData* misn;
 
@@ -173,8 +176,15 @@ Mission* missions_computer( int *n, int faction, char* planet, char* system )
 			(((misn->avail.planet && strcmp(misn->avail.planet,planet)==0)) ||
 				(misn->avail.system && (strcmp(misn->avail.system,system)==0)) ||
 				mission_matchFaction(misn,faction))) {
-			tmp = realloc( tmp, sizeof(Mission) * ++m);
-			mission_init( &tmp[m-1], misn );
+
+			chance = (double)(misn->avail.chance % 100)/100.;
+			rep = misn->avail.chance / 100;
+
+			for (j=0; j<rep; j++) /* random chance of rep appearances */
+				if (RNGF() > chance) {
+					tmp = realloc( tmp, sizeof(Mission) * ++m);
+					mission_init( &tmp[m-1], misn );
+				}
 		}
 	}
 
@@ -235,6 +245,8 @@ static MissionData* mission_parse( const xmlNodePtr parent )
 			do {
 				if (xml_isNode(cur,"location"))
 					temp->avail.loc = mission_location( xml_get(cur) );
+				else if (xml_isNode(cur,"chance"))
+					temp->avail.chance = xml_getInt(cur);
 				else if (xml_isNode(cur,"planet"))
 					temp->avail.planet = strdup( xml_get(cur) );
 				else if (xml_isNode(cur,"system"))

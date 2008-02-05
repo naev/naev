@@ -36,7 +36,7 @@ typedef struct MissionData_ {
 	/* availability */
 	struct {
 		int loc; /* location */
-		double chance; /* chance of it appearing */
+		int chance; /* chance of it appearing */
 
 		/* for specific cases */
 		char *planet;

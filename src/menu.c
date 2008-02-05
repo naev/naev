@@ -332,8 +332,8 @@ static void mission_menu_genList( int first )
 }
 static void mission_menu_update( char* str )
 {
-	int i;
 	char *active_misn;
+	Mission* misn;
 	unsigned int wid;
 
 	(void)str;
@@ -349,35 +349,32 @@ static void mission_menu_update( char* str )
 		return;
 	}
 
-	for (i=0; i<MISSION_MAX; i++)
-		if (player_missions[i].title &&
-				(strcmp(active_misn, player_missions[i].title)==0)) {
-			window_modifyText( wid, "txtReward", player_missions[i].reward );
-			window_modifyText( wid, "txtDesc", player_missions[i].desc );
-			window_enableButton( wid, "btnAbortMission" );
-			return;
-		}
+	misn = &player_missions[ toolkit_getListPos(wid, "lstMission" ) ];
+	window_modifyText( wid, "txtReward", misn->reward );
+	window_modifyText( wid, "txtDesc", misn->desc );
+	window_enableButton( wid, "btnAbortMission" );
 }
 static void mission_menu_abort( char* str )
 {
 	(void)str;
 	char *selected_misn;
+	int pos;
 	unsigned int wid;
-	int i;
+	Mission* misn;
 
 	wid = window_get( "Missions" );
 
 	selected_misn = toolkit_getList( wid, "lstMission" );
 
-	if (dialogue_YesNo( "Abort Mission", "Are you sure you want to abort this mission?" ))
-		for (i=0; i<MISSION_MAX; i++)
-			if (player_missions[i].title &&
-					(strcmp(selected_misn, player_missions[i].title)==0)) {
-				/* TODO handle lost cargo */
-				mission_cleanup( &player_missions[i] );
-				mission_menu_genList(0);
-				break;
-			}
+	if (dialogue_YesNo( "Abort Mission", 
+				"Are you sure you want to abort this mission?" )) {
+		pos = toolkit_getListPos(wid, "lstMission" );
+		misn = &player_missions[pos];
+		mission_cleanup( misn );
+		memmove( misn, &player_missions[pos+1], 
+				sizeof(Mission) * (MISSION_MAX-pos-1) );
+		mission_menu_genList(0);
+	}
 }
 
 

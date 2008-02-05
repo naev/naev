@@ -91,6 +91,7 @@ void window_imgColour( const unsigned int wid,
 int window_exists( const char* wdwname );
 unsigned int window_get( const char* wdwname );
 char* toolkit_getList( const unsigned int wid, char* name );
+int toolkit_getListPos( const unsigned int wid, char* name );
 glTexture* window_getImage( const unsigned int wid, char* name );
 char* window_getInput( const unsigned int wid, char* name );
 

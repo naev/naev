@@ -1604,6 +1604,20 @@ char* toolkit_getList( const unsigned int wid, char* name )
 
 
 /*
+ * get the position of current item in the list
+ */
+int toolkit_getListPos( const unsigned int wid, char* name )
+{
+	Widget *wgt = window_getwgt(wid,name);
+
+	if ((wgt->type != WIDGET_LIST) || (wgt->dat.lst.selected == -1))
+		return -1;
+
+	return wgt->dat.lst.selected;
+}
+
+
+/*
  * mouse event focus on list
  */
 static void toolkit_listFocus( Widget* lst, double bx, double by )

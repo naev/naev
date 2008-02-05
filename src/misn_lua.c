@@ -109,7 +109,7 @@ int misn_loadLibs( lua_State *L )
  */
 int misn_run( Mission *misn, char *func )
 {
-	int ret;
+	int i, ret;
 	char* err;
 
 	cur_mission = misn;
@@ -125,7 +125,16 @@ int misn_run( Mission *misn, char *func )
 	}
 
 	/* mission is finished */
-	if (misn_delete) mission_cleanup( cur_mission );
+	if (misn_delete) {
+		mission_cleanup( cur_mission );
+		for (i=0; i<MISSION_MAX; i++)
+			if (cur_mission == &player_missions[i]) {
+				memmove( &player_missions[i], &player_missions[i+1],
+						sizeof(Mission) * (MISSION_MAX-i-1) );
+				break;
+			}
+	}
+
 	cur_mission = NULL;
 
 	return ret;

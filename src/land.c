@@ -888,21 +888,25 @@ static void misn_close( char* str )
 }
 static void misn_accept( char* str )
 {
-	int i;
 	char* misn_name;
+	Mission* misn;
+	int pos;
 	(void)str;
 
 	misn_name = toolkit_getList( secondary_wid, "lstMission" );
 
 	if (strcmp(misn_name,"No Missions")==0) return;
 
-	for (i=0; i<mission_ncomputer; i++)
-		if (mission_computer[i].title &&
-				(strcmp(misn_name, mission_computer[i].title)==0)) {
-			mission_accept( &mission_computer[i] );
-			misn_genList(0);
-			return;
-		}
+	if (dialogue_YesNo("Accept Mission",
+			"Are you sure you want to accept this mission?")) {
+		pos = toolkit_getListPos( secondary_wid, "lstMission" );
+		misn = &mission_computer[pos];
+		mission_accept( misn );
+		memmove( misn, &mission_computer[pos+1],
+				sizeof(Mission) * (mission_ncomputer-pos-1) );
+		mission_ncomputer--;
+		misn_genList(0);
+	}
 }
 static void misn_genList( int first )
 {
@@ -934,8 +938,8 @@ static void misn_genList( int first )
 }
 static void misn_update( char* str )
 {
-	int i;
 	char *active_misn;
+	Mission* misn;
 
 	(void)str;
 
@@ -948,14 +952,10 @@ static void misn_update( char* str )
 		return;
 	}
 
-	for (i=0; i<mission_ncomputer; i++)
-		if (mission_computer[i].title &&
-				(strcmp(active_misn, mission_computer[i].title)==0)) {
-			window_modifyText( secondary_wid, "txtReward", mission_computer[i].reward );
-			window_modifyText( secondary_wid, "txtDesc", mission_computer[i].desc );
-			window_enableButton( secondary_wid, "btnAcceptMission" );
-			return;
-		}
+	misn = &mission_computer[ toolkit_getListPos( secondary_wid, "lstMission" ) ];
+	window_modifyText( secondary_wid, "txtReward", misn->reward );
+	window_modifyText( secondary_wid, "txtDesc", misn->desc );
+	window_enableButton( secondary_wid, "btnAcceptMission" );
 }
 
 
