@@ -15,8 +15,17 @@ function create()
 	end
 
 	-- mission generics
-	misn_type = "Rush"
-	misn.setTitle( "Rush Delivery to " .. planet )
+	misn_type = "Cargo"
+	i = rnd.int(0,3)
+	if i == 0 then
+		misn.setTitle( "Cargo delivery to " .. planet )
+	elseif i == 1 then
+		misn.setTitle( "Freight delivery to " .. planet )
+	elseif i == 2 then
+		misn.setTitle( "Transport to " .. planet )
+	elseif i == 3 then
+		misn.setTitle( "Delivery to " .. planet )
+	end
 
 	-- more mission specifics
 	carg_mass = rnd.int( 10, 30 )
