@@ -228,22 +228,30 @@ static int space_getPlanet( lua_State *L )
 	char *rndplanet;
 
 	if (lua_gettop(L) == 0) { /* get random planet */
+		lua_pushstring(L, space_getRndPlanet());
+		return 1;
 	}
-	else if (lua_istable(L,-1)) { /* get planet of faction in table */
+	else if (lua_isnumber(L,-1) || lua_istable(L,-1)) { /* faction table or single */
 
-		/* load up the table */
-		lua_pushnil(L);
-		nfactions = (int) lua_gettop(L);
-		factions = malloc( sizeof(int) * nfactions );
-		i = 0;
-		while (lua_next(L, -2) != 0) {
-			factions[i++] = (int) lua_tonumber(L,-1);
-			lua_pop(L,1);
+		if (lua_isnumber(L,-1)) { /* faction is just a number */
+			i = lua_tonumber(L,-1);
+			planets = space_getFactionPlanet( &nplanets, &i, 1 );
 		}
+		else if (lua_istable(L,-1)) {
+			/* load up the table */
+			lua_pushnil(L);
+			nfactions = (int) lua_gettop(L);
+			factions = malloc( sizeof(int) * nfactions );
+			i = 0;
+			while (lua_next(L, -2) != 0) {
+				factions[i++] = (int) lua_tonumber(L,-1);
+				lua_pop(L,1);
+			}
 
-		/* get the planets */
-		planets = space_getFactionPlanet( &nplanets, factions, nfactions );
-		free(factions);
+			/* get the planets */
+			planets = space_getFactionPlanet( &nplanets, factions, nfactions );
+			free(factions);
+		}
 
 		/* choose random planet */
 		if (nplanets == 0) { /* no suitable planet */

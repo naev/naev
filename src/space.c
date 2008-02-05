@@ -273,6 +273,38 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
 
 
 /*
+ * returns the name of a random planet
+ */
+char* space_getRndPlanet (void)
+{
+	int i,j;
+	char **tmp;
+	int ntmp;
+	int mtmp;
+	char *res;
+
+	ntmp = 0;
+	mtmp = 25;
+	tmp = malloc(sizeof(char*) * mtmp);
+
+	for (i=0; i<systems_nstack; i++)
+		for (j=0; j<systems_stack[i].nplanets; j++) {
+			ntmp++;
+			if (ntmp > mtmp) { /* need more space */
+				mtmp += 25;
+				tmp = realloc(tmp, sizeof(char*) * mtmp);
+			}
+			tmp[ntmp-1] = systems_stack[i].planets[j].name;
+		}
+	
+	res = tmp[RNG(0,ntmp-1)];
+	free(tmp);
+
+	return res; 
+}
+
+
+/*
  * basically used for spawning fleets and such
  */
 void space_update( const double dt )

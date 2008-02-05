@@ -139,6 +139,7 @@ void space_update( const double dt );
 int space_canHyperspace( Pilot* p);
 int space_hyperspace( Pilot* p );
 char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions );
+char* space_getRndPlanet (void);
 extern char* stardate;
 
 
