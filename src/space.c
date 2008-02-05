@@ -263,6 +263,7 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
 						tmp = realloc(tmp, sizeof(char*) * mtmp);
 					}
 					tmp[ntmp-1] = planet->name;
+					break; /* no need to check all factions */
 				}
 		}
 
