@@ -30,6 +30,10 @@
 static unsigned int pilot_id = PLAYER_ID;
 
 
+/* id for special mission cargo */
+static unsigned int mission_cargo_id = 0;
+
+
 /* stack of pilots */
 Pilot** pilot_stack = NULL; /* not static, used in player.c, weapon.c, pause.c and ai.c */
 int pilots = 0; /* same */
@@ -744,7 +748,7 @@ int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )
 
 	q = quantity;
 	for (i=0; i<pilot->ncommodities; i++)
-		if (pilot->commodities[i].commodity == cargo) {
+		if (!pilot->commodities[i].id && (pilot->commodities[i].commodity == cargo)) {
 			if (pilot->cargo_free < quantity)
 				q = pilot->cargo_free;
 			pilot->commodities[i].quantity += q;
@@ -758,12 +762,57 @@ int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )
 	pilot->commodities[ pilot->ncommodities ].commodity = cargo;
 	if (pilot->cargo_free < quantity)
 		q = pilot->cargo_free;
+	pilot->commodities[ pilot->ncommodities ].id = 0;
 	pilot->commodities[ pilot->ncommodities ].quantity = q;
 	pilot->cargo_free -= q;
 	pilot->ncommodities++;
 
 	return q;
 }
+
+
+/*
+ * adds special mission cargo, can't sell it and such
+ */
+unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity )
+{
+	int q;
+	q = quantity;
+
+	pilot->commodities = realloc( pilot->commodities,
+			sizeof(PilotCommodity) * (pilot->ncommodities+1));
+	pilot->commodities[ pilot->ncommodities ].commodity = cargo;
+	if (pilot->cargo_free < quantity)
+		q = pilot->cargo_free;
+	pilot->commodities[ pilot->ncommodities ].id = ++mission_cargo_id;
+	pilot->commodities[ pilot->ncommodities ].quantity = q;                
+	pilot->cargo_free -= q;
+	pilot->ncommodities++;
+
+	return pilot->commodities[ pilot->ncommodities-1 ].id;
+}
+void pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id )
+{
+	int i;
+
+	for (i=0; i<pilot->ncommodities; i++)
+		if (pilot->commodities[i].id == cargo_id)
+			break;
+	
+	if (i>=pilot->ncommodities) {
+		DEBUG("Mission Cargo id '%d' not found on pilot '%s'", cargo_id, pilot->name);
+		return;
+	}
+
+	/* remove cargo */
+	pilot->cargo_free += pilot->commodities[i].quantity;
+	memmove( pilot->commodities+i, pilot->commodities+i+1,
+			sizeof(PilotCommodity) * (pilot->ncommodities-i-1) );
+	pilot->ncommodities--;
+	pilot->commodities = realloc( pilot->commodities,
+			sizeof(PilotCommodity) * pilot->ncommodities );
+}
+
 
 
 /*
@@ -775,7 +824,7 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
 
 	q = quantity;
 	for (i=0; i<pilot->ncommodities; i++)
-		if (pilot->commodities[i].commodity == cargo) {
+		if (!pilot->commodities[i].id && (pilot->commodities[i].commodity == cargo)) {
 			if (quantity >= pilot->commodities[i].quantity) {
 				q = pilot->commodities[i].quantity;
 

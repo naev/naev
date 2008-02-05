@@ -35,7 +35,7 @@ function accept()
 			string.format("Your ship is too full.  You need to make room for %d more tons if you want to be able to accept the mission.",
 				carg_mass-player.freeCargo()) )
 	elseif misn.accept() then -- able to accept the mission, hooks BREAK after accepting
-		player.addCargo( carg_type, carg_mass )
+		carg_id = player.addCargo( carg_type, carg_mass )
 		tk.msg( "Mission Accepted",
 				string.format( "The workers load the %d tons of %s onto your ship.",
 						carg_mass, carg_type ) )
@@ -48,7 +48,7 @@ end
 -- Land hook
 function land()
 	if space.landName() == planet then
-		player.rmCargo( carg_type, carg_mass )
+		player.rmCargo( carg_id )
 		player.pay( misn_reward )
 		tk.msg( "Mission Accomplished",
 				string.format( "The workers unload the %s at the docks.", carg_type ) )

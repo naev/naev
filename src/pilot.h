@@ -65,9 +65,14 @@ typedef struct PilotOutfit_ {
 } PilotOutfit;
 
 
+
+/*
+ * pilot commodity
+ */
 typedef struct PilotCommodity_ {
 	Commodity* commodity;
 	int quantity;
+	unsigned int id; /* special mission id for cargo */
 } PilotCommodity;
 
 
@@ -164,13 +169,18 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 void pilot_setSecondary( Pilot* p, const char* secondary );
 void pilot_setAmmo( Pilot* p );
 double pilot_face( Pilot* p, const float dir );
+/* outfits */
 int pilot_freeSpace( Pilot* p ); /* weapon space */
 int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity );
 int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity );
 char* pilot_getOutfits( Pilot* pilot );
+/* normal cargo */
 int pilot_freeCargo( Pilot* p ); /* cargo space */
 int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity );
 int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity );
+/* mission cargo - not to be confused with normal cargo */
+unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity );
+void pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id );
 
 
 /*

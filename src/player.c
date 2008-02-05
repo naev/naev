@@ -456,7 +456,8 @@ int player_cargoOwned( const char* commodityname )
 	int i;
 
 	for (i=0; i<player->ncommodities; i++)
-		if (strcmp(commodityname, player->commodities[i].commodity->name)==0)
+		if (!player->commodities[i].id &&
+				strcmp(commodityname, player->commodities[i].commodity->name)==0)
 			return player->commodities[i].quantity;
 	return 0;
 }

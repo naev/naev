@@ -297,27 +297,23 @@ static int player_addCargo( lua_State *L )
 	if (lua_isnumber(L,-1)) quantity = (int) lua_tonumber(L,-1);
 	else return 0;
 
-	ret = pilot_addCargo( player, cargo, quantity );
+	ret = pilot_addMissionCargo( player, cargo, quantity );
 
 	lua_pushnumber(L, ret);
 	return 1;
 }
 static int player_rmCargo( lua_State *L )
 {
-	Commodity *cargo;
-	int quantity, ret;
+	unsigned int id;
 
-	MIN_ARGS(2);
+	MIN_ARGS(1);
 
-	if (lua_isstring(L,-2)) cargo = commodity_get( (char*) lua_tostring(L,-2) );
-	else return 0;
-	if (lua_isnumber(L,-1)) quantity = (int) lua_tonumber(L,-1);
+	if (lua_isnumber(L,-1)) id = (unsigned int) lua_tonumber(L,-1);
 	else return 0;
 
-	ret = pilot_rmCargo( player, cargo, quantity );
+	pilot_rmMissionCargo( player, id );
 
-	lua_pushnumber(L, ret);
-	return 1;
+	return 0;
 }
 static int player_pay( lua_State *L )
 {
