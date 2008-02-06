@@ -24,6 +24,7 @@
 #include "pause.h"
 #include "menu.h"
 #include "toolkit.h"
+#include "mission.h"
 
 
 #define XML_GUI_ID	"GUIs"   /* XML section identifier */
@@ -44,10 +45,12 @@ Pilot* player = NULL; /* ze player */
 static Ship* player_ship = NULL; /* temporary ship to hold when naming it */
 static double player_px, player_py, player_vx, player_vy, player_dir; /* more hack */
 static int player_credits = 0; /* temporary hack */
+
 /* player pilot stack - ships he has */
 static Pilot** player_stack = NULL;
 static char** player_lstack = NULL; /* names of the planet the ships are at */
 static int player_nstack = 0;
+
 /* player global properties */
 char* player_name = NULL; /* ze name */
 int player_crating = 0; /* ze rating */
@@ -62,6 +65,11 @@ int hyperspace_target = -1; /* targetted hyperspace route */
 /* for death and such */
 static unsigned int player_timer = 0;
 static Vector2d player_cam;
+
+/* unique mission stack */
+static int* missions_done = NULL; /* saves position */
+static int missions_mdone = 0;
+static int missions_ndone = 0;
 
 
 /*
@@ -357,6 +365,13 @@ void player_cleanup (void)
 		player_lstack = NULL;
 		/* nothing left */
 		player_nstack = 0;
+	}
+
+	if (missions_done) {
+		free(missions_done);
+		missions_done = NULL;
+		missions_ndone = 0;
+		missions_mdone = 0;
 	}
 }
 
@@ -1650,3 +1665,29 @@ void player_setLoc( char* shipname, char* loc )
 }
 
 
+/*
+ * marks a mission as completed
+ */
+void player_missionFinished( int id )
+{
+	missions_ndone++;
+	if (missions_ndone > missions_mdone) { /* need to grow */
+		missions_mdone += 25;
+		missions_done = realloc( missions_done, sizeof(int) * missions_mdone);
+	}
+	missions_done[ missions_ndone-1 ] = id;
+}
+
+
+/*
+ * has player already completed a mission?
+ */
+int player_missionAlreadyDone( int id )
+{
+	int i;
+
+	for (i=0; i<missions_ndone; i++)
+		if (missions_done[i] == id)
+			return 1;
+	return 0;
+}

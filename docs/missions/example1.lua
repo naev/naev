@@ -32,7 +32,7 @@ function create()
 	if tk.yesno( title[1], text[1] ) then
 		if player.freeCargo() < carg_mass then -- not enough room
 			tk.msg( room_title, string.format(room_msg, carg_mass-player.freeCargo()) )
-			misn.finish()
+			misn.finish(false)
 		end
 
 		misn.accept() -- we gots mission
@@ -57,7 +57,7 @@ function land()
 	if space.landName() == dest then
 		if player.rmCargo(carg_id) then -- player still has the cargo
 			tk.msg( title[3], text[3] )
-			misn.finish()
+			misn.finish(true)
 		else -- player doesn't have the cargo
 		end
 	end

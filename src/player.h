@@ -82,6 +82,12 @@ char* player_getLoc( char* shipname );
 void player_setLoc( char* shipname, char* loc );
 void player_swapShip( char* shipname );
 
+/*
+ * player missions
+ */
+void player_missionFinished( int id );
+int player_missionAlreadyDone( int id );
+
 /* 
  * keybind actions
  */

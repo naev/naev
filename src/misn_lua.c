@@ -15,6 +15,7 @@
 #include "space.h"
 #include "toolkit.h"
 #include "land.h"
+#include "player.h"
 
 
 #define MIN_ARGS(n)		if (lua_gettop(L) < n) return 0
@@ -233,7 +234,19 @@ static int misn_accept( lua_State *L )
 }
 static int misn_finish( lua_State *L )
 {
+	int b;
+
+	if (lua_isboolean(L,-1)) b = lua_toboolean(L,-1);
+	else {
+		DEBUG("Mission '%s' trying to finish without specifying if mission is complete",
+				cur_mission->data->name);
+		return 0;
+	}
+
 	misn_delete = 1;
+
+	if (b && mis_isFlag(cur_mission->data,MISSION_UNIQUE))
+		player_missionFinished( mission_getID( cur_mission->data ) );
 
 	lua_pushstring(L, "Mission Finished");
 	lua_error(L); /* shouldn't return */

@@ -62,6 +62,21 @@ static int mission_location( char* loc );
 static MissionData* mission_parse( const xmlNodePtr parent );
 
 
+
+/*
+ * gets the ID of a MissionData
+ */
+int mission_getID( MissionData* misn )
+{
+	int i;
+
+	for (i=0; i<mission_nstack; i++)
+		if (misn == &mission_stack[i])
+			return i;
+
+	DEBUG("Mission '%s' not found in stack", misn->name);
+	return -1;
+}
 /*
  * initializes a mission
  */
@@ -132,6 +147,8 @@ void missions_bar( int faction, char* planet, char* system )
 				(((misn->avail.planet && strcmp(misn->avail.planet,planet)==0)) ||
 				 (misn->avail.system && (strcmp(misn->avail.system,system)==0)) ||
 				 mission_matchFaction(misn,faction))) {
+
+			if (player_missionAlreadyDone(i)) continue; /* already done the mission */
 
 			chance = (double)(misn->avail.chance % 100)/100.;
 

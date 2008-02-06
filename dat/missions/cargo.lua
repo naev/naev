@@ -34,7 +34,7 @@ function create()
 	until planet ~= space.landName() or i > 10
 	-- infinite loop protection
 	if i > 10 then
-		misn.finish()
+		misn.finish(false)
 	end
 
 	-- mission generics
@@ -72,7 +72,7 @@ function land()
 		if player.rmCargo( carg_id ) then
 			player.pay( reward )
 			tk.msg( finish_title, string.format( finish_msg, carg_type ))
-			misn.finish()
+			misn.finish(true)
 		else
 			tk.msg( miss_title, string.format( miss_msg, carg_mass, carg_type ))
 		end

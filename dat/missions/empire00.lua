@@ -52,7 +52,7 @@ function land()
 			player.pay(reward)
 			-- More flavour text
 			tk.msg(title[3], string.format( text[4], dest ))
-			misn.finish()
+			misn.finish(true)
 		end
 	end
 end
