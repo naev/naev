@@ -57,6 +57,7 @@ extern int misn_run( Mission *misn, char *func );
 /* static */
 static int mission_init( Mission* mission, MissionData* misn );
 static void mission_freeData( MissionData* mission );
+static int mission_alreadyRunning( MissionData* misn );
 static int mission_matchFaction( MissionData* misn, int faction );
 static int mission_location( char* loc );
 static MissionData* mission_parse( const xmlNodePtr parent );
@@ -132,6 +133,19 @@ void mission_accept( Mission* mission )
 
 
 /*
+ * checks to see if mission is already running
+ */
+static int mission_alreadyRunning( MissionData* misn )
+{
+	int i;
+	for (i=0; i<MISSION_MAX; i++)
+		if (player_missions[i].data==misn)
+			return 1;
+	return 0;
+}
+
+
+/*
  * runs bar missions, all lua side and one-shot
  */
 void missions_bar( int faction, char* planet, char* system )
@@ -148,7 +162,9 @@ void missions_bar( int faction, char* planet, char* system )
 				 (misn->avail.system && (strcmp(misn->avail.system,system)==0)) ||
 				 mission_matchFaction(misn,faction))) {
 
-			if (player_missionAlreadyDone(i)) continue; /* already done the mission */
+			if (mis_isFlag(misn,MISSION_UNIQUE) && /* mission done or running */
+					(player_missionAlreadyDone(i) ||
+						mission_alreadyRunning(misn))) continue;
 
 			chance = (double)(misn->avail.chance % 100)/100.;
 
