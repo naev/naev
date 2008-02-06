@@ -66,8 +66,10 @@ void player_message( const char *fmt, ... );
 void player_clear (void);
 void player_warp( const double x, const double y );
 const char* player_rating (void);
+/* cargo */
 int player_outfitOwned( const char* outfitname );
 int player_cargoOwned( const char* commodityname );
+void player_rmMissionCargo( unsigned int cargo_id );
 
 
 /*

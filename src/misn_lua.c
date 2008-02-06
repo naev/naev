@@ -327,6 +327,7 @@ static int player_addCargo( lua_State *L )
 	else return 0;
 
 	ret = pilot_addMissionCargo( player, cargo, quantity );
+	mission_linkCargo( cur_mission, ret );
 
 	lua_pushnumber(L, ret);
 	return 1;
@@ -342,6 +343,7 @@ static int player_rmCargo( lua_State *L )
 	else return 0;
 
 	ret = pilot_rmMissionCargo( player, id );
+	mission_unlinkCargo( cur_mission, id );
 
 	lua_pushboolean(L,!ret);
 	return 0;

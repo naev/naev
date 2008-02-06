@@ -64,7 +64,11 @@ typedef struct Mission_ {
 	char *desc; /* description of the mission */
 	char *reward; /* rewards in text */
 
-	lua_State *L;
+	/* mission cargo given to the player - need to cleanup */
+	unsigned int *cargo;
+	int ncargo;
+
+	lua_State *L; /* the state of the running lua code */
 } Mission;
 
 
@@ -82,6 +86,12 @@ Mission* missions_computer( int *n, int faction,
 		char* planet, char* system ); /* for mission computer */
 void mission_accept( Mission* mission ); /* player accepted mission - mission computer */
 void missions_bar( int faction, char* planet, char* system );
+
+/*
+ * cargo stuff
+ */
+void mission_linkCargo( Mission* misn, unsigned int cargo_id );
+void mission_unlinkCargo( Mission* misn, unsigned int cargo_id );
 
 
 /*

@@ -20,6 +20,7 @@
 #include "pack.h"
 #include "xml.h"
 #include "faction.h"
+#include "player.h"
 
 
 #define XML_MISSION_ID			"Missions"   /* XML section identifier */
@@ -76,6 +77,8 @@ static int mission_init( Mission* mission, MissionData* misn )
 	mission->title = NULL;
 	mission->desc = NULL;
 	mission->reward = NULL;
+	mission->cargo = NULL;
+	mission->ncargo = 0;
 
 	/* init lua */
 	mission->L = luaL_newstate();
@@ -143,14 +146,56 @@ void missions_bar( int faction, char* planet, char* system )
 
 
 /*
+ * links cargo to the mission for posterior cleanup
+ */
+void mission_linkCargo( Mission* misn, unsigned int cargo_id )
+{
+	misn->ncargo++;
+	misn->cargo = realloc( misn->cargo, sizeof(unsigned int) * misn->ncargo);
+	misn->cargo[ misn->ncargo-1 ] = cargo_id;
+}
+
+
+/*
+ * unlinks cargo from the mission, removes it from the player
+ */
+void mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
+{
+	int i;
+	for (i=0; i<misn->ncargo; i++)
+		if (misn->cargo[i] == cargo_id)
+			break;
+
+	if (i>=misn->ncargo) { /* not found */
+		DEBUG("Mission '%s' attempting to unlink inexistant cargo %d.",
+				misn->title, cargo_id);
+		return;
+	}
+
+	/* shrink cargo size - no need to realloc */
+	memmove( &misn->cargo[i], &misn->cargo[i+1],
+			sizeof(unsigned int) * (misn->ncargo-i-1) );
+	misn->ncargo--;
+	player_rmMissionCargo( cargo_id );
+}
+
+
+/*
  * cleans up a mission
  */
 void mission_cleanup( Mission* misn )
 {
+	int i;
 	if (misn->id) hook_rmParent( misn->id ); /* remove existing hooks */
 	if (misn->title) free(misn->title);
 	if (misn->desc) free(misn->desc);
 	if (misn->reward) free(misn->reward);
+	if (misn->cargo) {
+		for (i=0; i<misn->ncargo; i++)
+			mission_unlinkCargo( misn, misn->cargo[i] );
+		free(misn->cargo);
+		misn->ncargo = 0;
+	}
 	if (misn->L) lua_close(misn->L);
 	memset(misn, 0, sizeof(Mission));
 }
