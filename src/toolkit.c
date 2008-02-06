@@ -165,6 +165,7 @@ static void toolkit_drawOutline( double x, double y,
 static void toolkit_drawRect( double x, double y,
 		double w, double h, glColour* c, glColour* lc );
 /* dialogues */
+static glFont* dialogue_getSize( char* msg, int* w, int* h );
 static void dialogue_alertClose( char* str );
 static void dialogue_msgClose( char* str );
 static void dialogue_YesNoClose( char* str );
@@ -1683,6 +1684,24 @@ static void dialogue_alertClose( char* str )
 }
 
 
+static glFont* dialogue_getSize( char* msg, int* w, int* h )
+{
+	glFont* font;
+
+	font = &gl_smallFont; /* try to use smallfont */
+	(*h) = gl_printHeight( font, (*w)-40, msg );
+	if (strlen(msg) > 100) { /* make font bigger for large texts */
+		font = &gl_defFont;
+		(*h) = gl_printHeight( font, (*w)-40, msg );
+		if ((*h) > 200) (*w) += MIN((*h)-200,600); /* too big, so we make it wider */
+		(*h) = gl_printHeight( font, (*w)-40, msg );
+	}
+
+	return font;
+}
+
+
+
 /*
  * displays an alert popup with only an ok button and a message
  */
@@ -1691,7 +1710,8 @@ void dialogue_msg( char* caption, const char *fmt, ... )
 {
 	char msg[4096];
 	va_list ap;
-	int h;
+	int w,h;
+	glFont* font;
 
 	if (msg_wid) return;
 
@@ -1702,13 +1722,14 @@ void dialogue_msg( char* caption, const char *fmt, ... )
 		va_end(ap);
 	}
 
-	h = gl_printHeight( &gl_smallFont, 260, msg );
+	w = 300; /* default width */
+	font =dialogue_getSize( msg, &w, &h );
 
 	/* create the window */
-	msg_wid = window_create( caption, -1, -1, 300, 90 + h );
-	window_addText( msg_wid, 20, -30, 260, h,  0, "txtMsg",
-			&gl_smallFont, &cBlack, msg );
-	window_addButton( msg_wid, 135, 20, 50, 30, "btnOK", "OK",
+	msg_wid = window_create( caption, -1, -1, w, 110 + h );
+	window_addText( msg_wid, 20, -40, w-40, h,  0, "txtMsg",
+			font, &cBlack, msg );
+	window_addButton( msg_wid, (w-50)/2, 20, 50, 30, "btnOK", "OK",
 			dialogue_msgClose );
 
 	toolkit_loop();
@@ -1731,7 +1752,8 @@ int dialogue_YesNo( char* caption, const char *fmt, ... )
 {
 	char msg[4096];
 	va_list ap;
-	int h;
+	int w,h;
+	glFont* font;
 
 	if (yesno_wid) return -1;
 
@@ -1742,18 +1764,18 @@ int dialogue_YesNo( char* caption, const char *fmt, ... )
 		va_end(ap);
 	}
 
-	/* get text height */
-	h = gl_printHeight( &gl_smallFont, 260, msg );
+	w = 300;
+	font = dialogue_getSize( msg, &w, &h );
 
 	/* create window */
-	yesno_wid = window_create( caption, -1, -1, 300, h+90 );
+	yesno_wid = window_create( caption, -1, -1, w, h+110 );
 	/* text */
-	window_addText( yesno_wid, 20, -30, 260, h,  0, "txtYesNo",
-			&gl_smallFont, &cBlack, msg );
+	window_addText( yesno_wid, 20, -40, w-40, h,  0, "txtYesNo",
+			font, &cBlack, msg );
 	/* buttons */
-	window_addButton( yesno_wid, 300/2-50-10, 20, 50, 30, "btnYes", "Yes",
+	window_addButton( yesno_wid, w/2-50-10, 20, 50, 30, "btnYes", "Yes",
 			dialogue_YesNoClose );
-	window_addButton( yesno_wid, 300/2+10, 20, 50, 30, "btnNo", "No",
+	window_addButton( yesno_wid, w/2+10, 20, 50, 30, "btnNo", "No",
 			dialogue_YesNoClose );
 
 	/* tricky secondary loop */
