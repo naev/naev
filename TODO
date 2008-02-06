@@ -2,8 +2,6 @@
 
 	VITAL
 
-	*) Missions
-		*) heavy lua usage -> complete scripting ability
 	*) Save
 		*) save entire game data except graphics, so that missions can modify stuff
 	*) Player faction system
@@ -11,6 +9,7 @@
 
 	MAJOR
 
+	*) More missions and mission lua bindings
 	*) Better AI
 		*) boids ship fleet movement (have them behave like fleets)
 		*) smarter missiles -> PID if possible
