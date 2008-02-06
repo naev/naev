@@ -462,9 +462,19 @@ static int tk_input( lua_State *L )
  */
 static int hook_land( lua_State *L )
 {
+	int i;
 	char *func;
 
 	MIN_ARGS(1);
+
+	/* make sure mission is a player mission */
+	for (i=0; i<MISSION_MAX; i++)
+		if (player_missions[i].id == cur_mission->id)
+			break;
+	if (i>=MISSION_MAX) {
+		WARN("Mission not in stack trying to hook");
+		return 0;
+	}
 
 	if (lua_isstring(L,-1)) func = (char*)lua_tostring(L,-1);
 	else {
@@ -472,6 +482,6 @@ static int hook_land( lua_State *L )
 				cur_mission->data->name);
 		return 0;
 	}
-	hook_add( cur_mission, func, "land" );
+	hook_add( cur_mission->id, func, "land" );
 	return 0;
 }

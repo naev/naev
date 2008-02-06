@@ -11,7 +11,7 @@
 
 
 /* add/run hooks */
-int hook_add( Mission* misn, char *func, char *stack );
+int hook_add( unsigned int parent, char *func, char *stack );
 void hook_rm( int id );
 void hook_rmParent( unsigned int parent );
 
