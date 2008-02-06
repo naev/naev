@@ -269,6 +269,10 @@ int gl_printText( const glFont *ft_font,
 			m = 0;
 			if (lastspace==-1) lastspace = 0;
 			for (j=0; j<(lastspace-p-1); j++) {
+				if (text[p+j+1]=='\t') {
+					p++;
+					continue;
+				}
 				m += ft_font->w[ (int)text[p+j+1] ];
 				if (m > width) break;
 				buf[j] = text[p+j+1];
