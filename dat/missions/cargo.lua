@@ -1,4 +1,27 @@
+lang = naev.lang()
+if lang == "es" then
+	-- not translated atm
+else -- default english
+	misn_desc = "%s needs a delivery of %d tons of %s."
+	misn_reward = "%d credits"
+	title = {}
+	title[1] = "Cargo delivery to %s"
+	title[2] = "Freight delivery to %s"
+	title[3] = "Transport to %s"
+	title[4] = "Delivery to %s"
+	full_title = "Ship is full"
+	full_msg = "Your ship is too full.  You need to make room for %d more tons if you want to be able to accept the mission."
+	accept_title = "Mission Accepted"
+	accept_msg = "The workers load the %d tons of %s onto your ship."
+	toomany_title = "Too many missions"
+	toomany_msg = "You have too many active missions."
+	finish_title = "Succesful Delivery"
+	finish_msg = "The workers unload the %s at the docks."
+	miss_title = "Cargo Missing"
+	miss_msg = "You are missing the %d tons of %s!."
+end
 
+		
 
 -- Create the mission
 function create()
@@ -17,15 +40,7 @@ function create()
 	-- mission generics
 	misn_type = "Cargo"
 	i = rnd.int(3)
-	if i == 0 then
-		misn.setTitle( "Cargo delivery to " .. planet )
-	elseif i == 1 then
-		misn.setTitle( "Freight delivery to " .. planet )
-	elseif i == 2 then
-		misn.setTitle( "Transport to " .. planet )
-	elseif i == 3 then
-		misn.setTitle( "Delivery to " .. planet )
-	end
+	misn.setTitle( string.format(title[i+1], planet) )
 
 	-- more mission specifics
 	carg_mass = rnd.int( 10, 30 )
@@ -33,27 +48,21 @@ function create()
 	if i==0 then carg_type = "Food"
 	elseif i==1 then carg_type = "Ore"
 	end
-	misn.setDesc( string.format(
-				"%s needs a delivery of %d tons of %s.",
-				planet, carg_mass, carg_type ) )
-	misn_reward = carg_mass * (750+rnd.int(250)) + rnd.int(5000)
-	misn.setReward( string.format( "%d credits", misn_reward ) )
+	misn.setDesc( string.format( misn_desc, planet, carg_mass, carg_type ) )
+	reward = carg_mass * (750+rnd.int(250)) + rnd.int(5000)
+	misn.setReward( string.format( misn_reward, reward ) )
 end
 
 -- Mission is accepted
 function accept()
 	if player.freeCargo() < carg_mass then
-		tk.msg( "Ship is full",
-			string.format("Your ship is too full.  You need to make room for %d more tons if you want to be able to accept the mission.",
-				carg_mass-player.freeCargo()) )
+		tk.msg( full_title, string.format( full_msg, carg_mass-player.freeCargo() ))
 	elseif misn.accept() then -- able to accept the mission, hooks BREAK after accepting
 		carg_id = player.addCargo( carg_type, carg_mass )
-		tk.msg( "Mission Accepted",
-				string.format( "The workers load the %d tons of %s onto your ship.",
-						carg_mass, carg_type ) )
+		tk.msg( accept_title, string_format( accept_msg, carg_mass, carg_type ))
 		hook.land( "land" ) -- only hook after accepting
 	else
-		tk.msg( "Too many missions", "You have too many active missions." )
+		tk.msg( toomany_title, toomany_msg )
 	end
 end
 
@@ -61,14 +70,11 @@ end
 function land()
 	if space.landName() == planet then
 		if player.rmCargo( carg_id ) then
-			player.pay( misn_reward )
-			tk.msg( "Mission Accomplished",
-					string.format( "The workers unload the %s at the docks.", carg_type ) )
+			player.pay( reward )
+			tk.msg( finish_title, string.format( finish_msg, carg_type ))
 			misn.finish()
 		else
-			tk.msg( "Where is the cargo?",
-					string.format( "You are missing the %d tons of %s!.",
-							carg_mass, carg_type ) )
+			tk.msg( miss_title, string.format( miss_msg, carg_mass, carg_type ))
 		end
 	end
 end

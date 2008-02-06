@@ -19,6 +19,9 @@
 </mission>
 <mission name="Empire Recruitment">
 <lua>empire00</lua>
+<flags>
+<unique>1</unique>
+</flags>
 <avail>
 <chance>80</chance>
 <location>Bar</location>

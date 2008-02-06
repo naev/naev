@@ -29,6 +29,12 @@ static int misn_delete = 0; /* if 1 delete current mission */
 /*
  * libraries
  */
+/* naev */
+static int naev_lang( lua_State *L );
+static const luaL_reg naev_methods[] = {
+	{ "lang", naev_lang },
+	{0,0}
+};
 /* misn */
 static int misn_setTitle( lua_State *L );
 static int misn_setDesc( lua_State *L );
@@ -94,6 +100,7 @@ static const luaL_reg hook_methods[] = {
  */
 int misn_loadLibs( lua_State *L )
 {
+	luaL_register(L, "naev", naev_methods);
 	luaL_register(L, "misn", misn_methods);
 	luaL_register(L, "space", space_methods);
 	luaL_register(L, "player", player_methods);
@@ -138,6 +145,18 @@ int misn_run( Mission *misn, char *func )
 	cur_mission = NULL;
 
 	return ret;
+}
+
+
+
+/*
+ *   N A E V
+ */
+static int naev_lang( lua_State *L )
+{
+	/* TODO multilanguage stuff */
+	lua_pushstring(L,"en");
+	return 1;
 }
 
 
