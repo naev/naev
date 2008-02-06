@@ -449,7 +449,7 @@ void window_modifyText( const unsigned int wid,
 	Widget *wgt = window_getwgt(wid,name);
 
 	if (wgt->dat.txt.text) free(wgt->dat.txt.text);
-	wgt->dat.txt.text = strdup(newstring);
+	if (newstring) wgt->dat.txt.text = strdup(newstring);
 }
 
 
