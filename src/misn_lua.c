@@ -346,7 +346,7 @@ static int player_rmCargo( lua_State *L )
 	mission_unlinkCargo( cur_mission, id );
 
 	lua_pushboolean(L,!ret);
-	return 0;
+	return 1;
 }
 static int player_pay( lua_State *L )
 {

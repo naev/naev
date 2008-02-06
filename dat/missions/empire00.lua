@@ -4,7 +4,7 @@ if lang == "es" then
 	-- not translated atm
 else -- default english
 	misn_title = "Empire Recruitment"
-	misn_reward = "3000 credits"
+	misn_reward = "%d credits"
 	misn_desc = "Deliver some parcels for the Empire to %s."
 	title = {}
 	title[1] = "Spaceport Bar"
@@ -31,8 +31,9 @@ function create()
 		dest = space.getPlanet("Empire");
 
 		-- Mission details
+		reward = 3000
 		misn.setTitle(misn_title)
-		misn.setReward(misn_credits)
+		misn.setReward( string.format(misn_reward, reward) )
 		misn.setDesc( string.format(misn_desc,dest))
 
 		-- Flavour text and mini-briefing
@@ -48,7 +49,7 @@ end
 function land()
 	if space.landName() == dest then
 		if player.rmCargo(parcels) then
-			player.pay(3000)
+			player.pay(reward)
 			-- More flavour text
 			tk.msg(title[3], string.format( text[4], dest ))
 			misn.finish()
