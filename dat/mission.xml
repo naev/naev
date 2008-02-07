@@ -8,7 +8,7 @@
 <location>None</location>
 </avail>
 </mission>
-<mission name="Cargo Freight">
+<mission name="Cargo">
 <lua>cargo</lua>
 <avail>
 <chance>750</chance>
@@ -25,6 +25,18 @@
 <avail>
 <chance>80</chance>
 <location>Bar</location>
+<alliance>Empire United</alliance>
+<alliance>Neutral</alliance>
+</avail>
+</mission>
+<mission name="Empire Shipping">
+<lua>es_cargo</lua>
+<req>
+<flag>req_esd</flag>
+</req>
+<avail>
+<chance>350</chance>
+<location>Computer</location>
 <alliance>Empire United</alliance>
 <alliance>Neutral</alliance>
 </avail>
