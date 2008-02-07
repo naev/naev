@@ -37,5 +37,47 @@ def load(xmlfile, tag, has_name=True, do_array=None):
    dom.unlink()
    return dictionary
 
-def save(xmlfile, basetag, tag, has_name=True):
-	print "TODO"
+
+def save(xmlfile, data, basetag, tag, has_name=True, do_array=None):
+   """
+   do_array is a DICTIONARY, not a list here
+   """
+   xml = minidom.Document()
+
+   base = xml.createElement(basetag)
+
+   for key, value in data.items():
+
+      elem = xml.createElement(tag)
+      if has_name:
+         elem.setAttribute("name",key)
+
+      for key2, value2 in value.items():
+         node = xml.createElement(key2)
+
+         # checks if it needs to parse an array instead of a dictionary
+         if do_array != None and key2 in do_array.keys():
+            for text in value2:
+               node2 = xml.createElement( do_array[key2] )
+               txtnode = xml.createTextNode( text )
+               node2.appendChild(txtnode)
+               node.appendChild(node2)
+
+         # standard dictionary approach
+         else:
+            for key3, value3 in value2.items():
+               node2 = xml.createElement( key3 )
+               txtnode = xml.createTextNode( value3 )
+               node2.appendChild(txtnode)
+               node.appendChild(node2)
+
+         elem.appendChild(node)
+      base.appendChild(elem)
+   xml.appendChild(base)
+
+   fp = open(xmlfile,"w")
+   xml.writexml(fp, "", "", "\n", "UTF-8")
+
+
+
+

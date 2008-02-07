@@ -25,7 +25,6 @@ import space
 universe = space.space()
 universe.loadSystems("../../dat/ssys.xml")
 universe.loadPlanets("../../dat/planet.xml")
-universe.debug()
 universe.window()
 
 

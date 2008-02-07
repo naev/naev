@@ -27,7 +27,8 @@ class space:
 
 
    def saveSystems(self, xmlfile):
-      print "TODO"
+      data.save( "ssys.xml", self.systems, "Systems", "ssys", True,
+            {"jumps":"jump","fleets":"fleet","planets":"planet"})
 
 
    def loadPlanets(self, xmlfile):
@@ -35,7 +36,8 @@ class space:
 
 
    def savePlanets(self, xmlfile):
-      print "TODO"
+        data.save( "planet.xml", self.planets, "Planets", "planet", True,
+            {"commodities":"commodity"})
 
 
    def window(self):
@@ -47,8 +49,10 @@ class space:
 
       # hook events and such
       self.__swidget("winSystems").connect("destroy", self.__done)
-      self.__swidget("butDone").connect("clicked", self.__done)
       self.__swidget("treSystems").connect("row-activated", self.__update)
+      # buttons
+      self.__swidget("butDone").connect("clicked", self.__done)
+      self.__swidget("butSave").connect("clicked", self.saveSystems)
 
       # populate the tree
       self.tree_systems = gtk.TreeStore(str)

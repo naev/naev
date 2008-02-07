@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.1 on Thu Feb  7 11:50:56 2008 -->
+<!--Generated with glade3 3.4.1 on Thu Feb  7 17:25:26 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="winSystems">
     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -19,7 +19,7 @@
             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
             <child>
               <widget class="GtkTreeView" id="treSystems">
-                <property name="width_request">100</property>
+                <property name="width_request">200</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -44,7 +44,7 @@
                   </widget>
                   <packing>
                     <property name="x">31</property>
-                    <property name="y">26</property>
+                    <property name="y">25</property>
                   </packing>
                 </child>
                 <child>
@@ -58,7 +58,7 @@
                   </widget>
                   <packing>
                     <property name="x">95</property>
-                    <property name="y">31</property>
+                    <property name="y">30</property>
                   </packing>
                 </child>
                 <child>
@@ -125,8 +125,8 @@
                     <property name="adjustment">0 0 100 1 10 10</property>
                   </widget>
                   <packing>
-                    <property name="x">117</property>
-                    <property name="y">79</property>
+                    <property name="x">120</property>
+                    <property name="y">80</property>
                   </packing>
                 </child>
                 <child>
@@ -139,7 +139,7 @@
                   </widget>
                   <packing>
                     <property name="x">29</property>
-                    <property name="y">114</property>
+                    <property name="y">115</property>
                   </packing>
                 </child>
                 <child>
@@ -152,8 +152,8 @@
                     <property name="adjustment">0 0 100 1 10 10</property>
                   </widget>
                   <packing>
-                    <property name="x">119</property>
-                    <property name="y">113</property>
+                    <property name="x">120</property>
+                    <property name="y">110</property>
                   </packing>
                 </child>
                 <child>
@@ -180,7 +180,7 @@
                   </widget>
                   <packing>
                     <property name="x">120</property>
-                    <property name="y">143</property>
+                    <property name="y">140</property>
                   </packing>
                 </child>
                 <child>
@@ -215,14 +215,14 @@
                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                   </widget>
                   <packing>
-                    <property name="x">5</property>
-                    <property name="y">169</property>
+                    <property name="x">4</property>
+                    <property name="y">162</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkTreeView" id="treJumps">
                     <property name="width_request">193</property>
-                    <property name="height_request">86</property>
+                    <property name="height_request">110</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -230,7 +230,7 @@
                   </widget>
                   <packing>
                     <property name="x">10</property>
-                    <property name="y">205</property>
+                    <property name="y">181</property>
                   </packing>
                 </child>
                 <child>
@@ -246,13 +246,13 @@
                   </widget>
                   <packing>
                     <property name="x">25</property>
-                    <property name="y">298</property>
+                    <property name="y">300</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkButton" id="butRmJump">
                     <property name="width_request">70</property>
-                    <property name="height_request">29</property>
+                    <property name="height_request">27</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -262,20 +262,7 @@
                   </widget>
                   <packing>
                     <property name="x">121</property>
-                    <property name="y">298</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkLabel" id="label5">
-                    <property name="width_request">126</property>
-                    <property name="height_request">20</property>
-                    <property name="visible">True</property>
-                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                    <property name="label" translatable="yes">Jumps</property>
-                  </widget>
-                  <packing>
-                    <property name="x">44</property>
-                    <property name="y">184</property>
+                    <property name="y">300</property>
                   </packing>
                 </child>
                 <child>
@@ -322,7 +309,7 @@
                 <child>
                   <widget class="GtkButton" id="butDone">
                     <property name="width_request">83</property>
-                    <property name="height_request">41</property>
+                    <property name="height_request">38</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -332,7 +319,7 @@
                   </widget>
                   <packing>
                     <property name="x">322</property>
-                    <property name="y">288</property>
+                    <property name="y">290</property>
                   </packing>
                 </child>
               </widget>
