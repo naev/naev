@@ -54,9 +54,11 @@ static const luaL_reg misn_methods[] = {
 };
 /* space */
 static int space_getPlanet( lua_State *L );
+static int space_getSystem( lua_State *L );
 static int space_landName( lua_State *L );
 static const luaL_reg space_methods[] = {
 	{ "getPlanet", space_getPlanet },
+	{ "getSystem", space_getSystem },
 	{ "landName", space_landName },
 	{0,0}
 };
@@ -306,6 +308,18 @@ static int space_getPlanet( lua_State *L )
 	free(planets);
 
 	lua_pushstring(L, rndplanet);
+	return 1;
+}
+static int space_getSystem( lua_State *L )
+{
+	char *planetname, *system;
+
+	MIN_ARGS(1);
+	if (lua_isstring(L,-1)) planetname = (char*) lua_tostring(L,-1);
+	else return 0;
+
+	system = planet_getSystem( planetname );
+	lua_pushstring(L,system);
 	return 1;
 }
 static int space_landName( lua_State *L )

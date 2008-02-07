@@ -123,6 +123,11 @@ int space_load (void);
 void space_exit (void);
 
 /*
+ * planet stuff
+ */
+char* planet_getSystem( char* planetname );
+
+/*
  * render
  */
 void space_render( double dt );

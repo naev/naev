@@ -46,6 +46,14 @@
 #define FLAG_FACTIONSET			(1<<6)
 
 
+/*
+ * planet <-> system name stack
+ */
+static char** planetname_stack = NULL;
+static char** systemname_stack = NULL;
+static int spacename_nstack = 0;
+
+
 /* 
  * star system stack and friends
  */
@@ -301,6 +309,22 @@ char* space_getRndPlanet (void)
 	free(tmp);
 
 	return res; 
+}
+
+
+/*
+ * get the name of a system from a planetname
+ */
+char* planet_getSystem( char* planetname )
+{
+	int i;
+
+	for (i=0; i<spacename_nstack; i++)
+		if (strcmp(planetname_stack[i],planetname))
+			return systemname_stack[i];
+	
+	DEBUG("Planet '%s' not found in planetname stack", planetname);
+	return NULL;
 }
 
 
@@ -643,10 +667,21 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 			cur = node->children;
 			do {
 				if (xml_isNode(cur,"planet")) {
+					/* add planet to system */
 					nplanets++; /* increase planet counter */
 					planet = planet_get(xml_get(cur));
 					temp->planets = realloc(temp->planets, sizeof(Planet)*(++temp->nplanets));
 					memcpy(temp->planets+(temp->nplanets-1), planet, sizeof(Planet));
+
+					/* add planet <-> star system to name stack */
+					spacename_nstack++;
+					planetname_stack = realloc(planetname_stack,
+							sizeof(char*)*spacename_nstack);
+					systemname_stack = realloc(systemname_stack,
+							sizeof(char*)*spacename_nstack);
+					planetname_stack[spacename_nstack-1] = planet->name;
+					systemname_stack[spacename_nstack-1] = temp->name;
+
 					free(planet);
 				}
 			} while ((cur = cur->next));
@@ -893,6 +928,13 @@ void planets_render (void)
 void space_exit (void)
 {
 	int i,j;
+
+	/* free the names */
+	if (planetname_stack) free(planetname_stack);
+	if (systemname_stack) free(systemname_stack);
+	spacename_nstack = 0;
+	
+	/* free the systems */
 	for (i=0; i < systems_nstack; i++) {
 		free(systems_stack[i].name);
 		if (systems_stack[i].fleets)
@@ -900,7 +942,7 @@ void space_exit (void)
 		if (systems_stack[i].jumps)
 			free(systems_stack[i].jumps);
 
-
+		/* free some planets */
 		for (j=0; j < systems_stack[i].nplanets; j++) {
 			free(systems_stack[i].planets[j].name);
 
@@ -925,6 +967,7 @@ void space_exit (void)
 	systems_stack = NULL;
 	systems_nstack = 0;
 
+	/* stars must be free too */
 	if (stars) free(stars);
 	stars = NULL;
 	nstars = 0;
