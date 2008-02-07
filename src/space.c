@@ -320,7 +320,7 @@ char* planet_getSystem( char* planetname )
 	int i;
 
 	for (i=0; i<spacename_nstack; i++)
-		if (strcmp(planetname_stack[i],planetname))
+		if (strcmp(planetname_stack[i],planetname)==0)
 			return systemname_stack[i];
 	
 	DEBUG("Planet '%s' not found in planetname stack", planetname);
