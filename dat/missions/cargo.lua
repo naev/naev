@@ -2,7 +2,7 @@ lang = naev.lang()
 if lang == "es" then
 	-- not translated atm
 else -- default english
-	misn_desc = "%s needs a delivery of %d tons of %s."
+	misn_desc = "%s in the %s system needs a delivery of %d tons of %s."
 	misn_reward = "%d credits"
 	title = {}
 	title[1] = "Cargo delivery to %s"
@@ -36,6 +36,7 @@ function create()
 	if i > 10 then
 		misn.finish(false)
 	end
+   system = space.getSystem( planet )
 
 	-- mission generics
 	misn_type = "Cargo"
@@ -48,7 +49,7 @@ function create()
 	if i==0 then carg_type = "Food"
 	elseif i==1 then carg_type = "Ore"
 	end
-	misn.setDesc( string.format( misn_desc, planet, carg_mass, carg_type ) )
+	misn.setDesc( string.format( misn_desc, planet, system, carg_mass, carg_type ) )
 	reward = carg_mass * (750+rnd.int(250)) + rnd.int(5000)
 	misn.setReward( string.format( misn_reward, reward ) )
 end
