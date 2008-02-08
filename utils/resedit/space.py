@@ -53,7 +53,8 @@ class space:
             "butDone":["clicked",self.__done],
             "butSave":["clicked",self.saveSystems],
             "butZoomIn":["clicked",self.__space_zoomin],
-            "butZoomOut":["clicked",self.__space_zoomout]
+            "butZoomOut":["clicked",self.__space_zoomout],
+            "butReset":["clicked",self.__space_reset]
       }
       for key, val in hooks.items():
          self.__swidget(key).connect(val[0],val[1])
@@ -206,6 +207,10 @@ class space:
       """
       gtk.main_quit()
 
+
+   def __space_reset(self, wgt=None, event=None):
+      self.x = self.y = 0
+      self.__space_draw()
 
    def __space_down(self, wgt, event):
       if event.button == 1:
