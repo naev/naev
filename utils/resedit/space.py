@@ -69,6 +69,7 @@ class space:
 
       # display the window and such
       self.__swidget("winSystems").show_all()
+      self.cur_system = ""
 
       # ---------------- PLANETS --------------------
 
@@ -83,21 +84,19 @@ class space:
       return self.swtree.get_widget(wgtname)
 
 
-   def __update(self, wgt=None, foo=None, bar=None):
+   def __update(self, wgt=None, index=None, iter=None):
       """
       Update the window
       """
-      # important thingies
-      tree = self.__swidget("treSystems")
-      model = tree.get_model()
 
-      # get system
-      sel = model.iter_nth_child(None, foo[0])
-      sys_name = model.get_value( sel, 0 )
-      system = self.systems[sys_name]
+      # store the current values
+      self.__store();
+
+      self.cur_system = self.__curSystem()
+      system = self.systems[self.cur_system]
 
       # load it all
-      dic = { "inpName":sys_name,
+      dic = { "inpName":self.cur_system,
             "spiInterference":system["general"]["interference"],
             "spiAsteroids":system["general"]["asteroids"],
             "spiStars":system["general"]["stars"],
@@ -107,7 +106,6 @@ class space:
          self.__swidget(key).set_text(value)
 
       # load jumps
-
       jumps = gtk.ListStore(str)
       for jump in system["jumps"]: # load up the planets
          treenode = jumps.append([jump])
@@ -120,6 +118,48 @@ class space:
       col.pack_start(cell, True)
       col.add_attribute(cell, 'text', 0)
       wgt.set_model(jumps)
+
+
+   def __store(self):
+      sys_name = self.__swidget("inpName").get_text()
+
+      # renamed the current system
+      if sys_name != self.cur_system:
+         self.systems[sys_name] = self.systems[self.cur_systems] # copy it over
+         del self.systems[self.cur_system] # get rid of the old one
+         self.cur_system = sys_name # now use self.cur_system again
+
+      try: 
+         system = self.systems[self.cur_system] 
+      except:
+         return # no system selected yet
+
+      # start load all the input stuff
+      # general stuff
+      self.__sinpStore(system,"spiStars","general","stars") 
+      self.__sinpStore(system,"spiInterference","general","interference")
+      self.__sinpStore(system,"spiAsteroids","general","asteroids")
+
+
+   def __sinpStore(self, system, wgt, tag, minortag=None):
+      text = self.__swidget(wgt).get_text()
+      if minortag==None:
+         system[tag] = text
+      else:
+         system[tag][minortag] = text
+
+
+
+   def __curSystem(self):
+      # important thingies
+      tree = self.__swidget("treSystems")
+      model = tree.get_model()
+      iter = tree.get_selection().get_selected()[1]
+      p = model.iter_parent(iter)
+      if p == None:
+         return model.get_value(iter,0)
+      else:
+         return model.get_value(p,0)
 
    
    def __done(self, widget=None, data=None):
