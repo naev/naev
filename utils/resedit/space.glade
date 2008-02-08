@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.1 on Fri Feb  8 15:57:14 2008 -->
+<!--Generated with glade3 3.4.1 on Fri Feb  8 20:42:23 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="winSystems">
+    <property name="width_request">750</property>
+    <property name="height_request">450</property>
     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
     <property name="title" translatable="yes">Systems</property>
-    <property name="default_width">600</property>
-    <property name="default_height">420</property>
     <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
     <child>
       <widget class="GtkVBox" id="vbox1">
@@ -43,8 +43,8 @@
                     <property name="label" translatable="yes">Name:</property>
                   </widget>
                   <packing>
-                    <property name="x">31</property>
-                    <property name="y">25</property>
+                    <property name="x">114</property>
+                    <property name="y">21</property>
                   </packing>
                 </child>
                 <child>
@@ -57,8 +57,8 @@
                     <property name="truncate_multiline">True</property>
                   </widget>
                   <packing>
-                    <property name="x">95</property>
-                    <property name="y">30</property>
+                    <property name="x">184</property>
+                    <property name="y">26</property>
                   </packing>
                 </child>
                 <child>
@@ -70,24 +70,8 @@
                     <property name="label" translatable="yes">X,Y</property>
                   </widget>
                   <packing>
-                    <property name="x">242</property>
-                    <property name="y">28</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkButton" id="butRepos">
-                    <property name="width_request">75</property>
-                    <property name="height_request">33</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                    <property name="label" translatable="yes">Reposition</property>
-                    <property name="response_id">0</property>
-                  </widget>
-                  <packing>
-                    <property name="x">319</property>
-                    <property name="y">23</property>
+                    <property name="x">371</property>
+                    <property name="y">26</property>
                   </packing>
                 </child>
                 <child>
@@ -105,7 +89,7 @@
                 </child>
                 <child>
                   <widget class="GtkHSeparator" id="hseparator1">
-                    <property name="width_request">402</property>
+                    <property name="width_request">525</property>
                     <property name="height_request">20</property>
                     <property name="visible">True</property>
                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -186,7 +170,7 @@
                 <child>
                   <widget class="GtkVSeparator" id="vseparator1">
                     <property name="width_request">20</property>
-                    <property name="height_request">259</property>
+                    <property name="height_request">322</property>
                     <property name="visible">True</property>
                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                   </widget>
@@ -197,14 +181,14 @@
                 </child>
                 <child>
                   <widget class="GtkDrawingArea" id="draSpace">
-                    <property name="width_request">180</property>
-                    <property name="height_request">171</property>
+                    <property name="width_request">296</property>
+                    <property name="height_request">248</property>
                     <property name="visible">True</property>
                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                   </widget>
                   <packing>
-                    <property name="x">221</property>
-                    <property name="y">88</property>
+                    <property name="x">220</property>
+                    <property name="y">97</property>
                   </packing>
                 </child>
                 <child>
@@ -230,7 +214,7 @@
                   </widget>
                   <packing>
                     <property name="x">10</property>
-                    <property name="y">181</property>
+                    <property name="y">180</property>
                   </packing>
                 </child>
                 <child>
@@ -245,8 +229,8 @@
                     <property name="response_id">0</property>
                   </widget>
                   <packing>
-                    <property name="x">25</property>
-                    <property name="y">300</property>
+                    <property name="x">20</property>
+                    <property name="y">296</property>
                   </packing>
                 </child>
                 <child>
@@ -261,8 +245,8 @@
                     <property name="response_id">0</property>
                   </widget>
                   <packing>
-                    <property name="x">121</property>
-                    <property name="y">300</property>
+                    <property name="x">112</property>
+                    <property name="y">295</property>
                   </packing>
                 </child>
                 <child>
@@ -274,20 +258,8 @@
                     <property name="label" translatable="yes">Space</property>
                   </widget>
                   <packing>
-                    <property name="x">263</property>
-                    <property name="y">69</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkHSeparator" id="hseparator3">
-                    <property name="width_request">190</property>
-                    <property name="height_request">20</property>
-                    <property name="visible">True</property>
-                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                  </widget>
-                  <packing>
-                    <property name="x">218</property>
-                    <property name="y">265</property>
+                    <property name="x">215</property>
+                    <property name="y">70</property>
                   </packing>
                 </child>
                 <child>
@@ -302,8 +274,8 @@
                     <property name="response_id">0</property>
                   </widget>
                   <packing>
-                    <property name="x">227</property>
-                    <property name="y">290</property>
+                    <property name="x">14</property>
+                    <property name="y">350</property>
                   </packing>
                 </child>
                 <child>
@@ -318,8 +290,97 @@
                     <property name="response_id">0</property>
                   </widget>
                   <packing>
-                    <property name="x">322</property>
-                    <property name="y">290</property>
+                    <property name="x">115</property>
+                    <property name="y">350</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkLabel" id="labCurPos">
+                    <property name="width_request">100</property>
+                    <property name="height_request">20</property>
+                    <property name="visible">True</property>
+                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                    <property name="label" translatable="yes">X,Y</property>
+                  </widget>
+                  <packing>
+                    <property name="x">333</property>
+                    <property name="y">72</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkButton" id="butNew">
+                    <property name="width_request">81</property>
+                    <property name="height_request">37</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                    <property name="label" translatable="yes">New</property>
+                    <property name="response_id">0</property>
+                  </widget>
+                  <packing>
+                    <property name="x">20</property>
+                    <property name="y">17</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkHSeparator" id="hseparator3">
+                    <property name="width_request">202</property>
+                    <property name="height_request">20</property>
+                    <property name="visible">True</property>
+                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                  </widget>
+                  <packing>
+                    <property name="x">5</property>
+                    <property name="y">326</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkButton" id="butZoomIn">
+                    <property name="width_request">35</property>
+                    <property name="height_request">35</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                    <property name="label" translatable="yes">+</property>
+                    <property name="response_id">0</property>
+                  </widget>
+                  <packing>
+                    <property name="x">300</property>
+                    <property name="y">350</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkButton" id="butZoomOut">
+                    <property name="width_request">35</property>
+                    <property name="height_request">35</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                    <property name="label" translatable="yes">-</property>
+                    <property name="response_id">0</property>
+                  </widget>
+                  <packing>
+                    <property name="x">345</property>
+                    <property name="y">350</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkToggleButton" id="butReposition">
+                    <property name="width_request">81</property>
+                    <property name="height_request">37</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                    <property name="label" translatable="yes">Reposition</property>
+                    <property name="response_id">0</property>
+                  </widget>
+                  <packing>
+                    <property name="x">433</property>
+                    <property name="y">18</property>
                   </packing>
                 </child>
               </widget>

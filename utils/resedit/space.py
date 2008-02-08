@@ -48,11 +48,15 @@ class space:
       self.swtree = gtk.glade.XML(self.glade, "winSystems")
 
       # hook events and such
-      self.__swidget("winSystems").connect("destroy", self.__done)
-      self.__swidget("treSystems").connect("row-activated", self.__update)
-      # buttons
-      self.__swidget("butDone").connect("clicked", self.__done)
-      self.__swidget("butSave").connect("clicked", self.saveSystems)
+      hooks = { "winSystems":["destroy",self.__done],
+            "treSystems":["row-activated", self.__update],
+            "butDone":["clicked",self.__done],
+            "butSave":["clicked",self.saveSystems],
+            "butZoomIn":["clicked",self.__space_zoomin],
+            "butZoomOut":["clicked",self.__space_zoomout]
+      }
+      for key, val in hooks.items():
+         self.__swidget(key).connect(val[0],val[1])
 
       # populate the tree
       self.tree_systems = gtk.TreeStore(str)
@@ -67,9 +71,23 @@ class space:
       col.add_attribute(cell, 'text', 0)
       self.__swidget("treSystems").set_model(self.tree_systems)
 
+      # custom widget drawing area thingy
+      self.zoom = 1
+      area = self.__swidget("draSpace")
+      area.set_events(gtk.gdk.EXPOSURE_MASK
+            | gtk.gdk.LEAVE_NOTIFY_MASK
+            | gtk.gdk.BUTTON_PRESS_MASK
+            | gtk.gdk.POINTER_MOTION_MASK
+            | gtk.gdk.POINTER_MOTION_HINT_MASK)
+      area.connect("expose-event", self.__space_draw)
+      area.connect("button-press-event", self.__space_down)
+      area.connect("motion-notify-event", self.__space_drag)
+
       # display the window and such
       self.__swidget("winSystems").show_all()
       self.cur_system = ""
+      self.x = self.y = 0
+      self.lx = self.ly = 0
 
       # ---------------- PLANETS --------------------
 
@@ -118,6 +136,8 @@ class space:
       col.pack_start(cell, True)
       col.add_attribute(cell, 'text', 0)
       wgt.set_model(jumps)
+
+      self.__space_draw()
 
 
    def __store(self):
@@ -185,6 +205,109 @@ class space:
       Window is done
       """
       gtk.main_quit()
+
+
+   def __space_down(self, wgt, event):
+      if event.button == 1:
+
+         x = event.x
+         y = event.y
+
+         # modify the current position
+         if self.__swidget("butReposition").get_active() and self.cur_system != "":
+
+            wx,wy, ww,wh = self.__swidget("draSpace").get_allocation()
+
+            mx = x - (self.x*self.zoom + ww/2)
+            my = y - (self.y*self.zoom + wh/2)
+
+            system = self.systems[self.cur_system]
+            system["pos"]["x"] = str(mx)
+            system["pos"]["y"] = str(-my)
+
+            self.__space_draw()
+
+            self.__swidget("butReposition").set_active(False)
+
+         self.lx = x
+         self.ly = y
+
+      return True
+
+   def __space_drag(self, wgt, event):
+      x = event.x
+      y = event.y
+      state = event.state
+
+      wx,wy, ww,wh = self.__swidget("draSpace").get_allocation()
+
+      mx = x - (self.x*self.zoom + ww/2)
+      my = y - (self.y*self.zoom + wh/2)
+
+      self.__swidget("labCurPos").set_text( "%dx%d" % (mx,my) )
+
+      if state & gtk.gdk.BUTTON1_MASK:
+         xrel = x - self.lx
+         yrel = y - self.ly
+         
+         self.x = self.x + xrel/self.zoom
+         self.y = self.y + yrel/self.zoom
+         self.lx = x
+         self.ly = y
+         
+         self.__space_draw()
+
+      return True
+
+   def __space_zoomout(self, wgt=None, event=None):
+      self.zoom = self.zoom/2
+      if self.zoom < 0.1:
+         self.zoom = 0.1
+      self.__space_draw()
+   def __space_zoomin(self, wgt=None, event=None):
+      self.zoom = self.zoom*2
+      if self.zoom > 4:
+         self.zoom = 4
+      self.__space_draw()
+
+
+   def __space_draw(self, wgt=None, event=None):
+      area = self.__swidget("draSpace")
+      style = area.get_style()
+      gc = style.fg_gc[gtk.STATE_NORMAL]
+      bg_gc = style.bg_gc[gtk.STATE_NORMAL]
+      wx,wy, ww,wh = area.get_allocation()
+      cx = self.x*self.zoom + ww/2
+      cy = self.y*self.zoom + wh/2
+      r = 15
+
+      # cleanup
+      area.window.draw_rectangle(bg_gc, True, 0,0, ww,wh)
+      area.window.draw_rectangle(gc, False, 0,0, ww-1,wh-1)
+
+      for sys_name, system in self.systems.items():
+         sx = float(system["pos"]["x"])
+         sy = -float(system["pos"]["y"])
+         dx = cx+sx*self.zoom
+         dy = cy+sy*self.zoom
+
+         # draw jumps
+         for jump in system["jumps"]:
+            jsx = float(self.systems[jump]["pos"]["x"])
+            jsy = -float(self.systems[jump]["pos"]["y"])
+            jdx = cx+jsx*self.zoom
+            jdy = cy+jsy*self.zoom
+            
+            area.window.draw_line(gc, dx,dy, jdx,jdy)
+
+
+         # draw circle
+         area.window.draw_arc(gc, True, dx-r/2,dy-r/2, r,r, 0,360*64)
+         area.window.draw_arc(bg_gc, True, dx-r/2+2,dy-r/2+2, r-4,r-4, 0,360*64)
+
+         # draw name
+         layout = area.create_pango_layout(sys_name)
+         area.window.draw_layout(gc, dx+r/2+2, dy-r/2, layout)
 
 
    def debug(self):
