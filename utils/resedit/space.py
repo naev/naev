@@ -125,7 +125,25 @@ class space:
 
       # renamed the current system
       if sys_name != self.cur_system:
-         self.systems[sys_name] = self.systems[self.cur_systems] # copy it over
+         self.systems[sys_name] = self.systems[self.cur_system] # copy it over
+         model = self.__swidget("treSystems").get_model()
+
+         # must rename the node in the treeview
+         for i in model:
+            if i[0] == self.cur_system:
+               i[0] = sys_name
+               break
+
+         # update jump paths
+         for key,value in self.systems.items():
+            i = 0
+            for jump in value["jumps"]:
+               if jump == self.cur_system:
+                  self.systems[key]["jumps"].pop(i)
+                  self.systems[key]["jumps"].append(sys_name)
+               i = i+1
+
+         # delete the old system and change current to it
          del self.systems[self.cur_system] # get rid of the old one
          self.cur_system = sys_name # now use self.cur_system again
 
