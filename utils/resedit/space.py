@@ -74,6 +74,7 @@ class space:
 
       # custom widget drawing area thingy
       self.zoom = 1
+      self.space_sel = ""
       area = self.__swidget("draSpace")
       area.set_events(gtk.gdk.EXPOSURE_MASK
             | gtk.gdk.LEAVE_NOTIFY_MASK
@@ -193,8 +194,11 @@ class space:
       # important thingies
       tree = self.__swidget("treSystems")
       model = tree.get_model()
-      iter = tree.get_selection().get_selected()[1]
-      p = model.iter_parent(iter)
+      try:
+         iter = tree.get_selection().get_selected()[1]
+         p = model.iter_parent(iter)
+      except:
+         return None
       if p == None:
          return model.get_value(iter,0)
       else:
@@ -210,6 +214,7 @@ class space:
 
    def __space_reset(self, wgt=None, event=None):
       self.x = self.y = 0
+      self.space_sel = ""
       self.__space_draw()
 
    def __space_down(self, wgt, event):
@@ -218,21 +223,34 @@ class space:
          x = event.x
          y = event.y
 
+         wx,wy, ww,wh = self.__swidget("draSpace").get_allocation()
+
+         mx = x - (self.x*self.zoom + ww/2)
+         my = y - (self.y*self.zoom + wh/2)
+
          # modify the current position
          if self.__swidget("butReposition").get_active() and self.cur_system != "":
 
-            wx,wy, ww,wh = self.__swidget("draSpace").get_allocation()
-
-            mx = x - (self.x*self.zoom + ww/2)
-            my = y - (self.y*self.zoom + wh/2)
-
             system = self.systems[self.cur_system]
-            system["pos"]["x"] = str(mx)
-            system["pos"]["y"] = str(-my)
+            system["pos"]["x"] = str(int(mx))
+            system["pos"]["y"] = str(int(-my))
 
             self.__space_draw()
 
             self.__swidget("butReposition").set_active(False)
+
+         else:
+            r = 15
+            for name, sys in self.systems.items():
+               sx = int(sys["pos"]["x"])
+               sy = -int(sys["pos"]["y"])
+
+               if abs(sx-mx) < r and abs(sy-my) < r:
+                  self.space_sel = name
+                  self.__space_draw()
+                  break
+
+
 
          self.lx = x
          self.ly = y
@@ -278,17 +296,28 @@ class space:
 
    def __space_draw(self, wgt=None, event=None):
       area = self.__swidget("draSpace")
-      style = area.get_style()
-      gc = style.fg_gc[gtk.STATE_NORMAL]
-      bg_gc = style.bg_gc[gtk.STATE_NORMAL]
       wx,wy, ww,wh = area.get_allocation()
       cx = self.x*self.zoom + ww/2
       cy = self.y*self.zoom + wh/2
       r = 15
 
+      # colour stuff
+      sys_gc = area.window.new_gc()
+      col = area.get_colormap().alloc_color("yellow")
+      sys_gc.foreground = col
+      bg_gc = area.window.new_gc()
+      col = area.get_colormap().alloc_color("black")
+      bg_gc.foreground = col
+      jmp_gc = area.window.new_gc()
+      col = area.get_colormap().alloc_color("blue")
+      jmp_gc.foreground = col
+      sel_gc = area.window.new_gc()
+      col = area.get_colormap().alloc_color("red")
+      sel_gc.foreground = col
+
       # cleanup
       area.window.draw_rectangle(bg_gc, True, 0,0, ww,wh)
-      area.window.draw_rectangle(gc, False, 0,0, ww-1,wh-1)
+      area.window.draw_rectangle(sys_gc, False, 0,0, ww-1,wh-1)
 
       for sys_name, system in self.systems.items():
          sx = int(system["pos"]["x"])
@@ -303,12 +332,20 @@ class space:
             jdx = int(cx+jsx*self.zoom)
             jdy = int(cy+jsy*self.zoom)
             
-            area.window.draw_line(gc, dx,dy, jdx,jdy)
+            area.window.draw_line(jmp_gc, dx,dy, jdx,jdy)
 
 
          # draw circle
+         if sys_name == self.space_sel:
+            gc = sel_gc
+         else:
+            gc = sys_gc
+         if sys_name == self.__curSystem():
+            gc2 = jmp_gc
+         else:
+            gc2 = bg_gc
          area.window.draw_arc(gc, True, dx-r/2,dy-r/2, r,r, 0,360*64)
-         area.window.draw_arc(bg_gc, True, dx-r/2+2,dy-r/2+2, r-4,r-4, 0,360*64)
+         area.window.draw_arc(gc2, True, dx-r/2+2,dy-r/2+2, r-4,r-4, 0,360*64)
 
          # draw name
          layout = area.create_pango_layout(sys_name)
