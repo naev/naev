@@ -291,17 +291,17 @@ class space:
       area.window.draw_rectangle(gc, False, 0,0, ww-1,wh-1)
 
       for sys_name, system in self.systems.items():
-         sx = float(system["pos"]["x"])
-         sy = -float(system["pos"]["y"])
-         dx = cx+sx*self.zoom
-         dy = cy+sy*self.zoom
+         sx = int(system["pos"]["x"])
+         sy = -int(system["pos"]["y"])
+         dx = int(cx+sx*self.zoom)
+         dy = int(cy+sy*self.zoom)
 
          # draw jumps
          for jump in system["jumps"]:
-            jsx = float(self.systems[jump]["pos"]["x"])
-            jsy = -float(self.systems[jump]["pos"]["y"])
-            jdx = cx+jsx*self.zoom
-            jdy = cy+jsy*self.zoom
+            jsx = int(self.systems[jump]["pos"]["x"])
+            jsy = -int(self.systems[jump]["pos"]["y"])
+            jdx = int(cx+jsx*self.zoom)
+            jdy = int(cy+jsy*self.zoom)
             
             area.window.draw_line(gc, dx,dy, jdx,jdy)
 
