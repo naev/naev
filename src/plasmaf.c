@@ -33,6 +33,7 @@ glTexture* pf_genFractal( const int w, const int h, double rug )
 	SDL_Surface *sur;
 	uint32_t *pix;
 	glTexture *tex;
+   double c;
 
 	map = pf_genFractalMap( w, h, rug );
 
@@ -41,8 +42,10 @@ glTexture* pf_genFractal( const int w, const int h, double rug )
 
 	/* convert from mapping to actual colours */
 	SDL_LockSurface( sur );
-	for (i=0; i<h*w; i++)
-		pix[i] = RMASK + BMASK + GMASK + (AMASK & (uint32_t)(AMASK*5000*map[i]));
+	for (i=0; i<h*w; i++) {
+      c = map[i];
+		pix[i] = RMASK + BMASK + GMASK + (AMASK & (uint32_t)(AMASK*c));
+   }
 	SDL_UnlockSurface( sur );
 
 	free(map);

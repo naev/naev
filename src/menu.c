@@ -78,7 +78,7 @@ void menu_main (void)
 	unsigned int bwid, wid;
 	glTexture *tex;
 
-	tex = pf_genFractal( gl_screen.w, gl_screen.h, 10. );
+	tex = pf_genFractal( gl_screen.w, gl_screen.h, 5. );
 
 	/* create background image window */
 	bwid = window_create( "BG", -1, -1, gl_screen.w, gl_screen.h );
