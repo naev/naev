@@ -54,7 +54,9 @@ class space:
             "butSave":["clicked",self.saveSystems],
             "butZoomIn":["clicked",self.__space_zoomin],
             "butZoomOut":["clicked",self.__space_zoomout],
-            "butReset":["clicked",self.__space_reset]
+            "butReset":["clicked",self.__space_reset],
+            "butAddJump":["clicked",self.__jump_add],
+            "butRmJump":["clicked",self.__jump_rm]
       }
       for key, val in hooks.items():
          self.__swidget(key).connect(val[0],val[1])
@@ -350,6 +352,32 @@ class space:
          # draw name
          layout = area.create_pango_layout(sys_name)
          area.window.draw_layout(gc, dx+r/2+2, dy-r/2, layout)
+
+
+   def __jump_add(self, wgt=None, event=None):
+      if self.space_sel in self.systems.keys() and self.cur_system in self.systems.keys():
+         self.systems[self.cur_system]["jumps"].append(self.space_sel)
+         self.systems[self.space_sel]["jumps"].append(self.cur_system)
+         data.uniq(self.systems[self.cur_system]["jumps"])
+         data.uniq(self.systems[self.space_sel]["jumps"])
+        
+         self.__update()
+         self.__space_draw()
+
+   def __jump_rm(self, wgt=None, event=None):
+      if self.space_sel in self.systems.keys() and self.cur_system in self.systems.keys():
+         i = 0
+         for e in self.systems[self.cur_system]["jumps"]:
+            if e == self.space_sel:
+               self.systems[self.cur_system]["jumps"].pop(i)
+            i = i + 1
+         i = 0
+         for e in self.systems[self.space_sel]["jumps"]:
+            if e == self.cur_system:
+               self.systems[self.space_sel]["jumps"].pop(i)
+            i = i + 1
+         self.__update()
+         self.__space_draw()
 
 
    def debug(self):

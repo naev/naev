@@ -1,6 +1,14 @@
 #!/usr/bin/env python
 
 from xml.dom import minidom
+import sets
+
+def uniq(alist):    # Fastest order preserving
+   s = sets.Set(alist)
+   del alist[:]
+   for a in s:
+      alist.append(a)
+
 
 def load(xmlfile, tag, has_name=True, do_array=None):
    dom = minidom.parse(xmlfile)
