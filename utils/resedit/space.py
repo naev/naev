@@ -333,6 +333,9 @@ class space:
       sel_gc = area.window.new_gc()
       col = area.get_colormap().alloc_color("red")
       sel_gc.foreground = col
+      inert_gc = area.window.new_gc()
+      col = area.get_colormap().alloc_color("grey")
+      inert_gc.foreground = col
 
       # cleanup
       area.window.draw_rectangle(bg_gc, True, 0,0, ww,wh)
@@ -357,6 +360,8 @@ class space:
          # draw circle
          if sys_name == self.space_sel:
             gc = sel_gc
+         elif len(system["planets"]) == 0:
+            gc = inert_gc
          else:
             gc = sys_gc
          if sys_name == self.__curSystem():
