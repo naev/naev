@@ -23,12 +23,13 @@ class space:
 
 
    def loadSystems(self, xmlfile):
-      self.systems = data.load(xmlfile, "ssys", True, ["jumps","fleets","planets"])
+      self.systems = data.load(xmlfile, "ssys", True,
+            ["jumps","planets"], {"fleets":"chance"} )
 
 
    def saveSystems(self, xmlfile):
       data.save( "ssys.xml", self.systems, "Systems", "ssys", True,
-            {"jumps":"jump","fleets":"fleet","planets":"planet"})
+            {"jumps":"jump","planets":"planet"}, {"fleets":["fleet","chance"]})
 
 
    def loadPlanets(self, xmlfile):
@@ -400,7 +401,7 @@ class space:
       name = "untitled"
       gen = { "asteroids":0, "interference":0, "stars":100 }
       pos = { "x":0,"y":0 }
-      new_ssys = { "general":gen, "pos":pos, "jumps":[], "fleets":[], "planets":[] }
+      new_ssys = { "general":gen, "pos":pos, "jumps":[], "fleets":{}, "planets":[] }
       self.systems[name] = new_ssys
       self.__create_treSystems()
       self.__selSys(name)

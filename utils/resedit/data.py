@@ -10,7 +10,7 @@ def uniq(alist):    # Fastest order preserving
       alist.append(a)
 
 
-def load(xmlfile, tag, has_name=True, do_array=None):
+def load(xmlfile, tag, has_name=True, do_array=None, do_special=None):
    dom = minidom.parse(xmlfile)
    xmlNodes = dom.getElementsByTagName(tag)
 
@@ -25,16 +25,32 @@ def load(xmlfile, tag, has_name=True, do_array=None):
       # process the nodes
       for bignode in filter(lambda x: x.nodeType==x.ELEMENT_NODE, xmlNode.childNodes):
          # load the nodes
-         section = {}
-         array = []
+
+         # figure out if we need an array or dic
+         if bignode.nodeName in do_array:
+            array = []
+            use_array = True
+         else:
+            section = {}
+            use_array = False
+
          for node in filter(lambda x: x.nodeType==x.ELEMENT_NODE,
                bignode.childNodes):
-            if bignode.nodeName in do_array: # big ugly hack to use list instead of array
+
+            # big ugly hack to use list instead of array
+            if bignode.nodeName in do_array:
+               use_array = True
                array.append(node.firstChild.data)
-            else: # normal way (but will overwrite lists)
+
+            # uglier hack for special things
+            elif do_special != None and bignode.nodeName in do_special.keys():
+               section[node.firstChild.data] = node.attributes[do_special[bignode.nodeName]].value
+
+            # normal way (but will overwrite lists)
+            else:
                section[node.nodeName] = node.firstChild.data
 
-         if len(array) > 0:
+         if use_array:
             mdic[bignode.nodeName] = array
          else:
             mdic[bignode.nodeName] = section
@@ -46,7 +62,7 @@ def load(xmlfile, tag, has_name=True, do_array=None):
    return dictionary
 
 
-def save(xmlfile, data, basetag, tag, has_name=True, do_array=None):
+def save(xmlfile, data, basetag, tag, has_name=True, do_array=None, do_special=None):
    """
    do_array is a DICTIONARY, not a list here
    """
@@ -67,7 +83,16 @@ def save(xmlfile, data, basetag, tag, has_name=True, do_array=None):
          if do_array != None and key2 in do_array.keys():
             for text in value2:
                node2 = xml.createElement( do_array[key2] )
-               txtnode = xml.createTextNode( text )
+               txtnode = xml.createTextNode( str(text) )
+               node2.appendChild(txtnode)
+               node.appendChild(node2)
+
+         # checks to see if we need to run the ULTRA UBER HACK
+         elif do_special != None and key2 in do_special.keys():
+            for key3, value3 in value2.items():
+               node2 = xml.createElement( do_special[key2][0] )
+               node2.setAttribute(do_special[key2][1], value3)
+               txtnode = xml.createTextNode( str(key3) )
                node2.appendChild(txtnode)
                node.appendChild(node2)
 
@@ -75,7 +100,7 @@ def save(xmlfile, data, basetag, tag, has_name=True, do_array=None):
          else:
             for key3, value3 in value2.items():
                node2 = xml.createElement( key3 )
-               txtnode = xml.createTextNode( value3 )
+               txtnode = xml.createTextNode( str(value3) )
                node2.appendChild(txtnode)
                node.appendChild(node2)
 
