@@ -21,40 +21,40 @@ extern int toolkit;
  * creation
  */
 unsigned int window_create( char* name,
-		const int x, const int y, /* position */
-		const int w, const int h ); /* dimensions */
+      const int x, const int y, /* position */
+      const int w, const int h ); /* dimensions */
 void window_addButton( const unsigned int wid,
-		const int x, const int y, /* position */
-		const int w, const int h, /* size */
-		char* name, char* display, /* label name, display name */
-		void (*call) (char*) ); /* function to call when clicked */
+      const int x, const int y, /* position */
+      const int w, const int h, /* size */
+      char* name, char* display, /* label name, display name */
+      void (*call) (char*) ); /* function to call when clicked */
 void window_addText( const unsigned int wid,
-		const int x, const int y, /* position */
-		const int w, const int h, /* size */
-		const int centered, char* name, /* text is centered? label name */
-		glFont* font, glColour* colour, char* string ); /* font, colour and actual text */
+      const int x, const int y, /* position */
+      const int w, const int h, /* size */
+      const int centered, char* name, /* text is centered? label name */
+      glFont* font, glColour* colour, char* string ); /* font, colour and actual text */
 void window_addImage( const unsigned int wid,
-		const int x, const int y, /* position */
-		char* name, glTexture* image, int border ); /* label and image itself */
+      const int x, const int y, /* position */
+      char* name, glTexture* image, int border ); /* label and image itself */
 void window_addList( const unsigned int wid,
-		const int x, const int y, /* position */
-		const int w, const int h, /* size */
-		char* name, char **items, int nitems, int defitem,
-		void (*call) (char*) );
+      const int x, const int y, /* position */
+      const int w, const int h, /* size */
+      char* name, char **items, int nitems, int defitem,
+      void (*call) (char*) );
 void window_addRect( const unsigned int wid,
-		const int x, const int y, /* position */
-		const int w, const int h, /* size */
-		char* name, glColour* colour, int border ); /* propertiers */
+      const int x, const int y, /* position */
+      const int w, const int h, /* size */
+      char* name, glColour* colour, int border ); /* propertiers */
 void window_addCust( const unsigned int wid,
-		const int x, const int y, /* position */
-		const int w, const int h, /* size */
-		char* name, const int border,
-		void (*render) (double x, double y, double w, double h),
-		void (*mouse) (SDL_Event* event, double x, double y) );
+      const int x, const int y, /* position */
+      const int w, const int h, /* size */
+      char* name, const int border,
+      void (*render) (double x, double y, double w, double h),
+      void (*mouse) (SDL_Event* event, double x, double y) );
 void window_addInput( const unsigned int wid,
-		const int x, const int y, /* position */
-		const int w, const int h, /* size */
-		char* name, const int max, const int oneline );
+      const int x, const int y, /* position */
+      const int w, const int h, /* size */
+      char* name, const int max, const int oneline );
 
 
 
@@ -74,15 +74,15 @@ char* dialogue_input( char* title, int min, int max, const char *fmt, ... );
 void window_setFptr( const unsigned int wid, void (*fptr)( char* ) );
 /* text */
 void window_modifyText( const unsigned int wid,
-		char* name, char* newstring );
+      char* name, char* newstring );
 /* button */
 void window_disableButton( const unsigned int wid, char* name );
 void window_enableButton( const unsigned int wid, char *name );
 /* image */
 void window_modifyImage( const unsigned int wid,
-		char* name, glTexture* image );
+      char* name, glTexture* image );
 void window_imgColour( const unsigned int wid,
-		char* name, glColour* colour );
+      char* name, glColour* colour );
 
 
 /*

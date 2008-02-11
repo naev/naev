@@ -17,12 +17,12 @@
 
 typedef struct Packfile_ {
 #ifdef _POSIX_SOURCE
-	int fd; /* file descriptor */
+   int fd; /* file descriptor */
 #else /* not _POSIX_SOURCE */
-	FILE* fp;
+   FILE* fp;
 #endif /* _POSIX_SOURCE */
-	uint32_t pos; /* position */
-	uint32_t start, end; /* file limits */
+   uint32_t pos; /* position */
+   uint32_t start, end; /* file limits */
 } Packfile;
 
 

@@ -9,7 +9,7 @@
 
 
 #define RNG(L,H)  ((int)L + (int)((double)(H-L+1) * randfp())) /* L <= RNG <= H */
-#define RNGF()		(randfp())
+#define RNGF()    (randfp())
 
 
 void rng_init (void);

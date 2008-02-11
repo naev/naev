@@ -33,17 +33,17 @@
 /*
  * Contains info about the opengl screen
  */
-#define OPENGL_FULLSCREEN	(1<<0)
-#define OPENGL_DOUBLEBUF	(1<<1)
-#define OPENGL_AA_POINT		(1<<2)
-#define OPENGL_AA_LINE		(1<<3)
-#define OPENGL_AA_POLYGON	(1<<4)
-#define gl_has(f)		(gl_screen.flags & (f)) /* check for the flag */
+#define OPENGL_FULLSCREEN  (1<<0)
+#define OPENGL_DOUBLEBUF   (1<<1)
+#define OPENGL_AA_POINT    (1<<2)
+#define OPENGL_AA_LINE     (1<<3)
+#define OPENGL_AA_POLYGON  (1<<4)
+#define gl_has(f)    (gl_screen.flags & (f)) /* check for the flag */
 typedef struct glInfo_ {
-	int w, h; /* window dimensions */
-	int depth; /* depth in bpp */
-	int r, g, b, a; /* framebuffer values in bits */
-	int flags; /* stores different propertiers */
+   int w, h; /* window dimensions */
+   int depth; /* depth in bpp */
+   int r, g, b, a; /* framebuffer values in bits */
+   int flags; /* stores different propertiers */
 } glInfo;
 extern glInfo gl_screen; /* local structure set with gl_init and co */
 
@@ -51,20 +51,20 @@ extern glInfo gl_screen; /* local structure set with gl_init and co */
 /*
  * used with colour.h
  */
-#define COLOUR(x)		glColor4d((x).r,(x).g,(x).b,(x).a)
-#define ACOLOUR(x,a)	glColor4d((x).r,(x).g,(x).b,a)
+#define COLOUR(x)    glColor4d((x).r,(x).g,(x).b,(x).a)
+#define ACOLOUR(x,a) glColor4d((x).r,(x).g,(x).b,a)
 
 
 /*
  * Spritesheet info
  */
 typedef struct glTexture_ {
-	double w, h; /* real size of the image (excluding POT buffer) */
-	double rw, rh; /* size of POT surface */
-	double sx, sy; /* number of sprites on x axis and y axis */
-	double sw, sh; /* size of each sprite */
-	GLuint texture; /* the opengl texture itself */
-	uint8_t* trans; /* maps the transparency */
+   double w, h; /* real size of the image (excluding POT buffer) */
+   double rw, rh; /* size of POT surface */
+   double sx, sy; /* number of sprites on x axis and y axis */
+   double sw, sh; /* size of each sprite */
+   GLuint texture; /* the opengl texture itself */
+   uint8_t* trans; /* maps the transparency */
 } glTexture;
 
 
@@ -82,11 +82,11 @@ void gl_freeTexture( glTexture* texture );
  */
 /* blits a sprite */
 void gl_blitSprite( const glTexture* sprite,
-		const double bx, const double by,
-		const int sx, const int sy, const glColour *c );
+      const double bx, const double by,
+      const int sx, const int sy, const glColour *c );
 /* blits the entire image */
 void gl_blitStatic( const glTexture* texture,
-		const double bx, const double by, const glColour *c );
+      const double bx, const double by, const glColour *c );
 /* binds the camera to a vector */
 void gl_bindCamera( const Vector2d* pos );
 /* circle drawing */
@@ -110,4 +110,4 @@ void gl_screenshot( const char *filename );
 
 
 #endif /* OPENGL_H */
-	
+   

@@ -13,24 +13,24 @@
 #include "physics.h"
 
 
-#define SOUND_REFERENCE_DIST	500.
-#define SOUND_MAX_DIST			1000.
+#define SOUND_REFERENCE_DIST  500.
+#define SOUND_MAX_DIST        1000.
 
 
 /*
  * virtual voice
  */
 typedef struct alVoice_ {
-	ALuint source; /* source itself, 0 if not set */
-	ALuint buffer; /* buffer */
+   ALuint source; /* source itself, 0 if not set */
+   ALuint buffer; /* buffer */
 
-	int priority; /* base priority */
+   int priority; /* base priority */
 
-	double px, py; /* position */
-	double vx, vy; /* velocity */
+   double px, py; /* position */
+   double vx, vy; /* velocity */
 
-	unsigned int start; /* time started in ms */
-	unsigned int flags; /* flags to set properties */
+   unsigned int start; /* time started in ms */
+   unsigned int flags; /* flags to set properties */
 } alVoice;
 
 
@@ -54,12 +54,12 @@ void sound_volume( const double vol );
  * voice manipulation function
  */
 alVoice* sound_addVoice( int priority, double px, double py,
-		double vx, double vy, const ALuint buffer, const int looping );
+      double vx, double vy, const ALuint buffer, const int looping );
 void sound_delVoice( alVoice* voice );
 void voice_update( alVoice* voice, double px, double py, 
-		double vx, double vy );
+      double vx, double vy );
 void sound_listener( double dir, double px, double py,
-		double vx, double vy );
+      double vx, double vy );
 
 
 #endif /* SOUND_H */

@@ -12,7 +12,7 @@
  * Colours
  */
 typedef struct glColour_ {
-	double r, g, b, a;
+   double r, g, b, a;
 } glColour;
 
 /*

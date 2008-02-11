@@ -24,12 +24,12 @@ glColour cGrey10     = { .r=0.10, .g=0.10, .b=0.10, .a=1. };
 glColour cBlack      = { .r=0.00, .g=0.00, .b=0.00, .a=1. };              
 
 glColour cGreen      = { .r=0.20, .g=0.80, .b=0.20, .a=1. };
-glColour cDarkRed		= { .r=0.60, .g=0.10, .b=0.10, .a=1. };
+glColour cDarkRed    = { .r=0.60, .g=0.10, .b=0.10, .a=1. };
 glColour cRed        = { .r=0.80, .g=0.20, .b=0.20, .a=1. };
-glColour cYellow		= { .r=0.80, .g=0.80, .b=0.00, .a=1. };
-glColour cDarkBlue	= { .r=0.10, .g=0.10, .b=0.60, .a=1. };
-glColour cBlue			= { .r=0.20, .g=0.20, .b=0.80, .a=1. };
-glColour cPurple		= { .r=0.90, .g=0.10, .b=0.90, .a=1. };
+glColour cYellow     = { .r=0.80, .g=0.80, .b=0.00, .a=1. };
+glColour cDarkBlue   = { .r=0.10, .g=0.10, .b=0.60, .a=1. };
+glColour cBlue       = { .r=0.20, .g=0.20, .b=0.80, .a=1. };
+glColour cPurple     = { .r=0.90, .g=0.10, .b=0.90, .a=1. };
 
 
 /*
@@ -38,7 +38,7 @@ glColour cPurple		= { .r=0.90, .g=0.10, .b=0.90, .a=1. };
 glColour cConsole       =  { .r = 0.1, .g = 0.9, .b = 0.1, .a = 1.  };
 glColour cDConsole      =  { .r = 0.0, .g = 0.7, .b = 0.0, .a = 1.  };
 /* toolkit */
-glColour cHilight			=	{ .r = 0.1, .g = 0.9, .b = 0.1, .a = 0.3 };
+glColour cHilight       =  { .r = 0.1, .g = 0.9, .b = 0.1, .a = 0.3 };
 /* objects */
 glColour cInert         =  { .r = 0.6, .g = 0.6, .b = 0.6, .a = 1.  };
 glColour cNeutral       =  { .r = 0.9, .g = 1.0, .b = 0.3, .a = 1.  };

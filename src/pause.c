@@ -41,14 +41,14 @@ static void pilots_delay( unsigned int delay );
  */
 void pause (void)
 {
-	if (paused) return; /* already paused */
+   if (paused) return; /* already paused */
 
-	pilots_pause();
-	weapons_pause();
-	spfx_pause();
-	spawn_timer -= SDL_GetTicks();
+   pilots_pause();
+   weapons_pause();
+   spfx_pause();
+   spawn_timer -= SDL_GetTicks();
 
-	paused = 1; /* officially paused */
+   paused = 1; /* officially paused */
 }
 
 
@@ -57,14 +57,14 @@ void pause (void)
  */
 void unpause (void)
 {
-	if (!paused) return; /* already unpaused */
+   if (!paused) return; /* already unpaused */
 
-	pilots_unpause();
-	weapons_unpause();
-	spfx_unpause();
-	spawn_timer += SDL_GetTicks();
+   pilots_unpause();
+   weapons_unpause();
+   spfx_unpause();
+   spawn_timer += SDL_GetTicks();
 
-	paused = 0; /* officially unpaused */
+   paused = 0; /* officially unpaused */
 }
 
 
@@ -73,10 +73,10 @@ void unpause (void)
  */
 void pause_delay( unsigned int delay )
 {
-	pilots_delay(delay);
-	weapons_delay(delay);
-	spfx_delay(delay);
-	spawn_timer += delay;
+   pilots_delay(delay);
+   weapons_delay(delay);
+   spfx_delay(delay);
+   spawn_timer += delay;
 }
 
 
@@ -85,40 +85,40 @@ void pause_delay( unsigned int delay )
  */
 static void pilots_pause (void)
 {
-	int i, j;
-	unsigned int t = SDL_GetTicks();
-	for (i=0; i<pilots; i++) {
+   int i, j;
+   unsigned int t = SDL_GetTicks();
+   for (i=0; i<pilots; i++) {
 
-		pilot_stack[i]->ptimer -= t;
+      pilot_stack[i]->ptimer -= t;
 
-		pilot_stack[i]->tcontrol -= t;
-		for (j=0; j<MAX_AI_TIMERS; j++)
-			pilot_stack[i]->timer[j] -= t;
-	}
+      pilot_stack[i]->tcontrol -= t;
+      for (j=0; j<MAX_AI_TIMERS; j++)
+         pilot_stack[i]->timer[j] -= t;
+   }
 }
 static void pilots_unpause (void)
 {
-	int i, j;
-	unsigned int t = SDL_GetTicks();
-	for (i=0; i<pilots; i++) {
-	
-		 pilot_stack[i]->ptimer += t;
+   int i, j;
+   unsigned int t = SDL_GetTicks();
+   for (i=0; i<pilots; i++) {
+   
+       pilot_stack[i]->ptimer += t;
 
-		pilot_stack[i]->tcontrol += t;
-		for (j=0; j<MAX_AI_TIMERS; j++)
-			pilot_stack[i]->timer[j] += t;
-	}
+      pilot_stack[i]->tcontrol += t;
+      for (j=0; j<MAX_AI_TIMERS; j++)
+         pilot_stack[i]->timer[j] += t;
+   }
 }
 static void pilots_delay( unsigned int delay )
 {
-	int i, j;
-	for (i=0; i<pilots; i++) {
+   int i, j;
+   for (i=0; i<pilots; i++) {
 
-		pilot_stack[i]->ptimer += delay;
+      pilot_stack[i]->ptimer += delay;
 
-		pilot_stack[i]->tcontrol += delay;
-		for (j=0; j<MAX_AI_TIMERS; j++)
-			pilot_stack[i]->timer[j] += delay;
-	}
+      pilot_stack[i]->tcontrol += delay;
+      for (j=0; j<MAX_AI_TIMERS; j++)
+         pilot_stack[i]->timer[j] += delay;
+   }
 }
 

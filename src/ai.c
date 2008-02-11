@@ -26,19 +26,19 @@
 /*
  * AI Overview
  *
- *	Concept: Goal (Task) Based AI with additional Optimization
+ * Concept: Goal (Task) Based AI with additional Optimization
  *
- *	  AI uses the goal (task) based AI approach with tasks scripted in lua,
- *	additionally there is a task that is hardcoded and obligatory in any AI
- *	script, the 'control' task, whose sole purpose is to assign tasks if there
- *	is no current tasks and optimizes or changes tasks if there are.
- *	  For example: Pilot A is attacking Pilot B.  Say that Pilot C then comes in
- *	the same system and is of the same faction as Pilot B, and therefore attacks
- *	Pilot A.  Pilot A would keep on fighting Pilot B until the control task kicks
- *	in.  Then he/she could run if it deems that Pilot C and Pilot B together are too
- *	strong for him/her, or attack Pilot C because it's an easier target to finish off
- *	then Pilot B.  Therefore there are endless possibilities and it's up to the AI
- *	coder to set up.
+ *   AI uses the goal (task) based AI approach with tasks scripted in lua,
+ * additionally there is a task that is hardcoded and obligatory in any AI
+ * script, the 'control' task, whose sole purpose is to assign tasks if there
+ * is no current tasks and optimizes or changes tasks if there are.
+ *   For example: Pilot A is attacking Pilot B.  Say that Pilot C then comes in
+ * the same system and is of the same faction as Pilot B, and therefore attacks
+ * Pilot A.  Pilot A would keep on fighting Pilot B until the control task kicks
+ * in.  Then he/she could run if it deems that Pilot C and Pilot B together are too
+ * strong for him/her, or attack Pilot C because it's an easier target to finish off
+ * then Pilot B.  Therefore there are endless possibilities and it's up to the AI
+ * coder to set up.
  *
  *
  * Specification
@@ -58,34 +58,34 @@
 /* creates a new lua table */
 #define newtable(L) (lua_newtable(L), lua_gettop(L))
 /* registers a number constant n to name s (syntax like lua_regfunc) */
-#define lua_regnumber(l,s,n)	\
+#define lua_regnumber(l,s,n)  \
 (lua_pushnumber(l,n), lua_setglobal(l,s))
 /* registers a C function */
-#define lua_regfunc(l,s,f)		\
+#define lua_regfunc(l,s,f)    \
 (lua_pushcfunction(l,f), lua_setglobal(L,s))
 /* L state, void* buf, int n size, char* s identifier */
 #define luaL_dobuffer(L, b, n, s) \
-	(luaL_loadbuffer(L, b, n, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
+   (luaL_loadbuffer(L, b, n, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
 
 /* makes the function not run if n minimum parameters aren't passed */
-#define MIN_ARGS(n)			if (lua_gettop(L) < n) return 0
+#define MIN_ARGS(n)        if (lua_gettop(L) < n) return 0
 
 
 /*
  * ai flags
  */
-#define ai_setFlag(f)	(pilot_flags |= f )
-#define ai_isFlag(f)		(pilot_flags & f )
+#define ai_setFlag(f)   (pilot_flags |= f )
+#define ai_isFlag(f)    (pilot_flags & f )
 /* flags */
-#define AI_PRIMARY		(1<<0)	/* firing primary weapon */
-#define AI_SECONDARY		(1<<1)	/* firing secondary weapon */
+#define AI_PRIMARY      (1<<0)   /* firing primary weapon */
+#define AI_SECONDARY    (1<<1)   /* firing secondary weapon */
 
 
 /*
  * file info
  */
-#define AI_PREFIX			"ai/"
-#define AI_SUFFIX			".lua"
+#define AI_PREFIX       "ai/"
+#define AI_SUFFIX       ".lua"
 
 
 /*
@@ -182,59 +182,59 @@ static int ai_rng( lua_State *L ); /* rng( number, number ) */
 
 
 static const luaL_reg ai_methods[] = {
-	/* tasks */
-	{ "pushtask", ai_pushtask },
-	{ "poptask", ai_poptask },
-	{ "taskname", ai_taskname },
-	/* is */
-	{ "exists", ai_exists },
-	{ "ismaxvel", ai_ismaxvel },
-	{ "isstopped", ai_isstopped },
-	{ "isenemy", ai_isenemy },
-	{ "isally", ai_isally },
-	{ "incombat", ai_incombat },
-	/* get */
-	{ "target", ai_gettarget },
-	{ "targetid", ai_gettargetid },
-	{ "rndpilot", ai_getrndpilot },
-	{ "armour", ai_armour },
-	{ "shield", ai_shield },
-	{ "parmour", ai_parmour },
-	{ "pshield", ai_pshield },
-	{ "dist", ai_getdistance },
-	{ "pos", ai_getpos },
-	{ "minbrakedist", ai_minbrakedist },
-	{ "cargofree", ai_cargofree },
-	{ "nearestplanet", ai_getnearestplanet },
-	{ "rndplanet", ai_getrndplanet },
-	/* movement */
-	{ "accel", ai_accel },
-	{ "turn", ai_turn },
-	{ "face", ai_face },
-	{ "brake", ai_brake },
-	{ "stop", ai_stop },
-	{ "hyperspace", ai_hyperspace },
-	/* combat */
-	{ "combat", ai_combat },
-	{ "settarget", ai_settarget },
-	{ "secondary", ai_secondary },
-	{ "hasturrets", ai_hasturrets },
-	{ "shoot", ai_shoot },
-	{ "getenemy", ai_getenemy },
-	{ "hostile", ai_hostile },
-	/* timers */
-	{ "settimer", ai_settimer },
-	{ "timeup", ai_timeup },
-	/* messages */
-	{ "comm", ai_comm },
-	{ "broadcast", ai_broadcast },
-	/* loot */
-	{ "setcredits", ai_credits },
-	{ "setcargo", ai_cargo },
-	{ "shipprice", ai_shipprice },
-	/* rng */
-	{ "rnd", ai_rng },
-	{0,0} /* end */
+   /* tasks */
+   { "pushtask", ai_pushtask },
+   { "poptask", ai_poptask },
+   { "taskname", ai_taskname },
+   /* is */
+   { "exists", ai_exists },
+   { "ismaxvel", ai_ismaxvel },
+   { "isstopped", ai_isstopped },
+   { "isenemy", ai_isenemy },
+   { "isally", ai_isally },
+   { "incombat", ai_incombat },
+   /* get */
+   { "target", ai_gettarget },
+   { "targetid", ai_gettargetid },
+   { "rndpilot", ai_getrndpilot },
+   { "armour", ai_armour },
+   { "shield", ai_shield },
+   { "parmour", ai_parmour },
+   { "pshield", ai_pshield },
+   { "dist", ai_getdistance },
+   { "pos", ai_getpos },
+   { "minbrakedist", ai_minbrakedist },
+   { "cargofree", ai_cargofree },
+   { "nearestplanet", ai_getnearestplanet },
+   { "rndplanet", ai_getrndplanet },
+   /* movement */
+   { "accel", ai_accel },
+   { "turn", ai_turn },
+   { "face", ai_face },
+   { "brake", ai_brake },
+   { "stop", ai_stop },
+   { "hyperspace", ai_hyperspace },
+   /* combat */
+   { "combat", ai_combat },
+   { "settarget", ai_settarget },
+   { "secondary", ai_secondary },
+   { "hasturrets", ai_hasturrets },
+   { "shoot", ai_shoot },
+   { "getenemy", ai_getenemy },
+   { "hostile", ai_hostile },
+   /* timers */
+   { "settimer", ai_settimer },
+   { "timeup", ai_timeup },
+   /* messages */
+   { "comm", ai_comm },
+   { "broadcast", ai_broadcast },
+   /* loot */
+   { "setcredits", ai_credits },
+   { "setcargo", ai_cargo },
+   { "shipprice", ai_shipprice },
+   /* rng */
+   { "rnd", ai_rng },
+   {0,0} /* end */
 };
 
 
@@ -251,8 +251,8 @@ static int pilot_target = 0;
 /*
  * ai status, used so that create functions can't be used elsewhere
  */
-#define AI_STATUS_NORMAL		1
-#define AI_STATUS_CREATE		2
+#define AI_STATUS_NORMAL      1
+#define AI_STATUS_CREATE      2
 static int ai_status = AI_STATUS_NORMAL;
 
 
@@ -261,9 +261,9 @@ static int ai_status = AI_STATUS_NORMAL;
  */
 static void ai_run( const char *funcname )
 {
-	lua_getglobal(L, funcname);
-	if (lua_pcall(L, 0, 0, 0)) /* error has occured */
-		WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, funcname, lua_tostring(L,-1));
+   lua_getglobal(L, funcname);
+   if (lua_pcall(L, 0, 0, 0)) /* error has occured */
+      WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, funcname, lua_tostring(L,-1));
 }
 
 
@@ -272,8 +272,8 @@ static void ai_run( const char *funcname )
  */
 void ai_destroy( Pilot* p )
 {
-	if (p->task)
-		ai_freetask( p->task );
+   if (p->task)
+      ai_freetask( p->task );
 }
 
 
@@ -282,28 +282,28 @@ void ai_destroy( Pilot* p )
  */
 int ai_init (void)
 {
-	char** files;
-	uint32_t nfiles,i;
+   char** files;
+   uint32_t nfiles,i;
 
-	/* get the file list */
-	files = pack_listfiles( data, &nfiles );
+   /* get the file list */
+   files = pack_listfiles( data, &nfiles );
 
-	/* load the profiles */
-	for (i=0; i<nfiles; i++)
-		if ((strncmp( files[i], AI_PREFIX, strlen(AI_PREFIX))==0) &&
-				(strncmp( files[i] + strlen(files[i]) - strlen(AI_SUFFIX),
-					AI_SUFFIX, strlen(AI_SUFFIX))==0))
-			if (ai_loadProfile(files[i]))
-				WARN("Error loading AI profile '%s'", files[i]);
+   /* load the profiles */
+   for (i=0; i<nfiles; i++)
+      if ((strncmp( files[i], AI_PREFIX, strlen(AI_PREFIX))==0) &&
+            (strncmp( files[i] + strlen(files[i]) - strlen(AI_SUFFIX),
+               AI_SUFFIX, strlen(AI_SUFFIX))==0))
+         if (ai_loadProfile(files[i]))
+            WARN("Error loading AI profile '%s'", files[i]);
 
-	/* free the char* allocated by pack */
-	for (i=0; i<nfiles; i++)
-		free(files[i]);
-	free(files);
+   /* free the char* allocated by pack */
+   for (i=0; i<nfiles; i++)
+      free(files[i]);
+   free(files);
 
-	DEBUG("Loaded %d AI Profile%c", nprofiles, (nprofiles==1)?' ':'s');
+   DEBUG("Loaded %d AI Profile%c", nprofiles, (nprofiles==1)?' ':'s');
 
-	return 0;
+   return 0;
 }
 
 
@@ -312,47 +312,47 @@ int ai_init (void)
  */
 static int ai_loadProfile( char* filename )
 {
-	char* buf = NULL;
-	uint32_t bufsize = 0;
+   char* buf = NULL;
+   uint32_t bufsize = 0;
 
-	profiles = realloc( profiles, sizeof(AI_Profile)*(++nprofiles) );
+   profiles = realloc( profiles, sizeof(AI_Profile)*(++nprofiles) );
 
-	profiles[nprofiles-1].name =
-		malloc(sizeof(char)*(strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX))+1 );
-	snprintf( profiles[nprofiles-1].name,
-			strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX)+1,
-			"%s", filename+strlen(AI_PREFIX) );
+   profiles[nprofiles-1].name =
+      malloc(sizeof(char)*(strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX))+1 );
+   snprintf( profiles[nprofiles-1].name,
+         strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX)+1,
+         "%s", filename+strlen(AI_PREFIX) );
 
-	profiles[nprofiles-1].L = luaL_newstate();
+   profiles[nprofiles-1].L = luaL_newstate();
 
-	if (profiles[nprofiles-1].L == NULL) {
-		ERR("Unable to create a new Lua state");
-		return -1;
-	}
+   if (profiles[nprofiles-1].L == NULL) {
+      ERR("Unable to create a new Lua state");
+      return -1;
+   }
 
-	L = profiles[nprofiles-1].L;
+   L = profiles[nprofiles-1].L;
 
-	/* opens the standard lua libraries */
-	/* luaL_openlibs(L); */
+   /* opens the standard lua libraries */
+   /* luaL_openlibs(L); */
 
-	/* constants */
-	lua_regnumber(L, "player", PLAYER_ID); /* player ID */
+   /* constants */
+   lua_regnumber(L, "player", PLAYER_ID); /* player ID */
 
-	/* Register C functions in Lua */
-	luaL_register(L, "ai", ai_methods);
+   /* Register C functions in Lua */
+   luaL_register(L, "ai", ai_methods);
 
 
-	/* now load the file since all the functions have been previously loaded */
-	buf = pack_readfile( DATA, filename, &bufsize );
-	if (luaL_dobuffer(L, buf, bufsize, filename) != 0) {
-		ERR("Error loading AI file: %s",filename);
-		ERR("%s",lua_tostring(L,-1));
-		WARN("Most likely Lua file has improper syntax, please check");
-		return -1;
-	}
-	free(buf);
+   /* now load the file since all the functions have been previously loaded */
+   buf = pack_readfile( DATA, filename, &bufsize );
+   if (luaL_dobuffer(L, buf, bufsize, filename) != 0) {
+      ERR("Error loading AI file: %s",filename);
+      ERR("%s",lua_tostring(L,-1));
+      WARN("Most likely Lua file has improper syntax, please check");
+      return -1;
+   }
+   free(buf);
 
-	return 0;
+   return 0;
 }
 
 
@@ -361,16 +361,16 @@ static int ai_loadProfile( char* filename )
  */
 AI_Profile* ai_getProfile( char* name )
 {
-	if (profiles == NULL) return NULL;
+   if (profiles == NULL) return NULL;
 
-	int i;
+   int i;
 
-	for (i=0; i<nprofiles; i++)
-		if (strcmp(name,profiles[i].name)==0)
-			return &profiles[i];
+   for (i=0; i<nprofiles; i++)
+      if (strcmp(name,profiles[i].name)==0)
+         return &profiles[i];
 
-	WARN("AI Profile '%s' not found in AI stack", name);
-	return NULL;
+   WARN("AI Profile '%s' not found in AI stack", name);
+   return NULL;
 }
 
 
@@ -379,12 +379,12 @@ AI_Profile* ai_getProfile( char* name )
  */
 void ai_exit (void)
 {
-	int i;
-	for (i=0; i<nprofiles; i++) {
-		free(profiles[i].name);
-		lua_close(profiles[i].L);
-	}
-	free(profiles);
+   int i;
+   for (i=0; i<nprofiles; i++) {
+      free(profiles[i].name);
+      lua_close(profiles[i].L);
+   }
+   free(profiles);
 }
 
 
@@ -393,41 +393,41 @@ void ai_exit (void)
  */
 void ai_think( Pilot* pilot )
 {
-	cur_pilot = pilot; /* set current pilot being processed */
-	L = cur_pilot->ai->L; /* set the AI profile to the current pilot's */
+   cur_pilot = pilot; /* set current pilot being processed */
+   L = cur_pilot->ai->L; /* set the AI profile to the current pilot's */
 
-	/* clean up some variables */
-	pilot_acc = 0;
-	pilot_turn = 0.;
-	pilot_flags = 0;
-	pilot_target = 0;
+   /* clean up some variables */
+   pilot_acc = 0;
+   pilot_turn = 0.;
+   pilot_flags = 0;
+   pilot_target = 0;
 
-	
-	/* control function if pilot is idle or tick is up */
-	if ((cur_pilot->tcontrol < SDL_GetTicks()) || (cur_pilot->task == NULL)) {
-		ai_run("control"); /* run control */
-		lua_getglobal(L,"control_rate");
-		cur_pilot->tcontrol = SDL_GetTicks() +  1000*(int)lua_tonumber(L,-1);
-	}
+   
+   /* control function if pilot is idle or tick is up */
+   if ((cur_pilot->tcontrol < SDL_GetTicks()) || (cur_pilot->task == NULL)) {
+      ai_run("control"); /* run control */
+      lua_getglobal(L,"control_rate");
+      cur_pilot->tcontrol = SDL_GetTicks() +  1000*(int)lua_tonumber(L,-1);
+   }
 
-	/* pilot has a currently running task */
-	if (cur_pilot->task)
-		ai_run(cur_pilot->task->name);
+   /* pilot has a currently running task */
+   if (cur_pilot->task)
+      ai_run(cur_pilot->task->name);
 
-	/* make sure pilot_acc and pilot_turn are legal */
-	if (pilot_acc > 1.) pilot_acc = 1.; /* value must be <= 1 */
-	if (pilot_turn > 1.) pilot_turn = 1.; /* value must between -1 and 1 */
-	else if (pilot_turn < -1.) pilot_turn = -1.;
+   /* make sure pilot_acc and pilot_turn are legal */
+   if (pilot_acc > 1.) pilot_acc = 1.; /* value must be <= 1 */
+   if (pilot_turn > 1.) pilot_turn = 1.; /* value must between -1 and 1 */
+   else if (pilot_turn < -1.) pilot_turn = -1.;
 
-	cur_pilot->solid->dir_vel = 0.;
-	if (pilot_turn) /* set the turning velocity */
-		cur_pilot->solid->dir_vel -= cur_pilot->turn * pilot_turn;
-	vect_pset( &cur_pilot->solid->force, /* set the velocity vector */
-			cur_pilot->thrust * pilot_acc, cur_pilot->solid->dir );
+   cur_pilot->solid->dir_vel = 0.;
+   if (pilot_turn) /* set the turning velocity */
+      cur_pilot->solid->dir_vel -= cur_pilot->turn * pilot_turn;
+   vect_pset( &cur_pilot->solid->force, /* set the velocity vector */
+         cur_pilot->thrust * pilot_acc, cur_pilot->solid->dir );
 
-	/* fire weapons if needed */
-	if (ai_isFlag(AI_PRIMARY)) pilot_shoot(pilot,pilot_target,0); /* primary */
-	if (ai_isFlag(AI_SECONDARY)) pilot_shoot(pilot,pilot_target,1); /* secondary */
+   /* fire weapons if needed */
+   if (ai_isFlag(AI_PRIMARY)) pilot_shoot(pilot,pilot_target,0); /* primary */
+   if (ai_isFlag(AI_SECONDARY)) pilot_shoot(pilot,pilot_target,1); /* secondary */
 }
 
 
@@ -436,11 +436,11 @@ void ai_think( Pilot* pilot )
  */
 void ai_attacked( Pilot* attacked, const unsigned int attacker )
 {
-	cur_pilot = attacked;
-	L = cur_pilot->ai->L;
-	lua_getglobal(L, "attacked");
-	lua_pushnumber(L, attacker);
-	lua_pcall(L, 1, 0, 0);
+   cur_pilot = attacked;
+   L = cur_pilot->ai->L;
+   lua_getglobal(L, "attacked");
+   lua_pushnumber(L, attacker);
+   lua_pcall(L, 1, 0, 0);
 }
 
 
@@ -449,11 +449,11 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker )
  */
 void ai_create( Pilot* pilot )
 {
-	cur_pilot = pilot;
-	L = cur_pilot->ai->L;
-	ai_status = AI_STATUS_CREATE;
-	ai_run("create");
-	ai_status = AI_STATUS_NORMAL;
+   cur_pilot = pilot;
+   L = cur_pilot->ai->L;
+   ai_status = AI_STATUS_CREATE;
+   ai_run("create");
+   ai_status = AI_STATUS_NORMAL;
 }
 
 
@@ -465,11 +465,11 @@ void ai_create( Pilot* pilot )
  */
 static void ai_freetask( Task* t )
 {
-	if (t->next) ai_freetask(t->next); /* yay recursive freeing */
+   if (t->next) ai_freetask(t->next); /* yay recursive freeing */
 
-	if (t->name) free(t->name);
-	if (t->dtype==TYPE_PTR) free(t->dat.target);
-	free(t);
+   if (t->name) free(t->name);
+   if (t->dtype==TYPE_PTR) free(t->dat.target);
+   free(t);
 }
 
 
@@ -481,45 +481,45 @@ static void ai_freetask( Task* t )
  */
 static int ai_pushtask( lua_State *L )
 {
-	int pos;
-	if (lua_isnumber(L,1)) pos = (int)lua_tonumber(L,1);
-	else return 0; /* invalid param */
+   int pos;
+   if (lua_isnumber(L,1)) pos = (int)lua_tonumber(L,1);
+   else return 0; /* invalid param */
 
-	Task* t = MALLOC_ONE(Task);
-	t->name = (lua_isstring(L,2)) ? strdup((char*)lua_tostring(L,2)) : NULL;
-	t->next = NULL;
-	t->dat.target = NULL;
+   Task* t = MALLOC_ONE(Task);
+   t->name = (lua_isstring(L,2)) ? strdup((char*)lua_tostring(L,2)) : NULL;
+   t->next = NULL;
+   t->dat.target = NULL;
 
-	if (lua_gettop(L) > 2) {
-		if (lua_isnumber(L,3)) {
-			t->dtype = TYPE_INT;
-			t->dat.ID = (unsigned int)lua_tonumber(L,3);
-		}
-		else if (lua_islightuserdata(L,3)) { /* only pointer valid is Vector2d* in Lua */
-			t->dtype = TYPE_PTR;
-			t->dat.target = MALLOC_ONE(Vector2d);
-			/* no idea why vectcpy doesn't work here... */
-			((Vector2d*)t->dat.target)->x = ((Vector2d*)lua_topointer(L,3))->x;
-			((Vector2d*)t->dat.target)->y = ((Vector2d*)lua_topointer(L,3))->y;
-			((Vector2d*)t->dat.target)->mod = ((Vector2d*)lua_topointer(L,3))->mod;
-			((Vector2d*)t->dat.target)->angle = ((Vector2d*)lua_topointer(L,3))->angle;
-		}
-		else t->dtype = TYPE_NULL;
-	}
+   if (lua_gettop(L) > 2) {
+      if (lua_isnumber(L,3)) {
+         t->dtype = TYPE_INT;
+         t->dat.ID = (unsigned int)lua_tonumber(L,3);
+      }
+      else if (lua_islightuserdata(L,3)) { /* only pointer valid is Vector2d* in Lua */
+         t->dtype = TYPE_PTR;
+         t->dat.target = MALLOC_ONE(Vector2d);
+         /* no idea why vectcpy doesn't work here... */
+         ((Vector2d*)t->dat.target)->x = ((Vector2d*)lua_topointer(L,3))->x;
+         ((Vector2d*)t->dat.target)->y = ((Vector2d*)lua_topointer(L,3))->y;
+         ((Vector2d*)t->dat.target)->mod = ((Vector2d*)lua_topointer(L,3))->mod;
+         ((Vector2d*)t->dat.target)->angle = ((Vector2d*)lua_topointer(L,3))->angle;
+      }
+      else t->dtype = TYPE_NULL;
+   }
 
-	if (cur_pilot->task == NULL) /* no other tasks */
-		cur_pilot->task = t;
-	else if (pos == 1) { /* put at the end */
-		Task* pointer;                                                                
-		for (pointer = cur_pilot->task; pointer->next; pointer = pointer->next);
-		pointer->next = t;
-	}
-	else { /* default put at the beginning */
-		t->next = cur_pilot->task;
-		cur_pilot->task = t;
-	}
+   if (cur_pilot->task == NULL) /* no other tasks */
+      cur_pilot->task = t;
+   else if (pos == 1) { /* put at the end */
+      Task* pointer;                                                                
+      for (pointer = cur_pilot->task; pointer->next; pointer = pointer->next);
+      pointer->next = t;
+   }
+   else { /* default put at the beginning */
+      t->next = cur_pilot->task;
+      cur_pilot->task = t;
+   }
 
-	return 0;
+   return 0;
 }
 
 /*
@@ -527,12 +527,12 @@ static int ai_pushtask( lua_State *L )
  */
 static int ai_poptask( lua_State *L )
 {
-	(void)L; /* hack to avoid -W -Wall warnings */
-	Task* t = cur_pilot->task;
-	cur_pilot->task = t->next;
-	t->next = NULL;
-	ai_freetask(t);
-	return 0;
+   (void)L; /* hack to avoid -W -Wall warnings */
+   Task* t = cur_pilot->task;
+   cur_pilot->task = t->next;
+   t->next = NULL;
+   ai_freetask(t);
+   return 0;
 }
 
 /*
@@ -540,9 +540,9 @@ static int ai_poptask( lua_State *L )
  */
 static int ai_taskname( lua_State *L )
 {
-	if (cur_pilot->task) lua_pushstring(L, cur_pilot->task->name);
-	else lua_pushstring(L, "none");
-	return 1;
+   if (cur_pilot->task) lua_pushstring(L, cur_pilot->task->name);
+   else lua_pushstring(L, "none");
+   return 1;
 }
 
 /*
@@ -550,11 +550,11 @@ static int ai_taskname( lua_State *L )
  */
 static int ai_gettarget( lua_State *L )
 {
-	if (cur_pilot->task->dtype == TYPE_PTR) {
-		lua_pushlightuserdata(L, cur_pilot->task->dat.target);
-		return 1;
-	}
-	return 0;
+   if (cur_pilot->task->dtype == TYPE_PTR) {
+      lua_pushlightuserdata(L, cur_pilot->task->dat.target);
+      return 1;
+   }
+   return 0;
 }
 
 /*
@@ -562,11 +562,11 @@ static int ai_gettarget( lua_State *L )
  */
 static int ai_gettargetid( lua_State *L )
 {
-	if (cur_pilot->task->dtype == TYPE_INT) {
-		lua_pushnumber(L, cur_pilot->task->dat.ID);
-		return 1;
-	}
-	return 0;
+   if (cur_pilot->task->dtype == TYPE_INT) {
+      lua_pushnumber(L, cur_pilot->task->dat.ID);
+      return 1;
+   }
+   return 0;
 }
 
 /*
@@ -574,8 +574,8 @@ static int ai_gettargetid( lua_State *L )
  */
 static int ai_getrndpilot( lua_State *L )
 {
-	lua_pushnumber(L, pilot_stack[ RNG(0, pilots-1) ]->id );
-	return 1;
+   lua_pushnumber(L, pilot_stack[ RNG(0, pilots-1) ]->id );
+   return 1;
 }
 
 /*
@@ -583,13 +583,13 @@ static int ai_getrndpilot( lua_State *L )
  */
 static int ai_armour( lua_State *L )
 {
-	double d;
+   double d;
 
-	if (lua_isnumber(L,1)) d = pilot_get((unsigned int)lua_tonumber(L,1))->armour;
-	else d = cur_pilot->armour;
+   if (lua_isnumber(L,1)) d = pilot_get((unsigned int)lua_tonumber(L,1))->armour;
+   else d = cur_pilot->armour;
 
-	lua_pushnumber(L, d);
-	return 1;
+   lua_pushnumber(L, d);
+   return 1;
 }
 
 /*
@@ -597,13 +597,13 @@ static int ai_armour( lua_State *L )
  */
 static int ai_shield( lua_State *L )
 {
-	double d;
+   double d;
 
-	if (lua_isnumber(L,1)) d = pilot_get((unsigned int)lua_tonumber(L,1))->shield;
-	else d = cur_pilot->shield;
+   if (lua_isnumber(L,1)) d = pilot_get((unsigned int)lua_tonumber(L,1))->shield;
+   else d = cur_pilot->shield;
 
-	lua_pushnumber(L, d);
-	return 1;
+   lua_pushnumber(L, d);
+   return 1;
 }
 
 /*
@@ -611,17 +611,17 @@ static int ai_shield( lua_State *L )
  */
 static int ai_parmour( lua_State *L )
 {
-	double d;
-	Pilot* p;
+   double d;
+   Pilot* p;
 
-	if (lua_isnumber(L,1)) {
-		p = pilot_get((unsigned int)lua_tonumber(L,1));
-		d = p->armour / p->armour_max * 100.;
-	}
-	else d = cur_pilot->armour / cur_pilot->armour_max * 100.;
+   if (lua_isnumber(L,1)) {
+      p = pilot_get((unsigned int)lua_tonumber(L,1));
+      d = p->armour / p->armour_max * 100.;
+   }
+   else d = cur_pilot->armour / cur_pilot->armour_max * 100.;
 
-	lua_pushnumber(L, d);
-	return 1;
+   lua_pushnumber(L, d);
+   return 1;
 }
 
 /* 
@@ -629,16 +629,16 @@ static int ai_parmour( lua_State *L )
  */              
 static int ai_pshield( lua_State *L )
 {
-	double d;
-	Pilot* p;
+   double d;
+   Pilot* p;
 
-	if (lua_isnumber(L,1)) {
-		p = pilot_get((unsigned int)lua_tonumber(L,1));
-		d = p->shield / p->shield_max * 100.;
-	}
-	else d = cur_pilot->shield / cur_pilot->shield_max * 100.;
+   if (lua_isnumber(L,1)) {
+      p = pilot_get((unsigned int)lua_tonumber(L,1));
+      d = p->shield / p->shield_max * 100.;
+   }
+   else d = cur_pilot->shield / cur_pilot->shield_max * 100.;
 
-	return 1;
+   return 1;
 } 
 
 /*
@@ -646,14 +646,14 @@ static int ai_pshield( lua_State *L )
  */
 static int ai_getdistance( lua_State *L )
 {
-	Vector2d *vect;
+   Vector2d *vect;
 
-	MIN_ARGS(1);
+   MIN_ARGS(1);
 
-	vect = (lua_islightuserdata(L,1)) ?
-			(Vector2d*)lua_topointer(L,1) : NULL;
-	lua_pushnumber(L, vect_dist(vect, &cur_pilot->solid->pos));
-	return 1;
+   vect = (lua_islightuserdata(L,1)) ?
+         (Vector2d*)lua_topointer(L,1) : NULL;
+   lua_pushnumber(L, vect_dist(vect, &cur_pilot->solid->pos));
+   return 1;
 }
 
 /*
@@ -661,17 +661,17 @@ static int ai_getdistance( lua_State *L )
  */
 static int ai_getpos( lua_State *L )
 {
-	Pilot *p;
+   Pilot *p;
 
-	if (lua_isnumber(L,1)) {
-		p = pilot_get((int)lua_tonumber(L,1)); /* Pilot ID */
-		if (p==NULL) return 0;
-	}
-	else p = cur_pilot; /* default to self */
+   if (lua_isnumber(L,1)) {
+      p = pilot_get((int)lua_tonumber(L,1)); /* Pilot ID */
+      if (p==NULL) return 0;
+   }
+   else p = cur_pilot; /* default to self */
 
-	lua_pushlightuserdata(L, &p->solid->pos );
+   lua_pushlightuserdata(L, &p->solid->pos );
 
-	return 1;
+   return 1;
 }
 
 /*
@@ -686,14 +686,14 @@ static int ai_getpos( lua_State *L )
  */
 static int ai_minbrakedist( lua_State *L )
 {
-	double time, dist;
-	time = VMOD(cur_pilot->solid->vel) /
-			(cur_pilot->thrust / cur_pilot->solid->mass);
-	dist =  VMOD(cur_pilot->solid->vel)*0.9*(time+180./cur_pilot->turn) -
-			0.5*(cur_pilot->thrust/cur_pilot->solid->mass)*time*time;
+   double time, dist;
+   time = VMOD(cur_pilot->solid->vel) /
+         (cur_pilot->thrust / cur_pilot->solid->mass);
+   dist =  VMOD(cur_pilot->solid->vel)*0.9*(time+180./cur_pilot->turn) -
+         0.5*(cur_pilot->thrust/cur_pilot->solid->mass)*time*time;
 
-	lua_pushnumber(L, dist); /* return */
-	return 1; /* returns one thing */
+   lua_pushnumber(L, dist); /* return */
+   return 1; /* returns one thing */
 }
 
 /*
@@ -701,8 +701,8 @@ static int ai_minbrakedist( lua_State *L )
  */
 static int ai_cargofree( lua_State *L )
 {
-	lua_pushnumber(L, cur_pilot->cargo_free);
-	return 1;
+   lua_pushnumber(L, cur_pilot->cargo_free);
+   return 1;
 }
 
 
@@ -711,14 +711,14 @@ static int ai_cargofree( lua_State *L )
  */
 static int ai_exists( lua_State *L )
 {
-	MIN_ARGS(1);
+   MIN_ARGS(1);
 
-	if (lua_isnumber(L,1)) {
-		lua_pushboolean(L,
-			(pilot_get((unsigned int)lua_tonumber(L,1))!=NULL)?1:0);
-		return 1;
-	}
-	return 0;
+   if (lua_isnumber(L,1)) {
+      lua_pushboolean(L,
+         (pilot_get((unsigned int)lua_tonumber(L,1))!=NULL)?1:0);
+      return 1;
+   }
+   return 0;
 }
 
 
@@ -727,8 +727,8 @@ static int ai_exists( lua_State *L )
  */
 static int ai_ismaxvel( lua_State *L )
 {
-	lua_pushboolean(L,(VMOD(cur_pilot->solid->vel) > cur_pilot->speed-MIN_VEL_ERR));
-	return 1;
+   lua_pushboolean(L,(VMOD(cur_pilot->solid->vel) > cur_pilot->speed-MIN_VEL_ERR));
+   return 1;
 }
 
 
@@ -737,8 +737,8 @@ static int ai_ismaxvel( lua_State *L )
  */
 static int ai_isstopped( lua_State *L )
 {
-	lua_pushboolean(L,(VMOD(cur_pilot->solid->vel) < MIN_VEL_ERR));
-	return 1;
+   lua_pushboolean(L,(VMOD(cur_pilot->solid->vel) < MIN_VEL_ERR));
+   return 1;
 }
 
 
@@ -747,10 +747,10 @@ static int ai_isstopped( lua_State *L )
  */
 static int ai_isenemy( lua_State *L )
 {
-	if (lua_isnumber(L,1))
-		lua_pushboolean(L,areEnemies(cur_pilot->faction,
-				pilot_get(lua_tonumber(L,1))->faction));
-	return 1;
+   if (lua_isnumber(L,1))
+      lua_pushboolean(L,areEnemies(cur_pilot->faction,
+            pilot_get(lua_tonumber(L,1))->faction));
+   return 1;
 }
 
 /*
@@ -758,10 +758,10 @@ static int ai_isenemy( lua_State *L )
  */
 static int ai_isally( lua_State *L )
 {
-	if (lua_isnumber(L,1))
-		lua_pushboolean(L,areAllies(cur_pilot->faction,
-				pilot_get(lua_tonumber(L,1))->faction));
-	return 1;
+   if (lua_isnumber(L,1))
+      lua_pushboolean(L,areAllies(cur_pilot->faction,
+            pilot_get(lua_tonumber(L,1))->faction));
+   return 1;
 }
 
 /*
@@ -769,13 +769,13 @@ static int ai_isally( lua_State *L )
  */
 static int ai_incombat( lua_State *L )
 {
-	Pilot* p;
+   Pilot* p;
 
-	if (lua_isnumber(L,1)) p = pilot_get((unsigned int)lua_tonumber(L,1));
-	else p = cur_pilot;
+   if (lua_isnumber(L,1)) p = pilot_get((unsigned int)lua_tonumber(L,1));
+   else p = cur_pilot;
 
-	lua_pushboolean(L, pilot_isFlag(p, PILOT_COMBAT));
-	return 1;
+   lua_pushboolean(L, pilot_isFlag(p, PILOT_COMBAT));
+   return 1;
 }
 
 /*
@@ -783,8 +783,8 @@ static int ai_incombat( lua_State *L )
  */
 static int ai_accel( lua_State *L )
 {
-	pilot_acc = (lua_gettop(L) > 1 && lua_isnumber(L,1)) ? ABS((double)lua_tonumber(L,1)) : 1. ;
-	return 0;
+   pilot_acc = (lua_gettop(L) > 1 && lua_isnumber(L,1)) ? ABS((double)lua_tonumber(L,1)) : 1. ;
+   return 0;
 }
 
 
@@ -793,9 +793,9 @@ static int ai_accel( lua_State *L )
  */
 static int ai_turn( lua_State *L )
 {
-	MIN_ARGS(1);
-	pilot_turn = (lua_isnumber(L,1)) ? (double)lua_tonumber(L,1) : 0. ;
-	return 0;
+   MIN_ARGS(1);
+   pilot_turn = (lua_isnumber(L,1)) ? (double)lua_tonumber(L,1) : 0. ;
+   return 0;
 }
 
 
@@ -804,46 +804,46 @@ static int ai_turn( lua_State *L )
  */
 static int ai_face( lua_State *L )
 {
-	MIN_ARGS(1);
-	Vector2d *v, sv, tv; /* get the position to face */
-	Pilot* p;
-	double mod, diff;
-	int invert = 0;
-	int n = -2;
+   MIN_ARGS(1);
+   Vector2d *v, sv, tv; /* get the position to face */
+   Pilot* p;
+   double mod, diff;
+   int invert = 0;
+   int n = -2;
 
-	if (lua_isnumber(L,1))
-		n = (int)lua_tonumber(L,1);
+   if (lua_isnumber(L,1))
+      n = (int)lua_tonumber(L,1);
 
-	if (n >= 0 ) {
-		p = pilot_get(n);
-		if (p==NULL) return 0; /* make sure pilot is valid */
-		vect_cset( &tv, VX(p->solid->pos) + FACE_WVEL*VX(p->solid->vel),
-				VY(p->solid->pos) + FACE_WVEL*VY(p->solid->vel) );
-		v = NULL;
-	}
-	else if (lua_islightuserdata(L,1)) v = (Vector2d*)lua_topointer(L,1);
+   if (n >= 0 ) {
+      p = pilot_get(n);
+      if (p==NULL) return 0; /* make sure pilot is valid */
+      vect_cset( &tv, VX(p->solid->pos) + FACE_WVEL*VX(p->solid->vel),
+            VY(p->solid->pos) + FACE_WVEL*VY(p->solid->vel) );
+      v = NULL;
+   }
+   else if (lua_islightuserdata(L,1)) v = (Vector2d*)lua_topointer(L,1);
 
-	mod = -10;
-	if (lua_gettop(L) > 1 && lua_isnumber(L,2)) invert = (int)lua_tonumber(L,2);
-	if (invert) mod *= -1;
+   mod = -10;
+   if (lua_gettop(L) > 1 && lua_isnumber(L,2)) invert = (int)lua_tonumber(L,2);
+   if (invert) mod *= -1;
 
-	vect_cset( &sv, VX(cur_pilot->solid->pos) + FACE_WVEL*VX(cur_pilot->solid->vel),
-			VY(cur_pilot->solid->pos) + FACE_WVEL*VY(cur_pilot->solid->vel) );
+   vect_cset( &sv, VX(cur_pilot->solid->pos) + FACE_WVEL*VX(cur_pilot->solid->vel),
+         VY(cur_pilot->solid->pos) + FACE_WVEL*VY(cur_pilot->solid->vel) );
 
-	if (v==NULL) /* target is dynamic */
-		diff = angle_diff(cur_pilot->solid->dir,
-				(n==-1) ? VANGLE(sv) :
-				vect_angle(&sv, &tv));
-	else /* target is static */
-		diff = angle_diff(cur_pilot->solid->dir,   
-				(n==-1) ? VANGLE(cur_pilot->solid->pos) :
-				vect_angle(&cur_pilot->solid->pos, v));
+   if (v==NULL) /* target is dynamic */
+      diff = angle_diff(cur_pilot->solid->dir,
+            (n==-1) ? VANGLE(sv) :
+            vect_angle(&sv, &tv));
+   else /* target is static */
+      diff = angle_diff(cur_pilot->solid->dir,   
+            (n==-1) ? VANGLE(cur_pilot->solid->pos) :
+            vect_angle(&cur_pilot->solid->pos, v));
 
 
-	pilot_turn = mod*diff;
+   pilot_turn = mod*diff;
 
-	lua_pushnumber(L, ABS(diff*180./M_PI));
-	return 1;
+   lua_pushnumber(L, ABS(diff*180./M_PI));
+   return 1;
 
 }
 
@@ -853,19 +853,19 @@ static int ai_face( lua_State *L )
  */
 static int ai_brake( lua_State *L )
 {
-	(void)L; /* hack to avoid -W -Wall warnings */
-	double diff, d;
+   (void)L; /* hack to avoid -W -Wall warnings */
+   double diff, d;
 
-	d = cur_pilot->solid->dir+M_PI;
-	if (d >= 2*M_PI) d = fmodf(d, 2*M_PI);
-	
-	diff = angle_diff(d,VANGLE(cur_pilot->solid->vel));
-	pilot_turn = -10*diff;
+   d = cur_pilot->solid->dir+M_PI;
+   if (d >= 2*M_PI) d = fmodf(d, 2*M_PI);
+   
+   diff = angle_diff(d,VANGLE(cur_pilot->solid->vel));
+   pilot_turn = -10*diff;
 
-	if (ABS(diff) < MAX_DIR_ERR && VMOD(cur_pilot->solid->vel) > MIN_VEL_ERR)
-		pilot_acc = 1.;
+   if (ABS(diff) < MAX_DIR_ERR && VMOD(cur_pilot->solid->vel) > MIN_VEL_ERR)
+      pilot_acc = 1.;
 
-	return 0;
+   return 0;
 }
 
 /*
@@ -873,26 +873,26 @@ static int ai_brake( lua_State *L )
  */
 static int ai_getnearestplanet( lua_State *L )
 {
-	if (cur_system->nplanets == 0) return 0; /* no planets */
+   if (cur_system->nplanets == 0) return 0; /* no planets */
 
-	double dist, d;
-	int i, j;
+   double dist, d;
+   int i, j;
 
-	/* cycle through planets */
-	for (dist=0., j=-1, i=0; i<cur_system->nplanets; i++) {
-		d = vect_dist( &cur_system->planets[i].pos, &cur_pilot->solid->pos );
-		if ((!areEnemies(cur_pilot->faction,cur_system->planets[i].faction)) &&
-				(d < dist)) { /* closer friendly planet */
-			j = i;
-			dist = d;
-		}
-	}
+   /* cycle through planets */
+   for (dist=0., j=-1, i=0; i<cur_system->nplanets; i++) {
+      d = vect_dist( &cur_system->planets[i].pos, &cur_pilot->solid->pos );
+      if ((!areEnemies(cur_pilot->faction,cur_system->planets[i].faction)) &&
+            (d < dist)) { /* closer friendly planet */
+         j = i;
+         dist = d;
+      }
+   }
 
-	/* no friendly planet found */
-	if (j == -1) return 0;
+   /* no friendly planet found */
+   if (j == -1) return 0;
 
-	lua_pushlightuserdata( L, &cur_system->planets[j].pos );
-	return 1;
+   lua_pushlightuserdata( L, &cur_system->planets[j].pos );
+   return 1;
 }
 
 /*
@@ -900,32 +900,32 @@ static int ai_getnearestplanet( lua_State *L )
  */
 static int ai_getrndplanet( lua_State *L )
 {
-	if (cur_system->nplanets == 0) return 0; /* no planets */
+   if (cur_system->nplanets == 0) return 0; /* no planets */
 
-	Planet** planets;
-	int nplanets, i;
-	Vector2d v;
-	planets = malloc( sizeof(Planet*) * cur_system->nplanets );
+   Planet** planets;
+   int nplanets, i;
+   Vector2d v;
+   planets = malloc( sizeof(Planet*) * cur_system->nplanets );
 
-	for (nplanets=0, i=0; i<cur_system->nplanets; i++)
-		if (planet_hasService(&cur_system->planets[i],PLANET_SERVICE_BASIC) &&
-				!areEnemies(cur_pilot->faction,cur_system->planets[i].faction))
-			planets[nplanets++] = &cur_system->planets[i];
+   for (nplanets=0, i=0; i<cur_system->nplanets; i++)
+      if (planet_hasService(&cur_system->planets[i],PLANET_SERVICE_BASIC) &&
+            !areEnemies(cur_pilot->faction,cur_system->planets[i].faction))
+         planets[nplanets++] = &cur_system->planets[i];
 
-	/* no planet to land on found */
-	if (nplanets==0) {
-		free(planets);
-		return 0;
-	}
+   /* no planet to land on found */
+   if (nplanets==0) {
+      free(planets);
+      return 0;
+   }
 
-	/* we can actually get a random planet now */
-	i = RNG(0,nplanets-1);
-	vectcpy( &v, &planets[i]->pos );
-	vect_cadd( &v, RNG(0, planets[i]->gfx_space->sw)-planets[i]->gfx_space->sw/2.,
-			RNG(0, planets[i]->gfx_space->sh)-planets[i]->gfx_space->sh/2. );
-	lua_pushlightuserdata( L, &v );
-	free(planets);
-	return 1;
+   /* we can actually get a random planet now */
+   i = RNG(0,nplanets-1);
+   vectcpy( &v, &planets[i]->pos );
+   vect_cadd( &v, RNG(0, planets[i]->gfx_space->sw)-planets[i]->gfx_space->sw/2.,
+         RNG(0, planets[i]->gfx_space->sh)-planets[i]->gfx_space->sh/2. );
+   lua_pushlightuserdata( L, &v );
+   free(planets);
+   return 1;
 }
 
 /*
@@ -933,13 +933,13 @@ static int ai_getrndplanet( lua_State *L )
  */
 static int ai_hyperspace( lua_State *L )
 {
-	int dist;
-	
-	dist = space_hyperspace(cur_pilot);
-	if (dist == 0.) return 0;
+   int dist;
+   
+   dist = space_hyperspace(cur_pilot);
+   if (dist == 0.) return 0;
 
-	lua_pushnumber(L,dist);
-	return 1;
+   lua_pushnumber(L,dist);
+   return 1;
 }
 
 
@@ -948,12 +948,12 @@ static int ai_hyperspace( lua_State *L )
  */
 static int ai_stop( lua_State *L )
 {
-	(void) L; /* avoid gcc warning */
+   (void) L; /* avoid gcc warning */
 
-	if (VMOD(cur_pilot->solid->vel) < MIN_VEL_ERR)
-		vect_pset( &cur_pilot->solid->vel, 0., 0. );
+   if (VMOD(cur_pilot->solid->vel) < MIN_VEL_ERR)
+      vect_pset( &cur_pilot->solid->vel, 0., 0. );
 
-	return 0;
+   return 0;
 }
 
 
@@ -962,16 +962,16 @@ static int ai_stop( lua_State *L )
  */
 static int ai_combat( lua_State *L )
 {
-	int i;
+   int i;
 
-	if (lua_isnumber(L,1)) {
-		i = (int)lua_tonumber(L,1);
-		if (i==1) pilot_setFlag(cur_pilot, PILOT_COMBAT);
-		else if (i==0) pilot_rmFlag(cur_pilot, PILOT_COMBAT);
-	}
-	else pilot_setFlag(cur_pilot, PILOT_COMBAT);
+   if (lua_isnumber(L,1)) {
+      i = (int)lua_tonumber(L,1);
+      if (i==1) pilot_setFlag(cur_pilot, PILOT_COMBAT);
+      else if (i==0) pilot_rmFlag(cur_pilot, PILOT_COMBAT);
+   }
+   else pilot_setFlag(cur_pilot, PILOT_COMBAT);
 
-	return 0;
+   return 0;
 }
 
 
@@ -980,10 +980,10 @@ static int ai_combat( lua_State *L )
  */
 static int ai_settarget( lua_State *L )
 {
-	MIN_ARGS(1);
+   MIN_ARGS(1);
 
-	if (lua_isnumber(L,1)) pilot_target = (int)lua_tonumber(L,1);
-	return 0;
+   if (lua_isnumber(L,1)) pilot_target = (int)lua_tonumber(L,1);
+   return 0;
 }
 
 
@@ -992,31 +992,31 @@ static int ai_settarget( lua_State *L )
  */
 static int ai_secondary( lua_State *L )
 {
-	if (cur_pilot->secondary) {
-		lua_pushstring( L, outfit_getTypeBroad(cur_pilot->secondary->outfit) );
-		return 1;
-	}
+   if (cur_pilot->secondary) {
+      lua_pushstring( L, outfit_getTypeBroad(cur_pilot->secondary->outfit) );
+      return 1;
+   }
 
-	PilotOutfit* po = NULL;
-	int i;
-	for (i=0; i<cur_pilot->noutfits; i++) {
-		if ((po==NULL) && (outfit_isWeapon(cur_pilot->outfits[i].outfit) ||
-					outfit_isLauncher(cur_pilot->outfits[i].outfit)))
-			po = &cur_pilot->outfits[i];
-		else if ((po!=NULL) && outfit_isWeapon(po->outfit) && /* launcher > weapon */
-				outfit_isLauncher(cur_pilot->outfits[i].outfit))
-			po = &cur_pilot->outfits[i];
-	}
+   PilotOutfit* po = NULL;
+   int i;
+   for (i=0; i<cur_pilot->noutfits; i++) {
+      if ((po==NULL) && (outfit_isWeapon(cur_pilot->outfits[i].outfit) ||
+               outfit_isLauncher(cur_pilot->outfits[i].outfit)))
+         po = &cur_pilot->outfits[i];
+      else if ((po!=NULL) && outfit_isWeapon(po->outfit) && /* launcher > weapon */
+            outfit_isLauncher(cur_pilot->outfits[i].outfit))
+         po = &cur_pilot->outfits[i];
+   }
 
-	if (po) {
-		cur_pilot->secondary = po;
-		pilot_setAmmo(cur_pilot);
-		lua_pushstring( L, outfit_getTypeBroad(po->outfit) );
-		return 1;
-	}
+   if (po) {
+      cur_pilot->secondary = po;
+      pilot_setAmmo(cur_pilot);
+      lua_pushstring( L, outfit_getTypeBroad(po->outfit) );
+      return 1;
+   }
 
-	lua_pushstring( L, "None" );
-	return 1;
+   lua_pushstring( L, "None" );
+   return 1;
 }
 
 
@@ -1025,8 +1025,8 @@ static int ai_secondary( lua_State *L )
  */
 static int ai_hasturrets( lua_State *L )
 {
-	lua_pushboolean( L, pilot_isFlag(cur_pilot, PILOT_HASTURRET) );
-	return 1;
+   lua_pushboolean( L, pilot_isFlag(cur_pilot, PILOT_HASTURRET) );
+   return 1;
 }
 
 
@@ -1035,14 +1035,14 @@ static int ai_hasturrets( lua_State *L )
  */
 static int ai_shoot( lua_State *L )
 {
-	int n = 1;
-	if (lua_isnumber(L,1)) n = (int)lua_tonumber(L,1);
+   int n = 1;
+   if (lua_isnumber(L,1)) n = (int)lua_tonumber(L,1);
 
-	if (n==1) ai_setFlag(AI_PRIMARY);
-	else if (n==2) ai_setFlag(AI_SECONDARY);
-	else if  (n==3) ai_setFlag(AI_PRIMARY | AI_SECONDARY );
+   if (n==1) ai_setFlag(AI_PRIMARY);
+   else if (n==2) ai_setFlag(AI_SECONDARY);
+   else if  (n==3) ai_setFlag(AI_PRIMARY | AI_SECONDARY );
 
-	return 0;
+   return 0;
 }
 
 
@@ -1051,8 +1051,8 @@ static int ai_shoot( lua_State *L )
  */
 static int ai_getenemy( lua_State *L )
 {
-	lua_pushnumber(L,pilot_getNearest(cur_pilot));
-	return 1;
+   lua_pushnumber(L,pilot_getNearest(cur_pilot));
+   return 1;
 }
 
 
@@ -1061,12 +1061,12 @@ static int ai_getenemy( lua_State *L )
  */
 static int ai_hostile( lua_State *L )
 {
-	MIN_ARGS(1);
+   MIN_ARGS(1);
 
-	if (lua_isnumber(L,1) && ((unsigned int)lua_tonumber(L,1) == PLAYER_ID))
-		pilot_setFlag(cur_pilot, PILOT_HOSTILE);
+   if (lua_isnumber(L,1) && ((unsigned int)lua_tonumber(L,1) == PLAYER_ID))
+      pilot_setFlag(cur_pilot, PILOT_HOSTILE);
 
-	return 0;
+   return 0;
 }
 
 
@@ -1075,14 +1075,14 @@ static int ai_hostile( lua_State *L )
  */
 static int ai_settimer( lua_State *L )
 {
-	MIN_ARGS(2);
+   MIN_ARGS(2);
 
-	int n; /* get the timer */
-	if (lua_isnumber(L,1)) n = lua_tonumber(L,1);
+   int n; /* get the timer */
+   if (lua_isnumber(L,1)) n = lua_tonumber(L,1);
 
-	cur_pilot->timer[n] = (lua_isnumber(L,2)) ? lua_tonumber(L,2) + SDL_GetTicks() : 0;
+   cur_pilot->timer[n] = (lua_isnumber(L,2)) ? lua_tonumber(L,2) + SDL_GetTicks() : 0;
 
-	return 0;
+   return 0;
 }
 
 /*
@@ -1090,13 +1090,13 @@ static int ai_settimer( lua_State *L )
  */
 static int ai_timeup( lua_State *L )
 {
-	MIN_ARGS(1);
+   MIN_ARGS(1);
 
-	int n; /* get the timer */
-	if (lua_isnumber(L,1)) n = lua_tonumber(L,1);
+   int n; /* get the timer */
+   if (lua_isnumber(L,1)) n = lua_tonumber(L,1);
 
-	lua_pushboolean(L, cur_pilot->timer[n] < SDL_GetTicks());
-	return 1;
+   lua_pushboolean(L, cur_pilot->timer[n] < SDL_GetTicks());
+   return 1;
 }
 
 
@@ -1105,12 +1105,12 @@ static int ai_timeup( lua_State *L )
  */
 static int ai_comm( lua_State *L )
 {
-	MIN_ARGS(2);
-	
-	if (lua_isnumber(L,1) && (lua_tonumber(L,1)==PLAYER_ID) && lua_isstring(L,2))
-		player_message( "Comm %s> \"%s\"", cur_pilot->name, lua_tostring(L,2));
+   MIN_ARGS(2);
+   
+   if (lua_isnumber(L,1) && (lua_tonumber(L,1)==PLAYER_ID) && lua_isstring(L,2))
+      player_message( "Comm %s> \"%s\"", cur_pilot->name, lua_tostring(L,2));
 
-	return 0;
+   return 0;
 }
 
 /*
@@ -1118,12 +1118,12 @@ static int ai_comm( lua_State *L )
  */
 static int ai_broadcast( lua_State *L )
 {
-	MIN_ARGS(1);
+   MIN_ARGS(1);
 
-	if (lua_isstring(L,1))
-		player_message( "Broadcast %s> \"%s\"", cur_pilot->name, lua_tostring(L,1));
+   if (lua_isstring(L,1))
+      player_message( "Broadcast %s> \"%s\"", cur_pilot->name, lua_tostring(L,1));
 
-	return 0;
+   return 0;
 }
 
 
@@ -1132,13 +1132,13 @@ static int ai_broadcast( lua_State *L )
  */
 static int ai_credits( lua_State *L )
 {
-	MIN_ARGS(1);
-	if (ai_status != AI_STATUS_CREATE) return 0;
+   MIN_ARGS(1);
+   if (ai_status != AI_STATUS_CREATE) return 0;
 
-	if (lua_isnumber(L,1))
-		cur_pilot->credits = (int)lua_tonumber(L,1);
-	
-	return 0;
+   if (lua_isnumber(L,1))
+      cur_pilot->credits = (int)lua_tonumber(L,1);
+   
+   return 0;
 }
 
 
@@ -1147,14 +1147,14 @@ static int ai_credits( lua_State *L )
  */
 static int ai_cargo( lua_State *L )
 {
-	MIN_ARGS(2);
-	if (ai_status != AI_STATUS_CREATE) return 0;
+   MIN_ARGS(2);
+   if (ai_status != AI_STATUS_CREATE) return 0;
 
-	if (lua_isstring(L,1) && lua_isnumber(L,2))
-		pilot_addCargo( cur_pilot, commodity_get(lua_tostring(L,1)),
-				(int)lua_tonumber(L,2));
+   if (lua_isstring(L,1) && lua_isnumber(L,2))
+      pilot_addCargo( cur_pilot, commodity_get(lua_tostring(L,1)),
+            (int)lua_tonumber(L,2));
 
-	return 0;
+   return 0;
 }
 
 
@@ -1163,8 +1163,8 @@ static int ai_cargo( lua_State *L )
  */
 static int ai_shipprice( lua_State *L )
 {
-	lua_pushnumber(L, cur_pilot->ship->price);
-	return 1;
+   lua_pushnumber(L, cur_pilot->ship->price);
+   return 1;
 }
 
 
@@ -1173,14 +1173,14 @@ static int ai_shipprice( lua_State *L )
  */
 static int ai_rng( lua_State *L )
 {
-	MIN_ARGS(2);
+   MIN_ARGS(2);
 
-	int l,h;
+   int l,h;
 
-	if (lua_isnumber(L,1)) l = (int)lua_tonumber(L,1);
-	if (lua_isnumber(L,2)) h = (int)lua_tonumber(L,2);
+   if (lua_isnumber(L,1)) l = (int)lua_tonumber(L,1);
+   if (lua_isnumber(L,2)) h = (int)lua_tonumber(L,2);
 
-	lua_pushnumber(L,RNG(l,h));
-	return 1;
+   lua_pushnumber(L,RNG(l,h));
+   return 1;
 }
 

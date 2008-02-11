@@ -40,28 +40,28 @@ static uint32_t mt_getInt (void);
 
 void rng_init (void)
 {
-	uint32_t i;
+   uint32_t i;
 
 #ifdef LINUX
-	int fd;
-	char buf[4];
-	fd = open("/dev/random", O_RDONLY);
-	if (fd != -1) {
-		if (read( fd, buf, 4 ) < 4)
-			memcpy( &i, buf, 4 );
-		else
-			i = rng_timeEntropy();
-		close(fd);
-	}
-	else
-		i = rng_timeEntropy();
+   int fd;
+   char buf[4];
+   fd = open("/dev/random", O_RDONLY);
+   if (fd != -1) {
+      if (read( fd, buf, 4 ) < 4)
+         memcpy( &i, buf, 4 );
+      else
+         i = rng_timeEntropy();
+      close(fd);
+   }
+   else
+      i = rng_timeEntropy();
 #else
-	i = rng_timeEntropy();
+   i = rng_timeEntropy();
 #endif
 
-	mt_initArray( i );
-	for (i=0; i<10; i++) /* generate numbers to get away from poor initial values */
-		mt_genArray();
+   mt_initArray( i );
+   for (i=0; i<10; i++) /* generate numbers to get away from poor initial values */
+      mt_genArray();
 }
 
 
@@ -70,17 +70,17 @@ void rng_init (void)
  */
 static uint32_t rng_timeEntropy (void)
 {
-	int i;
+   int i;
 #ifdef WIN32
-	struct _timeb tb;
-	_ftime( &tb );
-	i = tb.time * 1000 + tb.millitm;
+   struct _timeb tb;
+   _ftime( &tb );
+   i = tb.time * 1000 + tb.millitm;
 #else
-	struct timeval tv;
-	gettimeofday( &tv, NULL );
-	i = tv.tv_sec * 1000000 + tv.tv_usec;
+   struct timeval tv;
+   gettimeofday( &tv, NULL );
+   i = tv.tv_sec * 1000000 + tv.tv_usec;
 #endif
-	return i;
+   return i;
 }
 
 
@@ -89,12 +89,12 @@ static uint32_t rng_timeEntropy (void)
  */
 static void mt_initArray( uint32_t seed )
 {
-	int i;
+   int i;
 
-	MT[0] = seed;
-	for (i=1; i<624; i++)
-		MT[i] = 1812433253 * (MT[i-1] ^ (((MT[i-1])) + i) >> 30);
-	mt_pos = 0;
+   MT[0] = seed;
+   for (i=1; i<624; i++)
+      MT[i] = 1812433253 * (MT[i-1] ^ (((MT[i-1])) + i) >> 30);
+   mt_pos = 0;
 }
 
 
@@ -103,16 +103,16 @@ static void mt_initArray( uint32_t seed )
  */
 static void mt_genArray (void)
 {
-	int i;
+   int i;
 
-	for (i=0; i<624; i++ ) {
-		mt_y = (MT[i] & 0x80000000) + ((MT[i] % 624) & 0x7FFFFFFF);
-		if (mt_y % 2) /* odd */
-			MT[i] = (MT[(i+397) % 624] ^ (mt_y >> 1)) ^ 2567483615;
-		else /* even */
-			MT[i] = MT[(i+397) % 624] ^ (mt_y >> 1);
-	}
-	mt_pos = 0;
+   for (i=0; i<624; i++ ) {
+      mt_y = (MT[i] & 0x80000000) + ((MT[i] % 624) & 0x7FFFFFFF);
+      if (mt_y % 2) /* odd */
+         MT[i] = (MT[(i+397) % 624] ^ (mt_y >> 1)) ^ 2567483615;
+      else /* even */
+         MT[i] = MT[(i+397) % 624] ^ (mt_y >> 1);
+   }
+   mt_pos = 0;
 }
 
 
@@ -121,15 +121,15 @@ static void mt_genArray (void)
  */
 static uint32_t mt_getInt (void)
 {
-	if (mt_pos >= 624) mt_genArray();
+   if (mt_pos >= 624) mt_genArray();
 
-	mt_y = MT[mt_pos++];
-	mt_y ^= mt_y >> 11;
-	mt_y ^= (mt_y << 7) & 2636928640;
-	mt_y ^= (mt_y << 15) & 4022730752;
-	mt_y ^= mt_y >> 18;
+   mt_y = MT[mt_pos++];
+   mt_y ^= mt_y >> 11;
+   mt_y ^= (mt_y << 7) & 2636928640;
+   mt_y ^= (mt_y << 15) & 4022730752;
+   mt_y ^= mt_y >> 18;
 
-	return mt_y;
+   return mt_y;
 }
 
 
@@ -138,7 +138,7 @@ static uint32_t mt_getInt (void)
  */
 unsigned int randint (void)
 {
-	return mt_getInt();
+   return mt_getInt();
 }
 
 
@@ -148,8 +148,8 @@ unsigned int randint (void)
 static double m_div = (double)(0xFFFFFFFF) + 1.;
 double randfp (void)
 {
-	double m = (double)mt_getInt();
-	return m / m_div;
+   double m = (double)mt_getInt();
+   return m / m_div;
 }
 
 

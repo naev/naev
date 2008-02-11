@@ -11,8 +11,8 @@
 #include "physics.h"
 
 
-#define SPFX_LAYER_FRONT	0
-#define SPFX_LAYER_BACK		1
+#define SPFX_LAYER_FRONT   0
+#define SPFX_LAYER_BACK    1
 
 
 /*
@@ -20,9 +20,9 @@
  */
 int spfx_get( char* name );
 void spfx_add( const int effect,
-		const double px, const double py,
-		const double vx, const double vy,
-		const int layer );
+      const double px, const double py,
+      const double vx, const double vy,
+      const int layer );
 
 
 /*

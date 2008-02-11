@@ -14,21 +14,21 @@
 #define XML_NODE_TEXT   3
 
 /* checks to see if node n is of name s */
-#define xml_isNode(n,s)		\
-	((n!=NULL) && ((n)->type==XML_NODE_START) && \
-	(strcmp((char*)(n)->name,s)==0))
+#define xml_isNode(n,s)    \
+   ((n!=NULL) && ((n)->type==XML_NODE_START) && \
+   (strcmp((char*)(n)->name,s)==0))
 
 /* gets the next node */
 #define xml_nextNode(n)     \
    ((n!=NULL) && ((n = n->next) != NULL))
 
 /* gets the property s of node n. WARNING: MALLOCS! */
-#define xml_nodeProp(n,s)		(char*)xmlGetProp(n,(xmlChar*)s)
+#define xml_nodeProp(n,s)     (char*)xmlGetProp(n,(xmlChar*)s)
 
 /* get data different ways */
-#define xml_get(n)				((char*)(n)->children->content)
-#define xml_getInt(n)			(atoi((char*)(n)->children->content))
-#define xml_getFloat(n)			(atof((char*)(n)->children->content))
+#define xml_get(n)            ((char*)(n)->children->content)
+#define xml_getInt(n)         (atoi((char*)(n)->children->content))
+#define xml_getFloat(n)       (atof((char*)(n)->children->content))
 
 
 #endif /* XML_H */

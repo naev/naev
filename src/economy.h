@@ -9,9 +9,9 @@
 
 
 typedef struct Commodity_ {
-	char* name;
-	char* description;
-	int low, medium, high; /* prices */
+   char* name;
+   char* description;
+   int low, medium, high; /* prices */
 } Commodity;
 
 /* commodity stuff */

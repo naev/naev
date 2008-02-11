@@ -19,8 +19,8 @@
  */
 static double* pf_genFractalMap( const int w, const int h, double rug );
 static void pf_divFractal( double *map, const double x, const double y,
-		const double w, const double h, const double rw, const double rh,
-		double c1, double c2, double c3, double c4, double rug );
+      const double w, const double h, const double rw, const double rh,
+      double c1, double c2, double c3, double c4, double rug );
 
 
 /*
@@ -28,31 +28,31 @@ static void pf_divFractal( double *map, const double x, const double y,
  */
 glTexture* pf_genFractal( const int w, const int h, double rug )
 {
-	int i;
-	double *map;
-	SDL_Surface *sur;
-	uint32_t *pix;
-	glTexture *tex;
+   int i;
+   double *map;
+   SDL_Surface *sur;
+   uint32_t *pix;
+   glTexture *tex;
    double c;
 
-	map = pf_genFractalMap( w, h, rug );
+   map = pf_genFractalMap( w, h, rug );
 
-	sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );
-	pix = sur->pixels;
+   sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );
+   pix = sur->pixels;
 
-	/* convert from mapping to actual colours */
-	SDL_LockSurface( sur );
-	for (i=0; i<h*w; i++) {
+   /* convert from mapping to actual colours */
+   SDL_LockSurface( sur );
+   for (i=0; i<h*w; i++) {
       c = map[i];
-		pix[i] = RMASK + BMASK + GMASK + (AMASK & (uint32_t)(AMASK*c));
+      pix[i] = RMASK + BMASK + GMASK + (AMASK & (uint32_t)(AMASK*c));
    }
-	SDL_UnlockSurface( sur );
+   SDL_UnlockSurface( sur );
 
-	free(map);
+   free(map);
 
-	tex = gl_loadImage( sur );
+   tex = gl_loadImage( sur );
 
-	return tex;
+   return tex;
 }
 
 
@@ -61,60 +61,60 @@ glTexture* pf_genFractal( const int w, const int h, double rug )
  */
 static double* pf_genFractalMap( const int w, const int h, double rug )
 {
-	double *map; /* we'll use it to map out the fractal before saving */
-	double cx, cy;
+   double *map; /* we'll use it to map out the fractal before saving */
+   double cx, cy;
 
-	map = malloc( w*h * sizeof(double) );
+   map = malloc( w*h * sizeof(double) );
 
-	/* set up initial values */
-	cx = (double)w/2.;
-	cy = (double)h/2.;
+   /* set up initial values */
+   cx = (double)w/2.;
+   cy = (double)h/2.;
 
-	/* start by doing the four squares */
-	pf_divFractal( map, 0., 0., cx, cy, w, h, 0., 0., 1., 0., rug );
-	pf_divFractal( map, cx, 0., cx, cy, w, h, 0., 0., 0., 1., rug );
-	pf_divFractal( map, cx, cy, cx, cy, w, h, 1., 0., 0., 0., rug );
-	pf_divFractal( map, 0., cy, cx, cy, w, h, 0., 1., 0., 0., rug );
+   /* start by doing the four squares */
+   pf_divFractal( map, 0., 0., cx, cy, w, h, 0., 0., 1., 0., rug );
+   pf_divFractal( map, cx, 0., cx, cy, w, h, 0., 0., 0., 1., rug );
+   pf_divFractal( map, cx, cy, cx, cy, w, h, 1., 0., 0., 0., rug );
+   pf_divFractal( map, 0., cy, cx, cy, w, h, 0., 1., 0., 0., rug );
 
-	return map;
+   return map;
 }
 
 
 static void pf_divFractal( double *map, const double x, const double y,
-		const double w, const double h, const double rw, const double rh, 
-		double c1, double c2, double c3, double c4, double rug )
+      const double w, const double h, const double rw, const double rh, 
+      double c1, double c2, double c3, double c4, double rug )
 {
-	double nw, nh; /* new dimensions */
-	double m, e1,e2,e3,e4; /* middle and edges */
+   double nw, nh; /* new dimensions */
+   double m, e1,e2,e3,e4; /* middle and edges */
 
-	/* still need to subdivide */
-	if ((w>1.) || (h>1.)) {
-		/* calculate new dimensions */
-		nw = w/2.;
-		nh = h/2.;
+   /* still need to subdivide */
+   if ((w>1.) || (h>1.)) {
+      /* calculate new dimensions */
+      nw = w/2.;
+      nh = h/2.;
 
-		/* edges */
-		m = (c1 + c2 + c3 + c4)/4.;
-		e1 = (c1 + c2)/2.;
-		e2 = (c2 + c3)/2.;
-		e3 = (c3 + c4)/2.;
-		e4 = (c4 + c1)/2.;
+      /* edges */
+      m = (c1 + c2 + c3 + c4)/4.;
+      e1 = (c1 + c2)/2.;
+      e2 = (c2 + c3)/2.;
+      e3 = (c3 + c4)/2.;
+      e4 = (c4 + c1)/2.;
 
-		/* now change the middle colour */
-		m += rug*(RNGF()-0.5) * ((nw+nh)/(rw+rh) * 3.);
-		if (m < 0.) m = 0.;
-		else if (m > 1.) m = 1.;
+      /* now change the middle colour */
+      m += rug*(RNGF()-0.5) * ((nw+nh)/(rw+rh) * 3.);
+      if (m < 0.) m = 0.;
+      else if (m > 1.) m = 1.;
 
-		/* recursivation */
-		pf_divFractal( map, x,    y,    nw, nh, rw, rh, c1, e1, m,  e4, rug );
-		pf_divFractal( map, x+nw, y,    nw, nh, rw, rh, e1, c2, e2, m,  rug );
-		pf_divFractal( map, x+nw, y+nh, nw, nh, rw, rh, m,  e2, c3, e3, rug );
-		pf_divFractal( map, x,    y+nh, nw, nh, rw, rh, e4, m,  e3, c4, rug );
-	}
-	else { /* actually write the pixel */
-		//map[(int)y*(int)rw + (int)x] = (c1 + c2 + c3 + c4)/4.;
-		map[(int)round(y)*(int)rw + (int)round(x)] = (c1 + c2 + c3 + c4)/4.;
-	}
+      /* recursivation */
+      pf_divFractal( map, x,    y,    nw, nh, rw, rh, c1, e1, m,  e4, rug );
+      pf_divFractal( map, x+nw, y,    nw, nh, rw, rh, e1, c2, e2, m,  rug );
+      pf_divFractal( map, x+nw, y+nh, nw, nh, rw, rh, m,  e2, c3, e3, rug );
+      pf_divFractal( map, x,    y+nh, nw, nh, rw, rh, e4, m,  e3, c4, rug );
+   }
+   else { /* actually write the pixel */
+      //map[(int)y*(int)rw + (int)x] = (c1 + c2 + c3 + c4)/4.;
+      map[(int)round(y)*(int)rw + (int)round(x)] = (c1 + c2 + c3 + c4)/4.;
+   }
 }
 
 

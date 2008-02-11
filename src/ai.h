@@ -12,15 +12,15 @@
 #include "lua.h"
 
 
-#define MIN_DIR_ERR		1.0*M_PI/180.
-#define MAX_DIR_ERR		0.1*M_PI/180.
-#define MIN_VEL_ERR		1.0
+#define MIN_DIR_ERR     1.0*M_PI/180.
+#define MAX_DIR_ERR     0.1*M_PI/180.
+#define MIN_VEL_ERR     1.0
 
-#define FACE_WVEL			0.1 /* weight of velocity compared to pos for facing */
+#define FACE_WVEL       0.1 /* weight of velocity compared to pos for facing */
 
 
 /* maximum number of AI timers */
-#define MAX_AI_TIMERS	2
+#define MAX_AI_TIMERS   2
 
 
 typedef enum TaskData_ { TYPE_NULL, TYPE_INT, TYPE_PTR } TaskData;
@@ -31,14 +31,14 @@ typedef enum TaskData_ { TYPE_NULL, TYPE_INT, TYPE_PTR } TaskData;
  *  @target is the target which will depend on the task itself
  */
 typedef struct Task_ {
-	struct Task_* next;
-	char *name;
-	
-	TaskData dtype;
-	union {
-		void *target; /* Vector2d, etc... */
-		unsigned int ID; /* Pilot ID, etc... */
-	} dat;
+   struct Task_* next;
+   char *name;
+   
+   TaskData dtype;
+   union {
+      void *target; /* Vector2d, etc... */
+      unsigned int ID; /* Pilot ID, etc... */
+   } dat;
 } Task;
 
 
@@ -46,8 +46,8 @@ typedef struct Task_ {
  * the AI profile
  */
 typedef struct AI_Profile_ {
-	char* name;
-	lua_State *L;
+   char* name;
+   lua_State *L;
 } AI_Profile;
 
 
