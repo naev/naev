@@ -49,7 +49,7 @@ class space:
 
       # hook events and such
       hooks = { "winSystems":["destroy",self.__done],
-            "treSystems":["row-activated", self.__update],
+            "treSystems":["button-release-event", self.__update],
             "butDone":["clicked",self.__done],
             "butSave":["clicked",self.saveSystems],
             "butZoomIn":["clicked",self.__space_zoomin],
@@ -115,6 +115,8 @@ class space:
       self.__store();
 
       self.cur_system = self.__curSystem()
+      if self.cur_system == "":
+         return
       system = self.systems[self.cur_system]
 
       # load it all
@@ -146,6 +148,8 @@ class space:
 
    def __store(self):
       sys_name = self.__swidget("inpName").get_text()
+      if sys_name == "":
+         return
 
       # renamed the current system
       if sys_name != self.cur_system:
@@ -200,7 +204,7 @@ class space:
          iter = tree.get_selection().get_selected()[1]
          p = model.iter_parent(iter)
       except:
-         return None
+         return ""
       if p == None:
          return model.get_value(iter,0)
       else:
@@ -220,42 +224,51 @@ class space:
       self.__space_draw()
 
    def __space_down(self, wgt, event):
-      if event.button == 1:
 
-         x = event.x
-         y = event.y
+      x = event.x
+      y = event.y
 
-         wx,wy, ww,wh = self.__swidget("draSpace").get_allocation()
+      wx,wy, ww,wh = self.__swidget("draSpace").get_allocation()
 
-         mx = x - (self.x*self.zoom + ww/2)
-         my = y - (self.y*self.zoom + wh/2)
+      mx = x - (self.x*self.zoom + ww/2)
+      my = y - (self.y*self.zoom + wh/2)
 
-         # modify the current position
-         if self.__swidget("butReposition").get_active() and self.cur_system != "":
+      # modify the current position
+      if event.button == 1 and self.__swidget("butReposition").get_active() and self.cur_system != "":
 
-            system = self.systems[self.cur_system]
-            system["pos"]["x"] = str(int(mx))
-            system["pos"]["y"] = str(int(-my))
+         system = self.systems[self.cur_system]
+         system["pos"]["x"] = str(int(mx))
+         system["pos"]["y"] = str(int(-my))
 
-            self.__space_draw()
+         self.__space_draw()
 
-            self.__swidget("butReposition").set_active(False)
+         self.__swidget("butReposition").set_active(False)
 
-         else:
-            r = 15
-            for name, sys in self.systems.items():
-               sx = int(sys["pos"]["x"])
-               sy = -int(sys["pos"]["y"])
+      # see if a system is in "click" range
+      r = 15
+      for name, sys in self.systems.items():
+         sx = int(sys["pos"]["x"])
+         sy = -int(sys["pos"]["y"])
 
-               if abs(sx-mx) < r and abs(sy-my) < r:
-                  self.space_sel = name
-                  self.__space_draw()
-                  break
+         if abs(sx-mx) < r and abs(sy-my) < r:
+            if event.button == 1 and event.type == gtk.gdk._2BUTTON_PRESS:
+               tree = self.__swidget("treSystems")
+               i = 0
+               for row in tree.get_model():
+                  if row[0] == name:
+                     tree.set_cursor(i)
+                     self.__update()
+                     break
+                  i = i + 1
+            elif event.button == 1:
+               self.space_sel = name
+               self.__space_draw()
+            break
 
 
 
-         self.lx = x
-         self.ly = y
+      self.lx = x
+      self.ly = y
 
       return True
 
