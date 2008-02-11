@@ -84,7 +84,7 @@ def save(xmlfile, data, basetag, tag, has_name=True, do_array=None):
    xml.appendChild(base)
 
    fp = open(xmlfile,"w")
-   xml.writexml(fp, "", "", "\n", "UTF-8")
+   xml.writexml(fp, "", "", "", "UTF-8")
 
    xml.unlink()
 
