@@ -56,23 +56,13 @@ class space:
             "butZoomOut":["clicked",self.__space_zoomout],
             "butReset":["clicked",self.__space_reset],
             "butAddJump":["clicked",self.__jump_add],
-            "butRmJump":["clicked",self.__jump_rm]
+            "butRmJump":["clicked",self.__jump_rm],
+            "butNew":["clicked",self.__new]
       }
       for key, val in hooks.items():
          self.__swidget(key).connect(val[0],val[1])
 
-      # populate the tree
-      self.tree_systems = gtk.TreeStore(str)
-      for system in self.systems: # load up the planets
-         treenode = self.tree_systems.append(None, [system])
-         for planet in self.systems[system]['planets']:
-            self.tree_systems.append(treenode, [planet])
-      col = gtk.TreeViewColumn('Systems')
-      cell = gtk.CellRendererText()
-      self.__swidget("treSystems").append_column(col)
-      col.pack_start(cell, True)
-      col.add_attribute(cell, 'text', 0)
-      self.__swidget("treSystems").set_model(self.tree_systems)
+      self.__create_treSystems()
 
       # custom widget drawing area thingy
       self.zoom = 1
@@ -97,6 +87,22 @@ class space:
 
       # ---------------------------------------------
       gtk.main()
+
+
+   def __create_treSystems(self):
+      # populate the tree
+      self.tree_systems = gtk.TreeStore(str)
+      for system in self.systems: # load up the planets
+         treenode = self.tree_systems.append(None, [system])
+         for planet in self.systems[system]['planets']:
+            self.tree_systems.append(treenode, [planet])
+      col = gtk.TreeViewColumn('Systems')
+      cell = gtk.CellRendererText()
+      self.__swidget("treSystems").append_column(col)
+      col.pack_start(cell, True)
+      col.add_attribute(cell, 'text', 0)
+      self.__swidget("treSystems").set_model(self.tree_systems)
+
 
 
    def __swidget(self,wgtname):
@@ -127,7 +133,7 @@ class space:
             "labPos":"%s,%s" % (system["pos"]["x"],system["pos"]["y"])
       }
       for key, value in dic.items():
-         self.__swidget(key).set_text(value)
+         self.__swidget(key).set_text(str(value))
 
       # load jumps
       jumps = gtk.ListStore(str)
@@ -253,13 +259,7 @@ class space:
          if abs(sx-mx) < r and abs(sy-my) < r:
             if event.button == 1 and event.type == gtk.gdk._2BUTTON_PRESS:
                tree = self.__swidget("treSystems")
-               i = 0
-               for row in tree.get_model():
-                  if row[0] == name:
-                     tree.set_cursor(i)
-                     self.__update()
-                     break
-                  i = i + 1
+               self.__selSys(name)
             elif event.button == 1:
                self.space_sel = name
                self.__space_draw()
@@ -391,6 +391,29 @@ class space:
             i = i + 1
          self.__update()
          self.__space_draw()
+
+
+   def __new(self, wgt=None, event=None):
+      name = "untitled"
+      gen = { "asteroids":0, "interference":0, "stars":100 }
+      pos = { "x":0,"y":0 }
+      new_ssys = { "general":gen, "pos":pos, "jumps":[], "fleets":[], "planets":[] }
+      self.systems[name] = new_ssys
+      self.__create_treSystems()
+      self.__selSys(name)
+
+
+
+   def __selSys(self, system):
+      i = 0
+      tree = self.__swidget("treSystems")
+      for row in tree.get_model():
+         if row[0] == system:
+            tree.set_cursor(i)
+            self.__update()
+            break
+         i = i+1
+
 
 
    def debug(self):
