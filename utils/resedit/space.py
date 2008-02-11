@@ -240,8 +240,8 @@ class space:
 
       wx,wy, ww,wh = self.__swidget("draSpace").get_allocation()
 
-      mx = x - (self.x*self.zoom + ww/2)
-      my = y - (self.y*self.zoom + wh/2)
+      mx = (x - (self.x*self.zoom + ww/2))/self.zoom
+      my = (y - (self.y*self.zoom + wh/2))/self.zoom
 
       # modify the current position
       if event.button == 1 and self.__swidget("butReposition").get_active() and self.cur_system != "":
@@ -283,8 +283,8 @@ class space:
 
       wx,wy, ww,wh = self.__swidget("draSpace").get_allocation()
 
-      mx = x - (self.x*self.zoom + ww/2)
-      my = y - (self.y*self.zoom + wh/2)
+      mx = (x - (self.x*self.zoom + ww/2))/self.zoom
+      my = (y - (self.y*self.zoom + wh/2))/self.zoom
 
       self.__swidget("labCurPos").set_text( "%dx%d" % (mx,my) )
 
