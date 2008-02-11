@@ -91,6 +91,7 @@ class space:
 
    def __create_treSystems(self):
       # populate the tree
+      wgt = self.__swidget("treSystems")
       self.tree_systems = gtk.TreeStore(str)
       for system in self.systems: # load up the planets
          treenode = self.tree_systems.append(None, [system])
@@ -98,10 +99,12 @@ class space:
             self.tree_systems.append(treenode, [planet])
       col = gtk.TreeViewColumn('Systems')
       cell = gtk.CellRendererText()
-      self.__swidget("treSystems").append_column(col)
+      if wgt.get_column(0):
+         wgt.remove_column( wgt.get_column(0) )
+      wgt.append_column(col)
       col.pack_start(cell, True)
       col.add_attribute(cell, 'text', 0)
-      self.__swidget("treSystems").set_model(self.tree_systems)
+      wgt.set_model(self.tree_systems)
 
 
 
@@ -418,7 +421,10 @@ class space:
 
    def debug(self):
       print "SYSTEMS LOADED:"
-      print self.systems
+      print
+      for name, sys in self.systems.items():
+         print "SYSTEM: %s" % name
+         print sys
       print
       print
       print "PLANETS LOADED:"
