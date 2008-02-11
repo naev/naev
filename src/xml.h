@@ -15,8 +15,12 @@
 
 /* checks to see if node n is of name s */
 #define xml_isNode(n,s)		\
-	(((n)->type==XML_NODE_START) && \
+	((n!=NULL) && ((n)->type==XML_NODE_START) && \
 	(strcmp((char*)(n)->name,s)==0))
+
+/* gets the next node */
+#define xml_nextNode(n)     \
+   ((n!=NULL) && ((n = n->next) != NULL))
 
 /* gets the property s of node n. WARNING: MALLOCS! */
 #define xml_nodeProp(n,s)		(char*)xmlGetProp(n,(xmlChar*)s)

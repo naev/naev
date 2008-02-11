@@ -27,15 +27,15 @@
 #include "mission.h"
 
 
-#define XML_GUI_ID	"GUIs"   /* XML section identifier */
-#define XML_GUI_TAG	"gui"
+#define XML_GUI_ID   "GUIs"   /* XML section identifier */
+#define XML_GUI_TAG  "gui"
 
-#define XML_START_ID	"Start"
+#define XML_START_ID "Start"
 
-#define GUI_DATA		"dat/gui.xml"
-#define GUI_GFX		"gfx/gui/"
+#define GUI_DATA     "dat/gui.xml"
+#define GUI_GFX      "gfx/gui/"
 
-#define START_DATA 	"dat/start.xml"
+#define START_DATA   "dat/start.xml"
 
 
 /*
@@ -88,55 +88,55 @@ extern StarSystem *systems_stack;
  * GUI stuff
  */
 typedef struct Radar_ {
-	double x,y; /* position */
-	double w,h; /* dimensions */
-	RadarShape shape;
-	double res; /* resolution */
+   double x,y; /* position */
+   double w,h; /* dimensions */
+   RadarShape shape;
+   double res; /* resolution */
 } Radar;
 /* radar resolutions */
-#define RADAR_RES_MAX		100.
-#define RADAR_RES_MIN		10.
-#define RADAR_RES_INTERVAL	10.
-#define RADAR_RES_DEFAULT	40.
+#define RADAR_RES_MAX      100.
+#define RADAR_RES_MIN      10.
+#define RADAR_RES_INTERVAL 10.
+#define RADAR_RES_DEFAULT  40.
 
 typedef struct Rect_ {
-	double x,y;
-	double w,h;
+   double x,y;
+   double w,h;
 } Rect;
 
 typedef struct GUI_ {
-	/* graphics */
-	glTexture *gfx_frame;
-	glTexture *gfx_targetPilot, *gfx_targetPlanet;
+   /* graphics */
+   glTexture *gfx_frame;
+   glTexture *gfx_targetPilot, *gfx_targetPlanet;
 
-	/* rects */
-	Radar radar;
-	Rect nav;
-	Rect shield, armour, energy;
-	Rect weapon;
-	Rect target_health, target_name, target_faction;
-	Rect misc;
-	Rect mesg;
-	
-	/* positions */
-	Vector2d frame;
-	Vector2d target;
+   /* rects */
+   Radar radar;
+   Rect nav;
+   Rect shield, armour, energy;
+   Rect weapon;
+   Rect target_health, target_name, target_faction;
+   Rect misc;
+   Rect mesg;
+   
+   /* positions */
+   Vector2d frame;
+   Vector2d target;
 
 } GUI;
 GUI gui = { .gfx_frame = NULL,
-		.gfx_targetPilot = NULL,
-		.gfx_targetPlanet = NULL }; /* ze GUI */
+      .gfx_targetPilot = NULL,
+      .gfx_targetPlanet = NULL }; /* ze GUI */
 /* needed to render properly */
 double gui_xoff = 0.;
 double gui_yoff = 0.;
 
 /* messages */
-#define MESG_SIZE_MAX	80
+#define MESG_SIZE_MAX   80
 int mesg_timeout = 3000;
 int mesg_max = 5; /* maximum messages onscreen */
 typedef struct Mesg_ {
-	char str[MESG_SIZE_MAX];
-	unsigned int t;
+   char str[MESG_SIZE_MAX];
+   unsigned int t;
 } Mesg;
 static Mesg* mesg_stack;
 
@@ -147,18 +147,18 @@ static Mesg* mesg_stack;
 /* external */
 extern void pilot_render( const Pilot* pilot ); /* from pilot.c */
 extern void weapon_minimap( const double res, const double w, const double h,
-		const RadarShape shape ); /* from weapon.c */
+      const RadarShape shape ); /* from weapon.c */
 extern void planets_minimap( const double res, const double w, const double h,
-		const RadarShape shape ); /* from space.c */
+      const RadarShape shape ); /* from space.c */
 /* internal */
 static void player_newMake (void);
 static void player_newShipMake( char *name );
 static void rect_parse( const xmlNodePtr parent,
-		double *x, double *y, double *w, double *h );
+      double *x, double *y, double *w, double *h );
 static int gui_parse( const xmlNodePtr parent, const char *name );
 static void gui_renderPilot( const Pilot* p );
 static void gui_renderBar( const glColour* c,
-		const Rect* r, const double w );
+      const Rect* r, const double w );
 /* externed */
 void player_dead (void);
 void player_destroyed (void);
@@ -170,24 +170,24 @@ void player_destroyed (void);
  */
 void player_new (void)
 {
-	int i;
+   int i;
 
-	/* to not segfault due to lack of environment */
-	player_setFlag(PLAYER_DESTROYED);
-	vectnull( &player_cam );
-	gl_bindCamera( &player_cam );
+   /* to not segfault due to lack of environment */
+   player_setFlag(PLAYER_DESTROYED);
+   vectnull( &player_cam );
+   gl_bindCamera( &player_cam );
 
-	/* cleanup messages */
-	for (i=0; i<mesg_max; i++)
-		memset( mesg_stack[i].str, '\0', MESG_SIZE_MAX );
+   /* cleanup messages */
+   for (i=0; i<mesg_max; i++)
+      memset( mesg_stack[i].str, '\0', MESG_SIZE_MAX );
 
-	/* cleanup player stuff if we'll be recreating */
-	player_cleanup();
+   /* cleanup player stuff if we'll be recreating */
+   player_cleanup();
 
-	player_name = dialogue_input( "Player Name", 3, 20,
-			"Please write your name:" );
-	
-	player_newMake();
+   player_name = dialogue_input( "Player Name", 3, 20,
+         "Please write your name:" );
+   
+   player_newMake();
 }
 
 
@@ -196,71 +196,71 @@ void player_new (void)
  */
 static void player_newMake (void)
 {
-	Ship *ship;
-	char system[20];
-	uint32_t bufsize;
-	char *buf = pack_readfile( DATA, START_DATA, &bufsize );
-	int l,h;
-	double x,y;
+   Ship *ship;
+   char system[20];
+   uint32_t bufsize;
+   char *buf = pack_readfile( DATA, START_DATA, &bufsize );
+   int l,h;
+   double x,y;
 
-	xmlNodePtr node, cur, tmp;
-	xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+   xmlNodePtr node, cur, tmp;
+   xmlDocPtr doc = xmlParseMemory( buf, bufsize );
 
-	node = doc->xmlChildrenNode;
-	if (!xml_isNode(node,XML_START_ID)) {
-		ERR("Malformed '"START_DATA"' file: missing root element '"XML_START_ID"'");
-		return;
-	}
+   node = doc->xmlChildrenNode;
+   if (!xml_isNode(node,XML_START_ID)) {
+      ERR("Malformed '"START_DATA"' file: missing root element '"XML_START_ID"'");
+      return;
+   }
 
-	node = node->xmlChildrenNode; /* first system node */
-	if (node == NULL) {
-		ERR("Malformed '"START_DATA"' file: does not contain elements");
-		return;
-	}
-	do {
-		if (xml_isNode(node, "player")) { /* we are interested in the player */
-			cur = node->children;
-			do {
-				if (xml_isNode(cur,"ship")) ship = ship_get( xml_get(cur) );
-				else if (xml_isNode(cur,"credits")) { /* monies range */
-					tmp = cur->children;
-					do { 
-						if (xml_isNode(tmp,"low")) l = xml_getInt(tmp);
-						else if (xml_isNode(tmp,"high")) h = xml_getInt(tmp);
-					} while ((tmp = tmp->next));
-				}
-				else if (xml_isNode(cur,"system")) {
-					tmp = cur->children;
-					do {
-						/* system name, TODO percent chance */
-						if (xml_isNode(tmp,"name")) snprintf(system,20,xml_get(tmp));
-						/* position */
-						else if (xml_isNode(tmp,"x")) x = xml_getFloat(tmp);
-						else if (xml_isNode(tmp,"y")) y = xml_getFloat(tmp);
-					} while ((tmp = tmp->next));
-				}
-				else if (xml_isNode(cur,"player_crating"))
-					player_crating = xml_getInt(cur);
+   node = node->xmlChildrenNode; /* first system node */
+   if (node == NULL) {
+      ERR("Malformed '"START_DATA"' file: does not contain elements");
+      return;
+   }
+   do {
+      if (xml_isNode(node, "player")) { /* we are interested in the player */
+         cur = node->children;
+         do {
+            if (xml_isNode(cur,"ship")) ship = ship_get( xml_get(cur) );
+            else if (xml_isNode(cur,"credits")) { /* monies range */
+               tmp = cur->children;
+               do { 
+                  if (xml_isNode(tmp,"low")) l = xml_getInt(tmp);
+                  else if (xml_isNode(tmp,"high")) h = xml_getInt(tmp);
+               } while ((tmp = tmp->next));
+            }
+            else if (xml_isNode(cur,"system")) {
+               tmp = cur->children;
+               do {
+                  /* system name, TODO percent chance */
+                  if (xml_isNode(tmp,"name")) snprintf(system,20,xml_get(tmp));
+                  /* position */
+                  else if (xml_isNode(tmp,"x")) x = xml_getFloat(tmp);
+                  else if (xml_isNode(tmp,"y")) y = xml_getFloat(tmp);
+               } while ((tmp = tmp->next));
+            }
+            else if (xml_isNode(cur,"player_crating"))
+               player_crating = xml_getInt(cur);
 
-			} while ((cur = cur->next));
-		}
-	} while ((node = node->next));
+         } while (xml_nextNode(cur));
+      }
+   } while (xml_nextNode(node));
 
-	xmlFreeDoc(doc);
-	free(buf);
-	xmlCleanupParser();
+   xmlFreeDoc(doc);
+   free(buf);
+   xmlCleanupParser();
 
 
-	/* monies */
-	player_credits = RNG(l,h);
+   /* monies */
+   player_credits = RNG(l,h);
 
-	/* welcome message - must be before space_init */
-	player_message( "Welcome to "APPNAME"!" );
-	player_message( " v%d.%d.%d", VMAJOR, VMINOR, VREV );
+   /* welcome message - must be before space_init */
+   player_message( "Welcome to "APPNAME"!" );
+   player_message( " v%d.%d.%d", VMAJOR, VMINOR, VREV );
 
-	/* create the player and start the game */
-	player_newShip( ship, x, y, 0., 0., RNG(0,359)/180.*M_PI );
-	space_init(system);
+   /* create the player and start the game */
+   player_newShip( ship, x, y, 0., 0., RNG(0,359)/180.*M_PI );
+   space_init(system);
 }
 
 
@@ -268,23 +268,23 @@ static void player_newMake (void)
  * creates a dialogue to name the new ship
  */
 void player_newShip( Ship* ship, double px, double py,
-		double vx, double vy, double dir )
+      double vx, double vy, double dir )
 {
-	char* ship_name;
+   char* ship_name;
 
-	/* temporary values while player doesn't exist */
-	player_ship = ship;
-	player_px = px;
-	player_py = py;
-	player_vx = vx;
-	player_vy = vy;
-	player_dir = dir;
-	ship_name = dialogue_input( "Player Name", 3, 20,
-			"Please name your brand new %s:", ship->name );
+   /* temporary values while player doesn't exist */
+   player_ship = ship;
+   player_px = px;
+   player_py = py;
+   player_vx = vx;
+   player_vy = vy;
+   player_dir = dir;
+   ship_name = dialogue_input( "Player Name", 3, 20,
+         "Please name your brand new %s:", ship->name );
 
-	player_newShipMake(ship_name);
+   player_newShipMake(ship_name);
 
-	free(ship_name);
+   free(ship_name);
 }
 
 /*
@@ -292,32 +292,32 @@ void player_newShip( Ship* ship, double px, double py,
  */
 static void player_newShipMake( char* name )
 {
-	Vector2d vp, vv;
+   Vector2d vp, vv;
 
-	if (player) {
-		player_stack = realloc(player_stack, sizeof(Pilot*)*(player_nstack+1));
-		player_stack[player_nstack] = pilot_copy( player );
-		player_lstack = realloc(player_lstack, sizeof(char*)*(player_nstack+1));
-		player_lstack[player_nstack] = strdup( land_planet->name );
-		player_nstack++;
-		if (!player_credits) player_credits = player->credits;
-		pilot_destroy( player );
-	}
+   if (player) {
+      player_stack = realloc(player_stack, sizeof(Pilot*)*(player_nstack+1));
+      player_stack[player_nstack] = pilot_copy( player );
+      player_lstack = realloc(player_lstack, sizeof(char*)*(player_nstack+1));
+      player_lstack[player_nstack] = strdup( land_planet->name );
+      player_nstack++;
+      if (!player_credits) player_credits = player->credits;
+      pilot_destroy( player );
+   }
 
-	/* in case we're respawning */
-	player_rmFlag(PLAYER_DESTROYED);
+   /* in case we're respawning */
+   player_rmFlag(PLAYER_DESTROYED);
 
-	/* hackish position setting */
-	vect_cset( &vp, player_px, player_py );
-	vect_cset( &vv, player_vx, player_vy );
+   /* hackish position setting */
+   vect_cset( &vp, player_px, player_py );
+   vect_cset( &vv, player_vx, player_vy );
 
-	pilot_create( player_ship, name, faction_get("Player"), NULL,
-			player_dir,  &vp, &vv, PILOT_PLAYER );
-	gl_bindCamera( &player->solid->pos ); /* set opengl camera */
+   pilot_create( player_ship, name, faction_get("Player"), NULL,
+         player_dir,  &vp, &vv, PILOT_PLAYER );
+   gl_bindCamera( &player->solid->pos ); /* set opengl camera */
 
-	/* money */
-	player->credits = player_credits;
-	player_credits = 0;
+   /* money */
+   player->credits = player_credits;
+   player_credits = 0;
 }
 
 
@@ -326,20 +326,20 @@ static void player_newShipMake( char* name )
  */
 void player_swapShip( char* shipname )
 {
-	int i;
-	Pilot* ship;
+   int i;
+   Pilot* ship;
 
-	for (i=0; i<player_nstack; i++) {
-		if (strcmp(shipname,player_stack[i]->name)==0) { /* swap player and ship */
-			ship = player_stack[i];
-			ship->credits = player->credits;
-			player_stack[i] = player;
-			pilot_stack[0] = player = ship;
-			gl_bindCamera( &player->solid->pos ); /* don't forget the camera */
-			return;
-		}
-	}
-	WARN( "Unable to swap player with ship '%s': ship does not exist!", shipname );
+   for (i=0; i<player_nstack; i++) {
+      if (strcmp(shipname,player_stack[i]->name)==0) { /* swap player and ship */
+         ship = player_stack[i];
+         ship->credits = player->credits;
+         player_stack[i] = player;
+         pilot_stack[0] = player = ship;
+         gl_bindCamera( &player->solid->pos ); /* don't forget the camera */
+         return;
+      }
+   }
+   WARN( "Unable to swap player with ship '%s': ship does not exist!", shipname );
 }
 
 
@@ -348,31 +348,31 @@ void player_swapShip( char* shipname )
  */
 void player_cleanup (void)
 {
-	int i;
+   int i;
 
-	/* cleanup name */
-	if (player_name) free(player_name);
+   /* cleanup name */
+   if (player_name) free(player_name);
 
-	/* clean up the stack */
-	if (player_stack) {                
-		for (i=0; i<player_nstack; i++) {
-			pilot_free(player_stack[i]);
-			free(player_lstack[i]);
-		}
-		free (player_stack);
-		player_stack = NULL;
-		free(player_lstack);
-		player_lstack = NULL;
-		/* nothing left */
-		player_nstack = 0;
-	}
+   /* clean up the stack */
+   if (player_stack) {                
+      for (i=0; i<player_nstack; i++) {
+         pilot_free(player_stack[i]);
+         free(player_lstack[i]);
+      }
+      free (player_stack);
+      player_stack = NULL;
+      free(player_lstack);
+      player_lstack = NULL;
+      /* nothing left */
+      player_nstack = 0;
+   }
 
-	if (missions_done) {
-		free(missions_done);
-		missions_done = NULL;
-		missions_ndone = 0;
-		missions_mdone = 0;
-	}
+   if (missions_done) {
+      free(missions_done);
+      missions_done = NULL;
+      missions_ndone = 0;
+      missions_mdone = 0;
+   }
 }
 
 
@@ -381,25 +381,25 @@ void player_cleanup (void)
  */
 void player_message ( const char *fmt, ... )
 {
-	va_list ap;
-	int i;
+   va_list ap;
+   int i;
 
-	if (fmt == NULL) return; /* message not valid */
+   if (fmt == NULL) return; /* message not valid */
 
-	/* copy old messages back */
-	for (i=1; i<mesg_max; i++) {
-		if (mesg_stack[mesg_max-i-1].str[0] != '\0') {
-			strcpy(mesg_stack[mesg_max-i].str, mesg_stack[mesg_max-i-1].str);
-			mesg_stack[mesg_max-i].t = mesg_stack[mesg_max-i-1].t;
-		}
-	}
+   /* copy old messages back */
+   for (i=1; i<mesg_max; i++) {
+      if (mesg_stack[mesg_max-i-1].str[0] != '\0') {
+         strcpy(mesg_stack[mesg_max-i].str, mesg_stack[mesg_max-i-1].str);
+         mesg_stack[mesg_max-i].t = mesg_stack[mesg_max-i-1].t;
+      }
+   }
 
-	/* add the new one */
-	va_start(ap, fmt);
-	vsprintf( mesg_stack[0].str, fmt, ap );
-	va_end(ap);
+   /* add the new one */
+   va_start(ap, fmt);
+   vsprintf( mesg_stack[0].str, fmt, ap );
+   va_end(ap);
 
-	mesg_stack[0].t = SDL_GetTicks() + mesg_timeout;
+   mesg_stack[0].t = SDL_GetTicks() + mesg_timeout;
 }
 
 
@@ -408,7 +408,7 @@ void player_message ( const char *fmt, ... )
  */
 void player_warp( const double x, const double y )
 {
-	vect_cset( &player->solid->pos, x, y );
+   vect_cset( &player->solid->pos, x, y );
 }
 
 
@@ -417,9 +417,9 @@ void player_warp( const double x, const double y )
  */
 void player_clear (void)
 {
-	player_target = PLAYER_ID;
-	planet_target = -1;
-	hyperspace_target = -1;
+   player_target = PLAYER_ID;
+   planet_target = -1;
+   hyperspace_target = -1;
 }
 
 
@@ -427,25 +427,25 @@ void player_clear (void)
  * gets the player's combat rating
  */
 static char* player_ratings[] = {
-		"None",
-		"Smallfry",
-		"Weak",
-		"Minor",
-		"Average",
-		"Major",
-		"Fearsome",
-		"Godlike"
+      "None",
+      "Smallfry",
+      "Weak",
+      "Minor",
+      "Average",
+      "Major",
+      "Fearsome",
+      "Godlike"
 };
 const char* player_rating (void)
 {
-	if (player_crating == 0) return player_ratings[0];
-	else if (player_crating < 50) return player_ratings[1];
-	else if (player_crating < 200) return player_ratings[2];
-	else if (player_crating < 500) return player_ratings[3];
-	else if (player_crating < 1000) return player_ratings[4];
-	else if (player_crating < 2500) return player_ratings[5];
-	else if (player_crating < 10000) return player_ratings[6];
-	else return player_ratings[7];
+   if (player_crating == 0) return player_ratings[0];
+   else if (player_crating < 50) return player_ratings[1];
+   else if (player_crating < 200) return player_ratings[2];
+   else if (player_crating < 500) return player_ratings[3];
+   else if (player_crating < 1000) return player_ratings[4];
+   else if (player_crating < 2500) return player_ratings[5];
+   else if (player_crating < 10000) return player_ratings[6];
+   else return player_ratings[7];
 }
 
 
@@ -454,12 +454,12 @@ const char* player_rating (void)
  */
 int player_outfitOwned( const char* outfitname )
 {
-	int i;
+   int i;
 
-	for (i=0; i<player->noutfits; i++)
-		if (strcmp(outfitname, player->outfits[i].outfit->name)==0)
-			return player->outfits[i].quantity;
-	return 0;
+   for (i=0; i<player->noutfits; i++)
+      if (strcmp(outfitname, player->outfits[i].outfit->name)==0)
+         return player->outfits[i].quantity;
+   return 0;
 }
 
 
@@ -468,13 +468,13 @@ int player_outfitOwned( const char* outfitname )
  */
 int player_cargoOwned( const char* commodityname )
 {
-	int i;
+   int i;
 
-	for (i=0; i<player->ncommodities; i++)
-		if (!player->commodities[i].id &&
-				strcmp(commodityname, player->commodities[i].commodity->name)==0)
-			return player->commodities[i].quantity;
-	return 0;
+   for (i=0; i<player->ncommodities; i++)
+      if (!player->commodities[i].id &&
+            strcmp(commodityname, player->commodities[i].commodity->name)==0)
+         return player->commodities[i].quantity;
+   return 0;
 }
 
 
@@ -483,13 +483,13 @@ int player_cargoOwned( const char* commodityname )
  */
 void player_rmMissionCargo( unsigned int cargo_id )
 {
-	int i;
-	
-	if (!pilot_rmMissionCargo(player, cargo_id)) return; /* already done */
+   int i;
+   
+   if (!pilot_rmMissionCargo(player, cargo_id)) return; /* already done */
 
-	for (i=0; i<player_nstack; i++)
-		if (!pilot_rmMissionCargo( player_stack[i], cargo_id ))
-				return; /* success */
+   for (i=0; i<player_nstack; i++)
+      if (!pilot_rmMissionCargo( player_stack[i], cargo_id ))
+            return; /* success */
 }
 
 
@@ -499,33 +499,33 @@ void player_rmMissionCargo( unsigned int cargo_id )
  */
 void player_renderBG (void)
 {
-	double x,y;
-	glColour *c;
-	Planet* planet;
+   double x,y;
+   glColour *c;
+   Planet* planet;
 
-	/* no need to draw if pilot is dead */
-	if (player_isFlag(PLAYER_DESTROYED) ||
-		pilot_isFlag(player,PILOT_DEAD)) return;
+   /* no need to draw if pilot is dead */
+   if (player_isFlag(PLAYER_DESTROYED) ||
+      pilot_isFlag(player,PILOT_DEAD)) return;
 
-	if (planet_target >= 0) {
-		planet = &cur_system->planets[planet_target];
+   if (planet_target >= 0) {
+      planet = &cur_system->planets[planet_target];
 
-		if (areEnemies(player->faction,planet->faction)) c = &cHostile;
-		else c = &cNeutral;
+      if (areEnemies(player->faction,planet->faction)) c = &cHostile;
+      else c = &cNeutral;
 
-		x = planet->pos.x - planet->gfx_space->sw/2.;
-		y = planet->pos.y + planet->gfx_space->sh/2.;
-		gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 0, c ); /* top left */
+      x = planet->pos.x - planet->gfx_space->sw/2.;
+      y = planet->pos.y + planet->gfx_space->sh/2.;
+      gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 0, c ); /* top left */
 
-		x += planet->gfx_space->sw;
-		gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 0, c ); /* top right */
+      x += planet->gfx_space->sw;
+      gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 0, c ); /* top right */
 
-		y -= planet->gfx_space->sh;
-		gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 1, c ); /* bottom right */
+      y -= planet->gfx_space->sh;
+      gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 1, c ); /* bottom right */
 
-		x -= planet->gfx_space->sw;
-		gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 1, c ); /* bottom left */
-	}
+      x -= planet->gfx_space->sw;
+      gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 1, c ); /* bottom left */
+   }
 }
 
 /*
@@ -533,340 +533,340 @@ void player_renderBG (void)
  */
 void player_render (void)
 {
-	int i, j;
-	double x, y;
-	char str[10];
-	Pilot* p;
-	glColour* c;
-	glFont* f;
+   int i, j;
+   double x, y;
+   char str[10];
+   Pilot* p;
+   glColour* c;
+   glFont* f;
 
-	/* pilot is dead, just render him and stop */
-	if (player_isFlag(PLAYER_DESTROYED) || pilot_isFlag(player,PILOT_DEAD)) {
-		if (player_isFlag(PLAYER_DESTROYED)) {
-			if (!toolkit && (SDL_GetTicks() > player_timer))
-				menu_death();
-		}
-		else
-			pilot_render(player);
+   /* pilot is dead, just render him and stop */
+   if (player_isFlag(PLAYER_DESTROYED) || pilot_isFlag(player,PILOT_DEAD)) {
+      if (player_isFlag(PLAYER_DESTROYED)) {
+         if (!toolkit && (SDL_GetTicks() > player_timer))
+            menu_death();
+      }
+      else
+         pilot_render(player);
 
-		/*
-		 * draw fancy cinematic scene borders
-		 */
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix(); /* translation matrix */
-			glTranslated( x-(double)gl_screen.w/2., y-(double)gl_screen.h/2., 0);
+      /*
+       * draw fancy cinematic scene borders
+       */
+      glMatrixMode(GL_MODELVIEW);
+      glPushMatrix(); /* translation matrix */
+         glTranslated( x-(double)gl_screen.w/2., y-(double)gl_screen.h/2., 0);
 
-		COLOUR(cBlack);
-		glBegin(GL_QUADS);
-			glVertex2d( 0.,          0.              );
-			glVertex2d( 0.,          gl_screen.h*0.2 );
-			glVertex2d( gl_screen.w, gl_screen.h*0.2 );
-			glVertex2d( gl_screen.w, 0.              );
-			glVertex2d( 0.,          gl_screen.h     );
-			glVertex2d( gl_screen.w, gl_screen.h     );
-			glVertex2d( gl_screen.w, gl_screen.h*0.8 );
-			glVertex2d( 0.,          gl_screen.h*0.8 );
-		glEnd(); /* GL_QUADS */
+      COLOUR(cBlack);
+      glBegin(GL_QUADS);
+         glVertex2d( 0.,          0.              );
+         glVertex2d( 0.,          gl_screen.h*0.2 );
+         glVertex2d( gl_screen.w, gl_screen.h*0.2 );
+         glVertex2d( gl_screen.w, 0.              );
+         glVertex2d( 0.,          gl_screen.h     );
+         glVertex2d( gl_screen.w, gl_screen.h     );
+         glVertex2d( gl_screen.w, gl_screen.h*0.8 );
+         glVertex2d( 0.,          gl_screen.h*0.8 );
+      glEnd(); /* GL_QUADS */
 
-		glPopMatrix(); /* translation matrx */
+      glPopMatrix(); /* translation matrx */
 
-		return;
-	}
+      return;
+   }
 
-	/* renders the player target graphics */
-	if (player_target != PLAYER_ID) p = pilot_get(player_target);
-	else p = NULL;
-	if ((p==NULL) || pilot_isFlag(p,PILOT_DEAD))
-		player_target = PLAYER_ID; /* no more pilot_target */
-	else { /* still is a pilot_target */
-		if (pilot_isDisabled(p)) c = &cInert;
-		else if (pilot_isFlag(p,PILOT_HOSTILE)) c = &cHostile;
-		else c = &cNeutral;
+   /* renders the player target graphics */
+   if (player_target != PLAYER_ID) p = pilot_get(player_target);
+   else p = NULL;
+   if ((p==NULL) || pilot_isFlag(p,PILOT_DEAD))
+      player_target = PLAYER_ID; /* no more pilot_target */
+   else { /* still is a pilot_target */
+      if (pilot_isDisabled(p)) c = &cInert;
+      else if (pilot_isFlag(p,PILOT_HOSTILE)) c = &cHostile;
+      else c = &cNeutral;
 
-		x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.;
-		y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2.;
-		gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 0, c ); /* top left */
+      x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.;
+      y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2.;
+      gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 0, c ); /* top left */
 
-		x += p->ship->gfx_space->sw * PILOT_SIZE_APROX;
-		gl_blitSprite( gui.gfx_targetPilot, x, y, 1, 0, c ); /* top right */
+      x += p->ship->gfx_space->sw * PILOT_SIZE_APROX;
+      gl_blitSprite( gui.gfx_targetPilot, x, y, 1, 0, c ); /* top right */
 
-		y -= p->ship->gfx_space->sh * PILOT_SIZE_APROX;
-		gl_blitSprite( gui.gfx_targetPilot, x, y, 1, 1, c ); /* bottom right */
+      y -= p->ship->gfx_space->sh * PILOT_SIZE_APROX;
+      gl_blitSprite( gui.gfx_targetPilot, x, y, 1, 1, c ); /* bottom right */
 
-		x -= p->ship->gfx_space->sw * PILOT_SIZE_APROX;
-		gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 1, c ); /* bottom left */
-	}
+      x -= p->ship->gfx_space->sw * PILOT_SIZE_APROX;
+      gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 1, c ); /* bottom left */
+   }
 
-	/* render the player */
-	pilot_render(player);
+   /* render the player */
+   pilot_render(player);
 
-	/*
-	 *    G U I
-	 */
-	/*
-	 * frame
-	 */
-	gl_blitStatic( gui.gfx_frame, gui.frame.x, gui.frame.y, NULL );
+   /*
+    *    G U I
+    */
+   /*
+    * frame
+    */
+   gl_blitStatic( gui.gfx_frame, gui.frame.x, gui.frame.y, NULL );
 
-	/*
-	 * radar
-	 */
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-	if (gui.radar.shape==RADAR_RECT)
-		glTranslated( gui.radar.x - gl_screen.w/2. + gui.radar.w/2.,
-				gui.radar.y - gl_screen.h/2. - gui.radar.h/2., 0.);
-	else if (gui.radar.shape==RADAR_CIRCLE)
-		glTranslated( gui.radar.x - gl_screen.w/2.,
-				gui.radar.y - gl_screen.h/2., 0.);
+   /*
+    * radar
+    */
+   glMatrixMode(GL_PROJECTION);
+   glPushMatrix();
+   if (gui.radar.shape==RADAR_RECT)
+      glTranslated( gui.radar.x - gl_screen.w/2. + gui.radar.w/2.,
+            gui.radar.y - gl_screen.h/2. - gui.radar.h/2., 0.);
+   else if (gui.radar.shape==RADAR_CIRCLE)
+      glTranslated( gui.radar.x - gl_screen.w/2.,
+            gui.radar.y - gl_screen.h/2., 0.);
 
-	/*
-	 * planets
-	 */
-	planets_minimap(gui.radar.res, gui.radar.w, gui.radar.h, gui.radar.shape);
+   /*
+    * planets
+    */
+   planets_minimap(gui.radar.res, gui.radar.w, gui.radar.h, gui.radar.shape);
 
-	/*
-	 * weapons
-	 */
-	glBegin(GL_POINTS);
-		COLOUR(cRadar_weap);
-		weapon_minimap(gui.radar.res, gui.radar.w, gui.radar.h, gui.radar.shape);
-	glEnd(); /* GL_POINTS */
-
-
-	/* render the pilots */
-	for (j=0, i=1; i<pilots; i++) { /* skip the player */
-		if (pilot_stack[i]->id == player_target) j = i;
-		else gui_renderPilot(pilot_stack[i]);
-	}
-	/* render the targetted pilot */
-	if (j!=0) gui_renderPilot(pilot_stack[j]);
+   /*
+    * weapons
+    */
+   glBegin(GL_POINTS);
+      COLOUR(cRadar_weap);
+      weapon_minimap(gui.radar.res, gui.radar.w, gui.radar.h, gui.radar.shape);
+   glEnd(); /* GL_POINTS */
 
 
-	glBegin(GL_POINTS); /* for the player */
-		/* player - drawn last*/
-		COLOUR(cRadar_player);
-		glVertex2d(  0.,  2. ); /* we represent the player with a small + */
-		glVertex2d(  0.,  1. ); 
-		glVertex2d(  0.,  0. );
-		glVertex2d(  0., -1. );                                             
-		glVertex2d(  0., -2. );
-		glVertex2d(  2.,  0. );
-		glVertex2d(  1.,  0. );
-		glVertex2d( -1.,  0. );
-		glVertex2d( -2.,  0. );
-	glEnd(); /* GL_POINTS */
-
-	glPopMatrix(); /* GL_PROJECTION */
+   /* render the pilots */
+   for (j=0, i=1; i<pilots; i++) { /* skip the player */
+      if (pilot_stack[i]->id == player_target) j = i;
+      else gui_renderPilot(pilot_stack[i]);
+   }
+   /* render the targetted pilot */
+   if (j!=0) gui_renderPilot(pilot_stack[j]);
 
 
-	/*
-	 * NAV 
-	 */
-	if (planet_target >= 0) { /* planet landing target */
-		gl_printMid( NULL, (int)gui.nav.w,
-				gui.nav.x, gui.nav.y - 5,
-				&cConsole, "Land" );
+   glBegin(GL_POINTS); /* for the player */
+      /* player - drawn last*/
+      COLOUR(cRadar_player);
+      glVertex2d(  0.,  2. ); /* we represent the player with a small + */
+      glVertex2d(  0.,  1. ); 
+      glVertex2d(  0.,  0. );
+      glVertex2d(  0., -1. );                                             
+      glVertex2d(  0., -2. );
+      glVertex2d(  2.,  0. );
+      glVertex2d(  1.,  0. );
+      glVertex2d( -1.,  0. );
+      glVertex2d( -2.,  0. );
+   glEnd(); /* GL_POINTS */
 
-		gl_printMid( &gl_smallFont, (int)gui.nav.w,
-				gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
-				NULL, "%s", cur_system->planets[planet_target].name );
-	}
-	else if (hyperspace_target >= 0) { /* hyperspace target */
-
-		c = space_canHyperspace(player) ? &cConsole : NULL ;
-		gl_printMid( NULL, (int)gui.nav.w,
-				gui.nav.x, gui.nav.y - 5,
-				c, "Hyperspace" );
-
-		gl_printMid( &gl_smallFont, (int)gui.nav.w,
-				gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
-				NULL, "%s", systems_stack[cur_system->jumps[hyperspace_target]].name );
-	}
-	else { /* no NAV target */
-		gl_printMid( NULL, (int)gui.nav.w,
-				gui.nav.x, gui.nav.y - 5,
-				&cConsole, "Navigation" );
-
-		gl_printMid( &gl_smallFont, (int)gui.nav.w,
-				gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
-				&cGrey, "Off" );
-	}
+   glPopMatrix(); /* GL_PROJECTION */
 
 
-	/*
-	 * health
-	 */
-	gui_renderBar( &cShield,  &gui.shield,
-			player->shield / player->shield_max );
-	gui_renderBar( &cArmour, &gui.armour,
-			player->armour / player->armour_max );
-	gui_renderBar( &cEnergy, &gui.energy,
-			player->energy / player->energy_max );
+   /*
+    * NAV 
+    */
+   if (planet_target >= 0) { /* planet landing target */
+      gl_printMid( NULL, (int)gui.nav.w,
+            gui.nav.x, gui.nav.y - 5,
+            &cConsole, "Land" );
+
+      gl_printMid( &gl_smallFont, (int)gui.nav.w,
+            gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
+            NULL, "%s", cur_system->planets[planet_target].name );
+   }
+   else if (hyperspace_target >= 0) { /* hyperspace target */
+
+      c = space_canHyperspace(player) ? &cConsole : NULL ;
+      gl_printMid( NULL, (int)gui.nav.w,
+            gui.nav.x, gui.nav.y - 5,
+            c, "Hyperspace" );
+
+      gl_printMid( &gl_smallFont, (int)gui.nav.w,
+            gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
+            NULL, "%s", systems_stack[cur_system->jumps[hyperspace_target]].name );
+   }
+   else { /* no NAV target */
+      gl_printMid( NULL, (int)gui.nav.w,
+            gui.nav.x, gui.nav.y - 5,
+            &cConsole, "Navigation" );
+
+      gl_printMid( &gl_smallFont, (int)gui.nav.w,
+            gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
+            &cGrey, "Off" );
+   }
 
 
-	/* 
-	 * weapon 
-	 */ 
-	if (player->secondary==NULL) { /* no secondary weapon */ 
-		gl_printMid( NULL, (int)gui.weapon.w,
-				gui.weapon.x, gui.weapon.y - 5,
-				&cConsole, "Secondary" ); 
-
-		gl_printMid( &gl_smallFont, (int)gui.weapon.w,
-				gui.weapon.x, gui.weapon.y - 10 - gl_defFont.h,
-				&cGrey, "None"); 
-	}  
-	else {
-		f = &gl_defFont;
-		if (outfit_isLauncher(player->secondary->outfit)) {
-			/* use the ammunition's name */
-			i = gl_printWidth( f, "%s", player->secondary->outfit->u.lau.ammo);
-			if (i > gui.weapon.w) /* font is too big */
-				f = &gl_smallFont;
-			gl_printMid( f, (int)gui.weapon.w,
-					gui.weapon.x, gui.weapon.y - 5,
-					&cConsole, "%s", player->secondary->outfit->u.lau.ammo );
-
-			/* print ammo left underneath */
-			gl_printMid( &gl_smallFont, (int)gui.weapon.w,
-					gui.weapon.x, gui.weapon.y - 10 - gl_defFont.h,
-					NULL, "%d", (player->ammo) ? player->ammo->quantity : 0 );
-		}
-		else { /* just print the item name */
-			i = gl_printWidth( f, "%s", player->secondary->outfit->name);
-			if (i > (int)gui.weapon.w) /* font is too big */
-				f = &gl_smallFont;
-			gl_printMid( f, (int)gui.weapon.w,
-					gui.weapon.x, gui.weapon.y - (gui.weapon.h - f->h)/2.,
-					&cConsole, "%s", player->secondary->outfit->name );
-
-		}
-	} 
+   /*
+    * health
+    */
+   gui_renderBar( &cShield,  &gui.shield,
+         player->shield / player->shield_max );
+   gui_renderBar( &cArmour, &gui.armour,
+         player->armour / player->armour_max );
+   gui_renderBar( &cEnergy, &gui.energy,
+         player->energy / player->energy_max );
 
 
-	/*
-	 * target
-	 */
-	if (player_target != PLAYER_ID) {
-		p = pilot_get(player_target);
+   /* 
+    * weapon 
+    */ 
+   if (player->secondary==NULL) { /* no secondary weapon */ 
+      gl_printMid( NULL, (int)gui.weapon.w,
+            gui.weapon.x, gui.weapon.y - 5,
+            &cConsole, "Secondary" ); 
 
-		gl_blitStatic( p->ship->gfx_target, gui.target.x, gui.target.y, NULL );
+      gl_printMid( &gl_smallFont, (int)gui.weapon.w,
+            gui.weapon.x, gui.weapon.y - 10 - gl_defFont.h,
+            &cGrey, "None"); 
+   }  
+   else {
+      f = &gl_defFont;
+      if (outfit_isLauncher(player->secondary->outfit)) {
+         /* use the ammunition's name */
+         i = gl_printWidth( f, "%s", player->secondary->outfit->u.lau.ammo);
+         if (i > gui.weapon.w) /* font is too big */
+            f = &gl_smallFont;
+         gl_printMid( f, (int)gui.weapon.w,
+               gui.weapon.x, gui.weapon.y - 5,
+               &cConsole, "%s", player->secondary->outfit->u.lau.ammo );
 
-		/* target name */
-		gl_print( NULL,
-				gui.target_name.x,
-				gui.target_name.y,
-				NULL, "%s", p->name );
-		gl_print( &gl_smallFont,
-				gui.target_faction.x,
-				gui.target_faction.y,
-				NULL, "%s", faction_name(p->faction) );
+         /* print ammo left underneath */
+         gl_printMid( &gl_smallFont, (int)gui.weapon.w,
+               gui.weapon.x, gui.weapon.y - 10 - gl_defFont.h,
+               NULL, "%d", (player->ammo) ? player->ammo->quantity : 0 );
+      }
+      else { /* just print the item name */
+         i = gl_printWidth( f, "%s", player->secondary->outfit->name);
+         if (i > (int)gui.weapon.w) /* font is too big */
+            f = &gl_smallFont;
+         gl_printMid( f, (int)gui.weapon.w,
+               gui.weapon.x, gui.weapon.y - (gui.weapon.h - f->h)/2.,
+               &cConsole, "%s", player->secondary->outfit->name );
 
-		/* target status */
-		if (pilot_isDisabled(p)) /* pilot is disabled */
-			gl_print( &gl_smallFont,
-					gui.target_health.x,
-					gui.target_health.y,
-					NULL, "Disabled" );
-
-		else if (p->shield > p->shield_max/100.) /* on shields */
-			gl_print( &gl_smallFont,
-				gui.target_health.x,
-					gui.target_health.y, NULL,
-					"%s: %.0f%%", "Shield", p->shield/p->shield_max*100. );
-
-		else /* on armour */
-			gl_print( &gl_smallFont,
-					gui.target_health.x,
-					gui.target_health.y, NULL, 
-					"%s: %.0f%%", "Armour", p->armour/p->armour_max*100. );
-	}
-	else { /* no target */
-		gl_printMid( NULL, SHIP_TARGET_W,
-				gui.target.x, gui.target.y  + (SHIP_TARGET_H - gl_defFont.h)/2.,
-				&cGrey, "No Target" );
-	}
+      }
+   } 
 
 
-	/*
-	 * misc
-	 */
-	/* monies */
-	j = gui.misc.y - 8 - gl_smallFont.h;
-	gl_print( &gl_smallFont,
-			gui.misc.x + 8, j,
-			&cConsole, "Creds:" );
-	credits2str( str, player->credits, 2 );
-	i = gl_printWidth( &gl_smallFont, str );
-	gl_print( &gl_smallFont,
-			gui.misc.x + gui.misc.w - 8 - i, j,
-			NULL, str );
-	/* cargo and friends */
-	if (player->ncommodities > 0) {
-		j -= gl_smallFont.h + 5;
-		gl_print( &gl_smallFont,
-				gui.misc.x + 8, j,
-				&cConsole, "Cargo:" );
-		for (i=0; i < MIN(player->ncommodities,3); i++) { 
-			j -= gl_smallFont.h + 3;
-			if (player->commodities[i].quantity) /* quantity is over */
-				gl_print( &gl_smallFont,
-						gui.misc.x + 13, j,
-						NULL, "%d %s%s", player->commodities[i].quantity,
-						player->commodities[i].commodity->name,
-						(player->commodities[i].id) ? "*" : "" );
-			else /* basically for weightless mission stuff */ 
-				gl_print( &gl_smallFont,
-						gui.misc.x + 13, j,
-						NULL, "%s%s", 	player->commodities[i].commodity->name,
-						(player->commodities[i].id) ? "*" : "" );
+   /*
+    * target
+    */
+   if (player_target != PLAYER_ID) {
+      p = pilot_get(player_target);
 
-		}
-	}
+      gl_blitStatic( p->ship->gfx_target, gui.target.x, gui.target.y, NULL );
 
-	j -= gl_smallFont.h + 5;
-	gl_print( &gl_smallFont,
-			gui.misc.x + 8, j,
-			&cConsole, "Free:" );
-	i = gl_printWidth( &gl_smallFont, "%d", player->ship->cap_cargo );
-	gl_print( &gl_smallFont,
-			gui.misc.x + gui.misc.w - 8 - i, j,
-			NULL, "%d", player->cargo_free );
+      /* target name */
+      gl_print( NULL,
+            gui.target_name.x,
+            gui.target_name.y,
+            NULL, "%s", p->name );
+      gl_print( &gl_smallFont,
+            gui.target_faction.x,
+            gui.target_faction.y,
+            NULL, "%s", faction_name(p->faction) );
+
+      /* target status */
+      if (pilot_isDisabled(p)) /* pilot is disabled */
+         gl_print( &gl_smallFont,
+               gui.target_health.x,
+               gui.target_health.y,
+               NULL, "Disabled" );
+
+      else if (p->shield > p->shield_max/100.) /* on shields */
+         gl_print( &gl_smallFont,
+            gui.target_health.x,
+               gui.target_health.y, NULL,
+               "%s: %.0f%%", "Shield", p->shield/p->shield_max*100. );
+
+      else /* on armour */
+         gl_print( &gl_smallFont,
+               gui.target_health.x,
+               gui.target_health.y, NULL, 
+               "%s: %.0f%%", "Armour", p->armour/p->armour_max*100. );
+   }
+   else { /* no target */
+      gl_printMid( NULL, SHIP_TARGET_W,
+            gui.target.x, gui.target.y  + (SHIP_TARGET_H - gl_defFont.h)/2.,
+            &cGrey, "No Target" );
+   }
 
 
-	/*
-	 * messages
-	 */
-	x = gui.mesg.x;
-	y = gui.mesg.y + (double)(gl_defFont.h*mesg_max)*1.2;
-	for (i=0; i<mesg_max; i++) {
-		y -= (double)gl_defFont.h*1.2;
-		if (mesg_stack[mesg_max-i-1].str[0]!='\0') {
-			if (mesg_stack[mesg_max-i-1].t < SDL_GetTicks())
-				mesg_stack[mesg_max-i-1].str[0] = '\0';
-			else gl_print( NULL, x, y, NULL, "%s", mesg_stack[mesg_max-i-1].str );
-		}
-	}
+   /*
+    * misc
+    */
+   /* monies */
+   j = gui.misc.y - 8 - gl_smallFont.h;
+   gl_print( &gl_smallFont,
+         gui.misc.x + 8, j,
+         &cConsole, "Creds:" );
+   credits2str( str, player->credits, 2 );
+   i = gl_printWidth( &gl_smallFont, str );
+   gl_print( &gl_smallFont,
+         gui.misc.x + gui.misc.w - 8 - i, j,
+         NULL, str );
+   /* cargo and friends */
+   if (player->ncommodities > 0) {
+      j -= gl_smallFont.h + 5;
+      gl_print( &gl_smallFont,
+            gui.misc.x + 8, j,
+            &cConsole, "Cargo:" );
+      for (i=0; i < MIN(player->ncommodities,3); i++) { 
+         j -= gl_smallFont.h + 3;
+         if (player->commodities[i].quantity) /* quantity is over */
+            gl_print( &gl_smallFont,
+                  gui.misc.x + 13, j,
+                  NULL, "%d %s%s", player->commodities[i].quantity,
+                  player->commodities[i].commodity->name,
+                  (player->commodities[i].id) ? "*" : "" );
+         else /* basically for weightless mission stuff */ 
+            gl_print( &gl_smallFont,
+                  gui.misc.x + 13, j,
+                  NULL, "%s%s",  player->commodities[i].commodity->name,
+                  (player->commodities[i].id) ? "*" : "" );
+
+      }
+   }
+
+   j -= gl_smallFont.h + 5;
+   gl_print( &gl_smallFont,
+         gui.misc.x + 8, j,
+         &cConsole, "Free:" );
+   i = gl_printWidth( &gl_smallFont, "%d", player->ship->cap_cargo );
+   gl_print( &gl_smallFont,
+         gui.misc.x + gui.misc.w - 8 - i, j,
+         NULL, "%d", player->cargo_free );
 
 
-	/*
-	 * hyperspace
-	 */
-	if (pilot_isFlag(player, PILOT_HYPERSPACE) && !paused) {
-		i = (int)player->ptimer - HYPERSPACE_FADEOUT;
-		j = (int)SDL_GetTicks();
-		if (i < j) {
-			x = (double)(j-i) / HYPERSPACE_FADEOUT;
-			glColor4d(1.,1.,1., x );
-			glBegin(GL_QUADS);
-				glVertex2d( -gl_screen.w/2., -gl_screen.h/2. );
-				glVertex2d( -gl_screen.w/2.,  gl_screen.h/2. );
-				glVertex2d(  gl_screen.w/2.,  gl_screen.h/2. );
-				glVertex2d(  gl_screen.w/2., -gl_screen.h/2. );
-			glEnd(); /* GL_QUADS */
-		}
-	}
+   /*
+    * messages
+    */
+   x = gui.mesg.x;
+   y = gui.mesg.y + (double)(gl_defFont.h*mesg_max)*1.2;
+   for (i=0; i<mesg_max; i++) {
+      y -= (double)gl_defFont.h*1.2;
+      if (mesg_stack[mesg_max-i-1].str[0]!='\0') {
+         if (mesg_stack[mesg_max-i-1].t < SDL_GetTicks())
+            mesg_stack[mesg_max-i-1].str[0] = '\0';
+         else gl_print( NULL, x, y, NULL, "%s", mesg_stack[mesg_max-i-1].str );
+      }
+   }
+
+
+   /*
+    * hyperspace
+    */
+   if (pilot_isFlag(player, PILOT_HYPERSPACE) && !paused) {
+      i = (int)player->ptimer - HYPERSPACE_FADEOUT;
+      j = (int)SDL_GetTicks();
+      if (i < j) {
+         x = (double)(j-i) / HYPERSPACE_FADEOUT;
+         glColor4d(1.,1.,1., x );
+         glBegin(GL_QUADS);
+            glVertex2d( -gl_screen.w/2., -gl_screen.h/2. );
+            glVertex2d( -gl_screen.w/2.,  gl_screen.h/2. );
+            glVertex2d(  gl_screen.w/2.,  gl_screen.h/2. );
+            glVertex2d(  gl_screen.w/2., -gl_screen.h/2. );
+         glEnd(); /* GL_QUADS */
+      }
+   }
 }
 
 /*
@@ -874,44 +874,44 @@ void player_render (void)
  */
 static void gui_renderPilot( const Pilot* p )
 {
-	int x, y, sx, sy;
-	double w, h;
+   int x, y, sx, sy;
+   double w, h;
 
-	x = (p->solid->pos.x - player->solid->pos.x) / gui.radar.res;
-	y = (p->solid->pos.y - player->solid->pos.y) / gui.radar.res;
-	sx = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sw / gui.radar.res;
-	sy = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sh / gui.radar.res;
-	if (sx < 1.) sx = 1.;
-	if (sy < 1.) sy = 1.;
+   x = (p->solid->pos.x - player->solid->pos.x) / gui.radar.res;
+   y = (p->solid->pos.y - player->solid->pos.y) / gui.radar.res;
+   sx = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sw / gui.radar.res;
+   sy = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sh / gui.radar.res;
+   if (sx < 1.) sx = 1.;
+   if (sy < 1.) sy = 1.;
 
-	if ( ((gui.radar.shape==RADAR_RECT) &&
-				((ABS(x) > gui.radar.w/2+sx) || (ABS(y) > gui.radar.h/2.+sy)) ) ||
-			((gui.radar.shape==RADAR_CIRCLE) &&
-				((x*x+y*y) > (int)(gui.radar.w*gui.radar.w))) )
-		return; /* pilot not in range */
+   if ( ((gui.radar.shape==RADAR_RECT) &&
+            ((ABS(x) > gui.radar.w/2+sx) || (ABS(y) > gui.radar.h/2.+sy)) ) ||
+         ((gui.radar.shape==RADAR_CIRCLE) &&
+            ((x*x+y*y) > (int)(gui.radar.w*gui.radar.w))) )
+      return; /* pilot not in range */
 
-	if (gui.radar.shape==RADAR_RECT) {
-		w = gui.radar.w/2.;
-		h = gui.radar.h/2.;
-	}
-	else if (gui.radar.shape==RADAR_CIRCLE) {
-		w = gui.radar.w;
-		h = gui.radar.w;
-	}
+   if (gui.radar.shape==RADAR_RECT) {
+      w = gui.radar.w/2.;
+      h = gui.radar.h/2.;
+   }
+   else if (gui.radar.shape==RADAR_CIRCLE) {
+      w = gui.radar.w;
+      h = gui.radar.w;
+   }
 
-	glBegin(GL_QUADS);
-		/* colors */
-		if (p->id == player_target) COLOUR(cRadar_targ);
-		else if (pilot_isDisabled(p)) COLOUR(cInert);
-		else if (pilot_isFlag(p,PILOT_HOSTILE)) COLOUR(cHostile);
-		else COLOUR(cNeutral);
+   glBegin(GL_QUADS);
+      /* colors */
+      if (p->id == player_target) COLOUR(cRadar_targ);
+      else if (pilot_isDisabled(p)) COLOUR(cInert);
+      else if (pilot_isFlag(p,PILOT_HOSTILE)) COLOUR(cHostile);
+      else COLOUR(cNeutral);
 
-		/* image */
-		glVertex2d( MAX(x-sx,-w), MIN(y+sy, h) ); /* top-left */
-		glVertex2d( MIN(x+sx, w), MIN(y+sy, h) );/* top-right */
-		glVertex2d( MIN(x+sx, w), MAX(y-sy,-h) );/* bottom-right */
-		glVertex2d( MAX(x-sx,-w), MAX(y-sy,-h) );/* bottom-left */
-	glEnd(); /* GL_QUADS */
+      /* image */
+      glVertex2d( MAX(x-sx,-w), MIN(y+sy, h) ); /* top-left */
+      glVertex2d( MIN(x+sx, w), MIN(y+sy, h) );/* top-right */
+      glVertex2d( MIN(x+sx, w), MAX(y-sy,-h) );/* bottom-right */
+      glVertex2d( MAX(x-sx,-w), MAX(y-sy,-h) );/* bottom-left */
+   glEnd(); /* GL_QUADS */
 }
 
 
@@ -919,21 +919,21 @@ static void gui_renderPilot( const Pilot* p )
  * renders a bar (health)
  */
 static void gui_renderBar( const glColour* c,
-		const Rect* r, const double w )
+      const Rect* r, const double w )
 {
-	int x, y, sx, sy;
+   int x, y, sx, sy;
 
-	glBegin(GL_QUADS); /* shield */
-		COLOUR(*c); 
-		x = r->x - gl_screen.w/2.;
-		y = r->y - gl_screen.h/2.;
-		sx = w * r->w;
-		sy = r->h;
-		glVertex2d( x, y );
-		glVertex2d( x + sx, y );
-		glVertex2d( x + sx, y - sy );
-		glVertex2d( x, y - sy );                                            
-	glEnd(); /* GL_QUADS */
+   glBegin(GL_QUADS); /* shield */
+      COLOUR(*c); 
+      x = r->x - gl_screen.w/2.;
+      y = r->y - gl_screen.h/2.;
+      sx = w * r->w;
+      sy = r->h;
+      glVertex2d( x, y );
+      glVertex2d( x + sx, y );
+      glVertex2d( x + sx, y - sy );
+      glVertex2d( x, y - sy );                                            
+   glEnd(); /* GL_QUADS */
 
 }
 
@@ -943,26 +943,26 @@ static void gui_renderBar( const glColour* c,
  */
 int gui_init (void)
 {
-	/*
-	 * set gfx to NULL
-	 */
-	gui.gfx_frame = NULL;
-	gui.gfx_targetPilot = NULL;
-	gui.gfx_targetPlanet = NULL;
+   /*
+    * set gfx to NULL
+    */
+   gui.gfx_frame = NULL;
+   gui.gfx_targetPilot = NULL;
+   gui.gfx_targetPlanet = NULL;
 
-	/*
-	 * radar
-	 */
-	gui.radar.res = RADAR_RES_DEFAULT;
+   /*
+    * radar
+    */
+   gui.radar.res = RADAR_RES_DEFAULT;
 
-	/*
-	 * messages
-	 */
-	gui.mesg.x = 20;
-	gui.mesg.y = 30;
+   /*
+    * messages
+    */
+   gui.mesg.x = 20;
+   gui.mesg.y = 30;
    mesg_stack = calloc(mesg_max, sizeof(Mesg));
 
-	return 0;
+   return 0;
 }
 
 
@@ -971,54 +971,54 @@ int gui_init (void)
  */
 int gui_load (const char* name)
 {
-	uint32_t bufsize;
-	char *buf = pack_readfile( DATA, GUI_DATA, &bufsize );
-	char *tmp;
-	int found = 0;
+   uint32_t bufsize;
+   char *buf = pack_readfile( DATA, GUI_DATA, &bufsize );
+   char *tmp;
+   int found = 0;
 
-	xmlNodePtr node;
-	xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+   xmlNodePtr node;
+   xmlDocPtr doc = xmlParseMemory( buf, bufsize );
 
-	node = doc->xmlChildrenNode;
-	if (!xml_isNode(node,XML_GUI_ID)) {
-		ERR("Malformed '"GUI_DATA"' file: missing root element '"XML_GUI_ID"'");
-		return -1;
-	}
+   node = doc->xmlChildrenNode;
+   if (!xml_isNode(node,XML_GUI_ID)) {
+      ERR("Malformed '"GUI_DATA"' file: missing root element '"XML_GUI_ID"'");
+      return -1;
+   }
 
-	node = node->xmlChildrenNode; /* first system node */
-	if (node == NULL) {
-		ERR("Malformed '"GUI_DATA"' file: does not contain elements");
-		return -1;
-	}                                                                                       
-	do {
-		if (xml_isNode(node, XML_GUI_TAG)) {
+   node = node->xmlChildrenNode; /* first system node */
+   if (node == NULL) {
+      ERR("Malformed '"GUI_DATA"' file: does not contain elements");
+      return -1;
+   }                                                                                       
+   do {
+      if (xml_isNode(node, XML_GUI_TAG)) {
 
-			tmp = xml_nodeProp(node,"name"); /* mallocs */
+         tmp = xml_nodeProp(node,"name"); /* mallocs */
 
-			/* is the gui we are looking for? */
-			if (strcmp(tmp,name)==0) {
-				found = 1;
+         /* is the gui we are looking for? */
+         if (strcmp(tmp,name)==0) {
+            found = 1;
 
-				/* parse the xml node */
-				if (gui_parse(node,name)) WARN("Trouble loading GUI '%s'", name);
-				free(tmp);
-				break;
-			}
+            /* parse the xml node */
+            if (gui_parse(node,name)) WARN("Trouble loading GUI '%s'", name);
+            free(tmp);
+            break;
+         }
 
-			free(tmp);
-		}
-	} while ((node = node->next));
+         free(tmp);
+      }
+   } while (xml_nextNode(node));
 
-	xmlFreeDoc(doc);
-	free(buf);
-	xmlCleanupParser();
+   xmlFreeDoc(doc);
+   free(buf);
+   xmlCleanupParser();
 
-	if (!found) {
-		WARN("GUI '%s' not found in '"GUI_DATA"'",name);
-		return -1;
-	}
+   if (!found) {
+      WARN("GUI '%s' not found in '"GUI_DATA"'",name);
+      return -1;
+   }
 
-	return 0;
+   return 0;
 }
 
 
@@ -1026,219 +1026,219 @@ int gui_load (const char* name)
  * used to pull out a rect from an xml node (<x><y><w><h>)
  */
 static void rect_parse( const xmlNodePtr parent,
-		double *x, double *y, double *w, double *h )
+      double *x, double *y, double *w, double *h )
 {
-	xmlNodePtr cur;
-	int param;
+   xmlNodePtr cur;
+   int param;
 
-	param = 0;
+   param = 0;
 
-	cur = parent->children;
-	do {
-		if (xml_isNode(cur,"x")) {
-			if (x!=NULL) {
-				*x = xml_getFloat(cur);
-				param |= (1<<0);
-			}
-			else WARN("Extra parameter 'x' found for GUI node '%s'", parent->name);
-		}
-		else if (xml_isNode(cur,"y")) {
-			if (y!=NULL) {
-				*y = xml_getFloat(cur);
-				param |= (1<<1);
-			}
-			else WARN("Extra parameter 'y' found for GUI node '%s'", parent->name);
-		}
-		else if (xml_isNode(cur,"w")) {
-			if (w!=NULL) {
-				*w = xml_getFloat(cur);
-				param |= (1<<2);
-			}
-			else WARN("Extra parameter 'w' found for GUI node '%s'", parent->name);
-		}
-		else if (xml_isNode(cur,"h")) {
-			if (h!=NULL) {
-				*h = xml_getFloat(cur);
-				param |= (1<<3);
-			}
-			else WARN("Extra parameter 'h' found for GUI node '%s'", parent->name);
-		}
-	} while ((cur = cur->next));
+   cur = parent->children;
+   do {
+      if (xml_isNode(cur,"x")) {
+         if (x!=NULL) {
+            *x = xml_getFloat(cur);
+            param |= (1<<0);
+         }
+         else WARN("Extra parameter 'x' found for GUI node '%s'", parent->name);
+      }
+      else if (xml_isNode(cur,"y")) {
+         if (y!=NULL) {
+            *y = xml_getFloat(cur);
+            param |= (1<<1);
+         }
+         else WARN("Extra parameter 'y' found for GUI node '%s'", parent->name);
+      }
+      else if (xml_isNode(cur,"w")) {
+         if (w!=NULL) {
+            *w = xml_getFloat(cur);
+            param |= (1<<2);
+         }
+         else WARN("Extra parameter 'w' found for GUI node '%s'", parent->name);
+      }
+      else if (xml_isNode(cur,"h")) {
+         if (h!=NULL) {
+            *h = xml_getFloat(cur);
+            param |= (1<<3);
+         }
+         else WARN("Extra parameter 'h' found for GUI node '%s'", parent->name);
+      }
+   } while (xml_nextNode(cur));
 
-	/* check to see if we got everything we asked for */
-	if (x && !(param & (1<<0)))
-		WARN("Missing parameter 'x' for GUI node '%s'", parent->name);
-	else if (y && !(param & (1<<1))) 
-		WARN("Missing parameter 'y' for GUI node '%s'", parent->name);
-	else if (w && !(param & (1<<2))) 
-		WARN("Missing parameter 'w' for GUI node '%s'", parent->name);
-	else if (h && !(param & (1<<3))) 
-		WARN("Missing parameter 'h' for GUI node '%s'", parent->name);
+   /* check to see if we got everything we asked for */
+   if (x && !(param & (1<<0)))
+      WARN("Missing parameter 'x' for GUI node '%s'", parent->name);
+   else if (y && !(param & (1<<1))) 
+      WARN("Missing parameter 'y' for GUI node '%s'", parent->name);
+   else if (w && !(param & (1<<2))) 
+      WARN("Missing parameter 'w' for GUI node '%s'", parent->name);
+   else if (h && !(param & (1<<3))) 
+      WARN("Missing parameter 'h' for GUI node '%s'", parent->name);
 }
 
 
 /*
  * parse a gui node
  */
-#define RELATIVIZE(a)	\
+#define RELATIVIZE(a)   \
 {(a).x+=VX(gui.frame); (a).y=VY(gui.frame)+gui.gfx_frame->h-(a).y;}
 static int gui_parse( const xmlNodePtr parent, const char *name )
 {
-	xmlNodePtr cur, node;
-	char *tmp, *tmp2;
+   xmlNodePtr cur, node;
+   char *tmp, *tmp2;
 
 
-	/*
-	 * gfx
-	 */
-	/* set as a property and not a node because it must be loaded first */
-	tmp2 = xml_nodeProp(parent,"gfx");
-	if (tmp2==NULL) {
-		ERR("GUI '%s' has no gfx property",name);
-		return -1;
-	}
+   /*
+    * gfx
+    */
+   /* set as a property and not a node because it must be loaded first */
+   tmp2 = xml_nodeProp(parent,"gfx");
+   if (tmp2==NULL) {
+      ERR("GUI '%s' has no gfx property",name);
+      return -1;
+   }
 
-	/* load gfx */
-	tmp = malloc( (strlen(tmp2)+strlen(GUI_GFX)+12) * sizeof(char) );
-	/* frame */
-	snprintf( tmp, strlen(tmp2)+strlen(GUI_GFX)+5, GUI_GFX"%s.png", tmp2 );
-	if (gui.gfx_frame) gl_freeTexture(gui.gfx_frame); /* free if needed */
-	gui.gfx_frame = gl_newImage( tmp );
-	/* pilot */
-	snprintf( tmp, strlen(tmp2)+strlen(GUI_GFX)+11, GUI_GFX"%s_pilot.png", tmp2 );
-	if (gui.gfx_targetPilot) gl_freeTexture(gui.gfx_targetPilot); /* free if needed */
-	gui.gfx_targetPilot = gl_newSprite( tmp, 2, 2 );
-	/* planet */
-	snprintf( tmp, strlen(tmp2)+strlen(GUI_GFX)+12, GUI_GFX"%s_planet.png", tmp2 );
-	if (gui.gfx_targetPlanet) gl_freeTexture(gui.gfx_targetPlanet); /* free if needed */
-	gui.gfx_targetPlanet = gl_newSprite( tmp, 2, 2 );
-	free(tmp);
-	free(tmp2);
+   /* load gfx */
+   tmp = malloc( (strlen(tmp2)+strlen(GUI_GFX)+12) * sizeof(char) );
+   /* frame */
+   snprintf( tmp, strlen(tmp2)+strlen(GUI_GFX)+5, GUI_GFX"%s.png", tmp2 );
+   if (gui.gfx_frame) gl_freeTexture(gui.gfx_frame); /* free if needed */
+   gui.gfx_frame = gl_newImage( tmp );
+   /* pilot */
+   snprintf( tmp, strlen(tmp2)+strlen(GUI_GFX)+11, GUI_GFX"%s_pilot.png", tmp2 );
+   if (gui.gfx_targetPilot) gl_freeTexture(gui.gfx_targetPilot); /* free if needed */
+   gui.gfx_targetPilot = gl_newSprite( tmp, 2, 2 );
+   /* planet */
+   snprintf( tmp, strlen(tmp2)+strlen(GUI_GFX)+12, GUI_GFX"%s_planet.png", tmp2 );
+   if (gui.gfx_targetPlanet) gl_freeTexture(gui.gfx_targetPlanet); /* free if needed */
+   gui.gfx_targetPlanet = gl_newSprite( tmp, 2, 2 );
+   free(tmp);
+   free(tmp2);
 
-	/*
-	 * frame (based on gfx)
-	 */
-	vect_csetmin( &gui.frame,
-			gl_screen.w - gui.gfx_frame->w,     /* x */
-			gl_screen.h - gui.gfx_frame->h );   /* y */
+   /*
+    * frame (based on gfx)
+    */
+   vect_csetmin( &gui.frame,
+         gl_screen.w - gui.gfx_frame->w,     /* x */
+         gl_screen.h - gui.gfx_frame->h );   /* y */
 
-	/* now actually parse the data */
-	node = parent->children;
-	do { /* load all the data */
+   /* now actually parse the data */
+   node = parent->children;
+   do { /* load all the data */
 
-		/*
-		 * offset
-		 */
-		if (xml_isNode(node,"offset"))
-			rect_parse( node, &gui_xoff, &gui_yoff, NULL, NULL );
+      /*
+       * offset
+       */
+      if (xml_isNode(node,"offset"))
+         rect_parse( node, &gui_xoff, &gui_yoff, NULL, NULL );
 
-		/*
-		 * radar
-		 */
-		else if (xml_isNode(node,"radar")) {
+      /*
+       * radar
+       */
+      else if (xml_isNode(node,"radar")) {
 
-			tmp = xml_nodeProp(node,"type");
+         tmp = xml_nodeProp(node,"type");
 
-			/* make sure type is valid */
-			if (strcmp(tmp,"rectangle")==0) gui.radar.shape = RADAR_RECT;
-			else if (strcmp(tmp,"circle")==0) gui.radar.shape = RADAR_CIRCLE;
-			else {
-				WARN("Radar for GUI '%s' is missing 'type' tag or has invalid 'type' tag",name);
-				gui.radar.shape = RADAR_RECT;
-			}
+         /* make sure type is valid */
+         if (strcmp(tmp,"rectangle")==0) gui.radar.shape = RADAR_RECT;
+         else if (strcmp(tmp,"circle")==0) gui.radar.shape = RADAR_CIRCLE;
+         else {
+            WARN("Radar for GUI '%s' is missing 'type' tag or has invalid 'type' tag",name);
+            gui.radar.shape = RADAR_RECT;
+         }
 
-			free(tmp);
-		
-			/* load the appropriate measurements */
-			if (gui.radar.shape == RADAR_RECT)
-				rect_parse( node, &gui.radar.x, &gui.radar.y, &gui.radar.w, &gui.radar.h );
-			else if (gui.radar.shape == RADAR_CIRCLE)
-				rect_parse( node, &gui.radar.x, &gui.radar.y, &gui.radar.w, NULL );
-			RELATIVIZE(gui.radar);
-		}
+         free(tmp);
+      
+         /* load the appropriate measurements */
+         if (gui.radar.shape == RADAR_RECT)
+            rect_parse( node, &gui.radar.x, &gui.radar.y, &gui.radar.w, &gui.radar.h );
+         else if (gui.radar.shape == RADAR_CIRCLE)
+            rect_parse( node, &gui.radar.x, &gui.radar.y, &gui.radar.w, NULL );
+         RELATIVIZE(gui.radar);
+      }
 
-		/*
-		 * nav computer
-		 */
-		else if (xml_isNode(node,"nav")) {
-			rect_parse( node, &gui.nav.x, &gui.nav.y, &gui.nav.w, &gui.nav.h );
-			RELATIVIZE(gui.nav);
-			gui.nav.y -= gl_defFont.h;
-		}
+      /*
+       * nav computer
+       */
+      else if (xml_isNode(node,"nav")) {
+         rect_parse( node, &gui.nav.x, &gui.nav.y, &gui.nav.w, &gui.nav.h );
+         RELATIVIZE(gui.nav);
+         gui.nav.y -= gl_defFont.h;
+      }
 
-		/*
-		 * health bars
-		 */
-		else if (xml_isNode(node,"health")) {
-			cur = node->children;
-			do {
-				if (xml_isNode(cur,"shield")) {
-					rect_parse( cur, &gui.shield.x, &gui.shield.y,
-							&gui.shield.w, &gui.shield.h );
-					RELATIVIZE(gui.shield);
-				}
-				if (xml_isNode(cur,"armour")) {
-					rect_parse( cur, &gui.armour.x, &gui.armour.y,
-							&gui.armour.w, &gui.armour.h );
-					RELATIVIZE(gui.armour);
-				}
-				if (xml_isNode(cur,"energy")) {
-					rect_parse( cur, &gui.energy.x, &gui.energy.y,
-							&gui.energy.w, &gui.energy.h );
-					RELATIVIZE(gui.energy);
-				}
-			} while ((cur = cur->next));
-		}
+      /*
+       * health bars
+       */
+      else if (xml_isNode(node,"health")) {
+         cur = node->children;
+         do {
+            if (xml_isNode(cur,"shield")) {
+               rect_parse( cur, &gui.shield.x, &gui.shield.y,
+                     &gui.shield.w, &gui.shield.h );
+               RELATIVIZE(gui.shield);
+            }
+            if (xml_isNode(cur,"armour")) {
+               rect_parse( cur, &gui.armour.x, &gui.armour.y,
+                     &gui.armour.w, &gui.armour.h );
+               RELATIVIZE(gui.armour);
+            }
+            if (xml_isNode(cur,"energy")) {
+               rect_parse( cur, &gui.energy.x, &gui.energy.y,
+                     &gui.energy.w, &gui.energy.h );
+               RELATIVIZE(gui.energy);
+            }
+         } while (xml_nextNode(cur));
+      }
 
-		/*
-		 * secondary weapon
-		 */
-		else if (xml_isNode(node,"weapon")) {
-			rect_parse( node, &gui.weapon.x, &gui.weapon.y,
-					&gui.weapon.w, &gui.weapon.h );
-			RELATIVIZE(gui.weapon);
-			gui.weapon.y -= gl_defFont.h;
-		}
+      /*
+       * secondary weapon
+       */
+      else if (xml_isNode(node,"weapon")) {
+         rect_parse( node, &gui.weapon.x, &gui.weapon.y,
+               &gui.weapon.w, &gui.weapon.h );
+         RELATIVIZE(gui.weapon);
+         gui.weapon.y -= gl_defFont.h;
+      }
 
-		/*
-		 * target
-		 */
-		else if (xml_isNode(node,"target")) {
-			cur = node->children;
-			do {
-				if (xml_isNode(cur,"gfx")) {
-					rect_parse( cur, &gui.target.x, &gui.target.y, NULL, NULL );
-					RELATIVIZE(gui.target);
-					gui.target.y -= SHIP_TARGET_H;
-				}
-				else if (xml_isNode(cur,"name")) {
-					rect_parse( cur, &gui.target_name.x, &gui.target_name.y, NULL, NULL );
-					RELATIVIZE(gui.target_name);
-					gui.target_name.y -= gl_defFont.h;
-				}
-				else if (xml_isNode(cur,"faction")) {
-					rect_parse( cur, &gui.target_faction.x, &gui.target_faction.y, NULL, NULL );
-					RELATIVIZE(gui.target_faction);
-					gui.target_faction.y -= gl_smallFont.h;
-				}
-				else if (xml_isNode(cur,"health")) {
-					rect_parse( cur, &gui.target_health.x, &gui.target_health.y, NULL, NULL );
-					RELATIVIZE(gui.target_health);
-					gui.target_health.y -= gl_smallFont.h;
-				}
-			} while ((cur = cur->next));
-		}
+      /*
+       * target
+       */
+      else if (xml_isNode(node,"target")) {
+         cur = node->children;
+         do {
+            if (xml_isNode(cur,"gfx")) {
+               rect_parse( cur, &gui.target.x, &gui.target.y, NULL, NULL );
+               RELATIVIZE(gui.target);
+               gui.target.y -= SHIP_TARGET_H;
+            }
+            else if (xml_isNode(cur,"name")) {
+               rect_parse( cur, &gui.target_name.x, &gui.target_name.y, NULL, NULL );
+               RELATIVIZE(gui.target_name);
+               gui.target_name.y -= gl_defFont.h;
+            }
+            else if (xml_isNode(cur,"faction")) {
+               rect_parse( cur, &gui.target_faction.x, &gui.target_faction.y, NULL, NULL );
+               RELATIVIZE(gui.target_faction);
+               gui.target_faction.y -= gl_smallFont.h;
+            }
+            else if (xml_isNode(cur,"health")) {
+               rect_parse( cur, &gui.target_health.x, &gui.target_health.y, NULL, NULL );
+               RELATIVIZE(gui.target_health);
+               gui.target_health.y -= gl_smallFont.h;
+            }
+         } while (xml_nextNode(cur));
+      }
 
-		/*
-		 * misc
-		 */
-		else if (xml_isNode(node,"misc")) {
-			rect_parse( node, &gui.misc.x, &gui.misc.y, &gui.misc.w, &gui.misc.h );
-			RELATIVIZE(gui.misc);
-		}
-	} while ((node = node->next));
+      /*
+       * misc
+       */
+      else if (xml_isNode(node,"misc")) {
+         rect_parse( node, &gui.misc.x, &gui.misc.y, &gui.misc.w, &gui.misc.h );
+         RELATIVIZE(gui.misc);
+      }
+   } while (xml_nextNode(node));
 
-	return 0;
+   return 0;
 }
 #undef RELATIVIZE
 /*
@@ -1246,11 +1246,11 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
  */
 void gui_free (void)
 {
-	if (gui.gfx_frame) gl_freeTexture( gui.gfx_frame );
-	if (gui.gfx_targetPilot) gl_freeTexture( gui.gfx_targetPilot );
-	if (gui.gfx_targetPlanet) gl_freeTexture( gui.gfx_targetPlanet );
+   if (gui.gfx_frame) gl_freeTexture( gui.gfx_frame );
+   if (gui.gfx_targetPilot) gl_freeTexture( gui.gfx_targetPilot );
+   if (gui.gfx_targetPlanet) gl_freeTexture( gui.gfx_targetPlanet );
 
-	free(mesg_stack);
+   free(mesg_stack);
 }
 
 
@@ -1262,59 +1262,59 @@ void gui_free (void)
 void player_think( Pilot* player )
 {
 
-	/* last i heard, the dead don't think */
-	if (pilot_isFlag(player,PILOT_DEAD)) {
-		/* no sense in accelerating or turning */
-		player->solid->dir_vel = 0.;
-		vect_pset( &player->solid->force, 0., 0. );
-		return;
-	}
+   /* last i heard, the dead don't think */
+   if (pilot_isFlag(player,PILOT_DEAD)) {
+      /* no sense in accelerating or turning */
+      player->solid->dir_vel = 0.;
+      vect_pset( &player->solid->force, 0., 0. );
+      return;
+   }
 
-	/* turning taken over by PLAYER_FACE */
-	if (player_isFlag(PLAYER_FACE)) { 
-		if (player_target != PLAYER_ID)
-			pilot_face( player,
-					vect_angle( &player->solid->pos,
-						&pilot_get(player_target)->solid->pos ));
-		else if (planet_target != -1)
-			pilot_face( player,
-					vect_angle( &player->solid->pos,
-						&cur_system->planets[ planet_target ].pos ));
-	}
+   /* turning taken over by PLAYER_FACE */
+   if (player_isFlag(PLAYER_FACE)) { 
+      if (player_target != PLAYER_ID)
+         pilot_face( player,
+               vect_angle( &player->solid->pos,
+                  &pilot_get(player_target)->solid->pos ));
+      else if (planet_target != -1)
+         pilot_face( player,
+               vect_angle( &player->solid->pos,
+                  &cur_system->planets[ planet_target ].pos ));
+   }
 
-	/* turning taken over by PLAYER_REVERSE */
-	else if (player_isFlag(PLAYER_REVERSE) && (VMOD(player->solid->vel) > 0.))
-		pilot_face( player, VANGLE(player->solid->vel) + M_PI );
+   /* turning taken over by PLAYER_REVERSE */
+   else if (player_isFlag(PLAYER_REVERSE) && (VMOD(player->solid->vel) > 0.))
+      pilot_face( player, VANGLE(player->solid->vel) + M_PI );
 
-	/* normal turning scheme */
-	else {
-		player->solid->dir_vel = 0.;
-		if (player_turn)
-			player->solid->dir_vel -= player->turn * player_turn;
-	}
+   /* normal turning scheme */
+   else {
+      player->solid->dir_vel = 0.;
+      if (player_turn)
+         player->solid->dir_vel -= player->turn * player_turn;
+   }
 
-	if (player_isFlag(PLAYER_PRIMARY)) pilot_shoot(player,player_target,0);
-	if (player_isFlag(PLAYER_SECONDARY)) /* needs target */
-		pilot_shoot(player,player_target,1);
+   if (player_isFlag(PLAYER_PRIMARY)) pilot_shoot(player,player_target,0);
+   if (player_isFlag(PLAYER_SECONDARY)) /* needs target */
+      pilot_shoot(player,player_target,1);
 
-	if (player_isFlag(PLAYER_AFTERBURNER)) /* afterburn! */
-		vect_pset( &player->solid->force,
-				player->thrust * player->afterburner->outfit->u.afb.thrust_perc + 
-				player->afterburner->outfit->u.afb.thrust_abs, player->solid->dir );
-	else
-		vect_pset( &player->solid->force, player->thrust * player_acc,
-				player->solid->dir );
+   if (player_isFlag(PLAYER_AFTERBURNER)) /* afterburn! */
+      vect_pset( &player->solid->force,
+            player->thrust * player->afterburner->outfit->u.afb.thrust_perc + 
+            player->afterburner->outfit->u.afb.thrust_abs, player->solid->dir );
+   else
+      vect_pset( &player->solid->force, player->thrust * player_acc,
+            player->solid->dir );
 
-	/* set the listener stuff */
-	sound_listener( player->solid->dir,
-			player->solid->pos.x, player->solid->pos.y,
-			player->solid->vel.x, player->solid->vel.y );
+   /* set the listener stuff */
+   sound_listener( player->solid->dir,
+         player->solid->pos.x, player->solid->pos.y,
+         player->solid->vel.x, player->solid->vel.y );
 }
 
 
 /*
  *
- * 	For use in keybindings
+ *    For use in keybindings
  *
  */
 /*
@@ -1322,11 +1322,11 @@ void player_think( Pilot* player )
  */
 void player_setRadarRel( int mod )
 {
-	gui.radar.res += mod * RADAR_RES_INTERVAL;
-	if (gui.radar.res > RADAR_RES_MAX) gui.radar.res = RADAR_RES_MAX;
-	else if (gui.radar.res < RADAR_RES_MIN) gui.radar.res = RADAR_RES_MIN;
+   gui.radar.res += mod * RADAR_RES_INTERVAL;
+   if (gui.radar.res > RADAR_RES_MAX) gui.radar.res = RADAR_RES_MAX;
+   else if (gui.radar.res < RADAR_RES_MIN) gui.radar.res = RADAR_RES_MIN;
 
-	player_message( "Radar set to %dx", (int)gui.radar.res );
+   player_message( "Radar set to %dx", (int)gui.radar.res );
 }
 
 
@@ -1335,29 +1335,29 @@ void player_setRadarRel( int mod )
  */
 void player_secondaryNext (void)
 {
-	int i = 0;
-	
-	/* get current secondary weapon pos */
-	if (player->secondary != NULL)	
-		for (i=0; i<player->noutfits; i++)
-			if (&player->outfits[i] == player->secondary) {
-				i++;
-				break;
-			}
+   int i = 0;
+   
+   /* get current secondary weapon pos */
+   if (player->secondary != NULL)   
+      for (i=0; i<player->noutfits; i++)
+         if (&player->outfits[i] == player->secondary) {
+            i++;
+            break;
+         }
 
-	/* get next secondary weapon */
-	for (; i<player->noutfits; i++)
-		if (outfit_isProp(player->outfits[i].outfit, OUTFIT_PROP_WEAP_SECONDARY)) {
-			player->secondary = player->outfits + i;
-			break;
-		}
+   /* get next secondary weapon */
+   for (; i<player->noutfits; i++)
+      if (outfit_isProp(player->outfits[i].outfit, OUTFIT_PROP_WEAP_SECONDARY)) {
+         player->secondary = player->outfits + i;
+         break;
+      }
 
-	/* found no bugger outfit */
-	if (i >= player->noutfits)
-		player->secondary = NULL;
+   /* found no bugger outfit */
+   if (i >= player->noutfits)
+      player->secondary = NULL;
 
-	/* set ammo */
-	pilot_setAmmo(player);
+   /* set ammo */
+   pilot_setAmmo(player);
 }
 
 
@@ -1366,19 +1366,19 @@ void player_secondaryNext (void)
  */
 void player_targetPlanet (void)
 {
-	hyperspace_target = -1;
-	player_rmFlag(PLAYER_LANDACK);
+   hyperspace_target = -1;
+   player_rmFlag(PLAYER_LANDACK);
 
-	/* no target */
-	if ((planet_target==-1) && (cur_system->nplanets > 0)) {
-		planet_target = 0;
-		return;
-	}
-	
-	planet_target++;
+   /* no target */
+   if ((planet_target==-1) && (cur_system->nplanets > 0)) {
+      planet_target = 0;
+      return;
+   }
+   
+   planet_target++;
 
-	if (planet_target >= cur_system->nplanets) /* last system */
-		planet_target = -1;
+   if (planet_target >= cur_system->nplanets) /* last system */
+      planet_target = -1;
 }
 
 
@@ -1387,58 +1387,58 @@ void player_targetPlanet (void)
  */
 void player_land (void)
 {
-	if (landed) { /* player is already landed */
-		takeoff();
-		return;
-	}
+   if (landed) { /* player is already landed */
+      takeoff();
+      return;
+   }
 
-	Planet* planet = &cur_system->planets[planet_target];
-	if (planet_target >= 0) { /* attempt to land */
-		if (!planet_hasService(planet, PLANET_SERVICE_LAND)) {
-			player_message( "You can't land here." );
-			return;
-		}
-		else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
-			if (!areEnemies( player->faction, planet->faction )) {              
-				player_message( "%s> Permission to land granted.", planet->name );
-				player_setFlag(PLAYER_LANDACK);
-			}
-			else {
-				player_message( "%s> Land request denied.", planet->name );
-			}
-			return;
-		}
-		else if (vect_dist(&player->solid->pos,&planet->pos) > planet->gfx_space->sw) {
-			player_message("You are too far away to land on %s", planet->name);
-			return;
-		} else if ((pow2(VX(player->solid->vel)) + pow2(VY(player->solid->vel))) >
-				(double)pow2(MAX_HYPERSPACE_VEL)) {
-			player_message("You are going to fast to land on %s", planet->name);
-			return;
-		}
+   Planet* planet = &cur_system->planets[planet_target];
+   if (planet_target >= 0) { /* attempt to land */
+      if (!planet_hasService(planet, PLANET_SERVICE_LAND)) {
+         player_message( "You can't land here." );
+         return;
+      }
+      else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
+         if (!areEnemies( player->faction, planet->faction )) {              
+            player_message( "%s> Permission to land granted.", planet->name );
+            player_setFlag(PLAYER_LANDACK);
+         }
+         else {
+            player_message( "%s> Land request denied.", planet->name );
+         }
+         return;
+      }
+      else if (vect_dist(&player->solid->pos,&planet->pos) > planet->gfx_space->sw) {
+         player_message("You are too far away to land on %s", planet->name);
+         return;
+      } else if ((pow2(VX(player->solid->vel)) + pow2(VY(player->solid->vel))) >
+            (double)pow2(MAX_HYPERSPACE_VEL)) {
+         player_message("You are going to fast to land on %s", planet->name);
+         return;
+      }
 
-		land(planet); /* land the player */
-	}
-	else { /* get nearest planet target */
+      land(planet); /* land the player */
+   }
+   else { /* get nearest planet target */
 
-		int i;
-		int tp;
-		double td, d;
+      int i;
+      int tp;
+      double td, d;
 
-		td = -1; /* temporary distance */
-		tp = -1; /* temporary planet */
-		for (i=0; i<cur_system->nplanets; i++) {
-			d = vect_dist(&player->solid->pos,&cur_system->planets[i].pos);
-			if (planet_hasService(&cur_system->planets[i],PLANET_SERVICE_LAND) &&
-						((tp==-1) || ((td == -1) || (td > d)))) {
-				tp = i;
-				td = d;
-			}
-		}
-		planet_target = tp;
-		player_rmFlag(PLAYER_LANDACK);
-		player_land(); /* rerun land protocol */
-	}
+      td = -1; /* temporary distance */
+      tp = -1; /* temporary planet */
+      for (i=0; i<cur_system->nplanets; i++) {
+         d = vect_dist(&player->solid->pos,&cur_system->planets[i].pos);
+         if (planet_hasService(&cur_system->planets[i],PLANET_SERVICE_LAND) &&
+                  ((tp==-1) || ((td == -1) || (td > d)))) {
+            tp = i;
+            td = d;
+         }
+      }
+      planet_target = tp;
+      player_rmFlag(PLAYER_LANDACK);
+      player_land(); /* rerun land protocol */
+   }
 }
 
 
@@ -1447,12 +1447,12 @@ void player_land (void)
  */
 void player_targetHyperspace (void)
 {
-	planet_target = -1; /* get rid of planet target */
-	player_rmFlag(PLAYER_LANDACK); /* get rid of landing permission */
-	hyperspace_target++;
+   planet_target = -1; /* get rid of planet target */
+   player_rmFlag(PLAYER_LANDACK); /* get rid of landing permission */
+   hyperspace_target++;
 
-	if (hyperspace_target >= cur_system->njumps)
-		hyperspace_target = -1;
+   if (hyperspace_target >= cur_system->njumps)
+      hyperspace_target = -1;
 }
 
 
@@ -1461,20 +1461,20 @@ void player_targetHyperspace (void)
  */
 void player_jump (void)
 {
-	if ((hyperspace_target == -1) ||
-			pilot_isFlag(player, PILOT_HYP_PREP) ||
-			pilot_isFlag(player, PILOT_HYP_BEGIN) ||
-			pilot_isFlag(player, PILOT_HYPERSPACE))
-		return;
+   if ((hyperspace_target == -1) ||
+         pilot_isFlag(player, PILOT_HYP_PREP) ||
+         pilot_isFlag(player, PILOT_HYP_BEGIN) ||
+         pilot_isFlag(player, PILOT_HYPERSPACE))
+      return;
 
-	int i = space_hyperspace(player);
+   int i = space_hyperspace(player);
 
-	if (i == -1)
-		player_message("You are too close to gravity centers to initiate hyperspace");
-	else if (i == -2)
-		player_message("You are moving too fast to enter hyperspace.");
-	else
-		player_message("Preparing for hyperspace");
+   if (i == -1)
+      player_message("You are too close to gravity centers to initiate hyperspace");
+   else if (i == -2)
+      player_message("You are moving too fast to enter hyperspace.");
+   else
+      player_message("Preparing for hyperspace");
 }
 
 
@@ -1483,15 +1483,15 @@ void player_jump (void)
  */
 void player_brokeHyperspace (void)
 {
-	/* enter the new system */
-	space_init( systems_stack[cur_system->jumps[hyperspace_target]].name );
+   /* enter the new system */
+   space_init( systems_stack[cur_system->jumps[hyperspace_target]].name );
 
-	/* set position, the pilot_update will handle lowering vel */
-	player_warp( -cos( player->solid->dir ) * MIN_HYPERSPACE_DIST * 2.5,
-			-sin( player->solid->dir ) * MIN_HYPERSPACE_DIST * 2.5 );
+   /* set position, the pilot_update will handle lowering vel */
+   player_warp( -cos( player->solid->dir ) * MIN_HYPERSPACE_DIST * 2.5,
+         -sin( player->solid->dir ) * MIN_HYPERSPACE_DIST * 2.5 );
 
-	/* stop hyperspace */
-	pilot_rmFlag( player, PILOT_HYPERSPACE | PILOT_HYP_BEGIN | PILOT_HYP_PREP );
+   /* stop hyperspace */
+   pilot_rmFlag( player, PILOT_HYPERSPACE | PILOT_HYP_BEGIN | PILOT_HYP_PREP );
 }
 
 
@@ -1500,12 +1500,12 @@ void player_brokeHyperspace (void)
  */
 double player_faceHyperspace (void)
 {
-	double a;
-	a = ANGLE( systems_stack[ cur_system->jumps[hyperspace_target] ].pos.x -
-				cur_system->pos.x,
-			systems_stack[ cur_system->jumps[hyperspace_target] ].pos.y -
-				cur_system->pos.y );
-	return pilot_face( player, a );
+   double a;
+   a = ANGLE( systems_stack[ cur_system->jumps[hyperspace_target] ].pos.x -
+            cur_system->pos.x,
+         systems_stack[ cur_system->jumps[hyperspace_target] ].pos.y -
+            cur_system->pos.y );
+   return pilot_face( player, a );
 }
 
 
@@ -1514,18 +1514,18 @@ double player_faceHyperspace (void)
  */
 void player_afterburn (void)
 {
-	/* TODO fancy effect? */
-	if (player->afterburner!=NULL) {
-		player_setFlag(PLAYER_AFTERBURNER);
-		pilot_setFlag(player,PILOT_AFTERBURNER);
-	}
+   /* TODO fancy effect? */
+   if (player->afterburner!=NULL) {
+      player_setFlag(PLAYER_AFTERBURNER);
+      pilot_setFlag(player,PILOT_AFTERBURNER);
+   }
 }
 void player_afterburnOver (void)
 {
-	if (player->afterburner!=NULL) {
-		player_rmFlag(PLAYER_AFTERBURNER);
-		pilot_rmFlag(player,PILOT_AFTERBURNER);
-	}
+   if (player->afterburner!=NULL) {
+      player_rmFlag(PLAYER_AFTERBURNER);
+      pilot_rmFlag(player,PILOT_AFTERBURNER);
+   }
 }
 
 /*
@@ -1534,30 +1534,30 @@ void player_afterburnOver (void)
 static int screenshot_cur = 0;
 void player_screenshot (void)
 {
-	FILE *fp;
-	int done;
-	char filename[PATH_MAX];
+   FILE *fp;
+   int done;
+   char filename[PATH_MAX];
 
-	done = 0;
-	do {
-		if (screenshot_cur >= 128) { /* in case the crap system breaks :) */
-			WARN("You have reached the maximum amount of screenshots [128]");
-			return;
-		}
-		snprintf( filename, PATH_MAX, "screenshot%03d.png", screenshot_cur );
-		fp = fopen( filename, "r" ); /* yes i know it's a cheesy way to check */
-		if (fp==NULL) done = 1;
-		else { /* next */
-			screenshot_cur++;
-			fclose(fp);
-		}
-		fp = NULL;
-	} while (!done);
+   done = 0;
+   do {
+      if (screenshot_cur >= 128) { /* in case the crap system breaks :) */
+         WARN("You have reached the maximum amount of screenshots [128]");
+         return;
+      }
+      snprintf( filename, PATH_MAX, "screenshot%03d.png", screenshot_cur );
+      fp = fopen( filename, "r" ); /* yes i know it's a cheesy way to check */
+      if (fp==NULL) done = 1;
+      else { /* next */
+         screenshot_cur++;
+         fclose(fp);
+      }
+      fp = NULL;
+   } while (!done);
 
 
-	/* now proceed to take the screenshot */
-	DEBUG( "Taking screenshot [%03d]...", screenshot_cur );
-	gl_screenshot(filename);
+   /* now proceed to take the screenshot */
+   DEBUG( "Taking screenshot [%03d]...", screenshot_cur );
+   gl_screenshot(filename);
 }
 
 
@@ -1566,18 +1566,18 @@ void player_screenshot (void)
  */
 void player_dead (void)
 {
-	gui_xoff = 0.;
-	gui_yoff = 0.;
+   gui_xoff = 0.;
+   gui_yoff = 0.;
 }
 /*
  * player blew up in a fireball
  */
 void player_destroyed (void)
 {
-	vectcpy( &player_cam, &player->solid->pos );
-	gl_bindCamera( &player_cam );
-	player_setFlag(PLAYER_DESTROYED);
-	player_timer = SDL_GetTicks() + 5000;
+   vectcpy( &player_cam, &player->solid->pos );
+   gl_bindCamera( &player_cam );
+   player_setFlag(PLAYER_DESTROYED);
+   player_timer = SDL_GetTicks() + 5000;
 }
 
 
@@ -1586,22 +1586,22 @@ void player_destroyed (void)
  */
 char** player_ships( int *nships )
 {
-	int i;
-	char **shipnames;
+   int i;
+   char **shipnames;
 
-	if (player_nstack==0) {
-		(*nships) = 1;
-		shipnames = malloc(sizeof(char*));
-		shipnames[0] = strdup("None");
-	}
-	else {
-		(*nships) = player_nstack;
-		shipnames = malloc(sizeof(char*) * player_nstack);
-		for (i=0; i < player_nstack; i++)
-			shipnames[i] = strdup(player_stack[i]->name);
-	}
+   if (player_nstack==0) {
+      (*nships) = 1;
+      shipnames = malloc(sizeof(char*));
+      shipnames[0] = strdup("None");
+   }
+   else {
+      (*nships) = player_nstack;
+      shipnames = malloc(sizeof(char*) * player_nstack);
+      for (i=0; i < player_nstack; i++)
+         shipnames[i] = strdup(player_stack[i]->name);
+   }
 
-	return shipnames;
+   return shipnames;
 }
 
 
@@ -1610,7 +1610,7 @@ char** player_ships( int *nships )
  */
 int player_nships (void)
 {
-	return player_nstack;
+   return player_nstack;
 }
 
 
@@ -1619,14 +1619,14 @@ int player_nships (void)
  */
 Pilot* player_getShip( char* shipname )
 {
-	int i;
+   int i;
 
-	for (i=0; i < player_nstack; i++)
-		if (strcmp(player_stack[i]->name, shipname)==0)
-			return player_stack[i];
+   for (i=0; i < player_nstack; i++)
+      if (strcmp(player_stack[i]->name, shipname)==0)
+         return player_stack[i];
 
-	WARN("Player ship '%s' not found in stack", shipname);
-	return NULL;
+   WARN("Player ship '%s' not found in stack", shipname);
+   return NULL;
 }
 
 
@@ -1635,14 +1635,14 @@ Pilot* player_getShip( char* shipname )
  */
 char* player_getLoc( char* shipname )
 {
-	int i;
+   int i;
 
-	for (i=0; i < player_nstack; i++)
-		if (strcmp(player_stack[i]->name, shipname)==0)
-			return player_lstack[i];
+   for (i=0; i < player_nstack; i++)
+      if (strcmp(player_stack[i]->name, shipname)==0)
+         return player_lstack[i];
 
-	WARN("Player ship '%s' not found in stack", shipname);
-	return NULL;
+   WARN("Player ship '%s' not found in stack", shipname);
+   return NULL;
 }
 
 
@@ -1651,17 +1651,17 @@ char* player_getLoc( char* shipname )
  */
 void player_setLoc( char* shipname, char* loc )
 {
-	int i;
+   int i;
 
-	for (i=0; i < player_nstack; i++) {
-		if (strcmp(player_stack[i]->name, shipname)==0) {
-			free(player_lstack[i]);
-			player_lstack[i] = strdup(loc);
-			return;
-		}
-	}
-	
-	WARN("Player ship '%s' not found in stack", shipname);
+   for (i=0; i < player_nstack; i++) {
+      if (strcmp(player_stack[i]->name, shipname)==0) {
+         free(player_lstack[i]);
+         player_lstack[i] = strdup(loc);
+         return;
+      }
+   }
+   
+   WARN("Player ship '%s' not found in stack", shipname);
 }
 
 
@@ -1670,12 +1670,12 @@ void player_setLoc( char* shipname, char* loc )
  */
 void player_missionFinished( int id )
 {
-	missions_ndone++;
-	if (missions_ndone > missions_mdone) { /* need to grow */
-		missions_mdone += 25;
-		missions_done = realloc( missions_done, sizeof(int) * missions_mdone);
-	}
-	missions_done[ missions_ndone-1 ] = id;
+   missions_ndone++;
+   if (missions_ndone > missions_mdone) { /* need to grow */
+      missions_mdone += 25;
+      missions_done = realloc( missions_done, sizeof(int) * missions_mdone);
+   }
+   missions_done[ missions_ndone-1 ] = id;
 }
 
 
@@ -1684,10 +1684,10 @@ void player_missionFinished( int id )
  */
 int player_missionAlreadyDone( int id )
 {
-	int i;
+   int i;
 
-	for (i=0; i<missions_ndone; i++)
-		if (missions_done[i] == id)
-			return 1;
-	return 0;
+   for (i=0; i<missions_ndone; i++)
+      if (missions_done[i] == id)
+         return 1;
+   return 0;
 }

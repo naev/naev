@@ -16,9 +16,9 @@
 #include "log.h"
 
 
-#define XML_COMMODITY_ID		"Commodities"   /* XML section identifier */
-#define XML_COMMODITY_TAG		"commodity"
-#define COMMODITY_DATA			"dat/commodity.xml"
+#define XML_COMMODITY_ID      "Commodities"   /* XML section identifier */
+#define XML_COMMODITY_TAG     "commodity"
+#define COMMODITY_DATA        "dat/commodity.xml"
 
 
 /* commodity stack */
@@ -39,15 +39,15 @@ static Commodity* commodity_parse( xmlNodePtr parent );
  */
 void credits2str( char *str, unsigned int credits, int decimals )
 {
-	if (decimals < 0)
-		snprintf( str, 32, "%d", credits );
-	else if (credits >= 1000000000)
-		snprintf( str, 16, "%.*fB", decimals, (double)credits / 1000000000. );
-	else if (credits >= 1000000)                
-		snprintf( str, 16, "%.*fM", decimals, (double)credits / 1000000. );
-	else if (credits >= 1000)              
-		snprintf( str, 16, "%.*fK", decimals, (double)credits / 1000. );
-	else snprintf (str, 16, "%d", credits );
+   if (decimals < 0)
+      snprintf( str, 32, "%d", credits );
+   else if (credits >= 1000000000)
+      snprintf( str, 16, "%.*fB", decimals, (double)credits / 1000000000. );
+   else if (credits >= 1000000)                
+      snprintf( str, 16, "%.*fM", decimals, (double)credits / 1000000. );
+   else if (credits >= 1000)              
+      snprintf( str, 16, "%.*fK", decimals, (double)credits / 1000. );
+   else snprintf (str, 16, "%d", credits );
 }
 
 
@@ -56,13 +56,13 @@ void credits2str( char *str, unsigned int credits, int decimals )
  */
 Commodity* commodity_get( const char* name )
 {
-	int i;
-	for (i=0; i<commodity_nstack; i++)
-		if (strcmp(commodity_stack[i].name,name)==0)
-			return &commodity_stack[i];
-	
-	WARN("Commodity '%s' not found in stack", name);
-	return NULL;
+   int i;
+   for (i=0; i<commodity_nstack; i++)
+      if (strcmp(commodity_stack[i].name,name)==0)
+         return &commodity_stack[i];
+   
+   WARN("Commodity '%s' not found in stack", name);
+   return NULL;
 }
 
 
@@ -71,8 +71,8 @@ Commodity* commodity_get( const char* name )
  */
 static void commodity_freeOne( Commodity* com )
 {
-	if (com->name) free(com->name);
-	if (com->description) free(com->description);
+   if (com->name) free(com->name);
+   if (com->description) free(com->description);
 }
 
 
@@ -81,35 +81,35 @@ static void commodity_freeOne( Commodity* com )
  */
 static Commodity* commodity_parse( xmlNodePtr parent )
 {
-	xmlNodePtr node;
-	Commodity* temp = CALLOC_ONE(Commodity);
+   xmlNodePtr node;
+   Commodity* temp = CALLOC_ONE(Commodity);
 
-	temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name");
-	if (temp->name == NULL) WARN("Commodity from "COMMODITY_DATA" has invalid or no name");
+   temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name");
+   if (temp->name == NULL) WARN("Commodity from "COMMODITY_DATA" has invalid or no name");
 
-	node = parent->xmlChildrenNode;
+   node = parent->xmlChildrenNode;
 
-	do {
-		if (xml_isNode(node,"description"))
-			temp->description = strdup( xml_get(node) );
-		else if (xml_isNode(node,"high"))
-			temp->high = xml_getInt(node);
-		else if (xml_isNode(node,"medium"))
-			temp->medium = xml_getInt(node);
-		else if (xml_isNode(node,"low"))
-			temp->low = xml_getInt(node);
-	} while ((node = node->next));
+   do {
+      if (xml_isNode(node,"description"))
+         temp->description = strdup( xml_get(node) );
+      else if (xml_isNode(node,"high"))
+         temp->high = xml_getInt(node);
+      else if (xml_isNode(node,"medium"))
+         temp->medium = xml_getInt(node);
+      else if (xml_isNode(node,"low"))
+         temp->low = xml_getInt(node);
+   } while (xml_nextNode(node));
 
 #if 0 /* shouldn't be needed atm */
-#define MELEMENT(o,s)	if (o) WARN("Commodity '%s' missing '"s"' element", temp->name)
-	MELEMENT(temp->description==NULL,"description");
-	MELEMENT(temp->high==0,"high");
-	MELEMENT(temp->medium==0,"medium");
-	MELEMENT(temp->low==0,"low");
+#define MELEMENT(o,s)   if (o) WARN("Commodity '%s' missing '"s"' element", temp->name)
+   MELEMENT(temp->description==NULL,"description");
+   MELEMENT(temp->high==0,"high");
+   MELEMENT(temp->medium==0,"medium");
+   MELEMENT(temp->low==0,"low");
 #undef MELEMENT
 #endif
 
-	return temp;
+   return temp;
 }
 
 
@@ -118,56 +118,56 @@ static Commodity* commodity_parse( xmlNodePtr parent )
  */
 int commodity_load (void)
 {
-	uint32_t bufsize;
-	char *buf = pack_readfile(DATA, COMMODITY_DATA, &bufsize);
+   uint32_t bufsize;
+   char *buf = pack_readfile(DATA, COMMODITY_DATA, &bufsize);
 
-	xmlNodePtr node;
-	xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+   xmlNodePtr node;
+   xmlDocPtr doc = xmlParseMemory( buf, bufsize );
 
-	Commodity* temp = NULL;
+   Commodity* temp = NULL;
 
-	node = doc->xmlChildrenNode; /* Commoditys node */
-	if (strcmp((char*)node->name,XML_COMMODITY_ID)) {
-		ERR("Malformed "COMMODITY_DATA" file: missing root element '"XML_COMMODITY_ID"'");
-		return -1;
-	}
+   node = doc->xmlChildrenNode; /* Commoditys node */
+   if (strcmp((char*)node->name,XML_COMMODITY_ID)) {
+      ERR("Malformed "COMMODITY_DATA" file: missing root element '"XML_COMMODITY_ID"'");
+      return -1;
+   }
 
-	node = node->xmlChildrenNode; /* first faction node */
-	if (node == NULL) {
-		ERR("Malformed "COMMODITY_DATA" file: does not contain elements");
-		return -1;
-	}
+   node = node->xmlChildrenNode; /* first faction node */
+   if (node == NULL) {
+      ERR("Malformed "COMMODITY_DATA" file: does not contain elements");
+      return -1;
+   }
 
-	do {
-		if (node->type==XML_NODE_START) {
-			if (strcmp((char*)node->name,XML_COMMODITY_TAG)==0) {
-				temp = commodity_parse(node);
-				commodity_stack = realloc(commodity_stack,
-						sizeof(Commodity)*(++commodity_nstack));
-				memcpy(commodity_stack+commodity_nstack-1, temp, sizeof(Commodity));
-				free(temp);
-			}
-		}
-	} while ((node = node->next));
+   do {
+      if (node->type==XML_NODE_START) {
+         if (strcmp((char*)node->name,XML_COMMODITY_TAG)==0) {
+            temp = commodity_parse(node);
+            commodity_stack = realloc(commodity_stack,
+                  sizeof(Commodity)*(++commodity_nstack));
+            memcpy(commodity_stack+commodity_nstack-1, temp, sizeof(Commodity));
+            free(temp);
+         }
+      }
+   } while (xml_nextNode(node));
 
-	xmlFreeDoc(doc);
-	free(buf);
-	xmlCleanupParser();
+   xmlFreeDoc(doc);
+   free(buf);
+   xmlCleanupParser();
 
-	DEBUG("Loaded %d Commodit%s", commodity_nstack, (commodity_nstack==1) ? "y" : "ies" );
+   DEBUG("Loaded %d Commodit%s", commodity_nstack, (commodity_nstack==1) ? "y" : "ies" );
 
-	return 0;
+   return 0;
 
 
 }
 void commodity_free (void)
 {
-	int i;
-	for (i=0; i<commodity_nstack; i++)
-		commodity_freeOne( &commodity_stack[i] );
-	free( commodity_stack );
-	commodity_stack = NULL;
-	commodity_nstack = 0;
+   int i;
+   for (i=0; i<commodity_nstack; i++)
+      commodity_freeOne( &commodity_stack[i] );
+   free( commodity_stack );
+   commodity_stack = NULL;
+   commodity_nstack = 0;
 }
 
 
