@@ -12,7 +12,7 @@ except:
 
 import data
 
-class space:
+class Space:
 
    def __init__(self):
       self.glade = "space.glade"
@@ -50,8 +50,8 @@ class space:
 
       # hook events and such
       hooks = { "winSystems":["destroy",self.__done],
-            "treSystems":["button-release-event", self.__update],
-            "inpName":["changed",self.__update],
+            "treSystems":["button-release-event", self.__supdate],
+            "inpName":["changed",self.__supdate],
             "butDone":["clicked",self.__done],
             "butSave":["clicked",self.saveSystems],
             "butZoomIn":["clicked",self.__space_zoomin],
@@ -126,13 +126,13 @@ class space:
       return self.pwtree.get_widget(wgtname)
 
 
-   def __update(self, wgt=None, index=None, iter=None):
+   def __supdate(self, wgt=None, index=None, iter=None):
       """
       Update the window
       """
 
       # store the current values
-      self.__store();
+      self.__sstore();
 
       self.cur_system = self.__curSystem()
       if self.cur_system == "":
@@ -166,7 +166,7 @@ class space:
       self.__space_draw()
 
 
-   def __store(self):
+   def __sstore(self):
       sys_name = self.__swidget("inpName").get_text()
       if sys_name == "":
          return
@@ -396,7 +396,7 @@ class space:
          data.uniq(self.systems[self.cur_system]["jumps"])
          data.uniq(self.systems[self.space_sel]["jumps"])
         
-         self.__update()
+         self.__supdate()
          self.__space_draw()
 
    def __jump_rm(self, wgt=None, event=None):
@@ -411,7 +411,7 @@ class space:
             if e == self.cur_system:
                self.systems[self.space_sel]["jumps"].pop(i)
             i = i + 1
-         self.__update()
+         self.__supdate()
          self.__space_draw()
 
 
@@ -432,7 +432,7 @@ class space:
       for row in tree.get_model():
          if row[0] == system:
             tree.set_cursor(i)
-            self.__update()
+            self.__supdate()
             break
          i = i+1
 
@@ -448,4 +448,5 @@ class space:
       print
       print "PLANETS LOADED:"
       print self.planets
+
 

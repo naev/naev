@@ -22,7 +22,7 @@ import space
 
 
 # load the universe
-universe = space.space()
+universe = space.Space()
 universe.loadSystems("../../dat/ssys.xml")
 universe.loadPlanets("../../dat/planet.xml")
 universe.window()
