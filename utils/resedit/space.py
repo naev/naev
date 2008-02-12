@@ -51,6 +51,7 @@ class space:
       # hook events and such
       hooks = { "winSystems":["destroy",self.__done],
             "treSystems":["button-release-event", self.__update],
+            "inpName":["changed",self.__update],
             "butDone":["clicked",self.__done],
             "butSave":["clicked",self.saveSystems],
             "butZoomIn":["clicked",self.__space_zoomin],
@@ -69,6 +70,7 @@ class space:
       self.zoom = 1
       self.space_sel = ""
       area = self.__swidget("draSpace")
+      area.set_double_buffered(True)
       area.set_events(gtk.gdk.EXPOSURE_MASK
             | gtk.gdk.LEAVE_NOTIFY_MASK
             | gtk.gdk.BUTTON_PRESS_MASK
@@ -85,6 +87,11 @@ class space:
       self.lx = self.ly = 0
 
       # ---------------- PLANETS --------------------
+      self.pwtree = gtk.glade.XML(self.glade, "winPlanets")
+
+      self.__pwidget("winPlanets").show_all()
+      self.cur_planet = ""
+
 
       # ---------------------------------------------
       gtk.main()
@@ -114,6 +121,9 @@ class space:
       get a widget from the winSystems
       """
       return self.swtree.get_widget(wgtname)
+   
+   def __pwidget(self,wgtname):
+      return self.pwtree.get_widget(wgtname)
 
 
    def __update(self, wgt=None, index=None, iter=None):
@@ -374,6 +384,9 @@ class space:
          # draw name
          layout = area.create_pango_layout(sys_name)
          area.window.draw_layout(gc, dx+r/2+2, dy-r/2, layout)
+
+      # draw the frame at the end
+      area.window.draw_rectangle(sys_gc, False, 0,0, ww-1,wh-1)
 
 
    def __jump_add(self, wgt=None, event=None):
