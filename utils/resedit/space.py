@@ -37,8 +37,18 @@ class Space:
 
 
    def savePlanets(self, xmlfile):
-        data.save( "planet.xml", self.planets, "Planets", "planet", True,
+      data.save( "planet.xml", self.planets, "Planets", "planet", True,
             {"commodities":"commodity"})
+
+   def __genPlanetTree(self):
+      self.planetTree = {}
+      # set planets to None
+      for planet in self.planets.keys():
+         self.planetTree[planet] = None
+      # set allocated planets
+      for name, system in self.systems.items():
+         for planet in system["planets"]:
+            self.planetTree[planet] = name
 
 
    def window(self):
@@ -132,7 +142,7 @@ class Space:
       """
 
       # store the current values
-      self.__sstore();
+      self.__sstore()
 
       self.cur_system = self.__curSystem()
       if self.cur_system == "":
@@ -165,6 +175,17 @@ class Space:
 
       self.__space_draw()
 
+   def __pupdate(self, wgt=None, event=None):
+
+      # store current values
+      self.__pstore()
+
+      self.__genPlanetTree()
+
+      self.cur_planet = self.__curPlanet()
+      if self.cur_planet == "":
+         return
+      planet = self.planets[self.cur_planet]
 
    def __sstore(self):
       sys_name = self.__swidget("inpName").get_text()
@@ -229,6 +250,16 @@ class Space:
          return model.get_value(iter,0)
       else:
          return model.get_value(p,0)
+
+
+   def __curPlanet(self):
+      tree = self.__pwidget("trePlanets")
+      model = tree.get_model()
+      try:
+         iter = tree.get_selection().get_selected()[1]
+      except:
+         return ""
+      return model.get_value(iter,0)
 
    
    def __done(self, widget=None, data=None):
