@@ -47,10 +47,7 @@ def load_Tag( node, do_array=None, do_special=None ):
    for child in filter(lambda x: x.nodeType==x.ELEMENT_NODE, node.childNodes):
 
       n = 0
-      if node.nodeName not in do_array and \
-            do_special != None and \
-            node.nodeName not in do_special.keys():
-         children, n = load_Tag( child, do_array, do_special )
+      children, n = load_Tag( child, do_array, do_special )
 
       # just slap the children on
       if n > 0:
@@ -64,6 +61,9 @@ def load_Tag( node, do_array=None, do_special=None ):
       elif do_special != None and node.nodeName in do_special.keys():
          section[child.firstChild.data] = \
                child.attributes[do_special[node.nodeName]].value
+
+      elif n > 0:
+         section[child.nodeName] = children
 
       # normal way (but will overwrite lists)
       else:
@@ -93,46 +93,7 @@ def save(xmlfile, data, basetag, tag, has_name=True, do_array=None, do_special=N
       if has_name:
          elem.setAttribute("name",key)
 
-      for key2, value2 in value.items():
-         node = xml.createElement(key2)
-
-         # checks if it needs to parse an array instead of a dictionary
-         if do_array != None and key2 in do_array.keys():
-            for text in value2:
-               node2 = xml.createElement( do_array[key2] )
-               txtnode = xml.createTextNode( str(text) )
-               node2.appendChild(txtnode)
-               node.appendChild(node2)
-
-         # checks to see if we need to run the ULTRA UBER HACK
-         elif do_special != None and key2 in do_special.keys():
-            for key3, value3 in value2.items():
-               node2 = xml.createElement( do_special[key2][0] )
-               node2.setAttribute(do_special[key2][1], value3)
-               txtnode = xml.createTextNode( str(key3) )
-               node2.appendChild(txtnode)
-               node.appendChild(node2)
-
-         # standard dictionary approach
-         else:
-            for key3, value3 in value2.items():
-
-               node2 = xml.createElement( key3 )
-
-               if isinstance(value3,dict):
-                  for key4, value4 in value3.items():
-                     node3 = xml.createElement( key4 )
-                     txtnode = xml.createTextNode( str(value4) )
-                     node3.appendChild(txtnode)
-                     node2.appendChild(node3)
-
-               else:
-                  txtnode = xml.createTextNode( str(value3) )
-                  node2.appendChild(txtnode)
-
-               node.appendChild(node2)
-
-         elem.appendChild(node)
+         save_Tag( xml, elem, value, do_array, do_special )
       base.appendChild(elem)
    xml.appendChild(base)
 
@@ -143,4 +104,34 @@ def save(xmlfile, data, basetag, tag, has_name=True, do_array=None, do_special=N
 
 
 
+def save_Tag( xml, parent, data, do_array=None, do_special=None ):
+   for key, value in data.items():
+      node = xml.createElement(key)
+
+      # checks if it needs to parse an array instead of a dictionary
+      if do_array != None and key in do_array.keys():
+         for text in value:
+            node2 = xml.createElement( do_array[key] )
+            txtnode = xml.createTextNode( str(text) )
+            node2.appendChild(txtnode)
+            node.appendChild(node2)
+      
+      # checks to see if we need to run the ULTRA UBER HACK
+      elif do_special != None and key in do_special.keys():
+         for key2, value2 in value.items():
+            node2 = xml.createElement( do_special[key][0] )
+            node2.setAttribute(do_special[key][1], value2)
+            txtnode = xml.createTextNode( str(key2) )
+            node2.appendChild(txtnode)
+            node.appendChild(node2)
+
+      elif isinstance(value,dict):
+         save_Tag( xml, node, value, do_array, do_special )
+
+      # standard dictionary approach
+      else:
+            txtnode = xml.createTextNode( str(value) )
+            node.appendChild(txtnode)
+
+      parent.appendChild(node)
 
