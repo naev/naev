@@ -106,7 +106,8 @@ class Space:
       # hooks
       hooks = { "butNew":["clicked",self.__pnew],
             "trePlanets":["button-release-event", self.__pupdate],
-            "comSystem":["changed", self.__pnewSys]
+            "comSystem":["changed", self.__pnewSys],
+            "butSave":["clicked",self.savePlanets]
       }
       for key, val in hooks.items():
          self.__pwidget(key).connect(val[0],val[1])
