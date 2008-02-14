@@ -261,6 +261,24 @@ class Space:
       self.__pwidget("imaPlanet").set_from_file( self.planet_gfx + "space/" +
             planet["GFX"]["space"] )
 
+      # system
+      wgt = self.__pwidget("comSystem")
+      combo = gtk.ListStore(str)
+      for sysname in self.systems.keys():
+         node = combo.append([sysname])
+      cell = gtk.CellRendererText()
+      if wgt.get_model() == None:
+         wgt.pack_start(cell, True)
+         wgt.add_attribute(cell, 'text', 0)
+      wgt.set_model(combo)
+      self.__genPlanetTree()
+      i = 0
+      for row in combo:
+         if row[0] == self.planetTree[self.cur_planet]:
+            wgt.set_active_iter(combo.get_iter(i))
+         i = i + 1
+
+
 
    def __sstore(self):
       sys_name = self.__swidget("inpName").get_text()
@@ -304,10 +322,11 @@ class Space:
 
 
    def __pstore(self):
-      planet_name = self.__swidget("inpName").get_text()
+      planet_name = self.__pwidget("inpName").get_text()
       if planet_name == "":
          return
 
+      # changed planet name
       if planet_name != self.cur_planet:
          self.planets[planet_name] = self.planets[self.cur_planet]
          model = self.__pwidget("trePlanets").get_model()
@@ -570,9 +589,9 @@ class Space:
    def __pnew(self, wgt=None, event=None):
       name = "new planet"
       gfx = { "space":"none.png" }
-      gen = { "class":"A", "services":0, "GFX":gfx }
+      gen = { "class":"A", "services":0 }
       pos = { "x":0,"y":0 }
-      new_planet = { "general":gen, "pos":pos }
+      new_planet = { "GFX":gfx, "general":gen, "pos":pos }
       self.planets[name] = new_planet
       self.__create_trePlanets()
       self.__selPlanet(name)
@@ -588,6 +607,15 @@ class Space:
             break
          i = i+1
 
+   def __selPlanet(self, planet):
+      i = 0
+      tree = self.__pwidget("trePlanets")
+      for row in tree.get_model():
+         if row[0] == planet:
+            tree.set_cursor(i)
+            self.__pupdate()
+            break
+         i = i+1
 
    def debug(self):
       print "SYSTEMS LOADED:"
