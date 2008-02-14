@@ -105,7 +105,8 @@ class Space:
 
       # hooks
       hooks = { "butNew":["clicked",self.__pnew],
-            "trePlanets":["button-release-event", self.__pupdate]
+            "trePlanets":["button-release-event", self.__pupdate],
+            "comSystem":["changed", self.__pnewSys]
       }
       for key, val in hooks.items():
          self.__pwidget(key).connect(val[0],val[1])
@@ -616,6 +617,32 @@ class Space:
             self.__pupdate()
             break
          i = i+1
+
+   def __pnewSys(self, wgt=None, event=None):
+      combo = self.__pwidget("comSystem")
+      sys = combo.get_active_text()
+      planet = self.cur_planet
+
+      if planet == "":
+         return
+
+      # remove other existences of the planet
+      for name, system in self.systems.items():
+         for pnt in system["planets"]:
+            if pnt == planet:
+               if name == sys: # no change
+                  return
+               system["planets"].remove(planet)
+
+      # append to new location
+      self.systems[sys]["planets"].append(planet)
+
+      # recreate the tree
+      self.__genPlanetTree()
+      self.__create_treSystems()
+      self.__supdate()
+      self.__pupdate()
+
 
    def debug(self):
       print "SYSTEMS LOADED:"
