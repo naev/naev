@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+"""
+See Licensing and Copyright notice in resedit.py
+"""
 
 try:   
    import gtk,gtk.glade
@@ -358,6 +361,17 @@ class Space:
          if self.__pwidget(s).get_active():
             services = services + m
       planet["general"]["services"] = services
+
+      # get the techs
+      tech0 = self.__pwidget("spiTech0").get_text()
+      if tech0 > 0:
+         try:
+            planet["general"]["tech"]["main"] = tech0
+         except:
+            planet["general"]["tech"] = {}
+            planet["general"]["tech"]["main"] = tech0
+      else:
+         del planet["general"]["tech"]["main"]
      
 
    def __sinpStore(self, system, wgt, tag, minortag=None):

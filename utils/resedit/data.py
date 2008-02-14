@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+"""
+See Licensing and Copyright notice in resedit.py
+"""
 
 from xml.dom import minidom
 import sets
