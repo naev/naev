@@ -18,6 +18,7 @@ class Space:
       self.glade = "space.glade"
       self.systemsXML = "../../dat/ssys.xml"
       self.planetsXML = "../../dat/planet.xml"
+      self.planet_gfx = "../../gfx/planet/"
       self.loadSystems(self.systemsXML)
       self.loadPlanets(self.planetsXML)
 
@@ -69,7 +70,7 @@ class Space:
             "butReset":["clicked",self.__space_reset],
             "butAddJump":["clicked",self.__jump_add],
             "butRmJump":["clicked",self.__jump_rm],
-            "butNew":["clicked",self.__new]
+            "butNew":["clicked",self.__snew]
       }
       for key, val in hooks.items():
          self.__swidget(key).connect(val[0],val[1])
@@ -102,6 +103,27 @@ class Space:
       self.__pwidget("winPlanets").show_all()
       self.cur_planet = ""
 
+      # hooks
+      hooks = { "butNew":["clicked",self.__pnew],
+            "trePlanets":["button-release-event", self.__pupdate]
+      }
+      for key, val in hooks.items():
+         self.__pwidget(key).connect(val[0],val[1])
+
+      # planet tree
+      self.__create_trePlanets()
+
+      # classes
+      classes = [ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
+            "M", "N", "O", "P", "Q", "R", "S", "T", "X", "Y", "Z", "0", "1" ]
+      wgt = self.__pwidget("comClass")
+      combo = gtk.ListStore(str)
+      for a in classes:
+         node = combo.append(a)
+      cell = gtk.CellRendererText()
+      wgt.pack_start(cell, True)
+      wgt.add_attribute(cell, 'text', 0)
+      wgt.set_model(combo)
 
       # ---------------------------------------------
       gtk.main()
@@ -125,6 +147,20 @@ class Space:
       wgt.set_model(self.tree_systems)
 
 
+   def __create_trePlanets(self):
+      # population
+      wgt = self.__pwidget("trePlanets")
+      self.tree_planets = gtk.TreeStore(str)
+      for planet in self.planets:
+         treenode = self.tree_planets.append(None, [planet])
+      col = gtk.TreeViewColumn('Planets')
+      cell = gtk.CellRendererText()
+      if wgt.get_column(0):
+         wgt.remove_column( wgt.get_column(0) )
+      wgt.append_column(col)
+      col.pack_start(cell, True)
+      col.add_attribute(cell, 'text', 0)
+      wgt.set_model(self.tree_planets)
 
    def __swidget(self,wgtname):
       """
@@ -176,7 +212,6 @@ class Space:
       self.__space_draw()
 
    def __pupdate(self, wgt=None, event=None):
-
       # store current values
       self.__pstore()
 
@@ -186,6 +221,46 @@ class Space:
       if self.cur_planet == "":
          return
       planet = self.planets[self.cur_planet]
+
+      dic = { "inpName":self.cur_planet
+      }
+
+      for key,value in dic.items():
+         self.__pwidget(key).set_text(str(value))
+
+      # class
+      cls = planet["general"]["class"]
+      i = 0
+      wgt = self.__pwidget("comClass")
+      model = wgt.get_model()
+      for row in model:
+         if row[0] == cls:
+            wgt.set_active_iter(model.get_iter(i))
+         i = i + 1
+
+      # tech
+      try:
+         self.__pwidget("spiTech0").set_text(str(planet["general"]["tech"]["main"]))
+      except:
+         self.__pwidget("spiTech0").set_text(str(0))
+
+      # services
+      services = int(planet["general"]["services"])
+      serv = { "cheLand":2**0,
+            "cheBasic":2**1,
+            "cheCommodity":2**2,
+            "cheOutfits":2**3,
+            "cheShipyard":2**4 }
+      for s,m in serv.items():
+         if services & m > 0:
+            self.__pwidget(s).set_active(True)
+         else:
+            self.__pwidget(s).set_active(False)
+
+      # image
+      self.__pwidget("imaPlanet").set_from_file( self.planet_gfx + "space/" +
+            planet["GFX"]["space"] )
+
 
    def __sstore(self):
       sys_name = self.__swidget("inpName").get_text()
@@ -227,6 +302,42 @@ class Space:
       self.__sinpStore(system,"spiInterference","general","interference")
       self.__sinpStore(system,"spiAsteroids","general","asteroids")
 
+
+   def __pstore(self):
+      planet_name = self.__swidget("inpName").get_text()
+      if planet_name == "":
+         return
+
+      if planet_name != self.cur_planet:
+         self.planets[planet_name] = self.planets[self.cur_planet]
+         model = self.__pwidget("trePlanets").get_model()
+         
+         for i in model:
+            if i[0] == self.cur_planet:
+               i[0] = planet_name
+               break
+
+         del self.planets[self.cur_planet]
+         self.cur_planet = planet_name
+
+      try:
+         planet = self.planets[self.cur_planet]
+      except:
+         return
+
+
+      # get the services
+      services = 0
+      serv = { "cheLand":2**0,
+            "cheBasic":2**1,
+            "cheCommodity":2**2,
+            "cheOutfits":2**3,
+            "cheShipyard":2**4 }
+      for s,m in serv.items():
+         if self.__pwidget(s).get_active():
+            services = services + m
+      planet["general"]["services"] = services
+     
 
    def __sinpStore(self, system, wgt, tag, minortag=None):
       text = self.__swidget(wgt).get_text()
@@ -446,8 +557,8 @@ class Space:
          self.__space_draw()
 
 
-   def __new(self, wgt=None, event=None):
-      name = "untitled"
+   def __snew(self, wgt=None, event=None):
+      name = "new system"
       gen = { "asteroids":0, "interference":0, "stars":100 }
       pos = { "x":0,"y":0 }
       new_ssys = { "general":gen, "pos":pos, "jumps":[], "fleets":{}, "planets":[] }
@@ -455,6 +566,16 @@ class Space:
       self.__create_treSystems()
       self.__selSys(name)
 
+
+   def __pnew(self, wgt=None, event=None):
+      name = "new planet"
+      gfx = { "space":"none.png" }
+      gen = { "class":"A", "services":0, "GFX":gfx }
+      pos = { "x":0,"y":0 }
+      new_planet = { "general":gen, "pos":pos }
+      self.planets[name] = new_planet
+      self.__create_trePlanets()
+      self.__selPlanet(name)
 
 
    def __selSys(self, system):
@@ -466,7 +587,6 @@ class Space:
             self.__supdate()
             break
          i = i+1
-
 
 
    def debug(self):
