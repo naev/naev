@@ -16,14 +16,33 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import space
+try:
+   import gtk,gtk.glade
+   import gobject
+except:
+   print "You do not have python gtk bindings, or you're missing glade libs"
+   print "To use resedit you must install them"
+   print "http://pygtk.org/ "
+   raise SystemExit
 
+
+import space, faction
+
+
+# load the factions
+factions = faction.Factions()
+factions.loadFactions("../../dat/faction.xml")
+factions.window()
 
 # load the universe
-universe = space.Space()
+universe = space.Space( factions.data() )
 universe.loadSystems("../../dat/ssys.xml")
 universe.loadPlanets("../../dat/planet.xml")
 universe.window()
+
+
+
+gtk.main()
 
 
 

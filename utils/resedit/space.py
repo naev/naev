@@ -3,27 +3,25 @@
 See Licensing and Copyright notice in resedit.py
 """
 
-try:   
-   import gtk,gtk.glade
-   import gobject
-except:
-   print "You do not have python gtk bindings, or you're missing glade libs"
-   print "To use resedit you must install them"
-   print "http://pygtk.org/ "
-   raise SystemExit
-
+import gtk,gtk.glade
+import gobject
 
 import data
 
 class Space:
 
-   def __init__(self):
+   def __init__(self, factions=None):
       self.glade = "space.glade"
       self.systemsXML = "../../dat/ssys.xml"
       self.planetsXML = "../../dat/planet.xml"
       self.planet_gfx = "../../gfx/planet/"
       self.loadSystems(self.systemsXML)
       self.loadPlanets(self.planetsXML)
+      if factions==None:
+         self.factions = {}
+      else:
+         self.factions = factions
+
 
 
    def loadSystems(self, xmlfile):
@@ -110,6 +108,7 @@ class Space:
       hooks = { "butNew":["clicked",self.__pnew],
             "trePlanets":["button-release-event", self.__pupdate],
             "comSystem":["changed", self.__pnewSys],
+            "comFaction":["changed", self.__pnewFact],
             "butSave":["clicked",self.savePlanets]
       }
       for key, val in hooks.items():
@@ -123,15 +122,25 @@ class Space:
             "M", "N", "O", "P", "Q", "R", "S", "T", "X", "Y", "Z", "0", "1" ]
       wgt = self.__pwidget("comClass")
       combo = gtk.ListStore(str)
-      for a in classes:
-         node = combo.append(a)
+      for c in classes:
+         node = combo.append(c)
+      cell = gtk.CellRendererText()
+      wgt.pack_start(cell, True)
+      wgt.add_attribute(cell, 'text', 0)
+      wgt.set_model(combo)
+
+      # factions
+      wgt = self.__pwidget("comFaction")
+      combo = gtk.ListStore(str)
+      combo.append(["None"])
+      for f in self.factions.keys():
+         node = combo.append([f])
       cell = gtk.CellRendererText()
       wgt.pack_start(cell, True)
       wgt.add_attribute(cell, 'text', 0)
       wgt.set_model(combo)
 
       # ---------------------------------------------
-      gtk.main()
 
 
    def __create_treSystems(self):
@@ -242,6 +251,20 @@ class Space:
          if row[0] == cls:
             wgt.set_active_iter(model.get_iter(i))
          i = i + 1
+
+      # faction
+      wgt = self.__pwidget("comFaction")
+      try:
+         fact = planet["general"]["faction"]
+         i = 0
+         model = wgt.get_model()
+         for row in model:
+            if row[0] == fact:
+               wgt.set_active(i)
+            i = i + 1
+      except:
+         wgt.set_active(0) # none
+
 
       # tech
       try:
@@ -658,16 +681,36 @@ class Space:
       self.__supdate()
       self.__pupdate()
 
+   def __pnewFact(self, wgt=None, event=None):
+      combo = self.__pwidget("comFaction")
+      fact = combo.get_active_text()
+      planet = self.planets[self.cur_planet]
+
+      if planet == "":
+         return
+     
+      if fact == "None":
+         try:
+            del planet["general"]["faction"]
+         except:
+            return
+      else:
+         planet["general"]["faction"] = fact
+
 
    def debug(self):
-      print "SYSTEMS LOADED:"
+      print "---SYSTEMS-----------------"
       print
       for name, sys in self.systems.items():
-         print "SYSTEM: %s" % name
+         print "   ---SYSTEM: %s-----" % name
          print sys
+         print "   ---------------------"
       print
+      print "---------------------------"
       print
-      print "PLANETS LOADED:"
+      print "---PLANETS-----------------"
       print self.planets
+      print "---------------------------"
+      print
 
 
