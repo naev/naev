@@ -241,25 +241,33 @@ static void map_mouse( SDL_Event* event, double mx, double my )
    switch (event->type) {
       
       case SDL_MOUSEBUTTONDOWN:
-         /* selecting star system */
-         for (i=0; i<systems_nstack; i++) {
-            x = systems_stack[i].pos.x * map_zoom;
-            y = systems_stack[i].pos.y * map_zoom;
+         /* zooming */
+         if (event->button.button == SDL_BUTTON_WHEELUP)
+            map_buttonZoom( "btnZoomOut" );
+         else if (event->button.button == SDL_BUTTON_WHEELDOWN)
+            map_buttonZoom( "btnZoomIn" );
 
-            if ((pow2(mx-x)+pow2(my-y)) < t) {
-               map_selected = i;
-               for (j=0; j<cur_system->njumps; j++) {
-                  if (i==cur_system->jumps[j]) {
-                     planet_target = -1; /* override planet_target */
-                     hyperspace_target = j;
-                     break;
+         /* selecting star system */
+         else {
+            for (i=0; i<systems_nstack; i++) {
+               x = systems_stack[i].pos.x * map_zoom;
+               y = systems_stack[i].pos.y * map_zoom;
+
+               if ((pow2(mx-x)+pow2(my-y)) < t) {
+                  map_selected = i;
+                  for (j=0; j<cur_system->njumps; j++) {
+                     if (i==cur_system->jumps[j]) {
+                        planet_target = -1; /* override planet_target */
+                        hyperspace_target = j;
+                        break;
+                     }
                   }
+                  map_update();
+                  break;
                }
-               map_update();
-               break;
             }
+            map_drag = 1;
          }
-         map_drag = 1;
          break;
 
       case SDL_MOUSEBUTTONUP:
