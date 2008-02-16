@@ -12,7 +12,7 @@
 
 #define LOG(str, args...)  (fprintf(stdout,str"\n", ## args))
 #define WARN(str, args...) (fprintf(stderr,"Warning: "str"\n", ## args))
-#define ERR(str, args...)  (fprintf(stderr,"ERROR %s:%d: "str"\n", __FILE__, __LINE__, ## args))
+#define ERR(str, args...)  (fprintf(stderr,"ERROR %s:%d [%s]: "str"\n", __FILE__, __LINE__, __func__, ## args))
 #ifdef DEBUG
 #  undef DEBUG
 #  define DEBUG(str, args...) LOG(str, ## args)

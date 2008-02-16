@@ -18,7 +18,38 @@
 #include "player.h"
 
 
-#define MIN_ARGS(n)     if (lua_gettop(L) < n) return 0
+#define MISN_DEBUG(str, args...)  (fprintf(stdout,"Mission '%s': "str"\n", cur_mission->data->name, ## args))
+
+#define MIN_ARGS(n)     \
+if (lua_gettop(L) < n) { \
+   MISN_DEBUG("[%s] Too few arguments", __func__); \
+   return 0; \
+}
+
+
+
+/* similar to lua vars, but with less variety */
+#define MISN_VAR_NIL    0
+#define MISN_VAR_NUM    1
+#define MISN_VAR_BOOL   2
+#define MISN_VAR_STR    3
+typedef struct misn_var_ {
+   char* name;
+   char type;
+   union {
+      double num;
+      char* str;
+      int b;
+   } d;
+} misn_var;
+
+
+/*
+ * variable stack
+ */
+static misn_var* var_stack = NULL;
+static int var_nstack = 0;
+static int var_mstack = 0;
 
 
 /*
@@ -50,6 +81,16 @@ static const luaL_reg misn_methods[] = {
    { "factions", misn_factions },
    { "accept", misn_accept },
    { "finish", misn_finish },
+   {0,0}
+};
+/* var */
+static int var_peek( lua_State *L );
+static int var_pop( lua_State *L );
+static int var_push( lua_State *L );
+static const luaL_reg var_methods[] = {
+   { "peek", var_peek },
+   { "pop", var_pop },
+   { "push", var_push },
    {0,0}
 };
 /* space */
@@ -105,6 +146,7 @@ int misn_loadLibs( lua_State *L )
 {
    luaL_register(L, "naev", naev_methods);
    luaL_register(L, "misn", misn_methods);
+   luaL_register(L, "var", var_methods);
    luaL_register(L, "space", space_methods);
    luaL_register(L, "player", player_methods);
    luaL_register(L, "rnd", rnd_methods);
@@ -240,8 +282,7 @@ static int misn_finish( lua_State *L )
 
    if (lua_isboolean(L,-1)) b = lua_toboolean(L,-1);
    else {
-      DEBUG("Mission '%s' trying to finish without specifying if mission is complete",
-            cur_mission->data->name);
+      MISN_DEBUG("Trying to finish without specifying if mission is complete");
       return 0;
    }
 
@@ -252,6 +293,149 @@ static int misn_finish( lua_State *L )
 
    lua_pushstring(L, "Mission Finished");
    lua_error(L); /* shouldn't return */
+
+   return 0;
+}
+
+
+
+/*
+ *   V A R
+ */
+/* basically checks if a variable exists */
+int var_checkflag( char* str )
+{
+   int i;
+
+   for (i=0; i<var_nstack; i++)
+      if (strcmp(var_stack[i].name,str)==0)
+         return 1;
+   return 0;
+}
+static int var_peek( lua_State *L )
+{
+   MIN_ARGS(1);
+   int i;
+   char *str;
+
+   if (lua_isstring(L,-1)) str = (char*) lua_tostring(L,-1);
+   else {
+      MISN_DEBUG("Trying to peek a var with non-string name");
+      return 0;
+   }
+
+   for (i=0; i<var_nstack; i++)
+      if (strcmp(str,var_stack[i].name)==0) {
+         switch (var_stack[i].type) {
+            case MISN_VAR_NIL:
+               lua_pushnil(L);
+               break;
+            case MISN_VAR_NUM:
+               lua_pushnumber(L,var_stack[i].d.num);
+               break;
+            case MISN_VAR_BOOL:
+               lua_pushboolean(L,var_stack[i].d.b);
+               break;
+            case MISN_VAR_STR:
+               lua_pushstring(L,var_stack[i].d.str);
+               break;
+         }
+         return 1;
+      }
+
+   lua_pushnil(L);
+   return 1;
+}
+static int var_pop( lua_State *L )
+{
+   MIN_ARGS(1);
+   int i;
+   char* str;
+
+   if (lua_isstring(L,-1)) str = (char*) lua_tostring(L,-1);
+   else {
+      MISN_DEBUG("Trying to pop a var with non-string name");
+      return 0;
+   }
+
+   for (i=0; i<var_nstack; i++)
+      if (strcmp(str,var_stack[i].name)==0) {
+         switch (var_stack[i].type) {
+            case MISN_VAR_STR:
+               if (var_stack[i].d.str!=NULL) {
+                  free(var_stack[i].d.str);
+                  var_stack[i].d.str = NULL;
+               }
+               break;
+            case MISN_VAR_NIL:
+            case MISN_VAR_NUM:
+            case MISN_VAR_BOOL:
+               break;
+         }
+         memmove( &var_stack[i], &var_stack[i+1], sizeof(misn_var)*(var_nstack-i-1) );
+         var_stack--;
+         return 0;
+      } 
+
+   MISN_DEBUG("Var '%s' not found in stack", str);
+   return 0;
+}
+static int var_push( lua_State *L )
+{
+   MIN_ARGS(2);
+   int i;
+   char *str;
+   misn_var *var;
+
+   if (lua_isstring(L,-2)) str = (char*) lua_tostring(L,-2);
+   else {
+      MISN_DEBUG("Trying to push a var with non-string name");
+      return 0;
+   }
+
+   
+   if (var_nstack+1 > var_mstack) { /* more memory */
+      var_mstack += 10;
+      var_stack = realloc( var_stack, var_mstack * sizeof(misn_var) );
+   }
+
+   /* check if already exists */
+   var = NULL;
+   for (i=0; i<var_nstack; i++)
+      if (strcmp(str,var_stack[i].name)==0)
+         var = &var_stack[i];
+
+   if (var==NULL)
+      var = &var_stack[var_nstack];
+   else if ((var->type==MISN_VAR_STR) && (var->d.str!=NULL)) { /* must free */
+      free( var->d.str );
+      var->d.str = NULL;
+   }
+
+   /* store appropriate data */
+   if (lua_isnil(L,-1)) 
+      var->type = MISN_VAR_NIL;
+   else if (lua_isnumber(L,-1)) {
+      var->type = MISN_VAR_NUM;
+      var->d.num = (double) lua_tonumber(L,-1);
+   }
+   else if (lua_isboolean(L,-1)) {
+      var->type = MISN_VAR_BOOL;
+      var->d.b = lua_toboolean(L,-1);
+   }
+   else if (lua_isstring(L,-1)) {
+      var->type = MISN_VAR_STR;
+      var->d.str = strdup( (char*) lua_tostring(L,-1) );
+   }
+   else {
+      MISN_DEBUG("Trying to push a var of invalid data type to stack");
+      return 0;
+   }
+
+   if (i>=var_nstack) { /* var is new */
+      var->name = strdup(str);
+      var_nstack++;
+   }
 
    return 0;
 }
