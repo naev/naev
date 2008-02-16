@@ -41,14 +41,16 @@ static uint32_t mt_getInt (void);
 void rng_init (void)
 {
    uint32_t i;
+   int need_init;
 
+   need_init = 1; /* initialize by default */
 #ifdef LINUX
    int fd;
-   char buf[4];
-   fd = open("/dev/random", O_RDONLY);
+   fd = open("/dev/urandom", O_RDONLY); /* /dev/urandom is better then time seed */
    if (fd != -1) {
-      if (read( fd, buf, 4 ) < 4)
-         memcpy( &i, buf, 4 );
+      i = sizeof(uint32_t)*624;
+      if (read( fd, &MT, i ) == i)
+         need_init = 0;
       else
          i = rng_timeEntropy();
       close(fd);
@@ -59,7 +61,8 @@ void rng_init (void)
    i = rng_timeEntropy();
 #endif
 
-   mt_initArray( i );
+   if (need_init)
+      mt_initArray( i );
    for (i=0; i<10; i++) /* generate numbers to get away from poor initial values */
       mt_genArray();
 }
