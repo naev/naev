@@ -39,6 +39,7 @@
 #include "economy.h"
 #include "menu.h"
 #include "mission.h"
+#include "misn_lua.h"
 
 
 /* to get data info */
@@ -247,6 +248,7 @@ void unload_all (void)
    missions_free();
    factions_free();
    commodity_free();
+   var_cleanup(); /* cleans up mission variables */
 }
 
 /* 

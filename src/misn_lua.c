@@ -58,6 +58,12 @@ static int var_mstack = 0;
 static Mission *cur_mission = NULL;
 static int misn_delete = 0; /* if 1 delete current mission */
 
+
+/*
+ * prototypes
+ */
+static void var_free( misn_var* var );
+
 /*
  * libraries
  */
@@ -360,18 +366,7 @@ static int var_pop( lua_State *L )
 
    for (i=0; i<var_nstack; i++)
       if (strcmp(str,var_stack[i].name)==0) {
-         switch (var_stack[i].type) {
-            case MISN_VAR_STR:
-               if (var_stack[i].d.str!=NULL) {
-                  free(var_stack[i].d.str);
-                  var_stack[i].d.str = NULL;
-               }
-               break;
-            case MISN_VAR_NIL:
-            case MISN_VAR_NUM:
-            case MISN_VAR_BOOL:
-               break;
-         }
+         var_free( &var_stack[i] );
          memmove( &var_stack[i], &var_stack[i+1], sizeof(misn_var)*(var_nstack-i-1) );
          var_stack--;
          return 0;
@@ -438,6 +433,37 @@ static int var_push( lua_State *L )
    }
 
    return 0;
+}
+static void var_free( misn_var* var )
+{
+   switch (var->type) {
+      case MISN_VAR_STR:
+         if (var->d.str!=NULL) {
+            free(var->d.str);
+            var->d.str = NULL;
+         }
+         break;
+      case MISN_VAR_NIL:
+      case MISN_VAR_NUM:
+      case MISN_VAR_BOOL:
+         break;
+   }
+
+   if (var->name!=NULL) {
+      free(var->name);
+      var->name = NULL;
+   }
+}
+void var_cleanup (void)
+{
+   int i;
+   for (i=0; i<var_nstack; i++)
+      var_free( &var_stack[i] );
+
+   if (var_stack!=NULL) free( var_stack );
+   var_stack = NULL;
+   var_nstack = 0;
+   var_mstack = 0;
 }
 
 

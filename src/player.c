@@ -25,6 +25,7 @@
 #include "menu.h"
 #include "toolkit.h"
 #include "mission.h"
+#include "misn_lua.h"
 
 
 #define XML_GUI_ID   "GUIs"   /* XML section identifier */
@@ -183,6 +184,9 @@ void player_new (void)
 
    /* cleanup player stuff if we'll be recreating */
    player_cleanup();
+
+   /* cleanup stacks */
+   var_cleanup();
 
    player_name = dialogue_input( "Player Name", 3, 20,
          "Please write your name:" );
