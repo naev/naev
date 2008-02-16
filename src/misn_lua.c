@@ -64,6 +64,7 @@ static int misn_delete = 0; /* if 1 delete current mission */
  * prototypes
  */
 static void var_free( misn_var* var );
+static int hook_generic( lua_State *L, char* stack );
 
 /*
  * libraries
@@ -150,8 +151,12 @@ static const luaL_reg tk_methods[] = {
 };
 /* hooks */
 static int hook_land( lua_State *L );
+static int hook_takeoff( lua_State *L );
+static int hook_time( lua_State *L );
 static const luaL_reg hook_methods[] = {
    { "land", hook_land },
+   { "takeoff", hook_takeoff },
+   { "time", hook_time },
    {0,0}
 };
 
@@ -726,7 +731,7 @@ static int tk_input( lua_State *L )
 /*
  *   H O O K
  */
-static int hook_land( lua_State *L )
+static int hook_generic( lua_State *L, char* stack )
 {
    int i;
    char *func;
@@ -748,6 +753,21 @@ static int hook_land( lua_State *L )
             cur_mission->data->name);
       return 0;
    }
-   hook_add( cur_mission->id, func, "land" );
+   hook_add( cur_mission->id, func, stack );
+   return 0;
+}
+static int hook_land( lua_State *L )
+{
+   hook_generic( L, "land" );
+   return 0;
+}
+static int hook_takeoff( lua_State *L )
+{
+   hook_generic( L, "takeoff" );
+   return 0;
+}
+static int hook_time( lua_State *L )
+{
+   hook_generic( L, "time" );
    return 0;
 }
