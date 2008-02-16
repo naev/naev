@@ -102,6 +102,7 @@ def save(xmlfile, data, basetag, tag, has_name=True, do_array=None, do_special=N
 
    fp = open(xmlfile,"w")
    xml.writexml(fp, "", "", "", "UTF-8")
+   fp.close()
 
    xml.unlink()
 
