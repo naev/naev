@@ -16,6 +16,7 @@
 #include "toolkit.h"
 #include "land.h"
 #include "player.h"
+#include "ntime.h"
 
 
 #define MISN_DEBUG(str, args...)  (fprintf(stdout,"Mission '%s': "str"\n", cur_mission->data->name, ## args))
@@ -109,6 +110,16 @@ static const luaL_reg space_methods[] = {
    { "landName", space_landName },
    {0,0}
 };
+/* time */
+static int time_get( lua_State *L );
+static int time_str( lua_State *L );
+static int time_units( lua_State *L );
+static const luaL_reg time_methods[] = {
+   { "get", time_get },
+   { "str", time_str },
+   { "units", time_units },
+   {0,0}
+};
 /* player */
 static int player_freeSpace( lua_State *L );
 static int player_addCargo( lua_State *L );
@@ -154,6 +165,7 @@ int misn_loadLibs( lua_State *L )
    luaL_register(L, "misn", misn_methods);
    luaL_register(L, "var", var_methods);
    luaL_register(L, "space", space_methods);
+   luaL_register(L, "time", time_methods);
    luaL_register(L, "player", player_methods);
    luaL_register(L, "rnd", rnd_methods);
    luaL_register(L, "tk", tk_methods);
@@ -539,6 +551,36 @@ static int space_landName( lua_State *L )
       return 1;
    }
    return 0;
+}
+
+
+
+/*
+ *   T I M E
+ */
+static int time_get( lua_State *L )
+{
+   lua_pushnumber( L, ntime_get() );
+   return 1;
+}
+static int time_str( lua_State *L )
+{
+   char *nt;
+   if ((lua_gettop(L) > 0) && (lua_isnumber(L,-1)))
+      nt = ntime_pretty( (unsigned int) lua_tonumber(L,-1) );
+   else
+      nt = ntime_pretty( ntime_get() );
+   lua_pushstring(L, nt);
+   free(nt);
+   return 1;
+}
+static int time_units( lua_State *L )
+{
+   if ((lua_gettop(L) > 0) && (lua_isnumber(L,-1)))
+      lua_pushnumber( L, (unsigned int)lua_tonumber(L,-1) * NTIME_UNIT_LENGTH );
+   else
+      lua_pushnumber( L, NTIME_UNIT_LENGTH );
+   return 1;
 }
 
 
