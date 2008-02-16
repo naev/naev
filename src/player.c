@@ -26,6 +26,8 @@
 #include "toolkit.h"
 #include "mission.h"
 #include "misn_lua.h"
+#include "ntime.h"
+#include "hook.h"
 
 
 #define XML_GUI_ID   "GUIs"   /* XML section identifier */
@@ -133,7 +135,7 @@ double gui_yoff = 0.;
 
 /* messages */
 #define MESG_SIZE_MAX   80
-int mesg_timeout = 3000;
+int mesg_timeout = 5000;
 int mesg_max = 5; /* maximum messages onscreen */
 typedef struct Mesg_ {
    char str[MESG_SIZE_MAX];
@@ -204,7 +206,7 @@ static void player_newMake (void)
    char system[20];
    uint32_t bufsize;
    char *buf = pack_readfile( DATA, START_DATA, &bufsize );
-   int l,h;
+   int l,h, tl,th;
    double x,y;
 
    xmlNodePtr node, cur, tmp;
@@ -231,7 +233,7 @@ static void player_newMake (void)
                do { 
                   if (xml_isNode(tmp,"low")) l = xml_getInt(tmp);
                   else if (xml_isNode(tmp,"high")) h = xml_getInt(tmp);
-               } while ((tmp = tmp->next));
+               } while (xml_nextNode(tmp));
             }
             else if (xml_isNode(cur,"system")) {
                tmp = cur->children;
@@ -241,11 +243,17 @@ static void player_newMake (void)
                   /* position */
                   else if (xml_isNode(tmp,"x")) x = xml_getFloat(tmp);
                   else if (xml_isNode(tmp,"y")) y = xml_getFloat(tmp);
-               } while ((tmp = tmp->next));
+               } while (xml_nextNode(tmp));
             }
             else if (xml_isNode(cur,"player_crating"))
                player_crating = xml_getInt(cur);
-
+            else if (xml_isNode(cur,"date")) {
+               tmp = cur->children;
+               do {
+                  if (xml_isNode(tmp,"low")) tl = xml_getInt(tmp);
+                  else if (xml_isNode(tmp,"high")) th = xml_getInt(tmp);
+               } while (xml_nextNode(tmp));
+            }
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
@@ -257,6 +265,9 @@ static void player_newMake (void)
 
    /* monies */
    player_credits = RNG(l,h);
+
+   /* time */
+   ntime_set( RNG(tl*1000*NTIME_UNIT_LENGTH,th*1000*NTIME_UNIT_LENGTH) );
 
    /* welcome message - must be before space_init */
    player_message( "Welcome to "APPNAME"!" );
@@ -1487,6 +1498,15 @@ void player_jump (void)
  */
 void player_brokeHyperspace (void)
 {
+   unsigned int tl, th;
+
+   /* calculates the time it takes, call before space_init */
+   tl = (unsigned int) floor( sqrt( (double)player->solid->mass)/5. );
+   th = (unsigned int) ceil( sqrt( (double)player->solid->mass)/5. );
+   tl *= NTIME_UNIT_LENGTH;
+   th *= NTIME_UNIT_LENGTH;
+   ntime_inc( RNG( tl, th ) );
+
    /* enter the new system */
    space_init( systems_stack[cur_system->jumps[hyperspace_target]].name );
 
@@ -1496,6 +1516,8 @@ void player_brokeHyperspace (void)
 
    /* stop hyperspace */
    pilot_rmFlag( player, PILOT_HYPERSPACE | PILOT_HYP_BEGIN | PILOT_HYP_PREP );
+
+   hooks_run( "jump" );
 }
 
 

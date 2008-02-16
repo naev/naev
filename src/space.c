@@ -19,6 +19,7 @@
 #include "weapon.h"
 #include "toolkit.h"
 #include "spfx.h"
+#include "ntime.h"
 
 
 #define XML_PLANET_ID         "Planets"
@@ -61,13 +62,6 @@ StarSystem *systems_stack = NULL; /* star system stack */
 int systems_nstack = 0; /* number of star systems */
 static int nplanets = 0; /* total number of loaded planets - pretty silly */
 StarSystem *cur_system = NULL; /* Current star system */
-
-
-/* 
- * current stardate in nice format
- */
-char* stardate = "Stardate";
-unsigned int date = 0; /* time since epoch */
 
 
 /*
@@ -401,6 +395,7 @@ static void space_addFleet( Fleet* fleet )
  */
 void space_init ( const char* sysname )
 {
+   char* nt;
    int i;
 
    /* cleanup some stuff */
@@ -419,7 +414,9 @@ void space_init ( const char* sysname )
       if (i==systems_nstack) ERR("System %s not found in stack", sysname);
       cur_system = systems_stack+i;
 
-      player_message("Entering System %s on %s", sysname, stardate);
+      nt = ntime_pretty(0);
+      player_message("Entering System %s on %s", sysname, nt);
+      free(nt);
 
       /* set up stars */
       nstars = (cur_system->stars*gl_screen.w*gl_screen.h+STAR_BUF*STAR_BUF)/(800*640);

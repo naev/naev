@@ -15,7 +15,15 @@ int hook_add( unsigned int parent, char *func, char *stack );
 void hook_rm( int id );
 void hook_rmParent( unsigned int parent );
 
-/* run hooks */
+/* 
+ * run hooks
+ *
+ * Currently used:
+ *    "land" - when landed
+ *    "takeoff" - when taking off
+ *    "jump" - when changing system
+ *    "time" - when time is increment drastically (hyperspace and taking off)
+ */
 int hooks_run( char* stack );
 
 /* destroys hooks */

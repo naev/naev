@@ -6,6 +6,10 @@
 <low>500000</low>
 <high>1500000</high>
 </credits>
+<date>
+<low>1300</low>
+<high>1400</high>
+</date>
 <system>
 <name>Delta Pavonis</name>
 <x>0</x>

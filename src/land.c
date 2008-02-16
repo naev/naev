@@ -15,6 +15,7 @@
 #include "economy.h"
 #include "hook.h"
 #include "mission.h"
+#include "ntime.h"
 
 
 /* global/main window */
@@ -1032,6 +1033,7 @@ void land( Planet* p )
 void takeoff (void)
 {
    int sw,sh, i;
+   char *nt;
 
    if (!landed) return;
 
@@ -1056,6 +1058,12 @@ void takeoff (void)
    player->armour = player->armour_max;
    player->shield = player->shield_max;
    player->energy = player->energy_max;
+
+   /* time goes by, triggers hook before takeoff */
+   ntime_inc( RNG( 2*NTIME_UNIT_LENGTH, 3*NTIME_UNIT_LENGTH ) );
+   nt = ntime_pretty(0);
+   player_message("Taking off from %s on %s", land_planet->name, nt);
+   free(nt);
 
    /* initialize the new space */
    space_init(NULL);
