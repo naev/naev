@@ -58,6 +58,7 @@ extern int misn_run( Mission *misn, char *func );
 static int mission_init( Mission* mission, MissionData* misn );
 static void mission_freeData( MissionData* mission );
 static int mission_alreadyRunning( MissionData* misn );
+static int mission_meetReq( int mission, int faction, char* planet, char* system );
 static int mission_matchFaction( MissionData* misn, int faction );
 static int mission_location( char* loc );
 static MissionData* mission_parse( const xmlNodePtr parent );
@@ -146,6 +147,34 @@ static int mission_alreadyRunning( MissionData* misn )
 
 
 /*
+ * does the mission meet the minimum requirements?
+ */
+static int mission_meetReq( int mission, int faction, char* planet, char* system )
+{
+   MissionData* misn;
+
+   misn = &mission_stack[mission];
+
+   /* must match planet, system or faction */
+   if (!(((misn->avail.planet && strcmp(misn->avail.planet,planet)==0)) ||
+         (misn->avail.system && (strcmp(misn->avail.system,system)==0)) ||
+         mission_matchFaction(misn,faction)))
+      return 0;
+
+   if (mis_isFlag(misn,MISSION_UNIQUE) && /* mission done or running */
+         (player_missionAlreadyDone(mission) ||
+          mission_alreadyRunning(misn)))
+      return 0;
+
+   if ((misn->avail.req != NULL) && /* mission doesn't meet requirement */
+         !var_checkflag(misn->avail.req))
+      return 0;
+
+  return 1;
+}
+
+
+/*
  * runs bar missions, all lua side and one-shot
  */
 void missions_bar( int faction, char* planet, char* system )
@@ -157,14 +186,10 @@ void missions_bar( int faction, char* planet, char* system )
 
    for (i=0; i<mission_nstack; i++) {
       misn = &mission_stack[i];
-      if ((misn->avail.loc==MIS_AVAIL_BAR) &&
-            (((misn->avail.planet && strcmp(misn->avail.planet,planet)==0)) ||
-             (misn->avail.system && (strcmp(misn->avail.system,system)==0)) ||
-             mission_matchFaction(misn,faction))) {
+      if (misn->avail.loc==MIS_AVAIL_BAR) {
 
-         if (mis_isFlag(misn,MISSION_UNIQUE) && /* mission done or running */
-               (player_missionAlreadyDone(i) ||
-                  mission_alreadyRunning(misn))) continue;
+         if (!mission_meetReq(i, faction, planet, system))
+            continue;
 
          chance = (double)(misn->avail.chance % 100)/100.;
 
@@ -282,10 +307,10 @@ Mission* missions_computer( int *n, int faction, char* planet, char* system )
    m = 0;
    for (i=0; i<mission_nstack; i++) {
       misn = &mission_stack[i];
-      if ((misn->avail.loc==MIS_AVAIL_COMPUTER) &&
-         (((misn->avail.planet && strcmp(misn->avail.planet,planet)==0)) ||
-            (misn->avail.system && (strcmp(misn->avail.system,system)==0)) ||
-            mission_matchFaction(misn,faction))) {
+      if (misn->avail.loc==MIS_AVAIL_COMPUTER) {
+
+         if (!mission_meetReq(i, faction, planet, system))
+            continue;
 
          chance = (double)(misn->avail.chance % 100)/100.;
          rep = misn->avail.chance / 100;
@@ -373,6 +398,8 @@ static MissionData* mission_parse( const xmlNodePtr parent )
                temp->avail.factions[temp->avail.nfactions-1] =
                      faction_get( xml_get(cur) );
             }
+            else if (xml_isNode(cur,"req"))
+               temp->avail.req = strdup( xml_get(cur) );
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));

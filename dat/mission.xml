@@ -31,8 +31,8 @@
 </mission>
 <mission name="Empire Shipping">
 <lua>es_cargo</lua>
-<req>es_cargo</req>
 <avail>
+<req>es_cargo</req>
 <chance>350</chance>
 <location>Computer</location>
 <alliance>Empire United</alliance>
