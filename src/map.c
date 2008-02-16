@@ -115,9 +115,10 @@ static void map_update (void)
    else {
       f = -1;
       for (i=0; i<sys->nplanets; i++) {
-         if (f==-1)
+         if ((f==-1) && (sys->planets[i].faction!=0))
             f = sys->planets[i].faction;
-         else if (f!= sys->planets[i].faction) { /* TODO more verbosity */
+         else if (f!= sys->planets[i].faction && /* TODO more verbosity */
+               (sys->planets[i].faction!=0)) {
             snprintf( buf, 100, "Multiple" );
             break;
          }
@@ -131,9 +132,11 @@ static void map_update (void)
    if (sys->nplanets == 0)
       snprintf( buf, 100, "None" );
    else {
-      for (i=0; i<sys->nplanets; i++) {
+      if (sys->nplanets > 0)
+         strcat( buf, sys->planets[0].name );
+      for (i=1; i<sys->nplanets; i++) {
+         strcat( buf, ",\n" );
          strcat( buf, sys->planets[i].name );
-         strcat( buf, "\n" );
       }
    }
    window_modifyText( map_wid, "txtPlanets", buf );
