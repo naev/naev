@@ -119,7 +119,7 @@ incombat( [number id] )
 
 accel( [number mod] )
 	@desc accelerates the pilot
-	@param mod float that represents acceleration ratio between 0 (stopped) and 1 (max accel)
+	@param mod float that represents speed to accel to (1. is full speed, 0. is stopped)
 	@return nil
 
 turn( number mod )

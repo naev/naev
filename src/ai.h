@@ -12,9 +12,9 @@
 #include "lua.h"
 
 
-#define MIN_DIR_ERR     1.0*M_PI/180.
-#define MAX_DIR_ERR     0.1*M_PI/180.
-#define MIN_VEL_ERR     1.0
+#define MIN_DIR_ERR     5.0*M_PI/180.
+#define MAX_DIR_ERR     0.5*M_PI/180.
+#define MIN_VEL_ERR     5.0
 
 #define FACE_WVEL       0.1 /* weight of velocity compared to pos for facing */
 
