@@ -71,6 +71,15 @@ function land()
       if player.rmCargo( carg_id ) then
          player.pay( reward )
          tk.msg( finish_title, string.format( finish_msg, carg_type ))
+
+         -- increase empire shipping mission counter
+         n = var.peek("es_misn")
+         if n ~= nil then
+            var.push("es_misn", n+1)
+         else
+            var.push("es_misn", 1)
+         end
+
          misn.finish(true)
       else
          tk.msg( miss_title, string.format( miss_msg, carg_mass, carg_type ))
