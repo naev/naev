@@ -19,6 +19,7 @@
 #include "player.h"
 #include "plasmaf.h"
 #include "mission.h"
+#include "ntime.h"
 
 
 #define MAIN_WIDTH      130
@@ -192,13 +193,16 @@ void menu_info (void)
    pause();
 
    char str[128];
+   char *nt;
    unsigned int wid;
    wid = window_create( "Info", -1, -1, INFO_WIDTH, INFO_HEIGHT );
 
    /* pilot generics */
+   nt = ntime_pretty( ntime_get() );
    window_addText( wid, 20, 20, 120, INFO_HEIGHT-60,
          0, "txtDPilot", &gl_smallFont, &cDConsole,
          "Pilot:\n"
+         "Date:\n"
          "Combat\n"
          " Rating:\n"
          "\n"
@@ -206,14 +210,16 @@ void menu_info (void)
          );
    snprintf( str, 128, 
          "%s\n"
-         "\n"
          "%s\n"
          "\n"
          "%s\n"
-         , player_name, player_rating(), player->name );
+         "\n"
+         "%s\n"
+         , player_name, nt, player_rating(), player->name );
    window_addText( wid, 80, 20,
          INFO_WIDTH-120-BUTTON_WIDTH, INFO_HEIGHT-60,
          0, "txtPilot", &gl_smallFont, &cBlack, str );
+   free(nt);
 
    /* menu */
    window_addButton( wid, -20, (20 + BUTTON_HEIGHT)*4 + 20,
