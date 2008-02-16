@@ -11,9 +11,9 @@
 
 	*) More missions and mission lua bindings
 	*) Better AI
+      *) improved combat efficiency
 		*) boids ship fleet movement (have them behave like fleets)
 		*) smarter missiles -> PID if possible
-		*) faction-wide ai -> have factions engage other factions
 	*) More sounds (redo sound system?)
 	*) Escorts (boarding taking over too)
 		*) escort commands
@@ -33,10 +33,10 @@
 	*) Unique pilot system (besides mission uniques)
 	*) Real news
 	*) Dynamic Economy
+   *) Dynamic Politics - Faction wid AI
 	*) YAML (when DOM parser is done)
 	*) Cinema scenes
 	*) Options menu do something
-	*) Mersenne Twister for randomness
 	*) allow subsystems to get damage
 
 
