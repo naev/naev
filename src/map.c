@@ -179,11 +179,9 @@ static void map_render( double bx, double by, double w, double h )
       /* draw the system name */
       tx = x + 7. + sys->pos.x * map_zoom;
       ty = y - 5. + sys->pos.y * map_zoom;
-      if ((map_zoom >= 1.) && /* can't be tiny */
-            ((tx > bx) && (ty > by) && (ty < by+h-6.))) /* width checking by print */
-         gl_printMax( &gl_smallFont, (bx+w)-(tx),
-               tx + gl_screen.w/2., ty + gl_screen.h/2.,
-               &cWhite, sys->name );
+      gl_print( &gl_smallFont,
+            tx + gl_screen.w/2., ty + gl_screen.h/2.,
+            &cWhite, sys->name );
 
       /* draw the hyperspace paths */
       glShadeModel(GL_SMOOTH);
@@ -202,18 +200,15 @@ static void map_render( double bx, double by, double w, double h )
             ACOLOUR(*col,0.);
             tx = x + sys->pos.x * map_zoom;
             ty = y + sys->pos.y * map_zoom;
-            if (!((tx < bx) || (tx > bx+w) || (ty < by) || (ty > by+h)))
-               glVertex2d( tx, ty );
+            glVertex2d( tx, ty );
             COLOUR(*col);
             tx += (systems_stack[ sys->jumps[j] ].pos.x - sys->pos.x)/2. * map_zoom;
             ty += (systems_stack[ sys->jumps[j] ].pos.y - sys->pos.y)/2. * map_zoom;
-            if (!((tx < bx) || (tx > bx+w) || (ty < by) || (ty > by+h)))
-               glVertex2d( tx, ty );
+            glVertex2d( tx, ty );
             ACOLOUR(*col,0.);
             tx = x + systems_stack[ sys->jumps[j] ].pos.x * map_zoom;
             ty = y + systems_stack[ sys->jumps[j] ].pos.y * map_zoom;
-            if (!((tx < bx) || (tx > bx+w) || (ty < by) || (ty > by+h)))
-               glVertex2d( tx, ty );
+            glVertex2d( tx, ty );
          glEnd(); /* GL_LINE_STRIP */
       }
       glShadeModel(GL_FLAT);

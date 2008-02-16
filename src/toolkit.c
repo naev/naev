@@ -162,6 +162,8 @@ static void toolkit_renderInput( Widget* inp, double bx, double by );
 static void toolkit_drawOutline( double x, double y,
       double w, double h, double b,
       glColour* c, glColour* lc );
+static void toolkit_clip( double x, double y, double w, double h );
+static void toolkit_unclip (void);
 static void toolkit_drawRect( double x, double y,
       double w, double h, glColour* c, glColour* lc );
 /* dialogues */
@@ -764,6 +766,35 @@ static void toolkit_drawRect( double x, double y,
 
 
 /*
+ * sets up 2d clipping planes around a rectangle
+ */
+static void toolkit_clip( double x, double y, double w, double h )
+{
+   GLdouble ctop[4] = { 0.,  1., 0., -y  };
+   GLdouble cbot[4] = { 0., -1., 0., y+h };
+   GLdouble clef[4] = {  1., 0., 0., -x  };
+   GLdouble crig[4] = { -1., 0., 0., x+w };
+
+   glClipPlane(GL_CLIP_PLANE0, ctop);
+   glClipPlane(GL_CLIP_PLANE1, cbot);
+   glClipPlane(GL_CLIP_PLANE2, clef);
+   glClipPlane(GL_CLIP_PLANE3, crig);
+
+   glEnable(GL_CLIP_PLANE0);
+   glEnable(GL_CLIP_PLANE1);
+   glEnable(GL_CLIP_PLANE2);
+   glEnable(GL_CLIP_PLANE3);
+}
+static void toolkit_unclip (void)
+{
+   glDisable(GL_CLIP_PLANE0);
+   glDisable(GL_CLIP_PLANE1);
+   glDisable(GL_CLIP_PLANE2);
+   glDisable(GL_CLIP_PLANE3);
+}
+
+
+/*
  * renders a window
  */
 static void window_render( Window* w )
@@ -1169,7 +1200,10 @@ static void toolkit_renderCust( Widget* cst, double bx, double by )
       toolkit_drawOutline( x-1, y, cst->w+1, cst->h+1, 1.,
             toolkit_colDark, NULL );
    }
+
+   toolkit_clip( x+1, y+1, cst->w, cst->h );
    (*cst->dat.cst.render) ( x, y, cst->w, cst->h );
+   toolkit_unclip();
 }
 
 
