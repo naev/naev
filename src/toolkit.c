@@ -1201,8 +1201,8 @@ static void toolkit_renderCust( Widget* cst, double bx, double by )
             toolkit_colDark, NULL );
    }
 
-   toolkit_clip( x+1, y+1, cst->w, cst->h );
-   (*cst->dat.cst.render) ( x, y, cst->w, cst->h );
+   toolkit_clip( x, y+1, cst->w, cst->h );
+   (*cst->dat.cst.render) ( x, y, cst->w, cst->h+1 );
    toolkit_unclip();
 }
 
