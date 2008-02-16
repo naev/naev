@@ -37,8 +37,8 @@ char* ntime_pretty( unsigned int t )
    if (t==0) nt = naev_time;
    else nt = t;
 
-   /* Galactic Date */
-   snprintf( str, 128, "GD %d.%03d",
+   /* UST (Universal Synchronized Time) - unit is STU (Synchronized Time Unit) */
+   snprintf( str, 128, "UST %d.%03d",
          nt / (1000*NTIME_UNIT_LENGTH),
          (nt / (NTIME_UNIT_LENGTH)) % 1000);
 
