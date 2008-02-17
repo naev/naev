@@ -252,6 +252,7 @@ static void map_mouse( SDL_Event* event, double mx, double my )
                y = systems_stack[i].pos.y * map_zoom;
 
                if ((pow2(mx-x)+pow2(my-y)) < t) {
+
                   map_selected = i;
                   for (j=0; j<cur_system->njumps; j++) {
                      if (i==cur_system->jumps[j]) {
