@@ -105,10 +105,12 @@ static const luaL_reg var_methods[] = {
 static int space_getPlanet( lua_State *L );
 static int space_getSystem( lua_State *L );
 static int space_landName( lua_State *L );
+static int space_jumpDist( lua_State *L );
 static const luaL_reg space_methods[] = {
    { "getPlanet", space_getPlanet },
    { "getSystem", space_getSystem },
    { "landName", space_landName },
+   { "jumpDist", space_jumpDist },
    {0,0}
 };
 /* time */
@@ -539,9 +541,9 @@ static int space_getPlanet( lua_State *L )
 }
 static int space_getSystem( lua_State *L )
 {
+   MIN_ARGS(1);
    char *planetname, *system;
 
-   MIN_ARGS(1);
    if (lua_isstring(L,-1)) planetname = (char*) lua_tostring(L,-1);
    else return 0;
 
@@ -556,6 +558,31 @@ static int space_landName( lua_State *L )
       return 1;
    }
    return 0;
+}
+static int space_jumpDist( lua_State *L )
+{
+   MIN_ARGS(1);
+   StarSystem **s;
+   int jumps;
+   char *start, *goal;
+
+   if (lua_isstring(L,-1))
+      start = (char*) lua_tostring(L,-1);
+   else {
+      MISN_DEBUG("Invalid parameter 1");
+      return 0;
+   }
+
+   if ((lua_gettop(L) > 1) && lua_isstring(L,-2))
+      goal = (char*) lua_tostring(L,-2);
+   else
+      goal = cur_system->name;
+
+   s = system_getJumpPath( &jumps, start, goal );
+   free(s);
+
+   lua_pushnumber(L,jumps);
+   return 1;
 }
 
 

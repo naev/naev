@@ -37,6 +37,7 @@ function create()
       misn.finish(false)
    end
    system = space.getSystem( planet )
+   misn_dist = space.jumpDist( system )
 
    -- mission generics
    misn_type = "Cargo"
@@ -50,7 +51,9 @@ function create()
    elseif i==1 then carg_type = "Ore"
    end
    misn.setDesc( string.format( misn_desc, planet, system, carg_mass, carg_type ) )
-   reward = carg_mass * (750+rnd.int(250)) + rnd.int(5000)
+   reward = misn_dist * carg_mass * (250+rnd.int(150)) +
+         carg_mass * (150+rnd.int(75)) +
+         rnd.int(1500)
    misn.setReward( string.format( misn_reward, reward ) )
 end
 
