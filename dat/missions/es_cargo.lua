@@ -50,7 +50,7 @@ function create()
    end
    misn.setDesc( string.format( misn_desc, carg_mass, carg_type, planet, system ) )
    reward = misn_dist * carg_mass * (500+rnd.int(250)) +
-         carg_mass * (250+rnd.int(150) +
+         carg_mass * (250+rnd.int(150)) +
          rnd.int(2500)
    misn.setReward( string.format( misn_reward, reward ) )
 end
