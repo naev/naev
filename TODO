@@ -1,50 +1,50 @@
 
 
-	VITAL
+   VITAL
 
-	*) Save
-		*) save entire game data except graphics, so that missions can modify stuff
-	*) Player faction system
+   *) Save
+      *) save entire game data except graphics, so that missions can modify stuff
+   *) Player faction system
 
 
-	MAJOR
+   MAJOR
 
-	*) More missions and mission lua bindings
-	*) Better AI
+   *) More missions and mission lua bindings
+   *) Better AI
       *) improved combat efficiency
-		*) boids ship fleet movement (have them behave like fleets)
-		*) smarter missiles -> PID if possible
-	*) More sounds (redo sound system?)
-	*) Escorts (boarding taking over too)
-		*) escort commands
-	*) Graphic improvements
-		*) Nebulae -> pre-generated plasma fractals (cloudlike effect)
-			*) have ships flying in nebulae leave traces
-		*) missile smoke
-		*) engine glow -> need models
-		*) more special effects
-		*) have "screen shake" effect for afterburner and friends
-		*) cloaking effects
-		*) fancy displacement effects for some ships
+      *) boids ship fleet movement (have them behave like fleets)
+      *) smarter missiles -> PID if possible
+   *) More sounds (redo sound system?)
+   *) Escorts (boarding taking over too)
+      *) escort commands
+   *) Graphic improvements
+      *) Nebulae -> pre-generated plasma fractals (cloudlike effect)
+         *) have ships flying in nebulae leave traces
+      *) missile smoke
+      *) engine glow -> need models
+      *) more special effects
+      *) have "screen shake" effect for afterburner and friends
+      *) cloaking effects
+      *) fancy displacement effects for some ships
 
 
-	MINOR
+   MINOR
 
-	*) Unique pilot system (besides mission uniques)
-	*) Real news
-	*) Dynamic Economy
+   *) Unique pilot system (besides mission uniques)
+   *) Real news
+   *) Dynamic Economy
    *) Dynamic Politics - Faction wid AI
-	*) YAML (when DOM parser is done)
-	*) Cinema scenes
-	*) Options menu do something
-	*) Allow subsystems to get damage
+   *) YAML (when DOM parser is done)
+   *) Cinema scenes
+   *) Options menu do something
+   *) Allow subsystems to get damage
    *) Allow steering with the mouse
    *) Configuration app for keybindings
 
 
-	MAYBE... SOMEDAY...
+   MAYBE... SOMEDAY...
 
-	*) Multiplayer
-	*) 3d models (not actually 3d though, just no sprites)
+   *) Multiplayer
+   *) 3d models (not actually 3d though, just no sprites)
 
 
