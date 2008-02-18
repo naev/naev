@@ -49,7 +49,7 @@ void rng_init (void)
    fd = open("/dev/urandom", O_RDONLY); /* /dev/urandom is better then time seed */
    if (fd != -1) {
       i = sizeof(uint32_t)*624;
-      if (read( fd, &MT, i ) == i)
+      if (read( fd, &MT, i ) == (ssize_t)i)
          need_init = 0;
       else
          i = rng_timeEntropy();
