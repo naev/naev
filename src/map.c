@@ -27,7 +27,9 @@ static int map_wid = 0;
 static double map_zoom = 1.; /* zoom of the map */
 static double map_xpos = 0.; /* map position */
 static double map_ypos = 0.;
-static int map_selected = 0;
+static int map_selected = -1;
+static StarSystem **map_path = NULL; /* the path to current selected system */
+static int map_npath = 0;
 
 static int map_drag = 0; /* is the user dragging the map? */
 
@@ -47,6 +49,7 @@ extern int hyperspace_target;
  */
 static void map_close( char* str );
 static void map_update (void);
+static int map_inPath( StarSystem *sys );
 static void map_render( double bx, double by, double w, double h );
 static void map_mouse( SDL_Event* event, double mx, double my );
 static void map_buttonZoom( char* str );
@@ -144,6 +147,19 @@ static void map_update (void)
 
 
 /*
+ * returns 1 if sys is part of the map_path
+ */
+static int map_inPath( StarSystem *sys )
+{
+   int i;
+   for (i=0; i<map_npath; i++)
+      if (map_path[i] == sys)
+         return 1;
+   return 0;
+}
+
+
+/*
  * renders the map as a custom widget
  */
 static void map_render( double bx, double by, double w, double h )
@@ -197,6 +213,9 @@ static void map_render( double bx, double by, double w, double h )
                ((cur_system==&systems_stack[ sys->jumps[j] ]) &&
                 (sys==&systems_stack[ cur_system->jumps[hyperspace_target] ] )))
             col = &cRed;
+         /* is the route part of the path? */
+         else if (map_inPath(&systems_stack[ sys->jumps[j]]) && map_inPath(sys))
+            col = &cGreen;
          else col = &cDarkBlue;
 
          glBegin(GL_LINE_STRIP);
@@ -230,6 +249,7 @@ static void map_mouse( SDL_Event* event, double mx, double my )
 {
    int i, j;
    double x,y, t;
+   StarSystem *sys;
 
    t = 15.*15.; /* threshold */
 
@@ -248,14 +268,27 @@ static void map_mouse( SDL_Event* event, double mx, double my )
          /* selecting star system */
          else {
             for (i=0; i<systems_nstack; i++) {
-               x = systems_stack[i].pos.x * map_zoom;
-               y = systems_stack[i].pos.y * map_zoom;
+               sys = &systems_stack[i];
+
+               /* get position */
+               x = sys->pos.x * map_zoom;
+               y = sys->pos.y * map_zoom;
 
                if ((pow2(mx-x)+pow2(my-y)) < t) {
 
+                  /* select the current system and make a path to it */
                   map_selected = i;
+                  if (map_path)
+                     free(map_path);
+                  map_path = system_getJumpPath( &map_npath,
+                        cur_system->name, sys->name );
+
+                  if (map_npath==0)
+                     hyperspace_target = -1;
+                  else 
+                  /* see if it is a valid hyperspace target */
                   for (j=0; j<cur_system->njumps; j++) {
-                     if (i==cur_system->jumps[j]) {
+                     if (map_path[0]==&systems_stack[cur_system->jumps[j]]) {
                         planet_target = -1; /* override planet_target */
                         hyperspace_target = j;
                         break;
@@ -293,5 +326,75 @@ static void map_buttonZoom( char* str )
       map_zoom = MAX(0.5, map_zoom);
    }
 }
+
+
+/*
+ * sets the map to sane defaults
+ */
+void map_clear (void)
+{
+   int i;
+
+   map_zoom = 1.;
+   if (cur_system != NULL) {
+      map_xpos = cur_system->pos.x;
+      map_ypos = cur_system->pos.y;
+   }
+   else {
+      map_xpos = 0.;
+      map_ypos = 0.;
+   }
+   if (map_path != NULL) {
+      free(map_path);
+      map_path = NULL;
+      map_npath = 0;
+   }
+
+   /* default system is current system */
+   if (cur_system != NULL)
+      for (i=0; i<systems_nstack; i++)
+         if (&systems_stack[i] == cur_system) {
+            map_selected = i;
+            break;
+         }
+   else
+      map_selected = 0;
+}
+
+
+/*
+ * updates the map after a jump
+ */
+void map_jump (void)
+{
+   int j;
+
+   map_xpos = cur_system->pos.x;
+   map_ypos = cur_system->pos.y;
+
+   /* update path if set */
+   if (map_path != NULL) {
+      map_npath--;
+      if (map_npath == 0) { /* path is empty */
+         free (map_path);
+         map_path = NULL;
+      }
+      else { /* get rid of bottom of the path */
+         memcpy( &map_path[0], &map_path[1], sizeof(StarSystem*) * map_npath );
+         map_path = realloc( map_path, sizeof(StarSystem*) * map_npath );
+
+         /* set the next jump to be to the next in path */
+         for (j=0; j<cur_system->njumps; j++) {
+            if (map_path[0]==&systems_stack[cur_system->jumps[j]]) {
+               planet_target = -1; /* override planet_target */
+               hyperspace_target = j;
+               break;
+            }
+         }
+
+      }
+   }
+}
+
 
 

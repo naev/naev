@@ -28,6 +28,7 @@
 #include "misn_lua.h"
 #include "ntime.h"
 #include "hook.h"
+#include "map.h"
 
 
 #define XML_GUI_ID   "GUIs"   /* XML section identifier */
@@ -276,6 +277,9 @@ static void player_newMake (void)
    /* create the player and start the game */
    player_newShip( ship, x, y, 0., 0., RNG(0,359)/180.*M_PI );
    space_init(system);
+
+   /* clear the map */
+   map_clear();
 }
 
 
@@ -1517,6 +1521,10 @@ void player_brokeHyperspace (void)
    /* stop hyperspace */
    pilot_rmFlag( player, PILOT_HYPERSPACE | PILOT_HYP_BEGIN | PILOT_HYP_PREP );
 
+   /* update the map */
+   map_jump();
+
+   /* run the jump hooks */
    hooks_run( "jump" );
 }
 
