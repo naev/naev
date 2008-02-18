@@ -37,7 +37,9 @@
 	*) YAML (when DOM parser is done)
 	*) Cinema scenes
 	*) Options menu do something
-	*) allow subsystems to get damage
+	*) Allow subsystems to get damage
+   *) Allow steering with the mouse
+   *) Configuration app for keybindings
 
 
 	MAYBE... SOMEDAY...
