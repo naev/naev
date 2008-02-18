@@ -177,14 +177,14 @@ void planets_minimap( const double res, const double w, const double h,
  */
 /* the node struct */
 typedef struct SysNode_ {
-   struct SysNode_ *next;
+   struct SysNode_ *next, *gnext;
 
    struct SysNode_ *parent;
    StarSystem* sys;
    double r; /* ranking */
    int g; /* step */
 } SysNode;
-static SysNode *gc;
+static SysNode *A_gc;
 /* prototypes */
 static SysNode* A_newNode( StarSystem* sys, SysNode* parent );
 static double A_h( StarSystem *n, StarSystem *g );
@@ -207,7 +207,8 @@ static SysNode* A_newNode( StarSystem* sys, SysNode* parent )
    n->r = DBL_MAX;
    n->g = 0.;
 
-   A_add( gc, n );
+   n->gnext = A_gc;
+   A_gc = n;
 
    return n;
 }
@@ -306,7 +307,7 @@ static void A_freeList( SysNode *first )
       if (p != NULL)
          free(p);
       p = n;
-   } while ((n=n->next) != NULL);
+   } while ((n=n->gnext) != NULL);
    free(p);
 }
 StarSystem** system_getJumpPath( int* njumps, char* sysstart, char* sysend )
@@ -318,7 +319,7 @@ StarSystem** system_getJumpPath( int* njumps, char* sysstart, char* sysend )
    SysNode *cur, *neighbour;
    SysNode *open, *closed;
 
-   gc = NULL;
+   A_gc = NULL;
 
    /* initial and target systems */
    ssys = system_get(sysstart); /* start */
@@ -363,7 +364,7 @@ StarSystem** system_getJumpPath( int* njumps, char* sysstart, char* sysend )
    /* free the linked lists */
    //A_freeList(open);
    //A_freeList(closed);
-   A_freeList(gc);
+   A_freeList(A_gc);
    return res;
 }
 
