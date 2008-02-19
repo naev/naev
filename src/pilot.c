@@ -18,6 +18,7 @@
 #include "pack.h"
 #include "spfx.h"
 #include "rng.h"
+#include "hook.h"
 
 
 #define XML_ID          "Fleets"  /* XML section identifier */
@@ -350,6 +351,10 @@ void pilot_dead( Pilot* p )
 
    /* PILOT R OFFICIALLY DEADZ0R */
    pilot_setFlag(p,PILOT_DEAD);
+
+   /* run hook if pilot has a death hook */
+   if (p->hook_type == PILOT_HOOK_DEATH)
+      hook_runID( p->hook );
 }
 
 
@@ -852,6 +857,16 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
 
 
 /*
+ * adds a hook to the pilot
+ */
+void pilot_addHook( Pilot *pilot, int type, int hook )
+{
+   pilot->hook_type = type;
+   pilot->hook = hook;
+}
+
+
+/*
  * Initialize pilot
  *
  * @ ship : ship pilot will be flying
@@ -916,6 +931,10 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* 
    pilot->commodities = NULL;
    pilot->ncommodities = 0;
    pilot->cargo_free = pilot->ship->cap_cargo;
+
+   /* hooks */
+   pilot->hook_type = PILOT_HOOK_NONE;
+   pilot->hook = 0;
 
    /* set flags and functions */
    if (flags & PILOT_PLAYER) {

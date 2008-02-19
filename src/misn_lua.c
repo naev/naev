@@ -15,6 +15,7 @@
 #include "space.h"
 #include "toolkit.h"
 #include "land.h"
+#include "pilot.h"
 #include "player.h"
 #include "ntime.h"
 
@@ -157,10 +158,12 @@ static const luaL_reg tk_methods[] = {
 static int hook_land( lua_State *L );
 static int hook_takeoff( lua_State *L );
 static int hook_time( lua_State *L );
+static int hook_pilotDeath( lua_State *L );
 static const luaL_reg hook_methods[] = {
    { "land", hook_land },
    { "takeoff", hook_takeoff },
    { "time", hook_time },
+   { "pilotDeath", hook_pilotDeath },
    {0,0}
 };
 
@@ -789,8 +792,8 @@ static int hook_generic( lua_State *L, char* stack )
             cur_mission->data->name);
       return 0;
    }
-   hook_add( cur_mission->id, func, stack );
-   return 0;
+   i = hook_add( cur_mission->id, func, stack );
+   return i;
 }
 static int hook_land( lua_State *L )
 {
@@ -807,3 +810,22 @@ static int hook_time( lua_State *L )
    hook_generic( L, "time" );
    return 0;
 }
+static int hook_pilotDeath( lua_State *L )
+{
+   MIN_ARGS(2);
+   int h;
+   unsigned int p;
+
+   if (lua_isnumber(L,-2)) p = (unsigned int) lua_tonumber(L,-2);
+   else {
+      MISN_DEBUG("Invalid first parameter");
+      return 0;
+   }
+
+   h = hook_generic( L, "death" ); /* we won't actually call the death stack directly */
+   pilot_addHook( pilot_get(p), PILOT_HOOK_DEATH, h );
+
+   return 0;
+}
+
+

@@ -40,12 +40,14 @@ static int hook_runningstack = 0; /* check if stack is running */
  */
 /* extern */
 extern int misn_run( Mission *misn, char *func );
+/* intern */
+static int hook_run( Hook *hook );
 
 
 /*
  * prototypes
  */
-int hook_run( Hook *hook )
+static int hook_run( Hook *hook )
 {
    int i;
    Mission* misn;
@@ -157,6 +159,22 @@ int hooks_run( char* stack )
       }
    
    return 0;
+}
+
+
+/*
+ * runs a single hook by id
+ */
+void hook_runID( int id )
+{
+   int i;
+
+   for (i=0; i<hook_nstack; i++)
+      if (hook_stack[i].id == id) {
+         hook_run( &hook_stack[i] );
+         return;
+      }
+   DEBUG("Attempting to run hook of id '%d' which is not in the stack", id);
 }
 
 

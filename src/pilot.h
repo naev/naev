@@ -31,6 +31,10 @@
 #define PILOT_SIZE_APROX      0.8   /* aproximation for pilot size */
 #define PILOT_DISABLED_ARMOR  0.3   /* armour % that gets it disabled */
 
+/* hooks */
+#define PILOT_HOOK_NONE    0 /* no hook */
+#define PILOT_HOOK_DEATH   1 /* pilot died */
+
 
 /* flags */
 #define pilot_isFlag(p,f)  ((p)->flags & (f))
@@ -122,6 +126,10 @@ typedef struct Pilot_ {
    uint32_t flags; /* used for AI and others */
    unsigned int ptimer; /* generic timer for internal pilot use */
 
+   /* hook attached to the pilot */
+   int hook_type;
+   int hook;
+
    /* AI */
    AI_Profile* ai; /* ai personality profile */
    unsigned int tcontrol; /* timer for control tick */
@@ -209,6 +217,12 @@ void fleet_free (void);
  */
 void pilots_update( double dt );
 void pilots_render (void);
+
+
+/*
+ * hooks
+ */
+void pilot_addHook( Pilot *pilot, int type, int hook );
 
 
 #endif /* PILOT_H */

@@ -25,6 +25,7 @@ void hook_rmParent( unsigned int parent );
  *    "time" - when time is increment drastically (hyperspace and taking off)
  */
 int hooks_run( char* stack );
+void hook_runID( int id ); /* runs hook of specific id */
 
 /* destroys hooks */
 void hook_cleanup (void);
