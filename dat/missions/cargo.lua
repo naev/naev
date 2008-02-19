@@ -4,7 +4,7 @@ if lang == "es" then
 else -- default english
    misn_desc = {}
    misn_desc[1] = "%s in the %s system needs a delivery of %d tons of %s."
-   misn_desc[2] = "%s in the %s system needs a rush delivery of %d tons of %s before %s."
+   misn_desc[2] = "%s in the %s system needs a rush delivery of %d tons of %s before %s (%s left)."
    misn_reward = "%d credits"
    title = {}
    title[1] = "Cargo delivery to %s"
@@ -44,7 +44,7 @@ function create()
 
    -- mission generics
    i = rnd.int(4)
-   if i < 4 then -- cargo delivery
+   if i < 3 then -- cargo delivery
       misn_type = "Cargo"
       i = rnd.int(3)
       misn.setTitle( string.format(title[i+1], planet) )
@@ -74,9 +74,11 @@ function create()
             carg_mass * (150+rnd.int(75)) +
             rnd.int(1500)
    elseif misn_type == "Rush" then
-      misn_time = time.get() + rnd.int(time.units(2), time.units(4)) * misn_dist
+      misn_time = time.get() + time.units(2) +
+            rnd.int(time.units(2), time.units(4)) * misn_dist
       misn.setDesc( string.format( misn_desc[2], planet, system,
-            carg_mass, carg_type, time.str(misn_time) ) )
+            carg_mass, carg_type,
+            time.str(misn_time), time.str(misn_time-time.get()) ) )
       reward = misn_dist * carg_mass * (450+rnd.int(250)) +
             carg_mass * (250+rnd.int(125)) +
             rnd.int(3500)
@@ -118,6 +120,9 @@ end
 
 -- Time hook
 function timeup()
+   misn.setDesc( string.format( misn_desc[2], planet, system,                        
+         carg_mass, carg_type, 
+         time.str(misn_time), time.str(misn_time-time.get()) ) )
    if time.get() > misn_time then
       player.msg( "You have failed to delivery the goods on time!" )
       misn.finish(false)
