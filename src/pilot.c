@@ -161,6 +161,22 @@ Pilot* pilot_get( const unsigned int id )
 
 
 /*
+ * grabs a fleet out of the stack
+ */
+Fleet* fleet_get( const char* name )
+{
+   int i;
+
+   for (i=0; i<nfleets; i++)
+      if (strcmp(fleet_stack[i].name, name)==0)
+         return &fleet_stack[i];
+
+   WARN("Fleet '%s' not found in stack", name);
+   return NULL;
+}
+
+
+/*
  * tries to turn the pilot to face dir
  */
 double pilot_face( Pilot* p, const float dir )
@@ -1137,17 +1153,6 @@ void pilots_render (void)
    for (i=1; i<pilots; i++) /* skip player */
       if (pilot_stack[i]->render) /* render */
          pilot_stack[i]->render(pilot_stack[i]);
-}
-
-
-/* returns the fleet based on name */
-Fleet* fleet_get( const char* name )
-{
-   int i;
-   for (i=0; i<nfleets; i++)
-      if (strcmp(name, fleet_stack[i].name)==0)
-         return fleet_stack+i;
-   return NULL;
 }
 
 

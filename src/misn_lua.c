@@ -166,6 +166,12 @@ static const luaL_reg hook_methods[] = {
    { "pilotDeath", hook_pilotDeath },
    {0,0}
 };
+/* pilots */
+static int pilot_addFleet( lua_State *L );
+static const luaL_reg pilot_methods[] = {
+   { "add", pilot_addFleet },
+   {0,0}
+};
 
 
 /*
@@ -182,6 +188,7 @@ int misn_loadLibs( lua_State *L )
    luaL_register(L, "rnd", rnd_methods);
    luaL_register(L, "tk", tk_methods);
    luaL_register(L, "hook", hook_methods);
+   luaL_register(L, "pilot", pilot_methods);
    return 0;
 }
 
@@ -826,6 +833,70 @@ static int hook_pilotDeath( lua_State *L )
    pilot_addHook( pilot_get(p), PILOT_HOOK_DEATH, h );
 
    return 0;
+}
+
+
+
+/*
+ *   P I L O T
+ */
+static int pilot_addFleet( lua_State *L )
+{
+   MIN_ARGS(1);
+   Fleet *flt;
+   char *fltname;
+   int i, j;
+   unsigned int p;
+   double a;
+   Vector2d vv,vp, vn;
+
+   if (lua_isstring(L,-1)) fltname = (char*) lua_tostring(L,-1);
+   else {
+      MISN_DEBUG("Invalid parameter");
+      return 0;
+   }
+
+   /* pull the fleet */
+   flt = fleet_get( fltname );
+   if (flt == NULL) {
+      MISN_DEBUG("Fleet not found!");
+      return 0;
+   }
+
+   /* this should probable be done better */
+   vect_pset( &vp, RNG(MIN_HYPERSPACE_DIST, MIN_HYPERSPACE_DIST*1.5),
+         RNG(0,360)*M_PI/180.);
+   vectnull(&vn);
+
+   /* now we start adding pilots and toss ids into the table we return */
+   j = 0;
+   lua_newtable(L);
+   for (i=0; i<flt->npilots; i++) {
+
+      if (RNG(0,100) <= flt->pilots[i].chance) {
+
+         /* fleet displacement */
+         vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
+               RNG(75,150) * (RNG(0,1) ? 1 : -1));
+
+         a = vect_angle(&vp,&vn);
+         vectnull(&vv);
+         p = pilot_create( flt->pilots[i].ship,
+               flt->pilots[i].name,
+               flt->faction,
+               flt->ai,
+               a,
+               &vp,
+               &vv,
+               0 );
+
+         /* we push each pilot created into a table and return it */
+         lua_pushnumber(L,++j); /* index, starts with 1 */
+         lua_pushnumber(L,p); /* value = pilot id */
+         lua_rawset(L,-3); /* store the value in the table */
+      }
+   }
+   return 1;
 }
 
 
