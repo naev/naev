@@ -128,11 +128,13 @@ static int player_freeSpace( lua_State *L );
 static int player_addCargo( lua_State *L );
 static int player_rmCargo( lua_State *L );
 static int player_pay( lua_State *L );
+static int player_msg( lua_State *L );
 static const luaL_reg player_methods[] = {
    { "freeCargo", player_freeSpace },
    { "addCargo", player_addCargo },
    { "rmCargo", player_rmCargo },
    { "pay", player_pay },
+   { "msg", player_msg },
    {0,0}
 };
 /* rnd */
@@ -306,10 +308,7 @@ static int misn_finish( lua_State *L )
    int b;
 
    if (lua_isboolean(L,-1)) b = lua_toboolean(L,-1);
-   else {
-      MISN_DEBUG("Trying to finish without specifying if mission is complete");
-      return 0;
-   }
+   else return 0; /* with no argument it won't delete the mission */
 
    misn_delete = 1;
 
@@ -672,7 +671,17 @@ static int player_pay( lua_State *L )
 
    return 0;
 }
+static int player_msg( lua_State *L )
+{
+   MIN_ARGS(1);
+   char* str;
 
+   if (lua_isstring(L,-1)) str = (char*) lua_tostring(L,-1);
+   else return 0;
+
+   player_message(str);
+   return 0;
+}
 
 
 /*

@@ -110,7 +110,7 @@ static int mission_init( Mission* mission, MissionData* misn )
    /* load the file */
    buf = pack_readfile( DATA, misn->lua, &bufsize );
    if (luaL_dobuffer(mission->L, buf, bufsize, misn->lua) != 0) {
-      ERR("Error loading AI file: %s",misn->lua);
+      ERR("Error loading mission file: %s",misn->lua);
       ERR("%s",lua_tostring(mission->L,-1));
       WARN("Most likely Lua file has improper syntax, please check");
       return -1;
