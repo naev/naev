@@ -342,6 +342,13 @@ void pilot_dead( Pilot* p )
    p->ptimer = p->timer[0] + 1000 +
       (unsigned int)sqrt(10*p->armour_max*p->shield_max);
    p->timer[1] = p->timer[0]; /* explosion timer */
+
+   /* flag cleanup - fixes some issues */
+   if (pilot_isFlag(p,PILOT_HYP_PREP)) pilot_rmFlag(p,PILOT_HYP_PREP);
+   if (pilot_isFlag(p,PILOT_HYP_BEGIN)) pilot_rmFlag(p,PILOT_HYP_BEGIN);
+   if (pilot_isFlag(p,PILOT_HYPERSPACE)) pilot_rmFlag(p,PILOT_HYPERSPACE);
+
+   /* PILOT R OFFICIALLY DEADZ0R */
    pilot_setFlag(p,PILOT_DEAD);
 }
 
