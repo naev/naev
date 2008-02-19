@@ -1186,14 +1186,24 @@ static int ai_shipprice( lua_State *L )
  */
 static int ai_rng( lua_State *L )
 {
-   MIN_ARGS(2);
+   int o;
 
-   int l,h;
+   o = lua_gettop(L);
 
-   if (lua_isnumber(L,1)) l = (int)lua_tonumber(L,1);
-   if (lua_isnumber(L,2)) h = (int)lua_tonumber(L,2);
+   if (o==0) lua_pushnumber(L, RNGF() ); /* random double 0 <= x <= 1 */
+   else if (o==1) { /* random int 0 <= x <= parameter */
+      if (lua_isnumber(L, -1))
+         lua_pushnumber(L, RNG(0, (int)lua_tonumber(L, -1)));
+      else return 0;
+   }
+   else if (o>=2) { /* random int paramater 1 <= x <= parameter 2 */
+      if (lua_isnumber(L, -1) && lua_isnumber(L, -2))
+         lua_pushnumber(L,
+               RNG((int)lua_tonumber(L, -2), (int)lua_tonumber(L, -1)));
+      else return 0;
+   }
+   else return 0;
 
-   lua_pushnumber(L,RNG(l,h));
-   return 1;
+   return 1; /* unless it's returned 0 already it'll always return a parameter */
 }
 

@@ -46,10 +46,19 @@ function create()
 
    -- more mission specifics
    carg_mass = rnd.int( 10, 30 )
-   i = rnd.int(1)
-   if i==0 then carg_type = "Food"
-   elseif i==1 then carg_type = "Ore"
+   i = rnd.int(12)
+   if i < 5 then
+      carg_type = "Food"
+   elseif i < 8 then
+      carg_type = "Ore"
+   elseif i < 10 then
+      carg_type = "Industrial Goods"
+   elseif i < 12 then
+      carg_type = "Luxury Goods"
+   else
+      carg_type = "Medicine"
    end
+
    misn.setDesc( string.format( misn_desc, planet, system, carg_mass, carg_type ) )
    reward = misn_dist * carg_mass * (250+rnd.int(150)) +
          carg_mass * (150+rnd.int(75)) +

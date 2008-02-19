@@ -45,11 +45,17 @@ end
 function create ()
    ai.setcredits( ai.rnd(200, ai.shipprice()/100) )
 
-   num = ai.rnd(0,1)
-   if num == 0 then
+   num = ai.rnd(12)
+   if num < 5 then
       cargo = "Food"
-   elseif num ==1 then
+   elseif num < 8 then
       cargo = "Ore"
+   elseif num < 10 then
+      cargo = "Industrial Goods"
+   elseif num < 12 then
+      cargo = "Luxury Goods"
+   else
+      cargo = "Medicine"
    end
    ai.setcargo( cargo, ai.rnd(0, ai.cargofree() ) )
 end

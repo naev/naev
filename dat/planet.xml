@@ -21,6 +21,8 @@ The bar is just off the starport with a great view of the harbour.  You could wa
 <commodities>
 <commodity>Food</commodity>
 <commodity>Ore</commodity>
+<commodity>Industrial Goods</commodity>
+<commodity>Medicine</commodity>
 </commodities>
 </general>
 <GFX>
@@ -73,6 +75,7 @@ The Omega Canteen is a dark place that seems calm, although everytime a robotic 
 <services>15</services>
 <commodities>
 <commodity>Food</commodity>
+<commodity>Medicine</commodity>
 </commodities>
 <tech>
 <main>5</main>
@@ -119,6 +122,9 @@ The Darkshed cantina is decorated with all sorts of odd artifacts that marked di
 <commodities>
 <commodity>Food</commodity>
 <commodity>Ore</commodity>
+<commodity>Industrial Goods</commodity>
+<commodity>Medicine</commodity>
+<commodity>Luxury Goods</commodity>
 </commodities>
 </general>
 <GFX>
