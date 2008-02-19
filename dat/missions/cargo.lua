@@ -22,6 +22,7 @@ else -- default english
    finish_msg = "The workers unload the %s at the docks."
    miss_title = "Cargo Missing"
    miss_msg = "You are missing the %d tons of %s!."
+   misn_time_msg = "You have failed to delivery the goods on time!"
 end
 
       
@@ -81,7 +82,7 @@ function create()
             time.str(misn_time), time.str(misn_time-time.get()) ) )
       reward = misn_dist * carg_mass * (450+rnd.int(250)) +
             carg_mass * (250+rnd.int(125)) +
-            rnd.int(3500)
+            rnd.int(2500)
    end
    misn.setReward( string.format( misn_reward, reward ) )
 end
@@ -120,12 +121,12 @@ end
 
 -- Time hook
 function timeup()
-   misn.setDesc( string.format( misn_desc[2], planet, system,                        
-         carg_mass, carg_type, 
-         time.str(misn_time), time.str(misn_time-time.get()) ) )
    if time.get() > misn_time then
-      player.msg( "You have failed to delivery the goods on time!" )
+      player.msg( misn_time_msg )
       misn.finish(false)
    end
+   misn.setDesc( string.format( misn_desc[2], planet, system,
+         carg_mass, carg_type,
+         time.str(misn_time), time.str(misn_time-time.get()) ) )
 end
 

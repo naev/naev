@@ -2,7 +2,7 @@ lang = naev.lang()
 if lang == "es" then
    -- not translated atm
 else -- default english
-   misn_desc = "The Empire needs to ship %d tons of %s to %s in the %s system."
+   misn_desc = "The Empire needs to ship %d tons of %s to %s in the %s system by %s (%s left)."
    misn_reward = "%d credits"
    title = {}
    title[1] = "ES: Ship to %s"
@@ -17,9 +17,13 @@ else -- default english
    finish_msg = "The Empire workers unload the %s at the docks."
    miss_title = "Cargo Missing"
    miss_msg = "You are missing the %d tons of %s!."
+   miss_timeup = "You have failed to deliver the goods to the Empire on time!"
 end
 
-      
+--[[
+--    Empire shipping missions are always timed, but quite lax on the schedules
+--    pays a bit more then the rush missions
+--]]
 
 -- Create the mission
 function create()
@@ -57,7 +61,10 @@ function create()
       carg_type = "Medicine"
    end
 
-   misn.setDesc( string.format( misn_desc, carg_mass, carg_type, planet, system ) )
+   misn_time = time.get() + time.units(5) +
+         rnd.int(time.units(5), time.units(8)) * misn_dist
+   misn.setDesc( string.format( misn_desc, carg_mass, carg_type, planet, system,
+         time.str(misn_time), time.str(misn_time-time.get())) )
    reward = misn_dist * carg_mass * (500+rnd.int(250)) +
          carg_mass * (250+rnd.int(150)) +
          rnd.int(2500)
@@ -72,6 +79,7 @@ function accept()
       carg_id = player.addCargo( carg_type, carg_mass )
       tk.msg( accept_title, string.format( accept_msg, carg_mass, carg_type ))
       hook.land( "land" ) -- only hook after accepting
+      hook.time( "timeup" )
    else
       tk.msg( toomany_title, toomany_msg )
    end
@@ -98,4 +106,15 @@ function land()
       end
    end
 end
+
+-- Time hook
+function timeup()
+   if time.get() > misn_time then
+      player.msg( miss_timeup )
+      misn.finish(false)
+   end
+   misn.setDesc( string.format( misn_desc, carg_mass, carg_type, planet, system,
+         time.str(misn_time), time.str(misn_time-time.get())) )
+end
+
 
