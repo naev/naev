@@ -22,7 +22,7 @@ else -- default english
    finish_msg = "The workers unload the %s at the docks."
    miss_title = "Cargo Missing"
    miss_msg = "You are missing the %d tons of %s!."
-   misn_time_msg = "You have failed to delivery the goods on time!"
+   misn_time_msg = "MISSION FAILED: You have failed to delivery the goods on time!"
 end
 
       

@@ -18,7 +18,7 @@
 </avail>
 </mission>
 <mission name="Empire Recruitment">
-<lua>empire00</lua>
+<lua>emp_cargo00</lua>
 <flags>
 <unique>1</unique>
 </flags>
@@ -37,6 +37,18 @@
 <location>Computer</location>
 <alliance>Empire United</alliance>
 <alliance>Neutral</alliance>
+</avail>
+</mission>
+<mission name="Empire Scouting">
+<lua>emp_scout00</lua>
+<flags>
+<unique>1</unique>
+</flags>
+<avail>
+<req>es_cargo</req>
+<chance>70</chance>
+<location>Bar</location>
+<alliance>Empire United</alliance>
 </avail>
 </mission>
 </Missions>

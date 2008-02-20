@@ -1526,6 +1526,7 @@ void player_brokeHyperspace (void)
 
    /* run the jump hooks */
    hooks_run( "jump" );
+   hooks_run( "enter" );
 }
 
 

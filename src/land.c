@@ -1074,6 +1074,7 @@ void takeoff (void)
    landed = 0;
    land_visited = 0;
    hooks_run("takeoff"); 
+   hooks_run("enter");
 
    /* cleanup mission computer */
    for (i=0; i<mission_ncomputer; i++)

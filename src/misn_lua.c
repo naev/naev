@@ -106,11 +106,13 @@ static const luaL_reg var_methods[] = {
 static int space_getPlanet( lua_State *L );
 static int space_getSystem( lua_State *L );
 static int space_landName( lua_State *L );
+static int space_systemName( lua_State *L );
 static int space_jumpDist( lua_State *L );
 static const luaL_reg space_methods[] = {
    { "getPlanet", space_getPlanet },
    { "getSystem", space_getSystem },
    { "landName", space_landName },
+   { "system", space_systemName },
    { "jumpDist", space_jumpDist },
    {0,0}
 };
@@ -125,12 +127,16 @@ static const luaL_reg time_methods[] = {
    {0,0}
 };
 /* player */
+static int player_getname( lua_State *L );
+static int player_shipname( lua_State *L );
 static int player_freeSpace( lua_State *L );
 static int player_addCargo( lua_State *L );
 static int player_rmCargo( lua_State *L );
 static int player_pay( lua_State *L );
 static int player_msg( lua_State *L );
 static const luaL_reg player_methods[] = {
+   { "name", player_getname },
+   { "ship", player_shipname },
    { "freeCargo", player_freeSpace },
    { "addCargo", player_addCargo },
    { "rmCargo", player_rmCargo },
@@ -158,11 +164,13 @@ static const luaL_reg tk_methods[] = {
 static int hook_land( lua_State *L );
 static int hook_takeoff( lua_State *L );
 static int hook_time( lua_State *L );
+static int hook_enter( lua_State *L );
 static int hook_pilotDeath( lua_State *L );
 static const luaL_reg hook_methods[] = {
    { "land", hook_land },
    { "takeoff", hook_takeoff },
    { "time", hook_time },
+   { "enter", hook_enter },
    { "pilotDeath", hook_pilotDeath },
    {0,0}
 };
@@ -568,6 +576,11 @@ static int space_landName( lua_State *L )
    }
    return 0;
 }
+static int space_systemName( lua_State *L )
+{
+   lua_pushstring(L, cur_system->name);
+   return 1;
+}
 static int space_jumpDist( lua_State *L )
 {
    MIN_ARGS(1);
@@ -629,6 +642,16 @@ static int time_units( lua_State *L )
 /* 
  *   P L A Y E R
  */
+static int player_getname( lua_State *L )
+{
+   lua_pushstring(L,player_name);
+   return 1;
+}
+static int player_shipname( lua_State *L )
+{
+   lua_pushstring(L,player->name);
+   return 1;
+}
 static int player_freeSpace( lua_State *L )
 {
    lua_pushnumber(L, pilot_freeCargo(player) );
@@ -815,6 +838,11 @@ static int hook_takeoff( lua_State *L )
 static int hook_time( lua_State *L )
 {
    hook_generic( L, "time" );
+   return 0;
+}
+static int hook_enter( lua_State *L )
+{
+   hook_generic( L, "enter" );
    return 0;
 }
 static int hook_pilotDeath( lua_State *L )
