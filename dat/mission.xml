@@ -11,7 +11,7 @@
 <mission name="Cargo">
 <lua>cargo</lua>
 <avail>
-<chance>750</chance>
+<chance>960</chance>
 <location>Computer</location>
 <alliance>Neutral</alliance>
 <alliance>Empire United</alliance>
