@@ -231,9 +231,9 @@ static void player_newMake (void)
             if (xml_isNode(cur,"ship")) ship = ship_get( xml_get(cur) );
             else if (xml_isNode(cur,"credits")) { /* monies range */
                tmp = cur->children;
-               do { 
-                  if (xml_isNode(tmp,"low")) l = xml_getInt(tmp);
-                  else if (xml_isNode(tmp,"high")) h = xml_getInt(tmp);
+               do {
+                  xmlr_int(tmp, "low", l);
+                  xmlr_int(tmp, "high", h);
                } while (xml_nextNode(tmp));
             }
             else if (xml_isNode(cur,"system")) {
@@ -242,17 +242,16 @@ static void player_newMake (void)
                   /* system name, TODO percent chance */
                   if (xml_isNode(tmp,"name")) snprintf(system,20,xml_get(tmp));
                   /* position */
-                  else if (xml_isNode(tmp,"x")) x = xml_getFloat(tmp);
-                  else if (xml_isNode(tmp,"y")) y = xml_getFloat(tmp);
+                  xmlr_float(tmp,"x",x);
+                  xmlr_float(tmp,"y",y);
                } while (xml_nextNode(tmp));
             }
-            else if (xml_isNode(cur,"player_crating"))
-               player_crating = xml_getInt(cur);
-            else if (xml_isNode(cur,"date")) {
+            xmlr_int(cur,"player_crating",player_crating);
+            if (xml_isNode(cur,"date")) {
                tmp = cur->children;
                do {
-                  if (xml_isNode(tmp,"low")) tl = xml_getInt(tmp);
-                  else if (xml_isNode(tmp,"high")) th = xml_getInt(tmp);
+                  xmlr_int(tmp, "low", tl);
+                  xmlr_int(tmp, "high", th);
                } while (xml_nextNode(tmp));
             }
          } while (xml_nextNode(cur));
