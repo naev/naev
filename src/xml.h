@@ -48,17 +48,19 @@ if (xml_isNode(n,s)) { f = xml_getFloat(n); continue; }
  */
 /* encompassing element */
 #define xmlw_startElem(w,str)   \
-if (xmlTextWriterStartElement(w,str) < 0) { \
+if (xmlTextWriterStartElement(w,(xmlChar*)str) < 0) { \
    ERR("xmlw: unable to create start element"); return -1; }
 #define xmlw_endElem(w) \
 if (xmlTextWriterEndElement(w) < 0) { \
    ERR("xmlw: unable to create end element"); return -1; }
 /* other stuff */
-#define xmlw_elem(w,n,str, args...) \
-if (xmlTextWriterWriteFormatElement(w,n,str, ## args) < 0) { \
+#define xmlw_elem(w,n,str,args...) \
+if (xmlTextWriterWriteFormatElement(w,(xmlChar*)n, \
+      str, ## args) < 0) { \
    ERR("xmlw: unable to write format element"); return -1; }
-#define xmlw_attr(w,str,val)  \
-if (xmlTextWriterWriteAttribute(w,str,val) < 0) { \
+#define xmlw_attr(w,str,val...)  \
+if (xmlTextWriterWriteFormatAttribute(w,(xmlChar*)str, \
+      ## val) < 0) { \
    ERR("xmlw: unable to write element attribute"); return -1; }
 /* document level */
 #define xmlw_start(w) \

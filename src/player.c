@@ -163,9 +163,12 @@ static int gui_parse( const xmlNodePtr parent, const char *name );
 static void gui_renderPilot( const Pilot* p );
 static void gui_renderBar( const glColour* c,
       const Rect* r, const double w );
+static int player_saveShip( xmlTextWriterPtr writer, 
+      Pilot* ship, char* loc );
 /* externed */
 void player_dead (void);
 void player_destroyed (void);
+int player_save( xmlTextWriterPtr writer );
 
 
 
@@ -1725,3 +1728,66 @@ int player_missionAlreadyDone( int id )
          return 1;
    return 0;
 }
+
+
+/*
+ * save the freaking player in a freaking xmlfile
+ */
+int player_save( xmlTextWriterPtr writer )
+{
+   int i;
+
+   xmlw_startElem(writer,"player");
+   xmlw_attr(writer,"name",player_name);
+
+   xmlw_elem(writer,"rating","%d",player_crating);
+   xmlw_elem(writer,"credits","%d",player->credits);
+
+   player_saveShip( writer, player, NULL ); /* current ship */
+
+   xmlw_startElem(writer,"ships");
+   for (i=0; i<player_nstack; i++)
+      player_saveShip( writer, player_stack[i], player_lstack[i] );
+   xmlw_endElem(writer); /* ships */
+
+   xmlw_endElem(writer); /* "player" */
+
+   return 0;
+}
+
+
+static int player_saveShip( xmlTextWriterPtr writer,
+      Pilot* ship, char* loc )
+{
+   int i;
+
+   xmlw_startElem(writer,"ship");
+   xmlw_attr(writer,"name",ship->name);
+
+   xmlw_elem(writer,"shipname",ship->ship->name);
+   xmlw_elem(writer,"location",loc);
+
+   /* save the outfits */
+   xmlw_startElem(writer,"outfits");
+   for (i=0; i<ship->noutfits; i++) {
+      xmlw_elem(writer,"outfit",ship->outfits[i].outfit->name);
+      xmlw_attr(writer,"quantity","%d",ship->outfits[i].quantity);
+   }
+   xmlw_endElem(writer); /* "outfits" */
+
+   /* save the commodities */
+   xmlw_startElem(writer,"commodities");
+   for (i=0; i<ship->noutfits; i++) {
+      xmlw_elem(writer,"outfit",ship->commodities[i].commodity->name);
+      xmlw_attr(writer,"quantity","%d",ship->commodities[i].quantity);
+      if (ship->commodities[i].id > 0)
+         xmlw_attr(writer,"id","%d",ship->commodities[i].id);
+   }
+   xmlw_endElem(writer); /* "commodities" */
+
+   xmlw_endElem(writer); /* "ship" */
+
+   return 0;
+}
+
+
