@@ -1742,9 +1742,17 @@ int player_save( xmlTextWriterPtr writer )
    xmlw_startElem(writer,"ships");
    for (i=0; i<player_nstack; i++)
       player_saveShip( writer, player_stack[i], player_lstack[i] );
-   xmlw_endElem(writer); /* ships */
+   xmlw_endElem(writer); /* "ships" */
 
    xmlw_endElem(writer); /* "player" */
+
+
+   xmlw_startElem(writer,"missions_done");
+
+   for (i=0; i<missions_ndone; i++)
+      xmlw_elem(writer,"done",mission_get(missions_done[i])->name);
+
+   xmlw_endElem(writer); /* "missions_done */
 
    return 0;
 }

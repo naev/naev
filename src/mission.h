@@ -93,6 +93,7 @@ void missions_bar( int faction, char* planet, char* system );
  * misc
  */
 int mission_getID( MissionData* misn );
+MissionData* mission_get( int id );
 
 
 /*

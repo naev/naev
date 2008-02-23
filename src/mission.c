@@ -79,6 +79,17 @@ int mission_getID( MissionData* misn )
    DEBUG("Mission '%s' not found in stack", misn->name);
    return -1;
 }
+
+/*
+ * gets a MissionData based on ID
+ */
+MissionData* mission_get( int id )
+{
+   if ((id <= 0) || (mission_nstack < id)) return NULL;
+   return &mission_stack[id];
+}
+
+
 /*
  * initializes a mission
  */
