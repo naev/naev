@@ -478,4 +478,36 @@ void missions_cleanup (void)
 
 
 
+int missions_save( xmlTextWriterPtr writer )
+{
+   int i,j;
+
+   xmlw_startElem(writer,"missions");
+
+   for (i=0; i<MISSION_MAX; i++) {
+      if (player_missions[i].id != 0) {
+         xmlw_startElem(writer,"mission");
+
+         xmlw_elem(writer,"data",player_missions[i].data->name);
+         xmlw_elem(writer,"id","%u",player_missions[i].id);
+
+         xmlw_elem(writer,"title",player_missions[i].title);
+         xmlw_elem(writer,"desc",player_missions[i].desc);
+         xmlw_elem(writer,"reward",player_missions[i].reward);
+
+         xmlw_startElem(writer,"cargos");
+         for (j=0; j<player_missions[i].ncargo; j++)
+            xmlw_elem(writer,"cargo","%u", player_missions[i].cargo[j]);
+         xmlw_endElem(writer); /* "cargos" */
+
+         /* TODO save lua data */
+
+         xmlw_endElem(writer); /* "mission" */
+      }
+   }
+
+   xmlw_endElem(writer); /* "missions" */
+
+   return 0;
+}
 

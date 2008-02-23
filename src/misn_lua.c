@@ -18,6 +18,7 @@
 #include "pilot.h"
 #include "player.h"
 #include "ntime.h"
+#include "xml.h"
 
 
 #define MISN_DEBUG(str, args...)  (fprintf(stdout,"Mission '%s': "str"\n", cur_mission->data->name, ## args))
