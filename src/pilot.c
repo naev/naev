@@ -1162,7 +1162,7 @@ static Fleet* fleet_parse( const xmlNodePtr parent )
    xmlNodePtr cur, node;
    FleetPilot* pilot;
    char* c;
-   node  = parent->xmlChildrenNode;
+   node = parent->xmlChildrenNode;
 
    Fleet* temp = CALLOC_ONE(Fleet);
    temp->faction = -1;
@@ -1240,8 +1240,7 @@ int fleet_load (void)
    }
 
    do {  
-      if (node->type ==XML_NODE_START &&         
-            strcmp((char*)node->name,XML_FLEET)==0) {
+      if (xml_isNode(node,XML_FLEET)) {
          temp = fleet_parse(node);
          fleet_stack = realloc(fleet_stack, sizeof(Fleet)*(++nfleets));
          memcpy(fleet_stack+nfleets-1, temp, sizeof(Fleet));

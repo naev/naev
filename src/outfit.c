@@ -260,12 +260,13 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
    char str[PATH_MAX] = "\0";
 
    do { /* load all the data */
-      if (xml_isNode(node,"speed")) temp->u.blt.speed = xml_getFloat(node);
-      else if (xml_isNode(node,"delay")) temp->u.blt.delay = xml_getInt(node);
-      else if (xml_isNode(node,"range")) temp->u.blt.range = xml_getFloat(node);
-      else if (xml_isNode(node,"accuracy")) temp->u.blt.accuracy = xml_getFloat(node);
-      else if (xml_isNode(node,"energy")) temp->u.blt.energy = xml_getFloat(node);
-      else if (xml_isNode(node,"gfx")) {
+      xmlr_float(node,"speed",temp->u.blt.speed);
+      xmlr_float(node,"delay",temp->u.blt.delay);
+      xmlr_float(node,"range",temp->u.blt.range);
+      xmlr_float(node,"accuracy",temp->u.blt.accuracy);
+      xmlr_float(node,"energy",temp->u.blt.energy);
+
+      if (xml_isNode(node,"gfx")) {
          snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+10,
                OUTFIT_GFX"space/%s.png", xml_get(node));
          temp->u.blt.gfx_space = gl_newSprite(str, 6, 6);
@@ -277,10 +278,8 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
       else if (xml_isNode(node,"damage")) {
          cur = node->children;
          do {
-            if (xml_isNode(cur,"armour"))
-               temp->u.blt.damage_armour = xml_getFloat(cur);
-            else if (xml_isNode(cur,"shield"))
-               temp->u.blt.damage_shield = xml_getFloat(cur);
+            xmlr_float(cur,"armour",temp->u.blt.damage_armour);
+            xmlr_float(cur,"shield",temp->u.blt.damage_shield);
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
