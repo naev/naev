@@ -145,7 +145,7 @@ function timeup()
       player.msg( misn_time_msg )
       misn.finish(false)
    end
-   misn.setDesc( string.format( misn_desc[2], planet, system,
+   misn.setDesc( string.format( misn_desc[21], planet, system,
          carg_mass, carg_type,
          time.str(misn_time), time.str(misn_time-time.get()) ) )
 end

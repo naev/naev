@@ -1782,10 +1782,14 @@ static int player_saveShip( xmlTextWriterPtr writer,
    /* save the commodities */
    xmlw_startElem(writer,"commodities");
    for (i=0; i<ship->ncommodities; i++) {
-      xmlw_elem(writer,"outfit",ship->commodities[i].commodity->name);
+      xmlw_startElem(writer,"commodity");
+
       xmlw_attr(writer,"quantity","%d",ship->commodities[i].quantity);
       if (ship->commodities[i].id > 0)
          xmlw_attr(writer,"id","%d",ship->commodities[i].id);
+      xmlw_str(writer,ship->commodities[i].commodity->name);
+
+      xmlw_endElem(writer); /* commodity */
    }
    xmlw_endElem(writer); /* "commodities" */
 
