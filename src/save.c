@@ -16,6 +16,19 @@
 /* externs */
 extern int player_save( xmlTextWriterPtr writer );
 extern int missions_save( xmlTextWriterPtr writer );
+/* static */
+static int save_data( xmlTextWriterPtr writer );
+
+
+static int save_data( xmlTextWriterPtr writer )
+{
+   /* the data itself */
+   if (player_save(writer) < 0) return -1;
+   if (missions_save(writer) < 0) return -1;
+
+   return 0;
+}
+
 
 
 int save_all (void)
@@ -31,18 +44,25 @@ int save_all (void)
    }
 
    xmlw_start(writer);
+   xmlw_startElem(writer,"naev_save");
 
-   /* the data itself */
-   player_save(writer);
-   missions_save(writer);
+   if (save_data(writer) < 0) {
+      ERR("Trying to save game data");
+      xmlFreeTextWriter(writer);
+      xmlFreeDoc(doc);
+      return -1;
+   }
 
+   xmlw_endElem(writer); /* "naev_save" */
    xmlw_done(writer);
 
    file = "test.xml";
 
    xmlFreeTextWriter(writer);
-   xmlSaveFileEnc(file, doc, "UTF-8");
+   //xmlSaveFileEnc(file, doc, "UTF-8");
    xmlFreeDoc(doc);
 
    return 0;
 }
+
+

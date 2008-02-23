@@ -16,6 +16,7 @@
 #include "hook.h"
 #include "mission.h"
 #include "ntime.h"
+#include "save.h"
 
 
 /* global/main window */
@@ -1024,6 +1025,8 @@ void land( Planet* p )
       /* TODO mission check */
       visited(VISITED_LAND);
    }
+
+   save_all();
 }
 
 

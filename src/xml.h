@@ -62,6 +62,9 @@ if (xmlTextWriterWriteFormatElement(w,(xmlChar*)n, \
 if (xmlTextWriterWriteFormatAttribute(w,(xmlChar*)str, \
       ## val) < 0) { \
    ERR("xmlw: unable to write element attribute"); return -1; }
+#define xmlw_str(w,str,val...) \
+if (xmlTextWriterWriteFormatString(w,str, ## val) < 0) { \
+   ERR("xmlw: unable to write element data"); return -1; }
 /* document level */
 #define xmlw_start(w) \
 if (xmlTextWriterStartDocument(writer, NULL, "UTF-8", NULL) < 0) { \

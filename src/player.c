@@ -1765,19 +1765,23 @@ static int player_saveShip( xmlTextWriterPtr writer,
    xmlw_attr(writer,"name",ship->name);
 
    xmlw_elem(writer,"shipname",ship->ship->name);
-   xmlw_elem(writer,"location",loc);
+   if (loc != NULL) xmlw_elem(writer,"location",loc);
 
    /* save the outfits */
    xmlw_startElem(writer,"outfits");
    for (i=0; i<ship->noutfits; i++) {
-      xmlw_elem(writer,"outfit",ship->outfits[i].outfit->name);
+      xmlw_startElem(writer,"outfit");
+
       xmlw_attr(writer,"quantity","%d",ship->outfits[i].quantity);
+      xmlw_str(writer,ship->outfits[i].outfit->name);
+
+      xmlw_endElem(writer); /* "outfit" */
    }
    xmlw_endElem(writer); /* "outfits" */
 
    /* save the commodities */
    xmlw_startElem(writer,"commodities");
-   for (i=0; i<ship->noutfits; i++) {
+   for (i=0; i<ship->ncommodities; i++) {
       xmlw_elem(writer,"outfit",ship->commodities[i].commodity->name);
       xmlw_attr(writer,"quantity","%d",ship->commodities[i].quantity);
       if (ship->commodities[i].id > 0)
