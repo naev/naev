@@ -16,6 +16,7 @@
 /* externs */
 extern int player_save( xmlTextWriterPtr writer );
 extern int missions_save( xmlTextWriterPtr writer );
+extern int var_save( xmlTextWriterPtr writer ); /* misn var */
 /* static */
 static int save_data( xmlTextWriterPtr writer );
 
@@ -25,6 +26,7 @@ static int save_data( xmlTextWriterPtr writer )
    /* the data itself */
    if (player_save(writer) < 0) return -1;
    if (missions_save(writer) < 0) return -1;
+   if (var_save(writer) < 0) return -1;
 
    return 0;
 }

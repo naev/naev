@@ -241,6 +241,47 @@ int misn_run( Mission *misn, char *func )
 }
 
 
+/*
+ * saves the mission variables
+ */
+int var_save( xmlTextWriterPtr writer )
+{
+   int i;
+
+   xmlw_startElem(writer,"vars");
+
+   for (i=0; i<var_nstack; i++) {
+      xmlw_startElem(writer,"var");
+
+      xmlw_attr(writer,"name",var_stack[i].name);
+
+      switch (var_stack[i].type) {
+         case MISN_VAR_NIL:
+            xmlw_attr(writer,"type","nil");
+            break;
+         case MISN_VAR_NUM:
+            xmlw_attr(writer,"type","num");
+            xmlw_str(writer,"%d",var_stack[i].d.num);
+            break;
+         case MISN_VAR_BOOL:
+            xmlw_attr(writer,"type","bool");
+            xmlw_str(writer,"%d",var_stack[i].d.b);
+            break;
+         case MISN_VAR_STR:
+            xmlw_attr(writer,"type","str");
+            xmlw_str(writer,var_stack[i].d.str);
+            break;
+      }
+
+      xmlw_endElem(writer); /* "var" */
+   }
+
+   xmlw_endElem(writer); /* "vars" */
+
+   return 0;
+}
+
+
 
 /*
  *   N A E V
