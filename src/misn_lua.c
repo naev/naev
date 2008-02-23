@@ -204,6 +204,8 @@ int misn_loadLibs( lua_State *L )
 
 /*
  * runs a mission function
+ *
+ * -1 on error, 1 on misn.finish() call and 0 normally
  */
 int misn_run( Mission *misn, char *func )
 {
@@ -216,10 +218,10 @@ int misn_run( Mission *misn, char *func )
    lua_getglobal( misn->L, func );
    if ((ret = lua_pcall(misn->L, 0, 0, 0))) { /* error has occured */
       err = (lua_isstring(misn->L,-1)) ? (char*) lua_tostring(misn->L,-1) : NULL;
-      if (strcmp(err,"Mission Finished"))
+      if (strcmp(err,"Mission Done"))
          WARN("Mission '%s' -> '%s': %s",
                cur_mission->data->name, func, (err) ? err : "unknown error");
-      else ret = 0;
+      else ret = 1;
    }
 
    /* mission is finished */
@@ -327,14 +329,18 @@ static int misn_finish( lua_State *L )
    int b;
 
    if (lua_isboolean(L,-1)) b = lua_toboolean(L,-1);
-   else return 0; /* with no argument it won't delete the mission */
+   else {
+      lua_pushstring(L, "Mission Done");
+      lua_error(L); /* THERE IS NO RETURN */
+      return 0;
+   }
 
    misn_delete = 1;
 
    if (b && mis_isFlag(cur_mission->data,MISSION_UNIQUE))
       player_missionFinished( mission_getID( cur_mission->data ) );
 
-   lua_pushstring(L, "Mission Finished");
+   lua_pushstring(L, "Mission Done");
    lua_error(L); /* shouldn't return */
 
    return 0;

@@ -903,11 +903,12 @@ static void misn_accept( char* str )
          "Are you sure you want to accept this mission?")) {
       pos = toolkit_getListPos( secondary_wid, "lstMission" );
       misn = &mission_computer[pos];
-      mission_accept( misn );
-      memmove( misn, &mission_computer[pos+1],
-            sizeof(Mission) * (mission_ncomputer-pos-1) );
-      mission_ncomputer--;
-      misn_genList(0);
+      if (mission_accept( misn )) { /* successs in accepting the mission */
+         memmove( misn, &mission_computer[pos+1],
+               sizeof(Mission) * (mission_ncomputer-pos-1) );
+         mission_ncomputer--;
+         misn_genList(0);
+      }
    }
 }
 static void misn_genList( int first )

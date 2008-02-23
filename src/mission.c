@@ -127,9 +127,12 @@ static int mission_init( Mission* mission, MissionData* misn )
 /*
  * small wrapper for misn_run
  */
-void mission_accept( Mission* mission )
+int mission_accept( Mission* mission )
 {
-   misn_run( mission, "accept" );
+   int ret;
+   ret = misn_run( mission, "accept" );
+   if (ret==0) return 1;
+   return 0;
 }
 
 

@@ -64,7 +64,7 @@ static int hook_run( Hook *hook )
    }
    misn = &player_missions[i];
 
-   if (misn_run( misn, hook->func )) /* error has occured */
+   if (misn_run( misn, hook->func ) < 0) /* error has occured */
       WARN("Hook [%s] '%d' -> '%s' failed", hook->stack,
             hook->id, hook->func);
 
