@@ -664,19 +664,13 @@ void player_render (void)
    if (j!=0) gui_renderPilot(pilot_stack[j]);
 
 
-   glBegin(GL_POINTS); /* for the player */
-      /* player - drawn last*/
+   glBegin(GL_LINES);
       COLOUR(cRadar_player);
-      glVertex2d(  0.,  2. ); /* we represent the player with a small + */
-      glVertex2d(  0.,  1. ); 
-      glVertex2d(  0.,  0. );
-      glVertex2d(  0., -1. );                                             
-      glVertex2d(  0., -2. );
-      glVertex2d(  2.,  0. );
-      glVertex2d(  1.,  0. );
-      glVertex2d( -1.,  0. );
-      glVertex2d( -2.,  0. );
-   glEnd(); /* GL_POINTS */
+      glVertex2d(  0., -3. );
+      glVertex2d(  0.,  3. );
+      glVertex2d( -3.,  0. );
+      glVertex2d(  3.,  0. );
+   glEnd(); /* GL_LINES */
 
    glPopMatrix(); /* GL_PROJECTION */
 
@@ -832,13 +826,13 @@ void player_render (void)
       for (i=0; i < MIN(player->ncommodities,3); i++) { 
          j -= gl_smallFont.h + 3;
          if (player->commodities[i].quantity) /* quantity is over */
-            gl_print( &gl_smallFont,
+            gl_printMax( &gl_smallFont, gui.misc.w - 15,
                   gui.misc.x + 13, j,
                   NULL, "%d %s%s", player->commodities[i].quantity,
                   player->commodities[i].commodity->name,
                   (player->commodities[i].id) ? "*" : "" );
          else /* basically for weightless mission stuff */ 
-            gl_print( &gl_smallFont,
+            gl_printMax( &gl_smallFont, gui.misc.w - 15,
                   gui.misc.x + 13, j,
                   NULL, "%s%s",  player->commodities[i].commodity->name,
                   (player->commodities[i].id) ? "*" : "" );
