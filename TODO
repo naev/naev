@@ -2,8 +2,6 @@
 
    VITAL
 
-   *) Save
-      *) save entire game data except graphics, so that missions can modify stuff
    *) Player faction system
 
 
@@ -29,6 +27,8 @@
    *) More outfit types
       *) beam weapons
       *) hangar bays
+   *) Save improvements
+      *) save entire game data except graphics, so that missions can modify stuff
 
 
    MINOR
