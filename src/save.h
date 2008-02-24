@@ -8,7 +8,7 @@
 
 
 int save_all (void);
-int load_game( char* file );
+void load_game_menu (void);
 
 
 #endif /* SAVE_H */

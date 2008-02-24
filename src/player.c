@@ -29,6 +29,7 @@
 #include "ntime.h"
 #include "hook.h"
 #include "map.h"
+#include "nfile.h"
 
 
 #define XML_GUI_ID   "GUIs"   /* XML section identifier */
@@ -1567,13 +1568,19 @@ void player_screenshot (void)
    int done;
    char filename[PATH_MAX];
 
+   if (nfile_dirMakeExist("screenshots")) {
+      WARN("Aborting screenshot");
+      return;
+   }
+
    done = 0;
    do {
-      if (screenshot_cur >= 128) { /* in case the crap system breaks :) */
-         WARN("You have reached the maximum amount of screenshots [128]");
+      if (screenshot_cur >= 999) { /* in case the crap system breaks :) */
+         WARN("You have reached the maximum amount of screenshots [999]");
          return;
       }
-      snprintf( filename, PATH_MAX, "screenshot%03d.png", screenshot_cur );
+      snprintf( filename, PATH_MAX, "%sscreenshots/screenshot%03d.png",
+            nfile_basePath(), screenshot_cur );
       fp = fopen( filename, "r" ); /* yes i know it's a cheesy way to check */
       if (fp==NULL) done = 1;
       else { /* next */
@@ -1689,7 +1696,7 @@ void player_setLoc( char* shipname, char* loc )
          return;
       }
    }
-   
+
    WARN("Player ship '%s' not found in stack", shipname);
 }
 
@@ -1818,8 +1825,8 @@ int player_load( xmlNodePtr parent )
    do {
       if (xml_isNode(node,"player"))
          player_parse( node );
-       else if (xml_isNode(node,"missions_done"))
-          player_parseDone( node );
+      else if (xml_isNode(node,"missions_done"))
+         player_parseDone( node );
    } while (xml_nextNode(node));
 
    return 0;

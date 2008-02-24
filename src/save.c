@@ -5,18 +5,20 @@
 
 #include "save.h"
 
-#include <stdlib.h>
-#ifdef LINUX
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <errno.h>
-#endif /* LINUX */
-
 #include "naev.h"
 #include "log.h"
 #include "xml.h"
 #include "player.h"
+#include "toolkit.h"
+#include "menu.h"
+#include "nfile.h"
+
+
+#define LOAD_WIDTH      400
+#define LOAD_HEIGHT     300
+
+#define BUTTON_WIDTH    50
+#define BUTTON_HEIGHT   30
 
 
 /*
@@ -27,10 +29,16 @@ extern int player_save( xmlTextWriterPtr writer );
 extern int missions_save( xmlTextWriterPtr writer );
 extern int var_save( xmlTextWriterPtr writer ); /* misn var */
 extern int player_load( xmlNodePtr parent );
+extern void menu_main_close (void);
 /* static */
 static int save_data( xmlTextWriterPtr writer );
+static void load_menu_close( char *str );
+static int load_game( char* file );
 
 
+/*
+ * saves all the game data
+ */
 static int save_data( xmlTextWriterPtr writer )
 {
    /* the data itself */
@@ -47,7 +55,7 @@ static int save_data( xmlTextWriterPtr writer )
  */
 int save_all (void)
 {
-   char file[PATH_MAX], *home;
+   char file[PATH_MAX];
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
 
@@ -70,21 +78,13 @@ int save_all (void)
    xmlw_endElem(writer); /* "naev_save" */
    xmlw_done(writer);
 
-#ifdef LINUX
-   struct stat buf;
-   home = getenv("HOME");
-   snprintf(file, PATH_MAX,"%s/.naev/saves",home);
-   stat(file,&buf);
-   if (!S_ISDIR(buf.st_mode))
-      if (mkdir(file,S_IRWXU | S_IRWXG | S_IRWXO) < 0) {
-         WARN("Unable to create '%s' for saving: %s",file,strerror(errno));
-         WARN("aborting save...");
-         xmlFreeTextWriter(writer);
-         xmlFreeDoc(doc);
-         return -1;
-      }
-   snprintf(file, PATH_MAX,"%s/.naev/saves/%s.ns",home,player_name);
-#endif /* LINUX */
+   if (nfile_dirMakeExist("saves") < 0) {
+      WARN("aborting save...");
+      xmlFreeTextWriter(writer);
+      xmlFreeDoc(doc);
+      return -1;
+   }
+   snprintf(file, PATH_MAX,"%ssaves/%s.ns", nfile_basePath(), player_name);
 
    xmlFreeTextWriter(writer);
    xmlSaveFileEnc(file, doc, "UTF-8");
@@ -95,9 +95,28 @@ int save_all (void)
 
 
 /*
+ * opens the load game menu
+ */
+void load_game_menu (void)
+{
+   unsigned int wid;
+
+   wid = window_create( "Load Game", -1, -1, LOAD_WIDTH, LOAD_HEIGHT );
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnBack", "Back", load_menu_close );
+}
+static void load_menu_close( char *str )
+{
+   (void)str;
+
+   window_destroy( window_get("Load Game") );
+}
+
+
+/*
  * loads a new game
  */
-int load_game( char* file )
+static int load_game( char* file )
 {
    xmlNodePtr node;
    xmlDocPtr doc;

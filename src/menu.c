@@ -52,7 +52,7 @@ int menu_open = 0;
  * prototypes
  */
 /* main menu */
-static void menu_main_close (void);
+void menu_main_close (void);
 static void menu_main_load( char* str );
 static void menu_main_new( char* str );
 /* small menu */
@@ -104,7 +104,7 @@ void menu_main (void)
 
    menu_Open(MENU_MAIN);
 }
-static void menu_main_close (void)
+void menu_main_close (void)
 {
    window_destroy( window_get("Main Menu") );
 
@@ -117,8 +117,7 @@ static void menu_main_load( char* str )
 {
    (void)str;
 
-   menu_main_close();
-   load_game("test.xml");
+   load_game_menu();
 }
 static void menu_main_new( char* str )
 {
