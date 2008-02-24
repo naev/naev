@@ -1032,8 +1032,6 @@ void land( Planet* p )
       /* TODO mission check */
       visited(VISITED_LAND);
    }
-
-   save_all();
 }
 
 
@@ -1079,6 +1077,7 @@ void takeoff (void)
    space_init(NULL);
 
    /* cleanup */
+   save_all(); /* must be before cleaning up planet */
    land_planet = NULL;
    window_destroy( land_wid );
    landed = 0;

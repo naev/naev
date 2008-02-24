@@ -20,6 +20,8 @@
 #include "mission.h"
 #include "ntime.h"
 #include "save.h"
+#include "land.h"
+#include "rng.h"
 
 
 #define MAIN_WIDTH      130
@@ -180,6 +182,12 @@ static void edit_options (void)
  */
 static void exit_game (void)
 {
+   /* if landed we must save anyways */
+   if (landed) {
+      /* increment time to match takeoff */
+      ntime_inc( RNG( 2*NTIME_UNIT_LENGTH, 3*NTIME_UNIT_LENGTH ) );
+      save_all();
+   }
    SDL_Event quit;
    quit.type = SDL_QUIT;
    SDL_PushEvent(&quit);
