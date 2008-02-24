@@ -13,7 +13,6 @@
 #include "toolkit.h"
 #include "log.h"
 #include "naev.h"
-#include "pause.h"
 #include "pilot.h"
 #include "space.h"
 #include "player.h"
@@ -144,7 +143,6 @@ void menu_small (void)
          menu_isOpen(MENU_SMALL) ||
          menu_isOpen(MENU_DEATH) )
       return; /* menu is already open */
-   pause();
 
    unsigned int wid;
    wid = window_create( "Menu", -1, -1, MENU_WIDTH, MENU_HEIGHT );
@@ -166,7 +164,6 @@ static void menu_small_close( char* str )
    if (strcmp(str,"btnResume")==0)
       window_destroy( window_get("Menu") );
 
-   unpause();
    menu_Close(MENU_SMALL);
 }
 
@@ -199,7 +196,6 @@ static void exit_game (void)
 void menu_info (void)
 {
    if (menu_isOpen(MENU_INFO)) return;
-   pause();
 
    char str[128];
    char *nt;
@@ -255,7 +251,6 @@ static void menu_info_close( char* str )
       window_destroy( window_get("Info") );
 
    menu_Close(MENU_INFO);
-   unpause();
 }
 
 

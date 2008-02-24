@@ -11,8 +11,8 @@
 extern int paused;
 
 
-void pause (void);
-void unpause (void);
+void pause_game (void);
+void unpause_game (void);
 
 void pause_delay( unsigned int delay );
 

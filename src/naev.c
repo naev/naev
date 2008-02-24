@@ -10,6 +10,12 @@
 
 /* global */
 #include <string.h> /* strdup */
+#ifdef LINUX
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <errno.h>
+#endif /* LINUX */
 
 /* local */
 #include "naev.h"
@@ -89,12 +95,29 @@ static void render_all (void);
  */
 int main ( int argc, char** argv )
 {
+   char *home, dir[PATH_MAX];
+
    /* print the version */
    snprintf( version, VERSION_LEN, "%d.%d.%d", VMAJOR, VMINOR, VREV );
    LOG( " "APPNAME" v%s", version );
 
    /* initializes SDL for possible warnings */
    SDL_Init(0);
+
+   /* create the home directory if needed */
+#ifdef LINUX
+   struct stat buf;
+
+   home = getenv("HOME");
+   snprintf(dir, PATH_MAX,"%s/.naev",home);
+   stat(dir,&buf);
+   if (!S_ISDIR(buf.st_mode)) {
+      if (mkdir(dir,S_IRWXU | S_IRWXG | S_IRWXO) < 0)
+         WARN("Unable to create naev directory '%s'",dir);
+      else
+         DEBUG("Created naev directory '%s'",dir);
+      }
+#endif
 
    /* input must be initialized for config to work */
    input_init(); 

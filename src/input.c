@@ -288,8 +288,8 @@ static void input_key( int keynum, double value, int abs )
    } else if (KEY("pause") && NOHYP()) {
       if (value==KEY_PRESS) {
          if (!toolkit) {
-            if (paused) unpause();
-            else pause();
+            if (paused) unpause_game();
+            else pause_game();
          }
       }
    /* opens a small menu */
@@ -384,8 +384,8 @@ void input_handle( SDL_Event* event )
    /* pause the game if it is unfocused */
    if (event->type == SDL_ACTIVEEVENT) {
       if (event->active.state != SDL_APPMOUSEFOCUS) { /* we don't need mouse focus */
-         if ((event->active.gain==0) && !paused) pause();
-         else if ((event->active.gain==1) && paused) unpause();
+         if ((event->active.gain==0) && !paused) pause_game();
+         else if ((event->active.gain==1) && paused) unpause_game();
          return;
       }
    }

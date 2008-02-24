@@ -39,7 +39,7 @@ static void pilots_delay( unsigned int delay );
 /*
  * pauses the game
  */
-void pause (void)
+void pause_game (void)
 {
    if (paused) return; /* already paused */
 
@@ -55,7 +55,7 @@ void pause (void)
 /*
  * unpauses the game
  */
-void unpause (void)
+void unpause_game (void)
 {
    if (!paused) return; /* already unpaused */
 

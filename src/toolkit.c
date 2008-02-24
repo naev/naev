@@ -604,6 +604,7 @@ unsigned int window_create( char* name,
    if (toolkit==0) { /* toolkit is on */
       SDL_ShowCursor(SDL_ENABLE);
       toolkit = 1; /* enable toolkit */
+      pause_game();
    }
 
    return wid;
@@ -684,7 +685,7 @@ void window_destroy( const unsigned int wid )
    if (nwindows==0) { /* no windows left */
       SDL_ShowCursor(SDL_DISABLE);
       toolkit = 0; /* disable toolkit */
-      if (paused) unpause();
+      if (paused) unpause_game();
    }
 }
 

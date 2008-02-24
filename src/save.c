@@ -5,9 +5,18 @@
 
 #include "save.h"
 
+#include <stdlib.h>
+#ifdef LINUX
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <errno.h>
+#endif /* LINUX */
+
 #include "naev.h"
 #include "log.h"
 #include "xml.h"
+#include "player.h"
 
 
 /*
@@ -38,7 +47,7 @@ static int save_data( xmlTextWriterPtr writer )
  */
 int save_all (void)
 {
-   char *file;
+   char file[PATH_MAX], *home;
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
 
@@ -61,7 +70,21 @@ int save_all (void)
    xmlw_endElem(writer); /* "naev_save" */
    xmlw_done(writer);
 
-   file = "test.xml";
+#ifdef LINUX
+   struct stat buf;
+   home = getenv("HOME");
+   snprintf(file, PATH_MAX,"%s/.naev/saves",home);
+   stat(file,&buf);
+   if (!S_ISDIR(buf.st_mode))
+      if (mkdir(file,S_IRWXU | S_IRWXG | S_IRWXO) < 0) {
+         WARN("Unable to create '%s' for saving: %s",file,strerror(errno));
+         WARN("aborting save...");
+         xmlFreeTextWriter(writer);
+         xmlFreeDoc(doc);
+         return -1;
+      }
+   snprintf(file, PATH_MAX,"%s/.naev/saves/%s.ns",home,player_name);
+#endif /* LINUX */
 
    xmlFreeTextWriter(writer);
    xmlSaveFileEnc(file, doc, "UTF-8");
