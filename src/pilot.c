@@ -1030,7 +1030,7 @@ Pilot* pilot_createEmpty( Ship* ship, char* name,
       int faction, AI_Profile* ai, const int flags )
 {
    Pilot* dyn;
-   dyn = MALLOC_ONE(Pilot*);
+   dyn = MALLOC_ONE(Pilot);
    pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags | PILOT_EMPTY );
    return dyn;
 }

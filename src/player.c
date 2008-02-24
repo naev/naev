@@ -366,14 +366,14 @@ void player_cleanup (void)
    int i;
 
    /* cleanup name */
-   if (player_name) free(player_name);
+   if (player_name != NULL) free(player_name);
 
    /* cleanup messages */
    for (i=0; i<mesg_max; i++)
       memset( mesg_stack[i].str, '\0', MESG_SIZE_MAX );
 
    /* clean up the stack */
-   if (player_stack) {                
+   if (player_stack != NULL) {                
       for (i=0; i<player_nstack; i++) {
          pilot_free(player_stack[i]);
          free(player_lstack[i]);
@@ -386,7 +386,7 @@ void player_cleanup (void)
       player_nstack = 0;
    }
 
-   if (missions_done) {
+   if (missions_done != NULL) {
       free(missions_done);
       missions_done = NULL;
       missions_ndone = 0;
@@ -1897,7 +1897,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    xmlr_attr(parent,"model",model);
 
    /* player is currently on this ship */
-   if (is_player) {
+   if (is_player != 0) {
       pilot_create( ship_get(model), name, faction_get("Player"), NULL, 0., NULL, NULL,
             PILOT_PLAYER | PILOT_NO_OUTFITS );
       ship = player;
@@ -1912,7 +1912,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    node = parent->xmlChildrenNode;
 
    do {
-      if (!is_player) xmlr_str(node,"location",loc);
+      if (is_player == 0) xmlr_str(node,"location",loc);
 
       if (xml_isNode(node,"outfits")) {
          cur = node->xmlChildrenNode;
@@ -1947,9 +1947,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    } while (xml_nextNode(node));
 
    /* add it to the stack if it's not what the player is in */
-   if (!is_player) {
+   if (is_player == 0) {
       player_stack = realloc(player_stack, sizeof(Pilot*)*(player_nstack+1));
-      player_stack[player_nstack] = pilot_copy( player );
+      player_stack[player_nstack] = ship;
       player_lstack = realloc(player_lstack, sizeof(char*)*(player_nstack+1));
       player_lstack[player_nstack] = strdup(loc);
       player_nstack++;
