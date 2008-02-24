@@ -167,7 +167,7 @@ static void input_key( int keynum, double value, int abs )
     * movement
     */
    /* accelerating */
-   if (KEY("accel")) {
+   if (INGAME() && KEY("accel")) {
       if (abs) player_acc = value;
       else player_acc += value;
 
@@ -184,7 +184,7 @@ static void input_key( int keynum, double value, int abs )
       if (value==KEY_PRESS) input_accelLast = t;
 
    /* turning left */
-   } else if (KEY("left")) {
+   } else if (INGAME() && KEY("left")) {
 
       /* set flags for facing correction */
       if (value==KEY_PRESS) { player_setFlag(PLAYER_TURN_LEFT); }
@@ -195,7 +195,7 @@ static void input_key( int keynum, double value, int abs )
       if (player_turn < -1.) { player_turn = -1.; } /* make sure value is sane */
 
    /* turning right */
-   } else if (KEY("right")) {
+   } else if (INGAME() && KEY("right")) {
 
       /* set flags for facing correction */
       if (value==KEY_PRESS) { player_setFlag(PLAYER_TURN_RIGHT); }
@@ -206,7 +206,7 @@ static void input_key( int keynum, double value, int abs )
       if (player_turn > 1.) { player_turn = 1.; } /* make sure value is sane */
    
    /* turn around to face vel */
-   } else if (KEY("reverse")) {
+   } else if (INGAME() && KEY("reverse")) {
       if (value==KEY_PRESS) { player_setFlag(PLAYER_REVERSE); }
       else if (value==KEY_RELEASE) {
          player_rmFlag(PLAYER_REVERSE);
@@ -220,13 +220,13 @@ static void input_key( int keynum, double value, int abs )
     * combat
     */
    /* shooting primary weapon */
-   } else if (KEY("primary")) {
+   } else if (INGAME() && KEY("primary")) {
       if (value==KEY_PRESS) { player_setFlag(PLAYER_PRIMARY); }
       else if (value==KEY_RELEASE) { player_rmFlag(PLAYER_PRIMARY); }
    /* targetting */
-   } else if (KEY("target") && INGAME()) {
+   } else if (INGAME() && KEY("target")) {
       if (value==KEY_PRESS) player_target = pilot_getNext(player_target);
-   } else if (KEY("target_nearest") && INGAME()) {
+   } else if (INGAME() && KEY("target_nearest")) {
       if (value==KEY_PRESS) player_target = pilot_getHostile();
    /* face the target */
    } else if (KEY("face")) {
