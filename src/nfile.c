@@ -110,6 +110,12 @@ char** nfile_readDir( int* nfiles, char* path )
    closedir(d);
 #endif /* LINUX */
 
+   /* found nothing */
+   if ((*nfiles) == 0) {
+      free(files);
+      files = NULL;
+   }
+
    return files;
 }
 

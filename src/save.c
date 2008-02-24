@@ -128,6 +128,12 @@ void load_game_menu (void)
       else /* remove the extension */
          files[i][len-3] = '\0';
    }
+   /* case there are no files */
+   if (files == NULL) {
+      files = malloc(sizeof(char*));
+      files[0] = strdup("None");
+      nfiles = 1;
+   }
    window_addList( wid, 20, -50,
          LOAD_WIDTH-BUTTON_WIDTH-50, LOAD_HEIGHT-90,
          "lstSaves", files, nfiles, 0, NULL );
@@ -156,6 +162,9 @@ static void load_menu_load( char *str )
    wid = window_get( "Load Game" );
 
    save = toolkit_getList( wid, "lstSaves" );
+
+   if (strcmp(save,"None") == 0)
+      return;
 
    snprintf( path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), save );
    load_game( path );
