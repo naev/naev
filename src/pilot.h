@@ -43,6 +43,8 @@
 /* creation */
 #define PILOT_PLAYER       (1<<0) /* pilot is a player */
 #define PILOT_HASTURRET    (1<<20) /* pilot has turrets */
+#define PILOT_NO_OUTFITS   (1<<21) /* do not create the pilot with outfits */
+#define PILOT_EMPTY        (1<<22) /* do not add pilot to stack */
 /* dynamic */
 #define PILOT_HOSTILE      (1<<1) /* pilot is hostile to the player */
 #define PILOT_COMBAT       (1<<2) /* pilot is engaged in combat */
@@ -198,6 +200,8 @@ void pilot_init( Pilot* dest, Ship* ship, char* name, int faction, AI_Profile* a
       const double dir, const Vector2d* pos, const Vector2d* vel, const int flags );
 unsigned int pilot_create( Ship* ship, char* name, int faction, AI_Profile* ai,
       const double dir, const Vector2d* pos, const Vector2d* vel, const int flags );
+Pilot* pilot_createEmpty( Ship* ship, char* name,
+      int faction, AI_Profile* ai, const int flags );
 Pilot* pilot_copy( Pilot* src );
 
 

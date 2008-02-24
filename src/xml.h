@@ -32,6 +32,7 @@
 /* get data different ways */
 #define xml_get(n)            ((char*)(n)->children->content)
 #define xml_getInt(n)         (atoi((char*)(n)->children->content))
+#define xml_getLong(n)        (atol((char*)(n)->children->content))
 #define xml_getFloat(n)       (atof((char*)(n)->children->content))
 
 
@@ -40,8 +41,14 @@
  */
 #define xmlr_int(n,s,i) \
 if (xml_isNode(n,s)) { i = xml_getInt(n); continue; }
+#define xmlr_long(n,s,l) \
+if (xml_isNode(n,s)) { l = xml_getLong(n); continue; }
 #define xmlr_float(n,s,f) \
 if (xml_isNode(n,s)) { f = xml_getFloat(n); continue; }
+#define xmlr_str(n,s,str) \
+if (xml_isNode(n,s)) { str = xml_get(n); continue; }
+#define xmlr_attr(n,s,a) \
+a = xml_nodeProp(n,s)
 
 /*
  * writer crap

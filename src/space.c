@@ -89,7 +89,7 @@ static int mstars = 0; /* memory stars are taking */
  */
 /* intern */
 static StarSystem* system_get( const char* sysname );
-static Planet* planet_get( const char* name );
+static Planet* planet_pull( const char* name );
 static void space_addFleet( Fleet* fleet );
 static StarSystem* system_parse( const xmlNodePtr parent );
 static void system_parseJumps( const xmlNodePtr parent );
@@ -538,6 +538,26 @@ char* planet_getSystem( char* planetname )
 
 
 /*
+ * gets a planet based on it's name
+ */
+Planet* planet_get( char* planetname )
+{
+   int i;
+   char *sys;
+   StarSystem *system;
+
+   sys = planet_getSystem( planetname );
+   system = system_get(sys);
+
+   for (i=0; i<system->nplanets; i++)
+      if (strcmp(planetname,system->planets[i].name)==0)
+         return &system->planets[i];
+   DEBUG("Planet '%s' not found in the universe", planetname);
+   return NULL;
+}
+
+
+/*
  * basically used for spawning fleets and such
  */
 void space_update( const double dt )
@@ -657,7 +677,7 @@ void space_init ( const char* sysname )
 /*
  * loads the planet of name 'name'
  */
-static Planet* planet_get( const char* name )
+static Planet* planet_pull( const char* name )
 {
    int i;
 
@@ -881,7 +901,7 @@ static StarSystem* system_parse( const xmlNodePtr parent )
             if (xml_isNode(cur,"planet")) {
                /* add planet to system */
                nplanets++; /* increase planet counter */
-               planet = planet_get(xml_get(cur));
+               planet = planet_pull(xml_get(cur));
                temp->planets = realloc(temp->planets, sizeof(Planet)*(++temp->nplanets));
                memcpy(temp->planets+(temp->nplanets-1), planet, sizeof(Planet));
 

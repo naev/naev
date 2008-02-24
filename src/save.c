@@ -17,6 +17,7 @@
 extern int player_save( xmlTextWriterPtr writer );
 extern int missions_save( xmlTextWriterPtr writer );
 extern int var_save( xmlTextWriterPtr writer ); /* misn var */
+extern int player_load( xmlNodePtr parent );
 /* static */
 static int save_data( xmlTextWriterPtr writer );
 
@@ -32,7 +33,9 @@ static int save_data( xmlTextWriterPtr writer )
 }
 
 
-
+/*
+ * saves the current game
+ */
 int save_all (void)
 {
    char *file;
@@ -61,9 +64,28 @@ int save_all (void)
    file = "test.xml";
 
    xmlFreeTextWriter(writer);
-   //xmlSaveFileEnc(file, doc, "UTF-8");
+   xmlSaveFileEnc(file, doc, "UTF-8");
    xmlFreeDoc(doc);
 
+   return 0;
+}
+
+
+/*
+ * loads a new game
+ */
+int load_game( char* file )
+{
+   xmlNodePtr node;
+   xmlDocPtr doc;
+
+   doc = xmlParseFile(file);
+   node = doc->xmlChildrenNode; /* base node */
+
+   player_load(node);
+
+   xmlFreeDoc(doc);
+   
    return 0;
 }
 

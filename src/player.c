@@ -165,11 +165,13 @@ static void gui_renderBar( const glColour* c,
       const Rect* r, const double w );
 static int player_saveShip( xmlTextWriterPtr writer, 
       Pilot* ship, char* loc );
+static int player_parse( xmlNodePtr parent );
+static int player_parseDone( xmlNodePtr parent );
+static int player_parseShip( xmlNodePtr parent, int is_player );
 /* externed */
 void player_dead (void);
 void player_destroyed (void);
 int player_save( xmlTextWriterPtr writer );
-
 
 
 /* 
@@ -177,22 +179,15 @@ int player_save( xmlTextWriterPtr writer );
  */
 void player_new (void)
 {
-   int i;
-
    /* to not segfault due to lack of environment */
    player_setFlag(PLAYER_DESTROYED);
    vectnull( &player_cam );
    gl_bindCamera( &player_cam );
 
-   /* cleanup messages */
-   for (i=0; i<mesg_max; i++)
-      memset( mesg_stack[i].str, '\0', MESG_SIZE_MAX );
-
    /* cleanup player stuff if we'll be recreating */
    player_cleanup();
-
-   /* cleanup stacks */
    var_cleanup();
+   missions_cleanup();
 
    player_name = dialogue_input( "Player Name", 3, 20,
          "Please write your name:" );
@@ -264,7 +259,6 @@ static void player_newMake (void)
    xmlFreeDoc(doc);
    free(buf);
    xmlCleanupParser();
-
 
    /* monies */
    player_credits = RNG(l,h);
@@ -373,6 +367,10 @@ void player_cleanup (void)
 
    /* cleanup name */
    if (player_name) free(player_name);
+
+   /* cleanup messages */
+   for (i=0; i<mesg_max; i++)
+      memset( mesg_stack[i].str, '\0', MESG_SIZE_MAX );
 
    /* clean up the stack */
    if (player_stack) {                
@@ -1736,7 +1734,9 @@ int player_save( xmlTextWriterPtr writer )
 
    xmlw_elem(writer,"rating","%d",player_crating);
    xmlw_elem(writer,"credits","%d",player->credits);
+   xmlw_elem(writer,"time","%d",ntime_get());
 
+   xmlw_elem(writer,"location",land_planet->name);
    player_saveShip( writer, player, NULL ); /* current ship */
 
    xmlw_startElem(writer,"ships");
@@ -1765,8 +1765,8 @@ static int player_saveShip( xmlTextWriterPtr writer,
 
    xmlw_startElem(writer,"ship");
    xmlw_attr(writer,"name",ship->name);
+   xmlw_attr(writer,"model",ship->ship->name);
 
-   xmlw_elem(writer,"shipname",ship->ship->name);
    if (loc != NULL) xmlw_elem(writer,"location",loc);
 
    /* save the outfits */
@@ -1796,6 +1796,164 @@ static int player_saveShip( xmlTextWriterPtr writer,
    xmlw_endElem(writer); /* "commodities" */
 
    xmlw_endElem(writer); /* "ship" */
+
+   return 0;
+}
+
+
+/*
+ * loads the player stuff
+ */
+int player_load( xmlNodePtr parent )
+{
+   xmlNodePtr node;
+
+   /* some cleaning up */
+   player_cleanup();
+   var_cleanup();
+   missions_cleanup();
+
+   node = parent->xmlChildrenNode;
+
+   do {
+      if (xml_isNode(node,"player"))
+         player_parse( node );
+       else if (xml_isNode(node,"missions_done"))
+          player_parseDone( node );
+   } while (xml_nextNode(node));
+
+   return 0;
+}
+static int player_parse( xmlNodePtr parent )
+{
+   unsigned int player_time;
+   char* planet;
+   Planet* pnt;
+   int sw,sh;
+   xmlNodePtr node, cur;
+
+   node = parent->xmlChildrenNode;
+
+   xmlr_attr(parent,"name",player_name);
+
+   do {
+
+      /* global stuff */
+      xmlr_int(node,"rating",player_crating);
+      xmlr_int(node,"credits",player_credits);
+      xmlr_long(node,"time",player_time);
+      xmlr_str(node,"location",planet);
+
+      if (xml_isNode(node,"ship"))
+         player_parseShip(node, 1);
+      
+      if (xml_isNode(node,"ships")) {
+         cur = node->xmlChildrenNode;
+         do {
+            if (xml_isNode(cur,"ship"))
+               player_parseShip(cur, 0);
+         } while (xml_nextNode(cur));
+      }
+   } while (xml_nextNode(node));
+
+   /* set global thingies */
+   player->credits =player_credits;
+   ntime_set(player_time);
+
+   /* set player in system */
+   pnt = planet_get( planet );
+   sw = pnt->gfx_space->sw;
+   sh = pnt->gfx_space->sh;
+   player_warp( pnt->pos.x + RNG(-sw/2,sw/2),
+         pnt->pos.y + RNG(-sh/2,sh/2) );
+   player->solid->dir = RNG(0,359) * M_PI/180.;
+   gl_bindCamera(&player->solid->pos);
+
+   /* initialize the system */
+   space_init( planet_getSystem(planet) );
+
+   return 0;
+}
+static int player_parseDone( xmlNodePtr parent )
+{
+   xmlNodePtr node;
+
+   node = parent->xmlChildrenNode;
+
+   do {
+
+   } while (xml_nextNode(node));
+
+   return 0;
+}
+static int player_parseShip( xmlNodePtr parent, int is_player )
+{
+   char *name, *model, *loc, *q, *id;
+   int i, n;
+   Pilot* ship;
+   xmlNodePtr node, cur;
+   
+   xmlr_attr(parent,"name",name);
+   xmlr_attr(parent,"model",model);
+
+   /* player is currently on this ship */
+   if (is_player) {
+      pilot_create( ship_get(model), name, faction_get("Player"), NULL, 0., NULL, NULL,
+            PILOT_PLAYER | PILOT_NO_OUTFITS );
+      ship = player;
+   }
+   else
+      ship = pilot_createEmpty( ship_get(model), name, faction_get("Player"), NULL,
+            PILOT_PLAYER | PILOT_NO_OUTFITS );
+
+   free(name);
+   free(model);
+
+   node = parent->xmlChildrenNode;
+
+   do {
+      if (!is_player) xmlr_str(node,"location",loc);
+
+      if (xml_isNode(node,"outfits")) {
+         cur = node->xmlChildrenNode;
+         do { /* load each outfit */
+            if (xml_isNode(cur,"outfit")) {
+               xmlr_attr(cur,"quantity",q);
+               n = atoi(q);
+               free(q);
+               /* adding the outfit */
+               pilot_addOutfit( ship, outfit_get(xml_get(cur)), n );
+            }
+         } while (xml_nextNode(cur));
+      }
+      if (xml_isNode(node,"commodities")) {
+         cur = node->xmlChildrenNode;
+         do {
+            if (xml_isNode(cur,"commodity")) {
+               xmlr_attr(cur,"quantity",q);
+               xmlr_attr(cur,"id",id);
+               n = atoi(q);
+               if (id == NULL) i = 0;
+               else i = atoi(id);
+               free(q);
+               if (id != NULL) free(id);
+
+               /* actually add the cargo with id hack */
+               pilot_addCargo( ship, commodity_get(xml_get(cur)), n );
+               if (i != 0) ship->commodities[ ship->ncommodities-1 ].id = i;
+            }
+         } while (xml_nextNode(cur));
+      }
+   } while (xml_nextNode(node));
+
+   /* add it to the stack if it's not what the player is in */
+   if (!is_player) {
+      player_stack = realloc(player_stack, sizeof(Pilot*)*(player_nstack+1));
+      player_stack[player_nstack] = pilot_copy( player );
+      player_lstack = realloc(player_lstack, sizeof(char*)*(player_nstack+1));
+      player_lstack[player_nstack] = strdup(loc);
+      player_nstack++;
+   }
 
    return 0;
 }

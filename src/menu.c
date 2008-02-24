@@ -20,6 +20,7 @@
 #include "plasmaf.h"
 #include "mission.h"
 #include "ntime.h"
+#include "save.h"
 
 
 #define MAIN_WIDTH      130
@@ -53,6 +54,7 @@ int menu_open = 0;
  */
 /* main menu */
 static void menu_main_close (void);
+static void menu_main_load( char* str );
 static void menu_main_new( char* str );
 /* small menu */
 static void menu_small_close( char* str );
@@ -91,7 +93,7 @@ void menu_main (void)
    wid = window_create( "Main Menu", -1, -1, MAIN_WIDTH, MAIN_HEIGHT );
    window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*3,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnLoad", "Load Game", NULL );
+         "btnLoad", "Load Game", menu_main_load );
    window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*2,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnNew", "New Game", menu_main_new );
@@ -111,6 +113,13 @@ static void menu_main_close (void)
    window_destroy( window_get("BG") );
 
    menu_Close(MENU_MAIN);
+}
+static void menu_main_load( char* str )
+{
+   (void)str;
+
+   menu_main_close();
+   load_game("test.xml");
 }
 static void menu_main_new( char* str )
 {

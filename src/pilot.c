@@ -895,6 +895,8 @@ void pilot_addHook( Pilot *pilot, int type, int hook )
 void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* ai,
       const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
 {
+   ShipOutfit* so;
+
    if (flags & PILOT_PLAYER) /* player is ID 0 */
       pilot->id = PLAYER_ID;
    else
@@ -922,17 +924,19 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* 
    pilot->secondary = NULL;
    pilot->ammo = NULL;
    pilot->afterburner = NULL;
-   ShipOutfit* so;
-   if (ship->outfit) {
-      pilot->noutfits = 0;
-      for (so=ship->outfit; so; so=so->next) {
-         pilot->outfits = realloc(pilot->outfits, (pilot->noutfits+1)*sizeof(PilotOutfit));
-         pilot->outfits[pilot->noutfits].outfit = so->data;
-         pilot->outfits[pilot->noutfits].quantity = so->quantity;
-         pilot->outfits[pilot->noutfits].timer = 0;
-         (pilot->noutfits)++;
-         if (outfit_isTurret(so->data)) /* used to speed up AI */
-            pilot_setFlag(pilot, PILOT_HASTURRET);
+   pilot->noutfits = 0;
+   if (!(flags & PILOT_NO_OUTFITS)) {
+      if (ship->outfit) {
+         for (so=ship->outfit; so; so=so->next) {
+            pilot->outfits = realloc(pilot->outfits,
+                  (pilot->noutfits+1)*sizeof(PilotOutfit));
+            pilot->outfits[pilot->noutfits].outfit = so->data;
+            pilot->outfits[pilot->noutfits].quantity = so->quantity;
+            pilot->outfits[pilot->noutfits].timer = 0;
+            (pilot->noutfits)++;
+            if (outfit_isTurret(so->data)) /* used to speed up AI */
+               pilot_setFlag(pilot, PILOT_HASTURRET);
+         }
       }
    }
 
@@ -957,8 +961,10 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* 
       pilot->think = player_think; /* players don't need to think! :P */
       pilot->render = NULL; /* render will get called from player_think */
       pilot_setFlag(pilot,PILOT_PLAYER); /* it is a player! */
-      player = pilot;
-      gui_load( pilot->ship->gui ); /* load the gui */
+      if (!(flags & PILOT_EMPTY)) { /* sort of a hack */
+         player = pilot;
+         gui_load( pilot->ship->gui ); /* load the gui */
+      }
    }
    else {
       pilot->think = ai_think;
@@ -1014,6 +1020,19 @@ unsigned int pilot_create( Ship* ship, char* name, int faction, AI_Profile* ai,
    }
 
    return dyn->id;
+}
+
+
+/*
+ * creates a pilot without adding it to the stack
+ */
+Pilot* pilot_createEmpty( Ship* ship, char* name,
+      int faction, AI_Profile* ai, const int flags )
+{
+   Pilot* dyn;
+   dyn = MALLOC_ONE(Pilot*);
+   pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags | PILOT_EMPTY );
+   return dyn;
 }
 
 
