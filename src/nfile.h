@@ -9,6 +9,7 @@
 
 char* nfile_basePath (void);
 int nfile_dirMakeExist( char* path );
+char** nfile_readDir( int* nfiles, char* path );
 
 
 #endif /* NFILE_H */

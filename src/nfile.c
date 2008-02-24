@@ -11,6 +11,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <dirent.h> 
+#include <stdio.h> 
 #include <errno.h>
 #endif /* LINUX */
 
@@ -62,6 +64,53 @@ int nfile_dirMakeExist( char* path )
 #endif /* LINUX */
 
    return 0;
+}
+
+
+/*
+ * lists all the files in a dir (besidse . and ..)
+ */
+char** nfile_readDir( int* nfiles, char* path )
+{
+   char file[PATH_MAX];
+   char **files;
+
+   snprintf( file, PATH_MAX, "%s%s", nfile_basePath(), path );
+
+#ifdef LINUX
+   DIR *d;
+   struct dirent *dir;
+   char *name;
+   int mfiles;
+
+   (*nfiles) = 0;
+   mfiles = 100;
+   files = malloc(sizeof(char*)*mfiles);
+
+   d = opendir(file);
+   if (d == NULL) {
+      return NULL;
+   }
+
+   while ((dir = readdir(d)) != NULL) {
+      name = dir->d_name;
+
+      if ((strcmp(name,".")==0) || (strcmp(name,"..")==0))
+         continue;
+
+      if ((*nfiles)+1 > mfiles) {
+         mfiles += 100;
+         files = realloc( files, sizeof(char*) * mfiles );
+      }
+
+      files[(*nfiles)] = strdup(name);
+      (*nfiles)++;
+   }
+
+   closedir(d);
+#endif /* LINUX */
+
+   return files;
 }
 
 

@@ -33,6 +33,7 @@ extern void menu_main_close (void);
 /* static */
 static int save_data( xmlTextWriterPtr writer );
 static void load_menu_close( char *str );
+static void load_menu_load( char *str );
 static int load_game( char* file );
 
 
@@ -68,6 +69,7 @@ int save_all (void)
    xmlw_start(writer);
    xmlw_startElem(writer,"naev_save");
 
+   /* save the version and such */
    xmlw_startElem(writer,"version");
    xmlw_elem( writer, "naev", "%d.%d.%d", VMAJOR, VMINOR, VREV );
    xmlw_elem( writer, "data", dataname );
@@ -105,16 +107,60 @@ int save_all (void)
 void load_game_menu (void)
 {
    unsigned int wid;
+   char **files;
+   int nfiles, i, len;
 
+   /* window */
    wid = window_create( "Load Game", -1, -1, LOAD_WIDTH, LOAD_HEIGHT );
+
+   /* load the saves */
+   files = nfile_readDir( &nfiles, "saves" );
+   for (i=0; i<nfiles; i++) {
+      len = strlen(files[i]);
+
+      /* no save extension */
+      if ((len < 6) || strcmp(&files[i][len-3],".ns")) {
+         free(files[i]);
+         memmove( &files[i], &files[i+1], sizeof(char*) * (nfiles-i-1) );
+         nfiles--;
+         i--;
+      }
+      else /* remove the extension */
+         files[i][len-3] = '\0';
+   }
+   window_addList( wid, 20, -50,
+         LOAD_WIDTH-BUTTON_WIDTH-50, LOAD_HEIGHT-90,
+         "lstSaves", files, nfiles, 0, NULL );
+
+   /* buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnBack", "Back", load_menu_close );
+   window_addButton( wid, -20, 30 + BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnLoad", "Load", load_menu_load );
+
+   /* default action */
+   window_setFptr( wid, load_menu_load );
 }
 static void load_menu_close( char *str )
 {
    (void)str;
 
    window_destroy( window_get("Load Game") );
+}
+static void load_menu_load( char *str )
+{
+   (void)str;
+   char *save, path[PATH_MAX];
+   int wid;
+
+   wid = window_get( "Load Game" );
+
+   save = toolkit_getList( wid, "lstSaves" );
+
+   snprintf( path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), save );
+   load_game( path );
+   load_menu_close(NULL);
+   menu_main_close();
 }
 
 
