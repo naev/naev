@@ -68,6 +68,11 @@ int save_all (void)
    xmlw_start(writer);
    xmlw_startElem(writer,"naev_save");
 
+   xmlw_startElem(writer,"version");
+   xmlw_elem( writer, "naev", "%d.%d.%d", VMAJOR, VMINOR, VREV );
+   xmlw_elem( writer, "data", dataname );
+   xmlw_endElem(writer); /* "version" */
+
    if (save_data(writer) < 0) {
       ERR("Trying to save game data");
       xmlFreeTextWriter(writer);

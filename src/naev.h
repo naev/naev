@@ -34,6 +34,8 @@
 #define DATA_DEF           "data" /* default data packfile */
 extern char* data; /* modifiable datafile */
 #define DATA               data /* data file */
+#define DATA_NAME_LEN   25 /* max length of data name */
+extern char dataname[DATA_NAME_LEN];
 
 /* maximum filename path */
 #ifndef PATH_MAX

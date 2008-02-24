@@ -60,9 +60,8 @@ unsigned int time = 0; /* used to calculate FPS and movement, in pause.c */
 static char version[VERSION_LEN];
 
 /* some defaults */
-#define DATA_NAME_LEN   25 /* max length of data name */
 char* data = NULL;
-char dataname[DATA_NAME_LEN];
+char dataname[DATA_NAME_LEN] = "";
 int nosound = 0;
 int show_fps = 1; /* shows fps - default yes */
 int max_fps = 0;
