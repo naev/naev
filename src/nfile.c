@@ -49,7 +49,10 @@ int nfile_dirMakeExist( char* path )
 #ifdef LINUX
    struct stat buf;
 
-   snprintf(file, PATH_MAX,"%s%s",nfile_basePath(),path);
+   if (strcmp(path,".")==0)
+      strncpy(file,nfile_basePath(),PATH_MAX);
+   else
+      snprintf(file, PATH_MAX,"%s%s",nfile_basePath(),path);
    stat(file,&buf);
    if (!S_ISDIR(buf.st_mode))
       if (mkdir(file,S_IRWXU | S_IRWXG | S_IRWXO) < 0) {
