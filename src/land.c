@@ -337,6 +337,12 @@ static void outfits_update( char* str )
    /* new image */
    window_modifyImage( secondary_wid, "imgOutfit", outfit->gfx_store );
 
+   /* gray out sell button */
+   if (player_outfitOwned(outfitname) == 0)
+      window_disableButton( secondary_wid, "btnSellOutfit" );
+   else
+      window_enableButton( secondary_wid, "btnSellOutfit" );
+
    /* new text */
    window_modifyText( secondary_wid, "txtDescription", outfit->description );
    credits2str( buf2, outfit->price, 2 );
