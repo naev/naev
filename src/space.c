@@ -1079,7 +1079,7 @@ void space_render( double dt )
 {
    int i;
    unsigned int t, timer;
-   double x, y, m;
+   double x, y, m, b;
 
    /*
     * gprof claims it's the slowest thing in the game!
@@ -1117,27 +1117,38 @@ void space_render( double dt )
 
       glShadeModel(GL_FLAT);
    }
-   else {
+   else { /* normal rendering */
       glBegin(GL_POINTS);
-      for (i=0; i < nstars; i++) {
-         if (!paused && !toolkit) {
-            if (!player_isFlag(PLAYER_DESTROYED)) { /* update position */
-               stars[i].x -= VX(player->solid->vel)/(13.-10.*stars[i].brightness)*dt;
-               stars[i].y -= VY(player->solid->vel)/(13.-10.*stars[i].brightness)*dt;
-            }
+
+      if (!paused && !player_isFlag(PLAYER_DESTROYED)) { /* update position */
+         for (i=0; i < nstars; i++) {
+
+            /* calculate new position */
+            b = 13.-10.*stars[i].brightness;
+            stars[i].x -= player->solid->vel.x/b*dt;
+            stars[i].y -= player->solid->vel.y/b*dt;
+
+            /* check boundries */
             if (stars[i].x > gl_screen.w + STAR_BUF) stars[i].x = -STAR_BUF;
             else if (stars[i].x < -STAR_BUF) stars[i].x = gl_screen.w + STAR_BUF;
             if (stars[i].y > gl_screen.h + STAR_BUF) stars[i].y = -STAR_BUF;
             else if (stars[i].y < -STAR_BUF) stars[i].y = gl_screen.h + STAR_BUF;
+
+            /* render */
+            glColor4d( 1., 1., 1., stars[i].brightness );
+            glVertex2d( stars[i].x, stars[i].y );
          }
-         /* render */
-         glColor4d( 1., 1., 1., stars[i].brightness );
-         glVertex2d( stars[i].x, stars[i].y );
       }
-      glEnd();
+      else { /* just render */
+         for (i=0; i < nstars; i++) {
+            glColor4d( 1., 1., 1., stars[i].brightness );
+            glVertex2d( stars[i].x, stars[i].y );
+         }
+      }
+      glEnd(); /* GL_POINTS */
    }
 
-   glPopMatrix(); /* translation matrx */
+   glPopMatrix(); /* translation matrix */
 }
 
 /*
