@@ -682,7 +682,6 @@ int gl_init()
    flags |= SDL_FULLSCREEN * (gl_has(OPENGL_FULLSCREEN) ? 1 : 0);
 
    supported = 0;
-   modes = NULL;
 
    /* Initializes Video */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
@@ -795,14 +794,6 @@ int gl_init()
 
    glClear( GL_COLOR_BUFFER_BIT );
 
-
-   /* cleanup */
-   if (modes != NULL) {
-      /* free the modes */
-      for (i=0;modes[i];++i)
-         free(modes[i]);
-      free(modes);
-   }
 
    return 0;
 }
