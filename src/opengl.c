@@ -50,6 +50,8 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh );
 /* png */
 int write_png( const char *file_name, png_bytep *rows,
       int w, int h, int colourtype, int bitdepth );
+/* global */
+static GLboolean gl_hasExt( char *name );
 
 
 /*
@@ -639,21 +641,55 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
  * G L O B A L
  *
  */
+
+/*
+ * checks for extensions
+ */
+static GLboolean gl_hasExt( char *name )
+{
+   /*
+    * Search for name in the extensions string.  Use of strstr()
+    * is not sufficient because extension names can be prefixes of
+    * other extension names.  Could use strtok() but the constant
+    * string returned by glGetString can be in read-only memory.
+    */
+   char *p, *end;
+   size_t len, n;
+
+   p = (char*) glGetString(GL_EXTENSIONS);
+   len = strlen(name);
+   end = p + strlen(p);
+
+   while (p < end) {
+      n = strcspn(p, " ");
+      if ((len == n) && (strncmp(name,p,n)==0))
+         return GL_TRUE;
+
+      p += (n + 1);
+   }
+   return GL_FALSE;
+}
+
+
 /*
  * Initializes SDL/OpenGL and the works
  */
 int gl_init()
 {
-   int doublebuf, depth, i, j, off, toff, supported = 0;
+   int doublebuf, depth, i, j, off, toff, supported;
    SDL_Rect** modes;
    int flags = SDL_OPENGL;
    flags |= SDL_FULLSCREEN * (gl_has(OPENGL_FULLSCREEN) ? 1 : 0);
 
+   supported = 0;
+   modes = NULL;
+
    /* Initializes Video */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
-      WARN("Unable to initialize SDL: %s", SDL_GetError());
+      WARN("Unable to initialize SDL Video: %s", SDL_GetError());
       return -1;
    }
+
 
    /* get available fullscreen modes */
    if (gl_has(OPENGL_FULLSCREEN)) {
@@ -676,7 +712,6 @@ int gl_init()
                supported = 1; /* mode we asked for is supported */
          }
       }
-
       /* makes sure fullscreen mode is supported */
       if ((flags & SDL_FULLSCREEN) && !supported) {
 
@@ -690,7 +725,6 @@ int gl_init()
                off = toff;
             }
          }
-
          WARN("Fullscreen mode %dx%d is not supported by your setup\n"
                "   switching to %dx%d",
                gl_screen.w, gl_screen.h,
@@ -698,26 +732,24 @@ int gl_init()
          gl_screen.w = modes[j]->w;
          gl_screen.h = modes[j]->h;
       }
-
-      /* free the modes */
-      for (i=0;modes[i];++i)
-         free(modes[i]);
-      free(modes);
    }
 
    
-   /* test the setup */
+   /* test the setup - aim for 32 */
+   gl_screen.depth = 32;
    depth = SDL_VideoModeOK( gl_screen.w, gl_screen.h, gl_screen.depth, flags);
+   if (depth == 0)
+      WARN("Video Mode %dx%d @ %d bpp not supported"
+           "   going to try to create it anyways...",
+            gl_screen.w, gl_screen.h, gl_screen.depth );
    if (depth != gl_screen.depth)
-      WARN("Depth %d bpp unavailable, will use %d bpp", gl_screen.depth, depth);
+      LOG("Depth %d bpp unavailable, will use %d bpp", gl_screen.depth, depth);
 
    gl_screen.depth = depth;
 
-
    /* actually creating the screen */
-   if (SDL_SetVideoMode( gl_screen.w, gl_screen.h, gl_screen.depth, flags) == NULL) {
+   if (SDL_SetVideoMode( gl_screen.w, gl_screen.h, gl_screen.depth, flags)==NULL) {
       ERR("Unable to create OpenGL window: %s", SDL_GetError());
-      SDL_Quit();
       return -1;
    }
 
@@ -729,6 +761,12 @@ int gl_init()
    SDL_GL_GetAttribute( SDL_GL_DOUBLEBUFFER, &doublebuf );
    if (doublebuf) gl_screen.flags |= OPENGL_DOUBLEBUF;
    gl_screen.depth = gl_screen.r + gl_screen.g + gl_screen.b + gl_screen.a;
+
+   /* get info about some extensions */
+   if (gl_hasExt("GL_ARB_vertex_shader")==GL_TRUE)
+      gl_screen.flags |= OPENGL_VERT_SHADER;
+   if (gl_hasExt("GL_ARB_fragment_shader")==GL_TRUE)
+      gl_screen.flags |= OPENGL_FRAG_SHADER;
 
    /* Debug happiness */
    DEBUG("OpenGL Window Created: %dx%d@%dbpp %s", gl_screen.w, gl_screen.h, gl_screen.depth,
@@ -757,6 +795,14 @@ int gl_init()
 
    glClear( GL_COLOR_BUFFER_BIT );
 
+
+   /* cleanup */
+   if (modes != NULL) {
+      /* free the modes */
+      for (i=0;modes[i];++i)
+         free(modes[i]);
+      free(modes);
+   }
 
    return 0;
 }

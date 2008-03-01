@@ -38,6 +38,8 @@
 #define OPENGL_AA_POINT    (1<<2)
 #define OPENGL_AA_LINE     (1<<3)
 #define OPENGL_AA_POLYGON  (1<<4)
+#define OPENGL_FRAG_SHADER (1<<5)
+#define OPENGL_VERT_SHADER (1<<6)
 #define gl_has(f)    (gl_screen.flags & (f)) /* check for the flag */
 typedef struct glInfo_ {
    int w, h; /* window dimensions */
