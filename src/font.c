@@ -409,7 +409,7 @@ static void glFontMakeDList( FT_Face face, char ch,
 
    /* memory for textured data
     * bitmap is using two channels, one for luminosity and one for alpha */
-   expanded_data = (GLubyte*) malloc(sizeof(GLubyte)*2* w*h);
+   expanded_data = (GLubyte*) malloc(sizeof(GLubyte)*2* w*h + 1);
    for (j=0; j < h; j++) {
       for (i=0; i < w; i++ ) {
          expanded_data[2*(i+j*w)]= expanded_data[2*(i+j*w)+1] =
