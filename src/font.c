@@ -95,9 +95,10 @@ void gl_print( const glFont *ft_font,
    else COLOUR(*c);
    glCallLists(strlen(text), GL_UNSIGNED_BYTE, &text);
 
-   glPopMatrix(); /* translation matrx */
-
+   glPopMatrix(); /* translation matrix */
    glDisable(GL_TEXTURE_2D);
+
+   gl_checkErr();
 }
 /*
  * behaves exactly like gl_print but prints to a maximum length of max    
@@ -149,9 +150,10 @@ int gl_printMax( const glFont *ft_font, const int max,
    else COLOUR(*c);
    glCallLists(i, GL_UNSIGNED_BYTE, &text);
 
-   glPopMatrix(); /* translation matrx */
-
+   glPopMatrix(); /* translation matrix */
    glDisable(GL_TEXTURE_2D);
+
+   gl_checkErr();
 
    return ret;
 }
@@ -177,7 +179,6 @@ int gl_printMid( const glFont *ft_font, const int width,
       vsprintf(text, fmt, ap);
       va_end(ap);
    }
-
 
    /* limit size */
    len = (int)strlen(text);
@@ -206,9 +207,10 @@ int gl_printMid( const glFont *ft_font, const int width,
    else COLOUR(*c);
    glCallLists(i, GL_UNSIGNED_BYTE, &text);
 
-   glPopMatrix(); /* translation matrx */
-
+   glPopMatrix(); /* translation matrix */
    glDisable(GL_TEXTURE_2D);
+
+   gl_checkErr();
 
    return ret;
 }
@@ -296,6 +298,8 @@ int gl_printText( const glFont *ft_font,
    }
 
    glDisable(GL_TEXTURE_2D);
+
+   gl_checkErr();
 
    return ret;
 }
@@ -466,12 +470,16 @@ static void glFontMakeDList( FT_Face face, char ch,
    glEndList();
 
    FT_Done_Glyph(glyph);
+
+   gl_checkErr();
 }
 void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
 {
+   uint32_t bufsize;
+   int i;
+
    if (font == NULL) font = &gl_defFont;
 
-   uint32_t bufsize;
    FT_Byte* buf = pack_readfile( DATA, (fname) ? fname : FONT_DEF, &bufsize );
 
    /* allocage */
@@ -502,7 +510,6 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
 
 
    /* create each of the font display lists */
-   unsigned char i;
    for (i=0; i<128; i++)
       glFontMakeDList( face, i, font->list_base, font->textures, font->w );
 

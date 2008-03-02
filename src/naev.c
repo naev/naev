@@ -272,6 +272,8 @@ void main_loop (void)
    }
    if (toolkit) toolkit_render();
 
+   gl_checkErr(); /* check error every loop */
+
    SDL_GL_SwapBuffers();
 }
 

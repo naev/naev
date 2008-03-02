@@ -183,6 +183,8 @@ void gl_screenshot( const char *filename )
    for (i = 0; i < screen->h; i++) rows[i] = screenbuf[screen->h - i - 1];
    write_png( filename, rows, screen->w, screen->h,
          PNG_COLOR_TYPE_RGBA, 8);
+
+   gl_checkErr();
 }
 
 
@@ -284,6 +286,8 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
    SDL_UnlockSurface( surface );
 
    SDL_FreeSurface( surface );
+
+   gl_checkErr();
 
    return texture;
 }
@@ -468,6 +472,8 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
    glEnd(); /* GL_QUADS */
 
    glDisable(GL_TEXTURE_2D);
+
+   gl_checkErr();
 }
 
 
@@ -505,6 +511,8 @@ void gl_blitStatic( const glTexture* texture,
    glEnd(); /* GL_QUADS */
 
    glDisable(GL_TEXTURE_2D);
+
+   gl_checkErr();
 }
 
 
@@ -564,7 +572,9 @@ void gl_drawCircle( const double cx, const double cy, const double r )
                   glVertex2d( cx-y, cy-x );
                }
       }
-glEnd(); /* GL_POINTS */
+   glEnd(); /* GL_POINTS */
+
+   gl_checkErr();
 }
 
 
@@ -632,6 +642,8 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
                }
       }
    glEnd(); /* GL_POINTS */
+
+   gl_checkErr();
 }
 #undef PIXEL
 
@@ -668,6 +680,51 @@ static GLboolean gl_hasExt( char *name )
       p += (n + 1);
    }
    return GL_FALSE;
+}
+
+
+/*
+ * checks and reports if there's been an error
+ */
+void gl_checkErr (void)
+{
+#ifdef DEBUG
+   GLenum err;
+   char* errstr;
+
+   err = glGetError();
+
+   if (err == GL_NO_ERROR) return; /* no error */
+
+   switch (err) {
+      case GL_INVALID_ENUM:
+         errstr = "GL invalid enum";
+         break;
+      case GL_INVALID_VALUE:
+         errstr = "GL invalid value";
+         break;
+      case GL_INVALID_OPERATION:
+         errstr = "GL invalid operation";
+         break;
+      case GL_STACK_OVERFLOW:
+         errstr = "GL stack overflow";
+         break;
+      case GL_STACK_UNDERFLOW:
+         errstr = "GL stack underflow";
+         break;
+      case GL_OUT_OF_MEMORY:
+         errstr = "GL out of memory";
+         break;
+      case GL_TABLE_TOO_LARGE:
+         errstr = "GL table too large";
+         break;
+
+      default:
+         errstr = "GL unknown error";
+         break;
+   }
+   WARN("OpenGL error: %s",errstr);
+#endif
 }
 
 
@@ -794,6 +851,7 @@ int gl_init()
 
    glClear( GL_COLOR_BUFFER_BIT );
 
+   gl_checkErr();
 
    return 0;
 }

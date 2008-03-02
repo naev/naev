@@ -109,6 +109,7 @@ void gl_exit (void);
 int gl_isTrans( const glTexture* t, const int x, const int y );
 void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir );
 void gl_screenshot( const char *filename );
+void gl_checkErr (void);
 
 
 #endif /* OPENGL_H */
