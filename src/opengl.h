@@ -46,6 +46,7 @@ typedef struct glInfo_ {
    int depth; /* depth in bpp */
    int r, g, b, a; /* framebuffer values in bits */
    int flags; /* stores different propertiers */
+   int tex_max; /* maximum texture size */
 } glInfo;
 extern glInfo gl_screen; /* local structure set with gl_init and co */
 
@@ -109,7 +110,11 @@ void gl_exit (void);
 int gl_isTrans( const glTexture* t, const int x, const int y );
 void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir );
 void gl_screenshot( const char *filename );
+#if DEBUG == 1
 void gl_checkErr (void);
+#else /* DEBUG */
+#define gl_checkErr()
+#endif /* DEBUG */
 
 
 #endif /* OPENGL_H */

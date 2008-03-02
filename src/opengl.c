@@ -436,8 +436,8 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
       const int sx, const int sy, const glColour* c )
 {
    /* don't draw if offscreen */
-   if (fabs(bx-VX(*gl_camera)+gui_xoff) > gl_screen.w/2+sprite->sw/2 ||
-         fabs(by-VY(*gl_camera)+gui_yoff) > gl_screen.h/2+sprite->sh/2 )
+   if (fabs(bx-VX(*gl_camera)+gui_xoff) > SCREEN_W/2+sprite->sw/2 ||
+         fabs(by-VY(*gl_camera)+gui_yoff) > SCREEN_H/2+sprite->sh/2 )
       return;
 
    double x,y, tx,ty;
@@ -486,8 +486,8 @@ void gl_blitStatic( const glTexture* texture,
    double x,y;
    glEnable(GL_TEXTURE_2D);
 
-   x = bx - (double)gl_screen.w/2.;
-   y = by - (double)gl_screen.h/2.;
+   x = bx - (double)SCREEN_W/2.;
+   y = by - (double)SCREEN_H/2.;
 
    /* actual blitting */
    glBindTexture( GL_TEXTURE_2D, texture->texture);
@@ -686,9 +686,9 @@ static GLboolean gl_hasExt( char *name )
 /*
  * checks and reports if there's been an error
  */
+#ifndef gl_checkErr /* i agree it's a bit hackish :) */
 void gl_checkErr (void)
 {
-#ifdef DEBUG
    GLenum err;
    char* errstr;
 
@@ -724,8 +724,8 @@ void gl_checkErr (void)
          break;
    }
    WARN("OpenGL error: %s",errstr);
-#endif
 }
+#endif /* DEBUG */
 
 
 /*
@@ -763,8 +763,8 @@ int gl_init()
          DEBUG("Available fullscreen modes:");
          for (i=0; modes[i]; i++) {
             DEBUG("  %d x %d", modes[i]->w, modes[i]->h);
-            if ((flags & SDL_FULLSCREEN) && (modes[i]->w == gl_screen.w) &&
-                  (modes[i]->h == gl_screen.h))
+            if ((flags & SDL_FULLSCREEN) && (modes[i]->w == SCREEN_W) &&
+                  (modes[i]->h == SCREEN_H))
                supported = 1; /* mode we asked for is supported */
          }
       }
@@ -775,7 +775,7 @@ int gl_init()
          off = -1;
          j = 0;
          for (i=0; modes[i]; i++) {
-            toff = ABS(gl_screen.w-modes[i]->w) + ABS(gl_screen.h-modes[i]->h);
+            toff = ABS(SCREEN_W-modes[i]->w) + ABS(SCREEN_H-modes[i]->h);
             if ((off == -1) || (toff < off)) {
                j = i;
                off = toff;
@@ -783,7 +783,7 @@ int gl_init()
          }
          WARN("Fullscreen mode %dx%d is not supported by your setup\n"
                "   switching to %dx%d",
-               gl_screen.w, gl_screen.h,
+               SCREEN_W, SCREEN_H,
                modes[j]->w, modes[j]->h );
          gl_screen.w = modes[j]->w;
          gl_screen.h = modes[j]->h;
@@ -793,18 +793,18 @@ int gl_init()
    
    /* test the setup - aim for 32 */
    gl_screen.depth = 32;
-   depth = SDL_VideoModeOK( gl_screen.w, gl_screen.h, gl_screen.depth, flags);
+   depth = SDL_VideoModeOK( SCREEN_W, SCREEN_H, gl_screen.depth, flags);
    if (depth == 0)
       WARN("Video Mode %dx%d @ %d bpp not supported"
            "   going to try to create it anyways...",
-            gl_screen.w, gl_screen.h, gl_screen.depth );
+            SCREEN_W, SCREEN_H, gl_screen.depth );
    if (depth != gl_screen.depth)
       LOG("Depth %d bpp unavailable, will use %d bpp", gl_screen.depth, depth);
 
    gl_screen.depth = depth;
 
    /* actually creating the screen */
-   if (SDL_SetVideoMode( gl_screen.w, gl_screen.h, gl_screen.depth, flags)==NULL) {
+   if (SDL_SetVideoMode( SCREEN_W, SCREEN_H, gl_screen.depth, flags)==NULL) {
       ERR("Unable to create OpenGL window: %s", SDL_GetError());
       return -1;
    }
@@ -824,22 +824,29 @@ int gl_init()
    if (gl_hasExt("GL_ARB_fragment_shader")==GL_TRUE)
       gl_screen.flags |= OPENGL_FRAG_SHADER;
 
+   /* maximum texture size */
+   glGetIntegerv(GL_MAX_TEXTURE_SIZE, &gl_screen.tex_max);
+
    /* Debug happiness */
-   DEBUG("OpenGL Window Created: %dx%d@%dbpp %s", gl_screen.w, gl_screen.h, gl_screen.depth,
-         (gl_has(OPENGL_FULLSCREEN))?"fullscreen":"window");
-   DEBUG("r: %d, g: %d, b: %d, a: %d, doublebuffer: %s",
+   DEBUG("OpenGL Window Created: %dx%d@%dbpp %s", SCREEN_W, SCREEN_H, gl_screen.depth,
+         gl_has(OPENGL_FULLSCREEN)?"fullscreen":"window");
+   DEBUG("r: %d, g: %d, b: %d, a: %d, db: %s, tex: %d",
          gl_screen.r, gl_screen.g, gl_screen.b, gl_screen.a,
-         (gl_has(OPENGL_DOUBLEBUF)) ? "yes" : "no");
+         gl_has(OPENGL_DOUBLEBUF) ? "yes" : "no",
+         gl_screen.tex_max);
    DEBUG("Renderer: %s", glGetString(GL_RENDERER));
+   if (!gl_has(OPENGL_FRAG_SHADER))
+      DEBUG("No fragment shader extension detected");
+   DEBUG("");
 
    /* some OpenGL options */
    glClearColor( 0., 0., 0., 1. );
    glDisable( GL_DEPTH_TEST ); /* set for doing 2d */
 /* glEnable(  GL_TEXTURE_2D ); never enable globally, breaks non-texture blits */
    glDisable( GL_LIGHTING ); /* no lighting, it's done when rendered */
-   glEnable(  GL_BLEND );
+   glEnable(  GL_BLEND ); /* alpha blending ftw */
    glShadeModel( GL_FLAT ); /* default shade model, functions should keep this when done */
-   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* alpha */
+   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* good blend model */
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
    glOrtho( -SCREEN_W/2, /* left edge */
@@ -848,7 +855,6 @@ int gl_init()
          SCREEN_H/2, /* top edge */
          -1., /* near */
          1. ); /* far */
-
    glClear( GL_COLOR_BUFFER_BIT );
 
    gl_checkErr();
