@@ -6,6 +6,7 @@
 #include "nfile.h"
 
 #include <string.h>
+#include <stdarg.h>
 #ifdef LINUX
 #include <stdlib.h>
 #include <sys/types.h>
@@ -63,6 +64,36 @@ int nfile_dirMakeExist( char* path )
       }
 #endif /* LINUX */
 
+   return 0;
+}
+
+
+/*
+ * checks if a file exists
+ */
+int nfile_fileExists( char* path, ... )
+{
+   char file[PATH_MAX], name[PATH_MAX];
+   va_list ap;
+   size_t l;
+
+   l = 0;
+   if (path == NULL) return -1;
+   else { /* get the message */
+      va_start(ap, path);
+      vsnprintf(name, PATH_MAX-l, path, ap);
+      l = strlen(name);
+      va_end(ap);
+   }
+
+   snprintf(file, PATH_MAX,"%s%s",nfile_basePath(),name);
+#ifdef LINUX
+   struct stat buf;
+
+   if (stat(file,&buf)==0) /* stat worked, file must exist */
+      return 1;
+   
+#endif
    return 0;
 }
 

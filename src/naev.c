@@ -267,7 +267,7 @@ void main_loop (void)
    fps_control(); /* everyone loves fps control */
    if (toolkit) toolkit_update(); /* to simulate key repetition */
    if (!menu_isOpen(MENU_MAIN)) {
-      if (!paused && !toolkit) update_all(); /* update game */
+      if (!paused) update_all(); /* update game */
       render_all();
    }
    if (toolkit) toolkit_render();

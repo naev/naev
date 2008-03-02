@@ -564,8 +564,9 @@ void space_update( const double dt )
 {
    unsigned int t;
    int i, j, f;
-
    (void)dt; /* not used for now */
+
+   if (cur_system == NULL) return; /* can't update a null system */
 
    t = SDL_GetTicks();
 

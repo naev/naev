@@ -180,7 +180,10 @@ int player_save( xmlTextWriterPtr writer );
  */
 void player_new (void)
 {
+   int r;
+
    /* to not segfault due to lack of environment */
+   player_flags = 0;
    player_setFlag(PLAYER_DESTROYED);
    vectnull( &player_cam );
    gl_bindCamera( &player_cam );
@@ -192,7 +195,16 @@ void player_new (void)
 
    player_name = dialogue_input( "Player Name", 3, 20,
          "Please write your name:" );
-   
+
+   if (nfile_fileExists("saves/%s.ns",player_name)) {
+      r = dialogue_YesNo("Overwrite",
+            "You already have a pilot named %s. Overwrite?",player_name);
+      if (r==0) { /* no */
+         player_new();
+         return;
+      }
+   }
+
    player_newMake();
 }
 
@@ -559,6 +571,8 @@ void player_render (void)
    Pilot* p;
    glColour* c;
    glFont* f;
+
+   if (player==NULL) return;
 
    /* pilot is dead, just render him and stop */
    if (player_isFlag(PLAYER_DESTROYED) || pilot_isFlag(player,PILOT_DEAD)) {
