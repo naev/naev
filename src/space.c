@@ -12,6 +12,7 @@
 #include "xml.h"
 
 #include "naev.h"
+#include "opengl.h"
 #include "log.h"
 #include "rng.h"
 #include "pack.h"

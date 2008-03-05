@@ -7,6 +7,7 @@
 #ifndef OPENGL_H
 #  define OPENGL_H
 
+#include <stdint.h>
 
 #include "SDL.h"
 #include "SDL_opengl.h"
@@ -49,6 +50,9 @@ typedef struct glInfo_ {
    int tex_max; /* maximum texture size */
 } glInfo;
 extern glInfo gl_screen; /* local structure set with gl_init and co */
+
+#define  SCREEN_W gl_screen.w
+#define  SCREEN_H gl_screen.h
 
 
 /*

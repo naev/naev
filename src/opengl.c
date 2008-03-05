@@ -20,10 +20,6 @@
 #include "pack.h"
 
 
-#define  SCREEN_W gl_screen.w
-#define  SCREEN_H gl_screen.h
-
-
 /* the screen info, gives data of current opengl settings */
 glInfo gl_screen;
 
@@ -835,6 +831,7 @@ int gl_init()
          gl_has(OPENGL_DOUBLEBUF) ? "yes" : "no",
          gl_screen.tex_max);
    DEBUG("Renderer: %s", glGetString(GL_RENDERER));
+   DEBUG("Version: %s", glGetString(GL_VERSION));
    if (!gl_has(OPENGL_FRAG_SHADER))
       DEBUG("No fragment shader extension detected");
    DEBUG("");
