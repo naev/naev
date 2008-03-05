@@ -80,8 +80,8 @@ static void print_usage( char **argv )
    LOG("   -f, --fullscreen      fullscreen");
    LOG("   -F n, --fps n         limit frames per second");
    LOG("   -d s, --data s        set the data file to be s");
-   /*LOG("   -w n                  set width to n");
-     LOG("   -h n                  set height to n");*/
+   LOG("   -x n                  set width to n");
+   LOG("   -y n                  set height to n");
    LOG("   -j n, --joystick n    use joystick n");
    LOG("   -J s, --Joystick s    use joystick whose name contains s");
    LOG("   -M, --mute            disables sound");
@@ -244,6 +244,8 @@ void conf_parseCLI( int argc, char** argv )
       { "data", required_argument, 0, 'd' },
       { "joystick", required_argument, 0, 'j' },
       { "Joystick", required_argument, 0, 'J' },
+      { "width", required_argument, 0, 'W' },
+      { "height", required_argument, 0, 'H' },
       { "mute", no_argument, 0, 'M' },
       { "sound", no_argument, 0, 'S' },
       { "mvol", required_argument, 0, 'm' },
@@ -254,7 +256,7 @@ void conf_parseCLI( int argc, char** argv )
    int option_index = 0;
    int c = 0;
    while ((c = getopt_long(argc, argv,
-         "fF:d:j:J:MSm:s:hv",
+         "fF:d:j:J:W:H:MSm:s:hv",
          long_options, &option_index)) != -1) {
       switch (c) {
          case 'f':
@@ -271,6 +273,12 @@ void conf_parseCLI( int argc, char** argv )
             break;
          case 'J':
             namjoystick = strdup(optarg);
+            break;
+         case 'W':
+            gl_screen.w = atoi(optarg);
+            break;
+         case 'H':
+            gl_screen.h = atoi(optarg);
             break;
          case 'M':
             nosound = 1;

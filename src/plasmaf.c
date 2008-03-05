@@ -65,6 +65,10 @@ static double* pf_genFractalMap( const int w, const int h, double rug )
    double cx, cy;
 
    map = malloc( w*h * sizeof(double) );
+   if (map == NULL) {
+      WARN("Out of memory");
+      return NULL;
+   }
 
    /* set up initial values */
    cx = (double)w/2.;
@@ -111,10 +115,8 @@ static void pf_divFractal( double *map, const double x, const double y,
       pf_divFractal( map, x+nw, y+nh, nw, nh, rw, rh, m,  e2, c3, e3, rug );
       pf_divFractal( map, x,    y+nh, nw, nh, rw, rh, e4, m,  e3, c4, rug );
    }
-   else { /* actually write the pixel */
-      //map[(int)y*(int)rw + (int)x] = (c1 + c2 + c3 + c4)/4.;
-      map[(int)round(y)*(int)rw + (int)round(x)] = (c1 + c2 + c3 + c4)/4.;
-   }
+   else /* actually write the pixel */
+      map[(int)y*(int)rw + (int)x] = (c1 + c2 + c3 + c4)/4.;
 }
 
 
