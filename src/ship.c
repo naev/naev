@@ -111,7 +111,7 @@ static Ship* ship_parse( xmlNodePtr parent )
    char str[PATH_MAX] = "\0";
    char* stmp;
 
-   temp->name = xml_nodeProp(parent,"name");
+   xmlr_attr(parent,"name",temp->name);
    if (temp->name == NULL) WARN("Ship in "SHIP_DATA" has invalid or no name");
 
    node = parent->xmlChildrenNode;
@@ -127,41 +127,30 @@ static Ship* ship_parse( xmlNodePtr parent )
                SHIP_GFX"%s"SHIP_TARGET SHIP_EXT, xml_get(node));
          temp->gfx_target = gl_newImage(str);
       }
-      else if (xml_isNode(node,"GUI"))
-         temp->gui = strdup(xml_get(node));
-      else if (xml_isNode(node,"sound"))
+
+      xmlr_strd(node,"GUI",temp->gui);
+      if (xml_isNode(node,"sound"))
          temp->sound = sound_get( xml_get(node) );
-      else if (xml_isNode(node,"class"))
-         temp->class = xml_getInt(node);
-      else if (xml_isNode(node,"price"))
-         temp->price = xml_getInt(node);
-      else if (xml_isNode(node,"tech"))
-         temp->tech = xml_getInt(node);
-      else if (xml_isNode(node,"fabricator"))
-         temp->fabricator = strdup(xml_get(node));
-      else if (xml_isNode(node,"description"))
-         temp->description = strdup(xml_get(node));
-      else if (xml_isNode(node,"movement")) {
+      xmlr_int(node,"class",temp->class);
+      xmlr_int(node,"price",temp->price);
+      xmlr_int(node,"tech",temp->tech);
+      xmlr_strd(node,"fabricator",temp->fabricator);
+      xmlr_strd(node,"description",temp->description);
+      if (xml_isNode(node,"movement")) {
          cur = node->children;
          do {
-            if (xml_isNode(cur,"thrust"))
-               temp->thrust = xml_getInt(cur);
-            else if (xml_isNode(cur,"turn"))
-               temp->turn = xml_getInt(cur);
-            else if (xml_isNode(cur,"speed"))
-               temp->speed = xml_getInt(cur);
+            xmlr_int(cur,"thrust",temp->thrust);
+            xmlr_int(cur,"turn",temp->turn);
+            xmlr_int(cur,"speed",temp->speed);
          } while (xml_nextNode(cur));
       }
       else if (xml_isNode(node,"health")) {
          cur = node->children;
          do {
-            if (xml_isNode(cur,"armour"))
-               temp->armour = (double)xml_getInt(cur);
-            else if (xml_isNode(cur,"shield"))
-               temp->shield = (double)xml_getInt(cur);
-            else if (xml_isNode(cur,"energy"))
-               temp->energy = (double)xml_getInt(cur);
-            else if (xml_isNode(cur,"armour_regen"))
+            xmlr_float(cur,"armour",temp->armour);
+            xmlr_float(cur,"shield",temp->shield);
+            xmlr_float(cur,"energy",temp->energy);
+            if (xml_isNode(cur,"armour_regen"))
                temp->armour_regen = (double)(xml_getInt(cur))/60.0;
             else if (xml_isNode(cur,"shield_regen"))
                temp->shield_regen = (double)(xml_getInt(cur))/60.0;
@@ -172,14 +161,11 @@ static Ship* ship_parse( xmlNodePtr parent )
       else if (xml_isNode(node,"caracteristics")) {
          cur = node->children;
          do {
-            if (xml_isNode(cur,"crew"))
-               temp->crew = xml_getInt(cur);
-            else if (xml_isNode(cur,"mass"))
-               temp->mass = (double)xml_getInt(cur);
-            else if (xml_isNode(cur,"cap_weapon"))
-               temp->cap_weapon = xml_getInt(cur);
-            else if (xml_isNode(cur,"cap_cargo"))
-               temp->cap_cargo = xml_getInt(cur);
+            xmlr_int(cur,"crew",temp->crew);
+            xmlr_float(cur,"mass",temp->mass);
+            xmlr_int(cur,"fuel",temp->fuel);
+            xmlr_int(cur,"cap_weapon",temp->cap_weapon);
+            xmlr_int(cur,"cap_cargo",temp->cap_cargo);
          } while (xml_nextNode(cur));
       }
       else if (xml_isNode(node,"outfits")) {
@@ -226,6 +212,7 @@ static Ship* ship_parse( xmlNodePtr parent )
    MELEMENT(temp->shield_regen==0,"shield_regen");
    MELEMENT(temp->energy==0,"energy");
    MELEMENT(temp->energy_regen==0,"energy_regen");
+   MELEMENT(temp->fuel==0,"fuel");
    MELEMENT(temp->crew==0,"crew");
    MELEMENT(temp->mass==0,"mass");
    MELEMENT(temp->cap_cargo==0,"cap_cargo");

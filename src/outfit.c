@@ -330,11 +330,11 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    char str[PATH_MAX] = "\0";
 
    do { /* load all the data */
-      if (xml_isNode(node,"thrust")) temp->u.amm.thrust = xml_getFloat(node);
-      else if (xml_isNode(node,"turn")) temp->u.amm.turn = xml_getFloat(node);
-      else if (xml_isNode(node,"speed")) temp->u.amm.speed = xml_getFloat(node);
-      else if (xml_isNode(node,"energy")) temp->u.amm.energy = xml_getFloat(node);
-      else if (xml_isNode(node,"duration"))
+      xmlr_float(node,"thrust",temp->u.amm.thrust);
+      xmlr_float(node,"turn",temp->u.amm.turn);
+      xmlr_float(node,"speed",temp->u.amm.speed);
+      xmlr_float(node,"energy",temp->u.amm.energy);
+      if (xml_isNode(node,"duration"))
          temp->u.amm.duration = (unsigned int)1000.*xml_getFloat(node);
       else if (xml_isNode(node,"lockon"))
          temp->u.amm.lockon = (unsigned int)1000.*xml_getFloat(node);
@@ -350,10 +350,8 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       else if (xml_isNode(node,"damage")) {
          cur = node->children;
          do {
-            if (xml_isNode(cur,"armour"))
-               temp->u.amm.damage_armour = xml_getFloat(cur);
-            else if (xml_isNode(cur,"shield"))
-               temp->u.amm.damage_shield = xml_getFloat(cur);
+            xmlr_float(cur,"armour",temp->u.amm.damage_armour);
+            xmlr_float(cur,"shield",temp->u.amm.damage_shield);
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
@@ -383,20 +381,15 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 
    do { /* load all the data */
       /* movement */
-      if (xml_isNode(node,"thrust"))
-         temp->u.mod.thrust = xml_getFloat(node);
-      else if (xml_isNode(node,"turn"))
-         temp->u.mod.turn = xml_getFloat(node);
-      else if (xml_isNode(node,"speed"))
-         temp->u.mod.speed = xml_getFloat(node);
+      xmlr_float(node,"thrust",temp->u.mod.thrust);
+      xmlr_float(node,"turn",temp->u.mod.turn);
+      xmlr_float(node,"speed",temp->u.mod.speed);
       /* health */
-      if (xml_isNode(node,"armour"))
-         temp->u.mod.armour = xml_getFloat(node);
-      else if (xml_isNode(node,"shield"))
-         temp->u.mod.shield = xml_getFloat(node);
-      else if (xml_isNode(node,"energy"))
-         temp->u.mod.energy = xml_getFloat(node);
-      else if (xml_isNode(node,"armour_regen"))
+      xmlr_float(node,"armour",temp->u.mod.armour);
+      xmlr_float(node,"shield",temp->u.mod.shield);
+      xmlr_float(node,"energy",temp->u.mod.energy);
+      xmlr_float(node,"fuel",temp->u.mod.fuel);
+      if (xml_isNode(node,"armour_regen"))
          temp->u.mod.armour_regen = xml_getFloat(node)/60.0;
       else if (xml_isNode(node,"shield_regen"))
          temp->u.mod.shield_regen = xml_getFloat(node)/60.0;
@@ -453,13 +446,12 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
       if (xml_isNode(node,"general")) {
          cur = node->children;
          do {
-            if (xml_isNode(cur,"max")) temp->max = xml_getInt(cur);
-            else if (xml_isNode(cur,"tech")) temp->tech = xml_getInt(cur);
-            else if (xml_isNode(cur,"mass")) temp->mass = xml_getInt(cur);
-            else if (xml_isNode(cur,"price")) temp->price = xml_getInt(cur);
-            else if (xml_isNode(cur,"description"))
-               temp->description = strdup(xml_get(cur));
-            else if (xml_isNode(cur,"gfx_store")) {
+            xmlr_int(cur,"max",temp->max);
+            xmlr_int(cur,"tech",temp->tech);
+            xmlr_int(cur,"mass",temp->mass);
+            xmlr_int(cur,"price",temp->price);
+            xmlr_strd(cur,"description",temp->description);
+            if (xml_isNode(cur,"gfx_store")) {
                snprintf( str, strlen(xml_get(cur))+sizeof(OUTFIT_GFX)+10,
                      OUTFIT_GFX"store/%s.png", xml_get(cur));
                temp->gfx_store = gl_newImage(str);

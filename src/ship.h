@@ -78,6 +78,7 @@ typedef struct Ship_ {
    /* characteristics */
    int crew;
    int mass;
+   int fuel; /* how many jumps by default */
 
    /* health */
    double armour, armour_regen;

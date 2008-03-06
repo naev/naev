@@ -47,6 +47,8 @@ if (xml_isNode(n,s)) { l = xml_getLong(n); continue; }
 if (xml_isNode(n,s)) { f = xml_getFloat(n); continue; }
 #define xmlr_str(n,s,str) \
 if (xml_isNode(n,s)) { str = xml_get(n); continue; }
+#define xmlr_strd(n,s,str) \
+if (xml_isNode(n,s)) { str = strdup(xml_get(n)); continue; }
 #define xmlr_attr(n,s,a) \
 a = xml_nodeProp(n,s)
 

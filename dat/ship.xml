@@ -27,6 +27,7 @@ One of the most widely used ships in the galaxy.  Reknown for it's stability and
 <caracteristics>
 <crew>2</crew>
 <mass>32</mass>
+<fuel>400</fuel>
 <cap_weapon>25</cap_weapon>
 <cap_cargo>20</cap_cargo>
 </caracteristics>
@@ -61,6 +62,7 @@ The star product of Aerosys, the Hyena quickly has become a favorite of pirates 
 <caracteristics>
 <crew>2</crew>
 <mass>25</mass>
+<fuel>300</fuel>
 <cap_weapon>30</cap_weapon>
 <cap_cargo>10</cap_cargo>
 </caracteristics>
@@ -95,6 +97,7 @@ A heavy frigate designed for heavy combat.  Used widely by the empire to establi
 <caracteristics>
 <crew>35</crew>
 <mass>500</mass>
+<fuel>300</fuel>
 <cap_weapon>180</cap_weapon>
 <cap_cargo>70</cap_cargo>
 </caracteristics>
@@ -132,6 +135,7 @@ Used by security agencies all over the universe for it's reliability and availab
 <caracteristics>
 <crew>9</crew>
 <mass>130</mass>
+<fuel>400</fuel>
 <cap_weapon>90</cap_weapon>
 <cap_cargo>20</cap_cargo>
 </caracteristics>
@@ -168,6 +172,7 @@ A heavy liner specialized in freighting cargo all over the universe.  Also has g
 <caracteristics>                                                          
 <crew>13</crew>
 <mass>350</mass>
+<fuel>500</fuel>
 <cap_weapon>50</cap_weapon>
 <cap_cargo>250</cap_cargo>
 </caracteristics>
@@ -202,6 +207,7 @@ A robot drone.
 <caracteristics>
 <crew>1</crew>
 <mass>15</mass>
+<fuel>1</fuel>
 <cap_weapon>24</cap_weapon>
 <cap_cargo>1</cap_cargo>
 </caracteristics>

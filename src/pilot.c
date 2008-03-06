@@ -707,7 +707,7 @@ static void pilot_calcStats( Pilot* pilot )
    int i;
    double q;
    Outfit* o;
-   double ac, sc, ec; /* temporary health coeficients to set */
+   double ac, sc, ec, fc; /* temporary health coeficients to set */
    /*
     * set up the basic stuff
     */
@@ -719,9 +719,11 @@ static void pilot_calcStats( Pilot* pilot )
    ac = pilot->armour / pilot->armour_max;
    sc = pilot->shield / pilot->shield_max;
    ec = pilot->energy / pilot->energy_max;
+   fc = pilot->fuel / pilot->fuel_max;
    pilot->armour_max = pilot->ship->armour;
    pilot->shield_max = pilot->ship->shield;
    pilot->energy_max = pilot->ship->energy;
+   pilot->fuel_max = pilot->ship->fuel;
    pilot->armour_regen = pilot->ship->armour_regen;
    pilot->shield_regen = pilot->ship->shield_regen;
    pilot->energy_regen = pilot->ship->energy_regen;
@@ -745,6 +747,8 @@ static void pilot_calcStats( Pilot* pilot )
          pilot->shield_regen += o->u.mod.shield_regen * q;
          pilot->energy_max += o->u.mod.energy * q;
          pilot->energy_regen += o->u.mod.energy_regen * q;
+         /* fuel */
+         pilot ->fuel_max += o->u.mod.fuel * q;
       }
       else if (outfit_isAfterburner(pilot->outfits[i].outfit)) { /* set afterburner */
          pilot->afterburner = &pilot->outfits[i];
@@ -755,6 +759,7 @@ static void pilot_calcStats( Pilot* pilot )
    pilot->armour = ac * pilot->armour_max;
    pilot->shield = sc * pilot->shield_max;
    pilot->energy = ec * pilot->energy_max;
+   pilot->fuel = fc * pilot->fuel_max;
 }
 
 
@@ -944,6 +949,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* 
    pilot->armour = pilot->armour_max = 1.; /* hack to have full armour */
    pilot->shield = pilot->shield_max = 1.; /* ditto shield */
    pilot->energy = pilot->energy_max = 1.; /* ditto energy */
+   pilot->fuel = pilot->fuel_max = 1.; /* ditto fuel */
    pilot_calcStats(pilot);
 
    /* cargo */
