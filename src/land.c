@@ -100,7 +100,9 @@ static void commodity_sell( char* str );
 static void outfits (void);
 static void outfits_close( char* str );
 static void outfits_update( char* str );
+static int outfit_canBuy( Outfit* outfit, int q, int errmsg );
 static void outfits_buy( char* str );
+static int outfit_canSell( Outfit* outfit, int q, int errmsg );
 static void outfits_sell( char* str );
 static int outfits_getMod (void);
 static void outfits_renderMod( double bx, double by, double w, double h );
@@ -340,11 +342,16 @@ static void outfits_update( char* str )
    /* new image */
    window_modifyImage( secondary_wid, "imgOutfit", outfit->gfx_store );
 
-   /* gray out sell button */
-   if (player_outfitOwned(outfitname) == 0)
-      window_disableButton( secondary_wid, "btnSellOutfit" );
+   if (outfit_canBuy(outfit,1,0) > 0)
+      window_enableButton( secondary_wid, "btnBuyOutfit" );
    else
+      window_disableButton( secondary_wid, "btnBuyOutfit" );
+
+   /* gray out sell button */
+   if (outfit_canSell(outfit,1,0) > 0)
       window_enableButton( secondary_wid, "btnSellOutfit" );
+   else
+      window_disableButton( secondary_wid, "btnSellOutfit" );
 
    /* new text */
    window_modifyText( secondary_wid, "txtDescription", outfit->description );
@@ -369,46 +376,89 @@ static void outfits_update( char* str )
          buf3 );
    window_modifyText( secondary_wid,  "txtDDesc", buf );
 }
+static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
+{
+   char buf[16];
+
+   /* can player actually fit the outfit? */
+   if ((pilot_freeSpace(player) - outfit->mass) < 0) {
+      if (errmsg != 0)
+         dialogue_alert( "Not enough free space (you need %d more).",
+               outfit->mass - pilot_freeSpace(player) );
+      return 0;
+   }
+   /* has too many already */
+   else if (player_outfitOwned(outfit->name) >= outfit->max) {
+      if (errmsg != 0)
+         dialogue_alert( "You can only carry %d of this outfit.",
+               outfit->max );
+      return 0;
+   }
+   /* can only have one afterburner */
+   else if (outfit_isAfterburner(outfit) && (player->afterburner!=NULL)) {
+      if (errmsg != 0)
+         dialogue_alert( "You can only have one afterburner." );
+      return 0;
+   }
+   /* takes away cargo space but you don't have any */
+   else if (outfit_isMod(outfit) && (outfit->u.mod.cargo < 0)
+         && (player->cargo_free < -outfit->u.mod.cargo)) {
+      if (errmsg != 0)
+         dialogue_alert( "You need to empty your cargo first." );
+      return 0;
+   }
+   /* not enough $$ */
+   else if (q*(int)outfit->price >= player->credits) {
+      if (errmsg != 0) {
+         credits2str( buf, q*outfit->price - player->credits, 2 );
+         dialogue_alert( "You need %s more credits.", buf);
+      }
+      return 0;
+   }
+
+   return 1;
+}
 static void outfits_buy( char* str )
 {
    (void)str;
    char *outfitname;
    Outfit* outfit;
    int q;
-   char buf[16];
 
    outfitname = toolkit_getList( secondary_wid, "lstOutfits" );
    outfit = outfit_get( outfitname );
 
    q = outfits_getMod();
 
-   /* can player actually fit the outfit? */
-   if ((pilot_freeSpace(player) - outfit->mass) < 0) {
-      dialogue_alert( "Not enough free space (you need %d more).",
-            outfit->mass - pilot_freeSpace(player) );
-      return;
-   }
-   /* has too many already */
-   else if (player_outfitOwned(outfitname) >= outfit->max) {
-      dialogue_alert( "You can only carry %d of this outfit.",
-            outfit->max );
-      return;
-   }
-   /* can only have one afterburner */
-   else if (outfit_isAfterburner(outfit) && (player->afterburner!=NULL)) {
-      dialogue_alert( "You can only have one afterburner." );
-      return;
-   }
-   /* not enough $$ */
-   else if (q*(int)outfit->price >= player->credits) {
-      credits2str( buf, q*outfit->price - player->credits, 2 );
-      dialogue_alert( "You need %s more credits.", buf);
-      return;
-   }
+   /* can buy the outfit? */
+   if (outfit_canBuy(outfit, q, 1) == 0) return;
 
    player->credits -= outfit->price * pilot_addOutfit( player, outfit,
          MIN(q,outfit->max) );
    outfits_update(NULL);
+}
+static int outfit_canSell( Outfit* outfit, int q, int errmsg )
+{
+   /* has no outfits to sell */
+   if (player_outfitOwned(outfit->name) <= 0) {
+      if (errmsg != 0)
+         dialogue_alert( "You can't sell something you don't have." );
+      return 0;
+   }
+   /* can't sell when you are using it */
+   else if (outfit_isMod(outfit) && (player->cargo_free < outfit->u.mod.cargo*q)) {
+      if (errmsg != 0)
+         dialogue_alert( "You currently have cargo in this modification." );
+      return 0;
+   }
+   /* has negative mass and player has no free space */
+   else if ((outfit->mass < 0) && (pilot_freeSpace(player) < -outfit->mass)) {
+      if (errmsg != 0)
+         dialogue_alert( "Get rid of other outfits first.");
+      return 0;
+   }
+
+   return 1;
 }
 static void outfits_sell( char* str )
 {
@@ -423,16 +473,7 @@ static void outfits_sell( char* str )
    q = outfits_getMod();
 
    /* has no outfits to sell */
-   if (player_outfitOwned(outfitname) <= 0) {
-      dialogue_alert( "You can't sell something you don't have." );
-      return;
-   }
-   /* can't sell when you are using it */
-   else if (outfit_isMod(outfit) && (player->cargo_free < outfit->u.mod.cargo*q)) {
-      dialogue_alert( "You currently have cargo in this modification." );
-      return;
-   }
-
+   if (outfit_canSell( outfit, q, 1 ) == 0) return;
 
    player->credits += outfit->price * pilot_rmOutfit( player, outfit, q );
    outfits_update(NULL);

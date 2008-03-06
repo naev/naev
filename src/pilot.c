@@ -639,9 +639,10 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
  */
 int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 {
-   int i, q;
+   int i, q, c;
    char* s;
 
+   c = (outfit_isMod(outfit)) ? outfit->u.mod.cargo : 0;
    q = quantity;
    for (i=0; i<pilot->noutfits; i++)
       if (strcmp(outfit->name, pilot->outfits[i].outfit->name)==0) {
@@ -667,6 +668,7 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
             pilot_setSecondary( pilot, s );
          }
          pilot_calcStats(pilot); /* recalculate stats */
+         pilot->cargo_free -= c;
          return q;
       }
    WARN("Failure attempting to remove %d '%s' from pilot '%s'",

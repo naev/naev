@@ -318,7 +318,7 @@ The Hellburner is one of the best afterburners available in the market.  They ha
 <mass>5</mass>
 <price>15000</price>
 <description>
-The fuel pod allows a ship to store more fuel for hyperspace jumps.  Each pod effectively increases a ship's range by a jump.
+The Fuel Pod allows a ship to store more fuel for hyperspace jumps.  Each pod effectively increases a ship's range by a jump.
 </description>
 <gfx_store>fuel_pod</gfx_store>
 </general>
@@ -333,12 +333,27 @@ The fuel pod allows a ship to store more fuel for hyperspace jumps.  Each pod ef
 <mass>15</mass>
 <price>35000</price>
 <description>
-Cargo pods are big containers you can attach to dedicated weapon space allowing you to transport more cargo.  The drawback is that you lose alot of weapon space and won't be able to defend your cargo as well...
+Cargo Pods are big containers you can attach to dedicated weapon space allowing you to transport more cargo.  The drawback is that you lose alot of weapon space and won't be able to defend your cargo as well...
 </description>
 <gfx_store>cargo_pod</gfx_store>
 </general>
 <specific type="15">
 <cargo>15</cargo>
+</specific>
+</outfit>
+<outfit name="Weapon Rack">
+<general>
+<max>4</max>
+<tech>8</tech>
+<mass>-10</mass>
+<price>65000</price>
+<description>
+Adding a Weapon Rack to your ship will allow you to enjoy the benefits of more weapon space at the cost of cargo space.  It's often more wiser to have less cargo, but to guard it well.
+</description>
+<gfx_store>weapon_rack</gfx_store>
+</general>
+<specific type="15">
+<cargo>-15</cargo>
 </specific>
 </outfit>
 </Outfits>
