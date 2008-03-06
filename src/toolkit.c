@@ -111,11 +111,21 @@ static unsigned int genwid = 0; /* generates unique window ids, > 0 */
 
 int toolkit = 0; /* toolkit in use */
 
-/* window stuff */
+/* 
+ * window stuff
+ */
 #define MIN_WINDOWS  3
 static Window *windows = NULL;
 static int nwindows = 0;
 static int mwindows = 0;
+
+
+/*
+ * simulate keypresses when holding
+ */
+static SDLKey input_key;
+static unsigned int input_keyTime;
+static int input_keyCounter;
 
 
 /*
@@ -1386,8 +1396,10 @@ static void toolkit_mouseEvent( SDL_Event* event )
                   if (toolkit_isFocusable(wgt))
                      w->focus = i;
 
-                  if (wgt->type == WIDGET_LIST)
+                  if (wgt->type == WIDGET_LIST) {
                      toolkit_listFocus( wgt, x-wgt->x, y-wgt->y );
+                     input_key = 0; /* hack to avoid weird bug with permascroll */
+                  }
                   break;
 
                case SDL_MOUSEBUTTONUP:
@@ -1420,9 +1432,6 @@ static void toolkit_mouseEvent( SDL_Event* event )
 /*
  * handles the key events
  */
-static SDLKey input_key;
-static unsigned int input_keyTime;
-static int input_keyCounter;
 static void toolkit_regKey( SDLKey key )
 {
    if ((input_key==0) && (input_keyTime==0)) {
