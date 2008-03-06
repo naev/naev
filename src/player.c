@@ -709,7 +709,8 @@ void player_render (void)
 
       gl_printMid( &gl_smallFont, (int)gui.nav.w,
             gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
-            NULL, "%s", systems_stack[cur_system->jumps[hyperspace_target]].name );
+            NULL, "%d - %s", (int)(player->fuel) / HYPERSPACE_FUEL,
+            systems_stack[cur_system->jumps[hyperspace_target]].name );
    }
    else { /* no NAV target */
       gl_printMid( NULL, (int)gui.nav.w,
@@ -1501,6 +1502,8 @@ void player_jump (void)
       player_message("You are too close to gravity centers to initiate hyperspace");
    else if (i == -2)
       player_message("You are moving too fast to enter hyperspace.");
+   else if (i == -3)
+      player_message("You do not have enough fuel to hyperspace jump.");
    else
       player_message("Preparing for hyperspace");
 }
@@ -1526,6 +1529,9 @@ void player_brokeHyperspace (void)
    /* set position, the pilot_update will handle lowering vel */
    player_warp( -cos( player->solid->dir ) * MIN_HYPERSPACE_DIST * 2.5,
          -sin( player->solid->dir ) * MIN_HYPERSPACE_DIST * 2.5 );
+
+   /* reduce fuel */
+   player->fuel -= HYPERSPACE_FUEL;
 
    /* stop hyperspace */
    pilot_rmFlag( player, PILOT_HYPERSPACE | PILOT_HYP_BEGIN | PILOT_HYP_PREP );

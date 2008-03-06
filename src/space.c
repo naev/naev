@@ -415,6 +415,8 @@ int space_canHyperspace( Pilot* p)
 {
    int i;
    double d;
+   if (p->fuel < HYPERSPACE_FUEL) return 0;
+
    for (i=0; i < cur_system->nplanets; i++) {
       d = vect_dist(&p->solid->pos, &cur_system->planets[i].pos);
       if (d < MIN_HYPERSPACE_DIST)
@@ -427,6 +429,7 @@ int space_canHyperspace( Pilot* p)
  */
 int space_hyperspace( Pilot* p )
 {
+   if (p->fuel < HYPERSPACE_FUEL) return -3;
    if (!space_canHyperspace(p)) return -1;
 
    /* pilot is now going to get automatically ready for hyperspace */
