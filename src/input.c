@@ -381,16 +381,6 @@ static void input_keyup( SDLKey key )
  */
 void input_handle( SDL_Event* event )
 {
-   /* pause the game if it is unfocused */
-   if (event->type == SDL_ACTIVEEVENT) {
-      if (event->active.state != SDL_APPMOUSEFOCUS) { /* we don't need mouse focus */
-         if ((event->active.gain==0) && !paused) pause_game();
-         else if ((event->active.gain==1) && paused) unpause_game();
-         return;
-      }
-   }
-
-
    if (toolkit) /* toolkit handled seperately completely */
       if (toolkit_input(event))
          return; /* we don't process it if toolkit grabs it */
