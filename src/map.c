@@ -237,10 +237,12 @@ static void map_render( double bx, double by, double w, double h )
    }
 
    /* selected planet */
-   sys = &systems_stack[ map_selected ];
-   COLOUR(cRed);
-   gl_drawCircleInRect( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
-         r+3., bx, by, w, h );
+   if (map_selected != -1) {
+      sys = &systems_stack[ map_selected ];
+      COLOUR(cRed);
+      gl_drawCircleInRect( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
+            r+3., bx, by, w, h );
+   }
 }
 /*
  * map event handling
@@ -369,6 +371,7 @@ void map_jump (void)
 {
    int j;
 
+   map_selected = -1;
    map_xpos = cur_system->pos.x;
    map_ypos = cur_system->pos.y;
 
