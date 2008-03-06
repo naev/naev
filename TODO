@@ -26,9 +26,14 @@
       *) fancy displacement effects for some ships
    *) More outfit types
       *) beam weapons
-      *) hangar bays
+      *) hangar bays -> need escorts
    *) Save improvements
       *) save entire game data except graphics, so that missions can modify stuff
+   *) Hybrid ships
+      *) Start out with X skillpoints that get spread out by use, use fast at first
+      *) Can't use normal gear
+      *) very rare
+      *) random mutation for cloaking/displacement abilities
 
 
    MINOR
