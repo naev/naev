@@ -110,6 +110,9 @@ typedef struct Outfit_ {
          double shield, shield_regen;
          double energy, energy_regen;
          double fuel;
+
+         /* misc */
+         int cargo; /* cargo space to add */
       } mod;
       struct { /* afterburner */
          double thrust_perc, thrust_abs; /* percent and absolute thrust bonus */

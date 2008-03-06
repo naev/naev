@@ -395,7 +395,8 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          temp->u.mod.shield_regen = xml_getFloat(node)/60.0;
       else if (xml_isNode(node,"energy_regen"))
          temp->u.mod.energy_regen = xml_getFloat(node)/60.0;
-
+      /* misc */
+      xmlr_int(node,"cargo",temp->u.mod.cargo);
    } while (xml_nextNode(node));
 }
 

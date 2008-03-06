@@ -427,6 +427,12 @@ static void outfits_sell( char* str )
       dialogue_alert( "You can't sell something you don't have." );
       return;
    }
+   /* can't sell when you are using it */
+   else if (outfit_isMod(outfit) && (player->cargo_free < outfit->u.mod.cargo*q)) {
+      dialogue_alert( "You currently have cargo in this modification." );
+      return;
+   }
+
 
    player->credits += outfit->price * pilot_rmOutfit( player, outfit, q );
    outfits_update(NULL);
@@ -987,9 +993,8 @@ static void spaceport_refuel( char *str )
 {
    (void)str;
 
-   if (player->credits < refuel_price()) {
-      dialogue_alert("Need more Credits",
-            "You seem to not have enough credits to refuel your ship" );
+   if (player->credits < refuel_price()) { /* player is out of money after landing */
+      dialogue_alert("You seem to not have enough credits to refuel your ship" );
       return;
    }
 

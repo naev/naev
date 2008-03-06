@@ -666,6 +666,7 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 
             pilot_setSecondary( pilot, s );
          }
+         pilot_calcStats(pilot); /* recalculate stats */
          return q;
       }
    WARN("Failure attempting to remove %d '%s' from pilot '%s'",
@@ -748,7 +749,9 @@ static void pilot_calcStats( Pilot* pilot )
          pilot->energy_max += o->u.mod.energy * q;
          pilot->energy_regen += o->u.mod.energy_regen * q;
          /* fuel */
-         pilot ->fuel_max += o->u.mod.fuel * q;
+         pilot->fuel_max += o->u.mod.fuel * q;
+         /* misc */
+         pilot->cargo_free += o->u.mod.cargo * q;
       }
       else if (outfit_isAfterburner(pilot->outfits[i].outfit)) { /* set afterburner */
          pilot->afterburner = &pilot->outfits[i];

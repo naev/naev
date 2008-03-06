@@ -326,4 +326,19 @@ The fuel pod allows a ship to store more fuel for hyperspace jumps.  Each pod ef
 <fuel>100</fuel>
 </specific>
 </outfit>
+<outfit name="Cargo Pod">
+<general>
+<max>4</max>
+<tech>6</tech>
+<mass>15</mass>
+<price>35000</price>
+<description>
+Cargo pods are big containers you can attach to dedicated weapon space allowing you to transport more cargo.  The drawback is that you lose alot of weapon space and won't be able to defend your cargo as well...
+</description>
+<gfx_store>cargo_pod</gfx_store>
+</general>
+<specific type="15">
+<cargo>15</cargo>
+</specific>
+</outfit>
 </Outfits>
