@@ -129,6 +129,9 @@ static void misn_close( char* str );
 static void misn_accept( char* str );
 static void misn_genList( int first );
 static void misn_update( char* str );
+/* refuel */
+static int refuel_price (void);
+static void spaceport_refuel( char *str );
 
 
 /*
@@ -969,10 +972,40 @@ static void misn_update( char* str )
 
 
 /*
+ * returns how much it will cost to refuel the player
+ */
+static int refuel_price (void)
+{
+   return (player->fuel_max - player->fuel)*3;
+}
+
+
+/*
+ * refuel the player
+ */
+static void spaceport_refuel( char *str )
+{
+   (void)str;
+
+   if (player->credits < refuel_price()) {
+      dialogue_alert("Need more Credits",
+            "You seem to not have enough credits to refuel your ship" );
+      return;
+   }
+
+   player->credits -= refuel_price();
+   player->fuel = player->fuel_max;
+   window_destroyWidget( land_wid, "btnRefuel" );
+}
+
+
+/*
  * lands the player
  */
 void land( Planet* p )
 {
+   char buf[32], cred[16];
+
    if (landed) return;
 
    /* change music */
@@ -1012,11 +1045,20 @@ void land( Planet* p )
    /* third column */
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
       window_addButton( land_wid, 20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnNews",
-         "Mission Terminal", (void(*)(char*))misn);
+            BUTTON_WIDTH, BUTTON_HEIGHT, "btnNews",
+            "Mission Terminal", (void(*)(char*))misn);
       window_addButton( land_wid, 20, 20 + BUTTON_HEIGHT + 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnBar",
-         "Spaceport Bar", (void(*)(char*))spaceport_bar);
+            BUTTON_WIDTH, BUTTON_HEIGHT, "btnBar",
+            "Spaceport Bar", (void(*)(char*))spaceport_bar);
+      if (player->fuel < player->fuel_max) {
+         credits2str( cred, refuel_price(), 2 );
+         snprintf( buf, 32, "Refuel %s", cred );
+         window_addButton( land_wid, -20, 20 + 2*(BUTTON_HEIGHT + 20),
+               BUTTON_WIDTH, BUTTON_HEIGHT, "btnRefuel",
+               buf, spaceport_refuel );
+         if (player->credits < refuel_price()) /* not enough money */
+            window_disableButton( land_wid, "btnRefuel" );
+      }
    }
 
 

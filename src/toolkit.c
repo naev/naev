@@ -710,7 +710,8 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
       DEBUG("widget '%s' not found in window %d", wgtname, wid);
       return;
    }
-   
+  
+   if (w->focus == i) w->focus = -1;
    widget_cleanup(&w->widgets[i]);
    if (i < w->nwidgets-1) /* not last widget */
       memmove(&w->widgets[i], &w->widgets[i+1],
