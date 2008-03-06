@@ -298,11 +298,9 @@ void ship_view( char* shipname )
    Ship *s;
    char buf[1024];
    unsigned int wid;
-   wid = window_create( shipname, -1, -1, VIEW_WIDTH, VIEW_HEIGHT );
+   int h;
    s = ship_get( shipname );
-
-   window_addText( wid, 20, 0, 100, VIEW_HEIGHT-40,
-         0, "txtLabel", &gl_smallFont, &cDConsole,
+   snprintf(buf, 1024,
          "Name:\n"
          "Class:\n"
          "Crew:\n"
@@ -318,7 +316,13 @@ void ship_view( char* shipname )
          "\n"
          "Weapon Space:\n"
          "Cargo Space:\n"
+         "Fuel:\n"
          );
+   h = gl_printHeight( &gl_smallFont, VIEW_WIDTH, buf );
+
+   wid = window_create( shipname, -1, -1, VIEW_WIDTH, h+60+BUTTON_HEIGHT );
+   window_addText( wid, 20, -40, VIEW_WIDTH, h,
+         0, "txtLabel", &gl_smallFont, &cDConsole, buf );
    snprintf( buf, 1024,
          "%s\n"
          "%s\n"
@@ -335,11 +339,13 @@ void ship_view( char* shipname )
          "\n"
          "%d Tons\n"
          "%d Tons\n"
+         "%d Units\n"
          , s->name, ship_class(s), s->crew, s->mass,
          s->thrust/s->mass, s->speed, s->turn,
          s->shield, s->shield_regen, s->armour, s->armour_regen,
-         s->energy, s->energy_regen, s->cap_weapon, s->cap_cargo );
-   window_addText( wid, 120, 0, VIEW_WIDTH-140, VIEW_HEIGHT-40,
+         s->energy, s->energy_regen,
+         s->cap_weapon, s->cap_cargo, s->fuel );
+   window_addText( wid, 120, -40, VIEW_WIDTH-140, h,
          0, "txtProperties", &gl_smallFont, &cBlack, buf );
 
    /* close button */

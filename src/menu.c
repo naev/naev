@@ -219,6 +219,7 @@ void menu_info (void)
          " Rating:\n"
          "\n"
          "Ship:\n"
+         "Fuel:\n"
          );
    snprintf( str, 128, 
          "%s\n"
@@ -227,7 +228,9 @@ void menu_info (void)
          "%s\n"
          "\n"
          "%s\n"
-         , player_name, nt, player_rating(), player->name );
+         "%d (%d jumps)"
+         , player_name, nt, player_rating(), player->name,
+         (int)player->fuel, (int)(player->fuel) / HYPERSPACE_FUEL );
    window_addText( wid, 80, 20,
          INFO_WIDTH-120-BUTTON_WIDTH, INFO_HEIGHT-60,
          0, "txtPilot", &gl_smallFont, &cBlack, str );
