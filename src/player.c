@@ -286,6 +286,7 @@ static void player_newMake (void)
    /* create the player and start the game */
    player_newShip( ship, x, y, 0., 0., RNG(0,359)/180.*M_PI );
    space_init(system);
+   map_clear(); /* sets the map up */
 
    /* clear the map */
    map_clear();
@@ -1898,6 +1899,7 @@ static int player_parse( xmlNodePtr parent )
 
    /* initialize the system */
    space_init( planet_getSystem(planet) );
+   map_clear(); /* sets the map up */
 
    return 0;
 }

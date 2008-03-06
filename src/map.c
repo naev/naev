@@ -53,6 +53,7 @@ static int map_inPath( StarSystem *sys );
 static void map_render( double bx, double by, double w, double h );
 static void map_mouse( SDL_Event* event, double mx, double my );
 static void map_buttonZoom( char* str );
+static void map_selectCur (void);
 
 
 /*
@@ -110,7 +111,7 @@ static void map_update (void)
    char buf[100];
 
    sys = &systems_stack[ map_selected ];
-
+   
    window_modifyText( map_wid, "txtSysname", sys->name );
 
    if (sys->nplanets == 0) /* no planets -> no factions */
@@ -335,8 +336,6 @@ static void map_buttonZoom( char* str )
  */
 void map_clear (void)
 {
-   int i;
-
    map_zoom = 1.;
    if (cur_system != NULL) {
       map_xpos = cur_system->pos.x;
@@ -353,16 +352,27 @@ void map_clear (void)
    }
 
    /* default system is current system */
-   if (cur_system != NULL)
-      for (i=0; i<systems_nstack; i++)
+   map_selectCur();
+}
+
+
+static void map_selectCur (void)
+{
+   int i;
+
+   if (cur_system != NULL)  {
+      for (i=0; i<systems_nstack; i++) {
          if (&systems_stack[i] == cur_system) {
             map_selected = i;
             break;
          }
-   else
-      map_selected = 0;
+      }
+   }
+   else {
+      /* will probably segfault now */
+      map_selected = -1;
+   }
 }
-
 
 /*
  * updates the map after a jump
@@ -371,7 +381,10 @@ void map_jump (void)
 {
    int j;
 
-   map_selected = -1;
+
+   /* set selected system to self */
+   map_selectCur();
+
    map_xpos = cur_system->pos.x;
    map_ypos = cur_system->pos.y;
 
