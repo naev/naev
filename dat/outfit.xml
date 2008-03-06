@@ -311,4 +311,19 @@ The Hellburner is one of the best afterburners available in the market.  They ha
 <energy>65</energy>
 </specific>
 </outfit>
+<outfit name="Fuel Pod">
+<general>
+<max>2</max>
+<tech>3</tech>
+<mass>5</mass>
+<price>15000</price>
+<description>
+The fuel pod allows a ship to store more fuel for hyperspace jumps.  Each pod effectively increases a ship's range by a jump.
+</description>
+<gfx_store>fuel_pod</gfx_store>
+</general>
+<specific type="15">
+<fuel>100</fuel>
+</specific>
+</outfit>
 </Outfits>
