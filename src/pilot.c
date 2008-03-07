@@ -526,7 +526,8 @@ static void pilot_update( Pilot* pilot, const double dt )
          limit_speed( &pilot->solid->vel,
                pilot->speed * pilot->afterburner->outfit->u.afb.speed_perc + 
                pilot->afterburner->outfit->u.afb.speed_abs, dt );
-         pilot->energy -= pilot->afterburner->outfit->u.afb.energy * dt;
+         spfx_shake( SHAKE_DECAY/2. * dt); /* shake goes down at half speed */
+         pilot->energy -= pilot->afterburner->outfit->u.afb.energy * dt; /* energy loss */
       }
       else
          limit_speed( &pilot->solid->vel, pilot->speed, dt );

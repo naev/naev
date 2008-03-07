@@ -30,6 +30,7 @@
 #include "hook.h"
 #include "map.h"
 #include "nfile.h"
+#include "spfx.h"
 
 
 #define XML_GUI_ID   "GUIs"   /* XML section identifier */
@@ -71,7 +72,10 @@ int hyperspace_target = -1; /* targetted hyperspace route */
 static unsigned int player_timer = 0;
 static Vector2d player_cam;
 
-/* unique mission stack */
+
+/* 
+ * unique mission stack
+ */
 static int* missions_done = NULL; /* saves position */
 static int missions_mdone = 0;
 static int missions_ndone = 0;
@@ -1569,6 +1573,7 @@ void player_afterburn (void)
    if (player->afterburner!=NULL) {
       player_setFlag(PLAYER_AFTERBURNER);
       pilot_setFlag(player,PILOT_AFTERBURNER);
+      spfx_shake(50.);
    }
 }
 void player_afterburnOver (void)

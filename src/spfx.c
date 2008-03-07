@@ -14,13 +14,27 @@
 #include "physics.h"
 #include "opengl.h"
 #include "pause.h"
+#include "rng.h"
 
 
 #define SPFX_GFX     "gfx/spfx/" /* location of the graphic */
 
-#define SPFX_CHUNK   10 /* chunk to alloc when needed */
+#define SPFX_CHUNK   32 /* chunk to alloc when needed */
 
 
+/*
+ * special hardcoded special effects
+ */
+/* shake aka rumble */
+static double shake_rad = 0.;
+static Vector2d shake_pos = { .x = 0., .y = 0. };
+static Vector2d shake_vel = { .x = 0., .y = 0. };
+static int shake_off = 1;
+
+
+/*
+ * generic SPFX template
+ */
 typedef struct SPFX_Base_ {
    char* name;
 
@@ -224,6 +238,67 @@ static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt )
       /* actually update it */
       vect_cadd( &layer[i].pos, dt*VX(layer[i].vel), dt*VY(layer[i].vel) );
    }
+}
+
+
+/*
+ * prepares the rendering for special effects
+ */
+void spfx_start( double dt )
+{
+   GLdouble bx, by, x, y;
+   double inc;
+
+   if (shake_off == 1) return; /* save the cycles! */
+
+   /* set defaults */
+   bx = SCREEN_W/2;
+   by = SCREEN_H/2;
+
+   if (!paused) {
+      inc = dt*100000.;
+
+      /* calculate new position */
+      if (shake_rad > 0.01) {
+         vect_cadd( &shake_pos, shake_vel.x * inc, shake_vel.y * inc );
+
+         if (VMOD(shake_pos) > shake_rad) { /* change direction */
+            vect_pset( &shake_pos, shake_rad, VANGLE(shake_pos) );
+            vect_pset( &shake_vel, shake_rad, 
+                  -VANGLE(shake_pos) + (RNGF()-0.5) * M_PI );
+         }
+
+         shake_rad -= SHAKE_DECAY*dt ;
+         if (shake_rad < 0.) shake_rad = 0.;
+
+         x = shake_pos.x;
+         y = shake_pos.y;  
+      }
+      else {
+         shake_rad = 0.;
+         shake_off = 1;
+         x = 0.;
+         y = 0.;
+      }
+   }
+
+   /* set the new viewport */
+   glMatrixMode(GL_PROJECTION);
+   glLoadIdentity();
+   glOrtho( -bx+x, bx+x, -by+y, by+y, -1., 1. );
+}
+
+
+/*
+ * adds ruuuuuuuuumble!
+ */
+void spfx_shake( double mod )
+{
+   shake_rad += mod;
+   if (shake_rad > SHAKE_MAX) shake_rad = SHAKE_MAX;
+   shake_off = 0;
+
+   vect_pset( &shake_vel, shake_rad, RNGF() * 2. * M_PI );
 }
 
 

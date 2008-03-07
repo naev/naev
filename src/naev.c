@@ -337,6 +337,8 @@ static void update_all (void)
  */
 static void render_all (void)
 {
+   /* setup */
+   spfx_start(dt);
    /* BG */
    space_render(dt);
    planets_render();
