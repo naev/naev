@@ -21,7 +21,14 @@
 #include "xml.h"
 
 
-#define MISN_DEBUG(str, args...)  (fprintf(stdout,"Mission '%s': "str"\n", cur_mission->data->name, ## args))
+#define MISN_DEBUG(str, args...) \
+(fprintf(stdout,"Mission '%s': "str"\n", cur_mission->data->name, ## args))
+
+#define MISN_INVALID_PARAMETER()    \
+{ \
+   MISN_DEBUG("Invalid parameter."); \
+   return 0; \
+}
 
 #define MIN_ARGS(n)     \
 if (lua_gettop(L) < n) { \
@@ -178,8 +185,10 @@ static const luaL_reg hook_methods[] = {
 };
 /* pilots */
 static int pilot_addFleet( lua_State *L );
+static int pilot_rename( lua_State *L );
 static const luaL_reg pilot_methods[] = {
    { "add", pilot_addFleet },
+   { "rename", pilot_rename },
    {0,0}
 };
 
@@ -694,10 +703,7 @@ static int space_jumpDist( lua_State *L )
 
    if (lua_isstring(L,-1))
       start = (char*) lua_tostring(L,-1);
-   else {
-      MISN_DEBUG("Invalid parameter 1");
-      return 0;
-   }
+   else MISN_INVALID_PARAMETER();
 
    if ((lua_gettop(L) > 1) && lua_isstring(L,-2))
       goal = (char*) lua_tostring(L,-2);
@@ -956,10 +962,7 @@ static int hook_pilotDeath( lua_State *L )
    unsigned int p;
 
    if (lua_isnumber(L,-2)) p = (unsigned int) lua_tonumber(L,-2);
-   else {
-      MISN_DEBUG("Invalid first parameter");
-      return 0;
-   }
+   else MISN_INVALID_PARAMETER();
 
    h = hook_generic( L, "death" ); /* we won't actually call the death stack directly */
    pilot_addHook( pilot_get(p), PILOT_HOOK_DEATH, h );
@@ -983,10 +986,7 @@ static int pilot_addFleet( lua_State *L )
    Vector2d vv,vp, vn;
 
    if (lua_isstring(L,-1)) fltname = (char*) lua_tostring(L,-1);
-   else {
-      MISN_DEBUG("Invalid parameter");
-      return 0;
-   }
+   else MISN_INVALID_PARAMETER();
 
    /* pull the fleet */
    flt = fleet_get( fltname );
@@ -1029,6 +1029,23 @@ static int pilot_addFleet( lua_State *L )
       }
    }
    return 1;
+}
+static int pilot_rename( lua_State* L )
+{
+   MIN_ARGS(2);
+   char *name;
+   unsigned int id;
+   Pilot *p;
+
+   if (lua_isnumber(L,-2)) id = (unsigned int) lua_tonumber(L,-2);
+   else MISN_INVALID_PARAMETER();
+   if (lua_isstring(L,-1)) name = (char*) lua_tostring(L,-1);
+   else MISN_INVALID_PARAMETER();
+
+   p = pilot_get( id );
+   free(p->name);
+   p->name = strdup(name);
+   return 0; 
 }
 
 
