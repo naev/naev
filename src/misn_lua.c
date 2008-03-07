@@ -65,6 +65,7 @@ static int misn_delete = 0; /* if 1 delete current mission */
 /*
  * prototypes
  */
+static int var_add( misn_var *var );
 static void var_free( misn_var* var );
 static int hook_generic( lua_State *L, char* stack );
 
@@ -282,6 +283,84 @@ int var_save( xmlTextWriterPtr writer )
 }
 
 
+/*
+ * loads the vars
+ */
+int var_load( xmlNodePtr parent )
+{
+   char *str;
+   xmlNodePtr node, cur;
+   misn_var var;
+
+   var_cleanup();
+
+   node = parent->xmlChildrenNode;
+
+   do {
+      if (xml_isNode(node,"vars")) {
+         cur = node->xmlChildrenNode;
+         
+         do {
+            if (xml_isNode(cur,"var")) {
+               xmlr_attr(cur,"name",var.name);
+               xmlr_attr(cur,"type",str);
+               if (strcmp(str,"nil")==0)
+                  var.type = MISN_VAR_NIL;
+               else if (strcmp(str,"num")==0) {
+                  var.type = MISN_VAR_NUM;
+                  var.d.num = atoi( xml_get(cur) );
+               }
+               else if (strcmp(str,"bool")) {
+                  var.type = MISN_VAR_BOOL;
+                  var.d.b = atoi( xml_get(cur) );
+               }
+               else if (strcmp(str,"str")) {
+                  var.type = MISN_VAR_STR;
+                  var.d.str = strdup( xml_get(cur) );
+               }
+               else { /* super error checking */
+                  WARN("Unknown var type '%s'", str);
+                  free(var.name);
+                  continue;
+               }
+               free(str);
+               var_add( &var );
+            }
+         } while (xml_nextNode(cur));
+      }
+   } while (xml_nextNode(node));
+
+   return 0;
+}
+
+
+/*
+ * adds a var to the stack, strings will be SHARED, don't free
+ */
+static int var_add( misn_var *new_var )
+{
+   int i;
+
+   if (var_nstack+1 > var_mstack) { /* more memory */
+      var_mstack += 64; /* overkill ftw */
+      var_stack = realloc( var_stack, var_mstack * sizeof(misn_var) );
+   }
+
+   /* check if already exists */
+   for (i=0; i<var_nstack; i++)
+      if (strcmp(new_var->name,var_stack[i].name)==0) { /* overwrite */
+         var_free( &var_stack[i] );
+         memcpy( &var_stack[i], new_var, sizeof(misn_var) );
+         return 0;
+      }
+   
+   memcpy( &var_stack[var_nstack], new_var, sizeof(misn_var) );
+   var_nstack++;
+
+   return 0;
+}
+
+
 
 /*
  *   N A E V
@@ -379,7 +458,7 @@ static int misn_finish( lua_State *L )
    misn_delete = 1;
 
    if (b && mis_isFlag(cur_mission->data,MISSION_UNIQUE))
-      player_missionFinished( mission_getID( cur_mission->data ) );
+      player_missionFinished( mission_getID( cur_mission->data->name ) );
 
    lua_pushstring(L, "Mission Done");
    lua_error(L); /* shouldn't return */
@@ -462,59 +541,36 @@ static int var_pop( lua_State *L )
 static int var_push( lua_State *L )
 {
    MIN_ARGS(2);
-   int i;
    char *str;
-   misn_var *var;
+   misn_var var;
 
    if (lua_isstring(L,-2)) str = (char*) lua_tostring(L,-2);
    else {
       MISN_DEBUG("Trying to push a var with non-string name");
       return 0;
    }
-
+   var.name = strdup(str);
    
-   if (var_nstack+1 > var_mstack) { /* more memory */
-      var_mstack += 10;
-      var_stack = realloc( var_stack, var_mstack * sizeof(misn_var) );
-   }
-
-   /* check if already exists */
-   var = NULL;
-   for (i=0; i<var_nstack; i++)
-      if (strcmp(str,var_stack[i].name)==0)
-         var = &var_stack[i];
-
-   if (var==NULL)
-      var = &var_stack[var_nstack];
-   else if ((var->type==MISN_VAR_STR) && (var->d.str!=NULL)) { /* must free */
-      free( var->d.str );
-      var->d.str = NULL;
-   }
-
    /* store appropriate data */
    if (lua_isnil(L,-1)) 
-      var->type = MISN_VAR_NIL;
+      var.type = MISN_VAR_NIL;
    else if (lua_isnumber(L,-1)) {
-      var->type = MISN_VAR_NUM;
-      var->d.num = (double) lua_tonumber(L,-1);
+      var.type = MISN_VAR_NUM;
+      var.d.num = (double) lua_tonumber(L,-1);
    }
    else if (lua_isboolean(L,-1)) {
-      var->type = MISN_VAR_BOOL;
-      var->d.b = lua_toboolean(L,-1);
+      var.type = MISN_VAR_BOOL;
+      var.d.b = lua_toboolean(L,-1);
    }
    else if (lua_isstring(L,-1)) {
-      var->type = MISN_VAR_STR;
-      var->d.str = strdup( (char*) lua_tostring(L,-1) );
+      var.type = MISN_VAR_STR;
+      var.d.str = strdup( (char*) lua_tostring(L,-1) );
    }
    else {
       MISN_DEBUG("Trying to push a var of invalid data type to stack");
       return 0;
    }
-
-   if (i>=var_nstack) { /* var is new */
-      var->name = strdup(str);
-      var_nstack++;
-   }
+   var_add( &var );
 
    return 0;
 }

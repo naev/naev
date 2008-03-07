@@ -66,19 +66,20 @@ static MissionData* mission_parse( const xmlNodePtr parent );
 
 
 /*
- * gets the ID of a MissionData
+ * gets id from mission name
  */
-int mission_getID( MissionData* misn )
+int mission_getID( char* name )
 {
    int i;
 
    for (i=0; i<mission_nstack; i++)
-      if (misn == &mission_stack[i])
+      if (strcmp(name,mission_stack[i].name)==0)
          return i;
 
-   DEBUG("Mission '%s' not found in stack", misn->name);
+   DEBUG("Mission '%s' not found in stack", name);
    return -1;
 }
+
 
 /*
  * gets a MissionData based on ID

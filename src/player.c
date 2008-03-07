@@ -1882,6 +1882,9 @@ static int player_parse( xmlNodePtr parent )
                player_parseShip(cur, 0);
          } while (xml_nextNode(cur));
       }
+
+      if (xml_isNode(node,"missions_done"))
+         player_parseDone(node);
    } while (xml_nextNode(node));
 
    /* set global thingies */
@@ -1910,7 +1913,8 @@ static int player_parseDone( xmlNodePtr parent )
    node = parent->xmlChildrenNode;
 
    do {
-
+      if (xml_isNode(node,"done"))
+         player_missionFinished( mission_getID( xml_get(node) ) );
    } while (xml_nextNode(node));
 
    return 0;

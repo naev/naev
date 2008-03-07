@@ -29,6 +29,7 @@ extern int player_save( xmlTextWriterPtr writer );
 extern int missions_save( xmlTextWriterPtr writer );
 extern int var_save( xmlTextWriterPtr writer ); /* misn var */
 extern int player_load( xmlNodePtr parent );
+extern int var_load( xmlNodePtr parent );
 extern void menu_main_close (void);
 /* static */
 static int save_data( xmlTextWriterPtr writer );
@@ -185,6 +186,7 @@ static int load_game( char* file )
    node = doc->xmlChildrenNode; /* base node */
 
    player_load(node);
+   var_load(node);
 
    xmlFreeDoc(doc);
    
