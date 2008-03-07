@@ -34,6 +34,9 @@
       *) Can't use normal gear
       *) very rare
       *) random mutation for cloaking/displacement abilities
+   *) Optimize texture usage
+      *) all land graphics should be on land only (optionally)
+      *) planet space graphics should be ondemand
 
 
    MINOR
