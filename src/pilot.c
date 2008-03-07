@@ -27,6 +27,9 @@
 #define FLEET_DATA      "dat/fleet.xml"
 
 
+#define PILOT_CHUNK     32 /* chunks to increment pilot_stack by */
+
+
 /* stack of pilot ids to assure uniqueness */
 static unsigned int pilot_id = PLAYER_ID;
 
@@ -1021,7 +1024,7 @@ unsigned int pilot_create( Ship* ship, char* name, int faction, AI_Profile* ai,
       pilots++; /* there's a new pilot */
 
       if (pilots >= mpilots) { /* needs to grow */
-         mpilots += 20; /* grow 20 at a time */
+         mpilots += PILOT_CHUNK; /* grow 20 at a time */
          tp = pilot_stack;
          pilot_stack = realloc( pilot_stack, mpilots*sizeof(Pilot*) );
          if ((pilot_stack != tp) && player) /* take into account possible mem move */

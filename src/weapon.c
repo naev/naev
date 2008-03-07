@@ -25,9 +25,7 @@
 #define VOICE_PRIORITY_AMMO   8  /* higher */
 
 
-/* PID values */
-#define IMIN      -50000
-#define IMAX      50000
+#define WEAPON_CHUNK    32
 
 
 /*
@@ -522,10 +520,12 @@ void weapon_add( const Outfit* outfit, const double dir,
    else { /* need to allocate more memory */
       switch (layer) {
          case WEAPON_LAYER_BG:
-            curLayer = wbackLayer = realloc(curLayer, (++(*mLayer))*sizeof(Weapon*));
+            (*mLayer) += WEAPON_CHUNK;
+            curLayer = wbackLayer = realloc(curLayer, (*mLayer)*sizeof(Weapon*));
             break;
          case WEAPON_LAYER_FG:
-            curLayer = wfrontLayer = realloc(curLayer, (++(*mLayer))*sizeof(Weapon*));
+            (*mLayer) += WEAPON_CHUNK;
+            curLayer = wfrontLayer = realloc(curLayer, (*mLayer)*sizeof(Weapon*));
             break;
       }
       curLayer[(*nLayer)++] = w;
