@@ -332,6 +332,9 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    else if (p->armour-damage_armour > 0.) {
       p->armour -= damage_armour;
       dam_mod = damage_armour/p->armour_max;
+
+      if (p->id == PLAYER_ID) /* a bit of shaking */
+         spfx_shake( dam_mod*100. );
    }
    else { /* officially dead */
 
