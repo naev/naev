@@ -20,6 +20,7 @@ typedef enum { KEYBIND_NULL, KEYBIND_KEYBOARD, KEYBIND_JAXIS, KEYBIND_JBUTTON } 
  */
 void input_setDefault (void);
 void input_setKeybind( char *keybind, KeybindType type, int key, int reverse );
+int input_getKeybind( char *keybind, KeybindType *type, int *reverse );
 
 /*
  * handle input

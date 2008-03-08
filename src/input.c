@@ -147,6 +147,23 @@ void input_setKeybind( char *keybind, KeybindType type, int key, int reverse )
 
 
 /*
+ * gets the value of a keybind
+ */
+int input_getKeybind( char *keybind, KeybindType *type, int *reverse )
+{
+   int i;
+   for (i=0; strcmp(keybindNames[i],"end"); i++)
+      if (strcmp(keybind, input_keybinds[i]->name)==0) {
+         if (type != NULL) (*type) = input_keybinds[i]->type;
+         if (reverse != NULL) (*reverse) = input_keybinds[i]->reverse;
+         return input_keybinds[i]->key;
+      }
+   WARN("Unable to get keybinding '%s', that command doesn't exist", keybind);
+   return -1;
+}
+
+
+/*
  * runs the input command
  *
  * @param keynum is the index of the  keybind
@@ -169,7 +186,10 @@ static void input_key( int keynum, double value, int abs )
    /* accelerating */
    if (INGAME() && KEY("accel")) {
       if (abs) player_acc = value;
-      else player_acc += value;
+      else { /* prevent it from getting stuck */
+         if (value==KEY_PRESS) player_acc = 1.;
+         else if (value==KEY_RELEASE) player_acc = 0.;
+      }
 
       /* double tap accel = afterburn! */
       t = SDL_GetTicks();
