@@ -7,6 +7,9 @@
 #  define FACTION_H
 
 
+#define FACTION_PLAYER  0
+
+
 /* get stuff */
 int faction_get( const char* name );
 int faction_getAlliance( char* name );

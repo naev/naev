@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Factions>
-<faction name="Player">
-</faction>
 <faction name="Independent">
+<player>0</player>
 </faction>
 <faction name="Merchant">
+<player>0</player>
 </faction>
 <faction name="Pirate">
+<player>-20</player>
 </faction>
 <faction name="Militia">
+<player>0</player>
 </faction>
 <faction name="Empire">
+<player>0</player>
 </faction>
 <faction name="Collective">
+<player>-100</player>
 </faction>
 <Alliances>
 <alliance name="Neutral">
@@ -35,20 +39,12 @@
 <enemy type="alliance">Empire United</enemy>
 </enemies>
 <enemies>
-<enemy type="faction">Collective</enemy>
-<enemy type="faction">Player</enemy>
-</enemies>
-<enemies>
 <enemy type="alliance">Neutral</enemy>
 <enemy type="faction">Pirate</enemy>
 </enemies>
 <enemies>
 <enemy type="alliance">Empire United</enemy>
 <enemy type="faction">Pirate</enemy>
-</enemies>
-<enemies>
-<enemy type="faction">Pirate</enemy>
-<enemy type="faction">Player</enemy>
 </enemies>
 </Enemies>
 </Factions>

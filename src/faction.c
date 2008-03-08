@@ -23,7 +23,10 @@
 #define XML_ENEMIES_ID     "Enemies"
 #define XML_ENEMIES_TAG    "enemies"
 
-#define FACTION_DATA  "dat/faction.xml"
+#define FACTION_DATA       "dat/faction.xml"
+
+
+#define PLAYER_ALLY        70 /* above this player is considered ally */
 
 
 #define ALLIANCE_OFFSET    27182 /* special offset for alliances */
@@ -37,6 +40,7 @@ typedef struct Faction_ {
    int* allies;
    int nallies;
 
+   int player; /* standing with player - from -100 to 100 */
 } Faction;
 
 
@@ -139,6 +143,31 @@ int areEnemies( int a, int b)
 
    if (a==b) return 0; /* luckily our factions aren't masochistic */
 
+   /* player handled seperately */
+   if (a==FACTION_PLAYER) {
+      if (faction_isFaction(b)) {
+         if (faction_stack[b].player < 0)
+            return 1;
+         else return 0;
+      }
+      else {
+         DEBUG("areEnemies: %d is an invalid faction/alliance", b);
+         return 0;
+      }
+   }
+   if (b==FACTION_PLAYER) {
+      if (faction_isFaction(a)) {
+         if (faction_stack[a].player < 0)
+            return 1;
+         else return 0;
+      }
+      else {
+         DEBUG("areEnemies: %d is an invalid faction/alliance", a);
+         return 0;
+      }
+   }
+
+
    /* handle a */
    if (faction_isFaction(a)) fa = &faction_stack[a];
    else { /* a isn't valid */
@@ -175,17 +204,44 @@ int areAllies( int a, int b )
    Faction *fa, *fb;
    int i;
 
+
+   /* we assume player becomes allies with high rating */
+   if (a==FACTION_PLAYER) {
+      if (faction_isFaction(b)) {
+         if (faction_stack[b].player > PLAYER_ALLY) return 1;
+         else return 0;
+      }
+      else {
+         DEBUG("%d is an invalid faction/alliance", b);
+         return 0;
+      }
+   }
+   if (b==FACTION_PLAYER) {
+      if (faction_isFaction(a)) {
+         if (faction_stack[a].player > PLAYER_ALLY) return 1;
+         else return 0;
+      }    
+      else {
+         DEBUG("%d is an invalid faction/alliance", a);
+         return 0;
+      }
+   }
+
+
+   if ((a==FACTION_PLAYER) || (b==FACTION_PLAYER)) /* player has no allies */
+      return 0;
+
    /* handle a */
    if (faction_isFaction(a)) fa = &faction_stack[a];
    else { /* a isn't valid */
-      DEBUG("areEnemies: %d is an invalid faction/alliance", a);
+      DEBUG("%d is an invalid faction/alliance", a);
       return 0;
    }
 
    /* handle b */
    if (faction_isFaction(b)) fb = &faction_stack[b];
    else { /* b is invalid */
-      DEBUG("areEnemies: %d is an invalid faction/alliance", b);
+      DEBUG("%d is an invalid faction/alliance", b);
       return 0;
    }
 
@@ -259,10 +315,25 @@ int faction_isFaction( int f )
 
 static Faction* faction_parse( xmlNodePtr parent )
 {
-   Faction* temp = CALLOC_ONE(Faction);
+   xmlNodePtr node;
+   int player;
+   Faction* temp;
+   
+   temp = CALLOC_ONE(Faction);
 
    temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name");
    if (temp->name == NULL) WARN("Faction from "FACTION_DATA" has invalid or no name");
+
+   player = 0;
+   node = parent->xmlChildrenNode;
+   do {
+      if (xml_isNode(node,"player")) {
+         temp->player = xml_getInt(node);
+         player = 1;
+      }
+   } while (xml_nextNode(node));
+
+   if (player==0) DEBUG("Faction '%s' missing player tag.", temp->name);
 
    return temp;
 }
@@ -423,7 +494,7 @@ int factions_load (void)
    Faction* temp = NULL;
 
    node = doc->xmlChildrenNode; /* Factions node */
-   if (strcmp((char*)node->name,XML_FACTION_ID)) {
+   if (!xml_isNode(node,XML_FACTION_ID)) {
       ERR("Malformed "FACTION_DATA" file: missing root element '"XML_FACTION_ID"'");
       return -1;
    }
@@ -434,19 +505,24 @@ int factions_load (void)
       return -1;
    }
 
+   /* player faction is hardcoded */
+   faction_stack = malloc( sizeof(Faction) );
+   faction_stack[0].name = strdup("Player");
+   faction_stack[0].nallies = 0;
+   faction_stack[0].nenemies = 0;
+   nfactions++;
+
    do {
-      if (node->type==XML_NODE_START) {
-         if (strcmp((char*)node->name,XML_FACTION_TAG)==0) {
-            temp = faction_parse(node);
-            faction_stack = realloc(faction_stack, sizeof(Faction)*(++nfactions));        
-            memcpy(faction_stack+nfactions-1, temp, sizeof(Faction));                  
-            free(temp);
-         }
-         else if (strcmp((char*)node->name,XML_ALLIANCE_ID)==0)
-            alliance_parse(node);
-         else if (strcmp((char*)node->name,XML_ENEMIES_ID)==0)
-            enemies_parse(node);
+      if (xml_isNode(node,XML_FACTION_TAG)) {
+         temp = faction_parse(node);
+         faction_stack = realloc(faction_stack, sizeof(Faction)*(++nfactions));        
+         memcpy(faction_stack+nfactions-1, temp, sizeof(Faction));                  
+         free(temp);
       }
+      else if (xml_isNode(node,XML_ALLIANCE_ID))
+         alliance_parse(node);
+      else if (xml_isNode(node,XML_ENEMIES_ID))
+         enemies_parse(node);
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
