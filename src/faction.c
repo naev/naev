@@ -146,6 +146,16 @@ void faction_modPlayer( int f, int mod )
       return;
    }
 }
+int faction_getPlayer( int f )
+{
+   if (faction_isFaction(f)) {
+      return faction_stack[f].player;
+   }    
+   else {
+      DEBUG("%d is an invalid faction/alliance", f);
+      return -1000;
+   }
+}
 
 
 /*

@@ -384,7 +384,8 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer )
    /* inform the ai it has been attacked, useless if  player */
    if (!pilot_isPlayer(p)) {
       if ((player_target == p->id) || (RNG(0,2) == 0)) {
-         if (!pilot_isFlag(p,PILOT_HOSTILE) || (RNG(0,2) == 0))
+         if ((w->parent == PLAYER_ID) &&
+               (!pilot_isFlag(p,PILOT_HOSTILE) || (RNG(0,2) == 0)))
             faction_modPlayer( p->faction, -1 ); /* slowly lower faction */
          ai_attacked( p, w->parent );
       }

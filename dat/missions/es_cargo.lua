@@ -102,6 +102,11 @@ function land()
             var.push("es_misn", 1)
          end
 
+         -- increase faction
+         if player.getFaction("Empire") < 50 then
+            player.modFaction("Empire", rnd.int(5))
+         end
+
          misn.finish(true)
       else
          tk.msg( miss_title, string.format( miss_msg, carg_mass, carg_type ))

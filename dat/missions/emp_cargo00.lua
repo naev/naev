@@ -54,6 +54,7 @@ function land()
          -- More flavour text
          tk.msg(title[3], string.format( text[4], dest ))
          var.push("es_cargo", true)
+         player.modFaction("Empire",3);
          misn.finish(true)
       end
    end

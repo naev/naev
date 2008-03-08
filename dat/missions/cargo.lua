@@ -50,13 +50,16 @@ function create()
    i = rnd.int(6)
    if i < 4 then -- cargo delivery
       misn_type = "Cargo"
+      misn_faction = rnd.int(2)
       i = rnd.int(3)
       misn.setTitle( string.format(title[i+1], planet) )
    elseif i < 6 then -- rush delivery
       misn_type = "Rush"
+      misn_faction = rnd.int(5)
       misn.setTitle( string.format(title[11], planet) )
    else -- people delivery :)
       misn_type = "People"
+      misn.faction = rnd.int(1)
       carg_mass = 0
       i = rnd.int(5)
       if i < 2 then
@@ -135,6 +138,18 @@ function land()
       if player.rmCargo( carg_id ) then
          player.pay( reward )
          tk.msg( finish_title, string.format( finish_msg, carg_type ))
+
+         -- modify the faction standing
+         if player.getFaction("Merchant") < 70 then
+            player.modFaction("Merchant",misn_faction);
+         end
+         if player.getFaction("Independent") < 30 then
+            player.modFaction("Independent", misn_faction/2)
+         end
+         if player.getFaction("Empire") < 10 then
+            player.modFaction("Empire", misn_faction/3)
+         end
+
          misn.finish(true)
       else
          tk.msg( miss_title, string.format( miss_msg, carg_mass, carg_type ))

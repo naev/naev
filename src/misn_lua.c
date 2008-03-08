@@ -143,6 +143,8 @@ static int player_addCargo( lua_State *L );
 static int player_rmCargo( lua_State *L );
 static int player_pay( lua_State *L );
 static int player_msg( lua_State *L );
+static int player_modFaction( lua_State *L );
+static int player_getFaction( lua_State *L );
 static const luaL_reg player_methods[] = {
    { "name", player_getname },
    { "ship", player_shipname },
@@ -151,6 +153,8 @@ static const luaL_reg player_methods[] = {
    { "rmCargo", player_rmCargo },
    { "pay", player_pay },
    { "msg", player_msg },
+   { "modFaction", player_modFaction },
+   { "getFaction", player_getFaction },
    {0,0}
 };
 /* rnd */
@@ -825,6 +829,34 @@ static int player_msg( lua_State *L )
    player_message(str);
    return 0;
 }
+static int player_modFaction( lua_State *L )
+{
+   MIN_ARGS(2);
+   int f, mod;
+
+   if (lua_isstring(L,-2)) f = faction_get( lua_tostring(L,-2) );
+   else MISN_INVALID_PARAMETER();
+
+   if (lua_isnumber(L,-1)) mod = (int) lua_tonumber(L,-1);
+   else MISN_INVALID_PARAMETER();
+
+   faction_modPlayer( f, mod );
+
+   return 0;
+}
+static int player_getFaction( lua_State *L )
+{
+   MIN_ARGS(1);
+   int f;
+
+   if (lua_isstring(L,-1)) f = faction_get( lua_tostring(L,-1) );
+   else MISN_INVALID_PARAMETER();
+
+   lua_pushnumber(L, faction_getPlayer(f));
+
+   return 1;
+}
+
 
 
 /*
