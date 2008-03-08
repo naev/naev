@@ -591,23 +591,7 @@ void player_render (void)
       /*
        * draw fancy cinematic scene borders
        */
-      glMatrixMode(GL_MODELVIEW);
-      glPushMatrix(); /* translation matrix */
-         glTranslated( x-(double)gl_screen.w/2., y-(double)gl_screen.h/2., 0);
-
-      COLOUR(cBlack);
-      glBegin(GL_QUADS);
-         glVertex2d( 0.,          0.              );
-         glVertex2d( 0.,          gl_screen.h*0.2 );
-         glVertex2d( gl_screen.w, gl_screen.h*0.2 );
-         glVertex2d( gl_screen.w, 0.              );
-         glVertex2d( 0.,          gl_screen.h     );
-         glVertex2d( gl_screen.w, gl_screen.h     );
-         glVertex2d( gl_screen.w, gl_screen.h*0.8 );
-         glVertex2d( 0.,          gl_screen.h*0.8 );
-      glEnd(); /* GL_QUADS */
-
-      glPopMatrix(); /* translation matrx */
+      spfx_cinematic();
 
       return;
    }

@@ -44,6 +44,12 @@ void spfx_shake( double mod );
 
 
 /*
+ * other effects
+ */
+void spfx_cinematic (void);
+
+
+/*
  * spfx effect loading and freeing
  */
 int spfx_load (void);
