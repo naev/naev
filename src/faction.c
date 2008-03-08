@@ -134,6 +134,21 @@ static Alliance* alliance_get( char* name )
 
 
 /*
+ * modifies the player's standing with a faction
+ */
+void faction_modPlayer( int f, int mod )
+{
+   if (faction_isFaction(f)) {
+      faction_stack[f].player += mod;
+   }
+   else {
+      DEBUG("%d is an invalid faction/alliance", f);
+      return;
+   }
+}
+
+
+/*
  * returns 1 if Faction a and b are enemies
  */
 int areEnemies( int a, int b)

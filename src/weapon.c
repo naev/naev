@@ -34,6 +34,10 @@
 extern Pilot** pilot_stack;
 extern int pilots;
 /*
+ * player stuff
+ */
+extern unsigned int player_target;
+/*
  * ai stuff
  */
 extern void ai_attacked( Pilot* attacked, const unsigned int attacker );
@@ -379,7 +383,11 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer )
 {
    /* inform the ai it has been attacked, useless if  player */
    if (!pilot_isPlayer(p)) {
-      ai_attacked( p, w->parent );
+      if ((player_target == p->id) || (RNG(0,2) == 0)) {
+         if (!pilot_isFlag(p,PILOT_HOSTILE) || (RNG(0,2) == 0))
+            faction_modPlayer( p->faction, -1 ); /* slowly lower faction */
+         ai_attacked( p, w->parent );
+      }
       spfx_add( outfit_spfx(w->outfit),
             VX(w->solid->pos), VY(w->solid->pos),
             VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );

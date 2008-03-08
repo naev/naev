@@ -6,6 +6,7 @@ function control ()
    task = ai.taskname()
    enemy = ai.getenemy()
    if task ~= "attack" and enemy ~= 0 then
+      ai.hostile(enemy)
       ai.pushtask(0, "attack", enemy)
    elseif ai.taskname() == "none" then
       ai.pushtask(0, "scan", ai.rndpilot())

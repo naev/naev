@@ -7,6 +7,7 @@ function control ()
 
    enemy = ai.getenemy()
    if task ~= "attack" and enemy ~= 0 then
+      ai.hostile(enemy)
       ai.pushtask(0, "attack", enemy)
 
    elseif task == "none" then

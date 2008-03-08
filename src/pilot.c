@@ -344,8 +344,11 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       if (!pilot_isFlag(p, PILOT_DEAD)) {
          pilot_dead(p);
 
-         /* adjust the combat rating based on pilot mass */
-         if (shooter==PLAYER_ID) player_crating += MAX( 1, p->ship->mass/50 );
+         /* adjust the combat rating based on pilot mass and ditto faction */
+         if (shooter==PLAYER_ID) {
+            player_crating += MAX( 1, p->ship->mass/50 );
+            faction_modPlayer( p->faction, -(p->ship->mass/10) );
+         }
       }
    }
 

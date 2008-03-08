@@ -15,6 +15,9 @@ int faction_get( const char* name );
 int faction_getAlliance( char* name );
 char* faction_name( int f );
 
+/* player stuff */
+void faction_modPlayer( int f, int mod );
+
 /* works with only factions */
 int areEnemies( int a, int b );
 int areAllies( int a, int b );
