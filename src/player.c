@@ -1785,7 +1785,7 @@ int player_save( xmlTextWriterPtr writer )
    for (i=0; i<missions_ndone; i++)
       xmlw_elem(writer,"done",mission_get(missions_done[i])->name);
 
-   xmlw_endElem(writer); /* "missions_done */
+   xmlw_endElem(writer); /* "missions_done" */
 
    return 0;
 }

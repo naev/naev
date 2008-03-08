@@ -26,10 +26,12 @@
  */
 /* externs */
 extern int player_save( xmlTextWriterPtr writer );
+extern int player_load( xmlNodePtr parent );
 extern int missions_save( xmlTextWriterPtr writer );
 extern int var_save( xmlTextWriterPtr writer ); /* misn var */
-extern int player_load( xmlNodePtr parent );
 extern int var_load( xmlNodePtr parent );
+extern int pfaction_save( xmlTextWriterPtr writer );
+extern int pfaction_load( xmlNodePtr parent );
 extern void menu_main_close (void);
 /* static */
 static int save_data( xmlTextWriterPtr writer );
@@ -47,6 +49,7 @@ static int save_data( xmlTextWriterPtr writer )
    if (player_save(writer) < 0) return -1;
    if (missions_save(writer) < 0) return -1;
    if (var_save(writer) < 0) return -1;
+   if (pfaction_save(writer) < 0) return -1;
 
    return 0;
 }
@@ -184,9 +187,14 @@ static int load_game( char* file )
 
    doc = xmlParseFile(file);
    node = doc->xmlChildrenNode; /* base node */
+   if (node == NULL) {
+      WARN("Savegame '%s' invalid!", file);
+      return -1;
+   }
 
    player_load(node);
    var_load(node);
+   pfaction_load(node);
 
    xmlFreeDoc(doc);
    

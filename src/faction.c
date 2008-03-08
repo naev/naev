@@ -558,3 +558,50 @@ void factions_free (void)
    nfactions = 0;
 }
 
+
+/*
+ * player faction saving/loading
+ */
+int pfaction_save( xmlTextWriterPtr writer )
+{
+   int i;
+
+   xmlw_startElem(writer,"factions");
+
+   for (i=1; i<nfactions; i++) { /* player is faction 0 */
+      xmlw_startElem(writer,"faction");
+
+      xmlw_attr(writer,"name","%s",faction_stack[i].name);
+      xmlw_str(writer, "%d", faction_stack[i].player);
+
+      xmlw_endElem(writer); /* "faction" */
+   }
+
+   xmlw_endElem(writer); /* "factions" */
+
+   return 0;
+}
+int pfaction_load( xmlNodePtr parent )
+{
+   xmlNodePtr node, cur;
+   char *str;
+
+   node = parent->xmlChildrenNode;
+
+   do {
+      if (xml_isNode(node,"factions")) {
+         cur = node->xmlChildrenNode;
+         do {
+            if (xml_isNode(cur,"faction")) {
+               xmlr_attr(cur,"name",str);
+               faction_stack[faction_get(str)].player = xml_getInt(cur);
+               free(str);
+            }
+         } while (xml_nextNode(cur));
+      }
+   } while (xml_nextNode(node));
+
+   return 0;
+}
+
+
