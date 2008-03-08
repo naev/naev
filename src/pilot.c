@@ -362,6 +362,8 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
 void pilot_dead( Pilot* p )
 {
+   if (pilot_isFlag(p,PILOT_DEAD)) return; /* he's already dead */
+
    /* basically just set timers */
    if (p->id==PLAYER_ID) player_dead();
    p->timer[0] = SDL_GetTicks(); /* no need for AI anymore */

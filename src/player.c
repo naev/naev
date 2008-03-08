@@ -577,8 +577,6 @@ void player_render (void)
    glColour* c;
    glFont* f;
 
-   if (player==NULL) return;
-
    /* pilot is dead, just render him and stop */
    if (player_isFlag(PLAYER_DESTROYED) || pilot_isFlag(player,PILOT_DEAD)) {
       if (player_isFlag(PLAYER_DESTROYED)) {
@@ -595,6 +593,8 @@ void player_render (void)
 
       return;
    }
+
+   if (player==NULL) return;
 
    /* renders the player target graphics */
    if (player_target != PLAYER_ID) p = pilot_get(player_target);
@@ -1620,6 +1620,8 @@ void player_dead (void)
  */
 void player_destroyed (void)
 {
+   if (player_isFlag(PLAYER_DESTROYED)) return;
+
    vectcpy( &player_cam, &player->solid->pos );
    gl_bindCamera( &player_cam );
    player_setFlag(PLAYER_DESTROYED);
