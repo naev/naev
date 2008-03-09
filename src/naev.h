@@ -42,6 +42,10 @@ extern char dataname[DATA_NAME_LEN];
 #  define PATH_MAX         128
 #endif /* PATH_MAX */
 
+#ifndef M_PI
+# define M_PI     3.14159265358979323846  /* pi */
+#endif
+
 
 #endif /* NAEV_H */
 
