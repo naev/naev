@@ -115,6 +115,7 @@ typedef struct Outfit_ {
          int cargo; /* cargo space to add */
       } mod;
       struct { /* afterburner */
+         double rumble; /* percent of rumble */
          double thrust_perc, thrust_abs; /* percent and absolute thrust bonus */
          double speed_perc, speed_abs; /* percent and absolute speed bonus */
          double energy; /* energy usage while active */

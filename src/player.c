@@ -1557,7 +1557,7 @@ void player_afterburn (void)
    if (player->afterburner!=NULL) {
       player_setFlag(PLAYER_AFTERBURNER);
       pilot_setFlag(player,PILOT_AFTERBURNER);
-      spfx_shake(50.);
+      spfx_shake(player->afterburner->outfit->u.afb.rumble * SHAKE_MAX);
    }
 }
 void player_afterburnOver (void)

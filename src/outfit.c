@@ -414,16 +414,14 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    temp->u.afb.speed_perc = 1.;
    
    do { /* parse the data */
+      xmlr_float(node,"rumble",temp->u.afb.rumble);
       if (xml_isNode(node,"thrust_perc"))
          temp->u.afb.thrust_perc = 1. + xml_getFloat(node)/100.;
-      else if (xml_isNode(node,"thrust_abs"))
-         temp->u.afb.thrust_abs = xml_getFloat(node);
-      else if (xml_isNode(node,"speed_perc"))
+      xmlr_float(node,"thrust_abs",temp->u.afb.thrust_abs);
+      if (xml_isNode(node,"speed_perc"))
          temp->u.afb.speed_perc = 1. + xml_getFloat(node)/100.;
-      else if (xml_isNode(node,"speed_abs"))
-         temp->u.afb.speed_abs = xml_getFloat(node);
-      else if (xml_isNode(node,"energy"))
-         temp->u.afb.energy = xml_getFloat(node);
+      xmlr_float(node,"speed_abs",temp->u.afb.speed_abs);
+      xmlr_float(node,"energy",temp->u.afb.energy);
    } while (xml_nextNode(node));
 }
 
