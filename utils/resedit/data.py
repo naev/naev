@@ -40,7 +40,7 @@ def load_Tag( node, do_array=None, do_special=None ):
    i = 0
 
    # figure out if we need an array or dic
-   if node.nodeName in do_array:
+   if do_array != None and node.nodeName in do_array:
       array = []
       use_array = True
    else:
