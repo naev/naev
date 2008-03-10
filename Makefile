@@ -30,13 +30,14 @@ OBJS := $(OBJS:%.c=%.o)
 #   CFLAGS
 #
 CLUA = -Ilib/lua
+CPLUTO = -Ilib/pluto
 CSDL = $(shell sdl-config --cflags)
 CXML = $(shell xml2-config --cflags)
 CTTF = $(shell freetype-config --cflags)
 CAL = $(shell openal-config --cflags)
 CVORBIS =
 CGL =
-CFLAGS = $(CLUA) $(CSDL) $(CXML) $(CTTF) $(CGL) $(CAL) $(CVORBIS) $(VERSION) -D$(OS)
+CFLAGS = $(CLUA) $(CPLUTO) $(CSDL) $(CXML) $(CTTF) $(CGL) $(CAL) $(CVORBIS) $(VERSION) -D$(OS) -fgnu89-inline
 ifdef DEBUG
 CFLAGS += -W -Wall -g3 -DDEBUG -DLUA_USE_APICHECK -std=c99
 else # DEBUG
@@ -48,13 +49,14 @@ endif # DEBUG
 #   LDFLAGS
 #
 LDLUA = lib/lua/liblua.a
+LDPLUTO = lib/pluto/pluto.a
 LDSDL = $(shell sdl-config --libs) -lSDL_image
 LDXML = $(shell xml2-config --libs)
 LDTTF = $(shell freetype-config --libs)
 LDGL = -lGL
 LDAL = $(shell openal-config --libs)
 LDVORBIS = -lvorbisfile
-LDFLAGS = -lm $(LDLUA) $(LDSDL) $(LDXML) $(LDTTF) $(LDGL) $(LDAL) $(LDVORBIS)
+LDFLAGS = -lm $(LDLUA) $(LDPLUTO) $(LDSDL) $(LDXML) $(LDTTF) $(LDGL) $(LDAL) $(LDVORBIS)
 
 
 #
@@ -78,13 +80,16 @@ DATAFILES = $(VERSIONFILE) $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA
 	@echo -e "\tCC   $@"
 
 
-all:	utils data lua $(OBJS)
-	@$(CC) $(LDFLAGS) -o $(APPNAME) $(OBJS) lib/lua/liblua.a
+all:	utils data lua pluto $(OBJS)
+	@$(CC) $(LDFLAGS) -o $(APPNAME) $(OBJS) lib/lua/liblua.a lib/pluto/pluto.a
 	@echo -e "\tLD   $(APPNAME)"
 
 
 lua:
 	@if [ ! -e lib/lua/liblua.a ];then ( cd lib/lua; $(MAKE) a ); fi
+
+pluto:
+	@if [ ! -e lib/pluto/pluto.a ];then ( cd lib/pluto; $(MAKE) ); fi
 
 pack: src/pack.c utils/pack/main.c
 	@( cd utils/pack; $(MAKE) )

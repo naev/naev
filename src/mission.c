@@ -9,6 +9,7 @@
 #include <string.h>
 #include <malloc.h>
 
+#include "pluto.h"
 #include "lua.h"
 #include "lauxlib.h"
 #include "lualib.h"
@@ -21,6 +22,7 @@
 #include "xml.h"
 #include "faction.h"
 #include "player.h"
+#include "base64.h"
 
 
 #define XML_MISSION_ID        "Missions"   /* XML section identifier */
@@ -492,9 +494,54 @@ void missions_cleanup (void)
 }
 
 
+typedef struct MBuf_ {
+   char *data;
+   int len, alloc; /* size of each data chunk, chunks to alloc when growing */
+   int ndata, mdata; /* buffer real length, memory length */
+} MBuf;
+MBuf* mbuf_create( int len, int alloc )
+{
+   MBuf* buf;
 
+   buf = malloc(sizeof(MBuf));
+
+   buf->data = 0;
+   buf->ndata = buf->mdata = 0;
+
+   buf->len = len;
+   buf->alloc = alloc;
+
+   return buf;
+}
+void mbuf_free( MBuf *buf )
+{
+   if (buf->data != NULL) free( buf->data );
+   buf->ndata = buf->mdata = 0;
+   free(buf);
+}
+static int mission_writeLua( lua_State *L , const void *p, size_t sz, void* ud )
+{
+   int i;
+   MBuf *buf;
+   (void)L;
+
+   buf = (MBuf*)ud;
+
+   i = buf->ndata*buf->len + sz - buf->mdata*buf->len;
+   if (i > 0) { /* need more memory */
+      buf->mdata += (i / (buf->len*buf->alloc) + 1) * buf->len*buf->alloc;
+      buf->data = realloc( buf->data, buf->mdata*buf->len );
+   }
+
+   memcpy( &buf->data[buf->ndata*buf->len], p, sz );
+   buf->ndata += sz;
+
+   return 0;
+}
 int missions_save( xmlTextWriterPtr writer )
 {
+   MBuf *buf;
+   char *data;
    int i,j;
 
    xmlw_startElem(writer,"missions");
@@ -515,7 +562,15 @@ int missions_save( xmlTextWriterPtr writer )
             xmlw_elem(writer,"cargo","%u", player_missions[i].cargo[j]);
          xmlw_endElem(writer); /* "cargos" */
 
-         /* TODO save lua data */
+         xmlw_startElem(writer,"lua");
+         buf = mbuf_create(1,128);
+         lua_pushvalue(player_missions[i].L, LUA_GLOBALSINDEX);
+         pluto_persist( player_missions[i].L, mission_writeLua, buf );
+         data = base64_encode( &j, buf->data, buf->ndata );
+         mbuf_free(buf);
+         xmlw_raw(writer,data,j);
+         free(data);
+         xmlw_endElem(writer); /* "lua" */
 
          xmlw_endElem(writer); /* "mission" */
       }

@@ -67,6 +67,9 @@ if (xmlTextWriterEndElement(w) < 0) { \
 if (xmlTextWriterWriteFormatElement(w,(xmlChar*)n, \
       str, ## args) < 0) { \
    ERR("xmlw: unable to write format element"); return -1; }
+#define xmlw_raw(w,b,l) \
+if (xmlTextWriterWriteRawLen(w,(xmlChar*)b,l) < 0) { \
+   ERR("xmlw: unable to write raw element"); return -1; }
 #define xmlw_attr(w,str,val...)  \
 if (xmlTextWriterWriteFormatAttribute(w,(xmlChar*)str, \
       ## val) < 0) { \
