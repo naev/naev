@@ -10,7 +10,7 @@
             * libvorbis0a
             * libvorbisfile3
             * libxml2
-            * libttf2
+            * libfreetype6
 
          X.1.2) Source
             * libsdl1.2-dev
@@ -19,7 +19,7 @@
             * libopenal-dev
             * libvorbis-dev
             * libxml2-dev
-            * libttf-dev
+            * libfreetype6-dev
 
 
     X.) KEYBINDINGS
