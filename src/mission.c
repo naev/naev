@@ -65,6 +65,7 @@ static int mission_meetReq( int mission, int faction, char* planet, char* system
 static int mission_matchFaction( MissionData* misn, int faction );
 static int mission_location( char* loc );
 static MissionData* mission_parse( const xmlNodePtr parent );
+static int missions_parseActive( xmlNodePtr parent );
 
 
 /*
@@ -117,8 +118,10 @@ static int mission_init( Mission* mission, MissionData* misn )
    char *buf;
    uint32_t bufsize;
 
-   mission->id = mission_genID();
-   mission->data = misn;
+   if (misn != NULL) {  /* don't set the data either */
+      mission->id = mission_genID();
+      mission->data = misn;
+   }
 
    /* sane defaults */
    mission->title = NULL;
@@ -137,18 +140,20 @@ static int mission_init( Mission* mission, MissionData* misn )
    luaopen_string( mission->L ); /* string.format can be very useful */
    misn_loadLibs( mission->L ); /* load our custom libraries */
 
-   /* load the file */
-   buf = pack_readfile( DATA, misn->lua, &bufsize );
-   if (luaL_dobuffer(mission->L, buf, bufsize, misn->lua) != 0) {
-      ERR("Error loading mission file: %s",misn->lua);
-      ERR("%s",lua_tostring(mission->L,-1));
-      WARN("Most likely Lua file has improper syntax, please check");
-      return -1;
-   }
-   free(buf);
+   if (misn != NULL) { /* don't load it with data */
+      /* load the file */
+      buf = pack_readfile( DATA, misn->lua, &bufsize );
+      if (luaL_dobuffer(mission->L, buf, bufsize, misn->lua) != 0) {
+         ERR("Error loading mission file: %s",misn->lua);
+         ERR("%s",lua_tostring(mission->L,-1));
+         WARN("Most likely Lua file has improper syntax, please check");
+         return -1;
+      }
+      free(buf);
 
-   /* run create function */
-   misn_run( mission, "create");
+      /* run create function */
+      misn_run( mission, "create");
+   }
 
    return mission->id;
 }
@@ -512,8 +517,8 @@ void missions_cleanup (void)
 
 typedef struct MBuf_ {
    char *data;
-   int len, alloc; /* size of each data chunk, chunks to alloc when growing */
-   int ndata, mdata; /* buffer real length, memory length */
+   ssize_t len, alloc; /* size of each data chunk, chunks to alloc when growing */
+   size_t ndata, mdata; /* buffer real length, memory length */
 } MBuf;
 MBuf* mbuf_create( int len, int alloc )
 {
@@ -558,7 +563,7 @@ static int mission_writeLua( lua_State *L , const void *p, size_t sz, void* ud )
 
    return 0;
 }
-int missions_save( xmlTextWriterPtr writer )
+int missions_saveActive( xmlTextWriterPtr writer )
 {
    MBuf *buf;
    char *data;
@@ -601,4 +606,98 @@ int missions_save( xmlTextWriterPtr writer )
 
    return 0;
 }
+const char* mission_readLua( lua_State *L, void *data, size_t *size )
+{
+   (void)L;
+   MBuf *dat;
+   char *pos;
+   char *buf;
+
+   dat = (MBuf*)data;
+   pos = dat->data;
+
+   buf = &pos[dat->ndata];
+   if (dat->mdata >= dat->ndata) { /* end of stream */
+      (*size) = 0;
+      return NULL;
+   }
+   if (dat->mdata < (dat->ndata + dat->alloc * dat->len)) { /* last chunk */
+      (*size) = dat->mdata - dat->ndata;
+      dat->ndata = dat->mdata;
+   }
+   else {
+      (*size) = dat->alloc * dat->len;
+      dat->ndata += dat->alloc * dat->len;
+   }
+   return buf;
+}
+int missions_loadActive( xmlNodePtr parent )
+{
+   xmlNodePtr node;
+
+   /* cleanup old missions */
+   missions_cleanup();
+
+   node = parent->xmlChildrenNode;
+   do {
+      if (xml_isNode(node,"missions"))
+         if (missions_parseActive( node ) < 0) return -1;
+   } while (xml_nextNode(node));
+
+   return 0;
+}
+static int missions_parseActive( xmlNodePtr parent )
+{
+   Mission *misn;
+   int m;
+   char *buf;
+   MBuf dat;
+   
+   xmlNodePtr node, cur, nest;
+
+   m = 0; /* start with mission 0 */
+   node = parent->xmlChildrenNode;
+   do {
+      if (xml_isNode(node,"mission")) {
+         misn = &player_missions[m];
+         mission_init( misn, NULL ); /* won't set data nor id */
+
+         cur = node->xmlChildrenNode;
+         do {
+            if (xml_isNode(cur,"data")) {
+               buf = xml_get(cur);
+               misn->data = mission_get( mission_getID( buf) );
+            }
+            xmlr_long(cur,"id",misn->id);
+
+            xmlr_strd(cur,"title",misn->title);
+            xmlr_strd(cur,"desc",misn->desc);
+            xmlr_strd(cur,"reward",misn->reward);
+
+            if (xml_isNode(cur,"cargos")) {
+               nest = cur->xmlChildrenNode;
+               do {
+                  if (xml_isNode(nest,"cargo"))
+                     mission_linkCargo( misn, xml_getLong(nest) );
+               } while (xml_nextNode(nest));
+            }
+
+            if (xml_isNode(cur,"lua")) {
+               buf = xml_get(cur);
+               dat.ndata = 0;
+               dat.len = 1;
+               dat.alloc = 128;
+               dat.data = base64_decode( &dat.mdata, buf, strlen(buf) );
+               pluto_unpersist( misn->L, mission_readLua, &dat );
+            }
+         } while (xml_nextNode(cur));
+
+         m++; /* next mission */
+         if (m >= MISSION_MAX) break; /* full of missions, must be an error */
+      }
+   } while (xml_nextNode(node));
+
+   return 0;
+}
+
 

@@ -1803,9 +1803,6 @@ static int player_saveShip( xmlTextWriterPtr writer,
    /* save the commodities */
    xmlw_startElem(writer,"commodities");
    for (i=0; i<ship->ncommodities; i++) {
-      /* TODO load player missions, so that we can save mission commodities */
-      if (ship->commodities[i].id > 0) continue;
-
       xmlw_startElem(writer,"commodity");
 
       xmlw_attr(writer,"quantity","%d",ship->commodities[i].quantity);
