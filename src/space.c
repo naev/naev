@@ -1140,14 +1140,20 @@ void space_render( double dt )
             else if (stars[i].y < -STAR_BUF) stars[i].y = gl_screen.h + STAR_BUF;
 
             /* render */
-            glColor4d( 1., 1., 1., stars[i].brightness );
-            glVertex2d( stars[i].x, stars[i].y );
+            if ((stars[i].x < SCREEN_W) && (stars[i].x > 0) &&
+                  (stars[i].y < SCREEN_H) && (stars[i].y > 0)) {
+               glColor4d( 1., 1., 1., stars[i].brightness );
+               glVertex2d( stars[i].x, stars[i].y );
+            }
          }
       }
       else { /* just render */
          for (i=0; i < nstars; i++) {
-            glColor4d( 1., 1., 1., stars[i].brightness );
-            glVertex2d( stars[i].x, stars[i].y );
+            if ((stars[i].x < SCREEN_W) && (stars[i].x > 0) &&
+                  (stars[i].y < SCREEN_H) && (stars[i].y > 0)) {
+               glColor4d( 1., 1., 1., stars[i].brightness );
+               glVertex2d( stars[i].x, stars[i].y );
+            }
          }
       }
       glEnd(); /* GL_POINTS */

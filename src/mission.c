@@ -504,6 +504,10 @@ MBuf* mbuf_create( int len, int alloc )
    MBuf* buf;
 
    buf = malloc(sizeof(MBuf));
+   if (buf == NULL) {
+      WARN("Out of memory");
+      return NULL;
+   }
 
    buf->data = 0;
    buf->ndata = buf->mdata = 0;
@@ -543,6 +547,7 @@ int missions_save( xmlTextWriterPtr writer )
    MBuf *buf;
    char *data;
    int i,j;
+   size_t sz;
 
    xmlw_startElem(writer,"missions");
 
@@ -566,9 +571,9 @@ int missions_save( xmlTextWriterPtr writer )
          buf = mbuf_create(1,128);
          lua_pushvalue(player_missions[i].L, LUA_GLOBALSINDEX);
          pluto_persist( player_missions[i].L, mission_writeLua, buf );
-         data = base64_encode( &j, buf->data, buf->ndata );
+         data = base64_encode( &sz, buf->data, buf->ndata );
          mbuf_free(buf);
-         xmlw_raw(writer,data,j);
+         xmlw_raw(writer,data,sz);
          free(data);
          xmlw_endElem(writer); /* "lua" */
 

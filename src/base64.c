@@ -199,13 +199,13 @@ char* base64_encode( size_t *len, char *src, size_t sz )
 /*
  * decode the buffer, same syntax as base64_encode
  */
-inline int dec_valid( char inp )
+static inline int dec_valid( char inp )
 {
    if (cd64[(int)inp] == -1)
       return 0;
    return 1;
 }
-inline char dec_ch( char inp )
+static inline char dec_ch( char inp )
 {
    return cd64[(int)inp];
 }
