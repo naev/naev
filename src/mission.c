@@ -57,6 +57,7 @@ static int mission_nstack = 0;
 /* extern */
 extern int misn_run( Mission *misn, char *func );
 /* static */
+static unsigned int mission_genID (void);
 static int mission_init( Mission* mission, MissionData* misn );
 static void mission_freeData( MissionData* mission );
 static int mission_alreadyRunning( MissionData* misn );
@@ -66,6 +67,21 @@ static int mission_location( char* loc );
 static MissionData* mission_parse( const xmlNodePtr parent );
 
 
+/*
+ * generates a new id for the mission
+ */
+static unsigned int mission_genID (void)
+{
+   unsigned int id;
+   int i;
+   id = ++mission_id; /* default id, not safe if loading */
+
+   /* we save mission ids, so check for collisions with player's missions */
+   for (i=0; i<MISSION_MAX; i++)
+      if (id == player_missions[i].id) /* mission id was loaded from save */
+         return mission_genID(); /* recursively try again */
+   return id;
+}
 
 /*
  * gets id from mission name
@@ -101,7 +117,7 @@ static int mission_init( Mission* mission, MissionData* misn )
    char *buf;
    uint32_t bufsize;
 
-   mission->id = ++mission_id;
+   mission->id = mission_genID();
    mission->data = misn;
 
    /* sane defaults */
