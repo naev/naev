@@ -1,4 +1,6 @@
-
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
 
 #ifndef BASE64_H
 #  define BASE64_H

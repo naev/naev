@@ -1,4 +1,12 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
 
+/*
+ * compliant with rfc3548
+ */
+
+#include "base64.h"
 
 #include <malloc.h>
 #include <string.h>
@@ -6,9 +14,9 @@
 
 
 
-/* encode table */
+/* encode table - base 64 alphabet as defined by the rfc */
 static const char cb64[64]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-/* decode table */
+/* generate decode table at compile time */
 #define B64(_)                   \
       ((_) == 'A' ? 0            \
       : (_) == 'B' ? 1           \
@@ -75,7 +83,7 @@ static const char cb64[64]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
       : (_) == '+' ? 62          \
       : (_) == '/' ? 63          \
       : -1)
-static const signed char cd64[256] = {
+static const signed char cd64[256] = { /* makes it much faster */
       B64 (0), B64 (1), B64 (2), B64 (3),
       B64 (4), B64 (5), B64 (6), B64 (7),
       B64 (8), B64 (9), B64 (10), B64 (11),
@@ -189,7 +197,7 @@ char* base64_encode( size_t *len, char *src, size_t sz )
 
    for (c=0; c<pad; c++)
       r[i-c-1] = '=';
-   r[i] = '\0';
+   r[i] = '\0'; /* it'll be a valid string */
    (*len) = i;
 
    return r;
@@ -224,9 +232,9 @@ char* base64_decode( size_t *len, char *src, size_t sz )
    dat = malloc( sz * sizeof(char) );
    j = 0;
    for (i=0; i<sz; i++) {
-      if (src[i] == '=')
+      if (src[i] == '=') /* control padding */
          pad++;
-      if (dec_valid( src[i] ))
+      if (dec_valid( src[i] )) /* only allow valid characters */
          dat[j++] = src[i];
    }
 
@@ -234,11 +242,13 @@ char* base64_decode( size_t *len, char *src, size_t sz )
    i = 0;
    for (c=0; c<j; c+=4) {
 
-      n = dec_ch( dat[c+0] ) << 18;
-      n += (c+1<j) ? (dec_ch( dat[c+1] ) << 12) : 0;
+      /* process the input from base 64 */
+      n = dec_ch( dat[c+0] ) << 18; /* guaranteed to be valid */
+      n += (c+1<j) ? (dec_ch( dat[c+1] ) << 12) : 0; /* check if inbounds */
       n += (c+2<j) ? (dec_ch( dat[c+2] ) << 6)  : 0;
       n += (c+3<j) ? (dec_ch( dat[c+3] ) << 0)  : 0;
 
+      /* convert the 24 bits of encoded data into 3 8 bit chunks */ 
       r[i++] = (n >> 16) & 255;
       r[i++] = (n >> 8)  & 255;
       r[i++] = (n >> 0)  & 255;
@@ -247,7 +257,7 @@ char* base64_decode( size_t *len, char *src, size_t sz )
    /* cleanup */
    free(dat);
    
-   (*len) = i - pad;
+   (*len) = i - pad; /* must decount the padding */
    return r;
 }
 
