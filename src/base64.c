@@ -201,13 +201,13 @@ char* base64_encode( size_t *len, char *src, size_t sz )
  */
 inline int dec_valid( char inp )
 {
-   if (cd64[inp] == -1)
+   if (cd64[(int)inp] == -1)
       return 0;
    return 1;
 }
 inline char dec_ch( char inp )
 {
-   return cd64[ inp ];
+   return cd64[(int)inp];
 }
 char* base64_decode( size_t *len, char *src, size_t sz )
 {
