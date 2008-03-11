@@ -220,10 +220,12 @@ char* base64_decode( size_t *len, char *src, size_t sz )
    r = malloc( c * sizeof(char) );
 
    /* create a clean version of the text */
+   pad = 0;
    dat = malloc( sz * sizeof(char) );
    j = 0;
-   pad = 0;
    for (i=0; i<sz; i++) {
+      if (src[i] == '=')
+         pad++;
       if (dec_valid( src[i] ))
          dat[j++] = src[i];
    }
