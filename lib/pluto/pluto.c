@@ -291,11 +291,8 @@ static void persistfunction(PersistInfo *pi)
 		/* It's a C function. For now, we aren't going to allow
 		 * persistence of C closures, even if the "C proto" is
 		 * already in the permanents table. */
-      /*
 		lua_pushstring(pi->L, "Attempt to persist a C function");
 		lua_error(pi->L);
-      */
-      return; /* we don't save C closures, they'll have to get repushed */
 	} else {
 		/* It's a Lua closure. */
 		{

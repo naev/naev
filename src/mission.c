@@ -66,6 +66,8 @@ static int mission_matchFaction( MissionData* misn, int faction );
 static int mission_location( char* loc );
 static MissionData* mission_parse( const xmlNodePtr parent );
 static int missions_parseActive( xmlNodePtr parent );
+static int mission_persistTable( lua_State *L );
+static int mission_unpersistTable( lua_State *L );
 
 
 /*
@@ -136,7 +138,7 @@ static int mission_init( Mission* mission, MissionData* misn )
       ERR("Unable to create a new lua state.");
       return -1;
    }
-   luaopen_base( mission->L ); /* can be useful */
+   /* luaopen_base( mission->L ); *//* can be useful */
    luaopen_string( mission->L ); /* string.format can be very useful */
    misn_loadLibs( mission->L ); /* load our custom libraries */
 
@@ -282,18 +284,33 @@ void mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
 void mission_cleanup( Mission* misn )
 {
    int i;
-   if (misn->id) hook_rmParent( misn->id ); /* remove existing hooks */
-   if (misn->title) free(misn->title);
-   if (misn->desc) free(misn->desc);
-   if (misn->reward) free(misn->reward);
+   if (misn->id != 0) {
+      hook_rmParent( misn->id ); /* remove existing hooks */
+      misn->id = 0;
+   }
+   if (misn->title != NULL) {
+      free(misn->title);
+      misn->title = NULL;
+   }
+   if (misn->desc != NULL) {
+      free(misn->desc);
+      misn->desc = NULL;
+   }
+   if (misn->reward) {
+      free(misn->reward);
+      misn->reward = NULL;
+   }
    if (misn->cargo) {
       for (i=0; i<misn->ncargo; i++)
          mission_unlinkCargo( misn, misn->cargo[i] );
       free(misn->cargo);
+      misn->cargo = NULL;
       misn->ncargo = 0;
    }
-   if (misn->L) lua_close(misn->L);
-   memset(misn, 0, sizeof(Mission));
+   if (misn->L) {
+      lua_close(misn->L);
+      misn->L = NULL;
+   }
 }
 
 
@@ -515,6 +532,9 @@ void missions_cleanup (void)
 }
 
 
+/*
+ * memory buffer structure to handle lua writers/reades
+ */
 typedef struct MBuf_ {
    char *data;
    ssize_t len, alloc; /* size of each data chunk, chunks to alloc when growing */
@@ -563,6 +583,56 @@ static int mission_writeLua( lua_State *L , const void *p, size_t sz, void* ud )
 
    return 0;
 }
+static int mission_persistTable( lua_State *L )
+{
+   lua_newtable(L);
+   /* table */
+   lua_pushnil(L);
+   /* table, nil */
+   while (lua_next(L, LUA_GLOBALSINDEX) != 0) {
+      /* table, key, value */
+      switch (lua_type(L, -1)) {
+         case LUA_TNUMBER:
+         case LUA_TBOOLEAN:
+         case LUA_TSTRING:
+            lua_pushvalue(L, -2); /* copy key */
+            /* table, key, value, key */
+            lua_insert(L, -3); /* key << 2 */
+            /* table, key, key, value */
+            lua_settable(L, -4); /* table[key] = value */
+            /* table, key */
+            break;
+
+         default:
+            lua_pop(L,1);
+            /* table, key */
+            continue;
+      }
+   }
+   /* table */
+
+   return 0;
+}
+static int mission_unpersistTable( lua_State *L )
+{
+   /* table */
+   lua_pushnil(L);
+   /* table, nil */
+   while (lua_next(L, -2) != 0) {
+      /* table, key, value */
+      lua_pushvalue(L,-2); /* copy key */
+      /* table, key, value, key */
+      lua_insert(L, -3); /* key << 2 */
+      /* table, key, key, value */
+      lua_settable(L, LUA_GLOBALSINDEX);
+      /* table, key */
+   }
+   /* table */
+   lua_pop(L,1);
+   /* */
+
+   return 0;
+}
 int missions_saveActive( xmlTextWriterPtr writer )
 {
    MBuf *buf;
@@ -576,8 +646,9 @@ int missions_saveActive( xmlTextWriterPtr writer )
       if (player_missions[i].id != 0) {
          xmlw_startElem(writer,"mission");
 
-         xmlw_elem(writer,"data",player_missions[i].data->name);
-         xmlw_elem(writer,"id","%u",player_missions[i].id);
+         /* data and id are attributes becaues they must be loaded first */
+         xmlw_attr(writer,"data",player_missions[i].data->name);
+         xmlw_attr(writer,"id","%u",player_missions[i].id);
 
          xmlw_elem(writer,"title",player_missions[i].title);
          xmlw_elem(writer,"desc",player_missions[i].desc);
@@ -588,14 +659,25 @@ int missions_saveActive( xmlTextWriterPtr writer )
             xmlw_elem(writer,"cargo","%u", player_missions[i].cargo[j]);
          xmlw_endElem(writer); /* "cargos" */
 
+         /* write lua magic */
          xmlw_startElem(writer,"lua");
+
+         /* we need to use a special data struct */
          buf = mbuf_create(1,128);
-         lua_pushvalue(player_missions[i].L, LUA_GLOBALSINDEX);
+
+         /* prepare the data */
+         lua_pushnil(player_missions[i].L);
+         mission_persistTable(player_missions[i].L); /* we don't save it all */
          pluto_persist( player_missions[i].L, mission_writeLua, buf );
+
+         /* now process it to save it */
          data = base64_encode( &sz, buf->data, buf->ndata );
-         mbuf_free(buf);
          xmlw_raw(writer,data,sz);
+
+         /* cleanup */
+         mbuf_free(buf);
          free(data);
+
          xmlw_endElem(writer); /* "lua" */
 
          xmlw_endElem(writer); /* "mission" */
@@ -612,22 +694,24 @@ const char* mission_readLua( lua_State *L, void *data, size_t *size )
    MBuf *dat;
    char *pos;
    char *buf;
+   size_t len;
 
    dat = (MBuf*)data;
+   len = dat->alloc * dat->len;
    pos = dat->data;
 
    buf = &pos[dat->ndata];
-   if (dat->mdata >= dat->ndata) { /* end of stream */
+   if (dat->ndata >= dat->mdata) { /* end of stream */
       (*size) = 0;
       return NULL;
    }
-   if (dat->mdata < (dat->ndata + dat->alloc * dat->len)) { /* last chunk */
+   if (dat->mdata < (dat->ndata + len)) { /* last chunk */
       (*size) = dat->mdata - dat->ndata;
       dat->ndata = dat->mdata;
    }
    else {
-      (*size) = dat->alloc * dat->len;
-      dat->ndata += dat->alloc * dat->len;
+      (*size) = len;
+      dat->ndata += len;
    }
    return buf;
 }
@@ -650,9 +734,9 @@ static int missions_parseActive( xmlNodePtr parent )
 {
    Mission *misn;
    int m;
-   char *buf;
+   char *buf, *str;
    MBuf dat;
-   
+
    xmlNodePtr node, cur, nest;
 
    m = 0; /* start with mission 0 */
@@ -660,15 +744,19 @@ static int missions_parseActive( xmlNodePtr parent )
    do {
       if (xml_isNode(node,"mission")) {
          misn = &player_missions[m];
-         mission_init( misn, NULL ); /* won't set data nor id */
+
+         /* process the attributes to create the mission */
+         xmlr_attr(node,"data",buf);
+         mission_init( misn, mission_get(mission_getID(buf)) );
+         free(buf);
+
+         /* this will orphan an identifier */
+         xmlr_attr(node,"id",buf);
+         misn->id = atol(buf);
+         free(buf);
 
          cur = node->xmlChildrenNode;
          do {
-            if (xml_isNode(cur,"data")) {
-               buf = xml_get(cur);
-               misn->data = mission_get( mission_getID( buf) );
-            }
-            xmlr_long(cur,"id",misn->id);
 
             xmlr_strd(cur,"title",misn->title);
             xmlr_strd(cur,"desc",misn->desc);
@@ -683,14 +771,25 @@ static int missions_parseActive( xmlNodePtr parent )
             }
 
             if (xml_isNode(cur,"lua")) {
-               buf = xml_get(cur);
+
+               /* prepare the data */
+               str = xml_get(cur);
                dat.ndata = 0;
-               dat.len = 1;
+               dat.len = 1024;
                dat.alloc = 128;
-               dat.data = base64_decode( &dat.mdata, buf, strlen(buf) );
+               dat.data = base64_decode( &dat.mdata, str, strlen(str) );
+
+               /* start the unpersist routine */
+               lua_pushnil(misn->L);
                pluto_unpersist( misn->L, mission_readLua, &dat );
+               mission_unpersistTable(misn->L);
+
+               /* cleanup */
+               free(dat.data);
             }
          } while (xml_nextNode(cur));
+
+
 
          m++; /* next mission */
          if (m >= MISSION_MAX) break; /* full of missions, must be an error */

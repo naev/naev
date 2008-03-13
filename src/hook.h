@@ -11,8 +11,8 @@
 
 
 /* add/run hooks */
-int hook_add( unsigned int parent, char *func, char *stack );
-void hook_rm( int id );
+unsigned int hook_add( unsigned int parent, char *func, char *stack );
+void hook_rm( unsigned int id );
 void hook_rmParent( unsigned int parent );
 
 /* 
@@ -25,7 +25,7 @@ void hook_rmParent( unsigned int parent );
  *    "time" - when time is increment drastically (hyperspace and taking off)
  */
 int hooks_run( char* stack );
-void hook_runID( int id ); /* runs hook of specific id */
+void hook_runID( unsigned int id ); /* runs hook of specific id */
 
 /* destroys hooks */
 void hook_cleanup (void);

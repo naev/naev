@@ -33,6 +33,8 @@ extern int var_save( xmlTextWriterPtr writer ); /* misn var */
 extern int var_load( xmlNodePtr parent );
 extern int pfaction_save( xmlTextWriterPtr writer ); /* faction data */
 extern int pfaction_load( xmlNodePtr parent );
+extern int hook_save( xmlTextWriterPtr writer ); /* hooks */
+extern int hook_load( xmlNodePtr parent );
 extern void menu_main_close (void);
 /* static */
 static int save_data( xmlTextWriterPtr writer );
@@ -48,9 +50,10 @@ static int save_data( xmlTextWriterPtr writer )
 {
    /* the data itself */
    if (player_save(writer) < 0) return -1;
-   if (missions_saveActive(writer) < 0) return -1;
+   //if (missions_saveActive(writer) < 0) return -1;
    if (var_save(writer) < 0) return -1;
    if (pfaction_save(writer) < 0) return -1;
+   //if (hook_save(writer) < 0) return -1;
 
    return 0;
 }
@@ -195,8 +198,9 @@ static int load_game( char* file )
 
    player_load(node);
    var_load(node);
-   missions_loadActive(node);
+   //missions_loadActive(node);
    pfaction_load(node);
+   //hook_load(node);
 
    xmlFreeDoc(doc);
    

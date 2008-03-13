@@ -74,7 +74,7 @@ static int misn_delete = 0; /* if 1 delete current mission */
  */
 static int var_add( misn_var *var );
 static void var_free( misn_var* var );
-static int hook_generic( lua_State *L, char* stack );
+static unsigned int hook_generic( lua_State *L, char* stack );
 
 /*
  * libraries
@@ -942,7 +942,7 @@ static int tk_input( lua_State *L )
 /*
  *   H O O K
  */
-static int hook_generic( lua_State *L, char* stack )
+static unsigned int hook_generic( lua_State *L, char* stack )
 {
    int i;
    char *func;
@@ -964,8 +964,7 @@ static int hook_generic( lua_State *L, char* stack )
             cur_mission->data->name);
       return 0;
    }
-   i = hook_add( cur_mission->id, func, stack );
-   return i;
+   return hook_add( cur_mission->id, func, stack );
 }
 static int hook_land( lua_State *L )
 {
@@ -990,8 +989,7 @@ static int hook_enter( lua_State *L )
 static int hook_pilotDeath( lua_State *L )
 {
    MIN_ARGS(2);
-   int h;
-   unsigned int p;
+   unsigned int h,p;
 
    if (lua_isnumber(L,-2)) p = (unsigned int) lua_tonumber(L,-2);
    else MISN_INVALID_PARAMETER();

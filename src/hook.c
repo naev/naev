@@ -10,13 +10,14 @@
 
 #include "log.h"
 #include "naev.h"
+#include "xml.h"
 
 
 /*
  * the hook
  */
 typedef struct Hook_ {
-   int id; /* unique id */
+   unsigned int id; /* unique id */
    unsigned int parent; /* mission it's connected to */
    char *func; /* function it runs */
    char *stack; /* stack it's a part of */
@@ -42,6 +43,9 @@ static int hook_runningstack = 0; /* check if stack is running */
 extern int misn_run( Mission *misn, char *func );
 /* intern */
 static int hook_run( Hook *hook );
+static void hook_free( Hook *h );
+static int hook_needSave( Hook *h );
+static int hook_parse( xmlNodePtr base );
 
 
 /*
@@ -75,7 +79,7 @@ static int hook_run( Hook *hook )
 /*
  * add/remove hooks
  */
-int hook_add( unsigned int parent, char *func, char *stack )
+unsigned int hook_add( unsigned int parent, char *func, char *stack )
 {
    Hook *new_hook;
 
@@ -89,15 +93,15 @@ int hook_add( unsigned int parent, char *func, char *stack )
    new_hook = &hook_stack[hook_nstack];
    new_hook->id = ++hook_id;
    new_hook->parent = parent;
-   new_hook->func = func;
-   new_hook->stack = stack;
+   new_hook->func = strdup(func);
+   new_hook->stack = strdup(stack);
    new_hook->delete = 0;
 
    hook_nstack++;
 
    return new_hook->id;
 }
-void hook_rm( int id )
+void hook_rm( unsigned int id )
 {
    int l,m,h;
 
@@ -118,12 +122,13 @@ void hook_rm( int id )
 
    /* last hook, just clip the stack */
    if (m == (hook_nstack-1)) {
+      hook_free( &hook_stack[m] );
       hook_nstack--;
       return;
    }
 
    /* move it! */
-   memmove( &hook_stack[m], &hook_stack[m], sizeof(Hook) * (hook_nstack-m-1) );
+   memmove( &hook_stack[m], &hook_stack[m+1], sizeof(Hook) * (hook_nstack-m-1) );
    hook_nstack--;
 }
 void hook_rmParent( unsigned int parent )
@@ -165,7 +170,7 @@ int hooks_run( char* stack )
 /*
  * runs a single hook by id
  */
-void hook_runID( int id )
+void hook_runID( unsigned int id )
 {
    int i;
 
@@ -179,14 +184,115 @@ void hook_runID( int id )
 
 
 /*
+ * frees a hook
+ */
+static void hook_free( Hook *h )
+{
+   if (h->func != NULL) free(h->func);
+   if (h->stack != NULL) free(h->stack);
+}
+
+
+/*
  * clean up after ourselves
  */
 void hook_cleanup (void)
 {
+   int i;
+
+   for (i=0; i<hook_nstack; i++)
+      hook_free( &hook_stack[i] );
    free( hook_stack );
    /* sane defaults just in case */
    hook_stack = NULL;
    hook_nstack = 0;
    hook_mstack = 0;
 }
+
+
+/*
+ * saves the hooks
+ */
+static int hook_needSave( Hook *h )
+{
+   int i;
+   char *nosave[] = { "death", "end" };
+  
+   for (i=0; strcmp(nosave[i],"end") != 0; i++)
+      if (strcmp(nosave[i],h->stack)==0) return 0;
+
+   return 1;
+}
+int hook_save( xmlTextWriterPtr writer )
+{
+   int i;
+   Hook *h;
+
+   xmlw_startElem(writer,"hooks");
+   for (i=0; i<hook_nstack; i++) {
+      h = &hook_stack[i];
+
+      if (!hook_needSave(h)) continue; /* no need to save it */
+
+      xmlw_startElem(writer,"hook");
+
+      /* xmlw_attr(writer,"id","%u",h->id); I don't think it's needed */
+      xmlw_elem(writer,"parent","%u",h->parent);
+      xmlw_elem(writer,"func","%s",h->func);
+      xmlw_elem(writer,"stack","%s",h->stack);
+
+      xmlw_endElem(writer); /* "hook" */
+   }
+   xmlw_endElem(writer); /* "hooks" */
+
+   return 0;
+}
+/*
+ * loads hooks for a player
+ */
+int hook_load( xmlNodePtr parent )
+{
+   xmlNodePtr node;
+
+   hook_cleanup();
+
+   node = parent->xmlChildrenNode;
+   do {
+      if (xml_isNode(node,"hooks"))
+         hook_parse(node);
+   } while (xml_nextNode(node));
+
+   return 0;
+}
+static int hook_parse( xmlNodePtr base )
+{
+   xmlNodePtr node, cur;
+   char *func, *stack;
+   unsigned int parent;
+
+   node = base->xmlChildrenNode;
+   do {
+      if (xml_isNode(node,"hook")) {
+         parent = 0;
+         func = NULL;
+         stack = NULL;
+
+         cur = node->xmlChildrenNode;
+         do {
+            xmlr_long(cur,"parent",parent);
+            xmlr_str(cur,"func",func);
+            xmlr_str(cur,"stack",stack);
+         } while (xml_nextNode(cur));
+
+         if ((parent == 0) || (func == NULL) || (stack == NULL)) {
+            WARN("Invalid hook.");
+            return -1;
+         }
+         hook_add( parent, func, stack );
+      }
+   } while (xml_nextNode(node));
+
+   return 0;
+}
+
 
