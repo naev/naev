@@ -18,7 +18,9 @@ else -- default english
    full_title = "Ship is full"
    full_msg = "Your ship is too full.  You need to make room for %d more tons if you want to be able to accept the mission."
    accept_title = "Mission Accepted"
-   accept_msg = "The workers load the %d tons of %s onto your ship."
+   accept_msg = {}
+   accept_msg[1] = "The workers load the %d tons of %s onto your ship."
+   accept_msg[2] = "The %s board your ship."
    toomany_title = "Too many missions"
    toomany_msg = "You have too many active missions."
    finish_title = "Succesful Delivery"
@@ -119,7 +121,12 @@ function accept()
 
    elseif misn.accept() then -- able to accept the mission, hooks BREAK after accepting
       carg_id = player.addCargo( carg_type, carg_mass )
-      tk.msg( accept_title, string.format( accept_msg, carg_mass, carg_type ))
+
+      if misn_type == "People" then
+         tk.msg( accept_title, string.format( accept_msg[2], carg_type ))
+      else
+         tk.msg( accept_title, string.format( accept_msg[1], carg_mass, carg_type ))
+      end
 
       -- set the hooks
       hook.land( "land" ) -- only hook after accepting
