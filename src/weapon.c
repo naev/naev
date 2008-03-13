@@ -385,8 +385,10 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer )
    if (!pilot_isPlayer(p)) {
       if ((player_target == p->id) || (RNG(0,2) == 0)) {
          if ((w->parent == PLAYER_ID) &&
-               (!pilot_isFlag(p,PILOT_HOSTILE) || (RNG(0,2) == 0)))
+               (!pilot_isFlag(p,PILOT_HOSTILE) || (RNG(0,2) == 0))) {
             faction_modPlayer( p->faction, -1 ); /* slowly lower faction */
+            pilot_setFlag( p, PILOT_HOSTILE);
+         }
          ai_attacked( p, w->parent );
       }
       spfx_add( outfit_spfx(w->outfit),
@@ -397,8 +399,6 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer )
       spfx_add( outfit_spfx(w->outfit),
             VX(w->solid->pos), VY(w->solid->pos),
             VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_FRONT );
-   if (w->parent == PLAYER_ID) /* make hostile to player */
-      pilot_setFlag( p, PILOT_HOSTILE);
 
    /* inform the ship that it should take some damage */
    pilot_hit( p, w->solid, w->parent, 
