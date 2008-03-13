@@ -30,7 +30,6 @@ OBJS := $(OBJS:%.c=%.o)
 #   CFLAGS
 #
 CLUA = -Ilib/lua
-CPLUTO = -Ilib/pluto
 CSDL = $(shell sdl-config --cflags)
 CXML = $(shell xml2-config --cflags)
 CTTF = $(shell freetype-config --cflags)
@@ -49,7 +48,6 @@ endif # DEBUG
 #   LDFLAGS
 #
 LDLUA = lib/lua/liblua.a
-LDPLUTO = lib/pluto/pluto.a
 LDSDL = $(shell sdl-config --libs) -lSDL_image
 LDXML = $(shell xml2-config --libs)
 LDTTF = $(shell freetype-config --libs)
@@ -80,16 +78,13 @@ DATAFILES = $(VERSIONFILE) $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA
 	@echo -e "\tCC   $@"
 
 
-all:	utils data lua pluto $(OBJS)
-	@$(CC) $(LDFLAGS) -o $(APPNAME) $(OBJS) lib/lua/liblua.a lib/pluto/pluto.a
+all:	utils data lua $(OBJS)
+	@$(CC) $(LDFLAGS) -o $(APPNAME) $(OBJS) lib/lua/liblua.a
 	@echo -e "\tLD   $(APPNAME)"
 
 
 lua:
 	@if [ ! -e lib/lua/liblua.a ];then ( cd lib/lua; $(MAKE) a ); fi
-
-pluto:
-	@if [ ! -e lib/pluto/pluto.a ];then ( cd lib/pluto; $(MAKE) ); fi
 
 pack: src/pack.c utils/pack/main.c
 	@( cd utils/pack; $(MAKE) )

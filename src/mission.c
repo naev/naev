@@ -9,7 +9,6 @@
 #include <string.h>
 #include <malloc.h>
 
-#include "pluto.h"
 #include "lua.h"
 #include "lauxlib.h"
 #include "lualib.h"
@@ -66,8 +65,8 @@ static int mission_matchFaction( MissionData* misn, int faction );
 static int mission_location( char* loc );
 static MissionData* mission_parse( const xmlNodePtr parent );
 static int missions_parseActive( xmlNodePtr parent );
-static int mission_persistTable( lua_State *L );
-static int mission_unpersistTable( lua_State *L );
+static int mission_persistData( lua_State *L, xmlTextWriterPtr writer );
+static int mission_unpersistData( lua_State *L, xmlNodePtr parent );
 
 
 /*
@@ -532,113 +531,93 @@ void missions_cleanup (void)
 }
 
 
+
 /*
- * memory buffer structure to handle lua writers/reades
+ * persists partial lua data
  */
-typedef struct MBuf_ {
-   char *data;
-   ssize_t len, alloc; /* size of each data chunk, chunks to alloc when growing */
-   size_t ndata, mdata; /* buffer real length, memory length */
-} MBuf;
-MBuf* mbuf_create( int len, int alloc )
+static int mission_saveData( xmlTextWriterPtr writer,
+      char *type, char *name, char *value )
 {
-   MBuf* buf;
+   xmlw_startElem(writer,"data");
 
-   buf = malloc(sizeof(MBuf));
-   if (buf == NULL) {
-      WARN("Out of memory");
-      return NULL;
-   }
+   xmlw_attr(writer,"type",type);
+   xmlw_attr(writer,"name",name);
+   xmlw_str(writer,"%s",value);
 
-   buf->data = 0;
-   buf->ndata = buf->mdata = 0;
-
-   buf->len = len;
-   buf->alloc = alloc;
-
-   return buf;
-}
-void mbuf_free( MBuf *buf )
-{
-   if (buf->data != NULL) free( buf->data );
-   buf->ndata = buf->mdata = 0;
-   free(buf);
-}
-static int mission_writeLua( lua_State *L , const void *p, size_t sz, void* ud )
-{
-   int i;
-   MBuf *buf;
-   (void)L;
-
-   buf = (MBuf*)ud;
-
-   i = buf->ndata*buf->len + sz - buf->mdata*buf->len;
-   if (i > 0) { /* need more memory */
-      buf->mdata += (i / (buf->len*buf->alloc) + 1) * buf->len*buf->alloc;
-      buf->data = realloc( buf->data, buf->mdata*buf->len );
-   }
-
-   memcpy( &buf->data[buf->ndata*buf->len], p, sz );
-   buf->ndata += sz;
+   xmlw_endElem(writer); /* "data" */
 
    return 0;
 }
-static int mission_persistTable( lua_State *L )
+static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
 {
-   lua_newtable(L);
-   /* table */
    lua_pushnil(L);
-   /* table, nil */
+   /* nil */
    while (lua_next(L, LUA_GLOBALSINDEX) != 0) {
-      /* table, key, value */
+      /* key, value */
       switch (lua_type(L, -1)) {
          case LUA_TNUMBER:
+            mission_saveData( writer, "number",
+                  (char*)lua_tostring(L,-2), (char*)lua_tostring(L,-1) );
+            break;
          case LUA_TBOOLEAN:
+            mission_saveData( writer, "bool",
+                  (char*)lua_tostring(L,-2), (char*)lua_tostring(L,-1) );
+            break;
          case LUA_TSTRING:
-            lua_pushvalue(L, -2); /* copy key */
-            /* table, key, value, key */
-            lua_insert(L, -3); /* key << 2 */
-            /* table, key, key, value */
-            lua_settable(L, -4); /* table[key] = value */
-            /* table, key */
+            mission_saveData( writer, "string",
+                  (char*)lua_tostring(L,-2), (char*)lua_tostring(L,-1) );
             break;
 
          default:
-            lua_pop(L,1);
-            /* table, key */
-            continue;
+            break;
       }
+      lua_pop(L,1);
+      /* key */
    }
-   /* table */
 
    return 0;
 }
-static int mission_unpersistTable( lua_State *L )
+
+
+/* 
+ * unpersists lua data
+ */
+static int mission_unpersistData( lua_State *L, xmlNodePtr parent )
 {
-   /* table */
-   lua_pushnil(L);
-   /* table, nil */
-   while (lua_next(L, -2) != 0) {
-      /* table, key, value */
-      lua_pushvalue(L,-2); /* copy key */
-      /* table, key, value, key */
-      lua_insert(L, -3); /* key << 2 */
-      /* table, key, key, value */
-      lua_settable(L, LUA_GLOBALSINDEX);
-      /* table, key */
-   }
-   /* table */
-   lua_pop(L,1);
-   /* */
+   xmlNodePtr node;
+   char *name, *type;
+
+   node = parent->xmlChildrenNode;
+   do {
+      if (xml_isNode(node,"data")) {
+         xmlr_attr(node,"name",name);
+         xmlr_attr(node,"type",type);
+
+         /* handle data types */
+         if (strcmp(type,"number")==0)
+            lua_pushnumber(L,xml_getFloat(node));
+         else if (strcmp(type,"bool")==0)
+            lua_pushboolean(L,xml_getInt(node));
+         else if (strcmp(type,"string")==0)
+            lua_pushstring(L,xml_get(node));
+         else {
+            WARN("Unknown lua data type!");
+            return -1;
+         }
+
+         lua_setglobal(L,name);
+         
+         /* cleanup */
+         free(type);
+         free(name);
+      }
+   } while (xml_nextNode(node));
 
    return 0;
 }
 int missions_saveActive( xmlTextWriterPtr writer )
 {
-   MBuf *buf;
-   char *data;
    int i,j;
-   size_t sz;
 
    xmlw_startElem(writer,"missions");
 
@@ -662,21 +641,8 @@ int missions_saveActive( xmlTextWriterPtr writer )
          /* write lua magic */
          xmlw_startElem(writer,"lua");
 
-         /* we need to use a special data struct */
-         buf = mbuf_create(1,128);
-
          /* prepare the data */
-         lua_pushnil(player_missions[i].L);
-         mission_persistTable(player_missions[i].L); /* we don't save it all */
-         pluto_persist( player_missions[i].L, mission_writeLua, buf );
-
-         /* now process it to save it */
-         data = base64_encode( &sz, buf->data, buf->ndata );
-         xmlw_raw(writer,data,sz);
-
-         /* cleanup */
-         mbuf_free(buf);
-         free(data);
+         mission_persistData(player_missions[i].L, writer);
 
          xmlw_endElem(writer); /* "lua" */
 
@@ -687,33 +653,6 @@ int missions_saveActive( xmlTextWriterPtr writer )
    xmlw_endElem(writer); /* "missions" */
 
    return 0;
-}
-const char* mission_readLua( lua_State *L, void *data, size_t *size )
-{
-   (void)L;
-   MBuf *dat;
-   char *pos;
-   char *buf;
-   size_t len;
-
-   dat = (MBuf*)data;
-   len = dat->alloc * dat->len;
-   pos = dat->data;
-
-   buf = &pos[dat->ndata];
-   if (dat->ndata >= dat->mdata) { /* end of stream */
-      (*size) = 0;
-      return NULL;
-   }
-   if (dat->mdata < (dat->ndata + len)) { /* last chunk */
-      (*size) = dat->mdata - dat->ndata;
-      dat->ndata = dat->mdata;
-   }
-   else {
-      (*size) = len;
-      dat->ndata += len;
-   }
-   return buf;
 }
 int missions_loadActive( xmlNodePtr parent )
 {
@@ -734,8 +673,7 @@ static int missions_parseActive( xmlNodePtr parent )
 {
    Mission *misn;
    int m;
-   char *buf, *str;
-   MBuf dat;
+   char *buf;
 
    xmlNodePtr node, cur, nest;
 
@@ -770,23 +708,10 @@ static int missions_parseActive( xmlNodePtr parent )
                } while (xml_nextNode(nest));
             }
 
-            if (xml_isNode(cur,"lua")) {
-
-               /* prepare the data */
-               str = xml_get(cur);
-               dat.ndata = 0;
-               dat.len = 1024;
-               dat.alloc = 128;
-               dat.data = base64_decode( &dat.mdata, str, strlen(str) );
-
+            if (xml_isNode(cur,"lua"))
                /* start the unpersist routine */
-               lua_pushnil(misn->L);
-               pluto_unpersist( misn->L, mission_readLua, &dat );
-               mission_unpersistTable(misn->L);
+               mission_unpersistData(misn->L, cur);
 
-               /* cleanup */
-               free(dat.data);
-            }
          } while (xml_nextNode(cur));
 
 
