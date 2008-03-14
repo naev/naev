@@ -210,9 +210,10 @@ static void map_render( double bx, double by, double w, double h )
       for (j=0; j<sys->njumps; j++) {
          /* set the colours */
          /* is the route the current one? */
-         if (((cur_system==sys) && (j==hyperspace_target)) ||
-               ((cur_system==&systems_stack[ sys->jumps[j] ]) &&
-                (sys==&systems_stack[ cur_system->jumps[hyperspace_target] ] )))
+         if ((hyperspace_target != -1) && 
+               ( ((cur_system==sys) && (j==hyperspace_target)) ||
+                  ((cur_system==&systems_stack[ sys->jumps[j] ]) &&
+                     (sys==&systems_stack[ cur_system->jumps[hyperspace_target] ] ))))
             col = &cRed;
          /* is the route part of the path? */
          else if (map_inPath(&systems_stack[ sys->jumps[j]]) && map_inPath(sys))
