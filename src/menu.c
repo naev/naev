@@ -230,7 +230,7 @@ void menu_info (void)
          "%s\n"
          "%d (%d jumps)"
          , player_name, nt, player_rating(), player->name,
-         (int)player->fuel, (int)(player->fuel) / HYPERSPACE_FUEL );
+         (int)player->fuel, pilot_getJumps(player) );
    window_addText( wid, 80, 20,
          INFO_WIDTH-120-BUTTON_WIDTH, INFO_HEIGHT-60,
          0, "txtPilot", &gl_smallFont, &cBlack, str );

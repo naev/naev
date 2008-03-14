@@ -700,7 +700,7 @@ void player_render (void)
 
       gl_printMid( &gl_smallFont, (int)gui.nav.w,
             gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
-            NULL, "%d - %s", (int)(player->fuel) / HYPERSPACE_FUEL,
+            NULL, "%d - %s", pilot_getJumps(player),
             systems_stack[cur_system->jumps[hyperspace_target]].name );
    }
    else { /* no NAV target */

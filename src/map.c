@@ -148,14 +148,21 @@ static void map_update (void)
 
 
 /*
- * returns 1 if sys is part of the map_path
+ * returns 1 if sys is part of the map_path, 2 if won't have enough fuel
  */
 static int map_inPath( StarSystem *sys )
 {
-   int i;
+   int i, f;
+
+   f = pilot_getJumps(player) - 1;
    for (i=0; i<map_npath; i++)
-      if (map_path[i] == sys)
-         return 1;
+      if (map_path[i] == sys) {
+         if (i > f) {
+            return 2;
+         }
+         else
+            return 1;
+      }
    return 0;
 }
 
@@ -165,7 +172,7 @@ static int map_inPath( StarSystem *sys )
  */
 static void map_render( double bx, double by, double w, double h )
 {
-   int i,j;
+   int i,j, n,m;
    double x,y,r, tx,ty;
    StarSystem* sys;
    glColour* col;
@@ -208,16 +215,23 @@ static void map_render( double bx, double by, double w, double h )
       /* cheaply use transparency instead of actually calculating
        * from where to where the line must go :) */  
       for (j=0; j<sys->njumps; j++) {
+
+         n = map_inPath(&systems_stack[ sys->jumps[j]]);
+         m = map_inPath(sys);
          /* set the colours */
          /* is the route the current one? */
          if ((hyperspace_target != -1) && 
                ( ((cur_system==sys) && (j==hyperspace_target)) ||
                   ((cur_system==&systems_stack[ sys->jumps[j] ]) &&
                      (sys==&systems_stack[ cur_system->jumps[hyperspace_target] ] ))))
-            col = &cRed;
-         /* is the route part of the path? */
-         else if (map_inPath(&systems_stack[ sys->jumps[j]]) && map_inPath(sys))
             col = &cGreen;
+         /* is the route part of the path? */
+         else if ((n > 0) && (m > 0)) {
+            if ((n == 2) || (m == 2)) /* out of fuel */
+               col = &cRed;
+            else
+               col = &cYellow;
+         }
          else col = &cDarkBlue;
 
          glBegin(GL_LINE_STRIP);

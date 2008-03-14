@@ -201,6 +201,15 @@ double pilot_face( Pilot* p, const float dir )
 
 
 /*
+ * gets the amount of jumps the pilot has left
+ */
+int pilot_getJumps( const Pilot* p )
+{
+   return (int)(p->fuel) / HYPERSPACE_FUEL;
+}
+
+
+/*
  * returns the quantity of a pilot outfit
  */
 static int pilot_oquantity( Pilot* p, PilotOutfit* w )

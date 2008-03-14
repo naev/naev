@@ -168,6 +168,7 @@ unsigned int pilot_getNext( const unsigned int id );
 unsigned int pilot_getNearest( const Pilot* p );
 unsigned int pilot_getHostile (void); /* only for the player */
 Fleet* fleet_get( const char* name );
+int pilot_getJumps( const Pilot* p );
 
 
 /*
