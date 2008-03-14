@@ -383,6 +383,8 @@ void player_cleanup (void)
 {
    int i;
 
+   player_clear();
+
    /* cleanup name */
    if (player_name != NULL) free(player_name);
 

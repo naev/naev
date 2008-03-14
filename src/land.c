@@ -67,6 +67,7 @@
 static unsigned int land_visited = 0;
 
 
+
 /*
  * land variables
  */
@@ -78,6 +79,11 @@ Planet* land_planet = NULL;
  */
 static Mission* mission_computer = NULL;
 static int mission_ncomputer = 0;
+
+/*
+ * player stuff
+ */
+extern int hyperspace_target;
 
 /*
  * window stuff
@@ -1128,7 +1134,7 @@ void land( Planet* p )
  */
 void takeoff (void)
 {
-   int sw,sh, i;
+   int sw,sh, i, h;
    char *nt;
 
    if (!landed) return;
@@ -1162,7 +1168,9 @@ void takeoff (void)
    free(nt);
 
    /* initialize the new space */
+   h = hyperspace_target;
    space_init(NULL);
+   hyperspace_target = h;
 
    /* cleanup */
    save_all(); /* must be before cleaning up planet */
