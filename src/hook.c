@@ -63,7 +63,8 @@ static int hook_run( Hook *hook )
       if (player_missions[i].id == hook->parent)
          break;
    if (i>=MISSION_MAX) {
-      WARN("Trying to run hook with parent not in player mission stack!");
+      WARN("Trying to run hook with parent not in player mission stack: deleting");
+      hook->delete = 1; /* so we delete it */
       return -1;
    }
    misn = &player_missions[i];
