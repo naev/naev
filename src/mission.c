@@ -57,9 +57,10 @@ static int mission_nstack = 0;
 extern int misn_run( Mission *misn, char *func );
 /* static */
 static unsigned int mission_genID (void);
-static int mission_init( Mission* mission, MissionData* misn );
+static int mission_init( Mission* mission, MissionData* misn, int load );
 static void mission_freeData( MissionData* mission );
 static int mission_alreadyRunning( MissionData* misn );
+static int mission_meetCond( MissionData* misn );
 static int mission_meetReq( int mission, int faction, char* planet, char* system );
 static int mission_matchFaction( MissionData* misn, int faction );
 static int mission_location( char* loc );
@@ -114,15 +115,17 @@ MissionData* mission_get( int id )
 /*
  * initializes a mission
  */
-static int mission_init( Mission* mission, MissionData* misn )
+static int mission_init( Mission* mission, MissionData* misn, int load )
 {
    char *buf;
    uint32_t bufsize;
 
-   if (misn != NULL) {  /* don't set the data either */
+   /* we only need an id if not loading */
+   if (load != 0)
+      mission->id = 0;
+   else
       mission->id = mission_genID();
-      mission->data = misn;
-   }
+   mission->data = misn;
 
    /* sane defaults */
    mission->title = NULL;
@@ -141,20 +144,19 @@ static int mission_init( Mission* mission, MissionData* misn )
    luaopen_string( mission->L ); /* string.format can be very useful */
    misn_loadLibs( mission->L ); /* load our custom libraries */
 
-   if (misn != NULL) { /* don't load it with data */
-      /* load the file */
-      buf = pack_readfile( DATA, misn->lua, &bufsize );
-      if (luaL_dobuffer(mission->L, buf, bufsize, misn->lua) != 0) {
-         ERR("Error loading mission file: %s",misn->lua);
-         ERR("%s",lua_tostring(mission->L,-1));
-         WARN("Most likely Lua file has improper syntax, please check");
-         return -1;
-      }
-      free(buf);
-
-      /* run create function */
-      misn_run( mission, "create");
+   /* load the file */
+   buf = pack_readfile( DATA, misn->lua, &bufsize );
+   if (luaL_dobuffer(mission->L, buf, bufsize, misn->lua) != 0) {
+      ERR("Error loading mission file: %s",misn->lua);
+      ERR("%s",lua_tostring(mission->L,-1));
+      WARN("Most likely Lua file has improper syntax, please check");
+      return -1;
    }
+   free(buf);
+
+   /* run create function */
+   if (load == 0) /* never run when loading */
+      misn_run( mission, "create");
 
    return mission->id;
 }
@@ -186,6 +188,61 @@ static int mission_alreadyRunning( MissionData* misn )
 
 
 /*
+ * is the lua condition for misn met?
+ */
+static lua_State* mission_cond_L = NULL;
+static int mission_meetCond( MissionData* misn )
+{
+   int ret;
+   char buf[256];
+
+   if (mission_cond_L == NULL) { /* must create the conditional environment */
+      mission_cond_L = luaL_newstate();
+      misn_loadCondLibs( mission_cond_L );
+   }
+
+   snprintf( buf, 256, "return %s", misn->avail.cond );
+   ret = luaL_loadstring( mission_cond_L, buf );
+   switch (ret) {
+      case  LUA_ERRSYNTAX:
+         WARN("Mission '%s' Lua conditional syntax error", misn->name );
+         return 0;
+      case LUA_ERRMEM:
+         WARN("Mission '%s' Lua Conditional ran out of memory", misn->name );
+         return 0;
+      default:
+         break;
+   }
+
+   ret = lua_pcall( mission_cond_L, 0, 1, 0 );
+   switch (ret) {
+      case LUA_ERRRUN:
+         WARN("Mission '%s' Lua Conditional had a runtime error: %s",
+               misn->name, lua_tostring(mission_cond_L, -1));
+         return 0;
+      case LUA_ERRMEM:
+         WARN("Mission '%s' Lua Conditional ran out of memory", misn->name);
+         return 0;
+      case LUA_ERRERR:
+         WARN("Mission '%s' Lua Conditional had an error while handling error function",
+               misn->name);
+         return 0;
+      default:
+         break;
+   }
+
+
+   if (lua_isboolean(mission_cond_L, -1)) {
+      if (lua_toboolean(mission_cond_L, -1))
+         return 1;
+      else
+         return 0;
+   }
+   WARN("Mission '%s' Conditional Lua didn't return a boolean", misn->name);
+   return 0;
+}
+
+/*
  * does the mission meet the minimum requirements?
  */
 static int mission_meetReq( int mission, int faction, char* planet, char* system )
@@ -205,8 +262,8 @@ static int mission_meetReq( int mission, int faction, char* planet, char* system
           mission_alreadyRunning(misn)))
       return 0;
 
-   if ((misn->avail.req != NULL) && /* mission doesn't meet requirement */
-         !var_checkflag(misn->avail.req))
+   if ((misn->avail.cond != NULL) && /* mission doesn't meet the lua conditional */
+         !mission_meetCond(misn))
       return 0;
 
   return 1;
@@ -233,7 +290,7 @@ void missions_bar( int faction, char* planet, char* system )
          chance = (double)(misn->avail.chance % 100)/100.;
 
          if (RNGF() < chance) {
-            mission_init( &mission, misn );
+            mission_init( &mission, misn, 0 );
             mission_cleanup(&mission); /* it better clean up for itself or we do it */
          }
       }
@@ -372,7 +429,7 @@ Mission* missions_computer( int *n, int faction, char* planet, char* system )
          for (j=0; j<rep; j++) /* random chance of rep appearances */
             if (RNGF() < chance) {
                tmp = realloc( tmp, sizeof(Mission) * ++m);
-               mission_init( &tmp[m-1], misn );
+               mission_init( &tmp[m-1], misn, 0 );
             }
       }
    }
@@ -452,8 +509,8 @@ static MissionData* mission_parse( const xmlNodePtr parent )
                temp->avail.factions[temp->avail.nfactions-1] =
                      faction_get( xml_get(cur) );
             }
-            else if (xml_isNode(cur,"req"))
-               temp->avail.req = strdup( xml_get(cur) );
+            else if (xml_isNode(cur,"cond"))
+               temp->avail.cond = strdup( xml_get(cur) );
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
@@ -521,6 +578,12 @@ void missions_free (void)
    free( mission_stack );
    mission_stack = NULL;
    mission_nstack = 0;
+
+   /* frees the lua stack */
+   if (mission_cond_L != NULL) {
+      lua_close( mission_cond_L );
+      mission_cond_L = NULL;
+   }
 }
 void missions_cleanup (void)
 {
@@ -685,7 +748,7 @@ static int missions_parseActive( xmlNodePtr parent )
 
          /* process the attributes to create the mission */
          xmlr_attr(node,"data",buf);
-         mission_init( misn, mission_get(mission_getID(buf)) );
+         mission_init( misn, mission_get(mission_getID(buf)), 1 );
          free(buf);
 
          /* this will orphan an identifier */

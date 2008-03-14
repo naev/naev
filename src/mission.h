@@ -46,7 +46,7 @@ typedef struct MissionData_ {
       int* factions;
       int nfactions;
 
-      char* req; /* required variable */
+      char* cond; /* condition that must be met */
    } avail;
 
    unsigned int flags; /* flags to store binary properties */

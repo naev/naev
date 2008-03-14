@@ -32,7 +32,7 @@
 <mission name="Empire Shipping">
 <lua>es_cargo</lua>
 <avail>
-<req>es_cargo</req>
+<cond>var.peek("es_cargo") == true</cond>
 <chance>350</chance>
 <location>Computer</location>
 <alliance>Empire United</alliance>

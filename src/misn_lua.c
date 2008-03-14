@@ -111,6 +111,10 @@ static const luaL_reg var_methods[] = {
    { "push", var_push },
    {0,0}
 };
+static const luaL_reg var_cond_methods[] = { /* only conditional */
+   { "peek", var_peek },
+   {0,0}
+};
 /* space */
 static int space_getPlanet( lua_State *L );
 static int space_getSystem( lua_State *L );
@@ -212,6 +216,13 @@ int misn_loadLibs( lua_State *L )
    luaL_register(L, "tk", tk_methods);
    luaL_register(L, "hook", hook_methods);
    luaL_register(L, "pilot", pilot_methods);
+   return 0;
+}
+
+int misn_loadCondLibs( lua_State *L )
+{
+   luaL_register(L, "time", time_methods);
+   luaL_register(L, "var", var_cond_methods);
    return 0;
 }
 
