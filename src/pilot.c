@@ -690,7 +690,6 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
             pilot_setSecondary( pilot, s );
          }
          pilot_calcStats(pilot); /* recalculate stats */
-         pilot->cargo_free -= c;
          return q;
       }
    WARN("Failure attempting to remove %d '%s' from pilot '%s'",
