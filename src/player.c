@@ -290,7 +290,6 @@ static void player_newMake (void)
    /* create the player and start the game */
    player_newShip( ship, x, y, 0., 0., RNG(0,359)/180.*M_PI );
    space_init(system);
-   map_clear(); /* sets the map up */
 
    /* clear the map */
    map_clear();
@@ -582,8 +581,9 @@ void player_render (void)
    /* pilot is dead, just render him and stop */
    if (player_isFlag(PLAYER_DESTROYED) || pilot_isFlag(player,PILOT_DEAD)) {
       if (player_isFlag(PLAYER_DESTROYED)) {
-         if (!toolkit && (SDL_GetTicks() > player_timer))
+         if (!toolkit && (player != NULL) && (SDL_GetTicks() > player_timer)) {
             menu_death();
+         }
       }
       else
          pilot_render(player);
@@ -1830,6 +1830,7 @@ int player_load( xmlNodePtr parent )
    xmlNodePtr node;
 
    /* some cleaning up */
+   player_flags = 0;
    player_cleanup();
    var_cleanup();
    missions_cleanup();
