@@ -75,6 +75,7 @@ static void pilot_update( Pilot* pilot, const double dt );
 static void pilot_hyperspace( Pilot* pilot );
 void pilot_render( Pilot* pilot ); /* externed in player.c */
 static void pilot_calcStats( Pilot* pilot );
+static void pilot_calcCargo( Pilot* pilot );
 void pilot_free( Pilot* p );
 static Fleet* fleet_parse( const xmlNodePtr parent );
 static void pilot_dead( Pilot* p );
@@ -752,6 +753,9 @@ static void pilot_calcStats( Pilot* pilot )
    pilot->shield_regen = pilot->ship->shield_regen;
    pilot->energy_regen = pilot->ship->energy_regen;
 
+   /* cargo has to be reset */
+   pilot_calcCargo(pilot);
+
    /*
     * now add outfit changes
     */
@@ -827,6 +831,16 @@ int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )
    pilot->ncommodities++;
 
    return q;
+}
+
+
+static void pilot_calcCargo( Pilot* pilot )
+{
+   int i;
+
+   pilot->cargo_free = pilot->ship->cap_cargo;
+   for (i=0; i<pilot->ncommodities; i++)
+      pilot->cargo_free -= pilot->commodities[i].quantity;
 }
 
 
@@ -971,18 +985,18 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* 
       }
    }
 
+   /* cargo - must be set before calcStats */
+   pilot->credits = 0;
+   pilot->commodities = NULL;
+   pilot->ncommodities = 0;
+   pilot->cargo_free = pilot->ship->cap_cargo;
+
    /* set the pilot stats based on his ship and outfits */
    pilot->armour = pilot->armour_max = 1.; /* hack to have full armour */
    pilot->shield = pilot->shield_max = 1.; /* ditto shield */
    pilot->energy = pilot->energy_max = 1.; /* ditto energy */
    pilot->fuel = pilot->fuel_max = 1.; /* ditto fuel */
    pilot_calcStats(pilot);
-
-   /* cargo */
-   pilot->credits = 0;
-   pilot->commodities = NULL;
-   pilot->ncommodities = 0;
-   pilot->cargo_free = pilot->ship->cap_cargo;
 
    /* hooks */
    pilot->hook_type = PILOT_HOOK_NONE;
