@@ -2,7 +2,10 @@
  * See Licensing and Copyright notice in naev.h
  */
 
-
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
 
 #include "land.h"
 

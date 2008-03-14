@@ -44,7 +44,7 @@ extern char dataname[DATA_NAME_LEN];
 
 #ifndef M_PI
 # define M_PI     3.14159265358979323846  /* pi */
-#endif
+#endif /* M_PI */
 
 
 #endif /* NAEV_H */

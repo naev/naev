@@ -4,6 +4,11 @@
 
 #include "misn_lua.h"
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+
 #include "lua.h"
 #include "lauxlib.h"
 

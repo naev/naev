@@ -6,6 +6,7 @@
 
 #include "toolkit.h"
 
+#include <stdarg.h>
 
 #include "naev.h"
 #include "log.h"

@@ -6,6 +6,7 @@
 
 #include "conf.h"
 
+#include <stdlib.h> /* atoi */
 #include <unistd.h> /* getopt */
 #include <string.h> /* strdup */
 #include <getopt.h> /* getopt_long */

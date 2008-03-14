@@ -6,9 +6,10 @@
 
 #include "opengl.h"
 
-#include <math.h>
-#include <stdarg.h> /* va_list for gl_print */
+#include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
+#include <stdarg.h> /* va_list for gl_print */
 
 #include <png.h>
 

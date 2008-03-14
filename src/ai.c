@@ -6,6 +6,9 @@
 
 #include "ai.h"
 
+#include <stdlib.h>
+#include <stdio.h> /* malloc realloc */
+#include <string.h> /* strncpy strlen strncat strcmp strdup */
 #include <math.h>
 
 /* yay more lua */
