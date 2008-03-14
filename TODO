@@ -2,7 +2,7 @@
 
    VITAL
 
-   *) None atm :P
+   *) Get a good sound system working
 
 
    MAJOR
@@ -12,7 +12,6 @@
       *) improved combat efficiency
       *) boids ship fleet movement (have them behave like fleets)
       *) smarter missiles -> PID if possible
-   *) More sounds (redo sound system?)
    *) Escorts (boarding taking over too)
       *) escort commands
    *) Graphic improvements
@@ -50,6 +49,8 @@
    *) Allow subsystems to get damage
    *) Allow steering with the mouse
    *) Configuration app for keybindings
+   *) Pilot titles
+      *) would usually indicate changes on the base ship equipment
 
 
    MAYBE... SOMEDAY...
