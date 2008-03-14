@@ -1096,7 +1096,7 @@ void space_render( double dt )
 
 
    t = SDL_GetTicks();
-   if (!player_isFlag(PLAYER_DESTROYED) &&
+   if (!player_isFlag(PLAYER_DESTROYED) && !player_isFlag(PLAYER_CREATING) &&
          pilot_isFlag(player,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
          !paused && (player->ptimer-HYPERSPACE_STARS_BLUR < t)) {
 
@@ -1125,7 +1125,8 @@ void space_render( double dt )
    else { /* normal rendering */
       glBegin(GL_POINTS);
 
-      if (!paused && !player_isFlag(PLAYER_DESTROYED)) { /* update position */
+      if (!paused && !player_isFlag(PLAYER_DESTROYED) &&
+            !player_isFlag(PLAYER_CREATING)) { /* update position */
          for (i=0; i < nstars; i++) {
 
             /* calculate new position */

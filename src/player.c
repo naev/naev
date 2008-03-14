@@ -188,7 +188,7 @@ void player_new (void)
 
    /* to not segfault due to lack of environment */
    player_flags = 0;
-   player_setFlag(PLAYER_DESTROYED);
+   player_setFlag(PLAYER_CREATING);
    vectnull( &player_cam );
    gl_bindCamera( &player_cam );
 
@@ -337,7 +337,7 @@ static void player_newShipMake( char* name )
    }
 
    /* in case we're respawning */
-   player_rmFlag(PLAYER_DESTROYED);
+   player_rmFlag(PLAYER_CREATING);
 
    /* hackish position setting */
    vect_cset( &vp, player_px, player_py );
@@ -542,7 +542,7 @@ void player_renderBG (void)
    Planet* planet;
 
    /* no need to draw if pilot is dead */
-   if (player_isFlag(PLAYER_DESTROYED) ||
+   if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
       pilot_isFlag(player,PILOT_DEAD)) return;
 
    if (planet_target >= 0) {
@@ -578,14 +578,16 @@ void player_render (void)
    glColour* c;
    glFont* f;
 
-   /* pilot is dead, just render him and stop */
-   if (player_isFlag(PLAYER_DESTROYED) || pilot_isFlag(player,PILOT_DEAD)) {
+   /* pilot is dead or being created, just render him and stop */
+   if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
+        pilot_isFlag(player,PILOT_DEAD)) {
       if (player_isFlag(PLAYER_DESTROYED)) {
-         if (!toolkit && (player != NULL) && (SDL_GetTicks() > player_timer)) {
+         if (!toolkit && !player_isFlag(PLAYER_CREATING) &&
+               (SDL_GetTicks() > player_timer)) {
             menu_death();
          }
       }
-      else
+      else if (!player_isFlag(PLAYER_CREATING))
          pilot_render(player);
 
       /*

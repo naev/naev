@@ -21,6 +21,7 @@
 #define PLAYER_PRIMARY     (1<<11)  /* player is shooting primary weapon */
 #define PLAYER_SECONDARY   (1<<12)  /* player is shooting secondary weapon */
 #define PLAYER_LANDACK     (1<<13)  /* player has permission to land */
+#define PLAYER_CREATING    (1<<14)  /* player is being created */
 /* flag functions */
 #define player_isFlag(f)   (player_flags & f)
 #define player_setFlag(f)  if (!player_isFlag(f)) player_flags |= f
