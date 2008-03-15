@@ -1409,6 +1409,10 @@ void player_targetPlanet (void)
  */
 void player_land (void)
 {
+   int i;
+   int tp;
+   double td, d;
+
    if (landed) { /* player is already landed */
       takeoff();
       return;
@@ -1443,9 +1447,10 @@ void player_land (void)
    }
    else { /* get nearest planet target */
 
-      int i;
-      int tp;
-      double td, d;
+      if (cur_system->nplanets == 0) {
+         player_message("There are no planets to land on");
+         return;
+      }
 
       td = -1; /* temporary distance */
       tp = -1; /* temporary planet */
