@@ -89,6 +89,8 @@ static void render_all (void);
  */
 int main ( int argc, char** argv )
 {
+   char buf[PATH_MAX];
+
    /* print the version */
    snprintf( version, VERSION_LEN, "%d.%d.%d", VMAJOR, VMINOR, VREV );
    LOG( " "APPNAME" v%s", version );
@@ -104,8 +106,9 @@ int main ( int argc, char** argv )
    input_init(); 
 
    /* set the configuration */
+   snprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_basePath());
    conf_setDefaults(); /* set the default config values */
-   conf_loadConfig( CONF_FILE ); /* Lua to parse the configuration file */
+   conf_loadConfig(buf); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
 
    /* load the data basics */
