@@ -205,6 +205,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
    Uint32 saved_flags;
    Uint8 saved_alpha;
    int potw, poth;
+   SDL_Rect rtemp;
 
    /* Make size power of two */
    potw = pot(surface->w);
@@ -212,64 +213,42 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
    if (rw) *rw = potw;
    if (rh) *rh = poth;
 
-   if ((surface->w != potw) || (surface->h != poth)) { /* size isn't original */
-      SDL_Rect rtemp;
-      rtemp.x = rtemp.y = 0;
-      rtemp.w = surface->w;
-      rtemp.h = surface->h;
+   /* we must blit with an SDL_Rect */
+   rtemp.x = rtemp.y = 0;
+   rtemp.w = surface->w;
+   rtemp.h = surface->h;
 
-      /* saves alpha */
-      saved_flags = surface->flags & (SDL_SRCALPHA | SDL_RLEACCELOK);
-      saved_alpha = surface->format->alpha;
-      if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
-         SDL_SetAlpha( surface, 0, 0 );
+   /* saves alpha */
+   saved_flags = surface->flags & (SDL_SRCALPHA | SDL_RLEACCELOK);
+   saved_alpha = surface->format->alpha;
+   if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
+      SDL_SetAlpha( surface, 0, SDL_ALPHA_OPAQUE );
+   if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
+      SDL_SetColorKey( surface, 0, surface->format->colorkey );
 
-
-      /* create the temp POT surface */
-      temp = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
-            potw, poth, surface->format->BytesPerPixel*8, RGBAMASK );
-      if (temp == NULL) {
-         WARN("Unable to create POT surface: %s", SDL_GetError());
-         return 0;
-      }
-      if (SDL_FillRect( temp, NULL,
+   /* create the temp POT surface */
+   temp = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
+         potw, poth, surface->format->BytesPerPixel*8, RGBAMASK );
+   if (temp == NULL) {
+      WARN("Unable to create POT surface: %s", SDL_GetError());
+      return 0;
+   }
+   if (SDL_FillRect( temp, NULL,
             SDL_MapRGBA(surface->format,0,0,0,SDL_ALPHA_TRANSPARENT))) {
-         WARN("Unable to fill rect: %s", SDL_GetError());
-         return 0;
-      }
-
-      SDL_BlitSurface( surface, &rtemp, temp, &rtemp);
-      SDL_FreeSurface( surface );
-
-      surface = temp;
-
-      /* set saved alpha */
-      if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
-         SDL_SetAlpha( surface, 0, 0 );
-
-
-      /* create the temp POT surface */
-      temp = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
-            potw, poth, surface->format->BytesPerPixel*8, RGBAMASK );
-      if (temp == NULL) {
-         WARN("Unable to create POT surface: %s", SDL_GetError());
-         return 0;
-      }
-      if (SDL_FillRect( temp, NULL, SDL_MapRGBA(surface->format,0,0,0,SDL_ALPHA_TRANSPARENT))) {
-         WARN("Unable to fill rect: %s", SDL_GetError());
-         return 0;
-      }
-
-      SDL_BlitSurface( surface, &rtemp, temp, &rtemp);
-      SDL_FreeSurface( surface );
-
-      surface = temp;
-
-      /* set saved alpha */
-      if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
-         SDL_SetAlpha( surface, saved_flags, saved_alpha );
+      WARN("Unable to fill rect: %s", SDL_GetError());
+      return 0;
    }
 
+   /* change the surface to the new blitted one */
+   SDL_BlitSurface( surface, &rtemp, temp, &rtemp);
+   SDL_FreeSurface( surface );
+   surface = temp;
+
+   /* set saved alpha */
+   if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
+      SDL_SetAlpha( surface, 0, 0 );
+
+   /* opengl texture binding */
    glGenTextures( 1, &texture ); /* Creates the texture */
    glBindTexture( GL_TEXTURE_2D, texture ); /* Loads the texture */
 
@@ -280,13 +259,14 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
+   /* now lead the texture data up */
    SDL_LockSurface( surface );
    glTexImage2D( GL_TEXTURE_2D, 0, surface->format->BytesPerPixel,
          surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
    SDL_UnlockSurface( surface );
 
+   /* cleanup */
    SDL_FreeSurface( surface );
-
    gl_checkErr();
 
    return texture;
@@ -863,12 +843,18 @@ int gl_init()
 
    /* some OpenGL options */
    glClearColor( 0., 0., 0., 1. );
+
+   /* enable/disable */
    glDisable( GL_DEPTH_TEST ); /* set for doing 2d */
 /* glEnable(  GL_TEXTURE_2D ); never enable globally, breaks non-texture blits */
    glDisable( GL_LIGHTING ); /* no lighting, it's done when rendered */
    glEnable(  GL_BLEND ); /* alpha blending ftw */
+
+   /* models */
    glShadeModel( GL_FLAT ); /* default shade model, functions should keep this when done */
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* good blend model */
+
+   /* set up the matrix */
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
    glOrtho( -SCREEN_W/2, /* left edge */
@@ -877,8 +863,9 @@ int gl_init()
          SCREEN_H/2, /* top edge */
          -1., /* near */
          1. ); /* far */
-   glClear( GL_COLOR_BUFFER_BIT );
 
+   /* finishing touches */
+   glClear( GL_COLOR_BUFFER_BIT ); /* must clear the buffer first */
    gl_checkErr();
 
    return 0;
