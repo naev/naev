@@ -1,5 +1,6 @@
-; planet-render1-2.scm
+; mkplanet.scm
 ; (C) 2005-2007 Aurore D. "Rore", aurore.d@gmail.com 
+; (C) 2008 Bobbens, bobbens@gmail.com
 ;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -16,9 +17,7 @@
 ; Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ;
 ;
-; planet-render1-2.scm 
 ; Creates a planet.
-; You'll find this script in the "Xtns->Naev->Planet Render" menu
 ; December 2007 : Hacked it to add customizeable glow size and changed paths to be
 ;                 more naevy :)
 ; February 2007 : Small modifications to make it work on Gimp 2.3 and hopefully 2.4
@@ -134,4 +133,4 @@
 		             SF-ADJUSTMENT _"Sun Tilt " '(10 0 25 1 10 1 0)
                    SF-ADJUSTMENT _"Planet Glow" '(.25 .1 .6667 1 2 1 0) )
 (script-fu-menu-register "script-fu-naev-mkplanet"
-			 _"<Toolbox>/Xtns/Naev")
+			 _"<Toolbox>/Xtns/naev")
