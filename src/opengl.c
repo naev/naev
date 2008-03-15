@@ -44,6 +44,9 @@ static uint8_t* SDL_MapTrans( SDL_Surface* s );
 static int pot( int n );
 /* glTexture */
 static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh );
+static void gl_blitTexture( const glTexture* texture, 
+      const double x, const double y,
+      const double tx, const double ty, const glColour *c );
 /* png */
 int write_png( const char *file_name, png_bytep *rows,
       int w, int h, int colourtype, int bitdepth );
@@ -426,51 +429,94 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
  * B L I T T I N G
  *
  */
+static void gl_blitTexture( const glTexture* texture,
+      const double x, const double y,
+      const double tx, const double ty, const glColour *c )
+{
+   double tw,th;
+
+   /* texture dimensions */
+   tw = texture->sw / texture->rw;
+   th = texture->sh / texture->rh;
+
+   glEnable(GL_TEXTURE_2D);
+   glBindTexture( GL_TEXTURE_2D, texture->texture);
+   glBegin(GL_QUADS);
+      /* set colour or default if not set */
+      if (c==NULL) glColor4d( 1., 1., 1., 1. );
+      else COLOUR(*c);
+
+      glTexCoord2d( tx, ty);
+      glVertex2d( x, y );
+
+      glTexCoord2d( tx + tw, ty);
+      glVertex2d( x + texture->sw, y );
+
+      glTexCoord2d( tx + tw, ty + th);
+      glVertex2d( x + texture->sw, y + texture->sh );
+
+      glTexCoord2d( tx, ty + th);
+      glVertex2d( x, y + texture->sh );
+
+   glEnd(); /* GL_QUADS */
+   glDisable(GL_TEXTURE_2D);
+
+   /* anything failed? */
+   gl_checkErr();
+}
 /*
  * blits a sprite at pos (blits relative to player)
  */
 void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
       const int sx, const int sy, const glColour* c )
 {
-   /* don't draw if offscreen */
-   if (fabs(bx-VX(*gl_camera)+gui_xoff) > SCREEN_W/2+sprite->sw/2 ||
-         fabs(by-VY(*gl_camera)+gui_yoff) > SCREEN_H/2+sprite->sh/2 )
-      return;
-
    double x,y, tx,ty;
-   
-   glEnable(GL_TEXTURE_2D);
 
+   /* calculate position - we'll use relative coords to player */
    x = bx - VX(*gl_camera) - sprite->sw/2. + gui_xoff;
    y = by - VY(*gl_camera) - sprite->sh/2. + gui_yoff;
 
+   /* don't draw if offscreen */
+   if ((fabs(x) > SCREEN_W/2 + sprite->sw) ||
+         (fabs(y) > SCREEN_H/2 + sprite->sh) )
+      return;
+
+   /* texture coords */
    tx = sprite->sw*(double)(sx)/sprite->rw;
    ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
-   
+
    /* actual blitting */
-   glBindTexture( GL_TEXTURE_2D, sprite->texture);
-   glBegin(GL_QUADS);
+   gl_blitTexture( sprite, x, y, tx, ty, c );
+}
 
-      if (c==NULL) glColor4d( 1., 1., 1., 1. );
-      else COLOUR(*c);
 
-      glTexCoord2d( tx, ty);
-         glVertex2d( x, y );
+/*
+ * like gl_blitSprite but will use the actual direction, for things that
+ * can just rotate around
+ */
+void gl_blitRotate( const glTexture* texture,
+      const double bx, const double by,
+      const double dir, const glColour* c )
+{
+   double x,y;
 
-      glTexCoord2d( tx + sprite->sw/sprite->rw, ty);
-         glVertex2d( x + sprite->sw, y );
+   /* calculate position - we'll use relative coords to player */
+   x = bx - VX(*gl_camera) - texture->sw/2. + gui_xoff;
+   y = by - VY(*gl_camera) - texture->sh/2. + gui_yoff;
 
-      glTexCoord2d( tx + sprite->sw/sprite->rw, ty + sprite->sh/sprite->rh);
-         glVertex2d( x + sprite->sw, y + sprite->sh );
+   /* don't draw if offscreen */
+   if ((fabs(x) > SCREEN_W/2 + texture->sw) ||
+         (fabs(y) > SCREEN_H/2 + texture->sh) )
+      return;
 
-      glTexCoord2d( tx, ty + sprite->sh/sprite->rh);
-         glVertex2d( x, y + sprite->sh );
+   glMatrixMode(GL_PROJECTION);
+   glPushMatrix();
+      glRotated( dir, 0., 0., 1. );
 
-   glEnd(); /* GL_QUADS */
+   /* blit */
+   gl_blitTexture( texture, x, y, 0, 0, c );
 
-   glDisable(GL_TEXTURE_2D);
-
-   gl_checkErr();
+   glPopMatrix(); /* GL_PROJECTION */
 }
 
 
@@ -481,35 +527,13 @@ void gl_blitStatic( const glTexture* texture,
       const double bx, const double by, const glColour* c )
 {
    double x,y;
-   glEnable(GL_TEXTURE_2D);
 
+   /* here we use absolute coords */
    x = bx - (double)SCREEN_W/2.;
    y = by - (double)SCREEN_H/2.;
 
    /* actual blitting */
-   glBindTexture( GL_TEXTURE_2D, texture->texture);
-   glBegin(GL_QUADS);
-
-      if (c==NULL) glColor4d( 1., 1., 1., 1. );
-      else COLOUR(*c);
-
-      glTexCoord2d( 0., 0.);
-         glVertex2d( x, y );
-
-      glTexCoord2d( texture->sw/texture->rw, 0.);
-         glVertex2d( x + texture->sw, y );
-
-      glTexCoord2d( texture->sw/texture->rw, texture->sh/texture->rh);
-         glVertex2d( x + texture->sw, y + texture->sh );
-
-      glTexCoord2d( 0., texture->sh/texture->rh);
-         glVertex2d( x, y +texture->sh );
-
-   glEnd(); /* GL_QUADS */
-
-   glDisable(GL_TEXTURE_2D);
-
-   gl_checkErr();
+   gl_blitTexture( texture, x, y, 0, 0, c );
 }
 
 

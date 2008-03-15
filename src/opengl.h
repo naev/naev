@@ -87,11 +87,15 @@ void gl_freeTexture( glTexture* texture );
 /*
  * opengl drawing
  */
-/* blits a sprite */
+/* blits a sprite, relative pos */
 void gl_blitSprite( const glTexture* sprite,
       const double bx, const double by,
       const int sx, const int sy, const glColour *c );
-/* blits the entire image */
+/* blits a texture rotated, relative pos */
+void gl_blitRotate( const glTexture* texture,
+      const double bx, const double by,
+      const double dir, const glColour* c );
+/* blits the entire image, absolute pos */
 void gl_blitStatic( const glTexture* texture,
       const double bx, const double by, const glColour *c );
 /* binds the camera to a vector */
