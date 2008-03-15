@@ -82,11 +82,11 @@ void menu_main (void)
    unsigned int bwid, wid;
    glTexture *tex;
 
-   tex = pf_genFractal( gl_screen.w, gl_screen.h, 5. );
+   tex = pf_genFractal( SCREEN_W, SCREEN_H, 5. );
 
    /* create background image window */
-   bwid = window_create( "BG", -1, -1, gl_screen.w, gl_screen.h );
-   window_addRect( bwid, 0, 0, gl_screen.w, gl_screen.h, "rctBG", &cBlack, 0 );
+   bwid = window_create( "BG", -1, -1, SCREEN_W, SCREEN_H );
+   window_addRect( bwid, 0, 0, SCREEN_W, SCREEN_H, "rctBG", &cBlack, 0 );
    window_addImage( bwid, 0, 0, "imgBG", tex, 0 );
    window_imgColour( bwid, "imgBG", &cPurple );
 

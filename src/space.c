@@ -659,13 +659,13 @@ void space_init ( const char* sysname )
       free(nt);
 
       /* set up stars */
-      nstars = (cur_system->stars*gl_screen.w*gl_screen.h+STAR_BUF*STAR_BUF)/(800*640);
+      nstars = (cur_system->stars*SCREEN_W*SCREEN_H+STAR_BUF*STAR_BUF)/(800*640);
       if (mstars < nstars)
          stars = realloc(stars,sizeof(Star)*nstars); /* should realloc, not malloc */
       for (i=0; i < nstars; i++) {
          stars[i].brightness = (double)RNG( 50, 200 )/256.;
-         stars[i].x = (double)RNG( -STAR_BUF, gl_screen.w + STAR_BUF );
-         stars[i].y = (double)RNG( -STAR_BUF, gl_screen.h + STAR_BUF );
+         stars[i].x = (double)RNG( -STAR_BUF, SCREEN_W + STAR_BUF );
+         stars[i].y = (double)RNG( -STAR_BUF, SCREEN_H + STAR_BUF );
       }
    }
 
@@ -1092,7 +1092,7 @@ void space_render( double dt )
 
    glMatrixMode(GL_MODELVIEW);
    glPushMatrix(); /* translation matrix */
-      glTranslated( -(double)gl_screen.w/2., -(double)gl_screen.h/2., 0);
+      glTranslated( -(double)SCREEN_W/2., -(double)SCREEN_H/2., 0);
 
 
    t = SDL_GetTicks();
@@ -1135,10 +1135,10 @@ void space_render( double dt )
             stars[i].y -= player->solid->vel.y/b*dt;
 
             /* check boundries */
-            if (stars[i].x > gl_screen.w + STAR_BUF) stars[i].x = -STAR_BUF;
-            else if (stars[i].x < -STAR_BUF) stars[i].x = gl_screen.w + STAR_BUF;
-            if (stars[i].y > gl_screen.h + STAR_BUF) stars[i].y = -STAR_BUF;
-            else if (stars[i].y < -STAR_BUF) stars[i].y = gl_screen.h + STAR_BUF;
+            if (stars[i].x > SCREEN_W + STAR_BUF) stars[i].x = -STAR_BUF;
+            else if (stars[i].x < -STAR_BUF) stars[i].x = SCREEN_W + STAR_BUF;
+            if (stars[i].y > SCREEN_H + STAR_BUF) stars[i].y = -STAR_BUF;
+            else if (stars[i].y < -STAR_BUF) stars[i].y = SCREEN_H + STAR_BUF;
 
             /* render */
             if ((stars[i].x < SCREEN_W) && (stars[i].x > 0) &&

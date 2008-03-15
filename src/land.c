@@ -513,8 +513,8 @@ static void outfits_renderMod( double bx, double by, double w, double h )
 
    snprintf( buf, 8, "%dx", q );
    gl_printMid( &gl_smallFont, w,
-         bx + (double)gl_screen.w/2.,
-         by + (double)gl_screen.h/2.,
+         bx + (double)SCREEN_W/2.,
+         by + (double)SCREEN_H/2.,
          &cBlack, buf );
 }
 

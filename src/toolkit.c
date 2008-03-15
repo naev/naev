@@ -596,15 +596,15 @@ unsigned int window_create( char* name,
    wdw->h = (double) h;
    /* x pos */
    if (x==-1) /* center */
-      wdw->x = gl_screen.w/2. - wdw->w/2.;
+      wdw->x = SCREEN_W/2. - wdw->w/2.;
    else if (x < 0)
-      wdw->x = gl_screen.w - wdw->w + (double) x;
+      wdw->x = SCREEN_W - wdw->w + (double) x;
    else wdw->x = (double) x;
    /* y pos */
    if (y==-1) /* center */
-      wdw->y = gl_screen.h/2. - wdw->h/2.;
+      wdw->y = SCREEN_H/2. - wdw->h/2.;
    else if (y < 0)
-      wdw->x = gl_screen.h - wdw->h + (double) y;
+      wdw->x = SCREEN_H - wdw->h + (double) y;
    else wdw->y = (double) y;
 
    wdw->widgets = NULL;
@@ -817,8 +817,8 @@ static void window_render( Window* w )
    glColour *lc, *c, *dc, *oc;
 
    /* position */
-   x = w->x - (double)gl_screen.w/2.;
-   y = w->y - (double)gl_screen.h/2.;
+   x = w->x - (double)SCREEN_W/2.;
+   y = w->y - (double)SCREEN_H/2.;
 
    /* colours */
    lc = &cGrey90;
@@ -969,8 +969,8 @@ static void window_render( Window* w )
     * render window name
     */
    gl_printMid( &gl_defFont, w->w,
-         x + (double)gl_screen.w/2.,
-         y + w->h - 20. + (double)gl_screen.h/2.,
+         x + (double)SCREEN_W/2.,
+         y + w->h - 20. + (double)SCREEN_H/2.,
          &cBlack, w->name );
 
    /*
@@ -1080,8 +1080,8 @@ static void toolkit_renderButton( Widget* btn, double bx, double by )
    toolkit_drawOutline( x, y, btn->w, btn->h, 1., &cBlack, NULL );
 
    gl_printMid( NULL, (int)btn->w,
-         bx + (double)gl_screen.w/2. + btn->x,
-         by + (double)gl_screen.h/2. + btn->y + (btn->h - gl_defFont.h)/2.,
+         bx + (double)SCREEN_W/2. + btn->x,
+         by + (double)SCREEN_H/2. + btn->y + (btn->h - gl_defFont.h)/2.,
          &cDarkRed, btn->dat.btn.display );
 }
 /*
@@ -1093,13 +1093,13 @@ static void toolkit_renderText( Widget* txt, double bx, double by )
    
    if (txt->dat.txt.centered)
       gl_printMid( txt->dat.txt.font, txt->w,
-            bx + (double)gl_screen.w/2. + txt->x,
-            by + (double)gl_screen.h/2. + txt->y,
+            bx + (double)SCREEN_W/2. + txt->x,
+            by + (double)SCREEN_H/2. + txt->y,
             txt->dat.txt.colour, txt->dat.txt.text );
    else
       gl_printText( txt->dat.txt.font, txt->w, txt->h,
-            bx + (double)gl_screen.w/2. + txt->x,
-            by + (double)gl_screen.h/2. + txt->y,
+            bx + (double)SCREEN_W/2. + txt->x,
+            by + (double)SCREEN_H/2. + txt->y,
             txt->dat.txt.colour, txt->dat.txt.text );
 }
 /*
@@ -1118,8 +1118,8 @@ static void toolkit_renderImage( Widget* img, double bx, double by )
     * image
     */
    gl_blitStatic( img->dat.img.image,
-         x + (double)gl_screen.w/2.,
-         y + (double)gl_screen.h/2.,
+         x + (double)SCREEN_W/2.,
+         y + (double)SCREEN_H/2.,
          img->dat.img.colour );
 
    if (img->dat.img.border) {
@@ -1159,8 +1159,8 @@ static void toolkit_renderList( Widget* lst, double bx, double by )
          lst->w, gl_defFont.h + 2., &cHilight, NULL );
 
    /* draw content */
-   tx = (double)gl_screen.w/2. + x + 2.;
-   ty = (double)gl_screen.h/2. + y + lst->h - 2. - gl_defFont.h;
+   tx = (double)SCREEN_W/2. + x + 2.;
+   ty = (double)SCREEN_H/2. + y + lst->h - 2. - gl_defFont.h;
    y = ty - 2.;
    for (i=lst->dat.lst.pos; i<lst->dat.lst.noptions; i++) {
       gl_printMax( &gl_defFont, (int)lst->w-4,
@@ -1237,7 +1237,7 @@ static void toolkit_renderInput( Widget* inp, double bx, double by )
    if (inp->dat.inp.oneline) ty = y - (inp->h - gl_smallFont.h)/2.;
 
    gl_printText( &gl_smallFont, inp->w-10., inp->h,
-         x+5. + gl_screen.w/2., ty  + gl_screen.h/2.,
+         x+5. + SCREEN_W/2., ty  + SCREEN_H/2.,
          &cBlack, inp->dat.inp.input + inp->dat.inp.view );
 
    /* inner outline */
@@ -1357,11 +1357,11 @@ static void toolkit_mouseEvent( SDL_Event* event )
    /* absolute positions */
    if (event->type==SDL_MOUSEMOTION) {
       x = (double)event->motion.x;
-      y = gl_screen.h - (double)event->motion.y;
+      y = SCREEN_H - (double)event->motion.y;
    }
    else if ((event->type==SDL_MOUSEBUTTONDOWN) || (event->type==SDL_MOUSEBUTTONUP)) {
       x = (double)event->button.x;
-      y = gl_screen.h - (double)event->button.y;
+      y = SCREEN_H - (double)event->button.y;
    }
 
    w = &windows[nwindows-1];

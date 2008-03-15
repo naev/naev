@@ -302,7 +302,7 @@ glTexture* gl_loadImage( SDL_Surface* surface )
 /*
  * loads the image as an opengl texture directly
  */
-glTexture*  gl_newImage( const char* path )
+glTexture* gl_newImage( const char* path )
 {
    SDL_Surface *temp, *surface;
    glTexture* t;
@@ -330,6 +330,7 @@ glTexture*  gl_newImage( const char* path )
 
    SDL_FreeSurface(temp); /* free the temporary surface */
 
+   /* we have to flip our surfaces to match the ortho */
    if (SDL_VFlipSurface(surface)) {
       WARN( "Error flipping surface" );
       return NULL;
@@ -398,8 +399,8 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
    /* makes sure the sprite is "in range" */
    if (s > (sy*sx-1)) s = s % (sy*sx);
 
-   *x = s % sx;
-   *y = s / sx;
+   (*x) = s % sx;
+   (*y) = s / sx;
 }
 
 
@@ -790,7 +791,6 @@ int gl_init()
          gl_screen.h = modes[j]->h;
       }
    }
-
    
    /* test the setup - aim for 32 */
    gl_screen.depth = 32;
@@ -873,10 +873,11 @@ int gl_init()
 
 
 /*
- * Cleans up SDL/OpenGL, the works
+ * Cleans up OpenGL, the works
  */
 void gl_exit()
 {
+   SDL_QuitSubSystem(SDL_INIT_VIDEO);
 }
 
 

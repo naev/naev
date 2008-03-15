@@ -207,7 +207,7 @@ static void map_render( double bx, double by, double w, double h )
       tx = x + 7. + sys->pos.x * map_zoom;
       ty = y - 5. + sys->pos.y * map_zoom;
       gl_print( &gl_smallFont,
-            tx + gl_screen.w/2., ty + gl_screen.h/2.,
+            tx + SCREEN_W/2., ty + SCREEN_H/2.,
             &cWhite, sys->name );
 
       /* draw the hyperspace paths */

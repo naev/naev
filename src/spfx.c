@@ -309,18 +309,18 @@ void spfx_cinematic (void)
 {
    glMatrixMode(GL_MODELVIEW);
    glPushMatrix(); /* translation matrix */
-      glTranslated( -(double)gl_screen.w/2., -(double)gl_screen.h/2., 0);
+      glTranslated( -(double)SCREEN_W/2., -(double)SCREEN_H/2., 0);
 
    COLOUR(cBlack);
    glBegin(GL_QUADS);
-      glVertex2d( 0.,          0.              );
-      glVertex2d( 0.,          gl_screen.h*0.2 );
-      glVertex2d( gl_screen.w, gl_screen.h*0.2 );
-      glVertex2d( gl_screen.w, 0.              );
-      glVertex2d( 0.,          gl_screen.h     );
-      glVertex2d( gl_screen.w, gl_screen.h     );
-      glVertex2d( gl_screen.w, gl_screen.h*0.8 );
-      glVertex2d( 0.,          gl_screen.h*0.8 );
+      glVertex2d( 0.,       0.           );
+      glVertex2d( 0.,       SCREEN_H*0.2 );
+      glVertex2d( SCREEN_W, SCREEN_H*0.2 );
+      glVertex2d( SCREEN_W, 0.           );
+      glVertex2d( 0.,       SCREEN_H     );
+      glVertex2d( SCREEN_W, SCREEN_H     );
+      glVertex2d( SCREEN_W, SCREEN_H*0.8 );
+      glVertex2d( 0.,       SCREEN_H*0.8 );
    glEnd(); /* GL_QUADS */
 
    glPopMatrix(); /* translation matrx */

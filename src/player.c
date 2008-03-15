@@ -641,11 +641,11 @@ void player_render (void)
    glMatrixMode(GL_PROJECTION);
    glPushMatrix();
    if (gui.radar.shape==RADAR_RECT)
-      glTranslated( gui.radar.x - gl_screen.w/2. + gui.radar.w/2.,
-            gui.radar.y - gl_screen.h/2. - gui.radar.h/2., 0.);
+      glTranslated( gui.radar.x - SCREEN_W/2. + gui.radar.w/2.,
+            gui.radar.y - SCREEN_H/2. - gui.radar.h/2., 0.);
    else if (gui.radar.shape==RADAR_CIRCLE)
-      glTranslated( gui.radar.x - gl_screen.w/2.,
-            gui.radar.y - gl_screen.h/2., 0.);
+      glTranslated( gui.radar.x - SCREEN_W/2.,
+            gui.radar.y - SCREEN_H/2., 0.);
 
    /*
     * planets
@@ -882,10 +882,10 @@ void player_render (void)
          x = (double)(j-i) / HYPERSPACE_FADEOUT;
          glColor4d(1.,1.,1., x );
          glBegin(GL_QUADS);
-            glVertex2d( -gl_screen.w/2., -gl_screen.h/2. );
-            glVertex2d( -gl_screen.w/2.,  gl_screen.h/2. );
-            glVertex2d(  gl_screen.w/2.,  gl_screen.h/2. );
-            glVertex2d(  gl_screen.w/2., -gl_screen.h/2. );
+            glVertex2d( -SCREEN_W/2., -SCREEN_H/2. );
+            glVertex2d( -SCREEN_W/2.,  SCREEN_H/2. );
+            glVertex2d(  SCREEN_W/2.,  SCREEN_H/2. );
+            glVertex2d(  SCREEN_W/2., -SCREEN_H/2. );
          glEnd(); /* GL_QUADS */
       }
    }
@@ -947,8 +947,8 @@ static void gui_renderBar( const glColour* c,
 
    glBegin(GL_QUADS); /* shield */
       COLOUR(*c); 
-      x = r->x - gl_screen.w/2.;
-      y = r->y - gl_screen.h/2.;
+      x = r->x - SCREEN_W/2.;
+      y = r->y - SCREEN_H/2.;
       sx = w * r->w;
       sy = r->h;
       glVertex2d( x, y );
@@ -1141,8 +1141,8 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
     * frame (based on gfx)
     */
    vect_csetmin( &gui.frame,
-         gl_screen.w - gui.gfx_frame->w,     /* x */
-         gl_screen.h - gui.gfx_frame->h );   /* y */
+         SCREEN_W - gui.gfx_frame->w,     /* x */
+         SCREEN_H - gui.gfx_frame->h );   /* y */
 
    /* now actually parse the data */
    node = parent->children;
