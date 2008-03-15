@@ -1439,7 +1439,7 @@ void player_land (void)
          return;
       } else if ((pow2(VX(player->solid->vel)) + pow2(VY(player->solid->vel))) >
             (double)pow2(MAX_HYPERSPACE_VEL)) {
-         player_message("You are going to fast to land on %s", planet->name);
+         player_message("You are going too fast to land on %s", planet->name);
          return;
       }
 

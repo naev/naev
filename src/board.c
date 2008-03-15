@@ -64,7 +64,7 @@ void player_board (void)
    else if ((pow2(VX(player->solid->vel)-VX(p->solid->vel)) +
             pow2(VY(player->solid->vel)-VY(p->solid->vel))) >
          (double)pow2(MAX_HYPERSPACE_VEL)) {
-      player_message("You are going to fast to board the ship");
+      player_message("You are going too fast to board the ship");
       return;
    }
    else if (pilot_isFlag(p,PILOT_BOARDED)) {
