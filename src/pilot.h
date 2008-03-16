@@ -177,7 +177,7 @@ int pilot_getJumps( const Pilot* p );
  */
 void pilot_shoot( Pilot* p, const unsigned int target, const int secondary );
 void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
-      const double damage_shield, const double damage_armour );
+      const DamageType dtype, const double damage );
 void pilot_setSecondary( Pilot* p, const char* secondary );
 void pilot_setAmmo( Pilot* p );
 double pilot_face( Pilot* p, const float dir );

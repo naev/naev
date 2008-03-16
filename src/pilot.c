@@ -325,9 +325,12 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
  * damages the pilot
  */
 void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
-      const double damage_shield, const double damage_armour )
+      const DamageType dtype, const double damage )
 {
-   double dam_mod;
+   double damage_shield, damage_armour, dam_mod;
+
+   /* calculate the damage */
+   outfit_calcDamage( &damage_shield, &damage_armour, dtype, damage );
 
    if (p->shield-damage_shield > 0.) {
       p->shield -= damage_shield;

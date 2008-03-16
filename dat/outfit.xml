@@ -20,10 +20,7 @@ Your basic laser.  Fires charged energy beams that do a decent amount of damage 
 <range>300</range>
 <accuracy>30</accuracy>
 <energy>8</energy>
-<damage>
-<armour>10</armour>
-<shield>13</shield>
-</damage>
+<damage type="energy">10</damage>
 </specific>
 </outfit>
 <outfit name="Laser Turret">
@@ -46,10 +43,7 @@ Two laser cannons added on a rotating turret, allowing for 360 degrees of firepo
 <range>300</range>
 <accuracy>30</accuracy>
 <energy>10</energy>
-<damage>
-<armour>13</armour>
-<shield>10</shield>
-</damage>
+<damage type="energy">10</damage>
 </specific>
 </outfit>
 <outfit name="Railgun">
@@ -72,10 +66,7 @@ The rail gun is a cannon that uses heavy magnetic pulses to accelerate pieces of
 <range>500</range>
 <accuracy>10</accuracy>
 <energy>30</energy>
-<damage>
-<armour>35</armour>
-<shield>30</shield>
-</damage>
+<damage type="kinetic">30</damage>
 </specific>
 </outfit>
 <outfit name="Missile Launcher">
@@ -114,10 +105,7 @@ The cheapest missile on the market, what it lacks in a decent tracking system it
 <thrust>1600</thrust>
 <turn>200</turn>
 <speed>800</speed>
-<damage>
-<armour>25</armour>
-<shield>20</shield>
-</damage>
+<damage type="kinetic">20</damage>
 </specific>
 </outfit>
 <outfit name="Headhunter Launcher">
@@ -156,10 +144,7 @@ Headhunters first gained fame in the crush of the Araknoid, a fearsome battle ag
 <thrust>1300</thrust>
 <turn>200</turn>
 <speed>650</speed>
-<damage>
-<armour>23</armour>
-<shield>18</shield>
-</damage>
+<damage type="kinetic">20</damage>
 </specific>
 </outfit>
 <outfit name="Neutron Disruptor">
@@ -182,10 +167,7 @@ Neutron Disruptor.
 <range>200</range>
 <accuracy>15</accuracy>
 <energy>5</energy>
-<damage>
-<armour>7</armour>
-<shield>7</shield>
-</damage>
+<damage type="energy">7</damage>
 </specific>
 </outfit>
 <outfit name="Battery">

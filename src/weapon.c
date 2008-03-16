@@ -402,7 +402,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer )
 
    /* inform the ship that it should take some damage */
    pilot_hit( p, w->solid, w->parent, 
-         outfit_dmgShield(w->outfit), outfit_dmgShield(w->outfit) );
+         outfit_damageType(w->outfit), outfit_damage(w->outfit) );
    /* no need for the weapon particle anymore */
    weapon_destroy(w,layer);
 }

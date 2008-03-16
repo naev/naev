@@ -43,6 +43,12 @@ typedef enum OutfitType_ {
    OUTFIT_TYPE_AFTERBURNER=16
 } OutfitType;
 
+typedef enum DamageType_ {
+   DAMAGE_TYPE_NULL=0,
+   DAMAGE_TYPE_ENERGY=1,
+   DAMAGE_TYPE_KINETIC=2
+} DamageType;
+
 /*
  * an outfit, depends radically on the type
  */
@@ -71,7 +77,9 @@ typedef struct Outfit_ {
          double range; /* how far it goes */
          double accuracy; /* desviation accuracy */
          double energy; /* energy usage */
-         double damage_armour, damage_shield; /* damage */
+         DamageType dtype; /* damage type */
+         double damage; /* damage */
+
 
          glTexture* gfx_space; /* graphic */
          ALuint sound; /* sound to play */
@@ -81,7 +89,8 @@ typedef struct Outfit_ {
          double range; /* how far it goes */
          glColour colour; /* beam colour */
          double energy; /* energy it drains */
-         double damage_armour, damage_shield; /* damage */
+         double dtype; /* damage type */
+         double damage; /* damage */
       } bem;
       struct { /* launcher */
          unsigned int delay; /* delay between shots */
@@ -93,7 +102,8 @@ typedef struct Outfit_ {
          double turn; /* turn velocity */
          double thrust; /* acceleration */
          double energy; /* energy usage */
-         double damage_armour, damage_shield; /* damage */
+         DamageType dtype; /* damage type */
+         double damage; /* damage */
 
          glTexture* gfx_space; /* graphic */
          ALuint sound; /* sound to play */
@@ -125,6 +135,13 @@ typedef struct Outfit_ {
 
 
 /*
+ * misc
+ */
+void outfit_calcDamage( double *dshield, double *darmour,
+      DamageType dtype, double dmg );
+
+
+/*
  * get
  */
 Outfit* outfit_get( const char* name );
@@ -144,8 +161,8 @@ const char* outfit_getTypeBroad( const Outfit* o );
  */
 glTexture* outfit_gfx( const Outfit* o );
 int outfit_spfx( const Outfit* o );
-double outfit_dmgShield( const Outfit* o );
-double outfit_dmgArmour( const Outfit* o );
+double outfit_damage( const Outfit* o );
+DamageType outfit_damageType( const Outfit* o );
 int outfit_delay( const Outfit* o );
 double outfit_energy( const Outfit* o );
 

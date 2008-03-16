@@ -40,6 +40,10 @@ static int outfits = 0;
 /*
  * Prototypes
  */
+/* misc */
+static DamageType outfit_strToDamageType( char *buf );
+/* parsing */
+static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node );
 static Outfit* outfit_parse( const xmlNodePtr parent );
 static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent );
@@ -85,6 +89,26 @@ char** outfit_getTech( int *n, const int *tech, const int techmax )
 
    /* actual size is bigger, but it'll just get freed :) */
    return outfitnames;
+}
+
+
+void outfit_calcDamage( double *dshield, double *darmour,
+      DamageType dtype, double dmg )
+{
+   switch (dtype) {
+      case DAMAGE_TYPE_ENERGY:
+         (*dshield) = dmg*1.1;
+         (*darmour) = dmg*0.7;
+         break;
+      case DAMAGE_TYPE_KINETIC:
+         (*dshield) = dmg*0.8;
+         (*darmour) = dmg*1.2;
+         break;
+
+      default:
+         (*dshield) = (*darmour) = 0.;
+         break;
+   }
 }
 
 
@@ -166,19 +190,19 @@ int outfit_spfx( const Outfit* o )
    else if (outfit_isTurret(o)) return o->u.blt.spfx;
    return -1;
 }
-double outfit_dmgShield( const Outfit* o )
+double outfit_damage( const Outfit* o )
 {
-   if (outfit_isWeapon(o)) return o->u.blt.damage_armour;
-   else if (outfit_isAmmo(o)) return o->u.amm.damage_armour;
-   else if (outfit_isTurret(o)) return o->u.blt.damage_armour;
+   if (outfit_isWeapon(o)) return o->u.blt.damage;
+   else if (outfit_isAmmo(o)) return o->u.amm.damage;
+   else if (outfit_isTurret(o)) return o->u.blt.damage;
    return -1.;
 }
-double outfit_dmgArmour( const Outfit* o )
+DamageType outfit_damageType( const Outfit* o )
 {
-   if (outfit_isWeapon(o)) return o->u.blt.damage_shield;
-   else if (outfit_isAmmo(o)) return o->u.amm.damage_shield;
-   else if (outfit_isTurret(o)) return o->u.blt.damage_shield;
-   return -1.;
+   if (outfit_isWeapon(o)) return o->u.blt.dtype;
+   else if (outfit_isAmmo(o)) return o->u.amm.dtype;
+   else if (outfit_isTurret(o)) return o->u.blt.dtype;
+   return DAMAGE_TYPE_NULL;
 }
 int outfit_delay( const Outfit* o )
 {
@@ -224,6 +248,7 @@ const char* outfit_getType( const Outfit* o )
    return outfit_typename[o->type];
 }
 
+
 /*
  * returns the broad outfit type
  */
@@ -250,15 +275,50 @@ const char* outfit_getTypeBroad( const Outfit* o )
 
 
 /*
+ * returns the damage type from an str
+ */
+static DamageType outfit_strToDamageType( char *buf )
+{
+   if (strcmp(buf,"energy")==0) return DAMAGE_TYPE_ENERGY;
+   else if (strcmp(buf,"kinetic")==0) return DAMAGE_TYPE_KINETIC;
+
+   WARN("Invalid damage type: '%s'", buf);
+   return DAMAGE_TYPE_NULL;
+}
+
+
+/*
+ * parses a damage node: <damage type="kinetic">10</damage>
+ */
+static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node )
+{
+   char *buf;
+
+   if (xml_isNode(node,"damage")) {
+   xmlr_attr(node,"type",buf);
+   (*dtype) = outfit_strToDamageType(buf);
+   if (buf) free(buf);
+   (*dmg) = xml_getFloat(node);
+
+      return 0;
+   }
+
+   (*dtype) = DAMAGE_TYPE_NULL;
+   (*dmg) = 0;
+   WARN("Trying to parse non-damage node as damage node!");
+   return 1;
+}
+
+
+/*
  * parses the specific area for a weapon and loads it into Outfit
  */
 static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
 {
-   xmlNodePtr cur, node;
-   node  = parent->xmlChildrenNode;
-
+   xmlNodePtr node;
    char str[PATH_MAX] = "\0";
 
+   node = parent->xmlChildrenNode;
    do { /* load all the data */
       xmlr_float(node,"speed",temp->u.blt.speed);
       xmlr_float(node,"delay",temp->u.blt.delay);
@@ -275,13 +335,8 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
          temp->u.blt.spfx = spfx_get(xml_get(node));
       else if (xml_isNode(node,"sound"))
          temp->u.blt.sound = sound_get( xml_get(node) );
-      else if (xml_isNode(node,"damage")) {
-         cur = node->children;
-         do {
-            xmlr_float(cur,"armour",temp->u.blt.damage_armour);
-            xmlr_float(cur,"shield",temp->u.blt.damage_shield);
-         } while (xml_nextNode(cur));
-      }
+      else if (xml_isNode(node,"damage"))
+         outfit_parseDamage( &temp->u.blt.dtype, &temp->u.blt.damage, node );
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \
@@ -292,8 +347,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->u.blt.speed==0,"speed");
    MELEMENT(temp->u.blt.range==0,"range");
    MELEMENT(temp->u.blt.accuracy==0,"accuracy");
-   MELEMENT(temp->u.blt.damage_armour==0,"armour' from element 'damage");
-   MELEMENT(temp->u.blt.damage_shield==0,"shield' from element 'damage");
+   MELEMENT(temp->u.blt.damage==0,"damage");
 #undef MELEMENT
 }
 
@@ -324,7 +378,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
  */
 static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 {
-   xmlNodePtr cur, node;
+   xmlNodePtr node;
    node = parent->xmlChildrenNode;
 
    char str[PATH_MAX] = "\0";
@@ -347,26 +401,20 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          temp->u.amm.spfx = spfx_get(xml_get(node));
       else if (xml_isNode(node,"sound"))
          temp->u.amm.sound = sound_get( xml_get(node) );
-      else if (xml_isNode(node,"damage")) {
-         cur = node->children;
-         do {
-            xmlr_float(cur,"armour",temp->u.amm.damage_armour);
-            xmlr_float(cur,"shield",temp->u.amm.damage_shield);
-         } while (xml_nextNode(cur));
-      }
+      else if (xml_isNode(node,"damage"))
+         outfit_parseDamage( &temp->u.amm.dtype, &temp->u.amm.damage, node );
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->u.amm.gfx_space==NULL,"gfx");
-   MELEMENT((sound_lock != NULL) && (temp->u.amm.sound==0),"sound");
+   MELEMENT((sound_lock!=NULL) && (temp->u.amm.sound==0),"sound");
    MELEMENT(temp->u.amm.thrust==0,"thrust");
    MELEMENT(temp->u.amm.turn==0,"turn");
    MELEMENT(temp->u.amm.speed==0,"speed");
    MELEMENT(temp->u.amm.duration==0,"duration");
    MELEMENT(temp->u.amm.lockon==0,"lockon");
-   MELEMENT(temp->u.amm.damage_armour==0,"armour' from element 'damage");
-   MELEMENT(temp->u.amm.damage_shield==0,"shield' from element 'damage");
+   MELEMENT(temp->u.amm.damage==0,"damage");
 #undef MELEMENT
 }
 
