@@ -784,7 +784,7 @@ static int player_shipname( lua_State *L )
 }
 static int player_freeSpace( lua_State *L )
 {
-   lua_pushnumber(L, pilot_freeCargo(player) );
+   lua_pushnumber(L, pilot_cargoFree(player) );
    return 1;
 }
 static int player_addCargo( lua_State *L )

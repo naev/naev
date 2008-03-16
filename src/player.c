@@ -326,6 +326,7 @@ static void player_newShipMake( char* name )
 {
    Vector2d vp, vv;
 
+   /* store the current ship if it exists */
    if (player) {
       player_stack = realloc(player_stack, sizeof(Pilot*)*(player_nstack+1));
       player_stack[player_nstack] = pilot_copy( player );
@@ -358,15 +359,32 @@ static void player_newShipMake( char* name )
  */
 void player_swapShip( char* shipname )
 {
-   int i;
+   int i, j;
    Pilot* ship;
 
    for (i=0; i<player_nstack; i++) {
       if (strcmp(shipname,player_stack[i]->name)==0) { /* swap player and ship */
          ship = player_stack[i];
+
+         /* move credits over */
          ship->credits = player->credits;
+
+         /* move cargo over */
+         for (j=0; j<player->ncommodities; j++) {
+            pilot_addCargo( ship, player->commodities[j].commodity,
+                  player->commodities[j].quantity );
+            pilot_rmCargo( player, player->commodities[j].commodity,
+                  player->commodities[j].quantity );
+         }
+
+         /* extra pass to calculate stats */
+         pilot_calcStats( ship );
+         pilot_calcStats( player );
+
+         /* now swap the players */
          player_stack[i] = player;
          pilot_stack[0] = player = ship;
+
          gl_bindCamera( &player->solid->pos ); /* don't forget the camera */
          return;
       }
@@ -854,7 +872,7 @@ void player_render (void)
    i = gl_printWidth( &gl_smallFont, "%d", player->ship->cap_cargo );
    gl_print( &gl_smallFont,
          gui.misc.x + gui.misc.w - 8 - i, j,
-         NULL, "%d", player->cargo_free );
+         NULL, "%d", pilot_cargoFree(player) );
 
 
    /*

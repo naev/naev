@@ -704,7 +704,7 @@ static int ai_minbrakedist( lua_State *L )
  */
 static int ai_cargofree( lua_State *L )
 {
-   lua_pushnumber(L, cur_pilot->cargo_free);
+   lua_pushnumber(L, pilot_cargoFree(cur_pilot));
    return 1;
 }
 

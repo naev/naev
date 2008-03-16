@@ -74,7 +74,6 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t );
 static void pilot_update( Pilot* pilot, const double dt );
 static void pilot_hyperspace( Pilot* pilot );
 void pilot_render( Pilot* pilot ); /* externed in player.c */
-static void pilot_calcStats( Pilot* pilot );
 static void pilot_calcCargo( Pilot* pilot );
 void pilot_free( Pilot* p );
 static Fleet* fleet_parse( const xmlNodePtr parent );
@@ -726,7 +725,7 @@ char* pilot_getOutfits( Pilot* pilot )
 /*
  * recalculates the pilot's stats based on his outfits
  */
-static void pilot_calcStats( Pilot* pilot )
+void pilot_calcStats( Pilot* pilot )
 {
    int i;
    double q;
@@ -795,7 +794,7 @@ static void pilot_calcStats( Pilot* pilot )
 /*
  * pilot free cargo space
  */
-int pilot_freeCargo( Pilot* p )
+int pilot_cargoFree( Pilot* p )
 {
    return p->cargo_free;
 }
@@ -811,8 +810,8 @@ int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )
    q = quantity;
    for (i=0; i<pilot->ncommodities; i++)
       if (!pilot->commodities[i].id && (pilot->commodities[i].commodity == cargo)) {
-         if (pilot->cargo_free < quantity)
-            q = pilot->cargo_free;
+         if (pilot_cargoFree(pilot) < quantity)
+            q = pilot_cargoFree(pilot);
          pilot->commodities[i].quantity += q;
          pilot->cargo_free -= q;
          pilot->solid->mass += q;
@@ -823,8 +822,8 @@ int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )
    pilot->commodities = realloc( pilot->commodities,
          sizeof(PilotCommodity) * (pilot->ncommodities+1));
    pilot->commodities[ pilot->ncommodities ].commodity = cargo;
-   if (pilot->cargo_free < quantity)
-      q = pilot->cargo_free;
+   if (pilot_cargoFree(pilot) < quantity)
+      q = pilot_cargoFree(pilot);
    pilot->commodities[ pilot->ncommodities ].id = 0;
    pilot->commodities[ pilot->ncommodities ].quantity = q;
    pilot->cargo_free -= q;
@@ -835,14 +834,30 @@ int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )
 }
 
 
-static void pilot_calcCargo( Pilot* pilot )
+/*
+ * returns how much cargo ship has on board
+ */
+int pilot_cargoUsed( Pilot* pilot )
 {
    int i, q;
 
-   q = 0;
+   q = 0; 
    pilot->cargo_free = pilot->ship->cap_cargo;
    for (i=0; i<pilot->ncommodities; i++)
       q += pilot->commodities[i].quantity;
+
+   return q;
+}
+
+
+/*
+ * calculates how much cargo ship has left and such
+ */
+static void pilot_calcCargo( Pilot* pilot )
+{
+   int q;
+
+   q = pilot_cargoUsed( pilot );
 
    pilot->cargo_free -= q; /* reduce space left */
    pilot->solid->mass = pilot->ship->mass + q; /* cargo affects weight */
@@ -860,8 +875,8 @@ unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity
    pilot->commodities = realloc( pilot->commodities,
          sizeof(PilotCommodity) * (pilot->ncommodities+1));
    pilot->commodities[ pilot->ncommodities ].commodity = cargo;
-   if (pilot->cargo_free < quantity)
-      q = pilot->cargo_free;
+   if (pilot_cargoFree(pilot) < quantity)
+      q = pilot_cargoFree(pilot);
    pilot->commodities[ pilot->ncommodities ].id = ++mission_cargo_id;
    pilot->commodities[ pilot->ncommodities ].quantity = q;                
    pilot->cargo_free -= q;
@@ -997,7 +1012,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* 
    pilot->credits = 0;
    pilot->commodities = NULL;
    pilot->ncommodities = 0;
-   pilot->cargo_free = pilot->ship->cap_cargo;
+   pilot->cargo_free = pilot->ship->cap_cargo; /* should get redone with calcCargo */
 
    /* set the pilot stats based on his ship and outfits */
    pilot->armour = pilot->armour_max = 1.; /* hack to have full armour */
@@ -1063,7 +1078,7 @@ unsigned int pilot_create( Ship* ship, char* name, int faction, AI_Profile* ai,
       pilots++; /* there's a new pilot */
 
       if (pilots >= mpilots) { /* needs to grow */
-         mpilots += PILOT_CHUNK; /* grow 20 at a time */
+         mpilots += PILOT_CHUNK;
          tp = pilot_stack;
          pilot_stack = realloc( pilot_stack, mpilots*sizeof(Pilot*) );
          if ((pilot_stack != tp) && player) /* take into account possible mem move */

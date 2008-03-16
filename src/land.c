@@ -220,7 +220,7 @@ static void commodity_update( char* str )
          "%d tons\n",
          player_cargoOwned( comname ),
          com->medium,
-         player->cargo_free);
+         pilot_cargoFree(player));
    window_modifyText( secondary_wid, "txtDInfo", buf );
    window_modifyText( secondary_wid, "txtDesc", com->description );
 
@@ -240,7 +240,7 @@ static void commodity_buy( char* str )
       dialogue_alert( "Not enough credits!" );
       return;
    }
-   else if (player->cargo_free <= 0) {
+   else if (pilot_cargoFree(player) <= 0) {
       dialogue_alert( "Not enough free space!" );
       return;
    }
@@ -411,7 +411,7 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
    }
    /* takes away cargo space but you don't have any */
    else if (outfit_isMod(outfit) && (outfit->u.mod.cargo < 0)
-         && (player->cargo_free < -outfit->u.mod.cargo)) {
+         && (pilot_cargoFree(player) < -outfit->u.mod.cargo)) {
       if (errmsg != 0)
          dialogue_alert( "You need to empty your cargo first." );
       return 0;
@@ -455,7 +455,7 @@ static int outfit_canSell( Outfit* outfit, int q, int errmsg )
       return 0;
    }
    /* can't sell when you are using it */
-   else if (outfit_isMod(outfit) && (player->cargo_free < outfit->u.mod.cargo*q)) {
+   else if (outfit_isMod(outfit) && (pilot_cargoFree(player) < outfit->u.mod.cargo*q)) {
       if (errmsg != 0)
          dialogue_alert( "You currently have cargo in this modification." );
       return 0;
@@ -646,6 +646,11 @@ static void shipyard_buy( char* str )
    shipname = toolkit_getList( secondary_wid, "lstShipyard" );
    ship = ship_get( shipname );
 
+   /* we now move cargo to the new ship */
+   if (pilot_cargoUsed(player) > ship->cap_cargo) {
+      dialogue_alert("You won't have space to move your current cargo onto the new ship.");
+      return; 
+   }
    credits2str( buf, ship->price, 2 );
    if (dialogue_YesNo("Are you sure?", /* confirm */
          "Do you really want to spend %s on a new ship?", buf )==0)
@@ -763,7 +768,7 @@ static void shipyard_yoursUpdate( char* str )
          ship->ship->name,
          ship_class(ship->ship),
          loc,
-         ship->cargo_free,
+         pilot_cargoFree(ship),
          pilot_freeSpace(ship),
          buf2,
          buf3);
@@ -789,8 +794,10 @@ static void shipyard_yoursChange( char* str )
 {
    (void)str;
    char *shipname, *loc;
+   Pilot *newship;
 
    shipname = toolkit_getList( terciary_wid, "lstYourShips" );
+   newship = player_getShip(shipname);
    if (strcmp(shipname,"None")==0) { /* no ships */
       dialogue_alert( "You need another ship to change ships!" );
       return;
@@ -800,6 +807,10 @@ static void shipyard_yoursChange( char* str )
    if (strcmp(loc,land_planet->name)) {
       dialogue_alert( "You must transport the ship to %s to be able to get in.",
             land_planet->name );
+      return;
+   }
+   else if (pilot_cargoUsed(player) > pilot_cargoFree(newship)) {
+      dialogue_alert( "You won't be able to fit your current cargo in the new ship." );
       return;
    }
 

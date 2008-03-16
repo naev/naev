@@ -186,8 +186,10 @@ int pilot_freeSpace( Pilot* p ); /* weapon space */
 int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity );
 int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity );
 char* pilot_getOutfits( Pilot* pilot );
+void pilot_calcStats( Pilot* pilot );
 /* normal cargo */
-int pilot_freeCargo( Pilot* p ); /* cargo space */
+int pilot_cargoUsed( Pilot* pilot ); /* gets how much cargo it has onboard */
+int pilot_cargoFree( Pilot* p ); /* cargo space */
 int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity );
 int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity );
 /* mission cargo - not to be confused with normal cargo */

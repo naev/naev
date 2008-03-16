@@ -138,7 +138,7 @@ static void board_stealCargo( char* str )
       player_message("The ship has no cargo.");
       return;
    }
-   else if (player->cargo_free <= 0) {
+   else if (pilot_cargoFree(player) <= 0) {
       player_message("You have no room for cargo.");
       return;
    }
