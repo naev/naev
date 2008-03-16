@@ -815,6 +815,7 @@ int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )
             q = pilot->cargo_free;
          pilot->commodities[i].quantity += q;
          pilot->cargo_free -= q;
+         pilot->solid->mass += q;
          return q;
       }
 
@@ -827,6 +828,7 @@ int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )
    pilot->commodities[ pilot->ncommodities ].id = 0;
    pilot->commodities[ pilot->ncommodities ].quantity = q;
    pilot->cargo_free -= q;
+   pilot->solid->mass += q;
    pilot->ncommodities++;
 
    return q;
@@ -835,11 +837,15 @@ int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )
 
 static void pilot_calcCargo( Pilot* pilot )
 {
-   int i;
+   int i, q;
 
+   q = 0;
    pilot->cargo_free = pilot->ship->cap_cargo;
    for (i=0; i<pilot->ncommodities; i++)
-      pilot->cargo_free -= pilot->commodities[i].quantity;
+      q += pilot->commodities[i].quantity;
+
+   pilot->cargo_free -= q; /* reduce space left */
+   pilot->solid->mass = pilot->ship->mass + q; /* cargo affects weight */
 }
 
 
@@ -859,6 +865,7 @@ unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity
    pilot->commodities[ pilot->ncommodities ].id = ++mission_cargo_id;
    pilot->commodities[ pilot->ncommodities ].quantity = q;                
    pilot->cargo_free -= q;
+   pilot->solid->mass += q;
    pilot->ncommodities++;
 
    return pilot->commodities[ pilot->ncommodities-1 ].id;
@@ -876,6 +883,7 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id )
 
    /* remove cargo */
    pilot->cargo_free += pilot->commodities[i].quantity;
+   pilot->solid->mass -= pilot->commodities[i].quantity;
    memmove( pilot->commodities+i, pilot->commodities+i+1,
          sizeof(PilotCommodity) * (pilot->ncommodities-i-1) );
    pilot->ncommodities--;
@@ -910,6 +918,7 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
          else
             pilot->commodities[i].quantity -= q;
          pilot->cargo_free += q;
+         pilot->solid->mass -= q;
          return q;
       }
    return 0;

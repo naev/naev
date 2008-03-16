@@ -844,13 +844,16 @@ static int shipyard_yoursTransportPrice( char* shipname )
 {
    char *loc;
    Pilot* ship;
+   int price;
 
    ship = player_getShip(shipname);
    loc = player_getLoc(shipname);
    if (strcmp(loc,land_planet->name)==0) /* already here */
       return 0;
 
-   return (int)ship->solid->mass*500;
+   price = (int)ship->solid->mass*500;
+
+   return price;
 }
 
 
