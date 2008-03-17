@@ -33,7 +33,7 @@ CLUA = -Ilib/lua
 CSDL = $(shell sdl-config --cflags)
 CXML = $(shell xml2-config --cflags)
 CTTF = $(shell freetype-config --cflags)
-CAL = $(shell openal-config --cflags)
+CAL = $(shell openal-config --cflags) $(shell freealut-config --cflags)
 CVORBIS =
 CGL =
 CFLAGS = $(CLUA) $(CPLUTO) $(CSDL) $(CXML) $(CTTF) $(CGL) $(CAL) $(CVORBIS) $(VERSION) -D$(OS) -fgnu89-inline
@@ -52,7 +52,7 @@ LDSDL = $(shell sdl-config --libs) -lSDL_image
 LDXML = $(shell xml2-config --libs)
 LDTTF = $(shell freetype-config --libs)
 LDGL = -lGL
-LDAL = $(shell openal-config --libs)
+LDAL = $(shell openal-config --libs) $(shell freealut-config --libs)
 LDVORBIS = -lvorbisfile
 LDFLAGS = -lm $(LDLUA) $(LDPLUTO) $(LDSDL) $(LDXML) $(LDTTF) $(LDGL) $(LDAL) $(LDVORBIS)
 

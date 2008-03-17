@@ -1662,12 +1662,12 @@ void player_afterburnOver (void)
 void player_accel( double acc )
 {
    player_acc = acc;
-   //player_playSound( player->ship->sound, 0 );
+   player_playSound( player->ship->sound, 0 );
 }
 void player_accelOver (void)
 {
    player_acc = 0.;
-   //player_stopSound();
+   player_stopSound();
 }
 
 

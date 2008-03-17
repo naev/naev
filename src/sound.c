@@ -9,6 +9,7 @@
 #include <sys/stat.h>
 
 #include <AL/alc.h>
+#include <AL/alut.h>
 
 #include "SDL.h"
 #include "SDL_thread.h"
@@ -170,6 +171,9 @@ int sound_init (void)
    /* we'll need a mutex */
    sound_lock = SDL_CreateMutex();
    soundLock();
+
+   /* initialize alut - i think it's worth it */
+   alutInitWithoutContext(NULL,NULL);
 
    const ALchar* device = alcGetString( NULL, ALC_DEFAULT_DEVICE_SPECIFIER );
 
@@ -389,8 +393,10 @@ static int sound_load( ALuint *buffer, char *filename )
    soundLock();
 
    /* bind to OpenAL buffer */
-   alGenBuffers( 1, buffer );
-   alBufferData( *buffer, AL_FORMAT_MONO16, wavdata, size, 22050 );
+   (*buffer) = alutCreateBufferFromFileImage( wavdata, size );
+   if ((*buffer) == AL_NONE) WARN("FAILURE: %s", alutGetErrorString(alutGetError()));
+   /*alGenBuffers( 1, buffer );
+   alBufferData( *buffer, AL_FORMAT_MONO16, wavdata, size, 22050 );*/
 
    /* errors? */
    if ((err = alGetError()) != AL_NO_ERROR) {
