@@ -113,12 +113,26 @@ static int source_nstack = 0;
 
 
 /*
- * virtual voice stack
+ * virtual voice
  */
-static alVoice **voice_stack = NULL;
-static int voice_nstack = 0;
-static int voice_mstack = 0;
-#define VOICE_CHUNK        64 /* allocate by these chunks */
+struct alVoice { /* declared in header */
+   alVoice *next; /* yes it's a linked list */
+
+   ALuint id; /* unique id for the voice */
+
+   ALuint source; /* source itself, 0 if not set */
+   ALuint buffer; /* buffer */
+
+   int priority; /* base priority */
+
+   double px, py; /* position */
+   double vx, vy; /* velocity */
+
+   unsigned int start; /* time started in ms */
+   unsigned int flags; /* flags to set properties */
+};
+static alVoice *voice_start = NULL;
+static alVoice *voice_end = NULL;
 
 
 /*
@@ -190,6 +204,7 @@ int sound_init (void)
    /* start the music server */
    music_init();
 
+#if 0
    /* start allocating the sources - music has already taken his */
    alGetError(); /* another error clear */
    mem = 0;
@@ -204,6 +219,7 @@ int sound_init (void)
    }
    /* use minimal ram */
    source_stack = realloc( source_stack, sizeof(VoiceSource) * source_nstack );
+#endif
 
    /* debug magic */                                 
    DEBUG("OpenAL: %s", device);                      
@@ -301,18 +317,24 @@ static int sound_makeList (void)
    uint32_t nfiles,i;
    char tmp[64];
    int len;
+   int mem;
 
    /* get the file list */
    files = pack_listfiles( data, &nfiles );
 
    /* load the profiles */
+   mem = 0;
    for (i=0; i<nfiles; i++)
       if ((strncmp( files[i], SOUND_PREFIX, strlen(SOUND_PREFIX))==0) &&
             (strncmp( files[i] + strlen(files[i]) - strlen(SOUND_SUFFIX),
                       SOUND_SUFFIX, strlen(SOUND_SUFFIX))==0)) {
 
          /* grow the selection size */
-         sound_list = realloc( sound_list, ++nsound_list*sizeof(alSound));
+         nsound_list++;
+         if (nsound_list > mem) { /* we must grow */
+            mem += 32; /* we'll overallocate most likely */
+            sound_list = realloc( sound_list, mem*sizeof(alSound));
+         }
 
          /* remove the prefix and suffix */
          len = strlen(files[i]) - strlen(SOUND_SUFFIX SOUND_PREFIX);
@@ -323,13 +345,15 @@ static int sound_makeList (void)
          sound_list[nsound_list-1].name = strdup(tmp);
          sound_load( &sound_list[nsound_list-1].buffer, files[i] );
       }
+   /* shrink to minimum ram usage */
+   sound_list = realloc( sound_list, nsound_list*sizeof(alSound));
 
    /* free the char* allocated by pack */
    for (i=0; i<nfiles; i++)
       free(files[i]);
    free(files);
 
-   DEBUG("Loaded %d sound%c", nsound_list, (nsound_list==1)?' ':'s');
+   DEBUG("Loaded %d sound%s", nsound_list, (nsound_list==1)?"":"s");
 
    return 0;
 }
@@ -386,22 +410,51 @@ static void sound_free( alSound *snd )
  */
 void sound_update (void)
 {
-   if (sound_lock == NULL) return;
+   ALint stat;
+   alVoice *voice, *prev, *next;
 
-   int i;
+   if (sound_lock == NULL) return; /* sound system is off */
+   if (voice_start == NULL) return; /* no voices */
 
    SDL_mutexP( sound_lock );
 
-   for (i=0; i<voice_nstack; i++) {
-      if (voice_is(voice_stack[i], VOICE_PLAYING)) {
+   /* update sounds */
+   prev = NULL;
+   voice = voice_start;
+   do {
+      next = voice->next;
+      if (!voice_is(voice, VOICE_DONE)) { /* still working */
 
          /* update position */
-         alSource3f( voice_stack[i]->source, AL_POSITION,
-               voice_stack[i]->px, voice_stack[i]->py, 0. );
-   /*    alSource3f( voice_stack[i]->source, AL_VELOCITY,
-               voice_stack[i]->vx, voice_stack[i]->vy, 0. );*/
+         alSource3f( voice->source, AL_POSITION,
+               voice->px, voice->py, 0. );
+   /*    alSource3f( voice->source, AL_VELOCITY,
+               voice->vx, voice->vy, 0. );*/
       }
-   }
+      else { /* delete them */
+         if (voice->source != 0) { /* source must exist */
+
+            /* stop it if playing */
+            alGetSourcei( voice->source, AL_SOURCE_STATE, &stat );
+            if (stat == AL_PLAYING) alSourceStop( voice->source );
+
+            /* clear it and get rid of it */
+            alDeleteSources( 1, &voice->source );
+            voice->source = 0;
+         }
+
+         /* delete from linked list */
+         if (prev == NULL) /* was the first member */
+            voice_start = voice->next;
+         else /* not first member */
+            prev->next = voice->next;
+         if (voice_end == voice) /* last voice in linked list */
+            voice_end = prev;
+         free(voice);
+      }
+      prev = voice;
+      voice = next;
+   } while (voice != NULL);
 
    SDL_mutexV( sound_lock );
 }
@@ -414,15 +467,7 @@ void sound_volume( const double vol )
 {
    if (sound_lock == NULL) return;
 
-   int i;
-
    svolume = (ALfloat) vol;
-
-   SDL_mutexP( sound_lock );
-   for (i=0; i<voice_nstack; i++)
-      if (voice_set(voice_stack[i],VOICE_PLAYING))
-         alSourcef( voice_stack[i]->source, AL_GAIN, svolume );
-   SDL_mutexV( sound_lock );
 }
 
 
@@ -490,17 +535,16 @@ alVoice* sound_addVoice( int priority, double px, double py,
 
    if (sound_lock == NULL) return NULL;
 
-   voice_nstack++;
-   if (voice_nstack > voice_mstack)
-      voice_stack = realloc( voice_stack, ++voice_mstack * sizeof(alVoice*) );
    
+   /* allocate the voice */
    voc = malloc(sizeof(alVoice));
-   voice_stack[voice_nstack-1] = voc;
 
    /* set the data */
+   voc->next = NULL;
    voc->priority = priority;
    voc->start = SDL_GetTicks();
    voc->buffer = buffer;
+   voc->flags = 0;
    if (looping!=0) voice_set( voc, VOICE_LOOPING );
    voc->px = px;
    voc->py = py;
@@ -508,6 +552,17 @@ alVoice* sound_addVoice( int priority, double px, double py,
    voc->vy = vy; */
 
    voice_getSource( voc );
+
+   /* add to the linked list */
+   if (voice_start == NULL) {
+      voice_start = voc;
+      voice_end = voc;
+   }
+   else {
+      if (voice_end != NULL)
+         voice_end->next = voc;
+      voice_end = voc;
+   }
 
    return voc;
 }
@@ -519,39 +574,7 @@ void sound_delVoice( alVoice* voice )
 {
    if (sound_lock == NULL) return;
 
-   ALint stat;
-   int i;
-
-   /* linear search */
-   for (i=0; i<voice_nstack; i++)
-      if (voice == voice_stack[i])
-         break;
-   
-   /* no match is found */
-   if (i>=voice_nstack) {
-      WARN("Unable to find voice to free from stack");
-      return;
-   }
-
-   /* source must exist */
-   if (voice->source) {
-      SDL_mutexP( sound_lock );
-
-      /* stop it if playeing */
-      alGetSourcei( voice->source, AL_SOURCE_STATE, &stat );
-      if (stat == AL_PLAYING) alSourceStop( voice->source );
-
-      /* clear it and get rid of it */
-      alDeleteSources( 1, &voice->source );
-      voice->source = 0;
-
-      SDL_mutexV( sound_lock );
-   }
-
-   free(voice_stack[i]);
-   voice_nstack--;
-   for ( ; i<voice_nstack; i++)
-      voice_stack[i] = voice_stack[i+1];
+   voice_set(voice, VOICE_DONE);
 }
 
 

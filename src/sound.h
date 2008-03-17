@@ -13,25 +13,8 @@
 #include "physics.h"
 
 
-/*
- * virtual voice
- */
-typedef struct alVoice_ {
-   ALuint id; /* unique id for the voice */   
-
-   ALuint source; /* source itself, 0 if not set */
-   ALuint buffer; /* buffer */
-
-   int priority; /* base priority */
-
-   double px, py; /* position */
-   double vx, vy; /* velocity */
-
-   unsigned int start; /* time started in ms */
-   unsigned int flags; /* flags to set properties */
-} alVoice;
-
-
+struct alVoice;
+typedef struct alVoice alVoice;
 
 /*
  * sound subsystem
