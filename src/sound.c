@@ -304,6 +304,9 @@ void sound_exit (void)
       soundUnlock();
       SDL_DestroyMutex( sound_lock );
    }
+
+   /* bye bye alut */
+   alutExit();
 }
 
 
