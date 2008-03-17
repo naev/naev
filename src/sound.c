@@ -69,9 +69,11 @@ typedef struct alSound_ {
 } alSound;
 
 
+/*
+ * voice private flags (public in sound.h)
+ */
 #define VOICE_PLAYING      (1<<0)   /* voice is playing */
-#define VOICE_LOOPING      (1<<1)   /* voice is looping */
-#define VOICE_DONE         (1<<2)   /* voice is done - must remove */
+#define VOICE_DONE         (1<<1)   /* voice is done - must remove */
 #define voice_set(v,f)     ((v)->flags |= f)
 #define voice_is(v,f)      ((v)->flags & f)
 
@@ -88,8 +90,9 @@ SDL_mutex *sound_lock = NULL;
 static ALCcontext *al_context = NULL;
 static ALCdevice *al_device = NULL;
 
+
 /*
- * music player thread to assure streaming is perfect
+ * threads
  */
 static SDL_Thread *music_player = NULL;
 
@@ -144,7 +147,10 @@ static int sound_makeList (void);
 static int sound_load( ALuint *buffer, char *filename );
 static void sound_free( alSound *snd );
 static int voice_getSource( alVoice* voc );
+static void voice_init( alVoice *voice );
+static int voice_play( alVoice *voice );
 static void voice_rm( alVoice *prev, alVoice* voice );
+static void voice_parseFlags( alVoice* voice, const int flags );
 
 
 /*
@@ -413,6 +419,7 @@ static void sound_free( alSound *snd )
  */
 void sound_update (void)
 {
+   ALint stat;
    alVoice *voice, *prev, *next;
 
    if (sound_lock == NULL) return; /* sound system is off */
@@ -427,11 +434,16 @@ void sound_update (void)
       next = voice->next;
       if (!voice_is(voice, VOICE_DONE)) { /* still working */
 
-         /* update position */
-         alSource3f( voice->source, AL_POSITION,
-               voice->px, voice->py, 0. );
-   /*    alSource3f( voice->source, AL_VELOCITY,
-               voice->vx, voice->vy, 0. );*/
+         /* voice has a source */
+         if (voice->source != 0) {
+            alGetSourcei( voice->source, AL_SOURCE_STATE, &stat );
+
+            /* update position */
+            alSource3f( voice->source, AL_POSITION,
+                  voice->px, voice->py, 0. );
+            /*alSource3f( voice->source, AL_VELOCITY,
+              voice->vx, voice->vy, 0. );*/
+         }
 
          prev = voice; /* only case will voice will stay */
       }
@@ -488,10 +500,10 @@ void sound_volume( const double vol )
  */
 static int voice_getSource( alVoice* voc )
 {
-   if (sound_lock == NULL) return -1;
-
    int ret;
-   ALenum err;
+
+   /* sound system isn't on */
+   if (sound_lock == NULL) return -1;
 
    ret = 0; /* default return */
 
@@ -502,27 +514,10 @@ static int voice_getSource( alVoice* voc )
       
       /* we must pull it from the free source vector */
       voc->source = source_stack[--source_nstack];
-      alSourcei( voc->source, AL_BUFFER, voc->buffer );
 
-      /* distance model */
-      alSourcef( voc->source, AL_ROLLOFF_FACTOR, SOUND_ROLLOFF_FACTOR );
-      alSourcef( voc->source, AL_MAX_DISTANCE, SOUND_MAX_DIST );
-      alSourcef( voc->source, AL_REFERENCE_DISTANCE, SOUND_REFERENCE_DIST );
-
-      alSourcei( voc->source, AL_SOURCE_RELATIVE, AL_FALSE );
-      alSourcef( voc->source, AL_GAIN, svolume );
-      alSource3f( voc->source, AL_POSITION, voc->px, voc->py, 0. );
-      /* alSource3f( voc->source, AL_VELOCITY, voc->vx, voc->vy, 0. ); */
-      if (voice_is( voc, VOICE_LOOPING ))
-         alSourcei( voc->source, AL_LOOPING, AL_TRUE );
-      else
-         alSourcei( voc->source, AL_LOOPING, AL_FALSE );
-
-      /* try to play the source */
-      alSourcePlay( voc->source );
-      err = alGetError();
-      if (err == AL_NO_ERROR) voice_set( voc, VOICE_PLAYING );
-      else ret = 2;
+      /* initialize and play */
+      voice_init( voc );
+      ret = voice_play( voc );
    }
    else
       voc->source = 0;
@@ -534,10 +529,31 @@ static int voice_getSource( alVoice* voc )
 
 
 /*
+ * must lock before calling
+ */
+static void voice_init( alVoice *voice )
+{
+   /* distance model */
+   alSourcef( voice->source, AL_ROLLOFF_FACTOR, SOUND_ROLLOFF_FACTOR );
+   alSourcef( voice->source, AL_MAX_DISTANCE, SOUND_MAX_DIST );
+   alSourcef( voice->source, AL_REFERENCE_DISTANCE, SOUND_REFERENCE_DIST );
+
+   alSourcei( voice->source, AL_SOURCE_RELATIVE, AL_FALSE );
+   alSourcef( voice->source, AL_GAIN, svolume );
+   alSource3f( voice->source, AL_POSITION, voice->px, voice->py, 0. );
+   /* alSource3f( voice->source, AL_VELOCITY, voice->vx, voice->vy, 0. ); */
+   if (voice_is( voice, VOICE_LOOPING ))
+      alSourcei( voice->source, AL_LOOPING, AL_TRUE );
+   else
+      alSourcei( voice->source, AL_LOOPING, AL_FALSE );
+}
+
+
+/*
  * creates a dynamic moving voice
  */
 alVoice* sound_addVoice( int priority, double px, double py,
-      double vx, double vy, const ALuint buffer, const int looping )
+      double vx, double vy, const ALuint buffer, const int flags )
 {
    (void) vx;
    (void) vy;
@@ -553,13 +569,17 @@ alVoice* sound_addVoice( int priority, double px, double py,
    voc->priority = priority;
    voc->start = SDL_GetTicks();
    voc->buffer = buffer;
-   voc->flags = 0;
-   if (looping!=0) voice_set( voc, VOICE_LOOPING );
+
+   /* handle positions */
    voc->px = px;
    voc->py = py;
 /* voc->vx = vx;
    voc->vy = vy; */
 
+   /* handle the flags */
+   voice_parseFlags( voc, flags );
+
+   /* get the source */
    voice_getSource( voc );
 
    /* add to the linked list */
@@ -602,6 +622,57 @@ void voice_update( alVoice* voice, double px, double py,
    voice->py = py;
 /* voice->vx = vx;
    voice->vy = vy;*/
+}
+
+
+/*
+ * changes the voice's buffer
+ */
+void voice_buffer( alVoice* voice, const ALuint buffer, const int flags )
+{
+   voice->buffer = buffer;
+   voice_parseFlags( voice, flags );
+
+   /* start playing */
+   SDL_mutexP( sound_lock );
+   voice_play(voice);
+   SDL_mutexV( sound_lock );
+}
+
+
+/*
+ * handles the flags
+ */
+static void voice_parseFlags( alVoice* voice, const int flags )
+{
+   voice->flags = 0; /* defaults */
+   
+   /* looping */
+   if (flags & VOICE_LOOPING)
+      voice_set( voice, VOICE_LOOPING );
+}
+
+
+/*
+ * makes a voice play, must lock before calling
+ */
+static int voice_play( alVoice* voice )
+{
+   ALenum err;
+
+   /* must have a buffer */
+   if (voice->buffer != 0) {
+      /* set buffer */
+      alSourcei( voice->source, AL_BUFFER, voice->buffer );
+
+      /* try to play the source */
+      alSourcePlay( voice->source );
+      err = alGetError();
+      if (err == AL_NO_ERROR) voice_set( voice, VOICE_PLAYING );
+      else return 2;
+   }
+
+   return 0;
 }
 
 

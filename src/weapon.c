@@ -23,6 +23,7 @@
 
 #define VOICE_PRIORITY_BOLT   10 /* default */
 #define VOICE_PRIORITY_AMMO   8  /* higher */
+#define VOICE_PRIORITY_BEAM   6  /* even higher */
 
 
 #define WEAPON_CHUNK    32
@@ -472,8 +473,6 @@ static Weapon* weapon_create( const Outfit* outfit,
                w->solid->pos.x, w->solid->pos.y,
                w->solid->vel.x, w->solid->vel.y,  w->outfit->u.blt.sound, 0 );
          break;
-
-
 
 
       default: /* just dump it where the player is */

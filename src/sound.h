@@ -12,6 +12,8 @@
 
 #include "physics.h"
 
+#define VOICE_LOOPING      (1<<10)
+
 
 struct alVoice;
 typedef struct alVoice alVoice;
@@ -34,11 +36,17 @@ void sound_volume( const double vol );
 /*
  * voice manipulation function
  */
-alVoice* sound_addVoice( int priority, double px, double py,
-      double vx, double vy, const ALuint buffer, const int looping );
-void sound_delVoice( alVoice* voice );
+alVoice* sound_addVoice( int priority, double px, double py, /* new voice */
+      double vx, double vy, const ALuint buffer, const int flags );
+void sound_delVoice( alVoice* voice ); /* delete a voice */
 void voice_update( alVoice* voice, double px, double py, 
       double vx, double vy );
+void voice_buffer( alVoice* voice, const ALuint buffer, const int flags );
+
+
+/*
+ * listener manipulation functions
+ */
 void sound_listener( double dir, double px, double py,
       double vx, double vy );
 
