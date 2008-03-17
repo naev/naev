@@ -51,7 +51,6 @@ typedef struct alMusic_ {
 /*
  * song currently playing
  */
-
 static SDL_mutex *music_vorbis_lock;
 static alMusic music_vorbis;
 static ALuint music_buffer[2]; /* front and back buffer */
@@ -210,10 +209,9 @@ static int stream_loadBuffer( ALuint buffer )
 /*
  * init/exit
  */
-int music_init()
+int music_init (void)
 {
    music_vorbis_lock = SDL_CreateMutex();
-   music_find();
    music_vorbis.file.end = 0; /* indication it's not loaded */
 
    SDL_mutexP( sound_lock );
@@ -228,7 +226,11 @@ int music_init()
 
    return 0;
 }
-void music_exit()
+int music_makeList (void)
+{
+   return music_find();
+}
+void music_exit (void)
 {
    int i;
 

@@ -155,7 +155,7 @@ int conf_loadConfig ( const char* file )
 
       /* sound */
       conf_loadBool("nosound",i)
-      if (i) { nosound = 1; i = 0; }
+      nosound = i; i = 0;
       conf_loadFloat("sound",d);
       if (d) { sound_volume(d); d = 0.; }
       conf_loadFloat("music",d);

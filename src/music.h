@@ -19,6 +19,7 @@ void music_kill (void);
  * init/exit
  */
 int music_init (void);
+int music_makeList (void);
 void music_exit (void);
 
 

@@ -13,14 +13,12 @@
 #include "physics.h"
 
 
-#define SOUND_REFERENCE_DIST  500.
-#define SOUND_MAX_DIST        1000.
-
-
 /*
  * virtual voice
  */
 typedef struct alVoice_ {
+   ALuint id; /* unique id for the voice */   
+
    ALuint source; /* source itself, 0 if not set */
    ALuint buffer; /* buffer */
 

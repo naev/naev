@@ -26,6 +26,35 @@
  * currently it is only using positional sound and no doppler effect
  */
 
+/*
+ * SOUND OVERVIEW
+ *
+ *
+ * We use a priority virtual voice system with pre-allocated buffers.
+ *
+ * Naming:
+ *    buffer - sound sample
+ *    source - openal object that plays sound
+ *    voice - virtual object that wants to play sound
+ *
+ * 
+ * First we allocate all the buffers based on what we find inside the
+ * datafile.
+ * Then we allocate all the possible sources (giving the music system
+ * what it needs).  
+ * Now we allow the user to dynamically create voices, these voices will
+ * always try to grab a source from the source pool.  If they can't they
+ * will pretend to play the buffer.
+ * Every so often we'll check to see if the important voices are being
+ * played and take away the sources from the lesser ones.
+ */
+
+
+/* sound parameters - TODO make it variable per source */
+#define SOUND_ROLLOFF_FACTOR  1.
+#define SOUND_REFERENCE_DIST  500.
+#define SOUND_MAX_DIST        1000.
+
 
 #define SOUND_PREFIX "snd/sounds/"
 #define SOUND_SUFFIX ".wav"
@@ -42,6 +71,7 @@ typedef struct alSound_ {
 
 #define VOICE_PLAYING      (1<<0)   /* voice is playing */
 #define VOICE_LOOPING      (1<<1)   /* voice is looping */
+#define VOICE_DONE         (1<<2)   /* voice is done - must remove */
 #define voice_set(v,f)     ((v)->flags |= f)
 #define voice_is(v,f)      ((v)->flags & f)
 
@@ -72,11 +102,23 @@ static int nsound_list = 0;
 
 
 /*
- * currenty sources playing
+ * struct to hold all the sources and currently attached voice
+ */
+typedef struct VoiceSource_ {
+   ALuint source; /* allocated source */
+   ALuint voice; /* voice id */
+} VoiceSource;
+static VoiceSource *source_stack = NULL; /* and it's stack */
+static int source_nstack = 0;
+
+
+/*
+ * virtual voice stack
  */
 static alVoice **voice_stack = NULL;
-static int nvoice_stack = 0;
-static int mvoice_stack = 0;
+static int voice_nstack = 0;
+static int voice_mstack = 0;
+#define VOICE_CHUNK        64 /* allocate by these chunks */
 
 
 /*
@@ -99,14 +141,16 @@ static int voice_getSource( alVoice* voc );
  */
 int sound_init (void)
 {
-   int ret = 0;
+   int mem, ret;
+   ALenum err;
 
+   ret = 0;
+
+   /* we'll need a mutex */
    sound_lock = SDL_CreateMutex();
-
    SDL_mutexP( sound_lock );
 
    const ALchar* device = alcGetString( NULL, ALC_DEFAULT_DEVICE_SPECIFIER );
-   DEBUG("OpenAL using device '%s'", device );
 
    /* opening the default device */
    al_device = alcOpenDevice(NULL);
@@ -140,13 +184,39 @@ int sound_init (void)
    /* set the distance model */
    alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED );
 
+   /* we can unlock now */
    SDL_mutexV( sound_lock );
+
+   /* start the music server */
+   music_init();
+
+   /* start allocating the sources - music has already taken his */
+   alGetError(); /* another error clear */
+   mem = 0;
+   while (((err=alGetError())==AL_NO_ERROR) && (source_nstack < 128)) {
+      if (mem < source_nstack+1) { /* allocate more memory */
+         mem += 32;
+         source_stack = realloc( source_stack, sizeof(VoiceSource) * mem );
+      }
+      alGenSources( 1, &source_stack[source_nstack].source );
+      source_stack[source_nstack].voice = 0;
+      source_nstack++;
+   }
+   /* use minimal ram */
+   source_stack = realloc( source_stack, sizeof(VoiceSource) * source_nstack );
+
+   /* debug magic */                                 
+   DEBUG("OpenAL: %s", device);                      
+   DEBUG("Sources: %d", source_nstack );
+   DEBUG("Renderer: %s", alGetString(AL_RENDERER));  
+   DEBUG("Version: %s", alGetString(AL_VERSION));    
+   DEBUG();
 
    /* load up all the sounds */
    sound_makeList();
-   
-   /* start the music server */
-   music_init();
+   music_makeList(); /* and music */
+
+   /* now start the music thread */
    music_player = SDL_CreateThread( music_thread, NULL );
 
    return 0;
@@ -164,6 +234,7 @@ int sound_init (void)
    SDL_mutexV( sound_lock );
    SDL_DestroyMutex( sound_lock );
    sound_lock = NULL;
+   ERR("Sound failed to initialize");
    return ret;
 }
 /*
@@ -302,6 +373,7 @@ static void sound_free( alSound *snd )
 
    SDL_mutexP( sound_lock );
 
+   /* free the stuff */
    if (snd->name) free(snd->name);
    alDeleteBuffers( 1, &snd->buffer );
 
@@ -318,11 +390,9 @@ void sound_update (void)
 
    int i;
 
-   /* TODO prioritize sounds */
-
    SDL_mutexP( sound_lock );
 
-   for (i=0; i<nvoice_stack; i++) {
+   for (i=0; i<voice_nstack; i++) {
       if (voice_is(voice_stack[i], VOICE_PLAYING)) {
 
          /* update position */
@@ -349,7 +419,7 @@ void sound_volume( const double vol )
    svolume = (ALfloat) vol;
 
    SDL_mutexP( sound_lock );
-   for (i=0; i<nvoice_stack; i++)
+   for (i=0; i<voice_nstack; i++)
       if (voice_set(voice_stack[i],VOICE_PLAYING))
          alSourcef( voice_stack[i]->source, AL_GAIN, svolume );
    SDL_mutexV( sound_lock );
@@ -382,13 +452,14 @@ static int voice_getSource( alVoice* voc )
       alSourcei( voc->source, AL_BUFFER, voc->buffer );
 
       /* distance model */
-      alSourcef( voc->source, AL_MAX_DISTANCE, 200. );
-      alSourcef( voc->source, AL_REFERENCE_DISTANCE, 50. );
+      alSourcef( voc->source, AL_ROLLOFF_FACTOR, SOUND_ROLLOFF_FACTOR );
+      alSourcef( voc->source, AL_MAX_DISTANCE, SOUND_MAX_DIST );
+      alSourcef( voc->source, AL_REFERENCE_DISTANCE, SOUND_REFERENCE_DIST );
 
       alSourcei( voc->source, AL_SOURCE_RELATIVE, AL_FALSE );
       alSourcef( voc->source, AL_GAIN, svolume );
       alSource3f( voc->source, AL_POSITION, voc->px, voc->py, 0. );
-      /*    alSource3f( voc->source, AL_VELOCITY, voc->vx, voc->vy, 0. ); */
+      /* alSource3f( voc->source, AL_VELOCITY, voc->vx, voc->vy, 0. ); */
       if (voice_is( voc, VOICE_LOOPING ))
          alSourcei( voc->source, AL_LOOPING, AL_TRUE );
       else
@@ -415,23 +486,22 @@ alVoice* sound_addVoice( int priority, double px, double py,
 {
    (void) vx;
    (void) vy;
+   alVoice *voc;
 
    if (sound_lock == NULL) return NULL;
 
-   alVoice *voc;
-
-   nvoice_stack++;
-   if (nvoice_stack > mvoice_stack)
-      voice_stack = realloc( voice_stack, ++mvoice_stack * sizeof(alVoice*) );
+   voice_nstack++;
+   if (voice_nstack > voice_mstack)
+      voice_stack = realloc( voice_stack, ++voice_mstack * sizeof(alVoice*) );
    
    voc = malloc(sizeof(alVoice));
-   voice_stack[nvoice_stack-1] = voc;
+   voice_stack[voice_nstack-1] = voc;
 
    /* set the data */
    voc->priority = priority;
    voc->start = SDL_GetTicks();
    voc->buffer = buffer;
-   if (looping) voice_set( voc, VOICE_LOOPING );
+   if (looping!=0) voice_set( voc, VOICE_LOOPING );
    voc->px = px;
    voc->py = py;
 /* voc->vx = vx;
@@ -452,21 +522,26 @@ void sound_delVoice( alVoice* voice )
    ALint stat;
    int i;
 
-   for (i=0; i<nvoice_stack; i++)
+   /* linear search */
+   for (i=0; i<voice_nstack; i++)
       if (voice == voice_stack[i])
          break;
    
    /* no match is found */
-   if (i>=nvoice_stack) {
+   if (i>=voice_nstack) {
       WARN("Unable to find voice to free from stack");
       return;
    }
 
+   /* source must exist */
    if (voice->source) {
       SDL_mutexP( sound_lock );
 
+      /* stop it if playeing */
       alGetSourcei( voice->source, AL_SOURCE_STATE, &stat );
       if (stat == AL_PLAYING) alSourceStop( voice->source );
+
+      /* clear it and get rid of it */
       alDeleteSources( 1, &voice->source );
       voice->source = 0;
 
@@ -474,12 +549,15 @@ void sound_delVoice( alVoice* voice )
    }
 
    free(voice_stack[i]);
-   nvoice_stack--;
-   for ( ; i<nvoice_stack; i++)
+   voice_nstack--;
+   for ( ; i<voice_nstack; i++)
       voice_stack[i] = voice_stack[i+1];
 }
 
 
+/*
+ * updates voice position, should be run once per frame
+ */
 void voice_update( alVoice* voice, double px, double py,
       double vx, double vy )
 {
@@ -508,12 +586,15 @@ void sound_listener( double dir, double px, double py,
 
    SDL_mutexP( sound_lock );
 
+   /* set orientation */
    ALfloat ori[] = { 0., 0., 0.,  0., 0., 1. };
    ori[0] = cos(dir);
    ori[1] = sin(dir);
    alListenerfv( AL_ORIENTATION, ori );
-   alListener3f( AL_POSITION, px, py, 0. );
+   alListener3f( AL_POSITION, px, py, 1. );
 /* alListener3f( AL_VELOCITY, vx, vy, 0. );*/
 
    SDL_mutexV( sound_lock );
 }
+
+
