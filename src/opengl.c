@@ -391,8 +391,17 @@ int gl_isTrans( const glTexture* t, const int x, const int y )
 void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 {
    int s, sx, sy;
-   
-   s = (int)(dir / (2.0*M_PI / (t->sy*t->sx)));
+   double shard, rdir;
+
+   /* what each image represents in angle */
+   shard = 2.0*M_PI / (t->sy*t->sx);
+
+   /* real dir is slightly moved downwards */
+   rdir = dir + shard/2.;
+   if (rdir < 0.) rdir = 0.;
+  
+   /* now calculate the sprite we need */
+   s = (int)(rdir / shard);
    sx = t->sx;
    sy = t->sy;
 
