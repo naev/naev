@@ -59,7 +59,7 @@ The rail gun is a cannon that uses heavy magnetic pulses to accelerate pieces of
 </general>
 <specific type="1" secondary="1">
 <gfx>mass</gfx>
-<sound>laser</sound>
+<sound>mass</sound>
 <spfx>ExpS</spfx>
 <delay>1100</delay>
 <speed>650</speed>
@@ -160,7 +160,7 @@ Neutron Disruptor.
 </general>
 <specific type="1">
 <gfx>neutron</gfx>
-<sound>laser</sound>
+<sound>neutron</sound>
 <spfx>ExpS</spfx>
 <delay>400</delay>
 <speed>650</speed>
