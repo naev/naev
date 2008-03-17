@@ -104,11 +104,7 @@ static int nsound_list = 0;
 /*
  * struct to hold all the sources and currently attached voice
  */
-typedef struct VoiceSource_ {
-   ALuint source; /* allocated source */
-   ALuint voice; /* voice id */
-} VoiceSource;
-static VoiceSource *source_stack = NULL; /* and it's stack */
+static ALuint *source_stack = NULL; /* and it's stack */
 static int source_nstack = 0;
 
 
@@ -204,22 +200,19 @@ int sound_init (void)
    /* start the music server */
    music_init();
 
-#if 0
    /* start allocating the sources - music has already taken his */
    alGetError(); /* another error clear */
    mem = 0;
    while (((err=alGetError())==AL_NO_ERROR) && (source_nstack < 128)) {
       if (mem < source_nstack+1) { /* allocate more memory */
          mem += 32;
-         source_stack = realloc( source_stack, sizeof(VoiceSource) * mem );
+         source_stack = realloc( source_stack, sizeof(ALuint) * mem );
       }
-      alGenSources( 1, &source_stack[source_nstack].source );
-      source_stack[source_nstack].voice = 0;
+      alGenSources( 1, &source_stack[source_nstack] );
       source_nstack++;
    }
    /* use minimal ram */
-   source_stack = realloc( source_stack, sizeof(VoiceSource) * source_nstack );
-#endif
+   source_stack = realloc( source_stack, sizeof(ALuint) * source_nstack );
 
    /* debug magic */                                 
    DEBUG("OpenAL: %s", device);                      
@@ -439,8 +432,7 @@ void sound_update (void)
             if (stat == AL_PLAYING) alSourceStop( voice->source );
 
             /* clear it and get rid of it */
-            alDeleteSources( 1, &voice->source );
-            voice->source = 0;
+            source_stack[source_nstack++] = voice->source; /* throw it back */
          }
 
          /* delete from linked list */
@@ -486,14 +478,10 @@ static int voice_getSource( alVoice* voc )
    SDL_mutexP( sound_lock );
 
    /* try to grab a source */
-   voc->source = 0;
-   alGenSources( 1, &voc->source );
-   err = alGetError();
-   if (err != AL_NO_ERROR) {
-      voc->source = 0;
-      ret = 1;
-   }
-   else { /* set the properties */
+   if (source_nstack > 0) { /* we have source */
+      
+      /* we must pull it from the free source vector */
+      voc->source = source_stack[--source_nstack];
       alSourcei( voc->source, AL_BUFFER, voc->buffer );
 
       /* distance model */
@@ -516,6 +504,8 @@ static int voice_getSource( alVoice* voc )
       if (err == AL_NO_ERROR) voice_set( voc, VOICE_PLAYING );
       else ret = 2;
    }
+   else
+      voc->source = 0;
 
    SDL_mutexV( sound_lock );
 

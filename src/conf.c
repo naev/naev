@@ -107,7 +107,7 @@ void conf_setDefaults (void)
    gl_screen.h = 600;
    gl_screen.flags = 0;
    /* openal */
-   nosound = 1; /* TODO make sound default when it's sane again */
+   nosound = 0;
    /* joystick */
    indjoystick = -1;
    namjoystick = NULL;
