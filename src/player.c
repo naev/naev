@@ -49,21 +49,28 @@
  */
 Pilot* player = NULL; /* ze player */
 static Ship* player_ship = NULL; /* temporary ship to hold when naming it */
+static alVoice* player_voice = NULL; /* player's voice */
 static double player_px, player_py, player_vx, player_vy, player_dir; /* more hack */
 static int player_credits = 0; /* temporary hack */
 
-/* player pilot stack - ships he has */
+
+/* 
+ * player pilot stack - ships he has 
+ */
 static Pilot** player_stack = NULL;
 static char** player_lstack = NULL; /* names of the planet the ships are at */
 static int player_nstack = 0;
 
-/* player global properties */
+
+/* 
+ * player global properties
+ */
 char* player_name = NULL; /* ze name */
 int player_crating = 0; /* ze rating */
 unsigned int player_flags = 0; /* player flags */
 /* used in input.c */
 double player_turn = 0.; /* turn velocity from input */
-double player_acc = 0.; /* accel velocity from input */
+static double player_acc = 0.; /* accel velocity from input */
 unsigned int player_target = PLAYER_ID; /* targetted pilot */
 /* pure internal */
 int planet_target = -1; /* targetted planet */
@@ -153,30 +160,44 @@ static Mesg* mesg_stack;
 /* 
  * prototypes
  */
-/* external */
+/* 
+ * external
+ */
 extern void pilot_render( const Pilot* pilot ); /* from pilot.c */
 extern void weapon_minimap( const double res, const double w, const double h,
       const RadarShape shape ); /* from weapon.c */
 extern void planets_minimap( const double res, const double w, const double h,
       const RadarShape shape ); /* from space.c */
-/* internal */
+/* 
+ * internal
+ */
+/* creation */
 static void player_newMake (void);
 static void player_newShipMake( char *name );
+/* sound */
+static void player_initSound (void);
+static void player_playSound( ALuint sound, int once );
+static void player_stopSound (void);
+/* gui */
 static void rect_parse( const xmlNodePtr parent,
       double *x, double *y, double *w, double *h );
 static int gui_parse( const xmlNodePtr parent, const char *name );
 static void gui_renderPilot( const Pilot* p );
 static void gui_renderBar( const glColour* c,
       const Rect* r, const double w );
+/* save/load */
 static int player_saveShip( xmlTextWriterPtr writer, 
       Pilot* ship, char* loc );
 static int player_parse( xmlNodePtr parent );
 static int player_parseDone( xmlNodePtr parent );
 static int player_parseShip( xmlNodePtr parent, int is_player );
-/* externed */
+/* 
+ * externed
+ */
 void player_dead (void);
 void player_destroyed (void);
 int player_save( xmlTextWriterPtr writer );
+int player_load( xmlNodePtr parent );
 
 
 /* 
@@ -191,6 +212,9 @@ void player_new (void)
    player_setFlag(PLAYER_CREATING);
    vectnull( &player_cam );
    gl_bindCamera( &player_cam );
+
+   /* setup sound */
+   player_initSound();
 
    /* cleanup player stuff if we'll be recreating */
    player_cleanup();
@@ -344,6 +368,7 @@ static void player_newShipMake( char* name )
    vect_cset( &vp, player_px, player_py );
    vect_cset( &vv, player_vx, player_vy );
 
+   /* create the player */
    pilot_create( player_ship, name, faction_get("Player"), NULL,
          player_dir,  &vp, &vv, PILOT_PLAYER );
    gl_bindCamera( &player->solid->pos ); /* set opengl camera */
@@ -429,6 +454,40 @@ void player_cleanup (void)
       missions_ndone = 0;
       missions_mdone = 0;
    }
+}
+
+
+/*
+ * initializes the player sounds
+ */
+static void player_initSound (void)
+{
+   if (player_voice == NULL) {
+      player_voice = sound_addVoice( 0, /* max priority */
+            0., 0., 0., 0., 0, /* no properties */
+            VOICE_LOOPING | VOICE_STATIC );
+   }
+}
+
+
+/*
+ * plays a sound
+ */
+static void player_playSound( ALuint sound, int once )
+{
+   unsigned int flags = VOICE_STATIC;
+
+   if (once == 0) flags |= VOICE_LOOPING;
+   voice_buffer( player_voice, sound, flags );
+}
+
+
+/*
+ * stops playing a sound
+ */
+static void player_stopSound (void)
+{
+   voice_stop( player_voice );
 }
 
 
@@ -1301,7 +1360,6 @@ void gui_free (void)
  */
 void player_think( Pilot* player )
 {
-
    /* last i heard, the dead don't think */
    if (pilot_isFlag(player,PILOT_DEAD)) {
       /* no sense in accelerating or turning */
@@ -1585,6 +1643,7 @@ void player_afterburn (void)
       player_setFlag(PLAYER_AFTERBURNER);
       pilot_setFlag(player,PILOT_AFTERBURNER);
       spfx_shake(player->afterburner->outfit->u.afb.rumble * SHAKE_MAX);
+      player_playSound( player->afterburner->outfit->u.afb.sound, 0 );
    }
 }
 void player_afterburnOver (void)
@@ -1592,8 +1651,25 @@ void player_afterburnOver (void)
    if (player->afterburner!=NULL) {
       player_rmFlag(PLAYER_AFTERBURNER);
       pilot_rmFlag(player,PILOT_AFTERBURNER);
+      player_stopSound();
    }
 }
+
+
+/*
+ * start accelerating
+ */
+void player_accel( double acc )
+{
+   player_acc = acc;
+   //player_playSound( player->ship->sound, 0 );
+}
+void player_accelOver (void)
+{
+   player_acc = 0.;
+   //player_stopSound();
+}
+
 
 /*
  * take a screenshot
@@ -1922,6 +1998,9 @@ static int player_parse( xmlNodePtr parent )
    /* initialize the system */
    space_init( planet_getSystem(planet) );
    map_clear(); /* sets the map up */
+
+   /* initialize the sound */
+   player_initSound();
 
    return 0;
 }

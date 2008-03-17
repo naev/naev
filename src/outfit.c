@@ -463,6 +463,9 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    
    do { /* parse the data */
       xmlr_float(node,"rumble",temp->u.afb.rumble);
+      if (xml_isNode(node,"sound"))
+         temp->u.afb.sound = sound_get( xml_get(node) );
+
       if (xml_isNode(node,"thrust_perc"))
          temp->u.afb.thrust_perc = 1. + xml_getFloat(node)/100.;
       xmlr_float(node,"thrust_abs",temp->u.afb.thrust_abs);

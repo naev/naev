@@ -294,6 +294,7 @@ Being able to run from your enemies is a very powerful ability.  A generic after
 </general>
 <specific type="16">
 <rumble>30</rumble>
+<sound>afterburner</sound>
 <thrust_perc>100</thrust_perc>
 <thrust_abs>50</thrust_abs>
 <speed_perc>50</speed_perc>
@@ -314,6 +315,7 @@ The Hellburner is one of the best afterburners available in the market.  They ha
 </general>
 <specific type="16">
 <rumble>50</rumble>
+<sound>afterburner</sound>
 <thrust_perc>185</thrust_perc>
 <thrust_abs>100</thrust_abs>
 <speed_perc>85</speed_perc>

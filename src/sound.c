@@ -60,6 +60,10 @@
 #define SOUND_SUFFIX ".wav"
 
 
+#define soundLock()     SDL_mutexP(sound_lock)
+#define soundUnlock()   SDL_mutexV(sound_lock)
+
+
 /*
  * gives the buffers a name
  */
@@ -150,7 +154,7 @@ static int voice_getSource( alVoice* voc );
 static void voice_init( alVoice *voice );
 static int voice_play( alVoice *voice );
 static void voice_rm( alVoice *prev, alVoice* voice );
-static void voice_parseFlags( alVoice* voice, const int flags );
+static void voice_parseFlags( alVoice* voice, const int unsigned flags );
 
 
 /*
@@ -165,7 +169,7 @@ int sound_init (void)
 
    /* we'll need a mutex */
    sound_lock = SDL_CreateMutex();
-   SDL_mutexP( sound_lock );
+   soundLock();
 
    const ALchar* device = alcGetString( NULL, ALC_DEFAULT_DEVICE_SPECIFIER );
 
@@ -202,7 +206,7 @@ int sound_init (void)
    alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED );
 
    /* we can unlock now */
-   SDL_mutexV( sound_lock );
+   soundUnlock();
 
    /* start the music server */
    music_init();
@@ -247,7 +251,7 @@ int sound_init (void)
    alcCloseDevice( al_device );
    snderr_dev:
    al_device = NULL;
-   SDL_mutexV( sound_lock );
+   soundUnlock();
    SDL_DestroyMutex( sound_lock );
    sound_lock = NULL;
    ERR("Sound failed to initialize");
@@ -285,7 +289,7 @@ void sound_exit (void)
 
    /* clean up context and such */
    if (sound_lock) {
-      SDL_mutexP( sound_lock );
+      soundLock();
 
       if (al_context) {
          alcMakeContextCurrent(NULL);
@@ -293,7 +297,7 @@ void sound_exit (void)
       }
       if (al_device) alcCloseDevice( al_device );
 
-      SDL_mutexV( sound_lock );
+      soundUnlock();
       SDL_DestroyMutex( sound_lock );
    }
 }
@@ -382,7 +386,7 @@ static int sound_load( ALuint *buffer, char *filename )
    /* get the file data buffer from packfile */
    wavdata = pack_readfile( DATA, filename, &size );
 
-   SDL_mutexP( sound_lock );
+   soundLock();
 
    /* bind to OpenAL buffer */
    alGenBuffers( 1, buffer );
@@ -394,7 +398,7 @@ static int sound_load( ALuint *buffer, char *filename )
       return 0;
    }
 
-   SDL_mutexV( sound_lock );
+   soundUnlock();
 
    /* finish */
    free( wavdata );
@@ -404,13 +408,13 @@ static void sound_free( alSound *snd )
 {
    if (sound_lock == NULL) return;
 
-   SDL_mutexP( sound_lock );
+   soundLock();
 
    /* free the stuff */
    if (snd->name) free(snd->name);
    alDeleteBuffers( 1, &snd->buffer );
 
-   SDL_mutexV( sound_lock );
+   soundUnlock();
 }
 
 
@@ -425,7 +429,7 @@ void sound_update (void)
    if (sound_lock == NULL) return; /* sound system is off */
    if (voice_start == NULL) return; /* no voices */
 
-   SDL_mutexP( sound_lock );
+   soundLock();
 
    /* update sounds */
    prev = NULL;
@@ -452,7 +456,7 @@ void sound_update (void)
       voice = next;
    } while (voice != NULL);
 
-   SDL_mutexV( sound_lock );
+   soundUnlock();
 }
 
 
@@ -507,7 +511,7 @@ static int voice_getSource( alVoice* voc )
 
    ret = 0; /* default return */
 
-   SDL_mutexP( sound_lock );
+   soundLock();
 
    /* try to grab a source */
    if (source_nstack > 0) { /* we have source */
@@ -522,7 +526,7 @@ static int voice_getSource( alVoice* voc )
    else
       voc->source = 0;
 
-   SDL_mutexV( sound_lock );
+   soundUnlock();
 
    return ret;
 }
@@ -538,7 +542,6 @@ static void voice_init( alVoice *voice )
    alSourcef( voice->source, AL_MAX_DISTANCE, SOUND_MAX_DIST );
    alSourcef( voice->source, AL_REFERENCE_DISTANCE, SOUND_REFERENCE_DIST );
 
-   alSourcei( voice->source, AL_SOURCE_RELATIVE, AL_FALSE );
    alSourcef( voice->source, AL_GAIN, svolume );
    alSource3f( voice->source, AL_POSITION, voice->px, voice->py, 0. );
    /* alSource3f( voice->source, AL_VELOCITY, voice->vx, voice->vy, 0. ); */
@@ -553,7 +556,7 @@ static void voice_init( alVoice *voice )
  * creates a dynamic moving voice
  */
 alVoice* sound_addVoice( int priority, double px, double py,
-      double vx, double vy, const ALuint buffer, const int flags )
+      double vx, double vy, const ALuint buffer, const unsigned int flags )
 {
    (void) vx;
    (void) vy;
@@ -628,28 +631,46 @@ void voice_update( alVoice* voice, double px, double py,
 /*
  * changes the voice's buffer
  */
-void voice_buffer( alVoice* voice, const ALuint buffer, const int flags )
+void voice_buffer( alVoice* voice, const ALuint buffer, const unsigned int flags )
 {
    voice->buffer = buffer;
    voice_parseFlags( voice, flags );
 
    /* start playing */
-   SDL_mutexP( sound_lock );
+   soundLock();
    voice_play(voice);
-   SDL_mutexV( sound_lock );
+   soundUnlock();
+}
+
+
+/*
+ * stops playing sound
+ */
+void voice_stop( alVoice* voice )
+{
+   soundLock();
+   if (voice->source != 0)
+      alSourceStop(voice->source);
+   soundUnlock();
 }
 
 
 /*
  * handles the flags
  */
-static void voice_parseFlags( alVoice* voice, const int flags )
+static void voice_parseFlags( alVoice* voice, const unsigned int flags )
 {
    voice->flags = 0; /* defaults */
    
    /* looping */
    if (flags & VOICE_LOOPING)
       voice_set( voice, VOICE_LOOPING );
+
+   /* relative to player */
+   if (flags & VOICE_STATIC)
+      alSourcei( voice->source, AL_SOURCE_RELATIVE, AL_TRUE );
+   else
+      alSourcei( voice->source, AL_SOURCE_RELATIVE, AL_FALSE );
 }
 
 
@@ -659,9 +680,15 @@ static void voice_parseFlags( alVoice* voice, const int flags )
 static int voice_play( alVoice* voice )
 {
    ALenum err;
+   ALint stat;
 
    /* must have a buffer */
    if (voice->buffer != 0) {
+
+      alGetSourcei( voice->source, AL_SOURCE_STATE, &stat );
+      if (stat == AL_PLAYING)
+         alSourceStop( voice->source );
+
       /* set buffer */
       alSourcei( voice->source, AL_BUFFER, voice->buffer );
 
@@ -687,7 +714,7 @@ void sound_listener( double dir, double px, double py,
 
    if (sound_lock == NULL) return;
 
-   SDL_mutexP( sound_lock );
+   soundLock();
 
    /* set orientation */
    ALfloat ori[] = { 0., 0., 0.,  0., 0., 1. };
@@ -697,7 +724,7 @@ void sound_listener( double dir, double px, double py,
    alListener3f( AL_POSITION, px, py, 1. );
 /* alListener3f( AL_VELOCITY, vx, vy, 0. );*/
 
-   SDL_mutexV( sound_lock );
+   soundUnlock();
 }
 
 

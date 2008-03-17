@@ -29,6 +29,12 @@
 
 #define BUFFER_SIZE        (4096*8)
 
+#define soundLock()     SDL_mutexP(sound_lock)
+#define soundUnlock()   SDL_mutexV(sound_lock)
+
+#define musicLock()     SDL_mutexP(music_vorbis_lock)
+#define musicUnlock()   SDL_mutexV(music_vorbis_lock)
+
 
 /*
  * global sound mutex
@@ -115,8 +121,8 @@ int music_thread( void* unused )
 
             music_rm(MUSIC_STOPPED);
 
-            SDL_mutexP( music_vorbis_lock ); /* lock the mutex */
-            SDL_mutexP( sound_lock );
+            musicLock(); /* lock the mutex */
+            soundLock();
 
             /* start playing current song */
             active = 0; /* load first buffer */
@@ -130,13 +136,13 @@ int music_thread( void* unused )
             if (stream_loadBuffer( music_buffer[active] )) music_rm(MUSIC_PLAYING);
             alSourceQueueBuffers( music_source, 1, &music_buffer[active] );
 
-            SDL_mutexV( sound_lock );
+            soundUnlock();
 
             active = 0; /* dive into loop */
          }
          while (music_is(MUSIC_PLAYING)) {
 
-            SDL_mutexP( sound_lock );
+            soundLock();
 
             alGetSourcei( music_source, AL_BUFFERS_PROCESSED, &stat );
             if (stat > 0) {
@@ -149,18 +155,18 @@ int music_thread( void* unused )
                active = 1 - active;
             }
             
-            SDL_mutexV( sound_lock );
+            soundUnlock();
 
             SDL_Delay(0);
          }
 
-         SDL_mutexP( sound_lock );
+         soundLock();
 
          alSourceStop( music_source );
          alSourceUnqueueBuffers( music_source, 2, music_buffer );
 
-         SDL_mutexV( sound_lock );
-         SDL_mutexV( music_vorbis_lock );
+         soundUnlock();
+         musicUnlock();
       }
 
       music_set(MUSIC_STOPPED);
@@ -214,7 +220,7 @@ int music_init (void)
    music_vorbis_lock = SDL_CreateMutex();
    music_vorbis.file.end = 0; /* indication it's not loaded */
 
-   SDL_mutexP( sound_lock );
+   soundLock();
 
    alGenBuffers( 2, music_buffer );
    alGenSources( 1, &music_source );
@@ -222,7 +228,7 @@ int music_init (void)
    alSourcef( music_source, AL_ROLLOFF_FACTOR, 0. );
    alSourcei( music_source, AL_SOURCE_RELATIVE, AL_TRUE );
 
-   SDL_mutexV( sound_lock );
+   soundUnlock();
 
    return 0;
 }
@@ -256,7 +262,7 @@ static int music_loadOGG( const char *filename )
    /* free currently loaded ogg */
    music_free();
 
-   SDL_mutexP( music_vorbis_lock );
+   musicLock();
    
    /* load new ogg */
    pack_open( &music_vorbis.file, DATA, filename );
@@ -267,7 +273,7 @@ static int music_loadOGG( const char *filename )
    if (music_vorbis.info->channels == 1) music_vorbis.format = AL_FORMAT_MONO16;
    else music_vorbis.format = AL_FORMAT_STEREO16;
 
-   SDL_mutexV( music_vorbis_lock );
+   musicUnlock();
 
    return 0;
 }
@@ -310,7 +316,7 @@ static int music_find (void)
 }
 static void music_free (void)
 {
-   SDL_mutexP( music_vorbis_lock );
+   musicLock();
 
    if (music_vorbis.file.end != 0) {
       ov_clear( &music_vorbis.stream );
@@ -318,7 +324,7 @@ static void music_free (void)
       music_vorbis.file.end = 0; /* somewhat officially ended */
    }
 
-   SDL_mutexV( music_vorbis_lock );
+   musicUnlock();
 }
 
 
@@ -337,9 +343,9 @@ void music_volume( const double vol )
 
    /* only needed if playing */
    if (music_set(MUSIC_PLAYING)) {
-      SDL_mutexP( sound_lock );
+      soundLock();
       alSourcef( music_source, AL_GAIN, fvol );
-      SDL_mutexV( sound_lock );
+      soundUnlock();
    }
 }
 void music_load( const char* name )

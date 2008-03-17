@@ -126,6 +126,7 @@ typedef struct Outfit_ {
       } mod;
       struct { /* afterburner */
          double rumble; /* percent of rumble */
+         ALuint sound; /* sound of the afterburner */
          double thrust_perc, thrust_abs; /* percent and absolute thrust bonus */
          double speed_perc, speed_abs; /* percent and absolute speed bonus */
          double energy; /* energy usage while active */

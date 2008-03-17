@@ -101,6 +101,8 @@ void player_jump (void);
 void player_screenshot (void);
 void player_afterburn (void);
 void player_afterburnOver (void);
+void player_accel( double acc );
+void player_accelOver (void);
 
 
 #endif /* PLAYER_H */

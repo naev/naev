@@ -52,7 +52,6 @@ unsigned int input_afterburnSensibility = 500; /* ms between taps to afterburn *
  * from player.c
  */
 extern double player_turn;
-extern double player_acc;
 extern unsigned int player_target;
 /*
  * from main.c
@@ -185,21 +184,18 @@ static void input_key( int keynum, double value, int abs )
     */
    /* accelerating */
    if (INGAME() && KEY("accel")) {
-      if (abs) player_acc = value;
+      if (abs) player_accel(value);
       else { /* prevent it from getting stuck */
-         if (value==KEY_PRESS) player_acc = 1.;
-         else if (value==KEY_RELEASE) player_acc = 0.;
+         if (value==KEY_PRESS) player_accel(1.);
+         else if (value==KEY_RELEASE) player_accelOver();
       }
 
       /* double tap accel = afterburn! */
       t = SDL_GetTicks();
-      if ((value==KEY_PRESS) && (t-input_accelLast <= input_afterburnSensibility)) {
+      if ((value==KEY_PRESS) && (t-input_accelLast <= input_afterburnSensibility))
          player_afterburn();
-      }
       else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_AFTERBURNER))
          player_afterburnOver();
-      else
-         player_acc = ABS(player_acc); /* make sure value is sane */
 
       if (value==KEY_PRESS) input_accelLast = t;
 
