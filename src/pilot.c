@@ -404,12 +404,14 @@ void pilot_setSecondary( Pilot* p, const char* secondary )
 {
    int i;
 
+   /* no need for ammo if there is no secondary */
    if (secondary == NULL) {
       p->secondary = NULL;
       p->ammo = NULL;
       return;
    }
 
+   /* find which is the secondary and set ammo appropriately */
    for (i=0; i<p->noutfits; i++) {
       if (strcmp(secondary, p->outfits[i].outfit->name)==0) {
          p->secondary = &p->outfits[i];
@@ -433,20 +435,38 @@ void pilot_setAmmo( Pilot* p )
    int i;
    char *name;
 
+   /* only launchers use ammo */
    if ((p->secondary == NULL) || !outfit_isLauncher(p->secondary->outfit)) {
       p->ammo = NULL;
       return;
    }
 
+   /* find the ammo and set it */
    name = p->secondary->outfit->u.lau.ammo;
-
    for (i=0; i<p->noutfits; i++)
       if (strcmp(p->outfits[i].outfit->name,name)==0) {
-         p->ammo = p->outfits + i;
+         p->ammo = &p->outfits[i];
          return;
       }
 
+   /* none found, so we assume it doesn't need ammo */
    p->ammo = NULL;
+}
+
+
+/*
+ * sets the pilot's afterburner
+ */
+void pilot_setAfterburner( Pilot* p )
+{
+   int i;
+
+   for (i=0; i<p->noutfits; i++)
+      if (outfit_isAfterburner( p->outfits[i].outfit )) {
+         p->afterburner = &p->outfits[i];
+         return;
+      }
+   p->afterburner = NULL;
 }
 
 
@@ -469,22 +489,25 @@ static void pilot_update( Pilot* pilot, const double dt )
    unsigned int t, l;
    double a, px,py, vx,vy;
 
+   /* he's dead */
    if (pilot_isFlag(pilot,PILOT_DEAD)) {
       t = SDL_GetTicks();
 
-      if (t > pilot->ptimer) {
-         if (pilot->id==PLAYER_ID)
+      if (t > pilot->ptimer) { /* completely destroyed with final explosion */
+         if (pilot->id==PLAYER_ID) /* player handled differently */
             player_destroyed();
          pilot_setFlag(pilot,PILOT_DELETE); /* will get deleted next frame */
          return;
       }
-      
+     
+      /* final explosion */
       if (!pilot_isFlag(pilot,PILOT_EXPLODED) && (t > pilot->ptimer - 200)) {
          spfx_add( spfx_get("ExpL"), 
                VX(pilot->solid->pos), VY(pilot->solid->pos),
                VX(pilot->solid->vel), VY(pilot->solid->vel), SPFX_LAYER_BACK );
          pilot_setFlag(pilot,PILOT_EXPLODED);
       }
+      /* reset random explosion timer */
       else if (t > pilot->timer[1]) {
          pilot->timer[1] = t + (unsigned int)(100
                *(double)(pilot->ptimer - pilot->timer[1])
@@ -504,16 +527,16 @@ static void pilot_update( Pilot* pilot, const double dt )
       }
    }
    else if (pilot->armour <= 0.) /* PWNED */
-         pilot_dead(pilot);
+         pilot_dead(pilot); /* start death stuff */
 
    /* purpose fallthrough to get the movement like disabled */
    if ((pilot != player) && 
          (pilot->armour < PILOT_DISABLED_ARMOR*pilot->armour_max)) { /* disabled */
-      pilot_setFlag(pilot,PILOT_DISABLED);
+      pilot_setFlag(pilot,PILOT_DISABLED); /* set as disabled */
       vect_pset( &pilot->solid->vel, /* slowly brake */
          VMOD(pilot->solid->vel) * (1. - dt*0.10),
          VANGLE(pilot->solid->vel) );
-      vectnull( &pilot->solid->force );
+      vectnull( &pilot->solid->force ); /* no more accel */
       pilot->solid->dir_vel = 0.; /* no more turning */
 
       /* update the solid */
@@ -524,15 +547,16 @@ static void pilot_update( Pilot* pilot, const double dt )
    }
 
    /* still alive */
-   else if (pilot->armour < pilot->armour_max) {
+   else if (pilot->armour < pilot->armour_max) { /* regen armour */
       pilot->armour += pilot->armour_regen * dt;
       pilot->energy += pilot->energy_regen * dt;
    }
-   else {
+   else { /* regen shield */
       pilot->shield += pilot->shield_regen * dt;
       pilot->energy += pilot->energy_regen * dt;
    }
 
+   /* check limits */
    if (pilot->armour > pilot->armour_max) pilot->armour = pilot->armour_max;
    if (pilot->shield > pilot->shield_max) pilot->shield = pilot->shield_max;
    if (pilot->energy > pilot->energy_max) pilot->energy = pilot->energy_max;
@@ -543,16 +567,17 @@ static void pilot_update( Pilot* pilot, const double dt )
          pilot->ship->gfx_space, pilot->solid->dir );
 
    if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) { /* limit the speed */
-      
+
+      /* pilot is afterburning */
       if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && /* must have enough energy left */
                (player->energy > pilot->afterburner->outfit->u.afb.energy * dt)) {
-         limit_speed( &pilot->solid->vel,
+         limit_speed( &pilot->solid->vel, /* limit is higher */
                pilot->speed * pilot->afterburner->outfit->u.afb.speed_perc + 
                pilot->afterburner->outfit->u.afb.speed_abs, dt );
          spfx_shake( SHAKE_DECAY/2. * dt); /* shake goes down at half speed */
          pilot->energy -= pilot->afterburner->outfit->u.afb.energy * dt; /* energy loss */
       }
-      else
+      else /* normal limit */
          limit_speed( &pilot->solid->vel, pilot->speed, dt );
    }
 }
@@ -565,8 +590,10 @@ static void pilot_hyperspace( Pilot* p )
 {
    double diff;
 
-   if (pilot_isFlag(p, PILOT_HYPERSPACE)) { /* pilot is actually in hyperspace */
+   /* pilot is actually in hyperspace */
+   if (pilot_isFlag(p, PILOT_HYPERSPACE)) {
 
+      /* has jump happened? */
       if (SDL_GetTicks() > p->ptimer) {
          if (p == player) { /* player just broke hyperspace */
             player_brokeHyperspace();
@@ -576,8 +603,10 @@ static void pilot_hyperspace( Pilot* p )
          return;
       }
 
-      vect_pset( &p->solid->force, p->thrust * 3., p->solid->dir );
+      /* keep acceling - hyperspace uses much bigger accel */
+      vect_pset( &p->solid->force, p->thrust * 5., p->solid->dir );
    }
+   /* engines getting ready for the jump */
    else if (pilot_isFlag(p, PILOT_HYP_BEGIN)) {
 
       if (SDL_GetTicks() > p->ptimer) { /* engines ready */
@@ -585,19 +614,21 @@ static void pilot_hyperspace( Pilot* p )
          pilot_setFlag(p, PILOT_HYPERSPACE);
       }
    }
-   else { /* pilot is getting ready for hyperspace */
+   /* pilot is getting ready for hyperspace */
+   else {
 
+      /* brake */
       if (VMOD(p->solid->vel) > MIN_VEL_ERR) {
          diff = pilot_face( p, VANGLE(p->solid->vel) + M_PI );
 
-         if (ABS(diff) < MAX_DIR_ERR) /* brake */
+         if (ABS(diff) < MAX_DIR_ERR)
             vect_pset( &p->solid->force, p->thrust, p->solid->dir );
 
       }
+      /* face target */
       else {
 
          vectnull( &p->solid->force ); /* stop accel */
-
 
          /* player should actually face the system he's headed to */
          if (p==player) diff = player_faceHyperspace();
@@ -619,10 +650,11 @@ static void pilot_hyperspace( Pilot* p )
 int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 {
    int i, q;
-   char *s;
+   char *osec;
 
    q = quantity;
 
+   /* does outfit already exist? */
    for (i=0; i<pilot->noutfits; i++)
       if (strcmp(outfit->name, pilot->outfits[i].outfit->name)==0) {
          pilot->outfits[i].quantity += quantity;
@@ -631,28 +663,38 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
             q -= pilot->outfits[i].quantity - outfit->max;
             pilot->outfits[i].quantity = outfit->max;
          }
+
+         /* recalculate the stats */
          pilot_calcStats(pilot);
          return q;
       }
 
-   s = (pilot->secondary) ? pilot->secondary->outfit->name : NULL;
+   /* hacks in case it reallocs */
+   osec = (pilot->secondary) ? pilot->secondary->outfit->name : NULL;
+   /* no need for ammo since it's handled in setSecondary,
+    * since pilot has only one afterburner it's handled at the end */
+
+   /* grow the outfits */
    pilot->outfits = realloc(pilot->outfits, (pilot->noutfits+1)*sizeof(PilotOutfit));
    pilot->outfits[pilot->noutfits].outfit = outfit;
    pilot->outfits[pilot->noutfits].quantity = quantity;
+
    /* can't be over max */
    if (pilot->outfits[pilot->noutfits].quantity > outfit->max) {
       q -= pilot->outfits[pilot->noutfits].quantity - outfit->max;
       pilot->outfits[i].quantity = outfit->max;
    }
-   pilot->outfits[pilot->noutfits].timer = 0;
+   pilot->outfits[pilot->noutfits].timer = 0; /* reset timer */
    (pilot->noutfits)++;
 
    if (outfit_isTurret(outfit)) /* used to speed up AI */
       pilot_setFlag(pilot, PILOT_HASTURRET);
 
    /* hack due to realloc possibility */
-   pilot_setSecondary( pilot, s );
+   pilot_setSecondary( pilot, osec );
+   pilot_setAfterburner( pilot );
 
+   /* recalculate the stats */
    pilot_calcStats(pilot);
    return q;
 }
@@ -664,7 +706,7 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 {
    int i, q, c;
-   char* s;
+   char* osec;
 
    c = (outfit_isMod(outfit)) ? outfit->u.mod.cargo : 0;
    q = quantity;
@@ -677,10 +719,7 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
             q += pilot->outfits[i].quantity;
 
             /* hack in case it reallocs - can happen even when shrinking */
-            s = (pilot->secondary) ? pilot->secondary->outfit->name : NULL;
-            /* clear it if it's the afterburner */
-            if (&pilot->outfits[i] == pilot->afterburner)
-               pilot->afterburner = NULL;
+            osec = (pilot->secondary) ? pilot->secondary->outfit->name : NULL;
 
             /* remove the outfit */
             memmove( pilot->outfits+i, pilot->outfits+i+1,
@@ -689,7 +728,9 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
             pilot->outfits = realloc( pilot->outfits,
                   sizeof(PilotOutfit) * (pilot->noutfits) );
 
-            pilot_setSecondary( pilot, s );
+            /* set secondary  and afterburner */
+            pilot_setSecondary( pilot, osec );
+            pilot_setAfterburner( pilot );
          }
          pilot_calcStats(pilot); /* recalculate stats */
          return q;
@@ -781,9 +822,8 @@ void pilot_calcStats( Pilot* pilot )
          /* misc */
          pilot->cargo_free += o->u.mod.cargo * q;
       }
-      else if (outfit_isAfterburner(pilot->outfits[i].outfit)) { /* set afterburner */
+      else if (outfit_isAfterburner(pilot->outfits[i].outfit)) /* set afterburner */
          pilot->afterburner = &pilot->outfits[i];
-      }
    }
 
    /* give the pilot his health proportion back */
@@ -810,6 +850,7 @@ int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )
 {
    int i, q;
 
+   /* check if pilot has it first */
    q = quantity;
    for (i=0; i<pilot->ncommodities; i++)
       if (!pilot->commodities[i].id && (pilot->commodities[i].commodity == cargo)) {
@@ -888,16 +929,21 @@ unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity
 
    return pilot->commodities[ pilot->ncommodities-1 ].id;
 }
+
+
+/*
+ * removes special mission cargo based on id
+ */
 int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id )
 {
    int i;
 
+   /* check if pilot has it */
    for (i=0; i<pilot->ncommodities; i++)
       if (pilot->commodities[i].id == cargo_id)
          break;
-   
    if (i>=pilot->ncommodities)
-      return 1;
+      return 1; /* pilot doesn't have it */
 
    /* remove cargo */
    pilot->cargo_free += pilot->commodities[i].quantity;
@@ -920,8 +966,10 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
 {
    int i, q;
 
+   /* check if pilot has it */
    q = quantity;
    for (i=0; i<pilot->ncommodities; i++)
+      /* doesn't remove mission cargo */
       if (!pilot->commodities[i].id && (pilot->commodities[i].commodity == cargo)) {
          if (quantity >= pilot->commodities[i].quantity) {
             q = pilot->commodities[i].quantity;
@@ -939,7 +987,7 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
          pilot->solid->mass -= q;
          return q;
       }
-   return 0;
+   return 0; /* pilot didn't have it */
 }
 
 

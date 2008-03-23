@@ -180,6 +180,7 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       const DamageType dtype, const double damage );
 void pilot_setSecondary( Pilot* p, const char* secondary );
 void pilot_setAmmo( Pilot* p );
+void pilot_setAfterburner( Pilot* p );
 double pilot_face( Pilot* p, const float dir );
 /* outfits */
 int pilot_freeSpace( Pilot* p ); /* weapon space */
