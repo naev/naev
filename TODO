@@ -53,6 +53,9 @@
       *) would usually indicate changes on the base ship equipment
    *) Players should be able to configure what outfit they want as secondary
       *) players should also be able to set hotkeys for secondary weapons
+   *) Radar improvements
+      *) non-linear - see alot more data then currently possible
+      *) objects always in sight (depending on resolution)
 
 
    MAYBE... SOMEDAY...
