@@ -183,7 +183,7 @@ static void input_key( int keynum, double value, int abs )
     * movement
     */
    /* accelerating */
-   if (INGAME() && KEY("accel")) {
+   if (KEY("accel")) {
       if (abs) player_accel(value);
       else { /* prevent it from getting stuck */
          if (value==KEY_PRESS) player_accel(1.);
@@ -200,7 +200,7 @@ static void input_key( int keynum, double value, int abs )
       if (value==KEY_PRESS) input_accelLast = t;
 
    /* turning left */
-   } else if (INGAME() && KEY("left")) {
+   } else if (KEY("left")) {
 
       /* set flags for facing correction */
       if (value==KEY_PRESS) { player_setFlag(PLAYER_TURN_LEFT); }
@@ -211,7 +211,7 @@ static void input_key( int keynum, double value, int abs )
       if (player_turn < -1.) { player_turn = -1.; } /* make sure value is sane */
 
    /* turning right */
-   } else if (INGAME() && KEY("right")) {
+   } else if (KEY("right")) {
 
       /* set flags for facing correction */
       if (value==KEY_PRESS) { player_setFlag(PLAYER_TURN_RIGHT); }
@@ -222,7 +222,7 @@ static void input_key( int keynum, double value, int abs )
       if (player_turn > 1.) { player_turn = 1.; } /* make sure value is sane */
    
    /* turn around to face vel */
-   } else if (INGAME() && KEY("reverse")) {
+   } else if (KEY("reverse")) {
       if (value==KEY_PRESS) { player_setFlag(PLAYER_REVERSE); }
       else if (value==KEY_RELEASE) {
          player_rmFlag(PLAYER_REVERSE);
@@ -236,7 +236,7 @@ static void input_key( int keynum, double value, int abs )
     * combat
     */
    /* shooting primary weapon */
-   } else if (INGAME() && KEY("primary")) {
+   } else if (KEY("primary")) {
       if (value==KEY_PRESS) { player_setFlag(PLAYER_PRIMARY); }
       else if (value==KEY_RELEASE) { player_rmFlag(PLAYER_PRIMARY); }
    /* targetting */
@@ -262,7 +262,7 @@ static void input_key( int keynum, double value, int abs )
     * secondary weapons
     */
    /* shooting secondary weapon */
-   } else if (KEY("secondary") && INGAME() && NOHYP()) {
+   } else if (KEY("secondary") && NOHYP()) {
       if (value==KEY_PRESS) { player_setFlag(PLAYER_SECONDARY); }
       else if (value==KEY_RELEASE) { player_rmFlag(PLAYER_SECONDARY); }
 
