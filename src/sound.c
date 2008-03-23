@@ -445,12 +445,16 @@ void sound_update (void)
    voice = voice_start;
    do {
       next = voice->next;
+
+      /* get status */
+      stat = -1;
+      if (voice->source != 0)
+         alGetSourcei( voice->source, AL_SOURCE_STATE, &stat );
+
       if (!voice_is(voice, VOICE_DONE)) { /* still working */
 
          /* voice has a source */
          if (voice->source != 0) {
-            alGetSourcei( voice->source, AL_SOURCE_STATE, &stat );
-
             /* update position */
             alSource3f( voice->source, AL_POSITION,
                   voice->px, voice->py, 0. );
@@ -458,10 +462,14 @@ void sound_update (void)
               voice->vx, voice->vy, 0. );*/
          }
 
-         prev = voice; /* only case will voice will stay */
+         prev = voice;
       }
-      else /* delete them */
-         voice_rm( prev, voice );
+      else { /* delete them */
+         if (stat != AL_PLAYING)
+            voice_rm( prev, voice ); /* do not set prev to voice */
+         else
+            prev = voice;
+      }
       voice = next;
    } while (voice != NULL);
 
