@@ -40,17 +40,17 @@ function attacked ( attacker )
 end
 
 function create ()
-   if ai.rnd(0,2)==0 then -- money less often, but more
-      ai.setcredits( ai.rnd(1000, ai.shipprice()/70) )
+   if rnd.int(0,2)==0 then -- money less often, but more
+      ai.setcredits( rnd.int(1000, ai.shipprice()/70) )
    end
-   if ai.rnd(0,2)==0 then
+   if rnd.int(0,2)==0 then
       ai.broadcast("The Empire is watching you.")
    end
 end
 
 -- taunts
 function taunt ( target )
-   num = ai.rnd(0,4)
+   num = rnd.int(0,4)
    if num == 0 then msg = "You dare attack me!"
    elseif num == 1 then msg = "You are no match for the Empire!"
    elseif num == 2 then msg = "The Empire will have your head!"
@@ -107,7 +107,7 @@ function stop ()
    if ai.isstopped() then
       ai.stop()
       ai.poptask()
-      ai.settimer(0, ai.rnd(8000,15000))
+      ai.settimer(0, rnd.int(8000,15000))
       ai.pushtask(0,"land")
    else
       ai.brake()

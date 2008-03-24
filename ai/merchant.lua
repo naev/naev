@@ -26,7 +26,7 @@ function attacked ( attacker )
    if ai.taskname() ~= "runaway" then
 
       -- some messages
-      num = ai.rnd(0,3)
+      num = rnd.int(0,3)
       if num == 0 then msg = "Mayday! We are under attack!"
       elseif num == 1 then msg = "Requesting assistance.  We are under attack!"
       elseif num == 2 then msg = "Merchant vessle here under attack! Help!"
@@ -43,9 +43,9 @@ end
 
 -- Gives the pilot it's initial stuff
 function create ()
-   ai.setcredits( ai.rnd(200, ai.shipprice()/100) )
+   ai.setcredits( rnd.int(200, ai.shipprice()/100) )
 
-   num = ai.rnd(12)
+   num = rnd.int(12)
    if num < 5 then
       cargo = "Food"
    elseif num < 8 then
@@ -57,7 +57,7 @@ function create ()
    else
       cargo = "Medicine"
    end
-   ai.setcargo( cargo, ai.rnd(0, ai.cargofree() ) )
+   ai.setcargo( cargo, rnd.int(0, ai.cargofree() ) )
 end
 
 -- runs away
@@ -100,7 +100,7 @@ function stop ()
    if ai.isstopped() then
       ai.stop()
       ai.poptask()
-      ai.settimer(0, ai.rnd(8000,15000))
+      ai.settimer(0, rnd.int(8000,15000))
       ai.pushtask(0,"land")
    else
       ai.brake()

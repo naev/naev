@@ -22,7 +22,7 @@ function control ()
       if ai.parmour() == 100 and enemy ~= 0 then
 
          -- taunts!
-         num = ai.rnd(0,4)
+         num = rnd.int(0,4)
          if num == 0 then msg = "Prepare to be boarded!"
          elseif num == 1 then msg = "Yohoho!"
          elseif num == 2 then msg = "What's a ship like you doing in a place like this?"
@@ -62,7 +62,7 @@ end
 
 
 function create ()
-   if ai.rnd(0,5) ~= 0 then
+   if rnd.int(0,5) ~= 0 then
       ai.setcredits(0, ai.shipprice()/300 )
    end
 end
@@ -70,7 +70,7 @@ end
 
 function taunt ( target )
       -- some taunts
-      num = ai.rnd(0,4)
+      num = rnd.int(0,4)
       if num == 0 then msg = "You dare attack me!"
       elseif num == 1 then msg = "You think that you can take me on?"
       elseif num == 2 then msg = "Die!"

@@ -24,6 +24,9 @@
 #include "rng.h"
 #include "space.h"
 #include "faction.h"
+#include "nlua.h"
+#include "nluadef.h"
+
 
 
 /*
@@ -58,20 +61,9 @@
  */
 
 
-/* creates a new lua table */
-#define newtable(L) (lua_newtable(L), lua_gettop(L))
 /* registers a number constant n to name s (syntax like lua_regfunc) */
 #define lua_regnumber(l,s,n)  \
 (lua_pushnumber(l,n), lua_setglobal(l,s))
-/* registers a C function */
-#define lua_regfunc(l,s,f)    \
-(lua_pushcfunction(l,f), lua_setglobal(L,s))
-/* L state, void* buf, int n size, char* s identifier */
-#define luaL_dobuffer(L, b, n, s) \
-   (luaL_loadbuffer(L, b, n, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
-
-/* makes the function not run if n minimum parameters aren't passed */
-#define MIN_ARGS(n)        if (lua_gettop(L) < n) return 0
 
 
 /*
@@ -180,9 +172,6 @@ static int ai_credits( lua_State *L ); /* credits( number ) */
 static int ai_cargo( lua_State *L ); /* cargo( name, quantity ) */
 static int ai_shipprice( lua_State *L ); /* shipprice() */
 
-/* random */
-static int ai_rng( lua_State *L ); /* rng( number, number ) */
-
 
 static const luaL_reg ai_methods[] = {
    /* tasks */
@@ -235,8 +224,6 @@ static const luaL_reg ai_methods[] = {
    { "setcredits", ai_credits },
    { "setcargo", ai_cargo },
    { "shipprice", ai_shipprice },
-   /* rng */
-   { "rnd", ai_rng },
    {0,0} /* end */
 };
 
@@ -343,6 +330,7 @@ static int ai_loadProfile( char* filename )
 
    /* Register C functions in Lua */
    luaL_register(L, "ai", ai_methods);
+   lua_loadRnd(L);
 
 
    /* now load the file since all the functions have been previously loaded */
@@ -651,7 +639,7 @@ static int ai_getdistance( lua_State *L )
 {
    Vector2d *vect;
 
-   MIN_ARGS(1);
+   NLUA_MIN_ARGS(1);
 
    vect = (lua_islightuserdata(L,1)) ?
          (Vector2d*)lua_topointer(L,1) : NULL;
@@ -714,7 +702,7 @@ static int ai_cargofree( lua_State *L )
  */
 static int ai_exists( lua_State *L )
 {
-   MIN_ARGS(1);
+   NLUA_MIN_ARGS(1);
 
    if (lua_isnumber(L,1)) {
       lua_pushboolean(L,
@@ -809,7 +797,7 @@ static int ai_accel( lua_State *L )
  */
 static int ai_turn( lua_State *L )
 {
-   MIN_ARGS(1);
+   NLUA_MIN_ARGS(1);
    pilot_turn = (lua_isnumber(L,1)) ? (double)lua_tonumber(L,1) : 0. ;
    return 0;
 }
@@ -820,7 +808,7 @@ static int ai_turn( lua_State *L )
  */
 static int ai_face( lua_State *L )
 {
-   MIN_ARGS(1);
+   NLUA_MIN_ARGS(1);
    Vector2d *v, sv, tv; /* get the position to face */
    Pilot* p;
    double mod, diff;
@@ -996,7 +984,7 @@ static int ai_combat( lua_State *L )
  */
 static int ai_settarget( lua_State *L )
 {
-   MIN_ARGS(1);
+   NLUA_MIN_ARGS(1);
 
    if (lua_isnumber(L,1)) pilot_target = (int)lua_tonumber(L,1);
    return 0;
@@ -1077,7 +1065,7 @@ static int ai_getenemy( lua_State *L )
  */
 static int ai_hostile( lua_State *L )
 {
-   MIN_ARGS(1);
+   NLUA_MIN_ARGS(1);
 
    if (lua_isnumber(L,1) && ((unsigned int)lua_tonumber(L,1) == PLAYER_ID))
       pilot_setFlag(cur_pilot, PILOT_HOSTILE);
@@ -1091,7 +1079,7 @@ static int ai_hostile( lua_State *L )
  */
 static int ai_settimer( lua_State *L )
 {
-   MIN_ARGS(2);
+   NLUA_MIN_ARGS(2);
 
    int n; /* get the timer */
    if (lua_isnumber(L,1)) n = lua_tonumber(L,1);
@@ -1106,7 +1094,7 @@ static int ai_settimer( lua_State *L )
  */
 static int ai_timeup( lua_State *L )
 {
-   MIN_ARGS(1);
+   NLUA_MIN_ARGS(1);
 
    int n; /* get the timer */
    if (lua_isnumber(L,1)) n = lua_tonumber(L,1);
@@ -1121,7 +1109,7 @@ static int ai_timeup( lua_State *L )
  */
 static int ai_comm( lua_State *L )
 {
-   MIN_ARGS(2);
+   NLUA_MIN_ARGS(2);
    
    if (lua_isnumber(L,1) && (lua_tonumber(L,1)==PLAYER_ID) && lua_isstring(L,2))
       player_message( "Comm %s> \"%s\"", cur_pilot->name, lua_tostring(L,2));
@@ -1134,7 +1122,7 @@ static int ai_comm( lua_State *L )
  */
 static int ai_broadcast( lua_State *L )
 {
-   MIN_ARGS(1);
+   NLUA_MIN_ARGS(1);
 
    if (lua_isstring(L,1))
       player_message( "Broadcast %s> \"%s\"", cur_pilot->name, lua_tostring(L,1));
@@ -1148,7 +1136,7 @@ static int ai_broadcast( lua_State *L )
  */
 static int ai_credits( lua_State *L )
 {
-   MIN_ARGS(1);
+   NLUA_MIN_ARGS(1);
    if (ai_status != AI_STATUS_CREATE) return 0;
 
    if (lua_isnumber(L,1))
@@ -1163,7 +1151,7 @@ static int ai_credits( lua_State *L )
  */
 static int ai_cargo( lua_State *L )
 {
-   MIN_ARGS(2);
+   NLUA_MIN_ARGS(2);
    if (ai_status != AI_STATUS_CREATE) return 0;
 
    if (lua_isstring(L,1) && lua_isnumber(L,2))
@@ -1183,30 +1171,4 @@ static int ai_shipprice( lua_State *L )
    return 1;
 }
 
-
-/*
- * returns a random number between low and high
- */
-static int ai_rng( lua_State *L )
-{
-   int o;
-
-   o = lua_gettop(L);
-
-   if (o==0) lua_pushnumber(L, RNGF() ); /* random double 0 <= x <= 1 */
-   else if (o==1) { /* random int 0 <= x <= parameter */
-      if (lua_isnumber(L, -1))
-         lua_pushnumber(L, RNG(0, (int)lua_tonumber(L, -1)));
-      else return 0;
-   }
-   else if (o>=2) { /* random int paramater 1 <= x <= parameter 2 */
-      if (lua_isnumber(L, -1) && lua_isnumber(L, -2))
-         lua_pushnumber(L,
-               RNG((int)lua_tonumber(L, -2), (int)lua_tonumber(L, -1)));
-      else return 0;
-   }
-   else return 0;
-
-   return 1; /* unless it's returned 0 already it'll always return a parameter */
-}
 

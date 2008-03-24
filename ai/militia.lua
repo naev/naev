@@ -32,15 +32,15 @@ function attacked ( attacker )
 end
 
 function create ()
-   ai.setcredits( ai.rnd(1000, ai.shipprice()/200) )
-   if ai.rnd(0,2)==0 then
+   ai.setcredits( rnd.int(1000, ai.shipprice()/200) )
+   if rnd.int(0,2)==0 then
       ai.broadcast("This area is under militia survellance.")
    end
 end
 
 -- taunts
 function taunt ( target )
-   num = ai.rnd(0,4)
+   num = rnd.int(0,4)
    if num == 0 then msg = "You dare attack me!"
    elseif num == 1 then msg = "You think that you can take me on?"
    elseif num == 2 then msg = "Die!"
