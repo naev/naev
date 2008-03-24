@@ -38,7 +38,7 @@ CVORBIS =
 CGL =
 CFLAGS = $(CLUA) $(CPLUTO) $(CSDL) $(CXML) $(CTTF) $(CGL) $(CAL) $(CVORBIS) $(VERSION) -D$(OS) -fgnu89-inline
 ifdef DEBUG
-CFLAGS += -W -Wall -g3 -DDEBUG -DLUA_USE_APICHECK -std=c99
+CFLAGS += -W -Wall -Wextra -g3 -DDEBUG -DLUA_USE_APICHECK -std=c99
 else # DEBUG
 CFLAGS += -O2 -funroll-loops -pipe -std=c99
 endif # DEBUG
