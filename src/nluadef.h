@@ -7,6 +7,11 @@
 # define NLUADEF_H
 
 
+#include "lua.h"
+#include "lauxlib.h"
+#include "lualib.h"
+
+
 /*
  * debug stuff
  */

@@ -9,9 +9,7 @@
 #include <string.h>
 #include <malloc.h>
 
-#include "lua.h"
-#include "lauxlib.h"
-#include "lualib.h"
+#include "nluadef.h"
 
 #include "rng.h"
 #include "naev.h"
@@ -29,11 +27,6 @@
 
 #define MISSION_DATA          "dat/mission.xml"
 #define MISSION_LUA_PATH      "dat/missions/"
-
-
-/* L state, void* buf, int n size, char* s identifier */
-#define luaL_dobuffer(L, b, n, s) \
-   (luaL_loadbuffer(L, b, n, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
 
 
 /*

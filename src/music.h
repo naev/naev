@@ -8,6 +8,9 @@
 #  define MUSIC_H
 
 
+#include "lua.h"
+
+
 /*
  * thread
  */
@@ -30,6 +33,12 @@ void music_volume( const double vol );
 void music_load( const char* name );
 void music_play (void);
 void music_stop (void);
+
+/*
+ * lua control
+ */
+int lua_loadMusic( lua_State *L, int read_only );
+int music_choose( char* situation );
 
 
 #endif /* MUSIC_H */

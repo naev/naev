@@ -138,8 +138,7 @@ int main ( int argc, char** argv )
       LOG("Sound is disabled!");
    else {
       if (sound_init()) WARN("Problem setting up sound!");
-      music_load( "Machina" );
-      music_play();
+      music_choose( "load" );
    }
 
 

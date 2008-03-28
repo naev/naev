@@ -20,6 +20,7 @@
 #include "mission.h"
 #include "ntime.h"
 #include "save.h"
+#include "music.h"
 
 
 /* global/main window */
@@ -51,10 +52,6 @@
 /* mission computer window */
 #define MISSION_WIDTH   700
 #define MISSION_HEIGHT  600
-
-
-#define MUSIC_TAKEOFF   "liftoff"
-#define MUSIC_LAND      "agriculture"
 
 
 /*
@@ -1078,8 +1075,7 @@ void land( Planet* p )
    if (landed) return;
 
    /* change music */
-   music_load( MUSIC_LAND );
-   music_play();
+   music_choose("land");
 
    land_planet = p;
    land_wid = window_create( p->name, -1, -1, LAND_WIDTH, LAND_HEIGHT );
@@ -1157,8 +1153,7 @@ void takeoff (void)
    if (!landed) return;
 
    /* ze music */
-   music_load( MUSIC_TAKEOFF );
-   music_play();
+   music_choose("takeoff");
 
    /* to randomize the takeoff a bit */
    sw = land_planet->gfx_space->w;

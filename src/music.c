@@ -12,6 +12,9 @@
 #include <AL/alc.h>
 #include <vorbis/vorbisfile.h>
 
+#include "nlua.h"
+#include "nluadef.h"
+#include "misn_lua.h"
 #include "naev.h"
 #include "log.h"
 #include "pack.h"
@@ -35,6 +38,8 @@
 #define musicLock()     SDL_mutexP(music_vorbis_lock)
 #define musicUnlock()   SDL_mutexV(music_vorbis_lock)
 
+#define MUSIC_LUA_PATH     "snd/music.lua"
+
 
 /*
  * global sound mutex
@@ -43,10 +48,28 @@ extern SDL_mutex *sound_lock;
 
 
 /*
+ * global music lua
+ */
+static lua_State *music_lua = NULL;
+/* functions */
+static int musicL_load( lua_State* L );
+static int musicL_play( lua_State* L );
+static int musicL_stop( lua_State* L );
+static int musicL_get( lua_State* L );
+static const luaL_reg music_methods[] = {
+   { "load", musicL_load },
+   { "play", musicL_play },
+   { "stop", musicL_stop },
+   { "get", musicL_get },
+   {0,0}
+};
+
+
+/*
  * saves the music to ram in this structure
  */
 typedef struct alMusic_ {
-   char name[32]; /* name */
+   char name[64]; /* name */
    Packfile file;
    OggVorbis_File stream;
    vorbis_info* info;
@@ -94,10 +117,14 @@ ov_callbacks ovcall = {
 /*
  * prototypes
  */
+/* music stuff */
 static int stream_loadBuffer( ALuint buffer );
 static int music_find (void);
 static int music_loadOGG( const char *filename );
 static void music_free (void);
+/* lua stuff */
+static int music_luaInit (void);
+static void music_luaQuit (void);
 
 
 /*
@@ -226,7 +253,10 @@ int music_init (void)
    alGenSources( 1, &music_source );
    alSourcef( music_source, AL_GAIN, mvolume );
    alSourcef( music_source, AL_ROLLOFF_FACTOR, 0. );
-   alSourcei( music_source, AL_SOURCE_RELATIVE, AL_TRUE );
+   alSourcei( music_source, AL_SOURCE_RELATIVE, AL_FALSE );
+
+   /* start the lua music stuff */
+   music_luaInit();
 
    soundUnlock();
 
@@ -250,6 +280,9 @@ void music_exit (void)
       free(music_selection[i]);
    free(music_selection);
 
+   /* bye bye lua */
+   music_luaQuit();
+
    SDL_DestroyMutex( music_vorbis_lock );
 }
 
@@ -263,6 +296,9 @@ static int music_loadOGG( const char *filename )
    music_free();
 
    musicLock();
+
+   /* set the new name */
+   strncpy( music_vorbis.name, filename, 64 );
    
    /* load new ogg */
    pack_open( &music_vorbis.file, DATA, filename );
@@ -378,4 +414,113 @@ void music_kill (void)
 {
    if (!music_is(MUSIC_KILL)) music_set(MUSIC_KILL);
 }
+
+
+/*
+ * music lua stuff
+ */
+/* initialize */
+static int music_luaInit (void)
+{
+   char *buf;
+   uint32_t bufsize;
+
+   if (music_lua != NULL)
+      music_luaQuit();
+
+   music_lua = luaL_newstate();
+
+   lua_loadSpace(music_lua,1); /* space and time are readonly */
+   lua_loadTime(music_lua,1);
+   lua_loadRnd(music_lua);
+   lua_loadVar(music_lua,1); /* also read only */
+   lua_loadMusic(music_lua,0); /* write it */
+
+   /* load the actual lua music code */
+   buf = pack_readfile( DATA, MUSIC_LUA_PATH, &bufsize );
+   if (luaL_dobuffer(music_lua, buf, bufsize, MUSIC_LUA_PATH) != 0) {
+      ERR("Error loading music file: %s",MUSIC_LUA_PATH);
+      ERR("%s",lua_tostring(music_lua,-1));
+      WARN("Most likely Lua file has improper syntax, please check");
+      return -1;
+   }
+   free(buf);
+
+
+   return 0;
+}
+/* destroy */
+static void music_luaQuit (void)
+{
+   if (music_lua == NULL)
+      return;
+
+   lua_close(music_lua);
+   music_lua = NULL;
+}
+
+
+/*
+ * loads the music functions into a lua_State
+ */
+int lua_loadMusic( lua_State *L, int read_only )
+{
+   (void)read_only; /* future proof */
+   luaL_register(L, "music", music_methods);
+   return 0;
+}
+
+
+/*
+ * actually runs the music stuff, based on situation
+ */
+int music_choose( char* situation )
+{
+   lua_getglobal( music_lua, "choose" );
+   lua_pushstring( music_lua, situation );
+   if (lua_pcall(music_lua, 1, 0, 0)) { /* error has occured */
+      WARN("Error while choosing music: %s", (char*) lua_tostring(music_lua,-1));
+      return -1;
+   }
+   return 0;
+}
+
+
+/*
+ * the music lua functions
+ */
+static int musicL_load( lua_State *L )
+{
+   char* str;
+
+   /* check parameters */
+   NLUA_MIN_ARGS(1);
+   if (lua_isstring(L,1)) str = (char*)lua_tostring(L,1);
+   else NLUA_INVALID_PARAMETER();
+
+   music_load( str );
+   return 0;
+}
+static int musicL_play( lua_State *L )
+{
+   (void)L;
+   music_play();
+   return 0;
+}
+static int musicL_stop( lua_State *L )
+{
+   (void)L;
+   music_stop();
+   return 0;
+}
+static int musicL_get( lua_State *L )
+{
+   musicLock();
+   lua_pushstring(L,music_vorbis.name);
+   musicUnlock();
+
+   return 1;
+}
+
+
 
