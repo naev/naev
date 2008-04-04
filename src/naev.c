@@ -85,7 +85,9 @@ static void render_all (void);
 
 
 /*
- * main
+ * @brief The entry point of NAEV.
+ * @param[in] argc Number of arguments.
+ * @param[in] argv Array of argc arguments.
  */
 int main ( int argc, char** argv )
 {
@@ -138,7 +140,7 @@ int main ( int argc, char** argv )
       LOG("Sound is disabled!");
    else {
       if (sound_init()) WARN("Problem setting up sound!");
-      music_choose( "load" );
+      music_choose("load");
    }
 
 
@@ -242,7 +244,7 @@ void load_all (void)
    space_load();
 }
 /*
- * unloads all data, simplifies main()
+ * @brief Unloads all data, simplifies main().
  */
 void unload_all (void)
 {
@@ -258,7 +260,7 @@ void unload_all (void)
 }
 
 /* 
- * split main loop from main() for secondary loop hack in toolkit.c
+ * @brief Split main loop from main() for secondary loop hack in toolkit.c.
  */
 void main_loop (void)
 {
@@ -280,11 +282,11 @@ void main_loop (void)
 }
 
 
-/*
- * updates the game itself (player flying around and friends)
- */
 static double fps_dt = 1.;
 static double dt = 0.; /* used also a bit in render_all */
+/*
+ * @brief Controls the FPS.
+ */
 static void fps_control (void)
 {
    /* dt in ms/1000 */
@@ -303,7 +305,7 @@ static void fps_control (void)
 
 
 /*
- * updates the game itself (player flying around and friends)
+ * @brief Updates the game itself (player flying around and friends).
  */
 static void update_all (void)
 {
@@ -321,7 +323,7 @@ static void update_all (void)
 
 
 /*
- * Renders the game itself (player flying around and friends)
+ * @brief Renders the game itself (player flying around and friends).
  *
  * Blitting order (layers):
  *   BG | @ stars and planets
@@ -357,11 +359,11 @@ static void render_all (void)
 }
 
 
-/*
- * displays FPS on the screen
- */
 static double fps = 0.;
 static double fps_cur = 0.;
+/*
+ * @brief Displays FPS on the screen.
+ */
 static void display_fps( const double dt )
 {
    double x,y;
@@ -381,13 +383,12 @@ static void display_fps( const double dt )
 
 
 /*
- * gets the data module's name
+ * @brief Sets the data module's name.
  */
 static void data_name (void)
 {
    uint32_t bufsize;
    char *buf;
-
 
    /* 
     * check to see if data file is valid
@@ -445,7 +446,7 @@ static void data_name (void)
 
 
 /*
- * sets the window caption
+ * @brief Sets the window caption.
  */
 static void window_caption (void)
 {
