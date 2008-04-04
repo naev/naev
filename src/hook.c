@@ -46,6 +46,9 @@ static int hook_run( Hook *hook );
 static void hook_free( Hook *h );
 static int hook_needSave( Hook *h );
 static int hook_parse( xmlNodePtr base );
+/* externed */
+int hook_save( xmlTextWriterPtr writer );
+int hook_load( xmlNodePtr parent );
 
 
 /*

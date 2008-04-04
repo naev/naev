@@ -97,6 +97,9 @@ static void system_parseJumps( const xmlNodePtr parent );
 static PlanetClass planetclass_get( const char a );
 /* extern */
 extern void player_message ( const char *fmt, ... );
+/* externed */
+void planets_minimap( const double res, const double w,
+      const double h, const RadarShape shape );
 
 
 /*
@@ -107,8 +110,8 @@ extern void player_message ( const char *fmt, ... );
    if ((shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
          (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y))<rc)))   \
    glVertex2i((x),(y))
-void planets_minimap( const double res, const double w, const double h,
-      const RadarShape shape )
+void planets_minimap( const double res, const double w,
+      const double h, const RadarShape shape )
 {
    int i;
    int cx, cy, x, y, r, rc;
@@ -363,8 +366,6 @@ StarSystem** system_getJumpPath( int* njumps, char* sysstart, char* sysend )
    }
 
    /* free the linked lists */
-   //A_freeList(open);
-   //A_freeList(closed);
    A_freeList(A_gc);
    return res;
 }

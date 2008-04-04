@@ -21,8 +21,8 @@ int joystick_use( int indjoystick );
 /*
  * init/exit functions
  */
-int joystick_init();
-void joystick_exit();
+int joystick_init (void);
+void joystick_exit (void);
 
 
 #endif /* JOYSTICK_H */

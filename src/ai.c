@@ -109,6 +109,9 @@ static void ai_freetask( Task* t );
 /* External C routines */
 void ai_attacked( Pilot* attacked, const unsigned int attacker ); /* weapon.c */
 void ai_create( Pilot* pilot ); /* pilot.c */
+/* C Routines made External */
+void ai_destroy( Pilot* p );
+void ai_think( Pilot* pilot );
 
 
 /*

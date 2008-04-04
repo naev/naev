@@ -77,6 +77,7 @@ static int mwfrontLayer = 0; /* alloced memory size */
 /*
  * Prototypes
  */
+/* static */
 static Weapon* weapon_create( const Outfit* outfit,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const unsigned int parent, const unsigned int target );
@@ -89,6 +90,9 @@ static void weapon_free( Weapon* w );
 /* think */
 static void think_seeker( Weapon* w, const double dt );
 static void think_smart( Weapon* w, const double dt );
+/* externed */
+void weapon_minimap( const double res, const double w,
+      const double h, const RadarShape shape );
 
 
 /*
@@ -98,8 +102,8 @@ static void think_smart( Weapon* w, const double dt );
    if ((shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
          (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y))<rc)))   \
    glVertex2i((x),(y))
-void weapon_minimap( const double res, const double w, const double h,
-      const RadarShape shape )
+void weapon_minimap( const double res, const double w,
+      const double h, const RadarShape shape )
 {
    int i, rc;
    double x, y;

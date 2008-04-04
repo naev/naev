@@ -194,10 +194,13 @@ static int player_parseShip( xmlNodePtr parent, int is_player );
 /* 
  * externed
  */
-void player_dead (void);
-void player_destroyed (void);
-int player_save( xmlTextWriterPtr writer );
-int player_load( xmlNodePtr parent );
+void player_dead (void); /* pilot.c */
+void player_destroyed (void); /* pilot.c */
+int player_save( xmlTextWriterPtr writer ); /* save.c */
+int player_load( xmlNodePtr parent ); /* save.c */
+void player_think( Pilot* player ); /* pilot.c */
+void player_brokeHyperspace (void); /* pilot.c */
+double player_faceHyperspace (void); /* pilot.c */
 
 
 /* 

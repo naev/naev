@@ -122,7 +122,7 @@ static int source_nstack = 0;
 struct alVoice { /* declared in header */
    alVoice *next; /* yes it's a linked list */
 
-   // ALuint id; /* unique id for the voice */
+   /* ALuint id; *//* unique id for the voice */
 
    ALuint source; /* source itself, 0 if not set */
    ALuint buffer; /* buffer */
@@ -130,7 +130,7 @@ struct alVoice { /* declared in header */
    int priority; /* base priority */
 
    double px, py; /* position */
-   //double vx, vy; /* velocity */
+   /*double vx, vy; *//* velocity */
 
    unsigned int start; /* time started in ms */
    unsigned int flags; /* flags to set properties */

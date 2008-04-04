@@ -68,10 +68,14 @@ static int nalliances = 0;
 /*
  * Prototypes
  */
+/* static */
 static Faction* faction_parse( xmlNodePtr parent );
 static void alliance_parse( xmlNodePtr parent );
 static void enemies_parse( xmlNodePtr parent );
 static Alliance* alliance_get( char* name );
+/* externed */
+int pfaction_save( xmlTextWriterPtr writer );
+int pfaction_load( xmlNodePtr parent );
 
 
 /*

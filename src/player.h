@@ -51,6 +51,8 @@ void player_new (void);
 void player_newShip( Ship* ship, double px, double py,
       double vx, double vy, double dir );
 void player_cleanup (void);
+int gui_load (const char* name);
+
 
 /*
  * render
@@ -59,6 +61,7 @@ int gui_init (void);
 void gui_free (void);
 void player_render (void);
 void player_renderBG (void); /* renders BG layer player stuff */
+
 
 /*
  * misc

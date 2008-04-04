@@ -63,9 +63,15 @@ static int misn_delete = 0; /* if 1 delete current mission */
 /*
  * prototypes
  */
+/* static */
 static int var_add( misn_var *var );
 static void var_free( misn_var* var );
 static unsigned int hook_generic( lua_State *L, char* stack );
+/* externed */
+int misn_run( Mission *misn, char *func );
+int var_save( xmlTextWriterPtr writer );
+int var_load( xmlNodePtr parent );
+
 
 /*
  * libraries

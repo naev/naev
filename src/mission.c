@@ -61,6 +61,9 @@ static MissionData* mission_parse( const xmlNodePtr parent );
 static int missions_parseActive( xmlNodePtr parent );
 static int mission_persistData( lua_State *L, xmlTextWriterPtr writer );
 static int mission_unpersistData( lua_State *L, xmlNodePtr parent );
+/* externed */
+int missions_saveActive( xmlTextWriterPtr writer );
+int missions_loadActive( xmlNodePtr parent );
 
 
 /*
