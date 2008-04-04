@@ -8,6 +8,7 @@
 --    combat - player just got a hostile onscreen
 --    idle - current playing music ran out
 ]]--
+last = "idle"
 function choose( str )
 
    if str == "load" then
@@ -30,13 +31,13 @@ function choose( str )
       music.load( "galacticbattle" )
       music.play()
 
-   elseif str == "idle" then
-
+   elseif str == "idle" and last ~= "idle" then
       choose(last) -- this should be smarter in the future
-
    end
 
-   last = str -- save the last string so we can use it
+   if last ~= "idle" then
+      last = str -- save the last string so we can use it
+   end
 end
 
 

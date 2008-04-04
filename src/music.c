@@ -140,7 +140,7 @@ int music_thread( void* unused )
 
    /* main loop */
    while (!music_is(MUSIC_KILL)) {
-      
+
       if (music_is(MUSIC_PLAYING)) {
          if (music_vorbis.file.end == 0)
             music_rm(MUSIC_PLAYING);
@@ -429,6 +429,8 @@ static int music_luaInit (void)
       music_luaQuit();
 
    music_lua = luaL_newstate();
+
+   luaL_openlibs(music_lua);
 
    lua_loadSpace(music_lua,1); /* space and time are readonly */
    lua_loadTime(music_lua,1);
