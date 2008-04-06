@@ -36,7 +36,7 @@ CTTF = $(shell freetype-config --cflags)
 CAL = $(shell openal-config --cflags) $(shell freealut-config --cflags)
 CVORBIS =
 CGL =
-CFLAGS = $(CLUA) $(CPLUTO) $(CSDL) $(CXML) $(CTTF) $(CGL) $(CAL) $(CVORBIS) $(VERSION) -D$(OS) -fgnu89-inline
+CFLAGS = $(CLUA) $(CPLUTO) $(CSDL) $(CXML) $(CTTF) $(CGL) $(CAL) $(CVORBIS) $(VERSION) -D$(OS)
 ifdef DEBUG
 CFLAGS += -W -Wall -Wextra -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -fno-inline -g3 -DDEBUG -DLUA_USE_APICHECK -std=c99 -ansi
 else # DEBUG
