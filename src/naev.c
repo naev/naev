@@ -81,13 +81,15 @@ static void data_name (void);
 /* update */
 static void fps_control (void);
 static void update_all (void);
+static void update_routine( double dt );
 static void render_all (void);
 
 
-/*
+/**
  * @brief The entry point of NAEV.
  * @param[in] argc Number of arguments.
  * @param[in] argv Array of argc arguments.
+ * @return EXIT_SUCCESS on success.
  */
 int main ( int argc, char** argv )
 {
@@ -228,7 +230,7 @@ int main ( int argc, char** argv )
    exit(EXIT_SUCCESS);
 }
 
-/*
+/**
  * loads all the data, makes main() simpler
  */
 void load_all (void)
@@ -243,7 +245,7 @@ void load_all (void)
    fleet_load(); /* dep for space */
    space_load();
 }
-/*
+/**
  * @brief Unloads all data, simplifies main().
  */
 void unload_all (void)
@@ -259,7 +261,7 @@ void unload_all (void)
    var_cleanup(); /* cleans up mission variables */
 }
 
-/* 
+/**
  * @brief Split main loop from main() for secondary loop hack in toolkit.c.
  */
 void main_loop (void)
@@ -284,7 +286,7 @@ void main_loop (void)
 
 static double fps_dt = 1.;
 static double dt = 0.; /* used also a bit in render_all */
-/*
+/**
  * @brief Controls the FPS.
  */
 static void fps_control (void)
@@ -304,17 +306,42 @@ static void fps_control (void)
 }
 
 
-/*
+const double fps_min = 1./50.;
+/**
  * @brief Updates the game itself (player flying around and friends).
+ * @notes
  */
 static void update_all (void)
 {
-#if 0
-   if (dt > 1./30.) { /* slow timers down and rerun calculations */
+   double tempdt;
+
+   if (dt > 1.) { /* slow timers down and rerun calculations */
       pause_delay((unsigned int)dt*1000);
       return;
    }
-#endif
+   else if (dt > fps_min) { /* we'll force a minimum of 50 FPS */
+
+      tempdt = dt - fps_min;
+      pause_delay( (unsigned int)(tempdt*1000));
+      update_routine(fps_min);
+      
+      /* run as many cycles of dt=fps_min as needed */
+      while (tempdt > fps_min) {
+         pause_delay((unsigned int)(-fps_min*1000)); /* increment counters */
+         update_routine(fps_min);
+         tempdt -= fps_min;
+      }
+   }
+
+   update_routine(dt);
+}
+
+
+/**
+ * @brief Actually runs the updates
+ */
+static void update_routine( double dt )
+{
    space_update(dt);
    weapons_update(dt);
    spfx_update(dt);
@@ -322,7 +349,7 @@ static void update_all (void)
 }
 
 
-/*
+/**
  * @brief Renders the game itself (player flying around and friends).
  *
  * Blitting order (layers):
@@ -361,7 +388,7 @@ static void render_all (void)
 
 static double fps = 0.;
 static double fps_cur = 0.;
-/*
+/**
  * @brief Displays FPS on the screen.
  */
 static void display_fps( const double dt )
@@ -382,7 +409,7 @@ static void display_fps( const double dt )
 }
 
 
-/*
+/**
  * @brief Sets the data module's name.
  */
 static void data_name (void)
@@ -445,7 +472,7 @@ static void data_name (void)
 }
 
 
-/*
+/**
  * @brief Sets the window caption.
  */
 static void window_caption (void)
