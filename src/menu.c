@@ -59,7 +59,8 @@ static void menu_main_load( char* str );
 static void menu_main_new( char* str );
 /* small menu */
 static void menu_small_close( char* str );
-static void edit_options (void);
+static void edit_options( char* str );
+static void menu_small_exit( char* str );
 static void exit_game (void);
 /* information menu */
 static void menu_info_close( char* str );
@@ -156,7 +157,7 @@ void menu_small (void)
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOptions", "Options", (void(*)(char*)) edit_options );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, 
-         "btnExit", "Exit", (void(*)(char*)) exit_game );
+         "btnExit", "Exit", menu_small_exit );
 
    menu_Open(MENU_SMALL);
 }
@@ -167,12 +168,20 @@ static void menu_small_close( char* str )
 
    menu_Close(MENU_SMALL);
 }
+static void menu_small_exit( char* str )
+{
+   (void)str;
+   window_destroy( window_get("Menu") );
+   menu_Close(MENU_SMALL);
+   menu_main();
+}
 
 /*
  * edits the options
  */
-static void edit_options (void)
+static void edit_options( char* str )
 {
+   (void)str;
    /* TODO make options menu */
 }
 
