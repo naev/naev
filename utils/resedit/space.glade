@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.4 on Sun Apr 27 19:11:35 2008 -->
+<!--Generated with glade3 3.4.4 on Sun Apr 27 21:20:33 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="winSystems">
     <property name="width_request">750</property>
@@ -383,7 +383,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkTreeView" id="treFleet">
+                  <widget class="GtkTreeView" id="treFleets">
                     <property name="width_request">250</property>
                     <property name="height_request">212</property>
                     <property name="visible">True</property>

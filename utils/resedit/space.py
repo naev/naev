@@ -10,7 +10,7 @@ import data
 
 class Space:
 
-   def __init__(self, factions=None):
+   def __init__(self, factions=None, fleets=None):
       self.space_glade = "space.glade"
       self.planet_glade = "planets.glade"
       self.systemsXML = "../../dat/ssys.xml"
@@ -22,6 +22,10 @@ class Space:
          self.factions = {}
       else:
          self.factions = factions
+      if fleets==None:
+         self.fleets = {}
+      else:
+         self.fleets = fleets
 
 
 
@@ -72,7 +76,9 @@ class Space:
             "butReset":["clicked",self.__space_reset],
             "butAddJump":["clicked",self.__jump_add],
             "butRmJump":["clicked",self.__jump_rm],
-            "butNew":["clicked",self.__snew]
+            "butNew":["clicked",self.__snew],
+            "butFleetAdd":["clicked",self.__fleet_add],
+            "butFleetRemove":["clicked",self.__fleet_rm]
       }
       for key, val in hooks.items():
          self.__swidget(key).connect(val[0],val[1])
@@ -177,6 +183,7 @@ class Space:
       col.add_attribute(cell, 'text', 0)
       wgt.set_model(self.tree_planets)
 
+
    def __swidget(self,wgtname):
       """
       get a widget from the winSystems
@@ -223,6 +230,25 @@ class Space:
       col.pack_start(cell, True)
       col.add_attribute(cell, 'text', 0)
       wgt.set_model(jumps)
+
+      # load fleets
+      fleets = gtk.ListStore(str,int)
+      for fleet,chance in system["fleets"].items():
+         treenode = fleets.append([fleet,int(chance)])
+      wgt = self.__swidget("treFleets")
+      if wgt.get_column(0):
+         wgt.remove_column( wgt.get_column(0) )
+         wgt.remove_column( wgt.get_column(0) )
+      columns = [None]*2
+      columns[0] = gtk.TreeViewColumn('Fleet')
+      columns[1] = gtk.TreeViewColumn('Chance')
+      for n in range(2):
+         wgt.append_column(columns[n])
+         columns[n].cell = gtk.CellRendererText()
+         columns[n].pack_start(columns[n].cell, True)
+         columns[n].set_attributes(columns[n].cell, text=n)
+
+      wgt.set_model(fleets)
 
       self.__space_draw()
 
@@ -614,6 +640,12 @@ class Space:
             i = i + 1
          self.__supdate()
          self.__space_draw()
+
+
+   def __fleet_add(self, wgt=None, event=None):
+      return
+   def __fleet_rm(self, wgt=None, event=None):
+      return
 
 
    def __snew(self, wgt=None, event=None):
