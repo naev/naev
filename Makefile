@@ -37,6 +37,9 @@ CAL = $(shell openal-config --cflags) $(shell freealut-config --cflags)
 CVORBIS =
 CGL =
 CFLAGS = $(CLUA) $(CPLUTO) $(CSDL) $(CXML) $(CTTF) $(CGL) $(CAL) $(CVORBIS) $(VERSION) -D$(OS)
+ifeq ($(OS),LINUX)
+CFLAGS += -D_POSIX_SOURCE
+endif
 ifdef DEBUG
 CFLAGS += -W -Wall -Wextra -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -fno-inline -g3 -DDEBUG -DLUA_USE_APICHECK -std=c99 -ansi
 else # DEBUG
