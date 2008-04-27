@@ -299,6 +299,7 @@ static int music_loadOGG( const char *filename )
 
    /* set the new name */
    strncpy( music_vorbis.name, filename, 64 );
+   music_vorbis.name[64-1] = '\0';
    
    /* load new ogg */
    pack_open( &music_vorbis.file, DATA, filename );
@@ -335,7 +336,7 @@ static int music_find (void)
          /* remove the prefix and suffix */
          len = strlen(files[i]) - strlen(MUSIC_SUFFIX MUSIC_PREFIX);
          strncpy( tmp, files[i] + strlen(MUSIC_PREFIX), len );
-         tmp[len] = '\0';
+         tmp[MIN(len,64-1)] = '\0';
          
          /* give it the new name */
          music_selection[nmusic_selection-1] = strdup(tmp);

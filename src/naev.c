@@ -462,8 +462,10 @@ static void data_name (void)
       return;
    }
    do {
-      if (xml_isNode(node,"name"))
+      if (xml_isNode(node,"name")) {
          strncpy(dataname,xml_get(node),DATA_NAME_LEN);
+         dataname[DATA_NAME_LEN-1] = '\0';
+      }
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);

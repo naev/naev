@@ -52,8 +52,10 @@ int nfile_dirMakeExist( char* path )
 #ifdef LINUX
    struct stat buf;
 
-   if (strcmp(path,".")==0)
+   if (strcmp(path,".")==0) {
       strncpy(file,nfile_basePath(),PATH_MAX);
+      file[PATH_MAX-1] = '\0';
+   }
    else
       snprintf(file, PATH_MAX,"%s%s",nfile_basePath(),path);
    stat(file,&buf);
