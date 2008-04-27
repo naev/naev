@@ -26,7 +26,7 @@ except:
    raise SystemExit
 
 
-import space, faction
+import space, faction, fleet
 
 
 # load the factions
@@ -34,8 +34,12 @@ factions = faction.Factions()
 factions.loadFactions("../../dat/faction.xml")
 factions.window()
 
+# load the fleets
+fleets = fleet.Fleets()
+fleets.loadFleets("../../dat/fleet.xml")
+
 # load the universe
-universe = space.Space( factions.data() )
+universe = space.Space( factions.data(), fleets.data() )
 universe.loadSystems("../../dat/ssys.xml")
 universe.loadPlanets("../../dat/planet.xml")
 universe.window()

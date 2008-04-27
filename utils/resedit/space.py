@@ -629,6 +629,9 @@ class Space:
       area.window.draw_rectangle(sys_gc, False, 0,0, ww-1,wh-1)
 
 
+   """
+   add or remove jumps from a star system
+   """
    def __jump_add(self, wgt=None, event=None):
       if self.space_sel in self.systems.keys() and self.cur_system in self.systems.keys():
          self.systems[self.cur_system]["jumps"].append(self.space_sel)
@@ -637,7 +640,6 @@ class Space:
          data.uniq(self.systems[self.space_sel]["jumps"])
          self.__supdate()
          self.__space_draw()
-
    def __jump_rm(self, wgt=None, event=None):
       if self.space_sel in self.systems.keys() and self.cur_system in self.systems.keys():
          self.systems[self.cur_system]["jumps"].remove(self.space_sel)
@@ -645,6 +647,9 @@ class Space:
          self.__supdate()
          self.__space_draw()
 
+   """
+   add or remove fleets from a star system
+   """
    def __fleet_sel(self):
       tree = self.__swidget("treFleets")
       model = tree.get_model()
@@ -657,9 +662,8 @@ class Space:
       fleet = self.__swidget("comFleets").get_active_text()
       value = self.__swidget("spiFleets").get_value_as_int()
       if fleet != "None" and value > 0:
-         self.systems[self.cur_system]["fleets"][fleet] = value
+         self.systems[self.cur_system]["fleets"][fleet] = str(value)
          self.__supdate()
-
    def __fleet_rm(self, wgt=None, event=None):
       sel = self.__fleet_sel()
       if sel is "":
@@ -667,6 +671,10 @@ class Space:
       del self.systems[self.cur_system]["fleets"][sel]
       self.__supdate()
 
+
+   """
+   create a new star system
+   """
    def __snew(self, wgt=None, event=None):
       name = "new system"
       gen = { "asteroids":0, "interference":0, "stars":100 }
@@ -677,6 +685,9 @@ class Space:
       self.__selSys(name)
 
 
+   """
+   create a new planet
+   """
    def __pnew(self, wgt=None, event=None):
       name = "new planet"
       gfx = { "space":"none.png" }
