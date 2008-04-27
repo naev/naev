@@ -14,7 +14,7 @@ class Factions:
    def __init__(self):
       self.factions = {}
       self.factionsXML = "../../dat/faction.xml"
-      self.glade = "space.glade"
+      self.glade = "factions.glade"
       self.cur_faction = ""
 
    def loadFactions(self, xmlfile=None):

@@ -11,7 +11,8 @@ import data
 class Space:
 
    def __init__(self, factions=None):
-      self.glade = "space.glade"
+      self.space_glade = "space.glade"
+      self.planet_glade = "planets.glade"
       self.systemsXML = "../../dat/ssys.xml"
       self.planetsXML = "../../dat/planet.xml"
       self.planet_gfx = "../../gfx/planet/"
@@ -58,7 +59,7 @@ class Space:
       create the window
       """
       # --------------- SYSTEMS --------------------
-      self.swtree = gtk.glade.XML(self.glade, "winSystems")
+      self.swtree = gtk.glade.XML(self.space_glade, "winSystems")
 
       # hook events and such
       hooks = { "winSystems":["destroy",self.__done],
@@ -99,7 +100,7 @@ class Space:
       self.lx = self.ly = 0
 
       # ---------------- PLANETS --------------------
-      self.pwtree = gtk.glade.XML(self.glade, "winPlanets")
+      self.pwtree = gtk.glade.XML(self.planet_glade, "winPlanets")
 
       self.__pwidget("winPlanets").show_all()
       self.cur_planet = ""
