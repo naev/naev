@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.4 on Sun Apr 27 17:12:57 2008 -->
+<!--Generated with glade3 3.4.4 on Sun Apr 27 19:11:35 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="winSystems">
     <property name="width_request">750</property>
-    <property name="height_request">450</property>
+    <property name="height_request">675</property>
     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
     <property name="title" translatable="yes">System Editor</property>
     <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
@@ -170,7 +170,7 @@
                 <child>
                   <widget class="GtkVSeparator" id="vseparator1">
                     <property name="width_request">20</property>
-                    <property name="height_request">322</property>
+                    <property name="height_request">323</property>
                     <property name="visible">True</property>
                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                   </widget>
@@ -206,7 +206,7 @@
                 <child>
                   <widget class="GtkTreeView" id="treJumps">
                     <property name="width_request">193</property>
-                    <property name="height_request">110</property>
+                    <property name="height_request">170</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -215,22 +215,6 @@
                   <packing>
                     <property name="x">10</property>
                     <property name="y">180</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkButton" id="butAddJump">
-                    <property name="width_request">70</property>
-                    <property name="height_request">27</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                    <property name="label" translatable="yes">Add</property>
-                    <property name="response_id">0</property>
-                  </widget>
-                  <packing>
-                    <property name="x">20</property>
-                    <property name="y">296</property>
                   </packing>
                 </child>
                 <child>
@@ -245,8 +229,8 @@
                     <property name="response_id">0</property>
                   </widget>
                   <packing>
-                    <property name="x">112</property>
-                    <property name="y">295</property>
+                    <property name="x">110</property>
+                    <property name="y">360</property>
                   </packing>
                 </child>
                 <child>
@@ -274,8 +258,8 @@
                     <property name="response_id">0</property>
                   </widget>
                   <packing>
-                    <property name="x">14</property>
-                    <property name="y">350</property>
+                    <property name="x">328</property>
+                    <property name="y">577</property>
                   </packing>
                 </child>
                 <child>
@@ -290,8 +274,8 @@
                     <property name="response_id">0</property>
                   </widget>
                   <packing>
-                    <property name="x">115</property>
-                    <property name="y">350</property>
+                    <property name="x">422</property>
+                    <property name="y">578</property>
                   </packing>
                 </child>
                 <child>
@@ -321,18 +305,6 @@
                   <packing>
                     <property name="x">20</property>
                     <property name="y">17</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkHSeparator" id="hseparator3">
-                    <property name="width_request">202</property>
-                    <property name="height_request">20</property>
-                    <property name="visible">True</property>
-                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                  </widget>
-                  <packing>
-                    <property name="x">5</property>
-                    <property name="y">326</property>
                   </packing>
                 </child>
                 <child>
@@ -412,32 +384,21 @@
                 </child>
                 <child>
                   <widget class="GtkTreeView" id="treFleet">
-                    <property name="width_request">200</property>
-                    <property name="height_request">286</property>
+                    <property name="width_request">250</property>
+                    <property name="height_request">212</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="headers_clickable">True</property>
                   </widget>
                   <packing>
-                    <property name="x">554</property>
-                    <property name="y">17</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkComboBox" id="comFleet">
-                    <property name="width_request">193</property>
-                    <property name="height_request">22</property>
-                    <property name="visible">True</property>
-                  </widget>
-                  <packing>
-                    <property name="x">558</property>
-                    <property name="y">309</property>
+                    <property name="x">10</property>
+                    <property name="y">420</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkButton" id="butFleetAdd">
-                    <property name="width_request">80</property>
-                    <property name="height_request">35</property>
+                    <property name="width_request">70</property>
+                    <property name="height_request">27</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -445,14 +406,14 @@
                     <property name="response_id">0</property>
                   </widget>
                   <packing>
-                    <property name="x">564</property>
-                    <property name="y">340</property>
+                    <property name="x">270</property>
+                    <property name="y">460</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkButton" id="butFleetRemove">
-                    <property name="width_request">95</property>
-                    <property name="height_request">35</property>
+                    <property name="width_request">70</property>
+                    <property name="height_request">27</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -460,8 +421,57 @@
                     <property name="response_id">0</property>
                   </widget>
                   <packing>
-                    <property name="x">650</property>
-                    <property name="y">340</property>
+                    <property name="x">360</property>
+                    <property name="y">460</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkButton" id="butAddJump">
+                    <property name="width_request">70</property>
+                    <property name="height_request">27</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                    <property name="label" translatable="yes">Add</property>
+                    <property name="response_id">0</property>
+                  </widget>
+                  <packing>
+                    <property name="x">20</property>
+                    <property name="y">360</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkComboBox" id="comFleet">
+                    <property name="width_request">183</property>
+                    <property name="height_request">20</property>
+                    <property name="visible">True</property>
+                  </widget>
+                  <packing>
+                    <property name="x">270</property>
+                    <property name="y">425</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkHSeparator" id="hseparator4">
+                    <property name="width_request">513</property>
+                    <property name="height_request">20</property>
+                    <property name="visible">True</property>
+                  </widget>
+                  <packing>
+                    <property name="x">4</property>
+                    <property name="y">393</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkHSeparator" id="hseparator3">
+                    <property name="width_request">228</property>
+                    <property name="height_request">20</property>
+                    <property name="visible">True</property>
+                  </widget>
+                  <packing>
+                    <property name="x">289</property>
+                    <property name="y">556</property>
                   </packing>
                 </child>
               </widget>
