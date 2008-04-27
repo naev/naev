@@ -5,6 +5,10 @@
 
 #include "save.h"
 
+#ifdef _POSIX_SOURCE
+#include <unistd.h> /* unlink */
+#endif
+
 #include "naev.h"
 #include "log.h"
 #include "xml.h"
@@ -40,6 +44,7 @@ extern void menu_main_close (void);
 static int save_data( xmlTextWriterPtr writer );
 static void load_menu_close( char *str );
 static void load_menu_load( char *str );
+static void load_menu_delete( char *str );
 static int load_game( char* file );
 
 
@@ -151,6 +156,8 @@ void load_game_menu (void)
          "btnBack", "Back", load_menu_close );
    window_addButton( wid, -20, 30 + BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnLoad", "Load", load_menu_load );
+   window_addButton( wid, -20, 20 + 2*(10 + BUTTON_HEIGHT), BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnDelete", "Del", load_menu_delete );
 
    /* default action */
    window_setFptr( wid, load_menu_load );
@@ -168,7 +175,6 @@ static void load_menu_load( char *str )
    int wid;
 
    wid = window_get( "Load Game" );
-
    save = toolkit_getList( wid, "lstSaves" );
 
    if (strcmp(save,"None") == 0)
@@ -178,6 +184,30 @@ static void load_menu_load( char *str )
    load_game( path );
    load_menu_close(NULL);
    menu_main_close();
+}
+static void load_menu_delete( char *str )
+{
+   (void)str;
+   char *save, path[PATH_MAX];
+   int wid;
+
+   wid = window_get( "Load Game" );
+   save = toolkit_getList( wid, "lstSaves" );
+
+   if (strcmp(save,"None") == 0)
+      return;
+
+
+   if (dialogue_YesNo( "Permanently Delete?",
+      "Are you sure you want to permanently delete '%s'?", save) == 0)
+      return;
+
+   snprintf( path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), save );
+   unlink(path);
+
+   /* need to reload the menu */
+   load_menu_close(NULL);
+   load_game_menu();
 }
 
 
