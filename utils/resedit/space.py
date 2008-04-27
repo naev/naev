@@ -247,7 +247,6 @@ class Space:
          columns[n].cell = gtk.CellRendererText()
          columns[n].pack_start(columns[n].cell, True)
          columns[n].set_attributes(columns[n].cell, text=n)
-
       wgt.set_model(fleets)
 
       self.__space_draw()
@@ -622,31 +621,32 @@ class Space:
          self.systems[self.space_sel]["jumps"].append(self.cur_system)
          data.uniq(self.systems[self.cur_system]["jumps"])
          data.uniq(self.systems[self.space_sel]["jumps"])
-        
          self.__supdate()
          self.__space_draw()
 
    def __jump_rm(self, wgt=None, event=None):
       if self.space_sel in self.systems.keys() and self.cur_system in self.systems.keys():
-         i = 0
-         for e in self.systems[self.cur_system]["jumps"]:
-            if e == self.space_sel:
-               self.systems[self.cur_system]["jumps"].pop(i)
-            i = i + 1
-         i = 0
-         for e in self.systems[self.space_sel]["jumps"]:
-            if e == self.cur_system:
-               self.systems[self.space_sel]["jumps"].pop(i)
-            i = i + 1
+         self.systems[self.cur_system]["jumps"].remove(self.space_sel)
+         self.systems[self.space_sel]["jumps"].remove(self.cur_system)
          self.__supdate()
          self.__space_draw()
 
-
+   def __fleet_sel(self):
+      tree = self.__swidget("treFleets")
+      model = tree.get_model()
+      try:
+         iter = tree.get_selection().get_selected()[1]
+      except:
+         return ""
+      return model.get_value(iter,0)
    def __fleet_add(self, wgt=None, event=None):
       return
    def __fleet_rm(self, wgt=None, event=None):
-      return
-
+      sel = self.__fleet_sel()
+      if sel is "":
+         return
+      del self.systems[self.cur_system]["fleets"][sel]
+      self.__supdate()
 
    def __snew(self, wgt=None, event=None):
       name = "new system"

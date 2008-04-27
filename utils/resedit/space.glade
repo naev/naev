@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.4 on Sun Apr 27 21:20:33 2008 -->
+<!--Generated with glade3 3.4.4 on Sun Apr 27 22:43:43 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="winSystems">
     <property name="width_request">750</property>
@@ -407,7 +407,7 @@
                   </widget>
                   <packing>
                     <property name="x">270</property>
-                    <property name="y">460</property>
+                    <property name="y">480</property>
                   </packing>
                 </child>
                 <child>
@@ -422,7 +422,7 @@
                   </widget>
                   <packing>
                     <property name="x">360</property>
-                    <property name="y">460</property>
+                    <property name="y">480</property>
                   </packing>
                 </child>
                 <child>
@@ -443,13 +443,13 @@
                 </child>
                 <child>
                   <widget class="GtkComboBox" id="comFleet">
-                    <property name="width_request">183</property>
+                    <property name="width_request">189</property>
                     <property name="height_request">20</property>
                     <property name="visible">True</property>
                   </widget>
                   <packing>
                     <property name="x">270</property>
-                    <property name="y">425</property>
+                    <property name="y">445</property>
                   </packing>
                 </child>
                 <child>
@@ -472,6 +472,43 @@
                   <packing>
                     <property name="x">289</property>
                     <property name="y">556</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkLabel" id="label5">
+                    <property name="width_request">72</property>
+                    <property name="height_request">20</property>
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Fleet</property>
+                  </widget>
+                  <packing>
+                    <property name="x">278</property>
+                    <property name="y">421</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkLabel" id="label6">
+                    <property name="width_request">84</property>
+                    <property name="height_request">23</property>
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Chance</property>
+                  </widget>
+                  <packing>
+                    <property name="x">430</property>
+                    <property name="y">416</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkSpinButton" id="spiFleets">
+                    <property name="width_request">50</property>
+                    <property name="height_request">20</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="adjustment">0 0 100 1 10 10</property>
+                  </widget>
+                  <packing>
+                    <property name="x">472</property>
+                    <property name="y">445</property>
                   </packing>
                 </child>
               </widget>
