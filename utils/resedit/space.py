@@ -99,6 +99,18 @@ class Space:
       area.connect("button-press-event", self.__space_down)
       area.connect("motion-notify-event", self.__space_drag)
 
+      # factions
+      wgt = self.__swidget("comFleets")
+      combo = gtk.ListStore(str)
+      combo.append(["None"])
+      for f in self.fleets.keys():
+         node = combo.append([f])
+      cell = gtk.CellRendererText()
+      wgt.pack_start(cell, True)
+      wgt.add_attribute(cell, 'text', 0)
+      wgt.set_model(combo)
+      wgt.set_active(0)
+
       # display the window and such
       self.__swidget("winSystems").show_all()
       self.cur_system = ""
@@ -135,6 +147,7 @@ class Space:
       wgt.pack_start(cell, True)
       wgt.add_attribute(cell, 'text', 0)
       wgt.set_model(combo)
+      wgt.set_active(0)
 
       # factions
       wgt = self.__pwidget("comFaction")
@@ -146,6 +159,7 @@ class Space:
       wgt.pack_start(cell, True)
       wgt.add_attribute(cell, 'text', 0)
       wgt.set_model(combo)
+      wgt.set_active(0)
 
       # ---------------------------------------------
 
@@ -640,7 +654,12 @@ class Space:
          return ""
       return model.get_value(iter,0)
    def __fleet_add(self, wgt=None, event=None):
-      return
+      fleet = self.__swidget("comFleets").get_active_text()
+      value = self.__swidget("spiFleets").get_value_as_int()
+      if fleet != "None" and value > 0:
+         self.systems[self.cur_system]["fleets"][fleet] = value
+         self.__supdate()
+
    def __fleet_rm(self, wgt=None, event=None):
       sel = self.__fleet_sel()
       if sel is "":
@@ -715,6 +734,9 @@ class Space:
       self.__pupdate()
 
    def __pnewFact(self, wgt=None, event=None):
+      if self.cur_planet == "":
+         return
+
       combo = self.__pwidget("comFaction")
       fact = combo.get_active_text()
       planet = self.planets[self.cur_planet]

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.4 on Sun Apr 27 22:43:43 2008 -->
+<!--Generated with glade3 3.4.4 on Sun Apr 27 23:48:03 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="winSystems">
     <property name="width_request">750</property>
@@ -442,9 +442,9 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkComboBox" id="comFleet">
+                  <widget class="GtkComboBox" id="comFleets">
                     <property name="width_request">189</property>
-                    <property name="height_request">20</property>
+                    <property name="height_request">25</property>
                     <property name="visible">True</property>
                   </widget>
                   <packing>
