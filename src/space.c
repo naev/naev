@@ -343,10 +343,10 @@ StarSystem** system_getJumpPath( int* njumps, char* sysstart, char* sysend )
          neighbour = A_newNode( &systems_stack[cur->sys->jumps[i]], cur );
          cost = A_g(cur) + 1;
 
-         if (A_in(open, neighbour->sys) && (cost < A_g(neighbour)))
+         if (A_in(open, neighbour->sys))
             open = A_rm( open, neighbour->sys ); /* new path is better */
 
-         if (A_in(closed, neighbour->sys) && (cost < A_g(neighbour)))
+         if (A_in(closed, neighbour->sys))
             closed = A_rm( closed, neighbour->sys ); /* shouldn't happen */
          
          if (!A_in(open, neighbour->sys) && !A_in(closed, neighbour->sys)) {
