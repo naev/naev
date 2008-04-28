@@ -40,15 +40,14 @@ def load_Tag( node, do_array=None, do_special=None ):
    i = 0
 
    # figure out if we need an array or dic
-   if do_array != None and node.nodeName in do_array:
-      array = []
+   array = []
+   section = {}
+   if (do_array != None and node.nodeName in do_array) or ( do_special != None and node.nodeName in do_special):
       use_array = True
    else:
-      section = {}
       use_array = False
 
    for child in filter(lambda x: x.nodeType==x.ELEMENT_NODE, node.childNodes):
-
       n = 0
       children, n = load_Tag( child, do_array, do_special )
 
@@ -57,13 +56,15 @@ def load_Tag( node, do_array=None, do_special=None ):
          section[child.nodeName] = children
       
       # big ugly hack to use list instead of array
-      elif use_array:
+      elif use_array and node.nodeName in do_array:
          array.append(child.firstChild.data)
 
       # uglier hack for special things
-      elif do_special != None and node.nodeName in do_special.keys():
+      elif use_array and do_special != None and node.nodeName in do_special.keys():
+         section = {}
          section[child.firstChild.data] = \
                child.attributes[do_special[node.nodeName]].value
+         array.append(section)
 
       elif n > 0:
          section[child.nodeName] = children
@@ -122,12 +123,13 @@ def save_Tag( xml, parent, data, do_array=None, do_special=None ):
       
       # checks to see if we need to run the ULTRA UBER HACK
       elif do_special != None and key in do_special.keys():
-         for key2, value2 in value.items():
-            node2 = xml.createElement( do_special[key][0] )
-            node2.setAttribute(do_special[key][1], value2)
-            txtnode = xml.createTextNode( str(key2) )
-            node2.appendChild(txtnode)
-            node.appendChild(node2)
+         for item in value:
+            for key2, value2 in item.items(): # should only be one member
+               node2 = xml.createElement( do_special[key][0] )
+               node2.setAttribute(do_special[key][1], value2)
+               txtnode = xml.createTextNode( str(key2) )
+               node2.appendChild(txtnode)
+               node.appendChild(node2)
 
       elif isinstance(value,dict):
          save_Tag( xml, node, value, do_array, do_special )

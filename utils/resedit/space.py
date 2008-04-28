@@ -247,8 +247,9 @@ class Space:
 
       # load fleets
       fleets = gtk.ListStore(str,int)
-      for fleet,chance in system["fleets"].items():
-         treenode = fleets.append([fleet,int(chance)])
+      for item in system["fleets"]:
+         for fleet,chance in item.items():
+            treenode = fleets.append([fleet,int(chance)])
       wgt = self.__swidget("treFleets")
       if wgt.get_column(0):
          wgt.remove_column( wgt.get_column(0) )
@@ -657,18 +658,24 @@ class Space:
          iter = tree.get_selection().get_selected()[1]
       except:
          return ""
-      return model.get_value(iter,0)
+      return model.get_value(iter,0), model.get_value(iter,1)
    def __fleet_add(self, wgt=None, event=None):
       fleet = self.__swidget("comFleets").get_active_text()
       value = self.__swidget("spiFleets").get_value_as_int()
       if fleet != "None" and value > 0:
-         self.systems[self.cur_system]["fleets"][fleet] = str(value)
+         self.systems[self.cur_system]["fleets"].append( {fleet:str(value)} )
          self.__supdate()
    def __fleet_rm(self, wgt=None, event=None):
-      sel = self.__fleet_sel()
+      sel, chance = self.__fleet_sel()
       if sel is "":
          return
-      del self.systems[self.cur_system]["fleets"][sel]
+      i = 0
+      for item in self.systems[self.cur_system]["fleets"]:
+         for key, value in item.items():
+            if key == sel and value == chance:
+               self.systems[self.cur_system]["fleets"].pop(i)
+         i = i+1
+      print self.systems[self.cur_system]["fleets"]
       self.__supdate()
 
 
