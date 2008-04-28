@@ -672,11 +672,11 @@ class Space:
       i = 0
       for item in self.systems[self.cur_system]["fleets"]:
          for key, value in item.items():
-            if key == sel and value == chance:
+            if key == sel and value == str(chance):
                self.systems[self.cur_system]["fleets"].pop(i)
+               self.__supdate()
+               return
          i = i+1
-      print self.systems[self.cur_system]["fleets"]
-      self.__supdate()
 
 
    """
@@ -686,7 +686,7 @@ class Space:
       name = "new system"
       gen = { "asteroids":0, "interference":0, "stars":100 }
       pos = { "x":0,"y":0 }
-      new_ssys = { "general":gen, "pos":pos, "jumps":[], "fleets":{}, "planets":[] }
+      new_ssys = { "general":gen, "pos":pos, "jumps":[], "fleets":[], "planets":[] }
       self.systems[name] = new_ssys
       self.__create_treSystems()
       self.__selSys(name)
