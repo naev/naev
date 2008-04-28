@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.4 on Sun Apr 27 23:48:03 2008 -->
+<!--Generated with glade3 3.4.4 on Mon Apr 28 23:47:16 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="winSystems">
     <property name="width_request">750</property>
@@ -170,7 +170,7 @@
                 <child>
                   <widget class="GtkVSeparator" id="vseparator1">
                     <property name="width_request">20</property>
-                    <property name="height_request">323</property>
+                    <property name="height_request">383</property>
                     <property name="visible">True</property>
                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                   </widget>
@@ -181,8 +181,8 @@
                 </child>
                 <child>
                   <widget class="GtkDrawingArea" id="draSpace">
-                    <property name="width_request">300</property>
-                    <property name="height_request">250</property>
+                    <property name="width_request">326</property>
+                    <property name="height_request">313</property>
                     <property name="visible">True</property>
                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                   </widget>
@@ -206,7 +206,7 @@
                 <child>
                   <widget class="GtkTreeView" id="treJumps">
                     <property name="width_request">193</property>
-                    <property name="height_request">170</property>
+                    <property name="height_request">240</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -229,8 +229,8 @@
                     <property name="response_id">0</property>
                   </widget>
                   <packing>
-                    <property name="x">110</property>
-                    <property name="y">360</property>
+                    <property name="x">112</property>
+                    <property name="y">425</property>
                   </packing>
                 </child>
                 <child>
@@ -320,7 +320,7 @@
                   </widget>
                   <packing>
                     <property name="x">300</property>
-                    <property name="y">350</property>
+                    <property name="y">420</property>
                   </packing>
                 </child>
                 <child>
@@ -335,8 +335,8 @@
                     <property name="response_id">0</property>
                   </widget>
                   <packing>
-                    <property name="x">345</property>
-                    <property name="y">350</property>
+                    <property name="x">343</property>
+                    <property name="y">420</property>
                   </packing>
                 </child>
                 <child>
@@ -367,32 +367,21 @@
                     <property name="response_id">0</property>
                   </widget>
                   <packing>
-                    <property name="x">425</property>
-                    <property name="y">350</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkVSeparator" id="vseparator3">
-                    <property name="width_request">20</property>
-                    <property name="height_request">376</property>
-                    <property name="visible">True</property>
-                  </widget>
-                  <packing>
-                    <property name="x">530</property>
-                    <property name="y">11</property>
+                    <property name="x">440</property>
+                    <property name="y">420</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkTreeView" id="treFleets">
                     <property name="width_request">250</property>
-                    <property name="height_request">212</property>
+                    <property name="height_request">161</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="headers_clickable">True</property>
                   </widget>
                   <packing>
                     <property name="x">10</property>
-                    <property name="y">420</property>
+                    <property name="y">471</property>
                   </packing>
                 </child>
                 <child>
@@ -407,7 +396,7 @@
                   </widget>
                   <packing>
                     <property name="x">270</property>
-                    <property name="y">480</property>
+                    <property name="y">522</property>
                   </packing>
                 </child>
                 <child>
@@ -421,8 +410,8 @@
                     <property name="response_id">0</property>
                   </widget>
                   <packing>
-                    <property name="x">360</property>
-                    <property name="y">480</property>
+                    <property name="x">349</property>
+                    <property name="y">519</property>
                   </packing>
                 </child>
                 <child>
@@ -438,18 +427,18 @@
                   </widget>
                   <packing>
                     <property name="x">20</property>
-                    <property name="y">360</property>
+                    <property name="y">425</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkComboBox" id="comFleets">
                     <property name="width_request">189</property>
-                    <property name="height_request">25</property>
+                    <property name="height_request">22</property>
                     <property name="visible">True</property>
                   </widget>
                   <packing>
                     <property name="x">270</property>
-                    <property name="y">445</property>
+                    <property name="y">494</property>
                   </packing>
                 </child>
                 <child>
@@ -459,8 +448,8 @@
                     <property name="visible">True</property>
                   </widget>
                   <packing>
-                    <property name="x">4</property>
-                    <property name="y">393</property>
+                    <property name="x">5</property>
+                    <property name="y">452</property>
                   </packing>
                 </child>
                 <child>
@@ -482,8 +471,8 @@
                     <property name="label" translatable="yes">Fleet</property>
                   </widget>
                   <packing>
-                    <property name="x">278</property>
-                    <property name="y">421</property>
+                    <property name="x">277</property>
+                    <property name="y">469</property>
                   </packing>
                 </child>
                 <child>
@@ -494,21 +483,21 @@
                     <property name="label" translatable="yes">Chance</property>
                   </widget>
                   <packing>
-                    <property name="x">430</property>
-                    <property name="y">416</property>
+                    <property name="x">431</property>
+                    <property name="y">467</property>
                   </packing>
                 </child>
                 <child>
                   <widget class="GtkSpinButton" id="spiFleets">
-                    <property name="width_request">50</property>
+                    <property name="width_request">45</property>
                     <property name="height_request">20</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="adjustment">0 0 100 1 10 10</property>
                   </widget>
                   <packing>
-                    <property name="x">472</property>
-                    <property name="y">445</property>
+                    <property name="x">470</property>
+                    <property name="y">494</property>
                   </packing>
                 </child>
               </widget>
