@@ -291,9 +291,12 @@ static double dt = 0.; /* used also a bit in render_all */
  */
 static void fps_control (void)
 {
+   unsigned int t;
+
    /* dt in ms/1000 */
-   dt = (double)(SDL_GetTicks() - time) / 1000.;
-   time = SDL_GetTicks();
+   t = SDL_GetTicks();
+   dt = (double)(t - time) / 1000.;
+   time = t;
 
    if (paused) SDL_Delay(10); /* drop paused FPS - we are nice to the CPU :) */
 
