@@ -32,7 +32,6 @@ import space, faction, fleet
 # load the factions
 factions = faction.Factions()
 factions.loadFactions("../../dat/faction.xml")
-factions.window()
 
 # load the fleets
 fleets = fleet.Fleets()
@@ -42,8 +41,27 @@ fleets.loadFleets("../../dat/fleet.xml")
 universe = space.Space( factions.data(), fleets.data() )
 universe.loadSystems("../../dat/ssys.xml")
 universe.loadPlanets("../../dat/planet.xml")
-universe.window()
 
+# load the editor interface
+# functions
+def winSystem(widget=None,event=None):
+   if wtree.get_widget("butEditSystem").get_active():
+      universe.windowSystem()
+   else:
+      universe.windowSystemClose()
+def winPlanet(widget=None,event=None):
+   if wtree.get_widget("butEditPlanet").get_active():
+      universe.windowPlanet()
+   else:
+      universe.windowPlanetClose()
+wtree = gtk.glade.XML("resedit.glade","winResedit")
+hooks = { "winResedit":["destroy",gtk.main_quit],
+          "butEditSystem":["toggled",winSystem],
+          "butEditPlanet":["toggled",winPlanet]
+}
+for key, val in hooks.items():
+   wtree.get_widget(key).connect(val[0],val[1])
+wtree.get_widget("winResedit").show_all()
 
 
 gtk.main()

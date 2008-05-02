@@ -26,7 +26,8 @@ class Space:
          self.fleets = {}
       else:
          self.fleets = fleets
-
+      self.swtree = None
+      self.pwtree = None
 
 
    def loadSystems(self, xmlfile):
@@ -59,6 +60,10 @@ class Space:
 
 
    def window(self):
+      self.windowSystem()
+      self.windowPlanet()
+
+   def windowSystem(self):
       """
       create the window
       """
@@ -116,7 +121,12 @@ class Space:
       self.cur_system = ""
       self.x = self.y = 0
       self.lx = self.ly = 0
+   def windowSystemClose(self):
+      wgt = self.__swidget("winSystems")
+      if wgt != None:
+         wgt.hide_all()
 
+   def windowPlanet(self):
       # ---------------- PLANETS --------------------
       self.pwtree = gtk.glade.XML(self.planet_glade, "winPlanets")
 
@@ -160,8 +170,10 @@ class Space:
       wgt.add_attribute(cell, 'text', 0)
       wgt.set_model(combo)
       wgt.set_active(0)
-
-      # ---------------------------------------------
+   def windowPlanetClose(self):
+      wgt = self.__pwidget("winPlanets")
+      if wgt != None:
+         wgt.hide_all()
 
 
    def __create_treSystems(self):
@@ -476,7 +488,8 @@ class Space:
       """
       Window is done
       """
-      gtk.main_quit()
+      #gtk.main_quit()
+      return
 
 
    def __space_reset(self, wgt=None, event=None):
