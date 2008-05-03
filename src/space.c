@@ -814,7 +814,7 @@ static Planet* planet_pull( const char* name )
                                     commodity_get( xml_get(ccur) );
                               temp->ncommodities++;
                            }
-                        } while ((ccur = ccur->next));
+                        } while (xml_nextNode(ccur));
                      }
                   } while(xml_nextNode(cur));
                }
