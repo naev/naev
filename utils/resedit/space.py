@@ -515,7 +515,6 @@ class Space:
       except:
          return
 
-
       # get the services
       services = 0
       serv = { "cheLand":2**0,
@@ -818,7 +817,7 @@ class Space:
          self.__pupdate()
    def __exterior_sel(self, wgt=None, event=None):
       space = self.__pwidget("comExterior").get_active_text()
-      if self.cur_planet != "":
+      if self.cur_planet != "" and space != "None":
          self.planets[self.cur_planet]["GFX"]["exterior"] = space
          self.__pupdate()
 
