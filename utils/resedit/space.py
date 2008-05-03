@@ -736,6 +736,9 @@ class Space:
    add or remove jumps from a star system
    """
    def __jump_add(self, wgt=None, event=None):
+      if self.space_sel == self.cur_system: # can't add to self
+         return
+
       if self.space_sel in self.systems.keys() and self.cur_system in self.systems.keys():
          self.systems[self.cur_system]["jumps"].append(self.space_sel)
          self.systems[self.space_sel]["jumps"].append(self.cur_system)
