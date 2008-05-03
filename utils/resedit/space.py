@@ -135,6 +135,7 @@ class Space:
             "trePlanets":["button-release-event", self.__pupdate],
             "comSystem":["changed", self.__pnewSys],
             "comFaction":["changed", self.__pnewFact],
+            "comClass":["changed", self.__class_sel],
             "butSave":["clicked",self.savePlanets],
             "butComAdd":["clicked",self.__commodity_add],
             "butComRm":["clicked",self.__commodity_rm],
@@ -342,7 +343,8 @@ class Space:
 
    def __pupdate(self, wgt=None, event=None):
       # store current values
-      self.__pstore()
+      if self.cur_planet != self.__curPlanet():
+         self.__pstore()
 
       self.__genPlanetTree()
 
@@ -543,7 +545,6 @@ class Space:
          system[tag] = text
       else:
          system[tag][minortag] = text
-
 
 
    def __curSystem(self):
@@ -821,6 +822,15 @@ class Space:
          self.__pupdate()
 
    """
+   changes the planet class
+   """
+   def __class_sel(self, wgt=None, event=None):
+      cls = self.__pwidget("comClass").get_active_text()
+      if self.cur_planet != "":
+         self.planets[self.cur_planet]["general"]["class"] = cls
+         self.__pupdate()
+
+   """
    opens the description editor
    """
    def __edit_description(self, wgt=None, event=None):
@@ -918,7 +928,6 @@ class Space:
 
       # append to new location
       self.systems[sys]["planets"].append(planet)
-      print self.systems[sys]["planets"]
 
       # recreate the tree
       self.__genPlanetTree()
