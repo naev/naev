@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.4 on Sat May  3 16:22:52 2008 -->
+<!--Generated with glade3 3.4.4 on Sat May  3 17:26:05 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="winPlanets">
     <property name="width_request">600</property>
@@ -532,7 +532,7 @@
             </child>
             <child>
               <widget class="GtkButton" id="butDescription">
-                <property name="width_request">240</property>
+                <property name="width_request">110</property>
                 <property name="height_request">25</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -542,6 +542,21 @@
               </widget>
               <packing>
                 <property name="x">20</property>
+                <property name="y">150</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkButton" id="butBar">
+                <property name="width_request">110</property>
+                <property name="height_request">25</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">Edit Bar</property>
+                <property name="response_id">0</property>
+              </widget>
+              <packing>
+                <property name="x">150</property>
                 <property name="y">150</property>
               </packing>
             </child>
@@ -579,6 +594,45 @@
         </child>
         <child>
           <widget class="GtkButton" id="butDescDone">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="label" translatable="yes">Done</property>
+            <property name="response_id">0</property>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="GtkWindow" id="winBar">
+    <property name="type">GTK_WINDOW_POPUP</property>
+    <property name="title" translatable="yes">Edit Bar</property>
+    <property name="modal">True</property>
+    <property name="window_position">GTK_WIN_POS_CENTER</property>
+    <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+    <property name="gravity">GDK_GRAVITY_NORTH</property>
+    <child>
+      <widget class="GtkVBox" id="vbox2">
+        <property name="visible">True</property>
+        <child>
+          <widget class="GtkTextView" id="texBar">
+            <property name="width_request">400</property>
+            <property name="height_request">400</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="wrap_mode">GTK_WRAP_WORD</property>
+          </widget>
+          <packing>
+            <property name="padding">10</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkButton" id="butBarDone">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>

@@ -141,7 +141,8 @@ class Space:
             "butComRm":["clicked",self.__commodity_rm],
             "comSpace":["changed", self.__space_sel],
             "comExterior":["changed", self.__exterior_sel],
-            "butDescription":["clicked", self.__edit_description]
+            "butDescription":["clicked", self.__edit_description],
+            "butBar":["clicked", self.__edit_bar]
       }
       for key, val in hooks.items():
          self.__pwidget(key).connect(val[0],val[1])
@@ -861,6 +862,39 @@ class Space:
          if "description" in self.planets[self.cur_planet]["general"].keys():
             del self.planets[self.cur_planet]["general"]["description"]
       self.dtree.get_widget("winDescription").hide_all()
+
+   """
+   opens the bar editor
+   """
+   def __edit_bar(self, wgt=None, event=None):
+      if self.cur_planet == "":
+         return
+      
+      wtree = gtk.glade.XML(self.planet_glade, "winBar")
+      wtree.get_widget("winBar").show_all()
+
+      # hooks
+      wtree.get_widget("butBarDone").connect("clicked",self.__bar_done)
+
+      # set text
+      buf = gtk.TextBuffer()
+      try:
+         buf.set_text(self.planets[self.cur_planet]["general"]["bar"])
+      except:
+         buf.set_text("")
+      wtree.get_widget("texBar").set_buffer(buf)
+
+      self.btree = wtree
+   def __bar_done(self, wgt=None, event=None):
+      buf = self.btree.get_widget("texBar").get_buffer()
+      desc = buf.get_text(buf.get_start_iter(), buf.get_end_iter())
+      if desc != "":
+         self.planets[self.cur_planet]["general"]["bar"] = desc
+      else:
+         if "bar" in self.planets[self.cur_planet]["general"].keys():
+            del self.planets[self.cur_planet]["general"]["bar"]
+      self.btree.get_widget("winBar").hide_all()
+
 
 
    """
