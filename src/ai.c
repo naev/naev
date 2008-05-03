@@ -680,10 +680,12 @@ static int ai_getpos( lua_State *L )
  */
 static int ai_minbrakedist( lua_State *L )
 {
-   double time, dist;
+   double time, dist, vel;
    time = VMOD(cur_pilot->solid->vel) /
          (cur_pilot->thrust / cur_pilot->solid->mass);
-   dist =  VMOD(cur_pilot->solid->vel)*0.9*(time+180./cur_pilot->turn) -
+
+   vel = MIN(cur_pilot->speed,VMOD(cur_pilot->solid->vel));
+   dist = vel*(time+1.1*180./cur_pilot->turn) -
          0.5*(cur_pilot->thrust/cur_pilot->solid->mass)*time*time;
 
    lua_pushnumber(L, dist); /* return */

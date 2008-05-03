@@ -618,7 +618,7 @@ static void space_addFleet( Fleet* fleet )
    Vector2d vv,vp, vn;
 
    /* simulate they came from hyperspace */
-   vect_pset( &vp, RNG(MIN_HYPERSPACE_DIST, MIN_HYPERSPACE_DIST*1.5),
+   vect_pset( &vp, RNG(MIN_HYPERSPACE_DIST, MIN_HYPERSPACE_DIST*3.),
          RNG(0,360)*M_PI/180.);
    vectnull(&vn);
 
@@ -629,7 +629,7 @@ static void space_addFleet( Fleet* fleet )
                RNG(75,150) * (RNG(0,1) ? 1 : -1));
 
          a = vect_angle(&vp,&vn);
-         vectnull(&vv);
+         vect_pset( &vv, fleet->pilots[i].ship->speed * 2., a );
 
          pilot_create( fleet->pilots[i].ship,
                fleet->pilots[i].name,
