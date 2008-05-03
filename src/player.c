@@ -1543,6 +1543,10 @@ void player_land (void)
       }
       planet_target = tp;
       player_rmFlag(PLAYER_LANDACK);
+
+      /* no landable planet */
+      if (planet_target < 0) return;
+
       player_land(); /* rerun land protocol */
    }
 }
@@ -1642,7 +1646,7 @@ double player_faceHyperspace (void)
 void player_afterburn (void)
 {
    /* TODO fancy effect? */
-   if (player->afterburner!=NULL) {
+   if ((player != NULL) && (player->afterburner!=NULL)) {
       player_setFlag(PLAYER_AFTERBURNER);
       pilot_setFlag(player,PILOT_AFTERBURNER);
       spfx_shake(player->afterburner->outfit->u.afb.rumble * SHAKE_MAX);
@@ -1651,7 +1655,7 @@ void player_afterburn (void)
 }
 void player_afterburnOver (void)
 {
-   if (player->afterburner!=NULL) {
+   if ((player != NULL) && (player->afterburner!=NULL)) {
       player_rmFlag(PLAYER_AFTERBURNER);
       pilot_rmFlag(player,PILOT_AFTERBURNER);
       player_stopSound();
@@ -1664,8 +1668,10 @@ void player_afterburnOver (void)
  */
 void player_accel( double acc )
 {
-   player_acc = acc;
-   player_playSound( player->ship->sound, 0 );
+   if (player != NULL) {
+      player_acc = acc;
+      player_playSound( player->ship->sound, 0 );
+   }
 }
 void player_accelOver (void)
 {
