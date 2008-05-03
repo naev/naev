@@ -50,7 +50,10 @@ typedef enum PlanetClass_ {
    PLANET_CLASS_X,   /* Demon */
    PLANET_CLASS_Y,   /* Demon */
    PLANET_CLASS_Z,   /* Demon */
-   STATION_CLASS_A   /* TODO */
+   STATION_CLASS_A,  /* Civilian Station */
+   STATION_CLASS_B,  /* Military Station */
+   STATION_CLASS_C,  /* Interfactional Station */
+   STATION_CLASS_D  /* Robotic Station */
 } PlanetClass;
 
 /*

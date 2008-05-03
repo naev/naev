@@ -412,6 +412,9 @@ static PlanetClass planetclass_get( const char a )
       case 'Z': return PLANET_CLASS_Z;
       /* stations use numbers - not as many types */
       case '0': return STATION_CLASS_A;
+      case '1': return STATION_CLASS_B;
+      case '2': return STATION_CLASS_C;
+      case '3': return STATION_CLASS_D;
 
       default: return PLANET_CLASS_NULL;
    };

@@ -152,7 +152,8 @@ class Space:
 
       # classes
       classes = [ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
-            "M", "N", "O", "P", "Q", "R", "S", "T", "X", "Y", "Z", "0", "1" ]
+            "M", "N", "O", "P", "Q", "R", "S", "T", "X", "Y", "Z",
+            "0", "1", "2", "3" ]
       wgt = self.__pwidget("comClass")
       combo = gtk.ListStore(str)
       for c in classes:
