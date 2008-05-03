@@ -650,6 +650,8 @@ void voice_update( alVoice* voice, double px, double py,
  */
 void voice_buffer( alVoice* voice, const ALuint buffer, const unsigned int flags )
 {
+   if (voice == NULL) return;
+
    voice->buffer = buffer;
    voice_parseFlags( voice, flags );
 
@@ -665,6 +667,8 @@ void voice_buffer( alVoice* voice, const ALuint buffer, const unsigned int flags
  */
 void voice_stop( alVoice* voice )
 {
+   if (voice == NULL) return;
+
    soundLock();
    if (voice->source != 0)
       alSourceStop(voice->source);
