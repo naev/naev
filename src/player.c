@@ -430,10 +430,10 @@ void player_cleanup (void)
 
    player_clear();
 
-   /* cleanup name */
+   /* clean up name */
    if (player_name != NULL) free(player_name);
 
-   /* cleanup messages */
+   /* clean up messages */
    for (i=0; i<mesg_max; i++)
       memset( mesg_stack[i].str, '\0', MESG_SIZE_MAX );
 
@@ -451,11 +451,19 @@ void player_cleanup (void)
       player_nstack = 0;
    }
 
+   /* clean up misions */
    if (missions_done != NULL) {
       free(missions_done);
       missions_done = NULL;
       missions_ndone = 0;
       missions_mdone = 0;
+   }
+
+   /* just in case purge the pilot stack */
+   pilots_cleanAll();
+   if (player != NULL) { /* and the player */
+      pilot_free(player);
+      player = NULL;
    }
 }
 

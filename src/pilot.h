@@ -216,6 +216,7 @@ Pilot* pilot_copy( Pilot* src );
 void pilot_destroy(Pilot* p);
 void pilots_free (void);
 void pilots_clean (void);
+void pilots_cleanAll (void);
 void pilot_free( Pilot* p );
 int fleet_load (void); /* TODO make this fleet stuff actually matter */
 void fleet_free (void);

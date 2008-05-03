@@ -1257,6 +1257,20 @@ void pilots_clean (void)
 
 
 /*
+ * even cleans up the player
+ */
+void pilots_cleanAll (void)
+{
+   pilots_clean();
+   if (player != NULL) {
+      pilot_free(player);
+      player = NULL;
+   }
+   pilots = 0;
+}
+
+
+/*
  * updates all the pilots
  */
 void pilots_update( double dt )
