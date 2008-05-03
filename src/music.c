@@ -479,6 +479,8 @@ int lua_loadMusic( lua_State *L, int read_only )
  */
 int music_choose( char* situation )
 {
+   if (sound_lock == NULL) return 0;
+
    lua_getglobal( music_lua, "choose" );
    lua_pushstring( music_lua, situation );
    if (lua_pcall(music_lua, 1, 0, 0)) { /* error has occured */
