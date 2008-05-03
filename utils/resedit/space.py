@@ -808,6 +808,8 @@ class Space:
       commodity = self.__commodity_sel()
       if commodity != "":
          self.planets[self.cur_planet]["general"]["commodities"].remove(commodity)
+         if len(self.planets[self.cur_planet]["general"]["commodities"]) == 0:
+            del self.planets[self.cur_planet]["general"]["commodities"]
          self.__pupdate()
 
 
