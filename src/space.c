@@ -801,7 +801,7 @@ static Planet* planet_pull( const char* name )
                               if (i==PLANET_TECH_MAX) WARN("Planet '%s' has too many"
                                     "'special tech' entries", temp->name);
                            }
-                        } while ((ccur = ccur->next));
+                        } while (xml_nextNode(ccur));
                      }
                      
                      else if (xml_isNode(cur, "commodities")) {
