@@ -1,148 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Planets>
-<planet name="Caladan">
-<pos>
-<x>0</x>
-<y>0</y>
-</pos>
-<general>
-<class>A</class>
-<description>
-The surface of the planet is predominantly covered with water and the planetary climate is characterised by abundant precipitation and strong winds, yet tolerable enough to make special and expensive weather control measures unnecessary. Habitable land is often characterised by soft meadows, swamps and dense forests. The resource base of Caladan consists mainly of agriculture and biomass, with the locally bred and grown pundi rice being its main export, and fishing a traditional source of sustenance for its people. Other traditional products include wine and various livestock, most prominently cattle. Cuisine on Caladan is rather refined, with most dishes containing meat.
-</description>
-<bar>
+<?xml version="1.0" encoding="UTF-8"?><Planets><planet name="Caladan"><GFX><exterior>oceanic.png</exterior><space>M01.png</space></GFX><pos><y>0</y><x>0</x></pos><general><bar>
 The bar is just off the starport with a great view of the harbour.  You could watch the fishermen run frantically about attending their duties for hours.
-</bar>
-<faction>Independent</faction>
-<services>31</services>
-<tech>
-<main>3</main>
-</tech>
-<commodities>
-<commodity>Food</commodity>
-<commodity>Ore</commodity>
-<commodity>Industrial Goods</commodity>
-<commodity>Medicine</commodity>
-</commodities>
-</general>
-<GFX>
-<space>M01.png</space>
-<exterior>oceanic.png</exterior>
-</GFX>
-</planet>
-<planet name="Arrakis">
-<pos>
-<x>0</x>
-<y>0</y>
-</pos>
-<general>
-<class>H</class>
-<description>
-Arrakis is a desert planet with no natural precipitation.
-</description>
-<bar>
-The Arrakeen canteen is a shady place.  Many scoundrels and lowlifes make this their home to avoid notice from the universal police.
-</bar>
-<faction>Independent</faction>
-<services>7</services>
-<tech>
-<main>4</main>
-</tech>
-<commodities>
-<commodity>Food</commodity>
-<commodity>Ore</commodity>
-</commodities>
-</general>
-<GFX>
-<space>H00.png</space>
-<exterior>desertic.png</exterior>
-</GFX>
-</planet>
-<planet name="Omega Station">
-<pos>
-<x>0</x>
-<y>0</y>
-</pos>
-<general>
-<class>0</class>
-<description>
-Built to defend the Empire from the Collective.  The Omega Station has been the observer of countless battles fought in it's sector.  It's helped keep a stalemate in the sector.
-</description>
-<bar>
+</bar><description>
+The surface of the planet is predominantly covered with water and the planetary climate is characterised by abundant precipitation and strong winds, yet tolerable enough to make special and expensive weather control measures unnecessary. Habitable land is often characterised by soft meadows, swamps and dense forests. The resource base of Caladan consists mainly of agriculture and biomass, with the locally bred and grown pundi rice being its main export, and fishing a traditional source of sustenance for its people. Other traditional products include wine and various livestock, most prominently cattle. Cuisine on Caladan is rather refined, with most dishes containing meat.
+</description><faction>Independent</faction><commodities><commodity>Food</commodity><commodity>Ore</commodity><commodity>Industrial Goods</commodity><commodity>Medicine</commodity></commodities><tech><main>3</main></tech><services>31</services><class>A</class></general></planet><planet name="Selphod"><GFX><exterior>snow.png</exterior><space>P00.png</space></GFX><pos><y>0</y><x>0</x></pos><general><bar>Great bar if you like your drinks cold.</bar><description>Cold place.</description><faction>Empire</faction><commodities><commodity>Food</commodity><commodity>Ore</commodity><commodity>Industrial Goods</commodity></commodities><tech><main>0</main></tech><services>7</services><class>P</class></general></planet><planet name="Omega Station"><GFX><exterior>station00.png</exterior><space>000.png</space></GFX><pos><y>0</y><x>0</x></pos><general><bar>
 The Omega Canteen is a dark place that seems calm, although everytime a robotic drone approaches an alarm sounds sending pilots to man their ships to  fight off the menace.
-</bar>
-<faction>Empire</faction>
-<services>15</services>
-<commodities>
-<commodity>Food</commodity>
-<commodity>Medicine</commodity>
-</commodities>
-<tech>
-<main>5</main>
-</tech>
-</general>
-<GFX>
-<space>000.png</space>
-<exterior>station00.png</exterior>
-</GFX>
-</planet>
-<planet name="S72839">
-<pos>
-<x>0</x>
-<y>0</y>
-</pos>
-<general>
-<class>0</class>
-<faction>Collective</faction>
-<services>0</services>
-</general>
-<GFX>
-<space>001.png</space>
-<exterior>station01.png</exterior>
-</GFX>
-</planet>
-<planet name="Darkshed">
-<pos>
-<x>-57</x>
-<y>-33</y>
-</pos>
-<general>
-<class>0</class>
-<description>
-Reknown for it's outfit market and shipyards.  Almost the entire Darkshed station is dedicated to trading outfits and ships.  Mercenaries and bounty hunters from all over the galaxy come here to see the newest enhancements available in the market.  This tends to also attract many of the shadier characters in the universe winding up with frequent fights where they test their newly bought outfits.
-</description>
-<bar>
+</bar><description>
+Built to defend the Empire from the Collective.  The Omega Station has been the observer of countless battles fought in it's sector.  It's helped keep a stalemate in the sector.
+</description><faction>Empire</faction><commodities><commodity>Food</commodity><commodity>Medicine</commodity></commodities><tech><main>5</main></tech><services>15</services><class>0</class></general></planet><planet name="Darkshed"><GFX><exterior>station02.png</exterior><space>002.png</space></GFX><pos><y>-33</y><x>-57</x></pos><general><bar>
 The Darkshed cantina is decorated with all sorts of odd artifacts that marked different tendencies in spaceship outfitting.
-</bar>
-<faction>Independent</faction>
-<services>31</services>
-<tech>
-<main>13</main>
-</tech>
-<commodities>
-<commodity>Food</commodity>
-<commodity>Ore</commodity>
-<commodity>Industrial Goods</commodity>
-<commodity>Medicine</commodity>
-<commodity>Luxury Goods</commodity>
-</commodities>
-</general>
-<GFX>
-<space>002.png</space>
-<exterior>station02.png</exterior>
-</GFX>
-</planet>
-<planet name="Ozogo X">
-<pos>
-<x>23</x>
-<y>17</y>
-</pos>
-<general>
-<class>J</class>
-<services>0</services>
-</general>
-<GFX>
-<space>J00.png</space>
-</GFX>
-</planet>
-</Planets>
+</bar><description>
+Reknown for it's outfit market and shipyards.  Almost the entire Darkshed station is dedicated to trading outfits and ships.  Mercenaries and bounty hunters from all over the galaxy come here to see the newest enhancements available in the market.  This tends to also attract many of the shadier characters in the universe winding up with frequent fights where they test their newly bought outfits.
+</description><faction>Independent</faction><commodities><commodity>Food</commodity><commodity>Ore</commodity><commodity>Industrial Goods</commodity><commodity>Medicine</commodity><commodity>Luxury Goods</commodity></commodities><tech><main>13</main></tech><services>31</services><class>0</class></general></planet><planet name="S72839"><GFX><exterior>station01.png</exterior><space>001.png</space></GFX><pos><y>0</y><x>0</x></pos><general><services>0</services><tech><main>0</main></tech><class>0</class><faction>Collective</faction></general></planet><planet name="Ozogo X"><GFX><space>J00.png</space></GFX><pos><y>17</y><x>23</x></pos><general><services>0</services><tech><main>0</main></tech><class>J</class></general></planet><planet name="Arrakis"><GFX><exterior>desertic.png</exterior><space>H00.png</space></GFX><pos><y>0</y><x>0</x></pos><general><bar>
+The Arrakeen canteen is a shady place.  Many scoundrels and lowlifes make this their home to avoid notice from the universal police.
+</bar><description>
+Arrakis is a desert planet with no natural precipitation.
+</description><faction>Independent</faction><commodities><commodity>Food</commodity><commodity>Ore</commodity></commodities><tech><main>4</main></tech><services>7</services><class>H</class></general></planet></Planets>
