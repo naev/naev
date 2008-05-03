@@ -122,6 +122,7 @@ class Space:
       if wgt != None:
          wgt.hide_all()
 
+
    def windowPlanet(self):
       # ---------------- PLANETS --------------------
       self.pwtree = gtk.glade.XML(self.planet_glade, "winPlanets")
@@ -138,7 +139,8 @@ class Space:
             "butComAdd":["clicked",self.__commodity_add],
             "butComRm":["clicked",self.__commodity_rm],
             "comSpace":["changed", self.__space_sel],
-            "comExterior":["changed", self.__exterior_sel]
+            "comExterior":["changed", self.__exterior_sel],
+            "butDescription":["clicked", self.__edit_description]
       }
       for key, val in hooks.items():
          self.__pwidget(key).connect(val[0],val[1])
@@ -805,7 +807,7 @@ class Space:
 
 
    """
-   changes the graphics
+   changes the planet graphics
    """
    def __space_sel(self, wgt=None, event=None):
       space = self.__pwidget("comSpace").get_active_text()
@@ -817,6 +819,38 @@ class Space:
       if self.cur_planet != "":
          self.planets[self.cur_planet]["GFX"]["exterior"] = space
          self.__pupdate()
+
+   """
+   opens the description editor
+   """
+   def __edit_description(self, wgt=None, event=None):
+      if self.cur_planet == "":
+         return
+
+      wtree = gtk.glade.XML(self.planet_glade, "winDescription")
+      wtree.get_widget("winDescription").show_all()
+
+      # hooks
+      wtree.get_widget("butDescDone").connect("clicked",self.__desc_done)
+
+      # set text
+      buf = gtk.TextBuffer()
+      try:
+         buf.set_text(self.planets[self.cur_planet]["general"]["description"])
+      except:
+         buf.set_text("")
+      wtree.get_widget("texDescription").set_buffer(buf)
+      
+      self.dtree = wtree
+   def __desc_done(self, wgt=None, event=None):
+      buf = self.dtree.get_widget("texDescription").get_buffer()
+      desc = buf.get_text(buf.get_start_iter(), buf.get_end_iter())
+      if desc != "":
+         self.planets[self.cur_planet]["general"]["description"] = desc
+      else:
+         if "description" in self.planets[self.cur_planet]["general"].keys():
+            del self.planets[self.cur_planet]["general"]["description"]
+      self.dtree.get_widget("winDescription").hide_all()
 
 
    """
@@ -837,7 +871,7 @@ class Space:
    """
    def __pnew(self, wgt=None, event=None):
       name = "new planet"
-      gfx = { "space":"none.png" }
+      gfx = { "space":"None" }
       gen = { "class":"A", "services":0 }
       pos = { "x":0,"y":0 }
       new_planet = { "GFX":gfx, "general":gen, "pos":pos }
@@ -884,6 +918,7 @@ class Space:
 
       # append to new location
       self.systems[sys]["planets"].append(planet)
+      print self.systems[sys]["planets"]
 
       # recreate the tree
       self.__genPlanetTree()

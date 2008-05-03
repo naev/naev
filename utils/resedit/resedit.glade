@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.4 on Fri May  2 19:36:25 2008 -->
+<!--Generated with glade3 3.4.4 on Sat May  3 16:23:22 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="winResedit">
+    <property name="title" translatable="yes">NAEV Resource Editor</property>
+    <property name="window_position">GTK_WIN_POS_CENTER</property>
     <child>
       <widget class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
