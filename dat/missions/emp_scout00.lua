@@ -26,6 +26,11 @@ end
 
 function create()
 
+   -- Requirements
+   if var.peek("es_cargo") ~= true then
+      misn.finish(false)
+   end
+
    -- Intro text
    if tk.yesno( title[1], string.format(text[1], player.name()) )
       then

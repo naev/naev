@@ -23,13 +23,22 @@ end
 
 function create()
 
+   -- target destination
+   local i = 0
+   repeat
+      dest = space.getPlanet( misn.factions() )
+      i = i + 1
+   until dest ~= space.landName() or i > 10
+   -- infinite loop protection
+   if i > 10 then
+      misn.finish(false)
+   end
+
    -- Intro text
    tk.msg( title[1], text[1] )
    if tk.yesno( title[1], text[2] )
       then
       misn.accept()
-
-      dest = space.getPlanet("Empire");
 
       -- Mission details
       reward = 3000
