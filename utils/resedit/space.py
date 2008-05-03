@@ -10,7 +10,7 @@ import data
 
 class Space:
 
-   def __init__(self, factions=None, fleets=None):
+   def __init__(self, factions=None, fleets=None, commodities=None):
       self.space_glade = "space.glade"
       self.planet_glade = "planets.glade"
       self.systemsXML = "../../dat/ssys.xml"
@@ -18,14 +18,9 @@ class Space:
       self.planet_gfx = "../../gfx/planet/"
       self.loadSystems(self.systemsXML)
       self.loadPlanets(self.planetsXML)
-      if factions==None:
-         self.factions = {}
-      else:
-         self.factions = factions
-      if fleets==None:
-         self.fleets = {}
-      else:
-         self.fleets = fleets
+      self.factions = {} if factions is None else factions
+      self.fleets = {} if fleets is None else fleets
+      self.commodities = {} if commodities is None else commodities
       self.swtree = None
       self.pwtree = None
 
@@ -138,7 +133,9 @@ class Space:
             "trePlanets":["button-release-event", self.__pupdate],
             "comSystem":["changed", self.__pnewSys],
             "comFaction":["changed", self.__pnewFact],
-            "butSave":["clicked",self.savePlanets]
+            "butSave":["clicked",self.savePlanets],
+            "butComAdd":["clicked",self.__commodity_add],
+            "butComRm":["clicked",self.__commodity_rm]
       }
       for key, val in hooks.items():
          self.__pwidget(key).connect(val[0],val[1])
@@ -170,6 +167,20 @@ class Space:
       wgt.add_attribute(cell, 'text', 0)
       wgt.set_model(combo)
       wgt.set_active(0)
+
+      # commodities
+      wgt = self.__pwidget("comCommodities")
+      combo = gtk.ListStore(str)
+      combo.append(["None"])
+      for c in self.commodities.keys():
+         node = combo.append([c])
+      cell = gtk.CellRendererText()
+      wgt.pack_start(cell, True)
+      wgt.add_attribute(cell, 'text', 0)
+      wgt.set_model(combo)
+      wgt.set_active(0)
+
+
    def windowPlanetClose(self):
       wgt = self.__pwidget("winPlanets")
       if wgt != None:
@@ -208,6 +219,25 @@ class Space:
       col.pack_start(cell, True)
       col.add_attribute(cell, 'text', 0)
       wgt.set_model(self.tree_planets)
+
+
+   def __create_treCommodities(self):
+      # treeview
+      wgt = self.__pwidget("treCommodities")
+      self.tree_commodities = gtk.TreeStore(str)
+      try:
+         for commodity in self.planets[self.cur_planet]["general"]["commodities"]:
+            treenode = self.tree_commodities.append(None, [commodity])
+      except:
+         commodity = None
+      col = gtk.TreeViewColumn('Commodities')
+      cell = gtk.CellRendererText()
+      if wgt.get_column(0):
+         wgt.remove_column( wgt.get_column(0) )
+      wgt.append_column(col)
+      col.pack_start(cell, True)
+      col.add_attribute(cell, 'text', 0)
+      wgt.set_model(self.tree_commodities)
 
 
    def __swidget(self,wgtname):
@@ -359,6 +389,8 @@ class Space:
             wgt.set_active_iter(combo.get_iter(i))
          i = i + 1
 
+      # commodities
+      self.__create_treCommodities()
 
 
    def __sstore(self):
@@ -690,6 +722,33 @@ class Space:
                self.__supdate()
                return
          i = i+1
+
+   """
+   add or remove a commodity from a planet
+   """
+   def __commodity_sel(self):
+      tree = self.__pwidget("treCommodities")
+      model = tree.get_model()
+      try:
+         iter = tree.get_selection().get_selected()[1]
+      except:
+         return ""
+      return model.get_value(iter,0)
+   def __commodity_add(self, wgt=None, event=None):
+      commodity = self.__pwidget("comCommodities").get_active_text()
+      if commodity != "None" and self.cur_planet != "":
+         planet = self.planets[self.cur_planet]
+         try:
+            planet["general"]["commodities"].append( commodity )
+            data.uniq(planet["general"]["commodities"])
+         except:
+            planet["general"]["commodities"] = [ commodity ]
+         self.__pupdate()
+   def __commodity_rm(self, wgt=None, event=None):
+      commodity = self.__commodity_sel()
+      if commodity != "":
+         self.planets[self.cur_planet]["general"]["commodities"].remove(commodity)
+         self.__pupdate()
 
 
    """

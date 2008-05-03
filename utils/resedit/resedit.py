@@ -26,21 +26,27 @@ except:
    raise SystemExit
 
 
-import space, faction, fleet
+import space, faction, fleet, commodity
+
+path = "../../dat/"
 
 
 # load the factions
 factions = faction.Factions()
-factions.loadFactions("../../dat/faction.xml")
+factions.loadFactions(path+"faction.xml")
 
 # load the fleets
 fleets = fleet.Fleets()
-fleets.loadFleets("../../dat/fleet.xml")
+fleets.loadFleets(path+"fleet.xml")
+
+# load the commodities
+commodities = commodity.Commodities()
+commodities.loadCommodities(path+"commodity.xml")
 
 # load the universe
-universe = space.Space( factions.data(), fleets.data() )
-universe.loadSystems("../../dat/ssys.xml")
-universe.loadPlanets("../../dat/planet.xml")
+universe = space.Space( factions.data(), fleets.data(), commodities.data() )
+universe.loadSystems(path+"ssys.xml")
+universe.loadPlanets(path+"planet.xml")
 
 # load the editor interface
 # functions
