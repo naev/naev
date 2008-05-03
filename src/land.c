@@ -883,8 +883,8 @@ static void spaceport_bar (void)
          "News", (void(*)(char*))news);
 
    /* text */
-   window_addText( secondary_wid, 20, -30,
-         BAR_WIDTH - 40, BAR_HEIGHT - 40 - BUTTON_HEIGHT, 0,
+   window_addText( secondary_wid, 20, -50,
+         BAR_WIDTH - 40, BAR_HEIGHT - 60 - BUTTON_HEIGHT, 0,
          "txtDescription", &gl_smallFont, &cBlack, land_planet->bar_description );
 
    if (!has_visited(VISITED_BAR)) {
