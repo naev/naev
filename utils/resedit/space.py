@@ -5,6 +5,7 @@ See Licensing and Copyright notice in resedit.py
 
 import gtk,gtk.glade
 import gobject
+import os
 
 import data
 
@@ -135,7 +136,9 @@ class Space:
             "comFaction":["changed", self.__pnewFact],
             "butSave":["clicked",self.savePlanets],
             "butComAdd":["clicked",self.__commodity_add],
-            "butComRm":["clicked",self.__commodity_rm]
+            "butComRm":["clicked",self.__commodity_rm],
+            "comSpace":["changed", self.__space_sel],
+            "comExterior":["changed", self.__exterior_sel]
       }
       for key, val in hooks.items():
          self.__pwidget(key).connect(val[0],val[1])
@@ -179,6 +182,33 @@ class Space:
       wgt.add_attribute(cell, 'text', 0)
       wgt.set_model(combo)
       wgt.set_active(0)
+
+      # graphics - space
+      wgt = self.__pwidget("comSpace")
+      combo = gtk.ListStore(str)
+      combo.append(["None"])
+      for gfx in os.listdir(self.planet_gfx+"space"):
+         if gfx[-4:] == ".png":
+            node = combo.append([gfx])
+      cell = gtk.CellRendererText()
+      wgt.pack_start(cell, True)
+      wgt.add_attribute(cell, 'text', 0)
+      wgt.set_model(combo)
+      wgt.set_active(0)
+
+      # graphics - exterior
+      wgt = self.__pwidget("comExterior")
+      combo = gtk.ListStore(str)
+      combo.append(["None"])
+      for gfx in os.listdir(self.planet_gfx+"exterior"):
+         if gfx[-4:] == ".png":
+            node = combo.append([gfx])
+      cell = gtk.CellRendererText()
+      wgt.pack_start(cell, True)
+      wgt.add_attribute(cell, 'text', 0)
+      wgt.set_model(combo)
+      wgt.set_active(0)
+
 
 
    def windowPlanetClose(self):
@@ -347,6 +377,29 @@ class Space:
             i = i + 1
       except:
          wgt.set_active(0) # none
+
+      # gfx - space
+      space = planet["GFX"]["space"]
+      i = 0
+      wgt = self.__pwidget("comSpace")
+      model = wgt.get_model()
+      for row in model:
+         if row[0] == space:
+            wgt.set_active_iter(model.get_iter(i))
+         i = i + 1
+
+      # gfx - exterior
+      wgt = self.__pwidget("comExterior")
+      model = wgt.get_model()
+      try:
+         exterior = planet["GFX"]["exterior"]
+         i = 0
+         for row in model:
+            if row[0] == exterior:
+               wgt.set_active_iter(model.get_iter(i))
+            i = i + 1
+      except:
+          wgt.set_active_iter(model.get_iter(0))
 
 
       # tech
@@ -748,6 +801,21 @@ class Space:
       commodity = self.__commodity_sel()
       if commodity != "":
          self.planets[self.cur_planet]["general"]["commodities"].remove(commodity)
+         self.__pupdate()
+
+
+   """
+   changes the graphics
+   """
+   def __space_sel(self, wgt=None, event=None):
+      space = self.__pwidget("comSpace").get_active_text()
+      if self.cur_planet != "":
+         self.planets[self.cur_planet]["GFX"]["space"] = space
+         self.__pupdate()
+   def __exterior_sel(self, wgt=None, event=None):
+      space = self.__pwidget("comExterior").get_active_text()
+      if self.cur_planet != "":
+         self.planets[self.cur_planet]["GFX"]["exterior"] = space
          self.__pupdate()
 
 
