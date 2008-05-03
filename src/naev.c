@@ -318,7 +318,7 @@ static void update_all (void)
 {
    double tempdt;
 
-   if (dt > 1.) { /* slow timers down and rerun calculations */
+   if (dt > 0.25) { /* slow timers down and rerun calculations */
       pause_delay((unsigned int)dt*1000);
       return;
    }
