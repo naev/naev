@@ -81,8 +81,8 @@ static void print_usage( char **argv )
    LOG("   -f, --fullscreen      fullscreen");
    LOG("   -F n, --fps n         limit frames per second");
    LOG("   -d s, --data s        set the data file to be s");
-   LOG("   -x n                  set width to n");
-   LOG("   -y n                  set height to n");
+   LOG("   -W n                  set width to n");
+   LOG("   -H n                  set height to n");
    LOG("   -j n, --joystick n    use joystick n");
    LOG("   -J s, --Joystick s    use joystick whose name contains s");
    LOG("   -M, --mute            disables sound");
