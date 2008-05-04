@@ -136,7 +136,7 @@ static int mission_init( Mission* mission, MissionData* misn, int load )
       ERR("Unable to create a new lua state.");
       return -1;
    }
-   /* luaopen_base( mission->L ); *//* can be useful */
+   luaopen_base( mission->L ); /* can be useful */
    luaopen_string( mission->L ); /* string.format can be very useful */
    misn_loadLibs( mission->L ); /* load our custom libraries */
 
