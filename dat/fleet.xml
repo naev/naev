@@ -71,7 +71,15 @@
 <pilot chance='100'>Lancelot</pilot>
 <pilot chance='80'>Lancelot</pilot>
 <pilot chance='60'>Lancelot</pilot>
-<pilot chance='50'>Hawking</pilot>
+<pilot chance='50'>Pacifier</pilot>
+<pilot chance='30'>Hawking</pilot>
+</pilots>
+</fleet>
+<fleet name="Empire Pacifier">
+<ai>empire</ai>
+<faction>Empire</faction>
+<pilots>
+<pilot chance='100'>Pacifier</pilot>
 </pilots>
 </fleet>
 </Fleets>
