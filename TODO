@@ -3,15 +3,16 @@
    VITAL
 
    *) Get a good sound system working
+   *) Better AI
+      *) improved combat efficiency
+      *) smarter missiles -> PID if possible
 
 
    MAJOR
 
    *) More missions and mission lua bindings
    *) Better AI
-      *) improved combat efficiency
       *) boids ship fleet movement (have them behave like fleets)
-      *) smarter missiles -> PID if possible
    *) Escorts (boarding taking over too)
       *) escort commands
    *) Graphic improvements
@@ -42,7 +43,7 @@
    *) Unique pilot system (besides mission uniques)
    *) Real news
    *) Dynamic Economy
-   *) Dynamic Politics - Faction wid AI
+   *) Dynamic Politics - Faction wide AI
    *) YAML (when DOM parser is done)
    *) Cinema scenes
    *) Options menu do something
