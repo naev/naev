@@ -33,6 +33,16 @@ Vector2d* gl_camera;
 extern double gui_xoff;
 extern double gui_yoff;
 
+/*
+ * graphic list
+ */
+typedef struct glTexList_ {
+   struct glTexList_ *next; /*< Next in linked list */
+   glTexture *tex; /*< assosciated texture */
+   int used; /*< counts how many times texture is being used */
+} glTexList;
+static glTexList* texture_list = NULL;
+
 
 /*
  * prototypes
@@ -44,6 +54,7 @@ static uint8_t* SDL_MapTrans( SDL_Surface* s );
 static int pot( int n );
 /* glTexture */
 static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh );
+static glTexture* gl_loadNewImage( const char* path );
 static void gl_blitTexture( const glTexture* texture, 
       const double x, const double y,
       const double tx, const double ty, const glColour *c );
@@ -300,15 +311,54 @@ glTexture* gl_loadImage( SDL_Surface* surface )
 
 
 /*
- * loads the image as an opengl texture directly
+ * loads image if not loaded already
  */
 glTexture* gl_newImage( const char* path )
+{
+   glTexList *cur, *last;
+
+   /* check to see if it already exists */
+   if (texture_list != NULL) {
+      for (cur=texture_list; cur!=NULL; cur=cur->next) {
+         if (strcmp(path,cur->tex->name)==0) {
+            cur->used += 1;
+            return cur->tex;
+         }
+         last = cur;
+      }
+   }
+
+   /* allocate memory */
+   if (texture_list == NULL) { /* special condition - creating new list */
+      texture_list = cur = malloc(sizeof(glTexList));
+   }
+   else {
+      cur = malloc(sizeof(glTexList));
+      last->next = cur;
+   }
+
+   /* set node properties */
+   cur->next = NULL;
+   cur->tex = gl_loadNewImage(path);
+   cur->used = 1;
+
+   return cur->tex;
+}
+
+
+/*
+ * loads the image as an opengl texture directly
+ */
+static glTexture* gl_loadNewImage( const char* path )
 {
    SDL_Surface *temp, *surface;
    glTexture* t;
    uint8_t* trans = NULL;
    uint32_t filesize;
-   char *buf = pack_readfile( DATA, (char*)path, &filesize );
+   char *buf;
+
+   /* load from packfile */
+   buf = pack_readfile( DATA, (char*)path, &filesize );
    if (buf == NULL) {
       ERR("Loading surface from packfile");
       return NULL;
@@ -341,8 +391,10 @@ glTexture* gl_newImage( const char* path )
    trans = SDL_MapTrans(surface);
    SDL_UnlockSurface(surface);
 
+   /* set the texture */
    t = gl_loadImage(surface);
    t->trans = trans;
+   t->name = strdup(path);
    return t;
 }
 
@@ -355,6 +407,9 @@ glTexture* gl_newSprite( const char* path, const int sx, const int sy )
    glTexture* texture;
    if ((texture = gl_newImage(path)) == NULL)
       return NULL;
+
+   /* will possibly overwrite an existing textur properties
+    * so we have to load same texture always the same sprites */
    texture->sx = (double)sx;
    texture->sy = (double)sy;
    texture->sw = texture->w/texture->sx;
@@ -368,9 +423,30 @@ glTexture* gl_newSprite( const char* path, const int sx, const int sy )
  */
 void gl_freeTexture( glTexture* texture )
 {
-   glDeleteTextures( 1, &texture->texture );
-   if (texture->trans) free(texture->trans);
-   free(texture);
+   glTexList *cur, *last;
+
+   /* see if we can find it in stack */
+   last = NULL;
+   for (cur=texture_list; cur!=NULL; cur=cur->next) {
+      if (cur->tex == texture) { /* found it */
+         cur->used--;
+         if (cur->used <= 0) { /* not used anymore */
+            /* free the texture */
+            glDeleteTextures( 1, &texture->texture );
+            if (texture->trans) free(texture->trans);
+            free(texture);
+
+            /* free the list node */
+            if (last == NULL) /* case it's the last texture */
+               texture_list = NULL;
+            else
+               last->next = cur->next;
+            free(cur);
+         }
+         return; /* we already found it so we can exit */
+      }
+      last = cur;
+   }
 }
 
 

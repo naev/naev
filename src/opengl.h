@@ -66,12 +66,22 @@ extern glInfo gl_screen; /* local structure set with gl_init and co */
  * Spritesheet info
  */
 typedef struct glTexture_ {
-   double w, h; /* real size of the image (excluding POT buffer) */
-   double rw, rh; /* size of POT surface */
-   double sx, sy; /* number of sprites on x axis and y axis */
-   double sw, sh; /* size of each sprite */
-   GLuint texture; /* the opengl texture itself */
-   uint8_t* trans; /* maps the transparency */
+   char *name; /*< name of the graphic */
+
+   /* dimensions */
+   double w, h; /*< real size of the image (excluding POT buffer) */
+   double rw, rh; /*< size of POT surface */
+
+   /* sprites */
+   double sx, sy; /*< number of sprites on x axis and y axis */
+   double sw, sh; /*< size of each sprite */
+
+   /* data */
+   GLuint texture; /*< the opengl texture itself */
+   uint8_t* trans; /*< maps the transparency */
+
+   /* properties */
+   uint8_t flags; /*< flags used for texture properties */
 } glTexture;
 
 

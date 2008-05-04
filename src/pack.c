@@ -446,6 +446,11 @@ void* pack_readfile( const char* packfile, const char* filename, uint32_t *files
    /* read the entire file */
    size = file->end - file->start;
    buf = malloc( size + 1 );
+   if (buf == NULL) {
+      ERR("Unable to allocate %d bytes of memory!", size+1);
+      free(file);
+      return NULL;
+   }
    if ((bytes = pack_read( file, buf, size)) != size) {
       ERR("Reading '%s' from packfile '%s'.  Expected %d bytes got %d bytes",
             filename, packfile, size, bytes );
