@@ -192,7 +192,8 @@ static void input_key( int keynum, double value, int abs )
 
       /* double tap accel = afterburn! */
       t = SDL_GetTicks();
-      if ((value==KEY_PRESS) && (t-input_accelLast <= input_afterburnSensibility))
+      if ((value==KEY_PRESS) && INGAME() && NOHYP() &&
+            (t-input_accelLast <= input_afterburnSensibility))
          player_afterburn();
       else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_AFTERBURNER))
          player_afterburnOver();
