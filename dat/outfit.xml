@@ -69,6 +69,29 @@ Plasma is very volatile, if properly controlled it can be very destructive, it d
 <damage type="energy">13</damage>
 </specific>
 </outfit>
+<outfit name="Ion Cannon">
+<general>
+<max>4</max>
+<tech>7</tech>
+<mass>9</mass>
+<price>15000</price>
+<description>
+Ion pulses were originally intended only to deactivate shields since they had completely nullified the old radiation technology weapons.  It was thought that by figuring out a way to deactivate shields fast the radiation technology would still be able to destroy the armour.  By combining shield destruction power and armour destruction power, the perfect weopns could be designed.  The Ion pulses ended up being very effective against armour and electronics.  With the invention of the latest generation shields and armour materials, Ion pulses have lost much of the terrain they had as newfound technology.
+</description>
+<gfx_store>ion</gfx_store>
+</general>
+<specific type="1">
+<gfx>ion</gfx>
+<sound>ion</sound>
+<spfx>ExpS</spfx>
+<delay>800</delay>
+<speed>500</speed>
+<range>400</range>
+<accuracy>10</accuracy>
+<energy>13</energy>
+<damage type="ion">15</damage>
+</specific>
+</outfit>
 <outfit name="Railgun">
 <general>
 <max>2</max>
