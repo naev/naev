@@ -104,6 +104,14 @@ void outfit_calcDamage( double *dshield, double *darmour,
          (*dshield) = dmg*0.8;
          (*darmour) = dmg*1.2;
          break;
+      case DAMAGE_TYPE_ION:
+         (*dshield) = dmg;
+         (*darmour) = dmg;
+         break;
+      case DAMAGE_TYPE_RADIATION;
+         (*dshield) = 0.;
+         (*darmour) = dmg;
+         break;
 
       default:
          (*dshield) = (*darmour) = 0.;
@@ -281,6 +289,8 @@ static DamageType outfit_strToDamageType( char *buf )
 {
    if (strcmp(buf,"energy")==0) return DAMAGE_TYPE_ENERGY;
    else if (strcmp(buf,"kinetic")==0) return DAMAGE_TYPE_KINETIC;
+   else if (strcmp(buf,"ion")==0) return DAMAGE_TYPE_ION;
+   else if (strcmp(buf,"radiation")==0) return DAMAGE_TYPE_RADIATION;
 
    WARN("Invalid damage type: '%s'", buf);
    return DAMAGE_TYPE_NULL;

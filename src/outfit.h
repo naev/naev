@@ -44,9 +44,11 @@ typedef enum OutfitType_ {
 } OutfitType;
 
 typedef enum DamageType_ {
-   DAMAGE_TYPE_NULL=0,
-   DAMAGE_TYPE_ENERGY=1,
-   DAMAGE_TYPE_KINETIC=2
+   DAMAGE_TYPE_NULL,
+   DAMAGE_TYPE_ENERGY,
+   DAMAGE_TYPE_KINETIC,
+   DAMAGE_TYPE_ION,
+   DAMAGE_TYPE_RADIATION
 } DamageType;
 
 /*
