@@ -46,6 +46,29 @@ Two laser cannons added on a rotating turret, allowing for 360 degrees of firepo
 <damage type="energy">10</damage>
 </specific>
 </outfit>
+<outfit name="Plasma Cannon">
+<general>
+<max>4</max>
+<tech>3</tech>
+<mass>5</mass>
+<price>9000</price>
+<description>
+Plasma is very volatile, if properly controlled it canm.
+</description>
+<gfx_store>laser</gfx_store>
+</general>
+<specific type="1">
+<gfx>plasma</gfx>
+<sound>laser</sound>
+<spfx>ExpS</spfx>
+<delay>700</delay>
+<speed>450</speed>
+<range>250</range>
+<accuracy>20</accuracy>
+<energy>10</energy>
+<damage type="energy">13</damage>
+</specific>
+</outfit>
 <outfit name="Railgun">
 <general>
 <max>2</max>

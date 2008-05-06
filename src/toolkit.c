@@ -721,7 +721,7 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
       DEBUG("widget '%s' not found in window %d", wgtname, wid);
       return;
    }
-  
+ 
    if (w->focus == i) w->focus = -1;
    widget_cleanup(&w->widgets[i]);
    if (i < w->nwidgets-1) /* not last widget */
@@ -1554,9 +1554,9 @@ static void toolkit_nextFocus (void)
 {
    Window* wdw = &windows[nwindows-1]; /* get active window */
 
-   if (wdw->nwidgets==0) 
+   if (wdw->nwidgets==0) /* special case no widgets */
       wdw->focus = -1;
-   else if (wdw->focus >= wdw->nwidgets)
+   else if (wdw->focus+1 >= wdw->nwidgets)
       wdw->focus = -1;
    else if ((++wdw->focus+1) && /* just increment */
          toolkit_isFocusable(&wdw->widgets[wdw->focus]) )
