@@ -45,7 +45,7 @@ const char *keybindNames[] = {
  * accel hacks
  */
 static unsigned int input_accelLast = 0; /* used to see if double tap */
-unsigned int input_afterburnSensibility = 500; /* ms between taps to afterburn */
+unsigned int input_afterburnSensibility = 250; /* ms between taps to afterburn */
 
 
 /*
