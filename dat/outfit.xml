@@ -53,7 +53,7 @@ Two laser cannons added on a rotating turret, allowing for 360 degrees of firepo
 <mass>5</mass>
 <price>9000</price>
 <description>
-Plasma is very volatile, if properly controlled it canm.
+Plasma is very volatile, if properly controlled it can be very destructive, it does tend to dissipate quickly though.
 </description>
 <gfx_store>laser</gfx_store>
 </general>
