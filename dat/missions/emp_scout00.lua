@@ -6,7 +6,7 @@ else -- default english
    misn_title = "Collective Scout"
    misn_reward = "None"
    misn_desc = {}
-   misn_desc[1] = "Find a scout near %s."
+   misn_desc[1] = "Find a scout last seen in the %s system."
    misn_desc[2] = "Travel back to %s in %s."
    title = {}
    title[1] = "Empire Officer"
