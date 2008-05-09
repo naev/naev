@@ -311,8 +311,8 @@ static void outfits (void)
          "Money:\n" );
    window_addText( secondary_wid, 40+200+40+60, -60,
          250, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-   window_addText( secondary_wid, 20+200+40, -200,
-         OUTFITS_WIDTH-300, 200, 0, "txtDescription",
+   window_addText( secondary_wid, 20+200+40, -220,
+         OUTFITS_WIDTH-300, 180, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 
    /* set up the outfits to buy/sell */
