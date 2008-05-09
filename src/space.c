@@ -336,7 +336,7 @@ StarSystem** system_getJumpPath( int* njumps, char* sysstart, char* sysend )
    esys = system_get(sysend); /* goal */
 
    /* system target must be known */
-   if (esys->known == 0) {
+   if (!sys_isKnown(esys)) {
       if (space_sysReachable(esys)) { /* can we still reach it? */
          res = malloc(sizeof(StarSystem*));
          (*njumps) = 1;
@@ -363,7 +363,7 @@ StarSystem** system_getJumpPath( int* njumps, char* sysstart, char* sysend )
       for (i=0; i<cur->sys->njumps; i++) {
          sys = &systems_stack[cur->sys->jumps[i]];
 
-         if (sys->known == 0) continue;
+         if (!sys_isKnown(sys)) continue;
 
          neighbour = A_newNode( sys, NULL );
 
@@ -549,11 +549,11 @@ int space_sysReachable( StarSystem *sys )
 {
    int i;
 
-   if (sys->known != 0) return 1; /* it is known */
+   if (sys_isKnown(sys)) return 1; /* it is known */
 
    /* check to see if it is adjacent to known */
    for (i=0; i<sys->njumps; i++)
-      if (systems_stack[ sys->jumps[i]].known == 1)
+      if (sys_isKnown(&systems_stack[ sys->jumps[i]]))
          return 1;
 
    return 0;
@@ -729,7 +729,7 @@ void space_init ( const char* sysname )
    spawn_timer = SDL_GetTicks() + 120000./(float)(cur_system->nfleets+1);
 
    /* we now know this system */
-   cur_system->known = 1;
+   sys_setFlag(cur_system,SYSTEM_KNOWN);
 }
 
 
@@ -1288,7 +1288,7 @@ void space_clearKnown (void)
 {
    int i;
    for (i=0; i<systems_nstack; i++)
-      systems_stack[i].known = 0;
+      sys_rmFlag(&systems_stack[i],SYSTEM_KNOWN);
 }
 
 /*
@@ -1302,7 +1302,7 @@ int space_sysSave( xmlTextWriterPtr writer )
 
    for (i=0; i<systems_nstack; i++) {
 
-      if (systems_stack[i].known == 0) continue; /* not known */
+      if (!sys_isKnown(&systems_stack[i])) continue; /* not known */
 
       xmlw_elem(writer,"known","%s",systems_stack[i].name);
    }
@@ -1331,7 +1331,7 @@ int space_sysLoad( xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"known")) {
                sys = system_get(xml_get(cur));
-               sys->known = 1;
+               sys_setFlag(sys,SYSTEM_KNOWN);
             }
          } while (xml_nextNode(cur));
       }

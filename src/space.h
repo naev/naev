@@ -88,6 +88,16 @@ typedef struct Planet_ {
 } Planet;
 
 
+/* 
+ * star system flags
+ */
+#define SYSTEM_KNOWN    (1<<0)
+#define SYSTEM_MARKED   (1<<1)
+#define sys_isFlag(s,f)    ((s)->flags & (f))
+#define sys_setFlag(s,f)   if (!sys_isFlag(s,f)) (s)->flags |= (f)
+#define sys_rmFlag(s,f)    if (sys_isFlag(s,f)) (s)->flags ^= (f)
+#define sys_isKnown(s)     ((s)->flags & SYSTEM_KNOWN)
+
 /*
  * star systems                                                   
  */
@@ -113,7 +123,7 @@ typedef struct StarSystem_ {
    int *jumps; /* adjacent star system index numbers */
    int njumps; /* number of adjacent jumps */
 
-   int known; /* known by player? */
+   unsigned int flags; /* flags for system properties */
 } StarSystem;
 
 

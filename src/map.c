@@ -197,23 +197,17 @@ static void map_render( double bx, double by, double w, double h )
       sys = &systems_stack[i];
 
       /* check to make sure system is known or adjacent to known */
-      if (!space_sysReachable(sys)) {
-         for (j=0; j<sys->njumps; j++)
-            if (systems_stack[ sys->jumps[j]].known == 1)
-               break;
-         if (j==sys->njumps) /* none found */
-            continue;
-      }
+      if (!space_sysReachable(sys)) continue;
 
       /* system colours */
       if (sys==cur_system) COLOUR(cRadar_targ);
-      else if ((sys->known == 0) || (sys->nplanets==0)) COLOUR(cInert);
+      else if (!sys_isKnown(sys) || (sys->nplanets==0)) COLOUR(cInert);
       else if (areEnemies(player->faction, sys->faction)) COLOUR(cRed);
       else COLOUR(cYellow);
       gl_drawCircleInRect( x + sys->pos.x*map_zoom, y + sys->pos.y*map_zoom,
             r, bx, by, w, h );
       /* draw the system name */
-      if (sys->known != 0) {
+      if (sys_isKnown(sys)) {
          tx = x + 7. + sys->pos.x * map_zoom;
          ty = y - 5. + sys->pos.y * map_zoom;
          gl_print( &gl_smallFont,
@@ -222,7 +216,7 @@ static void map_render( double bx, double by, double w, double h )
       }
 
 
-      if (sys->known == 0) continue; /* we don't draw hyperspace lines */
+      if (!sys_isKnown(sys)) continue; /* we don't draw hyperspace lines */
 
       /* draw the hyperspace paths */
       glShadeModel(GL_SMOOTH);

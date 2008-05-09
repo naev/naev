@@ -795,7 +795,7 @@ void player_render (void)
       gl_printMid( &gl_smallFont, (int)gui.nav.w,
             gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
             NULL, "%d - %s", pilot_getJumps(player),
-            (sys->known == 0) ? "Unknown" : sys->name );
+            (sys_isKnown(sys)) ? sys->name : "Unknown" );
    }
    else { /* no NAV target */
       gl_printMid( NULL, (int)gui.nav.w,
