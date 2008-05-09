@@ -50,7 +50,6 @@ extern int hyperspace_target;
 static void map_close( char* str );
 static void map_update (void);
 static int map_inPath( StarSystem *sys );
-static int map_sysReachable( StarSystem *sys );
 static void map_render( double bx, double by, double w, double h );
 static void map_mouse( SDL_Event* event, double mx, double my );
 static void map_buttonZoom( char* str );
@@ -169,24 +168,6 @@ static int map_inPath( StarSystem *sys )
 
 
 /*
- * returns 1 if player can reach the system
- */
-static int map_sysReachable( StarSystem *sys )
-{
-   int i;
-
-   if (sys->known != 0) return 1; /* it is known */
-
-   /* check to see if it is adjacent to known */
-   for (i=0; i<sys->njumps; i++)
-      if (systems_stack[ sys->jumps[i]].known == 1)
-         return 1;
-
-   return 0;
-}
-
-
-/*
  * renders the map as a custom widget
  */
 static void map_render( double bx, double by, double w, double h )
@@ -216,7 +197,7 @@ static void map_render( double bx, double by, double w, double h )
       sys = &systems_stack[i];
 
       /* check to make sure system is known or adjacent to known */
-      if (!map_sysReachable(sys)) {
+      if (!space_sysReachable(sys)) {
          for (j=0; j<sys->njumps; j++)
             if (systems_stack[ sys->jumps[j]].known == 1)
                break;
@@ -322,7 +303,7 @@ static void map_mouse( SDL_Event* event, double mx, double my )
                sys = &systems_stack[i];
 
                /* must be reachable */
-               if (!map_sysReachable(sys))
+               if (!space_sysReachable(sys))
                   continue;
 
                /* get position */

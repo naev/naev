@@ -335,6 +335,20 @@ StarSystem** system_getJumpPath( int* njumps, char* sysstart, char* sysend )
    ssys = system_get(sysstart); /* start */
    esys = system_get(sysend); /* goal */
 
+   /* system target must be known */
+   if (esys->known == 0) {
+      if (space_sysReachable(esys)) { /* can we still reach it? */
+         res = malloc(sizeof(StarSystem*));
+         (*njumps) = 1;
+         res[0] = esys;
+         return res;
+      }
+
+      /* can't reach - don't make path */
+      (*njumps) = 0;
+      return NULL;
+   }
+
    /* start the linked lists */
    open = closed =  NULL;
    cur = A_newNode( ssys, NULL );
@@ -348,6 +362,9 @@ StarSystem** system_getJumpPath( int* njumps, char* sysstart, char* sysend )
 
       for (i=0; i<cur->sys->njumps; i++) {
          sys = &systems_stack[cur->sys->jumps[i]];
+
+         if (sys->known == 0) continue;
+
          neighbour = A_newNode( sys, NULL );
 
          ocost = A_in(open, sys);
@@ -522,6 +539,24 @@ char* space_getRndPlanet (void)
    free(tmp);
 
    return res; 
+}
+
+
+/*
+ * returns 1 if target system is reachable
+ */
+int space_sysReachable( StarSystem *sys )
+{
+   int i;
+
+   if (sys->known != 0) return 1; /* it is known */
+
+   /* check to see if it is adjacent to known */
+   for (i=0; i<sys->njumps; i++)
+      if (systems_stack[ sys->jumps[i]].known == 1)
+         return 1;
+
+   return 0;
 }
 
 

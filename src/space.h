@@ -150,6 +150,7 @@ void space_update( const double dt );
 StarSystem** system_getJumpPath( int* njumps, char* sysstart, char* sysend );
 int space_canHyperspace( Pilot* p);
 int space_hyperspace( Pilot* p );
+int space_sysReachable( StarSystem *sys );
 char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions );
 char* space_getRndPlanet (void);
 void space_clearKnown (void);
