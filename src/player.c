@@ -223,6 +223,7 @@ void player_new (void)
    player_cleanup();
    var_cleanup();
    missions_cleanup();
+   space_clearKnown();
 
    player_name = dialogue_input( "Player Name", 3, 20,
          "Please write your name:" );
@@ -665,6 +666,7 @@ void player_render (void)
    Pilot* p;
    glColour* c;
    glFont* f;
+   StarSystem *sys;
 
    /* pilot is dead or being created, just render him and stop */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
@@ -783,6 +785,8 @@ void player_render (void)
    }
    else if (hyperspace_target >= 0) { /* hyperspace target */
 
+      sys = &systems_stack[cur_system->jumps[hyperspace_target]];
+
       c = space_canHyperspace(player) ? &cConsole : NULL ;
       gl_printMid( NULL, (int)gui.nav.w,
             gui.nav.x, gui.nav.y - 5,
@@ -791,7 +795,7 @@ void player_render (void)
       gl_printMid( &gl_smallFont, (int)gui.nav.w,
             gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
             NULL, "%d - %s", pilot_getJumps(player),
-            systems_stack[cur_system->jumps[hyperspace_target]].name );
+            (sys->known == 0) ? "Unknown" : sys->name );
    }
    else { /* no NAV target */
       gl_printMid( NULL, (int)gui.nav.w,

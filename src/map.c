@@ -50,6 +50,7 @@ extern int hyperspace_target;
 static void map_close( char* str );
 static void map_update (void);
 static int map_inPath( StarSystem *sys );
+static int map_sysReachable( StarSystem *sys );
 static void map_render( double bx, double by, double w, double h );
 static void map_mouse( SDL_Event* event, double mx, double my );
 static void map_buttonZoom( char* str );
@@ -168,6 +169,24 @@ static int map_inPath( StarSystem *sys )
 
 
 /*
+ * returns 1 if player can reach the system
+ */
+static int map_sysReachable( StarSystem *sys )
+{
+   int i;
+
+   if (sys->known != 0) return 1; /* it is known */
+
+   /* check to see if it is adjacent to known */
+   for (i=0; i<sys->njumps; i++)
+      if (systems_stack[ sys->jumps[i]].known == 1)
+         return 1;
+
+   return 0;
+}
+
+
+/*
  * renders the map as a custom widget
  */
 static void map_render( double bx, double by, double w, double h )
@@ -196,19 +215,33 @@ static void map_render( double bx, double by, double w, double h )
       
       sys = &systems_stack[i];
 
-      /* draw the system */
+      /* check to make sure system is known or adjacent to known */
+      if (!map_sysReachable(sys)) {
+         for (j=0; j<sys->njumps; j++)
+            if (systems_stack[ sys->jumps[j]].known == 1)
+               break;
+         if (j==sys->njumps) /* none found */
+            continue;
+      }
+
+      /* system colours */
       if (sys==cur_system) COLOUR(cRadar_targ);
-      else if (sys->nplanets==0) COLOUR(cInert); /* TODO dependent on planet type */
+      else if ((sys->known == 0) || (sys->nplanets==0)) COLOUR(cInert);
       else if (areEnemies(player->faction, sys->faction)) COLOUR(cRed);
       else COLOUR(cYellow);
       gl_drawCircleInRect( x + sys->pos.x*map_zoom, y + sys->pos.y*map_zoom,
             r, bx, by, w, h );
       /* draw the system name */
-      tx = x + 7. + sys->pos.x * map_zoom;
-      ty = y - 5. + sys->pos.y * map_zoom;
-      gl_print( &gl_smallFont,
-            tx + SCREEN_W/2., ty + SCREEN_H/2.,
-            &cWhite, sys->name );
+      if (sys->known != 0) {
+         tx = x + 7. + sys->pos.x * map_zoom;
+         ty = y - 5. + sys->pos.y * map_zoom;
+         gl_print( &gl_smallFont,
+               tx + SCREEN_W/2., ty + SCREEN_H/2.,
+               &cWhite, sys->name );
+      }
+
+
+      if (sys->known == 0) continue; /* we don't draw hyperspace lines */
 
       /* draw the hyperspace paths */
       glShadeModel(GL_SMOOTH);
@@ -287,6 +320,10 @@ static void map_mouse( SDL_Event* event, double mx, double my )
          else {
             for (i=0; i<systems_nstack; i++) {
                sys = &systems_stack[i];
+
+               /* must be reachable */
+               if (!map_sysReachable(sys))
+                  continue;
 
                /* get position */
                x = sys->pos.x * map_zoom;
@@ -426,6 +463,3 @@ void map_jump (void)
       }
    }
 }
-
-
-

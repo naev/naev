@@ -100,6 +100,9 @@ extern void player_message ( const char *fmt, ... );
 /* externed */
 void planets_minimap( const double res, const double w,
       const double h, const RadarShape shape );
+int space_sysSave( xmlTextWriterPtr writer );
+int space_sysLoad( xmlNodePtr parent );
+
 
 
 /*
@@ -689,6 +692,9 @@ void space_init ( const char* sysname )
    
    /* start the spawn timer */
    spawn_timer = SDL_GetTicks() + 120000./(float)(cur_system->nfleets+1);
+
+   /* we now know this system */
+   cur_system->known = 1;
 }
 
 
@@ -1240,6 +1246,63 @@ void space_exit (void)
    if (stars) free(stars);
    stars = NULL;
    nstars = 0;
+}
+
+
+void space_clearKnown (void)
+{
+   int i;
+   for (i=0; i<systems_nstack; i++)
+      systems_stack[i].known = 0;
+}
+
+/*
+ * saves what is needed to be saved for space
+ */
+int space_sysSave( xmlTextWriterPtr writer )
+{
+   int i;
+
+   xmlw_startElem(writer,"space");
+
+   for (i=0; i<systems_nstack; i++) {
+
+      if (systems_stack[i].known == 0) continue; /* not known */
+
+      xmlw_elem(writer,"known","%s",systems_stack[i].name);
+   }
+
+   xmlw_endElem(writer); /* "space" */
+
+   return 0;
+}
+
+
+/*
+ * loads space
+ */
+int space_sysLoad( xmlNodePtr parent )
+{
+   xmlNodePtr node, cur;
+   StarSystem *sys;
+
+   space_clearKnown();
+
+   node = parent->xmlChildrenNode;
+   do {
+      if (xml_isNode(node,"space")) {
+         cur = node->xmlChildrenNode;
+
+         do {
+            if (xml_isNode(cur,"known")) {
+               sys = system_get(xml_get(cur));
+               sys->known = 1;
+            }
+         } while (xml_nextNode(cur));
+      }
+   } while (xml_nextNode(node));
+
+   return 0;
 }
 
 

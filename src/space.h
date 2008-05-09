@@ -112,6 +112,8 @@ typedef struct StarSystem_ {
 
    int *jumps; /* adjacent star system index numbers */
    int njumps; /* number of adjacent jumps */
+
+   int known; /* known by player? */
 } StarSystem;
 
 
@@ -150,6 +152,7 @@ int space_canHyperspace( Pilot* p);
 int space_hyperspace( Pilot* p );
 char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions );
 char* space_getRndPlanet (void);
+void space_clearKnown (void);
 extern char* stardate;
 
 
