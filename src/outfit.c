@@ -3,7 +3,6 @@
  */
 
 
-
 #include "outfit.h"
 
 #include <math.h>
@@ -42,6 +41,7 @@ static int outfits = 0;
  */
 /* misc */
 static DamageType outfit_strToDamageType( char *buf );
+static OutfitType outfit_strToOutfitType( char *buf );
 /* parsing */
 static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node );
 static Outfit* outfit_parse( const xmlNodePtr parent );
@@ -283,7 +283,7 @@ const char* outfit_getTypeBroad( const Outfit* o )
 
 
 /*
- * returns the damage type from an str
+ * returns the damage type from a str
  */
 static DamageType outfit_strToDamageType( char *buf )
 {
@@ -295,6 +295,36 @@ static DamageType outfit_strToDamageType( char *buf )
    WARN("Invalid damage type: '%s'", buf);
    return DAMAGE_TYPE_NULL;
 }
+
+
+/*
+ * returns the outfit type from a str
+ */
+#define O_CMP(s,t) \
+if (strcmp(buf,(s))==0) return t; 
+static OutfitType outfit_strToOutfitType( char *buf )
+{
+   O_CMP("bolt",OUTFIT_TYPE_BOLT);
+   O_CMP("beam",OUTFIT_TYPE_BEAM);
+   O_CMP("missile dumb",OUTFIT_TYPE_MISSILE_DUMB);
+   O_CMP("missile dumb ammo",OUTFIT_TYPE_MISSILE_DUMB_AMMO);
+   O_CMP("missile seek",OUTFIT_TYPE_MISSILE_SEEK);
+   O_CMP("missile seek ammo",OUTFIT_TYPE_MISSILE_SEEK_AMMO);
+   O_CMP("missile smart",OUTFIT_TYPE_MISSILE_SEEK_SMART);
+   O_CMP("missile smart ammo",OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO);
+   O_CMP("missile swarm",OUTFIT_TYPE_MISSILE_SWARM);
+   O_CMP("missile swarm ammo",OUTFIT_TYPE_MISSILE_SWARM_AMMO);
+   O_CMP("missile swarm smart",OUTFIT_TYPE_MISSILE_SWARM_SMART);
+   O_CMP("missile swarm smart ammo",OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO);
+   O_CMP("turret bolt",OUTFIT_TYPE_TURRET_BOLT);
+   O_CMP("turret beam",OUTFIT_TYPE_TURRET_BEAM);
+   O_CMP("modification",OUTFIT_TYPE_MODIFCATION);
+   O_CMP("afterburner",OUTFIT_TYPE_AFTERBURNER);
+
+   WARN("Invalid outfit type: '%s'",buf);
+   return  OUTFIT_TYPE_NULL;
+}
+#undef O_CMP
 
 
 /*
@@ -525,7 +555,7 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
          prop = xml_nodeProp(node,"type");
          if (prop == NULL)
             ERR("Outfit '%s' element 'specific' missing property 'type'",temp->name);
-         temp->type = atoi(prop);
+         temp->type = outfit_strToOutfitType(prop);
          free(prop);
 
          /* is secondary weapon? */
