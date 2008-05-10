@@ -239,4 +239,37 @@ Used by security agencies all over the universe for it's reliability and availab
 <outfit quantity='3'>Neutron Disruptor</outfit>
 </outfits>
 </ship>
+<ship name="Gawain">
+<GFX>gawain</GFX>
+<GUI>minimal</GUI>
+<sound>engine</sound>
+<class>1</class>
+<price>500000</price>
+<fabricator>Nexus</fabricator>
+<tech>11</tech>
+<description>The Gawain is a very high end ship that heavily uses the technology developed with the Lancelot.  It's widely used as a sporting rig as it is extremely maneuverable, although they are rarely used in combat because they are too expensive for the little firepower they can apport.</description>
+<movement>
+<thrust>420</thrust>
+<turn>170</turn>
+<speed>400</speed>
+</movement>
+<health>
+<shield>90</shield>
+<armour>50</armour>
+<energy>240</energy>
+<shield_regen>100</shield_regen>
+<armour_regen>70</armour_regen>
+<energy_regen>700</energy_regen>
+</health>
+<caracteristics>
+<crew>2</crew>
+<mass>28</mass>
+<fuel>400</fuel>
+<cap_weapon>35</cap_weapon>
+<cap_cargo>15</cap_cargo>
+</caracteristics>
+<outfits>
+<outfit quantity='1'>Ion Cannon</outfit>
+</outfits>
+</ship>
 </Ships>
