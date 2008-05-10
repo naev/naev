@@ -5,7 +5,7 @@ if lang == "es" then
 else -- default english
    misn_title = "Empire Recruitment"
    misn_reward = "%d credits"
-   misn_desc = "Deliver some parcels for the Empire to %s."
+   misn_desc = "Deliver some parcels for the Empire to %s in %s."
    title = {}
    title[1] = "Spaceport Bar"
    title[2] = "Empire Recruitment"
@@ -33,6 +33,8 @@ function create()
    if i > 10 then
       misn.finish(false)
    end
+   system = space.getSystem(dest)
+   misn.setMarker(system)
 
    -- Intro text
    tk.msg( title[1], text[1] )
@@ -44,7 +46,7 @@ function create()
       reward = 3000
       misn.setTitle(misn_title)
       misn.setReward( string.format(misn_reward, reward) )
-      misn.setDesc( string.format(misn_desc,dest))
+      misn.setDesc( string.format(misn_desc,dest,system))
 
       -- Flavour text and mini-briefing
       tk.msg( title[2], string.format( text[3], dest ))

@@ -39,6 +39,7 @@ function create()
       misn.finish(false)
    end
    system = space.getSystem( planet )
+   misn.setMarker(system) -- set system marker
    misn_dist = space.jumpDist(system)
 
    -- mission generics

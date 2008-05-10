@@ -41,6 +41,7 @@ function create()
       misn_target = "Dune"
       misn_base = "Omega Station"
       misn_base_sys = "NCG-7291"
+      misn.setMarker(misn_nearby) -- Not exact target
 
       -- Mission details
       misn.setTitle(misn_title)
@@ -73,6 +74,7 @@ function enter()
    if misn_stage == 0 and sys == misn_target then
       misn.setDesc( string.format(misn_desc[2],misn_base,misn_base_sys) )
       misn_stage = 1
+      misn.setMarker(misn_base_sys) -- now we mark return to base
    end
 end
 

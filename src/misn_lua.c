@@ -411,14 +411,18 @@ static int misn_setReward( lua_State *L )
 }
 static int misn_setMarker( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
    if (lua_isstring(L, 1)) {
       if (cur_mission->sys_marker != NULL) /* cleanup old marker */
          free(cur_mission->sys_marker);
       cur_mission->sys_marker = strdup((char*)lua_tostring(L,1));
+#ifdef DEBUG
+      if (system_get(cur_mission->sys_marker)==NULL)
+         NLUA_DEBUG("Marking unexistant system '%s'",cur_mission->sys_marker);
+#endif
       mission_sysMark();
    }
-   else NLUA_INVALID_PARAMETER();
+   else if (cur_mission->sys_marker != NULL) /* no parameter nullifies */
+      free(cur_mission->sys_marker);
    return 0;
 }
 static int misn_factions( lua_State *L )
