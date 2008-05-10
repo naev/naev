@@ -1912,6 +1912,9 @@ static int player_saveShip( xmlTextWriterPtr writer,
 
    if (loc != NULL) xmlw_elem(writer,"location",loc);
 
+   /* save the fuel */
+   xmlw_elem(writer,"fuel","%f",ship->fuel);
+
    /* save the outfits */
    xmlw_startElem(writer,"outfits");
    for (i=0; i<ship->noutfits; i++) {
@@ -2042,6 +2045,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 {
    char *name, *model, *loc, *q, *id;
    int i, n;
+   double fuel;
    Pilot* ship;
    xmlNodePtr node, cur;
    
@@ -2063,8 +2067,13 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
    node = parent->xmlChildrenNode;
 
+   fuel = 0;
+
    do {
       if (is_player == 0) xmlr_str(node,"location",loc);
+
+      /* get fuel */
+      xmlr_float(node,"fuel",ship->fuel);
 
       if (xml_isNode(node,"outfits")) {
          cur = node->xmlChildrenNode;
