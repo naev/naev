@@ -15,6 +15,7 @@
 #include "space.h"
 #include "land.h"
 #include "nluadef.h"
+#include "map.h"
 
 
 
@@ -210,7 +211,7 @@ static int space_jumpDist( lua_State *L )
    else
       goal = cur_system->name;
 
-   s = system_getJumpPath( &jumps, start, goal );
+   s = map_getJumpPath( &jumps, start, goal );
    free(s);
 
    lua_pushnumber(L,jumps);

@@ -5,6 +5,9 @@
 
 #include "map.h"
 
+#include <malloc.h>
+#include <math.h>
+#include <float.h>
 
 #include "log.h"
 #include "naev.h"
@@ -310,7 +313,7 @@ static void map_mouse( SDL_Event* event, double mx, double my )
                   map_selected = i;
                   if (map_path)
                      free(map_path);
-                  map_path = system_getJumpPath( &map_npath,
+                  map_path = map_getJumpPath( &map_npath,
                         cur_system->name, sys->name );
 
                   if (map_npath==0)
@@ -438,3 +441,224 @@ void map_jump (void)
       }
    }
 }
+
+/*
+ * A* algorithm for shortest path finding
+ */
+/* the node struct */
+typedef struct SysNode_ {
+   struct SysNode_ *next, *gnext;
+
+   struct SysNode_ *parent;
+   StarSystem* sys;
+   double r; /* ranking */
+   int g; /* step */
+} SysNode;
+static SysNode *A_gc;
+/* prototypes */
+static SysNode* A_newNode( StarSystem* sys, SysNode* parent );
+static double A_h( StarSystem *n, StarSystem *g );
+static double A_g( SysNode* n );
+static SysNode* A_add( SysNode *first, SysNode *cur );
+static SysNode* A_rm( SysNode *first, StarSystem *cur );
+static SysNode* A_in( SysNode *first, StarSystem *cur );
+static SysNode* A_lowest( SysNode *first );
+static void A_freeList( SysNode *first );
+/* creates a new node linke to star system */
+static SysNode* A_newNode( StarSystem* sys, SysNode* parent )
+{
+   SysNode* n;
+
+   n = malloc(sizeof(SysNode));
+
+   n->next = NULL;
+   n->parent = parent;
+   n->sys = sys;
+   n->r = DBL_MAX;
+   n->g = 0.;
+
+   n->gnext = A_gc;
+   A_gc = n;
+
+   return n;
+}
+static double A_h( StarSystem *n, StarSystem *g )
+{
+   (void)n;
+   (void)g;
+   /* Euclidean distance */
+   /*return sqrt(pow2(n->pos.x - g->pos.x) + pow2(n->pos.y - g->pos.y))/100.;*/
+   return 0.;
+}
+/* gets the g from a node */
+static double A_g( SysNode* n )
+{
+   return n->g;
+}
+/* adds a node to the linked list */
+static SysNode* A_add( SysNode *first, SysNode *cur )
+{
+   SysNode *n;
+
+   if (first == NULL)
+      return cur;
+
+   n = first;
+   while (n->next != NULL)
+      n = n->next;
+   n->next = cur;
+
+   return first;
+}
+/* removes a node from a linked list */
+static SysNode* A_rm( SysNode *first, StarSystem *cur )
+{
+   SysNode *n, *p;
+
+   if (first->sys == cur) {
+      n = first->next;
+      first->next = NULL;
+      return n;
+   }
+
+   p = first;
+   n = p->next;
+   do {
+      if (n->sys == cur) {
+         n->next = NULL;
+         p->next = n->next;
+         break;
+      }
+      p = n;
+   } while ((n=n->next) != NULL);
+
+   return first;
+}
+/* checks to see if node is in linked list */
+static SysNode* A_in( SysNode *first, StarSystem *cur )
+{
+   SysNode *n;
+
+   if (first == NULL)
+      return NULL;
+
+   n = first;
+   do {
+      if (n->sys == cur)
+         return n;
+   } while ((n=n->next) != NULL);
+   return NULL;
+}
+/* returns the lowest ranking node from a linked list of nodes */
+static SysNode* A_lowest( SysNode *first )
+{
+   SysNode *lowest, *n;
+
+   if (first == NULL)
+      return NULL;
+
+   n = first;
+   lowest = n;
+   do {
+      if (n->r < lowest->r)
+         lowest = n;
+   } while ((n=n->next) != NULL);
+   return lowest;
+}
+/* frees a linked list */
+static void A_freeList( SysNode *first )
+{
+   SysNode *p, *n;
+
+   if (first == NULL)
+      return;
+
+   p = NULL;
+   n = first;
+   do {
+      if (p != NULL)
+         free(p);
+      p = n;
+   } while ((n=n->gnext) != NULL);
+   free(p);
+}
+StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend )
+{
+   int i, cost;
+
+   StarSystem *sys, *ssys, *esys, **res;
+
+   SysNode *cur, *neighbour;
+   SysNode *open, *closed;
+   SysNode *ocost, *ccost;
+
+   A_gc = NULL;
+
+   /* initial and target systems */
+   ssys = system_get(sysstart); /* start */
+   esys = system_get(sysend); /* goal */
+
+   /* system target must be known */
+   if (!sys_isKnown(esys)) {
+      if (space_sysReachable(esys)) { /* can we still reach it? */
+         res = malloc(sizeof(StarSystem*));
+         (*njumps) = 1;
+         res[0] = esys;
+         return res;
+      }
+
+      /* can't reach - don't make path */
+      (*njumps) = 0;
+      return NULL;
+   }
+
+   /* start the linked lists */
+   open = closed =  NULL;
+   cur = A_newNode( ssys, NULL );
+   open = A_add( open, cur ); /* inital open node is the start system */
+
+   while ((cur = A_lowest(open))->sys != esys) {
+      /* get best from open and toss to closed */
+      open = A_rm( open, cur->sys );
+      closed = A_add( closed, cur );
+      cost = A_g(cur) + 1;
+
+      for (i=0; i<cur->sys->njumps; i++) {
+         sys = &systems_stack[cur->sys->jumps[i]];
+
+         if (!sys_isKnown(sys)) continue;
+
+         neighbour = A_newNode( sys, NULL );
+
+         ocost = A_in(open, sys);
+         if ((ocost != NULL) && (cost < ocost->g)) {
+            open = A_rm( open, sys ); /* new path is better */
+         }
+
+         ccost = A_in(closed, sys);
+         if (ccost != NULL) {
+            closed = A_rm( closed, sys ); /* shouldn't happen */
+         }
+         
+         if ((ocost == NULL) && (ccost == NULL)) {
+            neighbour->g = cost;
+            neighbour->r = A_g(neighbour) + A_h(cur->sys,sys);
+            neighbour->parent = cur;
+            open = A_add( open, neighbour );
+         }
+      }
+   }
+
+   /* build path backwards */
+   (*njumps) = A_g(cur);
+   res = malloc( sizeof(StarSystem*) * (*njumps) );
+   for (i=0; i<(*njumps); i++) {
+      res[(*njumps)-i-1] = cur->sys;
+      cur = cur->parent;
+   }
+
+   /* free the linked lists */
+   A_freeList(A_gc);
+   return res;
+}
+
