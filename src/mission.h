@@ -70,6 +70,8 @@ typedef struct Mission_ {
    unsigned int *cargo;
    int ncargo;
 
+   char *sys_marker; /* marked system */
+
    lua_State *L; /* the state of the running lua code */
 } Mission;
 
@@ -94,6 +96,7 @@ void missions_bar( int faction, char* planet, char* system );
  */
 int mission_getID( char* name );
 MissionData* mission_get( int id );
+void mission_sysMark (void);
 
 
 /*

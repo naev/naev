@@ -96,7 +96,8 @@ typedef struct Planet_ {
 #define sys_isFlag(s,f)    ((s)->flags & (f))
 #define sys_setFlag(s,f)   if (!sys_isFlag(s,f)) (s)->flags |= (f)
 #define sys_rmFlag(s,f)    if (sys_isFlag(s,f)) (s)->flags ^= (f)
-#define sys_isKnown(s)     ((s)->flags & SYSTEM_KNOWN)
+#define sys_isKnown(s)     sys_isFlag(s,SYSTEM_KNOWN)
+#define sys_isMarked(s)    sys_isFlag(s,SYSTEM_MARKED)
 
 /*
  * star systems                                                   
@@ -164,6 +165,7 @@ int space_sysReachable( StarSystem *sys );
 char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions );
 char* space_getRndPlanet (void);
 void space_clearKnown (void);
+void space_clearMarkers (void);
 extern char* stardate;
 
 

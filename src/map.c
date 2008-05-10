@@ -14,6 +14,7 @@
 #include "toolkit.h"
 #include "space.h"
 #include "opengl.h"
+#include "mission.h"
 
 
 #define WINDOW_WIDTH    550
@@ -72,6 +73,9 @@ void map_open (void)
    /* set position to focus on current system */
    map_xpos = cur_system->pos.x;
    map_ypos = cur_system->pos.y;
+
+   /* mark systems as needed */
+   mission_sysMark();
 
    map_wid = window_create( "Star Map", -1, -1,
          WINDOW_WIDTH, WINDOW_HEIGHT );
@@ -199,16 +203,30 @@ static void map_render( double bx, double by, double w, double h )
       
       sys = &systems_stack[i];
 
-      /* check to make sure system is known or adjacent to known */
-      if (!space_sysReachable(sys)) continue;
+      /* check to make sure system is known or adjacent to known (or marked) */
+      if (!sys_isMarked(sys) && !space_sysReachable(sys)) continue;
 
       /* system colours */
       if (sys==cur_system) COLOUR(cRadar_targ);
       else if (!sys_isKnown(sys) || (sys->nplanets==0)) COLOUR(cInert);
       else if (areEnemies(player->faction, sys->faction)) COLOUR(cRed);
       else COLOUR(cYellow);
-      gl_drawCircleInRect( x + sys->pos.x*map_zoom, y + sys->pos.y*map_zoom,
-            r, bx, by, w, h );
+
+      /* draw the system */
+      tx = x + sys->pos.x*map_zoom;
+      ty = y + sys->pos.y*map_zoom;
+      gl_drawCircleInRect( tx, ty, r, bx, by, w, h );
+
+      /* mark the system if needed */
+      if (sys_isMarked(sys)) {
+         COLOUR(cRed);
+         glBegin(GL_TRIANGLES);
+            glVertex2d( tx+r+9, ty+r+3 );
+            glVertex2d( tx+r+3, ty+r+3 );
+            glVertex2d( tx+r+3, ty+r+9 );
+         glEnd(); /* GL_TRIANGLES */
+      }
+
       /* draw the system name */
       if (sys_isKnown(sys)) {
          tx = x + 7. + sys->pos.x * map_zoom;

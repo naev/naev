@@ -71,6 +71,8 @@ static unsigned int hook_generic( lua_State *L, char* stack );
 int misn_run( Mission *misn, char *func );
 int var_save( xmlTextWriterPtr writer );
 int var_load( xmlNodePtr parent );
+/* external */
+extern void mission_sysMark (void);
 
 
 /*
@@ -80,6 +82,7 @@ int var_load( xmlNodePtr parent );
 static int misn_setTitle( lua_State *L );
 static int misn_setDesc( lua_State *L );
 static int misn_setReward( lua_State *L );
+static int misn_setMarker( lua_State *L );
 static int misn_factions( lua_State *L );
 static int misn_accept( lua_State *L );
 static int misn_finish( lua_State *L );
@@ -87,6 +90,7 @@ static const luaL_reg misn_methods[] = {
    { "setTitle", misn_setTitle },
    { "setDesc", misn_setDesc },
    { "setReward", misn_setReward },
+   { "setMarker", misn_setMarker },
    { "factions", misn_factions },
    { "accept", misn_accept },
    { "finish", misn_finish },
@@ -376,31 +380,45 @@ static int var_add( misn_var *new_var )
 static int misn_setTitle( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
-   if (lua_isstring(L, -1)) {
+   if (lua_isstring(L, 1)) {
       if (cur_mission->title) /* cleanup old title */
          free(cur_mission->title);
-      cur_mission->title = strdup((char*)lua_tostring(L, -1));
+      cur_mission->title = strdup((char*)lua_tostring(L, 1));
    }
    return 0;
 }
 static int misn_setDesc( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
-   if (lua_isstring(L, -1)) {    
+   if (lua_isstring(L, 1)) {    
       if (cur_mission->desc) /* cleanup old description */
          free(cur_mission->desc);
-      cur_mission->desc = strdup((char*)lua_tostring(L, -1));
+      cur_mission->desc = strdup((char*)lua_tostring(L, 1));
    }
+   else NLUA_INVALID_PARAMETER();
    return 0;
 }
 static int misn_setReward( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
-   if (lua_isstring(L, -1)) {    
-      if (cur_mission->reward) /* cleanup old reward */
+   if (lua_isstring(L, 1)) {    
+      if (cur_mission->reward != NULL) /* cleanup old reward */
          free(cur_mission->reward);
-      cur_mission->reward = strdup((char*)lua_tostring(L, -1));
+      cur_mission->reward = strdup((char*)lua_tostring(L, 1));
    }
+   else NLUA_INVALID_PARAMETER();
+   return 0;
+}
+static int misn_setMarker( lua_State *L )
+{
+   NLUA_MIN_ARGS(1);
+   if (lua_isstring(L, 1)) {
+      if (cur_mission->sys_marker != NULL) /* cleanup old marker */
+         free(cur_mission->sys_marker);
+      cur_mission->sys_marker = strdup((char*)lua_tostring(L,1));
+      mission_sysMark();
+   }
+   else NLUA_INVALID_PARAMETER();
    return 0;
 }
 static int misn_factions( lua_State *L )

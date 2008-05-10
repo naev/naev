@@ -1061,12 +1061,27 @@ void space_exit (void)
 }
 
 
+/*
+ * clears all system knowledge
+ */
 void space_clearKnown (void)
 {
    int i;
    for (i=0; i<systems_nstack; i++)
       sys_rmFlag(&systems_stack[i],SYSTEM_KNOWN);
 }
+
+
+/*
+ * clears all system markers
+ */
+void space_clearMarkers (void)
+{
+   int i;
+   for (i=0; i<systems_nstack; i++)
+      sys_rmFlag(&systems_stack[i],SYSTEM_MARKED);
+}
+
 
 /*
  * saves what is needed to be saved for space

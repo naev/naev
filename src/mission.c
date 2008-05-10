@@ -20,6 +20,7 @@
 #include "faction.h"
 #include "player.h"
 #include "base64.h"
+#include "space.h"
 
 
 #define XML_MISSION_ID        "Missions"   /* XML section identifier */
@@ -41,6 +42,13 @@ Mission player_missions[MISSION_MAX];
  */
 static MissionData *mission_stack = NULL; /* unmuteable after creation */
 static int mission_nstack = 0;
+
+
+/*
+ * external space stack
+ */
+extern StarSystem *systems_stack;
+extern int systems_nstack;
 
 
 /*
@@ -116,19 +124,15 @@ static int mission_init( Mission* mission, MissionData* misn, int load )
    char *buf;
    uint32_t bufsize;
 
+   /* clear the mission */
+   memset(mission,0,sizeof(Mission));
+
    /* we only need an id if not loading */
    if (load != 0)
       mission->id = 0;
    else
       mission->id = mission_genID();
    mission->data = misn;
-
-   /* sane defaults */
-   mission->title = NULL;
-   mission->desc = NULL;
-   mission->reward = NULL;
-   mission->cargo = NULL;
-   mission->ncargo = 0;
 
    /* init lua */
    mission->L = luaL_newstate();
@@ -291,7 +295,25 @@ void missions_bar( int faction, char* planet, char* system )
          }
       }
    }
+}
 
+
+/*
+ * marks all active systems that need marking
+ */
+void mission_sysMark (void)
+{
+   int i;
+   StarSystem *sys;
+
+   space_clearMarkers();
+
+   for (i=0; i<MISSION_MAX; i++) {
+      if (player_missions[i].sys_marker != NULL) {
+         sys = system_get(player_missions[i].sys_marker);
+         sys_setFlag(sys,SYSTEM_MARKED);
+      }
+   }
 }
 
 
@@ -348,12 +370,16 @@ void mission_cleanup( Mission* misn )
       free(misn->desc);
       misn->desc = NULL;
    }
-   if (misn->reward) {
+   if (misn->reward != NULL) {
       free(misn->reward);
       misn->reward = NULL;
    }
-   if (misn->cargo) {
-      for (i=0; i<misn->ncargo; i++)
+   if (misn->sys_marker != NULL) {
+      free(misn->sys_marker);
+      misn->sys_marker = NULL;
+   }
+   if (misn->cargo != NULL) {
+      for (i=0; i<misn->ncargo; i++) /* must unlink all the cargo */
          mission_unlinkCargo( misn, misn->cargo[i] );
       free(misn->cargo);
       misn->cargo = NULL;
@@ -691,6 +717,8 @@ int missions_saveActive( xmlTextWriterPtr writer )
          xmlw_elem(writer,"title",player_missions[i].title);
          xmlw_elem(writer,"desc",player_missions[i].desc);
          xmlw_elem(writer,"reward",player_missions[i].reward);
+         if (player_missions[i].sys_marker != NULL)
+            xmlw_elem(writer,"marker",player_missions[i].sys_marker);
 
          xmlw_startElem(writer,"cargos");
          for (j=0; j<player_missions[i].ncargo; j++)
@@ -758,6 +786,7 @@ static int missions_parseActive( xmlNodePtr parent )
             xmlr_strd(cur,"title",misn->title);
             xmlr_strd(cur,"desc",misn->desc);
             xmlr_strd(cur,"reward",misn->reward);
+            xmlr_strd(cur,"marker",misn->sys_marker);
 
             if (xml_isNode(cur,"cargos")) {
                nest = cur->xmlChildrenNode;
