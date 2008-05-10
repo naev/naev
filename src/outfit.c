@@ -50,6 +50,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent );
+static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
 
 
 /*
@@ -179,6 +180,15 @@ int outfit_isAfterburner( const Outfit* o )
 
 
 /*
+ * returns 1 if o is a map
+ */
+int outfit_isMap( const Outfit* o )
+{
+   return (o->type==OUTFIT_TYPE_MAP);
+}
+
+
+/*
  * gets the outfit's gfx
  */
 glTexture* outfit_gfx( const Outfit* o )
@@ -249,7 +259,8 @@ const char* outfit_typename[] = {
       "Bolt Turret",
       "Beam Turret",
       "Ship Modification",
-      "Afterburner"
+      "Afterburner",
+      "Map"
 };
 const char* outfit_getType( const Outfit* o )
 {
@@ -266,7 +277,8 @@ const char* outfit_typenamebroad[] = { "NULL",
       "Ammo",
       "Turret",
       "Modification",
-      "Afterburner"
+      "Afterburner",
+      "Map"
 };
 const char* outfit_getTypeBroad( const Outfit* o )
 {
@@ -277,6 +289,7 @@ const char* outfit_getTypeBroad( const Outfit* o )
    else if (outfit_isTurret(o)) i = 4;
    else if (outfit_isMod(o)) i = 5;
    else if (outfit_isAfterburner(o)) i = 6;
+   else if (outfit_isMap(o)) i = 7;
 
    return outfit_typenamebroad[i];
 }
@@ -320,6 +333,7 @@ static OutfitType outfit_strToOutfitType( char *buf )
    O_CMP("turret beam",OUTFIT_TYPE_TURRET_BEAM);
    O_CMP("modification",OUTFIT_TYPE_MODIFCATION);
    O_CMP("afterburner",OUTFIT_TYPE_AFTERBURNER);
+   O_CMP("map",OUTFIT_TYPE_MAP);
 
    WARN("Invalid outfit type: '%s'",buf);
    return  OUTFIT_TYPE_NULL;
@@ -518,6 +532,21 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
 
 
 /*
+ * parses the map tidbits of the outfit
+ */
+static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
+{
+   xmlNodePtr node;
+   node = parent->children;
+
+   do {
+      if (xml_isNode(node,"radius"))
+         temp->u.map.radius = xml_getInt(node);
+   } while (xml_nextNode(node));
+}
+
+
+/*
  * parses and returns Outfit from parent node
  */
 static Outfit* outfit_parse( const xmlNodePtr parent )
@@ -579,6 +608,8 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
             outfit_parseSMod( temp, node );
          else if (outfit_isAfterburner(temp))
             outfit_parseSAfterburner( temp, node );
+         else if (outfit_isMap(temp))
+            outfit_parseSMap( temp, node );
       }
    } while (xml_nextNode(node));
 

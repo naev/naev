@@ -40,7 +40,8 @@ typedef enum OutfitType_ {
    OUTFIT_TYPE_TURRET_BOLT,
    OUTFIT_TYPE_TURRET_BEAM,
    OUTFIT_TYPE_MODIFCATION,
-   OUTFIT_TYPE_AFTERBURNER
+   OUTFIT_TYPE_AFTERBURNER,
+   OUTFIT_TYPE_MAP
 } OutfitType;
 
 typedef enum DamageType_ {
@@ -133,6 +134,9 @@ typedef struct Outfit_ {
          double speed_perc, speed_abs; /* percent and absolute speed bonus */
          double energy; /* energy usage while active */
       } afb;
+      struct { /* map */
+         double radius; /* amount of systems to add */
+      } map;
    } u;
 } Outfit;
 
@@ -156,6 +160,7 @@ int outfit_isAmmo( const Outfit* o );
 int outfit_isTurret( const Outfit* o );
 int outfit_isMod( const Outfit* o );
 int outfit_isAfterburner( const Outfit* o );
+int outfit_isMap( const Outfit* o );
 const char* outfit_getType( const Outfit* o );
 const char* outfit_getTypeBroad( const Outfit* o );
 

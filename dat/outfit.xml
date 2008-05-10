@@ -391,4 +391,17 @@
 <cargo>-15</cargo>
 </specific>
 </outfit>
+<outfit name="Star Map">
+<general>
+<max>1</max>
+<tech>4</tech>
+<mass>0</mass>
+<price>7000</price>
+<description>A Star Map will give you details about all systems up to 2 jumps away.  It's a great risk-free way to discover parts of the universe.</description>
+<gfx_store>map</gfx_store>
+</general>
+<specific type="map">
+<radius>2</radius>
+</specific>
+</outfit>
 </Outfits>

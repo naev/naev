@@ -19,6 +19,7 @@
 #include "spfx.h"
 #include "rng.h"
 #include "hook.h"
+#include "map.h"
 
 
 #define XML_ID          "Fleets"  /* XML section identifier */
@@ -653,6 +654,12 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
    char *osec;
 
    q = quantity;
+
+   /* special case if it's a map */
+   if (outfit_isMap(outfit)) {
+      map_map(NULL,outfit->u.map.radius);
+      return 1; /* must return 1 for paying purposes */
+   }
 
    /* does outfit already exist? */
    for (i=0; i<pilot->noutfits; i++)

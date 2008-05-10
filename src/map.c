@@ -314,7 +314,7 @@ static void map_mouse( SDL_Event* event, double mx, double my )
                   if (map_path)
                      free(map_path);
                   map_path = map_getJumpPath( &map_npath,
-                        cur_system->name, sys->name );
+                        cur_system->name, sys->name, 0 );
 
                   if (map_npath==0)
                      hyperspace_target = -1;
@@ -582,7 +582,7 @@ static void A_freeList( SysNode *first )
    } while ((n=n->gnext) != NULL);
    free(p);
 }
-StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend )
+StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend, int ignore_known )
 {
    int i, cost;
 
@@ -599,7 +599,7 @@ StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend )
    esys = system_get(sysend); /* goal */
 
    /* system target must be known */
-   if (!sys_isKnown(esys)) {
+   if (!ignore_known && !sys_isKnown(esys)) {
       if (space_sysReachable(esys)) { /* can we still reach it? */
          res = malloc(sizeof(StarSystem*));
          (*njumps) = 1;
@@ -626,7 +626,7 @@ StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend )
       for (i=0; i<cur->sys->njumps; i++) {
          sys = &systems_stack[cur->sys->jumps[i]];
 
-         if (!sys_isKnown(sys)) continue;
+         if (!ignore_known && !sys_isKnown(sys)) continue;
 
          neighbour = A_newNode( sys, NULL );
 
@@ -661,4 +661,52 @@ StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend )
    A_freeList(A_gc);
    return res;
 }
+
+
+/*
+ * marks maps around a radius of currenty system as known
+ */
+int map_map( char* targ_sys, int r )
+{
+   int i, dep;
+   StarSystem *sys, *jsys;
+   SysNode *closed, *open, *cur, *neighbour;
+
+   A_gc = NULL;
+   open = closed = NULL;
+
+   if (targ_sys == NULL) sys = cur_system;
+   else sys = system_get( targ_sys );
+   sys_setFlag(sys,SYSTEM_KNOWN);
+   open = A_newNode( sys, NULL );
+   open->r = 0;
+
+   while ((cur = A_lowest(open)) != NULL) {
+
+      /* mark system as known and go to next */
+      sys = cur->sys;
+      dep = cur->r;
+      sys_setFlag(sys,SYSTEM_KNOWN);
+      open = A_rm( open, sys );
+      closed = A_add( closed, cur );
+
+      /* check it's jumps */
+      for (i=0; i<sys->njumps; i++) {
+         jsys = &systems_stack[cur->sys->jumps[i]];
+
+         /* System has already been parsed or is too deep */
+         if ((A_in(closed,jsys) != NULL) || (dep+1 > r))
+             continue;
+
+         /* create new node and such */
+         neighbour = A_newNode( jsys, NULL );
+         neighbour->r = dep+1;
+         open = A_add( open, neighbour );
+      }
+   }
+
+   A_freeList(A_gc);
+   return 0;
+}
+
 

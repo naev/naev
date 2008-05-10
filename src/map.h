@@ -19,7 +19,7 @@ void map_clear (void);
 void map_jump (void);
 
 /* manipulate universe stuff */
-StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend );
-
+StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend, int ignore_known );
+int map_map( char* targ_sys, int r );
 
 #endif /* MAP_H */

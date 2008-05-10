@@ -211,7 +211,7 @@ static int space_jumpDist( lua_State *L )
    else
       goal = cur_system->name;
 
-   s = map_getJumpPath( &jumps, start, goal );
+   s = map_getJumpPath( &jumps, start, goal, 1 );
    free(s);
 
    lua_pushnumber(L,jumps);
