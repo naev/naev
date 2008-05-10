@@ -8,9 +8,7 @@
 <price>120000</price>
 <fabricator>Melendez Corp.</fabricator>
 <tech>2</tech>
-<description>
-One of the most widely used ships in the galaxy.  Reknown for it's stability and stubborness.  The design hasn't been modified much since it's creation many many years ago.  It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.
-</description>
+<description>One of the most widely used ships in the galaxy.  Reknown for it's stability and stubborness.  The design hasn't been modified much since it's creation many many years ago.  It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
 <movement>
 <thrust>320</thrust>
 <turn>150</turn>
@@ -43,9 +41,7 @@ One of the most widely used ships in the galaxy.  Reknown for it's stability and
 <price>180000</price>
 <fabricator>Aerosys</fabricator>
 <tech>2</tech>
-<description>
-The star product of Aerosys, the Hyena quickly has become a favorite of pirates far and wide.  Not much of a fighter, nor does it pack too much of a punch, but they like to come in swarms to overcome their enemies.  While the Aerosys' official stance is that it doesn't sell them to shady characters, it's widely known that they do as it seems there's a countless amount in the hands of pirates.
-</description>
+<description>The star product of Aerosys, the Hyena quickly has become a favorite of pirates far and wide.  Not much of a fighter, nor does it pack too much of a punch, but they like to come in swarms to overcome their enemies.  While the Aerosys' official stance is that it doesn't sell them to shady characters, it's widely known that they do as it seems there's a countless amount in the hands of pirates.</description>
 <movement>
 <thrust>400</thrust>
 <turn>180</turn>
@@ -78,9 +74,7 @@ The star product of Aerosys, the Hyena quickly has become a favorite of pirates 
 <price>1200000</price>
 <fabricator>Nexus</fabricator>
 <tech>8</tech>
-<description>
-The Pacifier is one of the older and trustier designs of the Nexus Corporation.  Was constructed mainly to patrol border systems.  They are very heavy fighters designed to be able to take a pounding and dish out damage, but the cost has been maneuverability.  No reason to run though if you're in one of these.
-</description>
+<description>The Pacifier is one of the older and trustier designs of the Nexus Corporation.  Was constructed mainly to patrol border systems.  They are very heavy fighters designed to be able to take a pounding and dish out damage, but the cost has been maneuverability.  No reason to run though if you're in one of these.</description>
 <movement>
 <thrust>260</thrust>
 <turn>115</turn>
@@ -116,9 +110,7 @@ The Pacifier is one of the older and trustier designs of the Nexus Corporation. 
 <price>7500000</price>
 <fabricator>Nexus</fabricator>
 <tech>9</tech>
-<description>
-A heavy frigate designed for heavy combat.  Used widely by the empire to establish control on it's territory.  Has more then enough firepower to not be taken lightly.
-</description>
+<description>A heavy frigate designed for heavy combat.  Used widely by the empire to establish control on it's territory.  Has more then enough firepower to not be taken lightly.</description>
 <movement>
 <thrust>200</thrust>
 <turn>90</turn>
@@ -153,10 +145,8 @@ A heavy frigate designed for heavy combat.  Used widely by the empire to establi
 <price>700000</price>
 <fabricator>Nexus</fabricator>
 <tech>7</tech>
-<description>
-One of the Nexus' prize heavy fighters.  Was originally a secret design for the Empire military, but then disclosed.  Now a modified version is available for civilians, although it doesn't meet up to the original specifications.
-Used by security agencies all over the universe for it's reliability and availability. Proudly enforcing your security since UST 1132.
-</description>
+<description>One of the Nexus' prize heavy fighters.  Was originally a secret design for the Empire military, but then disclosed.  Now a modified version is available for civilians, although it doesn't meet up to the original specifications.
+Used by security agencies all over the universe for it's reliability and availability. Proudly enforcing your security since UST 1132.</description>
 <movement>
 <thrust>280</thrust>
 <turn>135</turn>
@@ -191,9 +181,7 @@ Used by security agencies all over the universe for it's reliability and availab
 <price>900000</price>
 <fabricator>Nexus</fabricator>
 <tech>5</tech>
-<description>
-A heavy liner specialized in freighting cargo all over the universe.  Also has good accomodations for passengers depending on the model allowing for enjoyable cruises.  Was a favorite target of pirates until they added stock turrets to the new models which can now defend themselves properly.
-</description>
+<description>A heavy liner specialized in freighting cargo all over the universe.  Also has good accomodations for passengers depending on the model allowing for enjoyable cruises.  Was a favorite target of pirates until they added stock turrets to the new models which can now defend themselves properly.</description>
 <movement>
 <thrust>180</thrust>
 <turn>100</turn>
@@ -226,9 +214,7 @@ A heavy liner specialized in freighting cargo all over the universe.  Also has g
 <price>300000</price>
 <fabricator>Robosys</fabricator>
 <tech>99</tech>
-<description>
-A robot drone.
-</description>
+<description>A robot drone.</description>
 <movement>
 <thrust>450</thrust>
 <turn>200</turn>
