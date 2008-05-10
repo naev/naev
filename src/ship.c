@@ -7,6 +7,7 @@
 #include "ship.h"
 
 #include <string.h>
+#include <limits.h>
 
 #include "xml.h"
 
@@ -32,7 +33,7 @@
 
 
 static Ship* ship_stack = NULL;
-static int ships = 0;
+static int ship_nstack = 0;
 
 
 /*
@@ -50,10 +51,10 @@ Ship* ship_get( const char* name )
    Ship* temp = ship_stack;
    int i;
 
-   for (i=0; i < ships; i++)
+   for (i=0; i < ship_nstack; i++)
       if (strcmp((temp+i)->name, name)==0) break;
 
-   if (i == ships) /* ship does not exist, game will probably crash now */
+   if (i == ship_nstack) /* ship does not exist, game will probably crash now */
       WARN("Ship %s does not exist", name);
 
    return temp+i;
@@ -65,24 +66,59 @@ Ship* ship_get( const char* name )
  */
 char** ship_getTech( int *n, const int *tech, const int techmax )
 {
-   int i,j;
+   int i,j,k, num, price;
    char **shipnames;
+   Ship **ships;
    
-   shipnames = malloc(sizeof(char*) * ships);
-   *n = 0;
-   for (i=0; i < ships; i++)
+   ships = malloc(sizeof(Ship*) * ship_nstack);
+   num = 0;
+   for (i=0; i < ship_nstack; i++) {
       if (ship_stack[i].tech <= tech[0]) {
-         shipnames[*n] = strdup(ship_stack[i].name);
-         (*n)++;
+         ships[num] = &ship_stack[i];
+         num++;
       }
       else {
          for (j=0; j<techmax; j++)
             if (tech[j] == ship_stack[i].tech) {
-               shipnames[*n] = strdup(ship_stack[i].name);
-               (*n)++;
+               ships[num] = &ship_stack[i];
+               num++;
             }
       }
-               
+   }
+
+   /* now sort by price */
+   *n = 0;
+   price = -1;
+   shipnames = malloc(sizeof(char*) * num);
+   /* until we fill the new stack */
+   for (i=0; i<num; i++) {
+
+      /* check for cheapest */
+      for (j=0; j<num; j++) {
+
+         /* is cheapest? */
+         if ((price == -1) || (ships[price]->price > ships[j]->price)) {
+
+            /* check if already in stack */
+            for (k=0; k<(*n); k++)
+               if (strcmp(shipnames[k],ships[j]->name)==0)
+                  break;
+
+            /* not in stack and therefore is cheapest */
+            if (k == (*n))
+               price = j;
+         }
+      }
+
+      /* add current cheapest to stack */
+      shipnames[i] = strdup(ships[price]->name);
+      (*n)++;
+      price = -1;
+   }
+
+   /* cleanup */
+   free(ships);
+
    return shipnames;
 }
 
@@ -249,8 +285,8 @@ int ships_load(void)
       if (node->type ==XML_NODE_START &&
             strcmp((char*)node->name,XML_SHIP)==0) {
          temp = ship_parse(node);
-         ship_stack = realloc(ship_stack, sizeof(Ship)*(++ships));
-         memcpy(ship_stack+ships-1, temp, sizeof(Ship));
+         ship_stack = realloc(ship_stack, sizeof(Ship)*(++ship_nstack));
+         memcpy(ship_stack+ship_nstack-1, temp, sizeof(Ship));
          free(temp);
       }
    } while (xml_nextNode(node));
@@ -259,7 +295,7 @@ int ships_load(void)
    free(buf);
    xmlCleanupParser();
 
-   DEBUG("Loaded %d Ship%s", ships, (ships==1) ? "" : "s" );
+   DEBUG("Loaded %d Ship%s", ship_nstack, (ship_nstack==1) ? "" : "s" );
 
    return 0;
 }
@@ -268,7 +304,7 @@ void ships_free()
 {
    ShipOutfit *so, *sot;
    int i;
-   for (i = 0; i < ships; i++) {
+   for (i = 0; i < ship_nstack; i++) {
       /* free stored strings */
       if ((ship_stack+i)->name) free(ship_stack[i].name);
       if ((ship_stack+i)->description) free(ship_stack[i].description);
