@@ -110,7 +110,7 @@ void outfit_calcDamage( double *dshield, double *darmour,
          (*darmour) = dmg;
          break;
       case DAMAGE_TYPE_RADIATION:
-         (*dshield) = 0.;
+         (*dshield) = 0.15; /* still take damage, just not much */
          (*darmour) = dmg;
          break;
 
