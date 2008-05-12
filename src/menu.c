@@ -418,9 +418,9 @@ void menu_death (void)
    wid = window_create( "Death", -1, -1, DEATH_WIDTH, DEATH_HEIGHT );
    window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20),
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnMain", "MainMenu", menu_death_main );
+         "btnMain", "Main Menu", menu_death_main );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnExit", "Exit", (void(*)(char*)) exit_game );
+         "btnExit", "Exit Game", (void(*)(char*)) exit_game );
    menu_Open(MENU_DEATH);
 }
 static void menu_death_main( char* str )
