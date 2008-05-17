@@ -542,10 +542,27 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
    x = bx - VX(*gl_camera) - sprite->sw/2. + gui_xoff;
    y = by - VY(*gl_camera) - sprite->sh/2. + gui_yoff;
 
-   /* don't draw if offscreen */
+   /* check if inbounds */
    if ((fabs(x) > SCREEN_W/2 + sprite->sw) ||
          (fabs(y) > SCREEN_H/2 + sprite->sh) )
       return;
+
+   /* texture coords */
+   tx = sprite->sw*(double)(sx)/sprite->rw;
+   ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
+
+   gl_blitTexture( sprite, x, y, tx, ty, c );
+}
+/*
+ * blits the sprite at pos (blits absolute pos)
+ */
+void gl_blitStaticSprite( const glTexture* sprite, const double bx, const double by,
+      const int sx, const int sy, const glColour* c )
+{
+   double x,y, tx,ty;
+
+   x = bx - (double)SCREEN_W/2.;
+   y = by - (double)SCREEN_H/2.;
 
    /* texture coords */
    tx = sprite->sw*(double)(sx)/sprite->rw;
@@ -569,11 +586,6 @@ void gl_blitRotate( const glTexture* texture,
    /* calculate position - we'll use relative coords to player */
    x = bx - VX(*gl_camera) - texture->sw/2. + gui_xoff;
    y = by - VY(*gl_camera) - texture->sh/2. + gui_yoff;
-
-   /* don't draw if offscreen */
-   if ((fabs(x) > SCREEN_W/2 + texture->sw) ||
-         (fabs(y) > SCREEN_H/2 + texture->sh) )
-      return;
 
    glMatrixMode(GL_PROJECTION);
    glPushMatrix();

@@ -43,6 +43,9 @@
 
 #define START_DATA   "dat/start.xml"
 
+#define TARGET_WIDTH 128
+#define TARGET_HEIGHT 96
+
 
 /*
  * player stuff
@@ -761,6 +764,7 @@ void player_render (void)
    if (j!=0) gui_renderPilot(pilot_stack[j]);
 
 
+   /* the + sign in the middle of the radar representing the player */
    glBegin(GL_LINES);
       COLOUR(cRadar_player);
       glVertex2d(  0., -3. );
@@ -866,7 +870,14 @@ void player_render (void)
    if (player_target != PLAYER_ID) {
       p = pilot_get(player_target);
 
+      /* blit the pilot target */
       gl_blitStatic( p->ship->gfx_target, gui.target.x, gui.target.y, NULL );
+      /* blit the pilot space image */
+      /*x = gui.target.x + (TARGET_WIDTH - p->ship->gfx_space->sw)/2.;
+      y = gui.target.y + (TARGET_HEIGHT - p->ship->gfx_space->sh)/2.;
+      gl_blitStaticSprite( p->ship->gfx_space,
+            x, y, p->tsx, p->tsy, NULL );*/
+
 
       /* target name */
       gl_print( NULL,

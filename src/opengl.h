@@ -101,6 +101,10 @@ void gl_freeTexture( glTexture* texture );
 void gl_blitSprite( const glTexture* sprite,
       const double bx, const double by,
       const int sx, const int sy, const glColour *c );
+/* blits a sprite, absolute pos */
+void gl_blitStaticSprite( const glTexture* sprite,
+      const double bx, const double by,
+      const int sx, const int sy, const glColour* c );
 /* blits a texture rotated, relative pos */
 void gl_blitRotate( const glTexture* texture,
       const double bx, const double by,
