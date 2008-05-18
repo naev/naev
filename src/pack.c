@@ -432,6 +432,7 @@ void* pack_readfile( const char* packfile, const char* filename, uint32_t *files
 {
    Packfile* file = malloc(sizeof(Packfile));
    void* buf;
+   char* str;
    int size, bytes;
 
    if (filesize)
@@ -459,7 +460,8 @@ void* pack_readfile( const char* packfile, const char* filename, uint32_t *files
       return NULL;
    }
    DEBUG("Read %d bytes from '%s'", bytes, filename );
-   memset(buf+size,0,1); /* append size '\0' for it to validate as a string */
+   str = buf;
+   str[size] = '\0'; /* append size '\0' for it to validate as a string */
 
    /* check the md5 */
    md5_state_t md5;

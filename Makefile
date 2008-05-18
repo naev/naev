@@ -41,7 +41,7 @@ ifeq ($(OS),LINUX)
 CFLAGS += -D_POSIX_SOURCE
 endif
 ifdef DEBUG
-CFLAGS += -W -Wall -Wextra -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -fno-inline -g3 -DDEBUG -DLUA_USE_APICHECK -std=c99 -ansi
+CFLAGS += -W -Wall -Wextra -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -fno-inline -g3 -DDEBUG -DLUA_USE_APICHECK -std=c99 -ansi
 else # DEBUG
 CFLAGS += -O2 -funroll-loops -pipe -std=c99 -ansi
 endif # DEBUG
