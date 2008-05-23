@@ -136,7 +136,7 @@ int music_thread( void* unused )
    (void)unused;
 
    int active; /* active buffer */
-   ALint stat;
+   ALint state;
 
    /* main loop */
    while (!music_is(MUSIC_KILL)) {
@@ -171,8 +171,8 @@ int music_thread( void* unused )
 
             soundLock();
 
-            alGetSourcei( music_source, AL_BUFFERS_PROCESSED, &stat );
-            if (stat > 0) {
+            alGetSourcei( music_source, AL_BUFFERS_PROCESSED, &state );
+            if (state > 0) {
 
                /* refill active buffer */
                alSourceUnqueueBuffers( music_source, 1, &music_buffer[active] );
@@ -205,13 +205,13 @@ int music_thread( void* unused )
 static int stream_loadBuffer( ALuint buffer )
 {
    int size, section, result;
-   char data[BUFFER_SIZE]; /* buffer to hold the data */
+   char dat[BUFFER_SIZE]; /* buffer to hold the data */
 
    size = 0;
    while (size < BUFFER_SIZE) { /* fille up the entire data buffer */
 
       result = ov_read( &music_vorbis.stream, /* stream */
-            data + size,            /* data */
+            dat + size,            /* data */
             BUFFER_SIZE - size,     /* amount to read */
             0,                      /* big endian? */
             2,                      /* 16 bit */
@@ -233,7 +233,7 @@ static int stream_loadBuffer( ALuint buffer )
    }
    /* load the buffer up */
    alBufferData( buffer, music_vorbis.format,
-         data, BUFFER_SIZE, music_vorbis.info->rate );
+         dat, BUFFER_SIZE, music_vorbis.info->rate );
 
    return 0;
 }

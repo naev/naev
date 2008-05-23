@@ -250,11 +250,15 @@ void player_new (void)
 static void player_newMake (void)
 {
    Ship *ship;
-   char system[20];
+   char *sysname;;
    uint32_t bufsize;
-   char *buf = pack_readfile( DATA, START_DATA, &bufsize );
+   char *buf;
    int l,h, tl,th;
    double x,y;
+
+   sysname = NULL;
+
+   buf = pack_readfile( DATA, START_DATA, &bufsize );
 
    xmlNodePtr node, cur, tmp;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );
@@ -286,7 +290,8 @@ static void player_newMake (void)
                tmp = cur->children;
                do {
                   /* system name, TODO percent chance */
-                  if (xml_isNode(tmp,"name")) snprintf(system,20,xml_get(tmp));
+                  if (xml_isNode(tmp,"name")) 
+                     sysname = strdup(xml_get(tmp));
                   /* position */
                   xmlr_float(tmp,"x",x);
                   xmlr_float(tmp,"y",y);
@@ -320,7 +325,8 @@ static void player_newMake (void)
 
    /* create the player and start the game */
    player_newShip( ship, x, y, 0., 0., RNG(0,359)/180.*M_PI );
-   space_init(system);
+   space_init(sysname);
+   free(sysname);
 
    /* clear the map */
    map_clear();
@@ -1385,12 +1391,12 @@ void gui_free (void)
  *
  * basically uses keyboard input instead of AI input
  */
-void player_think( Pilot* player )
+void player_think( Pilot* pplayer )
 {
    /* last i heard, the dead don't think */
-   if (pilot_isFlag(player,PILOT_DEAD)) {
+   if (pilot_isFlag(pplayer,PILOT_DEAD)) {
       /* no sense in accelerating or turning */
-      player->solid->dir_vel = 0.;
+      pplayer->solid->dir_vel = 0.;
       vect_pset( &player->solid->force, 0., 0. );
       return;
    }
@@ -1398,42 +1404,42 @@ void player_think( Pilot* player )
    /* turning taken over by PLAYER_FACE */
    if (player_isFlag(PLAYER_FACE)) { 
       if (player_target != PLAYER_ID)
-         pilot_face( player,
+         pilot_face( pplayer,
                vect_angle( &player->solid->pos,
                   &pilot_get(player_target)->solid->pos ));
       else if (planet_target != -1)
-         pilot_face( player,
+         pilot_face( pplayer,
                vect_angle( &player->solid->pos,
                   &cur_system->planets[ planet_target ].pos ));
    }
 
    /* turning taken over by PLAYER_REVERSE */
-   else if (player_isFlag(PLAYER_REVERSE) && (VMOD(player->solid->vel) > 0.))
-      pilot_face( player, VANGLE(player->solid->vel) + M_PI );
+   else if (player_isFlag(PLAYER_REVERSE) && (VMOD(pplayer->solid->vel) > 0.))
+      pilot_face( pplayer, VANGLE(player->solid->vel) + M_PI );
 
    /* normal turning scheme */
    else {
-      player->solid->dir_vel = 0.;
+      pplayer->solid->dir_vel = 0.;
       if (player_turn)
-         player->solid->dir_vel -= player->turn * player_turn;
+         pplayer->solid->dir_vel -= pplayer->turn * player_turn;
    }
 
-   if (player_isFlag(PLAYER_PRIMARY)) pilot_shoot(player,player_target,0);
+   if (player_isFlag(PLAYER_PRIMARY)) pilot_shoot(pplayer,player_target,0);
    if (player_isFlag(PLAYER_SECONDARY)) /* needs target */
-      pilot_shoot(player,player_target,1);
+      pilot_shoot(pplayer,player_target,1);
 
    if (player_isFlag(PLAYER_AFTERBURNER)) /* afterburn! */
-      vect_pset( &player->solid->force,
-            player->thrust * player->afterburner->outfit->u.afb.thrust_perc + 
-            player->afterburner->outfit->u.afb.thrust_abs, player->solid->dir );
+      vect_pset( &pplayer->solid->force,
+            pplayer->thrust * pplayer->afterburner->outfit->u.afb.thrust_perc + 
+            pplayer->afterburner->outfit->u.afb.thrust_abs, pplayer->solid->dir );
    else
-      vect_pset( &player->solid->force, player->thrust * player_acc,
-            player->solid->dir );
+      vect_pset( &pplayer->solid->force, pplayer->thrust * player_acc,
+            pplayer->solid->dir );
 
    /* set the listener stuff */
-   sound_listener( player->solid->dir,
-         player->solid->pos.x, player->solid->pos.y,
-         player->solid->vel.x, player->solid->vel.y );
+   sound_listener( pplayer->solid->dir,
+         pplayer->solid->pos.x, pplayer->solid->pos.y,
+         pplayer->solid->vel.x, pplayer->solid->vel.y );
 }
 
 

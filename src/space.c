@@ -61,7 +61,7 @@ static int spacename_nstack = 0;
  */
 StarSystem *systems_stack = NULL; /* star system stack */
 int systems_nstack = 0; /* number of star systems */
-static int nplanets = 0; /* total number of loaded planets - pretty silly */
+static int total_planets = 0; /* total number of loaded planets - pretty silly */
 StarSystem *cur_system = NULL; /* Current star system */
 
 
@@ -375,15 +375,15 @@ char* planet_getSystem( char* planetname )
 Planet* planet_get( char* planetname )
 {
    int i;
-   char *sys;
-   StarSystem *system;
+   char *sysname;
+   StarSystem *sys;
 
-   sys = planet_getSystem( planetname );
-   system = system_get(sys);
+   sysname = planet_getSystem( planetname );
+   sys = system_get(sysname);
 
-   for (i=0; i<system->nplanets; i++)
-      if (strcmp(planetname,system->planets[i].name)==0)
-         return &system->planets[i];
+   for (i=0; i<sys->nplanets; i++)
+      if (strcmp(planetname,sys->planets[i].name)==0)
+         return &sys->planets[i];
    DEBUG("Planet '%s' not found in the universe", planetname);
    return NULL;
 }
@@ -736,7 +736,7 @@ static StarSystem* system_parse( const xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"planet")) {
                /* add planet to system */
-               nplanets++; /* increase planet counter */
+               total_planets++; /* increase planet counter */
                planet = planet_pull(xml_get(cur));
                temp->planets = realloc(temp->planets, sizeof(Planet)*(++temp->nplanets));
                memcpy(temp->planets+(temp->nplanets-1), planet, sizeof(Planet));
@@ -805,14 +805,14 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 static void system_parseJumps( const xmlNodePtr parent )
 {
    int i;
-   StarSystem *system;
+   StarSystem *sys;
    char* name;
    xmlNodePtr cur, node;
 
    name = xml_nodeProp(parent,"name"); /* already mallocs */
    for (i=0; i<systems_nstack; i++)
       if (strcmp( systems_stack[i].name, name)==0) {
-         system = &systems_stack[i];
+         sys = &systems_stack[i];
          break;
       }
    if (i==systems_nstack) WARN("System '%s' was not found in the stack for some reason",name);
@@ -827,9 +827,9 @@ static void system_parseJumps( const xmlNodePtr parent )
             if (xml_isNode(cur,"jump")) {
                for (i=0; i<systems_nstack; i++)
                   if (strcmp( systems_stack[i].name, xml_get(cur))==0) {
-                     system->njumps++;
-                     system->jumps = realloc(system->jumps, system->njumps*sizeof(int));
-                     system->jumps[system->njumps-1] = i;
+                     sys->njumps++;
+                     sys->jumps = realloc(sys->jumps, sys->njumps*sizeof(int));
+                     sys->jumps[sys->njumps-1] = i;
                      break;
                   }
                if (i==systems_nstack)
@@ -902,7 +902,7 @@ int space_load (void)
 
    DEBUG("Loaded %d Star System%s with %d Planet%s",
          systems_nstack, (systems_nstack==1) ? "" : "s",
-         nplanets, (nplanets==1) ? "" : "s" );
+         total_planets, (total_planets==1) ? "" : "s" );
 
    return 0;
 }

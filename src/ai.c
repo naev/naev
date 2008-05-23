@@ -88,8 +88,6 @@
  */
 static AI_Profile* profiles = NULL;
 static int nprofiles = 0;
-/* Current AI Lua interpreter */
-static lua_State* L = NULL;
 
 
 /*
@@ -103,7 +101,7 @@ extern int pilots;
  * prototypes
  */
 /* Internal C routines */
-static void ai_run( const char *funcname );
+static void ai_run( lua_State *L, const char *funcname );
 static int ai_loadProfile( char* filename );
 static void ai_freetask( Task* t );
 /* External C routines */
@@ -252,7 +250,7 @@ static int ai_status = AI_STATUS_NORMAL;
 /*
  * attempts to run a function
  */
-static void ai_run( const char *funcname )
+static void ai_run( lua_State *L, const char *funcname )
 {
    lua_getglobal(L, funcname);
    if (lua_pcall(L, 0, 0, 0)) /* error has occured */
@@ -307,6 +305,7 @@ static int ai_loadProfile( char* filename )
 {
    char* buf = NULL;
    uint32_t bufsize = 0;
+   lua_State *L;
 
    profiles = realloc( profiles, sizeof(AI_Profile)*(++nprofiles) );
 
@@ -387,6 +386,8 @@ void ai_exit (void)
  */
 void ai_think( Pilot* pilot )
 {
+   lua_State *L;
+
    cur_pilot = pilot; /* set current pilot being processed */
    L = cur_pilot->ai->L; /* set the AI profile to the current pilot's */
 
@@ -399,14 +400,14 @@ void ai_think( Pilot* pilot )
    
    /* control function if pilot is idle or tick is up */
    if ((cur_pilot->tcontrol < SDL_GetTicks()) || (cur_pilot->task == NULL)) {
-      ai_run("control"); /* run control */
+      ai_run(L, "control"); /* run control */
       lua_getglobal(L,"control_rate");
       cur_pilot->tcontrol = SDL_GetTicks() +  1000*(int)lua_tonumber(L,-1);
    }
 
    /* pilot has a currently running task */
    if (cur_pilot->task)
-      ai_run(cur_pilot->task->name);
+      ai_run(L, cur_pilot->task->name);
 
    /* make sure pilot_acc and pilot_turn are legal */
    if (pilot_acc > 1.) pilot_acc = 1.; /* value must be <= 1 */
@@ -430,6 +431,8 @@ void ai_think( Pilot* pilot )
  */
 void ai_attacked( Pilot* attacked, const unsigned int attacker )
 {
+   lua_State *L;
+
    cur_pilot = attacked;
    L = cur_pilot->ai->L;
    lua_getglobal(L, "attacked");
@@ -443,10 +446,12 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker )
  */
 void ai_create( Pilot* pilot )
 {
+   lua_State *L;
+
    cur_pilot = pilot;
    L = cur_pilot->ai->L;
    ai_status = AI_STATUS_CREATE;
-   ai_run("create");
+   ai_run(L, "create");
    ai_status = AI_STATUS_NORMAL;
 }
 

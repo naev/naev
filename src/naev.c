@@ -285,7 +285,7 @@ void main_loop (void)
 
 
 static double fps_dt = 1.;
-static double dt = 0.; /* used also a bit in render_all */
+static double cur_dt = 0.; /* used also a bit in render_all */
 /**
  * @brief Controls the FPS.
  */
@@ -295,14 +295,14 @@ static void fps_control (void)
 
    /* dt in ms/1000 */
    t = SDL_GetTicks();
-   dt = (double)(t - time) / 1000.;
+   cur_dt = (double)(t - time) / 1000.;
    time = t;
 
    if (paused) SDL_Delay(10); /* drop paused FPS - we are nice to the CPU :) */
 
    /* if fps is limited */                       
-   if ((max_fps != 0) && (dt < 1./max_fps)) {
-      double delay = 1./max_fps - dt;
+   if ((max_fps != 0) && (cur_dt < 1./max_fps)) {
+      double delay = 1./max_fps - cur_dt;
       SDL_Delay( delay );
       fps_dt += delay; /* makes sure it displays the proper fps */
    }
@@ -318,13 +318,13 @@ static void update_all (void)
 {
    double tempdt;
 
-   if (dt > 0.25) { /* slow timers down and rerun calculations */
-      pause_delay((unsigned int)dt*1000);
+   if (cur_dt > 0.25) { /* slow timers down and rerun calculations */
+      pause_delay((unsigned int)cur_dt*1000);
       return;
    }
-   else if (dt > fps_min) { /* we'll force a minimum of 50 FPS */
+   else if (cur_dt > fps_min) { /* we'll force a minimum of 50 FPS */
 
-      tempdt = dt - fps_min;
+      tempdt = cur_dt - fps_min;
       pause_delay( (unsigned int)(tempdt*1000));
       update_routine(fps_min);
       
@@ -336,7 +336,7 @@ static void update_all (void)
       }
    }
 
-   update_routine(dt);
+   update_routine(cur_dt);
 }
 
 
@@ -372,9 +372,9 @@ static void update_routine( double dt )
 static void render_all (void)
 {
    /* setup */
-   spfx_start(dt);
+   spfx_start(cur_dt);
    /* BG */
-   space_render(dt);
+   space_render(cur_dt);
    planets_render();
    player_renderBG();
    weapons_render(WEAPON_LAYER_BG);
@@ -385,7 +385,7 @@ static void render_all (void)
    /* FG */
    player_render();
    spfx_render(SPFX_LAYER_FRONT);
-   display_fps(dt);
+   display_fps(cur_dt);
 }
 
 

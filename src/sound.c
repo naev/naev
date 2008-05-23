@@ -432,7 +432,7 @@ static void sound_free( alSound *snd )
  */
 void sound_update (void)
 {
-   ALint stat;
+   ALint state;
    alVoice *voice, *prev, *next;
 
    if (sound_lock == NULL) return; /* sound system is off */
@@ -447,9 +447,9 @@ void sound_update (void)
       next = voice->next;
 
       /* get status */
-      stat = -1;
+      state = -1;
       if (voice->source != 0)
-         alGetSourcei( voice->source, AL_SOURCE_STATE, &stat );
+         alGetSourcei( voice->source, AL_SOURCE_STATE, &state );
 
       if (!voice_is(voice, VOICE_DONE)) { /* still working */
 
@@ -465,7 +465,7 @@ void sound_update (void)
          prev = voice;
       }
       else { /* delete them */
-         if (stat != AL_PLAYING)
+         if (state != AL_PLAYING)
             voice_rm( prev, voice ); /* do not set prev to voice */
          else
             prev = voice;
@@ -482,13 +482,13 @@ void sound_update (void)
  */
 static void voice_rm( alVoice *prev, alVoice* voice )
 {
-   ALint stat;
+   ALint state;
 
    if (voice->source != 0) { /* source must exist */
 
       /* stop it if playing */
-      alGetSourcei( voice->source, AL_SOURCE_STATE, &stat );
-      if (stat == AL_PLAYING) alSourceStop( voice->source );
+      alGetSourcei( voice->source, AL_SOURCE_STATE, &state );
+      if (state == AL_PLAYING) alSourceStop( voice->source );
 
       /* clear it and get rid of it */
       source_stack[source_nstack++] = voice->source; /* throw it back */
@@ -701,13 +701,13 @@ static void voice_parseFlags( alVoice* voice, const unsigned int flags )
 static int voice_play( alVoice* voice )
 {
    ALenum err;
-   ALint stat;
+   ALint state;
 
    /* must have a buffer */
    if (voice->buffer != 0) {
 
-      alGetSourcei( voice->source, AL_SOURCE_STATE, &stat );
-      if (stat == AL_PLAYING)
+      alGetSourcei( voice->source, AL_SOURCE_STATE, &state );
+      if (state == AL_PLAYING)
          alSourceStop( voice->source );
 
       /* set buffer */

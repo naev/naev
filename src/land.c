@@ -97,13 +97,13 @@ static int terciary_wid = 0; /* used for fancy things like news, your ships... *
  * prototypes
  */
 /* commodity exchange */
-static void commodity_exchange (void);
+static void commodity_exchange_open (void);
 static void commodity_exchange_close( char* str );
 static void commodity_update( char* str );
 static void commodity_buy( char* str );
 static void commodity_sell( char* str );
 /* outfits */
-static void outfits (void);
+static void outfits_open (void);
 static void outfits_close( char* str );
 static void outfits_update( char* str );
 static int outfit_canBuy( Outfit* outfit, int q, int errmsg );
@@ -113,26 +113,26 @@ static void outfits_sell( char* str );
 static int outfits_getMod (void);
 static void outfits_renderMod( double bx, double by, double w, double h );
 /* shipyard */
-static void shipyard (void);
+static void shipyard_open (void);
 static void shipyard_close( char* str );
 static void shipyard_update( char* str );
 static void shipyard_info( char* str );
 static void shipyard_buy( char* str );
 /* your ships */
-static void shipyard_yours( char* str );
-static void shipyard_yoursClose( char* str );
+static void shipyard_yours_open( char* str );
+static void shipyard_yours_close( char* str );
 static void shipyard_yoursUpdate( char* str );
 static void shipyard_yoursChange( char* str );
 static void shipyard_yoursTransport( char* str );
 static int shipyard_yoursTransportPrice( char* shipname );
 /* spaceport bar */
-static void spaceport_bar (void);
+static void spaceport_bar_open (void);
 static void spaceport_bar_close( char* str );
 /* news */
-static void news (void);
+static void news_open (void);
 static void news_close( char* str );
 /* mission computer */
-static void misn (void);
+static void misn_open (void);
 static void misn_close( char* str );
 static void misn_accept( char* str );
 static void misn_genList( int first );
@@ -145,7 +145,7 @@ static void spaceport_refuel( char *str );
 /*
  * the local market
  */
-static void commodity_exchange (void)
+static void commodity_exchange_open (void)
 {
    int i;
    char **goods;
@@ -266,9 +266,9 @@ static void commodity_sell( char* str )
 /*
  * ze outfits
  */
-static void outfits (void)
+static void outfits_open (void)
 {
-   char **outfits;
+   char **soutfits;
    int noutfits;
    char buf[128];
 
@@ -316,10 +316,10 @@ static void outfits (void)
          &gl_smallFont, NULL, NULL );
 
    /* set up the outfits to buy/sell */
-   outfits = outfit_getTech( &noutfits, land_planet->tech, PLANET_TECH_MAX);
+   soutfits = outfit_getTech( &noutfits, land_planet->tech, PLANET_TECH_MAX);
    window_addList( secondary_wid, 20, 40,
          200, OUTFITS_HEIGHT-80, "lstOutfits",
-         outfits, noutfits, 0, outfits_update );
+         soutfits, noutfits, 0, outfits_update );
 
    /* write the outfits stuff */
    outfits_update( NULL );
@@ -521,7 +521,7 @@ static void outfits_renderMod( double bx, double by, double w, double h )
 /*
  * ze shipyard
  */
-static void shipyard (void)
+static void shipyard_open (void)
 {
    char **ships;
    int nships;
@@ -538,7 +538,7 @@ static void shipyard (void)
          "Close", shipyard_close );
    window_addButton( secondary_wid, -20, 40+BUTTON_HEIGHT,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnYourShips",
-         "Your Ships", shipyard_yours );
+         "Your Ships", shipyard_yours_open );
    window_addButton( secondary_wid, -40-BUTTON_WIDTH, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnBuyShip",
          "Buy", shipyard_buy );
@@ -660,7 +660,7 @@ static void shipyard_buy( char* str )
 
    shipyard_update(NULL);
 }
-static void shipyard_yours( char* str )
+static void shipyard_yours_open( char* str )
 {
    (void)str;
    char **ships;
@@ -673,7 +673,7 @@ static void shipyard_yours( char* str )
    /* buttons */
    window_addButton( terciary_wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseYourShips",
-         "Shipyard", shipyard_yoursClose );
+         "Shipyard", shipyard_yours_close );
    window_addButton( terciary_wid, -40-BUTTON_WIDTH, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnChangeShip",
          "Change Ship", shipyard_yoursChange );
@@ -719,7 +719,7 @@ static void shipyard_yours( char* str )
 
    shipyard_yoursUpdate(NULL);
 }
-static void shipyard_yoursClose( char* str )
+static void shipyard_yours_close( char* str )
 {
    (void)str;
    window_destroy( terciary_wid );
@@ -814,8 +814,8 @@ static void shipyard_yoursChange( char* str )
    player_swapShip(shipname);
 
    /* recreate the window */
-   shipyard_yoursClose(NULL);
-   shipyard_yours(NULL);
+   shipyard_yours_close(NULL);
+   shipyard_yours_open(NULL);
 }
 static void shipyard_yoursTransport( char* str )
 {
@@ -868,7 +868,7 @@ static int shipyard_yoursTransportPrice( char* shipname )
 /*
  * the spaceport bar
  */
-static void spaceport_bar (void)
+static void spaceport_bar_open (void)
 {
    /* window */
    secondary_wid = window_create( "Spaceport Bar",
@@ -880,7 +880,7 @@ static void spaceport_bar (void)
          "Close", spaceport_bar_close );
    window_addButton( secondary_wid, 20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnNews",
-         "News", (void(*)(char*))news);
+         "News", (void(*)(char*))news_open);
 
    /* text */
    window_addText( secondary_wid, 20, -50,
@@ -904,7 +904,7 @@ static void spaceport_bar_close( char* str )
 /*
  * the planetary news reports
  */
-static void news (void)
+static void news_open (void)
 {
    /* create window */
    terciary_wid = window_create( "News Reports",
@@ -932,7 +932,7 @@ static void news_close( char* str )
 /*
  * mission computer, cuz missions rock
  */
-static void misn (void)
+static void misn_open (void)
 {
    /* create window */
    secondary_wid = window_create( "Mission Computer",
@@ -1097,24 +1097,24 @@ void land( Planet* p )
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
       window_addButton( land_wid, -20, 20 + BUTTON_HEIGHT + 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnCommodity",
-            "Commodity Exchange", (void(*)(char*))commodity_exchange);
+            "Commodity Exchange", (void(*)(char*))commodity_exchange_open);
    /* second column */
    if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
       window_addButton( land_wid, -20 - BUTTON_WIDTH - 20, 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnShipyard",
-            "Shipyard", (void(*)(char*))shipyard);
+            "Shipyard", (void(*)(char*))shipyard_open);
    if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS))
       window_addButton( land_wid, -20 - BUTTON_WIDTH - 20, 20 + BUTTON_HEIGHT + 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnOutfits",
-            "Outfits", (void(*)(char*))outfits);
+            "Outfits", (void(*)(char*))outfits_open);
    /* third column */
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
       window_addButton( land_wid, 20, 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnNews",
-            "Mission Terminal", (void(*)(char*))misn);
+            "Mission Terminal", (void(*)(char*))misn_open);
       window_addButton( land_wid, 20, 20 + BUTTON_HEIGHT + 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnBar",
-            "Spaceport Bar", (void(*)(char*))spaceport_bar);
+            "Spaceport Bar", (void(*)(char*))spaceport_bar_open);
       if (player->fuel < player->fuel_max) {
          credits2str( cred, refuel_price(), 2 );
          snprintf( buf, 32, "Refuel %s", cred );

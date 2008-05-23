@@ -62,7 +62,7 @@ static int mission_init( Mission* mission, MissionData* misn, int load );
 static void mission_freeData( MissionData* mission );
 static int mission_alreadyRunning( MissionData* misn );
 static int mission_meetCond( MissionData* misn );
-static int mission_meetReq( int mission, int faction, char* planet, char* system );
+static int mission_meetReq( int mission, int faction, char* planet, char* sysname );
 static int mission_matchFaction( MissionData* misn, int faction );
 static int mission_location( char* loc );
 static MissionData* mission_parse( const xmlNodePtr parent );
@@ -245,7 +245,7 @@ static int mission_meetCond( MissionData* misn )
 /*
  * does the mission meet the minimum requirements?
  */
-static int mission_meetReq( int mission, int faction, char* planet, char* system )
+static int mission_meetReq( int mission, int faction, char* planet, char* sysname )
 {
    MissionData* misn;
 
@@ -253,7 +253,7 @@ static int mission_meetReq( int mission, int faction, char* planet, char* system
 
    /* must match planet, system or faction */
    if (!(((misn->avail.planet && strcmp(misn->avail.planet,planet)==0)) ||
-         (misn->avail.system && (strcmp(misn->avail.system,system)==0)) ||
+         (misn->avail.system && (strcmp(misn->avail.system,sysname)==0)) ||
          mission_matchFaction(misn,faction)))
       return 0;
 
@@ -273,7 +273,7 @@ static int mission_meetReq( int mission, int faction, char* planet, char* system
 /*
  * runs bar missions, all lua side and one-shot
  */
-void missions_bar( int faction, char* planet, char* system )
+void missions_bar( int faction, char* planet, char* sysname )
 {
    MissionData* misn;
    Mission mission;
@@ -284,7 +284,7 @@ void missions_bar( int faction, char* planet, char* system )
       misn = &mission_stack[i];
       if (misn->avail.loc==MIS_AVAIL_BAR) {
 
-         if (!mission_meetReq(i, faction, planet, system))
+         if (!mission_meetReq(i, faction, planet, sysname))
             continue;
 
          chance = (double)(misn->avail.chance % 100)/100.;
@@ -428,7 +428,7 @@ static int mission_matchFaction( MissionData* misn, int faction )
 /*
  * generates misisons for the computer - special case
  */
-Mission* missions_computer( int *n, int faction, char* planet, char* system )
+Mission* missions_computer( int *n, int faction, char* planet, char* sysname )
 {
    int i,j, m;
    double chance;
@@ -442,7 +442,7 @@ Mission* missions_computer( int *n, int faction, char* planet, char* system )
       misn = &mission_stack[i];
       if (misn->avail.loc==MIS_AVAIL_COMPUTER) {
 
-         if (!mission_meetReq(i, faction, planet, system))
+         if (!mission_meetReq(i, faction, planet, sysname))
             continue;
 
          chance = (double)(misn->avail.chance % 100)/100.;

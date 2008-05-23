@@ -175,7 +175,7 @@ int input_getKeybind( char *keybind, KeybindType *type, int *reverse )
 (player && !pilot_isFlag(player,PILOT_HYP_PREP) &&\
 !pilot_isFlag(player,PILOT_HYP_BEGIN) &&\
 !pilot_isFlag(player,PILOT_HYPERSPACE))
-static void input_key( int keynum, double value, int abs )
+static void input_key( int keynum, double value, int kabs )
 {
    unsigned int t;
 
@@ -184,7 +184,7 @@ static void input_key( int keynum, double value, int abs )
     */
    /* accelerating */
    if (KEY("accel")) {
-      if (abs) player_accel(value);
+      if (kabs) player_accel(value);
       else { /* prevent it from getting stuck */
          if (value==KEY_PRESS) player_accel(1.);
          else if (value==KEY_RELEASE) player_accelOver();
@@ -207,7 +207,7 @@ static void input_key( int keynum, double value, int abs )
       if (value==KEY_PRESS) { player_setFlag(PLAYER_TURN_LEFT); }
       else if (value==KEY_RELEASE) { player_rmFlag(PLAYER_TURN_LEFT); }
 
-      if (abs) { player_turn = -value; }
+      if (kabs) { player_turn = -value; }
       else { player_turn -= value; }
       if (player_turn < -1.) { player_turn = -1.; } /* make sure value is sane */
 
@@ -218,7 +218,7 @@ static void input_key( int keynum, double value, int abs )
       if (value==KEY_PRESS) { player_setFlag(PLAYER_TURN_RIGHT); }
       else if (value==KEY_RELEASE) { player_rmFlag(PLAYER_TURN_RIGHT); }
 
-      if (abs) { player_turn = value; }
+      if (kabs) { player_turn = value; }
       else { player_turn += value; }
       if (player_turn > 1.) { player_turn = 1.; } /* make sure value is sane */
    

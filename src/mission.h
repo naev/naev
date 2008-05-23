@@ -87,9 +87,9 @@ extern Mission player_missions[MISSION_MAX];
  * creates missions for a planet and such
  */
 Mission* missions_computer( int *n, int faction,
-      char* planet, char* system ); /* for mission computer */
+      char* planet, char* sysname ); /* for mission computer */
 int mission_accept( Mission* mission ); /* player accepted mission - mission computer */
-void missions_bar( int faction, char* planet, char* system );
+void missions_bar( int faction, char* planet, char* sysname );
 
 /*
  * misc

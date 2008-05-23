@@ -173,13 +173,13 @@ static int space_getPlanet( lua_State *L )
 static int space_getSystem( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
-   char *planetname, *system;
+   char *planetname, *sysname;
 
    if (lua_isstring(L,-1)) planetname = (char*) lua_tostring(L,-1);
    else return 0;
 
-   system = planet_getSystem( planetname );
-   lua_pushstring(L,system);
+   sysname = planet_getSystem( planetname );
+   lua_pushstring(L,sysname);
    return 1;
 }
 static int space_landName( lua_State *L )
