@@ -11,9 +11,8 @@
 #include <string.h> /* strdup */
 #include <getopt.h> /* getopt_long */
 
-#include "lua.h"
-#include "lauxlib.h"
-#include "lualib.h"
+#include "nlua.h"
+#include "lauxlib.h" /* luaL_dofile */
 
 #include "naev.h"
 #include "log.h"
@@ -124,7 +123,7 @@ int conf_loadConfig ( const char* file )
    int i = 0;
    double d = 0.;
 
-   lua_State *L = luaL_newstate();
+   lua_State *L = nlua_newState();
    if (luaL_dofile(L, file) == 0) { /* configuration file exists */
 
       /* global */

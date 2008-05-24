@@ -429,7 +429,7 @@ static int music_luaInit (void)
    if (music_lua != NULL)
       music_luaQuit();
 
-   music_lua = luaL_newstate();
+   music_lua = nlua_newState();
 
    luaL_openlibs(music_lua);
 

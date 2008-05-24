@@ -10,7 +10,16 @@
 #include "lua.h"
 
 
-/* individual libraries */
+/*
+ * standard lua stuff wrappers
+ */
+lua_State *nlua_newState (void); /* creates a new state */
+int nlua_loadBase( lua_State* L );
+
+
+/* 
+ * individual custom library loaders
+ */
 int lua_loadNaev( lua_State *L ); /* always read only */
 int lua_loadSpace( lua_State *L, int readonly );
 int lua_loadTime( lua_State *L, int readonly );

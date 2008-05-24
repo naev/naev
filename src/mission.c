@@ -9,6 +9,7 @@
 #include <string.h>
 #include <malloc.h>
 
+#include "nlua.h"
 #include "nluadef.h"
 
 #include "rng.h"
@@ -135,12 +136,12 @@ static int mission_init( Mission* mission, MissionData* misn, int load )
    mission->data = misn;
 
    /* init lua */
-   mission->L = luaL_newstate();
+   mission->L = nlua_newState();
    if (mission->L == NULL) {
       ERR("Unable to create a new lua state.");
       return -1;
    }
-   luaopen_base( mission->L ); /* can be useful */
+   nlua_loadBase( mission->L ); /* pairs and such */
    luaopen_string( mission->L ); /* string.format can be very useful */
    misn_loadLibs( mission->L ); /* load our custom libraries */
 
@@ -197,7 +198,7 @@ static int mission_meetCond( MissionData* misn )
    char buf[256];
 
    if (mission_cond_L == NULL) { /* must create the conditional environment */
-      mission_cond_L = luaL_newstate();
+      mission_cond_L = nlua_newState();
       misn_loadCondLibs( mission_cond_L );
    }
 

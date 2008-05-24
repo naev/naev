@@ -315,7 +315,7 @@ static int ai_loadProfile( char* filename )
          strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX)+1,
          "%s", filename+strlen(AI_PREFIX) );
 
-   profiles[nprofiles-1].L = luaL_newstate();
+   profiles[nprofiles-1].L = nlua_newState();
 
    if (profiles[nprofiles-1].L == NULL) {
       ERR("Unable to create a new Lua state");

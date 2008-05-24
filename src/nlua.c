@@ -71,6 +71,37 @@ static const luaL_reg tk_methods[] = {
 
 
 
+/*
+ * wrapper around luaL_newstate
+ */
+lua_State *nlua_newState (void)
+{
+   lua_State *L;
+
+   /* try to create the new state */
+   L = luaL_newstate();
+   if (L == NULL) {
+      WARN("Failed to create new lua state.");
+      return NULL;
+   }
+
+   return L;
+}
+
+
+/*
+ * loads a specially modified version of base
+ */
+int nlua_loadBase( lua_State* L )
+{
+   luaopen_base(L); /* open base */
+
+   /* replace package.loaders with a custom one */
+
+   return 0;
+}
+
+
 
 /*
  * individual library loading
