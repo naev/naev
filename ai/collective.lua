@@ -1,3 +1,5 @@
+include("ai/include/basic.lua")
+
 -- Required control rate
 control_rate = 2
 -- Required "control" function
@@ -27,31 +29,4 @@ function attacked ( attacker )
    end
 end
 function create ()
-end
-
--- attacks
-function attack ()
-   target = ai.targetid()
-
-   -- make sure pilot exists
-   if not ai.exists(target) then
-      ai.poptask()
-      return
-   end
-
-   dir = ai.face( target )
-   dist = ai.dist( ai.pos(target) )
-   second = ai.secondary()
-
-   if ai.secondary() == "Launcher" then
-      ai.settarget(target)
-      ai.shoot(2)
-   end
-
-
-   if dir < 10 and dist > 200 then
-      ai.accel()
-   elseif dir < 10 and dist < 200 then
-      ai.shoot()
-   end
 end

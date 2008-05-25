@@ -1,3 +1,5 @@
+include("ai/include/basic.lua")
+
 -- Required control rate
 control_rate = 2
 
@@ -47,50 +49,6 @@ function taunt ( target )
    elseif num == 3 then msg = "You'll regret this!"
    end
    if msg then ai.comm(attacker, msg) end
-end
-
--- runs away
-function runaway ()
-   target = ai.targetid()
-
-   -- make sure pilot exists
-   if not ai.exists(target) then
-      ai.poptask()
-      return
-   end
-      
-   dir = ai.face( target, 1 )
-   ai.accel()
-end
-
--- attacks
-function attack ()
-   target = ai.targetid()
-
-   -- make sure pilot exists
-   if not ai.exists(target) then
-      ai.poptask()
-      return
-   end
-
-   dir = ai.face( target )
-   dist = ai.dist( ai.pos(target) )
-   second = ai.secondary()
-
-   if ai.secondary() == "Launcher" then
-      ai.settarget(target)
-      ai.shoot(2)
-   end
-
-
-   if ai.parmour() < 70 then
-      ai.poptask()
-      ai.pushtask(0, "runaway", target)
-   elseif dir < 10 and dist > 300 then
-      ai.accel()
-   elseif dir < 10 and dist < 300 then
-      ai.shoot()
-   end
 end
 
 -- flies to the player

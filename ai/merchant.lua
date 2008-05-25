@@ -1,3 +1,5 @@
+include("ai/include/basic.lua")
+
 -- Required control rate
 control_rate = 2
 
@@ -58,27 +60,6 @@ function create ()
       cargo = "Medicine"
    end
    ai.setcargo( cargo, rnd.int(0, ai.cargofree() ) )
-end
-
--- runs away
-function runaway ()
-   target = ai.targetid()
-
-   if not ai.exists(target) then
-      ai.pushtask()
-      ai.pushtask(0,"hyperspace")
-      return
-   end
-
-   dir = ai.face( target, 1 )
-   ai.accel()
-   if ai.hasturrets() then
-      dist = ai.dist( ai.pos(target) )
-      if dist < 300 then
-         ai.settarget(target)
-         ai.shoot()
-      end
-   end
 end
 
 -- flies to the target

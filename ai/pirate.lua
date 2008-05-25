@@ -1,3 +1,5 @@
+include("ai/include/basic.lua")
+
 -- Required control rate
 control_rate = 2
 
@@ -79,46 +81,6 @@ function taunt ( target )
       if msg then ai.comm(target, msg) end
 end
 
-
--- runs away from the target
-function runaway ()
-   target = ai.targetid()
-
-   -- make sure target exists
-   if not ai.exists(target) then
-      ai.poptask()
-      return
-   end
-
-   dir = ai.face( target, 1 )
-   ai.accel()
-end
-
--- attacks the target
-function attack ()
-   target = ai.targetid()
-
-   -- make sure the pilot target exists
-   if not ai.exists(target) then
-      ai.poptask()
-      return
-   end
-
-   dir = ai.face( target )
-   dist = ai.dist( ai.pos(target) )
-
-   -- must know when to run away
-   if ai.parmour() < 70 then
-      ai.pushtask(0, "runaway", target)
-
-   -- should try to hurt the target
-   elseif dir < 10 and dist > 300 then
-      ai.accel()
-   elseif dir < 10 and dist < 300 then
-      ai.shoot()
-   end
-
-end
 
 -- flies to the player, pointless until hyperspace is implemented
 function fly ()
