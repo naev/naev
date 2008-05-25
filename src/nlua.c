@@ -16,7 +16,13 @@
 #include "land.h"
 #include "nluadef.h"
 #include "map.h"
+#include "pack.h"
 
+
+/*
+ * prototypes
+ */
+static int nlua_packfileLoader( lua_State* L );
 
 
 /*
@@ -90,14 +96,82 @@ lua_State *nlua_newState (void)
 
 
 /*
- * loads a specially modified version of base
+ * opens a lua library
  */
-int nlua_loadBase( lua_State* L )
+int nlua_load( lua_State* L, lua_CFunction f )
 {
-   luaopen_base(L); /* open base */
+   lua_pushcfunction(L, f);
+   lua_pcall(L, 0, 0, 0);
 
-   /* replace package.loaders with a custom one */
+   return 0;
+}
 
+
+/*
+ * loads specially modified basic stuff
+ */
+int nlua_loadBasic( lua_State* L )
+{
+   int i;
+   char *override[] = { /* unsafe functions */
+         "collectgarbage",
+         "dofile",
+         "getfenv",
+         "getmetatable",
+         "load",
+         "loadfile",
+         "loadstring",
+         "rawequal",
+         "rawget",
+         "rawset",
+         "setfenv",
+         "setmetatable",
+         "END"
+   };
+
+
+   nlua_load(L,luaopen_base); /* open base */
+
+   /* replace non-safe functions */
+   for (i=0; strcmp(override[i],"END")!=0; i++) {
+      lua_pushnil(L);
+      lua_setglobal(L, override[i]);
+   }
+
+   /* add our own */
+   lua_register(L, "include", nlua_packfileLoader);
+
+   return 0;
+}
+static int nlua_packfileLoader( lua_State* L )
+{
+   char *buf, *filename;
+   uint32_t bufsize;
+
+   NLUA_MIN_ARGS(1);
+
+   if (!lua_isstring(L,-1)) {
+      NLUA_INVALID_PARAMETER();
+      return 0;
+   }
+
+   filename = (char*) lua_tostring(L,-1);
+
+   /* try to locate the data */
+   buf = pack_readfile( DATA, filename, &bufsize );
+   if (buf == NULL) {
+      lua_pushfstring(L, "%s not found in packfile %s", filename, DATA);
+      return 1;
+   }
+   
+   /* run the buffer */
+   if (luaL_dobuffer(L, buf, bufsize, filename) != 0) {
+      /* will push the current error from the dobuffer */
+      return 1;
+   }
+
+   /* cleanup, success */
+   free(buf);
    return 0;
 }
 

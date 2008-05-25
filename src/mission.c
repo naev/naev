@@ -141,8 +141,8 @@ static int mission_init( Mission* mission, MissionData* misn, int load )
       ERR("Unable to create a new lua state.");
       return -1;
    }
-   nlua_loadBase( mission->L ); /* pairs and such */
-   luaopen_string( mission->L ); /* string.format can be very useful */
+   nlua_loadBasic( mission->L ); /* pairs and such */
+   nlua_load( mission->L, luaopen_string ); /* string.format can be very useful */
    misn_loadLibs( mission->L ); /* load our custom libraries */
 
    /* load the file */
