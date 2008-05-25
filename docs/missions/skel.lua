@@ -4,7 +4,7 @@ if lang == "es" then
 else -- default english
 end
 
-		
+      
 --[[ Create the mission - OBLIGATORY
 -- Computer - do not accept, set the strings for reward/desc/title which
 --    are what will appear at the planet mission computer
