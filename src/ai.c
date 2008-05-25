@@ -324,8 +324,8 @@ static int ai_loadProfile( char* filename )
 
    L = profiles[nprofiles-1].L;
 
-   /* opens the standard lua libraries */
-   /* luaL_openlibs(L); */
+   /* open basic lua stuff */
+   nlua_loadBasic(L);
 
    /* constants */
    lua_regnumber(L, "player", PLAYER_ID); /* player ID */
@@ -437,7 +437,8 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker )
    L = cur_pilot->ai->L;
    lua_getglobal(L, "attacked");
    lua_pushnumber(L, attacker);
-   lua_pcall(L, 1, 0, 0);
+   if (lua_pcall(L, 1, 0, 0))
+      WARN("Pilot '%s' ai -> 'attacked': %s", cur_pilot->name, lua_tostring(L,-1));
 }
 
 
