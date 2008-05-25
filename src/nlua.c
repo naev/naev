@@ -101,7 +101,8 @@ lua_State *nlua_newState (void)
 int nlua_load( lua_State* L, lua_CFunction f )
 {
    lua_pushcfunction(L, f);
-   lua_pcall(L, 0, 0, 0);
+   if (lua_pcall(L, 0, 0, 0))
+      WARN("nlua include error: %s",lua_tostring(L,-1));
 
    return 0;
 }
