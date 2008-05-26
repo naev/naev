@@ -33,7 +33,7 @@ extern SDL_mutex* sound_lock; /* from sound.c */
  * the stack
  */
 static Outfit* outfit_stack = NULL;
-static int outfits = 0;
+static int outfit_nstack = 0;
 
 
 /*
@@ -59,7 +59,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
 Outfit* outfit_get( const char* name )
 {
    int i;
-   for (i=0; i<outfits; i++)
+   for (i=0; i<outfit_nstack; i++)
       if (strcmp(name,outfit_stack[i].name)==0)
          return &outfit_stack[i];
    return NULL;
@@ -67,28 +67,74 @@ Outfit* outfit_get( const char* name )
 
 
 /*
- * returns all the outfits
+ * returns all the outfit_nstack
  */
 char** outfit_getTech( int *n, const int *tech, const int techmax )
 {
-   int i, j;
-   char **outfitnames = malloc(sizeof(Outfit*) * outfits);
+   int i,j,k, num, price;
+   Outfit **outfits;
+   char **outfitnames;
+   OutfitType type;
+   
+   outfits = malloc(sizeof(Outfit*) * outfit_nstack);
 
-   *n = 0;
-   for (i=0; i < outfits; i++)
-      if (outfit_stack[i].tech <= tech[0]) {
-         outfitnames[*n] = strdup(outfit_stack[i].name);
-         (*n)++;
+   /* get the available techs */
+   num = 0;
+   for (i=0; i < outfit_nstack; i++)
+      if (outfit_stack[i].tech <= tech[0]) { /* check vs base tech */
+         outfits[num] = &outfit_stack[i];
+         num++;
       }
       else {
-         for(j=0; j<techmax; j++)
+         for(j=0; j<techmax; j++) /* check vs special techs */
             if (tech[j] ==outfit_stack[i].tech) {
-               outfitnames[*n] = strdup(outfit_stack[i].name);
-               (*n)++;
+               outfits[num] = &outfit_stack[i];
+               num++;
             }
       }
 
-   /* actual size is bigger, but it'll just get freed :) */
+   /* now sort by type and price */
+   *n = 0;
+   price = -1;
+   type = OUTFIT_TYPE_NULL+1; /* first type */
+   outfitnames = malloc(sizeof(char*) * num);
+
+   /* sort by type */
+   while (type < OUTFIT_TYPE_SENTINEL) {
+
+      /* check for cheapest */
+      for (j=0; j<num; j++) {
+
+         /* must be of the current type */
+         if (outfits[j]->type != type) continue;
+
+         /* is cheapest? */
+         if ((price == -1) || (outfits[price]->price > outfits[j]->price)) {
+
+            /* check if already in stack */
+            for (k=0; k<(*n); k++)
+               if (strcmp(outfitnames[k],outfits[j]->name)==0)
+                  break;
+
+            /* not in stack and therefore is cheapest */
+            if (k == (*n))
+               price = j;
+         }
+      }
+
+      if (price == -1)
+         type++; 
+      else {
+         /* add current cheapest to stack */
+         outfitnames[*n] = strdup(outfits[price]->name);
+         (*n)++;
+         price = -1;
+      }
+   }
+   
+   /* cleanup */
+   free(outfits);
+
    return outfitnames;
 }
 
@@ -630,7 +676,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 
 
 /*
- * loads all the outfits into the outfit_stack
+ * loads all the outfit_nstack into the outfit_stack
  */
 int outfit_load (void)
 {
@@ -658,8 +704,8 @@ int outfit_load (void)
       if (xml_isNode(node,XML_OUTFIT_TAG)) {
 
          temp = outfit_parse(node);               
-         outfit_stack = realloc(outfit_stack, sizeof(Outfit)*(++outfits));
-         memcpy(outfit_stack+outfits-1, temp, sizeof(Outfit));
+         outfit_stack = realloc(outfit_stack, sizeof(Outfit)*(++outfit_nstack));
+         memcpy(outfit_stack+outfit_nstack-1, temp, sizeof(Outfit));
          free(temp);
       }
    } while (xml_nextNode(node));
@@ -668,7 +714,7 @@ int outfit_load (void)
    free(buf);
    xmlCleanupParser();
 
-   DEBUG("Loaded %d Outfit%s", outfits, (outfits==1) ? "" : "s" );
+   DEBUG("Loaded %d Outfit%s", outfit_nstack, (outfit_nstack==1) ? "" : "s" );
 
    return 0;
 }
@@ -680,7 +726,7 @@ int outfit_load (void)
 void outfit_free (void)
 {
    int i;
-   for (i=0; i < outfits; i++) {
+   for (i=0; i < outfit_nstack; i++) {
       /* free graphics */
       if (outfit_gfx(&outfit_stack[i]))
          gl_freeTexture(outfit_gfx(&outfit_stack[i]));

@@ -41,7 +41,8 @@ typedef enum OutfitType_ {
    OUTFIT_TYPE_TURRET_BEAM,
    OUTFIT_TYPE_MODIFCATION,
    OUTFIT_TYPE_AFTERBURNER,
-   OUTFIT_TYPE_MAP
+   OUTFIT_TYPE_MAP,
+   OUTFIT_TYPE_SENTINEL /* indicates last type */
 } OutfitType;
 
 typedef enum DamageType_ {
