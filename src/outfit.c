@@ -292,6 +292,8 @@ const char* outfit_typename[] = {
       "NULL",
       "Bolt Cannon",
       "Beam Cannon",
+      "Bolt Turret",
+      "Beam Turret",
       "Dumb Missile",
       "Dumb Missile Ammunition",
       "Seeker Missile",
@@ -302,8 +304,6 @@ const char* outfit_typename[] = {
       "Swarm Missile Ammunition Pack",
       "Smart Swarm Missile",
       "Smart Swarm Missile Ammunition Pack",
-      "Bolt Turret",
-      "Beam Turret",
       "Ship Modification",
       "Afterburner",
       "Map"
@@ -365,6 +365,8 @@ static OutfitType outfit_strToOutfitType( char *buf )
 {
    O_CMP("bolt",OUTFIT_TYPE_BOLT);
    O_CMP("beam",OUTFIT_TYPE_BEAM);
+   O_CMP("turret bolt",OUTFIT_TYPE_TURRET_BOLT);
+   O_CMP("turret beam",OUTFIT_TYPE_TURRET_BEAM);
    O_CMP("missile dumb",OUTFIT_TYPE_MISSILE_DUMB);
    O_CMP("missile dumb ammo",OUTFIT_TYPE_MISSILE_DUMB_AMMO);
    O_CMP("missile seek",OUTFIT_TYPE_MISSILE_SEEK);
@@ -375,8 +377,6 @@ static OutfitType outfit_strToOutfitType( char *buf )
    O_CMP("missile swarm ammo",OUTFIT_TYPE_MISSILE_SWARM_AMMO);
    O_CMP("missile swarm smart",OUTFIT_TYPE_MISSILE_SWARM_SMART);
    O_CMP("missile swarm smart ammo",OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO);
-   O_CMP("turret bolt",OUTFIT_TYPE_TURRET_BOLT);
-   O_CMP("turret beam",OUTFIT_TYPE_TURRET_BEAM);
    O_CMP("modification",OUTFIT_TYPE_MODIFCATION);
    O_CMP("afterburner",OUTFIT_TYPE_AFTERBURNER);
    O_CMP("map",OUTFIT_TYPE_MAP);
