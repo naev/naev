@@ -33,7 +33,7 @@
  * pilot stuff
  */
 extern Pilot** pilot_stack;
-extern int pilots;
+extern int pilot_nstack;
 /*
  * player stuff
  */
@@ -64,12 +64,12 @@ typedef struct Weapon_ {
 } Weapon;
 
 
-/* behind pilots layer */
-static Weapon** wbackLayer = NULL; /* behind pilots */
+/* behind pilot_nstack layer */
+static Weapon** wbackLayer = NULL; /* behind pilot_nstack */
 static int nwbackLayer = 0; /* number of elements */
 static int mwbacklayer = 0; /* alloced memory size */
 /* behind player layer */
-static Weapon** wfrontLayer = NULL; /* infront of pilots, behind player */
+static Weapon** wfrontLayer = NULL; /* infront of pilot_nstack, behind player */
 static int nwfrontLayer = 0; /* number of elements */
 static int mwfrontLayer = 0; /* alloced memory size */
 
@@ -168,7 +168,7 @@ static void think_seeker( Weapon* w, const double dt )
 
    if (w->target == w->parent) return; /* no self shooting */
 
-   Pilot* p = pilot_get(w->target); /* no null pilots */
+   Pilot* p = pilot_get(w->target); /* no null pilot_nstack */
    if (p==NULL) {
       limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );
       return;
@@ -200,7 +200,7 @@ static void think_smart( Weapon* w, const double dt )
 
    if (w->target == w->parent) return; /* no self shooting */
 
-   Pilot* p = pilot_get(w->target); /* no null pilots */
+   Pilot* p = pilot_get(w->target); /* no null pilot_nstack */
    if (p==NULL) {
       limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );
       return;
@@ -347,7 +347,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
    gl_getSpriteFromDir( &wsx, &wsy, gfx, w->solid->dir );
 
-   for (i=0; i<pilots; i++) {
+   for (i=0; i<pilot_nstack; i++) {
       psx = pilot_stack[i]->tsx;
       psy = pilot_stack[i]->tsy;
 

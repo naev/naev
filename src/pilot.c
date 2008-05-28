@@ -39,10 +39,10 @@ static unsigned int pilot_id = PLAYER_ID;
 static unsigned int mission_cargo_id = 0;
 
 
-/* stack of pilots */
+/* stack of pilot_nstack */
 Pilot** pilot_stack = NULL; /* not static, used in player.c, weapon.c, pause.c and ai.c */
-int pilots = 0; /* same */
-static int mpilots = 0;
+int pilot_nstack = 0; /* same */
+static int pilot_mstack = 0;
 
 /*
  * stuff from player.c
@@ -90,15 +90,15 @@ unsigned int pilot_getNext( const unsigned int id )
    /* binary search */
    int l,m,h;
    l = 0;
-   h = pilots-1;
+   h = pilot_nstack-1;
    while (l <= h) {
-      m = (l+h)/2;
+      m = l+(h-l)/2; /* for impossible overflow returning neg value */
       if (pilot_stack[m]->id > id) h = m-1;
       else if (pilot_stack[m]->id < id) l = m+1;
       else break;
    }
 
-   if (m == (pilots-1)) return PLAYER_ID;
+   if (m == (pilot_nstack-1)) return PLAYER_ID;
    else return pilot_stack[m+1]->id;
 }
 
@@ -111,7 +111,7 @@ unsigned int pilot_getNearest( const Pilot* p )
    unsigned int tp;
    int i;
    double d, td;
-   for (tp=0,d=0.,i=0; i<pilots; i++)
+   for (tp=0,d=0.,i=0; i<pilot_nstack; i++)
       if (areEnemies(p->faction, pilot_stack[i]->faction)) {
          td = vect_dist(&pilot_stack[i]->solid->pos, &p->solid->pos);
          if (!pilot_isDisabled(pilot_stack[i]) && ((!tp) || (td < d))) {
@@ -131,7 +131,7 @@ unsigned pilot_getHostile (void)
    unsigned int tp;
    int i;                                                                 
    double d, td;
-   for (tp=PLAYER_ID,d=0.,i=0; i<pilots; i++)
+   for (tp=PLAYER_ID,d=0.,i=0; i<pilot_nstack; i++)
       if (pilot_isFlag(pilot_stack[i],PILOT_HOSTILE)) {
          td = vect_dist(&pilot_stack[i]->solid->pos, &player->solid->pos);
          if (!pilot_isDisabled(pilot_stack[i]) && ((tp==PLAYER_ID) || (td < d))) {
@@ -153,7 +153,7 @@ Pilot* pilot_get( const unsigned int id )
    /* binary */
    int l,m,h;
    l = 0;
-   h = pilots-1;
+   h = pilot_nstack-1;
    while (l <= h) {
       m = (l+h)/2;
       if (pilot_stack[m]->id > id) h = m-1;
@@ -1126,24 +1126,24 @@ unsigned int pilot_create( Ship* ship, char* name, int faction, AI_Profile* ai,
    if (flags & PILOT_PLAYER) { /* player */
       if (!pilot_stack) {
          pilot_stack = MALLOC_ONE(Pilot*);
-         pilots = 1;
-         mpilots = 1;
+         pilot_nstack = 1;
+         pilot_mstack = 1;
       }
       pilot_stack[0] = dyn;
    }
    else { /* add to the stack */
 
-      pilots++; /* there's a new pilot */
+      pilot_nstack++; /* there's a new pilot */
 
-      if (pilots >= mpilots) { /* needs to grow */
-         mpilots += PILOT_CHUNK;
+      if (pilot_nstack >= pilot_mstack) { /* needs to grow */
+         pilot_mstack += PILOT_CHUNK;
          tp = pilot_stack;
-         pilot_stack = realloc( pilot_stack, mpilots*sizeof(Pilot*) );
+         pilot_stack = realloc( pilot_stack, pilot_mstack*sizeof(Pilot*) );
          if ((pilot_stack != tp) && player) /* take into account possible mem move */
             player = pilot_stack[0];
       }
 
-      pilot_stack[pilots-1] = dyn;
+      pilot_stack[pilot_nstack-1] = dyn;
    }
 
    return dyn->id;
@@ -1222,12 +1222,12 @@ void pilot_destroy(Pilot* p)
 {
    int i;
 
-   for (i=0; i < pilots; i++)
+   for (i=0; i < pilot_nstack; i++)
       if (pilot_stack[i]==p)
          break;
-   pilots--;
+   pilot_nstack--;
 
-   while (i < pilots) {
+   while (i < pilot_nstack) {
       pilot_stack[i] = pilot_stack[i+1];
       i++;
    }
@@ -1237,29 +1237,29 @@ void pilot_destroy(Pilot* p)
 
 
 /*
- * frees the pilots
+ * frees the pilot_nstack
  */
 void pilots_free (void)
 {
    int i;
    if (player) pilot_free(player);
-   for (i=1; i < pilots; i++)
+   for (i=1; i < pilot_nstack; i++)
       pilot_free(pilot_stack[i]);
    free(pilot_stack);
    pilot_stack = NULL;
-   pilots = 0;
+   pilot_nstack = 0;
 }
 
 
 /*
- * cleans up the pilots - leaves the player
+ * cleans up the pilot_nstack - leaves the player
  */
 void pilots_clean (void)
 {
    int i;
-   for (i=1; i < pilots; i++)
+   for (i=1; i < pilot_nstack; i++)
       pilot_free(pilot_stack[i]);
-   pilots = 1;
+   pilot_nstack = 1;
 }
 
 
@@ -1273,17 +1273,17 @@ void pilots_cleanAll (void)
       pilot_free(player);
       player = NULL;
    }
-   pilots = 0;
+   pilot_nstack = 0;
 }
 
 
 /*
- * updates all the pilots
+ * updates all the pilot_nstack
  */
 void pilots_update( double dt )
 {
    int i;
-   for ( i=0; i < pilots; i++ ) {
+   for ( i=0; i < pilot_nstack; i++ ) {
       if (pilot_stack[i]->think && /* think */
             !pilot_isDisabled(pilot_stack[i])) {
 
@@ -1305,12 +1305,12 @@ void pilots_update( double dt )
 
 
 /*
- * renders all the pilots
+ * renders all the pilot_nstack
  */
 void pilots_render (void)
 {
    int i;
-   for (i=1; i<pilots; i++) /* skip player */
+   for (i=1; i<pilot_nstack; i++) /* skip player */
       if (pilot_stack[i]->render) /* render */
          pilot_stack[i]->render(pilot_stack[i]);
 }

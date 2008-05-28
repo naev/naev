@@ -94,7 +94,7 @@ static int nprofiles = 0;
  * extern pilot hacks
  */
 extern Pilot** pilot_stack;
-extern int pilots;
+extern int pilot_nstack;
 
 
 /*
@@ -574,7 +574,7 @@ static int ai_gettargetid( lua_State *L )
  */
 static int ai_getrndpilot( lua_State *L )
 {
-   lua_pushnumber(L, pilot_stack[ RNG(0, pilots-1) ]->id );
+   lua_pushnumber(L, pilot_stack[ RNG(0, pilot_nstack-1) ]->id );
    return 1;
 }
 
@@ -1143,7 +1143,7 @@ static int ai_broadcast( lua_State *L )
 
 
 /*
- * sets the pilots credits
+ * sets the pilot_nstack credits
  */
 static int ai_credits( lua_State *L )
 {
@@ -1158,7 +1158,7 @@ static int ai_credits( lua_State *L )
 
 
 /*
- * sets the pilots cargo
+ * sets the pilot_nstack cargo
  */
 static int ai_cargo( lua_State *L )
 {

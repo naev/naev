@@ -22,7 +22,7 @@ int paused = 0; /* is paused? */
 
 /* from pilot.c */
 extern Pilot** pilot_stack;
-extern int pilots;
+extern int pilot_nstack;
 /* from space.c */
 extern unsigned int spawn_timer;
 /* from main.c */
@@ -31,9 +31,9 @@ extern unsigned int time;
 /*
  * prototypes
  */
-static void pilots_pause (void);
-static void pilots_unpause (void);
-static void pilots_delay( unsigned int delay );
+static void pilot_nstack_pause (void);
+static void pilot_nstack_unpause (void);
+static void pilot_nstack_delay( unsigned int delay );
 
 
 /*
@@ -43,7 +43,7 @@ void pause_game (void)
 {
    if (paused) return; /* already paused */
 
-   pilots_pause();
+   pilot_nstack_pause();
    weapons_pause();
    spfx_pause();
    spawn_timer -= SDL_GetTicks();
@@ -59,7 +59,7 @@ void unpause_game (void)
 {
    if (!paused) return; /* already unpaused */
 
-   pilots_unpause();
+   pilot_nstack_unpause();
    weapons_unpause();
    spfx_unpause();
    spawn_timer += SDL_GetTicks();
@@ -73,7 +73,7 @@ void unpause_game (void)
  */
 void pause_delay( unsigned int delay )
 {
-   pilots_delay(delay);
+   pilot_nstack_delay(delay);
    weapons_delay(delay);
    spfx_delay(delay);
    spawn_timer += delay;
@@ -81,13 +81,13 @@ void pause_delay( unsigned int delay )
 
 
 /*
- * pilots pausing/unpausing
+ * pilot_nstack pausing/unpausing
  */
-static void pilots_pause (void)
+static void pilot_nstack_pause (void)
 {
    int i, j;
    unsigned int t = SDL_GetTicks();
-   for (i=0; i<pilots; i++) {
+   for (i=0; i<pilot_nstack; i++) {
 
       pilot_stack[i]->ptimer -= t;
 
@@ -96,11 +96,11 @@ static void pilots_pause (void)
          pilot_stack[i]->timer[j] -= t;
    }
 }
-static void pilots_unpause (void)
+static void pilot_nstack_unpause (void)
 {
    int i, j;
    unsigned int t = SDL_GetTicks();
-   for (i=0; i<pilots; i++) {
+   for (i=0; i<pilot_nstack; i++) {
    
        pilot_stack[i]->ptimer += t;
 
@@ -109,10 +109,10 @@ static void pilots_unpause (void)
          pilot_stack[i]->timer[j] += t;
    }
 }
-static void pilots_delay( unsigned int delay )
+static void pilot_nstack_delay( unsigned int delay )
 {
    int i, j;
-   for (i=0; i<pilots; i++) {
+   for (i=0; i<pilot_nstack; i++) {
 
       pilot_stack[i]->ptimer += delay;
 

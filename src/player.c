@@ -95,7 +95,7 @@ static int missions_ndone = 0;
  * pilot stuff for GUI
  */
 extern Pilot** pilot_stack;
-extern int pilots;
+extern int pilot_nstack;
 
 /*
  * space stuff for GUI
@@ -761,8 +761,8 @@ void player_render (void)
    glEnd(); /* GL_POINTS */
 
 
-   /* render the pilots */
-   for (j=0, i=1; i<pilots; i++) { /* skip the player */
+   /* render the pilot_nstack */
+   for (j=0, i=1; i<pilot_nstack; i++) { /* skip the player */
       if (pilot_stack[i]->id == player_target) j = i;
       else gui_renderPilot(pilot_stack[i]);
    }
