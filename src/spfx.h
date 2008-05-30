@@ -57,13 +57,4 @@ int spfx_load (void);
 void spfx_free (void);
 
 
-/*
- * pause/unpause routines
- */
-void spfx_pause (void);
-void spfx_unpause (void);
-void spfx_delay( unsigned int delay );
-
-
-
 #endif /* SPFX_H */

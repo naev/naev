@@ -38,7 +38,7 @@ static int shake_off = 1;
 typedef struct SPFX_Base_ {
    char* name;
 
-   int anim; /* total duration in ms */
+   double anim; /* total duration in ms */
    glTexture *gfx; /* will use each sprite as a frame */
 } SPFX_Base;
 
@@ -51,7 +51,7 @@ typedef struct SPFX_ {
 
    int lastframe; /* needed when paused */
    int effect; /* the real effect */
-   unsigned int t; /* start */
+   double timer; /* time left */
 } SPFX;
 
 
@@ -71,9 +71,6 @@ static int spfx_base_load( char* name, int anim, char* gfx, int sx, int sy );
 static void spfx_base_free( SPFX_Base *effect );
 static void spfx_destroy( SPFX *layer, int *nlayer, int spfx );
 static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt );
-static void spfx_pause_layer( SPFX *layer, int nlayer );
-static void spfx_unpause_layer( SPFX *layer, int nlayer );
-static void spfx_delay_layer( SPFX *layer, int nlayer, unsigned int delay );
 
 
 /*
@@ -88,7 +85,7 @@ static int spfx_base_load( char* name, int anim, char* gfx, int sx, int sy )
    cur = &spfx_effects[spfx_neffects-1];
 
    cur->name = strdup(name);
-   cur->anim = anim;
+   cur->anim = (double)anim / 1000.;
    sprintf(buf, SPFX_GFX"%s", gfx);
    cur->gfx = gl_newSprite( buf, sx, sy );
 
@@ -181,7 +178,7 @@ void spfx_add( int effect,
    cur_spfx->effect = effect;
    vect_csetmin( &cur_spfx->pos, px, py );
    vect_csetmin( &cur_spfx->vel, vx, vy );
-   cur_spfx->t = SDL_GetTicks();
+   cur_spfx->timer = (double)spfx_effects[effect].anim;
 }
 
 
@@ -225,11 +222,12 @@ void spfx_update( const double dt )
 static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt )
 {
    int i;
-   unsigned int t = SDL_GetTicks();
 
    for (i=0; i<*nlayer; i++) {
+      layer[i].timer -= dt; /* less time to live */
+
       /* time to die! */
-      if (t > (layer[i].t + spfx_effects[ layer[i].effect ].anim)) {
+      if (layer[i].timer < 0.) {
          spfx_destroy( layer, nlayer, i );
          i--;
          continue;
@@ -336,7 +334,6 @@ void spfx_render( const int layer )
    int i, spfx_nstack;
    SPFX_Base *effect;
    int sx, sy;
-   unsigned int t = SDL_GetTicks();
 
    
    /* get the appropriate layer */
@@ -360,7 +357,7 @@ void spfx_render( const int layer )
 
       if (!paused) /* don't calculate frame if paused */
          spfx_stack[i].lastframe = sx * sy
-               * MIN(((double)(t - spfx_stack[i].t)/(double)effect->anim), 1.);
+               * MIN(((double)(spfx_stack[i].timer)/(double)effect->anim), 1.);
       
       gl_blitSprite( effect->gfx, 
             VX(spfx_stack[i].pos), VY(spfx_stack[i].pos),
@@ -370,42 +367,3 @@ void spfx_render( const int layer )
    }
 }
 
-
-/*
- * pause/unpause
- */
-void spfx_pause (void)
-{
-   spfx_pause_layer( spfx_stack_front, spfx_nstack_front );
-   spfx_pause_layer( spfx_stack_back, spfx_nstack_back );
-}
-static void spfx_pause_layer( SPFX *layer, int nlayer )
-{
-   int i;
-   unsigned int t = SDL_GetTicks();
-   for (i=0; i<nlayer; i++)
-      layer[i].t -= t;
-}
-void spfx_unpause (void)
-{
-   spfx_unpause_layer( spfx_stack_front, spfx_nstack_front );
-   spfx_unpause_layer( spfx_stack_back, spfx_nstack_back );
-}
-static void spfx_unpause_layer( SPFX *layer, int nlayer )
-{
-   int i;
-   unsigned int t = SDL_GetTicks();
-   for (i=0; i<nlayer; i++)
-      layer[i].t += t;
-}
-void spfx_delay( unsigned int delay )
-{
-   spfx_delay_layer( spfx_stack_front, spfx_nstack_front, delay );
-   spfx_delay_layer( spfx_stack_back, spfx_nstack_back, delay );
-}
-static void spfx_delay_layer( SPFX *layer, int nlayer, unsigned int delay )
-{
-   int i;
-   for (i=0; i<nlayer; i++)
-      layer[i].t += delay;
-}
