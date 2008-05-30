@@ -101,7 +101,9 @@ typedef struct Outfit_ {
          char *ammo; /* the ammo to use */
       } lau;
       struct { /* ammo */
-         unsigned int duration; /* duration */
+         double duration; /* duration */
+         double lockon; /* time it takes to lock on the target */
+
          double speed; /* maximum speed */
          double turn; /* turn velocity */
          double thrust; /* acceleration */
@@ -112,8 +114,6 @@ typedef struct Outfit_ {
          glTexture* gfx_space; /* graphic */
          ALuint sound; /* sound to play */
          int spfx; /* special effect on hit */
-
-         unsigned int lockon; /* time it takes to lock on the target */
       } amm;
       struct { /* modification */
          /* movement */

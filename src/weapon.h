@@ -19,13 +19,6 @@ void weapon_add( const Outfit* outfit,
 
 
 /*
- * pausing
- */
-void weapons_pause (void);
-void weapons_unpause (void);
-void weapons_delay( unsigned int delay );
-
-/*
  * update
  */
 void weapons_update( const double dt );

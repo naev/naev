@@ -51,16 +51,14 @@ typedef struct Weapon_ {
    unsigned int target; /* target to hit, only used by seeking things */
    const Outfit* outfit; /* related outfit that fired it or whatnot */
 
-   unsigned int timer; /* mainly used to see when the weapon was fired */
+   double lockon; /* some weapons have a lockon delay */
+   double timer; /* mainly used to see when the weapon was fired */
 
    alVoice* voice; /* virtual voice */
 
    /* position update and render */
    void (*update)(struct Weapon_*, const double, WeaponLayer);
    void (*think)(struct Weapon_*, const double); /* for the smart missiles */
-
-   double pid_last;
-   double pid_int;
 } Weapon;
 
 
@@ -125,41 +123,6 @@ void weapon_minimap( const double res, const double w,
 
 
 /*
- * pauses the weapon system
- */
-void weapons_pause (void)
-{
-   int i;
-   unsigned int t = SDL_GetTicks();
-
-   /* adjust layer's time */
-   for (i=0; i<nwbackLayer; i++)
-      wbackLayer[i]->timer -= t;
-   for (i=0; i<nwfrontLayer; i++)
-      wfrontLayer[i]->timer -= t;
-}
-void weapons_unpause (void)
-{
-   int i;                            
-   unsigned int t = SDL_GetTicks();
-
-   /* adjust layer's time */
-   for (i=0; i<nwbackLayer; i++) 
-      wbackLayer[i]->timer += t;
-   for (i=0; i<nwfrontLayer; i++) 
-      wfrontLayer[i]->timer += t;
-}
-void weapons_delay( unsigned int delay )
-{
-   int i;
-   for (i=0; i<nwbackLayer; i++)
-      wbackLayer[i]->timer += delay;
-   for (i=0; i<nwfrontLayer; i++)
-      wfrontLayer[i]->timer += delay;
-}
-
-
-/*
  * seeker brain, you get what you pay for :)
  */
 static void think_seeker( Weapon* w, const double dt )
@@ -175,7 +138,7 @@ static void think_seeker( Weapon* w, const double dt )
    }
 
    /* ammo isn't locked on yet */
-   if (SDL_GetTicks() > (w->timer + w->outfit->u.amm.lockon)) {
+   if (SDL_GetTicks() > (w->outfit->u.amm.lockon)) {
    
       diff = angle_diff(w->solid->dir,
             vect_angle(&w->solid->pos, &p->solid->pos));
@@ -207,7 +170,7 @@ static void think_smart( Weapon* w, const double dt )
    }
 
    /* ammo isn't locked on yet */
-   if (SDL_GetTicks() > (w->timer + w->outfit->u.amm.lockon)) {
+   if (w->lockon < 0.) {
 
       vect_cset( &tv, VX(p->solid->pos) + dt*VX(p->solid->vel),
             VY(p->solid->pos) + dt*VY(p->solid->vel));
@@ -268,15 +231,15 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          case OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO:
          case OUTFIT_TYPE_MISSILE_SWARM_AMMO:
          case OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO:
-            if (SDL_GetTicks() > (wlayer[i]->timer + wlayer[i]->outfit->u.amm.duration)) {
-               weapon_destroy(wlayer[i],layer);
-               continue;
-            }
-            break;
+            if (wlayer[i]->lockon > 0.) /* decrement lockon */
+               wlayer[i]->lockon -= dt;
+            /* purpose fallthrough */
 
-         case OUTFIT_TYPE_BOLT: /* check to see if exceeded distance */
+         /* bolts too */
+         case OUTFIT_TYPE_BOLT:
          case OUTFIT_TYPE_TURRET_BOLT:
-            if (SDL_GetTicks() > wlayer[i]->timer) {
+            wlayer[i]->timer -= dt;
+            if (wlayer[i]->timer < 0.) {
                weapon_destroy(wlayer[i],layer);
                continue;
             }
@@ -353,6 +316,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
       if (w->parent == pilot_stack[i]->id) continue; /* pilot is self */
 
+      /* smart weapons only collide with their target */
       if ( (weapon_isSmart(w)) && (pilot_stack[i]->id == w->target) &&
             CollideSprite( gfx, wsx, wsy, &w->solid->pos,
                   pilot_stack[i]->ship->gfx_space, psx, psy, &pilot_stack[i]->solid->pos)) {
@@ -360,6 +324,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
          weapon_hit( w, pilot_stack[i], layer );
          return;
       }
+      /* dump weapons hit anything not of the same faction */
       else if ( !weapon_isSmart(w) &&
             !areAllies(pilot_get(w->parent)->faction,pilot_stack[i]->faction) &&
             CollideSprite( gfx, wsx, wsy, &w->solid->pos,
@@ -370,6 +335,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       }
    }
 
+   /* smart weapons also get to think their next move */
    if (weapon_isSmart(w)) (*w->think)(w,dt);
    
    (*w->solid->update)(w->solid, dt);
@@ -428,7 +394,6 @@ static Weapon* weapon_create( const Outfit* outfit,
    w->target = target; /* non-changeable */
    w->outfit = outfit; /* non-changeable */
    w->update = weapon_update;
-   w->timer = SDL_GetTicks();
    w->think = NULL;
 
    switch (outfit->type) {
@@ -438,7 +403,7 @@ static Weapon* weapon_create( const Outfit* outfit,
          if ((rdir > 2.*M_PI) || (rdir < 0.)) rdir = fmod(rdir, 2.*M_PI);
          vectcpy( &v, vel );
          vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
-         w->timer += 1000*(unsigned int)outfit->u.blt.range/outfit->u.blt.speed;
+         w->timer = outfit->u.blt.range/outfit->u.blt.speed;
          w->solid = solid_create( mass, rdir, pos, &v );
          w->voice = sound_addVoice( VOICE_PRIORITY_BOLT,
                w->solid->pos.x, w->solid->pos.y,
@@ -447,6 +412,8 @@ static Weapon* weapon_create( const Outfit* outfit,
 
       case OUTFIT_TYPE_MISSILE_SEEK_AMMO:
          mass = w->outfit->mass;
+         w->lockon = outfit->u.amm.lockon;
+         w->timer = outfit->u.amm.duration;
          w->solid = solid_create( mass, dir, pos, vel );
          w->think = think_seeker; /* eet's a seeker */
          w->voice = sound_addVoice( VOICE_PRIORITY_AMMO,
@@ -456,6 +423,8 @@ static Weapon* weapon_create( const Outfit* outfit,
 
       case OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO:
          mass = w->outfit->mass;
+         w->lockon = outfit->u.amm.lockon;
+         w->timer = outfit->u.amm.duration;
          w->solid = solid_create( mass, dir, pos, vel );
          w->think = think_smart; /* smartass */
          w->voice = sound_addVoice( VOICE_PRIORITY_AMMO,
@@ -471,7 +440,7 @@ static Weapon* weapon_create( const Outfit* outfit,
          if ((rdir > 2.*M_PI) || (rdir < 0.)) rdir = fmod(rdir, 2.*M_PI);
          vectcpy( &v, vel );
          vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
-         w->timer += 1000*(unsigned int)outfit->u.blt.range/outfit->u.blt.speed;
+         w->timer += outfit->u.blt.range/outfit->u.blt.speed;
          w->solid = solid_create( mass, rdir, pos, &v );
          w->voice = sound_addVoice( VOICE_PRIORITY_BOLT,
                w->solid->pos.x, w->solid->pos.y,

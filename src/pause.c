@@ -44,7 +44,6 @@ void pause_game (void)
    if (paused) return; /* already paused */
 
    pilot_nstack_pause();
-   weapons_pause();
    spfx_pause();
    spawn_timer -= SDL_GetTicks();
 
@@ -60,7 +59,6 @@ void unpause_game (void)
    if (!paused) return; /* already unpaused */
 
    pilot_nstack_unpause();
-   weapons_unpause();
    spfx_unpause();
    spawn_timer += SDL_GetTicks();
 
@@ -74,7 +72,6 @@ void unpause_game (void)
 void pause_delay( unsigned int delay )
 {
    pilot_nstack_delay(delay);
-   weapons_delay(delay);
    spfx_delay(delay);
    spawn_timer += delay;
 }

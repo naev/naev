@@ -489,9 +489,9 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"speed",temp->u.amm.speed);
       xmlr_float(node,"energy",temp->u.amm.energy);
       if (xml_isNode(node,"duration"))
-         temp->u.amm.duration = (unsigned int)1000.*xml_getFloat(node);
+         temp->u.amm.duration = xml_getFloat(node);
       else if (xml_isNode(node,"lockon"))
-         temp->u.amm.lockon = (unsigned int)1000.*xml_getFloat(node);
+         temp->u.amm.lockon = xml_getFloat(node);
       else if (xml_isNode(node,"gfx")) {
          snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+10,
                OUTFIT_GFX"space/%s.png", xml_get(node));
