@@ -6,7 +6,6 @@
    *) Better AI
       *) improved combat efficiency
       *) smarter missiles -> PID if possible
-   *) Override lua include to look into data packfile
 
 
    MAJOR
