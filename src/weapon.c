@@ -47,6 +47,7 @@ extern void ai_attacked( Pilot* attacked, const unsigned int attacker );
 typedef struct Weapon_ {
    Solid* solid; /* actually has its own solid :) */
 
+   unsigned int faction; /* faction of pilot that shot it */
    unsigned int parent; /* pilot that shot it */
    unsigned int target; /* target to hit, only used by seeking things */
    const Outfit* outfit; /* related outfit that fired it or whatnot */
@@ -307,7 +308,6 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    glTexture *gfx;
 
    gfx = outfit_gfx(w->outfit);
-
    gl_getSpriteFromDir( &wsx, &wsy, gfx, w->solid->dir );
 
    for (i=0; i<pilot_nstack; i++) {
@@ -329,8 +329,8 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
          return;
       }
       /* dump weapons hit anything not of the same faction */
-      else if ( !weapon_isSmart(w) &&
-            !areAllies(pilot_get(w->parent)->faction,pilot_stack[i]->faction) &&
+      if ( !weapon_isSmart(w) &&
+            !areAllies(w->faction,pilot_stack[i]->faction) &&
             CollideSprite( gfx, wsx, wsy, &w->solid->pos,
                   pilot_stack[i]->ship->gfx_space, psx, psy, &pilot_stack[i]->solid->pos)) {
 
@@ -394,6 +394,7 @@ static Weapon* weapon_create( const Outfit* outfit,
    double mass = 1; /* presume lasers have a mass of 1 */
    double rdir = dir; /* real direction (accuracy) */
    Weapon* w = MALLOC_ONE(Weapon);
+   w->faction = pilot_get(parent)->faction; /* non-changeable */
    w->parent = parent; /* non-changeable */
    w->target = target; /* non-changeable */
    w->outfit = outfit; /* non-changeable */
