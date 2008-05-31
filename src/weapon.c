@@ -19,7 +19,7 @@
 #include "spfx.h"
 
 
-#define weapon_isSmart(w)     (w->think)
+#define weapon_isSmart(w)     (w->think != NULL)
 
 #define VOICE_PRIORITY_BOLT   10 /* default */
 #define VOICE_PRIORITY_AMMO   8  /* higher */
@@ -311,6 +311,10 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    gl_getSpriteFromDir( &wsx, &wsy, gfx, w->solid->dir );
 
    for (i=0; i<pilot_nstack; i++) {
+
+      /* check for player to exists */
+      if ((i==0) && (player==NULL)) continue;
+
       psx = pilot_stack[i]->tsx;
       psy = pilot_stack[i]->tsy;
 
