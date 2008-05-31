@@ -2091,7 +2091,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       if (is_player == 0) xmlr_str(node,"location",loc);
 
       /* get fuel */
-      xmlr_float(node,"fuel",ship->fuel);
+      xmlr_float(node,"fuel",fuel);
 
       if (xml_isNode(node,"outfits")) {
          cur = node->xmlChildrenNode;
@@ -2124,6 +2124,10 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
+
+   /* set fuel */
+   if (fuel != 0)
+      ship->fuel = MIN(ship->fuel_max, fuel);
 
    /* add it to the stack if it's not what the player is in */
    if (is_player == 0) {
