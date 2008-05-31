@@ -421,7 +421,11 @@ void player_swapShip( char* shipname )
 
          /* now swap the players */
          player_stack[i] = player;
-         pilot_stack[0] = player = ship;
+         for (j=0; j<pilot_nstack; j++) /* find pilot in stack to swap */
+            if (pilot_stack[j] == player) {
+               pilot_stack[j] = player = ship;
+               break;
+            }
 
          gl_bindCamera( &player->solid->pos ); /* don't forget the camera */
          return;

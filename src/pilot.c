@@ -1123,28 +1123,16 @@ unsigned int pilot_create( Ship* ship, char* name, int faction, AI_Profile* ai,
    }
    pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags );
 
-   if (flags & PILOT_PLAYER) { /* player */
-      if (!pilot_stack) {
-         pilot_stack = MALLOC_ONE(Pilot*);
-         pilot_nstack = 1;
-         pilot_mstack = 1;
-      }
-      pilot_stack[0] = dyn;
+   /* see if memory needs to grow */
+   if (pilot_nstack+1 > pilot_mstack) { /* needs to grow */
+      pilot_mstack += PILOT_CHUNK;
+      tp = pilot_stack;
+      pilot_stack = realloc( pilot_stack, pilot_mstack*sizeof(Pilot*) );
    }
-   else { /* add to the stack */
 
-      pilot_nstack++; /* there's a new pilot */
-
-      if (pilot_nstack >= pilot_mstack) { /* needs to grow */
-         pilot_mstack += PILOT_CHUNK;
-         tp = pilot_stack;
-         pilot_stack = realloc( pilot_stack, pilot_mstack*sizeof(Pilot*) );
-         if ((pilot_stack != tp) && player) /* take into account possible mem move */
-            player = pilot_stack[0];
-      }
-
-      pilot_stack[pilot_nstack-1] = dyn;
-   }
+   /* set the pilot in the stack */
+   pilot_stack[pilot_nstack] = dyn;
+   pilot_nstack++; /* there's a new pilot */
 
    return dyn->id;
 }
@@ -1242,11 +1230,11 @@ void pilot_destroy(Pilot* p)
 void pilots_free (void)
 {
    int i;
-   if (player) pilot_free(player);
-   for (i=1; i < pilot_nstack; i++)
+   for (i=0; i < pilot_nstack; i++)
       pilot_free(pilot_stack[i]);
    free(pilot_stack);
    pilot_stack = NULL;
+   player = NULL;
    pilot_nstack = 0;
 }
 
@@ -1257,9 +1245,15 @@ void pilots_free (void)
 void pilots_clean (void)
 {
    int i;
-   for (i=1; i < pilot_nstack; i++)
-      pilot_free(pilot_stack[i]);
-   pilot_nstack = 1;
+   for (i=0; i < pilot_nstack; i++)
+      /* we'll set player at priveleged position */
+      if ((player != NULL) && (pilot_stack[i] == player))
+         pilot_stack[0] = player;
+      else /* rest get killed */
+         pilot_free(pilot_stack[i]);
+
+   if (player != NULL) /* set stack to 1 if pilot exists */
+      pilot_nstack = 1;
 }
 
 
@@ -1310,9 +1304,11 @@ void pilots_update( double dt )
 void pilots_render (void)
 {
    int i;
-   for (i=1; i<pilot_nstack; i++) /* skip player */
+   for (i=0; i<pilot_nstack; i++) {
+      if (player == pilot_stack[i]) continue; /* skip player */
       if (pilot_stack[i]->render != NULL) /* render */
          pilot_stack[i]->render(pilot_stack[i]);
+   }
 }
 
 
