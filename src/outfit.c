@@ -282,6 +282,13 @@ double outfit_energy( const Outfit* o )
    else if (outfit_isTurret(o)) return o->u.blt.energy;
    return -1.;
 }
+double outfit_range( const Outfit* o )
+{
+   if (outfit_isWeapon(o)) return o->u.blt.range;
+   else if (outfit_isAmmo(o)) return 0.8*o->u.amm.speed*o->u.amm.duration;
+   else if (outfit_isTurret(o)) return o->u.blt.range;
+   return -1.;
+}
 
 
 

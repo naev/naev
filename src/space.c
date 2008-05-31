@@ -38,6 +38,8 @@
 #define PLANET_GFX_EXTERIOR_W 400
 #define PLANET_GFX_EXTERIOR_H 400
 
+#define CHUNK_SIZE            32
+
 /* used to overcome warnings due to 0 values */
 #define FLAG_XSET             (1<<0)
 #define FLAG_YSET             (1<<1)
@@ -261,7 +263,7 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
    int mtmp;
 
    ntmp = 0;
-   mtmp = 25;
+   mtmp = CHUNK_SIZE;
    tmp = malloc(sizeof(char*) * mtmp);
 
    for (i=0; i<systems_nstack; i++)
@@ -274,7 +276,7 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
                      faction_ofAlliance(planet->faction,factions[k]))) {
                ntmp++;
                if (ntmp > mtmp) { /* need more space */
-                  mtmp += 25;
+                  mtmp += CHUNK_SIZE;
                   tmp = realloc(tmp, sizeof(char*) * mtmp);
                }
                tmp[ntmp-1] = planet->name;
@@ -299,14 +301,14 @@ char* space_getRndPlanet (void)
    char *res;
 
    ntmp = 0;
-   mtmp = 25;
+   mtmp = CHUNK_SIZE;
    tmp = malloc(sizeof(char*) * mtmp);
 
    for (i=0; i<systems_nstack; i++)
       for (j=0; j<systems_stack[i].nplanets; j++) {
          ntmp++;
          if (ntmp > mtmp) { /* need more space */
-            mtmp += 25;
+            mtmp += CHUNK_SIZE;
             tmp = realloc(tmp, sizeof(char*) * mtmp);
          }
          tmp[ntmp-1] = systems_stack[i].planets[j].name;

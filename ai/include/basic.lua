@@ -18,18 +18,22 @@ function attack ()
 		return
 	end
 
-	dir = ai.face( target )
-	dist = ai.dist( ai.pos(target) )
-	second = ai.secondary()
+   -- Get stats about enemy
+	dir = ai.face( target ) -- face target
+	dist = ai.dist( ai.pos(target) ) -- get distance
+	second = ai.secondary() -- get best secondary weapon
 
-	if ai.secondary() == "Launcher" then
+   -- Shoot missiles if in range
+	if ai.secondary() == "Launcher" and dist < ai.getweaprange(1) then
 		ai.settarget(target)
 		ai.shoot(2)
 	end
 
-	if dir < 10 and dist > 300 then
+   -- Attack if in range
+   range = ai.getweaprange()
+	if dir < 10 and dist > range then
 		ai.accel()
-	elseif (dir < 10 or ai.hasturrets()) and dist < 300 then
+	elseif (dir < 10 or ai.hasturrets()) and dist < range then
 		ai.shoot()
 	end
 end

@@ -159,6 +159,7 @@ static int ai_hasturrets( lua_State *L ); /* bool hasturrets() */
 static int ai_shoot( lua_State *L ); /* shoot( number ); number = 1,2,3 */
 static int ai_getenemy( lua_State *L ); /* number getenemy() */
 static int ai_hostile( lua_State *L ); /* hostile( number ) */
+static int ai_getweaprange( lua_State *L ); /* number getweaprange() */
 
 /* timers */
 static int ai_settimer( lua_State *L ); /* settimer( number, number ) */
@@ -215,6 +216,7 @@ static const luaL_reg ai_methods[] = {
    { "shoot", ai_shoot },
    { "getenemy", ai_getenemy },
    { "hostile", ai_hostile },
+   { "getweaprange", ai_getweaprange },
    /* timers */
    { "settimer", ai_settimer },
    { "timeup", ai_timeup },
@@ -1082,6 +1084,51 @@ static int ai_hostile( lua_State *L )
       pilot_setFlag(cur_pilot, PILOT_HOSTILE);
 
    return 0;
+}
+
+
+/*
+ * returns the maximum range of weapons, if parameter is 1, then does secondary
+ */
+static int ai_getweaprange( lua_State *L )
+{
+   int i;
+   double range, max;
+   Outfit *o;
+
+   /* if 1 is passed as a parameter, secondary weapon is checked */
+   if (lua_isnumber(L,1) && ((int)lua_tonumber(L,1) == 1))
+      if (cur_pilot->secondary != NULL) {
+         /* get range, launchers use ammo's range */
+         if (outfit_isLauncher(cur_pilot->secondary->outfit) && (cur_pilot->ammo != NULL))
+            range = outfit_range(cur_pilot->ammo->outfit);
+         else
+            range = outfit_range(cur_pilot->secondary->outfit);
+
+         if (range < 0.) return 0; /* secondary doesn't have range */
+
+         /* secondary does have range */
+         lua_pushnumber(L, range);
+         return 1;
+      }
+
+   max = -1.;
+   for (i=0; i<cur_pilot->noutfits; i++) {
+      o = cur_pilot->outfits[i].outfit;
+
+      /* not interested in secondary weapons nor ammunition */
+      if (outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY) || outfit_isAmmo(o))
+         continue;
+
+      /* compare vs current outfit's range */
+      range = outfit_range(o);
+      if (range > max)
+         max = range;
+   }
+   if (max < 0.) return 0; /* no ranged weapons */
+
+   lua_pushnumber(L,max);
+   return 1;
 }
 
 

@@ -174,6 +174,7 @@ double outfit_damage( const Outfit* o );
 DamageType outfit_damageType( const Outfit* o );
 int outfit_delay( const Outfit* o );
 double outfit_energy( const Outfit* o );
+double outfit_range( const Outfit* o );
 
 /*
  * loading/freeing outfit stack
