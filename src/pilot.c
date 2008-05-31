@@ -1311,7 +1311,7 @@ void pilots_render (void)
 {
    int i;
    for (i=1; i<pilot_nstack; i++) /* skip player */
-      if (pilot_stack[i]->render) /* render */
+      if (pilot_stack[i]->render != NULL) /* render */
          pilot_stack[i]->render(pilot_stack[i]);
 }
 
