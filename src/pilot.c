@@ -155,7 +155,7 @@ Pilot* pilot_get( const unsigned int id )
    l = 0;
    h = pilot_nstack-1;
    while (l <= h) {
-      m = (l+h)/2;
+      m = (l+h)>>1;
       if (pilot_stack[m]->id > id) h = m-1;
       else if (pilot_stack[m]->id < id) l = m+1;
       else return pilot_stack[m];
