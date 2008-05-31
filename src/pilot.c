@@ -1222,17 +1222,17 @@ void pilot_destroy(Pilot* p)
 {
    int i;
 
+   /* find the pilot */
    for (i=0; i < pilot_nstack; i++)
       if (pilot_stack[i]==p)
          break;
+
+   /* pilot is eliminated */
+   pilot_free(p);
    pilot_nstack--;
 
-   while (i < pilot_nstack) {
-      pilot_stack[i] = pilot_stack[i+1];
-      i++;
-   }
-
-   pilot_free(p);
+   /* copy other pilots down */
+   memmove(&pilot_stack[i], &pilot_stack[i+1], (pilot_nstack-i)*sizeof(Pilot*));
 }
 
 
