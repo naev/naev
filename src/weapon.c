@@ -444,7 +444,7 @@ static Weapon* weapon_create( const Outfit* outfit,
          if ((rdir > 2.*M_PI) || (rdir < 0.)) rdir = fmod(rdir, 2.*M_PI);
          vectcpy( &v, vel );
          vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
-         w->timer += outfit->u.blt.range/outfit->u.blt.speed;
+         w->timer = outfit->u.blt.range/outfit->u.blt.speed;
          w->solid = solid_create( mass, rdir, pos, &v );
          w->voice = sound_addVoice( VOICE_PRIORITY_BOLT,
                w->solid->pos.x, w->solid->pos.y,
