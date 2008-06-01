@@ -328,12 +328,12 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
 void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       const DamageType dtype, const double damage )
 {
-   double damage_shield, damage_armour, dam_mod;
+   double damage_shield, damage_armour, knockback, dam_mod;
 
    /* calculate the damage */
-   outfit_calcDamage( &damage_shield, &damage_armour, dtype, damage );
+   outfit_calcDamage( &damage_shield, &damage_armour, &knockback, dtype, damage );
 
-   if (p->shield-damage_shield > 0.) {
+   if (p->shield-damage_shield > 0.) { /* shields take the whole blow */
       p->shield -= damage_shield;
       dam_mod = damage_shield/p->shield_max;
    }
@@ -368,8 +368,8 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    /* knock back effect is dependent on both damage and mass of the weapon 
     * should probably get turned into a partial conservative collision */
    vect_cadd( &p->solid->vel,
-         w->vel.x * (dam_mod/6. + w->mass/p->solid->mass/6.),
-         w->vel.y * (dam_mod/6. + w->mass/p->solid->mass/6.) );
+         knockback * (w->vel.x * (dam_mod/6. + w->mass/p->solid->mass/6.)),
+         knockback * (w->vel.y * (dam_mod/6. + w->mass/p->solid->mass/6.)) );
 }
 
 

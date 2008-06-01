@@ -145,7 +145,7 @@ typedef struct Outfit_ {
 /*
  * misc
  */
-void outfit_calcDamage( double *dshield, double *darmour,
+void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
       DamageType dtype, double dmg );
 
 

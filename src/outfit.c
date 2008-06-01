@@ -139,29 +139,37 @@ char** outfit_getTech( int *n, const int *tech, const int techmax )
 }
 
 
-void outfit_calcDamage( double *dshield, double *darmour,
+/*
+ * gives the real shield damage, armour damage and knockback modifier
+ */
+void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
       DamageType dtype, double dmg )
 {
    switch (dtype) {
       case DAMAGE_TYPE_ENERGY:
          (*dshield) = dmg*1.1;
          (*darmour) = dmg*0.7;
+         (*knockback) = 0.1;
          break;
       case DAMAGE_TYPE_KINETIC:
          (*dshield) = dmg*0.8;
          (*darmour) = dmg*1.2;
+         (*knockback) = 1.;
          break;
       case DAMAGE_TYPE_ION:
          (*dshield) = dmg;
          (*darmour) = dmg;
+         (*knockback) = 0.4;
          break;
       case DAMAGE_TYPE_RADIATION:
          (*dshield) = 0.15; /* still take damage, just not much */
          (*darmour) = dmg;
+         (*knockback) = 0.8;
          break;
 
       default:
-         (*dshield) = (*darmour) = 0.;
+         WARN("Unknown damage type: %d!", dtype);
+         (*dshield) = (*darmour) = (*knockback) = 0.;
          break;
    }
 }
