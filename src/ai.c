@@ -649,11 +649,26 @@ static int ai_pshield( lua_State *L )
 static int ai_getdistance( lua_State *L )
 {
    Vector2d *vect;
+   Pilot *pilot;
 
    NLUA_MIN_ARGS(1);
 
-   vect = (lua_islightuserdata(L,1)) ?
-         (Vector2d*)lua_topointer(L,1) : NULL;
+   /* vector as a parameter */
+   if (lua_islightuserdata(L,1))
+      vect = (Vector2d*)lua_topointer(L,1);
+   
+   /* pilot id as parameter */
+   else if (lua_isnumber(L,1)) {
+      pilot = pilot_get( (unsigned int) lua_tonumber(L,1) );
+      vect = &pilot->solid->pos;
+   }
+   
+   /* wrong parameter */
+   else {
+      NLUA_INVALID_PARAMETER();
+      return 0;
+   }
+
    lua_pushnumber(L, vect_dist(vect, &cur_pilot->solid->pos));
    return 1;
 }

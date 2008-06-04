@@ -802,14 +802,19 @@ static int pilot_addFleet( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
    Fleet *flt;
-   char *fltname;
+   char *fltname, *fltai;
    int i, j;
    unsigned int p;
    double a;
    Vector2d vv,vp, vn;
 
-   if (lua_isstring(L,-1)) fltname = (char*) lua_tostring(L,-1);
+   /* Parse first argument - Fleet Name */
+   if (lua_isstring(L,1)) fltname = (char*) lua_tostring(L,1);
    else NLUA_INVALID_PARAMETER();
+   
+   /* Parse second argument - Fleet AI Override */
+   if (lua_isstring(L,2)) fltai = (char*) lua_tostring(L,2);
+   else fltai = NULL;
 
    /* pull the fleet */
    flt = fleet_get( fltname );
@@ -839,7 +844,9 @@ static int pilot_addFleet( lua_State *L )
          p = pilot_create( flt->pilots[i].ship,
                flt->pilots[i].name,
                flt->faction,
-               flt->ai,
+               (fltai != NULL) ? /* AI Override */
+                     ai_getProfile(fltai) : 
+                     flt->ai,
                a,
                &vp,
                &vv,

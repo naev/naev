@@ -64,7 +64,7 @@ function enter()
       pilot.add("Empire Sml Defense")
       pilot.add("Collective Sml Swarm")
    elseif sys == misn_target then
-      p = pilot.add("Collective Drone")
+      p = pilot.add("Collective Drone", "scout")
       for k,v in pairs(p) do
          hook.pilotDeath( v, "kill")
       end
