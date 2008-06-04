@@ -54,7 +54,7 @@ function runaway ()
    ai.accel()
    if ai.hasturrets() then
       dist = ai.dist( ai.pos(target) )
-      if dist < 300 then
+      if dist < ai.getweaprange() then
          ai.settarget(target)
          ai.shoot()
       end
