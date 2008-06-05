@@ -77,6 +77,10 @@ void map_open (void)
    /* mark systems as needed */
    mission_sysMark();
 
+   /* Attempt to select current map if none is selected */
+   if (map_selected == -1)
+      map_selectCur();
+
    map_wid = window_create( "Star Map", -1, -1,
          WINDOW_WIDTH, WINDOW_HEIGHT );
 
@@ -337,14 +341,14 @@ static void map_mouse( SDL_Event* event, double mx, double my )
                   if (map_npath==0)
                      hyperspace_target = -1;
                   else 
-                  /* see if it is a valid hyperspace target */
-                  for (j=0; j<cur_system->njumps; j++) {
-                     if (map_path[0]==&systems_stack[cur_system->jumps[j]]) {
-                        planet_target = -1; /* override planet_target */
-                        hyperspace_target = j;
-                        break;
+                     /* see if it is a valid hyperspace target */
+                     for (j=0; j<cur_system->njumps; j++) {
+                        if (map_path[0]==&systems_stack[cur_system->jumps[j]]) {
+                           planet_target = -1; /* override planet_target */
+                           hyperspace_target = j;
+                           break;
+                        }
                      }
-                  }
                   map_update();
                   break;
                }

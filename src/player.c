@@ -1599,6 +1599,7 @@ void player_targetHyperspace (void)
    planet_target = -1; /* get rid of planet target */
    player_rmFlag(PLAYER_LANDACK); /* get rid of landing permission */
    hyperspace_target++;
+   map_clear(); /* clear the current map path */
 
    if (hyperspace_target >= cur_system->njumps)
       hyperspace_target = -1;
