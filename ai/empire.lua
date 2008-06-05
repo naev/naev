@@ -13,7 +13,7 @@ function control ()
       ai.pushtask(0, "attack", enemy)
 
    elseif task == "none" then
-      planet = ai.rndplanet()
+      planet = ai.landplanet()
       -- planet must exist
       if planet == nil then
          ai.pushtask(0, "hyperspace")

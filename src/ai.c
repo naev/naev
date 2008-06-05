@@ -149,6 +149,7 @@ static int ai_face( lua_State *L ); /* face(number/pointer) */
 static int ai_brake( lua_State *L ); /* brake() */
 static int ai_getnearestplanet( lua_State *L ); /* pointer getnearestplanet() */
 static int ai_getrndplanet( lua_State *L ); /* pointor getrndplanet() */
+static int ai_getlandplanet( lua_State *L ); /* pointor getlandplanet() */
 static int ai_hyperspace( lua_State *L ); /* [number] hyperspace() */
 static int ai_stop( lua_State *L ); /* stop() */
 
@@ -203,6 +204,7 @@ static const luaL_reg ai_methods[] = {
    { "cargofree", ai_cargofree },
    { "nearestplanet", ai_getnearestplanet },
    { "rndplanet", ai_getrndplanet },
+   { "landplanet", ai_getlandplanet },
    /* movement */
    { "accel", ai_accel },
    { "turn", ai_turn },
@@ -940,17 +942,38 @@ static int ai_getnearestplanet( lua_State *L )
    return 1;
 }
 
+
 /*
- * returns a random friendly planet's position to the pilot
+ * returns a random planet's position to the pilot
  */
 static int ai_getrndplanet( lua_State *L )
 {
+   Vector2d v;
+   int p;
+
    if (cur_system->nplanets == 0) return 0; /* no planets */
 
+   /* get a random planet */
+   p = RNG(0, cur_system->nplanets-1);
+
+   /* Copy the data into a vector */
+   vectcpy( &v, &cur_system->planets[p].pos );
+   lua_pushlightuserdata( L, &v );
+
+   return 1;
+}
+
+/*
+ * returns a random friendly planet's position to the pilot
+ */
+static int ai_getlandplanet( lua_State *L )
+{
    Planet** planets;
    int nplanets, i;
    Vector2d v;
    planets = malloc( sizeof(Planet*) * cur_system->nplanets );
+
+   if (cur_system->nplanets == 0) return 0; /* no planets */
 
    for (nplanets=0, i=0; i<cur_system->nplanets; i++)
       if (planet_hasService(&cur_system->planets[i],PLANET_SERVICE_BASIC) &&

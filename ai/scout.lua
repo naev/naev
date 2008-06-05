@@ -17,42 +17,45 @@ function control ()
       if enemy ~= 0 then
          -- make hostile to the enemy (mainly for player)
          
-         if ai.dist(enemy) < enemy_dist then
+         if ai.dist(enemy) < enemy_dist or ai.haslockon() then
             ai.pushtask(0, "runaway", enemy)
+            return
          end
+      end
 
-      -- No enemy
-      else
-         -- nothing to do so check if we are too far form the planet (if there is one)
-         planet = ai.rndplanet()
+      -- nothing to do so check if we are too far form the planet (if there is one)
+      planet = ai.rndplanet()
 
-         if planet ~= nil then
-            if ai.dist(planet) > planet_dist then
-               ai.pushtask(0, "approach", planet)
-            end
+      if planet ~= nil then
+         if ai.dist(planet) > planet_dist then
+            ai.pushtask(0, "approach", planet)
+            return
          end
       end
 
       -- Go idle if no task
       if task == "none" then
          ai.pushtask(0, "idle")
+         return
       end
 
    -- Check if we are near enough
    elseif task == "approach" then
       planet = ai.target()
       
-      if ai.dist( planet ) < planet_dist then
+      if ai.dist( planet ) < planet_dist + ai.minbrakedist() then
          ai.poptask()
          ai.pushtask(0, "idle")
+         return
       end
 
    -- Check if we need to run more
    elseif task == "runaway" then
       enemy = ai.targetid()
 
-      if ai.dist(enemy) > enemy_dist then
+      if ai.dist(enemy) > enemy_dist and ai.haslockon() == false then
          ai.poptask()
+         return
       end
    end
 end
