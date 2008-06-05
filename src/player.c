@@ -731,6 +731,11 @@ void player_render (void)
    /* render the player */
    pilot_render(player);
 
+   /* Lockon warning */
+   if (player->lockons > 0)
+      gl_printMid( NULL, SCREEN_W, 0., SCREEN_H-gl_defFont.h-25.,
+            &cRed, "LOCKON DETECTED");
+
    /*
     *    G U I
     */
