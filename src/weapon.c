@@ -442,6 +442,11 @@ static Weapon* weapon_create( const Outfit* outfit,
                w->solid->pos.x, w->solid->pos.y,
                w->solid->vel.x, w->solid->vel.y,  w->outfit->u.amm.sound, 0 );
 
+         /* if they are seeking a pilot, increment lockon counter */
+         pilot_target = pilot_get(target);
+         if (pilot_target != NULL)
+            pilot_target->lockons++;
+
          /* only diff is AI */
          if (outfit->type == OUTFIT_TYPE_MISSILE_SEEK_AMMO)
             w->think = think_seeker;
@@ -525,6 +530,15 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
    int i;
    Weapon** wlayer;
    int *nlayer;
+   Pilot *pilot_target;
+
+   /* Decrement target lockons if needed */
+   if (outfit_isSeeker(w->outfit)) {
+      pilot_target = pilot_get( w->target );
+      if (pilot_target != NULL)
+         pilot_target->lockons--;
+   }
+
    switch (layer) {
       case WEAPON_LAYER_BG:
          wlayer = wbackLayer;

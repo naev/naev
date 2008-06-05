@@ -130,6 +130,7 @@ typedef struct Pilot_ {
    /* misc */
    uint32_t flags; /* used for AI and others */
    unsigned int ptimer; /* generic timer for internal pilot use */
+   int lockons; /* Stores how many seeking weapons are targetting pilot */
 
    /* hook attached to the pilot */
    int hook_type;
