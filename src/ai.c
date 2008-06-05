@@ -140,6 +140,7 @@ static int ai_isstopped( lua_State *L ); /* boolean isstopped() */
 static int ai_isenemy( lua_State *L ); /* boolean isenemy( number ) */
 static int ai_isally( lua_State *L ); /* boolean isally( number ) */
 static int ai_incombat( lua_State *L ); /* boolean incombat( [number] ) */
+static int ai_haslockon( lua_State *L ); /* boolean haslockon() */
 
 /* movement */
 static int ai_accel( lua_State *L ); /* accel(number); number <= 1. */
@@ -187,6 +188,7 @@ static const luaL_reg ai_methods[] = {
    { "isenemy", ai_isenemy },
    { "isally", ai_isally },
    { "incombat", ai_incombat },
+   { "haslockon", ai_haslockon },
    /* get */
    { "target", ai_gettarget },
    { "targetid", ai_gettargetid },
@@ -796,6 +798,17 @@ static int ai_incombat( lua_State *L )
    lua_pushboolean(L, pilot_isFlag(p, PILOT_COMBAT));
    return 1;
 }
+
+
+/*
+ * pilot has is locked by some missile
+ */
+static int ai_haslockon( lua_State *L )
+{
+   lua_pushboolean(L, cur_pilot->lockons > 0);
+   return 1;
+}
+
 
 /*
  * starts accelerating the pilot based on a parameter
