@@ -391,9 +391,12 @@ static Weapon* weapon_create( const Outfit* outfit,
       const unsigned int parent, const unsigned int target )
 {
    Vector2d v;
-   double mass = 1; /* presume lasers have a mass of 1 */
-   double rdir = dir; /* real direction (accuracy) */
-   Weapon* w = MALLOC_ONE(Weapon);
+   double mass, rdir;
+   Pilot *pilot_target;
+   Weapon* w;
+  
+   /* Create basic features */
+   w = MALLOC_ONE(Weapon);
    w->faction = pilot_get(parent)->faction; /* non-changeable */
    w->parent = parent; /* non-changeable */
    w->target = target; /* non-changeable */
@@ -402,10 +405,22 @@ static Weapon* weapon_create( const Outfit* outfit,
    w->think = NULL;
 
    switch (outfit->type) {
-      case OUTFIT_TYPE_BOLT: /* needs "accuracy" and speed based on player */
-         rdir += RNG(-outfit->u.blt.accuracy/2.,
-               outfit->u.blt.accuracy/2.)/180.*M_PI;
+
+      /* Bolts treated together */
+      case OUTFIT_TYPE_BOLT:
+      case OUTFIT_TYPE_TURRET_BOLT:
+         /* Only difference is the direction of fire */
+         if ((outfit->type == OUTFIT_TYPE_TURRET_BOLT) && (w->parent!=w->target)) {
+            rdir = vect_angle(pos,&pilot_get(w->target)->solid->pos);
+            rdir += RNG(-outfit->u.blt.accuracy/2.,
+                  outfit->u.blt.accuracy/2.)/180.*M_PI;
+         }
+         else /* fire straight */
+            rdir = dir + RNG(-outfit->u.blt.accuracy/2.,
+                  outfit->u.blt.accuracy/2.)/180.*M_PI;
          if ((rdir > 2.*M_PI) || (rdir < 0.)) rdir = fmod(rdir, 2.*M_PI);
+
+         mass = 1; /* Lasers are presumed to have unitary mass */
          vectcpy( &v, vel );
          vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
          w->timer = outfit->u.blt.range/outfit->u.blt.speed;
@@ -415,45 +430,28 @@ static Weapon* weapon_create( const Outfit* outfit,
                w->solid->vel.x, w->solid->vel.y,  w->outfit->u.blt.sound, 0 );
          break;
 
-      case OUTFIT_TYPE_MISSILE_SEEK_AMMO:
-         mass = w->outfit->mass;
-         w->lockon = outfit->u.amm.lockon;
-         w->timer = outfit->u.amm.duration;
-         w->solid = solid_create( mass, dir, pos, vel );
-         w->think = think_seeker; /* eet's a seeker */
-         w->voice = sound_addVoice( VOICE_PRIORITY_AMMO,
-               w->solid->pos.x, w->solid->pos.y,
-               w->solid->vel.x, w->solid->vel.y,  w->outfit->u.amm.sound, 0 );
-         break;
 
+      /* Treat seekers together */
+      case OUTFIT_TYPE_MISSILE_SEEK_AMMO:
       case OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO:
          mass = w->outfit->mass;
          w->lockon = outfit->u.amm.lockon;
          w->timer = outfit->u.amm.duration;
          w->solid = solid_create( mass, dir, pos, vel );
-         w->think = think_smart; /* smartass */
          w->voice = sound_addVoice( VOICE_PRIORITY_AMMO,
                w->solid->pos.x, w->solid->pos.y,
                w->solid->vel.x, w->solid->vel.y,  w->outfit->u.amm.sound, 0 );
-         break;
 
-      case OUTFIT_TYPE_TURRET_BOLT:
-         if (w->parent!=w->target)
-            rdir = vect_angle(pos,&pilot_get(w->target)->solid->pos);
-         rdir += RNG(-outfit->u.blt.accuracy/2.,
-               outfit->u.blt.accuracy/2.)/180.*M_PI;
-         if ((rdir > 2.*M_PI) || (rdir < 0.)) rdir = fmod(rdir, 2.*M_PI);
-         vectcpy( &v, vel );
-         vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
-         w->timer = outfit->u.blt.range/outfit->u.blt.speed;
-         w->solid = solid_create( mass, rdir, pos, &v );
-         w->voice = sound_addVoice( VOICE_PRIORITY_BOLT,
-               w->solid->pos.x, w->solid->pos.y,
-               w->solid->vel.x, w->solid->vel.y,  w->outfit->u.blt.sound, 0 );
+         /* only diff is AI */
+         if (outfit->type == OUTFIT_TYPE_MISSILE_SEEK_AMMO)
+            w->think = think_seeker;
+         else if (outfit->type == OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO)
+            w->think = think_smart;
          break;
 
 
-      default: /* just dump it where the player is */
+      /* just dump it where the player is */
+      default:
          w->voice = NULL;
          w->solid = solid_create( mass, dir, pos, vel );
          break;
