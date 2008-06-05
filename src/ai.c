@@ -81,6 +81,7 @@
  */
 #define AI_PREFIX       "ai/"
 #define AI_SUFFIX       ".lua"
+#define AI_INCLUDE      "include/"
 
 
 /*
@@ -287,8 +288,10 @@ int ai_init (void)
 
    /* load the profiles */
    for (i=0; i<nfiles; i++)
-      if ((strncmp( files[i], AI_PREFIX, strlen(AI_PREFIX))==0) &&
-            (strncmp( files[i] + strlen(files[i]) - strlen(AI_SUFFIX),
+      if ((strncmp( files[i], AI_PREFIX, strlen(AI_PREFIX))==0) && /* prefixed */
+            (strncmp( files[i] + strlen(AI_PREFIX), AI_INCLUDE, /* not an include */
+               strlen(AI_INCLUDE))!=0) &&
+            (strncmp( files[i] + strlen(files[i]) - strlen(AI_SUFFIX), /* suffixed */
                AI_SUFFIX, strlen(AI_SUFFIX))==0))
          if (ai_loadProfile(files[i]))
             WARN("Error loading AI profile '%s'", files[i]);
