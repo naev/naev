@@ -35,6 +35,8 @@
 /* hooks */
 #define PILOT_HOOK_NONE    0 /* no hook */
 #define PILOT_HOOK_DEATH   1 /* pilot died */
+#define PILOT_HOOK_BOARD   2 /* pilot got boarded */
+#define PILOT_HOOK_DISABLE 3 /* pilot got disabled */
 
 
 /* flags */

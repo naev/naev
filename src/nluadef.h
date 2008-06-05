@@ -15,18 +15,23 @@
 /*
  * debug stuff
  */
+#ifdef DEBUG
 #define NLUA_DEBUG(str, args...) \
    (fprintf(stdout,"Lua: "str"\n", ## args))
 #define NLUA_INVALID_PARAMETER()    \
 { \
-   NLUA_DEBUG("[%s] Invalid parameter", __func__); \
+   NLUA_DEBUG("[%s] Invalid parameter (%s:%d)", __func__, __FILE__, __LINE__); \
    return 0; \
 }
 #define NLUA_MIN_ARGS(n)     \
    if (lua_gettop(L) < n) { \
-      NLUA_DEBUG("[%s] Too few arguments", __func__); \
+      NLUA_DEBUG("[%s] Too few arguments (%s:%d)", __func__, __FILE__, __LINE__); \
       return 0; \
    }
+#else /* DEBUG */
+#define NLUA_DEBUG(str, args...) do {;} while(0)
+#define NLUA_MIN_ARGS(n)         do {;} while(0)
+#endif /* DEBUG */
 
 
 /*

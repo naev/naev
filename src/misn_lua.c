@@ -137,13 +137,13 @@ static int hook_land( lua_State *L );
 static int hook_takeoff( lua_State *L );
 static int hook_time( lua_State *L );
 static int hook_enter( lua_State *L );
-static int hook_pilotDeath( lua_State *L );
+static int hook_pilot( lua_State *L );
 static const luaL_reg hook_methods[] = {
    { "land", hook_land },
    { "takeoff", hook_takeoff },
    { "time", hook_time },
    { "enter", hook_enter },
-   { "pilotDeath", hook_pilotDeath },
+   { "pilot", hook_pilot },
    {0,0}
 };
 /* pilots */
@@ -742,6 +742,10 @@ static unsigned int hook_generic( lua_State *L, char* stack )
 
    NLUA_MIN_ARGS(1);
 
+   /* Last parameter must be function to hook */
+   if (lua_isstring(L,-1)) func = (char*)lua_tostring(L,-1);
+   else NLUA_INVALID_PARAMETER();
+
    /* make sure mission is a player mission */
    for (i=0; i<MISSION_MAX; i++)
       if (player_missions[i].id == cur_mission->id)
@@ -751,12 +755,6 @@ static unsigned int hook_generic( lua_State *L, char* stack )
       return 0;
    }
 
-   if (lua_isstring(L,-1)) func = (char*)lua_tostring(L,-1);
-   else {
-      WARN("mission '%s': trying to push non-valid function hook",
-            cur_mission->data->name);
-      return 0;
-   }
    return hook_add( cur_mission->id, func, stack );
 }
 static int hook_land( lua_State *L )
@@ -779,16 +777,33 @@ static int hook_enter( lua_State *L )
    hook_generic( L, "enter" );
    return 0;
 }
-static int hook_pilotDeath( lua_State *L )
+static int hook_pilot( lua_State *L )
 {
    NLUA_MIN_ARGS(2);
    unsigned int h,p;
+   int type;
+   char *hook_type;
 
-   if (lua_isnumber(L,-2)) p = (unsigned int) lua_tonumber(L,-2);
+   /* First parameter parameter - pilot to hook */
+   if (lua_isnumber(L,1)) p = (unsigned int) lua_tonumber(L,1);
    else NLUA_INVALID_PARAMETER();
 
-   h = hook_generic( L, "death" ); /* we won't actually call the death stack directly */
-   pilot_addHook( pilot_get(p), PILOT_HOOK_DEATH, h );
+   /* Second parameter - hook name */
+   if (lua_isstring(L,2)) hook_type = (char*) lua_tostring(L,2);
+   else NLUA_INVALID_PARAMETER();
+
+   /* Check to see if hook_type is valid */
+   if (strcmp(hook_type,"death")==0) type = PILOT_HOOK_DEATH;
+   else if (strcmp(hook_type,"board")==0) type = PILOT_HOOK_BOARD;
+   else if (strcmp(hook_type,"disable")==0) type = PILOT_HOOK_DISABLE;
+   else { /* hook_type not valid */
+      NLUA_DEBUG("Invalid pilot hook type: '%s'", hook_type);
+      return 0;
+   }
+
+   /* actually add the hook */
+   h = hook_generic( L, hook_type );
+   pilot_addHook( pilot_get(p), type, h );
 
    return 0;
 }

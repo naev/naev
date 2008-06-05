@@ -220,7 +220,9 @@ void hook_cleanup (void)
 static int hook_needSave( Hook *h )
 {
    int i;
-   char *nosave[] = { "death", "end" };
+   char *nosave[] = {
+         "death", "board", "disable", /* pilot hooks */
+         "end" };
   
    for (i=0; strcmp(nosave[i],"end") != 0; i++)
       if (strcmp(nosave[i],h->stack)==0) return 0;

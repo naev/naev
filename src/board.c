@@ -13,6 +13,7 @@
 #include "space.h"
 #include "rng.h"
 #include "economy.h"
+#include "hook.h"
 
 
 #define BOARDING_WIDTH  300
@@ -99,6 +100,12 @@ void player_board (void)
          "Leave", board_exit );
 
    board_update();
+
+   /*
+    * run hook if needed
+    */
+   if (p->hook_type == PILOT_HOOK_BOARD)
+      hook_runID( p->hook );
 }
 static void board_exit( char* str )
 {

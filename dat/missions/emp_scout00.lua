@@ -66,7 +66,7 @@ function enter()
    elseif sys == misn_target then
       p = pilot.add("Collective Drone", "scout")
       for k,v in pairs(p) do
-         hook.pilotDeath( v, "kill")
+         hook.pilot( v, "death", "kill")
       end
    end
 

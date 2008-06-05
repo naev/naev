@@ -531,9 +531,18 @@ static void pilot_update( Pilot* pilot, const double dt )
          pilot_dead(pilot); /* start death stuff */
 
    /* purpose fallthrough to get the movement like disabled */
-   if ((pilot != player) && 
+   if ((pilot != player) &&
          (pilot->armour < PILOT_DISABLED_ARMOR*pilot->armour_max)) { /* disabled */
-      pilot_setFlag(pilot,PILOT_DISABLED); /* set as disabled */
+
+      /* First time pilot is disabled */
+      if (!pilot_isFlag(pilot,PILOT_DISABLED)) {
+         pilot_setFlag(pilot,PILOT_DISABLED); /* set as disabled */
+         /* run hook */
+         if (pilot->hook_type == PILOT_HOOK_DISABLE)
+            hook_runID( pilot->hook );
+      }
+
+      /* Do the slow brake thing */
       vect_pset( &pilot->solid->vel, /* slowly brake */
          VMOD(pilot->solid->vel) * (1. - dt*0.10),
          VANGLE(pilot->solid->vel) );
