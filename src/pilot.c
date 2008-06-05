@@ -1047,6 +1047,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* 
    pilot->ai = ai;
    pilot->tcontrol = 0;
    pilot->flags = 0;
+   pilot->lockons = 0;
 
    /* solid */
    pilot->solid = solid_create(ship->mass, dir, pos, vel);
