@@ -16,6 +16,7 @@
 #include "toolkit.h"
 #include "menu.h"
 #include "nfile.h"
+#include "hook.h"
 
 
 #define LOAD_WIDTH      400
@@ -235,6 +236,10 @@ static int load_game( char* file )
    pfaction_load(node);
    hook_load(node);
    space_sysLoad(node);
+
+   /* Need to run takeoff hooks since player just "took off" */
+   hooks_run("takeoff");
+   hooks_run("enter");
 
    xmlFreeDoc(doc);
    
