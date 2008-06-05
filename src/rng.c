@@ -146,9 +146,9 @@ unsigned int randint (void)
 
 
 /*
- * returns a random double
+ * returns a random double ( 0 <= randfp <= 1. )
  */
-static double m_div = (double)(0xFFFFFFFF) + 1.;
+static double m_div = (double)(0xFFFFFFFF);
 double randfp (void)
 {
    double m = (double)mt_getInt();

@@ -16,7 +16,7 @@
 #include "pilot.h"
 #include "space.h"
 #include "player.h"
-#include "plasmaf.h"
+#include "perlin.h"
 #include "mission.h"
 #include "ntime.h"
 #include "save.h"
@@ -83,7 +83,7 @@ void menu_main (void)
    unsigned int bwid, wid;
    glTexture *tex;
 
-   tex = pf_genFractal( SCREEN_W, SCREEN_H, 5. );
+   tex = noise_genCloud( SCREEN_W, SCREEN_H, 5. );
 
    /* create background image window */
    bwid = window_create( "BG", -1, -1, SCREEN_W, SCREEN_H );
