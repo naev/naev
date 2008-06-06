@@ -32,10 +32,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef __SSE__
-#include <xmmintrin.h>
-#endif /* __SSE__ */
-
 #include "naev.h"
 #include "log.h"
 #include "rng.h"
@@ -46,7 +42,6 @@
 
 
 #define TCOD_NOISE_MAX_OCTAVES            128   
-#define TCOD_NOISE_MAX_DIMENSIONS         4
 #define TCOD_NOISE_DEFAULT_HURST          0.5
 #define TCOD_NOISE_DEFAULT_LACUNARITY     2.
 
@@ -62,13 +57,12 @@ typedef void *TCOD_noise_t;
  * Used internally
  */
 typedef struct {
-	int ndim;
-	unsigned char map[256]; /* Randomized map of indexes into buffer */
-	float buffer[256][TCOD_NOISE_MAX_DIMENSIONS]; 	/* Random 256 x ndim buffer */
-	/* fractal stuff */
-	float H;
-	float lacunarity;
-	float exponent[TCOD_NOISE_MAX_OCTAVES];
+   unsigned char map[256]; /* Randomized map of indexes into buffer */
+   float buffer[256][3];   /* Random 256 x 3 buffer */
+   /* fractal stuff */
+   float H;
+   float lacunarity;
+   float exponent[TCOD_NOISE_MAX_OCTAVES];
 } perlin_data_t;
 
 
@@ -77,246 +71,151 @@ typedef struct {
  */
 static float* genNebulaeMap( const int w, const int h, const int n, float rug );
 SDL_Surface* surfaceFromNebulaeMap( float* map, const int w, const int h );
-static TCOD_noise_t TCOD_noise_new(int dimensions, float hurst, float lacunarity );
+static TCOD_noise_t TCOD_noise_new( float hurst, float lacunarity );
 /* basic perlin noise */
 static float TCOD_noise_get( TCOD_noise_t noise, float *f );
 /* fractional brownian motion */
-/* static float TCOD_noise_fbm( TCOD_noise_t noise, float *f, float octaves ); */
 /* turbulence */
 static float TCOD_noise_turbulence( TCOD_noise_t noise, float *f, float octaves );
 static void TCOD_noise_delete(TCOD_noise_t noise);
 
 
-static float lattice( perlin_data_t *pdata, int ix, float fx, int iy, float fy, int iz, float fz, int iw, float fw)
+static float lattice( perlin_data_t *pdata, int ix, float fx, int iy, float fy, int iz, float fz )
 {
-#ifdef __SSE__
-   (void)iw;
-   (void)fw;
    int nIndex;
-   __m128 a, b, c;
+   float value;
 
    nIndex = 0;
    nIndex = pdata->map[(nIndex + ix) & 0xFF];
    nIndex = pdata->map[(nIndex + iy) & 0xFF];
    nIndex = pdata->map[(nIndex + iz) & 0xFF];
 
-   float inp_sse1[4] __attribute__((aligned(16))) = {
-      pdata->buffer[nIndex][0],
-      pdata->buffer[nIndex][1],
-      pdata->buffer[nIndex][2], 0. };
-   float inp_sse2[4] __attribute__((aligned(16))) = {
-      fx, fy, fz, 0. };
-   float out_sse[4] __attribute__((aligned(16)));
+   value  = pdata->buffer[nIndex][0] * fx;
+   value += pdata->buffer[nIndex][1] * fy;
+   value += pdata->buffer[nIndex][2] * fz;
 
-   a = _mm_load_ps(inp_sse1);
-   b = _mm_load_ps(inp_sse2);
-   c = _mm_mul_ps(a, b);
-   _mm_store_ps(out_sse,c);
-
-   return out_sse[0] + out_sse[1] + out_sse[2];
-#else /* __SSE__ */
-	int n[4] = {ix, iy, iz, iw};
-	float f[4] = {fx, fy, fz, fw};
-	int nIndex = 0;
-	int i;
-	float value = 0;
-
-	for(i=0; i<pdata->ndim; i++)
-		nIndex = pdata->map[(nIndex + n[i]) & 0xFF];
-	for(i=0; i<pdata->ndim; i++)
-		value += pdata->buffer[nIndex][i] * f[i];
-	return value;
-#endif /* __SSE__ */
+   return value;
 }
 
 #define DEFAULT_SEED 0x15687436
-#define DELTA				1e-6f
-#define SWAP(a, b, t)		t = a; a = b; b = t
+#define DELTA           1e-6f
+#define SWAP(a, b, t)      t = a; a = b; b = t
 
 #define FLOOR(a) ((int)a - (a < 0 && a != (int)a))
-#define CUBIC(a)	( a * a * (3 - 2*a) )
+#define CUBIC(a)  ( a * a * (3 - 2*a) )
 
-static void normalize(perlin_data_t *pdata, float *f)
+static void normalize(float f[3])
 {
-	float magnitude = 0;
-	int i;
-	for(i=0; i<pdata->ndim; i++)
-		magnitude += f[i]*f[i];
-	magnitude = 1 / sqrtf(magnitude);
-	for(i=0; i<pdata->ndim; i++)
-		f[i] *= magnitude;
+   float magnitude;
+
+   magnitude = 1. / sqrtf(f[0]*f[0] + f[1]*f[1] + f[2]*f[2]);
+   f[0] *= magnitude;
+   f[1] *= magnitude;
+   f[2] *= magnitude;
 }
 
 
-static TCOD_noise_t TCOD_noise_new(int ndim, float hurst, float lacunarity )
+static TCOD_noise_t TCOD_noise_new( float hurst, float lacunarity )
 {
-	perlin_data_t *pdata=(perlin_data_t *)calloc(sizeof(perlin_data_t),1);
-	int i, j;
-	unsigned char tmp;
-	float f = 1;
-	pdata->ndim = ndim;
-	for(i=0; i<256; i++)
-	{
-		pdata->map[i] = (unsigned char)i;
-		for(j=0; j<pdata->ndim; j++)
-			pdata->buffer[i][j] = RNGF()-0.5;
-		normalize(pdata,pdata->buffer[i]);
-	}
+   perlin_data_t *pdata=(perlin_data_t *)calloc(sizeof(perlin_data_t),1);
+   int i, j;
+   unsigned char tmp;
+   float f = 1;
+   for(i=0; i<256; i++)
+   {
+      pdata->map[i] = (unsigned char)i;
+      pdata->buffer[i][0] = RNGF()-0.5;
+      pdata->buffer[i][1] = RNGF()-0.5;
+      pdata->buffer[i][2] = RNGF()-0.5;
+      normalize(pdata->buffer[i]);
+   }
 
-	while(--i)
-	{
-		j = RNG(0, 255);
-		SWAP(pdata->map[i], pdata->map[j], tmp);
-	}
+   while(--i)
+   {
+      j = RNG(0, 255);
+      SWAP(pdata->map[i], pdata->map[j], tmp);
+   }
 
-	pdata->H = hurst;
-	pdata->lacunarity = lacunarity;
-	for(i=0; i<TCOD_NOISE_MAX_OCTAVES; i++)
-	{
-		/*exponent[i] = powf(f, -H); */
-		pdata->exponent[i] = 1.0f / f;
-		f *= lacunarity;
-	}
-	return (TCOD_noise_t)pdata;
+   pdata->H = hurst;
+   pdata->lacunarity = lacunarity;
+   for(i=0; i<TCOD_NOISE_MAX_OCTAVES; i++)
+   {
+      /*exponent[i] = powf(f, -H); */
+      pdata->exponent[i] = 1. / f;
+      f *= lacunarity;
+   }
+   return (TCOD_noise_t)pdata;
 }
 
 static float TCOD_noise_get( TCOD_noise_t noise, float *f )
 {
-	perlin_data_t *pdata=(perlin_data_t *)noise;
-	int n[TCOD_NOISE_MAX_DIMENSIONS];			/* Indexes to pass to lattice function */
-	int i;
-	float r[TCOD_NOISE_MAX_DIMENSIONS];		/* Remainders to pass to lattice function */
-	float w[TCOD_NOISE_MAX_DIMENSIONS];		/* Cubic values to pass to interpolation function */
-	float value;
+   perlin_data_t *pdata=(perlin_data_t *)noise;
+   int n[3]; /* Indexes to pass to lattice function */
+   float r[3]; /* Remainders to pass to lattice function */
+   float w[3]; /* Cubic values to pass to interpolation function */
+   float value;
 
-	for(i=0; i<pdata->ndim; i++)
-	{
-		n[i] = FLOOR(f[i]);
-		r[i] = f[i] - n[i];
-		w[i] = CUBIC(r[i]);
-	}
+   n[0] = FLOOR(f[0]);
+   n[1] = FLOOR(f[1]);
+   n[2] = FLOOR(f[2]);
 
-	switch(pdata->ndim)
-	{
-		case 1:
-			value = LERP(lattice(pdata,n[0], r[0],0,0,0,0,0,0),
-						  lattice(pdata,n[0]+1, r[0]-1,0,0,0,0,0,0),
-						  w[0]);
-			break;
-		case 2:
-			value = LERP(LERP(lattice(pdata,n[0], r[0], n[1], r[1],0,0,0,0),
-							   lattice(pdata,n[0]+1, r[0]-1, n[1], r[1],0,0,0,0),
-							   w[0]),
-						  LERP(lattice(pdata,n[0], r[0], n[1]+1, r[1]-1,0,0,0,0),
-							   lattice(pdata,n[0]+1, r[0]-1, n[1]+1, r[1]-1,0,0,0,0),
-							   w[0]),
-						  w[1]);
-			break;
-		case 3:
-			value = LERP(LERP(LERP(lattice(pdata,n[0], r[0], n[1], r[1], n[2], r[2],0,0),
-									lattice(pdata,n[0]+1, r[0]-1, n[1], r[1], n[2], r[2],0,0),
-									w[0]),
-							   LERP(lattice(pdata,n[0], r[0], n[1]+1, r[1]-1, n[2], r[2],0,0),
-									lattice(pdata,n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2], r[2],0,0),
-									w[0]),
-							   w[1]),
-						  LERP(LERP(lattice(pdata,n[0], r[0], n[1], r[1], n[2]+1, r[2]-1,0,0),
-									lattice(pdata,n[0]+1, r[0]-1, n[1], r[1], n[2]+1, r[2]-1,0,0),
-									w[0]),
-							   LERP(lattice(pdata,n[0], r[0], n[1]+1, r[1]-1, n[2]+1, r[2]-1,0,0),
-									lattice(pdata,n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2]+1, r[2]-1,0,0),
-									w[0]),
-							   w[1]),
-						  w[2]);
-			break;
-		case 4:
-		default:
-			value = LERP(LERP(LERP(LERP(lattice(pdata,n[0], r[0], n[1], r[1], n[2], r[2], n[3], r[3]),
-										 lattice(pdata,n[0]+1, r[0]-1, n[1], r[1], n[2], r[2], n[3], r[3]),
-										 w[0]),
-									LERP(lattice(pdata,n[0], r[0], n[1]+1, r[1]-1, n[2], r[2], n[3], r[3]),
-										 lattice(pdata,n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2], r[2], n[3], r[3]),
-										 w[0]),
-									w[1]),
-									LERP(LERP(lattice(pdata,n[0], r[0], n[1], r[1], n[2]+1, r[2]-1, n[3], r[3]),
-										 lattice(pdata,n[0]+1, r[0]-1, n[1], r[1], n[2]+1, r[2]-1, n[3], r[3]),
-										 w[0]),
-									LERP(lattice(pdata,n[0], r[0], n[1]+1, r[1]-1, n[2]+1, r[2]-1,0,0),
-										 lattice(pdata,n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2]+1, r[2]-1, n[3], r[3]),
-										 w[0]),
-									w[1]),
-							   w[2]),
-						  LERP(LERP(LERP(lattice(pdata,n[0], r[0], n[1], r[1], n[2], r[2], n[3]+1, r[3]-1),
-										 lattice(pdata,n[0]+1, r[0]-1, n[1], r[1], n[2], r[2], n[3]+1, r[3]-1),
-										 w[0]),
-									LERP(lattice(pdata,n[0], r[0], n[1]+1, r[1]-1, n[2], r[2], n[3]+1, r[3]-1),
-										 lattice(pdata,n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2], r[2], n[3]+1, r[3]-1),
-										 w[0]),
-									w[1]),
-									LERP(LERP(lattice(pdata,n[0], r[0], n[1], r[1], n[2]+1, r[2]-1, n[3]+1, r[3]-1),
-										 lattice(pdata,n[0]+1, r[0]-1, n[1], r[1], n[2]+1, r[2]-1, n[3]+1, r[3]-1),
-										 w[0]),
-									LERP(lattice(pdata,n[0], r[0], n[1]+1, r[1]-1, n[2]+1, r[2]-1,0,0),
-										 lattice(pdata,n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2]+1, r[2]-1, n[3]+1, r[3]-1),
-										 w[0]),
-									w[1]),
-							   w[2]),
-						  w[3]);
-			break;
-	}
-	return CLAMP(-0.99999f, 0.99999f, value);
+   r[0] = f[0] - n[0];
+   r[1] = f[1] - n[1];
+   r[2] = f[2] - n[2];
+
+   w[0] = CUBIC(r[0]);
+   w[1] = CUBIC(r[1]);
+   w[2] = CUBIC(r[2]);
+
+   value = LERP(LERP(LERP(lattice(pdata,n[0], r[0], n[1], r[1], n[2], r[2]),
+               lattice(pdata,n[0]+1, r[0]-1, n[1], r[1], n[2], r[2]),
+               w[0]),
+            LERP(lattice(pdata,n[0], r[0], n[1]+1, r[1]-1, n[2], r[2]),
+               lattice(pdata,n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2], r[2]),
+               w[0]),
+            w[1]),
+         LERP(LERP(lattice(pdata,n[0], r[0], n[1], r[1], n[2]+1, r[2]-1),
+               lattice(pdata,n[0]+1, r[0]-1, n[1], r[1], n[2]+1, r[2]-1),
+               w[0]),
+            LERP(lattice(pdata,n[0], r[0], n[1]+1, r[1]-1, n[2]+1, r[2]-1),
+               lattice(pdata,n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2]+1, r[2]-1),
+               w[0]),
+            w[1]),
+         w[2]);
+
+   return CLAMP(-0.99999f, 0.99999f, value);
 }
-
-#if 0
-static float TCOD_noise_fbm( TCOD_noise_t noise,  float *f, float octaves )
-{
-	float tf[TCOD_NOISE_MAX_DIMENSIONS];
-	perlin_data_t *pdata=(perlin_data_t *)noise;
-	/* Initialize locals */
-	float value = 0;
-	int i,j;
-	memcpy(tf,f,sizeof(float)*pdata->ndim);
-
-	/* Inner loop of spectral construction, where the fractal is built */
-	for(i=0; i<(int)octaves; i++)
-	{
-		value += TCOD_noise_get(noise,tf) * pdata->exponent[i];
-		for (j=0; j < pdata->ndim; j++) tf[j] *= pdata->lacunarity;
-	}
-
-	/* Take care of remainder in octaves */
-	octaves -= (int)octaves;
-	if(octaves > DELTA)
-		value += octaves * TCOD_noise_get(noise,tf) * pdata->exponent[i];
-	return CLAMP(-0.99999f, 0.99999f, value);
-}
-#endif
 
 static float TCOD_noise_turbulence( TCOD_noise_t noise, float *f, float octaves )
 {
-	float tf[TCOD_NOISE_MAX_DIMENSIONS];
-	perlin_data_t *pdata=(perlin_data_t *)noise;
-	/* Initialize locals */
-	float value = 0;
-	int i,j;
-	memcpy(tf,f,sizeof(float)*pdata->ndim);
+   float tf[3];
+   perlin_data_t *pdata=(perlin_data_t *)noise;
+   /* Initialize locals */
+   float value = 0;
+   int i;
 
-	/* Inner loop of spectral construction, where the fractal is built */
-	for(i=0; i<(int)octaves; i++)
-	{
-		value += ABS(TCOD_noise_get(noise,tf)) * pdata->exponent[i];
-		for (j=0; j < pdata->ndim; j++) tf[j] *= pdata->lacunarity;
-	}
+   tf[0] = f[0];
+   tf[1] = f[1];
+   tf[2] = f[2];
 
-	/* Take care of remainder in octaves */
-	octaves -= (int)octaves;
-	if(octaves > DELTA)
-		value += octaves * ABS(TCOD_noise_get(noise,tf)) * pdata->exponent[i];
-	return CLAMP(-0.99999f, 0.99999f, value);
+   /* Inner loop of spectral construction, where the fractal is built */
+   for(i=0; i<(int)octaves; i++)
+   {
+      value += ABS(TCOD_noise_get(noise,tf)) * pdata->exponent[i];
+      tf[0] *= pdata->lacunarity;
+      tf[1] *= pdata->lacunarity;
+      tf[2] *= pdata->lacunarity;
+   }
+
+   /* Take care of remainder in octaves */
+   octaves -= (int)octaves;
+   if(octaves > DELTA)
+      value += octaves * ABS(TCOD_noise_get(noise,tf)) * pdata->exponent[i];
+   return CLAMP(-0.99999f, 0.99999f, value);
 }
 
 void TCOD_noise_delete(TCOD_noise_t noise) {
-	free((perlin_data_t *)noise);
+   free((perlin_data_t *)noise);
 }
 
 
@@ -341,7 +240,7 @@ static float* genNebulaeMap( const int w, const int h, const int n, float rug )
    lacunarity = TCOD_NOISE_DEFAULT_LACUNARITY;
 
    /* create noise and data */
-   noise = TCOD_noise_new( 3, hurst, lacunarity );
+   noise = TCOD_noise_new( hurst, lacunarity );
    nebulae = malloc(sizeof(float)*w*h*n);
    if (nebulae == NULL) {
       WARN("Out of memory!");
