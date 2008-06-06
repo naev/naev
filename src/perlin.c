@@ -35,11 +35,23 @@
 #include "rng.h"
 
 
+#define TCOD_NOISE_MAX_OCTAVES            128   
+#define TCOD_NOISE_MAX_DIMENSIONS         4
+#define TCOD_NOISE_DEFAULT_HURST          0.5
+#define TCOD_NOISE_DEFAULT_LACUNARITY     2.
+
+
 #define LERP(a, b, x)      ( a + x * (b - a) )
 #define ABS(a)             ((a)<0?-(a):(a))
 #define CLAMP(a, b, x)     ((x) < (a) ? (a) : ((x) > (b) ? (b) : (x)))
 
 
+typedef void *TCOD_noise_t;
+
+
+/*
+ * Used internally
+ */
 typedef struct {
 	int ndim;
 	unsigned char map[256]; /* Randomized map of indexes into buffer */
@@ -50,10 +62,20 @@ typedef struct {
 	float exponent[TCOD_NOISE_MAX_OCTAVES];
 } perlin_data_t;
 
+
 /*
  * prototypes
  */
-static float* noise_genMap( const int w, const int h, float rug );
+static float* noise_genNebulae( const int w, const int h, const int n, float rug );
+static TCOD_noise_t TCOD_noise_new(int dimensions, float hurst, float lacunarity );
+/* basic perlin noise */
+static float TCOD_noise_get( TCOD_noise_t noise, float *f );
+/* fractional brownian motion */
+/* static float TCOD_noise_fbm( TCOD_noise_t noise, float *f, float octaves ); */
+/* turbulence */
+static float TCOD_noise_turbulence( TCOD_noise_t noise, float *f, float octaves );
+static void TCOD_noise_delete(TCOD_noise_t noise);
+
 
 static float lattice( perlin_data_t *data, int ix, float fx, int iy, float fy, int iz, float fz, int iw, float fw)
 {
@@ -89,7 +111,7 @@ static void normalize(perlin_data_t *data, float *f)
 }
 
 
-TCOD_noise_t TCOD_noise_new(int ndim, float hurst, float lacunarity )
+static TCOD_noise_t TCOD_noise_new(int ndim, float hurst, float lacunarity )
 {
 	perlin_data_t *data=(perlin_data_t *)calloc(sizeof(perlin_data_t),1);
 	int i, j;
@@ -121,7 +143,7 @@ TCOD_noise_t TCOD_noise_new(int ndim, float hurst, float lacunarity )
 	return (TCOD_noise_t)data;
 }
 
-float TCOD_noise_get( TCOD_noise_t noise, float *f )
+static float TCOD_noise_get( TCOD_noise_t noise, float *f )
 {
 	perlin_data_t *data=(perlin_data_t *)noise;
 	int n[TCOD_NOISE_MAX_DIMENSIONS];			/* Indexes to pass to lattice function */
@@ -208,7 +230,8 @@ float TCOD_noise_get( TCOD_noise_t noise, float *f )
 	return CLAMP(-0.99999f, 0.99999f, value);
 }
 
-float TCOD_noise_fbm( TCOD_noise_t noise,  float *f, float octaves )
+#if 0
+static float TCOD_noise_fbm( TCOD_noise_t noise,  float *f, float octaves )
 {
 	float tf[TCOD_NOISE_MAX_DIMENSIONS];
 	perlin_data_t *data=(perlin_data_t *)noise;
@@ -230,8 +253,9 @@ float TCOD_noise_fbm( TCOD_noise_t noise,  float *f, float octaves )
 		value += octaves * TCOD_noise_get(noise,tf) * data->exponent[i];
 	return CLAMP(-0.99999f, 0.99999f, value);
 }
+#endif
 
-float TCOD_noise_turbulence( TCOD_noise_t noise, float *f, float octaves )
+static float TCOD_noise_turbulence( TCOD_noise_t noise, float *f, float octaves )
 {
 	float tf[TCOD_NOISE_MAX_DIMENSIONS];
 	perlin_data_t *data=(perlin_data_t *)noise;
@@ -259,44 +283,48 @@ void TCOD_noise_delete(TCOD_noise_t noise) {
 }
 
 
-
-static float* noise_genMap( const int w, const int h, float rug )
+static float* noise_genNebulae( const int w, const int h, const int n, float rug )
 {
-   int x,y;
-   float f[2];
+   int x, y, z;
+   float f[3];
    float octaves;
    float hurst;
    float lacunarity;
    TCOD_noise_t noise;
-   float *map;
+   float *nebulae;
    float value;
 
    octaves = 3.;
    hurst = TCOD_NOISE_DEFAULT_HURST;
    lacunarity = TCOD_NOISE_DEFAULT_LACUNARITY;
 
-   noise = TCOD_noise_new(2,hurst,lacunarity);
+   noise = TCOD_noise_new( 3, hurst, lacunarity );
 
-   map = malloc(sizeof(float)*w*h);
+   nebulae = malloc(sizeof(float)*w*h*n);
+   if (nebulae == NULL) {
+      WARN("Out of memory!");
+      return NULL;
+   }
 
-   for (y=0; y<h; y++) {
-      for (x=0; x<w; x++) {
+   for (z=0; z<n; z++) {
+      for (y=0; y<h; y++) {  
+         for (x=0; x<w; x++) {
 
-         f[0] = rug * (float)x / (float)w;
-         f[1] = rug * (float)y / (float)h;
+            f[0] = rug * (float)x / (float)w;
+            f[1] = rug * (float)y / (float)h;
+            f[2] = rug * (float)z / (float)n;
 
-         /*value = TCOD_noise_get(noise,f);*/
-         /*value = TCOD_noise_fbm(noise,f,octaves);*/
-         value = TCOD_noise_turbulence(noise,f,octaves);
+            value = TCOD_noise_turbulence( noise, f, octaves );
 
-         value = value + 0.3;
-         map[y*w+x] = (value < 1.) ? value : 1.;
+            value = value + 0.3;
+            nebulae[z*w*h + y*w + x] = (value < 1.) ? value : 1.;
+         }
       }
    }
 
    TCOD_noise_delete( noise );
 
-   return map;
+   return nebulae;
 }
 
 
@@ -309,7 +337,7 @@ glTexture* noise_genCloud( const int w, const int h, double rug )
    glTexture *tex;
    double c;
    
-   map = noise_genMap( w, h, rug );
+   map = noise_genNebulae( w, h, 1, rug );
    
    sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );
    pix = sur->pixels;
