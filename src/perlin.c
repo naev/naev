@@ -32,6 +32,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef __SSE__
+#include <xmmintrin.h>
+#endif /* __SSE__ */
+
 #include "naev.h"
 #include "log.h"
 #include "rng.h"
@@ -85,6 +89,32 @@ static void TCOD_noise_delete(TCOD_noise_t noise);
 
 static float lattice( perlin_data_t *pdata, int ix, float fx, int iy, float fy, int iz, float fz, int iw, float fw)
 {
+#ifdef __SSE__
+   (void)iw;
+   (void)fw;
+   int nIndex;
+   __m128 a, b, c;
+
+   nIndex = 0;
+   nIndex = pdata->map[(nIndex + ix) & 0xFF];
+   nIndex = pdata->map[(nIndex + iy) & 0xFF];
+   nIndex = pdata->map[(nIndex + iz) & 0xFF];
+
+   float inp_sse1[4] __attribute__((aligned(16))) = {
+      pdata->buffer[nIndex][0],
+      pdata->buffer[nIndex][1],
+      pdata->buffer[nIndex][2], 0. };
+   float inp_sse2[4] __attribute__((aligned(16))) = {
+      fx, fy, fz, 0. };
+   float out_sse[4] __attribute__((aligned(16)));
+
+   a = _mm_load_ps(inp_sse1);
+   b = _mm_load_ps(inp_sse2);
+   c = _mm_mul_ps(a, b);
+   _mm_store_ps(out_sse,c);
+
+   return out_sse[0] + out_sse[1] + out_sse[2];
+#else /* __SSE__ */
 	int n[4] = {ix, iy, iz, iw};
 	float f[4] = {fx, fy, fz, fw};
 	int nIndex = 0;
@@ -96,6 +126,7 @@ static float lattice( perlin_data_t *pdata, int ix, float fx, int iy, float fy, 
 	for(i=0; i<pdata->ndim; i++)
 		value += pdata->buffer[nIndex][i] * f[i];
 	return value;
+#endif /* __SSE__ */
 }
 
 #define DEFAULT_SEED 0x15687436
@@ -302,20 +333,27 @@ static float* genNebulaeMap( const int w, const int h, const int n, float rug )
    TCOD_noise_t noise;
    float *nebulae;
    float value;
+   unsigned int *t, s;
 
+   /* pretty default values */
    octaves = 3.;
    hurst = TCOD_NOISE_DEFAULT_HURST;
    lacunarity = TCOD_NOISE_DEFAULT_LACUNARITY;
 
+   /* create noise and data */
    noise = TCOD_noise_new( 3, hurst, lacunarity );
-
    nebulae = malloc(sizeof(float)*w*h*n);
    if (nebulae == NULL) {
       WARN("Out of memory!");
       return NULL;
    }
 
+   /* Some debug information and time setting */
+   s = SDL_GetTicks();
+   t = malloc(sizeof(unsigned int)*n);
+   DEBUG("Generating Nebulae of size %dx%dx%d", w, h, n);
 
+   /* Start to create the nebulae */
    f[2] = 0.;
    for (z=0; z<n; z++) {
       for (y=0; y<h; y++) {
@@ -333,10 +371,18 @@ static float* genNebulaeMap( const int w, const int h, const int n, float rug )
          }
       }
       f[2] += 0.01;
+
+      /* More time magic debug */
+      t[z] = SDL_GetTicks();
+      DEBUG("   Layer %d/%d generated in %d ms", z+1, n,
+            (z>0) ? t[z] - t[z-1] : t[z] - s );
    }
 
+   /* Clean up */
    TCOD_noise_delete( noise );
 
+   /* Results */
+   DEBUG("Nebulae Generated in %d ms", SDL_GetTicks() - s );
    return nebulae;
 }
 
