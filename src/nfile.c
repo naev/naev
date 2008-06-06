@@ -33,6 +33,8 @@ char* nfile_basePath (void)
    if (naev_base[0] == '\0') {
 #ifdef LINUX
       home = getenv("HOME");
+#else
+#error "Needs implementation."
 #endif /* LINUX */
       snprintf(naev_base,PATH_MAX,"%s/.naev/",home);
    }
@@ -64,6 +66,8 @@ int nfile_dirMakeExist( char* path )
          WARN("Dir '%s' does not exist and unable to create", path);
          return -1;
       }
+#else
+#error "Needs implementation."
 #endif /* LINUX */
 
    return 0;
@@ -94,7 +98,9 @@ int nfile_fileExists( char* path, ... )
 
    if (stat(file,&buf)==0) /* stat worked, file must exist */
       return 1;
-   
+
+#else /* LINUX */
+#error "Needs implementation."
 #endif
    return 0;
 }
@@ -141,6 +147,8 @@ char** nfile_readDir( int* nfiles, char* path )
    }
 
    closedir(d);
+#else /* LINUX */
+#error "Needs implementation."
 #endif /* LINUX */
 
    /* found nothing */
