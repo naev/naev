@@ -1,0 +1,11 @@
+syntax: glob
+
+*.o
+*.pyc
+.hgignore
+VERSION
+data
+lib/lua/liblua.a
+mkspr
+naev
+pack
