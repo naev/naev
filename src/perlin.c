@@ -38,9 +38,6 @@
 #include "nfile.h"
 
 
-#define NEBULAE_Z                         32
-
-
 #define TCOD_NOISE_MAX_OCTAVES            128   
 #define TCOD_NOISE_DEFAULT_HURST          0.5
 #define TCOD_NOISE_DEFAULT_LACUNARITY     2.
@@ -69,15 +66,13 @@ typedef struct {
 /*
  * prototypes
  */
-static float* genNebulaeMap( const int w, const int h, const int n, float rug );
-SDL_Surface* surfaceFromNebulaeMap( float* map, const int w, const int h );
-static TCOD_noise_t TCOD_noise_new( float hurst, float lacunarity );
+static perlin_data_t* TCOD_noise_new( float hurst, float lacunarity );
 /* basic perlin noise */
-static float TCOD_noise_get( TCOD_noise_t noise, float *f );
+static float TCOD_noise_get( perlin_data_t* pdata, float *f );
 /* fractional brownian motion */
 /* turbulence */
-static float TCOD_noise_turbulence( TCOD_noise_t noise, float *f, float octaves );
-static void TCOD_noise_delete(TCOD_noise_t noise);
+static float TCOD_noise_turbulence( perlin_data_t* noise, float *f, int octaves );
+static void TCOD_noise_delete(perlin_data_t* noise);
 
 
 static float lattice( perlin_data_t *pdata, int ix, float fx, int iy, float fy, int iz, float fz )
@@ -97,10 +92,7 @@ static float lattice( perlin_data_t *pdata, int ix, float fx, int iy, float fy, 
    return value;
 }
 
-#define DEFAULT_SEED 0x15687436
-#define DELTA           1e-6f
 #define SWAP(a, b, t)      t = a; a = b; b = t
-
 #define FLOOR(a) ((int)a - (a < 0 && a != (int)a))
 #define CUBIC(a)  ( a * a * (3 - 2*a) )
 
@@ -115,7 +107,7 @@ static void normalize(float f[3])
 }
 
 
-static TCOD_noise_t TCOD_noise_new( float hurst, float lacunarity )
+static perlin_data_t* TCOD_noise_new( float hurst, float lacunarity )
 {
    perlin_data_t *pdata=(perlin_data_t *)calloc(sizeof(perlin_data_t),1);
    int i, j;
@@ -147,9 +139,8 @@ static TCOD_noise_t TCOD_noise_new( float hurst, float lacunarity )
    return (TCOD_noise_t)pdata;
 }
 
-static float TCOD_noise_get( TCOD_noise_t noise, float *f )
+static float TCOD_noise_get( perlin_data_t* pdata, float *f )
 {
-   perlin_data_t *pdata=(perlin_data_t *)noise;
    int n[3]; /* Indexes to pass to lattice function */
    float r[3]; /* Remainders to pass to lattice function */
    float w[3]; /* Cubic values to pass to interpolation function */
@@ -167,6 +158,9 @@ static float TCOD_noise_get( TCOD_noise_t noise, float *f )
    w[1] = CUBIC(r[1]);
    w[2] = CUBIC(r[2]);
 
+   /*
+    * This is the big ugly bit in dire need of optimization
+    */
    value = LERP(LERP(LERP(lattice(pdata,n[0], r[0], n[1], r[1], n[2], r[2]),
                lattice(pdata,n[0]+1, r[0]-1, n[1], r[1], n[2], r[2]),
                w[0]),
@@ -186,7 +180,7 @@ static float TCOD_noise_get( TCOD_noise_t noise, float *f )
    return CLAMP(-0.99999f, 0.99999f, value);
 }
 
-static float TCOD_noise_turbulence( TCOD_noise_t noise, float *f, float octaves )
+static float TCOD_noise_turbulence( perlin_data_t* noise, float *f, int octaves )
 {
    float tf[3];
    perlin_data_t *pdata=(perlin_data_t *)noise;
@@ -199,7 +193,7 @@ static float TCOD_noise_turbulence( TCOD_noise_t noise, float *f, float octaves 
    tf[2] = f[2];
 
    /* Inner loop of spectral construction, where the fractal is built */
-   for(i=0; i<(int)octaves; i++)
+   for(i=0; i<octaves; i++)
    {
       value += ABS(TCOD_noise_get(noise,tf)) * pdata->exponent[i];
       tf[0] *= pdata->lacunarity;
@@ -207,14 +201,10 @@ static float TCOD_noise_turbulence( TCOD_noise_t noise, float *f, float octaves 
       tf[2] *= pdata->lacunarity;
    }
 
-   /* Take care of remainder in octaves */
-   octaves -= (int)octaves;
-   if(octaves > DELTA)
-      value += octaves * ABS(TCOD_noise_get(noise,tf)) * pdata->exponent[i];
    return CLAMP(-0.99999f, 0.99999f, value);
 }
 
-void TCOD_noise_delete(TCOD_noise_t noise) {
+void TCOD_noise_delete(perlin_data_t* noise) {
    free((perlin_data_t *)noise);
 }
 
@@ -222,20 +212,20 @@ void TCOD_noise_delete(TCOD_noise_t noise) {
 /*
  * Generates a 3d nebulae map of dimensions w,h,n with ruggedness rug
  */
-static float* genNebulaeMap( const int w, const int h, const int n, float rug )
+float* noise_genNebulaeMap( const int w, const int h, const int n, float rug )
 {
    int x, y, z;
    float f[3];
-   float octaves;
+   int octaves;
    float hurst;
    float lacunarity;
-   TCOD_noise_t noise;
+   perlin_data_t* noise;
    float *nebulae;
    float value;
    unsigned int *t, s;
 
    /* pretty default values */
-   octaves = 3.;
+   octaves = 3;
    hurst = TCOD_NOISE_DEFAULT_HURST;
    lacunarity = TCOD_NOISE_DEFAULT_LACUNARITY;
 
@@ -289,7 +279,7 @@ static float* genNebulaeMap( const int w, const int h, const int n, float rug )
 /*
  * Generates a SDL_Surface from a 2d nebulae map
  */
-SDL_Surface* surfaceFromNebulaeMap( float* map, const int w, const int h )
+SDL_Surface* noise_surfaceFromNebulaeMap( float* map, const int w, const int h )
 {
    int i;
    SDL_Surface *sur;
@@ -311,42 +301,15 @@ SDL_Surface* surfaceFromNebulaeMap( float* map, const int w, const int h )
 }
 
 
-/*
- * Generates nebulae and saves them for later usage
- */
-void noise_generateNebulae( const int w, const int h )
-{
-   int i;
-   float *nebu;
-   SDL_Surface *sur;
-   char nebu_file[PATH_MAX];
-
-   /* Generate all the nebulae */
-   nebu = genNebulaeMap( w, h, NEBULAE_Z, 15. );
-
-   /* Save each nebulae as an image */
-   for (i=0; i<NEBULAE_Z; i++) {
-      sur = surfaceFromNebulaeMap( &nebu[ i*w*h ], w, h );
-      snprintf( nebu_file, PATH_MAX, "%s/nebu_%02d.png", nfile_basePath(), i );
-      SDL_SavePNG( sur, nebu_file );
-      SDL_FreeSurface(sur);
-   }
-
-   /* Cleanup */
-   free(nebu);
-}
-
-
 glTexture* noise_genCloud( const int w, const int h, double rug )
 {
    float *map;
    SDL_Surface *sur;
    glTexture *tex;
 
-   /*noise_generateNebulae(w,h);*/
    
-   map = genNebulaeMap( w, h, 1, rug );
-   sur = surfaceFromNebulaeMap( map, w, h );
+   map = noise_genNebulaeMap( w, h, 1, rug );
+   sur = noise_surfaceFromNebulaeMap( map, w, h );
    free(map);
    
    tex = gl_loadImage( sur );
