@@ -199,6 +199,90 @@ void gl_screenshot( const char *filename )
 }
 
 
+/*
+ * Saves a surface to a file as a png.
+ *
+ * Ruthlessly stolen from "pygame - Python Game Library"
+ *    by Pete Shinners (pete@shinners.org)
+ */
+int SDL_SavePNG( SDL_Surface *surface, const char *file )
+{
+   static unsigned char** ss_rows;
+   static int ss_size;
+   static int ss_w, ss_h;
+   SDL_Surface *ss_surface;
+   SDL_Rect ss_rect;
+   int r, i;
+   int alpha = 0;
+   int pixel_bits = 32;
+
+   unsigned surf_flags;
+   unsigned surf_alpha;
+
+   ss_rows = 0;
+   ss_size = 0;
+   ss_surface = 0;
+
+   ss_w = surface->w;
+   ss_h = surface->h;
+
+   if (surface->format->Amask) {
+      alpha = 1;
+      pixel_bits = 32;
+   } else {                        
+      pixel_bits = 24;
+   }
+
+   ss_surface = SDL_CreateRGBSurface( SDL_SWSURFACE | SDL_SRCALPHA, ss_w, ss_h,
+         pixel_bits, RGBAMASK );
+
+   if( ss_surface == 0 ) {
+      return -1;
+   }
+
+   surf_flags = surface->flags & (SDL_SRCALPHA | SDL_SRCCOLORKEY);
+   surf_alpha = surface->format->alpha;
+   if(surf_flags & SDL_SRCALPHA)
+      SDL_SetAlpha(surface, 0, SDL_ALPHA_OPAQUE);
+   if(surf_flags & SDL_SRCCOLORKEY)
+      SDL_SetColorKey(surface, 0, surface->format->colorkey);
+
+   ss_rect.x = 0;
+   ss_rect.y = 0;
+   ss_rect.w = ss_w;
+   ss_rect.h = ss_h;
+   SDL_BlitSurface(surface, &ss_rect, ss_surface, 0);
+
+   if ( ss_size == 0 ) {
+      ss_size = ss_h;
+      ss_rows = (unsigned char**)malloc(sizeof(unsigned char*) * ss_size);
+      if( ss_rows == 0 ) {
+         return -1;
+      }
+   }
+   if ( surf_flags & SDL_SRCALPHA )
+      SDL_SetAlpha(surface, SDL_SRCALPHA, (Uint8)surf_alpha);
+   if ( surf_flags & SDL_SRCCOLORKEY )
+      SDL_SetColorKey(surface, SDL_SRCCOLORKEY, surface->format->colorkey);
+
+   for (i = 0; i < ss_h; i++) {
+      ss_rows[i] = ((unsigned char*)ss_surface->pixels) + i * ss_surface->pitch;
+   }
+
+   if (alpha) {
+      r = write_png(file, ss_rows, surface->w, surface->h, PNG_COLOR_TYPE_RGB_ALPHA, 8);
+   } else {
+      r = write_png(file, ss_rows, surface->w, surface->h, PNG_COLOR_TYPE_RGB, 8);
+   }
+
+   free(ss_rows);
+   SDL_FreeSurface(ss_surface);
+   ss_surface = NULL;
+
+   return r;
+}
+
+
 
 /*
  *

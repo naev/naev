@@ -132,6 +132,7 @@ void gl_exit (void);
 int gl_isTrans( const glTexture* t, const int x, const int y );
 void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir );
 void gl_screenshot( const char *filename );
+int SDL_SavePNG( SDL_Surface *surface, const char *file );
 #if DEBUG == 1
 void gl_checkErr (void);
 #else /* DEBUG */
