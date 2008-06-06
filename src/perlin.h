@@ -5,6 +5,7 @@
 #include "opengl.h"
 
 
+void noise_generateNebulae( const int w, const int h );
 glTexture* noise_genCloud( const int w, const int h, double rug );
 
 
