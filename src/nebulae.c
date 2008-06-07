@@ -49,9 +49,12 @@ static void saveNebulae( float *map, const uint32_t w, const uint32_t h, const c
 static unsigned char* loadNebulae( const char* file, int* w, int* h );
 
 
+/*
+ * Initializes the nebulae.
+ */
 void nebu_init (void)
 {
-   int i;
+   int i, y;
    char nebu_file[PATH_MAX];
    unsigned char *nebu_padded;
    int w, h;
@@ -81,7 +84,14 @@ void nebu_init (void)
 
       /* Load the file */
       nebu_data = loadNebulae( nebu_file, &w, &h );
-      memcpy(nebu_padded, nebu_data, w*h);
+      for (y=0; y<nebu_h; y++) { /* Copy lines over */
+         /* nebu_padded =  [ nebu_data 0000000000000 ] */
+         memmove( &nebu_padded[y*nebu_pw], &nebu_data[y*nebu_w], nebu_w );
+         memset( &nebu_padded[y*nebu_pw+nebu_w], 0, nebu_pw-nebu_w); /* pad the end */
+      }
+      /* end it with 0s */
+      memset( &nebu_padded[nebu_h*nebu_pw+nebu_w], 0,
+            nebu_ph*nebu_pw - nebu_h*nebu_pw);
 
       /* Load the texture */
       glBindTexture( GL_TEXTURE_2D, nebu_textures[i] );
@@ -94,6 +104,8 @@ void nebu_init (void)
       free(nebu_data); /* No longer need the data */
    }
    free(nebu_padded);
+
+   DEBUG("Loaded %d Nebulae Layers", NEBULAE_Z);
 }
 
 
@@ -103,6 +115,43 @@ void nebu_init (void)
 void nebu_exit (void)
 {
    glDeleteTextures( NEBULAE_Z, nebu_textures );
+}
+
+
+/*
+ * Renders the nebulae
+ */
+void nebu_render (void)
+{
+   int n;
+   double tw,th;
+
+   n = 0;
+
+   tw = nebu_w / nebu_pw;
+   th = nebu_h / nebu_ph;
+
+   glEnable(GL_TEXTURE_2D);
+   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+   glBindTexture( GL_TEXTURE_2D, nebu_textures[n]);
+   glColor4d(1.,1.,1.,1.);
+   glBegin(GL_QUADS);
+      glTexCoord2d( 0., 0. );
+      glVertex2d( -SCREEN_W/2., -SCREEN_H/2. );
+
+      glTexCoord2d( tw, 0. );
+      glVertex2d( SCREEN_W/2., -SCREEN_H/2. );
+
+      glTexCoord2d( tw, th );
+      glVertex2d( SCREEN_W/2., SCREEN_H/2. );
+
+      glTexCoord2d( 0., th );
+      glVertex2d( -SCREEN_W/2., SCREEN_H/2. );
+   glEnd(); /* GL_QUADS */
+   glDisable(GL_TEXTURE_2D);
+
+   /* anything failed? */
+   gl_checkErr();
 }
 
 
@@ -161,8 +210,9 @@ static void saveNebulae( float *map, const uint32_t w, const uint32_t h, const c
    snprintf(buf, NEBU_FORMAT_HEADER, "NAEV NEBU v" NEBU_VERSION );
    cur = 16;
    memcpy(&buf[cur], &w, 4);
+   cur += 4;
    memcpy(&buf[cur], &h, 4);
-   cur += 8;
+   cur += 4;
 
    /* Ze body */
    for (y=0; y<(int)h; y++)
@@ -211,8 +261,9 @@ if (len < l) { \
    return NULL; \
 }   
    int fd;
+   int cur;
    snprintf(file_path, PATH_MAX, "%s%s", nfile_basePath(), file );
-   fd = open( file, O_RDONLY );
+   fd = open( file_path, O_RDONLY );
    if (fd < 0) {
       ERR("Unable to open file %s: %s", file_path, strerror(errno));
       return NULL;
@@ -221,7 +272,9 @@ if (len < l) { \
    READ(&tw,4);
    READ(&th,4);
    buf = malloc(tw*th);
-   READ(buf,tw*th);
+   cur = 0;
+   while ((len = read(fd,&buf[cur],tw*th - cur))!=0)
+      cur += len;
 #else /* _POSIX_SOURCE */
 #error "Needs implementation."
 #endif /* _POSIX_SOURCE */

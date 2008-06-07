@@ -16,6 +16,7 @@
 void nebu_init (void);
 void nebu_exit (void);
 
+void nebu_render (void);
 void nebu_generate( const int w, const int h );
 
 
