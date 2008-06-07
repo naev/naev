@@ -247,8 +247,10 @@ float* noise_genNebulaeMap( const int w, const int h, const int n, float rug )
 
    /* Start to create the nebulae */
    max = 0.;
-   f[2] = 0.;
    for (z=0; z<n; z++) {
+
+      f[2] = zoom * (float)z / (float)n;
+
       for (y=0; y<h; y++) {
 
          f[1] = zoom * (float)y / (float)h;
@@ -263,7 +265,6 @@ float* noise_genNebulaeMap( const int w, const int h, const int n, float rug )
             nebulae[z*w*h + y*w + x] = value;
          }
       }
-      f[2] += 0.01;
 
       /* More time magic debug */
       t[z] = SDL_GetTicks();

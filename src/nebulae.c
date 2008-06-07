@@ -17,7 +17,7 @@
 #include "rng.h"
 
 
-#define NEBU_DT_MAX           1.
+#define NEBU_DT_MAX           5.
 
 #define NEBULAE_Z             16 /* Z plane */
 #define NEBULAE_PATH          "gen/nebu_%02d.png"
@@ -155,12 +155,12 @@ void nebu_render (void)
    /* Texture 0 */
    glActiveTexture( GL_TEXTURE0 );
    glEnable(GL_TEXTURE_2D);
-   glBindTexture( GL_TEXTURE_2D, nebu_textures[cur_nebu[0]]);
+   glBindTexture( GL_TEXTURE_2D, nebu_textures[cur_nebu[1]]);
 
    /* Texture 1 */
    glActiveTexture( GL_TEXTURE1 );
    glEnable(GL_TEXTURE_2D);
-   glBindTexture( GL_TEXTURE_2D, nebu_textures[cur_nebu[1]]);
+   glBindTexture( GL_TEXTURE_2D, nebu_textures[cur_nebu[0]]);
 
    /* Prepare it */
    glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE );
@@ -172,7 +172,7 @@ void nebu_render (void)
    /* Arguments */
    /* Arg0 */
    glTexEnvf( GL_TEXTURE_ENV, GL_SOURCE0_RGB, GL_CONSTANT );
-   glTexEnvf( GL_TEXTURE_ENV, GL_SOURCE0_ALPHA, GL_TEXTURE1 );
+   glTexEnvf( GL_TEXTURE_ENV, GL_SOURCE0_ALPHA, GL_TEXTURE );
    glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_COLOR );
    glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_ALPHA, GL_SRC_ALPHA );
    /* Arg1 */
