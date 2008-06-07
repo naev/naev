@@ -47,7 +47,7 @@ char* nfile_basePath (void)
  * checks if a directory exists, and creates it if it doesn't
  * based on naev_base
  */
-int nfile_dirMakeExist( char* path )
+int nfile_dirMakeExist( const char* path )
 {
    char file[PATH_MAX];
 
@@ -77,7 +77,7 @@ int nfile_dirMakeExist( char* path )
 /*
  * checks if a file exists
  */
-int nfile_fileExists( char* path, ... )
+int nfile_fileExists( const char* path, ... )
 {
    char file[PATH_MAX], name[PATH_MAX];
    va_list ap;
@@ -109,7 +109,7 @@ int nfile_fileExists( char* path, ... )
 /*
  * lists all the files in a dir (besidse . and ..)
  */
-char** nfile_readDir( int* nfiles, char* path )
+char** nfile_readDir( int* nfiles, const char* path )
 {
    char file[PATH_MAX];
    char **files;

@@ -51,7 +51,6 @@ static glTexList* texture_list = NULL;
 static int SDL_VFlipSurface( SDL_Surface* surface );
 static int SDL_IsTrans( SDL_Surface* s, int x, int y );
 static uint8_t* SDL_MapTrans( SDL_Surface* s );
-static int pot( int n );
 /* glTexture */
 static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh );
 static glTexture* gl_loadNewImage( const char* path );
@@ -73,7 +72,7 @@ static GLboolean gl_hasExt( char *name );
 /*
  * gets the closest power of two
  */
-static int pot( int n )
+int gl_pot( int n )
 {
    int i = 1;
    while (i < n)
@@ -303,8 +302,8 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
    SDL_Rect rtemp;
 
    /* Make size power of two */
-   potw = pot(surface->w);
-   poth = pot(surface->h);
+   potw = gl_pot(surface->w);
+   poth = gl_pot(surface->h);
    if (rw) *rw = potw;
    if (rh) *rh = poth;
 

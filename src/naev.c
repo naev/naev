@@ -41,6 +41,7 @@
 #include "mission.h"
 #include "misn_lua.h"
 #include "nfile.h"
+#include "nebulae.h"
 
 
 /* to get data info */
@@ -136,6 +137,12 @@ int main ( int argc, char** argv )
 
 
    /*
+    * Time to try to load the nebulae
+    */
+   nebu_init();
+
+
+   /*
     * OpenAL - Sound
     */
    if (nosound)
@@ -221,6 +228,7 @@ int main ( int argc, char** argv )
    ai_exit(); /* stops the Lua AI magic */
    joystick_exit(); /* releases joystick */
    input_exit(); /* cleans up keybindings */
+   nebu_exit(); /* destroys the nebulae */
    gl_exit(); /* kills video output */
    sound_exit(); /* kills the sound */
    SDL_Quit(); /* quits SDL */
