@@ -16,12 +16,12 @@
 #include "pilot.h"
 #include "space.h"
 #include "player.h"
-#include "perlin.h"
 #include "mission.h"
 #include "ntime.h"
 #include "save.h"
 #include "land.h"
 #include "rng.h"
+#include "nebulae.h"
 
 
 #define MAIN_WIDTH      130
@@ -81,15 +81,12 @@ static void menu_generic_close( char* str );
 void menu_main (void)
 {
    unsigned int bwid, wid;
-   glTexture *tex;
-
-   tex = noise_genCloud( SCREEN_W, SCREEN_H, 5. );
 
    /* create background image window */
    bwid = window_create( "BG", -1, -1, SCREEN_W, SCREEN_H );
-   window_addRect( bwid, 0, 0, SCREEN_W, SCREEN_H, "rctBG", &cBlack, 0 );
-   window_addImage( bwid, 0, 0, "imgBG", tex, 0 );
-   window_imgColour( bwid, "imgBG", &cPurple );
+/*   window_addRect( bwid, 0, 0, SCREEN_W, SCREEN_H, "rctBG", &cBlack, 0 );*/
+   window_addCust( bwid, 0, 0, SCREEN_W, SCREEN_H, "cstBG", 0,
+         (void(*)(double,double,double,double)) nebu_render, NULL );
 
    /* create menu window */
    wid = window_create( "Main Menu", -1, -1, MAIN_WIDTH, MAIN_HEIGHT );

@@ -137,12 +137,6 @@ int main ( int argc, char** argv )
 
 
    /*
-    * Time to try to load the nebulae
-    */
-   nebu_init();
-
-
-   /*
     * OpenAL - Sound
     */
    if (nosound)
@@ -176,6 +170,7 @@ int main ( int argc, char** argv )
    if (ai_init()) WARN("Error initializing AI");
 
    /* Misc graphics init */
+   nebu_init(); /* Initializes the nebulae */
    gl_fontInit( NULL, NULL, FONT_SIZE ); /* initializes default font to size */
    gl_fontInit( &gl_smallFont, NULL, FONT_SIZE_SMALL ); /* small font */
    gui_init(); /* initializes the GUI graphics */
