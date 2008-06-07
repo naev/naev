@@ -14,7 +14,10 @@
 #include "opengl.h"
 #include "nfile.h"
 #include "perlin.h"
+#include "rng.h"
 
+
+#define NEBU_DT_MAX           1.
 
 #define NEBULAE_Z             16 /* Z plane */
 #define NEBULAE_PATH          "gen/nebu_%02d.png"
@@ -25,6 +28,10 @@ static GLuint nebu_textures[NEBULAE_Z];
 static int nebu_w = 0;
 static int nebu_h = 0;
 static int nebu_pw, nebu_ph;
+
+/* Information on rendering */
+static int cur_nebu[2] = { 0, 1 };
+static unsigned int last_render = 0;
 
 
 /*
@@ -75,7 +82,7 @@ void nebu_init (void)
          WARN("Nebulae raw size doesn't match expected! (%dx%d instead of %dx%d)",
                nebu_sur->w, nebu_sur->h, nebu_pw, nebu_ph );
 
-
+      /* Prepare to load into Opengl */
       nebu_sur = gl_prepareSurface( nebu_sur );
       if ((nebu_sur->w != nebu_pw) || (nebu_sur->h != nebu_ph))
          WARN("Nebulae size doesn't match expected! (%dx%d instead of %dx%d)",
@@ -86,6 +93,7 @@ void nebu_init (void)
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
+      /* Store into opengl saving only alpha channel in video memory */
       SDL_LockSurface( nebu_sur );
       glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, nebu_sur->w, nebu_sur->h,
             0, GL_RGBA, GL_UNSIGNED_BYTE, nebu_sur->pixels );
@@ -113,40 +121,95 @@ void nebu_exit (void)
  */
 void nebu_render (void)
 {
-   int n;
-   double x,y, w,h, tx,ty, tw,th;
+   unsigned int t;
+   double dt;
+   double tw,th;
+   GLfloat col[4];
+   int temp;
 
-   n = 0;
+   /* calculate frame to draw */
+   t = SDL_GetTicks();
+   dt = (t - last_render) / 1000.;
+   if (dt > NEBU_DT_MAX) { /* Time to change */
+      temp = cur_nebu[0];
+      cur_nebu[0] += cur_nebu[0] - cur_nebu[1];
+      cur_nebu[1] = temp;
+      if (cur_nebu[0]+1 > NEBULAE_Z)
+         cur_nebu[0] = NEBULAE_Z - 2;
+      else if (cur_nebu[0] < 0)
+         cur_nebu[0] = 1;
 
-   x = -SCREEN_W/2.;
-   y = -SCREEN_H/2.;
+      last_render = t;
+      dt = 0.;
+   }
 
-   w = SCREEN_W;
-   h = SCREEN_H;
-
-   tx = 0.;
-   ty = 0.;
+   col[0] = cPurple.r;
+   col[1] = cPurple.g;
+   col[2] = cPurple.b;
+   col[3] = dt / NEBU_DT_MAX;
 
    tw = (double)nebu_w / (double)nebu_pw;
    th = (double)nebu_h / (double)nebu_ph;
 
+   /* Set up the targets */
+   /* Texture 0 */
+   glActiveTexture( GL_TEXTURE0 );
    glEnable(GL_TEXTURE_2D);
-   /*glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);*/
-   glBindTexture( GL_TEXTURE_2D, nebu_textures[n]);
-   COLOUR(cPurple);
+   glBindTexture( GL_TEXTURE_2D, nebu_textures[cur_nebu[0]]);
+
+   /* Texture 1 */
+   glActiveTexture( GL_TEXTURE1 );
+   glEnable(GL_TEXTURE_2D);
+   glBindTexture( GL_TEXTURE_2D, nebu_textures[cur_nebu[1]]);
+
+   /* Prepare it */
+   glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE );
+   glTexEnvf( GL_TEXTURE_ENV, GL_COMBINE_RGB, GL_INTERPOLATE );
+   glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_ALPHA, GL_INTERPOLATE );
+   /* Colour */
+   glTexEnvfv( GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, col );
+
+   /* Arguments */
+   /* Arg0 */
+   glTexEnvf( GL_TEXTURE_ENV, GL_SOURCE0_RGB, GL_CONSTANT );
+   glTexEnvf( GL_TEXTURE_ENV, GL_SOURCE0_ALPHA, GL_TEXTURE1 );
+   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_COLOR );
+   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_ALPHA, GL_SRC_ALPHA );
+   /* Arg1 */
+   glTexEnvf( GL_TEXTURE_ENV, GL_SOURCE1_RGB, GL_CONSTANT );
+   glTexEnvf( GL_TEXTURE_ENV, GL_SOURCE1_ALPHA, GL_PREVIOUS );
+   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_RGB, GL_SRC_COLOR );
+   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_ALPHA, GL_SRC_ALPHA );
+   /* Arg2 */
+   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE2_RGB, GL_CONSTANT );
+   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE2_ALPHA, GL_CONSTANT );
+   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND2_RGB, GL_SRC_ALPHA );
+   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND2_ALPHA, GL_SRC_ALPHA );
+
+   /* Now render! */
    glBegin(GL_QUADS);
-      glTexCoord2d( tx, ty);
-      glVertex2d( x, y );
+      glMultiTexCoord2d( GL_TEXTURE0, 0., 0. );
+      glMultiTexCoord2d( GL_TEXTURE1, 0., 0. );
+      glVertex2d( -SCREEN_W/2., -SCREEN_H/2. );
 
-      glTexCoord2d( tx + tw, ty);
-      glVertex2d( x + w, y );
+      glMultiTexCoord2d( GL_TEXTURE0, tw, 0. );
+      glMultiTexCoord2d( GL_TEXTURE1, tw, 0. );
+      glVertex2d(  SCREEN_W/2., -SCREEN_H/2. );
 
-      glTexCoord2d( tx + tw, ty + th);
-      glVertex2d( x + w, y + h );
-
-      glTexCoord2d( tx, ty + th);
-      glVertex2d( x, y + h );
+      glMultiTexCoord2d( GL_TEXTURE0, tw, th );
+      glMultiTexCoord2d( GL_TEXTURE1, tw, th );
+      glVertex2d(  SCREEN_W/2.,  SCREEN_H/2. );
+      
+      glMultiTexCoord2d( GL_TEXTURE0, 0., th );
+      glMultiTexCoord2d( GL_TEXTURE1, 0., th );
+      glVertex2d( -SCREEN_W/2.,  SCREEN_H/2. );
    glEnd(); /* GL_QUADS */
+
+   /* Clean up */
+   glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+   glDisable(GL_TEXTURE_2D);
+   glActiveTexture( GL_TEXTURE0 );
+   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
    glDisable(GL_TEXTURE_2D);
 
    /* anything failed? */
