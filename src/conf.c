@@ -20,6 +20,7 @@
 #include "input.h"
 #include "opengl.h"
 #include "music.h"
+#include "nebulae.h"
 
 
 #define  conf_loadInt(n,i)    \
@@ -88,6 +89,7 @@ static void print_usage( char **argv )
    LOG("   -S, --sound           forces sound");
    LOG("   -m f, --mvol f        sets the music volume to f");
    LOG("   -s f, --svol f        sets the sound volume to f");
+   LOG("   -G                    regenerates the nebulae (slow)");
    LOG("   -h, --help            display this message and exit");
    LOG("   -v, --version         print the version and exit");
 }
@@ -256,7 +258,7 @@ void conf_parseCLI( int argc, char** argv )
    int option_index = 0;
    int c = 0;
    while ((c = getopt_long(argc, argv,
-         "fF:d:j:J:W:H:MSm:s:hv",
+         "fF:d:j:J:W:H:MSm:s:Ghv",
          long_options, &option_index)) != -1) {
       switch (c) {
          case 'f':
@@ -291,6 +293,9 @@ void conf_parseCLI( int argc, char** argv )
             break;
          case 's':
             sound_volume( atof(optarg) );
+            break;
+         case 'G':
+            nebu_generate(SCREEN_W, SCREEN_H);
             break;
 
          case 'v':
