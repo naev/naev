@@ -47,5 +47,8 @@ extern char dataname[DATA_NAME_LEN];
 #endif /* M_PI */
 
 
+char *naev_version (void);
+
+
 #endif /* NAEV_H */
 

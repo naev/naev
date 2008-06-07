@@ -492,3 +492,16 @@ static void window_caption (void)
 }
 
 
+static char human_version[50];
+/**
+ * @brief Returns the version in a human readable string.
+ */
+char *naev_version (void)
+{
+   if (human_version[0] == '\0')
+      snprintf( human_version, 50, " "APPNAME" v%s - %s", version, dataname );
+
+   return human_version;
+}
+
+
