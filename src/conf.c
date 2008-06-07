@@ -295,7 +295,7 @@ void conf_parseCLI( int argc, char** argv )
             sound_volume( atof(optarg) );
             break;
          case 'G':
-            nebu_generate(SCREEN_W, SCREEN_H);
+            nebu_forceGenerate();
             break;
 
          case 'v':

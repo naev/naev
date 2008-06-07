@@ -11,30 +11,20 @@
 
 #include "naev.h"
 #include "log.h"
+#include "opengl.h"
 #include "nfile.h"
 #include "perlin.h"
 
 
-/*
- * CUSTOM NEBULAE FORMAT
- *
- * Header (16 byte string)
- * Dimensions (4 byte w and 4 byte h)
- * Body (1 byte per pixel)
- */
-
-
-#define NEBU_FORMAT_HEADER    16 /* Size of header */
-#define NEBU_VERSION          "1" /* Will be used for version checking */
-
-
-#define NEBULAE_Z             32 /* Z plane */
+#define NEBULAE_Z             16 /* Z plane */
 #define NEBULAE_PATH          "gen/nebu_%02d.png"
 
 
 /* The nebulae textures */
 static GLuint nebu_textures[NEBULAE_Z];
-static int nebu_w, nebu_h, nebu_pw, nebu_ph;
+static int nebu_w = 0;
+static int nebu_h = 0;
+static int nebu_pw, nebu_ph;
 
 
 /*
@@ -43,6 +33,7 @@ static int nebu_w, nebu_h, nebu_pw, nebu_ph;
 static int nebu_checkCompat( const char* file );
 static void saveNebulae( float *map, const uint32_t w, const uint32_t h, const char* file );
 static SDL_Surface* loadNebulae( const char* file );
+static void nebu_generate (void);
 
 
 /*
@@ -53,6 +44,10 @@ void nebu_init (void)
    int i;
    char nebu_file[PATH_MAX];
    SDL_Surface* nebu_sur;
+
+   /* Special code to regenerate the nebulae */
+   if ((nebu_w == -9) && (nebu_h == -9))
+      nebu_generate();
 
    /* Set expected sizes */
    nebu_w = SCREEN_W;
@@ -69,7 +64,7 @@ void nebu_init (void)
          LOG("No nebulae found, generating (this may take a while).");
 
          /* So we generate and reload */
-         nebu_generate( nebu_w, nebu_h );
+         nebu_generate();
          nebu_init();
          return;
       }
@@ -127,13 +122,13 @@ void nebu_render (void)
    y = -SCREEN_H/2.;
 
    w = SCREEN_W;
-   h = SCREEN_W;
+   h = SCREEN_H;
 
    tx = 0.;
    ty = 0.;
 
-   tw = nebu_w / nebu_pw;
-   th = nebu_h / nebu_ph;
+   tw = (double)nebu_w / (double)nebu_pw;
+   th = (double)nebu_h / (double)nebu_ph;
 
    glEnable(GL_TEXTURE_2D);
    /*glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);*/
@@ -162,14 +157,27 @@ void nebu_render (void)
 /*
  * Forces generation of new nebulae
  */
-void nebu_generate( const int w, const int h )
+void nebu_forceGenerate (void)
+{
+   nebu_w = nebu_h = -9;
+}
+
+
+/*
+ * Generates the nebulae
+ */
+static void nebu_generate (void)
 {
    int i;
    float *nebu;
    char nebu_file[PATH_MAX];
+   int w,h;
+
+   w = SCREEN_W;
+   h = SCREEN_H;
 
    /* Generate all the nebulae */
-   nebu = noise_genNebulaeMap( w, h, NEBULAE_Z, 15. );
+   nebu = noise_genNebulaeMap( w, h, NEBULAE_Z, 5. );
    nfile_dirMakeExist( "gen" );
 
    /* Save each nebulae as an image */

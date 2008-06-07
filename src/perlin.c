@@ -205,7 +205,7 @@ static float TCOD_noise_turbulence( perlin_data_t* noise, float *f, int octaves 
 }
 
 void TCOD_noise_delete(perlin_data_t* noise) {
-   free((perlin_data_t *)noise);
+   free(noise);
 }
 
 
@@ -222,12 +222,15 @@ float* noise_genNebulaeMap( const int w, const int h, const int n, float rug )
    perlin_data_t* noise;
    float *nebulae;
    float value;
+   float zoom;
+   float max;
    unsigned int *t, s;
 
    /* pretty default values */
    octaves = 3;
    hurst = TCOD_NOISE_DEFAULT_HURST;
    lacunarity = TCOD_NOISE_DEFAULT_LACUNARITY;
+   zoom = rug * ((float)h/768.)*((float)w/1024.);
 
    /* create noise and data */
    noise = TCOD_noise_new( hurst, lacunarity );
@@ -243,20 +246,21 @@ float* noise_genNebulaeMap( const int w, const int h, const int n, float rug )
    DEBUG("Generating Nebulae of size %dx%dx%d", w, h, n);
 
    /* Start to create the nebulae */
+   max = 0.;
    f[2] = 0.;
    for (z=0; z<n; z++) {
       for (y=0; y<h; y++) {
 
-         f[1] = rug * (float)y / (float)h;
+         f[1] = zoom * (float)y / (float)h;
 
          for (x=0; x<w; x++) {
 
-            f[0] = rug * (float)x / (float)w;
+            f[0] = zoom * (float)x / (float)w;
 
             value = TCOD_noise_turbulence( noise, f, octaves );
+            if (max < value) max = value;
 
-            value = value + 0.3;
-            nebulae[z*w*h + y*w + x] = (value < 1.) ? value : 1.;
+            nebulae[z*w*h + y*w + x] = value;
          }
       }
       f[2] += 0.01;
@@ -266,6 +270,13 @@ float* noise_genNebulaeMap( const int w, const int h, const int n, float rug )
       DEBUG("   Layer %d/%d generated in %d ms", z+1, n,
             (z>0) ? t[z] - t[z-1] : t[z] - s );
    }
+
+   /* Post filtering */
+   value = 1. - max;
+   for (z=0; z<n; z++)
+      for (y=0; y<h; y++)
+         for (x=0; x<w; x++)
+            nebulae[z*w*h + y*w + x] += value;
 
    /* Clean up */
    TCOD_noise_delete( noise );
@@ -293,7 +304,7 @@ SDL_Surface* noise_surfaceFromNebulaeMap( float* map, const int w, const int h )
    SDL_LockSurface( sur );
    for (i=0; i<h*w; i++) {
       c = map[i];
-      pix[i] = RMASK + BMASK + GMASK + (AMASK & (uint32_t)(AMASK*c));
+      pix[i] = RMASK + BMASK + GMASK + (AMASK & (uint32_t)((double)AMASK*c));
    }
    SDL_UnlockSurface( sur );
 
