@@ -89,6 +89,7 @@ typedef struct glTexture_ {
 /*
  * glTexture loading / freeing
  */
+SDL_Surface* gl_prepareSurface( SDL_Surface* surface ); /* Only preps it */
 glTexture* gl_loadImage( SDL_Surface* surface ); /* frees the surface */
 glTexture* gl_newImage( const char* path );
 glTexture* gl_newSprite( const char* path, const int sx, const int sy );

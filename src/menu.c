@@ -84,7 +84,7 @@ void menu_main (void)
 
    /* create background image window */
    bwid = window_create( "BG", -1, -1, SCREEN_W, SCREEN_H );
-/*   window_addRect( bwid, 0, 0, SCREEN_W, SCREEN_H, "rctBG", &cBlack, 0 );*/
+   window_addRect( bwid, 0, 0, SCREEN_W, SCREEN_H, "rctBG", &cBlack, 0 );
    window_addCust( bwid, 0, 0, SCREEN_W, SCREEN_H, "cstBG", 0,
          (void(*)(double,double,double,double)) nebu_render, NULL );
 

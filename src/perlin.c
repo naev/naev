@@ -300,20 +300,3 @@ SDL_Surface* noise_surfaceFromNebulaeMap( float* map, const int w, const int h )
    return sur;
 }
 
-
-glTexture* noise_genCloud( const int w, const int h, double rug )
-{
-   float *map;
-   SDL_Surface *sur;
-   glTexture *tex;
-
-   
-   map = noise_genNebulaeMap( w, h, 1, rug );
-   sur = noise_surfaceFromNebulaeMap( map, w, h );
-   free(map);
-   
-   tex = gl_loadImage( sur );
-   return tex;
-}     
-
-

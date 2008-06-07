@@ -289,12 +289,10 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
  *
  */
 /*
- * returns the texture ID
- * stores real sizes in rw/rh (from POT padding)
+ * Prepares the surface to be loaded
  */
-static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
+SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
 {
-   GLuint texture;
    SDL_Surface* temp;
    Uint32 saved_flags;
    Uint8 saved_alpha;
@@ -304,8 +302,6 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
    /* Make size power of two */
    potw = gl_pot(surface->w);
    poth = gl_pot(surface->h);
-   if (rw) *rw = potw;
-   if (rh) *rh = poth;
 
    /* we must blit with an SDL_Rect */
    rtemp.x = rtemp.y = 0;
@@ -341,6 +337,21 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
    /* set saved alpha */
    if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
       SDL_SetAlpha( surface, 0, 0 );
+
+   return surface;
+}
+
+/*
+ * returns the texture ID
+ * stores real sizes in rw/rh (from POT padding)
+ */
+static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
+{
+   GLuint texture;
+
+   surface = gl_prepareSurface( surface );
+   if (rw != NULL) (*rw) = surface->w;
+   if (rh != NULL) (*rh) = surface->h;
 
    /* opengl texture binding */
    glGenTextures( 1, &texture ); /* Creates the texture */

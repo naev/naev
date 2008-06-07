@@ -7,11 +7,7 @@
 
 #include <errno.h>
 
-#ifdef _POSIX_SOURCE
-#include <unistd.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#endif /* _POSIX_SOURCE */
+#include "SDL_image.h"
 
 #include "naev.h"
 #include "log.h"
@@ -33,7 +29,7 @@
 
 
 #define NEBULAE_Z             32 /* Z plane */
-#define NEBULAE_PATH          "gen/nebu_%02d.nebu"
+#define NEBULAE_PATH          "gen/nebu_%02d.png"
 
 
 /* The nebulae textures */
@@ -46,7 +42,7 @@ static int nebu_w, nebu_h, nebu_pw, nebu_ph;
  */
 static int nebu_checkCompat( const char* file );
 static void saveNebulae( float *map, const uint32_t w, const uint32_t h, const char* file );
-static unsigned char* loadNebulae( const char* file, int* w, int* h );
+static SDL_Surface* loadNebulae( const char* file );
 
 
 /*
@@ -54,11 +50,9 @@ static unsigned char* loadNebulae( const char* file, int* w, int* h );
  */
 void nebu_init (void)
 {
-   int i, y;
+   int i;
    char nebu_file[PATH_MAX];
-   unsigned char *nebu_padded;
-   int w, h;
-   unsigned char *nebu_data;
+   SDL_Surface* nebu_sur;
 
    /* Set expected sizes */
    nebu_w = SCREEN_W;
@@ -67,7 +61,6 @@ void nebu_init (void)
    nebu_ph = gl_pot(nebu_h);
 
    /* Load each, checking for compatibility and padding */
-   nebu_padded = malloc( nebu_pw * nebu_ph );
    glGenTextures( NEBULAE_Z, nebu_textures );
    for (i=0; i<NEBULAE_Z; i++) {
       snprintf( nebu_file, PATH_MAX, NEBULAE_PATH, i );
@@ -76,34 +69,36 @@ void nebu_init (void)
          LOG("No nebulae found, generating (this may take a while).");
 
          /* So we generate and reload */
-         free(nebu_padded);
          nebu_generate( nebu_w, nebu_h );
          nebu_init();
          return;
       }
 
       /* Load the file */
-      nebu_data = loadNebulae( nebu_file, &w, &h );
-      for (y=0; y<nebu_h; y++) { /* Copy lines over */
-         /* nebu_padded =  [ nebu_data 0000000000000 ] */
-         memmove( &nebu_padded[y*nebu_pw], &nebu_data[y*nebu_w], nebu_w );
-         memset( &nebu_padded[y*nebu_pw+nebu_w], 0, nebu_pw-nebu_w); /* pad the end */
-      }
-      /* end it with 0s */
-      memset( &nebu_padded[nebu_h*nebu_pw+nebu_w], 0,
-            nebu_ph*nebu_pw - nebu_h*nebu_pw);
+      nebu_sur = loadNebulae( nebu_file );
+      if ((nebu_sur->w != nebu_w) || (nebu_sur->h != nebu_h))
+         WARN("Nebulae raw size doesn't match expected! (%dx%d instead of %dx%d)",
+               nebu_sur->w, nebu_sur->h, nebu_pw, nebu_ph );
+
+
+      nebu_sur = gl_prepareSurface( nebu_sur );
+      if ((nebu_sur->w != nebu_pw) || (nebu_sur->h != nebu_ph))
+         WARN("Nebulae size doesn't match expected! (%dx%d instead of %dx%d)",
+               nebu_sur->w, nebu_sur->h, nebu_pw, nebu_ph );
 
       /* Load the texture */
       glBindTexture( GL_TEXTURE_2D, nebu_textures[i] );
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-      glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA8, nebu_pw, nebu_ph,
-            0, GL_ALPHA, GL_UNSIGNED_BYTE, nebu_padded );
-      gl_checkErr();
 
-      free(nebu_data); /* No longer need the data */
+      SDL_LockSurface( nebu_sur );
+      glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, nebu_sur->w, nebu_sur->h,
+            0, GL_RGBA, GL_UNSIGNED_BYTE, nebu_sur->pixels );
+      SDL_UnlockSurface( nebu_sur );
+
+      SDL_FreeSurface(nebu_sur);
+      gl_checkErr();
    }
-   free(nebu_padded);
 
    DEBUG("Loaded %d Nebulae Layers", NEBULAE_Z);
 }
@@ -124,29 +119,38 @@ void nebu_exit (void)
 void nebu_render (void)
 {
    int n;
-   double tw,th;
+   double x,y, w,h, tx,ty, tw,th;
 
    n = 0;
+
+   x = -SCREEN_W/2.;
+   y = -SCREEN_H/2.;
+
+   w = SCREEN_W;
+   h = SCREEN_W;
+
+   tx = 0.;
+   ty = 0.;
 
    tw = nebu_w / nebu_pw;
    th = nebu_h / nebu_ph;
 
    glEnable(GL_TEXTURE_2D);
-   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+   /*glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);*/
    glBindTexture( GL_TEXTURE_2D, nebu_textures[n]);
-   glColor4d(1.,1.,1.,1.);
+   COLOUR(cPurple);
    glBegin(GL_QUADS);
-      glTexCoord2d( 0., 0. );
-      glVertex2d( -SCREEN_W/2., -SCREEN_H/2. );
+      glTexCoord2d( tx, ty);
+      glVertex2d( x, y );
 
-      glTexCoord2d( tw, 0. );
-      glVertex2d( SCREEN_W/2., -SCREEN_H/2. );
+      glTexCoord2d( tx + tw, ty);
+      glVertex2d( x + w, y );
 
-      glTexCoord2d( tw, th );
-      glVertex2d( SCREEN_W/2., SCREEN_H/2. );
+      glTexCoord2d( tx + tw, ty + th);
+      glVertex2d( x + w, y + h );
 
-      glTexCoord2d( 0., th );
-      glVertex2d( -SCREEN_W/2., SCREEN_H/2. );
+      glTexCoord2d( tx, ty + th);
+      glVertex2d( x, y + h );
    glEnd(); /* GL_QUADS */
    glDisable(GL_TEXTURE_2D);
 
@@ -195,92 +199,34 @@ static int nebu_checkCompat( const char* file )
  */
 static void saveNebulae( float *map, const uint32_t w, const uint32_t h, const char* file )
 {
-   int x,y;
-   char *buf;
-   unsigned char c;
-   int cur;
-   ssize_t size;
    char file_path[PATH_MAX];
+   SDL_Surface* sur;
 
-   size = w*h + 16 + 4;
-   buf = malloc(size);
+   sur = noise_surfaceFromNebulaeMap( map, w, h );
 
-   /* write the header */
-   memset(buf, '0', 16);
-   snprintf(buf, NEBU_FORMAT_HEADER, "NAEV NEBU v" NEBU_VERSION );
-   cur = 16;
-   memcpy(&buf[cur], &w, 4);
-   cur += 4;
-   memcpy(&buf[cur], &h, 4);
-   cur += 4;
-
-   /* Ze body */
-   for (y=0; y<(int)h; y++)
-      for (x=0; x<(int)w; x++) {
-         c = (unsigned char) 255.*map[y*w + x];
-         memcpy( &buf[cur++], &c, 1 );
-      }
-
-   /* write to a file */
    snprintf(file_path, PATH_MAX, "%s%s", nfile_basePath(), file );
-#ifdef _POSIX_SOURCE
-   int fd;
-   fd = open( file_path, O_WRONLY | O_CREAT | O_TRUNC,
-         S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH );
-   if (fd < 0) {
-      ERR("Unable to open file %s: %s", file, strerror(errno));
-      return;
-   }
-   if (write( fd, buf, size) != size) {
-      ERR("Error writing nebulae to %s: %s", file, strerror(errno));
-      return;
-   }
-   close(fd);
-#else /* _POSIX_SOURCE */
-#error "Needs implementation."
-#endif /* _POSIX_SOURCE */
+   SDL_SavePNG( sur, file_path );
+
+   SDL_FreeSurface( sur );
 }
 
 
 /*
  * Loads the nebuale from file.
  */
-static unsigned char* loadNebulae( const char* file, int* w, int* h )
+static SDL_Surface* loadNebulae( const char* file )
 {
-   unsigned char* buf;
-   char header[16];
-   uint32_t tw, th;
-   ssize_t len;
    char file_path[PATH_MAX];
+   SDL_Surface* sur;
 
-#ifdef _POSIX_SOURCE
-#define READ(b,l) \
-len = read(fd, b, l); \
-if (len < l) { \
-   WARN("Read too few bytes from %s: %s", file, strerror(errno)); \
-   return NULL; \
-}   
-   int fd;
-   int cur;
    snprintf(file_path, PATH_MAX, "%s%s", nfile_basePath(), file );
-   fd = open( file_path, O_RDONLY );
-   if (fd < 0) {
-      ERR("Unable to open file %s: %s", file_path, strerror(errno));
+   sur = IMG_Load( file_path );
+   if (sur == NULL) {
+      ERR("Unable to load Nebulae image: %s", file);
       return NULL;
    }
-   READ(header,16);
-   READ(&tw,4);
-   READ(&th,4);
-   buf = malloc(tw*th);
-   cur = 0;
-   while ((len = read(fd,&buf[cur],tw*th - cur))!=0)
-      cur += len;
-#else /* _POSIX_SOURCE */
-#error "Needs implementation."
-#endif /* _POSIX_SOURCE */
-   (*w) = (int) tw;
-   (*h) = (int) th;
-   return buf;
+   
+   return sur;
 }
 
 

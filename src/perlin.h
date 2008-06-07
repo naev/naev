@@ -7,7 +7,6 @@
 
 float* noise_genNebulaeMap( const int w, const int h, const int n, float rug );
 SDL_Surface* noise_surfaceFromNebulaeMap( float* map, const int w, const int h );
-glTexture* noise_genCloud( const int w, const int h, double rug );
 
 
 #endif
