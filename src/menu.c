@@ -81,12 +81,18 @@ static void menu_generic_close( char* str );
 void menu_main (void)
 {
    unsigned int bwid, wid;
+   glTexture *tex;
+
+   tex = gl_newImage( "gfx/NAEV.png" );
 
    /* create background image window */
    bwid = window_create( "BG", -1, -1, SCREEN_W, SCREEN_H );
    window_addRect( bwid, 0, 0, SCREEN_W, SCREEN_H, "rctBG", &cBlack, 0 );
    window_addCust( bwid, 0, 0, SCREEN_W, SCREEN_H, "cstBG", 0,
          (void(*)(double,double,double,double)) nebu_render, NULL );
+   window_addImage( bwid, (SCREEN_W-tex->sw)/2., -50, "imgLogo", tex, 0 );
+   window_addText( bwid, 0., 50, SCREEN_W, 30., 1, "txtBG", NULL,
+         &cWhite, naev_version() );
 
    /* create menu window */
    wid = window_create( "Main Menu", -1, -1, MAIN_WIDTH, MAIN_HEIGHT );
