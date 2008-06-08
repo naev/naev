@@ -917,7 +917,7 @@ int space_load (void)
  */
 void space_render( double dt )
 {
-   if (cur_system->nebu_density > 0.)
+   if ((cur_system != NULL) && (cur_system->nebu_density > 0.))
       nebu_render();
    else
       space_renderStars(dt);
@@ -929,7 +929,7 @@ void space_render( double dt )
  */
 void space_renderOverlay (void)
 {
-   if (cur_system->nebu_density > 0.)
+   if ((cur_system != NULL) && (cur_system->nebu_density > 0.))
       nebu_renderOverlay( cur_system->nebu_density );
 }
 
