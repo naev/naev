@@ -24,7 +24,7 @@
 /*
  * Requirements
  */
-#define OPENGL_REQ_MULTITEX      3
+#define OPENGL_REQ_MULTITEX      2 /* 2 is minimum OpenGL 1.2 must have */
 
 
 /* the screen info, gives data of current opengl settings */
