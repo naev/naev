@@ -48,6 +48,7 @@ typedef struct glInfo_ {
    int r, g, b, a; /* framebuffer values in bits */
    int flags; /* stores different propertiers */
    int tex_max; /* maximum texture size */
+   int multitex_max; /* maximum multitexture levels */
 } glInfo;
 extern glInfo gl_screen; /* local structure set with gl_init and co */
 

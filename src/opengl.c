@@ -21,6 +21,12 @@
 #include "pack.h"
 
 
+/*
+ * Requirements
+ */
+#define OPENGL_REQ_MULTITEX      3
+
+
 /* the screen info, gives data of current opengl settings */
 glInfo gl_screen;
 
@@ -1010,14 +1016,15 @@ int gl_init()
    if (doublebuf) gl_screen.flags |= OPENGL_DOUBLEBUF;
    gl_screen.depth = gl_screen.r + gl_screen.g + gl_screen.b + gl_screen.a;
 
-   /* get info about some extensions */
+   /* Get info about some extensions */
    if (gl_hasExt("GL_ARB_vertex_shader")==GL_TRUE)
       gl_screen.flags |= OPENGL_VERT_SHADER;
    if (gl_hasExt("GL_ARB_fragment_shader")==GL_TRUE)
       gl_screen.flags |= OPENGL_FRAG_SHADER;
 
-   /* maximum texture size */
+   /* Texture information */
    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &gl_screen.tex_max);
+   glGetIntegerv(GL_MAX_TEXTURE_UNITS, &gl_screen.multitex_max);
 
    /* Debug happiness */
    DEBUG("OpenGL Window Created: %dx%d@%dbpp %s", SCREEN_W, SCREEN_H, gl_screen.depth,
@@ -1028,8 +1035,12 @@ int gl_init()
          gl_screen.tex_max);
    DEBUG("Renderer: %s", glGetString(GL_RENDERER));
    DEBUG("Version: %s", glGetString(GL_VERSION));
+   /* Now check for things that can be bad */
+   if (gl_screen.multitex_max < OPENGL_REQ_MULTITEX)
+      WARN("Missing texture units (%d required, %d found)",
+            OPENGL_REQ_MULTITEX, gl_screen.multitex_max );
    if (!gl_has(OPENGL_FRAG_SHADER))
-      DEBUG("No fragment shader extension detected");
+      DEBUG("No fragment shader extension detected"); /* Not a warning yet... */
    DEBUG("");
 
    /* some OpenGL options */
@@ -1068,6 +1079,16 @@ int gl_init()
  */
 void gl_exit()
 {
+   glTexList *tex;
+
+   /* Make sure there's no texture leak */
+   if (texture_list != NULL) {
+      DEBUG("Texture leak detected!");
+      for (tex=texture_list; tex!=NULL; tex=tex->next)
+         DEBUG("   '%s' opened %d times", tex->tex->name, tex->used );
+   }
+
+   /* Shut down the subsystem */
    SDL_QuitSubSystem(SDL_INIT_VIDEO);
 }
 
