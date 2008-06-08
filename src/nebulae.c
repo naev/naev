@@ -15,12 +15,16 @@
 #include "nfile.h"
 #include "perlin.h"
 #include "rng.h"
+#include "menu.h"
 
 
 #define NEBU_DT_MAX           5.
 
 #define NEBULAE_Z             16 /* Z plane */
 #define NEBULAE_PATH          "gen/nebu_%02d.png"
+
+
+extern double gui_xoff, gui_yoff;
 
 
 /* The nebulae textures */
@@ -157,6 +161,8 @@ void nebu_render (void)
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, nebu_textures[cur_nebu[1]]);
 
+   glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+
    /* Texture 1 */
    glActiveTexture( GL_TEXTURE1 );
    glEnable(GL_TEXTURE_2D);
@@ -205,7 +211,6 @@ void nebu_render (void)
       glVertex2d( -SCREEN_W/2.,  SCREEN_H/2. );
    glEnd(); /* GL_QUADS */
 
-   /* Clean up */
    glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
    glDisable(GL_TEXTURE_2D);
    glActiveTexture( GL_TEXTURE0 );
@@ -214,6 +219,90 @@ void nebu_render (void)
 
    /* anything failed? */
    gl_checkErr();
+}
+
+
+void nebu_renderOverlay( double density )
+{
+#define ANG45     0.70710678118654757
+#define COS225    0.92387953251128674
+#define SIN225    0.38268343236508978
+   glShadeModel(GL_SMOOTH);
+   glMatrixMode(GL_PROJECTION);
+   glPushMatrix();
+      glTranslated(gui_xoff, gui_yoff, 0.);
+
+   /* Stuff player partially sees */
+   glBegin(GL_TRIANGLE_FAN);
+      ACOLOUR(cPurple, 0.);
+      glVertex2d( 0., 0. );
+      ACOLOUR(cPurple, 1.);
+      glVertex2d( -density, 0. );
+      glVertex2d( -density*COS225, density*SIN225 );
+      glVertex2d( -density*ANG45, density*ANG45 );
+      glVertex2d( -density*SIN225, density*COS225 );
+      glVertex2d( 0., density );
+      glVertex2d( density*SIN225, density*COS225 );
+      glVertex2d( density*ANG45, density*ANG45 );
+      glVertex2d( density*COS225, density*SIN225 );
+      glVertex2d( density, 0. );
+      glVertex2d( density*COS225, -density*SIN225 );
+      glVertex2d( density*ANG45, -density*ANG45 );
+      glVertex2d( density*SIN225, -density*COS225 );
+      glVertex2d( 0., -density);
+      glVertex2d( -density*SIN225, -density*COS225 );
+      glVertex2d( -density*ANG45, -density*ANG45 );
+      glVertex2d( -density*COS225, -density*SIN225 );
+      glVertex2d( -density, 0. );
+   glEnd(); /* GL_TRIANGLE_FAN */
+
+   glShadeModel(GL_FLAT);
+
+   /* Stuff player can't see */
+   glBegin(GL_TRIANGLE_STRIP);
+      ACOLOUR(cPurple, 1.);
+      /* Start at the left */
+      glVertex2d( -density, 0. );
+      glVertex2d( -density*COS225, density*SIN225 );
+      glVertex2d( -SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
+      glVertex2d( -density*ANG45, density*ANG45 );
+      glVertex2d( -density*SIN225, density*COS225 );
+      glVertex2d( -SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
+      glVertex2d( SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
+      /* Move to the top */
+      glVertex2d( 0., density );
+      glVertex2d( density*SIN225, density*COS225 );
+      glVertex2d( SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
+      glVertex2d( density*ANG45, density*ANG45 );
+      glVertex2d( density*COS225, density*SIN225 );
+      glVertex2d( SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
+      /* Down to the right */
+      glVertex2d( density, 0. );
+      glVertex2d( SCREEN_W/2.-gui_xoff, -SCREEN_H/2.-gui_yoff );
+      glVertex2d( density*COS225, -density*SIN225 );
+      glVertex2d( SCREEN_W/2.-gui_xoff, -SCREEN_H/2.-gui_yoff );
+      glVertex2d( density*ANG45, -density*ANG45 );
+      glVertex2d( density*SIN225, -density*COS225 );
+      glVertex2d( SCREEN_W/2.-gui_xoff, -SCREEN_H/2.-gui_yoff );
+      glVertex2d( -SCREEN_W/2.-gui_xoff, -SCREEN_H/2.-gui_yoff );
+      /* At the bottom */
+      glVertex2d( 0., -density);
+      glVertex2d( -density*SIN225, -density*COS225 );
+      glVertex2d( -SCREEN_W/2.-gui_xoff, -SCREEN_H/2.-gui_yoff );
+      glVertex2d( -density*ANG45, -density*ANG45 );
+      glVertex2d( -density*COS225, -density*SIN225 );
+      glVertex2d( -SCREEN_W/2.-gui_xoff, -SCREEN_H/2.-gui_yoff );
+      /* Back to origin */
+      glVertex2d( -density, 0. );
+      glVertex2d( -SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
+   glEnd(); /* GL_QUAD_STRIP */
+
+   glPopMatrix();
+
+   gl_checkErr();
+#undef ANG45
+#undef COS225
+#undef SIN225
 }
 
 

@@ -385,6 +385,7 @@ static void render_all (void)
    pilots_render();
    weapons_render(WEAPON_LAYER_FG);
    spfx_render(SPFX_LAYER_BACK);
+   space_renderOverlay();
    /* FG */
    player_render();
    spfx_render(SPFX_LAYER_FRONT);

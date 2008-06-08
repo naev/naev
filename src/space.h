@@ -124,6 +124,9 @@ typedef struct StarSystem_ {
    int *jumps; /* adjacent star system index numbers */
    int njumps; /* number of adjacent jumps */
 
+   double nebu_density; /* Nebulae density */
+   double nebu_volatility; /* Nebulae volatility - Not used yet */
+
    unsigned int flags; /* flags for system properties */
 } StarSystem;
 
@@ -148,6 +151,7 @@ Planet* planet_get( char* planetname );
  * render
  */
 void space_render( double dt );
+void space_renderOverlay (void);
 void planets_render (void);
 
 /*

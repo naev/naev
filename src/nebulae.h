@@ -8,12 +8,20 @@
 
 
 /*
- * Tries to find nebulae to load up, if not will generate them.
+ * Init/Exit
  */
 void nebu_init (void);
 void nebu_exit (void);
 
+/*
+ * Render
+ */
 void nebu_render (void);
+void nebu_renderOverlay( double density );
+
+/*
+ * Misc
+ */
 void nebu_forceGenerate (void);
 
 
