@@ -21,6 +21,7 @@
 #include "toolkit.h"
 #include "spfx.h"
 #include "ntime.h"
+#include "nebulae.h"
 
 
 #define XML_PLANET_ID         "Planets"
@@ -91,6 +92,7 @@ static int mstars = 0; /* memory stars are taking */
  */
 /* intern */
 static Planet* planet_pull( const char* name );
+static void space_renderStars( double dt );
 static void space_addFleet( Fleet* fleet );
 static StarSystem* system_parse( const xmlNodePtr parent );
 static void system_parseJumps( const xmlNodePtr parent );
@@ -914,6 +916,16 @@ int space_load (void)
  * renders the system
  */
 void space_render( double dt )
+{
+   space_renderStars(dt);
+   /*nebu_render();*/
+}
+
+
+/*
+ * Renders stars
+ */
+static void space_renderStars( double dt )
 {
    int i;
    unsigned int t, timer;
