@@ -122,7 +122,15 @@ static void map_update (void)
    char buf[100];
 
    sys = &systems_stack[ map_selected ];
-   
+  
+   if (!sys_isKnown(sys)) { /* System isn't known, erase all */
+      window_modifyText( map_wid, "txtSysname", "Unknown" );
+      window_modifyText( map_wid, "txtFaction", "Unknown" );
+      window_modifyText( map_wid, "txtPlanets", "Unknown" );
+      return;
+   }
+
+   /* System is known */
    window_modifyText( map_wid, "txtSysname", sys->name );
 
    if (sys->nplanets == 0) /* no planets -> no factions */
