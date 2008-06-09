@@ -13,7 +13,7 @@ def uniq(alist):    # Fastest order preserving
       alist.append(a)
 
 
-def load(xmlfile, tag, has_name=True, do_array=None, do_special=None):
+def load(xmlfile, tag, has_name=True, do_array=None, do_special=None, do_special2=None):
    dom = minidom.parse(xmlfile)
    xmlNodes = dom.getElementsByTagName(tag)
 
@@ -27,7 +27,7 @@ def load(xmlfile, tag, has_name=True, do_array=None, do_special=None):
 
       # append the element to the dictionary
       for bignode in filter(lambda x: x.nodeType==x.ELEMENT_NODE, xmlNode.childNodes):
-         mdic[bignode.nodeName], size = load_Tag( bignode, do_array, do_special )
+         mdic[bignode.nodeName], size = load_Tag( bignode, do_array, do_special, do_special2 )
 
       dictionary[name] = mdic
    
@@ -35,7 +35,7 @@ def load(xmlfile, tag, has_name=True, do_array=None, do_special=None):
    return dictionary
 
 
-def load_Tag( node, do_array=None, do_special=None ):
+def load_Tag( node, do_array=None, do_special=None, do_special2=None ):
 
    i = 0
 
@@ -49,25 +49,68 @@ def load_Tag( node, do_array=None, do_special=None ):
 
    for child in filter(lambda x: x.nodeType==x.ELEMENT_NODE, node.childNodes):
       n = 0
-      children, n = load_Tag( child, do_array, do_special )
+      children, n = load_Tag( child, do_array, do_special, do_special2 )
 
       # just slap the children on
       if n > 0:
          section[child.nodeName] = children
       
       # big ugly hack to use list instead of array
+      #
+      # -- PARAMETER FORMAT --
+      # [KEY, ...]
+      #
+      # -- XML INPUT --
+      # <KEY>
+      #   <foo>xxx</foo>
+      #   <foo>yyy</foo>
+      #   ...
+      # </KEY>
+      #
+      # -- PYTHON OUTPUT --
+      # key:["xxx","xxx",...]
+      #
       elif use_array and node.nodeName in do_array:
          array.append(child.firstChild.data)
 
       # uglier hack for special things
+      #
+      # -- PARAMETER FORMAT --
+      # {KEY:VALUE, ...}
+      #
+      # -- XML INPUT --
+      # <KEY>
+      #    <foo VALUE="aaa">xxx</foo>
+      #    <foo VALUE="bbb">yyy</foo>
+      #    ...
+      # </KEY>
+      #
+      # -- PYTHON OUTPUT --
+      # KEY:[{"xxx":"aaa"},{"yyy":"bbb"}]
+      #
       elif use_array and do_special != None and node.nodeName in do_special.keys():
          section = {}
          section[child.firstChild.data] = \
                child.attributes[do_special[node.nodeName]].value
          array.append(section)
 
-      elif n > 0:
-         section[child.nodeName] = children
+      # I think the ugly hacks are starting to be overkill
+      #
+      # -- PARAMETER FORMAT --
+      # {KEY:VALUE, ...}
+      #
+      # -- XML INPUT --
+      # <KEY VALUE="aaa" ...>"xxx"</KEY>
+      #
+      # -- PYTHON OUTPUT --
+      # KEY:["xxx","aaa"]
+      #
+      elif do_special2 != None and node.nodeName in do_special2.keys():
+         array2 = []
+         array2.append( child.firstChild.data )
+         for item in do_special2[node.nodeName]:
+            array2.append( child.attributes[do_special[node.nodeName]].value )
+         section[node.nodeName]
 
       # normal way (but will overwrite lists)
       else:
@@ -83,7 +126,7 @@ def load_Tag( node, do_array=None, do_special=None ):
 
 
 
-def save(xmlfile, data, basetag, tag, has_name=True, do_array=None, do_special=None):
+def save(xmlfile, data, basetag, tag, has_name=True, do_array=None, do_special=None, do_special2=None):
    """
    do_array is a DICTIONARY, not a list here
    """
@@ -97,7 +140,7 @@ def save(xmlfile, data, basetag, tag, has_name=True, do_array=None, do_special=N
       if has_name:
          elem.setAttribute("name",key)
 
-         save_Tag( xml, elem, value, do_array, do_special )
+         save_Tag( xml, elem, value, do_array, do_special, do_special2 )
       base.appendChild(elem)
    xml.appendChild(base)
 
@@ -109,11 +152,25 @@ def save(xmlfile, data, basetag, tag, has_name=True, do_array=None, do_special=N
 
 
 
-def save_Tag( xml, parent, data, do_array=None, do_special=None ):
+def save_Tag( xml, parent, data, do_array=None, do_special=None, do_special2=None ):
    for key, value in data.items():
       node = xml.createElement(key)
 
       # checks if it needs to parse an array instead of a dictionary
+      #
+      # -- PARAMETER FORMAT --
+      # { KEY:VALUE, ... }
+      #
+      # -- PYTHON INPUT
+      # KEY:["xxx","yyy",....]
+      #
+      # -- XML OUTPUT --
+      # <KEY>
+      #    <VALUE>xxx</VALUE>
+      #    <VALUE>yyy</VALUE>
+      #    ...
+      # </KEY>
+      #
       if do_array != None and key in do_array.keys():
          for text in value:
             node2 = xml.createElement( do_array[key] )
@@ -122,6 +179,20 @@ def save_Tag( xml, parent, data, do_array=None, do_special=None ):
             node.appendChild(node2)
       
       # checks to see if we need to run the ULTRA UBER HACK
+      #
+      # -- PARAMETER FORMAT --
+      # { KEY:[VALUE1, VALUE2] }
+      #
+      # -- PYTHON INPUT --
+      # KEY:[{"xxx":"aaa"},{"yyy":"bbb"}]
+      #
+      # -- XML OUTPUT --
+      # <KEY>
+      #    <VALUE1 VALUE2="aaa">xxx</VALUE1>
+      #    <VALUE1 VALUE2="bbb">yyy</VALUE1>
+      #    ...
+      # </KEY>
+      #
       elif do_special != None and key in do_special.keys():
          for item in value:
             for key2, value2 in item.items(): # should only be one member
@@ -130,9 +201,26 @@ def save_Tag( xml, parent, data, do_array=None, do_special=None ):
                txtnode = xml.createTextNode( str(key2) )
                node2.appendChild(txtnode)
                node.appendChild(node2)
+      
+      # if you thought the last hack was the ULTRA UBER HACK, think again
+      #
+      # -- PARAMETER FORMAT --
+      # { KEY1:VALUE, ... }
+      #
+      # -- PYTHON INPUT --
+      # KEY:{"xxx":"aaa"}
+      #
+      # -- XML OUTPUT --
+      # <KEY VALUE="aaa">"xxx"</KEY>
+      #
+      elif do_special2 != None and key in do_special2.keys():
+         for key2, value2 in value.items(): # should only be one member
+            txtnode = xml.createTextNode( str(key2) )
+            node.appendChild(txtnode)
+            node.setAttribute( do_special2[key], value2 )
 
       elif isinstance(value,dict):
-         save_Tag( xml, node, value, do_array, do_special )
+         save_Tag( xml, node, value, do_array, do_special, do_special2 )
 
       # standard dictionary approach
       else:

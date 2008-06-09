@@ -28,12 +28,14 @@ class Space:
 
    def loadSystems(self, xmlfile):
       self.systems = data.load(xmlfile, "ssys", True,
-            ["jumps","planets"], {"fleets":"chance"} )
+            ["jumps","planets"], {"fleets":"chance"},
+            {"nebulae":"volatility"})
 
 
    def saveSystems(self, xmlfile):
       data.save( "ssys.xml", self.systems, "Systems", "ssys", True,
-            {"jumps":"jump","planets":"planet"}, {"fleets":["fleet","chance"]})
+            {"jumps":"jump","planets":"planet"}, {"fleets":["fleet","chance"]},
+            {"nebulae":"volatility"})
 
 
    def loadPlanets(self, xmlfile):
@@ -287,7 +289,7 @@ class Space:
 
    def __supdate(self, wgt=None, index=None, iter=None):
       """
-      Update the window
+      Update the star system window
       """
 
       # store the current values
@@ -307,6 +309,19 @@ class Space:
       }
       for key, value in dic.items():
          self.__swidget(key).set_text(str(value))
+
+      # load nebulae properties
+      print "LOAD %s" % self.cur_system
+      print system["general"]
+      try:
+         for key, val in system["general"]["nebulae"].items():
+            self.__swidget("spiNebuDensity").set_text(str(key))
+            self.__swidget("spiNebuVolatility").set_text(str(val))
+      except:
+         system["general"]["nebulae"] = {}
+         nebu = system["general"]["nebulae"]['0'] = '0'
+         self.__swidget("spiNebuDensity").set_text("0")
+         self.__swidget("spiNebuVolatility").set_text("0")
 
       # load jumps
       jumps = gtk.ListStore(str)
@@ -344,6 +359,10 @@ class Space:
       self.__space_draw()
 
    def __pupdate(self, wgt=None, event=None):
+      '''
+      Updates the current planet window
+      '''
+
       # store current values
       if self.cur_planet != self.__curPlanet():
          self.__pstore()
@@ -453,8 +472,11 @@ class Space:
 
 
    def __sstore(self):
+      '''
+      Stores the system stuff
+      '''
       sys_name = self.__swidget("inpName").get_text()
-      if sys_name == "":
+      if sys_name == "" or self.cur_system == self.__curSystem():
          return
 
       # renamed the current system
@@ -491,9 +513,19 @@ class Space:
       self.__sinpStore(system,"spiStars","general","stars") 
       self.__sinpStore(system,"spiInterference","general","interference")
       self.__sinpStore(system,"spiAsteroids","general","asteroids")
+      # nebulae
+      print "SAVE %s" % self.cur_system
+      print system["general"]
+      system["general"]["nebulae"] = {}
+      density = self.__swidget("spiNebuDensity").get_text()
+      volatility = self.__swidget("spiNebuVolatility").get_text()
+      system["general"]["nebulae"][density] = volatility
 
 
    def __pstore(self):
+      '''
+      Stores the planet stuff
+      '''
       planet_name = self.__pwidget("inpName").get_text()
       if planet_name == "":
          return
