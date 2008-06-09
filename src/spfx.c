@@ -27,7 +27,7 @@
  */
 /* shake aka rumble */
 static double shake_rad = 0.;
-static Vector2d shake_pos = { .x = 0., .y = 0. };
+Vector2d shake_pos = { .x = 0., .y = 0. }; /* used in nebulae.c */
 static Vector2d shake_vel = { .x = 0., .y = 0. };
 static int shake_off = 1;
 

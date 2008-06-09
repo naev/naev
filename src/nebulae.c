@@ -24,7 +24,9 @@
 #define NEBULAE_PATH          "gen/nebu_%02d.png"
 
 
+/* Externs */
 extern double gui_xoff, gui_yoff;
+extern Vector2d shake_pos;
 
 
 /* The nebulae textures */
@@ -192,6 +194,11 @@ void nebu_render (void)
    glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND2_RGB, GL_SRC_ALPHA );
    glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND2_ALPHA, GL_SRC_ALPHA );
 
+   /* Compensate possible rumble */
+   glMatrixMode(GL_PROJECTION);
+   glPushMatrix();
+      glTranslated(shake_pos.x, shake_pos.y, 0.);
+
    /* Now render! */
    glBegin(GL_QUADS);
       glMultiTexCoord2d( GL_TEXTURE0, 0., 0. );
@@ -210,6 +217,8 @@ void nebu_render (void)
       glMultiTexCoord2d( GL_TEXTURE1, 0., th );
       glVertex2d( -SCREEN_W/2.,  SCREEN_H/2. );
    glEnd(); /* GL_QUADS */
+
+   glPopMatrix(); /* GL_PROJECTION */
 
    glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
    glDisable(GL_TEXTURE_2D);
@@ -230,7 +239,7 @@ void nebu_renderOverlay( double density )
    glShadeModel(GL_SMOOTH);
    glMatrixMode(GL_PROJECTION);
    glPushMatrix();
-      glTranslated(gui_xoff, gui_yoff, 0.);
+      glTranslated(gui_xoff+shake_pos.x, gui_yoff+shake_pos.y, 0.);
 
    /* Stuff player partially sees */
    glBegin(GL_TRIANGLE_FAN);
@@ -297,7 +306,7 @@ void nebu_renderOverlay( double density )
       glVertex2d( -SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
    glEnd(); /* GL_QUAD_STRIP */
 
-   glPopMatrix();
+   glPopMatrix(); /* GL_PROJECTION */
 
    gl_checkErr();
 #undef ANG45
