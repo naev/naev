@@ -311,8 +311,6 @@ class Space:
          self.__swidget(key).set_text(str(value))
 
       # load nebulae properties
-      print "LOAD %s" % self.cur_system
-      print system["general"]
       try:
          for key, val in system["general"]["nebulae"].items():
             self.__swidget("spiNebuDensity").set_text(str(key))
@@ -514,8 +512,6 @@ class Space:
       self.__sinpStore(system,"spiInterference","general","interference")
       self.__sinpStore(system,"spiAsteroids","general","asteroids")
       # nebulae
-      print "SAVE %s" % self.cur_system
-      print system["general"]
       system["general"]["nebulae"] = {}
       density = self.__swidget("spiNebuDensity").get_text()
       volatility = self.__swidget("spiNebuVolatility").get_text()
