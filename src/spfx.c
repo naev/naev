@@ -189,11 +189,16 @@ void spfx_clear (void)
 {
    int i;
 
+   /* Clear front layer */
    for (i=spfx_nstack_front-1; i>=0; i--)
       spfx_destroy( spfx_stack_front, &spfx_nstack_front, i );
 
+   /* Clear back layer */
    for (i=spfx_nstack_back-1; i>=0; i--)
       spfx_destroy( spfx_stack_back, &spfx_nstack_back, i );
+
+   /* Clear rumble */
+   shake_rad = 0;
 }
 
 /*
