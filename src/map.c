@@ -17,8 +17,8 @@
 #include "mission.h"
 
 
-#define WINDOW_WIDTH    550
-#define WINDOW_HEIGHT   440
+#define WINDOW_WIDTH    650
+#define WINDOW_HEIGHT   540
 
 #define MAP_WIDTH       (WINDOW_WIDTH-150)
 #define MAP_HEIGHT      (WINDOW_HEIGHT-100)
