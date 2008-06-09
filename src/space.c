@@ -732,6 +732,14 @@ static StarSystem* system_parse( const xmlNodePtr parent )
                flags |= FLAG_INTERFERENCESET;
                temp->interference = xml_getFloat(cur)/100.;
             }
+            else if (xml_isNode(cur,"nebulae")) {
+               ptrc = xml_nodeProp(cur,"volatility");
+               if (ptrc != NULL) { /* Has volatility  */
+                  temp->nebu_volatility = atof(ptrc);
+                  free(ptrc);
+               }
+               temp->nebu_density = xml_getFloat(cur);
+            }
          } while (xml_nextNode(cur));
       }
       /* loads all the planets */
