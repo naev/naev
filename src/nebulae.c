@@ -18,8 +18,6 @@
 #include "menu.h"
 
 
-#define NEBU_DT_MAX           5.
-
 #define NEBULAE_Z             16 /* Z plane */
 #define NEBULAE_PATH          "gen/nebu_%02d.png"
 
@@ -38,6 +36,10 @@ static int nebu_pw, nebu_ph;
 /* Information on rendering */
 static int cur_nebu[2] = { 0, 1 };
 static unsigned int last_render = 0;
+
+/* Nebulae properties */
+static double nebu_view = 0.;
+static double nebu_dt = 0.;
 
 
 /*
@@ -136,7 +138,7 @@ void nebu_render (void)
    /* calculate frame to draw */
    t = SDL_GetTicks();
    dt = (t - last_render) / 1000.;
-   if (dt > NEBU_DT_MAX) { /* Time to change */
+   if (dt > nebu_dt) { /* Time to change */
       temp = cur_nebu[0];
       cur_nebu[0] += cur_nebu[0] - cur_nebu[1];
       cur_nebu[1] = temp;
@@ -152,7 +154,7 @@ void nebu_render (void)
    col[0] = cPurple.r;
    col[1] = cPurple.g;
    col[2] = cPurple.b;
-   col[3] = dt / NEBU_DT_MAX;
+   col[3] = dt / nebu_dt;
 
    tw = (double)nebu_w / (double)nebu_pw;
    th = (double)nebu_h / (double)nebu_ph;
@@ -231,7 +233,7 @@ void nebu_render (void)
 }
 
 
-void nebu_renderOverlay( double density )
+void nebu_renderOverlay (void)
 {
 #define ANG45     0.70710678118654757
 #define COS225    0.92387953251128674
@@ -246,23 +248,23 @@ void nebu_renderOverlay( double density )
       ACOLOUR(cPurple, 0.);
       glVertex2d( 0., 0. );
       ACOLOUR(cPurple, 1.);
-      glVertex2d( -density, 0. );
-      glVertex2d( -density*COS225, density*SIN225 );
-      glVertex2d( -density*ANG45, density*ANG45 );
-      glVertex2d( -density*SIN225, density*COS225 );
-      glVertex2d( 0., density );
-      glVertex2d( density*SIN225, density*COS225 );
-      glVertex2d( density*ANG45, density*ANG45 );
-      glVertex2d( density*COS225, density*SIN225 );
-      glVertex2d( density, 0. );
-      glVertex2d( density*COS225, -density*SIN225 );
-      glVertex2d( density*ANG45, -density*ANG45 );
-      glVertex2d( density*SIN225, -density*COS225 );
-      glVertex2d( 0., -density);
-      glVertex2d( -density*SIN225, -density*COS225 );
-      glVertex2d( -density*ANG45, -density*ANG45 );
-      glVertex2d( -density*COS225, -density*SIN225 );
-      glVertex2d( -density, 0. );
+      glVertex2d( -nebu_view, 0. );
+      glVertex2d( -nebu_view*COS225, nebu_view*SIN225 );
+      glVertex2d( -nebu_view*ANG45, nebu_view*ANG45 );
+      glVertex2d( -nebu_view*SIN225, nebu_view*COS225 );
+      glVertex2d( 0., nebu_view );
+      glVertex2d( nebu_view*SIN225, nebu_view*COS225 );
+      glVertex2d( nebu_view*ANG45, nebu_view*ANG45 );
+      glVertex2d( nebu_view*COS225, nebu_view*SIN225 );
+      glVertex2d( nebu_view, 0. );
+      glVertex2d( nebu_view*COS225, -nebu_view*SIN225 );
+      glVertex2d( nebu_view*ANG45, -nebu_view*ANG45 );
+      glVertex2d( nebu_view*SIN225, -nebu_view*COS225 );
+      glVertex2d( 0., -nebu_view);
+      glVertex2d( -nebu_view*SIN225, -nebu_view*COS225 );
+      glVertex2d( -nebu_view*ANG45, -nebu_view*ANG45 );
+      glVertex2d( -nebu_view*COS225, -nebu_view*SIN225 );
+      glVertex2d( -nebu_view, 0. );
    glEnd(); /* GL_TRIANGLE_FAN */
 
    glShadeModel(GL_FLAT);
@@ -272,41 +274,41 @@ void nebu_renderOverlay( double density )
    glBegin(GL_TRIANGLE_FAN);
       /* Top Left */
       glVertex2d( -SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
-      glVertex2d( -density, 0. );
-      glVertex2d( -density*COS225, density*SIN225 );
-      glVertex2d( -density*ANG45, density*ANG45 );
-      glVertex2d( -density*SIN225, density*COS225 );
-      glVertex2d( 0., density );
+      glVertex2d( -nebu_view, 0. );
+      glVertex2d( -nebu_view*COS225, nebu_view*SIN225 );
+      glVertex2d( -nebu_view*ANG45, nebu_view*ANG45 );
+      glVertex2d( -nebu_view*SIN225, nebu_view*COS225 );
+      glVertex2d( 0., nebu_view );
       glVertex2d( SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
    glEnd(); /* GL_TRIANGLE_FAN */
    glBegin(GL_TRIANGLE_FAN);
       /* Top Right */
       glVertex2d( SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
-      glVertex2d( 0., density );
-      glVertex2d( density*SIN225, density*COS225 );
-      glVertex2d( density*ANG45, density*ANG45 );
-      glVertex2d( density*COS225, density*SIN225 );
-      glVertex2d( density, 0. );
+      glVertex2d( 0., nebu_view );
+      glVertex2d( nebu_view*SIN225, nebu_view*COS225 );
+      glVertex2d( nebu_view*ANG45, nebu_view*ANG45 );
+      glVertex2d( nebu_view*COS225, nebu_view*SIN225 );
+      glVertex2d( nebu_view, 0. );
       glVertex2d( SCREEN_W/2.-gui_xoff, -SCREEN_H/2.-gui_yoff );
    glEnd(); /* GL_TRIANGLE_FAN */
    glBegin(GL_TRIANGLE_FAN);
       /* Bottom Right */
       glVertex2d( SCREEN_W/2.-gui_xoff, -SCREEN_H/2.-gui_yoff );
-      glVertex2d( density, 0. );
-      glVertex2d( density*COS225, -density*SIN225 );
-      glVertex2d( density*ANG45, -density*ANG45 );
-      glVertex2d( density*SIN225, -density*COS225 );
-      glVertex2d( 0., -density);
+      glVertex2d( nebu_view, 0. );
+      glVertex2d( nebu_view*COS225, -nebu_view*SIN225 );
+      glVertex2d( nebu_view*ANG45, -nebu_view*ANG45 );
+      glVertex2d( nebu_view*SIN225, -nebu_view*COS225 );
+      glVertex2d( 0., -nebu_view);
       glVertex2d( -SCREEN_W/2.-gui_xoff, -SCREEN_H/2.-gui_yoff );
    glEnd(); /* GL_TRIANGLE_FAN */
    glBegin(GL_TRIANGLE_FAN);
       /* Bottom left */
       glVertex2d( -SCREEN_W/2.-gui_xoff, -SCREEN_H/2.-gui_yoff );
-      glVertex2d( 0., -density);
-      glVertex2d( -density*SIN225, -density*COS225 );
-      glVertex2d( -density*ANG45, -density*ANG45 );
-      glVertex2d( -density*COS225, -density*SIN225 );
-      glVertex2d( -density, 0. );
+      glVertex2d( 0., -nebu_view);
+      glVertex2d( -nebu_view*SIN225, -nebu_view*COS225 );
+      glVertex2d( -nebu_view*ANG45, -nebu_view*ANG45 );
+      glVertex2d( -nebu_view*COS225, -nebu_view*SIN225 );
+      glVertex2d( -nebu_view, 0. );
       glVertex2d( -SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
    glEnd(); /* GL_TRIANGLE_FAN */
 
@@ -316,6 +318,17 @@ void nebu_renderOverlay( double density )
 #undef ANG45
 #undef COS225
 #undef SIN225
+}
+
+
+/*
+ * Prepares the nebualae
+ */
+void nebu_prep( double density, double volatility )
+{
+   (void)volatility;
+   nebu_view = 1000. - density;  /* At density 1000 you're blind */
+   nebu_dt = 2000. / (density + 100.); /* Faster at higher density */
 }
 
 

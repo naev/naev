@@ -490,14 +490,21 @@ void space_init ( const char* sysname )
       player_message("Entering System %s on %s", sysname, nt);
       free(nt);
 
-      /* set up stars */
-      nstars = (cur_system->stars*SCREEN_W*SCREEN_H+STAR_BUF*STAR_BUF)/(800*640);
-      if (mstars < nstars)
-         stars = realloc(stars,sizeof(Star)*nstars); /* should realloc, not malloc */
-      for (i=0; i < nstars; i++) {
-         stars[i].brightness = (double)RNG( 50, 200 )/256.;
-         stars[i].x = (double)RNG( -STAR_BUF, SCREEN_W + STAR_BUF );
-         stars[i].y = (double)RNG( -STAR_BUF, SCREEN_H + STAR_BUF );
+      /* Handle background */
+      if (cur_system->nebu_density > 0.) {
+         /* Background is Nebulae */
+         nebu_prep( cur_system->nebu_density, cur_system->nebu_volatility );
+      }
+      else {
+         /* Backrgound is Stary */
+         nstars = (cur_system->stars*SCREEN_W*SCREEN_H+STAR_BUF*STAR_BUF)/(800*640);
+         if (mstars < nstars)
+            stars = realloc(stars,sizeof(Star)*nstars); /* should realloc, not malloc */
+         for (i=0; i < nstars; i++) {
+            stars[i].brightness = (double)RNG( 50, 200 )/256.;
+            stars[i].x = (double)RNG( -STAR_BUF, SCREEN_W + STAR_BUF );
+            stars[i].y = (double)RNG( -STAR_BUF, SCREEN_H + STAR_BUF );
+         }
       }
    }
 
@@ -925,7 +932,9 @@ int space_load (void)
  */
 void space_render( double dt )
 {
-   if ((cur_system != NULL) && (cur_system->nebu_density > 0.))
+   if (cur_system == NULL) return;
+
+   if (cur_system->nebu_density > 0.)
       nebu_render();
    else
       space_renderStars(dt);
@@ -937,8 +946,10 @@ void space_render( double dt )
  */
 void space_renderOverlay (void)
 {
-   if ((cur_system != NULL) && (cur_system->nebu_density > 0.))
-      nebu_renderOverlay( cur_system->nebu_density );
+   if (cur_system == NULL) return;
+
+   if (cur_system->nebu_density > 0.)
+      nebu_renderOverlay();
 }
 
 

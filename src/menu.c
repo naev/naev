@@ -84,6 +84,7 @@ void menu_main (void)
    glTexture *tex;
 
    tex = gl_newImage( "gfx/NAEV.png" );
+   nebu_prep( 300., 0. ); /* Needed for nebulae to not spaz out */
 
    /* create background image window */
    bwid = window_create( "BG", -1, -1, SCREEN_W, SCREEN_H );

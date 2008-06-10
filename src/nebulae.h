@@ -17,11 +17,12 @@ void nebu_exit (void);
  * Render
  */
 void nebu_render (void);
-void nebu_renderOverlay( double density );
+void nebu_renderOverlay (void);
 
 /*
  * Misc
  */
+void nebu_prep( double density, double volatility );
 void nebu_forceGenerate (void);
 
 
