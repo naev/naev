@@ -266,45 +266,49 @@ void nebu_renderOverlay( double density )
    glEnd(); /* GL_TRIANGLE_FAN */
 
    glShadeModel(GL_FLAT);
+   ACOLOUR(cPurple, 1.);
 
    /* Stuff player can't see */
-   glBegin(GL_TRIANGLE_STRIP);
-      ACOLOUR(cPurple, 1.);
-      /* Start at the left */
+   glBegin(GL_TRIANGLE_FAN);
+      /* Top Left */
+      glVertex2d( -SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
       glVertex2d( -density, 0. );
       glVertex2d( -density*COS225, density*SIN225 );
-      glVertex2d( -SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
       glVertex2d( -density*ANG45, density*ANG45 );
       glVertex2d( -density*SIN225, density*COS225 );
-      glVertex2d( -SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
+      glVertex2d( 0., density );
       glVertex2d( SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
-      /* Move to the top */
+   glEnd(); /* GL_TRIANGLE_FAN */
+   glBegin(GL_TRIANGLE_FAN);
+      /* Top Right */
+      glVertex2d( SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
       glVertex2d( 0., density );
       glVertex2d( density*SIN225, density*COS225 );
-      glVertex2d( SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
       glVertex2d( density*ANG45, density*ANG45 );
       glVertex2d( density*COS225, density*SIN225 );
-      glVertex2d( SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
-      /* Down to the right */
       glVertex2d( density, 0. );
       glVertex2d( SCREEN_W/2.-gui_xoff, -SCREEN_H/2.-gui_yoff );
-      glVertex2d( density*COS225, -density*SIN225 );
+   glEnd(); /* GL_TRIANGLE_FAN */
+   glBegin(GL_TRIANGLE_FAN);
+      /* Bottom Right */
       glVertex2d( SCREEN_W/2.-gui_xoff, -SCREEN_H/2.-gui_yoff );
+      glVertex2d( density, 0. );
+      glVertex2d( density*COS225, -density*SIN225 );
       glVertex2d( density*ANG45, -density*ANG45 );
       glVertex2d( density*SIN225, -density*COS225 );
-      glVertex2d( SCREEN_W/2.-gui_xoff, -SCREEN_H/2.-gui_yoff );
+      glVertex2d( 0., -density);
       glVertex2d( -SCREEN_W/2.-gui_xoff, -SCREEN_H/2.-gui_yoff );
-      /* At the bottom */
+   glEnd(); /* GL_TRIANGLE_FAN */
+   glBegin(GL_TRIANGLE_FAN);
+      /* Bottom left */
+      glVertex2d( -SCREEN_W/2.-gui_xoff, -SCREEN_H/2.-gui_yoff );
       glVertex2d( 0., -density);
       glVertex2d( -density*SIN225, -density*COS225 );
-      glVertex2d( -SCREEN_W/2.-gui_xoff, -SCREEN_H/2.-gui_yoff );
       glVertex2d( -density*ANG45, -density*ANG45 );
       glVertex2d( -density*COS225, -density*SIN225 );
-      glVertex2d( -SCREEN_W/2.-gui_xoff, -SCREEN_H/2.-gui_yoff );
-      /* Back to origin */
       glVertex2d( -density, 0. );
       glVertex2d( -SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
-   glEnd(); /* GL_QUAD_STRIP */
+   glEnd(); /* GL_TRIANGLE_FAN */
 
    glPopMatrix(); /* GL_PROJECTION */
 
