@@ -5,6 +5,7 @@ See Licensing and Copyright notice in resedit.py
 
 from xml.dom import minidom
 import sets
+import re
 
 def uniq(alist):    # Fastest order preserving
    s = sets.Set(alist)
@@ -145,7 +146,7 @@ def save(xmlfile, data, basetag, tag, has_name=True, do_array=None, do_special=N
    xml.appendChild(base)
 
    fp = open(xmlfile,"w")
-   xml.writexml(fp, "", "", "", "UTF-8")
+   write_proper_xml( fp, xml )
    fp.close()
 
    xml.unlink()
@@ -228,4 +229,47 @@ def save_Tag( xml, parent, data, do_array=None, do_special=None, do_special2=Non
             node.appendChild(txtnode)
 
       parent.appendChild(node)
+
+
+
+def write_proper_xml( fp, doc ):
+
+   fp.write('<?xml version="1.0" encoding="UTF-8"?>')
+   write_xml_node( fp, doc, '' )
+
+
+# Returns if it just wrote text
+def write_xml_node( fp, node, indent ):
+
+   # Special cases
+   if node.nodeType == node.TEXT_NODE:
+      fp.write(node.data)
+      return True
+   elif node.nodeType == node.DOCUMENT_NODE:
+      if node.childNodes:
+         for n in node.childNodes:
+            write_xml_node(fp,n,indent)
+      return False
+
+   fp.write('\n%s<%s' % (indent,node.nodeName))
+
+   # Process attributes
+   attrs = node.attributes
+   if attrs != None:
+      for a_name,a_value in attrs.items():
+         fp.write(' %s=\"%s\"' % (a_name,a_value))
+
+   # Process children
+   if node.childNodes:
+      fp.write(">") # no newline
+      for n in node.childNodes:
+         last = write_xml_node(fp,n,indent+' ')
+      if last:
+         fp.write('</%s>' % node.nodeName)
+      else:
+         fp.write('\n%s</%s>' % (indent,node.nodeName))
+   else:
+      fp.write("/>")
+
+   return False
 
