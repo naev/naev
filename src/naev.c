@@ -176,14 +176,14 @@ int main ( int argc, char** argv )
    gui_init(); /* initializes the GUI graphics */
    toolkit_init(); /* initializes the toolkit */
 
-   
+
    /* data loading */
    load_all();
 
 
    /* start menu */
    menu_main();
-   
+
    time = SDL_GetTicks(); /* initializes the time */
    /* 
     * main loop
@@ -312,7 +312,7 @@ static void fps_control (void)
 }
 
 
-const double fps_min = 1./50.;
+static const double fps_min = 1./50.;
 /**
  * @brief Updates the game itself (player flying around and friends).
  * @notes
@@ -330,16 +330,19 @@ static void update_all (void)
       tempdt = cur_dt - fps_min;
       pause_delay( (unsigned int)(tempdt*1000));
       update_routine(fps_min);
-      
+
       /* run as many cycles of dt=fps_min as needed */
       while (tempdt > fps_min) {
          pause_delay((unsigned int)(-fps_min*1000)); /* increment counters */
          update_routine(fps_min);
          tempdt -= fps_min;
       }
-   }
 
-   update_routine(cur_dt);
+      update_routine(tempdt); /* leftovers */
+      /* Note we don't touch cur_dt so that fps_display works well */
+   }
+   else /* Standard, just update with the last dt */
+      update_routine(cur_dt);
 }
 
 
