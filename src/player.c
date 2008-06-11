@@ -674,6 +674,16 @@ void player_renderBG (void)
  */
 void player_render (void)
 {
+   if ((player != NULL) && !player_isFlag(PLAYER_CREATING))
+      pilot_render(player);
+}
+
+
+/*
+ * Renders the player's GUI
+ */
+void player_renderGUI (void)
+{
    int i, j;
    double x, y;
    char str[10];
@@ -682,7 +692,7 @@ void player_render (void)
    glFont* f;
    StarSystem *sys;
 
-   /* pilot is dead or being created, just render him and stop */
+      /* pilot is dead or being created, just render him and stop */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
         pilot_isFlag(player,PILOT_DEAD)) {
       if (player_isFlag(PLAYER_DESTROYED)) {
@@ -691,8 +701,6 @@ void player_render (void)
             menu_death();
          }
       }
-      else if (!player_isFlag(PLAYER_CREATING))
-         pilot_render(player);
 
       /*
        * draw fancy cinematic scene borders
@@ -727,9 +735,6 @@ void player_render (void)
       x -= p->ship->gfx_space->sw * PILOT_SIZE_APROX;
       gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 1, c ); /* bottom left */
    }
-
-   /* render the player */
-   pilot_render(player);
 
    /* Lockon warning */
    if (player->lockons > 0)

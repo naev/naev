@@ -935,7 +935,7 @@ void space_render( const double dt )
    if (cur_system == NULL) return;
 
    if (cur_system->nebu_density > 0.)
-      nebu_render();
+      nebu_render(dt);
    else
       space_renderStars(dt);
 }

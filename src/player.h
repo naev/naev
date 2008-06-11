@@ -61,6 +61,7 @@ int gui_init (void);
 void gui_free (void);
 void player_render (void);
 void player_renderBG (void); /* renders BG layer player stuff */
+void player_renderGUI (void); /* renders GUI stuff */
 
 
 /*

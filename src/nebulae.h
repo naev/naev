@@ -16,7 +16,7 @@ void nebu_exit (void);
 /*
  * Render
  */
-void nebu_render (void);
+void nebu_render( const double dt );
 void nebu_renderOverlay( const double dt );
 void nebu_renderPuffs( const double dt, int below_player );
 

@@ -17,12 +17,14 @@
 #include "rng.h"
 #include "menu.h"
 #include "player.h"
+#include "pause.h"
 
 
 #define NEBULAE_Z             16 /* Z plane */
 #define NEBULAE_PUFFS         32 /* Amount of puffs to generate */
 #define NEBULAE_PATH_BG       "gen/nebu_bg_%dx%d_%02d.png"
-#define NEBULAE_PATH_PUFF     "gen/nebu_puff_%02d.png"
+
+#define NEBULAE_PUFF_BUFFER   300 /* Nebulae buffer */
 
 
 /* Externs */
@@ -45,19 +47,14 @@ static double nebu_view = 0.;
 static double nebu_dt = 0.;
 
 /* puff textures */
-typedef struct NebulaePuffTex_ {
-   GLuint tex; /* Actual texture */
-   double w, h; /* Real dimensions */
-   double pw, ph; /* Padding */
-} NebulaePuffTex;
-static NebulaePuffTex nebu_pufftexs[NEBULAE_PUFFS];
+static glTexture *nebu_pufftexs[NEBULAE_PUFFS];
 
 /* puff handling */
 typedef struct NebulaePuff_ {
    double x, y; /* Position */
    double a, va; /* alpha, alpha velocity */
    double height; /* height vs player */
-   NebulaePuffTex *tex; /* Texture */
+   int tex; /* Texture */
 } NebulaePuff;
 static NebulaePuff *nebu_puffs = NULL;
 static int nebu_npuffs = 0;
@@ -165,25 +162,25 @@ void nebu_exit (void)
    glDeleteTextures( NEBULAE_Z, nebu_textures );
 
    for (i=0; i<NEBULAE_PUFFS; i++)
-      glDeleteTextures( 1, &nebu_pufftexs[i].tex );
+      gl_freeTexture( nebu_pufftexs[i] );
 }
 
 
 /*
  * Renders the nebulae
  */
-void nebu_render (void)
+void nebu_render( const double dt )
 {
    unsigned int t;
-   double dt;
+   double ndt;
    double tw,th;
    GLfloat col[4];
    int temp;
 
    /* calculate frame to draw */
    t = SDL_GetTicks();
-   dt = (t - last_render) / 1000.;
-   if (dt > nebu_dt) { /* Time to change */
+   ndt = (t - last_render) / 1000.;
+   if (ndt > nebu_dt) { /* Time to change */
       temp = cur_nebu[0];
       cur_nebu[0] += cur_nebu[0] - cur_nebu[1];
       cur_nebu[1] = temp;
@@ -193,13 +190,14 @@ void nebu_render (void)
          cur_nebu[0] = 1;
 
       last_render = t;
-      dt = 0.;
+      ndt = 0.;
    }
 
+   /* Set the colour */
    col[0] = cPurple.r;
    col[1] = cPurple.g;
    col[2] = cPurple.b;
-   col[3] = dt / nebu_dt;
+   col[3] = ndt / nebu_dt;
 
    tw = (double)nebu_w / (double)nebu_pw;
    th = (double)nebu_h / (double)nebu_ph;
@@ -267,14 +265,18 @@ void nebu_render (void)
 
    glPopMatrix(); /* GL_PROJECTION */
 
+   /* Set values to defaults */
    glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
    glDisable(GL_TEXTURE_2D);
    glActiveTexture( GL_TEXTURE0 );
    glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
    glDisable(GL_TEXTURE_2D);
 
-   /* anything failed? */
+   /* Anything failed? */
    gl_checkErr();
+
+   /* Now render the puffs */
+   nebu_renderPuffs( dt, 1 );
 }
 
 
@@ -383,9 +385,11 @@ void nebu_renderOverlay( const double dt )
 void nebu_renderPuffs( const double dt, int below_player )
 {
    int i;
+   glColour cPuff;
 
-   glPushMatrix(); /* GL_PROJECTION */
-      glTranslated( -(double)SCREEN_W/2., -(double)SCREEN_H/2., 0. );
+   cPuff.r = cPurple.r;
+   cPuff.g = cPurple.g;
+   cPuff.b = cPurple.b;
 
    for (i=0; i<nebu_npuffs; i++) {
 
@@ -393,18 +397,28 @@ void nebu_renderPuffs( const double dt, int below_player )
             (!below_player && (nebu_puffs[i].height > 1.))) {
 
          /* calculate new position */
-         nebu_puffs[i].x -= player->solid->vel.x * nebu_puffs[i].height * dt;
-         nebu_puffs[i].y -= player->solid->vel.y * nebu_puffs[i].height * dt;
+         if (!paused) {
+            nebu_puffs[i].x -= player->solid->vel.x * nebu_puffs[i].height * dt;
+            nebu_puffs[i].y -= player->solid->vel.y * nebu_puffs[i].height * dt;
+         }
 
-         /* calculate new alpha */
-         /* nebu_puffs[i].a += nebu_puffs[i].va * dt; */
+         /* Calculate new alpha */
+         /* Nebu_puffs[i].a += nebu_puffs[i].va * dt; */
+         cPuff.a = nebu_puffs[i].a;
 
-         /* check boundries */
+         /* Check boundries */
+         if (nebu_puffs[i].x > SCREEN_W + NEBULAE_PUFF_BUFFER)
+            nebu_puffs[i].x = -NEBULAE_PUFF_BUFFER;
+         else if (nebu_puffs[i].y > SCREEN_H + NEBULAE_PUFF_BUFFER)
+            nebu_puffs[i].y = -NEBULAE_PUFF_BUFFER;
+         else if (nebu_puffs[i].x < -NEBULAE_PUFF_BUFFER)
+            nebu_puffs[i].x = SCREEN_W + NEBULAE_PUFF_BUFFER;
+         else if (nebu_puffs[i].y < -NEBULAE_PUFF_BUFFER)
+            nebu_puffs[i].y = SCREEN_H + NEBULAE_PUFF_BUFFER;
 
-         /* render */
-         ACOLOUR( cPurple, nebu_puffs[i].a );
-         glBegin(GL_QUADS);
-         glEnd(); /* GL_QUADS */
+         /* Render */
+         gl_blitStatic( nebu_pufftexs[nebu_puffs[i].tex],
+               nebu_puffs[i].x, nebu_puffs[i].y, &cPuff );
       }
    }
 }
@@ -416,8 +430,22 @@ void nebu_renderPuffs( const double dt, int below_player )
 void nebu_prep( double density, double volatility )
 {
    (void)volatility;
+   int i;
+
    nebu_view = 1000. - density;  /* At density 1000 you're blind */
    nebu_dt = 2000. / (density + 100.); /* Faster at higher density */
+
+   nebu_npuffs = density/4.;
+   nebu_puffs = realloc(nebu_puffs, sizeof(NebulaePuff)*nebu_npuffs);
+   for (i=0; i<nebu_npuffs; i++) {
+      nebu_puffs[i].tex = RNG(0,NEBULAE_PUFFS-1);
+      nebu_puffs[i].x = (double)RNG(-NEBULAE_PUFF_BUFFER,
+            SCREEN_W + NEBULAE_PUFF_BUFFER);
+      nebu_puffs[i].y = (double)RNG(-NEBULAE_PUFF_BUFFER,
+            SCREEN_H + NEBULAE_PUFF_BUFFER);
+      nebu_puffs[i].a = (double)RNG(20,100)/100.;
+      nebu_puffs[i].height = RNGF()*2.;
+   }
 }
 
 
@@ -476,16 +504,9 @@ static void nebu_generatePuffs (void)
       nebu = noise_genNebulaePuffMap( w, h, 1. );
       sur = nebu_surfaceFromNebulaeMap( nebu, w, h );
       free(nebu);
-
-      /* Set dimensions */
-      nebu_pufftexs[i].w = w;
-      nebu_pufftexs[i].h = h;
-      nebu_pufftexs[i].pw = gl_pot( w );
-      nebu_pufftexs[i].ph = gl_pot( h );
-
-      /* Actually create the texture */
-      glGenTextures( 1, &nebu_pufftexs[i].tex );
-      nebu_loadTexture( sur, 0, 0, nebu_pufftexs[i].tex );
+      
+      /* Load the texture */
+      nebu_pufftexs[i] =  gl_loadImage( sur );
    }
 }
 
@@ -509,11 +530,14 @@ static void saveNebulae( float *map, const uint32_t w, const uint32_t h, const c
    char file_path[PATH_MAX];
    SDL_Surface* sur;
 
+   /* fix surface */
    sur = nebu_surfaceFromNebulaeMap( map, w, h );
 
+   /* save */
    snprintf(file_path, PATH_MAX, "%s%s", nfile_basePath(), file );
    SDL_SavePNG( sur, file_path );
 
+   /* cleanup */
    SDL_FreeSurface( sur );
 }
 
@@ -526,6 +550,7 @@ static SDL_Surface* loadNebulae( const char* file )
    char file_path[PATH_MAX];
    SDL_Surface* sur;
 
+   /* loads the file */
    snprintf(file_path, PATH_MAX, "%s%s", nfile_basePath(), file );
    sur = IMG_Load( file_path );
    if (sur == NULL) {
@@ -547,7 +572,8 @@ static SDL_Surface* nebu_surfaceFromNebulaeMap( float* map, const int w, const i
    SDL_Surface *sur;
    uint32_t *pix;
    double c;
-   
+  
+   /* the good surface */
    sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );
    pix = sur->pixels;
    
