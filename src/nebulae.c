@@ -52,7 +52,6 @@ static glTexture *nebu_pufftexs[NEBULAE_PUFFS];
 /* puff handling */
 typedef struct NebulaePuff_ {
    double x, y; /* Position */
-   double a, va; /* alpha, alpha velocity */
    double height; /* height vs player */
    int tex; /* Texture */
 } NebulaePuff;
@@ -285,16 +284,16 @@ void nebu_renderOverlay( const double dt )
 #define ANG45     0.70710678118654757
 #define COS225    0.92387953251128674
 #define SIN225    0.38268343236508978
-   glMatrixMode(GL_PROJECTION);
-   glPushMatrix();
-      glTranslated(gui_xoff+shake_pos.x, gui_yoff+shake_pos.y, 0.);
-
 
    /*
     * Renders the puffs
     */
    nebu_renderPuffs( dt, 0 );
 
+   /* Prepare the matrix */
+   glMatrixMode(GL_PROJECTION);
+   glPushMatrix();
+      glTranslated(gui_xoff+shake_pos.x, gui_yoff+shake_pos.y, 0.);
 
    /*
     * Mask for area player can still see (partially)
@@ -385,11 +384,6 @@ void nebu_renderOverlay( const double dt )
 void nebu_renderPuffs( const double dt, int below_player )
 {
    int i;
-   glColour cPuff;
-
-   cPuff.r = cPurple.r;
-   cPuff.g = cPurple.g;
-   cPuff.b = cPurple.b;
 
    for (i=0; i<nebu_npuffs; i++) {
 
@@ -401,10 +395,6 @@ void nebu_renderPuffs( const double dt, int below_player )
             nebu_puffs[i].x -= player->solid->vel.x * nebu_puffs[i].height * dt;
             nebu_puffs[i].y -= player->solid->vel.y * nebu_puffs[i].height * dt;
          }
-
-         /* Calculate new alpha */
-         /* Nebu_puffs[i].a += nebu_puffs[i].va * dt; */
-         cPuff.a = nebu_puffs[i].a;
 
          /* Check boundries */
          if (nebu_puffs[i].x > SCREEN_W + NEBULAE_PUFF_BUFFER)
@@ -418,7 +408,7 @@ void nebu_renderPuffs( const double dt, int below_player )
 
          /* Render */
          gl_blitStatic( nebu_pufftexs[nebu_puffs[i].tex],
-               nebu_puffs[i].x, nebu_puffs[i].y, &cPuff );
+               nebu_puffs[i].x, nebu_puffs[i].y, &cPurple );
       }
    }
 }
@@ -443,8 +433,7 @@ void nebu_prep( double density, double volatility )
             SCREEN_W + NEBULAE_PUFF_BUFFER);
       nebu_puffs[i].y = (double)RNG(-NEBULAE_PUFF_BUFFER,
             SCREEN_H + NEBULAE_PUFF_BUFFER);
-      nebu_puffs[i].a = (double)RNG(20,100)/100.;
-      nebu_puffs[i].height = RNGF()*2.;
+      nebu_puffs[i].height = RNGF() + 0.2;
    }
 }
 

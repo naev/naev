@@ -295,7 +295,8 @@ float* noise_genNebulaeMap( const int w, const int h, const int n, float rug )
  */
 float* noise_genNebulaePuffMap( const int w, const int h, float rug )
 {
-   int x, y;
+   int x,y, hw,hh;
+   float d;
    float f[3];
    int octaves;
    float hurst;
@@ -323,6 +324,9 @@ float* noise_genNebulaePuffMap( const int w, const int h, float rug )
    /* Start to create the nebulae */
    max = 0.;
    f[2] = 0.;
+   hw = w/2;
+   hh = h/2;
+   d = (float)MIN(hw,hh);
    for (y=0; y<h; y++) {
 
       f[1] = zoom * (float)y / (float)h;
@@ -331,6 +335,11 @@ float* noise_genNebulaePuffMap( const int w, const int h, float rug )
          f[0] = zoom * (float)x / (float)w;
 
          value = TCOD_noise_turbulence( noise, f, octaves );
+
+         /* Make value also depend on distance from center */
+         value *= (d - 1. - sqrtf( (float)((x-hw)*(x-hw) + (y-hh)*(y-hh)) )) / d;
+         if (value < 0.) value = 0.;
+
          if (max < value) max = value;
 
          nebulae[y*w + x] = value;
@@ -338,10 +347,11 @@ float* noise_genNebulaePuffMap( const int w, const int h, float rug )
    }
 
    /* Post filtering */
-   value = 1. - max;
+   /*value = 1. - max;
    for (y=0; y<h; y++)
       for (x=0; x<w; x++)
-         nebulae[y*w + x] += value;
+         if (nebulae[y*w + x] > 0.)
+            nebulae[y*w + x] += value;*/
 
    /* Clean up */
    TCOD_noise_delete( noise );
