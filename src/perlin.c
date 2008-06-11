@@ -287,28 +287,3 @@ float* noise_genNebulaeMap( const int w, const int h, const int n, float rug )
    return nebulae;
 }
 
-
-/*
- * Generates a SDL_Surface from a 2d nebulae map
- */
-SDL_Surface* noise_surfaceFromNebulaeMap( float* map, const int w, const int h )
-{
-   int i;
-   SDL_Surface *sur;
-   uint32_t *pix;
-   double c;
-
-   sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );
-   pix = sur->pixels;
-
-   /* convert from mapping to actual colours */
-   SDL_LockSurface( sur );
-   for (i=0; i<h*w; i++) {
-      c = map[i];
-      pix[i] = RMASK + BMASK + GMASK + (AMASK & (uint32_t)((double)AMASK*c));
-   }
-   SDL_UnlockSurface( sur );
-
-   return sur;
-}
-

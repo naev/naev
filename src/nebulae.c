@@ -46,9 +46,10 @@ static double nebu_dt = 0.;
  * prototypes
  */
 static int nebu_checkCompat( const char* file );
+static void nebu_generate (void);
 static void saveNebulae( float *map, const uint32_t w, const uint32_t h, const char* file );
 static SDL_Surface* loadNebulae( const char* file );
-static void nebu_generate (void);
+static SDL_Surface* nebu_surfaceFromNebulaeMap( float* map, const int w, const int h );
 
 
 /*
@@ -388,7 +389,7 @@ static void saveNebulae( float *map, const uint32_t w, const uint32_t h, const c
    char file_path[PATH_MAX];
    SDL_Surface* sur;
 
-   sur = noise_surfaceFromNebulaeMap( map, w, h );
+   sur = nebu_surfaceFromNebulaeMap( map, w, h );
 
    snprintf(file_path, PATH_MAX, "%s%s", nfile_basePath(), file );
    SDL_SavePNG( sur, file_path );
@@ -416,3 +417,27 @@ static SDL_Surface* loadNebulae( const char* file )
 }
 
 
+
+/*
+ * Generates a SDL_Surface from a 2d nebulae map
+ */
+static SDL_Surface* nebu_surfaceFromNebulaeMap( float* map, const int w, const int h )
+{
+   int i;
+   SDL_Surface *sur;
+   uint32_t *pix;
+   double c;
+   
+   sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );
+   pix = sur->pixels;
+   
+   /* convert from mapping to actual colours */
+   SDL_LockSurface( sur );
+   for (i=0; i<h*w; i++) {
+      c = map[i];
+      pix[i] = RMASK + BMASK + GMASK + (AMASK & (uint32_t)((double)AMASK*c));
+   }
+   SDL_UnlockSurface( sur );
+   
+   return sur;
+}          
