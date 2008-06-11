@@ -102,34 +102,6 @@
    <stars>200</stars>
   </general>
  </ssys>
- <ssys name="Delta Pavonis">
-  <fleets>
-   <fleet chance="40">Sml Merchant Convoy</fleet>
-   <fleet chance="60">Pirate Hyena</fleet>
-   <fleet chance="40">Merchant Llama</fleet>
-   <fleet chance="50">Merchant Mule</fleet>
-   <fleet chance="100">Militia Lancelot</fleet>
-  </fleets>
-  <jumps>
-   <jump>Cygnus</jump>
-   <jump>Borla</jump>
-   <jump>Eridani</jump>
-   <jump>NCG-7273</jump>
-   <jump>Alteris</jump>
-  </jumps>
-  <pos>
-   <y>-10</y>
-   <x>28</x>
-  </pos>
-  <planets>
-   <planet>Caladan</planet>
-  </planets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <stars>500</stars>
-  </general>
- </ssys>
  <ssys name="NCG-7132">
   <fleets>
    <fleet chance="60">Collective Sml Swarm</fleet>
@@ -298,6 +270,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">100</nebulae>
    <stars>600</stars>
   </general>
  </ssys>
@@ -385,15 +358,9 @@
  </ssys>
  <ssys name="Haven">
   <fleets>
-   <fleet chance="40">Empire Lancelot</fleet>
-   <fleet chance="40">Empire Lancelot</fleet>
-   <fleet chance="10">Empire Sml Defense</fleet>
-   <fleet chance="20">Merchant Mule</fleet>
-   <fleet chance="20">Merchant Mule</fleet>
    <fleet chance="70">Pirate Hyena</fleet>
-   <fleet chance="70">Pirate Hyena</fleet>
-   <fleet chance="70">Pirate Hyena</fleet>
-   <fleet chance="70">Pirate Hyena</fleet>
+   <fleet chance="20">Empire Pacifier</fleet>
+   <fleet chance="40">Pirate Hyena</fleet>
   </fleets>
   <jumps>
    <jump>NCG-7968</jump>
@@ -406,6 +373,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">200</nebulae>
    <stars>300</stars>
   </general>
  </ssys>
@@ -432,6 +400,25 @@
    <asteroids>0</asteroids>
    <interference>0</interference>
    <stars>200</stars>
+  </general>
+ </ssys>
+ <ssys name="NCG-7549">
+  <fleets>
+   <fleet chance="50">Merchant Llama</fleet>
+   <fleet chance="50">Pirate Hyena</fleet>
+  </fleets>
+  <jumps>
+   <jump>NCG-7690</jump>
+  </jumps>
+  <pos>
+   <y>148</y>
+   <x>-74</x>
+  </pos>
+  <planets/>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <stars>100</stars>
   </general>
  </ssys>
  <ssys name="Borla">
@@ -477,6 +464,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">150</nebulae>
    <stars>400</stars>
   </general>
  </ssys>
@@ -502,6 +490,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">100</nebulae>
    <stars>500</stars>
   </general>
  </ssys>
@@ -745,23 +734,32 @@
    <stars>200</stars>
   </general>
  </ssys>
- <ssys name="NCG-7549">
+ <ssys name="Delta Pavonis">
   <fleets>
-   <fleet chance="50">Merchant Llama</fleet>
-   <fleet chance="50">Pirate Hyena</fleet>
+   <fleet chance="40">Sml Merchant Convoy</fleet>
+   <fleet chance="60">Pirate Hyena</fleet>
+   <fleet chance="40">Merchant Llama</fleet>
+   <fleet chance="50">Merchant Mule</fleet>
+   <fleet chance="100">Militia Lancelot</fleet>
   </fleets>
   <jumps>
-   <jump>NCG-7690</jump>
+   <jump>Cygnus</jump>
+   <jump>Borla</jump>
+   <jump>Eridani</jump>
+   <jump>NCG-7273</jump>
+   <jump>Alteris</jump>
   </jumps>
   <pos>
-   <y>148</y>
-   <x>-74</x>
+   <y>-10</y>
+   <x>28</x>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Caladan</planet>
+  </planets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <stars>100</stars>
+   <stars>500</stars>
   </general>
  </ssys>
 </Systems>

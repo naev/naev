@@ -428,11 +428,14 @@ void nebu_prep( double density, double volatility )
    nebu_npuffs = density/4.;
    nebu_puffs = realloc(nebu_puffs, sizeof(NebulaePuff)*nebu_npuffs);
    for (i=0; i<nebu_npuffs; i++) {
-      nebu_puffs[i].tex = RNG(0,NEBULAE_PUFFS-1);
+      /* Position */
       nebu_puffs[i].x = (double)RNG(-NEBULAE_PUFF_BUFFER,
             SCREEN_W + NEBULAE_PUFF_BUFFER);
       nebu_puffs[i].y = (double)RNG(-NEBULAE_PUFF_BUFFER,
             SCREEN_H + NEBULAE_PUFF_BUFFER);
+      
+      /* Maybe make size related? */
+      nebu_puffs[i].tex = RNG(0,NEBULAE_PUFFS-1);
       nebu_puffs[i].height = RNGF() + 0.2;
    }
 }
