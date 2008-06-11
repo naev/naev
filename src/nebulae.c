@@ -16,10 +16,13 @@
 #include "perlin.h"
 #include "rng.h"
 #include "menu.h"
+#include "player.h"
 
 
 #define NEBULAE_Z             16 /* Z plane */
-#define NEBULAE_PATH          "gen/nebu_%02d.png"
+#define NEBULAE_PUFFS         32 /* Amount of puffs to generate */
+#define NEBULAE_PATH_BG       "gen/nebu_bg_%dx%d_%02d.png"
+#define NEBULAE_PATH_PUFF     "gen/nebu_puff_%02d.png"
 
 
 /* Externs */
@@ -41,12 +44,32 @@ static unsigned int last_render = 0;
 static double nebu_view = 0.;
 static double nebu_dt = 0.;
 
+/* puff textures */
+typedef struct NebulaePuffTex_ {
+   GLuint tex; /* Actual texture */
+   double w, h; /* Real dimensions */
+   double pw, ph; /* Padding */
+} NebulaePuffTex;
+static NebulaePuffTex nebu_pufftexs[NEBULAE_PUFFS];
+
+/* puff handling */
+typedef struct NebulaePuff_ {
+   double x, y; /* Position */
+   double a, va; /* alpha, alpha velocity */
+   double height; /* height vs player */
+   NebulaePuffTex *tex; /* Texture */
+} NebulaePuff;
+static NebulaePuff *nebu_puffs = NULL;
+static int nebu_npuffs = 0;
+
 
 /*
  * prototypes
  */
 static int nebu_checkCompat( const char* file );
+static void nebu_loadTexture( SDL_Surface *sur, int w, int h, GLuint tex );
 static void nebu_generate (void);
+static void nebu_generatePuffs (void);
 static void saveNebulae( float *map, const uint32_t w, const uint32_t h, const char* file );
 static SDL_Surface* loadNebulae( const char* file );
 static SDL_Surface* nebu_surfaceFromNebulaeMap( float* map, const int w, const int h );
@@ -71,10 +94,12 @@ void nebu_init (void)
    nebu_pw = gl_pot(nebu_w);
    nebu_ph = gl_pot(nebu_h);
 
+   nebu_generatePuffs();
+
    /* Load each, checking for compatibility and padding */
    glGenTextures( NEBULAE_Z, nebu_textures );
    for (i=0; i<NEBULAE_Z; i++) {
-      snprintf( nebu_file, PATH_MAX, NEBULAE_PATH, i );
+      snprintf( nebu_file, PATH_MAX, NEBULAE_PATH_BG, nebu_w, nebu_h, i );
 
       if (nebu_checkCompat( nebu_file )) { /* Incompatible */
          LOG("No nebulae found, generating (this may take a while).");
@@ -91,28 +116,42 @@ void nebu_init (void)
          WARN("Nebulae raw size doesn't match expected! (%dx%d instead of %dx%d)",
                nebu_sur->w, nebu_sur->h, nebu_pw, nebu_ph );
 
-      /* Prepare to load into Opengl */
-      nebu_sur = gl_prepareSurface( nebu_sur );
-      if ((nebu_sur->w != nebu_pw) || (nebu_sur->h != nebu_ph))
-         WARN("Nebulae size doesn't match expected! (%dx%d instead of %dx%d)",
-               nebu_sur->w, nebu_sur->h, nebu_pw, nebu_ph );
-
       /* Load the texture */
-      glBindTexture( GL_TEXTURE_2D, nebu_textures[i] );
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-      /* Store into opengl saving only alpha channel in video memory */
-      SDL_LockSurface( nebu_sur );
-      glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, nebu_sur->w, nebu_sur->h,
-            0, GL_RGBA, GL_UNSIGNED_BYTE, nebu_sur->pixels );
-      SDL_UnlockSurface( nebu_sur );
-
-      SDL_FreeSurface(nebu_sur);
-      gl_checkErr();
+      nebu_loadTexture( nebu_sur, nebu_pw, nebu_ph, nebu_textures[i] );
    }
 
    DEBUG("Loaded %d Nebulae Layers", NEBULAE_Z);
+}
+
+
+/*
+ * Loads sur into tex, checks for expected size of w and h
+ */
+static void nebu_loadTexture( SDL_Surface *sur, int w, int h, GLuint tex )
+{
+   SDL_Surface *nebu_sur;
+
+   nebu_sur = gl_prepareSurface( sur );
+   if ((w!=0) && (h!=0) &&
+         ((nebu_sur->w != w) || (nebu_sur->h != h))) {
+      WARN("Nebulae size doesn't match expected! (%dx%d instead of %dx%d)",
+            nebu_sur->w, nebu_sur->h, nebu_pw, nebu_ph );
+      return;
+   }
+
+   /* Load the texture */
+   glBindTexture( GL_TEXTURE_2D, tex );
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+   /* Store into opengl saving only alpha channel in video memory */
+   SDL_LockSurface( nebu_sur );
+   glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, nebu_sur->w, nebu_sur->h,
+         0, GL_RGBA, GL_UNSIGNED_BYTE, nebu_sur->pixels );
+   SDL_UnlockSurface( nebu_sur );
+
+   SDL_FreeSurface(nebu_sur);
+   gl_checkErr();
 }
 
 
@@ -121,7 +160,12 @@ void nebu_init (void)
  */
 void nebu_exit (void)
 {
+   int i;
+
    glDeleteTextures( NEBULAE_Z, nebu_textures );
+
+   for (i=0; i<NEBULAE_PUFFS; i++)
+      glDeleteTextures( 1, &nebu_pufftexs[i].tex );
 }
 
 
@@ -234,17 +278,26 @@ void nebu_render (void)
 }
 
 
-void nebu_renderOverlay (void)
+void nebu_renderOverlay( const double dt )
 {
 #define ANG45     0.70710678118654757
 #define COS225    0.92387953251128674
 #define SIN225    0.38268343236508978
-   glShadeModel(GL_SMOOTH);
    glMatrixMode(GL_PROJECTION);
    glPushMatrix();
       glTranslated(gui_xoff+shake_pos.x, gui_yoff+shake_pos.y, 0.);
 
-   /* Stuff player partially sees */
+
+   /*
+    * Renders the puffs
+    */
+   nebu_renderPuffs( dt, 0 );
+
+
+   /*
+    * Mask for area player can still see (partially)
+    */
+   glShadeModel(GL_SMOOTH);
    glBegin(GL_TRIANGLE_FAN);
       ACOLOUR(cPurple, 0.);
       glVertex2d( 0., 0. );
@@ -268,10 +321,12 @@ void nebu_renderOverlay (void)
       glVertex2d( -nebu_view, 0. );
    glEnd(); /* GL_TRIANGLE_FAN */
 
+
+   /*
+    * Solid nebulae for areas the player can't see
+    */
    glShadeModel(GL_FLAT);
    ACOLOUR(cPurple, 1.);
-
-   /* Stuff player can't see */
    glBegin(GL_TRIANGLE_FAN);
       /* Top Left */
       glVertex2d( -SCREEN_W/2.-gui_xoff, SCREEN_H/2.-gui_yoff );
@@ -323,6 +378,39 @@ void nebu_renderOverlay (void)
 
 
 /*
+ * Renders the puffs
+ */
+void nebu_renderPuffs( const double dt, int below_player )
+{
+   int i;
+
+   glPushMatrix(); /* GL_PROJECTION */
+      glTranslated( -(double)SCREEN_W/2., -(double)SCREEN_H/2., 0. );
+
+   for (i=0; i<nebu_npuffs; i++) {
+
+      if ((below_player && (nebu_puffs[i].height < 1.)) ||
+            (!below_player && (nebu_puffs[i].height > 1.))) {
+
+         /* calculate new position */
+         nebu_puffs[i].x -= player->solid->vel.x * nebu_puffs[i].height * dt;
+         nebu_puffs[i].y -= player->solid->vel.y * nebu_puffs[i].height * dt;
+
+         /* calculate new alpha */
+         /* nebu_puffs[i].a += nebu_puffs[i].va * dt; */
+
+         /* check boundries */
+
+         /* render */
+         ACOLOUR( cPurple, nebu_puffs[i].a );
+         glBegin(GL_QUADS);
+         glEnd(); /* GL_QUADS */
+      }
+   }
+}
+
+
+/*
  * Prepares the nebualae
  */
 void nebu_prep( double density, double volatility )
@@ -338,7 +426,7 @@ void nebu_prep( double density, double volatility )
  */
 void nebu_forceGenerate (void)
 {
-   nebu_w = nebu_h = -9;
+   nebu_w = nebu_h = -9; /* \o/ magic numbers */
 }
 
 
@@ -355,18 +443,50 @@ static void nebu_generate (void)
    w = SCREEN_W;
    h = SCREEN_H;
 
-   /* Generate all the nebulae */
+   /* Generate all the nebulae backgrounds */
    nebu = noise_genNebulaeMap( w, h, NEBULAE_Z, 5. );
    nfile_dirMakeExist( "gen" );
 
    /* Save each nebulae as an image */
    for (i=0; i<NEBULAE_Z; i++) {
-      snprintf( nebu_file, PATH_MAX, NEBULAE_PATH, i );
+      snprintf( nebu_file, PATH_MAX, NEBULAE_PATH_BG, w, h, i );
       saveNebulae( &nebu[ i*w*h ], w, h, nebu_file );
    }
 
    /* Cleanup */
    free(nebu);
+}
+
+
+/*
+ * Generates nebulae puffs
+ */
+static void nebu_generatePuffs (void)
+{
+   int i;
+   int w,h;
+   SDL_Surface *sur;
+   float *nebu;
+
+   /* Generate the nebulae puffs */
+   for (i=0; i<NEBULAE_PUFFS; i++) {
+
+      /* Generate the nebulae */
+      w = h = RNG(20,64);
+      nebu = noise_genNebulaePuffMap( w, h, 1. );
+      sur = nebu_surfaceFromNebulaeMap( nebu, w, h );
+      free(nebu);
+
+      /* Set dimensions */
+      nebu_pufftexs[i].w = w;
+      nebu_pufftexs[i].h = h;
+      nebu_pufftexs[i].pw = gl_pot( w );
+      nebu_pufftexs[i].ph = gl_pot( h );
+
+      /* Actually create the texture */
+      glGenTextures( 1, &nebu_pufftexs[i].tex );
+      nebu_loadTexture( sur, 0, 0, nebu_pufftexs[i].tex );
+   }
 }
 
 

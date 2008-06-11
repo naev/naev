@@ -92,7 +92,7 @@ static int mstars = 0; /* memory stars are taking */
  */
 /* intern */
 static Planet* planet_pull( const char* name );
-static void space_renderStars( double dt );
+static void space_renderStars( const double dt );
 static void space_addFleet( Fleet* fleet );
 static StarSystem* system_parse( const xmlNodePtr parent );
 static void system_parseJumps( const xmlNodePtr parent );
@@ -930,7 +930,7 @@ int space_load (void)
 /*
  * renders the system
  */
-void space_render( double dt )
+void space_render( const double dt )
 {
    if (cur_system == NULL) return;
 
@@ -944,19 +944,19 @@ void space_render( double dt )
 /*
  * Renders the overlay
  */
-void space_renderOverlay (void)
+void space_renderOverlay( const double dt )
 {
    if (cur_system == NULL) return;
 
    if (cur_system->nebu_density > 0.)
-      nebu_renderOverlay();
+      nebu_renderOverlay(dt);
 }
 
 
 /*
  * Renders stars
  */
-static void space_renderStars( double dt )
+static void space_renderStars( const double dt )
 {
    int i;
    unsigned int t, timer;
@@ -974,7 +974,7 @@ static void space_renderStars( double dt )
    t = SDL_GetTicks();
    if (!player_isFlag(PLAYER_DESTROYED) && !player_isFlag(PLAYER_CREATING) &&
          pilot_isFlag(player,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
-         !paused && (player->ptimer-HYPERSPACE_STARS_BLUR < t)) {
+         (player->ptimer-HYPERSPACE_STARS_BLUR < t)) {
 
       timer = player->ptimer - HYPERSPACE_STARS_BLUR;
 

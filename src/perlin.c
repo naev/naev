@@ -32,6 +32,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "SDL.h"
+
 #include "naev.h"
 #include "log.h"
 #include "rng.h"
@@ -287,3 +289,63 @@ float* noise_genNebulaeMap( const int w, const int h, const int n, float rug )
    return nebulae;
 }
 
+
+/*
+ * Generates tiny nebulae puffs
+ */
+float* noise_genNebulaePuffMap( const int w, const int h, float rug )
+{
+   int x, y;
+   float f[3];
+   int octaves;
+   float hurst;
+   float lacunarity;
+   perlin_data_t* noise;
+   float *nebulae;
+   float value;
+   float zoom;
+   float max;
+
+   /* pretty default values */
+   octaves = 3;
+   hurst = TCOD_NOISE_DEFAULT_HURST;
+   lacunarity = TCOD_NOISE_DEFAULT_LACUNARITY;
+   zoom = rug;
+
+   /* create noise and data */
+   noise = TCOD_noise_new( hurst, lacunarity );
+   nebulae = malloc(sizeof(float)*w*h);
+   if (nebulae == NULL) {
+      WARN("Out of memory!");
+      return NULL;
+   }
+
+   /* Start to create the nebulae */
+   max = 0.;
+   f[2] = 0.;
+   for (y=0; y<h; y++) {
+
+      f[1] = zoom * (float)y / (float)h;
+      for (x=0; x<w; x++) {
+
+         f[0] = zoom * (float)x / (float)w;
+
+         value = TCOD_noise_turbulence( noise, f, octaves );
+         if (max < value) max = value;
+
+         nebulae[y*w + x] = value;
+      }
+   }
+
+   /* Post filtering */
+   value = 1. - max;
+   for (y=0; y<h; y++)
+      for (x=0; x<w; x++)
+         nebulae[y*w + x] += value;
+
+   /* Clean up */
+   TCOD_noise_delete( noise );
+
+   /* Results */
+   return nebulae;
+}

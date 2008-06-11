@@ -150,8 +150,8 @@ Planet* planet_get( char* planetname );
 /*
  * render
  */
-void space_render( double dt );
-void space_renderOverlay (void);
+void space_render( const double dt );
+void space_renderOverlay( const double dt );
 void planets_render (void);
 
 /*
