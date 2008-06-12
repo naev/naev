@@ -596,15 +596,15 @@ unsigned int window_create( char* name,
    wdw->h = (double) h;
    /* x pos */
    if (x==-1) /* center */
-      wdw->x = SCREEN_W/2. - wdw->w/2.;
+      wdw->x = (SCREEN_W - wdw->w)/2.;
    else if (x < 0)
       wdw->x = SCREEN_W - wdw->w + (double) x;
    else wdw->x = (double) x;
    /* y pos */
    if (y==-1) /* center */
-      wdw->y = SCREEN_H/2. - wdw->h/2.;
+      wdw->y = (SCREEN_H - wdw->h)/2.;
    else if (y < 0)
-      wdw->x = SCREEN_H - wdw->h + (double) y;
+      wdw->y = SCREEN_H - wdw->h + (double) y;
    else wdw->y = (double) y;
 
    wdw->widgets = NULL;
