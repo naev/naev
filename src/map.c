@@ -251,6 +251,8 @@ static void map_update (void)
       strcat(buf, "Outfits\n");
    if (services & PLANET_SERVICE_SHIPYARD)
       strcat(buf, "Shipyard\n");
+   if (buf[0] == '\0')
+      strcat(buf, "None");
    window_modifyText( map_wid, "txtServices", buf );
 
 
