@@ -293,18 +293,21 @@ static void info_outfits_menu( char* str )
    (void)str;
    char *buf;
    unsigned int wid;
+
+   /* Create window */
    wid = window_create( "Outfits", -1, -1, OUTFITS_WIDTH, OUTFITS_HEIGHT );
 
+   /* Text */
    window_addText( wid, 20, -40, 100, OUTFITS_HEIGHT-40,
          0, "txtLabel", &gl_smallFont, &cDConsole,
          "Ship Outfits:" );
-
    buf = pilot_getOutfits( player );
    window_addText( wid, 20, -45-gl_smallFont.h,
          OUTFITS_WIDTH-40, OUTFITS_HEIGHT-60,
          0, "txtOutfits", &gl_smallFont, &cBlack, buf );
    free(buf);
-   
+  
+   /* Buttons */
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "closeOutfits", "Close", menu_generic_close );
@@ -318,6 +321,9 @@ static void info_cargo_menu( char* str )
 {
    (void)str;
    unsigned int wid;
+   char **buf;
+   int nbuf;
+   int i;
 
    /* Create the window */
    wid = window_create( "Cargo", -1, -1, CARGO_WIDTH, CARGO_HEIGHT );
@@ -328,6 +334,31 @@ static void info_cargo_menu( char* str )
    window_addButton( wid, -40 - BUTTON_WIDTH, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnJettisonCargo", "Jettison",
          cargo_jettison );
+   window_disableButton( wid, "btnJettisonCargo" );
+
+   /* List */
+   if (player->ncommodities==0) {
+      /* No cargo */
+      buf = malloc(sizeof(char*));
+      buf[0] = strdup("None");
+      nbuf = 1;
+   }
+   else {
+      /* List the player's cargo */
+      buf = malloc(sizeof(char*)*player->ncommodities);
+      for (i=0; i<player->ncommodities; i++) {
+         buf[i] = malloc(sizeof(char)*128);
+         snprintf(buf[i],128, "%s%s %d",
+               player->commodities[i].commodity->name,
+               (player->commodities[i].id != 0) ? "*" : "",
+               player->commodities[i].quantity);
+      }
+      nbuf = player->ncommodities;
+   }
+   window_addList( wid, 20, -40,
+         CARGO_WIDTH - 40, CARGO_HEIGHT - BUTTON_HEIGHT - 80,
+         "lstCargo", buf, nbuf, 0, cargo_update );
+
 
    cargo_update(NULL);
 }
@@ -335,14 +366,37 @@ static void cargo_update( char* str )
 {
    (void)str;
    unsigned int wid;
+   int pos;
+
+   if (player->ncommodities==0) return; /* No cargo */
 
    wid = window_get( "Cargo" );
+   pos = toolkit_getListPos( wid, "lstCargo" );
 
-   window_disableButton( wid, "btnJettisonCargo" );
+   /* Can jettison all but mission cargo when not landed*/
+   if (landed || (player->commodities[pos].id != 0))
+      window_disableButton( wid, "btnJettisonCargo" );
+   else
+      window_enableButton( wid, "btnJettisonCargo" );
 }
 static void cargo_jettison( char* str )
 {
    (void)str;
+   unsigned int wid;
+   int pos;
+
+   if (player->ncommodities==0) return; /* No cargo, redundant check */
+
+   wid = window_get( "Cargo" );
+   pos = toolkit_getListPos( wid, "lstCargo" );
+
+   /* Remove the cargo */
+   pilot_rmCargo( player, player->commodities[pos].commodity,
+         player->commodities[pos].quantity );
+
+   /* We reopen the menu to recreate the list now. */
+   menu_generic_close( "closeCargo" );
+   info_cargo_menu(NULL);
 }
 
 
