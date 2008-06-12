@@ -574,9 +574,9 @@ static Planet* planet_pull( const char* name )
                         temp->gfx_space = gl_newImage(str);
                      }
                      else if (xml_isNode(cur,"exterior")) { /* load land gfx */
-                        snprintf( str, strlen(xml_get(cur))+sizeof(PLANET_GFX_EXTERIOR),
+                        temp->gfx_exterior = malloc( strlen(xml_get(cur))+sizeof(PLANET_GFX_EXTERIOR) );
+                        snprintf( temp->gfx_exterior, strlen(xml_get(cur))+sizeof(PLANET_GFX_EXTERIOR),                            
                               PLANET_GFX_EXTERIOR"%s", xml_get(cur));
-                        temp->gfx_exterior = gl_newImage(str);
                      }
                   } while (xml_nextNode(cur));
                }

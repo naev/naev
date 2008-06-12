@@ -84,7 +84,7 @@ typedef struct Planet_ {
    int tech[PLANET_TECH_MAX];
 
    glTexture* gfx_space; /* graphic in space */
-   glTexture* gfx_exterior; /* graphic in the exterior */
+   char *gfx_exterior; /* Don't actually load the texture */
 } Planet;
 
 

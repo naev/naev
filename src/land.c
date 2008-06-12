@@ -73,6 +73,7 @@ static unsigned int land_visited = 0;
  */
 int landed = 0;
 Planet* land_planet = NULL;
+static glTexture *gfx_exterior = NULL;
 
 /*
  * mission computer stack
@@ -1077,13 +1078,15 @@ void land( Planet* p )
    /* change music */
    music_choose("land");
 
+   /* Load stuff */
    land_planet = p;
+   gfx_exterior = gl_newImage( p->gfx_exterior );
    land_wid = window_create( p->name, -1, -1, LAND_WIDTH, LAND_HEIGHT );
    
    /*
     * pretty display
     */
-   window_addImage( land_wid, 20, -40, "imgPlanet", p->gfx_exterior, 1 );
+   window_addImage( land_wid, 20, -40, "imgPlanet", gfx_exterior, 1 );
    window_addText( land_wid, 440, 80, LAND_WIDTH-460, 460, 0, 
          "txtPlanetDesc", &gl_smallFont, &cBlack, p->description);
 
@@ -1188,6 +1191,10 @@ void takeoff (void)
    save_all(); /* must be before cleaning up planet */
    land_planet = NULL;
    window_destroy( land_wid );
+   if (gfx_exterior != NULL) {
+      gl_freeTexture( gfx_exterior );
+      gfx_exterior = NULL;
+   }
    landed = 0;
    land_visited = 0;
    hooks_run("takeoff"); 
