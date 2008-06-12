@@ -20,7 +20,7 @@
 #include "pause.h"
 
 
-#define NEBULAE_Z             16 /* Z plane */
+#define NEBULAE_Z             4 /* Z plane */
 #define NEBULAE_PUFFS         32 /* Amount of puffs to generate */
 #define NEBULAE_PATH_BG       "gen/nebu_bg_%dx%d_%02d.png"
 
@@ -396,7 +396,7 @@ void nebu_renderPuffs( const double dt, int below_player )
             (!below_player && (nebu_puffs[i].height > 1.))) {
 
          /* calculate new position */
-         if (!paused) {
+         if (!paused && (player!=NULL)) {
             nebu_puffs[i].x -= player->solid->vel.x * nebu_puffs[i].height * dt;
             nebu_puffs[i].y -= player->solid->vel.y * nebu_puffs[i].height * dt;
          }
