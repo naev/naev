@@ -35,8 +35,11 @@
 typedef struct Faction_ {
    char* name;
 
+   /* Enemies */
    int* enemies;
    int nenemies;
+
+   /* Allies */
    int* allies;
    int nallies;
 
@@ -160,6 +163,36 @@ int faction_getPlayer( int f )
       return -1000;
    }
 }
+
+
+/*
+ * Returns the player's standing
+ */
+static char *player_standings[] = {
+   "Hero", /* 0 */
+   "Admired",
+   "Great",
+   "Good",
+   "Decent",
+   "Wanted", /* 5 */
+   "Outlaw",
+   "Criminal",
+   "Enemy"
+};
+#define STANDING(m,i)  if (mod >= m) return player_standings[i];
+char *faction_getStanding( int mod )
+{
+   STANDING(  90, 0 );
+   STANDING(  70, 1 );
+   STANDING(  50, 2 );
+   STANDING(  30, 3 );
+   STANDING(   0, 4 );
+   STANDING( -15, 5 );
+   STANDING( -30, 6 );
+   STANDING( -50, 7 );
+   return player_standings[8];
+}
+#undef STANDING
 
 
 /*

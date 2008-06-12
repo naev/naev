@@ -18,6 +18,7 @@ char* faction_name( int f );
 /* player stuff */
 void faction_modPlayer( int f, int mod );
 int faction_getPlayer( int f );
+char* faction_getStanding( int mod );
 
 /* works with only factions */
 int areEnemies( int a, int b );

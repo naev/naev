@@ -84,15 +84,38 @@ void map_open (void)
    map_wid = window_create( "Star Map", -1, -1,
          WINDOW_WIDTH, WINDOW_HEIGHT );
 
+   /* 
+    * SIDE TEXT
+    *
+    * $System
+    *
+    * Faction:
+    *   $Faction (or Multiple)
+    *
+    * Status:
+    *   $Status
+    *
+    * Planets:
+    *   $Planet1, $Planet2, ...
+    */
+
+   /* System Name */
    window_addText( map_wid, -20, -20, 100, 20, 1, "txtSysname",
          &gl_defFont, &cDConsole, systems_stack[ map_selected ].name );
+   /* Faction */
    window_addText( map_wid, -20, -60, 90, 20, 0, "txtSFaction",
          &gl_smallFont, &cDConsole, "Faction:" );
    window_addText( map_wid, -20, -60-gl_smallFont.h-5, 80, 100, 0, "txtFaction",
          &gl_smallFont, &cBlack, NULL );
-   window_addText( map_wid, -20, -110, 90, 20, 0, "txtSPlanets",
+   /* Standing */
+   window_addText( map_wid, -20, -110, 90, 20, 0, "txtSStanding",
+         &gl_smallFont, &cDConsole, "Standing:" );
+   window_addText( map_wid, -20, -110-gl_smallFont.h-5, 80, 100, 0, "txtStanding",
+         &gl_smallFont, &cBlack, NULL );
+   /* Planets */
+   window_addText( map_wid, -20, -150, 90, 20, 0, "txtSPlanets",
          &gl_smallFont, &cDConsole, "Planets:" );
-   window_addText( map_wid, -20, -110-gl_smallFont.h-5, 80, 100, 0, "txtPlanets",
+   window_addText( map_wid, -20, -150-gl_smallFont.h-5, 80, 100, 0, "txtPlanets",
          &gl_smallFont, &cBlack, NULL );
          
 
@@ -118,7 +141,7 @@ static void map_update (void)
 {
    int i;
    StarSystem* sys;
-   int f;
+   int f, standing, nstanding;
    char buf[100];
 
    sys = &systems_stack[ map_selected ];
@@ -126,6 +149,7 @@ static void map_update (void)
    if (!sys_isKnown(sys)) { /* System isn't known, erase all */
       window_modifyText( map_wid, "txtSysname", "Unknown" );
       window_modifyText( map_wid, "txtFaction", "Unknown" );
+      window_modifyText( map_wid, "txtStanding", "Unknown" );
       window_modifyText( map_wid, "txtPlanets", "Unknown" );
       return;
    }
@@ -133,36 +157,48 @@ static void map_update (void)
    /* System is known */
    window_modifyText( map_wid, "txtSysname", sys->name );
 
-   if (sys->nplanets == 0) /* no planets -> no factions */
-      snprintf( buf, 100, "NA" );
+   if (sys->nplanets == 0) { /* no planets -> no factions */
+      window_modifyText( map_wid, "txtFaction", "NA" );
+      window_modifyText( map_wid, "txtStanding", "NA" );
+   }
    else {
+      standing = 0;
+      nstanding = 0;
       f = -1;
       for (i=0; i<sys->nplanets; i++) {
-         if ((f==-1) && (sys->planets[i].faction!=0))
+         if ((f==-1) && (sys->planets[i].faction!=0)) {
             f = sys->planets[i].faction;
+            standing += faction_getPlayer( f );
+            nstanding++;
+         }
          else if (f!= sys->planets[i].faction && /* TODO more verbosity */
                (sys->planets[i].faction!=0)) {
             snprintf( buf, 100, "Multiple" );
-            break;
          }
       }
       if (i==sys->nplanets) /* saw them all and all the same */
          snprintf( buf, 100, "%s", faction_name(f) );
-   }
-   window_modifyText( map_wid, "txtFaction", buf );
 
-   buf[0] = '\0';
+      /* Modify the text */
+      window_modifyText( map_wid, "txtFaction", buf );
+      window_modifyText( map_wid, "txtStanding",
+            faction_getStanding( standing / nstanding ) );
+   }
+
+   /* Get planets */
    if (sys->nplanets == 0)
-      snprintf( buf, 100, "None" );
+      window_modifyText( map_wid, "txtPlanets", "None" );
    else {
+      buf[0] = '\0';
       if (sys->nplanets > 0)
          strcat( buf, sys->planets[0].name );
       for (i=1; i<sys->nplanets; i++) {
          strcat( buf, ",\n" );
          strcat( buf, sys->planets[i].name );
       }
+
+      window_modifyText( map_wid, "txtPlanets", buf );
    }
-   window_modifyText( map_wid, "txtPlanets", buf );
 }
 
 
