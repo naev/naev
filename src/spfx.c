@@ -297,7 +297,7 @@ void spfx_start( double dt )
  */
 void spfx_shake( double mod )
 {
-   shake_rad += mod;
+   shake_rad += mod/5.;
    if (shake_rad > SHAKE_MAX) shake_rad = SHAKE_MAX;
    shake_off = 0;
 
