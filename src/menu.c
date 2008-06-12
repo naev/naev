@@ -36,6 +36,9 @@
 #define OUTFITS_WIDTH   400
 #define OUTFITS_HEIGHT  200
 
+#define CARGO_WIDTH     300
+#define CARGO_HEIGHT    300
+
 #define MISSIONS_WIDTH  600
 #define MISSIONS_HEIGHT 400
 
@@ -66,6 +69,10 @@ static void exit_game (void);
 static void menu_info_close( char* str );
 /* outfits submenu */
 static void info_outfits_menu( char* str );
+/* cargo submenu */
+static void info_cargo_menu( char* str );
+static void cargo_update( char* str );
+static void cargo_jettison( char* str );
 /* mission submenu */
 static void info_missions_menu( char* str );
 static void mission_menu_abort( char* str );
@@ -259,7 +266,7 @@ void menu_info (void)
          "btnOutfits", "Outfts", info_outfits_menu );
    window_addButton( wid, -20, (20 + BUTTON_HEIGHT)*2 + 20,      
          BUTTON_WIDTH, BUTTON_HEIGHT,    
-         "btnCargo", "Cargo", NULL );
+         "btnCargo", "Cargo", info_cargo_menu );
    window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnMissions", "Missions", info_missions_menu );
@@ -305,7 +312,42 @@ static void info_outfits_menu( char* str )
 
 
 /*
- * shows the player's active missions
+ * Shows the player's cargo.
+ */
+static void info_cargo_menu( char* str )
+{
+   (void)str;
+   unsigned int wid;
+
+   /* Create the window */
+   wid = window_create( "Cargo", -1, -1, CARGO_WIDTH, CARGO_HEIGHT );
+
+   /* Buttons */
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "closeCargo", "Back", menu_generic_close );
+   window_addButton( wid, -40 - BUTTON_WIDTH, 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT, "btnJettisonCargo", "Jettison",
+         cargo_jettison );
+
+   cargo_update(NULL);
+}
+static void cargo_update( char* str )
+{
+   (void)str;
+   unsigned int wid;
+
+   wid = window_get( "Cargo" );
+
+   window_disableButton( wid, "btnJettisonCargo" );
+}
+static void cargo_jettison( char* str )
+{
+   (void)str;
+}
+
+
+/*
+ * Shows the player's active missions.
  */
 static void info_missions_menu( char* str )
 {
