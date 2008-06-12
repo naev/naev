@@ -20,7 +20,7 @@
 #include "pause.h"
 
 
-#define NEBULAE_Z             4 /* Z plane */
+#define NEBULAE_Z             16 /* Z plane */
 #define NEBULAE_PUFFS         32 /* Amount of puffs to generate */
 #define NEBULAE_PATH_BG       "gen/nebu_bg_%dx%d_%02d.png"
 
