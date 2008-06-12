@@ -1087,7 +1087,7 @@ void space_exit (void)
          if (systems_stack[i].planets[j].gfx_space)
             gl_freeTexture(systems_stack[i].planets[j].gfx_space);
          if (systems_stack[i].planets[j].gfx_exterior)
-            gl_freeTexture(systems_stack[i].planets[j].gfx_exterior);
+            free(systems_stack[i].planets[j].gfx_exterior);
 
          /* commodities */
          free(systems_stack[i].planets[j].commodities);
