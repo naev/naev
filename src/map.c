@@ -97,6 +97,10 @@ void map_open (void)
     *
     * Planets:
     *   $Planet1, $Planet2, ...
+    * 
+    * ...
+    *
+    * [Close]
     */
 
    /* System Name */
@@ -117,15 +121,28 @@ void map_open (void)
          &gl_smallFont, &cDConsole, "Planets:" );
    window_addText( map_wid, -20, -150-gl_smallFont.h-5, 80, 100, 0, "txtPlanets",
          &gl_smallFont, &cBlack, NULL );
-         
+   /* Close button */
+   window_addButton( map_wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnClose", "Close", map_close );
 
+         
+   /*
+    * The map itself.
+    */
    window_addCust( map_wid, 20, -40, MAP_WIDTH, MAP_HEIGHT,
          "cstMap", 1, map_render, map_mouse );
-   window_addButton( map_wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", "Close", map_close );
 
+   /*
+    * Bottom stuff
+    *
+    * [+] [-]  Nebulae, Asteroids, Interference
+    */
+   /* Zoom buttons */
    window_addButton( map_wid, 40, 20, 30, 30, "btnZoomIn", "+", map_buttonZoom );
    window_addButton( map_wid, 80, 20, 30, 30, "btnZoomOut", "-", map_buttonZoom );
+   /* Situation text */
+   window_addText( map_wid, 140, 10, WINDOW_WIDTH - 80 - 30 - 30, 30, 0,
+         "txtSystemStatus", &gl_smallFont, &cBlack, NULL );
 
    map_update();
 }
@@ -142,7 +159,7 @@ static void map_update (void)
    int i;
    StarSystem* sys;
    int f, standing, nstanding;
-   char buf[100];
+   char buf[128];
 
    sys = &systems_stack[ map_selected ];
   
@@ -199,6 +216,28 @@ static void map_update (void)
 
       window_modifyText( map_wid, "txtPlanets", buf );
    }
+
+   /*
+    * System Status
+    */
+   buf[0] = '\0';
+   if (sys->nebu_density > 0.) { /* Has nebulae */
+
+      /* Volatility */
+      if (sys->nebu_volatility > 700.)
+         strcat(buf," Volatile");
+      else if (sys->nebu_volatility > 300.)
+         strcat(buf," Dangerous");
+      else if (sys->nebu_volatility > 0.)
+         strcat(buf," Unstable");
+      /* Density */
+      if (sys->nebu_density > 700.)
+         strcat(buf," Dense");
+      else if (sys->nebu_density < 300.)
+         strcat(buf," Light");
+      strcat(buf," Nebulae");
+   }
+   window_modifyText( map_wid, "txtSystemStatus", buf );
 }
 
 

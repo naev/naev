@@ -124,8 +124,8 @@ typedef struct StarSystem_ {
    int *jumps; /* adjacent star system index numbers */
    int njumps; /* number of adjacent jumps */
 
-   double nebu_density; /* Nebulae density */
-   double nebu_volatility; /* Nebulae volatility - Not used yet */
+   double nebu_density; /* Nebulae density (0. - 1000.) */
+   double nebu_volatility; /* Nebulae volatility (0. - 1000.) */
 
    unsigned int flags; /* flags for system properties */
 } StarSystem;
