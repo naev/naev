@@ -146,10 +146,12 @@ extern void main_loop (void); /* from naev.c */
 /*
  * static
  */
+/* widgets */
 static Widget* window_newWidget( Window* w );
 static void widget_cleanup( Widget *widget );
 static Window* window_wget( const unsigned int wid );
 static Widget* window_getwgt( const unsigned int wid, char* name );
+static void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y );
 /* input */
 static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key );
 static void toolkit_mouseEvent( SDL_Event* event );
@@ -188,6 +190,17 @@ static int loop_done;
 static int toolkit_loop (void);
 
 
+/*
+ * Sets the internal widget position.
+ */
+static void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
+{
+   if (x < 0) wgt->x = wdw->w - wgt->w + x;
+   else wgt->x = (double) x;
+   if (y < 0) wgt->y = wdw->h - wgt->h + y;
+   else wgt->y = (double) y;
+}
+
 
 /*
  * adds a button that when pressed will trigger call passing it's name as
@@ -202,20 +215,19 @@ void window_addButton( const unsigned int wid,
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
 
-   /* specific */
+   /* generic */
    wgt->type = WIDGET_BUTTON;
    wgt->name = strdup(name);
+   
+   /* specific */
    wgt->dat.btn.display = strdup(display);
    wgt->dat.btn.disabled = 0; /* initially enabled */
+   wgt->dat.btn.fptr = call;
 
-   /* set the properties */
+   /* position/size */
    wgt->w = (double) w;
    wgt->h = (double) h;
-   if (x < 0) wgt->x = wdw->w - wgt->w + x;
-   else wgt->x = (double) x;
-   if (y < 0) wgt->y = wdw->h - wgt->h + y;
-   else wgt->y = (double) y;
-   wgt->dat.btn.fptr = call;
+   toolkit_setPos( wdw, wgt, x, y );
 
    if (wdw->focus == -1) /* initialize the focus */
       toolkit_nextFocus();
@@ -234,23 +246,25 @@ void window_addText( const unsigned int wid,
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
 
+   /* generic */
    wgt->type = WIDGET_TEXT;
-   wgt->name = strdup(name); /* displays it's name */
+   wgt->name = strdup(name);
 
-   /* set the properties */
-   wgt->w = (double) w;
-   wgt->h = (double) h;
+   /* specific */
    if (font==NULL) wgt->dat.txt.font = &gl_defFont;
    else wgt->dat.txt.font = font;
-   if (x < 0) wgt->x = wdw->w - wgt->w + x;
-   else wgt->x = (double) x;
-   if (y < 0) wgt->y = wdw->h + y - h;
-   else wgt->y = (double) y;
+   if (font==NULL) wgt->dat.txt.font = &gl_defFont;
+   else wgt->dat.txt.font = font;
    if (colour==NULL) wgt->dat.txt.colour = &cBlack;
    else wgt->dat.txt.colour = colour;
    wgt->dat.txt.centered = centered;
    if (string) wgt->dat.txt.text = strdup(string);
    else wgt->dat.txt.text = NULL;
+
+   /* position/size */
+   wgt->w = (double) w;
+   wgt->h = (double) h;
+   toolkit_setPos( wdw, wgt, x, y );
 }
 
 
@@ -264,20 +278,19 @@ void window_addImage( const unsigned int wid,
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
 
+   /* generic */
    wgt->type = WIDGET_IMAGE;
    wgt->name = strdup(name);
 
-   /* set the properties */
+   /* specific */
    wgt->dat.img.image = image;
    wgt->dat.img.border = border;
    wgt->dat.img.colour = NULL; /* normal colour */
 
+   /* position/size */
    wgt->w = (image==NULL) ? 0 : wgt->dat.img.image->sw;
    wgt->h = (image==NULL) ? 0 : wgt->dat.img.image->sh;
-   if (x < 0) wgt->x = wdw->w - wgt->w + x;
-   else wgt->x = (double) x;
-   if (y < 0) wgt->y = wdw->h - wgt->h + y;
-   else wgt->y = (double) y;
+   toolkit_setPos( wdw, wgt, x, y );
 }
 
 
@@ -293,21 +306,21 @@ void window_addList( const unsigned int wid,
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
 
+   /* generic */
    wgt->type = WIDGET_LIST;
    wgt->name = strdup(name);
 
+   /* specific */
    wgt->dat.lst.options = items;
    wgt->dat.lst.noptions = nitems;
    wgt->dat.lst.selected = defitem; /* -1 would be none */
    wgt->dat.lst.pos = 0;
    wgt->dat.lst.fptr = call;
-
+   
+   /* position/size */
    wgt->w = (double) w;
    wgt->h = (double) h - ((h % (gl_defFont.h+2)) + 2);
-   if (x < 0) wgt->x = wdw->w - wgt->w + x;
-   else wgt->x = (double) x;
-   if (y < 0) wgt->y = wdw->h - wgt->h + y;
-   else wgt->y = (double) y;
+   toolkit_setPos( wdw, wgt, x, y );
 
    if (wdw->focus == -1) /* initialize the focus */
       toolkit_nextFocus();
@@ -325,18 +338,18 @@ void window_addRect( const unsigned int wid,
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
 
+   /* generic */
    wgt->type = WIDGET_RECT;
    wgt->name = strdup(name);
 
+   /* specific */
    wgt->dat.rct.colour = colour;
    wgt->dat.rct.border = border;
 
+   /* position/size */
    wgt->w = (double) w;
    wgt->h = (double) h;
-   if (x < 0) wgt->x = wdw->w - wgt->w + x;
-   else wgt->x = (double) x;
-   if (y < 0) wgt->y = wdw->h - wgt->h + y;
-   else wgt->y = (double) y;
+   toolkit_setPos( wdw, wgt, x, y );
 }
 
 
@@ -365,10 +378,7 @@ void window_addCust( const unsigned int wid,
    /* position/size */
    wgt->w = (double) w;
    wgt->h = (double) h;
-   if (x < 0) wgt->x = wdw->w - wgt->w + x;
-   else wgt->x = (double) x;
-   if (y < 0) wgt->y = wdw->h - wgt->h + y;
-   else wgt->y = (double) y;
+   toolkit_setPos( wdw, wgt, x, y );
 }
 
 
@@ -398,10 +408,7 @@ void window_addInput( const unsigned int wid,
    /* position/size */
    wgt->w = (double) w;
    wgt->h = (double) h;
-   if (x < 0) wgt->x = wdw->w - wgt->w + x;
-   else wgt->x = (double) x;
-   if (y < 0) wgt->y = wdw->h - wgt->h + y;
-   else wgt->y = (double) y;
+   toolkit_setPos( wdw, wgt, x, y );
 }
 
 
@@ -464,6 +471,32 @@ void window_modifyText( const unsigned int wid,
 
    if (wgt->dat.txt.text) free(wgt->dat.txt.text);
    wgt->dat.txt.text = (newstring) ?  strdup(newstring) : NULL;
+}
+
+
+/*
+ * Gets a widget's position.
+ */
+void window_posWidget( const unsigned int wid,
+      char* name, int *x, int *y )
+{
+   Widget *wgt = window_getwgt(wid,name);
+
+   (*x) = wgt->x;
+   (*y) = wgt->y;
+}
+
+
+/*
+ * Moves a widget.
+ */
+void window_moveWidget( const unsigned int wid,
+      char* name, int x, int y )
+{
+   Window *wdw = window_wget(wid);
+   Widget *wgt = window_getwgt(wid,name);
+
+   toolkit_setPos( wdw, wgt, x, y );
 }
 
 

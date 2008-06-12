@@ -88,12 +88,18 @@ void window_imgColour( const unsigned int wid,
 /*
  * get
  */
+/* generic */
 int window_exists( const char* wdwname );
 unsigned int window_get( const char* wdwname );
+char* window_getInput( const unsigned int wid, char* name );
+void window_posWidget( const unsigned int wid,
+      char* name, int *x, int *y );
+void window_moveWidget( const unsigned int wid,
+      char* name, int x, int y );
+/* specific */
 char* toolkit_getList( const unsigned int wid, char* name );
 int toolkit_getListPos( const unsigned int wid, char* name );
 glTexture* window_getImage( const unsigned int wid, char* name );
-char* window_getInput( const unsigned int wid, char* name );
 
 
 /*
