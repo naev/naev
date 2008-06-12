@@ -131,6 +131,7 @@ void gl_exit (void);
 /*
  * misc
  */
+void gl_defViewport (void);
 int gl_pot( int n );
 int gl_isTrans( const glTexture* t, const int x, const int y );
 void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir );

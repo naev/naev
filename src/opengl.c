@@ -1057,6 +1057,21 @@ int gl_init()
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* good blend model */
 
    /* set up the matrix */
+   gl_defViewport();
+
+   /* finishing touches */
+   glClear( GL_COLOR_BUFFER_BIT ); /* must clear the buffer first */
+   gl_checkErr();
+
+   return 0;
+}
+
+
+/*
+ * Resets viewport to default
+ */
+void gl_defViewport (void)
+{
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
    glOrtho( -SCREEN_W/2, /* left edge */
@@ -1065,12 +1080,6 @@ int gl_init()
          SCREEN_H/2, /* top edge */
          -1., /* near */
          1. ); /* far */
-
-   /* finishing touches */
-   glClear( GL_COLOR_BUFFER_BIT ); /* must clear the buffer first */
-   gl_checkErr();
-
-   return 0;
 }
 
 

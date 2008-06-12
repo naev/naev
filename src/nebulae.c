@@ -239,9 +239,11 @@ void nebu_render( const double dt )
    glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND2_ALPHA, GL_SRC_ALPHA );
 
    /* Compensate possible rumble */
-   glMatrixMode(GL_PROJECTION);
-   glPushMatrix();
-      glTranslated(shake_pos.x, shake_pos.y, 0.);
+   if (!paused) {
+      glMatrixMode(GL_PROJECTION);
+      glPushMatrix();
+         glTranslated(shake_pos.x, shake_pos.y, 0.);
+   }
 
    /* Now render! */
    glBegin(GL_QUADS);
@@ -262,7 +264,8 @@ void nebu_render( const double dt )
       glVertex2d( -SCREEN_W/2.,  SCREEN_H/2. );
    glEnd(); /* GL_QUADS */
 
-   glPopMatrix(); /* GL_PROJECTION */
+   if (!paused)
+      glPopMatrix(); /* GL_PROJECTION */
 
    /* Set values to defaults */
    glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
@@ -293,7 +296,9 @@ void nebu_renderOverlay( const double dt )
    /* Prepare the matrix */
    glMatrixMode(GL_PROJECTION);
    glPushMatrix();
-      glTranslated(gui_xoff+shake_pos.x, gui_yoff+shake_pos.y, 0.);
+      glTranslated(gui_xoff, gui_yoff, 0.);
+   if (!paused)
+      glTranslated(shake_pos.x, shake_pos.y, 0.);
 
    /*
     * Mask for area player can still see (partially)

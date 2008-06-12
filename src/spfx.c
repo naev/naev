@@ -81,9 +81,11 @@ static int spfx_base_load( char* name, int anim, char* gfx, int sx, int sy )
    SPFX_Base *cur;
    char buf[PATH_MAX];
 
+   /* Create new effect */
    spfx_effects = realloc( spfx_effects, ++spfx_neffects*sizeof(SPFX_Base) );
    cur = &spfx_effects[spfx_neffects-1];
 
+   /* Fill it with ze data */
    cur->name = strdup(name);
    cur->anim = (double)anim / 1000.;
    sprintf(buf, SPFX_GFX"%s", gfx);
@@ -116,9 +118,11 @@ int spfx_get( char* name )
 
 /*
  * load and unload functions
+ * TODO make it customizeable?
  */
 int spfx_load (void)
 {
+   /* Standard explosion effects */
    spfx_base_load( "ExpS", 400, "exps.png", 6, 5 );
    spfx_base_load( "ExpM", 450, "expm.png", 6, 5 );
    spfx_base_load( "ExpL", 500, "expl.png", 6, 5 );
@@ -271,6 +275,7 @@ void spfx_start( double dt )
                   -VANGLE(shake_pos) + (RNGF()-0.5) * M_PI );
          }
 
+         /* the shake decays over time */
          shake_rad -= SHAKE_DECAY*dt ;
          if (shake_rad < 0.) shake_rad = 0.;
 

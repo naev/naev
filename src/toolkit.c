@@ -616,6 +616,7 @@ unsigned int window_create( char* name,
       SDL_ShowCursor(SDL_ENABLE);
       toolkit = 1; /* enable toolkit */
       pause_game();
+      gl_defViewport(); /* Reset the default viewport */
    }
 
    return wid;
