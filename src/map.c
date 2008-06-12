@@ -97,6 +97,9 @@ void map_open (void)
     *
     * Planets:
     *   $Planet1, $Planet2, ...
+    *
+    * Services:
+    *   $Services
     * 
     * ...
     *
@@ -112,14 +115,19 @@ void map_open (void)
    window_addText( map_wid, -20, -60-gl_smallFont.h-5, 80, 100, 0, "txtFaction",
          &gl_smallFont, &cBlack, NULL );
    /* Standing */
-   window_addText( map_wid, -20, -110, 90, 20, 0, "txtSStanding",
+   window_addText( map_wid, -20, -100, 90, 20, 0, "txtSStanding",
          &gl_smallFont, &cDConsole, "Standing:" );
-   window_addText( map_wid, -20, -110-gl_smallFont.h-5, 80, 100, 0, "txtStanding",
+   window_addText( map_wid, -20, -100-gl_smallFont.h-5, 80, 100, 0, "txtStanding",
          &gl_smallFont, &cBlack, NULL );
    /* Planets */
-   window_addText( map_wid, -20, -150, 90, 20, 0, "txtSPlanets",
+   window_addText( map_wid, -20, -140, 90, 20, 0, "txtSPlanets",
          &gl_smallFont, &cDConsole, "Planets:" );
-   window_addText( map_wid, -20, -150-gl_smallFont.h-5, 80, 100, 0, "txtPlanets",
+   window_addText( map_wid, -20, -140-gl_smallFont.h-5, 80, 100, 0, "txtPlanets",
+         &gl_smallFont, &cBlack, NULL );
+   /* Services */
+   window_addText( map_wid, -20, -180, 90, 20, 0, "txtSServices",
+         &gl_smallFont, &cDConsole, "Services:" );
+   window_addText( map_wid, -20, -180-gl_smallFont.h-5, 80, 100, 0, "txtServices",
          &gl_smallFont, &cBlack, NULL );
    /* Close button */
    window_addButton( map_wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -158,16 +166,26 @@ static void map_update (void)
 {
    int i;
    StarSystem* sys;
-   int f, standing, nstanding;
+   int f, y, h, standing, nstanding;
+   unsigned int services;
    char buf[128];
 
    sys = &systems_stack[ map_selected ];
-  
+ 
+
+   /*
+    * Right Text
+    */
+
    if (!sys_isKnown(sys)) { /* System isn't known, erase all */
       window_modifyText( map_wid, "txtSysname", "Unknown" );
       window_modifyText( map_wid, "txtFaction", "Unknown" );
       window_modifyText( map_wid, "txtStanding", "Unknown" );
       window_modifyText( map_wid, "txtPlanets", "Unknown" );
+      window_moveWidget( map_wid, "txtSServices", -20, -180 );
+      window_moveWidget( map_wid, "txtServices", -20, -180-gl_smallFont.h-5 );
+      window_modifyText( map_wid, "txtServices", "Unknown" );
+      window_modifyText( map_wid, "txtSystemStatus", NULL );
       return;
    }
 
@@ -216,6 +234,25 @@ static void map_update (void)
 
       window_modifyText( map_wid, "txtPlanets", buf );
    }
+
+   /* Get the services */
+   h = gl_printHeight( &gl_smallFont, 90, buf );
+   y = -180 - (h - gl_smallFont.h);
+   window_moveWidget( map_wid, "txtSServices", -20, y );
+   y -= gl_smallFont.h+5;
+   window_moveWidget( map_wid, "txtServices", -20, y );
+   services = 0;
+   for (i=0; i<sys->nplanets; i++)
+      services |= sys->planets[i].services;
+   buf[0] = '\0';
+   if (services & PLANET_SERVICE_COMMODITY)
+      strcat(buf, "Commodity\n");
+   if (services & PLANET_SERVICE_OUTFITS)
+      strcat(buf, "Outfits\n");
+   if (services & PLANET_SERVICE_SHIPYARD)
+      strcat(buf, "Shipyard\n");
+   window_modifyText( map_wid, "txtServices", buf );
+
 
    /*
     * System Status
