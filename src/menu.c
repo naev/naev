@@ -96,7 +96,8 @@ void menu_main (void)
          &cWhite, naev_version() );
 
    /* create menu window */
-   wid = window_create( "Main Menu", -1, -1, MAIN_WIDTH, MAIN_HEIGHT );
+   wid = window_create( "Main Menu", -1, -70-tex->sh,
+         MAIN_WIDTH, MAIN_HEIGHT );
    window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*3,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnLoad", "Load Game", menu_main_load );
