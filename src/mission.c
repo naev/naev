@@ -403,6 +403,7 @@ static void mission_freeData( MissionData* mission )
    if (mission->avail.planet) free(mission->avail.planet);
    if (mission->avail.system) free(mission->avail.system);
    if (mission->avail.factions) free(mission->avail.factions);
+   if (mission->avail.cond) free(mission->avail.cond);
    memset( mission, 0, sizeof(MissionData) );
 }
 

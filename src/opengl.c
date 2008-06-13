@@ -533,7 +533,8 @@ void gl_freeTexture( glTexture* texture )
          if (cur->used <= 0) { /* not used anymore */
             /* free the texture */
             glDeleteTextures( 1, &texture->texture );
-            if (texture->trans) free(texture->trans);
+            if (texture->trans != NULL) free(texture->trans);
+            if (texture->name != NULL) free(texture->name);
             free(texture);
 
             /* free the list node */

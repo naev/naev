@@ -640,6 +640,7 @@ unsigned int window_create( char* name,
       wdw->y = SCREEN_H - wdw->h + (double) y;
    else wdw->y = (double) y;
 
+   /* Widgets */
    wdw->widgets = NULL;
    wdw->nwidgets = 0;
 
@@ -721,6 +722,11 @@ void window_destroy( const unsigned int wid )
          free(windows[i].widgets);
          break;
       }
+
+   if (i==nwindows) { /* Not found */
+      WARN("Window of id '%u' not found in window stack!", wid);
+      return;
+   }
 
    /* move other windows down a layer */
    for ( ; i<(nwindows-1); i++)

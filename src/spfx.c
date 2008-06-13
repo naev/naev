@@ -100,8 +100,8 @@ static int spfx_base_load( char* name, int anim, char* gfx, int sx, int sy )
  */
 static void spfx_base_free( SPFX_Base *effect )
 {
-   if (effect->name) free(effect->name);
-   if (effect->gfx) gl_freeTexture(effect->gfx);
+   if (effect->name != NULL) free(effect->name);
+   if (effect->gfx != NULL) gl_freeTexture(effect->gfx);
 }
 
 
