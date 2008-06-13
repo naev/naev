@@ -525,6 +525,11 @@ void gl_freeTexture( glTexture* texture )
 {
    glTexList *cur, *last;
 
+   if (texture == NULL) {
+      WARN("Attempting to free NULL texture!");
+      return;
+   }
+
    /* see if we can find it in stack */
    last = NULL;
    for (cur=texture_list; cur!=NULL; cur=cur->next) {
@@ -538,8 +543,11 @@ void gl_freeTexture( glTexture* texture )
             free(texture);
 
             /* free the list node */
-            if (last == NULL) /* case it's the last texture */
-               texture_list = NULL;
+            if (last == NULL) /* case there's no texture before it */
+               if (cur->next != NULL)
+                  texture_list = cur->next;
+               else /* case it's the last texture */
+                  texture_list = NULL;
             else
                last->next = cur->next;
             free(cur);

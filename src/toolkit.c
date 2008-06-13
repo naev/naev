@@ -457,6 +457,8 @@ static Widget* window_getwgt( const unsigned int wid, char* name )
    for (i=0; i<wdw->nwidgets; i++)
       if (strcmp(wdw->widgets[i].name, name)==0)
          return &wdw->widgets[i];
+
+   WARN("Widget '%s' not found in window '%u'!", name, wid );
    return NULL;
 }
 

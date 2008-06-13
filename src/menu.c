@@ -60,6 +60,7 @@ int menu_open = 0;
 void menu_main_close (void);
 static void menu_main_load( char* str );
 static void menu_main_new( char* str );
+static void menu_main_exit( char* str );
 /* small menu */
 static void menu_small_close( char* str );
 static void edit_options( char* str );
@@ -115,7 +116,7 @@ void menu_main (void)
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOptions", "Options", (void(*)(char*)) edit_options );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnExit", "Exit", (void(*)(char*)) exit_game );
+         "btnExit", "Exit", menu_main_exit );
 
    menu_Open(MENU_MAIN);
 }
@@ -123,7 +124,7 @@ void menu_main_close (void)
 {
    window_destroy( window_get("Main Menu") );
 
-   gl_freeTexture( window_getImage( window_get("BG"), "imgBG" ) );
+   gl_freeTexture( window_getImage( window_get("BG"), "imgLogo" ) );
    window_destroy( window_get("BG") );
 
    menu_Close(MENU_MAIN);
@@ -140,6 +141,25 @@ static void menu_main_new( char* str )
 
    menu_main_close();
    player_new();
+}
+static void menu_main_exit( char* str )
+{
+   (void)str;
+   unsigned int wid;
+
+   wid = window_get("BG");
+
+   /* 
+    * Ugly hack to prevent player.c from segfaulting due to the fact
+    * that game will attempt to render while waiting for the quit event
+    * pushed by exit_game() to be handled without actually having a player
+    * nor anything of the likes (nor toolkit to stop rendering) while
+    * not leaking any texture.
+    */
+   gl_freeTexture( window_getImage(wid, "imgLogo") );
+   window_modifyImage( wid, "imgLogo", NULL );
+
+   exit_game();
 }
 
 
