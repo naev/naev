@@ -14,6 +14,9 @@
 #include "xml.h"
 #include "pack.h"
 #include "log.h"
+#include "spfx.h"
+#include "pilot.h"
+#include "rng.h"
 
 
 #define XML_COMMODITY_ID      "Commodities"   /* XML section identifier */
@@ -110,6 +113,37 @@ static Commodity* commodity_parse( xmlNodePtr parent )
 #endif
 
    return temp;
+}
+
+
+/*
+ * Throws cargo out in space graphically.
+ */
+void commodity_Jettison( int pilot, Commodity* com, int quantity )
+{
+   (void)com;
+   int i;
+   Pilot* p;
+   int n, effect;
+   double px,py, r,a, vx,vy;
+
+   p = pilot_get( pilot );
+
+   n = MAX( 1, RNG(quantity/10, quantity/5) );
+   px = p->solid->pos.x;
+   py = p->solid->pos.y;
+   for (i=0; i<n; i++) {
+      effect = spfx_get("cargo");
+
+      /* Radial distribution gives much nicer results */
+      r = RNGF()*25 - 12.5;
+      a = (double)RNG(0,359);
+      vx = r*cos(a);
+      vy = r*sin(a);
+      
+      /* Add the cargo effect */
+      spfx_add( effect, px, py, vx, vy, SPFX_LAYER_BACK );
+   }
 }
 
 

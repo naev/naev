@@ -326,7 +326,7 @@ static void info_outfits_menu( char* str )
          OUTFITS_WIDTH-40, OUTFITS_HEIGHT-60,
          0, "txtOutfits", &gl_smallFont, &cBlack, buf );
    free(buf);
-  
+
    /* Buttons */
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -411,6 +411,8 @@ static void cargo_jettison( char* str )
    pos = toolkit_getListPos( wid, "lstCargo" );
 
    /* Remove the cargo */
+   commodity_Jettison( player->id, player->commodities[pos].commodity,
+         player->commodities[pos].quantity );
    pilot_rmCargo( player, player->commodities[pos].commodity,
          player->commodities[pos].quantity );
 

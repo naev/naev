@@ -21,6 +21,7 @@ void commodity_free (void);
 
 /* misc stuff */
 void credits2str( char *str, unsigned int credits, int decimals );
+void commodity_Jettison( int pilot, Commodity* com, int quantity );
 
 
 #endif /* ECONOMY_H */

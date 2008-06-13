@@ -38,7 +38,9 @@ static int shake_off = 1;
 typedef struct SPFX_Base_ {
    char* name;
 
-   double anim; /* total duration in ms */
+   double ttl; /* Time to live */
+   double anim; /* Total duration in ms */
+
    glTexture *gfx; /* will use each sprite as a frame */
 } SPFX_Base;
 
@@ -51,6 +53,7 @@ typedef struct SPFX_ {
 
    int lastframe; /* needed when paused */
    int effect; /* the real effect */
+
    double timer; /* time left */
 } SPFX;
 
@@ -67,7 +70,7 @@ static int spfx_mstack_back = 0;
 /*
  * prototypes
  */
-static int spfx_base_load( char* name, int anim, char* gfx, int sx, int sy );
+static int spfx_base_load( char* name, int ttl, int anim, char* gfx, int sx, int sy );
 static void spfx_base_free( SPFX_Base *effect );
 static void spfx_destroy( SPFX *layer, int *nlayer, int spfx );
 static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt );
@@ -76,7 +79,7 @@ static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt );
 /*
  * loads the SPFX_Base
  */
-static int spfx_base_load( char* name, int anim, char* gfx, int sx, int sy )
+static int spfx_base_load( char* name, int ttl, int anim, char* gfx, int sx, int sy )
 {
    SPFX_Base *cur;
    char buf[PATH_MAX];
@@ -88,6 +91,7 @@ static int spfx_base_load( char* name, int anim, char* gfx, int sx, int sy )
    /* Fill it with ze data */
    cur->name = strdup(name);
    cur->anim = (double)anim / 1000.;
+   cur->ttl = (double)ttl / 1000.;
    sprintf(buf, SPFX_GFX"%s", gfx);
    cur->gfx = gl_newSprite( buf, sx, sy );
 
@@ -123,9 +127,10 @@ int spfx_get( char* name )
 int spfx_load (void)
 {
    /* Standard explosion effects */
-   spfx_base_load( "ExpS", 400, "exps.png", 6, 5 );
-   spfx_base_load( "ExpM", 450, "expm.png", 6, 5 );
-   spfx_base_load( "ExpL", 500, "expl.png", 6, 5 );
+   spfx_base_load( "ExpS", 400, 400, "exps.png", 6, 5 );
+   spfx_base_load( "ExpM", 450, 450, "expm.png", 6, 5 );
+   spfx_base_load( "ExpL", 500, 500, "expl.png", 6, 5 );
+   spfx_base_load( "cargo", 15000, 5000, "cargo.png", 6, 6 );
 
    return 0;
 }
@@ -160,7 +165,11 @@ void spfx_add( int effect,
       const int layer )
 {
    SPFX *cur_spfx;
+   double ttl, anim;
 
+   /*
+    * Select the Layer
+    */
    if (layer == SPFX_LAYER_FRONT) { /* front layer */
       if (spfx_mstack_front < spfx_nstack_front+1) { /* need more memory */
          spfx_mstack_front += SPFX_CHUNK;
@@ -178,11 +187,17 @@ void spfx_add( int effect,
       spfx_nstack_back++;
    }
 
-   /* no actual adding of the spfx */
+   /* The actual adding of the spfx */
    cur_spfx->effect = effect;
    vect_csetmin( &cur_spfx->pos, px, py );
    vect_csetmin( &cur_spfx->vel, vx, vy );
-   cur_spfx->timer = (double)spfx_effects[effect].anim;
+   /* Timer magic if ttl != anim */
+   ttl = spfx_effects[effect].ttl;
+   anim = spfx_effects[effect].anim;
+   if (ttl != anim)
+      cur_spfx->timer = ttl + RNGF()*anim;
+   else
+      cur_spfx->timer = ttl;
 }
 
 
@@ -344,6 +359,7 @@ void spfx_render( const int layer )
    int i, spfx_nstack;
    SPFX_Base *effect;
    int sx, sy;
+   double time;
 
    
    /* get the appropriate layer */
@@ -367,9 +383,10 @@ void spfx_render( const int layer )
       sx = (int)effect->gfx->sx;
       sy = (int)effect->gfx->sy;
 
-      if (!paused) /* don't calculate frame if paused */
-         spfx_stack[i].lastframe = sx * sy
-               * MIN(((double)(spfx_stack[i].timer)/(double)effect->anim), 1.);
+      if (!paused) { /* don't calculate frame if paused */
+         time = fmod(spfx_stack[i].timer,effect->anim) / effect->anim;
+         spfx_stack[i].lastframe = sx * sy * MIN(time, 1.);
+      }
       
       /* Renders */
       gl_blitSprite( effect->gfx, 
