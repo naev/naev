@@ -487,6 +487,7 @@ void pilot_render( Pilot* p )
  */
 static void pilot_update( Pilot* pilot, const double dt )
 {
+   int i;
    unsigned int t, l;
    double a, px,py, vx,vy;
 
@@ -507,6 +508,11 @@ static void pilot_update( Pilot* pilot, const double dt )
                VX(pilot->solid->pos), VY(pilot->solid->pos),
                VX(pilot->solid->vel), VY(pilot->solid->vel), SPFX_LAYER_BACK );
          pilot_setFlag(pilot,PILOT_EXPLODED);
+
+         /* Release cargo */
+         for (i=0; i<pilot->ncommodities; i++)
+            commodity_Jettison( pilot->id, pilot->commodities[i].commodity,
+                  pilot->commodities[i].quantity );
       }
       /* reset random explosion timer */
       else if (t > pilot->timer[1]) {
