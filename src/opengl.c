@@ -405,6 +405,7 @@ glTexture* gl_loadImage( SDL_Surface* surface )
    texture->sh = texture->h;
 
    texture->trans = NULL;
+   texture->name = NULL;
 
    return texture;
 }
@@ -428,19 +429,18 @@ glTexture* gl_newImage( const char* path )
       }
    }
 
-   /* allocate memory */
-   if (texture_list == NULL) { /* special condition - creating new list */
-      texture_list = cur = malloc(sizeof(glTexList));
-   }
-   else {
-      cur = malloc(sizeof(glTexList));
-      last->next = cur;
-   }
-
-   /* set node properties */
+   /* Create the new node */
+   cur = malloc(sizeof(glTexList));
    cur->next = NULL;
-   cur->tex = gl_loadNewImage(path);
    cur->used = 1;
+
+   /* Load the image */
+   cur->tex = gl_loadNewImage(path);
+
+   if (texture_list == NULL) /* special condition - creating new list */
+      texture_list = cur;
+   else
+      last->next = cur;
 
    return cur->tex;
 }

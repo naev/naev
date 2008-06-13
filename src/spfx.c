@@ -359,9 +359,11 @@ void spfx_render( const int layer )
          break;
    }
 
+   /* Now render the layer */
    for (i=0; i<spfx_nstack; i++) {
       effect = &spfx_effects[ spfx_stack[i].effect ];
 
+      /* Simplifies */
       sx = (int)effect->gfx->sx;
       sy = (int)effect->gfx->sy;
 
@@ -369,6 +371,7 @@ void spfx_render( const int layer )
          spfx_stack[i].lastframe = sx * sy
                * MIN(((double)(spfx_stack[i].timer)/(double)effect->anim), 1.);
       
+      /* Renders */
       gl_blitSprite( effect->gfx, 
             VX(spfx_stack[i].pos), VY(spfx_stack[i].pos),
             spfx_stack[i].lastframe % sx,

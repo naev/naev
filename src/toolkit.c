@@ -1971,9 +1971,8 @@ int toolkit_init (void)
  */
 void toolkit_exit (void)
 {
-   int i;
-   for (i=0; i<nwindows; i++)
-      window_destroy(windows[i].id);
+   while (nwindows > 0)
+      window_destroy(windows[0].id);
    free(windows);
 }
 
