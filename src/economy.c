@@ -125,21 +125,23 @@ void commodity_Jettison( int pilot, Commodity* com, int quantity )
    int i;
    Pilot* p;
    int n, effect;
-   double px,py, r,a, vx,vy;
+   double px,py, bvx, bvy, r,a, vx,vy;
 
    p = pilot_get( pilot );
 
    n = MAX( 1, RNG(quantity/10, quantity/5) );
    px = p->solid->pos.x;
    py = p->solid->pos.y;
+   bvx = p->solid->vel.x;
+   bvy = p->solid->vel.y;
    for (i=0; i<n; i++) {
       effect = spfx_get("cargo");
 
       /* Radial distribution gives much nicer results */
       r = RNGF()*25 - 12.5;
       a = (double)RNG(0,359);
-      vx = r*cos(a);
-      vy = r*sin(a);
+      vx = bvx + r*cos(a);
+      vy = bvy + r*sin(a);
       
       /* Add the cargo effect */
       spfx_add( effect, px, py, vx, vy, SPFX_LAYER_BACK );
