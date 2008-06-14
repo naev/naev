@@ -236,7 +236,7 @@ static void map_update (void)
    }
 
    /* Get the services */
-   h = gl_printHeight( &gl_smallFont, 90, buf );
+   h = gl_printHeight( &gl_smallFont, 80, buf );
    y = -180 - (h - gl_smallFont.h);
    window_moveWidget( map_wid, "txtSServices", -20, y );
    y -= gl_smallFont.h+5;
