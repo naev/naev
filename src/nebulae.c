@@ -390,8 +390,12 @@ void nebu_renderPuffs( const double dt, int below_player )
 {
    int i;
 
+   /* Main menu shouldn't have puffs */
+   if (menu_isOpen(MENU_MAIN)) return;
+
    for (i=0; i<nebu_npuffs; i++) {
 
+      /* Seperate by layers */
       if ((below_player && (nebu_puffs[i].height < 1.)) ||
             (!below_player && (nebu_puffs[i].height > 1.))) {
 
