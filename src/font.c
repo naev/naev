@@ -336,7 +336,7 @@ int gl_printHeight( const glFont *ft_font,
    char text[1024]; /* holds the string */
    va_list ap;
    int p, i, n, len, lastspace;
-   double x,y;
+   double y;
    
    if (ft_font == NULL) ft_font = &gl_defFont;
    
@@ -346,7 +346,6 @@ int gl_printHeight( const glFont *ft_font,
       vsprintf(text, fmt, ap);
       va_end(ap);
    } 
-   x = 0.;
    y = 0.;
    
    len = (int)strlen(text);
