@@ -525,6 +525,7 @@ void gl_freeTexture( glTexture* texture )
 {
    glTexList *cur, *last;
 
+   /* Shouldn't be NULL (won't segfault though) */
    if (texture == NULL) {
       WARN("Attempting to free NULL texture!");
       return;
@@ -543,11 +544,12 @@ void gl_freeTexture( glTexture* texture )
             free(texture);
 
             /* free the list node */
-            if (last == NULL) /* case there's no texture before it */
+            if (last == NULL) { /* case there's no texture before it */
                if (cur->next != NULL)
                   texture_list = cur->next;
                else /* case it's the last texture */
                   texture_list = NULL;
+            }
             else
                last->next = cur->next;
             free(cur);
@@ -556,6 +558,18 @@ void gl_freeTexture( glTexture* texture )
       }
       last = cur;
    }
+
+   /* Not found */
+   if (texture->name != NULL) /* Surfaces will have NULL names */
+      WARN("Attempting to free texture '%s' not found in stack!", texture->name);
+
+   /* Free anyways */
+   glDeleteTextures( 1, &texture->texture );
+   if (texture->trans != NULL) free(texture->trans);
+   if (texture->name != NULL) free(texture->name);
+   free(texture);
+
+   gl_checkErr();
 }
 
 
