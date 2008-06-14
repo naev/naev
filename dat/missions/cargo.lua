@@ -62,7 +62,7 @@ function create()
       misn.setTitle( string.format(title[11], planet) )
    else -- people delivery :)
       misn_type = "People"
-      misn.faction = rnd.int(1)
+      misn_faction = rnd.int(1)
       carg_mass = 0
       i = rnd.int(5)
       if i < 2 then
