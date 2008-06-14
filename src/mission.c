@@ -415,13 +415,9 @@ static int mission_matchFaction( MissionData* misn, int faction )
 {
    int i;
 
-   for (i=0; i<misn->avail.nfactions; i++) {
-      if (faction_isFaction(misn->avail.factions[i]) &&
-            (faction == misn->avail.factions[i]))
+   for (i=0; i<misn->avail.nfactions; i++)
+      if (faction == misn->avail.factions[i])
          return 1;
-      else if (faction_ofAlliance( faction, misn->avail.factions[i]))
-         return 1;
-   }
 
    return 0;
 }
@@ -521,12 +517,6 @@ static MissionData* mission_parse( const xmlNodePtr parent )
                temp->avail.planet = strdup( xml_get(cur) );
             else if (xml_isNode(cur,"system"))
                temp->avail.system = strdup( xml_get(cur) );
-            else if (xml_isNode(cur,"alliance")) {
-               temp->avail.factions = realloc( temp->avail.factions,
-                     sizeof(int) * ++temp->avail.nfactions );
-               temp->avail.factions[temp->avail.nfactions-1] = 
-                     faction_getAlliance( xml_get(cur) );
-            }
             else if (xml_isNode(cur,"faction")) {
                temp->avail.factions = realloc( temp->avail.factions, 
                      sizeof(int) * ++temp->avail.nfactions );

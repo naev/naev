@@ -13,8 +13,9 @@
 <avail>
 <chance>960</chance>
 <location>Computer</location>
-<alliance>Neutral</alliance>
-<alliance>Empire United</alliance>
+<faction>Independent</faction>
+<faction>Empire</faction>
+<faction>Soromid</faction>
 </avail>
 </mission>
 <mission name="Empire Recruitment">
@@ -25,8 +26,7 @@
 <avail>
 <chance>80</chance>
 <location>Bar</location>
-<alliance>Empire United</alliance>
-<alliance>Neutral</alliance>
+<faction>Empire</faction>
 </avail>
 </mission>
 <mission name="Empire Shipping">
@@ -35,8 +35,8 @@
 <cond>var.peek("es_cargo") == true</cond>
 <chance>350</chance>
 <location>Computer</location>
-<alliance>Empire United</alliance>
-<alliance>Neutral</alliance>
+<faction>Empire</faction>
+<faction>Soromid</faction>
 </avail>
 </mission>
 <mission name="Empire Scouting">
@@ -48,7 +48,7 @@
 <req>es_cargo</req>
 <chance>70</chance>
 <location>Bar</location>
-<alliance>Empire United</alliance>
+<faction>Empire</faction>
 </avail>
 </mission>
 </Missions>

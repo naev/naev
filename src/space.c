@@ -272,10 +272,7 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
       for (j=0; j<systems_stack[i].nplanets; j++) {
          planet = &systems_stack[i].planets[j];
          for (k=0; k<nfactions; k++)
-            if ((faction_isFaction(factions[k]) && /* is a faction */
-                     (planet->faction == factions[k])) ||
-                  (faction_isAlliance(factions[k]) && /* is an alliance */
-                     faction_ofAlliance(planet->faction,factions[k]))) {
+            if (planet->faction == factions[k]) {
                ntmp++;
                if (ntmp > mtmp) { /* need more space */
                   mtmp += CHUNK_SIZE;

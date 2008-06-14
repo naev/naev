@@ -18,18 +18,11 @@
 
 #define XML_FACTION_ID     "Factions"   /* XML section identifier */
 #define XML_FACTION_TAG    "faction"
-#define XML_ALLIANCE_ID    "Alliances"
-#define XML_ALLIANCE_TAG   "alliance"
-#define XML_ENEMIES_ID     "Enemies"
-#define XML_ENEMIES_TAG    "enemies"
 
 #define FACTION_DATA       "dat/faction.xml"
 
 
 #define PLAYER_ALLY        70 /* above this player is considered ally */
-
-
-#define ALLIANCE_OFFSET    27182 /* special offset for alliances */
 
 
 typedef struct Faction_ {
@@ -48,34 +41,16 @@ typedef struct Faction_ {
 
 
 static Faction* faction_stack = NULL;
-static int nfactions = 0;
-
-
-/*
- * used to save alliances
- */
-typedef struct Alliance_ {
-   char* name;
-   int* factions;
-   int nfactions;
-} Alliance;
-
-
-/*
- * alliance stack
- */
-static Alliance* alliances = NULL;
-static int nalliances = 0;
+static int faction_nstack = 0;
 
 
 /*
  * Prototypes
  */
 /* static */
+static int faction_isFaction( int f );
 static Faction* faction_parse( xmlNodePtr parent );
-static void alliance_parse( xmlNodePtr parent );
-static void enemies_parse( xmlNodePtr parent );
-static Alliance* alliance_get( char* name );
+static void faction_parseSocial( xmlNodePtr parent );
 /* externed */
 int pfaction_save( xmlTextWriterPtr writer );
 int pfaction_load( xmlNodePtr parent );
@@ -87,30 +62,13 @@ int pfaction_load( xmlNodePtr parent );
 int faction_get( const char* name )
 {
    int i;
-   for (i=0; i<nfactions; i++) 
+   for (i=0; i<faction_nstack; i++) 
       if (strcmp(faction_stack[i].name, name)==0)
          break;
 
-   if (i != nfactions)
+   if (i != faction_nstack)
       return i;
    DEBUG("Faction '%s' not found in stack.", name);
-   return -1;
-}
-
-
-/*
- * returns the id of an alliance
- */
-int faction_getAlliance( char* name )
-{
-   int i;
-   for (i=0; i<nalliances; i++)
-      if (strcmp(alliances[i].name, name)==0)
-         break;
-   
-   if (i != nalliances)
-      return ALLIANCE_OFFSET + i;
-   DEBUG("Alliance '%s' not found in stack.", name);
    return -1;
 }
 
@@ -121,22 +79,6 @@ int faction_getAlliance( char* name )
 char* faction_name( int f )
 {
    return faction_stack[f].name;
-}
-
-
-/*
- * returns the alliance of name name
- */
-static Alliance* alliance_get( char* name )
-{
-   int i;
-   for (i=0; i<nalliances; i++)
-      if (strcmp(alliances[i].name, name)==0)
-         break;
-   
-   if (i != nalliances)
-      return alliances+i;
-   return NULL;
 }
 
 
@@ -323,49 +265,11 @@ int areAllies( int a, int b )
 
 
 /*
- * is faction f part of alliance a?
- */
-int faction_ofAlliance( int f, int a )
-{
-   int i;
-   Alliance* aa;
-
-   /* validize faction and alliance */
-   if (!faction_isFaction(f)) {
-      DEBUG("faction_ofAlliance: invalid faction '%d'", f);
-      return 0;
-   }
-   if (!faction_isAlliance(a)) {
-      DEBUG("faction_ofAlliance: invalid alliance '%d'", a);
-      return 0;
-   }
-
-   aa = &alliances[a-ALLIANCE_OFFSET];
-
-   for (i=0; i<aa->nfactions; i++)
-      if (aa->factions[i] == f)
-         return 1;
-   return 0;
-}
-
-
-/*
- * returns true if a is an alliance
- */
-int faction_isAlliance( int a )
-{
-   if ((a<ALLIANCE_OFFSET) || (a>=ALLIANCE_OFFSET+nalliances))
-      return 0;
-   return 1;
-}
-
-
-/*
  * returns true if f is a faction
  */
-int faction_isFaction( int f )
+static int faction_isFaction( int f )
 {
-   if ((f<0) || (f>=nfactions))
+   if ((f<0) || (f>=faction_nstack))
       return 0;
    return 1;
 }
@@ -374,7 +278,6 @@ int faction_isFaction( int f )
 /*
  * parses a single faction, but doesn't set the allies/enemies bit
  */
-
 static Faction* faction_parse( xmlNodePtr parent )
 {
    xmlNodePtr node;
@@ -383,7 +286,7 @@ static Faction* faction_parse( xmlNodePtr parent )
    
    temp = CALLOC_ONE(Faction);
 
-   temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name");
+   temp->name = xml_nodeProp(parent,"name");
    if (temp->name == NULL) WARN("Faction from "FACTION_DATA" has invalid or no name");
 
    player = 0;
@@ -401,142 +304,47 @@ static Faction* faction_parse( xmlNodePtr parent )
 }
 
 
-/*
- * sets the allies bit in the faction_stack
- */
-static void alliance_parse( xmlNodePtr parent )
-{
-   Alliance* a;
-   int *i,j,n,m;
-   Faction* ft;
-   xmlNodePtr node, cur;
-
-   node = parent->xmlChildrenNode;
-
-   do {                                
-      if ((node->type==XML_NODE_START) &&
-            (strcmp((char*)node->name,XML_ALLIANCE_TAG)==0)) {
-
-         /* alloc a new alliance */
-         alliances = realloc(alliances, sizeof(Alliance)*(++nalliances));
-         alliances[nalliances-1].name = (char*)xmlGetProp(node,(xmlChar*)"name");
-         alliances[nalliances-1].factions = NULL;
-         alliances[nalliances-1].nfactions = 0;
-
-         /* parse the current alliance's allies */
-         cur = node->xmlChildrenNode;
-         do {
-            if (strcmp((char*)cur->name,"ally")==0) {
-
-               /* add the faction (and pointers to make life easier) */
-               a = alliances + nalliances-1;
-               i = &a->nfactions;
-               (*i)++;
-
-               /* load the faction */
-               a->factions = realloc( a->factions, (*i)*sizeof(int) );
-               a->factions[(*i)-1] = faction_get((char*)cur->children->content);
-                     
-               if (a->factions[(*i)-1] == -1)
-                  WARN("Faction '%s' in alliance '%s' doesn't exist in "FACTION_DATA,
-                        (char*)cur->children->content, a->name );
-            }
-         } while (xml_nextNode(cur));
-
-
-         /* set the stuff needed in faction_stack */
-         for (j=0; j<(*i); j++) {
-            ft = &faction_stack[ a->factions[j] ];
-            ft->nallies += (*i)-1;
-            ft->allies = realloc( ft->allies, (ft->nallies)*sizeof(int));
-            for (n=0,m=0; n<(*i); n++,m++) { /* add as ally all factions except self */
-               if (n==j) m--;
-               else if (n!=j)
-                  ft->allies[ ft->nallies-(*i)+1+m ] = a->factions[n];
-            }
-         }
-      }
-   } while (xml_nextNode(node));
-}
-
-
-/*
- * sets the enemies bit in the faction_stack
- */
-static void enemies_parse( xmlNodePtr parent )
+static void faction_parseSocial( xmlNodePtr parent )
 {
    xmlNodePtr node, cur;
-   int** f;
-   Faction* ft;
-   Alliance* a;
-   int i, *j, n, m, x, y, z, e;
-   char* type;
+   char *buf;
+   Faction *base;
+   int mod;
+
+   buf = xml_nodeProp(parent,"name");
+   base = &faction_stack[faction_get(buf)];
+   free(buf);
 
    node = parent->xmlChildrenNode;
-
    do {
-      if ((node->type==XML_NODE_START) &&
-            (strcmp((char*)node->name,XML_ENEMIES_TAG)==0)) {
 
-         i = 0;
-         f = NULL;
-         j = NULL;
-
+      /* Grab the allies */
+      if (xml_isNode(node,"allies")) {
          cur = node->xmlChildrenNode;
+
          do {
-            if (strcmp((char*)cur->name,"enemy")==0) {
+            if (xml_isNode(cur,"ally")) {
+               mod = faction_get(xml_get(cur));
+               base->nallies++;
+               base->allies = realloc(base->allies, sizeof(int)*base->nallies);
+               base->allies[base->nallies-1] = mod;
+            }
+         } while (xml_nextNode(cur));
+      }
 
-               type = (char*)xmlGetProp(cur,(xmlChar*)"type");
-               
-               i++;
-               j = realloc(j, sizeof(int)*i);
-               f = realloc(f, sizeof(int*)*i);
+      /* Grab the enemies */
+      if (xml_isNode(node,"enemies")) {
+         cur = node->xmlChildrenNode;
 
-               /* enemy thing is an alliance */
-               if (strcmp(type,"alliance")==0) {
-                  a = alliance_get( (char*)cur->children->content );
-                  if (a==NULL)
-                     WARN("Alliance %s not found in stack", (char*)cur->children->content);
-                  j[i-1] = a->nfactions;
-                  f[i-1] = a->factions;
-               }
-               /* enemy thing is only a faction */
-               else if (strcmp(type,"faction")==0) {
-                  j[i-1] = 1;
-                  f[i-1] = malloc(sizeof(int));
-                  f[i-1][0] = faction_get( (char*)cur->children->content );
-                  if (f[i-1][0] == -1)
-                     WARN("Faction %s not found in stack", (char*)cur->children->content);
-               }
-
-               free(type);
+         do {                           
+            if (xml_isNode(cur,"enemy")) {
+               mod = faction_get(xml_get(cur));
+               base->nenemies++;
+               base->enemies = realloc(base->enemies, sizeof(int)*base->nenemies);
+               base->enemies[base->nenemies-1] = mod;
             }
          } while (xml_nextNode(cur));
 
-         /* now actually parse and load up the enemies */
-         for (n=0; n<i; n++) { /* unsigned int** */
-            for (m=0; m<j[n]; m++) { /* unsigned int* */
-
-               /* add all the faction enemies to nenemies and alloc */
-               for (e=0,x=0; x<i; x++)
-                  if (x!=n) e += j[x]; /* stores the total enemies */
-               /* now alloc the memory */
-               ft = &faction_stack[ f[n][m] ];
-               ft->nenemies += e;
-               ft->enemies = realloc( ft->enemies, sizeof(int)*ft->nenemies );
-
-               /* now add the actual enemies */
-               for (x=0,z=0; x<i; x++)
-                  if (x!=n) /* make sure isn't from the same group */
-                     for (y=0; y<j[x]; y++,z++)
-                        ft->enemies[ ft->nenemies-e + z ] = f[x][y];
-            }
-         }
-         /* free all the temporary memory */
-         for (x=0; x<i; x++)
-            if (j[x]==1) free(f[x]); /* free the single malloced factions */
-         free(f); /* free the rest */
-         free(j);
       }
    } while (xml_nextNode(node));
 }
@@ -550,7 +358,7 @@ int factions_load (void)
    uint32_t bufsize;
    char *buf = pack_readfile(DATA, FACTION_DATA, &bufsize);
 
-   xmlNodePtr node;
+   xmlNodePtr factions, node;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );
 
    Faction* temp = NULL;
@@ -561,8 +369,8 @@ int factions_load (void)
       return -1;
    }
 
-   node = node->xmlChildrenNode; /* first faction node */
-   if (node == NULL) {
+   factions = node->xmlChildrenNode; /* first faction node */
+   if (factions == NULL) {
       ERR("Malformed "FACTION_DATA" file: does not contain elements");
       return -1;
    }
@@ -572,26 +380,32 @@ int factions_load (void)
    faction_stack[0].name = strdup("Player");
    faction_stack[0].nallies = 0;
    faction_stack[0].nenemies = 0;
-   nfactions++;
+   faction_nstack++;
 
+   /* First pass - gets factions */
+   node = factions;
    do {
       if (xml_isNode(node,XML_FACTION_TAG)) {
          temp = faction_parse(node);
-         faction_stack = realloc(faction_stack, sizeof(Faction)*(++nfactions));        
-         memcpy(faction_stack+nfactions-1, temp, sizeof(Faction));                  
+         faction_stack = realloc(faction_stack, sizeof(Faction)*(++faction_nstack));        
+         memcpy(faction_stack+faction_nstack-1, temp, sizeof(Faction));                  
          free(temp);
       }
-      else if (xml_isNode(node,XML_ALLIANCE_ID))
-         alliance_parse(node);
-      else if (xml_isNode(node,XML_ENEMIES_ID))
-         enemies_parse(node);
    } while (xml_nextNode(node));
+
+   /* Second pass - sets allies and enemies */
+   node = factions;
+   do {
+      if (xml_isNode(node,XML_FACTION_TAG))
+         faction_parseSocial(node);
+   } while (xml_nextNode(node));
+
 
    xmlFreeDoc(doc);
    free(buf);
    xmlCleanupParser();
 
-   DEBUG("Loaded %d Faction%s", nfactions, (nfactions==1) ? "" : "s" );
+   DEBUG("Loaded %d Faction%s", faction_nstack, (faction_nstack==1) ? "" : "s" );
 
    return 0;
 }
@@ -600,24 +414,15 @@ void factions_free (void)
 {
    int i;
 
-   /* free aliances */
-   for (i=0; i<nalliances; i++) {
-      free(alliances[i].name);
-      free(alliances[i].factions);
-   }
-   free(alliances);
-   alliances = NULL;
-   nalliances = 0;
-
    /* free factions */
-   for (i=0; i<nfactions; i++) {
+   for (i=0; i<faction_nstack; i++) {
       free(faction_stack[i].name);
       if (faction_stack[i].nallies > 0) free(faction_stack[i].allies);
       if (faction_stack[i].nenemies > 0) free(faction_stack[i].enemies);
    }
    free(faction_stack);
    faction_stack = NULL;
-   nfactions = 0;
+   faction_nstack = 0;
 }
 
 
@@ -630,7 +435,7 @@ int pfaction_save( xmlTextWriterPtr writer )
 
    xmlw_startElem(writer,"factions");
 
-   for (i=1; i<nfactions; i++) { /* player is faction 0 */
+   for (i=1; i<faction_nstack; i++) { /* player is faction 0 */
       xmlw_startElem(writer,"faction");
 
       xmlw_attr(writer,"name","%s",faction_stack[i].name);
