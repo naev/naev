@@ -107,10 +107,10 @@ void gl_blitSprite( const glTexture* sprite,
 void gl_blitStaticSprite( const glTexture* sprite,
       const double bx, const double by,
       const int sx, const int sy, const glColour* c );
-/* blits a texture rotated, relative pos */
-void gl_blitRotate( const glTexture* texture,
+/* blits a texture scaled, absolute pos */
+void gl_blitScale( const glTexture* texture,
       const double bx, const double by,
-      const double dir, const glColour* c );
+      const double bw, const double bh, const glColour* c );
 /* blits the entire image, absolute pos */
 void gl_blitStatic( const glTexture* texture,
       const double bx, const double by, const glColour *c );

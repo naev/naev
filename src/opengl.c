@@ -646,7 +646,6 @@ static void gl_blitTexture( const glTexture* texture,
 
       glTexCoord2d( tx, ty + th);
       glVertex2d( x, y + texture->sh );
-
    glEnd(); /* GL_QUADS */
    glDisable(GL_TEXTURE_2D);
 
@@ -697,29 +696,49 @@ void gl_blitStaticSprite( const glTexture* sprite, const double bx, const double
 
 
 /*
- * like gl_blitSprite but will use the actual direction, for things that
- * can just rotate around
+ * Like gl_blitStatic but scales to size
  */
-void gl_blitRotate( const glTexture* texture,
-      const double bx, const double by,
-      const double dir, const glColour* c )
+void gl_blitScale( const glTexture* texture,
+      const double bx, const double by,     
+      const double bw, const double bh, const glColour* c )
 {
    double x,y;
+   double tw,th;
+   double tx,ty;
 
-   /* calculate position - we'll use relative coords to player */
-   x = bx - VX(*gl_camera) - texture->sw/2. + gui_xoff;
-   y = by - VY(*gl_camera) - texture->sh/2. + gui_yoff;
+   /* here we use absolute coords */
+   x = bx - (double)SCREEN_W/2.;
+   y = by - (double)SCREEN_H/2.;
 
-   glMatrixMode(GL_PROJECTION);
-   glPushMatrix();
-      glRotated( dir, 0., 0., 1. );
+   /* texture dimensions */
+   tw = texture->sw / texture->rw;
+   th = texture->sh / texture->rh;
+   tx = ty = 0.;
 
-   /* blit */
-   gl_blitTexture( texture, x, y, 0, 0, c );
+   glEnable(GL_TEXTURE_2D);
+   glBindTexture( GL_TEXTURE_2D, texture->texture);
+   glBegin(GL_QUADS);
+      /* set colour or default if not set */
+      if (c==NULL) glColor4d( 1., 1., 1., 1. );
+      else COLOUR(*c);
 
-   glPopMatrix(); /* GL_PROJECTION */
+      glTexCoord2d( tx, ty);
+      glVertex2d( x, y );
+
+      glTexCoord2d( tx + tw, ty);
+      glVertex2d( x + bw, y );
+
+      glTexCoord2d( tx + tw, ty + th);
+      glVertex2d( x + bw, y + bh );
+
+      glTexCoord2d( tx, ty + th);
+      glVertex2d( x, y + bh );
+   glEnd(); /* GL_QUADS */
+   glDisable(GL_TEXTURE_2D);
+
+   /* anything failed? */
+   gl_checkErr();
 }
-
 
 /*
  * straight out blits a texture at position
