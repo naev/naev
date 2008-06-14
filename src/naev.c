@@ -55,6 +55,8 @@
 #define FONT_SIZE       12
 #define FONT_SIZE_SMALL 10
 
+#define NAEV_INIT_DELAY 3000 /* Minimum amount of time to wait with loading screen */
+
 
 static int quit = 0; /* for primary loop */
 unsigned int time = 0; /* used to calculate FPS and movement, in pause.c */
@@ -73,6 +75,7 @@ char* namjoystick = NULL;
 /*
  * prototypes
  */
+static void load_screen (void);
 static void load_all (void);
 static void unload_all (void);
 void main_loop (void);
@@ -134,6 +137,8 @@ int main ( int argc, char** argv )
       exit(EXIT_FAILURE);
    }
    window_caption();
+   load_screen();
+   time = SDL_GetTicks();
 
 
    /*
@@ -184,6 +189,9 @@ int main ( int argc, char** argv )
    /* start menu */
    menu_main();
 
+   /* Force a minimum delay with loading screen */
+   if ((SDL_GetTicks() - time) < NAEV_INIT_DELAY)
+      SDL_Delay( NAEV_INIT_DELAY - (SDL_GetTicks() - time) );
    time = SDL_GetTicks(); /* initializes the time */
    /* 
     * main loop
@@ -233,8 +241,53 @@ int main ( int argc, char** argv )
    exit(EXIT_SUCCESS);
 }
 
+
 /**
- * loads all the data, makes main() simpler
+ * @brief Displays a loading screen.
+ */
+void load_screen (void)
+{
+   int i;
+   glTexture *tex;
+   char file_path[PATH_MAX];
+   char **files;
+   uint32_t nfiles;
+   size_t len;
+   int nload;
+
+   /* Count the loading screens */
+   files = pack_listfiles( data, &nfiles );
+   len = strlen("gfx/loading");
+   nload = 0;
+   for (i=0; i<(int)nfiles; i++)
+      if (strncmp(files[i], "gfx/loading", len)==0) {
+         nload++;
+         free(files[i]);
+      }
+   free(files);
+
+
+   /* Must have loading screens */
+   if (nload==0) {
+      WARN("No loading screens found!");
+      return;
+   }
+
+   /* Load the texture */
+   snprintf(file_path, PATH_MAX, "gfx/loading%03d.png", RNG(0,nload-1));
+   tex = gl_newImage( file_path );
+
+   /* Draw once, won't be redrawn */
+   glClear(GL_COLOR_BUFFER_BIT);
+   gl_blitScale( tex, 0., 0., SCREEN_W, SCREEN_H, NULL );
+   SDL_GL_SwapBuffers();
+
+   /* Free the textures */
+   gl_freeTexture(tex);
+}
+
+/**
+ * @brief Loads all the data, makes main() simpler.
  */
 void load_all (void)
 {
