@@ -466,7 +466,7 @@ static int misn_finish( lua_State *L )
 {
    int b;
 
-   if (lua_isboolean(L,-1)) b = lua_toboolean(L,-1);
+   if (lua_isboolean(L,1)) b = lua_toboolean(L,1);
    else {
       lua_pushstring(L, "Mission Done");
       lua_error(L); /* THERE IS NO RETURN */
@@ -505,7 +505,7 @@ static int var_peek( lua_State *L )
    int i;
    char *str;
 
-   if (lua_isstring(L,-1)) str = (char*) lua_tostring(L,-1);
+   if (lua_isstring(L,1)) str = (char*) lua_tostring(L,1);
    else {
       NLUA_DEBUG("Trying to peek a var with non-string name");
       return 0;
@@ -539,7 +539,7 @@ static int var_pop( lua_State *L )
    int i;
    char* str;
 
-   if (lua_isstring(L,-1)) str = (char*) lua_tostring(L,-1);
+   if (lua_isstring(L,1)) str = (char*) lua_tostring(L,1);
    else {
       NLUA_DEBUG("Trying to pop a var with non-string name");
       return 0;
@@ -570,19 +570,19 @@ static int var_push( lua_State *L )
    var.name = strdup(str);
    
    /* store appropriate data */
-   if (lua_isnil(L,-1)) 
+   if (lua_isnil(L,1)) 
       var.type = MISN_VAR_NIL;
-   else if (lua_isnumber(L,-1)) {
+   else if (lua_isnumber(L,1)) {
       var.type = MISN_VAR_NUM;
-      var.d.num = (double) lua_tonumber(L,-1);
+      var.d.num = (double) lua_tonumber(L,1);
    }
-   else if (lua_isboolean(L,-1)) {
+   else if (lua_isboolean(L,1)) {
       var.type = MISN_VAR_BOOL;
-      var.d.b = lua_toboolean(L,-1);
+      var.d.b = lua_toboolean(L,1);
    }
-   else if (lua_isstring(L,-1)) {
+   else if (lua_isstring(L,1)) {
       var.type = MISN_VAR_STR;
-      var.d.str = strdup( (char*) lua_tostring(L,-1) );
+      var.d.str = strdup( (char*) lua_tostring(L,1) );
    }
    else {
       NLUA_DEBUG("Trying to push a var of invalid data type to stack");
@@ -651,9 +651,9 @@ static int player_addCargo( lua_State *L )
 
    NLUA_MIN_ARGS(2);
 
-   if (lua_isstring(L,-2)) cargo = commodity_get( (char*) lua_tostring(L,-2) );
+   if (lua_isstring(L,1)) cargo = commodity_get( (char*) lua_tostring(L,1) );
    else return 0;
-   if (lua_isnumber(L,-1)) quantity = (int) lua_tonumber(L,-1);
+   if (lua_isnumber(L,2)) quantity = (int) lua_tonumber(L,2);
    else return 0;
 
    ret = pilot_addMissionCargo( player, cargo, quantity );
@@ -669,7 +669,7 @@ static int player_rmCargo( lua_State *L )
 
    NLUA_MIN_ARGS(1);
 
-   if (lua_isnumber(L,-1)) id = (unsigned int) lua_tonumber(L,-1);
+   if (lua_isnumber(L,1)) id = (unsigned int) lua_tonumber(L,1);
    else return 0;
 
    ret = pilot_rmMissionCargo( player, id );
@@ -684,7 +684,7 @@ static int player_pay( lua_State *L )
 
    NLUA_MIN_ARGS(1);
 
-   if (lua_isnumber(L,-1)) money = (int) lua_tonumber(L,-1);
+   if (lua_isnumber(L,1)) money = (int) lua_tonumber(L,1);
    else return 0;
 
    player->credits += money;
@@ -707,10 +707,10 @@ static int player_modFaction( lua_State *L )
    NLUA_MIN_ARGS(2);
    int f, mod;
 
-   if (lua_isstring(L,-2)) f = faction_get( lua_tostring(L,-2) );
+   if (lua_isstring(L,1)) f = faction_get( lua_tostring(L,1) );
    else NLUA_INVALID_PARAMETER();
 
-   if (lua_isnumber(L,-1)) mod = (int) lua_tonumber(L,-1);
+   if (lua_isnumber(L,2)) mod = (int) lua_tonumber(L,2);
    else NLUA_INVALID_PARAMETER();
 
    faction_modPlayer( f, mod );
@@ -722,7 +722,7 @@ static int player_getFaction( lua_State *L )
    NLUA_MIN_ARGS(1);
    int f;
 
-   if (lua_isstring(L,-1)) f = faction_get( lua_tostring(L,-1) );
+   if (lua_isstring(L,1)) f = faction_get( lua_tostring(L,1) );
    else NLUA_INVALID_PARAMETER();
 
    lua_pushnumber(L, faction_getPlayer(f));
@@ -882,9 +882,9 @@ static int pilot_rename( lua_State* L )
    unsigned int id;
    Pilot *p;
 
-   if (lua_isnumber(L,-2)) id = (unsigned int) lua_tonumber(L,-2);
+   if (lua_isnumber(L,1)) id = (unsigned int) lua_tonumber(L,1);
    else NLUA_INVALID_PARAMETER();
-   if (lua_isstring(L,-1)) name = (char*) lua_tostring(L,-1);
+   if (lua_isstring(L,2)) name = (char*) lua_tostring(L,2);
    else NLUA_INVALID_PARAMETER();
 
    p = pilot_get( id );
