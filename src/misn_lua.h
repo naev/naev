@@ -20,7 +20,7 @@ int misn_loadCondLibs( lua_State *L ); /* safe read only stuff */
 /* individual library stuff */
 int lua_loadMisn( lua_State *L );
 int lua_loadVar( lua_State *L, int readonly );
-int lua_loadPlayer( lua_State *L );
+int lua_loadPlayer( lua_State *L, int readonnly );
 int lua_loadHook( lua_State *L );
 int lua_loadPilot( lua_State *L );
 

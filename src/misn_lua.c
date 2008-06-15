@@ -132,6 +132,12 @@ static const luaL_reg player_methods[] = {
    { "getFaction", player_getFaction },
    {0,0}
 };
+static const luaL_reg player_cond_methods[] = {
+   { "name", player_getname },
+   { "ship", player_shipname },
+   { "getFaction", player_getFaction },
+   {0,0}
+};
 /* hooks */
 static int hook_land( lua_State *L );
 static int hook_takeoff( lua_State *L );
@@ -166,7 +172,7 @@ int misn_loadLibs( lua_State *L )
    lua_loadVar(L,0);
    lua_loadSpace(L,0);
    lua_loadTime(L,0);
-   lua_loadPlayer(L);
+   lua_loadPlayer(L,0);
    lua_loadRnd(L);
    lua_loadTk(L);
    lua_loadHook(L);
@@ -177,6 +183,7 @@ int misn_loadCondLibs( lua_State *L )
 {
    lua_loadTime(L,1);
    lua_loadVar(L,1);
+   lua_loadPlayer(L,1);
    return 0;
 }
 /*
@@ -195,9 +202,12 @@ int lua_loadVar( lua_State *L, int readonly )
       luaL_register(L, "var", var_cond_methods);
    return 0;
 }  
-int lua_loadPlayer( lua_State *L )
-{  
-   luaL_register(L, "player", player_methods);
+int lua_loadPlayer( lua_State *L, int readonly )
+{
+   if (readonly == 0)
+      luaL_register(L, "player", player_methods);
+   else
+      luaL_register(L, "player", player_cond_methods);
    return 0;
 }  
 int lua_loadHook( lua_State *L )
