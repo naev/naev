@@ -39,8 +39,8 @@
 <faction>Soromid</faction>
 </avail>
 </mission>
-<mission name="Empire Scouting">
-<lua>emp_scout00</lua>
+<mission name="Collective Scouting">
+<lua>emp_collective00</lua>
 <flags>
 <unique>1</unique>
 </flags>
@@ -49,6 +49,18 @@
 <chance>70</chance>
 <location>Bar</location>
 <faction>Empire</faction>
+</avail>
+</mission>
+<mission name="Collective Espionage">
+<lua>emp_collective01</lua>
+<flags>
+<unique>1</unique>
+</flags>
+<avail>
+<done>Collective Scouting</done>
+<chance>50</chance>
+<location>Bar</location>
+<planet>Omega Station</planet>
 </avail>
 </mission>
 </Missions>
