@@ -344,9 +344,9 @@ static int space_faction( lua_State *L )
    /* Return result in table */
    lua_newtable(L);
    for (i=0; i<s->nplanets; i++) {
-      lua_pushnumber(L,i+1); /* index */
-      lua_pushstring(L,faction_name(s->planets[i].faction)); /* value */
-      lua_rawset(L,-3); /* store in table */
+      lua_pushboolean(L,1); /* value */
+      lua_setfield(L,-2,faction_name(s->planets[i].faction)); /* key */
+      /* allows syntax foo = space.faction("foo"); if foo["bar"] then ... end */
    }
    return 1;
 }
