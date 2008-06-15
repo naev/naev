@@ -102,7 +102,7 @@ int nlua_load( lua_State* L, lua_CFunction f )
 {
    lua_pushcfunction(L, f);
    if (lua_pcall(L, 0, 0, 0))
-      WARN("nlua include error: %s",lua_tostring(L,-1));
+      WARN("nlua include error: %s",lua_tostring(L,1));
 
    return 0;
 }
@@ -151,12 +151,12 @@ static int nlua_packfileLoader( lua_State* L )
 
    NLUA_MIN_ARGS(1);
 
-   if (!lua_isstring(L,-1)) {
+   if (!lua_isstring(L,1)) {
       NLUA_INVALID_PARAMETER();
       return 0;
    }
 
-   filename = (char*) lua_tostring(L,-1);
+   filename = (char*) lua_tostring(L,1);
 
    /* try to locate the data */
    buf = pack_readfile( DATA, filename, &bufsize );
@@ -240,15 +240,15 @@ static int space_getPlanet( lua_State *L )
       lua_pushstring(L, space_getRndPlanet());
       return 1;
    }
-   else if (lua_isnumber(L,-1)) {
-      i = lua_tonumber(L,-1);
+   else if (lua_isnumber(L,1)) {
+      i = lua_tonumber(L,1);
       planets = space_getFactionPlanet( &nplanets, &i, 1 );
    }
-   else if (lua_isstring(L,-1)) {
-      i = faction_get((char*) lua_tostring(L,-1));
+   else if (lua_isstring(L,1)) {
+      i = faction_get((char*) lua_tostring(L,1));
       planets = space_getFactionPlanet( &nplanets, &i, 1 );
    }
-   else if (lua_istable(L,-1)) {
+   else if (lua_istable(L,1)) {
       /* load up the table */
       lua_pushnil(L);
       nfactions = (int) lua_gettop(L);
@@ -281,7 +281,7 @@ static int space_getSystem( lua_State *L )
    NLUA_MIN_ARGS(1);
    char *planetname, *sysname;
 
-   if (lua_isstring(L,-1)) planetname = (char*) lua_tostring(L,-1);
+   if (lua_isstring(L,1)) planetname = (char*) lua_tostring(L,1);
    else return 0;
 
    sysname = planet_getSystem( planetname );
@@ -308,12 +308,12 @@ static int space_jumpDist( lua_State *L )
    int jumps;
    char *start, *goal;
 
-   if (lua_isstring(L,-1))
-      start = (char*) lua_tostring(L,-1);
+   if (lua_isstring(L,1))
+      start = (char*) lua_tostring(L,1);
    else NLUA_INVALID_PARAMETER();
 
-   if ((lua_gettop(L) > 1) && lua_isstring(L,-2))
-      goal = (char*) lua_tostring(L,-2);
+   if ((lua_gettop(L) > 1) && lua_isstring(L,2))
+      goal = (char*) lua_tostring(L,2);
    else
       goal = cur_system->name;
 
@@ -337,8 +337,8 @@ static int time_get( lua_State *L )
 static int time_str( lua_State *L )
 {
    char *nt;
-   if ((lua_gettop(L) > 0) && (lua_isnumber(L,-1)))
-      nt = ntime_pretty( (unsigned int) lua_tonumber(L,-1) );
+   if ((lua_gettop(L) > 0) && (lua_isnumber(L,1)))
+      nt = ntime_pretty( (unsigned int) lua_tonumber(L,1) );
    else
       nt = ntime_pretty( ntime_get() );
    lua_pushstring(L, nt);
@@ -347,8 +347,8 @@ static int time_str( lua_State *L )
 }
 static int time_units( lua_State *L )
 {  
-   if ((lua_gettop(L) > 0) && (lua_isnumber(L,-1)))
-      lua_pushnumber( L, (unsigned int)lua_tonumber(L,-1) * NTIME_UNIT_LENGTH );
+   if ((lua_gettop(L) > 0) && (lua_isnumber(L,1)))
+      lua_pushnumber( L, (unsigned int)lua_tonumber(L,1) * NTIME_UNIT_LENGTH );
    else
       lua_pushnumber( L, NTIME_UNIT_LENGTH );
    return 1;
@@ -367,17 +367,17 @@ static int rnd_int( lua_State *L )
    
    if (o==0) lua_pushnumber(L, RNGF() ); /* random double 0 <= x <= 1 */
    else if (o==1) { /* random int 0 <= x <= parameter */
-      if (lua_isnumber(L, -1))
-         lua_pushnumber(L, RNG(0, (int)lua_tonumber(L, -1)));
+      if (lua_isnumber(L, 1))
+         lua_pushnumber(L, RNG(0, (int)lua_tonumber(L, 1)));
       else return 0;
    }
    else if (o>=2) { /* random int paramater 1 <= x <= parameter 2 */
-      if (lua_isnumber(L, -1) && lua_isnumber(L, -2))
+      if (lua_isnumber(L, 1) && lua_isnumber(L, 2))
          lua_pushnumber(L,
-               RNG((int)lua_tonumber(L, -2), (int)lua_tonumber(L, -1)));
+               RNG((int)lua_tonumber(L, 1), (int)lua_tonumber(L, 2)));
       else return 0;
    }
-   else return 0;
+   else NLUA_INVALID_PARAMETER();
    
    return 1; /* unless it's returned 0 already it'll always return a parameter */
 }
@@ -392,10 +392,10 @@ static int tk_msg( lua_State *L )
    char *title, *str;
    NLUA_MIN_ARGS(2);
    
-   if (lua_isstring(L,-2)) title = (char*) lua_tostring(L,-2);
-   else return 0;
-   if (lua_isstring(L,-1)) str = (char*) lua_tostring(L,-1);
-   else return 0;
+   if (lua_isstring(L,1)) title = (char*) lua_tostring(L,1);
+   else NLUA_INVALID_PARAMETER();
+   if (lua_isstring(L,2)) str = (char*) lua_tostring(L,2);
+   else NLUA_INVALID_PARAMETER();
    
    dialogue_msg( title, str );
    return 0;
@@ -406,10 +406,10 @@ static int tk_yesno( lua_State *L )
    char *title, *str;
    NLUA_MIN_ARGS(2);
    
-   if (lua_isstring(L,-2)) title = (char*) lua_tostring(L,-2);
-   else return 0;
-   if (lua_isstring(L,-1)) str = (char*) lua_tostring(L,-1);
-   else return 0;
+   if (lua_isstring(L,1)) title = (char*) lua_tostring(L,1);
+   else NLUA_INVALID_PARAMETER();
+   if (lua_isstring(L,2)) str = (char*) lua_tostring(L,2);
+   else NLUA_INVALID_PARAMETER();
    
    ret = dialogue_YesNo( title, str );
    lua_pushboolean(L,ret);
@@ -421,14 +421,14 @@ static int tk_input( lua_State *L )
    int min, max;
    NLUA_MIN_ARGS(4);
 
-   if (lua_isstring(L,-4)) title = (char*) lua_tostring(L,-4);
-   else return 0;
-   if (lua_isnumber(L,-3)) min = (int) lua_tonumber(L,-3);
-   else return 0;
-   if (lua_isnumber(L,-2)) max = (int) lua_tonumber(L,-2);
-   else return 0;
-   if (lua_isstring(L,-1)) str = (char*) lua_tostring(L,-1);
-   else return 0;
+   if (lua_isstring(L,1)) title = (char*) lua_tostring(L,1);
+   else NLUA_INVALID_PARAMETER();
+   if (lua_isnumber(L,2)) min = (int) lua_tonumber(L,2);
+   else NLUA_INVALID_PARAMETER();
+   if (lua_isnumber(L,3)) max = (int) lua_tonumber(L,3);
+   else NLUA_INVALID_PARAMETER();
+   if (lua_isstring(L,4)) str = (char*) lua_tostring(L,4);
+   else NLUA_INVALID_PARAMETER();
    
    dialogue_input( title, min, max, str );
    return 0;
