@@ -120,6 +120,7 @@ static int player_pay( lua_State *L );
 static int player_msg( lua_State *L );
 static int player_modFaction( lua_State *L );
 static int player_getFaction( lua_State *L );
+static int player_getRating( lua_State *L );
 static const luaL_reg player_methods[] = {
    { "name", player_getname },
    { "ship", player_shipname },
@@ -130,12 +131,14 @@ static const luaL_reg player_methods[] = {
    { "msg", player_msg },
    { "modFaction", player_modFaction },
    { "getFaction", player_getFaction },
+   { "getRating", player_getRating },
    {0,0}
 };
 static const luaL_reg player_cond_methods[] = {
    { "name", player_getname },
    { "ship", player_shipname },
    { "getFaction", player_getFaction },
+   { "getRating", player_getRating },
    {0,0}
 };
 /* hooks */
@@ -738,6 +741,12 @@ static int player_getFaction( lua_State *L )
    lua_pushnumber(L, faction_getPlayer(f));
 
    return 1;
+}
+static int player_getRating( lua_State *L )
+{
+   lua_pushnumber(L, player_crating);
+   lua_pushstring(L, player_rating());
+   return 2;
 }
 
 
