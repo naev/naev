@@ -40,12 +40,14 @@ static int space_getSystem( lua_State *L );
 static int space_landName( lua_State *L );
 static int space_systemName( lua_State *L );
 static int space_jumpDist( lua_State *L );
+static int space_faction( lua_State *L );
 static const luaL_reg space_methods[] = {
    { "getPlanet", space_getPlanet },
    { "getSystem", space_getSystem },
    { "landName", space_landName },
    { "system", space_systemName },
    { "jumpDist", space_jumpDist },
+   { "faction", space_faction },
    {0,0}
 };
 /* time */
@@ -321,6 +323,31 @@ static int space_jumpDist( lua_State *L )
    free(s);
 
    lua_pushnumber(L,jumps);
+   return 1;
+}
+static int space_faction( lua_State *L )
+{
+   int i;
+   StarSystem *s;
+
+   /* Get system */
+   if (lua_isstring(L,1))
+      s = system_get( lua_tostring(L,1) );
+   else s = cur_system;
+
+   /* Check if valid */
+   if (s == NULL) {
+      NLUA_DEBUG("Invalid system!");
+      return 0;
+   }
+
+   /* Return result in table */
+   lua_newtable(L);
+   for (i=0; i<s->nplanets; i++) {
+      lua_pushnumber(L,i+1); /* index */
+      lua_pushstring(L,faction_name(s->planets[i].faction)); /* value */
+      lua_rawset(L,-3); /* store in table */
+   }
    return 1;
 }
 
