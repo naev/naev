@@ -47,6 +47,7 @@ typedef struct MissionData_ {
       int nfactions;
 
       char* cond; /* condition that must be met */
+      char* done; /* previous mission that must have been done */
    } avail;
 
    unsigned int flags; /* flags to store binary properties */

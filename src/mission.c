@@ -243,8 +243,9 @@ static int mission_meetCond( MissionData* misn )
    return 0;
 }
 
+
 /*
- * does the mission meet the minimum requirements?
+ * Does the mission meet the minimum requirements?
  */
 static int mission_meetReq( int mission, int faction, char* planet, char* sysname )
 {
@@ -252,20 +253,25 @@ static int mission_meetReq( int mission, int faction, char* planet, char* sysnam
 
    misn = &mission_stack[mission];
 
-   /* must match planet, system or faction */
+   /* Must match planet, system or faction. */
    if (!(((misn->avail.planet && strcmp(misn->avail.planet,planet)==0)) ||
          (misn->avail.system && (strcmp(misn->avail.system,sysname)==0)) ||
          mission_matchFaction(misn,faction)))
       return 0;
 
-   if (mis_isFlag(misn,MISSION_UNIQUE) && /* mission done or running */
+   if (mis_isFlag(misn,MISSION_UNIQUE) && /* Mission done or running. */
          (player_missionAlreadyDone(mission) ||
           mission_alreadyRunning(misn)))
       return 0;
 
-   if ((misn->avail.cond != NULL) && /* mission doesn't meet the lua conditional */
+   if ((misn->avail.cond != NULL) && /* Mission doesn't meet the lua conditional. */
          !mission_meetCond(misn))
       return 0;
+
+   if ((misn->avail.done != NULL) && /* Mission doesn't meet previous mission reqs. */
+         (player_missionAlreadyDone( mission_getID(misn->avail.done) ) == 0))
+      return 0;
+       
 
   return 1;
 }
@@ -509,22 +515,22 @@ static MissionData* mission_parse( const xmlNodePtr parent )
       else if (xml_isNode(node,"avail")) { /* mission availability */
          cur = node->children;
          do {
-            if (xml_isNode(cur,"location"))
+            if (xml_isNode(cur,"location")) {
                temp->avail.loc = mission_location( xml_get(cur) );
-            else if (xml_isNode(cur,"chance"))
-               temp->avail.chance = xml_getInt(cur);
-            else if (xml_isNode(cur,"planet"))
-               temp->avail.planet = strdup( xml_get(cur) );
-            else if (xml_isNode(cur,"system"))
-               temp->avail.system = strdup( xml_get(cur) );
-            else if (xml_isNode(cur,"faction")) {
+               continue;
+            }
+            xmlr_int(cur,"chance",temp->avail.chance);
+            xmlr_strd(cur,"planet",temp->avail.planet);
+            xmlr_strd(cur,"system",temp->avail.system);
+            if (xml_isNode(cur,"faction")) {
                temp->avail.factions = realloc( temp->avail.factions, 
                      sizeof(int) * ++temp->avail.nfactions );
                temp->avail.factions[temp->avail.nfactions-1] =
                      faction_get( xml_get(cur) );
+               continue;
             }
-            else if (xml_isNode(cur,"cond"))
-               temp->avail.cond = strdup( xml_get(cur) );
+            xmlr_strd(cur,"cond",temp->avail.cond);
+            xmlr_strd(cur,"done",temp->avail.done);
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
