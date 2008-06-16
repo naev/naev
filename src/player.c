@@ -1904,6 +1904,7 @@ int player_missionAlreadyDone( int id )
 int player_save( xmlTextWriterPtr writer )
 {
    int i;
+   MissionData *m;
 
    xmlw_startElem(writer,"player");
    xmlw_attr(writer,"name",player_name);
@@ -1923,11 +1924,13 @@ int player_save( xmlTextWriterPtr writer )
    xmlw_endElem(writer); /* "player" */
 
 
+   /* Mission the player has done */
    xmlw_startElem(writer,"missions_done");
-
-   for (i=0; i<missions_ndone; i++)
-      xmlw_elem(writer,"done",mission_get(missions_done[i])->name);
-
+   for (i=0; i<missions_ndone; i++) {
+      m = mission_get(missions_done[i]);
+      if (m != NULL) /* In case mission name changes between versions */
+         xmlw_elem(writer,"done",mission_get(missions_done[i])->name);
+   }
    xmlw_endElem(writer); /* "missions_done" */
 
    return 0;
