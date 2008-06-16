@@ -665,9 +665,9 @@ static int player_addCargo( lua_State *L )
    NLUA_MIN_ARGS(2);
 
    if (lua_isstring(L,1)) cargo = commodity_get( (char*) lua_tostring(L,1) );
-   else return 0;
+   else NLUA_INVALID_PARAMETER();
    if (lua_isnumber(L,2)) quantity = (int) lua_tonumber(L,2);
-   else return 0;
+   else NLUA_INVALID_PARAMETER();
 
    ret = pilot_addMissionCargo( player, cargo, quantity );
    mission_linkCargo( cur_mission, ret );
@@ -683,7 +683,7 @@ static int player_rmCargo( lua_State *L )
    NLUA_MIN_ARGS(1);
 
    if (lua_isnumber(L,1)) id = (unsigned int) lua_tonumber(L,1);
-   else return 0;
+   else NLUA_INVALID_PARAMETER();
 
    ret = pilot_rmMissionCargo( player, id );
    mission_unlinkCargo( cur_mission, id );
@@ -698,7 +698,7 @@ static int player_pay( lua_State *L )
    NLUA_MIN_ARGS(1);
 
    if (lua_isnumber(L,1)) money = (int) lua_tonumber(L,1);
-   else return 0;
+   else NLUA_INVALID_PARAMETER();
 
    player->credits += money;
 
@@ -710,7 +710,7 @@ static int player_msg( lua_State *L )
    char* str;
 
    if (lua_isstring(L,-1)) str = (char*) lua_tostring(L,-1);
-   else return 0;
+   else NLUA_INVALID_PARAMETER();
 
    player_message(str);
    return 0;
