@@ -65,7 +65,7 @@ function land()
 
    if misn_stage == 1 and  planet == misn_base then
       tk.msg( title[3], text[3] )
-      player.modFaction("Empire",5);
+      player.modFaction("Empire",5)
       misn.finish(true)
    end
 end
