@@ -45,20 +45,34 @@
 <unique>1</unique>
 </flags>
 <avail>
-<req>es_cargo</req>
-<chance>70</chance>
+<cond>var.peek("es_cargo") == true and space.jumpDist("NCG-1732") &lt; 5 and player.getFaction("Empire") &gt; 30 and player.getRating() &gt; 50</cond>
+<chance>30</chance>
 <location>Bar</location>
 <faction>Empire</faction>
 </avail>
 </mission>
-<mission name="Collective Espionage">
+<mission name="Collective Espionage 1">
 <lua>emp_collective01</lua>
 <flags>
 <unique>1</unique>
 </flags>
 <avail>
+<cond>player.getFaction("Empire") &gt; 30</cond>
 <done>Collective Scouting</done>
-<chance>50</chance>
+<chance>70</chance>
+<location>Bar</location>
+<planet>Omega Station</planet>
+</avail>
+</mission>
+<mission name="Collective Espionage 2">
+<lua>emp_collective02</lua>
+<flags>
+<unique>1</unique>
+</flags>
+<avail>
+<cond>player.getFaction("Empire") &gt; 30</cond>
+<done>Collective Espionage 1</done>
+<chance>70</chance>
 <location>Bar</location>
 <planet>Omega Station</planet>
 </avail>
