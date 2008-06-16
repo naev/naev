@@ -23,7 +23,7 @@ end
 
 function create()
    -- Intro text
-   if tk.yesno( title[1], string.format(text[1], player.name()) )
+   if tk.yesno( title[1], text[1], player.name() )
       then
       misn.accept()
 
@@ -69,3 +69,4 @@ function land()
       misn.finish(true)
    end
 end
+
