@@ -51,6 +51,33 @@
    <class>D</class>
   </general>
  </planet>
+ <planet name="Anecu">
+  <GFX>
+   <exterior>aquatic.png</exterior>
+   <space>M03.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <bar>The spaceport bar is aproximately 3 km below the surface of the planet.  Most of the walls are of a hardened transparet polymer that allows you to see into the darkness of the water.  Every so often you can notice a gelatinous creature slide around, barely illuminated by the bar lighting.</bar>
+   <description>Anecu is a completely aquatic planet.  It's surface is covered completely by water.  In the shallow areas great underwater cities are constructed, as the climate above the water can be very harsh (waves been recorded to be up to 2 km high).  The planet boasts of extensive ship designing facilities, using the high pressure water as a testbed for ships of all sorts.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Luxury Goods</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>9</main>
+   </tech>
+   <services>31</services>
+   <class>M</class>
+  </general>
+ </planet>
  <planet name="Zabween">
   <GFX>
    <exterior>station00.png</exterior>
@@ -159,6 +186,24 @@
    </tech>
    <services>7</services>
    <class>G</class>
+  </general>
+ </planet>
+ <planet name="Eiroik">
+  <GFX>
+   <space>J01.png</space>
+   <exterior>methane.png</exterior>
+  </GFX>
+  <pos>
+   <y>239</y>
+   <x>73</x>
+  </pos>
+  <general>
+   <services>1</services>
+   <tech>
+    <main>0</main>
+   </tech>
+   <class>J</class>
+   <description>Eiroik used to be a mining planet under the Empire rule until the Collective wiped out the human colonies on it.  The harsh atmosphere did the rest, erasing all tracks of former human life.</description>
   </general>
  </planet>
  <planet name="Selphod">
@@ -305,24 +350,6 @@
    <class>J</class>
   </general>
  </planet>
- <planet name="S00000">
-  <GFX>
-   <exterior>station01.png</exterior>
-   <space>001.png</space>
-  </GFX>
-  <pos>
-   <y>0</y>
-   <x>0</x>
-  </pos>
-  <general>
-   <services>0</services>
-   <tech>
-    <main>0</main>
-   </tech>
-   <class>3</class>
-   <faction>Collective</faction>
-  </general>
- </planet>
  <planet name="Arrakis">
   <GFX>
    <exterior>desertic.png</exterior>
@@ -347,31 +374,22 @@
    <class>H</class>
   </general>
  </planet>
- <planet name="Anecu">
+ <planet name="S00000">
   <GFX>
-   <exterior>aquatic.png</exterior>
-   <space>M03.png</space>
+   <exterior>station01.png</exterior>
+   <space>001.png</space>
   </GFX>
   <pos>
    <y>0</y>
    <x>0</x>
   </pos>
   <general>
-   <bar>The spaceport bar is aproximately 3 km below the surface of the planet.  Most of the walls are of a hardened transparet polymer that allows you to see into the darkness of the water.  Every so often you can notice a gelatinous creature slide around, barely illuminated by the bar lighting.</bar>
-   <description>Anecu is a completely aquatic planet.  It's surface is covered completely by water.  In the shallow areas great underwater cities are constructed, as the climate above the water can be very harsh (waves been recorded to be up to 2 km high).  The planet boasts of extensive ship designing facilities, using the high pressure water as a testbed for ships of all sorts.</description>
-   <faction>Empire</faction>
-   <commodities>
-    <commodity>Food</commodity>
-    <commodity>Medicine</commodity>
-    <commodity>Ore</commodity>
-    <commodity>Luxury Goods</commodity>
-    <commodity>Industrial Goods</commodity>
-   </commodities>
+   <services>0</services>
    <tech>
-    <main>9</main>
+    <main>0</main>
    </tech>
-   <services>31</services>
-   <class>M</class>
+   <class>3</class>
+   <faction>Collective</faction>
   </general>
  </planet>
 </Planets>
