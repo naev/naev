@@ -34,7 +34,7 @@ function create()
       -- Mission details
       misn.setTitle(misn_title)
       misn.setReward( misn_reward )
-      misn.setDesc( string.format(misn_desc[1],misn_nearby))
+      misn.setDesc(misn_desc[1])
 
       tk.msg( title[2], text[2] )
 
