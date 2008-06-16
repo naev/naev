@@ -124,9 +124,11 @@ void hook_rm( unsigned int id )
       return;
    }
 
+   /* Free the hook */
+   hook_free( &hook_stack[m] );
+
    /* last hook, just clip the stack */
    if (m == (hook_nstack-1)) {
-      hook_free( &hook_stack[m] );
       hook_nstack--;
       return;
    }
