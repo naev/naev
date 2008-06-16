@@ -243,7 +243,7 @@ int misn_run( Mission *misn, char *func )
    lua_getglobal( misn->L, func );
    if ((ret = lua_pcall(misn->L, 0, 0, 0))) { /* error has occured */
       err = (lua_isstring(misn->L,-1)) ? (char*) lua_tostring(misn->L,-1) : NULL;
-      if (strcmp(err,"Mission Done"))
+      if (strcmp(err,"Mission Done")!=0)
          WARN("Mission '%s' -> '%s': %s",
                cur_mission->data->name, func, (err) ? err : "unknown error");
       else ret = 1;
