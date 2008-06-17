@@ -71,7 +71,7 @@ class Space:
       # hook events and such
       hooks = { "winSystems":["destroy",self.__done],
             "treSystems":["button-release-event", self.__supdate],
-            "inpName":["changed",self.__supdate],
+            "inpName":["changed",self.__seditname],
             "butDone":["clicked",self.__done],
             "butSave":["clicked",self.saveSystems],
             "butZoomIn":["clicked",self.__space_zoomin],
@@ -286,6 +286,38 @@ class Space:
    def __pwidget(self,wgtname):
       return self.pwtree.get_widget(wgtname)
 
+   def __seditname(self, wgt=None, index=None, iter=None):
+      if self.modifyname == 1:
+         return
+
+      sys_name = self.__swidget("inpName").get_text()
+      if sys_name == "":
+         return
+
+      # renamed the current system
+      if sys_name != self.cur_system:
+         self.systems[sys_name] = self.systems[self.cur_system] # copy it over
+         model = self.__swidget("treSystems").get_model()
+
+         # must rename the node in the treeview
+         for i in model:
+            if i[0] == self.cur_system:
+               i[0] = sys_name
+               break
+         
+         # update jump paths
+         for key,value in self.systems.items():
+            i = 0
+            for jump in value["jumps"]:
+               if jump == self.cur_system:
+                  self.systems[key]["jumps"].pop(i)
+                  self.systems[key]["jumps"].append(sys_name)
+               i = i+1
+         
+         # delete the old system and change current to it
+         del self.systems[self.cur_system] # get rid of the old one
+         self.cur_system = sys_name # now use self.cur_system again
+
 
    def __supdate(self, wgt=None, index=None, iter=None):
       """
@@ -301,6 +333,7 @@ class Space:
       system = self.systems[self.cur_system]
 
       # load it all
+      self.modifyname = 1 # ugly hack to prevent rename triggering another sstore
       dic = { "inpName":self.cur_system,
             "spiInterference":system["general"]["interference"],
             "spiAsteroids":system["general"]["asteroids"],
@@ -309,6 +342,7 @@ class Space:
       }
       for key, value in dic.items():
          self.__swidget(key).set_text(str(value))
+      self.modifyname = 0 
 
       # load nebulae properties
       try:
@@ -474,32 +508,8 @@ class Space:
       Stores the system stuff
       '''
       sys_name = self.__swidget("inpName").get_text()
-      if sys_name == "" or self.cur_system == self.__curSystem():
+      if sys_name == "" or self.cur_system == self.__curSystem() or self.modifyname == 1:
          return
-
-      # renamed the current system
-      if sys_name != self.cur_system:
-         self.systems[sys_name] = self.systems[self.cur_system] # copy it over
-         model = self.__swidget("treSystems").get_model()
-
-         # must rename the node in the treeview
-         for i in model:
-            if i[0] == self.cur_system:
-               i[0] = sys_name
-               break
-
-         # update jump paths
-         for key,value in self.systems.items():
-            i = 0
-            for jump in value["jumps"]:
-               if jump == self.cur_system:
-                  self.systems[key]["jumps"].pop(i)
-                  self.systems[key]["jumps"].append(sys_name)
-               i = i+1
-
-         # delete the old system and change current to it
-         del self.systems[self.cur_system] # get rid of the old one
-         self.cur_system = sys_name # now use self.cur_system again
 
       try: 
          system = self.systems[self.cur_system] 
