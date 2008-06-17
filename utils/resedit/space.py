@@ -317,7 +317,7 @@ class Space:
             self.__swidget("spiNebuVolatility").set_text(str(val))
       except:
          system["general"]["nebulae"] = {}
-         nebu = system["general"]["nebulae"]['0'] = '0'
+         nebu = system["general"]["nebulae"] = {'0':'0'}
          self.__swidget("spiNebuDensity").set_text("0")
          self.__swidget("spiNebuVolatility").set_text("0")
 
@@ -515,7 +515,7 @@ class Space:
       system["general"]["nebulae"] = {}
       density = self.__swidget("spiNebuDensity").get_text()
       volatility = self.__swidget("spiNebuVolatility").get_text()
-      system["general"]["nebulae"][density] = volatility
+      system["general"]["nebulae"] = {density:volatility}
 
 
    def __pstore(self):
@@ -935,7 +935,7 @@ class Space:
    """
    def __snew(self, wgt=None, event=None):
       name = "new system"
-      gen = { "asteroids":0, "interference":0, "stars":100 }
+      gen = { "asteroids":0, "interference":0, "stars":100, "nebulae":{"0":"0"} }
       pos = { "x":0,"y":0 }
       new_ssys = { "general":gen, "pos":pos, "jumps":[], "fleets":[], "planets":[] }
       self.systems[name] = new_ssys

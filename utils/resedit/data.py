@@ -48,6 +48,21 @@ def load_Tag( node, do_array=None, do_special=None, do_special2=None ):
    else:
       use_array = False
 
+   # I think the ugly hacks are starting to be overkill
+   #
+   # -- PARAMETER FORMAT --
+   # {KEY:VALUE, ...}
+   #
+   # -- XML INPUT --
+   # <KEY VALUE="aaa" ...>"xxx"</KEY>
+   #
+   # -- PYTHON OUTPUT --
+   # KEY:{"xxx":"aaa"}
+   #
+   if do_special2 != None and node.nodeName in do_special2.keys():
+      return { node.firstChild.data : \
+            node.attributes[do_special2[node.nodeName]].value }, 1
+
    for child in filter(lambda x: x.nodeType==x.ELEMENT_NODE, node.childNodes):
       n = 0
       children, n = load_Tag( child, do_array, do_special, do_special2 )
@@ -94,24 +109,6 @@ def load_Tag( node, do_array=None, do_special=None, do_special2=None ):
          section[child.firstChild.data] = \
                child.attributes[do_special[node.nodeName]].value
          array.append(section)
-
-      # I think the ugly hacks are starting to be overkill
-      #
-      # -- PARAMETER FORMAT --
-      # {KEY:VALUE, ...}
-      #
-      # -- XML INPUT --
-      # <KEY VALUE="aaa" ...>"xxx"</KEY>
-      #
-      # -- PYTHON OUTPUT --
-      # KEY:["xxx","aaa"]
-      #
-      elif do_special2 != None and node.nodeName in do_special2.keys():
-         array2 = []
-         array2.append( child.firstChild.data )
-         for item in do_special2[node.nodeName]:
-            array2.append( child.attributes[do_special[node.nodeName]].value )
-         section[node.nodeName]
 
       # normal way (but will overwrite lists)
       else:
