@@ -272,4 +272,41 @@ Used by security agencies all over the universe for it's reliability and availab
 <outfit quantity='1'>Ion Cannon</outfit>
 </outfits>
 </ship>
+<ship name="Goddard">
+<GFX>goddard</GFX>
+<GUI>minimal</GUI>
+<sound>engine</sound>
+<class>3</class>
+<price>11500000</price>
+<fabricator>Goddard Inc.</fabricator>
+<tech>1001</tech>
+<description>The archaic design of the Goddard is decieving.  Although it takes the shape of traditional flying intra-planet vessels, it's very suited for space travel.
+Production is entirely done on Zhiru en the Goddard system by Goddard Inc, the sole providor and dealer in Goddards.  Over time, specialization and improvements on the original time have kept it very competitive in the market.  It's a classic of space.</description>
+<movement>
+<thrust>200</thrust>
+<turn>80</turn>
+<speed>250</speed>
+</movement>
+<health>
+<shield>800</shield>
+<armour>500</armour>
+<energy>2000</energy>
+<shield_regen>330</shield_regen>
+<armour_regen>90</armour_regen>
+<energy_regen>1700</energy_regen>
+</health>
+<caracteristics>
+<crew>52</crew>
+<mass>4350</mass>
+<fuel>500</fuel>
+<cap_weapon>250</cap_weapon>
+<cap_cargo>60</cap_cargo>
+</caracteristics>
+<outfits>
+<outfit quantity='2'>Heavy Ion Turret</outfit>
+<outfit quantity='2'>Laser Turret</outfit>
+<outfit quantity='2'>Headhunter Launcher</outfit>
+<outfit quantity='40'>Headhunter</outfit>
+</outfits>
+</ship>
 </Ships>
