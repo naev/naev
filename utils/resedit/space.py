@@ -462,8 +462,10 @@ class Space:
       # tech
       try:
          self.__pwidget("spiTech0").set_text(str(planet["general"]["tech"]["main"]))
+         self.__pwidget("spiTech1").set_text(str(planet["general"]["tech"]["special"]))
       except:
          self.__pwidget("spiTech0").set_text(str(0))
+         self.__pwidget("spiTech1").set_text(str(0))
 
       # services
       services = int(planet["general"]["services"])
@@ -567,15 +569,25 @@ class Space:
       planet["general"]["services"] = services
 
       # get the techs
-      tech0 = self.__pwidget("spiTech0").get_text()
-      if tech0 > 0:
+      tech = self.__pwidget("spiTech0").get_text()
+      if tech > 0:
          try:
-            planet["general"]["tech"]["main"] = tech0
+            planet["general"]["tech"]["main"] = tech
          except:
             planet["general"]["tech"] = {}
-            planet["general"]["tech"]["main"] = tech0
+            planet["general"]["tech"]["main"] = tech
       else:
          del planet["general"]["tech"]["main"]
+      tech = self.__pwidget("spiTech1").get_text()
+      if tech > 0:
+         try:
+            planet["general"]["tech"]["special"] = tech
+         except:
+            planet["general"]["tech"] = {}
+            planet["general"]["tech"]["special"] = tech
+      else:
+         del planet["general"]["tech"]["special"]
+
      
 
    def __sinpStore(self, system, wgt, tag, minortag=None):
