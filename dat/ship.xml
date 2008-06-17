@@ -126,7 +126,7 @@
 </health>
 <caracteristics>
 <crew>35</crew>
-<mass>500</mass>
+<mass>3750</mass>
 <fuel>300</fuel>
 <cap_weapon>200</cap_weapon>
 <cap_cargo>70</cap_cargo>
@@ -197,7 +197,7 @@ Used by security agencies all over the universe for it's reliability and availab
 </health>
 <caracteristics>                                                          
 <crew>13</crew>
-<mass>350</mass>
+<mass>1750</mass>
 <fuel>500</fuel>
 <cap_weapon>50</cap_weapon>
 <cap_cargo>250</cap_cargo>
