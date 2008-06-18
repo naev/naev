@@ -6,11 +6,13 @@
    *) Better AI
       *) improved combat efficiency
       *) smarter missiles -> PID if possible
+   *) Save improvements
+      *) Save changes to universe in diff format
+      *) Possibly predefine changes for easy updating
 
 
    MAJOR
 
-   *) More missions and mission lua bindings
    *) Better AI
       *) boids ship fleet movement (have them behave like fleets)
    *) Escorts (boarding taking over too)
@@ -25,8 +27,6 @@
    *) More outfit types
       *) beam weapons
       *) hangar bays -> need escorts
-   *) Save improvements
-      *) save entire game data except graphics, so that missions can modify stuff
    *) Hybrid ships
       *) Start out with X skillpoints that get spread out by use, use fast at first
       *) Can't use normal gear
