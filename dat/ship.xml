@@ -10,9 +10,9 @@
 <tech>2</tech>
 <description>One of the most widely used ships in the galaxy.  Reknown for it's stability and stubborness.  The design hasn't been modified much since it's creation many many years ago.  It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
 <movement>
-<thrust>320</thrust>
+<thrust>220</thrust>
 <turn>150</turn>
-<speed>360</speed>
+<speed>260</speed>
 </movement>
 <health>
 <shield>50</shield>
@@ -43,9 +43,9 @@
 <tech>2</tech>
 <description>The star product of Aerosys, the Hyena quickly has become a favorite of pirates far and wide.  Not much of a fighter, nor does it pack too much of a punch, but they like to come in swarms to overcome their enemies.  While the Aerosys' official stance is that it doesn't sell them to shady characters, it's widely known that they do as it seems there's a countless amount in the hands of pirates.</description>
 <movement>
-<thrust>400</thrust>
+<thrust>300</thrust>
 <turn>180</turn>
-<speed>480</speed>
+<speed>330</speed>
 </movement>
 <health>
 <shield>70</shield>
@@ -76,12 +76,12 @@
 <tech>8</tech>
 <description>The Pacifier is one of the older and trustier designs of the Nexus Corporation.  Was constructed mainly to patrol border systems.  They are very heavy fighters designed to be able to take a pounding and dish out damage, but the cost has been maneuverability.  No reason to run though if you're in one of these.</description>
 <movement>
-<thrust>260</thrust>
+<thrust>180</thrust>
 <turn>115</turn>
-<speed>280</speed>
+<speed>200</speed>
 </movement>
 <health>
-<shield>300</shield>
+<shield>260</shield>
 <armour>180</armour>
 <energy>420</energy>
 <shield_regen>240</shield_regen>
@@ -112,9 +112,9 @@
 <tech>9</tech>
 <description>A heavy frigate designed for heavy combat.  Used widely by the empire to establish control on it's territory.  Has more then enough firepower to not be taken lightly.</description>
 <movement>
-<thrust>200</thrust>
+<thrust>80</thrust>
 <turn>90</turn>
-<speed>240</speed>
+<speed>100</speed>
 </movement>
 <health>
 <shield>600</shield>
@@ -142,34 +142,34 @@
 <GUI>minimal</GUI>
 <sound>engine</sound>
 <class>2</class>
-<price>700000</price>
+<price>500000</price>
 <fabricator>Nexus</fabricator>
 <tech>7</tech>
 <description>One of the Nexus' prize heavy fighters.  Was originally a secret design for the Empire military, but then disclosed.  Now a modified version is available for civilians, although it doesn't meet up to the original specifications.
 Used by security agencies all over the universe for it's reliability and availability. Proudly enforcing your security since UST 1132.</description>
 <movement>
-<thrust>280</thrust>
+<thrust>220</thrust>
 <turn>135</turn>
-<speed>320</speed>
+<speed>260</speed>
 </movement>
 <health>
-<shield>200</shield>
+<shield>180</shield>
 <armour>140</armour>
-<energy>360</energy>
+<energy>280</energy>
 <shield_regen>180</shield_regen>
 <armour_regen>60</armour_regen>
-<energy_regen>1080</energy_regen>
+<energy_regen>980</energy_regen>
 </health>
 <caracteristics>
-<crew>9</crew>
-<mass>130</mass>
+<crew>4</crew>
+<mass>90</mass>
 <fuel>400</fuel>
-<cap_weapon>90</cap_weapon>
-<cap_cargo>20</cap_cargo>
+<cap_weapon>80</cap_weapon>
+<cap_cargo>10</cap_cargo>
 </caracteristics>
 <outfits>
-<outfit quantity='3'>Laser</outfit>
-<outfit quantity='2'>Headhunter Launcher</outfit>
+<outfit quantity='2'>Laser</outfit>
+<outfit quantity='1'>Headhunter Launcher</outfit>
 <outfit quantity='20'>Headhunter</outfit>
 </outfits>
 </ship>
@@ -183,9 +183,9 @@ Used by security agencies all over the universe for it's reliability and availab
 <tech>5</tech>
 <description>A heavy liner specialized in freighting cargo all over the universe.  Also has good accomodations for passengers depending on the model allowing for enjoyable cruises.  Was a favorite target of pirates until they added stock turrets to the new models which can now defend themselves properly.</description>
 <movement>
-<thrust>180</thrust>
+<thrust>100</thrust>
 <turn>100</turn>
-<speed>260</speed>
+<speed>100</speed>
 </movement>
 <health>
 <shield>160</shield>
@@ -216,9 +216,9 @@ Used by security agencies all over the universe for it's reliability and availab
 <tech>99</tech>
 <description>A robot drone.</description>
 <movement>
-<thrust>450</thrust>
+<thrust>320</thrust>
 <turn>200</turn>
-<speed>430</speed>
+<speed>360</speed>
 </movement>
 <health>
 <shield>70</shield>
@@ -249,9 +249,9 @@ Used by security agencies all over the universe for it's reliability and availab
 <tech>11</tech>
 <description>The Gawain is a very high end ship that heavily uses the technology developed with the Lancelot.  It's widely used as a sporting rig as it is extremely maneuverable, although they are rarely used in combat because they are too expensive for the little firepower they can apport.</description>
 <movement>
-<thrust>420</thrust>
+<thrust>320</thrust>
 <turn>170</turn>
-<speed>400</speed>
+<speed>340</speed>
 </movement>
 <health>
 <shield>90</shield>
@@ -283,9 +283,9 @@ Used by security agencies all over the universe for it's reliability and availab
 <description>The archaic design of the Goddard is decieving.  Although it takes the shape of traditional flying intra-planet vessels, it's very suited for space travel.
 Production is entirely done on Zhiru en the Goddard system by Goddard Inc, the sole providor and dealer in Goddards.  Over time, specialization and improvements on the original time have kept it very competitive in the market.  It's a classic of space.</description>
 <movement>
-<thrust>200</thrust>
+<thrust>100</thrust>
 <turn>80</turn>
-<speed>250</speed>
+<speed>130</speed>
 </movement>
 <health>
 <shield>800</shield>
