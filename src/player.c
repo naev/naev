@@ -674,8 +674,40 @@ void player_renderBG (void)
  */
 void player_render (void)
 {
-   if ((player != NULL) && !player_isFlag(PLAYER_CREATING))
+   Pilot *p;
+   glColour *c;
+   double x,y;
+
+   if ((player != NULL) && !player_isFlag(PLAYER_CREATING)) {
+
+      /* renders the player target graphics */
+      if (player_target != PLAYER_ID) p = pilot_get(player_target);
+      else p = NULL;
+      if ((p==NULL) || pilot_isFlag(p,PILOT_DEAD))
+         player_target = PLAYER_ID; /* no more pilot_target */
+      else { /* still is a pilot_target */
+         if (pilot_isDisabled(p)) c = &cInert;
+         else if (pilot_isFlag(p,PILOT_HOSTILE)) c = &cHostile;
+         else c = &cNeutral;
+
+         x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.;
+         y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2.;
+         gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 0, c ); /* top left */
+
+         x += p->ship->gfx_space->sw * PILOT_SIZE_APROX;
+         gl_blitSprite( gui.gfx_targetPilot, x, y, 1, 0, c ); /* top right */
+
+         y -= p->ship->gfx_space->sh * PILOT_SIZE_APROX;
+         gl_blitSprite( gui.gfx_targetPilot, x, y, 1, 1, c ); /* bottom right */
+
+         x -= p->ship->gfx_space->sw * PILOT_SIZE_APROX;
+         gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 1, c ); /* bottom left */
+      }
+
+
+      /* Player is ontop of targeting graphic */
       pilot_render(player);
+   }
 }
 
 
@@ -712,29 +744,6 @@ void player_renderGUI (void)
 
    if (player==NULL) return;
 
-   /* renders the player target graphics */
-   if (player_target != PLAYER_ID) p = pilot_get(player_target);
-   else p = NULL;
-   if ((p==NULL) || pilot_isFlag(p,PILOT_DEAD))
-      player_target = PLAYER_ID; /* no more pilot_target */
-   else { /* still is a pilot_target */
-      if (pilot_isDisabled(p)) c = &cInert;
-      else if (pilot_isFlag(p,PILOT_HOSTILE)) c = &cHostile;
-      else c = &cNeutral;
-
-      x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.;
-      y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2.;
-      gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 0, c ); /* top left */
-
-      x += p->ship->gfx_space->sw * PILOT_SIZE_APROX;
-      gl_blitSprite( gui.gfx_targetPilot, x, y, 1, 0, c ); /* top right */
-
-      y -= p->ship->gfx_space->sh * PILOT_SIZE_APROX;
-      gl_blitSprite( gui.gfx_targetPilot, x, y, 1, 1, c ); /* bottom right */
-
-      x -= p->ship->gfx_space->sw * PILOT_SIZE_APROX;
-      gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 1, c ); /* bottom left */
-   }
 
    /* Lockon warning */
    if (player->lockons > 0)
