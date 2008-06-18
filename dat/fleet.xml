@@ -45,6 +45,17 @@
 <pilot chance='100'>Hyena</pilot>
 </pilots>
 </fleet>
+<fleet name="Pirate Hyena Pack">
+<ai>pirate</ai>
+<faction>Pirate</faction>
+<pilots>
+<pilot chance='100'>Hyena</pilot>
+<pilot chance='100'>Hyena</pilot>
+<pilot chance='80'>Hyena</pilot>
+<pilot chance='60'>Hyena</pilot>
+<pilot chance='40'>Hyena</pilot>
+</pilots>
+</fleet>
 <fleet name="Pirate Admonisher">
 <ai>pirate</ai>
 <faction>Pirate</faction>
