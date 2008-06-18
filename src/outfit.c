@@ -62,6 +62,8 @@ Outfit* outfit_get( const char* name )
    for (i=0; i<outfit_nstack; i++)
       if (strcmp(name,outfit_stack[i].name)==0)
          return &outfit_stack[i];
+
+   WARN("Outfit '%s' not found in stack.", name);
    return NULL;
 }
 
