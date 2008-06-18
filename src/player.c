@@ -2083,6 +2083,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    int i, n;
    double fuel;
    Pilot* ship;
+   Outfit* o;
    xmlNodePtr node, cur;
    
    xmlr_attr(parent,"name",name);
@@ -2119,7 +2120,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                n = atoi(q);
                free(q);
                /* adding the outfit */
-               pilot_addOutfit( ship, outfit_get(xml_get(cur)), n );
+               o = outfit_get(xml_get(cur));
+               if (o != NULL)
+                  pilot_addOutfit( ship, o, n );
             }
          } while (xml_nextNode(cur));
       }
