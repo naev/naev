@@ -21,4 +21,5 @@ cp ${ARTWORK_PATH}"hawking2.png" "hawking.png"
 cp ${ARTWORK_PATH}"hyena1.png" "hyena.png"
 cp ${ARTWORK_PATH}"admonisher0.png" "admonisher.png"
 cp ${ARTWORK_PATH}"admonisher2.png" "admonisher_pirate.png"
+cp ${ARTWORK_PATH}"schroedinger0.png" "schroedinger.png"
 

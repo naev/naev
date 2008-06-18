@@ -380,4 +380,35 @@ Production is entirely done on Zhiru en the Goddard system by Goddard Inc, the s
 <outfit quantity='10'>Headhunter</outfit>
 </outfits>
 </ship>
+<ship name="Schroedinger">
+<GFX>schroedinger</GFX>
+<GUI>minimal</GUI>
+<sound>engine</sound>
+<class>1</class>
+<price>180000</price>
+<fabricator>Sirius Systems</fabricator>
+<tech>5</tech>
+<description>The Schroedinger is primarily used as a reconnaissance vessel.  It has very far autonomy thanks to it's special fuel tanks and light frame.  The downside is that the ship is extremely vulnerable to attack.  It also sports a twin pair of Eraedon engines, making it pretty maneuverable.</description>
+<movement>
+<thrust>260</thrust>
+<turn>165</turn>
+<speed>300</speed>
+</movement>
+<health>
+<shield>60</shield>
+<armour>25</armour>
+<energy>180</energy>
+<shield_regen>60</shield_regen>
+<armour_regen>30</armour_regen>
+<energy_regen>400</energy_regen>
+</health>
+<caracteristics>
+<crew>2</crew>
+<mass>17</mass>
+<fuel>800</fuel>
+<cap_weapon>15</cap_weapon>
+<cap_cargo>15</cap_cargo>
+</caracteristics>
+<outfits/>
+</ship>
 </Ships>
