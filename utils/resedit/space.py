@@ -89,7 +89,7 @@ class Space:
       self.__create_treSystems()
 
       # custom widget drawing area thingy
-      self.zoom = 1
+      self.zoom = 1.
       self.space_sel = ""
       area = self.__swidget("draSpace")
       area.set_double_buffered(True)
