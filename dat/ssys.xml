@@ -34,6 +34,7 @@
    <fleet chance="50">Merchant Mule</fleet>
    <fleet chance="50">Merchant Llama</fleet>
    <fleet chance="50">Empire Pacifier</fleet>
+   <fleet chance="30">Pirate Admonisher</fleet>
   </fleets>
   <jumps>
    <jump>Coriolis</jump>
@@ -49,6 +50,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
    <stars>200</stars>
   </general>
  </ssys>
@@ -58,6 +60,7 @@
    <fleet chance="30">Pirate Hyena</fleet>
    <fleet chance="30">Merchant Llama</fleet>
    <fleet chance="40">Empire Pacifier</fleet>
+   <fleet chance="50">Pirate Admonisher</fleet>
   </fleets>
   <jumps>
    <jump>Coriolis</jump>
@@ -73,6 +76,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
    <stars>200</stars>
   </general>
  </ssys>
@@ -83,6 +87,7 @@
    <fleet chance="50">Merchant Mule</fleet>
    <fleet chance="50">Merchant Llama</fleet>
    <fleet chance="50">Empire Pacifier</fleet>
+   <fleet chance="20">Pirate Admonisher</fleet>
   </fleets>
   <jumps>
    <jump>NCG-7291</jump>
@@ -99,6 +104,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
    <stars>200</stars>
   </general>
  </ssys>
@@ -109,6 +115,7 @@
    <fleet chance="40">Merchant Llama</fleet>
    <fleet chance="50">Merchant Mule</fleet>
    <fleet chance="100">Militia Lancelot</fleet>
+   <fleet chance="40">Empire Admonisher</fleet>
   </fleets>
   <jumps>
    <jump>Cygnus</jump>
@@ -127,6 +134,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
    <stars>500</stars>
   </general>
  </ssys>
@@ -208,6 +216,7 @@
   <fleets>
    <fleet chance="60">Merchant Llama</fleet>
    <fleet chance="60">Merchant Mule</fleet>
+   <fleet chance="30">Pirate Admonisher</fleet>
   </fleets>
   <jumps>
    <jump>Coriolis</jump>
@@ -225,6 +234,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
    <stars>300</stars>
   </general>
  </ssys>
@@ -256,6 +266,8 @@
    <fleet chance="50">Pirate Hyena</fleet>
    <fleet chance="50">Empire Pacifier</fleet>
    <fleet chance="30">Empire Lancelot</fleet>
+   <fleet chance="30">Pirate Admonisher</fleet>
+   <fleet chance="40">Empire Admonisher</fleet>
   </fleets>
   <jumps>
    <jump>Dune</jump>
@@ -271,6 +283,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
    <stars>300</stars>
   </general>
  </ssys>
@@ -283,6 +296,7 @@
    <fleet chance="30">Sml Merchant Convoy</fleet>
    <fleet chance="50">Merchant Mule</fleet>
    <fleet chance="20">Empire Pacifier</fleet>
+   <fleet chance="20">Pirate Admonisher</fleet>
   </fleets>
   <jumps>
    <jump>Tau Prime</jump>
@@ -311,6 +325,7 @@
    <fleet chance="50">Empire Sml Defense</fleet>
    <fleet chance="60">Empire Lancelot</fleet>
    <fleet chance="50">Empire Pacifier</fleet>
+   <fleet chance="40">Empire Admonisher</fleet>
   </fleets>
   <jumps>
    <jump>NCG-7324</jump>
@@ -328,6 +343,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
    <stars>300</stars>
   </general>
  </ssys>
@@ -342,6 +358,8 @@
    <fleet chance="30">Empire Lancelot</fleet>
    <fleet chance="50">Empire Lancelot</fleet>
    <fleet chance="20">Empire Pacifier</fleet>
+   <fleet chance="30">Pirate Admonisher</fleet>
+   <fleet chance="40">Empire Admonisher</fleet>
   </fleets>
   <jumps>
    <jump>Draconis</jump>
@@ -359,6 +377,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
    <stars>600</stars>
   </general>
  </ssys>
@@ -389,6 +408,7 @@
    <fleet chance="70">Pirate Hyena</fleet>
    <fleet chance="20">Empire Pacifier</fleet>
    <fleet chance="40">Pirate Hyena</fleet>
+   <fleet chance="30">Pirate Admonisher</fleet>
   </fleets>
   <jumps>
    <jump>NCG-7968</jump>
@@ -440,6 +460,7 @@
    <fleet chance="70">Pirate Hyena</fleet>
    <fleet chance="30">Empire Lancelot</fleet>
    <fleet chance="40">Empire Pacifier</fleet>
+   <fleet chance="50">Pirate Admonisher</fleet>
   </fleets>
   <jumps>
    <jump>Delta Pavonis</jump>
@@ -464,6 +485,7 @@
   <fleets>
    <fleet chance="50">Pirate Hyena</fleet>
    <fleet chance="30">Merchant Llama</fleet>
+   <fleet chance="30">Pirate Admonisher</fleet>
   </fleets>
   <jumps>
    <jump>Mizar</jump>
@@ -489,6 +511,8 @@
    <fleet chance="30">Empire Lancelot</fleet>
    <fleet chance="50">Merchant Llama</fleet>
    <fleet chance="40">Empire Pacifier</fleet>
+   <fleet chance="30">Pirate Admonisher</fleet>
+   <fleet chance="40">Empire Admonisher</fleet>
   </fleets>
   <jumps>
    <jump>Draconis</jump>
@@ -515,6 +539,7 @@
    <fleet chance="30">Sml Merchant Convoy</fleet>
    <fleet chance="50">Empire Lancelot</fleet>
    <fleet chance="20">Empire Pacifier</fleet>
+   <fleet chance="40">Empire Admonisher</fleet>
   </fleets>
   <jumps>
    <jump>Delta Pavonis</jump>
@@ -541,6 +566,7 @@
   <fleets>
    <fleet chance="50">Pirate Hyena</fleet>
    <fleet chance="50">Merchant Llama</fleet>
+   <fleet chance="50">Pirate Admonisher</fleet>
   </fleets>
   <jumps>
    <jump>NCG-7783</jump>
@@ -555,6 +581,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
    <stars>160</stars>
   </general>
  </ssys>
@@ -562,6 +589,7 @@
   <fleets>
    <fleet chance="30">Pirate Hyena</fleet>
    <fleet chance="50">Pirate Hyena</fleet>
+   <fleet chance="50">Pirate Admonisher</fleet>
   </fleets>
   <jumps>
    <jump>NCG-7723</jump>
@@ -575,6 +603,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
    <stars>120</stars>
   </general>
  </ssys>
@@ -587,6 +616,8 @@
    <fleet chance="40">Merchant Llama</fleet>
    <fleet chance="30">Sml Merchant Convoy</fleet>
    <fleet chance="20">Empire Pacifier</fleet>
+   <fleet chance="20">Pirate Admonisher</fleet>
+   <fleet chance="30">Pirate Admonisher</fleet>
   </fleets>
   <jumps>
    <jump>Delta Pavonis</jump>
@@ -604,26 +635,36 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
    <stars>500</stars>
   </general>
  </ssys>
- <ssys name="NCG-7549">
+ <ssys name="NCG-7273">
   <fleets>
+   <fleet chance="70">Empire Lancelot</fleet>
+   <fleet chance="50">Merchant Mule</fleet>
    <fleet chance="50">Merchant Llama</fleet>
-   <fleet chance="50">Pirate Hyena</fleet>
+   <fleet chance="50">Merchant Llama</fleet>
+   <fleet chance="50">Empire Pacifier</fleet>
+   <fleet chance="40">Empire Admonisher</fleet>
   </fleets>
   <jumps>
-   <jump>NCG-7690</jump>
+   <jump>NCG-7291</jump>
+   <jump>Delta Pavonis</jump>
+   <jump>NCG-6938</jump>
+   <jump>NCG-7324</jump>
+   <jump>Borla</jump>
   </jumps>
   <pos>
-   <y>148</y>
-   <x>-74</x>
+   <y>-15</y>
+   <x>-32</x>
   </pos>
   <planets/>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <stars>100</stars>
+   <nebulae volatility="0">0</nebulae>
+   <stars>300</stars>
   </general>
  </ssys>
  <ssys name="Alteris">
@@ -633,6 +674,7 @@
    <fleet chance="60">Pirate Hyena</fleet>
    <fleet chance="50">Merchant Mule</fleet>
    <fleet chance="50">Merchant Llama</fleet>
+   <fleet chance="20">Pirate Admonisher</fleet>
   </fleets>
   <jumps>
    <jump>Coriolis</jump>
@@ -652,6 +694,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
    <stars>400</stars>
   </general>
  </ssys>
@@ -659,8 +702,8 @@
   <fleets>
    <fleet chance="70">Pirate Hyena</fleet>
    <fleet chance="50">Pirate Hyena</fleet>
-   <fleet chance="50">Pirate Hyena</fleet>
-   <fleet chance="50">Pirate Hyena</fleet>
+   <fleet chance="50">Pirate Admonisher</fleet>
+   <fleet chance="50">Pirate Admonisher</fleet>
   </fleets>
   <jumps>
    <jump>NCG-7843</jump>
@@ -675,6 +718,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
    <stars>100</stars>
   </general>
  </ssys>
@@ -742,34 +786,39 @@
    <stars>200</stars>
   </general>
  </ssys>
- <ssys name="NCG-7273">
+ <ssys name="NCG-7549">
   <fleets>
-   <fleet chance="70">Empire Lancelot</fleet>
-   <fleet chance="50">Merchant Mule</fleet>
    <fleet chance="50">Merchant Llama</fleet>
-   <fleet chance="50">Merchant Llama</fleet>
-   <fleet chance="50">Empire Pacifier</fleet>
+   <fleet chance="50">Pirate Hyena</fleet>
+   <fleet chance="20">Pirate Admonisher</fleet>
   </fleets>
   <jumps>
-   <jump>NCG-7291</jump>
-   <jump>Delta Pavonis</jump>
-   <jump>NCG-6938</jump>
-   <jump>NCG-7324</jump>
-   <jump>Borla</jump>
+   <jump>NCG-7690</jump>
   </jumps>
   <pos>
-   <y>-15</y>
-   <x>-32</x>
+   <y>148</y>
+   <x>-74</x>
   </pos>
   <planets/>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <stars>300</stars>
+   <nebulae volatility="0">0</nebulae>
+   <stars>100</stars>
   </general>
  </ssys>
  <ssys name="Goddard">
-  <fleets/>
+  <fleets>
+   <fleet chance="70">Militia Goddard</fleet>
+   <fleet chance="50">Militia Goddard</fleet>
+   <fleet chance="30">Merchant Llama</fleet>
+   <fleet chance="30">Merchant Llama</fleet>
+   <fleet chance="30">Merchant Mule</fleet>
+   <fleet chance="30">Merchant Mule</fleet>
+   <fleet chance="30">Sml Merchant Convoy</fleet>
+   <fleet chance="50">Empire Lancelot</fleet>
+   <fleet chance="50">Militia Lancelot</fleet>
+  </fleets>
   <jumps>
    <jump>Borla</jump>
    <jump>Cygnus</jump>
