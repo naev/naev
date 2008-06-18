@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Outfits>
+<outfit name="Ripper MK2">
+<general>
+<max>3</max>
+<tech>11</tech>
+<mass>12</mass>
+<price>95000</price>
+<description>The Ripper does what it's name implies: it rips through enemies with ease.  Only downside is the energy needed to power it.</description>
+<gfx_store>heavy</gfx_store>
+</general>
+<specific type="bolt">
+<gfx>ripper</gfx>
+<sound>laser</sound>
+<spfx>ExpS</spfx>
+<delay>700</delay>
+<speed>700</speed>
+<range>400</range>
+<accuracy>20</accuracy>
+<energy>22</energy>
+<damage type="energy">18</damage>
+</specific>
+</outfit>
 <outfit name="Laser Cannon">
 <general>
 <max>5</max>
@@ -55,12 +76,12 @@
 <gfx>plasma</gfx>
 <sound>laser</sound>
 <spfx>ExpS</spfx>
-<delay>700</delay>
+<delay>400</delay>
 <speed>450</speed>
 <range>250</range>
 <accuracy>20</accuracy>
-<energy>10</energy>
-<damage type="energy">13</damage>
+<energy>7</energy>
+<damage type="energy">7</damage>
 </specific>
 </outfit>
 <outfit name="Ion Cannon">
@@ -105,7 +126,7 @@
 <damage type="ion">17</damage>
 </specific>
 </outfit>
-<outfit name="Railgun">
+<outfit name="150mm Railgun">
 <general>
 <max>2</max>
 <tech>8</tech>
@@ -122,8 +143,8 @@
 <speed>650</speed>
 <range>500</range>
 <accuracy>10</accuracy>
-<energy>30</energy>
-<damage type="kinetic">30</damage>
+<energy>35</energy>
+<damage type="kinetic">40</damage>
 </specific>
 </outfit>
 <outfit name="Missile Launcher">
