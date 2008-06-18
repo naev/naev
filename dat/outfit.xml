@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Outfits>
-<outfit name="Laser">
+<outfit name="Laser Cannon">
 <general>
 <max>5</max>
 <tech>2</tech>
@@ -42,7 +42,7 @@
 <damage type="energy">10</damage>
 </specific>
 </outfit>
-<outfit name="Plasma Cannon">
+<outfit name="Plasma Blaster">
 <general>
 <max>4</max>
 <tech>3</tech>

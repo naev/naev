@@ -30,7 +30,7 @@
 <cap_cargo>20</cap_cargo>
 </caracteristics>
 <outfits>
-<outfit quantity='1'>Laser</outfit>
+<outfit quantity='1'>Laser Cannon</outfit>
 </outfits>
 </ship>
 <ship name="Hyena">
@@ -63,7 +63,7 @@
 <cap_cargo>10</cap_cargo>
 </caracteristics>
 <outfits>
-<outfit quantity='2'>Laser</outfit>
+<outfit quantity='2'>Laser Cannon</outfit>
 </outfits>
 </ship>
 <ship name="Pacifier">
@@ -96,7 +96,7 @@
 <cap_cargo>30</cap_cargo>
 </caracteristics>
 <outfits>
-<outfit quantity='2'>Laser</outfit>
+<outfit quantity='2'>Laser Cannon</outfit>
 <outfit quantity='1'>Laser Turret</outfit>
 <outfit quantity='2'>Headhunter Launcher</outfit>
 <outfit quantity='40'>Headhunter</outfit>
@@ -168,7 +168,7 @@ Used by security agencies all over the universe for it's reliability and availab
 <cap_cargo>10</cap_cargo>
 </caracteristics>
 <outfits>
-<outfit quantity='2'>Laser</outfit>
+<outfit quantity='2'>Laser Cannon</outfit>
 <outfit quantity='1'>Headhunter Launcher</outfit>
 <outfit quantity='20'>Headhunter</outfit>
 </outfits>
@@ -179,7 +179,7 @@ Used by security agencies all over the universe for it's reliability and availab
 <sound>engine</sound>
 <class>2</class>
 <price>900000</price>
-<fabricator>Nexus</fabricator>
+<fabricator>Melendez Corp</fabricator>
 <tech>5</tech>
 <description>A heavy liner specialized in freighting cargo all over the universe.  Also has good accomodations for passengers depending on the model allowing for enjoyable cruises.  Was a favorite target of pirates until they added stock turrets to the new models which can now defend themselves properly.</description>
 <movement>
@@ -307,6 +307,42 @@ Production is entirely done on Zhiru en the Goddard system by Goddard Inc, the s
 <outfit quantity='2'>Laser Turret</outfit>
 <outfit quantity='2'>Headhunter Launcher</outfit>
 <outfit quantity='40'>Headhunter</outfit>
+</outfits>
+</ship>
+<ship name="Admonisher">
+<GFX>admonisher</GFX>
+<GUI>minimal</GUI>
+<sound>engine</sound>
+<class>2</class>
+<price>900000</price>
+<fabricator>Nexus</fabricator>
+<tech>10</tech>
+<description>A very versatile combat ship.  Nexus defines it as the combination between the ruggedness of the Pacifier and the agility of the Lancelot.  Overall a very solid fighter.</description>
+<movement>
+<thrust>200</thrust>
+<turn>105</turn>
+<speed>200</speed>
+</movement>
+<health>
+<shield>240</shield>
+<armour>170</armour>
+<energy>380</energy>
+<shield_regen>240</shield_regen>
+<armour_regen>90</armour_regen>
+<energy_regen>1180</energy_regen>
+</health>
+<caracteristics>
+<crew>13</crew>
+<mass>170</mass>
+<fuel>400</fuel>
+<cap_weapon>110</cap_weapon>
+<cap_cargo>20</cap_cargo>
+</caracteristics>
+<outfits>
+<outfit quantity='1'>Laser Cannon</outfit>
+<outfit quantity='2'>Plasma Blaster</outfit>
+<outfit quantity='1'>Headhunter Launcher</outfit>
+<outfit quantity='10'>Headhunter</outfit>
 </outfits>
 </ship>
 </Ships>
