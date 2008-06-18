@@ -345,4 +345,39 @@ Production is entirely done on Zhiru en the Goddard system by Goddard Inc, the s
 <outfit quantity='10'>Headhunter</outfit>
 </outfits>
 </ship>
+<ship name="Pirate Admonisher">
+<GFX target="admonisher">admonisher_pirate</GFX>
+<GUI>minimal</GUI>
+<sound>engine</sound>
+<class>2</class>
+<price>850000</price>
+<fabricator>Pirate</fabricator>
+<tech>9009</tech>
+<description>What do you get when you rip apart an Admonisher, hack up the internals and slap it back together?  A Pirate Admonisher, which surprisingly works quite well.</description>
+<movement>
+<thrust>205</thrust>
+<turn>110</turn>
+<speed>210</speed>
+</movement>
+<health>
+<shield>250</shield>
+<armour>175</armour>
+<energy>390</energy>
+<shield_regen>260</shield_regen>
+<armour_regen>60</armour_regen>
+<energy_regen>1180</energy_regen>
+</health>
+<caracteristics>
+<crew>13</crew>
+<mass>165</mass>
+<fuel>400</fuel>
+<cap_weapon>125</cap_weapon>
+<cap_cargo>15</cap_cargo>
+</caracteristics>
+<outfits>
+<outfit quantity='3'>Plasma Blaster</outfit>
+<outfit quantity='1'>Headhunter Launcher</outfit>
+<outfit quantity='10'>Headhunter</outfit>
+</outfits>
+</ship>
 </Ships>
