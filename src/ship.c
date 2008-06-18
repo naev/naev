@@ -155,14 +155,28 @@ static Ship* ship_parse( xmlNodePtr parent )
 
    do { /* load all the data */
       if (xml_isNode(node,"GFX")) {
+
+         /* Load the base graphic */
          snprintf( str, strlen(xml_get(node))+
                sizeof(SHIP_GFX)+sizeof(SHIP_EXT),
                SHIP_GFX"%s"SHIP_EXT, xml_get(node));
          temp->gfx_space = gl_newSprite(str, 6, 6);
-         snprintf( str, strlen(xml_get(node))+
-               sizeof(SHIP_GFX)+sizeof(SHIP_TARGET)+sizeof(SHIP_EXT),
-               SHIP_GFX"%s"SHIP_TARGET SHIP_EXT, xml_get(node));
-         temp->gfx_target = gl_newImage(str);
+
+
+         xmlr_attr(node,"target",stmp);
+         if (stmp != NULL) {
+            snprintf( str, strlen(stmp)+
+                  sizeof(SHIP_GFX)+sizeof(SHIP_TARGET)+sizeof(SHIP_EXT),
+                  SHIP_GFX"%s"SHIP_TARGET SHIP_EXT, stmp);
+            temp->gfx_target = gl_newImage(str);
+            free(stmp);
+         }
+         else { /* Load standard target graphic */
+            snprintf( str, strlen(xml_get(node))+
+                  sizeof(SHIP_GFX)+sizeof(SHIP_TARGET)+sizeof(SHIP_EXT),
+                  SHIP_GFX"%s"SHIP_TARGET SHIP_EXT, xml_get(node));
+            temp->gfx_target = gl_newImage(str);
+         }
       }
 
       xmlr_strd(node,"GUI",temp->gui);
