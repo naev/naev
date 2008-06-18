@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.4 on Sat May  3 17:26:05 2008 -->
+<!--Generated with glade3 3.4.5 on Wed Jun 18 20:18:48 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="winPlanets">
     <property name="width_request">600</property>
@@ -13,12 +13,20 @@
         <property name="can_focus">True</property>
         <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
         <child>
-          <widget class="GtkTreeView" id="trePlanets">
-            <property name="width_request">150</property>
+          <widget class="GtkScrolledWindow" id="scrolledwindow3">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-            <property name="headers_clickable">True</property>
+            <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+            <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+            <child>
+              <widget class="GtkTreeView" id="trePlanets">
+                <property name="width_request">150</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="headers_clickable">True</property>
+              </widget>
+            </child>
           </widget>
           <packing>
             <property name="resize">False</property>
@@ -105,20 +113,6 @@
               <packing>
                 <property name="x">12</property>
                 <property name="y">173</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkTreeView" id="treCommodities">
-                <property name="width_request">188</property>
-                <property name="height_request">149</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                <property name="headers_clickable">True</property>
-              </widget>
-              <packing>
-                <property name="x">17</property>
-                <property name="y">196</property>
               </packing>
             </child>
             <child>
@@ -560,6 +554,30 @@
                 <property name="y">150</property>
               </packing>
             </child>
+            <child>
+              <widget class="GtkScrolledWindow" id="scrolledwindow4">
+                <property name="width_request">190</property>
+                <property name="height_request">150</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                <child>
+                  <widget class="GtkTreeView" id="treCommodities">
+                    <property name="width_request">188</property>
+                    <property name="height_request">149</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                    <property name="headers_clickable">True</property>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="x">15</property>
+                <property name="y">195</property>
+              </packing>
+            </child>
           </widget>
           <packing>
             <property name="resize">True</property>
@@ -580,17 +598,30 @@
       <widget class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
         <child>
-          <widget class="GtkTextView" id="texDescription">
-            <property name="width_request">400</property>
-            <property name="height_request">400</property>
+          <widget class="GtkScrolledWindow" id="scrolledwindow1">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="wrap_mode">GTK_WRAP_WORD</property>
+            <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+            <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+            <child>
+              <widget class="GtkScrolledWindow" id="scrolledwindow2">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                <child>
+                  <widget class="GtkTextView" id="texDescription">
+                    <property name="width_request">400</property>
+                    <property name="height_request">400</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="wrap_mode">GTK_WRAP_WORD</property>
+                  </widget>
+                </child>
+              </widget>
+            </child>
           </widget>
-          <packing>
-            <property name="padding">10</property>
-          </packing>
         </child>
         <child>
           <widget class="GtkButton" id="butDescDone">

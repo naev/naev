@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Mon Jun  9 18:52:13 2008 -->
+<!--Generated with glade3 3.4.5 on Wed Jun 18 20:17:12 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="winSystems">
     <property name="width_request">750</property>
@@ -18,12 +18,20 @@
             <property name="can_focus">True</property>
             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
             <child>
-              <widget class="GtkTreeView" id="treSystems">
-                <property name="width_request">200</property>
+              <widget class="GtkScrolledWindow" id="scrolledwindow3">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                <property name="headers_clickable">True</property>
+                <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                <child>
+                  <widget class="GtkTreeView" id="treSystems">
+                    <property name="width_request">200</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                    <property name="headers_clickable">True</property>
+                  </widget>
+                </child>
               </widget>
               <packing>
                 <property name="resize">False</property>
@@ -204,20 +212,6 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkTreeView" id="treJumps">
-                    <property name="width_request">193</property>
-                    <property name="height_request">182</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                    <property name="headers_clickable">True</property>
-                  </widget>
-                  <packing>
-                    <property name="x">10</property>
-                    <property name="y">238</property>
-                  </packing>
-                </child>
-                <child>
                   <widget class="GtkButton" id="butRmJump">
                     <property name="width_request">70</property>
                     <property name="height_request">27</property>
@@ -369,19 +363,6 @@
                   <packing>
                     <property name="x">440</property>
                     <property name="y">420</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkTreeView" id="treFleets">
-                    <property name="width_request">250</property>
-                    <property name="height_request">161</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="headers_clickable">True</property>
-                  </widget>
-                  <packing>
-                    <property name="x">10</property>
-                    <property name="y">471</property>
                   </packing>
                 </child>
                 <child>
@@ -550,6 +531,53 @@
                   <packing>
                     <property name="x">13</property>
                     <property name="y">201</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkScrolledWindow" id="scrolledwindow1">
+                    <property name="width_request">250</property>
+                    <property name="height_request">160</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                    <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                    <child>
+                      <widget class="GtkTreeView" id="treFleets">
+                        <property name="width_request">250</property>
+                        <property name="height_request">161</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="headers_clickable">True</property>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="x">10</property>
+                    <property name="y">470</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkScrolledWindow" id="scrolledwindow2">
+                    <property name="width_request">190</property>
+                    <property name="height_request">180</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                    <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                    <child>
+                      <widget class="GtkTreeView" id="treJumps">
+                        <property name="width_request">193</property>
+                        <property name="height_request">182</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                        <property name="headers_clickable">True</property>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="x">10</property>
+                    <property name="y">238</property>
                   </packing>
                 </child>
               </widget>
