@@ -348,6 +348,7 @@ static double cur_dt = 0.; /* used also a bit in render_all */
 static void fps_control (void)
 {
    unsigned int t;
+   double delay;
 
    /* dt in ms/1000 */
    t = SDL_GetTicks();
@@ -358,7 +359,7 @@ static void fps_control (void)
 
    /* if fps is limited */                       
    if ((max_fps != 0) && (cur_dt < 1./max_fps)) {
-      double delay = 1./max_fps - cur_dt;
+      delay = 1./max_fps - cur_dt;
       SDL_Delay( delay );
       fps_dt += delay; /* makes sure it displays the proper fps */
    }
