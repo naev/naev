@@ -7,6 +7,13 @@
 <pilot chance='100'>Lancelot</pilot>
 </pilots>
 </fleet>
+<fleet name="Militia Goddard">
+<ai>militia</ai>
+<faction>Independent</faction>
+<pilots>
+<pilot chance='100'>Goddard</pilot>
+</pilots>
+</fleet>
 <fleet name="Merchant Llama">
 <ai>merchant</ai>
 <faction>Merchant</faction>
@@ -36,6 +43,13 @@
 <faction>Pirate</faction>
 <pilots>
 <pilot chance='100'>Hyena</pilot>
+</pilots>
+</fleet>
+<fleet name="Pirate Admonisher">
+<ai>pirate</ai>
+<faction>Pirate</faction>
+<pilots>
+<pilot chance='100'>Pirate Admonisher</pilot>
 </pilots>
 </fleet>
 <fleet name="Collective Drone">
@@ -70,7 +84,7 @@
 <pilots>
 <pilot chance='100'>Lancelot</pilot>
 <pilot chance='80'>Lancelot</pilot>
-<pilot chance='60'>Lancelot</pilot>
+<pilot chance='60'>Admonisher</pilot>
 <pilot chance='50'>Pacifier</pilot>
 <pilot chance='30'>Hawking</pilot>
 </pilots>
@@ -80,6 +94,13 @@
 <faction>Empire</faction>
 <pilots>
 <pilot chance='100'>Pacifier</pilot>
+</pilots>
+</fleet>
+<fleet name="Empire Admonisher">
+<ai>empire</ai>
+<faction>Empire</faction>
+<pilots>
+<pilot chance='100'>Admonisher</pilot>
 </pilots>
 </fleet>
 </Fleets>
