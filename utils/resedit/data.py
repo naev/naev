@@ -5,7 +5,6 @@ See Licensing and Copyright notice in resedit.py
 
 from xml.dom import minidom
 import sets
-import re
 
 def uniq(alist):    # Fastest order preserving
    s = sets.Set(alist)
