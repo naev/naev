@@ -360,7 +360,7 @@ static void fps_control (void)
    /* if fps is limited */                       
    if ((max_fps != 0) && (cur_dt < 1./max_fps)) {
       delay = 1./max_fps - cur_dt;
-      SDL_Delay( delay );
+      SDL_Delay( (unsigned int)(delay * 1000) );
       fps_dt += delay; /* makes sure it displays the proper fps */
    }
 }
