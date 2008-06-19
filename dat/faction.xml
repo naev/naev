@@ -9,7 +9,6 @@
 <enemies>
 <enemy>Pirate</enemy>
 <enemy>Collective</enemy>
-<enemy>Dvaered</enemy>
 <enemy>FLF</enemy>
 <enemy>Collective</enemy>
 </enemies>
@@ -25,7 +24,6 @@
 <enemies>
 <enemy>Pirate</enemy>
 <enemy>FLF</enemy>
-<enemy>Dvaered</enemy>
 <enemy>Collective</enemy>
 </enemies>
 </faction>
@@ -33,8 +31,6 @@
 <player>-20</player>
 <enemies>
 <enemy>Empire</enemy>
-<enemy>Aerius</enemy>
-<enemy>Ascendancy</enemy>
 <enemy>Dvaered</enemy>
 <enemy>Za'lek</enemy>
 <enemy>Collective</enemy>
@@ -56,13 +52,14 @@
 <faction name="Empire">
 <player>0</player>
 <allies>
+<ally>Dvaered</ally>
 <ally>Soromid</ally>
+<ally>Za'lek</ally>
 <ally>Merchant</ally>
 </allies>
 <enemies>
 <enemy>Pirate</enemy>
 <enemy>FLF</enemy>
-<enemy>Dvaered</enemy>
 <enemy>Collective</enemy>
 </enemies>
 </faction>
@@ -70,8 +67,6 @@
 <player>-100</player>
 <enemies>
 <enemy>Empire</enemy>
-<enemy>Aerius</enemy>
-<enemy>Ascendancy</enemy>
 <enemy>Dvaered</enemy>
 <enemy>Za'lek</enemy>
 <enemy>Soromid</enemy>
@@ -79,43 +74,24 @@
 <enemy>FLF</enemy>
 </enemies>
 </faction>
-<faction name="Aerius">
-<player>0</player>
-<enemies>
-<enemy>Pirate</enemy>
-<enemy>Collective</enemy>
-<enemy>Dvaered</enemy>
-</enemies>
-</faction>
 <faction name="FLF">
 <longname>Frontier Liberation Front</longname>
 <player>-10</player>
 <enemies>
 <enemy>Empire</enemy>
-<enemy>Ascendancy</enemy>
 <enemy>Dvaered</enemy>
 <enemy>Za'lek</enemy>
 <enemy>Collective</enemy>
 <enemy>Soromid</enemy>
-</enemies>
-</faction>
-<faction name="Ascendancy">
-<player>0</player>
-<enemies>
-<enemy>Pirate</enemy>
-<enemy>Collective</enemy>
-<enemy>Dvaered</enemy>
 </enemies>
 </faction>
 <faction name="Dvaered">
 <longname>House Dvaered</longname>
-<player>-80</player>
+<player>0</player>
+<allies>
+<ally>Empire</ally>
+</allies>
 <enemies>
-<enemy>Empire</enemy>
-<enemy>Aerius</enemy>
-<enemy>Ascendancy</enemy>
-<enemy>Za'lek</enemy>
-<enemy>Soromid</enemy>
 <enemy>Pirate</enemy>
 <enemy>FLF</enemy>
 <enemy>Collective</enemy>
@@ -124,10 +100,13 @@
 <faction name="Za'lek">
 <longname>House Soromid</longname>
 <player>0</player>
+<allies>
+<ally>Empire</ally>
+</allies>
 <enemies>
 <enemy>Pirate</enemy>
 <enemy>Collective</enemy>
-<enemy>Dvaered</enemy>
+<enemy>FLF</enemy>
 </enemies>
 </faction>
 <faction name="Soromid">
@@ -138,7 +117,6 @@
 <ally>Merchant</ally>
 </allies>
 <enemies>
-<enemy>Dvaered</enemy>
 <enemy>Pirate</enemy>
 <enemy>FLF</enemy>
 <enemy>Collective</enemy>
