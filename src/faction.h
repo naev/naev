@@ -13,6 +13,7 @@
 /* get stuff */
 int faction_get( const char* name );
 char* faction_name( int f );
+char* faction_longname( int f );
 
 /* player stuff */
 void faction_modPlayer( int f, int mod );

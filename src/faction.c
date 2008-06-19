@@ -26,7 +26,8 @@
 
 
 typedef struct Faction_ {
-   char* name;
+   char* name; /* Normal Name */
+   char* longname; /* Long Name */
 
    /* Enemies */
    int* enemies;
@@ -78,6 +79,17 @@ int faction_get( const char* name )
  */
 char* faction_name( int f )
 {
+   return faction_stack[f].name;
+}
+
+
+/*
+ * returns the faction's long name (formal)
+ */
+char* faction_longname( int f )
+{
+   if (faction_stack[f].longname != NULL)
+      return faction_stack[f].longname;
    return faction_stack[f].name;
 }
 
@@ -295,7 +307,9 @@ static Faction* faction_parse( xmlNodePtr parent )
       if (xml_isNode(node,"player")) {
          temp->player = xml_getInt(node);
          player = 1;
+         continue;
       }
+      xmlr_strd(node,"longname",temp->longname);
    } while (xml_nextNode(node));
 
    if (player==0) DEBUG("Faction '%s' missing player tag.", temp->name);
@@ -378,6 +392,7 @@ int factions_load (void)
    /* player faction is hardcoded */
    faction_stack = malloc( sizeof(Faction) );
    faction_stack[0].name = strdup("Player");
+   faction_stack[0].longname = NULL;
    faction_stack[0].nallies = 0;
    faction_stack[0].nenemies = 0;
    faction_nstack++;
@@ -417,6 +432,7 @@ void factions_free (void)
    /* free factions */
    for (i=0; i<faction_nstack; i++) {
       free(faction_stack[i].name);
+      if (faction_stack[i].longname != NULL) free(faction_stack[i].longname);
       if (faction_stack[i].nallies > 0) free(faction_stack[i].allies);
       if (faction_stack[i].nenemies > 0) free(faction_stack[i].enemies);
    }
@@ -460,7 +476,7 @@ int pfaction_load( xmlNodePtr parent )
          cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur,"faction")) {
-               xmlr_attr(cur,"name",str);
+               xmlr_attr(cur,"name",str); 
                faction_stack[faction_get(str)].player = xml_getInt(cur);
                free(str);
             }
