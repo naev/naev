@@ -742,15 +742,8 @@ StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend, int ign
    ssys = system_get(sysstart); /* start */
    esys = system_get(sysend); /* goal */
 
-   /* system target must be known */
-   if (!ignore_known && !sys_isKnown(esys)) {
-      if (space_sysReachable(esys)) { /* can we still reach it? */
-         res = malloc(sizeof(StarSystem*));
-         (*njumps) = 1;
-         res[0] = esys;
-         return res;
-      }
-
+   /* system target must be known and reachable */
+   if (!ignore_known && !sys_isKnown(esys) && !space_sysReachable(esys)) {
       /* can't reach - don't make path */
       (*njumps) = 0;
       return NULL;
@@ -770,7 +763,9 @@ StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend, int ign
       for (i=0; i<cur->sys->njumps; i++) {
          sys = &systems_stack[cur->sys->jumps[i]];
 
-         if (!ignore_known && !sys_isKnown(sys)) continue;
+         /* Make sure it's reachable */
+         if (!ignore_known && (!sys_isKnown(sys) && !space_sysReachable(esys)))
+            continue;
 
          neighbour = A_newNode( sys, NULL );
 
