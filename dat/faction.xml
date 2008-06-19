@@ -140,4 +140,17 @@
 <enemy>Collective</enemy>
 </enemies>
 </faction>
+<faction name="Goddard">
+<longname>House Goddard</longname>
+<player>0</player>
+<allies>
+<ally>Empire</ally>
+<ally>Merchant</ally>
+</allies>
+<enemies>
+<enemy>Pirate</enemy>
+<enemy>FLF</enemy>
+<enemy>Collective</enemy>
+</enemies>
+</faction>
 </Factions>

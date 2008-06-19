@@ -278,10 +278,10 @@ Used by security agencies all over the universe for it's reliability and availab
 <sound>engine</sound>
 <class>3</class>
 <price>11500000</price>
-<fabricator>Goddard Inc.</fabricator>
+<fabricator>House Goddard</fabricator>
 <tech>1001</tech>
 <description>The archaic design of the Goddard is decieving.  Although it takes the shape of traditional flying intra-planet vessels, it's very suited for space travel.
-Production is entirely done on Zhiru en the Goddard system by Goddard Inc, the sole providor and dealer in Goddards.  Over time, specialization and improvements on the original time have kept it very competitive in the market.  It's a classic of space.</description>
+Production is entirely done on Zhiru en the Goddard system by House Goddard the sole providor and dealer in Goddards.  Over time, specialization and improvements on the original time have kept it very competitive in the market.  It's a classic of space.</description>
 <movement>
 <thrust>100</thrust>
 <turn>80</turn>

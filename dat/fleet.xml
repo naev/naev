@@ -7,9 +7,9 @@
 <pilot chance='100'>Lancelot</pilot>
 </pilots>
 </fleet>
-<fleet name="Militia Goddard">
+<fleet name="Goddard Goddard">
 <ai>militia</ai>
-<faction>Independent</faction>
+<faction>Goddard</faction>
 <pilots>
 <pilot chance='100'>Goddard</pilot>
 </pilots>

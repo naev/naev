@@ -819,15 +819,14 @@
  </ssys>
  <ssys name="Goddard">
   <fleets>
-   <fleet chance="70">Militia Goddard</fleet>
-   <fleet chance="50">Militia Goddard</fleet>
+   <fleet chance="70">Goddard Goddard</fleet>
+   <fleet chance="50">Goddard Goddard</fleet>
    <fleet chance="30">Merchant Llama</fleet>
    <fleet chance="30">Merchant Llama</fleet>
    <fleet chance="30">Merchant Mule</fleet>
    <fleet chance="30">Merchant Mule</fleet>
    <fleet chance="30">Sml Merchant Convoy</fleet>
    <fleet chance="50">Empire Lancelot</fleet>
-   <fleet chance="50">Militia Lancelot</fleet>
   </fleets>
   <jumps>
    <jump>Borla</jump>
