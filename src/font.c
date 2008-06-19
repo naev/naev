@@ -370,7 +370,7 @@ int gl_printHeight( const glFont *ft_font,
       i++;
    }
    
-   return (int) y;
+   return (int) (y - 0.5*(double)ft_font->h);
 }
 
 
