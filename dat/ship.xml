@@ -113,7 +113,7 @@
 <description>A heavy frigate designed for heavy combat.  Used widely by the empire to establish control on it's territory.  Has more then enough firepower to not be taken lightly.</description>
 <movement>
 <thrust>80</thrust>
-<turn>90</turn>
+<turn>70</turn>
 <speed>100</speed>
 </movement>
 <health>
