@@ -589,14 +589,15 @@ static void pilot_update( Pilot* pilot, const double dt )
    }
 
    /* still alive */
-   else if (pilot->armour < pilot->armour_max) { /* regen armour */
+   else if (pilot->armour < pilot->armour_max) /* regen armour */
       pilot->armour += pilot->armour_regen * dt;
-      pilot->energy += pilot->energy_regen * dt;
-   }
-   else { /* regen shield */
+   else /* regen shield */
       pilot->shield += pilot->shield_regen * dt;
-      pilot->energy += pilot->energy_regen * dt;
-   }
+
+   /* Update energy */
+   if ((pilot->energy < 1.) && pilot_isFlag(pilot, PILOT_AFTERBURNER))
+      pilot_rmFlag(pilot, PILOT_AFTERBURNER); /* Break efterburner */
+   pilot->energy += pilot->energy_regen * dt;
 
    /* check limits */
    if (pilot->armour > pilot->armour_max) pilot->armour = pilot->armour_max;

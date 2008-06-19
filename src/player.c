@@ -1451,10 +1451,15 @@ void player_think( Pilot* pplayer )
    if (player_isFlag(PLAYER_SECONDARY)) /* needs target */
       pilot_shoot(pplayer,player_target,1);
 
-   if (player_isFlag(PLAYER_AFTERBURNER)) /* afterburn! */
-      vect_pset( &pplayer->solid->force,
-            pplayer->thrust * pplayer->afterburner->outfit->u.afb.thrust_perc + 
-            pplayer->afterburner->outfit->u.afb.thrust_abs, pplayer->solid->dir );
+   /* Afterburn! */
+   if (player_isFlag(PLAYER_AFTERBURNER)) {
+      if (pilot_isFlag(player,PILOT_AFTERBURNER))
+         vect_pset( &pplayer->solid->force,
+               pplayer->thrust * pplayer->afterburner->outfit->u.afb.thrust_perc + 
+               pplayer->afterburner->outfit->u.afb.thrust_abs, pplayer->solid->dir );
+      else /* Ran out of energy */
+         player_afterburnOver();
+   }
    else
       vect_pset( &pplayer->solid->force, pplayer->thrust * player_acc,
             pplayer->solid->dir );
