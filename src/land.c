@@ -21,6 +21,7 @@
 #include "ntime.h"
 #include "save.h"
 #include "music.h"
+#include "map.h"
 
 
 /* global/main window */
@@ -420,6 +421,12 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
          credits2str( buf, q*outfit->price - player->credits, 2 );
          dialogue_alert( "You need %s more credits.", buf);
       }
+      return 0;
+   }
+   /* Map already mapped */
+   else if (outfit_isMap(outfit) && map_isMapped(NULL,outfit->u.map.radius)) {
+      if (errmsg != 0)
+         dialogue_alert( "You already own this map." );
       return 0;
    }
 
