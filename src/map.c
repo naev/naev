@@ -178,13 +178,27 @@ static void map_update (void)
     */
 
    if (!sys_isKnown(sys)) { /* System isn't known, erase all */
+      /*
+       * Right Text
+       */
       window_modifyText( map_wid, "txtSysname", "Unknown" );
       window_modifyText( map_wid, "txtFaction", "Unknown" );
+      /* Standing */
+      window_moveWidget( map_wid, "txtSStanding", -20, -100 );
+      window_moveWidget( map_wid, "txtStanding", -20, -100-gl_smallFont.h-5 );
       window_modifyText( map_wid, "txtStanding", "Unknown" );
+      /* Planets */
+      window_moveWidget( map_wid, "txtSPlanets", -20, -140 );
+      window_moveWidget( map_wid, "txtPlanets", -20, -140-gl_smallFont.h-5 );
       window_modifyText( map_wid, "txtPlanets", "Unknown" );
+      /* Services */
       window_moveWidget( map_wid, "txtSServices", -20, -180 );
       window_moveWidget( map_wid, "txtServices", -20, -180-gl_smallFont.h-5 );
       window_modifyText( map_wid, "txtServices", "Unknown" );
+      
+      /*
+       * Bottom Text
+       */
       window_modifyText( map_wid, "txtSystemStatus", NULL );
       return;
    }
@@ -194,7 +208,10 @@ static void map_update (void)
 
    if (sys->nplanets == 0) { /* no planets -> no factions */
       window_modifyText( map_wid, "txtFaction", "NA" );
+      window_moveWidget( map_wid, "txtSStanding", -20, -100 );
+      window_moveWidget( map_wid, "txtStanding", -20, -100-gl_smallFont.h-5 );
       window_modifyText( map_wid, "txtStanding", "NA" );
+      y = -100;
    }
    else {
       standing = 0;
@@ -209,15 +226,22 @@ static void map_update (void)
          else if (f!= sys->planets[i].faction && /* TODO more verbosity */
                (sys->planets[i].faction!=0)) {
             snprintf( buf, 100, "Multiple" );
+            break;
          }
       }
       if (i==sys->nplanets) /* saw them all and all the same */
-         snprintf( buf, 100, "%s", faction_name(f) );
+         snprintf( buf, 100, "%s", faction_longname(f) );
 
       /* Modify the text */
       window_modifyText( map_wid, "txtFaction", buf );
       window_modifyText( map_wid, "txtStanding",
             faction_getStanding( standing / nstanding ) );
+
+      /* Lower text if needed */
+      h = gl_printHeight( &gl_smallFont, 80, buf );
+      y = -100 - (h - gl_smallFont.h);
+      window_moveWidget( map_wid, "txtSStanding", -20, y );
+      window_moveWidget( map_wid, "txtStanding", -20, y-gl_smallFont.h-5 );
    }
 
    /* Get planets */
@@ -234,13 +258,15 @@ static void map_update (void)
 
       window_modifyText( map_wid, "txtPlanets", buf );
    }
+   y -= 40;
+   window_moveWidget( map_wid, "txtSPlanets", -20, y );
+   window_moveWidget( map_wid, "txtPlanets", -20, y-gl_smallFont.h-5 );
 
    /* Get the services */
    h = gl_printHeight( &gl_smallFont, 80, buf );
-   y = -180 - (h - gl_smallFont.h);
+   y -= 40 + (h - gl_smallFont.h);
    window_moveWidget( map_wid, "txtSServices", -20, y );
-   y -= gl_smallFont.h+5;
-   window_moveWidget( map_wid, "txtServices", -20, y );
+   window_moveWidget( map_wid, "txtServices", -20, y-gl_smallFont.h-5 );
    services = 0;
    for (i=0; i<sys->nplanets; i++)
       services |= sys->planets[i].services;
