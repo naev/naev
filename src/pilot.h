@@ -166,9 +166,10 @@ typedef struct Fleet_ {
  */
 extern Pilot* player; /* the player */
 Pilot* pilot_get( const unsigned int id );
-unsigned int pilot_getNext( const unsigned int id );
-unsigned int pilot_getNearest( const Pilot* p );
-unsigned int pilot_getHostile (void); /* only for the player */
+unsigned int pilot_getNextID( const unsigned int id );
+unsigned int pilot_getNearestEnemy( const Pilot* p );
+unsigned int pilot_getNearestHostile (void); /* only for the player */
+unsigned int pilot_getNearestPilot( const Pilot* p );
 Fleet* fleet_get( const char* name );
 int pilot_getJumps( const Pilot* p );
 

@@ -85,7 +85,7 @@ static int pilot_oquantity( Pilot* p, PilotOutfit* w );
 /*
  * gets the next pilot based on id
  */
-unsigned int pilot_getNext( const unsigned int id )
+unsigned int pilot_getNextID( const unsigned int id )
 {
    /* binary search */
    int l,m,h;
@@ -106,7 +106,7 @@ unsigned int pilot_getNext( const unsigned int id )
 /*
  * gets the nearest enemy to the pilot
  */
-unsigned int pilot_getNearest( const Pilot* p )
+unsigned int pilot_getNearestEnemy( const Pilot* p )
 {
    unsigned int tp;
    int i;
@@ -126,14 +126,40 @@ unsigned int pilot_getNearest( const Pilot* p )
 /*
  * gets the nearest hostile enemy to the player
  */
-unsigned pilot_getHostile (void)
+unsigned int pilot_getNearestHostile (void)
 {
    unsigned int tp;
    int i;                                                                 
    double d, td;
-   for (tp=PLAYER_ID,d=0.,i=0; i<pilot_nstack; i++)
+    
+   tp=PLAYER_ID;
+   d=0;
+   for (i=0; i<pilot_nstack; i++)
       if (pilot_isFlag(pilot_stack[i],PILOT_HOSTILE)) {
          td = vect_dist(&pilot_stack[i]->solid->pos, &player->solid->pos);
+         if (!pilot_isDisabled(pilot_stack[i]) && ((tp==PLAYER_ID) || (td < d))) {
+            d = td;
+            tp = pilot_stack[i]->id;
+         }
+      }
+   return tp;
+}
+
+
+/*
+ * Get the nearest pilot
+ */
+unsigned int pilot_getNearestPilot( const Pilot* p )
+{
+   unsigned int tp;
+   int i;
+   double d, td;
+
+   tp=PLAYER_ID;
+   d=0;
+   for (i=0; i<pilot_nstack; i++)
+      if (pilot_stack[i] != p) {
+         td = vect_dist(&pilot_stack[i]->solid->pos, &player->solid->pos);       
          if (!pilot_isDisabled(pilot_stack[i]) && ((tp==PLAYER_ID) || (td < d))) {
             d = td;
             tp = pilot_stack[i]->id;

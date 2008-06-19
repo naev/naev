@@ -34,7 +34,8 @@ static Keybind** input_keybinds; /* contains the players keybindings */
 /* name of each keybinding */
 const char *keybindNames[] = {
    "accel", "left", "right", "reverse", /* movement */
-   "primary", "target", "target_nearest", "face", "board", /* fighting */
+   "target", "target_nearest", "target_hostile", /* targetting */
+   "primary", "face", "board", /* fighting */
    "secondary", "secondary_next", /* secondary weapons */
    "target_planet", "land", "thyperspace", "starmap", "jump", /* space navigation */
    "mapzoomin", "mapzoomout", "screenshot", "pause", "menu", "info",  /* misc */
@@ -69,10 +70,12 @@ void input_setDefault (void)
    input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, 0 );
    input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, 0 );
    input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, 0 );
+   /* targetting */
+   input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, 0 );
+   input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_t, 0 );
+   input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, 0 );
    /* combat */
    input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, 0 );
-   input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, 0 );
-   input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_r, 0 );
    input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, 0 );
    input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, 0 );
    /* secondary weap */
@@ -242,9 +245,11 @@ static void input_key( int keynum, double value, int kabs )
       else if (value==KEY_RELEASE) { player_rmFlag(PLAYER_PRIMARY); }
    /* targetting */
    } else if (INGAME() && KEY("target")) {
-      if (value==KEY_PRESS) player_target = pilot_getNext(player_target);
+      if (value==KEY_PRESS) player_target = pilot_getNextID(player_target);
    } else if (INGAME() && KEY("target_nearest")) {
-      if (value==KEY_PRESS) player_target = pilot_getHostile();
+      if (value==KEY_PRESS) player_target = pilot_getNearestPilot(player);
+   } else if (INGAME() && KEY("target_hostile")) {
+      if (value==KEY_PRESS) player_target = pilot_getNearestHostile();
    /* face the target */
    } else if (KEY("face")) {
       if (value==KEY_PRESS) { player_setFlag(PLAYER_FACE); }

@@ -1122,7 +1122,7 @@ static int ai_shoot( lua_State *L )
  */
 static int ai_getenemy( lua_State *L )
 {
-   lua_pushnumber(L,pilot_getNearest(cur_pilot));
+   lua_pushnumber(L,pilot_getNearestEnemy(cur_pilot));
    return 1;
 }
 
