@@ -117,36 +117,92 @@ char** nfile_readDir( int* nfiles, const char* path )
    snprintf( file, PATH_MAX, "%s%s", nfile_basePath(), path );
 
 #ifdef LINUX
+   int i,j,k, n;
    DIR *d;
    struct dirent *dir;
    char *name;
    int mfiles;
+   struct stat sb;
+   time_t *tt, *ft;
+   char **tfiles;
 
    (*nfiles) = 0;
    mfiles = 100;
-   files = malloc(sizeof(char*)*mfiles);
+   tfiles = malloc(sizeof(char*)*mfiles);
+   tt = malloc(sizeof(time_t)*mfiles);
 
    d = opendir(file);
-   if (d == NULL) {
+   if (d == NULL)
       return NULL;
-   }
 
+   /* Get the file list */
    while ((dir = readdir(d)) != NULL) {
       name = dir->d_name;
 
-      if ((strcmp(name,".")==0) || (strcmp(name,"..")==0))
+      /* Skip hidden directories */
+      if (name[0] == '.')
          continue;
 
+      /* Stat the file */
+      snprintf( file, PATH_MAX, "%s%s/%s", nfile_basePath(), path, name );
+      if (stat(file, &sb) == -1)
+         continue; /* Unable to stat */
+
+      /* Enough memory? */
       if ((*nfiles)+1 > mfiles) {
          mfiles += 100;
-         files = realloc( files, sizeof(char*) * mfiles );
+         tfiles = realloc( files, sizeof(char*) * mfiles );
+         tt = realloc( tt, sizeof(time_t) * mfiles );
       }
 
-      files[(*nfiles)] = strdup(name);
+      /* Write the information */
+      tfiles[(*nfiles)] = strdup(name);
+      tt[(*nfiles)] = sb.st_mtime;
       (*nfiles)++;
    }
 
    closedir(d);
+
+   /* Sort by last changed date */
+   if ((*nfiles) > 0) {
+
+      /* Need to allocate some stuff */
+      files = malloc( sizeof(char*) * (*nfiles) );
+      ft = malloc( sizeof(time_t) * (*nfiles) );
+
+      /* Fill the list */
+      for (i=0; i<(*nfiles); i++) {
+         n = -1;
+
+         /* Get next lowest */
+         for (j=0; j<(*nfiles); j++) {
+
+            /* Is lower? */
+            if ((n == -1) || (tt[j] > tt[n])) {
+
+               /* Check if it's already there */
+               for (k=0; k<i; k++)
+                  if (strcmp(files[k],tfiles[j])==0)
+                     break;
+
+               /* New lowest */
+               if (k>=i)
+                  n = j;
+            }
+         }
+
+         files[i] = tfiles[n];
+         ft[i] = tt[n];
+      }
+      free(ft);
+   }
+   else
+      files = NULL;
+
+   /* Free temporary stuff */
+   free(tfiles);
+   free(tt);
+
 #else /* LINUX */
 #error "Needs implementation."
 #endif /* LINUX */
