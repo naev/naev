@@ -575,7 +575,7 @@ static int var_push( lua_State *L )
    char *str;
    misn_var var;
 
-   if (lua_isstring(L,-2)) str = (char*) lua_tostring(L,-2);
+   if (lua_isstring(L,1)) str = (char*) lua_tostring(L,1);
    else {
       NLUA_DEBUG("Trying to push a var with non-string name");
       return 0;
@@ -583,19 +583,19 @@ static int var_push( lua_State *L )
    var.name = strdup(str);
    
    /* store appropriate data */
-   if (lua_isnil(L,1)) 
+   if (lua_isnil(L,2)) 
       var.type = MISN_VAR_NIL;
-   else if (lua_isnumber(L,1)) {
+   else if (lua_isnumber(L,2)) {
       var.type = MISN_VAR_NUM;
-      var.d.num = (double) lua_tonumber(L,1);
+      var.d.num = (double) lua_tonumber(L,2);
    }
-   else if (lua_isboolean(L,1)) {
+   else if (lua_isboolean(L,2)) {
       var.type = MISN_VAR_BOOL;
-      var.d.b = lua_toboolean(L,1);
+      var.d.b = lua_toboolean(L,2);
    }
-   else if (lua_isstring(L,1)) {
+   else if (lua_isstring(L,2)) {
       var.type = MISN_VAR_STR;
-      var.d.str = strdup( (char*) lua_tostring(L,1) );
+      var.d.str = strdup( (char*) lua_tostring(L,2) );
    }
    else {
       NLUA_DEBUG("Trying to push a var of invalid data type to stack");

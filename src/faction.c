@@ -101,6 +101,12 @@ void faction_modPlayer( int f, int mod )
 {
    if (faction_isFaction(f)) {
       faction_stack[f].player += mod;
+
+      /* Sanitize */
+      if (faction_stack[f].player > 100)
+         faction_stack[f].player = 100;
+      else if (faction_stack[f].player < -100)
+         faction_stack[f].player = -100;
    }
    else {
       DEBUG("%d is an invalid faction/alliance", f);
