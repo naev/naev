@@ -259,11 +259,11 @@ void load_screen (void)
    files = pack_listfiles( data, &nfiles );
    len = strlen("gfx/loading");
    nload = 0;
-   for (i=0; i<(int)nfiles; i++)
-      if (strncmp(files[i], "gfx/loading", len)==0) {
+   for (i=0; i<(int)nfiles; i++) {
+      if (strncmp(files[i], "gfx/loading", len)==0)
          nload++;
-         free(files[i]);
-      }
+      free(files[i]);
+   }
    free(files);
 
 
