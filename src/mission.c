@@ -410,6 +410,7 @@ static void mission_freeData( MissionData* mission )
    if (mission->avail.system) free(mission->avail.system);
    if (mission->avail.factions) free(mission->avail.factions);
    if (mission->avail.cond) free(mission->avail.cond);
+   if (mission->avail.done) free(mission->avail.done);
    memset( mission, 0, sizeof(MissionData) );
 }
 
