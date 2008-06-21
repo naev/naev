@@ -185,6 +185,7 @@ int misn_loadLibs( lua_State *L )
 int misn_loadCondLibs( lua_State *L )
 {
    lua_loadTime(L,1);
+   lua_loadSpace(L,1);
    lua_loadVar(L,1);
    lua_loadPlayer(L,1);
    return 0;
