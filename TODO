@@ -5,7 +5,6 @@
    *) Get a good sound system working
    *) Better AI
       *) improved combat efficiency
-      *) smarter missiles -> PID if possible
    *) Save improvements
       *) Save changes to universe in diff format
       *) Possibly predefine changes for easy updating
