@@ -173,9 +173,10 @@ static void menu_main_exit( char* str )
  */
 void menu_small (void)
 {
-   if ( menu_isOpen(MENU_MAIN) ||
+   if ( player_isFlag(PLAYER_DESTROYED) || pilot_isFlag(player,PILOT_DEAD) ||
+         (menu_isOpen(MENU_MAIN) ||
          menu_isOpen(MENU_SMALL) ||
-         menu_isOpen(MENU_DEATH) )
+         menu_isOpen(MENU_DEATH) ))
       return; /* menu is already open */
 
    unsigned int wid;
