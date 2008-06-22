@@ -119,6 +119,10 @@ typedef struct Pilot_ {
    PilotOutfit* ammo; /* secondary ammo if needed */
    PilotOutfit* afterburner; /* the afterburner */
 
+   /* jamming */
+   double jam_range;
+   double jam_chance;
+
    /* cargo */
    int credits; /* monies the pilot has */
    PilotCommodity* commodities; /* commodity and quantity */

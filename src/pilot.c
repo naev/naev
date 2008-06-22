@@ -852,6 +852,9 @@ void pilot_calcStats( Pilot* pilot )
    pilot->armour_regen = pilot->ship->armour_regen;
    pilot->shield_regen = pilot->ship->shield_regen;
    pilot->energy_regen = pilot->ship->energy_regen;
+   /* Jamming */
+   pilot->jam_range = 0.;
+   pilot->jam_chance = 0.;
 
    /* cargo has to be reset */
    pilot_calcCargo(pilot);
@@ -860,10 +863,10 @@ void pilot_calcStats( Pilot* pilot )
     * now add outfit changes
     */
    for (i=0; i<pilot->noutfits; i++) {
-      if (outfit_isMod(pilot->outfits[i].outfit)) {
-         q = (double) pilot->outfits[i].quantity;
-         o = pilot->outfits[i].outfit;
+      o = pilot->outfits[i].outfit;
+      q = (double) pilot->outfits[i].quantity;
 
+      if (outfit_isMod(o)) { /* Modification */
          /* movement */
          pilot->thrust += o->u.mod.thrust * q;
          pilot->turn += o->u.mod.turn * q;
@@ -880,8 +883,15 @@ void pilot_calcStats( Pilot* pilot )
          /* misc */
          pilot->cargo_free += o->u.mod.cargo * q;
       }
-      else if (outfit_isAfterburner(pilot->outfits[i].outfit)) /* set afterburner */
-         pilot->afterburner = &pilot->outfits[i];
+      else if (outfit_isAfterburner(o)) /* Afterburner */
+         pilot->afterburner = &pilot->outfits[i]; /* Set afterburner */
+      else if (outfit_isJammer(o)) { /* Jammer */
+         if (pilot->jam_chance < o->u.jam.chance) { /* substitute */
+            pilot->jam_range = o->u.jam.range;
+            pilot->jam_chance = o->u.jam.chance;
+         }
+         pilot->energy_regen -= o->u.jam.energy;
+      }
    }
 
    /* give the pilot his health proportion back */
@@ -1117,6 +1127,10 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* 
          }
       }
    }
+
+   /* jamming - must be set before calcStats */
+   pilot->jam_range = 0.;
+   pilot->jam_chance = 0.;
 
    /* cargo - must be set before calcStats */
    pilot->credits = 0;

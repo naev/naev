@@ -25,8 +25,12 @@
 #define VOICE_PRIORITY_AMMO   8  /* higher */
 #define VOICE_PRIORITY_BEAM   6  /* even higher */
 
+#define WEAPON_CHUNK          128 /* Size to increase array with */
 
-#define WEAPON_CHUNK    32
+/* Weapon status */
+#define WEAPON_STATUS_OK         0 /* weapon is fine */
+#define WEAPON_STATUS_JAMMED     1 /* Got jammed */
+#define WEAPON_STATUS_UNJAMMED   2 /* Survived jamming */
 
 
 /*
@@ -60,6 +64,8 @@ typedef struct Weapon_ {
    /* position update and render */
    void (*update)(struct Weapon_*, const double, WeaponLayer);
    void (*think)(struct Weapon_*, const double); /* for the smart missiles */
+
+   char status; /* Weapon status - to check for jamming */
 } Weapon;
 
 
@@ -130,27 +136,70 @@ static void think_seeker( Weapon* w, const double dt )
 {
    double diff;
    double vel;
+   Pilot *p;
+   int effect;
 
    if (w->target == w->parent) return; /* no self shooting */
 
-   Pilot* p = pilot_get(w->target); /* no null pilot_nstack */
+   p = pilot_get(w->target); /* no null pilot_nstack */
    if (p==NULL) {
-      limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );
+      w->solid->dir_vel = 0.; /* go straight */
+      vectnull( &w->solid->force ); /* no force */
       return;
    }
 
    /* ammo isn't locked on yet */
    if (SDL_GetTicks() > (w->outfit->u.amm.lockon)) {
-   
-      diff = angle_diff(w->solid->dir,
-            vect_angle(&w->solid->pos, &p->solid->pos));
-      /*diff = angle_diff( w->solid->dir, CollidePath( &w->solid->pos, &w->solid->vel,
-               &p->solid->pos, &p->solid->vel, 0.01 ));*/
-      w->solid->dir_vel = 10 * diff *  w->outfit->u.amm.turn; /* face the target */
-      if (w->solid->dir_vel > w->outfit->u.amm.turn)
-         w->solid->dir_vel = w->outfit->u.amm.turn;
-      else if (w->solid->dir_vel < -w->outfit->u.amm.turn)
-         w->solid->dir_vel = -w->outfit->u.amm.turn;
+
+      switch (w->status) {
+         case WEAPON_STATUS_OK: /* Check to see if can get jammed */
+            if ((p->jam_range != 0.) &&  /* Target has jammer and weapon is in range */
+                  (vect_dist(&w->solid->pos,&p->solid->pos) < p->jam_range)) {
+
+               if (RNGF() < p->jam_chance) { /* Is jammed */
+                  w->status = WEAPON_STATUS_JAMMED;
+                  /* Give it a nice random effect */
+                  effect = RNG(0,4);
+                  switch (effect) {
+                     case 0: /* Blow up */
+                        w->timer = -1.;
+                        break;
+                     case 1: /* Stuck in left loop */
+                        w->solid->dir_vel = w->outfit->u.amm.turn;
+                        break;
+                     case 2: /* Stuck in right loop */
+                        w->solid->dir_vel = -w->outfit->u.amm.turn;
+                        break;
+
+                     default: /* Go straight */
+                        w->solid->dir_vel = 0.;
+                        return;
+                  }
+               }
+               else /* Can't get jammed anymore */
+                  w->status = WEAPON_STATUS_UNJAMMED;
+            }
+        
+         /* Purpose fallthrough */
+         case WEAPON_STATUS_UNJAMMED: /* Work as expected */
+            diff = angle_diff(w->solid->dir, /* Get angle to target pos */
+                  vect_angle(&w->solid->pos, &p->solid->pos));
+            w->solid->dir_vel = 10 * diff *  w->outfit->u.amm.turn; /* Face pos */
+            /* Check for under/overflows */
+            if (w->solid->dir_vel > w->outfit->u.amm.turn)
+               w->solid->dir_vel = w->outfit->u.amm.turn;
+            else if (w->solid->dir_vel < -w->outfit->u.amm.turn)
+               w->solid->dir_vel = -w->outfit->u.amm.turn;
+            break;
+
+         case WEAPON_STATUS_JAMMED: /* Continue doing whatever */
+            /* Do nothing, dir_vel should be set already if needed */
+            break;
+
+         default:
+            WARN("Unknown weapon status for '%s'", w->outfit->name);
+            break;
+      }
    }
 
    /* Limit speed here */
@@ -158,6 +207,8 @@ static void think_seeker( Weapon* w, const double dt )
    vect_pset( &w->solid->vel, vel, w->solid->dir );
    /*limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );*/
 }
+
+
 /*
  * smart seeker brain, much better at homing
  */
@@ -409,6 +460,7 @@ static Weapon* weapon_create( const Outfit* outfit,
    w->outfit = outfit; /* non-changeable */
    w->update = weapon_update;
    w->think = NULL;
+   w->status = WEAPON_STATUS_OK;
 
    switch (outfit->type) {
 
