@@ -651,6 +651,7 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    temp->u.jam.chance /= 100.; /* Put in per one, instead of percent */
+   temp->u.jam.energy /= 60.; /* It's per minute */
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
