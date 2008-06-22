@@ -692,9 +692,10 @@ static void pilot_hyperspace( Pilot* p )
  */
 int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 {
-   int i, q;
+   int i, q, free_space;
    char *osec;
 
+   free_space = pilot_freeSpace( pilot );
    q = quantity;
 
    /* special case if it's a map */
@@ -703,10 +704,18 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
       return 1; /* must return 1 for paying purposes */
    }
 
+   /* Mod quantity down if it doesn't fit */
+   if (q*outfit->mass > free_space)
+      q = free_space / outfit->mass;
+
+   /* Can we actually add any? */
+   if (q == 0)
+      return 0;
+
    /* does outfit already exist? */
    for (i=0; i<pilot->noutfits; i++)
       if (strcmp(outfit->name, pilot->outfits[i].outfit->name)==0) {
-         pilot->outfits[i].quantity += quantity;
+         pilot->outfits[i].quantity += q;
          /* can't be over max */
          if (pilot->outfits[i].quantity > outfit->max) {
             q -= pilot->outfits[i].quantity - outfit->max;
@@ -726,7 +735,7 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
    /* grow the outfits */
    pilot->outfits = realloc(pilot->outfits, (pilot->noutfits+1)*sizeof(PilotOutfit));
    pilot->outfits[pilot->noutfits].outfit = outfit;
-   pilot->outfits[pilot->noutfits].quantity = quantity;
+   pilot->outfits[pilot->noutfits].quantity = q;
 
    /* can't be over max */
    if (pilot->outfits[pilot->noutfits].quantity > outfit->max) {
