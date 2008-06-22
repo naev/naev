@@ -104,6 +104,7 @@ typedef struct Outfit_ {
       struct { /* ammo */
          double duration; /* duration */
          double lockon; /* time it takes to lock on the target */
+         double resist; /* lowers chance of jamming by this amount */
 
          double speed; /* maximum speed */
          double turn; /* turn velocity */

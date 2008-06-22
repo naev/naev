@@ -526,18 +526,20 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    char str[PATH_MAX] = "\0";
 
    do { /* load all the data */
+      /* Basic */
+      xmlr_float(node,"duration",temp->u.amm.duration);
+      xmlr_float(node,"lockon",temp->u.amm.lockon);
+      xmlr_float(node,"resist",temp->u.amm.resist);
+      /* Movement */
       xmlr_float(node,"thrust",temp->u.amm.thrust);
       xmlr_float(node,"turn",temp->u.amm.turn);
       xmlr_float(node,"speed",temp->u.amm.speed);
       xmlr_float(node,"energy",temp->u.amm.energy);
-      if (xml_isNode(node,"duration"))
-         temp->u.amm.duration = xml_getFloat(node);
-      else if (xml_isNode(node,"lockon"))
-         temp->u.amm.lockon = xml_getFloat(node);
-      else if (xml_isNode(node,"gfx")) {
+      if (xml_isNode(node,"gfx")) {
          snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+10,
                OUTFIT_GFX"space/%s.png", xml_get(node));
          temp->u.amm.gfx_space = gl_newSprite(str, 6, 6);
+         continue;
       }
       else if (xml_isNode(node,"spfx"))
          temp->u.amm.spfx = spfx_get(xml_get(node));

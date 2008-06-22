@@ -211,6 +211,7 @@
 <spfx>ExpM</spfx>
 <duration>7</duration>
 <lockon>0.5</lockon>
+<resist>5</resist>
 <thrust>1300</thrust>
 <turn>90</turn>
 <speed>550</speed>

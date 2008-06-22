@@ -156,7 +156,8 @@ static void think_seeker( Weapon* w, const double dt )
             if ((p->jam_range != 0.) &&  /* Target has jammer and weapon is in range */
                   (vect_dist(&w->solid->pos,&p->solid->pos) < p->jam_range)) {
 
-               if (RNGF() < p->jam_chance) { /* Is jammed */
+               /* Check to see if weapon gets jammed */
+               if (RNGF() < p->jam_chance - w->outfit->u.amm.resist) {
                   w->status = WEAPON_STATUS_JAMMED;
                   /* Give it a nice random effect */
                   effect = RNG(0,4);
