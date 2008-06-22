@@ -425,4 +425,19 @@
 <radius>2</radius>
 </specific>
 </outfit>
+<outfit name="Civilian Jammer">
+<general>
+<max>1</max>
+<tech>7</tech>
+<mass>2</mass>
+<price>40000</price>
+<description>This jammer allows you to block the targetting systems of some of the missiles headed towards you, causing them to do unpredictable behaviours and not impact against your ship.</description>
+<gfx_store>jammer0</gfx_store>
+</general>
+<specific type="jammer">
+<range>400</range>
+<chance>20</chance>
+<energy>3</energy>
+</specific>
+</outfit>
 </Outfits>
