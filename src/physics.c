@@ -108,6 +108,21 @@ void vect_cadd( Vector2d* v, const double x, const double y )
 
 
 /*
+ * Mirrors a vector off another, stores results in vector.
+ */
+void vect_reflect( Vector2d* r, Vector2d* v, Vector2d* n )
+{
+   double dot;
+
+   dot = (v->x*n->x) + (v->y*n->y);
+   r->x = v->x - ((2. * dot) * n->x);
+   r->y = v->y - ((2. * dot) * n->y);
+   r->mod = MOD(r->x,r->y);
+   r->angle = MOD(r->x,r->y);
+}
+
+
+/*
  * S O L I D
  */
 /*
