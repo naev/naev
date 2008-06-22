@@ -362,11 +362,11 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
  */
 static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer )
 {
-   /* inform the ai it has been attacked, useless if  player */
+   /* inform the ai it has been attacked, useless if player */
    if (!pilot_isPlayer(p)) {
-      if ((player_target == p->id) || (RNG(0,2) == 0)) {
+      if ((player_target == p->id) || (RNG(0,2) == 0)) { /* 33% chance */
          if ((w->parent == PLAYER_ID) &&
-               (!pilot_isFlag(p,PILOT_HOSTILE) || (RNG(0,2) == 0))) {
+               (!pilot_isFlag(p,PILOT_HOSTILE) || (RNG(0,1) == 0))) { /* 50% chance */
             faction_modPlayer( p->faction, -1 ); /* slowly lower faction */
             pilot_setFlag( p, PILOT_HOSTILE);
          }
