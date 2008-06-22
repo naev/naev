@@ -88,7 +88,7 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer );
 static void weapon_free( Weapon* w );
 /* think */
 static void think_seeker( Weapon* w, const double dt );
-static void think_smart( Weapon* w, const double dt );
+/*static void think_smart( Weapon* w, const double dt );*/
 /* externed */
 void weapon_minimap( const double res, const double w,
       const double h, const RadarShape shape );
@@ -129,6 +129,7 @@ void weapon_minimap( const double res, const double w,
 static void think_seeker( Weapon* w, const double dt )
 {
    double diff;
+   double vel;
 
    if (w->target == w->parent) return; /* no self shooting */
 
@@ -143,6 +144,8 @@ static void think_seeker( Weapon* w, const double dt )
    
       diff = angle_diff(w->solid->dir,
             vect_angle(&w->solid->pos, &p->solid->pos));
+      /*diff = angle_diff( w->solid->dir, CollidePath( &w->solid->pos, &w->solid->vel,
+               &p->solid->pos, &p->solid->vel, 0.01 ));*/
       w->solid->dir_vel = 10 * diff *  w->outfit->u.amm.turn; /* face the target */
       if (w->solid->dir_vel > w->outfit->u.amm.turn)
          w->solid->dir_vel = w->outfit->u.amm.turn;
@@ -150,13 +153,15 @@ static void think_seeker( Weapon* w, const double dt )
          w->solid->dir_vel = -w->outfit->u.amm.turn;
    }
 
-   vect_pset( &w->solid->force, w->outfit->u.amm.thrust, w->solid->dir );
-
-   limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );
+   /* Limit speed here */
+   vel = MIN(w->outfit->u.amm.speed, VMOD(w->solid->vel) + w->outfit->u.amm.thrust*dt);
+   vect_pset( &w->solid->vel, vel, w->solid->dir );
+   /*limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );*/
 }
 /*
  * smart seeker brain, much better at homing
  */
+#if 0
 static void think_smart( Weapon* w, const double dt )
 {
    Vector2d sv, tv;
@@ -186,10 +191,11 @@ static void think_smart( Weapon* w, const double dt )
       else if (w->solid->dir_vel < -w->outfit->u.amm.turn)
          w->solid->dir_vel = -w->outfit->u.amm.turn;
    }
-   vect_pset( &w->solid->force, w->outfit->u.amm.thrust, w->solid->dir );
+   vect_pset( &w->solid->vel, w->outfit->u.amm.speed, w->solid->dir );
 
    limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );
 }
+#endif
 
 
 /*
@@ -448,10 +454,11 @@ static Weapon* weapon_create( const Outfit* outfit,
             pilot_target->lockons++;
 
          /* only diff is AI */
-         if (outfit->type == OUTFIT_TYPE_MISSILE_SEEK_AMMO)
+         w->think = think_seeker; /* AI is the same atm. */
+         /*if (outfit->type == OUTFIT_TYPE_MISSILE_SEEK_AMMO)
             w->think = think_seeker;
          else if (outfit->type == OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO)
-            w->think = think_smart;
+            w->think = think_smart;*/
          break;
 
 

@@ -177,7 +177,7 @@
 <duration>5</duration>
 <lockon>1</lockon>
 <thrust>1600</thrust>
-<turn>200</turn>
+<turn>60</turn>
 <speed>800</speed>
 <damage type="kinetic">20</damage>
 </specific>
@@ -212,8 +212,8 @@
 <duration>7</duration>
 <lockon>0.5</lockon>
 <thrust>1300</thrust>
-<turn>200</turn>
-<speed>650</speed>
+<turn>90</turn>
+<speed>550</speed>
 <damage type="kinetic">20</damage>
 </specific>
 </outfit>
