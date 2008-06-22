@@ -51,6 +51,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
+static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent );
 
 
 /*
@@ -245,6 +246,15 @@ int outfit_isMap( const Outfit* o )
 
 
 /*
+ * Returns 1 if o is a jammer.
+ */
+int outfit_isJammer( const Outfit* o )
+{
+   return (o->type==OUTFIT_TYPE_JAMMER);
+}
+
+
+/*
  * gets the outfit's gfx
  */
 glTexture* outfit_gfx( const Outfit* o )
@@ -332,7 +342,8 @@ const char* outfit_typename[] = {
       "Smart Swarm Missile Ammunition Pack",
       "Ship Modification",
       "Afterburner",
-      "Map"
+      "Map",
+      "Jammer"
 };
 const char* outfit_getType( const Outfit* o )
 {
@@ -350,7 +361,8 @@ const char* outfit_typenamebroad[] = { "NULL",
       "Turret",
       "Modification",
       "Afterburner",
-      "Map"
+      "Map",
+      "Jammer"
 };
 const char* outfit_getTypeBroad( const Outfit* o )
 {
@@ -362,6 +374,7 @@ const char* outfit_getTypeBroad( const Outfit* o )
    else if (outfit_isMod(o)) i = 5;
    else if (outfit_isAfterburner(o)) i = 6;
    else if (outfit_isMap(o)) i = 7;
+   else if (outfit_isJammer(o)) i = 8;
 
    return outfit_typenamebroad[i];
 }
@@ -406,6 +419,7 @@ static OutfitType outfit_strToOutfitType( char *buf )
    O_CMP("modification",OUTFIT_TYPE_MODIFCATION);
    O_CMP("afterburner",OUTFIT_TYPE_AFTERBURNER);
    O_CMP("map",OUTFIT_TYPE_MAP);
+   O_CMP("jammer",OUTFIT_TYPE_JAMMER);
 
    WARN("Invalid outfit type: '%s'",buf);
    return  OUTFIT_TYPE_NULL;
@@ -421,14 +435,16 @@ static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node )
    char *buf;
 
    if (xml_isNode(node,"damage")) {
-   xmlr_attr(node,"type",buf);
-   (*dtype) = outfit_strToDamageType(buf);
-   if (buf) free(buf);
-   (*dmg) = xml_getFloat(node);
-
+      /* Get type */
+      xmlr_attr(node,"type",buf);
+      (*dtype) = outfit_strToDamageType(buf);
+      if (buf) free(buf);
+      /* Get damage */
+      (*dmg) = xml_getFloat(node);
       return 0;
    }
 
+   /* Unknown type */
    (*dtype) = DAMAGE_TYPE_NULL;
    (*dmg) = 0;
    WARN("Trying to parse non-damage node as damage node!");
@@ -612,9 +628,35 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    node = parent->children;
 
    do {
-      if (xml_isNode(node,"radius"))
-         temp->u.map.radius = xml_getInt(node);
+      xmlr_int(node,"radius",temp->u.map.radius);
    } while (xml_nextNode(node));
+
+   if (temp->u.map.radius==0)
+      WARN("Outfit '%s' missing/invalid 'radius' element", temp->name);
+}
+
+
+/*
+ * Parses the jammer tidbits of the outfit
+ */
+static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
+{
+   xmlNodePtr node;
+   node = parent->children;
+
+   do {
+      xmlr_float(node,"range",temp->u.jam.range);
+      xmlr_float(node,"chance",temp->u.jam.chance);
+      xmlr_float(node,"energy",temp->u.jam.energy);
+   } while (xml_nextNode(node));
+
+   temp->u.jam.chance /= 100.; /* Put in per one, instead of percent */
+
+#define MELEMENT(o,s) \
+if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
+   MELEMENT(temp->u.jam.range==0.,"range");
+   MELEMENT(temp->u.jam.chance==0.,"chance");
+#undef MELEMENT
 }
 
 
@@ -682,6 +724,8 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
             outfit_parseSAfterburner( temp, node );
          else if (outfit_isMap(temp))
             outfit_parseSMap( temp, node );
+         else if (outfit_isJammer(temp))
+            outfit_parseSJammer( temp, node );
       }
    } while (xml_nextNode(node));
 

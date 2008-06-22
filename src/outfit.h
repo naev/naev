@@ -42,6 +42,7 @@ typedef enum OutfitType_ {
    OUTFIT_TYPE_MODIFCATION,
    OUTFIT_TYPE_AFTERBURNER,
    OUTFIT_TYPE_MAP,
+   OUTFIT_TYPE_JAMMER,
    OUTFIT_TYPE_SENTINEL /* indicates last type */
 } OutfitType;
 
@@ -138,6 +139,11 @@ typedef struct Outfit_ {
       struct { /* map */
          double radius; /* amount of systems to add */
       } map;
+      struct { /* jammer */
+         double range; /* Range it starts to do effect */
+         double chance; /* Chance of it nullifying the missile */
+         double energy; /* Energy it uses to run */
+      } jam;
    } u;
 } Outfit;
 
@@ -162,6 +168,7 @@ int outfit_isTurret( const Outfit* o );
 int outfit_isMod( const Outfit* o );
 int outfit_isAfterburner( const Outfit* o );
 int outfit_isMap( const Outfit* o );
+int outfit_isJammer( const Outfit* o );
 const char* outfit_getType( const Outfit* o );
 const char* outfit_getTypeBroad( const Outfit* o );
 
