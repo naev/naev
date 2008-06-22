@@ -25,6 +25,7 @@
 #define CALLOC_ONE(type)   (calloc(1,sizeof(type)))
 
 #define ABS(x)             (((x)<0)?-(x):(x))
+#define FABS(x)            (((x)<0.)?-(x):(x))
 
 #define MAX(x,y)           (((x)>(y))?(x):(y))
 #define MIN(x,y)           (((x)>(y))?(y):(x))
