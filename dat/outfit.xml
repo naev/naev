@@ -176,7 +176,7 @@
 <spfx>ExpM</spfx>
 <duration>5</duration>
 <lockon>1</lockon>
-<thrust>1600</thrust>
+<thrust>400</thrust>
 <turn>60</turn>
 <speed>800</speed>
 <damage type="kinetic">20</damage>
@@ -212,7 +212,7 @@
 <duration>7</duration>
 <lockon>0.5</lockon>
 <resist>5</resist>
-<thrust>1300</thrust>
+<thrust>325</thrust>
 <turn>90</turn>
 <speed>550</speed>
 <damage type="kinetic">20</damage>
