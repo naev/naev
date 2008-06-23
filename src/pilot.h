@@ -92,7 +92,7 @@ typedef struct Pilot_ {
    char* name; /* pilot's name (if unique) */
    char* title; /* title - usually indicating special properties - TODO use */
 
-   int faction;
+   int faction; /* Pilot's faction. */
 
    /* object caracteristics */
    Ship* ship; /* ship pilot is flying */

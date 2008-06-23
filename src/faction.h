@@ -7,6 +7,9 @@
 #  define FACTION_H
 
 
+#include "colour.h"
+
+
 #define FACTION_PLAYER  0
 
 
@@ -19,6 +22,7 @@ char* faction_longname( int f );
 void faction_modPlayer( int f, int mod );
 int faction_getPlayer( int f );
 char* faction_getStanding( int mod );
+glColour* faction_getColour( int f );
 
 /* works with only factions */
 int areEnemies( int a, int b );

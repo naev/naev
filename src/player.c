@@ -651,8 +651,7 @@ void player_renderBG (void)
    if (planet_target >= 0) {
       planet = &cur_system->planets[planet_target];
 
-      if (areEnemies(player->faction,planet->faction)) c = &cHostile;
-      else c = &cNeutral;
+      c = faction_getColour(planet->faction);
 
       x = planet->pos.x - planet->gfx_space->sw/2.;
       y = planet->pos.y + planet->gfx_space->sh/2.;
@@ -688,7 +687,7 @@ void player_render (void)
       else { /* still is a pilot_target */
          if (pilot_isDisabled(p)) c = &cInert;
          else if (pilot_isFlag(p,PILOT_HOSTILE)) c = &cHostile;
-         else c = &cNeutral;
+         else c = faction_getColour(p->faction);
 
          x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.;
          y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2.;
@@ -1041,6 +1040,7 @@ static void gui_renderPilot( const Pilot* p )
 {
    int x, y, sx, sy;
    double w, h;
+   glColour *col;
 
    x = (p->solid->pos.x - player->solid->pos.x) / gui.radar.res;
    y = (p->solid->pos.y - player->solid->pos.y) / gui.radar.res;
@@ -1066,10 +1066,11 @@ static void gui_renderPilot( const Pilot* p )
 
    glBegin(GL_QUADS);
       /* colors */
-      if (p->id == player_target) COLOUR(cRadar_targ);
-      else if (pilot_isDisabled(p)) COLOUR(cInert);
-      else if (pilot_isFlag(p,PILOT_HOSTILE)) COLOUR(cHostile);
-      else COLOUR(cNeutral);
+      if (p->id == player_target) col = &cRadar_targ;
+      else if (pilot_isDisabled(p)) col = &cInert;
+      else if (pilot_isFlag(p,PILOT_HOSTILE)) col = &cHostile;
+      else col = faction_getColour(p->faction);
+      COLOUR(*col);
 
       /* image */
       glVertex2d( MAX(x-sx,-w), MIN(y+sy, h) ); /* top-left */

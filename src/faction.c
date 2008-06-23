@@ -15,6 +15,7 @@
 #include "log.h"
 #include "pack.h"
 #include "rng.h"
+#include "colour.h"
 
 
 #define XML_FACTION_ID     "Factions"   /* XML section identifier */
@@ -158,6 +159,18 @@ int faction_getPlayer( int f )
       DEBUG("%d is an invalid faction", f);
       return -1000;
    }
+}
+
+
+/*
+ * Gets the colour of the faction based on it's standing with the player.
+ */
+glColour* faction_getColour( int f )
+{
+   if (f==-1) return &cInert;
+   else if (areAllies(FACTION_PLAYER,f)) return &cFriend;
+   else if (areEnemies(FACTION_PLAYER,f)) return &cHostile;
+   else return &cNeutral;
 }
 
 
