@@ -42,9 +42,9 @@ function create()
       misn.setDesc( string.format(misn_desc[1], misn_target, space.getSystem(misn_target) ))
 
       tk.msg( title[1], string.format(text[2], misn_target) )
-      tk.msg( title[1], text[3] )
+      tk.msg( title[1], string.format(text[3], misn_target, space.getSystem(misn_target)) )
 
-      hook.enter("enter")
+      hook.land("land")
    end
 end
 
@@ -52,8 +52,8 @@ function land()
    planet = space.landName()
 
    -- First mission part is landing on the planet
-   if misn_stage == 0 and planet == misn_targt then
-      tk.msg( title[1], text[4] )
+   if misn_stage == 0 and planet == misn_target then
+      tk.msg( title[1], string.format(text[4], misn_target) )
       misn_stage = 1
       misn.setMarker(space.getSystem(misn_base))
 
