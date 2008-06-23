@@ -549,6 +549,9 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          outfit_parseDamage( &temp->u.amm.dtype, &temp->u.amm.damage, node );
    } while (xml_nextNode(node));
 
+   /* Post-processing */
+   temp->u.amm.resist /= 100.; /* Set it in per one */
+
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->u.amm.gfx_space==NULL,"gfx");
