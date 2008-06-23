@@ -360,7 +360,8 @@ static void map_render( double bx, double by, double w, double h )
 
       /* system colours */
       if (sys==cur_system) COLOUR(cRadar_targ);
-      else if (!sys_isKnown(sys) || (sys->nplanets==0)) COLOUR(cInert);
+      else if (!sys_isKnown(sys) || (sys->nplanets==0) || (sys->faction==-1))
+         COLOUR(cInert);
       else if (areEnemies(player->faction, sys->faction)) COLOUR(cRed);
       else COLOUR(cYellow);
 
