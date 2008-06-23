@@ -24,7 +24,8 @@ function attack ()
 	second = ai.secondary() -- get best secondary weapon
 
    -- Shoot missiles if in range
-	if ai.secondary() == "Launcher" and dist < ai.getweaprange(1) then
+	if ai.secondary() == "Launcher" and
+         dist < ai.getweaprange(1) and dir < 30 then -- more lenient with aiming
 		ai.settarget(target)
 		ai.shoot(2)
 	end
