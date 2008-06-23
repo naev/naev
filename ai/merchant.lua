@@ -94,12 +94,3 @@ function land ()
       ai.pushtask(0,"hyperspace")
    end
 end
-
--- goes hyperspace
-function hyperspace ()
-   dir = ai.face(-1) -- face away from (0,0)
-   if (dir < 10) then
-      ai.accel()
-   end
-end
-

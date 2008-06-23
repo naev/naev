@@ -7,13 +7,22 @@ control_rate = 2
 function control ()
    task = ai.taskname()
 
+   if task == "hyperspace" then
+      ai.hyperspace() -- Try to hyperspace
+
    -- running pirate has healed up some
-   if task == "runaway" then
+   elseif task == "runaway" then
       if ai.parmour() == 100 then
          -- "attack" should be running after "runaway"
          ai.poptask()
       elseif ai.dist( ai.pos( ai.targetid() ) ) > 300 then
          ai.hyperspace()
+      end
+
+   -- Hurt pilot wants to run away
+   elseif task == "attack" then
+      if ai.parmour() < 80 then
+         ai.pushtask(0, "runaway", ai.targetid())
       end
 
    -- nothing to do
@@ -24,7 +33,7 @@ function control ()
       if ai.parmour() == 100 and enemy ~= 0 then
 
          -- taunts!
-         num = rnd.int(0,4)
+         num = rnd.int(0,5)
          if num == 0 then msg = "Prepare to be boarded!"
          elseif num == 1 then msg = "Yohoho!"
          elseif num == 2 then msg = "What's a ship like you doing in a place like this?"
@@ -40,7 +49,7 @@ function control ()
 
       -- nothing to attack
       else
-         ai.pushtask(0, "fly")
+         ai.pushtask(0, "hyperspace")
       end
    end
 end
