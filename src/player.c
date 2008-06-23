@@ -720,16 +720,19 @@ void player_renderGUI (void)
    double x, y;
    char str[10];
    Pilot* p;
-   glColour* c;
+   glColour* c, c2;
    glFont* f;
    StarSystem *sys;
+   unsigned int t;
+
+   t = SDL_GetTicks();
 
       /* pilot is dead or being created, just render him and stop */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
         pilot_isFlag(player,PILOT_DEAD)) {
       if (player_isFlag(PLAYER_DESTROYED)) {
          if (!toolkit && !player_isFlag(PLAYER_CREATING) &&
-               (SDL_GetTicks() > player_timer)) {
+               (t > player_timer)) {
             menu_death();
          }
       }
@@ -995,12 +998,19 @@ void player_renderGUI (void)
     */
    x = gui.mesg.x;
    y = gui.mesg.y + (double)(gl_defFont.h*mesg_max)*1.2;
+   c2.r = c2.g = c2.b = 1.;
    for (i=0; i<mesg_max; i++) {
       y -= (double)gl_defFont.h*1.2;
       if (mesg_stack[mesg_max-i-1].str[0]!='\0') {
-         if (mesg_stack[mesg_max-i-1].t < SDL_GetTicks())
+         if (mesg_stack[mesg_max-i-1].t < t)
             mesg_stack[mesg_max-i-1].str[0] = '\0';
-         else gl_print( NULL, x, y, NULL, "%s", mesg_stack[mesg_max-i-1].str );
+         else {
+            if (mesg_stack[mesg_max-i-1].t - mesg_timeout/2 < t)
+               c2.a = (double)(mesg_stack[mesg_max-i-1].t - t) / (double)(mesg_timeout/2);
+            else
+               c2.a = 1.;
+            gl_print( NULL, x, y, &c2, "%s", mesg_stack[mesg_max-i-1].str );
+         }
       }
    }
 
@@ -1010,7 +1020,7 @@ void player_renderGUI (void)
     */
    if (pilot_isFlag(player, PILOT_HYPERSPACE) && !paused) {
       i = (int)player->ptimer - HYPERSPACE_FADEOUT;
-      j = (int)SDL_GetTicks();
+      j = (int)t;
       if (i < j) {
          x = (double)(j-i) / HYPERSPACE_FADEOUT;
          glColor4d(1.,1.,1., x );
