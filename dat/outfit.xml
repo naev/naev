@@ -441,4 +441,19 @@
 <energy>3</energy>
 </specific>
 </outfit>
+<outfit name="Milspec Jammer">
+<general>
+<max>1</max>
+<tech>13</tech>
+<mass>3</mass>
+<price>250000</price>
+<description>This jammer follows the much stricter military specifications, allowing it to deflect a much greater amount of missiles at more range then the civilian counterpart.  The downside is that the energy requirements are much greater.</description>
+<gfx_store>jammer1</gfx_store>
+</general>
+<specific type="jammer">
+<range>600</range>
+<chance>40</chance>
+<energy>10</energy>
+</specific>
+</outfit>
 </Outfits>
