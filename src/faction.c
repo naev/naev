@@ -14,6 +14,7 @@
 #include "naev.h"
 #include "log.h"
 #include "pack.h"
+#include "rng.h"
 
 
 #define XML_FACTION_ID     "Factions"   /* XML section identifier */
@@ -50,6 +51,7 @@ static int faction_nstack = 0;
  */
 /* static */
 static int faction_isFaction( int f );
+static void faction_sanitizePlayer( Faction* faction );
 static Faction* faction_parse( xmlNodePtr parent );
 static void faction_parseSocial( xmlNodePtr parent );
 /* externed */
@@ -95,31 +97,65 @@ char* faction_longname( int f )
 
 
 /*
- * modifies the player's standing with a faction
+ * Sanitizes player faction standing.
+ */
+static void faction_sanitizePlayer( Faction* faction )
+{
+   if (faction->player > 100)
+      faction->player = 100;
+   else if (faction->player < -100)
+      faction->player = -100;
+}
+
+
+/*
+ * Modifies the player's standing with a faction.
  */
 void faction_modPlayer( int f, int mod )
 {
-   if (faction_isFaction(f)) {
-      faction_stack[f].player += mod;
+   int i;
+   Faction *faction, *ally, *enemy;
 
-      /* Sanitize */
-      if (faction_stack[f].player > 100)
-         faction_stack[f].player = 100;
-      else if (faction_stack[f].player < -100)
-         faction_stack[f].player = -100;
+   if (faction_isFaction(f)) {
+      faction = &faction_stack[f];
+
+      /* Faction in question gets direct increment. */
+      faction->player += mod;
+      faction_sanitizePlayer(faction);
+
+      /* Now mod allies to a lesser degree */
+      for (i=0; i<faction->nallies; i++) {
+         ally = &faction_stack[faction->allies[i]];
+
+         ally->player += RNG(0,mod/2);
+         faction_sanitizePlayer(ally);
+      }
+
+      /* Now mod enemies */
+      for (i=0; i<faction->nenemies; i++) {
+         enemy = &faction_stack[faction->enemies[i]];
+
+         enemy->player -= RNG(0,mod/2);
+         faction_sanitizePlayer(enemy);
+      }
    }
    else {
-      DEBUG("%d is an invalid faction/alliance", f);
+      DEBUG("%d is an invalid faction", f);
       return;
    }
 }
+
+
+/*
+ * Gets the player's standing with a faction.
+ */
 int faction_getPlayer( int f )
 {
    if (faction_isFaction(f)) {
       return faction_stack[f].player;
    }    
    else {
-      DEBUG("%d is an invalid faction/alliance", f);
+      DEBUG("%d is an invalid faction", f);
       return -1000;
    }
 }
@@ -173,7 +209,7 @@ int areEnemies( int a, int b)
          else return 0;
       }
       else {
-         DEBUG("areEnemies: %d is an invalid faction/alliance", b);
+         DEBUG("areEnemies: %d is an invalid faction", b);
          return 0;
       }
    }
@@ -184,7 +220,7 @@ int areEnemies( int a, int b)
          else return 0;
       }
       else {
-         DEBUG("areEnemies: %d is an invalid faction/alliance", a);
+         DEBUG("areEnemies: %d is an invalid faction", a);
          return 0;
       }
    }
@@ -193,14 +229,14 @@ int areEnemies( int a, int b)
    /* handle a */
    if (faction_isFaction(a)) fa = &faction_stack[a];
    else { /* a isn't valid */
-      DEBUG("areEnemies: %d is an invalid faction/alliance", a);
+      DEBUG("areEnemies: %d is an invalid faction", a);
       return 0;
    }
 
    /* handle b */
    if (faction_isFaction(b)) fb = &faction_stack[b];
    else { /* b is invalid */
-      DEBUG("areEnemies: %d is an invalid faction/alliance", b);
+      DEBUG("areEnemies: %d is an invalid faction", b);
       return 0;
    }
 
@@ -234,7 +270,7 @@ int areAllies( int a, int b )
          else return 0;
       }
       else {
-         DEBUG("%d is an invalid faction/alliance", b);
+         DEBUG("%d is an invalid faction", b);
          return 0;
       }
    }
@@ -244,7 +280,7 @@ int areAllies( int a, int b )
          else return 0;
       }    
       else {
-         DEBUG("%d is an invalid faction/alliance", a);
+         DEBUG("%d is an invalid faction", a);
          return 0;
       }
    }
@@ -256,14 +292,14 @@ int areAllies( int a, int b )
    /* handle a */
    if (faction_isFaction(a)) fa = &faction_stack[a];
    else { /* a isn't valid */
-      DEBUG("%d is an invalid faction/alliance", a);
+      DEBUG("%d is an invalid faction", a);
       return 0;
    }
 
    /* handle b */
    if (faction_isFaction(b)) fb = &faction_stack[b];
    else { /* b is invalid */
-      DEBUG("%d is an invalid faction/alliance", b);
+      DEBUG("%d is an invalid faction", b);
       return 0;
    }
 
@@ -324,6 +360,9 @@ static Faction* faction_parse( xmlNodePtr parent )
 }
 
 
+/*
+ * Parses the social tidbits: allies and enemies.
+ */
 static void faction_parseSocial( xmlNodePtr parent )
 {
    xmlNodePtr node, cur;
