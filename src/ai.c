@@ -737,14 +737,19 @@ static int ai_cargofree( lua_State *L )
  */
 static int ai_exists( lua_State *L )
 {
+   Pilot *p;
+   int i;
    NLUA_MIN_ARGS(1);
 
    if (lua_isnumber(L,1)) {
-      lua_pushboolean(L,
-         (pilot_get((unsigned int)lua_tonumber(L,1))!=NULL)?1:0);
+      i = 1;
+      p = pilot_get((unsigned int)lua_tonumber(L,1));
+      if (p==NULL) i = 0;
+      else if (pilot_isFlag(p,PILOT_DEAD)) i = 0;
+      lua_pushboolean(L, i );
       return 1;
    }
-   return 0;
+   NLUA_INVALID_PARAMETER();
 }
 
 
