@@ -1314,8 +1314,10 @@ void pilots_clean (void)
    int i;
    for (i=0; i < pilot_nstack; i++)
       /* we'll set player at priveleged position */
-      if ((player != NULL) && (pilot_stack[i] == player))
+      if ((player != NULL) && (pilot_stack[i] == player)) {
          pilot_stack[0] = player;
+         pilot_stack[0]->lockons = 0; /* Clear lockons. */
+      }
       else /* rest get killed */
          pilot_free(pilot_stack[i]);
 
