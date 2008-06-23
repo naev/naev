@@ -136,7 +136,7 @@ void faction_modPlayer( int f, int mod )
       for (i=0; i<faction->nenemies; i++) {
          enemy = &faction_stack[faction->enemies[i]];
 
-         enemy->player -= RNG(0,mod/2);
+         enemy->player -= MIN(1,RNG(0,mod/2));
          faction_sanitizePlayer(enemy);
       }
    }
