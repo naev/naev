@@ -116,7 +116,6 @@ void faction_modPlayer( int f, int mod )
 {
    int i;
    Faction *faction, *ally, *enemy;
-   DEBUG("MOD: %d   ALLY/ENEMY MOD: %d",mod,mod/2);
 
    if (faction_isFaction(f)) {
       faction = &faction_stack[f];
