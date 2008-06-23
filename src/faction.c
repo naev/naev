@@ -116,6 +116,7 @@ void faction_modPlayer( int f, int mod )
 {
    int i;
    Faction *faction, *ally, *enemy;
+   DEBUG("MOD: %d   ALLY/ENEMY MOD: %d",mod,mod/2);
 
    if (faction_isFaction(f)) {
       faction = &faction_stack[f];
@@ -128,7 +129,7 @@ void faction_modPlayer( int f, int mod )
       for (i=0; i<faction->nallies; i++) {
          ally = &faction_stack[faction->allies[i]];
 
-         ally->player += RNG(0,mod/2);
+         ally->player += RNG(0,(mod*3)/4);
          faction_sanitizePlayer(ally);
       }
 
@@ -136,7 +137,7 @@ void faction_modPlayer( int f, int mod )
       for (i=0; i<faction->nenemies; i++) {
          enemy = &faction_stack[faction->enemies[i]];
 
-         enemy->player -= MIN(1,RNG(0,mod/2));
+         enemy->player -= MIN(1,RNG(0,(mod*3)/4));
          faction_sanitizePlayer(enemy);
       }
    }
