@@ -1562,12 +1562,17 @@ void player_land (void)
          return;
       }
       else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
-         if (!areEnemies( player->faction, planet->faction )) {              
-            player_message( "%s> Permission to land granted.", planet->name );
-            player_setFlag(PLAYER_LANDACK);
+         if (planet_hasService(planet,PLANET_SERVICE_BASIC)) { /* Basic services */
+            if (!areEnemies( player->faction, planet->faction )) { /* Friendly */
+               player_message( "%s> Permission to land granted.", planet->name );
+               player_setFlag(PLAYER_LANDACK);
+            }
+            else /* Hostile */
+               player_message( "%s> Land request denied.", planet->name );
          }
-         else {
-            player_message( "%s> Land request denied.", planet->name );
+         else { /* No shoes, no shirt, no lifeforms, no service. */
+            player_message( "Ready to land on %s.", planet->name );
+            player_setFlag(PLAYER_LANDACK);
          }
          return;
       }

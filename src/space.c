@@ -121,14 +121,19 @@ void planets_minimap( const double res, const double w,
    int i;
    int cx, cy, x, y, r, rc;
    double p;
+   Planet *planet;
 
    if (shape==RADAR_CIRCLE) rc = (int)(w*w);
 
    glBegin(GL_POINTS);
    for (i=0; i<cur_system->nplanets; i++) {
-      if (areEnemies(player->faction, cur_system->planets[i].faction))
+      planet = &cur_system->planets[i];
+
+      if ((planet->faction == -1) && !planet_hasService(planet,PLANET_SERVICE_BASIC))
+         COLOUR(cInert);
+      else if (areEnemies(player->faction, planet->faction))
          COLOUR(cHostile);
-      else if (areAllies(player->faction, cur_system->planets[i].faction))
+      else if (areAllies(player->faction, planet->faction))
          COLOUR(cFriend);
       else COLOUR(cNeutral);
 
@@ -557,6 +562,7 @@ static Planet* planet_pull( const char* name )
          tstr = xml_nodeProp(node,"name");
          if (strcmp(tstr,name)==0) { /* found */
             temp = CALLOC_ONE(Planet);
+            temp->faction = -1; /* No faction */
             temp->name = tstr;
 
             node = node->xmlChildrenNode;
