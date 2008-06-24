@@ -175,7 +175,11 @@ int main ( int argc, char** argv )
    if (ai_init()) WARN("Error initializing AI");
 
    /* Misc graphics init */
-   nebu_init(); /* Initializes the nebulae */
+   if (nebu_init() != 0) { /* Initializes the nebulae */
+      /* An error has happened */
+      ERR("Unable to initialize the Nebulae subsystem!");
+      /* Weirdness will occur... */
+   }
    gl_fontInit( NULL, NULL, FONT_SIZE ); /* initializes default font to size */
    gl_fontInit( &gl_smallFont, NULL, FONT_SIZE_SMALL ); /* small font */
    gui_init(); /* initializes the GUI graphics */

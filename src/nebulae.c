@@ -64,9 +64,9 @@ static int nebu_npuffs = 0;
  */
 static int nebu_checkCompat( const char* file );
 static void nebu_loadTexture( SDL_Surface *sur, int w, int h, GLuint tex );
-static void nebu_generate (void);
+static int nebu_generate (void);
 static void nebu_generatePuffs (void);
-static void saveNebulae( float *map, const uint32_t w, const uint32_t h, const char* file );
+static int saveNebulae( float *map, const uint32_t w, const uint32_t h, const char* file );
 static SDL_Surface* loadNebulae( const char* file );
 static SDL_Surface* nebu_surfaceFromNebulaeMap( float* map, const int w, const int h );
 
@@ -74,11 +74,12 @@ static SDL_Surface* nebu_surfaceFromNebulaeMap( float* map, const int w, const i
 /*
  * Initializes the nebulae.
  */
-void nebu_init (void)
+int nebu_init (void)
 {
    int i;
    char nebu_file[PATH_MAX];
    SDL_Surface* nebu_sur;
+   int ret;
 
    /* Special code to regenerate the nebulae */
    if ((nebu_w == -9) && (nebu_h == -9))
@@ -101,9 +102,11 @@ void nebu_init (void)
          LOG("No nebulae found, generating (this may take a while).");
 
          /* So we generate and reload */
-         nebu_generate();
-         nebu_init();
-         return;
+         ret = nebu_generate();
+         if (ret != 0) /* An error has happened - break recursivity*/
+            return ret;
+
+         return nebu_init();
       }
 
       /* Load the file */
@@ -117,6 +120,7 @@ void nebu_init (void)
    }
 
    DEBUG("Loaded %d Nebulae Layers", NEBULAE_Z);
+   return 0;
 }
 
 
@@ -462,12 +466,13 @@ void nebu_forceGenerate (void)
 /*
  * Generates the nebulae
  */
-static void nebu_generate (void)
+static int nebu_generate (void)
 {
    int i;
    float *nebu;
    char nebu_file[PATH_MAX];
    int w,h;
+   int ret;
 
    w = SCREEN_W;
    h = SCREEN_H;
@@ -479,11 +484,13 @@ static void nebu_generate (void)
    /* Save each nebulae as an image */
    for (i=0; i<NEBULAE_Z; i++) {
       snprintf( nebu_file, PATH_MAX, NEBULAE_PATH_BG, w, h, i );
-      saveNebulae( &nebu[ i*w*h ], w, h, nebu_file );
+      ret = saveNebulae( &nebu[ i*w*h ], w, h, nebu_file );
+      if (ret != 0) break; /* An error has happenend */
    }
 
    /* Cleanup */
    free(nebu);
+   return ret;
 }
 
 
@@ -526,20 +533,24 @@ static int nebu_checkCompat( const char* file )
 /*
  * Saves a nebulae.
  */
-static void saveNebulae( float *map, const uint32_t w, const uint32_t h, const char* file )
+static int saveNebulae( float *map, const uint32_t w, const uint32_t h, const char* file )
 {
    char file_path[PATH_MAX];
    SDL_Surface* sur;
+   int ret;
 
    /* fix surface */
    sur = nebu_surfaceFromNebulaeMap( map, w, h );
 
    /* save */
+   ret = 0;
    snprintf(file_path, PATH_MAX, "%s%s", nfile_basePath(), file );
-   SDL_SavePNG( sur, file_path );
+   ret = SDL_SavePNG( sur, file_path );
 
    /* cleanup */
    SDL_FreeSurface( sur );
+
+   return ret;
 }
 
 

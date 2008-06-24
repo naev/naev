@@ -10,7 +10,7 @@
 /*
  * Init/Exit
  */
-void nebu_init (void);
+int nebu_init (void);
 void nebu_exit (void);
 
 /*
