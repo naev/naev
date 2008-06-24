@@ -6,12 +6,24 @@ control_rate = 2
 -- Required "control" function
 function control ()
    task = ai.taskname()
-   if task == "hyperspace" then
+   enemy = ai.getenemy()
+
+   -- Runaway if enemy is near
+   if task ~= "runaway" and enemy ~= nil and ai.dist(enemy) < 500 then
+      ai.poptask()
+      ai.pushtask(0,"runaway",enemy)
+
+   -- Enter hyperspace if possible
+   elseif task == "hyperspace" then
       ai.hyperspace() -- try to hyperspace
+
+   -- Try to jump when far enough away
    elseif task == "runaway" then
-      if ai.dist( ai.pos( ai.targetid() ) ) > 300 then
+      if ai.dist( ai.pos( ai.targetid() ) ) > 400 then
          ai.hyperspace()
       end
+
+   -- Find something to do
    elseif task == "none" then
       planet = ai.landplanet()
       -- planet must exist
@@ -81,7 +93,7 @@ function stop ()
    if ai.isstopped() then
       ai.stop()
       ai.poptask()
-      ai.settimer(0, rnd.int(8000,15000))
+      ai.settimer(0, rnd.int(8000,15000)) -- We wait duringa while
       ai.pushtask(0,"land")
    else
       ai.brake()

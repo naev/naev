@@ -657,6 +657,7 @@ static int ai_getdistance( lua_State *L )
 {
    Vector2d *vect;
    Pilot *pilot;
+   unsigned int n;
 
    NLUA_MIN_ARGS(1);
 
@@ -666,15 +667,18 @@ static int ai_getdistance( lua_State *L )
    
    /* pilot id as parameter */
    else if (lua_isnumber(L,1)) {
+      n = (unsigned int) lua_tonumber(L,1);
       pilot = pilot_get( (unsigned int) lua_tonumber(L,1) );
+      if (pilot==NULL) { 
+         NLUA_DEBUG("Pilot '%d' not found in stack", n );
+         return 0;
+      }
       vect = &pilot->solid->pos;
    }
    
    /* wrong parameter */
-   else {
+   else
       NLUA_INVALID_PARAMETER();
-      return 0;
-   }
 
    lua_pushnumber(L, vect_dist(vect, &cur_pilot->solid->pos));
    return 1;
@@ -1127,7 +1131,14 @@ static int ai_shoot( lua_State *L )
  */
 static int ai_getenemy( lua_State *L )
 {
-   lua_pushnumber(L,pilot_getNearestEnemy(cur_pilot));
+   unsigned int p;
+
+   p = pilot_getNearestEnemy(cur_pilot);
+
+   if (p==0) /* No enemy found */
+      return 0;
+
+   lua_pushnumber(L,p);
    return 1;
 }
 
