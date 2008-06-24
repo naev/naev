@@ -375,22 +375,22 @@ void ship_view( char* shipname )
    window_addText( wid, 20, -40, VIEW_WIDTH, h,
          0, "txtLabel", &gl_smallFont, &cDConsole, buf );
    snprintf( buf, 1024,
-         "%s\n"
-         "%s\n"
-         "%d\n"
-         "%d Tons\n"
+         "%s\n" /* Name */
+         "%s\n" /* Class */
+         "%d\n" /* Crew */
+         "%d Tons\n" /* Mass */
          "\n"
-         "%.2f MN\n"
-         "%.2f M/s\n"
-         "%.2f Grad/s\n"
+         "%.2f MN/ton\n" /* Thrust */
+         "%.2f M/s\n" /* Speed */
+         "%.2f Grad/s\n" /* Turn */
          "\n"
-         "%.2f MJ (%.2f MJ/s)\n"
-         "%.2f MJ (%.2f MJ/s)\n"
-         "%.2f MJ (%.2f MJ/s)\n"
+         "%.2f MJ (%.2f MJ/s)\n" /* Shield */
+         "%.2f MJ (%.2f MJ/s)\n" /* Armour */
+         "%.2f MJ (%.2f MJ/s)\n" /* Energy */
          "\n"
-         "%d Tons\n"
-         "%d Tons\n"
-         "%d Units\n"
+         "%d Tons\n" /* Weapon */
+         "%d Tons\n" /* Cargo */
+         "%d Units\n" /* Fuel */
          , s->name, ship_class(s), s->crew, s->mass,
          s->thrust/s->mass, s->speed, s->turn,
          s->shield, s->shield_regen, s->armour, s->armour_regen,
