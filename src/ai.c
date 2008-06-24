@@ -743,7 +743,6 @@ static int ai_exists( lua_State *L )
 {
    Pilot *p;
    int i;
-   NLUA_MIN_ARGS(1);
 
    if (lua_isnumber(L,1)) {
       i = 1;
@@ -753,7 +752,10 @@ static int ai_exists( lua_State *L )
       lua_pushboolean(L, i );
       return 1;
    }
-   NLUA_INVALID_PARAMETER();
+
+   /* Default to false for everything that isn't a pilot */
+   lua_pushboolean(L, 0);
+   return 0;
 }
 
 
