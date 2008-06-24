@@ -433,6 +433,7 @@ void space_update( const double dt )
  */
 static void space_addFleet( Fleet* fleet )
 {
+   FleetPilot *plt;
    int i;
    double a;
    Vector2d vv,vp, vn;
@@ -443,18 +444,19 @@ static void space_addFleet( Fleet* fleet )
    vectnull(&vn);
 
    for (i=0; i < fleet->npilots; i++)
-      if (RNG(0,100) <= fleet->pilots[i].chance) {
+      plt = &fleet->pilots[i];
+      if (RNG(0,100) <= plt->chance) {
          /* other ships in the fleet should start split up */
          vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
                RNG(75,150) * (RNG(0,1) ? 1 : -1));
 
          a = vect_angle(&vp,&vn);
-         vect_pset( &vv, fleet->pilots[i].ship->speed * 2., a );
+         vect_pset( &vv, plt->ship->speed * 2., a );
 
-         pilot_create( fleet->pilots[i].ship,
-               fleet->pilots[i].name,
+         pilot_create( plt->ship,
+               plt->name,
                fleet->faction,
-               fleet->ai,
+               (plt->ai != NULL) ? plt->ai : fleet->ai, /* Pilot AI override */
                a,
                &vp,
                &vv,

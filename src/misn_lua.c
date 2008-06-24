@@ -842,6 +842,7 @@ static int pilot_addFleet( lua_State *L )
    unsigned int p;
    double a;
    Vector2d vv,vp, vn;
+   FleetPilot *plt;
 
    /* Parse first argument - Fleet Name */
    if (lua_isstring(L,1)) fltname = (char*) lua_tostring(L,1);
@@ -868,7 +869,9 @@ static int pilot_addFleet( lua_State *L )
    lua_newtable(L);
    for (i=0; i<flt->npilots; i++) {
 
-      if (RNG(0,100) <= flt->pilots[i].chance) {
+      plt = &flt->pilots[i];
+
+      if (RNG(0,100) <= plt->chance) {
 
          /* fleet displacement */
          vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
@@ -876,12 +879,13 @@ static int pilot_addFleet( lua_State *L )
 
          a = vect_angle(&vp,&vn);
          vectnull(&vv);
-         p = pilot_create( flt->pilots[i].ship,
-               flt->pilots[i].name,
+         p = pilot_create( plt->ship,
+               plt->name,
                flt->faction,
-               (fltai != NULL) ? /* AI Override */
+               (fltai != NULL) ? /* Lua AI Override */
                      ai_getProfile(fltai) : 
-                     flt->ai,
+                     (plt->ai != NULL) ? /* Pilot AI Override */
+                        plt->ai : flt->ai,
                a,
                &vp,
                &vv,

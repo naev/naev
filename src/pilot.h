@@ -153,6 +153,7 @@ typedef struct FleetPilot_ {
    Ship* ship; /* ship the pilot is flying */
    char* name; /* used if they have a special name like uniques */
    int chance; /* chance of this pilot appearing in the leet */
+   AI_Profile* ai; /* ai different of fleet's global ai */
 } FleetPilot;
 typedef struct Fleet_ {
    char* name; /* fleet name, used as the identifier */

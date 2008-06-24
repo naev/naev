@@ -1399,31 +1399,41 @@ static Fleet* fleet_parse( const xmlNodePtr parent )
    if (temp->name == NULL) WARN("Fleet in "FLEET_DATA" has invalid or no name");
 
    do { /* load all the data */
-      if (strcmp((char*)node->name,"faction")==0)
-         temp->faction = faction_get((char*)node->children->content);
-      else if (strcmp((char*)node->name,"ai")==0)
-         temp->ai = ai_getProfile((char*)node->children->content);
-      else if (strcmp((char*)node->name,"pilots")==0) {
+      if (xml_isNode(node,"faction"))
+         temp->faction = faction_get(xml_get(node));
+      else if (xml_isNode(node,"ai"))
+         temp->ai = ai_getProfile(xml_get(node));
+      else if (xml_isNode(node,"pilots")) {
          cur = node->children;     
          do {
-            if (strcmp((char*)cur->name,"pilot")==0) {
+            if (xml_isNode(cur,"pilot")) {
                temp->npilots++; /* pilot count */
                pilot = MALLOC_ONE(FleetPilot);
 
-               /* name is not obligatory, will only override ship name */
-               c = (char*)xmlGetProp(cur,(xmlChar*)"name"); /* mallocs */
-               pilot->name = c; /* no need to free here though */
+               /* Check for name override */
+               xmlr_attr(cur,"name",c);
+               pilot->name = c; /* No need to free since it will have to later */
 
-               pilot->ship = ship_get((char*)cur->children->content);
+               /* Check for ai override */
+               xmlr_attr(cur,"ai",c);
+               if (c!=NULL) {
+                  pilot->ai = ai_getProfile(c);
+                  free(c);
+               }
+               else pilot->ai = NULL;
+
+               /* Load pilot's ship */
+               pilot->ship = ship_get(xml_get(cur));
                if (pilot->ship == NULL)
                   WARN("Pilot %s in Fleet %s has null ship", pilot->name, temp->name);
 
-               c = (char*)xmlGetProp(cur,(xmlChar*)"chance"); /* mallocs */
+               /* Load chance */
+               xmlr_attr(cur,"chance",c);
                pilot->chance = atoi(c);
                if (pilot->chance == 0)
                   WARN("Pilot %s in Fleet %s has 0%% chance of appearing",
                      pilot->name, temp->name );
-               if (c) free(c); /* free the external malloc */
+               if (c!=NULL) free(c); /* free the external malloc */
 
                /* memory silliness */
                temp->pilots = realloc(temp->pilots, sizeof(FleetPilot)*temp->npilots);
