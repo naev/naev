@@ -7,7 +7,7 @@ control_rate = 2
 function control ()
    task = ai.taskname()
    enemy = ai.getenemy()
-   if task ~= "attack" and enemy ~= 0 then
+   if task ~= "attack" and enemy ~= nil then
       ai.hostile(enemy)
       ai.pushtask(0, "attack", enemy)
    elseif ai.taskname() == "none" then

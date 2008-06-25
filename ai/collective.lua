@@ -7,7 +7,7 @@ function control ()
    if ai.taskname() == "none" then
       enemy = ai.getenemy()
 
-      if enemy ~= 0 then
+      if enemy ~= nil then
          -- make hostile to the enemy (mainly for player)
          ai.hostile(enemy)
          ai.pushtask(0, "attack", enemy)
