@@ -98,7 +98,7 @@
   </enemies>
  </faction>
  <faction name="Za'lek">
-  <longname>House Soromid</longname>
+  <longname>House Za'lek</longname>
   <player>0</player>
   <allies>
    <ally>Empire</ally>
