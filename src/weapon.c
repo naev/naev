@@ -469,7 +469,8 @@ static Weapon* weapon_create( const Outfit* outfit,
       case OUTFIT_TYPE_BOLT:
       case OUTFIT_TYPE_TURRET_BOLT:
          /* Only difference is the direction of fire */
-         if ((outfit->type == OUTFIT_TYPE_TURRET_BOLT) && (w->parent!=w->target)) {
+         if ((outfit->type == OUTFIT_TYPE_TURRET_BOLT) && (w->parent!=w->target) &&
+               (w->target != 0)) { /* Must have valid target */
             rdir = vect_angle(pos,&pilot_get(w->target)->solid->pos);
             rdir += RNG(-outfit->u.blt.accuracy/2.,
                   outfit->u.blt.accuracy/2.)/180.*M_PI;
