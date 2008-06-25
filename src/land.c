@@ -176,8 +176,9 @@ static void commodity_exchange_open (void)
          "Free Space:\n" );
    window_addText( secondary_wid, -20, -40, BUTTON_WIDTH/2, 60, 0,
          "txtDInfo", &gl_smallFont, &cBlack, NULL );
-   window_addText( secondary_wid, -40, -100, BUTTON_WIDTH-20,
-         BUTTON_WIDTH, 0, "txtDesc", &gl_smallFont, &cBlack, NULL );
+   window_addText( secondary_wid, -40, -120, BUTTON_WIDTH-20,
+         COMMODITY_HEIGHT-140-BUTTON_HEIGHT, 0,
+         "txtDesc", &gl_smallFont, &cBlack, NULL );
 
    /* goods list */
    goods = malloc(sizeof(char*) * land_planet->ncommodities);
