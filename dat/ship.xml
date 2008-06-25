@@ -374,8 +374,8 @@
   </caracteristics>
   <outfits>
    <outfit quantity="3">Plasma Blaster</outfit>
-   <outfit quantity="1">Headhunter Launcher</outfit>
-   <outfit quantity="10">Headhunter</outfit>
+   <outfit quantity="1">Missile Launcher</outfit>
+   <outfit quantity="12">Missile</outfit>
   </outfits>
  </ship>
  <ship name="Schroedinger">
