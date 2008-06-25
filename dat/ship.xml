@@ -1,414 +1,412 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Ships>
-<ship name="Llama">
-<GFX>llama</GFX>
-<GUI>minimal</GUI>
-<sound>engine</sound>
-<class>1</class>
-<price>120000</price>
-<fabricator>Melendez Corp.</fabricator>
-<tech>2</tech>
-<description>One of the most widely used ships in the galaxy.  Reknown for it's stability and stubborness.  The design hasn't been modified much since it's creation many many years ago.  It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
-<movement>
-<thrust>220</thrust>
-<turn>150</turn>
-<speed>260</speed>
-</movement>
-<health>
-<shield>50</shield>
-<armour>60</armour>
-<energy>240</energy>
-<shield_regen>80</shield_regen>
-<armour_regen>50</armour_regen>
-<energy_regen>500</energy_regen>
-</health>
-<caracteristics>
-<crew>2</crew>
-<mass>32</mass>
-<fuel>400</fuel>
-<cap_weapon>25</cap_weapon>
-<cap_cargo>20</cap_cargo>
-</caracteristics>
-<outfits>
-<outfit quantity='1'>Laser Cannon</outfit>
-</outfits>
-</ship>
-<ship name="Hyena">
-<GFX>hyena</GFX>
-<GUI>minimal</GUI>
-<sound>engine</sound>
-<class>1</class>
-<price>180000</price>
-<fabricator>Aerosys</fabricator>
-<tech>2</tech>
-<description>The star product of Aerosys, the Hyena quickly has become a favorite of pirates far and wide.  Not much of a fighter, nor does it pack too much of a punch, but they like to come in swarms to overcome their enemies.  While the Aerosys' official stance is that it doesn't sell them to shady characters, it's widely known that they do as it seems there's a countless amount in the hands of pirates.</description>
-<movement>
-<thrust>300</thrust>
-<turn>180</turn>
-<speed>330</speed>
-</movement>
-<health>
-<shield>70</shield>
-<armour>50</armour>
-<energy>180</energy>
-<shield_regen>150</shield_regen>
-<armour_regen>60</armour_regen>
-<energy_regen>550</energy_regen>
-</health>
-<caracteristics>
-<crew>2</crew>
-<mass>25</mass>
-<fuel>300</fuel>
-<cap_weapon>30</cap_weapon>
-<cap_cargo>10</cap_cargo>
-</caracteristics>
-<outfits>
-<outfit quantity='2'>Laser Cannon</outfit>
-</outfits>
-</ship>
-<ship name="Pacifier">
-<GFX>pacifier</GFX>
-<GUI>minimal</GUI>
-<sound>engine</sound>
-<class>2</class>
-<price>1200000</price>
-<fabricator>Nexus</fabricator>
-<tech>8</tech>
-<description>The Pacifier is one of the older and trustier designs of the Nexus Corporation.  Was constructed mainly to patrol border systems.  They are very heavy fighters designed to be able to take a pounding and dish out damage, but the cost has been maneuverability.  No reason to run though if you're in one of these.</description>
-<movement>
-<thrust>180</thrust>
-<turn>115</turn>
-<speed>200</speed>
-</movement>
-<health>
-<shield>260</shield>
-<armour>180</armour>
-<energy>420</energy>
-<shield_regen>240</shield_regen>
-<armour_regen>90</armour_regen>
-<energy_regen>1380</energy_regen>
-</health>
-<caracteristics>
-<crew>17</crew>
-<mass>230</mass>
-<fuel>500</fuel>
-<cap_weapon>130</cap_weapon>
-<cap_cargo>30</cap_cargo>
-</caracteristics>
-<outfits>
-<outfit quantity='2'>Laser Cannon</outfit>
-<outfit quantity='1'>Laser Turret</outfit>
-<outfit quantity='2'>Headhunter Launcher</outfit>
-<outfit quantity='40'>Headhunter</outfit>
-</outfits>
-</ship>
-<ship name="Hawking">
-<GFX>hawking</GFX>
-<GUI>minimal</GUI>
-<sound>engine</sound>
-<class>3</class>
-<price>7500000</price>
-<fabricator>Nexus</fabricator>
-<tech>9</tech>
-<description>A heavy frigate designed for heavy combat.  Used widely by the empire to establish control on it's territory.  Has more then enough firepower to not be taken lightly.</description>
-<movement>
-<thrust>80</thrust>
-<turn>70</turn>
-<speed>100</speed>
-</movement>
-<health>
-<shield>600</shield>
-<armour>400</armour>
-<energy>900</energy>
-<shield_regen>300</shield_regen>
-<armour_regen>80</armour_regen>
-<energy_regen>1600</energy_regen>
-</health>
-<caracteristics>
-<crew>35</crew>
-<mass>3750</mass>
-<fuel>300</fuel>
-<cap_weapon>200</cap_weapon>
-<cap_cargo>70</cap_cargo>
-</caracteristics>
-<outfits>
-<outfit quantity='3'>Laser Turret</outfit>
-<outfit quantity='2'>Headhunter Launcher</outfit>
-<outfit quantity='40'>Headhunter</outfit>
-</outfits>
-</ship>
-<ship name="Lancelot">
-<GFX>lancelot</GFX>
-<GUI>minimal</GUI>
-<sound>engine</sound>
-<class>2</class>
-<price>500000</price>
-<fabricator>Nexus</fabricator>
-<tech>7</tech>
-<description>One of the Nexus' prize heavy fighters.  Was originally a secret design for the Empire military, but then disclosed.  Now a modified version is available for civilians, although it doesn't meet up to the original specifications.
-Used by security agencies all over the universe for it's reliability and availability. Proudly enforcing your security since UST 1132.</description>
-<movement>
-<thrust>220</thrust>
-<turn>135</turn>
-<speed>260</speed>
-</movement>
-<health>
-<shield>180</shield>
-<armour>140</armour>
-<energy>280</energy>
-<shield_regen>180</shield_regen>
-<armour_regen>60</armour_regen>
-<energy_regen>980</energy_regen>
-</health>
-<caracteristics>
-<crew>4</crew>
-<mass>90</mass>
-<fuel>400</fuel>
-<cap_weapon>80</cap_weapon>
-<cap_cargo>10</cap_cargo>
-</caracteristics>
-<outfits>
-<outfit quantity='2'>Ripper MK2</outfit>
-<outfit quantity='1'>Headhunter Launcher</outfit>
-<outfit quantity='20'>Headhunter</outfit>
-</outfits>
-</ship>
-<ship name="Mule">
-<GFX>mule</GFX>
-<GUI>minimal</GUI>
-<sound>engine</sound>
-<class>2</class>
-<price>900000</price>
-<fabricator>Melendez Corp</fabricator>
-<tech>5</tech>
-<description>A heavy liner specialized in freighting cargo all over the universe.  Also has good accomodations for passengers depending on the model allowing for enjoyable cruises.  Was a favorite target of pirates until they added stock turrets to the new models which can now defend themselves properly.</description>
-<movement>
-<thrust>100</thrust>
-<turn>100</turn>
-<speed>100</speed>
-</movement>
-<health>
-<shield>160</shield>
-<armour>200</armour>
-<energy>300</energy>
-<shield_regen>100</shield_regen>
-<armour_regen>40</armour_regen>
-<energy_regen>800</energy_regen>
-</health>
-<caracteristics>                                                          
-<crew>13</crew>
-<mass>1750</mass>
-<fuel>500</fuel>
-<cap_weapon>50</cap_weapon>
-<cap_cargo>250</cap_cargo>
-</caracteristics>
-<outfits>
-<outfit quantity='2'>Laser Turret</outfit>
-</outfits>
-</ship>
-<ship name="Drone">
-<GFX>drone</GFX>
-<GUI>minimal</GUI>
-<sound>engine</sound>
-<class>7</class>
-<price>300000</price>
-<fabricator>Robosys</fabricator>
-<tech>99</tech>
-<description>A robot drone.</description>
-<movement>
-<thrust>320</thrust>
-<turn>200</turn>
-<speed>360</speed>
-</movement>
-<health>
-<shield>70</shield>
-<armour>40</armour>
-<energy>300</energy>
-<shield_regen>240</shield_regen>
-<armour_regen>420</armour_regen>
-<energy_regen>600</energy_regen>
-</health>
-<caracteristics>
-<crew>1</crew>
-<mass>15</mass>
-<fuel>1</fuel>
-<cap_weapon>24</cap_weapon>
-<cap_cargo>1</cap_cargo>
-</caracteristics>
-<outfits>
-<outfit quantity='3'>Neutron Disruptor</outfit>
-</outfits>
-</ship>
-<ship name="Gawain">
-<GFX>gawain</GFX>
-<GUI>minimal</GUI>
-<sound>engine</sound>
-<class>1</class>
-<price>500000</price>
-<fabricator>Nexus</fabricator>
-<tech>11</tech>
-<description>The Gawain is a very high end ship that heavily uses the technology developed with the Lancelot.  It's widely used as a sporting rig as it is extremely maneuverable, although they are rarely used in combat because they are too expensive for the little firepower they can apport.</description>
-<movement>
-<thrust>320</thrust>
-<turn>170</turn>
-<speed>340</speed>
-</movement>
-<health>
-<shield>90</shield>
-<armour>50</armour>
-<energy>240</energy>
-<shield_regen>100</shield_regen>
-<armour_regen>70</armour_regen>
-<energy_regen>700</energy_regen>
-</health>
-<caracteristics>
-<crew>2</crew>
-<mass>28</mass>
-<fuel>400</fuel>
-<cap_weapon>35</cap_weapon>
-<cap_cargo>15</cap_cargo>
-</caracteristics>
-<outfits>
-<outfit quantity='1'>Ion Cannon</outfit>
-</outfits>
-</ship>
-<ship name="Goddard">
-<GFX>goddard</GFX>
-<GUI>minimal</GUI>
-<sound>engine</sound>
-<class>3</class>
-<price>11500000</price>
-<fabricator>House Goddard</fabricator>
-<tech>1001</tech>
-<description>The archaic design of the Goddard is decieving.  Although it takes the shape of traditional flying intra-planet vessels, it's very suited for space travel.
-Production is entirely done on Zhiru en the Goddard system by House Goddard the sole providor and dealer in Goddards.  Over time, specialization and improvements on the original time have kept it very competitive in the market.  It's a classic of space.</description>
-<movement>
-<thrust>100</thrust>
-<turn>80</turn>
-<speed>130</speed>
-</movement>
-<health>
-<shield>800</shield>
-<armour>500</armour>
-<energy>2000</energy>
-<shield_regen>330</shield_regen>
-<armour_regen>90</armour_regen>
-<energy_regen>1700</energy_regen>
-</health>
-<caracteristics>
-<crew>52</crew>
-<mass>4350</mass>
-<fuel>500</fuel>
-<cap_weapon>250</cap_weapon>
-<cap_cargo>60</cap_cargo>
-</caracteristics>
-<outfits>
-<outfit quantity='2'>Heavy Ion Turret</outfit>
-<outfit quantity='2'>Laser Turret</outfit>
-<outfit quantity='2'>Headhunter Launcher</outfit>
-<outfit quantity='40'>Headhunter</outfit>
-</outfits>
-</ship>
-<ship name="Admonisher">
-<GFX>admonisher</GFX>
-<GUI>minimal</GUI>
-<sound>engine</sound>
-<class>2</class>
-<price>900000</price>
-<fabricator>Nexus</fabricator>
-<tech>10</tech>
-<description>A very versatile combat ship.  Nexus defines it as the combination between the ruggedness of the Pacifier and the agility of the Lancelot.  Overall a very solid fighter.</description>
-<movement>
-<thrust>200</thrust>
-<turn>105</turn>
-<speed>200</speed>
-</movement>
-<health>
-<shield>240</shield>
-<armour>170</armour>
-<energy>380</energy>
-<shield_regen>240</shield_regen>
-<armour_regen>90</armour_regen>
-<energy_regen>1180</energy_regen>
-</health>
-<caracteristics>
-<crew>13</crew>
-<mass>170</mass>
-<fuel>400</fuel>
-<cap_weapon>110</cap_weapon>
-<cap_cargo>20</cap_cargo>
-</caracteristics>
-<outfits>
-<outfit quantity='1'>Laser Cannon</outfit>
-<outfit quantity='2'>Plasma Blaster</outfit>
-<outfit quantity='1'>Headhunter Launcher</outfit>
-<outfit quantity='10'>Headhunter</outfit>
-</outfits>
-</ship>
-<ship name="Pirate Admonisher">
-<GFX target="admonisher">admonisher_pirate</GFX>
-<GUI>minimal</GUI>
-<sound>engine</sound>
-<class>2</class>
-<price>850000</price>
-<fabricator>Pirate</fabricator>
-<tech>9009</tech>
-<description>What do you get when you rip apart an Admonisher, hack up the internals and slap it back together?  A Pirate Admonisher, which surprisingly works quite well.</description>
-<movement>
-<thrust>205</thrust>
-<turn>110</turn>
-<speed>210</speed>
-</movement>
-<health>
-<shield>250</shield>
-<armour>175</armour>
-<energy>390</energy>
-<shield_regen>260</shield_regen>
-<armour_regen>60</armour_regen>
-<energy_regen>1180</energy_regen>
-</health>
-<caracteristics>
-<crew>13</crew>
-<mass>165</mass>
-<fuel>400</fuel>
-<cap_weapon>125</cap_weapon>
-<cap_cargo>15</cap_cargo>
-</caracteristics>
-<outfits>
-<outfit quantity='3'>Plasma Blaster</outfit>
-<outfit quantity='1'>Headhunter Launcher</outfit>
-<outfit quantity='10'>Headhunter</outfit>
-</outfits>
-</ship>
-<ship name="Schroedinger">
-<GFX>schroedinger</GFX>
-<GUI>minimal</GUI>
-<sound>engine</sound>
-<class>1</class>
-<price>180000</price>
-<fabricator>Sirius Systems</fabricator>
-<tech>5</tech>
-<description>The Schroedinger is primarily used as a reconnaissance vessel.  It has very far autonomy thanks to it's special fuel tanks and light frame.  The downside is that the ship is extremely vulnerable to attack.  It also sports a twin pair of Eraedon engines, making it pretty maneuverable.</description>
-<movement>
-<thrust>260</thrust>
-<turn>165</turn>
-<speed>300</speed>
-</movement>
-<health>
-<shield>60</shield>
-<armour>25</armour>
-<energy>180</energy>
-<shield_regen>60</shield_regen>
-<armour_regen>30</armour_regen>
-<energy_regen>400</energy_regen>
-</health>
-<caracteristics>
-<crew>2</crew>
-<mass>17</mass>
-<fuel>800</fuel>
-<cap_weapon>15</cap_weapon>
-<cap_cargo>15</cap_cargo>
-</caracteristics>
-<outfits/>
-</ship>
+ <ship name="Llama">
+  <GFX>llama</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>1</class>
+  <price>120000</price>
+  <fabricator>Melendez Corp.</fabricator>
+  <tech>2</tech>
+  <description>One of the most widely used ships in the galaxy.  Reknown for it's stability and stubborness.  The design hasn't been modified much since it's creation many many years ago.  It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
+  <movement>
+   <thrust>220</thrust>
+   <turn>150</turn>
+   <speed>260</speed>
+  </movement>
+  <health>
+   <shield>50</shield>
+   <armour>60</armour>
+   <energy>240</energy>
+   <shield_regen>80</shield_regen>
+   <armour_regen>50</armour_regen>
+   <energy_regen>500</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>2</crew>
+   <mass>32</mass>
+   <fuel>400</fuel>
+   <cap_weapon>25</cap_weapon>
+   <cap_cargo>20</cap_cargo>
+  </caracteristics>
+  <outfits>
+   <outfit quantity="1">Laser Cannon</outfit>
+  </outfits>
+ </ship>
+ <ship name="Hyena">
+  <GFX>hyena</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>1</class>
+  <price>180000</price>
+  <fabricator>Aerosys</fabricator>
+  <tech>2</tech>
+  <description>The star product of Aerosys, the Hyena quickly has become a favorite of pirates far and wide.  Not much of a fighter, nor does it pack too much of a punch, but they like to come in swarms to overcome their enemies.  While the Aerosys' official stance is that it doesn't sell them to shady characters, it's widely known that they do as it seems there's a countless amount in the hands of pirates.</description>
+  <movement>
+   <thrust>300</thrust>
+   <turn>180</turn>
+   <speed>330</speed>
+  </movement>
+  <health>
+   <shield>70</shield>
+   <armour>50</armour>
+   <energy>180</energy>
+   <shield_regen>150</shield_regen>
+   <armour_regen>60</armour_regen>
+   <energy_regen>550</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>2</crew>
+   <mass>25</mass>
+   <fuel>300</fuel>
+   <cap_weapon>30</cap_weapon>
+   <cap_cargo>10</cap_cargo>
+  </caracteristics>
+  <outfits>
+   <outfit quantity="2">Laser Cannon</outfit>
+  </outfits>
+ </ship>
+ <ship name="Pacifier">
+  <GFX>pacifier</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>2</class>
+  <price>1200000</price>
+  <fabricator>Nexus</fabricator>
+  <tech>8</tech>
+  <description>The Pacifier is one of the older and trustier designs of the Nexus Corporation.  Was constructed mainly to patrol border systems.  They are very heavy fighters designed to be able to take a pounding and dish out damage, but the cost has been maneuverability.  No reason to run though if you're in one of these.</description>
+  <movement>
+   <thrust>180</thrust>
+   <turn>115</turn>
+   <speed>200</speed>
+  </movement>
+  <health>
+   <shield>260</shield>
+   <armour>180</armour>
+   <energy>420</energy>
+   <shield_regen>240</shield_regen>
+   <armour_regen>90</armour_regen>
+   <energy_regen>1380</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>17</crew>
+   <mass>230</mass>
+   <fuel>500</fuel>
+   <cap_weapon>130</cap_weapon>
+   <cap_cargo>30</cap_cargo>
+  </caracteristics>
+  <outfits>
+   <outfit quantity="2">Laser Cannon</outfit>
+   <outfit quantity="1">Laser Turret</outfit>
+   <outfit quantity="2">Headhunter Launcher</outfit>
+   <outfit quantity="40">Headhunter</outfit>
+  </outfits>
+ </ship>
+ <ship name="Hawking">
+  <GFX>hawking</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>3</class>
+  <price>7500000</price>
+  <fabricator>Nexus</fabricator>
+  <tech>9</tech>
+  <description>A heavy frigate designed for heavy combat.  Used widely by the empire to establish control on it's territory.  Has more then enough firepower to not be taken lightly.</description>
+  <movement>
+   <thrust>80</thrust>
+   <turn>70</turn>
+   <speed>100</speed>
+  </movement>
+  <health>
+   <shield>600</shield>
+   <armour>400</armour>
+   <energy>900</energy>
+   <shield_regen>300</shield_regen>
+   <armour_regen>80</armour_regen>
+   <energy_regen>1600</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>35</crew>
+   <mass>3750</mass>
+   <fuel>300</fuel>
+   <cap_weapon>200</cap_weapon>
+   <cap_cargo>70</cap_cargo>
+  </caracteristics>
+  <outfits>
+   <outfit quantity="3">Laser Turret</outfit>
+   <outfit quantity="2">Headhunter Launcher</outfit>
+   <outfit quantity="40">Headhunter</outfit>
+  </outfits>
+ </ship>
+ <ship name="Lancelot">
+  <GFX>lancelot</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>2</class>
+  <price>500000</price>
+  <fabricator>Nexus</fabricator>
+  <tech>7</tech>
+  <description>One of the Nexus' prize heavy fighters.  Was originally a secret design for the Empire military, but then disclosed.  Now a modified version is available for civilians, although it doesn't meet up to the original specifications.Used by security agencies all over the universe for it's reliability and availability. Proudly enforcing your security since UST 1132.</description>
+  <movement>
+   <thrust>220</thrust>
+   <turn>135</turn>
+   <speed>260</speed>
+  </movement>
+  <health>
+   <shield>180</shield>
+   <armour>140</armour>
+   <energy>280</energy>
+   <shield_regen>180</shield_regen>
+   <armour_regen>60</armour_regen>
+   <energy_regen>980</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>4</crew>
+   <mass>90</mass>
+   <fuel>400</fuel>
+   <cap_weapon>80</cap_weapon>
+   <cap_cargo>10</cap_cargo>
+  </caracteristics>
+  <outfits>
+   <outfit quantity="2">Ripper MK2</outfit>
+   <outfit quantity="1">Headhunter Launcher</outfit>
+   <outfit quantity="20">Headhunter</outfit>
+  </outfits>
+ </ship>
+ <ship name="Mule">
+  <GFX>mule</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>2</class>
+  <price>900000</price>
+  <fabricator>Melendez Corp</fabricator>
+  <tech>5</tech>
+  <description>A heavy liner specialized in freighting cargo all over the universe.  Also has good accomodations for passengers depending on the model allowing for enjoyable cruises.  Was a favorite target of pirates until they added stock turrets to the new models which can now defend themselves properly.</description>
+  <movement>
+   <thrust>100</thrust>
+   <turn>100</turn>
+   <speed>100</speed>
+  </movement>
+  <health>
+   <shield>160</shield>
+   <armour>200</armour>
+   <energy>300</energy>
+   <shield_regen>100</shield_regen>
+   <armour_regen>40</armour_regen>
+   <energy_regen>800</energy_regen>
+  </health>
+  <caracteristics>                                                          
+   <crew>13</crew>
+   <mass>1750</mass>
+   <fuel>500</fuel>
+   <cap_weapon>50</cap_weapon>
+   <cap_cargo>250</cap_cargo>
+  </caracteristics>
+  <outfits>
+   <outfit quantity="2">Laser Turret</outfit>
+  </outfits>
+ </ship>
+ <ship name="Drone">
+  <GFX>drone</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>7</class>
+  <price>300000</price>
+  <fabricator>Robosys</fabricator>
+  <tech>99</tech>
+  <description>A robot drone.</description>
+  <movement>
+   <thrust>320</thrust>
+   <turn>200</turn>
+   <speed>360</speed>
+  </movement>
+  <health>
+   <shield>70</shield>
+   <armour>40</armour>
+   <energy>300</energy>
+   <shield_regen>240</shield_regen>
+   <armour_regen>420</armour_regen>
+   <energy_regen>600</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>1</crew>
+   <mass>15</mass>
+   <fuel>1</fuel>
+   <cap_weapon>24</cap_weapon>
+   <cap_cargo>1</cap_cargo>
+  </caracteristics>
+  <outfits>
+   <outfit quantity="3">Neutron Disruptor</outfit>
+  </outfits>
+ </ship>
+ <ship name="Gawain">
+  <GFX>gawain</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>1</class>
+  <price>500000</price>
+  <fabricator>Nexus</fabricator>
+  <tech>11</tech>
+  <description>The Gawain is a very high end ship that heavily uses the technology developed with the Lancelot.  It's widely used as a sporting rig as it is extremely maneuverable, although they are rarely used in combat because they are too expensive for the little firepower they can apport.</description>
+  <movement>
+   <thrust>320</thrust>
+   <turn>170</turn>
+   <speed>340</speed>
+  </movement>
+  <health>
+   <shield>90</shield>
+   <armour>50</armour>
+   <energy>240</energy>
+   <shield_regen>100</shield_regen>
+   <armour_regen>70</armour_regen>
+   <energy_regen>700</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>2</crew>
+   <mass>28</mass>
+   <fuel>400</fuel>
+   <cap_weapon>35</cap_weapon>
+   <cap_cargo>15</cap_cargo>
+  </caracteristics>
+  <outfits>
+   <outfit quantity="1">Ion Cannon</outfit>
+  </outfits>
+ </ship>
+ <ship name="Goddard">
+  <GFX>goddard</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>3</class>
+  <price>11500000</price>
+  <fabricator>House Goddard</fabricator>
+  <tech>1001</tech>
+  <description>The archaic design of the Goddard is decieving.  Although it takes the shape of traditional flying intra-planet vessels, it's very suited for space travel.Production is entirely done on Zhiru en the Goddard system by House Goddard the sole providor and dealer in Goddards.  Over time, specialization and improvements on the original time have kept it very competitive in the market.  It's a classic of space.</description>
+  <movement>
+   <thrust>100</thrust>
+   <turn>80</turn>
+   <speed>130</speed>
+  </movement>
+  <health>
+   <shield>800</shield>
+   <armour>500</armour>
+   <energy>2000</energy>
+   <shield_regen>330</shield_regen>
+   <armour_regen>90</armour_regen>
+   <energy_regen>1700</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>52</crew>
+   <mass>4350</mass>
+   <fuel>500</fuel>
+   <cap_weapon>250</cap_weapon>
+   <cap_cargo>60</cap_cargo>
+  </caracteristics>
+  <outfits>
+   <outfit quantity="2">Heavy Ion Turret</outfit>
+   <outfit quantity="2">Laser Turret</outfit>
+   <outfit quantity="2">Headhunter Launcher</outfit>
+   <outfit quantity="40">Headhunter</outfit>
+  </outfits>
+ </ship>
+ <ship name="Admonisher">
+  <GFX>admonisher</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>2</class>
+  <price>900000</price>
+  <fabricator>Nexus</fabricator>
+  <tech>10</tech>
+  <description>A very versatile combat ship.  Nexus defines it as the combination between the ruggedness of the Pacifier and the agility of the Lancelot.  Overall a very solid fighter.</description>
+  <movement>
+   <thrust>200</thrust>
+   <turn>105</turn>
+   <speed>200</speed>
+  </movement>
+  <health>
+   <shield>240</shield>
+   <armour>170</armour>
+   <energy>380</energy>
+   <shield_regen>240</shield_regen>
+   <armour_regen>90</armour_regen>
+   <energy_regen>1180</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>13</crew>
+   <mass>170</mass>
+   <fuel>400</fuel>
+   <cap_weapon>110</cap_weapon>
+   <cap_cargo>20</cap_cargo>
+  </caracteristics>
+  <outfits>
+   <outfit quantity="1">Laser Cannon</outfit>
+   <outfit quantity="2">Plasma Blaster</outfit>
+   <outfit quantity="1">Headhunter Launcher</outfit>
+   <outfit quantity="10">Headhunter</outfit>
+  </outfits>
+ </ship>
+ <ship name="Pirate Admonisher">
+  <GFX target="admonisher">admonisher_pirate</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>2</class>
+  <price>850000</price>
+  <fabricator>Pirate</fabricator>
+  <tech>9009</tech>
+  <description>What do you get when you rip apart an Admonisher, hack up the internals and slap it back together?  A Pirate Admonisher, which surprisingly works quite well.</description>
+  <movement>
+   <thrust>205</thrust>
+   <turn>110</turn>
+   <speed>210</speed>
+  </movement>
+  <health>
+   <shield>250</shield>
+   <armour>175</armour>
+   <energy>390</energy>
+   <shield_regen>260</shield_regen>
+   <armour_regen>60</armour_regen>
+   <energy_regen>1180</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>13</crew>
+   <mass>165</mass>
+   <fuel>400</fuel>
+   <cap_weapon>125</cap_weapon>
+   <cap_cargo>15</cap_cargo>
+  </caracteristics>
+  <outfits>
+   <outfit quantity="3">Plasma Blaster</outfit>
+   <outfit quantity="1">Headhunter Launcher</outfit>
+   <outfit quantity="10">Headhunter</outfit>
+  </outfits>
+ </ship>
+ <ship name="Schroedinger">
+  <GFX>schroedinger</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>1</class>
+  <price>180000</price>
+  <fabricator>Sirius Systems</fabricator>
+  <tech>5</tech>
+  <description>The Schroedinger is primarily used as a reconnaissance vessel.  It has very far autonomy thanks to it's special fuel tanks and light frame.  The downside is that the ship is extremely vulnerable to attack.  It also sports a twin pair of Eraedon engines, making it pretty maneuverable.</description>
+  <movement>
+   <thrust>260</thrust>
+   <turn>165</turn>
+   <speed>300</speed>
+  </movement>
+  <health>
+   <shield>60</shield>
+   <armour>25</armour>
+   <energy>180</energy>
+   <shield_regen>60</shield_regen>
+   <armour_regen>30</armour_regen>
+   <energy_regen>400</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>2</crew>
+   <mass>17</mass>
+   <fuel>800</fuel>
+   <cap_weapon>15</cap_weapon>
+   <cap_cargo>15</cap_cargo>
+  </caracteristics>
+  <outfits/>
+ </ship>
 </Ships>

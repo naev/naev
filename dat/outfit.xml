@@ -1,459 +1,459 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Outfits>
-<outfit name="Ripper MK2">
-<general>
-<max>3</max>
-<tech>11</tech>
-<mass>12</mass>
-<price>95000</price>
-<description>The Ripper does what it's name implies: it rips through enemies with ease.  Only downside is the energy needed to power it.</description>
-<gfx_store>heavy</gfx_store>
-</general>
-<specific type="bolt">
-<gfx>ripper</gfx>
-<sound>laser</sound>
-<spfx>ExpS</spfx>
-<delay>700</delay>
-<speed>700</speed>
-<range>400</range>
-<accuracy>20</accuracy>
-<energy>22</energy>
-<damage type="energy">18</damage>
-</specific>
-</outfit>
-<outfit name="Laser Cannon">
-<general>
-<max>5</max>
-<tech>2</tech>
-<mass>5</mass>
-<price>5000</price>
-<description>Your basic laser.  Fires charged energy beams that do a decent amount of damage to both shield and armour.</description>
-<gfx_store>laser</gfx_store>
-</general>
-<specific type="bolt">
-<gfx>laserred</gfx>
-<sound>laser</sound>
-<spfx>ExpS</spfx>
-<delay>500</delay>
-<speed>550</speed>
-<range>300</range>
-<accuracy>30</accuracy>
-<energy>8</energy>
-<damage type="energy">10</damage>
-</specific>
-</outfit>
-<outfit name="Laser Turret">
-<general>
-<max>4</max>
-<tech>4</tech>
-<mass>20</mass>
-<price>25000</price>
-<description>Two laser cannons added on a rotating turret, allowing for 360 degrees of firepower.</description>
-<gfx_store>laser_turret</gfx_store>
-</general>
-<specific type="turret bolt">
-<gfx>laserred</gfx>
-<sound>laser</sound>
-<spfx>ExpS</spfx>
-<delay>300</delay>
-<speed>550</speed>
-<range>300</range>
-<accuracy>30</accuracy>
-<energy>10</energy>
-<damage type="energy">10</damage>
-</specific>
-</outfit>
-<outfit name="Plasma Blaster">
-<general>
-<max>4</max>
-<tech>3</tech>
-<mass>5</mass>
-<price>9000</price>
-<description>Plasma is very volatile, if properly controlled it can be very destructive, it does tend to dissipate quickly though.</description>
-<gfx_store>laser</gfx_store>
-</general>
-<specific type="bolt">
-<gfx>plasma</gfx>
-<sound>laser</sound>
-<spfx>ExpS</spfx>
-<delay>400</delay>
-<speed>450</speed>
-<range>250</range>
-<accuracy>20</accuracy>
-<energy>7</energy>
-<damage type="energy">7</damage>
-</specific>
-</outfit>
-<outfit name="Ion Cannon">
-<general>
-<max>4</max>
-<tech>7</tech>
-<mass>9</mass>
-<price>15000</price>
-<description>Ion pulses were originally intended only to deactivate shields since they had completely nullified the old radiation technology weapons.  It was thought that by figuring out a way to deactivate shields fast the radiation technology would still be able to destroy the armour.  By combining shield destruction power and armour destruction power, the perfect weopns could be designed.  The Ion pulses ended up being very effective against armour and electronics.  With the invention of the latest generation shields and armour materials, Ion pulses have lost much of the terrain they had as newfound technology.</description>
-<gfx_store>ion</gfx_store>
-</general>
-<specific type="bolt">
-<gfx>ion</gfx>
-<sound>ion</sound>
-<spfx>ExpS</spfx>
-<delay>800</delay>
-<speed>500</speed>
-<range>400</range>
-<accuracy>10</accuracy>
-<energy>13</energy>
-<damage type="ion">15</damage>
-</specific>
-</outfit>
-<outfit name="Heavy Ion Turret">
-<general>
-<max>3</max>
-<tech>11</tech>
-<mass>35</mass>
-<price>75000</price>
-<description>The heavy Ion Turret uses a bigger generator for each cannon giving it more punch then the Ion cannnon.  The drawback is that this augments the power usage considerably.  Being designed for capital ships, this doesn't seem to worry the makers too much.</description>
-<gfx_store>turret3</gfx_store>
-</general>
-<specific type="turret bolt">
-<gfx>ion</gfx>
-<sound>ion</sound>
-<spfx>ExpS</spfx>
-<delay>400</delay>
-<speed>500</speed>
-<range>400</range>
-<accuracy>7</accuracy>
-<energy>17</energy>
-<damage type="ion">17</damage>
-</specific>
-</outfit>
-<outfit name="150mm Railgun">
-<general>
-<max>2</max>
-<tech>8</tech>
-<mass>15</mass>
-<price>85000</price>
-<description>The rail gun is a cannon that uses heavy magnetic pulses to accelerate pieces of debris to extremely high velocities.  The impact caused by the pieces of debris can tear apart even the strongest ship hulls.</description>
-<gfx_store>heavy</gfx_store>
-</general>
-<specific type="bolt" secondary="1">
-<gfx>mass</gfx>
-<sound>mass</sound>
-<spfx>ExpS</spfx>
-<delay>1100</delay>
-<speed>650</speed>
-<range>500</range>
-<accuracy>10</accuracy>
-<energy>35</energy>
-<damage type="kinetic">40</damage>
-</specific>
-</outfit>
-<outfit name="Missile Launcher">
-<general>
-<max>2</max>
-<tech>4</tech>
-<mass>10</mass>
-<price>25000</price>
-<description>Base for launching dumb missiles.</description>
-<gfx_store>missile</gfx_store>
-</general>
-<specific type="missile seek" secondary="1">
-<ammo>Missile</ammo>
-<delay>1200</delay>
-</specific>
-</outfit>
-<outfit name="Missile">
-<general>
-<max>60</max>
-<tech>2</tech>
-<mass>1</mass>
-<price>800</price>
-<description>The cheapest missile on the market, what it lacks in a decent tracking system it makes up for in affordability and firepower.</description>
-<gfx_store>missile</gfx_store>
-</general>
-<specific type="missile seek ammo">
-<gfx>missile</gfx>
-<sound>missile</sound>
-<spfx>ExpM</spfx>
-<duration>5</duration>
-<lockon>1</lockon>
-<thrust>400</thrust>
-<turn>60</turn>
-<speed>800</speed>
-<damage type="kinetic">20</damage>
-</specific>
-</outfit>
-<outfit name="Headhunter Launcher">
-<general>
-<max>2</max>
-<tech>5</tech>
-<mass>12</mass>
-<price>40000</price>
-<description>The Headhunter Launcher is one of the most used missile launcher by the security companies.  Much more reliable then the regular missiles, Headhunters feature more sensors and an advanced tracking system making them much better at hitting their targets.</description>
-<gfx_store>missile</gfx_store>
-</general>
-<specific type="missile smart" secondary="1">
-<ammo>Headhunter</ammo>
-<delay>1400</delay>
-</specific>
-</outfit>
-<outfit name="Headhunter">
-<general>
-<max>40</max>
-<tech>5</tech>
-<mass>1</mass>
-<price>2000</price>
-<description>Headhunters first gained fame in the crush of the Araknoid, a fearsome battle against a pirate stronghold where the Empire crushed the pirates thanks to the advanced guidance system on the Headhunter.  Now used by mercenaries and bounty hunters all over.</description>
-<gfx_store>missile</gfx_store>
-</general>
-<specific type="missile smart ammo">
-<gfx>headhunter</gfx>
-<sound>missile</sound>
-<spfx>ExpM</spfx>
-<duration>7</duration>
-<lockon>0.5</lockon>
-<resist>5</resist>
-<thrust>325</thrust>
-<turn>90</turn>
-<speed>550</speed>
-<damage type="kinetic">20</damage>
-</specific>
-</outfit>
-<outfit name="Neutron Disruptor">
-<general>
-<max>3</max>
-<tech>99</tech>
-<mass>8</mass>
-<price>25000</price>
-<description>Neutron Disruptor.</description>
-<gfx_store>neutron</gfx_store>
-</general>
-<specific type="bolt">
-<gfx>neutron</gfx>
-<sound>neutron</sound>
-<spfx>ExpS</spfx>
-<delay>400</delay>
-<speed>650</speed>
-<range>200</range>
-<accuracy>15</accuracy>
-<energy>5</energy>
-<damage type="energy">7</damage>
-</specific>
-</outfit>
-<outfit name="Battery">
-<general>
-<max>10</max>
-<tech>3</tech>
-<mass>2</mass>
-<price>22500</price>
-<description>A heavy battery that will increase your ship's energy to allow you to pack more firepower.</description>
-<gfx_store>capacitator</gfx_store>
-</general>
-<specific type="modification">
-<energy>30</energy>
-</specific>
-</outfit>
-<outfit name="Solar Panel">
-<general>
-<max>5</max>
-<tech>5</tech>
-<mass>3</mass>
-<price>55000</price>
-<description>A big panel that will generate energy based off solar energy.  This will allow your ship te regenerate it's energy supplies faster.</description>
-<gfx_store>solar</gfx_store>
-</general>
-<specific type="modification">
-<energy_regen>125</energy_regen>
-</specific>
-</outfit>
-<outfit name="Shield Capacitator">
-<general>
-<max>12</max>
-<tech>9</tech>
-<mass>3</mass>
-<price>75000</price>
-<description>An enhancement for the shield power system, allowing it to resist much heavier fire.</description>
-<gfx_store>capacitator</gfx_store>
-</general>
-<specific type="modification">
-<shield>15</shield>
-</specific>
-</outfit>
-<outfit name="Shield Booster">
-<general>
-<max>4</max>
-<tech>10</tech>
-<mass>5</mass>
-<price>145000</price>
-<description>A shield generator that feeds off the ship's main energy line.  It will allow you to generate your shield faster and give you a small maximum shield boost at the expense of draining osem of the ship's energy.</description>
-<gfx_store>shield</gfx_store>
-</general>
-<specific type="modification">
-<shield>15</shield>
-<shield_regen>15</shield_regen>
-<energy_regen>-50</energy_regen>
-</specific>
-</outfit>
-<outfit name="Engine Reroute">
-<general>
-<max>1</max>
-<tech>13</tech>
-<mass>1</mass>
-<price>125000</price>
-<description>This enhancement routes energy from the ship's energy supplies to the engine, giving the ship an increased thrust.  It does not increase the ship's max speed nor turn abilities.</description>
-<gfx_store>reroute</gfx_store>
-</general>
-<specific type="modification">
-<thrust>70</thrust>
-<energy_regen>-50</energy_regen>
-</specific>
-</outfit>
-<outfit name="Improved Stabilizer">
-<general>
-<max>1</max>
-<tech>13</tech>
-<mass>1</mass>
-<price>135000</price>
-<description>By improving your ship's stabilization systems drastically, this modification will allow you to reach higher speeds while still keeping the ship stable.</description>
-<gfx_store>stabilizer</gfx_store>
-</general>
-<specific type="modification">
-<speed>50</speed>
-<turn>5</turn>
-<energy_regen>-10</energy_regen>
-</specific>
-</outfit>
-<outfit name="Steering Thrusters">
-<general>
-<max>1</max>
-<tech>13</tech>
-<mass>1</mass>
-<price>130000</price>
-<description>With the adding of a couple additional steering thruster you can make it so that your ship is much agile at turning.</description>
-<gfx_store>thruster</gfx_store>
-</general>
-<specific type="modification">
-<turn>25</turn>
-<energy_regen>-10</energy_regen>
-</specific>
-</outfit>
-<outfit name="Generic Afterburner">
-<general>
-<max>1</max>
-<tech>3</tech>
-<mass>2</mass>
-<price>20000</price>
-<description>Being able to run from your enemies is a very powerful ability.  A generic afterburner will allow you to do that.  It may not be as powerful as some of the more high-end afterburners, but they're not nearly as affordable as a generic one.</description>
-<gfx_store>afterburner</gfx_store>
-</general>
-<specific type="afterburner">
-<rumble>30</rumble>
-<sound>afterburner</sound>
-<thrust_perc>100</thrust_perc>
-<thrust_abs>50</thrust_abs>
-<speed_perc>50</speed_perc>
-<speed_abs>30</speed_abs>
-<energy>60</energy>
-</specific>
-</outfit>
-<outfit name="Hellburner">
-<general>
-<max>1</max>
-<tech>13</tech>
-<mass>4</mass>
-<price>95000</price>
-<description>The Hellburner is one of the best afterburners available in the market.  They have a much better energy to speed ratio then the generics and are much stronger.  A must for any spacefarer who is proud of his ship.</description>
-<gfx_store>afterburner2</gfx_store>
-</general>
-<specific type="afterburner">
-<rumble>50</rumble>
-<sound>afterburner</sound>
-<thrust_perc>185</thrust_perc>
-<thrust_abs>100</thrust_abs>
-<speed_perc>85</speed_perc>
-<speed_abs>50</speed_abs>
-<energy>65</energy>
-</specific>
-</outfit>
-<outfit name="Fuel Pod">
-<general>
-<max>2</max>
-<tech>3</tech>
-<mass>5</mass>
-<price>15000</price>
-<description>The Fuel Pod allows a ship to store more fuel for hyperspace jumps.  Each pod effectively increases a ship's range by a jump.</description>
-<gfx_store>fuel_pod</gfx_store>
-</general>
-<specific type="modification">
-<fuel>100</fuel>
-</specific>
-</outfit>
-<outfit name="Cargo Pod">
-<general>
-<max>4</max>
-<tech>6</tech>
-<mass>15</mass>
-<price>35000</price>
-<description>Cargo Pods are big containers you can attach to dedicated weapon space allowing you to transport more cargo.  The drawback is that you lose alot of weapon space and won't be able to defend your cargo as well...</description>
-<gfx_store>cargo_pod</gfx_store>
-</general>
-<specific type="modification">
-<cargo>15</cargo>
-</specific>
-</outfit>
-<outfit name="Weapon Rack">
-<general>
-<max>4</max>
-<tech>8</tech>
-<mass>-10</mass>
-<price>65000</price>
-<description>Adding a Weapon Rack to your ship will allow you to enjoy the benefits of more weapon space at the cost of cargo space.  It's often more wiser to have less cargo, but to guard it well.</description>
-<gfx_store>weapon_rack</gfx_store>
-</general>
-<specific type="modification">
-<cargo>-15</cargo>
-</specific>
-</outfit>
-<outfit name="Star Map">
-<general>
-<max>1</max>
-<tech>4</tech>
-<mass>0</mass>
-<price>7000</price>
-<description>A Star Map will give you details about all systems up to 2 jumps away.  It's a great risk-free way to discover parts of the universe.</description>
-<gfx_store>map</gfx_store>
-</general>
-<specific type="map">
-<radius>2</radius>
-</specific>
-</outfit>
-<outfit name="Civilian Jammer">
-<general>
-<max>1</max>
-<tech>7</tech>
-<mass>2</mass>
-<price>40000</price>
-<description>This jammer allows you to block the targetting systems of some of the missiles headed towards you, causing them to do unpredictable behaviours and not impact against your ship.</description>
-<gfx_store>jammer0</gfx_store>
-</general>
-<specific type="jammer">
-<range>400</range>
-<chance>20</chance>
-<energy>3</energy>
-</specific>
-</outfit>
-<outfit name="Milspec Jammer">
-<general>
-<max>1</max>
-<tech>13</tech>
-<mass>3</mass>
-<price>250000</price>
-<description>This jammer follows the much stricter military specifications, allowing it to deflect a much greater amount of missiles at more range then the civilian counterpart.  The downside is that the energy requirements are much greater.</description>
-<gfx_store>jammer1</gfx_store>
-</general>
-<specific type="jammer">
-<range>600</range>
-<chance>40</chance>
-<energy>10</energy>
-</specific>
-</outfit>
+ <outfit name="Ripper MK2">
+  <general>
+   <max>3</max>
+   <tech>11</tech>
+   <mass>12</mass>
+   <price>95000</price>
+   <description>The Ripper does what it's name implies: it rips through enemies with ease.  Only downside is the energy needed to power it.</description>
+   <gfx_store>heavy</gfx_store>
+  </general>
+  <specific type="bolt">
+   <gfx>ripper</gfx>
+   <sound>laser</sound>
+   <spfx>ExpS</spfx>
+   <delay>700</delay>
+   <speed>700</speed>
+   <range>400</range>
+   <accuracy>20</accuracy>
+   <energy>22</energy>
+   <damage type="energy">18</damage>
+  </specific>
+ </outfit>
+ <outfit name="Laser Cannon">
+  <general>
+   <max>5</max>
+   <tech>2</tech>
+   <mass>5</mass>
+   <price>5000</price>
+   <description>Your basic laser.  Fires charged energy beams that do a decent amount of damage to both shield and armour.</description>
+   <gfx_store>laser</gfx_store>
+  </general>
+  <specific type="bolt">
+   <gfx>laserred</gfx>
+   <sound>laser</sound>
+   <spfx>ExpS</spfx>
+   <delay>500</delay>
+   <speed>550</speed>
+   <range>300</range>
+   <accuracy>30</accuracy>
+   <energy>8</energy>
+   <damage type="energy">10</damage>
+  </specific>
+ </outfit>
+ <outfit name="Laser Turret">
+  <general>
+   <max>4</max>
+   <tech>4</tech>
+   <mass>20</mass>
+   <price>25000</price>
+   <description>Two laser cannons added on a rotating turret, allowing for 360 degrees of firepower.</description>
+   <gfx_store>laser_turret</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <gfx>laserred</gfx>
+   <sound>laser</sound>
+   <spfx>ExpS</spfx>
+   <delay>300</delay>
+   <speed>550</speed>
+   <range>300</range>
+   <accuracy>30</accuracy>
+   <energy>10</energy>
+   <damage type="energy">10</damage>
+  </specific>
+ </outfit>
+ <outfit name="Plasma Blaster">
+  <general>
+   <max>4</max>
+   <tech>3</tech>
+   <mass>5</mass>
+   <price>9000</price>
+   <description>Plasma is very volatile, if properly controlled it can be very destructive, it does tend to dissipate quickly though.</description>
+   <gfx_store>laser</gfx_store>
+  </general>
+  <specific type="bolt">
+   <gfx>plasma</gfx>
+   <sound>laser</sound>
+   <spfx>ExpS</spfx>
+   <delay>400</delay>
+   <speed>450</speed>
+   <range>250</range>
+   <accuracy>20</accuracy>
+   <energy>7</energy>
+   <damage type="energy">7</damage>
+  </specific>
+ </outfit>
+ <outfit name="Ion Cannon">
+  <general>
+   <max>4</max>
+   <tech>7</tech>
+   <mass>9</mass>
+   <price>15000</price>
+   <description>Ion pulses were originally intended only to deactivate shields since they had completely nullified the old radiation technology weapons.  It was thought that by figuring out a way to deactivate shields fast the radiation technology would still be able to destroy the armour.  By combining shield destruction power and armour destruction power, the perfect weopns could be designed.  The Ion pulses ended up being very effective against armour and electronics.  With the invention of the latest generation shields and armour materials, Ion pulses have lost much of the terrain they had as newfound technology.</description>
+   <gfx_store>ion</gfx_store>
+  </general>
+  <specific type="bolt">
+   <gfx>ion</gfx>
+   <sound>ion</sound>
+   <spfx>ExpS</spfx>
+   <delay>800</delay>
+   <speed>500</speed>
+   <range>400</range>
+   <accuracy>10</accuracy>
+   <energy>13</energy>
+   <damage type="ion">15</damage>
+  </specific>
+ </outfit>
+ <outfit name="Heavy Ion Turret">
+  <general>
+   <max>3</max>
+   <tech>11</tech>
+   <mass>35</mass>
+   <price>75000</price>
+   <description>The heavy Ion Turret uses a bigger generator for each cannon giving it more punch then the Ion cannnon.  The drawback is that this augments the power usage considerably.  Being designed for capital ships, this doesn't seem to worry the makers too much.</description>
+   <gfx_store>turret3</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <gfx>ion</gfx>
+   <sound>ion</sound>
+   <spfx>ExpS</spfx>
+   <delay>400</delay>
+   <speed>500</speed>
+   <range>400</range>
+   <accuracy>7</accuracy>
+   <energy>17</energy>
+   <damage type="ion">17</damage>
+  </specific>
+ </outfit>
+ <outfit name="150mm Railgun">
+  <general>
+   <max>2</max>
+   <tech>8</tech>
+   <mass>15</mass>
+   <price>85000</price>
+   <description>The rail gun is a cannon that uses heavy magnetic pulses to accelerate pieces of debris to extremely high velocities.  The impact caused by the pieces of debris can tear apart even the strongest ship hulls.</description>
+   <gfx_store>heavy</gfx_store>
+  </general>
+  <specific type="bolt" secondary="1">
+   <gfx>mass</gfx>
+   <sound>mass</sound>
+   <spfx>ExpS</spfx>
+   <delay>1100</delay>
+   <speed>650</speed>
+   <range>500</range>
+   <accuracy>10</accuracy>
+   <energy>35</energy>
+   <damage type="kinetic">40</damage>
+  </specific>
+ </outfit>
+ <outfit name="Missile Launcher">
+  <general>
+   <max>2</max>
+   <tech>4</tech>
+   <mass>10</mass>
+   <price>25000</price>
+   <description>Base for launching dumb missiles.</description>
+   <gfx_store>missile</gfx_store>
+  </general>
+  <specific type="missile seek" secondary="1">
+   <ammo>Missile</ammo>
+   <delay>1200</delay>
+  </specific>
+ </outfit>
+ <outfit name="Missile">
+  <general>
+   <max>60</max>
+   <tech>2</tech>
+   <mass>1</mass>
+   <price>800</price>
+   <description>The cheapest missile on the market, what it lacks in a decent tracking system it makes up for in affordability and firepower.</description>
+   <gfx_store>missile</gfx_store>
+  </general>
+  <specific type="missile seek ammo">
+   <gfx>missile</gfx>
+   <sound>missile</sound>
+   <spfx>ExpM</spfx>
+   <duration>5</duration>
+   <lockon>1</lockon>
+   <thrust>400</thrust>
+   <turn>60</turn>
+   <speed>800</speed>
+   <damage type="kinetic">20</damage>
+  </specific>
+ </outfit>
+ <outfit name="Headhunter Launcher">
+  <general>
+   <max>2</max>
+   <tech>5</tech>
+   <mass>12</mass>
+   <price>40000</price>
+   <description>The Headhunter Launcher is one of the most used missile launcher by the security companies.  Much more reliable then the regular missiles, Headhunters feature more sensors and an advanced tracking system making them much better at hitting their targets.</description>
+   <gfx_store>missile</gfx_store>
+  </general>
+  <specific type="missile smart" secondary="1">
+   <ammo>Headhunter</ammo>
+   <delay>1400</delay>
+  </specific>
+ </outfit>
+ <outfit name="Headhunter">
+  <general>
+   <max>40</max>
+   <tech>5</tech>
+   <mass>1</mass>
+   <price>2000</price>
+   <description>Headhunters first gained fame in the crush of the Araknoid, a fearsome battle against a pirate stronghold where the Empire crushed the pirates thanks to the advanced guidance system on the Headhunter.  Now used by mercenaries and bounty hunters all over.</description>
+   <gfx_store>missile</gfx_store>
+  </general>
+  <specific type="missile smart ammo">
+   <gfx>headhunter</gfx>
+   <sound>missile</sound>
+   <spfx>ExpM</spfx>
+   <duration>7</duration>
+   <lockon>0.5</lockon>
+   <resist>5</resist>
+   <thrust>325</thrust>
+   <turn>90</turn>
+   <speed>550</speed>
+   <damage type="kinetic">20</damage>
+  </specific>
+ </outfit>
+ <outfit name="Neutron Disruptor">
+  <general>
+   <max>3</max>
+   <tech>99</tech>
+   <mass>8</mass>
+   <price>25000</price>
+   <description>Neutron Disruptor.</description>
+   <gfx_store>neutron</gfx_store>
+  </general>
+  <specific type="bolt">
+   <gfx>neutron</gfx>
+   <sound>neutron</sound>
+   <spfx>ExpS</spfx>
+   <delay>400</delay>
+   <speed>650</speed>
+   <range>200</range>
+   <accuracy>15</accuracy>
+   <energy>5</energy>
+   <damage type="energy">7</damage>
+  </specific>
+ </outfit>
+ <outfit name="Battery">
+  <general>
+   <max>10</max>
+   <tech>3</tech>
+   <mass>2</mass>
+   <price>22500</price>
+   <description>A heavy battery that will increase your ship's energy to allow you to pack more firepower.</description>
+   <gfx_store>capacitator</gfx_store>
+  </general>
+  <specific type="modification">
+   <energy>30</energy>
+  </specific>
+ </outfit>
+ <outfit name="Solar Panel">
+  <general>
+   <max>5</max>
+   <tech>5</tech>
+   <mass>3</mass>
+   <price>55000</price>
+   <description>A big panel that will generate energy based off solar energy.  This will allow your ship te regenerate it's energy supplies faster.</description>
+   <gfx_store>solar</gfx_store>
+  </general>
+  <specific type="modification">
+   <energy_regen>125</energy_regen>
+  </specific>
+ </outfit>
+ <outfit name="Shield Capacitator">
+  <general>
+   <max>12</max>
+   <tech>9</tech>
+   <mass>3</mass>
+   <price>75000</price>
+   <description>An enhancement for the shield power system, allowing it to resist much heavier fire.</description>
+   <gfx_store>capacitator</gfx_store>
+  </general>
+  <specific type="modification">
+   <shield>15</shield>
+  </specific>
+ </outfit>
+ <outfit name="Shield Booster">
+  <general>
+   <max>4</max>
+   <tech>10</tech>
+   <mass>5</mass>
+   <price>145000</price>
+   <description>A shield generator that feeds off the ship's main energy line.  It will allow you to generate your shield faster and give you a small maximum shield boost at the expense of draining osem of the ship's energy.</description>
+   <gfx_store>shield</gfx_store>
+  </general>
+  <specific type="modification">
+   <shield>15</shield>
+   <shield_regen>15</shield_regen>
+   <energy_regen>-50</energy_regen>
+  </specific>
+ </outfit>
+ <outfit name="Engine Reroute">
+  <general>
+   <max>1</max>
+   <tech>13</tech>
+   <mass>1</mass>
+   <price>125000</price>
+   <description>This enhancement routes energy from the ship's energy supplies to the engine, giving the ship an increased thrust.  It does not increase the ship's max speed nor turn abilities.</description>
+   <gfx_store>reroute</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>70</thrust>
+   <energy_regen>-50</energy_regen>
+  </specific>
+ </outfit>
+ <outfit name="Improved Stabilizer">
+  <general>
+   <max>1</max>
+   <tech>13</tech>
+   <mass>1</mass>
+   <price>135000</price>
+   <description>By improving your ship's stabilization systems drastically, this modification will allow you to reach higher speeds while still keeping the ship stable.</description>
+   <gfx_store>stabilizer</gfx_store>
+  </general>
+  <specific type="modification">
+   <speed>50</speed>
+   <turn>5</turn>
+   <energy_regen>-10</energy_regen>
+  </specific>
+ </outfit>
+ <outfit name="Steering Thrusters">
+  <general>
+   <max>1</max>
+   <tech>13</tech>
+   <mass>1</mass>
+   <price>130000</price>
+   <description>With the adding of a couple additional steering thruster you can make it so that your ship is much agile at turning.</description>
+   <gfx_store>thruster</gfx_store>
+  </general>
+  <specific type="modification">
+   <turn>25</turn>
+   <energy_regen>-10</energy_regen>
+  </specific>
+ </outfit>
+ <outfit name="Generic Afterburner">
+  <general>
+   <max>1</max>
+   <tech>3</tech>
+   <mass>2</mass>
+   <price>20000</price>
+   <description>Being able to run from your enemies is a very powerful ability.  A generic afterburner will allow you to do that.  It may not be as powerful as some of the more high-end afterburners, but they're not nearly as affordable as a generic one.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="afterburner">
+   <rumble>30</rumble>
+   <sound>afterburner</sound>
+   <thrust_perc>100</thrust_perc>
+   <thrust_abs>50</thrust_abs>
+   <speed_perc>50</speed_perc>
+   <speed_abs>30</speed_abs>
+   <energy>60</energy>
+  </specific>
+ </outfit>
+ <outfit name="Hellburner">
+  <general>
+   <max>1</max>
+   <tech>13</tech>
+   <mass>4</mass>
+   <price>95000</price>
+   <description>The Hellburner is one of the best afterburners available in the market.  They have a much better energy to speed ratio then the generics and are much stronger.  A must for any spacefarer who is proud of his ship.</description>
+   <gfx_store>afterburner2</gfx_store>
+  </general>
+  <specific type="afterburner">
+   <rumble>50</rumble>
+   <sound>afterburner</sound>
+   <thrust_perc>185</thrust_perc>
+   <thrust_abs>100</thrust_abs>
+   <speed_perc>85</speed_perc>
+   <speed_abs>50</speed_abs>
+   <energy>65</energy>
+  </specific>
+ </outfit>
+ <outfit name="Fuel Pod">
+  <general>
+   <max>2</max>
+   <tech>3</tech>
+   <mass>5</mass>
+   <price>15000</price>
+   <description>The Fuel Pod allows a ship to store more fuel for hyperspace jumps.  Each pod effectively increases a ship's range by a jump.</description>
+   <gfx_store>fuel_pod</gfx_store>
+  </general>
+  <specific type="modification">
+   <fuel>100</fuel>
+  </specific>
+ </outfit>
+ <outfit name="Cargo Pod">
+  <general>
+   <max>4</max>
+   <tech>6</tech>
+   <mass>15</mass>
+   <price>35000</price>
+   <description>Cargo Pods are big containers you can attach to dedicated weapon space allowing you to transport more cargo.  The drawback is that you lose alot of weapon space and won't be able to defend your cargo as well...</description>
+   <gfx_store>cargo_pod</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>15</cargo>
+  </specific>
+ </outfit>
+ <outfit name="Weapon Rack">
+  <general>
+   <max>4</max>
+   <tech>8</tech>
+   <mass>-10</mass>
+   <price>65000</price>
+   <description>Adding a Weapon Rack to your ship will allow you to enjoy the benefits of more weapon space at the cost of cargo space.  It's often more wiser to have less cargo, but to guard it well.</description>
+   <gfx_store>weapon_rack</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>-15</cargo>
+  </specific>
+ </outfit>
+ <outfit name="Star Map">
+  <general>
+   <max>1</max>
+   <tech>4</tech>
+   <mass>0</mass>
+   <price>7000</price>
+   <description>A Star Map will give you details about all systems up to 2 jumps away.  It's a great risk-free way to discover parts of the universe.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <radius>2</radius>
+  </specific>
+ </outfit>
+ <outfit name="Civilian Jammer">
+  <general>
+   <max>1</max>
+   <tech>7</tech>
+   <mass>2</mass>
+   <price>40000</price>
+   <description>This jammer allows you to block the targetting systems of some of the missiles headed towards you, causing them to do unpredictable behaviours and not impact against your ship.</description>
+   <gfx_store>jammer0</gfx_store>
+  </general>
+  <specific type="jammer">
+   <range>400</range>
+   <chance>20</chance>
+   <energy>3</energy>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Jammer">
+  <general>
+   <max>1</max>
+   <tech>13</tech>
+   <mass>3</mass>
+   <price>250000</price>
+   <description>This jammer follows the much stricter military specifications, allowing it to deflect a much greater amount of missiles at more range then the civilian counterpart.  The downside is that the energy requirements are much greater.</description>
+   <gfx_store>jammer1</gfx_store>
+  </general>
+  <specific type="jammer">
+   <range>600</range>
+   <chance>40</chance>
+   <energy>10</energy>
+  </specific>
+ </outfit>
 </Outfits>

@@ -1,80 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Missions>
-<mission name="Welcome">
-<lua>welcome</lua>
-<flags>
-<unique>1</unique>
-</flags>
-<avail>
-<location>None</location>
-</avail>
-</mission>
-<mission name="Cargo">
-<lua>cargo</lua>
-<avail>
-<chance>960</chance>
-<location>Computer</location>
-<faction>Independent</faction>
-<faction>Empire</faction>
-<faction>Soromid</faction>
-</avail>
-</mission>
-<mission name="Empire Recruitment">
-<lua>emp_cargo00</lua>
-<flags>
-<unique>1</unique>
-</flags>
-<avail>
-<chance>80</chance>
-<location>Bar</location>
-<faction>Empire</faction>
-</avail>
-</mission>
-<mission name="Empire Shipping">
-<lua>es_cargo</lua>
-<avail>
-<cond>var.peek("es_cargo") == true</cond>
-<chance>350</chance>
-<location>Computer</location>
-<faction>Empire</faction>
-<faction>Soromid</faction>
-</avail>
-</mission>
-<mission name="Collective Scouting">
-<lua>emp_collective00</lua>
-<flags>
-<unique>1</unique>
-</flags>
-<avail>
-<cond>var.peek("es_cargo") == true and space.jumpDist("NCG-7291") &lt; 5 and player.getFaction("Empire") &gt; 5 and player.getRating() &gt; 10</cond>
-<chance>60</chance>
-<location>Bar</location>
-<faction>Empire</faction>
-</avail>
-</mission>
-<mission name="Collective Espionage 1">
-<lua>emp_collective01</lua>
-<flags>
-<unique>1</unique>
-</flags>
-<avail>
-<cond>player.getFaction("Empire") &gt; 30</cond>
-<done>Collective Scouting</done>
-<chance>100</chance>
-<location>Bar</location>
-<planet>Omega Station</planet>
-</avail>
-</mission>
-<mission name="Collective Espionage 2">
-<lua>emp_collective02</lua>
-<flags>
-<unique>1</unique>
-</flags>
-<avail>
-<cond>player.getFaction("Empire") &gt; 30</cond>
-<done>Collective Espionage 1</done>
-<chance>100</chance>
-<location>Bar</location>
-<planet>Omega Station</planet>
-</avail>
-</mission>
+ <mission name="Welcome">
+  <lua>welcome</lua>
+  <flags>
+   <unique>1</unique>
+  </flags>
+  <avail>
+   <location>None</location>
+  </avail>
+ </mission>
+ <mission name="Cargo">
+  <lua>cargo</lua>
+  <avail>
+   <chance>960</chance>
+   <location>Computer</location>
+   <faction>Independent</faction>
+   <faction>Empire</faction>
+   <faction>Soromid</faction>
+  </avail>
+ </mission>
+ <mission name="Empire Recruitment">
+  <lua>emp_cargo00</lua>
+  <flags>
+   <unique>1</unique>
+  </flags>
+  <avail>
+   <chance>80</chance>
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission>
+ <mission name="Empire Shipping">
+  <lua>es_cargo</lua>
+  <avail>
+   <cond>var.peek("es_cargo") == true</cond>
+   <chance>350</chance>
+   <location>Computer</location>
+   <faction>Empire</faction>
+   <faction>Soromid</faction>
+  </avail>
+ </mission>
+ <mission name="Collective Scouting">
+  <lua>emp_collective00</lua>
+  <flags>
+   <unique>1</unique>
+  </flags>
+  <avail>
+   <cond>var.peek("es_cargo") == true and space.jumpDist("NCG-7291") &lt; 5 and player.getFaction("Empire") &gt; 5 and player.getRating() &gt; 10</cond>
+   <chance>60</chance>
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission>
+ <mission name="Collective Espionage 1">
+  <lua>emp_collective01</lua>
+  <flags>
+   <unique>1</unique>
+  </flags>
+  <avail>
+   <cond>player.getFaction("Empire") > 30</cond>
+   <done>Collective Scouting</done>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Omega Station</planet>
+  </avail>
+ </mission>
+ <mission name="Collective Espionage 2">
+  <lua>emp_collective02</lua>
+  <flags>
+   <unique>1</unique>
+  </flags>
+  <avail>
+   <cond>player.getFaction("Empire") > 30</cond>
+   <done>Collective Espionage 1</done>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Omega Station</planet>
+  </avail>
+ </mission>
 </Missions>

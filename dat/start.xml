@@ -1,19 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Start>
-<name>Sea of Darkness</name>
-<player>
-<ship>Lancelot</ship>
-<credits>
-<low>500000</low>
-<high>1500000</high>
-</credits>
-<date>
-<low>1300</low>
-<high>1400</high>
-</date>
-<system>
-<name>Delta Pavonis</name>
-<x>0</x>
-<y>0</y>
-</system>
-</player>
+ <name>Sea of Darkness</name>
+ <player>
+  <ship>Lancelot</ship>
+  <credits>
+   <low>500000</low>
+   <high>1500000</high>
+  </credits>
+  <date>
+   <low>1300</low>
+   <high>1400</high>
+  </date>
+  <system>
+   <name>Delta Pavonis</name>
+   <x>0</x>
+   <y>0</y>
+  </system>
+ </player>
 </Start>

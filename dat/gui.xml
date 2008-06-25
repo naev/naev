@@ -1,69 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <GUIs>
-<gui name="minimal" gfx="minimal">
-<offset>
-<x>-65</x>
-<y>0</y>
-</offset>
-<radar type="circle">
-<w>70</w>
-<x>72</x>
-<y>72</y>
-</radar>
-<nav>
-<x>40</x>
-<y>151</y>
-<w>112</w>
-<h>42</h>
-</nav>
-<health>
-<shield>
-<w>98</w>
-<h>8</h>
-<x>52</x>
-<y>201</y>
-</shield>
-<armour>
-<w>98</w>
-<h>8</h>
-<x>52</x>
-<y>212</y>
-</armour>
-<energy>
-<w>98</w>
-<h>8</h>
-<x>52</x>
-<y>223</y>
-</energy>
-</health>
-<weapon>
-<x>40</x>
-<y>239</y>
-<w>112</w>
-<h>42</h>
-</weapon>
-<target>
-<gfx>
-<x>34</x>
-<y>312</y>                                                                
-</gfx>
-<name>
-<x>40</x>
-<y>291</y>
-</name>
-<faction>
-<x>40</x>
-<y>304</y>
-</faction>
-<health>
-<x>40</x>
-<y>401</y>
-</health>
-</target>
-<misc>
-<x>40</x>
-<y>424</y>
-<w>112</w>
-<h>100</h>
-</misc>
-</gui>
+ <gui gfx="minimal" name="minimal">
+  <offset>
+   <x>-65</x>
+   <y>0</y>
+  </offset>
+  <radar type="circle">
+   <w>70</w>
+   <x>72</x>
+   <y>72</y>
+  </radar>
+  <nav>
+   <x>40</x>
+   <y>151</y>
+   <w>112</w>
+   <h>42</h>
+  </nav>
+  <health>
+   <shield>
+    <w>98</w>
+    <h>8</h>
+    <x>52</x>
+    <y>201</y>
+   </shield>
+   <armour>
+    <w>98</w>
+    <h>8</h>
+    <x>52</x>
+    <y>212</y>
+   </armour>
+   <energy>
+    <w>98</w>
+    <h>8</h>
+    <x>52</x>
+    <y>223</y>
+   </energy>
+  </health>
+  <weapon>
+   <x>40</x>
+   <y>239</y>
+   <w>112</w>
+   <h>42</h>
+  </weapon>
+  <target>
+   <gfx>
+    <x>34</x>
+    <y>312</y>
+   </gfx>
+   <name>
+    <x>40</x>
+    <y>291</y>
+   </name>
+   <faction>
+    <x>40</x>
+    <y>304</y>
+   </faction>
+   <health>
+    <x>40</x>
+    <y>401</y>
+   </health>
+  </target>
+  <misc>
+   <x>40</x>
+   <y>424</y>
+   <w>112</w>
+   <h>100</h>
+  </misc>
+ </gui>
 </GUIs>

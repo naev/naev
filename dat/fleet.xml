@@ -1,117 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Fleets>
-<fleet name="Militia Lancelot">
-<ai>militia</ai>
-<faction>Militia</faction>
-<pilots>
-<pilot chance='100'>Lancelot</pilot>
-</pilots>
-</fleet>
-<fleet name="Goddard Goddard">
-<ai>militia</ai>
-<faction>Goddard</faction>
-<pilots>
-<pilot chance='100'>Goddard</pilot>
-</pilots>
-</fleet>
-<fleet name="Merchant Llama">
-<ai>merchant</ai>
-<faction>Merchant</faction>
-<pilots>
-<pilot chance='100'>Llama</pilot>
-</pilots>
-</fleet>
-<fleet name="Merchant Mule">
-<ai>merchant</ai>
-<faction>Merchant</faction>
-<pilots>
-<pilot chance='100'>Mule</pilot>
-</pilots>
-</fleet>
-<fleet name="Sml Merchant Convoy">
-<ai>merchant</ai>
-<faction>Merchant</faction>
-<pilots>
-<pilot chance='80'>Llama</pilot>
-<pilot chance='80'>Llama</pilot>
-<pilot chance='80'>Mule</pilot>
-<pilot chance='80'>Mule</pilot>
-</pilots>
-</fleet>
-<fleet name="Pirate Hyena">
-<ai>pirate</ai>
-<faction>Pirate</faction>
-<pilots>
-<pilot chance='100'>Hyena</pilot>
-</pilots>
-</fleet>
-<fleet name="Pirate Hyena Pack">
-<ai>pirate</ai>
-<faction>Pirate</faction>
-<pilots>
-<pilot chance='100'>Hyena</pilot>
-<pilot chance='100'>Hyena</pilot>
-<pilot chance='80'>Hyena</pilot>
-<pilot chance='60'>Hyena</pilot>
-<pilot chance='40'>Hyena</pilot>
-</pilots>
-</fleet>
-<fleet name="Pirate Admonisher">
-<ai>pirate</ai>
-<faction>Pirate</faction>
-<pilots>
-<pilot chance='100'>Pirate Admonisher</pilot>
-</pilots>
-</fleet>
-<fleet name="Collective Drone">
-<ai>collective</ai>
-<faction>Collective</faction>
-<pilots>
-<pilot chance='100'>Drone</pilot>
-</pilots>
-</fleet>
-<fleet name="Collective Sml Swarm">
-<ai>collective</ai>                                                       
-<faction>Collective</faction>
-<pilots>
-<pilot chance='100'>Drone</pilot>
-<pilot chance='90'>Drone</pilot>
-<pilot chance='80'>Drone</pilot>
-<pilot chance='70'>Drone</pilot>
-<pilot chance='60'>Drone</pilot>
-<pilot chance='50'>Drone</pilot>
-</pilots>
-</fleet>
-<fleet name="Empire Lancelot">
-<ai>empire</ai>
-<faction>Empire</faction>
-<pilots>
-<pilot chance='100'>Lancelot</pilot>
-</pilots>
-</fleet>
-<fleet name="Empire Sml Defense">
-<ai>empire</ai>
-<faction>Empire</faction>
-<pilots>
-<pilot chance='100'>Lancelot</pilot>
-<pilot chance='80'>Lancelot</pilot>
-<pilot chance='60'>Admonisher</pilot>
-<pilot chance='50'>Pacifier</pilot>
-<pilot chance='30'>Hawking</pilot>
-</pilots>
-</fleet>
-<fleet name="Empire Pacifier">
-<ai>empire</ai>
-<faction>Empire</faction>
-<pilots>
-<pilot chance='100'>Pacifier</pilot>
-</pilots>
-</fleet>
-<fleet name="Empire Admonisher">
-<ai>empire</ai>
-<faction>Empire</faction>
-<pilots>
-<pilot chance='100'>Admonisher</pilot>
-</pilots>
-</fleet>
+ <fleet name="Militia Lancelot">
+  <ai>militia</ai>
+  <faction>Militia</faction>
+  <pilots>
+   <pilot chance="100">Lancelot</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Goddard Goddard">
+  <ai>militia</ai>
+  <faction>Goddard</faction>
+  <pilots>
+   <pilot chance="100">Goddard</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Merchant Llama">
+  <ai>merchant</ai>
+  <faction>Merchant</faction>
+  <pilots>
+   <pilot chance="100">Llama</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Merchant Mule">
+  <ai>merchant</ai>
+  <faction>Merchant</faction>
+  <pilots>
+   <pilot chance="100">Mule</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Sml Merchant Convoy">
+  <ai>merchant</ai>
+  <faction>Merchant</faction>
+  <pilots>
+   <pilot chance="80">Llama</pilot>
+   <pilot chance="80">Llama</pilot>
+   <pilot chance="80">Mule</pilot>
+   <pilot chance="80">Mule</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Pirate Hyena">
+  <ai>pirate</ai>
+  <faction>Pirate</faction>
+  <pilots>
+   <pilot chance="100">Hyena</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Pirate Hyena Pack">
+  <ai>pirate</ai>
+  <faction>Pirate</faction>
+  <pilots>
+   <pilot chance="100">Hyena</pilot>
+   <pilot chance="100">Hyena</pilot>
+   <pilot chance="80">Hyena</pilot>
+   <pilot chance="60">Hyena</pilot>
+   <pilot chance="40">Hyena</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Pirate Admonisher">
+  <ai>pirate</ai>
+  <faction>Pirate</faction>
+  <pilots>
+   <pilot chance="100">Pirate Admonisher</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Collective Drone">
+  <ai>collective</ai>
+  <faction>Collective</faction>
+  <pilots>
+   <pilot chance="100">Drone</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Collective Sml Swarm">
+  <ai>collective</ai>
+  <faction>Collective</faction>
+  <pilots>
+   <pilot chance="100">Drone</pilot>
+   <pilot chance="90">Drone</pilot>
+   <pilot chance="80">Drone</pilot>
+   <pilot chance="70">Drone</pilot>
+   <pilot chance="60">Drone</pilot>
+   <pilot chance="50">Drone</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Empire Lancelot">
+  <ai>empire</ai>
+  <faction>Empire</faction>
+  <pilots>
+   <pilot chance="100">Lancelot</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Empire Sml Defense">
+  <ai>empire</ai>
+  <faction>Empire</faction>
+  <pilots>
+   <pilot chance="100">Lancelot</pilot>
+   <pilot chance="80">Lancelot</pilot>
+   <pilot chance="60">Admonisher</pilot>
+   <pilot chance="50">Pacifier</pilot>
+   <pilot chance="30">Hawking</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Empire Pacifier">
+  <ai>empire</ai>
+  <faction>Empire</faction>
+  <pilots>
+   <pilot chance="100">Pacifier</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Empire Admonisher">
+  <ai>empire</ai>
+  <faction>Empire</faction>
+  <pilots>
+   <pilot chance="100">Admonisher</pilot>
+  </pilots>
+ </fleet>
 </Fleets>
