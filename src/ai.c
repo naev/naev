@@ -1064,8 +1064,11 @@ static int ai_settarget( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
 
-   if (lua_isnumber(L,1)) pilot_target = (int)lua_tonumber(L,1);
-   return 0;
+   if (lua_isnumber(L,1)) {
+      pilot_target = (int)lua_tonumber(L,1);
+      return 1;
+   }
+   NLUA_INVALID_PARAMETER();
 }
 
 
@@ -1074,13 +1077,15 @@ static int ai_settarget( lua_State *L )
  */
 static int ai_secondary( lua_State *L )
 {
+   PilotOutfit* po;
+   int i;
+
    if (cur_pilot->secondary) {
       lua_pushstring( L, outfit_getTypeBroad(cur_pilot->secondary->outfit) );
       return 1;
    }
 
-   PilotOutfit* po = NULL;
-   int i;
+   po = NULL;
    for (i=0; i<cur_pilot->noutfits; i++) {
       if ((po==NULL) && (outfit_isWeapon(cur_pilot->outfits[i].outfit) ||
                outfit_isLauncher(cur_pilot->outfits[i].outfit)))
