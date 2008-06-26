@@ -147,6 +147,7 @@ static int ai_haslockon( lua_State *L ); /* boolean haslockon() */
 static int ai_accel( lua_State *L ); /* accel(number); number <= 1. */
 static int ai_turn( lua_State *L ); /* turn(number); abs(number) <= 1. */
 static int ai_face( lua_State *L ); /* face(number/pointer) */
+static int ai_aim( lua_State *L ); /* aim(number) */
 static int ai_brake( lua_State *L ); /* brake() */
 static int ai_getnearestplanet( lua_State *L ); /* pointer getnearestplanet() */
 static int ai_getrndplanet( lua_State *L ); /* pointor getrndplanet() */
@@ -214,6 +215,7 @@ static const luaL_reg ai_methods[] = {
    { "stop", ai_stop },
    { "hyperspace", ai_hyperspace },
    /* combat */
+   { "aim", ai_aim },
    { "combat", ai_combat },
    { "settarget", ai_settarget },
    { "secondary", ai_secondary },
@@ -293,7 +295,7 @@ int ai_init (void)
                strlen(AI_INCLUDE))!=0) &&
             (strncmp( files[i] + strlen(files[i]) - strlen(AI_SUFFIX), /* suffixed */
                AI_SUFFIX, strlen(AI_SUFFIX))==0))
-         if (ai_loadProfile(files[i]))
+         if (ai_loadProfile(files[i])) /* Load the profile */
             WARN("Error loading AI profile '%s'", files[i]);
 
    /* free the char* allocated by pack */
@@ -425,7 +427,7 @@ void ai_think( Pilot* pilot )
 
    cur_pilot->solid->dir_vel = 0.;
    if (pilot_turn) /* set the turning velocity */
-      cur_pilot->solid->dir_vel -= cur_pilot->turn * pilot_turn;
+      cur_pilot->solid->dir_vel += cur_pilot->turn * pilot_turn;
    vect_pset( &cur_pilot->solid->force, /* set the velocity vector */
          cur_pilot->thrust * pilot_acc, cur_pilot->solid->dir );
 
@@ -884,7 +886,7 @@ static int ai_face( lua_State *L )
    }
    else if (lua_islightuserdata(L,1)) v = (Vector2d*)lua_topointer(L,1);
 
-   mod = -10;
+   mod = 10;
    if (lua_gettop(L) > 1 && lua_isnumber(L,2)) invert = (int)lua_tonumber(L,2);
    if (invert) mod *= -1;
 
@@ -896,7 +898,7 @@ static int ai_face( lua_State *L )
             (n==-1) ? VANGLE(sv) :
             vect_angle(&sv, &tv));
    else /* target is static */
-      diff = angle_diff(cur_pilot->solid->dir,   
+      diff = angle_diff( cur_pilot->solid->dir,   
             (n==-1) ? VANGLE(cur_pilot->solid->pos) :
             vect_angle(&cur_pilot->solid->pos, v));
 
@@ -905,9 +907,7 @@ static int ai_face( lua_State *L )
 
    lua_pushnumber(L, ABS(diff*180./M_PI));
    return 1;
-
 }
-
 
 /*
  * brakes the pilot
@@ -1036,6 +1036,57 @@ static int ai_stop( lua_State *L )
       vect_pset( &cur_pilot->solid->vel, 0., 0. );
 
    return 0;
+}
+
+
+/*
+ * Aims at the pilot, trying to hit it.
+ */
+static int ai_aim( lua_State *L )
+{
+   int id;
+   double x,y;
+   double t;
+   Pilot *p;
+   Vector2d tv;
+   double dist, diff;
+   double mod;
+   NLUA_MIN_ARGS(1);
+
+   /* Only acceptable parameter is pilot id */
+   if (lua_isnumber(L,1))
+      id = lua_tonumber(L,1);
+   else
+      NLUA_INVALID_PARAMETER();
+
+   /* Get pilot */
+   p = pilot_get(id);
+   if (p==NULL) {
+      WARN("Pilot invalid");
+      return 0;
+   }
+
+   /* Get the distance */
+   dist = vect_dist( &cur_pilot->solid->pos, &p->solid->pos );
+
+   /* Time for shots to reach that distance */
+   t = dist / cur_pilot->weap_speed;
+
+   /* Position is calculated on where it should be */
+   x = p->solid->pos.x + p->solid->vel.x*t
+         - (cur_pilot->solid->pos.x + cur_pilot->solid->vel.x*t);
+   y = p->solid->pos.y + p->solid->vel.y*t
+      - (cur_pilot->solid->pos.y + cur_pilot->solid->vel.y*t);
+   vect_cset( &tv, x, y );
+
+   /* Calculate what we need to turn */
+   mod = 10.;
+   diff = angle_diff(cur_pilot->solid->dir, VANGLE(tv));
+   pilot_turn = mod * diff;
+
+   /* Return distance to target (in grad) */
+   lua_pushnumber(L, ABS(diff*180./M_PI));
+   return 1;
 }
 
 
@@ -1169,9 +1220,7 @@ static int ai_hostile( lua_State *L )
  */
 static int ai_getweaprange( lua_State *L )
 {
-   int i;
-   double range, max;
-   Outfit *o;
+   double range;
 
    /* if 1 is passed as a parameter, secondary weapon is checked */
    if (lua_isnumber(L,1) && ((int)lua_tonumber(L,1) == 1))
@@ -1189,22 +1238,7 @@ static int ai_getweaprange( lua_State *L )
          return 1;
       }
 
-   max = -1.;
-   for (i=0; i<cur_pilot->noutfits; i++) {
-      o = cur_pilot->outfits[i].outfit;
-
-      /* not interested in secondary weapons nor ammunition */
-      if (outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY) || outfit_isAmmo(o))
-         continue;
-
-      /* compare vs current outfit's range */
-      range = outfit_range(o);
-      if (range > max)
-         max = range;
-   }
-   if (max < 0.) return 0; /* no ranged weapons */
-
-   lua_pushnumber(L,max);
+   lua_pushnumber(L,cur_pilot->weap_range);
    return 1;
 }
 

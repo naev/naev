@@ -309,6 +309,13 @@ double outfit_range( const Outfit* o )
    else if (outfit_isTurret(o)) return o->u.blt.range;
    return -1.;
 }
+double outfit_speed( const Outfit* o )
+{
+   if (outfit_isWeapon(o)) return o->u.blt.speed;
+   else if (outfit_isAmmo(o)) return o->u.amm.speed;
+   else if (outfit_isTurret(o)) return o->u.blt.speed;
+   return -1.;
+}
 int outfit_isSeeker( const Outfit* o )
 {
    if ((o->type==OUTFIT_TYPE_MISSILE_SEEK_AMMO)     ||

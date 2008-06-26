@@ -17,26 +17,33 @@ function attack ()
 		ai.poptask()
 		return
 	end
+   ai.settarget(target)
 
    -- Get stats about enemy
-	dir = ai.face( target ) -- face target
 	dist = ai.dist( ai.pos(target) ) -- get distance
-	second = ai.secondary() -- get best secondary weapon
-
-   -- Shoot missiles if in range
-	if ai.secondary() == "Launcher" and
-         dist < ai.getweaprange(1) and dir < 30 then -- more lenient with aiming
-		ai.settarget(target)
-		ai.shoot(2)
-	end
-
-   -- Attack if in range
    range = ai.getweaprange()
-	if dir < 10 and dist > range then
-		ai.accel()
-	elseif (dir < 10 or ai.hasturrets()) and dist < range then
-		ai.shoot()
-	end
+
+   -- We first bias towards range
+   if dist > range then
+      dir = ai.face(target) -- Normal face the target
+
+      -- Shoot missiles if in range
+      if ai.secondary() == "Launcher" and
+            dist < ai.getweaprange(1) and dir < 30 then -- more lenient with aiming
+         ai.shoot(2)
+      end
+
+      if dir < 10 then
+         ai.accel()
+      end
+
+   -- Close enough to melee
+   else
+      dir = ai.aim(target) -- We aim instead of face
+      if (dir < 10 or ai.hasturrets()) then
+         ai.shoot()
+      end
+   end
 end
 
 

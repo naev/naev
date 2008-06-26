@@ -183,6 +183,7 @@ DamageType outfit_damageType( const Outfit* o );
 int outfit_delay( const Outfit* o );
 double outfit_energy( const Outfit* o );
 double outfit_range( const Outfit* o );
+double outfit_speed( const Outfit* o );
 int outfit_isSeeker( const Outfit* o );
 
 /*

@@ -94,47 +94,51 @@ typedef struct Pilot_ {
 
    int faction; /* Pilot's faction. */
 
-   /* object caracteristics */
+   /* Object caracteristics */
    Ship* ship; /* ship pilot is flying */
    Solid* solid; /* associated solid (physics) */
    int tsx, tsy; /* current sprite, calculated on update */
 
-   /* movement */
+   /* Movement */
    double thrust, turn, speed;
 
-   /* current health */
+   /* Current health */
    double armour, shield, energy, fuel;
    double armour_max, shield_max, energy_max, fuel_max;
    double armour_regen, shield_regen, energy_regen;
 
-   /* associated functions */
+   /* Associated functions */
    void (*think)(struct Pilot_*); /* AI thinking for the pilot */
    void (*update)(struct Pilot_*, const double); /* updates the pilot */
    void (*render)(struct Pilot_*); /* for rendering the pilot */
 
-   /* outfit management */
+   /* Outfit management */
    PilotOutfit* outfits;
    int noutfits;
    PilotOutfit* secondary; /* secondary weapon */
    PilotOutfit* ammo; /* secondary ammo if needed */
    PilotOutfit* afterburner; /* the afterburner */
 
-   /* jamming */
+   /* Jamming */
    double jam_range;
    double jam_chance;
 
-   /* cargo */
+   /* Cargo */
    int credits; /* monies the pilot has */
    PilotCommodity* commodities; /* commodity and quantity */
    int ncommodities;
    int cargo_free;
 
-   /* misc */
+   /* Weapon properties */
+   double weap_range; /* Average range of primary weapons */
+   double weap_speed; /* Average speed of primary weapons */
+
+   /* Misc */
    uint32_t flags; /* used for AI and others */
    unsigned int ptimer; /* generic timer for internal pilot use */
    int lockons; /* Stores how many seeking weapons are targetting pilot */
 
-   /* hook attached to the pilot */
+   /* Hook attached to the pilot */
    int hook_type;
    int hook;
 

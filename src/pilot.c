@@ -834,6 +834,8 @@ void pilot_calcStats( Pilot* pilot )
 {
    int i;
    double q;
+   double wrange, wspeed;
+   int nweaps;
    Outfit* o;
    double ac, sc, ec, fc; /* temporary health coeficients to set */
    /*
@@ -865,6 +867,8 @@ void pilot_calcStats( Pilot* pilot )
    /*
     * now add outfit changes
     */
+   nweaps = 0;
+   wrange = wspeed = 0.;
    for (i=0; i<pilot->noutfits; i++) {
       o = pilot->outfits[i].outfit;
       q = (double) pilot->outfits[i].quantity;
@@ -896,9 +900,19 @@ void pilot_calcStats( Pilot* pilot )
          }
          pilot->energy_regen -= o->u.jam.energy;
       }
+      else if ((outfit_isWeapon(o) || outfit_isTurret(o)) && /* Primary weapon */
+            !outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY)) {
+         nweaps++;
+         wrange = MAX(wrange,outfit_range(o));
+         wspeed += outfit_speed(o);
+      }
    }
 
-   /* give the pilot his health proportion back */
+   /* Set weapon range and speed */
+   pilot->weap_range = wrange; /* Range is max */
+   pilot->weap_speed = wspeed / (double)nweaps;
+
+   /* Give the pilot his health proportion back */
    pilot->armour = ac * pilot->armour_max;
    pilot->shield = sc * pilot->shield_max;
    pilot->energy = ec * pilot->energy_max;

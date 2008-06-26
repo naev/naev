@@ -451,6 +451,7 @@ static Weapon* weapon_create( const Outfit* outfit,
    Vector2d v;
    double mass, rdir;
    Pilot *pilot_target;
+   double x,y, t, dist;
    Weapon* w;
   
    /* Create basic features */
@@ -471,7 +472,22 @@ static Weapon* weapon_create( const Outfit* outfit,
          /* Only difference is the direction of fire */
          if ((outfit->type == OUTFIT_TYPE_TURRET_BOLT) && (w->parent!=w->target) &&
                (w->target != 0)) { /* Must have valid target */
-            rdir = vect_angle(pos,&pilot_get(w->target)->solid->pos);
+            pilot_target = pilot_get(w->target);
+
+            /* Get the distance */
+            dist = vect_dist( pos, &pilot_target->solid->pos );
+
+            /* Time for shots to reach that distance */
+            t = dist / w->outfit->u.blt.speed;
+
+            /* Position is calculated on where it should be */
+            x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
+                  - pos->x + vel->x*t;
+            y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
+                  - pos->y + vel->y*t;
+            vect_cset( &v, x, y );
+
+            rdir = VANGLE(v);
             rdir += RNG(-outfit->u.blt.accuracy/2.,
                   outfit->u.blt.accuracy/2.)/180.*M_PI;
          }
