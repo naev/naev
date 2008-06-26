@@ -16,7 +16,7 @@
    <delay>700</delay>
    <speed>700</speed>
    <range>400</range>
-   <accuracy>20</accuracy>
+   <accuracy>10</accuracy>
    <energy>22</energy>
    <damage type="energy">18</damage>
   </specific>
@@ -79,7 +79,7 @@
    <delay>400</delay>
    <speed>450</speed>
    <range>250</range>
-   <accuracy>20</accuracy>
+   <accuracy>25</accuracy>
    <energy>7</energy>
    <damage type="energy">7</damage>
   </specific>
@@ -100,7 +100,7 @@
    <delay>800</delay>
    <speed>500</speed>
    <range>400</range>
-   <accuracy>10</accuracy>
+   <accuracy>13</accuracy>
    <energy>13</energy>
    <damage type="ion">15</damage>
   </specific>
