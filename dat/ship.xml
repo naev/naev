@@ -152,8 +152,8 @@
    <speed>260</speed>
   </movement>
   <health>
-   <shield>180</shield>
-   <armour>140</armour>
+   <shield>140</shield>
+   <armour>100</armour>
    <energy>280</energy>
    <shield_regen>180</shield_regen>
    <armour_regen>60</armour_regen>

@@ -233,7 +233,7 @@
    <spfx>ExpS</spfx>
    <delay>400</delay>
    <speed>650</speed>
-   <range>200</range>
+   <range>275</range>
    <accuracy>15</accuracy>
    <energy>5</energy>
    <damage type="energy">7</damage>
