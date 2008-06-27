@@ -72,7 +72,7 @@ int faction_get( const char* name )
 
    if (i != faction_nstack)
       return i;
-   DEBUG("Faction '%s' not found in stack.", name);
+   WARN("Faction '%s' not found in stack.", name);
    return -1;
 }
 
@@ -141,7 +141,7 @@ void faction_modPlayer( int f, int mod )
       }
    }
    else {
-      DEBUG("%d is an invalid faction", f);
+      WARN("%d is an invalid faction", f);
       return;
    }
 }
@@ -156,7 +156,7 @@ int faction_getPlayer( int f )
       return faction_stack[f].player;
    }    
    else {
-      DEBUG("%d is an invalid faction", f);
+      WARN("%d is an invalid faction", f);
       return -1000;
    }
 }
@@ -222,7 +222,7 @@ int areEnemies( int a, int b)
          else return 0;
       }
       else {
-         DEBUG("areEnemies: %d is an invalid faction", b);
+         WARN("areEnemies: %d is an invalid faction", b);
          return 0;
       }
    }
@@ -233,7 +233,7 @@ int areEnemies( int a, int b)
          else return 0;
       }
       else {
-         DEBUG("areEnemies: %d is an invalid faction", a);
+         WARN("areEnemies: %d is an invalid faction", a);
          return 0;
       }
    }
@@ -242,14 +242,14 @@ int areEnemies( int a, int b)
    /* handle a */
    if (faction_isFaction(a)) fa = &faction_stack[a];
    else { /* a isn't valid */
-      DEBUG("areEnemies: %d is an invalid faction", a);
+      WARN("areEnemies: %d is an invalid faction", a);
       return 0;
    }
 
    /* handle b */
    if (faction_isFaction(b)) fb = &faction_stack[b];
    else { /* b is invalid */
-      DEBUG("areEnemies: %d is an invalid faction", b);
+      WARN("areEnemies: %d is an invalid faction", b);
       return 0;
    }
 
@@ -283,7 +283,7 @@ int areAllies( int a, int b )
          else return 0;
       }
       else {
-         DEBUG("%d is an invalid faction", b);
+         WARN("%d is an invalid faction", b);
          return 0;
       }
    }
@@ -293,7 +293,7 @@ int areAllies( int a, int b )
          else return 0;
       }    
       else {
-         DEBUG("%d is an invalid faction", a);
+         WARN("%d is an invalid faction", a);
          return 0;
       }
    }
@@ -305,14 +305,14 @@ int areAllies( int a, int b )
    /* handle a */
    if (faction_isFaction(a)) fa = &faction_stack[a];
    else { /* a isn't valid */
-      DEBUG("%d is an invalid faction", a);
+      WARN("%d is an invalid faction", a);
       return 0;
    }
 
    /* handle b */
    if (faction_isFaction(b)) fb = &faction_stack[b];
    else { /* b is invalid */
-      DEBUG("%d is an invalid faction", b);
+      WARN("%d is an invalid faction", b);
       return 0;
    }
 
