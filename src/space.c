@@ -1172,7 +1172,8 @@ int space_sysLoad( xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"known")) {
                sys = system_get(xml_get(cur));
-               sys_setFlag(sys,SYSTEM_KNOWN);
+               if (sys != NULL) /* Must exist */
+                  sys_setFlag(sys,SYSTEM_KNOWN);
             }
          } while (xml_nextNode(cur));
       }
