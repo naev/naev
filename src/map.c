@@ -218,7 +218,7 @@ static void map_update (void)
       nstanding = 0;
       f = -1;
       for (i=0; i<sys->nplanets; i++) {
-         if ((f==-1) && (sys->planets[i].faction!=0)) {
+         if ((f==-1) && (sys->planets[i].faction>0)) {
             f = sys->planets[i].faction;
             standing += faction_getPlayer( f );
             nstanding++;
