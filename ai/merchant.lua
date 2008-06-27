@@ -57,8 +57,9 @@ end
 
 -- Gives the pilot it's initial stuff
 function create ()
-   ai.setcredits( rnd.int(200, ai.shipprice()/100) )
+   ai.setcredits( rnd.int(100, ai.shipprice()/50) )
 
+   -- Some stuff has more chance then others
    num = rnd.int(12)
    if num < 5 then
       cargo = "Food"
