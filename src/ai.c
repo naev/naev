@@ -540,8 +540,14 @@ static int ai_poptask( lua_State *L )
 {
    (void)L; /* hack to avoid -W -Wall warnings */
    Task* t = cur_pilot->task;
-   cur_pilot->task = t->next;
-   t->next = NULL;
+   if (t != NULL) {
+      cur_pilot->task = t->next;
+      t->next = NULL;
+   }
+   else {
+      NLUA_DEBUG("Trying to pop task when there are no tasks on the stack.");
+      return 0;
+   }
    ai_freetask(t);
    return 0;
 }
