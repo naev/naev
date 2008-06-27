@@ -482,9 +482,9 @@ static Weapon* weapon_create( const Outfit* outfit,
 
             /* Position is calculated on where it should be */
             x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
-                  - pos->x + vel->x*t;
+                  - (pos->x + vel->x*t);
             y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
-                  - pos->y + vel->y*t;
+                  - (pos->y + vel->y*t);
             vect_cset( &v, x, y );
 
             rdir = VANGLE(v);
