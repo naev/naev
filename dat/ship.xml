@@ -376,6 +376,7 @@
    <outfit quantity="3">Plasma Blaster</outfit>
    <outfit quantity="1">Missile Launcher</outfit>
    <outfit quantity="12">Missile</outfit>
+   <outfit quantity="1">Milspec Jammer</outfit>
   </outfits>
  </ship>
  <ship name="Schroedinger">
@@ -407,6 +408,8 @@
    <cap_weapon>15</cap_weapon>
    <cap_cargo>15</cap_cargo>
   </caracteristics>
-  <outfits/>
+  <outfits>
+   <outfit quantity="1">Civilian Jammer</outfit>
+  </outfits>
  </ship>
 </Ships>
