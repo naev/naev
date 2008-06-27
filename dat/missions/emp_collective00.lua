@@ -16,7 +16,7 @@ else -- default english
    text[1] = [[As you enter the bar you notice some one signal to you from the counter.  You notice he's wearing an Empire insignia on his uniform.
 "Hello %s, we have a reconnaissance you might be interested.  You up for the challenge?"]]
    text[2] = [["I don't think we've met.  I'm Sargent Dimitri.  If all goes well you'll be reporting to me for the next assignments."
-"This week Collective activity has increased heavily around NCG-7291.  We've been trying to contain them, but reports detect that a scout broke through.  The scout was last detected near %s.  We expect it to not have gone far.  You are to locate the scout and report back to %s in the %s system.  It seems like the Collective is planning something and we want to follow their game a bit more"
+"This week Collective activity has increased heavily around NGC-7291.  We've been trying to contain them, but reports detect that a scout broke through.  The scout was last detected near %s.  We expect it to not have gone far.  You are to locate the scout and report back to %s in the %s system.  It seems like the Collective is planning something and we want to follow their game a bit more"
 "It is of vital important that you do not engage the drone.  Report back as soon as you locate it."]]
    text[3] = [[After landing you head to the Empire military headquarters and find Sgt. Dimitri there.
 "Well it seems like the drone has some strange fixation with %s.  We aren't quite sure what to make of it, but intelligence is on it.  Report back at the bar in bit and we'll see what we can do about the Collective"]]
@@ -34,7 +34,7 @@ function create()
       misn_nearby = "Coriolis"
       misn_target = "Dune"
       misn_base = "Omega Station"
-      misn_base_sys = "NCG-7291"
+      misn_base_sys = "NGC-7291"
       misn.setMarker(misn_nearby) -- Not exact target
 
       -- Mission details
@@ -54,7 +54,7 @@ function enter()
    sys = space.system()
 
    -- additional fleets
-   if sys == "NCG-7291" then -- increase action for realism
+   if sys == "NGC-7291" then -- increase action for realism
       pilot.add("Empire Sml Defense")
       pilot.add("Collective Sml Swarm")
    elseif sys == misn_target then
