@@ -921,7 +921,7 @@ static int ai_brake( lua_State *L )
    if (d >= 2*M_PI) d = fmodf(d, 2*M_PI);
    
    diff = angle_diff(d,VANGLE(cur_pilot->solid->vel));
-   pilot_turn = -10*diff;
+   pilot_turn = 10*diff;
 
    if (ABS(diff) < MAX_DIR_ERR && VMOD(cur_pilot->solid->vel) > MIN_VEL_ERR)
       pilot_acc = 1.;
