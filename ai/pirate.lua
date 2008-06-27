@@ -74,7 +74,7 @@ end
 
 function create ()
    if rnd.int(0,5) ~= 0 then
-      ai.setcredits(0, ai.shipprice()/300 )
+      ai.setcredits(0, ai.shipprice()/100 )
    end
 end
 
