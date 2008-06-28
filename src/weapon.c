@@ -488,12 +488,12 @@ static Weapon* weapon_create( const Outfit* outfit,
             vect_cset( &v, x, y );
 
             rdir = VANGLE(v);
-            rdir += RNG(-outfit->u.blt.accuracy/2.,
-                  outfit->u.blt.accuracy/2.)/180.*M_PI;
          }
          else /* fire straight */
-            rdir = dir + RNG(-outfit->u.blt.accuracy/2.,
-                  outfit->u.blt.accuracy/2.)/180.*M_PI;
+            rdir = dir;
+
+         rdir += NormalInverse( RNGF()*0.9 + 0.05 ) /* Get rid of extreme values */
+               * outfit->u.blt.accuracy/2. * 1./180.*M_PI;
          if ((rdir > 2.*M_PI) || (rdir < 0.)) rdir = fmod(rdir, 2.*M_PI);
 
          mass = 1; /* Lasers are presumed to have unitary mass */

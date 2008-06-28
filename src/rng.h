@@ -13,9 +13,16 @@
 #define RNGF()    (randfp()) /* 0. <= RNGF <= 1. */
 
 
+/* Init */
 void rng_init (void);
+
+/* Random functions */
 unsigned int randint (void);
 double randfp (void);
+
+/* Probability functions */
+double Normal( double x );
+double NormalInverse( double p );
 
 
 #endif /* RNG_H */
