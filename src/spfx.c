@@ -17,9 +17,11 @@
 #include "rng.h"
 
 
-#define SPFX_GFX     "gfx/spfx/" /* location of the graphic */
+#define SPFX_GFX        "gfx/spfx/" /* location of the graphic */
 
-#define SPFX_CHUNK   32 /* chunk to alloc when needed */
+#define SPFX_CHUNK      32 /* chunk to alloc when needed */
+
+#define SHAKE_VEL_MOD   0.0015
 
 
 /*
@@ -286,7 +288,7 @@ void spfx_start( double dt )
 
          if (VMOD(shake_pos) > shake_rad) { /* change direction */
             vect_pset( &shake_pos, shake_rad, VANGLE(shake_pos) );
-            vect_pset( &shake_vel, shake_rad, 
+            vect_pset( &shake_vel, SHAKE_VEL_MOD*shake_rad, 
                   -VANGLE(shake_pos) + (RNGF()-0.5) * M_PI );
          }
 
@@ -321,7 +323,7 @@ void spfx_shake( double mod )
    if (shake_rad > SHAKE_MAX) shake_rad = SHAKE_MAX;
    shake_off = 0;
 
-   vect_pset( &shake_vel, shake_rad, RNGF() * 2. * M_PI );
+   vect_pset( &shake_vel, SHAKE_VEL_MOD*shake_rad, RNGF() * 2. * M_PI );
 }
 
 
