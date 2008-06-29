@@ -10,7 +10,9 @@ function control ()
 
    -- Runaway if enemy is near
    if task ~= "runaway" and enemy ~= nil and ai.dist(enemy) < 500 then
-      ai.poptask()
+      if task ~= "none" then
+         ai.poptask()
+      end
       ai.pushtask(0,"runaway",enemy)
 
    -- Enter hyperspace if possible
