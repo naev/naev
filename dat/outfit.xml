@@ -23,7 +23,7 @@
  </outfit>
  <outfit name="Laser Cannon">
   <general>
-   <max>5</max>
+   <max>6</max>
    <tech>2</tech>
    <mass>5</mass>
    <price>5000</price>

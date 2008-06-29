@@ -349,7 +349,7 @@
   <sound>engine</sound>
   <class>2</class>
   <price>850000</price>
-  <fabricator>Pirate</fabricator>
+  <fabricator>Skull and Bones</fabricator>
   <tech>9009</tech>
   <description>What do you get when you rip apart an Admonisher, hack up the internals and slap it back together?  A Pirate Admonisher, which surprisingly works quite well.</description>
   <movement>
@@ -410,6 +410,39 @@
   </caracteristics>
   <outfits>
    <outfit quantity="1">Civilian Jammer</outfit>
+  </outfits>
+ </ship>
+ <ship name="Vendetta">
+  <GFX>vendetta</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>1</class>
+  <price>400000</price>
+  <fabricator>House Dvaered</fabricator>
+  <tech>8</tech>
+  <description>The Vendetta displays the House Dvaered philosophy very well.  Give a ship as many intimidating guns as you can, layer it with as much armour and you can, and sort of forget about giving it proper electronics.  It's amazing to see that these fly.</description>
+  <movement>
+   <thrust>200</thrust>
+   <turn>125</turn>
+   <speed>180</speed>
+  </movement>
+  <health>
+   <shield>70</shield>
+   <armour>160</armour>
+   <energy>500</energy>
+   <shield_regen>90</shield_regen>
+   <armour_regen>30</armour_regen>
+   <energy_regen>600</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>4</crew>
+   <mass>67</mass>
+   <fuel>300</fuel>
+   <cap_weapon>60</cap_weapon>
+   <cap_cargo>5</cap_cargo>
+  </caracteristics>
+  <outfits>
+  <outfit quantity="6">Laser Cannon</outfit>
   </outfits>
  </ship>
 </Ships>
