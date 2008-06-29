@@ -1496,7 +1496,7 @@ void player_setRadarRel( int mod )
    if (gui.radar.res > RADAR_RES_MAX) gui.radar.res = RADAR_RES_MAX;
    else if (gui.radar.res < RADAR_RES_MIN) gui.radar.res = RADAR_RES_MIN;
 
-   player_message( "Radar set to %dx", (int)gui.radar.res );
+   player_message( "Radar set to %dx.", (int)gui.radar.res );
 }
 
 
@@ -1588,11 +1588,11 @@ void player_land (void)
          return;
       }
       else if (vect_dist(&player->solid->pos,&planet->pos) > planet->gfx_space->sw) {
-         player_message("You are too far away to land on %s", planet->name);
+         player_message("You are too far away to land on %s.", planet->name);
          return;
       } else if ((pow2(VX(player->solid->vel)) + pow2(VY(player->solid->vel))) >
             (double)pow2(MAX_HYPERSPACE_VEL)) {
-         player_message("You are going too fast to land on %s", planet->name);
+         player_message("You are going too fast to land on %s.", planet->name);
          return;
       }
 
@@ -1601,7 +1601,7 @@ void player_land (void)
    else { /* get nearest planet target */
 
       if (cur_system->nplanets == 0) {
-         player_message("There are no planets to land on");
+         player_message("There are no planets to land on.");
          return;
       }
 
@@ -1655,13 +1655,13 @@ void player_jump (void)
    int i = space_hyperspace(player);
 
    if (i == -1)
-      player_message("You are too close to gravity centers to initiate hyperspace");
+      player_message("You are too close to gravity centers to initiate hyperspace.");
    else if (i == -2)
       player_message("You are moving too fast to enter hyperspace.");
    else if (i == -3)
       player_message("You do not have enough fuel to hyperspace jump.");
    else
-      player_message("Preparing for hyperspace");
+      player_message("Preparing for hyperspace.");
 }
 
 

@@ -59,23 +59,23 @@ void player_board (void)
    }
    else if (vect_dist(&player->solid->pos,&p->solid->pos) >
          p->ship->gfx_space->sw * PILOT_SIZE_APROX) {
-      player_message("You are too far away to board your target");
+      player_message("You are too far away to board your target.");
       return;
    }
    else if ((pow2(VX(player->solid->vel)-VX(p->solid->vel)) +
             pow2(VY(player->solid->vel)-VY(p->solid->vel))) >
          (double)pow2(MAX_HYPERSPACE_VEL)) {
-      player_message("You are going too fast to board the ship");
+      player_message("You are going too fast to board the ship.");
       return;
    }
    else if (pilot_isFlag(p,PILOT_BOARDED)) {
-      player_message("Your target cannot be boarded again");
+      player_message("Your target cannot be boarded again.");
       return;
    };
 
    /* pilot will be boarded */
    pilot_setFlag(p,PILOT_BOARDED); 
-   player_message("Boarding ship %s", p->name);
+   player_message("Boarding ship %s.", p->name);
 
 
    /*
