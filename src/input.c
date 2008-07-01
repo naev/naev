@@ -88,9 +88,9 @@ void input_setDefault (void)
    input_setKeybind( "starmap", KEYBIND_KEYBOARD, SDLK_m, 0 );
    input_setKeybind( "jump", KEYBIND_KEYBOARD, SDLK_j, 0 );
    /* misc */
-   input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_9, 0 );
-   input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_0, 0 );
-   input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MINUS, 0 );
+   input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_KP_PLUS, 0 );
+   input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_KP_MINUS, 0 );
+   input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MULTIPLY, 0 );
    input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_z, 0 );
    input_setKeybind( "menu", KEYBIND_KEYBOARD, SDLK_ESCAPE, 0 );
    input_setKeybind( "info", KEYBIND_KEYBOARD, SDLK_i, 0 );
