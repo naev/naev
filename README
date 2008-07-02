@@ -5,21 +5,16 @@
          X.1.1) Binary
             * libsdl1.2debian
             * libsdl-image1.2
+            * libsdl-mixer1.2
             * libgl1-mesa-dri
-            * libopenal0a
-            * libalut0
-            * libvorbis0a
-            * libvorbisfile3
             * libxml2
             * libfreetype6
 
          X.1.2) Source
             * libsdl1.2-dev
             * libsdl-image1.2-dev
+            * libsdl-mixer1.2-dev
             * libgl1-mesa-dev
-            * libopenal-dev
-            * libalut-dev
-            * libvorbis-dev
             * libxml2-dev
             * libfreetype6-dev
 

@@ -73,7 +73,7 @@ typedef struct Ship_ {
    char* gui;
 
    /* sound */
-   ALuint sound;
+   int sound;
 
    /* characteristics */
    int crew;

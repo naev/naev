@@ -7,10 +7,7 @@
 #include "music.h"
 
 #include "SDL.h"
-
-#include <AL/al.h>
-#include <AL/alc.h>
-#include <vorbis/vorbisfile.h>
+#include "SDL_mixer.h"
 
 #include "nlua.h"
 #include "nluadef.h"
@@ -20,31 +17,13 @@
 #include "pack.h"
 
 
-#define MUSIC_STOPPED      (1<<1)
-#define MUSIC_PLAYING      (1<<2)
-#define MUSIC_KILL         (1<<9)
-#define music_is(f)        (music_state & f)
-#define music_set(f)       (music_state |= f)
-#define music_rm(f)        (music_state ^= f)
-
 #define MUSIC_PREFIX       "snd/music/"
 #define MUSIC_SUFFIX       ".ogg"
-
-#define BUFFER_SIZE        (4096*8)
-
-#define soundLock()     SDL_mutexP(sound_lock)
-#define soundUnlock()   SDL_mutexV(sound_lock)
-
-#define musicLock()     SDL_mutexP(music_vorbis_lock)
-#define musicUnlock()   SDL_mutexV(music_vorbis_lock)
 
 #define MUSIC_LUA_PATH     "snd/music.lua"
 
 
-/*
- * global sound mutex
- */
-extern SDL_mutex *sound_lock;
+int music_disabled = 0;
 
 
 /*
@@ -55,35 +34,12 @@ static lua_State *music_lua = NULL;
 static int musicL_load( lua_State* L );
 static int musicL_play( lua_State* L );
 static int musicL_stop( lua_State* L );
-static int musicL_get( lua_State* L );
 static const luaL_reg music_methods[] = {
    { "load", musicL_load },
    { "play", musicL_play },
    { "stop", musicL_stop },
-   { "get", musicL_get },
    {0,0}
 };
-
-
-/*
- * saves the music to ram in this structure
- */
-typedef struct alMusic_ {
-   char name[64]; /* name */
-   Packfile file;
-   OggVorbis_File stream;
-   vorbis_info* info;
-   ALenum format;
-} alMusic;
-
-
-/*
- * song currently playing
- */
-static SDL_mutex *music_vorbis_lock;
-static alMusic music_vorbis;
-static ALuint music_buffer[2]; /* front and back buffer */
-static ALuint music_source = 0;
 
 
 /*
@@ -94,149 +50,23 @@ static int nmusic_selection = 0;
 
 
 /*
- * volume
+ * The current music.
  */
-static ALfloat mvolume = 1.;
-
-
-/*
- * vorbis stuff
- */
-static size_t ovpack_read( void *ptr, size_t size, size_t nmemb, void *datasource )
-{  return (ssize_t) pack_read( datasource, ptr, size*nmemb );  } /* pack_read wrapper */
-static int ovpack_retneg (void) { return -1; } /* must return -1 */
-static int ovpack_retzero (void) { return 0; } /* must return 0 */
-ov_callbacks ovcall = {
-   .read_func = ovpack_read,
-   .seek_func = (int(*)(void*,ogg_int64_t,int)) ovpack_retneg,
-   .close_func = (int(*)(void*)) ovpack_retzero,
-   .tell_func =(long(*)(void*)) ovpack_retneg
-};
+static void *music_data = NULL;
+static SDL_RWops *music_rw = NULL;
+static Mix_Music *music_music = NULL;
 
 
 /*
  * prototypes
  */
 /* music stuff */
-static int stream_loadBuffer( ALuint buffer );
 static int music_find (void);
-static int music_loadOGG( const char *filename );
 static void music_free (void);
 /* lua stuff */
+static void music_rechoose (void);
 static int music_luaInit (void);
 static void music_luaQuit (void);
-
-
-/*
- * the thread
- */
-static unsigned int music_state = 0;
-int music_thread( void* unused )
-{
-   (void)unused;
-
-   int active; /* active buffer */
-   ALint state;
-
-   /* main loop */
-   while (!music_is(MUSIC_KILL)) {
-
-      if (music_is(MUSIC_PLAYING)) {
-         if (music_vorbis.file.end == 0)
-            music_rm(MUSIC_PLAYING);
-         else {
-
-            music_rm(MUSIC_STOPPED);
-
-            musicLock(); /* lock the mutex */
-            soundLock();
-
-            /* start playing current song */
-            active = 0; /* load first buffer */
-            if (stream_loadBuffer( music_buffer[active] )) music_rm(MUSIC_PLAYING);
-            alSourceQueueBuffers( music_source, 1, &music_buffer[active] );
-
-            /* start playing with buffer loaded */
-            alSourcePlay( music_source );
-
-            active = 1; /* load second buffer */
-            if (stream_loadBuffer( music_buffer[active] )) music_rm(MUSIC_PLAYING);
-            alSourceQueueBuffers( music_source, 1, &music_buffer[active] );
-
-            soundUnlock();
-
-            active = 0; /* dive into loop */
-         }
-         while (music_is(MUSIC_PLAYING)) {
-
-            soundLock();
-
-            alGetSourcei( music_source, AL_BUFFERS_PROCESSED, &state );
-            if (state > 0) {
-
-               /* refill active buffer */
-               alSourceUnqueueBuffers( music_source, 1, &music_buffer[active] );
-               if (stream_loadBuffer( music_buffer[active] )) music_rm(MUSIC_PLAYING);
-               alSourceQueueBuffers( music_source, 1, &music_buffer[active] );
-
-               active = 1 - active;
-            }
-            
-            soundUnlock();
-
-            SDL_Delay(0);
-         }
-
-         soundLock();
-
-         alSourceStop( music_source );
-         alSourceUnqueueBuffers( music_source, 2, music_buffer );
-
-         soundUnlock();
-         musicUnlock();
-      }
-
-      music_set(MUSIC_STOPPED);
-      SDL_Delay(0); /* we must not kill resources */
-   }
-
-   return 0;
-}
-static int stream_loadBuffer( ALuint buffer )
-{
-   int size, section, result;
-   char dat[BUFFER_SIZE]; /* buffer to hold the data */
-
-   size = 0;
-   while (size < BUFFER_SIZE) { /* fille up the entire data buffer */
-
-      result = ov_read( &music_vorbis.stream, /* stream */
-            dat + size,            /* data */
-            BUFFER_SIZE - size,     /* amount to read */
-            0,                      /* big endian? */
-            2,                      /* 16 bit */
-            1,                      /* signed */
-            &section );             /* current bitstream */
-
-      if (result == 0) return 1;
-      else if (result == OV_HOLE) {
-         WARN("OGG: Vorbis hole detected in music!");
-         return 0;
-      }
-      else if (result == OV_EBADLINK) {
-         WARN("OGG: Invalid stream section or corrupt link in music!");
-         return -1;
-      }
-
-      size += result;
-      if (size == BUFFER_SIZE) break; /* buffer is full */
-   }
-   /* load the buffer up */
-   alBufferData( buffer, music_vorbis.format,
-         dat, BUFFER_SIZE, music_vorbis.info->rate );
-
-   return 0;
-}
 
 
 /*
@@ -244,82 +74,48 @@ static int stream_loadBuffer( ALuint buffer )
  */
 int music_init (void)
 {
-   music_vorbis_lock = SDL_CreateMutex();
-   music_vorbis.file.end = 0; /* indication it's not loaded */
+   if (music_disabled) return 0;
 
-   soundLock();
-
-   alGenBuffers( 2, music_buffer );
-   alGenSources( 1, &music_source );
-   alSourcef( music_source, AL_GAIN, mvolume );
-   alSourcef( music_source, AL_ROLLOFF_FACTOR, 0. );
-   alSourcei( music_source, AL_SOURCE_RELATIVE, AL_FALSE );
-
-   /* start the lua music stuff */
-   music_luaInit();
-
-   soundUnlock();
-
+   if (music_find() < 0) return -1;
+   if (music_luaInit() < 0) return -1;
+   music_volume(0.7);
    return 0;
-}
-int music_makeList (void)
-{
-   return music_find();
 }
 void music_exit (void)
 {
-   int i;
-
-   /* free the music */
-   alDeleteBuffers( 2, music_buffer );
-   alDeleteSources( 1, &music_source );
    music_free();
+}
 
-   /* free selection */
-   for (i=0; i<nmusic_selection; i++)
-      free(music_selection[i]);
-   free(music_selection);
 
-   /* bye bye lua */
-   music_luaQuit();
-
-   SDL_DestroyMutex( music_vorbis_lock );
+/*
+ * Frees the current playing music.
+ */
+static void music_free (void)
+{
+   if (music_music != NULL) {
+      Mix_HookMusicFinished(NULL);
+      Mix_HaltMusic();
+      Mix_FreeMusic(music_music);
+      /*SDL_FreeRW(music_rw);*/ /* FreeMusic frees it itself */
+      free(music_data);
+      music_music = NULL;
+      music_rw = NULL;
+      music_data = NULL;
+   }
 }
 
 
 /*
  * internal music loading routines
  */
-static int music_loadOGG( const char *filename )
-{
-   /* free currently loaded ogg */
-   music_free();
-
-   musicLock();
-
-   /* set the new name */
-   strncpy( music_vorbis.name, filename, 64 );
-   music_vorbis.name[64-1] = '\0';
-   
-   /* load new ogg */
-   pack_open( &music_vorbis.file, DATA, filename );
-   ov_open_callbacks( &music_vorbis.file, &music_vorbis.stream, NULL, 0, ovcall );
-   music_vorbis.info = ov_info( &music_vorbis.stream, -1);
-
-   /* set the format */
-   if (music_vorbis.info->channels == 1) music_vorbis.format = AL_FORMAT_MONO16;
-   else music_vorbis.format = AL_FORMAT_STEREO16;
-
-   musicUnlock();
-
-   return 0;
-}
 static int music_find (void)
 {
    char** files;
    uint32_t nfiles,i;
    char tmp[64];
    int len;
+
+   if (music_disabled) return 0;
 
    /* get the file list */
    files = pack_listfiles( data, &nfiles );
@@ -351,69 +147,49 @@ static int music_find (void)
 
    return 0;
 }
-static void music_free (void)
-{
-   musicLock();
-
-   if (music_vorbis.file.end != 0) {
-      ov_clear( &music_vorbis.stream );
-      pack_close( &music_vorbis.file );
-      music_vorbis.file.end = 0; /* somewhat officially ended */
-   }
-
-   musicUnlock();
-}
 
 
 /*
  * music control functions
  */
-void music_volume( const double vol )
+int music_volume( const double vol )
 {
-   if (sound_lock == NULL) return;
+   if (music_disabled) return 0;
 
-   /* sanity check */
-   ALfloat fvol = ABS(vol);
-   if (fvol > 1.) fvol = 1.;
-
-   mvolume = fvol;
-
-   /* only needed if playing */
-   if (music_set(MUSIC_PLAYING)) {
-      soundLock();
-      alSourcef( music_source, AL_GAIN, fvol );
-      soundUnlock();
-   }
+   return Mix_VolumeMusic(MIX_MAX_VOLUME*vol);
 }
 void music_load( const char* name )
 {
-   if (sound_lock == NULL) return;
+   unsigned int size;
+   char filename[PATH_MAX];
 
-   int i;
-   char tmp[64];
+   if (music_disabled) return;
 
-   music_stop();
-   while (!music_is(MUSIC_STOPPED)) SDL_Delay(0);
+   music_free();
 
-   for (i=0; i<nmusic_selection; i++)
-      if (strcmp(music_selection[i], name)==0) {
-         snprintf( tmp, 64, MUSIC_PREFIX"%s"MUSIC_SUFFIX, name );
-         music_loadOGG(tmp);
-         return;
-      }
-   WARN("Requested load song '%s' but it can't be found in the music stack",name);
+   /* Load the data */
+   snprintf( filename, PATH_MAX, MUSIC_PREFIX"%s"MUSIC_SUFFIX, name); 
+   music_data = pack_readfile( DATA, filename, &size );
+   music_rw = SDL_RWFromMem(music_data, size);
+   music_music = Mix_LoadMUS_RW(music_rw);
+   if (music_music == NULL)
+      WARN("SDL_Mixer: %s", Mix_GetError());
+
+   Mix_HookMusicFinished(music_rechoose);
 }
 void music_play (void)
 {
-   if (!music_is(MUSIC_PLAYING)) music_set(MUSIC_PLAYING);
+   if (music_music == NULL) return;
+
+   if (Mix_FadeInMusic( music_music, 0, 500 ) < 0)
+      WARN("SDL_Mixer: %s", Mix_GetError());
 }
 void music_stop (void)
 {
-   if (music_is(MUSIC_PLAYING)) music_rm(MUSIC_PLAYING);
-}
-void music_kill (void)
-{
-   if (!music_is(MUSIC_KILL)) music_set(MUSIC_KILL);
+   if (music_music == NULL) return;
+
+   if (Mix_FadeOutMusic(500) < 0)
+      WARN("SDL_Mixer: %s", Mix_GetError());
 }
 
 
@@ -449,7 +225,6 @@ static int music_luaInit (void)
    }
    free(buf);
 
-
    return 0;
 }
 /* destroy */
@@ -479,7 +254,7 @@ int lua_loadMusic( lua_State *L, int read_only )
  */
 int music_choose( char* situation )
 {
-   if (sound_lock == NULL) return 0;
+   if (music_disabled) return 0;
 
    lua_getglobal( music_lua, "choose" );
    lua_pushstring( music_lua, situation );
@@ -487,7 +262,17 @@ int music_choose( char* situation )
       WARN("Error while choosing music: %s", (char*) lua_tostring(music_lua,-1));
       return -1;
    }
+
    return 0;
+}
+
+
+/*
+ * Attempts to rechoose the music.
+ */
+static void music_rechoose (void)
+{
+   music_choose("idle");
 }
 
 
@@ -517,14 +302,6 @@ static int musicL_stop( lua_State *L )
    (void)L;
    music_stop();
    return 0;
-}
-static int musicL_get( lua_State *L )
-{
-   musicLock();
-   lua_pushstring(L,music_vorbis.name);
-   musicUnlock();
-
-   return 1;
 }
 
 

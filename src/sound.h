@@ -8,49 +8,29 @@
 #  define SOUND_H
 
 
-#include <AL/al.h>
-
-#include "physics.h"
-
-#define VOICE_LOOPING      (1<<10) /* voice loops */
-#define VOICE_STATIC       (1<<11) /* voice isn't relative */
-
-
-struct alVoice;
-typedef struct alVoice alVoice;
+extern int sound_disabled;
 
 /*
  * sound subsystem
  */
 int sound_init (void);
 void sound_exit (void);
-void sound_update (void);
 
 
 /*
  * sound manipulation functions
  */
-ALuint sound_get( char* name );
-void sound_volume( const double vol );
-
-
-/*
- * voice manipulation function
- */
-alVoice* sound_addVoice( int priority, double px, double py, /* new voice */
-      double vx, double vy, const ALuint buffer, const unsigned int flags );
-void sound_delVoice( alVoice* voice ); /* delete a voice */
-void voice_update( alVoice* voice, double px, double py, 
-      double vx, double vy );
-void voice_buffer( alVoice* voice, const ALuint buffer, const unsigned int flags );
-void voice_stop( alVoice* voice );
-
+int sound_get( char* name );
+int sound_volume( const double vol );
+int sound_play( int sound );
 
 /*
- * listener manipulation functions
+ * Group functions.
  */
-void sound_listener( double dir, double px, double py,
-      double vx, double vy );
+int sound_reserve( int num );
+int sound_createGroup( int tag, int start, int size );
+int sound_playGroup( int group, int sound, int once );
+void sound_stopGroup( int group );
 
 
 #endif /* SOUND_H */

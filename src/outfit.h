@@ -87,7 +87,7 @@ typedef struct Outfit_ {
 
 
          glTexture* gfx_space; /* graphic */
-         ALuint sound; /* sound to play */
+         int sound; /* sound to play */
          int spfx; /* special effect on hit */
       } blt;
       struct { /* beam */
@@ -114,7 +114,7 @@ typedef struct Outfit_ {
          double damage; /* damage */
 
          glTexture* gfx_space; /* graphic */
-         ALuint sound; /* sound to play */
+         int sound; /* sound to play */
          int spfx; /* special effect on hit */
       } amm;
       struct { /* modification */
@@ -132,7 +132,7 @@ typedef struct Outfit_ {
       } mod;
       struct { /* afterburner */
          double rumble; /* percent of rumble */
-         ALuint sound; /* sound of the afterburner */
+         int sound; /* sound of the afterburner */
          double thrust_perc, thrust_abs; /* percent and absolute thrust bonus */
          double speed_perc, speed_abs; /* percent and absolute speed bonus */
          double energy; /* energy usage while active */

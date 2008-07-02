@@ -467,6 +467,9 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
    xmlNodePtr node;
    char str[PATH_MAX] = "\0";
 
+   /* Defaults */
+   temp->u.blt.sound = -1;
+
    node = parent->xmlChildrenNode;
    do { /* load all the data */
       xmlr_float(node,"speed",temp->u.blt.speed);
@@ -491,7 +494,7 @@ static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->u.blt.gfx_space==NULL,"gfx");
-   MELEMENT((sound_lock!=NULL) && (temp->u.blt.sound==0),"sound");
+   MELEMENT((sound_disabled!=0) && (temp->u.blt.sound<0),"sound");
    MELEMENT(temp->u.blt.delay==0,"delay");
    MELEMENT(temp->u.blt.speed==0,"speed");
    MELEMENT(temp->u.blt.range==0,"range");
@@ -562,7 +565,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->u.amm.gfx_space==NULL,"gfx");
-   MELEMENT((sound_lock!=NULL) && (temp->u.amm.sound==0),"sound");
+   MELEMENT((sound_disabled!=0) && (temp->u.amm.sound<0),"sound");
    MELEMENT(temp->u.amm.thrust==0,"thrust");
    MELEMENT(temp->u.amm.turn==0,"turn");
    MELEMENT(temp->u.amm.speed==0,"speed");

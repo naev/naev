@@ -11,6 +11,9 @@
 #include "lua.h"
 
 
+extern int music_disabled;
+
+
 /*
  * thread
  */
@@ -22,14 +25,13 @@ void music_kill (void);
  * init/exit
  */
 int music_init (void);
-int music_makeList (void);
 void music_exit (void);
 
 
 /*
  * music control
  */
-void music_volume( const double vol );
+int music_volume( const double vol );
 void music_load( const char* name );
 void music_play (void);
 void music_stop (void);

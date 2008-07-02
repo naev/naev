@@ -33,10 +33,8 @@ CLUA = -Ilib/lua
 CSDL = $(shell sdl-config --cflags)
 CXML = $(shell xml2-config --cflags)
 CTTF = $(shell freetype-config --cflags)
-CAL = $(shell openal-config --cflags) $(shell freealut-config --cflags)
-CVORBIS =
 CGL =
-CFLAGS = $(CLUA) $(CPLUTO) $(CSDL) $(CXML) $(CTTF) $(CGL) $(CAL) $(CVORBIS) $(VERSION) -D$(OS)
+CFLAGS = $(CLUA) $(CSDL) $(CXML) $(CTTF) $(CGL) $(VERSION) -D$(OS)
 ifeq ($(OS),LINUX)
 CFLAGS += -D_POSIX_SOURCE
 endif
@@ -51,13 +49,11 @@ endif # DEBUG
 #   LDFLAGS
 #
 LDLUA = lib/lua/liblua.a
-LDSDL = $(shell sdl-config --libs) -lSDL_image
+LDSDL = $(shell sdl-config --libs) -lSDL_image -lSDL_mixer
 LDXML = $(shell xml2-config --libs)
 LDTTF = $(shell freetype-config --libs)
 LDGL = -lGL
-LDAL = $(shell openal-config --libs) $(shell freealut-config --libs)
-LDVORBIS = -lvorbisfile
-LDFLAGS = -lm $(LDLUA) $(LDPLUTO) $(LDSDL) $(LDXML) $(LDTTF) $(LDGL) $(LDAL) $(LDVORBIS)
+LDFLAGS = -lm $(LDLUA) $(LDSDL) $(LDXML) $(LDTTF) $(LDGL)
 
 
 #

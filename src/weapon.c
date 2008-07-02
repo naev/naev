@@ -21,10 +21,6 @@
 
 #define weapon_isSmart(w)     (w->think != NULL)
 
-#define VOICE_PRIORITY_BOLT   10 /* default */
-#define VOICE_PRIORITY_AMMO   8  /* higher */
-#define VOICE_PRIORITY_BEAM   6  /* even higher */
-
 #define WEAPON_CHUNK          128 /* Size to increase array with */
 
 /* Weapon status */
@@ -58,8 +54,6 @@ typedef struct Weapon_ {
 
    double lockon; /* some weapons have a lockon delay */
    double timer; /* mainly used to see when the weapon was fired */
-
-   alVoice* voice; /* virtual voice */
 
    /* position update and render */
    void (*update)(struct Weapon_*, const double, WeaponLayer);
@@ -401,11 +395,6 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    if (weapon_isSmart(w)) (*w->think)(w,dt);
    
    (*w->solid->update)(w->solid, dt);
-
-   /* update the sound */
-   if (w->voice)
-      voice_update( w->voice, w->solid->pos.x, w->solid->pos.y,
-            w->solid->vel.x, w->solid->vel.y );
 }
 
 
@@ -501,9 +490,7 @@ static Weapon* weapon_create( const Outfit* outfit,
          vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
          w->timer = outfit->u.blt.range/outfit->u.blt.speed;
          w->solid = solid_create( mass, rdir, pos, &v );
-         w->voice = sound_addVoice( VOICE_PRIORITY_BOLT,
-               w->solid->pos.x, w->solid->pos.y,
-               w->solid->vel.x, w->solid->vel.y,  w->outfit->u.blt.sound, 0 );
+         sound_play(w->outfit->u.blt.sound);
          break;
 
 
@@ -514,9 +501,6 @@ static Weapon* weapon_create( const Outfit* outfit,
          w->lockon = outfit->u.amm.lockon;
          w->timer = outfit->u.amm.duration;
          w->solid = solid_create( mass, dir, pos, vel );
-         w->voice = sound_addVoice( VOICE_PRIORITY_AMMO,
-               w->solid->pos.x, w->solid->pos.y,
-               w->solid->vel.x, w->solid->vel.y,  w->outfit->u.amm.sound, 0 );
 
          /* if they are seeking a pilot, increment lockon counter */
          pilot_target = pilot_get(target);
@@ -529,12 +513,12 @@ static Weapon* weapon_create( const Outfit* outfit,
             w->think = think_seeker;
          else if (outfit->type == OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO)
             w->think = think_smart;*/
+         sound_play(w->outfit->u.amm.sound);
          break;
 
 
       /* just dump it where the player is */
       default:
-         w->voice = NULL;
          w->solid = solid_create( mass, dir, pos, vel );
          break;
    }
@@ -642,7 +626,6 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
  */
 static void weapon_free( Weapon* w )
 {
-   sound_delVoice( w->voice );
    solid_free(w->solid);
    free(w);
 }

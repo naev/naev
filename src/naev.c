@@ -144,12 +144,13 @@ int main ( int argc, char** argv )
    /*
     * OpenAL - Sound
     */
-   if (nosound)
+   if (nosound) {
       LOG("Sound is disabled!");
-   else {
-      if (sound_init()) WARN("Problem setting up sound!");
-      music_choose("load");
+      sound_disabled = 1;
+      music_disabled = 1;
    }
+   if (sound_init()) WARN("Problem setting up sound!");
+   music_choose("load");
 
 
    /*
@@ -326,8 +327,6 @@ void unload_all (void)
  */
 void main_loop (void)
 {
-   sound_update(); /* do sound stuff */
-
    glClear(GL_COLOR_BUFFER_BIT);
 
    fps_control(); /* everyone loves fps control */

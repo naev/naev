@@ -9,7 +9,6 @@
 #include <malloc.h>
 
 #include "xml.h"
-
 #include "naev.h"
 #include "pilot.h"
 #include "log.h"
@@ -46,13 +45,15 @@
 #define TARGET_WIDTH 128
 #define TARGET_HEIGHT 96
 
+#define PLAYER_RESERVED_CHANNELS 4
+#define PLAYER_CHANNEL           0
+
 
 /*
  * player stuff
  */
 Pilot* player = NULL; /* ze player */
 static Ship* player_ship = NULL; /* temporary ship to hold when naming it */
-static alVoice* player_voice = NULL; /* player's voice */
 static double player_px, player_py, player_vx, player_vy, player_dir; /* more hack */
 static int player_credits = 0; /* temporary hack */
 
@@ -179,7 +180,7 @@ static void player_newMake (void);
 static void player_newShipMake( char *name );
 /* sound */
 static void player_initSound (void);
-static void player_playSound( ALuint sound, int once );
+static void player_playSound( int sound, int once );
 static void player_stopSound (void);
 /* gui */
 static void rect_parse( const xmlNodePtr parent,
@@ -487,23 +488,17 @@ void player_cleanup (void)
  */
 static void player_initSound (void)
 {
-   if (player_voice == NULL) {
-      player_voice = sound_addVoice( 0, /* max priority */
-            0., 0., 0., 0., 0, /* no properties */
-            VOICE_LOOPING | VOICE_STATIC );
-   }
+   sound_reserve(PLAYER_RESERVED_CHANNELS);
+   sound_createGroup(PLAYER_CHANNEL, 0, PLAYER_RESERVED_CHANNELS);
 }
 
 
 /*
  * plays a sound
  */
-static void player_playSound( ALuint sound, int once )
+static void player_playSound( int sound, int once )
 {
-   unsigned int flags = VOICE_STATIC;
-
-   if (once == 0) flags |= VOICE_LOOPING;
-   voice_buffer( player_voice, sound, flags );
+   sound_playGroup( PLAYER_CHANNEL, sound, once );
 }
 
 
@@ -512,7 +507,7 @@ static void player_playSound( ALuint sound, int once )
  */
 static void player_stopSound (void)
 {
-   voice_stop( player_voice );
+   sound_stopGroup( PLAYER_CHANNEL );
 }
 
 
@@ -1474,11 +1469,6 @@ void player_think( Pilot* pplayer )
    else
       vect_pset( &pplayer->solid->force, pplayer->thrust * player_acc,
             pplayer->solid->dir );
-
-   /* set the listener stuff */
-   sound_listener( pplayer->solid->dir,
-         pplayer->solid->pos.x, pplayer->solid->pos.y,
-         pplayer->solid->vel.x, pplayer->solid->vel.y );
 }
 
 

@@ -292,7 +292,7 @@ void conf_parseCLI( int argc, char** argv )
             music_volume( atof(optarg) );
             break;
          case 's':
-            sound_volume( atof(optarg) );
+            /*sound_volume( atof(optarg) );*/
             break;
          case 'G':
             nebu_forceGenerate();
