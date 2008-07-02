@@ -445,4 +445,38 @@
   <outfit quantity="6">Laser Cannon</outfit>
   </outfits>
  </ship>
+ <ship name="Pirate Vendetta">
+  <GFX target="vendetta">vendetta_pirate</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>1</class>
+  <price>450000</price>
+  <fabricator>Skull and Bones</fabricator>
+  <tech>9009</tech>
+  <description>The Pirate Vendetta is even more intimidating then it's regular counterpart.  It's been heavily tweaked to be more adjusted to the pirate style of flying.  Some of the armour has been removed to make more room for loot, while the reactor has been jacked up by a dubious technician.  The ship ends up being much more solid then the original, but every so often the reactor goes nova destroying the ship.  You hope it won't happen to you if you get in one.</description>
+  <movement>
+   <thrust>210</thrust>
+   <turn>135</turn>
+   <speed>190</speed>
+  </movement>
+  <health>
+   <shield>80</shield>
+   <armour>150</armour>
+   <energy>540</energy>
+   <shield_regen>95</shield_regen>
+   <armour_regen>32</armour_regen>
+   <energy_regen>625</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>4</crew>
+   <mass>65</mass>
+   <fuel>300</fuel>
+   <cap_weapon>60</cap_weapon>
+   <cap_cargo>10</cap_cargo>
+  </caracteristics>
+  <outfits>
+  <outfit quantity="4">Plasma Blaster</outfit>
+  <outfit quantity="2">Laser Cannon</outfit>
+  </outfits>
+ </ship>
 </Ships>
