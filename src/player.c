@@ -486,10 +486,14 @@ void player_cleanup (void)
 /*
  * initializes the player sounds
  */
+static int player_soundReserved = 0;
 static void player_initSound (void)
 {
+   if (player_soundReserved) return;
+
    sound_reserve(PLAYER_RESERVED_CHANNELS);
    sound_createGroup(PLAYER_CHANNEL, 0, PLAYER_RESERVED_CHANNELS);
+   player_soundReserved = 1;
 }
 
 
