@@ -60,7 +60,14 @@
   <ai>pirate</ai>
   <faction>Pirate</faction>
   <pilots>
-   <pilot chance="100">Pirate Admonisher</pilot>
+   <pilot name="Admonisher" chance="100">Pirate Admonisher</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Pirate Vendetta">
+  <ai>pirate</ai>
+  <faction>Pirate</faction>
+  <pilots>
+   <pilot name="Vendetta" chance="100">Pirate Vendetta</pilot>
   </pilots>
  </fleet>
  <fleet name="Collective Drone">
