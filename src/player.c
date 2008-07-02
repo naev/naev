@@ -1473,6 +1473,10 @@ void player_think( Pilot* pplayer )
    else
       vect_pset( &pplayer->solid->force, pplayer->thrust * player_acc,
             pplayer->solid->dir );
+
+   /* Update sound position. */
+   sound_updateListener( pplayer->solid->dir,
+         pplayer->solid->pos.x, pplayer->solid->pos.y );
 }
 
 

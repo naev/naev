@@ -490,7 +490,9 @@ static Weapon* weapon_create( const Outfit* outfit,
          vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
          w->timer = outfit->u.blt.range/outfit->u.blt.speed;
          w->solid = solid_create( mass, rdir, pos, &v );
-         sound_play(w->outfit->u.blt.sound);
+         sound_playPos(w->outfit->u.blt.sound, 
+               w->solid->pos.x + w->solid->vel.x, 
+               w->solid->pos.y + w->solid->vel.y);
          break;
 
 
@@ -513,7 +515,9 @@ static Weapon* weapon_create( const Outfit* outfit,
             w->think = think_seeker;
          else if (outfit->type == OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO)
             w->think = think_smart;*/
-         sound_play(w->outfit->u.amm.sound);
+         sound_playPos(w->outfit->u.amm.sound,
+               w->solid->pos.x + w->solid->vel.x,
+               w->solid->pos.y + w->solid->vel.y);
          break;
 
 

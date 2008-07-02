@@ -16,6 +16,7 @@
 #include "log.h"
 #include "pack.h"
 #include "music.h"
+#include "physics.h"
 
 
 #define SOUND_CHANNEL_MAX  256 /* Overkill */
@@ -24,8 +25,12 @@
 #define SOUND_SUFFIX ".wav"
 
 
+/*
+ * Global sound properties.
+ */
 int sound_disabled = 0; /* Whether sound is disabled */
 static int sound_reserved = 0; /* Amount of reserved channels */
+static double sound_pos[3]; /* Position of listener. */
 
 
 /*
@@ -66,7 +71,7 @@ int sound_init (void)
    if (sound_disabled) return 0;
 
    SDL_InitSubSystem(SDL_INIT_AUDIO);
-   if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0) {
+   if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT , 2, 1024) < 0) {
       WARN("SDL_Mixer: %s", Mix_GetError());
       return -1;
    }
@@ -121,8 +126,9 @@ int sound_get( char* name )
    if (sound_disabled) return 0;
 
    for (i=0; i<sound_nlist; i++)
-      if (strcmp(name, sound_list[i].name)==0)
+      if (strcmp(name, sound_list[i].name)==0) {
          return i;
+      }
    WARN("Sound '%s' not found in sound list", name);
    return -1;
 }
@@ -143,8 +149,50 @@ int sound_play( int sound )
    channel = Mix_PlayChannel( -1, sound_list[sound].buffer, 0 );
    
    if (channel < 0)
-      DEBUG("SDL_Mixer: %s", Mix_GetError());
+      WARN("Unable to play sound: %s", Mix_GetError());
 
+   return 0;
+}
+
+
+int sound_playPos( int sound, double x, double y )
+{
+   int channel;
+   double angle, dist;
+   double px,py;
+
+   if (sound_disabled) return 0;
+
+   if ((sound < 0) || (sound > sound_nlist))
+      return -1;
+
+   px = x - sound_pos[0];
+   py = y - sound_pos[1];
+
+   angle = sound_pos[2] - ANGLE(px,py)/M_PI*180.;
+   dist = MOD(px,py);
+
+   channel = Mix_PlayChannel( -1, sound_list[sound].buffer, 0 );
+
+   if (channel < 0) {
+      WARN("Unable to play sound: %s", Mix_GetError());
+      return -1;
+   }
+
+   if (Mix_SetPosition( channel, (int)angle, (int)dist / 10 ) < 0) {
+      WARN("Unable to set sound position: %s", Mix_GetError());
+      return -1;
+   }
+
+   return 0;
+}
+
+
+int sound_updateListener( double dir, double x, double y )
+{
+   sound_pos[0] = x;
+   sound_pos[1] = y;
+   sound_pos[2] = dir/M_PI*180.;
    return 0;
 }
 
