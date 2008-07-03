@@ -23,9 +23,9 @@ function choose( str )
 
       if class == "M" then
          mus = "agriculture"
-      elseif class == "" then
+      elseif name == "Anecu" then -- TODO we need a way to differenciate aquatics
          mus = "ocean"
-      elseif class == "" then
+      elseif class == "P" then
          mus =  "snow"
       else
          if space.planetServices(planet) > 0 then
