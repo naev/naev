@@ -78,7 +78,7 @@ int music_init (void)
 
    if (music_find() < 0) return -1;
    if (music_luaInit() < 0) return -1;
-   music_volume(0.7);
+   music_volume(0.8);
    return 0;
 }
 void music_exit (void)

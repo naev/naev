@@ -89,7 +89,7 @@ int sound_init (void)
 
    /* load up all the sounds */
    sound_makeList();
-   sound_volume(0.3);
+   sound_volume(0.4);
 
    /* Initialize the music */
    music_init();
