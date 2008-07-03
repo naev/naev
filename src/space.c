@@ -221,7 +221,46 @@ static PlanetClass planetclass_get( const char a )
       case '2': return STATION_CLASS_C;
       case '3': return STATION_CLASS_D;
 
-      default: return PLANET_CLASS_NULL;
+      default:
+         WARN("Invalid planet class.");
+         return PLANET_CLASS_NULL;
+   };
+}
+char planet_getClass( Planet *p )
+{
+   switch (p->class) {
+      case PLANET_CLASS_A: return 'A';
+      case PLANET_CLASS_B: return 'B';
+      case PLANET_CLASS_C: return 'C';
+      case PLANET_CLASS_D: return 'D';
+      case PLANET_CLASS_E: return 'E';
+      case PLANET_CLASS_F: return 'F';
+      case PLANET_CLASS_G: return 'G';
+      case PLANET_CLASS_H: return 'H';
+      case PLANET_CLASS_I: return 'I';
+      case PLANET_CLASS_J: return 'J';
+      case PLANET_CLASS_K: return 'K';
+      case PLANET_CLASS_L: return 'L';
+      case PLANET_CLASS_M: return 'M';
+      case PLANET_CLASS_N: return 'N';
+      case PLANET_CLASS_O: return 'O';
+      case PLANET_CLASS_P: return 'P';
+      case PLANET_CLASS_Q: return 'Q';
+      case PLANET_CLASS_R: return 'R';
+      case PLANET_CLASS_S: return 'S';
+      case PLANET_CLASS_T: return 'T';
+      case PLANET_CLASS_X: return 'X';
+      case PLANET_CLASS_Y: return 'Y';
+      case PLANET_CLASS_Z: return 'Z';
+      /* Stations */
+      case STATION_CLASS_A: return '0';
+      case STATION_CLASS_B: return '1';
+      case STATION_CLASS_C: return '2';
+      case STATION_CLASS_D: return '3';
+
+      default: 
+         WARN("Invalid planet class.");
+         return 0;
    };
 }
 

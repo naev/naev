@@ -17,18 +17,37 @@ function choose( str )
       music.play()
 
    elseif str == "land" then
+  
+      planet = space.landName()
+      class = space.planetClass(planet)
 
-      music.load( "agriculture" )
+      if class == "M" then
+         mus = "agriculture"
+      elseif class == "" then
+         mus = "ocean"
+      elseif class == "" then
+         mus =  "snow"
+      else
+         if space.planetServices(planet) > 0 then
+            mus = "cosmostation"
+         else
+            mus = "agriculture"
+         end
+      end
+
+      music.load( mus )
       music.play()
 
    elseif str == "takeoff" then
 
-      music.load( "liftoff" )
+      takeoff = { "liftoff", "launch2", "launch3chatstart" }
+      music.load( takeoff[ rnd.int(1,#takeoff) ])
       music.play()
 
    elseif str == "ambient" then
 
-      music.load( "machina" )
+      ambient = { "peace1", "mission", "peace2", "peace4", "peace6" }
+      music.load( ambient[ rnd.int(1,#ambient) ])
       music.play()
 
    elseif str == "combat" then

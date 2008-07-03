@@ -146,6 +146,7 @@ void space_exit (void);
  */
 char* planet_getSystem( char* planetname );
 Planet* planet_get( char* planetname );
+char planet_getClass( Planet *p );
 
 /*
  * render

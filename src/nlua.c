@@ -41,6 +41,8 @@ static int space_landName( lua_State *L );
 static int space_systemName( lua_State *L );
 static int space_jumpDist( lua_State *L );
 static int space_faction( lua_State *L );
+static int space_planetClass( lua_State *L );
+static int space_planetServices( lua_State *L );
 static const luaL_reg space_methods[] = {
    { "getPlanet", space_getPlanet },
    { "getSystem", space_getSystem },
@@ -48,6 +50,8 @@ static const luaL_reg space_methods[] = {
    { "system", space_systemName },
    { "jumpDist", space_jumpDist },
    { "faction", space_faction },
+   { "planetClass", space_planetClass },
+   { "planetServices", space_planetServices },
    {0,0}
 };
 /* time */
@@ -348,6 +352,44 @@ static int space_faction( lua_State *L )
       lua_setfield(L,-2,faction_name(s->planets[i].faction)); /* key */
       /* allows syntax foo = space.faction("foo"); if foo["bar"] then ... end */
    }
+   return 1;
+}
+static int space_planetClass( lua_State *L )
+{
+   Planet *p;
+   char buf[2];
+
+   NLUA_MIN_ARGS(1);
+
+   /* Get planet */
+   if (lua_isstring(L,1))
+      p = planet_get( (char*)lua_tostring(L,1));
+   else
+      NLUA_INVALID_PARAMETER();
+
+   if (p==NULL) return 0;
+
+   /* Return the class */
+   buf[0] = planet_getClass(p);
+   buf[1] = '\0';
+   lua_pushstring(L,buf);
+   return 1;
+}
+static int space_planetServices( lua_State *L )
+{
+   Planet *p;
+
+   NLUA_MIN_ARGS(1);
+
+   /* Get planet */
+   if (lua_isstring(L,1))
+      p = planet_get( (char*)lua_tostring(L,1));
+   else
+      NLUA_INVALID_PARAMETER();
+
+   if (p==NULL) return 0;
+
+   lua_pushnumber(L,p->services);
    return 1;
 }
 

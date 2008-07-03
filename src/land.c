@@ -1083,9 +1083,6 @@ void land( Planet* p )
 
    if (landed) return;
 
-   /* change music */
-   music_choose("land");
-
    /* Load stuff */
    land_planet = p;
    gfx_exterior = gl_newImage( p->gfx_exterior );
@@ -1140,6 +1137,11 @@ void land( Planet* p )
 
    /* player is now officially landed */
    landed = 1;
+
+   /* Change the music */
+   music_choose("land");
+
+   /* Run hooks */
    hooks_run("land");
 
    /* generate mission computer stuff */
