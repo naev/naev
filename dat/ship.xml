@@ -479,4 +479,74 @@
   <outfit quantity="2">Laser Cannon</outfit>
   </outfits>
  </ship>
+ <ship name="Ancestor">
+  <GFX>ancestor</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>1</class>
+  <price>600000</price>
+  <fabricator>House Dvaered</fabricator>
+  <tech>9</tech>
+  <description>Commonly referred to as the little Goddard, the Ancestor also has it's roots in the primitive flying machines used by men many ages ago.  Unlike the Goddard though, the electronics are done by House Dvaered, making it considerably inferior in that area.</description>
+  <movement>
+   <thrust>180</thrust>
+   <turn>105</turn>
+   <speed>220</speed>
+  </movement>
+  <health>
+   <shield>100</shield>
+   <armour>190</armour>
+   <energy>600</energy>
+   <shield_regen>90</shield_regen>
+   <armour_regen>30</armour_regen>
+   <energy_regen>700</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>6</crew>
+   <mass>80</mass>
+   <fuel>300</fuel>
+   <cap_weapon>80</cap_weapon>
+   <cap_cargo>10</cap_cargo>
+  </caracteristics>
+  <outfits>
+  <outfit quantity="3">Laser Cannon</outfit>
+  <outfit quantity="1">Missile Launcher</outfit>
+  <outfit quantity="8">Missile</outfit>
+  </outfits>
+ </ship>
+ <ship name="Pirate Ancestor">
+  <GFX target="ancestor">ancestor_pirate</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>1</class>
+  <price>550000</price>
+  <fabricator>Skull and Bones</fabricator>
+  <tech>9009</tech>
+  <description>Ancestors were one of the first ships to be fancied by pirates.  The big intimidating wings and good top speeds would usually get ships to surrender without firing a shot.  As better ships came out in the market, their use has fallen due to their archaic electronic and targetting systems.</description>
+  <movement>
+   <thrust>180</thrust>
+   <turn>100</turn>
+   <speed>225</speed>
+  </movement>
+  <health>
+   <shield>120</shield>
+   <armour>180</armour>
+   <energy>600</energy>
+   <shield_regen>100</shield_regen>
+   <armour_regen>35</armour_regen>
+   <energy_regen>650</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>6</crew>
+   <mass>74</mass>
+   <fuel>400</fuel>
+   <cap_weapon>75</cap_weapon>
+   <cap_cargo>15</cap_cargo>
+  </caracteristics>
+  <outfits>
+  <outfit quantity="3">Plasma Blaster</outfit>
+  <outfit quantity="1">Missile Launcher</outfit>
+  <outfit quantity="8">Missile</outfit>
+  </outfits>
+ </ship>
 </Ships>

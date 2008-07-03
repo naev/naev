@@ -24,4 +24,6 @@ cp ${ARTWORK_PATH}"admonisher2.png" "admonisher_pirate.png"
 cp ${ARTWORK_PATH}"schroedinger0.png" "schroedinger.png"
 cp ${ARTWORK_PATH}"vendetta0.png" "vendetta.png"
 cp ${ARTWORK_PATH}"vendetta1.png" "vendetta_pirate.png"
+cp ${ARTWORK_PATH}"ancestor0.png" "ancestor.png"
+cp ${ARTWORK_PATH}"ancestor1.png" "ancestor_pirate.png"
 
