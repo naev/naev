@@ -42,23 +42,17 @@ function attacked ( attacker )
 end
 
 function create ()
-   if rnd.int(0,2)==0 then -- money less often, but more
-      ai.setcredits( rnd.int(1000, ai.shipprice()/70) )
-   end
-   if rnd.int(0,2)==0 then
-      ai.broadcast("The Empire is watching you.")
-   end
+   ai.setcredits( rnd.int(1000, ai.shipprice()/100) )
 end
 
 -- taunts
 function taunt ( target )
    taunts = {
-         "You dare attack me!",
-         "You are no match for the Empire!",
-         "The Empire will have your head!",
-         "You'll regret this!"
+         "Prepare to face annihilation!",
+         "I shall wash my hull in your blood!",
+         "Your head will make a great trophy!"
    }
-   ai.comm(target, taunts[ rnd.int(1,#taunts) ])
+   ai.comm( target, taunts[ rnd.int(1,#taunts) ] )
 end
 
 -- flies to the target

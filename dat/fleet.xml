@@ -70,6 +70,13 @@
    <pilot name="Vendetta" chance="100">Pirate Vendetta</pilot>
   </pilots>
  </fleet>
+ <fleet name="Pirate Ancestor">
+  <ai>pirate</ai>
+  <faction>Pirate</faction>
+  <pilots>
+   <pilot name="Ancestor" chance="100">Pirate Ancestor</pilot>
+  </pilots>
+ </fleet>
  <fleet name="Collective Drone">
   <ai>collective</ai>
   <faction>Collective</faction>
@@ -87,6 +94,40 @@
    <pilot chance="70">Drone</pilot>
    <pilot chance="60">Drone</pilot>
    <pilot chance="50">Drone</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Dvaered Vendetta">
+  <ai>dvaered</ai>
+  <faction>Dvaered</faction>
+  <pilots>
+   <pilot chance="100">Vendetta</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Dvaered Ancestor">
+  <ai>dvaered</ai>
+  <faction>Dvaered</faction>
+  <pilots>
+   <pilot chance="100">Ancestor</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Dvaered Goddard">
+  <ai>dvaered</ai>
+  <faction>Dvaered</faction>
+  <pilots>
+   <pilot chance="100">Goddard</pilot>
+   <pilot chance="80">Ancestor</pilot>
+   <pilot chance="80">Ancestor</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Dvaered Sml Force">
+  <ai>dvaered</ai>
+  <faction>Dvaered</faction>
+  <pilots>
+   <pilot chance="100">Vendetta</pilot>
+   <pilot chance="80">Vendetta</pilot>
+   <pilot chance="60">Ancestor</pilot>
+   <pilot chance="40">Ancestor</pilot>
+   <pilot chance="20">Goddard</pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Lancelot">

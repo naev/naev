@@ -80,14 +80,14 @@ end
 
 
 function taunt ( target )
-      -- some taunts
-      num = rnd.int(0,4)
-      if num == 0 then msg = "You dare attack me!"
-      elseif num == 1 then msg = "You think that you can take me on?"
-      elseif num == 2 then msg = "Die!"
-      elseif num == 3 then msg = "You'll regret this!"
-      end
-      if msg then ai.comm(target, msg) end
+   -- some taunts
+   taunts = {
+         "You dare attack me!",
+         "You think that you can take me on?",
+         "Die!",
+         "You'll regret this!"
+   }
+   ai.comm(target, taunts[ rnd.int(1,#taunts) ])
 end
 
 

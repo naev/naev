@@ -41,13 +41,12 @@ end
 function attacked ( attacker )
    if ai.taskname() ~= "runaway" then
 
-      -- some messages
-      num = rnd.int(0,3)
-      if num == 0 then msg = "Mayday! We are under attack!"
-      elseif num == 1 then msg = "Requesting assistance.  We are under attack!"
-      elseif num == 2 then msg = "Merchant vessle here under attack! Help!"
-      end
-      if msg then ai.broadcast(msg) end
+      sos = {
+            "Mayday! We are under attack!",
+            "Requesting assistance.  We are under attack!",
+            "Merchant vessle here under attack! Help!"
+      }
+      ai.broadcast(sos[ rnd.int(1,#sos) ])
 
       -- Sir Robin bravely ran away
       ai.pushtask(0, "runaway", attacker)
