@@ -9,20 +9,24 @@
 
    MAJOR
 
+   *) Unique pilot system (besides mission uniques)
+   *) Real news
    *) Better AI
       *) boids ship fleet movement (have them behave like fleets)
    *) Escorts (boarding taking over too)
       *) escort commands
-   *) Graphic improvements
-      *) have ships flying in nebulae leave traces
-      *) missile smoke
-      *) engine glow -> need models
-      *) more special effects
-      *) cloaking effects
-      *) fancy displacement effects for some ships
    *) More outfit types
       *) beam weapons
       *) hangar bays -> need escorts
+   *) Dynamic Economy
+   *) Options menu do something
+   *) Configuration app for keybindings
+   *) Players should be able to configure what outfit they want as secondary
+      *) players should also be able to set hotkeys for secondary weapons
+
+
+   MINOR
+
    *) Hybrid ships
       *) Start out with X skillpoints that get spread out by use, use fast at first
       *) Can't use normal gear
@@ -31,27 +35,22 @@
    *) Optimize texture usage
       *) all land graphics should be on land only (optionally)
       *) planet space graphics should be ondemand
-
-
-   MINOR
-
-   *) Unique pilot system (besides mission uniques)
-   *) Real news
-   *) Dynamic Economy
+   *) Graphic improvements
+      *) have ships flying in nebulae leave traces
+      *) missile smoke
+      *) engine glow -> need models
+      *) more special effects
+      *) cloaking effects
+      *) fancy displacement effects for some ships
    *) Dynamic Politics - Faction wide AI
    *) Cinema scenes
-   *) Options menu do something
    *) Allow subsystems to get damage
    *) Allow steering with the mouse
-   *) Configuration app for keybindings
    *) Pilot titles
       *) would usually indicate changes on the base ship equipment
-   *) Players should be able to configure what outfit they want as secondary
-      *) players should also be able to set hotkeys for secondary weapons
    *) Radar improvements
       *) non-linear - see alot more data then currently possible
       *) objects always in sight (depending on resolution)
-   *) Keybindings for secondary weapons
 
 
    MAYBE... SOMEDAY...
