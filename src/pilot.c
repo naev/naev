@@ -616,11 +616,14 @@ static void pilot_update( Pilot* pilot, const double dt )
 
       /* pilot is afterburning */
       if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && /* must have enough energy left */
-               (player->energy > pilot->afterburner->outfit->u.afb.energy * dt)) {
+               (pilot->energy > pilot->afterburner->outfit->u.afb.energy * dt)) {
          limit_speed( &pilot->solid->vel, /* limit is higher */
                pilot->speed * pilot->afterburner->outfit->u.afb.speed_perc + 
                pilot->afterburner->outfit->u.afb.speed_abs, dt );
-         spfx_shake( SHAKE_DECAY/2. * dt); /* shake goes down at half speed */
+
+         if (pilot->id == PLAYER_ID)
+            spfx_shake( SHAKE_DECAY*0.75 * dt); /* shake goes down at half speed */
+
          pilot->energy -= pilot->afterburner->outfit->u.afb.energy * dt; /* energy loss */
       }
       else /* normal limit */

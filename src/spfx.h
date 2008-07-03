@@ -15,8 +15,8 @@
 #define SPFX_LAYER_FRONT   0
 #define SPFX_LAYER_BACK    1
 
-#define SHAKE_DECAY  50. /* decay parameter */
-#define SHAKE_MAX    50.*SCREEN_W*SCREEN_H/1024./768. /* max parameter */
+#define SHAKE_DECAY  300. /* decay parameter */
+#define SHAKE_MAX    75.*SCREEN_W*SCREEN_H/1024./768. /* max parameter */
 
 
 /*
