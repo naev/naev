@@ -26,16 +26,27 @@ function choose( str )
       music.load( "liftoff" )
       music.play()
 
+   elseif str == "ambient" then
+
+      music.load( "machina" )
+      music.play()
+
    elseif str == "combat" then
 
       music.load( "galacticbattle" )
       music.play()
 
    elseif str == "idle" and last ~= "idle" then
-      choose(last) -- this should be smarter in the future
+
+      -- We'll play the same as last unless it was takeoff
+      if last == "takeoff" then
+         choose("ambient")
+      else
+         choose(last)
+      end
    end
 
-   if last ~= "idle" then
+   if str ~= "idle" then
       last = str -- save the last string so we can use it
    end
 end
