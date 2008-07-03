@@ -72,7 +72,7 @@ int sound_init (void)
 
    SDL_InitSubSystem(SDL_INIT_AUDIO);
    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT , 2, 1024) < 0) {
-      WARN("SDL_Mixer: %s", Mix_GetError());
+      WARN("Opening Audio: %s", Mix_GetError());
       return -1;
    }
    Mix_AllocateChannels(SOUND_CHANNEL_MAX);
@@ -280,7 +280,7 @@ static Mix_Chunk* sound_load( char *filename )
    buffer = Mix_LoadWAV_RW(rw,1);
 
    if (buffer == NULL)
-      DEBUG("SDL_Mixer: %s", Mix_GetError());
+      DEBUG("Unable to load sound '%s': %s", filename, Mix_GetError());
 
    /* finish */
    free( wavdata );
