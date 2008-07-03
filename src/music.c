@@ -218,9 +218,10 @@ static int music_luaInit (void)
    /* load the actual lua music code */
    buf = pack_readfile( DATA, MUSIC_LUA_PATH, &bufsize );
    if (luaL_dobuffer(music_lua, buf, bufsize, MUSIC_LUA_PATH) != 0) {
-      ERR("Error loading music file: %s",MUSIC_LUA_PATH);
-      ERR("%s",lua_tostring(music_lua,-1));
-      WARN("Most likely Lua file has improper syntax, please check");
+      ERR("Error loading music file: %s\n"
+          "%s\n"
+          "Most likely Lua file has improper syntax, please check",
+            MUSIC_LUA_PATH, lua_tostring(music_lua,-1) );
       return -1;
    }
    free(buf);

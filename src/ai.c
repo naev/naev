@@ -349,9 +349,10 @@ static int ai_loadProfile( char* filename )
    /* now load the file since all the functions have been previously loaded */
    buf = pack_readfile( DATA, filename, &bufsize );
    if (luaL_dobuffer(L, buf, bufsize, filename) != 0) {
-      ERR("Error loading AI file: %s",filename);
-      ERR("%s",lua_tostring(L,-1));
-      WARN("Most likely Lua file has improper syntax, please check");
+      ERR("Error loading AI file: %s\n"
+          "%s\n"
+          "Most likely Lua file has improper syntax, please check",
+            filename, lua_tostring(L,-1));
       return -1;
    }
    free(buf);
