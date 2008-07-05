@@ -16,10 +16,6 @@
 #include "map.h"
 
 
-#define PLANET_METATABLE   "Planet"
-#define SYSTEM_METATABLE   "System"
-
-
 /*
  * Lua wrappers.
  */
@@ -35,24 +31,20 @@ typedef struct LuaSystem_ {
  * Prototypes
  */
 static int planetL_createmetatable( lua_State *L );
+static int systemL_createmetatable( lua_State *L );
 
 /* space */
 static int planetL_get( lua_State *L );
-static int space_getSystem( lua_State *L );
-static int spaceL_getlanded( lua_State *L );
-static int space_systemName( lua_State *L );
-static int space_jumpDist( lua_State *L );
-static int space_faction( lua_State *L );
+static int systemL_get( lua_State *L );
 static const luaL_reg space_methods[] = {
    { "getPlanet", planetL_get },
-   { "getSystem", space_getSystem },
-   { "getLanded", spaceL_getlanded },
-   { "system", space_systemName },
-   { "jumpDist", space_jumpDist },
-   { "faction", space_faction },
+   { "getSystem", systemL_get },
    {0,0}
 };
 
+/* Internal planet methods. */
+static LuaPlanet* lua_toplanet( lua_State *L, int ind );
+static LuaPlanet* lua_pushplanet( lua_State *L, LuaPlanet planet );
 /* Planet metatable methods */
 static int planetL_eq( lua_State *L );
 static int planetL_name( lua_State *L );
@@ -69,6 +61,23 @@ static const luaL_reg planet_methods[] = {
    {0,0}
 };
 
+/* Internal system methods */
+static LuaSystem* lua_tosystem( lua_State *L, int ind );
+static LuaSystem* lua_pushsystem( lua_State *L, LuaSystem sys );
+/* System metatable methods */
+static int systemL_eq( lua_State *L );
+static int systemL_name( lua_State *L );
+static int systemL_faction( lua_State *L );
+static int systemL_jumpdistance( lua_State *L );
+static const luaL_reg system_methods[] = {
+   { "__eq", systemL_eq },
+   { "__tostring", systemL_name },
+   { "name", systemL_name },
+   { "faction", systemL_faction },
+   { "jumpDist", systemL_jumpdistance },
+   {0,0}
+};
+
 
 
 /*
@@ -78,16 +87,12 @@ int lua_loadSpace( lua_State *L, int readonly )
 {
    (void)readonly;
 
-   /*
-    * Register the functions.
-    */
+   /* Register the functions. */
    luaL_register(L, "space", space_methods);
 
-
-   /*
-    * Register the metatables
-    */
+   /* Register the metatables. */
    planetL_createmetatable( L );
+   systemL_createmetatable( L );
 
    return 0;
 }
@@ -98,8 +103,7 @@ int lua_loadSpace( lua_State *L, int readonly )
  */
 
 /*
- * Creates a Planet metatable from a planet and puts it on top
- * of the stack.
+ * Registers the planet metatable.
  */
 static int planetL_createmetatable( lua_State *L )
 {
@@ -112,6 +116,24 @@ static int planetL_createmetatable( lua_State *L )
 
    /* Register the values */
    luaL_register(L, NULL, planet_methods);
+
+   return 0; /* No error */
+}
+
+/*
+ * Register the system metatable.
+ */
+static int systemL_createmetatable( lua_State *L )
+{
+   /* Create the metatable */
+   luaL_newmetatable(L, SYSTEM_METATABLE);
+
+   /* Create the access table */
+   lua_pushvalue(L,-1);
+   lua_setfield(L,-2,"__index");
+
+   /* Register the values */
+   luaL_register(L, NULL, system_methods);
 
    return 0; /* No error */
 }
@@ -156,13 +178,22 @@ static int planetL_get( lua_State *L )
    int nplanets;
    char *rndplanet;
    LuaPlanet planet;
+   LuaSystem sys;
 
    rndplanet = NULL;
    nplanets = 0;
+
   
-   /* Get a random planet */
+   /* Get the landed planet */
    if (lua_gettop(L) == 0) {
-      rndplanet = space_getRndPlanet();
+      if (land_planet != NULL) {
+         planet.p = land_planet;
+         lua_pushplanet(L,planet);
+         sys.s = system_get( planet_getSystem(land_planet->name) );
+         lua_pushsystem(L,sys);
+         return 2;
+      }
+      return 0; /* Not landed. */
    }
 
    /* Get a planet by faction */
@@ -209,7 +240,8 @@ static int planetL_get( lua_State *L )
    /* Push the planet */
    planet.p = planet_get(rndplanet); /* The real planet */
    lua_pushplanet(L,planet);
-   lua_pushstring(L,planet_getSystem(rndplanet));
+   sys.s = system_get( planet_getSystem(rndplanet) );
+   lua_pushsystem(L,sys);
    return 2;
 }
 
@@ -246,7 +278,7 @@ static int planetL_faction( lua_State *L )
 {
    LuaPlanet *p;
    p = lua_toplanet(L,1);
-   lua_pushnumber(L,p->p->faction);
+   lua_pushstring(L,faction_name(p->p->faction));
    return 1;
 }
 
@@ -263,6 +295,10 @@ static int planetL_class(lua_State *L )
    lua_pushstring(L,buf);
    return 1;
 }
+
+/*
+ * Gets planet services.
+ */
 static int planetL_services( lua_State *L )
 {
    LuaPlanet *p;
@@ -274,45 +310,113 @@ static int planetL_services( lua_State *L )
 
 
 /*
+ *    S Y S T E M
+ */
+
+/*
+ * Gets system at index.
+ */
+static LuaSystem* lua_tosystem( lua_State *L, int ind )
+{     
+   if (lua_isuserdata(L,ind)) {
+      return (LuaSystem*) lua_touserdata(L,ind);
+   }
+   luaL_typerror(L, ind, SYSTEM_METATABLE);
+   return NULL;
+}
+
+/*
+ * Pushes a system on the stack.
+ */
+static LuaSystem* lua_pushsystem( lua_State *L, LuaSystem sys )
+{
+   LuaSystem *s;
+   s = (LuaSystem*) lua_newuserdata(L, sizeof(LuaSystem));
+   *s = sys;
+   luaL_getmetatable(L, SYSTEM_METATABLE);
+   lua_setmetatable(L, -2);
+   return s;
+}
+
+/*
  * Gets a system.
  */
-static int space_getSystem( lua_State *L )
+static int systemL_get( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
+   LuaSystem sys;
    char *planetname, *sysname;
 
    if (lua_isstring(L,1)) planetname = (char*) lua_tostring(L,1);
+   else if (lua_isuserdata(L,1)) {}
    else NLUA_INVALID_PARAMETER();
 
+   /* return the system */
    sysname = planet_getSystem( planetname );
-   lua_pushstring(L,sysname);
+   sys.s = system_get(sysname);
+   lua_pushsystem(L,sys);
    return 1;
 }
-static int spaceL_getlanded( lua_State *L )
+
+/*
+ * Check systems for equality.
+ */
+static int systemL_eq( lua_State *L )
 {
-   LuaPlanet planet;
-   if (landed) {
-      planet.p = land_planet;
-      lua_pushplanet(L,planet);
-      return 1;
+   LuaSystem *a, *b;
+   a = lua_tosystem(L,1);
+   b = lua_tosystem(L,2);
+   if (a->s == b->s)
+      lua_pushboolean(L,1);
+   else
+      lua_pushboolean(L,0);
+   return 1;
+}
+
+/*
+ * Returns the system's name.
+ */
+static int systemL_name( lua_State *L )
+{
+   LuaSystem *sys;
+   sys = lua_tosystem(L,1);
+   lua_pushstring(L,sys->s->name);
+   return 1;
+}
+
+/*
+ * Gets system factions.
+ */
+static int systemL_faction( lua_State *L )
+{
+   int i;
+   LuaSystem *sys;
+   sys = lua_tosystem(L,1);
+
+   /* Return result in table */
+   lua_newtable(L);
+   for (i=0; i<sys->s->nplanets; i++) {
+      lua_pushboolean(L,1); /* value */
+      lua_setfield(L,-2,faction_name(sys->s->planets[i].faction)); /* key */
+      /* allows syntax foo = space.faction("foo"); if foo["bar"] then ... end */
    }
-   return 0;
-}
-static int space_systemName( lua_State *L )
-{
-   lua_pushstring(L, cur_system->name);
    return 1;
+
 }
-static int space_jumpDist( lua_State *L )
+
+/*
+ * Gets jump distance from current system, or to another.
+ */
+static int systemL_jumpdistance( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
+   LuaSystem *sys;
    StarSystem **s;
    int jumps;
    char *start, *goal;
 
-   if (lua_isstring(L,1))
-      start = (char*) lua_tostring(L,1);
-   else NLUA_INVALID_PARAMETER();
+   sys = lua_tosystem(L,1);
+   start = sys->s->name;
 
    if ((lua_gettop(L) > 1) && lua_isstring(L,2))
       goal = (char*) lua_tostring(L,2);
@@ -323,31 +427,6 @@ static int space_jumpDist( lua_State *L )
    free(s);
 
    lua_pushnumber(L,jumps);
-   return 1;
-}
-static int space_faction( lua_State *L )
-{
-   int i;
-   StarSystem *s;
-
-   /* Get system */
-   if (lua_isstring(L,1))
-      s = system_get( lua_tostring(L,1) );
-   else s = cur_system;
-
-   /* Check if valid */
-   if (s == NULL) {
-      NLUA_DEBUG("Invalid system!");
-      return 0;
-   }
-
-   /* Return result in table */
-   lua_newtable(L);
-   for (i=0; i<s->nplanets; i++) {
-      lua_pushboolean(L,1); /* value */
-      lua_setfield(L,-2,faction_name(s->planets[i].faction)); /* key */
-      /* allows syntax foo = space.faction("foo"); if foo["bar"] then ... end */
-   }
    return 1;
 }
 

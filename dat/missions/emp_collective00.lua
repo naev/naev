@@ -31,19 +31,19 @@ function create()
       misn.accept()
 
       misn_stage = 0
-      misn_nearby = "Coriolis"
-      misn_target = "Dune"
-      misn_base = space.getPlanet("Omega Station")
-      misn_base_sys = "NGC-7291"
+      misn_nearby = space.getSystem("Coriolis")
+      misn_target = space.getSystem("Dune")
+      misn_base,misn_base_sys = space.getPlanet("Omega Station")
       misn.setMarker(misn_nearby) -- Not exact target
 
       -- Mission details
       misn.setTitle(misn_title)
       misn.setReward( misn_reward )
-      misn.setDesc( string.format(misn_desc[1],misn_nearby))
+      misn.setDesc( string.format(misn_desc[1],misn_nearby:name()))
 
       -- Flavour text and mini-briefing
-      tk.msg( title[2], string.format( text[2], misn_nearby, misn_base:name(), misn_base_sys ))
+      tk.msg( title[2], string.format( text[2], misn_nearby:name(),
+            misn_base:name(), misn_base_sys:name() ))
 
       hook.enter("enter")
       hook.land("land")
@@ -51,10 +51,10 @@ function create()
 end
 
 function enter()
-   sys = space.system()
+   sys = space.getSystem()
 
    -- additional fleets
-   if sys == "NGC-7291" then -- increase action for realism
+   if sys:name() == "NGC-7291" then -- increase action for realism
       pilot.add("Empire Sml Defense")
       pilot.add("Collective Sml Swarm")
    elseif sys == misn_target then
@@ -66,17 +66,17 @@ function enter()
 
    -- update mission
    if misn_stage == 0 and sys == misn_target then
-      misn.setDesc( string.format(misn_desc[2],misn_base:name(),misn_base_sys) )
+      misn.setDesc( string.format(misn_desc[2],misn_base:name(),misn_base_sys:name()) )
       misn_stage = 1
-      misn.setMarker(misn_base_sys) -- now we mark return to base
+      misn.setMarker(misn_base_sys:name()) -- now we mark return to base
    end
 end
 
 function land()
-   planet = space.getLanded()
+   planet = space.getPlanet()
 
    if misn_stage == 1 and  planet == misn_base then
-      tk.msg( title[3], string.format(text[3],misn_target) )
+      tk.msg( title[3], string.format(text[3],misn_target:name()) )
       player.modFaction("Empire",5)
       misn.finish(true)
    end

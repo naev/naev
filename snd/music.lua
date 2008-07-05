@@ -18,7 +18,7 @@ function choose( str )
 
    elseif str == "land" then
   
-      planet = space.getLanded()
+      planet = space.getPlanet()
       class = planet:class()
 
       if class == "M" then

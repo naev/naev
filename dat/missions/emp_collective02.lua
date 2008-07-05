@@ -39,17 +39,17 @@ function create()
       -- Mission details
       misn.setTitle(misn_title)
       misn.setReward( misn_reward )
-      misn.setDesc( string.format(misn_desc[1], misn_target:name(), misn_target_sys ))
+      misn.setDesc( string.format(misn_desc[1], misn_target:name(), misn_target_sys:name() ))
 
       tk.msg( title[1], string.format(text[2], misn_target:name()) )
-      tk.msg( title[1], string.format(text[3], misn_target:name(), misn_target_sys) )
+      tk.msg( title[1], string.format(text[3], misn_target:name(), misn_target_sys:name()) )
 
       hook.land("land")
    end
 end
 
 function land()
-   planet = space.getLanded()
+   planet = space.getPlanet()
 
    -- First mission part is landing on the planet
    if misn_stage == 0 and planet == misn_target then

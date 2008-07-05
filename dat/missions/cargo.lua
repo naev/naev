@@ -35,21 +35,20 @@ end
 -- Create the mission
 function create()
 
-   local landed = space.getLanded()
+   local landed = space.getPlanet() -- Get landed planet
 
    -- target destination
    local i = 0
    repeat
-      planet = space.getPlanet( misn.factions() )
+      planet,system = space.getPlanet( misn.factions() )
       i = i + 1
    until planet ~= landed or i > 10
    -- infinite loop protection
    if i > 10 then
       misn.finish(false)
    end
-   system = space.getSystem( planet:name() )
    misn.setMarker(system) -- mark the system
-   misn_dist = space.jumpDist( system )
+   misn_dist = system:jumpDist()
 
    -- mission generics
    i = rnd.int(6)
@@ -96,21 +95,21 @@ function create()
    end
 
    if misn_type == "Cargo" then
-      misn.setDesc( string.format( misn_desc[1], planet:name(), system, carg_mass, carg_type ) )
+      misn.setDesc( string.format( misn_desc[1], planet:name(), system:name(), carg_mass, carg_type ) )
       reward = misn_dist * carg_mass * (250+rnd.int(150)) +
             carg_mass * (150+rnd.int(75)) +
             rnd.int(1500)
    elseif misn_type == "Rush" then
       misn_time = time.get() + time.units(2) +
             rnd.int(time.units(2), time.units(4)) * misn_dist
-      misn.setDesc( string.format( misn_desc[11], planet:name(), system,
+      misn.setDesc( string.format( misn_desc[11], planet:name(), system:name(),
             carg_mass, carg_type,
             time.str(misn_time), time.str(misn_time-time.get()) ) )
       reward = misn_dist * carg_mass * (450+rnd.int(250)) +
             carg_mass * (250+rnd.int(125)) +
             rnd.int(2500)
    else -- "People"
-      misn.setDesc( string.format( misn_desc[21], carg_type, planet:name(), system ))
+      misn.setDesc( string.format( misn_desc[21], carg_type, planet:name(), system:name() ))
       reward = misn_dist * (1000+rnd.int(500)) + rnd.int(2000)
    end
    misn.setReward( string.format( misn_reward, reward ) )
@@ -144,7 +143,7 @@ end
 
 -- Land hook
 function land()
-   local landed = space.getLanded()
+   local landed = space.getPlanet()
    if landed == planet then
       if player.rmCargo( carg_id ) then
          player.pay( reward )
@@ -174,7 +173,7 @@ function timeup()
       player.msg( misn_time_msg )
       misn.finish(false)
    end
-   misn.setDesc( string.format( misn_desc[21], planet:name(), system,
+   misn.setDesc( string.format( misn_desc[21], planet:name(), system:name(),
          carg_mass, carg_type,
          time.str(misn_time), time.str(misn_time-time.get()) ) )
 end

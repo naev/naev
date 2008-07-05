@@ -46,7 +46,7 @@
    <unique>1</unique>
   </flags>
   <avail>
-   <cond>var.peek("es_cargo") == true and space.jumpDist("NGC-7291") &lt; 5 and player.getFaction("Empire") &gt; 5 and player.getRating() &gt; 10</cond>
+   <cond>var.peek("es_cargo") == true and space.getSystem("NGC-7291"):jumpDist() &lt; 5 and player.getFaction("Empire") &gt; 5 and player.getRating() &gt; 10</cond>
    <chance>60</chance>
    <location>Bar</location>
    <faction>Empire</faction>

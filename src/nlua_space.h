@@ -9,6 +9,11 @@
 
 #include "lua.h"
 
+
+#define PLANET_METATABLE   "Planet"
+#define SYSTEM_METATABLE   "System"
+
+
 /* 
  * Load the space library.
  */

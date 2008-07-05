@@ -29,8 +29,7 @@ function create()
 
       misn_stage = 0      
       systems_visited = 0 -- Number of Collective systems visited
-      misn_base = space.getPlanet("Omega Station")
-      misn_base_sys = space.getSystem(misn_base:name())
+      misn_base,misn_base_sys = space.getPlanet("Omega Station")
 
       -- Mission details
       misn.setTitle(misn_title)
@@ -44,7 +43,8 @@ function create()
 end
 
 function enter()
-   factions = space.faction()
+   local sys = space.getSystem()
+   local factions = sys:faction()
 
    -- Increment System visited count
    if misn_stage == 0 and factions["Collective"] then
@@ -53,7 +53,7 @@ function enter()
       -- Visited enough systems
       if misn_stage == 0 and systems_visited >= 2 then
          misn.setDesc( string.format(misn_desc[2],
-               misn_base:name(), misn_base_sys) )
+               misn_base:name(), misn_base_sys:name()) )
          misn_stage = 1
          misn.setMarker(misn_base_sys) -- now we mark return to base
          hook.land("land")
@@ -62,7 +62,7 @@ function enter()
 end
 
 function land()
-   planet = space.getLanded()
+   local planet = space.getPlanet()
 
    if misn_stage == 1 and  planet == misn_base then
       tk.msg( title[3], text[3] )

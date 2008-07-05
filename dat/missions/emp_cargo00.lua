@@ -23,19 +23,18 @@ end
 
 function create()
 
-   local landed = space.getLanded()
+   local landed = space.getPlanet()
 
    -- target destination
    local i = 0
    repeat
-      dest = space.getPlanet( misn.factions() )
+      dest,system = space.getPlanet( misn.factions() )
       i = i + 1
    until dest ~= landed or i > 10
    -- infinite loop protection
    if i > 10 then
       misn.finish(false)
    end
-   system = space.getSystem(dest:name())
    misn.setMarker(system)
 
    -- Intro text
@@ -48,7 +47,7 @@ function create()
       reward = 3000
       misn.setTitle(misn_title)
       misn.setReward( string.format(misn_reward, reward) )
-      misn.setDesc( string.format(misn_desc,dest:name(),system))
+      misn.setDesc( string.format(misn_desc,dest:name(),system:name()))
 
       -- Flavour text and mini-briefing
       tk.msg( title[2], string.format( text[3], dest:name() ))
@@ -62,7 +61,7 @@ end
 
 function land()
 
-   local landed = space.getLanded()
+   local landed = space.getPlanet()
    if landed == dest then
       if player.rmCargo(parcels) then
          player.pay(reward)
