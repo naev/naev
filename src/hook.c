@@ -13,6 +13,9 @@
 #include "xml.h"
 
 
+#define HOOK_CHUNK   32 /* Size to grow by when out of space */
+
+
 /*
  * the hook
  */
@@ -89,7 +92,7 @@ unsigned int hook_add( unsigned int parent, char *func, char *stack )
 
    /* if memory must grow */
    if (hook_nstack+1 > hook_mstack) {
-      hook_mstack += 5;
+      hook_mstack += HOOK_CHUNK;
       hook_stack = realloc(hook_stack, hook_mstack*sizeof(Hook));
    }
 
@@ -164,7 +167,7 @@ int hooks_run( char* stack )
    hook_runningstack = 0; /* not running hooks anymore */
 
    for (i=0; i<hook_nstack; i++)
-      if ((strcmp(stack, hook_stack[i].stack)==0) && hook_stack[i].delete) {
+      if (hook_stack[i].delete) { /* Delete any that need deleting */
          hook_rm( hook_stack[i].id );
          i--;
       }
