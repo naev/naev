@@ -75,6 +75,7 @@ char* namjoystick = NULL;
 /*
  * prototypes
  */
+static void print_SDLversion (void);
 static void load_screen (void);
 static void load_all (void);
 static void unload_all (void);
@@ -122,6 +123,10 @@ int main ( int argc, char** argv )
    /* load the data basics */
    data_name();
    LOG(" %s", dataname);
+   DEBUG();
+
+   /* Display the SDL Version. */
+   print_SDLversion();
    DEBUG();
 
    /* random numbers */
@@ -564,6 +569,21 @@ char *naev_version (void)
       snprintf( human_version, 50, " "APPNAME" v%s - %s", version, dataname );
 
    return human_version;
+}
+
+
+/**
+ * @brief Prints the SDL version.
+ */
+static void print_SDLversion (void)
+{
+   const SDL_version *linked;
+   SDL_version compiled;
+   SDL_VERSION(&compiled);
+   linked = SDL_Linked_Version();
+   DEBUG("SDL: %d.%d.%d [compiled: %d.%d.%d]",
+         linked->major, linked->minor, linked->patch,
+         compiled.major, compiled.minor, compiled.patch);
 }
 
 
