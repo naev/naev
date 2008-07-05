@@ -273,7 +273,6 @@ static int mission_meetReq( int mission, int faction, char* planet, char* sysnam
    if ((misn->avail.done != NULL) && /* Mission doesn't meet previous mission reqs. */
          (player_missionAlreadyDone( mission_getID(misn->avail.done) ) == 0))
       return 0;
-       
 
   return 1;
 }
@@ -296,7 +295,7 @@ void missions_bar( int faction, char* planet, char* sysname )
          if (!mission_meetReq(i, faction, planet, sysname))
             continue;
 
-         chance = (double)(misn->avail.chance % 100)/100.;
+         chance = (double)(misn->avail.chance % 101)/100.;
 
          if (RNGF() < chance) {
             mission_init( &mission, misn, 0 );

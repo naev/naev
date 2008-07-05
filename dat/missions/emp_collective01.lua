@@ -23,7 +23,7 @@ end
 
 function create()
    -- Intro text
-   if tk.yesno( title[1], text[1], player.name() )
+   if tk.yesno( title[1], text[1] )
       then
       misn.accept()
 
