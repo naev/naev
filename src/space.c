@@ -130,10 +130,9 @@ void planets_minimap( const double res, const double w,
    for (i=0; i<cur_system->nplanets; i++) {
       planet = &cur_system->planets[i];
 
-      if (!planet_hasService(planet,PLANET_SERVICE_BASIC))
-         col = &cInert;
-      else
-         col = faction_getColour(planet->faction);
+      col = faction_getColour(planet->faction);
+      if ((col != &cHostile) && !planet_hasService(planet,PLANET_SERVICE_BASIC))
+         col = &cInert; /* Override non-hostile planets without service. */
       COLOUR(*col);
 
       r = (int)(cur_system->planets[i].gfx_space->sw / res);

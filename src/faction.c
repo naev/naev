@@ -171,7 +171,7 @@ int faction_getPlayer( int f )
  */
 glColour* faction_getColour( int f )
 {
-   if (f==-1) return &cInert;
+   if (f<0) return &cInert;
    else if (areAllies(FACTION_PLAYER,f)) return &cFriend;
    else if (areEnemies(FACTION_PLAYER,f)) return &cHostile;
    else return &cNeutral;
