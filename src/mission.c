@@ -10,6 +10,7 @@
 #include <malloc.h>
 
 #include "nlua.h"
+#include "nlua_space.h"
 #include "nluadef.h"
 
 #include "rng.h"
@@ -635,6 +636,9 @@ static int mission_saveData( xmlTextWriterPtr writer,
 }
 static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
 {
+   LuaPlanet *p;
+   LuaSystem *s;
+
    lua_pushnil(L);
    /* nil */
    while (lua_next(L, LUA_GLOBALSINDEX) != 0) {
@@ -653,6 +657,20 @@ static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
                   (char*)lua_tostring(L,-2), (char*)lua_tostring(L,-1) );
             break;
 
+         case LUA_TUSERDATA:
+            if (lua_isplanet(L,-1)) {
+               p = lua_toplanet(L,-1);
+               mission_saveData( writer, "planet",
+                     (char*)lua_tostring(L,-2), p->p->name );
+               break;
+            }
+            else if (lua_issystem(L,-1)) {
+               s = lua_tosystem(L,-1);
+               mission_saveData( writer, "system",
+                     (char*)lua_tostring(L,-2), s->s->name );
+               break;
+            }
+
          default:
             break;
       }
@@ -669,6 +687,8 @@ static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
  */
 static int mission_unpersistData( lua_State *L, xmlNodePtr parent )
 {
+   LuaPlanet p;
+   LuaSystem s;
    xmlNodePtr node;
    char *name, *type;
 
@@ -685,11 +705,20 @@ static int mission_unpersistData( lua_State *L, xmlNodePtr parent )
             lua_pushboolean(L,xml_getInt(node));
          else if (strcmp(type,"string")==0)
             lua_pushstring(L,xml_get(node));
+         else if (strcmp(type,"planet")==0) {
+            p.p = planet_get(xml_get(node));
+            lua_pushplanet(L,p);
+         }
+         else if (strcmp(type,"system")==0) {
+            s.s = system_get(xml_get(node));
+            lua_pushsystem(L,s);
+         }
          else {
             WARN("Unknown lua data type!");
             return -1;
          }
 
+         /* Set as global */
          lua_setglobal(L,name);
          
          /* cleanup */

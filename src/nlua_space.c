@@ -10,21 +10,9 @@
 #include "log.h"
 #include "naev.h"
 #include "rng.h"
-#include "space.h"
 #include "land.h"
 #include "nluadef.h"
 #include "map.h"
-
-
-/*
- * Lua wrappers.
- */
-typedef struct LuaPlanet_ {
-   Planet *p;
-} LuaPlanet;
-typedef struct LuaSystem_ {
-   StarSystem *s;
-} LuaSystem;
 
 
 /*
@@ -42,9 +30,6 @@ static const luaL_reg space_methods[] = {
    {0,0}
 };
 
-/* Internal planet methods. */
-static LuaPlanet* lua_toplanet( lua_State *L, int ind );
-static LuaPlanet* lua_pushplanet( lua_State *L, LuaPlanet planet );
 /* Planet metatable methods */
 static int planetL_eq( lua_State *L );
 static int planetL_name( lua_State *L );
@@ -53,7 +38,6 @@ static int planetL_class( lua_State *L );
 static int planetL_services( lua_State *L );
 static const luaL_reg planet_methods[] = {
    { "__eq", planetL_eq },
-   { "__tostring", planetL_name },
    { "name", planetL_name },
    { "faction", planetL_faction },
    { "class", planetL_class },
@@ -61,9 +45,6 @@ static const luaL_reg planet_methods[] = {
    {0,0}
 };
 
-/* Internal system methods */
-static LuaSystem* lua_tosystem( lua_State *L, int ind );
-static LuaSystem* lua_pushsystem( lua_State *L, LuaSystem sys );
 /* System metatable methods */
 static int systemL_eq( lua_State *L );
 static int systemL_name( lua_State *L );
@@ -71,7 +52,6 @@ static int systemL_faction( lua_State *L );
 static int systemL_jumpdistance( lua_State *L );
 static const luaL_reg system_methods[] = {
    { "__eq", systemL_eq },
-   { "__tostring", systemL_name },
    { "name", systemL_name },
    { "faction", systemL_faction },
    { "jumpDist", systemL_jumpdistance },
@@ -144,7 +124,7 @@ static int systemL_createmetatable( lua_State *L )
 /*
  * Gets planet at index.
  */
-static LuaPlanet* lua_toplanet( lua_State *L, int ind )
+LuaPlanet* lua_toplanet( lua_State *L, int ind )
 {
    if (lua_isuserdata(L,ind)) {
       return (LuaPlanet*) lua_touserdata(L,ind);
@@ -156,7 +136,7 @@ static LuaPlanet* lua_toplanet( lua_State *L, int ind )
 /*
  * Pushes a planet on the stack.
  */
-static LuaPlanet* lua_pushplanet( lua_State *L, LuaPlanet planet )
+LuaPlanet* lua_pushplanet( lua_State *L, LuaPlanet planet )
 {
    LuaPlanet *p;
    p = (LuaPlanet*) lua_newuserdata(L, sizeof(LuaPlanet));
@@ -164,6 +144,25 @@ static LuaPlanet* lua_pushplanet( lua_State *L, LuaPlanet planet )
    luaL_getmetatable(L, PLANET_METATABLE);
    lua_setmetatable(L, -2);
    return p;
+}
+
+/*
+ * Checks to see if ind is a planet.
+ */
+int lua_isplanet( lua_State *L, int ind )
+{
+   int ret;
+
+   if (lua_getmetatable(L,ind)==0)
+      return 0;
+   lua_getfield(L, LUA_REGISTRYINDEX, PLANET_METATABLE);
+
+   ret = 0;
+   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */ 
+      ret = 1;
+
+   lua_pop(L, 2);  /* remove both metatables */ 
+   return ret;
 }
 
 /*
@@ -316,7 +315,7 @@ static int planetL_services( lua_State *L )
 /*
  * Gets system at index.
  */
-static LuaSystem* lua_tosystem( lua_State *L, int ind )
+LuaSystem* lua_tosystem( lua_State *L, int ind )
 {     
    if (lua_isuserdata(L,ind)) {
       return (LuaSystem*) lua_touserdata(L,ind);
@@ -328,7 +327,7 @@ static LuaSystem* lua_tosystem( lua_State *L, int ind )
 /*
  * Pushes a system on the stack.
  */
-static LuaSystem* lua_pushsystem( lua_State *L, LuaSystem sys )
+LuaSystem* lua_pushsystem( lua_State *L, LuaSystem sys )
 {
    LuaSystem *s;
    s = (LuaSystem*) lua_newuserdata(L, sizeof(LuaSystem));
@@ -337,6 +336,26 @@ static LuaSystem* lua_pushsystem( lua_State *L, LuaSystem sys )
    lua_setmetatable(L, -2);
    return s;
 }
+
+/*
+ * Checks to see if ind is a planet.
+ */
+int lua_issystem( lua_State *L, int ind )
+{  
+   int ret;
+
+   if (lua_getmetatable(L,ind)==0)
+      return 0;
+   lua_getfield(L, LUA_REGISTRYINDEX, SYSTEM_METATABLE);
+
+   ret = 0;
+   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */ 
+      ret = 1;
+
+   lua_pop(L, 2);  /* remove both metatables */
+   return ret;
+}
+
 
 /*
  * Gets a system.
