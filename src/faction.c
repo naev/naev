@@ -82,6 +82,10 @@ int faction_get( const char* name )
  */
 char* faction_name( int f )
 {
+   if ((f < 0) || (f >= faction_nstack)) {
+      WARN("Faction id '%d' is invalid.",f);
+      return NULL;
+   }
    return faction_stack[f].name;
 }
 
