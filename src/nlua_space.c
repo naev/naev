@@ -203,8 +203,7 @@ static int planetL_get( lua_State *L )
 
    /* Get a planet by name */
    else if (lua_isstring(L,1)) {
-      i = faction_get((char*) lua_tostring(L,1));
-      planets = space_getFactionPlanet( &nplanets, &i, 1 );
+      rndplanet = (char*) lua_tostring(L,1);
    }
 
    /* Get a planet from faction list */
@@ -362,12 +361,15 @@ int lua_issystem( lua_State *L, int ind )
  */
 static int systemL_get( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
    LuaSystem sys;
    LuaPlanet *p;
 
+   /* Get current system with no parameters */
+   if (lua_gettop(L) == 0) {
+      sys.s = cur_system;
+   }
    /* Passing a string (systemname) */
-   if (lua_isstring(L,1)) {
+   else if (lua_isstring(L,1)) {
       sys.s = system_get( (char*) lua_tostring(L,1) );
    }
    /* Passing a planet */

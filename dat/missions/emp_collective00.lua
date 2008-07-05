@@ -68,7 +68,7 @@ function enter()
    if misn_stage == 0 and sys == misn_target then
       misn.setDesc( string.format(misn_desc[2],misn_base:name(),misn_base_sys:name()) )
       misn_stage = 1
-      misn.setMarker(misn_base_sys:name()) -- now we mark return to base
+      misn.setMarker(misn_base_sys) -- now we mark return to base
    end
 end
 

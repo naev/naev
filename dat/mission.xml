@@ -46,8 +46,8 @@
    <unique>1</unique>
   </flags>
   <avail>
-   <cond>var.peek("es_cargo") == true and space.getSystem("NGC-7291"):jumpDist() &lt; 5 and player.getFaction("Empire") &gt; 5 and player.getRating() &gt; 10</cond>
-   <chance>60</chance>
+   <cond>var.peek("es_cargo") == true and space.getSystem("NGC-7291"):jumpDist() &lt; 5 and player.getFaction("Empire") &gt; 5 and player.getRating() &gt; 5</cond>
+   <chance>80</chance>
    <location>Bar</location>
    <faction>Empire</faction>
   </avail>
@@ -58,7 +58,7 @@
    <unique>1</unique>
   </flags>
   <avail>
-   <cond>player.getFaction("Empire") > 30</cond>
+   <cond>player.getFaction("Empire") &gt; 5</cond>
    <done>Collective Scouting</done>
    <chance>100</chance>
    <location>Bar</location>
@@ -71,7 +71,7 @@
    <unique>1</unique>
   </flags>
   <avail>
-   <cond>player.getFaction("Empire") > 30</cond>
+   <cond>player.getFaction("Empire") &gt; 5</cond>
    <done>Collective Espionage 1</done>
    <chance>100</chance>
    <location>Bar</location>
