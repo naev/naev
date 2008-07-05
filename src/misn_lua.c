@@ -13,6 +13,7 @@
 #include "lauxlib.h"
 
 #include "nlua.h"
+#include "nlua_space.h"
 #include "hook.h"
 #include "mission.h"
 #include "log.h"
@@ -425,18 +426,23 @@ static int misn_setReward( lua_State *L )
 }
 static int misn_setMarker( lua_State *L )
 {
-   if (lua_isstring(L, 1)) {
-      if (cur_mission->sys_marker != NULL) /* cleanup old marker */
+   LuaSystem *sys;
+
+   /* No parameter clears the marker */
+   if (lua_gettop(L)==0) {
+      if (cur_mission->sys_marker != NULL)
          free(cur_mission->sys_marker);
-      cur_mission->sys_marker = strdup((char*)lua_tostring(L,1));
-#ifdef DEBUG
-      if (system_get(cur_mission->sys_marker)==NULL)
-         NLUA_DEBUG("Marking unexistant system '%s'",cur_mission->sys_marker);
-#endif
-      mission_sysMark();
+      mission_sysMark(); /* Clear the marker */
    }
-   else if (cur_mission->sys_marker != NULL) /* no parameter nullifies */
-      free(cur_mission->sys_marker);
+
+   /* Passing in a Star System */
+   if (lua_issystem(L,1)) {
+      sys = lua_tosystem(L,1);
+      cur_mission->sys_marker = strdup(sys->s->name);
+      mission_sysMark(); /* mark the system */
+   }
+   else NLUA_INVALID_PARAMETER();
+
    return 0;
 }
 static int misn_factions( lua_State *L )
