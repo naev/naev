@@ -2,6 +2,7 @@
 #   OPTIONS
 #
 DEBUG = 1
+DEBUG_PARANOID = 1
 
 # OS
 OS := LINUX
@@ -40,6 +41,9 @@ CFLAGS += -D_POSIX_SOURCE
 endif
 ifdef DEBUG
 CFLAGS += -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -fstack-protector -fstack-protector-all -g3 -DDEBUG -DLUA_USE_APICHECK -std=c99 -ansi
+ifdef DEBUG_PARANOID
+CFLAGS += -DDEBUG_PARANOID
+endif # DEBUG_PARANOID
 else # DEBUG
 CFLAGS += -O2 -funroll-loops -pipe -std=c99 -ansi
 endif # DEBUG

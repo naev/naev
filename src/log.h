@@ -17,7 +17,11 @@
 #include <assert.h>
 
 #define LOG(str, args...)  (fprintf(stdout,str"\n", ## args))
+#ifdef DEBUG_PARANOID /* Will cause WARNs to blow up */
 #define WARN(str, args...) (fprintf(stderr,"Warning: "str"\n", ## args), assert(0))
+#else /* DEBUG_PARANOID */
+#define WARN(str, args...) (fprintf(stderr,"Warning: "str"\n", ## args))
+#endif /* DEBUG_PARANOID */
 #define ERR(str, args...)  (fprintf(stderr,"ERROR %s:%d [%s]: "str"\n", __FILE__, __LINE__, __func__, ## args), assert(0))
 #ifdef DEBUG
 #  undef DEBUG
