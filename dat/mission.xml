@@ -33,7 +33,7 @@
  <mission name="Empire Shipping">
   <lua>es_cargo</lua>
   <avail>
-   <cond>var.peek("es_cargo") == true</cond>
+   <cond>player.getFaction("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
    <chance>350</chance>
    <location>Computer</location>
    <faction>Empire</faction>

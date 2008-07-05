@@ -364,15 +364,20 @@ static int systemL_get( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
    LuaSystem sys;
-   char *planetname, *sysname;
+   LuaPlanet *p;
 
-   if (lua_isstring(L,1)) planetname = (char*) lua_tostring(L,1);
-   else if (lua_isuserdata(L,1)) {}
+   /* Passing a string (systemname) */
+   if (lua_isstring(L,1)) {
+      sys.s = system_get( (char*) lua_tostring(L,1) );
+   }
+   /* Passing a planet */
+   else if (lua_isplanet(L,1)) {
+      p = lua_toplanet(L,1);
+      sys.s = system_get( planet_getSystem( p->p->name ) );
+   }
    else NLUA_INVALID_PARAMETER();
 
    /* return the system */
-   sysname = planet_getSystem( planetname );
-   sys.s = system_get(sysname);
    lua_pushsystem(L,sys);
    return 1;
 }
