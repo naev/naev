@@ -32,30 +32,30 @@ function create()
 
       misn_stage = 0      
       systems_visited = 0 -- Number of Collective systems visited
-      misn_base = "Omega Station"
-      misn_target = "Eiroik"
-      misn.setMarker(space.getSystem(misn_target))
+      misn_base, misn_base_sys = space.getPlanet("Omega Station")
+      misn_target, misn_target_sys = space.getPlanet("Eiroik")
+      misn.setMarker(misn_target_sys)
 
       -- Mission details
       misn.setTitle(misn_title)
       misn.setReward( misn_reward )
-      misn.setDesc( string.format(misn_desc[1], misn_target, space.getSystem(misn_target) ))
+      misn.setDesc( string.format(misn_desc[1], misn_target:name(), misn_target_sys ))
 
-      tk.msg( title[1], string.format(text[2], misn_target) )
-      tk.msg( title[1], string.format(text[3], misn_target, space.getSystem(misn_target)) )
+      tk.msg( title[1], string.format(text[2], misn_target:name()) )
+      tk.msg( title[1], string.format(text[3], misn_target:name(), misn_target_sys) )
 
       hook.land("land")
    end
 end
 
 function land()
-   planet = space.landName()
+   planet = space.getLanded()
 
    -- First mission part is landing on the planet
    if misn_stage == 0 and planet == misn_target then
-      tk.msg( title[1], string.format(text[4], misn_target) )
+      tk.msg( title[1], string.format(text[4], misn_target:name()) )
       misn_stage = 1
-      misn.setMarker(space.getSystem(misn_base))
+      misn.setMarker(misn_base_sys)
 
    -- Return bit
    elseif misn_stage == 1 and planet == misn_base then

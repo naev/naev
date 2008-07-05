@@ -30,22 +30,22 @@ function create()
 
    -- target destination
    local i = 0
+   local landed = space.getLanded()
    repeat
-      planet = space.getPlanet( misn.factions() )
+      planet,system = space.getPlanet( misn.factions() )
       i = i + 1
-   until planet ~= space.landName() or i > 10
+   until planet ~= landed or i > 10
    -- infinite loop protection
    if i > 10 then
       misn.finish(false)
    end
-   system = space.getSystem( planet )
    misn.setMarker(system) -- set system marker
    misn_dist = space.jumpDist(system)
 
    -- mission generics
    misn_type = "Cargo"
    i = rnd.int(1)
-   misn.setTitle( string.format(title[i+1], planet) )
+   misn.setTitle( string.format(title[i+1], planet:name()) )
 
    -- more mission specifics
    carg_mass = rnd.int( 10, 30 )
@@ -64,7 +64,7 @@ function create()
 
    misn_time = time.get() + time.units(5) +
          rnd.int(time.units(5), time.units(8)) * misn_dist
-   misn.setDesc( string.format( misn_desc, carg_mass, carg_type, planet, system,
+   misn.setDesc( string.format( misn_desc, carg_mass, carg_type, planet:name(), system,
          time.str(misn_time), time.str(misn_time-time.get())) )
    reward = misn_dist * carg_mass * (500+rnd.int(250)) +
          carg_mass * (250+rnd.int(150)) +
@@ -90,7 +90,9 @@ end
 
 -- Land hook
 function land()
-   if space.landName() == planet then
+
+   local landed = space.getLanded()
+   if landed == planet then
       if player.rmCargo( carg_id ) then
          player.pay( reward )
          tk.msg( finish_title, string.format( finish_msg, carg_type ))
@@ -121,7 +123,7 @@ function timeup()
       player.msg( miss_timeup )
       misn.finish(false)
    end
-   misn.setDesc( string.format( misn_desc, carg_mass, carg_type, planet, system,
+   misn.setDesc( string.format( misn_desc, carg_mass, carg_type, planet:name(), system,
          time.str(misn_time), time.str(misn_time-time.get())) )
 end
 

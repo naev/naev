@@ -18,8 +18,8 @@ function choose( str )
 
    elseif str == "land" then
   
-      planet = space.landName()
-      class = space.planetClass(planet)
+      planet = space.getLanded()
+      class = planet:class()
 
       if class == "M" then
          mus = "agriculture"
@@ -28,7 +28,7 @@ function choose( str )
       elseif class == "P" then
          mus =  "snow"
       else
-         if space.planetServices(planet) > 0 then
+         if planet:services() > 0 then
             mus = "cosmostation"
          else
             mus = "agriculture"

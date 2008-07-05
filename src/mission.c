@@ -148,9 +148,10 @@ static int mission_init( Mission* mission, MissionData* misn, int load )
    /* load the file */
    buf = pack_readfile( DATA, misn->lua, &bufsize );
    if (luaL_dobuffer(mission->L, buf, bufsize, misn->lua) != 0) {
-      ERR("Error loading mission file: %s",misn->lua);
-      ERR("%s",lua_tostring(mission->L,-1));
-      WARN("Most likely Lua file has improper syntax, please check");
+      ERR("Error loading mission file: %s\n"
+          "%s\n"
+          "Most likely Lua file has improper syntax, please check",
+            misn->lua, lua_tostring(mission->L,-1));
       return -1;
    }
    free(buf);
