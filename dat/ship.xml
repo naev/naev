@@ -307,6 +307,41 @@
    <outfit quantity="40">Headhunter</outfit>
   </outfits>
  </ship>
+ <ship name="Dvaered Goddard">
+  <GFX target="goddard">goddard_dvaered</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>3</class>
+  <price>11500000</price>
+  <fabricator>House Goddard</fabricator> 
+  <tech>9999</tech>
+  <description>A Dvaered Goddard.</description>
+  <movement>
+   <thrust>100</thrust>
+   <turn>80</turn>
+   <speed>130</speed>
+  </movement>
+  <health>
+   <shield>800</shield>
+   <armour>500</armour>
+   <energy>2000</energy>
+   <shield_regen>330</shield_regen>
+   <armour_regen>90</armour_regen>
+   <energy_regen>1700</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>52</crew>
+   <mass>4350</mass>
+   <fuel>500</fuel>
+   <cap_weapon>250</cap_weapon>
+   <cap_cargo>60</cap_cargo>
+  </caracteristics>
+  <outfits>
+   <outfit quantity="4">Laser Turret</outfit>
+   <outfit quantity="2">Missile Launcher</outfit>
+   <outfit quantity="40">Missile</outfit>
+  </outfits>
+ </ship>
  <ship name="Admonisher">
   <GFX>admonisher</GFX>
   <GUI>minimal</GUI>
@@ -445,6 +480,39 @@
   <outfit quantity="6">Laser Cannon</outfit>
   </outfits>
  </ship>
+ <ship name="Dvaered Vendetta">
+  <GFX target="vendetta">vendetta_dvaered</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>1</class>
+  <price>400000</price>
+  <fabricator>House Dvaered</fabricator>
+  <tech>9999</tech>
+  <description>A Dvaered Vendetta.</description>
+  <movement>
+   <thrust>200</thrust>
+   <turn>125</turn>
+   <speed>180</speed>
+  </movement>
+  <health>
+   <shield>70</shield>
+   <armour>160</armour>
+   <energy>500</energy>                                                   
+   <shield_regen>90</shield_regen>                                        
+   <armour_regen>30</armour_regen>
+   <energy_regen>600</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>4</crew>
+   <mass>67</mass>
+   <fuel>300</fuel>
+   <cap_weapon>60</cap_weapon>
+   <cap_cargo>5</cap_cargo>
+  </caracteristics>
+  <outfits>
+  <outfit quantity="6">Laser Cannon</outfit>
+  </outfits>
+ </ship>
  <ship name="Pirate Vendetta">
   <GFX target="vendetta">vendetta_pirate</GFX>
   <GUI>minimal</GUI>
@@ -488,6 +556,41 @@
   <fabricator>House Dvaered</fabricator>
   <tech>9</tech>
   <description>Commonly referred to as the little Goddard, the Ancestor also has it's roots in the primitive flying machines used by men many ages ago.  Unlike the Goddard though, the electronics are done by House Dvaered, making it considerably inferior in that area.</description>
+  <movement>
+   <thrust>180</thrust>
+   <turn>105</turn>
+   <speed>220</speed>
+  </movement>
+  <health>
+   <shield>100</shield>
+   <armour>190</armour>
+   <energy>600</energy>
+   <shield_regen>90</shield_regen>
+   <armour_regen>30</armour_regen>
+   <energy_regen>700</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>6</crew>
+   <mass>80</mass>
+   <fuel>300</fuel>
+   <cap_weapon>80</cap_weapon>
+   <cap_cargo>10</cap_cargo>
+  </caracteristics>
+  <outfits>
+  <outfit quantity="3">Laser Cannon</outfit>
+  <outfit quantity="1">Missile Launcher</outfit>
+  <outfit quantity="8">Missile</outfit>
+  </outfits>
+ </ship>
+ <ship name="Dvaered Ancestor">
+  <GFX target="ancestor">ancestor_dvaered</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>1</class>
+  <price>600000</price>
+  <fabricator>House Dvaered</fabricator>
+  <tech>9999</tech>
+  <description>A Dvaered Ancestor.</description>
   <movement>
    <thrust>180</thrust>
    <turn>105</turn>
