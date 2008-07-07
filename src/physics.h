@@ -17,7 +17,7 @@
 #define VANGLE(v) ((v).angle)
 
 #define MOD(x,y)  (sqrt((x)*(x)+(y)*(y)))
-#define ANGLE(x,y) (((x)==0.) ? 0. : (((x)<0.) ? atan((y)/(x))+M_PI : atan((y)/(x))))
+#define ANGLE(x,y) (((x)==0.) ? 0. : atan2(y,x))
 
 #define vect_dist(v,u)  MOD((v)->x-(u)->x,(v)->y-(u)->y)
 #define vect_odist(v)   MOD((v)->x,(v)->y)
