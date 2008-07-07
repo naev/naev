@@ -12,7 +12,7 @@
   <general>
    <bar>The bar is just off the starport with a great view of the harbour.  You could watch the fishermen run frantically about attending their duties for hours.</bar>
    <description>The surface of the planet is predominantly covered with water and the planetary climate is characterised by abundant precipitation and strong winds, yet tolerable enough to make special and expensive weather control measures unnecessary. Habitable land is often characterised by soft meadows, swamps and dense forests. The resource base of Caladan consists mainly of agriculture and biomass, with the locally bred and grown pundi rice being its main export, and fishing a traditional source of sustenance for its people. Other traditional products include wine and various livestock, most prominently cattle. Cuisine on Caladan is rather refined, with most dishes containing meat.</description>
-   <faction>Independent</faction>
+   <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
     <commodity>Ore</commodity>
@@ -20,7 +20,8 @@
     <commodity>Medicine</commodity>
    </commodities>
    <tech>
-    <main>3</main>
+    <main>0</main>
+    <special>0</special>
    </tech>
    <services>31</services>
    <class>M</class>
@@ -52,6 +53,34 @@
    <class>D</class>
   </general>
  </planet>
+ <planet name="Anecu">
+  <GFX>
+   <exterior>aquatic.png</exterior>
+   <space>M03.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <bar>The spaceport bar is aproximately 3 km below the surface of the planet.  Most of the walls are of a hardened transparet polymer that allows you to see into the darkness of the water.  Every so often you can notice a gelatinous creature slide around, barely illuminated by the bar lighting.</bar>
+   <description>Anecu is a completely aquatic planet.  It's surface is covered completely by water.  In the shallow areas great underwater cities are constructed, as the climate above the water can be very harsh (waves been recorded to be up to 2 km high).  The planet boasts of extensive ship designing facilities, using the high pressure water as a testbed for ships of all sorts.</description>
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Luxury Goods</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>6</main>
+    <special>0</special>
+   </tech>
+   <services>31</services>
+   <class>M</class>
+  </general>
+ </planet>
  <planet name="Zabween">
   <GFX>
    <exterior>station00.png</exterior>
@@ -72,7 +101,8 @@
     <commodity>Industrial Goods</commodity>
    </commodities>
    <tech>
-    <main>9</main>
+    <main>0</main>
+    <special>0</special>
    </tech>
    <services>31</services>
    <class>0</class>
@@ -96,6 +126,7 @@
    </commodities>
    <tech>
     <main>0</main>
+    <special>0</special>
    </tech>
    <services>7</services>
    <class>0</class>
@@ -162,6 +193,24 @@
    <class>G</class>
   </general>
  </planet>
+ <planet name="Eiroik">
+  <GFX>
+   <exterior>methane.png</exterior>
+   <space>J01.png</space>
+  </GFX>
+  <pos>
+   <y>239</y>
+   <x>73</x>
+  </pos>
+  <general>
+   <services>1</services>
+   <tech>
+    <main>0</main>
+   </tech>
+   <class>J</class>
+   <description>Eiroik used to be a mining planet under the Empire rule until the Collective wiped out the human colonies on it.  The harsh atmosphere did the rest, erasing all tracks of former human life.</description>
+  </general>
+ </planet>
  <planet name="Selphod">
   <GFX>
    <exterior>snow.png</exterior>
@@ -182,6 +231,7 @@
    </commodities>
    <tech>
     <main>0</main>
+    <special>0</special>
    </tech>
    <services>7</services>
    <class>P</class>
@@ -205,28 +255,11 @@
     <commodity>Medicine</commodity>
    </commodities>
    <tech>
-    <main>5</main>
+    <main>0</main>
+    <special>0</special>
    </tech>
    <services>15</services>
    <class>0</class>
-  </general>
- </planet>
- <planet name="Eiroik">
-  <GFX>
-   <exterior>methane.png</exterior>
-   <space>J01.png</space>
-  </GFX>
-  <pos>
-   <y>239</y>
-   <x>73</x>
-  </pos>
-  <general>
-   <services>1</services>
-   <tech>
-    <main>0</main>
-   </tech>
-   <class>J</class>
-   <description>Eiroik used to be a mining planet under the Empire rule until the Collective wiped out the human colonies on it.  The harsh atmosphere did the rest, erasing all tracks of former human life.</description>
   </general>
  </planet>
  <planet name="Darkshed">
@@ -250,10 +283,32 @@
     <commodity>Luxury Goods</commodity>
    </commodities>
    <tech>
-    <main>13</main>
+    <main>0</main>
+    <special>0</special>
    </tech>
    <services>31</services>
    <class>0</class>
+  </general>
+ </planet>
+ <planet name="Raelid Outpost">
+  <GFX>
+   <exterior>station02.png</exterior>
+   <space>002.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <bar>Another big dirty bar full of hulking, smelly, sweaty Dvaereds.  They make a good brew though.</bar>
+   <description>Constructed by many captured and then enslaved FLF armsmen.  The design is pretty sturdy but you can't help to think there must be a hidden bomb somewhere, just waiting to go off and kill the Dvaered opressors.</description>
+   <services>11</services>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <class>0</class>
+   <faction>Dvaered</faction>
   </general>
  </planet>
  <planet name="S72839">
@@ -287,6 +342,7 @@
    <services>0</services>
    <tech>
     <main>0</main>
+    <special>0</special>
    </tech>
    <class>3</class>
    <faction>Collective</faction>
@@ -330,6 +386,7 @@
    <services>0</services>
    <tech>
     <main>0</main>
+    <special>0</special>
    </tech>
    <class>M</class>
   </general>
@@ -348,24 +405,6 @@
     <main>0</main>
    </tech>
    <class>J</class>
-  </general>
- </planet>
- <planet name="S00000">
-  <GFX>
-   <exterior>station01.png</exterior>
-   <space>001.png</space>
-  </GFX>
-  <pos>
-   <y>0</y>
-   <x>0</x>
-  </pos>
-  <general>
-   <services>0</services>
-   <tech>
-    <main>0</main>
-   </tech>
-   <class>3</class>
-   <faction>Collective</faction>
   </general>
  </planet>
  <planet name="Arrakis">
@@ -392,31 +431,22 @@
    <class>H</class>
   </general>
  </planet>
- <planet name="Anecu">
+ <planet name="S00000">
   <GFX>
-   <exterior>aquatic.png</exterior>
-   <space>M03.png</space>
+   <exterior>station01.png</exterior>
+   <space>001.png</space>
   </GFX>
   <pos>
    <y>0</y>
    <x>0</x>
   </pos>
   <general>
-   <bar>The spaceport bar is aproximately 3 km below the surface of the planet.  Most of the walls are of a hardened transparet polymer that allows you to see into the darkness of the water.  Every so often you can notice a gelatinous creature slide around, barely illuminated by the bar lighting.</bar>
-   <description>Anecu is a completely aquatic planet.  It's surface is covered completely by water.  In the shallow areas great underwater cities are constructed, as the climate above the water can be very harsh (waves been recorded to be up to 2 km high).  The planet boasts of extensive ship designing facilities, using the high pressure water as a testbed for ships of all sorts.</description>
-   <faction>Empire</faction>
-   <commodities>
-    <commodity>Food</commodity>
-    <commodity>Medicine</commodity>
-    <commodity>Ore</commodity>
-    <commodity>Luxury Goods</commodity>
-    <commodity>Industrial Goods</commodity>
-   </commodities>
+   <services>0</services>
    <tech>
-    <main>9</main>
+    <main>0</main>
    </tech>
-   <services>31</services>
-   <class>M</class>
+   <class>3</class>
+   <faction>Collective</faction>
   </general>
  </planet>
 </Planets>
