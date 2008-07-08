@@ -320,6 +320,11 @@ static void outfits_open (void)
 
    /* set up the outfits to buy/sell */
    soutfits = outfit_getTech( &noutfits, land_planet->tech, PLANET_TECH_MAX);
+   if (noutfits <= 0) { /* No outfits */
+      soutfits = malloc(sizeof(char*));
+      soutfits[0] = strdup("None");
+      noutfits = 1;
+   }
    window_addList( secondary_wid, 20, 40,
          200, OUTFITS_HEIGHT-80, "lstOutfits",
          soutfits, noutfits, 0, outfits_update );
@@ -346,6 +351,25 @@ static void outfits_update( char* str )
    char buf[128], buf2[16], buf3[16];
 
    outfitname = toolkit_getList( secondary_wid, "lstOutfits" );
+   if (strcmp(outfitname,"None")==0) { /* No outfits */
+      window_modifyImage( secondary_wid, "imgOutfit", NULL );
+      window_disableButton( secondary_wid, "btnBuyOutfit" );
+      window_disableButton( secondary_wid, "btnSellOutfit" );
+      snprintf( buf, 128,
+            "None\n"
+            "NA\n"
+            "NA\n"
+            "\n"
+            "NA\n"
+            "%d\n"
+            "\n"
+            "NA\n"
+            "NA\n",
+            pilot_freeSpace(player) );
+      window_modifyText( secondary_wid,  "txtDDesc", buf );
+      return;
+   }
+
    outfit = outfit_get( outfitname );
 
    /* new image */
