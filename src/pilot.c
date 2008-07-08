@@ -334,7 +334,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
    else if (outfit_isLauncher(w->outfit) && (w==p->secondary)) {
 
       /* Shooter can't be the target - sanity check for the player */
-      if ((w->outfit->type != OUTFIT_TYPE_MISSILE_DUMB) && (p->id!=t))
+      if ((w->outfit->type != OUTFIT_TYPE_MISSILE_DUMB) && (p->id==t))
          return;
 
       /* Must have ammo left. */
