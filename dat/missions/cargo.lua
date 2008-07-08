@@ -151,10 +151,10 @@ function land()
 
          -- modify the faction standing
          if player.getFaction("Merchant") < 70 then
-            player.modFaction("Merchant",misn_faction);
+            player.modFactionRaw("Merchant",misn_faction);
          end
          if player.getFaction("Independent") < 30 then
-            player.modFaction("Independent", misn_faction/2)
+            player.modFactionRaw("Independent", misn_faction/2)
          end
          if player.getFaction("Empire") < 10 then
             player.modFaction("Empire", misn_faction/3)

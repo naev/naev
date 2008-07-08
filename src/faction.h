@@ -20,6 +20,7 @@ char* faction_longname( int f );
 
 /* player stuff */
 void faction_modPlayer( int f, int mod );
+void faction_modPlayerRaw( int f, int mod );
 int faction_getPlayer( int f );
 char* faction_getStanding( int mod );
 glColour* faction_getColour( int f );

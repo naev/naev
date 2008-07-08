@@ -120,6 +120,7 @@ static int player_rmCargo( lua_State *L );
 static int player_pay( lua_State *L );
 static int player_msg( lua_State *L );
 static int player_modFaction( lua_State *L );
+static int player_modFactionRaw( lua_State *L );
 static int player_getFaction( lua_State *L );
 static int player_getRating( lua_State *L );
 static const luaL_reg player_methods[] = {
@@ -131,6 +132,7 @@ static const luaL_reg player_methods[] = {
    { "pay", player_pay },
    { "msg", player_msg },
    { "modFaction", player_modFaction },
+   { "modFactionRaw", player_modFactionRaw },
    { "getFaction", player_getFaction },
    { "getRating", player_getRating },
    {0,0}
@@ -734,6 +736,21 @@ static int player_modFaction( lua_State *L )
    else NLUA_INVALID_PARAMETER();
 
    faction_modPlayer( f, mod );
+
+   return 0;
+}
+static int player_modFactionRaw( lua_State *L )
+{
+   NLUA_MIN_ARGS(2);
+   int f, mod;
+
+   if (lua_isstring(L,1)) f = faction_get( lua_tostring(L,1) );
+   else NLUA_INVALID_PARAMETER();
+
+   if (lua_isnumber(L,2)) mod = (int) lua_tonumber(L,2);
+   else NLUA_INVALID_PARAMETER();
+
+   faction_modPlayerRaw( f, mod );
 
    return 0;
 }

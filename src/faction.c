@@ -121,33 +121,51 @@ void faction_modPlayer( int f, int mod )
    int i;
    Faction *faction, *ally, *enemy;
 
-   if (faction_isFaction(f)) {
-      faction = &faction_stack[f];
-
-      /* Faction in question gets direct increment. */
-      faction->player += mod;
-      faction_sanitizePlayer(faction);
-
-      /* Now mod allies to a lesser degree */
-      for (i=0; i<faction->nallies; i++) {
-         ally = &faction_stack[faction->allies[i]];
-
-         ally->player += RNG(0,(mod*3)/4);
-         faction_sanitizePlayer(ally);
-      }
-
-      /* Now mod enemies */
-      for (i=0; i<faction->nenemies; i++) {
-         enemy = &faction_stack[faction->enemies[i]];
-
-         enemy->player -= MIN(1,RNG(0,(mod*3)/4));
-         faction_sanitizePlayer(enemy);
-      }
-   }
-   else {
+   if (!faction_isFaction(f)) {
       WARN("%d is an invalid faction", f);
       return;
    }
+
+   faction = &faction_stack[f];
+
+   /* Faction in question gets direct increment. */
+   faction->player += mod;
+   faction_sanitizePlayer(faction);
+
+   /* Now mod allies to a lesser degree */
+   for (i=0; i<faction->nallies; i++) {
+      ally = &faction_stack[faction->allies[i]];
+
+      ally->player += RNG(0,(mod*3)/4);
+      faction_sanitizePlayer(ally);
+   }
+
+   /* Now mod enemies */
+   for (i=0; i<faction->nenemies; i++) {
+      enemy = &faction_stack[faction->enemies[i]];
+
+      enemy->player -= MIN(1,RNG(0,(mod*3)/4));
+      faction_sanitizePlayer(enemy);
+   }
+}
+
+
+/*
+ * Modifies a player's standing with a faction without affecting others.
+ */
+void faction_modPlayerRaw( int f, int mod )
+{
+   Faction *faction;
+
+   if (!faction_isFaction(f)) {
+      WARN("%d is an invalid faction", f);
+      return;
+   }
+
+   faction = &faction_stack[f];
+
+   faction->player += mod;
+   faction_sanitizePlayer(faction);
 }
 
 
