@@ -602,6 +602,11 @@ static void shipyard_open (void)
 
    /* set up the ships to buy/sell */
    ships = ship_getTech( &nships, land_planet->tech, PLANET_TECH_MAX );
+   if (nships <= 0) {
+      ships = malloc(sizeof(char*));
+      ships[0] = strdup("None");
+      nships = 1;
+   }
    window_addList( secondary_wid, 20, 40,
          200, SHIPYARD_HEIGHT-80, "lstShipyard",
          ships, nships, 0, shipyard_update );
@@ -628,6 +633,23 @@ static void shipyard_update( char* str )
    char buf[80], buf2[16], buf3[16];
    
    shipname = toolkit_getList( secondary_wid, "lstShipyard" );
+
+   /* No ships */
+   if (strcmp(shipname,"None")==0) {
+      window_modifyImage( secondary_wid, "imgTarget", NULL );
+      window_disableButton( secondary_wid, "btnBuyShip");
+      window_disableButton( secondary_wid, "btnInfoShip");
+      snprintf( buf, 80,
+            "None\n"
+            "NA\n"
+            "NA\n"
+            "\n"
+            "NA\n"
+            "NA\n" );
+      window_modifyText( secondary_wid,  "txtDDesc", buf );
+      return;
+   }
+
    ship = ship_get( shipname );
 
    /* toggle your shipyard */
