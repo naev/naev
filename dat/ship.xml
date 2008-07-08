@@ -409,8 +409,8 @@
   </caracteristics>
   <outfits>
    <outfit quantity="3">Plasma Blaster</outfit>
-   <outfit quantity="1">Missile Launcher</outfit>
-   <outfit quantity="12">Missile</outfit>
+   <outfit quantity="1">Seeker Launcher</outfit>
+   <outfit quantity="12">Seeker Missile</outfit>
    <outfit quantity="1">Milspec Jammer</outfit>
   </outfits>
  </ship>
@@ -580,8 +580,8 @@
   </caracteristics>
   <outfits>
   <outfit quantity="3">Laser Cannon</outfit>
-  <outfit quantity="1">Missile Launcher</outfit>
-  <outfit quantity="8">Missile</outfit>
+  <outfit quantity="1">Seeker Launcher</outfit>
+  <outfit quantity="8">Seeker Missile</outfit>
   </outfits>
  </ship>
  <ship name="Dvaered Ancestor">
@@ -650,8 +650,8 @@
   </caracteristics>
   <outfits>
   <outfit quantity="3">Plasma Blaster</outfit>
-  <outfit quantity="1">Missile Launcher</outfit>
-  <outfit quantity="8">Missile</outfit>
+  <outfit quantity="1">Seeker Launcher</outfit>
+  <outfit quantity="8">Seeker Missile</outfit>
   </outfits>
  </ship>
 </Ships>

@@ -147,21 +147,21 @@
    <damage type="kinetic">40</damage>
   </specific>
  </outfit>
- <outfit name="Missile Launcher">
+ <outfit name="Seeker Launcher">
   <general>
    <max>2</max>
    <tech>4</tech>
    <mass>10</mass>
    <price>25000</price>
-   <description>Base for launching dumb missiles.</description>
+   <description>Base for launching seeking missiles.</description>
    <gfx_store>missile</gfx_store>
   </general>
   <specific type="missile seek" secondary="1">
-   <ammo>Missile</ammo>
+   <ammo>Seeker Missile</ammo>
    <delay>1200</delay>
   </specific>
  </outfit>
- <outfit name="Missile">
+ <outfit name="Seeker Missile">
   <general>
    <max>60</max>
    <tech>2</tech>
