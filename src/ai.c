@@ -1135,33 +1135,88 @@ static int ai_settarget( lua_State *L )
  */
 static int ai_secondary( lua_State *L )
 {
-   PilotOutfit* po;
+   PilotOutfit *co, *po;
    int i;
-
-   if (cur_pilot->secondary) {
-      lua_pushstring( L, outfit_getTypeBroad(cur_pilot->secondary->outfit) );
-      return 1;
-   }
+   char *type;
+   const char *otype;
 
    po = NULL;
-   for (i=0; i<cur_pilot->noutfits; i++) {
-      if ((po==NULL) && (outfit_isWeapon(cur_pilot->outfits[i].outfit) ||
-               outfit_isLauncher(cur_pilot->outfits[i].outfit)))
-         po = &cur_pilot->outfits[i];
-      else if ((po!=NULL) && outfit_isWeapon(po->outfit) && /* launcher > weapon */
-            outfit_isLauncher(cur_pilot->outfits[i].outfit))
-         po = &cur_pilot->outfits[i];
+
+   /* Search for a type */
+   type = NULL;
+   if (lua_isstring(L,1))
+      type = (char*) lua_tostring(L,1);
+
+   /* Pilot has secondary selected - use that */
+   if (cur_pilot->secondary != NULL) {
+      co = cur_pilot->secondary;
+      otype = outfit_getTypeBroad(co->outfit);
+
+      /* If we aren't looking for a type or if it matches what we want. */
+      if ((type==NULL) || (strcmp(otype,type)==0))
+         po = co;
    }
 
-   if (po) {
+   /* Need to get new secondary */
+   if (po==NULL)  {
+
+      /* Iterate over the list */
+      po = NULL;
+      for (i=0; i<cur_pilot->noutfits; i++) {
+         co = &cur_pilot->outfits[i];
+
+         /* Not a secondary weapon. */
+         if (!outfit_isProp(co->outfit, OUTFIT_PROP_WEAP_SECONDARY) ||
+               outfit_isAmmo(co->outfit))
+            continue;
+
+         /* Searching for type */
+         if (type != NULL) {
+            otype = outfit_getTypeBroad(co->outfit);
+            if (strcmp(otype,type)==0) {
+               po = co;
+               break;
+            }
+
+            /* We'll grab the first weapon in case we don't find what we want. */
+            if ((po==NULL) && (outfit_isWeapon(co->outfit) ||
+                  outfit_isLauncher(co->outfit)))
+               po = co;
+         }
+
+         /* Just grabbing best weapon */
+         else {
+            /* Grab first weapon or launcher it finds. */
+            if ((po==NULL) && (outfit_isWeapon(co->outfit) ||
+                     outfit_isLauncher(co->outfit)))
+               po = co;
+
+            /* Grab launcher over weapon by default. */
+            else if ((po!=NULL) && outfit_isWeapon(po->outfit) &&
+                  outfit_isLauncher(co->outfit))
+               po = co;
+         }
+      }
+   }
+
+   if (po != NULL) {
       cur_pilot->secondary = po;
       pilot_setAmmo(cur_pilot);
-      lua_pushstring( L, outfit_getTypeBroad(po->outfit) );
+      otype = outfit_getTypeBroad(po->outfit);
+      lua_pushstring( L, otype );
+
+      /* Set special flags */
+      if ((strcmp(otype,"Launcher")==0) &&
+            (po->outfit->type != OUTFIT_TYPE_MISSILE_DUMB)) {
+         lua_pushstring( L, "Smart" );
+         return 2;
+      }
+
       return 1;
    }
 
-   lua_pushstring( L, "None" );
-   return 1;
+   /* Nothing found */
+   return 0;
 }
 
 

@@ -27,10 +27,20 @@ function attack ()
    if dist > range then
       dir = ai.face(target) -- Normal face the target
 
+      secondary, special = ai.secondary("Launcher")
+
       -- Shoot missiles if in range
-      if ai.secondary() == "Launcher" and
-            dist < ai.getweaprange(1) and dir < 30 then -- more lenient with aiming
-         ai.shoot(2)
+      if secondary == "Launcher" and
+            dist < ai.getweaprange(1) then
+
+         -- More lenient with aiming
+         if special == "Smart" and dir < 30 then
+            ai.shoot(2)
+
+         -- Non-smart miss more
+         elseif dir < 10 then
+            ai.shoot(2)
+         end
       end
 
       if dir < 10 then
@@ -39,8 +49,19 @@ function attack ()
 
    -- Close enough to melee
    else
+
+      secondary, special = ai.secondary("Weapon")
       dir = ai.aim(target) -- We aim instead of face
-      if (dir < 10 or ai.hasturrets()) then
+
+      -- Fire non-smart secondary weapons
+      if (secondary == "Launcher" and special ~= "Smart") or
+            secondary == "Weapon" then
+         if dir < 10 then -- Need good acuracy
+            ai.shoot(2)
+         end
+      end
+
+      if dir < 10 or ai.hasturrets() then
          ai.shoot()
       end
    end

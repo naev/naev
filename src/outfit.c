@@ -27,8 +27,6 @@
 #define OUTFIT_GFX   "gfx/outfit/"
 
 
-extern SDL_mutex* sound_lock; /* from sound.c */
-
 /*
  * the stack
  */

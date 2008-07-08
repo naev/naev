@@ -1212,7 +1212,7 @@ unsigned int pilot_create( Ship* ship, char* name, int faction, AI_Profile* ai,
    dyn = MALLOC_ONE(Pilot);
    if (dyn == NULL) {
       WARN("Unable to allocate memory");
-      return 0;;
+      return 0;
    }
    pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags );
 

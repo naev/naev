@@ -338,8 +338,8 @@
   </caracteristics>
   <outfits>
    <outfit quantity="4">Laser Turret</outfit>
-   <outfit quantity="2">Missile Launcher</outfit>
-   <outfit quantity="40">Missile</outfit>
+   <outfit quantity="2">Mace Launcher</outfit>
+   <outfit quantity="20">Mace Rocket</outfit>
   </outfits>
  </ship>
  <ship name="Admonisher">
@@ -511,6 +511,8 @@
   </caracteristics>
   <outfits>
   <outfit quantity="6">Laser Cannon</outfit>
+  <outfit quantity="1">Mace Launcher</outfit>
+  <outfit quantity="5">Mace Rocket</outfit>
   </outfits>
  </ship>
  <ship name="Pirate Vendetta">
@@ -613,8 +615,8 @@
   </caracteristics>
   <outfits>
   <outfit quantity="3">Laser Cannon</outfit>
-  <outfit quantity="1">Missile Launcher</outfit>
-  <outfit quantity="8">Missile</outfit>
+  <outfit quantity="2">Mace Launcher</outfit>
+  <outfit quantity="10">Mace Rocket</outfit>
   </outfits>
  </ship>
  <ship name="Pirate Ancestor">
