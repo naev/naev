@@ -463,7 +463,7 @@
    <mass>10</mass>
    <price>19000</price>
    <description>A base for launching Dvaered Mace rockets.</description>
-   <gfx_store>missile</gfx_store>
+   <gfx_store>mace</gfx_store>
   </general>
   <specific type="missile dumb" secondary="1">
    <ammo>Mace Rocket</ammo>
@@ -477,7 +477,7 @@
    <mass>2</mass>
    <price>700</price>
    <description>The Mace rocket is a very heavy fast accelerating rocket designed for high speed collisions.  The rockets doesn't have too much explosive, instead it has a lot of fuel for the acceleration it uses to combust.  Most of the damage it does is from the impact and not the explosion though.</description>
-   <gfx_store>missile</gfx_store>
+   <gfx_store>mace</gfx_store>
   </general>
   <specific type="missile dumb ammo">
    <gfx>mace</gfx>
