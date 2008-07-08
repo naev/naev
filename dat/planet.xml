@@ -20,7 +20,7 @@
     <commodity>Medicine</commodity>
    </commodities>
    <tech>
-    <main>0</main>
+    <main>5</main>
     <special>0</special>
    </tech>
    <services>31</services>
@@ -101,7 +101,7 @@
     <commodity>Industrial Goods</commodity>
    </commodities>
    <tech>
-    <main>0</main>
+    <main>9</main>
     <special>0</special>
    </tech>
    <services>31</services>
@@ -125,7 +125,7 @@
     <commodity>Food</commodity>
    </commodities>
    <tech>
-    <main>0</main>
+    <main>7</main>
     <special>0</special>
    </tech>
    <services>7</services>
@@ -187,7 +187,7 @@
     <commodity>Industrial Goods</commodity>
    </commodities>
    <tech>
-    <main>0</main>
+    <main>5</main>
    </tech>
    <services>7</services>
    <class>G</class>
@@ -230,7 +230,7 @@
     <commodity>Industrial Goods</commodity>
    </commodities>
    <tech>
-    <main>0</main>
+    <main>7</main>
     <special>0</special>
    </tech>
    <services>7</services>
@@ -255,7 +255,7 @@
     <commodity>Medicine</commodity>
    </commodities>
    <tech>
-    <main>0</main>
+    <main>9</main>
     <special>0</special>
    </tech>
    <services>15</services>
@@ -283,7 +283,7 @@
     <commodity>Luxury Goods</commodity>
    </commodities>
    <tech>
-    <main>0</main>
+    <main>15</main>
     <special>0</special>
    </tech>
    <services>31</services>
