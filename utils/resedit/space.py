@@ -570,23 +570,16 @@ class Space:
 
       # get the techs
       tech = self.__pwidget("spiTech0").get_text()
-      if tech > 0:
-         try:
-            planet["general"]["tech"]["main"] = tech
-         except:
-            planet["general"]["tech"] = {}
-            planet["general"]["tech"]["main"] = tech
-      else:
-         del planet["general"]["tech"]["main"]
+      try:
+         planet["general"]["tech"]["main"] = tech
+      except:
+         planet["general"]["tech"] = {}
+         planet["general"]["tech"]["main"] = tech
       tech = self.__pwidget("spiTech1").get_text()
-      if tech > 0:
-         try:
-            planet["general"]["tech"]["special"] = tech
-         except:
-            planet["general"]["tech"] = {}
-            planet["general"]["tech"]["special"] = tech
-      else:
-         del planet["general"]["tech"]["special"]
+      try:
+         planet["general"]["tech"]["special"] = tech
+      except:
+         planet["general"]["tech"]["special"] = tech
 
      
 
