@@ -456,4 +456,37 @@
    <energy>10</energy>
   </specific>
  </outfit>
+  <outfit name="Mace Launcher">
+  <general>
+   <max>2</max>
+   <tech>3</tech>
+   <mass>10</mass>
+   <price>19000</price>
+   <description>A base for launching Dvaered Mace rockets.</description>
+   <gfx_store>missile</gfx_store>
+  </general>
+  <specific type="missile dumb" secondary="1">
+   <ammo>Mace Rocket</ammo>
+   <delay>2000</delay>
+  </specific>
+ </outfit>
+ <outfit name="Mace Rocket">
+  <general>
+   <max>40</max>
+   <tech>2</tech>
+   <mass>2</mass>
+   <price>700</price>
+   <description>The Mace rocket is a very heavy fast accelerating rocket designed for high speed collisions.  The rockets doesn't have too much explosive, instead it has a lot of fuel for the acceleration it uses to combust.  Most of the damage it does is from the impact and not the explosion though.</description>
+   <gfx_store>missile</gfx_store>
+  </general>
+  <specific type="missile dumb ammo">
+   <gfx>mace</gfx>
+   <sound>missile</sound>
+   <spfx>ExpM</spfx>
+   <duration>5</duration>
+   <thrust>600</thrust>
+   <speed>1000</speed>
+   <damage type="kinetic">35</damage>
+  </specific>
+ </outfit>
 </Outfits>

@@ -567,10 +567,13 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->u.amm.gfx_space==NULL,"gfx");
    MELEMENT((sound_disabled!=0) && (temp->u.amm.sound<0),"sound");
    MELEMENT(temp->u.amm.thrust==0,"thrust");
-   MELEMENT(temp->u.amm.turn==0,"turn");
+   /* Dumb missiles don't need everything */
+   if (temp->type != OUTFIT_TYPE_MISSILE_DUMB_AMMO) {
+      MELEMENT(temp->u.amm.turn==0,"turn");
+      MELEMENT(temp->u.amm.lockon==0,"lockon");
+   }
    MELEMENT(temp->u.amm.speed==0,"speed");
    MELEMENT(temp->u.amm.duration==0,"duration");
-   MELEMENT(temp->u.amm.lockon==0,"lockon");
    MELEMENT(temp->u.amm.damage==0,"damage");
 #undef MELEMENT
 }

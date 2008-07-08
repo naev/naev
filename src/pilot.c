@@ -291,7 +291,7 @@ void pilot_shoot( Pilot* p, const unsigned int target, const int secondary )
 static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
 {
    int quantity, delay;
-   
+
    /* will segfault when trying to launch with 0 ammo otherwise */
    quantity = pilot_oquantity(p,w);
    delay = outfit_delay(w->outfit);
@@ -330,21 +330,27 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
     * missile launchers
     *
     * @must be a secondary weapon
-    * @shooter can't be the target - sanity check for the player
     */
-   else if (outfit_isLauncher(w->outfit) && (w==p->secondary) && (p->id!=t)) {
-      if (p->ammo && (p->ammo->quantity > 0)) {
+   else if (outfit_isLauncher(w->outfit) && (w==p->secondary)) {
 
-         /* enough energy? */
-         if (outfit_energy(w->outfit) > p->energy) return;
-   
-         p->energy -= outfit_energy(w->outfit);
-         weapon_add( p->ammo->outfit, p->solid->dir,
-               &p->solid->pos, &p->solid->vel, p->id, t );
+      /* Shooter can't be the target - sanity check for the player */
+      if ((w->outfit->type != OUTFIT_TYPE_MISSILE_DUMB) && (p->id!=t))
+         return;
 
-         w->timer = SDL_GetTicks(); /* can't shoot it for a bit */
-         p->ammo->quantity -= 1; /* we just shot it */
-      }
+      /* Must have ammo left. */
+      if ((p->ammo == NULL) || (p->ammo->quantity <= 0))
+         return;
+
+      /* enough energy? */
+      if (outfit_energy(w->outfit) > p->energy)
+         return;
+
+      p->energy -= outfit_energy(w->outfit);
+      weapon_add( p->ammo->outfit, p->solid->dir,
+            &p->solid->pos, &p->solid->vel, p->id, t );
+
+      w->timer = SDL_GetTicks(); /* can't shoot it for a bit */
+      p->ammo->quantity -= 1; /* we just shot it */
    }
 }
 

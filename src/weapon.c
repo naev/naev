@@ -291,6 +291,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          /* bolts too */
          case OUTFIT_TYPE_BOLT:
          case OUTFIT_TYPE_TURRET_BOLT:
+         case OUTFIT_TYPE_MISSILE_DUMB_AMMO: /* Dumb missiles are like bolts */
             wlayer[i]->timer -= dt;
             if (wlayer[i]->timer < 0.) {
                weapon_destroy(wlayer[i],layer);
@@ -299,6 +300,8 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
             break;
 
          default:
+            WARN("Weapon of type '%s' has no update implemented yet!",
+                  w->outfit->name);
             break;
       }
       weapon_update(wlayer[i],dt,layer);
@@ -520,9 +523,24 @@ static Weapon* weapon_create( const Outfit* outfit,
                w->solid->pos.y + w->solid->vel.y);
          break;
 
+      /* Dumb missiles are a mixture of missile and bolt */
+      case OUTFIT_TYPE_MISSILE_DUMB_AMMO:
+         mass = w->outfit->mass;
+         w->timer = outfit->u.amm.duration;
+         w->solid = solid_create( mass, dir, pos, vel );
+         vect_pset( &w->solid->force, w->outfit->u.amm.thrust, dir );
+         w->think = NULL; /* No AI */
+
+         sound_playPos(w->outfit->u.amm.sound,
+            w->solid->pos.x + w->solid->vel.x,
+            w->solid->pos.y + w->solid->vel.y);
+         break;
+
 
       /* just dump it where the player is */
       default:
+         WARN("Weapon of type '%s' has no create implemented yet!",
+               w->outfit->name);
          w->solid = solid_create( mass, dir, pos, vel );
          break;
    }
