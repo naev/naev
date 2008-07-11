@@ -137,6 +137,41 @@
    <outfit quantity="40">Headhunter</outfit>
   </outfits>
  </ship>
+ <ship name="Empire Hawking">
+  <GFX target="hawking">hawking_empire</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>3</class>
+  <price>7500000</price>
+  <fabricator>Nexus</fabricator>
+  <tech>9999</tech>
+  <description>An Empire Hawking.</description>
+  <movement> 
+   <thrust>80</thrust>
+   <turn>70</turn>
+   <speed>100</speed>
+  </movement>
+  <health>   
+   <shield>630</shield>
+   <armour>420</armour>
+   <energy>900</energy>
+   <shield_regen>330</shield_regen>
+   <armour_regen>100</armour_regen>
+   <energy_regen>1600</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>35</crew>
+   <mass>3750</mass>
+   <fuel>300</fuel>
+   <cap_weapon>200</cap_weapon>
+   <cap_cargo>70</cap_cargo>
+  </caracteristics>
+  <outfits>
+   <outfit quantity="3">Heavy Ion Turret</outfit>
+   <outfit quantity="2">Headhunter Launcher</outfit>
+   <outfit quantity="40">Headhunter</outfit>
+  </outfits>
+ </ship>
  <ship name="Lancelot">
   <GFX>lancelot</GFX>
   <GUI>minimal</GUI>
@@ -170,6 +205,42 @@
    <outfit quantity="2">Ripper MK2</outfit>
    <outfit quantity="1">Headhunter Launcher</outfit>
    <outfit quantity="20">Headhunter</outfit>
+  </outfits>
+ </ship>
+ <ship name="Empire Lancelot">
+  <GFX target="lancelot">lancelot_empire</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>2</class>
+  <price>500000</price>
+  <fabricator>Nexus</fabricator>
+  <tech>9999</tech>
+  <description>An Empire Lancelot.</description>
+  <movement>
+   <thrust>220</thrust>
+   <turn>135</turn>
+   <speed>260</speed>
+  </movement>
+  <health>
+   <shield>150</shield>
+   <armour>100</armour>
+   <energy>280</energy>
+   <shield_regen>190</shield_regen>
+   <armour_regen>60</armour_regen>
+   <energy_regen>980</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>4</crew>
+   <mass>90</mass>
+   <fuel>400</fuel>
+   <cap_weapon>80</cap_weapon>
+   <cap_cargo>10</cap_cargo>
+  </caracteristics>
+  <outfits>
+   <outfit quantity="2">Ripper MK2</outfit>
+   <outfit quantity="1">Headhunter Launcher</outfit>
+   <outfit quantity="20">Headhunter</outfit>
+   <outfit quantity="1">Milspec Jammer</outfit>
   </outfits>
  </ship>
  <ship name="Mule">
@@ -411,6 +482,43 @@
    <outfit quantity="3">Plasma Blaster</outfit>
    <outfit quantity="1">Seeker Launcher</outfit>
    <outfit quantity="12">Seeker Missile</outfit>
+   <outfit quantity="1">Milspec Jammer</outfit>
+  </outfits>
+ </ship>
+ <ship name="Empire Admonisher">
+  <GFX target="admonisher">admonisher_empire</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>2</class>
+  <price>900000</price>
+  <fabricator>Nexus</fabricator>
+  <tech>9999</tech>
+  <description>An Empire Admonisher.</description>
+  <movement>
+   <thrust>200</thrust>
+   <turn>105</turn>
+   <speed>200</speed>
+  </movement>
+  <health>
+   <shield>250</shield>
+   <armour>175</armour>
+   <energy>380</energy>
+   <shield_regen>250</shield_regen>
+   <armour_regen>100</armour_regen>
+   <energy_regen>1180</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>13</crew>
+   <mass>170</mass>
+   <fuel>400</fuel>
+   <cap_weapon>110</cap_weapon>
+   <cap_cargo>20</cap_cargo>
+  </caracteristics>
+  <outfits>
+   <outfit quantity="1">Ripper MK2</outfit>
+   <outfit quantity="2">Ion Cannon</outfit>
+   <outfit quantity="1">Headhunter Launcher</outfit>
+   <outfit quantity="10">Headhunter</outfit>
    <outfit quantity="1">Milspec Jammer</outfit>
   </outfits>
  </ship>
