@@ -76,6 +76,9 @@ DATAFILES = $(VERSIONFILE) $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA
 #
 #   TARGETS
 #
+.PHONY: all lua pack mkspr data utils docs clean purge
+
+
 %.o:	%.c %.h
 	@$(CC) -c $(CFLAGS) -o $@ $<
 	@echo -e "\tCC   $@"
@@ -106,6 +109,9 @@ data: pack $(DATAFILES) src/pack.c utils/pack/main.c
 	@./pack $(DATA) $(DATAFILES)
 
 utils: mkspr
+
+docs:
+	@( cd src; doxygen )
 
 
 clean:

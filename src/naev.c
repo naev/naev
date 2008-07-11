@@ -2,6 +2,17 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @mainpage NAEV
+ *
+ * Doxygen documentation for the NAEV project.
+ */
+/**
+ * @file naev.c
+ *
+ * @brief Controls the overall game flow: data loading/unloading and game loop.
+ */
+
 /*
  * includes
  */
@@ -45,31 +56,30 @@
 
 
 /* to get data info */
-#define XML_START_ID    "Start"
-#define START_DATA      "dat/start.xml"
+#define XML_START_ID    "Start"  /**< XML document tag of module start file. */
+#define START_DATA      "dat/start.xml" /**< Path to module start file. */
 
-#define CONF_FILE       "conf"
-#define VERSION_FILE    "VERSION"
-#define VERSION_LEN     10
-#define MINIMUM_FPS     0.5
-#define FONT_SIZE       12
-#define FONT_SIZE_SMALL 10
+#define CONF_FILE       "conf" /**< Configuration file by default. */
+#define VERSION_FILE    "VERSION" /**< Version file by default. */
+#define VERSION_LEN     10 /**< Maximum length of the version file. */
+#define FONT_SIZE       12 /**< Normal font size. */
+#define FONT_SIZE_SMALL 10 /**< Small font size. */
 
-#define NAEV_INIT_DELAY 3000 /* Minimum amount of time to wait with loading screen */
+#define NAEV_INIT_DELAY 3000 /**< Minimum amount of time to wait with loading screen */
 
 
-static int quit = 0; /* for primary loop */
-unsigned int time = 0; /* used to calculate FPS and movement, in pause.c */
+static int quit = 0; /**< For primary loop */
+unsigned int time = 0; /**< used to calculate FPS and movement, in pause.c */
 static char version[VERSION_LEN];
 
 /* some defaults */
-char* data = NULL;
-char dataname[DATA_NAME_LEN] = "";
-int nosound = 0;
-int show_fps = 1; /* shows fps - default yes */
-int max_fps = 0;
-int indjoystick = -1;
-char* namjoystick = NULL;
+char* data = NULL; /**< Path to datafile. */
+char dataname[DATA_NAME_LEN] = ""; /**< Name of data file. */
+int nosound = 0; /**< Disables sound when loading. */
+int show_fps = 1; /**< Shows fps - default yes */
+int max_fps = 0; /**< Default fps limit, 0 is no limit. */
+int indjoystick = -1; /**< Index of joystick to use, -1 is none. */
+char* namjoystick = NULL; /**< Name of joystick to use, NULL is none. */
 
 
 /*
@@ -91,12 +101,15 @@ static void render_all (void);
 
 
 /**
+ * @fn int main( int argc, char** argv )
+ *
  * @brief The entry point of NAEV.
- * @param[in] argc Number of arguments.
- * @param[in] argv Array of argc arguments.
- * @return EXIT_SUCCESS on success.
+ *
+ *    @param[in] argc Number of arguments.
+ *    @param[in] argv Array of argc arguments.
+ *    @return EXIT_SUCCESS on success.
  */
-int main ( int argc, char** argv )
+int main( int argc, char** argv )
 {
    char buf[PATH_MAX];
 
@@ -253,6 +266,8 @@ int main ( int argc, char** argv )
 
 
 /**
+ * @fn void load_screen (void)
+ *
  * @brief Displays a loading screen.
  */
 void load_screen (void)
@@ -297,6 +312,8 @@ void load_screen (void)
 }
 
 /**
+ * @fn void load_all (void)
+ *
  * @brief Loads all the data, makes main() simpler.
  */
 void load_all (void)
@@ -312,6 +329,8 @@ void load_all (void)
    space_load();
 }
 /**
+ * @fn void unload_all (void)
+ *
  * @brief Unloads all data, simplifies main().
  */
 void unload_all (void)
@@ -328,6 +347,8 @@ void unload_all (void)
 }
 
 /**
+ * @fn void main_loop (void)
+ *
  * @brief Split main loop from main() for secondary loop hack in toolkit.c.
  */
 void main_loop (void)
@@ -351,6 +372,8 @@ void main_loop (void)
 static double fps_dt = 1.;
 static double cur_dt = 0.; /* used also a bit in render_all */
 /**
+ * @fn static void fps_control (void)
+ *
  * @brief Controls the FPS.
  */
 static void fps_control (void)
@@ -374,10 +397,11 @@ static void fps_control (void)
 }
 
 
-static const double fps_min = 1./50.;
+static const double fps_min = 1./50.; /**< Minimum fps to run at. */
 /**
+ * @fn static void update_all (void)
+ *
  * @brief Updates the game itself (player flying around and friends).
- * @notes
  */
 static void update_all (void)
 {
@@ -409,7 +433,11 @@ static void update_all (void)
 
 
 /**
+ * @fn static void update_routine( double dt )
+ *
  * @brief Actually runs the updates
+ *
+ *    @param[in] dt Current delta tick.
  */
 static void update_routine( double dt )
 {
@@ -421,21 +449,24 @@ static void update_routine( double dt )
 
 
 /**
+ * @fn static void render_all (void)
+ *
  * @brief Renders the game itself (player flying around and friends).
  *
  * Blitting order (layers):
- *   BG | @ stars and planets
- *      | @ background player stuff (planet targetting)
- *      | @ background particles
- *      | @ back layer weapons
- *      X
- *   N  | @ NPC ships
- *      | @ front layer weapons
- *      | @ normal layer particles (above ships)
- *      X
- *   FG | @ player
- *      | @ foreground particles
- *      | @ text and GUI
+ *   - BG
+ *     - stars and planets
+ *     - background player stuff (planet targetting)
+ *     - background particles
+ *     - back layer weapons
+ *   - N
+ *     - NPC ships
+ *     - front layer weapons
+ *     - normal layer particles (above ships)
+ *   - FG
+ *     - player
+ *     - foreground particles
+ *     - text and GUI
  */
 static void render_all (void)
 {
@@ -462,7 +493,11 @@ static void render_all (void)
 static double fps = 0.;
 static double fps_cur = 0.;
 /**
+ * @fn static void display_fps( const double dt )
+ *
  * @brief Displays FPS on the screen.
+ *
+ *    @param[in] dt Current delta tick.
  */
 static void display_fps( const double dt )
 {
@@ -483,6 +518,8 @@ static void display_fps( const double dt )
 
 
 /**
+ * @fn static void data_name (void)
+ *
  * @brief Sets the data module's name.
  */
 static void data_name (void)
@@ -548,6 +585,8 @@ static void data_name (void)
 
 
 /**
+ * @fn static void window_caption (void)
+ *
  * @brief Sets the window caption.
  */
 static void window_caption (void)
@@ -559,9 +598,13 @@ static void window_caption (void)
 }
 
 
-static char human_version[50];
+static char human_version[50]; /**< Stores the human readable version string. */
 /**
+ * @fn char *naev_version (void)
+ *
  * @brief Returns the version in a human readable string.
+ *
+ *    @return The human readable version string.
  */
 char *naev_version (void)
 {
@@ -573,7 +616,9 @@ char *naev_version (void)
 
 
 /**
- * @brief Prints the SDL version.
+ * @fn static void print_SDLversion.
+ *
+ * @brief Prints the SDL version to console.
  */
 static void print_SDLversion (void)
 {

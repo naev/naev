@@ -9,3 +9,4 @@ lib/lua/liblua.a
 mkspr
 naev
 pack
+docs/doxygen/*

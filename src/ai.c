@@ -29,7 +29,11 @@
 
 
 
-/*
+/**
+ * @file ai.c
+ *
+ * @brief Controls the Pilot AI.
+ *
  * AI Overview
  *
  * Concept: Goal (Task) Based AI with additional Optimization
@@ -49,19 +53,23 @@
  *
  * Specification
  *
- * @ AI will follow basic tasks defined from Lua AI script.  
- *   @ if Task is NULL, AI will run "control" task
- *   @ Task is continued every frame
- *   @ "control" task is a special task that MUST exist in any given  Pilot AI
- *     (missiles and such will use "seek")
- *     @ "control" task is not permanent, but transitory
- *     @ "control" task sets another task
- *   @ "control" task is also run at a set rate (depending on Lua global "control_rate")
+ *   -  AI will follow basic tasks defined from Lua AI script.  
+ *     - if Task is NULL, AI will run "control" task
+ *     - Task is continued every frame
+ *     -  "control" task is a special task that MUST exist in any given  Pilot AI
+ *        (missiles and such will use "seek")
+ *     - "control" task is not permanent, but transitory
+ *     - "control" task sets another task
+ *   - "control" task is also run at a set rate (depending on Lua global "control_rate")
  *     to choose optimal behaviour (task)
  */
 
 
-/* registers a number constant n to name s (syntax like lua_regfunc) */
+/**
+ * @def lua_regnumber(l,s,n)
+ *
+ * @brief Registers a number constant n to name s (syntax like lua_regfunc).
+ */
 #define lua_regnumber(l,s,n)  \
 (lua_pushnumber(l,n), lua_setglobal(l,s))
 
@@ -69,26 +77,26 @@
 /*
  * ai flags
  */
-#define ai_setFlag(f)   (pilot_flags |= f )
-#define ai_isFlag(f)    (pilot_flags & f )
+#define ai_setFlag(f)   (pilot_flags |= f ) /**< Sets pilot flag f */
+#define ai_isFlag(f)    (pilot_flags & f ) /**< Checks pilot flag f */
 /* flags */
-#define AI_PRIMARY      (1<<0)   /* firing primary weapon */
-#define AI_SECONDARY    (1<<1)   /* firing secondary weapon */
+#define AI_PRIMARY      (1<<0)   /**< Firing primary weapon */
+#define AI_SECONDARY    (1<<1)   /**< Firing secondary weapon */
 
 
 /*
  * file info
  */
-#define AI_PREFIX       "ai/"
-#define AI_SUFFIX       ".lua"
-#define AI_INCLUDE      "include/"
+#define AI_PREFIX       "ai/" /**< AI file prefix. */
+#define AI_SUFFIX       ".lua" /**< AI file suffix. */
+#define AI_INCLUDE      "include/" /**< Where to searcth for includes. */
 
 
 /*
  * all the AI profiles
  */
-static AI_Profile* profiles = NULL;
-static int nprofiles = 0;
+static AI_Profile* profiles = NULL; /**< Array of AI_Profiles loaded. */
+static int nprofiles = 0; /**< Number of AI_Profiles loaded. */
 
 
 /*
@@ -251,13 +259,18 @@ static int pilot_target = 0;
 /*
  * ai status, used so that create functions can't be used elsewhere
  */
-#define AI_STATUS_NORMAL      1
-#define AI_STATUS_CREATE      2
+#define AI_STATUS_NORMAL      1 /**< Normal ai function behaviour. */
+#define AI_STATUS_CREATE      2 /**< AI is running create function. */
 static int ai_status = AI_STATUS_NORMAL;
 
 
-/*
- * attempts to run a function
+/**
+ * @fn static void ai_run( lua_State *L, const char *funcname )
+ *
+ * @brief Attempts to run a function.
+ *
+ *    @param[in] L Lua state to run function on.
+ *    @param[in] funcname Function to run.
  */
 static void ai_run( lua_State *L, const char *funcname )
 {
@@ -267,8 +280,12 @@ static void ai_run( lua_State *L, const char *funcname )
 }
 
 
-/*
- * destroys the ai part of the pilot
+/**
+ * @fn void ai_destroy( Pilot* p )
+ *
+ * @brief Destroys the ai part of the pilot
+ *
+ *    @param[in] p Pilot to destroy it's AI part.
  */
 void ai_destroy( Pilot* p )
 {
@@ -277,8 +294,12 @@ void ai_destroy( Pilot* p )
 }
 
 
-/* 
- * initializes the AI stuff which is basically Lua
+/**
+ * @fn int ai_init (void)
+ *
+ * @brief Initializes the AI stuff which is basically Lua.
+ *
+ *    @return 0 on no errors.
  */
 int ai_init (void)
 {
@@ -310,7 +331,12 @@ int ai_init (void)
 
 
 /*
- * initializes an AI_Profile and adds it to the stack
+ * @fn static int ai_loadProfile( char* filename )
+ * 
+ * @brief Initializes an AI_Profile and adds it to the stack.
+ *
+ *    @param[in] filename File to create the profile from.
+ *    @return 0 on no error.
  */
 static int ai_loadProfile( char* filename )
 {
@@ -361,8 +387,13 @@ static int ai_loadProfile( char* filename )
 }
 
 
-/*
- * gets the AI_Profile with name
+/**
+ * @fn AI_Profile* ai_getProfile( char* name )
+ *
+ * @brief Gets the AI_Profile by name.
+ *
+ *    @param[in] name Name of the profile to get.
+ *    @return The profile or NULL on error.
  */
 AI_Profile* ai_getProfile( char* name )
 {
@@ -379,8 +410,10 @@ AI_Profile* ai_getProfile( char* name )
 }
 
 
-/*
- * cleans up global AI
+/**
+ * @fn void ai_exit (void)
+ *
+ * @brief Cleans up global AI.
  */
 void ai_exit (void)
 {
@@ -393,8 +426,12 @@ void ai_exit (void)
 }
 
 
-/*
- * heart of the AI, brains of the pilot
+/**
+ * @fn void ai_think( Pilot* pilot )
+ *
+ * @brief Heart of the AI, brains of the pilot.
+ *
+ *    @param pilot Pilot that needs to think.
  */
 void ai_think( Pilot* pilot )
 {
@@ -438,8 +475,13 @@ void ai_think( Pilot* pilot )
 }
 
 
-/*
- * pilot is attacked
+/**
+ * @fn void ai_attacked( Pilot* attacked, const unsigned int attacker )
+ *
+ * @brief Triggers the attacked() function in the pilot's AI.
+ *
+ *    @param attacked Pilot that is attacked.
+ *    @param[in] attacker ID of the attacker.
  */
 void ai_attacked( Pilot* attacked, const unsigned int attacker )
 {
@@ -454,8 +496,14 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker )
 }
 
 
-/*
- * pilot was just created
+/**
+ * @fn void ai_create( Pilot* pilot )
+ *
+ * @brief Runs the create() function in the pilot.
+ *
+ * Should create all the gear and sucth the pilot has.
+ *
+ *    @param pilot Pilot to "create".
  */
 void ai_create( Pilot* pilot )
 {

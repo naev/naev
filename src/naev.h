@@ -14,37 +14,43 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * @file naev.h
+ *
+ * @brief Header file with generic functions and naev-specifics.
+ */
+
 
 #ifndef NAEV_H
 #  define NAEV_H
 
 
-#define APPNAME            "NAEV"
+#define APPNAME            "NAEV" /**< Application name. */
 
-#define MALLOC_ONE(type)   (malloc(sizeof(type)))
-#define CALLOC_ONE(type)   (calloc(1,sizeof(type)))
+#define MALLOC_ONE(type)   (malloc(sizeof(type))) /**< Deprecated. */
+#define CALLOC_ONE(type)   (calloc(1,sizeof(type))) /**< Deprecated. */
 
-#define ABS(x)             (((x)<0)?-(x):(x))
-#define FABS(x)            (((x)<0.)?-(x):(x))
+#define ABS(x)             (((x)<0)?-(x):(x)) /**< Returns absolute value. */
+#define FABS(x)            (((x)<0.)?-(x):(x)) /**< Returns float absolute value. */
 
-#define MAX(x,y)           (((x)>(y))?(x):(y))
-#define MIN(x,y)           (((x)>(y))?(y):(x))
+#define MAX(x,y)           (((x)>(y))?(x):(y)) /**< Returns maximum. */
+#define MIN(x,y)           (((x)>(y))?(y):(x)) /**< Returns minimum. */
 
-#define pow2(x)            ((x)*(x))
+#define pow2(x)            ((x)*(x)) /**< ^2 */
 
-#define DATA_DEF           "data" /* default data packfile */
-extern char* data; /* modifiable datafile */
-#define DATA               data /* data file */
-#define DATA_NAME_LEN      32 /* max length of data name */
-extern char dataname[DATA_NAME_LEN];
+#define DATA_DEF           "data" /**< Default data packfile. */
+extern char* data; /**< Modifiable datafile */
+#define DATA               data /**< Standard daata file to use. */
+#define DATA_NAME_LEN      32 /**< Max length of data name */
+extern char dataname[DATA_NAME_LEN]; /**< Datafile name. */
 
 /* maximum filename path */
 #ifndef PATH_MAX
-#  define PATH_MAX         128
+#  define PATH_MAX         128 /**< If not already defined. */
 #endif /* PATH_MAX */
 
 #ifndef M_PI
-# define M_PI     3.14159265358979323846  /* pi */
+# define M_PI     3.14159265358979323846  /**< If not already defined. */
 #endif /* M_PI */
 
 
