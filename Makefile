@@ -2,7 +2,7 @@
 #   OPTIONS
 #
 DEBUG = 1
-DEBUG_PARANOID = 1
+#DEBUG_PARANOID = 1
 
 # OS
 OS := LINUX
@@ -84,9 +84,9 @@ DATAFILES = $(VERSIONFILE) $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA
 	@echo -e "\tCC   $@"
 
 
-all:	utils data lua bin $(OBJS)
+all:	utils data lua bin
 
-bin:
+bin: $(OBJS)
 	@$(CC) $(LDFLAGS) -o $(APPNAME) $(OBJS) lib/lua/liblua.a
 	@echo -e "\tLD   $(APPNAME)"
 
