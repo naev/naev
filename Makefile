@@ -76,7 +76,7 @@ DATAFILES = $(VERSIONFILE) $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA
 #
 #   TARGETS
 #
-.PHONY: all lua pack mkspr data utils docs clean purge
+.PHONY: all lua bin pack mkspr data utils docs clean purge
 
 
 %.o:	%.c %.h
@@ -84,7 +84,9 @@ DATAFILES = $(VERSIONFILE) $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA
 	@echo -e "\tCC   $@"
 
 
-all:	utils data lua $(OBJS)
+all:	utils data lua bin $(OBJS)
+
+bin:
 	@$(CC) $(LDFLAGS) -o $(APPNAME) $(OBJS) lib/lua/liblua.a
 	@echo -e "\tLD   $(APPNAME)"
 
