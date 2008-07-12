@@ -64,6 +64,13 @@ static double player_px, player_py, player_vx, player_vy, player_dir; /**< More 
 static int player_credits = 0; /**< Temporary hack for when creating. */
 
 
+/*
+ * player sounds.
+ */
+static int snd_target = -1;
+static int snd_jump = -1;
+
+
 /* 
  * player pilot stack - ships he has 
  */
@@ -521,10 +528,15 @@ static void player_initSound (void)
 {
    if (player_soundReserved) return;
 
+   /* Allocate channels. */
    sound_reserve(PLAYER_RESERVED_CHANNELS);
    sound_createGroup(PLAYER_ENGINE_CHANNEL, 0, 1); /* Channel for engine noises. */
    sound_createGroup(PLAYER_GUI_CHANNEL, 1, PLAYER_RESERVED_CHANNELS-1);
    player_soundReserved = 1;
+
+   /* Get sounds. */
+   snd_target = sound_get("target");
+   snd_jump = sound_get("jump");
 }
 
 
@@ -648,7 +660,7 @@ const char* player_rating (void)
  *
  * @brief Gets how many of the outfit the player owns.
  *
- *    @param outfitname Outfit to check how many the player owns of.
+ *    @param outfitname Outfit to check how many the player owns.
  *    @return The number of outfits matching outfitname owned.
  */
 int player_outfitOwned( const char* outfitname )
@@ -662,8 +674,13 @@ int player_outfitOwned( const char* outfitname )
 }
 
 
-/*
- * returns how many of the commodity the player has
+/**
+ * @fn int player_cargoOwned( const char* commodityname )
+ *
+ * @brief Gets how many of the commodity the player has.
+ *
+ *    @param commodityname Commodity to check how many the player owns.
+ *    @return The number of commodities owned matching commodityname.
  */
 int player_cargoOwned( const char* commodityname )
 {
@@ -694,8 +711,10 @@ void player_rmMissionCargo( unsigned int cargo_id )
 
 
 
-/*
- * renders the background player stuff, namely planet target gfx
+/**
+ * @fn void player_renderBG (void)
+ *
+ * @brief Renders the background player stuff, namely planet target gfx
  */
 void player_renderBG (void)
 {
@@ -769,8 +788,10 @@ void player_render (void)
 }
 
 
-/*
- * Renders the player's GUI
+/**
+ * @fn void player_renderGUI (void)
+ *
+ * @brief Renders the player's GUI.
  */
 void player_renderGUI (void)
 {
@@ -1886,7 +1907,7 @@ void player_targetHostile (void)
    unsigned int tp;
    int i;
    double d, td;
-   
+
    tp=PLAYER_ID;
    d=0;
    for (i=0; i<pilot_nstack; i++)
@@ -1898,6 +1919,9 @@ void player_targetHostile (void)
             tp = pilot_stack[i]->id;
          }
       }
+
+   if ((tp != PLAYER_ID) && (tp != player_target))
+      player_playSound( snd_target, 1 );
 
    player_target = tp;
 }
@@ -1911,6 +1935,9 @@ void player_targetHostile (void)
 void player_targetNext (void)
 {
    player_target = pilot_getNextID(player_target);
+
+   if (player_target != PLAYER_ID)
+      player_playSound( snd_target, 1 );
 }
 
 
@@ -1921,7 +1948,13 @@ void player_targetNext (void)
  */
 void player_targetNearest (void)
 {
+   unsigned int t;
+
+   t = player_target;
    player_target = pilot_getNearestPilot(player);
+
+   if ((player_target != PLAYER_ID) && (t != player_target))
+      player_playSound( snd_target, 1 );
 }
 
 
