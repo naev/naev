@@ -746,8 +746,10 @@ void player_renderBG (void)
    }
 }
 
-/*
- * renders the player
+/**
+ * @fn void player_render (void)
+ *
+ * @brief Renders the player
  */
 void player_render (void)
 {
@@ -793,6 +795,7 @@ void player_render (void)
  *
  * @brief Renders the player's GUI.
  */
+static int can_jump = 0; /**< Stores whether or not the player is able to jump. */
 void player_renderGUI (void)
 {
    int i, j;
@@ -903,7 +906,12 @@ void player_renderGUI (void)
 
       sys = &systems_stack[cur_system->jumps[hyperspace_target]];
 
-      c = space_canHyperspace(player) ? &cConsole : NULL ;
+      i = space_canHyperspace(player);
+      if ((i != 0) && (i != can_jump))
+         player_playSound(snd_jump, 1);
+      can_jump = i;
+
+      c = can_jump ? &cConsole : NULL ;
       gl_printMid( NULL, (int)gui.nav.w,
             gui.nav.x, gui.nav.y - 5,
             c, "Hyperspace" );
