@@ -2,6 +2,11 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file input.c
+ *
+ * @brief Handles all the keybindings and input.
+ */
 
 
 #include "input.h"
@@ -16,20 +21,20 @@
 #include "map.h"
 
 
-#define KEY_PRESS    ( 1.)
-#define KEY_RELEASE  (-1.)
+#define KEY_PRESS    ( 1.) /**< Key is pressed. */
+#define KEY_RELEASE  (-1.) /**< Key is released. */
 
 
 /* keybinding structure */
 typedef struct Keybind_ {
-   char *name; /* keybinding name, taken from keybindNames */
-   KeybindType type; /* type, defined in playe.h */
-   unsigned int key; /* key/axis/button event number */
-   double reverse; /* 1. if normal, -1. if reversed, only useful for joystick axis */
+   char *name; /**< keybinding name, taken from keybindNames */
+   KeybindType type; /**< type, defined in playe.h */
+   unsigned int key; /**< key/axis/button event number */
+   double reverse; /**< 1. if normal, -1. if reversed, only useful for joystick axis */
 } Keybind;
 
 
-static Keybind** input_keybinds; /* contains the players keybindings */
+static Keybind** input_keybinds; /**< contains the players keybindings */
 
 /* name of each keybinding */
 const char *keybindNames[] = {
@@ -45,8 +50,8 @@ const char *keybindNames[] = {
 /*
  * accel hacks
  */
-static unsigned int input_accelLast = 0; /* used to see if double tap */
-unsigned int input_afterburnSensibility = 250; /* ms between taps to afterburn */
+static unsigned int input_accelLast = 0; /**< Used to see if double tap */
+unsigned int input_afterburnSensibility = 250; /**< ms between taps to afterburn */
 
 
 /*
@@ -60,8 +65,10 @@ extern unsigned int player_target;
 extern int show_fps;
 
 
-/*
- * sets the default input keys
+/**
+ * @fn void input_setDefault (void)
+ *
+ * @brief Sets the default input keys.
  */
 void input_setDefault (void)
 {
@@ -97,8 +104,10 @@ void input_setDefault (void)
 }
 
 
-/*
- * initialization/exit functions (does not assign keys)
+/**
+ * @fn void input_init (void)
+ *
+ * @brief Initializes the input subsystem (does not set keys).
  */
 void input_init (void)
 {  
@@ -117,6 +126,13 @@ void input_init (void)
       input_keybinds[i] = temp;
    }
 }
+
+
+/**
+ * @fn void input_exit (void)
+ *
+ * @brief Exits the input subsystem.
+ */
 void input_exit (void)
 {
    int i;
@@ -126,13 +142,15 @@ void input_exit (void)
 }
 
 
-/*
- * binds key of type type to action keybind
+/**
+ * @fn void input_setKeybind( char *keybind, KeybindType type, int key, int reverse )
  *
- * @param keybind is the name of the keybind defined above
- * @param type is the type of the keybind
- * @param key is the key to bind to
- * @param reverse is whether to reverse it or not
+ * @brief Binds key of type type to action keybind.
+ *
+ *    @param keybind The name of the keybind defined above.
+ *    @param type The type of the keybind.
+ *    @param key The key to bind to.
+ *    @param reverse Whether to reverse it or not.
  */
 void input_setKeybind( char *keybind, KeybindType type, int key, int reverse )
 {  
@@ -148,8 +166,10 @@ void input_setKeybind( char *keybind, KeybindType type, int key, int reverse )
 }
 
 
-/*
- * gets the value of a keybind
+/**
+ * @fn int input_getKeybind( char *keybind, KeybindType *type, int *reverse )
+ *
+ * @brief Gets the value of a keybind.
  */
 int input_getKeybind( char *keybind, KeybindType *type, int *reverse )
 {
@@ -165,12 +185,14 @@ int input_getKeybind( char *keybind, KeybindType *type, int *reverse )
 }
 
 
-/*
- * runs the input command
+/**
+ * @fn static void input_key( int keynum, double value, int kabs )
  *
- * @param keynum is the index of the  keybind
- * @param value is the value of the keypress (defined above)
- * @param abs is whether or not it's an absolute value (for them joystick)
+ * @brief Runs the input command.
+ *
+ *    @param keynum The index of the  keybind.
+ *    @param value The value of the keypress (defined above).
+ *    @param abs Whether or not it's an absolute value (for them joystick).
  */
 #define KEY(s)    (strcmp(input_keybinds[keynum]->name,s)==0)
 #define INGAME()  (!toolkit)
@@ -245,11 +267,11 @@ static void input_key( int keynum, double value, int kabs )
       else if (value==KEY_RELEASE) { player_rmFlag(PLAYER_PRIMARY); }
    /* targetting */
    } else if (INGAME() && KEY("target")) {
-      if (value==KEY_PRESS) player_target = pilot_getNextID(player_target);
+      if (value==KEY_PRESS) player_targetNext();
    } else if (INGAME() && KEY("target_nearest")) {
-      if (value==KEY_PRESS) player_target = pilot_getNearestPilot(player);
+      if (value==KEY_PRESS) player_targetNearest();
    } else if (INGAME() && KEY("target_hostile")) {
-      if (value==KEY_PRESS) player_target = pilot_getNearestHostile();
+      if (value==KEY_PRESS) player_targetHostile();
    /* face the target */
    } else if (KEY("face")) {
       if (value==KEY_PRESS) { player_setFlag(PLAYER_FACE); }
@@ -396,10 +418,14 @@ static void input_keyup( SDLKey key )
 }
 
 
-/*
- * global input
+/**
+ * @fn void input_handle( SDL_Event* event )
  *
- * basically seperates the event types
+ * @brief Handles global input.
+ *
+ * Basically seperates the event types
+ *
+ *    @param event Incoming SDL_Event.
  */
 void input_handle( SDL_Event* event )
 {

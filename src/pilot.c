@@ -3,6 +3,12 @@
  */
 
 
+/**
+ * @file pilot.c
+ *
+ * @brief Handles the pilot stuff.
+ */
+
 
 #include "pilot.h"
 
@@ -25,24 +31,21 @@
 #define XML_ID          "Fleets"  /* XML section identifier */
 #define XML_FLEET       "fleet"
 
-#define FLEET_DATA      "dat/fleet.xml"
+#define FLEET_DATA      "dat/fleet.xml" /**< Where to find fleet data. */
 
 
-#define PILOT_CHUNK     32 /* chunks to increment pilot_stack by */
+#define PILOT_CHUNK     32 /**< Chunks to increment pilot_stack by */
 
 
-/* stack of pilot ids to assure uniqueness */
-static unsigned int pilot_id = PLAYER_ID;
-
-
-/* id for special mission cargo */
-static unsigned int mission_cargo_id = 0;
+/* ID Generators. */
+static unsigned int pilot_id = PLAYER_ID; /**< Stack of pilot ids to assure uniqueness */
+static unsigned int mission_cargo_id = 0; /**< id generator for special mission cargo */
 
 
 /* stack of pilot_nstack */
-Pilot** pilot_stack = NULL; /* not static, used in player.c, weapon.c, pause.c and ai.c */
-int pilot_nstack = 0; /* same */
-static int pilot_mstack = 0;
+Pilot** pilot_stack = NULL; /**< Not static, used in player.c, weapon.c, pause.c and ai.c */
+int pilot_nstack = 0; /**< same */
+static int pilot_mstack = 0; /**< Memory allocated for pilot_stack. */
 
 /*
  * stuff from player.c
@@ -51,8 +54,8 @@ extern Pilot* player;
 extern unsigned int player_crating;
 
 /* stack of fleets */
-static Fleet* fleet_stack = NULL;
-static int nfleets = 0;
+static Fleet* fleet_stack = NULL; /**< Fleet stack. */
+static int nfleets = 0; /**< Number of fleets. */
 
 
 /*
@@ -82,8 +85,13 @@ static void pilot_dead( Pilot* p );
 static int pilot_oquantity( Pilot* p, PilotOutfit* w );
 
 
-/*
- * gets the next pilot based on id
+/**
+ * @fn unsigned int pilot_getNextID( const unsigned int id )
+ *
+ * @brief Gets the next pilot based on id.
+ *
+ *    @param id ID of current pilot.
+ *    @return ID of next pilot or PLAYER_ID if no next pilot.
  */
 unsigned int pilot_getNextID( const unsigned int id )
 {
@@ -103,8 +111,13 @@ unsigned int pilot_getNextID( const unsigned int id )
 }
 
 
-/*
- * gets the nearest enemy to the pilot
+/**
+ * @fnunsigned int pilot_getNearestEnemy( const Pilot* p )
+ *
+ * @brief Gets the nearest enemy to the pilot.
+ *
+ *    @param p Pilot to get his nearest enemy.
+ *    @return ID of his nearest enemy.
  */
 unsigned int pilot_getNearestEnemy( const Pilot* p )
 {
@@ -123,32 +136,13 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
 }
 
 
-/*
- * gets the nearest hostile enemy to the player
- */
-unsigned int pilot_getNearestHostile (void)
-{
-   unsigned int tp;
-   int i;                                                                 
-   double d, td;
-    
-   tp=PLAYER_ID;
-   d=0;
-   for (i=0; i<pilot_nstack; i++)
-      if (pilot_isFlag(pilot_stack[i],PILOT_HOSTILE) ||
-            areEnemies(FACTION_PLAYER,pilot_stack[i]->faction)) {
-         td = vect_dist(&pilot_stack[i]->solid->pos, &player->solid->pos);
-         if (!pilot_isDisabled(pilot_stack[i]) && ((tp==PLAYER_ID) || (td < d))) {
-            d = td;
-            tp = pilot_stack[i]->id;
-         }
-      }
-   return tp;
-}
-
-
-/*
- * Get the nearest pilot
+/**
+ * @fn unsigned int pilot_getNearestPilot( const Pilot* p )
+ *
+ * @brief Get the nearest pilot to a pilot.
+ *
+ *    @param p Pilot to get his nearest pilot.
+ *    @return The nearest pilot.
  */
 unsigned int pilot_getNearestPilot( const Pilot* p )
 {
@@ -1096,15 +1090,20 @@ void pilot_addHook( Pilot *pilot, int type, int hook )
 }
 
 
-/*
- * Initialize pilot
+/**
+ * @fn void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* ai,
+ *          const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
  *
- * @ ship : ship pilot will be flying
- * @ name : pilot's name, if NULL ship's name will be used
- * @ dir : initial direction to face (radians)
- * @ vel : initial velocity
- * @ pos : initial position
- * @ flags : used for tweaking the pilot
+ * @brief Initialize pilot.
+ *
+ *    @param ship Ship pilot will be flying.
+ *    @param name Pilot's name, if NULL ship's name will be used.
+ *    @param faction Faction of the pilot.
+ *    @param ai AI profile to use for the pilot.
+ *    @param dir Initial direction to face (radians).
+ *    @param vel Initial velocity.
+ *    @param pos Initial position.
+ *    @param flags Used for tweaking the pilot.
  */
 void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* ai,
       const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
@@ -1197,12 +1196,17 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* 
 }
 
 
-/*
- * Creates a new pilot
+/**
+ * @fn unsigned int pilot_create( Ship* ship, char* name, int faction, AI_Profile* ai,
+ *       const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
  *
- * see pilot_init for parameters
+ * @brief Creates a new pilot
  *
- * returns pilot's id
+ * See pilot_init for parameters.
+ *
+ *    @return Pilot's id.
+ *
+ * @sa pilot_init
  */
 unsigned int pilot_create( Ship* ship, char* name, int faction, AI_Profile* ai,
       const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
@@ -1231,8 +1235,18 @@ unsigned int pilot_create( Ship* ship, char* name, int faction, AI_Profile* ai,
 }
 
 
-/*
- * creates a pilot without adding it to the stack
+/**
+ * @fn Pilot* pilot_createEmpty( Ship* ship, char* name,
+ *       int faction, AI_Profile* ai, const int flags )
+ *
+ * @brief Creates a pilot without adding it to the stack.
+ *
+ *    @param ship Ship for the pilot to use.
+ *    @param name Name of the pilot ship (NULL uses ship name).
+ *    @param faction Faction of the ship.
+ *    @param ai AI to use.
+ *    @param flags Flags for tweaking, PILOT_EMPTY is added.
+ *    @return Pointer to the new pilot (not added to stack).
  */
 Pilot* pilot_createEmpty( Ship* ship, char* name,
       int faction, AI_Profile* ai, const int flags )
@@ -1244,8 +1258,13 @@ Pilot* pilot_createEmpty( Ship* ship, char* name,
 }
 
 
-/*
- * copies src pilot to dest
+/**
+ * @fn Pilot* pilot_copy( Pilot* src )
+ *
+ * @brief Copies src pilot to dest.
+ *
+ *    @param src Pilot to copy.
+ *    @return Copy of src.
  */
 Pilot* pilot_copy( Pilot* src )
 {
@@ -1281,8 +1300,12 @@ Pilot* pilot_copy( Pilot* src )
 }
 
 
-/*
- * frees and cleans up a pilot
+/**
+ * @fn void pilot_free( Pilot* p )
+ *
+ * @brief Frees and cleans up a pilot
+ *
+ *    @param p Pilot to free.
  */
 void pilot_free( Pilot* p )
 {
@@ -1296,8 +1319,12 @@ void pilot_free( Pilot* p )
 }
 
 
-/*
- * destroys pilot from stack
+/**
+ * @fn void pilot_destroy(Pilot* p)
+ *
+ * @brief Destroys pilot from stack
+ *
+ *    @param p Pilot to destroy.
  */
 void pilot_destroy(Pilot* p)
 {
@@ -1317,8 +1344,10 @@ void pilot_destroy(Pilot* p)
 }
 
 
-/*
- * frees the pilot_nstack
+/**
+ * @fn void pilots_free (void)
+ *
+ * @brief Frees the pilot stack.
  */
 void pilots_free (void)
 {
@@ -1332,8 +1361,10 @@ void pilots_free (void)
 }
 
 
-/*
- * cleans up the pilot_nstack - leaves the player
+/**
+ * @fn void pilots_clean (void)
+ *
+ * @brief Cleans up the pilot stack - leaves the player.
  */
 void pilots_clean (void)
 {
@@ -1352,8 +1383,10 @@ void pilots_clean (void)
 }
 
 
-/*
- * even cleans up the player
+/**
+ * @fn void pilots_cleanAll (void)
+ *
+ * @brief Even cleans up the player.
  */
 void pilots_cleanAll (void)
 {
@@ -1366,8 +1399,12 @@ void pilots_cleanAll (void)
 }
 
 
-/*
- * updates all the pilot_nstack
+/**
+ * @fn void pilots_update( double dt )
+ *
+ * @brief Updates all the pilots.
+ *
+ *    @param dt Delta tick for the update.
  */
 void pilots_update( double dt )
 {
@@ -1393,8 +1430,10 @@ void pilots_update( double dt )
 }
 
 
-/*
- * renders all the pilot_nstack
+/**
+ * @fn void pilots_render (void)
+ *
+ * @brief Renders all the pilots.
  */
 void pilots_render (void)
 {

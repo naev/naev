@@ -71,6 +71,7 @@ void player_message( const char *fmt, ... );
 void player_clear (void);
 void player_warp( const double x, const double y );
 const char* player_rating (void);
+void player_playSound( int sound, int once );
 /* cargo */
 int player_outfitOwned( const char* outfitname );
 int player_cargoOwned( const char* commodityname );
@@ -96,6 +97,9 @@ int player_missionAlreadyDone( int id );
 /* 
  * keybind actions
  */
+void player_targetHostile (void);
+void player_targetNext (void);
+void player_targetNearest (void);
 void player_setRadarRel( int mod );
 void player_secondaryNext (void);
 void player_targetPlanet (void);

@@ -433,6 +433,10 @@ int sound_playGroup( int group, int sound, int once )
    if (sound_disabled) return 0;
 
    channel = Mix_GroupAvailable(group);
+   if (channel == -1) {
+      WARN("Group '%d' has no free channels!", group);
+      return -1;
+   }
 
    ret = Mix_PlayChannel( channel, sound_list[sound].buffer,
          (once == 0) ? -1 : 0 );
@@ -458,7 +462,7 @@ void sound_stopGroup( int group )
 {
    if (sound_disabled) return;
 
-   Mix_FadeOutGroup(group, 100);
+   Mix_HaltGroup(group);
 }
 
 

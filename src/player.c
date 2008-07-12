@@ -50,8 +50,9 @@
 #define TARGET_WIDTH 128 /**< Width of target graphics. */
 #define TARGET_HEIGHT 96 /**< Height of target graphics. */
 
-#define PLAYER_RESERVED_CHANNELS 4 /**< Number of channels to reserve for player sounds. */
-#define PLAYER_CHANNEL           0 /**< Player channel. */
+#define PLAYER_RESERVED_CHANNELS 6 /**< Number of channels to reserve for player sounds. */
+#define PLAYER_ENGINE_CHANNEL    8 /**< Player channel for engine noises. */
+#define PLAYER_GUI_CHANNEL       9 /**< Player channel. */
 
 
 /*
@@ -186,8 +187,7 @@ static void player_newMake (void);
 static void player_newShipMake( char *name );
 /* sound */
 static void player_initSound (void);
-static void player_playSound( int sound, int once );
-static void player_stopSound (void);
+/* static void player_stopSound (void);*/
 /* gui */
 static void rect_parse( const xmlNodePtr parent,
       double *x, double *y, double *w, double *h );
@@ -522,7 +522,8 @@ static void player_initSound (void)
    if (player_soundReserved) return;
 
    sound_reserve(PLAYER_RESERVED_CHANNELS);
-   sound_createGroup(PLAYER_CHANNEL, 0, PLAYER_RESERVED_CHANNELS);
+   sound_createGroup(PLAYER_ENGINE_CHANNEL, 0, 1); /* Channel for engine noises. */
+   sound_createGroup(PLAYER_GUI_CHANNEL, 1, PLAYER_RESERVED_CHANNELS-1);
    player_soundReserved = 1;
 }
 
@@ -535,12 +536,13 @@ static void player_initSound (void)
  *    @param sound ID of the sound to play.
  *    @param once Play only once?
  */
-static void player_playSound( int sound, int once )
+void player_playSound( int sound, int once )
 {
-   sound_playGroup( PLAYER_CHANNEL, sound, once );
+   sound_playGroup( PLAYER_GUI_CHANNEL, sound, once );
 }
 
 
+#if 0
 /**
  * @fn static void player_stopSound (void)
  *
@@ -548,8 +550,9 @@ static void player_playSound( int sound, int once )
  */
 static void player_stopSound (void)
 {
-   sound_stopGroup( PLAYER_CHANNEL );
+   sound_stopGroup( PLAYER_GUI_CHANNEL );
 }
+#endif
 
 
 /**
@@ -1160,8 +1163,12 @@ static void gui_renderBar( const glColour* c,
 }
 
 
-/*
- * initializes the GUI
+/**
+ * @fn int gui_init (void)
+ *
+ * @brief Initializes the GUI system.
+ *
+ *    @return 0 on success;
  */
 int gui_init (void)
 {
@@ -1183,15 +1190,24 @@ int gui_init (void)
    gui.mesg.x = 20;
    gui.mesg.y = 30;
    mesg_stack = calloc(mesg_max, sizeof(Mesg));
+   if (mesg_stack == NULL) {
+      ERR("Out of memory!");
+      return -1;
+   }
 
    return 0;
 }
 
 
-/*
- * attempts to load the actual gui
+/**
+ * @fn int gui_load (const char* name)
+ *
+ * @brief Attempts to load the actual GUI.
+ *
+ *    @param name Name of the GUI to load.
+ *    @return 0 on success.
  */
-int gui_load (const char* name)
+int gui_load( const char* name )
 {
    uint32_t bufsize;
    char *buf = pack_readfile( DATA, GUI_DATA, &bufsize );
@@ -1463,8 +1479,10 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
    return 0;
 }
 #undef RELATIVIZE
-/*
- * frees the GUI
+/**
+ * @fn void gui_free (void)
+ *
+ * @brief Frees the GUI.
  */
 void gui_free (void)
 {
@@ -1476,10 +1494,12 @@ void gui_free (void)
 }
 
 
-/*
- * used in pilot.c
+/**
+ * @fn void player_think( Pilot* pplayer )
  *
- * basically uses keyboard input instead of AI input
+ * @brief Basically uses keyboard input instead of AI input. Used in pilot.c.
+ *
+ *    @param pplayer Player to think.
  */
 void player_think( Pilot* pplayer )
 {
@@ -1542,8 +1562,12 @@ void player_think( Pilot* pplayer )
  *    For use in keybindings
  *
  */
-/*
- * modifies the radar resolution
+/**
+ * @fn void player_setRadarRel( int mod )
+ *
+ * @brief Modifies the radar resolution.
+ *
+ *    @param mod Number of intervals to jump (up or down).
  */
 void player_setRadarRel( int mod )
 {
@@ -1555,8 +1579,10 @@ void player_setRadarRel( int mod )
 }
 
 
-/*
- * get the next secondary weapon
+/**
+ * @fn void player_secondaryNext (void)
+ *
+ * @brief Get the next secondary weapon.
  */
 void player_secondaryNext (void)
 {
@@ -1586,8 +1612,10 @@ void player_secondaryNext (void)
 }
 
 
-/*
- * cycle through planet targets
+/**
+ * @fn void player_targetPlanet (void)
+ *
+ * @brief Cycle through planet targets.
  */
 void player_targetPlanet (void)
 {
@@ -1607,8 +1635,10 @@ void player_targetPlanet (void)
 }
 
 
-/*
- * try to land or target closest planet if no land target
+/**
+ * @fn void player_land (void)
+ *
+ * @brief Try to land or target closest planet if no land target.
  */
 void player_land (void)
 {
@@ -1681,8 +1711,10 @@ void player_land (void)
 }
 
 
-/*
- * gets a hyperspace target
+/**
+ * @fn void player_targetHyperspace (void)
+ *
+ * @brief Gets a hyperspace target.
  */
 void player_targetHyperspace (void)
 {
@@ -1696,18 +1728,22 @@ void player_targetHyperspace (void)
 }
 
 
-/*
- * actually attempts to jump in hyperspace
+/**
+ * @fn void player_jump (void)
+ *
+ * @brief Actually attempts to jump in hyperspace.
  */
 void player_jump (void)
 {
+   int i;
+
    if ((hyperspace_target == -1) ||
          pilot_isFlag(player, PILOT_HYP_PREP) ||
          pilot_isFlag(player, PILOT_HYP_BEGIN) ||
          pilot_isFlag(player, PILOT_HYPERSPACE))
       return;
 
-   int i = space_hyperspace(player);
+   i = space_hyperspace(player);
 
    if (i == -1)
       player_message("You are too close to gravity centers to initiate hyperspace.");
@@ -1720,8 +1756,10 @@ void player_jump (void)
 }
 
 
-/*
- * player actually broke hyperspace (entering new system)
+/**
+ * @fn void player_brokeHyperspace (void)
+ *
+ * @brief Player actually broke hyperspace (entering new system).
  */
 void player_brokeHyperspace (void)
 {
@@ -1756,8 +1794,12 @@ void player_brokeHyperspace (void)
 }
 
 
-/*
- * makes player face his hyperspace target
+/**
+ * @fn double player_faceHyperspace (void)
+ *
+ * @brief Makes player face his hyperspace target.
+ *
+ *    @return direction to face.
  */
 double player_faceHyperspace (void)
 {
@@ -1770,8 +1812,10 @@ double player_faceHyperspace (void)
 }
 
 
-/*
- * activate the afterburner
+/**
+ * @fn void player_afterburn (void)
+ *
+ * @brief Activate the afterburner.
  */
 void player_afterburn (void)
 {
@@ -1780,40 +1824,113 @@ void player_afterburn (void)
       player_setFlag(PLAYER_AFTERBURNER);
       pilot_setFlag(player,PILOT_AFTERBURNER);
       spfx_shake(player->afterburner->outfit->u.afb.rumble * SHAKE_MAX);
-      player_playSound( player->afterburner->outfit->u.afb.sound, 0 );
+      sound_stopGroup( PLAYER_ENGINE_CHANNEL );
+      sound_playGroup( PLAYER_ENGINE_CHANNEL, 
+            player->afterburner->outfit->u.afb.sound, 0 );
    }
 }
+
+
+/**
+ * @fn void player_afterburnOver (void)
+ *
+ * @brief Deactivates the afterburner.
+ */
 void player_afterburnOver (void)
 {
    if ((player != NULL) && (player->afterburner!=NULL)) {
       player_rmFlag(PLAYER_AFTERBURNER);
       pilot_rmFlag(player,PILOT_AFTERBURNER);
-      player_stopSound();
+      sound_stopGroup( PLAYER_ENGINE_CHANNEL );
    }
 }
 
 
-/*
- * start accelerating
+/**
+ * @fn void player_accel( double acc )
+ *
+ * @brief Start accelerating.
+ *
+ *    @param acc How much thrust should beb applied of maximum (0 - 1).
  */
 void player_accel( double acc )
 {
    if (player != NULL) {
       player_acc = acc;
-      player_playSound( player->ship->sound, 0 );
+      sound_stopGroup( PLAYER_ENGINE_CHANNEL );
+      sound_playGroup( PLAYER_ENGINE_CHANNEL,
+            player->ship->sound, 0 );
    }
 }
+
+
+/**
+ * @fn void player_accelOver (void)
+ *
+ * @brief Done accelerating.
+ */
 void player_accelOver (void)
 {
    player_acc = 0.;
-   player_stopSound();
+   sound_stopGroup( PLAYER_ENGINE_CHANNEL );
 }
 
 
-/*
- * take a screenshot
+/**
+ * @fn void player_targetHostile (void)
+ *
+ * @brief Targets the nearest hostile enemy to the player.
  */
-static int screenshot_cur = 0;
+void player_targetHostile (void)
+{  
+   unsigned int tp;
+   int i;
+   double d, td;
+   
+   tp=PLAYER_ID;
+   d=0;
+   for (i=0; i<pilot_nstack; i++)
+      if (pilot_isFlag(pilot_stack[i],PILOT_HOSTILE) ||
+            areEnemies(FACTION_PLAYER,pilot_stack[i]->faction)) {                
+         td = vect_dist(&pilot_stack[i]->solid->pos, &player->solid->pos);       
+         if (!pilot_isDisabled(pilot_stack[i]) && ((tp==PLAYER_ID) || (td < d))) {
+            d = td;
+            tp = pilot_stack[i]->id;
+         }
+      }
+
+   player_target = tp;
+}
+
+
+/**
+ * @fn void player_targetNext (void)
+ *
+ * @brief Cycles to next target.
+ */
+void player_targetNext (void)
+{
+   player_target = pilot_getNextID(player_target);
+}
+
+
+/**
+ * @fn player_targetNearest (void)
+ *
+ * @brief Player targets nearest pilot.
+ */
+void player_targetNearest (void)
+{
+   player_target = pilot_getNearestPilot(player);
+}
+
+
+/**
+ * @fn void player_screenshot (void)
+ *
+ * @brief Takes a screenshot.
+ */
+static int screenshot_cur = 0; /**< Current screenshot at. */
 void player_screenshot (void)
 {
    FILE *fp;
@@ -1849,16 +1966,22 @@ void player_screenshot (void)
 }
 
 
-/*
- * player got pwned
+/**
+ * @fn void player_dead (void)
+ *
+ * @brief Player got pwned.
  */
 void player_dead (void)
 {
    gui_xoff = 0.;
    gui_yoff = 0.;
 }
-/*
- * player blew up in a fireball
+
+
+/**
+ * @fn void player_destroyed (void)
+ *
+ * @brief Player blew up in a fireball.
  */
 void player_destroyed (void)
 {
@@ -1871,8 +1994,14 @@ void player_destroyed (void)
 }
 
 
-/*
- * Returns a buffer with all the ships names or "None" if there are no ships
+/**
+ * @fn char** player_ships( int *nships )
+ *
+ * @brief Returns a buffer with all the player's ships names
+ *        or "None" if there are no ships.
+ *
+ *    @param nships Stores the number of ships.
+ *    @return Freshly allocated array with allocated ship names.
  */
 char** player_ships( int *nships )
 {
@@ -1895,8 +2024,12 @@ char** player_ships( int *nships )
 }
 
 
-/*
- * returns the amount of ships player has in storage
+/**
+ * @fn int player_nships (void)
+ *
+ * @brief Gets the amount of ships player has in storage.
+ *
+ *    @return The number of ships the player has.
  */
 int player_nships (void)
 {
