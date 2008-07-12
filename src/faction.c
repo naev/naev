@@ -653,6 +653,7 @@ int pfaction_load( xmlNodePtr parent )
 {
    xmlNodePtr node, cur;
    char *str;
+   int faction;
 
    node = parent->xmlChildrenNode;
 
@@ -662,7 +663,9 @@ int pfaction_load( xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"faction")) {
                xmlr_attr(cur,"name",str); 
-               faction_stack[faction_get(str)].player = xml_getInt(cur);
+               faction = faction_get(str);
+               if (faction != -1) /* Faction is valid. */
+                  faction_stack[faction].player = xml_getInt(cur);
                free(str);
             }
          } while (xml_nextNode(cur));
