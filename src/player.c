@@ -67,8 +67,9 @@ static int player_credits = 0; /**< Temporary hack for when creating. */
 /*
  * player sounds.
  */
-static int snd_target = -1;
-static int snd_jump = -1;
+static int snd_target = -1; /**< Sound when targetting. */
+static int snd_jump = -1; /**< Sound when can jump. */
+static int snd_nav = -1; /**< Sound when changing nav computer. */
 
 
 /* 
@@ -537,6 +538,7 @@ static void player_initSound (void)
    /* Get sounds. */
    snd_target = sound_get("target");
    snd_jump = sound_get("jump");
+   snd_nav = sound_get("nav");
 }
 
 
@@ -1654,6 +1656,7 @@ void player_targetPlanet (void)
    /* no target */
    if ((planet_target==-1) && (cur_system->nplanets > 0)) {
       planet_target = 0;
+      player_playSound(snd_nav, 1);
       return;
    }
    
@@ -1661,6 +1664,8 @@ void player_targetPlanet (void)
 
    if (planet_target >= cur_system->nplanets) /* last system */
       planet_target = -1;
+   else
+      player_playSound(snd_nav, 1);
 }
 
 
@@ -1691,6 +1696,7 @@ void player_land (void)
             if (!areEnemies( player->faction, planet->faction )) { /* Friendly */
                player_message( "%s> Permission to land granted.", planet->name );
                player_setFlag(PLAYER_LANDACK);
+               player_playSound(snd_nav,1);
             }
             else /* Hostile */
                player_message( "%s> Land request denied.", planet->name );
@@ -1698,6 +1704,7 @@ void player_land (void)
          else { /* No shoes, no shirt, no lifeforms, no service. */
             player_message( "Ready to land on %s.", planet->name );
             player_setFlag(PLAYER_LANDACK);
+            player_playSound(snd_nav,1);
          }
          return;
       }
@@ -1754,6 +1761,8 @@ void player_targetHyperspace (void)
 
    if (hyperspace_target >= cur_system->njumps)
       hyperspace_target = -1;
+   else
+      player_playSound(snd_nav,1);
 }
 
 
