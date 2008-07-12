@@ -12,42 +12,47 @@
 #include "lua.h"
 
 
-#define MIN_DIR_ERR     5.0*M_PI/180.
-#define MAX_DIR_ERR     0.5*M_PI/180.
-#define MIN_VEL_ERR     5.0
-
-#define FACE_WVEL       0.1 /* weight of velocity compared to pos for facing */
+#define MIN_DIR_ERR     5.0*M_PI/180. /**< Minimum direction error. */
+#define MAX_DIR_ERR     0.5*M_PI/180. /**< Maximum direction error. */
+#define MIN_VEL_ERR     5.0 /**< Minimum velocity error. */
 
 
 /* maximum number of AI timers */
-#define MAX_AI_TIMERS   2
+#define MAX_AI_TIMERS   2 /**< Max amount of AI timers. */
 
 
+/**
+ * @enum TaskData
+ *
+ * @brief Task data types.
+ */
 typedef enum TaskData_ { TYPE_NULL, TYPE_INT, TYPE_PTR } TaskData;
 
-/* 
- * Basic task
- *  @name is the task's name (function name in Lua)
- *  @target is the target which will depend on the task itself
+/**
+ * @struct Task
+ *
+ * @brief Basic AI task.
  */
 typedef struct Task_ {
-   struct Task_* next;
-   char *name;
+   struct Task_* next; /**< Next task */
+   char *name; /**< Task name. */
    
-   TaskData dtype;
+   TaskData dtype; /**< Data type. */
    union {
-      void *target; /* Vector2d, etc... */
-      unsigned int ID; /* Pilot ID, etc... */
-   } dat;
+      void *target; /**< Vector2d, etc... */
+      unsigned int ID; /**< Pilot ID, etc... */
+   } dat; /**< Stores the data. */
 } Task;
 
 
-/*
- * the AI profile
+/**
+ * @struct AI_Profile
+ *
+ * @brief Basic AI profile.
  */
 typedef struct AI_Profile_ {
-   char* name;
-   lua_State *L;
+   char* name; /**< Name of the profile. */
+   lua_State *L; /**< Assosciated lua State. */
 } AI_Profile;
 
 

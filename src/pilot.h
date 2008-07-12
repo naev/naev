@@ -16,31 +16,31 @@
 #include "economy.h"
 
 
-#define PLAYER_ID       1
+#define PLAYER_ID       1 /**< Player pilot ID. */
 
 
-#define HYPERSPACE_ENGINE_DELAY  3000 /* time to warm up engine */
-#define HYPERSPACE_FLY_DELAY     5000 /* time it takes to hyperspace */
-#define HYPERSPACE_STARS_BLUR    2000 /* how long the stars blur */
-#define HYPERSPACE_STARS_LENGTH  1000 /* length the stars blur to at max */
-#define HYPERSPACE_FADEOUT       1000 /* how long the fade is */
-#define HYPERSPACE_FUEL          100  /* how much fuel it takes */
+#define HYPERSPACE_ENGINE_DELAY  3000 /**< time to warm up engine */
+#define HYPERSPACE_FLY_DELAY     5000 /**< time it takes to hyperspace */
+#define HYPERSPACE_STARS_BLUR    2000 /**< how long the stars blur */
+#define HYPERSPACE_STARS_LENGTH  1000 /**< length the stars blur to at max */
+#define HYPERSPACE_FADEOUT       1000 /**< how long the fade is */
+#define HYPERSPACE_FUEL          100  /**, how much fuel it takes */
 
 
-#define PILOT_SIZE_APROX      0.8   /* aproximation for pilot size */
-#define PILOT_DISABLED_ARMOR  0.3   /* armour % that gets it disabled */
+#define PILOT_SIZE_APROX      0.8   /**, aproximation for pilot size */
+#define PILOT_DISABLED_ARMOR  0.3   /**< armour % that gets it disabled */
 
 /* hooks */
-#define PILOT_HOOK_NONE    0 /* no hook */
-#define PILOT_HOOK_DEATH   1 /* pilot died */
-#define PILOT_HOOK_BOARD   2 /* pilot got boarded */
-#define PILOT_HOOK_DISABLE 3 /* pilot got disabled */
+#define PILOT_HOOK_NONE    0 /**< no hook */
+#define PILOT_HOOK_DEATH   1 /**< pilot died */
+#define PILOT_HOOK_BOARD   2 /**< pilot got boarded */
+#define PILOT_HOOK_DISABLE 3 /**< pilot got disabled */
 
 
 /* flags */
-#define pilot_isFlag(p,f)  ((p)->flags & (f))
-#define pilot_setFlag(p,f) ((p)->flags |= (f))
-#define pilot_rmFlag(p,f)  ((p)->flags ^= (f))
+#define pilot_isFlag(p,f)  ((p)->flags & (f)) /**< Checks if flag f is set on pilot p. */
+#define pilot_setFlag(p,f) ((p)->flags |= (f)) /**< Sets flag f on pilot p. */
+#define pilot_rmFlag(p,f)  ((p)->flags ^= (f)) /**< Removes flag f on pilot p. */
 /* creation */
 #define PILOT_PLAYER       (1<<0) /**< pilot is a player. */
 #define PILOT_HASTURRET    (1<<20) /**< pilot has turrets. */
@@ -61,26 +61,33 @@
 #define PILOT_DELETE       (1<<15) /**< pilot will get deleted asap. */
 
 /* makes life easier */
-#define pilot_isPlayer(p)  ((p)->flags & PILOT_PLAYER)
-#define pilot_isDisabled(p) ((p)->flags & PILOT_DISABLED)
+#define pilot_isPlayer(p)  ((p)->flags & PILOT_PLAYER) /**< Checks if pilot is a player. */
+#define pilot_isDisabled(p) ((p)->flags & PILOT_DISABLED) /**< Checks if pilot is disabled. */
 
 
+/**
+ * @struct PilotOutfit
+ *
+ * @brief Stores an outfit the pilot has.
+ */
 typedef struct PilotOutfit_ {
-   Outfit* outfit; /* associated outfit */
-   int quantity; /* number of outfits of this type pilot has */
+   Outfit* outfit; /**< associated outfit */
+   int quantity; /**< number of outfits of this type pilot has */
 
-   unsigned int timer; /* used to store when it was last used */
+   unsigned int timer; /**< used to store when it was last used */
 } PilotOutfit;
 
 
 
-/*
- * pilot commodity
+/**
+ * @struct PilotCommodity
+ *
+ * @brief Stores a pilot commodity.
  */
 typedef struct PilotCommodity_ {
-   Commodity* commodity;
-   int quantity;
-   unsigned int id; /* special mission id for cargo */
+   Commodity* commodity; /**< Assosciated commodity. */
+   int quantity; /**< Amount player has. */
+   unsigned int id; /**< Special mission id for cargo, 0 means none. */
 } PilotCommodity;
 
 
@@ -93,7 +100,7 @@ typedef struct Pilot_ {
 
    unsigned int id; /**< pilot's id, used for many functions */
    char* name; /**< pilot's name (if unique) */
-   char* title; /**< title - usually indicating special properties - TODO use */
+   char* title; /**< title - usually indicating special properties - @todo use */
 
    int faction; /**< Pilot's faction. */
 
@@ -164,23 +171,39 @@ typedef struct Pilot_ {
 } Pilot;
 
 
-/*    
- * fleets
+/**
+ * @struct FleetPilot
+ *
+ * @brief Represents a pilot in a fleet.
+ *
+ * @sa Fleet
+ * @sa Pilot
  */   
 typedef struct FleetPilot_ {
-   Ship* ship; /* ship the pilot is flying */
-   char* name; /* used if they have a special name like uniques */
-   int chance; /* chance of this pilot appearing in the leet */
-   AI_Profile* ai; /* ai different of fleet's global ai */
+   Ship* ship; /**< ship the pilot is flying */
+   char* name; /**< used if they have a special name like uniques */
+   int chance; /**< chance of this pilot appearing in the leet */
+   AI_Profile* ai; /**< ai different of fleet's global ai */
 } FleetPilot;
+
+/**
+ * @struct Fleet
+ *
+ * @brief Represents a fleet.
+ *
+ * Fleets are used to create pilots, both from being in a system and from
+ *  mission triggers.
+ *
+ * @sa FleetPilot
+ */
 typedef struct Fleet_ {
-   char* name; /* fleet name, used as the identifier */
-   int faction; /* faction of the fleet */
+   char* name; /**< fleet name, used as the identifier */
+   int faction; /**< faction of the fleet */
 
-   AI_Profile* ai; /* AI profile to use */
+   AI_Profile* ai; /**< AI profile to use */
 
-   FleetPilot* pilots; /* the pilots in the fleet */
-   int npilots; /* total number of pilots */
+   FleetPilot* pilots; /**< the pilots in the fleet */
+   int npilots; /**< total number of pilots */
 } Fleet;
 
 
