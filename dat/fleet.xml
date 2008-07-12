@@ -144,7 +144,7 @@
    <pilot name="Lancelot" chance="100">Empire Lancelot</pilot>
    <pilot name="Lancelot" chance="80">Empire Lancelot</pilot>
    <pilot name="Admonisher" chance="60">Empire Admonisher</pilot>
-   <pilot chance="50">Pacifier</pilot>
+   <pilot name="Pacifier" chance="50">Empire Pacifier</pilot>
    <pilot name="Hawking" chance="30">Empire Hawking</pilot>
   </pilots>
  </fleet>
@@ -152,7 +152,7 @@
   <ai>empire</ai>
   <faction>Empire</faction>
   <pilots>
-   <pilot chance="100">Pacifier</pilot>
+   <pilot name="Pacifier" chance="100">Empire Pacifier</pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Admonisher">

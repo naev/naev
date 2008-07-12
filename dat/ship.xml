@@ -102,6 +102,42 @@
    <outfit quantity="40">Headhunter</outfit>
   </outfits>
  </ship>
+ <ship name="Empire Pacifier">
+  <GFX target="pacifier">pacifier_empire</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>2</class>
+  <price>1200000</price>
+  <fabricator>Nexus</fabricator>
+  <tech>9999</tech>
+  <description>An Empire Pacifier.</description>
+  <movement>
+   <thrust>180</thrust>
+   <turn>115</turn>
+   <speed>200</speed>
+  </movement>
+  <health>
+   <shield>275</shield>
+   <armour>200</armour>
+   <energy>420</energy>
+   <shield_regen>250</shield_regen>
+   <armour_regen>100</armour_regen>
+   <energy_regen>1380</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>17</crew>
+   <mass>230</mass>
+   <fuel>500</fuel>
+   <cap_weapon>130</cap_weapon>
+   <cap_cargo>30</cap_cargo>
+  </caracteristics>
+  <outfits>
+   <outfit quantity="2">Ion Cannon</outfit>
+   <outfit quantity="1">Heavy Ion Turret</outfit>
+   <outfit quantity="2">Headhunter Launcher</outfit>
+   <outfit quantity="20">Headhunter</outfit>
+  </outfits>
+ </ship>
  <ship name="Hawking">
   <GFX>hawking</GFX>
   <GUI>minimal</GUI>
