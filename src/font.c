@@ -2,6 +2,21 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file font.c
+ *
+ * @brief OpenGL font rendering routines.
+ *
+ * Use a displaylist to store ASCII chars rendered with freefont
+ * There are several drawing methods depending on whether you want
+ * print it all, print to a max width, print centered or print a
+ * block of text.
+ *
+ * There are hardcoded size limits.  256 characters for all routines
+ * except gl_printText which has a 1024 limit.
+ *
+ * @todo check if length is too long
+ */
 
 
 #include "font.h"
@@ -16,23 +31,6 @@
 
 
 #define FONT_DEF  "dat/font.ttf"
-
-
-/*
- *
- *    OpenGL font rendering routines
- *
- * Use a displaylist to store ASCII chars rendered with freefont
- * There are several drawing methods depending on whether you want
- * print it all, print to a max width, print centered or print a
- * block of text.
- *
- * There are hardcoded size limits.  256 characters for all routines
- * except gl_printText which has a 1024 limit.
- *
- * TODO check if length is too long
- */
-
 
 
 /* default font */

@@ -312,7 +312,7 @@ static void player_newMake (void)
             else if (xml_isNode(cur,"system")) {
                tmp = cur->children;
                do {
-                  /* system name, TODO percent chance */
+                  /** system name, @todo percent chance */
                   if (xml_isNode(tmp,"name")) 
                      sysname = strdup(xml_get(tmp));
                   /* position */
@@ -1848,7 +1848,7 @@ double player_faceHyperspace (void)
  */
 void player_afterburn (void)
 {
-   /* TODO fancy effect? */
+   /** @todo fancy effect? */
    if ((player != NULL) && (player->afterburner!=NULL)) {
       player_setFlag(PLAYER_AFTERBURNER);
       pilot_setFlag(player,PILOT_AFTERBURNER);

@@ -2,6 +2,11 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file spfx.c
+ *
+ * @brief Handles the special effects.
+ */
 
 
 #include "spfx.h"
@@ -17,57 +22,65 @@
 #include "rng.h"
 
 
-#define SPFX_GFX        "gfx/spfx/" /* location of the graphic */
+#define SPFX_GFX        "gfx/spfx/" /**< location of the graphic */
 
-#define SPFX_CHUNK      32 /* chunk to alloc when needed */
+#define SPFX_CHUNK      32 /**< chunk to alloc when needed */
 
-#define SHAKE_VEL_MOD   0.0012
-#define SHAKE_MOD_FACTOR 0.2
+#define SHAKE_VEL_MOD   0.0012 /**< Shake modifier. */
+#define SHAKE_MOD_FACTOR 0.2 /**< Shake modifier factor. */
 
 
 /*
  * special hardcoded special effects
  */
 /* shake aka rumble */
-static double shake_rad = 0.;
-Vector2d shake_pos = { .x = 0., .y = 0. }; /* used in nebulae.c */
-static Vector2d shake_vel = { .x = 0., .y = 0. };
-static int shake_off = 1;
+static double shake_rad = 0.; /**< Current shake radius (0 = no shake). */
+Vector2d shake_pos = { .x = 0., .y = 0. }; /**< Current shake position. Used in nebulae.c */
+static Vector2d shake_vel = { .x = 0., .y = 0. }; /**< Current shake velocity. */
+static int shake_off = 1; /**< 1 if shake is not active. */
 
 
-/*
- * generic SPFX template
+/**
+ * @struct SPFX_Base
+ *
+ * @brief Generic special effect.
  */
 typedef struct SPFX_Base_ {
-   char* name;
+   char* name; /**< Name of the special effect. */
 
-   double ttl; /* Time to live */
-   double anim; /* Total duration in ms */
+   double ttl; /**< Time to live */
+   double anim; /**< Total duration in ms */
 
-   glTexture *gfx; /* will use each sprite as a frame */
+   glTexture *gfx; /**< will use each sprite as a frame */
 } SPFX_Base;
 
-static SPFX_Base *spfx_effects = NULL;
-static int spfx_neffects = 0;
+static SPFX_Base *spfx_effects = NULL; /**< Total special effects. */
+static int spfx_neffects = 0; /**< Total number of special effects. */
 
 
+/**
+ * @struct SPFX
+ *
+ * @brief An actual in-game active special effect.
+ */
 typedef struct SPFX_ {
-   Vector2d pos, vel; /* they don't accelerate */
+   Vector2d pos; /**< Current position. */
+   Vector2d vel; /**< Current velocity. */
 
-   int lastframe; /* needed when paused */
-   int effect; /* the real effect */
+   int lastframe; /**< Needed when paused */
+   int effect; /**< The real effect */
 
-   double timer; /* time left */
+   double timer; /**< Time left */
 } SPFX;
 
 
 /* front stack is for effects on player, back is for the rest */
-static SPFX *spfx_stack_front = NULL;
-static int spfx_nstack_front = 0;
-static int spfx_mstack_front = 0;
-static SPFX *spfx_stack_back = NULL;
-static int spfx_nstack_back = 0;
-static int spfx_mstack_back = 0;
+static SPFX *spfx_stack_front = NULL; /**< Frontal special effect layer. */
+static int spfx_nstack_front = 0; /**< Number of special effects in front. */
+static int spfx_mstack_front = 0; /**< Memory allocated for frontal special effects. */
+static SPFX *spfx_stack_back = NULL; /**< Back special effect layer. */
+static int spfx_nstack_back = 0; /**< Number of special effects in back. */
+static int spfx_mstack_back = 0; /**< Memory allocated for special effects in back. */
 
 
 /*
@@ -123,9 +136,9 @@ int spfx_get( char* name )
 }
 
 
-/*
+/**
  * load and unload functions
- * TODO make it customizeable?
+ * @todo make it customizeable?
  */
 int spfx_load (void)
 {

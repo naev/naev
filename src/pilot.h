@@ -266,7 +266,7 @@ void pilots_free (void);
 void pilots_clean (void);
 void pilots_cleanAll (void);
 void pilot_free( Pilot* p );
-int fleet_load (void); /* TODO make this fleet stuff actually matter */
+int fleet_load (void);
 void fleet_free (void);
 
 

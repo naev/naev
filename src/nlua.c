@@ -94,13 +94,18 @@ int nlua_load( lua_State* L, lua_CFunction f )
 }
 
 
-/*
- * loads specially modified basic stuff
+/**
+ * @fn int nlua_loadBasic( lua_State* L )
+ *
+ * @brief Loads specially modified basic stuff.
+ *
+ *    @param L Lua State to load the basic stuff into.
+ *    @return 0 on success.
  */
 int nlua_loadBasic( lua_State* L )
 {
    int i;
-   char *override[] = { /* unsafe functions */
+   const char *override[] = { /* unsafe functions */
          "collectgarbage",
          "dofile",
          "getfenv",
@@ -197,7 +202,7 @@ int lua_loadTk( lua_State *L )
  */
 static int naev_lang( lua_State *L )
 {  
-   /* TODO multilanguage stuff */
+   /** @todo multilanguage stuff */
    lua_pushstring(L,"en");
    return 1;
 }

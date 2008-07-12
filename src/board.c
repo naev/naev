@@ -186,7 +186,7 @@ static void board_stealCargo( char* str )
 
    if (board_fail()) return;
 
-   /* steal as much as possible until full - TODO let player choose */
+   /** steal as much as possible until full - @todo let player choose */
    q = 1;
    while ((p->ncommodities > 0) && (q!=0)) {
       q = pilot_addCargo( player, p->commodities[0].commodity,

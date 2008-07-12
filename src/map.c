@@ -223,7 +223,7 @@ static void map_update (void)
             standing += faction_getPlayer( f );
             nstanding++;
          }
-         else if (f != sys->planets[i].faction && /* TODO more verbosity */
+         else if (f != sys->planets[i].faction && /** @todo more verbosity */
                (sys->planets[i].faction>0)) {
             snprintf( buf, 100, "Multiple" );
             break;

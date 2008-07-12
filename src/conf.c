@@ -315,7 +315,7 @@ void conf_parseCLI( int argc, char** argv )
  */
 int conf_saveConfig (void)
 {
-   /* TODO save conf */
+   /** @todo save conf */
    return 0;
 }
 

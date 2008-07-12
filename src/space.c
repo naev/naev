@@ -853,7 +853,7 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 #undef MELEMENT
 
    /* post-processing */
-   if (temp->nplanets > 0) /* TODO make dependent on overall planet faction */
+   if (temp->nplanets > 0) /** @todo make dependent on overall planet faction */
       temp->faction = temp->planets[0].faction;
 
    return temp;

@@ -192,7 +192,7 @@ static void commodity_exchange_open (void)
    commodity_update(NULL);
 
    if (!has_visited(VISITED_COMMODITY)) {
-      /* TODO mission check */
+      /** @todo mission check */
       visited(VISITED_COMMODITY);
    }
 }
@@ -333,7 +333,7 @@ static void outfits_open (void)
    outfits_update( NULL );
 
    if (!has_visited(VISITED_OUTFITS)) {
-      /* TODO mission check */
+      /** @todo mission check */
       visited(VISITED_OUTFITS);
    }
 }
@@ -615,7 +615,7 @@ static void shipyard_open (void)
    shipyard_update( NULL );
 
    if (!has_visited(VISITED_SHIPYARD)) {
-      /* TODO mission check */
+      /** @todo mission check */
       visited(VISITED_SHIPYARD);
    }
 }
@@ -1195,7 +1195,7 @@ void land( Planet* p )
          land_planet->faction, land_planet->name, cur_system->name );
 
    if (!has_visited(VISITED_LAND)) {
-      /* TODO mission check */
+      /** @todo mission check */
       visited(VISITED_LAND);
    }
 }

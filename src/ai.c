@@ -935,8 +935,7 @@ static int ai_face( lua_State *L )
    if (n >= 0 ) {
       p = pilot_get(n);
       if (p==NULL) return 0; /* make sure pilot is valid */
-      vect_cset( &tv, VX(p->solid->pos) + FACE_WVEL*VX(p->solid->vel),
-            VY(p->solid->pos) + FACE_WVEL*VY(p->solid->vel) );
+      vect_cset( &tv, VX(p->solid->pos), VY(p->solid->pos) );
       v = NULL;
    }
    else if (lua_islightuserdata(L,1)) v = (Vector2d*)lua_topointer(L,1);
@@ -945,8 +944,7 @@ static int ai_face( lua_State *L )
    if (lua_gettop(L) > 1 && lua_isnumber(L,2)) invert = (int)lua_tonumber(L,2);
    if (invert) mod *= -1;
 
-   vect_cset( &sv, VX(cur_pilot->solid->pos) + FACE_WVEL*VX(cur_pilot->solid->vel),
-         VY(cur_pilot->solid->pos) + FACE_WVEL*VY(cur_pilot->solid->vel) );
+   vect_cset( &sv, VX(cur_pilot->solid->pos), VY(cur_pilot->solid->pos) );
 
    if (v==NULL) /* target is dynamic */
       diff = angle_diff(cur_pilot->solid->dir,

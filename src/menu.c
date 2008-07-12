@@ -215,7 +215,7 @@ static void menu_small_exit( char* str )
 static void edit_options( char* str )
 {
    (void)str;
-   /* TODO make options menu */
+   /** @todo make options menu */
 }
 
 

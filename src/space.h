@@ -15,7 +15,7 @@
 
 
 #define MIN_HYPERSPACE_DIST   1500 /**< Minimum distance to initiate hyperspace. */
-#define MAX_HYPERSPACE_VEL    25 /**< Veloc
+#define MAX_HYPERSPACE_VEL    25 /**< Speed to brake to before jumping. */
 
 
 #define PLANET_TECH_MAX       8 /**< Amount of special techs a planet can have. */

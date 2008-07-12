@@ -946,7 +946,7 @@ void pilot_calcStats( Pilot* pilot )
          pilot->afterburner = &pilot->outfits[i]; /* Set afterburner */
       else if (outfit_isJammer(o)) { /* Jammer */
          if (pilot->jam_chance < o->u.jam.chance) { /* substitute */
-            /* TODO make more jammers improve overall */
+            /** @todo make more jammers improve overall */
             pilot->jam_range = o->u.jam.range;
             pilot->jam_chance = o->u.jam.chance;
          }
