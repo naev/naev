@@ -2,6 +2,11 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file sound.c
+ *
+ * @brief Handles all the sound details.
+ */
 
 
 #include "sound.h"
@@ -10,7 +15,6 @@
 
 #include "SDL.h"
 #include "SDL_mixer.h"
-#include "SDL_thread.h"
 
 #include "naev.h"
 #include "log.h"
@@ -19,34 +23,34 @@
 #include "physics.h"
 
 
-#define SOUND_CHANNEL_MAX  256 /* Overkill */
+#define SOUND_CHANNEL_MAX  256 /**< Number of sound channels to allocate. Overkill. */
 
-#define SOUND_PREFIX "snd/sounds/"
-#define SOUND_SUFFIX ".wav"
+#define SOUND_PREFIX "snd/sounds/" /**< Prefix of where to find sounds. */
+#define SOUND_SUFFIX ".wav" /**< Suffix of sounds. */
 
 
 /*
  * Global sound properties.
  */
-int sound_disabled = 0; /* Whether sound is disabled */
-static int sound_reserved = 0; /* Amount of reserved channels */
-static double sound_pos[3]; /* Position of listener. */
+int sound_disabled = 0; /**< Whether sound is disabled. */
+static int sound_reserved = 0; /**< Amount of reserved channels. */
+static double sound_pos[3]; /**< Position of listener. */
 
 
 /*
  * gives the buffers a name
  */
 typedef struct alSound_ {
-   char *name; /* buffer's name */
-   Mix_Chunk *buffer;
+   char *name; /**< Buffer's name. */
+   Mix_Chunk *buffer; /**< Buffer data. */
 } alSound;
 
 
 /*
  * list of sounds available (all preloaded into a buffer)
  */
-static alSound *sound_list = NULL;
-static int sound_nlist = 0;
+static alSound *sound_list = NULL; /**< List of available sounds. */
+static int sound_nlist = 0; /**< Number of available sounds. */
 
 
 /*
@@ -57,8 +61,12 @@ static Mix_Chunk *sound_load( char *filename );
 static void sound_free( alSound *snd );
 
 
-/*
- * initializes the sound subsystem
+/**
+ * @fn int sound_init (void)
+ *
+ * @brief Initializes the sound subsystem.
+ *
+ *    @return 0 on success.
  */
 int sound_init (void)
 {
@@ -98,8 +106,10 @@ int sound_init (void)
 }
 
 
-/*
- * cleans up after the sound subsytem
+/**
+ * @fn void sound_exit (void)
+ *
+ * @brief Cleans up after the sound subsytem.
  */
 void sound_exit (void)
 {
@@ -116,8 +126,13 @@ void sound_exit (void)
 }
 
 
-/*
- * Gets the buffer to sound of name.
+/**
+ * @fn int sound_get( char* name )
+ *
+ * @brief Gets the buffer to sound of name.
+ *
+ *    @param name Name of the sound to get it's id.
+ *    @return ID of the sound matching name.
  */
 int sound_get( char* name ) 
 {
@@ -134,8 +149,13 @@ int sound_get( char* name )
 }
 
 
-/*
- * Plays the sound.
+/**
+ * @fn int sound_play( int sound )
+ *
+ * @brief Plays the sound in the first available channel.
+ *
+ *    @param sound Sound to play.
+ *    @return 0 on success.
  */
 int sound_play( int sound )
 {
@@ -155,6 +175,16 @@ int sound_play( int sound )
 }
 
 
+/**
+ * @fn int sound_playPos( int sound, double x, double y )
+ *
+ * @brief Plays a sound based on position.
+ *
+ *    @param sound Sound to paly.
+ *    @param x X position of the sound.
+ *    @param y Y position of the sound.
+ *    @return 0 on success.
+ */
 int sound_playPos( int sound, double x, double y )
 {
    int channel;
@@ -188,6 +218,18 @@ int sound_playPos( int sound, double x, double y )
 }
 
 
+/**
+ * @fn int sound_updateListener( double dir, double x, double y )
+ *
+ * @brief Updates the sound listener.
+ *
+ *    @param dir Direction listener is facing.
+ *    @param x X position of the listener.
+ *    @param y Y position of the listener.
+ *    @return 0 on success.
+ *
+ * @sa sound_playPos
+ */
 int sound_updateListener( double dir, double x, double y )
 {
    sound_pos[0] = x;
@@ -197,8 +239,10 @@ int sound_updateListener( double dir, double x, double y )
 }
 
 
-/*
- * makes the list of available sounds
+/**
+ * @fn static int sound_makeList (void)
+ *
+ * @brief Makes the list of available sounds.
  */
 static int sound_makeList (void)
 {
@@ -250,8 +294,13 @@ static int sound_makeList (void)
 }
 
 
-/*
- * Sets the volume.
+/**
+ * @fn int sound_volume( const double vol )
+ *
+ * @brief Sets the volume.
+ *
+ *    @param vol Volume to set to.
+ *    @return 0 on success.
  */
 int sound_volume( const double vol )
 {
@@ -260,8 +309,15 @@ int sound_volume( const double vol )
 }
 
 
-/*
- * loads a sound into the sound_list
+/**
+ * @fn static Mix_Chunk* sound_load( char *filename )
+ *
+ * @brief Loads a sound into the sound_list.
+ *
+ *    @param filename Name fo the file to load.
+ *    @return The SDL_Mixer of the loaded chunk.
+ *
+ * @sa sound_makeList
  */
 static Mix_Chunk* sound_load( char *filename )
 {
@@ -286,6 +342,15 @@ static Mix_Chunk* sound_load( char *filename )
    free( wavdata );
    return buffer;
 }
+
+
+/**
+ * @fn static void sound_free( alSound *snd )
+ *
+ * @brief Frees the sound.
+ *
+ *    @param snd Sound to free.
+ */
 static void sound_free( alSound *snd )
 {
    /* free the stuff */
@@ -298,8 +363,13 @@ static void sound_free( alSound *snd )
 }
 
 
-/*
- * Reserves num channels.
+/**
+ * @fn int sound_reserve( int num )
+ *
+ * @brief Reserves num channels.
+ *
+ *    @param num Number of channels to reserve.
+ *    @return 0 on success.
  */
 int sound_reserve( int num )
 {
@@ -319,8 +389,15 @@ int sound_reserve( int num )
 }
 
 
-/*
- * Creates a sound group.
+/**
+ * @fn int sound_createGroup( int tag, int start, int size )
+ *
+ * @brief Creates a sound group.
+ *
+ *    @param tag Identifier of the group to creat.
+ *    @param start Where to start creating the group.
+ *    @param size Size of the group.
+ *    @return 0 on success.
  */
 int sound_createGroup( int tag, int start, int size )
 {
@@ -339,8 +416,15 @@ int sound_createGroup( int tag, int start, int size )
 }
 
 
-/*
- * Plays a sound in a group.
+/**
+ * @fn int sound_playGroup( int group, int sound, int once )
+ *
+ * @brief Plays a sound in a group.
+ *
+ *    @param group Group to play sound in.
+ *    @param sound Sound to play.
+ *    @param once Whether to play only once.
+ *    @return 0 on success.
  */
 int sound_playGroup( int group, int sound, int once )
 {
@@ -363,8 +447,12 @@ int sound_playGroup( int group, int sound, int once )
 }
 
 
-/*
- * Stops all the sounds in a group.
+/**
+ * @fn void sound_stopGroup( int group )
+ *
+ * @brief Stops all the sounds in a group.
+ *
+ *    @param group Group to stop all it's sounds.
  */
 void sound_stopGroup( int group )
 {

@@ -2,6 +2,11 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file player.c
+ *
+ * @brief Contains all the player related stuff.
+ */
 
 
 #include "player.h"
@@ -32,64 +37,64 @@
 #include "spfx.h"
 
 
-#define XML_GUI_ID   "GUIs"   /* XML section identifier */
-#define XML_GUI_TAG  "gui"
+#define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
+#define XML_GUI_TAG  "gui" /**<  XML Section identifier for GUI tags. */
 
-#define XML_START_ID "Start"
+#define XML_START_ID "Start" /**< Module start xml document identifier. */
 
-#define GUI_DATA     "dat/gui.xml"
-#define GUI_GFX      "gfx/gui/"
+#define GUI_DATA     "dat/gui.xml" /**< Global GUI configuration file. */
+#define GUI_GFX      "gfx/gui/" /**< Location of the GUI graphics. */
 
-#define START_DATA   "dat/start.xml"
+#define START_DATA   "dat/start.xml" /**< Module start information file. */
 
-#define TARGET_WIDTH 128
-#define TARGET_HEIGHT 96
+#define TARGET_WIDTH 128 /**< Width of target graphics. */
+#define TARGET_HEIGHT 96 /**< Height of target graphics. */
 
-#define PLAYER_RESERVED_CHANNELS 4
-#define PLAYER_CHANNEL           0
+#define PLAYER_RESERVED_CHANNELS 4 /**< Number of channels to reserve for player sounds. */
+#define PLAYER_CHANNEL           0 /**< Player channel. */
 
 
 /*
  * player stuff
  */
-Pilot* player = NULL; /* ze player */
-static Ship* player_ship = NULL; /* temporary ship to hold when naming it */
-static double player_px, player_py, player_vx, player_vy, player_dir; /* more hack */
-static int player_credits = 0; /* temporary hack */
+Pilot* player = NULL; /**< Ze player. */
+static Ship* player_ship = NULL; /**< Temporary ship to hold when naming it */
+static double player_px, player_py, player_vx, player_vy, player_dir; /**< More hack. */
+static int player_credits = 0; /**< Temporary hack for when creating. */
 
 
 /* 
  * player pilot stack - ships he has 
  */
-static Pilot** player_stack = NULL;
-static char** player_lstack = NULL; /* names of the planet the ships are at */
-static int player_nstack = 0;
+static Pilot** player_stack = NULL; /**< Stack of ships player has. */
+static char** player_lstack = NULL; /**< Names of the planet the ships are at. */
+static int player_nstack = 0; /**< Number of ships player has. */
 
 
 /* 
  * player global properties
  */
-char* player_name = NULL; /* ze name */
-int player_crating = 0; /* ze rating */
-unsigned int player_flags = 0; /* player flags */
+char* player_name = NULL; /**< Ze name. */
+int player_crating = 0; /**< Ze combat rating. */
+unsigned int player_flags = 0; /**< Player flags. */
 /* used in input.c */
-double player_turn = 0.; /* turn velocity from input */
-static double player_acc = 0.; /* accel velocity from input */
-unsigned int player_target = PLAYER_ID; /* targetted pilot */
+double player_turn = 0.; /**< Turn velocity from input. */
+static double player_acc = 0.; /**< Accel velocity from input. */
+unsigned int player_target = PLAYER_ID; /**< Targetted pilot. */
 /* pure internal */
-int planet_target = -1; /* targetted planet */
-int hyperspace_target = -1; /* targetted hyperspace route */
+int planet_target = -1; /* targetted planet. */
+int hyperspace_target = -1; /* targetted hyperspace route. */
 /* for death and such */
-static unsigned int player_timer = 0;
-static Vector2d player_cam;
+static unsigned int player_timer = 0; /**< For death and such. */
+static Vector2d player_cam; /**< For death and such. */
 
 
 /* 
  * unique mission stack
  */
-static int* missions_done = NULL; /* saves position */
-static int missions_mdone = 0;
-static int missions_ndone = 0;
+static int* missions_done = NULL; /**< Saves position of completed missions. */
+static int missions_mdone = 0; /**< Memory size of completed missions. */
+static int missions_ndone = 0; /**< Number of completed missions. */
 
 
 /*
@@ -108,16 +113,16 @@ extern StarSystem *systems_stack;
  * GUI stuff
  */
 typedef struct Radar_ {
-   double x,y; /* position */
-   double w,h; /* dimensions */
-   RadarShape shape;
-   double res; /* resolution */
+   double x,y; /**< Position */
+   double w,h; /**< Dimensions */
+   RadarShape shape; /**< Shape */
+   double res; /**< Resolution */
 } Radar;
 /* radar resolutions */
-#define RADAR_RES_MAX      100.
-#define RADAR_RES_MIN      10.
-#define RADAR_RES_INTERVAL 10.
-#define RADAR_RES_DEFAULT  40.
+#define RADAR_RES_MAX      100. /**< Maximum radar resolution. */
+#define RADAR_RES_MIN      10. /**< Minimum radar resolution. */
+#define RADAR_RES_INTERVAL 10. /**< Steps used to increase/decrease resolution. */
+#define RADAR_RES_DEFAULT  40. /**< Default resolution. */
 
 typedef struct Rect_ {
    double x,y;
@@ -126,39 +131,40 @@ typedef struct Rect_ {
 
 typedef struct GUI_ {
    /* graphics */
-   glTexture *gfx_frame;
-   glTexture *gfx_targetPilot, *gfx_targetPlanet;
+   glTexture *gfx_frame; /**< Frame of the GUI. */
+   glTexture *gfx_targetPilot; /**< Graphics used to target pilot. */
+   glTexture *gfx_targetPlanet; /**< Graphics used to target planets. */
 
    /* rects */
-   Radar radar;
-   Rect nav;
-   Rect shield, armour, energy;
-   Rect weapon;
-   Rect target_health, target_name, target_faction;
-   Rect misc;
-   Rect mesg;
+   Radar radar; /**< The radar. */
+   Rect nav; /**< Navigation computer. */
+   Rect shield, armour, energy; /**< Health bars. */
+   Rect weapon; /**< Weapon targetting system. */
+   Rect target_health, target_name, target_faction; /**< Target stuff. */
+   Rect misc; /**< Misc stuff: credits, cargo... */
+   Rect mesg; /**< Where messages go. */
    
    /* positions */
-   Vector2d frame;
-   Vector2d target;
+   Vector2d frame; /**< Global frame position. */
+   Vector2d target; /**< Global target position. */
 
 } GUI;
-GUI gui = { .gfx_frame = NULL,
+static GUI gui = { .gfx_frame = NULL,
       .gfx_targetPilot = NULL,
-      .gfx_targetPlanet = NULL }; /* ze GUI */
+      .gfx_targetPlanet = NULL }; /**< Ze GUI. */
 /* needed to render properly */
 double gui_xoff = 0.;
 double gui_yoff = 0.;
 
 /* messages */
 #define MESG_SIZE_MAX   80
-int mesg_timeout = 5000;
-int mesg_max = 5; /* maximum messages onscreen */
+int mesg_timeout = 5000; /**< How long it takes for a message to timeout. */
+int mesg_max = 5; /**< Maximum messages onscreen */
 typedef struct Mesg_ {
    char str[MESG_SIZE_MAX];
    unsigned int t;
 } Mesg;
-static Mesg* mesg_stack;
+static Mesg* mesg_stack; /**< Stack of mesages. */
 
 
 /* 
@@ -207,8 +213,15 @@ void player_brokeHyperspace (void); /* pilot.c */
 double player_faceHyperspace (void); /* pilot.c */
 
 
-/* 
- * prompts for player's name
+/**
+ * @fn void player_new (void)
+ * 
+ * @brief Creates a new player.
+ *
+ *   - Cleans up after old players.
+ *   - Prompts for name.
+ * 
+ * @sa player_newMake
  */
 void player_new (void)
 {
@@ -245,8 +258,10 @@ void player_new (void)
 }
 
 
-/*
- * creates a new player
+/**
+ * @fn static void player_newMake (void)
+ *
+ * @brief Actually creates a new player.
  */
 static void player_newMake (void)
 {
@@ -334,8 +349,13 @@ static void player_newMake (void)
 }
 
 
-/*
- * creates a dialogue to name the new ship
+/**
+ * @fn void player_newShip( Ship* ship, double px, double py,
+ *           double vx, double vy, double dir )
+ *
+ * @brief Creates a new ship for player.
+ *
+ * @sa player_newShipMake
  */
 void player_newShip( Ship* ship, double px, double py,
       double vx, double vy, double dir )
@@ -357,8 +377,10 @@ void player_newShip( Ship* ship, double px, double py,
    free(ship_name);
 }
 
-/*
- * change the player's ship
+/**
+ * @fn static void player_newShipMake( char* name )
+ *
+ * @brief Actually creates the new ship.
  */
 static void player_newShipMake( char* name )
 {
@@ -393,8 +415,12 @@ static void player_newShipMake( char* name )
 }
 
 
-/*
- * swaps the current ship with shipname
+/**
+ * @fn void player_swapShip( char* shipname )
+ *
+ * @brief Swaps player's current ship with his ship named shipname.
+ *
+ *    @param shipname Ship to change to.
  */
 void player_swapShip( char* shipname )
 {
@@ -436,8 +462,10 @@ void player_swapShip( char* shipname )
 }
 
 
-/*
- * cleans up player stuff like player_stack
+/**
+ * @brief void player_cleanup (void)
+ *
+ * @brief Cleans up player stuff like player_stack.
  */
 void player_cleanup (void)
 {
@@ -483,10 +511,12 @@ void player_cleanup (void)
 }
 
 
-/*
- * initializes the player sounds
+/**
+ * @fn static void player_initSound (void)
+ *
+ * @brief Initializes the player sounds.
  */
-static int player_soundReserved = 0;
+static int player_soundReserved = 0; /**< Has the player already reserved sound? */
 static void player_initSound (void)
 {
    if (player_soundReserved) return;
@@ -497,8 +527,13 @@ static void player_initSound (void)
 }
 
 
-/*
- * plays a sound
+/**
+ * @fn static void player_playSound( int sound, int once )
+ *
+ * @brief Plays a sound at the player.
+ *
+ *    @param sound ID of the sound to play.
+ *    @param once Play only once?
  */
 static void player_playSound( int sound, int once )
 {
@@ -506,8 +541,10 @@ static void player_playSound( int sound, int once )
 }
 
 
-/*
- * stops playing a sound
+/**
+ * @fn static void player_stopSound (void)
+ *
+ * @brief Stops playing player sounds.
  */
 static void player_stopSound (void)
 {
@@ -515,8 +552,12 @@ static void player_stopSound (void)
 }
 
 
-/*
- * adds a mesg to the queue to be displayed on screen
+/**
+ * @fn void player_message ( const char *fmt, ... )
+ *
+ * @brief Adds a mesg to the queue to be displayed on screen.
+ *
+ *    @param fmt String with formatting like printf.
  */
 void player_message ( const char *fmt, ... )
 {
@@ -542,8 +583,13 @@ void player_message ( const char *fmt, ... )
 }
 
 
-/*
- * warps the player to the new position
+/**
+ * @fn void player_warp( const double x, const double y )
+ *
+ * @brief Warps the player to the new position
+ *
+ *    @param x X value of the position to warp to.
+ *    @param y Y value of the position to warp to.
  */
 void player_warp( const double x, const double y )
 {
@@ -551,8 +597,10 @@ void player_warp( const double x, const double y )
 }
 
 
-/*
- * clears the targets
+/**
+ * @fn void player_clear (void)
+ *
+ * @brief Clears the targets.
  */
 void player_clear (void)
 {
@@ -562,8 +610,12 @@ void player_clear (void)
 }
 
 
-/*
- * gets the player's combat rating
+/**
+ * @fn const char* player_rating (void)
+ *
+ * @brief Gets the player's combat rating in a human-readable string.
+ *
+ *    @return The player's combat rating in a human readable string.
  */
 static char* player_ratings[] = {
       "None",
@@ -588,8 +640,13 @@ const char* player_rating (void)
 }
 
 
-/*
- * returns how many of the outfit the player owns
+/**
+ * @fn int player_outfitOwned( const char* outfitname )
+ *
+ * @brief Gets how many of the outfit the player owns.
+ *
+ *    @param outfitname Outfit to check how many the player owns of.
+ *    @return The number of outfits matching outfitname owned.
  */
 int player_outfitOwned( const char* outfitname )
 {
