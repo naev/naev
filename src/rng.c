@@ -2,6 +2,13 @@
  * See Licensing and Copmt_yright notice in naev.h
  */
 
+/**
+ * @file rng.c
+ *
+ * @brief Handles all the random number logic.
+ *
+ * Random numbers are currently generated using the mersenne twister.
+ */
 
 
 #include "rng.h"
@@ -25,9 +32,9 @@
 /*
  * mersenne twister state
  */
-static uint32_t MT[624];
-static uint32_t mt_y;
-static int mt_pos = 0; /* current number */
+static uint32_t MT[624]; /**< Mersenne twister state. */
+static uint32_t mt_y; /**< Internal mersenne twister variable. */
+static int mt_pos = 0; /**< Current number being used. */
 
 
 /*
@@ -40,6 +47,11 @@ static void mt_genArray (void);
 static uint32_t mt_getInt (void);
 
 
+/**
+ * @fn void rng_init (void)
+ *
+ * @brief Initializes the random subsystem.
+ */
 void rng_init (void)
 {
    uint32_t i;
@@ -70,8 +82,12 @@ void rng_init (void)
 }
 
 
-/*
- * uses the time as a source of entropy
+/**
+ * @fn static uint32_t rng_timeEntropy (void)
+ *
+ * @brief Uses time as a source of entropy.
+ *
+ *    @return A 4 byte entropy seed.
  */
 static uint32_t rng_timeEntropy (void)
 {
@@ -89,8 +105,10 @@ static uint32_t rng_timeEntropy (void)
 }
 
 
-/*
- * generates the initial mersenne twister based on seed
+/**
+ * @fn static void mt_initArray( uint32_t seed )
+ *
+ * @brief Generates the initial mersenne twister based on seed.
  */
 static void mt_initArray( uint32_t seed )
 {
@@ -103,8 +121,10 @@ static void mt_initArray( uint32_t seed )
 }
 
 
-/*
- * generates an array of numbers
+/**
+ * @fn static void mt_genArray (void)
+ *
+ * @brief Generates a new set of random numbers for the mersenne twister.
  */
 static void mt_genArray (void)
 {
@@ -121,8 +141,12 @@ static void mt_genArray (void)
 }
 
 
-/*
- * gets the next int
+/**
+ * @fn static uint32_t mt_getInt (void)
+ *
+ * @brief Gets the next int.
+ *
+ *    @return A random 4 byte number.
  */
 static uint32_t mt_getInt (void)
 {
@@ -138,8 +162,12 @@ static uint32_t mt_getInt (void)
 }
 
 
-/*
- * returns a random int
+/**
+ * @fn unsigned int randint (void)
+ *
+ * @brief Gets a random integer.
+ *
+ *    @return A random integer.
  */
 unsigned int randint (void)
 {
@@ -147,10 +175,14 @@ unsigned int randint (void)
 }
 
 
-/*
- * returns a random double ( 0 <= randfp <= 1. )
+/**
+ * @fn double randfp (void)
+ *
+ * @brief Gets a random float between 0 and 1 (inclusive).
+ *
+ *    @return A random float between 0 and 1 (inclusive).
  */
-static double m_div = (double)(0xFFFFFFFF);
+static double m_div = (double)(0xFFFFFFFF); /**< Number to divide by. */
 double randfp (void)
 {
    double m = (double)mt_getInt();
@@ -158,7 +190,11 @@ double randfp (void)
 }
 
 
-/*
+/**
+ * @fn double Normal( double x )
+ *
+ * @brief Calculates the Normal distribution.
+ *
  * Calculates N(x) where N is the normal distribution.
  *
  * Approximates to a power series:
@@ -167,6 +203,9 @@ double randfp (void)
  *  where t = 1 / (1 + 0.2316419*x)
  *  
  * Maximum absolute error is 7.5e^-8.
+ *
+ *    @param x Value to calculate the normal of.
+ *    @return The value of the Normal.
  */
 double Normal( double x )
 {
@@ -187,7 +226,11 @@ double Normal( double x )
 }
 
 
-/*
+/**
+ * @fn double NormalInverse( double p )
+ *
+ * @brief Calculates the inverse of the normal.
+ *
  * Lower tail quantile for standard normal distribution function.
  *
  * This function returns an approximation of the inverse cumulative
@@ -217,7 +260,7 @@ static const double a[] =
    1.383577518672690e+02,
    -3.066479806614716e+01,
    2.506628277459239e+00
-};
+}; /**< Inverse normal coefficients. */
 static const double b[] =
 {
    -5.447609879822406e+01,
@@ -225,7 +268,7 @@ static const double b[] =
    -1.556989798598866e+02,
    6.680131188771972e+01,
    -1.328068155288572e+01
-};
+}; /**< Inverse normal coefficients. */
 static const double c[] =
 {
    -7.784894002430293e-03,
@@ -234,16 +277,16 @@ static const double c[] =
    -2.549732539343734e+00,
    4.374664141464968e+00,
    2.938163982698783e+00
-};
+}; /**< Inverse normal coefficients. */
 static const double d[] =
 {
    7.784695709041462e-03,
    3.224671290700398e-01,
    2.445134137142996e+00,
    3.754408661907416e+00
-};
-#define LOW 0.02425
-#define HIGH 0.97575
+}; /**< Inverse normal coefficients. */
+#define LOW 0.02425 /**< Low area threshold. */
+#define HIGH 0.97575 /**< High area threshold. */
 double NormalInverse( double p )
 {
    double x, e, u, q, r;
