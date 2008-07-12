@@ -2,6 +2,11 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file faction.c
+ *
+ * @brief Handles the NAEV factions.
+ */
 
 
 #include "faction.h"
@@ -21,30 +26,35 @@
 #define XML_FACTION_ID     "Factions"   /* XML section identifier */
 #define XML_FACTION_TAG    "faction"
 
-#define FACTION_DATA       "dat/faction.xml"
+#define FACTION_DATA       "dat/faction.xml" /**< Faction xml file. */
 
 
-#define PLAYER_ALLY        70 /* above this player is considered ally */
+#define PLAYER_ALLY        70 /**< above this player is considered ally */
 
 
+/**
+ * @struct Faction
+ *
+ * @brief Represents a faction.
+ */
 typedef struct Faction_ {
-   char* name; /* Normal Name */
-   char* longname; /* Long Name */
+   char* name; /**< Normal Name */
+   char* longname; /**< Long Name */
 
    /* Enemies */
-   int* enemies;
-   int nenemies;
+   int* enemies; /**< Enemies by ID of the faction. */
+   int nenemies; /**< Number of enemies. */
 
    /* Allies */
-   int* allies;
-   int nallies;
+   int* allies; /**< Allies by ID of the faction. */
+   int nallies; /**< Number of allies. */
 
-   int player; /* standing with player - from -100 to 100 */
+   int player; /**< Standing with player - from -100 to 100 */
 } Faction;
 
 
-static Faction* faction_stack = NULL;
-static int faction_nstack = 0;
+static Faction* faction_stack = NULL; /**< Faction stack. */
+static int faction_nstack = 0; /**< Number of factions in the faction stack. */
 
 
 /*
@@ -60,8 +70,13 @@ int pfaction_save( xmlTextWriterPtr writer );
 int pfaction_load( xmlNodePtr parent );
 
 
-/*
- * returns the faction of name name
+/**
+ * @fn int faction_get( const char* name )
+ *
+ * @brief Gets a faction ID by name.
+ *
+ *    @param name Name of the faction to seek.
+ *    @return ID of the faction.
  */
 int faction_get( const char* name )
 {
@@ -77,8 +92,13 @@ int faction_get( const char* name )
 }
 
 
-/*
- * returns the faction's name
+/**
+ * @fn char* faction_name( int f )
+ *
+ * @brief Get's a factions short name.
+ *
+ *    @param f Faction to get the name of.
+ *    @return Name of the faction.
  */
 char* faction_name( int f )
 {
@@ -90,8 +110,13 @@ char* faction_name( int f )
 }
 
 
-/*
- * returns the faction's long name (formal)
+/**
+ * @fn char* faction_longname( int f )
+ *
+ * @brief Gets the faction's long name (formal).
+ *
+ *    @param f Faction to get the name of.
+ *    @return The faction's long name.
  */
 char* faction_longname( int f )
 {
@@ -101,8 +126,12 @@ char* faction_longname( int f )
 }
 
 
-/*
- * Sanitizes player faction standing.
+/**
+ * @fn static void faction_sanitizePlayer( Faction* faction )
+ *
+ * @brief Sanitizes player faction standing.
+ *
+ *    @param faction Faction to sanitize.
  */
 static void faction_sanitizePlayer( Faction* faction )
 {
@@ -113,8 +142,17 @@ static void faction_sanitizePlayer( Faction* faction )
 }
 
 
-/*
- * Modifies the player's standing with a faction.
+/**
+ * @fn void faction_modPlayer( int f, int mod )
+ *
+ * @brief Modifies the player's standing with a faction.
+ *
+ * Affects enemies and allies too.
+ *
+ *    @param f Faction to modify player's standing.
+ *    @param mod Modifier to modify by.
+ *
+ * @sa faction_modPlayerRaw
  */
 void faction_modPlayer( int f, int mod )
 {
@@ -150,8 +188,17 @@ void faction_modPlayer( int f, int mod )
 }
 
 
-/*
- * Modifies a player's standing with a faction without affecting others.
+/**
+ * @fn void faction_modPlayerRaw( int f, int mod )
+ *
+ * @brief Modifies the player's standing without affecting others.
+ *
+ * Does not affect allies nor enemies.
+ *
+ *    @param f Faction whose standing to modiy.
+ *    @param mod Amount to modiy standing by.
+ *
+ * @sa faction_modPlayer
  */
 void faction_modPlayerRaw( int f, int mod )
 {
@@ -169,8 +216,13 @@ void faction_modPlayerRaw( int f, int mod )
 }
 
 
-/*
- * Gets the player's standing with a faction.
+/**
+ * @fn int faction_getPlayer( int f )
+ *
+ * @brief Gets the player's standing with a faction.
+ *
+ *    @param f Faction to get player's standing from.
+ *    @return The standing the player has with the faction.
  */
 int faction_getPlayer( int f )
 {
@@ -184,8 +236,15 @@ int faction_getPlayer( int f )
 }
 
 
-/*
- * Gets the colour of the faction based on it's standing with the player.
+/**
+ * @fn glColour* faction_getColour( int f )
+ *
+ * @brief Gets the colour of the faction based on it's standing with the player.
+ *
+ * Used to unify the colour checks all over.
+ *
+ *    @param f Faction to get the colour of based on player's standing.
+ *    @return Pointer to the colour.
  */
 glColour* faction_getColour( int f )
 {
@@ -196,8 +255,13 @@ glColour* faction_getColour( int f )
 }
 
 
-/*
- * Returns the player's standing
+/**
+ * @fn char *faction_getStanding( int mod )
+ *
+ * @brief Get's the player's standing in human readable form.
+ *
+ *    @param mod Player's standing.
+ *    @return Human readable player's standing.
  */
 static char *player_standings[] = {
    "Hero", /* 0 */
@@ -226,8 +290,14 @@ char *faction_getStanding( int mod )
 #undef STANDING
 
 
-/*
- * returns 1 if Faction a and b are enemies
+/**
+ * @fn int areEnemies( int a, int b)
+ *
+ * @brief Checks whether two factions are enemies.
+ *
+ *    @param a Faction A.
+ *    @param b Faction B.
+ *    @return 1 if A and B are enemies, 0 otherwise.
  */
 int areEnemies( int a, int b)
 {
@@ -260,7 +330,6 @@ int areEnemies( int a, int b)
       }
    }
 
-
    /* handle a */
    if (faction_isFaction(a)) fa = &faction_stack[a];
    else { /* a isn't valid */
@@ -289,8 +358,14 @@ int areEnemies( int a, int b)
 }
 
 
-/*
- * returns 1 if Faction a and b are allies
+/**
+ * @fn int areAllies( int a, int b )
+ *
+ * @brief Checks whether two factions are allies or not.
+ *
+ *    @param a Faction A.
+ *    @param b Faction B.
+ *    @return 1 if A and B are allies, 0 otherwise.
  */
 int areAllies( int a, int b )
 {
@@ -353,8 +428,13 @@ int areAllies( int a, int b )
 }
 
 
-/*
- * returns true if f is a faction
+/**
+ * @fn static int faction_isFaction( int f )
+ *
+ * @brief Checks whether or not a faction is valid.
+ *
+ *    @param f Faction to check for validity.
+ *    @return 1 if faction is valid, 0 otherwise.
  */
 static int faction_isFaction( int f )
 {
@@ -444,8 +524,12 @@ static void faction_parseSocial( xmlNodePtr parent )
 }
 
 
-/*
- * loads up all the factions
+/**
+ * @fn int factions_load (void)
+ *
+ * @brief Loads up all the factions from the data file.
+ *
+ *    @return 0 on success.
  */
 int factions_load (void)
 {
@@ -505,6 +589,12 @@ int factions_load (void)
    return 0;
 }
 
+
+/**
+ * @fn void factions_free (void)
+ *
+ * @brief Frees the factions.
+ */
 void factions_free (void)
 {
    int i;
@@ -522,8 +612,13 @@ void factions_free (void)
 }
 
 
-/*
- * player faction saving/loading
+/**
+ * @fn int pfaction_save( xmlTextWriterPtr writer )
+ *
+ * @brief Saves player's standings with the factions.
+ *
+ *    @param writer The xml writer to use.
+ *    @return 0 on success.
  */
 int pfaction_save( xmlTextWriterPtr writer )
 {
@@ -544,6 +639,16 @@ int pfaction_save( xmlTextWriterPtr writer )
 
    return 0;
 }
+
+
+/**
+ * @fn int pfaction_load( xmlNodePtr parent )
+ *
+ * @brief Loads the player's faction standings.
+ *
+ *    @param parent Parent xml node to read from.
+ *    @return 0 on success.
+ */
 int pfaction_load( xmlNodePtr parent )
 {
    xmlNodePtr node, cur;
