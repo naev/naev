@@ -15,14 +15,20 @@
 #include <stdint.h> /* uint32_t */
 
 
+/**
+ * @struct Packfile
+ *
+ * @brief Abstracts around packfiles.
+ */
 typedef struct Packfile_ {
 #ifdef _POSIX_SOURCE
-   int fd; /* file descriptor */
+   int fd; /**< file descriptor */
 #else /* not _POSIX_SOURCE */
-   FILE* fp;
+   FILE* fp; /**< For non-posix. */
 #endif /* _POSIX_SOURCE */
-   uint32_t pos; /* position */
-   uint32_t start, end; /* file limits */
+   uint32_t pos; /**< cursor position */
+   uint32_t start; /**< File start. */
+   uint32_t end; /**< File end. */
 } Packfile;
 
 

@@ -16,8 +16,11 @@
 #include "md5.h"
 
 
-/*
- * STORES DATA IN FUNKY FORMAT
+/**
+ * @file pack.c
+ *
+ * @brief Stores data in funky format.
+ *
  *
  * Format Overview:
  *
@@ -46,21 +49,24 @@
 #define DEBUG(str, args...)      do {;} while(0)
 
 
-/* the read/WRITE block size */
-#define BLOCKSIZE    128*1024
+#define BLOCKSIZE    128*1024 /**< The read/write block size. */
 
-/* maximum filename length */
-#define MAX_FILENAME 100
+#define MAX_FILENAME 128   /**< maximum file name length. */
 
 
-#define PERMS   S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH
+#define PERMS   S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH /**< default permissions. */
 
 
-const uint64_t magic =  0x25524573; /* sER% */
+const uint64_t magic =  0x25524573; /**< File magic number: sER% */
 
 
-/*
- * gets the file's size
+/**
+ * @fn static off_t getfilesize( const char* filename )
+ *
+ * @brief Gets the file's size.
+ *
+ *    @param filename File to get the size of.
+ *    @return The size of the file.
  */
 static off_t getfilesize( const char* filename )
 {
@@ -87,8 +93,13 @@ static off_t getfilesize( const char* filename )
 }
 
 
-/*
- * returns true if filename is a Packfile
+/**
+ * @fn int pack_check( const char* filename )
+ *
+ * @brief Checks to see if a file is a packfile.
+ *
+ *    @param filename Name of the file to check.
+ *    @return 1 if it is a packfile, 0 if it isn't and -1 on error.
  */
 int pack_check( const char* filename )
 {
@@ -136,8 +147,15 @@ int pack_check( const char* filename )
 }
 
 
-/* 
- * packs nfiles infiles into outfile
+/**
+ * @fn int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles )
+ *
+ * @brief Packages files into a packfile.
+ *
+ *    @param outfile Name of the file to output to.
+ *    @param infiles Array of filenames to package.
+ *    @param nfiles Number of filenames in infiles.
+ *    @return 0 on success.
  */
 #ifdef _POSIX_SOURCE
 #define WRITE(b,n)    if (write(outfd,b,n)==-1) { \
@@ -259,8 +277,15 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
 #undef WRITE
 
 
-/*
- * opens the filename in packfile for reading
+/**
+ * @fn int pack_open( Packfile* file, const char* packfile, const char* filename )
+ *
+ * @brief Opens a file in the packfile for reading.
+ *
+ *    @param file Packfile to store data into.
+ *    @param packfile Path to the real packfile.
+ *    @param filename Name of the file within th. packfile.
+ *    @return 0 on success.
  */
 #ifdef _POSIX_SOURCE
 #define READ(b,n)  if (read(file->fd,(b),(n))!=(n)) { \
@@ -341,8 +366,17 @@ int pack_open( Packfile* file, const char* packfile, const char* filename )
 #undef READ
 
 
-/*
- * reads count bytes from file and puts them into buf
+/**
+ * @fn ssize_t pack_read( Packfile* file, void* buf, size_t count )
+ *
+ * @brief Reads data from a packfile.
+ *
+ * Behaves like POSIX read.
+ *
+ *    @param file Opened packfile to read data from.
+ *    @param buf Allocated buffer to read into.
+ *    @param count Bytes to read.
+ *    @return Bytes read or -1 on error.
  */
 ssize_t pack_read( Packfile* file, void* buf, size_t count )
 {
@@ -366,8 +400,19 @@ ssize_t pack_read( Packfile* file, void* buf, size_t count )
 }
 
 
-/*
- * seeks in the packfile
+/**
+ * @fn off_t pack_seek( Packfile* file, off_t offset, int whence)
+ *
+ * @brief Seeks within a file inside a packfile.
+ *
+ * Behaves like lseek/fseek.
+ *
+ * @todo It's broken, needs fixing.
+ *
+ *    @param file File to seek.
+ *    @param offset Position to seek to.
+ *    @param whence Either SEEK_SET, SEEK_CUR or SEEK_END.
+ *    @return The position moved to.
  */
 off_t pack_seek( Packfile* file, off_t offset, int whence)
 {
@@ -416,8 +461,13 @@ off_t pack_seek( Packfile* file, off_t offset, int whence)
 }
 
 
-/*
- * returns current pointer position
+/**
+ * @fn long pack_tell( Packfile* file )
+ *
+ * @brief Gets the current position in the file.
+ *
+ *    @param file Packfile to get the position from.
+ *    @return The current position in the file.
  */
 long pack_tell( Packfile* file )
 {
@@ -425,8 +475,15 @@ long pack_tell( Packfile* file )
 }
 
 
-/*
- * loads an entire file inte memory and returns a pointer to it
+/**
+ * @fn void* pack_readfile( const char* packfile, const char* filename, uint32_t *filesize )
+ *
+ * @brief Reads an entire file into memory.
+ *
+ *    @param packfile Name of the packfile to read frome.
+ *    @param filename Name of the packed file to read.
+ *    @param filesize Is set to the size of the file.
+ *    @return A pointer to the data in the file or NULL if an error occurred.
  */
 void* pack_readfile( const char* packfile, const char* filename, uint32_t *filesize )
 {
@@ -497,10 +554,16 @@ void* pack_readfile( const char* packfile, const char* filename, uint32_t *files
 }
 
 
-/*
- * loads the filenames in the packfile to filenames
- * filenames should be freed after use
- * on error it filenames is (char**)-1
+/**
+ * @brief char** pack_listfiles( const char* packfile, uint32_t* nfiles )
+ *
+ * @brief Gets what files are in the packfile.
+ *
+ * Each name must be freed individually afterwarsd and the array of names too.
+ *
+ *    @param packfile Packfile to query it's internal files.
+ *    @param nfiles Stores the amount of files in packfile.
+ *    @return An array of filenames in packfile.
  */
 #ifdef _POSIX_SOURCE
 #define READ(b,n)    if (read(fd,(b),(n))!=(n)) { \
@@ -565,8 +628,13 @@ char** pack_listfiles( const char* packfile, uint32_t* nfiles )
 
 
 
-/*
- * closes the packfile
+/**
+ * @fn int pack_close( Packfile* file )
+ *
+ * @brief Closes a packfile.
+ *
+ *    @param file Packfile to close.
+ *    @return 0 on success.
  */
 int pack_close( Packfile* file )
 {
