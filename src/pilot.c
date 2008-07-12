@@ -349,8 +349,17 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
 }
 
 
-/*
- * damages the pilot
+/**
+ * @fn void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
+ *                     const DamageType dtype, const double damage )
+ *
+ * @brief Damages the pilot.
+ *
+ *    @param p Pilot that is taking damage.
+ *    @param w Solid that is hitting pilot.
+ *    @param shooter Attacker that shot the pilot.
+ *    @param dtype Type of damage.
+ *    @param damage Amount of damage.
  */
 void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       const DamageType dtype, const double damage )
@@ -402,6 +411,13 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 }
 
 
+/**
+ * @fn void pilot_dead( Pilot* p )
+ *
+ * @brief Pilot is dead, now will slowly explode.
+ *
+ *    @param p Pilot that just died.
+ */
 void pilot_dead( Pilot* p )
 {
    if (pilot_isFlag(p,PILOT_DEAD)) return; /* he's already dead */
@@ -427,8 +443,13 @@ void pilot_dead( Pilot* p )
 }
 
 
-/*
- * sets the pilot's secondary weapon based on it's name
+/**
+ * @fn void pilot_setSecondary( Pilot* p, const char* secondary )
+ *
+ * @brief Sets the pilot's secondary weapon based on it's name.
+ *
+ *    @param p Pilot to set secondary weapon.
+ *    @param secondary Name of the secondary weapon to set.
  */
 void pilot_setSecondary( Pilot* p, const char* secondary )
 {
@@ -457,8 +478,12 @@ void pilot_setSecondary( Pilot* p, const char* secondary )
 }
 
 
-/*
- * sets the pilot's ammo based on their secondary weapon
+/**
+ * @fn void pilot_setAmmo( Pilot* p )
+ *
+ * @param Sets the pilot's ammo based on their secondary weapon.
+ *
+ *    @param p Pilot to set ammo.
  */
 void pilot_setAmmo( Pilot* p )
 {
@@ -484,8 +509,12 @@ void pilot_setAmmo( Pilot* p )
 }
 
 
-/*
- * sets the pilot's afterburner
+/**
+ * @fn void pilot_setAfterburner( Pilot* p )
+ *
+ * @brief Sets the pilot's afterburner if he has one.
+ *
+ *    @param p Pilot to set afterburner.
  */
 void pilot_setAfterburner( Pilot* p )
 {
@@ -500,8 +529,12 @@ void pilot_setAfterburner( Pilot* p )
 }
 
 
-/*
- * renders the pilot
+/**
+ * @fn void pilot_render( Pilot* p )
+ *
+ * @brief Renders the pilot.
+ *
+ *    @param p Pilot to render.
  */
 void pilot_render( Pilot* p )
 {
@@ -511,14 +544,20 @@ void pilot_render( Pilot* p )
 }
 
 
-/*
- * updates the Pilot
+/**
+ * @fn static void pilot_update( Pilot* pilot, const double dt )
+ *
+ * @brief Updates the pilot.
+ *
+ *    @param pilot Pilot to update.
+ *    @param dt Current delta tick.
  */
 static void pilot_update( Pilot* pilot, const double dt )
 {
    int i;
    unsigned int t, l;
    double a, px,py, vx,vy;
+   char buf[16];
 
    /* he's dead */
    if (pilot_isFlag(pilot,PILOT_DEAD)) {
@@ -530,12 +569,22 @@ static void pilot_update( Pilot* pilot, const double dt )
          pilot_setFlag(pilot,PILOT_DELETE); /* will get deleted next frame */
          return;
       }
-     
+
+      /* pilot death sound */
+      if (!pilot_isFlag(pilot,PILOT_DEATH_SOUND) && (t > pilot->ptimer - 50)) {
+         
+         /* Play random explsion sound. */
+         snprintf(buf, 16, "explosion%d", RNG(0,2));
+         sound_playPos( sound_get(buf), pilot->solid->pos.x, pilot->solid->pos.y );
+         
+         pilot_setFlag(pilot,PILOT_DEATH_SOUND);
+      }
       /* final explosion */
-      if (!pilot_isFlag(pilot,PILOT_EXPLODED) && (t > pilot->ptimer - 200)) {
+      else if (!pilot_isFlag(pilot,PILOT_EXPLODED) && (t > pilot->ptimer - 200)) {
          spfx_add( spfx_get("ExpL"), 
                VX(pilot->solid->pos), VY(pilot->solid->pos),
                VX(pilot->solid->vel), VY(pilot->solid->vel), SPFX_LAYER_BACK );
+
          pilot_setFlag(pilot,PILOT_EXPLODED);
 
          /* Release cargo */
