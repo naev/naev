@@ -2,6 +2,11 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file joystick.c
+ *
+ * @brief Handles joystick initialization.
+ */
 
 
 #include "joystick.h"
@@ -13,11 +18,16 @@
 #include "log.h"
 
 
-static SDL_Joystick* joystick = NULL;
+static SDL_Joystick* joystick = NULL; /**< Current joystick in use. */
 
 
-/*
- * Gets the first joystick whose name contains namjoystick
+/**
+ * @fn int joystick_get( char* namjoystick )
+ *
+ * @brief Gets the joystick index by name.
+ *
+ *    @param namjoystick Looks for this string in the joystick name.
+ *    @return The index if found, defaults to 0 if it isn't found.
  */
 int joystick_get( char* namjoystick )
 {
@@ -32,8 +42,13 @@ int joystick_get( char* namjoystick )
 }
 
 
-/*
- * sets the game to use joystick of index indjoystick
+/**
+ * @fn int joystick_use( int indjoystick )
+ *
+ * @brief Makes the game use a joystick by index.
+ *
+ *    @param indjoystick Index of the joystick to use.
+ *    @return 0 on success.
  */
 int joystick_use( int indjoystick )
 {
@@ -61,7 +76,14 @@ int joystick_use( int indjoystick )
 }
 
 
-int joystick_init()
+/**
+ * @fn int joystick_init (void)
+ *
+ * @brief Initializes the joystick subsystem.
+ *
+ *    @return 0 on success.
+ */
+int joystick_init (void)
 {
    int numjoysticks, i;
 
@@ -85,7 +107,12 @@ int joystick_init()
 }
 
 
-void joystick_exit()
+/**
+ * @fn void joystick_exit (void)
+ *
+ * @brief Exits the joystick subsystem.
+ */
+void joystick_exit (void)
 {
    SDL_JoystickClose(joystick);
 }
