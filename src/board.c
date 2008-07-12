@@ -2,6 +2,12 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file board.c
+ *
+ * @brief Deals with boarding ships.
+ */
+
 
 #include "board.h"
 
@@ -16,8 +22,8 @@
 #include "hook.h"
 
 
-#define BOARDING_WIDTH  300
-#define BOARDING_HEIGHT 200
+#define BOARDING_WIDTH  300 /**< Boarding window width. */
+#define BOARDING_HEIGHT 200 /**< Boarding window height. */
 
 
 /*
@@ -26,7 +32,7 @@
 extern unsigned int player_target;
 
 
-static unsigned int board_wid = 0;
+static unsigned int board_wid = 0; /**< Boarding window identifier. */
 
 
 /*
@@ -39,8 +45,12 @@ static int board_fail (void);
 static void board_update (void);
 
 
-/*
- * attempt to board the player's target
+/**
+ * @fn void player_board (void)
+ *
+ * @brief Attempt to board the player's target.
+ *
+ * Creates the window on success.
  */
 void player_board (void)
 {  
@@ -107,6 +117,14 @@ void player_board (void)
    if (p->hook_type == PILOT_HOOK_BOARD)
       hook_runID( p->hook );
 }
+
+/**
+ * @fn static void board_exit( char* str )
+ *
+ * @brief Closes the boarding window.
+ *
+ *    @param str Unused.
+ */
 static void board_exit( char* str )
 {
    (void)str;
@@ -114,6 +132,13 @@ static void board_exit( char* str )
 }
 
 
+/**
+ * @fn static void board_stealCreds( char* str )
+ *
+ * @brief Attempt to steal the boarded ship's credits.
+ *
+ *    @param str Unused.
+ */
 static void board_stealCreds( char* str )
 {
    (void)str;
@@ -133,6 +158,15 @@ static void board_stealCreds( char* str )
    board_update(); /* update the lack of credits */
    player_message("You manage to steal the ship's credits.");
 }
+
+
+/**
+ * @fn static void board_stealCargo( char* str )
+ *
+ * @brief Attempt to steal the bearded ship's cargo.
+ *
+ *    @param str Unused.
+ */
 static void board_stealCargo( char* str )
 {
    (void)str;
@@ -165,8 +199,12 @@ static void board_stealCargo( char* str )
 }
 
 
-/*
- * failed to board
+/**
+ * @fn static int board_fail (void)
+ *
+ * @brief Checks to see if the hijack attempt failed.
+ *
+ *    @return 1 on failure to board, otherwise 0.
  */
 static int board_fail (void)
 {
@@ -191,8 +229,10 @@ static int board_fail (void)
 }
 
 
-/*
- * updates the cargo and credit fields
+/**
+ * @fn static void board_update (void)
+ *
+ * @brief Updates the boarding window fields.
  */
 static void board_update (void)
 {
