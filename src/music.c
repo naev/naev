@@ -2,6 +2,11 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file music.c
+ *
+ * @brief Controls all the music playing.
+ */
 
 
 #include "music.h"
@@ -17,19 +22,19 @@
 #include "pack.h"
 
 
-#define MUSIC_PREFIX       "snd/music/"
-#define MUSIC_SUFFIX       ".ogg"
+#define MUSIC_PREFIX       "snd/music/" /**< Prefix of where tho find musics. */
+#define MUSIC_SUFFIX       ".ogg" /**< Suffix of musics. */
 
-#define MUSIC_LUA_PATH     "snd/music.lua"
+#define MUSIC_LUA_PATH     "snd/music.lua" /**<  Lua music control file. */
 
 
-int music_disabled = 0;
+int music_disabled = 0; /**< Whether or not music is disabled. */
 
 
 /*
  * global music lua
  */
-static lua_State *music_lua = NULL;
+static lua_State *music_lua = NULL; /**< The Lua music control state. */
 /* functions */
 static int musicL_load( lua_State* L );
 static int musicL_play( lua_State* L );
@@ -39,22 +44,22 @@ static const luaL_reg music_methods[] = {
    { "play", musicL_play },
    { "stop", musicL_stop },
    {0,0}
-};
+}; /**< Music specific methods. */
 
 
 /*
  * what is available
  */
-static char** music_selection = NULL;
-static int nmusic_selection = 0;
+static char** music_selection = NULL; /**< Available music selection. */
+static int nmusic_selection = 0; /**< Size of available music selection. */
 
 
 /*
  * The current music.
  */
-static void *music_data = NULL;
-static SDL_RWops *music_rw = NULL;
-static Mix_Music *music_music = NULL;
+static void *music_data = NULL; /**< Current music data. */
+static SDL_RWops *music_rw = NULL; /**< Current music RWops. */
+static Mix_Music *music_music = NULL; /**< Current music. */
 
 
 /*
@@ -69,8 +74,12 @@ static int music_luaInit (void);
 static void music_luaQuit (void);
 
 
-/*
- * init/exit
+/**
+ * @fn int music_init (void)
+ *
+ * @brief Initializes the music subsystem.
+ *
+ *    @return 0 on success.
  */
 int music_init (void)
 {
@@ -81,14 +90,23 @@ int music_init (void)
    music_volume(0.8);
    return 0;
 }
+
+
+/**
+ * @fn void music_exit (void)
+ *
+ * @brief Exits the music subsystem.
+ */
 void music_exit (void)
 {
    music_free();
 }
 
 
-/*
- * Frees the current playing music.
+/**
+ * @fn static void music_free (void)
+ *
+ * @brief Frees the current playing music.
  */
 static void music_free (void)
 {
@@ -105,8 +123,12 @@ static void music_free (void)
 }
 
 
-/*
- * internal music loading routines
+/**
+ * @fn static int music_find (void)
+ *
+ * @brief Internal music loading routines.
+ *
+ *    @return 0 on success.
  */
 static int music_find (void)
 {
@@ -149,8 +171,13 @@ static int music_find (void)
 }
 
 
-/*
- * music control functions
+/**
+ * @fn int music_volume( const double vol )
+ *
+ * @brief Sets the music volume.
+ *
+ *    @param vol Volume to set to (between 0 and 1).
+ *    @return 0 on success.
  */
 int music_volume( const double vol )
 {
@@ -158,6 +185,15 @@ int music_volume( const double vol )
 
    return Mix_VolumeMusic(MIX_MAX_VOLUME*vol);
 }
+
+
+/**
+ * @fn void music_load( const char* name )
+ *
+ * @brief Loads the music by name.
+ *
+ *    @param name Name of the file to load.
+ */
 void music_load( const char* name )
 {
    unsigned int size;
@@ -177,6 +213,13 @@ void music_load( const char* name )
 
    Mix_HookMusicFinished(music_rechoose);
 }
+
+
+/**
+ * @fn void music_play (void)
+ *
+ * @brief Plays the loaded music.
+ */
 void music_play (void)
 {
    if (music_music == NULL) return;
@@ -184,6 +227,13 @@ void music_play (void)
    if (Mix_FadeInMusic( music_music, 0, 500 ) < 0)
       WARN("SDL_Mixer: %s", Mix_GetError());
 }
+
+
+/**
+ * @fn void music_stop (void)
+ *
+ * @brief Stops the loaded music.
+ */
 void music_stop (void)
 {
    if (music_music == NULL) return;
@@ -196,7 +246,13 @@ void music_stop (void)
 /*
  * music lua stuff
  */
-/* initialize */
+/**
+ * @fn static int music_luaInit (void)
+ *
+ * @brief Initialize the music Lua control system.
+ *
+ *    @return 0 on success.
+ */
 static int music_luaInit (void)
 {
    char *buf;
@@ -228,7 +284,13 @@ static int music_luaInit (void)
 
    return 0;
 }
-/* destroy */
+
+
+/**
+ * @fn static void music_luaQuit (void)
+ *
+ * @brief Quits the music Lua contrtol system.
+ */
 static void music_luaQuit (void)
 {
    if (music_lua == NULL)
@@ -239,8 +301,14 @@ static void music_luaQuit (void)
 }
 
 
-/*
- * loads the music functions into a lua_State
+/**
+ * @fn int lua_loadMusic( lua_State *L, int read_only )
+ *
+ * @brief Loads the music functions into a lua_State.
+ *
+ *    @param L Lua State to load the music functions into.
+ *    @param read_only Load the write functions?
+ *    @return 0 on success.
  */
 int lua_loadMusic( lua_State *L, int read_only )
 {
@@ -250,8 +318,13 @@ int lua_loadMusic( lua_State *L, int read_only )
 }
 
 
-/*
- * actually runs the music stuff, based on situation
+/**
+ * @fn int music_choose( char* situation )
+ *
+ * @brief Actually runs the music stuff, based on situation.
+ *
+ *    @param situation Choose a new music to play.
+ *    @return 0 on success.
  */
 int music_choose( char* situation )
 {
@@ -268,8 +341,10 @@ int music_choose( char* situation )
 }
 
 
-/*
- * Attempts to rechoose the music.
+/**
+ * @fn static void music_rechoose (void)
+ *
+ * @brief Attempts to rechoose the music.
  */
 static void music_rechoose (void)
 {
