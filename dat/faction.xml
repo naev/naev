@@ -4,7 +4,7 @@
   <player>0</player>
   <allies>
    <ally>Militia</ally>
-   <ally>Merchant</ally>
+   <ally>Trader</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
@@ -13,7 +13,8 @@
    <enemy>Collective</enemy>
   </enemies>
  </faction>
- <faction name="Merchant">
+ <faction name="Trader">
+  <longname>Space Traders Guild</longname>
   <player>0</player>
   <allies>
    <ally>Militia</ally>
@@ -41,7 +42,7 @@
   <player>0</player>
   <allies>
    <ally>Independent</ally>
-   <ally>Merchant</ally>
+   <ally>Trader</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
@@ -55,7 +56,7 @@
    <ally>Dvaered</ally>
    <ally>Soromid</ally>
    <ally>Za'lek</ally>
-   <ally>Merchant</ally>
+   <ally>Trader</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
@@ -114,7 +115,7 @@
   <player>0</player>
   <allies>
    <ally>Empire</ally>
-   <ally>Merchant</ally>
+   <ally>Trader</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
@@ -127,7 +128,7 @@
   <player>0</player>
   <allies>
    <ally>Empire</ally>
-   <ally>Merchant</ally>
+   <ally>Trader</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>

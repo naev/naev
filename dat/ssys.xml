@@ -2,11 +2,11 @@
 <Systems>
  <ssys name="Draygar">
   <fleets>
-   <fleet chance="50">Merchant Llama</fleet>
-   <fleet chance="50">Merchant Llama</fleet>
-   <fleet chance="50">Sml Merchant Convoy</fleet>
-   <fleet chance="50">Merchant Mule</fleet>
-   <fleet chance="50">Merchant Mule</fleet>
+   <fleet chance="50">Trader Llama</fleet>
+   <fleet chance="50">Trader Llama</fleet>
+   <fleet chance="50">Sml Trader Convoy</fleet>
+   <fleet chance="50">Trader Mule</fleet>
+   <fleet chance="50">Trader Mule</fleet>
    <fleet chance="40">Dvaered Ancestor</fleet>
    <fleet chance="60">Dvaered Vendetta</fleet>
    <fleet chance="30">Empire Lancelot</fleet>
@@ -36,7 +36,7 @@
  <ssys name="NGC-7723">
   <fleets>
    <fleet chance="50">Pirate Hyena</fleet>
-   <fleet chance="50">Merchant Llama</fleet>
+   <fleet chance="50">Trader Llama</fleet>
    <fleet chance="50">Pirate Admonisher</fleet>
    <fleet chance="30">Pirate Hyena Pack</fleet>
    <fleet chance="40">Pirate Ancestor</fleet>
@@ -64,10 +64,10 @@
    <fleet chance="40">Dvaered Ancestor</fleet>
    <fleet chance="20">Dvaered Goddard</fleet>
    <fleet chance="30">Dvaered Sml Force</fleet>
-   <fleet chance="60">Merchant Mule</fleet>
-   <fleet chance="40">Merchant Llama</fleet>
-   <fleet chance="40">Merchant Llama</fleet>
-   <fleet chance="40">Merchant Llama</fleet>
+   <fleet chance="60">Trader Mule</fleet>
+   <fleet chance="40">Trader Llama</fleet>
+   <fleet chance="40">Trader Llama</fleet>
+   <fleet chance="40">Trader Llama</fleet>
    <fleet chance="20">Empire Pacifier</fleet>
   </fleets>
   <jumps>
@@ -91,7 +91,7 @@
  </ssys>
  <ssys name="NGC-7414">
   <fleets>
-   <fleet chance="50">Merchant Llama</fleet>
+   <fleet chance="50">Trader Llama</fleet>
    <fleet chance="50">Pirate Hyena</fleet>
    <fleet chance="50">Empire Pacifier</fleet>
   </fleets>
@@ -113,8 +113,8 @@
  <ssys name="NGC-7690">
   <fleets>
    <fleet chance="50">Pirate Hyena</fleet>
-   <fleet chance="50">Merchant Mule</fleet>
-   <fleet chance="50">Merchant Llama</fleet>
+   <fleet chance="50">Trader Mule</fleet>
+   <fleet chance="50">Trader Llama</fleet>
    <fleet chance="50">Empire Pacifier</fleet>
    <fleet chance="30">Pirate Admonisher</fleet>
    <fleet chance="20">Pirate Hyena Pack</fleet>
@@ -140,9 +140,9 @@
  </ssys>
  <ssys name="NGC-7693">
   <fleets>
-   <fleet chance="30">Merchant Mule</fleet>
+   <fleet chance="30">Trader Mule</fleet>
    <fleet chance="30">Pirate Hyena</fleet>
-   <fleet chance="30">Merchant Llama</fleet>
+   <fleet chance="30">Trader Llama</fleet>
    <fleet chance="40">Empire Pacifier</fleet>
    <fleet chance="50">Pirate Admonisher</fleet>
    <fleet chance="30">Pirate Hyena Pack</fleet>
@@ -194,7 +194,7 @@
  <ssys name="NGC-7968">
   <fleets>
    <fleet chance="50">Pirate Hyena</fleet>
-   <fleet chance="30">Merchant Llama</fleet>
+   <fleet chance="30">Trader Llama</fleet>
    <fleet chance="30">Pirate Admonisher</fleet>
    <fleet chance="40">Pirate Ancestor</fleet>
    <fleet chance="50">Pirate Vendetta</fleet>
@@ -268,9 +268,9 @@
  <ssys name="NGC-7273">
   <fleets>
    <fleet chance="70">Empire Lancelot</fleet>
-   <fleet chance="50">Merchant Mule</fleet>
-   <fleet chance="50">Merchant Llama</fleet>
-   <fleet chance="50">Merchant Llama</fleet>
+   <fleet chance="50">Trader Mule</fleet>
+   <fleet chance="50">Trader Llama</fleet>
+   <fleet chance="50">Trader Llama</fleet>
    <fleet chance="50">Empire Pacifier</fleet>
    <fleet chance="40">Empire Admonisher</fleet>
   </fleets>
@@ -295,8 +295,8 @@
  </ssys>
  <ssys name="Dune">
   <fleets>
-   <fleet chance="60">Merchant Llama</fleet>
-   <fleet chance="60">Merchant Mule</fleet>
+   <fleet chance="60">Trader Llama</fleet>
+   <fleet chance="60">Trader Mule</fleet>
    <fleet chance="30">Pirate Admonisher</fleet>
    <fleet chance="20">Pirate Hyena Pack</fleet>
    <fleet chance="20">Pirate Vendetta</fleet>
@@ -323,8 +323,8 @@
  </ssys>
  <ssys name="Coriolis">
   <fleets>
-   <fleet chance="50">Merchant Llama</fleet>
-   <fleet chance="50">Merchant Mule</fleet>
+   <fleet chance="50">Trader Llama</fleet>
+   <fleet chance="50">Trader Mule</fleet>
    <fleet chance="50">Pirate Hyena</fleet>
    <fleet chance="50">Empire Pacifier</fleet>
    <fleet chance="30">Empire Lancelot</fleet>
@@ -354,10 +354,10 @@
  </ssys>
  <ssys name="Cygnus">
   <fleets>
-   <fleet chance="60">Merchant Mule</fleet>
-   <fleet chance="60">Merchant Mule</fleet>
-   <fleet chance="60">Merchant Llama</fleet>
-   <fleet chance="30">Sml Merchant Convoy</fleet>
+   <fleet chance="60">Trader Mule</fleet>
+   <fleet chance="60">Trader Mule</fleet>
+   <fleet chance="60">Trader Llama</fleet>
+   <fleet chance="30">Sml Trader Convoy</fleet>
    <fleet chance="50">Empire Lancelot</fleet>
    <fleet chance="20">Empire Pacifier</fleet>
    <fleet chance="40">Empire Admonisher</fleet>
@@ -386,12 +386,12 @@
  </ssys>
  <ssys name="Tau Prime">
   <fleets>
-   <fleet chance="50">Merchant Mule</fleet>
-   <fleet chance="50">Merchant Mule</fleet>
-   <fleet chance="40">Sml Merchant Convoy</fleet>
-   <fleet chance="30">Merchant Llama</fleet>
-   <fleet chance="30">Merchant Llama</fleet>
-   <fleet chance="30">Merchant Llama</fleet>
+   <fleet chance="50">Trader Mule</fleet>
+   <fleet chance="50">Trader Mule</fleet>
+   <fleet chance="40">Sml Trader Convoy</fleet>
+   <fleet chance="30">Trader Llama</fleet>
+   <fleet chance="30">Trader Llama</fleet>
+   <fleet chance="30">Trader Llama</fleet>
    <fleet chance="30">Empire Lancelot</fleet>
    <fleet chance="50">Empire Lancelot</fleet>
    <fleet chance="20">Empire Pacifier</fleet>
@@ -422,7 +422,7 @@
  </ssys>
  <ssys name="NGC-7549">
   <fleets>
-   <fleet chance="50">Merchant Llama</fleet>
+   <fleet chance="50">Trader Llama</fleet>
    <fleet chance="50">Pirate Hyena</fleet>
    <fleet chance="20">Pirate Admonisher</fleet>
   </fleets>
@@ -494,9 +494,9 @@
  </ssys>
  <ssys name="NGC-7291">
   <fleets>
-   <fleet chance="60">Merchant Llama</fleet>
+   <fleet chance="60">Trader Llama</fleet>
    <fleet chance="60">Collective Drone</fleet>
-   <fleet chance="80">Merchant Mule</fleet>
+   <fleet chance="80">Trader Mule</fleet>
    <fleet chance="50">Collective Sml Swarm</fleet>
    <fleet chance="50">Empire Sml Defense</fleet>
    <fleet chance="60">Empire Lancelot</fleet>
@@ -525,9 +525,9 @@
  </ssys>
  <ssys name="Borla">
   <fleets>
-   <fleet chance="50">Merchant Llama</fleet>
-   <fleet chance="50">Merchant Llama</fleet>
-   <fleet chance="40">Merchant Mule</fleet>
+   <fleet chance="50">Trader Llama</fleet>
+   <fleet chance="50">Trader Llama</fleet>
+   <fleet chance="40">Trader Mule</fleet>
    <fleet chance="70">Pirate Hyena</fleet>
    <fleet chance="30">Empire Lancelot</fleet>
    <fleet chance="40">Empire Pacifier</fleet>
@@ -558,10 +558,10 @@
  <ssys name="Mizar">
   <fleets>
    <fleet chance="60">Pirate Hyena</fleet>
-   <fleet chance="40">Merchant Mule</fleet>
-   <fleet chance="40">Merchant Mule</fleet>
+   <fleet chance="40">Trader Mule</fleet>
+   <fleet chance="40">Trader Mule</fleet>
    <fleet chance="30">Empire Lancelot</fleet>
-   <fleet chance="50">Merchant Llama</fleet>
+   <fleet chance="50">Trader Llama</fleet>
    <fleet chance="40">Empire Pacifier</fleet>
    <fleet chance="30">Pirate Admonisher</fleet>
    <fleet chance="40">Empire Admonisher</fleet>
@@ -612,12 +612,12 @@
  </ssys>
  <ssys name="Draconis">
   <fleets>
-   <fleet chance="30">Merchant Llama</fleet>
-   <fleet chance="30">Merchant Llama</fleet>
+   <fleet chance="30">Trader Llama</fleet>
+   <fleet chance="30">Trader Llama</fleet>
    <fleet chance="30">Empire Lancelot</fleet>
    <fleet chance="30">Empire Lancelot</fleet>
-   <fleet chance="30">Sml Merchant Convoy</fleet>
-   <fleet chance="50">Merchant Mule</fleet>
+   <fleet chance="30">Sml Trader Convoy</fleet>
+   <fleet chance="50">Trader Mule</fleet>
    <fleet chance="20">Empire Pacifier</fleet>
    <fleet chance="20">Pirate Admonisher</fleet>
   </fleets>
@@ -641,8 +641,8 @@
  </ssys>
  <ssys name="NGC-6938">
   <fleets>
-   <fleet chance="40">Merchant Llama</fleet>
-   <fleet chance="20">Merchant Mule</fleet>
+   <fleet chance="40">Trader Llama</fleet>
+   <fleet chance="20">Trader Mule</fleet>
    <fleet chance="50">Pirate Hyena</fleet>
    <fleet chance="50">Empire Pacifier</fleet>
    <fleet chance="30">Pirate Ancestor</fleet>
@@ -665,11 +665,11 @@
  </ssys>
  <ssys name="Alteris">
   <fleets>
-   <fleet chance="40">Sml Merchant Convoy</fleet>
-   <fleet chance="40">Merchant Llama</fleet>
+   <fleet chance="40">Sml Trader Convoy</fleet>
+   <fleet chance="40">Trader Llama</fleet>
    <fleet chance="60">Pirate Hyena</fleet>
-   <fleet chance="50">Merchant Mule</fleet>
-   <fleet chance="50">Merchant Llama</fleet>
+   <fleet chance="50">Trader Mule</fleet>
+   <fleet chance="50">Trader Llama</fleet>
    <fleet chance="20">Pirate Admonisher</fleet>
    <fleet chance="10">Pirate Hyena Pack</fleet>
    <fleet chance="40">Pirate Ancestor</fleet>
@@ -704,8 +704,8 @@
   <fleets>
    <fleet chance="70">Empire Lancelot</fleet>
    <fleet chance="50">Pirate Hyena</fleet>
-   <fleet chance="50">Merchant Mule</fleet>
-   <fleet chance="50">Merchant Llama</fleet>
+   <fleet chance="50">Trader Mule</fleet>
+   <fleet chance="50">Trader Llama</fleet>
    <fleet chance="50">Empire Pacifier</fleet>
    <fleet chance="20">Pirate Admonisher</fleet>
    <fleet chance="40">Pirate Vendetta</fleet>
@@ -804,11 +804,11 @@
  <ssys name="Eridani">
   <fleets>
    <fleet chance="80">Empire Lancelot</fleet>
-   <fleet chance="40">Merchant Mule</fleet>
-   <fleet chance="40">Merchant Mule</fleet>
-   <fleet chance="40">Merchant Llama</fleet>
-   <fleet chance="40">Merchant Llama</fleet>
-   <fleet chance="30">Sml Merchant Convoy</fleet>
+   <fleet chance="40">Trader Mule</fleet>
+   <fleet chance="40">Trader Mule</fleet>
+   <fleet chance="40">Trader Llama</fleet>
+   <fleet chance="40">Trader Llama</fleet>
+   <fleet chance="30">Sml Trader Convoy</fleet>
    <fleet chance="20">Empire Pacifier</fleet>
    <fleet chance="20">Pirate Admonisher</fleet>
    <fleet chance="20">Pirate Vendetta</fleet>
@@ -860,10 +860,10 @@
  </ssys>
  <ssys name="Delta Pavonis">
   <fleets>
-   <fleet chance="40">Sml Merchant Convoy</fleet>
+   <fleet chance="40">Sml Trader Convoy</fleet>
    <fleet chance="60">Pirate Hyena</fleet>
-   <fleet chance="40">Merchant Llama</fleet>
-   <fleet chance="50">Merchant Mule</fleet>
+   <fleet chance="40">Trader Llama</fleet>
+   <fleet chance="50">Trader Mule</fleet>
    <fleet chance="40">Empire Admonisher</fleet>
    <fleet chance="20">Empire Pacifier</fleet>
    <fleet chance="80">Empire Lancelot</fleet>
@@ -920,11 +920,11 @@
   <fleets>
    <fleet chance="70">Goddard Goddard</fleet>
    <fleet chance="50">Goddard Goddard</fleet>
-   <fleet chance="30">Merchant Llama</fleet>
-   <fleet chance="30">Merchant Llama</fleet>
-   <fleet chance="30">Merchant Mule</fleet>
-   <fleet chance="30">Merchant Mule</fleet>
-   <fleet chance="30">Sml Merchant Convoy</fleet>
+   <fleet chance="30">Trader Llama</fleet>
+   <fleet chance="30">Trader Llama</fleet>
+   <fleet chance="30">Trader Mule</fleet>
+   <fleet chance="30">Trader Mule</fleet>
+   <fleet chance="30">Sml Trader Convoy</fleet>
    <fleet chance="50">Empire Lancelot</fleet>
    <fleet chance="30">Pirate Ancestor</fleet>
    <fleet chance="20">Pirate Admonisher</fleet>
