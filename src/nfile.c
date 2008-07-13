@@ -2,6 +2,12 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file nfile.c
+ *
+ * @brief Handles read/write abstractions to the users directory.a
+ */
+
 
 #include "nfile.h"
 
@@ -22,10 +28,14 @@
 
 
 
-/*
- * returns naev's base path
+/**
+ * @fn char* nfile_basePath (void)
+ *
+ * @brief Gets naev's base path (for saves and such).
+ *
+ *    @return The base path to naev.
  */
-static char naev_base[128] = "\0";
+static char naev_base[128] = "\0"; /**< Stores naev's base path. */
 char* nfile_basePath (void)
 {
    char *home;
@@ -43,9 +53,15 @@ char* nfile_basePath (void)
 }
 
 
-/*
- * checks if a directory exists, and creates it if it doesn't
- * based on naev_base
+/**
+ * @fn int nfile_dirMakeExist( const char* path )
+ *
+ * @brief Creates a directory if it doesn't exist.
+ *
+ * Uses relative paths to basePath.
+ *
+ *    @param path Path to create directory if it doesn't exist.
+ *    @return 0 on success.
  */
 int nfile_dirMakeExist( const char* path )
 {
@@ -74,8 +90,13 @@ int nfile_dirMakeExist( const char* path )
 }
 
 
-/*
- * checks if a file exists
+/**
+ * @fn int nfile_fileExists( const char* path, ... )
+ *
+ * @brief Checks to see if a file exists.
+ *
+ *    @param path printf formatted string pointing to the file to check for existance.
+ *    @return 1 if file exists, 0 if it doesn't or -1 on error.
  */
 int nfile_fileExists( const char* path, ... )
 {
@@ -106,8 +127,16 @@ int nfile_fileExists( const char* path, ... )
 }
 
 
-/*
- * lists all the files in a dir (besidse . and ..)
+/**
+ * @fn char** nfile_readDir( int* nfiles, const char* path )
+ *
+ * @brief Lists all the visible files in a directory.
+ *
+ * Should also sort by last modified but that's up to the OS in question.
+ * Paths are relative to base directory.
+ *
+ *    @param[out] nfiles Returns how many files there are.
+ *    @param path Direcotory to read.
  */
 char** nfile_readDir( int* nfiles, const char* path )
 {
