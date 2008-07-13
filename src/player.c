@@ -119,13 +119,15 @@ extern StarSystem *systems_stack;
 
 
 /**
- * @strtuct Radar
+ * @struct Radar
  *
  * @brief Represents the player's radar.
  */
 typedef struct Radar_ {
-   double x,y; /**< Position */
-   double w,h; /**< Dimensions */
+   double x; /**< X position. */
+   double y; /**< Y Position */
+   double w; /**< Width. */
+   double h; /**< Hegiht. */
    RadarShape shape; /**< Shape */
    double res; /**< Resolution */
 } Radar;
@@ -141,8 +143,10 @@ typedef struct Radar_ {
  * @brief Represents a rectangle.
  */
 typedef struct Rect_ {
-   double x,y;
-   double w,h;
+   double x; /**< X position. */
+   double y; /**< Y position. */
+   double w; /**< Width. */
+   double h; /**< Height. */
 } Rect;
 
 /**
@@ -159,9 +163,13 @@ typedef struct GUI_ {
    /* rects */
    Radar radar; /**< The radar. */
    Rect nav; /**< Navigation computer. */
-   Rect shield, armour, energy; /**< Health bars. */
+   Rect shield; /**< Shield bar. */
+   Rect armour; /**< Armour bar. */
+   Rect energy; /**< Energy bar. */
    Rect weapon; /**< Weapon targetting system. */
-   Rect target_health, target_name, target_faction; /**< Target stuff. */
+   Rect target_health; /**< Target health. */
+   Rect target_name; /**< Name of the target. */
+   Rect target_faction; /**< Faction of the target. */
    Rect misc; /**< Misc stuff: credits, cargo... */
    Rect mesg; /**< Where messages go. */
    
