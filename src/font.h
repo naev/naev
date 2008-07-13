@@ -11,17 +11,19 @@
 #include "opengl.h"
 
 
-/*
- * Font info
+/**
+ * @struct glFont
+ *
+ * @brief Represents a font in memory.
  */
 typedef struct glFont_ {
-   int h; /* height */
-   int* w;
-   GLuint *textures;
-   GLuint list_base;
+   int h; /**< Font height. */
+   int* w; /**< Width of each font member. */
+   GLuint *textures; /**< Textures in the font. */
+   GLuint list_base; /**< Display list base. */
 } glFont;
-extern glFont gl_defFont; /* default font */
-extern glFont gl_smallFont; /* small font */
+extern glFont gl_defFont; /**< default font */
+extern glFont gl_smallFont; /**< small font */
 
 
 /*

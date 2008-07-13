@@ -30,12 +30,12 @@
 #include "pack.h"
 
 
-#define FONT_DEF  "dat/font.ttf"
+#define FONT_DEF  "dat/font.ttf" /**< Default font path. */
 
 
 /* default font */
-glFont gl_defFont;
-glFont gl_smallFont;
+glFont gl_defFont; /**< Default font. */
+glFont gl_smallFont; /**< Small font. */
 
 
 /* 
@@ -43,25 +43,22 @@ glFont gl_smallFont;
  */
 static void glFontMakeDList( FT_Face face, char ch,
       GLuint list_base, GLuint *tex_base, int *width_base );
-static int pot( int n );
 
 
-/*
- * gets the closest power of two
- */
-static int pot( int n )
-{
-   int i = 1;
-   while (i < n)
-      i <<= 1;
-   return i;
-}
-
-
-/*
- * prints text on screen like printf
+/**
+ * @fn void gl_print( const glFont *ft_font,
+ *                    const double x, const double y,
+ *                    const glColour* c, const char *fmt, ... )
  *
- * defaults ft_font to gl_defFont if NULL
+ * @brief Prints text on screen like printf.
+ *
+ * Defaults ft_font to gl_defFont if NULL.
+ *
+ *    @param ft_font Font to use (NULL means gl_defFont)
+ *    @param x X position to put text at.
+ *    @param y Y position to put text at.
+ *    @param c Colour to use (uses white if NULL)
+ *    @param fmt String formatted like printf to print.
  */
 void gl_print( const glFont *ft_font,
       const double x, const double y,
@@ -98,9 +95,20 @@ void gl_print( const glFont *ft_font,
 
    gl_checkErr();
 }
-/*
- * behaves exactly like gl_print but prints to a maximum length of max    
- * returns how many characters it had to suppress
+/**
+ * @fn int gl_printMax( const glFont *ft_font, const int max,
+ *                      const double x, const double y,
+ *                      const glColour* c, const char *fmt, ... )
+ *
+ * @brief Behavise like gl_print but stops displaying text after reaching a certain length.
+ *
+ *    @param ft_font Font to use (NULL means use gl_defFont).
+ *    @param max Maximum length to reach.
+ *    @param x X position to display text at.
+ *    @param y Y position to display text at.
+ *    @param c Colour to use (NULL defaults to white).
+ *    @param fmt String to display formatted like printf.
+ *    @return The number of characters it had to suppress.
  */
 int gl_printMax( const glFont *ft_font, const int max,
       const double x, const double y,
@@ -155,8 +163,23 @@ int gl_printMax( const glFont *ft_font, const int max,
 
    return ret;
 }
-/*
- * functions like gl_printMax but centers the text in the width
+
+/**
+ * @fn int gl_printMid( const glFont *ft_font, const int width,
+ *                      double x, const double y,
+ *                      const glColour* c, const char *fmt, ... )
+ *
+ * @brief Displays text centered in position and width.
+ *
+ * Will truncate if text is too long.
+ *
+ *    @param ft_font Font to use (NULL defaults to gl_defFont)
+ *    @param width Width of area to center in.
+ *    @param x X position to display text at.
+ *    @param y Y position to display text at.
+ *    @param c Colour to use for text (NULL defaults to white).
+ *    @param fmt Text to display formatted like printf.
+ *    @return The number of characters it had to truncate.
  */
 int gl_printMid( const glFont *ft_font, const int width,
       double x, const double y,
@@ -212,7 +235,24 @@ int gl_printMid( const glFont *ft_font, const int width,
 
    return ret;
 }
-/*
+/**
+ * @fn int gl_printText( const glFont *ft_font,
+ *                       const int width, const int height,
+ *                       double bx, double by,
+ *                       glColour* c, const char *fmt, ... )
+ *
+ * @brief Prints a block of text that fits in the dimensions given.
+ *
+ * Positions are based on origin being top-left.
+ *
+ *    @param ft_font Font to use (NULL defaults to gl_defFont).
+ *    @param width Maximum width to print to.
+ *    @param height Maximum height to print to.
+ *    @param bx X position to display text at.
+ *    @param by Y position to display text at.
+ *    @param c Colour to use (NULL defaults to white).
+ *    @param fmt Text to display formatted like printf.
+ *    @return 0 on success.
  * prints text with line breaks included to a maximum width and height preset
  */
 int gl_printText( const glFont *ft_font,
@@ -301,8 +341,18 @@ int gl_printText( const glFont *ft_font,
 
    return ret;
 }
-/*
- * gets the width of the text about to be printed
+
+
+/**
+ * @fn int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
+ *
+ * @brief Gets the width that it would take to print some text.
+ *
+ * Does not display text on screen.
+ *
+ *    @param ft_font Font to use (NULL defaults to gl_defFont).
+ *    @param fmt Text to calculate the length of.
+ *    @return The length of the text in pixels.
  */
 int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
 {  
@@ -325,8 +375,18 @@ int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
    return n;
 }
 
-/*
- * prints the height of the text about to be printed
+/**
+ * @fn int gl_printHeight( const glFont *ft_font,
+ *                         const int width, const char *fmt, ... )
+ *
+ * @brief Gets the height of the text if it were printed.
+ *
+ * Does not display the text on screen.
+ *
+ *    @param ft_font Font to use (NULL defaults to gl_defFont).
+ *    @param width Width to jump to next line once reached.
+ *    @param fmt Text to get the height of in printf format.
+ *    @return The height of the text.
  */
 int gl_printHeight( const glFont *ft_font,
       const int width, const char *fmt, ... )
@@ -377,8 +437,14 @@ int gl_printHeight( const glFont *ft_font,
  * G L _ F O N T
  *
  */
-/*
- * basically taken from NeHe lesson 43
+/**
+ * @fn static void glFontMakeDList( FT_Face face, char ch,
+ *                                GLuint list_base, GLuint *tex_base,
+ *                                int* width_base )
+ *
+ * @brief Makes the font display list.
+ *
+ * Basically taken from NeHe lesson 43
  * http://nehe.gamedev.net/data/lessons/lesson.asp?lesson=43
  */
 static void glFontMakeDList( FT_Face face, char ch,
@@ -405,8 +471,8 @@ static void glFontMakeDList( FT_Face face, char ch,
    bitmap = bitmap_glyph->bitmap; /* to simplify */
 
    /* need the POT wrapping for opengl */
-   w = pot(bitmap.width);
-   h = pot(bitmap.rows);
+   w = gl_pot(bitmap.width);
+   h = gl_pot(bitmap.rows);
 
    /* memory for textured data
     * bitmap is using two channels, one for luminosity and one for alpha */
@@ -470,6 +536,17 @@ static void glFontMakeDList( FT_Face face, char ch,
 
    gl_checkErr();
 }
+
+
+/**
+ * @fn void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
+ *
+ * @brief Initializes a font.
+ *
+ *    @param font Font to load (NULL defaults to gl_defFont).
+ *    @param fname Name of the font (from inside packfile, NULL defaults to default font).
+ *    @param h Height of the font to generate.
+ */
 void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
 {
    uint32_t bufsize;
@@ -477,7 +554,7 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
 
    if (font == NULL) font = &gl_defFont;
 
-   FT_Byte* buf = pack_readfile( DATA, (fname) ? fname : FONT_DEF, &bufsize );
+   FT_Byte* buf = pack_readfile( DATA, (fname!=NULL) ? fname : FONT_DEF, &bufsize );
 
    /* allocage */
    font->textures = malloc(sizeof(GLuint)*128);
@@ -515,6 +592,14 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    FT_Done_FreeType(library);
    free(buf);
 }
+
+/**
+ * @fn void gl_freeFont( glFont* font )
+ *
+ * @brief Frees a loaded font.
+ *
+ *    @param font Font to free.
+ */
 void gl_freeFont( glFont* font )
 {
    if (font == NULL) font = &gl_defFont;
