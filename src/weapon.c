@@ -2,6 +2,14 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file weapon.c
+ *
+ * @brief Handles all the weapons in game.
+ *
+ * Weapons are what gets created when a pilot shoots.  They are based
+ * on the outfit that created them.
+ */
 
 
 #include "weapon.h"
@@ -19,14 +27,14 @@
 #include "spfx.h"
 
 
-#define weapon_isSmart(w)     (w->think != NULL)
+#define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
 
-#define WEAPON_CHUNK          128 /* Size to increase array with */
+#define WEAPON_CHUNK          128 /**< Size to increase array with */
 
 /* Weapon status */
-#define WEAPON_STATUS_OK         0 /* weapon is fine */
-#define WEAPON_STATUS_JAMMED     1 /* Got jammed */
-#define WEAPON_STATUS_UNJAMMED   2 /* Survived jamming */
+#define WEAPON_STATUS_OK         0 /**< Weapon is fine */
+#define WEAPON_STATUS_JAMMED     1 /**< Got jammed */
+#define WEAPON_STATUS_UNJAMMED   2 /**< Survived jamming */
 
 
 /*
@@ -44,33 +52,38 @@ extern unsigned int player_target;
 extern void ai_attacked( Pilot* attacked, const unsigned int attacker );
 
 
+/**
+ * @struct Weapon
+ *
+ * @brief In-game representation of a weapon.
+ */
 typedef struct Weapon_ {
-   Solid* solid; /* actually has its own solid :) */
+   Solid* solid; /**< actually has its own solid :) */
 
-   unsigned int faction; /* faction of pilot that shot it */
-   unsigned int parent; /* pilot that shot it */
-   unsigned int target; /* target to hit, only used by seeking things */
-   const Outfit* outfit; /* related outfit that fired it or whatnot */
+   unsigned int faction; /**< faction of pilot that shot it */
+   unsigned int parent; /**< pilot that shot it */
+   unsigned int target; /**< target to hit, only used by seeking things */
+   const Outfit* outfit; /**< related outfit that fired it or whatnot */
 
-   double lockon; /* some weapons have a lockon delay */
-   double timer; /* mainly used to see when the weapon was fired */
+   double lockon; /**< some weapons have a lockon delay */
+   double timer; /**< mainly used to see when the weapon was fired */
 
    /* position update and render */
-   void (*update)(struct Weapon_*, const double, WeaponLayer);
-   void (*think)(struct Weapon_*, const double); /* for the smart missiles */
+   void (*update)(struct Weapon_*, const double, WeaponLayer); /**< Updates the weapon */
+   void (*think)(struct Weapon_*, const double); /**< for the smart missiles */
 
-   char status; /* Weapon status - to check for jamming */
+   char status; /**< Weapon status - to check for jamming */
 } Weapon;
 
 
 /* behind pilot_nstack layer */
-static Weapon** wbackLayer = NULL; /* behind pilot_nstack */
-static int nwbackLayer = 0; /* number of elements */
-static int mwbacklayer = 0; /* alloced memory size */
+static Weapon** wbackLayer = NULL; /**< behind pilots */
+static int nwbackLayer = 0; /**< number of elements */
+static int mwbacklayer = 0; /**< alloced memory size */
 /* behind player layer */
-static Weapon** wfrontLayer = NULL; /* infront of pilot_nstack, behind player */
-static int nwfrontLayer = 0; /* number of elements */
-static int mwfrontLayer = 0; /* alloced memory size */
+static Weapon** wfrontLayer = NULL; /**< infront of pilots, behind player */
+static int nwfrontLayer = 0; /**< number of elements */
+static int mwfrontLayer = 0; /**< alloced memory size */
 
 
 /*
@@ -88,19 +101,26 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer );
 static void weapon_free( Weapon* w );
 /* think */
 static void think_seeker( Weapon* w, const double dt );
-/*static void think_smart( Weapon* w, const double dt );*/
 /* externed */
 void weapon_minimap( const double res, const double w,
       const double h, const RadarShape shape );
 
 
-/*
- * draws the minimap weapons (used in player.c)
+/**
+ * @fn void weapon_minimap( const double res, const double w,
+ *                          const double h, const RadarShape shape )
+ *
+ * @brief Draws the minimap weapons (used in player.c).
+ *
+ *    @param res Minimap resolution.
+ *    @param w Width of minimap.
+ *    @param h Height of minimap.
+ *    @param shape Shape of the minimap.
  */
 #define PIXEL(x,y)      \
    if ((shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
          (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y))<rc)))   \
-   glVertex2i((x),(y))
+   glVertex2i((x),(y)) /**< Sets a pixel if within range. */
 void weapon_minimap( const double res, const double w,
       const double h, const RadarShape shape )
 {
@@ -123,8 +143,13 @@ void weapon_minimap( const double res, const double w,
 #undef PIXEL
 
 
-/*
- * seeker brain, you get what you pay for :)
+/**
+ * @fn static void think_seeker( Weapon* w, const double dt )
+ *
+ * @brief The AI of seeker missiles.
+ *
+ *    @param w Weapon to do the thinking.
+ *    @param dt Current delta tick.
  */
 static void think_seeker( Weapon* w, const double dt )
 {
@@ -204,48 +229,12 @@ static void think_seeker( Weapon* w, const double dt )
 }
 
 
-/*
- * smart seeker brain, much better at homing
- */
-#if 0
-static void think_smart( Weapon* w, const double dt )
-{
-   Vector2d sv, tv;
-   double t;
-
-   if (w->target == w->parent) return; /* no self shooting */
-
-   Pilot* p = pilot_get(w->target); /* no null pilot_nstack */
-   if (p==NULL) {
-      limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );
-      return;
-   }
-
-   /* ammo isn't locked on yet */
-   if (w->lockon < 0.) {
-
-      vect_cset( &tv, VX(p->solid->pos) + dt*VX(p->solid->vel),
-            VY(p->solid->pos) + dt*VY(p->solid->vel));
-      vect_cset( &sv, VX(w->solid->pos) + dt*VX(w->solid->vel),
-            VY(w->solid->pos) + dt*VY(w->solid->vel));
-      t = -angle_diff(w->solid->dir, vect_angle(&tv, &sv));
-
-      w->solid->dir_vel = t * w->outfit->u.amm.turn; /* face the target */
-
-      if (w->solid->dir_vel > w->outfit->u.amm.turn)
-         w->solid->dir_vel = w->outfit->u.amm.turn;
-      else if (w->solid->dir_vel < -w->outfit->u.amm.turn)
-         w->solid->dir_vel = -w->outfit->u.amm.turn;
-   }
-   vect_pset( &w->solid->vel, w->outfit->u.amm.speed, w->solid->dir );
-
-   limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );
-}
-#endif
-
-
-/*
- * updates all the weapon layers
+/**
+ * @fn void weapons_update( const double dt )
+ *
+ * @brief Updates all the weapon layers.
+ *
+ *    @param dt Current delta tick.
  */
 void weapons_update( const double dt )
 {
@@ -254,8 +243,13 @@ void weapons_update( const double dt )
 }
 
 
-/*
- * updates all the weapons in the layer
+/**
+ * @fn static void weapons_updateLayer( const double dt, const WeaponLayer layer )
+ *
+ * @brief Updates all the weapons in the layer.
+ *
+ *    @param dt Current delta tick.
+ *    @param layer Layer to update.
  */
 static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 {
@@ -312,8 +306,12 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 }
 
 
-/*
- * renders all the weapons
+/**
+ * @fn void weapons_render( const WeaponLayer layer )
+ *
+ * @brief Renders all the weapons in a layer.
+ *
+ *    @param layer Layer to render.
  */
 void weapons_render( const WeaponLayer layer )
 {
@@ -337,8 +335,12 @@ void weapons_render( const WeaponLayer layer )
 }
 
 
-/*
- * renders the weapon
+/**
+ * @fn static void weapon_render( const Weapon* w )
+ *
+ * @brief Renders an individual weapon.
+ *
+ *    @param w Weapon to render.
  */
 static void weapon_render( const Weapon* w )
 {
@@ -354,8 +356,14 @@ static void weapon_render( const Weapon* w )
 }
 
 
-/*
- * updates the weapon
+/**
+ * @fn static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
+ *
+ * @brief Updates an individual weapon.
+ *
+ *    @param w Weapon to update.
+ *    @param dt Current delta tick.
+ *    @param layer Layer to which the weapon belongs.
  */
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
@@ -401,8 +409,14 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 }
 
 
-/*
- * weapon hit the player
+/**
+ * @fn static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer )
+ *
+ * @brief Weapon hit the pilot.
+ *
+ *    @param w Weapon involved in the collision.
+ *    @param p Pilot that got hit.
+ *    @param layer Layer to which the weapon belongs.
  */
 static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer )
 {
@@ -433,8 +447,20 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer )
 }
 
 
-/*
- * creates a new weapon
+/**
+ * @fn static Weapon* weapon_create( const Outfit* outfit,
+ *                    const double dir, const Vector2d* pos, const Vector2d* vel,
+ *                    const unsigned int parent, const unsigned int target )
+ *
+ * @brief Creates a new weapon.
+ *
+ *    @param outfit Outfit which spawned the weapon.
+ *    @param dir Direction the shooter is facing.
+ *    @param pos Position of the shooter.
+ *    @param vel Velocity of the shooter.
+ *    @param parent Shooter ID.
+ *    @param target Target ID of the shooter.
+ *    @return A pointer to the newly created weapon.
  */
 static Weapon* weapon_create( const Outfit* outfit,
       const double dir, const Vector2d* pos, const Vector2d* vel,
@@ -549,8 +575,19 @@ static Weapon* weapon_create( const Outfit* outfit,
 }
 
 
-/*
- * adds a new weapon
+/**
+ * @fn void weapon_add( const Outfit* outfit, const double dir,
+ *                      const Vector2d* pos, const Vector2d* vel,
+ *                      unsigned int parent, unsigned int target )
+ *
+ * @brief Creates a new weapon.
+ *
+ *    @param outfit Outfit which spawns the weapon.
+ *    @param dir Direction of the shooter.
+ *    @param pos Position of the shooter.
+ *    @param vel Velocity of the shooter.
+ *    @param parent Pilot ID of the shooter.
+ *    @param target Target ID that is getting shot.
  */
 void weapon_add( const Outfit* outfit, const double dir,
       const Vector2d* pos, const Vector2d* vel,
@@ -605,8 +642,13 @@ void weapon_add( const Outfit* outfit, const double dir,
 }
 
 
-/*
- * destroys the weapon
+/**
+ * @fn static void weapon_destroy( Weapon* w, WeaponLayer layer )
+ *
+ * @brief Destroys a weapon.
+ *
+ *    @param w Weapon to destroy.
+ *    @param layer Layer to which the weapon belongs.
  */
 static void weapon_destroy( Weapon* w, WeaponLayer layer )
 {
@@ -643,8 +685,12 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
 }
 
 
-/*
- * clears the weapon
+/**
+ * @fn static void weapon_free( Weapon* w )
+ *
+ * @brief Frees the weapon.
+ *
+ *    @param w Weapon to free.
  */
 static void weapon_free( Weapon* w )
 {
@@ -652,8 +698,10 @@ static void weapon_free( Weapon* w )
    free(w);
 }
 
-/*
- * clears all the weapons, does NOT free the layers
+/**
+ * @fn void weapon_clear (void)
+ *
+ * @brief Clears all the weapons, does NOT free the layers.
  */
 void weapon_clear (void)
 {
@@ -666,11 +714,26 @@ void weapon_clear (void)
    nwfrontLayer = 0;
 }
 
+/**
+ * @fn void weapon_exit (void)
+ *
+ * @brief Destroys all the weapons and frees it all.
+ */
 void weapon_exit (void)
 {
    weapon_clear();
-   free(wbackLayer);
-   free(wfrontLayer);
+
+   if (wbackLayer != NULL) {
+      free(wbackLayer);
+      wbackLayer = NULL;
+      mwbacklayer = 0;
+   }
+
+   if (wfrontLayer != NULL) {
+      free(wfrontLayer);
+      wfrontLayer = NULL;
+      mwfrontLayer = 0;
+   }
 }
 
 
