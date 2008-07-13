@@ -5,7 +5,7 @@
 /**
  * @file nfile.c
  *
- * @brief Handles read/write abstractions to the users directory.a
+ * @brief Handles read/write abstractions to the users directory.
  *
  * @todo add support for windows and mac os.
  */
