@@ -8,11 +8,16 @@
 #  define COLOUR_H
 
 
-/*
- * Colours
+/**
+ * @struct glColour
+ *
+ * @brief reperesents a colour via it's RGBA values.
  */
 typedef struct glColour_ {
-   double r, g, b, a;
+   double r; /**< Red value of the colour (0 to 1). */
+   double g; /**< Green value of the colour (0 to 1). */
+   double b; /**< Blue value of the colour (0 to 1). */
+   double a; /**< Alpha value of the colour (0 to 1). */
 } glColour;
 
 /*
