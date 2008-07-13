@@ -89,10 +89,10 @@ unsigned int player_flags = 0; /**< Player flags. */
 /* used in input.c */
 double player_turn = 0.; /**< Turn velocity from input. */
 static double player_acc = 0.; /**< Accel velocity from input. */
-unsigned int player_target = PLAYER_ID; /**< Targetted pilot. */
+unsigned int player_target = PLAYER_ID; /**< Targetted pilot. PLAYER_ID is none. */
 /* pure internal */
-int planet_target = -1; /* targetted planet. */
-int hyperspace_target = -1; /* targetted hyperspace route. */
+int planet_target = -1; /**< Targetted planet. -1 is none. */
+int hyperspace_target = -1; /**< Targetted hyperspace route. -1 is none. */
 /* for death and such */
 static unsigned int player_timer = 0; /**< For death and such. */
 static Vector2d player_cam; /**< For death and such. */
@@ -118,8 +118,10 @@ extern int pilot_nstack;
 extern StarSystem *systems_stack;
 
 
-/*
- * GUI stuff
+/**
+ * @strtuct Radar
+ *
+ * @brief Represents the player's radar.
  */
 typedef struct Radar_ {
    double x,y; /**< Position */
@@ -133,11 +135,21 @@ typedef struct Radar_ {
 #define RADAR_RES_INTERVAL 10. /**< Steps used to increase/decrease resolution. */
 #define RADAR_RES_DEFAULT  40. /**< Default resolution. */
 
+/**
+ * @struct Rect
+ *
+ * @brief Represents a rectangle.
+ */
 typedef struct Rect_ {
    double x,y;
    double w,h;
 } Rect;
 
+/**
+ * @struct GUI
+ *
+ * @brief Represents the ingame player graphical user interface.
+ */
 typedef struct GUI_ {
    /* graphics */
    glTexture *gfx_frame; /**< Frame of the GUI. */
@@ -162,18 +174,23 @@ static GUI gui = { .gfx_frame = NULL,
       .gfx_targetPilot = NULL,
       .gfx_targetPlanet = NULL }; /**< Ze GUI. */
 /* needed to render properly */
-double gui_xoff = 0.;
-double gui_yoff = 0.;
+double gui_xoff = 0.; /**< X Offset that GUI introduces. */
+double gui_yoff = 0.; /**< Y offset that GUI introduces. */
 
 /* messages */
-#define MESG_SIZE_MAX   80
+#define MESG_SIZE_MAX   80 /**< Maxmimu message length. */
 int mesg_timeout = 5000; /**< How long it takes for a message to timeout. */
 int mesg_max = 5; /**< Maximum messages onscreen */
+/**
+ * @struct Mesg
+ * 
+ * @brief On screen player message.
+ */
 typedef struct Mesg_ {
-   char str[MESG_SIZE_MAX];
-   unsigned int t;
+   char str[MESG_SIZE_MAX]; /**< The message. */
+   unsigned int t; /**< Time of creation. */
 } Mesg;
-static Mesg* mesg_stack; /**< Stack of mesages. */
+static Mesg* mesg_stack; /**< Stack of mesages, will be of mesg_max size. */
 
 
 /* 

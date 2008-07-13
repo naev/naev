@@ -12,36 +12,38 @@
 
 
 /* flag defines */
-#define PLAYER_TURN_LEFT   (1<<0)   /* player is turning left */
-#define PLAYER_TURN_RIGHT  (1<<1)   /* player is turning right */
-#define PLAYER_REVERSE     (1<<2)   /* player is facing opposite of vel */
-#define PLAYER_AFTERBURNER (1<<3)   /* player is afterburning */
-#define PLAYER_DESTROYED   (1<<9)   /* player is destroyed */
-#define PLAYER_FACE        (1<<10)  /* player is facing target */
-#define PLAYER_PRIMARY     (1<<11)  /* player is shooting primary weapon */
-#define PLAYER_SECONDARY   (1<<12)  /* player is shooting secondary weapon */
-#define PLAYER_LANDACK     (1<<13)  /* player has permission to land */
-#define PLAYER_CREATING    (1<<14)  /* player is being created */
+#define PLAYER_TURN_LEFT   (1<<0)   /**< player is turning left */
+#define PLAYER_TURN_RIGHT  (1<<1)   /**< player is turning right */
+#define PLAYER_REVERSE     (1<<2)   /**< player is facing opposite of vel */
+#define PLAYER_AFTERBURNER (1<<3)   /**< player is afterburning */
+#define PLAYER_DESTROYED   (1<<9)   /**< player is destroyed */
+#define PLAYER_FACE        (1<<10)  /**< player is facing target */
+#define PLAYER_PRIMARY     (1<<11)  /**< player is shooting primary weapon */
+#define PLAYER_SECONDARY   (1<<12)  /**< player is shooting secondary weapon */
+#define PLAYER_LANDACK     (1<<13)  /**< player has permission to land */
+#define PLAYER_CREATING    (1<<14)  /**< player is being created */
 /* flag functions */
-#define player_isFlag(f)   (player_flags & f)
-#define player_setFlag(f)  if (!player_isFlag(f)) player_flags |= f
-#define player_rmFlag(f)   if (player_isFlag(f)) player_flags ^= f
+#define player_isFlag(f)   (player_flags & f) /**< Checks for a player flag. */
+#define player_setFlag(f)  \
+if (!player_isFlag(f)) player_flags |= f /**< Sets a player flag. */
+#define player_rmFlag(f)   \
+if (player_isFlag(f)) player_flags ^= f /**< Removes a player flag. */
 
 
 /*
  * the player
  */
-extern Pilot* player;
-extern char* player_name;
-extern unsigned int player_flags;
-extern int player_crating;
+extern Pilot* player; /**< Player himself. */
+extern char* player_name; /**< Player's name. */
+extern unsigned int player_flags; /**< Player's flags. */
+extern int player_crating; /**< Player's combat rating. */
 
 
 /*
  * enums
  */
 typedef enum RadarShape_ { RADAR_RECT, RADAR_CIRCLE
-} RadarShape; /* for rendering fucntions */
+} RadarShape; /**< Player's radar shape. */
 
 
 /*

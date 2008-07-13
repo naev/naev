@@ -24,14 +24,11 @@
 /*
  * Requirements
  */
-#define OPENGL_REQ_MULTITEX      2 /* 2 is minimum OpenGL 1.2 must have */
+#define OPENGL_REQ_MULTITEX      2 /**< 2 is minimum OpenGL 1.2 must have */
 
 
-/* the screen info, gives data of current opengl settings */
-glInfo gl_screen;
-
-/* the camera */
-Vector2d* gl_camera;
+glInfo gl_screen; /**< Gives data of current opengl settings. */
+Vector2d* gl_camera; /**< Camera we are using. */
 
 /*
  * used to adjust the pilot's place onscreen to be in the middle even with the GUI

@@ -34,37 +34,50 @@
 /*
  * Contains info about the opengl screen
  */
-#define OPENGL_FULLSCREEN  (1<<0)
-#define OPENGL_DOUBLEBUF   (1<<1)
-#define OPENGL_AA_POINT    (1<<2)
-#define OPENGL_AA_LINE     (1<<3)
-#define OPENGL_AA_POLYGON  (1<<4)
-#define OPENGL_FRAG_SHADER (1<<5)
-#define OPENGL_VERT_SHADER (1<<6)
-#define gl_has(f)    (gl_screen.flags & (f)) /* check for the flag */
+#define OPENGL_FULLSCREEN  (1<<0) /**< Fullscreen. */
+#define OPENGL_DOUBLEBUF   (1<<1) /**< Doublebuffer. */
+#define OPENGL_AA_POINT    (1<<2) /**< Antialiasing points. */
+#define OPENGL_AA_LINE     (1<<3) /**< Antialiasing lines. */
+#define OPENGL_AA_POLYGON  (1<<4) /**< Antialiasing polygons. */
+#define OPENGL_FRAG_SHADER (1<<5) /**< Fragment shaders. */
+#define OPENGL_VERT_SHADER (1<<6) /**< Vertex shaders. */
+#define gl_has(f)    (gl_screen.flags & (f)) /**< Check for the flag */
+/**
+ * @struct glInfo
+ *
+ * @brief Stores data about the current opengl environment.
+ */
 typedef struct glInfo_ {
-   int w, h; /* window dimensions */
-   int depth; /* depth in bpp */
-   int r, g, b, a; /* framebuffer values in bits */
-   int flags; /* stores different propertiers */
-   int tex_max; /* maximum texture size */
-   int multitex_max; /* maximum multitexture levels */
+   int w; /**< Window width. */
+   int h; /**< Window height. */
+   int depth; /**< Depth in bpp */
+   int r; /**< How many red bits we have. */
+   int g; /**< How many green bits we have. */
+   int b; /**< How many blue bits we have. */
+   int a; /**< How many alpha bits we have. */
+   unsigned int flags; /**< Stores different propertiers */
+   int tex_max; /**< Maximum texture size */
+   int multitex_max; /**< Maximum multitexture levels */
 } glInfo;
 extern glInfo gl_screen; /* local structure set with gl_init and co */
 
-#define  SCREEN_W gl_screen.w
-#define  SCREEN_H gl_screen.h
+#define  SCREEN_W gl_screen.w /**< Screen width. */
+#define  SCREEN_H gl_screen.h /**< Screen height. */
 
 
 /*
  * used with colour.h
  */
-#define COLOUR(x)    glColor4d((x).r,(x).g,(x).b,(x).a)
-#define ACOLOUR(x,a) glColor4d((x).r,(x).g,(x).b,a)
+#define COLOUR(x)    glColor4d((x).r,(x).g,(x).b,(x).a) /**< Change colour. */
+#define ACOLOUR(x,a) glColor4d((x).r,(x).g,(x).b,a) /**< Change colour and override alpha. */
 
 
-/*
- * Spritesheet info
+/**
+ * @struct glTexture
+ *
+ * @brief Abstraction for rendering spriteshets.
+ *
+ * The basic unit all the graphic rendering works with.
  */
 typedef struct glTexture_ {
    char *name; /*< name of the graphic */
