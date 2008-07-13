@@ -347,8 +347,8 @@ const char* outfit_typename[] = {
       "Smart Swarm Missile Ammunition Pack",
       "Ship Modification",
       "Afterburner",
-      "Map",
-      "Jammer"
+      "Jammer",
+      "Map"
 };
 const char* outfit_getType( const Outfit* o )
 {
@@ -366,8 +366,8 @@ const char* outfit_typenamebroad[] = { "NULL",
       "Turret",
       "Modification",
       "Afterburner",
-      "Map",
-      "Jammer"
+      "Jammer",
+      "Map"
 };
 const char* outfit_getTypeBroad( const Outfit* o )
 {
@@ -378,8 +378,8 @@ const char* outfit_getTypeBroad( const Outfit* o )
    else if (outfit_isTurret(o)) i = 4;
    else if (outfit_isMod(o)) i = 5;
    else if (outfit_isAfterburner(o)) i = 6;
-   else if (outfit_isMap(o)) i = 7;
-   else if (outfit_isJammer(o)) i = 8;
+   else if (outfit_isJammer(o)) i = 7;
+   else if (outfit_isMap(o)) i = 8;
 
    return outfit_typenamebroad[i];
 }
