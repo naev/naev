@@ -64,6 +64,136 @@ typedef enum DamageType_ {
    DAMAGE_TYPE_RADIATION /**< Radioactive weapons. */
 } DamageType;
 
+
+/**
+ * @struct OutfitBoltData
+ *
+ * @brief Represents the particular properties of a bolt weapon.
+ */
+typedef struct OutfitBoltData_ {
+   unsigned int delay; /**< delay between shots */
+   double speed; /**< how fast it goes (not applicable to beam) */
+   double range; /**< how far it goes */
+   double accuracy; /**< desviation accuracy */
+   double energy; /**< energy usage */
+   DamageType dtype; /**< damage type */
+   double damage; /**< damage */
+
+   glTexture* gfx_space; /**< graphic */
+   int sound; /**< sound to play */
+   int spfx; /**< special effect on hit */
+} OutfitBoltData;
+
+/**
+ * @struct OutfitBeamData
+ *
+ * @brief Represents the particular properties of a beam weapon.
+ */
+typedef struct OutfitBeamData_ {
+   double range; /**< how far it goes */
+   glColour colour; /**< beam colour */
+   double energy; /**< energy it drains */
+   double dtype; /**< damage type */
+   double damage; /**< damage */
+} OutfitBeamData;
+
+/**
+ * @struct OutfitLauncherData
+ *
+ * @brief Represents a particular missile launcher.
+ *
+ * The properties of the weapon are highly dependent on the ammunition.
+ */
+typedef struct OutfitLauncherData_ {
+   unsigned int delay; /**< delay between shots */
+   char *ammo; /**< the ammo to use */
+} OutfitLauncherData;
+
+/**
+ * @struct OutfitAmmoData
+ *
+ * @brief Represents ammunition for a launcher.
+ */
+typedef struct OutfitAmmoData_ {
+   double duration; /**< How long the ammo lives. */
+   double lockon; /**< time it takes to lock on the target */
+   double resist; /**< lowers chance of jamming by this amount */
+
+   double speed; /**< maximum speed */
+   double turn; /**< turn velocity */
+   double thrust; /**< acceleration */
+   double energy; /**< energy usage */
+   DamageType dtype; /**< damage type */
+   double damage; /**< damage */
+
+   glTexture* gfx_space; /**< graphic */
+   int sound; /**< sound to play */
+   int spfx; /**< special effect on hit */
+} OutfitAmmoData;
+
+/**
+ * @struct OutfitModificationData
+ *
+ * @brief Represents a ship modification.
+ *
+ * These modify the ship's basic properties when equipped on a pilot.
+ */
+typedef struct OutfitModificationData_ {
+   /* movement */
+   double thrust; /**< Maximum thrust modifier. */
+   double turn; /**< Maximum turn modifier. */
+   double speed; /**< Maximum speed modifier. */
+
+   /* health */
+   double armour; /**< Maximum armour modifier. */
+   double armour_regen; /**< Armour regeneration modifier. */
+   double shield; /**< Maximum shield modifier. */
+   double shield_regen; /**< Shield regeneration modifier. */
+   double energy; /**< Maximum energy modifier. */
+   double energy_regen; /**< Energy regeneration modifier. */
+   double fuel; /**< Maximum fuel modifier. */
+
+   /* misc */
+   int cargo; /**< Cargo space modifier. */
+} OutfitModificationData;
+
+/**
+ * @struct OutfitAfterburnerData
+ *
+ * @brief Represents an afterburner.
+ */
+typedef struct OutfitAfterburnerData_ {
+   double rumble; /**< percent of rumble */
+   int sound; /**< sound of the afterburner */
+   double thrust_perc; /**< % of thrust increase based on ship base. */
+   double thrust_abs; /**< Fixed absolute thrust increase. */
+   double speed_perc; /**< % of speed to increase based on ship base. */
+   double speed_abs; /**< Fixed absolute speed increase. */
+   double energy; /**< Energy usage while active */
+} OutfitAfterburnerData;
+
+/**
+ * @struct OutfitMapData
+ *
+ * @brief Represents a map, is not actually stored on a ship but put into the nav system.
+ *
+ * Basically just marks an amount of systems when the player buys it as known.
+ */
+typedef struct OutfitMapData_ {
+   double radius; /**< Number of jumps to add all systems within. */
+} OutfitMapData;
+
+/**
+ * @struct OutfitJammerData
+ *
+ * @brief Represents a jammer.
+ */
+typedef struct OutfitJammerData_ {
+   double range; /**< Range it starts to do effect */
+   double chance; /**< Chance of it nullifying the missile */
+   double energy; /**< Energy it uses to run */
+} OutfitJammerData;
+
 /**
  * @struct Outfit
  *
@@ -88,81 +218,14 @@ typedef struct Outfit_ {
    /* Type dependent */
    OutfitType type; /**< Type of the outfit. */
    union {
-      struct { /* bolt */
-         unsigned int delay; /**< delay between shots */
-         double speed; /**< how fast it goes (not applicable to beam) */
-         double range; /**< how far it goes */
-         double accuracy; /**< desviation accuracy */
-         double energy; /**< energy usage */
-         DamageType dtype; /**< damage type */
-         double damage; /**< damage */
-
-         glTexture* gfx_space; /**< graphic */
-         int sound; /**< sound to play */
-         int spfx; /**< special effect on hit */
-      } blt; /**< Store data for bolt-type weapons. */
-      struct { /* beam */
-         double range; /**< how far it goes */
-         glColour colour; /**< beam colour */
-         double energy; /**< energy it drains */
-         double dtype; /**< damage type */
-         double damage; /**< damage */
-      } bem; /**< Stores data for beam type weapons. */
-      struct { /* launcher */
-         unsigned int delay; /**< delay between shots */
-         char *ammo; /**< the ammo to use */
-      } lau; /**< Stores data for launchers. */
-      struct { /* ammo */
-         double duration; /**< How long the ammo lives. */
-         double lockon; /**< time it takes to lock on the target */
-         double resist; /**< lowers chance of jamming by this amount */
-
-         double speed; /**< maximum speed */
-         double turn; /**< turn velocity */
-         double thrust; /**< acceleration */
-         double energy; /**< energy usage */
-         DamageType dtype; /**< damage type */
-         double damage; /* *<damage */
-
-         glTexture* gfx_space; /**< graphic */
-         int sound; /**< sound to play */
-         int spfx; /**< special effect on hit */
-      } amm; /**< Stores data for ammunition. */
-      struct { /* modification */
-         /* movement */
-         double thrust; /**< Maximum thrust modifier. */
-         double turn; /**< Maximum turn modifier. */
-         double speed; /**< Maximum speed modifier. */
-         
-         /* health */
-         double armour; /**< Maximum armour modifier. */
-         double armour_regen; /**< Armour regeneration modifier. */
-         double shield; /**< Maximum shield modifier. */
-         double shield_regen; /**< Shield regeneration modifier. */
-         double energy; /**< Maximum energy modifier. */
-         double energy_regen; /**< Energy regeneration modifier. */
-         double fuel; /**< Maximum fuel modifier. */
-
-         /* misc */
-         int cargo; /**< Cargo space modifier. */
-      } mod; /**< Stores data for ship modifications. */
-      struct { /* afterburner */
-         double rumble; /**< percent of rumble */
-         int sound; /**< sound of the afterburner */
-         double thrust_perc; /**< % of thrust increase based on ship base. */
-         double thrust_abs; /**< Fixed absolute thrust increase. */
-         double speed_perc; /**< % of speed to increase based on ship base. */
-         double speed_abs; /**< Fixed absolute speed increase. */
-         double energy; /**< Energy usage while active */
-      } afb; /**< Stores data for afterburner modifications. */
-      struct { /* map */
-         double radius; /**< Number of jumps to add all systems within. */
-      } map; /**< Stores data for map upgrades. */
-      struct { /* jammer */
-         double range; /**< Range it starts to do effect */
-         double chance; /**< Chance of it nullifying the missile */
-         double energy; /**< Energy it uses to run */
-      } jam; /**< Stores data for missile jammers. */
+      OutfitBoltData blt; /**< BOLT */
+      OutfitBeamData bem; /**< BEAM */
+      OutfitLauncherData lau; /**< MISSILE */
+      OutfitAmmoData amm; /**< AMMO */
+      OutfitModificationData mod; /**< MODIFICATION */
+      OutfitAfterburnerData afb; /**< AFTERBURNER */
+      OutfitJammerData jam; /**< JAMMER */
+      OutfitMapData map; /**< MAP */
    } u; /**< Holds the type-based outfit data. */
 } Outfit;
 
