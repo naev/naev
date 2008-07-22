@@ -50,7 +50,7 @@ typedef enum RadarShape_ { RADAR_RECT, RADAR_CIRCLE
  * creation/cleanup
  */
 void player_new (void);
-void player_newShip( Ship* ship, double px, double py,
+int player_newShip( Ship* ship, double px, double py,
       double vx, double vy, double dir );
 void player_cleanup (void);
 int gui_load (const char* name);

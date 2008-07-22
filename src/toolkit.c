@@ -217,6 +217,7 @@ static void dialogue_alertClose( char* str );
 static void dialogue_msgClose( char* str );
 static void dialogue_YesNoClose( char* str );
 static void dialogue_inputClose( char* str );
+static void dialogue_inputCancel( char* str );
 /* secondary loop hack */
 static int loop_done;
 static int toolkit_loop (void);
@@ -1605,6 +1606,14 @@ static int toolkit_keyEvent( SDL_Event* event )
             toolkit_triggerFocus();
          return 1;
 
+      case SDLK_ESCAPE:
+         if (event->type == SDL_KEYDOWN)
+            if (wdw->cancel_fptr != NULL) {
+               (*wdw->cancel_fptr)(wdw->name);
+               return 1;
+            }
+         return 0;
+
       case SDLK_UP:
          if (event->type == SDL_KEYDOWN) {
             toolkit_regKey(SDLK_UP);
@@ -1971,6 +1980,7 @@ static void dialogue_YesNoClose( char* str )
  * toolkit input boxes, returns the input
  */
 static unsigned int input_wid = 0;
+static int input_cancelled = 0;
 char* dialogue_input( char* title, int min, int max, const char *fmt, ... )
 {
    char msg[512], *input;
@@ -1986,12 +1996,16 @@ char* dialogue_input( char* title, int min, int max, const char *fmt, ... )
       va_end(ap);
    }
 
+   /* Start out not cancelled. */
+   input_cancelled = 0;
+
    /* get text height */
    h = gl_printHeight( &gl_smallFont, 200, msg );
 
    /* create window */
    input_wid = window_create( title, -1, -1, 240, h+140 );
    window_setAccept( input_wid, dialogue_inputClose );
+   window_setCancel( input_wid, dialogue_inputCancel );
    /* text */
    window_addText( input_wid, 30, -30, 200, h,  0, "txtInput",
          &gl_smallFont, &cDConsole, msg );
@@ -2003,7 +2017,8 @@ char* dialogue_input( char* title, int min, int max, const char *fmt, ... )
 
    /* tricky secondary loop */
    input = NULL;
-   while (!input || ((int)strlen(input) < min)) { /* must be longer then min */
+   while (!input_cancelled && (!input ||
+         ((int)strlen(input) < min))) { /* must be longer then min */
 
       if (input) {
          dialogue_alert( "Input must be at least %d characters long!", min );
@@ -2011,11 +2026,14 @@ char* dialogue_input( char* title, int min, int max, const char *fmt, ... )
          input = NULL;
       }
 
-      if (toolkit_loop()) /* error in loop -> quit */
+      if (toolkit_loop() != 0) /* error in loop -> quit */
          return NULL;
 
       /* save the input */
-      input = strdup( window_getInput( input_wid, "inpInput" ) );
+      if (input_cancelled != 0)
+         input = NULL;
+      else
+         input = strdup( window_getInput( input_wid, "inpInput" ) );
    }
 
    /* cleanup */
@@ -2032,6 +2050,11 @@ static void dialogue_inputClose( char* str )
 
    /* break the loop */
    loop_done = 1;
+}
+static void dialogue_inputCancel( char* str )
+{
+   input_cancelled = 1;
+   dialogue_inputClose(str);
 }
 
 

@@ -278,6 +278,12 @@ void player_new (void)
    player_name = dialogue_input( "Player Name", 3, 20,
          "Please write your name:" );
 
+   /* Player cancelled dialogue. */
+   if (player_name == NULL) {
+      menu_main();
+      return;
+   }
+
    if (nfile_fileExists("saves/%s.ns",player_name)) {
       r = dialogue_YesNo("Overwrite",
             "You already have a pilot named %s. Overwrite?",player_name);
@@ -372,8 +378,11 @@ static void player_newMake (void)
    player_message( "Welcome to "APPNAME"!" );
    player_message( " v%d.%d.%d", VMAJOR, VMINOR, VREV );
 
-   /* create the player and start the game */
-   player_newShip( ship, x, y, 0., 0., RNG(0,359)/180.*M_PI );
+   /* Try to create the pilot, if fails reask for player name. */
+   if (player_newShip( ship, x, y, 0., 0., RNG(0,359)/180.*M_PI ) != 0) {
+      player_new();
+      return;
+   }
    space_init(sysname);
    free(sysname);
 
@@ -388,9 +397,11 @@ static void player_newMake (void)
  *
  * @brief Creates a new ship for player.
  *
+ *    @return 0 indicates success, -1 means dialogue was cancelled.
+ *
  * @sa player_newShipMake
  */
-void player_newShip( Ship* ship, double px, double py,
+int player_newShip( Ship* ship, double px, double py,
       double vx, double vy, double dir )
 {
    char* ship_name;
@@ -402,12 +413,18 @@ void player_newShip( Ship* ship, double px, double py,
    player_vx = vx;
    player_vy = vy;
    player_dir = dir;
-   ship_name = dialogue_input( "Player Name", 3, 20,
+   ship_name = dialogue_input( "Ship Name", 3, 20,
          "Please name your brand new %s:", ship->name );
+
+   /* Dialogue cancelled. */
+   if (ship_name == NULL)
+      return -1;
 
    player_newShipMake(ship_name);
 
    free(ship_name);
+
+   return 0;
 }
 
 /**
@@ -420,7 +437,7 @@ static void player_newShipMake( char* name )
    Vector2d vp, vv;
 
    /* store the current ship if it exists */
-   if (player) {
+   if (player != NULL) {
       player_stack = realloc(player_stack, sizeof(Pilot*)*(player_nstack+1));
       player_stack[player_nstack] = pilot_copy( player );
       player_lstack = realloc(player_lstack, sizeof(char*)*(player_nstack+1));

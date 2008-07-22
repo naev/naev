@@ -183,6 +183,7 @@ void menu_small (void)
    unsigned int wid;
    wid = window_create( "Menu", -1, -1, MENU_WIDTH, MENU_HEIGHT );
 
+   window_setCancel( wid, menu_small_close );
 
    window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2,
          BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -197,9 +198,8 @@ void menu_small (void)
 }
 static void menu_small_close( char* str )
 {
-   if (strcmp(str,"btnResume")==0)
-      window_destroy( window_get("Menu") );
-
+   (void)str;
+   window_destroy( window_get("Menu") );
    menu_Close(MENU_SMALL);
 }
 static void menu_small_exit( char* str )

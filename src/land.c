@@ -709,8 +709,11 @@ static void shipyard_buy( char* str )
       return;
 
    /* player just gots a new ship */
-   player_newShip( ship, player->solid->pos.x, player->solid->pos.y,
-         0., 0., player->solid->dir );
+   if (player_newShip( ship, player->solid->pos.x, player->solid->pos.y,
+         0., 0., player->solid->dir ) != 0) {
+      /* Player actually aborted naming process. */
+      return;
+   }
    player->credits -= ship->price; /* ouch, paying is hard */
 
    shipyard_update(NULL);
