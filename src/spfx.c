@@ -233,7 +233,9 @@ void spfx_clear (void)
       spfx_destroy( spfx_stack_back, &spfx_nstack_back, i );
 
    /* Clear rumble */
-   shake_rad = 0;
+   shake_rad = 0.;
+   shake_pos.x = shake_pos.y = 0.;
+   shake_vel.x = shake_vel.y = 0.;
 }
 
 /*
