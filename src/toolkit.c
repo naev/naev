@@ -2,6 +2,11 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file toolkit.c
+ *
+ * @brief Handles windows and widgets.
+ */
 
 
 #include "toolkit.h"
@@ -15,10 +20,15 @@
 #include "input.h"
 
 
-#define INPUT_DELAY     500
-#define INPUT_FREQ      100
+#define INPUT_DELAY     500 /**< Delay before starting to repeat. */
+#define INPUT_FREQ      100 /**< Interval between repetition. */
 
 
+/**
+ * @typedef WidgetType
+ *
+ * @brief Represents the widget types.
+ */
 typedef enum WidgetType_ {
    WIDGET_NULL,
    WIDGET_BUTTON,
@@ -30,111 +40,133 @@ typedef enum WidgetType_ {
    WIDGET_INPUT
 } WidgetType;
 
+/**
+ * @typedef WidgetStatus
+ *
+ * @brief Represents widget status.
+ *
+ * Only really used by buttons.
+ */
 typedef enum WidgetStatus_ {
    WIDGET_STATUS_NORMAL,
    WIDGET_STATUS_MOUSEOVER,
    WIDGET_STATUS_MOUSEDOWN
 } WidgetStatus;
 
+
+/**
+ * @struct Widget
+ *
+ * @brief Represents a widget.
+ */
 typedef struct Widget_ {
-   char* name; /* widget's name */
-   WidgetType type; /* type */
+   char* name; /**< Widget's name. */
+   WidgetType type; /**< Widget's type. */
 
-   double x,y; /* position */
-   double w,h; /* dimensions */
+   double x; /**< X position within the window. */
+   double y; /**< Y position within the window. */
+   double w; /**< Widget width. */
+   double h; /**< Widget height. */
 
-   WidgetStatus status;
+   WidgetStatus status; /**< Widget status. */
 
    union {
       struct { /* WIDGET_BUTTON */
-         void (*fptr) (char*); /* activate callback */
-         char *display; /* stored text */
-         int disabled;
-      } btn;
+         void (*fptr) (char*); /**< Activate callback. */
+         char *display; /**< Displayed text. */
+         int disabled; /**< 1 if button is disabled, 0 if enabled. */
+      } btn; /**< WIDGET_BUTTON */
       struct { /* WIDGET_TEXT */
-         char *text; /* text to display, using printMid if centered, else printText */
-         glFont* font;
-         glColour* colour;
-         int centered; /* is centered? */
-      } txt;
+         char *text; /**< Text to display, using printMid if centered, else printText. */
+         glFont* font; /**< Text font. */
+         glColour* colour; /**< Text colour. */
+         int centered; /**< 1 if text is centered, 0 if it isn't. */
+      } txt; /**< WIDGET_TEXT */
       struct { /* WIDGET_IMAGE */
-         glTexture* image;
-         glColour* colour;
-         int border; /* border */
-      } img;
+         glTexture* image; /**< Image to display. */
+         glColour* colour; /**< Colour to warp to. */
+         int border; /**< 1 if widget should have border. */
+      } img; /**< WIDGET_IMAGE */
       struct { /* WIDGET_LIST */
-         char **options; /* pointer to the options */
-         int noptions; /* total number of options */
-         int selected; /* which option is currently selected */
-         int pos; /* current topmost option (in view) */
-         void (*fptr) (char*); /* modify callback */
-      } lst;
+         char **options; /**< Pointer to the options. */
+         int noptions; /**< Total number of options. */
+         int selected; /**< Which option is currently selected. */
+         int pos; /** Current topmost option (in view). */
+         void (*fptr) (char*); /**< Modify callback - triggered on selection. */
+      } lst; /**< WIDGET_LIST */
       struct { /* WIDGET_RECT */
-         glColour* colour; /* background colour */
-         int border; /* border */
-      } rct;
+         glColour* colour; /**< Background colour. */
+         int border; /**< 1 if widget should have border, 0 if it shouldn't. */
+      } rct; /**< WIDGET_RECT */
       struct { /* WIDGET_CUST */
-         int border;
-         void (*render) (double bx, double by, double bw, double bh);
-         void (*mouse) (SDL_Event* event, double bx, double by);
-      } cst;
+         int border; /**< 1 if widget should have border, 0 if it shouldn't. */
+         void (*render) (double bx, double by, double bw, double bh); /**< Function to run when rendering. */
+         void (*mouse) (SDL_Event* event, double bx, double by); /**< Function to run when recieving mous events. */
+      } cst; /**< WIDGET_CUST */
       struct { /* WIDGET_INPUT */
-         char *input; /* input buffer */
-         int max; /* maximum length */
-         int oneline; /* is it a one-liner? no '\n' and friends */
-         int view, pos; /* view and cursor position */
-      } inp;
-   } dat;
+         char *input; /**< Input buffer. */
+         int max; /**< Maximum length. */
+         int oneline; /**< Is it a one-liner? no '\n' and friends */
+         int view; /**< View position. */
+         int pos; /**< Cursor position. */
+      } inp; /**< WIDGET_INPUT */
+   } dat; /**< Stores the widget specific data. */
 } Widget;
 
 
+/**
+ * @struct Window
+ *
+ * @brief Represents a graphical window.
+ */
 typedef struct Window_ {
-   unsigned int id; /* unique id */
-   char *name; /* name */
+   unsigned int id; /**< Unique ID. */
+   char *name; /**< Window name - should be unique. */
 
-   int hidden; /* is it hidden? */
-   int focus; /* what bugger is focused? */
+   int hidden; /**< Is window hidden? - @todo use */
+   int focus; /**< Current focused widget. */
 
-   /* pointer to a function to run if user hits 'enter' and no button is focused
-    * nor any other input thingy that catches 'enter' */
-   void (*def_fptr)( char* );
+   void (*accept_fptr)( char* ); /**< Triggered by hitting 'enter' with no widget that catches the keypress. */
+   void (*cancel_fptr)( char* ); /**< Triggered by hitting 'escape' with no widget that catches the keypress. */
 
-   double x,y; /* position */
-   double w,h; /* dimensions */
+   double x; /**< X position of the window. */
+   double y; /**< Y position of the window. */
+   double w; /**< Window width. */
+   double h; /**< Window height. */
 
-   Widget *widgets; /* widget storage */
-   int nwidgets; /* total number of widgets */
+   Widget *widgets; /**< Widget storage. */
+   int nwidgets; /**< Total number of widgets. */
 } Window;
 
 
-static unsigned int genwid = 0; /* generates unique window ids, > 0 */
+static unsigned int genwid = 0; /**< Generates unique window ids, > 0 */
 
 
-int toolkit = 0; /* toolkit in use */
+int toolkit = 0; /**< 1 if toolkit is in use, 0 else. */
 
 /* 
  * window stuff
  */
-#define MIN_WINDOWS  3
-static Window *windows = NULL;
-static int nwindows = 0;
-static int mwindows = 0;
+#define MIN_WINDOWS  3 /**< Minimum windows to prealloc. */
+static Window *windows = NULL; /**< Window stacks, not to be confused with MS windows. */
+static int nwindows = 0; /**< Number of windows in the stack. */
+static int mwindows = 0; /**< Allocated windows in the stack. */
 
 
 /*
  * simulate keypresses when holding
  */
-static SDLKey input_key;
-static unsigned int input_keyTime;
-static int input_keyCounter;
+static SDLKey input_key; /**< Current pressed key. */
+static unsigned int input_keyTime; /**< Tick pressed. */
+static int input_keyCounter; /**< Number of repetitions. */
 
 
 /*
  * default outline colours
  */
-static glColour* toolkit_colLight = &cGrey90;
-static glColour* toolkit_col = &cGrey70;
-static glColour* toolkit_colDark = &cGrey30;
+static glColour* toolkit_colLight = &cGrey90; /**< Light outline colour. */
+static glColour* toolkit_col = &cGrey70; /**< Normal outline colour. */
+static glColour* toolkit_colDark = &cGrey30; /**< Dark outline colour. */
 
 /*
  * prototypes
@@ -202,15 +234,33 @@ static void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
 }
 
 
-/*
- * adds a button that when pressed will trigger call passing it's name as
- * only parameter
+/**
+ * @fn void window_addButton( const unsigned int wid,
+ *                            const int x, const int y,
+ *                            const int w, const int h,
+ *                            char* name, char* display,
+ *                            void (*call) (char*) )
+ *
+ * @brief Adds a button widget to a window.
+ *
+ * Position origin is 0,0 at bottom left.  If you use negative X or Y
+ *  positions.  They actually count from the opposite side in.
+ *
+ *    @param wid ID of the window to add the button widget to.
+ *    @param x X position within the window to use.
+ *    @param y Y position within the window to use.
+ *    @param w Width of the button.
+ *    @param h Height of the button.
+ *    @param name Name of the button to use internally.
+ *    @param display Text displayed on the button (centered).
+ *    @param call Function to call when button is pressed. Parameter passed
+ *                is the name of the button.
  */
 void window_addButton( const unsigned int wid,
-      const int x, const int y,
-      const int w, const int h,
-      char* name, char* display,
-      void (*call) (char*) )
+                       const int x, const int y,
+                       const int w, const int h,
+                       char* name, char* display,
+                       void (*call) (char*) )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
@@ -625,7 +675,8 @@ unsigned int window_create( char* name,
 
    wdw->hidden = 0;
    wdw->focus = -1;
-   wdw->def_fptr = NULL;
+   wdw->accept_fptr = NULL;
+   wdw->cancel_fptr = NULL;
 
    wdw->w = (double) w;
    wdw->h = (double) h;
@@ -659,15 +710,45 @@ unsigned int window_create( char* name,
 }
 
 
-/*
- * sets the window's default funcion
+/**
+ * @fn void window_setAccept( const unsigned int wid, void (*accept)( char* ) )
+ *
+ * @ brief Sets the default accept function of the window.
+ *
+ * This function is called whenever 'enter' is pressed and the current widget
+ *  does not catch it.  NULL disables the accept function.
+ *
+ *    @param wid ID of the window to set the accept function.
+ *    @param accept Function to trigger when window is "accepted".  Parameter
+ *                  passed is window name.
  */
-void window_setFptr( const unsigned int wid, void (*fptr)( char* ) )
+void window_setAccept( const unsigned int wid, void (*accept)( char* ) )
 {
    Window *wdw;
 
    wdw = window_wget( wid );
-   if (wdw != NULL) wdw->def_fptr = fptr;
+   if (wdw != NULL) wdw->accept_fptr = accept;
+}
+
+
+/**
+ * @fn void window_setCancel( const unsigned int wid, void (*cancel)( char* ) )
+ *
+ * @brief Sets the default cancel function of the window.
+ *
+ * This function is called whenever 'escape' is hit and the current widget
+ *  does not catch it.  NULL disables the cancel function.
+ *
+ *    @param wid ID of the window to set cancel function.
+ *    @param cancel Function to trigger when window is "cancelled".  Parameter
+ *                  passed is window name.
+ */
+void window_setCancel( const unsigned int wid, void (*cancel)( char* ) )
+{
+   Window *wdw;
+
+   wdw = window_wget( wid );
+   if (wdw != NULL) wdw->cancel_fptr = cancel;
 }
 
 
@@ -1650,7 +1731,7 @@ static void toolkit_triggerFocus (void)
          break;
 
       default:
-         if (wdw->def_fptr) (*wdw->def_fptr)(wgt->name);
+         if (wdw->accept_fptr) (*wdw->accept_fptr)(wgt->name);
          break;
    }
 }
@@ -1910,7 +1991,7 @@ char* dialogue_input( char* title, int min, int max, const char *fmt, ... )
 
    /* create window */
    input_wid = window_create( title, -1, -1, 240, h+140 );
-   window_setFptr( input_wid, dialogue_inputClose );
+   window_setAccept( input_wid, dialogue_inputClose );
    /* text */
    window_addText( input_wid, 30, -30, 200, h,  0, "txtInput",
          &gl_smallFont, &cDConsole, msg );

@@ -164,7 +164,7 @@ void load_game_menu (void)
          "btnDelete", "Del", load_menu_delete );
 
    /* default action */
-   window_setFptr( wid, load_menu_load );
+   window_setAccept( wid, load_menu_load );
 }
 static void load_menu_close( char *str )
 {

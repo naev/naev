@@ -279,7 +279,7 @@ static void outfits_open (void)
    snprintf(buf,128,"%s - Outfits", land_planet->name );
    secondary_wid = window_create( buf, -1, -1,
          OUTFITS_WIDTH, OUTFITS_HEIGHT );
-   window_setFptr( secondary_wid, outfits_buy ); /* will allow buying from keyboard */
+   window_setAccept( secondary_wid, outfits_buy ); /* will allow buying from keyboard */
 
    /* buttons */
    window_addButton( secondary_wid, -20, 20,

@@ -71,7 +71,8 @@ char* dialogue_input( char* title, int min, int max, const char *fmt, ... );
  * modification
  */
 /* window */
-void window_setFptr( const unsigned int wid, void (*fptr)( char* ) );
+void window_setAccept( const unsigned int wid, void (*fptr)( char* ) );
+void window_setCancel( const unsigned int wid, void (*cancel)( char* ) );
 /* text */
 void window_modifyText( const unsigned int wid,
       char* name, char* newstring );
