@@ -1056,9 +1056,9 @@ int gl_init()
    gl_screen.depth = gl_screen.r + gl_screen.g + gl_screen.b + gl_screen.a;
 
    /* Get info about some extensions */
-   if (gl_hasExt("GL_ARB_vertex_shader")==GL_TRUE)
+   if (gl_hasExt("GL_ARB_vertex_program")==GL_TRUE)
       gl_screen.flags |= OPENGL_VERT_SHADER;
-   if (gl_hasExt("GL_ARB_fragment_shader")==GL_TRUE)
+   if (gl_hasExt("GL_ARB_fragment_program")==GL_TRUE)
       gl_screen.flags |= OPENGL_FRAG_SHADER;
 
    /* Texture information */
