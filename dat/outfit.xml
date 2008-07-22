@@ -258,7 +258,7 @@
    <tech>5</tech>
    <mass>3</mass>
    <price>55000</price>
-   <description>A big panel that will generate energy based off solar energy.  This will allow your ship to regenerate it's energy supplies faster.</description>
+   <description>A big panel that will generate energy based off solar energy.  This will allow your ship to regenerate its energy supplies faster.</description>
    <gfx_store>solar</gfx_store>
   </general>
   <specific type="modification">
