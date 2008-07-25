@@ -96,7 +96,7 @@ static Weapon* weapon_create( const Outfit* outfit,
 static void weapon_render( const Weapon* w );
 static void weapons_updateLayer( const double dt, const WeaponLayer layer );
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer );
-static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer );
+static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos );
 static void weapon_destroy( Weapon* w, WeaponLayer layer );
 static void weapon_free( Weapon* w );
 /* think */
@@ -369,6 +369,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
    int i, wsx,wsy, psx,psy;
    glTexture *gfx;
+   Vector2d crash;
 
    gfx = outfit_gfx(w->outfit);
    gl_getSpriteFromDir( &wsx, &wsy, gfx, w->solid->dir );
@@ -386,18 +387,20 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       /* smart weapons only collide with their target */
       if ( (weapon_isSmart(w)) && (pilot_stack[i]->id == w->target) &&
             CollideSprite( gfx, wsx, wsy, &w->solid->pos,
-                  pilot_stack[i]->ship->gfx_space, psx, psy, &pilot_stack[i]->solid->pos)) {
+                  pilot_stack[i]->ship->gfx_space, psx, psy, &pilot_stack[i]->solid->pos,
+                  &crash )) {
 
-         weapon_hit( w, pilot_stack[i], layer );
+         weapon_hit( w, pilot_stack[i], layer, &crash );
          return;
       }
       /* dump weapons hit anything not of the same faction */
       if ( !weapon_isSmart(w) &&
             !areAllies(w->faction,pilot_stack[i]->faction) &&
             CollideSprite( gfx, wsx, wsy, &w->solid->pos,
-                  pilot_stack[i]->ship->gfx_space, psx, psy, &pilot_stack[i]->solid->pos)) {
+                  pilot_stack[i]->ship->gfx_space, psx, psy, &pilot_stack[i]->solid->pos,
+                  &crash )) {
 
-         weapon_hit( w, pilot_stack[i], layer );
+         weapon_hit( w, pilot_stack[i], layer, &crash );
          return;
       }
    }
@@ -410,15 +413,16 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
 
 /**
- * @fn static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer )
+ * @fn static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
  *
  * @brief Weapon hit the pilot.
  *
  *    @param w Weapon involved in the collision.
  *    @param p Pilot that got hit.
  *    @param layer Layer to which the weapon belongs.
+ *    @param pos Position of the hit.
  */
-static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer )
+static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
 {
    /* inform the ai it has been attacked, useless if player */
    if (!pilot_isPlayer(p)) {
@@ -430,13 +434,11 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer )
          }
          ai_attacked( p, w->parent );
       }
-      spfx_add( outfit_spfx(w->outfit),
-            VX(w->solid->pos), VY(w->solid->pos),
+      spfx_add( outfit_spfx(w->outfit), pos->x, pos->y,
             VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );
    }
    else
-      spfx_add( outfit_spfx(w->outfit),
-            VX(w->solid->pos), VY(w->solid->pos),
+      spfx_add( outfit_spfx(w->outfit), pos->x, pos->y,
             VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_FRONT );
 
    /* inform the ship that it should take some damage */

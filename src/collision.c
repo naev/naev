@@ -24,20 +24,23 @@
  *
  * @brief Checks whether or not two sprites collide.
  *
- * This function does pixel perfect checks.
+ * This function does pixel perfect checks.  If the collision actually occurs,
+ *  crash is set to store the real position of the collision.
  *
- *    @param[in] at texture a.
- *    @param[in] asx position of x of sprite a.
- *    @param[in] asy position of y of sprita a.
- *    @param[in] ap position in space of sprite a.
- *    @param[in] bt texture b.
- *    @param[in] bsx position of x of sprite b.
- *    @param[in] bsy position of y of sprite b.
- *    @param[in] bp position in space of sprite b.
+ *    @param[in] at Texture a.
+ *    @param[in] asx Position of x of sprite a.
+ *    @param[in] asy Position of y of sprita a.
+ *    @param[in] ap Position in space of sprite a.
+ *    @param[in] bt Texture b.
+ *    @param[in] bsx Position of x of sprite b.
+ *    @param[in] bsy Position of y of sprite b.
+ *    @param[in] bp Position in space of sprite b.
+ *    @param[out] crash Actual position of the collision (only set on collision).
  *    @return 1 on collision, 0 else.
  */
 int CollideSprite( const glTexture* at, const int asx, const int asy, const Vector2d* ap,
-      const glTexture* bt, const int bsx, const int bsy, const Vector2d* bp )
+      const glTexture* bt, const int bsx, const int bsy, const Vector2d* bp,
+      Vector2d* crash )
 {
    int x,y;
    int ax1,ax2, ay1,ay2;
@@ -83,9 +86,36 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
       for (x=inter_x0; x<=inter_x1; x++)
          /* compute offsets for surface before pass to TransparentPixel test */ 
          if ((!gl_isTrans(at, abx + x, aby + y)) &&
-               (!gl_isTrans(bt, bbx + x, bby + y)))
+               (!gl_isTrans(bt, bbx + x, bby + y))) {
+
+            /* Set the crash position. */
+            crash->x = x;
+            crash->y = y;
             return 1;
+         }
 
    return 0;
 }
+
+
+/**
+ * @fn int CollideLineSprite( const Vector2d* ap, double dir,
+ *           const glTexture* bt, const int bsx, const int bsy, const Vector2d* bp )
+ *
+ *    @param[in] ap Origin of the line.
+ *    @param[in] ad Direction of the line.
+ *    @param[in] bt Texture b.
+ *    @param[in] bsx Position of x of sprite b.
+ *    @param[in] bsy Position of y of sprite b.
+ *    @param[in] bp Position in space of sprite b.
+ *    @return 1 on collision, 0 else.
+ *
+ * @sa CollideSprite
+ */
+int CollideLineSprite( const Vector2d* ap, double ad,
+      const glTexture* bt, const int bsx, const int bsy, const Vector2d* bp,
+      Vector2d* crash )
+{
+}
+
 
