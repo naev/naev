@@ -99,23 +99,159 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
 
 
 /**
+ * @fn int CollideLineLine( double s1x, double s1y, double e1x, double e1y,  
+ *       double s2x, double s2y, double e2x, double e2y, Vector2d* crash )
+ *
+ * @brief Checks to see if two lines collide.
+ *
+ *    @param[in] s1 Start point of line 1.
+ *    @param[in] e1 End point of line 1.
+ *    @param[in] s2 Start point of line 2.
+ *    @param[in] e2 End point of line 2.
+ *    @param[out] crash Position of the collision.
+ *    @return 3 if lines are coincident, 1 if lines are parallel,
+ *              1 if lines just collideon a point, or 0 if they don't.
+ */
+int CollideLineLine( double s1x, double s1y, double e1x, double e1y,
+      double s2x, double s2y, double e2x, double e2y, Vector2d* crash )
+{
+   double ua_t, ub_t, u_b;
+   double ua, ub;
+   
+   ua_t = (e2x - s2x) * (s1y - s2y) - (e2y - s2y) * (s1x - s2x);
+   ub_t = (e1x - s1x) * (s1y - s2y) - (e1y - s1y) * (s1x - s2x);
+   u_b  = (e2y - s2y) * (e1x - s1x) - (e2x - s2x) * (e1y - s1y);
+
+   if (u_b != 0.) {
+      ua = ua_t / u_b;
+      ub = ub_t / u_b;
+
+      /* Intersection at a point. */
+      if ((0. <= ua) && (ua <= 1.) && (0. <= ub) && (ub <= 1.)) {
+         crash->x = s1x + ua * (e1x - s1x);
+         crash->y = s1y + ua * (e1y - s1y);
+         return 1;
+      }
+      /* No intersection. */
+      else
+         return 0;
+   }
+   else {
+      /* Coincident. */
+      if ((ua_t == 0.) || (ub_t == 0.))
+         return 3;
+      /* Parallel. */
+      else
+         return 2;
+   }
+}
+
+
+/**
  * @fn int CollideLineSprite( const Vector2d* ap, double dir,
  *           const glTexture* bt, const int bsx, const int bsy, const Vector2d* bp )
  *
+ * @brief Checks to see if a line collides with a sprite.
+ *
+ * First collisions are detected on all the walls of the sprite's rectangle.
+ *  Then the collisions are tested by pixel perfectness until collisions are
+ *  actually found with the ship itself.
+ *
  *    @param[in] ap Origin of the line.
  *    @param[in] ad Direction of the line.
+ *    @param[in] al Length of the line.
  *    @param[in] bt Texture b.
  *    @param[in] bsx Position of x of sprite b.
  *    @param[in] bsy Position of y of sprite b.
  *    @param[in] bp Position in space of sprite b.
+ *    @param[out] crash Position of the collision.
  *    @return 1 on collision, 0 else.
  *
  * @sa CollideSprite
  */
-int CollideLineSprite( const Vector2d* ap, double ad,
+int CollideLineSprite( const Vector2d* ap, double ad, double al,
       const glTexture* bt, const int bsx, const int bsy, const Vector2d* bp,
-      Vector2d* crash )
+      Vector2d crash[2] )
 {
+   double ep[2], tr[2], v[2], mod;
+   int hits;
+   Vector2d tmp_crash, border[2];
+
+   /* Set up end point of line. */
+   ep[0] = ap->x + al*cos(ad);
+   ep[1] = ap->y + al*sin(ad);
+
+   /* Set up top right corner of the rectangle. */
+   tr[0] = bp->x + bt->sx;
+   tr[1] = bp->y + bt->sy;
+
+   /* 
+    * Start check for rectangular collisions.
+    */
+   hits = 0;
+   /* Left border. */
+   if (CollideLineLine(ap->x, ap->y, ep[0], ep[1],
+         bp->x, bp->y, bp->x, tr[1], &tmp_crash) != 0) {
+      border[hits].x = tmp_crash.x;
+      border[hits].y = tmp_crash.y;
+      hits++;
+   }
+   /* Top border. */
+   if (CollideLineLine(ap->x, ap->y, ep[0], ep[1],
+         bp->x, tr[1], tr[0], tr[1], &tmp_crash) != 0) {
+      border[hits].x = tmp_crash.x;
+      border[hits].y = tmp_crash.y;
+      hits++;
+   }
+   /* Now we have to make sure hits isn't 2. */
+   /* Right border. */
+   if ((hits < 2) && CollideLineLine(ap->x, ap->y, ep[0], ep[1],
+         tr[0], tr[1], tr[0], bp->y, &tmp_crash) != 0) {
+      border[hits].x = tmp_crash.x;
+      border[hits].y = tmp_crash.y;
+      hits++;
+   }
+   /* Bottom border. */
+   if ((hits < 2) && CollideLineLine(ap->x, ap->y, ep[0], ep[1],
+         tr[0], bp->y, bp->x, bp->y, &tmp_crash) != 0) {
+      border[hits].x = tmp_crash.x;
+      border[hits].y = tmp_crash.y;
+      hits++;
+   }
+
+   /* No hits - missed. */
+   if (hits == 0)
+      return 0;
+
+
+   /* Special case only one hit - shouldn't happen, but just in case. */
+   if (hits == 1) {
+      /* We just return the same point twice. */
+      crash[0].x = crash[1].x = border[0].x;
+      crash[0].y = crash[1].y = border[0].y;
+      return 1;
+   }
+
+   crash[0].x = border[0].x;
+   crash[0].y = border[0].y;
+   crash[1].x = border[1].x;
+   crash[1].y = border[1].y;
+   return 1;
+
+   /* 
+    * @todo Now we do a pixel perfect approach.
+    */
+   /* Directonaly vector (normalized). */
+   v[0] = border[1].x - border[0].x;
+   v[1] = border[1].y - border[0].y;
+   /* Normalize. */
+   mod = 2*MOD(v[0],v[1]); /* Multiply by two to reduce check amount. */
+   v[0] /= mod;
+   v[1] /= mod;
+
+   /* We start checking first border until we find collision. */
+   tmp_crash.x = border[0].x;
+   tmp_crash.y = border[0].y;
 }
 
 
