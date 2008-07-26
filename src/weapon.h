@@ -11,8 +11,17 @@
 #include "outfit.h"
 #include "physics.h"
 
+/**
+ * @enum WeaponLayer
+ * @brief Designates the layer the weapon is on.
+ * Automatically set up on creation (player is front, rest is back).
+ */
 typedef enum { WEAPON_LAYER_BG, WEAPON_LAYER_FG } WeaponLayer;
 
+
+/*
+ * addition
+ */
 void weapon_add( const Outfit* outfit,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const unsigned int parent, const unsigned int target );

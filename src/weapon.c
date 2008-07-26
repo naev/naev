@@ -253,8 +253,10 @@ void weapons_update( const double dt )
  */
 static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 {
-   Weapon** wlayer;
-   int* nlayer;
+   Weapon **wlayer;
+   int *nlayer;
+   Weapon *w;
+   int i;
 
    switch (layer) {
       case WEAPON_LAYER_BG:
@@ -267,8 +269,6 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          break;
    }
 
-   int i;
-   Weapon* w;
    for (i=0; i<(*nlayer); i++) {
       w = wlayer[i];
       switch (wlayer[i]->outfit->type) {
@@ -426,9 +426,9 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
 {
    /* inform the ai it has been attacked, useless if player */
    if (!pilot_isPlayer(p)) {
-      if ((player_target == p->id) || (RNG(0,2) == 0)) { /* 33% chance */
+      if ((player_target == p->id) || (RNGF() < 0.33)) { /* 33% chance */
          if ((w->parent == PLAYER_ID) &&
-               (!pilot_isFlag(p,PILOT_HOSTILE) || (RNG(0,1) == 0))) { /* 50% chance */
+               (!pilot_isFlag(p,PILOT_HOSTILE) || (RNGF() < 0.5))) { /* 50% chance */
             faction_modPlayer( p->faction, -1 ); /* slowly lower faction */
             pilot_setFlag( p, PILOT_HOSTILE);
          }
@@ -595,6 +595,11 @@ void weapon_add( const Outfit* outfit, const double dir,
       const Vector2d* pos, const Vector2d* vel,
       unsigned int parent, unsigned int target )
 {
+   WeaponLayer layer;
+   Weapon *w;
+   Weapon **curLayer;
+   int *mLayer, *nLayer;
+
    if (!outfit_isWeapon(outfit) && 
          !outfit_isAmmo(outfit) && 
          !outfit_isTurret(outfit)) {
@@ -602,13 +607,10 @@ void weapon_add( const Outfit* outfit, const double dir,
       return;
    }
 
-   WeaponLayer layer = (parent==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   Weapon* w = weapon_create( outfit, dir, pos, vel, parent, target );
+   layer = (parent==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
+   w = weapon_create( outfit, dir, pos, vel, parent, target );
 
    /* set the proper layer */
-   Weapon** curLayer = NULL;
-   int *mLayer = NULL;
-   int *nLayer = NULL;
    switch (layer) {
       case WEAPON_LAYER_BG:
          curLayer = wbackLayer;
