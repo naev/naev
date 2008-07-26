@@ -176,16 +176,44 @@ void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
 }
 
 
-/*
- * return 1 if o is a weapon (beam/bolt)
+/**
+ * @fn int outift_isWeapon( const Outfit* o )
+ * @brief Checks if outfit is a fixed mounted weapon.
+ *    @param o Outfit to check.
+ *    @return 1 if o is a weapon (beam/bolt).
  */
 int outfit_isWeapon( const Outfit* o )
 {
    return ( (o->type==OUTFIT_TYPE_BOLT)      ||
          (o->type==OUTFIT_TYPE_BEAM) );
 }
-/*
- * return 1 if o is a launcher
+/**
+ * @fn int outift_isBolt( const Outfit* o )
+ * @brief Checks if outfit is bolt type weapon.
+ *    @param o Outfit to check.
+ *    @return 1 if o is a bolt type weapon.
+ */
+int outfit_isBolt( const Outfit* o )
+{
+   return ( (o->type==OUTFIT_TYPE_BOLT)      ||
+         (o->type==OUTFIT_TYPE_TURRET_BOLT) );
+}
+/**
+ * @fn int outift_isBeam( const Outfit* o )
+ * @brief Checks if outfit is a beam type weapon.
+ *    @param o Outfit to check.
+ *    @return 1 if o is a beam type weapon.
+ */
+int outfit_isBeam( const Outfit* o )
+{
+   return ( (o->type==OUTFIT_TYPE_BEAM)      ||
+         (o->type==OUTFIT_TYPE_TURRET_BEAM) );
+}
+/**
+ * @fn int outift_isLauncher( const Outfit* o )
+ * @brief Checks if outfit is a weapon launcher.
+ *    @param o Outfit to check.
+ *    @return 1 if o is a weapon launcher.
  */
 int outfit_isLauncher( const Outfit* o )
 {
@@ -195,8 +223,11 @@ int outfit_isLauncher( const Outfit* o )
          (o->type==OUTFIT_TYPE_MISSILE_SWARM)   ||
          (o->type==OUTFIT_TYPE_MISSILE_SWARM_SMART) );
 }
-/*
- * return 1 if o is weapon ammunition
+/**
+ * @fn int outift_isAmmo( const Outfit* o )
+ * @brief Checks if outfit is ammo for a launcher.
+ *    @param o Outfit to check.
+ *    @return 1 if o is ammo.
  */
 int outfit_isAmmo( const Outfit* o )
 {
@@ -206,49 +237,56 @@ int outfit_isAmmo( const Outfit* o )
          (o->type==OUTFIT_TYPE_MISSILE_SWARM_AMMO)    ||
          (o->type==OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO) );
 }
-/*
- * return 1 if o is a turret
+/**
+ * @fn int outift_isTurret( const Outfit* o )
+ * @brief Checks if outfit is a turret class weapon.
+ *    @param o Outfit to check.
+ *    @return 1 if o is a turret class weapon.
  */
 int outfit_isTurret( const Outfit* o )
 {
    return ( (o->type==OUTFIT_TYPE_TURRET_BOLT) ||
          (o->type==OUTFIT_TYPE_TURRET_BEAM) );
 }
-
-
-/*
- * returns 1 if o is a modification
+/**
+ * @fn int outift_isMod( const Outfit* o )
+ * @brief Checks if outfit is a ship modification.
+ *    @param o Outfit to check.
+ *    @return 1 if o is a ship modification.
  */
 int outfit_isMod( const Outfit* o )
 {
    return (o->type==OUTFIT_TYPE_MODIFCATION);
 }
-
-
-/*
- * returns 1 if o is an afterburner
+/**
+ * @fn int outift_isAfterburner( const Outfit* o )
+ * @brief Checks if outfit is an afterburner.
+ *    @param o Outfit to check.
+ *    @return 1 if o is an afterburner.
  */
 int outfit_isAfterburner( const Outfit* o )
 {
    return (o->type==OUTFIT_TYPE_AFTERBURNER);
 }
-
-
-/*
- * returns 1 if o is a map
- */
-int outfit_isMap( const Outfit* o )
-{
-   return (o->type==OUTFIT_TYPE_MAP);
-}
-
-
-/*
- * Returns 1 if o is a jammer.
+/**
+ * @fn int outift_isJammer( const Outfit* o )
+ * @brief Checks if outfit is a missile jammer.
+ *    @param o Outfit to check.
+ *    @return 1 if o is a jammer.
  */
 int outfit_isJammer( const Outfit* o )
 {
    return (o->type==OUTFIT_TYPE_JAMMER);
+}
+/**
+ * @fn int outift_isMap( const Outfit* o )
+ * @brief Checks if outfit is a space map.
+ *    @param o Outfit to check.
+ *    @return 1 if o is a map.
+ */
+int outfit_isMap( const Outfit* o )
+{
+   return (o->type==OUTFIT_TYPE_MAP);
 }
 
 

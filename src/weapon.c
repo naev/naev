@@ -58,7 +58,7 @@ extern void ai_attacked( Pilot* attacked, const unsigned int attacker );
  * @brief In-game representation of a weapon.
  */
 typedef struct Weapon_ {
-   Solid* solid; /**< actually has its own solid :) */
+   Solid *solid; /**< Actually has its own solid :) */
 
    unsigned int faction; /**< faction of pilot that shot it */
    unsigned int parent; /**< pilot that shot it */
@@ -286,13 +286,15 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          case OUTFIT_TYPE_BOLT:
          case OUTFIT_TYPE_TURRET_BOLT:
          case OUTFIT_TYPE_MISSILE_DUMB_AMMO: /* Dumb missiles are like bolts */
+         case OUTFIT_TYPE_BEAM: /* Timer usage is actually more complicated for beams. */
+         case OUTFIT_TYPE_TURRET_BEAM:
             wlayer[i]->timer -= dt;
             if (wlayer[i]->timer < 0.) {
                weapon_destroy(wlayer[i],layer);
                continue;
             }
             break;
-
+         
          default:
             WARN("Weapon of type '%s' has no update implemented yet!",
                   w->outfit->name);
@@ -347,12 +349,36 @@ static void weapon_render( const Weapon* w )
    int sx, sy;
    glTexture *gfx;
 
-   gfx = outfit_gfx(w->outfit);
+   switch (w->outfit->type) {
+      /* Weapons that use sprites. */
+      case OUTFIT_TYPE_MISSILE_SEEK_AMMO:
+      case OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO:
+      case OUTFIT_TYPE_MISSILE_SWARM_AMMO:
+      case OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO:
+      case OUTFIT_TYPE_BOLT:
+      case OUTFIT_TYPE_TURRET_BOLT:
+      case OUTFIT_TYPE_MISSILE_DUMB_AMMO:
+         gfx = outfit_gfx(w->outfit);
+         /* get the sprite corresponding to the direction facing */
+         gl_getSpriteFromDir( &sx, &sy, gfx, w->solid->dir );
+         gl_blitSprite( gfx, w->solid->pos.x, w->solid->pos.y, sx, sy, NULL );
+         break;
 
-   /* get the sprite corresponding to the direction facing */
-   gl_getSpriteFromDir( &sx, &sy, gfx, w->solid->dir );
-
-   gl_blitSprite( gfx, w->solid->pos.x, w->solid->pos.y, sx, sy, NULL );
+      /* Beam weapons. */
+      case OUTFIT_TYPE_BEAM:
+      case OUTFIT_TYPE_TURRET_BEAM:
+         glBegin(GL_LINES);
+            glVertex2d( w->solid->pos.x, w->solid->pos.y );
+            glVertex2d( w->solid->pos.x + w->outfit->u.bem.range*cos(w->solid->dir),
+                        w->solid->pos.y + w->outfit->u.bem.range*sin(w->solid->dir) );
+         glEnd(); /* GL_LINES */
+         break;
+      
+      default:
+         WARN("Weapon of type '%s' has no render implemented yet!",
+               w->outfit->name);
+         break;
+   }
 }
 
 
@@ -385,23 +411,25 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       if (w->parent == pilot_stack[i]->id) continue; /* pilot is self */
 
       /* smart weapons only collide with their target */
-      if ( (weapon_isSmart(w)) && (pilot_stack[i]->id == w->target) &&
+      if (weapon_isSmart(w)) {
+         if ((pilot_stack[i]->id == w->target) &&
             CollideSprite( gfx, wsx, wsy, &w->solid->pos,
                   pilot_stack[i]->ship->gfx_space, psx, psy, &pilot_stack[i]->solid->pos,
                   &crash )) {
-
-         weapon_hit( w, pilot_stack[i], layer, &crash );
-         return;
+            weapon_hit( w, pilot_stack[i], layer, &crash );
+            return;
+         }
       }
       /* dump weapons hit anything not of the same faction */
-      if ( !weapon_isSmart(w) &&
-            !areAllies(w->faction,pilot_stack[i]->faction) &&
-            CollideSprite( gfx, wsx, wsy, &w->solid->pos,
-                  pilot_stack[i]->ship->gfx_space, psx, psy, &pilot_stack[i]->solid->pos,
-                  &crash )) {
-
-         weapon_hit( w, pilot_stack[i], layer, &crash );
-         return;
+     else if (!weapon_isSmart(w)) {
+         if (!areAllies(w->faction,pilot_stack[i]->faction) &&
+               CollideSprite( gfx, wsx, wsy, &w->solid->pos,
+                     pilot_stack[i]->ship->gfx_space, psx, psy,
+                     &pilot_stack[i]->solid->pos,
+                     &crash )) {
+            weapon_hit( w, pilot_stack[i], layer, &crash );
+            return;
+         }
       }
    }
 

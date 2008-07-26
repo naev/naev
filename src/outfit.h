@@ -91,7 +91,7 @@ typedef struct OutfitBoltData_ {
  */
 typedef struct OutfitBeamData_ {
    double range; /**< how far it goes */
-   glColour colour; /**< beam colour */
+   glColour *colour; /**< beam colour */
    double energy; /**< energy it drains */
    double dtype; /**< damage type */
    double damage; /**< damage */
@@ -244,6 +244,8 @@ Outfit* outfit_get( const char* name );
 char** outfit_getTech( int *n, const int *tech, const int techmax );
 /* outfit types */
 int outfit_isWeapon( const Outfit* o );
+int outfit_isBolt( const Outfit* o );
+int outfit_isBeam( const Outfit* o );
 int outfit_isLauncher( const Outfit* o );
 int outfit_isAmmo( const Outfit* o );
 int outfit_isTurret( const Outfit* o );
