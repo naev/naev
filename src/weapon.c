@@ -101,6 +101,7 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer );
 static void weapon_free( Weapon* w );
 /* think */
 static void think_seeker( Weapon* w, const double dt );
+static void think_beam( Weapon* w, const double dt );
 /* externed */
 void weapon_minimap( const double res, const double w,
       const double h, const RadarShape shape );
@@ -226,6 +227,47 @@ static void think_seeker( Weapon* w, const double dt )
    vel = MIN(w->outfit->u.amm.speed, VMOD(w->solid->vel) + w->outfit->u.amm.thrust*dt);
    vect_pset( &w->solid->vel, vel, w->solid->dir );
    /*limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );*/
+}
+
+
+/**
+ * @fn static void think_beam( Weapon* w, const double dt )
+ *
+ * @brief The pseudo-ai of the beam weapons.
+ *
+ *    @param w Weapon to do the thinking.
+ *    @param dt Current delta tick.
+ */
+static void think_beam( Weapon* w, const double dt )
+{
+   (void)dt;
+   Pilot *p;
+
+   /* Get pilot, if pilot is dead beam is destroyed. */
+   p = pilot_get(w->parent);
+   if (p==NULL) {
+      w->timer = -1.; /* Hack to make it get destroyed next update. */
+      return;
+   }
+
+   /* Update beam position to match pilot. */
+   w->solid->pos.x = p->solid->pos.x;
+   w->solid->pos.y = p->solid->pos.y;
+
+   /* Handle aiming. */
+   switch (w->outfit->type) {
+      case OUTFIT_TYPE_BEAM:
+         w->solid->dir = p->solid->dir;
+         break;
+
+      case OUTFIT_TYPE_TURRET_BEAM:
+         /** @todo Have beam turret aim independently. */
+         w->solid->dir = p->solid->dir;
+         break;
+
+      default:
+         return;
+   }
 }
 
 
@@ -395,7 +437,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
    int i, wsx,wsy, psx,psy;
    glTexture *gfx;
-   Vector2d crash;
+   Vector2d crash[2];
 
    gfx = outfit_gfx(w->outfit);
    gl_getSpriteFromDir( &wsx, &wsy, gfx, w->solid->dir );
@@ -410,24 +452,39 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
       if (w->parent == pilot_stack[i]->id) continue; /* pilot is self */
 
+      /* Beam weapons have special collisions. */
+      if (outfit_isBeam(w->outfit)) {
+         if (!areAllies(w->faction,pilot_stack[i]->faction) &&
+               CollideLineSprite( &w->solid->pos, w->solid->dir,
+                     w->outfit->u.bem.range,
+                     pilot_stack[i]->ship->gfx_space, psx, psy,
+                     &pilot_stack[i]->solid->pos,
+                     crash)) {
+            /** @todo beam_hit Needs it's own function. */
+
+            /* No return because beam can still think, it's not
+             * destroyed like the other weapons.*/
+         }
+      }
       /* smart weapons only collide with their target */
-      if (weapon_isSmart(w)) {
+      else if (weapon_isSmart(w)) {
          if ((pilot_stack[i]->id == w->target) &&
-            CollideSprite( gfx, wsx, wsy, &w->solid->pos,
-                  pilot_stack[i]->ship->gfx_space, psx, psy, &pilot_stack[i]->solid->pos,
-                  &crash )) {
-            weapon_hit( w, pilot_stack[i], layer, &crash );
+               CollideSprite( gfx, wsx, wsy, &w->solid->pos,
+                     pilot_stack[i]->ship->gfx_space, psx, psy,
+                     &pilot_stack[i]->solid->pos,
+                     &crash[0] )) {
+            weapon_hit( w, pilot_stack[i], layer, &crash[0] );
             return;
          }
       }
       /* dump weapons hit anything not of the same faction */
-     else if (!weapon_isSmart(w)) {
+      else if (!weapon_isSmart(w)) {
          if (!areAllies(w->faction,pilot_stack[i]->faction) &&
                CollideSprite( gfx, wsx, wsy, &w->solid->pos,
                      pilot_stack[i]->ship->gfx_space, psx, psy,
                      &pilot_stack[i]->solid->pos,
-                     &crash )) {
-            weapon_hit( w, pilot_stack[i], layer, &crash );
+                     &crash[0] )) {
+            weapon_hit( w, pilot_stack[i], layer, &crash[0] );
             return;
          }
       }
@@ -435,7 +492,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
    /* smart weapons also get to think their next move */
    if (weapon_isSmart(w)) (*w->think)(w,dt);
-   
+  
    (*w->solid->update)(w->solid, dt);
 }
 
@@ -554,8 +611,15 @@ static Weapon* weapon_create( const Outfit* outfit,
                w->solid->pos.y + w->solid->vel.y);
          break;
 
+      /* Beam weapons are treated together. */
+      case OUTFIT_TYPE_BEAM:
+      case OUTFIT_TYPE_TURRET_BEAM:
+         mass = 1.;
+         w->solid = solid_create( mass, dir, pos, NULL );
+         w->think = think_beam;
+         break;
 
-      /* Treat seekers together */
+      /* Treat seekers together. */
       case OUTFIT_TYPE_MISSILE_SEEK_AMMO:
       case OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO:
          mass = w->outfit->mass;
