@@ -224,17 +224,8 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
    }
 
    /* No hits - missed. */
-   if (hits == 0)
+   if (hits < 2)
       return 0;
-
-
-   /* Special case only one hit - shouldn't happen, but just in case. */
-   if (hits == 1) {
-      /* We just return the same point twice. */
-      crash[0].x = crash[1].x = border[0].x;
-      crash[0].y = crash[1].y = border[0].y;
-      return 1;
-   }
 
    /* 
     * Now we do a pixel perfect approach.
