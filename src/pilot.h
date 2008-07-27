@@ -44,6 +44,7 @@
 /* creation */
 #define PILOT_PLAYER       (1<<0) /**< pilot is a player. */
 #define PILOT_HASTURRET    (1<<20) /**< pilot has turrets. */
+#define PILOT_HASBEAMS     (1<<23) /**< Pilot has beam weapons. */
 #define PILOT_NO_OUTFITS   (1<<21) /**< do not create the pilot with outfits. */
 #define PILOT_EMPTY        (1<<22) /**< do not add pilot to stack. */
 /* dynamic */

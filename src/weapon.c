@@ -258,6 +258,14 @@ static void think_beam( Weapon* w, const double dt )
       return;
    }
 
+   /* Check if pilot has enough energy left to keep beam active. */
+   p->energy -= dt*w->outfit->u.bem.energy;
+   if (p->energy < 0.) {
+      p->energy = 0.;
+      w->timer = -1;
+      return;
+   }
+
    /* Update beam position to match pilot. */
    w->solid->pos.x = p->solid->pos.x;
    w->solid->pos.y = p->solid->pos.y;

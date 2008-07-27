@@ -869,6 +869,9 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
    if (outfit_isTurret(outfit)) /* used to speed up AI */
       pilot_setFlag(pilot, PILOT_HASTURRET);
 
+   if (outfit_isBeam(outfit)) /* Used to speed up some calculations. */
+      pilot_setFlag(pilot, PILOT_HASBEAMS);
+
    /* hack due to realloc possibility */
    pilot_setSecondary( pilot, osec );
    pilot_setAfterburner( pilot );
