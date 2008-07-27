@@ -2,6 +2,15 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file outfit.c
+ *
+ * @brief Handles all the ship outfit specifics.
+ *
+ * These outfits allow you to modify ships or make them more powerful and are
+ *  a fundamental part of the game.
+ */
+
 
 #include "outfit.h"
 
@@ -17,21 +26,21 @@
 #include "spfx.h"
 
 
-#define outfit_setProp(o,p)      ((o)->properties |= p)
+#define outfit_setProp(o,p)      ((o)->properties |= p) /**< Checks outfit property. */
 
 
-#define XML_OUTFIT_ID      "Outfits"   /* XML section identifier */
-#define XML_OUTFIT_TAG     "outfit"
+#define XML_OUTFIT_ID      "Outfits"   /**< XML section identifier. */
+#define XML_OUTFIT_TAG     "outfit"    /**< XML section identifier. */
 
-#define OUTFIT_DATA  "dat/outfit.xml"
-#define OUTFIT_GFX   "gfx/outfit/"
+#define OUTFIT_DATA  "dat/outfit.xml" /**< File that contains the outfit data. */
+#define OUTFIT_GFX   "gfx/outfit/" /**< Path to outfit graphics. */
 
 
 /*
  * the stack
  */
-static Outfit* outfit_stack = NULL;
-static int outfit_nstack = 0;
+static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
+static int outfit_nstack = 0; /**< Size of the stack. */
 
 
 /*
@@ -53,8 +62,13 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent );
 
 
-/*
- * returns the outfit
+/**
+ * @fn Outfit* outfit_get( const char* name )
+ *
+ * @brief Gets an outfit by name.
+ *
+ *    @param name Name to match.
+ *    @return Outfit matching name or NULL if not found.
  */
 Outfit* outfit_get( const char* name )
 {
@@ -68,8 +82,20 @@ Outfit* outfit_get( const char* name )
 }
 
 
-/*
- * returns all the outfit_nstack
+/**
+ * @fn char** outfit_getTech( int *n, const int *tech, const int techmax )
+ *
+ * @brief Gets all the outfits matching technology requirements.
+ *
+ * Function will already sort the outfits by type and then by price making
+ *  it much easier to handle later on.
+ *
+ *    @param[out] n Number of outfits found.
+ *    @param[in] tech Technologies to check against.  The first one represents
+ *                    overall technology, the others are specific technologies.
+ *    @param[in] techmax Number of technologies in tech.
+ *    @return An allocated array of allocated strings with the names of outfits
+ *            matching the tech requirements.
  */
 char** outfit_getTech( int *n, const int *tech, const int techmax )
 {
@@ -141,8 +167,17 @@ char** outfit_getTech( int *n, const int *tech, const int techmax )
 }
 
 
-/*
- * gives the real shield damage, armour damage and knockback modifier
+/**
+ * @fn void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
+ *       DamageType dtype, double dmg )
+ *
+ * @brief Gives the real shield damage, armour damage and knockback modifier.
+ *
+ *    @param[out] dshield Real shield damage.
+ *    @param[out] darmour Real armour damage.
+ *    @param[out] knockback Knocback modifier.
+ *    @param[in] dtype Damage type.
+ *    @param[in] dmg Amoung of damage.
  */
 void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
       DamageType dtype, double dmg )
@@ -178,7 +213,7 @@ void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
 
 
 /**
- * @fn int outift_isWeapon( const Outfit* o )
+ * @fn int outfit_isWeapon( const Outfit* o )
  * @brief Checks if outfit is a fixed mounted weapon.
  *    @param o Outfit to check.
  *    @return 1 if o is a weapon (beam/bolt).
@@ -189,7 +224,7 @@ int outfit_isWeapon( const Outfit* o )
          (o->type==OUTFIT_TYPE_BEAM) );
 }
 /**
- * @fn int outift_isBolt( const Outfit* o )
+ * @fn int outfit_isBolt( const Outfit* o )
  * @brief Checks if outfit is bolt type weapon.
  *    @param o Outfit to check.
  *    @return 1 if o is a bolt type weapon.
@@ -200,7 +235,7 @@ int outfit_isBolt( const Outfit* o )
          (o->type==OUTFIT_TYPE_TURRET_BOLT) );
 }
 /**
- * @fn int outift_isBeam( const Outfit* o )
+ * @fn int outfit_isBeam( const Outfit* o )
  * @brief Checks if outfit is a beam type weapon.
  *    @param o Outfit to check.
  *    @return 1 if o is a beam type weapon.
@@ -211,7 +246,7 @@ int outfit_isBeam( const Outfit* o )
          (o->type==OUTFIT_TYPE_TURRET_BEAM) );
 }
 /**
- * @fn int outift_isLauncher( const Outfit* o )
+ * @fn int outfit_isLauncher( const Outfit* o )
  * @brief Checks if outfit is a weapon launcher.
  *    @param o Outfit to check.
  *    @return 1 if o is a weapon launcher.
@@ -225,7 +260,7 @@ int outfit_isLauncher( const Outfit* o )
          (o->type==OUTFIT_TYPE_MISSILE_SWARM_SMART) );
 }
 /**
- * @fn int outift_isAmmo( const Outfit* o )
+ * @fn int outfit_isAmmo( const Outfit* o )
  * @brief Checks if outfit is ammo for a launcher.
  *    @param o Outfit to check.
  *    @return 1 if o is ammo.
@@ -239,7 +274,22 @@ int outfit_isAmmo( const Outfit* o )
          (o->type==OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO) );
 }
 /**
- * @fn int outift_isTurret( const Outfit* o )
+ * @fn int outfit_isSeeker( const Outfit* o )
+ * @brief Checks if outfit is a seeking weapon.
+ *    @param o Outfit to check.
+ *    @return 1 if o is a seeking weapon.
+ */
+int outfit_isSeeker( const Outfit* o )
+{
+   if ((o->type==OUTFIT_TYPE_MISSILE_SEEK_AMMO)     ||
+         (o->type==OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO) ||
+         (o->type==OUTFIT_TYPE_MISSILE_SWARM_AMMO)    ||
+         (o->type==OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO))
+      return 1;
+   return 0;
+}
+/**
+ * @fn int outfit_isTurret( const Outfit* o )
  * @brief Checks if outfit is a turret class weapon.
  *    @param o Outfit to check.
  *    @return 1 if o is a turret class weapon.
@@ -250,7 +300,7 @@ int outfit_isTurret( const Outfit* o )
          (o->type==OUTFIT_TYPE_TURRET_BEAM) );
 }
 /**
- * @fn int outift_isMod( const Outfit* o )
+ * @fn int outfit_isMod( const Outfit* o )
  * @brief Checks if outfit is a ship modification.
  *    @param o Outfit to check.
  *    @return 1 if o is a ship modification.
@@ -260,7 +310,7 @@ int outfit_isMod( const Outfit* o )
    return (o->type==OUTFIT_TYPE_MODIFCATION);
 }
 /**
- * @fn int outift_isAfterburner( const Outfit* o )
+ * @fn int outfit_isAfterburner( const Outfit* o )
  * @brief Checks if outfit is an afterburner.
  *    @param o Outfit to check.
  *    @return 1 if o is an afterburner.
@@ -270,7 +320,7 @@ int outfit_isAfterburner( const Outfit* o )
    return (o->type==OUTFIT_TYPE_AFTERBURNER);
 }
 /**
- * @fn int outift_isJammer( const Outfit* o )
+ * @fn int outfit_isJammer( const Outfit* o )
  * @brief Checks if outfit is a missile jammer.
  *    @param o Outfit to check.
  *    @return 1 if o is a jammer.
@@ -280,7 +330,7 @@ int outfit_isJammer( const Outfit* o )
    return (o->type==OUTFIT_TYPE_JAMMER);
 }
 /**
- * @fn int outift_isMap( const Outfit* o )
+ * @fn int outfit_isMap( const Outfit* o )
  * @brief Checks if outfit is a space map.
  *    @param o Outfit to check.
  *    @return 1 if o is a map.
@@ -291,141 +341,189 @@ int outfit_isMap( const Outfit* o )
 }
 
 
-/*
- * gets the outfit's gfx
+/**
+ * @fn glTexture* outfit_gfx( const Outfit* o )
+ * @brief Gets the outfit's graphic effect.
+ *    @param o Outfit to ge information from.
  */
 glTexture* outfit_gfx( const Outfit* o )
 {
-   if (outfit_isWeapon(o)) return o->u.blt.gfx_space;
+   if (outfit_isBolt(o)) return o->u.blt.gfx_space;
    else if (outfit_isAmmo(o)) return o->u.amm.gfx_space;
    else if (outfit_isTurret(o)) return o->u.blt.gfx_space;
    return NULL;
 }
-/*
- * gets the outfit's spfx is applicable
+/**
+ * @fn glTexture* outfit_spfx( const Outfit* o )
+ * @brief Gets the outfit's sound effect.
+ *    @param o Outfit to ge information from.
  */
 int outfit_spfx( const Outfit* o )
 {
-   if (outfit_isWeapon(o)) return o->u.blt.spfx;
+   if (outfit_isBolt(o)) return o->u.blt.spfx;
    else if (outfit_isAmmo(o)) return o->u.amm.spfx;
    else if (outfit_isTurret(o)) return o->u.blt.spfx;
    return -1;
 }
+/**
+ * @fn glTexture* outfit_damage( const Outfit* o )
+ * @brief Gets the outfit's damage.
+ *    @param o Outfit to ge information from.
+ */
 double outfit_damage( const Outfit* o )
 {
-   if (outfit_isWeapon(o)) return o->u.blt.damage;
+   if (outfit_isBolt(o)) return o->u.blt.damage;
+   else if (outfit_isBeam(o)) return o->u.bem.damage;
    else if (outfit_isAmmo(o)) return o->u.amm.damage;
    else if (outfit_isTurret(o)) return o->u.blt.damage;
    return -1.;
 }
+/**
+ * @fn glTexture* outfit_damageType( const Outfit* o )
+ * @brief Gets the outfit's damage type.
+ *    @param o Outfit to ge information from.
+ */
 DamageType outfit_damageType( const Outfit* o )
 {
-   if (outfit_isWeapon(o)) return o->u.blt.dtype;
+   if (outfit_isBolt(o)) return o->u.blt.dtype;
+   else if (outfit_isBeam(o)) return o->u.bem.dtype;
    else if (outfit_isAmmo(o)) return o->u.amm.dtype;
    else if (outfit_isTurret(o)) return o->u.blt.dtype;
    return DAMAGE_TYPE_NULL;
 }
+/**
+ * @fn glTexture* outfit_delay( const Outfit* o )
+ * @brief Gets the outfit's delay.
+ *    @param o Outfit to ge information from.
+ */
 int outfit_delay( const Outfit* o )
 {
-   if (outfit_isWeapon(o)) return o->u.blt.delay;
+   if (outfit_isBolt(o)) return o->u.blt.delay;
+   else if (outfit_isBeam(o)) return o->u.bem.delay;
    else if (outfit_isLauncher(o)) return o->u.lau.delay;
    else if (outfit_isTurret(o)) return o->u.blt.delay;
    return -1;
 }
+/**
+ * @fn glTexture* outfit_energy( const Outfit* o )
+ * @brief Gets the outfit's energy usage.
+ *    @param o Outfit to ge information from.
+ */
 double outfit_energy( const Outfit* o )
 {
-   if (outfit_isWeapon(o)) return o->u.blt.energy;
+   if (outfit_isBolt(o)) return o->u.blt.energy;
+   else if (outfit_isBeam(o)) return o->u.bem.energy;
    else if (outfit_isAmmo(o)) return o->u.amm.energy;
    else if (outfit_isTurret(o)) return o->u.blt.energy;
    return -1.;
 }
+/**
+ * @fn glTexture* outfit_range( const Outfit* o )
+ * @brief Gets the outfit's range.
+ *    @param o Outfit to ge information from.
+ */
 double outfit_range( const Outfit* o )
 {
-   if (outfit_isWeapon(o)) return o->u.blt.range;
+   if (outfit_isBolt(o)) return o->u.blt.range;
+   else if (outfit_isBeam(o)) return o->u.bem.range;
    else if (outfit_isAmmo(o)) return 0.8*o->u.amm.speed*o->u.amm.duration;
    else if (outfit_isTurret(o)) return o->u.blt.range;
    return -1.;
 }
+/**
+ * @fn glTexture* outfit_speed( const Outfit* o )
+ * @brief Gets the outfit's speed.
+ *    @param o Outfit to ge information from.
+ */
 double outfit_speed( const Outfit* o )
 {
-   if (outfit_isWeapon(o)) return o->u.blt.speed;
+   if (outfit_isBolt(o)) return o->u.blt.speed;
    else if (outfit_isAmmo(o)) return o->u.amm.speed;
    else if (outfit_isTurret(o)) return o->u.blt.speed;
    return -1.;
 }
-int outfit_isSeeker( const Outfit* o )
-{
-   if ((o->type==OUTFIT_TYPE_MISSILE_SEEK_AMMO)     ||
-         (o->type==OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO) ||
-         (o->type==OUTFIT_TYPE_MISSILE_SWARM_AMMO)    ||
-         (o->type==OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO))
-      return 1;
-   return 0;
-}
 
 
 
-/*
- * returns the associated name
+/**
+ * @fn const char* outfit_getType( const Outfit* o )
+ *
+ * @brief Gets the outfit's specific type.
+ *
+ *    @param o Outfit to get specific type from.
+ *    @return The specific type in human readable form.
  */
-const char* outfit_typename[] = { 
-      "NULL",
-      "Bolt Cannon",
-      "Beam Cannon",
-      "Bolt Turret",
-      "Beam Turret",
-      "Dumb Missile",
-      "Dumb Missile Ammunition",
-      "Seeker Missile",
-      "Seeker Missile Ammunition",
-      "Smart Seeker Missile",
-      "Smart Seeker Missile Ammunition",
-      "Swarm Missile",
-      "Swarm Missile Ammunition Pack",
-      "Smart Swarm Missile",
-      "Smart Swarm Missile Ammunition Pack",
-      "Ship Modification",
-      "Afterburner",
-      "Jammer",
-      "Map"
-};
 const char* outfit_getType( const Outfit* o )
 {
+   const char* outfit_typename[] = { 
+         "NULL",
+         "Bolt Cannon",
+         "Beam Cannon",
+         "Bolt Turret",
+         "Beam Turret",
+         "Dumb Missile",
+         "Dumb Missile Ammunition",
+         "Seeker Missile",
+         "Seeker Missile Ammunition",
+         "Smart Seeker Missile",
+         "Smart Seeker Missile Ammunition",
+         "Swarm Missile",
+         "Swarm Missile Ammunition Pack",
+         "Smart Swarm Missile",
+         "Smart Swarm Missile Ammunition Pack",
+         "Ship Modification",
+         "Afterburner",
+         "Jammer",
+         "Map"
+   };
    return outfit_typename[o->type];
 }
 
 
-/*
- * returns the broad outfit type
+/**
+ * @fn const char* outfit_getTypeBroad( const Outfit* o )
+ *
+ * @brief Gets the outfit's broad type.
+ *
+ *    @param o Outfit to get the type of.
+ *    @return The outfit's broad type in human readable form.
  */
-const char* outfit_typenamebroad[] = { "NULL",
-      "Weapon",
-      "Launcher",
-      "Ammo",
-      "Turret",
-      "Modification",
-      "Afterburner",
-      "Jammer",
-      "Map"
-};
 const char* outfit_getTypeBroad( const Outfit* o )
 {
    int i = 0;
-   if (outfit_isWeapon(o)) i = 1;
-   else if (outfit_isLauncher(o)) i = 2;
-   else if (outfit_isAmmo(o)) i = 3;
-   else if (outfit_isTurret(o)) i = 4;
-   else if (outfit_isMod(o)) i = 5;
-   else if (outfit_isAfterburner(o)) i = 6;
-   else if (outfit_isJammer(o)) i = 7;
-   else if (outfit_isMap(o)) i = 8;
+   const char* outfit_typenamebroad[] = { "NULL",
+         "Bolt Weapon",
+         "Beam Weapon",
+         "Launcher",
+         "Ammo",
+         "Turret",
+         "Modification",
+         "Afterburner",
+         "Jammer",
+         "Map"
+   };
+
+   if (outfit_isBolt(o)) i = 1;
+   else if (outfit_isBeam(o)) i = 2;
+   else if (outfit_isLauncher(o)) i = 3;
+   else if (outfit_isAmmo(o)) i = 4;
+   else if (outfit_isTurret(o)) i = 5;
+   else if (outfit_isMod(o)) i = 6;
+   else if (outfit_isAfterburner(o)) i = 7;
+   else if (outfit_isJammer(o)) i = 8;
+   else if (outfit_isMap(o)) i = 9;
 
    return outfit_typenamebroad[i];
 }
 
 
-/*
- * returns the damage type from a str
+/**
+ * @fn static DamageType outfit_strToDamageType( char *buf )
+ *
+ * @brief Gets the damage type from a human readable string.
+ *
+ *    @param buf String to extract damage type from.
+ *    @return Damage type stored in buf.
  */
 static DamageType outfit_strToDamageType( char *buf )
 {
@@ -439,8 +537,13 @@ static DamageType outfit_strToDamageType( char *buf )
 }
 
 
-/*
- * returns the outfit type from a str
+/**
+ * @fn static OutfitType outfit_strToOutfitType( char *buf )
+ *
+ * @brief Gets the outfit type from a human readable string.
+ *
+ *    @param buf String to extract outfit type from.
+ *    @return Outfit type stored in buf.
  */
 #define O_CMP(s,t) \
 if (strcmp(buf,(s))==0) return t; 
@@ -471,8 +574,20 @@ static OutfitType outfit_strToOutfitType( char *buf )
 #undef O_CMP
 
 
-/*
- * parses a damage node: <damage type="kinetic">10</damage>
+/**
+ * @fn static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node )
+ *
+ * @brief Parses a damage node.
+ *
+ * Example damage node would be:
+ * @startcode
+ * <damage type="kinetic">10</damage>
+ * @endcode
+ *
+ *    @param[out] dtype Stores the damage type here.
+ *    @param[out] dmg Storse the damage here.
+ *    @param[in] node Node to parse damage from.
+ *    @param return 0 on success.
  */
 static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node )
 {
@@ -496,8 +611,13 @@ static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node )
 }
 
 
-/*
- * parses the specific area for a weapon and loads it into Outfit
+/**
+ * @fn static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
+ *
+ * @brief Parses the specific area for a bolt weapon and loads it into Outfit.
+ *
+ *    @param temp Outfit to finish loading.
+ *    @param parent Outfit's parent node.
  */
 static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 {
@@ -575,8 +695,13 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 }
 
 
-/*
- * parses the specific area for a launcher and loads it into Outfit
+/**
+ * @fn static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
+ *
+ * @brief Parses the specific area for a launcher and loads it into Outfit.
+ *
+ *    @param temp Outfit to finish loading.
+ *    @param parent Outfit's parent node.
  */
 static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 {
@@ -596,8 +721,13 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 }
 
 
-/*
- * parses the specific area for a weapon and loads it into Outfit
+/**
+ * @fn static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
+ *
+ * @brief Parses the specific area for a weapon and loads it into Outfit.
+ *
+ *    @param temp Outfit to finish loading.
+ *    @param parent Outfit's parent node.
  */
 static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 {
@@ -650,8 +780,13 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 }
 
 
-/*
- * parses the modification tidbits of the outfit
+/**
+ * @fn static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
+ *
+ * @brief Parses the modification tidbits of the outfit.
+ *
+ *    @param temp Outfit to finish loading.
+ *    @param parent Outfit's parent node.
  */
 static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 {
@@ -680,8 +815,13 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 }
 
 
-/*
- * parses the afterburner tidbits of the outfit
+/**
+ * @fn static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
+ *
+ * @brief Parses the afterburner tidbits of the outfit.
+ *
+ *    @param temp Outfit to finish loading.
+ *    @param parent Outfit's parent node.
  */
 static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
 {
@@ -708,8 +848,13 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
 }
 
 
-/*
- * parses the map tidbits of the outfit
+/**
+ * @fn static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
+ *
+ * @brief Parses the map tidbits of the outfit.
+ *
+ *    @param temp Outfit to finish loading.
+ *    @param parent Outfit's parent node.
  */
 static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 {
@@ -725,8 +870,13 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 }
 
 
-/*
- * Parses the jammer tidbits of the outfit
+/**
+ * @fn static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
+ *
+ * @brief Parses the jammer tidbits of the outfit.
+ *
+ *    @param temp Outfit to finish loading.
+ *    @param parent Outfit's parent node.
  */
 static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
 {
@@ -750,8 +900,13 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 }
 
 
-/*
- * parses and returns Outfit from parent node
+/**
+ * @fn static Outfit* outfit_parse( const xmlNodePtr parent )
+ *
+ * @brief Parses and returns Outfit from parent node.
+ *
+ *    @param parent Parent node to parse outfit from.
+ *    @return A newly allocated outfit set with data from parent or NULL on error.
  */
 static Outfit* outfit_parse( const xmlNodePtr parent )
 {
@@ -835,8 +990,12 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 }
 
 
-/*
- * loads all the outfit_nstack into the outfit_stack
+/**
+ * @fn int outfit_load (void)
+ *
+ * @brief Loads all the outfits.
+ *
+ *    @return 0 on success.
  */
 int outfit_load (void)
 {
@@ -880,8 +1039,10 @@ int outfit_load (void)
 }
 
 
-/*
- * frees the outfit stack
+/**
+ * @fn void outfit_free (void)
+ *
+ * @brief Frees the outfit stack.
  */
 void outfit_free (void)
 {

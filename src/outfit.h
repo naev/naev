@@ -90,6 +90,7 @@ typedef struct OutfitBoltData_ {
  * @brief Represents the particular properties of a beam weapon.
  */
 typedef struct OutfitBeamData_ {
+   unsigned int delay; /**< Delay between usage. */
    double range; /**< how far it goes */
    double turn; /**< How fast it can turn. Only for turrets. */
    glColour *colour; /**< Beam colour. */
