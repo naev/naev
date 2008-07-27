@@ -147,6 +147,24 @@
    <damage type="kinetic">40</damage>
   </specific>
  </outfit>
+ <outfit name="Ragnarok Beam">
+  <general>
+   <max>1</max>
+   <tech>13</tech>
+   <mass>60</mass>
+   <price>745000</price>
+   <description>The Ragnorak Beam is one of the most powerful beam class weapons on the market.  It's designed for capital ship combat, although it's extremely high payload makes it also somewhat useful for clearing enemy fighters.</description>
+   <gfx_store>turret3</gfx_store>
+  </general>
+  <specific type="turret beam" secondary="1">
+   <delay>7000</delay>
+   <duration>3</duration>
+   <range>400</range>
+   <turn>50</turn>
+   <energy>130</energy>
+   <damage type="energy">100</damage>
+  </specific>
+ </outfit>
  <outfit name="Seeker Launcher">
   <general>
    <max>2</max>
