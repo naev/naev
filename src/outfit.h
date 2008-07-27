@@ -91,6 +91,7 @@ typedef struct OutfitBoltData_ {
  */
 typedef struct OutfitBeamData_ {
    unsigned int delay; /**< Delay between usage. */
+   unsigned int duration; /**< How long the beam lasts active. */
    double range; /**< how far it goes */
    double turn; /**< How fast it can turn. Only for turrets. */
    glColour *colour; /**< Beam colour. */

@@ -678,6 +678,8 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"range",temp->u.bem.range);
       xmlr_float(node,"turn",temp->u.bem.turn);
       xmlr_float(node,"energy",temp->u.bem.energy);
+      xmlr_long(node,"delay",temp->u.bem.delay);
+      xmlr_long(node,"duration",temp->u.bem.duration);
 
       if (xml_isNode(node,"damage"))
          outfit_parseDamage( &temp->u.bem.dtype, &temp->u.bem.damage, node );
@@ -687,6 +689,8 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
+   MELEMENT(temp->u.bem.delay==0,"delay");
+   MELEMENT(temp->u.bem.duration==0,"duration");
    MELEMENT(temp->u.bem.range==0,"range");
    MELEMENT(temp->u.bem.turn==0,"turn");
    MELEMENT(temp->u.bem.energy==0,"energy");
