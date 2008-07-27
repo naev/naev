@@ -360,15 +360,30 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          case OUTFIT_TYPE_BOLT:
          case OUTFIT_TYPE_TURRET_BOLT:
          case OUTFIT_TYPE_MISSILE_DUMB_AMMO: /* Dumb missiles are like bolts */
-         case OUTFIT_TYPE_BEAM: /* Timer usage is actually more complicated for beams. */
-         case OUTFIT_TYPE_TURRET_BEAM:
             wlayer[i]->timer -= dt;
             if (wlayer[i]->timer < 0.) {
                weapon_destroy(wlayer[i],layer);
                continue;
             }
             break;
-         
+
+         /* Beam weapons handled a part. */
+         case OUTFIT_TYPE_BEAM:
+         case OUTFIT_TYPE_TURRET_BEAM:
+            wlayer[i]->timer -= dt;
+            if (wlayer[i]->timer < 0.) {
+               weapon_destroy(wlayer[i],layer);
+               continue;
+            }
+            /* We use the lockon to tell when we have to create explosions. */
+            wlayer[i]->lockon -= dt;
+            if (wlayer[i]->lockon < 0.) {
+               if (wlayer[i]->lockon < -1.)
+                  wlayer[i]->lockon = 0.100;
+               else
+                  wlayer[i]->lockon = -1.;
+            }
+            break;
          default:
             WARN("Weapon of type '%s' has no update implemented yet!",
                   w->outfit->name);
@@ -600,12 +615,15 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
          }
          ai_attacked( p, w->parent );
       }
-      spfx_add( outfit_spfx(w->outfit), pos[0].x, pos[0].y,
-            VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );
-      spfx_add( outfit_spfx(w->outfit), pos[1].x, pos[1].y,
-            VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );
+
+      if (w->lockon == -1.) { /* Code to signal create explosions. */
+         spfx_add( outfit_spfx(w->outfit), pos[0].x, pos[0].y,
+               VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );
+         spfx_add( outfit_spfx(w->outfit), pos[1].x, pos[1].y,
+               VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );
+      }
    }
-   else {
+   else if (w->lockon == -1.) {
       spfx_add( outfit_spfx(w->outfit), pos[0].x, pos[0].y,
             VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_FRONT );
       spfx_add( outfit_spfx(w->outfit), pos[1].x, pos[1].y,
@@ -698,8 +716,7 @@ static Weapon* weapon_create( const Outfit* outfit,
       /* Beam weapons are treated together. */
       case OUTFIT_TYPE_BEAM:
       case OUTFIT_TYPE_TURRET_BEAM:
-         if ((outfit->type == OUTFIT_TYPE_TURRET_BOLT) && (w->parent!=w->target) &&
-               (w->target != 0)) { /* Must have valid target */
+         if ((outfit->type == OUTFIT_TYPE_TURRET_BEAM) && (w->parent!=w->target)) {
             pilot_target = pilot_get(target);
             rdir = (pilot_target == NULL) ? dir :
                   vect_angle(pos, &pilot_target->solid->pos);
