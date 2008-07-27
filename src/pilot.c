@@ -164,8 +164,17 @@ unsigned int pilot_getNearestPilot( const Pilot* p )
 }
 
 
-/*
- * pulls a pilot out of the pilot_stack based on id
+/**
+ * @fn Pilot* pilot_get( const unsigned int id )
+ *
+ * @brief Pulls a pilot out of the pilot_stack based on ID.
+ *
+ * It's a binary search ( O(logn) ) therefore it's pretty fast and can be
+ *  abused all the time.  Maximum iterations is 32 on a platfom with 32 bit
+ *  unsigned ints.
+ *
+ *    @param id ID of the pilot to get.
+ *    @return The actual pilot who has matching ID or NULL if not found.
  */
 Pilot* pilot_get( const unsigned int id )
 {
@@ -185,8 +194,13 @@ Pilot* pilot_get( const unsigned int id )
 }
 
 
-/*
- * grabs a fleet out of the stack
+/**
+ * @fn Fleet* fleet_get( const char* name )
+ *
+ * @brief Grabs a fleet out of the stack.
+ *
+ *    @param name Name of the fleet to match.
+ *    @return The fleet matching name or NULL if not found.
  */
 Fleet* fleet_get( const char* name )
 {
@@ -201,10 +215,19 @@ Fleet* fleet_get( const char* name )
 }
 
 
-/*
- * tries to turn the pilot to face dir
+/**
+ * @fn double pilot_face( Pilot* p, const double dir )
+ *
+ * @brief Tries to turn the pilot to face dir.
+ *
+ * Sets the direction velocity property of the pilot's solid, does not
+ *  directly manipulate the direction.
+ *
+ *    @param p Pilot to turn.
+ *    @param dir Direction to attempt to face.
+ *    @return The distance left to turn to match dir.
  */
-double pilot_face( Pilot* p, const float dir )
+double pilot_face( Pilot* p, const double dir )
 {
    double diff, turn;
    
@@ -222,8 +245,13 @@ double pilot_face( Pilot* p, const float dir )
 }
 
 
-/*
- * gets the amount of jumps the pilot has left
+/**
+ * @fn int pilot_getJumps( const Pilot* p )
+ *
+ * @brief Gets the amount of jumps the pilot has left.
+ *
+ *    @param p Pilot to get the jumps left.
+ *    @return Number of jumps the pilot has left.
  */
 int pilot_getJumps( const Pilot* p )
 {
@@ -231,8 +259,14 @@ int pilot_getJumps( const Pilot* p )
 }
 
 
-/*
- * returns the quantity of a pilot outfit
+/**
+ * @fn static int pilot_oquantity( Pilot* p, PilotOutfit* w )
+ *
+ * @brief Gets the quantity of a pilot outfit.
+ *
+ *    @param p Pilot to which the outfit belongs.
+ *    @param w Outfit to check quantity of.
+ *    @return The amount of the outfit the pilot has.
  */
 static int pilot_oquantity( Pilot* p, PilotOutfit* w )
 {
@@ -241,8 +275,13 @@ static int pilot_oquantity( Pilot* p, PilotOutfit* w )
 }
 
 
-/*
- * gets pilot's free weapon space
+/**
+ * @fn int pilot_freeSpace( Pilot* p )
+ *
+ * @brief Gets pilot's free weapon space.
+ *
+ *    @param p Pilot to get free space of.
+ *    @return Free weapon space of the pilot.
  */
 int pilot_freeSpace( Pilot* p )
 {
@@ -257,11 +296,14 @@ int pilot_freeSpace( Pilot* p )
 
 
 
-/*
- * makes the pilot shoot
+/**
+ * @fn void pilot_shoot( Pilot* p, const unsigned int target, const int secondary )
  *
- * @param p the pilot which is shooting
- * @param secondary whether they are shooting secondary weapons or primary weapons
+ * @brief Makes the pilot shoot.
+ *
+ *    @param p The pilot which is shooting.
+ *    @param target Target of tho shooting pilot.
+ *    @param secondary Whether they are shooting secondary weapons or primary weapons.
  */
 void pilot_shoot( Pilot* p, const unsigned int target, const int secondary )
 {
@@ -282,6 +324,17 @@ void pilot_shoot( Pilot* p, const unsigned int target, const int secondary )
 
    }
 }
+
+
+/**
+ * @fn static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
+ *
+ * @brief Actually handles the shooting, how often the player can shoot and such.
+ *
+ *    @param p Pilot that is shooting.
+ *    @param w Pilot's outfit to shoot.
+ *    @param t Pilot's target.
+ */
 static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
 {
    int quantity, delay;
@@ -294,36 +347,31 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
    if ((SDL_GetTicks() - w->timer) < (unsigned int)(delay / quantity)) return;
 
    /*
-    * regular weapons
+    * regular bolt weapons
     */
-   if (outfit_isWeapon(w->outfit) || (outfit_isTurret(w->outfit))) {
+   if (outfit_isBolt(w->outfit)) {
       
-      /* different weapons, different behaviours */
-      switch (w->outfit->type) {
-         case OUTFIT_TYPE_TURRET_BOLT:
-         case OUTFIT_TYPE_BOLT:
+      /* enough energy? */
+      if (outfit_energy(w->outfit) > p->energy) return;
 
-            /* enough energy? */
-            if (outfit_energy(w->outfit) > p->energy) return;
+      p->energy -= outfit_energy(w->outfit);
+      weapon_add( w->outfit, p->solid->dir,
+            &p->solid->pos, &p->solid->vel, p->id, t );
 
-            p->energy -= outfit_energy(w->outfit);
-            weapon_add( w->outfit, p->solid->dir,
-                  &p->solid->pos, &p->solid->vel, p->id, t );
+      /* can't shoot it for a bit */      
+      w->timer = SDL_GetTicks();
+   }
 
-            /* can't shoot it for a bit */      
-            w->timer = SDL_GetTicks();
-            break;
-
-         default:
-            break;
-      }
-
+   /*
+    * Beam weapons.
+    */
+   else if (outfit_isBeam(w->outfit)) {
    }
 
    /*
     * missile launchers
     *
-    * @must be a secondary weapon
+    * must be a secondary weapon
     */
    else if (outfit_isLauncher(w->outfit) && (w==p->secondary)) {
 
@@ -681,8 +729,12 @@ static void pilot_update( Pilot* pilot, const double dt )
 }
 
 
-/*
- * pilot is actually getting ready or in hyperspace
+/**
+ * @fn static void pilot_hyperspace( Pilot* p )
+ *
+ * @brief Handles pilot's hyperspace states.
+ *
+ *    @param p Pilot to handle hyperspace navigation.
  */
 static void pilot_hyperspace( Pilot* p )
 {
@@ -1495,7 +1547,14 @@ void pilots_render (void)
 }
 
 
-/* parses the fleet node */
+/**
+ * @fn static Fleet* fleet_parse( const xmlNodePtr parent )
+ *
+ * @brief Parses the fleet node.
+ *
+ *    @param parent Parent xml node of the fleet in question.
+ *    @return A newly allocated fleet loaded with data in parent node.
+ */
 static Fleet* fleet_parse( const xmlNodePtr parent )
 {
    xmlNodePtr cur, node;
@@ -1565,7 +1624,13 @@ static Fleet* fleet_parse( const xmlNodePtr parent )
 }
 
 
-/* loads the fleets */
+/**
+ * @fn int fleet_load (void)
+ *
+ * @brief Loads all the fleets.
+ *
+ *    @return 0 on success.
+ */
 int fleet_load (void)
 {
    uint32_t bufsize;
@@ -1607,7 +1672,11 @@ int fleet_load (void)
 }
 
 
-/* frees the fleets */
+/**
+ * @fn void fleet_free (void)
+ *
+ * @brief Cleans up by freeing all the fleet data.
+ */
 void fleet_free (void)
 {
    int i,j;
