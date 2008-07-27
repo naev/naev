@@ -248,7 +248,8 @@ static void think_seeker( Weapon* w, const double dt )
 static void think_beam( Weapon* w, const double dt )
 {
    (void)dt;
-   Pilot *p;
+   Pilot *p, *t;
+   double diff;
 
    /* Get pilot, if pilot is dead beam is destroyed. */
    p = pilot_get(w->parent);
@@ -261,6 +262,13 @@ static void think_beam( Weapon* w, const double dt )
    w->solid->pos.x = p->solid->pos.x;
    w->solid->pos.y = p->solid->pos.y;
 
+   /* Get target, if target is dead beam stops moving. */
+   t = pilot_get(w->target);
+   if (t==NULL) {
+      w->solid->dir_vel = 0.;
+      return;
+   }
+
    /* Handle aiming. */
    switch (w->outfit->type) {
       case OUTFIT_TYPE_BEAM:
@@ -268,8 +276,17 @@ static void think_beam( Weapon* w, const double dt )
          break;
 
       case OUTFIT_TYPE_TURRET_BEAM:
-         /** @todo Have beam turret aim independently. */
-         w->solid->dir = p->solid->dir;
+         if (w->target == w->parent) /* Invalid target, tries to follow shooter. */
+            diff = angle_diff(w->solid->dir, p->solid->dir);
+         else
+            diff = angle_diff(w->solid->dir, /* Get angle to target pos */
+                  vect_angle(&w->solid->pos, &t->solid->pos));
+         w->solid->dir_vel = 10 * diff *  w->outfit->u.bem.turn; /* Face pos */
+         /* Check for under/overflows */
+         if (w->solid->dir_vel > w->outfit->u.bem.turn)
+            w->solid->dir_vel = w->outfit->u.bem.turn;
+         else if (w->solid->dir_vel < -w->outfit->u.bem.turn)
+            w->solid->dir_vel = -w->outfit->u.bem.turn;
          break;
 
       default:
@@ -419,12 +436,14 @@ static void weapon_render( const Weapon* w )
       case OUTFIT_TYPE_TURRET_BEAM:
          x = w->solid->pos.x - VX(*gl_camera) + gui_xoff;
          y = w->solid->pos.y - VY(*gl_camera) + gui_yoff;
-         COLOUR(*w->outfit->u.bem.colour);
+         ACOLOUR(*w->outfit->u.bem.colour, 0.8);
+         glLineWidth(3.);
          glBegin(GL_LINES);
             glVertex2d( x, y );
             glVertex2d( x + w->outfit->u.bem.range*cos(w->solid->dir),
                         y + w->outfit->u.bem.range*sin(w->solid->dir) );
          glEnd(); /* GL_LINES */
+         glLineWidth(1.);
          break;
       
       default:
@@ -505,7 +524,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
    /* smart weapons also get to think their next move */
    if (weapon_isSmart(w)) (*w->think)(w,dt);
-  
+ 
    (*w->solid->update)(w->solid, dt);
 }
 
@@ -671,8 +690,16 @@ static Weapon* weapon_create( const Outfit* outfit,
       /* Beam weapons are treated together. */
       case OUTFIT_TYPE_BEAM:
       case OUTFIT_TYPE_TURRET_BEAM:
+         if ((outfit->type == OUTFIT_TYPE_TURRET_BOLT) && (w->parent!=w->target) &&
+               (w->target != 0)) { /* Must have valid target */
+            pilot_target = pilot_get(target);
+            rdir = (pilot_target == NULL) ? dir :
+                  vect_angle(pos, &pilot_target->solid->pos);
+         }
+         else
+            rdir = dir;
          mass = 1.;
-         w->solid = solid_create( mass, dir, pos, NULL );
+         w->solid = solid_create( mass, rdir, pos, NULL );
          w->think = think_beam;
          w->timer = outfit->u.bem.duration;
          break;

@@ -679,7 +679,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"turn",temp->u.bem.turn);
       xmlr_float(node,"energy",temp->u.bem.energy);
       xmlr_long(node,"delay",temp->u.bem.delay);
-      xmlr_long(node,"duration",temp->u.bem.duration);
+      xmlr_float(node,"duration",temp->u.bem.duration);
 
       if (xml_isNode(node,"damage"))
          outfit_parseDamage( &temp->u.bem.dtype, &temp->u.bem.damage, node );
