@@ -173,7 +173,8 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
       const glTexture* bt, const int bsx, const int bsy, const Vector2d* bp,
       Vector2d crash[2] )
 {
-   double ep[2], tr[2], v[2], mod;
+   int x,y, rbsy, bbx,bby;
+   double ep[2], bl[2], tr[2], v[2], mod;
    int hits;
    Vector2d tmp_crash, border[2];
 
@@ -182,8 +183,11 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
    ep[1] = ap->y + al*sin(ad);
 
    /* Set up top right corner of the rectangle. */
-   tr[0] = bp->x + bt->sx;
-   tr[1] = bp->y + bt->sy;
+   tr[0] = bp->x + bt->sw/2.;
+   tr[1] = bp->y + bt->sh/2.;
+   /* Set up bottom left corner of the rectangle. */
+   bl[0] = bp->x - bt->sw/2.;
+   bl[1] = bp->y - bt->sh/2.;
 
    /* 
     * Start check for rectangular collisions.
@@ -191,14 +195,14 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
    hits = 0;
    /* Left border. */
    if (CollideLineLine(ap->x, ap->y, ep[0], ep[1],
-         bp->x, bp->y, bp->x, tr[1], &tmp_crash) != 0) {
+         bl[0], bl[1], bl[0], tr[1], &tmp_crash) != 0) {
       border[hits].x = tmp_crash.x;
       border[hits].y = tmp_crash.y;
       hits++;
    }
    /* Top border. */
    if (CollideLineLine(ap->x, ap->y, ep[0], ep[1],
-         bp->x, tr[1], tr[0], tr[1], &tmp_crash) != 0) {
+         bl[0], tr[1], tr[0], tr[1], &tmp_crash) != 0) {
       border[hits].x = tmp_crash.x;
       border[hits].y = tmp_crash.y;
       hits++;
@@ -206,14 +210,14 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
    /* Now we have to make sure hits isn't 2. */
    /* Right border. */
    if ((hits < 2) && CollideLineLine(ap->x, ap->y, ep[0], ep[1],
-         tr[0], tr[1], tr[0], bp->y, &tmp_crash) != 0) {
+         tr[0], tr[1], tr[0], bl[1], &tmp_crash) != 0) {
       border[hits].x = tmp_crash.x;
       border[hits].y = tmp_crash.y;
       hits++;
    }
    /* Bottom border. */
    if ((hits < 2) && CollideLineLine(ap->x, ap->y, ep[0], ep[1],
-         tr[0], bp->y, bp->x, bp->y, &tmp_crash) != 0) {
+         tr[0], bl[1], bl[0], bl[1], &tmp_crash) != 0) {
       border[hits].x = tmp_crash.x;
       border[hits].y = tmp_crash.y;
       hits++;
@@ -232,26 +236,61 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
       return 1;
    }
 
-   crash[0].x = border[0].x;
-   crash[0].y = border[0].y;
-   crash[1].x = border[1].x;
-   crash[1].y = border[1].y;
-   return 1;
-
    /* 
-    * @todo Now we do a pixel perfect approach.
+    * Now we do a pixel perfect approach.
     */
+   hits = 0;
    /* Directonaly vector (normalized). */
    v[0] = border[1].x - border[0].x;
    v[1] = border[1].y - border[0].y;
    /* Normalize. */
-   mod = 2*MOD(v[0],v[1]); /* Multiply by two to reduce check amount. */
+   mod = MOD(v[0],v[1])/2.; /* Multiply by two to reduce check amount. */
    v[0] /= mod;
    v[1] /= mod;
 
+   /* real vertical sprite value (flipped) */
+   rbsy = bt->sy - bsy - 1;
+   /* set up the base points */
+   bbx =  bsx*(int)(bt->sw);
+   bby = rbsy*(int)(bt->sh);
+
    /* We start checking first border until we find collision. */
-   tmp_crash.x = border[0].x;
-   tmp_crash.y = border[0].y;
+   x = border[0].x - bl[0] + v[0];
+   y = border[0].y - bl[1] + v[1];
+   while ((x > 0.) && (x < bt->sw) && (y > 0.) && (y < bt->sh)) {
+      /* Is non-transparent. */
+      if (!gl_isTrans(bt, bbx+(int)x, bby+(int)y)) {
+         crash[0].x = x + bl[0];
+         crash[0].y = y + bl[1];
+         hits++;
+         break;
+      }
+      x += v[0];
+      y += v[1];
+   }
+   if (hits != 1) /* We actually missed. */
+      return 0;
+
+
+   /* Now we check the second border. */
+   x = border[1].x - bl[0] - v[0];
+   y = border[1].y - bl[1] - v[1];
+   while ((x > 0.) && (x < bt->sw) && (y > 0.) && (y < bt->sh)) {
+      /* Is non-transparent. */
+      if (!gl_isTrans(bt, bbx+(int)x, bby+(int)y)) {
+         crash[1].x = x + bl[0];
+         crash[1].y = y + bl[1];
+         hits++;
+         break;
+      }
+      x -= v[0];
+      y -= v[1];
+   }
+   if (hits != 2) /* We actually missed. */
+      return 0;
+
+   /* We hit. */
+   return 1;
 }
 
 
