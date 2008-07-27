@@ -394,7 +394,7 @@ void spfx_render( const int layer )
    }
 
    /* Now render the layer */
-   for (i=0; i<spfx_nstack; i++) {
+   for (i=spfx_nstack-1; i>=0; i--) {
       effect = &spfx_effects[ spfx_stack[i].effect ];
 
       /* Simplifies */
