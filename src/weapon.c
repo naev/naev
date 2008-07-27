@@ -25,6 +25,7 @@
 #include "player.h"
 #include "collision.h"
 #include "spfx.h"
+#include "opengl.h"
 
 
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
@@ -36,7 +37,11 @@
 #define WEAPON_STATUS_JAMMED     1 /**< Got jammed */
 #define WEAPON_STATUS_UNJAMMED   2 /**< Survived jamming */
 
-
+/*
+ * opengl stuff.
+ */
+extern Vector2d *gl_camera;
+extern double gui_xoff, gui_yoff;
 /*
  * pilot stuff
  */
@@ -97,6 +102,8 @@ static void weapon_render( const Weapon* w );
 static void weapons_updateLayer( const double dt, const WeaponLayer layer );
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer );
 static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos );
+static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
+      Vector2d pos[2], const double dt );
 static void weapon_destroy( Weapon* w, WeaponLayer layer );
 static void weapon_free( Weapon* w );
 /* think */
@@ -107,9 +114,13 @@ void weapon_minimap( const double res, const double w,
       const double h, const RadarShape shape );
 
 
+#define PIXEL(x,y)      \
+   if ((shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
+         (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y))<rc)))   \
+   glVertex2i((x),(y)) /**< Sets a pixel if within range. */
 /**
  * @fn void weapon_minimap( const double res, const double w,
- *                          const double h, const RadarShape shape )
+ *       const double h, const RadarShape shape )
  *
  * @brief Draws the minimap weapons (used in player.c).
  *
@@ -118,10 +129,6 @@ void weapon_minimap( const double res, const double w,
  *    @param h Height of minimap.
  *    @param shape Shape of the minimap.
  */
-#define PIXEL(x,y)      \
-   if ((shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
-         (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y))<rc)))   \
-   glVertex2i((x),(y)) /**< Sets a pixel if within range. */
 void weapon_minimap( const double res, const double w,
       const double h, const RadarShape shape )
 {
@@ -389,6 +396,7 @@ void weapons_render( const WeaponLayer layer )
 static void weapon_render( const Weapon* w )
 {
    int sx, sy;
+   double x,y;
    glTexture *gfx;
 
    switch (w->outfit->type) {
@@ -409,10 +417,13 @@ static void weapon_render( const Weapon* w )
       /* Beam weapons. */
       case OUTFIT_TYPE_BEAM:
       case OUTFIT_TYPE_TURRET_BEAM:
+         x = w->solid->pos.x - VX(*gl_camera) + gui_xoff;
+         y = w->solid->pos.y - VY(*gl_camera) + gui_yoff;
+         COLOUR(*w->outfit->u.bem.colour);
          glBegin(GL_LINES);
-            glVertex2d( w->solid->pos.x, w->solid->pos.y );
-            glVertex2d( w->solid->pos.x + w->outfit->u.bem.range*cos(w->solid->dir),
-                        w->solid->pos.y + w->outfit->u.bem.range*sin(w->solid->dir) );
+            glVertex2d( x, y );
+            glVertex2d( x + w->outfit->u.bem.range*cos(w->solid->dir),
+                        y + w->outfit->u.bem.range*sin(w->solid->dir) );
          glEnd(); /* GL_LINES */
          break;
       
@@ -439,9 +450,6 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    glTexture *gfx;
    Vector2d crash[2];
 
-   gfx = outfit_gfx(w->outfit);
-   gl_getSpriteFromDir( &wsx, &wsy, gfx, w->solid->dir );
-
    for (i=0; i<pilot_nstack; i++) {
 
       /* check for player to exists */
@@ -460,32 +468,37 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
                      pilot_stack[i]->ship->gfx_space, psx, psy,
                      &pilot_stack[i]->solid->pos,
                      crash)) {
-            /** @todo beam_hit Needs it's own function. */
-
+            weapon_hitBeam( w, pilot_stack[i], layer, crash, dt );
             /* No return because beam can still think, it's not
              * destroyed like the other weapons.*/
          }
       }
       /* smart weapons only collide with their target */
       else if (weapon_isSmart(w)) {
+
+         gfx = outfit_gfx(w->outfit);
+         gl_getSpriteFromDir( &wsx, &wsy, gfx, w->solid->dir );
          if ((pilot_stack[i]->id == w->target) &&
                CollideSprite( gfx, wsx, wsy, &w->solid->pos,
                      pilot_stack[i]->ship->gfx_space, psx, psy,
                      &pilot_stack[i]->solid->pos,
                      &crash[0] )) {
             weapon_hit( w, pilot_stack[i], layer, &crash[0] );
-            return;
+            return; /* Weapon is destroyed. */
          }
       }
       /* dump weapons hit anything not of the same faction */
       else if (!weapon_isSmart(w)) {
+
+         gfx = outfit_gfx(w->outfit);
+         gl_getSpriteFromDir( &wsx, &wsy, gfx, w->solid->dir );
          if (!areAllies(w->faction,pilot_stack[i]->faction) &&
                CollideSprite( gfx, wsx, wsy, &w->solid->pos,
                      pilot_stack[i]->ship->gfx_space, psx, psy,
                      &pilot_stack[i]->solid->pos,
                      &crash[0] )) {
             weapon_hit( w, pilot_stack[i], layer, &crash[0] );
-            return;
+            return; /* Weapon is destroyed. */
          }
       }
    }
@@ -531,6 +544,50 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
          outfit_damageType(w->outfit), outfit_damage(w->outfit) );
    /* no need for the weapon particle anymore */
    weapon_destroy(w,layer);
+}
+
+
+/**
+ * @fn static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
+ *       Vector2d pos[2], const double dt )
+ *
+ * @brief Weapon hit the pilot.
+ *
+ *    @param w Weapon involved in the collision.
+ *    @param p Pilot that got hit.
+ *    @param layer Layer to which the weapon belongs.
+ *    @param pos Position of the hit.
+ */
+static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
+      Vector2d pos[2], const double dt )
+{
+   (void) layer;
+
+   /* inform the ai it has been attacked, useless if player */
+   if (!pilot_isPlayer(p)) {
+      if ((player_target == p->id) || (RNGF()*dt < 0.70)) { /* 70% chance per second */
+         if ((w->parent == PLAYER_ID) &&
+               (!pilot_isFlag(p,PILOT_HOSTILE) || (RNGF() < 0.5))) { /* 50% chance */
+            faction_modPlayer( p->faction, -1 ); /* slowly lower faction */
+            pilot_setFlag( p, PILOT_HOSTILE);
+         }
+         ai_attacked( p, w->parent );
+      }
+      spfx_add( outfit_spfx(w->outfit), pos[0].x, pos[0].y,
+            VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );
+      spfx_add( outfit_spfx(w->outfit), pos[1].x, pos[1].y,
+            VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );
+   }
+   else {
+      spfx_add( outfit_spfx(w->outfit), pos[0].x, pos[0].y,
+            VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_FRONT );
+      spfx_add( outfit_spfx(w->outfit), pos[1].x, pos[1].y,
+            VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_FRONT );
+   }
+
+   /* inform the ship that it should take some damage */
+   pilot_hit( p, w->solid, w->parent, 
+         outfit_damageType(w->outfit), outfit_damage(w->outfit)*dt );
 }
 
 
@@ -617,6 +674,7 @@ static Weapon* weapon_create( const Outfit* outfit,
          mass = 1.;
          w->solid = solid_create( mass, dir, pos, NULL );
          w->think = think_beam;
+         w->timer = outfit->u.bem.duration;
          break;
 
       /* Treat seekers together. */

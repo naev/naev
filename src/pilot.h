@@ -66,17 +66,30 @@
 
 
 /**
+ * @enum PilotOutfitState
+ *
+ * @brief Contains the state of the outfit.
+ *
+ * Currently only applicable to beam weapons.
+ */
+typedef enum PilotOutfitState_ {
+   PILOT_OUTFIT_OFF, /**< Normal state. */
+   PILOT_OUTFIT_WARMUP, /**< Outfit is starting to warm up. */
+   PILOT_OUTFIT_ON /**< Outfit is activated and running. */
+} PilotOutfitState;
+
+
+/**
  * @struct PilotOutfit
  *
  * @brief Stores an outfit the pilot has.
  */
 typedef struct PilotOutfit_ {
-   Outfit* outfit; /**< associated outfit */
-   int quantity; /**< number of outfits of this type pilot has */
-
-   unsigned int timer; /**< used to store when it was last used */
+   Outfit* outfit; /**< Associated outfit. */
+   int quantity; /**< Number of outfits of this type pilot has. */
+   PilotOutfitState state; /**< State of thou outfit. */
+   unsigned int timer; /**< Used to store when it was last used. */
 } PilotOutfit;
-
 
 
 /**

@@ -308,14 +308,18 @@ int pilot_freeSpace( Pilot* p )
 void pilot_shoot( Pilot* p, const unsigned int target, const int secondary )
 {
    int i;
+   Outfit* o;
 
    if (!p->outfits) return; /* no outfits */
 
    if (!secondary) { /* primary weapons */
 
-      for (i=0; i<p->noutfits; i++) /* cycles through outfits to find primary weapons */
-         if (!outfit_isProp(p->outfits[i].outfit,OUTFIT_PROP_WEAP_SECONDARY))
+      for (i=0; i<p->noutfits; i++) { /* cycles through outfits to find primary weapons */
+         o = p->outfits[i].outfit;
+         if (!outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY) &&
+               (outfit_isBolt(o) || outfit_isBeam(o))) /** @todo possibly make this neater. */
             pilot_shootWeapon( p, &p->outfits[i], target );
+      }
    }
    else { /* secondary weapon */
 
@@ -357,15 +361,20 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
       p->energy -= outfit_energy(w->outfit);
       weapon_add( w->outfit, p->solid->dir,
             &p->solid->pos, &p->solid->vel, p->id, t );
-
-      /* can't shoot it for a bit */      
-      w->timer = SDL_GetTicks();
    }
 
    /*
     * Beam weapons.
     */
    else if (outfit_isBeam(w->outfit)) {
+
+      /* Check if enough energy to last a second. */
+      if (outfit_energy(w->outfit) > p->energy) return;
+
+      /** @todo Handle warmup stage. */
+      w->state = PILOT_OUTFIT_ON;
+      weapon_add( w->outfit, p->solid->dir,
+            &p->solid->pos, NULL, p->id, t );
    }
 
    /*
@@ -391,9 +400,14 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
       weapon_add( p->ammo->outfit, p->solid->dir,
             &p->solid->pos, &p->solid->vel, p->id, t );
 
-      w->timer = SDL_GetTicks(); /* can't shoot it for a bit */
       p->ammo->quantity -= 1; /* we just shot it */
    }
+   else {
+      WARN("Shooting unknown weapon type: %s", w->outfit->name);
+   }
+
+   /* Update weapon last used timer. */
+   w->timer = SDL_GetTicks();
 }
 
 
