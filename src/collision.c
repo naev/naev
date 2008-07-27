@@ -175,7 +175,7 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
 {
    int x,y, rbsy, bbx,bby;
    double ep[2], bl[2], tr[2], v[2], mod;
-   int hits;
+   int hits, real_hits;
    Vector2d tmp_crash, border[2];
 
    /* Set up end point of line. */
@@ -224,13 +224,27 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
    }
 
    /* No hits - missed. */
-   if (hits < 2)
+   if (hits == 0)
       return 0;
+
+   /* Beam must die in the rectangle. */
+   if (hits == 1) {
+      border[1].x = ep[0];
+      border[1].y = ep[1];
+   }
+
+   /*
+   crash[0].x = border[0].x;
+   crash[0].y = border[0].y;
+   crash[1].x = border[1].x;
+   crash[1].y = border[1].y;
+   return 1;
+   */
 
    /* 
     * Now we do a pixel perfect approach.
     */
-   hits = 0;
+   real_hits = 0;
    /* Directonaly vector (normalized). */
    v[0] = border[1].x - border[0].x;
    v[1] = border[1].y - border[0].y;
@@ -251,17 +265,14 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
    while ((x > 0.) && (x < bt->sw) && (y > 0.) && (y < bt->sh)) {
       /* Is non-transparent. */
       if (!gl_isTrans(bt, bbx+(int)x, bby+(int)y)) {
-         crash[0].x = x + bl[0];
-         crash[0].y = y + bl[1];
-         hits++;
+         crash[real_hits].x = x + bl[0];
+         crash[real_hits].y = y + bl[1];
+         real_hits++;
          break;
       }
       x += v[0];
       y += v[1];
    }
-   if (hits != 1) /* We actually missed. */
-      return 0;
-
 
    /* Now we check the second border. */
    x = border[1].x - bl[0] - v[0];
@@ -269,16 +280,25 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
    while ((x > 0.) && (x < bt->sw) && (y > 0.) && (y < bt->sh)) {
       /* Is non-transparent. */
       if (!gl_isTrans(bt, bbx+(int)x, bby+(int)y)) {
-         crash[1].x = x + bl[0];
-         crash[1].y = y + bl[1];
-         hits++;
+         crash[real_hits].x = x + bl[0];
+         crash[real_hits].y = y + bl[1];
+         real_hits++;
          break;
       }
       x -= v[0];
       y -= v[1];
    }
-   if (hits != 2) /* We actually missed. */
+
+   /* Actually missed. */
+   if (real_hits == 0)
       return 0;
+
+   /* Strange situation, should never happen but just in case we duplicate
+    *  the hit. */
+   if (real_hits == 1) {
+      crash[1].x = crash[0].x;
+      crash[1].y = crash[0].y;
+   }
 
    /* We hit. */
    return 1;
