@@ -91,10 +91,11 @@ typedef struct OutfitBoltData_ {
  */
 typedef struct OutfitBeamData_ {
    double range; /**< how far it goes */
-   glColour *colour; /**< beam colour */
-   double energy; /**< energy it drains */
-   double dtype; /**< damage type */
-   double damage; /**< damage */
+   double turn; /**< How fast it can turn. Only for turrets. */
+   glColour *colour; /**< Beam colour. */
+   double energy; /**< Amount of energy it drains (per second). */
+   DamageType dtype; /**< Damage type. */
+   double damage; /**< Damage amount. */
 } OutfitBeamData;
 
 /**

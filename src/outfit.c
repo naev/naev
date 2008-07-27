@@ -43,7 +43,8 @@ static OutfitType outfit_strToOutfitType( char *buf );
 /* parsing */
 static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node );
 static Outfit* outfit_parse( const xmlNodePtr parent );
-static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent );
+static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent );
+static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent );
@@ -498,7 +499,7 @@ static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node )
 /*
  * parses the specific area for a weapon and loads it into Outfit
  */
-static void outfit_parseSWeapon( Outfit* temp, const xmlNodePtr parent )
+static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 {
    xmlNodePtr node;
    char str[PATH_MAX] = "\0";
@@ -536,6 +537,40 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->u.blt.range==0,"range");
    MELEMENT(temp->u.blt.accuracy==0,"accuracy");
    MELEMENT(temp->u.blt.damage==0,"damage");
+#undef MELEMENT
+}
+
+
+/**
+ * @fn static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
+ *
+ * @brief Parses the beam weapon specifics of an outfit.
+ *
+ *    @param temp Outfit to finish loading.
+ *    @param parent Outfit's parent node.
+ */
+static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
+{
+   xmlNodePtr node;
+
+   node = parent->xmlChildrenNode;
+   do { /* load all the data */
+      xmlr_float(node,"range",temp->u.bem.range);
+      xmlr_float(node,"turn",temp->u.bem.turn);
+      xmlr_float(node,"energy",temp->u.bem.energy);
+
+      if (xml_isNode(node,"damage"))
+         outfit_parseDamage( &temp->u.bem.dtype, &temp->u.bem.damage, node );
+   } while (xml_nextNode(node));
+
+   temp->u.bem.colour = &cWhite; /** @todo Make it loadable. */
+
+#define MELEMENT(o,s) \
+if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
+   MELEMENT(temp->u.bem.range==0,"range");
+   MELEMENT(temp->u.bem.turn==0,"turn");
+   MELEMENT(temp->u.bem.energy==0,"energy");
+   MELEMENT(temp->u.bem.damage==0,"damage");
 #undef MELEMENT
 }
 
@@ -765,14 +800,14 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
 
          if (temp->type==OUTFIT_TYPE_NULL)
             WARN("Outfit '%s' is of type NONE", temp->name);
-         else if (outfit_isWeapon(temp))
-            outfit_parseSWeapon( temp, node );
+         else if (outfit_isBolt(temp))
+            outfit_parseSBolt( temp, node );
+         else if (outfit_isBeam(temp))
+            outfit_parseSBeam( temp, node );
          else if (outfit_isLauncher(temp))
             outfit_parseSLauncher( temp, node );
          else if (outfit_isAmmo(temp))
             outfit_parseSAmmo( temp, node );
-         else if (outfit_isTurret(temp))
-            outfit_parseSWeapon( temp, node );
          else if (outfit_isMod(temp))
             outfit_parseSMod( temp, node );
          else if (outfit_isAfterburner(temp))
