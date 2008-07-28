@@ -79,6 +79,7 @@ typedef struct OutfitBoltData_ {
    DamageType dtype; /**< damage type */
    double damage; /**< damage */
 
+   /* Sound and graphics. */
    glTexture* gfx_space; /**< graphic */
    int sound; /**< sound to play */
    int spfx; /**< special effect on hit */
@@ -90,14 +91,20 @@ typedef struct OutfitBoltData_ {
  * @brief Represents the particular properties of a beam weapon.
  */
 typedef struct OutfitBeamData_ {
+   /* Time stuff. */
    unsigned int delay; /**< Delay between usage. */
-   unsigned int duration; /**< How long the beam lasts active. */
+   double warmup; /**< How long beam takes to warm up. */
+   double duration; /**< How long the beam lasts active. */
+
+   /* Beam properties. */
    double range; /**< how far it goes */
    double turn; /**< How fast it can turn. Only for turrets. */
-   glColour *colour; /**< Beam colour. */
    double energy; /**< Amount of energy it drains (per second). */
    DamageType dtype; /**< Damage type. */
    double damage; /**< Damage amount. */
+   
+   /* Graphics. */
+   glTexture *gfx; /**< Base texture. */
 } OutfitBeamData;
 
 /**

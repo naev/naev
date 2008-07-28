@@ -457,16 +457,53 @@ static void weapon_render( const Weapon* w )
       /* Beam weapons. */
       case OUTFIT_TYPE_BEAM:
       case OUTFIT_TYPE_TURRET_BEAM:
+         gfx = outfit_gfx(w->outfit);
          x = w->solid->pos.x - VX(*gl_camera) + gui_xoff;
          y = w->solid->pos.y - VY(*gl_camera) + gui_yoff;
-         ACOLOUR(*w->outfit->u.bem.colour, 0.8);
-         glLineWidth(3.);
-         glBegin(GL_LINES);
-            glVertex2d( x, y );
-            glVertex2d( x + w->outfit->u.bem.range*cos(w->solid->dir),
-                        y + w->outfit->u.bem.range*sin(w->solid->dir) );
-         glEnd(); /* GL_LINES */
-         glLineWidth(1.);
+
+         /* Set up the matrix. */
+         glMatrixMode(GL_PROJECTION);
+         glPushMatrix();
+            glTranslated( x, y, 0. );
+            glRotated( 270. + w->solid->dir / M_PI * 180., 0., 0., 1. );
+
+         /* Preparatives. */
+         glEnable(GL_TEXTURE_2D);
+         glBindTexture( GL_TEXTURE_2D, gfx->texture);
+         glShadeModel(GL_SMOOTH);
+
+         /* Actual rendering. */
+         glBegin(GL_QUAD_STRIP);
+            COLOUR(cWhite);
+
+            /* Full strength. */
+            glTexCoord2d( 0., 0. );
+            glVertex2d( -gfx->sh/2., 0. );
+
+            glTexCoord2d( 0., 1. );
+            glVertex2d( +gfx->sh/2., 0. );
+
+            glTexCoord2d( 0.8*w->outfit->u.bem.range / gfx->sw, 0. );
+            glVertex2d( -gfx->sh/2., 0.8*w->outfit->u.bem.range );
+
+            glTexCoord2d( 0.8*w->outfit->u.bem.range / gfx->sw, 1. );
+            glVertex2d( +gfx->sh/2., 0.8*w->outfit->u.bem.range );
+
+            /* Fades out. */
+            ACOLOUR(cWhite, 0.);
+
+            glTexCoord2d( w->outfit->u.bem.range / gfx->sw, 0. );
+            glVertex2d( -gfx->sh/2., w->outfit->u.bem.range );
+
+            glTexCoord2d( w->outfit->u.bem.range / gfx->sw, 1. );
+            glVertex2d( +gfx->sh/2., w->outfit->u.bem.range );
+         glEnd(); /* GL_QUAD_STRIP */
+
+         /* Clean up. */
+         glDisable(GL_TEXTURE_2D);
+         glShadeModel(GL_FLAT);
+         glPopMatrix(); /* GL_PROJECTION */
+         gl_checkErr();
          break;
       
       default:

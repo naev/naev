@@ -349,6 +349,7 @@ int outfit_isMap( const Outfit* o )
 glTexture* outfit_gfx( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.gfx_space;
+   else if (outfit_isBeam(o)) return o->u.bem.gfx;
    else if (outfit_isAmmo(o)) return o->u.amm.gfx_space;
    else if (outfit_isTurret(o)) return o->u.blt.gfx_space;
    return NULL;
@@ -672,6 +673,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 {
    xmlNodePtr node;
+   char str[PATH_MAX] = "\0";
 
    node = parent->xmlChildrenNode;
    do { /* load all the data */
@@ -679,16 +681,25 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"turn",temp->u.bem.turn);
       xmlr_float(node,"energy",temp->u.bem.energy);
       xmlr_long(node,"delay",temp->u.bem.delay);
+      xmlr_float(node,"warmup",temp->u.bem.warmup);
       xmlr_float(node,"duration",temp->u.bem.duration);
 
-      if (xml_isNode(node,"damage"))
+      if (xml_isNode(node,"damage")) {
          outfit_parseDamage( &temp->u.bem.dtype, &temp->u.bem.damage, node );
-   } while (xml_nextNode(node));
+         continue;
+      }
 
-   temp->u.bem.colour = &cWhite; /** @todo Make it loadable. */
+      if (xml_isNode(node,"gfx")) {
+         snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+10,
+               OUTFIT_GFX"space/%s.png", xml_get(node));
+         temp->u.bem.gfx = gl_newSprite(str, 1, 1);
+         continue;
+      }
+   } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
+   MELEMENT(temp->u.bem.gfx==NULL,"gfx");
    MELEMENT(temp->u.bem.delay==0,"delay");
    MELEMENT(temp->u.bem.duration==0,"duration");
    MELEMENT(temp->u.bem.range==0,"range");
@@ -710,9 +721,8 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 {
    xmlNodePtr node;
+
    node  = parent->xmlChildrenNode;
-
-
    do { /* load all the data */
       if (xml_isNode(node,"delay")) temp->u.lau.delay = xml_getInt(node);
       else if (xml_isNode(node,"ammo")) temp->u.lau.ammo = strdup(xml_get(node));

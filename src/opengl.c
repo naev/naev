@@ -367,6 +367,10 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
+   /* Always wrap just in case. */
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
    /* now lead the texture data up */
    SDL_LockSurface( surface );
    glTexImage2D( GL_TEXTURE_2D, 0, surface->format->BytesPerPixel,

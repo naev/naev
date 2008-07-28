@@ -163,6 +163,7 @@
    <turn>50</turn>
    <energy>130</energy>
    <damage type="energy">100</damage>
+   <gfx>beam_ragnarok</gfx>
   </specific>
  </outfit>
  <outfit name="Seeker Launcher">
