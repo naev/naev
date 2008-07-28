@@ -157,7 +157,7 @@
    <gfx_store>turret3</gfx_store>
   </general>
   <specific type="turret beam" secondary="1">
-   <delay>1000</delay>
+   <delay>10000</delay>
    <duration>5</duration>
    <range>400</range>
    <turn>50</turn>
