@@ -103,8 +103,11 @@ typedef struct OutfitBeamData_ {
    DamageType dtype; /**< Damage type. */
    double damage; /**< Damage amount. */
    
-   /* Graphics. */
+   /* Graphics and sound. */
    glTexture *gfx; /**< Base texture. */
+   int sound_warmup; /**< Sound to play when warming up. @todo use. */
+   int sound; /**< Sound to play. */
+   int sound_off; /**< Sound to play when turning off. */
 } OutfitBeamData;
 
 /**

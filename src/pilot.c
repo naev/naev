@@ -374,7 +374,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
       /** @todo Handle warmup stage. */
       w->state = PILOT_OUTFIT_ON;
       weapon_add( w->outfit, p->solid->dir,
-            &p->solid->pos, NULL, p->id, t );
+            &p->solid->pos, &p->solid->vel, p->id, t );
    }
 
    /*

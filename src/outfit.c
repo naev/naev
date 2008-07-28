@@ -675,6 +675,11 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    xmlNodePtr node;
    char str[PATH_MAX] = "\0";
 
+   /* Defaults. */
+   temp->u.bem.sound_warmup = -1;
+   temp->u.bem.sound = -1;
+   temp->u.bem.sound_off = -1;
+
    node = parent->xmlChildrenNode;
    do { /* load all the data */
       xmlr_float(node,"range",temp->u.bem.range);
@@ -695,11 +700,29 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          temp->u.bem.gfx = gl_newSprite(str, 1, 1);
          continue;
       }
+
+      if (xml_isNode(node,"sound_warmup")) {
+         temp->u.bem.sound_warmup = sound_get( xml_get(node) );
+         continue;
+      }
+
+      if (xml_isNode(node,"sound")) {
+         temp->u.bem.sound = sound_get( xml_get(node) );
+         continue;
+      }
+
+      if (xml_isNode(node,"sound_off")) {
+         temp->u.bem.sound_off = sound_get( xml_get(node) );
+         continue;
+      }
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->u.bem.gfx==NULL,"gfx");
+   MELEMENT((sound_disabled!=0) && (temp->u.bem.warmup > 0.) && (temp->u.bem.sound<0),"sound_warmup");
+   MELEMENT((sound_disabled!=0) && (temp->u.bem.sound<0),"sound");
+   MELEMENT((sound_disabled!=0) && (temp->u.bem.sound_off<0),"sound_off");
    MELEMENT(temp->u.bem.delay==0,"delay");
    MELEMENT(temp->u.bem.duration==0,"duration");
    MELEMENT(temp->u.bem.range==0,"range");

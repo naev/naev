@@ -372,6 +372,9 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          case OUTFIT_TYPE_TURRET_BEAM:
             wlayer[i]->timer -= dt;
             if (wlayer[i]->timer < 0.) {
+               sound_playPos(w->outfit->u.bem.sound_off,
+                     w->solid->pos.x,
+                     w->solid->pos.y);
                weapon_destroy(wlayer[i],layer);
                continue;
             }
@@ -764,6 +767,9 @@ static Weapon* weapon_create( const Outfit* outfit,
          w->solid = solid_create( mass, rdir, pos, NULL );
          w->think = think_beam;
          w->timer = outfit->u.bem.duration;
+         sound_playPos(w->outfit->u.bem.sound,
+               w->solid->pos.x + vel->x,
+               w->solid->pos.y + vel->y);
          break;
 
       /* Treat seekers together. */
