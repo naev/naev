@@ -19,9 +19,11 @@
 #define PLAYER_DESTROYED   (1<<9)   /**< player is destroyed */
 #define PLAYER_FACE        (1<<10)  /**< player is facing target */
 #define PLAYER_PRIMARY     (1<<11)  /**< player is shooting primary weapon */
-#define PLAYER_SECONDARY   (1<<12)  /**< player is shooting secondary weapon */
-#define PLAYER_LANDACK     (1<<13)  /**< player has permission to land */
-#define PLAYER_CREATING    (1<<14)  /**< player is being created */
+#define PLAYER_PRIMARY_L   (1<<12)  /**< player shot primary weapon last frame. */
+#define PLAYER_SECONDARY   (1<<13)  /**< player is shooting secondary weapon */
+#define PLAYER_SECONDARY_L (1<<14)  /**< player shot secondary last frame. */
+#define PLAYER_LANDACK     (1<<15)  /**< player has permission to land */
+#define PLAYER_CREATING    (1<<16)  /**< player is being created */
 /* flag functions */
 #define player_isFlag(f)   (player_flags & f) /**< Checks for a player flag. */
 #define player_setFlag(f)  \

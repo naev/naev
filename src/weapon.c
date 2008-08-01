@@ -64,6 +64,7 @@ extern void ai_attacked( Pilot* attacked, const unsigned int attacker );
  */
 typedef struct Weapon_ {
    Solid *solid; /**< Actually has its own solid :) */
+   int ID; /**< Only used for beam weapons. */
 
    unsigned int faction; /**< faction of pilot that shot it */
    unsigned int parent; /**< pilot that shot it */
@@ -89,6 +90,10 @@ static int mwbacklayer = 0; /**< alloced memory size */
 static Weapon** wfrontLayer = NULL; /**< infront of pilots, behind player */
 static int nwfrontLayer = 0; /**< number of elements */
 static int mwfrontLayer = 0; /**< alloced memory size */
+
+
+/* Internal stuff. */
+static int beam_idgen = 0; /**< Beam identifier generator. */
 
 
 /*
@@ -845,9 +850,8 @@ void weapon_add( const Outfit* outfit, const double dir,
    Weapon **curLayer;
    int *mLayer, *nLayer;
 
-   if (!outfit_isWeapon(outfit) && 
-         !outfit_isAmmo(outfit) && 
-         !outfit_isTurret(outfit)) {
+   if (!outfit_isBolt(outfit) && 
+         !outfit_isAmmo(outfit)) {
       ERR("Trying to create a Weapon from a non-Weapon type Outfit");
       return;
    }
@@ -887,6 +891,125 @@ void weapon_add( const Outfit* outfit, const double dir,
             break;
       }
       curLayer[(*nLayer)++] = w;
+   }
+}
+
+
+/**
+ * @fn int beam_start( const Outfit* outfit,
+ *       const double dir, const Vector2d* pos, const Vector2d* vel,
+ *       const unsigned int parent, const unsigned int target )
+ *
+ * @brief Starts a beam weaapon.
+ *
+ *    @param outfit Outfit which spawns the weapon.
+ *    @param dir Direction of the shooter.
+ *    @param pos Position of the shooter.
+ *    @param vel Velocity of the shooter.
+ *    @param parent Pilot ID of the shooter.
+ *    @param target Target ID that is getting shot.
+ *    @return The identifier of the beam weapon.
+ *
+ * @sa beam_end
+ */
+int beam_start( const Outfit* outfit,
+      const double dir, const Vector2d* pos, const Vector2d* vel,
+      const unsigned int parent, const unsigned int target )
+{
+   WeaponLayer layer;
+   Weapon *w;
+   Weapon **curLayer;
+   int *mLayer, *nLayer;
+
+   if (!outfit_isBeam(outfit)) {
+      ERR("Trying to create a Beam Weapon from a non-beam outfit.");
+      return -1;
+   }
+
+   layer = (parent==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
+   w = weapon_create( outfit, dir, pos, vel, parent, target );
+   w->ID = ++beam_idgen;
+
+   /* set the proper layer */
+   switch (layer) {
+      case WEAPON_LAYER_BG:
+         curLayer = wbackLayer;
+         nLayer = &nwbackLayer;
+         mLayer = &mwbacklayer;
+         break;
+      case WEAPON_LAYER_FG:
+         curLayer = wfrontLayer;
+         nLayer = &nwfrontLayer;
+         mLayer = &mwfrontLayer;
+         break;
+
+      default:
+         ERR("Invalid WEAPON_LAYER specified");
+         return -1;
+   }
+
+   if (*mLayer > *nLayer) /* more memory alloced then needed */
+      curLayer[(*nLayer)++] = w;
+   else { /* need to allocate more memory */
+      switch (layer) {
+         case WEAPON_LAYER_BG:
+            (*mLayer) += WEAPON_CHUNK;
+            curLayer = wbackLayer = realloc(curLayer, (*mLayer)*sizeof(Weapon*));
+            break;
+         case WEAPON_LAYER_FG:
+            (*mLayer) += WEAPON_CHUNK;
+            curLayer = wfrontLayer = realloc(curLayer, (*mLayer)*sizeof(Weapon*));
+            break;
+      }
+      curLayer[(*nLayer)++] = w;
+   }
+
+   return w->ID;
+}
+
+
+/**
+ * @fn void beam_end( int beam )
+ *
+ * @brief Ends a beam weapon.
+ *
+ *    @param parent ID of the parent of the beam.
+ *    @param beam ID of the beam to destroy.
+ */    
+void beam_end( const unsigned int parent, int beam )
+{
+   int i;
+   WeaponLayer layer;
+   Weapon **curLayer;
+   int *mLayer, *nLayer;
+
+   layer = (parent==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
+
+   /* set the proper layer */
+   switch (layer) {
+      case WEAPON_LAYER_BG:
+         curLayer = wbackLayer;
+         nLayer = &nwbackLayer;
+         mLayer = &mwbacklayer;
+         break;
+      case WEAPON_LAYER_FG:
+         curLayer = wfrontLayer;
+         nLayer = &nwfrontLayer;
+         mLayer = &mwfrontLayer;
+         break;
+
+      default:
+         ERR("Invalid WEAPON_LAYER specified");
+         return;
+   }
+
+
+   /* Now try to destroy the beam. */
+   for (i=0; i<*nLayer; i++) {
+      if (curLayer[i]->ID == beam) { /* Found it. */
+         weapon_destroy(curLayer[i], layer);
+         break;
+      }
    }
 }
 

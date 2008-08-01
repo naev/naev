@@ -331,6 +331,48 @@ void pilot_shoot( Pilot* p, const unsigned int target, const int secondary )
 
 
 /**
+ * @fn void pilot_shootStop( Pilot* p, const int secondary )
+ *
+ * @brief Have pilot stop shooting his weapon.
+ *
+ * Only really deals with beam weapons.
+ *
+ *    @param p Pilot that was shooting.
+ *    @param secondary If weapon is secondary.
+ */
+void pilot_shootStop( Pilot* p, const int secondary )
+{
+   int i;
+   Outfit* o;
+
+   if (!p->outfits) return; /* no outfits */
+
+   if (!secondary) { /* primary weapons */
+
+      for (i=0; i<p->noutfits; i++) { /* cycles through outfits to find primary weapons */
+         o = p->outfits[i].outfit;
+         if (!outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY) &&
+               outfit_isBeam(o)) /** @todo possibly make this neater. */
+            if (p->outfits[i].beamid > 0) {
+               beam_end( p->id, p->outfits[i].beamid );
+               p->outfits[i].beamid = 0;
+            }
+      }
+   }
+   else { /* secondary weapon */
+      o = p->secondary->outfit;
+
+      if (o == NULL) return; /* no secondary weapon */
+
+      if (outfit_isBeam(o) && (p->secondary->beamid > 0)) {
+         beam_end( p->id, p->secondary->beamid );
+         p->secondary->beamid = 0;
+      }
+   }
+}
+
+
+/**
  * @fn static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
  *
  * @brief Actually handles the shooting, how often the player can shoot and such.
@@ -373,7 +415,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
 
       /** @todo Handle warmup stage. */
       w->state = PILOT_OUTFIT_ON;
-      weapon_add( w->outfit, p->solid->dir,
+      w->beamid = beam_start( w->outfit, p->solid->dir,
             &p->solid->pos, &p->solid->vel, p->id, t );
    }
 
@@ -408,6 +450,36 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
 
    /* Update weapon last used timer. */
    w->timer = SDL_GetTicks();
+}
+
+
+
+/**
+ * @fn void pilot_switchSecondary( Pilot* p, int i )
+ *
+ * @brief Sets the pilot's secondary weapon.
+ *
+ *    @param p Pilot to set secondary weapon.
+ *    @param i Index of the weapon to set to.
+ */
+void pilot_switchSecondary( Pilot* p, int i )
+{
+   PilotOutfit *cur;
+
+   cur = player->secondary;
+
+   if ((i < 0) || (i >= player->noutfits))
+      player->secondary = NULL;
+   else
+      player->secondary = &player->outfits[i];
+
+   /* Check for weapon change. */
+   if ((cur != NULL) && (player->secondary != cur)) {
+      if (outfit_isBeam(cur->outfit) && (cur->beamid > 0)) {
+         beam_end( p->id, cur->beamid );
+         cur->beamid = 0;
+      }
+   }
 }
 
 

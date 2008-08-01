@@ -1607,11 +1607,32 @@ void player_think( Pilot* pplayer )
          pplayer->solid->dir_vel -= pplayer->turn * player_turn;
    }
 
-   if (player_isFlag(PLAYER_PRIMARY)) pilot_shoot(pplayer,player_target,0);
-   if (player_isFlag(PLAYER_SECONDARY)) /* needs target */
-      pilot_shoot(pplayer,player_target,1);
+   /*
+    * Weapon shooting stuff
+    */
+   /* Primary weapon. */
+   if (player_isFlag(PLAYER_PRIMARY)) {
+      pilot_shoot( pplayer, player_target, 0 );
+      player_setFlag(PLAYER_PRIMARY_L);
+   }
+   else if (player_isFlag(PLAYER_PRIMARY_L)) {
+      pilot_shootStop( pplayer, 0 );
+      player_rmFlag(PLAYER_PRIMARY_L);
+   }
+   /* Secondary weapon. */
+   if (player_isFlag(PLAYER_SECONDARY)) { /* needs target */
+      pilot_shoot( pplayer, player_target, 1 );
+      player_setFlag(PLAYER_SECONDARY_L);
+   }
+   else if (player_isFlag(PLAYER_SECONDARY_L)) {
+      pilot_shootStop( pplayer, 1 );
+      player_rmFlag(PLAYER_SECONDARY_L);
+   }
 
-   /* Afterburn! */
+
+   /* 
+    * Afterburn!
+    */
    if (player_isFlag(PLAYER_AFTERBURNER)) {
       if (pilot_isFlag(player,PILOT_AFTERBURNER))
          vect_pset( &pplayer->solid->force,
@@ -1624,7 +1645,9 @@ void player_think( Pilot* pplayer )
       vect_pset( &pplayer->solid->force, pplayer->thrust * player_acc,
             pplayer->solid->dir );
 
-   /* Update sound position. */
+   /*
+    * Sound
+    */
    sound_updateListener( pplayer->solid->dir,
          pplayer->solid->pos.x, pplayer->solid->pos.y );
 }
@@ -1672,13 +1695,13 @@ void player_secondaryNext (void)
    /* get next secondary weapon */
    for (; i<player->noutfits; i++)
       if (outfit_isProp(player->outfits[i].outfit, OUTFIT_PROP_WEAP_SECONDARY)) {
-         player->secondary = player->outfits + i;
+         pilot_switchSecondary( player, i );
          break;
       }
 
    /* found no bugger outfit */
    if (i >= player->noutfits)
-      player->secondary = NULL;
+      pilot_switchSecondary( player, -1 );
 
    /* set ammo */
    pilot_setAmmo(player);

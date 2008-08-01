@@ -28,6 +28,15 @@ void weapon_add( const Outfit* outfit,
 
 
 /*
+ * Beam weapons.
+ */
+int beam_start( const Outfit* outfit,
+      const double dir, const Vector2d* pos, const Vector2d* vel,
+      const unsigned int parent, const unsigned int target );
+void beam_end( const unsigned int parent, int beam );
+
+
+/*
  * update
  */
 void weapons_update( const double dt );

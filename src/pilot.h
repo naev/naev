@@ -88,7 +88,8 @@ typedef enum PilotOutfitState_ {
 typedef struct PilotOutfit_ {
    Outfit* outfit; /**< Associated outfit. */
    int quantity; /**< Number of outfits of this type pilot has. */
-   PilotOutfitState state; /**< State of thou outfit. */
+   PilotOutfitState state; /**< State of the outfit. */
+   int beamid; /**< ID of the beam used in this outfit, only used for beams. */
    unsigned int timer; /**< Used to store when it was last used. */
 } PilotOutfit;
 
@@ -238,8 +239,10 @@ int pilot_getJumps( const Pilot* p );
  * misc
  */
 void pilot_shoot( Pilot* p, const unsigned int target, const int secondary );
+void pilot_shootStop( Pilot* p, const int secondary );
 void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       const DamageType dtype, const double damage );
+void pilot_switchSecondary( Pilot* p, int i );
 void pilot_setSecondary( Pilot* p, const char* secondary );
 void pilot_setAmmo( Pilot* p );
 void pilot_setAfterburner( Pilot* p );
