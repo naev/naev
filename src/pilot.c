@@ -390,7 +390,9 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
    delay = outfit_delay(w->outfit);
    
    /* check to see if weapon is ready */
-   if ((SDL_GetTicks() - w->timer) < (unsigned int)(delay / quantity)) return;
+   if ((w->timer > 0) &&
+         (SDL_GetTicks() - w->timer) < (unsigned int)(delay / quantity))
+      return;
 
    /*
     * regular bolt weapons
@@ -929,6 +931,8 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
    pilot->outfits = realloc(pilot->outfits, (pilot->noutfits+1)*sizeof(PilotOutfit));
    pilot->outfits[pilot->noutfits].outfit = outfit;
    pilot->outfits[pilot->noutfits].quantity = q;
+   pilot->outfits[pilot->noutfits].timer = 0;
+   pilot->outfits[pilot->noutfits].beamid = 0;
 
    /* can't be over max */
    if (pilot->outfits[pilot->noutfits].quantity > outfit->max) {
