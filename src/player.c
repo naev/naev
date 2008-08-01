@@ -1621,11 +1621,18 @@ void player_think( Pilot* pplayer )
    }
    /* Secondary weapon. */
    if (player_isFlag(PLAYER_SECONDARY)) { /* needs target */
-      pilot_shoot( pplayer, player_target, 1 );
+      /* Double tap stops beams. */
+      if (!player_isFlag(PLAYER_SECONDARY_L) &&
+            (pplayer->secondary != NULL) &&
+            outfit_isBeam(pplayer->secondary->outfit)) {
+         pilot_shootStop( pplayer, 1 );
+      }
+      else
+         pilot_shoot( pplayer, player_target, 1 );
+
       player_setFlag(PLAYER_SECONDARY_L);
    }
    else if (player_isFlag(PLAYER_SECONDARY_L)) {
-      pilot_shootStop( pplayer, 1 );
       player_rmFlag(PLAYER_SECONDARY_L);
    }
 
