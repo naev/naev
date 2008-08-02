@@ -15,6 +15,7 @@ extern int sound_disabled;
  */
 int sound_init (void);
 void sound_exit (void);
+int sound_update (void);
 
 
 /*
@@ -24,7 +25,10 @@ int sound_get( char* name );
 int sound_volume( const double vol );
 int sound_play( int sound );
 int sound_playPos( int sound, double x, double y );
+void sound_stop( int voice );
+int sound_updatePos( int voice, double x, double y );
 int sound_updateListener( double dir, double x, double y );
+
 
 /*
  * Group functions.

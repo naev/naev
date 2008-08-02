@@ -356,6 +356,8 @@ void main_loop (void)
    glClear(GL_COLOR_BUFFER_BIT);
 
    fps_control(); /* everyone loves fps control */
+
+   sound_update(); /* Update sounds. */
    if (toolkit) toolkit_update(); /* to simulate key repetition */
    if (!menu_isOpen(MENU_MAIN)) {
       if (!paused) update_all(); /* update game */

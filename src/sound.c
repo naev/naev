@@ -37,8 +37,10 @@ static int sound_reserved = 0; /**< Amount of reserved channels. */
 static double sound_pos[3]; /**< Position of listener. */
 
 
-/*
- * gives the buffers a name
+/**
+ * @struct alSound
+ *
+ * @brief Contains a sound buffer.
  */
 typedef struct alSound_ {
    char *name; /**< Buffer's name. */
@@ -46,19 +48,63 @@ typedef struct alSound_ {
 } alSound;
 
 
+/**
+ * @typedef voice_state_t
+ * @brief The state of a voice.
+ * @sa alVoice
+ */
+typedef enum voice_state_ {
+   VOICE_STOPPED, /**< Voice is stopped. */
+   VOICE_PLAYING, /**< Voice is playing. */
+   VOICE_DESTROY  /**< Voice should get destroyed asap. */
+} voice_state_t;
+
+
+/**
+ * @struct alVoice
+ *
+ * @brief Represents a voice in the game.
+ *
+ * A voice would be any object that is creating sound.
+ */
+typedef struct alVoice_ {
+   struct alVoice_ *prev; /**< Linked list previous member. */
+   struct alVoice_ *next; /**< Linked list next member. */
+
+   int id; /**< Identifier of the voice. */
+   double pos[2]; /**< Position of the voice. */
+   int channel; /**< Channel currently in use. */
+   unsigned int state; /**< Current state of the sound. */
+} alVoice;
+
+
 /*
  * list of sounds available (all preloaded into a buffer)
  */
+static int voice_genid = 0; /**< Voice identifier generator. */
 static alSound *sound_list = NULL; /**< List of available sounds. */
 static int sound_nlist = 0; /**< Number of available sounds. */
 
 
 /*
+ * voice linked list.
+ */
+static alVoice *voice_active; /**< Active voices. */
+static alVoice *voice_pool; /**< Pool of free voices. */
+
+
+/*
  * prototypes
  */
+/* General. */
 static int sound_makeList (void);
 static Mix_Chunk *sound_load( char *filename );
 static void sound_free( alSound *snd );
+/* Voices. */
+static void voice_markStopped( int channel );
+static alVoice* voice_new (void);
+static int voice_add( alVoice* v );
+static alVoice* voice_get( int id );
 
 
 /**
@@ -99,6 +145,9 @@ int sound_init (void)
    sound_makeList();
    sound_volume(0.4);
 
+   /* Finish function. */
+   Mix_ChannelFinished( voice_markStopped );
+
    /* Initialize the music */
    music_init();
 
@@ -114,6 +163,19 @@ int sound_init (void)
 void sound_exit (void)
 {
    int i;
+   alVoice *v;
+
+   /* free the voices. */
+   while (voice_active != NULL) {
+      v = voice_active;
+      voice_active = v->next;
+      free(v);
+   }
+   while (voice_pool != NULL) {
+      v = voice_pool;
+      voice_pool = v->next;
+      free(v);
+   }
 
    /* free the sounds */
    for (i=0; i<sound_nlist; i++)
@@ -180,41 +242,154 @@ int sound_play( int sound )
  *
  * @brief Plays a sound based on position.
  *
- *    @param sound Sound to paly.
+ *    @param sound Sound to play.
  *    @param x X position of the sound.
  *    @param y Y position of the sound.
  *    @return 0 on success.
  */
 int sound_playPos( int sound, double x, double y )
 {
-   int channel;
+   alVoice *v;
    double angle, dist;
-   double px,py;
+   double px, py;
 
    if (sound_disabled) return 0;
 
    if ((sound < 0) || (sound > sound_nlist))
       return -1;
 
-   px = x - sound_pos[0];
-   py = y - sound_pos[1];
+   /* Gets a new voice. */
+   v = voice_new();
+
+   v->pos[0] = x;
+   v->pos[1] = y;
+
+   px = v->pos[0] - sound_pos[0];
+   py = v->pos[1] - sound_pos[1];
 
    angle = sound_pos[2] - ANGLE(px,py)/M_PI*180.;
    dist = MOD(px,py);
 
-   channel = Mix_PlayChannel( -1, sound_list[sound].buffer, 0 );
+   v->channel = Mix_PlayChannel( -1, sound_list[sound].buffer, 0 );
 
-   if (channel < 0) {
+   if (v->channel < 0) {
       WARN("Unable to play sound: %s", Mix_GetError());
       return -1;
    }
 
-   if (Mix_SetPosition( channel, (int)angle, (int)dist / 10 ) < 0) {
+   if (Mix_SetPosition( v->channel, (int)angle, (int)dist / 10 ) < 0) {
       WARN("Unable to set sound position: %s", Mix_GetError());
       return -1;
    }
 
+   /* Actually add the voice to the list. */
+   v->state = VOICE_PLAYING;
+   v->id = ++voice_genid;
+   voice_add(v);
+
+   return v->id;
+}
+
+
+/**
+ * @fn int sound_updatePos( int voice, double x, double y )
+ *
+ * @brief Updates the position of a voice.
+ *
+ *    @param voice Identifier of the voice to update.
+ *    @param x New x position to update to.
+ *    @param y New y position to update to.
+ */
+int sound_updatePos( int voice, double x, double y )
+{
+   alVoice *v;
+   double angle, dist;
+   double px, py;
+
+   if (sound_disabled) return 0;
+
+   v = voice_get(voice);
+   if (v != NULL) {
+      v->pos[0] = x;
+      v->pos[1] = y;
+
+      px = x - sound_pos[0];
+      py = y - sound_pos[1];
+
+      angle = sound_pos[2] - ANGLE(px,py)/M_PI*180.;
+      dist = MOD(px,py);
+
+      if (Mix_SetPosition( v->channel, (int)angle, (int)dist / 10 ) < 0) {
+         WARN("Unable to set sound position: %s", Mix_GetError());
+         return -1;
+      }
+   }
+
    return 0;
+}
+
+
+/**
+ * @fn int sound_update (void)
+ *
+ * @brief Updates the sonuds removing obsolete ones and such.
+ *
+ *    @return 0 on success.
+ */
+int sound_update (void)
+{
+   alVoice *v, *tv;
+
+   if (sound_disabled) return 0;
+
+   if (voice_active == NULL) return 0;
+
+   /* The actual control loop. */
+   for (v=voice_active; v!=NULL; v=v->next) {
+
+      /* Destroy and toss into pool. */
+      if ((v->state == VOICE_STOPPED) || (v->state == VOICE_DESTROY)) {
+
+         /* Remove from active list. */
+         tv = v->prev;
+         if (tv == NULL)
+            voice_active = v->next;
+         else
+            tv->next = v->next;
+
+         /* Add to free pool. */
+         v->next = voice_pool;
+         voice_pool = v;
+         v->channel = 0;
+
+         /* Avoid loop blockage. */
+         v = (tv != NULL) ? tv->next : voice_active;
+         if (v == NULL) break;
+      }
+   }
+
+   return 0;
+}
+
+
+/**
+ * @fn void sound_stop( int voice )
+ *
+ * @brief Stops a voice from playing.
+ *
+ *    @param voice Identifier of the voice to stop.
+ */
+void sound_stop( int voice )
+{
+   alVoice *v;
+
+   if (sound_disabled) return;
+
+   v = voice_get(voice);
+   if (v != NULL) {
+      Mix_HaltChannel(v->channel);
+      v->state = VOICE_STOPPED;
+   }
 }
 
 
@@ -440,13 +615,12 @@ int sound_playGroup( int group, int sound, int once )
 
    ret = Mix_PlayChannel( channel, sound_list[sound].buffer,
          (once == 0) ? -1 : 0 );
-
    if (ret < 0) {
       WARN("Unable to play sound %d for group %d: %s",
             sound, group, Mix_GetError());
       return -1;
    }
-   
+
    return 0;
 }
 
@@ -465,4 +639,96 @@ void sound_stopGroup( int group )
    Mix_HaltGroup(group);
 }
 
+
+/**
+ * @fn static void voice_markStopped( int channel )
+ *
+ * @brief Marks the voice to which channel belongs to as stopped.
+ */
+static void voice_markStopped( int channel )
+{
+   alVoice *v;
+
+   for (v=voice_active; v!=NULL; v=v->next)
+      if (v->channel == channel) {
+         v->state = VOICE_STOPPED;
+         return;
+      }
+}
+
+
+/**
+ * @fn static alVoice* voice_new (void)
+ *
+ * @brief Gets a new voice ready to be used.
+ *
+ *    @return New voice ready to use.
+ */
+static alVoice* voice_new (void)
+{
+   alVoice *v;
+
+   /* No free voices, allocate a new one. */
+   if (voice_pool == NULL) {
+      v = malloc(sizeof(alVoice));
+      memset(v, 0, sizeof(alVoice));
+      voice_pool = v;
+      return v;
+   }
+
+   /* First free voice. */
+   v = voice_pool;
+   return v;
+}
+
+
+/**
+ * @fn static int voice_add( alVoice* v )
+ *
+ * @brief Adds a voice to the active voice stack.
+ *
+ *    @param v Voice to add to the active voice stack.
+ *    @return 0 on success.
+ */
+static int voice_add( alVoice* v )
+{
+   alVoice *tv;
+
+   /* Set previous to point to next. */
+   if (v->prev != NULL) {
+      tv = v->prev;
+      tv->next = v->next;
+   }
+   else { /* Set pool to be the next. */
+      voice_pool = v->next;
+   }
+
+   /* Insert to the front of active voices. */
+   tv = voice_active;
+   voice_active = v;
+   v->next = tv;
+   return 0;
+}
+
+
+/**
+ * @fn static alVoice* voice_get( int id )
+ *
+ * @brief Gets a voice by identifier.
+ *
+ *    @param id Identifier to look for.
+ *    @return Voice matching identifier or NULL if not found.
+ */
+static alVoice* voice_get( int id )
+{
+   alVoice *v;
+
+   if (voice_active==NULL) return NULL;
+
+   for (v=voice_active; v!=NULL; v=v->next)
+      if (v->id == id)
+         return v;
+
+   return NULL;
+}
 
