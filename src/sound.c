@@ -217,23 +217,28 @@ int sound_get( char* name )
  * @brief Plays the sound in the first available channel.
  *
  *    @param sound Sound to play.
- *    @return 0 on success.
+ *    @return Voice identifier on success.
  */
 int sound_play( int sound )
 {
-   int channel;
+   alVoice *v;
 
    if (sound_disabled) return 0;
 
    if ((sound < 0) || (sound > sound_nlist))
       return -1;
 
-   channel = Mix_PlayChannel( -1, sound_list[sound].buffer, 0 );
+   v = voice_new();
+
+   v->channel = Mix_PlayChannel( -1, sound_list[sound].buffer, 0 );
    
-   if (channel < 0)
+   if (v->channel < 0)
       WARN("Unable to play sound: %s", Mix_GetError());
 
-   return 0;
+   v->state = VOICE_PLAYING;
+   v->id = ++voice_genid;
+   voice_add(v);
+   return v->id;
 }
 
 
@@ -352,15 +357,24 @@ int sound_update (void)
 
          /* Remove from active list. */
          tv = v->prev;
-         if (tv == NULL)
+         if (tv == NULL) {
             voice_active = v->next;
-         else
+            if (voice_active != NULL)
+               voice_active->prev = NULL;
+         }
+         else {
             tv->next = v->next;
+            if (tv->next != NULL)
+               tv->next->prev = tv;
+         }
 
          /* Add to free pool. */
          v->next = voice_pool;
+         v->prev = NULL;
          voice_pool = v;
          v->channel = 0;
+         if (v->next != NULL)
+            v->next->prev = v;
 
          /* Avoid loop blockage. */
          v = (tv != NULL) ? tv->next : voice_active;
@@ -677,7 +691,7 @@ static alVoice* voice_new (void)
    }
 
    /* First free voice. */
-   v = voice_pool;
+   v = voice_pool; /* We do not touch the next nor prev, it's still in the pool. */
    return v;
 }
 
@@ -694,19 +708,26 @@ static int voice_add( alVoice* v )
 {
    alVoice *tv;
 
-   /* Set previous to point to next. */
+   /* Remove from pool. */
    if (v->prev != NULL) {
       tv = v->prev;
       tv->next = v->next;
+      if (tv->next != NULL)
+         tv->next->prev = tv;
    }
    else { /* Set pool to be the next. */
       voice_pool = v->next;
+      if (voice_pool != NULL)
+         voice_pool->prev = NULL;
    }
 
    /* Insert to the front of active voices. */
    tv = voice_active;
    voice_active = v;
    v->next = tv;
+   v->prev = NULL;
+   if (tv != NULL)
+      tv->prev = v;
    return 0;
 }
 

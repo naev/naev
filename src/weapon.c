@@ -71,6 +71,7 @@ typedef struct Weapon_ {
    unsigned int target; /**< target to hit, only used by seeking things */
    const Outfit* outfit; /**< related outfit that fired it or whatnot */
 
+   int voice; /**< Weapon's voice. */
    double lockon; /**< some weapons have a lockon delay */
    double timer; /**< mainly used to see when the weapon was fired */
 
@@ -377,9 +378,6 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          case OUTFIT_TYPE_TURRET_BEAM:
             wlayer[i]->timer -= dt;
             if (wlayer[i]->timer < 0.) {
-               sound_playPos(w->outfit->u.bem.sound_off,
-                     w->solid->pos.x,
-                     w->solid->pos.y);
                weapon_destroy(wlayer[i],layer);
                continue;
             }
@@ -592,8 +590,12 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
    /* smart weapons also get to think their next move */
    if (weapon_isSmart(w)) (*w->think)(w,dt);
- 
+
+   /* Update the solid position. */
    (*w->solid->update)(w->solid, dt);
+
+   /* Update the sound. */
+   sound_updatePos(w->voice, w->solid->pos.x, w->solid->pos.y);
 }
 
 
@@ -753,7 +755,7 @@ static Weapon* weapon_create( const Outfit* outfit,
          vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
          w->timer = outfit->u.blt.range/outfit->u.blt.speed;
          w->solid = solid_create( mass, rdir, pos, &v );
-         sound_playPos(w->outfit->u.blt.sound, 
+         w->voice = sound_playPos(w->outfit->u.blt.sound, 
                w->solid->pos.x + w->solid->vel.x, 
                w->solid->pos.y + w->solid->vel.y);
          break;
@@ -772,7 +774,7 @@ static Weapon* weapon_create( const Outfit* outfit,
          w->solid = solid_create( mass, rdir, pos, NULL );
          w->think = think_beam;
          w->timer = outfit->u.bem.duration;
-         sound_playPos(w->outfit->u.bem.sound,
+         w->voice = sound_playPos(w->outfit->u.bem.sound,
                w->solid->pos.x + vel->x,
                w->solid->pos.y + vel->y);
          break;
@@ -796,7 +798,7 @@ static Weapon* weapon_create( const Outfit* outfit,
             w->think = think_seeker;
          else if (outfit->type == OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO)
             w->think = think_smart;*/
-         sound_playPos(w->outfit->u.amm.sound,
+         w->voice = sound_playPos(w->outfit->u.amm.sound,
                w->solid->pos.x + w->solid->vel.x,
                w->solid->pos.y + w->solid->vel.y);
          break;
@@ -809,9 +811,9 @@ static Weapon* weapon_create( const Outfit* outfit,
          vect_pset( &w->solid->force, w->outfit->u.amm.thrust, dir );
          w->think = NULL; /* No AI */
 
-         sound_playPos(w->outfit->u.amm.sound,
-            w->solid->pos.x + w->solid->vel.x,
-            w->solid->pos.y + w->solid->vel.y);
+         w->voice = sound_playPos(w->outfit->u.amm.sound,
+               w->solid->pos.x + w->solid->vel.x,
+               w->solid->pos.y + w->solid->vel.y);
          break;
 
 
@@ -1034,6 +1036,14 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
       pilot_target = pilot_get( w->target );
       if (pilot_target != NULL)
          pilot_target->lockons--;
+   }
+
+   /* Stop playing sound if beam weapon. */
+   if (outfit_isBeam(w->outfit)) {
+      sound_stop( w->voice );
+      sound_playPos(w->outfit->u.bem.sound_off,
+            w->solid->pos.x,
+            w->solid->pos.y);
    }
 
    switch (layer) {
