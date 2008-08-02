@@ -123,6 +123,7 @@ int sound_init (void)
    int channels;
    SDL_version compile_version;
    const SDL_version *link_version;
+   char device[PATH_MAX];
 
    if (sound_disabled) return 0;
 
@@ -137,9 +138,11 @@ int sound_init (void)
    Mix_QuerySpec(&frequency, &format, &channels);
    MIX_VERSION(&compile_version);
    link_version = Mix_Linked_Version();
+   SDL_AudioDriverName(device, PATH_MAX);
    DEBUG("SDL_Mixer: %d.%d.%d [compiled: %d.%d.%d]", 
          compile_version.major, compile_version.minor, compile_version.patch,
          link_version->major, link_version->minor, link_version->patch);
+   DEBUG("Driver: %s",device);
    DEBUG("Format: %d Hz %s", frequency, (channels == 2) ? "Stereo" : "Mono");
    DEBUG();
 
