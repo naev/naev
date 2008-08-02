@@ -464,6 +464,8 @@ static void weapon_render( const Weapon* w )
       case OUTFIT_TYPE_BEAM:
       case OUTFIT_TYPE_TURRET_BEAM:
          gfx = outfit_gfx(w->outfit);
+
+         /* Position. */
          x = w->solid->pos.x - VX(*gl_camera) + gui_xoff;
          y = w->solid->pos.y - VY(*gl_camera) + gui_yoff;
 
@@ -480,14 +482,24 @@ static void weapon_render( const Weapon* w )
 
          /* Actual rendering. */
          glBegin(GL_QUAD_STRIP);
-            COLOUR(cWhite);
+            
+            /* Start faded. */
+            ACOLOUR(cWhite, 0.);
 
-            /* Full strength. */
             glTexCoord2d( 0., 0. );
             glVertex2d( -gfx->sh/2., 0. );
 
             glTexCoord2d( 0., 1. );
             glVertex2d( +gfx->sh/2., 0. );
+
+            /* Full strength. */
+            COLOUR(cWhite);
+
+            glTexCoord2d( 10. / gfx->sw, 0. );
+            glVertex2d( -gfx->sh/2., 10. );
+
+            glTexCoord2d( 10. / gfx->sw, 1. );
+            glVertex2d( +gfx->sh/2., 10. );
 
             glTexCoord2d( 0.8*w->outfit->u.bem.range / gfx->sw, 0. );
             glVertex2d( -gfx->sh/2., 0.8*w->outfit->u.bem.range );
