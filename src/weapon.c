@@ -276,13 +276,6 @@ static void think_beam( Weapon* w, const double dt )
    w->solid->pos.x = p->solid->pos.x;
    w->solid->pos.y = p->solid->pos.y;
 
-   /* Get target, if target is dead beam stops moving. */
-   t = pilot_get(w->target);
-   if (t==NULL) {
-      w->solid->dir_vel = 0.;
-      return;
-   }
-
    /* Handle aiming. */
    switch (w->outfit->type) {
       case OUTFIT_TYPE_BEAM:
@@ -290,6 +283,13 @@ static void think_beam( Weapon* w, const double dt )
          break;
 
       case OUTFIT_TYPE_TURRET_BEAM:
+         /* Get target, if target is dead beam stops moving. */
+         t = pilot_get(w->target);
+         if (t==NULL) {
+            w->solid->dir_vel = 0.;
+            return;
+         }
+
          if (w->target == w->parent) /* Invalid target, tries to follow shooter. */
             diff = angle_diff(w->solid->dir, p->solid->dir);
          else
