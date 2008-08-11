@@ -988,6 +988,8 @@ int gl_init()
       return -1;
    }
 
+   /* Set opengl flags. */
+   SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); /* Ideally want double buffering. */
 
    /* get available fullscreen modes */
    if (gl_has(OPENGL_FULLSCREEN)) {
