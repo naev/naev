@@ -680,6 +680,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
                VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );
          spfx_add( outfit_spfx(w->outfit), pos[1].x, pos[1].y,
                VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );
+         w->lockon = -2;
       }
    }
    else if (w->lockon == -1.) {
@@ -687,6 +688,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
             VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_FRONT );
       spfx_add( outfit_spfx(w->outfit), pos[1].x, pos[1].y,
             VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_FRONT );
+         w->lockon = -2;
    }
 
    /* inform the ship that it should take some damage */

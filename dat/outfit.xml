@@ -162,6 +162,7 @@
    <range>300</range>
    <energy>70</energy>
    <damage type="energy">40</damage>
+   <spfx>ExpS</spfx>
    <gfx>beam_orion</gfx>
    <sound>beam0</sound>
    <sound_off>beam_off0</sound_off>
@@ -183,6 +184,7 @@
    <turn>50</turn>
    <energy>130</energy>
    <damage type="energy">100</damage>
+   <spfx>ExpS</spfx>
    <gfx>beam_ragnarok</gfx>
    <sound>beam0</sound>
    <sound_off>beam_off0</sound_off>

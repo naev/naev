@@ -351,7 +351,6 @@ glTexture* outfit_gfx( const Outfit* o )
    if (outfit_isBolt(o)) return o->u.blt.gfx_space;
    else if (outfit_isBeam(o)) return o->u.bem.gfx;
    else if (outfit_isAmmo(o)) return o->u.amm.gfx_space;
-   else if (outfit_isTurret(o)) return o->u.blt.gfx_space;
    return NULL;
 }
 /**
@@ -362,8 +361,8 @@ glTexture* outfit_gfx( const Outfit* o )
 int outfit_spfx( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.spfx;
+   else if (outfit_isBeam(o)) return o->u.bem.spfx;
    else if (outfit_isAmmo(o)) return o->u.amm.spfx;
-   else if (outfit_isTurret(o)) return o->u.blt.spfx;
    return -1;
 }
 /**
@@ -376,7 +375,6 @@ double outfit_damage( const Outfit* o )
    if (outfit_isBolt(o)) return o->u.blt.damage;
    else if (outfit_isBeam(o)) return o->u.bem.damage;
    else if (outfit_isAmmo(o)) return o->u.amm.damage;
-   else if (outfit_isTurret(o)) return o->u.blt.damage;
    return -1.;
 }
 /**
@@ -389,7 +387,6 @@ DamageType outfit_damageType( const Outfit* o )
    if (outfit_isBolt(o)) return o->u.blt.dtype;
    else if (outfit_isBeam(o)) return o->u.bem.dtype;
    else if (outfit_isAmmo(o)) return o->u.amm.dtype;
-   else if (outfit_isTurret(o)) return o->u.blt.dtype;
    return DAMAGE_TYPE_NULL;
 }
 /**
@@ -402,7 +399,6 @@ int outfit_delay( const Outfit* o )
    if (outfit_isBolt(o)) return o->u.blt.delay;
    else if (outfit_isBeam(o)) return o->u.bem.delay;
    else if (outfit_isLauncher(o)) return o->u.lau.delay;
-   else if (outfit_isTurret(o)) return o->u.blt.delay;
    return -1;
 }
 /**
@@ -415,7 +411,6 @@ double outfit_energy( const Outfit* o )
    if (outfit_isBolt(o)) return o->u.blt.energy;
    else if (outfit_isBeam(o)) return o->u.bem.energy;
    else if (outfit_isAmmo(o)) return o->u.amm.energy;
-   else if (outfit_isTurret(o)) return o->u.blt.energy;
    return -1.;
 }
 /**
@@ -428,7 +423,6 @@ double outfit_range( const Outfit* o )
    if (outfit_isBolt(o)) return o->u.blt.range;
    else if (outfit_isBeam(o)) return o->u.bem.range;
    else if (outfit_isAmmo(o)) return 0.8*o->u.amm.speed*o->u.amm.duration;
-   else if (outfit_isTurret(o)) return o->u.blt.range;
    return -1.;
 }
 /**
@@ -440,7 +434,6 @@ double outfit_speed( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.speed;
    else if (outfit_isAmmo(o)) return o->u.amm.speed;
-   else if (outfit_isTurret(o)) return o->u.blt.speed;
    return -1.;
 }
 
@@ -626,6 +619,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    char str[PATH_MAX] = "\0";
 
    /* Defaults */
+   temp->u.blt.spfx = -1;
    temp->u.blt.sound = -1;
 
    node = parent->xmlChildrenNode;
@@ -640,18 +634,26 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+10,
                OUTFIT_GFX"space/%s.png", xml_get(node));
          temp->u.blt.gfx_space = gl_newSprite(str, 6, 6);
+         continue;
       }
-      else if (xml_isNode(node,"spfx"))
+      if (xml_isNode(node,"spfx")) {
          temp->u.blt.spfx = spfx_get(xml_get(node));
-      else if (xml_isNode(node,"sound"))
+         continue;
+      }
+      if (xml_isNode(node,"sound")) {
          temp->u.blt.sound = sound_get( xml_get(node) );
-      else if (xml_isNode(node,"damage"))
+         continue;
+      }
+      if (xml_isNode(node,"damage")) {
          outfit_parseDamage( &temp->u.blt.dtype, &temp->u.blt.damage, node );
+         continue;
+      }
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->u.blt.gfx_space==NULL,"gfx");
+   MELEMENT(temp->u.blt.spfx==-1,"spfx");
    MELEMENT((sound_disabled!=0) && (temp->u.blt.sound<0),"sound");
    MELEMENT(temp->u.blt.delay==0,"delay");
    MELEMENT(temp->u.blt.speed==0,"speed");
@@ -676,6 +678,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    char str[PATH_MAX] = "\0";
 
    /* Defaults. */
+   temp->u.bem.spfx = -1;
    temp->u.bem.sound_warmup = -1;
    temp->u.bem.sound = -1;
    temp->u.bem.sound_off = -1;
@@ -694,23 +697,27 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          continue;
       }
 
+      /* Graphic stuff. */
       if (xml_isNode(node,"gfx")) {
          snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+10,
                OUTFIT_GFX"space/%s.png", xml_get(node));
          temp->u.bem.gfx = gl_newSprite(str, 1, 1);
          continue;
       }
+      if (xml_isNode(node,"spfx")) {
+         temp->u.bem.spfx = spfx_get(xml_get(node));
+         continue;
+      }
 
+      /* Sound stuff. */
       if (xml_isNode(node,"sound_warmup")) {
          temp->u.bem.sound_warmup = sound_get( xml_get(node) );
          continue;
       }
-
       if (xml_isNode(node,"sound")) {
          temp->u.bem.sound = sound_get( xml_get(node) );
          continue;
       }
-
       if (xml_isNode(node,"sound_off")) {
          temp->u.bem.sound_off = sound_get( xml_get(node) );
          continue;
@@ -720,6 +727,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->u.bem.gfx==NULL,"gfx");
+   MELEMENT(temp->u.bem.spfx==-1,"spfx");
    MELEMENT((sound_disabled!=0) && (temp->u.bem.warmup > 0.) && (temp->u.bem.sound<0),"sound_warmup");
    MELEMENT((sound_disabled!=0) && (temp->u.bem.sound<0),"sound");
    MELEMENT((sound_disabled!=0) && (temp->u.bem.sound_off<0),"sound_off");

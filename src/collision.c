@@ -233,14 +233,6 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
       border[1].y = ep[1];
    }
 
-   /*
-   crash[0].x = border[0].x;
-   crash[0].y = border[0].y;
-   crash[1].x = border[1].x;
-   crash[1].y = border[1].y;
-   return 1;
-   */
-
    /* 
     * Now we do a pixel perfect approach.
     */

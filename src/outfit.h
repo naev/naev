@@ -105,6 +105,7 @@ typedef struct OutfitBeamData_ {
    
    /* Graphics and sound. */
    glTexture *gfx; /**< Base texture. */
+   int spfx; /**< Special effect on hit. */
    int sound_warmup; /**< Sound to play when warming up. @todo use. */
    int sound; /**< Sound to play. */
    int sound_off; /**< Sound to play when turning off. */
