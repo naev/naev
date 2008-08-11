@@ -513,6 +513,73 @@ void player_swapShip( char* shipname )
 
 
 /**
+ * @fn int player_shipPrice( char* shipname )
+ *
+ * @brief Calculates the price of one of the player's ships.
+ *
+ *    @param shipname Name of the ship.
+ *    @return The price of the ship in credits.
+ */
+int player_shipPrice( char* shipname )
+{
+   int i;
+   int price;
+   Pilot *ship;
+
+   /* Find the ship. */
+   for (i=0; i<player_nstack; i++) {
+      if (strcmp(shipname,player_stack[i]->name)==0) {
+         ship = player_stack[i];
+
+         /* Ship price is base price + outfit prices. */
+         price = ship_basePrice( ship->ship );
+         for (i=0; i<ship->noutfits; i++)
+            price += ship->outfits[i].quantity * ship->outfits[i].outfit->price;
+
+         return price;
+      }
+   }
+
+   WARN( "Unable to find price for player's ship '%s': ship does not exist!", shipname );
+   return -1;
+}
+
+
+/**
+ * @brief void player_rmShip( char* shipname )
+ * 
+ * @brief Removes one of the player's ships.
+ *
+ *    @param shipname Name of the ship to remove.
+ */
+void player_rmShip( char* shipname )
+{
+   int i;
+
+   for (i=0; i<player_nstack; i++) {
+      if (strcmp(shipname,player_stack[i]->name)==0) {
+
+         /* Free player ship and location. */
+         pilot_free(player_stack[i]);
+         free(player_lstack[i]);
+
+         /* Move memory to make adjacent. */
+         memmove( player_stack+i, player_stack+i+1,
+               sizeof(Pilot*) * (player_nstack-i-1) );
+         memmove( player_lstack+i, player_lstack+i+1,
+               sizeof(char*) * (player_nstack-i-1) );
+         player_nstack--; /* Shrink stack. */
+         /* Realloc memory to smaller size. */
+         player_stack = realloc( player_stack,
+               sizeof(Pilot*) * (player_nstack) );
+         player_lstack = realloc( player_lstack,
+               sizeof(char*) * (player_nstack) );
+      }
+   }
+}
+
+
+/**
  * @brief void player_cleanup (void)
  *
  * @brief Cleans up player stuff like player_stack.
@@ -536,7 +603,7 @@ void player_cleanup (void)
          pilot_free(player_stack[i]);
          free(player_lstack[i]);
       }
-      free (player_stack);
+      free(player_stack);
       player_stack = NULL;
       free(player_lstack);
       player_lstack = NULL;

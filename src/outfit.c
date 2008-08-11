@@ -1069,7 +1069,7 @@ int outfit_load (void)
 
          temp = outfit_parse(node);               
          outfit_stack = realloc(outfit_stack, sizeof(Outfit)*(++outfit_nstack));
-         memcpy(outfit_stack+outfit_nstack-1, temp, sizeof(Outfit));
+         memmove(outfit_stack+outfit_nstack-1, temp, sizeof(Outfit));
          free(temp);
       }
    } while (xml_nextNode(node));

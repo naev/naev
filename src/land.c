@@ -125,6 +125,7 @@ static void shipyard_yours_open( char* str );
 static void shipyard_yours_close( char* str );
 static void shipyard_yoursUpdate( char* str );
 static void shipyard_yoursChange( char* str );
+static void shipyard_yoursSell( char* str );
 static void shipyard_yoursTransport( char* str );
 static int shipyard_yoursTransportPrice( char* shipname );
 /* spaceport bar */
@@ -738,6 +739,9 @@ static void shipyard_yours_open( char* str )
    window_addButton( terciary_wid, -40-BUTTON_WIDTH, 40+BUTTON_HEIGHT,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnTransportShip",
          "Transport Ship", shipyard_yoursTransport );
+   window_addButton( terciary_wid, -20, 40+BUTTON_HEIGHT,
+         BUTTON_WIDTH, BUTTON_HEIGHT, "btnSellShip",
+         "Sell Ship", shipyard_yoursSell );
 
    /* image */
    window_addRect( terciary_wid, -40, -50,
@@ -796,6 +800,7 @@ static void shipyard_yoursUpdate( char* str )
    if (strcmp(shipname,"None")==0) { /* no ships */
       window_disableButton( terciary_wid, "btnChangeShip" );
       window_disableButton( terciary_wid, "btnTransportShip" );
+      window_disableButton( terciary_wid, "btnSellShip" );
       return;
    }
    ship = player_getShip( shipname );
@@ -807,7 +812,7 @@ static void shipyard_yoursUpdate( char* str )
 
    /* update text */
    credits2str( buf2, price , 2 ); /* transport */
-   credits2str( buf3, 0, 2 ); /* sell price */
+   credits2str( buf3, player_shipPrice(shipname), 2 ); /* sell price */
    snprintf( buf, 256,
          "%s\n"
          "%s\n"
@@ -844,6 +849,8 @@ static void shipyard_yoursUpdate( char* str )
       window_enableButton( terciary_wid, "btnChangeShip" );
       window_disableButton( terciary_wid, "btnTransportShip" );
    }
+   /* If ship is there you can always sell. */
+   window_enableButton( terciary_wid, "btnSellShip" );
 }
 static void shipyard_yoursChange( char* str )
 {
@@ -870,6 +877,38 @@ static void shipyard_yoursChange( char* str )
    }
 
    player_swapShip(shipname);
+
+   /* recreate the window */
+   shipyard_yours_close(NULL);
+   shipyard_yours_open(NULL);
+}
+static void shipyard_yoursSell( char* str )
+{
+   (void)str;
+   char *shipname, buf[16];
+   int price;
+
+   shipname = toolkit_getList( terciary_wid, "lstYourShips" );
+   if (strcmp(shipname,"None")==0) { /* no ships */
+      dialogue_alert( "You can't sell nothing!" );
+      return;
+   }
+
+   /* Calculate price. */
+   price = player_shipPrice(shipname);
+   credits2str( buf, price, 2 );
+
+   /* Check if player really wants to sell. */
+   if (!dialogue_YesNo( "Sell Ship",
+         "Are you sure you want to sell your ship %s for %s credits?", shipname, buf)) {
+      return;
+   }
+
+   /* Sold. */
+   player->credits += price;
+   player_rmShip( shipname );
+   dialogue_msg( "Ship Sold", "You have sold your ship %s for %s credits.",
+         shipname, buf );
 
    /* recreate the window */
    shipyard_yours_close(NULL);

@@ -139,6 +139,25 @@ char* ship_class( Ship* s )
 }
 
 
+/**
+ * @fn int ship_basePrice( Ship* s )
+ *
+ * @brief Gets the ship's base price (no outfits).
+ */
+int ship_basePrice( Ship* s )
+{
+   int price;
+   ShipOutfit *o;
+
+   /* Base price is ship's price minus it's outfits. */
+   price = s->price;
+   for (o=s->outfit; o!=NULL; o=o->next)
+      price -= o->quantity * o->data->price;
+
+   return price;
+}
+
+
 static Ship* ship_parse( xmlNodePtr parent )
 {
    xmlNodePtr cur, node;
