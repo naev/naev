@@ -54,7 +54,7 @@ extern unsigned int player_target;
 /*
  * ai stuff
  */
-extern void ai_attacked( Pilot* attacked, const unsigned int attacker );
+extern void ai_attacked( Pilot* attacked, const unsigned int attacker ); /**< Triggers the "attacked" function in the ai */
 
 
 /**
@@ -658,6 +658,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
  *    @param p Pilot that got hit.
  *    @param layer Layer to which the weapon belongs.
  *    @param pos Position of the hit.
+ *    @param dt Current delta tick.
  */
 static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
       Vector2d pos[2], const double dt )
@@ -985,7 +986,7 @@ int beam_start( const Outfit* outfit,
 
 
 /**
- * @fn void beam_end( int beam )
+ * @fn void beam_end( const unsigned int parent, int beam )
  *
  * @brief Ends a beam weapon.
  *

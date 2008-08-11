@@ -92,8 +92,18 @@ static void spfx_destroy( SPFX *layer, int *nlayer, int spfx );
 static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt );
 
 
-/*
- * loads the SPFX_Base
+/**
+ * @fn static int spfx_base_load( char* name, int ttl, int anim, char* gfx, int sx, int sy )
+ *
+ * @brief Loads a SPFX_Base into the stack based on some parameters.
+ *
+ *    @param name Name of the spfx.
+ *    @param ttl Time to live of the spfx.
+ *    @param anim Total duration in ms of the animation.
+ *    @param gfx Name of the graphic effect to use.
+ *    @param sx Number of x sprites in the graphic.
+ *    @param sy Number of y sprites in the graphic.
+ *    @return 0 on success.
  */
 static int spfx_base_load( char* name, int ttl, int anim, char* gfx, int sx, int sy )
 {
@@ -115,8 +125,12 @@ static int spfx_base_load( char* name, int ttl, int anim, char* gfx, int sx, int
 }
 
 
-/*
- * frees the SPFX_Base
+/**
+ * @fn static void spfx_base_free( SPFX_Base *effect )
+ *
+ * @brief Frees a SPFX_Base.
+ *
+ *    @param effect SPFX_Base to free.
  */
 static void spfx_base_free( SPFX_Base *effect )
 {
@@ -125,6 +139,14 @@ static void spfx_base_free( SPFX_Base *effect )
 }
 
 
+/**
+ * @fn int spfx_get( char* name )
+ *
+ * @brief Gets the id of an spfx based on name.
+ *
+ *    @param name Name to match.
+ *    @return ID of the special effect or -1 on error.
+ */
 int spfx_get( char* name )
 {
    int i;
@@ -132,13 +154,18 @@ int spfx_get( char* name )
       if (strcmp(spfx_effects[i].name, name)==0)
          return i;
    WARN("SPFX '%s' not found!", name );
-   return 0;
+   return -1;
 }
 
 
 /**
- * load and unload functions
- * @todo make it customizeable?
+ * @fn int spfx_load (void)
+ *
+ * @brief Loads the spfx stack.
+ *
+ *    @return 0 on success.
+ *
+ * @todo Make spfx not hardcoded.
  */
 int spfx_load (void)
 {
@@ -150,6 +177,13 @@ int spfx_load (void)
 
    return 0;
 }
+
+
+/**
+ * @fn void spfx_free (void)
+ *
+ * @brief Frees the spfx stack.
+ */
 void spfx_free (void)
 {
    int i;
@@ -172,8 +206,20 @@ void spfx_free (void)
 }
 
 
-/*
- * adds a new spfx to layer
+/**
+ * @fn void spfx_add( int effect,
+ *       const double px, const double py,
+ *       const double vx, const double vy,
+ *       const int layer )
+ *
+ * @brief Creates a new special effect.
+ *
+ *    @param effect Base effect identifier to use.
+ *    @param px X position of the effect.
+ *    @param py Y position of the effect.
+ *    @param vx X velocity of the effect.
+ *    @param vy Y velocity of the effect.
+ *    @param layer Layer to put the effect on.
  */
 void spfx_add( int effect,
       const double px, const double py,
@@ -222,8 +268,10 @@ void spfx_add( int effect,
 }
 
 
-/*
- * clears the current particles from the stacks
+/**
+ * @fn void spfx_clear (void)
+ *
+ * @brief Clears all the currently running effects.
  */
 void spfx_clear (void)
 {
@@ -243,8 +291,14 @@ void spfx_clear (void)
    shake_vel.x = shake_vel.y = 0.;
 }
 
-/*
- * destroys an active spfx
+/**
+ * @fn static void spfx_destroy( SPFX *layer, int *nlayer, int spfx )
+ *
+ * @brief Destroys an active spfx.
+ *
+ *    @param layer Layer the spfx is on.
+ *    @param nlayer Pointer to the number of elements in the layer.
+ *    @param spfx Position of the spfx in the stack.
  */
 static void spfx_destroy( SPFX *layer, int *nlayer, int spfx )
 {
@@ -253,8 +307,12 @@ static void spfx_destroy( SPFX *layer, int *nlayer, int spfx )
 }
 
 
-/*
- * updates all the spfx
+/**
+ * @fn void spfx_update( const double dt )
+ *
+ * @brief Updates all the spfx.
+ *
+ *    @param dt Current delta tick.
  */
 void spfx_update( const double dt )
 {
@@ -263,8 +321,14 @@ void spfx_update( const double dt )
 }
 
 
-/*
- * updates a spfx
+/**
+ * @fn static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt )
+ *
+ * @brief Updates an individual spfx.
+ *
+ *    @param layer Layer the spfx is on.
+ *    @param nlayer Pointer to the assosciated nlayer.
+ *    @param dt Current delta tick.
  */
 static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt )
 {
@@ -286,10 +350,16 @@ static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt )
 }
 
 
-/*
- * prepares the rendering for special effects
+/**
+ * @fn void spfx_start( double dt )
+ *
+ * @brief Preperase the rendering for the special effects.
+ *
+ * Should be called at the beginning of the rendering loop.
+ *
+ *    @param dt Current delta tick.
  */
-void spfx_start( double dt )
+void spfx_start( const double dt )
 {
    GLdouble bx, by, x, y;
    double inc;
@@ -335,8 +405,14 @@ void spfx_start( double dt )
 }
 
 
-/*
- * adds ruuuuuuuuumble!
+/**
+ * @fn void spfx_shake( double mod )
+ *
+ * @brief Increases the current rumble level.
+ *
+ * Rumble will decay over time.
+ * 
+ *    @param mod Modifier to increase level by.
  */
 void spfx_shake( double mod )
 {
@@ -348,8 +424,12 @@ void spfx_shake( double mod )
 }
 
 
-/*
- * creates cinematic mode, should be run last
+/**
+ * @fn void spfx_cinematic (void)
+ *
+ * @brief Sets the cinematic mode.
+ *
+ * Should be run at the end of the render loop if needed.
  */
 void spfx_cinematic (void)
 {
@@ -373,8 +453,12 @@ void spfx_cinematic (void)
 }
 
 
-/*
- * renders all the spfx
+/**
+ * @fn void spfx_render( const int layer )
+ *
+ * @brief Renders the entire spfx layer.
+ *
+ *    @param layer Layer to render.
  */
 void spfx_render( const int layer )
 {
