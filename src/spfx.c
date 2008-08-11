@@ -183,6 +183,11 @@ void spfx_add( int effect,
    SPFX *cur_spfx;
    double ttl, anim;
 
+   if ((effect < 0) || (effect > spfx_neffects)) {
+      WARN("Trying to add spfx with invalid effect!");
+      return;
+   }
+
    /*
     * Select the Layer
     */
