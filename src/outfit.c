@@ -726,7 +726,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->u.bem.delay==0,"delay");
    MELEMENT(temp->u.bem.duration==0,"duration");
    MELEMENT(temp->u.bem.range==0,"range");
-   MELEMENT(temp->u.bem.turn==0,"turn");
+   MELEMENT((temp->type!=OUTFIT_TYPE_BEAM) && (temp->u.bem.turn==0),"turn");
    MELEMENT(temp->u.bem.energy==0,"energy");
    MELEMENT(temp->u.bem.damage==0,"damage");
 #undef MELEMENT
