@@ -31,6 +31,7 @@
 #else /* DEBUG */
 #define NLUA_DEBUG(str, args...) do {;} while(0)
 #define NLUA_MIN_ARGS(n)         do {;} while(0)
+#define NLUA_INVALID_PARAMETER() do {;} while(0)
 #endif /* DEBUG */
 
 
