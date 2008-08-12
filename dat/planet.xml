@@ -29,8 +29,8 @@
  </planet>
  <planet name="Cerberus">
   <GFX>
-   <exterior>station00.png</exterior>
-   <space>000.png</space>
+   <exterior>traderoom.png</exterior>
+   <space>003.png</space>
   </GFX>
   <pos>
    <y>0</y>
