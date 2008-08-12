@@ -1168,6 +1168,8 @@ static void spaceport_refuel( char *str )
 void land( Planet* p )
 {
    char buf[32], cred[16];
+   glTexture *logo;
+   int offset;
 
    if (landed) return;
 
@@ -1177,10 +1179,24 @@ void land( Planet* p )
    land_wid = window_create( p->name, -1, -1, LAND_WIDTH, LAND_HEIGHT );
    
    /*
-    * pretty display
+    * Faction logo.
+    */
+   offset = 20;
+   if (land_planet->faction != -1) {
+      logo = faction_logoSmall(land_planet->faction);
+      if (logo != NULL) {
+         window_addImage( land_wid, 440 + (LAND_WIDTH-460-logo->w)/2, -20,
+               "imgFaction", logo, 0 );
+         offset = 84;
+      }
+   }
+
+   /*
+    * Pretty display.
     */
    window_addImage( land_wid, 20, -40, "imgPlanet", gfx_exterior, 1 );
-   window_addText( land_wid, 440, 80, LAND_WIDTH-460, 460, 0, 
+   window_addText( land_wid, 440, -20-offset,
+         LAND_WIDTH-460, LAND_HEIGHT-20-offset-60-BUTTON_HEIGHT*2, 0, 
          "txtPlanetDesc", &gl_smallFont, &cBlack, p->description);
 
    /*

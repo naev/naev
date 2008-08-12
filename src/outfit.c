@@ -631,8 +631,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"energy",temp->u.blt.energy);
 
       if (xml_isNode(node,"gfx")) {
-         snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+10,
-               OUTFIT_GFX"space/%s.png", xml_get(node));
+         snprintf( str, PATH_MAX, OUTFIT_GFX"space/%s.png", xml_get(node));
          temp->u.blt.gfx_space = gl_newSprite(str, 6, 6);
          continue;
       }
@@ -699,8 +698,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 
       /* Graphic stuff. */
       if (xml_isNode(node,"gfx")) {
-         snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+10,
-               OUTFIT_GFX"space/%s.png", xml_get(node));
+         snprintf( str, PATH_MAX, OUTFIT_GFX"space/%s.png", xml_get(node));
          temp->u.bem.gfx = gl_newSprite(str, 1, 1);
          continue;
       }

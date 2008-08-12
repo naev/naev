@@ -16,6 +16,7 @@
 
 #include "xml.h"
 
+#include "opengl.h"
 #include "naev.h"
 #include "log.h"
 #include "pack.h"
@@ -27,6 +28,7 @@
 #define XML_FACTION_TAG    "faction"
 
 #define FACTION_DATA       "dat/faction.xml" /**< Faction xml file. */
+#define FACTION_LOGO_PATH  "gfx/logo/" /**< Path to logo gfx. */
 
 
 #define PLAYER_ALLY        70 /**< above this player is considered ally */
@@ -38,15 +40,18 @@
  * @brief Represents a faction.
  */
 typedef struct Faction_ {
-   char* name; /**< Normal Name */
-   char* longname; /**< Long Name */
+   char *name; /**< Normal Name. */
+   char *longname; /**< Long Name. */
+
+   /* Graphics. */
+   glTexture *logo_small; /**< Small logo. */
 
    /* Enemies */
-   int* enemies; /**< Enemies by ID of the faction. */
+   int *enemies; /**< Enemies by ID of the faction. */
    int nenemies; /**< Number of enemies. */
 
    /* Allies */
-   int* allies; /**< Allies by ID of the faction. */
+   int *allies; /**< Allies by ID of the faction. */
    int nallies; /**< Number of allies. */
 
    int player; /**< Standing with player - from -100 to 100 */
@@ -120,9 +125,31 @@ char* faction_name( int f )
  */
 char* faction_longname( int f )
 {
+   if ((f < 0) || (f >= faction_nstack)) {
+      WARN("Faction id '%d' is invalid.",f);
+      return NULL;
+   }
    if (faction_stack[f].longname != NULL)
       return faction_stack[f].longname;
    return faction_stack[f].name;
+}
+
+
+/**
+ * @fn glTexture* faction_logoSmall( int f )
+ *
+ * @brief Gets the faction's small logo.
+ *
+ *    @param f Faction to get the logo of.
+ *    @return The faction's small logo image.
+ */
+glTexture* faction_logoSmall( int f )
+{
+   if ((f < 0) || (f >= faction_nstack)) {
+      WARN("Faction id '%d' is invalid.",f);
+      return NULL;
+   }
+   return faction_stack[f].logo_small;
 }
 
 
@@ -444,14 +471,20 @@ static int faction_isFaction( int f )
 }
 
 
-/*
- * parses a single faction, but doesn't set the allies/enemies bit
+/**
+ * @fn static Faction* faction_parse( xmlNodePtr parent )
+ *
+ * @brief Parses a single faction, but doesn't set the allies/enemies bit.
+ *
+ *    @param parent Parent node to extract faction from.
+ *    @return Faction created from parent node.
  */
 static Faction* faction_parse( xmlNodePtr parent )
 {
    xmlNodePtr node;
    int player;
    Faction* temp;
+   char buf[PATH_MAX];
    
    temp = CALLOC_ONE(Faction);
 
@@ -461,12 +494,20 @@ static Faction* faction_parse( xmlNodePtr parent )
    player = 0;
    node = parent->xmlChildrenNode;
    do {
+      /* Can be 0 or negative, so we have to take that into account. */
       if (xml_isNode(node,"player")) {
          temp->player = xml_getInt(node);
          player = 1;
          continue;
       }
+
       xmlr_strd(node,"longname",temp->longname);
+
+      if (xml_isNode(node,"logo")) {
+         snprintf( buf, PATH_MAX, FACTION_LOGO_PATH"%s_small.png", xml_get(node));
+         temp->logo_small = gl_newImage(buf);
+         continue;
+      }
    } while (xml_nextNode(node));
 
    if (player==0) DEBUG("Faction '%s' missing player tag.", temp->name);
@@ -555,10 +596,8 @@ int factions_load (void)
 
    /* player faction is hardcoded */
    faction_stack = malloc( sizeof(Faction) );
+   memset(faction_stack, 0, sizeof(Faction) );
    faction_stack[0].name = strdup("Player");
-   faction_stack[0].longname = NULL;
-   faction_stack[0].nallies = 0;
-   faction_stack[0].nenemies = 0;
    faction_nstack++;
 
    /* First pass - gets factions */
@@ -603,6 +642,7 @@ void factions_free (void)
    for (i=0; i<faction_nstack; i++) {
       free(faction_stack[i].name);
       if (faction_stack[i].longname != NULL) free(faction_stack[i].longname);
+      if (faction_stack[i].logo_small != NULL) gl_freeTexture(faction_stack[i].logo_small);
       if (faction_stack[i].nallies > 0) free(faction_stack[i].allies);
       if (faction_stack[i].nenemies > 0) free(faction_stack[i].enemies);
    }

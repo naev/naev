@@ -37,6 +37,7 @@
    <enemy>Za'lek</enemy>
    <enemy>Collective</enemy>
    <enemy>Soromid</enemy>
+   <enemy>Sirius</enemy>
   </enemies>
  </faction>
  <faction name="Militia">
@@ -52,12 +53,14 @@
   </enemies>
  </faction>
  <faction name="Empire">
+  <logo>empire</logo>
   <player>0</player>
   <allies>
    <ally>Dvaered</ally>
    <ally>Soromid</ally>
    <ally>Za'lek</ally>
    <ally>Trader</ally>
+   <ally>Sirius</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
@@ -74,6 +77,7 @@
    <enemy>Soromid</enemy>
    <enemy>Pirate</enemy>
    <enemy>FLF</enemy>
+   <enemy>Sirius</enemy>
   </enemies>
  </faction>
  <faction name="FLF">
@@ -88,6 +92,7 @@
   </enemies>
  </faction>
  <faction name="Dvaered">
+  <logo>dvaered</logo>
   <longname>House Dvaered</longname>
   <player>0</player>
   <allies>
@@ -100,7 +105,21 @@
   </enemies>
  </faction>
  <faction name="Za'lek">
+  <logo>zalek</logo>
   <longname>House Za'lek</longname>
+  <player>0</player>
+  <allies>
+   <ally>Empire</ally>
+  </allies>
+  <enemies>
+   <enemy>Pirate</enemy>
+   <enemy>Collective</enemy>
+   <enemy>FLF</enemy>
+  </enemies>
+ </faction>
+ <faction name="Sirius">
+  <logo>sirius</logo>
+  <longname>House Sirius</longname>
   <player>0</player>
   <allies>
    <ally>Empire</ally>
@@ -125,6 +144,7 @@
   </enemies>
  </faction>
  <faction name="Goddard">
+  <logo>goddard</logo>
   <longname>House Goddard</longname>
   <player>0</player>
   <allies>

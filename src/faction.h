@@ -7,6 +7,7 @@
 #  define FACTION_H
 
 
+#include "opengl.h"
 #include "colour.h"
 
 
@@ -17,6 +18,7 @@
 int faction_get( const char* name );
 char* faction_name( int f );
 char* faction_longname( int f );
+glTexture* faction_logoSmall( int f );
 
 /* player stuff */
 void faction_modPlayer( int f, int mod );
