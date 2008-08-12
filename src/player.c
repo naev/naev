@@ -1019,7 +1019,8 @@ void player_renderGUI (void)
 
       i = space_canHyperspace(player);
       if ((i != 0) && (i != can_jump))
-         player_playSound(snd_jump, 1);
+         if (!pilot_isFlag(player,PILOT_HYPERSPACE))
+            player_playSound(snd_jump, 1);
       can_jump = i;
 
       c = can_jump ? &cConsole : NULL ;
