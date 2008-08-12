@@ -1464,35 +1464,33 @@ static void rect_parse( const xmlNodePtr parent,
 static int gui_parse( const xmlNodePtr parent, const char *name )
 {
    xmlNodePtr cur, node;
-   char *tmp, *tmp2;
+   char *tmp, buf[PATH_MAX];
 
 
    /*
     * gfx
     */
    /* set as a property and not a node because it must be loaded first */
-   tmp2 = xml_nodeProp(parent,"gfx");
-   if (tmp2==NULL) {
+   tmp = xml_nodeProp(parent,"gfx");
+   if (tmp==NULL) {
       ERR("GUI '%s' has no gfx property",name);
       return -1;
    }
 
    /* load gfx */
-   tmp = malloc( (strlen(tmp2)+strlen(GUI_GFX)+12) * sizeof(char) );
    /* frame */
-   snprintf( tmp, strlen(tmp2)+strlen(GUI_GFX)+5, GUI_GFX"%s.png", tmp2 );
+   snprintf( buf, PATH_MAX, GUI_GFX"%s.png", tmp );
    if (gui.gfx_frame) gl_freeTexture(gui.gfx_frame); /* free if needed */
-   gui.gfx_frame = gl_newImage( tmp );
+   gui.gfx_frame = gl_newImage( buf );
    /* pilot */
-   snprintf( tmp, strlen(tmp2)+strlen(GUI_GFX)+11, GUI_GFX"%s_pilot.png", tmp2 );
+   snprintf( buf, PATH_MAX, GUI_GFX"%s_pilot.png", tmp );
    if (gui.gfx_targetPilot) gl_freeTexture(gui.gfx_targetPilot); /* free if needed */
-   gui.gfx_targetPilot = gl_newSprite( tmp, 2, 2 );
+   gui.gfx_targetPilot = gl_newSprite( buf, 2, 2 );
    /* planet */
-   snprintf( tmp, strlen(tmp2)+strlen(GUI_GFX)+12, GUI_GFX"%s_planet.png", tmp2 );
+   snprintf( buf, PATH_MAX, GUI_GFX"%s_planet.png", tmp );
    if (gui.gfx_targetPlanet) gl_freeTexture(gui.gfx_targetPlanet); /* free if needed */
-   gui.gfx_targetPlanet = gl_newSprite( tmp, 2, 2 );
+   gui.gfx_targetPlanet = gl_newSprite( buf, 2, 2 );
    free(tmp);
-   free(tmp2);
 
    /*
     * frame (based on gfx)

@@ -611,8 +611,7 @@ static Planet* planet_pull( const char* name )
                   cur = node->children;
                   do {
                      if (xml_isNode(cur,"space")) { /* load space gfx */
-                        snprintf( str, strlen(xml_get(cur))+sizeof(PLANET_GFX_SPACE),
-                              PLANET_GFX_SPACE"%s", xml_get(cur));
+                        snprintf( str, PATH_MAX, PLANET_GFX_SPACE"%s", xml_get(cur));
                         temp->gfx_space = gl_newImage(str);
                      }
                      else if (xml_isNode(cur,"exterior")) { /* load land gfx */

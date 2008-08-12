@@ -790,8 +790,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"speed",temp->u.amm.speed);
       xmlr_float(node,"energy",temp->u.amm.energy);
       if (xml_isNode(node,"gfx")) {
-         snprintf( str, strlen(xml_get(node))+sizeof(OUTFIT_GFX)+10,
-               OUTFIT_GFX"space/%s.png", xml_get(node));
+         snprintf( str, PATH_MAX, OUTFIT_GFX"space/%s.png", xml_get(node));
          temp->u.amm.gfx_space = gl_newSprite(str, 6, 6);
          continue;
       }
@@ -973,8 +972,7 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
             xmlr_int(cur,"price",temp->price);
             xmlr_strd(cur,"description",temp->description);
             if (xml_isNode(cur,"gfx_store")) {
-               snprintf( str, strlen(xml_get(cur))+sizeof(OUTFIT_GFX)+10,
-                     OUTFIT_GFX"store/%s.png", xml_get(cur));
+               snprintf( str, PATH_MAX, OUTFIT_GFX"store/%s.png", xml_get(cur));
                temp->gfx_store = gl_newImage(str);
             }
 
