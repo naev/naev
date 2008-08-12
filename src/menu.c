@@ -2,6 +2,11 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file menu.h
+ *
+ * @brief Handles the important game menus.
+ */
 
 
 #include "menu.h"
@@ -25,40 +30,40 @@
 #include "nebulae.h"
 
 
-#define MAIN_WIDTH      130
-#define MAIN_HEIGHT     250
+#define MAIN_WIDTH      130 /**< Main menu width. */
+#define MAIN_HEIGHT     250 /**< Main menu height. */
 
-#define MENU_WIDTH      130
-#define MENU_HEIGHT     200
+#define MENU_WIDTH      130 /**< Escape menu width. */
+#define MENU_HEIGHT     200 /**< Escape menu height. */
 
-#define INFO_WIDTH      360
-#define INFO_HEIGHT     280
+#define INFO_WIDTH      360 /**< Information menu width. */
+#define INFO_HEIGHT     280 /**< Information menu height. */
 
-#define OUTFITS_WIDTH   400
-#define OUTFITS_HEIGHT  200
+#define OUTFITS_WIDTH   400 /**< Outfit menu width. */
+#define OUTFITS_HEIGHT  200 /**< Outfit menu height. */
 
-#define CARGO_WIDTH     300
-#define CARGO_HEIGHT    300
+#define CARGO_WIDTH     300 /**< Cargo menu width. */
+#define CARGO_HEIGHT    300 /**< Cargo menu height. */
 
-#define MISSIONS_WIDTH  600
-#define MISSIONS_HEIGHT 400
+#define MISSIONS_WIDTH  600 /**< Mission menu width. */
+#define MISSIONS_HEIGHT 400 /**< Mission menu height. */
 
-#define DEATH_WIDTH     130
-#define DEATH_HEIGHT    150
+#define DEATH_WIDTH     130 /**< Death menu width. */
+#define DEATH_HEIGHT    150 /**< Death menu height. */
 
-#define BUTTON_WIDTH    90
-#define BUTTON_HEIGHT   30
+#define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
+#define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
 
-#define menu_Open(f)    (menu_open |= (f))
-#define menu_Close(f)   (menu_open ^= (f))
-int menu_open = 0;
+#define menu_Open(f)    (menu_open |= (f)) /**< Marks a menu as opened. */
+#define menu_Close(f)   (menu_open ^= (f)) /**< Marksa  menu as closed. */
+int menu_open = 0; /**< Stores the opened/closed menus. */
 
 
 /*
  * prototypes
  */
 /* main menu */
-void menu_main_close (void);
+void menu_main_close (void); /**< Externed in save.c */
 static void menu_main_load( char* str );
 static void menu_main_new( char* str );
 static void menu_main_exit( char* str );
@@ -86,7 +91,11 @@ static void menu_death_main( char* str );
 static void menu_generic_close( char* str );
 
 
-
+/**
+ * @fn void menu_main (void)
+ *
+ * @brief Opens the main menu (titlescreen).
+ */
 void menu_main (void)
 {
    unsigned int bwid, wid;
@@ -121,6 +130,10 @@ void menu_main (void)
 
    menu_Open(MENU_MAIN);
 }
+/**
+ * @fn void menu_main_close (void)
+ * @brief Closes the main menu.
+ */
 void menu_main_close (void)
 {
    window_destroy( window_get("Main Menu") );
@@ -130,12 +143,22 @@ void menu_main_close (void)
 
    menu_Close(MENU_MAIN);
 }
+/**
+ * @fn static void menu_main_load( char* str )
+ * @brief Function to active the load game menu.
+ *    @param str Unused.
+ */
 static void menu_main_load( char* str )
 {
    (void)str;
 
    load_game_menu();
 }
+/**
+ * @fn static void menu_main_new( char* str )
+ * @brief Function to active the new game menu.
+ *    @param str Unused.
+ */
 static void menu_main_new( char* str )
 {
    (void)str;
@@ -143,6 +166,11 @@ static void menu_main_new( char* str )
    menu_main_close();
    player_new();
 }
+/**
+ * @fn static void menu_main_exit( char* str )
+ * @brief Function to exit the main menu and game.
+ *    @param str Unused.
+ */
 static void menu_main_exit( char* str )
 {
    (void)str;
@@ -169,19 +197,23 @@ static void menu_main_exit( char* str )
  * ingame menu
  *
  */
-/*
- * the small ingame menu
+/**
+ * @fnvoid menu_small (void)
+ *
+ * @brief Opens the small ingame menu.
  */
 void menu_small (void)
 {
+   unsigned int wid;
+
+   /* Check if menu should be openable. */
    if ((player == NULL) || player_isFlag(PLAYER_DESTROYED)
          || pilot_isFlag(player,PILOT_DEAD) ||
          (menu_isOpen(MENU_MAIN) ||
          menu_isOpen(MENU_SMALL) ||
          menu_isOpen(MENU_DEATH) ))
-      return; /* menu is already open */
+      return;
 
-   unsigned int wid;
    wid = window_create( "Menu", -1, -1, MENU_WIDTH, MENU_HEIGHT );
 
    window_setCancel( wid, menu_small_close );
@@ -197,12 +229,22 @@ void menu_small (void)
 
    menu_Open(MENU_SMALL);
 }
+/**
+ * @fn static void menu_small_close( char* str )
+ * @brief Closes the small ingame menu.
+ *    @param str Unused.
+ */
 static void menu_small_close( char* str )
 {
    (void)str;
    window_destroy( window_get("Menu") );
    menu_Close(MENU_SMALL);
 }
+/**
+ * @fn static void menu_small_exit( char* str )
+ * @brief Closes the small ingame menu and goes back to the main menu.
+ *    @param str Unused.
+ */
 static void menu_small_exit( char* str )
 {
    (void)str;
@@ -210,19 +252,22 @@ static void menu_small_exit( char* str )
    menu_Close(MENU_SMALL);
    menu_main();
 }
-
-/*
- * edits the options
+/**
+ * @fn static void edit_options( char* str )
+ * @brief Edits the options
+ *    @param str Unused.
+ * @todo Make the options menu.
  */
 static void edit_options( char* str )
 {
    (void)str;
-   /** @todo make options menu */
 }
 
 
-/*
- * exits the game
+/**
+ * @fn static void exit_game (void)
+ *
+ * @brief Exits the game.
  */
 static void exit_game (void)
 {
@@ -244,14 +289,20 @@ static void exit_game (void)
  * information menu
  *
  */
+/**
+ * @fn void menu_info (void)
+ *
+ * @brief Opens the information menu.
+ */
 void menu_info (void)
 {
-   if (menu_isOpen(MENU_INFO)) return;
-
    char str[128];
    char *nt;
    unsigned int wid;
    wid = window_create( "Info", -1, -1, INFO_WIDTH, INFO_HEIGHT );
+
+   /* Can't open menu twice. */
+   if (menu_isOpen(MENU_INFO)) return;
 
    /* pilot generics */
    nt = ntime_pretty( ntime_get() );
@@ -299,6 +350,11 @@ void menu_info (void)
 
    menu_Open(MENU_INFO);
 }
+/**
+ * @fn static void menu_info_close( char* str )
+ * @brief Closes the information menu.
+ *    @param str Unused.
+ */
 static void menu_info_close( char* str )
 {
    if (strcmp(str,"btnClose")==0)
@@ -308,8 +364,12 @@ static void menu_info_close( char* str )
 }
 
 
-/*
- * shows the player what outfits he has
+/**
+ * @fn static void info_outfits_menu( char* str )
+ *
+ * @brief Shows the player what outfits he has.
+ *
+ *    @param str Unused.
  */
 static void info_outfits_menu( char* str )
 {
@@ -337,8 +397,12 @@ static void info_outfits_menu( char* str )
 }
 
 
-/*
- * Shows the player's cargo.
+/**
+ * @fn static void info_cargo_menu( char* str )
+ *
+ * @brief Shows the player his cargo.
+ *
+ *    @param str Unused.
  */
 static void info_cargo_menu( char* str )
 {
@@ -382,9 +446,13 @@ static void info_cargo_menu( char* str )
          CARGO_WIDTH - 40, CARGO_HEIGHT - BUTTON_HEIGHT - 80,
          "lstCargo", buf, nbuf, 0, cargo_update );
 
-
    cargo_update(NULL);
 }
+/**
+ * @fn static void cargo_update( char* str )
+ * @brief Updates the player's cargo in the cargo menu.
+ *    @param str Unused.
+ */
 static void cargo_update( char* str )
 {
    (void)str;
@@ -402,6 +470,11 @@ static void cargo_update( char* str )
    else
       window_enableButton( wid, "btnJettisonCargo" );
 }
+/**
+ * @fn static void cargo_jettison( char* str )
+ * @brief Makes the player jettison the currently selected cargo.
+ *    @param str Unused.
+ */
 static void cargo_jettison( char* str )
 {
    (void)str;
@@ -425,8 +498,12 @@ static void cargo_jettison( char* str )
 }
 
 
-/*
- * Shows the player's active missions.
+/**
+ * @fn static void info_missions_menu( char* str )
+ * 
+ * @brief Shows the player's active missions.
+ *
+ *    @param str Unused.
  */
 static void info_missions_menu( char* str )
 {
@@ -456,6 +533,11 @@ static void info_missions_menu( char* str )
    /* list */
    mission_menu_genList(1);
 }
+/**
+ * @fn static void mission_menu_genList( int first )
+ * @brief Creates the current mission list for the mission menu.
+ *    @param first 1 if it's the first time run.
+ */
 static void mission_menu_genList( int first )
 {
    int i,j;
@@ -485,6 +567,11 @@ static void mission_menu_genList( int first )
 
    mission_menu_update(NULL);
 }
+/**
+ * @fn static void mission_menu_update( char* str )
+ * @brief Updates the mission menu mission information based on what's selected.
+ *    @param str Unusued.
+ */
 static void mission_menu_update( char* str )
 {
    char *active_misn;
@@ -509,6 +596,11 @@ static void mission_menu_update( char* str )
    window_modifyText( wid, "txtDesc", misn->desc );
    window_enableButton( wid, "btnAbortMission" );
 }
+/**
+ * @fn static void mission_menu_abort( char* str )
+ * @brief Aborts a mission in the mission menu.
+ *    @param str Unused.
+ */
 static void mission_menu_abort( char* str )
 {
    (void)str;
@@ -534,8 +626,10 @@ static void mission_menu_abort( char* str )
 
 
 
-/*
- * pilot died
+/**
+ * @fn void menu_death (void)
+ *
+ * @brief Player death menu, appears when player got creamed.
  */
 void menu_death (void)
 {
@@ -549,6 +643,11 @@ void menu_death (void)
          "btnExit", "Exit Game", (void(*)(char*)) exit_game );
    menu_Open(MENU_DEATH);
 }
+/**
+ * @fn static void menu_death_main( char* str )
+ * @brief Closes the player death menu.
+ *    @param str Unused.
+ */
 static void menu_death_main( char* str )
 {
    (void)str;
@@ -562,8 +661,15 @@ static void menu_death_main( char* str )
 }
 
 
-/*
- * generic close approach
+/**
+ * @fn static void menu_generic_close( char* str )
+ *
+ * @brief Generic function to close the current window.
+ *
+ * Only works if the button is labeled "closeFoo", where "Foo" would be the
+ *  window name.
+ *
+ *    @param str Used by the button it's assigned to internally.
  */
 static void menu_generic_close( char* str )
 {
