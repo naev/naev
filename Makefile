@@ -69,7 +69,7 @@ DATA_XML = $(shell find dat/ -name '*.xml' -o -name '*.ttf')
 DATA_SND = $(shell find snd/ -name '*.ogg' -o -name '*.wav') snd/music.lua
 DATA_MISN = $(shell find dat/missions/ -name '*.lua')
 DATA = data
-DATAFILES = $(VERSIONFILE) $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN)
+DATAFILES = $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN)
 
 
 
@@ -105,10 +105,10 @@ $(VERSIONFILE):
 	@echo -n "$(VMAJOR).$(VMINOR).$(VREV)" > $(VERSIONFILE)
 
 
-data: pack $(DATAFILES) src/pack.c utils/pack/main.c
+data: pack $(DATAFILES)
 	@echo -n "$(VMAJOR).$(VMINOR).$(VREV)" > $(VERSIONFILE)
 	@echo -e "\tCreating data\n"
-	@./pack $(DATA) $(DATAFILES)
+	@./pack $(DATA) $(DATAFILES) $(VERSIONFILE)
 
 utils: mkspr
 
