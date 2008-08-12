@@ -27,61 +27,7 @@
    <class>M</class>
   </general>
  </planet>
- <planet name="New Haven">
-  <GFX>
-   <exterior>gas.png</exterior>
-   <space>D00.png</space>
-  </GFX>
-  <pos>
-   <y>0</y>
-   <x>0</x>
-  </pos>
-  <general>
-   <bar>The Slop and Grill is one of the nastiest taverns in the universe.  The food and drink doesn't exactly help.  Most of it is brewed on New Haven and wouldn't pass any of the minimal health insurance tests.  Some of the booze even doubles as ship fuel if needed, which says a lot about the quality.The clients are also deep space thugs, pirates, contrabandiers, mercenaries and othe shady folk that insist on keeping the ground coated with blood and broken teeth.  Not a great place to bring the family.</bar>
-   <description>New Haven is a small planet located beyond the boundries of law and justice.  Founded by Bartax the Great, one of the most successful pirates to ever live after the old Haven was annihilated.The planet is mostly covered by very toxic gases and has a lot of radiation if you stray from the stronghold.  These very features are what made the Empire qualify it as uninhabitable as it doesn't have any strategic resources.  It's distance from other civilized worlds also gives it a nice cover from prying eyes.</description>
-   <faction>Pirate</faction>
-   <commodities>
-    <commodity>Medicine</commodity>
-    <commodity>Luxury Goods</commodity>
-    <commodity>Industrial Goods</commodity>
-   </commodities>
-   <tech>
-    <main>13</main>
-    <special>9009</special>
-   </tech>
-   <services>31</services>
-   <class>D</class>
-  </general>
- </planet>
- <planet name="Anecu">
-  <GFX>
-   <exterior>aquatic.png</exterior>
-   <space>M03.png</space>
-  </GFX>
-  <pos>
-   <y>0</y>
-   <x>0</x>
-  </pos>
-  <general>
-   <bar>The spaceport bar is aproximately 3 km below the surface of the planet.  Most of the walls are of a hardened transparet polymer that allows you to see into the darkness of the water.  Every so often you can notice a gelatinous creature slide around, barely illuminated by the bar lighting.</bar>
-   <description>Anecu is a completely aquatic planet.  It's surface is covered completely by water.  In the shallow areas great underwater cities are constructed, as the climate above the water can be very harsh (waves been recorded to be up to 2 km high).  The planet boasts of extensive ship designing facilities, using the high pressure water as a testbed for ships of all sorts.</description>
-   <faction>Dvaered</faction>
-   <commodities>
-    <commodity>Food</commodity>
-    <commodity>Medicine</commodity>
-    <commodity>Ore</commodity>
-    <commodity>Luxury Goods</commodity>
-    <commodity>Industrial Goods</commodity>
-   </commodities>
-   <tech>
-    <main>6</main>
-    <special>0</special>
-   </tech>
-   <services>31</services>
-   <class>M</class>
-  </general>
- </planet>
- <planet name="Zabween">
+ <planet name="Cerberus">
   <GFX>
    <exterior>station00.png</exterior>
    <space>000.png</space>
@@ -91,106 +37,15 @@
    <x>0</x>
   </pos>
   <general>
-   <bar>The bar walls are covered with pictures of Empire soldiers fallen in the fight against Haven and piracy in general.  It has become a custom of the Empire to put pictures of the fallen from fighting piracy.  They are working on another addition to be able to fit more pictures.</bar>
-   <description>Zabween is an old station.  It was first created as an outpost to fight piracy, but with the destruction of the Haven it has calmed down a lot.  Now it's more of a gigantic commercial center selling all sorts of goods.  It keeps a museum with all sorts of ships and weapons that were used in the final fight against Haven.</description>
+   <bar>The bar is maintained by off-duty scientists and soldiers.  It's very small and doesn't have much offerings.  There's not much ambient noise, it seems like the boredom has gotten the best of most of the people.</bar>
+   <description>Named after the guardian dog of hell for it's role in monitoring and observing the immense Sol nebulae.  It was created shortly after the nebulae stabilized.  Exact details are confidential and there's more then enough military influence to make it suspicious.  With all the conspiration theories around the Incident, one can never be too sure where reality ends and fiction starts.</description>
    <faction>Empire</faction>
-   <commodities>
-    <commodity>Food</commodity>
-    <commodity>Medicine</commodity>
-    <commodity>Luxury Goods</commodity>
-    <commodity>Industrial Goods</commodity>
-   </commodities>
-   <tech>
-    <main>9</main>
-    <special>0</special>
-   </tech>
-   <services>31</services>
-   <class>0</class>
-  </general>
- </planet>
- <planet name="Tau Station">
-  <GFX>
-   <exterior>station00.png</exterior>
-   <space>000.png</space>
-  </GFX>
-  <pos>
-   <y>54</y>
-   <x>47</x>
-  </pos>
-  <general>
-   <bar>The Tau Prime algae has a very strong stench which seems to envelope the bar completely.  The smell is soo strong you can actually taste it.  It doesn't taste nearly as good unprocessed. Most algae runners stop to grab drinks between runs to try to get the taste of the algae out of their mouth, although the usually use licor made out of processed algae to do that.</bar>
-   <description>Tau Station was constructed with the sole purpose of exploiting the algae produced on Tau Prime.  Being a completely watery algae world with a very corrosive environment, it was deemed more profitable to build a space station then a city on the planet surface.   From the station windows you can see heavy algae collectors flying to and from the surface on their endless algae runs.</description>
-   <faction>Empire</faction>
-   <commodities>
-    <commodity>Food</commodity>
-   </commodities>
-   <tech>
-    <main>7</main>
-    <special>0</special>
-   </tech>
-   <services>7</services>
-   <class>0</class>
-  </general>
- </planet>
- <planet name="S38729">
-  <GFX>
-   <exterior>station01.png</exterior>
-   <space>001.png</space>
-  </GFX>
-  <pos>
-   <y>0</y>
-   <x>0</x>
-  </pos>
-  <general>
-   <services>0</services>
    <tech>
     <main>0</main>
+    <special>0</special>
    </tech>
-   <class>3</class>
-   <faction>Collective</faction>
-  </general>
- </planet>
- <planet name="S23491">
-  <GFX>
-   <exterior>station01.png</exterior>
-   <space>001.png</space>
-  </GFX>
-  <pos>
-   <y>0</y>
-   <x>0</x>
-  </pos>
-  <general>
-   <services>0</services>
-   <tech>
-    <main>0</main>
-   </tech>
-   <class>3</class>
-   <faction>Collective</faction>
-  </general>
- </planet>
- <planet name="Torloth">
-  <GFX>
-   <exterior>mining.png</exterior>
-   <space>G00.png</space>
-  </GFX>
-  <pos>
-   <y>0</y>
-   <x>0</x>
-  </pos>
-  <general>
-   <bar>The spaceport bar is carved into a rich mineral deposit giving the walls great reflections and colours.  The local drink are made partially with minerals giving all a rocky taste.</bar>
-   <description>Torloth is a heavy mining planet.  It has rich ores and minerals in abundance with no local life forms to speak of.  It's one of the strongholds of the Nexus corporation housing some of their important ship factories.  Of course the bigger ships have to get built off planet.</description>
-   <faction>Empire</faction>
-   <commodities>
-    <commodity>Food</commodity>
-    <commodity>Ore</commodity>
-    <commodity>Industrial Goods</commodity>
-   </commodities>
-   <tech>
-    <main>5</main>
-   </tech>
-   <services>7</services>
-   <class>G</class>
+   <services>3</services>
+   <class>0</class>
   </general>
  </planet>
  <planet name="Eiroik">
@@ -209,6 +64,24 @@
    </tech>
    <class>J</class>
    <description>Eiroik used to be a mining planet under the Empire rule until the Collective wiped out the human colonies on it.  The harsh atmosphere did the rest, erasing all tracks of former human life.</description>
+  </general>
+ </planet>
+ <planet name="S23491">
+  <GFX>
+   <exterior>station01.png</exterior>
+   <space>001.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <services>0</services>
+   <tech>
+    <main>0</main>
+   </tech>
+   <class>3</class>
+   <faction>Collective</faction>
   </general>
  </planet>
  <planet name="Selphod">
@@ -237,6 +110,55 @@
    <class>P</class>
   </general>
  </planet>
+ <planet name="Tau Station">
+  <GFX>
+   <exterior>station00.png</exterior>
+   <space>000.png</space>
+  </GFX>
+  <pos>
+   <y>54</y>
+   <x>47</x>
+  </pos>
+  <general>
+   <bar>The Tau Prime algae has a very strong stench which seems to envelope the bar completely.  The smell is soo strong you can actually taste it.  It doesn't taste nearly as good unprocessed. Most algae runners stop to grab drinks between runs to try to get the taste of the algae out of their mouth, although the usually use licor made out of processed algae to do that.</bar>
+   <description>Tau Station was constructed with the sole purpose of exploiting the algae produced on Tau Prime.  Being a completely watery algae world with a very corrosive environment, it was deemed more profitable to build a space station then a city on the planet surface.   From the station windows you can see heavy algae collectors flying to and from the surface on their endless algae runs.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <tech>
+    <main>7</main>
+    <special>0</special>
+   </tech>
+   <services>7</services>
+   <class>0</class>
+  </general>
+ </planet>
+ <planet name="Torloth">
+  <GFX>
+   <exterior>mining.png</exterior>
+   <space>G00.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <bar>The spaceport bar is carved into a rich mineral deposit giving the walls great reflections and colours.  The local drink are made partially with minerals giving all a rocky taste.</bar>
+   <description>Torloth is a heavy mining planet.  It has rich ores and minerals in abundance with no local life forms to speak of.  It's one of the strongholds of the Nexus corporation housing some of their important ship factories.  Of course the bigger ships have to get built off planet.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>5</main>
+   </tech>
+   <services>7</services>
+   <class>G</class>
+  </general>
+ </planet>
  <planet name="Omega Station">
   <GFX>
    <exterior>station00.png</exterior>
@@ -262,55 +184,48 @@
    <class>0</class>
   </general>
  </planet>
- <planet name="Darkshed">
+ <planet name="Tau Prime">
   <GFX>
-   <exterior>station02.png</exterior>
-   <space>002.png</space>
-  </GFX>
-  <pos>
-   <y>-33</y>
-   <x>-57</x>
-  </pos>
-  <general>
-   <bar>The Darkshed cantina is decorated with all sorts of odd artifacts that marked different tendencies in spaceship outfitting.</bar>
-   <description>Reknown for it's outfit market and shipyards.  Almost the entire Darkshed station is dedicated to trading outfits and ships.  Mercenaries and bounty hunters from all over the galaxy come here to see the newest enhancements available in the market.  This tends to also attract many of the shadier characters in the universe winding up with frequent fights where they test their newly bought outfits.</description>
-   <faction>Independent</faction>
-   <commodities>
-    <commodity>Food</commodity>
-    <commodity>Ore</commodity>
-    <commodity>Industrial Goods</commodity>
-    <commodity>Medicine</commodity>
-    <commodity>Luxury Goods</commodity>
-   </commodities>
-   <tech>
-    <main>15</main>
-    <special>0</special>
-   </tech>
-   <services>31</services>
-   <class>0</class>
-  </general>
- </planet>
- <planet name="Raelid Outpost">
-  <GFX>
-   <exterior>station02.png</exterior>
-   <space>002.png</space>
+   <space>M02.png</space>
   </GFX>
   <pos>
    <y>0</y>
    <x>0</x>
   </pos>
   <general>
-   <bar>Another big dirty bar full of hulking, smelly, sweaty Dvaereds.  They make a good brew though.</bar>
-   <description>Constructed by many captured and then enslaved FLF armsmen.  The design is pretty sturdy but you can't help to think there must be a hidden bomb somewhere, just waiting to go off and kill the Dvaered opressors.</description>
-   <services>11</services>
+   <services>0</services>
    <tech>
-    <main>6</main>
+    <main>0</main>
+    <special>0</special>
    </tech>
-   <class>0</class>
-   <faction>Dvaered</faction>
+   <class>M</class>
   </general>
  </planet>
- <planet name="S72839">
+ <planet name="Arrakis">
+  <GFX>
+   <exterior>desertic.png</exterior>
+   <space>H00.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <bar>The Arrakeen canteen is a shady place.  Many scoundrels and lowlifes make this their home to avoid notice from the universal police.</bar>
+   <description>Arrakis is a desert planet with no natural precipitation.</description>
+   <faction>Independent</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+   </commodities>
+   <tech>
+    <main>4</main>
+   </tech>
+   <services>7</services>
+   <class>H</class>
+  </general>
+ </planet>
+ <planet name="S38729">
   <GFX>
    <exterior>station01.png</exterior>
    <space>001.png</space>
@@ -328,7 +243,7 @@
    <faction>Collective</faction>
   </general>
  </planet>
- <planet name="S49281">
+ <planet name="S72839">
   <GFX>
    <exterior>station01.png</exterior>
    <space>001.png</space>
@@ -341,7 +256,6 @@
    <services>0</services>
    <tech>
     <main>0</main>
-    <special>0</special>
    </tech>
    <class>3</class>
    <faction>Collective</faction>
@@ -373,9 +287,129 @@
    <class>M</class>
   </general>
  </planet>
- <planet name="Tau Prime">
+ <planet name="S00000">
   <GFX>
-   <space>M02.png</space>
+   <exterior>station01.png</exterior>
+   <space>001.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <services>0</services>
+   <tech>
+    <main>0</main>
+   </tech>
+   <class>3</class>
+   <faction>Collective</faction>
+  </general>
+ </planet>
+ <planet name="New Haven">
+  <GFX>
+   <exterior>gas.png</exterior>
+   <space>D00.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <bar>The Slop and Grill is one of the nastiest taverns in the universe.  The food and drink doesn't exactly help.  Most of it is brewed on New Haven and wouldn't pass any of the minimal health insurance tests.  Some of the booze even doubles as ship fuel if needed, which says a lot about the quality.The clients are also deep space thugs, pirates, contrabandiers, mercenaries and othe shady folk that insist on keeping the ground coated with blood and broken teeth.  Not a great place to bring the family.</bar>
+   <description>New Haven is a small planet located beyond the boundries of law and justice.  Founded by Bartax the Great, one of the most successful pirates to ever live after the old Haven was annihilated.The planet is mostly covered by very toxic gases and has a lot of radiation if you stray from the stronghold.  These very features are what made the Empire qualify it as uninhabitable as it doesn't have any strategic resources.  It's distance from other civilized worlds also gives it a nice cover from prying eyes.</description>
+   <faction>Pirate</faction>
+   <commodities>
+    <commodity>Medicine</commodity>
+    <commodity>Luxury Goods</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>13</main>
+    <special>9009</special>
+   </tech>
+   <services>31</services>
+   <class>D</class>
+  </general>
+ </planet>
+ <planet name="Zabween">
+  <GFX>
+   <exterior>station00.png</exterior>
+   <space>000.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <bar>The bar walls are covered with pictures of Empire soldiers fallen in the fight against Haven and piracy in general.  It has become a custom of the Empire to put pictures of the fallen from fighting piracy.  They are working on another addition to be able to fit more pictures.</bar>
+   <description>Zabween is an old station.  It was first created as an outpost to fight piracy, but with the destruction of the Haven it has calmed down a lot.  Now it's more of a gigantic commercial center selling all sorts of goods.  It keeps a museum with all sorts of ships and weapons that were used in the final fight against Haven.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Luxury Goods</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>9</main>
+    <special>0</special>
+   </tech>
+   <services>31</services>
+   <class>0</class>
+  </general>
+ </planet>
+ <planet name="Raelid Outpost">
+  <GFX>
+   <exterior>station02.png</exterior>
+   <space>002.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <bar>Another big dirty bar full of hulking, smelly, sweaty Dvaereds.  They make a good brew though.</bar>
+   <description>Constructed by many captured and then enslaved FLF armsmen.  The design is pretty sturdy but you can't help to think there must be a hidden bomb somewhere, just waiting to go off and kill the Dvaered opressors.</description>
+   <faction>Dvaered</faction>
+   <tech>
+    <main>6</main>
+   </tech>
+   <services>11</services>
+   <class>0</class>
+  </general>
+ </planet>
+ <planet name="Darkshed">
+  <GFX>
+   <exterior>station02.png</exterior>
+   <space>002.png</space>
+  </GFX>
+  <pos>
+   <y>-33</y>
+   <x>-57</x>
+  </pos>
+  <general>
+   <bar>The Darkshed cantina is decorated with all sorts of odd artifacts that marked different tendencies in spaceship outfitting.</bar>
+   <description>Reknown for it's outfit market and shipyards.  Almost the entire Darkshed station is dedicated to trading outfits and ships.  Mercenaries and bounty hunters from all over the galaxy come here to see the newest enhancements available in the market.  This tends to also attract many of the shadier characters in the universe winding up with frequent fights where they test their newly bought outfits.</description>
+   <faction>Independent</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Luxury Goods</commodity>
+   </commodities>
+   <tech>
+    <main>15</main>
+    <special>0</special>
+   </tech>
+   <services>31</services>
+   <class>0</class>
+  </general>
+ </planet>
+ <planet name="S49281">
+  <GFX>
+   <exterior>station01.png</exterior>
+   <space>001.png</space>
   </GFX>
   <pos>
    <y>0</y>
@@ -387,7 +421,8 @@
     <main>0</main>
     <special>0</special>
    </tech>
-   <class>M</class>
+   <class>3</class>
+   <faction>Collective</faction>
   </general>
  </planet>
  <planet name="Ozogo X">
@@ -406,46 +441,32 @@
    <class>J</class>
   </general>
  </planet>
- <planet name="Arrakis">
+ <planet name="Anecu">
   <GFX>
-   <exterior>desertic.png</exterior>
-   <space>H00.png</space>
+   <exterior>aquatic.png</exterior>
+   <space>M03.png</space>
   </GFX>
   <pos>
    <y>0</y>
    <x>0</x>
   </pos>
   <general>
-   <bar>The Arrakeen canteen is a shady place.  Many scoundrels and lowlifes make this their home to avoid notice from the universal police.</bar>
-   <description>Arrakis is a desert planet with no natural precipitation.</description>
-   <faction>Independent</faction>
+   <bar>The spaceport bar is aproximately 3 km below the surface of the planet.  Most of the walls are of a hardened transparet polymer that allows you to see into the darkness of the water.  Every so often you can notice a gelatinous creature slide around, barely illuminated by the bar lighting.</bar>
+   <description>Anecu is a completely aquatic planet.  It's surface is covered completely by water.  In the shallow areas great underwater cities are constructed, as the climate above the water can be very harsh (waves been recorded to be up to 2 km high).  The planet boasts of extensive ship designing facilities, using the high pressure water as a testbed for ships of all sorts.</description>
+   <faction>Dvaered</faction>
    <commodities>
     <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
     <commodity>Ore</commodity>
+    <commodity>Luxury Goods</commodity>
+    <commodity>Industrial Goods</commodity>
    </commodities>
    <tech>
-    <main>4</main>
+    <main>6</main>
+    <special>0</special>
    </tech>
-   <services>7</services>
-   <class>H</class>
-  </general>
- </planet>
- <planet name="S00000">
-  <GFX>
-   <exterior>station01.png</exterior>
-   <space>001.png</space>
-  </GFX>
-  <pos>
-   <y>0</y>
-   <x>0</x>
-  </pos>
-  <general>
-   <services>0</services>
-   <tech>
-    <main>0</main>
-   </tech>
-   <class>3</class>
-   <faction>Collective</faction>
+   <services>31</services>
+   <class>M</class>
   </general>
  </planet>
 </Planets>
