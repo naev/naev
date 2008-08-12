@@ -11,7 +11,7 @@
 #include "naev.h"
 #include "rng.h"
 #include "ntime.h"
-#include "toolkit.h"
+#include "dialogue.h"
 #include "space.h"
 #include "land.h"
 #include "nluadef.h"

@@ -57,16 +57,6 @@ void window_addInput( const unsigned int wid,
       char* name, const int max, const int oneline );
 
 
-
-/*
- * popups and alerts
- */
-void dialogue_alert( const char *fmt, ... ); /* does not pause execution */
-void dialogue_msg( char *caption, const char *fmt, ... );
-int dialogue_YesNo( char *caption, const char *fmt, ... ); /* Yes = 1, No = 0 */
-char* dialogue_input( char* title, int min, int max, const char *fmt, ... );
-
-
 /*
  * modification
  */
@@ -129,5 +119,5 @@ int toolkit_init (void);
 void toolkit_exit (void);
 
 
-#endif
+#endif /* TOOLKIT_H */
 

@@ -12,6 +12,7 @@
 #include "naev.h"
 #include "log.h"
 #include "toolkit.h"
+#include "dialogue.h"
 #include "player.h"
 #include "rng.h"
 #include "music.h"

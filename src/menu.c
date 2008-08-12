@@ -11,6 +11,7 @@
 #include "SDL.h"
 
 #include "toolkit.h"
+#include "dialogue.h"
 #include "log.h"
 #include "naev.h"
 #include "pilot.h"

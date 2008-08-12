@@ -14,6 +14,7 @@
 #include "xml.h"
 #include "player.h"
 #include "toolkit.h"
+#include "dialogue.h"
 #include "menu.h"
 #include "nfile.h"
 #include "hook.h"

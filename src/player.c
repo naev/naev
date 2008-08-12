@@ -28,6 +28,7 @@
 #include "pause.h"
 #include "menu.h"
 #include "toolkit.h"
+#include "dialogue.h"
 #include "mission.h"
 #include "misn_lua.h"
 #include "ntime.h"
