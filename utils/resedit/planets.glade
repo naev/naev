@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Wed Jun 18 20:18:48 2008 -->
+<!--Generated with glade3 3.4.5 on Tue Aug 12 16:36:04 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="winPlanets">
     <property name="width_request">600</property>
@@ -599,12 +599,15 @@
         <property name="visible">True</property>
         <child>
           <widget class="GtkScrolledWindow" id="scrolledwindow1">
+            <property name="width_request">400</property>
+            <property name="height_request">400</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
             <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
             <child>
               <widget class="GtkScrolledWindow" id="scrolledwindow2">
+                <property name="width_request">400</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
