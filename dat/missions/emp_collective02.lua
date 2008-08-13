@@ -1,3 +1,10 @@
+--[[
+
+   Third mission in the collective mini campaign.
+
+   You must land on an ex-empire planet in collective territory and return.
+
+]]--
 
 lang = naev.lang()
 if lang == "es" then

@@ -1,3 +1,9 @@
+--[[
+
+   Handles the randomly created cargo delivery missions.
+
+]]--
+
 lang = naev.lang()
 if lang == "es" then
    -- not translated atm

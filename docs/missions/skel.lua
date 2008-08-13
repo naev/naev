@@ -1,3 +1,10 @@
+--[[
+
+   MISSION: <NAME GOES HERE>
+   DESCRIPTION: <DESCRIPTION GOES HERE>
+
+]]--
+
 -- localization stuff, translators would work here
 lang = naev.lang()
 if lang == "es" then

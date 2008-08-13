@@ -1,3 +1,10 @@
+--[[
+
+   Second mission in the mini collective campaign.
+
+   You must inspect a system for wireless communications.
+
+]]--
 
 lang = naev.lang()
 if lang == "es" then

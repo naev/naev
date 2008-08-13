@@ -1,3 +1,9 @@
+--[[
+
+   Handles the randomly generated Empire cargo missions.
+
+]]--
+
 lang = naev.lang()
 if lang == "es" then
    -- not translated atm

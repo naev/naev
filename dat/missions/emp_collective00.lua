@@ -1,3 +1,10 @@
+--[[
+
+   Starts the collective mini campaign.
+
+   You must inspect a stray drone.
+
+]]--
 
 lang = naev.lang()
 if lang == "es" then
