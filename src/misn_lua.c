@@ -2,6 +2,13 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file misn_lua.c
+ *
+ * @brief Handles the mission lua bindings.
+ */
+
+
 #include "misn_lua.h"
 
 #include <stdlib.h>
@@ -31,34 +38,39 @@
 
 
 /* similar to lua vars, but with less variety */
-#define MISN_VAR_NIL    0
-#define MISN_VAR_NUM    1
-#define MISN_VAR_BOOL   2
-#define MISN_VAR_STR    3
+#define MISN_VAR_NIL    0 /**< Nil type. */
+#define MISN_VAR_NUM    1 /**< Number type. */
+#define MISN_VAR_BOOL   2 /**< Boolean type. */
+#define MISN_VAR_STR    3 /**< String type. */
+/**
+ * @struct misn_var
+ *
+ * @brief Contains a mission variable.
+ */
 typedef struct misn_var_ {
-   char* name;
-   char type;
+   char* name; /**< Name of the variable. */
+   char type; /**< Type of the variable. */
    union {
-      double num;
-      char* str;
-      int b;
-   } d;
+      double num; /**< Used if type is number. */
+      char* str; /**< Used if type is string. */
+      int b; /**< Used if type is boolean. */
+   } d; /**< Variable data. */
 } misn_var;
 
 
 /*
  * variable stack
  */
-static misn_var* var_stack = NULL;
-static int var_nstack = 0;
-static int var_mstack = 0;
+static misn_var* var_stack = NULL; /**< Stack of mission variables. */
+static int var_nstack = 0; /**< Number of mission variables. */
+static int var_mstack = 0; /**< Memory size of the mission variable stack. */
 
 
 /*
  * current mission
  */
-static Mission *cur_mission = NULL;
-static int misn_delete = 0; /* if 1 delete current mission */
+static Mission *cur_mission = NULL; /**< Contains the current mission for a running script. */
+static int misn_delete = 0; /**< if 1 delete current mission */
 
 
 /*
@@ -96,7 +108,7 @@ static const luaL_reg misn_methods[] = {
    { "accept", misn_accept },
    { "finish", misn_finish },
    {0,0}
-};
+}; /**< Mission lua methods. */
 /* var */
 static int var_peek( lua_State *L );
 static int var_pop( lua_State *L );
@@ -106,11 +118,11 @@ static const luaL_reg var_methods[] = {
    { "pop", var_pop },
    { "push", var_push },
    {0,0}
-};
-static const luaL_reg var_cond_methods[] = { /* only conditional */
+}; /**< Mission variable lua methods. */
+static const luaL_reg var_cond_methods[] = {
    { "peek", var_peek },
    {0,0}
-};
+}; /**< Conditional mission variable lua methods. */
 /* player */
 static int player_getname( lua_State *L );
 static int player_shipname( lua_State *L );
@@ -136,14 +148,14 @@ static const luaL_reg player_methods[] = {
    { "getFaction", player_getFaction },
    { "getRating", player_getRating },
    {0,0}
-};
+}; /**< Player lua methods. */
 static const luaL_reg player_cond_methods[] = {
    { "name", player_getname },
    { "ship", player_shipname },
    { "getFaction", player_getFaction },
    { "getRating", player_getRating },
    {0,0}
-};
+}; /**< Conditional player lua methods. */
 /* hooks */
 static int hook_land( lua_State *L );
 static int hook_takeoff( lua_State *L );
@@ -157,7 +169,7 @@ static const luaL_reg hook_methods[] = {
    { "enter", hook_enter },
    { "pilot", hook_pilot },
    {0,0}
-};
+}; /**< Hook lua methods. */
 /* pilots */
 static int pilot_addFleet( lua_State *L );
 static int pilot_rename( lua_State *L );
@@ -165,11 +177,16 @@ static const luaL_reg pilot_methods[] = {
    { "add", pilot_addFleet },
    { "rename", pilot_rename },
    {0,0}
-};
+}; /**< Pilot lua methods. */
 
 
-/*
- * register all the libraries here
+/**
+ * @fn int misn_loadLibs( lua_State *L )
+ *
+ * @brief Registers all the mission libraries.
+ *
+ *    @param L Lua state.
+ *    @return 0 on success.
  */
 int misn_loadLibs( lua_State *L )
 {
@@ -185,6 +202,14 @@ int misn_loadLibs( lua_State *L )
    lua_loadPilot(L);
    return 0;
 }
+/**
+ * @fn int misn_loadCondLibs( lua_State *L )
+ *
+ * @brief Registers all the mission conditional libraries.
+ *
+ *    @param L Lua state.
+ *    @return 0 on success.
+ */
 int misn_loadCondLibs( lua_State *L )
 {
    lua_loadTime(L,1);
@@ -196,11 +221,21 @@ int misn_loadCondLibs( lua_State *L )
 /*
  * individual library loading
  */
+/**
+ * @fn int lua_loadMisn( lua_State *L )
+ * @brief Loads the mission lua library.
+ *    @param L Lua state.
+ */
 int lua_loadMisn( lua_State *L )
 {  
    luaL_register(L, "misn", misn_methods);
    return 0;
 }  
+/**
+ * @fn int lua_loadVar( lua_State *L )
+ * @brief Loads the mission variable lua library.
+ *    @param L Lua state.
+ */
 int lua_loadVar( lua_State *L, int readonly )
 {
    if (readonly == 0)
@@ -209,6 +244,11 @@ int lua_loadVar( lua_State *L, int readonly )
       luaL_register(L, "var", var_cond_methods);
    return 0;
 }  
+/**
+ * @fn int lua_loadPlayer( lua_State *L )
+ * @brief Loads the player lua library.
+ *    @param L Lua state.
+ */
 int lua_loadPlayer( lua_State *L, int readonly )
 {
    if (readonly == 0)
@@ -217,11 +257,21 @@ int lua_loadPlayer( lua_State *L, int readonly )
       luaL_register(L, "player", player_cond_methods);
    return 0;
 }  
+/**
+ * @fn int lua_loadHook( lua_State *L )
+ * @brief Loads the hook lua library.
+ *    @param L Lua state.
+ */
 int lua_loadHook( lua_State *L )
 {
    luaL_register(L, "hook", hook_methods);
    return 0;
 }
+/**
+ * @fn int lua_loadPilot( lua_State *L )
+ * @brief Loads the pilot lua library.
+ *    @param L Lua state.
+ */
 int lua_loadPilot( lua_State *L )
 {
    luaL_register(L, "pilot", pilot_methods);
@@ -229,12 +279,14 @@ int lua_loadPilot( lua_State *L )
 }
 
 
-
-
-/*
- * runs a mission function
+/**
+ * @fn int misn_run( Mission *misn, char *func )
+ * 
+ * @brief Runs a mission function.
  *
- * -1 on error, 1 on misn.finish() call and 0 normally
+ *    @param misn Mission that owns the function.
+ *    @param func Name of the function to call.
+ *    @return -1 on error, 1 on misn.finish() call and 0 normally.
  */
 int misn_run( Mission *misn, char *func )
 {
@@ -270,8 +322,13 @@ int misn_run( Mission *misn, char *func )
 }
 
 
-/*
- * saves the mission variables
+/**
+ * @fn int var_save( xmlTextWriterPtr writer )
+ *
+ * @brief Saves the mission variables.
+ *
+ *    @param writer XML Writer to use.
+ *    @return 0 on success.
  */
 int var_save( xmlTextWriterPtr writer )
 {
@@ -311,8 +368,13 @@ int var_save( xmlTextWriterPtr writer )
 }
 
 
-/*
- * loads the vars
+/**
+ * @fn int var_load( xmlNodePtr parent )
+ *
+ * @brief Loads the vars from XML file.
+ *
+ *    @param parent Parent node containing the variables.
+ *    @return 0 on success.
  */
 int var_load( xmlNodePtr parent )
 {
@@ -362,8 +424,13 @@ int var_load( xmlNodePtr parent )
 }
 
 
-/*
- * adds a var to the stack, strings will be SHARED, don't free
+/**
+ * @fn static int var_add( misn_var *new_var )
+ *
+ * @brief Adds a var to the stack, strings will be SHARED, don't free.
+ *
+ *    @param new_var Variable to add.
+ *    @return 0 on success.
  */
 static int var_add( misn_var *new_var )
 {
@@ -391,8 +458,27 @@ static int var_add( misn_var *new_var )
 
 
 
-/*
- *   M I S N
+/**
+ * @defgroup MISN Misn Lua bindings
+ *
+ * @brief Generic mission Lua bindings.
+ *
+ * Functions should be called like:
+ *
+ * @code
+ * misn.function( parameters )
+ * @endcode
+ *
+ * @{
+ */
+/**
+ * @fn static int misn_setTitle( lua_State *L )
+ *
+ * @brief setTitle( string title )
+ *
+ * Sets the current mission title.
+ *
+ *    @param title Title to use for mission.
  */
 static int misn_setTitle( lua_State *L )
 {
@@ -404,6 +490,15 @@ static int misn_setTitle( lua_State *L )
    }
    return 0;
 }
+/**
+ * @fn static int misn_setDesc( lua_State *L )
+ *
+ * @brief setDesc( string desc )
+ *
+ * Sets the current mission description.
+ *
+ *    @param desc Description to use for mission.
+ */
 static int misn_setDesc( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
@@ -415,6 +510,15 @@ static int misn_setDesc( lua_State *L )
    else NLUA_INVALID_PARAMETER();
    return 0;
 }
+/**
+ * @fn static int misn_setReward( lua_State *L )
+ *
+ * @brief setReward( string reward )
+ *
+ * Sets the current mission reward description.
+ *
+ *    @param reward Description of the reward to use.
+ */
 static int misn_setReward( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
@@ -426,6 +530,16 @@ static int misn_setReward( lua_State *L )
    else NLUA_INVALID_PARAMETER();
    return 0;
 }
+/**
+ * @fn static int misn_setMarker( lua_State *L )
+ *
+ * @brief setMarker( [system sys )
+ *
+ * Sets the mission marker on the system.  If no parameters are passed it
+ * unsets the current marker.
+ *
+ *    @param sys System to mark.
+ */
 static int misn_setMarker( lua_State *L )
 {
    LuaSystem *sys;
@@ -447,6 +561,15 @@ static int misn_setMarker( lua_State *L )
 
    return 0;
 }
+/**
+ * @fn static int misn_factions( lua_State *L )
+ *
+ * @brief table factions( nil )
+ *
+ * Gets the factions the mission is available for.
+ *
+ *    @return A containing the factions.
+ */
 static int misn_factions( lua_State *L )
 {
    int i;
@@ -463,6 +586,15 @@ static int misn_factions( lua_State *L )
    }
    return 1;
 }
+/**
+ * @fn static int misn_accept( lua_State *L )
+ *
+ * @brief bool accept( nil )
+ *
+ * Attempts to accept the mission.
+ *
+ *    @return true if mission was properly accepted.
+ */
 static int misn_accept( lua_State *L )
 {
    int i, ret;
@@ -484,6 +616,18 @@ static int misn_accept( lua_State *L )
    lua_pushboolean(L,!ret); /* we'll convert C style return to lua */
    return 1;
 }
+/**
+ * @fn static int misn_finish( lua_State *L )
+ *
+ * @brief finish( bool properly )
+ *
+ * Finishes the mission.
+ *
+ *    @param properly If true and the mission is unique it marks the mission
+ *                     as completed.  If false it deletes the mission but
+ *                     doesn't mark it as completed.  If the parameter isn't
+ *                     passed it just ends the mission.
+ */
 static int misn_finish( lua_State *L )
 {
    int b;
@@ -505,13 +649,35 @@ static int misn_finish( lua_State *L )
 
    return 0;
 }
-
-
-
-/*
- *   V A R
+/**
+ * @}
  */
-/* basically checks if a variable exists */
+
+
+
+/**
+ * @defgroup VAR Mission Variable Lua bindings
+ *
+ * @brief Generic mission variable Lua bindings.
+ *
+ * Mission variables are similar to Lua variables, but are conserved for each
+ *  player across all the missions.  They are good for storing campaign or
+ *  other global values.
+ *
+ * Functions should be called like:
+ *
+ * @code
+ * var.function( parameters )
+ * @endcode
+ */
+/**
+ * @fn int var_checkflag( char* str )
+ *
+ * @brief Checks to see if a mission var exists.
+ *
+ *    @param str Name of the mission var.
+ *    @return 1 if it exists, 0 if it doesn't.
+ */
 int var_checkflag( char* str )
 {
    int i;
@@ -521,6 +687,18 @@ int var_checkflag( char* str )
          return 1;
    return 0;
 }
+/**
+ * @fn static int var_peek( lua_State *L )
+ * @ingroup VAR
+ *
+ * @brief misn_var peek( string name )
+ *
+ * Gets the mission variable value of a certain name.
+ *
+ *    @param name Name of the mission variable to get.
+ *    @return The value of the mission variable which will depend on what type
+ *             it is.
+ */
 static int var_peek( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
@@ -555,6 +733,16 @@ static int var_peek( lua_State *L )
    lua_pushnil(L);
    return 1;
 }
+/**
+ * @fn static int var_pop( lua_State *L )
+ * @ingroup VAR
+ *
+ * @brief pop( string name )
+ *
+ * Pops a mission variable off the stack, destroying it.
+ *
+ *    @param name Name of the mission variable to pop.
+ */
 static int var_pop( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
@@ -578,6 +766,18 @@ static int var_pop( lua_State *L )
    NLUA_DEBUG("Var '%s' not found in stack", str);
    return 0;
 }
+/**
+ * @fn static int var_push( lua_State *L )
+ * @ingroup VAR
+ *
+ * @brief push( string name, value )
+ *
+ * Creates a new mission variable.
+ *
+ *    @param name Name to use for the new mission variable.
+ *    @param value Value of the new mission variable.  Accepted types are:
+ *                  nil, bool, string or number.
+ */
 static int var_push( lua_State *L )
 {
    NLUA_MIN_ARGS(2);
@@ -614,6 +814,13 @@ static int var_push( lua_State *L )
 
    return 0;
 }
+/**
+ * @fn static void var_free( misn_var* var )
+ *
+ * @brief Frees a mission variable.
+ *
+ *    @param var Mission variable to free.
+ */
 static void var_free( misn_var* var )
 {
    switch (var->type) {
@@ -634,6 +841,11 @@ static void var_free( misn_var* var )
       var->name = NULL;
    }
 }
+/**
+ * @fn void var_cleanup (void)
+ *
+ * @brief Cleans up all the mission variables.
+ */
 void var_cleanup (void)
 {
    int i;
