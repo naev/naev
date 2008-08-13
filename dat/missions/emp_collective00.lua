@@ -22,7 +22,7 @@ else -- default english
    text = {}
    text[1] = [[As you enter the bar you notice some one signal to you from the counter.  You notice he's wearing an Empire insignia on his uniform.
 "Hello %s, we have a reconnaissance you might be interested.  You up for the challenge?"]]
-   text[2] = [["I don't think we've met.  I'm Sargent Dimitri.  If all goes well you'll be reporting to me for the next assignments."
+   text[2] = [["I don't think we've met.  I'm Sergeant Dimitri.  If all goes well you'll be reporting to me for the next assignments."
 "This week Collective activity has increased heavily around NGC-7291.  We've been trying to contain them, but reports detect that a scout broke through.  The scout was last detected near %s.  We expect it to not have gone far.  You are to locate the scout and report back to %s in the %s system.  It seems like the Collective is planning something and we want to follow their game a bit more"
 "It is of vital important that you do not engage the drone.  Report back as soon as you locate it."]]
    text[3] = [[After landing you head to the Empire military headquarters and find Sgt. Dimitri there.
