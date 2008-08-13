@@ -1920,11 +1920,16 @@ void player_jump (void)
 {
    int i;
 
-   if ((hyperspace_target == -1) ||
-         pilot_isFlag(player, PILOT_HYP_PREP) ||
-         pilot_isFlag(player, PILOT_HYP_BEGIN) ||
-         pilot_isFlag(player, PILOT_HYPERSPACE))
+   /* Must have a jump target and not be already jumping. */
+   if ((hyperspace_target == -1) || pilot_isFlag(player, PILOT_HYPERSPACE))
       return;
+
+   /* Already jumping, so we break jump. */
+   if (pilot_isFlag(player, PILOT_HYP_PREP)) {
+      pilot_hyperspaceAbort(player);
+      player_message("Aborting hyperspace sequence.");
+      return;
+   }
 
    i = space_hyperspace(player);
 

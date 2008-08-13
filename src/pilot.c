@@ -28,8 +28,8 @@
 #include "map.h"
 
 
-#define XML_ID          "Fleets"  /* XML section identifier */
-#define XML_FLEET       "fleet"
+#define XML_ID          "Fleets"  /**< XML document identifier. */
+#define XML_FLEET       "fleet" /**< XML individual fleet identifier. */
 
 #define FLEET_DATA      "dat/fleet.xml" /**< Where to find fleet data. */
 
@@ -51,7 +51,7 @@ static int pilot_mstack = 0; /**< Memory allocated for pilot_stack. */
  * stuff from player.c
  */
 extern Pilot* player;
-extern unsigned int player_crating;
+extern unsigned int player_crating; /**< Player's combat rating. */
 
 /* stack of fleets */
 static Fleet* fleet_stack = NULL; /**< Fleet stack. */
@@ -878,6 +878,26 @@ static void pilot_hyperspace( Pilot* p )
             pilot_setFlag(p, PILOT_HYP_BEGIN);
          }
       }
+   }
+}
+
+
+/**
+ * @fn void pilot_hyperspaceAbort( Pilot* p )
+ *
+ * @brief Stops the pilot from hyperspacing.
+ *
+ * Can only stop in preparation mode.
+ *
+ *    @param p Pilot to handle stop hyperspace.
+ */
+void pilot_hyperspaceAbort( Pilot* p )
+{
+   if (!pilot_isFlag(p, PILOT_HYPERSPACE)) {
+      if (pilot_isFlag(p, PILOT_HYP_BEGIN))
+         pilot_rmFlag(p, PILOT_HYP_BEGIN);
+      if (pilot_isFlag(p, PILOT_HYP_PREP))
+         pilot_rmFlag(p, PILOT_HYP_PREP);
    }
 }
 

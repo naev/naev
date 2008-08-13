@@ -247,6 +247,7 @@ void pilot_setSecondary( Pilot* p, const char* secondary );
 void pilot_setAmmo( Pilot* p );
 void pilot_setAfterburner( Pilot* p );
 double pilot_face( Pilot* p, const double dir );
+void pilot_hyperspaceAbort( Pilot* p );
 /* outfits */
 int pilot_freeSpace( Pilot* p ); /* weapon space */
 int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity );
