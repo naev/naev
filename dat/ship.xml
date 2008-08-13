@@ -4,7 +4,7 @@
   <GFX>llama</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>1</class>
+  <class>civ light</class>
   <price>120000</price>
   <fabricator>Melendez Corp.</fabricator>
   <tech>2</tech>
@@ -37,7 +37,7 @@
   <GFX>hyena</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>1</class>
+  <class>civ light</class>
   <price>180000</price>
   <fabricator>Aerosys</fabricator>
   <tech>2</tech>
@@ -70,7 +70,7 @@
   <GFX>pacifier</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>2</class>
+  <class>civ medium</class>
   <price>1200000</price>
   <fabricator>Nexus</fabricator>
   <tech>8</tech>
@@ -106,7 +106,7 @@
   <GFX target="pacifier">pacifier_empire</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>2</class>
+  <class>mil medium</class>
   <price>1200000</price>
   <fabricator>Nexus</fabricator>
   <tech>9999</tech>
@@ -142,7 +142,7 @@
   <GFX>hawking</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>3</class>
+  <class>civ heavy</class>
   <price>7500000</price>
   <fabricator>Nexus</fabricator>
   <tech>9</tech>
@@ -177,7 +177,7 @@
   <GFX target="hawking">hawking_empire</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>3</class>
+  <class>mil heavy</class>
   <price>7500000</price>
   <fabricator>Nexus</fabricator>
   <tech>9999</tech>
@@ -212,7 +212,7 @@
   <GFX>lancelot</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>2</class>
+  <class>civ medium</class>
   <price>500000</price>
   <fabricator>Nexus</fabricator>
   <tech>7</tech>
@@ -247,7 +247,7 @@
   <GFX target="lancelot">lancelot_empire</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>2</class>
+  <class>mil medium</class>
   <price>500000</price>
   <fabricator>Nexus</fabricator>
   <tech>9999</tech>
@@ -283,7 +283,7 @@
   <GFX>mule</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>2</class>
+  <class>civ heavy</class>
   <price>900000</price>
   <fabricator>Melendez Corp</fabricator>
   <tech>5</tech>
@@ -316,7 +316,7 @@
   <GFX>drone</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>7</class>
+  <class>rob light</class>
   <price>300000</price>
   <fabricator>Robosys</fabricator>
   <tech>99</tech>
@@ -349,7 +349,7 @@
   <GFX>gawain</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>1</class>
+  <class>civ light</class>
   <price>500000</price>
   <fabricator>Nexus</fabricator>
   <tech>11</tech>
@@ -382,7 +382,7 @@
   <GFX>goddard</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>3</class>
+  <class>civ heavy</class>
   <price>11500000</price>
   <fabricator>House Goddard</fabricator>
   <tech>1001</tech>
@@ -418,7 +418,7 @@
   <GFX target="goddard">goddard_dvaered</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>3</class>
+  <class>mil heavy</class>
   <price>11500000</price>
   <fabricator>House Goddard</fabricator> 
   <tech>9999</tech>
@@ -453,7 +453,7 @@
   <GFX>admonisher</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>2</class>
+  <class>civ medium</class>
   <price>900000</price>
   <fabricator>Nexus</fabricator>
   <tech>10</tech>
@@ -489,7 +489,7 @@
   <GFX target="admonisher">admonisher_pirate</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>2</class>
+  <class>civ medium</class>
   <price>850000</price>
   <fabricator>Skull and Bones</fabricator>
   <tech>9009</tech>
@@ -525,7 +525,7 @@
   <GFX target="admonisher">admonisher_empire</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>2</class>
+  <class>civ medium</class>
   <price>900000</price>
   <fabricator>Nexus</fabricator>
   <tech>9999</tech>
@@ -562,7 +562,7 @@
   <GFX>schroedinger</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>1</class>
+  <class>civ light</class>
   <price>180000</price>
   <fabricator>Sirius Systems</fabricator>
   <tech>5</tech>
@@ -595,7 +595,7 @@
   <GFX>vendetta</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>1</class>
+  <class>civ light</class>
   <price>400000</price>
   <fabricator>House Dvaered</fabricator>
   <tech>8</tech>
@@ -628,7 +628,7 @@
   <GFX target="vendetta">vendetta_dvaered</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>1</class>
+  <class>mil light</class>
   <price>400000</price>
   <fabricator>House Dvaered</fabricator>
   <tech>9999</tech>
@@ -663,7 +663,7 @@
   <GFX target="vendetta">vendetta_pirate</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>1</class>
+  <class>civ light</class>
   <price>450000</price>
   <fabricator>Skull and Bones</fabricator>
   <tech>9009</tech>
@@ -697,7 +697,7 @@
   <GFX>ancestor</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>1</class>
+  <class>civ light</class>
   <price>600000</price>
   <fabricator>House Dvaered</fabricator>
   <tech>9</tech>
@@ -732,7 +732,7 @@
   <GFX target="ancestor">ancestor_dvaered</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>1</class>
+  <class>mil light</class>
   <price>600000</price>
   <fabricator>House Dvaered</fabricator>
   <tech>9999</tech>
@@ -767,7 +767,7 @@
   <GFX target="ancestor">ancestor_pirate</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>1</class>
+  <class>civ light</class>
   <price>550000</price>
   <fabricator>Skull and Bones</fabricator>
   <tech>9009</tech>

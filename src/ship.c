@@ -127,15 +127,86 @@ char** ship_getTech( int *n, const int *tech, const int techmax )
 /*
  * Gets the ship's classname
  */
-static char* ship_classes[] = { "NULL",
-      "Civilian Light", "Civilian Medium", "Civilian Heavy",
-      "Military Light", "Military Medium", "Military Heavy",
-      "Robotic Light", "Robotic Medium", "Robotic Heavy",
-      "Hybrid Light", "Hybrid Medium", "Hybrid Heavy"
-};
 char* ship_class( Ship* s )
 {
-   return ship_classes[s->class];
+   switch (s->class) {
+      case SHIP_CLASS_NULL:
+         return "NULL";
+      /* Civilian */
+      case SHIP_CLASS_CIV_LIGHT:
+         return "Civilian Light";
+      case SHIP_CLASS_CIV_MEDIUM:
+         return "Civilian Medium";
+      case SHIP_CLASS_CIV_HEAVY:
+         return "Civilian Heavy";
+      /* Military */
+      case SHIP_CLASS_MIL_LIGHT:
+         return "Military Light";
+      case SHIP_CLASS_MIL_MEDIUM:
+         return "Military Medium";
+      case SHIP_CLASS_MIL_HEAVY:
+         return "Military Heavy";
+      /* Robotic */
+      case SHIP_CLASS_ROB_LIGHT:
+         return "Robotic Light";
+      case SHIP_CLASS_ROB_MEDIUM:
+         return "Robotic Medium";
+      case SHIP_CLASS_ROB_HEAVY:
+         return "Robotic Heavy";
+      /* Hybrid */
+      case SHIP_CLASS_HYB_LIGHT:
+         return "Hybrid Light";
+      case SHIP_CLASS_HYB_MEDIUM:
+         return "Hybrid Medium";
+      case SHIP_CLASS_HYB_HEAVY:
+         return "Hybrid Heavy";
+
+      default:
+         return "Unknown";
+   }
+}
+
+
+/**
+ * @fn static ShipClass ship_classFromString( char* str )
+ *
+ * @brief Gets the machine ship class identifier from a human readable string.
+ *
+ *    @param str String to extract ship class identifier from.
+ */
+static ShipClass ship_classFromString( char* str )
+{
+   /* Civilian */
+   if (strcmp(str,"civ light")==0)
+      return SHIP_CLASS_CIV_LIGHT;
+   else if (strcmp(str,"civ medium")==0)
+      return SHIP_CLASS_CIV_MEDIUM;
+   else if (strcmp(str,"civ heavy")==0)
+      return SHIP_CLASS_CIV_HEAVY;
+   /* Military */
+   else if (strcmp(str,"mil light")==0)
+      return SHIP_CLASS_CIV_LIGHT;
+   else if (strcmp(str,"mil medium")==0)
+      return SHIP_CLASS_CIV_MEDIUM;
+   else if (strcmp(str,"mil heavy")==0)
+      return SHIP_CLASS_CIV_HEAVY;
+   /* Robotic */
+   else if (strcmp(str,"rob light")==0)
+      return SHIP_CLASS_CIV_LIGHT;
+   else if (strcmp(str,"rob medium")==0)
+      return SHIP_CLASS_CIV_MEDIUM;
+   else if (strcmp(str,"rob heavy")==0)
+      return SHIP_CLASS_CIV_HEAVY;
+   /* Hybrid */
+   else if (strcmp(str,"hyb light")==0)
+      return SHIP_CLASS_CIV_LIGHT;
+   else if (strcmp(str,"hyb medium")==0)
+      return SHIP_CLASS_CIV_MEDIUM;
+   else if (strcmp(str,"hyb heavy")==0)
+      return SHIP_CLASS_CIV_HEAVY;
+
+  /* Unknown */
+  return SHIP_CLASS_NULL;
 }
 
 
@@ -199,9 +270,14 @@ static Ship* ship_parse( xmlNodePtr parent )
       }
 
       xmlr_strd(node,"GUI",temp->gui);
-      if (xml_isNode(node,"sound"))
+      if (xml_isNode(node,"sound")) {
          temp->sound = sound_get( xml_get(node) );
-      xmlr_int(node,"class",temp->class);
+         continue;
+      }
+      if (xml_isNode(node,"class")) {
+         temp->class = ship_classFromString( xml_get(node) );
+         continue;
+      }
       xmlr_int(node,"price",temp->price);
       xmlr_int(node,"tech",temp->tech);
       xmlr_strd(node,"fabricator",temp->fabricator);
@@ -213,8 +289,9 @@ static Ship* ship_parse( xmlNodePtr parent )
             xmlr_int(cur,"turn",temp->turn);
             xmlr_int(cur,"speed",temp->speed);
          } while (xml_nextNode(cur));
+         continue;
       }
-      else if (xml_isNode(node,"health")) {
+      if (xml_isNode(node,"health")) {
          cur = node->children;
          do {
             xmlr_float(cur,"armour",temp->armour);
@@ -227,8 +304,9 @@ static Ship* ship_parse( xmlNodePtr parent )
             else if (xml_isNode(cur,"energy_regen"))
                temp->energy_regen = (double)(xml_getInt(cur))/60.0;
          } while (xml_nextNode(cur));
+         continue;
       }
-      else if (xml_isNode(node,"caracteristics")) {
+      if (xml_isNode(node,"caracteristics")) {
          cur = node->children;
          do {
             xmlr_int(cur,"crew",temp->crew);
@@ -237,8 +315,9 @@ static Ship* ship_parse( xmlNodePtr parent )
             xmlr_int(cur,"cap_weapon",temp->cap_weapon);
             xmlr_int(cur,"cap_cargo",temp->cap_cargo);
          } while (xml_nextNode(cur));
+         continue;
       }
-      else if (xml_isNode(node,"outfits")) {
+      if (xml_isNode(node,"outfits")) {
          cur = node->children;
          do {
             if (xml_isNode(cur,"outfit")) {
@@ -259,6 +338,7 @@ static Ship* ship_parse( xmlNodePtr parent )
                }
             }
          } while (xml_nextNode(cur));
+         continue;
       }
    } while (xml_nextNode(node));
    temp->thrust *= temp->mass; /* helps keep numbers sane */
@@ -268,7 +348,7 @@ static Ship* ship_parse( xmlNodePtr parent )
    MELEMENT(temp->name==NULL,"name");
    MELEMENT(temp->gfx_space==NULL,"GFX");
    MELEMENT(temp->gui==NULL,"GUI");
-   MELEMENT(temp->class==0,"class");
+   MELEMENT(temp->class==SHIP_CLASS_NULL,"class");
    MELEMENT(temp->price==0,"price");
    MELEMENT(temp->tech==0,"tech");
    MELEMENT(temp->fabricator==NULL,"fabricator");

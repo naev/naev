@@ -14,28 +14,33 @@
 
 
 /* target gfx dimensions */
-#define SHIP_TARGET_W   128
-#define SHIP_TARGET_H   96
+#define SHIP_TARGET_W   128 /**< Ship target graphic width. */
+#define SHIP_TARGET_H   96 /**< Ship target graphic height. */
 
 
+/**
+ * @typedef ShipClass
+ *
+ * @brief Contains the different types of ships.
+ */
 typedef enum ShipClass_ {
-   SHIP_CLASS_NULL=0,
+   SHIP_CLASS_NULL, 
    /* CIVILIAN */
-   SHIP_CLASS_CIV_LIGHT=1,
-   SHIP_CLASS_CIV_MEDIUM=2,
-   SHIP_CLASS_CIV_HEAVY=3,
+   SHIP_CLASS_CIV_LIGHT,
+   SHIP_CLASS_CIV_MEDIUM,
+   SHIP_CLASS_CIV_HEAVY,
    /* MILITARY */
-   SHIP_CLASS_MIL_LIGHT=4,
-   SHIP_CLASS_MIL_MEDIUM=5,
-   SHIP_CLASS_MIL_HEAVY=6,
+   SHIP_CLASS_MIL_LIGHT,
+   SHIP_CLASS_MIL_MEDIUM,
+   SHIP_CLASS_MIL_HEAVY,
    /* ROBOTIC */
-   SHIP_CLASS_ROB_LIGHT=7,
-   SHIP_CLASS_ROB_MEDIUM=8,
-   SHIP_CLASS_ROB_HEAVY=9,
+   SHIP_CLASS_ROB_LIGHT,
+   SHIP_CLASS_ROB_MEDIUM,
+   SHIP_CLASS_ROB_HEAVY,
    /* HYBRID */
-   SHIP_CLASS_HYB_LIGHT=10,
-   SHIP_CLASS_HYB_MEDIUM=11,
-   SHIP_CLASS_HYB_HEAVY=12
+   SHIP_CLASS_HYB_LIGHT,
+   SHIP_CLASS_HYB_MEDIUM,
+   SHIP_CLASS_HYB_HEAVY
 } ShipClass;
 
 
