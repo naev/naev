@@ -2,6 +2,14 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file hook.c
+ *
+ * @brief Handles hooks.
+ *
+ * Currently only used in the mission system.
+ */
+
 
 #include "hook.h"
 
@@ -13,30 +21,32 @@
 #include "xml.h"
 
 
-#define HOOK_CHUNK   32 /* Size to grow by when out of space */
+#define HOOK_CHUNK   32 /**< Size to grow by when out of space */
 
 
-/*
- * the hook
+/**
+ * @struct Hook
+ *
+ * @brief Internal representation of a hook.
  */
 typedef struct Hook_ {
-   unsigned int id; /* unique id */
-   unsigned int parent; /* mission it's connected to */
-   char *func; /* function it runs */
-   char *stack; /* stack it's a part of */
+   unsigned int id; /**< unique id */
+   unsigned int parent; /**< mission it's connected to */
+   char *func; /**< function it runs */
+   char *stack; /**< stack it's a part of */
 
-   int delete; /* indicates it should be deleted when possible */
+   int delete; /**< indicates it should be deleted when possible */
 } Hook;
 
 
 /* 
  * the stack
  */
-static unsigned int hook_id = 0; /* unique hook id */
-static Hook* hook_stack = NULL;
-static int hook_mstack = 0;
-static int hook_nstack = 0;
-static int hook_runningstack = 0; /* check if stack is running */
+static unsigned int hook_id = 0; /**< Unique hook id generator. */
+static Hook* hook_stack = NULL; /**< Stack of hooks. */
+static int hook_mstack = 0; /**< Size of hook memory. */
+static int hook_nstack = 0; /**< Number of hooks currently used. */
+static int hook_runningstack = 0; /**< Check if stack is running. */
 
 
 /*
@@ -54,8 +64,13 @@ int hook_save( xmlTextWriterPtr writer );
 int hook_load( xmlNodePtr parent );
 
 
-/*
- * prototypes
+/**
+ * @fn static int hook_run( Hook *hook )
+ *
+ * @brief Runs a hook.
+ *
+ *    @param hook Hook to run.
+ *    @return 0 on success.
  */
 static int hook_run( Hook *hook )
 {
@@ -83,8 +98,15 @@ static int hook_run( Hook *hook )
 }
 
 
-/*
- * add/remove hooks
+/**
+ * @fn unsigned int hook_add( unsigned int parent, char *func, char *stack )
+ *
+ * @brief Adds a new hook.
+ *
+ *    @param parent Hook mission parent.
+ *    @param func Function to run when hook is triggered.
+ *    @param stack Stack hook belongs to.
+ *    @return The new hooks identifier.
  */
 unsigned int hook_add( unsigned int parent, char *func, char *stack )
 {
@@ -108,6 +130,15 @@ unsigned int hook_add( unsigned int parent, char *func, char *stack )
 
    return new_hook->id;
 }
+
+
+/**
+ * @fn void hook_rm( unsigned int id )
+ *
+ * @brief Removes a hook.
+ *
+ *    @param id Identifier of the hook to remove.
+ */
 void hook_rm( unsigned int id )
 {
    int l,m,h;
@@ -140,6 +171,15 @@ void hook_rm( unsigned int id )
    memmove( &hook_stack[m], &hook_stack[m+1], sizeof(Hook) * (hook_nstack-m-1) );
    hook_nstack--;
 }
+
+
+/**
+ * @fn void hook_rmParent( unsigned int parent )
+ *
+ * @brief Removes all hooks belonging to parent.
+ *
+ *    @param parent Parent id to remove all hooks belonging to.
+ */
 void hook_rmParent( unsigned int parent )
 {
    int i;
@@ -152,8 +192,13 @@ void hook_rmParent( unsigned int parent )
 }
 
 
-/*
- * runs all the hooks of stack
+/**
+ * @fn int hooks_run( char* stack )
+ *
+ * @brief Runs all the hooks of stack.
+ *
+ *    @param stack Stack to run.
+ *    @return 0 on success.
  */
 int hooks_run( char* stack )
 {
@@ -176,8 +221,12 @@ int hooks_run( char* stack )
 }
 
 
-/*
- * runs a single hook by id
+/**
+ * @fn void hook_runID( unsigned int id )
+ *
+ * @brief Runs a single hook by id.
+ *
+ *    @param id Identifier of the hook to run.
  */
 void hook_runID( unsigned int id )
 {
@@ -192,8 +241,12 @@ void hook_runID( unsigned int id )
 }
 
 
-/*
- * frees a hook
+/**
+ * @fn static void hook_free( Hook *h )
+ *
+ * @brief Frees a hook.
+ *
+ *    @param h Hook to free.
  */
 static void hook_free( Hook *h )
 {
@@ -202,8 +255,10 @@ static void hook_free( Hook *h )
 }
 
 
-/*
- * clean up after ourselves
+/**
+ * @fn void hook_cleanup (void)
+ *
+ * @brief Gets rid of all current hooks.
  */
 void hook_cleanup (void)
 {
@@ -219,8 +274,13 @@ void hook_cleanup (void)
 }
 
 
-/*
- * saves the hooks
+/**
+ * @fn static int hook_needSave( Hook *h )
+ *
+ * @brief Checks if a hook needs to be saved.
+ *
+ *    @param h Hook to check if it should be saved.
+ *    @return 1 if hook should be saved.
  */
 static int hook_needSave( Hook *h )
 {
@@ -234,6 +294,16 @@ static int hook_needSave( Hook *h )
 
    return 1;
 }
+
+
+/**
+ * @Fn int hook_save( xmlTextWriterPtr writer )
+ *
+ * @brief Saves all the hooks.
+ *
+ *    @param writer XML Writer to use.
+ *    @return 0 on success.
+ */
 int hook_save( xmlTextWriterPtr writer )
 {
    int i;
@@ -258,8 +328,15 @@ int hook_save( xmlTextWriterPtr writer )
 
    return 0;
 }
-/*
- * loads hooks for a player
+
+
+/**
+ * @fn int hook_load( xmlNodePtr parent )
+ *
+ * @brief Loads hooks for a player.
+ *
+ *    @param parent Parent xml node containing the hooks.
+ *    @return 0 on success.
  */
 int hook_load( xmlNodePtr parent )
 {
@@ -275,6 +352,16 @@ int hook_load( xmlNodePtr parent )
 
    return 0;
 }
+
+
+/**
+ * @fn static int hook_parse( xmlNodePtr base )
+ *
+ * @brief Parses an individual hook.
+ *
+ *    @param base Parent xml node of the hook.
+ *    @return 0 on success.
+ */
 static int hook_parse( xmlNodePtr base )
 {
    xmlNodePtr node, cur;
