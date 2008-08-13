@@ -563,9 +563,15 @@ static void space_addFleet( Fleet* fleet, int init )
    /* Needed to determine angle. */
    vectnull(&vn);
 
-   /* c will determino how to create the fleet. */
-   if (init == 1)
-      c = RNG(0,1);
+   /* c will determino how to create the fleet, only non-zero if it's run in init. */
+   if (init == 1) {
+      if (RNGF() < 0.5) /* 50% chance of starting out en route. */
+         c = 2;
+      else if (RNGF() < 0.5) /* 25% of starting out landed. */
+         c = 1;
+      else /* 25% chance starting out entering hyperspace. */
+         c = 0;
+   }
    else c = 0;
 
    /* simulate they came from hyperspace */
@@ -573,8 +579,8 @@ static void space_addFleet( Fleet* fleet, int init )
       vect_pset( &vp, RNG(MIN_HYPERSPACE_DIST, MIN_HYPERSPACE_DIST*3.),
             RNG(0,360)*M_PI/180.);
    }
-   /* Starting out landed. */
-   else if (c==1) {
+   /* Starting out landed or heading towards landing.. */
+   else if ((c==1) || (c==2)) {
       /* Get friendly planet to land on. */
       planet = NULL;
       for (i=0; i<cur_system->nplanets; i++)
@@ -590,8 +596,15 @@ static void space_addFleet( Fleet* fleet, int init )
                RNG(0,360)*M_PI/180.);
          c = 0;
       }
-      else /* Set position to be planet position. */
-         vectcpy( &vp, &planet->pos );
+      else {
+         /* Start out landed. */
+         if (c==1)
+            vectcpy( &vp, &planet->pos );
+         /* Start out near landed. */
+         else if (c==2)
+            vect_pset( &vp, RNG(100, MIN_HYPERSPACE_DIST),
+                  RNG(0,360)*M_PI/180.);
+      }
    }
 
    for (i=0; i < fleet->npilots; i++)
@@ -608,6 +621,10 @@ static void space_addFleet( Fleet* fleet, int init )
          /* Starting out landed. */
          else if (c==1)
             vectnull(&vv);
+         /* Starting out almost landed. */
+         else if (c==2)
+            /* Put speed at half in case they start very near. */
+            vect_pset( &vv, plt->ship->speed * 0.5, a );
 
          pilot_create( plt->ship,
                plt->name,
