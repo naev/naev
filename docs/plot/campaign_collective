@@ -21,6 +21,37 @@
    converted to robots?  No one knows for certain.
 
 
+   LOCATIONS
+
+   * Omega Station
+      * Center of operations for empire actions against the Collective
+   * Eirok
+      * Ex-Empire colony now occupied by the Collective
+      * Used to have a military scientific facility where the collectives
+            where concieved.  Now is abandoned.
+
+
+   CHARACTERS
+
+   * Empire
+      * Commodore Keer
+         * In charge of eliminating the Collective threat.
+         * Spies on Omega Station without revealing true nature.
+      * Sergeant Dimitry
+         * In charge of the Collective counter-espionage department of Omega
+            Station.
+         * Unaware of the true Collective nature.
+   * Collective
+      * Commodore Welsh
+         * Was in charge of the Collective research facility in Eirok.
+         * Now controls the Collective.
+         * Commands the Starfire.
+      * Captain Zakred
+         * Second in command to Welsh.
+         * Infiltrated in Empire.
+         * Commands the ESS Trinity.
+
+
    PLOT OVERVIEW
 
    * Initial stalemate
@@ -36,14 +67,26 @@
    * One survivor hidden with data.
    * Proof that the ESS Trinity communicates with the collective (preparing
          coup )
+   * You've been monitored by superiors who knew what was happening all along.
+      * Collective was actually part of a scientific military experiment
+            commanded by Commodore Welsh.
+      * You are offered a chance to try to end the menace under command of
+            Commodore Keer.
    * Prepare trap for the ESS Trinity to arrest.
-   * ESS Trinity jumps to Collective space.
-   * Final showdown at NCG-7132.
-   * ESS Trinity destroyed, Collective/Empire suffer heavy losses.
+   * ESS Trinity tries to jump to Collective space.
+      * If ESS Trinity is destroyed there's an extra Drone Attack mission and
+            final showdown includes both ESS Trinity and Starfire.
+   * Drone attack on Omega Station thanks to information facilitated by
+         Captain Zakred. If ESS Trinity is destroyed mission is skipped.
+   * Attack (or counterattack with previous mission) on Drone space C-43.
+   * Final showdown at C-28..
+      * Starfire will be there always.
+      * ESS Trinity will be there if not destroyed previously.
+   * Commodore Welsh killed, Collective/Empire suffer heavy losses.
    * Cinematic scene to finish:
-      * You see the ESS Trinity release the AI limiter.
+      * You see the Commodore Welsh release the AI limiter.
       * Collective back off.
-      * Scientists and militaries found guilty.  Their heads roll.
+      * Publicity stunt by Military.  No news is heard of Welsh nor Zakred.
       * End of Collective conflict.
 
 
@@ -56,7 +99,7 @@
       * Fly back to Omega Station.
 
    * Collective Espionage I
-      * Fly around systems listening on signals, enforce minimum system time.
+      * Fly around systems listening on signals, enforce minimum jump system.
       * Fly back to Omega Station.
 
    * Collective Espionage II
@@ -76,9 +119,25 @@
       * Trinity will jump (unless you destroy really fast) leaving collective
             drones behind for you to fight.
       * Rebrief at Omega Station.
-      * Showdown at NCG-7132.
-         * If flee, different ending with no medal.
-         * If win cinema scene.
+
+   * Collective Assault
+      * Only if ESS Trinity is not destroyed.
+      * Heavy collective attack at Omega Station.
+
+   * Operation Cold Metal
+      * Player is helped by heavy Empire/Dvaered fleet.
+      * Attack on C-43
+         * Heavy Collective presence.
+      * Follow up on C-28
+         * Starfire is there.
+         * ESS Trinity is there if not destroyed previously.
+         * Very Heavy Collective presence.
+         * Upon destruction of the Starfire and Trinity (if applicable)
+            * Cinema Scene
+            * Player gets medal
+            * All Collective bases are destroyed, systems are still dead.
+            * Empire no longer in NCG-7134.
+            * Player can now buy Collective technology.
 
 
 
