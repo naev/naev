@@ -17,23 +17,23 @@
 #include "toolkit.h"
 
 
-#define XML_ID    "Ships"  /* XML section identifier */
-#define XML_SHIP  "ship"
+#define XML_ID    "Ships"  /**< XML document identifier */
+#define XML_SHIP  "ship" /**< XML individual ship identifier. */
 
-#define SHIP_DATA    "dat/ship.xml"
-#define SHIP_GFX     "gfx/ship/"
-#define SHIP_EXT     ".png"
-#define SHIP_TARGET  "_target"
+#define SHIP_DATA    "dat/ship.xml" /**< XML file containing ships. */
+#define SHIP_GFX     "gfx/ship/" /**< Location of ship graphics. */
+#define SHIP_EXT     ".png" /**< Ship graphics extension format. */
+#define SHIP_TARGET  "_target" /**< Target graphic extension. */
 
-#define VIEW_WIDTH   300
-#define VIEW_HEIGHT  300
+#define VIEW_WIDTH   300 /**< Ship view window width. */
+#define VIEW_HEIGHT  300 /**< Ship view window height. */
 
-#define BUTTON_WIDTH  80
-#define BUTTON_HEIGHT 30
+#define BUTTON_WIDTH  80 /**< Button width in ship view window. */
+#define BUTTON_HEIGHT 30 /**< Button height in ship view window. */
 
 
-static Ship* ship_stack = NULL;
-static int ship_nstack = 0;
+static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
+static int ship_nstack = 0; /**< Number of ships in the stack. */
 
 
 /*
@@ -41,10 +41,16 @@ static int ship_nstack = 0;
  */
 static Ship* ship_parse( xmlNodePtr parent );
 static void ship_view_close( char* btn );
+static ShipClass ship_classFromString( char* str );
 
 
-/*
- * Gets a ship based on its name
+/**
+ * @fn Ship* ship_get( const char* name )
+ *
+ * @brief Gets a ship based on its name.
+ *
+ *    @param name Name to match.
+ *    @return Ship matching name or NULL if not found.
  */
 Ship* ship_get( const char* name )
 {
@@ -61,8 +67,17 @@ Ship* ship_get( const char* name )
 }
 
 
-/*
- * returns all the ships in text form
+/**
+ * @fn char** ship_getTech( int *n, const int *tech, const int techmax )
+ *
+ * @brief Gets all the ships in text form matching tech.
+ *
+ * You have to free all the strings created in the string array too.
+ *
+ *    @param[out] n Number of ships found.
+ *    @param tech List of technologies to use.
+ *    @param techmax Number of technologies in tech.
+ *    @return An array of allocated ship names.
  */
 char** ship_getTech( int *n, const int *tech, const int techmax )
 {
@@ -124,8 +139,13 @@ char** ship_getTech( int *n, const int *tech, const int techmax )
 }
 
 
-/*
- * Gets the ship's classname
+/**
+ * @fn char* ship_class( Ship* s )
+ *
+ * @brief Gets the ship's class name in human readable form.
+ *
+ *    @param s Ship to get the class name from.
+ *    @return The human readable class name.
  */
 char* ship_class( Ship* s )
 {
@@ -229,6 +249,14 @@ int ship_basePrice( Ship* s )
 }
 
 
+/**
+ * @fn static Ship* ship_parse( xmlNodePtr parent )
+ *
+ * @brief Extracts the ingame ship from an XML node.
+ *
+ *    @param parent Node to get ship from.
+ *    @return The newly created ship.
+ */
 static Ship* ship_parse( xmlNodePtr parent )
 {
    xmlNodePtr cur, node;
@@ -373,6 +401,13 @@ static Ship* ship_parse( xmlNodePtr parent )
 }
 
 
+/**
+ * @fn int ships_load(void)
+ *
+ * @brief Loads all the ships in the data files.
+ *
+ *    @return 0 on success.
+ */
 int ships_load(void)
 {
    uint32_t bufsize;
@@ -414,6 +449,12 @@ int ships_load(void)
    return 0;
 }
 
+
+/**
+ * @fn void ships_free()
+ *
+ * @brief Frees all the ships.
+ */
 void ships_free()
 {
    ShipOutfit *so, *sot;
@@ -440,8 +481,14 @@ void ships_free()
 }
 
 
-/*
- * used to visualize the ships stats
+/**
+ * @fn void ship_view( char* shipname )
+ *
+ * @brief Used to visualize the ships stats.
+ *
+ * @todo Take into account outfits or something like that.
+ *
+ *    @param shipname Ship ot view the stats of.
  */
 void ship_view( char* shipname )
 {
@@ -504,6 +551,11 @@ void ship_view( char* shipname )
          BUTTON_WIDTH, BUTTON_HEIGHT,
          buf, "Close", ship_view_close );
 }
+/**
+ * @fn static void ship_view_close( char* btn )
+ * @brief Closes the ship view window.
+ *    @param btn Used internally by buttons.
+ */
 static void ship_view_close( char* btn )
 {
    window_destroy( window_get( btn+5 /* "closeFoo -> Foo" */ ) );

@@ -22,17 +22,22 @@
  * @typedef ShipClass
  *
  * @brief Contains the different types of ships.
+ *
+ * @todo Not too happy with the current ship class system.  Too smiplistic.
+ *
+ * @sa ship_classFromString
+ * @sa ship_class
  */
 typedef enum ShipClass_ {
-   SHIP_CLASS_NULL, 
+   SHIP_CLASS_NULL, /* Invalid ship class. */
    /* CIVILIAN */
-   SHIP_CLASS_CIV_LIGHT,
-   SHIP_CLASS_CIV_MEDIUM,
-   SHIP_CLASS_CIV_HEAVY,
+   SHIP_CLASS_CIV_LIGHT, /**< Light civilian ship. */
+   SHIP_CLASS_CIV_MEDIUM, /**< Medium civilian ship. */
+   SHIP_CLASS_CIV_HEAVY, /**< Heavy civilian ship. */
    /* MILITARY */
-   SHIP_CLASS_MIL_LIGHT,
-   SHIP_CLASS_MIL_MEDIUM,
-   SHIP_CLASS_MIL_HEAVY,
+   SHIP_CLASS_MIL_LIGHT, /**< Light military ship. */
+   SHIP_CLASS_MIL_MEDIUM, /**< Medium military ship. */
+   SHIP_CLASS_MIL_HEAVY, /**< Heavy military ship. */
    /* ROBOTIC */
    SHIP_CLASS_ROB_LIGHT,
    SHIP_CLASS_ROB_MEDIUM,
@@ -44,57 +49,68 @@ typedef enum ShipClass_ {
 } ShipClass;
 
 
-/*
- * little wrapper for outfits
+/**
+ * @struct ShipOutfit
+ *
+ * @brief Little wrapper for outfits.
  */
 typedef struct ShipOutfit_ {
-   struct ShipOutfit_* next; /* linked list */
-   Outfit* data; /* data itself */
-   int quantity; /* important difference */
+   struct ShipOutfit_* next; /**< Linked list next. */
+   Outfit* data; /**< Data itself. */
+   int quantity; /**< Important difference. */
 } ShipOutfit;
 
 
-/*
- * ship class itself
+/**
+ * @struct Ship
+ *
+ * @brief Represents a space ship.
  */
 typedef struct Ship_ {
 
-   char* name; /* ship name */
-   ShipClass class; /* ship class */
+   char* name; /**< ship name */
+   ShipClass class; /**< ship class */
 
    /* store stuff */
-   int price; /* cost to buy */
-   int tech; /* see space.h */
-   char* fabricator; /* company that makes it */
-   char* description; /* selling description */
+   int price; /**< cost to buy */
+   int tech; /**< see space.h */
+   char* fabricator; /**< company that makes it */
+   char* description; /**< selling description */
 
    /* movement */
-   double thrust, turn, speed;
+   double thrust; /**< Ship's thrust in "pixel/sec^2" */
+   double turn; /**< Ship's turn in rad/s */
+   double speed; /**< Ship's max speed in "pixel/sec" */
 
    /* graphics */
-   glTexture *gfx_space, *gfx_target;
+   glTexture *gfx_space; /**< Space sprite sheet. */
+   glTexture *gfx_target; /**< Targetting window graphic. */
 
    /* GUI interface */
-   char* gui;
+   char* gui; /**< Name of the GUI the ship uses by default. */
 
    /* sound */
-   int sound;
+   int sound; /**< Sound motor uses.  Unused atm. */
 
    /* characteristics */
-   int crew;
-   int mass;
-   int fuel; /* how many jumps by default */
+   int crew; /**< Crew members. */
+   int mass; /**< Mass in tons. */
+   int fuel; /**< How many jumps by default. */
 
    /* health */
-   double armour, armour_regen;
-   double shield, shield_regen;
-   double energy, energy_regen;
+   double armour; /**< Maximum base armour in MJ. */
+   double armour_regen; /**< Maximum armour regeneration in MJ/s. */
+   double shield; /**< Maximum base shield in MJ. */
+   double shield_regen; /**< Maximum shield regeneration in MJ/s. */
+   double energy; /**< Maximum base energy in MJ. */
+   double energy_regen; /**< Maximum energy regeneration in MJ/s. */
 
    /* capacity */
-   int cap_cargo, cap_weapon; 
+   int cap_cargo; /**< Cargo capacity if empty. */
+   int cap_weapon;  /**< Weapon capacity with no outfits. */
 
    /* outfits */
-   ShipOutfit* outfit;
+   ShipOutfit* outfit; /**< Linked list of outfits. */
 
 } Ship;
 
