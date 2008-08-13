@@ -2,6 +2,11 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file space.c
+ *
+ * @brief Handles all the space stuff, namely systems and planets.
+ */
 
 #include "space.h"
 
@@ -24,67 +29,72 @@
 #include "nebulae.h"
 
 
-#define XML_PLANET_ID         "Planets"
-#define XML_PLANET_TAG        "planet"
+#define XML_PLANET_ID         "Planets" /**< Planet xml document tag. */
+#define XML_PLANET_TAG        "planet" /**< Individual planet xml tag. */
 
-#define XML_SYSTEM_ID         "Systems"
-#define XML_SYSTEM_TAG        "ssys"
+#define XML_SYSTEM_ID         "Systems" /**< Systems xml document tag. */
+#define XML_SYSTEM_TAG        "ssys" /**< Individual systems xml tag. */
 
-#define PLANET_DATA           "dat/planet.xml"
-#define SYSTEM_DATA           "dat/ssys.xml"
+#define PLANET_DATA           "dat/planet.xml" /**< XML file containing planets. */
+#define SYSTEM_DATA           "dat/ssys.xml" /**< XML file containing systems. */
 
-#define PLANET_GFX_SPACE      "gfx/planet/space/"
-#define PLANET_GFX_EXTERIOR   "gfx/planet/exterior/"
+#define PLANET_GFX_SPACE      "gfx/planet/space/" /**< Location of planet space graphics. */
+#define PLANET_GFX_EXTERIOR   "gfx/planet/exterior/" /**< Location of planet exterior graphics (when landed). */
 
-#define PLANET_GFX_EXTERIOR_W 400
-#define PLANET_GFX_EXTERIOR_H 400
+#define PLANET_GFX_EXTERIOR_W 400 /**< Planet exterior graphic width. */
+#define PLANET_GFX_EXTERIOR_H 400 /**< Planet exterior graphic height. */
 
-#define CHUNK_SIZE            32
+#define CHUNK_SIZE            32 /**< Size to allocate by. */
 
 /* used to overcome warnings due to 0 values */
-#define FLAG_XSET             (1<<0)
-#define FLAG_YSET             (1<<1)
-#define FLAG_ASTEROIDSSET     (1<<2)
-#define FLAG_INTERFERENCESET  (1<<3)
-#define FLAG_SERVICESSET      (1<<4)
-#define FLAG_TECHSET          (1<<5)
-#define FLAG_FACTIONSET       (1<<6)
+#define FLAG_XSET             (1<<0) /**< Set the X position value. */
+#define FLAG_YSET             (1<<1) /**< Set the Y position value. */
+#define FLAG_ASTEROIDSSET     (1<<2) /**< Set the asteroid value. */
+#define FLAG_INTERFERENCESET  (1<<3) /**< Set the interference value. */
+#define FLAG_SERVICESSET      (1<<4) /**< Set the service value. */
+#define FLAG_TECHSET          (1<<5) /**< Set the tech value. */
+#define FLAG_FACTIONSET       (1<<6) /**< Set the faction value. */
 
 
 /*
  * planet <-> system name stack
  */
-static char** planetname_stack = NULL;
-static char** systemname_stack = NULL;
-static int spacename_nstack = 0;
+static char** planetname_stack = NULL; /**< Planet name stack corresponding to system. */
+static char** systemname_stack = NULL; /**< System name stack corresponding to planet. */
+static int spacename_nstack = 0; /**< Size of planet<->system stack. */
 
 
 /* 
  * star system stack and friends
  */
-StarSystem *systems_stack = NULL; /* star system stack */
-int systems_nstack = 0; /* number of star systems */
-static int total_planets = 0; /* total number of loaded planets - pretty silly */
-StarSystem *cur_system = NULL; /* Current star system */
+StarSystem *systems_stack = NULL; /**< Star system stack. */
+int systems_nstack = 0; /**< Number of star systems. */
+static int total_planets = 0; /**< Total number of loaded planets - pretty silly. */
+StarSystem *cur_system = NULL; /**< Current star system. */
 
 
 /*
  * fleet spawn rate
  */
-unsigned int spawn_timer = 0; /* timer that controls spawn rate */
+unsigned int spawn_timer = 0; /**< Timer that controls spawn rate. Used in pause.c */
 
 
 /*
  * star stack and friends
  */
-#define STAR_BUF  100   /* area to leave around screen, more = less repitition */
+#define STAR_BUF  100   /**< Area to leave around screen for stars, more = less repitition */
+/**
+ * @struct Star
+ *
+ * @brief Represents a background star. */
 typedef struct Star_ {
-   double x,y; /* position, lighter to use to doubles then the physics system */
-   double brightness; /* self-explanatory */
+   double x; /**< X position of the star. */
+   double y; /**< Y position of the star. */
+   double brightness; /* Brightness of the star, also affects movement speed. */
 } Star;
-static Star *stars = NULL; /* star array */
-static int nstars = 0; /* total stars */
-static int mstars = 0; /* memory stars are taking */
+static Star *stars = NULL; /**< star array */
+static int nstars = 0; /**< total stars */
+static int mstars = 0; /**< memory stars are taking */
 
 
 /* 
@@ -107,14 +117,23 @@ int space_sysLoad( xmlNodePtr parent );
 
 
 
-/*
- * draws the planets. used in player.c
- * matrix mode is already displaced to center of the minimap
- */
 #define PIXEL(x,y)      \
    if ((shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
          (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y))<rc)))   \
    glVertex2i((x),(y))
+/**
+ * @fn void planets_minimap( const double res, const double w,
+ *       const double h, const RadarShape shape )
+ *
+ * @brief Draws the planets in the minimap.  Used by player.c.
+ *
+ * Matrix mode is already displaced to center of the minimap.
+ *
+ *    @param res Current minimap resolution.
+ *    @param w Current minimap width.
+ *    @param h Current minimap height.
+ *    @param shape Current minimap shape.
+ */
 void planets_minimap( const double res, const double w,
       const double h, const RadarShape shape )
 {
@@ -184,8 +203,13 @@ void planets_minimap( const double res, const double w,
 #undef PIXEL
 
 
-/*
- * basically returns a PlanetClass integer from a char
+/**
+ * @fn static PlanetClass planetclass_get( const char a )
+ *
+ * @brief Basically returns a PlanetClass integer from a char
+ *
+ *    @param a Char to get class from.
+ *    @return Identifier matching the char.
  */
 static PlanetClass planetclass_get( const char a )
 {
@@ -225,6 +249,14 @@ static PlanetClass planetclass_get( const char a )
          return PLANET_CLASS_NULL;
    };
 }
+/**
+ * @fn char planet_getClass( Planet *p )
+ *
+ * @brief Gets the char representing the planet class from the planet.
+ *
+ *    @param p Planet to get the class char from.
+ *    @return The planet's class char.
+ */
 char planet_getClass( Planet *p )
 {
    switch (p->class) {
@@ -264,8 +296,13 @@ char planet_getClass( Planet *p )
 }
 
 
-/*
- * checks to make sure if player is far enough away to hyperspace
+/**
+ * @Fn int space_canHyperspace( Pilot* p)
+ *
+ * @brief Checks to make sure if pilot is far enough away to hyperspace.
+ *
+ *    @param p Pilot to check if he can hyperspace.
+ *    @return 1 if he can hyperspace, 0 else.
  */
 int space_canHyperspace( Pilot* p)
 {
@@ -280,8 +317,15 @@ int space_canHyperspace( Pilot* p)
    }
    return 1;
 }
-/*
- * hyperspaces, returns 0 if entering hyperspace, or distance otherwise
+
+
+/**
+ * @fn int space_hyperspace( Pilot* p )
+ *
+ * @brief Tries to get the pilot into hyperspace.
+ *
+ *    @param p Pilot to try to start hyperspacing.
+ *    @return 0 on success.
  */
 int space_hyperspace( Pilot* p )
 {
@@ -295,8 +339,15 @@ int space_hyperspace( Pilot* p )
 }
 
 
-/*
- * returns the name of all the planets that belong to factions
+/**
+ * @fn char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
+ *
+ * @brief Gets the name of all the planets that belong to factions.
+ *
+ *    @param[out] nplanets Number of planets found.
+ *    @param factions Factions to check against.
+ *    @param nfactions Number of factions in factions.
+ *    @return An array of faction names.  Individual names are not allocated.
  */
 char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
 {
@@ -330,8 +381,12 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
 }
 
 
-/*
- * returns the name of a random planet
+/**
+ * @fn char* space_getRndPlanet (void)
+ *
+ * @brief Gets the name of a random planet.
+ *
+ *    @return The name of a random planet.
  */
 char* space_getRndPlanet (void)
 {
@@ -362,8 +417,12 @@ char* space_getRndPlanet (void)
 }
 
 
-/*
- * returns 1 if target system is reachable
+/**
+ * @fn int space_sysReachable( StarSystem *sys )
+ *
+ * @brief Sees if a system is reachable.
+ *
+ *    @return 1 if target system is reachable, 0 if it isn't.
  */
 int space_sysReachable( StarSystem *sys )
 {
