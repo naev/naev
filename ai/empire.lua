@@ -12,6 +12,11 @@ function control ()
       ai.hostile(enemy)
       ai.pushtask(0, "attack", enemy)
 
+   -- Enter hyperspace if possible
+   elseif task == "hyperspace" then 
+      ai.hyperspace() -- try to hyperspace 
+
+   -- Get new task
    elseif task == "none" then
       planet = ai.landplanet()
       -- planet must exist
