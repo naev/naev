@@ -90,7 +90,7 @@ unsigned int spawn_timer = 0; /**< Timer that controls spawn rate. Used in pause
 typedef struct Star_ {
    double x; /**< X position of the star. */
    double y; /**< Y position of the star. */
-   double brightness; /* Brightness of the star, also affects movement speed. */
+   double brightness; /**< Brightness of the star, also affects movement speed. */
 } Star;
 static Star *stars = NULL; /**< star array */
 static int nstars = 0; /**< total stars */
