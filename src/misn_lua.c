@@ -658,7 +658,7 @@ static int misn_finish( lua_State *L )
 /**
  * @defgroup VAR Mission Variable Lua bindings
  *
- * @brief Generic mission variable Lua bindings.
+ * @brief Mission variable Lua bindings.
  *
  * Mission variables are similar to Lua variables, but are conserved for each
  *  player across all the missions.  They are good for storing campaign or
@@ -860,24 +860,73 @@ void var_cleanup (void)
 
 
 
-/* 
- *   P L A Y E R
+/**
+ * @defgroup PLAYER Player Lua bindings
+ *
+ * @brief Lua bindings to interact with the player.
+ *
+ * Functions should be called like:
+ *
+ * @code
+ * player.function( parameters )
+ * @endcode
+ *
+ * @{
+ */
+/**
+ * @fn static int player_getname( lua_State *L )
+ *
+ * @brief string name( nil )
+ *
+ * Gets the player's name.
+ *
+ *    @return The name of the player.
  */
 static int player_getname( lua_State *L )
 {
    lua_pushstring(L,player_name);
    return 1;
 }
+/**
+ * @fn static int player_shipname( lua_State *L )
+ *
+ * @brief string ship( nil )
+ *
+ * Gets the player's ship's name.
+ *
+ *    @return The name of the ship the player is currently in.
+ */
 static int player_shipname( lua_State *L )
 {
    lua_pushstring(L,player->name);
    return 1;
 }
+/**
+ * @fn static int player_freeSpace( lua_State *L )
+ *
+ * @brief number freeCargo( nil )
+ *
+ * Gets the free cargo space the player has.
+ *
+ *    @return The free cargo space in tons of the player.
+ */
 static int player_freeSpace( lua_State *L )
 {
    lua_pushnumber(L, pilot_cargoFree(player) );
    return 1;
 }
+/**
+ * @fn static int player_addCargo( lua_State *L )
+ *
+ * @brief number addCargo( string cargo, number quantity )
+ *
+ * Adds some mission cargo to the player.  He cannot sell it nor get rid of it
+ *  unless he abandons the mission in which case it'll get eliminated.
+ *
+ *    @param cargo Name of the cargo to add.
+ *    @param quantity Quantity of cargo to add.
+ *    @return The id of the cargo which can be used in rmCargo.
+ */
 static int player_addCargo( lua_State *L )
 {
    Commodity *cargo;
@@ -896,6 +945,16 @@ static int player_addCargo( lua_State *L )
    lua_pushnumber(L, ret);
    return 1;
 }
+/**
+ * @fn static int player_rmCargo( lua_State *L )
+ *
+ * @brief bool rmCargo( number cargoid )
+ *
+ * Removes the mission cargo.
+ *
+ *    @param cargoid Identifier of the mission cargo.
+ *    @return true on success.
+ */
 static int player_rmCargo( lua_State *L )
 {
    int ret;
@@ -912,6 +971,15 @@ static int player_rmCargo( lua_State *L )
    lua_pushboolean(L,!ret);
    return 1;
 }
+/**
+ * @fn static int player_pay( lua_State *L )
+ *
+ * @brief pay( number amount )
+ *
+ * Pays the player an amount of money.
+ *
+ *    @param amount Amount of money to pay the player in credits.
+ */
 static int player_pay( lua_State *L )
 {
    int money;
@@ -925,6 +993,15 @@ static int player_pay( lua_State *L )
 
    return 0;
 }
+/**
+ * @fn static int player_msg( lua_State *L )
+ *
+ * @brief msg( string message )
+ *
+ * Sends the player an ingame message.
+ *
+ *    @param message Message to send the player.
+ */
 static int player_msg( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
@@ -936,6 +1013,17 @@ static int player_msg( lua_State *L )
    player_message(str);
    return 0;
 }
+/**
+ * @fn static int player_modFaction( lua_State *L )
+ *
+ * @brief modFaction( string faction, number mod )
+ *
+ * Increases the player's standing to a faction by an amount.  This will
+ *  affect player's standing with that faction's allies and enemies also.
+ *
+ *    @param faction Name of the faction.
+ *    @param mod Amount to modify standing by.
+ */
 static int player_modFaction( lua_State *L )
 {
    NLUA_MIN_ARGS(2);
@@ -951,6 +1039,17 @@ static int player_modFaction( lua_State *L )
 
    return 0;
 }
+/**
+ * @fn static int player_modFactionRaw( lua_State *L )
+ *
+ * @brief modFactionRaw( string faction, number mod )
+ *
+ * Increases the player's standing to a faction by a fixed amount without
+ *  touching other faction standings.
+ *
+ *    @param faction Name of the faction.
+ *    @param mod Amount to modify standing by.
+ */
 static int player_modFactionRaw( lua_State *L )
 {
    NLUA_MIN_ARGS(2);
@@ -966,6 +1065,16 @@ static int player_modFactionRaw( lua_State *L )
 
    return 0;
 }
+/**
+ * @fn static int player_getFaction( lua_State *L )
+ *
+ * @brief number getFaction( string faction )
+ *
+ * Gets the standing of the player with a certain faction.
+ *
+ *    @param faction Faction to get the standing of.
+ *    @return The faction standing.
+ */
 static int player_getFaction( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
@@ -978,12 +1087,25 @@ static int player_getFaction( lua_State *L )
 
    return 1;
 }
+/**
+ * @fn static int player_getRating( lua_State *L )
+ *
+ * @brief number, string getRating( nil )
+ *
+ * Gets the player's combat rating.
+ *
+ *    @return Returns the combat rating (in raw number) and the actual
+ *             standing in human readable form.
+ */
 static int player_getRating( lua_State *L )
 {
    lua_pushnumber(L, player_crating);
    lua_pushstring(L, player_rating());
    return 2;
 }
+/**
+ * @}
+ */
 
 
 
