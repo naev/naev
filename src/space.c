@@ -103,7 +103,7 @@ static int mstars = 0; /**< memory stars are taking */
 /* intern */
 static Planet* planet_pull( const char* name );
 static void space_renderStars( const double dt );
-static void space_addFleet( Fleet* fleet );
+static void space_addFleet( Fleet* fleet, int init );
 static StarSystem* system_parse( const xmlNodePtr parent );
 static void system_parseJumps( const xmlNodePtr parent );
 static PlanetClass planetclass_get( const char a );
@@ -534,7 +534,7 @@ void space_update( const double dt )
       for (i=0; i < cur_system->nfleets; i++) {
          j += cur_system->fleets[i].chance;
          if (f < j) { /* add one fleet */
-            space_addFleet( cur_system->fleets[i].fleet );
+            space_addFleet( cur_system->fleets[i].fleet, 0 );
             break;
          }
       }
@@ -545,23 +545,54 @@ void space_update( const double dt )
 
 
 /**
- * @fn static void space_addFleet( Fleet* fleet )
+ * @fn static void space_addFleet( Fleet* fleet, int init )
  *
  * @brief Creates a fleet.
  *
  *    @param fleet Fleet to add to the system.
+ *    @param init Is being run during the space initialization.
  */
-static void space_addFleet( Fleet* fleet )
+static void space_addFleet( Fleet* fleet, int init )
 {
    FleetPilot *plt;
-   int i;
+   Planet *planet;
+   int i, c;
    double a;
    Vector2d vv,vp, vn;
 
-   /* simulate they came from hyperspace */
-   vect_pset( &vp, RNG(MIN_HYPERSPACE_DIST, MIN_HYPERSPACE_DIST*3.),
-         RNG(0,360)*M_PI/180.);
+   /* Needed to determine angle. */
    vectnull(&vn);
+
+   /* c will determino how to create the fleet. */
+   if (init == 1)
+      c = RNG(0,1);
+   else c = 0;
+
+   /* simulate they came from hyperspace */
+   if (c==0) {
+      vect_pset( &vp, RNG(MIN_HYPERSPACE_DIST, MIN_HYPERSPACE_DIST*3.),
+            RNG(0,360)*M_PI/180.);
+   }
+   /* Starting out landed. */
+   else if (c==1) {
+      /* Get friendly planet to land on. */
+      planet = NULL;
+      for (i=0; i<cur_system->nplanets; i++)
+         if (planet_hasService(&cur_system->planets[i],PLANET_SERVICE_BASIC) &&
+               !areEnemies(fleet->faction,cur_system->planets[i].faction)) {
+            planet = &cur_system->planets[i];
+            break;
+         }
+
+      /* No suitable planet found. */
+      if (planet == NULL) {
+         vect_pset( &vp, RNG(MIN_HYPERSPACE_DIST, MIN_HYPERSPACE_DIST*3.),
+               RNG(0,360)*M_PI/180.);
+         c = 0;
+      }
+      else /* Set position to be planet position. */
+         vectcpy( &vp, &planet->pos );
+   }
 
    for (i=0; i < fleet->npilots; i++)
       plt = &fleet->pilots[i];
@@ -569,9 +600,14 @@ static void space_addFleet( Fleet* fleet )
          /* other ships in the fleet should start split up */
          vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
                RNG(75,150) * (RNG(0,1) ? 1 : -1));
+         a = vect_angle(&vp, &vn);
 
-         a = vect_angle(&vp,&vn);
-         vect_pset( &vv, plt->ship->speed * 2., a );
+         /* Entering via hyperspace. */
+         if (c==0)
+            vect_pset( &vv, plt->ship->speed * 3., a );
+         /* Starting out landed. */
+         else if (c==1)
+            vectnull(&vv);
 
          pilot_create( plt->ship,
                plt->name,
@@ -638,7 +674,7 @@ void space_init ( const char* sysname )
    /* set up fleets -> pilots */
    for (i=0; i < cur_system->nfleets; i++)
       if (RNG(0,100) <= (cur_system->fleets[i].chance/2)) /* fleet check (50% chance) */
-         space_addFleet( cur_system->fleets[i].fleet );
+         space_addFleet( cur_system->fleets[i].fleet, 1 );
    
    /* start the spawn timer */
    spawn_timer = SDL_GetTicks() + 120000./(float)(cur_system->nfleets+1);
