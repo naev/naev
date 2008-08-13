@@ -1270,8 +1270,29 @@ static int hook_pilot( lua_State *L )
 
 
 
-/*
- *   P I L O T
+/**
+ * @defgroup PILOT Pilot Lua bindings.
+ *
+ * @brief Lua bindings to interact with pilots.
+ *
+ * Functions should be called like:
+ *
+ * @code
+ * pilot.function( parameters )
+ * @endcode
+ *
+ * @{
+ */
+/**
+ * @fn static int pilot_addFleet( lua_State *L )
+ *
+ * @brief table add( string fleetname [, string ai ] )
+ *
+ * Adds a fleet to the system.
+ *
+ *    @param fleetname Name of the fleet to add.
+ *    @param ai If set will override the standard fleet AI.
+ *    @return Table populated with all the identifiers of the pilots created.
  */
 static int pilot_addFleet( lua_State *L )
 {
@@ -1289,7 +1310,8 @@ static int pilot_addFleet( lua_State *L )
    else NLUA_INVALID_PARAMETER();
    
    /* Parse second argument - Fleet AI Override */
-   if (lua_isstring(L,2)) fltai = (char*) lua_tostring(L,2);
+   if ((lua_gettop(L) > 1) && lua_isstring(L,2))
+      fltai = (char*) lua_tostring(L,2);
    else fltai = NULL;
 
    /* pull the fleet */
@@ -1339,6 +1361,16 @@ static int pilot_addFleet( lua_State *L )
    }
    return 1;
 }
+/**
+ * @fn static int pilot_rename( lua_State* L )
+ *
+ * @brief rename( number pilot, string name )
+ *
+ * Renames a pilot.
+ *
+ *    @param pilot Pilot to rename.
+ *    @param name New name for the pilot.
+ */
 static int pilot_rename( lua_State* L )
 {
    NLUA_MIN_ARGS(2);
@@ -1356,5 +1388,7 @@ static int pilot_rename( lua_State* L )
    p->name = strdup(name);
    return 0; 
 }
-
+/**
+ * @}
+ */
 
