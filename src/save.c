@@ -2,6 +2,11 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file save.c
+ *
+ * @brief Handles saving/loading games.
+ */
 
 #include "save.h"
 
@@ -20,11 +25,11 @@
 #include "hook.h"
 
 
-#define LOAD_WIDTH      400
-#define LOAD_HEIGHT     300
+#define LOAD_WIDTH      400 /**< Load window width. */
+#define LOAD_HEIGHT     300 /**< Load window height. */
 
-#define BUTTON_WIDTH    50
-#define BUTTON_HEIGHT   30
+#define BUTTON_WIDTH    50 /**< Button width. */
+#define BUTTON_HEIGHT   30 /**< Button height. */
 
 
 /*
@@ -52,8 +57,13 @@ static void load_menu_delete( char *str );
 static int load_game( char* file );
 
 
-/*
- * saves all the game data
+/**
+ * @fn static int save_data( xmlTextWriterPtr writer )
+ *
+ * @brief Saves all the player's game data.
+ *
+ *    @param writer XML writer to use.
+ *    @return 0 on success.
  */
 static int save_data( xmlTextWriterPtr writer )
 {
@@ -69,8 +79,12 @@ static int save_data( xmlTextWriterPtr writer )
 }
 
 
-/*
- * saves the current game
+/**
+ * @fn int save_all (void)
+ *
+ * @brief Saves the current game.
+ *
+ *    @return 0 on success.
  */
 int save_all (void)
 {
@@ -119,8 +133,10 @@ int save_all (void)
 }
 
 
-/*
- * opens the load game menu
+/**
+ * @fn void load_game_menu (void)
+ *
+ * @brief Opens the load game menu.
  */
 void load_game_menu (void)
 {
@@ -167,12 +183,22 @@ void load_game_menu (void)
    /* default action */
    window_setAccept( wid, load_menu_load );
 }
+/**
+ * @fn static void load_menu_close( char *str )
+ * @brief Closes the load game menu.
+ *    @param str Unused.
+ */
 static void load_menu_close( char *str )
 {
    (void)str;
 
    window_destroy( window_get("Load Game") );
 }
+/**
+ * @fn static void load_menu_load( char *str )
+ * @brief Loads a new game.
+ *    @param str Unused.
+ */
 static void load_menu_load( char *str )
 {
    (void)str;
@@ -190,6 +216,11 @@ static void load_menu_load( char *str )
    load_menu_close(NULL);
    menu_main_close();
 }
+/**
+ * @fn static void load_menu_delete( char *str )
+ * @brief Deletes an old game.
+ *    @param str Unused.
+ */
 static void load_menu_delete( char *str )
 {
    (void)str;
@@ -216,8 +247,13 @@ static void load_menu_delete( char *str )
 }
 
 
-/*
- * loads a new game
+/**
+ * @fn static int load_game( char* file )
+ * 
+ * @brief Actually loads a new game based on file.
+ *
+ *    @param file File that contains the new game.
+ *    @return 0 on success.
  */
 static int load_game( char* file )
 {
