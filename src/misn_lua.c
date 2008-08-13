@@ -79,7 +79,7 @@ static int misn_delete = 0; /**< if 1 delete current mission */
 /* static */
 static int var_add( misn_var *var );
 static void var_free( misn_var* var );
-static unsigned int hook_generic( lua_State *L, char* stack );
+static unsigned int hook_generic( lua_State *L, char* stack, int pos );
 /* externed */
 int misn_run( Mission *misn, char *func );
 int var_save( xmlTextWriterPtr writer );
@@ -1109,10 +1109,30 @@ static int player_getRating( lua_State *L )
 
 
 
-/*
- *   H O O K
+/**
+ * @defgroup HOOK Hook Lua bindings
+ *
+ * @brief Lua bindings to manipulate hooks.
+ *
+ * Functions should be called like:
+ *
+ * @code
+ * hook.function( parameters )
+ * @endcode
  */
-static unsigned int hook_generic( lua_State *L, char* stack )
+/**
+ * @fn static unsigned int hook_generic( lua_State *L, char* stack, int pos )
+ *
+ * @brief Creates a mission hook to a certain stack.
+ *
+ * Basically a generic approach to hooking.
+ *
+ *    @param L Lua state.
+ *    @param stack Stack to put the hook in.
+ *    @param pos Position in the stack of the function name.
+ *    @return The hook ID or 0 on error.
+ */
+static unsigned int hook_generic( lua_State *L, char* stack, int pos )
 {
    int i;
    char *func;
@@ -1120,7 +1140,7 @@ static unsigned int hook_generic( lua_State *L, char* stack )
    NLUA_MIN_ARGS(1);
 
    /* Last parameter must be function to hook */
-   if (lua_isstring(L,-1)) func = (char*)lua_tostring(L,-1);
+   if (lua_isstring(L,pos)) func = (char*)lua_tostring(L,pos);
    else NLUA_INVALID_PARAMETER();
 
    /* make sure mission is a player mission */
@@ -1134,29 +1154,92 @@ static unsigned int hook_generic( lua_State *L, char* stack )
 
    return hook_add( cur_mission->id, func, stack );
 }
+/**
+ * @fn static int hook_land( lua_State *L )
+ * @ingroup HOOK
+ *
+ * @brief number land( string func )
+ *
+ * Hooks the function to the player landing.
+ *
+ *    @param func Function to run when hook is triggered.
+ *    @return Hook identifier.
+ */
 static int hook_land( lua_State *L )
 {
-   hook_generic( L, "land" );
+   hook_generic( L, "land", 1 );
    return 0;
 }
+/**
+ * @fn static int hook_takeoff( lua_State *L )
+ * @ingroup HOOK
+ *
+ * @brief number takeoff( string func )
+ *
+ * Hooks the function to the player taking off
+ *
+ *    @param func Function to run when hook is triggered.
+ *    @return Hook identifier.
+ */
 static int hook_takeoff( lua_State *L )
 {
-   hook_generic( L, "takeoff" );
+   hook_generic( L, "takeoff", 1 );
    return 0;
 }
+/**
+ * @fn static int hook_time( lua_State *L )
+ * @ingroup HOOK
+ *
+ * @brief number time( string func )
+ *
+ * Hooks the function to a time change.
+ *
+ *    @param func Function to run when hook is triggered.
+ *    @return Hook identifier.
+ */
 static int hook_time( lua_State *L )
 {
-   hook_generic( L, "time" );
+   hook_generic( L, "time", 1 );
    return 0;
 }
+/**
+ * @fn static int hook_enter( lua_State *L )
+ * @ingroup HOOK
+ *
+ * @brief number enter( string func )
+ *
+ * Hooks the function to the player entering a system (triggers when taking
+ *  off too).
+ *
+ *    @param func Function to run when hook is triggered.
+ *    @return Hook identifier.
+ */
 static int hook_enter( lua_State *L )
 {
-   hook_generic( L, "enter" );
+   hook_generic( L, "enter", 1 );
    return 0;
 }
+/**
+ * @fn static int hook_pilot( lua_State *L )
+ * @ingroup HOOK
+ *
+ * @brief number pilot( number pilot, string type, string func )
+ *
+ * Hooks the function to a specific pilot.
+ *
+ * You can hook to different actions.  Curently hook system only supports:
+ *    - "death" :  triggered when pilot dies.
+ *    - "board" :  triggered when pilot is boarded.
+ *    - "disable" :  triggered when pilot is disabled.
+ *
+ *    @param pilot Pilot identifier to hook.
+ *    @param type One of the supported hook types.
+ *    @param func Function to run when hook is triggered.
+ *    @return Hook identifier.
+ */
 static int hook_pilot( lua_State *L )
 {
-   NLUA_MIN_ARGS(2);
+   NLUA_MIN_ARGS(3);
    unsigned int h,p;
    int type;
    char *hook_type;
@@ -1179,7 +1262,7 @@ static int hook_pilot( lua_State *L )
    }
 
    /* actually add the hook */
-   h = hook_generic( L, hook_type );
+   h = hook_generic( L, hook_type, 3 );
    pilot_addHook( pilot_get(p), type, h );
 
    return 0;
