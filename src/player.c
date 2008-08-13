@@ -1018,13 +1018,19 @@ void player_renderGUI (void)
 
       sys = &systems_stack[cur_system->jumps[hyperspace_target]];
 
+      /* Determine if we have to play the "enter hyperspace range" sound. */
       i = space_canHyperspace(player);
       if ((i != 0) && (i != can_jump))
          if (!pilot_isFlag(player,PILOT_HYPERSPACE))
             player_playSound(snd_jump, 1);
       can_jump = i;
 
-      c = can_jump ? &cConsole : NULL ;
+      /* Determine the colour of the NAV text. */
+      if (can_jump || pilot_isFlag(player,PILOT_HYPERSPACE) ||
+             pilot_isFlag(player,PILOT_HYP_PREP) ||
+             pilot_isFlag(player,PILOT_HYP_BEGIN))
+         c = &cConsole;
+      else c = NULL;
       gl_printMid( NULL, (int)gui.nav.w,
             gui.nav.x, gui.nav.y - 5,
             c, "Hyperspace" );
