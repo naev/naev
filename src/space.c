@@ -439,8 +439,13 @@ int space_sysReachable( StarSystem *sys )
 }
 
 
-/*
- * get the system from it's name
+/**
+ * @fn StarSystem* system_get( const char* sysname )
+ *
+ * @brief Get the system from it's name.
+ *
+ *    @param sysname Name to match.
+ *    @return System matching sysname.
  */
 StarSystem* system_get( const char* sysname )
 {
@@ -455,8 +460,13 @@ StarSystem* system_get( const char* sysname )
 }
 
 
-/*
- * get the name of a system from a planetname
+/**
+ * @fn char* planet_getSystem( char* planetname )
+ *
+ * @brief Get the name of a system from a planetname.
+ *
+ *    @param planetname Planet name to match.
+ *    @return Name of the system planet belongs to.
  */
 char* planet_getSystem( char* planetname )
 {
@@ -471,8 +481,13 @@ char* planet_getSystem( char* planetname )
 }
 
 
-/*
- * gets a planet based on it's name
+/**
+ * @fn Planet* planet_get( char* planetname )
+ *
+ * @brief Gets a planet based on it's name.
+ *
+ *    @param planetname Name to match.
+ *    @return Planet matching planetname.
  */
 Planet* planet_get( char* planetname )
 {
@@ -491,8 +506,12 @@ Planet* planet_get( char* planetname )
 }
 
 
-/*
- * basically used for spawning fleets and such
+/**
+ * @fn void space_update( const double dt )
+ *
+ * @brief Controls fleet spawning.
+ *
+ *    @param dt Current delta tick.
  */
 void space_update( const double dt )
 {
@@ -525,8 +544,12 @@ void space_update( const double dt )
 }
 
 
-/*
- * creates a fleet
+/**
+ * @fn static void space_addFleet( Fleet* fleet )
+ *
+ * @brief Creates a fleet.
+ *
+ *    @param fleet Fleet to add to the system.
  */
 static void space_addFleet( Fleet* fleet )
 {
@@ -562,8 +585,12 @@ static void space_addFleet( Fleet* fleet )
 }
 
 
-/*
- * initializes the system
+/**
+ * @fn void space_init ( const char* sysname )
+ *
+ * @brief Initializes the system.
+ *
+ *    @param sysname Name of the system to initialize.
  */
 void space_init ( const char* sysname )
 {
@@ -621,8 +648,13 @@ void space_init ( const char* sysname )
 }
 
 
-/*
- * loads the planet of name 'name'
+/**
+ * @fn static Planet* planet_pull( const char* name )
+ *
+ * @brief Loads a planet by name.
+ *
+ *    @param name Name of the planet to get.
+ *    @return Planet matching name.
  */
 static Planet* planet_pull( const char* name )
 {
@@ -794,9 +826,13 @@ static Planet* planet_pull( const char* name )
 }
 
 
-/*
- * parses node 'parent' which should be the node of a system
- * returns the StarSystem fully loaded
+/**
+ * @fn static StarSystem* system_parse( const xmlNodePtr parent )
+ *
+ * @brief Creates a system from an XML node.
+ *
+ *    @param parent XML node to get system from.
+ *    @return System matching parent data.
  */
 static StarSystem* system_parse( const xmlNodePtr parent )
 {
@@ -918,8 +954,12 @@ static StarSystem* system_parse( const xmlNodePtr parent )
 }
 
 
-/*
- * loads the jumps into a system
+/**
+ * @fn static void system_parseJumps( const xmlNodePtr parent )
+ *
+ * @brief Loads the jumps into a system.
+ *
+ *    @param parent System parent node.
  */
 static void system_parseJumps( const xmlNodePtr parent )
 {
@@ -960,10 +1000,15 @@ static void system_parseJumps( const xmlNodePtr parent )
 }
 
 
-/*
- * LOADS THE ENTIRE UNIVERSE INTO RAM - pretty big feat eh?
+/**
+ * @fn int space_load (void)
  *
- * uses a two system pass to first load the star systems_stack and then set jump routes
+ * @brief Loads the entire universe into ram - pretty big feat eh?
+ *
+ * Uses a two system pass to first load the star systems_stack and then set
+ *  jump routes.
+ *
+ *    @return 0 on success.
  */
 int space_load (void)
 {
@@ -1027,8 +1072,12 @@ int space_load (void)
 }
 
 
-/*
- * renders the system
+/**
+ * @fn void space_render( const double dt )
+ *
+ * @brief Renders the system.
+ *
+ *    @param dt Current delta tick.
  */
 void space_render( const double dt )
 {
@@ -1041,8 +1090,12 @@ void space_render( const double dt )
 }
 
 
-/*
- * Renders the overlay
+/**
+ * @fn void space_renderOverlay( const double dt )
+ *
+ * @brief Renders the system overlay.
+ *
+ *    @param dt Current delta tick.
  */
 void space_renderOverlay( const double dt )
 {
@@ -1053,8 +1106,12 @@ void space_renderOverlay( const double dt )
 }
 
 
-/*
- * Renders stars
+/**
+ * @fn static void space_renderStars( const double dt )
+ *
+ * @brief Renders the starry background.
+ *
+ *    @param dt Current delta tick.
  */
 static void space_renderStars( const double dt )
 {
@@ -1139,8 +1196,11 @@ static void space_renderStars( const double dt )
    glPopMatrix(); /* translation matrix */
 }
 
-/*
- * renders the planets
+
+/**
+ * @fn void planets_render (void)
+ *
+ * @brief Renders the current systemsplanets.
  */
 void planets_render (void)
 {
@@ -1154,8 +1214,10 @@ void planets_render (void)
 }
 
 
-/*
- * cleans up the system
+/**
+ * @fn void space_exit (void)
+ *
+ * @brief Cleans up the system.
  */
 void space_exit (void)
 {
@@ -1206,8 +1268,10 @@ void space_exit (void)
 }
 
 
-/*
- * clears all system knowledge
+/**
+ * @fn void space_clearKnown (void)
+ *
+ * @brief Clears all system knowledge.
  */
 void space_clearKnown (void)
 {
@@ -1217,8 +1281,10 @@ void space_clearKnown (void)
 }
 
 
-/*
- * clears all system markers
+/**
+ * @fn void space_clearMarkers (void)
+ *
+ * @brief Clears all system markers.
  */
 void space_clearMarkers (void)
 {
@@ -1228,8 +1294,13 @@ void space_clearMarkers (void)
 }
 
 
-/*
- * saves what is needed to be saved for space
+/**
+ * @fn int space_sysSave( xmlTextWriterPtr writer )
+ *
+ * @brief Saves what is needed to be saved for space.
+ *
+ *    @param writer XML writer to use.
+ *    @return 0 on success.
  */
 int space_sysSave( xmlTextWriterPtr writer )
 {
@@ -1250,8 +1321,13 @@ int space_sysSave( xmlTextWriterPtr writer )
 }
 
 
-/*
- * loads space
+/**
+ * @fn int space_sysLoad( xmlNodePtr parent )
+ *
+ * @brief Loads player's space properties from an XML node.
+ *
+ *    @param parent Parent node for space.
+ *    @return 0 on success.
  */
 int space_sysLoad( xmlNodePtr parent )
 {
