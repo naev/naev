@@ -8,7 +8,7 @@
 
 
 /* how long a "unit" of time is */
-#define NTIME_UNIT_LENGTH      1000
+#define NTIME_UNIT_LENGTH      1000 /**< Length of a MTU (Major Time Unit) */
 
 /* get */
 unsigned int ntime_get (void);

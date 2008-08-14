@@ -26,7 +26,7 @@
 #include "hook.h"
 
 
-static unsigned int naev_time = 0; /**< Contains the current time in STU. */
+static unsigned int naev_time = 0; /**< Contains the current time in mSTU. */
 
 
 
