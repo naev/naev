@@ -1,5 +1,7 @@
 --[[
 
+   Collective Espionage II
+
    Third mission in the collective mini campaign.
 
    You must land on an ex-empire planet in collective territory and return.

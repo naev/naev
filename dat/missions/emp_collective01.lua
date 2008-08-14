@@ -1,5 +1,7 @@
 --[[
 
+   Collective Espionage I
+
    Second mission in the mini collective campaign.
 
    You must inspect a system for wireless communications.
