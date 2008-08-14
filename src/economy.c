@@ -2,6 +2,13 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file economy.c
+ *
+ * @brief Handles economy stuff.
+ *
+ * @todo Use Nodal Analysis to create a real dynamic economy.
+ */
 
 
 #include "economy.h"
@@ -19,14 +26,14 @@
 #include "rng.h"
 
 
-#define XML_COMMODITY_ID      "Commodities"   /* XML section identifier */
-#define XML_COMMODITY_TAG     "commodity"
-#define COMMODITY_DATA        "dat/commodity.xml"
+#define XML_COMMODITY_ID      "Commodities" /**< XML document identifier */
+#define XML_COMMODITY_TAG     "commodity" /**< XML commodity identifier. */
+#define COMMODITY_DATA        "dat/commodity.xml" /**< Comodity XML file. */
 
 
 /* commodity stack */
-static Commodity* commodity_stack = NULL;
-static int commodity_nstack = 0;
+static Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
+static int commodity_nstack = 0; /**< Number of commodities in the stack. */
 
 
 /*
@@ -36,9 +43,15 @@ static void commodity_freeOne( Commodity* com );
 static Commodity* commodity_parse( xmlNodePtr parent );
 
 
-/*
- * converts credits to a usable string for displaying
- * str must have 10 characters alloced
+/**
+ * @fn void credits2str( char *str, unsigned int credits, int decimals )
+ *
+ * @brief Converts credits to a usable string for displaying.
+ *
+ *    @param[out] str Output is stored here, must have at least a length of 10
+ *                     char.
+ *    @param credits Credits to display.
+ *    @param decimals Decimals to use.
  */
 void credits2str( char *str, unsigned int credits, int decimals )
 {
@@ -54,8 +67,13 @@ void credits2str( char *str, unsigned int credits, int decimals )
 }
 
 
-/*
- * gets a commoditiy
+/**
+ * @fn Commodity* commodity_get( const char* name )
+ *
+ * @brief Gets a commoditiy by name.
+ *
+ *    @param name Name to match.
+ *    @return Commodity matching name.
  */
 Commodity* commodity_get( const char* name )
 {
@@ -69,8 +87,12 @@ Commodity* commodity_get( const char* name )
 }
 
 
-/*
- * frees a commodity
+/**
+ * @fn static void commodity_freeOne( Commodity* com )
+ *
+ * @brief Frees a commodity.
+ *
+ *    @param com Commodity to free.
  */
 static void commodity_freeOne( Commodity* com )
 {
@@ -79,8 +101,13 @@ static void commodity_freeOne( Commodity* com )
 }
 
 
-/*
- * loads a commodity
+/**
+ * @Fn static Commodity* commodity_parse( xmlNodePtr parent )
+ *
+ * @brief Loads a commodity.
+ *
+ *    @param parent XML node to load from.
+ *    @return Commodity loaded from parent.
  */
 static Commodity* commodity_parse( xmlNodePtr parent )
 {
@@ -116,8 +143,14 @@ static Commodity* commodity_parse( xmlNodePtr parent )
 }
 
 
-/*
- * Throws cargo out in space graphically.
+/**
+ * @fn void commodity_Jettison( int pilot, Commodity* com, int quantity )
+ *
+ * @brief Throws cargo out in space graphically.
+ *
+ *    @param pilot ID of the pilot throwing the stuff out 
+ *    @param com Commodity to throw out.
+ *    @param quantity Quantity thrown out.
  */
 void commodity_Jettison( int pilot, Commodity* com, int quantity )
 {
@@ -149,8 +182,12 @@ void commodity_Jettison( int pilot, Commodity* com, int quantity )
 }
 
 
-/*
- * init/exit
+/**
+ * @fn int commodity_load (void)
+ *
+ * @brief Loads all the commodity data.
+ *
+ *    @return 0 on success.
  */
 int commodity_load (void)
 {
@@ -196,6 +233,13 @@ int commodity_load (void)
 
 
 }
+
+
+/**
+ * @fn void commodity_free (void)
+ *
+ * @brief Frees all the loaded commodities.
+ */
 void commodity_free (void)
 {
    int i;

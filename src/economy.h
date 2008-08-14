@@ -8,10 +8,20 @@
 #  define ECONOMY_H
 
 
+/**
+ * @struct Commodity
+ *
+ * @brief Represents a commodity.
+ *
+ * @todo Use inverse normal?
+ */
 typedef struct Commodity_ {
-   char* name;
-   char* description;
-   int low, medium, high; /* prices */
+   char* name; /**< Name of the commodity. */
+   char* description; /**< Description of the commodity. */
+   /* Prices. */
+   int low; /**< Lowest price on the market. */
+   int medium; /**< Average price on the market. */
+   int high; /**< Highest price on the market. */
 } Commodity;
 
 /* commodity stuff */

@@ -104,13 +104,17 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
  *
  * @brief Checks to see if two lines collide.
  *
- *    @param[in] s1 Start point of line 1.
- *    @param[in] e1 End point of line 1.
- *    @param[in] s2 Start point of line 2.
- *    @param[in] e2 End point of line 2.
+ *    @param[in] s1x X start point of line 1.
+ *    @param[in] s1y Y start point of line 1.
+ *    @param[in] e1x X end point of line 1.
+ *    @param[in] e1y Y end point of line 1.
+ *    @param[in] s2x X start point of line 2.
+ *    @param[in] s2y Y start point of line 2.
+ *    @param[in] e2x X end point of line 2.
+ *    @param[in] e2y Y end point of line 2.
  *    @param[out] crash Position of the collision.
- *    @return 3 if lines are coincident, 1 if lines are parallel,
- *              1 if lines just collideon a point, or 0 if they don't.
+ *    @return 3 if lines are coincident, 2 if lines are parallel,
+ *              1 if lines just collide on a point, or 0 if they don't.
  */
 int CollideLineLine( double s1x, double s1y, double e1x, double e1y,
       double s2x, double s2y, double e2x, double e2y, Vector2d* crash )
