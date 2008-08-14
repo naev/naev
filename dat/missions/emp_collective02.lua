@@ -29,7 +29,7 @@ else -- default english
 "Good luck, I'll be waiting for you on your return."]]
    text[4] = [[You quickly land on %s and hide in the deep dense methane atmosphere it has.  Your monitoring gear flickers into action, hopefully catching something of use. With some luck there won't be too many Collective ships when you take off.]]
    text[5] = [[As your ship touches ground you see Sergeant Dimitri come out to greet you.
-"How was the weatherV", he mentions jokingly.  "Glad to see you're in one piece.  We'll get right on analyzing the data acquired.  These robots have to be up to something.  Meet me in the bar later, meanwhile give yourself a treat, you've earned it.   We've made a 100k credit deposit in your bank account, enjoy it."]]
+"How was the weather?", he mentions jokingly.  "Glad to see you're in one piece.  We'll get right on analyzing the data acquired.  These robots have to be up to something.  Meet me in the bar later, meanwhile give yourself a treat, you've earned it.   We've made a 100k credit deposit in your bank account, enjoy it."]]
 end
 
 
