@@ -152,35 +152,48 @@ char* ship_class( Ship* s )
    switch (s->class) {
       case SHIP_CLASS_NULL:
          return "NULL";
-      /* Civilian */
-      case SHIP_CLASS_CIV_LIGHT:
-         return "Civilian Light";
-      case SHIP_CLASS_CIV_MEDIUM:
-         return "Civilian Medium";
-      case SHIP_CLASS_CIV_HEAVY:
-         return "Civilian Heavy";
-      /* Military */
-      case SHIP_CLASS_MIL_LIGHT:
-         return "Military Light";
-      case SHIP_CLASS_MIL_MEDIUM:
-         return "Military Medium";
-      case SHIP_CLASS_MIL_HEAVY:
-         return "Military Heavy";
-      /* Robotic */
-      case SHIP_CLASS_ROB_LIGHT:
-         return "Robotic Light";
-      case SHIP_CLASS_ROB_MEDIUM:
-         return "Robotic Medium";
-      case SHIP_CLASS_ROB_HEAVY:
-         return "Robotic Heavy";
-      /* Hybrid */
-      case SHIP_CLASS_HYB_LIGHT:
-         return "Hybrid Light";
-      case SHIP_CLASS_HYB_MEDIUM:
-         return "Hybrid Medium";
-      case SHIP_CLASS_HYB_HEAVY:
-         return "Hybrid Heavy";
 
+      /* Civilian. */
+      case SHIP_CLASS_YACHT:
+         return "Yacht";
+      case SHIP_CLASS_LUXERY_YACHT:
+         return "Luxery Yacht";
+      case SHIP_CLASS_CRUISE_SHIP:
+         return "Cruise Ship";
+
+      /* Merchant. */
+      case SHIP_CLASS_COURIER:
+         return "Courier";
+      case SHIP_CLASS_FREIGHTER:
+         return "Freighter";
+      case SHIP_CLASS_BULK_CARRIER:
+         return "Bulk Carrier";
+
+      /* Military. */
+      case SHIP_CLASS_SCOUT:
+         return "Scout";
+      case SHIP_CLASS_FIGHTER:
+         return "Fighter";
+      case SHIP_CLASS_BOMBER:
+         return "Bomber";
+      case SHIP_CLASS_CORVETTE:
+         return "Corvette";
+      case SHIP_CLASS_DESTROYER:
+         return "Destroyer";
+      case SHIP_CLASS_CRUISER:
+         return "Cruiser";
+      case SHIP_CLASS_CARRIER:
+         return "Carrier";
+
+      /* Robotic. */
+      case SHIP_CLASS_DRONE:
+         return "Drone";
+      case SHIP_CLASS_HEAVY_DRONE:
+         return "Heavy Drone";
+      case SHIP_CLASS_MOTHERSHIP:
+         return "Mothership";
+
+      /* Unknown. */
       default:
          return "Unknown";
    }
@@ -197,33 +210,44 @@ char* ship_class( Ship* s )
 static ShipClass ship_classFromString( char* str )
 {
    /* Civilian */
-   if (strcmp(str,"civ light")==0)
-      return SHIP_CLASS_CIV_LIGHT;
-   else if (strcmp(str,"civ medium")==0)
-      return SHIP_CLASS_CIV_MEDIUM;
-   else if (strcmp(str,"civ heavy")==0)
-      return SHIP_CLASS_CIV_HEAVY;
+   if (strcmp(str,"Yacht")==0)
+      return SHIP_CLASS_YACHT;
+   else if (strcmp(str,"Luxery Yacht")==0)
+      return SHIP_CLASS_LUXERY_YACHT;
+   else if (strcmp(str,"Cruise Ship")==0)
+      return SHIP_CLASS_CRUISE_SHIP;
+
+   /* Merchant. */
+   else if (strcmp(str,"Courier")==0)
+      return SHIP_CLASS_COURIER;
+   else if (strcmp(str,"Freighter")==0)
+      return SHIP_CLASS_FREIGHTER;
+   else if (strcmp(str,"Bulk Carrier")==0)
+      return SHIP_CLASS_BULK_CARRIER;
+
    /* Military */
-   else if (strcmp(str,"mil light")==0)
-      return SHIP_CLASS_CIV_LIGHT;
-   else if (strcmp(str,"mil medium")==0)
-      return SHIP_CLASS_CIV_MEDIUM;
-   else if (strcmp(str,"mil heavy")==0)
-      return SHIP_CLASS_CIV_HEAVY;
+   else if (strcmp(str,"Scout")==0)
+      return SHIP_CLASS_SCOUT;
+   else if (strcmp(str,"Fighter")==0)
+      return SHIP_CLASS_FIGHTER;
+   else if (strcmp(str,"Bomber")==0)
+      return SHIP_CLASS_BOMBER;
+   else if (strcmp(str,"Corvette")==0)
+      return SHIP_CLASS_CORVETTE;
+   else if (strcmp(str,"Destroyer")==0)
+      return SHIP_CLASS_DESTROYER;
+   else if (strcmp(str,"Cruiser")==0)
+      return SHIP_CLASS_CRUISER;
+   else if (strcmp(str,"Carrier")==0)
+      return SHIP_CLASS_CARRIER;
+
    /* Robotic */
-   else if (strcmp(str,"rob light")==0)
-      return SHIP_CLASS_CIV_LIGHT;
-   else if (strcmp(str,"rob medium")==0)
-      return SHIP_CLASS_CIV_MEDIUM;
-   else if (strcmp(str,"rob heavy")==0)
-      return SHIP_CLASS_CIV_HEAVY;
-   /* Hybrid */
-   else if (strcmp(str,"hyb light")==0)
-      return SHIP_CLASS_CIV_LIGHT;
-   else if (strcmp(str,"hyb medium")==0)
-      return SHIP_CLASS_CIV_MEDIUM;
-   else if (strcmp(str,"hyb heavy")==0)
-      return SHIP_CLASS_CIV_HEAVY;
+   else if (strcmp(str,"Drone")==0)
+      return SHIP_CLASS_DRONE;
+   else if (strcmp(str,"Heavy Drone")==0)
+      return SHIP_CLASS_HEAVY_DRONE;
+   else if (strcmp(str,"Mothership")==0)
+      return SHIP_CLASS_MOTHERSHIP;
 
   /* Unknown */
   return SHIP_CLASS_NULL;

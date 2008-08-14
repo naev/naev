@@ -23,29 +23,35 @@
  *
  * @brief Contains the different types of ships.
  *
- * @todo Not too happy with the current ship class system.  Too smiplistic.
+ * See docs/ships/classification for more details.
  *
  * @sa ship_classFromString
  * @sa ship_class
  */
 typedef enum ShipClass_ {
-   SHIP_CLASS_NULL, /* Invalid ship class. */
-   /* CIVILIAN */
-   SHIP_CLASS_CIV_LIGHT, /**< Light civilian ship. */
-   SHIP_CLASS_CIV_MEDIUM, /**< Medium civilian ship. */
-   SHIP_CLASS_CIV_HEAVY, /**< Heavy civilian ship. */
-   /* MILITARY */
-   SHIP_CLASS_MIL_LIGHT, /**< Light military ship. */
-   SHIP_CLASS_MIL_MEDIUM, /**< Medium military ship. */
-   SHIP_CLASS_MIL_HEAVY, /**< Heavy military ship. */
-   /* ROBOTIC */
-   SHIP_CLASS_ROB_LIGHT,
-   SHIP_CLASS_ROB_MEDIUM,
-   SHIP_CLASS_ROB_HEAVY,
-   /* HYBRID */
-   SHIP_CLASS_HYB_LIGHT,
-   SHIP_CLASS_HYB_MEDIUM,
-   SHIP_CLASS_HYB_HEAVY
+   SHIP_CLASS_NULL, /**< Invalid ship class. */
+   /* Civilian. */
+   SHIP_CLASS_YACHT, /**< Small cheap ship. */
+   SHIP_CLASS_LUXERY_YACHT, /**< Small expensive ship. */
+   SHIP_CLASS_CRUISE_SHIP, /**< Medium ship. */
+   /* Merchant. */
+   SHIP_CLASS_COURIER, /**< Small ship. */
+   SHIP_CLASS_FREIGHTER, /**< Medium ship. */
+   SHIP_CLASS_BULK_CARRIER, /**< Large ship. */
+   /* Military. */
+   SHIP_CLASS_SCOUT, /**< Small scouter. */
+   SHIP_CLASS_FIGHTER, /**< Small attack ship. */
+   SHIP_CLASS_BOMBER, /**< Small attack ship with many missiles. */
+   SHIP_CLASS_CORVETTE, /**< Very agile medium ship. */
+   SHIP_CLASS_DESTROYER, /**< Not so agile medium ship. */
+   SHIP_CLASS_CRUISER, /**< Large ship. */
+   SHIP_CLASS_CARRIER, /**< Large ship with fighter bays. */
+   /* Robotic */
+   SHIP_CLASS_DRONE, /**< Unmanned small robotic ship. */
+   SHIP_CLASS_HEAVY_DRONE, /**< Unmanned medium robotic ship. */
+   SHIP_CLASS_MOTHERSHIP /**< Unmanned large robotic carrier. */
+   /* Hybrid */
+   /** @todo hybrid ship classification. */
 } ShipClass;
 
 
