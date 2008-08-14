@@ -2,6 +2,11 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file ship.c
+ *
+ * @brief Handles the ship details.
+ */
 
 
 #include "ship.h"
