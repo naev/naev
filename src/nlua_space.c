@@ -2,6 +2,13 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file nlua_space.c
+ *
+ * @brief Handles the Lua space bindings.
+ *
+ * These bindings control the planets and systems.
+ */
 
 #include "nlua_space.h"
 
@@ -28,7 +35,7 @@ static const luaL_reg space_methods[] = {
    { "getPlanet", planetL_get },
    { "getSystem", systemL_get },
    {0,0}
-};
+}; /**< Space Lua methods. */
 
 /* Planet metatable methods */
 static int planetL_eq( lua_State *L );
@@ -43,7 +50,7 @@ static const luaL_reg planet_methods[] = {
    { "class", planetL_class },
    { "services", planetL_services },
    {0,0}
-};
+}; /**< Planet metatable methods. */
 
 /* System metatable methods */
 static int systemL_eq( lua_State *L );
@@ -56,12 +63,17 @@ static const luaL_reg system_methods[] = {
    { "faction", systemL_faction },
    { "jumpDist", systemL_jumpdistance },
    {0,0}
-};
+}; /**< System metatable methods. */
 
 
 
-/*
- * Loads the space library.
+/**
+ * @fn int lua_loadSpace( lua_State *L, int readonly )
+ *
+ * @brief Loads the space library.
+ *
+ *    @param L State to load space library into.
+ *    @return 0 on success.
  */
 int lua_loadSpace( lua_State *L, int readonly )
 {
@@ -78,12 +90,13 @@ int lua_loadSpace( lua_State *L, int readonly )
 }
 
 
-/*
- *   S P A C E
- */
-
-/*
- * Registers the planet metatable.
+/**
+ * @fn static int planetL_createmetatable( lua_State *L )
+ *
+ * @brief Registers the planet metatable.
+ *
+ *    @param L Lua state to register metatable in.
+ *    @return 0 on success.
  */
 static int planetL_createmetatable( lua_State *L )
 {
@@ -99,9 +112,13 @@ static int planetL_createmetatable( lua_State *L )
 
    return 0; /* No error */
 }
-
-/*
- * Register the system metatable.
+/**
+ * @fn static int systemL_createmetatable( lua_State *L )
+ *
+ * @brief Registers the system metatable.
+ *
+ *    @param L Lua state to register metatable in.
+ *    @return 0 on success.
  */
 static int systemL_createmetatable( lua_State *L )
 {
@@ -118,11 +135,33 @@ static int systemL_createmetatable( lua_State *L )
    return 0; /* No error */
 }
 
-/*
- *   P L A N E T
+
+
+/**
+ * @defgroup SPACE Space Lua Bindings
+ *
+ * @brief Contains Lua bindings for manipulating the space itself.
  */
-/*
- * Gets planet at index.
+/**
+ * @defgroup META_PLANET Planet Metatable
+ *
+ * @brief The planet metatable is a way to represent a planet in Lua.
+ *
+ * It allows all sorts of operators making it much more natural to use.
+ *
+ * To call members of the metatable always use:
+ * @code 
+ * planet:function( param )
+ * @endcode
+ */
+/**
+ * @fn LuaPlanet* lua_toplanet( lua_State *L, int ind )
+ *
+ * @brief Gets planet at index.
+ *
+ *    @param L Lua state to get planet from.
+ *    @param ind Index position to find the planet.
+ *    @return Planet found at the index in the state.
  */
 LuaPlanet* lua_toplanet( lua_State *L, int ind )
 {
@@ -132,9 +171,14 @@ LuaPlanet* lua_toplanet( lua_State *L, int ind )
    luaL_typerror(L, ind, PLANET_METATABLE);
    return NULL;
 }
-
-/*
- * Pushes a planet on the stack.
+/**
+ * @fn LuaPlanet* lua_pushplanet( lua_State *L, LuaPlanet planet )
+ *
+ * @brief Pushes a planet on the stack.
+ *
+ *    @param L Lua state to push planet into.
+ *    @param planet Planet to push.
+ *    @return Newly pushed planet.
  */
 LuaPlanet* lua_pushplanet( lua_State *L, LuaPlanet planet )
 {
@@ -145,9 +189,14 @@ LuaPlanet* lua_pushplanet( lua_State *L, LuaPlanet planet )
    lua_setmetatable(L, -2);
    return p;
 }
-
-/*
- * Checks to see if ind is a planet.
+/**
+ * @fn int lua_isplanet( lua_State *L, int ind )
+ *
+ * @brief Checks to see if ind is a planet.
+ *
+ *    @param L Lua state to check.
+ *    @param ind Index position to check.
+ *    @return 1 if ind is a planet.
  */
 int lua_isplanet( lua_State *L, int ind )
 {
@@ -165,8 +214,23 @@ int lua_isplanet( lua_State *L, int ind )
    return ret;
 }
 
-/*
+/**
+ * @fn static int planetL_get( lua_State *L )
+ * @ingroup SPACE
+ *
+ * @brief planet, system getPlanet( [param] )
+ *
  * Gets a planet.
+ *
+ * Possible values of param:
+ *    - nil : Gets the current landed planet or nil if there is none.
+ *    - number : Gets random planet belonging to faction matching the number.
+ *    - string : Gets the planet by name.
+ *    - table : Gets random planet belonging to any of the factions in the
+ *               table.
+ *
+ *    @param param See description.
+ *    @return Returns the planet and the system it belongs to.
  */
 static int planetL_get( lua_State *L )
 {
@@ -181,7 +245,6 @@ static int planetL_get( lua_State *L )
 
    rndplanet = NULL;
    nplanets = 0;
-
   
    /* Get the landed planet */
    if (lua_gettop(L) == 0) {
@@ -243,8 +306,18 @@ static int planetL_get( lua_State *L )
    return 2;
 }
 
-/*
+/**
+ * @fn static int planetL_eq( lua_State *L )
+ * @ingroup META_PLANET
+ *
+ * @brief bool __eq( planet comp )
+ *
  * __eq (equality) metamethod for planets.
+ *
+ * You can use the '=' operator within Lua to compare planets with this.
+ *
+ *    @param comp planet to compare against.
+ *    @return true if both planets are the same.
  */
 static int planetL_eq( lua_State *L )
 {
@@ -258,8 +331,15 @@ static int planetL_eq( lua_State *L )
    return 1;
 }
 
-/*
+/**
+ * @fn static int planetL_name( lua_State *L )
+ * @ingroup META_PLANET
+ *
+ * @brief string name( nil )
+ *
  * Gets the planet's name.
+ *
+ *    @return The name of the planet.
  */
 static int planetL_name( lua_State *L )
 {
@@ -269,8 +349,15 @@ static int planetL_name( lua_State *L )
    return 1;
 }
 
-/*
+/**
+ * @fn static int planetL_faction( lua_State *L )
+ * @ingroup META_PLANET
+ *
+ * @brief number faction( nil )
+ *
  * Gets the planet's faction.
+ *
+ *    @return The planet's faction.
  */
 static int planetL_faction( lua_State *L )
 {
@@ -280,8 +367,15 @@ static int planetL_faction( lua_State *L )
    return 1;
 }
 
-/*
+/**
+ * @fn static int planetL_class(lua_State *L )
+ * @ingroup META_PLANET
+ *
+ * @brief string class( nil )
+ *
  * Gets the planet's class.
+ *
+ *    @return The class of the planet in a one char identifier.
  */
 static int planetL_class(lua_State *L )
 {
@@ -294,8 +388,15 @@ static int planetL_class(lua_State *L )
    return 1;
 }
 
-/*
+/**
+ * @fn static int planetL_services( lua_State *L )
+ * @ingroup META_PLANET
+ *
+ * @brief number services( nil )
+ *
  * Gets planet services.
+ *
+ *    @return The services the planet has it stored bitwise.
  */
 static int planetL_services( lua_State *L )
 {
@@ -307,12 +408,24 @@ static int planetL_services( lua_State *L )
 
 
 
-/*
- *    S Y S T E M
+/**
+ * @defgroup META_SYSTEM System Metatable
+ *
+ * @brief Represents a system in Lua.
+ *
+ * To call members of the metatable always use:
+ * @code 
+ * system:function( param )
+ * @endcode
  */
-
-/*
- * Gets system at index.
+/**
+ * @fn LuaSystem* lua_tosystem( lua_State *L, int ind )
+ *
+ * @brief Gets system at index.
+ *
+ *    @param L Lua state to get system from.
+ *    @param ind Index position of system.
+ *    @return The LuaSystem at ind.
  */
 LuaSystem* lua_tosystem( lua_State *L, int ind )
 {     
@@ -323,8 +436,14 @@ LuaSystem* lua_tosystem( lua_State *L, int ind )
    return NULL;
 }
 
-/*
- * Pushes a system on the stack.
+/**
+ * @fn LuaSystem* lua_pushsystem( lua_State *L, LuaSystem sys )
+ *
+ * @brief Pushes a system on the stack.
+ *
+ *    @param L Lua state to push system onto.
+ *    @param sys System to push.
+ *    @return System just pushed.
  */
 LuaSystem* lua_pushsystem( lua_State *L, LuaSystem sys )
 {
@@ -336,8 +455,14 @@ LuaSystem* lua_pushsystem( lua_State *L, LuaSystem sys )
    return s;
 }
 
-/*
- * Checks to see if ind is a planet.
+/**
+ * @fn int lua_issystem( lua_State *L, int ind )
+ *
+ * @brief Checks to see if ind is a system.
+ *
+ *    @param L Lua state to check.
+ *    @param ind Index position to check.
+ *    @return 1 if there is a system at index position.
  */
 int lua_issystem( lua_State *L, int ind )
 {  
@@ -356,8 +481,21 @@ int lua_issystem( lua_State *L, int ind )
 }
 
 
-/*
+/**
+ * @fn static int systemL_get( lua_State *L )
+ * @ingroup SPACE
+ *
+ * @brief system getSystem( [param] )
+ *
  * Gets a system.
+ *
+ * Behaves differently depending on what you pass as param:
+ *    - nil : Gets the current system.
+ *    - string : Gets the system by name.
+ *    - planet : Gets the system by planet.
+ *
+ *    @param param Read description for details.
+ *    @return System metatable matching param.
  */
 static int systemL_get( lua_State *L )
 {
@@ -384,8 +522,18 @@ static int systemL_get( lua_State *L )
    return 1;
 }
 
-/*
+/**
+ * @fn static int systemL_eq( lua_State *L )
+ * @ingroup META_SYSTEM
+ *
+ * @brief bool __eq( system comp )
+ *
  * Check systems for equality.
+ *
+ * Allows you to use the '=' operator in Lua with systems.
+ *
+ *    @param comp System to compare against.
+ *    @return true if both systems are the same.
  */
 static int systemL_eq( lua_State *L )
 {
@@ -399,8 +547,15 @@ static int systemL_eq( lua_State *L )
    return 1;
 }
 
-/*
+/**
+ * @fn static int systemL_name( lua_State *L )
+ * @ingroup META_SYSTEM
+ *
+ * @brief string name( nil )
+ *
  * Returns the system's name.
+ *
+ *    @return The name of the system.
  */
 static int systemL_name( lua_State *L )
 {
@@ -410,8 +565,22 @@ static int systemL_name( lua_State *L )
    return 1;
 }
 
-/*
+/**
+ * @fn static int systemL_faction( lua_State *L )
+ * @ingroup META_SYSTEM
+ *
+ * @brief table faction( nil )
+ *
  * Gets system factions.
+ *
+ * @code
+ * foo = space.faction("foo")
+ * if foo["bar"] then
+ *    print( "faction 'bar' found" )
+ * end
+ * @endcode
+ *
+ *    @return A table containing all the factions in the system.
  */
 static int systemL_faction( lua_State *L )
 {
@@ -432,13 +601,26 @@ static int systemL_faction( lua_State *L )
 
 }
 
-/*
+/**
+ * @fn static int systemL_jumpdistance( lua_State *L )
+ * @ingroup META_SYSTEM
+ *
+ * @brief number jumpDist( [param] )
+ *
  * Gets jump distance from current system, or to another.
+ *
+ * Does different things depending on the parameter type:
+ *    - nil : Gets distance from current system.
+ *    - string : Gets distance from system matching name.
+ *    - system : Gets distance from system
+ *
+ *    @param param See description.
+ *    @return Number of jumps to system.
  */
 static int systemL_jumpdistance( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
-   LuaSystem *sys;
+   LuaSystem *sys, *sysp;
    StarSystem **s;
    int jumps;
    char *start, *goal;
@@ -446,8 +628,14 @@ static int systemL_jumpdistance( lua_State *L )
    sys = lua_tosystem(L,1);
    start = sys->s->name;
 
-   if ((lua_gettop(L) > 1) && lua_isstring(L,2))
-      goal = (char*) lua_tostring(L,2);
+   if (lua_gettop(L) > 1) {
+      if (lua_isstring(L,2))
+         goal = (char*) lua_tostring(L,2);
+      else if (lua_issystem(L,2)) {
+         sysp = lua_tosystem(L,2);
+         goal = sysp->s->name;
+      }
+   }
    else
       goal = cur_system->name;
 
