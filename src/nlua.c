@@ -2,6 +2,11 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file nlua.c
+ *
+ * @brief Contains some standard Lua binding libraries.
+ */
 
 #include "nlua.h"
 
@@ -33,7 +38,7 @@ static int naev_lang( lua_State *L );
 static const luaL_reg naev_methods[] = {
    { "lang", naev_lang },
    {0,0}
-};
+}; /**< NAEV Lua methods. */
 /* time */
 static int time_get( lua_State *L );
 static int time_str( lua_State *L );
@@ -43,13 +48,13 @@ static const luaL_reg time_methods[] = {
    { "str", time_str },
    { "units", time_units },
    {0,0}                                                                  
-};                                                                        
+}; /**< Time Lua methods. */
 /* rnd */
 static int rnd_int( lua_State *L );
 static const luaL_reg rnd_methods[] = {
    { "int", rnd_int },
    {0,0}
-};
+}; /**< Random Lua methods. */
 /* toolkit */
 static int tk_msg( lua_State *L );
 static int tk_yesno( lua_State *L );
@@ -59,12 +64,16 @@ static const luaL_reg tk_methods[] = {
    { "yesno", tk_yesno },
    { "input", tk_input },
    {0,0}
-};
+}; /**< Toolkit Lua methods. */
 
 
 
-/*
- * wrapper around luaL_newstate
+/**
+ * @fn lua_State *nlua_newState (void)
+ *
+ * @brief Wrapper around luaL_newstate.
+ *
+ *    @return A newly created lua_State.
  */
 lua_State *nlua_newState (void)
 {
@@ -81,8 +90,13 @@ lua_State *nlua_newState (void)
 }
 
 
-/*
- * opens a lua library
+/**
+ * @fn int nlua_load( lua_State* L, lua_CFunction f )
+ *
+ * @brief Opens a lua library.
+ *
+ *    @param L Lua state to load the library into.
+ *    @param f CFunction to load.
  */
 int nlua_load( lua_State* L, lua_CFunction f )
 {
@@ -135,6 +149,18 @@ int nlua_loadBasic( lua_State* L )
 
    return 0;
 }
+
+
+/**
+ * @fn static int nlua_packfileLoader( lua_State* L )
+ *
+ * @brief include( string module )
+ *
+ * Loads a module into the current Lua state from inside the data file.
+ *
+ *    @param module Name of the module to load.
+ *    @return An error string on error.
+ */
 static int nlua_packfileLoader( lua_State* L )
 {
    char *buf, *filename;
@@ -172,22 +198,55 @@ static int nlua_packfileLoader( lua_State* L )
 /*
  * individual library loading
  */
+/**
+ * @fn int lua_loadNaev( lua_State *L )
+ *
+ * @brief Loads the NAEV Lua library.
+ *
+ *    @param L Lua state.
+ *    @return 0 on success.
+ */
 int lua_loadNaev( lua_State *L )
 {  
    luaL_register(L, "naev", naev_methods);
    return 0;
 }
+/**
+ * @fn int lua_loadTime( lua_State *L )
+ *
+ * @brief Loads the Time Lua library.
+ *
+ *    @param L Lua state.
+ *    @param readonly Whether to open it as read only.
+ *    @return 0 on success.
+ */
 int lua_loadTime( lua_State *L, int readonly )
 {
    (void)readonly;
    luaL_register(L, "time", time_methods);
    return 0;
 }
+/**
+ * @fn int lua_loadRnd( lua_State *L )
+ *
+ * @brief Loads the Random Number Lua library.
+ *
+ *    @param L Lua state.
+ *    @return 0 on success.
+ */
 int lua_loadRnd( lua_State *L )
 {
    luaL_register(L, "rnd", rnd_methods);
    return 0;
 }
+/**
+ * @fn int lua_loadTk( lua_State *L )
+ *
+ * @brief Loads the Toolkit Lua library.
+ *
+ *    @param L Lua state.
+ *    @return 0 on success.
+ */
 int lua_loadTk( lua_State *L )
 {
    luaL_register(L, "tk", tk_methods);
@@ -196,9 +255,27 @@ int lua_loadTk( lua_State *L )
 
 
 
-
-/*
- *   N A E V
+/**
+ * @defgroup NAEV NAEV Generic Lua Bindings
+ *
+ * @brief Bindings for interacting with general NAEV stuff.
+ *
+ * Functions should be called like:
+ *
+ * @code
+ * naev.function( parameters )
+ * @endcode
+ *
+ * @{
+ */
+/**
+ * @fn static int naev_lang( lua_State *L )
+ *
+ * @brief string lang( nil )
+ *
+ * Gets the language NAEV is currently using.
+ *
+ *    @return Two character identifier of the language.
  */
 static int naev_lang( lua_State *L )
 {  
@@ -206,16 +283,49 @@ static int naev_lang( lua_State *L )
    lua_pushstring(L,"en");
    return 1;
 }
+/**
+ * @}
+ */
 
 
-/*
- *   T I M E
+/**
+ * @defgroup TIME Time Lua Bindings
+ *
+ * @brief Bindings for interacting with the time.
+ *
+ * Functions should be called like:
+ *
+ * @code
+ * time.function( parameters )
+ * @endcode
+ *
+ * @{
+ */
+/**
+ * @fn static int time_get( lua_State *L )
+ *
+ * @brief number get( nil )
+ *
+ * Gets the current time in internal representation time.
+ *
+ *    @return Time in internal representation time.
  */
 static int time_get( lua_State *L )
 {
    lua_pushnumber( L, ntime_get() );
    return 1;
 }
+/**
+ * @fn static int time_str( lua_State *L )
+ *
+ * @brief string str( [number t] )
+ *
+ * Converts the time to a pretty human readable format.
+ *
+ *    @param t Time to convert to pretty format.  If ommitted, current time is
+ *              used.
+ *    @return The time in human readable format.
+ */
 static int time_str( lua_State *L )
 {
    char *nt;
@@ -227,6 +337,17 @@ static int time_str( lua_State *L )
    free(nt);
    return 1;
 }
+/**
+ * @fn static int time_units( lua_State *L )
+ *
+ * @brief number units( [number stu] ) 
+ *
+ * Converts stu to internal representation time.
+ *
+ *    @param stu Time in stu to convert to internal representation time.  If
+ *                ommitted, 1 stu is used.
+ *    @return The value of stu in internal representation time.
+ */
 static int time_units( lua_State *L )
 {  
    if ((lua_gettop(L) > 0) && (lua_isnumber(L,1)))
@@ -235,11 +356,39 @@ static int time_units( lua_State *L )
       lua_pushnumber( L, NTIME_UNIT_LENGTH );
    return 1;
 }
+/**
+ * @}
+ */
 
 
 
-/*
- *   R N D
+/**
+ * @defgroup RND Random Number Lua Bindings
+ *
+ * @brief Bindings for interacting with the random number generator.
+ *
+ * Functions should be called like:
+ *
+ * @code
+ * rnd.function( parameters )
+ * @endcode
+ *
+ * @{
+ */
+/**
+ * @fn static int rnd_int( lua_State *L )
+ *
+ * @brief number int( [number x, number y] )
+ *
+ * Gets a random number.  With no parameters it returns a random float between
+ *  0 and 1 (yes I know name is misleading).  With one parameter it returns a
+ *  whole number between 0 and that number (both included).  With two
+ *  parameters it returns a whole number between both parameters (both
+ *  included).
+ *
+ *    @param x First parameter, read description for details.
+ *    @param y Second parameter, read description for details.
+ *    @return A randomly generated number, read description for details.
  */
 static int rnd_int( lua_State *L )
 {  
@@ -263,11 +412,34 @@ static int rnd_int( lua_State *L )
    
    return 1; /* unless it's returned 0 already it'll always return a parameter */
 }
+/**
+ * @}
+ */
 
 
 
-/*
- *   T O O L K I T
+/**
+ * @defgroup TOOLKIT Toolkit Lua Bindings
+ *
+ * @brief Bindings for interacting with the Toolkit.
+ *
+ * Functions should be called like:
+ *
+ * @code
+ * tk.function( parameters )
+ * @endcode
+ *
+ * @{
+ */
+/**
+ * @fn static int tk_msg( lua_State *L )
+ *
+ * @brief msg( string title, string message )
+ *
+ * Creates a window with an ok button.
+ *
+ *    @param title Title of the window.
+ *    @param message Message to display in the window.
  */
 static int tk_msg( lua_State *L )
 {  
@@ -282,6 +454,17 @@ static int tk_msg( lua_State *L )
    dialogue_msg( title, str );
    return 0;
 }
+/**
+ * @fn static int tk_yesno( lua_State *L )
+ *
+ * @brief bool yesno( string title, string message )
+ *
+ * Displays a window with Yes and No buttons.
+ *
+ *    @param title Title of the window.
+ *    @param message Message to display in the window.
+ *    @return true if yes was clicked, false if no was clicked.
+ */
 static int tk_yesno( lua_State *L )
 {  
    int ret;
@@ -297,9 +480,22 @@ static int tk_yesno( lua_State *L )
    lua_pushboolean(L,ret);
    return 1;
 }
+/**
+ * @fn static int tk_input( lua_State *L )
+ *
+ * @brief string input( string title, number min, number max, string str )
+ *
+ * Creates a window that allows player to write text input.
+ *
+ *    @param title Title of the window.
+ *    @param min Minimum characters to accept (must be greater then 0).
+ *    @param max Maximum characters to accept.
+ *    @param str Text to display in the window.
+ *    @return nil if input was canceled or a string with the text written.
+ */
 static int tk_input( lua_State *L )
 {  
-   char *title, *str;
+   char *title, *str, *ret;
    int min, max;
    NLUA_MIN_ARGS(4);
 
@@ -312,7 +508,16 @@ static int tk_input( lua_State *L )
    if (lua_isstring(L,4)) str = (char*) lua_tostring(L,4);
    else NLUA_INVALID_PARAMETER();
    
-   dialogue_input( title, min, max, str );
-   return 0;
+   ret = dialogue_input( title, min, max, str );
+   if (ret != NULL) {
+      lua_pushstring(L, ret);
+      free(ret);
+   }
+   else
+      lua_pushnil(L);
+   return 1;
 }
+/**
+ * @}
+ */
 
