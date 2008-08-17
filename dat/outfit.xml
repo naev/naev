@@ -532,4 +532,45 @@
    <damage type="kinetic">35</damage>
   </specific>
  </outfit>
+ <outfit name="Plasteel Plating">
+  <general>
+   <max>1</max>
+   <tech>6</tech>
+   <mass>15</mass>
+   <price>65000</price>
+   <gfx_store>plasteel</gfx_store>
+   <description>Plasteel was one of man's greatest improvements on materials.  It's a cheap, very strong armour that seems to take the best from both the plastic and steel.  You can bend it relatively easily while keeping it's incredible strength.  The Second Growth was only possible with this amazing new material.
+By adding quite a dense layer of Plasteel to your ship you can increase it's sturdiness by a lot.  Although with the advent of even newer materials Plasteel is starting to fade in popularity, although it's lower price tag always seems to keep a loyal customer base.</description>
+  </general>
+  <specific type="modification">
+   <armour>35</armour>
+  </specific>
+ </outfit>
+ <outfit name="Nanobond Plating">
+  <general>
+   <max>1</max>
+   <tech>9</tech>
+   <mass>35</mass>
+   <price>365000</price>
+   <gfx_store>nanobond</gfx_store>
+   <description>Nanobond is the succesor to Plasteel.  It follows the same approach but has a much more refined manufacturing process with much more control on the small scale.  The result is a much more robust and dense material although much more expensive.</description>
+  </general>
+  <specific type="modification">
+   <armour>120</armour>
+  </specific>
+ </outfit>
+ <outfit name="Biometal Armour">
+  <general>
+   <max>1</max>
+   <tech>15</tech>
+   <mass>57</mass>
+   <price>1120000</price>
+   <gfx_store>biometal</gfx_store>
+   <description>Biometal is a metal armour that will actually regenerate itself thanks to some special bacteria it uses.  The downside is that this makes it much bulkier and expensive then just using more refined Nanobond.  The results are pretty formidable, but it's hard to equip such an armour on anything short of a Destroyer.</description>
+  </general>
+  <specific type="modification">
+   <armour>150</armour>
+   <armour_regen>60</armour_regen>
+  </specific>
+ </outfit>
 </Outfits>
