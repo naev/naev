@@ -44,7 +44,7 @@ void window_addList( const unsigned int wid,
 void window_addRect( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
-      char* name, glColour* colour, int border ); /* propertiers */
+      char* name, glColour* colour, int border ); /* properties */
 void window_addCust( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
@@ -55,6 +55,12 @@ void window_addInput( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
       char* name, const int max, const int oneline );
+void window_addImageArray( const unsigned int wid,
+      const int x, const int y, /* position */
+      const int w, const int h, /* size */
+      char* name, const int iw, const int ih, /* name and image sizes */
+      glTexture** tex, char** caption, int nelem, /* elements */
+      void (*call) (char*) );
 
 
 /*
@@ -90,6 +96,7 @@ void window_moveWidget( const unsigned int wid,
 /* specific */
 char* toolkit_getList( const unsigned int wid, char* name );
 int toolkit_getListPos( const unsigned int wid, char* name );
+char* toolkit_getImageArray( const unsigned int wid, char* name );
 glTexture* window_getImage( const unsigned int wid, char* name );
 
 

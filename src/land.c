@@ -36,7 +36,7 @@
 #define COMMODITY_HEIGHT 400
 
 /* outfits */
-#define OUTFITS_WIDTH   700
+#define OUTFITS_WIDTH   800
 #define OUTFITS_HEIGHT  600
 
 /* shipyard */
@@ -273,7 +273,9 @@ static void commodity_sell( char* str )
  */
 static void outfits_open (void)
 {
+   int i;
    char **soutfits;
+   glTexture **toutfits;
    int noutfits;
    char buf[128];
 
@@ -303,7 +305,7 @@ static void outfits_open (void)
          BUTTON_WIDTH, BUTTON_HEIGHT, "cstMod", 0, outfits_renderMod, NULL );
 
    /* the descriptive text */
-   window_addText( secondary_wid, 40+200+20, -60,
+   window_addText( secondary_wid, 40+300+20, -60,
          80, 96, 0, "txtSDesc", &gl_smallFont, &cDConsole,
          "Name:\n"
          "Type:\n"
@@ -314,10 +316,10 @@ static void outfits_open (void)
          "\n"
          "Price:\n"
          "Money:\n" );
-   window_addText( secondary_wid, 40+200+40+60, -60,
+   window_addText( secondary_wid, 40+300+40+60, -60,
          250, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-   window_addText( secondary_wid, 20+200+40, -220,
-         OUTFITS_WIDTH-300, 180, 0, "txtDescription",
+   window_addText( secondary_wid, 20+300+40, -220,
+         OUTFITS_WIDTH-400, 180, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 
    /* set up the outfits to buy/sell */
@@ -325,11 +327,19 @@ static void outfits_open (void)
    if (noutfits <= 0) { /* No outfits */
       soutfits = malloc(sizeof(char*));
       soutfits[0] = strdup("None");
+      toutfits = malloc(sizeof(glTexture*));
+      toutfits[0] = NULL;
       noutfits = 1;
    }
-   window_addList( secondary_wid, 20, 40,
-         200, OUTFITS_HEIGHT-80, "lstOutfits",
-         soutfits, noutfits, 0, outfits_update );
+   else {
+      /** @todo Have the outfit tech loading be much more efficient. */
+      toutfits = malloc(sizeof(glTexture*)*noutfits);
+      for (i=0; i<noutfits; i++)
+         toutfits[i] = outfit_get(soutfits[i])->gfx_store;
+   }
+   window_addImageArray( secondary_wid, 20, 40,
+         310, OUTFITS_HEIGHT-80, "iarOutfits", 64, 64,
+         toutfits, soutfits, noutfits, outfits_update );
 
    /* write the outfits stuff */
    outfits_update( NULL );
@@ -352,7 +362,7 @@ static void outfits_update( char* str )
    Outfit* outfit;
    char buf[128], buf2[16], buf3[16];
 
-   outfitname = toolkit_getList( secondary_wid, "lstOutfits" );
+   outfitname = toolkit_getImageArray( secondary_wid, "iarOutfits" );
    if (strcmp(outfitname,"None")==0) { /* No outfits */
       window_modifyImage( secondary_wid, "imgOutfit", NULL );
       window_disableButton( secondary_wid, "btnBuyOutfit" );
@@ -466,7 +476,7 @@ static void outfits_buy( char* str )
    Outfit* outfit;
    int q;
 
-   outfitname = toolkit_getList( secondary_wid, "lstOutfits" );
+   outfitname = toolkit_getImageArray( secondary_wid, "iarOutfits" );
    outfit = outfit_get( outfitname );
 
    q = outfits_getMod();
@@ -508,7 +518,7 @@ static void outfits_sell( char* str )
    Outfit* outfit;
    int q;
 
-   outfitname = toolkit_getList( secondary_wid, "lstOutfits" );
+   outfitname = toolkit_getImageArray( secondary_wid, "iarOutfits" );
    outfit = outfit_get( outfitname );
 
    q = outfits_getMod();
