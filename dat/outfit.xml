@@ -573,4 +573,19 @@ By adding quite a dense layer of Plasteel to your ship you can increase it's stu
    <armour_regen>60</armour_regen>
   </specific>
  </outfit>
+ <outfit name="Droid Repair Crew">
+  <general>
+   <max>3</max>
+   <tech>11</tech>
+   <mass>3</mass>
+   <price>430000</price>
+   <gfx_store>droid</gfx_store>
+   <description>The low maintenance droid crew will scour your ship to repair any damages caused by space hazards.  They are very small and able to work both on interior or exterior of the ship.  Power is drawn from the ship to feed the robots, although the load is generally very low compared to the benefits of having a robotic repair crew.</description>
+  </general>
+  <specific type="modification">
+   <armour_regen>30</armour_regen>
+   <energy>-5</energy>
+   <energy_regen>-40</energy_regen>
+  </specific>
+ </outfit>
 </Outfits>
