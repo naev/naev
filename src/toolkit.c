@@ -2000,6 +2000,8 @@ static void toolkit_listScroll( Widget* wgt, int direction )
 
          /* maximum */
          hmax = h * (yelem - (int)(wgt->h / h));
+         if (hmax < 0.)
+            hmax = 0.;
          
          /* move */
          wgt->dat.iar.pos -= direction * h;
