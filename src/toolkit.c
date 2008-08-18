@@ -51,7 +51,8 @@ typedef enum WidgetType_ {
 typedef enum WidgetStatus_ {
    WIDGET_STATUS_NORMAL,
    WIDGET_STATUS_MOUSEOVER,
-   WIDGET_STATUS_MOUSEDOWN
+   WIDGET_STATUS_MOUSEDOWN,
+   WIDGET_STATUS_SCROLLING
 } WidgetStatus;
 
 
@@ -180,6 +181,13 @@ static int input_keyCounter; /**< Number of repetitions. */
 
 
 /*
+ * Converts absolute mouse events to relative mouse events.
+ */
+static double last_x = 0.; /**< Last x mouse position. */
+static double last_y = 0.; /**< Last y mouse position. */
+
+
+/*
  * default outline colours
  */
 static glColour* toolkit_colLight = &cGrey90; /**< Light outline colour. */
@@ -199,6 +207,7 @@ static void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y );
 static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key );
 static void toolkit_mouseEvent( SDL_Event* event );
 static int toolkit_keyEvent( SDL_Event* event );
+static void toolkit_imgarrMove( Widget* iar, double ry );
 /* focus */
 static void toolkit_nextFocus (void);
 static int toolkit_isFocusable( Widget *wgt );
@@ -1455,6 +1464,7 @@ static void toolkit_renderImageArray( Widget* iar, double bx, double by )
    double scroll_pos, sx,sy;
    int xelem,yelem, xspace;
    glColour *c, *dc, *lc;
+   int is_selected;
 
    /*
     * Calculations.
@@ -1473,7 +1483,7 @@ static void toolkit_renderImageArray( Widget* iar, double bx, double by )
    yelem = (int)iar->dat.iar.nelements / xelem + 1;
 
    /* background */
-   toolkit_drawRect( x, y, iar->w, iar->h, toolkit_colDark, NULL );
+   toolkit_drawRect( x, y, iar->w, iar->h, &cBlack, NULL );
 
    /* 
     * Scrollbar.
@@ -1505,6 +1515,13 @@ static void toolkit_renderImageArray( Widget* iar, double bx, double by )
          if ((j*xelem + i) >= iar->dat.iar.nelements)
             break;
 
+         is_selected = (iar->dat.iar.selected == j*xelem + i) ? 1 : 0;
+
+         if (is_selected)
+            toolkit_drawRect( xcurs-(double)SCREEN_W/2. + 2.,
+                  ycurs-(double)SCREEN_H/2. + 2.,
+                  w - 4., h - 4., &cDConsole, NULL );
+
          /* image */
          if (iar->dat.iar.images[j*xelem + i] != NULL)
             gl_blitScale( iar->dat.iar.images[j*xelem + i],
@@ -1513,10 +1530,11 @@ static void toolkit_renderImageArray( Widget* iar, double bx, double by )
 
          /* caption */
          gl_printMid( &gl_smallFont, iar->dat.iar.iw, xcurs + 5., ycurs + 5.,
-                  &cBlack, iar->dat.iar.captions[j*xelem + i] );
+                  (is_selected) ? &cBlack : &cWhite,
+                  iar->dat.iar.captions[j*xelem + i] );
          
          /* outline */
-         if (iar->dat.iar.selected == j*xelem + i) {
+         if (is_selected) {
             lc = &cWhite;
             c = &cGrey80;
             dc = &cGrey60;
@@ -1644,7 +1662,7 @@ static int mouse_down = 0;
 static void toolkit_mouseEvent( SDL_Event* event )
 {
    int i;
-   double x, y;
+   double x,y, rel_x,rel_y;
    Window *w;
    Widget *wgt, *wgt_func;
 
@@ -1656,6 +1674,11 @@ static void toolkit_mouseEvent( SDL_Event* event )
    if (event->type==SDL_MOUSEMOTION) {
       x = (double)event->motion.x;
       y = SCREEN_H - (double)event->motion.y;
+      /* Create relative events. */
+      rel_x = x - last_x;
+      rel_y = y - last_y;
+      last_x = x;
+      last_y = y;
    }
    else if ((event->type==SDL_MOUSEBUTTONDOWN) || (event->type==SDL_MOUSEBUTTONUP)) {
       x = (double)event->button.x;
@@ -1687,10 +1710,24 @@ static void toolkit_mouseEvent( SDL_Event* event )
                case SDL_MOUSEMOTION:
                   if (!mouse_down)
                      wgt->status = WIDGET_STATUS_MOUSEOVER;
+                  else {
+                     if (wgt->type == WIDGET_IMAGEARRAY)
+                        toolkit_imgarrMove( wgt, rel_y );
+                  }
                   break;
 
                case SDL_MOUSEBUTTONDOWN:
                   wgt->status = WIDGET_STATUS_MOUSEDOWN;
+
+                  /* Handle mouse wheel. */
+                  if (event->button.button == SDL_BUTTON_WHEELUP) {
+                     toolkit_listScroll( wgt, +1 );
+                     break;
+                  }
+                  if (event->button.button == SDL_BUTTON_WHEELDOWN) {
+                     toolkit_listScroll( wgt, -1 );
+                     break;
+                  }
 
                   if (toolkit_isFocusable(wgt))
                      w->focus = i;
@@ -1705,6 +1742,11 @@ static void toolkit_mouseEvent( SDL_Event* event )
                   break;
 
                case SDL_MOUSEBUTTONUP:
+                  /* Since basically only buttons are handled here, we ignore
+                   * it all except the left mouse button. */
+                  if (event->button.button != SDL_BUTTON_LEFT)
+                     break;
+
                   if (wgt->status==WIDGET_STATUS_MOUSEDOWN) {
                      if ((wgt->type==WIDGET_BUTTON) &&
                            (wgt->dat.btn.disabled==0)) {
@@ -1727,6 +1769,9 @@ static void toolkit_mouseEvent( SDL_Event* event )
       else if (!mouse_down)
          wgt->status = WIDGET_STATUS_NORMAL;
    }
+
+   /* We trigger this at the end in case it destroys the window that is calling
+    * this function.  Otherwise ugly segfaults appear. */
    if (wgt_func) (*wgt_func->dat.btn.fptr)(wgt_func->name);
 }
 
@@ -1887,6 +1932,7 @@ static int toolkit_isFocusable( Widget *wgt )
          if (wgt->dat.btn.disabled==1) return 0;
       case WIDGET_LIST:
       case WIDGET_INPUT:
+      case WIDGET_IMAGEARRAY:
          return 1;
 
       default:
@@ -1928,6 +1974,10 @@ static void toolkit_triggerFocus (void)
  */
 static void toolkit_listScroll( Widget* wgt, int direction )
 {
+   double w,h;
+   int xelem, yelem;
+   double hmax;
+
    if (wgt == NULL) return;
 
    switch (wgt->type) {
@@ -1937,6 +1987,27 @@ static void toolkit_listScroll( Widget* wgt, int direction )
          wgt->dat.lst.selected = MAX(0,wgt->dat.lst.selected);
          wgt->dat.lst.selected = MIN(wgt->dat.lst.selected, wgt->dat.lst.noptions-1);
          if (wgt->dat.lst.fptr) (*wgt->dat.lst.fptr)(wgt->name);
+         break;
+
+      case WIDGET_IMAGEARRAY:
+         /* element dimensions */
+         w = wgt->dat.iar.iw + 5.*2.; /* includes border */
+         h = wgt->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
+
+         /* number of elements */
+         xelem = (int)((wgt->w - 10.) / w);
+         yelem = (int)wgt->dat.iar.nelements / xelem + 1;
+
+         /* maximum */
+         hmax = h * (yelem - (int)(wgt->h / h));
+         
+         /* move */
+         wgt->dat.iar.pos -= direction * h;
+
+         /* Boundry check. */
+         wgt->dat.iar.pos = MAX(wgt->dat.iar.pos, 0.);
+         wgt->dat.iar.pos = MIN(wgt->dat.iar.pos, hmax);
+         if (wgt->dat.iar.fptr) (*wgt->dat.iar.fptr)(wgt->name);
          break;
 
       default:
@@ -2085,22 +2156,48 @@ static void toolkit_imgarrFocus( Widget* iar, double bx, double by )
       y = iar->h - (iar->h - 30.) * scroll_pos - 15.;
 
       /* Click below the bar. */
-      if (by < y-15.) {
-         iar->dat.iar.pos += h*2.;
-      }
+      if (by < y-15.)
+         toolkit_listScroll( iar, -2 );
       /* Click above the bar. */
-      else if (by > y+15.) {
-         iar->dat.iar.pos -= h*2.;
-      }
+      else if (by > y+15.)
+         toolkit_listScroll( iar, +2 );
       /* Click on the bar. */
-      else {
-      }
+      else
+         iar->status = WIDGET_STATUS_SCROLLING;
+   }
+}
 
-      /* Boundry check. */
-      if (iar->dat.iar.pos < 0.)
-         iar->dat.iar.pos = 0.;
-      else if (iar->dat.iar.pos > hmax)
-         iar->dat.iar.pos = hmax;
+
+/**
+ * @fn static void toolkit_imgarrMove( Widget* iar, double ry )
+ *
+ * @brief Handles Image Array movement.
+ *
+ *    @param iar Image Array that has mouse movement.
+ *    @param ry Relative Y mouse movement.
+ */
+static void toolkit_imgarrMove( Widget* iar, double ry )
+{
+   double w,h;
+   int xelem, yelem;
+   double hmax;
+
+   if (iar->status == WIDGET_STATUS_SCROLLING) {
+
+      /* element dimensions */
+      w = iar->dat.iar.iw + 5.*2.; /* includes border */
+      h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
+
+      /* number of elements */
+      xelem = (int)((iar->w - 10.) / w);
+      yelem = (int)iar->dat.iar.nelements / xelem + 1;
+
+      hmax = h * (yelem - (int)(iar->h / h));
+
+      iar->dat.iar.pos -= (ry * (iar->w - 30.) / hmax) / 2.;
+
+      /* Dous boundry checks. */
+      toolkit_listScroll(iar, 0);
    }
 }
 
