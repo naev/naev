@@ -274,6 +274,7 @@ static void commodity_sell( char* str )
 static void outfits_open (void)
 {
    int i;
+   Outfit **outfits;
    char **soutfits;
    glTexture **toutfits;
    int noutfits;
@@ -323,7 +324,7 @@ static void outfits_open (void)
          &gl_smallFont, NULL, NULL );
 
    /* set up the outfits to buy/sell */
-   soutfits = outfit_getTech( &noutfits, land_planet->tech, PLANET_TECH_MAX);
+   outfits = outfit_getTech( &noutfits, land_planet->tech, PLANET_TECH_MAX);
    if (noutfits <= 0) { /* No outfits */
       soutfits = malloc(sizeof(char*));
       soutfits[0] = strdup("None");
@@ -332,10 +333,14 @@ static void outfits_open (void)
       noutfits = 1;
    }
    else {
-      /** @todo Have the outfit tech loading be much more efficient. */
+      /* Create the outfit arrays. */
+      soutfits = malloc(sizeof(char*)*noutfits);
       toutfits = malloc(sizeof(glTexture*)*noutfits);
-      for (i=0; i<noutfits; i++)
-         toutfits[i] = outfit_get(soutfits[i])->gfx_store;
+      for (i=0; i<noutfits; i++) {
+         soutfits[i] = strdup(outfits[i]->name);
+         toutfits[i] = outfits[i]->gfx_store;
+      }
+      free(outfits);
    }
    window_addImageArray( secondary_wid, 20, 40,
          310, OUTFITS_HEIGHT-80, "iarOutfits", 64, 64,

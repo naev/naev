@@ -83,7 +83,7 @@ Outfit* outfit_get( const char* name )
 
 
 /**
- * @fn char** outfit_getTech( int *n, const int *tech, const int techmax )
+ * @fn Outfit** outfit_getTech( int *n, const int *tech, const int techmax )
  *
  * @brief Gets all the outfits matching technology requirements.
  *
@@ -97,11 +97,11 @@ Outfit* outfit_get( const char* name )
  *    @return An allocated array of allocated strings with the names of outfits
  *            matching the tech requirements.
  */
-char** outfit_getTech( int *n, const int *tech, const int techmax )
+Outfit** outfit_getTech( int *n, const int *tech, const int techmax )
 {
    int i,j,k, num, price;
    Outfit **outfits;
-   char **outfitnames;
+   Outfit **result;
    OutfitType type;
    
    outfits = malloc(sizeof(Outfit*) * outfit_nstack);
@@ -125,7 +125,7 @@ char** outfit_getTech( int *n, const int *tech, const int techmax )
    *n = 0;
    price = -1;
    type = OUTFIT_TYPE_NULL+1; /* first type */
-   outfitnames = malloc(sizeof(char*) * num);
+   result = malloc(sizeof(Outfit*) * num);
 
    /* sort by type */
    while (type < OUTFIT_TYPE_SENTINEL) {
@@ -141,7 +141,7 @@ char** outfit_getTech( int *n, const int *tech, const int techmax )
 
             /* check if already in stack */
             for (k=0; k<(*n); k++)
-               if (strcmp(outfitnames[k],outfits[j]->name)==0)
+               if (strcmp(result[k]->name,outfits[j]->name)==0)
                   break;
 
             /* not in stack and therefore is cheapest */
@@ -154,7 +154,7 @@ char** outfit_getTech( int *n, const int *tech, const int techmax )
          type++; 
       else {
          /* add current cheapest to stack */
-         outfitnames[*n] = strdup(outfits[price]->name);
+         result[*n] = outfits[price];
          (*n)++;
          price = -1;
       }
@@ -163,7 +163,7 @@ char** outfit_getTech( int *n, const int *tech, const int techmax )
    /* cleanup */
    free(outfits);
 
-   return outfitnames;
+   return result;
 }
 
 
