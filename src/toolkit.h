@@ -96,7 +96,6 @@ void window_moveWidget( const unsigned int wid,
 /* specific */
 char* toolkit_getList( const unsigned int wid, char* name );
 int toolkit_getListPos( const unsigned int wid, char* name );
-char* toolkit_getImageArray( const unsigned int wid, char* name );
 glTexture* window_getImage( const unsigned int wid, char* name );
 
 

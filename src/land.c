@@ -40,7 +40,7 @@
 #define OUTFITS_HEIGHT  600
 
 /* shipyard */
-#define SHIPYARD_WIDTH  700
+#define SHIPYARD_WIDTH  800
 #define SHIPYARD_HEIGHT 600
 
 /* news window */
@@ -367,7 +367,7 @@ static void outfits_update( char* str )
    Outfit* outfit;
    char buf[128], buf2[16], buf3[16];
 
-   outfitname = toolkit_getImageArray( secondary_wid, "iarOutfits" );
+   outfitname = toolkit_getList( secondary_wid, "iarOutfits" );
    if (strcmp(outfitname,"None")==0) { /* No outfits */
       window_modifyImage( secondary_wid, "imgOutfit", NULL );
       window_disableButton( secondary_wid, "btnBuyOutfit" );
@@ -481,7 +481,7 @@ static void outfits_buy( char* str )
    Outfit* outfit;
    int q;
 
-   outfitname = toolkit_getImageArray( secondary_wid, "iarOutfits" );
+   outfitname = toolkit_getList( secondary_wid, "iarOutfits" );
    outfit = outfit_get( outfitname );
 
    q = outfits_getMod();
@@ -523,7 +523,7 @@ static void outfits_sell( char* str )
    Outfit* outfit;
    int q;
 
-   outfitname = toolkit_getImageArray( secondary_wid, "iarOutfits" );
+   outfitname = toolkit_getList( secondary_wid, "iarOutfits" );
    outfit = outfit_get( outfitname );
 
    q = outfits_getMod();
@@ -573,7 +573,10 @@ static void outfits_renderMod( double bx, double by, double w, double h )
  */
 static void shipyard_open (void)
 {
-   char **ships;
+   int i;
+   Ship **ships;
+   char **sships;
+   glTexture **tships;
    int nships;
    char buf[128];
 
@@ -603,7 +606,7 @@ static void shipyard_open (void)
          "imgTarget", NULL, 1 );
 
    /* text */
-   window_addText( secondary_wid, 40+200+40, -55,
+   window_addText( secondary_wid, 40+300+40, -55,
          80, 96, 0, "txtSDesc", &gl_smallFont, &cDConsole,
          "Name:\n"
          "Class:\n"
@@ -611,22 +614,33 @@ static void shipyard_open (void)
          "\n"
          "Price:\n"
          "Money:\n" );
-   window_addText( secondary_wid, 40+200+40+80, -55,
+   window_addText( secondary_wid, 40+300+40+80, -55,
          130, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-   window_addText( secondary_wid, 20+200+40, -175,
+   window_addText( secondary_wid, 20+300+40, -175,
          SHIPYARD_WIDTH-300, 185, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 
    /* set up the ships to buy/sell */
    ships = ship_getTech( &nships, land_planet->tech, PLANET_TECH_MAX );
    if (nships <= 0) {
-      ships = malloc(sizeof(char*));
-      ships[0] = strdup("None");
+      sships = malloc(sizeof(char*));
+      sships[0] = strdup("None");
+      tships = malloc(sizeof(glTexture*));
+      tships[0] = NULL;
       nships = 1;
    }
-   window_addList( secondary_wid, 20, 40,
-         200, SHIPYARD_HEIGHT-80, "lstShipyard",
-         ships, nships, 0, shipyard_update );
+   else {
+      sships = malloc(sizeof(char*)*nships);
+      tships = malloc(sizeof(glTexture*)*nships);
+      for (i=0; i<nships; i++) {
+         sships[i] = strdup(ships[i]->name);
+         tships[i] = ships[i]->gfx_target;
+      }
+      free(ships);
+   }
+   window_addImageArray( secondary_wid, 20, 40,
+         310, SHIPYARD_HEIGHT-80, "iarShipyard", 64./96.*128., 64.,
+         tships, sships, nships, shipyard_update );
 
    /* write the shipyard stuff */
    shipyard_update( NULL );
@@ -649,7 +663,7 @@ static void shipyard_update( char* str )
    Ship* ship;
    char buf[80], buf2[16], buf3[16];
    
-   shipname = toolkit_getList( secondary_wid, "lstShipyard" );
+   shipname = toolkit_getList( secondary_wid, "iarShipyard" );
 
    /* No ships */
    if (strcmp(shipname,"None")==0) {
@@ -703,7 +717,7 @@ static void shipyard_info( char* str )
    (void)str;
    char *shipname;
 
-   shipname = toolkit_getList( secondary_wid, "lstShipyard" );
+   shipname = toolkit_getList( secondary_wid, "iarShipyard" );
    ship_view(shipname);
 }
 static void shipyard_buy( char* str )
@@ -712,7 +726,7 @@ static void shipyard_buy( char* str )
    char *shipname, buf[16];
    Ship* ship;
 
-   shipname = toolkit_getList( secondary_wid, "lstShipyard" );
+   shipname = toolkit_getList( secondary_wid, "iarShipyard" );
    ship = ship_get( shipname );
 
    /* we now move cargo to the new ship */
@@ -766,7 +780,7 @@ static void shipyard_yours_open( char* str )
          "imgTarget", NULL, 1 );
 
    /* text */
-   window_addText( terciary_wid, 40+200+40, -55,
+   window_addText( terciary_wid, 40+300+40, -55,
          100, 96, 0, "txtSDesc", &gl_smallFont, &cDConsole,
          "Name:\n"
          "Ship:\n"
@@ -779,13 +793,13 @@ static void shipyard_yours_open( char* str )
          "Transportation:\n"
          "Sell price:\n"
          );
-   window_addText( terciary_wid, 40+200+40+100, -55,
+   window_addText( terciary_wid, 40+300+40+100, -55,
       130, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-   window_addText( terciary_wid, 40+200+40, -215,
+   window_addText( terciary_wid, 40+300+40, -215,
       100, 20, 0, "txtSOutfits", &gl_smallFont, &cDConsole,
       "Outfits:\n"
       );
-   window_addText( terciary_wid, 40+200+40, -215-gl_smallFont.h-5,
+   window_addText( terciary_wid, 40+300+40, -215-gl_smallFont.h-5,
       SHIPYARD_WIDTH-40-200-40-20, 200, 0, "txtDOutfits",
       &gl_smallFont, &cBlack, NULL );
 

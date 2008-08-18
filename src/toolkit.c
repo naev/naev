@@ -2016,8 +2016,12 @@ static void toolkit_listScroll( Widget* wgt, int direction )
 }
 
 
-/*
- * gets what is selected currently in a list
+/**
+ * @fn char* toolkit_getList( const unsigned int wid, char* name )
+ *
+ * @brief Gets what is selected currently in a list.
+ *
+ * List includes Image Arrays.
  */
 char* toolkit_getList( const unsigned int wid, char* name )
 {
@@ -2028,10 +2032,20 @@ char* toolkit_getList( const unsigned int wid, char* name )
       return NULL;
    }
 
-   if ((wgt->type != WIDGET_LIST) || (wgt->dat.lst.selected == -1))
-      return NULL;
+   switch (wgt->type) {
+      case WIDGET_LIST:
+         if (wgt->dat.lst.selected == -1)
+            return NULL;
+         return wgt->dat.lst.options[ wgt->dat.lst.selected ];
 
-   return wgt->dat.lst.options[ wgt->dat.lst.selected ];
+      case WIDGET_IMAGEARRAY:
+         if (wgt->dat.iar.selected == -1)
+            return NULL;
+         return wgt->dat.iar.captions[ wgt->dat.iar.selected ];
+
+      default:
+         return NULL;
+   }
 }
 
 
@@ -2051,31 +2065,6 @@ int toolkit_getListPos( const unsigned int wid, char* name )
       return -1;
 
    return wgt->dat.lst.selected;
-}
-
-/**
- * @fn char* toolkit_getImageArray( const unsigned int wid, char* name )
- *
- * @brief Gets what is currently selected in an image array.
- *
- *    @param wid Window to get array data from.
- *    @param name Name of the image array widget.
- *    @return Caption of the currently selected element.
- */
-char* toolkit_getImageArray( const unsigned int wid, char* name )
-{
-   Widget *wgt = window_getwgt(wid,name);
-
-   if (wgt == NULL) {
-      WARN("Widget '%s' not found", name);
-      return NULL;
-   }
-
-   if ((wgt->type != WIDGET_IMAGEARRAY) || (wgt->dat.iar.selected == -1))
-      return NULL;
-
-   return wgt->dat.iar.captions[ wgt->dat.iar.selected ];
-
 }
 
 

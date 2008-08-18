@@ -84,10 +84,10 @@ Ship* ship_get( const char* name )
  *    @param techmax Number of technologies in tech.
  *    @return An array of allocated ship names.
  */
-char** ship_getTech( int *n, const int *tech, const int techmax )
+Ship** ship_getTech( int *n, const int *tech, const int techmax )
 {
    int i,j,k, num, price;
-   char **shipnames;
+   Ship **result;
    Ship **ships;
   
    /* get available ships for tech */
@@ -110,7 +110,7 @@ char** ship_getTech( int *n, const int *tech, const int techmax )
    /* now sort by price */
    *n = 0;
    price = -1;
-   shipnames = malloc(sizeof(char*) * num);
+   result = malloc(sizeof(Ship*) * num);
    /* until we fill the new stack */
    for (i=0; i<num; i++) {
 
@@ -122,7 +122,7 @@ char** ship_getTech( int *n, const int *tech, const int techmax )
 
             /* check if already in stack */
             for (k=0; k<(*n); k++)
-               if (strcmp(shipnames[k],ships[j]->name)==0)
+               if (strcmp(result[k]->name,ships[j]->name)==0)
                   break;
 
             /* not in stack and therefore is cheapest */
@@ -132,7 +132,7 @@ char** ship_getTech( int *n, const int *tech, const int techmax )
       }
 
       /* add current cheapest to stack */
-      shipnames[i] = strdup(ships[price]->name);
+      result[i] = ships[price];
       (*n)++;
       price = -1;
    }
@@ -140,7 +140,7 @@ char** ship_getTech( int *n, const int *tech, const int techmax )
    /* cleanup */
    free(ships);
 
-   return shipnames;
+   return result;
 }
 
 
