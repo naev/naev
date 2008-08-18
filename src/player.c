@@ -2195,32 +2195,29 @@ void player_destroyed (void)
 
 
 /**
- * @fn char** player_ships( int *nships )
+ * @fn void player_ships( char** sships, glTexture** tships )
  *
  * @brief Returns a buffer with all the player's ships names
  *        or "None" if there are no ships.
  *
- *    @param nships Stores the number of ships.
+ *    @param sships Fills sships with player_nships ship names.
+ *    @param tships Fills sships with player_nships ship target textures.
  *    @return Freshly allocated array with allocated ship names.
  */
-char** player_ships( int *nships )
+void player_ships( char** sships, glTexture** tships )
 {
    int i;
-   char **shipnames;
 
    if (player_nstack==0) {
-      (*nships) = 1;
-      shipnames = malloc(sizeof(char*));
-      shipnames[0] = strdup("None");
+      sships[0] = strdup("None");
+      tships[0] = NULL;
    }
    else {
-      (*nships) = player_nstack;
-      shipnames = malloc(sizeof(char*) * player_nstack);
-      for (i=0; i < player_nstack; i++)
-         shipnames[i] = strdup(player_stack[i]->name);
+      for (i=0; i < player_nstack; i++) {
+         sships[i] = strdup(player_stack[i]->name);
+         tships[i] = player_stack[i]->ship->gfx_target;
+      }
    }
-
-   return shipnames;
 }
 
 

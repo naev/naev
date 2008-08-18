@@ -752,7 +752,8 @@ static void shipyard_buy( char* str )
 static void shipyard_yours_open( char* str )
 {
    (void)str;
-   char **ships;
+   char **sships;
+   glTexture **tships;
    int nships;
 
    /* create window */
@@ -800,14 +801,17 @@ static void shipyard_yours_open( char* str )
       "Outfits:\n"
       );
    window_addText( terciary_wid, 40+300+40, -215-gl_smallFont.h-5,
-      SHIPYARD_WIDTH-40-200-40-20, 200, 0, "txtDOutfits",
+      SHIPYARD_WIDTH-40-300-40-20, 200, 0, "txtDOutfits",
       &gl_smallFont, &cBlack, NULL );
 
    /* ship list */
-   ships = player_ships( &nships );
-   window_addList( terciary_wid, 20, 40,
-         200, SHIPYARD_HEIGHT-80, "lstYourShips",
-         ships, nships, 0, shipyard_yoursUpdate );
+   nships = MAX(1,player_nships());
+   sships = malloc(sizeof(char*)*nships);
+   tships = malloc(sizeof(glTexture*)*nships);
+   player_ships( sships, tships );
+   window_addImageArray( terciary_wid, 20, 40,
+         310, SHIPYARD_HEIGHT-80, "lstYourShips", 64./96.*128., 64.,
+         tships, sships, nships, shipyard_yoursUpdate );
 
    shipyard_yoursUpdate(NULL);
 }

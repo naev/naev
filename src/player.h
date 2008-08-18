@@ -85,7 +85,7 @@ void player_rmMissionCargo( unsigned int cargo_id );
 /*
  * pilot ships
  */
-char** player_ships( int *nships );
+void player_ships( char** sships, glTexture** tships );
 int player_nships (void);
 Pilot* player_getShip( char* shipname );
 char* player_getLoc( char* shipname );
