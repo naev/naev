@@ -599,7 +599,7 @@ By adding quite a dense layer of Plasteel to your ship you can increase it's stu
   </general>
   <specific type="modification">
    <energy>20</energy>
-   <energy_regen>150</energy_regen>
+   <energy_regen>330</energy_regen>
   </specific>
  </outfit>
  <outfit name="Reactor Class II">
@@ -612,8 +612,8 @@ By adding quite a dense layer of Plasteel to your ship you can increase it's stu
    <description>The class II reactor takes a different approach to energy creation then the class I reactor.  The new fusion design allows it to have a higher energy output, but is deemed unstable at bigger loads.  The result is a medium sized reactor that can't really suit the needs of the bigger warships.</description>
   </general>
   <specific type="modification">
-   <energy>50</energy>
-   <energy_regen>270</energy_regen>
+   <energy>60</energy>
+   <energy_regen>720</energy_regen>
   </specific>
  </outfit>
  <outfit name="Reactor Class III">
@@ -626,8 +626,8 @@ By adding quite a dense layer of Plasteel to your ship you can increase it's stu
    <description>The class III reactor pretty much makes all your energy worries negligable.  It follows the traditional fusion approach of the class I reactor, only making it much bigger.  The size increase makes it only fit comfortably on large vessels, but the energy output is also suited for those.</description>
   </general>
   <specific type="modification">
-   <energy>80</energy>
-   <energy_regen>430</energy_regen>
+   <energy>100</energy>
+   <energy_regen>1620</energy_regen>
   </specific>
  </outfit>
 </Outfits>
