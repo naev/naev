@@ -2,6 +2,12 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file mission.c
+ *
+ * @brief Handles missions.
+ */
+
 
 #include "mission.h"
 
@@ -25,25 +31,25 @@
 #include "space.h"
 
 
-#define XML_MISSION_ID        "Missions"   /* XML section identifier */
-#define XML_MISSION_TAG       "mission"
+#define XML_MISSION_ID        "Missions" /**< XML document identifier */
+#define XML_MISSION_TAG       "mission" /**< XML mission tag. */
 
-#define MISSION_DATA          "dat/mission.xml"
-#define MISSION_LUA_PATH      "dat/missions/"
+#define MISSION_DATA          "dat/mission.xml" /**< Path to missions XML. */
+#define MISSION_LUA_PATH      "dat/missions/" /**< Path to Lua files. */
 
 
 /*
  * current player missions
  */
-static unsigned int mission_id = 0;
-Mission player_missions[MISSION_MAX];
+static unsigned int mission_id = 0; /**< Mission ID generator. */
+Mission player_missions[MISSION_MAX]; /**< Player's active missions. */
 
 
 /*
  * mission stack
  */
-static MissionData *mission_stack = NULL; /* unmuteable after creation */
-static int mission_nstack = 0;
+static MissionData *mission_stack = NULL; /**< Unmuteable after creation */
+static int mission_nstack = 0; /**< Mssions in stack. */
 
 
 /*
@@ -76,8 +82,12 @@ int missions_saveActive( xmlTextWriterPtr writer );
 int missions_loadActive( xmlNodePtr parent );
 
 
-/*
- * generates a new id for the mission
+/**
+ * @fn static unsigned int mission_genID (void)
+ *
+ * @brief Generates a new id for the mission.
+ *
+ *    @return New id for the mission.
  */
 static unsigned int mission_genID (void)
 {
@@ -92,8 +102,13 @@ static unsigned int mission_genID (void)
    return id;
 }
 
-/*
- * gets id from mission name
+/**
+ * @fn int mission_getID( char* name )
+ *
+ * @brief Gets id from mission name.
+ *
+ *    @param name Name to match.
+ *    @return id of the matching mission.
  */
 int mission_getID( char* name )
 {
@@ -108,8 +123,13 @@ int mission_getID( char* name )
 }
 
 
-/*
- * gets a MissionData based on ID
+/**
+ * @fn MissionData* mission_get( int id )
+ *
+ * @brief Gets a MissionData based on ID.
+ *
+ *    @param id ID to match.
+ *    @return MissonData matching ID.
  */
 MissionData* mission_get( int id )
 {
@@ -118,8 +138,15 @@ MissionData* mission_get( int id )
 }
 
 
-/*
- * initializes a mission
+/**
+ * @fn static int mission_init( Mission* mission, MissionData* misn, int load )
+ *
+ * @brief Initializes a mission.
+ *
+ *    @param mission Mission to initialize.
+ *    @param misn Data to use.
+ *    @param load 1 if loading mision from save file, otherwise 0.
+ *    @return ID of the newly created mission.
  */
 static int mission_init( Mission* mission, MissionData* misn, int load )
 {
@@ -165,8 +192,15 @@ static int mission_init( Mission* mission, MissionData* misn, int load )
 }
 
 
-/*
- * small wrapper for misn_run
+/**
+ * @fn int mission_accept( Mission* mission )
+ *
+ * @brief Small wrapper for misn_run.
+ *
+ *    @param mission Mission to accept.
+ *    @return 0 on success.
+ *
+ * @sa misn_run
  */
 int mission_accept( Mission* mission )
 {
@@ -177,8 +211,13 @@ int mission_accept( Mission* mission )
 }
 
 
-/*
- * checks to see if mission is already running
+/**
+ * @fn static int mission_alreadyRunning( MissionData* misn )
+ *
+ * @brief Checks to see if mission is already running.
+ *
+ *    @param misn Mission to check if is already running.
+ *    @return 1 if already running, 0 if isn't.
  */
 static int mission_alreadyRunning( MissionData* misn )
 {
@@ -190,21 +229,28 @@ static int mission_alreadyRunning( MissionData* misn )
 }
 
 
-/*
- * is the lua condition for misn met?
+static lua_State* mission_cond_L = NULL; /**< Mission conditional Lua state. */
+/**
+ * @fn static int mission_meetCond( MissionData* misn )
+ *
+ * @brief Checks to see if the mission conditional data is met.
+ *
+ *    @param misn Mission to check.
+ *    @return 1 if is met, 0 if it isn't.
  */
-static lua_State* mission_cond_L = NULL;
 static int mission_meetCond( MissionData* misn )
 {
    int ret;
    char buf[256];
 
+   /* Create environment if needed. */
    if (mission_cond_L == NULL) { /* must create the conditional environment */
       mission_cond_L = nlua_newState();
       misn_loadCondLibs( mission_cond_L );
    }
 
-   snprintf( buf, 256, "return %s", misn->avail.cond );
+   /* Load the string. */ 
+   snprintf( buf, 256, "return %s", misn->avail.cond ); /* Must convert to Lua syntax */
    ret = luaL_loadstring( mission_cond_L, buf );
    switch (ret) {
       case  LUA_ERRSYNTAX:
@@ -217,6 +263,7 @@ static int mission_meetCond( MissionData* misn )
          break;
    }
 
+   /* Run the string. */
    ret = lua_pcall( mission_cond_L, 0, 1, 0 );
    switch (ret) {
       case LUA_ERRRUN:
@@ -234,7 +281,7 @@ static int mission_meetCond( MissionData* misn )
          break;
    }
 
-
+   /* Check the result. */
    if (lua_isboolean(mission_cond_L, -1)) {
       if (lua_toboolean(mission_cond_L, -1))
          return 1;
@@ -246,31 +293,44 @@ static int mission_meetCond( MissionData* misn )
 }
 
 
-/*
- * Does the mission meet the minimum requirements?
+/**
+ * @fn static int mission_meetReq( int mission, int faction, char* planet, char* sysname )
+ *
+ * @brief Checks to see if a mission meets the requirements.
+ *
+ *    @param mission ID of the mission to check.
+ *    @param faction Faction of the current planet.
+ *    @param planet Name of the current planet.
+ *    @param sysname Name of the current system.
+ *    @return 1 if requirements are met, 0 if they aren't.
  */
 static int mission_meetReq( int mission, int faction, char* planet, char* sysname )
 {
    MissionData* misn;
 
-   misn = &mission_stack[mission];
+   misn = mission_get( mission );
+   if (misn == NULL) /* In case it doesn't exist */
+      return 0;
 
    /* Must match planet, system or faction. */
-   if (!(((misn->avail.planet && strcmp(misn->avail.planet,planet)==0)) ||
+   if (!((misn->avail.planet && (strcmp(misn->avail.planet,planet)==0)) ||
          (misn->avail.system && (strcmp(misn->avail.system,sysname)==0)) ||
          mission_matchFaction(misn,faction)))
       return 0;
 
-   if (mis_isFlag(misn,MISSION_UNIQUE) && /* Mission done or running. */
+   /* Must not be already done or running if unique. */
+   if (mis_isFlag(misn,MISSION_UNIQUE) &&
          (player_missionAlreadyDone(mission) ||
           mission_alreadyRunning(misn)))
       return 0;
 
-   if ((misn->avail.cond != NULL) && /* Mission doesn't meet the lua conditional. */
+   /* Must meet Lua condition. */
+   if ((misn->avail.cond != NULL) &&
          !mission_meetCond(misn))
       return 0;
 
-   if ((misn->avail.done != NULL) && /* Mission doesn't meet previous mission reqs. */
+   /* Must meet previous mission requirements. */
+   if ((misn->avail.done != NULL) &&
          (player_missionAlreadyDone( mission_getID(misn->avail.done) ) == 0))
       return 0;
 
@@ -278,8 +338,14 @@ static int mission_meetReq( int mission, int faction, char* planet, char* sysnam
 }
 
 
-/*
- * runs bar missions, all lua side and one-shot
+/**
+ * @fn void missions_bar( int faction, char* planet, char* sysname )
+ *
+ * @brief Runs bar missions, all Lua side and one-shot.
+ *
+ *    @param faction Faction of the planet.
+ *    @param planet Name of the current planet.
+ *    @param sysname Name of the current system.
  */
 void missions_bar( int faction, char* planet, char* sysname )
 {
@@ -306,8 +372,10 @@ void missions_bar( int faction, char* planet, char* sysname )
 }
 
 
-/*
- * marks all active systems that need marking
+/**
+ * @fn void mission_sysMark (void)
+ *
+ * @brief Marks all active systems that need marking.
  */
 void mission_sysMark (void)
 {
@@ -325,8 +393,13 @@ void mission_sysMark (void)
 }
 
 
-/*
- * links cargo to the mission for posterior cleanup
+/**
+ * @fn void mission_linkCargo( Mission* misn, unsigned int cargo_id )
+ *
+ * @brief Links cargo to the mission for posterior cleanup.
+ *
+ *    @param misn Mission to link cargo to.
+ *    @param cargo_id ID of cargo to link.
  */
 void mission_linkCargo( Mission* misn, unsigned int cargo_id )
 {
@@ -336,8 +409,13 @@ void mission_linkCargo( Mission* misn, unsigned int cargo_id )
 }
 
 
-/*
- * unlinks cargo from the mission, removes it from the player
+/**
+ * @fn void mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
+ *
+ * @brief Unlinks cargo from the mission, removes it from the player.
+ *
+ *    @param misn Mission to unlink cargo from.
+ *    @param cargo_id ID of cargo to unlink.
  */
 void mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
 {
@@ -360,8 +438,12 @@ void mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
 }
 
 
-/*
- * cleans up a mission
+/**
+ * @fn void mission_cleanup( Mission* misn )
+ *
+ * @brief Cleans up a mission.
+ *
+ *    @param misn Mission to clean up.
  */
 void mission_cleanup( Mission* misn )
 {
@@ -400,8 +482,12 @@ void mission_cleanup( Mission* misn )
 }
 
 
-/*
- * frees a mission
+/**
+ * @fn static void mission_freeData( MissionData* mission )
+ *
+ * @brief Frees MissionData.
+ *
+ *    @param mission MissionData to free.
  */
 static void mission_freeData( MissionData* mission )
 {
@@ -416,8 +502,14 @@ static void mission_freeData( MissionData* mission )
 }
 
 
-/*
- * does mission match faction requirement?
+/**
+ * @fn static int mission_matchFaction( MissionData* misn, int faction )
+ *
+ * @brief Checks to see if a mission matches the faction requirements.
+ *
+ *    @param misn Mission to check.
+ *    @param faction Faction to check against.
+ *    @return 1 if it meets the faction requirement, 0 if it doesn't.
  */
 static int mission_matchFaction( MissionData* misn, int faction )
 {
@@ -431,8 +523,16 @@ static int mission_matchFaction( MissionData* misn, int faction )
 }
 
 
-/*
- * generates misisons for the computer - special case
+/**
+ * @fn Mission* missions_computer( int *n, int faction, char* planet, char* sysname )
+ *
+ * @brief Generates misisons for the computer - special case.
+ *
+ *    @param[out] n Missions created.
+ *    @param faction Faction of the planet.
+ *    @param planet Name of the planet.
+ *    @param sysname Name of the current system.
+ *    @return The stack of Missions created with n members.
  */
 Mission* missions_computer( int *n, int faction, char* planet, char* sysname )
 {
@@ -467,8 +567,13 @@ Mission* missions_computer( int *n, int faction, char* planet, char* sysname )
 }
 
 
-/*
- * returns location based on string
+/**
+ * @fn static int mission_location( char* loc )
+ *
+ * @brief Gets location based on a human readable string.
+ *
+ *    @param loc String to get the location of.
+ *    @return Location matching loc.
  */
 static int mission_location( char* loc )
 {
@@ -482,8 +587,13 @@ static int mission_location( char* loc )
 }
 
 
-/*
- * parses a node of a mission
+/**
+ * @fn static MissionData* mission_parse( const xmlNodePtr parent )
+ *
+ * @brief Parses a node of a mission.
+ *
+ *    @param parent Node containing the mission.
+ *    @return The MissionData extracted from parent.
  */
 static MissionData* mission_parse( const xmlNodePtr parent )
 {
@@ -547,8 +657,12 @@ static MissionData* mission_parse( const xmlNodePtr parent )
 }
 
 
-/*
- * load/free
+/**
+ * @fn int missions_load (void)
+ *
+ * @brief Loads all the mission data.
+ *
+ *    @return 0 on success.
  */
 int missions_load (void)
 {
@@ -590,6 +704,13 @@ int missions_load (void)
 
    return 0;
 }
+
+
+/**
+ * @fn void missions_free (void)
+ *
+ * @brief Frees all the mission data.
+ */
 void missions_free (void)
 {
    int i;
@@ -607,6 +728,13 @@ void missions_free (void)
       mission_cond_L = NULL;
    }
 }
+
+
+/**
+ * @fn void missions_cleanup (void)
+ *
+ * @brief Cleans up all the player's active missions.
+ */
 void missions_cleanup (void)
 {
    int i;
@@ -617,8 +745,17 @@ void missions_cleanup (void)
 
 
 
-/*
- * persists partial lua data
+/**
+ * @fn static int mission_saveData( xmlTextWriterPtr writer,
+ *       char *type, char *name, char *value )
+ *
+ * @brief Persists Lua data.
+ *
+ *    @param writer XML Writer to use to persist stuff.
+ *    @param type Type of the data to save.
+ *    @param name Name of the data to save.
+ *    @param value Value of the data to save.
+ *    @return 0 on success.
  */
 static int mission_saveData( xmlTextWriterPtr writer,
       char *type, char *name, char *value )
@@ -633,6 +770,19 @@ static int mission_saveData( xmlTextWriterPtr writer,
 
    return 0;
 }
+
+
+/**
+ * @fn static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
+ *
+ * @brief Persists all the mission Lua data.
+ *
+ * Does not save anything in tables nor functions of any type.
+ *
+ *    @param L Lua state to save.
+ *    @param writer XML Writer to use.
+ *    @return 0 on success.
+ */
 static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
 {
    LuaPlanet *p;
@@ -656,6 +806,7 @@ static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
                   (char*)lua_tostring(L,-2), (char*)lua_tostring(L,-1) );
             break;
 
+         /* User data must be hardcoded here. */
          case LUA_TUSERDATA:
             if (lua_isplanet(L,-1)) {
                p = lua_toplanet(L,-1);
@@ -681,8 +832,14 @@ static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
 }
 
 
-/* 
- * unpersists lua data
+/**
+ * @fn static int mission_unpersistData( lua_State *L, xmlNodePtr parent )
+ *
+ * @brief Unpersists Lua data.
+ *
+ *    @param L State to unperisist data into.
+ *    @param parent Node containing all the Lua persisted data.
+ *    @return 0 on success.
  */
 static int mission_unpersistData( lua_State *L, xmlNodePtr parent )
 {
@@ -728,6 +885,16 @@ static int mission_unpersistData( lua_State *L, xmlNodePtr parent )
 
    return 0;
 }
+
+
+/**
+ * @fn int missions_saveActive( xmlTextWriterPtr writer )
+ *
+ * @brief Saves the player's active missions.
+ *
+ *    @param writer XML Write to use to save missions.
+ *    @return 0 on success.
+ */
 int missions_saveActive( xmlTextWriterPtr writer )
 {
    int i,j;
@@ -769,6 +936,16 @@ int missions_saveActive( xmlTextWriterPtr writer )
 
    return 0;
 }
+
+
+/**
+ * @fn int missions_loadActive( xmlNodePtr parent )
+ *
+ * @brief Loads the player's active missions from a save.
+ *
+ *    @param parent Node containing the player's active missions.
+ *    @return 0 on success.
+ */
 int missions_loadActive( xmlNodePtr parent )
 {
    xmlNodePtr node;
@@ -784,6 +961,16 @@ int missions_loadActive( xmlNodePtr parent )
 
    return 0;
 }
+
+
+/**
+ * @fn static int missions_parseActive( xmlNodePtr parent )
+ *
+ * @brief Parses the actual individual mission nodes.
+ *
+ *    @param parent Parent node to parse.
+ *    @return 0 on success.
+ */
 static int missions_parseActive( xmlNodePtr parent )
 {
    Mission *misn;

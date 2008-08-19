@@ -11,12 +11,12 @@
 
 
 /* availability by location */
-#define  MIS_AVAIL_NONE       0
-#define  MIS_AVAIL_COMPUTER   1
-#define  MIS_AVAIL_BAR        2
-#define  MIS_AVAIL_OUTFIT     3
-#define  MIS_AVAIL_SHIPYARD   4
-#define  MIS_AVAIL_LAND       5
+#define  MIS_AVAIL_NONE       0 /**< Mission isn't available. */
+#define  MIS_AVAIL_COMPUTER   1 /**< Mission is available at mission computer. */
+#define  MIS_AVAIL_BAR        2 /**< Mission is available at bar. */
+#define  MIS_AVAIL_OUTFIT     3 /**< Mission is available at outfitter. */
+#define  MIS_AVAIL_SHIPYARD   4 /**< Mission is available at shipyard. */
+#define  MIS_AVAIL_LAND       5 /**< Mission is available on landing. */
 
 
 /* flag functions */
@@ -24,14 +24,16 @@
 #define mis_setFlag(m,f)   ((m)->flags |= (f))
 #define mis_rmFlag(m,f)    ((m)->flags ^= (f))
 /* actual flags */
-#define  MISSION_UNIQUE       1 /* unique missions can't be repeated */
+#define  MISSION_UNIQUE       1 /**< Unique missions can't be repeated */
 
 
-/*
- * static mission data
+/**
+ * @struct MissionData
+ *
+ * @brief Static mission data.
  */
 typedef struct MissionData_ {
-   char *name; /* the name of the mission */
+   char *name; /**< The name of the mission. */
 
    /* availability */
    struct {
@@ -39,49 +41,51 @@ typedef struct MissionData_ {
       int chance; /* chance of it appearing */
 
       /* for specific cases */
-      char *planet;
-      char *system;
+      char *planet; /**< Planet name. */
+      char *system; /**< System name. */
 
       /* for generic cases */
-      int* factions;
-      int nfactions;
+      int* factions; /**< To certain factions. */
+      int nfactions; /**< Number of factions in factions. */
 
-      char* cond; /* condition that must be met */
-      char* done; /* previous mission that must have been done */
-   } avail;
+      char* cond; /**< Condition that must be met (Lua). */
+      char* done; /**< Previous mission that must have been done. */
+   } avail; /**< Availability. */
 
-   unsigned int flags; /* flags to store binary properties */
+   unsigned int flags; /**< Flags to store binary properties */
 
-   char* lua;
+   char* lua; /**< Lua file to use. */
 } MissionData;
 
 
-/*
- * active mission
+/**
+ * @struct Mission
+ *
+ * @brief Represents an active mission.
  */
 typedef struct Mission_ {
-   MissionData *data;
-   unsigned int id; /* unique mission identifier, used for keeping track of hooks */
+   MissionData *data; /**< Data to use. */
+   unsigned int id; /**< Unique mission identifier, used for keeping track of hooks. */
 
-   char *title; /* not to be confused with name */
-   char *desc; /* description of the mission */
-   char *reward; /* rewards in text */
+   char *title; /**< Not to be confused with name */
+   char *desc; /**< Description of the mission */
+   char *reward; /**< Rewards in text */
 
    /* mission cargo given to the player - need to cleanup */
-   unsigned int *cargo;
-   int ncargo;
+   unsigned int *cargo; /**< Cargos given to player. */
+   int ncargo; /**< Number of cargos given to player. */
 
-   char *sys_marker; /* marked system */
+   char *sys_marker; /**< System to mark. */
 
-   lua_State *L; /* the state of the running lua code */
+   lua_State *L; /**< The state of the running lua code. */
 } Mission;
 
 
 /*
  * current player missions
  */
-#define MISSION_MAX  6  /* no sense in allowing the player have infinite missions */
-extern Mission player_missions[MISSION_MAX];
+#define MISSION_MAX  12 /**< No sense in allowing the player have infinite missions. */
+extern Mission player_missions[MISSION_MAX]; /**< Player's active missions. */
 
 
 /*
