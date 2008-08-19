@@ -2185,7 +2185,7 @@ static void toolkit_imgarrMove( Widget* iar, double ry )
 
       hmax = h * (yelem - (int)(iar->h / h));
 
-      iar->dat.iar.pos -= (ry * (iar->w - 30.) / hmax) / 2.;
+      iar->dat.iar.pos -= ry * hmax / (iar->h - 30.);
 
       /* Dous boundry checks. */
       toolkit_listScroll(iar, 0);
