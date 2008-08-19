@@ -305,7 +305,7 @@
    <gfx_store>solar</gfx_store>
   </general>
   <specific type="modification">
-   <energy_regen>125</energy_regen>
+   <energy_regen>75</energy_regen>
   </specific>
  </outfit>
  <outfit name="Shield Capacitator">
@@ -586,6 +586,48 @@ By adding quite a dense layer of Plasteel to your ship you can increase it's stu
    <armour_regen>30</armour_regen>
    <energy>-5</energy>
    <energy_regen>-40</energy_regen>
+  </specific>
+ </outfit>
+ <outfit name="Reactor Class I">
+  <general>
+   <max>1</max>
+   <tech>9</tech>
+   <mass>12</mass>
+   <price>170000</price>
+   <gfx_store>reactor_i</gfx_store>
+   <description>Adding a complementary reactor to your ship is a great way to get that extra energy boost you need.  This do not replace the existing reactor but work alongside it and hook up directly to the energy flux.</description>
+  </general>
+  <specific type="modification">
+   <energy>20</energy>
+   <energy_regen>150</energy_regen>
+  </specific>
+ </outfit>
+ <outfit name="Reactor Class II">
+  <general>
+   <max>1</max>
+   <tech>12</tech>
+   <mass>23</mass>
+   <price>530000</price>
+   <gfx_store>reactor_ii</gfx_store>
+   <description>The class II reactor takes a different approach to energy creation then the class I reactor.  The new fusion design allows it to have a higher energy output, but is deemed unstable at bigger loads.  The result is a medium sized reactor that can't really suit the needs of the bigger warships.</description>
+  </general>
+  <specific type="modification">
+   <energy>50</energy>
+   <energy_regen>270</energy_regen>
+  </specific>
+ </outfit>
+ <outfit name="Reactor Class III">
+  <general>
+   <max>1</max>
+   <tech>12</tech>
+   <mass>46</mass>
+   <price>970000</price>
+   <gfx_store>reactor_iii</gfx_store>
+   <description>The class III reactor pretty much makes all your energy worries negligable.  It follows the traditional fusion approach of the class I reactor, only making it much bigger.  The size increase makes it only fit comfortably on large vessels, but the energy output is also suited for those.</description>
+  </general>
+  <specific type="modification">
+   <energy>80</energy>
+   <energy_regen>430</energy_regen>
   </specific>
  </outfit>
 </Outfits>
