@@ -91,7 +91,7 @@
    <mass>9</mass>
    <price>15000</price>
    <description>Ion pulses were originally intended only to deactivate shields since they had completely nullified the old radiation technology weapons.  It was thought that by figuring out a way to deactivate shields fast the radiation technology would still be able to destroy the armour.  By combining shield destruction power and armour destruction power, the perfect weopns could be designed.  The Ion pulses ended up being very effective against armour and electronics.  With the invention of the latest generation shields and armour materials, Ion pulses have lost much of the terrain they had as newfound technology.</description>
-   <gfx_store>ion</gfx_store>
+   <gfx_store>medium</gfx_store>
   </general>
   <specific type="bolt">
    <gfx>ion</gfx>
@@ -112,7 +112,7 @@
    <mass>35</mass>
    <price>75000</price>
    <description>The heavy Ion Turret uses a bigger generator for each cannon giving it more punch then the Ion cannnon.  The drawback is that this augments the power usage considerably.  Being designed for capital ships, this doesn't seem to worry the makers too much.</description>
-   <gfx_store>turret3</gfx_store>
+   <gfx_store>turret2</gfx_store>
   </general>
   <specific type="turret bolt">
    <gfx>ion</gfx>
@@ -154,7 +154,7 @@
    <mass>20</mass>
    <price>184000</price>
    <description>One of the more popular beam weapons for it's simplicity and size.  Most heavy fighters have no trouble fitting one of these.  Being fixed mounted it inherits their maneuverability, allowing for greater precision on agile ships.</description>
-   <gfx_store>heavy</gfx_store>
+   <gfx_store>orion</gfx_store>
   </general>
   <specific type="beam" secondary="1">
    <delay>6000</delay>
