@@ -94,7 +94,7 @@ extern Mission player_missions[MISSION_MAX]; /**< Player's active missions. */
 Mission* missions_computer( int *n, int faction,
       char* planet, char* sysname ); /* for mission computer */
 int mission_accept( Mission* mission ); /* player accepted mission - mission computer */
-void missions_bar( int faction, char* planet, char* sysname );
+void missions_run( int loc, int faction, char* planet, char* sysname );
 
 /*
  * misc

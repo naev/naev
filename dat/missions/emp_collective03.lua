@@ -87,7 +87,7 @@ function land()
       tk.msg( title[2], text[4] )
 
       -- Store time commando theoretically landed
-      var.push( "emp_commando", time.get() )
+      var.push( "emp_commando", time.get() + time.units(10) )
 
       -- Rewards
       player.modFaction("Empire",5)

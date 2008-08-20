@@ -248,6 +248,15 @@ static void menu_small_close( char* str )
 static void menu_small_exit( char* str )
 {
    (void)str;
+   
+   /* if landed we must save anyways */
+   if (landed) {
+      /* increment time to match takeoff */
+      ntime_inc( RNG( 2*NTIME_UNIT_LENGTH, 3*NTIME_UNIT_LENGTH ) );
+      save_all();
+      land_cleanup();
+   }
+
    window_destroy( window_get("Menu") );
    menu_Close(MENU_SMALL);
    menu_main();
@@ -276,6 +285,7 @@ static void exit_game (void)
       /* increment time to match takeoff */
       ntime_inc( RNG( 2*NTIME_UNIT_LENGTH, 3*NTIME_UNIT_LENGTH ) );
       save_all();
+      land_cleanup();
    }
    SDL_Event quit;
    quit.type = SDL_QUIT;

@@ -2,12 +2,19 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file land.c
+ *
+ * @brief Handles all the landing menus and actionsv.
+ */
+
+
+#include "land.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-
-#include "land.h"
 
 #include "naev.h"
 #include "log.h"
@@ -26,47 +33,47 @@
 
 
 /* global/main window */
-#define LAND_WIDTH   700
-#define LAND_HEIGHT  600
-#define BUTTON_WIDTH 200
-#define BUTTON_HEIGHT 40
+#define LAND_WIDTH   700 /**< Land window width. */
+#define LAND_HEIGHT  600 /**< Land window height. */
+#define BUTTON_WIDTH 200 /**< Default button width. */
+#define BUTTON_HEIGHT 40 /**< Default button height. */
 
 /* commodity window */
-#define COMMODITY_WIDTH 400
-#define COMMODITY_HEIGHT 400
+#define COMMODITY_WIDTH 400 /**< Commodity window width. */
+#define COMMODITY_HEIGHT 400 /**< Commodity window height. */
 
 /* outfits */
-#define OUTFITS_WIDTH   800
-#define OUTFITS_HEIGHT  600
+#define OUTFITS_WIDTH   800 /**< Outfits window width. */
+#define OUTFITS_HEIGHT  600 /**< Outfits window height. */
 
 /* shipyard */
-#define SHIPYARD_WIDTH  800
-#define SHIPYARD_HEIGHT 600
+#define SHIPYARD_WIDTH  800 /**< Shipyard window width. */
+#define SHIPYARD_HEIGHT 600 /**< Shipyard window height. */
 
 /* news window */
-#define NEWS_WIDTH   400
-#define NEWS_HEIGHT  500
+#define NEWS_WIDTH   400 /**< News window width. */
+#define NEWS_HEIGHT  500 /**< News window height. */
 
 /* bar window */
-#define BAR_WIDTH    460
-#define BAR_HEIGHT   300
+#define BAR_WIDTH    460 /**< Bar window width. */
+#define BAR_HEIGHT   300 /**< Bar window height. */
 
 /* mission computer window */
-#define MISSION_WIDTH   700
-#define MISSION_HEIGHT  600
+#define MISSION_WIDTH   700 /**< Mission computer window width. */
+#define MISSION_HEIGHT  600 /**< Mission computer window height. */
 
 
 /*
  * we use visited flags to not duplicate missions generated
  */
-#define VISITED_LAND          (1<<0)
-#define VISITED_COMMODITY     (1<<1)
-#define VISITED_BAR           (1<<2)
-#define VISITED_OUTFITS       (1<<3)
-#define VISITED_SHIPYARD      (1<<4)
+#define VISITED_LAND          (1<<0) /**< Player already landed. */
+#define VISITED_COMMODITY     (1<<1) /**< Player already visited commodities. */
+#define VISITED_BAR           (1<<2) /**< Player already visited bar. */
+#define VISITED_OUTFITS       (1<<3) /**< Player already visited outfits. */
+#define VISITED_SHIPYARD      (1<<4) /**< Player already visited shipyard. */
 #define visited(f)            (land_visited |= (f))
 #define has_visited(f)        (land_visited & (f))
-static unsigned int land_visited = 0;
+static unsigned int land_visited = 0; /**< Contains what the player visited. */
 
 
 
@@ -349,8 +356,10 @@ static void outfits_open (void)
    /* write the outfits stuff */
    outfits_update( NULL );
 
+   /* Check outfit missions. */
    if (!has_visited(VISITED_OUTFITS)) {
-      /** @todo mission check */
+      missions_run(MIS_AVAIL_OUTFIT, land_planet->faction,
+            land_planet->name, cur_system->name);
       visited(VISITED_OUTFITS);
    }
 }
@@ -645,8 +654,10 @@ static void shipyard_open (void)
    /* write the shipyard stuff */
    shipyard_update( NULL );
 
+   /* Run available missions. */
    if (!has_visited(VISITED_SHIPYARD)) {
-      /** @todo mission check */
+      missions_run(MIS_AVAIL_SHIPYARD, land_planet->faction,
+            land_planet->name, cur_system->name);
       visited(VISITED_SHIPYARD);
    }
 }
@@ -1019,7 +1030,8 @@ static void spaceport_bar_open (void)
          "txtDescription", &gl_smallFont, &cBlack, land_planet->bar_description );
 
    if (!has_visited(VISITED_BAR)) {
-      missions_bar(land_planet->faction, land_planet->name, cur_system->name);
+      missions_run(MIS_AVAIL_BAR, land_planet->faction,
+            land_planet->name, cur_system->name);
       visited(VISITED_BAR);
    }
 }
@@ -1169,8 +1181,12 @@ static void misn_update( char* str )
 }
 
 
-/*
- * returns how much it will cost to refuel the player
+/**
+ * @fn static int refuel_price (void)
+ *
+ * @brief Gets how much it will cost to refuel the player.
+ *
+ *    @return Refuel price.
  */
 static int refuel_price (void)
 {
@@ -1178,8 +1194,12 @@ static int refuel_price (void)
 }
 
 
-/*
- * refuel the player
+/**
+ * @fn static void spaceport_refuel( char *str )
+ *
+ * @brief Refuels the player.
+ *
+ *    @param str Unused.
  */
 static void spaceport_refuel( char *str )
 {
@@ -1196,8 +1216,12 @@ static void spaceport_refuel( char *str )
 }
 
 
-/*
- * lands the player
+/**
+ * @fn void land( Planet* p )
+ *
+ * @brief Opens up all the land dialogue stuff.
+ *
+ *    @param p Planet to open stuff for.
  */
 void land( Planet* p )
 {
@@ -1286,15 +1310,19 @@ void land( Planet* p )
    mission_computer = missions_computer( &mission_ncomputer,
          land_planet->faction, land_planet->name, cur_system->name );
 
+   /* Check land missions. */
    if (!has_visited(VISITED_LAND)) {
-      /** @todo mission check */
+      missions_run(MIS_AVAIL_LAND, land_planet->faction,
+            land_planet->name, cur_system->name);
       visited(VISITED_LAND);
    }
 }
 
 
-/*
- * takes off the player
+/**
+ * @fn void takeoff (void)
+ *
+ * @brief Makes the player take off if landed.
  */
 void takeoff (void)
 {
@@ -1337,15 +1365,9 @@ void takeoff (void)
 
    /* cleanup */
    save_all(); /* must be before cleaning up planet */
-   land_planet = NULL;
-   window_destroy( land_wid );
-   if (gfx_exterior != NULL) {
-      gl_freeTexture( gfx_exterior );
-      gfx_exterior = NULL;
-   }
-   landed = 0;
-   land_visited = 0;
-   hooks_run("takeoff"); 
+   land_cleanup(); /* Cleanup stuff */
+   hooks_run("takeoff"); /* Must be run after cleanup since we don't want the
+                            missions to think we are landed. */
    hooks_run("enter");
 
    /* cleanup mission computer */
@@ -1354,5 +1376,32 @@ void takeoff (void)
    free(mission_computer);
    mission_computer = NULL;
    mission_ncomputer = 0;
+}
+
+
+/**
+ * @fn void land_cleanup (void)
+ *
+ * @brief Cleans up some land-related variables.
+ */
+void land_cleanup (void)
+{
+   /* Clean up default stuff. */
+   land_planet = NULL;
+   landed = 0;
+   land_visited = 0;
+
+   /* Clean up window. */
+   if (land_wid != 0) {
+      window_destroy( land_wid );
+      land_wid = 0;
+   }
+
+   /* Clean up possible stray graphic. */
+   if (gfx_exterior != NULL) {
+      gl_freeTexture( gfx_exterior );
+      gfx_exterior = NULL;
+   }
+
 }
 

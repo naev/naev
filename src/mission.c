@@ -339,15 +339,16 @@ static int mission_meetReq( int mission, int faction, char* planet, char* sysnam
 
 
 /**
- * @fn void missions_bar( int faction, char* planet, char* sysname )
+ * @fn void missions_run( int loc, int faction, char* planet, char* sysname )
  *
- * @brief Runs bar missions, all Lua side and one-shot.
+ * @brief Runs missions matching location, all Lua side and one-shot.
  *
+ *    @param loc Location to match.
  *    @param faction Faction of the planet.
  *    @param planet Name of the current planet.
  *    @param sysname Name of the current system.
  */
-void missions_bar( int faction, char* planet, char* sysname )
+void missions_run( int loc, int faction, char* planet, char* sysname )
 {
    MissionData* misn;
    Mission mission;
@@ -356,12 +357,14 @@ void missions_bar( int faction, char* planet, char* sysname )
 
    for (i=0; i<mission_nstack; i++) {
       misn = &mission_stack[i];
-      if (misn->avail.loc==MIS_AVAIL_BAR) {
+      if (misn->avail.loc==loc) {
 
          if (!mission_meetReq(i, faction, planet, sysname))
             continue;
 
-         chance = (double)(misn->avail.chance % 101)/100.;
+         chance = (double)(misn->avail.chance % 100)/100.;
+         if (chance == 0.) /* We want to consider 100 -> 100% not 0% */
+            chance = 1.;
 
          if (RNGF() < chance) {
             mission_init( &mission, misn, 0 );

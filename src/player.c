@@ -275,6 +275,7 @@ void player_new (void)
    var_cleanup();
    missions_cleanup();
    space_clearKnown();
+   land_cleanup();
 
    player_name = dialogue_input( "Player Name", 3, 20,
          "Please write your name:" );
