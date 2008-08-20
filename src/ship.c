@@ -46,7 +46,6 @@ static int ship_nstack = 0; /**< Number of ships in the stack. */
  */
 static Ship* ship_parse( xmlNodePtr parent );
 static void ship_view_close( char* btn );
-static ShipClass ship_classFromString( char* str );
 
 
 /**
@@ -206,13 +205,13 @@ char* ship_class( Ship* s )
 
 
 /**
- * @fn static ShipClass ship_classFromString( char* str )
+ * @fn ShipClass ship_classFromString( char* str )
  *
  * @brief Gets the machine ship class identifier from a human readable string.
  *
  *    @param str String to extract ship class identifier from.
  */
-static ShipClass ship_classFromString( char* str )
+ShipClass ship_classFromString( char* str )
 {
    /* Civilian */
    if (strcmp(str,"Yacht")==0)

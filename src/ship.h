@@ -134,6 +134,7 @@ void ships_free (void);
 Ship* ship_get( const char* name );
 Ship** ship_getTech( int *n, const int* tech, const int techmax );
 char* ship_class( Ship* s );
+ShipClass ship_classFromString( char* str );
 int ship_basePrice( Ship* s );
 
 
