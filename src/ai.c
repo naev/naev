@@ -1224,6 +1224,11 @@ static int ai_secondary( lua_State *L )
                outfit_isAmmo(co->outfit))
             continue;
 
+         /* Must have ammo. */
+         if (outfit_isLauncher(co->outfit) && pilot_getAmmo(cur_pilot,co->outfit)==0)
+            continue;
+
+
          /* Searching for type */
          if (type != NULL) {
             otype = outfit_getTypeBroad(co->outfit);
@@ -1241,12 +1246,14 @@ static int ai_secondary( lua_State *L )
          /* Just grabbing best weapon */
          else {
             /* Grab first weapon or launcher it finds. */
-            if ((po==NULL) && (outfit_isWeapon(co->outfit) ||
-                     outfit_isLauncher(co->outfit)))
+            if ((po==NULL) && (outfit_isBolt(co->outfit) ||
+                  outfit_isBeam(co->outfit) ||
+                  outfit_isLauncher(co->outfit)))
                po = co;
 
             /* Grab launcher over weapon by default. */
-            else if ((po!=NULL) && outfit_isWeapon(po->outfit) &&
+            else if ((po!=NULL) && (outfit_isBolt(po->outfit) ||
+                     outfit_isBeam(po->outfit)) &&
                   outfit_isLauncher(co->outfit))
                po = co;
          }
@@ -1261,10 +1268,17 @@ static int ai_secondary( lua_State *L )
       lua_pushstring( L, otype );
 
       /* Set special flags */
-      if (outfit_isLauncher(po->outfit) &&
-            (po->outfit->type != OUTFIT_TYPE_MISSILE_DUMB)) {
-         lua_pushstring( L, "Smart" );
-         return 2;
+      if (outfit_isLauncher(po->outfit)) {
+         if ((po->outfit->type != OUTFIT_TYPE_MISSILE_DUMB))
+            lua_pushstring( L, "Smart" );
+         else
+            lua_pushstring( L, "Dumb" );
+
+         if (cur_pilot->ammo == NULL)
+            lua_pushnumber( L, 0. );
+         else
+            lua_pushnumber( L, cur_pilot->ammo->quantity );
+         return 3;
       }
       else if (outfit_isTurret(po->outfit)) {
          lua_pushstring( L, "Turret" );
