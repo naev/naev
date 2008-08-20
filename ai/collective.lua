@@ -1,17 +1,23 @@
 include("ai/include/basic.lua")
 
 -- Required control rate
-control_rate = 2
+control_rate = 0.5
 -- Required "control" function
 function control ()
-   if ai.taskname() == "none" then
-      enemy = ai.getenemy()
+   local task = ai.taskname()
+
+   if task == "none" then
+      local enemy = ai.getenemy()
 
       if enemy ~= nil then
-         -- make hostile to the enemy (mainly for player)
-         ai.hostile(enemy)
          ai.pushtask(0, "attack", enemy)
+      else
+         ai.pushtask(0, "hyperspace")
       end
+   elseif task == "hyperspace" then
+      ai.hyperspace()
+   else
+      attack_closestenemy()
    end
 end
 -- Required "attacked" function
