@@ -245,6 +245,7 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 void pilot_switchSecondary( Pilot* p, int i );
 void pilot_setSecondary( Pilot* p, const char* secondary );
 void pilot_setAmmo( Pilot* p );
+int pilot_getAmmo( Pilot* p, Outfit* o );
 void pilot_setAfterburner( Pilot* p );
 double pilot_face( Pilot* p, const double dir );
 void pilot_hyperspaceAbort( Pilot* p );

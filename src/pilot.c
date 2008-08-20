@@ -648,6 +648,35 @@ void pilot_setAmmo( Pilot* p )
 
 
 /**
+ * @fn int pilot_getAmmo( Pilot* p, Outfit* o )
+ *
+ * @brief Gets the amount of ammo pilot has for a certain outfit.
+ *
+ *    @param p Pilot to get amount of ammo for.
+ *    @param o Outfit to get ammo for.
+ *    @return Amount of ammo for o on p.
+ */
+int pilot_getAmmo( Pilot* p, Outfit* o )
+{
+   int i;
+   char *name;
+
+   /* Must be a launcher. */
+   if (!outfit_isLauncher(o))
+      return 0;
+
+   /* Try to find the ammo. */
+   name = o->u.lau.ammo;
+   for (i=0; i<p->noutfits; i++)
+      if (strcmp(p->outfits[i].outfit->name,name)==0)
+         return p->outfits[i].quantity;
+
+   /* Assume none. */
+   return 0;
+}
+
+
+/**
  * @fn void pilot_setAfterburner( Pilot* p )
  *
  * @brief Sets the pilot's afterburner if he has one.
