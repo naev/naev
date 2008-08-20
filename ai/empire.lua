@@ -5,11 +5,15 @@ control_rate = 2
 
 -- Required "control" function
 function control ()
-   task = ai.taskname()
+   local task = ai.taskname()
+   local enemy = ai.getenemy()
 
-   enemy = ai.getenemy()
-   if task ~= "attack" and enemy ~= nil then
-      ai.hostile(enemy)
+   -- Think for attacking
+   if task == "attack" then
+      attack_think()
+
+   -- Enemy sighted
+   elseif enemy ~= nil then
       ai.pushtask(0, "attack", enemy)
 
    -- Enter hyperspace if possible
@@ -17,7 +21,7 @@ function control ()
       ai.hyperspace() -- try to hyperspace 
 
    -- Get new task
-   elseif task == "none" then
+   else
       planet = ai.landplanet()
       -- planet must exist
       if planet == nil then

@@ -6,7 +6,11 @@ control_rate = 0.5
 function control ()
    local task = ai.taskname()
 
-   if task == "none" then
+   -- Think function for attack
+   if task == "attack" then
+      attack_think()
+
+   elseif task == "none" then
       local enemy = ai.getenemy()
 
       if enemy ~= nil then
@@ -14,10 +18,9 @@ function control ()
       else
          ai.pushtask(0, "hyperspace")
       end
+
    elseif task == "hyperspace" then
       ai.hyperspace()
-   else
-      attack_closestenemy()
    end
 end
 -- Required "attacked" function

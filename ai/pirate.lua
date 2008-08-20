@@ -7,7 +7,15 @@ control_rate = 2
 function control ()
    task = ai.taskname()
 
-   if task == "hyperspace" then
+   -- Handle updating enemies
+   if task == "attack" then
+      if ai.parmour() < 80 then
+         ai.pushtask(0, "runaway", ai.targetid())
+      else
+         attack_think()
+      end
+
+   elseif task == "hyperspace" then
       ai.hyperspace() -- Try to hyperspace
 
    -- running pirate has healed up some
@@ -19,32 +27,13 @@ function control ()
          ai.hyperspace()
       end
 
-   -- Hurt pilot wants to run away
-   elseif task == "attack" then
-      if ai.parmour() < 80 then
-         ai.pushtask(0, "runaway", ai.targetid())
-      end
-
    -- nothing to do
-   elseif task ~= "attack" and task ~= "runaway" then
+   else
 
       -- if getenemy() is 0 then there is no enemy around
       enemy = ai.getenemy()
       if ai.parmour() == 100 and enemy ~= 0 then
-
-         -- taunts!
-         num = rnd.int(0,5)
-         if num == 0 then msg = "Prepare to be boarded!"
-         elseif num == 1 then msg = "Yohoho!"
-         elseif num == 2 then msg = "What's a ship like you doing in a place like this?"
-         end
-         ai.comm(enemy, msg)
-
-         -- make hostile to the enemy (mainly for player)
-         ai.hostile(enemy)
-
-         -- proceed to the attack
-         ai.combat() -- set to be fighting
+         taunt( enemy, true )
          ai.pushtask(0, "attack", enemy) -- actually begin the attack
 
       -- nothing to attack
@@ -60,7 +49,7 @@ function attacked ( attacker )
 
    -- pirate isn't fighting or fleeing already
    if task ~= "attack" and task ~= "runaway" then
-      taunt(attacker)
+      taunt(attacker, false)
       ai.pushtask(0, "attack", attacker)
 
    -- pirate is fighting, but switches to new target (doesn't forget the old one though)
@@ -79,25 +68,29 @@ function create ()
 end
 
 
-function taunt ( target )
-   -- some taunts
-   taunts = {
-         "You dare attack me!",
-         "You think that you can take me on?",
-         "Die!",
-         "You'll regret this!"
-   }
-   ai.comm(target, taunts[ rnd.int(1,#taunts) ])
-end
+function taunt ( target, offense )
 
-
--- flies to the player, pointless until hyperspace is implemented
-function fly ()
-   target = player
-   dir = ai.face(target)
-   dist = ai.getdist( getpos(target) )
-   if dir < 10 and dist > 300 then
-      ai.accel()
+   -- Only 50% of actually taunting.
+   if rnd.int(0,1) == 0 then
+      return
    end
+
+   -- some taunts
+   if offense then
+      taunts = {
+            "Prepare to be boarded!",
+            "Yohoho!",
+            "What's a ship like you doing in a place like this?"
+      }
+   else
+      taunts = {
+            "You dare attack me!",
+            "You think that you can take me on?",
+            "Die!",
+            "You'll regret this!"
+      }
+   end
+
+   ai.comm(target, taunts[ rnd.int(1,#taunts) ])
 end
 

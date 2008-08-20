@@ -7,16 +7,21 @@
 
 
 --[[
--- Replaces the current target with a closer one if possible.
+-- Should be run when the pilot is in attack mode, something like:
+-- if task == "attack" then attack_think() end
+-- in control().
 --]]
-function attack_closestenemy ()
-   local task = ai.taskname()
+function attack_think ()
+   local enemy = ai.getenemy()
+   local target = ai.targetid()
 
-   if task == "attack" then
-      local enemy = ai.getenemy()
-      local target = ai.targetid()
+   -- Get new target if it's closer
+   if enemy ~= target then
+      local dist = ai.dist( ai.pos(target) )
+      local range = ai.getweaprange()
 
-      if enemy ~= target then
+      -- Shouldn't switch targets if close
+      if dist > range * 1.3 then
          ai.poptask()
          ai.pushtask( 0, "attack", enemy )
       end
