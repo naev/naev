@@ -32,7 +32,8 @@ function control ()
       if planet == nil then
          ai.pushtask(0, "hyperspace")
       else
-         ai.pushtask(0, "goto", planet)
+         ai.pushtask(0, "hyperspace")
+         ai.pushtask(0, "land", planet)
       end
    end
 end
@@ -76,6 +77,7 @@ function create ()
    ai.setcargo( cargo, rnd.int(0, ai.cargofree() ) )
 end
 
+--[[
 -- flies to the target
 function goto ()
    target = ai.target()
@@ -108,3 +110,4 @@ function land ()
       ai.pushtask(0,"hyperspace")
    end
 end
+]]

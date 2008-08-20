@@ -23,7 +23,8 @@ function control ()
       if planet == nil then
          ai.pushtask(0, "hyperspace")
       else
-         ai.pushtask(0, "goto", planet)
+         ai.pushtask(0, "hyperspace")
+         ai.pushtask(0, "land", planet)
       end
    end
 end
@@ -65,38 +66,4 @@ function taunt ( target )
    }
    ai.comm(target, taunts[ rnd.int(1,#taunts) ])
 end
-
--- flies to the target
-function goto ()
-   target = ai.target()
-   dir = ai.face(target)
-   dist = ai.dist( target )
-   bdist = ai.minbrakedist()
-   if dir < 10 and dist > bdist then
-      ai.accel()
-   elseif dir < 10 and dist < bdist then
-      ai.poptask()
-      ai.pushtask(0,"stop")
-   end
-end
-
--- brakes
-function stop ()
-   if ai.isstopped() then
-      ai.stop()
-      ai.poptask()
-      ai.settimer(0, rnd.int(8000,15000))
-      ai.pushtask(0,"land")
-   else
-      ai.brake()
-   end
-end
-
--- waits
-function land ()
-   if ai.timeup(0) then
-      ai.pushtask(0,"hyperspace")
-   end
-end
-
 
