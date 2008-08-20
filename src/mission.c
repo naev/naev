@@ -586,6 +586,7 @@ static int mission_location( char* loc )
    else if (strcmp(loc,"Outfit")==0) return MIS_AVAIL_OUTFIT;
    else if (strcmp(loc,"Shipyard")==0) return MIS_AVAIL_SHIPYARD;
    else if (strcmp(loc,"Land")==0) return MIS_AVAIL_LAND;
+   else if (strcmp(loc,"Commodity")==0) return MIS_AVAIL_COMMODITY;
    return -1;
 }
 

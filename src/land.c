@@ -200,8 +200,10 @@ static void commodity_exchange_open (void)
    /* update */
    commodity_update(NULL);
 
+   /* Check commodity exchange missions. */
    if (!has_visited(VISITED_COMMODITY)) {
-      /** @todo mission check */
+      missions_run(MIS_AVAIL_COMMODITY, land_planet->faction,
+            land_planet->name, cur_system->name);
       visited(VISITED_COMMODITY);
    }
 }
