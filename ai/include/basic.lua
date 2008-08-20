@@ -7,10 +7,29 @@
 
 
 --[[
+-- Replaces the current target with a closer one if possible.
+--]]
+function attack_closestenemy ()
+   local task = ai.taskname()
+
+   if task == "attack" then
+      local enemy = ai.getenemy()
+      local target = ai.targetid()
+
+      if enemy ~= target then
+         ai.poptask()
+         ai.pushtask( 0, "attack", enemy )
+      end
+   end
+end
+
+
+--[[
 -- Attacks the current target, task pops when target is dead.
 --]]
 function attack_default ()
 	local target = ai.targetid()
+   ai.hostile(target) -- Mark as hostile
 
 	-- make sure pilot exists
 	if not ai.exists(target) then
