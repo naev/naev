@@ -445,6 +445,8 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
             &p->solid->pos, &p->solid->vel, p->id, t );
 
       p->ammo->quantity -= 1; /* we just shot it */
+      if (p->ammo->quantity <= 0) /* Out of ammo. */
+         pilot_rmOutfit( p, p->ammo->outfit, 0 ); /* It'll set p->ammo to NULL */
    }
    else {
       WARN("Shooting unknown weapon type: %s", w->outfit->name);
