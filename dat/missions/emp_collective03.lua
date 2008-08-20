@@ -44,7 +44,6 @@ function create()
       misn.accept()
 
       misn_stage = 0      
-      systems_visited = 0 -- Number of Collective systems visited
       misn_base, misn_base_sys = space.getPlanet("Omega Station")
       misn_target_sys = space.getSystem("C-28")
       misn.setMarker(misn_target_sys)

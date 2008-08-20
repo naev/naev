@@ -91,4 +91,17 @@
    <planet>Omega Station</planet>
   </avail>
  </mission>
+ <mission name="Operation Green Giant">
+  <lua>emp_collective04</lua>
+  <flags>
+   <unique>1</unique>
+  </flags>
+  <avail>
+   <cond>player.getFaction("Empire") &gt; 5 and var.peek("emp_commando") ~= nil and time.get() &gt; var.peek("emp_commando")</cond>
+   <done>Collective Espionage 3</done>
+   <chance>100</chance>
+   <location>Land</location>
+   <planet>Omega Station</planet>
+  </avail>
+ </mission>
 </Missions>
