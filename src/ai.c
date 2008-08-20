@@ -451,7 +451,7 @@ void ai_think( Pilot* pilot )
    if ((cur_pilot->tcontrol < SDL_GetTicks()) || (cur_pilot->task == NULL)) {
       ai_run(L, "control"); /* run control */
       lua_getglobal(L,"control_rate");
-      cur_pilot->tcontrol = SDL_GetTicks() +  1000*(int)lua_tonumber(L,-1);
+      cur_pilot->tcontrol = SDL_GetTicks() +  (int)(1000.*lua_tonumber(L,-1));
    }
 
    /* pilot has a currently running task */
