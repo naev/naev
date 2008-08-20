@@ -541,12 +541,19 @@ static void ai_freetask( Task* t )
  */
 static int ai_pushtask( lua_State *L )
 {
+   NLUA_MIN_ARGS(2);
    int pos;
+   char *func;
+   Vector2d *vec;
+
+   /* Parse basic parameters. */
    if (lua_isnumber(L,1)) pos = (int)lua_tonumber(L,1);
-   else return 0; /* invalid param */
+   else NLUA_INVALID_PARAMETER();
+   if (lua_isstring(L,2)) func = (char*)lua_tostring(L,2);
+   else NLUA_INVALID_PARAMETER();
 
    Task* t = MALLOC_ONE(Task);
-   t->name = (lua_isstring(L,2)) ? strdup((char*)lua_tostring(L,2)) : NULL;
+   t->name = strdup(func);
    t->next = NULL;
    t->dat.target = NULL;
 
@@ -558,11 +565,12 @@ static int ai_pushtask( lua_State *L )
       else if (lua_islightuserdata(L,3)) { /* only pointer valid is Vector2d* in Lua */
          t->dtype = TYPE_PTR;
          t->dat.target = MALLOC_ONE(Vector2d);
+         vec = (Vector2d*)lua_topointer(L,3);
          /* no idea why vectcpy doesn't work here... */
-         ((Vector2d*)t->dat.target)->x = ((Vector2d*)lua_topointer(L,3))->x;
-         ((Vector2d*)t->dat.target)->y = ((Vector2d*)lua_topointer(L,3))->y;
-         ((Vector2d*)t->dat.target)->mod = ((Vector2d*)lua_topointer(L,3))->mod;
-         ((Vector2d*)t->dat.target)->angle = ((Vector2d*)lua_topointer(L,3))->angle;
+         ((Vector2d*)t->dat.target)->x = vec->x;
+         ((Vector2d*)t->dat.target)->y = vec->y;
+         ((Vector2d*)t->dat.target)->mod = vec->mod;
+         ((Vector2d*)t->dat.target)->angle = vec->angle;
       }
       else t->dtype = TYPE_NULL;
    }
@@ -1245,6 +1253,7 @@ static int ai_secondary( lua_State *L )
       }
    }
 
+   /* Check to see if we have a good secondary weapon. */
    if (po != NULL) {
       cur_pilot->secondary = po;
       pilot_setAmmo(cur_pilot);
@@ -1252,9 +1261,13 @@ static int ai_secondary( lua_State *L )
       lua_pushstring( L, otype );
 
       /* Set special flags */
-      if ((strcmp(otype,"Launcher")==0) &&
+      if (outfit_isLauncher(po->outfit) &&
             (po->outfit->type != OUTFIT_TYPE_MISSILE_DUMB)) {
          lua_pushstring( L, "Smart" );
+         return 2;
+      }
+      else if (outfit_isTurret(po->outfit)) {
+         lua_pushstring( L, "Turret" );
          return 2;
       }
 
