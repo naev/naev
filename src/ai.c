@@ -2,33 +2,6 @@
  * See Licensing and Copyright notice in naev.h
  */
 
-
-
-#include "ai.h"
-
-#include <stdlib.h>
-#include <stdio.h> /* malloc realloc */
-#include <string.h> /* strncpy strlen strncat strcmp strdup */
-#include <math.h>
-
-/* yay more lua */
-#include "lauxlib.h"
-#include "lualib.h"
-
-#include "naev.h"
-#include "log.h"
-#include "pilot.h"
-#include "player.h"
-#include "physics.h"
-#include "pack.h"
-#include "rng.h"
-#include "space.h"
-#include "faction.h"
-#include "nlua.h"
-#include "nluadef.h"
-
-
-
 /**
  * @file ai.c
  *
@@ -62,7 +35,37 @@
  *     - "control" task sets another task
  *   - "control" task is also run at a set rate (depending on Lua global "control_rate")
  *     to choose optimal behaviour (task)
+ *
+ *
+ *  @todo Clean up most of the code, it was written as one of the first
+ *         subsystems and is pretty lacking in quite a few aspects. Notably
+ *         removing the entire lightuserdata thing and actually go with full
+ *         userdata.
  */
+
+
+#include "ai.h"
+
+#include <stdlib.h>
+#include <stdio.h> /* malloc realloc */
+#include <string.h> /* strncpy strlen strncat strcmp strdup */
+#include <math.h>
+
+/* yay more lua */
+#include "lauxlib.h"
+#include "lualib.h"
+
+#include "naev.h"
+#include "log.h"
+#include "pilot.h"
+#include "player.h"
+#include "physics.h"
+#include "pack.h"
+#include "rng.h"
+#include "space.h"
+#include "faction.h"
+#include "nlua.h"
+#include "nluadef.h"
 
 
 /**
@@ -934,23 +937,29 @@ static int ai_face( lua_State *L )
    Vector2d *v, sv, tv; /* get the position to face */
    Pilot* p;
    double mod, diff;
-   int invert = 0;
-   int n = -2;
+   int n;
 
+   /* Get first parameter, aka what to face. */
+   n = -2;
    if (lua_isnumber(L,1))
       n = (int)lua_tonumber(L,1);
-
    if (n >= 0 ) {
       p = pilot_get(n);
-      if (p==NULL) return 0; /* make sure pilot is valid */
+      if (p==NULL)
+         return 0; /* make sure pilot is valid */
       vect_cset( &tv, VX(p->solid->pos), VY(p->solid->pos) );
       v = NULL;
    }
-   else if (lua_islightuserdata(L,1)) v = (Vector2d*)lua_topointer(L,1);
+   else if (lua_islightuserdata(L,1))
+      v = (Vector2d*)lua_topointer(L,1);
 
    mod = 10;
-   if (lua_gettop(L) > 1 && lua_isnumber(L,2)) invert = (int)lua_tonumber(L,2);
-   if (invert) mod *= -1;
+
+   /* Check if must invert. */
+   if (lua_gettop(L) > 1) {
+      if (lua_isboolean(L,2) && lua_toboolean(L,2))
+         mod *= -1;
+   }
 
    vect_cset( &sv, VX(cur_pilot->solid->pos), VY(cur_pilot->solid->pos) );
 
@@ -963,9 +972,10 @@ static int ai_face( lua_State *L )
             (n==-1) ? VANGLE(cur_pilot->solid->pos) :
             vect_angle(&cur_pilot->solid->pos, v));
 
-
+   /* Make pilot turn. */
    pilot_turn = mod*diff;
 
+   /* Return angle in degrees away from target. */
    lua_pushnumber(L, ABS(diff*180./M_PI));
    return 1;
 }
@@ -1366,7 +1376,10 @@ static int ai_getweaprange( lua_State *L )
          else
             range = outfit_range(cur_pilot->secondary->outfit);
 
-         if (range < 0.) return 0; /* secondary doesn't have range */
+         if (range < 0.) {
+            lua_pushnumber(L, 0.); /* secondary doesn't have range */
+            return 1;
+         }
 
          /* secondary does have range */
          lua_pushnumber(L, range);

@@ -1,11 +1,13 @@
 include("ai/include/basic.lua")
 
--- Some vars
+-- Variables
 planet_dist = 1000 -- distance to keep from planets
 enemy_dist = 700 -- distance to keep from enemies
 
+
 -- Required control rate
 control_rate = 2
+
 -- Required "control" function
 function control ()
    task = ai.taskname()
@@ -15,8 +17,6 @@ function control ()
 
       -- There is an enemy
       if enemy ~= 0 then
-         -- make hostile to the enemy (mainly for player)
-         
          if ai.dist(enemy) < enemy_dist or ai.haslockon() then
             ai.pushtask(0, "runaway", enemy)
             return
@@ -64,12 +64,15 @@ end
 -- Required "attacked" function
 function attacked ( attacker )
    task = ai.taskname()
-   if task ~= "runaway" then
 
+   -- Start running away
+   if task ~= "runaway" then
       ai.pushtask(0, "runaway", attacker)
 
    elseif task == "runaway" then
       if ai.targetid() ~= attacker then
+         -- Runaway from the new guy
+         ai.poptask()
          ai.pushtask(0, "runaway", attacker)
       end
    end
@@ -92,7 +95,7 @@ end
 -- Approaches the target
 function approach ()
    target = ai.target()
-   dir = ai.face(target)
+   ai.face(target)
    ai.accel()
 end
 

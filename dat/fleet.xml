@@ -1,35 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Fleets>
- <fleet name="Militia Lancelot">
-  <ai>militia</ai>
-  <faction>Militia</faction>
-  <pilots>
-   <pilot chance="100">Lancelot</pilot>
-  </pilots>
- </fleet>
  <fleet name="Goddard Goddard">
-  <ai>militia</ai>
+  <ai>goddard</ai>
   <faction>Goddard</faction>
   <pilots>
    <pilot chance="100">Goddard</pilot>
   </pilots>
  </fleet>
  <fleet name="Trader Llama">
-  <ai>merchant</ai>
+  <ai>trader</ai>
   <faction>Trader</faction>
   <pilots>
    <pilot chance="100">Llama</pilot>
   </pilots>
  </fleet>
  <fleet name="Trader Mule">
-  <ai>merchant</ai>
+  <ai>trader</ai>
   <faction>Trader</faction>
   <pilots>
    <pilot chance="100">Mule</pilot>
   </pilots>
  </fleet>
  <fleet name="Sml Trader Convoy">
-  <ai>merchant</ai>
+  <ai>trader</ai>
   <faction>Trader</faction>
   <pilots>
    <pilot chance="80">Llama</pilot>

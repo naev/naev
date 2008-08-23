@@ -125,7 +125,8 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
    int i;
    double d, td;
    for (tp=0,d=0.,i=0; i<pilot_nstack; i++)
-      if (areEnemies(p->faction, pilot_stack[i]->faction)) {
+      if (areEnemies(p->faction, pilot_stack[i]->faction) ||
+            ((pilot_stack[i]->id == PLAYER_ID) && (pilot_isFlag(p,PILOT_HOSTILE)))) {
          td = vect_dist(&pilot_stack[i]->solid->pos, &p->solid->pos);
          if (!pilot_isDisabled(pilot_stack[i]) && ((!tp) || (td < d))) {
             d = td;

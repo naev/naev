@@ -7,107 +7,13 @@
 
 
 --[[
--- Should be run when the pilot is in attack mode, something like:
--- if task == "attack" then attack_think() end
--- in control().
---]]
-function attack_think ()
-   local enemy = ai.getenemy()
-   local target = ai.targetid()
-
-   -- Get new target if it's closer
-   if enemy ~= target then
-      local dist = ai.dist( ai.pos(target) )
-      local range = ai.getweaprange()
-
-      -- Shouldn't switch targets if close
-      if dist > range * 1.3 then
-         ai.poptask()
-         ai.pushtask( 0, "attack", enemy )
-      end
-   end
-end
-
-
---[[
--- Attacks the current target, task pops when target is dead.
---]]
-function attack_default ()
-	local target = ai.targetid()
-   ai.hostile(target) -- Mark as hostile
-
-	-- make sure pilot exists
-	if not ai.exists(target) then
-		ai.poptask()
-		return
-	end
-   ai.settarget(target)
-
-   -- Get stats about enemy
-	local dist = ai.dist( ai.pos(target) ) -- get distance
-   local range = ai.getweaprange()
-
-   -- We first bias towards range
-   if dist > range then
-      local dir = ai.face(target) -- Normal face the target
-
-      local secondary, special = ai.secondary("Launcher")
-
-      -- Shoot missiles if in range
-      if secondary == "Launcher" and
-            dist < ai.getweaprange(1) then
-
-         -- More lenient with aiming
-         if special == "Smart" and dir < 30 then
-            ai.shoot(2)
-
-         -- Non-smart miss more
-         elseif dir < 10 then
-            ai.shoot(2)
-         end
-      end
-
-      if dir < 10 then
-         ai.accel()
-      end
-
-   -- Close enough to melee
-   else
-
-      local secondary, special = ai.secondary("Beam Weapon")
-      local dir = ai.aim(target) -- We aim instead of face
-
-      -- Fire non-smart secondary weapons
-      if (secondary == "Launcher" and special ~= "Smart") or
-            secondary == "Beam Weapon" then
-         if dir < 10 or special == "Turret" then -- Need good acuracy
-            ai.shoot(2)
-         end
-      end
-
-      if dir < 10 or ai.hasturrets() then
-         ai.shoot()
-      end
-   end
-end
-
-
---[[
--- Set attack function to be default.  If you want to override use:
--- attack = attack_<type>
--- Right after including this file.
---]]
-attack = attack_default
-
-
---[[
 -- Attempts to land on a planet.
 --]]
 function land ()
-   local target = ai.target()
-   local dir = ai.face(target)
-   local dist = ai.dist( target )
-   local bdist = ai.minbrakedist()
+   target = ai.target()
+   dir = ai.face(target)
+   dist = ai.dist( target )
+   bdist = ai.minbrakedist()
 
    -- Need to get closer
    if dir < 10 and dist > bdist then
@@ -124,7 +30,7 @@ end
 function landstop ()
    ai.brake()
    if ai.isstopped() then
-      local target = ai.target()
+      target = ai.target()
 
       ai.stop() -- Will stop the pilot if below err vel
       ai.settimer(0, rnd.int(8000,15000)) -- We wait during a while
@@ -133,8 +39,8 @@ function landstop ()
    end
 end
 function landwait ()
-   local target = ai.target()
-   local dist = ai.dist( target )
+   target = ai.target()
+   dist = ai.dist( target )
 
    -- In case for some reason landed far away
    if dist > 50 then
@@ -152,14 +58,14 @@ end
 -- Attempts to run away from the target.
 --]]
 function runaway ()
-   local target = ai.targetid()
+   target = ai.targetid()
    
    if not ai.exists(target) then
       ai.poptask()
       return
    end
    
-   local dir = ai.face( target, 1 )
+   dir = ai.face(target, true)
    ai.accel()
 
    --[[
@@ -184,13 +90,13 @@ end
 --
 -- Will need teh following in control() to work:
 --
--- local task = ai.taskname()
+-- task = ai.taskname()
 -- if task == "hyperspace" then
 --    ai.hyperspace() -- Try to hyperspace
 -- end
 --]]
 function hyperspace ()
-   local dir = ai.face(-1) -- face away from (0,0)
+   dir = ai.face(-1) -- face away from (0,0)
    if (dir < 10) then
       ai.accel()
    end
