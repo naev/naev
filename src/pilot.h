@@ -31,10 +31,11 @@
 #define PILOT_DISABLED_ARMOR  0.3   /**< armour % that gets it disabled */
 
 /* hooks */
-#define PILOT_HOOK_NONE    0 /**< no hook */
-#define PILOT_HOOK_DEATH   1 /**< pilot died */
-#define PILOT_HOOK_BOARD   2 /**< pilot got boarded */
-#define PILOT_HOOK_DISABLE 3 /**< pilot got disabled */
+#define PILOT_HOOK_NONE    0 /**< No hook. */
+#define PILOT_HOOK_DEATH   1 /**< Pilot died. */
+#define PILOT_HOOK_BOARD   2 /**< Pilot got boarded. */
+#define PILOT_HOOK_DISABLE 3 /**< Pilot got disabled. */
+#define PILOT_HOOK_JUMP    4 /**< Pilot jumped. */
 
 
 /* flags */

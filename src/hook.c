@@ -286,7 +286,7 @@ static int hook_needSave( Hook *h )
 {
    int i;
    char *nosave[] = {
-         "death", "board", "disable", /* pilot hooks */
+         "death", "board", "disable", "jump", /* pilot hooks */
          "end" };
   
    for (i=0; strcmp(nosave[i],"end") != 0; i++)

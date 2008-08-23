@@ -868,8 +868,11 @@ static void pilot_hyperspace( Pilot* p )
          if (p == player) { /* player just broke hyperspace */
             player_brokeHyperspace();
          }
-         else
+         else {
+            if (p->hook_type == PILOT_HOOK_JUMP)
+               hook_runID( p->hook );
             pilot_setFlag(p, PILOT_DELETE); /* set flag to delete pilot */
+         }
          return;
       }
 
