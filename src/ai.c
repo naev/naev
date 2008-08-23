@@ -92,7 +92,7 @@
  */
 #define AI_PREFIX       "ai/" /**< AI file prefix. */
 #define AI_SUFFIX       ".lua" /**< AI file suffix. */
-#define AI_INCLUDE      "include/" /**< Where to searcth for includes. */
+#define AI_INCLUDE      "include/" /**< Where to search for includes. */
 
 
 /*
