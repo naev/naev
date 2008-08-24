@@ -268,8 +268,14 @@ static int pilot_addFleet( lua_State *L )
                RNG(75,150) * (RNG(0,1) ? 1 : -1));
 
          /* Set velocity only if no position is set.. */
-         if (lv != NULL)
-            vectnull( &vv );
+         if (lv != NULL) {
+            if (VMOD(lv->vec) > MIN_HYPERSPACE_DIST) {
+               a = vect_angle(&vp,&vn);
+               vect_pset( &vv, plt->ship->speed * 3., a );
+            }
+            else
+               vectnull( &vv );
+         }
          else { /* Entering via hyperspace. */
             a = vect_angle(&vp,&vn);
             vect_pset( &vv, plt->ship->speed * 3., a );
