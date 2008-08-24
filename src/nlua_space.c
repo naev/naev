@@ -27,6 +27,7 @@
  */
 static int planetL_createmetatable( lua_State *L );
 static int systemL_createmetatable( lua_State *L );
+static int vectorL_createmetatable( lua_State *L );
 
 /* space */
 static int planetL_get( lua_State *L );
@@ -65,6 +66,19 @@ static const luaL_reg system_methods[] = {
    {0,0}
 }; /**< System metatable methods. */
 
+/* Vector metatable methods */
+static int vectorL_add( lua_State *L );
+static int vectorL_sub( lua_State *L );
+static int vectorL_mul( lua_State *L );
+static int vectorL_div( lua_State *L );
+static const luaL_reg vector_methods[] = {
+   { "__add", vectorL_add },
+   { "__sub", vectorL_sub },
+   { "__mul", vectorL_mul },
+   { "__div", vectorL_div },
+   {0,0}
+}; /**< Vector metatable methods. */
+
 
 
 /**
@@ -77,7 +91,7 @@ static const luaL_reg system_methods[] = {
  */
 int lua_loadSpace( lua_State *L, int readonly )
 {
-   (void)readonly;
+   (void)readonly; /* only read only atm */
 
    /* Register the functions. */
    luaL_register(L, "space", space_methods);
@@ -85,6 +99,23 @@ int lua_loadSpace( lua_State *L, int readonly )
    /* Register the metatables. */
    planetL_createmetatable( L );
    systemL_createmetatable( L );
+   lua_loadVector( L );
+
+   return 0;
+}
+
+
+/**
+ * @fn int lua_loadVector( lua_State *L )
+ *
+ * @brief Loads the vector metatable.
+ *
+ *    @param L State to load the vector metatable into.
+ *    @return 0 on success.
+ */
+int lua_loadVector( lua_State *L )
+{
+   vectorL_createmetatable( L );
 
    return 0;
 }
@@ -131,6 +162,28 @@ static int systemL_createmetatable( lua_State *L )
 
    /* Register the values */
    luaL_register(L, NULL, system_methods);
+
+   return 0; /* No error */
+}
+/**
+ * @fn static int vectorL_createmetatable( lua_State *L )
+ *
+ * @brief Registers the vector metatable.
+ *
+ *    @param L Lua state to register metatable in.
+ *    @return 0 on success.
+ */
+static int vectorL_createmetatable( lua_State *L )
+{
+   /* Create the metatable */
+   luaL_newmetatable(L, VECTOR_METATABLE);
+
+   /* Create the access table */
+   lua_pushvalue(L,-1);
+   lua_setfield(L,-2,"__index");
+
+   /* Register the values */
+   luaL_register(L, NULL, vector_methods);
 
    return 0; /* No error */
 }
@@ -644,5 +697,216 @@ static int systemL_jumpdistance( lua_State *L )
 
    lua_pushnumber(L,jumps);
    return 1;
+}
+
+
+
+/**
+ * @defgroup META_VECTOR Vector Metatable
+ *
+ * @brief Represents a 2d vector in Lua.
+ *
+ * To call members of the metatable always use:
+ * @code 
+ * vector:function( param )
+ * @endcode
+ */
+/**
+ * @fn LuaSystem* lua_tovector( lua_State *L, int ind )
+ *
+ * @brief Gets vector at index.
+ *
+ *    @param L Lua state to get vector from.
+ *    @param ind Index position of vector.
+ *    @return The LuaVector at ind.
+ */
+LuaVector* lua_tovector( lua_State *L, int ind )
+{     
+   if (lua_isuserdata(L,ind)) {
+      return (LuaVector*) lua_touserdata(L,ind);
+   }
+   luaL_typerror(L, ind, VECTOR_METATABLE);
+   return NULL;
+}
+
+/**
+ * @fn LuaSystem* lua_pushvector( lua_State *L, LuaSystem sys )
+ *
+ * @brief Pushes a vector on the stack.
+ *
+ *    @param L Lua state to push vector onto.
+ *    @param sys Vector to push.
+ *    @return Vector just pushed.
+ */
+LuaVector* lua_pushvector( lua_State *L, LuaVector vec )
+{
+   LuaVector *v;
+   v = (LuaVector*) lua_newuserdata(L, sizeof(LuaVector));
+   *v = vec;
+   luaL_getmetatable(L, VECTOR_METATABLE);
+   lua_setmetatable(L, -2);
+   return v;
+}
+
+/**
+ * @fn int lua_isvector( lua_State *L, int ind )
+ *
+ * @brief Checks to see if ind is a vector.
+ *
+ *    @param L Lua state to check.
+ *    @param ind Index position to check.
+ *    @return 1 if there is a vector at index position.
+ */
+int lua_isvector( lua_State *L, int ind )
+{  
+   int ret;
+
+   if (lua_getmetatable(L,ind)==0)
+      return 0;
+   lua_getfield(L, LUA_REGISTRYINDEX, VECTOR_METATABLE);
+
+   ret = 0;
+   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */ 
+      ret = 1;
+
+   lua_pop(L, 2);  /* remove both metatables */
+   return ret;
+}
+
+/**
+ * @fn static int vectorL_add( lua_State *L )
+ * @ingroup META_VECTOR
+ *
+ * @brief __add( Vec2 vector )
+ *
+ * __add( number x, number y )
+ *
+ * Adds two vectors or a vector and some cartesian coordinates.
+ */
+static int vectorL_add( lua_State *L )
+{
+   NLUA_MIN_ARGS(2);
+   LuaVector *v1, *v2;
+   double x, y;
+
+   /* Get self. */
+   if (lua_isvector(L,1))
+      v1 = lua_tovector(L,1);
+   else NLUA_INVALID_PARAMETER();
+
+   /* Get rest of parameters. */
+   v2 = NULL;
+   if (lua_isvector(L,2)) {
+      v2 = lua_tovector(L,2);
+      x = v2->vec.x;
+      y = v2->vec.y;
+   }
+   else if ((lua_gettop(L) > 2) && lua_isnumber(L,2) && lua_isnumber(L,3)) {
+      x = lua_tonumber(L,2);
+      y = lua_tonumber(L,3);
+   }
+   else NLUA_INVALID_PARAMETER();
+
+   /* Actually add it */
+   vect_cadd( &v1->vec, x, y );
+   return 0;
+}
+/**
+ * @fn static int vectorL_sub( lua_State *L )
+ * @ingroup META_VECTOR
+ *
+ * @brief __sub( Vec2 vector )
+ *
+ * __sub( number x, number y )
+ *
+ * Subtracts two vectors or a vector and some cartesian coordinates.
+ */
+static int vectorL_sub( lua_State *L )
+{
+   NLUA_MIN_ARGS(2);
+   LuaVector *v1, *v2;
+   double x, y;
+
+   /* Get self. */
+   if (lua_isvector(L,1))
+      v1 = lua_tovector(L,1);
+   else NLUA_INVALID_PARAMETER();
+
+   /* Get rest of parameters. */
+   v2 = NULL;
+   if (lua_isvector(L,2)) {
+      v2 = lua_tovector(L,2);
+      x = v2->vec.x;
+      y = v2->vec.y;
+   }
+   else if ((lua_gettop(L) > 2) && lua_isnumber(L,2) && lua_isnumber(L,3)) {
+      x = lua_tonumber(L,2);
+      y = lua_tonumber(L,3);
+   }
+   else NLUA_INVALID_PARAMETER();
+
+   /* Actually add it */
+   vect_cadd( &v1->vec, -x, -y );
+   return 0;
+}
+/**
+ * @fn static int vectorL_mul( lua_State *L )
+ * @ingroup META_VECTOR
+ *
+ * @brief __mul( number mod )
+ *
+ * Multiplies a vector by a number.
+ *
+ *    @param mod Amount to multiply by.
+ */
+static int vectorL_mul( lua_State *L )
+{
+   NLUA_MIN_ARGS(2);
+   LuaVector *v1;
+   double mod;
+
+   /* Get self. */
+   if (lua_isvector(L,1))
+      v1 = lua_tovector(L,1);
+   else NLUA_INVALID_PARAMETER();
+
+   /* Get rest of parameters. */
+   if (lua_isnumber(L,2))
+      mod = lua_tonumber(L,2);
+   else NLUA_INVALID_PARAMETER();
+
+   /* Actually add it */
+   vect_cadd( &v1->vec, v1->vec.x * mod, v1->vec.x * mod );
+   return 0;
+}
+/**
+ * @fn static int vectorL_div( lua_State *L )
+ * @ingroup META_VECTOR
+ *
+ * @brief __div( number mod )
+ *
+ * Divides a vector by a number.
+ *
+ *    @param mod Amount to divide by.
+ */
+static int vectorL_div( lua_State *L )
+{
+   NLUA_MIN_ARGS(2);
+   LuaVector *v1;
+   double mod;
+
+   /* Get self. */
+   if (lua_isvector(L,1))
+      v1 = lua_tovector(L,1);
+   else NLUA_INVALID_PARAMETER();
+
+   /* Get rest of parameters. */
+   if (lua_isnumber(L,2))
+      mod = lua_tonumber(L,2);
+   else NLUA_INVALID_PARAMETER();
+
+   /* Actually add it */
+   vect_cadd( &v1->vec, v1->vec.x / mod, v1->vec.x / mod );
+   return 0;
 }
 

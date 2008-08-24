@@ -6,6 +6,12 @@
  * @file nlua.c
  *
  * @brief Contains some standard Lua binding libraries.
+ *
+ * Namely:
+ *    - naev : General game stuff.
+ *    - time : For manipulating time.
+ *    - rnd : For access to the random number generator.
+ *    - tk : Access to the toolkit.
  */
 
 #include "nlua.h"
