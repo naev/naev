@@ -44,12 +44,14 @@ static int planetL_name( lua_State *L );
 static int planetL_faction( lua_State *L );
 static int planetL_class( lua_State *L );
 static int planetL_services( lua_State *L );
+static int planetL_position( lua_State *L );
 static const luaL_reg planet_methods[] = {
    { "__eq", planetL_eq },
    { "name", planetL_name },
    { "faction", planetL_faction },
    { "class", planetL_class },
    { "services", planetL_services },
+   { "pos", planetL_position },
    {0,0}
 }; /**< Planet metatable methods. */
 
@@ -71,11 +73,13 @@ static int vectorL_add( lua_State *L );
 static int vectorL_sub( lua_State *L );
 static int vectorL_mul( lua_State *L );
 static int vectorL_div( lua_State *L );
+static int vectorL_distance( lua_State *L );
 static const luaL_reg vector_methods[] = {
    { "__add", vectorL_add },
    { "__sub", vectorL_sub },
    { "__mul", vectorL_mul },
    { "__div", vectorL_div },
+   { "dist", vectorL_distance },
    {0,0}
 }; /**< Vector metatable methods. */
 
@@ -459,6 +463,26 @@ static int planetL_services( lua_State *L )
    return 1;
 }
 
+/**
+ * @fn static int planetL_position( lua_State *L )
+ * @ingroup META_PLANET
+ *
+ * @brief Vec2 pos( nil )
+ *
+ * Gets the position of the planet in the system.
+ *
+ *    @return The position of the planet in the system.
+ */
+static int planetL_position( lua_State *L )
+{
+   LuaPlanet *p;
+   LuaVector v;
+   p = lua_toplanet(L,1);
+   vectcpy(&v.vec, &p->p->pos);
+   lua_pushvector(L, v);
+   return 1;
+}
+
 
 
 /**
@@ -790,9 +814,7 @@ static int vectorL_add( lua_State *L )
    double x, y;
 
    /* Get self. */
-   if (lua_isvector(L,1))
-      v1 = lua_tovector(L,1);
-   else NLUA_INVALID_PARAMETER();
+   v1 = lua_tovector(L,1);
 
    /* Get rest of parameters. */
    v2 = NULL;
@@ -811,6 +833,7 @@ static int vectorL_add( lua_State *L )
    vect_cadd( &v1->vec, x, y );
    return 0;
 }
+
 /**
  * @fn static int vectorL_sub( lua_State *L )
  * @ingroup META_VECTOR
@@ -828,9 +851,7 @@ static int vectorL_sub( lua_State *L )
    double x, y;
 
    /* Get self. */
-   if (lua_isvector(L,1))
-      v1 = lua_tovector(L,1);
-   else NLUA_INVALID_PARAMETER();
+   v1 = lua_tovector(L,1);
 
    /* Get rest of parameters. */
    v2 = NULL;
@@ -849,6 +870,7 @@ static int vectorL_sub( lua_State *L )
    vect_cadd( &v1->vec, -x, -y );
    return 0;
 }
+
 /**
  * @fn static int vectorL_mul( lua_State *L )
  * @ingroup META_VECTOR
@@ -866,9 +888,7 @@ static int vectorL_mul( lua_State *L )
    double mod;
 
    /* Get self. */
-   if (lua_isvector(L,1))
-      v1 = lua_tovector(L,1);
-   else NLUA_INVALID_PARAMETER();
+   v1 = lua_tovector(L,1);
 
    /* Get rest of parameters. */
    if (lua_isnumber(L,2))
@@ -879,6 +899,7 @@ static int vectorL_mul( lua_State *L )
    vect_cadd( &v1->vec, v1->vec.x * mod, v1->vec.x * mod );
    return 0;
 }
+
 /**
  * @fn static int vectorL_div( lua_State *L )
  * @ingroup META_VECTOR
@@ -896,9 +917,7 @@ static int vectorL_div( lua_State *L )
    double mod;
 
    /* Get self. */
-   if (lua_isvector(L,1))
-      v1 = lua_tovector(L,1);
-   else NLUA_INVALID_PARAMETER();
+   v1 = lua_tovector(L,1);
 
    /* Get rest of parameters. */
    if (lua_isnumber(L,2))
@@ -908,5 +927,42 @@ static int vectorL_div( lua_State *L )
    /* Actually add it */
    vect_cadd( &v1->vec, v1->vec.x / mod, v1->vec.x / mod );
    return 0;
+}
+
+/**
+ * @fn static int vectorL_distance( lua_State *L )
+ * @ingroup META_VECTOR
+ *
+ * @brief number dist( [Vec2 vector] )
+ *
+ * Gets the distance from the Vec2.
+ *
+ *    @param vector Vector to get distance from, uses origin (0,0) if not set.
+ *    @return The distance calculated.
+ */
+static int vectorL_distance( lua_State *L )
+{
+   NLUA_MIN_ARGS(1);
+   LuaVector *v1, *v2;
+   double dist;
+
+   /* Get self. */
+   v1 = lua_tovector(L,1);
+
+   /* Get rest of parameters. */
+   v2 = NULL;
+   if ((lua_gettop(L) > 1) && lua_isvector(L,2))
+      v2 = lua_tovector(L,2);
+   else NLUA_INVALID_PARAMETER();
+
+   /* Get distance. */
+   if (v2 == NULL)
+      dist = vect_odist(&v1->vec);
+   else
+      dist = vect_dist(&v1->vec, &v2->vec);
+
+   /* Return the distance. */
+   lua_pushnumber(L, dist);
+   return 1;
 }
 
