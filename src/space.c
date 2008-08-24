@@ -577,7 +577,7 @@ static void space_addFleet( Fleet* fleet, int init )
 
    /* simulate they came from hyperspace */
    if (c==0) {
-      vect_pset( &vp, RNG(MIN_HYPERSPACE_DIST, MIN_HYPERSPACE_DIST*3.),
+      vect_pset( &vp, RNG(MIN_HYPERSPACE_DIST*2, MIN_HYPERSPACE_DIST*3.),
             RNG(0,360)*M_PI/180.);
    }
    /* Starting out landed or heading towards landing.. */

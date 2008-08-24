@@ -35,7 +35,7 @@ static int pilot_toggleSpawn( lua_State *L );
 static const luaL_reg pilot_methods[] = {
    { "add", pilot_addFleet },
    { "clear", pilot_clear },
-   { "togglespawn", pilot_toggleSpawn },
+   { "toggleSpawn", pilot_toggleSpawn },
    {0,0}
 }; /**< Pilot lua methods. */
 
@@ -192,13 +192,14 @@ int lua_ispilot( lua_State *L, int ind )
  * @fn static int pilot_addFleet( lua_State *L )
  * @ingroup PILOT
  *
- * @brief table add( string fleetname [, string ai ] )
+ * @brief table add( string fleetname [, string ai, Vec2 pos ] )
  *
  * Adds a fleet to the system.
  *
  *    @param fleetname Name of the fleet to add.
- *    @param ai If set will override the standard fleet AI.
- *    @return Table populated with all the identifiers of the pilots created.
+ *    @param ai If set will override the standard fleet AI.  "def" means use default.
+ *    @param pos Position to create pilots around instead of choosing randomly.
+ *    @return Table populated with all the pilots created.
  */
 static int pilot_addFleet( lua_State *L )
 {
@@ -211,15 +212,33 @@ static int pilot_addFleet( lua_State *L )
    Vector2d vv,vp, vn;
    FleetPilot *plt;
    LuaPilot lp;
+   LuaVector *lv;
 
    /* Parse first argument - Fleet Name */
    if (lua_isstring(L,1)) fltname = (char*) lua_tostring(L,1);
    else NLUA_INVALID_PARAMETER();
    
    /* Parse second argument - Fleet AI Override */
-   if ((lua_gettop(L) > 1) && lua_isstring(L,2))
-      fltai = (char*) lua_tostring(L,2);
+   if (lua_gettop(L) > 1) {
+      if (lua_isstring(L,2)) {
+         fltai = (char*) lua_tostring(L,2);
+         if (strcmp(fltai, "def")==0) /* Check if set to default */
+            fltai = NULL;
+      }
+      else NLUA_INVALID_PARAMETER();
+   }
    else fltai = NULL;
+
+   /* Parse third argument - Position */
+   if (lua_gettop(L) > 2) {
+      if (lua_isvector(L,2))
+         lv = lua_tovector(L,2);
+      else NLUA_INVALID_PARAMETER();
+   }
+   else lv = NULL;
+
+   /* Needed to determine angle. */
+   vectnull(&vn);
 
    /* pull the fleet */
    flt = fleet_get( fltname );
@@ -228,10 +247,12 @@ static int pilot_addFleet( lua_State *L )
       return 0;
    }
 
-   /* this should probable be done better */
-   vect_pset( &vp, RNG(MIN_HYPERSPACE_DIST, MIN_HYPERSPACE_DIST*1.5),
-         RNG(0,360)*M_PI/180.);
-   vectnull(&vn);
+   /* Use position passed if possible. */
+   if (lv != NULL)
+      vectcpy( &vp, &lv->vec );
+   else
+      vect_pset( &vp, RNG(MIN_HYPERSPACE_DIST*2, MIN_HYPERSPACE_DIST*3),
+            RNG(0,360)*M_PI/180.);
 
    /* now we start adding pilots and toss ids into the table we return */
    j = 0;
@@ -246,8 +267,15 @@ static int pilot_addFleet( lua_State *L )
          vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
                RNG(75,150) * (RNG(0,1) ? 1 : -1));
 
-         a = vect_angle(&vp,&vn);
-         vectnull(&vv);
+         /* Set velocity only if no position is set.. */
+         if (lv != NULL)
+            vectnull( &vv );
+         else { /* Entering via hyperspace. */
+            a = vect_angle(&vp,&vn);
+            vect_pset( &vv, plt->ship->speed * 3., a );
+         }
+
+         /* Create the pilot. */
          p = pilot_create( plt->ship,
                plt->name,
                flt->faction,

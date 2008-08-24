@@ -69,16 +69,22 @@ static const luaL_reg system_methods[] = {
 }; /**< System metatable methods. */
 
 /* Vector metatable methods */
+static int vectorL_new( lua_State *L );
 static int vectorL_add( lua_State *L );
 static int vectorL_sub( lua_State *L );
 static int vectorL_mul( lua_State *L );
 static int vectorL_div( lua_State *L );
+static int vectorL_get( lua_State *L );
+static int vectorL_set( lua_State *L );
 static int vectorL_distance( lua_State *L );
 static const luaL_reg vector_methods[] = {
+   { "new", vectorL_new },
    { "__add", vectorL_add },
    { "__sub", vectorL_sub },
    { "__mul", vectorL_mul },
    { "__div", vectorL_div },
+   { "get", vectorL_get },
+   { "set", vectorL_set },
    { "dist", vectorL_distance },
    {0,0}
 }; /**< Vector metatable methods. */
@@ -798,6 +804,37 @@ int lua_isvector( lua_State *L, int ind )
 }
 
 /**
+ * @fn static int vectorL_new( lua_State *L )
+ * @ingroup META_VECTOR
+ *
+ * @brief Vec2 new( [number x, number y] )
+ *
+ * Creates a new vector.
+ *
+ *    @param x If set, the X value for the new vector.
+ *    @param y If set, the Y value for the new vector.
+ *    @return The new vector.
+ */
+static int vectorL_new( lua_State *L )
+{
+   LuaVector v;
+   double x, y;
+
+   if ((lua_gettop(L) > 1) && lua_isnumber(L,1) && lua_isnumber(L,2)) {
+      x = lua_tonumber(L,1);
+      y = lua_tonumber(L,2);
+   }
+   else {
+      x = 0.;
+      y = 0.;
+   }
+
+   vect_cset( &v.vec, x, y );
+   lua_pushvector(L, v);
+   return 1;
+}
+
+/**
  * @fn static int vectorL_add( lua_State *L )
  * @ingroup META_VECTOR
  *
@@ -926,6 +963,63 @@ static int vectorL_div( lua_State *L )
 
    /* Actually add it */
    vect_cadd( &v1->vec, v1->vec.x / mod, v1->vec.x / mod );
+   return 0;
+}
+
+
+/**
+ * @fn static int vectorL_get( lua_State *L )
+ * @ingroup META_VECTOR
+ *
+ * @brief number, number get( nil )
+ *
+ * Gets the cartesian positions of the vector.
+ *
+ *    @return X and Y position of the vector.
+ */
+static int vectorL_get( lua_State *L )
+{
+   NLUA_MIN_ARGS(1);
+   LuaVector *v1;
+
+   /* Get self. */
+   v1 = lua_tovector(L,1);
+
+   /* Push the vector. */
+   lua_pushnumber(L, v1->vec.x);
+   lua_pushnumber(L, v1->vec.y);
+   return 2;
+}
+
+/**
+ * @fn static int vectorL_set( lua_State *L )
+ * @ingroup META_VECTOR
+ *
+ * @brief set( number x, number y )
+ *
+ * Sets the vector by cartesian coordinates.
+ *
+ *    @param x X coordinate to set.
+ *    @param y Y coordinate to set.
+ */
+static int vectorL_set( lua_State *L )
+{
+   NLUA_MIN_ARGS(3);
+   LuaVector *v1;
+   double x, y;
+
+   /* Get self. */
+   v1 = lua_tovector(L,1);
+
+   /* Get parameters. */
+   if (lua_isnumber(L,2))
+      x = lua_tonumber(L,2);
+   else NLUA_INVALID_PARAMETER();
+   if (lua_isnumber(L,3))
+      y = lua_tonumber(L,3);
+   else NLUA_INVALID_PARAMETER();
+
+   vect_cset( &v1->vec, x, y );
    return 0;
 }
 

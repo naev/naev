@@ -136,6 +136,7 @@ static int player_modFaction( lua_State *L );
 static int player_modFactionRaw( lua_State *L );
 static int player_getFaction( lua_State *L );
 static int player_getRating( lua_State *L );
+static int player_getPosition( lua_State *L );
 static const luaL_reg player_methods[] = {
    { "name", player_getname },
    { "ship", player_shipname },
@@ -148,6 +149,7 @@ static const luaL_reg player_methods[] = {
    { "modFactionRaw", player_modFactionRaw },
    { "getFaction", player_getFaction },
    { "getRating", player_getRating },
+   { "pos", player_getPosition },
    {0,0}
 }; /**< Player lua methods. */
 static const luaL_reg player_cond_methods[] = {
@@ -1086,6 +1088,24 @@ static int player_getRating( lua_State *L )
    lua_pushnumber(L, player_crating);
    lua_pushstring(L, player_rating());
    return 2;
+}
+
+/**
+ * @fn static int player_getPosition( lua_State *L )
+ *
+ * @brief Vec2 getPos( nil )
+ *
+ * Gets the player's position.
+ *
+ *    @return The position of the player.
+ */
+static int player_getPosition( lua_State *L )
+{
+   LuaVector v;
+
+   vectcpy( &v.vec, &player->solid->pos );
+   lua_pushvector(L, v);
+   return 1;
 }
 /**
  * @}
