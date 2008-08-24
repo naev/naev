@@ -1,6 +1,6 @@
 --[[
 
-   Operation Green Giant
+   Collective Distraction
 
    Fifth mission in the collective mini campaign.
 
@@ -13,7 +13,7 @@ lang = naev.lang()
 if lang == "es" then
    -- not translated atm
 else -- default english
-   misn_title = "Operation Green Giant"
+   misn_title = "Collective Distraction"
    misn_reward = "None"
    misn_desc = {}
    misn_desc[1] = "Check for survivors on %s in %s."

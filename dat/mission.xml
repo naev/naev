@@ -91,7 +91,7 @@
    <planet>Omega Station</planet>
   </avail>
  </mission>
- <mission name="Operation Green Giant">
+ <mission name="Collective Distraction">
   <lua>emp_collective04</lua>
   <flags>
    <unique>1</unique>
