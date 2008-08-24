@@ -31,6 +31,7 @@
 #define PILOT_DISABLED_ARMOR  0.3   /**< armour % that gets it disabled */
 
 /* hooks */
+#define PILOT_HOOKS        4 /**< Max number of hooks a pilot can have. */
 #define PILOT_HOOK_NONE    0 /**< No hook. */
 #define PILOT_HOOK_DEATH   1 /**< Pilot died. */
 #define PILOT_HOOK_BOARD   2 /**< Pilot got boarded. */
@@ -176,8 +177,8 @@ typedef struct Pilot_ {
    int lockons; /**< Stores how many seeking weapons are targetting pilot */
 
    /* Hook attached to the pilot */
-   int hook_type; /**< Type of the hook attached to the pilot. */
-   int hook; /**< Hook ID */
+   int hook_type[PILOT_HOOKS]; /**< Type of the hook attached to the pilot. */
+   int hook[PILOT_HOOKS]; /**< Hook ID */
 
    /* AI */
    AI_Profile* ai; /**< ai personality profile */

@@ -77,6 +77,7 @@ extern int gui_load( const char *name );
 static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t );
 static void pilot_update( Pilot* pilot, const double dt );
 static void pilot_hyperspace( Pilot* pilot );
+static void pilot_runHook( Pilot* p, int hook_type );
 void pilot_render( Pilot* pilot ); /* externed in player.c */
 static void pilot_calcCargo( Pilot* pilot );
 void pilot_free( Pilot* p );
@@ -577,8 +578,24 @@ void pilot_dead( Pilot* p )
    pilot_setFlag(p,PILOT_DEAD);
 
    /* run hook if pilot has a death hook */
-   if (p->hook_type == PILOT_HOOK_DEATH)
-      hook_runID( p->hook );
+   pilot_runHook( p, PILOT_HOOK_DEATH );
+}
+
+
+/**
+ * @fn static void pilot_runHook( Pilot* p, int hook_type )
+ *
+ * @brief Tries to run a pilot hook if he has it.
+ *
+ *    @param p Pilot to run the hook.
+ *    @param hook_type Type of hook to run.
+ */
+static void pilot_runHook( Pilot* p, int hook_type )
+{
+   int i;
+   for (i=0; i<PILOT_HOOKS; i++)
+      if (p->hook_type[i] == hook_type)
+         hook_runID( p->hook[i] );
 }
 
 
@@ -790,8 +807,7 @@ static void pilot_update( Pilot* pilot, const double dt )
       if (!pilot_isFlag(pilot,PILOT_DISABLED)) {
          pilot_setFlag(pilot,PILOT_DISABLED); /* set as disabled */
          /* run hook */
-         if (pilot->hook_type == PILOT_HOOK_DISABLE)
-            hook_runID( pilot->hook );
+         pilot_runHook( pilot, PILOT_HOOK_DISABLE );
       }
 
       /* Do the slow brake thing */
@@ -869,8 +885,7 @@ static void pilot_hyperspace( Pilot* p )
             player_brokeHyperspace();
          }
          else {
-            if (p->hook_type == PILOT_HOOK_JUMP)
-               hook_runID( p->hook );
+            pilot_runHook( p, PILOT_HOOK_JUMP );
             pilot_setFlag(p, PILOT_DELETE); /* set flag to delete pilot */
          }
          return;
@@ -1079,8 +1094,12 @@ char* pilot_getOutfits( Pilot* pilot )
 }
 
 
-/*
- * recalculates the pilot's stats based on his outfits
+/**
+ * @fn void pilot_calcStats( Pilot* pilot )
+ *
+ * @brief Recalculates the pilot's stats based on his outfits.
+ *
+ *    @param pilot Pilot to recalculate his stats.
  */
 void pilot_calcStats( Pilot* pilot )
 {
@@ -1090,6 +1109,7 @@ void pilot_calcStats( Pilot* pilot )
    int nweaps;
    Outfit* o;
    double ac, sc, ec, fc; /* temporary health coeficients to set */
+
    /*
     * set up the basic stuff
     */
@@ -1329,13 +1349,28 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
 }
 
 
-/*
- * adds a hook to the pilot
+/**
+ * @fn void pilot_addHook( Pilot *pilot, int type, int hook )
+ *
+ * @brief Adds a hook to the pilot.
+ *
+ *    @param pilot Pilot to add the hook to.
+ *    @param type Type of the hook to add.
+ *    @param hook ID of the hook to add.
  */
 void pilot_addHook( Pilot *pilot, int type, int hook )
 {
-   pilot->hook_type = type;
-   pilot->hook = hook;
+   int i;
+
+   for (i=0; i<PILOT_HOOKS; i++) {
+      if (pilot->hook_type[i] == PILOT_HOOK_NONE) {
+         pilot->hook_type[i] = type;
+         pilot->hook[i] = hook;
+         return;
+      }
+   }
+
+   WARN("Pilot has maximum amount of hooks, cannot add another.");
 }
 
 
@@ -1357,6 +1392,7 @@ void pilot_addHook( Pilot *pilot, int type, int hook )
 void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* ai,
       const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
 {
+   int i;
    ShipOutfit* so;
 
    if (flags & PILOT_PLAYER) /* player is ID 0 */
@@ -1421,8 +1457,10 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* 
    pilot_calcStats(pilot);
 
    /* hooks */
-   pilot->hook_type = PILOT_HOOK_NONE;
-   pilot->hook = 0;
+   for (i=0; i<PILOT_HOOKS; i++) {
+      pilot->hook_type[i] = PILOT_HOOK_NONE;
+      pilot->hook[i] = 0;
+   }
 
    /* set flags and functions */
    if (flags & PILOT_PLAYER) {
