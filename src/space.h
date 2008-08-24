@@ -155,6 +155,7 @@ typedef struct StarSystem_ {
 
 
 extern StarSystem *cur_system; /**< current star system */
+extern int space_spawn; /**< 1 if spawning is enabled. */
 
 
 /*

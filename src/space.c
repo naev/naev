@@ -76,7 +76,8 @@ StarSystem *cur_system = NULL; /**< Current star system. */
 /*
  * fleet spawn rate
  */
-unsigned int spawn_timer = 0; /**< Timer that controls spawn rate. Used in pause.c */
+int space_spawn = 1; /**< Spawn enabled by default. */
+static double spawn_timer = 0; /**< Timer that controls spawn rate. */
 
 
 /*
@@ -515,18 +516,18 @@ Planet* planet_get( char* planetname )
  */
 void space_update( const double dt )
 {
-   unsigned int t;
    int i, j, f;
-   (void)dt; /* not used for now */
 
    if (cur_system == NULL) return; /* can't update a null system */
 
-   t = SDL_GetTicks();
+   if (!space_spawn) return; /* spawning is disabled */
+
+   spawn_timer -= dt;
 
    if (cur_system->nfleets == 0) /* stop checking if there are no fleets */
-      spawn_timer = t + 300000;
+      spawn_timer = 300.;
    
-   if (spawn_timer < t) { /* time to possibly spawn */
+   if (spawn_timer < 0.) { /* time to possibly spawn */
 
       /* spawn chance is based on overall % */
       f = RNG(0,100*cur_system->nfleets);
@@ -539,7 +540,7 @@ void space_update( const double dt )
          }
       }
 
-      spawn_timer = t + 60000./(float)cur_system->nfleets;
+      spawn_timer = 60./(float)cur_system->nfleets;
    }
 }
 
@@ -655,6 +656,7 @@ void space_init ( const char* sysname )
    pilots_clean(); /* destroy all the current pilots, except player */
    weapon_clear(); /* get rid of all the weapons */
    spfx_clear(); /* get rid of the explosions */
+   space_spawn = 1; /* spawn is enabled by default. */
 
    if ((sysname==NULL) && (cur_system==NULL))
       ERR("Cannot reinit system if there is no system previously loaded");
@@ -694,7 +696,7 @@ void space_init ( const char* sysname )
          space_addFleet( cur_system->fleets[i].fleet, 1 );
    
    /* start the spawn timer */
-   spawn_timer = SDL_GetTicks() + 120000./(float)(cur_system->nfleets+1);
+   spawn_timer = 120./(float)(cur_system->nfleets+1);
 
    /* we now know this system */
    sys_setFlag(cur_system,SYSTEM_KNOWN);

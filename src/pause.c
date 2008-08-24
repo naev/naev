@@ -21,8 +21,6 @@ int paused = 0; /* is paused? */
 /* from pilot.c */
 extern Pilot** pilot_stack;
 extern int pilot_nstack;
-/* from space.c */
-extern unsigned int spawn_timer;
 /* from main.c */
 extern unsigned int time;
 
@@ -42,7 +40,6 @@ void pause_game (void)
    if (paused) return; /* already paused */
 
    pilot_nstack_pause();
-   spawn_timer -= SDL_GetTicks();
 
    paused = 1; /* officially paused */
 }
@@ -56,7 +53,6 @@ void unpause_game (void)
    if (!paused) return; /* already unpaused */
 
    pilot_nstack_unpause();
-   spawn_timer += SDL_GetTicks();
 
    paused = 0; /* officially unpaused */
 }
@@ -68,7 +64,6 @@ void unpause_game (void)
 void pause_delay( unsigned int delay )
 {
    pilot_nstack_delay(delay);
-   spawn_timer += delay;
 }
 
 
