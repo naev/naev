@@ -21,6 +21,7 @@
 
 #include "nlua.h"
 #include "nlua_space.h"
+#include "nlua_pilot.h"
 #include "hook.h"
 #include "mission.h"
 #include "log.h"
@@ -170,18 +171,7 @@ static const luaL_reg hook_methods[] = {
    { "pilot", hook_pilot },
    {0,0}
 }; /**< Hook lua methods. */
-/* pilots */
-static int pilot_addFleet( lua_State *L );
-static int pilot_rename( lua_State *L );
-static int pilot_clear( lua_State *L );
-static int pilot_toggleSpawn( lua_State *L );
-static const luaL_reg pilot_methods[] = {
-   { "add", pilot_addFleet },
-   { "rename", pilot_rename },
-   { "clear", pilot_clear },
-   { "togglespawn", pilot_toggleSpawn },
-   {0,0}
-}; /**< Pilot lua methods. */
+
 
 
 /**
@@ -203,7 +193,7 @@ int misn_loadLibs( lua_State *L )
    lua_loadRnd(L);
    lua_loadTk(L);
    lua_loadHook(L);
-   lua_loadPilot(L);
+   lua_loadPilot(L,0);
    return 0;
 }
 /**
@@ -269,16 +259,6 @@ int lua_loadPlayer( lua_State *L, int readonly )
 int lua_loadHook( lua_State *L )
 {
    luaL_register(L, "hook", hook_methods);
-   return 0;
-}
-/**
- * @fn int lua_loadPilot( lua_State *L )
- * @brief Loads the pilot lua library.
- *    @param L Lua state.
- */
-int lua_loadPilot( lua_State *L )
-{
-   luaL_register(L, "pilot", pilot_methods);
    return 0;
 }
 
@@ -1227,7 +1207,7 @@ static int hook_enter( lua_State *L )
  * @fn static int hook_pilot( lua_State *L )
  * @ingroup HOOK
  *
- * @brief number pilot( number pilot, string type, string func )
+ * @brief number pilot( Pilot pilot, string type, string func )
  *
  * Hooks the function to a specific pilot.
  *
@@ -1245,12 +1225,13 @@ static int hook_enter( lua_State *L )
 static int hook_pilot( lua_State *L )
 {
    NLUA_MIN_ARGS(3);
-   unsigned int h,p;
+   unsigned int h;
+   LuaPilot *p;
    int type;
    char *hook_type;
 
    /* First parameter parameter - pilot to hook */
-   if (lua_isnumber(L,1)) p = (unsigned int) lua_tonumber(L,1);
+   if (lua_ispilot(L,1)) p = lua_topilot(L,1);
    else NLUA_INVALID_PARAMETER();
 
    /* Second parameter - hook name */
@@ -1269,168 +1250,10 @@ static int hook_pilot( lua_State *L )
 
    /* actually add the hook */
    h = hook_generic( L, hook_type, 3 );
-   pilot_addHook( pilot_get(p), type, h );
+   pilot_addHook( pilot_get(p->pilot), type, h );
 
    return 0;
 }
 
 
-
-/**
- * @defgroup PILOT Pilot Lua bindings.
- *
- * @brief Lua bindings to interact with pilots.
- *
- * Functions should be called like:
- *
- * @code
- * pilot.function( parameters )
- * @endcode
- *
- * @{
- */
-/**
- * @fn static int pilot_addFleet( lua_State *L )
- *
- * @brief table add( string fleetname [, string ai ] )
- *
- * Adds a fleet to the system.
- *
- *    @param fleetname Name of the fleet to add.
- *    @param ai If set will override the standard fleet AI.
- *    @return Table populated with all the identifiers of the pilots created.
- */
-static int pilot_addFleet( lua_State *L )
-{
-   NLUA_MIN_ARGS(1);
-   Fleet *flt;
-   char *fltname, *fltai;
-   int i, j;
-   unsigned int p;
-   double a;
-   Vector2d vv,vp, vn;
-   FleetPilot *plt;
-
-   /* Parse first argument - Fleet Name */
-   if (lua_isstring(L,1)) fltname = (char*) lua_tostring(L,1);
-   else NLUA_INVALID_PARAMETER();
-   
-   /* Parse second argument - Fleet AI Override */
-   if ((lua_gettop(L) > 1) && lua_isstring(L,2))
-      fltai = (char*) lua_tostring(L,2);
-   else fltai = NULL;
-
-   /* pull the fleet */
-   flt = fleet_get( fltname );
-   if (flt == NULL) {
-      NLUA_DEBUG("Fleet not found!");
-      return 0;
-   }
-
-   /* this should probable be done better */
-   vect_pset( &vp, RNG(MIN_HYPERSPACE_DIST, MIN_HYPERSPACE_DIST*1.5),
-         RNG(0,360)*M_PI/180.);
-   vectnull(&vn);
-
-   /* now we start adding pilots and toss ids into the table we return */
-   j = 0;
-   lua_newtable(L);
-   for (i=0; i<flt->npilots; i++) {
-
-      plt = &flt->pilots[i];
-
-      if (RNG(0,100) <= plt->chance) {
-
-         /* fleet displacement */
-         vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
-               RNG(75,150) * (RNG(0,1) ? 1 : -1));
-
-         a = vect_angle(&vp,&vn);
-         vectnull(&vv);
-         p = pilot_create( plt->ship,
-               plt->name,
-               flt->faction,
-               (fltai != NULL) ? /* Lua AI Override */
-                     ai_getProfile(fltai) : 
-                     (plt->ai != NULL) ? /* Pilot AI Override */
-                        plt->ai : flt->ai,
-               a,
-               &vp,
-               &vv,
-               0 );
-
-         /* we push each pilot created into a table and return it */
-         lua_pushnumber(L,++j); /* index, starts with 1 */
-         lua_pushnumber(L,p); /* value = pilot id */
-         lua_rawset(L,-3); /* store the value in the table */
-      }
-   }
-   return 1;
-}
-/**
- * @fn static int pilot_rename( lua_State* L )
- *
- * @brief rename( number pilot, string name )
- *
- * Renames a pilot.
- *
- *    @param pilot Pilot to rename.
- *    @param name New name for the pilot.
- */
-static int pilot_rename( lua_State* L )
-{
-   NLUA_MIN_ARGS(2);
-   char *name;
-   unsigned int id;
-   Pilot *p;
-
-   if (lua_isnumber(L,1)) id = (unsigned int) lua_tonumber(L,1);
-   else NLUA_INVALID_PARAMETER();
-   if (lua_isstring(L,2)) name = (char*) lua_tostring(L,2);
-   else NLUA_INVALID_PARAMETER();
-
-   p = pilot_get( id );
-   free(p->name);
-   p->name = strdup(name);
-   return 0; 
-}
-/**
- * @fn static int pilot_clear( lua_State *L )
- *
- * @brief clear( nil )
- *
- * Clears the current system of pilots.  Used for epic battles and such.
- */
-static int pilot_clear( lua_State *L )
-{
-   (void) L;
-   pilots_clean();
-   return 0;
-}
-/**
- * @fn static int pilot_toggleSpawn( lua_State *L )
- *
- * @brief bool togglespawn( [bool enable] )
- *
- * Disables or enables pilot spawning in the current system.  If player jumps
- *  the spawn is enabled again automatically.
- *
- *    @param enable true enables spawn, false disables it.
- *    @return The current spawn state.
- */
-static int pilot_toggleSpawn( lua_State *L )
-{
-   /* Setting it directly. */
-   if ((lua_gettop(L) > 0) && lua_isboolean(L,1))
-      space_spawn = lua_toboolean(L,1);
-   /* Toggling. */
-   else
-      space_spawn = !space_spawn;
-
-   lua_pushboolean(L, space_spawn);
-   return 1;
-}
-/**
- * @}
- */
 

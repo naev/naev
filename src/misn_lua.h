@@ -22,7 +22,6 @@ int lua_loadMisn( lua_State *L );
 int lua_loadVar( lua_State *L, int readonly );
 int lua_loadPlayer( lua_State *L, int readonnly );
 int lua_loadHook( lua_State *L );
-int lua_loadPilot( lua_State *L );
 
 
 #endif /* MISN_LUA */
