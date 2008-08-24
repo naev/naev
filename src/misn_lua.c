@@ -173,9 +173,13 @@ static const luaL_reg hook_methods[] = {
 /* pilots */
 static int pilot_addFleet( lua_State *L );
 static int pilot_rename( lua_State *L );
+static int pilot_clear( lua_State *L );
+static int pilot_toggleSpawn( lua_State *L );
 static const luaL_reg pilot_methods[] = {
    { "add", pilot_addFleet },
    { "rename", pilot_rename },
+   { "clear", pilot_clear },
+   { "togglespawn", pilot_toggleSpawn },
    {0,0}
 }; /**< Pilot lua methods. */
 
@@ -1389,6 +1393,42 @@ static int pilot_rename( lua_State* L )
    free(p->name);
    p->name = strdup(name);
    return 0; 
+}
+/**
+ * @fn static int pilot_clear( lua_State *L )
+ *
+ * @brief clear( nil )
+ *
+ * Clears the current system of pilots.  Used for epic battles and such.
+ */
+static int pilot_clear( lua_State *L )
+{
+   (void) L;
+   pilots_clean();
+   return 0;
+}
+/**
+ * @fn static int pilot_toggleSpawn( lua_State *L )
+ *
+ * @brief bool togglespawn( [bool enable] )
+ *
+ * Disables or enables pilot spawning in the current system.  If player jumps
+ *  the spawn is enabled again automatically.
+ *
+ *    @param enable true enables spawn, false disables it.
+ *    @return The current spawn state.
+ */
+static int pilot_toggleSpawn( lua_State *L )
+{
+   /* Setting it directly. */
+   if ((lua_gettop(L) > 0) && lua_isboolean(L,1))
+      space_spawn = lua_toboolean(L,1);
+   /* Toggling. */
+   else
+      space_spawn = !space_spawn;
+
+   lua_pushboolean(L, space_spawn);
+   return 1;
 }
 /**
  * @}
