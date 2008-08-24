@@ -302,6 +302,7 @@ void pilots_render (void);
  * hooks
  */
 void pilot_addHook( Pilot *pilot, int type, int hook );
+void pilot_runHook( Pilot* p, int hook_type );
 
 
 #endif /* PILOT_H */

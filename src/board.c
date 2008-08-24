@@ -114,8 +114,7 @@ void player_board (void)
    /*
     * run hook if needed
     */
-   if (p->hook_type == PILOT_HOOK_BOARD)
-      hook_runID( p->hook );
+   pilot_runHook(p, PILOT_HOOK_BOARD);
 }
 
 /**

@@ -77,7 +77,6 @@ extern int gui_load( const char *name );
 static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t );
 static void pilot_update( Pilot* pilot, const double dt );
 static void pilot_hyperspace( Pilot* pilot );
-static void pilot_runHook( Pilot* p, int hook_type );
 void pilot_render( Pilot* pilot ); /* externed in player.c */
 static void pilot_calcCargo( Pilot* pilot );
 void pilot_free( Pilot* p );
@@ -583,14 +582,14 @@ void pilot_dead( Pilot* p )
 
 
 /**
- * @fn static void pilot_runHook( Pilot* p, int hook_type )
+ * @fn void pilot_runHook( Pilot* p, int hook_type )
  *
  * @brief Tries to run a pilot hook if he has it.
  *
  *    @param p Pilot to run the hook.
  *    @param hook_type Type of hook to run.
  */
-static void pilot_runHook( Pilot* p, int hook_type )
+void pilot_runHook( Pilot* p, int hook_type )
 {
    int i;
    for (i=0; i<PILOT_HOOKS; i++)
