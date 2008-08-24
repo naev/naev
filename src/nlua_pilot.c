@@ -457,6 +457,7 @@ static int pilotL_warp( lua_State *L )
 
    /* Warp pilot to new position. */
    vectcpy( &p->solid->pos, &v->vec );
+   vectnull( &p->solid->vel ); /* Clear velocity otherwise it's a bit weird. */
    return 0;
 }
 
