@@ -141,6 +141,7 @@ static int player_modFactionRaw( lua_State *L );
 static int player_getFaction( lua_State *L );
 static int player_getRating( lua_State *L );
 static int player_getPosition( lua_State *L );
+static int player_getPilot( lua_State *L );
 static const luaL_reg player_methods[] = {
    { "name", player_getname },
    { "ship", player_shipname },
@@ -154,6 +155,7 @@ static const luaL_reg player_methods[] = {
    { "getFaction", player_getFaction },
    { "getRating", player_getRating },
    { "pos", player_getPosition },
+   { "pilot", player_getPilot },
    {0,0}
 }; /**< Player lua methods. */
 static const luaL_reg player_cond_methods[] = {
@@ -1185,6 +1187,23 @@ static int player_getPosition( lua_State *L )
 
    vectcpy( &v.vec, &player->solid->pos );
    lua_pushvector(L, v);
+   return 1;
+}
+
+/**
+ * @fn static int player_getPilot( lua_State *L )
+ *
+ * @brief Pilot getPilot( nil )
+ *
+ * Gets the player's associated pilot.
+ *
+ *    @return The player's pilot.
+ */
+static int player_getPilot( lua_State *L )
+{
+   LuaPilot lp;
+   lp.pilot = PLAYER_ID;
+   lua_pushpilot(L, lp);
    return 1;
 }
 /**
