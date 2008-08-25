@@ -43,15 +43,19 @@ static const luaL_reg pilot_methods[] = {
 /* Pilot metatable methods. */
 static int pilotL_eq( lua_State *L );
 static int pilotL_name( lua_State *L );
+static int pilotL_alive( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_warp( lua_State *L );
+static int pilotL_broadcast( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    { "__eq", pilotL_eq },
    { "name", pilotL_name },
+   { "alive", pilotL_alive },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "warp", pilotL_warp },
+   { "broadcast", pilotL_broadcast },
    {0,0}
 }; /**< Pilot metatable methods. */
 
@@ -398,6 +402,31 @@ static int pilotL_name( lua_State *L )
 }
 
 /**
+ * @fn static int pilotL_alive( lua_State *L )
+ * @ingroup META_PILOT
+ *
+ * @brief bool alive( nil )
+ *
+ * Checks to see if pilot is still alive.
+ *
+ *    @return true if pilot is still alive.
+ */
+static int pilotL_alive( lua_State *L )
+{
+   NLUA_MIN_ARGS(1);
+   LuaPilot *lp;
+   Pilot *p;
+
+   /* Parse parameters. */
+   lp = lua_topilot(L,1);
+   p = pilot_get( lp->pilot );
+
+   /* Check if is alive. */
+   lua_pushboolean(L, p!=NULL);
+   return 1;
+}
+
+/**
  * @fn static int pilotL_rename( lua_State *L )
  * @ingroup META_PILOT
  *
@@ -494,4 +523,39 @@ static int pilotL_warp( lua_State *L )
    vectnull( &p->solid->vel ); /* Clear velocity otherwise it's a bit weird. */
    return 0;
 }
+
+/**
+ * @fn static int pilotL_broadcast( lua_State *L )
+ * @ingroup META_PILOT
+ *
+ * @brief broadcast( string msg )
+ *
+ * Makes the pilot broadcast a message.
+ *
+ *    @param msg Message to broadcast.
+ */
+static int pilotL_broadcast( lua_State *L )
+{
+   NLUA_MIN_ARGS(2);
+   Pilot *p;
+   LuaPilot *lp;
+   char *msg;
+
+   /* Parse parameters. */
+   lp = lua_topilot(L,1);
+   if (lua_isstring(L,2))
+      msg = (char*) lua_tostring(L,2);
+   else NLUA_INVALID_PARAMETER();
+
+   /* Check to see if pilot is valid. */
+   p = pilot_get(lp->pilot);
+   if (p == NULL)
+      return 0;
+
+   /* Broadcast message. */
+   player_message( "Broadcast %s> \"%s\"", p->name, msg);
+   return 0;
+}
+
+
 
