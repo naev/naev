@@ -80,7 +80,9 @@ static int vectorL_distance( lua_State *L );
 static const luaL_reg vector_methods[] = {
    { "new", vectorL_new },
    { "__add", vectorL_add },
+   { "add", vectorL_add },
    { "__sub", vectorL_sub },
+   { "sub", vectorL_sub },
    { "__mul", vectorL_mul },
    { "__div", vectorL_div },
    { "get", vectorL_get },
