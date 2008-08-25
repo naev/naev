@@ -447,6 +447,7 @@ static void update_routine( double dt )
    weapons_update(dt);
    spfx_update(dt);
    pilots_update(dt);
+   missions_update(dt);
 }
 
 

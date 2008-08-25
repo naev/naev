@@ -100,6 +100,8 @@ static int misn_setMarker( lua_State *L );
 static int misn_factions( lua_State *L );
 static int misn_accept( lua_State *L );
 static int misn_finish( lua_State *L );
+static int misn_timerStart( lua_State *L );
+static int misn_timerStop( lua_State *L );
 static const luaL_reg misn_methods[] = {
    { "setTitle", misn_setTitle },
    { "setDesc", misn_setDesc },
@@ -108,6 +110,8 @@ static const luaL_reg misn_methods[] = {
    { "factions", misn_factions },
    { "accept", misn_accept },
    { "finish", misn_finish },
+   { "timerStart", misn_timerStart },
+   { "timerStop", misn_timerStop },
    {0,0}
 }; /**< Mission lua methods. */
 /* var */
@@ -632,6 +636,82 @@ static int misn_finish( lua_State *L )
 
    lua_pushstring(L, "Mission Done");
    lua_error(L); /* shouldn't return */
+
+   return 0;
+}
+
+/**
+ * @fn static int misn_timerStart( lua_State *L )
+ *
+ * @brief number timerStart( string func, number delay )
+ *
+ * Starts a timer.
+ *
+ *    @param func Function to run when timer is up.
+ *    @param delay Seconds to wait for timer.
+ *    @return The timer being used.
+ */
+static int misn_timerStart( lua_State *L )
+{
+   NLUA_MIN_ARGS(2);
+   int i;
+   char *func;
+   double delay;
+
+   /* Parse arguments. */
+   if (lua_isstring(L,1))
+      func = (char*) lua_tostring(L,1);
+   else NLUA_INVALID_PARAMETER();
+   if (lua_isnumber(L,2))
+      delay = lua_tonumber(L,2);
+   else NLUA_INVALID_PARAMETER();
+
+   /* Add timer */
+   for (i=0; i<MISSION_TIMER_MAX; i++) {
+      if (cur_mission->timer[i] == 0.) {
+         cur_mission->timer[i] = delay;
+         cur_mission->tfunc[i] = strdup(func);
+         break;
+      }
+   }
+
+   /* No timer found. */
+   if (i >= MISSION_TIMER_MAX) {
+      return 0;
+   }
+
+   /* Returns the timer id. */
+   lua_pushnumber(L,i);
+   return 1;
+}
+
+/**
+ * @fn static int misn_timerStop( lua_State *L )
+ *
+ * @brief timerStop( number t )
+ *
+ * Stops a timer previously started with timerStart().
+ *
+ *    @param t Timer to stop.
+ */
+static int misn_timerStop( lua_State *L )
+{
+   NLUA_MIN_ARGS(1);
+   int t;
+
+   /* Parse parameters. */
+   if (lua_isnumber(L,1))
+      t = (int)lua_tonumber(L,1);
+   else NLUA_INVALID_PARAMETER();
+
+   /* Stop the timer. */
+   if (cur_mission->timer[t] != 0.) {
+      cur_mission->timer[t] = 0.;
+      if (cur_mission->tfunc[t] != NULL) {
+         free(cur_mission->tfunc[t]);
+         cur_mission->tfunc[t] = NULL;
+      }
+   }
 
    return 0;
 }

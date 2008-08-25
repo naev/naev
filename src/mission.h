@@ -27,6 +27,8 @@
 /* actual flags */
 #define  MISSION_UNIQUE       1 /**< Unique missions can't be repeated */
 
+#define MISSION_TIMER_MAX     4 /**< Maximum amount of timers in a mission. */
+
 
 /**
  * @struct MissionData
@@ -78,6 +80,10 @@ typedef struct Mission_ {
 
    char *sys_marker; /**< System to mark. */
 
+   /* Timers. */
+   double timer[MISSION_TIMER_MAX];
+   char *tfunc[MISSION_TIMER_MAX];
+
    lua_State *L; /**< The state of the running lua code. */
 } Mission;
 
@@ -100,6 +106,7 @@ void missions_run( int loc, int faction, char* planet, char* sysname );
 /*
  * misc
  */
+void missions_update( const double dt );
 int mission_getID( char* name );
 MissionData* mission_get( int id );
 void mission_sysMark (void);

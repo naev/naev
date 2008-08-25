@@ -442,6 +442,42 @@ void mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
 
 
 /**
+ * @fn void missions_update (void)
+ *
+ * @brief Updates the missions triggering timers if needed.
+ *
+ *    @param dt Current deltatick.
+ */
+void missions_update( const double dt )
+{
+   int i,j;
+
+   for (i=0; i<MISSION_MAX; i++) {
+
+      /* Mission must be active. */
+      if (player_missions[i].id != 0) {
+         for (j=0; j<MISSION_TIMER_MAX; i++) {
+
+            /* Timer must be active. */
+            if (player_missions[i].timer[j] != 0.) {
+
+               player_missions[i].timer[j] -= dt;
+
+               /* Timer is up - trigger function. */
+               if (player_missions[i].timer[j] < 0.) {
+                  misn_run( &player_missions[i], player_missions[i].tfunc[j] );
+                  player_missions[i].timer[j] = 0.;
+                  free(player_missions[i].tfunc[j]);
+                  player_missions[i].tfunc[j] = NULL;
+               }
+            }
+         }
+      }
+   }
+}
+
+
+/**
  * @fn void mission_cleanup( Mission* misn )
  *
  * @brief Cleans up a mission.
@@ -477,6 +513,13 @@ void mission_cleanup( Mission* misn )
       free(misn->cargo);
       misn->cargo = NULL;
       misn->ncargo = 0;
+   }
+   for (i=0; i<MISSION_TIMER_MAX; i++) {
+      misn->timer[i] = 0.;
+      if (misn->tfunc[i] != NULL) {
+         free(misn->tfunc[i]);
+         misn->tfunc[i] = NULL;
+      }
    }
    if (misn->L) {
       lua_close(misn->L);
