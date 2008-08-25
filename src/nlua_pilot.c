@@ -20,6 +20,7 @@
 #include "nluadef.h"
 #include "rng.h"
 #include "pilot.h"
+#include "player.h"
 #include "space.h"
 
 
@@ -48,6 +49,7 @@ static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_warp( lua_State *L );
 static int pilotL_broadcast( lua_State *L );
+static int pilotL_setFaction( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    { "__eq", pilotL_eq },
    { "name", pilotL_name },
@@ -56,6 +58,7 @@ static const luaL_reg pilotL_methods[] = {
    { "pos", pilotL_position },
    { "warp", pilotL_warp },
    { "broadcast", pilotL_broadcast },
+   { "setFaction", pilotL_setFaction },
    {0,0}
 }; /**< Pilot metatable methods. */
 
@@ -557,5 +560,35 @@ static int pilotL_broadcast( lua_State *L )
    return 0;
 }
 
+/**
+ * @fn static int pilotL_setFaction( lua_State *L )
+ * @ingroup META_PILOT
+ *
+ * @brief setFaction( string faction )
+ */
+static int pilotL_setFaction( lua_State *L )
+{
+   NLUA_MIN_ARGS(2);
+   Pilot *p;
+   LuaPilot *lp;
+   int fid;
+   char *faction;
+
+   /* Parse parameters. */
+   lp = lua_topilot(L,1);
+   if (lua_isstring(L,2))
+      faction = (char*) lua_tostring(L,2);
+   else NLUA_INVALID_PARAMETER();
+
+   /* Get pilot/faction. */
+   p = pilot_get(lp->pilot);
+   if (p==NULL) return 0;
+   fid = faction_get(faction);
+
+   /* Set the new faction. */
+   p->faction = fid;
+
+   return 0;
+}
 
 

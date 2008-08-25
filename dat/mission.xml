@@ -104,4 +104,17 @@
    <planet>Omega Station</planet>
   </avail>
  </mission>
+ <mission name="Operation Black Trinity">
+  <lua>emp_collective05</lua>
+  <flags>
+   <unique>1</unique>
+  </flags>
+  <avail>
+   <cond>player.getFaction("Empire") &gt; 5</cond>
+   <done>Collective Distraction</done>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Omega Station</planet>
+  </avail>
+ </mission>
 </Missions>
