@@ -33,7 +33,7 @@ You spend a while searching until you find a datapad on one of the corpses, igno
 end
 
 
-function create()
+function create ()
 
    misn_target, misn_target_sys = space.getSystem("Eiroik")
 
@@ -59,7 +59,7 @@ function create()
 end
 
 -- Handles jumping to target system
-function jump()
+function jump ()
    local sys = space.getSystem()
    local factions = sys:faction()
 
@@ -75,7 +75,7 @@ function jump()
 end
 
 -- Handles arrival back to base
-function land()
+function land ()
    local planet = space.getPlanet()
 
    -- Just landing
