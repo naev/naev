@@ -23,7 +23,7 @@ else -- default english
    title[2] = "Eiroik"
    title[3] = "Mission Accomplished"
    text = {}
-   text[1] = [[As soon as you exit the docking yard you see Sergeant Dimitri waiting for you.  He seems a bit more nervous then usual.
+   text[1] = [[As soon as you exit the landing pad you see Sergeant Dimitri waiting for you.  He seems a bit more nervous then usual.
 "We haven't heard from the commando team, we have to assume the worst.  It seems like Collective presence has also been incremented around %s.  We need you to go check for survivors.  Would you be willing to embark on another dangerous mission?"]]
    text[2] = [["We'll send extra forces to %s to try to weaken the blockade.  You'll have to fly through and land on %s and see if there are any survivors.  The increased drone patrols will pose an issue, be very careful, this is going to be no walk in the park."]]
    text[3] = [[The atmosphere once again starts giving your shields a workout as you land.  You spend a while flying low until you sensors pick up a reading of possible life forms.  The silhouette of the transport ship is barely.  It seems like they were detected and massacred.  You try to see if you can salvage the readings from their equipment, but it seems like it's completely toasted.
