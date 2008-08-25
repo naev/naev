@@ -962,10 +962,26 @@ int missions_saveActive( xmlTextWriterPtr writer )
          if (player_missions[i].sys_marker != NULL)
             xmlw_elem(writer,"marker",player_missions[i].sys_marker);
 
+         /* Cargo */
          xmlw_startElem(writer,"cargos");
          for (j=0; j<player_missions[i].ncargo; j++)
             xmlw_elem(writer,"cargo","%u", player_missions[i].cargo[j]);
          xmlw_endElem(writer); /* "cargos" */
+
+         /* Timers. */
+         xmlw_startElem(writer,"timers");
+         for (j=0; j<MISSION_TIMER_MAX; j++) {
+            if (player_missions[i].timer[j] > 0.) {
+               xmlw_startElem(writer,"timer");
+              
+               xmlw_attr(writer,"id","%d",j);
+               xmlw_attr(writer,"func","%s",player_missions[i].tfunc[j]);
+               xmlw_str(writer,"%f",player_missions[i].timer[j]);
+
+               xmlw_endElem(writer); /* "timer" */
+            }
+         }
+         xmlw_endElem(writer); /* "timers" */
 
          /* write lua magic */
          xmlw_startElem(writer,"lua");
@@ -1021,7 +1037,7 @@ int missions_loadActive( xmlNodePtr parent )
 static int missions_parseActive( xmlNodePtr parent )
 {
    Mission *misn;
-   int m;
+   int m, i;
    char *buf;
 
    xmlNodePtr node, cur, nest;
@@ -1050,11 +1066,28 @@ static int missions_parseActive( xmlNodePtr parent )
             xmlr_strd(cur,"reward",misn->reward);
             xmlr_strd(cur,"marker",misn->sys_marker);
 
+            /* Cargo. */
             if (xml_isNode(cur,"cargos")) {
                nest = cur->xmlChildrenNode;
                do {
                   if (xml_isNode(nest,"cargo"))
                      mission_linkCargo( misn, xml_getLong(nest) );
+               } while (xml_nextNode(nest));
+            }
+
+            /* Timers. */
+            if (xml_isNode(cur,"timers")) {
+               nest = cur->xmlChildrenNode;
+               do {
+                  if (xml_isNode(nest,"timer")) {
+                     xmlr_attr(nest,"id",buf);
+                     i = atoi(buf);
+                     free(buf);
+                     xmlr_attr(nest,"func",buf);
+                     /* Set the timer. */
+                     misn->timer[i] = xml_getFloat(nest);
+                     misn->tfunc[i] = buf;
+                  }
                } while (xml_nextNode(nest));
             }
 
