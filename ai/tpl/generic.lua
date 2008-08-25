@@ -61,14 +61,7 @@ function control ()
 
    -- Get new task
    else
-      planet = ai.landplanet()
-      -- planet must exist
-      if planet == nil or land_planet == false then
-         ai.pushtask(0, "hyperspace")
-      else
-         ai.pushtask(0, "hyperspace")
-         ai.pushtask(0, "land", planet)
-      end
+      idle()
    end
 end
 
@@ -87,6 +80,18 @@ function attacked ( attacker )
       if ai.targetid() ~= attacker then
          ai.pushtask(0, "attack", attacker)
       end
+   end
+end
+
+-- Default task to run when idle
+function idle ()
+   planet = ai.landplanet()
+   -- planet must exist
+   if planet == nil or land_planet == false then
+      ai.pushtask(0, "hyperspace")
+   else
+      ai.pushtask(0, "hyperspace")
+      ai.pushtask(0, "land", planet)
    end
 end
 
