@@ -650,7 +650,7 @@ static int misn_finish( lua_State *L )
  * Starts a timer.
  *
  *    @param func Function to run when timer is up.
- *    @param delay Seconds to wait for timer.
+ *    @param delay Milliseconds to wait for timer.
  *    @return The timer being used.
  */
 static int misn_timerStart( lua_State *L )
@@ -671,7 +671,7 @@ static int misn_timerStart( lua_State *L )
    /* Add timer */
    for (i=0; i<MISSION_TIMER_MAX; i++) {
       if (cur_mission->timer[i] == 0.) {
-         cur_mission->timer[i] = delay;
+         cur_mission->timer[i] = delay / 1000.;
          cur_mission->tfunc[i] = strdup(func);
          break;
       }
