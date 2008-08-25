@@ -133,6 +133,7 @@ static int ai_poptask( lua_State *L ); /* poptask() */
 static int ai_taskname( lua_State *L ); /* number taskname() */
 
 /* consult values */
+static int ai_getplayer( lua_State *L ); /* number getPlayer() */
 static int ai_gettarget( lua_State *L ); /* pointer gettarget() */
 static int ai_gettargetid( lua_State *L ); /* number gettargetid() */
 static int ai_getrndpilot( lua_State *L ); /* number getrndpilot() */
@@ -204,6 +205,7 @@ static const luaL_reg ai_methods[] = {
    { "incombat", ai_incombat },
    { "haslockon", ai_haslockon },
    /* get */
+   { "getPlayer", ai_getplayer },
    { "target", ai_gettarget },
    { "targetid", ai_gettargetid },
    { "rndpilot", ai_getrndpilot },
@@ -619,6 +621,15 @@ static int ai_taskname( lua_State *L )
 {
    if (cur_pilot->task) lua_pushstring(L, cur_pilot->task->name);
    else lua_pushstring(L, "none");
+   return 1;
+}
+
+/*
+ * Gets the player.
+ */
+static int ai_getplayer( lua_State *L )
+{
+   lua_pushnumber(L, PLAYER_ID);
    return 1;
 }
 
