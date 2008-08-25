@@ -28,6 +28,7 @@
 #include "land.h"
 #include "rng.h"
 #include "nebulae.h"
+#include "pause.h"
 
 
 #define MAIN_WIDTH      130 /**< Main menu width. */
@@ -652,6 +653,9 @@ void menu_death (void)
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnExit", "Exit Game", (void(*)(char*)) exit_game );
    menu_Open(MENU_DEATH);
+
+   /* Makes it all look cooler since everything still goes on. */
+   unpause_game();
 }
 /**
  * @fn static void menu_death_main( char* str )
@@ -667,6 +671,7 @@ static void menu_death_main( char* str )
    window_destroy( wid );
    menu_Close(MENU_DEATH);
 
+   /* Game will repause now since toolkit closes and reopens. */
    menu_main();
 }
 
