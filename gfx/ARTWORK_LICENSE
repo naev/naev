@@ -1,0 +1,176 @@
+ * Author: Bobbens, License: PD
+   * NAEV.png
+   * loading00.png
+   * gui
+     * minimal.png
+     * minimal_pilot.png
+     * minimal_planet.png
+   * logo
+     * dvaered_small.png
+     * empire_small.png
+     * goddard_small.png
+     * sirius_small.png
+     * zalek_small.png
+   * outfit
+     * space
+       * lasergreen.png
+     * store
+       * plasteel.png
+   * planet
+     * exterior
+       * methane.png
+     * space
+       * A00.png
+       * C00.png
+       * D00.png
+       * D01.png
+       * G00.png
+       * H00.png
+       * H01.png
+       * I00.png
+       * J01.png
+       * M01.png
+       * M02.png
+       * M03.png
+       * M04.png
+       * P00.png
+       * P01.png
+ 
+ * Author: Vega Strike, License: PD
+   * outfit
+     * space
+       * beam_orion.png (modified by Bobbens)
+       * beam_ragnarok.png (modified by Bobbens)
+       * ion.png
+       * laserred.png
+       * mass.png
+       * missile.png (rendered by Bobbens)
+       * neutron.png
+       * particle.png
+       * plasma.png
+       * ripper.png (modified by Bobbens)
+     * store
+       * afterburner.png
+       * afterburner2.png
+       * capacitator.png
+       * cargo_pod.png
+       * fuel_pod.png
+       * heavy.png
+       * jammer0.png
+       * jammer1.png
+       * laser.png
+       * medium.png
+       * missile.png
+       * orion.png
+       * neutron.png
+       * reactor_i.png
+       * reactor_ii.png
+       * reactor_iii.png
+       * rerout.png
+       * shield.png
+       * stabilizer.png
+       * thruster.png
+       * turret2.png
+       * turret3.png
+       * turret.png
+       * weapon_rack.png
+   * planet
+     * exterior
+       * aquatic.png
+       * desertic.png
+       * gas.png
+       * mining2.png
+       * mining.png
+       * oceanic.png
+       * snow.png
+       * traderoom.png
+       * station00.png (rendered by Bobbens)
+       * station01.png (rendered by Bobbens)
+       * station02.png (rendered by Bobbens)
+     * space
+       * 000.png (rendered by Bobbens)
+       * 001.png (rendered by Bobbens)
+       * 002.png (rendered by Bobbens)
+       * 003.png (rendered by Bobbens)
+   * spfx
+     * cargo.png (rendered by Bobbens)
+   * ship
+     * admonisher.png (rendered by Bobbens)
+     * admonisher_empire.png (textured, rendered by Bobbens)
+     * admonisher_pirate.png (rendered by Bobbens)
+     * admonisher_target.png (modified, rendered by Bobbens)
+     * ancestor.png (rendered by Bobbens)
+     * ancestor_dvaered.png (textured, rendered by Bobbens)
+     * ancestor_pirate.png (rendered by Bobbens)
+     * ancestor_target.png (modified, rendered by Bobbens)
+     * drone.png (rendered by Bobbens)
+     * drone_target.png (modified, rendered by Bobbens)
+     * gawain.png (rendered by Bobbens)
+     * gawain_target.png (modified, rendered by Bobbens)
+     * goddard.png (rendered by Bobbens)
+     * goddard_dvaered.png (textured, rendered by Bobbens)
+     * goddard_target.png (modified, rendered by Bobbens)
+     * hawking.png (rendered by Bobbens)
+     * hawking_empire.png (textured, rendered by Bobbens)
+     * hawking_target.png (modified, rendered by Bobbens)
+     * hyena.png (rendered by Bobbens)
+     * hyena_target.png (modified, rendered by Bobbens)
+     * lancelot.png (rendered by Bobbens)
+     * lancelot_empire.png (textured, rendered by Bobbens)
+     * lancelot_target.png (modified, rendered by Bobbens)
+     * llama.png (rendered by Bobbens)
+     * llama_target.png (modified, rendered by Bobbens)
+     * mule.png (rendered by Bobbens)
+     * mule_target.png (modified, rendered by Bobbens)
+     * pacifier.png (rendered by Bobbens)
+     * pacifier_empire.png (textured, rendered by Bobbens)
+     * pacifier_target.png (modified, rendered by Bobbens)
+     * schroedinger.png (rendered by Bobbens)
+     * schroedinger_target.png (modified, rendered by Bobbens)
+     * vendetta.png (rendered by Bobbens)
+     * vendetta_dvaered.png (textured, rendered by Bobbens)
+     * vendetta_pirate.png (rendered by Bobbens)
+     * vendetta_target.png (modified, rendered by Bobbens)
+ 
+ * Author: Joel Hans, License: PD
+   * planet
+     * space
+       * J00.png
+       * M00.png
+ 
+ * Author: Jordi Pegueroles, License: PD
+   * outfit
+     * space
+       * headhunter.png (rendered by Bobbens)
+       * mace.png (textured, rendered by Bobbens)
+     * store
+       * mace.png (textured, rendered by Bobbens)
+   * spfx
+     * exps.png
+     * expm.png
+     * expl.png
+
+ * Author: Basse, License: GPLv2
+   * outfit
+     * store
+       * droid.png
+
+ * Author: W. R. van Hage <http://www.xs4all.nl/~wrvh/galaxymap/>, License: GFDL
+   * outfit
+     * store
+       * map.png
+
+ * Author: United States Department of Energy, License: PD
+   * outfit
+     * store
+       * solar.png (modified by Bobbens)
+
+ * Author: Dennis Myts, License: PD
+   * outfit
+     * store
+       * biometal.png
+ 
+ * Author: Wikicommons, License: UNKNOWN
+   * outfit
+     * store
+       * nanobond.png
