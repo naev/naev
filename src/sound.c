@@ -99,6 +99,7 @@ static alVoice *voice_pool = NULL; /**< Pool of free voices. */
  * prototypes
  */
 /* General. */
+static void print_MixerVersion (void);
 static int sound_makeList (void);
 static Mix_Chunk *sound_load( char *filename );
 static void sound_free( alSound *snd );
@@ -118,33 +119,20 @@ static alVoice* voice_get( int id );
  */
 int sound_init (void)
 {
-   int frequency;
-   Uint16 format;
-   int channels;
-   SDL_version compile_version;
-   const SDL_version *link_version;
-   char device[PATH_MAX];
-
    if (sound_disabled) return 0;
 
    SDL_InitSubSystem(SDL_INIT_AUDIO);
    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT , 2, 1024) < 0) {
       WARN("Opening Audio: %s", Mix_GetError());
+      DEBUG();
+      sound_disabled = 1; /* Just disable sound then. */
+      music_disabled = 1;
       return -1;
    }
    Mix_AllocateChannels(SOUND_CHANNEL_MAX);
 
-   /* debug magic */
-   Mix_QuerySpec(&frequency, &format, &channels);
-   MIX_VERSION(&compile_version);
-   link_version = Mix_Linked_Version();
-   SDL_AudioDriverName(device, PATH_MAX);
-   DEBUG("SDL_Mixer: %d.%d.%d [compiled: %d.%d.%d]", 
-         compile_version.major, compile_version.minor, compile_version.patch,
-         link_version->major, link_version->minor, link_version->patch);
-   DEBUG("Driver: %s",device);
-   DEBUG("Format: %d Hz %s", frequency, (channels == 2) ? "Stereo" : "Mono");
-   DEBUG();
+   /* Debug magic. */
+   print_MixerVersion();
 
    /* load up all the sounds */
    sound_makeList();
@@ -160,6 +148,41 @@ int sound_init (void)
    voice_lock = SDL_CreateMutex();
 
    return 0;
+}
+
+/**
+ * @fn static void print_MixerVersion (void)
+ *
+ * @brief Prints the current and compiled SDL_Mixer versions.
+ */
+static void print_MixerVersion (void)
+{
+   int frequency;
+   Uint16 format;
+   int channels;
+   SDL_version compiled;
+   const SDL_version *linked;
+   char device[PATH_MAX];
+
+   /* Query stuff. */
+   Mix_QuerySpec(&frequency, &format, &channels);
+   MIX_VERSION(&compiled);
+   linked = Mix_Linked_Version();
+   SDL_AudioDriverName(device, PATH_MAX);
+
+   /* Version itself. */
+   DEBUG("SDL_Mixer: %d.%d.%d [compiled: %d.%d.%d]", 
+         compiled.major, compiled.minor, compiled.patch,
+         linked->major, linked->minor, linked->patch);
+   /* Check if major/minor version differ. */
+   if ((linked->major*100 + linked->minor) > compiled.major*100 + compiled.minor)
+      WARN("SDL_Mixer is newer then compiled version");
+   if ((linked->major*100 + linked->minor) < compiled.major*100 + compiled.minor)
+      WARN("SDL_Mixer is older then compiled version.");
+   /* Print other debug info. */
+   DEBUG("Driver: %s",device);
+   DEBUG("Format: %d Hz %s", frequency, (channels == 2) ? "Stereo" : "Mono");
+   DEBUG();
 }
 
 
