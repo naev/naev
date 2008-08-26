@@ -632,6 +632,12 @@ static void print_SDLversion (void)
    DEBUG("SDL: %d.%d.%d [compiled: %d.%d.%d]",
          linked->major, linked->minor, linked->patch,
          compiled.major, compiled.minor, compiled.patch);
+
+   /* Check if major/minor version differ. */
+   if ((linked->major*100 + linked->minor) > compiled.major*100 + compiled.minor)
+      WARN("SDL is newer then compiled version");
+   if ((linked->major*100 + linked->minor) < compiled.major*100 + compiled.minor)
+      WARN("SDL is older then compiled version.");
 }
 
 
