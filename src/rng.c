@@ -133,7 +133,7 @@ static void mt_genArray (void)
    for (i=0; i<624; i++ ) {
       mt_y = (MT[i] & 0x80000000) + ((MT[i] % 624) & 0x7FFFFFFF);
       if (mt_y % 2) /* odd */
-         MT[i] = (MT[(i+397) % 624] ^ (mt_y >> 1)) ^ 2567483615;
+         MT[i] = (MT[(i+397) % 624] ^ (mt_y >> 1)) ^ 2567483615U;
       else /* even */
          MT[i] = MT[(i+397) % 624] ^ (mt_y >> 1);
    }
@@ -154,8 +154,8 @@ static uint32_t mt_getInt (void)
 
    mt_y = MT[mt_pos++];
    mt_y ^= mt_y >> 11;
-   mt_y ^= (mt_y << 7) & 2636928640;
-   mt_y ^= (mt_y << 15) & 4022730752;
+   mt_y ^= (mt_y << 7) & 2636928640U;
+   mt_y ^= (mt_y << 15) & 4022730752U;
    mt_y ^= mt_y >> 18;
 
    return mt_y;
