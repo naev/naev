@@ -155,4 +155,11 @@
    <pilot name="Admonisher" chance="100">Empire Admonisher</pilot>
   </pilots>
  </fleet>
+ <fleet name="Trinity">
+  <ai>empire</ai>
+  <faction>Empire</faction>
+  <pilots>
+   <pilot name="Empire Hawking" chance="100">Empire Hawking</pilot>
+  </pilots>
+ </fleet>
 </Fleets>
