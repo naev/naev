@@ -1047,9 +1047,11 @@ static int vectorL_distance( lua_State *L )
 
    /* Get rest of parameters. */
    v2 = NULL;
-   if ((lua_gettop(L) > 1) && lua_isvector(L,2))
-      v2 = lua_tovector(L,2);
-   else NLUA_INVALID_PARAMETER();
+   if (lua_gettop(L) > 1) {
+      if (lua_isvector(L,2))
+         v2 = lua_tovector(L,2);
+      else NLUA_INVALID_PARAMETER();
+   }
 
    /* Get distance. */
    if (v2 == NULL)

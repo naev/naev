@@ -35,7 +35,7 @@ end
 
 function create ()
 
-   misn_target, misn_target_sys = space.getSystem("Eiroik")
+   misn_target, misn_target_sys = space.getPlanet("Eiroik")
 
    -- Intro text
    if tk.yesno( title[1], string.format(text[1], misn_target:name()) )
@@ -83,7 +83,7 @@ function land ()
 
       tk.msg( title[2], text[3] )
       misn_stage = 1
-      misn.setDesc( string.format(misn_desc[2], misn_base::name(), misn_base_sys:name() ))
+      misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
       misn.setMarker(misn_base_sys)
       misn_cargo = player.addCargo( "Datapad", 0 )
 

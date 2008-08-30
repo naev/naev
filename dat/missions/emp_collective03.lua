@@ -70,7 +70,7 @@ function jump()
 
       -- Maybe introducing a delay here would be interesting.
       misn_stage = 1
-      misn.setDesc( string.format(misn_desc[2], misn_base::name(), misn_base_sys:name() ))
+      misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
       misn.setMarker(misn_base_sys)
       hook.land("land")
 
@@ -82,6 +82,8 @@ end
 
 -- Handles arrival back to base
 function land()
+   planet = space.getPlanet()
+
    if misn_stage == 1 and planet == misn_base then
       tk.msg( title[2], text[4] )
 

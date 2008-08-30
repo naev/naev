@@ -841,6 +841,7 @@ static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
 {
    LuaPlanet *p;
    LuaSystem *s;
+   char buf[PATH_MAX];
 
    lua_pushnil(L);
    /* nil */
@@ -852,8 +853,12 @@ static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
                   (char*)lua_tostring(L,-2), (char*)lua_tostring(L,-1) );
             break;
          case LUA_TBOOLEAN:
+            /* lua_tostring doesn't work on booleans. */
+            if (lua_toboolean(L,-1)) buf[0] = '1';
+            else buf[0] = '0';
+            buf[1] = '\0';
             mission_saveData( writer, "bool",
-                  (char*)lua_tostring(L,-2), (char*)lua_tostring(L,-1) );
+                  (char*)lua_tostring(L,-2), buf );
             break;
          case LUA_TSTRING:
             mission_saveData( writer, "string",

@@ -78,7 +78,7 @@ function create ()
       -- Mission data
       misn_stage = 0
       misn_base, misn_base_sys = space.getPlanet("Omega Station")
-      misn_target_sys = space.getSystem("NCG-7690")
+      misn_target_sys = space.getSystem("NGC-7690")
       misn.setMarker(misn_target_sys)
 
       -- Mission details
@@ -87,7 +87,7 @@ function create ()
       misn.setDesc( string.format(misn_desc[1], misn_target_sys:name() ))
       tk.msg( title[2], string.format(text[3], misn_base:name() ) )
       tk.msg( title[3], string.format(text[4], "Eiroik"))
-      tk.msg( title[4], string.format(text[5], misn_target_sys:name() ) )
+      tk.msg( title[4], string.format(text[5], misn_target_sys:name(), misn_target_sys:name() ) )
 
       -- Escorts
       esc_pacifier = true
@@ -114,7 +114,7 @@ function jump ()
       end
 
       -- Create some havoc
-      if sys == target_sys then
+      if sys == misn_target_sys then
          -- Disable spawning and clear pilots -> makes it more epic
          pilot.clear()
          pilot.toggleSpawn(false)
@@ -126,8 +126,10 @@ function jump ()
          x, y = v:get()
          v:set( -x, -y )
          trinity = pilot.add("Trinity", "noidle", v)
-         hook.pilot( trinity, "death", "trinity_kill" )
-         hook.pilot( trinity, "jump", "trinity_jump" )
+         for k,v in pairs(trinity) do
+            hook.pilot( k, "death", "trinity_kill" )
+            hook.pilot( k, "jump", "trinity_jump" )
+         end
 
          final_fight = 0
          misn.timerStart( "talk", rnd.int(6000, 8000) ) -- Escorts should be in system by now
@@ -183,7 +185,7 @@ function talk ()
 
       final_fight = 3
       misn.timerStart( "talk", rnd.int( 4000, 5000 ))
-   else if final_fight == 3 then
+   elseif final_fight == 3 then
       player.msg( talk[4] )
       misn.timerStart( "call_drones", rnd.int( 3000, 5000 ) )
    end
@@ -201,17 +203,23 @@ function add_escorts ()
    if esc_pacifier then
       enter_vect:add( rnd.int(-50,50), rnd.int(-50,50) )
       paci = pilot.add("Empire Pacifier", "escort_player", enter_vect)
-      hook.pilot(pilot, "death", "paci_dead")
+      for k,v in pairs(paci) do
+         hook.pilot(v, "death", "paci_dead")
+      end
    end
    if esc_lancelot1 then
       enter_vect:add( rnd.int(-50,50), rnd.int(-50,50) )
       lance1 = pilot.add("Empire Lancelot", "escort_player", enter_vect)
-      hook.pilot(lance1, "death", "lance1_dead")
+      for k,v in pairs(lance1) do
+         hook.pilot(v, "death", "lance1_dead")
+      end
    end
    if esc_lancelot2 then
       enter_vect:add( rnd.int(-50,50), rnd.int(-50,50) )
       lance2 = pilot.add("Empire Lancelot", "escort_player", enter_vect)
-      hook.pilot(lance2, "death", "lance2_dead")
+      for k,v in pairs(lance2) do
+         hook.pilot(v, "death", "lance2_dead")
+      end
    end
 end
 

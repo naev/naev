@@ -238,8 +238,8 @@ static int pilot_addFleet( lua_State *L )
 
    /* Parse third argument - Position */
    if (lua_gettop(L) > 2) {
-      if (lua_isvector(L,2))
-         lv = lua_tovector(L,2);
+      if (lua_isvector(L,3))
+         lv = lua_tovector(L,3);
       else NLUA_INVALID_PARAMETER();
    }
    else lv = NULL;
