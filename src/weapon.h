@@ -11,6 +11,7 @@
 #include "outfit.h"
 #include "physics.h"
 
+
 /**
  * @enum WeaponLayer
  * @brief Designates the layer the weapon is on.
@@ -37,10 +38,19 @@ void beam_end( const unsigned int parent, int beam );
 
 
 /*
+ * Misc stuff.
+ */
+void weapon_explode( double x, double y, double radius,
+      DamageType dtype, double damage,
+      unsigned int parent, int mode );
+
+
+/*
  * update
  */
 void weapons_update( const double dt );
 void weapons_render( const WeaponLayer layer );
+
 
 /*
  * clean

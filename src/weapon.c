@@ -26,6 +26,7 @@
 #include "collision.h"
 #include "spfx.h"
 #include "opengl.h"
+#include "explosion.h"
 
 
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
@@ -112,6 +113,9 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
       Vector2d pos[2], const double dt );
 static void weapon_destroy( Weapon* w, WeaponLayer layer );
 static void weapon_free( Weapon* w );
+static void weapon_explodeLayer( WeaponLayer layer,
+      double x, double y, double radius,
+      unsigned int parent, int mode );
 /* think */
 static void think_seeker( Weapon* w, const double dt );
 static void think_beam( Weapon* w, const double dt );
@@ -1130,6 +1134,69 @@ void weapon_exit (void)
       free(wfrontLayer);
       wfrontLayer = NULL;
       mwfrontLayer = 0;
+   }
+}
+
+
+/**
+ * @fn void weapon_explode( double x, double y, double radius,
+ *       DamageType dtype, double damage,
+ *       unsigned int parent, int mode )
+ *
+ * @brief Clears possible exploded weapons.
+ */
+void weapon_explode( double x, double y, double radius,
+      DamageType dtype, double damage,
+      unsigned int parent, int mode )
+{
+   (void)dtype;
+   (void)damage;
+   weapon_explodeLayer( WEAPON_LAYER_FG, x, y, radius, parent, mode );
+   weapon_explodeLayer( WEAPON_LAYER_BG, x, y, radius, parent, mode );
+}
+
+
+static void weapon_explodeLayer( WeaponLayer layer,
+      double x, double y, double radius,
+      unsigned int parent, int mode )
+{
+   (void)parent;
+   int i;
+   Weapon **curLayer;
+   int *nLayer;
+   double dist, rad2;
+
+   /* set the proper layer */
+   switch (layer) {
+      case WEAPON_LAYER_BG:
+         curLayer = wbackLayer;
+         nLayer = &nwbackLayer;
+         break;
+      case WEAPON_LAYER_FG:
+         curLayer = wfrontLayer;
+         nLayer = &nwfrontLayer;
+         break;
+
+      default:
+         ERR("Invalid WEAPON_LAYER specified");
+         return;
+   }
+
+   rad2 = radius*radius;
+
+   /* Now try to destroy the weapons affected. */
+   for (i=0; i<*nLayer; i++) {
+      if (((mode & EXPL_MODE_MISSILE) && outfit_isAmmo(curLayer[i]->outfit)) ||
+            ((mode & EXPL_MODE_BOLT) && outfit_isBolt(curLayer[i]->outfit))) {
+
+         dist = pow2(curLayer[i]->solid->pos.x - x) +
+               pow2(curLayer[i]->solid->pos.y - y);
+
+         if (dist < rad2) {
+            weapon_destroy(curLayer[i], layer);
+            i--;
+         }
+      }
    }
 }
 

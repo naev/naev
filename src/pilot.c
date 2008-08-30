@@ -26,6 +26,7 @@
 #include "rng.h"
 #include "hook.h"
 #include "map.h"
+#include "explosion.h"
 
 
 #define XML_ID          "Fleets"  /**< XML document identifier. */
@@ -714,6 +715,42 @@ void pilot_setAfterburner( Pilot* p )
 
 
 /**
+ */
+void pilot_explode( double x, double y, double radius,
+      DamageType dtype, double damage, unsigned int parent )
+{
+   int i;
+   double rx, ry;
+   double dist, rad2;
+   Pilot *p;
+   Solid s; /* Only need to manipulate mass and vel. */
+
+   rad2 = radius*radius;
+
+   for (i=0; i<pilot_nstack; i++) {
+      p = pilot_stack[i];
+
+      /* Calculate a bit. */
+      rx = p->solid->pos.x - x;
+      ry = p->solid->pos.y - y;
+      dist = pow2(rx) + pow2(ry);
+
+      /* Pilot is hit. */
+      if (dist < rad2) {
+
+         /* Impact settings. */
+         s.mass = (rad2 - dist) / 10.;
+         s.vel.x = rx;
+         s.vel.y = ry;
+
+         /* Actual damage calculations. */
+         pilot_hit( p, &s, parent, dtype, damage );
+      }
+   }
+}
+
+
+/**
  * @fn void pilot_render( Pilot* p )
  *
  * @brief Renders the pilot.
@@ -765,10 +802,14 @@ static void pilot_update( Pilot* pilot, const double dt )
       }
       /* final explosion */
       else if (!pilot_isFlag(pilot,PILOT_EXPLODED) && (t > pilot->ptimer - 200)) {
-         spfx_add( spfx_get("ExpL"), 
-               VX(pilot->solid->pos), VY(pilot->solid->pos),
-               VX(pilot->solid->vel), VY(pilot->solid->vel), SPFX_LAYER_BACK );
 
+         /* Damagae from explosion. */
+         a = sqrt(pilot->solid->mass);
+         expl_explode( pilot->solid->pos.x, pilot->solid->pos.y,
+               pilot->solid->vel.x, pilot->solid->vel.y,
+               pilot->ship->gfx_space->sw/2. + a,
+               DAMAGE_TYPE_KINETIC, 2.*a - 20.,
+               0, EXPL_MODE_SHIP );
          pilot_setFlag(pilot,PILOT_EXPLODED);
 
          /* Release cargo */

@@ -244,13 +244,17 @@ void pilot_shoot( Pilot* p, const unsigned int target, const int secondary );
 void pilot_shootStop( Pilot* p, const int secondary );
 void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       const DamageType dtype, const double damage );
+double pilot_face( Pilot* p, const double dir );
+void pilot_hyperspaceAbort( Pilot* p );
+/* special outfit stuff. */
 void pilot_switchSecondary( Pilot* p, int i );
 void pilot_setSecondary( Pilot* p, const char* secondary );
 void pilot_setAmmo( Pilot* p );
 int pilot_getAmmo( Pilot* p, Outfit* o );
 void pilot_setAfterburner( Pilot* p );
-double pilot_face( Pilot* p, const double dir );
-void pilot_hyperspaceAbort( Pilot* p );
+/* explosion. */
+void pilot_explode( double x, double y, double radius,
+      DamageType dtype, double damage, unsigned int parent );
 /* outfits */
 int pilot_freeSpace( Pilot* p ); /* weapon space */
 int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity );
