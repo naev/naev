@@ -14,9 +14,9 @@
       * Kill Zakred.
 
    Mission Stages:
-      1) Get to the Trinity
-      2) Trinity Combat
-      3) Trinity dead/run
+      0) Get to the Trinity
+      1) Trinity Combat
+      2) Trinity dead/run
 
    Not too happy with the text (it chews it all up for you), but then again,
     I'm no writer.  Hopefully someone can clean it up a bit someday.
