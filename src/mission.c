@@ -150,6 +150,7 @@ MissionData* mission_get( int id )
  */
 static int mission_init( Mission* mission, MissionData* misn, int load )
 {
+   int i;
    char *buf;
    uint32_t bufsize;
 
@@ -162,6 +163,12 @@ static int mission_init( Mission* mission, MissionData* misn, int load )
    else
       mission->id = mission_genID();
    mission->data = misn;
+
+   /* Init the timers. */
+   for (i=0; i<MISSION_TIMER_MAX; i++) {
+      mission->timer[i] = 0.;
+      mission->tfunc[i] = NULL;
+   }
 
    /* init lua */
    mission->L = nlua_newState();
@@ -456,7 +463,7 @@ void missions_update( const double dt )
 
       /* Mission must be active. */
       if (player_missions[i].id != 0) {
-         for (j=0; j<MISSION_TIMER_MAX; i++) {
+         for (j=0; j<MISSION_TIMER_MAX; j++) {
 
             /* Timer must be active. */
             if (player_missions[i].timer[j] != 0.) {
