@@ -126,13 +126,12 @@ function jump ()
          x, y = v:get()
          v:set( -x, -y )
          trinity = pilot.add("Trinity", "noidle", v)
-         for k,v in pairs(trinity) do
-            hook.pilot( k, "death", "trinity_kill" )
-            hook.pilot( k, "jump", "trinity_jump" )
-         end
+         trinity = trinity[1]
+         hook.pilot( trinity, "death", "trinity_kill" )
+         hook.pilot( trinity, "jump", "trinity_jump" )
 
          final_fight = 0
-         misn.timerStart( "talk", rnd.int(6000, 8000) ) -- Escorts should be in system by now
+         misn.timerStart( "final_talk", rnd.int(6000, 8000) ) -- Escorts should be in system by now
       end
 
    -- Player ran away from combat - big disgrace.
@@ -161,20 +160,20 @@ end
 
 
 -- Little talk when ESS Trinity is encountered.
-function talk ()
+function final_talk ()
    -- Empire talks about arresting
    if final_fight == 0 then
       talker = emp_talker()
       talker:broadcast( talk[1] )
 
       final_fight = 1
-      misn.timerStart( "talk", rnd.int( 3000, 4000 ))
+      misn.timerStart( "final_talk", rnd.int( 3000, 4000 ))
    elseif final_fight == 1 then
       talker = trinity
       talker:broadcast( talk[2] )
 
       final_fight = 2
-      misn.timerStart( "talk", rnd.int( 3000, 4000 ))
+      misn.timerStart( "final_talk", rnd.int( 3000, 4000 ))
    elseif final_fight == 2 then
       -- Talk
       talker = emp_talker()
@@ -184,7 +183,7 @@ function talk ()
       trinity:setFaction("Collective")
 
       final_fight = 3
-      misn.timerStart( "talk", rnd.int( 4000, 5000 ))
+      misn.timerStart( "final_talk", rnd.int( 4000, 5000 ))
    elseif final_fight == 3 then
       player.msg( talk[4] )
       misn.timerStart( "call_drones", rnd.int( 3000, 5000 ) )
@@ -203,23 +202,20 @@ function add_escorts ()
    if esc_pacifier then
       enter_vect:add( rnd.int(-50,50), rnd.int(-50,50) )
       paci = pilot.add("Empire Pacifier", "escort_player", enter_vect)
-      for k,v in pairs(paci) do
-         hook.pilot(v, "death", "paci_dead")
-      end
+      paci = paci[1]
+      hook.pilot(paci, "death", "paci_dead")
    end
    if esc_lancelot1 then
       enter_vect:add( rnd.int(-50,50), rnd.int(-50,50) )
       lance1 = pilot.add("Empire Lancelot", "escort_player", enter_vect)
-      for k,v in pairs(lance1) do
-         hook.pilot(v, "death", "lance1_dead")
-      end
+      lance1 = lance1[1]
+      hook.pilot(lance1, "death", "lance1_dead")
    end
    if esc_lancelot2 then
       enter_vect:add( rnd.int(-50,50), rnd.int(-50,50) )
       lance2 = pilot.add("Empire Lancelot", "escort_player", enter_vect)
-      for k,v in pairs(lance2) do
-         hook.pilot(v, "death", "lance2_dead")
-      end
+      lance2 = lance2[1]
+      hook.pilot(lance2, "death", "lance2_dead")
    end
 end
 
@@ -264,10 +260,12 @@ function trinity_kill () -- Got killed
    misn_stage = 2
    trinity_alive = false
    misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
+   misn.setMarker(misn_base_sys)
 end
 function trinity_jump () -- Got away
    player.msg( talk[6] )
    misn_stage = 2
    trinity_alive = true
    misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
+   misn.setMarker(misn_base_sys)
 end

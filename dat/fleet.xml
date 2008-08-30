@@ -159,7 +159,7 @@
   <ai>empire</ai>
   <faction>Empire</faction>
   <pilots>
-   <pilot name="Empire Hawking" chance="100">Empire Hawking</pilot>
+   <pilot name="ESS Trinity" chance="100">Empire Hawking</pilot>
   </pilots>
  </fleet>
 </Fleets>

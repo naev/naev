@@ -187,7 +187,7 @@ double gui_xoff = 0.; /**< X Offset that GUI introduces. */
 double gui_yoff = 0.; /**< Y offset that GUI introduces. */
 
 /* messages */
-#define MESG_SIZE_MAX   80 /**< Maxmimu message length. */
+#define MESG_SIZE_MAX   120 /**< Maxmimu message length. */
 int mesg_timeout = 5000; /**< How long it takes for a message to timeout. */
 int mesg_max = 5; /**< Maximum messages onscreen */
 /**
