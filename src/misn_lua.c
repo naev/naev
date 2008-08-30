@@ -392,11 +392,11 @@ int var_load( xmlNodePtr parent )
                   var.type = MISN_VAR_NUM;
                   var.d.num = atoi( xml_get(cur) );
                }
-               else if (strcmp(str,"bool")) {
+               else if (strcmp(str,"bool")==0) {
                   var.type = MISN_VAR_BOOL;
                   var.d.b = atoi( xml_get(cur) );
                }
-               else if (strcmp(str,"str")) {
+               else if (strcmp(str,"str")==0) {
                   var.type = MISN_VAR_STR;
                   var.d.str = strdup( xml_get(cur) );
                }
