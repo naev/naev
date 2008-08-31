@@ -1065,7 +1065,7 @@ void player_renderGUI (void)
 
 
    /* 
-    * weapon 
+    * weapon
     */ 
    if (player->secondary==NULL) { /* no secondary weapon */ 
       gl_printMid( NULL, (int)gui.weapon.w,
@@ -1096,11 +1096,14 @@ void player_renderGUI (void)
          i = gl_printWidth( f, "%s", player->secondary->outfit->u.lau.ammo);
          if (i > gui.weapon.w) /* font is too big */
             f = &gl_smallFont;
+
+         /* Weapon name. */
          gl_printMid( f, (int)gui.weapon.w,
                gui.weapon.x, gui.weapon.y - 5,
-               c, "%s", player->secondary->outfit->u.lau.ammo );
+               (player->ammo) ? c : &cGrey, "%s",
+               player->secondary->outfit->u.lau.ammo );
 
-         /* print ammo left underneath */
+         /* Print ammo left underneath. */
          gl_printMid( &gl_smallFont, (int)gui.weapon.w,
                gui.weapon.x, gui.weapon.y - 10 - gl_defFont.h,
                NULL, "%d", (player->ammo) ? player->ammo->quantity : 0 );
