@@ -36,11 +36,6 @@ function control ()
          attack_think()
       end
 
-   -- Enemy sighted
-   elseif enemy ~= nil and aggressive then
-      taunt(enemy, true)
-      ai.pushtask(0, "attack", enemy)
-
    -- Pilot is running away
    elseif task == "runaway" then
       dist = ai.dist( ai.pos( ai.targetid() ) )
@@ -54,6 +49,11 @@ function control ()
       elseif dist > safe_distance then
          ai.hyperspace()
       end
+
+   -- Enemy sighted, handled after running away
+   elseif enemy ~= nil and aggressive then
+      taunt(enemy, true)
+      ai.pushtask(0, "attack", enemy)
 
    -- Enter hyperspace if possible
    elseif task == "hyperspace" then 
