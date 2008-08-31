@@ -261,6 +261,7 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity );
 int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity );
 char* pilot_getOutfits( Pilot* pilot );
 void pilot_calcStats( Pilot* pilot );
+int pilot_oquantity( Pilot* p, PilotOutfit* w );
 /* normal cargo */
 int pilot_cargoUsed( Pilot* pilot ); /* gets how much cargo it has onboard */
 int pilot_cargoFree( Pilot* p ); /* cargo space */

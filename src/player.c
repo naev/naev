@@ -919,6 +919,7 @@ void player_renderGUI (void)
    glFont* f;
    StarSystem *sys;
    unsigned int t;
+   int quantity, delay;
 
    t = SDL_GetTicks();
 
@@ -1077,6 +1078,19 @@ void player_renderGUI (void)
    }  
    else {
       f = &gl_defFont;
+
+      quantity = pilot_oquantity(player,player->secondary);
+      delay = outfit_delay(player->secondary->outfit);
+
+      /* check to see if weapon is ready */
+      if ((player->secondary->timer > 0) &&
+            (SDL_GetTicks() - player->secondary->timer) < (unsigned int)(delay / quantity))
+         c = &cGrey;
+      else
+         c = &cConsole;
+
+
+      /* Launcher. */
       if (outfit_isLauncher(player->secondary->outfit)) {
          /* use the ammunition's name */
          i = gl_printWidth( f, "%s", player->secondary->outfit->u.lau.ammo);
@@ -1084,20 +1098,21 @@ void player_renderGUI (void)
             f = &gl_smallFont;
          gl_printMid( f, (int)gui.weapon.w,
                gui.weapon.x, gui.weapon.y - 5,
-               &cConsole, "%s", player->secondary->outfit->u.lau.ammo );
+               c, "%s", player->secondary->outfit->u.lau.ammo );
 
          /* print ammo left underneath */
          gl_printMid( &gl_smallFont, (int)gui.weapon.w,
                gui.weapon.x, gui.weapon.y - 10 - gl_defFont.h,
                NULL, "%d", (player->ammo) ? player->ammo->quantity : 0 );
       }
+      /* Other. */
       else { /* just print the item name */
          i = gl_printWidth( f, "%s", player->secondary->outfit->name);
          if (i > (int)gui.weapon.w) /* font is too big */
             f = &gl_smallFont;
          gl_printMid( f, (int)gui.weapon.w,
                gui.weapon.x, gui.weapon.y - (gui.weapon.h - f->h)/2.,
-               &cConsole, "%s", player->secondary->outfit->name );
+               c, "%s", player->secondary->outfit->name );
 
       }
    } 

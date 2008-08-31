@@ -83,7 +83,6 @@ static void pilot_calcCargo( Pilot* pilot );
 void pilot_free( Pilot* p );
 static Fleet* fleet_parse( const xmlNodePtr parent );
 static void pilot_dead( Pilot* p );
-static int pilot_oquantity( Pilot* p, PilotOutfit* w );
 
 
 /**
@@ -262,7 +261,7 @@ int pilot_getJumps( const Pilot* p )
 
 
 /**
- * @fn static int pilot_oquantity( Pilot* p, PilotOutfit* w )
+ * @fn int pilot_oquantity( Pilot* p, PilotOutfit* w )
  *
  * @brief Gets the quantity of a pilot outfit.
  *
@@ -270,7 +269,7 @@ int pilot_getJumps( const Pilot* p )
  *    @param w Outfit to check quantity of.
  *    @return The amount of the outfit the pilot has.
  */
-static int pilot_oquantity( Pilot* p, PilotOutfit* w )
+int pilot_oquantity( Pilot* p, PilotOutfit* w )
 {
    return (outfit_isAmmo(w->outfit) && p->secondary) ?
       p->secondary->quantity : w->quantity ;
