@@ -77,6 +77,32 @@
    <pilot chance="100">Drone</pilot>
   </pilots>
  </fleet>
+ <fleet name="Collective Lge Swarm">
+  <ai>collective</ai>
+  <faction>Collective</faction>
+  <pilots>
+   <pilot chance="100">Drone</pilot>
+   <pilot chance="100">Drone</pilot>
+   <pilot chance="100">Drone</pilot>
+   <pilot chance="100">Drone</pilot>
+   <pilot chance="100">Drone</pilot>
+   <pilot chance="100">Drone</pilot>
+   <pilot chance="90">Drone</pilot>
+   <pilot chance="90">Drone</pilot>
+   <pilot chance="90">Drone</pilot>
+   <pilot chance="90">Drone</pilot>
+   <pilot chance="80">Drone</pilot>
+   <pilot chance="80">Drone</pilot>
+   <pilot chance="80">Drone</pilot>
+   <pilot chance="80">Drone</pilot>
+   <pilot chance="70">Drone</pilot>
+   <pilot chance="70">Drone</pilot>
+   <pilot chance="60">Drone</pilot>
+   <pilot chance="60">Drone</pilot>
+   <pilot chance="50">Drone</pilot>
+   <pilot chance="50">Drone</pilot>
+  </pilots>
+ </fleet>
  <fleet name="Collective Sml Swarm">
   <ai>collective</ai>
   <faction>Collective</faction>
@@ -141,6 +167,49 @@
    <pilot name="Hawking" chance="30">Empire Hawking</pilot>
   </pilots>
  </fleet>
+ <fleet name="Empire Lge Attack">
+  <ai>empire</ai>
+  <faction>Empire</faction>
+  <pilots>
+   <pilot name="Lancelot" chance="100">Empire Lancelot</pilot>
+   <pilot name="Lancelot" chance="100">Empire Lancelot</pilot>
+   <pilot name="Lancelot" chance="100">Empire Lancelot</pilot>
+   <pilot name="Lancelot" chance="80">Empire Lancelot</pilot>
+   <pilot name="Lancelot" chance="80">Empire Lancelot</pilot>
+   <pilot name="Lancelot" chance="60">Empire Lancelot</pilot>
+   <pilot name="Lancelot" chance="40">Empire Lancelot</pilot>
+   <pilot name="Admonisher" chance="100">Empire Admonisher</pilot>
+   <pilot name="Admonisher" chance="80">Empire Admonisher</pilot>
+   <pilot name="Admonisher" chance="60">Empire Admonisher</pilot>
+   <pilot name="Pacifier" chance="50">Empire Pacifier</pilot>
+   <pilot name="Hawking" chance="100">Empire Hawking</pilot>
+   <pilot name="Hawking" chance="60">Empire Hawking</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Empire Med Attack">
+  <ai>empire</ai>
+  <faction>Empire</faction>
+  <pilots>
+   <pilot name="Lancelot" chance="100">Empire Lancelot</pilot>
+   <pilot name="Lancelot" chance="100">Empire Lancelot</pilot>
+   <pilot name="Lancelot" chance="80">Empire Lancelot</pilot>
+   <pilot name="Lancelot" chance="80">Empire Lancelot</pilot>
+   <pilot name="Admonisher" chance="80">Empire Admonisher</pilot>
+   <pilot name="Admonisher" chance="60">Empire Admonisher</pilot>
+   <pilot name="Pacifier" chance="20">Empire Pacifier</pilot>
+   <pilot name="Hawking" chance="60">Empire Hawking</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Empire Sml Attack">
+  <ai>empire</ai>
+  <faction>Empire</faction>
+  <pilots>
+   <pilot name="Lancelot" chance="100">Empire Lancelot</pilot>
+   <pilot name="Lancelot" chance="80">Empire Lancelot</pilot>
+   <pilot name="Admonisher" chance="60">Empire Admonisher</pilot>
+   <pilot name="Pacifier" chance="50">Empire Pacifier</pilot>
+  </pilots>
+ </fleet>
  <fleet name="Empire Pacifier">
   <ai>empire</ai>
   <faction>Empire</faction>
@@ -156,10 +225,17 @@
   </pilots>
  </fleet>
  <fleet name="Trinity">
-  <ai>empire</ai>
-  <faction>Empire</faction>
+  <ai>collective</ai>
+  <faction>Collective</faction>
   <pilots>
    <pilot name="ESS Trinity" chance="100">Empire Hawking</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Starfire">
+  <ai>collective</ai>
+  <faction>Collective</faction>
+  <pilots>
+   <pilot name="Starfire" chance="100">Goddard</pilot>
   </pilots>
  </fleet>
 </Fleets>
