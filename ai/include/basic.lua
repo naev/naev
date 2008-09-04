@@ -43,7 +43,7 @@ function landwait ()
    dist = ai.dist( target )
 
    -- In case for some reason landed far away
-   if dist > 50 then
+   if dist > 100 then
       ai.poptask()
       ai.pushtask( 0, "land", target )
 
