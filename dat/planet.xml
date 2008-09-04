@@ -27,27 +27,6 @@
    <class>M</class>
   </general>
  </planet>
- <planet name="Cerberus">
-  <GFX>
-   <exterior>traderoom.png</exterior>
-   <space>003.png</space>
-  </GFX>
-  <pos>
-   <y>0</y>
-   <x>0</x>
-  </pos>
-  <general>
-   <bar>The bar is maintained by off-duty scientists and soldiers.  It's very small and doesn't have much offerings.  There's not much ambient noise, it seems like the boredom has gotten the best of most of the people.</bar>
-   <description>Named after the guardian dog of hell for it's role in monitoring and observing the immense Sol nebulae.  It was created shortly after the nebulae stabilized.  Exact details are confidential and there's more then enough military influence to make it suspicious.  With all the conspiration theories around the Incident, one can never be too sure where reality ends and fiction starts.</description>
-   <faction>Empire</faction>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
-   <services>3</services>
-   <class>0</class>
-  </general>
- </planet>
  <planet name="Eiroik">
   <GFX>
    <exterior>methane.png</exterior>
@@ -61,6 +40,7 @@
    <services>1</services>
    <tech>
     <main>0</main>
+    <special>0</special>
    </tech>
    <class>J</class>
    <description>Eiroik used to be a mining planet under the Empire rule until the Collective wiped out the human colonies on it.  The harsh atmosphere did the rest, erasing all tracks of former human life.</description>
@@ -79,6 +59,7 @@
    <services>0</services>
    <tech>
     <main>0</main>
+    <special>0</special>
    </tech>
    <class>3</class>
    <faction>Collective</faction>
@@ -108,6 +89,51 @@
    </tech>
    <services>7</services>
    <class>P</class>
+  </general>
+ </planet>
+ <planet name="Doranthex Prime">
+  <GFX>
+   <exterior>lava.png</exterior>
+   <space>A01.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <bar>The drinks served in the Furnance, as the bar calls itself are of a pretty strange variety.  They are generally very strong and served at a warm temperature.  The house specialties also contain volcanic ash which is harvested on the planet surface.  A strange bar indeed.</bar>
+   <description>Doranthex Prime is a mostly molten planet.  The only exception is a small island that drifts around the surface mainly around the polar regions.  On this island the Dvaered have established a small base, mainly for research and military prototyping, although civilians are allowed in the main facilities.  Due to the intense temperatures they are shielded by over 50 m of temperature isolating plating, which doesn't allow any views of the planet itself once you've landed.</description>
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>3</services>
+   <class>A</class>
+  </general>
+ </planet>
+ <planet name="Cerberus">
+  <GFX>
+   <exterior>traderoom.png</exterior>
+   <space>003.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <bar>The bar is maintained by off-duty scientists and soldiers.  It's very small and doesn't have much offerings.  There's not much ambient noise, it seems like the boredom has gotten the best of most of the people.</bar>
+   <description>Named after the guardian dog of hell for it's role in monitoring and observing the immense Sol nebulae.  It was created shortly after the nebulae stabilized.  Exact details are confidential and there's more then enough military influence to make it suspicious.  With all the conspiration theories around the Incident, one can never be too sure where reality ends and fiction starts.</description>
+   <faction>Empire</faction>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>3</services>
+   <class>0</class>
   </general>
  </planet>
  <planet name="Tau Station">
@@ -153,7 +179,8 @@
     <commodity>Industrial Goods</commodity>
    </commodities>
    <tech>
-    <main>5</main>
+    <main>0</main>
+    <special>0</special>
    </tech>
    <services>7</services>
    <class>G</class>
@@ -213,13 +240,14 @@
   <general>
    <bar>The Arrakeen canteen is a shady place.  Many scoundrels and lowlifes make this their home to avoid notice from the universal police.</bar>
    <description>Arrakis is a desert planet with no natural precipitation.</description>
-   <faction>Independent</faction>
+   <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
     <commodity>Ore</commodity>
    </commodities>
    <tech>
-    <main>4</main>
+    <main>0</main>
+    <special>0</special>
    </tech>
    <services>7</services>
    <class>H</class>
@@ -238,9 +266,35 @@
    <services>0</services>
    <tech>
     <main>0</main>
+    <special>0</special>
    </tech>
    <class>3</class>
    <faction>Collective</faction>
+  </general>
+ </planet>
+ <planet name="Jorcan">
+  <GFX>
+   <exterior>mining.png</exterior>
+   <space>G01.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <bar>The one word that would describe the Jorcan spaceport bar would be dust.  It's everywhere: on the seats, on the counter, in the drinks, on everyone's faces...  It's not the usual finer dust you find on most worlds either, it's a thick, consistant, black, disgusting dust that you think you'll never be able to get off you.</bar>
+   <description>Jorcan is a very barren dull planet, like most mining worlds.  It's very poor in deposits, but mining is still done heavily in an attempt to remove every single drop of ore from the planet.</description>
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+   </commodities>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>7</services>
+   <class>G</class>
   </general>
  </planet>
  <planet name="S72839">
@@ -256,6 +310,7 @@
    <services>0</services>
    <tech>
     <main>0</main>
+    <special>0</special>
    </tech>
    <class>3</class>
    <faction>Collective</faction>
@@ -300,6 +355,7 @@
    <services>0</services>
    <tech>
     <main>0</main>
+    <special>0</special>
    </tech>
    <class>3</class>
    <faction>Collective</faction>
@@ -358,6 +414,31 @@
    <class>0</class>
   </general>
  </planet>
+ <planet name="Cetrat">
+  <GFX>
+   <exterior>aquatic.png</exterior>
+   <space>O01.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <bar>The bar is very large and not too full.  You notice the drink list has a "living" menu.  When you ask the bartender about them, he says they specialize in drinks containing living beings.  Generally jellyfish, but sometimes small cephalopods or more exotic beings.  What strange habits.</bar>
+   <description>Cetrat is a small aquatic planet known for it's medical algae that grows.  No one has been able to reproduce it exactly as it is in the wild, but with the abundance of it all over there hasn't been too much effort in that field.</description>
+   <faction>Independent</faction>
+   <commodities>
+    <commodity>Medicine</commodity>
+    <commodity>Luxury Goods</commodity>
+   </commodities>
+   <tech>
+    <main>6</main>
+    <special>0</special>
+   </tech>
+   <services>15</services>
+   <class>A</class>
+  </general>
+ </planet>
  <planet name="Raelid Outpost">
   <GFX>
    <exterior>station02.png</exterior>
@@ -372,7 +453,8 @@
    <description>Constructed by many captured and then enslaved FLF armsmen.  The design is pretty sturdy but you can't help to think there must be a hidden bomb somewhere, just waiting to go off and kill the Dvaered opressors.</description>
    <faction>Dvaered</faction>
    <tech>
-    <main>6</main>
+    <main>0</main>
+    <special>0</special>
    </tech>
    <services>11</services>
    <class>0</class>
@@ -437,6 +519,7 @@
    <services>0</services>
    <tech>
     <main>0</main>
+    <special>0</special>
    </tech>
    <class>J</class>
   </general>
@@ -444,7 +527,7 @@
  <planet name="Anecu">
   <GFX>
    <exterior>aquatic.png</exterior>
-   <space>M03.png</space>
+   <space>O00.png</space>
   </GFX>
   <pos>
    <y>0</y>
