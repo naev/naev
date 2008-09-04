@@ -726,6 +726,7 @@ static int ai_pshield( lua_State *L )
    }
    else d = cur_pilot->shield / cur_pilot->shield_max * 100.;
 
+   lua_pushnumber(L, d);
    return 1;
 } 
 
