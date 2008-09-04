@@ -194,12 +194,12 @@ int input_getKeybind( char *keybind, KeybindType *type, int *reverse )
  *    @param value The value of the keypress (defined above).
  *    @param abs Whether or not it's an absolute value (for them joystick).
  */
-#define KEY(s)    (strcmp(input_keybinds[keynum]->name,s)==0)
-#define INGAME()  (!toolkit)
+#define KEY(s)    (strcmp(input_keybinds[keynum]->name,s)==0) /**< Shortcut for ease. */
+#define INGAME()  (!toolkit) /**< Makes sure player is in game. */
 #define NOHYP()   \
 (player && !pilot_isFlag(player,PILOT_HYP_PREP) &&\
 !pilot_isFlag(player,PILOT_HYP_BEGIN) &&\
-!pilot_isFlag(player,PILOT_HYPERSPACE))
+!pilot_isFlag(player,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
 static void input_key( int keynum, double value, int kabs )
 {
    unsigned int t;
