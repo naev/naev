@@ -183,6 +183,10 @@ function final_talk ()
       -- ESS Trinity becomes collective now.
       trinity:setFaction("Collective")
 
+      -- Some music
+      music.load( "galacticbattle" )
+      music.play()
+
       final_fight = 3
       misn.timerStart( "final_talk", rnd.int( 4000, 5000 ))
    elseif final_fight == 3 then

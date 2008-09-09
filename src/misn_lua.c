@@ -35,6 +35,7 @@
 #include "ntime.h"
 #include "xml.h"
 #include "nluadef.h"
+#include "music.h"
 
 
 
@@ -202,6 +203,7 @@ int misn_loadLibs( lua_State *L )
    lua_loadTk(L);
    lua_loadHook(L);
    lua_loadPilot(L,0);
+   lua_loadMusic(L,0);
    return 0;
 }
 /**
