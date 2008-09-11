@@ -24,7 +24,7 @@
 #define HYPERSPACE_STARS_BLUR    2000 /**< how long the stars blur */
 #define HYPERSPACE_STARS_LENGTH  1000 /**< length the stars blur to at max */
 #define HYPERSPACE_FADEOUT       1000 /**< how long the fade is */
-#define HYPERSPACE_FUEL          100  /**, how much fuel it takes */
+#define HYPERSPACE_FUEL          100  /**< how much fuel it takes */
 
 
 #define PILOT_SIZE_APROX      0.8   /**, aproximation for pilot size */
