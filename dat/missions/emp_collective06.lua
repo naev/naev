@@ -90,6 +90,7 @@ function jump ()
       if sys == misn_target_sys then
 
          -- Create big battle
+         enter_vect = player.pos()
          pilot.clear()
          pilot.toggleSpawn(false)
          -- Empire
@@ -98,18 +99,22 @@ function jump ()
          emp_fleets[2] = "Empire Sml Attack"
          emp_fleets[3] = "Dvaered Goddard" -- They help empire
          for k,v in ipairs(emp_fleets) do
-            pilot.add( v )
+            enter_vect:add( rnd.int(-500,500), rnd.int(-500,500) )
+            pilot.add( v, "def", enter_vect )
          end
          -- Collective
          col_fleets = {}
          col_fleets[1] = "Collective Sml Swarm"
          col_fleets[2] = "Collective Sml Swarm"
          col_fleets[3] = "Collective Sml Swarm"
-         col_fleets[4] = "Collective Sml Swarm"
+         -- Set up position
+         x,y = enter_vect:get()
+         enter_vect:set(-x, -y)
          -- Count amount created
          col_alive = 0
          for k,v in ipairs(col_fleets) do
-            pilots = pilot.add( v )
+            enter_vect:add( rnd.int(-500,500), rnd.int(-500,500) )
+            pilots = pilot.add( v, "def", enter_vect )
             col_alive = col_alive + #pilots
             for k,v in ipairs(pilots) do
                hook.pilot( v, "disable", "col_dead" )
@@ -125,30 +130,32 @@ function jump ()
       if sys == misn_final_sys then
 
          -- Create bigger battle
+         enter_vect = player.pos()
          pilot.clear()
          pilot.toggleSpawn(false)
          -- Empire
          emp_fleets = {}
          emp_fleets[1] = "Empire Lge Attack"
          emp_fleets[2] = "Empire Med Attack"
-         emp_fleets[2] = "Empire Sml Attack"
          emp_fleets[3] = "Dvaered Goddard" -- They help empire
          for k,v in ipairs(emp_fleets) do
-            pilot.add( v )
+            enter_vect:add( rnd.int(-500,500), rnd.int(-500,500) )
+            pilot.add( v, "def", enter_vect )
          end
          -- Collective
          col_fleets = {}
          col_fleets[1] = "Starfire"
          col_fleets[2] = "Collective Lge Swarm"
          col_fleets[3] = "Collective Lge Swarm"
-         col_fleets[4] = "Collective Sml Swarm"
-         col_fleets[5] = "Collective Sml Swarm"
          if var.peek("trinity") == true then
-            col_fleets[6] = "Trinity"
+            col_fleets[4] = "Trinity"
          end
+         x,y = enter_vect:get()
+         enter_vect:set(-x, -y)
          col_alive = 0
          for k,v in ipairs(col_fleets) do
-            pilots = pilot.add( v )
+            enter_vect:add( rnd.int(-500,500), rnd.int(-500,500) )
+            pilots = pilot.add( v, "def", enter_vect )
 
             -- Handle special ships
             if v == "Starfire" then
