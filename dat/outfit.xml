@@ -419,7 +419,7 @@
  </outfit>
  <outfit name="Fuel Pod">
   <general>
-   <max>2</max>
+   <max>4</max>
    <tech>3</tech>
    <mass>5</mass>
    <price>15000</price>
