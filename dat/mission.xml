@@ -117,4 +117,17 @@
    <planet>Omega Station</planet>
   </avail>
  </mission>
+ <mission name="Operation Cold Metal">
+  <lua>emp_collective06</lua>
+  <flags>
+   <unique>1</unique>
+  </flags>
+  <avail>
+   <cond>player.getFaction("Empire") &gt; 5</cond>
+   <done>Operation Black Trinity</done>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Omega Station</planet>
+  </avail>
+ </mission>
 </Missions>
