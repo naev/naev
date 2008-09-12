@@ -1958,8 +1958,11 @@ void player_jump (void)
       player_message("You are moving too fast to enter hyperspace.");
    else if (i == -3)
       player_message("You do not have enough fuel to hyperspace jump.");
-   else
+   else {
       player_message("Preparing for hyperspace.");
+      pilot_shootStop( player, 0 );
+      pilot_shootStop( player, 1 );
+   }
 }
 
 

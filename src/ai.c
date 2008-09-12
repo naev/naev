@@ -1100,6 +1100,8 @@ static int ai_hyperspace( lua_State *L )
 {
    int dist;
    
+   pilot_shootStop( cur_pilot, 0 );
+   pilot_shootStop( cur_pilot, 1 );
    dist = space_hyperspace(cur_pilot);
    if (dist == 0.) return 0;
 

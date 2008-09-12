@@ -361,9 +361,10 @@ void pilot_shootStop( Pilot* p, const int secondary )
       }
    }
    else { /* secondary weapon */
+      
+      if (p->secondary == NULL) return; /* No secondary weapon. */
+      
       o = p->secondary->outfit;
-
-      if (o == NULL) return; /* no secondary weapon */
 
       if (outfit_isBeam(o) && (p->secondary->beamid > 0)) {
          beam_end( p->id, p->secondary->beamid );
