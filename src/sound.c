@@ -263,8 +263,6 @@ int sound_play( int sound )
    if ((sound < 0) || (sound > sound_nlist))
       return -1;
 
-   SDL_mutexP(voice_lock);
-
    v->channel = Mix_PlayChannel( -1, sound_list[sound].buffer, 0 );
    
    if (v->channel < 0)
@@ -293,6 +291,7 @@ int sound_playPos( int sound, double x, double y )
    alVoice *v;
    double angle, dist;
    double px, py;
+   int idist;
 
    if (sound_disabled) return 0;
 
@@ -318,7 +317,10 @@ int sound_playPos( int sound, double x, double y )
       return -1;
    }
 
-   if (Mix_SetPosition( v->channel, (int)angle, (int)dist / 10 ) < 0) {
+   /* Need to make sure distance doesn't overflow. */
+   idist = dist / 4;
+   if (idist > 255) idist = 255;
+   if (Mix_SetPosition( v->channel, (int)angle, idist) < 0) {
       WARN("Unable to set sound position: %s", Mix_GetError());
       return -1;
    }
@@ -349,8 +351,6 @@ int sound_updatePos( int voice, double x, double y )
 
    if (sound_disabled) return 0;
 
-   SDL_mutexP(voice_lock);
-
    v = voice_get(voice);
    if (v != NULL) {
       v->pos[0] = x;
@@ -364,12 +364,9 @@ int sound_updatePos( int voice, double x, double y )
 
       if (Mix_SetPosition( v->channel, (int)angle, (int)dist / 10 ) < 0) {
          WARN("Unable to set sound position: %s", Mix_GetError());
-         SDL_mutexV(voice_lock);
          return -1;
       }
    }
-
-   SDL_mutexV(voice_lock);
 
    return 0;
 }
@@ -389,8 +386,6 @@ int sound_update (void)
    if (sound_disabled) return 0;
 
    if (voice_active == NULL) return 0;
-
-   SDL_mutexP(voice_lock);
 
    /* The actual control loop. */
    for (v=voice_active; v!=NULL; v=v->next) {
@@ -425,8 +420,6 @@ int sound_update (void)
       }
    }
 
-   SDL_mutexV(voice_lock);
-
    return 0;
 }
 
@@ -444,15 +437,12 @@ void sound_stop( int voice )
 
    if (sound_disabled) return;
 
-   SDL_mutexP(voice_lock);
-
    v = voice_get(voice);
    if (v != NULL) {
       Mix_HaltChannel(v->channel);
       v->state = VOICE_STOPPED;
    }
 
-   SDL_mutexV(voice_lock);
 }
 
 
@@ -712,15 +702,11 @@ static void voice_markStopped( int channel )
 {
    alVoice *v;
 
-   SDL_mutexP(voice_lock);
-
    for (v=voice_active; v!=NULL; v=v->next)
       if (v->channel == channel) {
          v->state = VOICE_STOPPED;
          break;
       }
-
-   SDL_mutexV(voice_lock);
 }
 
 
@@ -776,9 +762,9 @@ static int voice_add( alVoice* v )
 
    /* Insert to the front of active voices. */
    tv = voice_active;
-   voice_active = v;
    v->next = tv;
    v->prev = NULL;
+   voice_active = v;
    if (tv != NULL)
       tv->prev = v;
    return 0;
@@ -800,8 +786,9 @@ static alVoice* voice_get( int id )
    if (voice_active==NULL) return NULL;
 
    for (v=voice_active; v!=NULL; v=v->next)
-      if (v->id == id)
+      if (v->id == id) {
          return v;
+      }
 
    return NULL;
 }
