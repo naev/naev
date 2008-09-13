@@ -156,8 +156,8 @@ function land()
          tk.msg( finish_title, string.format( finish_msg, carg_type ))
 
          -- modify the faction standing
-         if player.getFaction("Merchant") < 70 then
-            player.modFactionRaw("Merchant",misn_faction);
+         if player.getFaction("Trader") < 70 then
+            player.modFactionRaw("Trader",misn_faction);
          end
          if player.getFaction("Independent") < 30 then
             player.modFactionRaw("Independent", misn_faction/2)
