@@ -676,9 +676,9 @@ static int systemL_faction( lua_State *L )
    /* Return result in table */
    lua_newtable(L);
    for (i=0; i<sys->s->nplanets; i++) {
-      if (sys->s->planets[i].faction > 0) { /* Faction must be valid */
+      if (sys->s->planets[i]->faction > 0) { /* Faction must be valid */
          lua_pushboolean(L,1); /* value */
-         lua_setfield(L,-2,faction_name(sys->s->planets[i].faction)); /* key */
+         lua_setfield(L,-2,faction_name(sys->s->planets[i]->faction)); /* key */
          /* allows syntax foo = space.faction("foo"); if foo["bar"] then ... end */
       }
    }

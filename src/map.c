@@ -218,13 +218,13 @@ static void map_update (void)
       nstanding = 0;
       f = -1;
       for (i=0; i<sys->nplanets; i++) {
-         if ((f==-1) && (sys->planets[i].faction>0)) {
-            f = sys->planets[i].faction;
+         if ((f==-1) && (sys->planets[i]->faction>0)) {
+            f = sys->planets[i]->faction;
             standing += faction_getPlayer( f );
             nstanding++;
          }
-         else if (f != sys->planets[i].faction && /** @todo more verbosity */
-               (sys->planets[i].faction>0)) {
+         else if (f != sys->planets[i]->faction && /** @todo more verbosity */
+               (sys->planets[i]->faction>0)) {
             snprintf( buf, 100, "Multiple" );
             break;
          }
@@ -250,10 +250,10 @@ static void map_update (void)
    else {
       buf[0] = '\0';
       if (sys->nplanets > 0)
-         strcat( buf, sys->planets[0].name );
+         strcat( buf, sys->planets[0]->name );
       for (i=1; i<sys->nplanets; i++) {
          strcat( buf, ",\n" );
-         strcat( buf, sys->planets[i].name );
+         strcat( buf, sys->planets[i]->name );
       }
 
       window_modifyText( map_wid, "txtPlanets", buf );
@@ -269,7 +269,7 @@ static void map_update (void)
    window_moveWidget( map_wid, "txtServices", -20, y-gl_smallFont.h-5 );
    services = 0;
    for (i=0; i<sys->nplanets; i++)
-      services |= sys->planets[i].services;
+      services |= sys->planets[i]->services;
    buf[0] = '\0';
    if (services & PLANET_SERVICE_COMMODITY)
       strcat(buf, "Commodity\n");

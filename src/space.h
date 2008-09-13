@@ -138,7 +138,7 @@ typedef struct StarSystem_ {
 
    int faction; /**< overall faction */
 
-   Planet *planets; /**< planets */
+   Planet **planets; /**< planets */
    int nplanets; /**< total number of planets */
 
    SystemFleet* fleets; /**< fleets that can appear in the current system */

@@ -840,7 +840,7 @@ void player_renderBG (void)
       pilot_isFlag(player,PILOT_DEAD)) return;
 
    if (planet_target >= 0) {
-      planet = &cur_system->planets[planet_target];
+      planet = cur_system->planets[planet_target];
 
       c = faction_getColour(planet->faction);
 
@@ -1014,7 +1014,7 @@ void player_renderGUI (void)
 
       gl_printMid( &gl_smallFont, (int)gui.nav.w,
             gui.nav.x, gui.nav.y - 10 - gl_smallFont.h,
-            NULL, "%s", cur_system->planets[planet_target].name );
+            NULL, "%s", cur_system->planets[planet_target]->name );
    }
    else if (hyperspace_target >= 0) { /* hyperspace target */
 
@@ -1685,7 +1685,7 @@ void player_think( Pilot* pplayer )
       else if (planet_target != -1)
          pilot_face( pplayer,
                vect_angle( &player->solid->pos,
-                  &cur_system->planets[ planet_target ].pos ));
+                  &cur_system->planets[ planet_target ]->pos ));
    }
 
    /* turning taken over by PLAYER_REVERSE */
@@ -1849,7 +1849,7 @@ void player_land (void)
       return;
    }
 
-   Planet* planet = &cur_system->planets[planet_target];
+   Planet* planet = cur_system->planets[planet_target];
    if (planet_target >= 0) { /* attempt to land */
       if (!planet_hasService(planet, PLANET_SERVICE_LAND)) {
          player_message( "You can't land here." );
@@ -1893,8 +1893,8 @@ void player_land (void)
       td = -1; /* temporary distance */
       tp = -1; /* temporary planet */
       for (i=0; i<cur_system->nplanets; i++) {
-         d = vect_dist(&player->solid->pos,&cur_system->planets[i].pos);
-         if (planet_hasService(&cur_system->planets[i],PLANET_SERVICE_LAND) &&
+         d = vect_dist(&player->solid->pos,&cur_system->planets[i]->pos);
+         if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_LAND) &&
                   ((tp==-1) || ((td == -1) || (td > d)))) {
             tp = i;
             td = d;

@@ -1024,8 +1024,8 @@ static int ai_getnearestplanet( lua_State *L )
 
    /* cycle through planets */
    for (dist=0., j=-1, i=0; i<cur_system->nplanets; i++) {
-      d = vect_dist( &cur_system->planets[i].pos, &cur_pilot->solid->pos );
-      if ((!areEnemies(cur_pilot->faction,cur_system->planets[i].faction)) &&
+      d = vect_dist( &cur_system->planets[i]->pos, &cur_pilot->solid->pos );
+      if ((!areEnemies(cur_pilot->faction,cur_system->planets[i]->faction)) &&
             (d < dist)) { /* closer friendly planet */
          j = i;
          dist = d;
@@ -1035,7 +1035,7 @@ static int ai_getnearestplanet( lua_State *L )
    /* no friendly planet found */
    if (j == -1) return 0;
 
-   lua_pushlightuserdata( L, &cur_system->planets[j].pos );
+   lua_pushlightuserdata( L, &cur_system->planets[j]->pos );
    return 1;
 }
 
@@ -1054,7 +1054,7 @@ static int ai_getrndplanet( lua_State *L )
    p = RNG(0, cur_system->nplanets-1);
 
    /* Copy the data into a vector */
-   vectcpy( &v, &cur_system->planets[p].pos );
+   vectcpy( &v, &cur_system->planets[p]->pos );
    lua_pushlightuserdata( L, &v );
 
    return 1;
@@ -1073,9 +1073,9 @@ static int ai_getlandplanet( lua_State *L )
    if (cur_system->nplanets == 0) return 0; /* no planets */
 
    for (nplanets=0, i=0; i<cur_system->nplanets; i++)
-      if (planet_hasService(&cur_system->planets[i],PLANET_SERVICE_BASIC) &&
-            !areEnemies(cur_pilot->faction,cur_system->planets[i].faction))
-         planets[nplanets++] = &cur_system->planets[i];
+      if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_BASIC) &&
+            !areEnemies(cur_pilot->faction,cur_system->planets[i]->faction))
+         planets[nplanets++] = cur_system->planets[i];
 
    /* no planet to land on found */
    if (nplanets==0) {

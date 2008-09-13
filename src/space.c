@@ -45,6 +45,7 @@
 #define PLANET_GFX_EXTERIOR_H 400 /**< Planet exterior graphic height. */
 
 #define CHUNK_SIZE            32 /**< Size to allocate by. */
+#define CHUNK_SIZE_SMALL       8 /**< Smaller size to allocate chunks by. */
 
 /* used to overcome warnings due to 0 values */
 #define FLAG_XSET             (1<<0) /**< Set the X position value. */
@@ -62,14 +63,26 @@
 static char** planetname_stack = NULL; /**< Planet name stack corresponding to system. */
 static char** systemname_stack = NULL; /**< System name stack corresponding to planet. */
 static int spacename_nstack = 0; /**< Size of planet<->system stack. */
+static int spacename_mstack = 0; /**< Size of memory in planet<->system stack. */
 
 
 /* 
- * star system stack and friends
+ * Star system stack.
  */
 StarSystem *systems_stack = NULL; /**< Star system stack. */
 int systems_nstack = 0; /**< Number of star systems. */
-static int total_planets = 0; /**< Total number of loaded planets - pretty silly. */
+static int systems_mstack = 0; /**< Number of memory allocated for star system stack. */
+
+/*
+ * Planet stack.
+ */
+static Planet *planet_stack = NULL; /**< Planet stack. */
+static int planet_nstack = 0; /**< Planet stack size. */
+static int planet_mstack = 0; /**< Memory size of planet stack. */
+
+/*
+ * Misc.
+ */
 StarSystem *cur_system = NULL; /**< Current star system. */
 
 
@@ -99,18 +112,25 @@ static int mstars = 0; /**< memory stars are taking */
 
 
 /* 
- * Prototypes
+ * Internal Prototypes.
  */
-/* intern */
-static Planet* planet_pull( const char* name );
+/* planet load */
+static int planet_parse( Planet* planet, const xmlNodePtr parent );
+/* system load */
+static int systems_load (void);
+static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
+static void system_parseJumps( const xmlNodePtr parent );
+/* misc */
 static void space_renderStars( const double dt );
 static void space_addFleet( Fleet* fleet, int init );
-static StarSystem* system_parse( const xmlNodePtr parent );
-static void system_parseJumps( const xmlNodePtr parent );
 static PlanetClass planetclass_get( const char a );
-/* extern */
+/*
+ * External prototypes.
+ */
 extern void player_message ( const char *fmt, ... );
-/* externed */
+/*
+ * Externed prototypes.
+ */
 void planets_minimap( const double res, const double w,
       const double h, const RadarShape shape );
 int space_sysSave( xmlTextWriterPtr writer );
@@ -148,16 +168,16 @@ void planets_minimap( const double res, const double w,
 
    glBegin(GL_POINTS);
    for (i=0; i<cur_system->nplanets; i++) {
-      planet = &cur_system->planets[i];
+      planet = cur_system->planets[i];
 
       col = faction_getColour(planet->faction);
       if ((col != &cHostile) && !planet_hasService(planet,PLANET_SERVICE_BASIC))
          col = &cInert; /* Override non-hostile planets without service. */
       COLOUR(*col);
 
-      r = (int)(cur_system->planets[i].gfx_space->sw / res);
-      cx = (int)((cur_system->planets[i].pos.x - player->solid->pos.x) / res);
-      cy = (int)((cur_system->planets[i].pos.y - player->solid->pos.y) / res);
+      r = (int)(cur_system->planets[i]->gfx_space->sw / res);
+      cx = (int)((cur_system->planets[i]->pos.x - player->solid->pos.x) / res);
+      cy = (int)((cur_system->planets[i]->pos.y - player->solid->pos.y) / res);
 
       x = 0;
       y = r;
@@ -312,7 +332,7 @@ int space_canHyperspace( Pilot* p)
    if (p->fuel < HYPERSPACE_FUEL) return 0;
 
    for (i=0; i < cur_system->nplanets; i++) {
-      d = vect_dist(&p->solid->pos, &cur_system->planets[i].pos);
+      d = vect_dist(&p->solid->pos, &cur_system->planets[i]->pos);
       if (d < MIN_HYPERSPACE_DIST)
          return 0;
    }
@@ -364,7 +384,7 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
 
    for (i=0; i<systems_nstack; i++)
       for (j=0; j<systems_stack[i].nplanets; j++) {
-         planet = &systems_stack[i].planets[j];
+         planet = systems_stack[i].planets[j];
          for (k=0; k<nfactions; k++)
             if (planet->faction == factions[k]) {
                ntmp++;
@@ -408,7 +428,7 @@ char* space_getRndPlanet (void)
             mtmp += CHUNK_SIZE;
             tmp = realloc(tmp, sizeof(char*) * mtmp);
          }
-         tmp[ntmp-1] = systems_stack[i].planets[j].name;
+         tmp[ntmp-1] = systems_stack[i].planets[j]->name;
       }
    
    res = tmp[RNG(0,ntmp-1)];
@@ -493,15 +513,11 @@ char* planet_getSystem( char* planetname )
 Planet* planet_get( char* planetname )
 {
    int i;
-   char *sysname;
-   StarSystem *sys;
 
-   sysname = planet_getSystem( planetname );
-   sys = system_get(sysname);
+   for (i=0; i<planet_nstack; i++)
+      if (strcmp(planet_stack[i].name,planetname)==0)
+         return &planet_stack[i];
 
-   for (i=0; i<sys->nplanets; i++)
-      if (strcmp(planetname,sys->planets[i].name)==0)
-         return &sys->planets[i];
    DEBUG("Planet '%s' not found in the universe", planetname);
    return NULL;
 }
@@ -585,9 +601,9 @@ static void space_addFleet( Fleet* fleet, int init )
       /* Get friendly planet to land on. */
       planet = NULL;
       for (i=0; i<cur_system->nplanets; i++)
-         if (planet_hasService(&cur_system->planets[i],PLANET_SERVICE_BASIC) &&
-               !areEnemies(fleet->faction,cur_system->planets[i].faction)) {
-            planet = &cur_system->planets[i];
+         if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_BASIC) &&
+               !areEnemies(fleet->faction,cur_system->planets[i]->faction)) {
+            planet = cur_system->planets[i];
             break;
          }
 
@@ -704,143 +720,54 @@ void space_init ( const char* sysname )
 
 
 /**
- * @fn static Planet* planet_pull( const char* name )
+ * @fn static int planets_load ( void )
  *
- * @brief Loads a planet by name.
+ * @brief Loads all the planets in the game.
  *
- *    @param name Name of the planet to get.
- *    @return Planet matching name.
+ *    @return 0 on success.
  */
-static Planet* planet_pull( const char* name )
+static int planets_load ( void )
 {
-   int i;
-
-   Planet* temp = NULL;
-
-   char str[PATH_MAX] = "\0";
-   char* tstr;
-
-   uint32_t flags = 0;
-
    uint32_t bufsize;
-   char *buf = pack_readfile( DATA, PLANET_DATA, &bufsize );
+   char *buf;
+   xmlNodePtr node;
+   xmlDocPtr doc;
 
-   xmlNodePtr node, cur, ccur;
-   xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+   buf = pack_readfile( DATA, PLANET_DATA, &bufsize );
+   doc = xmlParseMemory( buf, bufsize );
 
    node = doc->xmlChildrenNode;
    if (strcmp((char*)node->name,XML_PLANET_ID)) {
-      ERR("Malformed "PLANET_DATA"file: missing root element '"XML_PLANET_ID"'");
-      return NULL;
+      ERR("Malformed "PLANET_DATA" file: missing root element '"XML_PLANET_ID"'");
+      return -1;
    }
 
    node = node->xmlChildrenNode; /* first system node */
    if (node == NULL) {
       ERR("Malformed "PLANET_DATA" file: does not contain elements");
-      return NULL;
+      return -1;
    }
 
+   /* Initialize stack if needed. */
+   if (planet_stack == NULL) {
+      planet_mstack = CHUNK_SIZE;
+      planet_stack = malloc( sizeof(Planet) * planet_mstack );
+      planet_nstack = 0;
+   }
 
    do {
       if (xml_isNode(node,XML_PLANET_TAG)) {
 
-         tstr = xml_nodeProp(node,"name");
-         if (strcmp(tstr,name)==0) { /* found */
-            temp = CALLOC_ONE(Planet);
-            temp->faction = -1; /* No faction */
-            temp->name = tstr;
-
-            node = node->xmlChildrenNode;
-
-            do {
-               if (xml_isNode(node,"GFX")) {
-                  cur = node->children;
-                  do {
-                     if (xml_isNode(cur,"space")) { /* load space gfx */
-                        snprintf( str, PATH_MAX, PLANET_GFX_SPACE"%s", xml_get(cur));
-                        temp->gfx_space = gl_newImage(str);
-                     }
-                     else if (xml_isNode(cur,"exterior")) { /* load land gfx */
-                        temp->gfx_exterior = malloc( strlen(xml_get(cur))+sizeof(PLANET_GFX_EXTERIOR) );
-                        snprintf( temp->gfx_exterior, strlen(xml_get(cur))+sizeof(PLANET_GFX_EXTERIOR),                            
-                              PLANET_GFX_EXTERIOR"%s", xml_get(cur));
-                     }
-                  } while (xml_nextNode(cur));
-               }
-               else if (xml_isNode(node,"pos")) {
-                  cur = node->children;
-                  do {
-                     if (xml_isNode(cur,"x")) {
-                        flags |= FLAG_XSET;
-                        temp->pos.x = xml_getFloat(cur);
-                     }
-                     else if (xml_isNode(cur,"y")) {
-                        flags |= FLAG_YSET;
-                        temp->pos.y = xml_getFloat(cur);
-                     }
-                  } while(xml_nextNode(cur));
-               }
-               else if (xml_isNode(node,"general")) {
-                  cur = node->children;
-                  do {
-                     if (xml_isNode(cur,"class"))
-                        temp->class =
-                           planetclass_get(cur->children->content[0]);
-                     else if (xml_isNode(cur,"faction")) {
-                        flags |= FLAG_FACTIONSET;
-                        temp->faction = faction_get( xml_get(cur) );
-                     }
-                     else if (xml_isNode(cur, "description"))
-                        temp->description = strdup( xml_get(cur) );
-
-                     else if (xml_isNode(cur, "bar"))
-                        temp->bar_description = strdup( xml_get(cur) );
-
-                     else if (xml_isNode(cur, "services")) {
-                        flags |= FLAG_SERVICESSET;
-                        temp->services = xml_getInt(cur); /* flags gotten by data */
-                     }
-
-                     else if (xml_isNode(cur, "tech")) {
-                        ccur = cur->children;
-                        do {
-                           if (xml_isNode(ccur,"main")) {
-                              flags |= FLAG_TECHSET;
-                              temp->tech[0] = xml_getInt(ccur);
-                           }
-                           else if (xml_isNode(ccur,"special")) {
-                              for (i=1; i<PLANET_TECH_MAX; i++)
-                                 if (temp->tech[i]==0) {
-                                    temp->tech[i] = xml_getInt(ccur);
-                                    break;
-                                 }
-                              if (i==PLANET_TECH_MAX) WARN("Planet '%s' has too many"
-                                    "'special tech' entries", temp->name);
-                           }
-                        } while (xml_nextNode(ccur));
-                     }
-                     
-                     else if (xml_isNode(cur, "commodities")) {
-                        ccur = cur->children;
-                        do {
-                           if (xml_isNode(ccur,"commodity")) {
-                              temp->commodities = realloc(temp->commodities,
-                                    (temp->ncommodities+1) * sizeof(Commodity*));
-                              temp->commodities[temp->ncommodities] =
-                                    commodity_get( xml_get(ccur) );
-                              temp->ncommodities++;
-                           }
-                        } while (xml_nextNode(ccur));
-                     }
-                  } while(xml_nextNode(cur));
-               }
-            } while (xml_nextNode(node));
-            break;
+         /* See if stack must grow. */
+         planet_nstack++;
+         if (planet_nstack > planet_mstack) {
+            planet_mstack += CHUNK_SIZE;
+            planet_stack = realloc( planet_stack, sizeof(Planet) * planet_mstack );
          }
-         else free(tstr); /* xmlGetProp mallocs the string */
+
+         planet_parse( &planet_stack[planet_nstack-1], node );
       }
    } while (xml_nextNode(node));
-
 
    /*
     * free stuff
@@ -849,35 +776,146 @@ static Planet* planet_pull( const char* name )
    free(buf);
    xmlCleanupParser();
 
-   /* 
-    * verification
-    */
-   if (temp) {
-#define MELEMENT(o,s)   if (o) WARN("Planet '%s' missing '"s"' element", temp->name)
-      MELEMENT(temp->gfx_space==NULL,"GFX space");
-      MELEMENT( planet_hasService(temp,PLANET_SERVICE_LAND) &&
-            temp->gfx_exterior==NULL,"GFX exterior");
-      MELEMENT((flags&FLAG_XSET)==0,"x");
-      MELEMENT((flags&FLAG_YSET)==0,"y");
-      MELEMENT(temp->class==PLANET_CLASS_NULL,"class");
-      MELEMENT( planet_hasService(temp,PLANET_SERVICE_LAND) &&
-            temp->description==NULL,"desription");
-      MELEMENT( planet_hasService(temp,PLANET_SERVICE_BASIC) &&
-            temp->bar_description==NULL,"bar");
-      MELEMENT( planet_hasService(temp,PLANET_SERVICE_BASIC) &&
-            (flags&FLAG_FACTIONSET)==0,"faction");
-      MELEMENT((flags&FLAG_SERVICESSET)==0,"services");
-      MELEMENT( (planet_hasService(temp,PLANET_SERVICE_OUTFITS) ||
-            planet_hasService(temp,PLANET_SERVICE_SHIPYARD)) &&
-            (flags&FLAG_TECHSET)==0, "tech" );
-      MELEMENT( planet_hasService(temp,PLANET_SERVICE_COMMODITY) &&
-            (temp->ncommodities==0),"commodity" );
-#undef MELEMENT
-   }
-   else
-      WARN("No Planet found matching name '%s'", name);
+   return 0;
+}
 
-   return temp;
+
+/**
+ * @fn static int planet_parse( Planet *planet, const xmlNodePtr parent )
+ *
+ * @brief Parses a planet from an xml node.
+ *
+ *    @param planet Planet to fill up.
+ *    @param parent Node that contains planet data.
+ *    @return 0 on success.
+ */
+static int planet_parse( Planet *planet, const xmlNodePtr parent )
+{
+   int i;
+   char str[PATH_MAX];
+   xmlNodePtr node, cur, ccur;
+   int len;
+   unsigned int flags;
+
+   /* Clear up memory for sane defaults. */
+   memset( planet, 0, sizeof(Planet) );
+   str[0] = '\0';
+   flags = 0;
+
+   /* Get the name. */
+   xmlr_attr( parent, "name", planet->name );
+
+   node = parent->xmlChildrenNode;
+   do {
+      if (xml_isNode(node,"GFX")) {
+         cur = node->children;
+         do {
+            if (xml_isNode(cur,"space")) { /* load space gfx */
+               snprintf( str, PATH_MAX, PLANET_GFX_SPACE"%s", xml_get(cur));
+               planet->gfx_space = gl_newImage(str);
+            }
+            else if (xml_isNode(cur,"exterior")) { /* load land gfx */
+               len = strlen(xml_get(cur)) + sizeof(PLANET_GFX_EXTERIOR);
+               planet->gfx_exterior = malloc( len );
+               snprintf( planet->gfx_exterior, len, PLANET_GFX_EXTERIOR"%s", xml_get(cur));
+            }
+         } while (xml_nextNode(cur));
+      }
+      else if (xml_isNode(node,"pos")) {
+         cur = node->children;
+         do {
+            if (xml_isNode(cur,"x")) {
+               flags |= FLAG_XSET;
+               planet->pos.x = xml_getFloat(cur);
+            }
+            else if (xml_isNode(cur,"y")) {
+               flags |= FLAG_YSET;
+               planet->pos.y = xml_getFloat(cur);
+            }
+         } while(xml_nextNode(cur));
+      }
+      else if (xml_isNode(node,"general")) {
+         cur = node->children;
+         do {
+            if (xml_isNode(cur,"class"))
+               planet->class =
+                  planetclass_get(cur->children->content[0]);
+            else if (xml_isNode(cur,"faction")) {
+               flags |= FLAG_FACTIONSET;
+               planet->faction = faction_get( xml_get(cur) );
+            }
+            else if (xml_isNode(cur, "description"))
+               planet->description = strdup( xml_get(cur) );
+
+            else if (xml_isNode(cur, "bar"))
+               planet->bar_description = strdup( xml_get(cur) );
+
+            else if (xml_isNode(cur, "services")) {
+               flags |= FLAG_SERVICESSET;
+               planet->services = xml_getInt(cur); /* flags gotten by data */
+            }
+
+            else if (xml_isNode(cur, "tech")) {
+               ccur = cur->children;
+               do {
+                  if (xml_isNode(ccur,"main")) {
+                     flags |= FLAG_TECHSET;
+                     planet->tech[0] = xml_getInt(ccur);
+                  }
+                  else if (xml_isNode(ccur,"special")) {
+                     for (i=1; i<PLANET_TECH_MAX; i++)
+                        if (planet->tech[i]==0) {
+                           planet->tech[i] = xml_getInt(ccur);
+                           break;
+                        }
+                     if (i==PLANET_TECH_MAX) WARN("Planet '%s' has too many"
+                           "'special tech' entries", planet->name);
+                  }
+               } while (xml_nextNode(ccur));
+            }
+
+            else if (xml_isNode(cur, "commodities")) {
+               ccur = cur->children;
+               do {
+                  if (xml_isNode(ccur,"commodity")) {
+                     planet->commodities = realloc(planet->commodities,
+                           (planet->ncommodities+1) * sizeof(Commodity*));
+                     planet->commodities[planet->ncommodities] =
+                        commodity_get( xml_get(ccur) );
+                     planet->ncommodities++;
+                  }
+               } while (xml_nextNode(ccur));
+            }
+         } while(xml_nextNode(cur));
+      }
+   } while (xml_nextNode(node));
+
+
+/* 
+ * verification
+ */
+#define MELEMENT(o,s)   if (o) WARN("Planet '%s' missing '"s"' element", planet->name)
+   MELEMENT(planet->gfx_space==NULL,"GFX space");
+   MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
+         planet->gfx_exterior==NULL,"GFX exterior");
+   MELEMENT((flags&FLAG_XSET)==0,"x");
+   MELEMENT((flags&FLAG_YSET)==0,"y");
+   MELEMENT(planet->class==PLANET_CLASS_NULL,"class");
+   MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
+         planet->description==NULL,"desription");
+   MELEMENT( planet_hasService(planet,PLANET_SERVICE_BASIC) &&
+         planet->bar_description==NULL,"bar");
+   MELEMENT( planet_hasService(planet,PLANET_SERVICE_BASIC) &&
+         (flags&FLAG_FACTIONSET)==0,"faction");
+   MELEMENT((flags&FLAG_SERVICESSET)==0,"services");
+   MELEMENT( (planet_hasService(planet,PLANET_SERVICE_OUTFITS) ||
+            planet_hasService(planet,PLANET_SERVICE_SHIPYARD)) &&
+         (flags&FLAG_TECHSET)==0, "tech" );
+   MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
+         (planet->ncommodities==0),"commodity" );
+#undef MELEMENT
+
+   return 0;
 }
 
 
@@ -889,17 +927,22 @@ static Planet* planet_pull( const char* name )
  *    @param parent XML node to get system from.
  *    @return System matching parent data.
  */
-static StarSystem* system_parse( const xmlNodePtr parent )
+static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 {
-   Planet* planet = NULL;
-   SystemFleet* fleet = NULL;
-   StarSystem* temp = CALLOC_ONE(StarSystem);
+   Planet* planet;
+   SystemFleet* fleet;
    char* ptrc;
    xmlNodePtr cur, node;
-
    uint32_t flags;
+   int size;
 
-   temp->name = xml_nodeProp(parent,"name"); /* already mallocs */
+   /* Clear memory for sane defaults. */
+   memset( sys, 0, sizeof(StarSystem) );
+   planet = NULL;
+   fleet = NULL;
+   size = 0;
+   
+   sys->name = xml_nodeProp(parent,"name"); /* already mallocs */
 
    node  = parent->xmlChildrenNode;
 
@@ -909,11 +952,11 @@ static StarSystem* system_parse( const xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"x")) {
                flags |= FLAG_XSET;
-               temp->pos.x = xml_getFloat(cur);
+               sys->pos.x = xml_getFloat(cur);
             }
             else if (xml_isNode(cur,"y")) {
                flags |= FLAG_YSET;
-               temp->pos.y = xml_getFloat(cur);
+               sys->pos.y = xml_getFloat(cur);
             }
          } while (xml_nextNode(cur));
       }
@@ -921,22 +964,22 @@ static StarSystem* system_parse( const xmlNodePtr parent )
          cur = node->children;
          do {
             if (xml_isNode(cur,"stars")) /* non-zero */
-               temp->stars = xml_getInt(cur);
+               sys->stars = xml_getInt(cur);
             else if (xml_isNode(cur,"asteroids")) {
                flags |= FLAG_ASTEROIDSSET;
-               temp->asteroids = xml_getInt(cur);
+               sys->asteroids = xml_getInt(cur);
             }
             else if (xml_isNode(cur,"interference")) {
                flags |= FLAG_INTERFERENCESET;
-               temp->interference = xml_getFloat(cur)/100.;
+               sys->interference = xml_getFloat(cur)/100.;
             }
             else if (xml_isNode(cur,"nebulae")) {
                ptrc = xml_nodeProp(cur,"volatility");
                if (ptrc != NULL) { /* Has volatility  */
-                  temp->nebu_volatility = atof(ptrc);
+                  sys->nebu_volatility = atof(ptrc);
                   free(ptrc);
                }
-               temp->nebu_density = xml_getFloat(cur);
+               sys->nebu_density = xml_getFloat(cur);
             }
          } while (xml_nextNode(cur));
       }
@@ -946,21 +989,25 @@ static StarSystem* system_parse( const xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"planet")) {
                /* add planet to system */
-               total_planets++; /* increase planet counter */
-               planet = planet_pull(xml_get(cur));
-               temp->planets = realloc(temp->planets, sizeof(Planet)*(++temp->nplanets));
-               memcpy(temp->planets+(temp->nplanets-1), planet, sizeof(Planet));
+               sys->nplanets++;
+               if (sys->nplanets > size) {
+                  size += CHUNK_SIZE_SMALL;
+                  sys->planets = realloc(sys->planets, sizeof(Planet*) * size );
+               }
+               planet = planet_get(xml_get(cur));
+               sys->planets[sys->nplanets-1] = planet;
 
                /* add planet <-> star system to name stack */
                spacename_nstack++;
-               planetname_stack = realloc(planetname_stack,
-                     sizeof(char*)*spacename_nstack);
-               systemname_stack = realloc(systemname_stack,
-                     sizeof(char*)*spacename_nstack);
+               if (spacename_nstack > spacename_mstack) {
+                  spacename_mstack += CHUNK_SIZE;
+                  planetname_stack = realloc(planetname_stack,
+                        sizeof(char*) * spacename_mstack);
+                  systemname_stack = realloc(systemname_stack,
+                        sizeof(char*) * spacename_mstack);
+               }
                planetname_stack[spacename_nstack-1] = planet->name;
-               systemname_stack[spacename_nstack-1] = temp->name;
-
-               free(planet);
+               systemname_stack[spacename_nstack-1] = sys->name;
             }
          } while (xml_nextNode(cur));
       }
@@ -974,38 +1021,38 @@ static StarSystem* system_parse( const xmlNodePtr parent )
                fleet->fleet = fleet_get(xml_get(cur));
                if (fleet->fleet==NULL)
                   WARN("Fleet '%s' for Star System '%s' not found",
-                        xml_get(cur), temp->name);
+                        xml_get(cur), sys->name);
 
                ptrc = xml_nodeProp(cur,"chance"); /* mallocs ptrc */
                if (ptrc==NULL) fleet->chance = 0; /* gives warning */
                else fleet->chance = atoi(ptrc);
                if (fleet->chance == 0)
                   WARN("Fleet '%s' for Star System '%s' has 0%% chance to appear",
-                     fleet->fleet->name, temp->name);
+                     fleet->fleet->name, sys->name);
                if (ptrc) free(ptrc); /* free the ptrc */
 
-               temp->fleets = realloc(temp->fleets, sizeof(SystemFleet)*(++temp->nfleets));
-               memcpy(temp->fleets+(temp->nfleets-1), fleet, sizeof(SystemFleet));
+               sys->fleets = realloc(sys->fleets, sizeof(SystemFleet)*(++sys->nfleets));
+               memcpy(sys->fleets+(sys->nfleets-1), fleet, sizeof(SystemFleet));
                free(fleet);
             }
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
 
-#define MELEMENT(o,s)      if ((o) == 0) WARN("Star System '%s' missing '"s"' element", temp->name)
-   if (temp->name == NULL) WARN("Star System '%s' missing 'name' tag", temp->name);
+#define MELEMENT(o,s)      if ((o) == 0) WARN("Star System '%s' missing '"s"' element", sys->name)
+   if (sys->name == NULL) WARN("Star System '%s' missing 'name' tag", sys->name);
    MELEMENT(flags&FLAG_XSET,"x");
    MELEMENT(flags&FLAG_YSET,"y");
-   MELEMENT(temp->stars,"stars");
+   MELEMENT(sys->stars,"stars");
    MELEMENT(flags&FLAG_ASTEROIDSSET,"asteroids");
    MELEMENT(flags&FLAG_INTERFERENCESET,"inteference");
 #undef MELEMENT
 
    /* post-processing */
-   if (temp->nplanets > 0) /** @todo make dependent on overall planet faction */
-      temp->faction = temp->planets[0].faction;
+   if (sys->nplanets > 0) /** @todo make dependent on overall planet faction */
+      sys->faction = sys->planets[0]->faction;
 
-   return temp;
+   return 0;
 }
 
 
@@ -1060,24 +1107,43 @@ static void system_parseJumps( const xmlNodePtr parent )
  *
  * @brief Loads the entire universe into ram - pretty big feat eh?
  *
+ *    @return 0 on success.
+ */
+int space_load (void)
+{
+   int ret;
+
+   ret = planets_load();
+   if (ret < 0)
+      return ret;
+   ret = systems_load();
+   if (ret < 0)
+      return ret;
+
+   return 0;
+}
+
+/**
+ * @fn int systems_load (void)
+ *
+ * @brief Loads the entire systems, needs to be called after planets_load.
+ *
  * Uses a two system pass to first load the star systems_stack and then set
  *  jump routes.
  *
  *    @return 0 on success.
  */
-int space_load (void)
+static int systems_load (void)
 {
    uint32_t bufsize;
    char *buf = pack_readfile( DATA, SYSTEM_DATA, &bufsize );
-
-   StarSystem *temp;
 
    xmlNodePtr node;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );
 
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,XML_SYSTEM_ID)) {
-      ERR("Malformed "SYSTEM_DATA"file: missing root element '"XML_SYSTEM_ID"'");
+      ERR("Malformed "SYSTEM_DATA" file: missing root element '"XML_SYSTEM_ID"'");
       return -1;
    }
 
@@ -1087,16 +1153,26 @@ int space_load (void)
       return -1;
    }
 
+   /* Allocate if needed. */
+   if (systems_stack == NULL) {
+      systems_mstack = CHUNK_SIZE;
+      systems_stack = malloc( sizeof(StarSystem) * systems_mstack );
+      systems_nstack = 0;
+   }
+
    /*
     * first pass - loads all the star systems_stack
     */
    do {
       if (xml_isNode(node,XML_SYSTEM_TAG)) {
+         /* Check if memory needs to grow. */
+         systems_nstack++;
+         if (systems_nstack > systems_mstack) {
+            systems_mstack += CHUNK_SIZE;
+            systems_stack = realloc(systems_stack, sizeof(StarSystem) * systems_mstack );
+         }
 
-         temp = system_parse(node);
-         systems_stack = realloc(systems_stack, sizeof(StarSystem)*(++systems_nstack));
-         memcpy(systems_stack+systems_nstack-1, temp, sizeof(StarSystem));
-         free(temp);
+         system_parse(&systems_stack[systems_nstack-1],node);
       }                                                                             
    } while (xml_nextNode(node));                                       
 
@@ -1121,7 +1197,7 @@ int space_load (void)
 
    DEBUG("Loaded %d Star System%s with %d Planet%s",
          systems_nstack, (systems_nstack==1) ? "" : "s",
-         total_planets, (total_planets==1) ? "" : "s" );
+         planet_nstack, (planet_nstack==1) ? "" : "s" );
 
    return 0;
 }
@@ -1263,8 +1339,8 @@ void planets_render (void)
 
    int i;
    for (i=0; i < cur_system->nplanets; i++)
-      gl_blitSprite( cur_system->planets[i].gfx_space,
-            cur_system->planets[i].pos.x, cur_system->planets[i].pos.y,
+      gl_blitSprite( cur_system->planets[i]->gfx_space,
+            cur_system->planets[i]->pos.x, cur_system->planets[i]->pos.y,
             0, 0, NULL );
 }
 
@@ -1276,14 +1352,37 @@ void planets_render (void)
  */
 void space_exit (void)
 {
-   int i,j;
+   int i;
 
-   /* free the names */
+   /* Free the names. */
    if (planetname_stack) free(planetname_stack);
    if (systemname_stack) free(systemname_stack);
    spacename_nstack = 0;
+
+   /* Free the planets. */
+   for (i=0; i < planet_nstack; i++) {
+      free(planet_stack[i].name);
+
+      if (planet_stack[i].description)
+         free(planet_stack[i].description);
+      if (planet_stack[i].bar_description)
+         free(planet_stack[i].bar_description);
+
+      /* graphics */
+      if (planet_stack[i].gfx_space)
+         gl_freeTexture(planet_stack[i].gfx_space);
+      if (planet_stack[i].gfx_exterior)
+         free(planet_stack[i].gfx_exterior);
+
+      /* commodities */
+      free(planet_stack[i].commodities);
+   }
+   free(planet_stack);
+   planet_stack = NULL;
+   planet_nstack = 0;
+   planet_mstack = 0;
    
-   /* free the systems */
+   /* Free the systems. */
    for (i=0; i < systems_nstack; i++) {
       free(systems_stack[i].name);
       if (systems_stack[i].fleets)
@@ -1291,35 +1390,18 @@ void space_exit (void)
       if (systems_stack[i].jumps)
          free(systems_stack[i].jumps);
 
-      /* free some planets */
-      for (j=0; j < systems_stack[i].nplanets; j++) {
-         free(systems_stack[i].planets[j].name);
-
-         if (systems_stack[i].planets[j].description)
-            free(systems_stack[i].planets[j].description);
-         if (systems_stack[i].planets[j].bar_description)
-            free(systems_stack[i].planets[j].bar_description);
-
-         /* graphics */
-         if (systems_stack[i].planets[j].gfx_space)
-            gl_freeTexture(systems_stack[i].planets[j].gfx_space);
-         if (systems_stack[i].planets[j].gfx_exterior)
-            free(systems_stack[i].planets[j].gfx_exterior);
-
-         /* commodities */
-         free(systems_stack[i].planets[j].commodities);
-      }
-
       free(systems_stack[i].planets);
    }
    free(systems_stack);
    systems_stack = NULL;
    systems_nstack = 0;
+   systems_mstack = 0;
 
    /* stars must be free too */
    if (stars) free(stars);
    stars = NULL;
    nstars = 0;
+   mstars = 0;
 }
 
 
