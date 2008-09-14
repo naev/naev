@@ -2,10 +2,10 @@
 <Start>
  <name>Sea of Darkness</name>
  <player>
-  <ship>Lancelot</ship>
+  <ship>Llama</ship>
   <credits>
-   <low>500000</low>
-   <high>1500000</high>
+   <low>10000</low>
+   <high>20000</high>
   </credits>
   <date>
    <low>1300</low>
