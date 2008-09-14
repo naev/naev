@@ -1245,8 +1245,9 @@ void player_renderGUI (void)
    /*
     * hyperspace
     */
-   if (pilot_isFlag(player, PILOT_HYPERSPACE) && !paused) {
+   if (pilot_isFlag(player, PILOT_HYPERSPACE)) {
       i = (int)player->ptimer - HYPERSPACE_FADEOUT;
+      if (paused) i += t;
       j = (int)t;
       if (i < j) {
          x = (double)(j-i) / HYPERSPACE_FADEOUT;

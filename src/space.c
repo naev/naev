@@ -1208,7 +1208,6 @@ static void system_setFaction( StarSystem *sys )
 }
 
 
-
 /**
  * @fn static void system_parseJumps( const xmlNodePtr parent )
  *
@@ -1415,9 +1414,11 @@ static void space_renderStars( const double dt )
    t = SDL_GetTicks();
    if (!player_isFlag(PLAYER_DESTROYED) && !player_isFlag(PLAYER_CREATING) &&
          pilot_isFlag(player,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
-         (player->ptimer-HYPERSPACE_STARS_BLUR < t)) {
+         ((!paused && (player->ptimer-HYPERSPACE_STARS_BLUR < t)) ||
+            (paused && (player->ptimer < HYPERSPACE_STARS_BLUR)))) {
 
       timer = player->ptimer - HYPERSPACE_STARS_BLUR;
+      if (paused) timer += t;
 
       glShadeModel(GL_SMOOTH);
 
