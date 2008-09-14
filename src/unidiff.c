@@ -81,6 +81,7 @@ typedef struct UniHunk_ {
    UniHunkType_t type; /**< Type of hunk it is. */
    union {
       char *name;
+      SystemFleet fleet;
    } u; /**< Actual data to patch. */
 } UniHunk_t;
 
@@ -274,8 +275,13 @@ static int diff_patch( xmlNodePtr parent )
                hunk.target.type = base.target.type;
                hunk.target.u.name = strdup(base.target.u.name);
 
-               /* Get the planet to modify. */
-               xmlr_attr(cur,"name",hunk.u.name);
+               /* Get the fleet properties. */
+               xmlr_attr(cur,"name",buf);
+               hunk.u.fleet.fleet = fleet_get(buf);
+               free(buf);
+               xmlr_attr(cur,"chance",buf);
+               hunk.u.fleet.chance = atoi(buf);
+               free(buf);
 
                /* Get the type. */
                buf = xml_get(cur);
@@ -322,10 +328,12 @@ static int diff_patchHunk( UniHunk_t *hunk )
       case HUNK_TYPE_PLANET_REMOVE:
          return system_rmPlanet( system_get(hunk->target.u.name), hunk->u.name );
 
+      /* Adding a fleet. */
       case HUNK_TYPE_FLEET_ADD:
-         break;
+         return system_addFleet( system_get(hunk->target.u.name), &hunk->u.fleet );
+      /* Removing a fleet. */
       case HUNK_TYPE_FLEET_REMOVE:
-         break;
+         return system_rmFleet( system_get(hunk->target.u.name), &hunk->u.fleet );
 
       default:
          WARN("Unknown hunk type '%d'.", hunk->type);
@@ -527,8 +535,17 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
 {
    if (hunk->target.u.name != NULL)
       free(hunk->target.u.name);
-   if (hunk->u.name != NULL)
-      free(hunk->u.name);
+
+   switch (hunk->type) {
+      case HUNK_TYPE_PLANET_ADD:
+      case HUNK_TYPE_PLANET_REMOVE:
+         if (hunk->u.name != NULL)
+            free(hunk->u.name);
+         break;
+      
+      default:
+         break;
+   }
    memset( hunk, 0, sizeof(UniHunk_t) );
 }
 

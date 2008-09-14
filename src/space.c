@@ -1018,6 +1018,58 @@ int system_rmPlanet( StarSystem *sys, char *planetname )
 
 
 /**
+ * @fn int system_addFleet( StarSystem *sys, SystemFleet *fleet )
+ *
+ * @brief Adds a fleet to a star system.
+ *
+ *    @param sys Star System to add fleet to.
+ *    @param fleet Fleet to add.
+ *    @return 0 on success.
+ */
+int system_addFleet( StarSystem *sys, SystemFleet *fleet )
+{
+   if (sys == NULL)
+      return -1;
+
+   sys->fleets = realloc(sys->fleets, sizeof(SystemFleet)*(++sys->nfleets));
+   memcpy(sys->fleets+(sys->nfleets-1), fleet, sizeof(SystemFleet));
+
+   return 0;
+}
+
+
+/**
+ * @fn int system_rmFleet( StarSystem *sys, SystemFleet *fleet )
+ *
+ * @brief Removes a fleet from a star system.
+ *
+ *    @param sys Star System to remove fleet from.
+ *    @param fleet Fleet to remove.
+ *    @return 0 on success.
+ */
+int system_rmFleet( StarSystem *sys, SystemFleet *fleet )
+{
+   int i;
+
+   /* Find a matching fleet (will grab first since can be duplicates). */
+   for (i=0; i<sys->nfleets; i++)
+      if ((fleet->fleet == sys->fleets[i].fleet) &&
+            (fleet->chance == sys->fleets[i].chance))
+         break;
+
+   /* Not found. */
+   if (i >= sys->nfleets)
+      return -1;
+   
+   sys->nfleets--;
+   memmove(&sys->fleets[i], &sys->fleets[i+1], sizeof(SystemFleet) * (sys->nfleets - i));
+   sys->fleets = realloc(sys->fleets, sizeof(SystemFleet) * sys->nfleets);
+
+   return 0;
+}
+
+
+/**
  * @fn static StarSystem* system_parse( const xmlNodePtr parent )
  *
  * @brief Creates a system from an XML node.
@@ -1028,7 +1080,7 @@ int system_rmPlanet( StarSystem *sys, char *planetname )
 static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 {
    Planet* planet;
-   SystemFleet* fleet;
+   SystemFleet fleet;
    char* ptrc;
    xmlNodePtr cur, node;
    uint32_t flags;
@@ -1037,7 +1089,6 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    /* Clear memory for sane defaults. */
    memset( sys, 0, sizeof(StarSystem) );
    planet = NULL;
-   fleet = NULL;
    size = 0;
    
    sys->name = xml_nodeProp(parent,"name"); /* already mallocs */
@@ -1094,24 +1145,22 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          cur = node->children;
          do {
             if (xml_isNode(cur,"fleet")) {
-               fleet = CALLOC_ONE(SystemFleet);
+               memset(&fleet, 0, sizeof(SystemFleet));
 
-               fleet->fleet = fleet_get(xml_get(cur));
-               if (fleet->fleet==NULL)
+               fleet.fleet = fleet_get(xml_get(cur));
+               if (fleet.fleet==NULL)
                   WARN("Fleet '%s' for Star System '%s' not found",
                         xml_get(cur), sys->name);
 
-               ptrc = xml_nodeProp(cur,"chance"); /* mallocs ptrc */
-               if (ptrc==NULL) fleet->chance = 0; /* gives warning */
-               else fleet->chance = atoi(ptrc);
-               if (fleet->chance == 0)
+               xmlr_attr(cur,"chance",ptrc); /* mallocs ptrc */
+               if (ptrc==NULL) fleet.chance = 0; /* gives warning */
+               else fleet.chance = atoi(ptrc);
+               if (fleet.chance == 0)
                   WARN("Fleet '%s' for Star System '%s' has 0%% chance to appear",
-                     fleet->fleet->name, sys->name);
+                     fleet.fleet->name, sys->name);
                if (ptrc) free(ptrc); /* free the ptrc */
 
-               sys->fleets = realloc(sys->fleets, sizeof(SystemFleet)*(++sys->nfleets));
-               memcpy(sys->fleets+(sys->nfleets-1), fleet, sizeof(SystemFleet));
-               free(fleet);
+               system_addFleet( sys, &fleet );
             }
          } while (xml_nextNode(cur));
       }

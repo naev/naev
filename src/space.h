@@ -171,8 +171,14 @@ void space_exit (void);
 char* planet_getSystem( char* planetname );
 Planet* planet_get( char* planetname );
 char planet_getClass( Planet *p );
+
+/*
+ * system adding/removing stuff.
+ */
 int system_addPlanet( StarSystem *sys, char *planetname );
 int system_rmPlanet( StarSystem *sys, char *planetname );
+int system_addFleet( StarSystem *sys, SystemFleet *fleet );
+int system_rmFleet( StarSystem *sys, SystemFleet *fleet );
 
 /*
  * render
