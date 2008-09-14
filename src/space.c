@@ -920,6 +920,95 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
 
 
 /**
+ * @fn int system_addPlanet( StarSystem *sys, char *planetname )
+ *
+ * @brief Adds a planet to a star system.
+ *
+ *    @param sys Star System to add planet to.
+ *    @param planetname Name of the planet to add.
+ *    @return 0 on success.
+ */
+int system_addPlanet( StarSystem *sys, char *planetname )
+{
+   Planet *planet;
+
+   if (sys == NULL)
+      return -1;
+
+   /* Check if need to grow the star system planet stack. */
+   sys->nplanets++;
+   if (sys->planets == NULL) {
+      sys->planets = malloc( sizeof(Planet*) * CHUNK_SIZE_SMALL );
+   }
+   else if (sys->nplanets > CHUNK_SIZE_SMALL) {
+      sys->planets = realloc( sys->planets, sizeof(Planet*) * sys->nplanets );
+   }
+   planet = planet_get(planetname);
+   sys->planets[sys->nplanets-1] = planet;
+
+   /* add planet <-> star system to name stack */
+   spacename_nstack++;
+   if (spacename_nstack > spacename_mstack) {
+      spacename_mstack += CHUNK_SIZE;
+      planetname_stack = realloc(planetname_stack,
+            sizeof(char*) * spacename_mstack);
+      systemname_stack = realloc(systemname_stack,
+            sizeof(char*) * spacename_mstack);
+   }
+   planetname_stack[spacename_nstack-1] = planet->name;
+   systemname_stack[spacename_nstack-1] = sys->name;
+
+   return 0;
+}
+
+
+/**
+ * @fn int system_rmPlanet( StarSystem *sys, char *planetname )
+ *
+ * @brief Removes a planet from a star system.
+ *
+ *    @param sys Star System to remove planet from.
+ *    @param planetname Name of the planet to remove.
+ *    @return 0 on success.
+ */
+int system_rmPlanet( StarSystem *sys, char *planetname )
+{
+   int i;
+   Planet *planet ;
+
+   if (sys == NULL)
+      return -1;
+
+   /* Try to find planet. */
+   planet = planet_get( planetname );
+   for (i=0; i<sys->nplanets; i++)
+      if (sys->planets[i] == planet)
+         break;
+
+   /* Planet not found. */
+   if (i>=sys->nplanets)
+      return -1;
+
+   /* Remove planet from system. */
+   sys->nplanets--;
+   memmove( &sys->planets[i], &sys->planets[i+1], sizeof(Planet*) * (sys->nplanets-i) );
+
+   /* Remove from the name stack thingy. */
+   for (i=0; i<spacename_nstack; i++)
+      if (strcmp(planetname, planetname_stack[i])==0) {
+         spacename_nstack--;
+         memmove( &planetname_stack[i], &planetname_stack[i+1],
+               sizeof(char*) * (spacename_nstack-i) );
+         memmove( &systemname_stack[i], &systemname_stack[i+1],
+               sizeof(char*) * (spacename_nstack-i) );
+         break;
+      }
+
+   return 0;
+}
+
+
+/**
  * @fn static StarSystem* system_parse( const xmlNodePtr parent )
  *
  * @brief Creates a system from an XML node.
@@ -987,28 +1076,8 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
       else if (xml_isNode(node,"planets")) {
          cur = node->children;
          do {
-            if (xml_isNode(cur,"planet")) {
-               /* add planet to system */
-               sys->nplanets++;
-               if (sys->nplanets > size) {
-                  size += CHUNK_SIZE_SMALL;
-                  sys->planets = realloc(sys->planets, sizeof(Planet*) * size );
-               }
-               planet = planet_get(xml_get(cur));
-               sys->planets[sys->nplanets-1] = planet;
-
-               /* add planet <-> star system to name stack */
-               spacename_nstack++;
-               if (spacename_nstack > spacename_mstack) {
-                  spacename_mstack += CHUNK_SIZE;
-                  planetname_stack = realloc(planetname_stack,
-                        sizeof(char*) * spacename_mstack);
-                  systemname_stack = realloc(systemname_stack,
-                        sizeof(char*) * spacename_mstack);
-               }
-               planetname_stack[spacename_nstack-1] = planet->name;
-               systemname_stack[spacename_nstack-1] = sys->name;
-            }
+            if (xml_isNode(cur,"planet"))
+               system_addPlanet( sys, xml_get(cur) );
          } while (xml_nextNode(cur));
       }
       /* loads all the fleets */

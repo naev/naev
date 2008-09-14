@@ -48,6 +48,8 @@ extern int hook_save( xmlTextWriterPtr writer ); /* hooks */
 extern int hook_load( xmlNodePtr parent );
 extern int space_sysSave( xmlTextWriterPtr writer ); /* space stuff */
 extern int space_sysLoad( xmlNodePtr parent );
+extern int diff_save( xmlTextWriterPtr writer );
+extern int diff_load( xmlNodePtr parent );
 extern void menu_main_close (void);
 /* static */
 static int save_data( xmlTextWriterPtr writer );
@@ -73,6 +75,7 @@ static int save_data( xmlTextWriterPtr writer )
    if (var_save(writer) < 0) return -1;
    if (pfaction_save(writer) < 0) return -1;
    if (hook_save(writer) < 0) return -1;
+   if (diff_save(writer) < 0) return -1;
    if (space_sysSave(writer) < 0) return -1;
 
    return 0;
@@ -272,6 +275,7 @@ static int load_game( char* file )
    missions_loadActive(node);
    pfaction_load(node);
    hook_load(node);
+   diff_load(node);
    space_sysLoad(node);
 
    /* Need to run takeoff hooks since player just "took off" */

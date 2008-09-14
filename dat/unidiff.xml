@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unidiffs>
+ <unidiff name="collective_dead">
+  <system name="C-28">
+   <planet name="S38729">remove</planet>
+   <fleet name="Collective Sml Swarm" chance="60">remove</fleet>
+   <fleet name="Collective Sml Swarm" chance="60">remove</fleet>
+   <fleet name="Collective Drone" chance="80">remove<fleet>
+  </system>
+ </unidiff>
+</unidiffs>

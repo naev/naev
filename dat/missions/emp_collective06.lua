@@ -216,6 +216,7 @@ function land ()
       -- Rewards
       player.modFaction("Empire",5)
       misn.finish(true)
+      diff.apply("collective_dead")
       player.pay( 500000 ) -- 500k
 
       tk.msg( title[3], text[4] )

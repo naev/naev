@@ -36,6 +36,7 @@
 #include "xml.h"
 #include "nluadef.h"
 #include "music.h"
+#include "unidiff.h"
 
 
 
@@ -180,6 +181,16 @@ static const luaL_reg hook_methods[] = {
    { "pilot", hook_pilot },
    {0,0}
 }; /**< Hook lua methods. */
+/* diffs */
+static int diff_applyL( lua_State *L );
+static int diff_removeL( lua_State *L );
+static int diff_isappliedL( lua_State *L );
+static const luaL_reg diff_methods[] = {
+   { "apply", diff_applyL },
+   { "remove", diff_removeL },
+   { "isApplied", diff_isappliedL },
+   {0,0}
+};
 
 
 
@@ -1377,4 +1388,77 @@ static int hook_pilot( lua_State *L )
 }
 
 
+/**
+ * @defgroup DIFF Universe Diff Lua Bindings
+ *
+ * @brief Lua bindings to apply/remove Universe Diffs.
+ *
+ * Functions should be called like:
+ *
+ * @code
+ * diff.function( parameters )
+ * @endcode
+ *
+ * @{
+ */
+/**
+ * @fn static int diff_applyL( lua_State *L )
+ *
+ * @brief apply( string name )
+ *
+ * Applies a diff by name.
+ *
+ *    @param name Name of the diff to apply.
+ */
+static int diff_applyL( lua_State *L )
+{
+   char *name;
 
+   if (lua_isstring(L,1)) name = (char*)lua_tostring(L,1);
+   else NLUA_INVALID_PARAMETER();
+
+   diff_apply( name );
+   return 0;
+}
+/**
+ * @fn static int diff_removeL( lua_State *L )
+ *
+ * @brief remove( string name )
+ *
+ * Removes a diff by name.
+ *
+ *    @param name Name of the diff to remove.
+ */
+static int diff_removeL( lua_State *L )
+{
+   char *name;
+
+   if (lua_isstring(L,1)) name = (char*)lua_tostring(L,1);
+   else NLUA_INVALID_PARAMETER();
+
+   diff_remove( name );
+   return 0;
+}
+/**
+ * @fn static int diff_isappliedL( lua_State *L )
+ *
+ * @brief bool isApplied( string name )
+ *
+ * Checks to see if a diff is currently applied.
+ *
+ *    @param name Name of the diff to check.
+ *    @return true if is applied, false if it isn't.
+ */
+static int diff_isappliedL( lua_State *L )
+{
+   char *name;
+
+   if (lua_isstring(L,1)) name = (char*)lua_tostring(L,1);
+   else NLUA_INVALID_PARAMETER();
+
+   lua_pushboolean(L,diff_isApplied(name));
+   return 1;
+}
+/**
+ * @}
+ */
