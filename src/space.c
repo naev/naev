@@ -973,11 +973,13 @@ int system_addPlanet( StarSystem *sys, char *planetname )
  */
 int system_rmPlanet( StarSystem *sys, char *planetname )
 {
-   int i;
+   int i, found;
    Planet *planet ;
 
-   if (sys == NULL)
+   if (sys == NULL) {
+      WARN("Unable to remove planet '%s' from NULL system.", planetname);
       return -1;
+   }
 
    /* Try to find planet. */
    planet = planet_get( planetname );
@@ -986,14 +988,17 @@ int system_rmPlanet( StarSystem *sys, char *planetname )
          break;
 
    /* Planet not found. */
-   if (i>=sys->nplanets)
+   if (i>=sys->nplanets) {
+      WARN("Planet '%s' not found in system '%s' for removal.", planetname, sys->name);
       return -1;
+   }
 
    /* Remove planet from system. */
    sys->nplanets--;
    memmove( &sys->planets[i], &sys->planets[i+1], sizeof(Planet*) * (sys->nplanets-i) );
 
    /* Remove from the name stack thingy. */
+   found = 0;
    for (i=0; i<spacename_nstack; i++)
       if (strcmp(planetname, planetname_stack[i])==0) {
          spacename_nstack--;
@@ -1001,8 +1006,12 @@ int system_rmPlanet( StarSystem *sys, char *planetname )
                sizeof(char*) * (spacename_nstack-i) );
          memmove( &systemname_stack[i], &systemname_stack[i+1],
                sizeof(char*) * (spacename_nstack-i) );
+         found = 1;
          break;
       }
+   if (found == 0)
+      WARN("Unable to find planet '%s' and system '%s' in planet<->system stack.",
+            planetname, sys->name );
 
    return 0;
 }

@@ -53,6 +53,7 @@
 #include "misn_lua.h"
 #include "nfile.h"
 #include "nebulae.h"
+#include "unidiff.h"
 
 
 /* to get data info */

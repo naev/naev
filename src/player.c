@@ -36,6 +36,7 @@
 #include "map.h"
 #include "nfile.h"
 #include "spfx.h"
+#include "unidiff.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
@@ -591,6 +592,7 @@ void player_cleanup (void)
    int i;
 
    player_clear();
+   diff_clear();
 
    /* clean up name */
    if (player_name != NULL) free(player_name);

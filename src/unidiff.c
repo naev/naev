@@ -183,6 +183,7 @@ int diff_apply( char *name )
       return 0;
 
    buf = pack_readfile( DATA, DIFF_DATA, &bufsize );
+   doc = xmlParseMemory( buf, bufsize );
 
    node = doc->xmlChildrenNode;
    if (strcmp((char*)node->name,"unidiffs")) {
@@ -203,6 +204,7 @@ int diff_apply( char *name )
          if (strcmp(diffname,name)==0) {
             diff_patch( node );
             free(diffname);
+            DEBUG("Unidiff '%s' applied.",name);
             return 0;
          }
          free(diffname);
@@ -248,7 +250,8 @@ static int diff_patch( xmlNodePtr parent )
          cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur,"planet")) {
-               memcpy(&hunk, &base, sizeof(UniHunk_t));
+               hunk.target.type = base.target.type;
+               hunk.target.u.name = strdup(base.target.u.name);
 
                /* Get the planet to modify. */
                xmlr_attr(cur,"name",hunk.u.name);
@@ -268,7 +271,8 @@ static int diff_patch( xmlNodePtr parent )
                   diff_hunkSuccess( diff, &hunk );
             }
             else if (xml_isNode(cur, "fleet")) {
-               memcpy(&hunk, &base, sizeof(UniHunk_t));
+               hunk.target.type = base.target.type;
+               hunk.target.u.name = strdup(base.target.u.name);
 
                /* Get the planet to modify. */
                xmlr_attr(cur,"name",hunk.u.name);
@@ -288,6 +292,10 @@ static int diff_patch( xmlNodePtr parent )
                   diff_hunkSuccess( diff, &hunk );
             }
          } while (xml_nextNode(cur));
+        
+         /* Clean up some stuff. */
+         free(base.target.u.name);
+         base.target.u.name = NULL;
       }
    } while(xml_nextNode(node));
 
@@ -346,7 +354,7 @@ static void diff_hunkFailed( UniDiff_t *diff, UniHunk_t *hunk )
       diff->mfailed += CHUNK_SIZE;
       diff->failed = realloc(diff->failed, sizeof(UniHunk_t) * diff->mfailed);
    }
-   memcpy( &diff->failed[diff->nfailed-1], &hunk, sizeof(UniHunk_t) );
+   memcpy( &diff->failed[diff->nfailed-1], hunk, sizeof(UniHunk_t) );
 }
 
 
@@ -368,7 +376,7 @@ static void diff_hunkSuccess( UniDiff_t *diff, UniHunk_t *hunk )
       diff->mapplied += CHUNK_SIZE;
       diff->applied = realloc(diff->applied, sizeof(UniHunk_t) * diff->mapplied);
    }
-   memcpy( &diff->applied[diff->napplied-1], &hunk, sizeof(UniHunk_t) );
+   memcpy( &diff->applied[diff->napplied-1], hunk, sizeof(UniHunk_t) );
 }
 
 
@@ -389,6 +397,7 @@ void diff_remove( char *name )
       return;
 
    diff_removeDiff(diff);
+   DEBUG("Unidiff '%s' removed.", name);
 }
 
 
@@ -418,7 +427,7 @@ static UniDiff_t *diff_newDiff (void)
    if (diff_stack == NULL) {
       diff_mstack = CHUNK_SIZE;
       diff_stack = malloc(diff_mstack * sizeof(UniDiff_t));
-      diff_nstack = 0;
+      diff_nstack = 1;
       return &diff_stack[0];
    }
 
