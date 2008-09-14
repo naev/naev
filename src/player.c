@@ -278,6 +278,7 @@ void player_new (void)
    space_clearKnown();
    land_cleanup();
    diff_clear();
+   factions_reset();
 
    player_name = dialogue_input( "Player Name", 3, 20,
          "Please write your name:" );

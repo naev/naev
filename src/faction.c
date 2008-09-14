@@ -54,6 +54,7 @@ typedef struct Faction_ {
    int *allies; /**< Allies by ID of the faction. */
    int nallies; /**< Number of allies. */
 
+   int player_def; /**< Default player standing. */
    int player; /**< Standing with player - from -100 to 100 */
 } Faction;
 
@@ -496,7 +497,7 @@ static Faction* faction_parse( xmlNodePtr parent )
    do {
       /* Can be 0 or negative, so we have to take that into account. */
       if (xml_isNode(node,"player")) {
-         temp->player = xml_getInt(node);
+         temp->player_def = xml_getInt(node);
          player = 1;
          continue;
       }
@@ -562,6 +563,19 @@ static void faction_parseSocial( xmlNodePtr parent )
 
       }
    } while (xml_nextNode(node));
+}
+
+
+/**
+ * @fn void factions_reset (void)
+ *
+ * @brief Resets the player's standing with the factions to default.
+ */
+void factions_reset (void)
+{
+   int i;
+   for (i=0; i<faction_nstack; i++)
+      faction_stack[i].player = faction_stack[i].player_def;
 }
 
 
