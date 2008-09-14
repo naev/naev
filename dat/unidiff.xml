@@ -1,17 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <unidiffs>
  <unidiff name="collective_dead">
+  <system name="C-00">
+   <planet name="S00000">remove</planet>
+   <fleet name="Collective Sml Swarm" chance="80">remove</fleet>
+   <fleet name="Collective Sml Swarm" chance="80">remove</fleet>
+   <fleet name="Collective Sml Swarm" chance="80">remove</fleet>
+   <fleet name="Collective Drone" chance="80">remove</fleet>
+   <fleet name="Collective Drone" chance="80">remove</fleet>
+   <fleet name="Empire Pacifier" chance="70">add</fleet>
+   <fleet name="Empire Pacifier" chance="30">add</fleet>
+  </system>
   <system name="C-28">
    <planet name="S38729">remove</planet>
    <fleet name="Collective Sml Swarm" chance="60">remove</fleet>
    <fleet name="Collective Sml Swarm" chance="60">remove</fleet>
    <fleet name="Collective Drone" chance="80">remove</fleet>
+   <fleet name="Empire Pacifier" chance="40">add</fleet>
+   <fleet name="Empire Lancelot" chance="40">add</fleet>
   </system>
   <system name="C-59">
    <planet name="S72839">remove</planet>
+   <fleet name="Collective Sml Swarm" chance="60">remove</fleet>
+   <fleet name="Collective Sml Swarm" chance="50">remove</fleet>
+   <fleet name="Collective Drone" chance="80">remove</fleet>
+   <fleet name="Empire Pacifier" chance="40">add</fleet>
+   <fleet name="Empire Lancelot" chance="40">add</fleet>
   </system>
   <system name="C-43">
    <planet name="S23491">remove</planet>
+   <fleet name="Collective Sml Swarm" chance="60">remove</fleet>
+   <fleet name="Collective Sml Swarm" chance="60">remove</fleet>
+   <fleet name="Collective Drone" chance="80">remove</fleet>
+   <fleet name="Empire Pacifier" chance="40">add</fleet>
+  </system>
+  <system name="NGC-7291">
+   <fleet name="Collective Drone" chance="60">remove</fleet>
+   <fleet name="Collective Sml Swarm" chance="50">remove</fleet>
+  </system>
+  <system name="NGC-7132">
+   <fleet name="Collective Drone" chance="60">remove</fleet>
+   <fleet name="Collective Sml Swarm" chance="60">remove</fleet>
+   <fleet name="Collective Sml Swarm" chance="30">remove</fleet>
+   <fleet name="Empire Lancelot" chance="40">add</fleet>
   </system>
  </unidiff>
 </unidiffs>
