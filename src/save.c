@@ -283,6 +283,7 @@ static int load_game( char* file )
    hooks_run("enter");
 
    xmlFreeDoc(doc);
+   xmlCleanupParser();
    
    return 0;
 }

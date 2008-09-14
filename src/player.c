@@ -371,7 +371,6 @@ static void player_newMake (void)
 
    xmlFreeDoc(doc);
    free(buf);
-   xmlCleanupParser();
 
    /* monies */
    player_credits = RNG(l,h);
@@ -1420,7 +1419,6 @@ int gui_load( const char* name )
 
    xmlFreeDoc(doc);
    free(buf);
-   xmlCleanupParser();
 
    if (!found) {
       WARN("GUI '%s' not found in '"GUI_DATA"'",name);

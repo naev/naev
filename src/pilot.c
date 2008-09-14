@@ -1890,7 +1890,6 @@ int fleet_load (void)
 
    xmlFreeDoc(doc);
    free(buf);
-   xmlCleanupParser();
 
    DEBUG("Loaded %d Fleet%s", nfleets, (nfleets==1) ? "" : "s" );
 

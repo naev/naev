@@ -328,6 +328,7 @@ void load_all (void)
    ships_load(); /* dep for fleet */
    fleet_load(); /* dep for space */
    space_load();
+   xmlCleanupParser(); /* Only needed to be run after all the loading is done. */
 }
 /**
  * @fn void unload_all (void)
@@ -584,7 +585,6 @@ static void data_name (void)
 
    xmlFreeDoc(doc);
    free(buf);
-   xmlCleanupParser();
 }
 
 

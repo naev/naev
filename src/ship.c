@@ -470,7 +470,6 @@ int ships_load(void)
 
    xmlFreeDoc(doc);
    free(buf);
-   xmlCleanupParser();
 
    DEBUG("Loaded %d Ship%s", ship_nstack, (ship_nstack==1) ? "" : "s" );
 

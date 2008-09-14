@@ -225,7 +225,6 @@ int commodity_load (void)
 
    xmlFreeDoc(doc);
    free(buf);
-   xmlCleanupParser();
 
    DEBUG("Loaded %d Commodit%s", commodity_nstack, (commodity_nstack==1) ? "y" : "ies" );
 

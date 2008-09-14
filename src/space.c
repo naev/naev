@@ -775,7 +775,6 @@ static int planets_load ( void )
     */
    xmlFreeDoc(doc);
    free(buf);
-   xmlCleanupParser();
 
    return 0;
 }
@@ -1345,7 +1344,6 @@ static int systems_load (void)
     */
    xmlFreeDoc(doc);
    free(buf);
-   xmlCleanupParser();
 
    DEBUG("Loaded %d Star System%s with %d Planet%s",
          systems_nstack, (systems_nstack==1) ? "" : "s",

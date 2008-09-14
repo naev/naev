@@ -635,7 +635,6 @@ int factions_load (void)
 
    xmlFreeDoc(doc);
    free(buf);
-   xmlCleanupParser();
 
    DEBUG("Loaded %d Faction%s", faction_nstack, (faction_nstack==1) ? "" : "s" );
 

@@ -752,7 +752,6 @@ int missions_load (void)
 
    xmlFreeDoc(doc);
    free(buf);
-   xmlCleanupParser();
 
    DEBUG("Loaded %d Mission%s", mission_nstack, (mission_nstack==1) ? "" : "s" );
 

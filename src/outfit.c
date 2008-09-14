@@ -1072,7 +1072,6 @@ int outfit_load (void)
 
    xmlFreeDoc(doc);
    free(buf);
-   xmlCleanupParser();
 
    DEBUG("Loaded %d Outfit%s", outfit_nstack, (outfit_nstack==1) ? "" : "s" );
 
