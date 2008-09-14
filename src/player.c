@@ -277,6 +277,7 @@ void player_new (void)
    missions_cleanup();
    space_clearKnown();
    land_cleanup();
+   diff_clear();
 
    player_name = dialogue_input( "Player Name", 3, 20,
          "Please write your name:" );
@@ -592,7 +593,6 @@ void player_cleanup (void)
    int i;
 
    player_clear();
-   diff_clear();
 
    /* clean up name */
    if (player_name != NULL) free(player_name);
