@@ -226,10 +226,11 @@ int diff_apply( char *name )
  */
 static int diff_patch( xmlNodePtr parent )
 {
+   int i;
    UniDiff_t *diff;
-   UniHunk_t base, hunk;
+   UniHunk_t base, hunk, *fail;
    xmlNodePtr node, cur;
-   char *buf;
+   char *buf, *target;
 
    /* Prepare it. */
    diff = diff_newDiff();
@@ -301,8 +302,37 @@ static int diff_patch( xmlNodePtr parent )
          /* Clean up some stuff. */
          free(base.target.u.name);
          base.target.u.name = NULL;
+
       }
    } while(xml_nextNode(node));
+
+   if (diff->nfailed > 0) {
+      DEBUG("Unidiff '%s' failed %d hunks.", diff->name, diff->nfailed);
+      for (i=0; i<diff->nfailed; i++) {
+         fail = &diff->failed[i];
+         target = fail->target.u.name;
+         switch (fail->type) {
+            case HUNK_TYPE_PLANET_ADD:
+               DEBUG("   [%s] planet add: '%s'", target, fail->u.name);
+               break;
+            case HUNK_TYPE_PLANET_REMOVE:
+               DEBUG("   [%s] planet remove: '%s'", target, fail->u.name);
+               break;
+            case HUNK_TYPE_FLEET_ADD:
+               DEBUG("   [%s] fleet add: '%s' (%d%% chance)", target, 
+                     fail->u.fleet.fleet->name, fail->u.fleet.chance );
+               break;
+            case HUNK_TYPE_FLEET_REMOVE:
+               DEBUG("   [%s] fleet remove: '%s' (%d%% chance)", target,
+                     fail->u.fleet.fleet->name, fail->u.fleet.chance );
+               break;
+
+            default:
+               DEBUG("   unknown hunk '%d'", fail->type);
+               break;
+         }
+      }
+   }
 
    return 0;
 }
