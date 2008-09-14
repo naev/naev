@@ -13,17 +13,21 @@ else -- default english
    title = {}
    title[1] = "ES: Ship to %s"
    title[2] = "ES: Delivery to %s"
-   full_title = "Ship is full"
-   full_msg = "Your ship is too full.  You need to make room for %d more tons if you want to be able to accept the mission."
-   accept_title = "Mission Accepted"
-   accept_msg = "The Empire workers load the %d tons of %s onto your ship."
-   toomany_title = "Too many missions"
-   toomany_msg = "You have too many active missions."
-   finish_title = "Succesful Delivery"
-   finish_msg = "The Empire workers unload the %s at the docks."
-   miss_title = "Cargo Missing"
-   miss_msg = "You are missing the %d tons of %s!."
-   miss_timeup = "MISSION FAILED: You have failed to deliver the goods to the Empire on time!"
+   full = {}
+   full[1] = "Ship is full"
+   full[2] = "Your ship is too full.  You need to make room for %d more tons if you want to be able to accept the mission."
+   msg_title = {}
+   msg_title[1] = "Mission Accepted"
+   msg_title[2] = "Too many missions"
+   msg_title[3] = "Succesful Delivery"
+   msg_msg = {}
+   msg_msg[1] = "The Empire workers load the %d tons of %s onto your ship."
+   msg_msg[2] = "You have too many active missions."
+   msg_msg[3] = "The Empire workers unload the %s at the docks."
+   miss = {}
+   miss[1]= "Cargo Missing"
+   miss[2] = "You are missing the %d tons of %s!."
+   miss[3] = "MISSION FAILED: You have failed to deliver the goods to the Empire on time!"
 end
 
 --[[
@@ -82,15 +86,15 @@ end
 -- Mission is accepted
 function accept()
    if player.freeCargo() < carg_mass then
-      tk.msg( full_title, string.format( full_msg, carg_mass-player.freeCargo() ))
+      tk.msg( full[1], string.format( full[2], carg_mass-player.freeCargo() ))
       misn.finish()
    elseif misn.accept() then -- able to accept the mission, hooks BREAK after accepting
       carg_id = player.addCargo( carg_type, carg_mass )
-      tk.msg( accept_title, string.format( accept_msg, carg_mass, carg_type ))
+      tk.msg( msg_title[1], string.format( msg_msg[1], carg_mass, carg_type ))
       hook.land( "land" ) -- only hook after accepting
       hook.time( "timeup" )
    else
-      tk.msg( toomany_title, toomany_msg )
+      tk.msg( msg_title[2], msg_title[2] )
       misn.finish()
    end
 end
@@ -102,7 +106,7 @@ function land()
    if landed == planet then
       if player.rmCargo( carg_id ) then
          player.pay( reward )
-         tk.msg( finish_title, string.format( finish_msg, carg_type ))
+         tk.msg( msg_title[3], string.format( msg_msg[3], carg_type ))
 
          -- increase empire shipping mission counter
          n = var.peek("es_misn")
@@ -119,7 +123,7 @@ function land()
 
          misn.finish(true)
       else
-         tk.msg( miss_title, string.format( miss_msg, carg_mass, carg_type ))
+         tk.msg( miss[1], string.format( miss[2], carg_mass, carg_type ))
       end
    end
 end
@@ -127,7 +131,7 @@ end
 -- Time hook
 function timeup()
    if time.get() > misn_time then
-      player.msg( miss_timeup )
+      player.msg( miss[3] )
       misn.finish(false)
    end
    misn.setDesc( string.format( misn_desc, carg_mass, carg_type,

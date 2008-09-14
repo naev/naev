@@ -21,19 +21,22 @@ else -- default english
    title[11] = "Rush Delivery to %s"
    title[21] = "Transport %s to %s"
    title[22] = "Ferry %s to %s"
-   full_title = "Ship is full"
-   full_msg = "Your ship is too full.  You need to make room for %d more tons if you want to be able to accept the mission."
+   full = {}
+   full[1] = "Ship is full"
+   full[2] = "Your ship is too full.  You need to make room for %d more tons if you want to be able to accept the mission."
    accept_title = "Mission Accepted"
    accept_msg = {}
    accept_msg[1] = "The workers load the %d tons of %s onto your ship."
    accept_msg[2] = "The %s board your ship."
-   toomany_title = "Too many missions"
-   toomany_msg = "You have too many active missions."
-   finish_title = "Succesful Delivery"
-   finish_msg = "The workers unload the %s at the docks."
-   miss_title = "Cargo Missing"
-   miss_msg = "You are missing the %d tons of %s!."
-   misn_time_msg = "MISSION FAILED: You have failed to delivery the goods on time!"
+   msg_title = {}
+   msg_msg = {}
+   msg_title[1] = "Too many missions"
+   msg_msg[1] = "You have too many active missions."
+   msg_title[2] = "Succesful Delivery"
+   msg_msg[2] = "The workers unload the %s at the docks."
+   msg_title[3] = "Cargo Missing"
+   msg_msg[3] = "You are missing the %d tons of %s!."
+   msg_msg[4] = "MISSION FAILED: You have failed to delivery the goods on time!"
 end
 
       
@@ -124,7 +127,7 @@ end
 -- Mission is accepted
 function accept()
    if player.freeCargo() < carg_mass then
-      tk.msg( full_title, string.format( full_msg, carg_mass-player.freeCargo() ))
+      tk.msg( full[1], string.format( full[2], carg_mass-player.freeCargo() ))
       misn.finish()
 
    elseif misn.accept() then -- able to accept the mission, hooks BREAK after accepting
@@ -142,7 +145,7 @@ function accept()
          hook.time( "timeup" )
       end
    else
-      tk.msg( toomany_title, toomany_msg )
+      tk.msg( msg_title[1], msg_msg[1] )
       misn.finish()
    end
 end
@@ -153,7 +156,7 @@ function land()
    if landed == planet then
       if player.rmCargo( carg_id ) then
          player.pay( reward )
-         tk.msg( finish_title, string.format( finish_msg, carg_type ))
+         tk.msg( msg_title[2], string.format( msg_msg[2], carg_type ))
 
          -- modify the faction standing
          if player.getFaction("Trader") < 70 then
@@ -168,7 +171,7 @@ function land()
 
          misn.finish(true)
       else
-         tk.msg( miss_title, string.format( miss_msg, carg_mass, carg_type ))
+         tk.msg( msg_title[3], string.format( msg_msg[3], carg_mass, carg_type ))
       end
    end
 end
@@ -176,7 +179,7 @@ end
 -- Time hook
 function timeup()
    if time.get() > misn_time then
-      player.msg( misn_time_msg )
+      player.msg( msg_msg[4] )
       misn.finish(false)
    end
    misn.setDesc( string.format( misn_desc[21], planet:name(), system:name(),
