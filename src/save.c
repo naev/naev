@@ -70,12 +70,12 @@ static int load_game( char* file );
 static int save_data( xmlTextWriterPtr writer )
 {
    /* the data itself */
+   if (diff_save(writer) < 0) return -1;
    if (player_save(writer) < 0) return -1;
    if (missions_saveActive(writer) < 0) return -1;
    if (var_save(writer) < 0) return -1;
    if (pfaction_save(writer) < 0) return -1;
    if (hook_save(writer) < 0) return -1;
-   if (diff_save(writer) < 0) return -1;
    if (space_sysSave(writer) < 0) return -1;
 
    return 0;
@@ -270,12 +270,12 @@ static int load_game( char* file )
       return -1;
    }
 
+   diff_load(node);
    player_load(node);
    var_load(node);
    missions_loadActive(node);
    pfaction_load(node);
    hook_load(node);
-   diff_load(node);
    space_sysLoad(node);
 
    /* Need to run takeoff hooks since player just "took off" */
