@@ -191,6 +191,10 @@ static const luaL_reg diff_methods[] = {
    { "isApplied", diff_isappliedL },
    {0,0}
 };
+static const luaL_reg diff_cond_methods[] = {
+   { "isApplied", diff_isappliedL },
+   {0,0}
+};
 
 
 
@@ -215,6 +219,7 @@ int misn_loadLibs( lua_State *L )
    lua_loadHook(L);
    lua_loadPilot(L,0);
    lua_loadMusic(L,0);
+   lua_loadDiff(L,0);
    return 0;
 }
 /**
@@ -231,6 +236,7 @@ int misn_loadCondLibs( lua_State *L )
    lua_loadSpace(L,1);
    lua_loadVar(L,1);
    lua_loadPlayer(L,1);
+   lua_loadDiff(L,1);
    return 0;
 }
 /*
@@ -280,6 +286,20 @@ int lua_loadPlayer( lua_State *L, int readonly )
 int lua_loadHook( lua_State *L )
 {
    luaL_register(L, "hook", hook_methods);
+   return 0;
+}
+/**
+ * @fn int lua_loadDiff( lua_State *L, int readonly )
+ * @brief Loads the diff Lua library.
+ *    @param L Lua state.
+ *    @param readonly Load read only functions?
+ */
+int lua_loadDiff( lua_State *L, int readonly )
+{
+   if (readonly == 0)
+      luaL_register(L, "diff", diff_methods);
+   else
+      luaL_register(L, "diff", diff_cond_methods);
    return 0;
 }
 
