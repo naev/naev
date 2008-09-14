@@ -121,6 +121,7 @@ static int systems_load (void);
 static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static void system_parseJumps( const xmlNodePtr parent );
 /* misc */
+static void system_setFaction( StarSystem *sys );
 static void space_renderStars( const double dt );
 static void space_addFleet( Fleet* fleet, int init );
 static PlanetClass planetclass_get( const char a );
@@ -959,6 +960,8 @@ int system_addPlanet( StarSystem *sys, char *planetname )
    planetname_stack[spacename_nstack-1] = planet->name;
    systemname_stack[spacename_nstack-1] = sys->name;
 
+   system_setFaction(sys);
+
    return 0;
 }
 
@@ -1013,6 +1016,8 @@ int system_rmPlanet( StarSystem *sys, char *planetname )
    if (found == 0)
       WARN("Unable to find planet '%s' and system '%s' in planet<->system stack.",
             planetname, sys->name );
+
+   system_setFaction(sys);
 
    return 0;
 }
@@ -1089,6 +1094,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 
    /* Clear memory for sane defaults. */
    memset( sys, 0, sizeof(StarSystem) );
+   sys->faction = -1;
    planet = NULL;
    size = 0;
    
@@ -1177,11 +1183,30 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 #undef MELEMENT
 
    /* post-processing */
-   if (sys->nplanets > 0) /** @todo make dependent on overall planet faction */
-      sys->faction = sys->planets[0]->faction;
+   system_setFaction( sys );
 
    return 0;
 }
+
+
+/**
+ * @fn static void system_setFaction( StarSystem *sys )
+ *
+ * @brief Sets the system faction based on the planets it has.
+ *
+ *    @param sys System to set the faction of.
+ */
+static void system_setFaction( StarSystem *sys )
+{
+   int i;
+   sys->faction = -1;
+   for (i=0; i<sys->nplanets; i++) /** @todo Handle multiple different factions. */
+      if (sys->planets[i]->faction > 0) {
+         sys->faction = sys->planets[i]->faction;
+         break;
+      }
+}
+
 
 
 /**
