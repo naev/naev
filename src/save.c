@@ -70,7 +70,7 @@ static int load_game( char* file );
 static int save_data( xmlTextWriterPtr writer )
 {
    /* the data itself */
-   if (diff_save(writer) < 0) return -1;
+   if (diff_save(writer) < 0) return -1; /* Must save first or can get cleared. */
    if (player_save(writer) < 0) return -1;
    if (missions_saveActive(writer) < 0) return -1;
    if (var_save(writer) < 0) return -1;
@@ -270,7 +270,7 @@ static int load_game( char* file )
       return -1;
    }
 
-   diff_load(node);
+   diff_load(node); /* Must load first to work properly. */
    player_load(node);
    var_load(node);
    missions_loadActive(node);
