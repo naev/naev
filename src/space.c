@@ -799,6 +799,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
 
    /* Clear up memory for sane defaults. */
    memset( planet, 0, sizeof(Planet) );
+   planet->faction = -1;
    str[0] = '\0';
    flags = 0;
 

@@ -206,29 +206,30 @@ static void map_update (void)
    /* System is known */
    window_modifyText( map_wid, "txtSysname", sys->name );
 
-   if (sys->nplanets == 0) { /* no planets -> no factions */
+   standing = 0;
+   nstanding = 0;
+   f = -1;
+   for (i=0; i<sys->nplanets; i++) {
+      if ((f==-1) && (sys->planets[i]->faction>0)) {
+         f = sys->planets[i]->faction;
+         standing += faction_getPlayer( f );
+         nstanding++;
+      }
+      else if (f != sys->planets[i]->faction && /** @todo more verbosity */
+            (sys->planets[i]->faction>0)) {
+         snprintf( buf, 100, "Multiple" );
+         break;
+      }
+   }
+   if (f == -1) {
       window_modifyText( map_wid, "txtFaction", "NA" );
       window_moveWidget( map_wid, "txtSStanding", -20, -100 );
       window_moveWidget( map_wid, "txtStanding", -20, -100-gl_smallFont.h-5 );
       window_modifyText( map_wid, "txtStanding", "NA" );
       y = -100;
+
    }
    else {
-      standing = 0;
-      nstanding = 0;
-      f = -1;
-      for (i=0; i<sys->nplanets; i++) {
-         if ((f==-1) && (sys->planets[i]->faction>0)) {
-            f = sys->planets[i]->faction;
-            standing += faction_getPlayer( f );
-            nstanding++;
-         }
-         else if (f != sys->planets[i]->faction && /** @todo more verbosity */
-               (sys->planets[i]->faction>0)) {
-            snprintf( buf, 100, "Multiple" );
-            break;
-         }
-      }
       if (i==sys->nplanets) /* saw them all and all the same */
          snprintf( buf, 100, "%s", faction_longname(f) );
 
