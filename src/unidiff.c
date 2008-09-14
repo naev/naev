@@ -205,7 +205,6 @@ int diff_apply( char *name )
          if (strcmp(diffname,name)==0) {
             diff_patch( node );
             free(diffname);
-            DEBUG("Unidiff '%s' applied.",name);
             return 0;
          }
          free(diffname);
@@ -405,7 +404,6 @@ void diff_remove( char *name )
       return;
 
    diff_removeDiff(diff);
-   DEBUG("Unidiff '%s' removed.", name);
 }
 
 
