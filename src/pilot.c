@@ -1432,8 +1432,10 @@ void pilot_addHook( Pilot *pilot, int type, int hook )
 void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* ai,
       const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
 {
-   int i;
    ShipOutfit* so;
+
+   /* Clear memory. */
+   memset(pilot, 0, sizeof(Pilot));
 
    if (flags & PILOT_PLAYER) /* player is ID 0 */
       pilot->id = PLAYER_ID;
@@ -1448,22 +1450,11 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* 
 
    /* AI */
    pilot->ai = ai;
-   pilot->tcontrol = 0;
-   pilot->flags = 0;
-   pilot->lockons = 0;
 
    /* solid */
    pilot->solid = solid_create(ship->mass, dir, pos, vel);
 
-   /* initially idle */
-   pilot->task = NULL;
-
    /* outfits */
-   pilot->outfits = NULL;
-   pilot->secondary = NULL;
-   pilot->ammo = NULL;
-   pilot->afterburner = NULL;
-   pilot->noutfits = 0;
    if (!(flags & PILOT_NO_OUTFITS)) {
       if (ship->outfit) {
          for (so=ship->outfit; so; so=so->next) {
@@ -1479,14 +1470,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* 
       }
    }
 
-   /* jamming - must be set before calcStats */
-   pilot->jam_range = 0.;
-   pilot->jam_chance = 0.;
-
    /* cargo - must be set before calcStats */
-   pilot->credits = 0;
-   pilot->commodities = NULL;
-   pilot->ncommodities = 0;
    pilot->cargo_free = pilot->ship->cap_cargo; /* should get redone with calcCargo */
 
    /* set the pilot stats based on his ship and outfits */
@@ -1495,12 +1479,6 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* 
    pilot->energy = pilot->energy_max = 1.; /* ditto energy */
    pilot->fuel = pilot->fuel_max = 1.; /* ditto fuel */
    pilot_calcStats(pilot);
-
-   /* hooks */
-   for (i=0; i<PILOT_HOOKS; i++) {
-      pilot->hook_type[i] = PILOT_HOOK_NONE;
-      pilot->hook[i] = 0;
-   }
 
    /* set flags and functions */
    if (flags & PILOT_PLAYER) {

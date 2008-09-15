@@ -92,7 +92,7 @@ unsigned int player_flags = 0; /**< Player flags. */
 double player_turn = 0.; /**< Turn velocity from input. */
 static double player_acc = 0.; /**< Accel velocity from input. */
 unsigned int player_target = PLAYER_ID; /**< Targetted pilot. PLAYER_ID is none. */
-/* pure internal */
+/* used in map.c */
 int planet_target = -1; /**< Targetted planet. -1 is none. */
 int hyperspace_target = -1; /**< Targetted hyperspace route. -1 is none. */
 /* for death and such */
@@ -1661,6 +1661,27 @@ void gui_free (void)
 }
 
 
+void player_startAutonav (void)
+{
+   player_message("Autonav continuing.");
+   player_setFlag(PLAYER_AUTONAV);
+}
+
+
+/**
+ * @fn void player_abortAutonav (void)
+ *
+ * @brief Aborts autonav.
+ */
+void player_abortAutonav (void)
+{
+   if (player_isFlag(PLAYER_AUTONAV)) {
+      player_message("Autonav aborted!");
+      player_rmFlag(PLAYER_AUTONAV);
+   }
+}
+
+
 /**
  * @fn void player_think( Pilot* pplayer )
  *
@@ -1676,6 +1697,15 @@ void player_think( Pilot* pplayer )
       pplayer->solid->dir_vel = 0.;
       vect_pset( &player->solid->force, 0., 0. );
       return;
+   }
+
+   /* Autonav takes over normal controls. */
+   if (player_isFlag(PLAYER_AUTONAV)) {
+      if (pplayer->lockons > 0)
+         player_abortAutonav();
+
+      if (space_canHyperspace(pplayer))
+         player_jump();
    }
 
    /* turning taken over by PLAYER_FACE */

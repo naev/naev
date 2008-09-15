@@ -24,6 +24,7 @@
 #define PLAYER_SECONDARY_L (1<<14)  /**< player shot secondary last frame. */
 #define PLAYER_LANDACK     (1<<15)  /**< player has permission to land */
 #define PLAYER_CREATING    (1<<16)  /**< player is being created */
+#define PLAYER_AUTONAV     (1<<17)  /**< player has autonavigation on. */
 /* flag functions */
 #define player_isFlag(f)   (player_flags & f) /**< Checks for a player flag. */
 #define player_setFlag(f)  \
