@@ -120,6 +120,7 @@ static void ai_freetask( Task* t );
 void ai_attacked( Pilot* attacked, const unsigned int attacker ); /* weapon.c */
 void ai_create( Pilot* pilot ); /* pilot.c */
 /* C Routines made External */
+void ai_pinit( Pilot *p, AI_Profile *ai );
 void ai_destroy( Pilot* p );
 void ai_think( Pilot* pilot );
 
@@ -279,9 +280,30 @@ static int ai_status = AI_STATUS_NORMAL;
  */
 static void ai_run( lua_State *L, const char *funcname )
 {
+   /* Set the pilot's memory. */
+   lua_getglobal(L, "pilotmem");
+   lua_pushnumber(L, cur_pilot->id);
+   lua_gettable(L, -2);
+   lua_setglobal(L, "mem");
+
    lua_getglobal(L, funcname);
    if (lua_pcall(L, 0, 0, 0)) /* error has occured */
       WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, funcname, lua_tostring(L,-1));
+}
+
+
+/**
+ */
+void ai_pinit( Pilot *p, AI_Profile *ai )
+{
+   lua_State *L;
+   L = ai->L;
+
+   /* Adds a new pilot memory in the memory table. */
+   lua_getglobal(L, "pilotmem");
+   lua_pushnumber(L, p->id);
+   lua_newtable(L);
+   lua_settable(L,-3);
 }
 
 
@@ -294,6 +316,16 @@ static void ai_run( lua_State *L, const char *funcname )
  */
 void ai_destroy( Pilot* p )
 {
+   lua_State *L;
+   L = p->ai->L;
+
+   /* Get rid of pilot's memory. */
+   lua_getglobal(L, "pilotmem");
+   lua_pushnumber(L, p->id);
+   lua_pushnil(L);
+   lua_settable(L,-3);
+
+   /* Clean up tasks. */
    if (p->task)
       ai_freetask( p->task );
 }
@@ -376,7 +408,6 @@ static int ai_loadProfile( char* filename )
    luaL_register(L, "ai", ai_methods);
    lua_loadRnd(L);
 
-
    /* now load the file since all the functions have been previously loaded */
    buf = pack_readfile( DATA, filename, &bufsize );
    if (luaL_dobuffer(L, buf, bufsize, filename) != 0) {
@@ -387,6 +418,10 @@ static int ai_loadProfile( char* filename )
       return -1;
    }
    free(buf);
+
+   /* Add the player memory table. */
+   lua_newtable(L);
+   lua_setglobal(L, "pilotmem");
 
    return 0;
 }

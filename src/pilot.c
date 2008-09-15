@@ -65,6 +65,7 @@ static int nfleets = 0; /**< Number of fleets. */
  */
 /* external */
 /* ai.c */
+extern void ai_pinit( Pilot *p, AI_Profile *ai );
 extern void ai_destroy( Pilot* p );
 extern void ai_think( Pilot* pilot );
 extern void ai_create( Pilot* pilot );
@@ -1453,7 +1454,10 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* 
    pilot->faction = faction;
 
    /* AI */
-   pilot->ai = ai;
+   if (ai != NULL) {
+      ai_pinit( pilot, ai );
+      pilot->ai = ai;
+   }
 
    /* solid */
    pilot->solid = solid_create(ship->mass, dir, pos, vel);
@@ -1618,12 +1622,13 @@ Pilot* pilot_copy( Pilot* src )
  */
 void pilot_free( Pilot* p )
 {
+   if (p->ai != NULL)
+      ai_destroy(p); /* Must be destroyed first if applicable. */
    if (player==p) player = NULL;
    solid_free(p->solid);
    if (p->outfits) free(p->outfits);
    free(p->name);
    if (p->commodities) free(p->commodities);
-   ai_destroy(p);
    free(p);
 }
 
