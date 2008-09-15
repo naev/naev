@@ -33,7 +33,7 @@ static double map_xpos = 0.; /* map position */
 static double map_ypos = 0.;
 static int map_selected = -1;
 static StarSystem **map_path = NULL; /* the path to current selected system */
-static int map_npath = 0;
+int map_npath = 0;
 
 static int map_drag = 0; /* is the user dragging the map? */
 

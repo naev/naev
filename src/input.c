@@ -38,12 +38,18 @@ static Keybind** input_keybinds; /**< contains the players keybindings */
 
 /* name of each keybinding */
 const char *keybindNames[] = {
-   "accel", "left", "right", "reverse", /* movement */
-   "target", "target_nearest", "target_hostile", /* targetting */
-   "primary", "face", "board", /* fighting */
-   "secondary", "secondary_next", /* secondary weapons */
-   "target_planet", "land", "thyperspace", "starmap", "jump", /* space navigation */
-   "mapzoomin", "mapzoomout", "screenshot", "pause", "menu", "info",  /* misc */
+   /* Movement. */
+   "accel", "left", "right", "reverse",
+   /* Targetting. */
+   "target", "target_nearest", "target_hostile",
+   /* Fighting. */
+   "primary", "face", "board",
+   /* Secondary weapons. */
+   "secondary", "secondary_next",
+   /* Space navigation. */
+   "autonav", "target_planet", "land", "thyperspace", "starmap", "jump",
+   /* Misc. */
+   "mapzoomin", "mapzoomout", "screenshot", "pause", "menu", "info",
    "end" }; /* must terminate in "end" */
 
 
@@ -89,6 +95,7 @@ void input_setDefault (void)
    input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, 0 );
    input_setKeybind( "secondary_next", KEYBIND_KEYBOARD, SDLK_w, 0 );
    /* space */
+   input_setKeybind( "autonav", KEYBIND_KEYBOARD, SDLK_n, 0 );
    input_setKeybind( "target_planet", KEYBIND_KEYBOARD, SDLK_p, 0 );
    input_setKeybind( "land", KEYBIND_KEYBOARD, SDLK_l, 0 );
    input_setKeybind( "thyperspace", KEYBIND_KEYBOARD, SDLK_h, 0 );
@@ -209,6 +216,7 @@ static void input_key( int keynum, double value, int kabs )
     */
    /* accelerating */
    if (KEY("accel")) {
+      player_abortAutonav();
       if (kabs) player_accel(value);
       else { /* prevent it from getting stuck */
          if (value==KEY_PRESS) player_accel(1.);
@@ -227,6 +235,7 @@ static void input_key( int keynum, double value, int kabs )
 
    /* turning left */
    } else if (KEY("left")) {
+      player_abortAutonav();
 
       /* set flags for facing correction */
       if (value==KEY_PRESS) { player_setFlag(PLAYER_TURN_LEFT); }
@@ -238,6 +247,7 @@ static void input_key( int keynum, double value, int kabs )
 
    /* turning right */
    } else if (KEY("right")) {
+      player_abortAutonav();
 
       /* set flags for facing correction */
       if (value==KEY_PRESS) { player_setFlag(PLAYER_TURN_RIGHT); }
@@ -249,6 +259,7 @@ static void input_key( int keynum, double value, int kabs )
    
    /* turn around to face vel */
    } else if (KEY("reverse")) {
+      player_abortAutonav();
       if (value==KEY_PRESS) { player_setFlag(PLAYER_REVERSE); }
       else if (value==KEY_RELEASE) {
          player_rmFlag(PLAYER_REVERSE);
@@ -263,6 +274,7 @@ static void input_key( int keynum, double value, int kabs )
     */
    /* shooting primary weapon */
    } else if (KEY("primary")) {
+      player_abortAutonav();
       if (value==KEY_PRESS) { player_setFlag(PLAYER_PRIMARY); }
       else if (value==KEY_RELEASE) { player_rmFlag(PLAYER_PRIMARY); }
    /* targetting */
@@ -274,6 +286,7 @@ static void input_key( int keynum, double value, int kabs )
       if (value==KEY_PRESS) player_targetHostile();
    /* face the target */
    } else if (KEY("face")) {
+      player_abortAutonav();
       if (value==KEY_PRESS) { player_setFlag(PLAYER_FACE); }
       else if (value==KEY_RELEASE) {
          player_rmFlag(PLAYER_FACE);
@@ -283,6 +296,7 @@ static void input_key( int keynum, double value, int kabs )
       }
    /* board them ships */
    } else if (KEY("board") && INGAME() && NOHYP()) {
+      player_abortAutonav();
       if (value==KEY_PRESS) player_board();
 
 
@@ -291,6 +305,7 @@ static void input_key( int keynum, double value, int kabs )
     */
    /* shooting secondary weapon */
    } else if (KEY("secondary") && NOHYP()) {
+      player_abortAutonav();
       if (value==KEY_PRESS) { player_setFlag(PLAYER_SECONDARY); }
       else if (value==KEY_RELEASE) { player_rmFlag(PLAYER_SECONDARY); }
 
@@ -302,17 +317,22 @@ static void input_key( int keynum, double value, int kabs )
    /*                                                                     
     * space
     */
+   } else if (KEY("autonav") && INGAME() && NOHYP()) {
+      if (value==KEY_PRESS) player_startAutonav();
    /* target planet (cycles like target) */
    } else if (KEY("target_planet") && INGAME() && NOHYP()) {
       if (value==KEY_PRESS) player_targetPlanet();
    /* target nearest planet or attempt to land */
    } else if (KEY("land") && INGAME() && NOHYP()) {
+      player_abortAutonav();
       if (value==KEY_PRESS) player_land();
    } else if (KEY("thyperspace") && INGAME() && NOHYP()) {
+      player_abortAutonav();
       if (value==KEY_PRESS) player_targetHyperspace();
    } else if (KEY("starmap") && NOHYP()) {
       if (value==KEY_PRESS) map_open();
    } else if (KEY("jump") && INGAME()) {
+      player_abortAutonav();
       if (value==KEY_PRESS) player_jump();
 
 

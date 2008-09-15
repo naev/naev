@@ -53,6 +53,7 @@ static int pilot_mstack = 0; /**< Memory allocated for pilot_stack. */
  */
 extern Pilot* player;
 extern unsigned int player_crating; /**< Player's combat rating. */
+extern void player_abortAutonav (void);
 
 /* stack of fleets */
 static Fleet* fleet_stack = NULL; /**< Fleet stack. */
@@ -509,6 +510,9 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
    /* calculate the damage */
    outfit_calcDamage( &damage_shield, &damage_armour, &knockback, dtype, damage );
+
+   if (p->id == PLAYER_ID)
+      player_abortAutonav();
 
    if (p->shield-damage_shield > 0.) { /* shields take the whole blow */
       p->shield -= damage_shield;

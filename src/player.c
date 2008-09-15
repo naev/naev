@@ -119,6 +119,11 @@ extern int pilot_nstack;
  */
 extern StarSystem *systems_stack;
 
+/*
+ * map stuff for autonav
+ */
+extern int map_npath;
+
 
 /**
  * @struct Radar
@@ -1661,9 +1666,17 @@ void gui_free (void)
 }
 
 
+/**
+ * @fn void player_startAutonav (void)
+ *
+ * @brief Starts autonav.
+ */
 void player_startAutonav (void)
 {
-   player_message("Autonav continuing.");
+   if (hyperspace_target == -1)
+      return;
+
+   player_message("Autonav initialized.");
    player_setFlag(PLAYER_AUTONAV);
 }
 
@@ -1706,6 +1719,10 @@ void player_think( Pilot* pplayer )
 
       if (space_canHyperspace(pplayer))
          player_jump();
+      else  {
+         pilot_face( pplayer, VANGLE(pplayer->solid->pos) );
+         player_acc = 1.;
+      }
    }
 
    /* turning taken over by PLAYER_FACE */
@@ -2029,6 +2046,18 @@ void player_brokeHyperspace (void)
 
    /* update the map */
    map_jump();
+
+   /* Disable autonavigation if arrived. */
+   if (player_isFlag(PLAYER_AUTONAV)) {
+      if (hyperspace_target == -1) {
+         player_message( "Autonav arrived at destination.");
+         player_rmFlag(PLAYER_AUTONAV);
+      }
+      else {
+         player_message( "Autonav continuing until destination (%d jumps left).",
+               map_npath );
+      }
+   }
 
    /* run the jump hooks */
    hooks_run( "jump" );
