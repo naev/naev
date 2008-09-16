@@ -6,7 +6,7 @@
 --[[
 -- Bombers don't really think, they lock on until target is dead.
 --]]
-function attack_think ()
+function atk_b_think ()
    -- No thinking atm
 end
 
@@ -17,7 +17,7 @@ end
 -- Specialized for bomber type craft.  AI will try to shoot missiles and such
 --  until out and then will melee.
 --]]
-function attack ()
+function atk_b ()
 	target = ai.targetid()
    ai.hostile(target) -- Mark as hostile
 

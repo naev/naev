@@ -98,7 +98,7 @@ function idle ()
 end
 
 function create ()
-   -- Empty stub
+   attack_choose()
 end
 
 -- taunts

@@ -7,6 +7,7 @@ aggressive = true
 -- Create function
 function create ()
    ai.setcredits( rnd.int(1000, ai.shipprice()/200) )
+   attack_choose()
 end
 
 -- taunts

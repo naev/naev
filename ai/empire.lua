@@ -13,6 +13,8 @@ function create ()
    if rnd.int(0,2)==0 then
       ai.broadcast("The Empire is watching you.")
    end
+
+   attack_choose()
 end
 
 -- taunts
