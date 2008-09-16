@@ -1455,7 +1455,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* 
 
    /* AI */
    if (ai != NULL) {
-      ai_pinit( pilot, ai );
+      ai_pinit( pilot, ai ); /* Must run before ai_create */
       pilot->ai = ai;
    }
 
