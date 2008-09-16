@@ -24,11 +24,12 @@ function control ()
       end
 
       -- nothing to do so check if we are too far form the planet (if there is one)
-      planet = ai.rndplanet()
+      mem.approach = ai.rndplanet()
+      planet = mem.approach
 
       if planet ~= nil then
          if ai.dist(planet) > planet_dist then
-            ai.pushtask(0, "approach", planet)
+            ai.pushtask(0, "approach")
             return
          end
       end
@@ -41,7 +42,7 @@ function control ()
 
    -- Check if we are near enough
    elseif task == "approach" then
-      planet = ai.target()
+      planet = mem.approach
       
       if ai.dist( planet ) < planet_dist + ai.minbrakedist() then
          ai.poptask()
@@ -94,7 +95,7 @@ end
 
 -- Approaches the target
 function approach ()
-   target = ai.target()
+   target = mem.approach
    ai.face(target)
    ai.accel()
 end
