@@ -23,8 +23,12 @@ function control ()
    task = ai.taskname()
    enemy = ai.getenemy()
 
+   -- Get new task
+   if task == "none" then
+      idle()
+
    -- Think for attacking
-   if task == "attack" then
+   elseif task == "attack" then
 
       -- Runaway if needed
       if (shield_run > 0 and ai.pshield() < shield_run) or
@@ -59,9 +63,6 @@ function control ()
    elseif task == "hyperspace" then 
       ai.hyperspace() -- try to hyperspace 
 
-   -- Get new task
-   else
-      idle()
    end
 end
 
@@ -90,8 +91,9 @@ function idle ()
    if planet == nil or land_planet == false then
       ai.pushtask(0, "hyperspace")
    else
+      mem.land = planet
       ai.pushtask(0, "hyperspace")
-      ai.pushtask(0, "land", planet)
+      ai.pushtask(0, "land")
    end
 end
 

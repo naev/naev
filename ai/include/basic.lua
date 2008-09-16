@@ -10,8 +10,8 @@
 -- Attempts to land on a planet.
 --]]
 function land ()
-   target = ai.target()
-   dir = ai.face(target)
+   target = mem.land
+   dir = ai.face( target )
    dist = ai.dist( target )
    bdist = ai.minbrakedist()
 
@@ -23,29 +23,26 @@ function land ()
    elseif dist < bdist then
       ai.poptask()
       ai.pushtask( 0, "landstop", target )
-
    end
 
 end
 function landstop ()
    ai.brake()
    if ai.isstopped() then
-      target = ai.target()
-
       ai.stop() -- Will stop the pilot if below err vel
       ai.settimer(0, rnd.int(8000,15000)) -- We wait during a while
       ai.poptask()
-      ai.pushtask( 0, "landwait", target )
+      ai.pushtask( 0, "landwait")
    end
 end
 function landwait ()
-   target = ai.target()
+   target = mem.land
    dist = ai.dist( target )
 
    -- In case for some reason landed far away
-   if dist > 100 then
+   if dist > 50 then
       ai.poptask()
-      ai.pushtask( 0, "land", target )
+      ai.pushtask( 0, "land" )
 
    -- Check if time is up
    elseif ai.timeup(0) then

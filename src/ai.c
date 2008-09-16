@@ -66,6 +66,7 @@
 #include "faction.h"
 #include "nlua.h"
 #include "nluadef.h"
+#include "nlua_space.h"
 
 
 /**
@@ -407,6 +408,9 @@ static int ai_loadProfile( char* filename )
    /* Register C functions in Lua */
    luaL_register(L, "ai", ai_methods);
    lua_loadRnd(L);
+
+   /* Metatables to register. */
+   lua_loadVector(L);
 
    /* now load the file since all the functions have been previously loaded */
    buf = pack_readfile( DATA, filename, &bufsize );
@@ -770,15 +774,21 @@ static int ai_pshield( lua_State *L )
  */
 static int ai_getdistance( lua_State *L )
 {
-   Vector2d *vect;
+   Vector2d *v;
+   LuaVector *lv;
    Pilot *pilot;
    unsigned int n;
 
    NLUA_MIN_ARGS(1);
 
    /* vector as a parameter */
-   if (lua_islightuserdata(L,1))
-      vect = (Vector2d*)lua_topointer(L,1);
+   if (lua_isvector(L,1)) {
+      lv = lua_tovector(L,1);
+      v = &lv->vec;
+   }
+
+   else if (lua_islightuserdata(L,1))
+      v = lua_touserdata(L,1);
    
    /* pilot id as parameter */
    else if (lua_isnumber(L,1)) {
@@ -788,14 +798,14 @@ static int ai_getdistance( lua_State *L )
          NLUA_DEBUG("Pilot '%d' not found in stack", n );
          return 0;
       }
-      vect = &pilot->solid->pos;
+      v = &pilot->solid->pos;
    }
    
    /* wrong parameter */
    else
       NLUA_INVALID_PARAMETER();
 
-   lua_pushnumber(L, vect_dist(vect, &cur_pilot->solid->pos));
+   lua_pushnumber(L, vect_dist(v, &cur_pilot->solid->pos));
    return 1;
 }
 
@@ -981,24 +991,26 @@ static int ai_turn( lua_State *L )
 static int ai_face( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
-   Vector2d *v, sv, tv; /* get the position to face */
+   LuaVector *lv;
+   Vector2d sv, tv; /* get the position to face */
    Pilot* p;
    double mod, diff;
    int n;
 
    /* Get first parameter, aka what to face. */
    n = -2;
-   if (lua_isnumber(L,1))
+   if (lua_isnumber(L,1)) {
       n = (int)lua_tonumber(L,1);
-   if (n >= 0 ) {
-      p = pilot_get(n);
-      if (p==NULL)
-         return 0; /* make sure pilot is valid */
-      vect_cset( &tv, VX(p->solid->pos), VY(p->solid->pos) );
-      v = NULL;
+      if (n >= 0 ) {
+         p = pilot_get(n);
+         if (p==NULL)
+            return 0; /* make sure pilot is valid */
+         vect_cset( &tv, VX(p->solid->pos), VY(p->solid->pos) );
+         lv = NULL;
+      }
    }
-   else if (lua_islightuserdata(L,1))
-      v = (Vector2d*)lua_topointer(L,1);
+   else if (lua_isvector(L,1))
+      lv = lua_tovector(L,1);
 
    mod = 10;
 
@@ -1010,14 +1022,14 @@ static int ai_face( lua_State *L )
 
    vect_cset( &sv, VX(cur_pilot->solid->pos), VY(cur_pilot->solid->pos) );
 
-   if (v==NULL) /* target is dynamic */
+   if (lv==NULL) /* target is dynamic */
       diff = angle_diff(cur_pilot->solid->dir,
             (n==-1) ? VANGLE(sv) :
             vect_angle(&sv, &tv));
    else /* target is static */
       diff = angle_diff( cur_pilot->solid->dir,   
             (n==-1) ? VANGLE(cur_pilot->solid->pos) :
-            vect_angle(&cur_pilot->solid->pos, v));
+            vect_angle(&cur_pilot->solid->pos, &lv->vec));
 
    /* Make pilot turn. */
    pilot_turn = mod*diff;
@@ -1102,7 +1114,7 @@ static int ai_getlandplanet( lua_State *L )
 {
    Planet** planets;
    int nplanets, i;
-   Vector2d v;
+   LuaVector lv;
    planets = malloc( sizeof(Planet*) * cur_system->nplanets );
 
    if (cur_system->nplanets == 0) return 0; /* no planets */
@@ -1120,10 +1132,10 @@ static int ai_getlandplanet( lua_State *L )
 
    /* we can actually get a random planet now */
    i = RNG(0,nplanets-1);
-   vectcpy( &v, &planets[i]->pos );
-   vect_cadd( &v, RNG(0, planets[i]->gfx_space->sw)-planets[i]->gfx_space->sw/2.,
+   vectcpy( &lv.vec, &planets[i]->pos );
+   vect_cadd( &lv.vec, RNG(0, planets[i]->gfx_space->sw)-planets[i]->gfx_space->sw/2.,
          RNG(0, planets[i]->gfx_space->sh)-planets[i]->gfx_space->sh/2. );
-   lua_pushlightuserdata( L, &v );
+   lua_pushvector( L, lv );
    free(planets);
    return 1;
 }

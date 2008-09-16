@@ -35,8 +35,9 @@ function control ()
       if planet == nil then
          ai.pushtask(0, "hyperspace")
       else
+         mem.land = planet
          ai.pushtask(0, "hyperspace")
-         ai.pushtask(0, "land", planet)
+         ai.pushtask(0, "land")
       end
    end
 end
