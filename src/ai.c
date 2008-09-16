@@ -11,17 +11,18 @@
  *
  * Concept: Goal (Task) Based AI with additional Optimization
  *
- *   AI uses the goal (task) based AI approach with tasks scripted in lua,
+ *  AI uses the goal (task) based AI approach with tasks scripted in lua,
  * additionally there is a task that is hardcoded and obligatory in any AI
  * script, the 'control' task, whose sole purpose is to assign tasks if there
  * is no current tasks and optimizes or changes tasks if there are.
- *   For example: Pilot A is attacking Pilot B.  Say that Pilot C then comes in
+ *
+ *  For example: Pilot A is attacking Pilot B.  Say that Pilot C then comes in
  * the same system and is of the same faction as Pilot B, and therefore attacks
- * Pilot A.  Pilot A would keep on fighting Pilot B until the control task kicks
- * in.  Then he/she could run if it deems that Pilot C and Pilot B together are too
- * strong for him/her, or attack Pilot C because it's an easier target to finish off
- * then Pilot B.  Therefore there are endless possibilities and it's up to the AI
- * coder to set up.
+ * Pilot A.  Pilot A would keep on fighting Pilot B until the control task
+ * kicks in.  Then he/she could run if it deems that Pilot C and Pilot B
+ * together are too strong for him/her, or attack Pilot C because it's an
+ * easier target to finish off then Pilot B.  Therefore there are endless
+ * possibilities and it's up to the AI coder to set up.
  *
  *
  * Specification
@@ -36,8 +37,15 @@
  *   - "control" task is also run at a set rate (depending on Lua global "control_rate")
  *     to choose optimal behaviour (task)
  *
+ * 
+ * Memory
  *
- *  @todo Clean up most of the code, it was written as one of the first
+ *  The AI currently has per-pilot memory which is accessible as "mem".  This
+ * memory is actually stored in the table pilotmem[cur_pilot->id].  This allows
+ * the pilot to keep some memory always accesible between runs without having
+ * to rely on the storage space a task has.
+ *
+ * @todo Clean up most of the code, it was written as one of the first
  *         subsystems and is pretty lacking in quite a few aspects. Notably
  *         removing the entire lightuserdata thing and actually go with full
  *         userdata.
@@ -147,6 +155,7 @@ static int ai_getdistance( lua_State *L ); /* number getdist(Vector2d) */
 static int ai_getpos( lua_State *L ); /* getpos(number) */
 static int ai_minbrakedist( lua_State *L ); /* number minbrakedist() */
 static int ai_cargofree( lua_State *L ); /* number cargofree() */
+static int ai_shipclass( lua_State *L ); /* string shipclass() */
 
 /* boolean expressions */
 static int ai_exists( lua_State *L ); /* boolean exists() */
@@ -163,9 +172,9 @@ static int ai_turn( lua_State *L ); /* turn(number); abs(number) <= 1. */
 static int ai_face( lua_State *L ); /* face(number/pointer) */
 static int ai_aim( lua_State *L ); /* aim(number) */
 static int ai_brake( lua_State *L ); /* brake() */
-static int ai_getnearestplanet( lua_State *L ); /* pointer getnearestplanet() */
-static int ai_getrndplanet( lua_State *L ); /* pointor getrndplanet() */
-static int ai_getlandplanet( lua_State *L ); /* pointor getlandplanet() */
+static int ai_getnearestplanet( lua_State *L ); /* Vec2 getnearestplanet() */
+static int ai_getrndplanet( lua_State *L ); /* Vec2 getrndplanet() */
+static int ai_getlandplanet( lua_State *L ); /* Vec2 getlandplanet() */
 static int ai_hyperspace( lua_State *L ); /* [number] hyperspace() */
 static int ai_stop( lua_State *L ); /* stop() */
 
@@ -219,10 +228,11 @@ static const luaL_reg ai_methods[] = {
    { "pos", ai_getpos },
    { "minbrakedist", ai_minbrakedist },
    { "cargofree", ai_cargofree },
+   { "shipclass", ai_shipclass },
+   /* movement */
    { "nearestplanet", ai_getnearestplanet },
    { "rndplanet", ai_getrndplanet },
    { "landplanet", ai_getlandplanet },
-   /* movement */
    { "accel", ai_accel },
    { "turn", ai_turn },
    { "face", ai_face },
@@ -257,18 +267,18 @@ static const luaL_reg ai_methods[] = {
 /*
  * current pilot "thinking" and assorted variables
  */
-static Pilot *cur_pilot = NULL;
-static double pilot_acc = 0.;
-static double pilot_turn = 0.;
-static int pilot_flags = 0;
-static int pilot_target = 0;
+static Pilot *cur_pilot = NULL; /**< Current pilot.  All functions use this. */
+static double pilot_acc = 0.; /**< Current pilot's acceleration. */
+static double pilot_turn = 0.; /**< Current pilot's turning. */
+static int pilot_flags = 0; /**< Handle stuff like weapon firing. */
+static int pilot_target = 0; /**< Indicate the target to aim at for the pilot. */
 
 /*
  * ai status, used so that create functions can't be used elsewhere
  */
 #define AI_STATUS_NORMAL      1 /**< Normal ai function behaviour. */
 #define AI_STATUS_CREATE      2 /**< AI is running create function. */
-static int ai_status = AI_STATUS_NORMAL;
+static int ai_status = AI_STATUS_NORMAL; /**< Current AI run status. */
 
 
 /**
@@ -294,6 +304,14 @@ static void ai_run( lua_State *L, const char *funcname )
 
 
 /**
+ * @fn void ai_pinit( Pilot *p, AI_Profile *ai )
+ *
+ * @brief Initializes the pilot in the ai.
+ *
+ * Mainly used to create the pilot's memory table.
+ *
+ *    @param p Pilot to initialize in AI.
+ *    @param ai AI to initialize pilot.
  */
 void ai_pinit( Pilot *p, AI_Profile *ai )
 {
@@ -564,8 +582,12 @@ void ai_create( Pilot* pilot )
 /*
  * internal use C functions
  */
-/*
- * frees the task
+/**
+ * @fn static void ai_freetask( Task* t )
+ *
+ * @brief Frees an AI task.
+ *
+ *    @param t Task to free.
  */
 static void ai_freetask( Task* t )
 {
@@ -577,11 +599,27 @@ static void ai_freetask( Task* t )
 }
 
 
-/*
- * C Functions to call from Lua
+/**
+ * @group AI Lua AI Bindings
+ *
+ * @brief Handles how the AI interacts with the universe.
+ *
+ * Usage is:
+ * @code
+ * ai.function( params )
+ * @endcode
+ *
+ * @{
  */
-/*
- * pushes the current stack
+/**
+ * @fn static int ai_pushtask( lua_State *L )
+ *
+ * @brief pushtask( number pos, string func [, data] )
+ *
+ *    @param pos Position to push into stack, 0 is front, 1 is back.
+ *    @param func Function to call for task.
+ *    @param data Data to pass to the function.  Only lightuserdata or number
+ *           is currently supported.
  */
 static int ai_pushtask( lua_State *L )
 {
@@ -633,9 +671,12 @@ static int ai_pushtask( lua_State *L )
 
    return 0;
 }
-
-/*
- * pops the current task
+/**
+ * @fn static int ai_poptask( lua_State *L )
+ *
+ * @brief poptask( nil )
+ *
+ * Pops the current running task.
  */
 static int ai_poptask( lua_State *L )
 {
@@ -697,7 +738,7 @@ static int ai_gettargetid( lua_State *L )
 }
 
 /*
- * gets a random target's ID
+ * Gets a random target's ID
  */
 static int ai_getrndpilot( lua_State *L )
 {
@@ -857,6 +898,13 @@ static int ai_minbrakedist( lua_State *L )
 static int ai_cargofree( lua_State *L )
 {
    lua_pushnumber(L, pilot_cargoFree(cur_pilot));
+   return 1;
+}
+
+
+static int ai_shipclass( lua_State *L )
+{
+   lua_pushstring(L, ship_class(cur_pilot->ship));
    return 1;
 }
 
@@ -1064,10 +1112,11 @@ static int ai_brake( lua_State *L )
  */
 static int ai_getnearestplanet( lua_State *L )
 {
-   if (cur_system->nplanets == 0) return 0; /* no planets */
-
    double dist, d;
    int i, j;
+   LuaVector lv;
+
+   if (cur_system->nplanets == 0) return 0; /* no planets */
 
    /* cycle through planets */
    for (dist=0., j=-1, i=0; i<cur_system->nplanets; i++) {
@@ -1082,7 +1131,9 @@ static int ai_getnearestplanet( lua_State *L )
    /* no friendly planet found */
    if (j == -1) return 0;
 
-   lua_pushlightuserdata( L, &cur_system->planets[j]->pos );
+   vectcpy( &lv.vec, &cur_system->planets[j]->pos );
+   lua_pushvector(L, lv);
+
    return 1;
 }
 
@@ -1092,7 +1143,7 @@ static int ai_getnearestplanet( lua_State *L )
  */
 static int ai_getrndplanet( lua_State *L )
 {
-   Vector2d v;
+   LuaVector lv;
    int p;
 
    if (cur_system->nplanets == 0) return 0; /* no planets */
@@ -1101,8 +1152,8 @@ static int ai_getrndplanet( lua_State *L )
    p = RNG(0, cur_system->nplanets-1);
 
    /* Copy the data into a vector */
-   vectcpy( &v, &cur_system->planets[p]->pos );
-   lua_pushlightuserdata( L, &v );
+   vectcpy( &lv.vec, &cur_system->planets[p]->pos );
+   lua_pushvector(L, lv);
 
    return 1;
 }
@@ -1549,4 +1600,6 @@ static int ai_shipprice( lua_State *L )
    return 1;
 }
 
-
+/**
+ * @}
+ */
