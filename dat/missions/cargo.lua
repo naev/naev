@@ -44,10 +44,16 @@ end
 -- Create the mission
 function create()
 
-   local landed = space.getPlanet() -- Get landed planet
+   landed = space.getPlanet() -- Get landed planet
+
+   -- Only 50% chance of appearing on Dvaered systems
+   dv = faction.get("Dvaered")
+   if landed:faction() == dv and rnd.int(1) == 0 then
+      misn.finish(false)
+   end
 
    -- target destination
-   local i = 0
+   i = 0
    repeat
       planet,system = space.getPlanet( misn.factions() )
       i = i + 1
@@ -152,7 +158,7 @@ end
 
 -- Land hook
 function land()
-   local landed = space.getPlanet()
+   landed = space.getPlanet()
    if landed == planet then
       if player.rmCargo( carg_id ) then
          player.pay( reward )
