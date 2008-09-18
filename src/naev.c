@@ -475,23 +475,27 @@ static void update_routine( double dt )
  */
 static void render_all (void)
 {
+   double dt;
+
+   dt = (paused) ? 0. : cur_dt;
+
    /* setup */
-   spfx_start(cur_dt);
+   spfx_start(dt);
    /* BG */
-   space_render(cur_dt);
+   space_render(dt);
    planets_render();
    player_renderBG();
-   weapons_render(WEAPON_LAYER_BG);
+   weapons_render(WEAPON_LAYER_BG, dt);
    /* N */
    pilots_render();
-   weapons_render(WEAPON_LAYER_FG);
+   weapons_render(WEAPON_LAYER_FG, dt);
    spfx_render(SPFX_LAYER_BACK);
    /* FG */
    player_render();
    spfx_render(SPFX_LAYER_FRONT);
-   space_renderOverlay(cur_dt);
+   space_renderOverlay(dt);
    player_renderGUI();
-   display_fps(cur_dt);
+   display_fps(cur_dt); /* Exception. */
 }
 
 

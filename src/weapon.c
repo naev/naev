@@ -75,6 +75,7 @@ typedef struct Weapon_ {
    int voice; /**< Weapon's voice. */
    double lockon; /**< some weapons have a lockon delay */
    double timer; /**< mainly used to see when the weapon was fired */
+   double anim; /**< Used for beam weapon graphics. */
 
    /* position update and render */
    void (*update)(struct Weapon_*, const double, WeaponLayer); /**< Updates the weapon */
@@ -105,7 +106,7 @@ static int beam_idgen = 0; /**< Beam identifier generator. */
 static Weapon* weapon_create( const Outfit* outfit,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const unsigned int parent, const unsigned int target );
-static void weapon_render( const Weapon* w );
+static void weapon_render( Weapon* w, const double dt );
 static void weapons_updateLayer( const double dt, const WeaponLayer layer );
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer );
 static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos );
@@ -413,8 +414,9 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
  * @brief Renders all the weapons in a layer.
  *
  *    @param layer Layer to render.
+ *    @param dt Current delta tick.
  */
-void weapons_render( const WeaponLayer layer )
+void weapons_render( const WeaponLayer layer, const double dt )
 {
    Weapon** wlayer;
    int* nlayer;
@@ -432,7 +434,7 @@ void weapons_render( const WeaponLayer layer )
    }
    
    for (i=0; i<(*nlayer); i++)
-      weapon_render( wlayer[i] );
+      weapon_render( wlayer[i], dt );
 }
 
 
@@ -442,8 +444,9 @@ void weapons_render( const WeaponLayer layer )
  * @brief Renders an individual weapon.
  *
  *    @param w Weapon to render.
+ *    @param dt Current delta tick.
  */
-static void weapon_render( const Weapon* w )
+static void weapon_render( Weapon* w, const double dt )
 {
    int sx, sy;
    double x,y;
@@ -490,36 +493,41 @@ static void weapon_render( const Weapon* w )
             /* Start faded. */
             ACOLOUR(cWhite, 0.);
 
-            glTexCoord2d( 0., 0. );
+            glTexCoord2d( w->anim, 0. );
             glVertex2d( -gfx->sh/2., 0. );
 
-            glTexCoord2d( 0., 1. );
+            glTexCoord2d( w->anim, 1. );
             glVertex2d( +gfx->sh/2., 0. );
 
             /* Full strength. */
             COLOUR(cWhite);
 
-            glTexCoord2d( 10. / gfx->sw, 0. );
+            glTexCoord2d( w->anim + 10. / gfx->sw, 0. );
             glVertex2d( -gfx->sh/2., 10. );
 
-            glTexCoord2d( 10. / gfx->sw, 1. );
+            glTexCoord2d( w->anim + 10. / gfx->sw, 1. );
             glVertex2d( +gfx->sh/2., 10. );
 
-            glTexCoord2d( 0.8*w->outfit->u.bem.range / gfx->sw, 0. );
+            glTexCoord2d( w->anim + 0.8*w->outfit->u.bem.range / gfx->sw, 0. );
             glVertex2d( -gfx->sh/2., 0.8*w->outfit->u.bem.range );
 
-            glTexCoord2d( 0.8*w->outfit->u.bem.range / gfx->sw, 1. );
+            glTexCoord2d( w->anim + 0.8*w->outfit->u.bem.range / gfx->sw, 1. );
             glVertex2d( +gfx->sh/2., 0.8*w->outfit->u.bem.range );
 
             /* Fades out. */
             ACOLOUR(cWhite, 0.);
 
-            glTexCoord2d( w->outfit->u.bem.range / gfx->sw, 0. );
+            glTexCoord2d( w->anim + w->outfit->u.bem.range / gfx->sw, 0. );
             glVertex2d( -gfx->sh/2., w->outfit->u.bem.range );
 
-            glTexCoord2d( w->outfit->u.bem.range / gfx->sw, 1. );
+            glTexCoord2d( w->anim + w->outfit->u.bem.range / gfx->sw, 1. );
             glVertex2d( +gfx->sh/2., w->outfit->u.bem.range );
          glEnd(); /* GL_QUAD_STRIP */
+
+         /* Do the beam movement. */
+         w->anim -= 5. * dt;
+         if (w->anim <= -gfx->sw)
+            w->anim += gfx->sw;
 
          /* Clean up. */
          glDisable(GL_TEXTURE_2D);

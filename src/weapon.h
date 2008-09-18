@@ -49,7 +49,7 @@ void weapon_explode( double x, double y, double radius,
  * update
  */
 void weapons_update( const double dt );
-void weapons_render( const WeaponLayer layer );
+void weapons_render( const WeaponLayer layer, const double dt );
 
 
 /*
