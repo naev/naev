@@ -609,8 +609,10 @@ Mission* missions_computer( int *n, int faction, char* planet, char* sysname )
 
          for (j=0; j<rep; j++) /* random chance of rep appearances */
             if (RNGF() < chance) {
-               tmp = realloc( tmp, sizeof(Mission) * ++m);
-               mission_init( &tmp[m-1], misn, 0 );
+               m++;
+               tmp = realloc( tmp, sizeof(Mission) * m);
+               if (mission_init( &tmp[m-1], misn, 0 ) == 0)
+                  m--;
             }
       }
    }
