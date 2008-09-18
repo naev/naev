@@ -77,7 +77,7 @@
   <general>
    <bar>The Jorlan people don't really have a habit for drinking.  You only seem to see other spacefarers in the bar, but no natives.</bar>
    <description>Jorlan is a small moon that orbits Haleb IV.  It's inhabitants are mostly part of the ore refining process, as it supplies most of the Frontier with all sorts of alloys.  Gas miners are also sent down to Haleb IV every dozen STU when the planetary conditions are favorable, otherwise the incredible winds can crush many ships like tin cans.</description>
-   <faction>Independent</faction>
+   <faction>Frontier</faction>
    <commodities>
     <commodity>Food</commodity>
     <commodity>Ore</commodity>
@@ -490,7 +490,7 @@
   <general>
    <bar>The bar is very large and not too full.  You notice the drink list has a "living" menu.  When you ask the bartender about them, he says they specialize in drinks containing living beings.  Generally jellyfish, but sometimes small cephalopods or more exotic beings.  What strange habits.</bar>
    <description>Cetrat is a small aquatic planet known for it's medical algae that grows.  No one has been able to reproduce it exactly as it is in the wild, but with the abundance of it all over there hasn't been too much effort in that field.</description>
-   <faction>Independent</faction>
+   <faction>Frontier</faction>
    <commodities>
     <commodity>Medicine</commodity>
     <commodity>Luxury Goods</commodity>

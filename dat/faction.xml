@@ -10,6 +10,16 @@
    <enemy>Pirate</enemy>
    <enemy>Collective</enemy>
    <enemy>FLF</enemy>
+  </enemies>
+ </faction>
+ <faction name="Frontier">
+  <longname>Frontier Alliance</longname>
+  <player>0</player>
+  <allies>
+   <ally>Trader</ally>
+  </allies>
+  <enemies>
+   <enemy>Pirate</enemy>
    <enemy>Collective</enemy>
   </enemies>
  </faction>
@@ -21,6 +31,7 @@
    <ally>Independent</ally>
    <ally>Empire</ally>
    <ally>Soromid</ally>
+   <ally>Frontier</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
@@ -38,6 +49,7 @@
    <enemy>Collective</enemy>
    <enemy>Soromid</enemy>
    <enemy>Sirius</enemy>
+   <enemy>Frontier</enemy>
   </enemies>
  </faction>
  <faction name="Militia">
@@ -78,6 +90,7 @@
    <enemy>Pirate</enemy>
    <enemy>FLF</enemy>
    <enemy>Sirius</enemy>
+   <enemy>Frontier</enemy>
   </enemies>
  </faction>
  <faction name="FLF">
