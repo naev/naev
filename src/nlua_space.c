@@ -18,7 +18,9 @@
 #include "naev.h"
 #include "rng.h"
 #include "land.h"
+#include "nlua.h"
 #include "nluadef.h"
+#include "nlua_faction.h"
 #include "map.h"
 
 
@@ -307,6 +309,7 @@ static int planetL_get( lua_State *L )
    char *rndplanet;
    LuaPlanet planet;
    LuaSystem sys;
+   LuaFaction *f;
 
    rndplanet = NULL;
    nplanets = 0;
@@ -324,9 +327,9 @@ static int planetL_get( lua_State *L )
    }
 
    /* Get a planet by faction */
-   else if (lua_isnumber(L,1)) {
-      i = lua_tonumber(L,1);
-      planets = space_getFactionPlanet( &nplanets, &i, 1 );
+   else if (lua_isfaction(L,1)) {
+      f = lua_tofaction(L,1);
+      planets = space_getFactionPlanet( &nplanets, &f->f, 1 );
    }
 
    /* Get a planet by name */
@@ -342,7 +345,8 @@ static int planetL_get( lua_State *L )
       factions = malloc( sizeof(int) * nfactions );
       i = 0;
       while (lua_next(L, -2) != 0) {
-         factions[i++] = (int) lua_tonumber(L,-1);
+         f = lua_tofaction(L, -1);
+         factions[i++] = f->f;
          lua_pop(L,1);
       }
       
@@ -427,8 +431,10 @@ static int planetL_name( lua_State *L )
 static int planetL_faction( lua_State *L )
 {
    LuaPlanet *p;
+   LuaFaction f;
    p = lua_toplanet(L,1);
-   lua_pushstring(L,faction_name(p->p->faction));
+   f.f = p->p->faction;
+   lua_pushfaction(L, f);
    return 1;
 }
 

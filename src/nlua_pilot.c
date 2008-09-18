@@ -16,8 +16,10 @@
 
 #include "log.h"
 #include "naev.h"
-#include "nlua_space.h"
+#include "nlua.h"
 #include "nluadef.h"
+#include "nlua_space.h"
+#include "nlua_faction.h"
 #include "rng.h"
 #include "pilot.h"
 #include "player.h"
@@ -571,19 +573,25 @@ static int pilotL_setFaction( lua_State *L )
    NLUA_MIN_ARGS(2);
    Pilot *p;
    LuaPilot *lp;
+   LuaFaction *f;
    int fid;
    char *faction;
 
    /* Parse parameters. */
    lp = lua_topilot(L,1);
-   if (lua_isstring(L,2))
+   if (lua_isstring(L,2)) {
       faction = (char*) lua_tostring(L,2);
+      fid = faction_get(faction);
+   }
+   else if (lua_isfaction(L,2)) {
+      f = lua_tofaction(L,2);
+      fid = f->f;
+   }
    else NLUA_INVALID_PARAMETER();
 
    /* Get pilot/faction. */
    p = pilot_get(lp->pilot);
    if (p==NULL) return 0;
-   fid = faction_get(faction);
 
    /* Set the new faction. */
    p->faction = fid;

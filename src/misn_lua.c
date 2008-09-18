@@ -22,6 +22,7 @@
 #include "nlua.h"
 #include "nlua_space.h"
 #include "nlua_pilot.h"
+#include "nlua_faction.h"
 #include "hook.h"
 #include "mission.h"
 #include "log.h"
@@ -220,6 +221,7 @@ int misn_loadLibs( lua_State *L )
    lua_loadPilot(L,0);
    lua_loadMusic(L,0);
    lua_loadDiff(L,0);
+   lua_loadFaction(L,0);
    return 0;
 }
 /**
@@ -599,6 +601,7 @@ static int misn_factions( lua_State *L )
 {
    int i;
    MissionData *dat;
+   LuaFaction f;
 
    dat = cur_mission->data;
 
@@ -606,7 +609,8 @@ static int misn_factions( lua_State *L )
    lua_newtable(L);
    for (i=0; i<dat->avail.nfactions; i++) {
       lua_pushnumber(L,i+1); /* index, starts with 1 */
-      lua_pushnumber(L,dat->avail.factions[i]); /* value */
+      f.f = dat->avail.factions[i];
+      lua_pushfaction(L, f); /* value */
       lua_rawset(L,-3); /* store the value in the table */
    }
    return 1;
