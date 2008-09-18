@@ -65,6 +65,32 @@
    <faction>Collective</faction>
   </general>
  </planet>
+ <planet name="Jorlan">
+  <GFX>
+   <exterior>traderoom.png</exterior>
+   <space>D01.png</space>
+  </GFX>
+  <pos>
+   <y>120</y>
+   <x>-97</x>
+  </pos>
+  <general>
+   <bar>The Jorlan people don't really have a habit for drinking.  You only seem to see other spacefarers in the bar, but no natives.</bar>
+   <description>Jorlan is a small moon that orbits Haleb IV.  It's inhabitants are mostly part of the ore refining process, as it supplies most of the Frontier with all sorts of alloys.  Gas miners are also sent down to Haleb IV every dozen STU when the planetary conditions are favorable, otherwise the incredible winds can crush many ships like tin cans.</description>
+   <faction>Independent</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>6</main>
+    <special>0</special>
+   </tech>
+   <services>15</services>
+   <class>D</class>
+  </general>
+ </planet>
  <planet name="Selphod">
   <GFX>
    <exterior>snow.png</exterior>
@@ -136,6 +162,23 @@
    <class>0</class>
   </general>
  </planet>
+ <planet name="Haleb IV">
+  <GFX>
+   <space>I00.png</space>
+  </GFX>
+  <pos>
+   <y>-17</y>
+   <x>-57</x>
+  </pos>
+  <general>
+   <services>0</services>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <class>I</class>
+  </general>
+ </planet>
  <planet name="Tau Station">
   <GFX>
    <exterior>station00.png</exterior>
@@ -158,6 +201,27 @@
    </tech>
    <services>7</services>
    <class>0</class>
+  </general>
+ </planet>
+ <planet name="Raglan Outpost">
+  <GFX>
+   <exterior>station00.png</exterior>
+   <space>000.png</space>
+  </GFX>
+  <pos>
+   <y>17</y>
+   <x>394</x>
+  </pos>
+  <general>
+   <bar>The Raglan bar is a pretty small bar for Dvaered standards, and quite empty too.</bar>
+   <description>Raglan Outpost was established after the Dvaered-Frontier war broke out before the Incident.  To this day the Frontier still is demanding for it's dismantling in the halls of the Emperor, although he has yet to make a statement.  Meanwhile the Dvaereds use this base intensively in their fight against the FLF.</description>
+   <faction>Dvaered</faction>
+   <tech>
+    <main>7</main>
+    <special>0</special>
+   </tech>
+   <services>3</services>
+   <class>1</class>
   </general>
  </planet>
  <planet name="Torloth">

@@ -202,36 +202,22 @@
    <stars>200</stars>
   </general>
  </ssys>
- <ssys name="Doranthex">
-  <fleets>
-   <fleet chance="20">Trader Mule</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="40">Empire Lancelot</fleet>
-   <fleet chance="70">Dvaered Vendetta</fleet>
-   <fleet chance="70">Dvaered Vendetta</fleet>
-   <fleet chance="60">Dvaered Ancestor</fleet>
-   <fleet chance="40">Empire Pacifier</fleet>
-   <fleet chance="20">Dvaered Goddard</fleet>
-   <fleet chance="20">FLF Pacifier</fleet>
-  </fleets>
+ <ssys name="Tormulex">
+  <fleets/>
   <jumps>
-   <jump>Draygar</jump>
-   <jump>Torg</jump>
-   <jump>Goddard</jump>
+   <jump>Myad</jump>
+   <jump>Toros</jump>
   </jumps>
   <pos>
-   <y>-176</y>
-   <x>109</x>
+   <y>-78</y>
+   <x>636</x>
   </pos>
-  <planets>
-   <planet>Doranthex Prime</planet>
-  </planets>
+  <planets/>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
-   <stars>500</stars>
+   <nebulae volatility="100">500</nebulae>
+   <stars>400</stars>
   </general>
  </ssys>
  <ssys name="NGC-7843">
@@ -563,36 +549,33 @@
    <stars>300</stars>
   </general>
  </ssys>
- <ssys name="Cygnus">
+ <ssys name="Draconis">
   <fleets>
-   <fleet chance="60">Trader Mule</fleet>
-   <fleet chance="60">Trader Mule</fleet>
-   <fleet chance="60">Trader Llama</fleet>
+   <fleet chance="30">Trader Llama</fleet>
+   <fleet chance="30">Trader Llama</fleet>
+   <fleet chance="30">Empire Lancelot</fleet>
+   <fleet chance="30">Empire Lancelot</fleet>
    <fleet chance="30">Sml Trader Convoy</fleet>
-   <fleet chance="50">Empire Lancelot</fleet>
+   <fleet chance="50">Trader Mule</fleet>
    <fleet chance="20">Empire Pacifier</fleet>
-   <fleet chance="40">Empire Admonisher</fleet>
-   <fleet chance="30">Pirate Hyena Pack</fleet>
+   <fleet chance="20">Pirate Admonisher</fleet>
   </fleets>
   <jumps>
-   <jump>Delta Pavonis</jump>
    <jump>Tau Prime</jump>
-   <jump>Borla</jump>
-   <jump>Goddard</jump>
-   <jump>Draygar</jump>
+   <jump>Mizar</jump>
   </jumps>
   <pos>
-   <y>-85</y>
-   <x>88</x>
+   <y>-33</y>
+   <x>220</x>
   </pos>
   <planets>
-   <planet>Torloth</planet>
+   <planet>Zabween</planet>
   </planets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
-   <stars>400</stars>
+   <nebulae volatility="0">100</nebulae>
+   <stars>600</stars>
   </general>
  </ssys>
  <ssys name="Tau Prime">
@@ -861,33 +844,36 @@
    <stars>400</stars>
   </general>
  </ssys>
- <ssys name="Draconis">
+ <ssys name="Cygnus">
   <fleets>
-   <fleet chance="30">Trader Llama</fleet>
-   <fleet chance="30">Trader Llama</fleet>
-   <fleet chance="30">Empire Lancelot</fleet>
-   <fleet chance="30">Empire Lancelot</fleet>
+   <fleet chance="60">Trader Mule</fleet>
+   <fleet chance="60">Trader Mule</fleet>
+   <fleet chance="60">Trader Llama</fleet>
    <fleet chance="30">Sml Trader Convoy</fleet>
-   <fleet chance="50">Trader Mule</fleet>
+   <fleet chance="50">Empire Lancelot</fleet>
    <fleet chance="20">Empire Pacifier</fleet>
-   <fleet chance="20">Pirate Admonisher</fleet>
+   <fleet chance="40">Empire Admonisher</fleet>
+   <fleet chance="30">Pirate Hyena Pack</fleet>
   </fleets>
   <jumps>
+   <jump>Delta Pavonis</jump>
    <jump>Tau Prime</jump>
-   <jump>Mizar</jump>
+   <jump>Borla</jump>
+   <jump>Goddard</jump>
+   <jump>Draygar</jump>
   </jumps>
   <pos>
-   <y>-33</y>
-   <x>220</x>
+   <y>-85</y>
+   <x>88</x>
   </pos>
   <planets>
-   <planet>Zabween</planet>
+   <planet>Torloth</planet>
   </planets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">100</nebulae>
-   <stars>600</stars>
+   <nebulae volatility="0">0</nebulae>
+   <stars>400</stars>
   </general>
  </ssys>
  <ssys name="Myad">
@@ -970,22 +956,36 @@
    <stars>400</stars>
   </general>
  </ssys>
- <ssys name="Tormulex">
-  <fleets/>
+ <ssys name="Doranthex">
+  <fleets>
+   <fleet chance="20">Trader Mule</fleet>
+   <fleet chance="50">Trader Llama</fleet>
+   <fleet chance="50">Trader Llama</fleet>
+   <fleet chance="40">Empire Lancelot</fleet>
+   <fleet chance="70">Dvaered Vendetta</fleet>
+   <fleet chance="70">Dvaered Vendetta</fleet>
+   <fleet chance="60">Dvaered Ancestor</fleet>
+   <fleet chance="40">Empire Pacifier</fleet>
+   <fleet chance="20">Dvaered Goddard</fleet>
+   <fleet chance="20">FLF Pacifier</fleet>
+  </fleets>
   <jumps>
-   <jump>Myad</jump>
-   <jump>Toros</jump>
+   <jump>Draygar</jump>
+   <jump>Torg</jump>
+   <jump>Goddard</jump>
   </jumps>
   <pos>
-   <y>-78</y>
-   <x>636</x>
+   <y>-176</y>
+   <x>109</x>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Doranthex Prime</planet>
+  </planets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="100">500</nebulae>
-   <stars>400</stars>
+   <nebulae volatility="0">0</nebulae>
+   <stars>500</stars>
   </general>
  </ssys>
  <ssys name="Toros">
@@ -1160,6 +1160,27 @@
    <stars>100</stars>
   </general>
  </ssys>
+ <ssys name="Sigur">
+  <fleets/>
+  <jumps>
+   <jump>NCG-8037</jump>
+   <jump>Zylex</jump>
+   <jump>Doeston</jump>
+   <jump>Arcanis</jump>
+   <jump>Oriantis</jump>
+  </jumps>
+  <pos>
+   <y>-15</y>
+   <x>435</x>
+  </pos>
+  <planets/>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebulae volatility="0">300</nebulae>
+   <stars>400</stars>
+  </general>
+ </ssys>
  <ssys name="Theras">
   <fleets>
    <fleet chance="60">Trader Mule</fleet>
@@ -1175,6 +1196,7 @@
   <jumps>
    <jump>Zacron</jump>
    <jump>Toaxis</jump>
+   <jump>Haleb</jump>
   </jumps>
   <pos>
    <y>-266</y>
@@ -1206,37 +1228,6 @@
    <asteroids>0</asteroids>
    <interference>0</interference>
    <nebulae volatility="500">900</nebulae>
-   <stars>500</stars>
-  </general>
- </ssys>
- <ssys name="Zacron">
-  <fleets>
-   <fleet chance="40">Dvaered Ancestor</fleet>
-   <fleet chance="60">Dvaered Vendetta</fleet>
-   <fleet chance="20">Dvaered Goddard</fleet>
-   <fleet chance="40">Pirate Hyena</fleet>
-   <fleet chance="40">Pirate Ancestor</fleet>
-   <fleet chance="40">Pirate Vendetta</fleet>
-   <fleet chance="20">Pirate Admonisher</fleet>
-   <fleet chance="20">Empire Pacifier</fleet>
-   <fleet chance="20">FLF Sml Force</fleet>
-  </fleets>
-  <jumps>
-   <jump>Draygar</jump>
-   <jump>Torg</jump>
-   <jump>Theras</jump>
-   <jump>Raelid</jump>
-   <jump>Toaxis</jump>
-  </jumps>
-  <pos>
-   <y>-193</y>
-   <x>252</x>
-  </pos>
-  <planets/>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
    <stars>500</stars>
   </general>
  </ssys>
@@ -1318,6 +1309,40 @@
    <stars>200</stars>
   </general>
  </ssys>
+ <ssys name="Haleb">
+  <fleets>
+   <fleet chance="5">FLF Med Force</fleet>
+   <fleet chance="10">FLF Pacifier</fleet>
+   <fleet chance="10">FLF Sml Force</fleet>
+   <fleet chance="15">Dvaered Goddard</fleet>
+   <fleet chance="50">Dvaered Vendetta</fleet>
+   <fleet chance="40">Dvaered Ancestor</fleet>
+   <fleet chance="20">FLF Vendetta</fleet>
+   <fleet chance="20">Dvaered Sml Force</fleet>
+   <fleet chance="50">Trader Mule</fleet>
+   <fleet chance="50">Trader Mule</fleet>
+   <fleet chance="70">Trader Llama</fleet>
+   <fleet chance="70">Trader Llama</fleet>
+  </fleets>
+  <jumps>
+   <jump>Theras</jump>
+  </jumps>
+  <pos>
+   <y>-327</y>
+   <x>403</x>
+  </pos>
+  <planets>
+   <planet>Haleb IV</planet>
+   <planet>Jorlan</planet>
+   <planet>Raglan Outpost</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
+   <stars>400</stars>
+  </general>
+ </ssys>
  <ssys name="Delta Pavonis">
   <fleets>
    <fleet chance="40">Sml Trader Convoy</fleet>
@@ -1349,25 +1374,35 @@
    <stars>500</stars>
   </general>
  </ssys>
- <ssys name="Sigur">
-  <fleets/>
+ <ssys name="Zacron">
+  <fleets>
+   <fleet chance="40">Dvaered Ancestor</fleet>
+   <fleet chance="60">Dvaered Vendetta</fleet>
+   <fleet chance="20">Dvaered Goddard</fleet>
+   <fleet chance="40">Pirate Hyena</fleet>
+   <fleet chance="40">Pirate Ancestor</fleet>
+   <fleet chance="40">Pirate Vendetta</fleet>
+   <fleet chance="20">Pirate Admonisher</fleet>
+   <fleet chance="20">Empire Pacifier</fleet>
+   <fleet chance="20">FLF Sml Force</fleet>
+  </fleets>
   <jumps>
-   <jump>NCG-8037</jump>
-   <jump>Zylex</jump>
-   <jump>Doeston</jump>
-   <jump>Arcanis</jump>
-   <jump>Oriantis</jump>
+   <jump>Draygar</jump>
+   <jump>Torg</jump>
+   <jump>Theras</jump>
+   <jump>Raelid</jump>
+   <jump>Toaxis</jump>
   </jumps>
   <pos>
-   <y>-15</y>
-   <x>435</x>
+   <y>-193</y>
+   <x>252</x>
   </pos>
   <planets/>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">300</nebulae>
-   <stars>400</stars>
+   <nebulae volatility="0">0</nebulae>
+   <stars>500</stars>
   </general>
  </ssys>
  <ssys name="Goddard">
