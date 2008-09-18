@@ -2054,8 +2054,8 @@ void player_brokeHyperspace (void)
          player_rmFlag(PLAYER_AUTONAV);
       }
       else {
-         player_message( "Autonav continuing until destination (%d jumps left).",
-               map_npath );
+         player_message( "Autonav continuing until destination (%d jump%s left).",
+               map_npath, (map_npath==1) ? "" : "s" );
       }
    }
 
