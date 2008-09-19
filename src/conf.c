@@ -212,7 +212,7 @@ int conf_loadConfig ( const char* file )
                   continue;
                }
                /* set the keybind */
-               input_setKeybind( (char*)keybindNames[i], type, key, reverse );
+               input_setKeybind( (char*)keybindNames[i], type, key, KMOD_ALL, reverse );
             }
             else WARN("Malformed keybind in %s", file);              
 

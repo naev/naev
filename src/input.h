@@ -11,6 +11,9 @@
 #include "SDL.h"
 
 
+#define KMOD_ALL  0xffff /**< Comfort thing SDL is lacking. */
+
+
 /* input types */
 typedef enum { KEYBIND_NULL, KEYBIND_KEYBOARD, KEYBIND_JAXIS, KEYBIND_JBUTTON } KeybindType;
 
@@ -19,8 +22,8 @@ typedef enum { KEYBIND_NULL, KEYBIND_KEYBOARD, KEYBIND_JAXIS, KEYBIND_JBUTTON } 
  * set input
  */
 void input_setDefault (void);
-void input_setKeybind( char *keybind, KeybindType type, int key, int reverse );
-int input_getKeybind( char *keybind, KeybindType *type, int *reverse );
+void input_setKeybind( char *keybind, KeybindType type, int key, SDLMod mod, int reverse );
+int input_getKeybind( char *keybind, KeybindType *type, SDLMod *mod, int *reverse );
 
 /*
  * handle input

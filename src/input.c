@@ -31,6 +31,7 @@ typedef struct Keybind_ {
    KeybindType type; /**< type, defined in playe.h */
    unsigned int key; /**< key/axis/button event number */
    double reverse; /**< 1. if normal, -1. if reversed, only useful for joystick axis */
+   SDLMod mod; /**< Key modifiers (where applicable). */
 } Keybind;
 
 
@@ -75,36 +76,36 @@ extern unsigned int player_target;
 void input_setDefault (void)
 {
    /* movement */
-   input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, 0 );
-   input_setKeybind( "afterburn", KEYBIND_KEYBOARD, SDLK_UNKNOWN, 0 ); /* not set */
-   input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, 0 );
-   input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, 0 );
-   input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, 0 );
+   input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, KMOD_NONE, 0 );
+   input_setKeybind( "afterburn", KEYBIND_KEYBOARD, SDLK_UNKNOWN, KMOD_NONE, 0 ); /* not set */
+   input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, KMOD_NONE, 0 );
+   input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, KMOD_NONE, 0 );
+   input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, KMOD_NONE, 0 );
    /* targetting */
-   input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, 0 );
-   input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_t, 0 );
-   input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, 0 );
+   input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, KMOD_NONE, 0 );
+   input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_t, KMOD_NONE, 0 );
+   input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, KMOD_NONE, 0 );
    /* combat */
-   input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, 0 );
-   input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, 0 );
-   input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, 0 );
+   input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, KMOD_NONE, 0 );
+   input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, KMOD_NONE, 0 );
+   input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, KMOD_NONE, 0 );
    /* secondary weap */
-   input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, 0 );
-   input_setKeybind( "secondary_next", KEYBIND_KEYBOARD, SDLK_w, 0 );
+   input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, KMOD_NONE, 0 );
+   input_setKeybind( "secondary_next", KEYBIND_KEYBOARD, SDLK_w, KMOD_NONE, 0 );
    /* space */
-   input_setKeybind( "autonav", KEYBIND_KEYBOARD, SDLK_n, 0 );
-   input_setKeybind( "target_planet", KEYBIND_KEYBOARD, SDLK_p, 0 );
-   input_setKeybind( "land", KEYBIND_KEYBOARD, SDLK_l, 0 );
-   input_setKeybind( "thyperspace", KEYBIND_KEYBOARD, SDLK_h, 0 );
-   input_setKeybind( "starmap", KEYBIND_KEYBOARD, SDLK_m, 0 );
-   input_setKeybind( "jump", KEYBIND_KEYBOARD, SDLK_j, 0 );
+   input_setKeybind( "autonav", KEYBIND_KEYBOARD, SDLK_j, KMOD_SHIFT, 0 );
+   input_setKeybind( "target_planet", KEYBIND_KEYBOARD, SDLK_p, KMOD_NONE, 0 );
+   input_setKeybind( "land", KEYBIND_KEYBOARD, SDLK_l, KMOD_NONE, 0 );
+   input_setKeybind( "thyperspace", KEYBIND_KEYBOARD, SDLK_h, KMOD_NONE, 0 );
+   input_setKeybind( "starmap", KEYBIND_KEYBOARD, SDLK_m, KMOD_NONE, 0 );
+   input_setKeybind( "jump", KEYBIND_KEYBOARD, SDLK_j, KMOD_NONE, 0 );
    /* misc */
-   input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_KP_PLUS, 0 );
-   input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_KP_MINUS, 0 );
-   input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MULTIPLY, 0 );
-   input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_z, 0 );
-   input_setKeybind( "menu", KEYBIND_KEYBOARD, SDLK_ESCAPE, 0 );
-   input_setKeybind( "info", KEYBIND_KEYBOARD, SDLK_i, 0 );
+   input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_KP_PLUS, KMOD_NONE, 0 );
+   input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_KP_MINUS, KMOD_NONE, 0 );
+   input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MULTIPLY, KMOD_NONE, 0 );
+   input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_z, KMOD_NONE, 0 );
+   input_setKeybind( "menu", KEYBIND_KEYBOARD, SDLK_ESCAPE, KMOD_NONE, 0 );
+   input_setKeybind( "info", KEYBIND_KEYBOARD, SDLK_i, KMOD_NONE, 0 );
 }
 
 
@@ -154,15 +155,19 @@ void input_exit (void)
  *    @param keybind The name of the keybind defined above.
  *    @param type The type of the keybind.
  *    @param key The key to bind to.
+ *    @param mod Modifiers to check for.
  *    @param reverse Whether to reverse it or not.
  */
-void input_setKeybind( char *keybind, KeybindType type, int key, int reverse )
+void input_setKeybind( char *keybind, KeybindType type, int key,
+      SDLMod mod, int reverse )
 {  
    int i;
    for (i=0; strcmp(keybindNames[i],"end"); i++)
       if (strcmp(keybind, input_keybinds[i]->name)==0) {
          input_keybinds[i]->type = type;
          input_keybinds[i]->key = key;
+         /* Non-keyboards get mod KMOD_ALL to always match. */
+         input_keybinds[i]->mod = (type == KEYBIND_KEYBOARD) ? mod : KMOD_ALL;
          input_keybinds[i]->reverse = (reverse) ? -1. : 1. ;
          return;
       }
@@ -175,12 +180,13 @@ void input_setKeybind( char *keybind, KeybindType type, int key, int reverse )
  *
  * @brief Gets the value of a keybind.
  */
-int input_getKeybind( char *keybind, KeybindType *type, int *reverse )
+int input_getKeybind( char *keybind, KeybindType *type, SDLMod *mod, int *reverse )
 {
    int i;
    for (i=0; strcmp(keybindNames[i],"end"); i++)
       if (strcmp(keybind, input_keybinds[i]->name)==0) {
          if (type != NULL) (*type) = input_keybinds[i]->type;
+         if (mod != NULL) (*mod) = input_keybinds[i]->mod;
          if (reverse != NULL) (*reverse) = input_keybinds[i]->reverse;
          return input_keybinds[i]->key;
       }
@@ -198,7 +204,10 @@ int input_getKeybind( char *keybind, KeybindType *type, int *reverse )
  *    @param value The value of the keypress (defined above).
  *    @param abs Whether or not it's an absolute value (for them joystick).
  */
-#define KEY(s)    (strcmp(input_keybinds[keynum]->name,s)==0) /**< Shortcut for ease. */
+#define KEY(s)    (((input_keybinds[keynum]->mod & mod) || \
+         (input_keybinds[keynum]->mod == mod) || \
+         (input_keybinds[keynum]->mod == KMOD_ALL)) && \
+      (strcmp(input_keybinds[keynum]->name,s)==0)) /**< Shortcut for ease. */
 #define INGAME()  (!toolkit) /**< Makes sure player is in game. */
 #define NOHYP()   \
 (player && !pilot_isFlag(player,PILOT_HYP_PREP) &&\
@@ -207,6 +216,9 @@ int input_getKeybind( char *keybind, KeybindType *type, int *reverse )
 static void input_key( int keynum, double value, int kabs )
 {
    unsigned int t;
+   SDLMod mod;
+
+   mod = SDL_GetModState(); /* Yes we always get it just in case. */
 
    /*
     * movement
