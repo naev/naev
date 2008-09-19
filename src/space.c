@@ -537,27 +537,36 @@ void space_update( const double dt )
 
    if (cur_system == NULL) return; /* can't update a null system */
 
-   if (!space_spawn) return; /* spawning is disabled */
+   /* Spawning. */
+   if (space_spawn) {
+      spawn_timer -= dt;
 
-   spawn_timer -= dt;
+      if (cur_system->nfleets == 0) /* stop checking if there are no fleets */
+         spawn_timer = 300.;
+      
+      if (spawn_timer < 0.) { /* time to possibly spawn */
 
-   if (cur_system->nfleets == 0) /* stop checking if there are no fleets */
-      spawn_timer = 300.;
-   
-   if (spawn_timer < 0.) { /* time to possibly spawn */
-
-      /* spawn chance is based on overall % */
-      f = RNG(0,100*cur_system->nfleets);
-      j = 0;
-      for (i=0; i < cur_system->nfleets; i++) {
-         j += cur_system->fleets[i].chance;
-         if (f < j) { /* add one fleet */
-            space_addFleet( cur_system->fleets[i].fleet, 0 );
-            break;
+         /* spawn chance is based on overall % */
+         f = RNG(0,100*cur_system->nfleets);
+         j = 0;
+         for (i=0; i < cur_system->nfleets; i++) {
+            j += cur_system->fleets[i].chance;
+            if (f < j) { /* add one fleet */
+               space_addFleet( cur_system->fleets[i].fleet, 0 );
+               break;
+            }
          }
-      }
 
-      spawn_timer = 60./(float)cur_system->nfleets;
+         spawn_timer = 60./(float)cur_system->nfleets;
+      }
+   }
+
+   /* Volatile system. */
+   if (cur_system->nebu_volatility > 0.) {
+      /* Player takes damage. */
+      if (player)
+         pilot_hit( player, NULL, 0, DAMAGE_TYPE_RADIATION,
+               pow2(cur_system->nebu_volatility) / 500. * dt );
    }
 }
 

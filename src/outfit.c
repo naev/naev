@@ -182,33 +182,38 @@ Outfit** outfit_getTech( int *n, const int *tech, const int techmax )
 void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
       DamageType dtype, double dmg )
 {
+   double ds, da, kn;
    switch (dtype) {
       case DAMAGE_TYPE_ENERGY:
-         (*dshield) = dmg*1.1;
-         (*darmour) = dmg*0.7;
-         (*knockback) = 0.1;
+         ds = dmg*1.1;
+         da = dmg*0.7;
+         kn = 0.1;
          break;
       case DAMAGE_TYPE_KINETIC:
-         (*dshield) = dmg*0.8;
-         (*darmour) = dmg*1.2;
-         (*knockback) = 1.;
+         ds = dmg*0.8;
+         da = dmg*1.2;
+         kn = 1.;
          break;
       case DAMAGE_TYPE_ION:
-         (*dshield) = dmg;
-         (*darmour) = dmg;
-         (*knockback) = 0.4;
+         ds = dmg;
+         da = dmg;
+         kn = 0.4;
          break;
       case DAMAGE_TYPE_RADIATION:
-         (*dshield) = 0.15; /* still take damage, just not much */
-         (*darmour) = dmg;
-         (*knockback) = 0.8;
+         ds = dmg*0.15; /* still take damage, just not much */
+         da = dmg;
+         kn = 0.8;
          break;
 
       default:
          WARN("Unknown damage type: %d!", dtype);
-         (*dshield) = (*darmour) = (*knockback) = 0.;
+         da = ds = kn = 0.;
          break;
    }
+
+   if (dshield) *dshield = ds;
+   if (darmour) *darmour = da;
+   if (knockback) *knockback = kn;
 }
 
 

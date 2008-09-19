@@ -953,8 +953,13 @@ void player_renderGUI (void)
 
    /* Lockon warning */
    if (player->lockons > 0)
-      gl_printMid( NULL, SCREEN_W, 0., SCREEN_H-gl_defFont.h-25.,
+      gl_printMid( NULL, SCREEN_W - gui_xoff, 0., SCREEN_H-gl_defFont.h-25.,
             &cRed, "LOCKON DETECTED");
+
+   /* Volatile environment. */
+   if (cur_system->nebu_volatility > 0.)
+      gl_printMid( NULL, SCREEN_W - gui_xoff, 0., SCREEN_H-gl_defFont.h*2.-35.,
+            &cRed, "VOLATILE ENVIRONMENT DETECTED");
 
    /*
     *    G U I
