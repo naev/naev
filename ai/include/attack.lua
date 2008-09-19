@@ -37,9 +37,11 @@ end
 function attack_choose ()
    class = ai.shipclass()
 
+   --[[
    if class == "Bomber" then
       mem.atk_think = atk_b_think
       mem.atk = atk_b
    end
+   ]]
 end
 
