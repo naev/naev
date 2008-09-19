@@ -39,7 +39,7 @@ static Keybind** input_keybinds; /**< contains the players keybindings */
 /* name of each keybinding */
 const char *keybindNames[] = {
    /* Movement. */
-   "accel", "left", "right", "reverse",
+   "accel", "left", "right", "reverse", "afterburn",
    /* Targetting. */
    "target", "target_nearest", "target_hostile",
    /* Fighting. */
@@ -65,10 +65,6 @@ unsigned int input_afterburnSensibility = 250; /**< ms between taps to afterburn
  */
 extern double player_turn;
 extern unsigned int player_target;
-/*
- * from main.c
- */
-extern int show_fps;
 
 
 /**
@@ -80,6 +76,7 @@ void input_setDefault (void)
 {
    /* movement */
    input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, 0 );
+   input_setKeybind( "afterburn", KEYBIND_KEYBOARD, SDLK_UNKNOWN, 0 ); /* not set */
    input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, 0 );
    input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, 0 );
    input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, 0 );
@@ -232,6 +229,10 @@ static void input_key( int keynum, double value, int kabs )
          player_afterburnOver();
 
       if (value==KEY_PRESS) input_accelLast = t;
+   /* Afterburning. */
+   } else if (KEY("afterburn") && INGAME() && NOHYP()) {
+      if (value==KEY_PRESS) player_afterburn();
+      else if (value==KEY_RELEASE) player_afterburnOver();
 
    /* turning left */
    } else if (KEY("left")) {
@@ -243,7 +244,7 @@ static void input_key( int keynum, double value, int kabs )
 
       if (kabs) { player_turn = -value; }
       else { player_turn -= value; }
-      if (player_turn < -1.) { player_turn = -1.; } /* make sure value is sane */
+      if (player_turn < -1.) player_turn = -1.; /* make sure value is sane */
 
    /* turning right */
    } else if (KEY("right")) {
