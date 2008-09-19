@@ -1691,6 +1691,11 @@ void player_abortAutonav (void)
    if (player_isFlag(PLAYER_AUTONAV)) {
       player_message("Autonav aborted!");
       player_rmFlag(PLAYER_AUTONAV);
+      if (pilot_isFlag(player, PILOT_HYP_PREP)) {
+         pilot_hyperspaceAbort(player);
+         player_message("Aborting hyperspace sequence.");
+         return;
+      }
    }
 }
 

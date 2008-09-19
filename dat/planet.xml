@@ -117,28 +117,25 @@
    <class>P</class>
   </general>
  </planet>
- <planet name="Doranthex Prime">
+ <planet name="Raglan Outpost">
   <GFX>
-   <exterior>lava.png</exterior>
-   <space>A01.png</space>
+   <exterior>station00.png</exterior>
+   <space>000.png</space>
   </GFX>
   <pos>
-   <y>0</y>
-   <x>0</x>
+   <y>17</y>
+   <x>394</x>
   </pos>
   <general>
-   <bar>The drinks served in the Furnance, as the bar calls itself are of a pretty strange variety.  They are generally very strong and served at a warm temperature.  The house specialties also contain volcanic ash which is harvested on the planet surface.  A strange bar indeed.</bar>
-   <description>Doranthex Prime is a mostly molten planet.  The only exception is a small island that drifts around the surface mainly around the polar regions.  On this island the Dvaered have established a small base, mainly for research and military prototyping, although civilians are allowed in the main facilities.  Due to the intense temperatures they are shielded by over 50 m of temperature isolating plating, which doesn't allow any views of the planet itself once you've landed.</description>
+   <bar>The Raglan bar is a pretty small bar for Dvaered standards, and quite empty too.</bar>
+   <description>Raglan Outpost was established after the Dvaered-Frontier war broke out before the Incident.  To this day the Frontier still is demanding for it's dismantling in the halls of the Emperor, although he has yet to make a statement.  Meanwhile the Dvaereds use this base intensively in their fight against the FLF.</description>
    <faction>Dvaered</faction>
-   <commodities>
-    <commodity>Food</commodity>
-   </commodities>
    <tech>
-    <main>0</main>
+    <main>7</main>
     <special>0</special>
    </tech>
    <services>3</services>
-   <class>A</class>
+   <class>1</class>
   </general>
  </planet>
  <planet name="Cerberus">
@@ -203,25 +200,28 @@
    <class>0</class>
   </general>
  </planet>
- <planet name="Raglan Outpost">
+ <planet name="Doranthex Prime">
   <GFX>
-   <exterior>station00.png</exterior>
-   <space>000.png</space>
+   <exterior>lava.png</exterior>
+   <space>A01.png</space>
   </GFX>
   <pos>
-   <y>17</y>
-   <x>394</x>
+   <y>0</y>
+   <x>0</x>
   </pos>
   <general>
-   <bar>The Raglan bar is a pretty small bar for Dvaered standards, and quite empty too.</bar>
-   <description>Raglan Outpost was established after the Dvaered-Frontier war broke out before the Incident.  To this day the Frontier still is demanding for it's dismantling in the halls of the Emperor, although he has yet to make a statement.  Meanwhile the Dvaereds use this base intensively in their fight against the FLF.</description>
+   <bar>The drinks served in the Furnance, as the bar calls itself are of a pretty strange variety.  They are generally very strong and served at a warm temperature.  The house specialties also contain volcanic ash which is harvested on the planet surface.  A strange bar indeed.</bar>
+   <description>Doranthex Prime is a mostly molten planet.  The only exception is a small island that drifts around the surface mainly around the polar regions.  On this island the Dvaered have established a small base, mainly for research and military prototyping, although civilians are allowed in the main facilities.  Due to the intense temperatures they are shielded by over 50 m of temperature isolating plating, which doesn't allow any views of the planet itself once you've landed.</description>
    <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
    <tech>
-    <main>7</main>
+    <main>0</main>
     <special>0</special>
    </tech>
    <services>3</services>
-   <class>1</class>
+   <class>A</class>
   </general>
  </planet>
  <planet name="Torloth">
@@ -550,6 +550,33 @@
    </tech>
    <services>31</services>
    <class>0</class>
+  </general>
+ </planet>
+ <planet name="Nor">
+  <GFX>
+   <exterior>gas.png</exterior>
+   <space>I01.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <bar>There's nothing remarkable about the Nor spaceport bar.  It's full of drunken Dvaereds trying to forget their hard labour.</bar>
+   <description>Nor was one of the first Dvaered worlds to be terraformed.  It's abundance in gas and ores made it a strategic location and has since then been heavily reenforced after FLF attacks and sabotages.</description>
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>7</services>
+   <class>I</class>
   </general>
  </planet>
  <planet name="S49281">
