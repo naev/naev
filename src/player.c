@@ -1695,12 +1695,15 @@ void player_abortAutonav (void)
 {
    if (player_isFlag(PLAYER_AUTONAV)) {
       player_message("Autonav aborted!");
-      player_acc = 0.; /* Might be acceling. */
       player_rmFlag(PLAYER_AUTONAV);
+
+      /* Get rid of acceleration. */
+      player_accelOver();
+
+      /* Break possible hyperspacing. */
       if (pilot_isFlag(player, PILOT_HYP_PREP)) {
          pilot_hyperspaceAbort(player);
          player_message("Aborting hyperspace sequence.");
-         return;
       }
    }
 }
@@ -1729,12 +1732,12 @@ void player_think( Pilot* pplayer )
          player_abortAutonav();
 
       if (space_canHyperspace(pplayer)) {
-         player_acc = 0.;
          player_jump();
       }
       else  {
          pilot_face( pplayer, VANGLE(pplayer->solid->pos) );
-         player_acc = 1.;
+         if (player_acc < 1.)
+            player_accel( 1. );
       }
    }
 
@@ -2022,6 +2025,9 @@ void player_jump (void)
       player_message("You do not have enough fuel to hyperspace jump.");
    else {
       player_message("Preparing for hyperspace.");
+      /* Stop acceleration noise. */
+      player_accelOver();
+      /* Stop possible shooting. */
       pilot_shootStop( player, 0 );
       pilot_shootStop( player, 1 );
    }
