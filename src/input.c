@@ -29,7 +29,7 @@
 typedef struct Keybind_ {
    char *name; /**< keybinding name, taken from keybindNames */
    KeybindType type; /**< type, defined in playe.h */
-   unsigned int key; /**< key/axis/button event number */
+   SDLKey key; /**< key/axis/button event number */
    double reverse; /**< 1. if normal, -1. if reversed, only useful for joystick axis */
    SDLMod mod; /**< Key modifiers (where applicable). */
 } Keybind;
@@ -205,9 +205,7 @@ int input_getKeybind( char *keybind, KeybindType *type, SDLMod *mod, int *revers
  *    @param value The value of the keypress (defined above).
  *    @param abs Whether or not it's an absolute value (for them joystick).
  */
-#define KEY(s)    (((input_keybinds[keynum]->mod==mod) || \
-         (input_keybinds[keynum]->mod==KMOD_ALL)) && \
-      (strcmp(input_keybinds[keynum]->name,s)==0)) /**< Shortcut for ease. */
+#define KEY(s)    (strcmp(input_keybinds[keynum]->name,s)==0) /**< Shortcut for ease. */
 #define INGAME()  (!toolkit) /**< Makes sure player is in game. */
 #define NOHYP()   \
 (player && !pilot_isFlag(player,PILOT_HYP_PREP) &&\
@@ -216,10 +214,7 @@ int input_getKeybind( char *keybind, KeybindType *type, SDLMod *mod, int *revers
 static void input_key( int keynum, double value, int kabs )
 {
    unsigned int t;
-   SDLMod mod;
 
-   mod = SDL_GetModState(); /* Yes we always get it just in case. */
-   mod &= ~(KMOD_CAPS | KMOD_NUM | KMOD_MODE); /* We want to ignore "global" modifiers. */
 
    /*
     * movement
@@ -409,10 +404,8 @@ static void input_key( int keynum, double value, int kabs )
  */
 /* prototypes */
 static void input_joyaxis( const unsigned int axis, const int value );
-static void input_joydown( const unsigned int button );
-static void input_joyup( const unsigned int button );
-static void input_keydown( SDLKey key );
-static void input_keyup( SDLKey key );
+static void input_joyevent( int event, const unsigned int button );
+static void input_keyevent( int event, SDLKey key, SDLMod mod );
 
 /*
  * joystick
@@ -426,41 +419,30 @@ static void input_joyaxis( const unsigned int axis, const int value )
          input_key(i,-(input_keybinds[i]->reverse)*(double)value/32767.,1);
 }
 /* joystick button down */
-static void input_joydown( const unsigned int button )
+static void input_joyevent( int event, const unsigned int button )
 {
    int i;
    for (i=0; strcmp(keybindNames[i],"end"); i++)
       if (input_keybinds[i]->type == KEYBIND_JBUTTON && input_keybinds[i]->key == button)
-         input_key(i,KEY_PRESS,0);
-}
-/* joystick button up */
-static void input_joyup( const unsigned int button )
-{  
-   int i;
-   for (i=0; strcmp(keybindNames[i],"end"); i++)
-      if (input_keybinds[i]->type == KEYBIND_JBUTTON && input_keybinds[i]->key == button)
-         input_key(i,KEY_RELEASE,0);
+         input_key(i, event, 0);
 }
 
 
 /*
  * keyboard
  */
-/* key down */
-static void input_keydown( SDLKey key )
+/* key event */
+static void input_keyevent( int event, SDLKey key, SDLMod mod )
 {
    int i;
+
+   mod &= ~(KMOD_CAPS | KMOD_NUM | KMOD_MODE); /* We want to ignore "global" modifiers. */
+
    for (i=0; strcmp(keybindNames[i],"end"); i++)
-      if (input_keybinds[i]->type == KEYBIND_KEYBOARD && input_keybinds[i]->key == key)
-         input_key(i,KEY_PRESS,0);
-}
-/* key up */
-static void input_keyup( SDLKey key )
-{  
-   int i;
-   for (i=0; strcmp(keybindNames[i],"end"); i++)
-      if (input_keybinds[i]->type == KEYBIND_KEYBOARD && input_keybinds[i]->key == key)
-         input_key(i,KEY_RELEASE,0);
+      if ((input_keybinds[i]->type == KEYBIND_KEYBOARD) &&
+            (input_keybinds[i]->key == key) &&
+            ((input_keybinds[i]->mod == mod) || (input_keybinds[i]->mod == KMOD_ALL))) 
+         input_key(i, event, 0);
 }
 
 
@@ -489,19 +471,19 @@ void input_handle( SDL_Event* event )
          break;
 
       case SDL_JOYBUTTONDOWN:
-         input_joydown(event->jbutton.button);
+         input_joyevent(KEY_PRESS, event->jbutton.button);
          break;
 
       case SDL_JOYBUTTONUP:
-         input_joyup(event->jbutton.button);
+         input_joyevent(KEY_RELEASE, event->jbutton.button);
          break;
 
       case SDL_KEYDOWN:
-         input_keydown(event->key.keysym.sym);
+         input_keyevent(KEY_PRESS, event->key.keysym.sym, event->key.keysym.mod);
          break;
 
       case SDL_KEYUP:
-         input_keyup(event->key.keysym.sym);
+         input_keyevent(KEY_RELEASE, event->key.keysym.sym, event->key.keysym.mod);
          break;
    }
 }
