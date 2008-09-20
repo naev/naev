@@ -76,11 +76,11 @@ extern unsigned int player_target;
 void input_setDefault (void)
 {
    /* movement */
-   input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, KMOD_NONE, 0 );
-   input_setKeybind( "afterburn", KEYBIND_KEYBOARD, SDLK_UNKNOWN, KMOD_NONE, 0 ); /* not set */
-   input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, KMOD_NONE, 0 );
-   input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, KMOD_NONE, 0 );
-   input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, KMOD_NONE, 0 );
+   input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, KMOD_ALL, 0 );
+   input_setKeybind( "afterburn", KEYBIND_KEYBOARD, SDLK_UNKNOWN, KMOD_ALL, 0 ); /* not set */
+   input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, KMOD_ALL, 0 );
+   input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, KMOD_ALL, 0 );
+   input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, KMOD_ALL, 0 );
    /* targetting */
    input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, KMOD_NONE, 0 );
    input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_t, KMOD_NONE, 0 );
@@ -93,7 +93,7 @@ void input_setDefault (void)
    input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, KMOD_NONE, 0 );
    input_setKeybind( "secondary_next", KEYBIND_KEYBOARD, SDLK_w, KMOD_NONE, 0 );
    /* space */
-   input_setKeybind( "autonav", KEYBIND_KEYBOARD, SDLK_j, KMOD_CTRL, 0 );
+   input_setKeybind( "autonav", KEYBIND_KEYBOARD, SDLK_j, KMOD_LCTRL, 0 );
    input_setKeybind( "target_planet", KEYBIND_KEYBOARD, SDLK_p, KMOD_NONE, 0 );
    input_setKeybind( "land", KEYBIND_KEYBOARD, SDLK_l, KMOD_NONE, 0 );
    input_setKeybind( "thyperspace", KEYBIND_KEYBOARD, SDLK_h, KMOD_NONE, 0 );
@@ -126,7 +126,8 @@ void input_init (void)
       temp = MALLOC_ONE(Keybind);
       temp->name = (char*)keybindNames[i];
       temp->type = KEYBIND_NULL;
-      temp->key = 0;
+      temp->key = SDLK_UNKNOWN;
+      temp->mod = KMOD_NONE;
       temp->reverse = 1.;
       input_keybinds[i] = temp;
    }
@@ -167,7 +168,7 @@ void input_setKeybind( char *keybind, KeybindType type, int key,
          input_keybinds[i]->type = type;
          input_keybinds[i]->key = key;
          /* Non-keyboards get mod KMOD_ALL to always match. */
-         input_keybinds[i]->mod = (type == KEYBIND_KEYBOARD) ? mod : KMOD_ALL;
+         input_keybinds[i]->mod = (type==KEYBIND_KEYBOARD) ? mod : KMOD_ALL;
          input_keybinds[i]->reverse = (reverse) ? -1. : 1. ;
          return;
       }
@@ -204,9 +205,8 @@ int input_getKeybind( char *keybind, KeybindType *type, SDLMod *mod, int *revers
  *    @param value The value of the keypress (defined above).
  *    @param abs Whether or not it's an absolute value (for them joystick).
  */
-#define KEY(s)    (((input_keybinds[keynum]->mod & mod) || \
-         (input_keybinds[keynum]->mod == mod) || \
-         (input_keybinds[keynum]->mod == KMOD_ALL)) && \
+#define KEY(s)    (((input_keybinds[keynum]->mod==mod) || \
+         (input_keybinds[keynum]->mod==KMOD_ALL)) && \
       (strcmp(input_keybinds[keynum]->name,s)==0)) /**< Shortcut for ease. */
 #define INGAME()  (!toolkit) /**< Makes sure player is in game. */
 #define NOHYP()   \
@@ -219,6 +219,7 @@ static void input_key( int keynum, double value, int kabs )
    SDLMod mod;
 
    mod = SDL_GetModState(); /* Yes we always get it just in case. */
+   mod &= ~(KMOD_CAPS | KMOD_NUM | KMOD_MODE); /* We want to ignore "global" modifiers. */
 
    /*
     * movement
@@ -421,30 +422,24 @@ static void input_joyaxis( const unsigned int axis, const int value )
 {
    int i;
    for (i=0; strcmp(keybindNames[i],"end"); i++)
-      if (input_keybinds[i]->type == KEYBIND_JAXIS && input_keybinds[i]->key == axis) {
+      if (input_keybinds[i]->type == KEYBIND_JAXIS && input_keybinds[i]->key == axis)
          input_key(i,-(input_keybinds[i]->reverse)*(double)value/32767.,1);
-         return;
-      }
 }
 /* joystick button down */
 static void input_joydown( const unsigned int button )
 {
    int i;
    for (i=0; strcmp(keybindNames[i],"end"); i++)
-      if (input_keybinds[i]->type == KEYBIND_JBUTTON && input_keybinds[i]->key == button) {
+      if (input_keybinds[i]->type == KEYBIND_JBUTTON && input_keybinds[i]->key == button)
          input_key(i,KEY_PRESS,0);
-         return;
-      }
 }
 /* joystick button up */
 static void input_joyup( const unsigned int button )
 {  
    int i;
    for (i=0; strcmp(keybindNames[i],"end"); i++)
-      if (input_keybinds[i]->type == KEYBIND_JBUTTON && input_keybinds[i]->key == button) {
+      if (input_keybinds[i]->type == KEYBIND_JBUTTON && input_keybinds[i]->key == button)
          input_key(i,KEY_RELEASE,0);
-         return;                                                          
-      }
 }
 
 
@@ -456,20 +451,16 @@ static void input_keydown( SDLKey key )
 {
    int i;
    for (i=0; strcmp(keybindNames[i],"end"); i++)
-      if (input_keybinds[i]->type == KEYBIND_KEYBOARD && input_keybinds[i]->key == key) {
+      if (input_keybinds[i]->type == KEYBIND_KEYBOARD && input_keybinds[i]->key == key)
          input_key(i,KEY_PRESS,0);
-         return;
-      }
 }
 /* key up */
 static void input_keyup( SDLKey key )
 {  
    int i;
    for (i=0; strcmp(keybindNames[i],"end"); i++)
-      if (input_keybinds[i]->type == KEYBIND_KEYBOARD && input_keybinds[i]->key == key) {
+      if (input_keybinds[i]->type == KEYBIND_KEYBOARD && input_keybinds[i]->key == key)
          input_key(i,KEY_RELEASE,0);
-         return;                                                          
-      }
 }
 
 
