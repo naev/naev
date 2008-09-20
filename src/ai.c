@@ -125,14 +125,15 @@ extern int pilot_nstack;
 static void ai_run( lua_State *L, const char *funcname );
 static int ai_loadProfile( char* filename );
 static void ai_freetask( Task* t );
-static void ai_setmemory (void);
+static void ai_setMemory (void);
 static void ai_create( Pilot* pilot, char *param );
 /* External C routines */
 void ai_attacked( Pilot* attacked, const unsigned int attacker ); /* weapon.c */
 /* C Routines made External */
-int ai_pinit( Pilot *p, char *ai );
-void ai_destroy( Pilot* p );
-void ai_think( Pilot* pilot );
+int ai_pinit( Pilot *p, char *ai ); /* pilot.c */
+void ai_destroy( Pilot* p ); /* pilot.c */
+void ai_think( Pilot* pilot ); /* pilot.c */
+void ai_setPilot( Pilot *p ); /* escort.c */
 
 
 /*
@@ -272,7 +273,6 @@ static Pilot *cur_pilot = NULL; /**< Current pilot.  All functions use this. */
 static double pilot_acc = 0.; /**< Current pilot's acceleration. */
 static double pilot_turn = 0.; /**< Current pilot's turning. */
 static int pilot_flags = 0; /**< Handle stuff like weapon firing. */
-static int pilot_target = 0; /**< Indicate the target to aim at for the pilot. */
 
 /*
  * ai status, used so that create functions can't be used elsewhere
@@ -283,11 +283,11 @@ static int ai_status = AI_STATUS_NORMAL; /**< Current AI run status. */
 
 
 /**
- * @fn static void ai_setmemory (void)
+ * @fn static void ai_setMemory (void)
  *
  * @brief Sets the cur_pilot's ai.
  */
-static void ai_setmemory (void)
+static void ai_setMemory (void)
 {
    lua_State *L;
    L = cur_pilot->ai->L;
@@ -296,6 +296,18 @@ static void ai_setmemory (void)
    lua_pushnumber(L, cur_pilot->id);
    lua_gettable(L, -2);
    lua_setglobal(L, "mem");
+}
+
+
+/**
+ * @fn void ai_setPilot( Pilot *p )
+ *
+ * @brief Sets the pilot for furthur AI calls.
+ */
+void ai_setPilot( Pilot *p )
+{
+   cur_pilot = p;
+   ai_setMemory();
 }
 
 
@@ -309,9 +321,6 @@ static void ai_setmemory (void)
  */
 static void ai_run( lua_State *L, const char *funcname )
 {
-   /* Set the pilot's memory. */
-   ai_setmemory();
-
    lua_getglobal(L, funcname);
    if (lua_pcall(L, 0, 0, 0)) /* error has occured */
       WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, funcname, lua_tostring(L,-1));
@@ -547,14 +556,14 @@ void ai_think( Pilot* pilot )
 {
    lua_State *L;
 
-   cur_pilot = pilot; /* set current pilot being processed */
+   ai_setPilot(pilot);
    L = cur_pilot->ai->L; /* set the AI profile to the current pilot's */
 
    /* clean up some variables */
    pilot_acc = 0;
    pilot_turn = 0.;
    pilot_flags = 0;
-   pilot_target = 0;
+   cur_pilot->target = cur_pilot->id;
 
    
    /* control function if pilot is idle or tick is up */
@@ -580,8 +589,8 @@ void ai_think( Pilot* pilot )
          cur_pilot->thrust * pilot_acc, cur_pilot->solid->dir );
 
    /* fire weapons if needed */
-   if (ai_isFlag(AI_PRIMARY)) pilot_shoot(pilot,pilot_target,0); /* primary */
-   if (ai_isFlag(AI_SECONDARY)) pilot_shoot(pilot,pilot_target,1); /* secondary */
+   if (ai_isFlag(AI_PRIMARY)) pilot_shoot(pilot,cur_pilot->target,0); /* primary */
+   if (ai_isFlag(AI_SECONDARY)) pilot_shoot(pilot,cur_pilot->target,1); /* secondary */
 }
 
 
@@ -597,7 +606,7 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker )
 {
    lua_State *L;
 
-   cur_pilot = attacked;
+   ai_setPilot(attacked);
    L = cur_pilot->ai->L;
    lua_getglobal(L, "attacked");
    lua_pushnumber(L, attacker);
@@ -620,11 +629,8 @@ static void ai_create( Pilot* pilot, char *param )
 {
    lua_State *L;
 
-   cur_pilot = pilot;
+   ai_setPilot( pilot );
    L = cur_pilot->ai->L;
-
-   /* Sets the pilot's memory. */
-   ai_setmemory();
 
    /* Set creation mode. */
    ai_status = AI_STATUS_CREATE;
@@ -1374,7 +1380,7 @@ static int ai_settarget( lua_State *L )
    NLUA_MIN_ARGS(1);
 
    if (lua_isnumber(L,1)) {
-      pilot_target = (int)lua_tonumber(L,1);
+      cur_pilot->target = (int)lua_tonumber(L,1);
       return 1;
    }
    NLUA_INVALID_PARAMETER();

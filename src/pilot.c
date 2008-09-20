@@ -1447,6 +1447,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, char *ai,
    else
       pilot->id = ++pilot_id; /* new unique pilot id based on pilot_id, can't be 0 */
 
+   /* Basic information. */
    pilot->ship = ship;
    pilot->name = strdup( (name==NULL) ? ship->name : name );
 
@@ -1501,6 +1502,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, char *ai,
    pilot->update = pilot_update;
 
    /* AI */
+   pilot->target = pilot->id; /* Self = no target. */
    if (ai != NULL)
       ai_pinit( pilot, ai ); /* Must run before ai_create */
 }

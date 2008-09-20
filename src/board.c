@@ -26,12 +26,6 @@
 #define BOARDING_HEIGHT 200 /**< Boarding window height. */
 
 
-/*
- * externs
- */
-extern unsigned int player_target;
-
-
 static unsigned int board_wid = 0; /**< Boarding window identifier. */
 
 
@@ -56,12 +50,12 @@ void player_board (void)
 {  
    Pilot *p;
 
-   if (player_target==PLAYER_ID) {
+   if (player->target==PLAYER_ID) {
       player_message("You need a target to board first!");
       return;
    }
 
-   p = pilot_get(player_target);
+   p = pilot_get(player->target);
 
    if (!pilot_isDisabled(p)) {
       player_message("You cannot board a ship that isn't disabled!");
@@ -143,7 +137,7 @@ static void board_stealCreds( char* str )
    (void)str;
    Pilot* p;
 
-   p = pilot_get(player_target);
+   p = pilot_get(player->target);
 
    if (p->credits==0) { /* you can't steal from the poor */
       player_message("The ship has no credits.");
@@ -172,7 +166,7 @@ static void board_stealCargo( char* str )
    int q;
    Pilot* p;
 
-   p = pilot_get(player_target);
+   p = pilot_get(player->target);
 
    if (p->ncommodities==0) { /* no cargo */
       player_message("The ship has no cargo.");
@@ -209,7 +203,7 @@ static int board_fail (void)
 {
    Pilot* p;
 
-   p = pilot_get(player_target);
+   p = pilot_get(player->target);
 
    /* fail chance */
    if (RNG(0,100) > (int)(50. * 
@@ -240,7 +234,7 @@ static void board_update (void)
    char cred[10];
    Pilot* p;
 
-   p = pilot_get(player_target);
+   p = pilot_get(player->target);
 
    credits2str( cred, p->credits, 2 );
 

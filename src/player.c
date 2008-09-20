@@ -91,7 +91,6 @@ unsigned int player_flags = 0; /**< Player flags. */
 /* used in input.c */
 double player_turn = 0.; /**< Turn velocity from input. */
 static double player_acc = 0.; /**< Accel velocity from input. */
-unsigned int player_target = PLAYER_ID; /**< Targetted pilot. PLAYER_ID is none. */
 /* used in map.c */
 int planet_target = -1; /**< Targetted planet. -1 is none. */
 int hyperspace_target = -1; /**< Targetted hyperspace route. -1 is none. */
@@ -739,7 +738,8 @@ void player_warp( const double x, const double y )
  */
 void player_clear (void)
 {
-   player_target = PLAYER_ID;
+   if (player != NULL)
+      player->target = PLAYER_ID;
    planet_target = -1;
    hyperspace_target = -1;
 }
@@ -880,10 +880,10 @@ void player_render (void)
    if ((player != NULL) && !player_isFlag(PLAYER_CREATING)) {
 
       /* renders the player target graphics */
-      if (player_target != PLAYER_ID) p = pilot_get(player_target);
+      if (player->target != PLAYER_ID) p = pilot_get(player->target);
       else p = NULL;
       if ((p==NULL) || pilot_isFlag(p,PILOT_DEAD))
-         player_target = PLAYER_ID; /* no more pilot_target */
+         player->target = PLAYER_ID; /* no more pilot_target */
       else { /* still is a pilot_target */
          if (pilot_isDisabled(p)) c = &cInert;
          else if (pilot_isFlag(p,PILOT_HOSTILE)) c = &cHostile;
@@ -997,7 +997,7 @@ void player_renderGUI (void)
 
    /* render the pilot_nstack */
    for (j=0, i=1; i<pilot_nstack; i++) { /* skip the player */
-      if (pilot_stack[i]->id == player_target) j = i;
+      if (pilot_stack[i]->id == player->target) j = i;
       else gui_renderPilot(pilot_stack[i]);
    }
    /* render the targetted pilot */
@@ -1136,8 +1136,8 @@ void player_renderGUI (void)
    /*
     * target
     */
-   if (player_target != PLAYER_ID) {
-      p = pilot_get(player_target);
+   if (player->target != PLAYER_ID) {
+      p = pilot_get(player->target);
 
       /* blit the pilot target */
       gl_blitStatic( p->ship->gfx_target, gui.target.x, gui.target.y, NULL );
@@ -1305,7 +1305,7 @@ static void gui_renderPilot( const Pilot* p )
 
    glBegin(GL_QUADS);
       /* colors */
-      if (p->id == player_target) col = &cRadar_targ;
+      if (p->id == player->target) col = &cRadar_targ;
       else if (pilot_isDisabled(p)) col = &cInert;
       else if (pilot_isFlag(p,PILOT_HOSTILE)) col = &cHostile;
       else col = faction_getColour(p->faction);
@@ -1743,10 +1743,10 @@ void player_think( Pilot* pplayer )
 
    /* turning taken over by PLAYER_FACE */
    if (player_isFlag(PLAYER_FACE)) { 
-      if (player_target != PLAYER_ID)
+      if (player->target != PLAYER_ID)
          pilot_face( pplayer,
                vect_angle( &player->solid->pos,
-                  &pilot_get(player_target)->solid->pos ));
+                  &pilot_get(player->target)->solid->pos ));
       else if (planet_target != -1)
          pilot_face( pplayer,
                vect_angle( &player->solid->pos,
@@ -1769,7 +1769,7 @@ void player_think( Pilot* pplayer )
     */
    /* Primary weapon. */
    if (player_isFlag(PLAYER_PRIMARY)) {
-      pilot_shoot( pplayer, player_target, 0 );
+      pilot_shoot( pplayer, player->target, 0 );
       player_setFlag(PLAYER_PRIMARY_L);
    }
    else if (player_isFlag(PLAYER_PRIMARY_L)) {
@@ -1785,7 +1785,7 @@ void player_think( Pilot* pplayer )
          pilot_shootStop( pplayer, 1 );
       }
       else
-         pilot_shoot( pplayer, player_target, 1 );
+         pilot_shoot( pplayer, player->target, 1 );
 
       player_setFlag(PLAYER_SECONDARY_L);
    }
@@ -2189,10 +2189,10 @@ void player_targetHostile (void)
          }
       }
 
-   if ((tp != PLAYER_ID) && (tp != player_target))
+   if ((tp != PLAYER_ID) && (tp != player->target))
       player_playSound( snd_target, 1 );
 
-   player_target = tp;
+   player->target = tp;
 }
 
 
@@ -2203,9 +2203,9 @@ void player_targetHostile (void)
  */
 void player_targetNext (void)
 {
-   player_target = pilot_getNextID(player_target);
+   player->target = pilot_getNextID(player->target);
 
-   if (player_target != PLAYER_ID)
+   if (player->target != PLAYER_ID)
       player_playSound( snd_target, 1 );
 }
 
@@ -2219,10 +2219,10 @@ void player_targetNearest (void)
 {
    unsigned int t;
 
-   t = player_target;
-   player_target = pilot_getNearestPilot(player);
+   t = player->target;
+   player->target = pilot_getNearestPilot(player);
 
-   if ((player_target != PLAYER_ID) && (t != player_target))
+   if ((player->target != PLAYER_ID) && (t != player->target))
       player_playSound( snd_target, 1 );
 }
 

@@ -180,7 +180,13 @@ typedef struct Pilot_ {
    int hook_type[PILOT_HOOKS]; /**< Type of the hook attached to the pilot. */
    int hook[PILOT_HOOKS]; /**< Hook ID */
 
+   /* Escort stuff. */
+   unsigned int parent; /**< Pilot's parent. */
+   unsigned int *escorts; /**< Pilot's escorts. */
+   int nescorts; /**< Number of pilot escorts. */
+
    /* AI */
+   unsigned int target; /**< AI target. */
    AI_Profile* ai; /**< ai personality profile */
    unsigned int tcontrol; /**< timer for control tick */
    unsigned int timer[MAX_AI_TIMERS]; /**< timers for AI */
