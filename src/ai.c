@@ -589,8 +589,8 @@ void ai_think( Pilot* pilot )
          cur_pilot->thrust * pilot_acc, cur_pilot->solid->dir );
 
    /* fire weapons if needed */
-   if (ai_isFlag(AI_PRIMARY)) pilot_shoot(pilot,cur_pilot->target,0); /* primary */
-   if (ai_isFlag(AI_SECONDARY)) pilot_shoot(pilot,cur_pilot->target,1); /* secondary */
+   if (ai_isFlag(AI_PRIMARY)) pilot_shoot(pilot, 0); /* primary */
+   if (ai_isFlag(AI_SECONDARY)) pilot_shoot(pilot, 1); /* secondary */
 }
 
 

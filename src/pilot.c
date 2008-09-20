@@ -76,7 +76,7 @@ extern void player_dead (void);
 extern void player_destroyed (void);
 extern int gui_load( const char *name );
 /* internal */
-static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t );
+static void pilot_shootWeapon( Pilot* p, PilotOutfit* w );
 static void pilot_update( Pilot* pilot, const double dt );
 static void pilot_hyperspace( Pilot* pilot );
 void pilot_render( Pilot* pilot ); /* externed in player.c */
@@ -299,15 +299,14 @@ int pilot_freeSpace( Pilot* p )
 
 
 /**
- * @fn void pilot_shoot( Pilot* p, const unsigned int target, const int secondary )
+ * @fn void pilot_shoot( Pilot* p, const int secondary )
  *
  * @brief Makes the pilot shoot.
  *
  *    @param p The pilot which is shooting.
- *    @param target Target of tho shooting pilot.
  *    @param secondary Whether they are shooting secondary weapons or primary weapons.
  */
-void pilot_shoot( Pilot* p, const unsigned int target, const int secondary )
+void pilot_shoot( Pilot* p, const int secondary )
 {
    int i;
    Outfit* o;
@@ -320,13 +319,13 @@ void pilot_shoot( Pilot* p, const unsigned int target, const int secondary )
          o = p->outfits[i].outfit;
          if (!outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY) &&
                (outfit_isBolt(o) || outfit_isBeam(o))) /** @todo possibly make this neater. */
-            pilot_shootWeapon( p, &p->outfits[i], target );
+            pilot_shootWeapon( p, &p->outfits[i] );
       }
    }
    else { /* secondary weapon */
 
       if (!p->secondary) return; /* no secondary weapon */
-      pilot_shootWeapon( p, p->secondary, target );
+      pilot_shootWeapon( p, p->secondary );
 
    }
 }
@@ -376,15 +375,14 @@ void pilot_shootStop( Pilot* p, const int secondary )
 
 
 /**
- * @fn static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
+ * @fn static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
  *
  * @brief Actually handles the shooting, how often the player can shoot and such.
  *
  *    @param p Pilot that is shooting.
  *    @param w Pilot's outfit to shoot.
- *    @param t Pilot's target.
  */
-static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
+static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 {
    int quantity, delay;
 
@@ -407,7 +405,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
 
       p->energy -= outfit_energy(w->outfit);
       weapon_add( w->outfit, p->solid->dir,
-            &p->solid->pos, &p->solid->vel, p->id, t );
+            &p->solid->pos, &p->solid->vel, p->id, p->target );
    }
 
    /*
@@ -421,7 +419,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
       /** @todo Handle warmup stage. */
       w->state = PILOT_OUTFIT_ON;
       w->beamid = beam_start( w->outfit, p->solid->dir,
-            &p->solid->pos, &p->solid->vel, p->id, t );
+            &p->solid->pos, &p->solid->vel, p->id, p->target );
    }
 
    /*
@@ -432,7 +430,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
    else if (outfit_isLauncher(w->outfit) && (w==p->secondary)) {
 
       /* Shooter can't be the target - sanity check for the player */
-      if ((w->outfit->type != OUTFIT_TYPE_MISSILE_DUMB) && (p->id==t))
+      if ((w->outfit->type != OUTFIT_TYPE_MISSILE_DUMB) && (p->id==p->target))
          return;
 
       /* Must have ammo left. */
@@ -445,7 +443,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w, const unsigned int t )
 
       p->energy -= outfit_energy(w->outfit);
       weapon_add( p->ammo->outfit, p->solid->dir,
-            &p->solid->pos, &p->solid->vel, p->id, t );
+            &p->solid->pos, &p->solid->vel, p->id, p->target );
 
       p->ammo->quantity -= 1; /* we just shot it */
       if (p->ammo->quantity <= 0) /* Out of ammo. */

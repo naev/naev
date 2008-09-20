@@ -1769,7 +1769,7 @@ void player_think( Pilot* pplayer )
     */
    /* Primary weapon. */
    if (player_isFlag(PLAYER_PRIMARY)) {
-      pilot_shoot( pplayer, player->target, 0 );
+      pilot_shoot( pplayer, 0 );
       player_setFlag(PLAYER_PRIMARY_L);
    }
    else if (player_isFlag(PLAYER_PRIMARY_L)) {
@@ -1785,7 +1785,7 @@ void player_think( Pilot* pplayer )
          pilot_shootStop( pplayer, 1 );
       }
       else
-         pilot_shoot( pplayer, player->target, 1 );
+         pilot_shoot( pplayer, 1 );
 
       player_setFlag(PLAYER_SECONDARY_L);
    }
