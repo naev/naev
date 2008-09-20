@@ -125,11 +125,12 @@ extern int pilot_nstack;
 static void ai_run( lua_State *L, const char *funcname );
 static int ai_loadProfile( char* filename );
 static void ai_freetask( Task* t );
+static void ai_setmemory (void);
+static void ai_create( Pilot* pilot, char *param );
 /* External C routines */
 void ai_attacked( Pilot* attacked, const unsigned int attacker ); /* weapon.c */
-void ai_create( Pilot* pilot ); /* pilot.c */
 /* C Routines made External */
-void ai_pinit( Pilot *p, AI_Profile *ai );
+int ai_pinit( Pilot *p, char *ai );
 void ai_destroy( Pilot* p );
 void ai_think( Pilot* pilot );
 
@@ -282,6 +283,23 @@ static int ai_status = AI_STATUS_NORMAL; /**< Current AI run status. */
 
 
 /**
+ * @fn static void ai_setmemory (void)
+ *
+ * @brief Sets the cur_pilot's ai.
+ */
+static void ai_setmemory (void)
+{
+   lua_State *L;
+   L = cur_pilot->ai->L;
+
+   lua_getglobal(L, "pilotmem");
+   lua_pushnumber(L, cur_pilot->id);
+   lua_gettable(L, -2);
+   lua_setglobal(L, "mem");
+}
+
+
+/**
  * @fn static void ai_run( lua_State *L, const char *funcname )
  *
  * @brief Attempts to run a function.
@@ -292,10 +310,7 @@ static int ai_status = AI_STATUS_NORMAL; /**< Current AI run status. */
 static void ai_run( lua_State *L, const char *funcname )
 {
    /* Set the pilot's memory. */
-   lua_getglobal(L, "pilotmem");
-   lua_pushnumber(L, cur_pilot->id);
-   lua_gettable(L, -2);
-   lua_setglobal(L, "mem");
+   ai_setmemory();
 
    lua_getglobal(L, funcname);
    if (lua_pcall(L, 0, 0, 0)) /* error has occured */
@@ -304,7 +319,7 @@ static void ai_run( lua_State *L, const char *funcname )
 
 
 /**
- * @fn void ai_pinit( Pilot *p, AI_Profile *ai )
+ * @fn int ai_pinit( Pilot *p, char *ai )
  *
  * @brief Initializes the pilot in the ai.
  *
@@ -313,16 +328,48 @@ static void ai_run( lua_State *L, const char *funcname )
  *    @param p Pilot to initialize in AI.
  *    @param ai AI to initialize pilot.
  */
-void ai_pinit( Pilot *p, AI_Profile *ai )
+int ai_pinit( Pilot *p, char *ai )
 {
+   int i, n;
+   AI_Profile *prof;
    lua_State *L;
-   L = ai->L;
+   char buf[PATH_MAX], param[PATH_MAX];
+
+   /* Split parameter from ai itself. */
+   n = 0;
+   for (i=0; ai[i] != '\0'; i++) {
+      /* Overflow protection. */
+      if (i > PATH_MAX)
+         break;
+
+      /* Check to see if we find the splitter. */
+      if (ai[i] == '*') {
+         buf[i] = '\0';
+         n = i+1;
+         continue;
+      }
+
+      if (n==0)
+         buf[i] = ai[i];
+      else
+         param[i-n] = ai[i];
+   }
+   if (n!=0) param[i-n] = '\0'; /* Terminate string if needed. */
+
+   prof = ai_getProfile(buf);
+   p->ai = prof;
+   L = p->ai->L;
 
    /* Adds a new pilot memory in the memory table. */
    lua_getglobal(L, "pilotmem");
    lua_pushnumber(L, p->id);
    lua_newtable(L);
    lua_settable(L,-3);
+
+   /* Create the pilot. */
+   ai_create( p, (n!=0) ? param : NULL );
+
+   return 0;
 }
 
 
@@ -559,22 +606,49 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker )
 
 
 /**
- * @fn void ai_create( Pilot* pilot )
+ * @fn static void ai_create( Pilot* pilot, char *param )
  *
  * @brief Runs the create() function in the pilot.
  *
  * Should create all the gear and sucth the pilot has.
  *
  *    @param pilot Pilot to "create".
+ *    @param param Parameter to pass to "create" function.
  */
-void ai_create( Pilot* pilot )
+static void ai_create( Pilot* pilot, char *param )
 {
    lua_State *L;
 
    cur_pilot = pilot;
    L = cur_pilot->ai->L;
+
+   /* Sets the pilot's memory. */
+   ai_setmemory();
+
+   /* Set creation mode. */
    ai_status = AI_STATUS_CREATE;
-   ai_run(L, "create");
+
+   /* Prepare stack. */
+   lua_getglobal(L, "create");
+
+   /* Parse parameter. */
+   if (param != NULL) {
+      /* Number */
+      if (isdigit(param[0]))
+         lua_pushnumber(L, atoi(param));
+      /* Special case player. */
+      else if (strcmp(param,"player")==0)
+         lua_pushnumber(L, PLAYER_ID);
+      /* Default. */
+      else
+         lua_pushstring(L, param);
+   }
+
+   /* Run function. */
+   if (lua_pcall(L, (param!=NULL) ? 1 : 0, 0, 0)) /* error has occured */
+      WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, "create", lua_tostring(L,-1));
+
+   /* Recover normal mode. */
    ai_status = AI_STATUS_NORMAL;
 }
 

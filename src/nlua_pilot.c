@@ -295,7 +295,7 @@ static int pilot_addFleet( lua_State *L )
                plt->name,
                flt->faction,
                (fltai != NULL) ? /* Lua AI Override */
-                     ai_getProfile(fltai) : 
+                     fltai : 
                      (plt->ai != NULL) ? /* Pilot AI Override */
                         plt->ai : flt->ai,
                a,

@@ -200,7 +200,7 @@ typedef struct FleetPilot_ {
    Ship* ship; /**< ship the pilot is flying */
    char* name; /**< used if they have a special name like uniques */
    int chance; /**< chance of this pilot appearing in the leet */
-   AI_Profile* ai; /**< ai different of fleet's global ai */
+   char *ai; /**< ai different of fleet's global ai */
 } FleetPilot;
 
 /**
@@ -217,7 +217,7 @@ typedef struct Fleet_ {
    char* name; /**< fleet name, used as the identifier */
    int faction; /**< faction of the fleet */
 
-   AI_Profile* ai; /**< AI profile to use */
+   char *ai; /**< AI profile to use */
 
    FleetPilot* pilots; /**< the pilots in the fleet */
    int npilots; /**< total number of pilots */
@@ -275,12 +275,12 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id );
 /*
  * creation
  */
-void pilot_init( Pilot* dest, Ship* ship, char* name, int faction, AI_Profile* ai,
+void pilot_init( Pilot* dest, Ship* ship, char* name, int faction, char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel, const int flags );
-unsigned int pilot_create( Ship* ship, char* name, int faction, AI_Profile* ai,
+unsigned int pilot_create( Ship* ship, char* name, int faction, char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel, const int flags );
 Pilot* pilot_createEmpty( Ship* ship, char* name,
-      int faction, AI_Profile* ai, const int flags );
+      int faction, char *ai, const int flags );
 Pilot* pilot_copy( Pilot* src );
 
 

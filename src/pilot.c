@@ -65,10 +65,9 @@ static int nfleets = 0; /**< Number of fleets. */
  */
 /* external */
 /* ai.c */
-extern void ai_pinit( Pilot *p, AI_Profile *ai );
+extern AI_Profile* ai_pinit( Pilot *p, char *ai );
 extern void ai_destroy( Pilot* p );
 extern void ai_think( Pilot* pilot );
-extern void ai_create( Pilot* pilot );
 /* player.c */
 extern void player_think( Pilot* pilot );
 extern void player_brokeHyperspace (void);
@@ -1421,7 +1420,7 @@ void pilot_addHook( Pilot *pilot, int type, int hook )
 
 
 /**
- * @fn void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* ai,
+ * @fn void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, char *ai,
  *          const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
  *
  * @brief Initialize pilot.
@@ -1429,13 +1428,13 @@ void pilot_addHook( Pilot *pilot, int type, int hook )
  *    @param ship Ship pilot will be flying.
  *    @param name Pilot's name, if NULL ship's name will be used.
  *    @param faction Faction of the pilot.
- *    @param ai AI profile to use for the pilot.
+ *    @param ai Name of the AI profile to use for the pilot.
  *    @param dir Initial direction to face (radians).
  *    @param vel Initial velocity.
  *    @param pos Initial position.
  *    @param flags Used for tweaking the pilot.
  */
-void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* ai,
+void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
 {
    ShipOutfit* so;
@@ -1453,12 +1452,6 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* 
 
    /* faction */
    pilot->faction = faction;
-
-   /* AI */
-   if (ai != NULL) {
-      ai_pinit( pilot, ai ); /* Must run before ai_create */
-      pilot->ai = ai;
-   }
 
    /* solid */
    pilot->solid = solid_create(ship->mass, dir, pos, vel);
@@ -1502,16 +1495,19 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* 
    else {
       pilot->think = ai_think;
       pilot->render = pilot_render;
-      ai_create(pilot); /* will run the create function in the ai */
    }
 
    /* all update the same way */
    pilot->update = pilot_update;
+
+   /* AI */
+   if (ai != NULL)
+      ai_pinit( pilot, ai ); /* Must run before ai_create */
 }
 
 
 /**
- * @fn unsigned int pilot_create( Ship* ship, char* name, int faction, AI_Profile* ai,
+ * @fn unsigned int pilot_create( Ship* ship, char* name, int faction, char *ai,
  *       const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
  *
  * @brief Creates a new pilot
@@ -1522,7 +1518,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, AI_Profile* 
  *
  * @sa pilot_init
  */
-unsigned int pilot_create( Ship* ship, char* name, int faction, AI_Profile* ai,
+unsigned int pilot_create( Ship* ship, char* name, int faction, char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
 {
    Pilot **tp, *dyn;
@@ -1551,7 +1547,7 @@ unsigned int pilot_create( Ship* ship, char* name, int faction, AI_Profile* ai,
 
 /**
  * @fn Pilot* pilot_createEmpty( Ship* ship, char* name,
- *       int faction, AI_Profile* ai, const int flags )
+ *       int faction, char *ai, const int flags )
  *
  * @brief Creates a pilot without adding it to the stack.
  *
@@ -1563,7 +1559,7 @@ unsigned int pilot_create( Ship* ship, char* name, int faction, AI_Profile* ai,
  *    @return Pointer to the new pilot (not added to stack).
  */
 Pilot* pilot_createEmpty( Ship* ship, char* name,
-      int faction, AI_Profile* ai, const int flags )
+      int faction, char *ai, const int flags )
 {
    Pilot* dyn;
    dyn = MALLOC_ONE(Pilot);
@@ -1786,7 +1782,7 @@ static Fleet* fleet_parse( const xmlNodePtr parent )
       if (xml_isNode(node,"faction"))
          temp->faction = faction_get(xml_get(node));
       else if (xml_isNode(node,"ai"))
-         temp->ai = ai_getProfile(xml_get(node));
+         temp->ai = strdup(xml_get(node));
       else if (xml_isNode(node,"pilots")) {
          cur = node->children;     
          do {
@@ -1799,12 +1795,7 @@ static Fleet* fleet_parse( const xmlNodePtr parent )
                pilot->name = c; /* No need to free since it will have to later */
 
                /* Check for ai override */
-               xmlr_attr(cur,"ai",c);
-               if (c!=NULL) {
-                  pilot->ai = ai_getProfile(c);
-                  free(c);
-               }
-               else pilot->ai = NULL;
+               xmlr_attr(cur,"ai",pilot->ai);
 
                /* Load pilot's ship */
                pilot->ship = ship_get(xml_get(cur));
@@ -1895,11 +1886,15 @@ void fleet_free (void)
    int i,j;
    if (fleet_stack != NULL) {
       for (i=0; i<nfleets; i++) {
-         for (j=0; j<fleet_stack[i].npilots; j++)
+         for (j=0; j<fleet_stack[i].npilots; j++) {
             if (fleet_stack[i].pilots[j].name)
                free(fleet_stack[i].pilots[j].name);
+            if (fleet_stack[i].pilots[j].ai)
+               free(fleet_stack[i].pilots[j].ai);
+         }
          free(fleet_stack[i].name);
          free(fleet_stack[i].pilots);
+         free(fleet_stack[i].ai);
       }
       free(fleet_stack);
       fleet_stack = NULL;
