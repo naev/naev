@@ -381,7 +381,7 @@ static void map_render( double bx, double by, double w, double h )
       }
 
       /* draw the system name */
-      if (sys_isKnown(sys)) {
+      if (sys_isKnown(sys) && (map_zoom > 0.5 )) {
          tx = x + 7. + sys->pos.x * map_zoom;
          ty = y - 5. + sys->pos.y * map_zoom;
          gl_print( &gl_smallFont,
@@ -527,7 +527,7 @@ static void map_buttonZoom( char* str )
    }
    else if (strcmp(str,"btnZoomOut")==0) {
       map_zoom -= (map_zoom > 1.) ? 0.5 : 0.25;
-      map_zoom = MAX(0.5, map_zoom);
+      map_zoom = MAX(0.25, map_zoom);
    }
 }
 
