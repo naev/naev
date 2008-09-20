@@ -124,6 +124,9 @@ int conf_loadConfig ( const char* file )
 {
    int i = 0;
    double d = 0.;
+   char *str, *mod;
+   int type, key, reverse;
+   SDLMod m;
 
    lua_State *L = nlua_newState();
    if (luaL_dofile(L, file) == 0) { /* configuration file exists */
@@ -175,8 +178,6 @@ int conf_loadConfig ( const char* file )
       }
 
       /* grab the keybindings if there are any */
-      char *str;
-      int type, key, reverse;
       for (i=0; strcmp(keybindNames[i],"end"); i++) {
          lua_getglobal(L, keybindNames[i]);
          str = NULL;
@@ -201,6 +202,11 @@ int conf_loadConfig ( const char* file )
             if (lua_isnumber(L, -1))
                reverse = 1;
 
+            lua_pushstring(L, "mod");
+            lua_gettable(L, -4);
+            if (lua_isstring(L, -1))
+               mod = (char*)lua_tostring(L, -1);
+
             if (key != -1 && str != NULL) { /* keybind is valid */
                /* get type */
                if (strcmp(str,"null")==0) type = KEYBIND_NULL;
@@ -211,8 +217,25 @@ int conf_loadConfig ( const char* file )
                   WARN("Unkown keybinding of type %s", str);
                   continue;
                }
+
+               if (mod != NULL) {
+                  if (strcmp(mod,"lctrl")==0) m = KMOD_LCTRL;
+                  else if (strcmp(mod,"rctrl")==0) m = KMOD_RCTRL;
+                  else if (strcmp(mod,"lshift")==0) m = KMOD_LSHIFT;
+                  else if (strcmp(mod,"rshift")==0) m = KMOD_RSHIFT;
+                  else if (strcmp(mod,"lalt")==0) m = KMOD_LALT;
+                  else if (strcmp(mod,"ralt")==0) m = KMOD_RALT;
+                  else if (strcmp(mod,"lmeta")==0) m = KMOD_LMETA;
+                  else if (strcmp(mod,"rmeta")==0) m = KMOD_RMETA;
+                  else {
+                     WARN("Unknown keybinding mod of type %s", mod);
+                     m = KMOD_NONE;
+                  }
+               }
+               else m = KMOD_NONE;
+
                /* set the keybind */
-               input_setKeybind( (char*)keybindNames[i], type, key, KMOD_ALL, reverse );
+               input_setKeybind( (char*)keybindNames[i], type, key, m, reverse );
             }
             else WARN("Malformed keybind in %s", file);              
 
