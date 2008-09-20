@@ -355,6 +355,7 @@ int ai_pinit( Pilot *p, char *ai )
          param[i-n] = ai[i];
    }
    if (n!=0) param[i-n] = '\0'; /* Terminate string if needed. */
+   else buf[i] = '\0';
 
    prof = ai_getProfile(buf);
    p->ai = prof;
