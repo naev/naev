@@ -1695,6 +1695,7 @@ void player_abortAutonav (void)
 {
    if (player_isFlag(PLAYER_AUTONAV)) {
       player_message("Autonav aborted!");
+      player_acc = 0.; /* Might be acceling. */
       player_rmFlag(PLAYER_AUTONAV);
       if (pilot_isFlag(player, PILOT_HYP_PREP)) {
          pilot_hyperspaceAbort(player);
@@ -1727,8 +1728,10 @@ void player_think( Pilot* pplayer )
       if (pplayer->lockons > 0)
          player_abortAutonav();
 
-      if (space_canHyperspace(pplayer))
+      if (space_canHyperspace(pplayer)) {
+         player_acc = 0.;
          player_jump();
+      }
       else  {
          pilot_face( pplayer, VANGLE(pplayer->solid->pos) );
          player_acc = 1.;
