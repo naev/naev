@@ -44,24 +44,26 @@
 #define pilot_setFlag(p,f) ((p)->flags |= (f)) /**< Sets flag f on pilot p. */
 #define pilot_rmFlag(p,f)  ((p)->flags ^= (f)) /**< Removes flag f on pilot p. */
 /* creation */
-#define PILOT_PLAYER       (1<<0) /**< pilot is a player. */
-#define PILOT_HASTURRET    (1<<20) /**< pilot has turrets. */
-#define PILOT_HASBEAMS     (1<<23) /**< Pilot has beam weapons. */
-#define PILOT_NO_OUTFITS   (1<<21) /**< do not create the pilot with outfits. */
-#define PILOT_EMPTY        (1<<22) /**< do not add pilot to stack. */
+#define PILOT_PLAYER       (1<<0) /**< Pilot is a player. */
+#define PILOT_ESCORT       (1<<1) /**< Pilot is an escort. */
+#define PILOT_CARRIED      (1<<2) /**< Pilot usually resides in a fighter bay. */
+#define PILOT_EMPTY        (1<<5) /**< do not add pilot to stack. */
+#define PILOT_NO_OUTFITS   (1<<6) /**< do not create the pilot with outfits. */
+#define PILOT_HASTURRET    (1<<9) /**< pilot has turrets. */
+#define PILOT_HASBEAMS     (1<<10) /**< Pilot has beam weapons. */
 /* dynamic */
-#define PILOT_HOSTILE      (1<<1) /**< pilot is hostile to the player. */
-#define PILOT_COMBAT       (1<<2) /**< pilot is engaged in combat. */
-#define PILOT_AFTERBURNER  (1<<3) /**< pilot has his afterburner activated. */
-#define PILOT_HYP_PREP     (1<<5) /**< pilot is getting ready for hyperspace. */
-#define PILOT_HYP_BEGIN    (1<<6) /**< pilot is starting engines. */
-#define PILOT_HYPERSPACE   (1<<7) /**< pilot is in hyperspace. */
-#define PILOT_BOARDED      (1<<8) /**< pilot has been boarded already. */
-#define PILOT_DISABLED     (1<<9) /**< pilot is disabled. */
-#define PILOT_DEAD         (1<<10) /**< pilot is in it's dying throes */
-#define PILOT_DEATH_SOUND  (1<<11) /**< pilot just did death explosion. */
-#define PILOT_EXPLODED     (1<<12) /**< pilot did final death explosion. */
-#define PILOT_DELETE       (1<<15) /**< pilot will get deleted asap. */
+#define PILOT_HOSTILE      (1<<11) /**< pilot is hostile to the player. */
+#define PILOT_COMBAT       (1<<12) /**< pilot is engaged in combat. */
+#define PILOT_AFTERBURNER  (1<<13) /**< pilot has his afterburner activated. */
+#define PILOT_HYP_PREP     (1<<15) /**< pilot is getting ready for hyperspace. */
+#define PILOT_HYP_BEGIN    (1<<16) /**< pilot is starting engines. */
+#define PILOT_HYPERSPACE   (1<<17) /**< pilot is in hyperspace. */
+#define PILOT_BOARDED      (1<<18) /**< pilot has been boarded already. */
+#define PILOT_DISABLED     (1<<19) /**< pilot is disabled. */
+#define PILOT_DEAD         (1<<20) /**< pilot is in it's dying throes */
+#define PILOT_DEATH_SOUND  (1<<21) /**< pilot just did death explosion. */
+#define PILOT_EXPLODED     (1<<22) /**< pilot did final death explosion. */
+#define PILOT_DELETE       (1<<25) /**< pilot will get deleted asap. */
 
 /* makes life easier */
 #define pilot_isPlayer(p)  ((p)->flags & PILOT_PLAYER) /**< Checks if pilot is a player. */

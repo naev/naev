@@ -19,6 +19,7 @@
 #include "menu.h"
 #include "board.h"
 #include "map.h"
+#include "escort.h"
 
 
 #define KEY_PRESS    ( 1.) /**< Key is pressed. */
@@ -45,6 +46,8 @@ const char *keybindNames[] = {
    "target", "target_nearest", "target_hostile",
    /* Fighting. */
    "primary", "face", "board",
+   /* Escorts. */
+   "e_attack", "e_hold", "e_return", "e_clear",
    /* Secondary weapons. */
    "secondary", "secondary_next",
    /* Space navigation. */
@@ -65,7 +68,6 @@ unsigned int input_afterburnSensibility = 250; /**< ms between taps to afterburn
  * from player.c
  */
 extern double player_turn;
-extern unsigned int player_target;
 
 
 /**
@@ -75,31 +77,36 @@ extern unsigned int player_target;
  */
 void input_setDefault (void)
 {
-   /* movement */
+   /* Movement. */
    input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, KMOD_ALL, 0 );
    input_setKeybind( "afterburn", KEYBIND_KEYBOARD, SDLK_UNKNOWN, KMOD_ALL, 0 ); /* not set */
    input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, KMOD_ALL, 0 );
    input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, KMOD_ALL, 0 );
    input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, KMOD_ALL, 0 );
-   /* targetting */
+   /* Targetting. */
    input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, KMOD_NONE, 0 );
    input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_t, KMOD_NONE, 0 );
    input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, KMOD_NONE, 0 );
-   /* combat */
+   /* Combat. */
    input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, KMOD_NONE, 0 );
    input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, KMOD_NONE, 0 );
    input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, KMOD_NONE, 0 );
-   /* secondary weap */
+   /* Escorts. */
+   input_setKeybind( "e_attack", KEYBIND_KEYBOARD, SDLK_f, KMOD_NONE, 0 );
+   input_setKeybind( "e_hold", KEYBIND_KEYBOARD, SDLK_g, KMOD_NONE, 0 );
+   input_setKeybind( "e_return", KEYBIND_KEYBOARD, SDLK_r, KMOD_NONE, 0 );
+   input_setKeybind( "e_clear", KEYBIND_KEYBOARD, SDLK_c, KMOD_NONE, 0 );
+   /* Secondary weapons. */
    input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, KMOD_ALL, 0 );
    input_setKeybind( "secondary_next", KEYBIND_KEYBOARD, SDLK_w, KMOD_NONE, 0 );
-   /* space */
+   /* Space. */
    input_setKeybind( "autonav", KEYBIND_KEYBOARD, SDLK_j, KMOD_LCTRL, 0 );
    input_setKeybind( "target_planet", KEYBIND_KEYBOARD, SDLK_p, KMOD_NONE, 0 );
    input_setKeybind( "land", KEYBIND_KEYBOARD, SDLK_l, KMOD_NONE, 0 );
    input_setKeybind( "thyperspace", KEYBIND_KEYBOARD, SDLK_h, KMOD_NONE, 0 );
    input_setKeybind( "starmap", KEYBIND_KEYBOARD, SDLK_m, KMOD_NONE, 0 );
    input_setKeybind( "jump", KEYBIND_KEYBOARD, SDLK_j, KMOD_NONE, 0 );
-   /* misc */
+   /* Misc. */
    input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_KP_PLUS, KMOD_NONE, 0 );
    input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_KP_MINUS, KMOD_NONE, 0 );
    input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MULTIPLY, KMOD_NONE, 0 );
@@ -323,6 +330,19 @@ static void input_key( int keynum, double value, int kabs )
          player_abortAutonav();
          player_board();
       }
+
+
+   /*
+    * Escorts.
+    */
+   } else if (INGAME() && KEY("e_attack")) {
+      if (value==KEY_PRESS) escorts_attack(player);
+   } else if (INGAME() && KEY("e_hold")) {
+      if (value==KEY_PRESS) escorts_hold(player);
+   } else if (INGAME() && KEY("e_return")) {
+      if (value==KEY_PRESS) escorts_return(player);
+   } else if (INGAME() && KEY("e_clear")) {
+      if (value==KEY_PRESS) escorts_clear(player);
 
 
    /*

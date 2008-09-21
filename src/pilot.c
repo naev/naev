@@ -1499,6 +1499,13 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, char *ai,
    /* all update the same way */
    pilot->update = pilot_update;
 
+   /* Escort stuff. */
+   if (flags & PILOT_ESCORT) {
+      pilot->flags |= PILOT_ESCORT;
+      if (flags & PILOT_CARRIED)
+         pilot->flags |= PILOT_CARRIED;
+   }
+
    /* AI */
    pilot->target = pilot->id; /* Self = no target. */
    if (ai != NULL)
@@ -1626,6 +1633,7 @@ void pilot_free( Pilot* p )
    if (p->outfits) free(p->outfits);
    free(p->name);
    if (p->commodities) free(p->commodities);
+   if (p->escorts) free(p->escorts);
    free(p);
 }
 

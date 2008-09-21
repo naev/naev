@@ -46,6 +46,8 @@ typedef enum OutfitType_ {
    OUTFIT_TYPE_MODIFCATION, /**< Modifies the ship base features. */
    OUTFIT_TYPE_AFTERBURNER, /**< Gives the ship afterburn capability. */
    OUTFIT_TYPE_JAMMER, /**< Used to nullify seeker missiles. */
+   OUTFIT_TYPE_FIGHTER_BAY, /**< Contains other ships. */
+   OUTFIT_TYPE_FIGHTER, /**< Ship contained in FIGHTER_BAY. */
    OUTFIT_TYPE_MAP, /**< Gives the player more knowledge about systems. */
    OUTFIT_TYPE_SENTINEL /**< indicates last type */
 } OutfitType;
@@ -187,6 +189,26 @@ typedef struct OutfitAfterburnerData_ {
 } OutfitAfterburnerData;
 
 /**
+ * @struct OutfitFighterBayData
+ *
+ * @brief Represents a fighter bay.
+ */
+typedef struct OutfitFighterBayData_ {
+   char *ammo; /**< Ships to use as ammo. */
+   double delay; /**< Delay between launches. */
+} OutfitFighterBayData;
+
+/**
+ * @struct OutfitFighterData
+ *
+ * @brief Represents a fighter for a fighter bay.
+ */
+typedef struct OutfitFighterData_ {
+   char *ship; /**< Ship to use for fighter. */
+   int sound; /**< Sound to make when launching. */
+} OutfitFighterData;
+
+/**
  * @struct OutfitMapData
  *
  * @brief Represents a map, is not actually stored on a ship but put into the nav system.
@@ -239,6 +261,8 @@ typedef struct Outfit_ {
       OutfitModificationData mod; /**< MODIFICATION */
       OutfitAfterburnerData afb; /**< AFTERBURNER */
       OutfitJammerData jam; /**< JAMMER */
+      OutfitFighterBayData bay; /**< FIGHTER_BAY */
+      OutfitFighterData fig; /**< FIGHTER */
       OutfitMapData map; /**< MAP */
    } u; /**< Holds the type-based outfit data. */
 } Outfit;
@@ -265,8 +289,10 @@ int outfit_isAmmo( const Outfit* o );
 int outfit_isTurret( const Outfit* o );
 int outfit_isMod( const Outfit* o );
 int outfit_isAfterburner( const Outfit* o );
-int outfit_isMap( const Outfit* o );
 int outfit_isJammer( const Outfit* o );
+int outfit_isFighterBay( const Outfit* o );
+int outfit_isFighter( const Outfit* o );
+int outfit_isMap( const Outfit* o );
 const char* outfit_getType( const Outfit* o );
 const char* outfit_getTypeBroad( const Outfit* o );
 

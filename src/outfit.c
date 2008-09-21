@@ -335,6 +335,26 @@ int outfit_isJammer( const Outfit* o )
    return (o->type==OUTFIT_TYPE_JAMMER);
 }
 /**
+ * @fn int outfit_isFighterBay( const Outfit* o )
+ * @brief Checks if outfit is a fighter bay.
+ *    @param o Outfit to check.
+ *    @return 1 if o is a jammer.
+ */
+int outfit_isFighterBay( const Outfit* o )
+{
+   return (o->type==OUTFIT_TYPE_FIGHTER_BAY);
+}
+/**
+ * @fn int outfit_isFighter( const Outfit* o )
+ * @brief Checks if outfit is a fighter.
+ *    @param o Outfit to check.
+ *    @return 1 if o is a jammer.
+ */
+int outfit_isFighter( const Outfit* o )
+{
+   return (o->type==OUTFIT_TYPE_FIGHTER);
+}
+/**
  * @fn int outfit_isMap( const Outfit* o )
  * @brief Checks if outfit is a space map.
  *    @param o Outfit to check.
@@ -404,6 +424,7 @@ int outfit_delay( const Outfit* o )
    if (outfit_isBolt(o)) return o->u.blt.delay;
    else if (outfit_isBeam(o)) return o->u.bem.delay;
    else if (outfit_isLauncher(o)) return o->u.lau.delay;
+   else if (outfit_isFighterBay(o)) return o->u.bay.delay;
    return -1;
 }
 /**
@@ -473,6 +494,8 @@ const char* outfit_getType( const Outfit* o )
          "Ship Modification",
          "Afterburner",
          "Jammer",
+         "Fighter Bay",
+         "Fighter",
          "Map"
    };
    return outfit_typename[o->type];
@@ -489,30 +512,18 @@ const char* outfit_getType( const Outfit* o )
  */
 const char* outfit_getTypeBroad( const Outfit* o )
 {
-   int i = 0;
-   const char* outfit_typenamebroad[] = { "NULL",
-         "Bolt Weapon",
-         "Beam Weapon",
-         "Launcher",
-         "Ammo",
-         "Turret",
-         "Modification",
-         "Afterburner",
-         "Jammer",
-         "Map"
-   };
-
-   if (outfit_isBolt(o)) i = 1;
-   else if (outfit_isBeam(o)) i = 2;
-   else if (outfit_isLauncher(o)) i = 3;
-   else if (outfit_isAmmo(o)) i = 4;
-   else if (outfit_isTurret(o)) i = 5;
-   else if (outfit_isMod(o)) i = 6;
-   else if (outfit_isAfterburner(o)) i = 7;
-   else if (outfit_isJammer(o)) i = 8;
-   else if (outfit_isMap(o)) i = 9;
-
-   return outfit_typenamebroad[i];
+   if (outfit_isBolt(o)) return "Bolt Weapon";
+   else if (outfit_isBeam(o)) return "Beam Weapon";
+   else if (outfit_isLauncher(o)) return "Launcher";
+   else if (outfit_isAmmo(o)) return "Ammo";
+   else if (outfit_isTurret(o)) return "Turret";
+   else if (outfit_isMod(o)) return "Modification";
+   else if (outfit_isAfterburner(o)) return "Afterburner";
+   else if (outfit_isJammer(o)) return "Jammer";
+   else if (outfit_isFighterBay(o)) return "Fighter Bay";
+   else if (outfit_isFighter(o)) return "Fighter";
+   else if (outfit_isMap(o)) return "Map";
+   else return "Unknown";
 }
 
 
@@ -1092,19 +1103,26 @@ int outfit_load (void)
 void outfit_free (void)
 {
    int i;
+   Outfit *o;
    for (i=0; i < outfit_nstack; i++) {
+      o = &outfit_stack[i];
+
       /* free graphics */
       if (outfit_gfx(&outfit_stack[i]))
          gl_freeTexture(outfit_gfx(&outfit_stack[i]));
 
+      /* Type specific. */
+      if (outfit_isLauncher(o) && o->u.lau.ammo)
+         free(o->u.lau.ammo);
+      if (outfit_isFighterBay(o) && o->u.bay.ammo)
+         free(o->u.bay.ammo);
+
       /* strings */
-      if (outfit_isLauncher(&outfit_stack[i]) && outfit_stack[i].u.lau.ammo)
-         free(outfit_stack[i].u.lau.ammo);
-      if (outfit_stack[i].description)
-         free(outfit_stack[i].description);
-      if (outfit_stack[i].gfx_store)
-         gl_freeTexture(outfit_stack[i].gfx_store);
-      free(outfit_stack[i].name);
+      if (o->description)
+         free(o->description);
+      if (o->gfx_store)
+         gl_freeTexture(o->gfx_store);
+      free(o->name);
    }
    free(outfit_stack);
 }
