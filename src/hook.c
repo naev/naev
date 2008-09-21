@@ -297,7 +297,7 @@ static int hook_needSave( Hook *h )
 
 
 /**
- * @Fn int hook_save( xmlTextWriterPtr writer )
+ * @fn int hook_save( xmlTextWriterPtr writer )
  *
  * @brief Saves all the hooks.
  *

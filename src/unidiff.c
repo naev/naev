@@ -48,10 +48,10 @@ typedef enum UniHunkTargetType_ {
  * @brief Represents the hunk's target.
  */
 typedef struct UniHunkTarget_ {
-   UniHunkTargetType_t type;
+   UniHunkTargetType_t type; /**< Type of hunk target. */
    union {
-      char *name;
-   } u;
+      char *name; /**< Name of the target. */
+   } u; /**< Union of possible target types. */
 } UniHunkTarget_t;
 
 
@@ -98,7 +98,7 @@ typedef struct UniDiff_ {
    int napplied; /**< Number of applied hunks. */
    int mapplied; /**< Memory of applied hunks. */
 
-   UniHunk_t *failed; /** Failed hunks. */
+   UniHunk_t *failed; /**< Failed hunks. */
    int nfailed; /**< Number of failed hunks. */
    int mfailed; /**< Memory of failed hunks. */
 } UniDiff_t;

@@ -17,11 +17,6 @@
 
 
 /**
- * @fn int CollideSprite( const glTexture* at, const int asx,
- *                        const int asy, const Vector2d* ap,
- *                        const glTexture* bt, const int bsx, 
- *                        const int bsy, const Vector2d* bp )
- *
  * @brief Checks whether or not two sprites collide.
  *
  * This function does pixel perfect checks.  If the collision actually occurs,
@@ -99,9 +94,6 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
 
 
 /**
- * @fn int CollideLineLine( double s1x, double s1y, double e1x, double e1y,  
- *       double s2x, double s2y, double e2x, double e2y, Vector2d* crash )
- *
  * @brief Checks to see if two lines collide.
  *
  *    @param[in] s1x X start point of line 1.
@@ -152,9 +144,6 @@ int CollideLineLine( double s1x, double s1y, double e1x, double e1y,
 
 
 /**
- * @fn int CollideLineSprite( const Vector2d* ap, double dir,
- *           const glTexture* bt, const int bsx, const int bsy, const Vector2d* bp )
- *
  * @brief Checks to see if a line collides with a sprite.
  *
  * First collisions are detected on all the walls of the sprite's rectangle.

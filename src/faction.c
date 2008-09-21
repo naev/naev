@@ -24,8 +24,8 @@
 #include "colour.h"
 
 
-#define XML_FACTION_ID     "Factions"   /* XML section identifier */
-#define XML_FACTION_TAG    "faction"
+#define XML_FACTION_ID     "Factions"   /**< XML section identifier */
+#define XML_FACTION_TAG    "faction" /**< XML tag identifier. */
 
 #define FACTION_DATA       "dat/faction.xml" /**< Faction xml file. */
 #define FACTION_LOGO_PATH  "gfx/logo/" /**< Path to logo gfx. */
@@ -517,8 +517,12 @@ static Faction* faction_parse( xmlNodePtr parent )
 }
 
 
-/*
- * Parses the social tidbits: allies and enemies.
+/**
+ * @fn static void faction_parseSocial( xmlNodePtr parent )
+ *
+ * @brief Parses the social tidbits of a faction: allies and enemies.
+ *
+ *    @param parent Node containing the faction.
  */
 static void faction_parseSocial( xmlNodePtr parent )
 {

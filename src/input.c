@@ -156,7 +156,8 @@ void input_exit (void)
 
 
 /**
- * @fn void input_setKeybind( char *keybind, KeybindType type, int key, int reverse )
+ * @fn void input_setKeybind( char *keybind, KeybindType type, int key,
+ *       SDLMod mod, int reverse )
  *
  * @brief Binds key of type type to action keybind.
  *
@@ -184,7 +185,7 @@ void input_setKeybind( char *keybind, KeybindType type, int key,
 
 
 /**
- * @fn int input_getKeybind( char *keybind, KeybindType *type, int *reverse )
+ * @fn int input_getKeybind( char *keybind, KeybindType *type, SDLMod *mod, int *reverse )
  *
  * @brief Gets the value of a keybind.
  */

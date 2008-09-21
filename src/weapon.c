@@ -405,7 +405,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 
 
 /**
- * @fn void weapons_render( const WeaponLayer layer )
+ * @fn void weapons_render( const WeaponLayer layer, const double dt )
  *
  * @brief Renders all the weapons in a layer.
  *
@@ -435,7 +435,7 @@ void weapons_render( const WeaponLayer layer, const double dt )
 
 
 /**
- * @fn static void weapon_render( const Weapon* w )
+ * @fn static void weapon_render( Weapon* w, const double dt )
  *
  * @brief Renders an individual weapon.
  *

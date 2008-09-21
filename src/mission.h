@@ -81,8 +81,8 @@ typedef struct Mission_ {
    char *sys_marker; /**< System to mark. */
 
    /* Timers. */
-   double timer[MISSION_TIMER_MAX];
-   char *tfunc[MISSION_TIMER_MAX];
+   double timer[MISSION_TIMER_MAX]; /**< Mission timers. */
+   char *tfunc[MISSION_TIMER_MAX]; /**< Functions assosciated to the timers. */
 
    lua_State *L; /**< The state of the running lua code. */
 } Mission;
