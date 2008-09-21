@@ -990,6 +990,8 @@ int gl_init()
 
    /* Set opengl flags. */
    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); /* Ideally want double buffering. */
+   if (gl_has(OPENGL_VSYNC))
+      SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, 1);
 
    /* get available fullscreen modes */
    if (gl_has(OPENGL_FULLSCREEN)) {

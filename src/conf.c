@@ -80,6 +80,7 @@ static void print_usage( char **argv )
    LOG("Options are:");
    LOG("   -f, --fullscreen      fullscreen");
    LOG("   -F n, --fps n         limit frames per second");
+   LOG("   -V, --vsync           enable vsync");
    LOG("   -d s, --data s        set the data file to be s");
    LOG("   -W n                  set width to n");
    LOG("   -H n                  set height to n");
@@ -149,6 +150,8 @@ int conf_loadConfig ( const char* file )
       if (i) { gl_screen.flags |= OPENGL_AA_LINE; i = 0; }
       conf_loadBool("aa_polygon",i);
       if (i) { gl_screen.flags |= OPENGL_AA_POLYGON; i = 0; }
+      conf_loadBool("vsync",i);
+      if (i) { gl_screen.flags |= OPENGL_VSYNC; i = 0; }
 
       /* FPS */
       conf_loadBool("showfps",show_fps);
@@ -266,6 +269,7 @@ void conf_parseCLI( int argc, char** argv )
    static struct option long_options[] = {
       { "fullscreen", no_argument, 0, 'f' },
       { "fps", required_argument, 0, 'F' },
+      { "vsync", no_argument, 0, 'V' },
       { "data", required_argument, 0, 'd' },
       { "joystick", required_argument, 0, 'j' },
       { "Joystick", required_argument, 0, 'J' },
@@ -281,7 +285,7 @@ void conf_parseCLI( int argc, char** argv )
    int option_index = 0;
    int c = 0;
    while ((c = getopt_long(argc, argv,
-         "fF:d:j:J:W:H:MSm:s:Ghv",
+         "fF:Vd:j:J:W:H:MSm:s:Ghv",
          long_options, &option_index)) != -1) {
       switch (c) {
          case 'f':
@@ -289,6 +293,9 @@ void conf_parseCLI( int argc, char** argv )
             break;
          case 'F':
             max_fps = atoi(optarg);
+            break;
+         case 'V':
+            gl_screen.flags |= OPENGL_VSYNC;
             break;
          case 'd': 
             data = strdup(optarg);

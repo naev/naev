@@ -39,8 +39,9 @@
 #define OPENGL_AA_POINT    (1<<2) /**< Antialiasing points. */
 #define OPENGL_AA_LINE     (1<<3) /**< Antialiasing lines. */
 #define OPENGL_AA_POLYGON  (1<<4) /**< Antialiasing polygons. */
-#define OPENGL_FRAG_SHADER (1<<5) /**< Fragment shaders. */
-#define OPENGL_VERT_SHADER (1<<6) /**< Vertex shaders. */
+#define OPENGL_VSYNC       (1<<5) /**< Sync to monitor vertical refresh rate. */
+#define OPENGL_FRAG_SHADER (1<<6) /**< Fragment shaders. */
+#define OPENGL_VERT_SHADER (1<<7) /**< Vertex shaders. */
 #define gl_has(f)    (gl_screen.flags & (f)) /**< Check for the flag */
 /**
  * @struct glInfo
