@@ -318,9 +318,9 @@ int sound_playPos( int sound, double x, double y )
    }
 
    /* Need to make sure distance doesn't overflow. */
-   idist = dist / 4;
+   idist = (int) dist / 13.;
    if (idist > 255) idist = 255;
-   if (Mix_SetPosition( v->channel, (int)angle, idist) < 0) {
+   if (Mix_SetPosition( v->channel, (Sint16)angle, (Uint8)idist) < 0) {
       WARN("Unable to set sound position: %s", Mix_GetError());
       return -1;
    }
