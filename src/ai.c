@@ -72,6 +72,7 @@
 #include "rng.h"
 #include "space.h"
 #include "faction.h"
+#include "escort.h"
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_space.h"
@@ -179,6 +180,12 @@ static int ai_getrndplanet( lua_State *L ); /* Vec2 getrndplanet() */
 static int ai_getlandplanet( lua_State *L ); /* Vec2 getlandplanet() */
 static int ai_hyperspace( lua_State *L ); /* [number] hyperspace() */
 static int ai_stop( lua_State *L ); /* stop() */
+
+/* escorts */
+static int ai_e_attack( lua_State *L ); /* bool e_attack() */
+static int ai_e_hold( lua_State *L ); /* bool e_hold() */
+static int ai_e_clear( lua_State *L ); /* bool e_clear() */
+static int ai_e_return( lua_State *L ); /* bool e_return() */
 static int ai_dock( lua_State *L ); /* dock( number ) */
 
 /* combat */
@@ -242,6 +249,11 @@ static const luaL_reg ai_methods[] = {
    { "brake", ai_brake },
    { "stop", ai_stop },
    { "hyperspace", ai_hyperspace },
+   /* escorts */
+   { "e_attack", ai_e_attack },
+   { "e_hold", ai_e_hold },
+   { "e_clear", ai_e_clear },
+   { "e_return", ai_e_return },
    { "dock", ai_dock },
    /* combat */
    { "aim", ai_aim },
@@ -1304,6 +1316,49 @@ static int ai_stop( lua_State *L )
    return 0;
 }
 
+/*
+ * Tells the pilot's escort's to attack it's target.
+ */
+static int ai_e_attack( lua_State *L )
+{
+   int ret;
+   ret = escorts_attack(cur_pilot);
+   lua_pushboolean(L,!ret);
+   return 1;
+}
+
+/* 
+ * Tells the pilot's escorts to hold position.
+ */
+static int ai_e_hold( lua_State *L )
+{
+   int ret;
+   ret = escorts_hold(cur_pilot);
+   lua_pushboolean(L,!ret);
+   return 1;
+}
+
+/*
+ * Tells the pilot's escorts to clear orders.
+ */
+static int ai_e_clear( lua_State *L )
+{
+   int ret;
+   ret = escorts_clear(cur_pilot);
+   lua_pushboolean(L,!ret);
+   return 1;
+}
+
+/*
+ * Tells the pilot's escorts to return to dock.
+ */
+static int ai_e_return( lua_State *L )
+{
+   int ret;
+   ret = escorts_return(cur_pilot);
+   lua_pushboolean(L,!ret);
+   return 1;
+}
 
 /*
  * Docks the ship.

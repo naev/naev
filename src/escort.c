@@ -156,53 +156,66 @@ static int escort_command( Pilot *parent, int cmd, int param )
 
 
 /**
- * @fn void escorts_attack( Pilot *parent )
+ * @fn int escorts_attack( Pilot *parent )
  *
  * @brief Have a pilot order it's escorts to attack it's target.
  *
  *    @param parent Pilot giving the order.
  */
-void escorts_attack( Pilot *parent )
+int escorts_attack( Pilot *parent )
 {
+   int ret;
+   ret = 1;
    if (parent->target != parent->id)
-      if (escort_command( parent, ESCORT_ATTACK, parent->target ) == 0)
-         player_message("Escorts: Attacking %s.", pilot_get(parent->target)->name);
+      ret = escort_command( parent, ESCORT_ATTACK, parent->target );
+   if ((ret == 0) && (parent == player))
+      player_message("Escorts: Attacking %s.", pilot_get(parent->target)->name);
+   return ret;
 }
 /**
- * @fn void escorts_hold( Pilot *parent )
+ * @fn int escorts_hold( Pilot *parent )
  *
  * @brief Have a pilot order it's escorts to hold position.
  *
  *    @param parent Pilot giving the order.
  */
-void escorts_hold( Pilot *parent )
+int escorts_hold( Pilot *parent )
 {
-   if (escort_command( parent, ESCORT_HOLD, -1 ) == 0)
-      player_message("Escorts: Holding position.");
+   int ret;
+   ret = escort_command( parent, ESCORT_HOLD, -1 );
+   if ((ret == 0) && (parent == player))
+         player_message("Escorts: Holding position.");
+   return ret;
 }
 /**
- * @fn void escorts_return( Pilot *parent )
+ * @fn int escorts_return( Pilot *parent )
  *
  * @brief Have a pilot order it's escorts to dock.
  *
  *    @param parent Pilot giving the order.
  */
-void escorts_return( Pilot *parent )
+int escorts_return( Pilot *parent )
 {
-   if (escort_command( parent, ESCORT_RETURN, -1 ) == 0)
+   int ret;
+   ret = escort_command( parent, ESCORT_RETURN, -1 );
+   if ((ret == 0) && (parent == player))
       player_message("Escorts: Returning to ship.");
+   return ret;
 }
 /**
- * @fn void escorts_clear( Pilot *parent )
+ * @fn int escorts_clear( Pilot *parent )
  *
  * @brief Have a pilot order it's escorts to clear orders.
  *
  *    @param parent Pilot giving the order.
  */
-void escorts_clear( Pilot *parent )
+int escorts_clear( Pilot *parent )
 {
-   if (escort_command( parent, ESCORT_CLEAR, -1) == 0)
+   int ret;
+   ret = escort_command( parent, ESCORT_CLEAR, -1);
+   if ((ret == 0) && (parent == player))
       player_message("Escorts: Clearing orders.");
+   return ret;
 }
 
 

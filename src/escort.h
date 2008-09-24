@@ -16,10 +16,10 @@ int escort_create( unsigned int parent, char *ship,
       Vector2d *pos, Vector2d *vel, int carried );
 
 /* Keybind commands. */
-void escorts_attack( Pilot *parent );
-void escorts_hold( Pilot *parent );
-void escorts_return( Pilot *parent );
-void escorts_clear( Pilot *parent );
+int escorts_attack( Pilot *parent );
+int escorts_hold( Pilot *parent );
+int escorts_return( Pilot *parent );
+int escorts_clear( Pilot *parent );
 
 
 #endif /* ESCORT_H */
