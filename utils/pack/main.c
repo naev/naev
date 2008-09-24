@@ -14,8 +14,8 @@ int main( int argc, char** argv )
    char* packfile;
    char** list;
    uint32_t nlist;
-   int i;
    uint32_t nfiles;
+   int i;
 
    if (argc == 1) {
       fprintf(stderr, "Missing output file\n");
@@ -30,7 +30,7 @@ int main( int argc, char** argv )
       list = pack_listfiles( packfile, &nlist );
       fprintf(stdout, "Packfile '%s' contains:\n", packfile);
       for (i=0; i<nlist; i++) {
-         fprintf(stdout, "   %03d   %s\n", i, list[i]);
+         fprintf(stdout, "   %04d   %s\n", i, list[i]);
          free(list[i]);
       }
       free(list);
