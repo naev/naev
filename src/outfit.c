@@ -58,8 +58,10 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent );
-static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent );
+static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent );
+static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent );
+static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
 
 
 /**
@@ -369,7 +371,7 @@ int outfit_isMap( const Outfit* o )
 /**
  * @fn glTexture* outfit_gfx( const Outfit* o )
  * @brief Gets the outfit's graphic effect.
- *    @param o Outfit to ge information from.
+ *    @param o Outfit to get information from.
  */
 glTexture* outfit_gfx( const Outfit* o )
 {
@@ -381,7 +383,7 @@ glTexture* outfit_gfx( const Outfit* o )
 /**
  * @fn glTexture* outfit_spfx( const Outfit* o )
  * @brief Gets the outfit's sound effect.
- *    @param o Outfit to ge information from.
+ *    @param o Outfit to get information from.
  */
 int outfit_spfx( const Outfit* o )
 {
@@ -393,7 +395,7 @@ int outfit_spfx( const Outfit* o )
 /**
  * @fn glTexture* outfit_damage( const Outfit* o )
  * @brief Gets the outfit's damage.
- *    @param o Outfit to ge information from.
+ *    @param o Outfit to get information from.
  */
 double outfit_damage( const Outfit* o )
 {
@@ -405,7 +407,7 @@ double outfit_damage( const Outfit* o )
 /**
  * @fn glTexture* outfit_damageType( const Outfit* o )
  * @brief Gets the outfit's damage type.
- *    @param o Outfit to ge information from.
+ *    @param o Outfit to get information from.
  */
 DamageType outfit_damageType( const Outfit* o )
 {
@@ -417,7 +419,7 @@ DamageType outfit_damageType( const Outfit* o )
 /**
  * @fn glTexture* outfit_delay( const Outfit* o )
  * @brief Gets the outfit's delay.
- *    @param o Outfit to ge information from.
+ *    @param o Outfit to get information from.
  */
 int outfit_delay( const Outfit* o )
 {
@@ -428,9 +430,20 @@ int outfit_delay( const Outfit* o )
    return -1;
 }
 /**
+ * @fn glTexture* outfit_ammo( const Outfit* o )
+ * @brief Gets the outfit's ammo.
+ *    @param o Outfit to get information from.
+ */
+char* outfit_ammo( const Outfit* o )
+{
+   if (outfit_isLauncher(o)) return o->u.lau.ammo;
+   else if (outfit_isFighterBay(o)) return o->u.bay.ammo;
+   return NULL;
+}
+/**
  * @fn glTexture* outfit_energy( const Outfit* o )
  * @brief Gets the outfit's energy usage.
- *    @param o Outfit to ge information from.
+ *    @param o Outfit to get information from.
  */
 double outfit_energy( const Outfit* o )
 {
@@ -442,7 +455,7 @@ double outfit_energy( const Outfit* o )
 /**
  * @fn glTexture* outfit_range( const Outfit* o )
  * @brief Gets the outfit's range.
- *    @param o Outfit to ge information from.
+ *    @param o Outfit to get information from.
  */
 double outfit_range( const Outfit* o )
 {
@@ -454,7 +467,7 @@ double outfit_range( const Outfit* o )
 /**
  * @fn glTexture* outfit_speed( const Outfit* o )
  * @brief Gets the outfit's speed.
- *    @param o Outfit to ge information from.
+ *    @param o Outfit to get information from.
  */
 double outfit_speed( const Outfit* o )
 {
@@ -576,6 +589,8 @@ static OutfitType outfit_strToOutfitType( char *buf )
    O_CMP("modification",OUTFIT_TYPE_MODIFCATION);
    O_CMP("afterburner",OUTFIT_TYPE_AFTERBURNER);
    O_CMP("map",OUTFIT_TYPE_MAP);
+   O_CMP("fighter bay",OUTFIT_TYPE_FIGHTER_BAY);
+   O_CMP("fighter",OUTFIT_TYPE_FIGHTER);
    O_CMP("jammer",OUTFIT_TYPE_JAMMER);
 
    WARN("Invalid outfit type: '%s'",buf);
@@ -769,8 +784,8 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 
    node  = parent->xmlChildrenNode;
    do { /* load all the data */
-      if (xml_isNode(node,"delay")) temp->u.lau.delay = xml_getInt(node);
-      else if (xml_isNode(node,"ammo")) temp->u.lau.ammo = strdup(xml_get(node));
+      xmlr_int(node,"delay",temp->u.lau.delay);
+      xmlr_strd(node,"ammo",temp->u.lau.ammo);
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s)      if (o) WARN("Outfit '%s' missing '"s"' element", temp->name)
@@ -905,6 +920,53 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 }
 
+/**
+ * @fn static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
+ *
+ * @brief Parses the fighter bay tidbits of the outfit.
+ *
+ *    @param temp Outfit to finish loading.
+ *    @param parent Outfit's parent node.
+ */
+static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
+{
+   xmlNodePtr node;
+   node = parent->children;
+
+   do {
+      xmlr_int(node,"delay",temp->u.bay.delay);
+      xmlr_strd(node,"ammo",temp->u.bay.ammo);
+   } while (xml_nextNode(node));
+
+#define MELEMENT(o,s) \
+if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
+   MELEMENT(temp->u.bay.delay==0,"delay");
+   MELEMENT(temp->u.bay.ammo==NULL,"ammo");
+#undef MELEMENT
+}
+
+/**
+ * @fn static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent )
+ *
+ * @brief Parses the fighter tidbits of the outfit.
+ *
+ *    @param temp Outfit to finish loading.
+ *    @param parent Outfit's parent node.
+ */
+static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent )
+{
+   xmlNodePtr node;
+   node = parent->children;
+
+   do {
+      xmlr_strd(node,"ship",temp->u.fig.ship);
+   } while (xml_nextNode(node));
+
+#define MELEMENT(o,s) \
+if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
+   MELEMENT(temp->u.fig.ship==NULL,"ship");
+#undef MELEMENT
+}
 
 /**
  * @fn static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
@@ -1024,10 +1086,14 @@ static Outfit* outfit_parse( const xmlNodePtr parent )
             outfit_parseSMod( temp, node );
          else if (outfit_isAfterburner(temp))
             outfit_parseSAfterburner( temp, node );
-         else if (outfit_isMap(temp))
-            outfit_parseSMap( temp, node );
          else if (outfit_isJammer(temp))
             outfit_parseSJammer( temp, node );
+         else if (outfit_isFighterBay(temp))
+            outfit_parseSFighterBay( temp, node );
+         else if (outfit_isFighter(temp))
+            outfit_parseSFighter( temp, node );
+         else if (outfit_isMap(temp))
+            outfit_parseSMap( temp, node );
       }
    } while (xml_nextNode(node));
 
@@ -1116,6 +1182,8 @@ void outfit_free (void)
          free(o->u.lau.ammo);
       if (outfit_isFighterBay(o) && o->u.bay.ammo)
          free(o->u.bay.ammo);
+      if (outfit_isFighter(o) && o->u.fig.ship)
+         free(o->u.fig.ship);
 
       /* strings */
       if (o->description)

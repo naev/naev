@@ -630,4 +630,31 @@ By adding quite a dense layer of Plasteel to your ship you can increase it's stu
    <energy_regen>1620</energy_regen>
   </specific>
  </outfit>
+ <outfit name="Lancelot Fighter Bay">
+  <general>
+   <max>1</max>
+   <tech>14</tech>
+   <mass>80</mass>
+   <price>830000</price>
+   <gfx_store>lancelot_fighter</gfx_store>
+   <description>This fighter bay allows your ship to carry a pair of Lancelot class Fighters.  It comes with all the devices required for the maintenance and flight of the fighters.</description>
+  </general>
+  <specific type="fighter bay" secondary="1">
+   <ammo>Lancelot Fighter</ammo>
+   <delay>4000</delay>
+  </specific>
+ </outfit>
+ <outfit name="Lancelot Fighter">
+  <general>
+   <max>2</max>
+   <tech>12</tech>
+   <mass>0</mass>
+   <price>500000</price>
+   <gfx_store>lancelot_fighter</gfx_store>
+   <description>This is a Lancelot class Fighter adapted for usage in the Lancelot Fighter Bay.  It contains all the features of the standalone Lancelot with improved encrypted communication.</description>
+  </general>
+  <specific type="fighter">
+   <ship>Lancelot</ship>
+  </specific>
+ </outfit>
 </Outfits>

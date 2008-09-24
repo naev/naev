@@ -27,6 +27,7 @@
 #include "hook.h"
 #include "map.h"
 #include "explosion.h"
+#include "escort.h"
 
 
 #define XML_ID          "Fleets"  /**< XML document identifier. */
@@ -318,7 +319,7 @@ void pilot_shoot( Pilot* p, const int secondary )
       for (i=0; i<p->noutfits; i++) { /* cycles through outfits to find primary weapons */
          o = p->outfits[i].outfit;
          if (!outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY) &&
-               (outfit_isBolt(o) || outfit_isBeam(o))) /** @todo possibly make this neater. */
+               (outfit_isBolt(o) || outfit_isBeam(o) || outfit_isFighterBay(o))) /** @todo possibly make this neater. */
             pilot_shootWeapon( p, &p->outfits[i] );
       }
    }
@@ -449,6 +450,27 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
       if (p->ammo->quantity <= 0) /* Out of ammo. */
          pilot_rmOutfit( p, p->ammo->outfit, 0 ); /* It'll set p->ammo to NULL */
    }
+
+   /*
+    * Fighter bays.
+    *
+    * Must be secondary weapon.
+    */
+   else if (outfit_isFighterBay(w->outfit) && (w==p->secondary)) {
+
+      /* Must have ammo left. */
+      if ((p->ammo == NULL) || (p->ammo->quantity <= 0))
+         return;
+
+      /* Create the escort. */
+      escort_create( p->id, p->ammo->outfit->u.fig.ship,
+            &p->solid->pos, &p->solid->vel, 1 );
+
+      p->ammo->quantity -= 1; /* we just shot it */
+      if (p->ammo->quantity <= 0) /* Out of ammo. */
+         pilot_rmOutfit( p, p->ammo->outfit, 0 ); /* It'll set p->ammo to NULL */
+   }
+
    else {
       WARN("Shooting unknown weapon type: %s", w->outfit->name);
    }
@@ -649,14 +671,14 @@ void pilot_setAmmo( Pilot* p )
    int i;
    char *name;
 
-   /* only launchers use ammo */
-   if ((p->secondary == NULL) || !outfit_isLauncher(p->secondary->outfit)) {
+   /* Weapon must use ammo. */
+   if ((p->secondary == NULL) || (outfit_ammo(p->secondary->outfit)==NULL)) {
       p->ammo = NULL;
       return;
    }
 
    /* find the ammo and set it */
-   name = p->secondary->outfit->u.lau.ammo;
+   name = outfit_ammo(p->secondary->outfit);
    for (i=0; i<p->noutfits; i++)
       if (strcmp(p->outfits[i].outfit->name,name)==0) {
          p->ammo = &p->outfits[i];
