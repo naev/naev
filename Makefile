@@ -120,7 +120,7 @@ lua:
 	+@if [ ! -e lib/lua/liblua.a ];then make -C lib/lua a; fi
 
 
-pack: src/pack.c utils/pack/main.c
+pack: src/md5.c src/pack.c utils/pack/main.c
 	+@make -C utils/pack
 
 
