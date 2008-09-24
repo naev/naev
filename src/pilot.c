@@ -527,6 +527,7 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 {
    int mod;
    double damage_shield, damage_armour, knockback, dam_mod;
+   Pilot *pshooter;
 
    /* calculate the damage */
    outfit_calcDamage( &damage_shield, &damage_armour, &knockback, dtype, damage );
@@ -559,7 +560,8 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
          pilot_dead(p);
 
          /* adjust the combat rating based on pilot mass and ditto faction */
-         if (shooter==PLAYER_ID) {
+         pshooter = pilot_get(shooter);
+         if (pshooter->faction == FACTION_PLAYER) {
             mod = (int)MAX(1,ceil(pow(p->ship->mass,1./3.))-1.);
             player_crating += MAX( 1, mod );
             faction_modPlayer( p->faction, -mod );

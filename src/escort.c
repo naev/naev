@@ -58,6 +58,7 @@ int escort_create( unsigned int parent, char *ship,
    Pilot *p, *pe;
    char buf[16];
    unsigned int e, f;
+   double dir;
 
    /* Get important stuff. */
    p = pilot_get(parent);
@@ -68,8 +69,12 @@ int escort_create( unsigned int parent, char *ship,
    f = PILOT_ESCORT;
    if (carried) f |= PILOT_CARRIED;
 
+   /* Get the direction. */
+   if (carried) dir = p->solid->dir;
+   else dir = 0.;
+
    /* Create the pilot. */
-   e = pilot_create( s, NULL, p->faction, buf, 0., pos, vel, f );
+   e = pilot_create( s, NULL, p->faction, buf, dir, pos, vel, f );
    pe = pilot_get(e);
    pe->parent = parent;
 

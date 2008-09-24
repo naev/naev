@@ -112,6 +112,9 @@ char* faction_name( int f )
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
+   /* Don't want player to see his escorts as "Player" faction. */
+   if (f == FACTION_PLAYER)
+      return "Escort";
    return faction_stack[f].name;
 }
 
@@ -400,6 +403,8 @@ int areAllies( int a, int b )
    Faction *fa, *fb;
    int i;
 
+   /* If they are the same they must be allies. */
+   if (a==b) return 1;
 
    /* we assume player becomes allies with high rating */
    if (a==FACTION_PLAYER) {
@@ -440,8 +445,6 @@ int areAllies( int a, int b )
       WARN("%d is an invalid faction", b);
       return 0;
    }
-
-   if (a==b) return 1;
 
    /* both are factions */
    if (fa && fb) {

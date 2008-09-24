@@ -1,7 +1,13 @@
 include("ai/tpl/generic.lua")
 
+-- Shouldn't think, should only obey orders.
+atk_think = false
+
+
 -- Simple create function
-function create ()
+function create ( master )
+   mem.escort = master
+   mem.command = true -- On by default
    attack_choose()
 end
 
@@ -23,12 +29,16 @@ function escort ()
    dist = ai.dist( ai.pos(target) )
    bdist = ai.minbrakedist()
 
+   -- Close enough.
+   if ai.isstopped() and dist < 300 then
+      return
+
    -- Brake
-   if not ai.isstopped() and dist < bdist then
+   elseif dist < bdist then
       ai.pushtask(0, "brake")
 
    -- Must approach
-   elseif dir < 10 and dist > 200 then
+   elseif dir < 10 and dist > 300 then
       ai.accel()
 
    end
@@ -98,7 +108,7 @@ end
 -- Clear orders
 function e_clear ()
    if mem.command then
-      while ai.taskname ~= "none" do
+      while ai.taskname() ~= "none" do
          ai.poptask()
       end
    end

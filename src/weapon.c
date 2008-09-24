@@ -631,10 +631,13 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
  */
 static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
 {
+   Pilot *parent;
+
    /* inform the ai it has been attacked, useless if player */
    if (!pilot_isPlayer(p)) {
       if ((player->target == p->id) || (RNGF() < 0.33)) { /* 33% chance */
-         if ((w->parent == PLAYER_ID) &&
+         parent = pilot_get(w->parent);
+         if ((parent->faction == FACTION_PLAYER) &&
                (!pilot_isFlag(p,PILOT_HOSTILE) || (RNGF() < 0.5))) { /* 50% chance */
             faction_modPlayer( p->faction, -1 ); /* slowly lower faction */
             pilot_setFlag( p, PILOT_HOSTILE);
@@ -672,11 +675,13 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
       Vector2d pos[2], const double dt )
 {
    (void) layer;
+   Pilot *parent;
 
    /* inform the ai it has been attacked, useless if player */
    if (!pilot_isPlayer(p)) {
       if ((player->target == p->id) || (RNGF() < 0.30*dt)) { /* 30% chance per second */
-         if ((w->parent == PLAYER_ID) &&
+         parent = pilot_get(w->parent);
+         if ((parent->faction == FACTION_PLAYER) &&
                (!pilot_isFlag(p,PILOT_HOSTILE) || (RNGF() < 0.5))) { /* 50% chance */
             faction_modPlayer( p->faction, -1 ); /* slowly lower faction */
             pilot_setFlag( p, PILOT_HOSTILE);
