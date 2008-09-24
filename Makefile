@@ -4,6 +4,7 @@
 DEBUG := 1
 #DEBUG_PARANOID := 1
 
+
 # OS
 OS := LINUX
 #OS := WIN32
@@ -84,7 +85,6 @@ DATA      := 	data
 DATAFILES := 	$(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN)
 
 
-
 #
 #   TARGETS
 #
@@ -97,6 +97,7 @@ DATAFILES := 	$(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN)
 
 
 all:	utils data lua naev
+
 
 help:
 	@echo "Possible targets are:":
@@ -118,8 +119,10 @@ naev: $(OBJS)
 lua:
 	+@if [ ! -e lib/lua/liblua.a ];then make -C lib/lua a; fi
 
+
 pack: src/pack.c utils/pack/main.c
 	+@make -C utils/pack
+
 
 mkspr: utils/mkspr/main.c
 	+@make -C utils/mkspr
@@ -136,6 +139,7 @@ data: $(DATAFILES)
 
 utils: mkspr
 
+
 docs:
 	@( cd src; doxygen )
 
@@ -145,6 +149,7 @@ clean:
 	@$(RM) $(DATA)
 	@echo -e "\tRemoving object files"
 	@$(RM) $(OBJS)
+
 
 purge: clean
 	@echo -e "\tCleaning utilities"
