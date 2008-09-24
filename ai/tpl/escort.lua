@@ -79,7 +79,7 @@ function flyback ()
       ai.dock(target)
 
    -- Far away, must approach
-   elseif dir < 10 and dist > 200 then
+   elseif dir < 10 then
       ai.accel()
    end
 end

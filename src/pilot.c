@@ -755,6 +755,14 @@ int pilot_dock( Pilot *p, Pilot *target )
    int i;
    Outfit *o;
 
+   /* Must be close. */
+   if (vect_dist(&p->solid->pos, &target->solid->pos) > 30.)
+      return -1;
+
+   /* Cannot be going much faster. */
+   if (vect_dist(&p->solid->vel, &target->solid->vel) > 2*MIN_VEL_ERR)
+      return -1;
+
    /* Check to see if target has an available bay. */
    for (i=0; i<target->noutfits; i++) {
       if (outfit_isFighterBay(target->outfits[i].outfit)) {
