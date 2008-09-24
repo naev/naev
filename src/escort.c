@@ -117,7 +117,7 @@ static int escort_command( Pilot *parent, int cmd, int param )
          continue;
 
       /* Check if command makes sense. */
-      if ((cmd == ESCORT_RETURN) && !pilot_isFlag(parent, PILOT_CARRIED))
+      if ((cmd == ESCORT_RETURN) && !pilot_isFlag(e, PILOT_CARRIED))
          continue;
 
       n++; /* Amount of escorts left. */

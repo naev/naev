@@ -94,7 +94,7 @@ void input_setDefault (void)
    /* Escorts. */
    input_setKeybind( "e_attack", KEYBIND_KEYBOARD, SDLK_f, KMOD_NONE, 0 );
    input_setKeybind( "e_hold", KEYBIND_KEYBOARD, SDLK_g, KMOD_NONE, 0 );
-   input_setKeybind( "e_return", KEYBIND_KEYBOARD, SDLK_r, KMOD_NONE, 0 );
+   input_setKeybind( "e_return", KEYBIND_KEYBOARD, SDLK_c, KMOD_LCTRL, 0 );
    input_setKeybind( "e_clear", KEYBIND_KEYBOARD, SDLK_c, KMOD_NONE, 0 );
    /* Secondary weapons. */
    input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, KMOD_ALL, 0 );

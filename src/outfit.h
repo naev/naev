@@ -29,9 +29,9 @@
  */
 typedef enum OutfitType_ {
    OUTFIT_TYPE_NULL, /**< Null type. */
-   OUTFIT_TYPE_BOLT, /**< @todo Fixed bolt cannon. */
+   OUTFIT_TYPE_BOLT, /**< Fixed bolt cannon. */
    OUTFIT_TYPE_BEAM, /**< Fixed beam cannon. */
-   OUTFIT_TYPE_TURRET_BOLT, /**< @todo Rotary bolt turret. */
+   OUTFIT_TYPE_TURRET_BOLT, /**< Rotary bolt turret. */
    OUTFIT_TYPE_TURRET_BEAM, /**< Rotary beam turret. */
    OUTFIT_TYPE_MISSILE_DUMB, /**< Dumb missile launcher. */
    OUTFIT_TYPE_MISSILE_DUMB_AMMO, /**< Dumb missile ammo. */

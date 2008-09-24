@@ -4,6 +4,7 @@ include("ai/tpl/escort.lua")
 armour_run = 40
 armour_return = 70
 aggressive = true
+command = false
 
 
 function create ()

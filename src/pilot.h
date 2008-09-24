@@ -260,6 +260,8 @@ void pilot_setSecondary( Pilot* p, const char* secondary );
 void pilot_setAmmo( Pilot* p );
 int pilot_getAmmo( Pilot* p, Outfit* o );
 void pilot_setAfterburner( Pilot* p );
+/* Escort stuff. */
+int pilot_dock( Pilot *p, Pilot *target );
 /* explosion. */
 void pilot_explode( double x, double y, double radius,
       DamageType dtype, double damage, unsigned int parent );

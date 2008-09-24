@@ -2,12 +2,13 @@ include("ai/tpl/generic.lua")
 
 -- Shouldn't think, should only obey orders.
 atk_think = false
+command = true
 
 
 -- Simple create function
 function create ( master )
    mem.escort = master
-   mem.command = true -- On by default
+   mem.carrier = true
    attack_choose()
 end
 
@@ -34,7 +35,7 @@ function escort ()
       return
 
    -- Brake
-   elseif dist < bdist then
+   elseif dist+100 < bdist then
       ai.pushtask(0, "brake")
 
    -- Must approach
@@ -89,25 +90,25 @@ end
 --]]
 -- Attack target
 function e_attack( target )
-   if mem.command then
+   if command then
       ai.pushtask(0, "attack", target)
    end
 end
 -- Hold position
 function e_hold ()
-   if mem.command then
+   if command then
       ai.pushtask(0, "hold" )
    end
 end
 -- Return to carrier
 function e_return ()
-   if mem.command and mem.carrier then
+   if command and mem.carrier then
       ai.pushtask(0, "flyback" )
    end
 end
 -- Clear orders
 function e_clear ()
-   if mem.command then
+   if command then
       while ai.taskname() ~= "none" do
          ai.poptask()
       end

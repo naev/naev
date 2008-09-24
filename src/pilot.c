@@ -742,6 +742,43 @@ void pilot_setAfterburner( Pilot* p )
 
 
 /**
+ * @fn int pilot_dock( Pilot *p, Pilot *target )
+ *
+ * @brief Docks the pilot on it's target pilot.
+ *
+ *    @param p Pilot that wants to dock.
+ *    @param target Pilot to dock on.
+ *    @return 0 on successful docking.
+ */
+int pilot_dock( Pilot *p, Pilot *target )
+{
+   int i;
+   Outfit *o;
+
+   /* Check to see if target has an available bay. */
+   for (i=0; i<target->noutfits; i++) {
+      if (outfit_isFighterBay(target->outfits[i].outfit)) {
+         o = outfit_get(outfit_ammo(target->outfits[i].outfit));
+         if (outfit_isFighter(o) &&
+               (strcmp(p->ship->name,o->u.fig.ship)==0))
+            break;
+      }
+   }
+   if (i >= target->noutfits)
+      return -1;
+
+   /* Add the pilot's outfit. */
+   if (pilot_addOutfit(target, o, 1) != 1)
+      return -1;
+
+   /* Destroy the pilot. */
+   pilot_setFlag(p,PILOT_DELETE);
+
+   return 0;
+}
+
+
+/**
  */
 void pilot_explode( double x, double y, double radius,
       DamageType dtype, double damage, unsigned int parent )
@@ -1525,9 +1562,9 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, char *ai,
 
    /* Escort stuff. */
    if (flags & PILOT_ESCORT) {
-      pilot->flags |= PILOT_ESCORT;
+      pilot_setFlag(pilot,PILOT_ESCORT);
       if (flags & PILOT_CARRIED)
-         pilot->flags |= PILOT_CARRIED;
+         pilot_setFlag(pilot,PILOT_CARRIED);
    }
 
    /* AI */

@@ -179,6 +179,7 @@ static int ai_getrndplanet( lua_State *L ); /* Vec2 getrndplanet() */
 static int ai_getlandplanet( lua_State *L ); /* Vec2 getlandplanet() */
 static int ai_hyperspace( lua_State *L ); /* [number] hyperspace() */
 static int ai_stop( lua_State *L ); /* stop() */
+static int ai_dock( lua_State *L ); /* dock( number ) */
 
 /* combat */
 static int ai_combat( lua_State *L ); /* combat( number ) */
@@ -241,6 +242,7 @@ static const luaL_reg ai_methods[] = {
    { "brake", ai_brake },
    { "stop", ai_stop },
    { "hyperspace", ai_hyperspace },
+   { "dock", ai_dock },
    /* combat */
    { "aim", ai_aim },
    { "combat", ai_combat },
@@ -589,8 +591,8 @@ void ai_think( Pilot* pilot )
          cur_pilot->thrust * pilot_acc, cur_pilot->solid->dir );
 
    /* fire weapons if needed */
-   if (ai_isFlag(AI_PRIMARY)) pilot_shoot(pilot, 0); /* primary */
-   if (ai_isFlag(AI_SECONDARY)) pilot_shoot(pilot, 1); /* secondary */
+   if (ai_isFlag(AI_PRIMARY)) pilot_shoot(cur_pilot, 0); /* primary */
+   if (ai_isFlag(AI_SECONDARY)) pilot_shoot(cur_pilot, 1); /* secondary */
 }
 
 
@@ -1298,6 +1300,25 @@ static int ai_stop( lua_State *L )
 
    if (VMOD(cur_pilot->solid->vel) < MIN_VEL_ERR)
       vect_pset( &cur_pilot->solid->vel, 0., 0. );
+
+   return 0;
+}
+
+
+/*
+ * Docks the ship.
+ */
+static int ai_dock( lua_State *L )
+{
+   Pilot *p;
+
+   /* Target is another ship. */
+   if (lua_isnumber(L,1)) {
+      p = pilot_get(lua_tonumber(L,1));
+      if (p==NULL) return 0;
+      pilot_dock(cur_pilot, p);
+   }
+   else NLUA_INVALID_PARAMETER();
 
    return 0;
 }
