@@ -684,6 +684,15 @@ void space_init ( const char* sysname )
    spfx_clear(); /* get rid of the explosions */
    space_spawn = 1; /* spawn is enabled by default. */
 
+   /* Clear player escorts since they don't automatically follow. */
+   if (player) {
+      player->nescorts = 0;
+      if (player->escorts) {
+         free(player->escorts);
+         player->escorts = NULL;
+      }
+   }
+
    if ((sysname==NULL) && (cur_system==NULL))
       ERR("Cannot reinit system if there is no system previously loaded");
    else if (sysname!=NULL) {
