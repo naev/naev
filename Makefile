@@ -137,7 +137,8 @@ data: $(DATAFILES)
 	@echo -e "\tCreating data\n"
 	@./pack $(DATA) $(DATAFILES) $(VERSIONFILE)
 
-utils: mkspr
+
+utils: pack mkspr
 
 
 docs:
