@@ -7,24 +7,24 @@ DEBUG := 1
 # OS
 OS := LINUX
 #OS := WIN32
+#OS := MACOS
 
 
 #
 #   VERSION
 #
-VMAJOR := 0
-VMINOR := 0
-VREV   := 1
-VERSION = -DVMAJOR=$(VMAJOR) -DVMINOR=$(VMINOR) -DVREV=$(VREV)
-VERSIONFILE = VERSION
+VMAJOR      := 0
+VMINOR      := 0
+VREV        := 1
+VERSION     := -DVMAJOR=$(VMAJOR) -DVMINOR=$(VMINOR) -DVREV=$(VREV)
+VERSIONFILE := VERSION
 
 
 #
 #   OBJS
 #
 APPNAME := naev
-OBJS    := $(shell find src/ -name '*.c' -print)
-OBJS    := $(OBJS:%.c=%.o)
+OBJS    := $(patsubst %.c,%.o,$(wildcard src/*.c))
 
 
 #
@@ -63,13 +63,25 @@ LDFLAGS := -lm $(LDLUA) $(LDSDL) $(LDXML) $(LDTTF) $(LDGL)
 #
 #   DATA
 #
-DATA_AI   := $(shell find ai/ -name '*.lua')
-DATA_GFX  := $(shell find gfx/ -name '*png')
-DATA_XML  := $(shell find dat/ -name '*.xml' -o -name '*.ttf')
-DATA_SND  := $(shell find snd/ -name '*.ogg' -o -name '*.wav') snd/music.lua
-DATA_MISN := $(shell find dat/missions/ -name '*.lua')
-DATA      := data
-DATAFILES := $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN)
+DATA_AI   := 	$(wildcard ai/*.lua) \
+					$(wildcard ai/include/*.lua) \
+					$(wildcard ai/tpl/*.lua)
+DATA_GFX  := 	$(wildcard gfx/*.png) \
+					$(wildcard gfx/gui/*.png) \
+					$(wildcard gfx/logo/*.png) \
+					$(wildcard gfx/outfit/space/*.png) \
+					$(wildcard gfx/outfit/store/*.png) \
+					$(wildcard gfx/planet/exterior/*.png) \
+					$(wildcard gfx/planet/space/*.png) \
+					$(wildcard gfx/ship/*.png) \
+					$(wildcard gfx/spfx/*.png)
+DATA_XML  := 	$(wildcard dat/*.xml) $(wildcard dat/*.ttf)
+DATA_SND  := 	$(wildcard snd/music/*.ogg) \
+					$(wildcard snd/sounds/*.wav) \
+					snd/music.lua
+DATA_MISN := 	$(wildcard dat/missions/*.lua)
+DATA      := 	data
+DATAFILES := 	$(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN)
 
 
 
