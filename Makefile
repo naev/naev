@@ -132,7 +132,7 @@ $(VERSIONFILE):
 	@echo -n "$(VMAJOR).$(VMINOR).$(VREV)" > $(VERSIONFILE)
 
 
-data: $(DATAFILES)
+data: pack $(DATAFILES)
 	@echo -n "$(VMAJOR).$(VMINOR).$(VREV)" > $(VERSIONFILE)
 	@echo -e "\tCreating data\n"
 	@./pack $(DATA) $(DATAFILES) $(VERSIONFILE)
