@@ -65,22 +65,20 @@ LDFLAGS := -lm $(LDLUA) $(LDSDL) $(LDXML) $(LDTTF) $(LDGL)
 #
 #   DATA
 #
-DATA_AI   := 	$(wildcard ai/*.lua) \
-					$(wildcard ai/include/*.lua) \
-					$(wildcard ai/tpl/*.lua)
-DATA_GFX  := 	$(wildcard gfx/*.png) \
-					$(wildcard gfx/gui/*.png) \
-					$(wildcard gfx/logo/*.png) \
-					$(wildcard gfx/outfit/space/*.png) \
-					$(wildcard gfx/outfit/store/*.png) \
-					$(wildcard gfx/planet/exterior/*.png) \
-					$(wildcard gfx/planet/space/*.png) \
-					$(wildcard gfx/ship/*.png) \
-					$(wildcard gfx/spfx/*.png)
-DATA_XML  := 	$(wildcard dat/*.xml) $(wildcard dat/*.ttf)
-DATA_SND  := 	$(wildcard snd/music/*.ogg) \
-					$(wildcard snd/sounds/*.wav) \
-					snd/music.lua
+DATA_AI   := 	$(wildcard ai/*.lua \
+					ai/include/*.lua \
+					ai/tpl/*.lua )
+DATA_GFX  := 	$(wildcard gfx/*.png \
+					gfx/gui/*.png \
+					gfx/logo/*.png \
+					gfx/outfit/space/*.png \
+					gfx/outfit/store/*.png \
+					gfx/planet/exterior/*.png \
+					gfx/planet/space/*.png \
+					gfx/ship/*.png \
+					gfx/spfx/*.png)
+DATA_XML  := 	$(wildcard dat/*.xml dat/*.ttf)
+DATA_SND  := 	$(wildcard snd/music/*.ogg snd/sounds/*.wav) snd/music.lua
 DATA_MISN := 	$(wildcard dat/missions/*.lua)
 DATA      := 	data
 DATAFILES := 	$(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN)
