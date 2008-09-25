@@ -4,39 +4,43 @@
 
 # == CHANGE THE SETTINGS BELOW TO SUIT YOUR ENVIRONMENT =======================
 
-PLAT= posix
+#CC      := gcc
+CFLAGS  := -O2 -Wall
+AR      := ar rcu
+RANLIB  := ranlib
+#RM      := rm -f
+LIBS    := -lm
+RELPATH := lib/lua/
 
-CC= gcc
-CFLAGS= -O2 -Wall $(MYCFLAGS)
-AR= ar rcu
-RANLIB= ranlib
-RM= rm -f
-LIBS= -lm $(MYLIBS)
+ifeq ($(OS),LINUX)
+CFLAGS += -DLUA_USE_POSIX
+endif
 
-MYCFLAGS=-DLUA_USE_POSIX
-MYLDFLAGS=
-MYLIBS=
 
 # == END OF USER SETTINGS. NO NEED TO CHANGE ANYTHING BELOW THIS LINE =========
 
 PLATS= aix ansi bsd freebsd generic linux macosx mingw posix solaris
 
-LUA_A=	liblua.a
-CORE_O=	lapi.o lcode.o ldebug.o ldo.o ldump.o lfunc.o lgc.o llex.o lmem.o \
+LUA_A  := liblua.a
+CORE_O := lapi.o lcode.o ldebug.o ldo.o ldump.o lfunc.o lgc.o llex.o lmem.o \
 	lobject.o lopcodes.o lparser.o lstate.o lstring.o ltable.o ltm.o  \
 	lundump.o lvm.o lzio.o
-LIB_O=	lauxlib.o lbaselib.o ldblib.o liolib.o lmathlib.o loslib.o ltablib.o \
+LIB_O  := lauxlib.o lbaselib.o ldblib.o liolib.o lmathlib.o loslib.o ltablib.o \
 	lstrlib.o loadlib.o linit.o
 
-LUA_T=	lua
-LUA_O=	lua.o
+LUA_T := lua
+LUA_O := lua.o
 
-LUAC_T=	luac
-LUAC_O=	luac.o print.o
+LUAC_T := luac
+LUAC_O := luac.o print.o
 
-ALL_O= $(CORE_O) $(LIB_O) $(LUA_O) $(LUAC_O)
-ALL_T= $(LUA_A) $(LUA_T) $(LUAC_T)
-ALL_A= $(LUA_A)
+ALL_O := $(CORE_O) $(LIB_O) $(LUA_O) $(LUAC_O)
+ALL_T := $(LUA_A) $(LUA_T) $(LUAC_T)
+ALL_A := $(LUA_A)
+
+%.o:
+	@$(CC) -c $(CFLAGS) -o $@ $<
+	@echo -e "\tCC   $(RELPATH)$@"
 
 default: $(PLAT)
 
@@ -47,17 +51,21 @@ o:	$(ALL_O)
 a:	$(ALL_A)
 
 $(LUA_A): $(CORE_O) $(LIB_O)
-	$(AR) $@ $?
-	$(RANLIB) $@
+	@$(AR) $@ $?
+	@$(RANLIB) $@
+	@echo -e "\tLIB  $(RELPATH)$@"
 
 $(LUA_T): $(LUA_O) $(LUA_A)
 	@$(CC) -o $@ $(MYLDFLAGS) $(LUA_O) $(LUA_A) $(LIBS)
+	@echo -e "\tLD   $(RELPATH)$@"
 
 $(LUAC_T): $(LUAC_O) $(LUA_A)
 	@$(CC) -o $@ $(MYLDFLAGS) $(LUAC_O) $(LUA_A) $(LIBS)
+	@echo -e "\tLD   $(RELPATH)$@"
 
 clean:
-	$(RM) $(ALL_T) $(ALL_O)
+	@$(RM) $(ALL_T) $(ALL_O)
+	@echo -e "\tCleaning Lua"
 
 depend:
 	@$(CC) $(CFLAGS) -MM l*.c print.c
@@ -95,7 +103,7 @@ generic:
 	$(MAKE) all MYCFLAGS=
 
 linux:
-	$(MAKE) all MYCFLAGS=-DLUA_USE_LINUX MYLIBS="-Wl,-E -ldl -lreadline -lhistory -lncurses"
+	$(MAKE) all MYCFLAGS="-DLUA_USE_LINUX -DLUA_USE_MKSTEMP" MYLIBS="-Wl,-E -ldl -lreadline -lhistory -lncurses"
 
 macosx:
 	$(MAKE) all MYCFLAGS=-DLUA_USE_MACOSX

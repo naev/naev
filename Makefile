@@ -9,6 +9,7 @@ DEBUG := 1
 OS := LINUX
 #OS := WIN32
 #OS := MACOS
+export OS
 
 
 #
