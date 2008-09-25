@@ -1,21 +1,27 @@
 
-ROOTDIR = ../../
-LOCALDIR = utils/mksprite/
+ROOTDIR  := ../../
+LOCALDIR := utils/mksprite/
 
-COBJS =
+COBJS    := main.o
 
-CFLAGS = `sdl-config --cflags` -O2 -Wall
-LFLAGS = `sdl-config --libs` -lSDL_image
+CFLAGS   := $(shell sdl-config --cflags) -O2 -Wall
+LFLAGS   := $(sdl-config --libs) -lSDL_image
 
-APPNAME = mkspr
+APPNAME  := mkspr
+
+.PHONY: all clean
 
 %.o: $(SRCDIR)%.c
 	@$(CC) -c $(CFLAGS) -o $@ $<
 	@echo -e "\tCC   $(LOCALDIR)$@"
 
-all: $(COBJS)
-	@$(CC) $(LFLAGS) $(CFLAGS) -o $(ROOTDIR)$(APPNAME) main.c $(COBJS)
+all: $(ROOTDIR)$(APPNAME)
+
+$(ROOTDIR)$(APPNAME): $(COBJS)
+	@$(CC) $(LFLAGS) $(CFLAGS) -o $(ROOTDIR)$(APPNAME) $(COBJS)
 	@echo -e "\tLD   $(APPNAME)"
 
 clean:
+	@$(RM) $(COBJS)
+	@echo -e "\tCleaning mkspr"
 	
