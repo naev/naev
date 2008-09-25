@@ -234,13 +234,13 @@
    <crew>4</crew>
    <mass>90</mass>
    <fuel>400</fuel>
-   <cap_weapon>80</cap_weapon>
+   <cap_weapon>50</cap_weapon>
    <cap_cargo>10</cap_cargo>
   </caracteristics>
   <outfits>
-   <outfit quantity="2">Ripper MK2</outfit>
-   <outfit quantity="1">Headhunter Launcher</outfit>
-   <outfit quantity="20">Headhunter</outfit>
+   <outfit quantity="2">Laser Cannon</outfit>
+   <outfit quantity="1">Seeker Launcher</outfit>
+   <outfit quantity="5">Seeker Missile</outfit>
   </outfits>
  </ship>
  <ship name="Empire Lancelot">
@@ -269,13 +269,13 @@
    <crew>4</crew>
    <mass>90</mass>
    <fuel>400</fuel>
-   <cap_weapon>80</cap_weapon>
+   <cap_weapon>50</cap_weapon>
    <cap_cargo>10</cap_cargo>
   </caracteristics>
   <outfits>
    <outfit quantity="2">Ripper MK2</outfit>
    <outfit quantity="1">Headhunter Launcher</outfit>
-   <outfit quantity="20">Headhunter</outfit>
+   <outfit quantity="6">Headhunter</outfit>
    <outfit quantity="1">Milspec Jammer</outfit>
   </outfits>
  </ship>
