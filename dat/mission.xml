@@ -47,7 +47,7 @@
    <unique>1</unique>
   </flags>
   <avail>
-   <cond>var.peek("es_cargo") == true and space.getSystem("NGC-7291"):jumpDist() &lt; 5 and player.getFaction("Empire") &gt; 5 and player.getRating() &gt; 5</cond>
+   <cond>var.peek("es_cargo") == true and space.getSystem("NGC-7291"):jumpDist() &lt; 5 and player.getFaction("Empire") &gt; 5 and player.getRating() &gt; 5 and var.peek("collective_fail") ~= true</cond>
    <chance>80</chance>
    <location>Bar</location>
    <faction>Empire</faction>
@@ -59,7 +59,7 @@
    <unique>1</unique>
   </flags>
   <avail>
-   <cond>player.getFaction("Empire") &gt; 5</cond>
+   <cond>player.getFaction("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
    <done>Collective Scouting</done>
    <chance>100</chance>
    <location>Bar</location>
@@ -72,7 +72,7 @@
    <unique>1</unique>
   </flags>
   <avail>
-   <cond>player.getFaction("Empire") &gt; 5</cond>
+   <cond>player.getFaction("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
    <done>Collective Espionage 1</done>
    <chance>100</chance>
    <location>Bar</location>
@@ -85,7 +85,7 @@
    <unique>1</unique>
   </flags>
   <avail>
-   <cond>player.getFaction("Empire") &gt; 5</cond>
+   <cond>player.getFaction("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
    <done>Collective Espionage 2</done>
    <chance>100</chance>
    <location>Bar</location>
@@ -111,7 +111,7 @@
    <unique>1</unique>
   </flags>
   <avail>
-   <cond>player.getFaction("Empire") &gt; 5</cond>
+   <cond>player.getFaction("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
    <done>Collective Distraction</done>
    <chance>100</chance>
    <location>Bar</location>
@@ -124,7 +124,7 @@
    <unique>1</unique>
   </flags>
   <avail>
-   <cond>player.getFaction("Empire") &gt; 5</cond>
+   <cond>player.getFaction("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
    <done>Operation Black Trinity</done>
    <chance>100</chance>
    <location>Bar</location>

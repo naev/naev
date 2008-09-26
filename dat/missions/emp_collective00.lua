@@ -29,7 +29,7 @@ else -- default english
 "It is of vital important that you do not engage the drone.  Report back as soon as you locate it."]]
    text[3] = [[After landing you head to the Empire military headquarters and find Sgt. Dimitri there.
 "Well it seems like the drone has some strange fixation with %s.  We aren't quite sure what to make of it, but intelligence is on it.  Report back at the bar in bit and we'll see what we can do about the Collective"]]
-   msg_killdrone = "MISSION FAILED: You weren't supposed to kill the drone!"
+   msg_killdrone = "Mission Failed: You weren't supposed to kill the drone!"
 end
 
 
@@ -94,5 +94,6 @@ end
 function kill()
    player.msg( msg_killdrone )
    misn.finish(false)
+   var.push( "collective_fail", true )
 end
 

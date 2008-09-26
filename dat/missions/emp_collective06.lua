@@ -34,6 +34,7 @@ else -- default english
    title[1] = "Bar"
    title[2] = "Operation Cold Metal"
    title[3] = "Mission Success"
+   title[4] = "Cowardly Behaviour"
    text = {}
    text[1] = [[You see Commodore Keer at a table with a couple other pilots.  She motions you over to sit down.
 She begins, "We're going to finally attack the Collective.  We've gotten the Emperor himself to bless the mission and send some of his better pilots.  Would you be interested in joining the destruction of the Collective?"]]
@@ -43,6 +44,9 @@ You notice Commodore Keer.  Upon greeting her she says, "You did a good job out 
    text[4] = [[She continues, "As a symbol of appreciation you should find a deposit of 500 thousand credits has been made to your account.  There will be a celebration later today in the officer's room if you want to join in."
 
 And such ends the Collective threat...]]
+   text[5] = [[You recieve a message signed by Commodore Keeras soon as you enter Empire space:
+"There is no room for cowards in the Empire's fleet."
+The signature does seem valid.]]
    -- Conversation between pilots
    talk = {}
    talk[1] = "System Cleared: Procede to %s."
@@ -179,6 +183,22 @@ function jump ()
       misn_stage = 5
       player.msg( string.format( talk[3], misn_base_sys:name() ))
 
+   elseif misn_stage == 5 then
+
+      -- Lower faction by a lot, without making hostile
+      f = player.getFaction("Empire") 
+      if f > 0 then
+         if f > 20 then player.modFactionRaw("Empire", -20)
+         else player.modFactionRaw("Empire", -f)
+         end
+      end
+
+      -- Display message
+      tk.msg( title[4], text[5] )
+
+      -- Mission failed
+      var.push( "collective_fail", true )
+      misn.finish(false)
    end
 end
 
