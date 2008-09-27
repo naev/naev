@@ -46,7 +46,15 @@ function choose( str )
 
    elseif str == "ambient" then
 
-      ambient = { "peace1", "mission", "peace2", "peace4", "peace6" }
+      sys = space.getSystem()
+      factions = sys:faction()
+
+      if factions["Collective"] then
+         ambient = { "collective1" }
+      else
+         ambient = { "ambient1", "ambient2", "mission",
+                     "peace1", "peace2", "peace4", "peace6" }
+      end
       music.load( ambient[ rnd.int(1,#ambient) ])
       music.play()
 
