@@ -51,7 +51,6 @@ extern int hyperspace_target;
 /*
  * prototypes
  */
-static void map_close( char* str );
 static void map_update (void);
 static int map_inPath( StarSystem *sys );
 static void map_render( double bx, double by, double w, double h );
@@ -66,7 +65,7 @@ static void map_selectCur (void);
 void map_open (void)
 {
    if (map_wid) {
-      map_close(NULL);
+      map_close();
       return;
    }
 
@@ -131,7 +130,7 @@ void map_open (void)
          &gl_smallFont, &cBlack, NULL );
    /* Close button */
    window_addButton( map_wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnClose", "Close", map_close );
+            "btnClose", "Close", (void(*)(char*))map_close );
 
          
    /*
@@ -154,9 +153,8 @@ void map_open (void)
 
    map_update();
 }
-static void map_close( char* str )
+void map_close (void)
 {
-   (void)str;
    if (map_wid) {
       window_destroy( map_wid );
       map_wid = 0;

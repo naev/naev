@@ -13,6 +13,7 @@
 
 /* open the map window */
 void map_open (void);
+void map_close (void);
 int map_isOpen (void);
 
 /* misc */
