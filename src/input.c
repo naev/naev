@@ -310,11 +310,11 @@ static void input_key( int keynum, double value, int kabs )
       }
       else if (value==KEY_RELEASE) { player_rmFlag(PLAYER_PRIMARY); }
    /* targetting */
-   } else if (INGAME() && KEY("target")) {
+   } else if (INGAME() && NODEAD() && KEY("target")) {
       if (value==KEY_PRESS) player_targetNext();
-   } else if (INGAME() && KEY("target_nearest")) {
+   } else if (INGAME() && NODEAD() && KEY("target_nearest")) {
       if (value==KEY_PRESS) player_targetNearest();
-   } else if (INGAME() && KEY("target_hostile")) {
+   } else if (INGAME() && NODEAD() && KEY("target_hostile")) {
       if (value==KEY_PRESS) player_targetHostile();
    /* face the target */
    } else if (KEY("face")) {
@@ -339,13 +339,13 @@ static void input_key( int keynum, double value, int kabs )
    /*
     * Escorts.
     */
-   } else if (INGAME() && KEY("e_attack")) {
+   } else if (INGAME() && NODEAD() && KEY("e_attack")) {
       if (value==KEY_PRESS) escorts_attack(player);
-   } else if (INGAME() && KEY("e_hold")) {
+   } else if (INGAME() && NODEAD() && KEY("e_hold")) {
       if (value==KEY_PRESS) escorts_hold(player);
-   } else if (INGAME() && KEY("e_return")) {
+   } else if (INGAME() && NODEAD() && KEY("e_return")) {
       if (value==KEY_PRESS) escorts_return(player);
-   } else if (INGAME() && KEY("e_clear")) {
+   } else if (INGAME() && NODEAD() && KEY("e_clear")) {
       if (value==KEY_PRESS) escorts_clear(player);
 
 
