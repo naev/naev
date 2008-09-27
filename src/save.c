@@ -236,7 +236,6 @@ static void load_menu_delete( char *str )
    if (strcmp(save,"None") == 0)
       return;
 
-
    if (dialogue_YesNo( "Permanently Delete?",
       "Are you sure you want to permanently delete '%s'?", save) == 0)
       return;
