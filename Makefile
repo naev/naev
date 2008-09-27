@@ -80,7 +80,7 @@ DATA_GFX  := 	$(wildcard gfx/*.png \
 DATA_XML  := 	$(wildcard dat/*.xml dat/*.ttf)
 DATA_SND  := 	$(wildcard snd/music/*.ogg snd/sounds/*.wav) snd/music.lua
 DATA_MISN := 	$(wildcard dat/missions/*.lua)
-DATA      := 	data
+DATA      := 	ndata
 DATAFILES := 	$(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN)
 
 
@@ -95,7 +95,7 @@ DATAFILES := 	$(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN)
 	@echo -e "\tCC   $@"
 
 
-all:	utils data lua naev
+all:	utils ndata lua naev
 
 
 help:
@@ -103,10 +103,10 @@ help:
 	@echo "   lua - makes Lua"
 	@echo "   naev - makes the naev binary"
 	@echo "   mkpsr - makes the mkspr utilitily"
-	@echo "   data - creates the data file"
+	@echo "   ndata - creates the ndata file"
 	@echo "   utils - makes all the utilities"
 	@echo "   docs - creates the doxygen documentation"
-	@echo "   clean - removes naev's main binary and data file"
+	@echo "   clean - removes naev's main binary and ndata file"
 	@echo "   purge - removes everything done"
 
 
@@ -131,9 +131,9 @@ $(VERSIONFILE):
 	@echo -n "$(VMAJOR).$(VMINOR).$(VREV)" > $(VERSIONFILE)
 
 
-data: pack $(DATAFILES)
+ndata: pack $(DATAFILES)
 	@echo -n "$(VMAJOR).$(VMINOR).$(VREV)" > $(VERSIONFILE)
-	@echo -e "\tCreating data\n"
+	@echo -e "\tCreating ndata\n"
 	@./pack $(DATA) $(DATAFILES) $(VERSIONFILE)
 
 
@@ -145,7 +145,7 @@ docs:
 
 
 clean:
-	@echo -e "\tRemoving data"
+	@echo -e "\tRemoving ndata"
 	@$(RM) $(DATA)
 	@echo -e "\tRemoving object files"
 	@$(RM) $(OBJS)

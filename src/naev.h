@@ -38,7 +38,7 @@
 
 #define pow2(x)            ((x)*(x)) /**< ^2 */
 
-#define DATA_DEF           "data" /**< Default data packfile. */
+#define DATA_DEF           "ndata" /**< Default data packfile. */
 extern char* data; /**< Modifiable datafile */
 #define DATA               data /**< Standard daata file to use. */
 #define DATA_NAME_LEN      32 /**< Max length of data name */
