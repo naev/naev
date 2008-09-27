@@ -331,7 +331,7 @@ static int factionL_areallies( lua_State *L )
 static int factionL_modplayer( lua_State *L )
 {
    LuaFaction *f;
-   int n;
+   double n;
    f = lua_tofaction(L,1);
 
    if (lua_isnumber(L,2)) n = lua_tonumber(L,2);
@@ -355,7 +355,7 @@ static int factionL_modplayer( lua_State *L )
 static int factionL_modplayerraw( lua_State *L )
 {
    LuaFaction *f;
-   int n;
+   double n;
    f = lua_tofaction(L,1);
 
    if (lua_isnumber(L,2)) n = lua_tonumber(L,2);

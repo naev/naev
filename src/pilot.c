@@ -53,7 +53,7 @@ static int pilot_mstack = 0; /**< Memory allocated for pilot_stack. */
  * stuff from player.c
  */
 extern Pilot* player;
-extern unsigned int player_crating; /**< Player's combat rating. */
+extern double player_crating; /**< Player's combat rating. */
 extern void player_abortAutonav (void);
 
 /* stack of fleets */
@@ -562,8 +562,8 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
          /* adjust the combat rating based on pilot mass and ditto faction */
          pshooter = pilot_get(shooter);
          if (pshooter->faction == FACTION_PLAYER) {
-            mod = (int)MAX(1,ceil(pow(p->ship->mass,1./3.))-1.);
-            player_crating += MAX( 1, mod );
+            mod = pow(p->ship->mass,1./3.);
+            player_crating += 2*mod;
             faction_modPlayer( p->faction, -mod );
          }
       }

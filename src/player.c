@@ -86,7 +86,7 @@ static int player_nstack = 0; /**< Number of ships player has. */
  * player global properties
  */
 char* player_name = NULL; /**< Ze name. */
-int player_crating = 0; /**< Ze combat rating. */
+double player_crating = 0; /**< Ze combat rating. */
 unsigned int player_flags = 0; /**< Player flags. */
 /* used in input.c */
 double player_turn = 0.; /**< Turn velocity from input. */
@@ -361,7 +361,7 @@ static void player_newMake (void)
                   xmlr_float(tmp,"y",y);
                } while (xml_nextNode(tmp));
             }
-            xmlr_int(cur,"player_crating",player_crating);
+            xmlr_float(cur,"player_crating",player_crating);
             if (xml_isNode(cur,"date")) {
                tmp = cur->children;
                do {
@@ -764,13 +764,13 @@ static char* player_ratings[] = {
 };
 const char* player_rating (void)
 {
-   if (player_crating == 0) return player_ratings[0];
-   else if (player_crating < 50) return player_ratings[1];
-   else if (player_crating < 200) return player_ratings[2];
-   else if (player_crating < 500) return player_ratings[3];
-   else if (player_crating < 1000) return player_ratings[4];
-   else if (player_crating < 2500) return player_ratings[5];
-   else if (player_crating < 10000) return player_ratings[6];
+   if (player_crating == 0.) return player_ratings[0];
+   else if (player_crating < 50.) return player_ratings[1];
+   else if (player_crating < 200.) return player_ratings[2];
+   else if (player_crating < 500.) return player_ratings[3];
+   else if (player_crating < 1000.) return player_ratings[4];
+   else if (player_crating < 2500.) return player_ratings[5];
+   else if (player_crating < 10000.) return player_ratings[6];
    else return player_ratings[7];
 }
 
@@ -2426,7 +2426,7 @@ int player_save( xmlTextWriterPtr writer )
    xmlw_startElem(writer,"player");
    xmlw_attr(writer,"name",player_name);
 
-   xmlw_elem(writer,"rating","%d",player_crating);
+   xmlw_elem(writer,"rating","%f",player_crating);
    xmlw_elem(writer,"credits","%d",player->credits);
    xmlw_elem(writer,"time","%d",ntime_get());
 
@@ -2539,7 +2539,7 @@ static int player_parse( xmlNodePtr parent )
    do {
 
       /* global stuff */
-      xmlr_int(node,"rating",player_crating);
+      xmlr_float(node,"rating",player_crating);
       xmlr_int(node,"credits",player_credits);
       xmlr_long(node,"time",player_time);
       xmlr_str(node,"location",planet);

@@ -39,7 +39,7 @@ if (player_isFlag(f)) player_flags ^= f /**< Removes a player flag. */
 extern Pilot* player; /**< Player himself. */
 extern char* player_name; /**< Player's name. */
 extern unsigned int player_flags; /**< Player's flags. */
-extern int player_crating; /**< Player's combat rating. */
+extern double player_crating; /**< Player's combat rating. */
 
 
 /*

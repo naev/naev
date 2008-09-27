@@ -31,7 +31,7 @@
 #define FACTION_LOGO_PATH  "gfx/logo/" /**< Path to logo gfx. */
 
 
-#define PLAYER_ALLY        70 /**< above this player is considered ally */
+#define PLAYER_ALLY        70. /**< above this player is considered ally */
 
 
 /**
@@ -54,8 +54,8 @@ typedef struct Faction_ {
    int *allies; /**< Allies by ID of the faction. */
    int nallies; /**< Number of allies. */
 
-   int player_def; /**< Default player standing. */
-   int player; /**< Standing with player - from -100 to 100 */
+   double player_def; /**< Default player standing. */
+   double player; /**< Standing with player - from -100 to 100 */
 } Faction;
 
 
@@ -166,15 +166,15 @@ glTexture* faction_logoSmall( int f )
  */
 static void faction_sanitizePlayer( Faction* faction )
 {
-   if (faction->player > 100)
-      faction->player = 100;
-   else if (faction->player < -100)
-      faction->player = -100;
+   if (faction->player > 100.)
+      faction->player = 100.;
+   else if (faction->player < -100.)
+      faction->player = -100.;
 }
 
 
 /**
- * @fn void faction_modPlayer( int f, int mod )
+ * @fn void faction_modPlayer( int f, double mod )
  *
  * @brief Modifies the player's standing with a faction.
  *
@@ -185,7 +185,7 @@ static void faction_sanitizePlayer( Faction* faction )
  *
  * @sa faction_modPlayerRaw
  */
-void faction_modPlayer( int f, int mod )
+void faction_modPlayer( int f, double mod )
 {
    int i;
    Faction *faction, *ally, *enemy;
@@ -205,7 +205,7 @@ void faction_modPlayer( int f, int mod )
    for (i=0; i<faction->nallies; i++) {
       ally = &faction_stack[faction->allies[i]];
 
-      ally->player += RNG(0,(mod*3)/4);
+      ally->player += RNGF() * (mod*3/4);
       faction_sanitizePlayer(ally);
    }
 
@@ -213,14 +213,14 @@ void faction_modPlayer( int f, int mod )
    for (i=0; i<faction->nenemies; i++) {
       enemy = &faction_stack[faction->enemies[i]];
 
-      enemy->player -= MIN(1,RNG(0,(mod*3)/4));
+      enemy->player -= RNGF() * mod; /* Enemies are made faster. */
       faction_sanitizePlayer(enemy);
    }
 }
 
 
 /**
- * @fn void faction_modPlayerRaw( int f, int mod )
+ * @fn void faction_modPlayerRaw( int f, double mod )
  *
  * @brief Modifies the player's standing without affecting others.
  *
@@ -231,7 +231,7 @@ void faction_modPlayer( int f, int mod )
  *
  * @sa faction_modPlayer
  */
-void faction_modPlayerRaw( int f, int mod )
+void faction_modPlayerRaw( int f, double mod )
 {
    Faction *faction;
 
@@ -248,14 +248,14 @@ void faction_modPlayerRaw( int f, int mod )
 
 
 /**
- * @fn int faction_getPlayer( int f )
+ * @fn double faction_getPlayer( int f )
  *
  * @brief Gets the player's standing with a faction.
  *
  *    @param f Faction to get player's standing from.
  *    @return The standing the player has with the faction.
  */
-int faction_getPlayer( int f )
+double faction_getPlayer( int f )
 {
    if (faction_isFaction(f)) {
       return faction_stack[f].player;
@@ -287,36 +287,25 @@ glColour* faction_getColour( int f )
 
 
 /**
- * @fn char *faction_getStanding( int mod )
+ * @fn char *faction_getStanding( double mod )
  *
  * @brief Get's the player's standing in human readable form.
  *
  *    @param mod Player's standing.
  *    @return Human readable player's standing.
  */
-static char *player_standings[] = {
-   "Hero", /* 0 */
-   "Admired",
-   "Great",
-   "Good",
-   "Decent",
-   "Wanted", /* 5 */
-   "Outlaw",
-   "Criminal",
-   "Enemy"
-};
-#define STANDING(m,i)  if (mod >= m) return player_standings[i];
-char *faction_getStanding( int mod )
+#define STANDING(m,s)  if (mod >= m) return s;
+char *faction_getStanding( double mod )
 {
-   STANDING(  90, 0 );
-   STANDING(  70, 1 );
-   STANDING(  50, 2 );
-   STANDING(  30, 3 );
-   STANDING(   0, 4 );
-   STANDING( -15, 5 );
-   STANDING( -30, 6 );
-   STANDING( -50, 7 );
-   return player_standings[8];
+   STANDING(  90., "Hero" );
+   STANDING(  70., "Admired" );
+   STANDING(  50., "Great" );
+   STANDING(  30., "Good" );
+   STANDING(   0., "Decent"  );
+   STANDING( -15., "Wanted" );
+   STANDING( -30., "Outlaw" );
+   STANDING( -50., "Criminal" );
+   return "Enemy";
 }
 #undef STANDING
 
@@ -500,7 +489,7 @@ static Faction* faction_parse( xmlNodePtr parent )
    do {
       /* Can be 0 or negative, so we have to take that into account. */
       if (xml_isNode(node,"player")) {
-         temp->player_def = xml_getInt(node);
+         temp->player_def = xml_getFloat(node);
          player = 1;
          continue;
       }
@@ -690,7 +679,7 @@ int pfaction_save( xmlTextWriterPtr writer )
       xmlw_startElem(writer,"faction");
 
       xmlw_attr(writer,"name","%s",faction_stack[i].name);
-      xmlw_str(writer, "%d", faction_stack[i].player);
+      xmlw_str(writer, "%f", faction_stack[i].player);
 
       xmlw_endElem(writer); /* "faction" */
    }
@@ -725,7 +714,7 @@ int pfaction_load( xmlNodePtr parent )
                xmlr_attr(cur,"name",str); 
                faction = faction_get(str);
                if (faction != -1) /* Faction is valid. */
-                  faction_stack[faction].player = xml_getInt(cur);
+                  faction_stack[faction].player = xml_getFloat(cur);
                free(str);
             }
          } while (xml_nextNode(cur));

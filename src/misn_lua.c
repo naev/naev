@@ -1132,12 +1132,13 @@ static int player_msg( lua_State *L )
 static int player_modFaction( lua_State *L )
 {
    NLUA_MIN_ARGS(2);
-   int f, mod;
+   int f;
+   double mod;
 
    if (lua_isstring(L,1)) f = faction_get( lua_tostring(L,1) );
    else NLUA_INVALID_PARAMETER();
 
-   if (lua_isnumber(L,2)) mod = (int) lua_tonumber(L,2);
+   if (lua_isnumber(L,2)) mod = lua_tonumber(L,2);
    else NLUA_INVALID_PARAMETER();
 
    faction_modPlayer( f, mod );
@@ -1158,12 +1159,13 @@ static int player_modFaction( lua_State *L )
 static int player_modFactionRaw( lua_State *L )
 {
    NLUA_MIN_ARGS(2);
-   int f, mod;
+   int f;
+   double mod;
 
    if (lua_isstring(L,1)) f = faction_get( lua_tostring(L,1) );
    else NLUA_INVALID_PARAMETER();
 
-   if (lua_isnumber(L,2)) mod = (int) lua_tonumber(L,2);
+   if (lua_isnumber(L,2)) mod = lua_tonumber(L,2);
    else NLUA_INVALID_PARAMETER();
 
    faction_modPlayerRaw( f, mod );

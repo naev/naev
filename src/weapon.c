@@ -639,7 +639,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
          parent = pilot_get(w->parent);
          if ((parent->faction == FACTION_PLAYER) &&
                (!pilot_isFlag(p,PILOT_HOSTILE) || (RNGF() < 0.5))) { /* 50% chance */
-            faction_modPlayer( p->faction, -1 ); /* slowly lower faction */
+            faction_modPlayer( p->faction, -1. ); /* slowly lower faction */
             pilot_setFlag( p, PILOT_HOSTILE);
          }
          ai_attacked( p, w->parent );
@@ -683,7 +683,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
          parent = pilot_get(w->parent);
          if ((parent->faction == FACTION_PLAYER) &&
                (!pilot_isFlag(p,PILOT_HOSTILE) || (RNGF() < 0.5))) { /* 50% chance */
-            faction_modPlayer( p->faction, -1 ); /* slowly lower faction */
+            faction_modPlayer( p->faction, -1. ); /* slowly lower faction */
             pilot_setFlag( p, PILOT_HOSTILE);
          }
          ai_attacked( p, w->parent );
