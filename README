@@ -1,4 +1,7 @@
 
+   NAEV README
+
+
    X.) DEPENDENCIES
 
       X.1) Debian
@@ -35,12 +38,15 @@
                joystick = "Precision" # in conf file
          X.0.2) Syntax
             KEY_IDENTIFIER = { type = KEY_TYPE, key = KEY_NUMBER,
-                  [reverse = KEY_REVERSE] }
+                  [reverse = KEY_REVERSE, mod = MOD_IDENTIFIER] }
             KEY_IDENTIFIER is the identifier given below
             KEY_TYPE can be one of keyboard, jaxis or jbutton
             KEY_NUMBER is the number of the key (found with xev usually)
             KEY_REVERSE is whether it is reversed or not, which is only useful
                in the case of jaxis
+            MOD_IDENTIFIER is the modifier to take into account, can be one of:
+               lctrl, rctrl, lshift, rshift, lmeta, rmeta, ralt, lalt
+               It isn't used with joystick bindings.
          X.0.3) Example
             accel = { type = "jbutton", key = 0 }
             see conf.example for more examples
@@ -52,7 +58,7 @@
          X.1.4) reverse : makes the ship face the direction it's coming from.
             default: down arrow
          X.1.5) afterburner : uses the ship's afetrburner. default: double tap
-            and hold up arrow (NOT CONFIGURABLE YET)
+            and hold up arrow
 
       X.2) Combat
          X.2.1) primary : fires primary weapons. default: spacebar.
