@@ -307,6 +307,19 @@ static void map_update (void)
 }
 
 
+/**
+ * @fn int map_isOpen (void)
+ *
+ * @brief Checks to see if the map is open.
+ *
+ *    @return 0 if map is closed, non-zero if it's open.
+ */
+int map_isOpen (void)
+{
+   return (map_wid > 0);
+}
+
+
 /*
  * returns 1 if sys is part of the map_path, 2 if won't have enough fuel
  */
@@ -611,6 +624,19 @@ void map_jump (void)
 
       }
    }
+}
+
+
+/**
+ * @fn void map_select( StarSystem *sys )
+ *
+ * @brief Selects the system in the map.
+ *
+ *    @param sys System to select.
+ */
+void map_select( StarSystem *sys )
+{
+   map_selected = sys - systems_stack;
 }
 
 /*

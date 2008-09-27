@@ -13,8 +13,10 @@
 
 /* open the map window */
 void map_open (void);
+int map_isOpen (void);
 
 /* misc */
+void map_select( StarSystem *sys );
 void map_clear (void);
 void map_jump (void);
 

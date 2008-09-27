@@ -20,6 +20,7 @@
 #include "board.h"
 #include "map.h"
 #include "escort.h"
+#include "land.h"
 
 
 #define KEY_PRESS    ( 1.) /**< Key is pressed. */
@@ -219,6 +220,8 @@ int input_getKeybind( char *keybind, KeybindType *type, SDLMod *mod, int *revers
 (player && !pilot_isFlag(player,PILOT_HYP_PREP) &&\
 !pilot_isFlag(player,PILOT_HYP_BEGIN) &&\
 !pilot_isFlag(player,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
+#define NODEAD()  (player) /**< Player isn't dead. */
+#define NOLAND()  (!landed) /**< Player isn't landed. */
 static void input_key( int keynum, double value, int kabs )
 {
    unsigned int t;
@@ -374,12 +377,12 @@ static void input_key( int keynum, double value, int kabs )
          player_abortAutonav();
          player_land();
       }
-   } else if (KEY("thyperspace") && INGAME() && NOHYP()) {
+   } else if (KEY("thyperspace") && NOHYP() && NOLAND() && NODEAD()) {
       if (value==KEY_PRESS) {
          player_abortAutonav();
          player_targetHyperspace();
       }
-   } else if (KEY("starmap") && NOHYP()) {
+   } else if (KEY("starmap") && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS) map_open();
    } else if (KEY("jump") && INGAME()) {
       if (value==KEY_PRESS) {
