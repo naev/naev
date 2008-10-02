@@ -334,7 +334,7 @@ int space_canHyperspace( Pilot* p)
 
    for (i=0; i < cur_system->nplanets; i++) {
       d = vect_dist(&p->solid->pos, &cur_system->planets[i]->pos);
-      if (d < MIN_HYPERSPACE_DIST)
+      if (d < HYPERSPACE_EXIT_MIN)
          return 0;
    }
    return 1;
@@ -584,7 +584,7 @@ static void space_addFleet( Fleet* fleet, int init )
    FleetPilot *plt;
    Planet *planet;
    int i, c;
-   double a;
+   double a, d;
    Vector2d vv,vp, vn;
 
    /* Needed to determine angle. */
@@ -603,8 +603,8 @@ static void space_addFleet( Fleet* fleet, int init )
 
    /* simulate they came from hyperspace */
    if (c==0) {
-      vect_pset( &vp, RNG(MIN_HYPERSPACE_DIST*2, MIN_HYPERSPACE_DIST*3.),
-            RNG(0,360)*M_PI/180.);
+      d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
+      vect_pset( &vp, d, RNG(0,360)*M_PI/180.);
    }
    /* Starting out landed or heading towards landing.. */
    else if ((c==1) || (c==2)) {
@@ -619,8 +619,8 @@ static void space_addFleet( Fleet* fleet, int init )
 
       /* No suitable planet found. */
       if (planet == NULL) {
-         vect_pset( &vp, RNG(MIN_HYPERSPACE_DIST, MIN_HYPERSPACE_DIST*3.),
-               RNG(0,360)*M_PI/180.);
+         d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
+         vect_pset( &vp, d, RNG(0,360)*M_PI/180.);
          c = 0;
       }
       else {
@@ -628,9 +628,10 @@ static void space_addFleet( Fleet* fleet, int init )
          if (c==1)
             vectcpy( &vp, &planet->pos );
          /* Start out near landed. */
-         else if (c==2)
-            vect_pset( &vp, RNG(100, MIN_HYPERSPACE_DIST),
-                  RNG(0,360)*M_PI/180.);
+         else if (c==2) {
+            d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
+            vect_pset( &vp, d, RNG(0,360)*M_PI/180.);
+         }
       }
    }
 
@@ -644,7 +645,7 @@ static void space_addFleet( Fleet* fleet, int init )
 
          /* Entering via hyperspace. */
          if (c==0)
-            vect_pset( &vv, plt->ship->speed * 3., a );
+            vect_pset( &vv, HYPERSPACE_VEL, a );
          /* Starting out landed. */
          else if (c==1)
             vectnull(&vv);

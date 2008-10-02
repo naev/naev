@@ -14,7 +14,6 @@
 #include "economy.h"
 
 
-#define MIN_HYPERSPACE_DIST   1500 /**< Minimum distance to initiate hyperspace. */
 #define MAX_HYPERSPACE_VEL    25 /**< Speed to brake to before jumping. */
 
 

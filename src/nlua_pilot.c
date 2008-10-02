@@ -218,6 +218,7 @@ static int pilot_addFleet( lua_State *L )
    int i, j;
    unsigned int p;
    double a;
+   double d;
    Vector2d vv,vp, vn;
    FleetPilot *plt;
    LuaPilot lp;
@@ -259,9 +260,10 @@ static int pilot_addFleet( lua_State *L )
    /* Use position passed if possible. */
    if (lv != NULL)
       vectcpy( &vp, &lv->vec );
-   else
-      vect_pset( &vp, RNG(MIN_HYPERSPACE_DIST*2, MIN_HYPERSPACE_DIST*3),
-            RNG(0,360)*M_PI/180.);
+   else {
+      d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
+      vect_pset( &vp, d, RNG(0,360)*M_PI/180.);
+   }
 
    /* now we start adding pilots and toss ids into the table we return */
    j = 0;
@@ -278,16 +280,16 @@ static int pilot_addFleet( lua_State *L )
 
          /* Set velocity only if no position is set.. */
          if (lv != NULL) {
-            if (VMOD(lv->vec) > MIN_HYPERSPACE_DIST) {
+            if (VMOD(lv->vec) > HYPERSPACE_ENTER_MIN*0.9) {
                a = vect_angle(&vp,&vn);
-               vect_pset( &vv, plt->ship->speed * 3., a );
+               vect_pset( &vv, HYPERSPACE_VEL, a );
             }
             else
                vectnull( &vv );
          }
          else { /* Entering via hyperspace. */
             a = vect_angle(&vp,&vn);
-            vect_pset( &vv, plt->ship->speed * 3., a );
+            vect_pset( &vv, HYPERSPACE_VEL, a );
          }
 
          /* Create the pilot. */

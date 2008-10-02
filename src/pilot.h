@@ -19,12 +19,18 @@
 #define PLAYER_ID       1 /**< Player pilot ID. */
 
 
+/* Hyperspace parameters. */
 #define HYPERSPACE_ENGINE_DELAY  3000 /**< time to warm up engine */
 #define HYPERSPACE_FLY_DELAY     5000 /**< time it takes to hyperspace */
 #define HYPERSPACE_STARS_BLUR    2000 /**< how long the stars blur */
 #define HYPERSPACE_STARS_LENGTH  1000 /**< length the stars blur to at max */
 #define HYPERSPACE_FADEOUT       1000 /**< how long the fade is */
 #define HYPERSPACE_FUEL          100  /**< how much fuel it takes */
+#define HYPERSPACE_THRUST        2000./**< How much thrust you use in hyperspace. */
+#define HYPERSPACE_VEL           HYPERSPACE_THRUST*(HYPERSPACE_FLY_DELAY/1000) /**< Velocity at hyperspace. */
+#define HYPERSPACE_ENTER_MIN     HYPERSPACE_VEL*0.5 /**< Minimum entering distance. */
+#define HYPERSPACE_ENTER_MAX     HYPERSPACE_VEL*0.6 /**< Maxmimu entering distance. */
+#define HYPERSPACE_EXIT_MIN      1500. /**< Minimum distance to begin jumping. */
 
 
 #define PILOT_SIZE_APROX      0.8   /**, aproximation for pilot size */

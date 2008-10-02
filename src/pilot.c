@@ -1004,7 +1004,7 @@ static void pilot_hyperspace( Pilot* p )
       }
 
       /* keep acceling - hyperspace uses much bigger accel */
-      vect_pset( &p->solid->force, p->thrust * 5., p->solid->dir );
+      vect_pset( &p->solid->force, HYPERSPACE_THRUST*p->solid->mass, p->solid->dir );
    }
    /* engines getting ready for the jump */
    else if (pilot_isFlag(p, PILOT_HYP_BEGIN)) {

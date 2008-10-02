@@ -2053,6 +2053,7 @@ void player_jump (void)
 void player_brokeHyperspace (void)
 {
    unsigned int tl, th;
+   double d;
 
    /* calculates the time it takes, call before space_init */
    tl = (unsigned int) floor( sqrt( (double)player->solid->mass)/5. );
@@ -2065,8 +2066,8 @@ void player_brokeHyperspace (void)
    space_init( systems_stack[cur_system->jumps[hyperspace_target]].name );
 
    /* set position, the pilot_update will handle lowering vel */
-   player_warp( -cos( player->solid->dir ) * MIN_HYPERSPACE_DIST * 2.5,
-         -sin( player->solid->dir ) * MIN_HYPERSPACE_DIST * 2.5 );
+   d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
+   player_warp( -cos( player->solid->dir ) * d, -sin( player->solid->dir ) * d );
 
    /* reduce fuel */
    player->fuel -= HYPERSPACE_FUEL;
