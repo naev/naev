@@ -17,7 +17,7 @@ export OS
 #
 VMAJOR      := 0
 VMINOR      := 3
-VREV        := 0
+VREV        := 1
 VERSION     := -DVMAJOR=$(VMAJOR) -DVMINOR=$(VMINOR) -DVREV=$(VREV)
 VERSIONFILE := VERSION
 
