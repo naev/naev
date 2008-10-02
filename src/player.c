@@ -1915,6 +1915,12 @@ void player_land (void)
       return;
    }
 
+   /* Check if there are planets to land on. */
+   if (cur_system->nplanets == 0) {
+      player_message("There are no planets to land on.");
+      return;
+   }
+
    Planet* planet = cur_system->planets[planet_target];
    if (planet_target >= 0) { /* attempt to land */
       if (!planet_hasService(planet, PLANET_SERVICE_LAND)) {
