@@ -16,7 +16,7 @@ function atk_g_think ()
       range = ai.getweaprange()
 
       -- Shouldn't switch targets if close
-      if dist > range * 1.3 then
+      if dist > range * 1.6 then
          ai.poptask()
          ai.pushtask( 0, "attack", enemy )
       end
@@ -43,7 +43,7 @@ function atk_g ()
    range = ai.getweaprange()
 
    -- We first bias towards range
-   if dist > range then
+   if dist > range*1.3 then
       dir = ai.face(target) -- Normal face the target
 
       secondary, special, ammo = ai.secondary("Launcher")
@@ -81,7 +81,7 @@ function atk_g ()
          end
       end
 
-      if dir < 10 or ai.hasturrets() then
+      if (dir < 10 and dist < range)or ai.hasturrets() then
          ai.shoot()
       end
    end
