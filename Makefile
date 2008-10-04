@@ -12,6 +12,10 @@ OS := LINUX
 export OS
 
 
+# Data path
+#DATA_DEF := "ndata"
+
+
 #
 #   VERSION
 #
