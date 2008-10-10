@@ -2224,6 +2224,20 @@ void player_targetNext (void)
 
 
 /**
+ * @fn void player_targetPrev (void)
+ *
+ * @brief Cycles to previous target.
+ */
+void player_targetPrev (void)
+{
+   player->target = pilot_getPrevID(player->target);
+
+   if (player->target != PLAYER_ID)
+      player_playSound( snd_target, 1 );
+}
+
+
+/**
  * @fn player_targetNearest (void)
  *
  * @brief Player targets nearest pilot.

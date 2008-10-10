@@ -106,6 +106,7 @@ int player_missionAlreadyDone( int id );
  */
 void player_targetHostile (void);
 void player_targetNext (void);
+void player_targetPrev (void);
 void player_targetNearest (void);
 void player_setRadarRel( int mod );
 void player_secondaryNext (void);

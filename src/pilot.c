@@ -77,6 +77,7 @@ extern void player_dead (void);
 extern void player_destroyed (void);
 extern int gui_load( const char *name );
 /* internal */
+static int pilot_getStackPos( const unsigned int id );
 static void pilot_shootWeapon( Pilot* p, PilotOutfit* w );
 static void pilot_update( Pilot* pilot, const double dt );
 static void pilot_hyperspace( Pilot* pilot );
@@ -85,6 +86,32 @@ static void pilot_calcCargo( Pilot* pilot );
 void pilot_free( Pilot* p );
 static Fleet* fleet_parse( const xmlNodePtr parent );
 static void pilot_dead( Pilot* p );
+
+
+/**
+ * @fn static int pilot_getStackPos( const unsigned int id )
+ *
+ * @brief Gets the pilot's position in the stack.
+ *
+ *    @param id ID of the pilot to get.
+ *    @return Position of pilot in stack or -1 if not found.
+ */
+static int pilot_getStackPos( const unsigned int id )
+{
+   /* binary search */
+   int l,m,h;
+   l = 0;
+   h = pilot_nstack-1;
+   while (l <= h) {
+      m = (l+h) >> 1; /* for impossible overflow returning neg value */
+      if (pilot_stack[m]->id > id) h = m-1;
+      else if (pilot_stack[m]->id < id) l = m+1;
+      else return m;;
+   }
+
+   /* Not found. */
+   return -1;
+}
 
 
 /**
@@ -97,19 +124,30 @@ static void pilot_dead( Pilot* p );
  */
 unsigned int pilot_getNextID( const unsigned int id )
 {
-   /* binary search */
-   int l,m,h;
-   l = 0;
-   h = pilot_nstack-1;
-   while (l <= h) {
-      m = (l+h) >> 1; /* for impossible overflow returning neg value */
-      if (pilot_stack[m]->id > id) h = m-1;
-      else if (pilot_stack[m]->id < id) l = m+1;
-      else break;
-   }
+   int m;
+   m = pilot_getStackPos(id);
 
-   if (m == (pilot_nstack-1)) return PLAYER_ID;
+   if ((m == (pilot_nstack-1)) || (m == -1)) return PLAYER_ID;
    else return pilot_stack[m+1]->id;
+}
+
+
+/**
+ * @fn unsigned int pilot_getPrevID( const unsigned int id )
+ *
+ * @brief Gets the previous pilot based on ID.
+ *
+ *    @param id ID of the current pilot.
+ *    @return ID of previous pilot or PLAYER_ID if no previous pilot.
+ */
+unsigned int pilot_getPrevID( const unsigned int id )
+{
+   int m;
+   m = pilot_getStackPos(id);
+
+   if (m == -1) return PLAYER_ID;
+   else if (m == 0) return pilot_stack[pilot_nstack-1]->id;
+   else return pilot_stack[m-1]->id;
 }
 
 
@@ -181,19 +219,16 @@ unsigned int pilot_getNearestPilot( const Pilot* p )
  */
 Pilot* pilot_get( const unsigned int id )
 {
+   int m;
+
    if (id==PLAYER_ID) return player; /* special case player */
-   
-   /* binary */
-   int l,m,h;
-   l = 0;
-   h = pilot_nstack-1;
-   while (l <= h) {
-      m = (l+h)>>1;
-      if (pilot_stack[m]->id > id) h = m-1;
-      else if (pilot_stack[m]->id < id) l = m+1;
-      else return pilot_stack[m];
-   }
-   return NULL;
+  
+   m = pilot_getStackPos(id);
+
+   if (m==-1)
+      return NULL;
+   else
+      return pilot_stack[m];
 }
 
 

@@ -43,8 +43,8 @@ static Keybind** input_keybinds; /**< contains the players keybindings */
 const char *keybindNames[] = {
    /* Movement. */
    "accel", "left", "right", "reverse", "afterburn",
-   /* Targetting. */
-   "target", "target_nearest", "target_hostile",
+  /* Targetting. */
+   "target", "target_prev", "target_nearest", "target_hostile",
    /* Fighting. */
    "primary", "face", "board",
    /* Escorts. */
@@ -88,6 +88,7 @@ void input_setDefault (void)
    input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, KMOD_ALL, 0 );
    /* Targetting. */
    input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, KMOD_NONE, 0 );
+   input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_TAB, KMOD_LCTRL, 0 );
    input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_t, KMOD_NONE, 0 );
    input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, KMOD_NONE, 0 );
    /* Combat. */
@@ -316,6 +317,8 @@ static void input_key( int keynum, double value, int kabs )
    /* targetting */
    } else if (INGAME() && NODEAD() && KEY("target")) {
       if (value==KEY_PRESS) player_targetNext();
+   } else if (INGAME() && NODEAD() && KEY("target_prev")) {
+      if (value==KEY_PRESS) player_targetPrev();
    } else if (INGAME() && NODEAD() && KEY("target_nearest")) {
       if (value==KEY_PRESS) player_targetNearest();
    } else if (INGAME() && NODEAD() && KEY("target_hostile")) {
