@@ -27,30 +27,30 @@
 lua_getglobal(L,n); \
 if (lua_isnumber(L, -1)) { \
    i = (int)lua_tonumber(L, -1); \
-   lua_remove(L,-1); \
-}
+} \
+lua_remove(L,-1);
 
 #define  conf_loadFloat(n,f)    \
 lua_getglobal(L,n); \
 if (lua_isnumber(L, -1)) { \
    f = (double)lua_tonumber(L, -1); \
-   lua_remove(L,-1); \
-}
+} \
+lua_remove(L,-1);
 
 #define  conf_loadBool(n,b)   \
 lua_getglobal(L, n); \
 if (lua_isnumber(L, -1)) \
    if ((int)lua_tonumber(L, -1) == 1) { \
       b = 1; \
-      lua_remove(L,-1); \
-   }
+   } \
+lua_remove(L,-1);
 
 #define  conf_loadString(n,s) \
    lua_getglobal(L, n); \
 if (lua_isstring(L, -1)) { \
    s = strdup((char*)lua_tostring(L, -1));   \
-   lua_remove(L,-1); \
-}
+} \
+lua_remove(L,-1);
 
 
 /* from main.c */
@@ -192,25 +192,29 @@ int conf_loadConfig ( const char* file )
             lua_gettable(L, -2);
             if (lua_isstring(L, -1))
                str = (char*)lua_tostring(L, -1);
+            lua_remove(L, -1);
 
             /* gets the key */
             lua_pushstring(L, "key");
-            lua_gettable(L, -3);
+            lua_gettable(L, -2);
             if (lua_isnumber(L, -1))
                key = (int)lua_tonumber(L, -1);
+            lua_remove(L, -1);
 
             /* is reversed, only useful for axis */
             lua_pushstring(L, "reverse");
-            lua_gettable(L, -4);
+            lua_gettable(L, -2);
             if (lua_isnumber(L, -1))
                reverse = 1;
+            lua_remove(L, -1);
 
             lua_pushstring(L, "mod");
-            lua_gettable(L, -4);
+            lua_gettable(L, -2);
             if (lua_isstring(L, -1))
                mod = (char*)lua_tostring(L, -1);
+            lua_remove(L, -1);
 
-            if (key != -1 && str != NULL) { /* keybind is valid */
+            if ((key != -1) && (str != NULL)) { /* keybind is valid */
                /* get type */
                if (strcmp(str,"null")==0) type = KEYBIND_NULL;
                else if (strcmp(str,"keyboard")==0) type = KEYBIND_KEYBOARD;
@@ -244,10 +248,8 @@ int conf_loadConfig ( const char* file )
 
             /* clean up after table stuff */
             lua_remove(L,-1);
-            lua_remove(L,-1);
-            lua_remove(L,-1);
-            lua_remove(L,-1);
          }
+         lua_remove(L,-1);
       }
    }
    else { /* failed to load the config file */
