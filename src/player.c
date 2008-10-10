@@ -37,6 +37,7 @@
 #include "nfile.h"
 #include "spfx.h"
 #include "unidiff.h"
+#include "comm.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
@@ -2277,6 +2278,16 @@ void player_screenshot (void)
    /* now proceed to take the screenshot */
    DEBUG( "Taking screenshot [%03d]...", screenshot_cur );
    gl_screenshot(filename);
+}
+
+
+/**
+ * @fn void player_hail (void)
+ */
+void player_hail (void)
+{
+   if (player->target != player->id)
+      comm_open(player->target);
 }
 
 

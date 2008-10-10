@@ -120,6 +120,7 @@ void player_accel( double acc );
 void player_accelOver (void);
 void player_startAutonav (void);
 void player_abortAutonav (void);
+void player_hail (void);
 
 
 #endif /* PLAYER_H */

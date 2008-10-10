@@ -53,6 +53,8 @@ const char *keybindNames[] = {
    "secondary", "secondary_next",
    /* Space navigation. */
    "autonav", "target_planet", "land", "thyperspace", "starmap", "jump",
+   /* Communication. */
+   "hail",
    /* Misc. */
    "mapzoomin", "mapzoomout", "screenshot", "pause", "menu", "info",
    "end" }; /* must terminate in "end" */
@@ -107,6 +109,8 @@ void input_setDefault (void)
    input_setKeybind( "thyperspace", KEYBIND_KEYBOARD, SDLK_h, KMOD_NONE, 0 );
    input_setKeybind( "starmap", KEYBIND_KEYBOARD, SDLK_m, KMOD_NONE, 0 );
    input_setKeybind( "jump", KEYBIND_KEYBOARD, SDLK_j, KMOD_NONE, 0 );
+   /* Communication. */
+   input_setKeybind( "hail", KEYBIND_KEYBOARD, SDLK_y, KMOD_NONE, 0 );
    /* Misc. */
    input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_KP_PLUS, KMOD_NONE, 0 );
    input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_KP_MINUS, KMOD_NONE, 0 );
@@ -388,6 +392,15 @@ static void input_key( int keynum, double value, int kabs )
       if (value==KEY_PRESS) {
          player_abortAutonav();
          player_jump();
+      }
+
+
+   /*
+    * Communication.
+    */
+   } else if (KEY("hail") && INGAME() && NOHYP()) {
+      if (value==KEY_PRESS) {
+         player_hail();
       }
 
 
