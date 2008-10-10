@@ -91,7 +91,7 @@ DATAFILES := 	$(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN)
 #
 #   TARGETS
 #
-.PHONY: all clean purge
+.PHONY: all help lua utils docs clean purge
 
 
 %.o:	%.c %.h
@@ -119,16 +119,19 @@ naev: $(OBJS)
 	@echo -e "\tLD   $(APPNAME)"
 
 
-lua:
-	+@if [ ! -e lib/lua/liblua.a ];then make -C lib/lua a; fi
+lua: lib/lua/liblua.a
+
+
+lib/lua/liblua.a:
+	+@$(MAKE) -C lib/lua a
 
 
 pack: src/md5.c src/pack.c utils/pack/main.c
-	+@make -C utils/pack
+	+@$(MAKE) -C utils/pack
 
 
 mkspr: utils/mkspr/main.c
-	+@make -C utils/mkspr
+	+@$(MAKE) -C utils/mkspr
 
 
 $(VERSIONFILE):
@@ -157,9 +160,9 @@ clean:
 
 purge: clean
 	@echo -e "\tCleaning utilities"
-	@make -C utils/pack clean
-	@make -C utils/mkspr clean
+	@$(MAKE) -C utils/pack clean
+	@$(MAKE) -C utils/mkspr clean
 	@echo -e "\tCleaning Lua"
-	@make -C lib/lua clean
+	@$(MAKE) -C lib/lua clean
 
 
