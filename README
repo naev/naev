@@ -41,7 +41,8 @@
                   [reverse = KEY_REVERSE, mod = MOD_IDENTIFIER] }
             KEY_IDENTIFIER is the identifier given below
             KEY_TYPE can be one of keyboard, jaxis or jbutton
-            KEY_NUMBER is the number of the key (found with xev usually)
+            KEY_NUMBER is the number of the key (found with xev usually, just
+               convert the keysym from hex to base 10)
             KEY_REVERSE is whether it is reversed or not, which is only useful
                in the case of jaxis
             MOD_IDENTIFIER is the modifier to take into account, can be one of:
