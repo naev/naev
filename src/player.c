@@ -1910,6 +1910,7 @@ void player_land (void)
    int i;
    int tp;
    double td, d;
+   Planet *planet;
 
    if (landed) { /* player is already landed */
       takeoff();
@@ -1922,8 +1923,8 @@ void player_land (void)
       return;
    }
 
-   Planet* planet = cur_system->planets[planet_target];
    if (planet_target >= 0) { /* attempt to land */
+      planet = cur_system->planets[planet_target];
       if (!planet_hasService(planet, PLANET_SERVICE_LAND)) {
          player_message( "You can't land here." );
          return;
@@ -1966,8 +1967,9 @@ void player_land (void)
       td = -1; /* temporary distance */
       tp = -1; /* temporary planet */
       for (i=0; i<cur_system->nplanets; i++) {
-         d = vect_dist(&player->solid->pos,&cur_system->planets[i]->pos);
-         if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_LAND) &&
+         planet = cur_system->planets[i];
+         d = vect_dist(&player->solid->pos,&planet->pos);
+         if (planet_hasService(planet,PLANET_SERVICE_LAND) &&
                   ((tp==-1) || ((td == -1) || (td > d)))) {
             tp = i;
             td = d;

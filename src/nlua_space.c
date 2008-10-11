@@ -339,10 +339,11 @@ static int planetL_get( lua_State *L )
 
    /* Get a planet from faction list */
    else if (lua_istable(L,1)) {
-      /* load up the table */
-      lua_pushnil(L);
-      nfactions = (int) lua_gettop(L);
+      /* Get table length and preallocate. */
+      nfactions = (int) lua_objlen(L,1);
       factions = malloc( sizeof(int) * nfactions );
+      /*Lload up the table. */
+      lua_pushnil(L);
       i = 0;
       while (lua_next(L, -2) != 0) {
          f = lua_tofaction(L, -1);
