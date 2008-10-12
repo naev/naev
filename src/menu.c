@@ -70,7 +70,6 @@ static void menu_main_new( char* str );
 static void menu_main_exit( char* str );
 /* small menu */
 static void menu_small_close( char* str );
-static void edit_options( char* str );
 static void menu_small_exit( char* str );
 static void exit_game (void);
 /* information menu */
@@ -125,7 +124,7 @@ void menu_main (void)
          "btnNew", "New Game", menu_main_new );
    window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20),
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnOptions", "Options", (void(*)(char*)) edit_options );
+         "btnOptions", "Options", NULL );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnExit", "Exit", menu_main_exit );
 
@@ -224,7 +223,7 @@ void menu_small (void)
          "btnResume", "Resume", menu_small_close );
    window_addButton( wid, 20, 20 + BUTTON_HEIGHT + 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnOptions", "Options", (void(*)(char*)) edit_options );
+         "btnOptions", "Options", NULL );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, 
          "btnExit", "Exit", menu_small_exit );
 
@@ -261,16 +260,6 @@ static void menu_small_exit( char* str )
    window_destroy( window_get("Menu") );
    menu_Close(MENU_SMALL);
    menu_main();
-}
-/**
- * @fn static void edit_options( char* str )
- * @brief Edits the options
- *    @param str Unused.
- * @todo Make the options menu.
- */
-static void edit_options( char* str )
-{
-   (void)str;
 }
 
 

@@ -286,6 +286,8 @@ void window_addButton( const unsigned int wid,
    wgt->dat.btn.display = strdup(display);
    wgt->dat.btn.disabled = 0; /* initially enabled */
    wgt->dat.btn.fptr = call;
+   if (wgt->dat.btn.fptr == NULL) /* Disable if function is NULL. */
+      wgt->dat.btn.disabled = 1;
 
    /* position/size */
    wgt->w = (double) w;
