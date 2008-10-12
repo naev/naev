@@ -22,7 +22,7 @@ function land ()
    -- Need to start braking
    elseif dist < bdist then
       ai.poptask()
-      ai.pushtask( 0, "landstop", target )
+      ai.pushtask( 0, "landstop" )
    end
 
 end
