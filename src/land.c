@@ -1003,7 +1003,7 @@ static int shipyard_yoursTransportPrice( char* shipname )
    if (strcmp(loc,land_planet->name)==0) /* already here */
       return 0;
 
-   price = (int)ship->solid->mass*500;
+   price = (int)(sqrt(ship->solid->mass)*5000.);
 
    return price;
 }
