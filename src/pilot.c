@@ -1632,7 +1632,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, char *ai,
 unsigned int pilot_create( Ship* ship, char* name, int faction, char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
 {
-   Pilot **tp, *dyn;
+   Pilot *dyn;
    
    dyn = MALLOC_ONE(Pilot);
    if (dyn == NULL) {
@@ -1644,7 +1644,6 @@ unsigned int pilot_create( Ship* ship, char* name, int faction, char *ai,
    /* see if memory needs to grow */
    if (pilot_nstack+1 > pilot_mstack) { /* needs to grow */
       pilot_mstack += PILOT_CHUNK;
-      tp = pilot_stack;
       pilot_stack = realloc( pilot_stack, pilot_mstack*sizeof(Pilot*) );
    }
 
