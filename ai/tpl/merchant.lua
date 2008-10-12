@@ -24,7 +24,7 @@ function control ()
 
    -- Try to jump when far enough away
    elseif task == "runaway" then
-      if ai.dist( ai.pos( ai.targetid() ) ) > 400 then
+      if ai.dist( ai.pos( ai.target() ) ) > 400 then
          ai.hyperspace()
       end
 

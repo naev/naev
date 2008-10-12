@@ -148,7 +148,6 @@ static int ai_taskname( lua_State *L ); /* number taskname() */
 /* consult values */
 static int ai_getplayer( lua_State *L ); /* number getPlayer() */
 static int ai_gettarget( lua_State *L ); /* pointer gettarget() */
-static int ai_gettargetid( lua_State *L ); /* number gettargetid() */
 static int ai_getrndpilot( lua_State *L ); /* number getrndpilot() */
 static int ai_armour( lua_State *L ); /* armour() */
 static int ai_shield( lua_State *L ); /* shield() */
@@ -228,7 +227,6 @@ static const luaL_reg ai_methods[] = {
    /* get */
    { "getPlayer", ai_getplayer },
    { "target", ai_gettarget },
-   { "targetid", ai_gettargetid },
    { "rndpilot", ai_getrndpilot },
    { "armour", ai_armour },
    { "shield", ai_shield },
@@ -418,6 +416,7 @@ void ai_destroy( Pilot* p )
    /* Clean up tasks. */
    if (p->task)
       ai_freetask( p->task );
+   p->task = NULL;
 }
 
 
@@ -686,10 +685,12 @@ static void ai_create( Pilot* pilot, char *param )
  */
 static void ai_freetask( Task* t )
 {
-   if (t->next) ai_freetask(t->next); /* yay recursive freeing */
+   if (t->next != NULL) {
+      ai_freetask(t->next); /* yay recursive freeing */
+      t->next = NULL;
+   }
 
    if (t->name) free(t->name);
-   if (t->dtype==TYPE_PTR) free(t->dat.target);
    free(t);
 }
 
@@ -721,7 +722,7 @@ static int ai_pushtask( lua_State *L )
    NLUA_MIN_ARGS(2);
    int pos;
    char *func;
-   Vector2d *vec;
+   Task *t, *pointer;
 
    /* Parse basic parameters. */
    if (lua_isnumber(L,1)) pos = (int)lua_tonumber(L,1);
@@ -729,34 +730,21 @@ static int ai_pushtask( lua_State *L )
    if (lua_isstring(L,2)) func = (char*)lua_tostring(L,2);
    else NLUA_INVALID_PARAMETER();
 
-   Task* t = MALLOC_ONE(Task);
-   t->name = strdup(func);
+   t = MALLOC_ONE(Task);
    t->next = NULL;
-   t->dat.target = NULL;
+   t->name = strdup(func);
+   t->dtype = TYPE_NULL;
 
    if (lua_gettop(L) > 2) {
       if (lua_isnumber(L,3)) {
          t->dtype = TYPE_INT;
-         t->dat.ID = (unsigned int)lua_tonumber(L,3);
+         t->dat.num = (unsigned int)lua_tonumber(L,3);
       }
-      else if (lua_islightuserdata(L,3)) { /* only pointer valid is Vector2d* in Lua */
-         t->dtype = TYPE_PTR;
-         t->dat.target = MALLOC_ONE(Vector2d);
-         vec = (Vector2d*)lua_topointer(L,3);
-         /* no idea why vectcpy doesn't work here... */
-         ((Vector2d*)t->dat.target)->x = vec->x;
-         ((Vector2d*)t->dat.target)->y = vec->y;
-         ((Vector2d*)t->dat.target)->mod = vec->mod;
-         ((Vector2d*)t->dat.target)->angle = vec->angle;
-      }
-      else t->dtype = TYPE_NULL;
+      else NLUA_INVALID_PARAMETER();
    }
 
-   if (cur_pilot->task == NULL) /* no other tasks */
-      cur_pilot->task = t;
-   else if (pos == 1) { /* put at the end */
-      Task* pointer;                                                                
-      for (pointer = cur_pilot->task; pointer->next; pointer = pointer->next);
+   if (pos == 1) { /* put at the end */
+      for (pointer = cur_pilot->task; pointer->next != NULL; pointer = pointer->next);
       pointer->next = t;
    }
    else { /* default put at the beginning */
@@ -777,14 +765,15 @@ static int ai_poptask( lua_State *L )
 {
    (void)L; /* hack to avoid -W -Wall warnings */
    Task* t = cur_pilot->task;
-   if (t != NULL) {
-      cur_pilot->task = t->next;
-      t->next = NULL;
-   }
-   else {
+
+   /* Tasks must exist. */
+   if (t == NULL) {
       NLUA_DEBUG("Trying to pop task when there are no tasks on the stack.");
       return 0;
    }
+
+   cur_pilot->task = t->next;
+   t->next = NULL;
    ai_freetask(t);
    return 0;
 }
@@ -809,27 +798,18 @@ static int ai_getplayer( lua_State *L )
 }
 
 /*
- * gets the target pointer
+ * gets the target
  */
 static int ai_gettarget( lua_State *L )
 {
-   if (cur_pilot->task->dtype == TYPE_PTR) {
-      lua_pushlightuserdata(L, cur_pilot->task->dat.target);
-      return 1;
-   }
-   return 0;
-}
+   switch (cur_pilot->task->dtype) {
+      case TYPE_INT:
+         lua_pushnumber(L, cur_pilot->task->dat.num);
+         return 1;
 
-/*
- * gets the target ID
- */
-static int ai_gettargetid( lua_State *L )
-{
-   if (cur_pilot->task->dtype == TYPE_INT) {
-      lua_pushnumber(L, cur_pilot->task->dat.ID);
-      return 1;
+      default:
+         return 0;
    }
-   return 0;
 }
 
 /*

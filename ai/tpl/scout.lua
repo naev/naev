@@ -52,7 +52,7 @@ function control ()
 
    -- Check if we need to run more
    elseif task == "runaway" then
-      enemy = ai.targetid()
+      enemy = ai.target()
 
       if ai.dist(enemy) > enemy_dist and ai.haslockon() == false then
          ai.poptask()
@@ -71,7 +71,7 @@ function attacked ( attacker )
       ai.pushtask(0, "runaway", attacker)
 
    elseif task == "runaway" then
-      if ai.targetid() ~= attacker then
+      if ai.target() ~= attacker then
          -- Runaway from the new guy
          ai.poptask()
          ai.pushtask(0, "runaway", attacker)

@@ -8,7 +8,7 @@
 --]]
 function atk_g_think ()
    enemy = ai.getenemy()
-   target = ai.targetid()
+   target = ai.target()
 
    -- Get new target if it's closer
    if enemy ~= target then
@@ -28,7 +28,7 @@ end
 -- Generic "brute force" attack.  Doesn't really do anything interesting.
 --]]
 function atk_g ()
-	target = ai.targetid()
+	target = ai.target()
    ai.hostile(target) -- Mark as hostile
 
 	-- make sure pilot exists

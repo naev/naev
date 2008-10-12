@@ -18,7 +18,7 @@ end
 --  until out and then will melee.
 --]]
 function atk_b ()
-	target = ai.targetid()
+	target = ai.target()
    ai.hostile(target) -- Mark as hostile
 
 	-- make sure pilot exists

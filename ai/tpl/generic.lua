@@ -33,7 +33,7 @@ function control ()
       -- Runaway if needed
       if (shield_run > 0 and ai.pshield() < shield_run) or
             (armour_run > 0 and ai.parmour() < armour_run) then
-         ai.pushtask(0, "runaway", ai.targetid())
+         ai.pushtask(0, "runaway", ai.target())
 
       -- Think like normal
       else
@@ -42,7 +42,7 @@ function control ()
 
    -- Pilot is running away
    elseif task == "runaway" then
-      dist = ai.dist( ai.pos( ai.targetid() ) )
+      dist = ai.dist( ai.pos( ai.target() ) )
 
       -- Should return to combat?
       if aggressive and ((shield_return > 0 and ai.pshield() >= shield_return) or
@@ -78,7 +78,7 @@ function attacked ( attacker )
       ai.pushtask(0, "attack", attacker)
 
    elseif task == "attack" then
-      if ai.targetid() ~= attacker then
+      if ai.target() ~= attacker then
          ai.pushtask(0, "attack", attacker)
       end
    end

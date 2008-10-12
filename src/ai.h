@@ -26,7 +26,7 @@
  *
  * @brief Task data types.
  */
-typedef enum TaskData_ { TYPE_NULL, TYPE_INT, TYPE_PTR } TaskData;
+typedef enum TaskData_ { TYPE_NULL, TYPE_INT } TaskData;
 
 /**
  * @struct Task
@@ -39,8 +39,7 @@ typedef struct Task_ {
    
    TaskData dtype; /**< Data type. */
    union {
-      void *target; /**< Vector2d, etc... */
-      unsigned int ID; /**< Pilot ID, etc... */
+      unsigned int num; /**< Pilot ID, etc... */
    } dat; /**< Stores the data. */
 } Task;
 

@@ -55,7 +55,7 @@ end
 -- Attempts to run away from the target.
 --]]
 function runaway ()
-   target = ai.targetid()
+   target = ai.target()
    
    if not ai.exists(target) then
       ai.poptask()
