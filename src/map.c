@@ -168,13 +168,16 @@ static void map_update (void)
    unsigned int services;
    char buf[128];
 
+   /* Needs map to update. */
+   if (map_wid <= 0)
+      return;
+
    sys = &systems_stack[ map_selected ];
  
 
    /*
     * Right Text
     */
-
    if (!sys_isKnown(sys)) { /* System isn't known, erase all */
       /*
        * Right Text
@@ -568,22 +571,18 @@ void map_clear (void)
 }
 
 
+/**
+ * @fn static void map_selectCur (void)
+ *
+ * @brief Tries to select the current system.
+ */
 static void map_selectCur (void)
 {
-   int i;
-
-   if (cur_system != NULL)  {
-      for (i=0; i<systems_nstack; i++) {
-         if (&systems_stack[i] == cur_system) {
-            map_selected = i;
-            break;
-         }
-      }
-   }
-   else {
+   if (cur_system != NULL)
+      map_selected = cur_system - systems_stack;
+   else
       /* will probably segfault now */
       map_selected = -1;
-   }
 }
 
 /*
@@ -634,7 +633,11 @@ void map_jump (void)
  */
 void map_select( StarSystem *sys )
 {
-   map_selected = sys - systems_stack;
+   if (sys == NULL)
+      map_selectCur();
+   else
+      map_selected = sys - systems_stack;
+   map_update();
 }
 
 /*

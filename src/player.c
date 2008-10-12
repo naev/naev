@@ -2003,8 +2003,13 @@ void player_targetHyperspace (void)
    else
       player_playSound(snd_nav,1);
 
-   if ((hyperspace_target != -1) && map_isOpen())
-      map_select( &systems_stack[cur_system->jumps[hyperspace_target]] );
+   /* Map gets special treatment if open. */
+   if (map_isOpen()) {
+      if (hyperspace_target == -1)
+         map_select( NULL );
+      else
+         map_select( &systems_stack[cur_system->jumps[hyperspace_target]] );
+   }
 
 }
 
