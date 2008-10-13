@@ -70,8 +70,9 @@
 
 
 static int quit = 0; /**< For primary loop */
-unsigned int time = 0; /**< used to calculate FPS and movement, in pause.c */
-static char version[VERSION_LEN];
+static unsigned int time = 0; /**< used to calculate FPS and movement, in pause.c */
+static char version[VERSION_LEN]; /***< Contains version. */
+static glTexture *loading; /**< Loading screen. */
 
 /* some defaults */
 char* data = NULL; /**< Path to datafile. */
@@ -86,8 +87,11 @@ char* namjoystick = NULL; /**< Name of joystick to use, NULL is none. */
 /*
  * prototypes
  */
+/* Loading. */
 static void print_SDLversion (void);
-static void load_screen (void);
+static void loadscreen_load (void);
+static void loadscreen_render( double done, const char *msg );
+static void loadscreen_unload (void);
 static void load_all (void);
 static void unload_all (void);
 void main_loop (void);
@@ -155,8 +159,13 @@ int main( int argc, char** argv )
       SDL_Quit();
       exit(EXIT_FAILURE);
    }
+   gl_fontInit( NULL, NULL, FONT_SIZE ); /* initializes default font to size */
+   gl_fontInit( &gl_smallFont, NULL, FONT_SIZE_SMALL ); /* small font */
    window_caption();
-   load_screen();
+
+   /* Display the load screen. */
+   loadscreen_load();
+   loadscreen_render( 0., "Initializing subsystems..." );
    time = SDL_GetTicks();
 
 
@@ -200,17 +209,16 @@ int main( int argc, char** argv )
       ERR("Unable to initialize the Nebulae subsystem!");
       /* Weirdness will occur... */
    }
-   gl_fontInit( NULL, NULL, FONT_SIZE ); /* initializes default font to size */
-   gl_fontInit( &gl_smallFont, NULL, FONT_SIZE_SMALL ); /* small font */
    gui_init(); /* initializes the GUI graphics */
    toolkit_init(); /* initializes the toolkit */
 
-
-   /* data loading */
+   /* Data loading */
    load_all();
 
+   /* Unload load screen. */
+   loadscreen_unload();
 
-   /* start menu */
+   /* Start menu. */
    menu_main();
 
    /* Force a minimum delay with loading screen */
@@ -267,14 +275,13 @@ int main( int argc, char** argv )
 
 
 /**
- * @fn void load_screen (void)
+ * @fn void loadscreen_load (void)
  *
- * @brief Displays a loading screen.
+ * @brief Loads a loading screen.
  */
-void load_screen (void)
+void loadscreen_load (void)
 {
    int i;
-   glTexture *tex;
    char file_path[PATH_MAX];
    char **files;
    uint32_t nfiles;
@@ -301,33 +308,99 @@ void load_screen (void)
 
    /* Load the texture */
    snprintf(file_path, PATH_MAX, "gfx/loading%03d.png", RNG(0,nload-1));
-   tex = gl_newImage( file_path );
-
-   /* Draw once, won't be redrawn */
-   glClear(GL_COLOR_BUFFER_BIT);
-   gl_blitScale( tex, 0., 0., SCREEN_W, SCREEN_H, NULL );
-   SDL_GL_SwapBuffers();
-
-   /* Free the textures */
-   gl_freeTexture(tex);
+   loading = gl_newImage( file_path );
 }
+
+
+/**
+ * @fn static void loadscreen_render( double done, const char *msg )
+ *
+ * @brief Renders the load screen with message.
+ *
+ *    @param done Amount done (1. == completed).
+ *    @param msg Loading screen message.
+ */
+static void loadscreen_render( double done, const char *msg )
+{
+   double x,y, w,h, rh;
+
+   /* Clear background. */
+   glClear(GL_COLOR_BUFFER_BIT);
+
+   /* Draw loading screen image. */
+   gl_blitScale( loading, 0., 0., SCREEN_W, SCREEN_H, NULL );
+
+   /* Draw progress bar. */
+   w = gl_screen.w * 0.4;
+   h = gl_screen.h * 0.02;
+   rh = h + gl_defFont.h + 4.;
+   x = -w/2.;
+   y = -h/2.;
+   /* BG. */
+   ACOLOUR(cBlack, 0.7);
+   glBegin(GL_QUADS);
+      glVertex2d( x-2.,        y-2. + 0.  );
+      glVertex2d( x-2.,        y+2. + rh  );
+      glVertex2d( x-2. + w+4., y+2. + rh  );
+      glVertex2d( x-2. + w+4., y-2. + 0.  );
+   glEnd();
+   /* FG. */
+   ACOLOUR(cConsole, 0.7);
+   glBegin(GL_QUADS);
+      glVertex2d( x,          y + 0. );
+      glVertex2d( x,          y + h  );
+      glVertex2d( x + done*w, y + h  );
+      glVertex2d( x + done*w, y + 0. );
+   glEnd();
+
+   /* Draw text. */
+   gl_print( &gl_defFont, x + gl_screen.w/2., y + gl_screen.h/2 + 2. + h,
+         &cConsole, msg );
+
+   /* Flip buffers. */
+   SDL_GL_SwapBuffers();
+}
+
+
+/**
+ * @fn static void loadscreen_unload (void)
+ *
+ * @brief Frees the loading screen.
+ */
+static void loadscreen_unload (void)
+{
+   /* Free the textures */
+   gl_freeTexture(loading);
+   loading = NULL;
+}
+
 
 /**
  * @fn void load_all (void)
  *
  * @brief Loads all the data, makes main() simpler.
  */
+#define LOADING_STAGES     9. /**< Amount of loading stages. */
 void load_all (void)
 {
    /* order is very important as they're interdependent */
+   loadscreen_render( 1./LOADING_STAGES, "Loading Commodities..." );
    commodity_load(); /* dep for space */
+   loadscreen_render( 2./LOADING_STAGES, "Loading Factions..." );
    factions_load(); /* dep for fleet, space, missions */
+   loadscreen_render( 3./LOADING_STAGES, "Loading Missions..." );
    missions_load(); /* no dep */
+   loadscreen_render( 4./LOADING_STAGES, "Loading Special Effects..." );
    spfx_load(); /* no dep */
+   loadscreen_render( 5./LOADING_STAGES, "Loading Outfits..." );
    outfit_load(); /* dep for ships */
+   loadscreen_render( 6./LOADING_STAGES, "Loading Ships..." );
    ships_load(); /* dep for fleet */
+   loadscreen_render( 7./LOADING_STAGES, "Loading Fleets..." );
    fleet_load(); /* dep for space */
+   loadscreen_render( 8./LOADING_STAGES, "Loading the Universe..." );
    space_load();
+   loadscreen_render( 1., "Loading Completed!" );
    xmlCleanupParser(); /* Only needed to be run after all the loading is done. */
 }
 /**
