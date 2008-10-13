@@ -90,7 +90,7 @@ char* namjoystick = NULL; /**< Name of joystick to use, NULL is none. */
 /* Loading. */
 static void print_SDLversion (void);
 static void loadscreen_load (void);
-static void loadscreen_render( double done, const char *msg );
+void loadscreen_render( double done, const char *msg ); /* nebulae.c */
 static void loadscreen_unload (void);
 static void load_all (void);
 static void unload_all (void);
@@ -313,14 +313,14 @@ void loadscreen_load (void)
 
 
 /**
- * @fn static void loadscreen_render( double done, const char *msg )
+ * @fn void loadscreen_render( double done, const char *msg )
  *
  * @brief Renders the load screen with message.
  *
  *    @param done Amount done (1. == completed).
  *    @param msg Loading screen message.
  */
-static void loadscreen_render( double done, const char *msg )
+void loadscreen_render( double done, const char *msg )
 {
    double x,y, w,h, rh;
 

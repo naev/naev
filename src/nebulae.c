@@ -35,6 +35,7 @@
 /* Externs */
 extern double gui_xoff, gui_yoff;
 extern Vector2d shake_pos;
+extern void loadscreen_render( double done, const char *msg );
 
 
 /* The nebulae textures */
@@ -97,8 +98,9 @@ int nebu_init (void)
    int ret;
 
    /* Special code to regenerate the nebulae */
-   if ((nebu_w == -9) && (nebu_h == -9))
+   if ((nebu_w == -9) && (nebu_h == -9)) {
       nebu_generate();
+   }
 
    /* Set expected sizes */
    nebu_w = SCREEN_W;
@@ -525,6 +527,9 @@ static int nebu_generate (void)
    int w,h;
    int ret;
 
+   /* Warn user of what is happening. */
+   loadscreen_render( 0.05, "Generating Nebulae..." );
+
    w = SCREEN_W;
    h = SCREEN_H;
 
@@ -556,6 +561,9 @@ static void nebu_generatePuffs (void)
    int w,h;
    SDL_Surface *sur;
    float *nebu;
+
+   /* Warn user of what is happening. */
+   loadscreen_render( 0.05, "Generating Nebulae Puffs..." );
 
    /* Generate the nebulae puffs */
    for (i=0; i<NEBULAE_PUFFS; i++) {
