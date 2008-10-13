@@ -203,8 +203,14 @@ int diff_apply( char *name )
          /* Check to see if it's the diff we're looking for. */
          xmlr_attr(node,"name",diffname);
          if (strcmp(diffname,name)==0) {
+            /* Apply it. */
             diff_patch( node );
+
+            /* Clean up. */
             free(diffname);
+            xmlFreeDoc(doc);
+            free(buf);
+
             return 0;
          }
          free(diffname);
