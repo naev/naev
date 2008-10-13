@@ -217,6 +217,10 @@ int diff_apply( char *name )
       }
    } while (xml_nextNode(node));
 
+   /* More clean up. */
+   xmlFreeDoc(doc);
+   free(buf);
+
    WARN("UniDiff '%s' not found in "DIFF_DATA".", name);
    return -1;
 }
