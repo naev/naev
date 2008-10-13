@@ -179,6 +179,7 @@ static int ai_getrndplanet( lua_State *L ); /* Vec2 getrndplanet() */
 static int ai_getlandplanet( lua_State *L ); /* Vec2 getlandplanet() */
 static int ai_hyperspace( lua_State *L ); /* [number] hyperspace() */
 static int ai_stop( lua_State *L ); /* stop() */
+static int ai_relvel( lua_State *L ); /* relvel( number ) */
 
 /* escorts */
 static int ai_e_attack( lua_State *L ); /* bool e_attack() */
@@ -247,6 +248,7 @@ static const luaL_reg ai_methods[] = {
    { "brake", ai_brake },
    { "stop", ai_stop },
    { "hyperspace", ai_hyperspace },
+   { "relvel", ai_relvel },
    /* escorts */
    { "e_attack", ai_e_attack },
    { "e_hold", ai_e_hold },
@@ -1282,6 +1284,28 @@ static int ai_hyperspace( lua_State *L )
    return 1;
 }
 
+/*
+ * Gets the relative velocity of a pilot.
+ */
+static int ai_relvel( lua_State *L )
+{
+   unsigned int id;
+   Pilot *p;
+
+   NLUA_MIN_ARGS(1);
+
+   if (lua_isnumber(L,1)) id = (unsigned int) lua_tonumber(L,1);
+   else NLUA_INVALID_PARAMETER()
+
+   p = pilot_get(id);
+   if (p==NULL) {
+      NLUA_DEBUG("Invalid pilot identifier.");
+      return 0;
+   }
+
+   lua_pushnumber(L, vect_dist( &cur_pilot->solid->vel, &p->solid->vel ));
+   return 1;
+}
 
 /*
  * completely stops the pilot if it is below minimum vel error (no instastops)
