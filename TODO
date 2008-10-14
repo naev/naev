@@ -2,7 +2,14 @@
 
    VITAL
 
-   *) Proper documentation.
+   *) Pilot Communication system
+   *) Introductory screen (text + image?)
+   *) System obstacles and such
+      *) Interference
+      *) Asteroids
+   *) More loading screens.
+   *) Real news
+   *) Dynamic Economy
 
 
    MAJOR
@@ -11,10 +18,8 @@
       *) Like mission system, but they occur naturally/randomly
       *) Has similar power to mission system
    *) Unique pilot system (besides mission uniques)
-   *) Real news
    *) Better AI
       *) boids ship fleet movement (have them behave like fleets)
-   *) Dynamic Economy
    *) Options menu do something
    *) Configuration app for keybindings
    *) Secondary weapon revamp
@@ -49,7 +54,8 @@
       *) non-linear - see alot more data then currently possible
       *) objects always in sight (depending on resolution)
    *) Allow creating collision masks to make collision more realistic.
-   *) Change custom font system to use Queso GLC
+   *) Improve font system to handle unicode
+      *) Possibly use Queso CGL
 
 
    MAYBE... SOMEDAY...
