@@ -17,6 +17,7 @@
 #include "mission.h"
 
 
+#define MAP_WDWNAME     "Star Map"
 #define WINDOW_WIDTH    650
 #define WINDOW_HEIGHT   540
 
@@ -27,7 +28,6 @@
 #define BUTTON_HEIGHT   30
 
 
-static int map_wid = 0;
 static double map_zoom = 1.; /* zoom of the map */
 static double map_xpos = 0.; /* map position */
 static double map_ypos = 0.;
@@ -51,11 +51,11 @@ extern int hyperspace_target;
 /*
  * prototypes
  */
-static void map_update (void);
+static void map_update( unsigned int wid );
 static int map_inPath( StarSystem *sys );
 static void map_render( double bx, double by, double w, double h );
-static void map_mouse( SDL_Event* event, double mx, double my );
-static void map_buttonZoom( char* str );
+static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my );
+static void map_buttonZoom( unsigned int wid, char* str );
 static void map_selectCur (void);
 
 
@@ -64,8 +64,11 @@ static void map_selectCur (void);
  */
 void map_open (void)
 {
-   if (map_wid) {
-      map_close();
+   unsigned int wid;
+
+   wid = window_get(MAP_WDWNAME);
+   if (wid > 0) {
+      window_destroy( wid );
       return;
    }
 
@@ -80,7 +83,7 @@ void map_open (void)
    if (map_selected == -1)
       map_selectCur();
 
-   map_wid = window_create( "Star Map", -1, -1,
+   wid = window_create( MAP_WDWNAME, -1, -1,
          WINDOW_WIDTH, WINDOW_HEIGHT );
 
    /* 
@@ -106,37 +109,37 @@ void map_open (void)
     */
 
    /* System Name */
-   window_addText( map_wid, -20, -20, 100, 20, 1, "txtSysname",
+   window_addText( wid, -20, -20, 100, 20, 1, "txtSysname",
          &gl_defFont, &cDConsole, systems_stack[ map_selected ].name );
    /* Faction */
-   window_addText( map_wid, -20, -60, 90, 20, 0, "txtSFaction",
+   window_addText( wid, -20, -60, 90, 20, 0, "txtSFaction",
          &gl_smallFont, &cDConsole, "Faction:" );
-   window_addText( map_wid, -20, -60-gl_smallFont.h-5, 80, 100, 0, "txtFaction",
+   window_addText( wid, -20, -60-gl_smallFont.h-5, 80, 100, 0, "txtFaction",
          &gl_smallFont, &cBlack, NULL );
    /* Standing */
-   window_addText( map_wid, -20, -100, 90, 20, 0, "txtSStanding",
+   window_addText( wid, -20, -100, 90, 20, 0, "txtSStanding",
          &gl_smallFont, &cDConsole, "Standing:" );
-   window_addText( map_wid, -20, -100-gl_smallFont.h-5, 80, 100, 0, "txtStanding",
+   window_addText( wid, -20, -100-gl_smallFont.h-5, 80, 100, 0, "txtStanding",
          &gl_smallFont, &cBlack, NULL );
    /* Planets */
-   window_addText( map_wid, -20, -140, 90, 20, 0, "txtSPlanets",
+   window_addText( wid, -20, -140, 90, 20, 0, "txtSPlanets",
          &gl_smallFont, &cDConsole, "Planets:" );
-   window_addText( map_wid, -20, -140-gl_smallFont.h-5, 80, 100, 0, "txtPlanets",
+   window_addText( wid, -20, -140-gl_smallFont.h-5, 80, 100, 0, "txtPlanets",
          &gl_smallFont, &cBlack, NULL );
    /* Services */
-   window_addText( map_wid, -20, -180, 90, 20, 0, "txtSServices",
+   window_addText( wid, -20, -180, 90, 20, 0, "txtSServices",
          &gl_smallFont, &cDConsole, "Services:" );
-   window_addText( map_wid, -20, -180-gl_smallFont.h-5, 80, 100, 0, "txtServices",
+   window_addText( wid, -20, -180-gl_smallFont.h-5, 80, 100, 0, "txtServices",
          &gl_smallFont, &cBlack, NULL );
    /* Close button */
-   window_addButton( map_wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-            "btnClose", "Close", (void(*)(char*))map_close );
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnClose", "Close", window_close );
 
          
    /*
     * The map itself.
     */
-   window_addCust( map_wid, 20, -40, MAP_WIDTH, MAP_HEIGHT,
+   window_addCust( wid, 20, -40, MAP_WIDTH, MAP_HEIGHT,
          "cstMap", 1, map_render, map_mouse );
 
    /*
@@ -145,22 +148,15 @@ void map_open (void)
     * [+] [-]  Nebulae, Asteroids, Interference
     */
    /* Zoom buttons */
-   window_addButton( map_wid, 40, 20, 30, 30, "btnZoomIn", "+", map_buttonZoom );
-   window_addButton( map_wid, 80, 20, 30, 30, "btnZoomOut", "-", map_buttonZoom );
+   window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", map_buttonZoom );
+   window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", map_buttonZoom );
    /* Situation text */
-   window_addText( map_wid, 140, 10, WINDOW_WIDTH - 80 - 30 - 30, 30, 0,
+   window_addText( wid, 140, 10, WINDOW_WIDTH - 80 - 30 - 30, 30, 0,
          "txtSystemStatus", &gl_smallFont, &cBlack, NULL );
 
-   map_update();
+   map_update( wid );
 }
-void map_close (void)
-{
-   if (map_wid) {
-      window_destroy( map_wid );
-      map_wid = 0;
-   }
-}
-static void map_update (void)
+static void map_update( unsigned int wid )
 {
    int i;
    StarSystem* sys;
@@ -169,7 +165,7 @@ static void map_update (void)
    char buf[128];
 
    /* Needs map to update. */
-   if (map_wid <= 0)
+   if (!map_isOpen())
       return;
 
    sys = &systems_stack[ map_selected ];
@@ -182,30 +178,30 @@ static void map_update (void)
       /*
        * Right Text
        */
-      window_modifyText( map_wid, "txtSysname", "Unknown" );
-      window_modifyText( map_wid, "txtFaction", "Unknown" );
+      window_modifyText( wid, "txtSysname", "Unknown" );
+      window_modifyText( wid, "txtFaction", "Unknown" );
       /* Standing */
-      window_moveWidget( map_wid, "txtSStanding", -20, -100 );
-      window_moveWidget( map_wid, "txtStanding", -20, -100-gl_smallFont.h-5 );
-      window_modifyText( map_wid, "txtStanding", "Unknown" );
+      window_moveWidget( wid, "txtSStanding", -20, -100 );
+      window_moveWidget( wid, "txtStanding", -20, -100-gl_smallFont.h-5 );
+      window_modifyText( wid, "txtStanding", "Unknown" );
       /* Planets */
-      window_moveWidget( map_wid, "txtSPlanets", -20, -140 );
-      window_moveWidget( map_wid, "txtPlanets", -20, -140-gl_smallFont.h-5 );
-      window_modifyText( map_wid, "txtPlanets", "Unknown" );
+      window_moveWidget( wid, "txtSPlanets", -20, -140 );
+      window_moveWidget( wid, "txtPlanets", -20, -140-gl_smallFont.h-5 );
+      window_modifyText( wid, "txtPlanets", "Unknown" );
       /* Services */
-      window_moveWidget( map_wid, "txtSServices", -20, -180 );
-      window_moveWidget( map_wid, "txtServices", -20, -180-gl_smallFont.h-5 );
-      window_modifyText( map_wid, "txtServices", "Unknown" );
+      window_moveWidget( wid, "txtSServices", -20, -180 );
+      window_moveWidget( wid, "txtServices", -20, -180-gl_smallFont.h-5 );
+      window_modifyText( wid, "txtServices", "Unknown" );
       
       /*
        * Bottom Text
        */
-      window_modifyText( map_wid, "txtSystemStatus", NULL );
+      window_modifyText( wid, "txtSystemStatus", NULL );
       return;
    }
 
    /* System is known */
-   window_modifyText( map_wid, "txtSysname", sys->name );
+   window_modifyText( wid, "txtSysname", sys->name );
 
    standing = 0;
    nstanding = 0;
@@ -223,10 +219,10 @@ static void map_update (void)
       }
    }
    if (f == -1) {
-      window_modifyText( map_wid, "txtFaction", "NA" );
-      window_moveWidget( map_wid, "txtSStanding", -20, -100 );
-      window_moveWidget( map_wid, "txtStanding", -20, -100-gl_smallFont.h-5 );
-      window_modifyText( map_wid, "txtStanding", "NA" );
+      window_modifyText( wid, "txtFaction", "NA" );
+      window_moveWidget( wid, "txtSStanding", -20, -100 );
+      window_moveWidget( wid, "txtStanding", -20, -100-gl_smallFont.h-5 );
+      window_modifyText( wid, "txtStanding", "NA" );
       y = -100;
 
    }
@@ -235,20 +231,20 @@ static void map_update (void)
          snprintf( buf, 100, "%s", faction_longname(f) );
 
       /* Modify the text */
-      window_modifyText( map_wid, "txtFaction", buf );
-      window_modifyText( map_wid, "txtStanding",
+      window_modifyText( wid, "txtFaction", buf );
+      window_modifyText( wid, "txtStanding",
             faction_getStanding( standing / nstanding ) );
 
       /* Lower text if needed */
       h = gl_printHeight( &gl_smallFont, 80, buf );
       y = -100 - (h - gl_smallFont.h);
-      window_moveWidget( map_wid, "txtSStanding", -20, y );
-      window_moveWidget( map_wid, "txtStanding", -20, y-gl_smallFont.h-5 );
+      window_moveWidget( wid, "txtSStanding", -20, y );
+      window_moveWidget( wid, "txtStanding", -20, y-gl_smallFont.h-5 );
    }
 
    /* Get planets */
    if (sys->nplanets == 0)
-      window_modifyText( map_wid, "txtPlanets", "None" );
+      window_modifyText( wid, "txtPlanets", "None" );
    else {
       buf[0] = '\0';
       if (sys->nplanets > 0)
@@ -258,17 +254,17 @@ static void map_update (void)
          strcat( buf, sys->planets[i]->name );
       }
 
-      window_modifyText( map_wid, "txtPlanets", buf );
+      window_modifyText( wid, "txtPlanets", buf );
    }
    y -= 40;
-   window_moveWidget( map_wid, "txtSPlanets", -20, y );
-   window_moveWidget( map_wid, "txtPlanets", -20, y-gl_smallFont.h-5 );
+   window_moveWidget( wid, "txtSPlanets", -20, y );
+   window_moveWidget( wid, "txtPlanets", -20, y-gl_smallFont.h-5 );
 
    /* Get the services */
    h = gl_printHeight( &gl_smallFont, 80, buf );
    y -= 40 + (h - gl_smallFont.h);
-   window_moveWidget( map_wid, "txtSServices", -20, y );
-   window_moveWidget( map_wid, "txtServices", -20, y-gl_smallFont.h-5 );
+   window_moveWidget( wid, "txtSServices", -20, y );
+   window_moveWidget( wid, "txtServices", -20, y-gl_smallFont.h-5 );
    services = 0;
    for (i=0; i<sys->nplanets; i++)
       services |= sys->planets[i]->services;
@@ -281,7 +277,7 @@ static void map_update (void)
       strcat(buf, "Shipyard\n");
    if (buf[0] == '\0')
       strcat(buf, "None");
-   window_modifyText( map_wid, "txtServices", buf );
+   window_modifyText( wid, "txtServices", buf );
 
 
    /*
@@ -304,7 +300,7 @@ static void map_update (void)
          strcat(buf," Light");
       strcat(buf," Nebulae");
    }
-   window_modifyText( map_wid, "txtSystemStatus", buf );
+   window_modifyText( wid, "txtSystemStatus", buf );
 }
 
 
@@ -317,7 +313,7 @@ static void map_update (void)
  */
 int map_isOpen (void)
 {
-   return (map_wid > 0);
+   return window_exists(MAP_WDWNAME);
 }
 
 
@@ -459,7 +455,7 @@ static void map_render( double bx, double by, double w, double h )
 /*
  * map event handling
  */
-static void map_mouse( SDL_Event* event, double mx, double my )
+static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my )
 {
    int i, j;
    double x,y, t;
@@ -475,9 +471,9 @@ static void map_mouse( SDL_Event* event, double mx, double my )
       case SDL_MOUSEBUTTONDOWN:
          /* zooming */
          if (event->button.button == SDL_BUTTON_WHEELUP)
-            map_buttonZoom( "btnZoomOut" );
+            map_buttonZoom( 0, "btnZoomOut" );
          else if (event->button.button == SDL_BUTTON_WHEELDOWN)
-            map_buttonZoom( "btnZoomIn" );
+            map_buttonZoom( 0, "btnZoomIn" );
 
          /* selecting star system */
          else {
@@ -512,7 +508,7 @@ static void map_mouse( SDL_Event* event, double mx, double my )
                            break;
                         }
                      }
-                  map_update();
+                  map_update( wid );
                   break;
                }
             }
@@ -533,8 +529,10 @@ static void map_mouse( SDL_Event* event, double mx, double my )
          break;
    }
 }
-static void map_buttonZoom( char* str )
+static void map_buttonZoom( unsigned int wid, char* str )
 {
+   (void) wid;
+
    if (strcmp(str,"btnZoomIn")==0) {
       map_zoom += (map_zoom >= 1.) ? 0.5 : 0.25;
       map_zoom = MIN(2.5, map_zoom);
@@ -543,6 +541,19 @@ static void map_buttonZoom( char* str )
       map_zoom -= (map_zoom > 1.) ? 0.5 : 0.25;
       map_zoom = MAX(0.25, map_zoom);
    }
+}
+
+
+/**
+ * @brief Closes the map.
+ */
+void map_close (void)
+{
+   unsigned int wid;
+
+   wid = window_get(MAP_WDWNAME);
+   if (wid > 0)
+      window_destroy(wid);
 }
 
 
@@ -633,11 +644,15 @@ void map_jump (void)
  */
 void map_select( StarSystem *sys )
 {
+   unsigned int wid;
+
+   wid = window_get(MAP_WDWNAME);
+
    if (sys == NULL)
       map_selectCur();
    else
       map_selected = sys - systems_stack;
-   map_update();
+   map_update(wid);
 }
 
 /*

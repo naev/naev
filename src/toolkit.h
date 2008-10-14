@@ -27,7 +27,7 @@ void window_addButton( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
       char* name, char* display, /* label name, display name */
-      void (*call) (char*) ); /* function to call when clicked */
+      void (*call) (unsigned int,char*) ); /* function to call when clicked */
 void window_addText( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
@@ -40,7 +40,7 @@ void window_addList( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
       char* name, char **items, int nitems, int defitem,
-      void (*call) (char*) );
+      void (*call) (unsigned int,char*) );
 void window_addRect( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
@@ -50,7 +50,7 @@ void window_addCust( const unsigned int wid,
       const int w, const int h, /* size */
       char* name, const int border,
       void (*render) (double x, double y, double w, double h),
-      void (*mouse) (SDL_Event* event, double x, double y) );
+      void (*mouse) (unsigned int wid, SDL_Event* event, double x, double y) );
 void window_addInput( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
@@ -60,15 +60,15 @@ void window_addImageArray( const unsigned int wid,
       const int w, const int h, /* size */
       char* name, const int iw, const int ih, /* name and image sizes */
       glTexture** tex, char** caption, int nelem, /* elements */
-      void (*call) (char*) );
+      void (*call) (unsigned int,char*) );
 
 
 /*
  * modification
  */
 /* window */
-void window_setAccept( const unsigned int wid, void (*fptr)( char* ) );
-void window_setCancel( const unsigned int wid, void (*cancel)( char* ) );
+void window_setAccept( const unsigned int wid, void (*fptr)(unsigned int,char*) );
+void window_setCancel( const unsigned int wid, void (*cancel)(unsigned int,char*) );
 /* text */
 void window_modifyText( const unsigned int wid,
       char* name, char* newstring );
@@ -102,6 +102,7 @@ glTexture* window_getImage( const unsigned int wid, char* name );
 /*
  * destruction
  */
+void window_close( unsigned int wid, char *str );
 void window_destroy( const unsigned int wid );
 void window_destroyWidget( unsigned int wid, const char* wgtname );
 

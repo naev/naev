@@ -26,17 +26,14 @@
 #define BOARDING_HEIGHT 200 /**< Boarding window height. */
 
 
-static unsigned int board_wid = 0; /**< Boarding window identifier. */
-
-
 /*
  * prototypes
  */
-static void board_exit( char* str );
-static void board_stealCreds( char* str );
-static void board_stealCargo( char* str );
-static int board_fail (void);
-static void board_update (void);
+static void board_exit( unsigned int wdw, char* str );
+static void board_stealCreds( unsigned int wdw, char* str );
+static void board_stealCargo( unsigned int wdw, char* str );
+static int board_fail( unsigned int wdw );
+static void board_update( unsigned int wdw );
 
 
 /**
@@ -49,6 +46,7 @@ static void board_update (void);
 void player_board (void)
 {  
    Pilot *p;
+   unsigned int wdw;
 
    if (player->target==PLAYER_ID) {
       player_message("You need a target to board first!");
@@ -85,25 +83,25 @@ void player_board (void)
    /*
     * create the boarding window
     */
-   board_wid = window_create( "Boarding", -1, -1, BOARDING_WIDTH, BOARDING_HEIGHT );
+   wdw = window_create( "Boarding", -1, -1, BOARDING_WIDTH, BOARDING_HEIGHT );
 
-   window_addText( board_wid, 20, -30, 120, 60,
+   window_addText( wdw, 20, -30, 120, 60,
          0, "txtCargo", &gl_smallFont, &cDConsole,
          "Credits:\n"
          "Cargo:\n"
          );
-   window_addText( board_wid, 80, -30, 120, 60,
+   window_addText( wdw, 80, -30, 120, 60,
          0, "txtData", &gl_smallFont, &cBlack, NULL );
 
-   window_addButton( board_wid, 20, 20, 50, 30, "btnStealCredits",
+   window_addButton( wdw, 20, 20, 50, 30, "btnStealCredits",
          "Credits", board_stealCreds);
-   window_addButton( board_wid, 90, 20, 50, 30, "btnStealCargo",
+   window_addButton( wdw, 90, 20, 50, 30, "btnStealCargo",
          "Cargo", board_stealCargo);
 
-   window_addButton( board_wid, -20, 20, 50, 30, "btnBoardingClose",
+   window_addButton( wdw, -20, 20, 50, 30, "btnBoardingClose",
          "Leave", board_exit );
 
-   board_update();
+   board_update(wdw);
 
    /*
     * run hook if needed
@@ -112,27 +110,25 @@ void player_board (void)
 }
 
 /**
- * @fn static void board_exit( char* str )
- *
  * @brief Closes the boarding window.
  *
+ *    @param wdw Window triggering the function.
  *    @param str Unused.
  */
-static void board_exit( char* str )
+static void board_exit( unsigned int wdw, char* str )
 {
-   (void)str;
-   window_destroy( window_get("Boarding") );
+   (void) str;
+   window_destroy( wdw );
 }
 
 
 /**
- * @fn static void board_stealCreds( char* str )
- *
  * @brief Attempt to steal the boarded ship's credits.
  *
+ *    @param wdw Window triggering the function.
  *    @param str Unused.
  */
-static void board_stealCreds( char* str )
+static void board_stealCreds( unsigned int wdw, char* str )
 {
    (void)str;
    Pilot* p;
@@ -144,23 +140,22 @@ static void board_stealCreds( char* str )
       return;
    }
 
-   if (board_fail()) return;
+   if (board_fail(wdw)) return;
 
    player->credits += p->credits;
    p->credits = 0;
-   board_update(); /* update the lack of credits */
+   board_update( wdw ); /* update the lack of credits */
    player_message("You manage to steal the ship's credits.");
 }
 
 
 /**
- * @fn static void board_stealCargo( char* str )
- *
  * @brief Attempt to steal the bearded ship's cargo.
  *
+ *    @param wdw Window triggering the function.
  *    @param str Unused.
  */
-static void board_stealCargo( char* str )
+static void board_stealCargo( unsigned int wdw, char* str )
 {
    (void)str;
    int q;
@@ -177,7 +172,7 @@ static void board_stealCargo( char* str )
       return;
    }
 
-   if (board_fail()) return;
+   if (board_fail(wdw)) return;
 
    /** steal as much as possible until full - @todo let player choose */
    q = 1;
@@ -187,19 +182,17 @@ static void board_stealCargo( char* str )
       pilot_rmCargo( p, p->commodities[0].commodity, q );
    }
 
-   board_update();
+   board_update( wdw );
    player_message("You manage to steal the ship's cargo.");
 }
 
 
 /**
- * @fn static int board_fail (void)
- *
  * @brief Checks to see if the hijack attempt failed.
  *
  *    @return 1 on failure to board, otherwise 0.
  */
-static int board_fail (void)
+static int board_fail( unsigned int wdw )
 {
    Pilot* p;
 
@@ -217,17 +210,15 @@ static int board_fail (void)
    else /* you just got locked out */
       player_message("The ship's security system locks you out.");
 
-   board_exit(NULL);
+   board_exit( wdw, NULL);
    return 1;
 }
 
 
 /**
- * @fn static void board_update (void)
- *
  * @brief Updates the boarding window fields.
  */
-static void board_update (void)
+static void board_update( unsigned int wdw )
 {
    int i;
    char str[128], buf[32];
@@ -251,5 +242,5 @@ static void board_update (void)
       }
    }
 
-   window_modifyText( board_wid, "txtData", str ); 
+   window_modifyText( wdw, "txtData", str ); 
 }

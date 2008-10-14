@@ -40,19 +40,17 @@
 extern void main_loop (void); /* from naev.c */
 /* dialogues */
 static glFont* dialogue_getSize( char* msg, int* w, int* h );
-static void dialogue_alertClose( char* str );
-static void dialogue_msgClose( char* str );
-static void dialogue_YesNoClose( char* str );
-static void dialogue_inputClose( char* str );
-static void dialogue_inputCancel( char* str );
+static void dialogue_alertClose( unsigned int wid, char* str );
+static void dialogue_msgClose( unsigned int wid, char* str );
+static void dialogue_YesNoClose( unsigned int wid, char* str );
+static void dialogue_inputClose( unsigned int wid, char* str );
+static void dialogue_inputCancel( unsigned int wid, char* str );
 /* secondary loop hack */
 static int loop_done; /**< Used to indicate the secondary loop is finished. */
 static int toolkit_loop (void);
 
 
 /**
- * @fn void dialogue_alert( const char *fmt, ... )
- *
  * @brief Displays an alert popup with only an ok button and a message.
  *
  *    @param fmt Printf style message to display.
@@ -63,8 +61,6 @@ void dialogue_alert( const char *fmt, ... )
    va_list ap;
    unsigned int wdw;
    int h;
-
-   if (window_exists( "Warning" )) return;
 
    if (fmt == NULL) return;
    else { /* get the message */
@@ -83,15 +79,13 @@ void dialogue_alert( const char *fmt, ... )
          dialogue_alertClose );
 }
 /**
- * @fn static void dialogue_alertClose( char* str )
  * @brief Closes the alert dialogue.
  *    @param str Unused.
  */
-static void dialogue_alertClose( char* str )
+static void dialogue_alertClose( unsigned int wid, char* str )
 {
    (void)str;
-   if (window_exists( "Warning" ))
-      window_destroy( window_get( "Warning" ));
+   window_destroy( wid );
 }
 
 
@@ -121,11 +115,7 @@ static glFont* dialogue_getSize( char* msg, int* w, int* h )
 }
 
 
-
-static unsigned int msg_wid = 0; /**< Stores the message window id. */
 /**
- * @fn void dialogue_msg( char* caption, const char *fmt, ... )
- *
  * @brief Opens a dialogue window with an ok button and a message.
  *
  *    @param caption Window title.
@@ -137,8 +127,7 @@ void dialogue_msg( char* caption, const char *fmt, ... )
    va_list ap;
    int w,h;
    glFont* font;
-
-   if (msg_wid) return;
+   unsigned int msg_wid;
 
    if (fmt == NULL) return;
    else { /* get the message */
@@ -160,15 +149,13 @@ void dialogue_msg( char* caption, const char *fmt, ... )
    toolkit_loop();
 }
 /**
- * @fn static void dialogue_msgClose( char* str )
  * @brief Closes a message dialogue.
  *    @param str Unused.
  */
-static void dialogue_msgClose( char* str )
+static void dialogue_msgClose( unsigned int wid, char* str )
 {
    (void)str;
-   window_destroy( msg_wid );
-   msg_wid = 0;
+   window_destroy( wid );
    loop_done = 1;
 }
 
@@ -176,8 +163,6 @@ static void dialogue_msgClose( char* str )
 static int yesno_result; /**< Stores the yesno dialogue result. */
 static unsigned int yesno_wid = 0; /**< Stores the yesno window id. */
 /**
- * @fn int dialogue_YesNo( char* caption, const char *fmt, ... )
- *
  * @brief Runs a dialogue with both yes and no options.
  *
  *    @param caption Caption to use for the dialogue.
@@ -221,18 +206,17 @@ int dialogue_YesNo( char* caption, const char *fmt, ... )
    return yesno_result;
 }
 /**
- * @fn static void dialogue_YesNoClose( char* str )
  * @brief Closes a yesno dialogue.
  *    @param str Unused.
  */
-static void dialogue_YesNoClose( char* str )
+static void dialogue_YesNoClose( unsigned int wid, char* str )
 {
    /* store the result */
    if (strcmp(str,"btnYes")==0) yesno_result = 1;
    else if (strcmp(str,"btnNo")==0) yesno_result = 0;
 
    /* destroy the window */
-   window_destroy( yesno_wid );
+   window_destroy( wid );
    yesno_wid = 0;
 
    loop_done = 1;
@@ -317,32 +301,29 @@ char* dialogue_input( char* title, int min, int max, const char *fmt, ... )
    return input;
 }
 /**
- * @fn static void dialogue_inputClose( char* str )
  * @brief Closes an input dialogue.
  *    @param str Unused.
  */
-static void dialogue_inputClose( char* str )
+static void dialogue_inputClose( unsigned int wid, char* str )
 {
-   (void)str;
+   (void) str;
+   (void) wid;
 
    /* break the loop */
    loop_done = 1;
 }
 /**
- * @fn static void dialogue_inputCancel( char* str )
  * @brief Cancels an input dialogue.
  *    @param str Unused.
  */
-static void dialogue_inputCancel( char* str )
+static void dialogue_inputCancel( unsigned int wid, char* str )
 {
    input_cancelled = 1;
-   dialogue_inputClose(str);
+   dialogue_inputClose(wid,str);
 }
 
 
 /**
- * @fn static int toolkit_loop (void)
- *
  * @brief Creates a secondary loop until loop_done is set to 1 or the toolkit closes.
  *
  * Almost identical to the main loop in naev.c.

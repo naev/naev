@@ -74,7 +74,7 @@ typedef struct Widget_ {
 
    union {
       struct { /* WIDGET_BUTTON */
-         void (*fptr) (char*); /**< Activate callback. */
+         void (*fptr) (unsigned int,char*); /**< Activate callback. */
          char *display; /**< Displayed text. */
          int disabled; /**< 1 if button is disabled, 0 if enabled. */
       } btn; /**< WIDGET_BUTTON */
@@ -97,7 +97,7 @@ typedef struct Widget_ {
          int noptions; /**< Total number of options. */
          int selected; /**< Which option is currently selected. */
          int pos; /** Current topmost option (in view). */
-         void (*fptr) (char*); /**< Modify callback - triggered on selection. */
+         void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
       } lst; /**< WIDGET_LIST */
 
       struct { /* WIDGET_RECT */
@@ -108,7 +108,7 @@ typedef struct Widget_ {
       struct { /* WIDGET_CUST */
          int border; /**< 1 if widget should have border, 0 if it shouldn't. */
          void (*render) (double bx, double by, double bw, double bh); /**< Function to run when rendering. */
-         void (*mouse) (SDL_Event* event, double bx, double by); /**< Function to run when recieving mous events. */
+         void (*mouse) (unsigned int wid, SDL_Event* event, double bx, double by); /**< Function to run when recieving mous events. */
       } cst; /**< WIDGET_CUST */
 
       struct { /* WIDGET_INPUT */
@@ -127,7 +127,7 @@ typedef struct Widget_ {
          double pos; /**< Current y position. */
          int iw; /**< Image width to use. */
          int ih; /**< Image height to use. */
-         void (*fptr) (char*); /**< Modify callback - triggered on selection. */
+         void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
       } iar; /**< WIDGET_IMAGEARRAY */
    } dat; /**< Stores the widget specific data. */
 } Widget;
@@ -145,8 +145,8 @@ typedef struct Window_ {
    int hidden; /**< Is window hidden? - @todo use */
    int focus; /**< Current focused widget. */
 
-   void (*accept_fptr)( char* ); /**< Triggered by hitting 'enter' with no widget that catches the keypress. */
-   void (*cancel_fptr)( char* ); /**< Triggered by hitting 'escape' with no widget that catches the keypress. */
+   void (*accept_fptr)(unsigned int,char*); /**< Triggered by hitting 'enter' with no widget that catches the keypress. */
+   void (*cancel_fptr)(unsigned int,char*); /**< Triggered by hitting 'escape' with no widget that catches the keypress. */
 
    double x; /**< X position of the window. */
    double y; /**< Y position of the window. */
@@ -252,7 +252,7 @@ static void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
  *                            const int x, const int y,
  *                            const int w, const int h,
  *                            char* name, char* display,
- *                            void (*call) (char*) )
+ *                            void (*call) (unsigned int,char*) )
  *
  * @brief Adds a button widget to a window.
  *
@@ -273,7 +273,7 @@ void window_addButton( const unsigned int wid,
                        const int x, const int y,
                        const int w, const int h,
                        char* name, char* display,
-                       void (*call) (char*) )
+                       void (*call) (unsigned int,char*) )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
@@ -366,7 +366,7 @@ void window_addList( const unsigned int wid,
       const int x, const int y,
       const int w, const int h,
       char* name, char **items, int nitems, int defitem,
-      void (*call) (char*) )
+      void (*call) (unsigned int,char*) )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
@@ -426,7 +426,7 @@ void window_addCust( const unsigned int wid,
       const int w, const int h, /* size */
       char* name, const int border,
       void (*render) (double x, double y, double w, double h),
-      void (*mouse) (SDL_Event* event, double x, double y) )
+      void (*mouse) (unsigned int wid, SDL_Event* event, double x, double y) )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
@@ -498,7 +498,7 @@ void window_addImageArray( const unsigned int wid,
       const int w, const int h, /* size */
       char* name, const int iw, const int ih, /* name and image sizes */
       glTexture** tex, char** caption, int nelem, /* elements */
-      void (*call) (char*) )
+      void (*call) (unsigned int,char*) )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
@@ -714,7 +714,6 @@ unsigned int window_get( const char* wdwname )
    for (i=0; i<nwindows; i++)
       if (strcmp(windows[i].name,wdwname)==0)
          return windows[i].id;
-   DEBUG("Window '%s' not found in windows stack", wdwname);
    return 0;
 }
 
@@ -777,7 +776,7 @@ unsigned int window_create( char* name,
 
 
 /**
- * @fn void window_setAccept( const unsigned int wid, void (*accept)( char* ) )
+ * @fn void window_setAccept( const unsigned int wid, void (*accept)(unsigned int,char*) )
  *
  * @ brief Sets the default accept function of the window.
  *
@@ -788,7 +787,7 @@ unsigned int window_create( char* name,
  *    @param accept Function to trigger when window is "accepted".  Parameter
  *                  passed is window name.
  */
-void window_setAccept( const unsigned int wid, void (*accept)( char* ) )
+void window_setAccept( const unsigned int wid, void (*accept)(unsigned int,char*) )
 {
    Window *wdw;
 
@@ -798,7 +797,7 @@ void window_setAccept( const unsigned int wid, void (*accept)( char* ) )
 
 
 /**
- * @fn void window_setCancel( const unsigned int wid, void (*cancel)( char* ) )
+ * @fn void window_setCancel( const unsigned int wid, void (*cancel)(unsigned int,char*) )
  *
  * @brief Sets the default cancel function of the window.
  *
@@ -809,7 +808,7 @@ void window_setAccept( const unsigned int wid, void (*accept)( char* ) )
  *    @param cancel Function to trigger when window is "cancelled".  Parameter
  *                  passed is window name.
  */
-void window_setCancel( const unsigned int wid, void (*cancel)( char* ) )
+void window_setCancel( const unsigned int wid, void (*cancel)(unsigned int,char*) )
 {
    Window *wdw;
 
@@ -864,6 +863,18 @@ static void widget_cleanup( Widget *widget )
       default:
          break;
    }
+}
+
+
+/**
+ * @brief Helper function to automatically close the window calling it.
+ *    @param wid Window to close.
+ *    @param str Unused.
+ */
+void window_close( unsigned int wid, char *str )
+{
+   (void) str;
+   window_destroy( wid );
 }
 
 
@@ -1706,7 +1717,7 @@ static void toolkit_mouseEvent( SDL_Event* event )
             (y > wgt->y) && (y < (wgt->y + wgt->h))) {
          /* custom widgets take it from here */
          if ((wgt->type==WIDGET_CUST) && wgt->dat.cst.mouse) 
-            (*wgt->dat.cst.mouse)( event, x-wgt->x, y-wgt->y );
+            (*wgt->dat.cst.mouse)( w->id, event, x-wgt->x, y-wgt->y );
          else
             switch (event->type) {
                case SDL_MOUSEMOTION:
@@ -1767,14 +1778,15 @@ static void toolkit_mouseEvent( SDL_Event* event )
       /* otherwise custom widgets can get stuck on mousedown */
       else if ((wgt->type==WIDGET_CUST) &&
             (event->type==SDL_MOUSEBUTTONUP) && wgt->dat.cst.mouse)
-            (*wgt->dat.cst.mouse)( event, x-wgt->x, y-wgt->y );
+            (*wgt->dat.cst.mouse)( w->id, event, x-wgt->x, y-wgt->y );
       else if (!mouse_down)
          wgt->status = WIDGET_STATUS_NORMAL;
    }
 
    /* We trigger this at the end in case it destroys the window that is calling
     * this function.  Otherwise ugly segfaults appear. */
-   if (wgt_func) (*wgt_func->dat.btn.fptr)(wgt_func->name);
+   if (wgt_func)
+      (*wgt_func->dat.btn.fptr)(w->id, wgt_func->name);
 }
 
 
@@ -1833,7 +1845,7 @@ static int toolkit_keyEvent( SDL_Event* event )
       case SDLK_ESCAPE:
          if (event->type == SDL_KEYDOWN)
             if (wdw->cancel_fptr != NULL) {
-               (*wdw->cancel_fptr)(wdw->name);
+               (*wdw->cancel_fptr)(wdw->id,wdw->name);
                return 1;
             }
          return 0;
@@ -1958,14 +1970,14 @@ static void toolkit_triggerFocus (void)
    switch (wgt->type) {
 
       case WIDGET_BUTTON:
-         if (wgt->dat.btn.fptr) (*wgt->dat.btn.fptr)(wgt->name);
+         if (wgt->dat.btn.fptr) (*wgt->dat.btn.fptr)(wdw->id,wgt->name);
          else DEBUG("Toolkit: Button '%s' of Window '%s' "
                "doesn't have a function trigger",
                wgt->name, wdw->name );
          break;
 
       default:
-         if (wdw->accept_fptr) (*wdw->accept_fptr)(wgt->name);
+         if (wdw->accept_fptr) (*wdw->accept_fptr)(wdw->id,wgt->name);
          break;
    }
 }
@@ -1979,8 +1991,11 @@ static void toolkit_listScroll( Widget* wgt, int direction )
    double w,h;
    int xelem, yelem;
    double hmax;
+   Window *wdw;
 
    if (wgt == NULL) return;
+
+   wdw = &windows[nwindows-1]; /* get active window */
 
    switch (wgt->type) {
 
@@ -1988,7 +2003,7 @@ static void toolkit_listScroll( Widget* wgt, int direction )
          wgt->dat.lst.selected -= direction;
          wgt->dat.lst.selected = MAX(0,wgt->dat.lst.selected);
          wgt->dat.lst.selected = MIN(wgt->dat.lst.selected, wgt->dat.lst.noptions-1);
-         if (wgt->dat.lst.fptr) (*wgt->dat.lst.fptr)(wgt->name);
+         if (wgt->dat.lst.fptr) (*wgt->dat.lst.fptr)(wdw->id,wgt->name);
          break;
 
       case WIDGET_IMAGEARRAY:
@@ -2011,7 +2026,7 @@ static void toolkit_listScroll( Widget* wgt, int direction )
          /* Boundry check. */
          wgt->dat.iar.pos = MAX(wgt->dat.iar.pos, 0.);
          wgt->dat.iar.pos = MIN(wgt->dat.iar.pos, hmax);
-         if (wgt->dat.iar.fptr) (*wgt->dat.iar.fptr)(wgt->name);
+         if (wgt->dat.iar.fptr) (*wgt->dat.iar.fptr)(wdw->id,wgt->name);
          break;
 
       default:
@@ -2102,6 +2117,9 @@ static void toolkit_imgarrFocus( Widget* iar, double bx, double by )
    double x,y, w,h, ycurs,xcurs;
    double scroll_pos, hmax;
    int xelem, xspace, yelem;
+   Window *wdw;
+
+   wdw = &windows[nwindows-1]; /* get active window */
 
    /* positions */
    x = bx + iar->x;
@@ -2133,7 +2151,7 @@ static void toolkit_imgarrFocus( Widget* iar, double bx, double by )
                   (by > ycurs) && (by < ycurs+h-4.)) {
                iar->dat.iar.selected = j*xelem + i;
                if (iar->dat.iar.fptr != NULL)
-                  (*iar->dat.iar.fptr)(iar->name);
+                  (*iar->dat.iar.fptr)(wdw->id, iar->name);
                return;
             }
             xcurs += xspace + w;

@@ -53,9 +53,9 @@ extern int diff_load( xmlNodePtr parent );
 extern void menu_main_close (void);
 /* static */
 static int save_data( xmlTextWriterPtr writer );
-static void load_menu_close( char *str );
-static void load_menu_load( char *str );
-static void load_menu_delete( char *str );
+static void load_menu_close( unsigned int wdw, char *str );
+static void load_menu_load( unsigned int wdw, char *str );
+static void load_menu_delete( unsigned int wdw, char *str );
 static int load_game( char* file );
 
 
@@ -187,22 +187,21 @@ void load_game_menu (void)
    window_setAccept( wid, load_menu_load );
 }
 /**
- * @fn static void load_menu_close( char *str )
  * @brief Closes the load game menu.
+ *    @param wdw Window triggering function.
  *    @param str Unused.
  */
-static void load_menu_close( char *str )
+static void load_menu_close( unsigned int wdw, char *str )
 {
    (void)str;
-
-   window_destroy( window_get("Load Game") );
+   window_destroy( wdw );
 }
 /**
- * @fn static void load_menu_load( char *str )
  * @brief Loads a new game.
+ *    @param wdw Window triggering function.
  *    @param str Unused.
  */
-static void load_menu_load( char *str )
+static void load_menu_load( unsigned int wdw, char *str )
 {
    (void)str;
    char *save, path[PATH_MAX];
@@ -216,15 +215,14 @@ static void load_menu_load( char *str )
 
    snprintf( path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), save );
    load_game( path );
-   load_menu_close(NULL);
+   load_menu_close(wdw, NULL);
    menu_main_close();
 }
 /**
- * @fn static void load_menu_delete( char *str )
  * @brief Deletes an old game.
  *    @param str Unused.
  */
-static void load_menu_delete( char *str )
+static void load_menu_delete( unsigned int wdw, char *str )
 {
    (void)str;
    char *save, path[PATH_MAX];
@@ -244,7 +242,7 @@ static void load_menu_delete( char *str )
    unlink(path);
 
    /* need to reload the menu */
-   load_menu_close(NULL);
+   load_menu_close(wdw, NULL);
    load_game_menu();
 }
 

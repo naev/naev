@@ -45,7 +45,6 @@ static int ship_nstack = 0; /**< Number of ships in the stack. */
  * Prototypes
  */
 static Ship* ship_parse( xmlNodePtr parent );
-static void ship_view_close( char* btn );
 
 
 /**
@@ -509,16 +508,16 @@ void ships_free()
 
 
 /**
- * @fn void ship_view( char* shipname )
- *
  * @brief Used to visualize the ships stats.
  *
  * @todo Take into account outfits or something like that.
  *
+ *    @param unused Unused.
  *    @param shipname Ship ot view the stats of.
  */
-void ship_view( char* shipname )
+void ship_view( unsigned int unused, char* shipname )
 {
+   (void) unused;
    Ship *s;
    char buf[1024];
    unsigned int wid;
@@ -576,15 +575,6 @@ void ship_view( char* shipname )
    snprintf( buf, 37, "close%s", shipname );
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         buf, "Close", ship_view_close );
-}
-/**
- * @fn static void ship_view_close( char* btn )
- * @brief Closes the ship view window.
- *    @param btn Used internally by buttons.
- */
-static void ship_view_close( char* btn )
-{
-   window_destroy( window_get( btn+5 /* "closeFoo -> Foo" */ ) );
+         buf, "Close", window_close );
 }
 

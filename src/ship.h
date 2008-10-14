@@ -141,7 +141,7 @@ int ship_basePrice( Ship* s );
 /*
  * toolkit
  */
-void ship_view( char* shipname );
+void ship_view( unsigned int unused, char* shipname );
 
 
 #endif /* SHIP_H */

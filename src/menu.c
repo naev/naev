@@ -65,30 +65,28 @@ int menu_open = 0; /**< Stores the opened/closed menus. */
  */
 /* main menu */
 void menu_main_close (void); /**< Externed in save.c */
-static void menu_main_load( char* str );
-static void menu_main_new( char* str );
-static void menu_main_exit( char* str );
+static void menu_main_load( unsigned int wid, char* str );
+static void menu_main_new( unsigned int wid, char* str );
+static void menu_main_exit( unsigned int wid, char* str );
 /* small menu */
-static void menu_small_close( char* str );
-static void menu_small_exit( char* str );
+static void menu_small_close( unsigned int wid, char* str );
+static void menu_small_exit( unsigned int wid, char* str );
 static void exit_game (void);
 /* information menu */
-static void menu_info_close( char* str );
+static void menu_info_close( unsigned int wid, char* str );
 /* outfits submenu */
-static void info_outfits_menu( char* str );
+static void info_outfits_menu( unsigned int parent, char* str );
 /* cargo submenu */
-static void info_cargo_menu( char* str );
-static void cargo_update( char* str );
-static void cargo_jettison( char* str );
+static void info_cargo_menu( unsigned int parent, char* str );
+static void cargo_update( unsigned int wid, char* str );
+static void cargo_jettison( unsigned int wid, char* str );
 /* mission submenu */
-static void info_missions_menu( char* str );
-static void mission_menu_abort( char* str );
-static void mission_menu_genList( int first );
-static void mission_menu_update( char* str );
+static void info_missions_menu( unsigned int parent, char* str );
+static void mission_menu_abort( unsigned int wid, char* str );
+static void mission_menu_genList( unsigned int wid, int first );
+static void mission_menu_update( unsigned int wid, char* str );
 /* death menu */
-static void menu_death_main( char* str );
-/* generic */
-static void menu_generic_close( char* str );
+static void menu_death_main( unsigned int wid, char* str );
 
 
 /**
@@ -144,39 +142,40 @@ void menu_main_close (void)
    menu_Close(MENU_MAIN);
 }
 /**
- * @fn static void menu_main_load( char* str )
+ * @fn static void menu_main_load( unsigned int wid, char* str )
  * @brief Function to active the load game menu.
  *    @param str Unused.
  */
-static void menu_main_load( char* str )
+static void menu_main_load( unsigned int wid, char* str )
 {
-   (void)str;
-
+   (void) str;
+   (void) wid;
    load_game_menu();
 }
 /**
- * @fn static void menu_main_new( char* str )
+ * @fn static void menu_main_new( unsigned int wid, char* str )
  * @brief Function to active the new game menu.
  *    @param str Unused.
  */
-static void menu_main_new( char* str )
+static void menu_main_new( unsigned int wid, char* str )
 {
-   (void)str;
-
+   (void) str;
+   (void) wid;
    menu_main_close();
    player_new();
 }
 /**
- * @fn static void menu_main_exit( char* str )
+ * @fn static void menu_main_exit( unsigned int wid, char* str )
  * @brief Function to exit the main menu and game.
  *    @param str Unused.
  */
-static void menu_main_exit( char* str )
+static void menu_main_exit( unsigned int wid, char* str )
 {
-   (void)str;
-   unsigned int wid;
+   (void) str;
+   (void) wid;
+   unsigned int bg;
 
-   wid = window_get("BG");
+   bg = window_get( "BG" );
 
    /* 
     * Ugly hack to prevent player.c from segfaulting due to the fact
@@ -185,8 +184,8 @@ static void menu_main_exit( char* str )
     * nor anything of the likes (nor toolkit to stop rendering) while
     * not leaking any texture.
     */
-   gl_freeTexture( window_getImage(wid, "imgLogo") );
-   window_modifyImage( wid, "imgLogo", NULL );
+   gl_freeTexture( window_getImage(bg, "imgLogo") );
+   window_modifyImage( bg, "imgLogo", NULL );
 
    exit_game();
 }
@@ -230,24 +229,24 @@ void menu_small (void)
    menu_Open(MENU_SMALL);
 }
 /**
- * @fn static void menu_small_close( char* str )
+ * @fn static void menu_small_close( unsigned int wid, char* str )
  * @brief Closes the small ingame menu.
  *    @param str Unused.
  */
-static void menu_small_close( char* str )
+static void menu_small_close( unsigned int wid, char* str )
 {
    (void)str;
-   window_destroy( window_get("Menu") );
+   window_destroy( wid );
    menu_Close(MENU_SMALL);
 }
 /**
- * @fn static void menu_small_exit( char* str )
+ * @fn static void menu_small_exit( unsigned int wid, char* str )
  * @brief Closes the small ingame menu and goes back to the main menu.
  *    @param str Unused.
  */
-static void menu_small_exit( char* str )
+static void menu_small_exit( unsigned int wid, char* str )
 {
-   (void)str;
+   (void) str;
    
    /* if landed we must save anyways */
    if (landed) {
@@ -257,7 +256,7 @@ static void menu_small_exit( char* str )
       land_cleanup();
    }
 
-   window_destroy( window_get("Menu") );
+   window_destroy( wid );
    menu_Close(MENU_SMALL);
    menu_main();
 }
@@ -351,29 +350,26 @@ void menu_info (void)
    menu_Open(MENU_INFO);
 }
 /**
- * @fn static void menu_info_close( char* str )
  * @brief Closes the information menu.
  *    @param str Unused.
  */
-static void menu_info_close( char* str )
+static void menu_info_close( unsigned int wid, char* str )
 {
-   if (strcmp(str,"btnClose")==0)
-      window_destroy( window_get("Info") );
-
+   (void) str;
+   window_destroy( wid );
    menu_Close(MENU_INFO);
 }
 
 
 /**
- * @fn static void info_outfits_menu( char* str )
- *
  * @brief Shows the player what outfits he has.
  *
  *    @param str Unused.
  */
-static void info_outfits_menu( char* str )
+static void info_outfits_menu( unsigned int parent, char* str )
 {
-   (void)str;
+   (void) str;
+   (void) parent;
    char *buf;
    unsigned int wid;
 
@@ -393,20 +389,19 @@ static void info_outfits_menu( char* str )
    /* Buttons */
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "closeOutfits", "Close", menu_generic_close );
+         "closeOutfits", "Close", window_close );
 }
 
 
 /**
- * @fn static void info_cargo_menu( char* str )
- *
  * @brief Shows the player his cargo.
  *
  *    @param str Unused.
  */
-static void info_cargo_menu( char* str )
+static void info_cargo_menu( unsigned int parent, char* str )
 {
-   (void)str;
+   (void) str;
+   (void) parent;
    unsigned int wid;
    char **buf;
    int nbuf;
@@ -417,7 +412,7 @@ static void info_cargo_menu( char* str )
 
    /* Buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "closeCargo", "Back", menu_generic_close );
+         "closeCargo", "Back", window_close );
    window_addButton( wid, -40 - BUTTON_WIDTH, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnJettisonCargo", "Jettison",
          cargo_jettison );
@@ -446,22 +441,20 @@ static void info_cargo_menu( char* str )
          CARGO_WIDTH - 40, CARGO_HEIGHT - BUTTON_HEIGHT - 80,
          "lstCargo", buf, nbuf, 0, cargo_update );
 
-   cargo_update(NULL);
+   cargo_update(wid, NULL);
 }
 /**
- * @fn static void cargo_update( char* str )
+ * @fn static void cargo_update( unsigned int wid, char* str )
  * @brief Updates the player's cargo in the cargo menu.
  *    @param str Unused.
  */
-static void cargo_update( char* str )
+static void cargo_update( unsigned int wid, char* str )
 {
    (void)str;
-   unsigned int wid;
    int pos;
 
    if (player->ncommodities==0) return; /* No cargo */
 
-   wid = window_get( "Cargo" );
    pos = toolkit_getListPos( wid, "lstCargo" );
 
    /* Can jettison all but mission cargo when not landed*/
@@ -471,19 +464,17 @@ static void cargo_update( char* str )
       window_enableButton( wid, "btnJettisonCargo" );
 }
 /**
- * @fn static void cargo_jettison( char* str )
+ * @fn static void cargo_jettison( unsigned int wid, char* str )
  * @brief Makes the player jettison the currently selected cargo.
  *    @param str Unused.
  */
-static void cargo_jettison( char* str )
+static void cargo_jettison( unsigned int wid, char* str )
 {
    (void)str;
-   unsigned int wid;
    int pos;
 
    if (player->ncommodities==0) return; /* No cargo, redundant check */
 
-   wid = window_get( "Cargo" );
    pos = toolkit_getListPos( wid, "lstCargo" );
 
    /* Remove the cargo */
@@ -493,21 +484,21 @@ static void cargo_jettison( char* str )
          player->commodities[pos].quantity );
 
    /* We reopen the menu to recreate the list now. */
-   menu_generic_close( "closeCargo" );
-   info_cargo_menu(NULL);
+   window_destroy( wid );
+   info_cargo_menu(0, NULL);
 }
 
 
 /**
- * @fn static void info_missions_menu( char* str )
- * 
  * @brief Shows the player's active missions.
  *
+ *    @param parent Unused.
  *    @param str Unused.
  */
-static void info_missions_menu( char* str )
+static void info_missions_menu( unsigned int parent, char* str )
 {
-   (void)str;
+   (void) str;
+   (void) parent;
    unsigned int wid;
 
    /* create the window */
@@ -515,7 +506,7 @@ static void info_missions_menu( char* str )
 
    /* buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "closeMissions", "Back", menu_generic_close );
+         "closeMissions", "Back", window_close );
    window_addButton( wid, -20, 40 + BUTTON_HEIGHT,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnAbortMission", "Abort",
          mission_menu_abort );
@@ -531,20 +522,16 @@ static void info_missions_menu( char* str )
          "txtDesc", &gl_smallFont, &cBlack, NULL );
 
    /* list */
-   mission_menu_genList(1);
+   mission_menu_genList(wid ,1);
 }
 /**
- * @fn static void mission_menu_genList( int first )
  * @brief Creates the current mission list for the mission menu.
  *    @param first 1 if it's the first time run.
  */
-static void mission_menu_genList( int first )
+static void mission_menu_genList( unsigned int wid, int first )
 {
    int i,j;
    char** misn_names;
-   unsigned int wid;
-
-   wid = window_get("Missions");
 
    if (!first)
       window_destroyWidget( wid, "lstMission" );
@@ -565,22 +552,18 @@ static void mission_menu_genList( int first )
          300, MISSIONS_HEIGHT-60,
          "lstMission", misn_names, j, 0, mission_menu_update );
 
-   mission_menu_update(NULL);
+   mission_menu_update(wid ,NULL);
 }
 /**
- * @fn static void mission_menu_update( char* str )
+ * @fn static void mission_menu_update( unsigned int wid, char* str )
  * @brief Updates the mission menu mission information based on what's selected.
  *    @param str Unusued.
  */
-static void mission_menu_update( char* str )
+static void mission_menu_update( unsigned int wid, char* str )
 {
+   (void)str;
    char *active_misn;
    Mission* misn;
-   unsigned int wid;
-
-   (void)str;
-
-   wid = window_get( "Missions" );
 
    active_misn = toolkit_getList( wid, "lstMission" );
    if (strcmp(active_misn,"No Missions")==0) {
@@ -597,19 +580,16 @@ static void mission_menu_update( char* str )
    window_enableButton( wid, "btnAbortMission" );
 }
 /**
- * @fn static void mission_menu_abort( char* str )
+ * @fn static void mission_menu_abort( unsigned int wid, char* str )
  * @brief Aborts a mission in the mission menu.
  *    @param str Unused.
  */
-static void mission_menu_abort( char* str )
+static void mission_menu_abort( unsigned int wid, char* str )
 {
    (void)str;
    char *selected_misn;
    int pos;
-   unsigned int wid;
    Mission* misn;
-
-   wid = window_get( "Missions" );
 
    selected_misn = toolkit_getList( wid, "lstMission" );
 
@@ -620,7 +600,7 @@ static void mission_menu_abort( char* str )
       mission_cleanup( misn );
       memmove( misn, &player_missions[pos+1], 
             sizeof(Mission) * (MISSION_MAX-pos-1) );
-      mission_menu_genList(0);
+      mission_menu_genList(wid ,0);
    }
 }
 
@@ -640,20 +620,20 @@ void menu_death (void)
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnMain", "Main Menu", menu_death_main );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnExit", "Exit Game", (void(*)(char*)) exit_game );
+         "btnExit", "Exit Game", (void(*)(unsigned int, char*)) exit_game );
    menu_Open(MENU_DEATH);
 
    /* Makes it all look cooler since everything still goes on. */
    unpause_game();
 }
 /**
- * @fn static void menu_death_main( char* str )
  * @brief Closes the player death menu.
  *    @param str Unused.
  */
-static void menu_death_main( char* str )
+static void menu_death_main( unsigned int parent, char* str )
 {
-   (void)str;
+   (void) parent;
+   (void) str;
    unsigned int wid;
 
    wid = window_get( "Death" );
@@ -665,17 +645,3 @@ static void menu_death_main( char* str )
 }
 
 
-/**
- * @fn static void menu_generic_close( char* str )
- *
- * @brief Generic function to close the current window.
- *
- * Only works if the button is labeled "closeFoo", where "Foo" would be the
- *  window name.
- *
- *    @param str Used by the button it's assigned to internally.
- */
-static void menu_generic_close( char* str )
-{
-   window_destroy( window_get( str+5 /* "closeFoo -> Foo" */ ) );
-}

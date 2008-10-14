@@ -26,13 +26,12 @@
 
 
 static Pilot *comm_pilot = NULL; /**< Pilot currently talking to. */
-static int comm_wid = 0; /**< Communication Window ID. */
 
 
 /*
  * Prototypes.
  */
-static void comm_close( char *str );
+static void comm_close( unsigned int wid, char *str );
 
 
 /**
@@ -44,6 +43,7 @@ static void comm_close( char *str );
 int comm_open( unsigned int pilot )
 {
    char buf[128];
+   unsigned int wid;
 
    /* Get the pilot. */
    comm_pilot = pilot_get( pilot );
@@ -52,20 +52,17 @@ int comm_open( unsigned int pilot )
   
    /* Create the window. */
    snprintf(buf, 128, "Comm - %s", comm_pilot->name);
-   comm_wid = window_create( buf, -1, -1, COMM_WIDTH, COMM_HEIGHT );
+   wid = window_create( buf, -1, -1, COMM_WIDTH, COMM_HEIGHT );
 
-   window_addButton( comm_wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close Channel", comm_close );
 
    return 0;
 }
-static void comm_close( char *str )
+static void comm_close( unsigned int wid, char *str )
 {
    (void) str;
-   if (comm_wid > 0) {
-      window_destroy( comm_wid );
-      comm_wid = 0;
-   }
+   window_destroy( wid );
 }
 
 
