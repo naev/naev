@@ -27,9 +27,9 @@ extern unsigned int time;
 /*
  * prototypes
  */
-static void pilot_nstack_pause (void);
-static void pilot_nstack_unpause (void);
-static void pilot_nstack_delay( unsigned int delay );
+static void pilot_pause (void);
+static void pilot_unpause (void);
+static void pilot_delay( unsigned int delay );
 
 
 /*
@@ -39,7 +39,7 @@ void pause_game (void)
 {
    if (paused) return; /* already paused */
 
-   pilot_nstack_pause();
+   pilot_pause();
 
    paused = 1; /* officially paused */
 }
@@ -52,7 +52,7 @@ void unpause_game (void)
 {
    if (!paused) return; /* already unpaused */
 
-   pilot_nstack_unpause();
+   pilot_unpause();
 
    paused = 0; /* officially unpaused */
 }
@@ -63,14 +63,14 @@ void unpause_game (void)
  */
 void pause_delay( unsigned int delay )
 {
-   pilot_nstack_delay(delay);
+   pilot_delay(delay);
 }
 
 
 /*
  * pilot_nstack pausing/unpausing
  */
-static void pilot_nstack_pause (void)
+static void pilot_pause (void)
 {
    int i, j;
    unsigned int t = SDL_GetTicks();
@@ -78,25 +78,39 @@ static void pilot_nstack_pause (void)
 
       pilot_stack[i]->ptimer -= t;
 
+      /* Pause timers. */
       pilot_stack[i]->tcontrol -= t;
       for (j=0; j<MAX_AI_TIMERS; j++)
          pilot_stack[i]->timer[j] -= t;
+
+      /* Pause outfits. */
+      for (j=0; j<pilot_stack[i]->noutfits; j++) {
+         if (pilot_stack[i]->outfits[j].timer > 0)
+            pilot_stack[i]->outfits[j].timer -= t;
+      }
    }
 }
-static void pilot_nstack_unpause (void)
+static void pilot_unpause (void)
 {
    int i, j;
    unsigned int t = SDL_GetTicks();
    for (i=0; i<pilot_nstack; i++) {
    
-       pilot_stack[i]->ptimer += t;
+      pilot_stack[i]->ptimer += t;
 
+      /* Rerun timers. */
       pilot_stack[i]->tcontrol += t;
       for (j=0; j<MAX_AI_TIMERS; j++)
          pilot_stack[i]->timer[j] += t;
+
+      /* Pause outfits. */
+      for (j=0; j<pilot_stack[i]->noutfits; j++) {
+         if (pilot_stack[i]->outfits[j].timer > 0)
+            pilot_stack[i]->outfits[j].timer += t;
+      }
    }
 }
-static void pilot_nstack_delay( unsigned int delay )
+static void pilot_delay( unsigned int delay )
 {
    int i, j;
    for (i=0; i<pilot_nstack; i++) {
@@ -106,6 +120,11 @@ static void pilot_nstack_delay( unsigned int delay )
       pilot_stack[i]->tcontrol += delay;
       for (j=0; j<MAX_AI_TIMERS; j++)
          pilot_stack[i]->timer[j] += delay;
+
+      for (j=0; j<pilot_stack[i]->noutfits; j++) {
+         if (pilot_stack[i]->outfits[j].timer > 0)
+            pilot_stack[i]->outfits[j].timer += delay;
+      }
    }
 }
 
