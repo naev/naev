@@ -91,6 +91,7 @@ typedef struct Ship_ {
    /* graphics */
    glTexture *gfx_space; /**< Space sprite sheet. */
    glTexture *gfx_target; /**< Targetting window graphic. */
+   glTexture *gfx_comm; /**< Graphic for communication window. */
 
    /* GUI interface */
    char* gui; /**< Name of the GUI the ship uses by default. */

@@ -311,6 +311,21 @@ char *faction_getStanding( double mod )
 
 
 /**
+ * @brief Gets the broad faction standing.
+ *
+ *    @param mod Player's standing.
+ *    @return Human readable broad player's standing.
+ */
+char *faction_getStandingBroad( double mod )
+{
+   if (mod > PLAYER_ALLY) return "Friendly";
+   else if (mod > 0.) return "Neutral";
+   return "Hostile";
+
+}
+
+
+/**
  * @fn int areEnemies( int a, int b)
  *
  * @brief Checks whether two factions are enemies.

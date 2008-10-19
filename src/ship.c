@@ -29,6 +29,7 @@
 #define SHIP_GFX     "gfx/ship/" /**< Location of ship graphics. */
 #define SHIP_EXT     ".png" /**< Ship graphics extension format. */
 #define SHIP_TARGET  "_target" /**< Target graphic extension. */
+#define SHIP_COMM    "_comm" /**< Communicatio graphic extension. */
 
 #define VIEW_WIDTH   300 /**< Ship view window width. */
 #define VIEW_HEIGHT  300 /**< Ship view window height. */
@@ -307,7 +308,13 @@ static Ship* ship_parse( xmlNodePtr parent )
                SHIP_GFX"%s"SHIP_EXT, xml_get(node));
          temp->gfx_space = gl_newSprite(str, 6, 6);
 
+         /* Load the comm graphic. */
+         snprintf( str, strlen(xml_get(node))+
+               sizeof(SHIP_GFX)+sizeof(SHIP_COMM)+sizeof(SHIP_EXT),
+               SHIP_GFX"%s"SHIP_COMM SHIP_EXT, xml_get(node));
+         temp->gfx_comm = gl_newImage(str);
 
+         /* Load the target graphic. */
          xmlr_attr(node,"target",stmp);
          if (stmp != NULL) {
             snprintf( str, strlen(stmp)+
@@ -487,20 +494,21 @@ void ships_free()
    int i;
    for (i = 0; i < ship_nstack; i++) {
       /* free stored strings */
-      if ((ship_stack+i)->name) free(ship_stack[i].name);
-      if ((ship_stack+i)->description) free(ship_stack[i].description);
-      if ((ship_stack+i)->gui) free(ship_stack[i].gui);
-      if ((ship_stack+i)->fabricator) free(ship_stack[i].fabricator);
+      if (ship_stack[i].name) free(ship_stack[i].name);
+      if (ship_stack[i].description) free(ship_stack[i].description);
+      if (ship_stack[i].gui) free(ship_stack[i].gui);
+      if (ship_stack[i].fabricator) free(ship_stack[i].fabricator);
 
-      so=(ship_stack+i)->outfit;
+      so = ship_stack[i].outfit;
       while (so) { /* free the outfits */
          sot = so;
          so = so->next;
          free(sot);
       }
 
-      gl_freeTexture((ship_stack+i)->gfx_space);
-      gl_freeTexture((ship_stack+i)->gfx_target);
+      gl_freeTexture(ship_stack[i].gfx_space);
+      gl_freeTexture(ship_stack[i].gfx_comm);
+      gl_freeTexture(ship_stack[i].gfx_target);
    }
    free(ship_stack);
    ship_stack = NULL;
