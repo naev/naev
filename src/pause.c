@@ -2,6 +2,16 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file pause.c
+ *
+ * @brief Handles pausing and resuming the game.
+ *
+ * Main trick to pausing/unpausing is to allow things based on time to
+ * behavie properly when the toolkit opens a window.
+ *
+ * @todo Should probably be eliminated by making everything use the dt system.
+ */
 
 
 #include "pause.h"
@@ -9,13 +19,7 @@
 #include "pilot.h"
 
 
-/*
- * main trick to pausing/unpausing is to allow things based on time to
- * behavie properly when the toolkit opens a window
- */
-
-
-int paused = 0; /* is paused? */
+int paused = 0; /**< is paused? */
 
 
 /* from pilot.c */
