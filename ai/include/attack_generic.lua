@@ -69,10 +69,13 @@ end
 --]]
 function atk_g_ranged( target, dist )
    dir = ai.face(target) -- Normal face the target
-   secondary, special, ammo = ai.secondary("Launcher")
+   secondary, special, ammo = ai.secondary("ranged")
+
+   -- Always use fighter bay
+   if secondary == "" then
 
    -- Shoot missiles if in range
-   if secondary == "Launcher" and
+   elseif secondary == "Launcher" and
          dist < ai.getweaprange(1) then
 
       -- More lenient with aiming
@@ -104,7 +107,7 @@ end
 -- Melees the target
 --]]
 function atk_g_melee( target, dist )
-   secondary, special = ai.secondary("Beam Weapon")
+   secondary, special = ai.secondary("melee")
    dir = ai.aim(target) -- We aim instead of face
 
    -- Fire non-smart secondary weapons

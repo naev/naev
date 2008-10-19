@@ -32,7 +32,7 @@ function atk_b ()
 	dist = ai.dist( ai.pos(target) ) -- get distance
 
    -- Get bombing tool
-   secondary, special = ai.secondary("Launcher")
+   secondary, special = ai.secondary("ranged")
    if secondary ~= "Launcher" or special == "Dumb" then -- No launcher, must melee
       range = ai.getweaprange()
 

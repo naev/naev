@@ -1467,30 +1467,52 @@ static int ai_settarget( lua_State *L )
 }
 
 
+static int outfit_isMelee( Pilot *p, PilotOutfit *o )
+{
+   (void) p;
+   if (outfit_isBolt(o->outfit) || outfit_isBeam(o->outfit))
+      return 1;
+   return 0;
+}
+static int outfit_isRanged( Pilot *p, PilotOutfit *o )
+{
+   if (outfit_isFighterBay(o->outfit) || outfit_isLauncher(o->outfit)) {
+      /* Must have ammo. */
+      if (pilot_getAmmo( p, o->outfit ) <= 0)
+         return 0;
+      return 1;
+   }
+   return 0;
+}
 /*
  * sets the secondary weapon, biased towards launchers
  */
 static int ai_secondary( lua_State *L )
 {
    PilotOutfit *co, *po;
-   int i;
-   char *type;
+   int i, melee;
+   char *str;
    const char *otype;
 
    po = NULL;
 
-   /* Search for a type */
-   type = NULL;
-   if (lua_isstring(L,1))
-      type = (char*) lua_tostring(L,1);
+   /* Parse the parameters. */
+   if (lua_isstring(L,1)) {
+      str = (char*) lua_tostring(L, 1);
+      if (strcmp(str, "melee")==0)
+         melee = 1;
+      else if (strcmp(str, "ranged")==0)
+         melee = 0;
+      else NLUA_INVALID_PARAMETER();
+   }
+   else NLUA_INVALID_PARAMETER();
 
    /* Pilot has secondary selected - use that */
    if (cur_pilot->secondary != NULL) {
       co = cur_pilot->secondary;
-      otype = outfit_getTypeBroad(co->outfit);
-
-      /* If we aren't looking for a type or if it matches what we want. */
-      if ((type==NULL) || (strcmp(otype,type)==0))
+      if (melee && outfit_isMelee(cur_pilot,co))
+         po = co;
+      else if (!melee && outfit_isRanged(cur_pilot,co))
          po = co;
    }
 
@@ -1507,38 +1529,14 @@ static int ai_secondary( lua_State *L )
                outfit_isAmmo(co->outfit))
             continue;
 
-         /* Must have ammo. */
-         if (outfit_isLauncher(co->outfit) && pilot_getAmmo(cur_pilot,co->outfit)==0)
-            continue;
-
-
-         /* Searching for type */
-         if (type != NULL) {
-            otype = outfit_getTypeBroad(co->outfit);
-            if (strcmp(otype,type)==0) {
-               po = co;
-               break;
-            }
-
-            /* We'll grab the first weapon in case we don't find what we want. */
-            if ((po==NULL) && (outfit_isWeapon(co->outfit) ||
-                  outfit_isLauncher(co->outfit)))
-               po = co;
+         /* Get the first match. */
+         if (melee && outfit_isMelee(cur_pilot,co)) {
+            po = co;
+            break;
          }
-
-         /* Just grabbing best weapon */
-         else {
-            /* Grab first weapon or launcher it finds. */
-            if ((po==NULL) && (outfit_isBolt(co->outfit) ||
-                  outfit_isBeam(co->outfit) ||
-                  outfit_isLauncher(co->outfit)))
-               po = co;
-
-            /* Grab launcher over weapon by default. */
-            else if ((po!=NULL) && (outfit_isBolt(po->outfit) ||
-                     outfit_isBeam(po->outfit)) &&
-                  outfit_isLauncher(co->outfit))
-               po = co;
+         else if (!melee && outfit_isRanged(cur_pilot,co)) {
+            po = co;
+            break;
          }
       }
    }
