@@ -1107,7 +1107,7 @@ void player_renderGUI (void)
       /* Launcher. */
       if (player->ammo != NULL) {
          /* use the ammunition's name */
-         i = gl_printWidth( f, "%s", outfit_ammo(player->secondary->outfit));
+         i = gl_printWidth( f, "%s", outfit_ammo(player->secondary->outfit)->name);
          if (i > gui.weapon.w) /* font is too big */
             f = &gl_smallFont;
 
@@ -1115,7 +1115,7 @@ void player_renderGUI (void)
          gl_printMid( f, (int)gui.weapon.w,
                gui.weapon.x, gui.weapon.y - 5,
                (player->ammo) ? c : &cGrey, "%s",
-               outfit_ammo(player->secondary->outfit) );
+               outfit_ammo(player->secondary->outfit)->name );
 
          /* Print ammo left underneath. */
          gl_printMid( &gl_smallFont, (int)gui.weapon.w,
