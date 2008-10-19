@@ -1138,6 +1138,8 @@ int outfit_load (void)
          outfit_parse( &outfit_stack[outfit_nstack-1], node );               
       }
    } while (xml_nextNode(node));
+   /* Shrink back to minimum - shouldn't change ever. */
+   outfit_stack = realloc(outfit_stack, sizeof(Outfit) * outfit_nstack);
 
    /* Second pass, sets up ammunition relationships. */
    for (i=0; i<outfit_nstack; i++) {
