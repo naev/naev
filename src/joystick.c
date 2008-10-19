@@ -52,7 +52,7 @@ int joystick_get( char* namjoystick )
  */
 int joystick_use( int indjoystick )
 {
-   if (indjoystick < 0 || indjoystick >= SDL_NumJoysticks()) {
+   if ((indjoystick < 0) || (indjoystick >= SDL_NumJoysticks())) {
       WARN("Joystick of index number %d does not existing, switching to default 0",
             indjoystick);
       indjoystick = 0;
@@ -62,12 +62,12 @@ int joystick_use( int indjoystick )
       SDL_JoystickClose(joystick);
 
    /* start using joystick */
-   LOG("Using joystick %d", indjoystick);
    joystick = SDL_JoystickOpen(indjoystick);
    if (joystick==NULL) {
       WARN("Error opening joystick %d [%s]", indjoystick, SDL_JoystickName(indjoystick));
       return -1;
    }
+   LOG("Using joystick %d - %s", indjoystick, SDL_JoystickName(indjoystick));
    DEBUG("  with %d axes, %d buttons, %d balls and %d hats",
          SDL_JoystickNumAxes(joystick), SDL_JoystickNumButtons(joystick),
          SDL_JoystickNumBalls(joystick), SDL_JoystickNumHats(joystick));
@@ -93,12 +93,11 @@ int joystick_init (void)
       return -1;
    }
 
-
    /* figure out how many joysticks there are */
    numjoysticks = SDL_NumJoysticks();
-   LOG("%d joystick%s detected", numjoysticks, (numjoysticks==1)?"":"s" );
-   for ( i=0; i < numjoysticks; i++ )
-      LOG("  %d. %s", i, SDL_JoystickName(i));
+   DEBUG("%d joystick%s detected", numjoysticks, (numjoysticks==1)?"":"s" );
+   for (i=0; i < numjoysticks; i++)
+      DEBUG("  %d. %s", i, SDL_JoystickName(i));
 
    /* enables joystick events */
    SDL_JoystickEventState(SDL_ENABLE);
