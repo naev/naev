@@ -20,6 +20,9 @@
 #define OUTFIT_PROP_WEAP_SECONDARY  (1<<0) /**< Is a secondary weapon? */
 
 
+struct Outfit_;
+
+
 /**
  * @enum OutfitType
  *
@@ -121,8 +124,9 @@ typedef struct OutfitBeamData_ {
  * The properties of the weapon are highly dependent on the ammunition.
  */
 typedef struct OutfitLauncherData_ {
-   unsigned int delay; /**< delay between shots */
-   char *ammo; /**< the ammo to use */
+   unsigned int delay; /**< Delay between shots. */
+   char *ammo_name; /**< Name of the ammo to use. */
+   struct Outfit_ *ammo; /**< Ammo to use. */
 } OutfitLauncherData;
 
 /**
@@ -194,7 +198,8 @@ typedef struct OutfitAfterburnerData_ {
  * @brief Represents a fighter bay.
  */
 typedef struct OutfitFighterBayData_ {
-   char *ammo; /**< Ships to use as ammo. */
+   char *ammo_name; /**< Name fo the ships to use as ammo. */
+   struct Outfit_ *ammo; /**< Ships to use as ammo. */
    double delay; /**< Delay between launches. */
 } OutfitFighterBayData;
 
@@ -304,7 +309,7 @@ int outfit_spfx( const Outfit* o );
 double outfit_damage( const Outfit* o );
 DamageType outfit_damageType( const Outfit* o );
 int outfit_delay( const Outfit* o );
-char* outfit_ammo( const Outfit* o );
+Outfit* outfit_ammo( const Outfit* o );
 double outfit_energy( const Outfit* o );
 double outfit_range( const Outfit* o );
 double outfit_speed( const Outfit* o );

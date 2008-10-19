@@ -706,7 +706,7 @@ void pilot_setSecondary( Pilot* p, const char* secondary )
 void pilot_setAmmo( Pilot* p )
 {
    int i;
-   char *name;
+   Outfit *ammo;
 
    /* Weapon must use ammo. */
    if ((p->secondary == NULL) || (outfit_ammo(p->secondary->outfit)==NULL)) {
@@ -715,9 +715,9 @@ void pilot_setAmmo( Pilot* p )
    }
 
    /* find the ammo and set it */
-   name = outfit_ammo(p->secondary->outfit);
+   ammo = outfit_ammo(p->secondary->outfit);
    for (i=0; i<p->noutfits; i++)
-      if (strcmp(p->outfits[i].outfit->name,name)==0) {
+      if (p->outfits[i].outfit == ammo) {
          p->ammo = &p->outfits[i];
          return;
       }
@@ -739,16 +739,16 @@ void pilot_setAmmo( Pilot* p )
 int pilot_getAmmo( Pilot* p, Outfit* o )
 {
    int i;
-   char *name;
+   Outfit *ammo;
 
    /* Must be a launcher. */
    if (!outfit_isLauncher(o))
       return 0;
 
    /* Try to find the ammo. */
-   name = o->u.lau.ammo;
+   ammo = o->u.lau.ammo;
    for (i=0; i<p->noutfits; i++)
-      if (strcmp(p->outfits[i].outfit->name,name)==0)
+      if (p->outfits[i].outfit == ammo)
          return p->outfits[i].quantity;
 
    /* Assume none. */
@@ -801,7 +801,7 @@ int pilot_dock( Pilot *p, Pilot *target )
    /* Check to see if target has an available bay. */
    for (i=0; i<target->noutfits; i++) {
       if (outfit_isFighterBay(target->outfits[i].outfit)) {
-         o = outfit_get(outfit_ammo(target->outfits[i].outfit));
+         o = outfit_ammo(target->outfits[i].outfit);
          if (outfit_isFighter(o) &&
                (strcmp(p->ship->name,o->u.fig.ship)==0))
             break;

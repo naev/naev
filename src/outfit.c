@@ -36,6 +36,9 @@
 #define OUTFIT_GFX   "gfx/outfit/" /**< Path to outfit graphics. */
 
 
+#define CHUNK_SIZE            64 /**< Size to reallocate by. */
+
+
 /*
  * the stack
  */
@@ -51,7 +54,7 @@ static DamageType outfit_strToDamageType( char *buf );
 static OutfitType outfit_strToOutfitType( char *buf );
 /* parsing */
 static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node );
-static Outfit* outfit_parse( const xmlNodePtr parent );
+static int outfit_parse( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent );
@@ -220,7 +223,6 @@ void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
 
 
 /**
- * @fn int outfit_isWeapon( const Outfit* o )
  * @brief Checks if outfit is a fixed mounted weapon.
  *    @param o Outfit to check.
  *    @return 1 if o is a weapon (beam/bolt).
@@ -231,7 +233,6 @@ int outfit_isWeapon( const Outfit* o )
          (o->type==OUTFIT_TYPE_BEAM) );
 }
 /**
- * @fn int outfit_isBolt( const Outfit* o )
  * @brief Checks if outfit is bolt type weapon.
  *    @param o Outfit to check.
  *    @return 1 if o is a bolt type weapon.
@@ -242,7 +243,6 @@ int outfit_isBolt( const Outfit* o )
          (o->type==OUTFIT_TYPE_TURRET_BOLT) );
 }
 /**
- * @fn int outfit_isBeam( const Outfit* o )
  * @brief Checks if outfit is a beam type weapon.
  *    @param o Outfit to check.
  *    @return 1 if o is a beam type weapon.
@@ -253,7 +253,6 @@ int outfit_isBeam( const Outfit* o )
          (o->type==OUTFIT_TYPE_TURRET_BEAM) );
 }
 /**
- * @fn int outfit_isLauncher( const Outfit* o )
  * @brief Checks if outfit is a weapon launcher.
  *    @param o Outfit to check.
  *    @return 1 if o is a weapon launcher.
@@ -267,7 +266,6 @@ int outfit_isLauncher( const Outfit* o )
          (o->type==OUTFIT_TYPE_MISSILE_SWARM_SMART) );
 }
 /**
- * @fn int outfit_isAmmo( const Outfit* o )
  * @brief Checks if outfit is ammo for a launcher.
  *    @param o Outfit to check.
  *    @return 1 if o is ammo.
@@ -281,7 +279,6 @@ int outfit_isAmmo( const Outfit* o )
          (o->type==OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO) );
 }
 /**
- * @fn int outfit_isSeeker( const Outfit* o )
  * @brief Checks if outfit is a seeking weapon.
  *    @param o Outfit to check.
  *    @return 1 if o is a seeking weapon.
@@ -296,7 +293,6 @@ int outfit_isSeeker( const Outfit* o )
    return 0;
 }
 /**
- * @fn int outfit_isTurret( const Outfit* o )
  * @brief Checks if outfit is a turret class weapon.
  *    @param o Outfit to check.
  *    @return 1 if o is a turret class weapon.
@@ -307,7 +303,6 @@ int outfit_isTurret( const Outfit* o )
          (o->type==OUTFIT_TYPE_TURRET_BEAM) );
 }
 /**
- * @fn int outfit_isMod( const Outfit* o )
  * @brief Checks if outfit is a ship modification.
  *    @param o Outfit to check.
  *    @return 1 if o is a ship modification.
@@ -317,7 +312,6 @@ int outfit_isMod( const Outfit* o )
    return (o->type==OUTFIT_TYPE_MODIFCATION);
 }
 /**
- * @fn int outfit_isAfterburner( const Outfit* o )
  * @brief Checks if outfit is an afterburner.
  *    @param o Outfit to check.
  *    @return 1 if o is an afterburner.
@@ -327,7 +321,6 @@ int outfit_isAfterburner( const Outfit* o )
    return (o->type==OUTFIT_TYPE_AFTERBURNER);
 }
 /**
- * @fn int outfit_isJammer( const Outfit* o )
  * @brief Checks if outfit is a missile jammer.
  *    @param o Outfit to check.
  *    @return 1 if o is a jammer.
@@ -337,7 +330,6 @@ int outfit_isJammer( const Outfit* o )
    return (o->type==OUTFIT_TYPE_JAMMER);
 }
 /**
- * @fn int outfit_isFighterBay( const Outfit* o )
  * @brief Checks if outfit is a fighter bay.
  *    @param o Outfit to check.
  *    @return 1 if o is a jammer.
@@ -347,7 +339,6 @@ int outfit_isFighterBay( const Outfit* o )
    return (o->type==OUTFIT_TYPE_FIGHTER_BAY);
 }
 /**
- * @fn int outfit_isFighter( const Outfit* o )
  * @brief Checks if outfit is a fighter.
  *    @param o Outfit to check.
  *    @return 1 if o is a jammer.
@@ -357,7 +348,6 @@ int outfit_isFighter( const Outfit* o )
    return (o->type==OUTFIT_TYPE_FIGHTER);
 }
 /**
- * @fn int outfit_isMap( const Outfit* o )
  * @brief Checks if outfit is a space map.
  *    @param o Outfit to check.
  *    @return 1 if o is a map.
@@ -369,7 +359,6 @@ int outfit_isMap( const Outfit* o )
 
 
 /**
- * @fn glTexture* outfit_gfx( const Outfit* o )
  * @brief Gets the outfit's graphic effect.
  *    @param o Outfit to get information from.
  */
@@ -381,7 +370,6 @@ glTexture* outfit_gfx( const Outfit* o )
    return NULL;
 }
 /**
- * @fn glTexture* outfit_spfx( const Outfit* o )
  * @brief Gets the outfit's sound effect.
  *    @param o Outfit to get information from.
  */
@@ -393,7 +381,6 @@ int outfit_spfx( const Outfit* o )
    return -1;
 }
 /**
- * @fn glTexture* outfit_damage( const Outfit* o )
  * @brief Gets the outfit's damage.
  *    @param o Outfit to get information from.
  */
@@ -405,7 +392,6 @@ double outfit_damage( const Outfit* o )
    return -1.;
 }
 /**
- * @fn glTexture* outfit_damageType( const Outfit* o )
  * @brief Gets the outfit's damage type.
  *    @param o Outfit to get information from.
  */
@@ -430,18 +416,16 @@ int outfit_delay( const Outfit* o )
    return -1;
 }
 /**
- * @fn glTexture* outfit_ammo( const Outfit* o )
  * @brief Gets the outfit's ammo.
  *    @param o Outfit to get information from.
  */
-char* outfit_ammo( const Outfit* o )
+Outfit* outfit_ammo( const Outfit* o )
 {
    if (outfit_isLauncher(o)) return o->u.lau.ammo;
    else if (outfit_isFighterBay(o)) return o->u.bay.ammo;
    return NULL;
 }
 /**
- * @fn glTexture* outfit_energy( const Outfit* o )
  * @brief Gets the outfit's energy usage.
  *    @param o Outfit to get information from.
  */
@@ -453,7 +437,6 @@ double outfit_energy( const Outfit* o )
    return -1.;
 }
 /**
- * @fn glTexture* outfit_range( const Outfit* o )
  * @brief Gets the outfit's range.
  *    @param o Outfit to get information from.
  */
@@ -785,11 +768,11 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    node  = parent->xmlChildrenNode;
    do { /* load all the data */
       xmlr_int(node,"delay",temp->u.lau.delay);
-      xmlr_strd(node,"ammo",temp->u.lau.ammo);
+      xmlr_strd(node,"ammo",temp->u.lau.ammo_name);
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s)      if (o) WARN("Outfit '%s' missing '"s"' element", temp->name)
-   MELEMENT(temp->u.lau.ammo==NULL,"ammo");
+   MELEMENT(temp->u.lau.ammo_name==NULL,"ammo");
    MELEMENT(temp->u.lau.delay==0,"delay");
 #undef MELEMENT
 }
@@ -935,13 +918,13 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
 
    do {
       xmlr_int(node,"delay",temp->u.bay.delay);
-      xmlr_strd(node,"ammo",temp->u.bay.ammo);
+      xmlr_strd(node,"ammo",temp->u.bay.ammo_name);
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->u.bay.delay==0,"delay");
-   MELEMENT(temp->u.bay.ammo==NULL,"ammo");
+   MELEMENT(temp->u.bay.ammo_name==NULL,"ammo");
 #undef MELEMENT
 }
 
@@ -1021,19 +1004,20 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 
 
 /**
- * @fn static Outfit* outfit_parse( const xmlNodePtr parent )
- *
  * @brief Parses and returns Outfit from parent node.
  *
+ *    @param temp Outfit to load into.
  *    @param parent Parent node to parse outfit from.
- *    @return A newly allocated outfit set with data from parent or NULL on error.
+ *    @return 0 on success.
  */
-static Outfit* outfit_parse( const xmlNodePtr parent )
+static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
 {
-   Outfit* temp = CALLOC_ONE(Outfit);
    xmlNodePtr cur, node;
    char *prop;
    char str[PATH_MAX] = "\0";
+
+   /* Clear data. */
+   memset( temp, 0, sizeof(Outfit) );
 
    temp->name = xml_nodeProp(parent,"name"); /* already mallocs */
    if (temp->name == NULL) WARN("Outfit in "OUTFIT_DATA" has invalid or no name");
@@ -1109,7 +1093,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->description==NULL,"description");
 #undef MELEMENT
 
-   return temp;
+   return 0;
 }
 
 
@@ -1122,10 +1106,9 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
  */
 int outfit_load (void)
 {
+   int i, mem;
    uint32_t bufsize;
    char *buf = pack_readfile( DATA, OUTFIT_DATA, &bufsize );
-
-   Outfit *temp;
 
    xmlNodePtr node;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );
@@ -1142,15 +1125,27 @@ int outfit_load (void)
       return -1;
    }        
 
+   /* First pass, loads up ammunition. */
+   mem = 0;
    do {
       if (xml_isNode(node,XML_OUTFIT_TAG)) {
 
-         temp = outfit_parse(node);               
-         outfit_stack = realloc(outfit_stack, sizeof(Outfit)*(++outfit_nstack));
-         memmove(outfit_stack+outfit_nstack-1, temp, sizeof(Outfit));
-         free(temp);
+         outfit_nstack++;
+         if (outfit_nstack > mem) {
+            mem += CHUNK_SIZE;
+            outfit_stack = realloc(outfit_stack, sizeof(Outfit)*mem);
+         }
+         outfit_parse( &outfit_stack[outfit_nstack-1], node );               
       }
    } while (xml_nextNode(node));
+
+   /* Second pass, sets up ammunition relationships. */
+   for (i=0; i<outfit_nstack; i++) {
+      if (outfit_isLauncher(&outfit_stack[i]))
+         outfit_stack[i].u.lau.ammo = outfit_get( outfit_stack[i].u.lau.ammo_name );
+      else if (outfit_isFighterBay(&outfit_stack[i]))
+         outfit_stack[i].u.bay.ammo = outfit_get( outfit_stack[i].u.bay.ammo_name );
+   }
 
    xmlFreeDoc(doc);
    free(buf);
@@ -1178,10 +1173,10 @@ void outfit_free (void)
          gl_freeTexture(outfit_gfx(&outfit_stack[i]));
 
       /* Type specific. */
-      if (outfit_isLauncher(o) && o->u.lau.ammo)
-         free(o->u.lau.ammo);
-      if (outfit_isFighterBay(o) && o->u.bay.ammo)
-         free(o->u.bay.ammo);
+      if (outfit_isLauncher(o) && o->u.lau.ammo_name)
+         free(o->u.lau.ammo_name);
+      if (outfit_isFighterBay(o) && o->u.bay.ammo_name)
+         free(o->u.bay.ammo_name);
       if (outfit_isFighter(o) && o->u.fig.ship)
          free(o->u.fig.ship);
 
