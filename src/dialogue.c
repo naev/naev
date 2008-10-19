@@ -332,14 +332,14 @@ static void dialogue_inputCancel( unsigned int wid, char* str )
  */
 static int toolkit_loop (void)
 {
-   SDL_Event event, quit = { .type = SDL_QUIT };
+   SDL_Event event;
 
    loop_done = 0;
    while (!loop_done && toolkit) {
       while (SDL_PollEvent(&event)) { /* event loop */
          if (event.type == SDL_QUIT) { /* pass quit event to main engine */
             loop_done = 1;
-            SDL_PushEvent(&quit);
+            SDL_PushEvent(&event);
             return -1;
          }
 
