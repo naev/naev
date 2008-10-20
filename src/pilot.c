@@ -164,15 +164,21 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
    unsigned int tp;
    int i;
    double d, td;
-   for (tp=0,d=0.,i=0; i<pilot_nstack; i++)
-      if (areEnemies(p->faction, pilot_stack[i]->faction) ||
-            ((pilot_stack[i]->id == PLAYER_ID) && (pilot_isFlag(p,PILOT_HOSTILE)))) {
+   for (tp=0,d=0.,i=0; i<pilot_nstack; i++) {
+      /* Must not be bribed. */
+      if ((pilot_stack[i]->id == PLAYER_ID) && pilot_isFlag(p,PILOT_BRIBED))
+         continue;
+
+      if ((areEnemies(p->faction, pilot_stack[i]->faction) || /* Enemy faction. */
+            ((pilot_stack[i]->id == PLAYER_ID) && 
+               pilot_isFlag(p,PILOT_HOSTILE)))) { /* Hostile to player. */
          td = vect_dist(&pilot_stack[i]->solid->pos, &p->solid->pos);
          if (!pilot_isDisabled(pilot_stack[i]) && ((!tp) || (td < d))) {
             d = td;
             tp = pilot_stack[i]->id;
          }
       }
+   }
    return tp;
 }
 

@@ -635,14 +635,15 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
 
    /* inform the ai it has been attacked, useless if player */
    if (!pilot_isPlayer(p)) {
-      if ((player != NULL) &&
+      if ((player != NULL) && (w->parent == player->id) &&
             ((player->target == p->id) || (RNGF() < 0.33))) { /* 33% chance */
          parent = pilot_get(w->parent);
          if ((parent->faction == FACTION_PLAYER) &&
                (!pilot_isFlag(p,PILOT_HOSTILE) || (RNGF() < 0.5))) { /* 50% chance */
             faction_modPlayer( p->faction, -1. ); /* slowly lower faction */
-            pilot_setFlag( p, PILOT_HOSTILE);
          }
+         pilot_setFlag( p, PILOT_HOSTILE );
+         pilot_rmFlag( p, PILOT_BRIBED );
          ai_attacked( p, w->parent );
       }
       spfx_add( outfit_spfx(w->outfit), pos->x, pos->y,
@@ -680,14 +681,15 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
 
    /* inform the ai it has been attacked, useless if player */
    if (!pilot_isPlayer(p)) {
-      if ((player != NULL) &&
+      if ((player != NULL) && (w->parent == player->id) &&
             ((player->target == p->id) || (RNGF() < 0.30*dt))) { /* 30% chance per second */
          parent = pilot_get(w->parent);
          if ((parent->faction == FACTION_PLAYER) &&
                (!pilot_isFlag(p,PILOT_HOSTILE) || (RNGF() < 0.5))) { /* 50% chance */
             faction_modPlayer( p->faction, -1. ); /* slowly lower faction */
-            pilot_setFlag( p, PILOT_HOSTILE);
          }
+         pilot_rmFlag( p, PILOT_BRIBED );
+         pilot_setFlag( p, PILOT_HOSTILE);
          ai_attacked( p, w->parent );
       }
 

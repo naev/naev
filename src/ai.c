@@ -158,6 +158,7 @@ static int ai_getpos( lua_State *L ); /* getpos(number) */
 static int ai_minbrakedist( lua_State *L ); /* number minbrakedist() */
 static int ai_cargofree( lua_State *L ); /* number cargofree() */
 static int ai_shipclass( lua_State *L ); /* string shipclass() */
+static int ai_isbribed( lua_State *L ); /* bool isbribed( number ) */
 
 /* boolean expressions */
 static int ai_exists( lua_State *L ); /* boolean exists() */
@@ -238,6 +239,7 @@ static const luaL_reg ai_methods[] = {
    { "minbrakedist", ai_minbrakedist },
    { "cargofree", ai_cargofree },
    { "shipclass", ai_shipclass },
+   { "isbribed", ai_isbribed },
    /* movement */
    { "nearestplanet", ai_getnearestplanet },
    { "rndplanet", ai_getrndplanet },
@@ -979,9 +981,28 @@ static int ai_cargofree( lua_State *L )
 }
 
 
+/*
+ * gets the pilot's ship class.
+ */
 static int ai_shipclass( lua_State *L )
 {
    lua_pushstring(L, ship_class(cur_pilot->ship));
+   return 1;
+}
+
+
+/*
+ * Checks to see if target has bribed pilot.
+ */
+static int ai_isbribed( lua_State *L )
+{
+   unsigned int target;
+
+   if (lua_isnumber(L,1))
+      target = (unsigned int) lua_tonumber(L,1);
+   else NLUA_INVALID_PARAMETER();
+
+   lua_pushboolean(L, (target == PLAYER_ID) && pilot_isFlag(cur_pilot,PILOT_BRIBED));
    return 1;
 }
 

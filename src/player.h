@@ -26,11 +26,9 @@
 #define PLAYER_CREATING    (1<<16)  /**< player is being created */
 #define PLAYER_AUTONAV     (1<<17)  /**< player has autonavigation on. */
 /* flag functions */
-#define player_isFlag(f)   (player_flags & f) /**< Checks for a player flag. */
-#define player_setFlag(f)  \
-if (!player_isFlag(f)) player_flags |= f /**< Sets a player flag. */
-#define player_rmFlag(f)   \
-if (player_isFlag(f)) player_flags ^= f /**< Removes a player flag. */
+#define player_isFlag(f)   (player_flags & (f)) /**< Checks for a player flag. */
+#define player_setFlag(f)  (player_flags |= (f)) /**< Sets a player flag. */ 
+#define player_rmFlag(f)   (player_flags &= ~(f)) /**< Removes a player flag. */
 
 
 /*

@@ -33,6 +33,13 @@ end
 --]]
 function atk_g ()
 	target = ai.target()
+
+   -- Check if is bribed by target
+   if ai.isbribed(target) then
+      ai.poptask()
+      return
+   end
+
    ai.hostile(target) -- Mark as hostile
 
 	-- make sure pilot exists

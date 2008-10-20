@@ -15,7 +15,9 @@
 #include "naev.h"
 #include "log.h"
 #include "toolkit.h"
+#include "dialogue.h"
 #include "pilot.h"
+#include "rng.h"
 
 
 #define BUTTON_WIDTH    80 /**< Button width. */
@@ -28,6 +30,7 @@ static Pilot *comm_pilot = NULL; /**< Pilot currently talking to. */
 /*
  * Prototypes.
  */
+static void comm_bribe( unsigned int wid, char *str );
 
 
 /**
@@ -92,13 +95,44 @@ int comm_open( unsigned int pilot )
          "btnClose", "Close", window_close );
    window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnGreet", "Greet", NULL );
-   if (faction_getPlayer( comm_pilot->faction ) < 0)
+   if ((faction_getPlayer( comm_pilot->faction ) < 0) ||
+         pilot_isFlag(comm_pilot, PILOT_HOSTILE))
       window_addButton( wid, -20, 20 + 2*BUTTON_HEIGHT + 40,
-            BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", "Bribe", NULL );
+            BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", "Bribe", comm_bribe );
    else
       window_addButton( wid, -20, 20 + 2*BUTTON_HEIGHT + 40,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnRequest", "Request...", NULL );
 
    return 0;
+}
+
+
+/**
+ * @brief Tries to bribe the pilot.
+ *
+ *    @param wid ID of window calling the function.
+ *    @param str Unused.
+ */
+static void comm_bribe( unsigned int wid, char *str )
+{
+   (void) str;
+   int answer;
+   int price;
+
+   price = (int) sqrt( comm_pilot->solid->mass ) * (300.*RNGF() + 850.);
+
+   answer = dialogue_YesNo( "Bribe Pilot", "\"I'm gonna need at least %d credits to not leave you as a hunk of floating debris.\"\n\nPay %d credits?", price, price );
+
+   if (player->credits < price) {
+      dialogue_msg("Bribe Pilot", "You don't have enough credits for the bribery.");
+   }
+   else {
+      player->credits -= price;
+      dialogue_msg("Bribe Pilot", "\"Pleasure to do business with you.\"");
+      pilot_setFlag( comm_pilot, PILOT_BRIBED );
+      /* Reopen window. */
+      window_destroy( wid );
+      comm_open( comm_pilot->id );
+   }
 }
 

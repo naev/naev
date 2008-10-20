@@ -888,6 +888,7 @@ void player_render (void)
          player->target = PLAYER_ID; /* no more pilot_target */
       else { /* still is a pilot_target */
          if (pilot_isDisabled(p)) c = &cInert;
+         else if (pilot_isFlag(p,PILOT_BRIBED)) c = &cNeutral;
          else if (pilot_isFlag(p,PILOT_HOSTILE)) c = &cHostile;
          else c = faction_getColour(p->faction);
 
@@ -1309,6 +1310,7 @@ static void gui_renderPilot( const Pilot* p )
       /* colors */
       if (p->id == player->target) col = &cRadar_targ;
       else if (pilot_isDisabled(p)) col = &cInert;
+      else if (pilot_isFlag(p,PILOT_BRIBED)) col = &cNeutral;
       else if (pilot_isFlag(p,PILOT_HOSTILE)) col = &cHostile;
       else col = faction_getColour(p->faction);
       COLOUR(*col);
@@ -2199,15 +2201,21 @@ void player_targetHostile (void)
 
    tp=PLAYER_ID;
    d=0;
-   for (i=0; i<pilot_nstack; i++)
+   for (i=0; i<pilot_nstack; i++) {
+      /* Don't get if is bribed. */
+      if (pilot_isFlag(pilot_stack[i],PILOT_BRIBED))
+         continue;
+   
+      /* Normal unbribed check. */
       if (pilot_isFlag(pilot_stack[i],PILOT_HOSTILE) ||
-            areEnemies(FACTION_PLAYER,pilot_stack[i]->faction)) {                
+            areEnemies(FACTION_PLAYER,pilot_stack[i]->faction)) {
          td = vect_dist(&pilot_stack[i]->solid->pos, &player->solid->pos);       
          if (!pilot_isDisabled(pilot_stack[i]) && ((tp==PLAYER_ID) || (td < d))) {
             d = td;
             tp = pilot_stack[i]->id;
          }
       }
+   }
 
    if ((tp != PLAYER_ID) && (tp != player->target))
       player_playSound( snd_target, 1 );

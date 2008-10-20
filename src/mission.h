@@ -23,7 +23,7 @@
 /* flag functions */
 #define mis_isFlag(m,f)    ((m)->flags & (f))
 #define mis_setFlag(m,f)   ((m)->flags |= (f))
-#define mis_rmFlag(m,f)    ((m)->flags ^= (f))
+#define mis_rmFlag(m,f)    ((m)->flags &= ~(f))
 /* actual flags */
 #define  MISSION_UNIQUE       1 /**< Unique missions can't be repeated */
 
