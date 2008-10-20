@@ -50,6 +50,7 @@ void vectnull( Vector2d* v );
 double vect_angle( const Vector2d* ref, const Vector2d* v );
 void vect_cadd( Vector2d* v, const double x, const double y );
 void vect_reflect( Vector2d* r, Vector2d* v, Vector2d* n );
+double vect_dot( Vector2d* a, Vector2d* b );
 
 
 /*

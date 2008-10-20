@@ -17,6 +17,12 @@
 /*
  * M I S C
  */
+/**
+ * @brief Gets the difference between two angles.
+ *
+ *    @param ref Reference angle.
+ *    @param a Angle to get distance from ref.
+ */
 double angle_diff( const double ref, double a )
 {
    double d;
@@ -25,6 +31,13 @@ double angle_diff( const double ref, double a )
    d = fmod((a-ref),2*M_PI);
    return (d <= M_PI) ? d : d - 2*M_PI ;
 }
+/**
+ * @brief Limits the speed of an object.
+ *
+ *    @param vel Velocity vector to limit.
+ *    @param speed Maximum speed.
+ *    @param dt Current delta tick.
+ */
 void limit_speed( Vector2d* vel, const double speed, const double dt )
 {
    double vmod;
@@ -40,8 +53,12 @@ void limit_speed( Vector2d* vel, const double speed, const double dt )
  * V E C T O R 2 D
  *
  */
-/*
- * set the vector value using cartesian coordinates
+/**
+ * @brief Set the vector value using cartesian coordinates
+ *
+ *    @param v Vector to set.
+ *    @param x X value for vector.
+ *    @param y Y value for vector.
  */
 void vect_cset( Vector2d* v, const double x, const double y )
 {
@@ -50,16 +67,28 @@ void vect_cset( Vector2d* v, const double x, const double y )
    v->mod = MOD(x,y);
    v->angle = ANGLE(x,y);
 }
-/*
- * creates a minimal vector only valid for blitting and not other operations
+
+
+/**
+ * @brief Creates a minimal vector only valid for blitting and not other operations.
+ *
+ *    @param v Vector to set.
+ *    @param x X value for vector.
+ *    @param y Y value for vector.
  */
 void vect_csetmin( Vector2d* v, const double x, const double y )
 {
    v->x = x;
    v->y = y;
 }
-/*
- * set the vector value using polar coordinates
+
+
+/**
+ * @brief Set the vector value using polar coordinates.
+ *
+ *    @param v Vector to set.
+ *    @param mod Modulus of the vector.
+ *    @param angle Angle of the vector.
  */
 void vect_pset( Vector2d* v, const double mod, const double angle )
 {
@@ -68,8 +97,13 @@ void vect_pset( Vector2d* v, const double mod, const double angle )
    v->x = v->mod*cos(v->angle);
    v->y = v->mod*sin(v->angle);
 }
-/*
- * copies vector src to dest
+
+
+/**
+ * @brief Copies vector src to dest.
+ *
+ *    @param dest Destination vector.
+ *    @param src Vector to copy.
  */
 void vectcpy( Vector2d* dest, const Vector2d* src )
 {
@@ -78,16 +112,25 @@ void vectcpy( Vector2d* dest, const Vector2d* src )
    dest->mod = src->mod;
    dest->angle = src->angle;
 }
-/*
- * makes a vector NULL
+
+
+/**
+ * @brief Sets a vector to NULL.
+ *
+ *    @param v Vector to set to NULL.
  */
 void vectnull( Vector2d* v )
 {
    v->x = v->y = v->mod = v->angle = 0.;
 }
 
-/*
- * get the direction pointed to by two vectors (from ref to v)
+
+/**
+ * @brief Get the direction pointed to by two vectors (from ref to v).
+ *
+ *    @param ref Reference vector.
+ *    @param v Vector to get angle from reference vector.
+ *    @return Angle between ref and v.
  */
 double vect_angle( const Vector2d* ref, const Vector2d* v )
 {
@@ -95,8 +138,12 @@ double vect_angle( const Vector2d* ref, const Vector2d* v )
 }
 
 
-/*
- * adds x and y to the current vector
+/**
+ * @brief Adds x and y to the current vector
+ *
+ *    @param v Vector to add x and y to.
+ *    @param x X value to add to vector.
+ *    @param y Y value to add to vector.
  */
 void vect_cadd( Vector2d* v, const double x, const double y )
 {
@@ -107,20 +154,36 @@ void vect_cadd( Vector2d* v, const double x, const double y )
 }
 
 
-/*
- * Mirrors a vector off another, stores results in vector.
+/**
+ * @brief Mirrors a vector off another, stores results in vector.
+ *
+ *    @param r Resulting vector of the reflection.
+ *    @param v Vector to reflect.
+ *    @param n Normal to reflect off of.
  */
 void vect_reflect( Vector2d* r, Vector2d* v, Vector2d* n )
 {
    double dot;
 
-   dot = (v->x*n->x) + (v->y*n->y);
+   dot = vect_dot( v, n );
    r->x = v->x - ((2. * dot) * n->x);
    r->y = v->y - ((2. * dot) * n->y);
    r->mod = MOD(r->x,r->y);
    r->angle = MOD(r->x,r->y);
 }
 
+
+/**
+ * @brief Vector dot product.
+ *
+ *    @param a Vector 1 for dot product.
+ *    @param b Vector 2 for dot product.
+ *    @return Dot product of vectors.
+ */
+double vect_dot( Vector2d* a, Vector2d* b )
+{
+   return a->x * b->x + a->y * b->y;
+}
 
 /*
  * S O L I D
@@ -175,7 +238,11 @@ static void simple_update (Solid *obj, const double dt)
 }
 #endif
 
-/*
+/**
+ * @fn static void rk4_update (Solid *obj, const double dt)
+ *
+ * @brief Runge-Kutta method of updatting a solid based on it's acceleration.
+ *
  * Runge-Kutta 4 method
  *
  *   d^2 x(t) / d t^2 = a, a = constant (acceleration)
@@ -191,7 +258,7 @@ static void simple_update (Solid *obj, const double dt)
  *
  *   x_{n+1} = x_n + h/6*(6x'_n + 3*h*a, 4*a)
  */
-#define RK4_MIN_H 0.01 /* minimal pass we want */
+#define RK4_MIN_H 0.01 /**< Minimal pass we want. */
 static void rk4_update (Solid *obj, const double dt)
 {
    int i, N; /* for iteration, and pass calcualtion */
@@ -250,8 +317,14 @@ static void rk4_update (Solid *obj, const double dt)
 }
 
 
-/*
- * Initializes a new Solid
+/**
+ * @brief Initializes a new Solid.
+ *
+ *    @param dest Solid to initialize.
+ *    @param mass Mass to set solid to.
+ *    @param dir Solid initial direction.
+ *    @param pos Initial solid position.
+ *    @param vel Initial solid velocity.
  */
 void solid_init( Solid* dest, const double mass, const double dir,
       const Vector2d* pos, const Vector2d* vel )
@@ -274,8 +347,15 @@ void solid_init( Solid* dest, const double mass, const double dir,
    dest->update = rk4_update;
 }
 
-/*
- * Creates a new Solid
+
+/**
+ * @brief Creates a new Solid.
+ *
+ *    @param mass Mass to set solid to.
+ *    @param dir Solid initial direction.
+ *    @param pos Initial solid position.
+ *    @param vel Initial solid velocity.
+ *    @return A newly created solid.
  */
 Solid* solid_create( const double mass, const double dir,
       const Vector2d* pos, const Vector2d* vel )
@@ -286,12 +366,14 @@ Solid* solid_create( const double mass, const double dir,
    return dyn;
 }
 
-/*
- * Frees an existing solid
+
+/**
+ * @brief Frees an existing solid.
+ *
+ *    @param src Solid to free.
  */
 void solid_free( Solid* src )
 {
    free(src);
-   src = NULL;
 }
 
