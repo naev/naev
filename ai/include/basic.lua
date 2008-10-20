@@ -10,6 +10,13 @@
 -- Attempts to land on a planet.
 --]]
 function land ()
+
+   -- Only want to land once, prevents guys from never leaving.
+   if mem.landed then
+      ai.poptask()
+      return
+   end
+
    target = mem.land
    dir = ai.face( target )
    dist = ai.dist( target )
@@ -46,6 +53,7 @@ function landwait ()
 
    -- Check if time is up
    elseif ai.timeup(0) then
+      mem.landed = true -- Mark as landed so they don't spend time forever floating around
       ai.poptask() -- Ready to do whatever we were doing before.
    end
 end
@@ -56,7 +64,8 @@ end
 --]]
 function runaway ()
    target = ai.target()
-   
+  
+   -- Target must exist
    if not ai.exists(target) then
       ai.poptask()
       return
