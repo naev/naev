@@ -1290,7 +1290,9 @@ static int ai_hyperspace( lua_State *L )
 static int ai_relvel( lua_State *L )
 {
    unsigned int id;
+   double dot, mod;
    Pilot *p;
+   Vector2d vv, pv;
 
    NLUA_MIN_ARGS(1);
 
@@ -1303,7 +1305,15 @@ static int ai_relvel( lua_State *L )
       return 0;
    }
 
-   lua_pushnumber(L, vect_dist( &cur_pilot->solid->vel, &p->solid->vel ));
+   /* Get the projection of target on current velocity. */
+   vect_cset( &vv, p->solid->vel.x - cur_pilot->solid->vel.x,
+         p->solid->vel.y - cur_pilot->solid->vel.y );
+   vect_cset( &pv, p->solid->pos.x - cur_pilot->solid->pos.x,
+         p->solid->pos.y - cur_pilot->solid->pos.y );
+   dot = vect_dot( &pv, &vv );
+   mod = MAX(VMOD(pv), 1.); /* Avoid /0. */
+   
+   lua_pushnumber(L, dot / mod );
    return 1;
 }
 

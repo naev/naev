@@ -20,7 +20,7 @@ function atk_g_think ()
       range = ai.getweaprange()
 
       -- Shouldn't switch targets if close
-      if dist > range * atk_changetarget then
+      if dist > 400 and dist > range * atk_changetarget then
          ai.poptask()
          ai.pushtask( 0, "attack", enemy )
       end
