@@ -1344,8 +1344,10 @@ void land_cleanup (void)
    land_visited = 0;
   
    /* Destroy window. */
-   if (land_wid > 0)
+   if (land_wid > 0) {
       window_destroy(land_wid);
+      land_wid = 0;
+   }
 
    /* Clean up possible stray graphic. */
    if (gfx_exterior != NULL) {
