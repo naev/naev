@@ -45,10 +45,10 @@ char* nfile_basePath (void)
    if (naev_base[0] == '\0') {
 #ifdef LINUX
       home = getenv("HOME");
+      snprintf(naev_base,PATH_MAX,"%s/.naev/",home);
 #else
 #error "Needs implementation."
 #endif /* LINUX */
-      snprintf(naev_base,PATH_MAX,"%s/.naev/",home);
    }
    
    return naev_base;
@@ -138,7 +138,7 @@ int nfile_fileExists( const char* path, ... )
  * Paths are relative to base directory.
  *
  *    @param[out] nfiles Returns how many files there are.
- *    @param path Direcotory to read.
+ *    @param path Directory to read.
  */
 char** nfile_readDir( int* nfiles, const char* path )
 {
