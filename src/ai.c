@@ -157,7 +157,8 @@ static int ai_getdistance( lua_State *L ); /* number getdist(Vector2d) */
 static int ai_getpos( lua_State *L ); /* getpos(number) */
 static int ai_minbrakedist( lua_State *L ); /* number minbrakedist() */
 static int ai_cargofree( lua_State *L ); /* number cargofree() */
-static int ai_shipclass( lua_State *L ); /* string shipclass() */
+static int ai_shipclass( lua_State *L ); /* string shipclass( [number] ) */
+static int ai_shipmass( lua_State *L ); /* string shipmass( [number] ) */
 static int ai_isbribed( lua_State *L ); /* bool isbribed( number ) */
 
 /* boolean expressions */
@@ -239,6 +240,7 @@ static const luaL_reg ai_methods[] = {
    { "minbrakedist", ai_minbrakedist },
    { "cargofree", ai_cargofree },
    { "shipclass", ai_shipclass },
+   { "shipmass", ai_shipmass },
    { "isbribed", ai_isbribed },
    /* movement */
    { "nearestplanet", ai_getnearestplanet },
@@ -986,7 +988,47 @@ static int ai_cargofree( lua_State *L )
  */
 static int ai_shipclass( lua_State *L )
 {
-   lua_pushstring(L, ship_class(cur_pilot->ship));
+   Pilot *p;
+
+   if (lua_gettop(L) > 0) {
+      if (lua_isnumber(L,1))
+         p = pilot_get( (unsigned int) lua_tonumber(L,1));
+      else NLUA_INVALID_PARAMETER();
+   }
+   else
+      p = cur_pilot;
+
+   if (p == NULL) {
+      NLUA_DEBUG("Trying to get class of unexistant ship!");
+      return 0;
+   }
+
+   lua_pushstring(L, ship_class(p->ship));
+   return 1;
+}
+
+
+/*
+ * Gets the ship's mass.
+ */
+static int ai_shipmass( lua_State *L )
+{
+   Pilot *p;
+
+   if (lua_gettop(L) > 0) {
+      if (lua_isnumber(L,1))
+         p = pilot_get( (unsigned int) lua_tonumber(L,1));
+      else NLUA_INVALID_PARAMETER();
+   }
+   else
+      p = cur_pilot;
+
+   if (p == NULL) {
+      NLUA_DEBUG("Trying to get class of unexistant ship!");
+      return 0;
+   }
+
+   lua_pushnumber(L, p->solid->mass);
    return 1;
 }
 

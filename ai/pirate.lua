@@ -9,6 +9,7 @@ armour_return = 100
 
 function create ()
    ai.setcredits(ai.shipprice()/1000 , ai.shipprice()/100 )
+   mem.bribe = math.sqrt( ai.shipmass() ) * (300. * rnd.int() + 850.)
    attack_choose()
 end
 

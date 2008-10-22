@@ -142,13 +142,15 @@ int nlua_loadBasic( lua_State* L )
    };
 
 
-   nlua_load(L,luaopen_base); /* open base */
+   nlua_load(L,luaopen_base); /* open base. */
 
    /* replace non-safe functions */
    for (i=0; strcmp(override[i],"END")!=0; i++) {
       lua_pushnil(L);
       lua_setglobal(L, override[i]);
    }
+
+   nlua_load(L,luaopen_math); /* open math. */
 
    /* add our own */
    lua_register(L, "include", nlua_packfileLoader);

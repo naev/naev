@@ -18,6 +18,7 @@
 #include "dialogue.h"
 #include "pilot.h"
 #include "rng.h"
+#include "nlua.h"
 
 
 #define BUTTON_WIDTH    80 /**< Button width. */
@@ -30,7 +31,11 @@ static Pilot *comm_pilot = NULL; /**< Pilot currently talking to. */
 /*
  * Prototypes.
  */
+/* Static. */
 static void comm_bribe( unsigned int wid, char *str );
+static unsigned int comm_getBribeAmount (void);
+/* Extern. */
+void ai_setPilot( Pilot *p );
 
 
 /**
@@ -119,7 +124,13 @@ static void comm_bribe( unsigned int wid, char *str )
    int answer;
    int price;
 
-   price = (int) sqrt( comm_pilot->solid->mass ) * (300.*RNGF() + 850.);
+   price = comm_getBribeAmount();
+
+   /* Unbribeable. */
+   if (price == 0) {
+      dialogue_msg("Bribe Pilot", "\"Money won't save your hide now!\"");
+      return;
+   }
 
    answer = dialogue_YesNo( "Bribe Pilot", "\"I'm gonna need at least %d credits to not leave you as a hunk of floating debris.\"\n\nPay %d credits?", price, price );
 
@@ -134,5 +145,40 @@ static void comm_bribe( unsigned int wid, char *str )
       window_destroy( wid );
       comm_open( comm_pilot->id );
    }
+}
+
+
+/**
+ * @brief Gets the amount the communicating pilot wants as a bribe.
+ *
+ * Note: It's a hack around the AI stuff, probably not too good of an idea.
+ *
+ *    @return Amount pilot wants.
+ */
+static unsigned int comm_getBribeAmount (void)
+{
+   lua_State *L;
+   double bribe;
+
+   /* Set up the state. */
+   ai_setPilot( comm_pilot );
+   L = comm_pilot->ai->L;
+
+   /* Get the bribe amount. */
+   lua_getglobal( L, "mem" );
+   lua_getfield( L, -1, "bribe" );
+
+   /* If not number consider unbribeable. */
+   if (!lua_isnumber(L, -1)) {
+      lua_pop(L, 2);
+      return 0;
+   }
+
+   /* Get amount. */
+   bribe = (unsigned int) lua_tonumber(L, -1);
+
+   /* Clean up. */
+   lua_pop(L, 2);
+   return bribe;
 }
 
