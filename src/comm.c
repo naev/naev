@@ -19,6 +19,7 @@
 #include "pilot.h"
 #include "rng.h"
 #include "nlua.h"
+#include "player.h"
 
 
 #define BUTTON_WIDTH    80 /**< Button width. */
@@ -50,17 +51,31 @@ int comm_open( unsigned int pilot )
    glTexture *logo, *gfx_comm;
    char *name, *stand;
    unsigned int wid;
+   glColour *c;
 
    /* Get the pilot. */
    comm_pilot = pilot_get( pilot );
    if (comm_pilot == NULL)
       return -1;
+  
+   /* Must not be disabled. */
+   if (pilot_isFlag(comm_pilot, PILOT_DISABLED)) {
+      player_message("%s does not respond.", comm_pilot->name);
+   }
 
    /* Get graphics and text. */
    gfx_comm = comm_pilot->ship->gfx_comm;
    logo = faction_logoSmall(comm_pilot->faction);
    name = comm_pilot->name;
-   stand = faction_getStandingBroad(faction_getPlayer( comm_pilot->faction ));
+   /* Get standing colour / text. */
+   if (pilot_isFlag(comm_pilot, PILOT_HOSTILE)) {
+      stand = "Hostile";
+      c = &cHostile;
+   }
+   else {
+      stand = faction_getStandingBroad(faction_getPlayer( comm_pilot->faction ));
+      c = faction_getColour( comm_pilot->faction );
+   }
    w = MAX(gl_printWidth( NULL, name ), gl_printWidth( NULL, stand ));
    y = gl_defFont.h*2 + 15;
    if (logo != NULL) {
@@ -92,16 +107,16 @@ int comm_open( unsigned int pilot )
 
    /* Standing. */
    window_addText( wid, x, -30 - gfx_comm->h - y + gl_defFont.h + 5,
-         gfx_comm->w - x, 20, 0, "txtStanding", NULL,
-         faction_getColour( comm_pilot->faction ), stand );
+         gfx_comm->w - x, 20, 0, "txtStanding", NULL, c, stand );
 
    /* Buttons. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", window_close );
    window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnGreet", "Greet", NULL );
-   if ((faction_getPlayer( comm_pilot->faction ) < 0) ||
-         pilot_isFlag(comm_pilot, PILOT_HOSTILE))
+   if (!pilot_isFlag(comm_pilot, PILOT_BRIBED) && /* Not already bribed. */
+         ((faction_getPlayer( comm_pilot->faction ) < 0) || /* Hostile. */
+            pilot_isFlag(comm_pilot, PILOT_HOSTILE)))
       window_addButton( wid, -20, 20 + 2*BUTTON_HEIGHT + 40,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", "Bribe", comm_bribe );
    else
@@ -134,6 +149,13 @@ static void comm_bribe( unsigned int wid, char *str )
 
    answer = dialogue_YesNo( "Bribe Pilot", "\"I'm gonna need at least %d credits to not leave you as a hunk of floating debris.\"\n\nPay %d credits?", price, price );
 
+   /* Said no. */
+   if (answer == 0) {
+      dialogue_msg("Bribe Pilot", "You decide not to pay.");
+      return;
+   }
+
+   /* Check if has the money. */
    if (player->credits < price) {
       dialogue_msg("Bribe Pilot", "You don't have enough credits for the bribery.");
    }
