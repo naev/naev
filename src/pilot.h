@@ -66,15 +66,15 @@
 #define PILOT_HYPERSPACE   (1<<17) /**< Pilot is in hyperspace. */
 #define PILOT_BOARDED      (1<<18) /**< Pilot has been boarded already. */
 #define PILOT_BRIBED       (1<<19) /**< Pilot has been bribed already. */
-#define PILOT_DISABLED     (1<<16) /**< Pilot is disabled. */
+#define PILOT_DISABLED     (1<<26) /**< Pilot is disabled. */
 #define PILOT_DEAD         (1<<27) /**< Pilot is in it's dying throes */
 #define PILOT_DEATH_SOUND  (1<<28) /**< Pilot just did death explosion. */
 #define PILOT_EXPLODED     (1<<29) /**< Pilot did final death explosion. */
 #define PILOT_DELETE       (1<<30) /**< Pilot will get deleted asap. */
 
 /* makes life easier */
-#define pilot_isPlayer(p)  ((p)->flags & PILOT_PLAYER) /**< Checks if pilot is a player. */
-#define pilot_isDisabled(p) ((p)->flags & PILOT_DISABLED) /**< Checks if pilot is disabled. */
+#define pilot_isPlayer(p)   pilot_isFlag(p,PILOT_PLAYER) /**< Checks if pilot is a player. */
+#define pilot_isDisabled(p) pilot_isFlag(p,PILOT_DISABLED) /**< Checks if pilot is disabled. */
 
 
 /**
