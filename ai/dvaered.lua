@@ -8,6 +8,11 @@ aggressive = true
 function create ()
    ai.setcredits( rnd.int(1000, ai.shipprice()/200) )
    attack_choose()
+   if rnd.int() > 0.4 then
+      mem.bribe_no = "\"I shall especially enjoy your death.\""
+   else
+      mem.bribe_no = "\"You shall not buy my honour!\""
+   end
 end
 
 -- taunts

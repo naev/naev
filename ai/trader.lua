@@ -5,7 +5,7 @@ function sos ()
    msg = {
       "Mayday! We are under attack!",
       "Requesting assistance.  We are under attack!",
-      "Merchant vessle here under attack! Help!"
+      "Merchant vessel here under attack! Help!"
    }
    ai.broadcast(msg[ rnd.int(1,#msg) ])
 end
@@ -13,6 +13,8 @@ end
 
 function create ()
    ai.setcredits( rnd.int(100, ai.shipprice()/50) )
+
+   mem.bribe_no = "\"The Space Traders do not negotiate with criminals.\""
 
    -- Some stuff has more chance then others
    num = rnd.int(12)

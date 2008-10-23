@@ -14,6 +14,18 @@ function create ()
       ai.broadcast("The Empire is watching you.")
    end
 
+   if rnd.int() > 0.7 then
+      mem.bribe = math.sqrt( ai.shipmass() ) * (500. * rnd.int() + 1750.)
+      mem.bribe_prompt = string.format("\"For some %d credits I could forget about seeing you.\"", mem.bribe )
+      mem.bribe_paid = "\"Now scram before I change my mind.\""
+   else
+      if rnd.int() > 0.5 then
+         mem.bribe_no = "\"You won't buy your way out of this one.\""
+      else
+         mem.bribe_no = "\"The Empire likes to make examples out of scum like you.\""
+      end
+   end
+
    attack_choose()
 end
 

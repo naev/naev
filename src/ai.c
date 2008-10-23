@@ -495,6 +495,7 @@ static int ai_loadProfile( char* filename )
 
    /* open basic lua stuff */
    nlua_loadBasic(L);
+   nlua_load(L,luaopen_string); /* open string. */
 
    /* constants */
    lua_regnumber(L, "player", PLAYER_ID); /* player ID */

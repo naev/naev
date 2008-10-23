@@ -4,3 +4,8 @@ include("ai/tpl/generic.lua")
 control_rate = 0.5 -- Lower control rate
 aggressive = true
 land_planet = false
+
+function create ()
+   mem.bribe_no = "No response."
+   attack_choose()
+end
