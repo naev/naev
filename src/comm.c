@@ -140,6 +140,7 @@ static void comm_bribe( unsigned int wid, char *unused )
    int answer;
    int price;
    char *str;
+   lua_State *L;
 
    /* Set up for the comm_get* functions. */
    ai_setPilot( comm_pilot );
@@ -181,7 +182,15 @@ static void comm_bribe( unsigned int wid, char *unused )
          dialogue_msg("Bribe Pilot", "\"Pleasure to do business with you.\"");
       else
          dialogue_msg("Bribe Pilot", "%s", str);
+
+      /* Mark as bribed and don't allow bribing again. */
       pilot_setFlag( comm_pilot, PILOT_BRIBED );
+      L = comm_pilot->ai->L;
+      lua_getglobal(L, "mem");
+      lua_pushnil(L);
+      lua_setfield(L, -2, "bribe");
+      lua_pop(L,1);
+
       /* Reopen window. */
       window_destroy( wid );
       comm_open( comm_pilot->id );
