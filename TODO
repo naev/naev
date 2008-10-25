@@ -2,9 +2,9 @@
 
    VITAL
 
-   *) Pilot Communication system
-      *) Request fuel
-   *) Introductory screen (text + image?)
+   *) New game improvements
+      *) Introductory screen (text + image?)
+      *) Tutorial or small guide
    *) System obstacles and such
       *) Interference
       *) Asteroids
@@ -29,6 +29,8 @@
 
    MINOR
 
+   *) Pilot Communication system
+      *) Request fuel
    *) Hybrid ships
       *) Start out with X skillpoints that get spread out by use, use fast at first
       *) Can't use normal gear
