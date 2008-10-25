@@ -73,6 +73,7 @@ DATA_AI   := 	$(wildcard ai/*.lua \
 					ai/include/*.lua \
 					ai/tpl/*.lua )
 DATA_GFX  := 	$(wildcard gfx/*.png \
+					gfx/loading/*.png \
 					gfx/gui/*.png \
 					gfx/logo/*.png \
 					gfx/outfit/space/*.png \
