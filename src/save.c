@@ -10,9 +10,7 @@
 
 #include "save.h"
 
-#ifdef _POSIX_SOURCE
-#include <unistd.h> /* unlink */
-#endif
+#include <stdio.h> /* remove() */
 
 #include "naev.h"
 #include "log.h"
@@ -239,7 +237,7 @@ static void load_menu_delete( unsigned int wdw, char *str )
       return;
 
    snprintf( path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), save );
-   unlink(path);
+   remove(path); /* remove is portable and will call unlink on linux. */
 
    /* need to reload the menu */
    load_menu_close(wdw, NULL);
