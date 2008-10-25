@@ -13,6 +13,7 @@
 
 #include "nfile.h"
 
+#include <stdio.h> 
 #include <string.h>
 #include <stdarg.h>
 #ifdef LINUX
@@ -21,7 +22,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h> 
-#include <stdio.h> 
 #include <errno.h>
 #endif /* LINUX */
 
@@ -123,7 +123,14 @@ int nfile_fileExists( const char* path, ... )
       return 1;
 
 #else /* LINUX */
-#error "Needs implementation."
+   FILE *f;
+
+   /* Try to open the file, C89 compliant, but not as precise as stat. */
+   f = fopen(file, 'r');
+   if (f != NULL) {
+      fclose(f);
+      return 1;
+   }
 #endif
    return 0;
 }
