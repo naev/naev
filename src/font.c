@@ -47,6 +47,14 @@ static int font_limitSize( const glFont *ft_font, int *width,
       char *text, const int max );
 
 
+/**
+ * @brief Limits the text to max.
+ *
+ *    @param ft_font Font to calculate width with.
+ *    @param width Actual width it takes up.
+ *    @param text Text to parse.
+ *    @param max Max to look for.
+ */
 static int font_limitSize( const glFont *ft_font, int *width,
       char *text, const int max )
 {
@@ -68,6 +76,55 @@ static int font_limitSize( const glFont *ft_font, int *width,
       (*width) = n;
    return i;
 }
+
+
+/**
+ * @brief Gets the number of characters in text that fit into width.
+ *
+ *    @param ft_font Font to use.
+ *    @param text Text to check.
+ *    @param width Width to match.
+ *    @return Number of characters that fit.
+ */
+int gl_printWidthForText( const glFont *ft_font, char *text,
+      const int width )
+{
+   int i, n, lastspace;
+   
+   if (ft_font == NULL) ft_font = &gl_defFont;
+   
+   /* limit size per line */
+   lastspace = 0; /* last ' ' or '\n' in the text */
+   n = 0; /* current width */
+   i = 0; /* current position */
+   while (1) {
+
+      /* Check if we found an EOL character. */
+      if ((text[i] == '\n') || (text[i] == '\0'))
+         return i;
+
+      /* Characters we should ignore. */
+      if (text[i] == '\t')
+         continue;
+
+      /* Increase size. */
+      n += ft_font->w[ (int)text[i] ];
+
+      /* Save last space. */
+      if (text[i] == ' ')
+         lastspace = i;
+
+      /* Check if out of bounds. */
+      if (n > width)
+         break;
+
+      /* Check next character. */
+      i++;
+   }
+
+   return lastspace;   
+}
+
 
 /**
  * @fn void gl_print( const glFont *ft_font,
@@ -265,12 +322,9 @@ int gl_printText( const glFont *ft_font,
 {
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
    char text[4096]; /* holds the string */
-   char buf[256];
    va_list ap;
-   int p, i, j, n, m, len, ret, lastspace;
+   int i, p;
    double x,y;
-
-   ret = 0; /* default return value */
 
    if (ft_font == NULL) ft_font = &gl_defFont;
 
@@ -291,58 +345,31 @@ int gl_printText( const glFont *ft_font,
    if (c==NULL) glColor4d( 1., 1., 1., 1. );
    else COLOUR(*c);
 
-   len = (int)strlen(text);
-   /* limit size per line */
-   lastspace = -1; /* last ' ' or '\n' in the text */
-   n = 0; /* current width */
-   i = 0; /* current position */
-   p = -1; /* where we last drew up to */
-   while (i<len+1) {
-      
-      if (by - y > (double)height) return len-lastspace; /* past height */
+   p = 0; /* where we last drew up to */
+   while (1) {
+      i = gl_printWidthForText( ft_font, &text[p], width );
 
-      n += ft_font->w[ (int)text[i] ];
-      
-      if ((text[i]==' ') || (text[i]=='\n') || (text[i]=='\0')) lastspace = i;
+      glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
+      glPushMatrix(); /* translation matrix */                               
+         glTranslated( x, y, 0);
 
-      if (((n > width) && (p!=lastspace))
-            || (text[i]=='\n') || (text[i]=='\0')) {
+      glCallLists(i, GL_UNSIGNED_BYTE, &text[p]); /* the actual displaying */
 
-         /* time to draw the line */
-         m = 0;
-         if (lastspace==-1) lastspace = 0;
-         for (j=0; j<(lastspace-p-1); j++) {
-            if (text[p+j+1]=='\t') {
-               p++;
-               continue;
-            }
-            m += ft_font->w[ (int)text[p+j+1] ];
-            if (m > width) break;
-            buf[j] = text[p+j+1];
-         }
-         /* no need for NUL termination */
+      glPopMatrix(); /* translation matrix */
 
-         glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
-         glPushMatrix(); /* translation matrix */                               
-            glTranslated( x, y, 0);
-
-         glCallLists(j, GL_UNSIGNED_BYTE, &buf); /* the actual displaying */
-
-         glPopMatrix(); /* translation matrx */
-
-         p = lastspace;
-         n = 0;
-         i = lastspace;
-         y -= 1.5*(double)ft_font->h; /* move position down */
-      }
-      i++;
+      if (text[p+i] == '\0')
+         break;
+      p += i + 1;
+      y -= 1.5*(double)ft_font->h; /* move position down */
+      if (by - y > (double)height)
+         break;
    }
 
    glDisable(GL_TEXTURE_2D);
 
    gl_checkErr();
 
-   return ret;
+   return 0;
 }
 
 
@@ -396,7 +423,7 @@ int gl_printHeight( const glFont *ft_font,
 {
    char text[1024]; /* holds the string */
    va_list ap;
-   int p, i, n, len, lastspace;
+   int i, p;
    double y;
    
    if (ft_font == NULL) ft_font = &gl_defFont;
@@ -408,27 +435,15 @@ int gl_printHeight( const glFont *ft_font,
       va_end(ap);
    } 
    y = 0.;
-   
-   len = (int)strlen(text);
-   /* limit size per line */
-   lastspace = -1; /* last ' ' or '\n' in the text */
-   n = 0; /* current width */
-   i = 0; /* current position */
-   p = -1; /* where we last drew up to */
-   while (i<len+1) {
+  
+   p = 0;
+   while (1) {
+      i = gl_printWidthForText( ft_font, &text[p], width );
 
-      n += ft_font->w[ (int)text[i] ];
-
-      if ((text[i]==' ') || (text[i]=='\n') || (text[i]=='\0')) lastspace = i;
-
-      if (((n > width) && (p!=lastspace))
-            || (text[i]=='\n') || (text[i]=='\0')) {
-         p = lastspace;
-         n = 0;
-         i = lastspace;
-         y += 1.5*(double)ft_font->h; /* move position down */
-      }
-      i++;
+      if (text[p+i] == '\0')
+         break;
+      p += i + 1;
+      y += 1.5*(double)ft_font->h; /* move position down */
    }
    
    return (int) (y - 0.5*(double)ft_font->h);

@@ -51,7 +51,11 @@ int gl_printText( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
       glColour* c, const char *fmt, ... );
-/* gets the width of the text wanting to be printed */
+
+
+/* Dimension stuff. */
+int gl_printWidthForText( const glFont *ft_font, char *text,
+      const int width );
 int gl_printWidth( const glFont *ft_font, const char *fmt, ... );
 int gl_printHeight( const glFont *ft_font,
       const int width, const char *fmt, ... );
