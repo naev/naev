@@ -97,15 +97,13 @@ int gl_printWidthForText( const glFont *ft_font, char *text,
    lastspace = 0; /* last ' ' or '\n' in the text */
    n = 0; /* current width */
    i = 0; /* current position */
-   while (1) {
-
-      /* Check if we found an EOL character. */
-      if ((text[i] == '\n') || (text[i] == '\0'))
-         return i;
+   while ((text[i] != '\n') && (text[i] != '\0')) {
 
       /* Characters we should ignore. */
-      if (text[i] == '\t')
+      if (text[i] == '\t') {
+         i++;
          continue;
+      }
 
       /* Increase size. */
       n += ft_font->w[ (int)text[i] ];
@@ -116,13 +114,13 @@ int gl_printWidthForText( const glFont *ft_font, char *text,
 
       /* Check if out of bounds. */
       if (n > width)
-         break;
+         return lastspace;   
 
       /* Check next character. */
       i++;
    }
 
-   return lastspace;   
+   return i;
 }
 
 
@@ -346,7 +344,7 @@ int gl_printText( const glFont *ft_font,
    else COLOUR(*c);
 
    p = 0; /* where we last drew up to */
-   while (1) {
+   while (by - y < 0) {
       i = gl_printWidthForText( ft_font, &text[p], width );
 
       glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
@@ -361,8 +359,6 @@ int gl_printText( const glFont *ft_font,
          break;
       p += i + 1;
       y -= 1.5*(double)ft_font->h; /* move position down */
-      if (by - y > (double)height)
-         break;
    }
 
    glDisable(GL_TEXTURE_2D);
