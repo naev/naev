@@ -605,8 +605,8 @@ static void shipyard_open (void)
          "Money:\n" );
    window_addText( wid, 40+300+40+80, -55,
          130, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, 20+300+40, -175,
-         SHIPYARD_WIDTH-300, 185, 0, "txtDescription",
+   window_addText( wid, 20+310+40, -175,
+         SHIPYARD_WIDTH-(20+310+40) - 20, 185, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 
    /* set up the ships to buy/sell */
