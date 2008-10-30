@@ -43,7 +43,31 @@ glFont gl_smallFont; /**< Small font. */
  */
 static void glFontMakeDList( FT_Face face, char ch,
       GLuint list_base, GLuint *tex_base, int *width_base );
+static int font_limitSize( const glFont *ft_font, int *width,
+      char *text, const int max );
 
+
+static int font_limitSize( const glFont *ft_font, int *width,
+      char *text, const int max )
+{
+   int n, len, i;
+
+   /* limit size */
+   len = (int)strlen(text);
+   n = 0;
+   for (i=0; i<len; i++) {
+      n += ft_font->w[ (int)text[i] ];
+      if (n > max) {
+         n -= ft_font->w[ (int)text[i] ]; /* actual size */
+         text[i] = '\0';
+         break;
+      }
+   }
+
+   if (width != NULL)
+      (*width) = n;
+   return i;
+}
 
 /**
  * @fn void gl_print( const glFont *ft_font,
@@ -76,7 +100,6 @@ void gl_print( const glFont *ft_font,
       vsprintf(text, fmt, ap);
       va_end(ap);
    }
-
 
    glEnable(GL_TEXTURE_2D);
 
@@ -117,7 +140,7 @@ int gl_printMax( const glFont *ft_font, const int max,
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
    char text[256]; /* holds the string */
    va_list ap;
-   int i, n, len, ret;
+   int ret;
 
    ret = 0; /* default return value */
 
@@ -130,23 +153,13 @@ int gl_printMax( const glFont *ft_font, const int max,
       va_end(ap);
    }
 
-
    /* limit size */
-   len = (int)strlen(text);
-   for (n=0,i=0; i<len; i++) {
-      n += ft_font->w[ (int)text[i] ];
-      if (n > max) {
-         ret = len - i; /* difference */
-         text[i] = '\0';
-         break;
-      }
-   }
+   ret = font_limitSize( ft_font, NULL, text, max );
 
    /* display the text */
    glEnable(GL_TEXTURE_2D);
 
    glListBase(ft_font->list_base);
-
 
    glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
    glPushMatrix(); /* translation matrix */
@@ -154,14 +167,14 @@ int gl_printMax( const glFont *ft_font, const int max,
 
    if (c==NULL) glColor4d( 1., 1., 1., 1. );
    else COLOUR(*c);
-   glCallLists(i, GL_UNSIGNED_BYTE, &text);
+   glCallLists(ret, GL_UNSIGNED_BYTE, &text);
 
    glPopMatrix(); /* translation matrix */
    glDisable(GL_TEXTURE_2D);
 
    gl_checkErr();
 
-   return ret;
+   return 0;
 }
 
 /**
@@ -188,7 +201,7 @@ int gl_printMid( const glFont *ft_font, const int width,
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
    char text[256]; /* holds the string */
    va_list ap;
-   int i, n, len, ret;
+   int n, ret;
 
    ret = 0; /* default return value */
 
@@ -202,17 +215,7 @@ int gl_printMid( const glFont *ft_font, const int width,
    }
 
    /* limit size */
-   len = (int)strlen(text);
-   for (n=0,i=0; i<len; i++) {
-      n += ft_font->w[ (int)text[i] ];
-      if (n > width) {
-         ret = len - i; /* difference */
-         n -= ft_font->w[ (int)text[i] ]; /* actual size */
-         text[i] = '\0';
-         break;
-      }
-   }
-
+   ret = font_limitSize( ft_font, &n, text, width );
    x += (double)(width - n)/2.;
 
    /* display the text */
@@ -226,14 +229,14 @@ int gl_printMid( const glFont *ft_font, const int width,
 
    if (c==NULL) glColor4d( 1., 1., 1., 1. );
    else COLOUR(*c);
-   glCallLists(i, GL_UNSIGNED_BYTE, &text);
+   glCallLists(ret, GL_UNSIGNED_BYTE, &text);
 
    glPopMatrix(); /* translation matrix */
    glDisable(GL_TEXTURE_2D);
 
    gl_checkErr();
 
-   return ret;
+   return 0;
 }
 /**
  * @fn int gl_printText( const glFont *ft_font,
