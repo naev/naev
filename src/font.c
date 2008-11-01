@@ -91,7 +91,8 @@ int gl_printWidthForText( const glFont *ft_font, char *text,
 {
    int i, n, lastspace;
    
-   if (ft_font == NULL) ft_font = &gl_defFont;
+   if (ft_font == NULL)
+      ft_font = &gl_defFont;
    
    /* limit size per line */
    lastspace = 0; /* last ' ' or '\n' in the text */
@@ -147,7 +148,8 @@ void gl_print( const glFont *ft_font,
    char text[256]; /* holds the string */
    va_list ap;
 
-   if (ft_font == NULL) ft_font = &gl_defFont;                            
+   if (ft_font == NULL)
+      ft_font = &gl_defFont;                            
 
    if (fmt == NULL) return;
    else { /* convert the symbols to text */
@@ -199,7 +201,8 @@ int gl_printMax( const glFont *ft_font, const int max,
 
    ret = 0; /* default return value */
 
-   if (ft_font == NULL) ft_font = &gl_defFont;
+   if (ft_font == NULL)
+      ft_font = &gl_defFont;
 
    if (fmt == NULL) return -1;
    else { /* convert the symbols to text */
@@ -260,7 +263,8 @@ int gl_printMid( const glFont *ft_font, const int width,
 
    ret = 0; /* default return value */
 
-   if (ft_font == NULL) ft_font = &gl_defFont;
+   if (ft_font == NULL)
+      ft_font = &gl_defFont;
 
    if (fmt == NULL) return -1;
    else { /* convert the symbols to text */
@@ -324,7 +328,8 @@ int gl_printText( const glFont *ft_font,
    int i, p;
    double x,y;
 
-   if (ft_font == NULL) ft_font = &gl_defFont;
+   if (ft_font == NULL)
+      ft_font = &gl_defFont;
 
    if (fmt == NULL) return -1;
    else { /* convert the symbols to text */
@@ -344,7 +349,7 @@ int gl_printText( const glFont *ft_font,
    else COLOUR(*c);
 
    p = 0; /* where we last drew up to */
-   while (by - y < 0) {
+   while (y - by > -1e-5) {
       i = gl_printWidthForText( ft_font, &text[p], width );
 
       glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
@@ -386,7 +391,8 @@ int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
    char text[256]; /* holds the string */
    va_list ap;                                                            
 
-   if (ft_font == NULL) ft_font = &gl_defFont;
+   if (ft_font == NULL)
+      ft_font = &gl_defFont;
 
    if (fmt == NULL) return 0;
    else { /* convert the symbols to text */
@@ -422,7 +428,8 @@ int gl_printHeight( const glFont *ft_font,
    int i, p;
    double y;
    
-   if (ft_font == NULL) ft_font = &gl_defFont;
+   if (ft_font == NULL) 
+      ft_font = &gl_defFont;
    
    if (fmt == NULL) return -1;
    else { /* convert the symbols to text */
@@ -430,17 +437,18 @@ int gl_printHeight( const glFont *ft_font,
       vsprintf(text, fmt, ap);
       va_end(ap);
    } 
-   y = 0.;
-  
-   p = 0;
-   while (1) {
-      i = gl_printWidthForText( ft_font, &text[p], width );
 
-      if (text[p+i] == '\0')
-         break;
+   /* Check 0 length strings. */
+   if (text[0] == '\0')
+      return 0;
+
+   y = 0.;
+   p = 0;
+   do {
+      i = gl_printWidthForText( ft_font, &text[p], width );
       p += i + 1;
       y += 1.5*(double)ft_font->h; /* move position down */
-   }
+   } while (text[p-1] != '\0');
    
    return (int) (y - 0.5*(double)ft_font->h);
 }
