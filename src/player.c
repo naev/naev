@@ -38,6 +38,7 @@
 #include "spfx.h"
 #include "unidiff.h"
 #include "comm.h"
+#include "intro.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
@@ -223,7 +224,7 @@ extern void planets_minimap( const double res, const double w, const double h,
  * internal
  */
 /* creation */
-static void player_newMake (void);
+static int player_newMake (void);
 static void player_newShipMake( char *name );
 /* sound */
 static void player_initSound (void);
@@ -304,16 +305,19 @@ void player_new (void)
       }
    }
 
-   player_newMake();
+   if (player_newMake())
+      return;
+
+   intro_display();
 }
 
 
 /**
- * @fn static void player_newMake (void)
- *
  * @brief Actually creates a new player.
+ *
+ *    @return 0 on success.
  */
-static void player_newMake (void)
+static int player_newMake (void)
 {
    Ship *ship;
    char *sysname;;
@@ -332,13 +336,13 @@ static void player_newMake (void)
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,XML_START_ID)) {
       ERR("Malformed '"START_DATA"' file: missing root element '"XML_START_ID"'");
-      return;
+      return -1;
    }
 
    node = node->xmlChildrenNode; /* first system node */
    if (node == NULL) {
       ERR("Malformed '"START_DATA"' file: does not contain elements");
-      return;
+      return -1;
    }
    do {
       if (xml_isNode(node, "player")) { /* we are interested in the player */
@@ -391,13 +395,15 @@ static void player_newMake (void)
    /* Try to create the pilot, if fails reask for player name. */
    if (player_newShip( ship, x, y, 0., 0., RNG(0,359)/180.*M_PI ) != 0) {
       player_new();
-      return;
+      return -1;
    }
    space_init(sysname);
    free(sysname);
 
    /* clear the map */
    map_clear();
+
+   return 0;
 }
 
 

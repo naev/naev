@@ -82,7 +82,7 @@ DATA_GFX  := 	$(wildcard gfx/*.png \
 					gfx/planet/space/*.png \
 					gfx/ship/*.png \
 					gfx/spfx/*.png)
-DATA_XML  := 	$(wildcard dat/*.xml dat/*.ttf)
+DATA_XML  := 	$(wildcard dat/*.xml dat/*.ttf dat/intro)
 DATA_SND  := 	$(wildcard snd/music/*.ogg snd/sounds/*.wav) snd/music.lua
 DATA_MISN := 	$(wildcard dat/missions/*.lua)
 DATA      := 	ndata

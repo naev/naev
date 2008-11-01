@@ -126,6 +126,7 @@ int save_all (void)
    }
    snprintf(file, PATH_MAX,"%ssaves/%s.ns", nfile_basePath(), player_name);
 
+   /* Critical section, if crashes here player's game gets corrupted. */
    xmlFreeTextWriter(writer);
    xmlSaveFileEnc(file, doc, "UTF-8");
    xmlFreeDoc(doc);
