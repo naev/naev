@@ -66,6 +66,7 @@ Pilot* player = NULL; /**< Ze player. */
 static Ship* player_ship = NULL; /**< Temporary ship to hold when naming it */
 static double player_px, player_py, player_vx, player_vy, player_dir; /**< More hack. */
 static int player_credits = 0; /**< Temporary hack for when creating. */
+static char *player_mission = NULL; /**< More hack. */
 
 
 /*
@@ -309,6 +310,14 @@ void player_new (void)
       return;
 
    intro_display();
+
+   /* Add the mission if found. */
+   if (player_mission != NULL) {
+      if (mission_start( player_mission ) < 0)
+         WARN("Failed to run start mission '%s'.", player_mission);
+      free(player_mission);
+      player_mission = NULL;
+   }
 }
 
 
@@ -326,7 +335,9 @@ static int player_newMake (void)
    int l,h, tl,th;
    double x,y;
 
+   /* Sane defaults. */
    sysname = NULL;
+   player_mission = NULL;
 
    buf = pack_readfile( DATA, START_DATA, &bufsize );
 
@@ -375,20 +386,29 @@ static int player_newMake (void)
                   xmlr_int(tmp, "high", th);
                } while (xml_nextNode(tmp));
             }
+            /* Check for mission. */
+            if (xml_isNode(cur,"mission")) {
+               if (player_mission != NULL) {
+                  WARN("start.xml already contains a mission node!");
+                  continue;
+               }
+               player_mission = strdup(xml_get(cur));
+            }
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
 
+   /* Clean up. */
    xmlFreeDoc(doc);
    free(buf);
 
-   /* monies */
+   /* Monies. */
    player_credits = RNG(l,h);
 
-   /* time */
+   /* Time. */
    ntime_set( RNG(tl*1000*NTIME_UNIT_LENGTH,th*1000*NTIME_UNIT_LENGTH) );
 
-   /* welcome message - must be before space_init */
+   /* Welcome message - must be before space_init. */
    player_message( "Welcome to "APPNAME"!" );
    player_message( " v%d.%d.%d", VMAJOR, VMINOR, VREV );
 

@@ -102,6 +102,7 @@ Mission* missions_computer( int *n, int faction,
       char* planet, char* sysname ); /* for mission computer */
 int mission_accept( Mission* mission ); /* player accepted mission - mission computer */
 void missions_run( int loc, int faction, char* planet, char* sysname );
+int mission_start( char *name );
 
 /*
  * misc

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Missions>
- <mission name="Welcome">
-  <lua>welcome</lua>
+ <mission name="Tutorial">
+  <lua>tutorial</lua>
   <flags>
    <unique>1</unique>
   </flags>

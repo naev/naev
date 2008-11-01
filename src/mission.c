@@ -133,7 +133,7 @@ int mission_getID( char* name )
  */
 MissionData* mission_get( int id )
 {
-   if ((id <= 0) || (mission_nstack < id)) return NULL;
+   if ((id < 0) || (id >= mission_nstack)) return NULL;
    return &mission_stack[id];
 }
 
@@ -379,6 +379,33 @@ void missions_run( int loc, int faction, char* planet, char* sysname )
          }
       }
    }
+}
+
+
+/**
+ * @brief Starts a mission.
+ *
+ *  Mission must still call misn.accept() to actually get added to the player's
+ * active missions.
+ *
+ *    @param name Name of the mission to start.
+ *    @return 0 on success.
+ */
+int mission_start( char *name )
+{
+   Mission mission;
+   MissionData *mdat;
+
+   /* Try to get the mission. */
+   mdat = mission_get( mission_getID(name) );
+   if (mdat == NULL)
+      return -1;
+
+   /* Try to run the mission. */
+   mission_init( &mission, mdat, 0 );
+   mission_cleanup( &mission ); /* Clean up in case not accepted. */
+
+   return 0;
 }
 
 
