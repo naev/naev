@@ -208,6 +208,7 @@ static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key );
 static void toolkit_mouseEvent( SDL_Event* event );
 static int toolkit_keyEvent( SDL_Event* event );
 static void toolkit_imgarrMove( Widget* iar, double ry );
+static void toolkit_clearKey (void);
 /* focus */
 static void toolkit_nextFocus (void);
 static int toolkit_isFocusable( Widget *wgt );
@@ -248,12 +249,6 @@ static void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
 
 
 /**
- * @fn void window_addButton( const unsigned int wid,
- *                            const int x, const int y,
- *                            const int w, const int h,
- *                            char* name, char* display,
- *                            void (*call) (unsigned int,char*) )
- *
  * @brief Adds a button widget to a window.
  *
  * Position origin is 0,0 at bottom left.  If you use negative X or Y
@@ -738,6 +733,7 @@ unsigned int window_create( char* name,
    wdw->id = wid;
    wdw->name = strdup(name);
 
+   /* Sane defaults. */
    wdw->hidden = 0;
    wdw->focus = -1;
    wdw->accept_fptr = NULL;
@@ -878,8 +874,10 @@ void window_close( unsigned int wid, char *str )
 }
 
 
-/* 
- * destroys a window
+/**
+ * @brief Destroys a window.
+ *
+ *    @param wid ID of window to destroy.
  */
 void window_destroy( const unsigned int wid )
 {
@@ -910,11 +908,17 @@ void window_destroy( const unsigned int wid )
       toolkit = 0; /* disable toolkit */
       if (paused) unpause_game();
    }
+
+   /* Clear key repeat, since toolkit could miss the keyup event. */
+   toolkit_clearKey();
 }
 
 
-/*
- * destroys a widget on a window
+/**
+ * @brief Destroys a widget in a window.
+ *
+ *    @param wid Window to destroy widget in.
+ *    @param wgtname Name of the widget to destroy.
  */
 void window_destroyWidget( unsigned int wid, const char* wgtname )
 {
@@ -943,9 +947,18 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
 }
 
 
-/* 
- * draws an outline
- * if bc is NULL, colour will be flat
+/**
+ * @brief Draws an outline.
+ *
+ * If lc is NULL, colour will be flat.
+ *
+ *    @param x X position to draw at.
+ *    @param y Y position to draw at.
+ *    @param w Width.
+ *    @param h Height.
+ *    @param b Border width.
+ *    @param c Colour.
+ *    @param lc Light colour.
  */
 static void toolkit_drawOutline( double x, double y, 
       double w, double h, double b,
@@ -990,8 +1003,13 @@ static void toolkit_drawRect( double x, double y,
 }
 
 
-/*
- * sets up 2d clipping planes around a rectangle
+/**
+ * @brief Sets up 2d clipping planes around a rectangle.
+ *
+ *    @param x X position of the rectangle.
+ *    @param y Y position of the rectangle.
+ *    @param w Width of the rectangle.
+ *    @param h Height of the rectangle.
  */
 static void toolkit_clip( double x, double y, double w, double h )
 {
@@ -1010,6 +1028,9 @@ static void toolkit_clip( double x, double y, double w, double h )
    glEnable(GL_CLIP_PLANE2);
    glEnable(GL_CLIP_PLANE3);
 }
+/**
+ * @brief Clears the 2d clipping planes.
+ */
 static void toolkit_unclip (void)
 {
    glDisable(GL_CLIP_PLANE0);
@@ -1019,8 +1040,10 @@ static void toolkit_unclip (void)
 }
 
 
-/*
- * renders a window
+/**
+ * @brief Renders a window.
+ *
+ *    @param w Window to render.
  */
 static void window_render( Window* w )
 {
@@ -1737,7 +1760,7 @@ static void toolkit_mouseEvent( SDL_Event* event )
                      toolkit_listScroll( wgt, +1 );
                      break;
                   }
-                  if (event->button.button == SDL_BUTTON_WHEELDOWN) {
+                  else if (event->button.button == SDL_BUTTON_WHEELDOWN) {
                      toolkit_listScroll( wgt, -1 );
                      break;
                   }
@@ -1749,8 +1772,7 @@ static void toolkit_mouseEvent( SDL_Event* event )
                      toolkit_listFocus( wgt, x-wgt->x, y-wgt->y );
                      input_key = 0; /* hack to avoid weird bug with permascroll */
                   }
-
-                  if (wgt->type == WIDGET_IMAGEARRAY)
+                  else if (wgt->type == WIDGET_IMAGEARRAY)
                      toolkit_imgarrFocus( wgt, x-wgt->x, y-wgt->y );
                   break;
 
@@ -1808,6 +1830,12 @@ static void toolkit_unregKey( SDLKey key )
       input_keyTime = 0;
       input_keyCounter = 0;
    }
+}
+static void toolkit_clearKey (void)
+{
+   input_key = 0;
+   input_keyTime = 0;
+   input_keyCounter = 0;
 }
 static int toolkit_keyEvent( SDL_Event* event )
 {
