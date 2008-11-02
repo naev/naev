@@ -493,7 +493,7 @@ void missions_update( const double dt )
          for (j=0; j<MISSION_TIMER_MAX; j++) {
 
             /* Timer must be active. */
-            if (player_missions[i].timer[j] != 0.) {
+            if (player_missions[i].timer[j] > 0.) {
 
                player_missions[i].timer[j] -= dt;
 
