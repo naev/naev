@@ -127,6 +127,7 @@ int conf_loadConfig ( const char* file )
    double d = 0.;
    char *str, *mod;
    int type, key, reverse;
+   int w, h;
    SDLMod m;
 
    lua_State *L = nlua_newState();
@@ -136,8 +137,17 @@ int conf_loadConfig ( const char* file )
       conf_loadString("data",data);
 
       /* opengl properties*/
-      conf_loadInt("width",gl_screen.w);
-      conf_loadInt("height",gl_screen.h);
+      w = h = 0;
+      conf_loadInt("width",w);
+      conf_loadInt("height",h);
+      if (w != 0) {
+         gl_screen.flags |= OPENGL_DIM_DEF;
+         gl_screen.w = w;
+      }
+      if (h != 0) {
+         gl_screen.flags |= OPENGL_DIM_DEF;
+         gl_screen.h = h;
+      }
       conf_loadBool("fullscreen",i);
       if (i) { gl_screen.flags |= OPENGL_FULLSCREEN; i = 0; }
       conf_loadBool("aa",i);
@@ -310,9 +320,11 @@ void conf_parseCLI( int argc, char** argv )
             break;
          case 'W':
             gl_screen.w = atoi(optarg);
+            gl_screen.flags |= OPENGL_DIM_DEF;
             break;
          case 'H':
             gl_screen.h = atoi(optarg);
+            gl_screen.flags |= OPENGL_DIM_DEF;
             break;
          case 'M':
             nosound = 1;

@@ -15,6 +15,7 @@
 
 #include "SDL.h"
 #include "SDL_image.h"
+#include "SDL_version.h"
 
 #include "naev.h"
 #include "log.h"
@@ -993,8 +994,17 @@ int gl_init()
    if (gl_has(OPENGL_VSYNC))
       SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, 1);
 
-   /* get available fullscreen modes */
    if (gl_has(OPENGL_FULLSCREEN)) {
+      /* Try to use desktop resolution if nothing is specifically set. */
+#if SDL_VERSION_ATLEAST(1,2,10)
+      if (!gl_has(OPENGL_DIM_DEF)) {
+         const SDL_VideoInfo *vidinfo = SDL_GetVideoInfo();
+         gl_screen.w = vidinfo->current_w;
+         gl_screen.h = vidinfo->current_h;
+      }
+#endif /* SDL_VERSION_ATLEAST(1,2,10) */
+
+      /* Get available modes and see what we can use. */
       modes = SDL_ListModes( NULL, SDL_OPENGL | SDL_FULLSCREEN );
       if (modes == NULL) { /* rare case, but could happen */
          WARN("No fullscreen modes available");
