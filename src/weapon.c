@@ -1089,7 +1089,12 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
          break;
    }
 
-   for (i=0; wlayer[i] != w; i++); /* get to the current position */
+   for (i=0; (wlayer[i] != w) && (i < *nlayer); i++); /* get to the curent position */
+   if (i >= *nlayer) {
+      /** @todo Figure out why this happens in the tutorial. */
+      WARN("Trying to destroy non-existant weapon.");
+      return;
+   }
    weapon_free(wlayer[i]);
    wlayer[i] = NULL;
    (*nlayer)--;
