@@ -98,18 +98,37 @@ static void dialogue_alertClose( unsigned int wid, char* str )
  *    @param[out] w Gets the width needed.
  *    @param[out] h Gets the height needed.
  */
-static glFont* dialogue_getSize( char* msg, int* w, int* h )
+static glFont* dialogue_getSize( char* msg, int* width, int* height )
 {
    glFont* font;
+   double w, h, d;
+   int len;
 
-   font = &gl_smallFont; /* try to use smallfont */
-   (*h) = gl_printHeight( font, (*w)-40, msg );
-   if (strlen(msg) > 100) { /* make font bigger for large texts */
+   w = 300; /* Default width to try. */
+   len = strlen(msg);
+
+   /* First we split by text length. */
+   if (len < 50) {
       font = &gl_defFont;
-      (*h) = gl_printHeight( font, (*w)-40, msg );
-      if ((*h) > 200) (*w) += MIN((*h)-200,600); /* too big, so we make it wider */
-      (*h) = gl_printHeight( font, (*w)-40, msg );
+      h = gl_printHeight( font, w-40, msg );
    }
+   else {
+      /* Now we look at proportion. */
+      font = &gl_smallFont;
+      /* font = &gl_defFont; */
+      h = gl_printHeight( font, w-40, msg );
+
+      d = ((double)w/(double)h)*(3./4.); /* deformation factor. */
+      if (fabs(d) > 0.3) {
+         if (h > w)
+            w = h;
+         h = gl_printHeight( font, w-40, msg );
+      }
+   }
+
+   /* Set values. */
+   (*width) = w;
+   (*height) = h;
 
    return font;
 }
@@ -136,7 +155,6 @@ void dialogue_msg( char* caption, const char *fmt, ... )
       va_end(ap);
    }
 
-   w = 300; /* default width */
    font =dialogue_getSize( msg, &w, &h );
 
    /* create the window */
@@ -185,7 +203,6 @@ int dialogue_YesNo( char* caption, const char *fmt, ... )
       va_end(ap);
    }
 
-   w = 300;
    font = dialogue_getSize( msg, &w, &h );
 
    /* create window */
