@@ -350,7 +350,8 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          break;
    }
 
-   for (i=0; i<(*nlayer); i++) {
+   i = 0;
+   while (i < *nlayer) {
       w = wlayer[i];
       switch (wlayer[i]->outfit->type) {
 
@@ -398,8 +399,9 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
       }
       weapon_update(wlayer[i],dt,layer);
 
-      /* if the weapon has been deleted we have to hold back one */
-      if (w != wlayer[i]) i--;
+      /* Only increment if weapon wasn't deleted. */
+      if (w == wlayer[i])
+         i++;
    }
 }
 
@@ -1091,8 +1093,7 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
 
    for (i=0; (wlayer[i] != w) && (i < *nlayer); i++); /* get to the curent position */
    if (i >= *nlayer) {
-      /** @todo Figure out why this happens in the tutorial. */
-      WARN("Trying to destroy non-existant weapon.");
+      WARN("Trying to destroy weapon not found in stack!");
       return;
    }
    weapon_free(wlayer[i]);
