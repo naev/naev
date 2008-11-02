@@ -339,6 +339,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
    Weapon *w;
    int i;
 
+   /* Choose layer. */
    switch (layer) {
       case WEAPON_LAYER_BG:
          wlayer = wbackLayer;
@@ -371,7 +372,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
             wlayer[i]->timer -= dt;
             if (wlayer[i]->timer < 0.) {
                weapon_destroy(wlayer[i],layer);
-               continue;
+               break;
             }
             break;
 
@@ -381,7 +382,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
             wlayer[i]->timer -= dt;
             if (wlayer[i]->timer < 0.) {
                weapon_destroy(wlayer[i],layer);
-               continue;
+               break;
             }
             /* We use the lockon to tell when we have to create explosions. */
             wlayer[i]->lockon -= dt;
@@ -397,11 +398,12 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                   w->outfit->name);
             break;
       }
-      weapon_update(wlayer[i],dt,layer);
 
       /* Only increment if weapon wasn't deleted. */
-      if (w == wlayer[i])
+      if (w == wlayer[i]) {
+         weapon_update(wlayer[i],dt,layer);
          i++;
+      }
    }
 }
 
@@ -557,6 +559,12 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    glTexture *gfx;
    Vector2d crash[2];
 
+   /* Get the sprite direction to speed up calculations. */
+   if (!outfit_isBeam(w->outfit)) {
+      gfx = outfit_gfx(w->outfit);
+      gl_getSpriteFromDir( &wsx, &wsy, gfx, w->solid->dir );
+   }
+
    for (i=0; i<pilot_nstack; i++) {
 
       /* check for player to exists */
@@ -583,8 +591,6 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       /* smart weapons only collide with their target */
       else if (weapon_isSmart(w)) {
 
-         gfx = outfit_gfx(w->outfit);
-         gl_getSpriteFromDir( &wsx, &wsy, gfx, w->solid->dir );
          if ((pilot_stack[i]->id == w->target) &&
                CollideSprite( gfx, wsx, wsy, &w->solid->pos,
                      pilot_stack[i]->ship->gfx_space, psx, psy,
@@ -595,10 +601,8 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
          }
       }
       /* dump weapons hit anything not of the same faction */
-      else if (!weapon_isSmart(w)) {
+      else {
 
-         gfx = outfit_gfx(w->outfit);
-         gl_getSpriteFromDir( &wsx, &wsy, gfx, w->solid->dir );
          if (!areAllies(w->faction,pilot_stack[i]->faction) &&
                CollideSprite( gfx, wsx, wsy, &w->solid->pos,
                      pilot_stack[i]->ship->gfx_space, psx, psy,
@@ -611,7 +615,8 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    }
 
    /* smart weapons also get to think their next move */
-   if (weapon_isSmart(w)) (*w->think)(w,dt);
+   if (weapon_isSmart(w))
+      (*w->think)(w,dt);
 
    /* Update the solid position. */
    (*w->solid->update)(w->solid, dt);
@@ -1096,6 +1101,7 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
       WARN("Trying to destroy weapon not found in stack!");
       return;
    }
+
    weapon_free(wlayer[i]);
    wlayer[i] = NULL;
    (*nlayer)--;
