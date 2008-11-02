@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Factions>
+ <faction name="Dummy">
+  <player>0</player>
+  <allies />
+  <enemies />
+ </faction>
  <faction name="Independent">
   <player>0</player>
   <allies>

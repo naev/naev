@@ -79,6 +79,7 @@ static int vectorL_div( lua_State *L );
 static int vectorL_get( lua_State *L );
 static int vectorL_set( lua_State *L );
 static int vectorL_distance( lua_State *L );
+static int vectorL_mod( lua_State *L );
 static const luaL_reg vector_methods[] = {
    { "new", vectorL_new },
    { "__add", vectorL_add },
@@ -90,6 +91,7 @@ static const luaL_reg vector_methods[] = {
    { "get", vectorL_get },
    { "set", vectorL_set },
    { "dist", vectorL_distance },
+   { "mod", vectorL_mod },
    {0,0}
 }; /**< Vector metatable methods. */
 
@@ -1068,6 +1070,25 @@ static int vectorL_distance( lua_State *L )
 
    /* Return the distance. */
    lua_pushnumber(L, dist);
+   return 1;
+}
+
+/**
+ * @ingroup META_VECTOR
+ *
+ * @brief number mod( nil )
+ *
+ * Gets the modulus of the vector.
+ *
+ *    @return The modulus of the vector.
+ */
+static int vectorL_mod( lua_State *L )
+{
+   NLUA_MIN_ARGS(1);
+   LuaVector *v;
+
+   v = lua_tovector(L,1);
+   lua_pushnumber(L, VMOD(v->vec));
    return 1;
 }
 

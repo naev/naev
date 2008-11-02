@@ -32,10 +32,12 @@
 static int pilotL_createmetatable( lua_State *L );
 
 /* pilots */
+static int pilot_getPlayer( lua_State *L );
 static int pilot_addFleet( lua_State *L );
 static int pilot_clear( lua_State *L );
 static int pilot_toggleSpawn( lua_State *L );
 static const luaL_reg pilot_methods[] = {
+   { "player", pilot_getPlayer },
    { "add", pilot_addFleet },
    { "clear", pilot_clear },
    { "toggleSpawn", pilot_toggleSpawn },
@@ -49,18 +51,22 @@ static int pilotL_name( lua_State *L );
 static int pilotL_alive( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
+static int pilotL_velocity( lua_State *L );
 static int pilotL_warp( lua_State *L );
 static int pilotL_broadcast( lua_State *L );
 static int pilotL_setFaction( lua_State *L );
+static int pilotL_setName( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    { "__eq", pilotL_eq },
    { "name", pilotL_name },
    { "alive", pilotL_alive },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
+   { "vel", pilotL_velocity },
    { "warp", pilotL_warp },
    { "broadcast", pilotL_broadcast },
    { "setFaction", pilotL_setFaction },
+   { "setName", pilotL_setName },
    {0,0}
 }; /**< Pilot metatable methods. */
 
@@ -195,6 +201,29 @@ int lua_ispilot( lua_State *L, int ind )
 
    lua_pop(L, 2);  /* remove both metatables */ 
    return ret;
+}
+
+/**
+ * @ingroup PILOT
+ *
+ * @brief pilot player(nil)
+ *
+ * Gets the player's pilot.
+ *
+ *    @return Pilot pointing to the player.
+ */
+static int pilot_getPlayer( lua_State *L )
+{
+   LuaPilot lp;
+
+   if (player == NULL) {
+      lua_pushnil(L);
+      return 1;
+   }
+
+   lp.pilot = player->id;
+   lua_pushpilot(L,lp);
+   return 1;
 }
 
 /**
@@ -472,7 +501,7 @@ static int pilotL_rename( lua_State *L )
  * @fn static int pilotL_position( lua_State *L )
  * @ingroup META_PILOT
  *
- * @brief Vec2 position( nil )
+ * @brief Vec2 pos( nil )
  *
  * Gets the pilot's position.
  *
@@ -494,6 +523,36 @@ static int pilotL_position( lua_State *L )
 
    /* Push position. */
    vectcpy( &v.vec, &p->solid->pos );
+   lua_pushvector(L, v);
+   return 1;
+}
+
+/**
+ * @fn static int pilotL_velocity( lua_State *L )
+ * @ingroup META_PILOT
+ *
+ * @brief Vec2 vel( nil )
+ *
+ * Gets the pilot's velocity.
+ *
+ *    @return The pilot's current velocity.
+ */
+static int pilotL_velocity( lua_State *L )
+{
+   NLUA_MIN_ARGS(1);
+   LuaPilot *p1;
+   Pilot *p;
+   LuaVector v;
+
+   /* Parse parameters */
+   p1 = lua_topilot(L,1);
+   p = pilot_get( p1->pilot );
+
+   /* Pilot must exist. */
+   if (p == NULL) return 0;
+
+   /* Push velocity. */
+   vectcpy( &v.vec, &p->solid->vel );
    lua_pushvector(L, v);
    return 1;
 }
@@ -601,4 +660,33 @@ static int pilotL_setFaction( lua_State *L )
    return 0;
 }
 
+/**
+ * @ingroup META_PILOT
+ *
+ * @brief setName( string name )
+ */
+static int pilotL_setName( lua_State *L )
+{
+   NLUA_MIN_ARGS(2);
+   LuaPilot *lp;
+   Pilot *p;
+   char *name;
+
+   /* Get the parameters. */
+   lp = lua_topilot(L,1);
+   if (lua_isstring(L,2))
+      name = (char*) lua_tostring(L,2);
+   else NLUA_INVALID_PARAMETER();
+
+   /* Get the pilot. */
+   p = pilot_get(lp->pilot);
+   if (p==NULL) return 0;
+
+   /* Set the name. */
+   if (p->name != NULL)
+      free(p->name);
+   p->name = strdup(name);
+
+   return 0;
+}
 
