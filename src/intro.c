@@ -137,7 +137,7 @@ int intro_display (void)
    x = 100.;
    y = 0.;
    tlast = SDL_GetTicks();
-   offset = -(intro_font.h + 5.);
+   offset = 0.;
    max = intro_nlines + SCREEN_H / ((intro_font.h + 5.));
    while (1) {
 
