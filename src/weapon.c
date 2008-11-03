@@ -349,6 +349,9 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          wlayer = wfrontLayer;
          nlayer = &nwfrontLayer;
          break;
+
+      default:
+         WARN("Unknown weapon layer!");
    }
 
    i = 0;
@@ -436,6 +439,9 @@ void weapons_render( const WeaponLayer layer, const double dt )
          wlayer = wfrontLayer;
          nlayer = &nwfrontLayer;
          break;
+
+      default:
+         WARN("Unknown weapon layer!");
    }
    
    for (i=0; i<(*nlayer); i++)
@@ -919,8 +925,7 @@ void weapon_add( const Outfit* outfit, const double dir,
          break;
 
       default:
-         ERR("Invalid WEAPON_LAYER specified");
-         return;
+         WARN("Unknown weapon layer!");
    }
 
    if (*mLayer > *nLayer) /* more memory alloced then needed */
@@ -1099,6 +1104,9 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
          wlayer = wfrontLayer;
          nlayer = &nwfrontLayer;
          break;
+
+      default:
+         WARN("Unknown weapon layer!");
    }
 
    for (i=0; (wlayer[i] != w) && (i < *nlayer); i++); /* get to the curent position */
