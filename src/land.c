@@ -299,7 +299,7 @@ static void outfits_open (void)
 
    /* the descriptive text */
    window_addText( wid, 40+300+20, -60,
-         80, 96, 0, "txtSDesc", &gl_smallFont, &cDConsole,
+         80, 140, 0, "txtSDesc", &gl_smallFont, &cDConsole,
          "Name:\n"
          "Type:\n"
          "Owned:\n"
@@ -310,7 +310,7 @@ static void outfits_open (void)
          "Price:\n"
          "Money:\n" );
    window_addText( wid, 40+300+40+60, -60,
-         250, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+         250, 140, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
    window_addText( wid, 20+300+40, -220,
          OUTFITS_WIDTH-400, 180, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
