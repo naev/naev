@@ -78,7 +78,7 @@ Try to board the ship now.]]
    'p' cycles through planets.
    'l' lands or targets nearest planet if none selected.  Needed to get confirmation.]]
    text[16] = [[The easiest way to land is to hit 'l' to get the first land target and get the lack acknowledgement.  Then you have to "board" the planet, meaning go and brake on top of it.  Then you hit 'l' again to land.  Try doing this now.]]
-   text[17] = [[This is the land window.  Here you can see an image of where you are witha  description of where you landed.  Depending on the planet you'll have various services available.  Services include:
+   text[17] = [[This is the land window.  Here you can see an image of where you are with a  description of where you landed.  Depending on the planet you'll have various services available.  Services include:
    * Commodity Exchange
    * Spaceport Bar
    * Mission Computer
