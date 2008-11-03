@@ -1439,6 +1439,10 @@ static void space_renderStars( const double dt )
 
       glShadeModel(GL_SMOOTH);
 
+      /* Enable AA if possible. */
+      if (gl_has(OPENGL_AA_LINE))
+         glEnable(GL_LINE_SMOOTH);
+
       glBegin(GL_LINES);
 
       /* lines will be based on velocity */
@@ -1454,6 +1458,9 @@ static void space_renderStars( const double dt )
                stars[i].y + y*stars[i].brightness );
       }
       glEnd(); /* GL_LINES */
+
+      if (gl_has(OPENGL_AA_LINE))
+         glDisable(GL_LINE_SMOOTH);
 
       glShadeModel(GL_FLAT);
    }
