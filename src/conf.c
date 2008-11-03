@@ -39,10 +39,12 @@ lua_remove(L,-1);
 
 #define  conf_loadBool(n,b)   \
 lua_getglobal(L, n); \
-if (lua_isnumber(L, -1)) \
-   if ((int)lua_tonumber(L, -1) == 1) { \
+if (lua_isnumber(L, -1)) { \
+   if ((int)lua_tonumber(L, -1) == 1) \
       b = 1; \
-   } \
+} \
+else if (lua_isboolean(L, -1)) \
+   b = lua_toboolean(L, -1); \
 lua_remove(L,-1);
 
 #define  conf_loadString(n,s) \
