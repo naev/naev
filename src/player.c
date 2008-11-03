@@ -275,10 +275,14 @@ void player_new (void)
    vectnull( &player_cam );
    gl_bindCamera( &player_cam );
 
-   /* setup sound */
+   /* Set up GUI. */
+   gui.radar.res = RADAR_RES_DEFAULT;
+   memset( mesg_stack, 0, mesg_max * sizeof(Mesg));
+
+   /* Setup sound */
    player_initSound();
 
-   /* cleanup player stuff if we'll be recreating */
+   /* Clean up player stuff if we'll be recreating. */
    player_cleanup();
    var_cleanup();
    missions_cleanup();
