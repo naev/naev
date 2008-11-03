@@ -55,7 +55,7 @@ else -- default english
    'ctrl + tab' cycles through ships backwards.
    't' targets nearest ship.
    'r' targets nearest hostile.]]
-   text[7] = [[I'll bring in a couple of ships so you can try playing around with targetting. ]]
+   text[7] = [[I'll bring in a couple of ships so you can try playing around with targetting.  You'll notice your targetted ship gets hilighted blue in the radar (top-right).  You can use the + and - key on the keypad to change the zoom on the map.  Yellow is neutral, red is hostile, green is friendly and grey is inert.  The new ships will be yellow.]]
    -- Step 4
    title[4] = "Combat Tutorial"
    text[8] = [[Now let's try using the weapon systems.  There are primarily three keys:
