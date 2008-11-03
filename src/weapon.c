@@ -399,10 +399,14 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
             break;
       }
 
+      /* Out of bounds, loop is over. */
+      if (i >= *nlayer)
+         break;
+
       /* Only increment if weapon wasn't deleted. */
       if (w == wlayer[i]) {
          weapon_update(wlayer[i],dt,layer);
-         if (w == wlayer[i])
+         if ((i < *nlayer) && (w == wlayer[i]))
             i++;
       }
    }
