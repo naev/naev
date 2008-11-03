@@ -402,7 +402,8 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
       /* Only increment if weapon wasn't deleted. */
       if (w == wlayer[i]) {
          weapon_update(wlayer[i],dt,layer);
-         i++;
+         if (w == wlayer[i])
+            i++;
       }
    }
 }
