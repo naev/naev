@@ -353,6 +353,9 @@ static int toolkit_loop (void)
 
    loop_done = 0;
    while (!loop_done && toolkit) {
+      /* Loop first so exit condition is checked before next iteration. */
+      main_loop();
+
       while (SDL_PollEvent(&event)) { /* event loop */
          if (event.type == SDL_QUIT) { /* pass quit event to main engine */
             loop_done = 1;
@@ -362,8 +365,6 @@ static int toolkit_loop (void)
 
          input_handle(&event); /* handles all the events and player keybinds */
       }
-
-      main_loop();
    }
 
    return 0;

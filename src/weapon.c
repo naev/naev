@@ -357,24 +357,24 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
    i = 0;
    while (i < *nlayer) {
       w = wlayer[i];
-      switch (wlayer[i]->outfit->type) {
+      switch (w->outfit->type) {
 
          /* most missiles behave the same */
          case OUTFIT_TYPE_MISSILE_SEEK_AMMO:
          case OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO:
          case OUTFIT_TYPE_MISSILE_SWARM_AMMO:
          case OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO:
-            if (wlayer[i]->lockon > 0.) /* decrement lockon */
-               wlayer[i]->lockon -= dt;
+            if (w->lockon > 0.) /* decrement lockon */
+               w->lockon -= dt;
             /* purpose fallthrough */
 
          /* bolts too */
          case OUTFIT_TYPE_BOLT:
          case OUTFIT_TYPE_TURRET_BOLT:
          case OUTFIT_TYPE_MISSILE_DUMB_AMMO: /* Dumb missiles are like bolts */
-            wlayer[i]->timer -= dt;
-            if (wlayer[i]->timer < 0.) {
-               weapon_destroy(wlayer[i],layer);
+            w->timer -= dt;
+            if (w->timer < 0.) {
+               weapon_destroy(w,layer);
                break;
             }
             break;
@@ -382,18 +382,18 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          /* Beam weapons handled a part. */
          case OUTFIT_TYPE_BEAM:
          case OUTFIT_TYPE_TURRET_BEAM:
-            wlayer[i]->timer -= dt;
-            if (wlayer[i]->timer < 0.) {
-               weapon_destroy(wlayer[i],layer);
+            w->timer -= dt;
+            if (w->timer < 0.) {
+               weapon_destroy(w,layer);
                break;
             }
             /* We use the lockon to tell when we have to create explosions. */
-            wlayer[i]->lockon -= dt;
-            if (wlayer[i]->lockon < 0.) {
-               if (wlayer[i]->lockon < -1.)
-                  wlayer[i]->lockon = 0.100;
+            w->lockon -= dt;
+            if (w->lockon < 0.) {
+               if (w->lockon < -1.)
+                  w->lockon = 0.100;
                else
-                  wlayer[i]->lockon = -1.;
+                  w->lockon = -1.;
             }
             break;
          default:
@@ -408,7 +408,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 
       /* Only increment if weapon wasn't deleted. */
       if (w == wlayer[i]) {
-         weapon_update(wlayer[i],dt,layer);
+         weapon_update(w,dt,layer);
          if ((i < *nlayer) && (w == wlayer[i]))
             i++;
       }
