@@ -97,7 +97,7 @@ DATAFILES := 	$(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN)
 
 %.o:	%.c %.h
 	@$(CC) -c $(CFLAGS) -o $@ $<
-	@echo -e "\tCC   $@"
+	@echo "   CC   $@"
 
 
 all:	utils ndata lua naev
@@ -117,7 +117,7 @@ help:
 
 naev: $(OBJS)
 	@$(CC) $(LDFLAGS) -o $(APPNAME) $(OBJS) lib/lua/liblua.a
-	@echo -e "\tLD   $(APPNAME)"
+	@echo "   LD   $(APPNAME)"
 
 
 lua: lib/lua/liblua.a
@@ -141,7 +141,7 @@ $(VERSIONFILE):
 
 ndata: pack $(DATAFILES)
 	@echo -n "$(VMAJOR).$(VMINOR).$(VREV)" > $(VERSIONFILE)
-	@echo -e "\tCreating ndata\n"
+	@echo "   DAT  ndata"
 	@./pack $(DATA) $(DATAFILES) $(VERSIONFILE)
 
 
@@ -153,17 +153,17 @@ docs:
 
 
 clean:
-	@echo -e "\tRemoving ndata"
+	@echo "   Removing ndata"
 	@$(RM) $(DATA)
-	@echo -e "\tRemoving object files"
+	@echo "   Removing object files"
 	@$(RM) $(OBJS)
 
 
 purge: clean
-	@echo -e "\tCleaning utilities"
+	@echo "   Cleaning utilities"
 	@$(MAKE) -C utils/pack clean
 	@$(MAKE) -C utils/mkspr clean
-	@echo -e "\tCleaning Lua"
+	@echo "   Cleaning Lua"
 	@$(MAKE) -C lib/lua clean
 
 
