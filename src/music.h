@@ -35,6 +35,9 @@ int music_volume( const double vol );
 void music_load( const char* name );
 void music_play (void);
 void music_stop (void);
+void music_pause (void);
+void music_resume (void);
+void music_setPos( double sec );
 
 /*
  * lua control

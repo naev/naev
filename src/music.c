@@ -243,6 +243,41 @@ void music_stop (void)
 }
 
 
+/**
+ * @brief Pauses the music.
+ */
+void music_pause (void)
+{
+   if (music_music == NULL) return;
+
+   Mix_PauseMusic();
+}
+
+
+/**
+ * @brief Resumes the music.
+ */
+void music_resume (void)
+{
+   if (music_music == NULL) return;
+
+   Mix_ResumeMusic();
+}
+
+
+/**
+ * @brief Sets the music to a position in seconds.
+ *
+ *    @param sec Position to go to in seconds.
+ */
+void music_setPos( double sec )
+{
+   if (music_music == NULL) return;
+
+   Mix_FadeInMusicPos( music_music, 1, 1000, sec );
+}
+
+
 /*
  * music lua stuff
  */
