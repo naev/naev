@@ -22,6 +22,7 @@
 #include "log.h"
 #include "pack.h"
 #include "font.h"
+#include "music.h"
 
 
 #define INTRO_FONT_SIZE    18. /**< Intro text font size. */
@@ -133,7 +134,11 @@ int intro_display (void)
    density /= (double)intro_font.h; /* char / pixel */
    vel = INTRO_SPEED / density;  /* (char / s) * (pixel / char) = pixel / s */
 
+   /* Change music to intro music. */
+   music_load("intro");
+   music_play();
 
+   /* Prepare for intro loop. */
    x = 100.;
    y = 0.;
    tlast = SDL_GetTicks();
@@ -150,9 +155,15 @@ int intro_display (void)
       while (SDL_PollEvent(&event)) {
          switch (event.type) {
             case SDL_KEYDOWN:
+
                /* Escape skips directly. */
                if (event.key.keysym.sym == SDLK_ESCAPE)
                   offset = max * (intro_font.h + 5.);
+
+               /* Only Handle space from here down. */
+               else if (!isspace(event.key.keysym.sym))
+                  break;
+
                   /* Purpose fallthrough. */
             case SDL_JOYBUTTONDOWN:
                offset += 250.;
@@ -194,6 +205,9 @@ int intro_display (void)
 
       SDL_Delay(10); /* No need to burn CPU. */
    }
+
+   /* Stop music, normal music will start shortly after. */
+   music_stop();
 
    /* Clean up after the introduction. */
    intro_cleanup();
