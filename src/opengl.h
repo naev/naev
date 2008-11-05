@@ -43,6 +43,7 @@
 #define OPENGL_FRAG_SHADER (1<<6) /**< Fragment shaders. */
 #define OPENGL_VERT_SHADER (1<<7) /**< Vertex shaders. */
 #define OPENGL_DIM_DEF     (1<<8) /**< Dimensions specifically defined. */
+#define OPENGL_FSAA        (1<<9) /**< Full Screen Anti Aliasing. */
 #define gl_has(f)    (gl_screen.flags & (f)) /**< Check for the flag */
 /**
  * @struct glInfo
@@ -60,6 +61,7 @@ typedef struct glInfo_ {
    unsigned int flags; /**< Stores different propertiers */
    int tex_max; /**< Maximum texture size */
    int multitex_max; /**< Maximum multitexture levels */
+   int fsaa; /**< Full Scene Anti Aliasing level. */
 } glInfo;
 extern glInfo gl_screen; /* local structure set with gl_init and co */
 

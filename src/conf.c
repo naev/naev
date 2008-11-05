@@ -110,6 +110,7 @@ void conf_setDefaults (void)
    gl_screen.w = 800;
    gl_screen.h = 600;
    gl_screen.flags = 0;
+   gl_screen.fsaa = 4; /* Only used if activated. */
    /* openal */
    nosound = 0;
    /* joystick */
@@ -125,12 +126,15 @@ void conf_setDefaults (void)
  */
 int conf_loadConfig ( const char* file )
 {
-   int i = 0;
-   double d = 0.;
+   int i;
+   double d;
    char *str, *mod;
    int type, key, reverse;
-   int w, h;
+   int w,h, fsaa;
    SDLMod m;
+
+   i = 0;
+   d = 0.;
 
    lua_State *L = nlua_newState();
    if (luaL_dofile(L, file) == 0) { /* configuration file exists */
@@ -138,7 +142,10 @@ int conf_loadConfig ( const char* file )
       /* global */
       conf_loadString("data",data);
 
-      /* opengl properties*/
+      /*
+       * opengl properties
+       */
+      /* Dimensions. */
       w = h = 0;
       conf_loadInt("width",w);
       conf_loadInt("height",h);
@@ -150,8 +157,17 @@ int conf_loadConfig ( const char* file )
          gl_screen.flags |= OPENGL_DIM_DEF;
          gl_screen.h = h;
       }
+      /* FSAA */
+      fsaa = 0;
+      conf_loadInt("fsaa",fsaa);
+      if (fsaa > 0) {
+         gl_screen.flags |= OPENGL_FSAA;
+         gl_screen.fsaa = fsaa;
+      }
+      /* Fullscreen. */
       conf_loadBool("fullscreen",i);
       if (i) { gl_screen.flags |= OPENGL_FULLSCREEN; i = 0; }
+      /* Anti aliasing. */
       conf_loadBool("aa",i);
       if (i) {
          gl_screen.flags |= OPENGL_AA_POINT | OPENGL_AA_LINE | OPENGL_AA_POLYGON;
@@ -162,6 +178,7 @@ int conf_loadConfig ( const char* file )
       if (i) { gl_screen.flags |= OPENGL_AA_LINE; i = 0; }
       conf_loadBool("aa_polygon",i);
       if (i) { gl_screen.flags |= OPENGL_AA_POLYGON; i = 0; }
+      /* Vsync. */
       conf_loadBool("vsync",i);
       if (i) { gl_screen.flags |= OPENGL_VSYNC; i = 0; }
 
@@ -172,7 +189,9 @@ int conf_loadConfig ( const char* file )
       /* input */
       conf_loadInt("afterburn",input_afterburnSensibility);
 
-      /* sound */
+      /* 
+       * sound
+       */
       conf_loadBool("nosound",i)
       nosound = i; i = 0;
       conf_loadFloat("sound",d);
@@ -181,7 +200,9 @@ int conf_loadConfig ( const char* file )
       if (d) { music_volume(d); d = 0.; }
 
 
-      /* joystick */
+      /* 
+       * Joystick.
+       */
       lua_getglobal(L, "joystick");
       if (lua_isnumber(L, -1)) {
          indjoystick = (int)lua_tonumber(L, -1);
@@ -192,7 +213,10 @@ int conf_loadConfig ( const char* file )
          lua_remove(L,-1);
       }
 
-      /* grab the keybindings if there are any */
+
+      /*
+       * Keybindings.
+       */
       for (i=0; strcmp(keybindNames[i],"end"); i++) {
          lua_getglobal(L, keybindNames[i]);
          str = NULL;

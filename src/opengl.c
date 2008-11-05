@@ -991,6 +991,10 @@ int gl_init()
 
    /* Set opengl flags. */
    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); /* Ideally want double buffering. */
+   if (gl_has(OPENGL_FSAA)) {
+      SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+      SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, gl_screen.fsaa);
+   }
    if (gl_has(OPENGL_VSYNC))
       SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, 1);
 
@@ -1010,7 +1014,7 @@ int gl_init()
          WARN("No fullscreen modes available");
          if (flags & SDL_FULLSCREEN) {
             WARN("Disabling fullscreen mode");
-            flags ^= SDL_FULLSCREEN;
+            flags &= ~SDL_FULLSCREEN;
          }
       }
       else if (modes == (SDL_Rect **)-1)
@@ -1060,8 +1064,17 @@ int gl_init()
 
    /* actually creating the screen */
    if (SDL_SetVideoMode( SCREEN_W, SCREEN_H, gl_screen.depth, flags)==NULL) {
-      ERR("Unable to create OpenGL window: %s", SDL_GetError());
-      return -1;
+      /* Try again possibly disabling FSAA. */
+      if (gl_has(OPENGL_FSAA)) {
+         LOG("Disabling FSAA.");
+         gl_screen.flags &= ~OPENGL_FSAA;
+         SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 0);
+         SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0);
+      }
+      if (SDL_SetVideoMode( SCREEN_W, SCREEN_H, gl_screen.depth, flags)==NULL) {
+         ERR("Unable to create OpenGL window: %s", SDL_GetError());
+         return -1;
+      }
    }
 
    /* Get info about the OpenGL window */
