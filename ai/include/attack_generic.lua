@@ -58,7 +58,7 @@ function atk_g ()
       atk_g_ranged( target, dist )
 
    elseif dist > range * atk_aim then
-      if ai.relvel( target ) < 0 then
+      if ai.relvel(target) > -10 then
          atk_g_ranged( target, dist )
       else
          atk_g_aim( target, dist )
@@ -116,6 +116,7 @@ end
 function atk_g_melee( target, dist )
    secondary, special = ai.secondary("melee")
    dir = ai.aim(target) -- We aim instead of face
+   range = ai.getweaprange()
 
    -- Fire non-smart secondary weapons
    if (secondary == "Launcher" and special ~= "Smart") or
@@ -125,7 +126,13 @@ function atk_g_melee( target, dist )
       end
    end
 
-   if (dir < 10 and dist < range)or ai.hasturrets() then
+   -- Drifting away we'll want to get closer
+   if dir < 10  and dist > 0.5*range and ai.relvel(target) > -10 then
+      ai.accel()
+   end
+
+   -- Shoot if should be shooting.
+   if (dir < 10 and dist < range) or ai.hasturrets() then
       ai.shoot()
    end
 end
