@@ -188,14 +188,14 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
    hits = 0;
    /* Left border. */
    if (CollideLineLine(ap->x, ap->y, ep[0], ep[1],
-         bl[0], bl[1], bl[0], tr[1], &tmp_crash) != 0) {
+         bl[0], bl[1], bl[0], tr[1], &tmp_crash) == 1) {
       border[hits].x = tmp_crash.x;
       border[hits].y = tmp_crash.y;
       hits++;
    }
    /* Top border. */
    if (CollideLineLine(ap->x, ap->y, ep[0], ep[1],
-         bl[0], tr[1], tr[0], tr[1], &tmp_crash) != 0) {
+         bl[0], tr[1], tr[0], tr[1], &tmp_crash) == 1) {
       border[hits].x = tmp_crash.x;
       border[hits].y = tmp_crash.y;
       hits++;
@@ -203,14 +203,14 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
    /* Now we have to make sure hits isn't 2. */
    /* Right border. */
    if ((hits < 2) && CollideLineLine(ap->x, ap->y, ep[0], ep[1],
-         tr[0], tr[1], tr[0], bl[1], &tmp_crash) != 0) {
+         tr[0], tr[1], tr[0], bl[1], &tmp_crash) == 1) {
       border[hits].x = tmp_crash.x;
       border[hits].y = tmp_crash.y;
       hits++;
    }
    /* Bottom border. */
    if ((hits < 2) && CollideLineLine(ap->x, ap->y, ep[0], ep[1],
-         tr[0], bl[1], bl[0], bl[1], &tmp_crash) != 0) {
+         tr[0], bl[1], bl[0], bl[1], &tmp_crash) == 1) {
       border[hits].x = tmp_crash.x;
       border[hits].y = tmp_crash.y;
       hits++;
