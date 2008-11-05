@@ -15,7 +15,7 @@ function atk_g_think ()
    target = ai.target()
 
    -- Get new target if it's closer
-   if enemy ~= target then
+   if enemy ~= target and enemy ~= nil then
       dist = ai.dist( ai.pos(target) )
       range = ai.getweaprange()
 
