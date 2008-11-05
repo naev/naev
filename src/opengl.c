@@ -976,7 +976,7 @@ void gl_checkErr (void)
  */
 int gl_init()
 {
-   int doublebuf, depth, i, j, off, toff, supported;
+   int doublebuf, depth, i, j, off, toff, supported, fsaa;
    SDL_Rect** modes;
    int flags = SDL_OPENGL;
    flags |= SDL_FULLSCREEN * (gl_has(OPENGL_FULLSCREEN) ? 1 : 0);
@@ -1066,7 +1066,7 @@ int gl_init()
    if (SDL_SetVideoMode( SCREEN_W, SCREEN_H, gl_screen.depth, flags)==NULL) {
       /* Try again possibly disabling FSAA. */
       if (gl_has(OPENGL_FSAA)) {
-         LOG("Disabling FSAA.");
+         LOG("Unable to create OpenGL window: Trying without FSAA.");
          gl_screen.flags &= ~OPENGL_FSAA;
          SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 0);
          SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0);
@@ -1083,6 +1083,7 @@ int gl_init()
    SDL_GL_GetAttribute( SDL_GL_BLUE_SIZE, &gl_screen.b );
    SDL_GL_GetAttribute( SDL_GL_ALPHA_SIZE, &gl_screen.a );
    SDL_GL_GetAttribute( SDL_GL_DOUBLEBUFFER, &doublebuf );
+   SDL_GL_GetAttribute( SDL_GL_MULTISAMPLESAMPLES, &fsaa);
    if (doublebuf) gl_screen.flags |= OPENGL_DOUBLEBUF;
    gl_screen.depth = gl_screen.r + gl_screen.g + gl_screen.b + gl_screen.a;
 
@@ -1099,16 +1100,19 @@ int gl_init()
    /* Debug happiness */
    DEBUG("OpenGL Window Created: %dx%d@%dbpp %s", SCREEN_W, SCREEN_H, gl_screen.depth,
          gl_has(OPENGL_FULLSCREEN)?"fullscreen":"window");
-   DEBUG("r: %d, g: %d, b: %d, a: %d, db: %s, tex: %d",
+   DEBUG("r: %d, g: %d, b: %d, a: %d, db: %s, fsaa: %d, tex: %d",
          gl_screen.r, gl_screen.g, gl_screen.b, gl_screen.a,
          gl_has(OPENGL_DOUBLEBUF) ? "yes" : "no",
-         gl_screen.tex_max);
+         fsaa, gl_screen.tex_max);
    DEBUG("Renderer: %s", glGetString(GL_RENDERER));
    DEBUG("Version: %s", glGetString(GL_VERSION));
    /* Now check for things that can be bad */
    if (gl_screen.multitex_max < OPENGL_REQ_MULTITEX)
       WARN("Missing texture units (%d required, %d found)",
             OPENGL_REQ_MULTITEX, gl_screen.multitex_max );
+   if (gl_has(OPENGL_FSAA) && (fsaa != gl_screen.fsaa))
+      WARN("Unable to get requested FSAA level (%d requested, got %d)",
+            gl_screen.fsaa, fsaa );
    if (!gl_has(OPENGL_FRAG_SHADER))
       DEBUG("No fragment shader extension detected"); /* Not a warning yet... */
    DEBUG("");
