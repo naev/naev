@@ -56,7 +56,7 @@
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
 
 #define menu_Open(f)    (menu_open |= (f)) /**< Marks a menu as opened. */
-#define menu_Close(f)   (menu_open ^= (f)) /**< Marksa  menu as closed. */
+#define menu_Close(f)   (menu_open &= ~(f)) /**< Marks a menu as closed. */
 int menu_open = 0; /**< Stores the opened/closed menus. */
 
 
@@ -206,11 +206,12 @@ void menu_small (void)
    unsigned int wid;
 
    /* Check if menu should be openable. */
-   if ((player == NULL) || player_isFlag(PLAYER_DESTROYED)
-         || pilot_isFlag(player,PILOT_DEAD) ||
+   if ((player == NULL) || player_isFlag(PLAYER_DESTROYED) ||
+         pilot_isFlag(player,PILOT_DEAD) ||
+         dialogue_isOpen() || /* Shouldn't open over dialogues. */
          (menu_isOpen(MENU_MAIN) ||
-         menu_isOpen(MENU_SMALL) ||
-         menu_isOpen(MENU_DEATH) ))
+            menu_isOpen(MENU_SMALL) ||
+            menu_isOpen(MENU_DEATH) ))
       return;
 
    wid = window_create( "Menu", -1, -1, MENU_WIDTH, MENU_HEIGHT );

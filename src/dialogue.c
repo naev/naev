@@ -33,6 +33,9 @@
 #include "input.h"
 
 
+int dialogue_open; /**< Number of dialogues open. */
+
+
 /*
  * Prototypes.
  */
@@ -49,6 +52,14 @@ static void dialogue_inputCancel( unsigned int wid, char* str );
 static int loop_done; /**< Used to indicate the secondary loop is finished. */
 static int toolkit_loop (void);
 
+
+/**
+ * @brief Checks to see if a dialogue is open.
+ */
+int dialogue_isOpen (void)
+{
+   return !!dialogue_open;
+}
 
 /**
  * @brief Displays an alert popup with only an ok button and a message.
@@ -77,6 +88,8 @@ void dialogue_alert( const char *fmt, ... )
          &gl_smallFont, &cBlack, msg );
    window_addButton( wdw, 135, 20, 50, 30, "btnOK", "OK",
          dialogue_alertClose );
+
+   dialogue_open++;
 }
 /**
  * @brief Closes the alert dialogue.
@@ -86,6 +99,7 @@ static void dialogue_alertClose( unsigned int wid, char* str )
 {
    (void)str;
    window_destroy( wid );
+   dialogue_open--;
 }
 
 
@@ -164,6 +178,7 @@ void dialogue_msg( char* caption, const char *fmt, ... )
    window_addButton( msg_wid, (w-50)/2, 20, 50, 30, "btnOK", "OK",
          dialogue_msgClose );
 
+   dialogue_open++;
    toolkit_loop();
 }
 /**
@@ -175,6 +190,7 @@ static void dialogue_msgClose( unsigned int wid, char* str )
    (void)str;
    window_destroy( wid );
    loop_done = 1;
+   dialogue_open--;
 }
 
 
@@ -217,6 +233,7 @@ int dialogue_YesNo( char* caption, const char *fmt, ... )
          dialogue_YesNoClose );
 
    /* tricky secondary loop */
+   dialogue_open++;
    toolkit_loop();
 
    /* return the result */
@@ -237,6 +254,7 @@ static void dialogue_YesNoClose( unsigned int wid, char* str )
    yesno_wid = 0;
 
    loop_done = 1;
+   dialogue_open--;
 }
 
 
@@ -290,6 +308,7 @@ char* dialogue_input( char* title, int min, int max, const char *fmt, ... )
          "btnClose", "Done", dialogue_inputClose );
 
    /* tricky secondary loop */
+   dialogue_open++;
    input = NULL;
    while (!input_cancelled && (!input ||
          ((int)strlen(input) < min))) { /* must be longer then min */
@@ -313,6 +332,7 @@ char* dialogue_input( char* title, int min, int max, const char *fmt, ... )
    /* cleanup */
    window_destroy( input_wid );
    input_wid = 0;
+   dialogue_open--;
 
    /* return the result */
    return input;
