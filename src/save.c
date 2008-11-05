@@ -213,9 +213,12 @@ static void load_menu_load( unsigned int wdw, char *str )
       return;
 
    snprintf( path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), save );
-   load_game( path );
+
+   /* Close menus before loading for proper rendering. */
    load_menu_close(wdw, NULL);
    menu_main_close();
+
+   load_game( path );
 }
 /**
  * @brief Deletes an old game.
