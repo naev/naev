@@ -42,17 +42,6 @@ CXML   := $(shell xml2-config --cflags)
 CTTF   := $(shell freetype-config --cflags)
 CGL    :=
 CFLAGS := $(CLUA) $(CSDL) $(CXML) $(CTTF) $(CGL) $(VERSION) -D$(OS)
-ifeq ($(OS),LINUX)
-CFLAGS += -D_POSIX_SOURCE
-endif
-ifdef DEBUG
-CFLAGS += -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -fstack-protector -fstack-protector-all -g3 -DDEBUG -DLUA_USE_APICHECK -std=c99 -ansi
-ifdef DEBUG_PARANOID
-CFLAGS += -DDEBUG_PARANOID
-endif # DEBUG_PARANOID
-else # DEBUG
-CFLAGS += -O2 -funroll-loops -pipe -std=c99 -ansi
-endif # DEBUG
 
 
 #
@@ -64,6 +53,32 @@ LDXML   := $(shell xml2-config --libs)
 LDTTF   := $(shell freetype-config --libs)
 LDGL    := -lGL
 LDFLAGS := -lm $(LDLUA) $(LDSDL) $(LDXML) $(LDTTF) $(LDGL)
+
+
+# OS Stuff
+
+ifeq ($(OS),LINUX)
+CFLAGS += -D_POSIX_SOURCE
+endif
+
+# Debug stuff
+
+ifdef DEBUG
+CFLAGS += -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -fstack-protector -fstack-protector-all -g3 -DDEBUG -DLUA_USE_APICHECK -std=c99 -ansi
+
+ifdef DEBUG_PARANOID
+CFLAGS += -DDEBUG_PARANOID
+endif # DEBUG_PARANOID
+
+# Handle OS Debug stuff here.
+
+ifeq ($(OS),LINUX)
+LDFLAGS += -rdynamic
+endif # LINUX
+
+else # DEBUG
+CFLAGS += -O2 -funroll-loops -pipe -std=c99 -ansi
+endif # DEBUG
 
 
 #

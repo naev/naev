@@ -292,7 +292,7 @@ static int factionL_areenemies( lua_State *L )
    LuaFaction *f, *ff;
    f = lua_tofaction(L,1);
    if (lua_isfaction(L,2)) ff = lua_tofaction(L,2);
-   else NLUA_INVALID_PARAMETER()
+   else NLUA_INVALID_PARAMETER();
 
    lua_pushboolean(L, areEnemies( f->f, ff->f ));
    return 1;
@@ -313,7 +313,7 @@ static int factionL_areallies( lua_State *L )
    LuaFaction *f, *ff;
    f = lua_tofaction(L,1);
    if (lua_isfaction(L,2)) ff = lua_tofaction(L,2);
-   else NLUA_INVALID_PARAMETER()
+   else NLUA_INVALID_PARAMETER();
 
    lua_pushboolean(L, areAllies( f->f, ff->f ));
    return 1;
@@ -335,7 +335,7 @@ static int factionL_modplayer( lua_State *L )
    f = lua_tofaction(L,1);
 
    if (lua_isnumber(L,2)) n = lua_tonumber(L,2);
-   else NLUA_INVALID_PARAMETER()
+   else NLUA_INVALID_PARAMETER();
 
    faction_modPlayer( f->f, n );
    return 0;
@@ -359,7 +359,7 @@ static int factionL_modplayerraw( lua_State *L )
    f = lua_tofaction(L,1);
 
    if (lua_isnumber(L,2)) n = lua_tonumber(L,2);
-   else NLUA_INVALID_PARAMETER()
+   else NLUA_INVALID_PARAMETER();
 
    faction_modPlayerRaw( f->f, n );
    return 0;

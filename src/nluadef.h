@@ -15,7 +15,7 @@
 /*
  * debug stuff
  */
-#ifdef DEBUG
+#ifndef NODEBUG
 #define NLUA_DEBUG(str, args...) \
    (fprintf(stdout,"Lua: "str"\n", ## args))
 #define NLUA_INVALID_PARAMETER()    \
@@ -28,11 +28,11 @@
       NLUA_DEBUG("[%s] Too few arguments (%s:%d)", __func__, __FILE__, __LINE__); \
       return 0; \
    }
-#else /* DEBUG */
+#else /* NODEBUG */
 #define NLUA_DEBUG(str, args...) do {;} while(0)
 #define NLUA_MIN_ARGS(n)         do {;} while(0)
 #define NLUA_INVALID_PARAMETER() do {;} while(0)
-#endif /* DEBUG */
+#endif /* NODEBUG */
 
 
 /*

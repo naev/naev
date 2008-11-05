@@ -21,6 +21,13 @@
 
 /* global */
 #include <string.h> /* strdup */
+#if defined(LINUX) && !defined(NODEBUG)
+#include <signal.h>
+#include <execinfo.h>
+#include <stdlib.h>
+#include <unistd.h>
+#endif /* defined(LINUX) && !defined(DEBUG) */
+
 
 /* local */
 #include "naev.h"
@@ -90,19 +97,22 @@ char* namjoystick = NULL; /**< Name of joystick to use, NULL is none. */
 /* Loading. */
 static void print_SDLversion (void);
 static void loadscreen_load (void);
-void loadscreen_render( double done, const char *msg ); /* nebulae.c */
 static void loadscreen_unload (void);
 static void load_all (void);
 static void unload_all (void);
-void main_loop (void);
 static void display_fps( const double dt );
 static void window_caption (void);
 static void data_name (void);
+static void debug_sigInit (void);
 /* update */
 static void fps_control (void);
 static void update_all (void);
 static void update_routine( double dt );
 static void render_all (void);
+/* Misc. */
+void loadscreen_render( double done, const char *msg ); /* nebulae.c */
+void main_loop (void); /* dialogue.c */
+
 
 
 /**
@@ -122,23 +132,26 @@ int main( int argc, char** argv )
    snprintf( version, VERSION_LEN, "%d.%d.%d", VMAJOR, VMINOR, VREV );
    LOG( " "APPNAME" v%s", version );
 
-   /* initializes SDL for possible warnings */
+   /* Initializes SDL for possible warnings. */
    SDL_Init(0);
 
-   /* create the home directory if needed */
+   /* Set up debug signal handlers. */
+   debug_sigInit();
+
+   /* Create the home directory if needed. */
    if (nfile_dirMakeExist("."))
       WARN("Unable to create naev directory '%s'",nfile_basePath());
 
-   /* input must be initialized for config to work */
+   /* Input must be initialized for config to work. */
    input_init(); 
 
-   /* set the configuration */
+   /* Set the configuration. */
    snprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_basePath());
    conf_setDefaults(); /* set the default config values */
    conf_loadConfig(buf); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
 
-   /* load the data basics */
+   /* Load the data basics. */
    data_name();
    LOG(" %s", dataname);
    DEBUG();
@@ -729,3 +742,89 @@ static void print_SDLversion (void)
 }
 
 
+#if defined(LINUX) && !defined(NODEBUG)
+/**
+ * @brief Gets the string related to the signal code.
+ *
+ *    @param sig Signal to which code belongs.
+ *    @param sig_code Signal code to get string of.
+ *    @return String of signal code.
+ */
+static const char* debug_sigCodeToStr( int sig, int sig_code )
+{
+   if (sig == SIGFPE)
+      switch (sig_code) {
+         case FPE_INTDIV: return "SIGFPE (integer divide by zero)";
+         case FPE_INTOVF: return "SIGFPE (integer overflow)";
+         case FPE_FLTDIV: return "SIGFPE (floating-point divide by zero)";
+         case FPE_FLTOVF: return "SIGFPE (floating-point overflow)";
+         case FPE_FLTUND: return "SIGFPE (floating-point underflow)";
+         case FPE_FLTRES: return "SIGFPE (floating-point inexact result)";
+         case FPE_FLTINV: return "SIGFPE (floating-point invalid operation)";
+         case FPE_FLTSUB: return "SIGFPE (subscript out of range)";
+         default: return "SIGFPE";
+      }
+   else if (sig == SIGSEGV)
+      switch (sig_code) {
+         case SEGV_MAPERR: return "SIGSEGV (address not mapped to object)";
+         case SEGV_ACCERR: return "SIGSEGV (invalid permissions for mapped object)";
+         default: return "SIGSEGV";
+      }
+
+   /* No suitable code found. */
+   return strsignal(sig);
+}
+
+
+/**
+ * @brief Backtrace signal handler for Linux.
+ *
+ *    @param sig Signal.
+ *    @param info Signal information.
+ *    @param unused Unused.
+ */
+static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
+{
+   (void)sig;
+   (void)unused;
+   int i, num;
+   void *buf[64];
+   char **symbols;
+
+   num = backtrace(buf, 64);
+   symbols = backtrace_symbols(buf, num);
+
+   DEBUG("NAEV recieved %s!",
+         debug_sigCodeToStr(info->si_signo, info->si_code) );
+   for (i=0; i<num; i++)
+      DEBUG("   %s", symbols[i]);
+   DEBUG("Report this to project maintainer with the backtrace.");
+
+   exit(1);
+}
+#endif /* defined(LINUX) && !defined(DEBUG) */
+
+
+/**
+ * @brief Sets up the SignalHandler for Linux.
+ */
+static void debug_sigInit (void)
+{
+#if defined(LINUX) && !defined(NODEBUG)
+   struct sigaction sa, so;
+
+   /* Set up handler. */
+   sa.sa_handler   = NULL;
+   sa.sa_sigaction = debug_sigHandler;
+   sigemptyset(&sa.sa_mask);
+   sa.sa_flags     = SA_SIGINFO;
+
+   /* Attach signals. */
+   sigaction(SIGSEGV, &sa, &so);
+   if (so.sa_handler == SIG_IGN)
+      DEBUG("Unable to set up SIGSEGV signal handler.");
+   sigaction(SIGFPE, &sa, &so);
+   if (so.sa_handler == SIG_IGN)
+      DEBUG("Unable to set up SIGFPE signal handler.");
+#endif /* defined(LINUX) && !defined(DEBUG) */
+}

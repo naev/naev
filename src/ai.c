@@ -1361,7 +1361,7 @@ static int ai_relvel( lua_State *L )
    NLUA_MIN_ARGS(1);
 
    if (lua_isnumber(L,1)) id = (unsigned int) lua_tonumber(L,1);
-   else NLUA_INVALID_PARAMETER()
+   else NLUA_INVALID_PARAMETER();
 
    p = pilot_get(id);
    if (p==NULL) {
