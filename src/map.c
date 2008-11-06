@@ -833,7 +833,9 @@ StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend, int ign
          sys = &systems_stack[cur->sys->jumps[i]];
 
          /* Make sure it's reachable */
-         if (!ignore_known && (!sys_isKnown(sys) && !space_sysReachable(esys)))
+         if (!ignore_known &&
+               ((!sys_isKnown(sys) && 
+                  (!sys_isKnown(cur->sys) || !space_sysReachable(esys)))))
             continue;
 
          neighbour = A_newNode( sys, NULL );
