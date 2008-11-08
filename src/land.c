@@ -769,7 +769,7 @@ static void shipyard_yours_open( unsigned int parent, char* str )
 
    /* text */
    window_addText( wid, 40+300+40, -55,
-         100, 96, 0, "txtSDesc", &gl_smallFont, &cDConsole,
+         100, 200, 0, "txtSDesc", &gl_smallFont, &cDConsole,
          "Name:\n"
          "Ship:\n"
          "Class:\n"
@@ -782,12 +782,12 @@ static void shipyard_yours_open( unsigned int parent, char* str )
          "Sell price:\n"
          );
    window_addText( wid, 40+300+40+100, -55,
-      130, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, 40+300+40, -215,
+      130, 200, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+   window_addText( wid, 40+300+40, -255,
       100, 20, 0, "txtSOutfits", &gl_smallFont, &cDConsole,
       "Outfits:\n"
       );
-   window_addText( wid, 40+300+40, -215-gl_smallFont.h-5,
+   window_addText( wid, 40+300+40, -255-gl_smallFont.h-5,
       SHIPYARD_WIDTH-40-300-40-20, 200, 0, "txtDOutfits",
       &gl_smallFont, &cBlack, NULL );
 
