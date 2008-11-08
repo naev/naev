@@ -1735,6 +1735,14 @@ Pilot* pilot_copy( Pilot* src )
  */
 void pilot_free( Pilot* p )
 {
+   int i;
+  
+   /* Clear up pilot hooks. */
+   for (i=0; i<PILOT_HOOKS; i++)
+      if (p->hook_type[i] != PILOT_HOOK_NONE)
+         hook_rm( p->hook[i] );
+
+   /* Clean up data. */
    if (p->ai != NULL)
       ai_destroy(p); /* Must be destroyed first if applicable. */
    if (player==p) player = NULL;
