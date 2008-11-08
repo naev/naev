@@ -189,6 +189,7 @@ void faction_modPlayer( int f, double mod )
 {
    int i;
    Faction *faction, *ally, *enemy;
+   double m;
 
    if (!faction_isFaction(f)) {
       WARN("%d is an invalid faction", f);
@@ -205,7 +206,12 @@ void faction_modPlayer( int f, double mod )
    for (i=0; i<faction->nallies; i++) {
       ally = &faction_stack[faction->allies[i]];
 
-      ally->player += RNGF() * (mod*3/4);
+      /* Enemies are made faster. */
+      m = RNGF();
+      if (mod > 0.)
+         m *= 3./4.;
+
+      ally->player += m;
       faction_sanitizePlayer(ally);
    }
 
@@ -213,7 +219,12 @@ void faction_modPlayer( int f, double mod )
    for (i=0; i<faction->nenemies; i++) {
       enemy = &faction_stack[faction->enemies[i]];
 
-      enemy->player -= RNGF() * mod; /* Enemies are made faster. */
+      /* Enemies are made faster. */
+      m = RNGF();
+      if (mod < 0.)
+         m *= 3./4.;
+
+      enemy->player -= m;
       faction_sanitizePlayer(enemy);
    }
 }
