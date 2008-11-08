@@ -247,6 +247,7 @@ function boardOver ()
    pilots = pilot.add( "Pirate Hyena" )
    for k,v in ipairs(pilots) do
        hook.pilot( v, "death", "hyenaDead" )
+       hook.pilot( v, "jump", "hyenaDead" ) -- Treat jump as dead
    end
    misn.timerStart( "bringHelp", 9000 ) -- Player "should" surive 9 seconds
 end
