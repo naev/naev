@@ -34,6 +34,7 @@ else -- default english
    msg_msg[1] = "You have too many active missions."
    msg_title[2] = "Succesful Delivery"
    msg_msg[2] = "The workers unload the %s at the docks."
+   msg_msg[5] = "The %s leave your ship."
    msg_title[3] = "Cargo Missing"
    msg_msg[3] = "You are missing the %d tons of %s!."
    msg_msg[4] = "MISSION FAILED: You have failed to delivery the goods on time!"
@@ -109,6 +110,7 @@ function create()
       end
    end
 
+   -- Set reward and description
    if misn_type == "Cargo" then
       misn.setDesc( string.format( misn_desc[1], planet:name(), system:name(), carg_mass, carg_type ) )
       reward = misn_dist * carg_mass * (250+rnd.int(150)) +
@@ -123,7 +125,7 @@ function create()
       reward = misn_dist * carg_mass * (450+rnd.int(250)) +
             carg_mass * (250+rnd.int(125)) +
             rnd.int(2500)
-   else -- "People"
+   elseif misn_type == "People" then
       misn.setDesc( string.format( misn_desc[21], carg_type, planet:name(), system:name() ))
       reward = misn_dist * (1000+rnd.int(500)) + rnd.int(2000)
    end
@@ -162,7 +164,11 @@ function land()
    if landed == planet then
       if player.rmCargo( carg_id ) then
          player.pay( reward )
-         tk.msg( msg_title[2], string.format( msg_msg[2], carg_type ))
+         if misn_type == "People" then
+            tk.msg( msg_title[2], string.format( msg_msg[5], carg_type ))
+         else
+            tk.msg( msg_title[2], string.format( msg_msg[2], carg_type ))
+         end
 
          -- modify the faction standing
          if player.getFaction("Trader") < 70 then
@@ -188,7 +194,7 @@ function timeup()
       player.msg( msg_msg[4] )
       misn.finish(false)
    end
-   misn.setDesc( string.format( misn_desc[21], planet:name(), system:name(),
+   misn.setDesc( string.format( misn_desc[11], planet:name(), system:name(),
          carg_mass, carg_type,
          time.str(misn_time), time.str(misn_time-time.get()) ) )
 end
