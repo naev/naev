@@ -17,6 +17,7 @@
       0) Get to the Trinity
       1) Trinity Combat
       2) Trinity dead/run
+      3) Ran away
 
    Not too happy with the text (it chews it all up for you), but then again,
     I'm no writer.  Hopefully someone can clean it up a bit someday.
@@ -138,6 +139,7 @@ function jump ()
    -- Player ran away from combat - big disgrace.
    elseif misn_stage == 1 then
 
+      misn_stage = 3
       player.msg( talk[6] )
    end
 end
@@ -232,9 +234,9 @@ function land ()
    local planet = space.getPlanet()
 
    -- Just landing
-   if misn_stage == 2 and planet == misn_base then
+   if (misn_stage == 2 or misn_stage == 3) and planet == misn_base then
 
-      if trinity_alive then
+      if trinity_alive or misn_stage == 3 then
          -- Failure to kill
          tk.msg( title[5], text[7] )
          var.push("trinity", true)
