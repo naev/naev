@@ -285,7 +285,7 @@
   <sound>engine</sound>
   <class>Freighter</class>
   <price>900000</price>
-  <fabricator>Melendez Corp</fabricator>
+  <fabricator>Melendez Corp.</fabricator>
   <tech>5</tech>
   <description>A heavy liner specialized in freighting cargo all over the universe.  Also has good accomodations for passengers depending on the model allowing for enjoyable cruises.  Was a favorite target of pirates until they added stock turrets to the new models which can now defend themselves properly.</description>
   <movement>
@@ -796,6 +796,39 @@
   <outfit quantity="3">Plasma Blaster</outfit>
   <outfit quantity="1">Seeker Launcher</outfit>
   <outfit quantity="8">Seeker Missile</outfit>
+  </outfits>
+ </ship>
+ <ship name="Koala">
+  <GFX>koala</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Courier</class>
+  <price>260000</price>
+  <fabricator>Melendez Corp.</fabricator>
+  <tech>5</tech>
+  <description>The Koala is your standard cargo vessel.  It's a small ship with little weapon space but a decent amount of cargo space.  Good for the entrepreneur working his way to a vast space trade empire.</description>
+  <movement>
+   <thrust>200</thrust>
+   <turn>140</turn>
+   <speed>220</speed>
+  </movement>
+  <health>
+   <shield>70</shield>
+   <armour>90</armour>
+   <energy>270</energy>
+   <shield_regen>90</shield_regen>
+   <armour_regen>50</armour_regen>
+   <energy_regen>500</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>3</crew>
+   <mass>63</mass>
+   <fuel>400</fuel>
+   <cap_weapon>20</cap_weapon>
+   <cap_cargo>45</cap_cargo>
+  </caracteristics>
+  <outfits>
+   <outfit quantity="1">Laser Cannon</outfit>
   </outfits>
  </ship>
 </Ships>
