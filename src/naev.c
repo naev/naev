@@ -754,6 +754,7 @@ static const char* debug_sigCodeToStr( int sig, int sig_code )
 {
    if (sig == SIGFPE)
       switch (sig_code) {
+         case SI_USER: return "SIGFPE (raised by program)";
          case FPE_INTDIV: return "SIGFPE (integer divide by zero)";
          case FPE_INTOVF: return "SIGFPE (integer overflow)";
          case FPE_FLTDIV: return "SIGFPE (floating-point divide by zero)";
@@ -766,9 +767,17 @@ static const char* debug_sigCodeToStr( int sig, int sig_code )
       }
    else if (sig == SIGSEGV)
       switch (sig_code) {
+         case SI_USER: return "SIGSEGV (raised by program)";
          case SEGV_MAPERR: return "SIGSEGV (address not mapped to object)";
          case SEGV_ACCERR: return "SIGSEGV (invalid permissions for mapped object)";
          default: return "SIGSEGV";
+      }
+   else if (sig == SIGTRAP)
+      switch (sig_code) {
+         case SI_USER: return "SIGTRAP (raised by program)";
+         case TRAP_BRKPT: return "SIGTRAP (process breakpoint)";
+         case TRAP_TRACE: return "SIGTRAP (process trace trap)";
+         default: return "SIGTRAP";
       }
 
    /* No suitable code found. */
@@ -826,5 +835,8 @@ static void debug_sigInit (void)
    sigaction(SIGFPE, &sa, &so);
    if (so.sa_handler == SIG_IGN)
       DEBUG("Unable to set up SIGFPE signal handler.");
+   sigaction(SIGTRAP, &sa, &so);
+   if (so.sa_handler == SIG_IGN)
+      DEBUG("Unable to set up SIGTRAP signal handler.");
 #endif /* defined(LINUX) && !defined(DEBUG) */
 }
