@@ -120,17 +120,17 @@ all:	utils ndata lua naev
 
 help:
 	@echo "Possible targets are:":
-	@echo "   lua - builds Lua support"
-	@echo "   naev - builds the naev binary"
-	@echo "   mkpsr - builds the mkspr utilitily"
-	@echo "   ndata - creates the ndata file"
-	@echo "   utils - builds all the utilities"
-	@echo "   docs - creates the doxygen documentation"
-	@echo "   clean - removes naev's main binary and ndata file"
-	@echo "   distclean - removes everything done"
+	@echo "       lua - builds Lua support"
+	@echo "      naev - builds the naev binary"
+	@echo "     mkpsr - builds the mkspr utilitily"
+	@echo "     ndata - creates the ndata file"
+	@echo "     utils - builds all the utilities"
+	@echo "      docs - creates the doxygen documentation"
+	@echo "     clean - removes naev's main binary and ndata file"
+	@echo " distclean - removes everything done"
 
 
-naev: $(OBJS)
+$(APPNAME): $(OBJS)
 	@$(CC) $(LDFLAGS) -o $(APPNAME) $(OBJS) lib/lua/liblua.a
 	@echo "   LD   $(APPNAME)"
 
@@ -172,8 +172,8 @@ clean:
 	@$(RM) $(DATA)
 	@echo "   Removing object files"
 	@$(RM) $(OBJS)
-	@echo "   Removing binary"
-	@$(RM) naev
+	@echo "   Removing main binary ($(APPNAME))"
+	@$(RM) $(APPNAME)
 
 
 distclean: clean
@@ -182,7 +182,7 @@ distclean: clean
 	@$(MAKE) -C utils/mkspr clean
 	@echo "   Cleaning Lua"
 	@$(MAKE) -C lib/lua clean
-	@echo "   Removing binaries"
+	@echo "   Removing build tool binaries"
 	@$(RM) mkspr pack
 
 
