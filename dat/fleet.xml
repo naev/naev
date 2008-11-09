@@ -14,6 +14,13 @@
    <pilot chance="100">Llama</pilot>
   </pilots>
  </fleet>
+ <fleet name="Trader Koala">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <pilots>
+   <pilot chance="100">Koala</pilot>
+  </pilots>
+ </fleet>
  <fleet name="Trader Mule">
   <ai>trader</ai>
   <faction>Trader</faction>
@@ -25,9 +32,9 @@
   <ai>trader</ai>
   <faction>Trader</faction>
   <pilots>
+   <pilot chance="100">Llama</pilot>
    <pilot chance="80">Llama</pilot>
-   <pilot chance="80">Llama</pilot>
-   <pilot chance="80">Mule</pilot>
+   <pilot chance="80">Koala</pilot>
    <pilot chance="80">Mule</pilot>
   </pilots>
  </fleet>
