@@ -182,5 +182,7 @@ distclean: clean
 	@$(MAKE) -C utils/mkspr clean
 	@echo "   Cleaning Lua"
 	@$(MAKE) -C lib/lua clean
+	@echo "   Removing binaries"
+	@$(RM) mkspr pack
 
 
