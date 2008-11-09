@@ -480,7 +480,7 @@ static void glFontMakeDList( FT_Face face, char ch,
    double x,y;
 
    if (FT_Load_Glyph( face, FT_Get_Char_Index( face, ch ),
-      FT_LOAD_FORCE_AUTOHINT)) /* FT_LOAD_DEFAULT )) - looks much better then default */
+      FT_LOAD_DEFAULT ))
       WARN("FT_Load_Glyph failed");                                       
 
    if (FT_Get_Glyph( face->glyph, &glyph ))
@@ -509,8 +509,8 @@ static void glFontMakeDList( FT_Face face, char ch,
 
    /* creating the opengl texture */
    glBindTexture( GL_TEXTURE_2D, tex_base[(int)ch]);
-   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,
          GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, expanded_data );
 
