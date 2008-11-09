@@ -18,6 +18,7 @@
    <faction>Empire</faction>
    <faction>Soromid</faction>
    <faction>Dvaered</faction>
+   <faction>Frontier</faction>
   </avail>
  </mission>
  <mission name="Empire Recruitment">
