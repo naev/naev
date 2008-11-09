@@ -651,8 +651,6 @@ void pilot_dead( Pilot* p )
 
 
 /**
- * @fn void pilot_runHook( Pilot* p, int hook_type )
- *
  * @brief Tries to run a pilot hook if he has it.
  *
  *    @param p Pilot to run the hook.
@@ -668,8 +666,6 @@ void pilot_runHook( Pilot* p, int hook_type )
 
 
 /**
- * @fn void pilot_setSecondary( Pilot* p, const char* secondary )
- *
  * @brief Sets the pilot's secondary weapon based on it's name.
  *
  *    @param p Pilot to set secondary weapon.
@@ -695,8 +691,6 @@ void pilot_setSecondary( Pilot* p, const char* secondary )
       }
    }
 
-   WARN("attempted to set pilot '%s' secondary weapon to non-existing '%s'",
-         p->name, secondary );
    p->secondary = NULL;
    p->ammo = NULL;
 }
