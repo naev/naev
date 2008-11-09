@@ -602,7 +602,7 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
          /* adjust the combat rating based on pilot mass and ditto faction */
          pshooter = pilot_get(shooter);
-         if (pshooter->faction == FACTION_PLAYER) {
+         if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
             mod = sqrt(p->ship->mass) / 5;
             player_crating += 2*mod; /* Crating changes faster. */
             faction_modPlayer( p->faction, -mod );
