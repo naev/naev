@@ -1397,7 +1397,6 @@ int pilot_cargoUsed( Pilot* pilot )
    int i, q;
 
    q = 0; 
-   pilot->cargo_free = pilot->ship->cap_cargo;
    for (i=0; i<pilot->ncommodities; i++)
       q += pilot->commodities[i].quantity;
 
