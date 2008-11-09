@@ -120,11 +120,11 @@ all:	utils ndata lua naev
 
 help:
 	@echo "Possible targets are:":
-	@echo "   lua - makes Lua"
-	@echo "   naev - makes the naev binary"
-	@echo "   mkpsr - makes the mkspr utilitily"
+	@echo "   lua - builds Lua"
+	@echo "   naev - builds the naev binary"
+	@echo "   mkpsr - builds the mkspr utilitily"
 	@echo "   ndata - creates the ndata file"
-	@echo "   utils - makes all the utilities"
+	@echo "   utils - builds all the utilities"
 	@echo "   docs - creates the doxygen documentation"
 	@echo "   clean - removes naev's main binary and ndata file"
 	@echo "   distclean - removes everything done"
