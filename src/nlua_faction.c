@@ -278,8 +278,6 @@ static int factionL_longname( lua_State *L )
 }
 
 /**
- * @fn static int factionL_areenemies( lua_State *L )
- *
  * @brief bool areEnemies( faction f )
  *
  * Checks to see if f is an enemy.
@@ -299,8 +297,6 @@ static int factionL_areenemies( lua_State *L )
 }
 
 /**
- * @fn static int factionL_arenemies( lua_State *L )
- *
  * @brief bool areEnemies( faction f )
  *
  * Checks to see if f is an enemy.
@@ -320,8 +316,6 @@ static int factionL_areallies( lua_State *L )
 }
 
 /**
- * @fn static int factionL_modplayer( lua_State *L )
- *
  * @brief modPlayer( number mod )
  *
  * Modifies the player's standing with the faction.

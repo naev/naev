@@ -660,13 +660,13 @@ void map_select( StarSystem *sys )
  */
 /* the node struct */
 typedef struct SysNode_ {
-   struct SysNode_ *next, *gnext;
+   struct SysNode_ *next, *gnext; /**< Next nodes. */
 
-   struct SysNode_ *parent;
-   StarSystem* sys;
-   double r; /* ranking */
-   int g; /* step */
-} SysNode;
+   struct SysNode_ *parent; /**< Parent node. */
+   StarSystem* sys; /**< System in node. */
+   double r; /**< ranking */
+   int g; /**< step */
+} SysNode; /**< System Node for use in A* pathfinding. */
 static SysNode *A_gc;
 /* prototypes */
 static SysNode* A_newNode( StarSystem* sys, SysNode* parent );

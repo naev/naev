@@ -297,15 +297,13 @@ glColour* faction_getColour( int f )
 }
 
 
+#define STANDING(m,s)  if (mod >= m) return s;
 /**
- * @fn char *faction_getStanding( double mod )
- *
  * @brief Get's the player's standing in human readable form.
  *
  *    @param mod Player's standing.
  *    @return Human readable player's standing.
  */
-#define STANDING(m,s)  if (mod >= m) return s;
 char *faction_getStanding( double mod )
 {
    STANDING(  90., "Hero" );

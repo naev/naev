@@ -19,8 +19,8 @@
  * Lua wrappers.
  */
 typedef struct LuaPilot_s {
-   unsigned int pilot;
-} LuaPilot;
+   unsigned int pilot; /**< ID of the pilot. */
+} LuaPilot; /**< Wrapper for a Pilot. */
 
 
 /* 

@@ -3,7 +3,7 @@
  */
 
 /**
- * @file time.c
+ * @file ntime.c
  *
  * @brief Handles the NAEV time.
  *

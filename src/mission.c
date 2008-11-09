@@ -481,8 +481,6 @@ int mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
 
 
 /**
- * @fn void missions_update (void)
- *
  * @brief Updates the missions triggering timers if needed.
  *
  *    @param dt Current deltatick.

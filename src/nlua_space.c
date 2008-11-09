@@ -753,8 +753,6 @@ static int systemL_jumpdistance( lua_State *L )
  * @endcode
  */
 /**
- * @fn LuaSystem* lua_tovector( lua_State *L, int ind )
- *
  * @brief Gets vector at index.
  *
  *    @param L Lua state to get vector from.
@@ -771,8 +769,6 @@ LuaVector* lua_tovector( lua_State *L, int ind )
 }
 
 /**
- * @fn LuaSystem* lua_pushvector( lua_State *L, LuaSystem sys )
- *
  * @brief Pushes a vector on the stack.
  *
  *    @param L Lua state to push vector onto.
@@ -790,8 +786,6 @@ LuaVector* lua_pushvector( lua_State *L, LuaVector vec )
 }
 
 /**
- * @fn int lua_isvector( lua_State *L, int ind )
- *
  * @brief Checks to see if ind is a vector.
  *
  *    @param L Lua state to check.

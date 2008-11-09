@@ -245,7 +245,6 @@ int misn_loadCondLibs( lua_State *L )
  * individual library loading
  */
 /**
- * @fn int lua_loadMisn( lua_State *L )
  * @brief Loads the mission lua library.
  *    @param L Lua state.
  */
@@ -255,9 +254,9 @@ int lua_loadMisn( lua_State *L )
    return 0;
 }  
 /**
- * @fn int lua_loadVar( lua_State *L )
  * @brief Loads the mission variable lua library.
  *    @param L Lua state.
+ *    @param readonly Whether to open in read-only form.
  */
 int lua_loadVar( lua_State *L, int readonly )
 {
@@ -268,9 +267,9 @@ int lua_loadVar( lua_State *L, int readonly )
    return 0;
 }  
 /**
- * @fn int lua_loadPlayer( lua_State *L )
  * @brief Loads the player lua library.
  *    @param L Lua state.
+ *    @param readonly Whether to open in read-only form.
  */
 int lua_loadPlayer( lua_State *L, int readonly )
 {
@@ -281,7 +280,6 @@ int lua_loadPlayer( lua_State *L, int readonly )
    return 0;
 }  
 /**
- * @fn int lua_loadHook( lua_State *L )
  * @brief Loads the hook lua library.
  *    @param L Lua state.
  */
@@ -291,7 +289,6 @@ int lua_loadHook( lua_State *L )
    return 0;
 }
 /**
- * @fn int lua_loadDiff( lua_State *L, int readonly )
  * @brief Loads the diff Lua library.
  *    @param L Lua state.
  *    @param readonly Load read only functions?
@@ -307,8 +304,6 @@ int lua_loadDiff( lua_State *L, int readonly )
 
 
 /**
- * @fn int misn_run( Mission *misn, char *func )
- * 
  * @brief Runs a mission function.
  *
  *    @param misn Mission that owns the function.

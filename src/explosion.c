@@ -4,6 +4,8 @@
 
 /**
  * @file explosion.c
+ *
+ * @brief Handles gigantic explosions.
  */
 
 
@@ -18,10 +20,6 @@
 
 
 /**
- * @fn void expl_explode( double x, double y, double radius,
- *       DamageType dtype, double damage,
- *       unsigned int parent, int mode )
- *
  * @brief Does explosion in a radius (damage and graphics).
  *
  *    @param x X position of explosion center.
@@ -78,10 +76,6 @@ void expl_explode( double x, double y, double vx, double vy,
 
 
 /**
- * @fn void expl_explode( double x, double y, double radius,
- *       DamageType dtype, double damage,
- *       unsigned int parent, int mode )
- *
  * @brief Does explosion damage in a radius.
  *
  *    @param x X position of explosion center.

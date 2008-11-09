@@ -280,7 +280,7 @@ static const luaL_reg ai_methods[] = {
    { "setcargo", ai_cargo },
    { "shipprice", ai_shipprice },
    {0,0} /* end */
-};
+}; /**< Lua AI Function table. */
 
 
 
@@ -463,8 +463,6 @@ int ai_init (void)
 
 
 /*
- * @fn static int ai_loadProfile( char* filename )
- * 
  * @brief Initializes an AI_Profile and adds it to the stack.
  *
  *    @param[in] filename File to create the profile from.
@@ -715,8 +713,6 @@ static void ai_freetask( Task* t )
  * @{
  */
 /**
- * @fn static int ai_pushtask( lua_State *L )
- *
  * @brief pushtask( number pos, string func [, data] )
  *
  *    @param pos Position to push into stack, 0 is front, 1 is back.

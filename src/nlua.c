@@ -207,8 +207,6 @@ static int nlua_packfileLoader( lua_State* L )
  * individual library loading
  */
 /**
- * @fn int lua_loadNaev( lua_State *L )
- *
  * @brief Loads the NAEV Lua library.
  *
  *    @param L Lua state.
@@ -220,8 +218,6 @@ int lua_loadNaev( lua_State *L )
    return 0;
 }
 /**
- * @fn int lua_loadTime( lua_State *L )
- *
  * @brief Loads the Time Lua library.
  *
  *    @param L Lua state.
@@ -235,8 +231,6 @@ int lua_loadTime( lua_State *L, int readonly )
    return 0;
 }
 /**
- * @fn int lua_loadRnd( lua_State *L )
- *
  * @brief Loads the Random Number Lua library.
  *
  *    @param L Lua state.
@@ -248,8 +242,6 @@ int lua_loadRnd( lua_State *L )
    return 0;
 }
 /**
- * @fn int lua_loadTk( lua_State *L )
- *
  * @brief Loads the Toolkit Lua library.
  *
  *    @param L Lua state.

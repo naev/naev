@@ -40,12 +40,16 @@ extern double gui_yoff;
 /*
  * graphic list
  */
+/**
+ * @typedef glTexList
+ * @brief Represents a node in the texture list.
+ */
 typedef struct glTexList_ {
    struct glTexList_ *next; /*< Next in linked list */
    glTexture *tex; /*< assosciated texture */
    int used; /*< counts how many times texture is being used */
 } glTexList;
-static glTexList* texture_list = NULL;
+static glTexList* texture_list = NULL; /**< Texture list. */
 
 
 /*

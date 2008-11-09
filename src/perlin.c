@@ -56,13 +56,13 @@ typedef void *TCOD_noise_t;
  * Used internally
  */
 typedef struct {
-   unsigned char map[256]; /* Randomized map of indexes into buffer */
-   float buffer[256][3];   /* Random 256 x 3 buffer */
+   unsigned char map[256]; /**@ Randomized map of indexes into buffer */
+   float buffer[256][3];   /**@ Random 256 x 3 buffer */
    /* fractal stuff */
    float H;
    float lacunarity;
    float exponent[TCOD_NOISE_MAX_OCTAVES];
-} perlin_data_t;
+} perlin_data_t; /**< Internal perlin noise data. */
 
 
 /*

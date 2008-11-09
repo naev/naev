@@ -28,6 +28,10 @@
 
 
 /* keybinding structure */
+/**
+ * @typedef Keybind
+ * @brief NAEV Keybinding.
+ */
 typedef struct Keybind_ {
    char *name; /**< keybinding name, taken from keybindNames */
    KeybindType type; /**< type, defined in playe.h */

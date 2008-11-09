@@ -15,7 +15,12 @@
 
 
 /* input types */
-typedef enum { KEYBIND_NULL, KEYBIND_KEYBOARD, KEYBIND_JAXIS, KEYBIND_JBUTTON } KeybindType;
+typedef enum {
+   KEYBIND_NULL, /**< Null keybinding. */
+   KEYBIND_KEYBOARD, /**< Keyboard keybinding. */
+   KEYBIND_JAXIS, /**< Joystick axis keybinding. */
+   KEYBIND_JBUTTON /**< Joystick button keybinding. */
+} KeybindType; /**< Keybind types. */
 
 
 /*

@@ -27,9 +27,9 @@
  * base of all 2d Vector work
  */
 typedef struct Vector2d_ {                                          
-   double x, y; /* cartesian values */                              
-   double mod, angle; /* polar values */
-} Vector2d;
+   double x, y; /**< cartesian values */                              
+   double mod, angle; /**< polar values */
+} Vector2d; /**< 2 dimensional vector. */
 
 
 /*

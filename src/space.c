@@ -1094,8 +1094,6 @@ int system_rmFleet( StarSystem *sys, SystemFleet *fleet )
 
 
 /**
- * @fn static StarSystem* system_parse( const xmlNodePtr parent )
- *
  * @brief Creates a system from an XML node.
  *
  *    @param parent XML node to get system from.

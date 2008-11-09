@@ -12,22 +12,34 @@
 #include "space.h"
 
 
-#define PLANET_METATABLE   "Planet"
-#define SYSTEM_METATABLE   "System"
-#define VECTOR_METATABLE   "Vec2"
+#define PLANET_METATABLE   "Planet" /**< Planet metatable identifier. */
+#define SYSTEM_METATABLE   "System" /**< System metatable identifier. */
+#define VECTOR_METATABLE   "Vec2"   /**< Vector metatable identifier. */
 
 
 /*
  * Lua wrappers.
  */
+/**
+ * @typedef LuaPlanet
+ * @brief Lua Planet Wrapper.
+ */
 typedef struct LuaPlanet_s {
-   Planet *p;
+   Planet *p; /**< Pointer to the real Planet. */
 } LuaPlanet;
+/**
+ * @typedef LuaSystem
+ * @brief Lua StarSystem Wrapper.
+ */
 typedef struct LuaSystem_s {
-   StarSystem *s;
+   StarSystem *s; /**< Pointer to the real StarSystem. */
 } LuaSystem;
+/**
+ * @typedef LuaVector
+ * @brief Lua Vector2d Wrapper.
+ */
 typedef struct LuaVector_s {
-   Vector2d vec;
+   Vector2d vec; /**< The actual Vector2d. */
 } LuaVector;
 
 
