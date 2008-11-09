@@ -13,15 +13,15 @@ APPNAME  := mkspr
 
 %.o: $(SRCDIR)%.c
 	@$(CC) -c $(CFLAGS) -o $@ $<
-	@echo -e "\tCC   $(LOCALDIR)$@"
+	@echo "   CC   $(LOCALDIR)$@"
 
 all: $(ROOTDIR)$(APPNAME)
 
 $(ROOTDIR)$(APPNAME): $(COBJS)
 	@$(CC) $(LFLAGS) $(CFLAGS) -o $(ROOTDIR)$(APPNAME) $(COBJS)
-	@echo -e "\tLD   $(APPNAME)"
+	@echo "   LD   $(APPNAME)"
 
 clean:
 	@$(RM) $(COBJS)
-	@echo -e "\tCleaning mkspr"
+	@echo "   Cleaning mkspr"
 	

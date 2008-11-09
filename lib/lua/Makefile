@@ -40,7 +40,7 @@ ALL_A := $(LUA_A)
 
 %.o:
 	@$(CC) -c $(CFLAGS) -o $@ $<
-	@echo -e "\tCC   $(RELPATH)$@"
+	@echo "   CC   $(RELPATH)$@"
 
 default: $(PLAT)
 
@@ -53,19 +53,19 @@ a:	$(ALL_A)
 $(LUA_A): $(CORE_O) $(LIB_O)
 	@$(AR) $@ $?
 	@$(RANLIB) $@
-	@echo -e "\tLIB  $(RELPATH)$@"
+	@echo "   LIB  $(RELPATH)$@"
 
 $(LUA_T): $(LUA_O) $(LUA_A)
 	@$(CC) -o $@ $(MYLDFLAGS) $(LUA_O) $(LUA_A) $(LIBS)
-	@echo -e "\tLD   $(RELPATH)$@"
+	@echo "   LD   $(RELPATH)$@"
 
 $(LUAC_T): $(LUAC_O) $(LUA_A)
 	@$(CC) -o $@ $(MYLDFLAGS) $(LUAC_O) $(LUA_A) $(LIBS)
-	@echo -e "\tLD   $(RELPATH)$@"
+	@echo "   LD   $(RELPATH)$@"
 
 clean:
 	@$(RM) $(ALL_T) $(ALL_O)
-	@echo -e "\tCleaning Lua"
+	@echo "   Cleaning Lua"
 
 depend:
 	@$(CC) $(CFLAGS) -MM l*.c print.c

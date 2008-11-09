@@ -13,14 +13,14 @@ APPNAME  := pack
 
 %.o: %.c
 	@$(CC) -c $(CFLAGS) -o $@ $<
-	@echo -e "\tCC   $(LOCALDIR)$@"
+	@echo "   CC   $(LOCALDIR)$@"
 
 all: $(ROOTDIR)$(APPNAME)
 
 $(ROOTDIR)$(APPNAME): $(COBJS)
 	@$(CC) $(CFLAGS) -o $(ROOTDIR)$(APPNAME) $(COBJS)
-	@echo -e "\tLD   $(APPNAME)"
+	@echo "   LD   $(APPNAME)"
 
 clean:
 	@$(RM) $(COBJS)
-	@echo -e "\tCleaning pack"
+	@echo "   Cleaning pack"

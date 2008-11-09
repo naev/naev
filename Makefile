@@ -107,7 +107,7 @@ DATAFILES := 	$(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN)
 #
 #   TARGETS
 #
-.PHONY: all help lua utils docs clean purge
+.PHONY: all help lua utils docs clean distclean
 
 
 %.o:	%.c %.h
@@ -127,7 +127,7 @@ help:
 	@echo "   utils - makes all the utilities"
 	@echo "   docs - creates the doxygen documentation"
 	@echo "   clean - removes naev's main binary and ndata file"
-	@echo "   purge - removes everything done"
+	@echo "   distclean - removes everything done"
 
 
 naev: $(OBJS)
@@ -172,9 +172,11 @@ clean:
 	@$(RM) $(DATA)
 	@echo "   Removing object files"
 	@$(RM) $(OBJS)
+	@echo "   Removing binary"
+	@$(RM) naev
 
 
-purge: clean
+distclean: clean
 	@echo "   Cleaning utilities"
 	@$(MAKE) -C utils/pack clean
 	@$(MAKE) -C utils/mkspr clean
