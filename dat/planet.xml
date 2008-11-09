@@ -517,7 +517,7 @@
    <description>Constructed by many captured and then enslaved FLF armsmen.  The design is pretty sturdy but you can't help to think there must be a hidden bomb somewhere, just waiting to go off and kill the Dvaered opressors.</description>
    <faction>Dvaered</faction>
    <tech>
-    <main>0</main>
+    <main>3</main>
     <special>0</special>
    </tech>
    <services>11</services>
