@@ -1044,6 +1044,7 @@ static int player_addCargo( lua_State *L )
    if (lua_isnumber(L,2)) quantity = (int) lua_tonumber(L,2);
    else NLUA_INVALID_PARAMETER();
 
+   /* First try to add the cargo. */
    ret = pilot_addMissionCargo( player, cargo, quantity );
    mission_linkCargo( cur_mission, ret );
 
@@ -1070,8 +1071,14 @@ static int player_rmCargo( lua_State *L )
    if (lua_isnumber(L,1)) id = (unsigned int) lua_tonumber(L,1);
    else NLUA_INVALID_PARAMETER();
 
-   ret = pilot_rmMissionCargo( player, id );
-   mission_unlinkCargo( cur_mission, id );
+   /* First try to remove the cargo from player. */
+   if (pilot_rmMissionCargo( player, id ) != 0) {
+      lua_pushboolean(L,0);
+      return 1;
+   }
+
+   /* Now unlink the mission cargo if it was successful. */
+   ret = mission_unlinkCargo( cur_mission, id );
 
    lua_pushboolean(L,!ret);
    return 1;

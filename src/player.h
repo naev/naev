@@ -78,7 +78,6 @@ void player_playSound( int sound, int once );
 /* cargo */
 int player_outfitOwned( const char* outfitname );
 int player_cargoOwned( const char* commodityname );
-void player_rmMissionCargo( unsigned int cargo_id );
 
 
 /*

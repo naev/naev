@@ -437,12 +437,15 @@ void mission_sysMark (void)
  *
  *    @param misn Mission to link cargo to.
  *    @param cargo_id ID of cargo to link.
+ *    @return 0 on success.
  */
-void mission_linkCargo( Mission* misn, unsigned int cargo_id )
+int mission_linkCargo( Mission* misn, unsigned int cargo_id )
 {
    misn->ncargo++;
    misn->cargo = realloc( misn->cargo, sizeof(unsigned int) * misn->ncargo);
    misn->cargo[ misn->ncargo-1 ] = cargo_id;
+
+   return 0;
 }
 
 
@@ -453,8 +456,9 @@ void mission_linkCargo( Mission* misn, unsigned int cargo_id )
  *
  *    @param misn Mission to unlink cargo from.
  *    @param cargo_id ID of cargo to unlink.
+ *    @return returns 0 on success.
  */
-void mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
+int mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
 {
    int i;
    for (i=0; i<misn->ncargo; i++)
@@ -464,14 +468,15 @@ void mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
    if (i>=misn->ncargo) { /* not found */
       DEBUG("Mission '%s' attempting to unlink inexistant cargo %d.",
             misn->title, cargo_id);
-      return;
+      return 1;
    }
 
    /* shrink cargo size - no need to realloc */
    memmove( &misn->cargo[i], &misn->cargo[i+1],
          sizeof(unsigned int) * (misn->ncargo-i-1) );
    misn->ncargo--;
-   player_rmMissionCargo( cargo_id );
+
+   return 0;
 }
 
 

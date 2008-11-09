@@ -116,8 +116,8 @@ void mission_sysMark (void);
 /*
  * cargo stuff
  */
-void mission_linkCargo( Mission* misn, unsigned int cargo_id );
-void mission_unlinkCargo( Mission* misn, unsigned int cargo_id );
+int mission_linkCargo( Mission* misn, unsigned int cargo_id );
+int mission_unlinkCargo( Mission* misn, unsigned int cargo_id );
 
 
 /*

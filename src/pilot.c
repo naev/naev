@@ -1419,8 +1419,13 @@ static void pilot_calcCargo( Pilot* pilot )
 }
 
 
-/*
- * adds special mission cargo, can't sell it and such
+/***
+ * @brief Adds special mission cargo, can't sell it and such.
+ *
+ *    @param pilot Pilot to add it to.
+ *    @param cargo Commodity to add.
+ *    @param quantity Quantity to add.
+ *    @return The Mission Cargo ID of created cargo. 
  */
 unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity )
 {
@@ -1442,8 +1447,12 @@ unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity
 }
 
 
-/*
- * removes special mission cargo based on id
+/**
+ * @brief Removes special mission cargo based on id.
+ *
+ *    @param pilot Pilot to remove cargo from.
+ *    @param cargo_id ID of the cargo to remove.
+ *    @return 0 on success (cargo removed).
  */
 int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id )
 {
@@ -1459,7 +1468,7 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id )
    /* remove cargo */
    pilot->cargo_free += pilot->commodities[i].quantity;
    pilot->solid->mass -= pilot->commodities[i].quantity;
-   memmove( pilot->commodities+i, pilot->commodities+i+1,
+   memmove( &pilot->commodities[i], &pilot->commodities[i+1],
          sizeof(PilotCommodity) * (pilot->ncommodities-i-1) );
    pilot->ncommodities--;
    pilot->commodities = realloc( pilot->commodities,

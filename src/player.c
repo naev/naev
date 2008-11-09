@@ -846,23 +846,6 @@ int player_cargoOwned( const char* commodityname )
 }
 
 
-/*
- * removes mission cargo from all player ships
- */
-void player_rmMissionCargo( unsigned int cargo_id )
-{
-   int i;
-   
-   /* check if already done */
-   if ((player != NULL) && !pilot_rmMissionCargo(player, cargo_id)) return;
-
-   for (i=0; i<player_nstack; i++)
-      if (!pilot_rmMissionCargo( player_stack[i], cargo_id ))
-            return; /* success */
-}
-
-
-
 /**
  * @fn void player_renderBG (void)
  *
