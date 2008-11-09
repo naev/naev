@@ -57,12 +57,9 @@ function atk_g ()
    if dist > range * atk_approach then
       atk_g_ranged( target, dist )
 
+   -- Now we do an approach
    elseif dist > range * atk_aim then
-      if ai.relvel(target) > -10 then
-         atk_g_ranged( target, dist )
-      else
-         atk_g_aim( target, dist )
-      end
+      atk_g_approach( target, dist )
 
    -- Close enough to melee
    else
@@ -103,10 +100,13 @@ end
 
 
 --[[
--- Aims at the target
+-- Approaches the target
 --]]
-function atk_g_aim( target, dist )
+function atk_g_approach( target, dist )
    dir = ai.aim(target)
+   if dir < 10 then
+      ai.accel()
+   end
 end
 
 
@@ -136,3 +136,4 @@ function atk_g_melee( target, dist )
       ai.shoot()
    end
 end
+
