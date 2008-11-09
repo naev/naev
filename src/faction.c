@@ -209,9 +209,9 @@ void faction_modPlayer( int f, double mod )
       /* Enemies are made faster. */
       m = RNGF();
       if (mod > 0.)
-         m *= 3./4.;
+         m *= 0.75;
 
-      ally->player += m;
+      ally->player += m*mod;
       faction_sanitizePlayer(ally);
    }
 
@@ -222,9 +222,9 @@ void faction_modPlayer( int f, double mod )
       /* Enemies are made faster. */
       m = RNGF();
       if (mod < 0.)
-         m *= 3./4.;
+         m *= 0.75;
 
-      enemy->player -= m;
+      enemy->player -= m*mod;
       faction_sanitizePlayer(enemy);
    }
 }
