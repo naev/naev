@@ -120,7 +120,7 @@ all:	utils ndata lua naev
 
 help:
 	@echo "Possible targets are:":
-	@echo "   lua - builds Lua"
+	@echo "   lua - builds Lua support"
 	@echo "   naev - builds the naev binary"
 	@echo "   mkpsr - builds the mkspr utilitily"
 	@echo "   ndata - creates the ndata file"
