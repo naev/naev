@@ -25,7 +25,13 @@ function control ()
 
    -- Get new task
    if task == "none" then
-      idle()
+      -- We'll first check enemy.
+      if enemy ~= nil and aggressive then
+         taunt(enemy, true)
+         ai.pushtask(0, "attack", enemy)
+      else
+         idle()
+      end
 
    -- Think for attacking
    elseif task == "attack" then
