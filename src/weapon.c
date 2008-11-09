@@ -656,7 +656,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
       if ((player != NULL) && (w->parent == player->id) &&
             ((player->target == p->id) || (RNGF() < 0.33))) { /* 33% chance */
          parent = pilot_get(w->parent);
-         if ((parent->faction == FACTION_PLAYER) &&
+         if ((parent != NULL) && (parent->faction == FACTION_PLAYER) &&
                (!pilot_isFlag(p,PILOT_HOSTILE) || (RNGF() < 0.5))) { /* 50% chance */
             faction_modPlayer( p->faction, -1. ); /* slowly lower faction */
          }
@@ -702,7 +702,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
       if ((player != NULL) && (w->parent == player->id) &&
             ((player->target == p->id) || (RNGF() < 0.30*dt))) { /* 30% chance per second */
          parent = pilot_get(w->parent);
-         if ((parent->faction == FACTION_PLAYER) &&
+         if ((parent != NULL) && (parent->faction == FACTION_PLAYER) &&
                (!pilot_isFlag(p,PILOT_HOSTILE) || (RNGF() < 0.5))) { /* 50% chance */
             faction_modPlayer( p->faction, -1. ); /* slowly lower faction */
          }
@@ -776,22 +776,27 @@ static Weapon* weapon_create( const Outfit* outfit,
          /* Only difference is the direction of fire */
          if ((outfit->type == OUTFIT_TYPE_TURRET_BOLT) && (w->parent!=w->target) &&
                (w->target != 0)) { /* Must have valid target */
+
             pilot_target = pilot_get(w->target);
+            if (pilot_target == NULL)
+               rdir = dir;
 
-            /* Get the distance */
-            dist = vect_dist( pos, &pilot_target->solid->pos );
+            else {
+               /* Get the distance */
+               dist = vect_dist( pos, &pilot_target->solid->pos );
 
-            /* Time for shots to reach that distance */
-            t = dist / w->outfit->u.blt.speed;
+               /* Time for shots to reach that distance */
+               t = dist / w->outfit->u.blt.speed;
 
-            /* Position is calculated on where it should be */
-            x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
-                  - (pos->x + vel->x*t);
-            y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
-                  - (pos->y + vel->y*t);
-            vect_cset( &v, x, y );
+               /* Position is calculated on where it should be */
+               x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
+                     - (pos->x + vel->x*t);
+               y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
+                     - (pos->y + vel->y*t);
+               vect_cset( &v, x, y );
 
-            rdir = VANGLE(v);
+               rdir = VANGLE(v);
+            }
          }
          else /* fire straight */
             rdir = dir;
