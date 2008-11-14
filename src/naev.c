@@ -635,8 +635,8 @@ static void data_name (void)
    /* 
     * check to see if data file is valid
     */
-   if (pack_check(DATA)) {
-      ERR("Data file '%s' not found",DATA);
+   if ((DATA == NULL) || (pack_check(DATA))) {
+      WARN("Data file '%s' not found",DATA);
       WARN("You should specify which data file to use with '-d'");
       WARN("See -h or --help for more information");
       SDL_Quit();
