@@ -369,9 +369,10 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
             /* purpose fallthrough */
 
          /* bolts too */
+         case OUTFIT_TYPE_MISSILE_DUMB_AMMO: /* Dumb missiles are like bolts */
+            limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );
          case OUTFIT_TYPE_BOLT:
          case OUTFIT_TYPE_TURRET_BOLT:
-         case OUTFIT_TYPE_MISSILE_DUMB_AMMO: /* Dumb missiles are like bolts */
             w->timer -= dt;
             if (w->timer < 0.) {
                weapon_destroy(w,layer);
