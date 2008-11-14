@@ -118,7 +118,7 @@ int save_all (void)
    xmlw_endElem(writer); /* "naev_save" */
    xmlw_done(writer);
 
-   if (nfile_dirMakeExist("saves") < 0) {
+   if (nfile_dirMakeExist("%ssaves", nfile_basePath()) < 0) {
       WARN("aborting save...");
       xmlFreeTextWriter(writer);
       xmlFreeDoc(doc);
