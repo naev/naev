@@ -99,7 +99,7 @@ static off_t getfilesize( const char* filename )
  * @brief Checks to see if a file is a packfile.
  *
  *    @param filename Name of the file to check.
- *    @return 1 if it is a packfile, 0 if it isn't and -1 on error.
+ *    @return 0 if it is a packfile, 1 if it isn't and -1 on error.
  */
 int pack_check( const char* filename )
 {

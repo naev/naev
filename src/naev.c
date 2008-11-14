@@ -139,8 +139,8 @@ int main( int argc, char** argv )
    debug_sigInit();
 
    /* Create the home directory if needed. */
-   if (nfile_dirMakeExist("."))
-      WARN("Unable to create naev directory '%s'",nfile_basePath());
+   if (nfile_dirMakeExist("%s", nfile_basePath()))
+      WARN("Unable to create naev directory '%s'", nfile_basePath());
 
    /* Input must be initialized for config to work. */
    input_init(); 

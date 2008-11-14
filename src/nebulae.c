@@ -535,7 +535,7 @@ static int nebu_generate (void)
 
    /* Generate all the nebulae backgrounds */
    nebu = noise_genNebulaeMap( w, h, NEBULAE_Z, 5. );
-   nfile_dirMakeExist( "gen" );
+   nfile_dirMakeExist( "%sgen", nfile_basePath() );
 
    /* Save each nebulae as an image */
    for (i=0; i<NEBULAE_Z; i++) {

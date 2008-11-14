@@ -2293,7 +2293,7 @@ void player_screenshot (void)
    int done;
    char filename[PATH_MAX];
 
-   if (nfile_dirMakeExist("screenshots")) {
+   if (nfile_dirMakeExist("%sscreenshots", nfile_basePath())) {
       WARN("Aborting screenshot");
       return;
    }

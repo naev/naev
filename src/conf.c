@@ -21,6 +21,7 @@
 #include "opengl.h"
 #include "music.h"
 #include "nebulae.h"
+#include "pack.h"
 #include "nfile.h"
 
 
@@ -99,19 +100,39 @@ static void print_usage( char **argv )
 }
 
 
-char dataVersion[PATH_MAX];
 /**
  * @brief Sets the default configuration.
  */
 void conf_setDefaults (void)
 {
-   /* global */
+   int i, nfiles;
+   char **files;
+   size_t len;
+
+   /* find data */
    if (nfile_fileExists("%s-%d.%d.%d", DATA_NAME, VMAJOR, VMINOR, VREV )) {
-      snprintf( dataVersion, 128, "%s-%d.%d.%d", DATA_NAME, VMAJOR, VMINOR, VREV );
-      data = dataVersion;
+      data = malloc(PATH_MAX);
+      snprintf( data, PATH_MAX, "%s-%d.%d.%d", DATA_NAME, VMAJOR, VMINOR, VREV );
    }
-   else
+   else if (nfile_fileExists(DATA_DEF))
       data = DATA_DEF;
+   else {
+      files = nfile_readDir( &nfiles, "." );
+      len = strlen(DATA_NAME);
+      for (i=0; i<nfiles; i++) {
+         if (strncmp(files[i], DATA_NAME, len)==0) {
+            /* Must be packfile. */
+            if (pack_check(files[i]))
+               continue;
+
+            data = strdup(files[i]);
+         }
+      }
+
+      for (i=0; i<nfiles; i++)
+         free(files[i]);
+      free(files);
+   }
    /* opengl */
    gl_screen.w = 800;
    gl_screen.h = 600;

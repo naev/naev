@@ -31,8 +31,6 @@
 
 
 /**
- * @fn char* nfile_basePath (void)
- *
  * @brief Gets naev's base path (for saves and such).
  *
  *    @return The base path to naev.
@@ -56,8 +54,6 @@ char* nfile_basePath (void)
 
 
 /**
- * @fn int nfile_dirMakeExist( const char* path )
- *
  * @brief Creates a directory if it doesn't exist.
  *
  * Uses relative paths to basePath.
@@ -65,19 +61,24 @@ char* nfile_basePath (void)
  *    @param path Path to create directory if it doesn't exist.
  *    @return 0 on success.
  */
-int nfile_dirMakeExist( const char* path )
+int nfile_dirMakeExist( const char* path, ... )
 {
    char file[PATH_MAX];
+   va_list ap;
+   size_t l;
+
+   l = 0;
+   if (path == NULL) return -1;
+   else { /* get the message */
+      va_start(ap, path);
+      vsnprintf(file, PATH_MAX-l, path, ap);
+      l = strlen(file);
+      va_end(ap);
+   }
 
 #ifdef LINUX
    struct stat buf;
 
-   if (strcmp(path,".")==0) {
-      strncpy(file,nfile_basePath(),PATH_MAX);
-      file[PATH_MAX-1] = '\0';
-   }
-   else
-      snprintf(file, PATH_MAX,"%s%s",nfile_basePath(),path);
    stat(file,&buf);
    if (!S_ISDIR(buf.st_mode))
       if (mkdir(file,S_IRWXU | S_IRWXG | S_IRWXO) < 0) {
@@ -93,8 +94,6 @@ int nfile_dirMakeExist( const char* path )
 
 
 /**
- * @fn int nfile_fileExists( const char* path, ... )
- *
  * @brief Checks to see if a file exists.
  *
  *    @param path printf formatted string pointing to the file to check for existance.
@@ -135,8 +134,6 @@ int nfile_fileExists( const char* path, ... )
 
 
 /**
- * @fn char** nfile_readDir( int* nfiles, const char* path )
- *
  * @brief Lists all the visible files in a directory.
  *
  * Should also sort by last modified but that's up to the OS in question.
@@ -145,12 +142,24 @@ int nfile_fileExists( const char* path, ... )
  *    @param[out] nfiles Returns how many files there are.
  *    @param path Directory to read.
  */
-char** nfile_readDir( int* nfiles, const char* path )
+char** nfile_readDir( int* nfiles, const char* path, ... )
 {
-   char file[PATH_MAX];
+   char file[PATH_MAX], base[PATH_MAX];
    char **files;
+   va_list ap;
+   size_t l;
 
-   snprintf( file, PATH_MAX, "%s%s", nfile_basePath(), path );
+   l = 0;
+   if (path == NULL) {
+      *nfiles = 0;
+      return NULL;
+   }
+   else { /* get the message */
+      va_start(ap, path);
+      vsnprintf(base, PATH_MAX-l, path, ap);
+      l = strlen(base);
+      va_end(ap);
+   }
 
 #ifdef LINUX
    int i,j,k, n;
@@ -167,7 +176,7 @@ char** nfile_readDir( int* nfiles, const char* path )
    tfiles = malloc(sizeof(char*)*mfiles);
    tt = malloc(sizeof(time_t)*mfiles);
 
-   d = opendir(file);
+   d = opendir(base);
    if (d == NULL)
       return NULL;
 
@@ -180,7 +189,7 @@ char** nfile_readDir( int* nfiles, const char* path )
          continue;
 
       /* Stat the file */
-      snprintf( file, PATH_MAX, "%s%s/%s", nfile_basePath(), path, name );
+      snprintf( file, PATH_MAX, "%s/%s", base, name );
       if (stat(file, &sb) == -1)
          continue; /* Unable to stat */
 
