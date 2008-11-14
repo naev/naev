@@ -102,7 +102,7 @@ int nfile_dirMakeExist( const char* path )
  */
 int nfile_fileExists( const char* path, ... )
 {
-   char file[PATH_MAX], name[PATH_MAX];
+   char file[PATH_MAX];
    va_list ap;
    size_t l;
 
@@ -110,12 +110,10 @@ int nfile_fileExists( const char* path, ... )
    if (path == NULL) return -1;
    else { /* get the message */
       va_start(ap, path);
-      vsnprintf(name, PATH_MAX-l, path, ap);
-      l = strlen(name);
+      vsnprintf(file, PATH_MAX-l, path, ap);
+      l = strlen(file);
       va_end(ap);
    }
-
-   snprintf(file, PATH_MAX,"%s%s",nfile_basePath(),name);
 #ifdef LINUX
    struct stat buf;
 

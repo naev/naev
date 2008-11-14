@@ -590,7 +590,8 @@ static void nebu_generatePuffs (void)
  */
 static int nebu_checkCompat( const char* file )
 {
-   if (nfile_fileExists(file) == 0) /* first check to see if file exists */
+   /* first check to see if file exists */
+   if (nfile_fileExists("%s%s", nfile_basePath(), file) == 0)
       return -1;
    return 0;
 }

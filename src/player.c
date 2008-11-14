@@ -301,7 +301,7 @@ void player_new (void)
       return;
    }
 
-   if (nfile_fileExists("saves/%s.ns",player_name)) {
+   if (nfile_fileExists("%ssaves/%s.ns", nfile_basePath(), player_name)) {
       r = dialogue_YesNo("Overwrite",
             "You already have a pilot named %s. Overwrite?",player_name);
       if (r==0) { /* no */

@@ -21,6 +21,7 @@
 #include "opengl.h"
 #include "music.h"
 #include "nebulae.h"
+#include "nfile.h"
 
 
 #define  conf_loadInt(n,i)    \
@@ -98,14 +99,19 @@ static void print_usage( char **argv )
 }
 
 
-
-/*
- * sets the default configuration
+char dataVersion[PATH_MAX];
+/**
+ * @brief Sets the default configuration.
  */
 void conf_setDefaults (void)
 {
    /* global */
-   data = DATA_DEF;
+   if (nfile_fileExists("%s-%d.%d.%d", DATA_NAME, VMAJOR, VMINOR, VREV )) {
+      snprintf( dataVersion, 128, "%s-%d.%d.%d", DATA_NAME, VMAJOR, VMINOR, VREV );
+      data = dataVersion;
+   }
+   else
+      data = DATA_DEF;
    /* opengl */
    gl_screen.w = 800;
    gl_screen.h = 600;
