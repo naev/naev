@@ -470,9 +470,10 @@ static void glFontMakeDList( FT_Face face, char ch,
    expanded_data = (GLubyte*) malloc(sizeof(GLubyte)*2* w*h + 1);
    for (j=0; j < h; j++) {
       for (i=0; i < w; i++ ) {
-         expanded_data[2*(i+j*w)]= expanded_data[2*(i+j*w)+1] =
-            (i>=bitmap.width || j>=bitmap.rows) ?
-            0 : bitmap.buffer[i + bitmap.width*j];
+         expanded_data[2*(i+j*w)] = 0xcf; /* Set LUMINANCE to constant. */
+         expanded_data[2*(i+j*w)+1] = /* Alpha varies with bitmap. */
+               ((i>=bitmap.width) || (j>=bitmap.rows)) ?
+                  0 : bitmap.buffer[i + bitmap.width*j];
       }
    }
 
@@ -492,7 +493,6 @@ static void glFontMakeDList( FT_Face face, char ch,
     * downwards correction for letters like g or y */
    glPushMatrix();                                                        
       glTranslated( slot->bitmap_left, slot->bitmap_top - bitmap.rows, 0);
-
 
    /* take into account opengl POT wrapping */
    x = (double)bitmap.width/(double)w;
@@ -536,6 +536,8 @@ static void glFontMakeDList( FT_Face face, char ch,
  */
 void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
 {
+   FT_Library library;
+   FT_Face face;
    uint32_t bufsize;
    int i;
 
@@ -553,21 +555,21 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    }
 
    /* create a FreeType font library */
-   FT_Library library;
    if (FT_Init_FreeType(&library))
-      WARN("FT_Init_FreeType failed");
+      WARN("FT_Init_FreeType failed.");
 
    /* object which freetype uses to store font info */
-   FT_Face face;
    if (FT_New_Memory_Face( library, buf, bufsize, 0, &face ))
       WARN("FT_New_Face failed loading library from %s", fname );
 
    /* FreeType is cool and measures using 1/64 of a pixel, therefore expand */
-   FT_Set_Char_Size( face,
-         0, /* Same as width. */
-         h << 6, /* In 1/64th of a pixel. */
-         96,
-         96);
+   if (FT_IS_SCALABLE(face))
+      if (FT_Set_Char_Size( face,
+               0, /* Same as width. */
+               h << 6, /* In 1/64th of a pixel. */
+               96,
+               96))
+         WARN("FT_Set_Char_Size failed.");
 
    /* Select the character map. */
    if (FT_Select_Charmap( face, FT_ENCODING_UNICODE ))
@@ -576,7 +578,6 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    /* have OpenGL allocate space for the textures / display list */
    font->list_base = glGenLists(128);
    glGenTextures( 128, font->textures );
-
 
    /* create each of the font display lists */
    for (i=0; i<128; i++)
