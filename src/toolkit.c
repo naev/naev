@@ -98,6 +98,7 @@ typedef struct Widget_ {
          int selected; /**< Which option is currently selected. */
          int pos; /** Current topmost option (in view). */
          void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
+         int height; /**< Real height. */
       } lst; /**< WIDGET_LIST */
 
       struct { /* WIDGET_RECT */
@@ -230,6 +231,7 @@ static void toolkit_renderImageArray( Widget* iar, double bx, double by );
 static void toolkit_drawOutline( double x, double y,
       double w, double h, double b,
       glColour* c, glColour* lc );
+static void toolkit_drawScrollbar( double x, double y, double w, double h, double pos );
 static void toolkit_clip( double x, double y, double w, double h );
 static void toolkit_unclip (void);
 static void toolkit_drawRect( double x, double y,
@@ -381,6 +383,12 @@ void window_addList( const unsigned int wid,
    wgt->w = (double) w;
    wgt->h = (double) h - ((h % (gl_defFont.h+2)) + 2);
    toolkit_setPos( wdw, wgt, x, y );
+
+   /* check if needs scrollbar. */
+   if (2 + (nitems * (gl_defFont.h + 2)) > (int)wgt->h)
+      wgt->dat.lst.height = (2 + gl_defFont.h) * nitems + 2;
+   else
+      wgt->dat.lst.height = 0;
 
    if (wdw->focus == -1) /* initialize the focus */
       toolkit_nextFocus();
@@ -1263,8 +1271,12 @@ static void window_render( Window* w )
 }
 
 
-/*
- * renders a button
+/**
+ * @brief Renders a button widget.
+ *
+ *    @param wct WIDGET_BUTTON widget to render.
+ *    @param bx Base X position.
+ *    @param by Base Y position.
  */
 static void toolkit_renderButton( Widget* btn, double bx, double by )
 {
@@ -1323,8 +1335,14 @@ static void toolkit_renderButton( Widget* btn, double bx, double by )
          by + (double)SCREEN_H/2. + btn->y + (btn->h - gl_defFont.h)/2.,
          &cDarkRed, btn->dat.btn.display );
 }
-/*
- * renders the text
+
+
+/**
+ * @brief Renders a text widget.
+ *
+ *    @param wct WIDGET_TEXT widget to render.
+ *    @param bx Base X position.
+ *    @param by Base Y position.
  */
 static void toolkit_renderText( Widget* txt, double bx, double by )
 {
@@ -1341,8 +1359,14 @@ static void toolkit_renderText( Widget* txt, double bx, double by )
             by + (double)SCREEN_H/2. + txt->y,
             txt->dat.txt.colour, txt->dat.txt.text );
 }
-/*
- * renders the image
+
+
+/**
+ * @brief Renders a image widget.
+ *
+ *    @param wct WIDGET_IMAGE widget to render.
+ *    @param bx Base X position.
+ *    @param by Base Y position.
  */
 static void toolkit_renderImage( Widget* img, double bx, double by )
 {
@@ -1372,14 +1396,20 @@ static void toolkit_renderImage( Widget* img, double bx, double by )
 }
 
 
-/*
- * renders the list
+/**
+ * @brief Renders a list widget.
+ *
+ *    @param wct WIDGET_LIST widget to render.
+ *    @param bx Base X position.
+ *    @param by Base Y position.
  */
 static void toolkit_renderList( Widget* lst, double bx, double by )
 {
    int i;
-   double x,y, tx,ty;
+   double x,y, tx,ty, miny;
+   double w, scroll_pos;
 
+   w = lst->w;
    x = bx + lst->x;
    y = by + lst->y;
 
@@ -1392,26 +1422,44 @@ static void toolkit_renderList( Widget* lst, double bx, double by )
    /* outter outline */
    toolkit_drawOutline( x, y, lst->w, lst->h, 1., toolkit_colDark, NULL );
 
+   /* Draw scrollbar. */
+   if (lst->dat.lst.height > 0) {
+      /* We need to make room for list. */
+      w -= 10.;
+
+      scroll_pos = (double)lst->dat.lst.pos / ((double)lst->dat.lst.height - lst->h);
+      toolkit_drawScrollbar( x + lst->w - 10., y, 10., lst->h, scroll_pos );
+   }
+
    /* draw selected */
    toolkit_drawRect( x, y - 1. + lst->h -
          (1 + lst->dat.lst.selected - lst->dat.lst.pos)*(gl_defFont.h+2.),
-         lst->w, gl_defFont.h + 2., &cHilight, NULL );
+         w, gl_defFont.h + 2., &cHilight, NULL );
 
    /* draw content */
    tx = (double)SCREEN_W/2. + x + 2.;
    ty = (double)SCREEN_H/2. + y + lst->h - 2. - gl_defFont.h;
+   miny = ty - lst->h;
    y = ty - 2.;
+   w -= 4;
    for (i=lst->dat.lst.pos; i<lst->dat.lst.noptions; i++) {
-      gl_printMax( &gl_defFont, (int)lst->w-4,
+      gl_printMax( &gl_defFont, (int)w,
             tx, ty, &cBlack, lst->dat.lst.options[i] );
       ty -= 2 + gl_defFont.h;
-      if (ty-y > lst->h) break;
+
+      /* Check if out of bounds. */
+      if (ty < miny)
+         break;
    }
 }
 
 
-/*
- * renders a rectangle
+/**
+ * @brief Renders a rectangle widget.
+ *
+ *    @param wct WIDGET_RECT widget to render.
+ *    @param bx Base X position.
+ *    @param by Base Y position.
  */
 static void toolkit_renderRect( Widget* rct, double bx, double by )
 {
@@ -1434,8 +1482,12 @@ static void toolkit_renderRect( Widget* rct, double bx, double by )
 }
 
 
-/*
- * renders a custom widget
+/**
+ * @brief Renders a custom widget.
+ *
+ *    @param cst WIDGET_CUST widget to render.
+ *    @param bx Base X position.
+ *    @param by Base Y position.
  */
 static void toolkit_renderCust( Widget* cst, double bx, double by )
 {
@@ -1459,8 +1511,12 @@ static void toolkit_renderCust( Widget* cst, double bx, double by )
 }
 
 
-/*
- * renders an input widget
+/**
+ * @brief Renders a input widget.
+ *
+ *    @param cst WIDGET_INPUT widget to render.
+ *    @param bx Base X position.
+ *    @param by Base Y position.
  */
 static void toolkit_renderInput( Widget* inp, double bx, double by )
 {
@@ -1489,15 +1545,17 @@ static void toolkit_renderInput( Widget* inp, double bx, double by )
 
 
 /**
- * @fn static void toolkit_renderImageArray( Widget* iar, double bx, double by )
- *
  * @brief Renders an image array.
+ *
+ *    @param cst WIDGET_IMAGEARRAY widget to render.
+ *    @param bx Base X position.
+ *    @param by Base Y position.
  */
 static void toolkit_renderImageArray( Widget* iar, double bx, double by )
 {
    int i,j;
    double x,y, w,h, xcurs,ycurs;
-   double scroll_pos, sx,sy;
+   double scroll_pos;
    int xelem,yelem, xspace;
    glColour *c, *dc, *lc;
    int is_selected;
@@ -1524,19 +1582,8 @@ static void toolkit_renderImageArray( Widget* iar, double bx, double by )
    /* 
     * Scrollbar.
     */
-   /* scrollbar background */
-   toolkit_drawRect( x + iar->w - 10., y, 10., iar->h,
-         toolkit_colDark, toolkit_col );
-   toolkit_drawOutline( x + iar->w - 10., y, 10., iar->h, 1.,
-         toolkit_colLight, toolkit_col );
-   toolkit_drawOutline( x + iar->w - 10., y, 10., iar->h, 2.,
-         toolkit_colDark, NULL );
-   /* Bar itself. */
    scroll_pos = iar->dat.iar.pos / (h * (yelem - (int)(iar->h / h)));
-   sx = x + iar->w - 10.;
-   sy = y + iar-> h - (iar->h - 30.) * scroll_pos - 30.;
-   toolkit_drawRect( sx, sy, 10., 30., toolkit_colLight, toolkit_col );
-   toolkit_drawOutline( sx, sy, 10., 30., 0., toolkit_colDark, NULL );
+   toolkit_drawScrollbar( x + iar->w - 10., y, 10., iar->h, scroll_pos );
 
    /* 
     * Main drawing loop.
@@ -1601,8 +1648,38 @@ static void toolkit_renderImageArray( Widget* iar, double bx, double by )
 }
 
 
-/*
- * handles input for an input widget
+/**
+ * @brief Draws a scrollbar.
+ *
+ *    @param x X position of scrollbar.
+ *    @param y Y position of scrollbar.
+ *    @param w Width of the scrollbar.
+ *    @param h Height of the scrollbar.
+ *    @param pos Position at [0:1].
+ */
+static void toolkit_drawScrollbar( double x, double y, double w, double h, double pos )
+{
+   double sy;
+
+   /* scrollbar background */
+   toolkit_drawRect( x, y, w, h, toolkit_colDark, toolkit_col );
+   toolkit_drawOutline( x, y, w, h, 1., toolkit_colLight, toolkit_col );
+   toolkit_drawOutline( x, y, w, h, 2., toolkit_colDark, NULL );
+
+   /* Bar itself. */
+   sy = y + (h - 30.) * (1.-pos);
+   toolkit_drawRect( x, sy, w, 30., toolkit_colLight, toolkit_col );
+   toolkit_drawOutline( x, sy, w, 30., 0., toolkit_colDark, NULL );
+}
+
+
+
+/**
+ * @brief Handles input for an input widget.
+ *
+ *    @param type Event type.
+ *    @param inp Input widget to handle event.
+ *    @param key Key being handled.
  */
 static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key )
 {
