@@ -481,6 +481,8 @@ static void glFontMakeDList( FT_Face face, char ch,
    glBindTexture( GL_TEXTURE_2D, tex_base[(int)ch]);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,
          GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, expanded_data );
 
@@ -492,7 +494,7 @@ static void glFontMakeDList( FT_Face face, char ch,
    /* corrects a spacing flaw between letters and
     * downwards correction for letters like g or y */
    glPushMatrix();                                                        
-      glTranslated( slot->bitmap_left, slot->bitmap_top - bitmap.rows, 0);
+      glTranslated( (double)slot->bitmap_left, (double)(slot->bitmap_top-bitmap.rows), 0. );
 
    /* take into account opengl POT wrapping */
    x = (double)bitmap.width/(double)w;
@@ -502,22 +504,22 @@ static void glFontMakeDList( FT_Face face, char ch,
    glBindTexture(GL_TEXTURE_2D,tex_base[(int)ch]);
    glBegin( GL_QUADS );
 
-      glTexCoord2d( 0, 0 );
-         glVertex2d( 0, bitmap.rows );
+      glTexCoord2d( 0., 0. );
+         glVertex2d( 0., (double)bitmap.rows );
       
-      glTexCoord2d( x, 0);
-         glVertex2d( bitmap.width, bitmap.rows );
+      glTexCoord2d( x, 0. );
+         glVertex2d( (double)bitmap.width, (double)bitmap.rows );
 
       glTexCoord2d( x, y );
-         glVertex2d( bitmap.width, 0 );
+         glVertex2d( (double)bitmap.width, 0. );
       
-      glTexCoord2d( 0, y );
-         glVertex2d( 0, 0 );
+      glTexCoord2d( 0., y );
+         glVertex2d( 0., 0. );
 
    glEnd(); /* GL_QUADS */
 
    glPopMatrix(); /* translation matrix */
-   glTranslated( slot->advance.x >> 6, slot->advance.y >> 6, 0);
+   glTranslated( (double)(slot->advance.x >> 6), (double)(slot->advance.y >> 6), 0. );
    width_base[(int)ch] = slot->advance.x >> 6;
 
    /* end of display list */
