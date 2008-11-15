@@ -564,14 +564,17 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    if (FT_New_Memory_Face( library, buf, bufsize, 0, &face ))
       WARN("FT_New_Face failed loading library from %s", fname );
 
-   /* FreeType is cool and measures using 1/64 of a pixel, therefore expand */
-   if (FT_IS_SCALABLE(face))
+   /* Try to resize. */
+   if (FT_IS_SCALABLE(face)) {
       if (FT_Set_Char_Size( face,
                0, /* Same as width. */
                h << 6, /* In 1/64th of a pixel. */
-               96,
-               96))
+               96, /* Create at 96 DPI */
+               96)) /* Create at 96 DPI */
          WARN("FT_Set_Char_Size failed.");
+   }
+   else
+      WARN("Font isn't resizeable!");
 
    /* Select the character map. */
    if (FT_Select_Charmap( face, FT_ENCODING_UNICODE ))
