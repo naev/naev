@@ -248,6 +248,7 @@ static void menu_small_close( unsigned int wid, char* str )
 static void menu_small_exit( unsigned int wid, char* str )
 {
    (void) str;
+   unsigned int info_wid;
    
    /* if landed we must save anyways */
    if (landed) {
@@ -255,6 +256,13 @@ static void menu_small_exit( unsigned int wid, char* str )
       ntime_inc( RNG( 2*NTIME_UNIT_LENGTH, 3*NTIME_UNIT_LENGTH ) );
       save_all();
       land_cleanup();
+   }
+
+   /* Close info menu if open. */
+   if (menu_isOpen(MENU_INFO)) {
+      info_wid = window_get("Info");
+      window_destroy( info_wid );
+      menu_Close(MENU_INFO);
    }
 
    window_destroy( wid );
