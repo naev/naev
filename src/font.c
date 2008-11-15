@@ -22,8 +22,8 @@
 #include "font.h"
 
 #include "ft2build.h"
-#include "freetype/freetype.h"
-#include "freetype/ftglyph.h"
+#include FT_FREETYPE_H 
+#include FT_GLYPH_H 
 
 #include "naev.h"
 #include "log.h"
@@ -126,10 +126,6 @@ int gl_printWidthForText( const glFont *ft_font, char *text,
 
 
 /**
- * @fn void gl_print( const glFont *ft_font,
- *                    const double x, const double y,
- *                    const glColour* c, const char *fmt, ... )
- *
  * @brief Prints text on screen like printf.
  *
  * Defaults ft_font to gl_defFont if NULL.
@@ -176,10 +172,6 @@ void gl_print( const glFont *ft_font,
    gl_checkErr();
 }
 /**
- * @fn int gl_printMax( const glFont *ft_font, const int max,
- *                      const double x, const double y,
- *                      const glColour* c, const char *fmt, ... )
- *
  * @brief Behavise like gl_print but stops displaying text after reaching a certain length.
  *
  *    @param ft_font Font to use (NULL means use gl_defFont).
@@ -236,10 +228,6 @@ int gl_printMax( const glFont *ft_font, const int max,
 }
 
 /**
- * @fn int gl_printMid( const glFont *ft_font, const int width,
- *                      double x, const double y,
- *                      const glColour* c, const char *fmt, ... )
- *
  * @brief Displays text centered in position and width.
  *
  * Will truncate if text is too long.
@@ -298,11 +286,6 @@ int gl_printMid( const glFont *ft_font, const int width,
    return 0;
 }
 /**
- * @fn int gl_printText( const glFont *ft_font,
- *                       const int width, const int height,
- *                       double bx, double by,
- *                       glColour* c, const char *fmt, ... )
- *
  * @brief Prints a block of text that fits in the dimensions given.
  *
  * Positions are based on origin being top-left.
@@ -375,8 +358,6 @@ int gl_printText( const glFont *ft_font,
 
 
 /**
- * @fn int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
- *
  * @brief Gets the width that it would take to print some text.
  *
  * Does not display text on screen.
@@ -408,9 +389,6 @@ int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
 }
 
 /**
- * @fn int gl_printHeight( const glFont *ft_font,
- *                         const int width, const char *fmt, ... )
- *
  * @brief Gets the height of the text if it were printed.
  *
  * Does not display the text on screen.
@@ -460,10 +438,6 @@ int gl_printHeight( const glFont *ft_font,
  *
  */
 /**
- * @fn static void glFontMakeDList( FT_Face face, char ch,
- *                                GLuint list_base, GLuint *tex_base,
- *                                int* width_base )
- *
  * @brief Makes the font display list.
  *
  * Basically taken from NeHe lesson 43
@@ -472,25 +446,20 @@ int gl_printHeight( const glFont *ft_font,
 static void glFontMakeDList( FT_Face face, char ch,
       GLuint list_base, GLuint *tex_base, int* width_base )
 {  
-   FT_Glyph glyph;
    FT_Bitmap bitmap;
    GLubyte* expanded_data;
+   FT_GlyphSlot slot;
    int w,h;
    int i,j;
    double x,y;
 
-   if (FT_Load_Glyph( face, FT_Get_Char_Index( face, ch ),
-      FT_LOAD_DEFAULT ))
-      WARN("FT_Load_Glyph failed");                                       
+   slot = face->glyph; /* Small shortcut. */
 
-   if (FT_Get_Glyph( face->glyph, &glyph ))
-      WARN("FT_Get_Glyph failed");
+   /* Load the glyph. */
+   if (FT_Load_Char( face, ch, FT_LOAD_RENDER ))
+      WARN("FT_Load_Char failed.");                                       
 
-   /* converting our glyph to a bitmap */
-   FT_Glyph_To_Bitmap( &glyph, FT_RENDER_MODE_NORMAL, 0, 1 );
-   FT_BitmapGlyph bitmap_glyph = (FT_BitmapGlyph) glyph;
-
-   bitmap = bitmap_glyph->bitmap; /* to simplify */
+   bitmap = slot->bitmap; /* to simplify */
 
    /* need the POT wrapping for opengl */
    w = gl_pot(bitmap.width);
@@ -522,7 +491,7 @@ static void glFontMakeDList( FT_Face face, char ch,
    /* corrects a spacing flaw between letters and
     * downwards correction for letters like g or y */
    glPushMatrix();                                                        
-      glTranslated( bitmap_glyph->left, bitmap_glyph->top-bitmap.rows, 0);
+      glTranslated( slot->bitmap_left, slot->bitmap_top - bitmap.rows, 0);
 
 
    /* take into account opengl POT wrapping */
@@ -548,21 +517,17 @@ static void glFontMakeDList( FT_Face face, char ch,
    glEnd(); /* GL_QUADS */
 
    glPopMatrix(); /* translation matrix */
-   glTranslated( face->glyph->advance.x >> 6, 0, 0);
-   width_base[(int)ch] = (int)(face->glyph->advance.x >> 6);
+   glTranslated( slot->advance.x >> 6, slot->advance.y >> 6, 0);
+   width_base[(int)ch] = slot->advance.x >> 6;
 
    /* end of display list */
    glEndList();
-
-   FT_Done_Glyph(glyph);
 
    gl_checkErr();
 }
 
 
 /**
- * @fn void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
- *
  * @brief Initializes a font.
  *
  *    @param font Font to load (NULL defaults to gl_defFont).
@@ -598,7 +563,15 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
       WARN("FT_New_Face failed loading library from %s", fname );
 
    /* FreeType is cool and measures using 1/64 of a pixel, therefore expand */
-   FT_Set_Char_Size( face, h << 6, h << 6, 96, 96);
+   FT_Set_Char_Size( face,
+         0, /* Same as width. */
+         h << 6, /* In 1/64th of a pixel. */
+         96,
+         96);
+
+   /* Select the character map. */
+   if (FT_Select_Charmap( face, FT_ENCODING_UNICODE ))
+      WARN("FT_Select_Charmap failed to change character mapping.");
 
    /* have OpenGL allocate space for the textures / display list */
    font->list_base = glGenLists(128);
@@ -616,8 +589,6 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
 }
 
 /**
- * @fn void gl_freeFont( glFont* font )
- *
  * @brief Frees a loaded font.
  *
  *    @param font Font to free.
