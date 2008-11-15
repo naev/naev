@@ -381,7 +381,7 @@ void window_addList( const unsigned int wid,
    
    /* position/size */
    wgt->w = (double) w;
-   wgt->h = (double) h - ((h % (gl_defFont.h+2)) + 2);
+   wgt->h = (double) h - ((h % (gl_defFont.h+2)) - 2);
    toolkit_setPos( wdw, wgt, x, y );
 
    /* check if needs scrollbar. */
@@ -1427,7 +1427,8 @@ static void toolkit_renderList( Widget* lst, double bx, double by )
       /* We need to make room for list. */
       w -= 10.;
 
-      scroll_pos = (double)lst->dat.lst.pos / ((double)lst->dat.lst.height - lst->h);
+      scroll_pos  = (double)(lst->dat.lst.pos * (2 + gl_defFont.h));
+      scroll_pos /= ((double)lst->dat.lst.height - lst->h);
       toolkit_drawScrollbar( x + lst->w - 10., y, 10., lst->h, scroll_pos );
    }
 
@@ -1439,7 +1440,7 @@ static void toolkit_renderList( Widget* lst, double bx, double by )
    /* draw content */
    tx = (double)SCREEN_W/2. + x + 2.;
    ty = (double)SCREEN_H/2. + y + lst->h - 2. - gl_defFont.h;
-   miny = ty - lst->h;
+   miny = ty - lst->h + 2 + gl_defFont.h;
    y = ty - 2.;
    w -= 4;
    for (i=lst->dat.lst.pos; i<lst->dat.lst.noptions; i++) {
@@ -1845,10 +1846,8 @@ static void toolkit_mouseEvent( SDL_Event* event )
                   if (toolkit_isFocusable(wgt))
                      w->focus = i;
 
-                  if (wgt->type == WIDGET_LIST) {
+                  if (wgt->type == WIDGET_LIST)
                      toolkit_listFocus( wgt, x-wgt->x, y-wgt->y );
-                     input_key = 0; /* hack to avoid weird bug with permascroll */
-                  }
                   else if (wgt->type == WIDGET_IMAGEARRAY)
                      toolkit_imgarrFocus( wgt, x-wgt->x, y-wgt->y );
                   break;
@@ -2088,8 +2087,12 @@ static void toolkit_triggerFocus (void)
 }
 
 
-/*
- * tries to scroll up/down by direction
+/**
+ * @brief Tries to scroll a widget up/down by direction.
+ *
+ *    @param wgt Widget to scroll.
+ *    @param direction Direction to scroll.  Positive is up, negative
+ *           is down and absolute value is number of elements to scroll.
  */
 static void toolkit_listScroll( Widget* wgt, int direction )
 {
@@ -2097,6 +2100,7 @@ static void toolkit_listScroll( Widget* wgt, int direction )
    int xelem, yelem;
    double hmax;
    Window *wdw;
+   int pos;
 
    if (wgt == NULL) return;
 
@@ -2106,9 +2110,24 @@ static void toolkit_listScroll( Widget* wgt, int direction )
 
       case WIDGET_LIST:
          wgt->dat.lst.selected -= direction;
+
+         /* boundry check. */
          wgt->dat.lst.selected = MAX(0,wgt->dat.lst.selected);
          wgt->dat.lst.selected = MIN(wgt->dat.lst.selected, wgt->dat.lst.noptions-1);
-         if (wgt->dat.lst.fptr) (*wgt->dat.lst.fptr)(wdw->id,wgt->name);
+
+         /* see if we have to scroll. */
+         pos = (wgt->dat.lst.selected - wgt->dat.lst.pos);
+         if (pos < 0) {
+            wgt->dat.lst.pos += pos;
+            if (wgt->dat.lst.pos < 0)
+               wgt->dat.lst.pos = 0;
+         }
+         else if (2 + (pos+1) * (gl_defFont.h + 2) > wgt->h) {
+            wgt->dat.lst.pos += (2 + (pos+1) * (gl_defFont.h + 2) - wgt->h) / (gl_defFont.h + 2);
+         }
+
+         if (wgt->dat.lst.fptr)
+            (*wgt->dat.lst.fptr)(wdw->id,wgt->name);
          break;
 
       case WIDGET_IMAGEARRAY:
@@ -2131,7 +2150,8 @@ static void toolkit_listScroll( Widget* wgt, int direction )
          /* Boundry check. */
          wgt->dat.iar.pos = MAX(wgt->dat.iar.pos, 0.);
          wgt->dat.iar.pos = MIN(wgt->dat.iar.pos, hmax);
-         if (wgt->dat.iar.fptr) (*wgt->dat.iar.fptr)(wdw->id,wgt->name);
+         if (wgt->dat.iar.fptr)
+            (*wgt->dat.iar.fptr)(wdw->id,wgt->name);
          break;
 
       default:
@@ -2173,8 +2193,12 @@ char* toolkit_getList( const unsigned int wid, char* name )
 }
 
 
-/*
- * get the position of current item in the list
+/**
+ * @brief Get the position of current item in the list.
+ *
+ *    @param wid Window identifier where the list is.
+ *    @param name Name of the list.
+ *    @return The position in the list or -1 on error.
  */
 int toolkit_getListPos( const unsigned int wid, char* name )
 {
@@ -2192,8 +2216,12 @@ int toolkit_getListPos( const unsigned int wid, char* name )
 }
 
 
-/*
- * mouse event focus on list
+/**
+ * @brief Handles mouse event focus on a list widget.
+ *
+ *    @param lst List widget.
+ *    @param bx Base X mouse click.
+ *    @param by Base Y mouse click.
  */
 static void toolkit_listFocus( Widget* lst, double bx, double by )
 {
@@ -2201,6 +2229,7 @@ static void toolkit_listFocus( Widget* lst, double bx, double by )
    int i;
 
    i = (lst->h - by) / (gl_defFont.h + 2.);
+
    if (i < lst->dat.lst.noptions) { /* shouldn't be out of boundries */
       lst->dat.lst.selected = i;
       toolkit_listScroll( lst, 0 ); /* checks boundries and triggers callback */
