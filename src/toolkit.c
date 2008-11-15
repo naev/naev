@@ -208,6 +208,7 @@ static void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y );
 static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key );
 static void toolkit_mouseEvent( SDL_Event* event );
 static int toolkit_keyEvent( SDL_Event* event );
+static void toolkit_listMove( Widget* lst, double ay );
 static void toolkit_imgarrMove( Widget* iar, double ry );
 static void toolkit_clearKey (void);
 /* focus */
@@ -1428,7 +1429,7 @@ static void toolkit_renderList( Widget* lst, double bx, double by )
       w -= 10.;
 
       scroll_pos  = (double)(lst->dat.lst.pos * (2 + gl_defFont.h));
-      scroll_pos /= ((double)lst->dat.lst.height - lst->h);
+      scroll_pos /= (double)lst->dat.lst.height - lst->h;
       toolkit_drawScrollbar( x + lst->w - 10., y, 10., lst->h, scroll_pos );
    }
 
@@ -1825,6 +1826,8 @@ static void toolkit_mouseEvent( SDL_Event* event )
                   if (!mouse_down)
                      wgt->status = WIDGET_STATUS_MOUSEOVER;
                   else {
+                     if (wgt->type == WIDGET_LIST)
+                        toolkit_listMove( wgt, y-wgt->y );
                      if (wgt->type == WIDGET_IMAGEARRAY)
                         toolkit_imgarrMove( wgt, rel_y );
                   }
@@ -2225,20 +2228,41 @@ int toolkit_getListPos( const unsigned int wid, char* name )
  */
 static void toolkit_listFocus( Widget* lst, double bx, double by )
 {
-   (void)bx;
    int i;
+   double y, w;
+   double scroll_pos;
 
-   i = (lst->h - by) / (gl_defFont.h + 2.);
+   /* Get the actual width. */
+   w = lst->w;
+   if (lst->dat.lst.height > 0)
+      w -= 10.;
 
-   if (i < lst->dat.lst.noptions) { /* shouldn't be out of boundries */
-      lst->dat.lst.selected = i;
-      toolkit_listScroll( lst, 0 ); /* checks boundries and triggers callback */
+   if (bx < w) {
+      i = lst->dat.lst.pos + (lst->h - by) / (gl_defFont.h + 2.);
+      if (i < lst->dat.lst.noptions) { /* shouldn't be out of boundries */
+         lst->dat.lst.selected = i;
+         toolkit_listScroll( lst, 0 ); /* checks boundries and triggers callback */
+      }
+   }
+   else {
+      /* Get bar position (center). */
+      scroll_pos  = (double)(lst->dat.lst.pos * (2 + gl_defFont.h));
+      scroll_pos /= (double)lst->dat.lst.height - lst->h;
+      y = (lst->h - 30.) * (1.-scroll_pos) + 15.;
+
+      /* Click below the bar. */
+      if (by < y-15.)
+         toolkit_listScroll( lst, -5 );
+      /* Click above the bar. */
+      else if (by > y+15.)
+         toolkit_listScroll( lst, +5 );
+      /* Click on the bar. */
+      else
+         lst->status = WIDGET_STATUS_SCROLLING;
    }
 }
 
 /**
- * @fn static void toolkit_imgarrFocus( Widget* iar, double bx, double by )
- *
  * @brief Mouse event focus on image array.
  *
  *    @param iar Image Array widget.
@@ -2314,8 +2338,44 @@ static void toolkit_imgarrFocus( Widget* iar, double bx, double by )
 
 
 /**
- * @fn static void toolkit_imgarrMove( Widget* iar, double ry )
+ * @brief Handles List movement.
  *
+ *    @param lst List that has mouse movement.
+ *    @param ay Absolute Y mouse movement.
+ */
+static void toolkit_listMove( Widget* lst, double ay )
+{
+   Window *wdw;
+   int psel;
+   double p;
+   int h;
+
+   if (lst->status == WIDGET_STATUS_SCROLLING) {
+      h = lst->h / (2 + gl_defFont.h) - 1;
+
+      /* Save previous position. */
+      psel = lst->dat.lst.pos;
+
+      /* Find absolute position. */
+      p  = (lst->h - ay) / lst->h * (lst->dat.lst.height - lst->h);
+      p /= (2 + gl_defFont.h);
+      lst->dat.lst.pos = (int)round(p);
+
+      /* Does boundry checks. */
+      lst->dat.lst.selected = MAX(lst->dat.lst.selected, lst->dat.lst.pos);
+      lst->dat.lst.selected = MIN(lst->dat.lst.selected, lst->dat.lst.pos+h);
+
+      /* Run change if position changed. */
+      if (lst->dat.lst.selected != psel)
+         if (lst->dat.lst.fptr) {
+            wdw = &windows[nwindows-1]; /* get active window */
+            (*lst->dat.lst.fptr)(wdw->id,lst->name);
+         }
+   }
+}
+
+
+/**
  * @brief Handles Image Array movement.
  *
  *    @param iar Image Array that has mouse movement.
@@ -2341,7 +2401,7 @@ static void toolkit_imgarrMove( Widget* iar, double ry )
 
       iar->dat.iar.pos -= ry * hmax / (iar->h - 30.);
 
-      /* Dous boundry checks. */
+      /* Does boundry checks. */
       toolkit_listScroll(iar, 0);
    }
 }
