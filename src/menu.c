@@ -299,10 +299,11 @@ void menu_info (void)
    char str[128];
    char *nt;
    unsigned int wid;
-   wid = window_create( "Info", -1, -1, INFO_WIDTH, INFO_HEIGHT );
 
    /* Can't open menu twice. */
    if (menu_isOpen(MENU_INFO)) return;
+
+   wid = window_create( "Info", -1, -1, INFO_WIDTH, INFO_HEIGHT );
 
    /* pilot generics */
    nt = ntime_pretty( ntime_get() );
