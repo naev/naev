@@ -40,7 +40,7 @@ CLUA   := -Ilib/lua
 CSDL   := $(shell sdl-config --cflags)
 CXML   := $(shell xml2-config --cflags)
 CTTF   := $(shell freetype-config --cflags)
-CPNG   := $(shell pkg-config libpng --cflags)
+CPNG   := $(shell libpng-config --cflags)
 CGL    :=
 CFLAGS := $(CLUA) $(CSDL) $(CXML) $(CTTF) $(CPNG) $(CGL) $(VERSION) -D$(OS)
 
@@ -52,7 +52,7 @@ LDLUA   := lib/lua/liblua.a
 LDSDL   := $(shell sdl-config --libs) -lSDL_image -lSDL_mixer
 LDXML   := $(shell xml2-config --libs)
 LDTTF   := $(shell freetype-config --libs)
-LDPNG   := $(shell pkg-config libpng --libs)
+LDPNG   := $(shell libpng-config --libs)
 LDGL    := -lGL
 LDFLAGS := -lm $(LDLUA) $(LDSDL) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
 
