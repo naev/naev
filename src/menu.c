@@ -52,6 +52,9 @@
 #define DEATH_WIDTH     130 /**< Death menu width. */
 #define DEATH_HEIGHT    150 /**< Death menu height. */
 
+#define OPTIONS_WIDTH   130 /**< Options menu width. */
+#define OPTIONS_HEIGHT  150 /**< Options menu height. */
+
 #define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
 
@@ -87,11 +90,11 @@ static void mission_menu_genList( unsigned int wid, int first );
 static void mission_menu_update( unsigned int wid, char* str );
 /* death menu */
 static void menu_death_main( unsigned int wid, char* str );
+/* Options menu. */
+static void menu_options_close( unsigned int parent, char* str );
 
 
 /**
- * @fn void menu_main (void)
- *
  * @brief Opens the main menu (titlescreen).
  */
 void menu_main (void)
@@ -122,7 +125,7 @@ void menu_main (void)
          "btnNew", "New Game", menu_main_new );
    window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20),
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnOptions", "Options", NULL );
+         "btnOptions", "Options", (void(*)(unsigned int,char*))menu_options );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnExit", "Exit", menu_main_exit );
 
@@ -223,7 +226,7 @@ void menu_small (void)
          "btnResume", "Resume", menu_small_close );
    window_addButton( wid, 20, 20 + BUTTON_HEIGHT + 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnOptions", "Options", NULL );
+         "btnOptions", "Options", (void(*)(unsigned int,char*))menu_options );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, 
          "btnExit", "Exit", menu_small_exit );
 
@@ -309,7 +312,7 @@ void menu_info (void)
    unsigned int wid;
 
    /* Can't open menu twice. */
-   if (menu_isOpen(MENU_INFO)) return;
+   if (menu_isOpen(MENU_INFO) || dialogue_isOpen()) return;
 
    wid = window_create( "Info", -1, -1, INFO_WIDTH, INFO_HEIGHT );
 
@@ -654,4 +657,34 @@ static void menu_death_main( unsigned int parent, char* str )
    menu_main();
 }
 
+
+/**
+ * @brief Opens the options menu.
+ */
+void menu_options (void)
+{
+   unsigned int wid;
+
+   wid = window_create( "Options", -1, -1, OPTIONS_WIDTH, OPTIONS_HEIGHT );
+   window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClose", "Close", menu_options_close );
+   window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20),
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnKeybinds", "Keybindings", NULL );
+   menu_Open(MENU_OPTIONS);
+}
+/**
+ * @brief Closes the options menu.
+ *    @param str Unused.
+ */
+static void menu_options_close( unsigned int parent, char* str )
+{
+   (void) parent;
+   (void) str;
+   unsigned int wid;
+
+   wid = window_get( "Options" );
+   window_destroy( wid );
+   menu_Close(MENU_OPTIONS);
+}
 
