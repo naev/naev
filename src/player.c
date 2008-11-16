@@ -2521,7 +2521,8 @@ int player_save( xmlTextWriterPtr writer )
 static int player_saveShip( xmlTextWriterPtr writer,
       Pilot* ship, char* loc )
 {
-   int i;
+   int i, j, k;
+   int found;
 
    xmlw_startElem(writer,"ship");
    xmlw_attr(writer,"name",ship->name);
@@ -2547,6 +2548,32 @@ static int player_saveShip( xmlTextWriterPtr writer,
    /* save the commodities */
    xmlw_startElem(writer,"commodities");
    for (i=0; i<ship->ncommodities; i++) {
+      /* Remove cargo with id and no mission. */
+      if (ship->commodities[i].id > 0) {
+         found = 0;
+         for (j=0; j<MISSION_MAX; j++) {
+            /* Only check active missions. */
+            if (player_missions[j].id > 0) {
+               /* Now check if it's in the cargo list. */
+               for (k=0; player_missions[j].ncargo; k++) {
+                  /* See if it matches a cargo. */
+                  if (player_missions[j].cargo[k] == ship->commodities[i].id) {
+                     found = 1;
+                     break;
+                  }
+               }
+            }
+            if (found)
+               break;
+         }
+
+         if (!found) {
+            WARN("Found mission cargo without assosciated mission.");
+            WARN("Please reload save game to remove the dead cargo.");
+            continue;
+         }
+      }
+
       xmlw_startElem(writer,"commodity");
 
       xmlw_attr(writer,"quantity","%d",ship->commodities[i].quantity);

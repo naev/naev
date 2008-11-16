@@ -547,7 +547,8 @@ void mission_cleanup( Mission* misn )
    }
    if (misn->cargo != NULL) {
       for (i=0; i<misn->ncargo; i++) { /* must unlink all the cargo */
-         pilot_rmMissionCargo( player, misn->cargo[i] );
+         if (player != NULL) /* Only remove if player exists. */
+            pilot_rmMissionCargo( player, misn->cargo[i] );
          mission_unlinkCargo( misn, misn->cargo[i] );
       }
       free(misn->cargo);
