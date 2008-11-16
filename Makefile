@@ -13,7 +13,7 @@ export OS
 
 
 # Data path
-#DATA_DEF := "ndata"
+#DATA_DEF := \"ndata\"
 
 
 #
@@ -43,6 +43,10 @@ CTTF   := $(shell freetype-config --cflags)
 CPNG   := $(shell libpng-config --cflags)
 CGL    :=
 CFLAGS := $(CLUA) $(CSDL) $(CXML) $(CTTF) $(CPNG) $(CGL) $(VERSION) -D$(OS)
+ifdef DATA_DEF
+CFLAGS += -DDATA_DEF=$(DATA_DEF)
+endif
+
 
 
 #
