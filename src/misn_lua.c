@@ -659,6 +659,7 @@ static int misn_finish( lua_State *L )
    if (lua_isboolean(L,1)) b = lua_toboolean(L,1);
    else {
       lua_pushstring(L, "Mission Done");
+      misn_delete = 1;
       lua_error(L); /* THERE IS NO RETURN */
       return 0;
    }

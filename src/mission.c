@@ -480,6 +480,7 @@ int mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
 }
 
 
+
 /**
  * @brief Updates the missions triggering timers if needed.
  *
@@ -545,8 +546,10 @@ void mission_cleanup( Mission* misn )
       misn->sys_marker = NULL;
    }
    if (misn->cargo != NULL) {
-      for (i=0; i<misn->ncargo; i++) /* must unlink all the cargo */
+      for (i=0; i<misn->ncargo; i++) { /* must unlink all the cargo */
+         pilot_rmMissionCargo( player, misn->cargo[i] );
          mission_unlinkCargo( misn, misn->cargo[i] );
+      }
       free(misn->cargo);
       misn->cargo = NULL;
       misn->ncargo = 0;
