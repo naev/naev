@@ -471,9 +471,9 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my 
       case SDL_MOUSEBUTTONDOWN:
          /* zooming */
          if (event->button.button == SDL_BUTTON_WHEELUP)
-            map_buttonZoom( 0, "btnZoomOut" );
-         else if (event->button.button == SDL_BUTTON_WHEELDOWN)
             map_buttonZoom( 0, "btnZoomIn" );
+         else if (event->button.button == SDL_BUTTON_WHEELDOWN)
+            map_buttonZoom( 0, "btnZoomOut" );
 
          /* selecting star system */
          else {
