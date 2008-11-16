@@ -192,8 +192,13 @@ static int mission_init( Mission* mission, MissionData* misn, int load )
    free(buf);
 
    /* run create function */
-   if (load == 0) /* never run when loading */
-      misn_run( mission, "create");
+   if (load == 0) { /* never run when loading */
+      /* Failed to create. */
+      if (misn_run( mission, "create")) {
+         mission_cleanup(mission);
+         return -1;
+      }
+   }
 
    return mission->id;
 }
@@ -611,8 +616,6 @@ static int mission_matchFaction( MissionData* misn, int faction )
 
 
 /**
- * @fn Mission* missions_computer( int *n, int faction, char* planet, char* sysname )
- *
  * @brief Generates misisons for the computer - special case.
  *
  *    @param[out] n Missions created.

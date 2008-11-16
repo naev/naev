@@ -1083,7 +1083,7 @@ static void misn_accept( unsigned int wid, char* str )
       pos = toolkit_getListPos( wid, "lstMission" );
       misn = &mission_computer[pos];
       if (mission_accept( misn )) { /* successs in accepting the mission */
-         memmove( misn, &mission_computer[pos+1],
+         memmove( &mission_computer[pos], &mission_computer[pos+1],
                sizeof(Mission) * (mission_ncomputer-pos-1) );
          mission_ncomputer--;
          misn_genList(wid, 0);
@@ -1099,7 +1099,7 @@ static void misn_genList( unsigned int wid, int first )
       window_destroyWidget( wid, "lstMission" );
 
    /* list */
-   if (mission_ncomputer!=0) { /* there are missions */
+   if (mission_ncomputer > 0) { /* there are missions */
       misn_names = malloc(sizeof(char*) * mission_ncomputer);
       j = 0;
       for (i=0; i<mission_ncomputer; i++)
