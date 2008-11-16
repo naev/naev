@@ -1407,7 +1407,7 @@ static void pilot_calcCargo( Pilot* pilot )
 
    q = pilot_cargoUsed( pilot );
 
-   pilot->cargo_free -= q; /* reduce space left */
+   pilot->cargo_free = pilot->ship->cap_cargo - q; /* reduce space left */
    pilot->solid->mass = pilot->ship->mass + q; /* cargo affects weight */
 }
 
