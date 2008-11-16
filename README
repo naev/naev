@@ -12,6 +12,7 @@
             * libgl1-mesa-dri
             * libxml2
             * libfreetype6
+            * libpng12-0
 
          X.1.2) Source
             * libsdl1.2-dev
@@ -20,6 +21,7 @@
             * libgl1-mesa-dev
             * libxml2-dev
             * libfreetype6-dev
+            * libpng12-dev
 
 
     X.) KEYBINDINGS
