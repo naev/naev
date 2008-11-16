@@ -32,7 +32,7 @@ typedef enum ShipClass_ {
    SHIP_CLASS_NULL, /**< Invalid ship class. */
    /* Civilian. */
    SHIP_CLASS_YACHT, /**< Small cheap ship. */
-   SHIP_CLASS_LUXERY_YACHT, /**< Small expensive ship. */
+   SHIP_CLASS_LUXURY_YACHT, /**< Small expensive ship. */
    SHIP_CLASS_CRUISE_SHIP, /**< Medium ship. */
    /* Merchant. */
    SHIP_CLASS_COURIER, /**< Small ship. */

@@ -160,8 +160,8 @@ char* ship_class( Ship* s )
       /* Civilian. */
       case SHIP_CLASS_YACHT:
          return "Yacht";
-      case SHIP_CLASS_LUXERY_YACHT:
-         return "Luxery Yacht";
+      case SHIP_CLASS_LUXURY_YACHT:
+         return "Luxury Yacht";
       case SHIP_CLASS_CRUISE_SHIP:
          return "Cruise Ship";
 
@@ -216,8 +216,8 @@ ShipClass ship_classFromString( char* str )
    /* Civilian */
    if (strcmp(str,"Yacht")==0)
       return SHIP_CLASS_YACHT;
-   else if (strcmp(str,"Luxery Yacht")==0)
-      return SHIP_CLASS_LUXERY_YACHT;
+   else if (strcmp(str,"Luxury Yacht")==0)
+      return SHIP_CLASS_LUXURY_YACHT;
    else if (strcmp(str,"Cruise Ship")==0)
       return SHIP_CLASS_CRUISE_SHIP;
 

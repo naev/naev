@@ -349,7 +349,7 @@
   <GFX>gawain</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
-  <class>Luxery Yacht</class>
+  <class>Luxury Yacht</class>
   <price>500000</price>
   <fabricator>Nexus</fabricator>
   <tech>11</tech>
