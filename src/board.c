@@ -199,16 +199,17 @@ static int board_fail( unsigned int wdw )
    p = pilot_get(player->target);
 
    /* fail chance */
-   if (RNG(0,100) > (int)(50. * 
+   if (RNGF() > (0.5 * 
             (10. + (double)p->ship->crew)/(10. + (double)player->ship->crew)))
       return 0;
 
-   if (RNG(0,2)==0) { /* 33% of instadeath */
+   if (RNGF() < 0.4) { /* 40% of instadeath */
       p->armour = -1.;
       player_message("You have tripped the ship's self destruct mechanism!");
    }
    else /* you just got locked out */
-      player_message("The ship's security system locks you out.");
+      player_message("The ship's security system locks %s out.",
+            (player->ship->crew > 0) ? "your crew" : "you" );
 
    board_exit( wdw, NULL);
    return 1;
