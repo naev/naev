@@ -25,6 +25,9 @@
 #define BOARDING_WIDTH  300 /**< Boarding window width. */
 #define BOARDING_HEIGHT 200 /**< Boarding window height. */
 
+#define BUTTON_WIDTH     50 /**< Boarding button width. */
+#define BUTTON_HEIGHT    30 /**< Boarding button height. */
+
 
 /*
  * prototypes
@@ -32,6 +35,7 @@
 static void board_exit( unsigned int wdw, char* str );
 static void board_stealCreds( unsigned int wdw, char* str );
 static void board_stealCargo( unsigned int wdw, char* str );
+static void board_stealFuel( unsigned int wdw, char* str );
 static int board_fail( unsigned int wdw );
 static void board_update( unsigned int wdw );
 
@@ -89,17 +93,20 @@ void player_board (void)
          0, "txtCargo", &gl_smallFont, &cDConsole,
          "Credits:\n"
          "Cargo:\n"
+         "Fuel:\n"
          );
    window_addText( wdw, 80, -30, 120, 60,
          0, "txtData", &gl_smallFont, &cBlack, NULL );
 
-   window_addButton( wdw, 20, 20, 50, 30, "btnStealCredits",
-         "Credits", board_stealCreds);
-   window_addButton( wdw, 90, 20, 50, 30, "btnStealCargo",
-         "Cargo", board_stealCargo);
+   window_addButton( wdw, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnStealCredits", "Credits", board_stealCreds);
+   window_addButton( wdw, 20+BUTTON_WIDTH+20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnStealCargo", "Cargo", board_stealCargo);
+   window_addButton( wdw, 20+2*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnStealCargo", "Fuel", board_stealFuel);
 
-   window_addButton( wdw, -20, 20, 50, 30, "btnBoardingClose",
-         "Leave", board_exit );
+   window_addButton( wdw, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnBoardingClose", "Leave", board_exit );
 
    board_update(wdw);
 
@@ -150,7 +157,7 @@ static void board_stealCreds( unsigned int wdw, char* str )
 
 
 /**
- * @brief Attempt to steal the bearded ship's cargo.
+ * @brief Attempt to steal the boarded ship's cargo.
  *
  *    @param wdw Window triggering the function.
  *    @param str Unused.
@@ -188,6 +195,47 @@ static void board_stealCargo( unsigned int wdw, char* str )
 
 
 /**
+ * @brief Attempt to steal the boarded ship's fuel.
+ *
+ *    @param wdw Window triggering the function.
+ *    @param str Unused.
+ */
+static void board_stealFuel( unsigned int wdw, char* str )
+{
+   (void)str;
+   double f;
+   Pilot* p;
+
+   p = pilot_get(player->target);
+
+   if (p->fuel <= 0.) { /* no fuel. */
+      player_message("The ship has no fuel.");
+      return;
+   }
+   else if (p->fuel == p->fuel_max) {
+      player_message("Your ship is at maximum fuel capacity.");
+      return;
+   }
+
+   if (board_fail(wdw)) return;
+
+   /* Steal fuel. */
+   f = player->fuel;
+   player->fuel += p->fuel;
+   p->fuel = 0.;
+
+   /* Make sure doesn't overflow. */
+   if (player->fuel > player->fuel_max) {
+      p->fuel = player->fuel_max - player->fuel;
+      player->fuel = player->fuel_max;
+   }
+
+   board_update( wdw );
+   player_message("You manage to steal the ship's fuel.");
+}
+
+
+/**
  * @brief Checks to see if the hijack attempt failed.
  *
  *    @return 1 on failure to board, otherwise 0.
@@ -221,27 +269,42 @@ static int board_fail( unsigned int wdw )
  */
 static void board_update( unsigned int wdw )
 {
-   int i;
+   int i, len;
    char str[128], buf[32];
    char cred[10];
    Pilot* p;
 
    p = pilot_get(player->target);
 
+   /* Credits. */
    credits2str( cred, p->credits, 2 );
-
-   snprintf( str, 11,
+   snprintf( str, 128,
          "%s\n", cred );
-   if (p->ncommodities==0)
-      strncat( str, "none", 10 );
+   len = strlen(str);
+
+   /* Commodities. */
+   if (p->ncommodities==0) {
+      strncat( str, "none", 128-len );
+      len = strlen(str);
+   }
    else {
       for (i=0; i<p->ncommodities; i++) {
-         snprintf( buf, 32, 
+         snprintf( buf, 32,
                "%d %s\n",
                p->commodities[i].quantity, p->commodities[i].commodity->name );
-         strncat( str, buf, 32 );
+         strncat( str, buf, 128-len );
+         len = strlen(str);
       }
    }
+
+   /* Fuel. */
+   if (p->fuel <= 0.)
+      strncat( str, "none", 128-len );
+   else {
+      snprintf( buf, 32, "%.0f Units", p->fuel );
+      strncat( str, buf, 128-len );
+   }
+   len = strlen(str);
 
    window_modifyText( wdw, "txtData", str ); 
 }
