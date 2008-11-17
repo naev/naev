@@ -650,8 +650,10 @@ static void data_name (void)
    buf = pack_readfile( DATA, VERSION_FILE, &bufsize );
 
    if (strncmp(buf, version, bufsize) != 0) {
-      WARN("NAEV version and data module version differ!");
-      WARN("NAEV is v%s, data is for v%s", version, buf );
+      /* 0.3.4 release will use 0.3.3 ndata, we don't want to warn.
+      DEBUG("NAEV version and data module version differ!");
+      DEBUG("NAEV is v%s, data is for v%s", version, buf );
+      */
    }
    
    free(buf);
