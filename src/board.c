@@ -85,6 +85,12 @@ void player_board (void)
 
 
    /*
+    * Tweak some values.
+    */
+   p->fuel = (double)RNG(100, p->fuel_max);
+
+
+   /*
     * create the boarding window
     */
    wdw = window_create( "Boarding", -1, -1, BOARDING_WIDTH, BOARDING_HEIGHT );
@@ -203,16 +209,15 @@ static void board_stealCargo( unsigned int wdw, char* str )
 static void board_stealFuel( unsigned int wdw, char* str )
 {
    (void)str;
-   double f;
    Pilot* p;
 
    p = pilot_get(player->target);
 
-   if (p->fuel <= 0.) { /* no fuel. */
+   if (player->fuel <= 0.) { /* no fuel. */
       player_message("The ship has no fuel.");
       return;
    }
-   else if (p->fuel == p->fuel_max) {
+   else if (player->fuel == player->fuel_max) {
       player_message("Your ship is at maximum fuel capacity.");
       return;
    }
@@ -220,7 +225,6 @@ static void board_stealFuel( unsigned int wdw, char* str )
    if (board_fail(wdw)) return;
 
    /* Steal fuel. */
-   f = player->fuel;
    player->fuel += p->fuel;
    p->fuel = 0.;
 
