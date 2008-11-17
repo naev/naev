@@ -80,10 +80,10 @@ static void print_usage( char **argv );
  */
 static void print_usage( char **argv )
 {
-   LOG("Usage: %s [OPTION]", argv[0]);
+   LOG("Usage: %s [OPTIONS]", argv[0]);
    LOG("Options are:");
-   LOG("   -f, --fullscreen      fullscreen");
-   LOG("   -F n, --fps n         limit frames per second");
+   LOG("   -f, --fullscreen      activate fullscreen");
+   LOG("   -F n, --fps n         limit frames per second to n");
    LOG("   -V, --vsync           enable vsync");
    LOG("   -d s, --data s        set the data file to be s");
    LOG("   -W n                  set width to n");
