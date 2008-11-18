@@ -1196,6 +1196,7 @@ static int ai_face( lua_State *L )
    }
    else if (lua_isvector(L,1))
       lv = lua_tovector(L,1);
+   else NLUA_INVALID_PARAMETER();
 
    mod = 10;
 
