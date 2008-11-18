@@ -288,7 +288,7 @@ static void board_update( unsigned int wdw )
 
    /* Commodities. */
    if (p->ncommodities==0) {
-      strncat( str, "none", 128-len );
+      strncat( str, "none\n", 128-len );
       len = strlen(str);
    }
    else {
@@ -303,9 +303,9 @@ static void board_update( unsigned int wdw )
 
    /* Fuel. */
    if (p->fuel <= 0.)
-      strncat( str, "none", 128-len );
+      strncat( str, "none\n", 128-len );
    else {
-      snprintf( buf, 32, "%.0f Units", p->fuel );
+      snprintf( buf, 32, "%.0f Units\n", p->fuel );
       strncat( str, buf, 128-len );
    }
    len = strlen(str);
