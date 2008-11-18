@@ -136,6 +136,7 @@ static void misn_accept( unsigned int wid, char* str );
 static void misn_genList( unsigned int wid, int first );
 static void misn_update( unsigned int wid, char* str );
 /* refuel */
+static void land_checkAddRefuel (void);
 static unsigned int refuel_price (void);
 static void spaceport_refuel( unsigned int wid, char *str );
 
@@ -255,6 +256,7 @@ static void commodity_sell( unsigned int wid, char* str )
 
    q = pilot_rmCargo( player, com, q );
    player->credits += q * com->medium;
+   land_checkAddRefuel();
    commodity_update(wid, NULL);
 }
 
@@ -520,6 +522,7 @@ static void outfits_sell( unsigned int wid, char* str )
    if (outfit_canSell( outfit, q, 1 ) == 0) return;
 
    player->credits += outfit->price * pilot_rmOutfit( player, outfit, q );
+   land_checkAddRefuel();
    outfits_update(wid, NULL);
 }
 /*
@@ -921,6 +924,7 @@ static void shipyard_yoursSell( unsigned int wid, char* str )
 
    /* Sold. */
    player->credits += price;
+   land_checkAddRefuel();
    player_rmShip( shipname );
    dialogue_msg( "Ship Sold", "You have sold your ship %s for %s credits.",
          shipname, buf );
@@ -1175,13 +1179,46 @@ static void spaceport_refuel( unsigned int wid, char *str )
 
 
 /**
+ * @brief Checks if should add the refuel button and does if needed.
+ */
+static void land_checkAddRefuel (void)
+{
+   char buf[32], cred[16];
+
+   /* Check to see if fuel conditions are met. */
+   if (!planet_hasService(land_planet, PLANET_SERVICE_BASIC))
+      return;
+
+   /* Full fuel. */
+   if (player->fuel >= player->fuel_max)
+      return;
+
+   /* Just enable button if it exists. */
+   if (widget_exists( land_wid, "btnRefuel" )) {
+      window_enableButton( land_wid, "btnRefuel");
+   }
+   /* Else create it. */
+   else {
+      credits2str( cred, refuel_price(), 2 );
+      snprintf( buf, 32, "Refuel %s", cred );
+      window_addButton( land_wid, -20, 20 + 2*(BUTTON_HEIGHT + 20),
+            BUTTON_WIDTH, BUTTON_HEIGHT, "btnRefuel",
+            buf, spaceport_refuel );
+   }
+   
+   /* Make sure player can click it. */
+   if (player->credits < refuel_price())
+      window_disableButton( land_wid, "btnRefuel" );
+}
+
+
+/**
  * @brief Opens up all the land dialogue stuff.
  *
  *    @param p Planet to open stuff for.
  */
 void land( Planet* p )
 {
-   char buf[32], cred[16];
    glTexture *logo;
    int offset;
 
@@ -1241,15 +1278,6 @@ void land( Planet* p )
       window_addButton( land_wid, 20, 20 + BUTTON_HEIGHT + 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnBar",
             "Spaceport Bar", (void(*)(unsigned int,char*))spaceport_bar_open);
-      if (player->fuel < player->fuel_max) {
-         credits2str( cred, refuel_price(), 2 );
-         snprintf( buf, 32, "Refuel %s", cred );
-         window_addButton( land_wid, -20, 20 + 2*(BUTTON_HEIGHT + 20),
-               BUTTON_WIDTH, BUTTON_HEIGHT, "btnRefuel",
-               buf, spaceport_refuel );
-         if (player->credits < refuel_price()) /* not enough money */
-            window_disableButton( land_wid, "btnRefuel" );
-      }
    }
 
 
@@ -1272,6 +1300,9 @@ void land( Planet* p )
             land_planet->name, cur_system->name);
       visited(VISITED_LAND);
    }
+
+   /* Add fuel button if needed - AFTER missions pay :). */
+   land_checkAddRefuel();
 }
 
 

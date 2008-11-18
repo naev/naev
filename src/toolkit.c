@@ -924,6 +924,32 @@ void window_destroy( const unsigned int wid )
 
 
 /**
+ * @brief Checks to see if a widget exists.
+ *
+ *    @param wid Window to check widget in.
+ *    @param wgtname Name of the widget to check;
+ */
+int widget_exists( const unsigned int wid, const char* wgtname )
+{
+   Window *w = window_wget(wid);
+   int i;
+
+   /* Get window. */
+   if (w==NULL) {
+      WARN("window '%d' does not exist", wid);
+      return -1;
+   }
+
+   /* Check for widget. */
+   for (i=0; i<w->nwidgets; i++)
+      if (strcmp(wgtname,w->widgets[i].name)==0)
+         return 1;
+
+   return 0;
+}
+
+
+/**
  * @brief Destroys a widget in a window.
  *
  *    @param wid Window to destroy widget in.
@@ -1689,6 +1715,28 @@ static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key )
    SDLMod mods;
 
    if (inp->type != WIDGET_INPUT) return 0;
+
+   /*
+    * Handle arrow keys.
+    * @todo finish implementing, no cursor makes it complicated to see where you are.
+    */
+#if 0
+   if ((type == SDL_KEYDOWN) &&
+         ((key == SDLK_LEFT) || (key == SDLK_RETURN))) {
+      /* Move pointer. */
+      if (key == SDLK_LEFT) {
+         if (inp->dat.inp.pos > 0)
+            inp->dat.inp.pos -= 1;
+      }
+      else if (key == SDLK_RIGHT) {
+         if ((inp->dat.inp.pos < inp->dat.inp.max-1) &&
+               (inp->dat.inp.input[inp->dat.inp.pos+1] != '\0'))
+            inp->dat.inp.pos += 1;
+      }
+
+      return 1;
+   }
+#endif
 
    mods = SDL_GetModState();
    if (inp->dat.inp.oneline && isascii(key)) {

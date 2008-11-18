@@ -87,6 +87,7 @@ void window_imgColour( const unsigned int wid,
  */
 /* generic */
 int window_exists( const char* wdwname );
+int widget_exists( const unsigned int wid, const char* wgtname );
 unsigned int window_get( const char* wdwname );
 char* window_getInput( const unsigned int wid, char* name );
 void window_posWidget( const unsigned int wid,
