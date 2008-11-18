@@ -448,7 +448,7 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
       return 0;
    }
    /* not enough $$ */
-   else if (q*outfit->price >= player->credits) {
+   else if (q*outfit->price > player->credits) {
       if (errmsg != 0) {
          credits2str( buf, q*outfit->price - player->credits, 2 );
          dialogue_alert( "You need %s more credits.", buf);
@@ -477,7 +477,8 @@ static void outfits_buy( unsigned int wid, char* str )
    q = outfits_getMod();
 
    /* can buy the outfit? */
-   if (outfit_canBuy(outfit, q, 1) == 0) return;
+   if (outfit_canBuy(outfit, q, 1) == 0)
+      return;
 
    player->credits -= outfit->price * pilot_addOutfit( player, outfit,
          MIN(q,outfit->max) );
@@ -519,7 +520,8 @@ static void outfits_sell( unsigned int wid, char* str )
    q = outfits_getMod();
 
    /* has no outfits to sell */
-   if (outfit_canSell( outfit, q, 1 ) == 0) return;
+   if (outfit_canSell( outfit, q, 1 ) == 0)
+      return;
 
    player->credits += outfit->price * pilot_rmOutfit( player, outfit, q );
    land_checkAddRefuel();
@@ -716,6 +718,12 @@ static void shipyard_buy( unsigned int wid, char* str )
 
    shipname = toolkit_getList( wid, "iarShipyard" );
    ship = ship_get( shipname );
+
+   /* Must have enough money. */
+   if (ship->price > player->credits) {
+      dialogue_alert( "Not enough credits!" );
+      return;
+   }
 
    /* we now move cargo to the new ship */
    if (pilot_cargoUsed(player) > ship->cap_cargo) {
