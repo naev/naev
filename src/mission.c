@@ -648,7 +648,7 @@ Mission* missions_computer( int *n, int faction, char* planet, char* sysname )
             if (RNGF() < chance) {
                m++;
                tmp = realloc( tmp, sizeof(Mission) * m);
-               if (mission_init( &tmp[m-1], misn, 0 ) == 0)
+               if (mission_init( &tmp[m-1], misn, 0 ) < 0)
                   m--;
             }
       }
