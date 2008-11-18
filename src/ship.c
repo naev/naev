@@ -273,6 +273,11 @@ int ship_basePrice( Ship* s )
    for (o=s->outfit; o!=NULL; o=o->next)
       price -= o->quantity * o->data->price;
 
+   if (price < 0) {
+      WARN("Negative ship base price!");
+      price = 0;
+   }
+
    return price;
 }
 
