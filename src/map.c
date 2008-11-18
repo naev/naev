@@ -243,8 +243,10 @@ static void map_update( unsigned int wid )
    }
 
    /* Get planets */
-   if (sys->nplanets == 0)
-      window_modifyText( wid, "txtPlanets", "None" );
+   if (sys->nplanets == 0) {
+      strncpy( buf, "None", 128 );
+      window_modifyText( wid, "txtPlanets", buf );
+   }
    else {
       buf[0] = '\0';
       if (sys->nplanets > 0)
