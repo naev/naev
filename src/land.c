@@ -125,7 +125,7 @@ static void shipyard_yoursUpdate( unsigned int wid, char* str );
 static void shipyard_yoursChange( unsigned int wid, char* str );
 static void shipyard_yoursSell( unsigned int wid, char* str );
 static void shipyard_yoursTransport( unsigned int wid, char* str );
-static int shipyard_yoursTransportPrice( char* shipname );
+static unsigned int shipyard_yoursTransportPrice( char* shipname );
 /* spaceport bar */
 static void spaceport_bar_open (void);
 /* news */
@@ -136,7 +136,7 @@ static void misn_accept( unsigned int wid, char* str );
 static void misn_genList( unsigned int wid, int first );
 static void misn_update( unsigned int wid, char* str );
 /* refuel */
-static int refuel_price (void);
+static unsigned int refuel_price (void);
 static void spaceport_refuel( unsigned int wid, char *str );
 
 
@@ -446,7 +446,7 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
       return 0;
    }
    /* not enough $$ */
-   else if (q*(int)outfit->price >= player->credits) {
+   else if (q*outfit->price >= player->credits) {
       if (errmsg != 0) {
          credits2str( buf, q*outfit->price - player->credits, 2 );
          dialogue_alert( "You need %s more credits.", buf);
@@ -809,7 +809,7 @@ static void shipyard_yoursUpdate( unsigned int wid, char* str )
    char *shipname;
    Pilot *ship;
    char* loc;
-   int price;
+   unsigned int price;
 
    shipname = toolkit_getList( wid, "lstYourShips" );
    if (strcmp(shipname,"None")==0) { /* no ships */
@@ -932,7 +932,7 @@ static void shipyard_yoursSell( unsigned int wid, char* str )
 static void shipyard_yoursTransport( unsigned int wid, char* str )
 {
    (void)str;
-   int price;
+   unsigned int price;
    char *shipname, buf[16];
 
    shipname = toolkit_getList( wid, "lstYourShips" );
@@ -960,7 +960,7 @@ static void shipyard_yoursTransport( unsigned int wid, char* str )
    /* update the window to reflect the change */
    shipyard_yoursUpdate(wid, NULL);
 }
-static int shipyard_yoursTransportPrice( char* shipname )
+static unsigned int shipyard_yoursTransportPrice( char* shipname )
 {
    char *loc;
    Pilot* ship;
@@ -1148,9 +1148,9 @@ static void misn_update( unsigned int wid, char* str )
  *
  *    @return Refuel price.
  */
-static int refuel_price (void)
+static unsigned int refuel_price (void)
 {
-   return (player->fuel_max - player->fuel)*3;
+   return (unsigned int)((player->fuel_max - player->fuel)*3);
 }
 
 

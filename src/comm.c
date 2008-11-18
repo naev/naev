@@ -138,7 +138,7 @@ static void comm_bribe( unsigned int wid, char *unused )
 {
    (void) unused;
    int answer;
-   int price;
+   unsigned int price;
    char *str;
    lua_State *L;
 

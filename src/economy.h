@@ -19,9 +19,9 @@ typedef struct Commodity_ {
    char* name; /**< Name of the commodity. */
    char* description; /**< Description of the commodity. */
    /* Prices. */
-   int low; /**< Lowest price on the market. */
-   int medium; /**< Average price on the market. */
-   int high; /**< Highest price on the market. */
+   unsigned int low; /**< Lowest price on the market. */
+   unsigned int medium; /**< Average price on the market. */
+   unsigned int high; /**< Highest price on the market. */
 } Commodity;
 
 /* commodity stuff */

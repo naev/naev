@@ -78,7 +78,7 @@ typedef struct Ship_ {
    ShipClass class; /**< ship class */
 
    /* store stuff */
-   int price; /**< cost to buy */
+   unsigned int price; /**< cost to buy */
    int tech; /**< see space.h */
    char* fabricator; /**< company that makes it */
    char* description; /**< selling description */
