@@ -1184,6 +1184,7 @@ static int ai_face( lua_State *L )
 
    /* Get first parameter, aka what to face. */
    n = -2;
+   lv = NULL;
    if (lua_isnumber(L,1)) {
       n = (int)lua_tonumber(L,1);
       if (n >= 0 ) {
@@ -1191,9 +1192,7 @@ static int ai_face( lua_State *L )
          if (p==NULL)
             return 0; /* make sure pilot is valid */
          vect_cset( &tv, VX(p->solid->pos), VY(p->solid->pos) );
-         lv = NULL;
       }
-      else NLUA_INVALID_PARAMETER();
    }
    else if (lua_isvector(L,1))
       lv = lua_tovector(L,1);
