@@ -35,11 +35,14 @@ function control ()
 
    -- Think for attacking
    elseif task == "attack" then
+      target = ai.target()
 
       -- Runaway if needed
-      if (shield_run > 0 and ai.pshield() < shield_run) or
-            (armour_run > 0 and ai.parmour() < armour_run) then
-         ai.pushtask(0, "runaway", ai.target())
+      if (shield_run > 0 and ai.pshield() < shield_run
+               and ai.pshield() < ai.pshield(target) ) or
+            (armour_run > 0 and ai.parmour() < armour_run
+               and ai.parmour() < ai.parmour(target) ) then
+         ai.pushtask(0, "runaway", target)
 
       -- Think like normal
       else
