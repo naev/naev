@@ -1230,6 +1230,8 @@ char* pilot_getOutfits( Pilot* pilot )
    if (pilot->noutfits>0)
       snprintf( str, 1024, "%dx %s",
             pilot->outfits[0].quantity, pilot->outfits[0].outfit->name );
+   else
+      snprintf( str, 1024, "None" );
    /* rest of the outfits */
    for (i=1; i<pilot->noutfits; i++) {
       snprintf( buf, 64, ", %dx %s",
