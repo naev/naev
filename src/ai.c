@@ -1193,6 +1193,7 @@ static int ai_face( lua_State *L )
          vect_cset( &tv, VX(p->solid->pos), VY(p->solid->pos) );
          lv = NULL;
       }
+      else NLUA_INVALID_PARAMETER();
    }
    else if (lua_isvector(L,1))
       lv = lua_tovector(L,1);
