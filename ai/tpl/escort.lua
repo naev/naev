@@ -27,7 +27,7 @@ function escort ()
    end
    
    dir = ai.face(target)
-   dist = ai.dist( ai.pos(target) )
+   dist = ai.dist(target)
    bdist = ai.minbrakedist()
 
    -- Close enough.
@@ -67,7 +67,7 @@ function flyback ()
    target = mem.escort
 
    dir = ai.face(target)
-   dist = ai.dist( ai.pos(target) )
+   dist = ai.dist(target)
    bdist = ai.minbrakedist()
 
    -- Try to brake
