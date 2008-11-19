@@ -241,6 +241,7 @@ static void commodity_buy( unsigned int wid, char* str )
 
    q = pilot_addCargo( player, com, q );
    player->credits -= q * com->medium;
+   land_checkAddRefuel();
    commodity_update(wid, NULL);
 }
 static void commodity_sell( unsigned int wid, char* str )
@@ -482,6 +483,7 @@ static void outfits_buy( unsigned int wid, char* str )
 
    player->credits -= outfit->price * pilot_addOutfit( player, outfit,
          MIN(q,outfit->max) );
+   land_checkAddRefuel();
    outfits_update(wid, NULL);
 }
 static int outfit_canSell( Outfit* outfit, int q, int errmsg )
@@ -742,6 +744,7 @@ static void shipyard_buy( unsigned int wid, char* str )
       return;
    }
    player->credits -= ship->price; /* ouch, paying is hard */
+   land_checkAddRefuel();
 
    shipyard_update(wid, NULL);
 }
@@ -967,6 +970,7 @@ static void shipyard_yoursTransport( unsigned int wid, char* str )
 
    /* success */
    player->credits -= price;
+   land_checkAddRefuel();
    player_setLoc( shipname, land_planet->name );
 
    /* update the window to reflect the change */
