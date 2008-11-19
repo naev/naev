@@ -499,15 +499,22 @@ static void player_newShipMake( char* name )
          player_dir,  &vp, &vv, PILOT_PLAYER );
    gl_bindCamera( &player->solid->pos ); /* set opengl camera */
 
-   /* money */
+   /* copy cargo over. */
+   if (player_nstack > 0) { /* not during creation though. */
+      pilot_moveCargo( player, player_stack[player_nstack-1] );
+
+      /* recalculate stats after cargo movement. */
+      pilot_calcStats( player );
+      pilot_calcStats( player_stack[player_nstack-1] );
+   }
+
+   /* money. */
    player->credits = player_credits;
    player_credits = 0;
 }
 
 
 /**
- * @fn void player_swapShip( char* shipname )
- *
  * @brief Swaps player's current ship with his ship named shipname.
  *
  *    @param shipname Ship to change to.
@@ -525,12 +532,7 @@ void player_swapShip( char* shipname )
          ship->credits = player->credits;
 
          /* move cargo over */
-         for (j=0; j<player->ncommodities; j++) {
-            pilot_addCargo( ship, player->commodities[j].commodity,
-                  player->commodities[j].quantity );
-            pilot_rmCargo( player, player->commodities[j].commodity,
-                  player->commodities[j].quantity );
-         }
+         pilot_moveCargo( ship, player );
 
          /* extra pass to calculate stats */
          pilot_calcStats( ship );

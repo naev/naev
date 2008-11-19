@@ -285,6 +285,7 @@ int pilot_cargoUsed( Pilot* pilot ); /* gets how much cargo it has onboard */
 int pilot_cargoFree( Pilot* p ); /* cargo space */
 int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity );
 int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity );
+int pilot_moveCargo( Pilot* dest, Pilot* src );
 /* mission cargo - not to be confused with normal cargo */
 unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity );
 int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id );

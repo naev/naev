@@ -1197,7 +1197,7 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
             osec = (pilot->secondary) ? pilot->secondary->outfit->name : NULL;
 
             /* remove the outfit */
-            memmove( pilot->outfits+i, pilot->outfits+i+1,
+            memmove( &pilot->outfits[i], &pilot->outfits[i+1],
                   sizeof(PilotOutfit) * (pilot->noutfits-i-1) );
             pilot->noutfits--;
             pilot->outfits = realloc( pilot->outfits,
@@ -1350,8 +1350,54 @@ int pilot_cargoFree( Pilot* p )
 }
 
 
-/*
- * tries to add quantity of cargo to pilot, returns quantity actually added
+/**
+ * @brief Moves cargo from one pilot to another.
+ *
+ *    @param dest Destination pilot.
+ *    @param src Source pilot.
+ *    @return 0 on success.
+ */
+int pilot_moveCargo( Pilot* dest, Pilot* src )
+{
+   int i;
+
+   /* Nothing to copy, success! */
+   if (src->ncommodities == 0)
+      return 0;
+
+   /* Check if it fits. */
+   if (pilot_cargoUsed(src) > pilot_cargoFree(dest)) {
+      WARN("Unable to copy cargo over from pilot '%s' to '%s'", src->name, dest->name );
+      return -1;
+   }
+
+   /* Allocate new space. */
+   i = dest->ncommodities;
+   dest->ncommodities += src->ncommodities;
+   dest->commodities = realloc( dest->commodities,
+         sizeof(PilotCommodity)*dest->ncommodities);
+  
+   /* Copy over. */
+   memmove(&dest->commodities[i], &src->commodities[0],
+         sizeof(PilotCommodity) * src->ncommodities);
+
+   /* Clean src. */
+   src->ncommodities = 0;
+   if (src->commodities != NULL)
+      free(src->commodities);
+   src->commodities = NULL;
+
+   return 0;
+}
+
+
+/**
+ * @brief Tries to add quantity of cargo to pilot.
+ *
+ *    @param pilot Pilot to add cargo to.
+ *    @param cargo Cargo to add.
+ *    @param quantity Quantity to add.
+ *    @return Quantity actually added.
  */
 int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )
 {
