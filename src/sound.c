@@ -111,8 +111,6 @@ static alVoice* voice_get( int id );
 
 
 /**
- * @fn int sound_init (void)
- *
  * @brief Initializes the sound subsystem.
  *
  *    @return 0 on success.
@@ -151,8 +149,6 @@ int sound_init (void)
 }
 
 /**
- * @fn static void print_MixerVersion (void)
- *
  * @brief Prints the current and compiled SDL_Mixer versions.
  */
 static void print_MixerVersion (void)
@@ -187,8 +183,6 @@ static void print_MixerVersion (void)
 
 
 /**
- * @fn void sound_exit (void)
- *
  * @brief Cleans up after the sound subsytem.
  */
 void sound_exit (void)
@@ -224,8 +218,6 @@ void sound_exit (void)
 
 
 /**
- * @fn int sound_get( char* name )
- *
  * @brief Gets the buffer to sound of name.
  *
  *    @param name Name of the sound to get it's id.
@@ -247,8 +239,6 @@ int sound_get( char* name )
 
 
 /**
- * @fn int sound_play( int sound )
- *
  * @brief Plays the sound in the first available channel.
  *
  *    @param sound Sound to play.
@@ -277,8 +267,6 @@ int sound_play( int sound )
 
 
 /**
- * @fn int sound_playPos( int sound, double x, double y )
- *
  * @brief Plays a sound based on position.
  *
  *    @param sound Sound to play.
@@ -335,8 +323,6 @@ int sound_playPos( int sound, double x, double y )
 
 
 /**
- * @fn int sound_updatePos( int voice, double x, double y )
- *
  * @brief Updates the position of a voice.
  *
  *    @param voice Identifier of the voice to update.
@@ -373,8 +359,6 @@ int sound_updatePos( int voice, double x, double y )
 
 
 /**
- * @fn int sound_update (void)
- *
  * @brief Updates the sonuds removing obsolete ones and such.
  *
  *    @return 0 on success.
@@ -382,6 +366,9 @@ int sound_updatePos( int voice, double x, double y )
 int sound_update (void)
 {
    alVoice *v, *tv;
+
+   /* Update music if needed. */
+   music_update();
 
    if (sound_disabled) return 0;
 
@@ -425,8 +412,6 @@ int sound_update (void)
 
 
 /**
- * @fn void sound_stop( int voice )
- *
  * @brief Stops a voice from playing.
  *
  *    @param voice Identifier of the voice to stop.
@@ -447,8 +432,6 @@ void sound_stop( int voice )
 
 
 /**
- * @fn int sound_updateListener( double dir, double x, double y )
- *
  * @brief Updates the sound listener.
  *
  *    @param dir Direction listener is facing.
@@ -468,8 +451,6 @@ int sound_updateListener( double dir, double x, double y )
 
 
 /**
- * @fn static int sound_makeList (void)
- *
  * @brief Makes the list of available sounds.
  */
 static int sound_makeList (void)
@@ -523,8 +504,6 @@ static int sound_makeList (void)
 
 
 /**
- * @fn int sound_volume( const double vol )
- *
  * @brief Sets the volume.
  *
  *    @param vol Volume to set to.
@@ -538,8 +517,6 @@ int sound_volume( const double vol )
 
 
 /**
- * @fn static Mix_Chunk* sound_load( char *filename )
- *
  * @brief Loads a sound into the sound_list.
  *
  *    @param filename Name fo the file to load.
@@ -573,8 +550,6 @@ static Mix_Chunk* sound_load( char *filename )
 
 
 /**
- * @fn static void sound_free( alSound *snd )
- *
  * @brief Frees the sound.
  *
  *    @param snd Sound to free.
@@ -592,8 +567,6 @@ static void sound_free( alSound *snd )
 
 
 /**
- * @fn int sound_reserve( int num )
- *
  * @brief Reserves num channels.
  *
  *    @param num Number of channels to reserve.
@@ -618,8 +591,6 @@ int sound_reserve( int num )
 
 
 /**
- * @fn int sound_createGroup( int tag, int start, int size )
- *
  * @brief Creates a sound group.
  *
  *    @param tag Identifier of the group to creat.
@@ -645,8 +616,6 @@ int sound_createGroup( int tag, int start, int size )
 
 
 /**
- * @fn int sound_playGroup( int group, int sound, int once )
- *
  * @brief Plays a sound in a group.
  *
  *    @param group Group to play sound in.
@@ -679,8 +648,6 @@ int sound_playGroup( int group, int sound, int once )
 
 
 /**
- * @fn void sound_stopGroup( int group )
- *
  * @brief Stops all the sounds in a group.
  *
  *    @param group Group to stop all it's sounds.
@@ -694,9 +661,9 @@ void sound_stopGroup( int group )
 
 
 /**
- * @fn static void voice_markStopped( int channel )
- *
  * @brief Marks the voice to which channel belongs to as stopped.
+ *
+ * DO NOT CALL MIX_* FUNCTIONS FROM CALLBACKS!
  */
 static void voice_markStopped( int channel )
 {
@@ -711,8 +678,6 @@ static void voice_markStopped( int channel )
 
 
 /**
- * @fn static alVoice* voice_new (void)
- *
  * @brief Gets a new voice ready to be used.
  *
  *    @return New voice ready to use.
@@ -736,8 +701,6 @@ static alVoice* voice_new (void)
 
 
 /**
- * @fn static int voice_add( alVoice* v )
- *
  * @brief Adds a voice to the active voice stack.
  *
  *    @param v Voice to add to the active voice stack.
@@ -772,8 +735,6 @@ static int voice_add( alVoice* v )
 
 
 /**
- * @fn static alVoice* voice_get( int id )
- *
  * @brief Gets a voice by identifier.
  *
  *    @param id Identifier to look for.

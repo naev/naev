@@ -15,10 +15,9 @@ extern int music_disabled;
 
 
 /*
- * thread
+ * updating
  */
-int music_thread( void* unused );
-void music_kill (void);
+void music_update (void);
 
 
 /*
@@ -38,6 +37,7 @@ void music_stop (void);
 void music_pause (void);
 void music_resume (void);
 void music_setPos( double sec );
+
 
 /*
  * lua control

@@ -26,7 +26,7 @@ function choose( str )
       elseif name == "Anecu" then -- TODO we need a way to differenciate aquatics
          mus = "ocean"
       elseif class == "P" then
-         mus =  "snow"
+         mus = "snow"
       else
          if planet:services() > 0 then
             mus = "cosmostation"

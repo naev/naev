@@ -13,6 +13,7 @@
 
 #include "SDL.h"
 #include "SDL_mixer.h"
+#include "SDL_mutex.h"
 
 #include "nlua.h"
 #include "nluadef.h"
@@ -32,10 +33,24 @@ int music_disabled = 0; /**< Whether or not music is disabled. */
 
 
 /*
+ * Handle if music should run Lua script.  Must be locked to ensure same
+ *  behaviour always.
+ */
+static SDL_mutex *music_lock = NULL; /**< lock for music_runLua so it doesn't
+                                          run twice in a row with weird
+                                          results.
+                                          DO NOT CALL MIX_* FUNCTIONS WHEN
+                                          LOCKED!!! */
+static int music_runchoose = 0; /**< Whether or not music should run the choose function. */
+static char music_situation[PATH_MAX]; /**< What situation music is in. */
+
+
+/*
  * global music lua
  */
 static lua_State *music_lua = NULL; /**< The Lua music control state. */
 /* functions */
+static int music_runLua( char *situation );
 static int musicL_load( lua_State* L );
 static int musicL_play( lua_State* L );
 static int musicL_stop( lua_State* L );
@@ -75,8 +90,46 @@ static void music_luaQuit (void);
 
 
 /**
- * @fn int music_init (void)
+ * @brief Updates the music.
+ */
+void music_update (void)
+{
+   char buf[PATH_MAX];
+
+   /* Lock music and see if needs to update. */
+   SDL_mutexP(music_lock);
+   if (music_runchoose == 0) {
+      SDL_mutexV(music_lock);
+      return;
+   }
+   music_runchoose = 0;
+   strncpy(buf, music_situation, PATH_MAX);
+   SDL_mutexV(music_lock);
+
+   music_runLua( buf );
+
+}
+
+
+/**
+ * @brief Runs the Lua music choose function.
  *
+ *    @param situation Situation in to choose music for.
+ *    @return 0 on success.
+ */
+static int music_runLua( char *situation )
+{
+   /* Run the choose function in Lua. */
+   lua_getglobal( music_lua, "choose" );
+   lua_pushstring( music_lua, situation );
+   if (lua_pcall(music_lua, 1, 0, 0)) /* error has occured */
+      WARN("Error while choosing music: %s", (char*) lua_tostring(music_lua,-1));
+
+   return 0;
+}
+
+
+/**
  * @brief Initializes the music subsystem.
  *
  *    @return 0 on success.
@@ -88,24 +141,30 @@ int music_init (void)
    if (music_find() < 0) return -1;
    if (music_luaInit() < 0) return -1;
    music_volume(0.8);
+
+   /* Create the lock. */
+   music_lock = SDL_CreateMutex();
+
    return 0;
 }
 
 
 /**
- * @fn void music_exit (void)
- *
  * @brief Exits the music subsystem.
  */
 void music_exit (void)
 {
    music_free();
+
+   /* Destroy the lock. */
+   if (music_lock != NULL) {
+      SDL_DestroyMutex(music_lock);
+      music_lock = NULL;
+   }
 }
 
 
 /**
- * @fn static void music_free (void)
- *
  * @brief Frees the current playing music.
  */
 static void music_free (void)
@@ -124,8 +183,6 @@ static void music_free (void)
 
 
 /**
- * @fn static int music_find (void)
- *
  * @brief Internal music loading routines.
  *
  *    @return 0 on success.
@@ -172,8 +229,6 @@ static int music_find (void)
 
 
 /**
- * @fn int music_volume( const double vol )
- *
  * @brief Sets the music volume.
  *
  *    @param vol Volume to set to (between 0 and 1).
@@ -188,8 +243,6 @@ int music_volume( const double vol )
 
 
 /**
- * @fn void music_load( const char* name )
- *
  * @brief Loads the music by name.
  *
  *    @param name Name of the file to load.
@@ -216,8 +269,6 @@ void music_load( const char* name )
 
 
 /**
- * @fn void music_play (void)
- *
  * @brief Plays the loaded music.
  */
 void music_play (void)
@@ -230,8 +281,6 @@ void music_play (void)
 
 
 /**
- * @fn void music_stop (void)
- *
  * @brief Stops the loaded music.
  */
 void music_stop (void)
@@ -282,8 +331,6 @@ void music_setPos( double sec )
  * music lua stuff
  */
 /**
- * @fn static int music_luaInit (void)
- *
  * @brief Initialize the music Lua control system.
  *
  *    @return 0 on success.
@@ -322,8 +369,6 @@ static int music_luaInit (void)
 
 
 /**
- * @fn static void music_luaQuit (void)
- *
  * @brief Quits the music Lua contrtol system.
  */
 static void music_luaQuit (void)
@@ -337,8 +382,6 @@ static void music_luaQuit (void)
 
 
 /**
- * @fn int lua_loadMusic( lua_State *L, int read_only )
- *
  * @brief Loads the music functions into a lua_State.
  *
  *    @param L Lua State to load the music functions into.
@@ -354,8 +397,6 @@ int lua_loadMusic( lua_State *L, int read_only )
 
 
 /**
- * @fn int music_choose( char* situation )
- *
  * @brief Actually runs the music stuff, based on situation.
  *
  *    @param situation Choose a new music to play.
@@ -365,25 +406,24 @@ int music_choose( char* situation )
 {
    if (music_disabled) return 0;
 
-   lua_getglobal( music_lua, "choose" );
-   lua_pushstring( music_lua, situation );
-   if (lua_pcall(music_lua, 1, 0, 0)) { /* error has occured */
-      WARN("Error while choosing music: %s", (char*) lua_tostring(music_lua,-1));
-      return -1;
-   }
+   music_runLua( situation );
 
    return 0;
 }
 
 
 /**
- * @fn static void music_rechoose (void)
- *
  * @brief Attempts to rechoose the music.
+ *
+ * DO NOT CALL MIX_* FUNCTIONS FROM WITHIN THE CALLBACKS!
  */
 static void music_rechoose (void)
 {
-   music_choose("idle");
+   /* Lock so it doesn't run in between an update. */
+   SDL_mutexP(music_lock);
+   music_runchoose = 1;
+   strncpy(music_situation, "idle", PATH_MAX);
+   SDL_mutexV(music_lock);
 }
 
 
