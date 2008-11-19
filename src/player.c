@@ -2570,7 +2570,7 @@ static int player_saveShip( xmlTextWriterPtr writer,
          }
 
          if (!found) {
-            WARN("Found mission cargo without assosciated mission.");
+            WARN("Found mission cargo without associated mission.");
             WARN("Please reload save game to remove the dead cargo.");
             continue;
          }
