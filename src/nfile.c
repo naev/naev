@@ -262,3 +262,35 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
 }
 
 
+/**
+ * @brief Tries to create the file if it doesn't exist.
+ *
+ *    @param path Path of the file to create.
+ */
+int nfile_touch( const char* path, ... )
+{
+   char file[PATH_MAX];
+   va_list ap;
+   size_t l;
+   FILE *f;
+
+   l = 0;
+   if (path == NULL) return -1;
+   else { /* get the message */
+      va_start(ap, path);
+      vsnprintf(file, PATH_MAX-l, path, ap);
+      l = strlen(file);
+      va_end(ap);
+   }
+
+   /* Try to open the file, C89 compliant, but not as precise as stat. */
+   f = fopen(file, "a+");
+   if (f == NULL) {
+      WARN("Unable to touch file '%s': %s", file, strerror(errno));
+      return -1;
+   }
+
+   fclose(f);
+   return 0;
+}
+

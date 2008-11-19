@@ -11,6 +11,7 @@ char* nfile_basePath (void);
 int nfile_dirMakeExist( const char* path, ... ); /* Creates if doesn't exist, 0 success */
 int nfile_fileExists( const char* path, ... ); /* Returns 1 on exists */
 char** nfile_readDir( int* nfiles, const char* path, ... );
+int nfile_touch( const char* path, ... );
 
 
 #endif /* NFILE_H */
