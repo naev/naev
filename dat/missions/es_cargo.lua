@@ -131,12 +131,20 @@ end
 -- Time hook
 function timeup()
    if time.get() > misn_time then
-      player.msg( miss[3] )
-      misn.finish(false)
+      misn.timerStart("failed", 2000)
+   else
+      misn.setDesc( string.format( misn_desc, carg_mass, carg_type,
+            planet:name(), system:name(),
+            time.str(misn_time), time.str(misn_time-time.get())) )
    end
-   misn.setDesc( string.format( misn_desc, carg_mass, carg_type,
-         planet:name(), system:name(),
-         time.str(misn_time), time.str(misn_time-time.get())) )
 end
+
+function failed ()
+   player.msg( miss[3] )
+   if misn_type ~= "People" then
+      player.jetCargo( carg_id )
+   end
+   misn.finish(false)
+end   
 
 
