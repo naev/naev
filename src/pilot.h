@@ -288,7 +288,7 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity );
 int pilot_moveCargo( Pilot* dest, Pilot* src );
 /* mission cargo - not to be confused with normal cargo */
 unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity );
-int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id );
+int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison );
 
 
 /*

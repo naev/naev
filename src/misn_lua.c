@@ -137,6 +137,7 @@ static int player_shipname( lua_State *L );
 static int player_freeSpace( lua_State *L );
 static int player_addCargo( lua_State *L );
 static int player_rmCargo( lua_State *L );
+static int player_jetCargo( lua_State *L );
 static int player_pay( lua_State *L );
 static int player_msg( lua_State *L );
 static int player_modFaction( lua_State *L );
@@ -151,6 +152,7 @@ static const luaL_reg player_methods[] = {
    { "freeCargo", player_freeSpace },
    { "addCargo", player_addCargo },
    { "rmCargo", player_rmCargo },
+   { "jetCargo", player_jetCargo },
    { "pay", player_pay },
    { "msg", player_msg },
    { "modFaction", player_modFaction },
@@ -1067,7 +1069,36 @@ static int player_rmCargo( lua_State *L )
    else NLUA_INVALID_PARAMETER();
 
    /* First try to remove the cargo from player. */
-   if (pilot_rmMissionCargo( player, id ) != 0) {
+   if (pilot_rmMissionCargo( player, id, 0 ) != 0) {
+      lua_pushboolean(L,0);
+      return 1;
+   }
+
+   /* Now unlink the mission cargo if it was successful. */
+   ret = mission_unlinkCargo( cur_mission, id );
+
+   lua_pushboolean(L,!ret);
+   return 1;
+}
+/**
+ * @brief jetCargo( number cargoid )
+ *
+ * Jettisons the mission cargo.
+ *
+ *    @param cargoid ID of the cargo to jettison.
+ */
+static int player_jetCargo( lua_State *L )
+{
+   int ret;
+   unsigned int id;
+
+   NLUA_MIN_ARGS(1);
+
+   if (lua_isnumber(L,1)) id = (unsigned int) lua_tonumber(L,1);
+   else NLUA_INVALID_PARAMETER();
+
+   /* First try to remove the cargo from player. */
+   if (pilot_rmMissionCargo( player, id, 1 ) != 0) {
       lua_pushboolean(L,0);
       return 1;
    }

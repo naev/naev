@@ -1493,9 +1493,10 @@ unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity
  *
  *    @param pilot Pilot to remove cargo from.
  *    @param cargo_id ID of the cargo to remove.
+ *    @param jettiosn Should jettison the cargo?
  *    @return 0 on success (cargo removed).
  */
-int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id )
+int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
 {
    int i;
 
@@ -1505,6 +1506,10 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id )
          break;
    if (i>=pilot->ncommodities)
       return 1; /* pilot doesn't have it */
+
+   if (jettison)
+      commodity_Jettison( pilot->id, pilot->commodities[i].commodity,
+            pilot->commodities[i].quantity );
 
    /* remove cargo */
    pilot->cargo_free += pilot->commodities[i].quantity;

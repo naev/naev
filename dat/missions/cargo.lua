@@ -189,13 +189,22 @@ function land()
 end
 
 -- Time hook
-function timeup()
+function timeup ()
    if time.get() > misn_time then
-      player.msg( msg_msg[4] )
-      misn.finish(false)
+      misn.timerStart("failed", 2000)
+   else
+      misn.setDesc( string.format( misn_desc[11], planet:name(), system:name(),
+            carg_mass, carg_type,
+            time.str(misn_time), time.str(misn_time-time.get()) ) )
    end
-   misn.setDesc( string.format( misn_desc[11], planet:name(), system:name(),
-         carg_mass, carg_type,
-         time.str(misn_time), time.str(misn_time-time.get()) ) )
+end
+
+
+function failed ()
+      player.msg( msg_msg[4] )
+      if misn_type ~= "People" then
+         player.jetCargo( carg_id )
+      end
+      misn.finish(false)
 end
 

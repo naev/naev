@@ -144,8 +144,6 @@ static Commodity* commodity_parse( xmlNodePtr parent )
 
 
 /**
- * @fn void commodity_Jettison( int pilot, Commodity* com, int quantity )
- *
  * @brief Throws cargo out in space graphically.
  *
  *    @param pilot ID of the pilot throwing the stuff out 
