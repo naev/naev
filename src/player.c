@@ -1019,7 +1019,8 @@ void player_renderGUI (void)
       else gui_renderPilot(pilot_stack[i]);
    }
    /* render the targetted pilot */
-   if (j!=0) gui_renderPilot(pilot_stack[j]);
+   if (j!=0)
+      gui_renderPilot(pilot_stack[j]);
 
 
    /* the + sign in the middle of the radar representing the player */
@@ -1298,19 +1299,45 @@ static void gui_renderPilot( const Pilot* p )
    int x, y, sx, sy;
    double w, h;
    glColour *col;
+   double a;
 
+   /* Get position. */
    x = (p->solid->pos.x - player->solid->pos.x) / gui.radar.res;
    y = (p->solid->pos.y - player->solid->pos.y) / gui.radar.res;
+   /* Get size. */
    sx = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sw / gui.radar.res;
    sy = PILOT_SIZE_APROX/2. * p->ship->gfx_space->sh / gui.radar.res;
-   if (sx < 1.) sx = 1.;
-   if (sy < 1.) sy = 1.;
+   if (sx < 1.)
+      sx = 1.;
+   if (sy < 1.)
+      sy = 1.;
 
+   /* Check if pilot in range. */
    if ( ((gui.radar.shape==RADAR_RECT) &&
             ((ABS(x) > gui.radar.w/2+sx) || (ABS(y) > gui.radar.h/2.+sy)) ) ||
          ((gui.radar.shape==RADAR_CIRCLE) &&
-            ((x*x+y*y) > (int)(gui.radar.w*gui.radar.w))) )
-      return; /* pilot not in range */
+            ((x*x+y*y) > (int)(gui.radar.w*gui.radar.w))) ) {
+
+      /* Draw little targetted symbol. */
+      if (p->id == player->target) {
+         /* Circle radars have it easy. */
+         if (gui.radar.shape==RADAR_CIRCLE)  {
+            /* We'll create a line. */
+            a = ANGLE(x,y);
+            x = gui.radar.w*cos(a);
+            y = gui.radar.w*sin(a);
+            sx = 0.85 * x;
+            sy = 0.85 * y;
+
+            COLOUR(cRadar_targ);
+            glBegin(GL_LINES);
+               glVertex2d(  x,  y );
+               glVertex2d( sx, sy );
+            glEnd(); /* GL_LINES */
+         }
+      }
+      return;
+   }
 
    if (gui.radar.shape==RADAR_RECT) {
       w = gui.radar.w/2.;
