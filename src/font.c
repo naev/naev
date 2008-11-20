@@ -160,7 +160,8 @@ void gl_print( const glFont *ft_font,
 
    glMatrixMode(GL_MODELVIEW);
    glPushMatrix(); /* translation matrix */
-      glTranslated( x-(double)SCREEN_W/2., y-(double)SCREEN_H/2., 0);
+      glTranslated( round(x-(double)SCREEN_W/2.),
+            round(y-(double)SCREEN_H/2.), 0);
 
    if (c==NULL) glColor4d( 1., 1., 1., 1. );
    else COLOUR(*c);
@@ -213,7 +214,8 @@ int gl_printMax( const glFont *ft_font, const int max,
 
    glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
    glPushMatrix(); /* translation matrix */
-      glTranslated( x-(double)SCREEN_W/2., y-(double)SCREEN_H/2., 0);
+      glTranslated( round(x-(double)SCREEN_W/2.),
+            round(y-(double)SCREEN_H/2.), 0);
 
    if (c==NULL) glColor4d( 1., 1., 1., 1. );
    else COLOUR(*c);
@@ -272,7 +274,8 @@ int gl_printMid( const glFont *ft_font, const int width,
 
    glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
    glPushMatrix(); /* translation matrix */
-      glTranslated( x-(double)SCREEN_W/2., y-(double)SCREEN_H/2., 0);
+      glTranslated( round(x-(double)SCREEN_W/2.),
+            round(y-(double)SCREEN_H/2.), 0);
 
    if (c==NULL) glColor4d( 1., 1., 1., 1. );
    else COLOUR(*c);
@@ -337,7 +340,7 @@ int gl_printText( const glFont *ft_font,
 
       glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
       glPushMatrix(); /* translation matrix */                               
-         glTranslated( x, y, 0);
+         glTranslated( round(x), round(y), 0);
 
       glCallLists(i, GL_UNSIGNED_BYTE, &text[p]); /* the actual displaying */
 
