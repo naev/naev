@@ -1729,14 +1729,19 @@ void player_startAutonav (void)
 
 
 /**
- * @fn void player_abortAutonav (void)
- *
  * @brief Aborts autonav.
  */
-void player_abortAutonav (void)
+void player_abortAutonav( char *reason )
 {
+   /* No point if player is beyond aborting. */
+   if (pilot_isFlag(player, PILOT_HYPERSPACE))
+      return;
+
    if (player_isFlag(PLAYER_AUTONAV)) {
-      player_message("Autonav aborted!");
+      if (reason != NULL)
+         player_message("Autonav aborted: %s!", reason);
+      else
+         player_message("Autonav aborted!");
       player_rmFlag(PLAYER_AUTONAV);
 
       /* Get rid of acceleration. */
@@ -1771,7 +1776,7 @@ void player_think( Pilot* pplayer )
    /* Autonav takes over normal controls. */
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (pplayer->lockons > 0)
-         player_abortAutonav();
+         player_abortAutonav("Missile Lockon Detected");
 
       if (space_canHyperspace(pplayer)) {
          player_jump();
