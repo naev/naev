@@ -530,12 +530,15 @@ static int nebu_generate (void)
    /* Warn user of what is happening. */
    loadscreen_render( 0.05, "Generating Nebulae..." );
 
+   /* Get resolution to create at. */
    w = SCREEN_W;
    h = SCREEN_H;
 
+   /* Try to make the dir first if it fails. */
+   nfile_dirMakeExist( "%sgen", nfile_basePath() );
+
    /* Generate all the nebulae backgrounds */
    nebu = noise_genNebulaeMap( w, h, NEBULAE_Z, 5. );
-   nfile_dirMakeExist( "%sgen", nfile_basePath() );
 
    /* Save each nebulae as an image */
    for (i=0; i<NEBULAE_Z; i++) {
