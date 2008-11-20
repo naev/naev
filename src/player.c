@@ -229,7 +229,6 @@ static int player_newMake (void);
 static void player_newShipMake( char *name );
 /* sound */
 static void player_initSound (void);
-/* static void player_stopSound (void);*/
 /* gui */
 static void rect_parse( const xmlNodePtr parent,
       double *x, double *y, double *w, double *h );
@@ -707,17 +706,14 @@ void player_playSound( int sound, int once )
 }
 
 
-#if 0
 /**
- * @fn static void player_stopSound (void)
- *
  * @brief Stops playing player sounds.
  */
-static void player_stopSound (void)
+void player_stopSound (void)
 {
    sound_stopGroup( PLAYER_GUI_CHANNEL );
+   sound_stopGroup( PLAYER_ENGINE_CHANNEL );
 }
-#endif
 
 
 /**

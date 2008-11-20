@@ -268,6 +268,11 @@ static void menu_small_exit( unsigned int wid, char* str )
       menu_Close(MENU_INFO);
    }
 
+   /* Stop player sounds because sometimes they hang. */
+   player_flags = 0;
+   player_stopSound();
+
+   /* Clean up. */
    window_destroy( wid );
    menu_Close(MENU_SMALL);
    menu_main();
