@@ -65,14 +65,12 @@ int nfile_dirMakeExist( const char* path, ... )
 {
    char file[PATH_MAX];
    va_list ap;
-   size_t l;
 
-   l = 0;
-   if (path == NULL) return -1;
+   if (path == NULL)
+      return -1;
    else { /* get the message */
       va_start(ap, path);
-      vsnprintf(file, PATH_MAX-l, path, ap);
-      l = strlen(file);
+      vsnprintf(file, PATH_MAX, path, ap);
       va_end(ap);
    }
 
@@ -103,14 +101,12 @@ int nfile_fileExists( const char* path, ... )
 {
    char file[PATH_MAX];
    va_list ap;
-   size_t l;
 
-   l = 0;
-   if (path == NULL) return -1;
+   if (path == NULL)
+      return -1;
    else { /* get the message */
       va_start(ap, path);
-      vsnprintf(file, PATH_MAX-l, path, ap);
-      l = strlen(file);
+      vsnprintf(file, PATH_MAX, path, ap);
       va_end(ap);
    }
 #ifdef LINUX
@@ -147,17 +143,14 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    char file[PATH_MAX], base[PATH_MAX];
    char **files;
    va_list ap;
-   size_t l;
 
-   l = 0;
    if (path == NULL) {
       *nfiles = 0;
       return NULL;
    }
    else { /* get the message */
       va_start(ap, path);
-      vsnprintf(base, PATH_MAX-l, path, ap);
-      l = strlen(base);
+      vsnprintf(base, PATH_MAX, path, ap);
       va_end(ap);
    }
 
@@ -271,15 +264,13 @@ int nfile_touch( const char* path, ... )
 {
    char file[PATH_MAX];
    va_list ap;
-   size_t l;
    FILE *f;
 
-   l = 0;
-   if (path == NULL) return -1;
+   if (path == NULL)
+      return -1;
    else { /* get the message */
       va_start(ap, path);
-      vsnprintf(file, PATH_MAX-l, path, ap);
-      l = strlen(file);
+      vsnprintf(file, PATH_MAX, path, ap);
       va_end(ap);
    }
 
