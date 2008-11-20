@@ -786,16 +786,25 @@ static Weapon* weapon_create( const Outfit* outfit,
                /* Get the distance */
                dist = vect_dist( pos, &pilot_target->solid->pos );
 
-               /* Time for shots to reach that distance */
-               t = dist / w->outfit->u.blt.speed;
+               /* Aim. */
+               if (dist > outfit->u.blt.range*1.2) {
+                  x = pilot_target->solid->pos.x - pos->x;
+                  y = pilot_target->solid->pos.y - pos->y;
+               }
+               else {
+                  /* Try to predict where the enemy will be. */
+                  /* Time for shots to reach that distance */
+                  t = dist / w->outfit->u.blt.speed;
 
-               /* Position is calculated on where it should be */
-               x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
+                  /* Position is calculated on where it should be */
+                  x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
                      - (pos->x + vel->x*t);
-               y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
+                  y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
                      - (pos->y + vel->y*t);
-               vect_cset( &v, x, y );
+               }
 
+               /* Set angle to face. */
+               vect_cset( &v, x, y );
                rdir = VANGLE(v);
             }
          }
