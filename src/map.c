@@ -417,8 +417,12 @@ static void map_render( double bx, double by, double w, double h )
          if ((hyperspace_target != -1) && 
                ( ((cur_system==sys) && (j==hyperspace_target)) ||
                   ((cur_system==&systems_stack[ sys->jumps[j] ]) &&
-                     (sys==&systems_stack[ cur_system->jumps[hyperspace_target] ] ))))
-            col = &cGreen;
+                     (sys==&systems_stack[ cur_system->jumps[hyperspace_target] ] )))) {
+            if (player->fuel < HYPERSPACE_FUEL)
+               col = &cRed;
+            else
+               col = &cGreen;
+         }
          /* is the route part of the path? */
          else if ((n > 0) && (m > 0)) {
             if ((n == 2) || (m == 2)) /* out of fuel */
@@ -426,7 +430,8 @@ static void map_render( double bx, double by, double w, double h )
             else
                col = &cYellow;
          }
-         else col = &cDarkBlue;
+         else
+            col = &cDarkBlue;
 
          glBegin(GL_LINE_STRIP);
             ACOLOUR(*col,0.);
