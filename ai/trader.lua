@@ -5,7 +5,9 @@ function sos ()
    msg = {
       "Mayday! We are under attack!",
       "Requesting assistance.  We are under attack!",
-      "Merchant vessel here under attack! Help!"
+      "Merchant vessel under attack! Requesting help!",
+      "Help! Ship under fire!",
+      string.format("Mayday! Merchant %s being assaulted!", ai.shipclass())
    }
    ai.broadcast(msg[ rnd.int(1,#msg) ])
 end
