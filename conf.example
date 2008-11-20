@@ -1,52 +1,99 @@
 -- This is a comment
 -- Configuration file is written in lua
 
--- WINDOW
-width = 1024
-height = 768
-fullscreen = 0
+-- Data file.
+--data = /path/to/data/file
 
--- SCREEN
-fps = 0
+-- Dimensions.
+width  = 1280
+height = 1024
 
--- SOUND
-nosound = 0
-sound = 0.7
-mosic = 0.5
+-- FSAA.
+--fsaa = 8
 
--- JOYSTICK
+-- Fullscreen.
+fullscreen = 1
+
+-- Anti aliasing.
+--aa = 1
+--aa_point = 1
+--aa_line = 1
+--aa_polygon = 1
+
+-- Vsync.
+--vsync = 1
+
+-- FPS.
+--showfps = 0
+--maxfps = 60
+
+-- Input.
+--afterburn = 3
+
+-- Sound.
+--nosound = 1
+--sound = 0.7
+--mosic = 0.5
+
+-- Joystick.
 -- can be by number or substring of joystick name
-joystick = "Precision"
+--joystick = "Precision"
 
-
--- KEYBINDINGS
+-- Keybindings.
+--
 -- type can be keyboard, jaxis or jbutton
 --
--- if left is an axis it'll automatically set right to the same axis
--- therefore you set both to the same axis (key).  You can use the reverse = 1
--- option to reverse them
+-- If left is an axis it'll automatically set right to the same axis.
+-- Therefore you set both to the same axis (key). You can use the reverse = 1
+-- option to reverse them.
 -- Currently keybindings work with the number of the key only (when doing
--- keyboard).  Would be nice to have a gui to do it for you someday.
+-- keyboard). Would be nice to have a gui to do it for you someday.
 
--- movement
-accel = { type = "jbutton", key = 0 }
-left = { type = "jaxis", key = 0 }
-right = { type = "jaxis", key = 0 }
+-- Movement.
+--accel        = { type = "keyboard", key = 273 }
+--left         = { type = "keyboard", key = 276 }
+--right        = { type = "keyboard", key = 275 }
+--reverse      = { type = "keyboard", key = 274 }
+--afterburn    = { type = "keyboard", key = 0 }
+afterburn      = { type = "keyboard", key = 8 }
 
--- combat
-primary = { type = "jbutton", key = 1 }
-target = { type = "jbutton", key = 4 }
-target_nearest = { type = "jbutton", key = 3 }
-face = { type = "keyboard", key = 38 }
-board = { type = "keyboard", key = 57 }
-secondary = { type = "jbutton", key = 7 }
-secondary_next = { type = "jbutton", key = 5 }
+-- Targetting.
+--target       = { type = "keyboard", key = 9 }
+--target_prev  = { type = "keyboard", key = 9, mod = "lctrl" }
+--target_nearest = { type = "keyboard", key = 116 }
+--target_hostile = { type = "keyboard", key = 114 }
 
--- space
+-- Fighting.
+--primary      = { type = "keyboard", key = 32 }
+--face         = { type = "keyboard", key = 97 }
+--board        = { type = "keyboard", key = 98 }
 
+-- Escorts.
+--e_attack     = { type = "keyboard", key = 102 }
+--e_hold       = { type = "keyboard", key = 103 }
+--e_return     = { type = "keyboard", key = 99, mod = "lctrl" }
+--e_clear      = { type = "keyboard", key = 99 }
 
---gui
---mapzoomin = { type = "jbutton", key = 4 }
---mapzoomout = { type = "jbutton", key = 6 }
-screenshot = { type = "keyboard", key = 82 }
+-- Secondary weapons.
+--secondary    = { type = "keyboard", key = 304 }
+--secondary_next = { type = "keyboard", key = 119 }
 
+-- Space navigation.
+--autonav      = { type = "keyboard", key = 106, mod = "lctrl" }
+autonav        = { type = "keyboard", key = 110}
+--target_planet = { type = "keyboard", key = 112 }
+--land         = { type = "keyboard", key = 108 }
+--thyperspace  = { type = "keyboard", key = 104 }
+--starmap      = { type = "keyboard", key = 109 }
+--jump         = { type = "keyboard", key = 106 }
+
+-- Communication.
+--hail         = { type = "keyboard", key = 121 }
+
+-- Misc.
+--mapzoomin    = { type = "keyboard", key = 270 }
+--mapzoomout   = { type = "keyboard", key = 269 }
+--screenshot   = { type = "keyboard", key = 268 }
+--pause        = { type = "keyboard", key = 122 }
+--menu         = { type = "keyboard", key = 27 }
+--info         = { type = "keyboard", key = 105 }
