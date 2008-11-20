@@ -50,7 +50,7 @@ extern char dataname[DATA_NAME_LEN]; /**< Datafile name. */
 
 /* maximum filename path */
 #ifndef PATH_MAX
-#  define PATH_MAX         128 /**< If not already defined. */
+#  define PATH_MAX         256 /**< If not already defined. */
 #endif /* PATH_MAX */
 
 #ifndef M_PI
