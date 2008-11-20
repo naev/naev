@@ -98,11 +98,19 @@ function idle ()
    planet = ai.landplanet()
    -- planet must exist
    if planet == nil or land_planet == false then
-      ai.pushtask(0, "hyperspace")
+      ai.settimer(0, rnd.int(1000, 3000))
+      ai.pushtask(0, "enterdelay")
    else
       mem.land = planet
       ai.pushtask(0, "hyperspace")
       ai.pushtask(0, "land")
+   end
+end
+
+-- Delays the ship when entering systems so that it doesn't leave right away
+function enterdelay ()
+   if ai.timeup(0) then
+      ai.pushtask(0, "hyperspace")
    end
 end
 
