@@ -41,7 +41,9 @@
 
 /* ID Generators. */
 static unsigned int pilot_id = PLAYER_ID; /**< Stack of pilot ids to assure uniqueness */
-static unsigned int mission_cargo_id = 0; /**< id generator for special mission cargo */
+static unsigned int mission_cargo_id = 0; /**< ID generator for special mission cargo.
+                                               Not guaranteed to be absolutely unique, 
+                                               only unique for each pilot. */
 
 
 /* stack of pilot_nstack */
@@ -1470,21 +1472,38 @@ static void pilot_calcCargo( Pilot* pilot )
  */
 unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity )
 {
+   int i;
+   unsigned int id, max_id;
    int q;
    q = quantity;
 
+   /* Get ID. */
+   id = ++mission_cargo_id;
+
+   /* Check for collisions with pilot and set ID generator to the max. */
+   max_id = 0;
+   for (i=0; i<pilot->ncommodities; i++)
+      if (pilot->commodities[i].id > max_id)
+         max_id = pilot->commodities[i].id;
+   if (max_id > id)
+      mission_cargo_id = max_id;
+   id = ++mission_cargo_id;
+
+   /* Grow commodities. */
    pilot->commodities = realloc( pilot->commodities,
          sizeof(PilotCommodity) * (pilot->ncommodities+1));
    pilot->commodities[ pilot->ncommodities ].commodity = cargo;
+   /* Add commodity. */
    if (pilot_cargoFree(pilot) < quantity)
       q = pilot_cargoFree(pilot);
-   pilot->commodities[ pilot->ncommodities ].id = ++mission_cargo_id;
-   pilot->commodities[ pilot->ncommodities ].quantity = q;                
+   pilot->commodities[ pilot->ncommodities ].id = id;
+   pilot->commodities[ pilot->ncommodities ].quantity = q;
+   /* Postfixing. */
    pilot->cargo_free -= q;
    pilot->solid->mass += q;
    pilot->ncommodities++;
 
-   return pilot->commodities[ pilot->ncommodities-1 ].id;
+   return id;
 }
 
 
