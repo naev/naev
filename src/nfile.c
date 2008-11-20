@@ -30,12 +30,12 @@
 
 
 
+static char naev_base[PATH_MAX] = "\0"; /**< Stores naev's base path. */
 /**
  * @brief Gets naev's base path (for saves and such).
  *
  *    @return The base path to naev.
  */
-static char naev_base[128] = "\0"; /**< Stores naev's base path. */
 char* nfile_basePath (void)
 {
    char *home;
@@ -81,8 +81,8 @@ int nfile_dirMakeExist( const char* path, ... )
 
    stat(file,&buf);
    if (!S_ISDIR(buf.st_mode))
-      if (mkdir(file,S_IRWXU | S_IRWXG | S_IRWXO) < 0) {
-         WARN("Dir '%s' does not exist and unable to create", path);
+      if (mkdir(file, S_IRWXU | S_IRWXG | S_IRWXO) < 0) {
+         WARN("Dir '%s' does not exist and unable to create", file);
          return -1;
       }
 #else
