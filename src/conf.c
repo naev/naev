@@ -246,15 +246,16 @@ int conf_loadConfig ( const char* file )
        */
       for (i=0; strcmp(keybindNames[i],"end"); i++) {
          lua_getglobal(L, keybindNames[i]);
-         str = NULL;
-         key = -1;
-         reverse = 0;
          if (lua_istable(L, -1)) { /* it's a table */
             /* gets the event type */
             lua_pushstring(L, "type");
             lua_gettable(L, -2);
             if (lua_isstring(L, -1))
                str = (char*)lua_tostring(L, -1);
+            else {
+               WARN("Found keybind with no type field!");
+               str = "null";
+            }
             lua_remove(L, -1);
 
             /* gets the key */
@@ -262,19 +263,30 @@ int conf_loadConfig ( const char* file )
             lua_gettable(L, -2);
             if (lua_isnumber(L, -1))
                key = (int)lua_tonumber(L, -1);
+            else {
+               WARN("Found keybind with no key field!");
+               key = -1;
+            }
             lua_remove(L, -1);
 
             /* is reversed, only useful for axis */
             lua_pushstring(L, "reverse");
             lua_gettable(L, -2);
             if (lua_isnumber(L, -1))
-               reverse = 1;
+               reverse = !!(int)lua_tonumber(L, -1);
+            else if (lua_isboolean(L, -1))
+               reverse = lua_toboolean(L, -1);
+            else
+               reverse = 0;
             lua_remove(L, -1);
 
+            /* Get the modifier. */
             lua_pushstring(L, "mod");
             lua_gettable(L, -2);
             if (lua_isstring(L, -1))
                mod = (char*)lua_tostring(L, -1);
+            else
+               mod = NULL;
             lua_remove(L, -1);
 
             if ((key != -1) && (str != NULL)) { /* keybind is valid */
@@ -288,6 +300,7 @@ int conf_loadConfig ( const char* file )
                   continue;
                }
 
+               /* Set modifier, probably should be able to handle two at a time. */
                if (mod != NULL) {
                   if (strcmp(mod,"lctrl")==0) m = KMOD_LCTRL;
                   else if (strcmp(mod,"rctrl")==0) m = KMOD_RCTRL;
@@ -302,7 +315,8 @@ int conf_loadConfig ( const char* file )
                      m = KMOD_NONE;
                   }
                }
-               else m = KMOD_NONE;
+               else
+                  m = KMOD_NONE;
 
                /* set the keybind */
                input_setKeybind( (char*)keybindNames[i], type, key, m, reverse );
