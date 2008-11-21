@@ -12,6 +12,7 @@
 
 
 extern int music_disabled;
+extern double music_defVolume;
 
 
 /*

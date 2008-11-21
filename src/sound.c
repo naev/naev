@@ -34,6 +34,7 @@
  * Global sound properties.
  */
 int sound_disabled = 0; /**< Whether sound is disabled. */
+double sound_defVolume = 0.4; /**< Sound default volume. */
 static int sound_reserved = 0; /**< Amount of reserved channels. */
 static double sound_pos[3]; /**< Position of listener. */
 
@@ -90,7 +91,6 @@ static int sound_nlist = 0; /**< Number of available sounds. */
 /*
  * voice linked list.
  */
-static SDL_mutex *voice_lock = NULL;
 static alVoice *voice_active = NULL; /**< Active voices. */
 static alVoice *voice_pool = NULL; /**< Pool of free voices. */
 
@@ -117,7 +117,7 @@ static alVoice* voice_get( int id );
  */
 int sound_init (void)
 {
-   if (sound_disabled) return 0;
+   if (sound_disabled && music_disabled) return 0;
 
    SDL_InitSubSystem(SDL_INIT_AUDIO);
    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT , 2, 1024) < 0) {
@@ -132,18 +132,17 @@ int sound_init (void)
    /* Debug magic. */
    print_MixerVersion();
 
-   /* load up all the sounds */
-   sound_makeList();
-   sound_volume(0.4);
+   if (!sound_disabled) {
+      /* load up all the sounds */
+      sound_makeList();
+      sound_volume(sound_defVolume);
 
-   /* Finish function. */
-   Mix_ChannelFinished( voice_markStopped );
+      /* Finish function. */
+      Mix_ChannelFinished( voice_markStopped );
+   }
 
    /* Initialize the music */
    music_init();
-
-   /* Create the voice lock. */
-   voice_lock = SDL_CreateMutex();
 
    return 0;
 }
@@ -192,7 +191,6 @@ void sound_exit (void)
 
    /* Close the audio. */
    Mix_CloseAudio();
-   SDL_DestroyMutex(voice_lock);
 
    /* free the voices. */
    while (voice_active != NULL) {
@@ -443,6 +441,8 @@ void sound_stop( int voice )
  */
 int sound_updateListener( double dir, double x, double y )
 {
+   if (sound_disabled) return 0;
+
    sound_pos[0] = x;
    sound_pos[1] = y;
    sound_pos[2] = dir/M_PI*180.;

@@ -30,6 +30,7 @@
 
 
 int music_disabled = 0; /**< Whether or not music is disabled. */
+double music_defVolume = 0.8; /**< Music default volume. */
 
 
 /*
@@ -96,6 +97,8 @@ void music_update (void)
 {
    char buf[PATH_MAX];
 
+   if (music_disabled) return;
+
    /* Lock music and see if needs to update. */
    SDL_mutexP(music_lock);
    if (music_runchoose == 0) {
@@ -119,6 +122,8 @@ void music_update (void)
  */
 static int music_runLua( char *situation )
 {
+   if (music_disabled) return 0;
+
    /* Run the choose function in Lua. */
    lua_getglobal( music_lua, "choose" );
    lua_pushstring( music_lua, situation );
@@ -140,7 +145,7 @@ int music_init (void)
 
    if (music_find() < 0) return -1;
    if (music_luaInit() < 0) return -1;
-   music_volume(0.8);
+   music_volume(music_defVolume);
 
    /* Create the lock. */
    music_lock = SDL_CreateMutex();
@@ -273,6 +278,8 @@ void music_load( const char* name )
  */
 void music_play (void)
 {
+   if (music_disabled) return;
+
    if (music_music == NULL) return;
 
    if (Mix_FadeInMusic( music_music, 0, 500 ) < 0)
@@ -285,6 +292,8 @@ void music_play (void)
  */
 void music_stop (void)
 {
+   if (music_disabled) return;
+
    if (music_music == NULL) return;
 
    if (Mix_FadeOutMusic(500) < 0)
@@ -297,6 +306,8 @@ void music_stop (void)
  */
 void music_pause (void)
 {
+   if (music_disabled) return;
+
    if (music_music == NULL) return;
 
    Mix_PauseMusic();
@@ -308,6 +319,8 @@ void music_pause (void)
  */
 void music_resume (void)
 {
+   if (music_disabled) return;
+
    if (music_music == NULL) return;
 
    Mix_ResumeMusic();
@@ -321,6 +334,8 @@ void music_resume (void)
  */
 void music_setPos( double sec )
 {
+   if (music_disabled) return;
+
    if (music_music == NULL) return;
 
    Mix_FadeInMusicPos( music_music, 1, 1000, sec );
@@ -339,6 +354,8 @@ static int music_luaInit (void)
 {
    char *buf;
    uint32_t bufsize;
+
+   if (music_disabled) return 0;
 
    if (music_lua != NULL)
       music_luaQuit();
@@ -373,6 +390,8 @@ static int music_luaInit (void)
  */
 static void music_luaQuit (void)
 {
+   if (music_disabled) return;
+
    if (music_lua == NULL)
       return;
 
@@ -419,6 +438,8 @@ int music_choose( char* situation )
  */
 static void music_rechoose (void)
 {
+   if (music_disabled) return;
+
    /* Lock so it doesn't run in between an update. */
    SDL_mutexP(music_lock);
    music_runchoose = 1;

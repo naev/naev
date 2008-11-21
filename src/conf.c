@@ -222,9 +222,19 @@ int conf_loadConfig ( const char* file )
       conf_loadBool("nosound",i)
       nosound = i; i = 0;
       conf_loadFloat("sound",d);
-      if (d) { sound_volume(d); d = 0.; }
+      if (d) {
+         sound_defVolume = MAX(MIN(d, 1.), 0.);
+         if (d == 0.)
+            sound_disabled = 1;
+         d = 0.;
+      }
       conf_loadFloat("music",d);
-      if (d) { music_volume(d); d = 0.; }
+      if (d) {
+         music_defVolume = MAX(MIN(d, 1.), 0.);
+         if (d == 0.)
+            music_disabled = 1;
+         d = 0.;
+      }
 
 
       /* 
@@ -365,6 +375,7 @@ void conf_parseCLI( int argc, char** argv )
       { NULL, 0, 0, 0 } };
    int option_index = 0;
    int c = 0;
+   double d;
    while ((c = getopt_long(argc, argv,
          "fF:Vd:j:J:W:H:MSm:s:Ghv",
          long_options, &option_index)) != -1) {
@@ -402,10 +413,16 @@ void conf_parseCLI( int argc, char** argv )
             nosound = 0;
             break;
          case 'm':
-            music_volume( atof(optarg) );
+            d = atof(optarg);
+            music_defVolume = MAX(MIN(d, 1.), 0.);
+            if (d == 0.)
+               music_disabled = 1;
             break;
          case 's':
-            /*sound_volume( atof(optarg) );*/
+            d = atof(optarg);
+            sound_defVolume = MAX(MIN(d, 1.), 0.);
+            if (d == 0.)
+               sound_disabled = 1;
             break;
          case 'G':
             nebu_forceGenerate();
