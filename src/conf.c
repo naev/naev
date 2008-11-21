@@ -302,14 +302,15 @@ int conf_loadConfig ( const char* file )
 
                /* Set modifier, probably should be able to handle two at a time. */
                if (mod != NULL) {
-                  if (strcmp(mod,"lctrl")==0) m = KMOD_LCTRL;
-                  else if (strcmp(mod,"rctrl")==0) m = KMOD_RCTRL;
-                  else if (strcmp(mod,"lshift")==0) m = KMOD_LSHIFT;
-                  else if (strcmp(mod,"rshift")==0) m = KMOD_RSHIFT;
-                  else if (strcmp(mod,"lalt")==0) m = KMOD_LALT;
-                  else if (strcmp(mod,"ralt")==0) m = KMOD_RALT;
-                  else if (strcmp(mod,"lmeta")==0) m = KMOD_LMETA;
-                  else if (strcmp(mod,"rmeta")==0) m = KMOD_RMETA;
+                  if (strcmp(mod,"lctrl")==0)         m = KMOD_LCTRL;
+                  else if (strcmp(mod,"rctrl")==0)    m = KMOD_RCTRL;
+                  else if (strcmp(mod,"lshift")==0)   m = KMOD_LSHIFT;
+                  else if (strcmp(mod,"rshift")==0)   m = KMOD_RSHIFT;
+                  else if (strcmp(mod,"lalt")==0)     m = KMOD_LALT;
+                  else if (strcmp(mod,"ralt")==0)     m = KMOD_RALT;
+                  else if (strcmp(mod,"lmeta")==0)    m = KMOD_LMETA;
+                  else if (strcmp(mod,"rmeta")==0)    m = KMOD_RMETA;
+                  else if (strcmp(mod,"any")==0)      m = KMOD_ALL;
                   else {
                      WARN("Unknown keybinding mod of type %s", mod);
                      m = KMOD_NONE;
