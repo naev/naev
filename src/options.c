@@ -21,7 +21,7 @@
 #include "toolkit.h"
 
 
-#define KEYBINDS_WIDTH  400 /**< Options menu width. */
+#define KEYBINDS_WIDTH  440 /**< Options menu width. */
 #define KEYBINDS_HEIGHT 300 /**< Options menu height. */
 
 #define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
@@ -31,7 +31,7 @@
 /*
  * External stuff.
  */
-extern const char *keybindNames[];
+extern const char *keybindNames[]; /* input.c */
 
 
 /*
@@ -60,10 +60,10 @@ void opt_menuKeybinds (void)
          "btnClose", "Close", window_close );
 
    /* Text stuff. */
-   window_addText( wid, 200, -40, KEYBINDS_WIDTH-220, 30, 1, "txtName",
+   window_addText( wid, 240, -40, KEYBINDS_WIDTH-260, 30, 1, "txtName",
          NULL, &cDConsole, NULL );
-   window_addText( wid, 200, -90,
-         KEYBINDS_WIDTH-220, KEYBINDS_HEIGHT-70-60-BUTTON_HEIGHT,
+   window_addText( wid, 240, -90,
+         KEYBINDS_WIDTH-260, KEYBINDS_HEIGHT-70-60-BUTTON_HEIGHT,
          0, "txtDesc", &gl_smallFont, NULL, NULL );
 
    /* Create the list. */
@@ -74,6 +74,7 @@ void opt_menuKeybinds (void)
       key = input_getKeybind( keybindNames[j], &type, &mod, &reverse );
       switch (type) {
          case KEYBIND_KEYBOARD:
+            /* SDL_GetKeyName returns lowercase which is ugly. */
             if (isalpha(key))
                snprintf(str[j], 64, "%s <%c>", keybindNames[j], toupper(key) );
             else
@@ -90,7 +91,7 @@ void opt_menuKeybinds (void)
             break;
       }
    }
-   window_addList( wid, 20, -40, 160, KEYBINDS_HEIGHT-60, "lstKeybinds",
+   window_addList( wid, 20, -40, 200, KEYBINDS_HEIGHT-60, "lstKeybinds",
          str, i-1, 0, menuKeybinds_update );
 
    /* Update the list. */
@@ -100,26 +101,32 @@ void opt_menuKeybinds (void)
 
 /**
  * @brief Gets the human readable version of mod.
+ *
+ *    @brief mod Mod to get human readable version from.
+ *    @return Human readable version of mod.
  */
 static const char* modToText( SDLMod mod )
 {
    switch (mod) {
-      case KMOD_LCTRL: return "lctrl";
-      case KMOD_RCTRL: return "rctrl";
+      case KMOD_LCTRL:  return "lctrl";
+      case KMOD_RCTRL:  return "rctrl";
       case KMOD_LSHIFT: return "lshift";
       case KMOD_RSHIFT: return "rshift";
-      case KMOD_LALT: return "lalt";
-      case KMOD_RALT: return "ralt";
-      case KMOD_LMETA: return "lmeta";
-      case KMOD_RMETA: return "rmeta";
-      case KMOD_ALL: return "any";
-      default: return "unknown";
+      case KMOD_LALT:   return "lalt";
+      case KMOD_RALT:   return "ralt";
+      case KMOD_LMETA:  return "lmeta";
+      case KMOD_RMETA:  return "rmeta";
+      case KMOD_ALL:    return "any";
+      default:          return "unknown";
    }
 }
 
 
 /**
  * @brief Updates the keybindings menu.
+ *
+ *    @param wid Window to update.
+ *    @param name Unused.
  */
 static void menuKeybinds_update( unsigned int wid, char *name )
 {
@@ -153,6 +160,7 @@ static void menuKeybinds_update( unsigned int wid, char *name )
          snprintf(bind, 64, "Not bound");
          break;
       case KEYBIND_KEYBOARD:
+         /* SDL_GetKeyName returns lowercase which is ugly. */
          if (isalpha(key))
             snprintf(bind, 32, "keyboard:   %s%s%c",
                   (mod != KMOD_NONE) ? modToText(mod) : "",
@@ -171,6 +179,8 @@ static void menuKeybinds_update( unsigned int wid, char *name )
          snprintf(bind, 64, "joy button:   <%d>", key);
          break;
    }
+
+   /* Update text. */
    snprintf(buf, 1024, "%s\n\n%s\n", desc, bind);
    window_modifyText( wid, "txtDesc", buf );
 }
