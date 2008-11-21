@@ -37,7 +37,7 @@ OBJS    := $(patsubst %.c,%.o,$(wildcard src/*.c))
 #   CFLAGS
 #
 CLUA   := -Ilib/lua
-CSDL   := $(shell sdl-config --cflags)
+CSDL   := $(shell sdl-config --cflags) -DGL_GLEXT_PROTOTYPES
 CXML   := $(shell xml2-config --cflags)
 CTTF   := $(shell freetype-config --cflags)
 CPNG   := $(shell libpng-config --cflags)
