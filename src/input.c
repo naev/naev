@@ -62,6 +62,9 @@ const char *keybindNames[] = {
    /* Misc. */
    "mapzoomin", "mapzoomout", "screenshot", "pause", "menu", "info",
    "end" }; /* must terminate in "end" */
+/*
+ * Keybinding descriptions.  Should match in position the names.
+ */
 const char *keybindDescription[] = {
    /* Movement. */
    "Makes your ship accelerate forward.",
@@ -127,7 +130,7 @@ void input_setDefault (void)
 {
    /* Movement. */
    input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, KMOD_ALL, 0 );
-   input_setKeybind( "afterburn", KEYBIND_KEYBOARD, SDLK_UNKNOWN, KMOD_ALL, 0 ); /* not set */
+   input_setKeybind( "afterburn", KEYBIND_NULL, SDLK_UNKNOWN, KMOD_ALL, 0 ); /* not set */
    input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, KMOD_ALL, 0 );
    input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, KMOD_ALL, 0 );
    input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, KMOD_ALL, 0 );
@@ -238,7 +241,7 @@ void input_setKeybind( char *keybind, KeybindType type, int key,
 /**
  * @brief Gets the value of a keybind.
  */
-int input_getKeybind( char *keybind, KeybindType *type, SDLMod *mod, int *reverse )
+SDLKey input_getKeybind( char *keybind, KeybindType *type, SDLMod *mod, int *reverse )
 {
    int i;
    for (i=0; strcmp(keybindNames[i],"end"); i++)
@@ -249,7 +252,7 @@ int input_getKeybind( char *keybind, KeybindType *type, SDLMod *mod, int *revers
          return input_keybinds[i]->key;
       }
    WARN("Unable to get keybinding '%s', that command doesn't exist", keybind);
-   return -1;
+   return (SDLKey)-1;
 }
 
 

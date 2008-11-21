@@ -37,6 +37,7 @@ extern const char *keybindNames[];
 /*
  * prototypes
  */
+static const char* modToText( SDLMod mod );
 static void menuKeybinds_update( unsigned int wid, char *name );
 
 
@@ -75,6 +76,26 @@ void opt_menuKeybinds (void)
 
 
 /**
+ * @brief Gets the human readable version of mod.
+ */
+static const char* modToText( SDLMod mod )
+{
+   switch (mod) {
+      case KMOD_LCTRL: return "lctrl";
+      case KMOD_RCTRL: return "rctrl";
+      case KMOD_LSHIFT: return "lshift";
+      case KMOD_RSHIFT: return "rshift";
+      case KMOD_LALT: return "lalt";
+      case KMOD_RALT: return "ralt";
+      case KMOD_LMETA: return "lmeta";
+      case KMOD_RMETA: return "rmeta";
+      case KMOD_ALL: return "any";
+      default: return "unknown";
+   }
+}
+
+
+/**
  * @brief Updates the keybindings menu.
  */
 static void menuKeybinds_update( unsigned int wid, char *name )
@@ -82,10 +103,46 @@ static void menuKeybinds_update( unsigned int wid, char *name )
    (void) name;
    char *keybind;
    const char *desc;
+   SDLKey key;
+   KeybindType type;
+   SDLMod mod;
+   int reverse;
+   char buf[1024];
+   char pre[32];
+   char bind[32];
 
+   /* Get the keybind. */
    keybind = toolkit_getList( wid, "lstKeybinds" );
    window_modifyText( wid, "txtName", keybind );
+
+   /* Get information. */
    desc = input_getKeybindDescription( keybind );
-   window_modifyText( wid, "txtDesc", (char*)desc );
+   key = input_getKeybind( keybind, &type, &mod, &reverse );
+
+   /* Create the text. */
+   switch (type) {
+      case KEYBIND_NULL:
+         snprintf(bind, 64, "Not bound");
+         break;
+      case KEYBIND_KEYBOARD:
+         snprintf(pre, 32, "keyboard:   %s%s",
+               (mod != KMOD_NONE) ? modToText(mod) : "",
+               (mod != KMOD_NONE) ? " + " : "" );
+
+         /* Is key. */
+         if (isalnum(key))
+            snprintf(bind, 32, "%s%c", pre, (char)key);
+         else
+            snprintf(bind, 32, "%s<%d>", pre, key);
+         break;
+      case KEYBIND_JAXIS:
+         snprintf(bind, 64, "joy axis:   <%d>%s", key, (reverse) ? " rev" : "");
+         break;
+      case KEYBIND_JBUTTON:
+         snprintf(bind, 64, "joy button:   <%d>", key);
+         break;
+   }
+   snprintf(buf, 1024, "%s\n\n%s\n", desc, bind);
+   window_modifyText( wid, "txtDesc", buf );
 }
 
