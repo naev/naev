@@ -9,7 +9,7 @@ armour_return = 100
 
 function create ()
    attack_choose()
-   ai.setcredits(ai.shipprice()/1000 , ai.shipprice()/100 )
+   ai.setcredits(ai.shipprice()/120 , ai.shipprice()/40 )
 
    -- Deal with bribeability
    if rnd.int() < 0.05 then
