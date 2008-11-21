@@ -49,6 +49,10 @@ void opt_menuKeybinds (void)
    int i, j;
    unsigned int wid;
    char **str;
+   SDLKey key;
+   KeybindType type;
+   SDLMod mod;
+   int reverse;
 
    /* Create the window. */
    wid = window_create( "Keybindings", -1, -1, KEYBINDS_WIDTH, KEYBINDS_HEIGHT );
@@ -65,8 +69,27 @@ void opt_menuKeybinds (void)
    /* Create the list. */
    for (i=0; strcmp(keybindNames[i],"end"); i++);
    str = malloc(sizeof(char*) * (i-1));
-   for (j=0; j < i; j++)
-      str[j] = strdup(keybindNames[j]);
+   for (j=0; j < i; j++) {
+      str[j] = malloc(sizeof(char) * 64);
+      key = input_getKeybind( keybindNames[j], &type, &mod, &reverse );
+      switch (type) {
+         case KEYBIND_KEYBOARD:
+            if (isalpha(key))
+               snprintf(str[j], 64, "%s <%c>", keybindNames[j], toupper(key) );
+            else
+               snprintf(str[j], 64, "%s <%s>", keybindNames[j], SDL_GetKeyName(key) );
+            break;
+         case KEYBIND_JAXIS:
+            snprintf(str[j], 64, "%s <jb%d>", keybindNames[j], key);
+            break;
+         case KEYBIND_JBUTTON:
+            snprintf(str[j], 64, "%s <ja%d>", keybindNames[j], key);
+            break;
+         default:
+            snprintf(str[j], 64, keybindNames[j]);
+            break;
+      }
+   }
    window_addList( wid, 20, -40, 160, KEYBINDS_HEIGHT-60, "lstKeybinds",
          str, i-1, 0, menuKeybinds_update );
 
@@ -101,18 +124,23 @@ static const char* modToText( SDLMod mod )
 static void menuKeybinds_update( unsigned int wid, char *name )
 {
    (void) name;
-   char *keybind;
+   int i;
+   char *selected, keybind[32];
    const char *desc;
    SDLKey key;
    KeybindType type;
    SDLMod mod;
    int reverse;
    char buf[1024];
-   char pre[32];
    char bind[32];
 
    /* Get the keybind. */
-   keybind = toolkit_getList( wid, "lstKeybinds" );
+   selected = toolkit_getList( wid, "lstKeybinds" );
+
+   /* Remove the excess. */
+   for (i=0; (selected[i] != '\0') && (selected[i] != ' '); i++)
+      keybind[i] = selected[i];
+   keybind[i] = '\0';
    window_modifyText( wid, "txtName", keybind );
 
    /* Get information. */
@@ -125,15 +153,16 @@ static void menuKeybinds_update( unsigned int wid, char *name )
          snprintf(bind, 64, "Not bound");
          break;
       case KEYBIND_KEYBOARD:
-         snprintf(pre, 32, "keyboard:   %s%s",
-               (mod != KMOD_NONE) ? modToText(mod) : "",
-               (mod != KMOD_NONE) ? " + " : "" );
-
-         /* Is key. */
-         if (isalnum(key))
-            snprintf(bind, 32, "%s%c", pre, toupper((char)key));
+         if (isalpha(key))
+            snprintf(bind, 32, "keyboard:   %s%s%c",
+                  (mod != KMOD_NONE) ? modToText(mod) : "",
+                  (mod != KMOD_NONE) ? " + " : "",
+                  toupper(key));
          else
-            snprintf(bind, 32, "%s<%d>", pre, key);
+            snprintf(bind, 32, "keyboard:   %s%s%s",
+                  (mod != KMOD_NONE) ? modToText(mod) : "",
+                  (mod != KMOD_NONE) ? " + " : "",
+                  SDL_GetKeyName(key));
          break;
       case KEYBIND_JAXIS:
          snprintf(bind, 64, "joy axis:   <%d>%s", key, (reverse) ? " rev" : "");

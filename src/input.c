@@ -241,7 +241,7 @@ void input_setKeybind( char *keybind, KeybindType type, int key,
 /**
  * @brief Gets the value of a keybind.
  */
-SDLKey input_getKeybind( char *keybind, KeybindType *type, SDLMod *mod, int *reverse )
+SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod, int *reverse )
 {
    int i;
    for (i=0; strcmp(keybindNames[i],"end"); i++)
