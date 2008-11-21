@@ -131,7 +131,7 @@ static void menuKeybinds_update( unsigned int wid, char *name )
 
          /* Is key. */
          if (isalnum(key))
-            snprintf(bind, 32, "%s%c", pre, (char)key);
+            snprintf(bind, 32, "%s%c", pre, toupper((char)key));
          else
             snprintf(bind, 32, "%s<%d>", pre, key);
          break;
