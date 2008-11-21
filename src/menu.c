@@ -608,16 +608,28 @@ static void mission_menu_abort( unsigned int wid, char* str )
    char *selected_misn;
    int pos;
    Mission* misn;
+   int ret;
 
    selected_misn = toolkit_getList( wid, "lstMission" );
 
    if (dialogue_YesNo( "Abort Mission", 
             "Are you sure you want to abort this mission?" )) {
+
+      /* Get the mission. */
       pos = toolkit_getListPos(wid, "lstMission" );
       misn = &player_missions[pos];
-      mission_cleanup( misn );
-      memmove( misn, &player_missions[pos+1], 
-            sizeof(Mission) * (MISSION_MAX-pos-1) );
+
+      /* We run the "abort" function if it's found. */
+      ret = misn_tryRun( misn, "abort" );
+
+      /* Now clean up mission. */
+      if (ret != 2) {
+         mission_cleanup( misn );
+         memmove( misn, &player_missions[pos+1], 
+               sizeof(Mission) * (MISSION_MAX-pos-1) );
+      }
+
+      /* Regenerate list. */
       mission_menu_genList(wid ,0);
    }
 }

@@ -84,6 +84,7 @@ static int misn_delete = 0; /**< if 1 delete current mission */
 static int var_add( misn_var *var );
 static void var_free( misn_var* var );
 static unsigned int hook_generic( lua_State *L, char* stack, int pos );
+static int misn_runTopStack( Mission *misn, char *func);
 /* externed */
 int misn_run( Mission *misn, char *func );
 int var_save( xmlTextWriterPtr writer );
@@ -306,13 +307,48 @@ int lua_loadDiff( lua_State *L, int readonly )
 
 
 /**
+ * @brief Tries to run a mission, but doesn't err if it fails.
+ *
+ *    @param misn Mission that owns the function.
+ *    @param func Name of the function to call.
+ *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
+ *            and 0 normally.
+ */
+int misn_tryRun( Mission *misn, char *func )
+{
+   /* Get the function to run. */
+   lua_getglobal( misn->L, func );
+   if (lua_isnil( misn->L, -1 ))
+      return 0;
+   return misn_runTopStack( misn, func );
+}
+
+
+/**
  * @brief Runs a mission function.
  *
  *    @param misn Mission that owns the function.
  *    @param func Name of the function to call.
- *    @return -1 on error, 1 on misn.finish() call and 0 normally.
+ *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
+ *            and 0 normally.
  */
 int misn_run( Mission *misn, char *func )
+{
+   /* Run the function. */
+   lua_getglobal( misn->L, func );
+   return misn_runTopStack( misn, func );
+}
+
+
+/**
+ * @brief Runs the function at the top of the stack.
+ *
+ *    @param misn Mission that owns the function.
+ *    @param func Name of the function to call.
+ *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
+ *            and 0 normally.
+ */
+static int misn_runTopStack( Mission *misn, char *func)
 {
    int i, ret;
    char* err;
@@ -320,17 +356,18 @@ int misn_run( Mission *misn, char *func )
    cur_mission = misn;
    misn_delete = 0;
 
-   lua_getglobal( misn->L, func );
    if ((ret = lua_pcall(misn->L, 0, 0, 0))) { /* error has occured */
       err = (lua_isstring(misn->L,-1)) ? (char*) lua_tostring(misn->L,-1) : NULL;
       if (strcmp(err,"Mission Done")!=0)
          WARN("Mission '%s' -> '%s': %s",
                cur_mission->data->name, func, (err) ? err : "unknown error");
-      else ret = 1;
+      else
+         ret = 1;
    }
 
    /* mission is finished */
    if (misn_delete) {
+      ret = 2;
       mission_cleanup( cur_mission );
       for (i=0; i<MISSION_MAX; i++)
          if (cur_mission == &player_missions[i]) {

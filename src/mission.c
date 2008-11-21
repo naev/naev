@@ -62,8 +62,6 @@ extern int systems_nstack;
 /*
  * prototypes
  */
-/* extern */
-extern int misn_run( Mission *misn, char *func );
 /* static */
 static unsigned int mission_genID (void);
 static int mission_init( Mission* mission, MissionData* misn, int load );

@@ -128,6 +128,12 @@ void mission_cleanup( Mission* misn );
 void missions_free (void);
 void missions_cleanup (void);
 
+/*
+ * Actually in misn_lua.h
+ */
+int misn_tryRun( Mission *misn, char *func );
+int misn_run( Mission *misn, char *func );
+
 
 #endif /* MISSION_H */
 

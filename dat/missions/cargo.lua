@@ -208,3 +208,9 @@ function failed ()
       misn.finish(false)
 end
 
+function abort ()
+   if misn_type ~= "People" then
+      player.jetCargo( carg_id )
+   end
+end
+
