@@ -63,7 +63,8 @@ extern glColour cFriend;
 extern glColour cHostile;
 /* radar */
 extern glColour cRadar_player;
-extern glColour cRadar_targ;
+extern glColour cRadar_tPilot;
+extern glColour cRadar_tPlanet;
 extern glColour cRadar_weap;
 /* health */
 extern glColour cShield;

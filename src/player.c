@@ -1325,7 +1325,7 @@ static void gui_renderPilot( const Pilot* p )
             sx = 0.85 * x;
             sy = 0.85 * y;
 
-            COLOUR(cRadar_targ);
+            COLOUR(cRadar_tPilot);
             glBegin(GL_LINES);
                glVertex2d(  x,  y );
                glVertex2d( sx, sy );
@@ -1346,7 +1346,7 @@ static void gui_renderPilot( const Pilot* p )
 
    glBegin(GL_QUADS);
       /* colors */
-      if (p->id == player->target) col = &cRadar_targ;
+      if (p->id == player->target) col = &cRadar_tPilot;
       else if (pilot_isDisabled(p)) col = &cInert;
       else if (pilot_isFlag(p,PILOT_BRIBED)) col = &cNeutral;
       else if (pilot_isFlag(p,PILOT_HOSTILE)) col = &cHostile;

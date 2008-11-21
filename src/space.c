@@ -111,6 +111,12 @@ static int nstars = 0; /**< total stars */
 static int mstars = 0; /**< memory stars are taking */
 
 
+/*
+ * External stuff.
+ */
+extern int planet_target; /* player.c */
+
+
 /* 
  * Internal Prototypes.
  */
@@ -144,9 +150,6 @@ int space_sysLoad( xmlNodePtr parent );
          (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y))<rc)))   \
    glVertex2i((x),(y))
 /**
- * @fn void planets_minimap( const double res, const double w,
- *       const double h, const RadarShape shape )
- *
  * @brief Draws the planets in the minimap.  Used by player.c.
  *
  * Matrix mode is already displaced to center of the minimap.
@@ -162,27 +165,61 @@ void planets_minimap( const double res, const double w,
    int i;
    int cx, cy, x, y, r, rc;
    double p;
+   double a, tx,ty;
    Planet *planet;
    glColour *col;
 
-   if (shape==RADAR_CIRCLE) rc = (int)(w*w);
+   if (shape==RADAR_CIRCLE)
+      rc = (int)(w*w);
 
-   glBegin(GL_POINTS);
    for (i=0; i<cur_system->nplanets; i++) {
       planet = cur_system->planets[i];
 
+      /* Get the colour. */
       col = faction_getColour(planet->faction);
-      if ((col != &cHostile) && !planet_hasService(planet,PLANET_SERVICE_BASIC))
+      if (i == planet_target)
+         col = &cRadar_tPlanet;
+      else if ((col != &cHostile) && !planet_hasService(planet,PLANET_SERVICE_BASIC))
          col = &cInert; /* Override non-hostile planets without service. */
       COLOUR(*col);
 
+      /* Some parameters. */
       r = (int)(cur_system->planets[i]->gfx_space->sw / res);
       cx = (int)((cur_system->planets[i]->pos.x - player->solid->pos.x) / res);
       cy = (int)((cur_system->planets[i]->pos.y - player->solid->pos.y) / res);
 
+      /* Check if in range. */
+      if (shape == RADAR_RECT) {
+         /* Out of range. */
+         if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.))
+            continue;
+      }
+      else if (shape == RADAR_CIRCLE) {
+         x = cx-r;
+         y = cy-r;
+         /* Out of range. */
+         if (x*x + y*y > rc) {
+            if (planet_target == i) {
+               /* Draw a line like for pilots. */
+               a = ANGLE(cx,cy);
+               tx = w*cos(a);
+               ty = w*sin(a);
+
+               COLOUR(cRadar_tPlanet);
+               glBegin(GL_LINES);
+                  glVertex2d(      tx,      ty );
+                  glVertex2d( 0.85*tx, 0.85*ty );
+               glEnd(); /* GL_LINES */
+            }
+            continue;
+         }
+      }
+
       x = 0;
       y = r;
       p = (5. - (double)(r*4)) / 4.;
+
+      glBegin(GL_POINTS);
 
       PIXEL( cx,   cy+y );
       PIXEL( cx,   cy-y );
@@ -219,8 +256,8 @@ void planets_minimap( const double res, const double w,
                PIXEL( cx-y, cy-x );
             }
          }
-      }
-   glEnd(); /* GL_POINTS */
+      glEnd(); /* GL_POINTS */
+   }
 }
 #undef PIXEL
 

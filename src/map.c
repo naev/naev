@@ -15,6 +15,7 @@
 #include "space.h"
 #include "opengl.h"
 #include "mission.h"
+#include "colour.h"
 
 
 #define MAP_WDWNAME     "Star Map"
@@ -372,7 +373,7 @@ static void map_render( double bx, double by, double w, double h )
       if (!sys_isMarked(sys) && !space_sysReachable(sys)) continue;
 
       /* system colours */
-      if (sys==cur_system) col = &cRadar_targ;
+      if (sys==cur_system) col = &cRadar_tPlanet;
       else if (!sys_isKnown(sys) || (sys->nplanets==0)) col = &cInert;
       else col = faction_getColour( sys->faction);
       COLOUR(*col);
