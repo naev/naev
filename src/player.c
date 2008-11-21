@@ -1734,7 +1734,7 @@ void player_startAutonav (void)
 void player_abortAutonav( char *reason )
 {
    /* No point if player is beyond aborting. */
-   if (pilot_isFlag(player, PILOT_HYPERSPACE))
+   if ((player != NULL) && pilot_isFlag(player, PILOT_HYPERSPACE))
       return;
 
    if (player_isFlag(PLAYER_AUTONAV)) {
