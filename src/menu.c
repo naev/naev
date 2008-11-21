@@ -29,6 +29,7 @@
 #include "rng.h"
 #include "nebulae.h"
 #include "pause.h"
+#include "options.h"
 
 
 #define MAIN_WIDTH      130 /**< Main menu width. */
@@ -52,8 +53,8 @@
 #define DEATH_WIDTH     130 /**< Death menu width. */
 #define DEATH_HEIGHT    150 /**< Death menu height. */
 
-#define OPTIONS_WIDTH   130 /**< Options menu width. */
-#define OPTIONS_HEIGHT  150 /**< Options menu height. */
+#define OPTIONS_WIDTH   240 /**< Options menu width. */
+#define OPTIONS_HEIGHT  90  /**< Options menu height. */
 
 #define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
@@ -683,11 +684,11 @@ void menu_options (void)
    unsigned int wid;
 
    wid = window_create( "Options", -1, -1, OPTIONS_WIDTH, OPTIONS_HEIGHT );
-   window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", menu_options_close );
-   window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20),
+   window_addButton( wid, -20 - (BUTTON_WIDTH+20), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnKeybinds", "Keybindings", NULL );
+         "btnKeybinds", "Keybindings", (void(*)(unsigned int,char*))opt_menuKeybinds );
    menu_Open(MENU_OPTIONS);
 }
 /**

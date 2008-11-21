@@ -51,10 +51,10 @@ const char *keybindNames[] = {
    "target", "target_prev", "target_nearest", "target_hostile",
    /* Fighting. */
    "primary", "face", "board",
-   /* Escorts. */
-   "e_attack", "e_hold", "e_return", "e_clear",
    /* Secondary weapons. */
    "secondary", "secondary_next",
+   /* Escorts. */
+   "e_attack", "e_hold", "e_return", "e_clear",
    /* Space navigation. */
    "autonav", "target_planet", "land", "thyperspace", "starmap", "jump",
    /* Communication. */
@@ -62,6 +62,47 @@ const char *keybindNames[] = {
    /* Misc. */
    "mapzoomin", "mapzoomout", "screenshot", "pause", "menu", "info",
    "end" }; /* must terminate in "end" */
+const char *keybindDescription[] = {
+   /* Movement. */
+   "Makes your ship accelerate forward.",
+   "Makes your ship turn left.",
+   "Makes your ship turn right.",
+   "Makes your ship turn around and face the direction you're moving from.  Good for braking.",
+   "Makes your ship afterburn if you have an afterburner installed.",
+   /* Targetting. */
+   "Cycles through ship targets.",
+   "Cycles backwards through ship targets.",
+   "Targets the nearest non-disabled ship.",
+   "Targets the nearest hostile ship.",
+   /* Fighting. */
+   "Fires your primary weapons.",
+   "Faces your target (ship target if you have one, otherwise your planet target).",
+   "Attempts to board your target ship.",
+   /* Secondary weapons. */
+   "Fires your secondary weapon.",
+   "Cycles through secondary weapons.",
+   /* Escorts. */
+   "Tells your escorts to attack your target.",
+   "Tells your escorts to hold their positions.",
+   "Tells your escorts to return to your ship hangars.",
+   "Clears your escorts of commands.",
+   /* Space navigation. */
+   "Initializes the autonavigation system.",
+   "Cycles through planet targets",
+   "Attempts to land on your targetted planet or targets nearest landable planet.  Requests for landing if you don't have permission yet.",
+   "Cycles through hyperspace targets.",
+   "Opens the Star Map.",
+   "Attempts to jump to your hyperspace target.",
+   /* Communication. */
+   "Attempts to initialize communication with your targetted ship.",
+   /* Misc. */
+   "Zooms in on your radar.",
+   "Zooms out on your radar.",
+   "Takes a screenshot.",
+   "Pauses the game.",
+   "Opens the small ingame menu.",
+   "Opens the information menu."
+};
 
 
 /*
@@ -99,14 +140,14 @@ void input_setDefault (void)
    input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, KMOD_NONE, 0 );
    input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, KMOD_NONE, 0 );
    input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, KMOD_NONE, 0 );
+   /* Secondary weapons. */
+   input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, KMOD_ALL, 0 );
+   input_setKeybind( "secondary_next", KEYBIND_KEYBOARD, SDLK_w, KMOD_NONE, 0 );
    /* Escorts. */
    input_setKeybind( "e_attack", KEYBIND_KEYBOARD, SDLK_f, KMOD_NONE, 0 );
    input_setKeybind( "e_hold", KEYBIND_KEYBOARD, SDLK_g, KMOD_NONE, 0 );
    input_setKeybind( "e_return", KEYBIND_KEYBOARD, SDLK_c, KMOD_LCTRL, 0 );
    input_setKeybind( "e_clear", KEYBIND_KEYBOARD, SDLK_c, KMOD_NONE, 0 );
-   /* Secondary weapons. */
-   input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, KMOD_ALL, 0 );
-   input_setKeybind( "secondary_next", KEYBIND_KEYBOARD, SDLK_w, KMOD_NONE, 0 );
    /* Space. */
    input_setKeybind( "autonav", KEYBIND_KEYBOARD, SDLK_j, KMOD_LCTRL, 0 );
    input_setKeybind( "target_planet", KEYBIND_KEYBOARD, SDLK_p, KMOD_NONE, 0 );
@@ -195,8 +236,6 @@ void input_setKeybind( char *keybind, KeybindType type, int key,
 
 
 /**
- * @fn int input_getKeybind( char *keybind, KeybindType *type, SDLMod *mod, int *reverse )
- *
  * @brief Gets the value of a keybind.
  */
 int input_getKeybind( char *keybind, KeybindType *type, SDLMod *mod, int *reverse )
@@ -211,6 +250,23 @@ int input_getKeybind( char *keybind, KeybindType *type, SDLMod *mod, int *revers
       }
    WARN("Unable to get keybinding '%s', that command doesn't exist", keybind);
    return -1;
+}
+
+
+/**
+ * @brief Gets the description of the keybinding.
+ *
+ *    @param keybind Keybinding to get the description of.
+ *    @return Description of the keybinding.
+ */
+const char* input_getKeybindDescription( char *keybind )
+{
+   int i;
+   for (i=0; strcmp(keybindNames[i],"end"); i++)
+      if (strcmp(keybind, input_keybinds[i]->name)==0)
+         return keybindDescription[i];
+   WARN("Unable to get keybinding description '%s', that command doesn't exist", keybind);
+   return NULL;
 }
 
 
