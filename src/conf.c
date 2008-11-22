@@ -312,10 +312,10 @@ int conf_loadConfig ( const char* file )
 
             if ((key != SDLK_UNKNOWN) && (str != NULL)) { /* keybind is valid */
                /* get type */
-               if (strcmp(str,"null")==0) type = KEYBIND_NULL;
+               if (strcmp(str,"null")==0)          type = KEYBIND_NULL;
                else if (strcmp(str,"keyboard")==0) type = KEYBIND_KEYBOARD;
-               else if (strcmp(str,"jaxis")==0) type = KEYBIND_JAXIS;
-               else if (strcmp(str,"jbutton")==0) type = KEYBIND_JBUTTON;
+               else if (strcmp(str,"jaxis")==0)    type = KEYBIND_JAXIS;
+               else if (strcmp(str,"jbutton")==0)  type = KEYBIND_JBUTTON;
                else {
                   WARN("Unkown keybinding of type %s", str);
                   continue;
@@ -343,13 +343,13 @@ int conf_loadConfig ( const char* file )
                /* set the keybind */
                input_setKeybind( (char*)keybindNames[i], type, key, m, reverse );
             }
-            else
+            else {
                WARN("Malformed keybind in %s", file);              
+            }
 
             /* clean up after table stuff */
             lua_remove(L,-1);
          }
-         lua_remove(L,-1);
       }
    }
    else { /* failed to load the config file */
