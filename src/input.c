@@ -122,6 +122,19 @@ unsigned int input_afterburnSensibility = 250; /**< ms between taps to afterburn
 extern double player_turn;
 
 
+/*
+ * Key conversion table.
+ */
+static char *keyconv[SDLK_LAST]; /**< Key conversion table. */
+
+
+/*
+ * Prototypes.
+ */
+static void input_keyConvGen (void);
+static void input_keyConvDestroy (void);
+
+
 /**
  * @fn void input_setDefault (void)
  *
@@ -194,6 +207,8 @@ void input_init (void)
       temp->reverse = 1.;
       input_keybinds[i] = temp;
    }
+
+   input_keyConvGen();
 }
 
 
@@ -208,6 +223,47 @@ void input_exit (void)
    for (i=0; strcmp(keybindNames[i],"end"); i++)
       free(input_keybinds[i]);
    free(input_keybinds);
+
+   input_keyConvDestroy();
+}
+
+
+/**
+ * @brief Creates the key conversion table.
+ */
+static void input_keyConvGen (void)
+{
+   SDLKey k;
+
+   for (k=SDLK_FIRST; k < SDLK_LAST; k++)
+      keyconv[k] = SDL_GetKeyName(k);
+}
+
+
+/**
+ * @brief Destroys the key conversion table.
+ */
+static void input_keyConvDestroy (void)
+{
+}
+
+
+/**
+ * @brief Gets the key id from it's name.
+ *
+ *    @param name Name of the key to get id from.
+ *    @return ID of the key.
+ */
+SDLKey input_keyConv( char *name )
+{
+   SDLKey k;
+
+   for (k=SDLK_FIRST; k < SDLK_LAST; k++)
+      if (strcmp(name, keyconv[k])==0)
+         return k;
+
+   WARN("Keyname '%s' doesn't match any key.", name);
+   return SDLK_UNKNOWN;
 }
 
 

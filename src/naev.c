@@ -142,6 +142,12 @@ int main( int argc, char** argv )
    if (nfile_dirMakeExist("%s", nfile_basePath()))
       WARN("Unable to create naev directory '%s'", nfile_basePath());
 
+   /* Must be initialized before input_init is called. */
+   if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
+      WARN("Unable to initialize SDL Video: %s", SDL_GetError());
+      return -1;
+   }
+
    /* Input must be initialized for config to work. */
    input_init(); 
 

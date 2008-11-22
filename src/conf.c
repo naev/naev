@@ -156,7 +156,8 @@ int conf_loadConfig ( const char* file )
    int i;
    double d;
    char *str, *mod;
-   int type, key, reverse;
+   SDLKey key;
+   int type, reverse;
    int w,h, fsaa;
    SDLMod m;
 
@@ -262,8 +263,12 @@ int conf_loadConfig ( const char* file )
             lua_gettable(L, -2);
             if (lua_isstring(L, -1))
                str = (char*)lua_tostring(L, -1);
-            else {
+            else if (lua_isnil(L, -1)) {
                WARN("Found keybind with no type field!");
+               str = "null";
+            }
+            else {
+               WARN("Found keybind with invalid type field!");
                str = "null";
             }
             lua_remove(L, -1);
@@ -273,9 +278,15 @@ int conf_loadConfig ( const char* file )
             lua_gettable(L, -2);
             if (lua_isnumber(L, -1))
                key = (int)lua_tonumber(L, -1);
-            else {
+            else if (lua_isstring(L, -1))
+               key = input_keyConv( (char*)lua_tostring(L, -1));
+            else if (lua_isnil(L, -1)) {
                WARN("Found keybind with no key field!");
-               key = -1;
+               key = SDLK_UNKNOWN;
+            }
+            else {
+               WARN("Found keybind with invalid key field!");
+               key = SDLK_UNKNOWN;
             }
             lua_remove(L, -1);
 
@@ -299,7 +310,7 @@ int conf_loadConfig ( const char* file )
                mod = NULL;
             lua_remove(L, -1);
 
-            if ((key != -1) && (str != NULL)) { /* keybind is valid */
+            if ((key != SDLK_UNKNOWN) && (str != NULL)) { /* keybind is valid */
                /* get type */
                if (strcmp(str,"null")==0) type = KEYBIND_NULL;
                else if (strcmp(str,"keyboard")==0) type = KEYBIND_KEYBOARD;
@@ -332,7 +343,8 @@ int conf_loadConfig ( const char* file )
                /* set the keybind */
                input_setKeybind( (char*)keybindNames[i], type, key, m, reverse );
             }
-            else WARN("Malformed keybind in %s", file);              
+            else
+               WARN("Malformed keybind in %s", file);              
 
             /* clean up after table stuff */
             lua_remove(L,-1);
