@@ -103,6 +103,7 @@ typedef struct Planet_ {
  */
 #define SYSTEM_KNOWN    (1<<0) /**< System is known. */
 #define SYSTEM_MARKED   (1<<1) /**< System is marked by a mission. */
+#define SYSTEM_CMARKED  (1<<2) /**< System is marked by a computer mission. */
 #define sys_isFlag(s,f)    ((s)->flags & (f)) /**< Checks system flag. */
 #define sys_setFlag(s,f)   ((s)->flags |= (f)) /**< Sets a system flag. */
 #define sys_rmFlag(s,f)    ((s)->flags &= ~(f)) /**< Removes a system flag. */
@@ -202,6 +203,7 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions );
 char* space_getRndPlanet (void);
 void space_clearKnown (void);
 void space_clearMarkers (void);
+void space_clearComputerMarkers (void);
 extern char* stardate;
 
 

@@ -111,6 +111,7 @@ void missions_update( const double dt );
 int mission_getID( char* name );
 MissionData* mission_get( int id );
 void mission_sysMark (void);
+void mission_sysComputerMark( Mission* misn );
 
 
 /*

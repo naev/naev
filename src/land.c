@@ -132,6 +132,7 @@ static void spaceport_bar_open (void);
 static void news_open(unsigned int parent, char *str);
 /* mission computer */
 static void misn_open (void);
+static void misn_close( unsigned int wid, char *name );
 static void misn_accept( unsigned int wid, char* str );
 static void misn_genList( unsigned int wid, int first );
 static void misn_update( unsigned int wid, char* str );
@@ -1066,7 +1067,7 @@ static void misn_open (void)
    /* buttons */
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseMission",
-         "Close", window_close );
+         "Close", misn_close );
    window_addButton( wid, -20, 40+BUTTON_HEIGHT,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnAcceptMission",
          "Accept", misn_accept );
@@ -1082,6 +1083,12 @@ static void misn_open (void)
          "txtDesc", &gl_smallFont, &cBlack, NULL );
 
    misn_genList(wid, 1);
+}
+static void misn_close( unsigned int wid, char *name )
+{
+   /* Remove computer markers just in case. */
+   space_clearComputerMarkers();
+   window_close( wid, name );
 }
 static void misn_accept( unsigned int wid, char* str )
 {
@@ -1151,6 +1158,7 @@ static void misn_update( unsigned int wid, char* str )
    }
 
    misn = &mission_computer[ toolkit_getListPos( wid, "lstMission" ) ];
+   mission_sysComputerMark( misn );
    window_modifyText( wid, "txtReward", misn->reward );
    window_modifyText( wid, "txtDesc", misn->desc );
    window_enableButton( wid, "btnAcceptMission" );

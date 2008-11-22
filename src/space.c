@@ -1632,8 +1632,6 @@ void space_clearKnown (void)
 
 
 /**
- * @fn void space_clearMarkers (void)
- *
  * @brief Clears all system markers.
  */
 void space_clearMarkers (void)
@@ -1641,6 +1639,17 @@ void space_clearMarkers (void)
    int i;
    for (i=0; i<systems_nstack; i++)
       sys_rmFlag(&systems_stack[i],SYSTEM_MARKED);
+}
+
+
+/**
+ * @brief Clears all the system computer markers.
+ */
+void space_clearComputerMarkers (void)
+{
+   int i;
+   for (i=0; i<systems_nstack; i++)
+      sys_rmFlag(&systems_stack[i],SYSTEM_CMARKED);
 }
 
 

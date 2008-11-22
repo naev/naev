@@ -413,8 +413,6 @@ int mission_start( char *name )
 
 
 /**
- * @fn void mission_sysMark (void)
- *
  * @brief Marks all active systems that need marking.
  */
 void mission_sysMark (void)
@@ -434,8 +432,26 @@ void mission_sysMark (void)
 
 
 /**
- * @fn void mission_linkCargo( Mission* misn, unsigned int cargo_id )
+ * @brief Marks the system of the computer mission to reflect where it will head to.
  *
+ * Does not modify other markers.
+ *
+ *    @param misn Mission to mark.
+ */
+void mission_sysComputerMark( Mission* misn )
+{
+   StarSystem *sys;
+
+   space_clearComputerMarkers();
+
+   if (misn->sys_marker != NULL) {
+      sys = system_get(misn->sys_marker);
+      sys_setFlag(sys,SYSTEM_CMARKED);
+   }
+}
+
+
+/**
  * @brief Links cargo to the mission for posterior cleanup.
  *
  *    @param misn Mission to link cargo to.

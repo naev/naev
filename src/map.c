@@ -29,14 +29,14 @@
 #define BUTTON_HEIGHT   30
 
 
-static double map_zoom = 1.; /* zoom of the map */
-static double map_xpos = 0.; /* map position */
-static double map_ypos = 0.;
-static int map_selected = -1;
-static StarSystem **map_path = NULL; /* the path to current selected system */
-int map_npath = 0;
+static double map_zoom = 1.; /**< Zoom of the map. */
+static double map_xpos = 0.; /**< Map X position. */
+static double map_ypos = 0.; /**< Map Y .osition. */
+static int map_selected = -1; /**< What system is selected on the map. */
+static StarSystem **map_path = NULL; /**< The path to current selected system. */
+int map_npath = 0; /**< Number of systems in map_path. */
 
-static int map_drag = 0; /* is the user dragging the map? */
+static int map_drag = 0; /**< Is the user dragging the map? */
 
 /*
  * extern
@@ -60,8 +60,8 @@ static void map_buttonZoom( unsigned int wid, char* str );
 static void map_selectCur (void);
 
 
-/*
- * opens the map window
+/**
+ * @brief Opens the map window.
  */
 void map_open (void)
 {
@@ -157,6 +157,11 @@ void map_open (void)
 
    map_update( wid );
 }
+/**
+ * @brief Updates the map window.
+ *
+ *    @param wid Window id.
+ */
 static void map_update( unsigned int wid )
 {
    int i;
@@ -370,7 +375,8 @@ static void map_render( double bx, double by, double w, double h )
       sys = &systems_stack[i];
 
       /* check to make sure system is known or adjacent to known (or marked) */
-      if (!sys_isMarked(sys) && !space_sysReachable(sys)) continue;
+      if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED) && !space_sysReachable(sys))
+         continue;
 
       /* system colours */
       if (sys==cur_system) col = &cRadar_tPlanet;
@@ -384,8 +390,12 @@ static void map_render( double bx, double by, double w, double h )
       gl_drawCircleInRect( tx, ty, r, bx, by, w, h );
 
       /* mark the system if needed */
-      if (sys_isMarked(sys)) {
-         COLOUR(cRed);
+      if (sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)) {
+         if (sys_isFlag(sys, SYSTEM_CMARKED))
+            COLOUR(cGreen);
+         else if (sys_isFlag(sys, SYSTEM_MARKED))
+            COLOUR(cRed);
+
          glBegin(GL_TRIANGLES);
             glVertex2d( tx+r+9, ty+r+3 );
             glVertex2d( tx+r+3, ty+r+3 );
