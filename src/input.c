@@ -166,7 +166,7 @@ void input_setDefault (void)
    input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_KP_MINUS, KMOD_NONE, 0 );
    input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MULTIPLY, KMOD_NONE, 0 );
    input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_z, KMOD_NONE, 0 );
-   input_setKeybind( "speed", KEYBIND_KEYBOARD, SDLK_CAPSLOCK, KMOD_NONE, 0 );
+   input_setKeybind( "speed", KEYBIND_KEYBOARD, SDLK_BACKQUOTE, KMOD_NONE, 0 );
    input_setKeybind( "menu", KEYBIND_KEYBOARD, SDLK_ESCAPE, KMOD_NONE, 0 );
    input_setKeybind( "info", KEYBIND_KEYBOARD, SDLK_i, KMOD_NONE, 0 );
 }
