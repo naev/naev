@@ -8,6 +8,7 @@
    <shield w="98" h="8" x="52" y="201" />
    <armour w="98" h="8" x="52" y="212" />
    <energy w="98" h="8" x="52" y="223" />
+   <fuel w="0" h="0" x="0" y="0" />
   </health>
   <weapon x="40" y="239" w="112" h="42" />
   <target>

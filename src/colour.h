@@ -70,6 +70,7 @@ extern glColour cRadar_weap;
 extern glColour cShield;
 extern glColour cArmour;
 extern glColour cEnergy;
+extern glColour cFuel;
 
 
 

@@ -459,15 +459,15 @@ int var_load( xmlNodePtr parent )
                   var.type = MISN_VAR_NIL;
                else if (strcmp(str,"num")==0) {
                   var.type = MISN_VAR_NUM;
-                  var.d.num = atoi( xml_get(cur) );
+                  var.d.num = xml_getFloat(cur);
                }
                else if (strcmp(str,"bool")==0) {
                   var.type = MISN_VAR_BOOL;
-                  var.d.b = atoi( xml_get(cur) );
+                  var.d.b = xml_getInt(cur);
                }
                else if (strcmp(str,"str")==0) {
                   var.type = MISN_VAR_STR;
-                  var.d.str = strdup( xml_get(cur) );
+                  var.d.str = xml_getStrd(cur);
                }
                else { /* super error checking */
                   WARN("Unknown var type '%s'", str);

@@ -1405,6 +1405,5 @@ void land_cleanup (void)
       gl_freeTexture( gfx_exterior );
       gfx_exterior = NULL;
    }
-
 }
 

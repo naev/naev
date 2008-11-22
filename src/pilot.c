@@ -1981,7 +1981,7 @@ static Fleet* fleet_parse( const xmlNodePtr parent )
       if (xml_isNode(node,"faction"))
          temp->faction = faction_get(xml_get(node));
       else if (xml_isNode(node,"ai"))
-         temp->ai = strdup(xml_get(node));
+         temp->ai = xml_getStrd(node);
       else if (xml_isNode(node,"pilots")) {
          cur = node->children;     
          do {

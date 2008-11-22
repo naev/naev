@@ -83,7 +83,7 @@ static glTexture *loading; /**< Loading screen. */
 
 /* some defaults */
 char* data = NULL; /**< Path to datafile. */
-char dataname[DATA_NAME_LEN] = ""; /**< Name of data file. */
+char *dataname = NULL; /**< Name of data file. */
 int nosound = 0; /**< Disables sound when loading. */
 int show_fps = 1; /**< Shows fps - default yes */
 int max_fps = 0; /**< Default fps limit, 0 is no limit. */
@@ -689,10 +689,7 @@ static void data_name (void)
       return;
    }
    do {
-      if (xml_isNode(node,"name")) {
-         strncpy(dataname,xml_get(node),DATA_NAME_LEN);
-         dataname[DATA_NAME_LEN-1] = '\0';
-      }
+      xmlr_strd(node, "name", dataname);
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
@@ -707,10 +704,14 @@ static void data_name (void)
  */
 static void window_caption (void)
 {
-   char tmp[DATA_NAME_LEN+10];
+   size_t len;
+   char *tmp;
 
-   snprintf(tmp,DATA_NAME_LEN+10,APPNAME" - %s",dataname);
+   len = strlen(dataname) + strlen(APPNAME);
+   tmp = malloc(sizeof(char)*len);
+   snprintf(tmp, len ,APPNAME" - %s", dataname);
    SDL_WM_SetCaption(tmp, NULL );
+   free(tmp);
 }
 
 

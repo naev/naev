@@ -872,7 +872,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                planet->gfx_space = gl_newImage(str);
             }
             else if (xml_isNode(cur,"exterior")) { /* load land gfx */
-               len = strlen(xml_get(cur)) + sizeof(PLANET_GFX_EXTERIOR);
+               len = strlen(xml_raw(cur)) + sizeof(PLANET_GFX_EXTERIOR);
                planet->gfx_exterior = malloc( len );
                snprintf( planet->gfx_exterior, len, PLANET_GFX_EXTERIOR"%s", xml_get(cur));
             }
@@ -902,10 +902,10 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                planet->faction = faction_get( xml_get(cur) );
             }
             else if (xml_isNode(cur, "description"))
-               planet->description = strdup( xml_get(cur) );
+               planet->description = xml_getStrd(cur);
 
             else if (xml_isNode(cur, "bar"))
-               planet->bar_description = strdup( xml_get(cur) );
+               planet->bar_description = xml_getStrd(cur);
 
             else if (xml_isNode(cur, "services")) {
                flags |= FLAG_SERVICESSET;
@@ -1292,7 +1292,7 @@ static void system_parseJumps( const xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"jump")) {
                for (i=0; i<systems_nstack; i++)
-                  if (strcmp( systems_stack[i].name, xml_get(cur))==0) {
+                  if (strcmp( systems_stack[i].name, xml_raw(cur))==0) {
                      sys->njumps++;
                      sys->jumps = realloc(sys->jumps, sys->njumps*sizeof(int));
                      sys->jumps[sys->njumps-1] = i;

@@ -120,14 +120,10 @@ static Commodity* commodity_parse( xmlNodePtr parent )
    node = parent->xmlChildrenNode;
 
    do {
-      if (xml_isNode(node,"description"))
-         temp->description = strdup( xml_get(node) );
-      else if (xml_isNode(node,"high"))
-         temp->high = xml_getInt(node);
-      else if (xml_isNode(node,"medium"))
-         temp->medium = xml_getInt(node);
-      else if (xml_isNode(node,"low"))
-         temp->low = xml_getInt(node);
+      xmlr_strd(node, "description", temp->description);
+      xmlr_int(node, "high", temp->high);
+      xmlr_int(node, "medium", temp->medium);
+      xmlr_int(node, "low", temp->low);
    } while (xml_nextNode(node));
 
 #if 0 /* shouldn't be needed atm */

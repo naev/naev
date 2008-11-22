@@ -45,8 +45,7 @@
 #endif /* DATA_DEF */
 extern char* data; /**< Modifiable datafile */
 #define DATA               data /**< Standard data file to use. */
-#define DATA_NAME_LEN      32 /**< Max length of data name */
-extern char dataname[DATA_NAME_LEN]; /**< Datafile name. */
+extern char *dataname; /**< Datafile name. */
 
 /* maximum filename path */
 #ifndef PATH_MAX

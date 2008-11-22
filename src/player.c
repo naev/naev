@@ -169,17 +169,31 @@ typedef struct GUI_ {
    glTexture *gfx_targetPilot; /**< Graphics used to target pilot. */
    glTexture *gfx_targetPlanet; /**< Graphics used to target planets. */
 
-   /* rects */
+   /*
+    * Rects.
+    */
+   /* Radar. */
    Radar radar; /**< The radar. */
+   /* Navigation. */
    Rect nav; /**< Navigation computer. */
+   /* Health. */
    Rect shield; /**< Shield bar. */
+   glTexture *gfx_shield; /**< Shield bar texture if applicable. */
    Rect armour; /**< Armour bar. */
+   glTexture *gfx_armour; /**< Armour bar texture if applicable. */
    Rect energy; /**< Energy bar. */
+   glTexture *gfx_energy; /**< Energy bar texture if applicable. */
+   Rect fuel; /**< Fuel bar. */
+   glTexture *gfx_fuel; /**< Fuel bar texture if applicable. */
+   /* Weapon. */
    Rect weapon; /**< Weapon targetting system. */
+   /* Targetting. */
    Rect target_health; /**< Target health. */
    Rect target_name; /**< Name of the target. */
    Rect target_faction; /**< Faction of the target. */
+   /* Misc. */
    Rect misc; /**< Misc stuff: credits, cargo... */
+   /* Messages. */
    Rect mesg; /**< Where messages go. */
    
    /* positions */
@@ -230,12 +244,15 @@ static void player_newShipMake( char *name );
 /* sound */
 static void player_initSound (void);
 /* gui */
+static void rect_parseParam( const xmlNodePtr parent,
+      char *name, double *param );
 static void rect_parse( const xmlNodePtr parent,
       double *x, double *y, double *w, double *h );
 static int gui_parse( const xmlNodePtr parent, const char *name );
 static void gui_renderPilot( const Pilot* p );
-static void gui_renderBar( const glColour* c,
-      const Rect* r, const double w );
+static void gui_renderHealth( const glColour* c,
+      const Rect* r, const glTexture *tex, const double w );
+static void gui_cleanup (void);
 /* save/load */
 static int player_saveShip( xmlTextWriterPtr writer, 
       Pilot* ship, char* loc );
@@ -374,8 +391,7 @@ static int player_newMake (void)
                tmp = cur->children;
                do {
                   /** system name, @todo percent chance */
-                  if (xml_isNode(tmp,"name")) 
-                     sysname = strdup(xml_get(tmp));
+                  xmlr_strd(tmp, "name", sysname);
                   /* position */
                   xmlr_float(tmp,"x",x);
                   xmlr_float(tmp,"y",y);
@@ -395,7 +411,7 @@ static int player_newMake (void)
                   WARN("start.xml already contains a mission node!");
                   continue;
                }
-               player_mission = strdup(xml_get(cur));
+               player_mission = xml_getStrd(cur);
             }
          } while (xml_nextNode(cur));
       }
@@ -1083,12 +1099,14 @@ void player_renderGUI (void)
    /*
     * health
     */
-   gui_renderBar( &cShield,  &gui.shield,
+   gui_renderHealth( &cShield,  &gui.shield, gui.gfx_shield,
          player->shield / player->shield_max );
-   gui_renderBar( &cArmour, &gui.armour,
+   gui_renderHealth( &cArmour, &gui.armour, gui.gfx_armour,
          player->armour / player->armour_max );
-   gui_renderBar( &cEnergy, &gui.energy,
+   gui_renderHealth( &cEnergy, &gui.energy, gui.gfx_energy,
          player->energy / player->energy_max );
+   gui_renderHealth( &cFuel, &gui.fuel, gui.gfx_fuel,
+         player->fuel / player->fuel_max );
 
 
    /* 
@@ -1362,25 +1380,63 @@ static void gui_renderPilot( const Pilot* p )
 }
 
 
-/*
- * renders a bar (health)
+/**
+ * @brief Renders a health bar.
  */
-static void gui_renderBar( const glColour* c,
-      const Rect* r, const double w )
+static void gui_renderHealth( const glColour* c,
+      const Rect* r, const glTexture *tex, const double w )
 {
-   int x, y, sx, sy;
+   double x,y, sx,sy, tx,ty;
 
-   glBegin(GL_QUADS); /* shield */
-      COLOUR(*c); 
+   /* Set the colour. */
+   COLOUR(*c); 
+
+   /* Just create a bar. */
+   if (tex == NULL) {
+      /* Set the position values. */
       x = r->x - SCREEN_W/2.;
       y = r->y - SCREEN_H/2.;
       sx = w * r->w;
       sy = r->h;
-      glVertex2d( x, y );
-      glVertex2d( x + sx, y );
-      glVertex2d( x + sx, y - sy );
-      glVertex2d( x, y - sy );                                            
-   glEnd(); /* GL_QUADS */
+
+      glBegin(GL_QUADS);
+         glVertex2d( x, y );
+         glVertex2d( x + sx, y );
+         glVertex2d( x + sx, y - sy );
+         glVertex2d( x, y - sy );                                            
+      glEnd(); /* GL_QUADS */
+   }
+   /* Render the texture. */
+   else {
+      /* Set the position values. */
+      x = r->x - SCREEN_W/2.;
+      y = r->y - SCREEN_H/2. + tex->sh;
+      sx = w * tex->sw;
+      sy = tex->sh;
+      tx = tex->sw / tex->rw;
+      ty = tex->sh / tex->rh;
+
+      /* Draw the image. */
+      glEnable(GL_TEXTURE_2D);
+      glBindTexture( GL_TEXTURE_2D, tex->texture);
+      glBegin(GL_QUADS);
+         COLOUR(*c); 
+
+         glTexCoord2d( 0., ty );
+         glVertex2d( x, y );
+
+         glTexCoord2d( w*tx, ty );
+         glVertex2d( x + sx, y );
+         
+         glTexCoord2d( w*tx, 0. );
+         glVertex2d( x + sx, y - sy );
+
+         glTexCoord2d( 0., 0. );
+         glVertex2d( x, y - sy );                                            
+
+      glEnd(); /* GL_QUADS */
+      glDisable(GL_TEXTURE_2D);
+   }
 
 }
 
@@ -1397,9 +1453,7 @@ int gui_init (void)
    /*
     * set gfx to NULL
     */
-   gui.gfx_frame = NULL;
-   gui.gfx_targetPilot = NULL;
-   gui.gfx_targetPlanet = NULL;
+   memset(&gui, 0, sizeof(GUI));
 
    /*
     * radar
@@ -1460,7 +1514,8 @@ int gui_load( const char* name )
             found = 1;
 
             /* parse the xml node */
-            if (gui_parse(node,name)) WARN("Trouble loading GUI '%s'", name);
+            if (gui_parse(node,name))
+               WARN("Trouble loading GUI '%s'", name);
             free(tmp);
             break;
          }
@@ -1532,6 +1587,10 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
    xmlNodePtr cur, node;
    char *tmp, buf[PATH_MAX];
 
+   /*
+    * Clean up.
+    */
+   gui_cleanup();
 
    /*
     * gfx
@@ -1546,15 +1605,12 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
    /* load gfx */
    /* frame */
    snprintf( buf, PATH_MAX, GUI_GFX"%s.png", tmp );
-   if (gui.gfx_frame) gl_freeTexture(gui.gfx_frame); /* free if needed */
    gui.gfx_frame = gl_newImage( buf );
    /* pilot */
    snprintf( buf, PATH_MAX, GUI_GFX"%s_pilot.png", tmp );
-   if (gui.gfx_targetPilot) gl_freeTexture(gui.gfx_targetPilot); /* free if needed */
    gui.gfx_targetPilot = gl_newSprite( buf, 2, 2 );
    /* planet */
    snprintf( buf, PATH_MAX, GUI_GFX"%s_planet.png", tmp );
-   if (gui.gfx_targetPlanet) gl_freeTexture(gui.gfx_targetPlanet); /* free if needed */
    gui.gfx_targetPlanet = gl_newSprite( buf, 2, 2 );
    free(tmp);
 
@@ -1618,17 +1674,31 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
             if (xml_isNode(cur,"shield")) {
                rect_parse( cur, &gui.shield.x, &gui.shield.y,
                      &gui.shield.w, &gui.shield.h );
+               tmp = xml_get(cur);
+               if (tmp != NULL)
+                  gui.gfx_shield = gl_newImage( tmp );
                RELATIVIZE(gui.shield);
             }
             if (xml_isNode(cur,"armour")) {
                rect_parse( cur, &gui.armour.x, &gui.armour.y,
                      &gui.armour.w, &gui.armour.h );
+               if (tmp != NULL)
+                  gui.gfx_armour = gl_newImage( tmp );
                RELATIVIZE(gui.armour);
             }
             if (xml_isNode(cur,"energy")) {
                rect_parse( cur, &gui.energy.x, &gui.energy.y,
                      &gui.energy.w, &gui.energy.h );
+               if (tmp != NULL)
+                  gui.gfx_energy = gl_newImage( tmp );
                RELATIVIZE(gui.energy);
+            }
+            if (xml_isNode(cur,"fuel")) {
+               rect_parse( cur, &gui.fuel.x, &gui.fuel.y,
+                     &gui.fuel.w, &gui.fuel.h );
+               if (tmp != NULL)
+                  gui.gfx_fuel = gl_newImage( tmp );
+               RELATIVIZE(gui.fuel);
             }
          } while (xml_nextNode(cur));
       }
@@ -1684,17 +1754,55 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
    return 0;
 }
 #undef RELATIVIZE
+
+
 /**
- * @fn void gui_free (void)
- *
- * @brief Frees the GUI.
+ * @brief Cleans up the GUI.
+ */
+static void gui_cleanup (void)
+{
+   /* Free textures. */
+   if (gui.gfx_frame != NULL) {
+      gl_freeTexture( gui.gfx_frame );
+      gui.gfx_frame = NULL;
+   }
+   if (gui.gfx_targetPilot != NULL) {
+      gl_freeTexture( gui.gfx_targetPilot );
+      gui.gfx_targetPilot = NULL;
+   }
+   if (gui.gfx_targetPlanet != NULL) {
+      gl_freeTexture( gui.gfx_targetPlanet );
+      gui.gfx_targetPlanet = NULL;
+   }
+   /* Health textures. */
+   if (gui.gfx_shield != NULL) {
+      gl_freeTexture(gui.gfx_shield);
+      gui.gfx_shield = NULL;
+   }
+   if (gui.gfx_armour != NULL) {
+      gl_freeTexture(gui.gfx_armour);
+      gui.gfx_armour = NULL;
+   }
+   if (gui.gfx_energy != NULL) {
+      gl_freeTexture(gui.gfx_energy);
+      gui.gfx_energy = NULL;
+   }
+   if (gui.gfx_fuel != NULL) {
+      gl_freeTexture(gui.gfx_fuel);
+      gui.gfx_fuel = NULL;
+   }
+}
+
+
+/**
+ * @brief Frees the gui stuff.
  */
 void gui_free (void)
 {
-   if (gui.gfx_frame) gl_freeTexture( gui.gfx_frame );
-   if (gui.gfx_targetPilot) gl_freeTexture( gui.gfx_targetPilot );
-   if (gui.gfx_targetPlanet) gl_freeTexture( gui.gfx_targetPlanet );
+   /* Clean up gui. */
+   gui_cleanup();
 
+   /* Free messages. */
    free(mesg_stack);
 }
 

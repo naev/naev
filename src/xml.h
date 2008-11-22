@@ -30,10 +30,12 @@
 #define xml_nodeProp(n,s)     (char*)xmlGetProp(n,(xmlChar*)s)
 
 /* get data different ways */
-#define xml_get(n)            ((char*)(n)->children->content)
-#define xml_getInt(n)         (atoi((char*)(n)->children->content))
-#define xml_getLong(n)        (atol((char*)(n)->children->content))
-#define xml_getFloat(n)       (atof((char*)(n)->children->content))
+#define xml_raw(n)            ((char*)(n)->children->content)
+#define xml_get(n)            (((n)->children == NULL) ? NULL : (char*)(n)->children->content)
+#define xml_getInt(n)         ((xml_get(n) == NULL) ? 0  : atoi(xml_raw(n)))
+#define xml_getLong(n)        ((xml_get(n) == NULL) ? 0  : atol(xml_raw(n)))
+#define xml_getFloat(n)       ((xml_get(n) == NULL) ? 0. : atof(xml_raw(n)))
+#define xml_getStrd(n)        ((xml_get(n) == NULL) ? NULL : strdup(xml_raw(n)))
 
 
 /*
@@ -48,7 +50,7 @@ if (xml_isNode(n,s)) { f = xml_getFloat(n); continue; }
 #define xmlr_str(n,s,str) \
 if (xml_isNode(n,s)) { str = xml_get(n); continue; }
 #define xmlr_strd(n,s,str) \
-if (xml_isNode(n,s)) { str = strdup(xml_get(n)); continue; }
+if (xml_isNode(n,s)) { str = ((xml_get(n) == NULL) ? NULL : strdup(xml_raw(n))); continue; }
 #define xmlr_attr(n,s,a) \
 a = xml_nodeProp(n,s)
 
