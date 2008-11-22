@@ -231,7 +231,7 @@ static void commodity_buy( unsigned int wid, char* str )
    comname = toolkit_getList( wid, "lstGoods" );
    com = commodity_get( comname );
 
-   if (player->credits <= q * com->medium) {
+   if (player->credits < q * com->medium) {
       dialogue_alert( "Not enough credits!" );
       return;
    }
