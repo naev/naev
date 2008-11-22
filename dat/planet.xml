@@ -128,7 +128,7 @@
   </pos>
   <general>
    <bar>The Raglan bar is a pretty small bar for Dvaered standards, and quite empty too.</bar>
-   <description>Raglan Outpost was established after the Dvaered-Frontier war broke out before the Incident.  To this day the Frontier still is demanding for it's dismantling in the halls of the Emperor, although he has yet to make a statement.  Meanwhile the Dvaereds use this base intensively in their fight against the FLF.</description>
+   <description>Raglan Outpost was established after the Dvaered-Frontier war broke out before the Incident.  To this day the Frontier still is demanding for its dismantling in the halls of the Emperor, although he has yet to make a statement.  Meanwhile the Dvaereds use this base intensively in their fight against the FLF.</description>
    <faction>Dvaered</faction>
    <tech>
     <main>7</main>
@@ -149,7 +149,7 @@
   </pos>
   <general>
    <bar>The bar is maintained by off-duty scientists and soldiers.  It's very small and doesn't have much offerings.  There's not much ambient noise, it seems like the boredom has gotten the best of most of the people.</bar>
-   <description>Named after the guardian dog of hell for it's role in monitoring and observing the immense Sol nebulae.  It was created shortly after the nebulae stabilized.  Exact details are confidential and there's more then enough military influence to make it suspicious.  With all the conspiration theories around the Incident, one can never be too sure where reality ends and fiction starts.</description>
+   <description>Named after the guardian dog of hell for its role in monitoring and observing the immense Sol nebulae.  It was created shortly after the nebulae stabilized.  Exact details are confidential and there's more then enough military influence to make it suspicious.  With all the conspiration theories around the Incident, one can never be too sure where reality ends and fiction starts.</description>
    <faction>Empire</faction>
    <tech>
     <main>0</main>
@@ -261,7 +261,7 @@
   </pos>
   <general>
    <bar>The Omega Canteen is a dark place that seems calm, although everytime a robotic drone approaches an alarm sounds sending pilots to man their ships to  fight off the menace.</bar>
-   <description>Built to defend the Empire from the Collective.  The Omega Station has been the observer of countless battles fought in it's sector.  It's helped keep a stalemate in the sector.</description>
+   <description>Built to defend the Empire from the Collective.  The Omega Station has been the observer of countless battles fought in its sector.  It's helped keep a stalemate in the sector.</description>
    <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -489,7 +489,7 @@
   </pos>
   <general>
    <bar>The bar is very large and not too full.  You notice the drink list has a "living" menu.  When you ask the bartender about them, he says they specialize in drinks containing living beings.  Generally jellyfish, but sometimes small cephalopods or more exotic beings.  What strange habits.</bar>
-   <description>Cetrat is a small aquatic planet known for it's medical algae that grows.  No one has been able to reproduce it exactly as it is in the wild, but with the abundance of it all over there hasn't been too much effort in that field.</description>
+   <description>Cetrat is a small aquatic planet known for its medical algae that grows.  No one has been able to reproduce it exactly as it is in the wild, but with the abundance of it all over there hasn't been too much effort in that field.</description>
    <faction>Frontier</faction>
    <commodities>
     <commodity>Medicine</commodity>
@@ -535,7 +535,7 @@
   </pos>
   <general>
    <bar>The Darkshed cantina is decorated with all sorts of odd artifacts that marked different tendencies in spaceship outfitting.</bar>
-   <description>Reknown for it's outfit market and shipyards.  Almost the entire Darkshed station is dedicated to trading outfits and ships.  Mercenaries and bounty hunters from all over the galaxy come here to see the newest enhancements available in the market.  This tends to also attract many of the shadier characters in the universe winding up with frequent fights where they test their newly bought outfits.</description>
+   <description>Renowned for its outfit market and shipyards.  Almost the entire Darkshed station is dedicated to trading outfits and ships.  Mercenaries and bounty hunters from all over the galaxy come here to see the newest enhancements available in the market.  This tends to also attract many of the shadier characters in the universe winding up with frequent fights where they test their newly bought outfits.</description>
    <faction>Independent</faction>
    <commodities>
     <commodity>Food</commodity>

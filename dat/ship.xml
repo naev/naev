@@ -8,7 +8,7 @@
   <price>120000</price>
   <fabricator>Melendez Corp.</fabricator>
   <tech>2</tech>
-  <description>One of the most widely used ships in the galaxy.  Reknown for it's stability and stubborness.  The design hasn't been modified much since it's creation many many years ago.  It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
+  <description>One of the most widely used ships in the galaxy.  Renowned for itss stability and stubborness.  The design hasn't been modified much since its creation many many years ago.  It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
   <movement>
    <thrust>220</thrust>
    <turn>150</turn>
@@ -146,7 +146,7 @@
   <price>7500000</price>
   <fabricator>Nexus</fabricator>
   <tech>9</tech>
-  <description>A heavy frigate designed for heavy combat.  Used widely by the empire to establish control on it's territory.  Has more then enough firepower to not be taken lightly.</description>
+  <description>A heavy frigate designed for heavy combat.  Used widely by the empire to establish control on its territory.  Has more then enough firepower to not be taken lightly.</description>
   <movement>
    <thrust>80</thrust>
    <turn>70</turn>
@@ -216,7 +216,7 @@
   <price>500000</price>
   <fabricator>Nexus</fabricator>
   <tech>7</tech>
-  <description>One of the Nexus' prize heavy fighters.  Was originally a secret design for the Empire military, but then disclosed.  Now a modified version is available for civilians, although it doesn't meet up to the original specifications.Used by security agencies all over the universe for it's reliability and availability. Proudly enforcing your security since UST 1132.</description>
+  <description>One of the Nexus' prize heavy fighters.  Was originally a secret design for the Empire military, but then disclosed.  Now a modified version is available for civilians, although it doesn't meet up to the original specifications.Used by security agencies all over the universe for its reliability and availability. Proudly enforcing your security since UST 1132.</description>
   <movement>
    <thrust>220</thrust>
    <turn>135</turn>
@@ -566,7 +566,7 @@
   <price>180000</price>
   <fabricator>Sirius Systems</fabricator>
   <tech>5</tech>
-  <description>The Schroedinger is primarily used as a reconnaissance vessel.  It has very far autonomy thanks to it's special fuel tanks and light frame.  The downside is that the ship is extremely vulnerable to attack.  It also sports a twin pair of Eraedon engines, making it pretty maneuverable.</description>
+  <description>The Schroedinger is primarily used as a reconnaissance vessel.  It has very far autonomy thanks to its special fuel tanks and light frame.  The downside is that the ship is extremely vulnerable to attack.  It also sports a twin pair of Eraedon engines, making it pretty maneuverable.</description>
   <movement>
    <thrust>260</thrust>
    <turn>165</turn>
@@ -667,7 +667,7 @@
   <price>450000</price>
   <fabricator>Skull and Bones</fabricator>
   <tech>9009</tech>
-  <description>The Pirate Vendetta is even more intimidating then it's regular counterpart.  It's been heavily tweaked to be more adjusted to the pirate style of flying.  Some of the armour has been removed to make more room for loot, while the reactor has been jacked up by a dubious technician.  The ship ends up being much more solid then the original, but every so often the reactor goes nova destroying the ship.  You hope it won't happen to you if you get in one.</description>
+  <description>The Pirate Vendetta is even more intimidating then its regular counterpart.  It's been heavily tweaked to be more adjusted to the pirate style of flying.  Some of the armour has been removed to make more room for loot, while the reactor has been jacked up by a dubious technician.  The ship ends up being much more solid then the original, but every so often the reactor goes nova destroying the ship.  You hope it won't happen to you if you get in one.</description>
   <movement>
    <thrust>210</thrust>
    <turn>135</turn>
@@ -701,7 +701,7 @@
   <price>600000</price>
   <fabricator>House Dvaered</fabricator>
   <tech>9</tech>
-  <description>Commonly referred to as the little Goddard, the Ancestor also has it's roots in the primitive flying machines used by men many ages ago.  Unlike the Goddard though, the electronics are done by House Dvaered, making it considerably inferior in that area.</description>
+  <description>Commonly referred to as the little Goddard, the Ancestor also has its roots in the primitive flying machines used by men many ages ago.  Unlike the Goddard though, the electronics are done by House Dvaered, making it considerably inferior in that area.</description>
   <movement>
    <thrust>180</thrust>
    <turn>105</turn>
