@@ -257,9 +257,14 @@ static void input_keyConvDestroy (void)
 SDLKey input_keyConv( char *name )
 {
    SDLKey k;
+   size_t l;
+   char buf[2];
 
+   l = strlen(name);
+   buf[0] = tolower(name[0]);
+   buf[1] = '\0';
    for (k=SDLK_FIRST; k < SDLK_LAST; k++)
-      if (strcmp(name, keyconv[k])==0)
+      if (strcmp((l==1) ? buf : name , keyconv[k])==0)
          return k;
 
    WARN("Keyname '%s' doesn't match any key.", name);

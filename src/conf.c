@@ -310,7 +310,7 @@ int conf_loadConfig ( const char* file )
                mod = NULL;
             lua_remove(L, -1);
 
-            if ((key != SDLK_UNKNOWN) && (str != NULL)) { /* keybind is valid */
+            if (str != NULL) { /* keybind is valid */
                /* get type */
                if (strcmp(str,"null")==0)          type = KEYBIND_NULL;
                else if (strcmp(str,"keyboard")==0) type = KEYBIND_KEYBOARD;
@@ -344,7 +344,7 @@ int conf_loadConfig ( const char* file )
                input_setKeybind( (char*)keybindNames[i], type, key, m, reverse );
             }
             else {
-               WARN("Malformed keybind in %s", file);              
+               WARN("Malformed keybind for '%s' in '%s'.", keybindNames[i], file);
             }
 
             /* clean up after table stuff */
