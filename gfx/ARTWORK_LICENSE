@@ -2,7 +2,6 @@
    * NAEV.png
    * loading00.png
    * gui
-     * minimal.png
      * minimal_pilot.png
      * minimal_planet.png
    * logo
@@ -191,3 +190,8 @@
        * O01.png
        * P02.png
 
+ * Author: Camilo Polymeris <cpolymeris@gmx.net>, License: GPLv3
+   * gui
+     * minimal.png
+     * minimal_fuel.png
+     * minimal_energy.png
