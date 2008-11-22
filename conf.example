@@ -50,50 +50,51 @@ fullscreen = 1
 -- keyboard). Would be nice to have a gui to do it for you someday.
 
 -- Movement.
---accel        = { type = "keyboard", key = 273 }
---left         = { type = "keyboard", key = 276 }
---right        = { type = "keyboard", key = 275 }
---reverse      = { type = "keyboard", key = 274 }
+--accel        = { type = "keyboard", key = "up", mod = "any" }
+--left         = { type = "keyboard", key = "left", mod = "any" }
+--right        = { type = "keyboard", key = "right", mod = "any" }
+--reverse      = { type = "keyboard", key = "down", mod = "any" }
 --afterburn    = { type = "keyboard", key = 0 }
 afterburn      = { type = "keyboard", key = 8 }
 
 -- Targetting.
---target       = { type = "keyboard", key = 9 }
---target_prev  = { type = "keyboard", key = 9, mod = "lctrl" }
---target_nearest = { type = "keyboard", key = 116 }
---target_hostile = { type = "keyboard", key = 114 }
+--target       = { type = "keyboard", key = "tab" }
+--target_prev  = { type = "keyboard", key = "tab", mod = "lctrl" }
+--target_nearest = { type = "keyboard", key = "T" }
+--target_hostile = { type = "keyboard", key = "R" }
 
 -- Fighting.
---primary      = { type = "keyboard", key = 32 }
---face         = { type = "keyboard", key = 97 }
---board        = { type = "keyboard", key = 98 }
+--primary      = { type = "keyboard", key = "space" }
+--face         = { type = "keyboard", key = "A" }
+--board        = { type = "keyboard", key = "B" }
 
 -- Escorts.
---e_attack     = { type = "keyboard", key = 102 }
---e_hold       = { type = "keyboard", key = 103 }
---e_return     = { type = "keyboard", key = 99, mod = "lctrl" }
---e_clear      = { type = "keyboard", key = 99 }
+--e_attack     = { type = "keyboard", key = "F" }
+--e_hold       = { type = "keyboard", key = "G" }
+--e_return     = { type = "keyboard", key = "C", mod = "lctrl" }
+--e_clear      = { type = "keyboard", key = "C" }
 
 -- Secondary weapons.
---secondary    = { type = "keyboard", key = 304 }
---secondary_next = { type = "keyboard", key = 119 }
+--secondary    = { type = "keyboard", key = "left shift", mod = "any" }
+--secondary_next = { type = "keyboard", key = "W" }
 
 -- Space navigation.
---autonav      = { type = "keyboard", key = 106, mod = "lctrl" }
-autonav        = { type = "keyboard", key = 110}
---target_planet = { type = "keyboard", key = 112 }
---land         = { type = "keyboard", key = 108 }
---thyperspace  = { type = "keyboard", key = 104 }
---starmap      = { type = "keyboard", key = 109 }
---jump         = { type = "keyboard", key = 106 }
+--autonav      = { type = "keyboard", key = "J", mod = "lctrl" }
+autonav        = { type = "keyboard", key = "N" }
+--target_planet = { type = "keyboard", key = "P" }
+--land         = { type = "keyboard", key = "L" }
+--thyperspace  = { type = "keyboard", key = "H" }
+--starmap      = { type = "keyboard", key = "M" }
+--jump         = { type = "keyboard", key = "J" }
 
 -- Communication.
---hail         = { type = "keyboard", key = 121 }
+--hail         = { type = "keyboard", key = "Y" }
 
 -- Misc.
---mapzoomin    = { type = "keyboard", key = 270 }
---mapzoomout   = { type = "keyboard", key = 269 }
---screenshot   = { type = "keyboard", key = 268 }
---pause        = { type = "keyboard", key = 122 }
---menu         = { type = "keyboard", key = 27 }
---info         = { type = "keyboard", key = 105 }
+--mapzoomin    = { type = "keyboard", key = "[+]", mod = "any" }
+--mapzoomout   = { type = "keyboard", key = "[-]", mod = "any" }
+--screenshot   = { type = "keyboard", key = "[*]", mod = "any" }
+--pause        = { type = "keyboard", key = "P" }
+--speed        = { type = "keyboard", key = "`" }
+--menu         = { type = "keyboard", key = "escape", mod = "any" }
+--info         = { type = "keyboard", key = "I" }
