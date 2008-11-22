@@ -60,7 +60,7 @@ const char *keybindNames[] = {
    /* Communication. */
    "hail",
    /* Misc. */
-   "mapzoomin", "mapzoomout", "screenshot", "pause", "menu", "info",
+   "mapzoomin", "mapzoomout", "screenshot", "pause", "speed", "menu", "info",
    "end" }; /* must terminate in "end" */
 /*
  * Keybinding descriptions.  Should match in position the names.
@@ -103,6 +103,7 @@ const char *keybindDescription[] = {
    "Zooms out on your radar.",
    "Takes a screenshot.",
    "Pauses the game.",
+   "Toggles 2x speed modifier.",
    "Opens the small ingame menu.",
    "Opens the information menu."
 };
@@ -165,6 +166,7 @@ void input_setDefault (void)
    input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_KP_MINUS, KMOD_NONE, 0 );
    input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MULTIPLY, KMOD_NONE, 0 );
    input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_z, KMOD_NONE, 0 );
+   input_setKeybind( "speed", KEYBIND_KEYBOARD, SDLK_CAPSLOCK, KMOD_NONE, 0 );
    input_setKeybind( "menu", KEYBIND_KEYBOARD, SDLK_ESCAPE, KMOD_NONE, 0 );
    input_setKeybind( "info", KEYBIND_KEYBOARD, SDLK_i, KMOD_NONE, 0 );
 }
@@ -489,6 +491,12 @@ static void input_key( int keynum, double value, int kabs )
             if (paused) unpause_game();
             else pause_game();
          }
+      }
+   /* toggle speed mode */
+   } else if (KEY("speed")) {
+      if (value==KEY_PRESS) {
+         if (dt_mod == 1.) pause_setSpeed(2.);
+         else pause_setSpeed(1.);
       }
    /* opens a small menu */
    } else if (KEY("menu")) {

@@ -481,9 +481,11 @@ static void fps_control (void)
    unsigned int t;
    double delay;
 
-   /* dt in ms/1000 */
+   /* dt in s */
    t = SDL_GetTicks();
-   cur_dt = (double)(t - time) / 1000.;
+   cur_dt  = (double)(t - time); /* Get the elapsed ms. */
+   cur_dt *= dt_mod; /* Apply the modifier. */
+   cur_dt /= 1000.; /* Convert to seconds. */
    time = t;
 
    if (paused) SDL_Delay(10); /* drop paused FPS - we are nice to the CPU :) */
@@ -507,7 +509,7 @@ static void update_all (void)
 {
    double tempdt;
 
-   if (cur_dt > 0.25) { /* slow timers down and rerun calculations */
+   if (cur_dt > 0.25*dt_mod) { /* slow timers down and rerun calculations */
       pause_delay((unsigned int)cur_dt*1000);
       return;
    }
@@ -617,8 +619,12 @@ static void display_fps( const double dt )
 
    x = 10.;
    y = (double)(gl_screen.h-20);
-   if (show_fps)
+   if (show_fps) {
       gl_print( NULL, x, y, NULL, "%3.2f", fps );
+      y -= gl_defFont.h + 5.;
+   }
+   if (dt_mod != 1.)
+      gl_print( NULL, x, y, NULL, "%3.1fx", dt_mod);
 }
 
 

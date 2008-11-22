@@ -1747,6 +1747,10 @@ void player_abortAutonav( char *reason )
       /* Get rid of acceleration. */
       player_accelOver();
 
+      /* Drop out of possible different speed modes. */
+      if (dt_mod != 1.)
+         pause_setSpeed(1.);
+
       /* Break possible hyperspacing. */
       if (pilot_isFlag(player, PILOT_HYP_PREP)) {
          pilot_hyperspaceAbort(player);

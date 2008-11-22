@@ -20,6 +20,7 @@
 
 
 int paused = 0; /**< is paused? */
+double dt_mod = 1.; /**< dt modifier. */
 
 
 /* from pilot.c */
@@ -36,8 +37,8 @@ static void pilot_unpause (void);
 static void pilot_delay( unsigned int delay );
 
 
-/*
- * pauses the game
+/**
+ * @brief Pauses the game.
  */
 void pause_game (void)
 {
@@ -49,8 +50,8 @@ void pause_game (void)
 }
 
 
-/*
- * unpauses the game
+/**
+ * @brief Unpauses the game.
  */
 void unpause_game (void)
 {
@@ -70,9 +71,17 @@ void pause_delay( unsigned int delay )
    pilot_delay(delay);
 }
 
+/**
+ * @brief Adjusts the game's dt modifier.
+ */
+void pause_setSpeed( double mod )
+{
+   dt_mod = mod;
+}
 
-/*
- * pilot_nstack pausing/unpausing
+
+/**
+ * @brief Pilot_stack pausing/unpausing.
  */
 static void pilot_pause (void)
 {
