@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GUIs>
  <gui gfx="minimal" name="minimal">
-  <offset x="-65" y="0" />
-  <radar type="circle" w="70" x="72" y="72" />
-  <nav x="40" y="151" w="112" h="42" />
+  <offset x="0" y="0" />
+  <radar type="circle" w="80" x="83" y="90" />
   <health>
-   <shield w="98" h="8" x="52" y="201" />
-   <armour w="98" h="8" x="52" y="212" />
-   <energy w="98" h="8" x="52" y="223" />
-   <fuel w="0" h="0" x="0" y="0" />
+   <shield w="103" h="7" x="68" y="185" />
+   <armour w="103" h="7" x="68" y="199" />
+   <energy w="0" h="0" x="97" y="177">minimal_energy</energy>
+   <fuel w="0" h="0" x="95" y="78">minimal_fuel</fuel>
   </health>
-  <weapon x="40" y="239" w="112" h="42" />
+  <nav w="110" h="40" x="60" y="220" />
+  <weapon w="110" h="32" x="60" y="274" />
   <target>
-   <gfx x="34" y="312" />
-   <name x="40" y="291" />
-   <faction x="40" y="304" />
-   <health x="40" y="401" />
+   <gfx x="55" y="343" /> 
+   <name x="65" y="330" />
+   <faction x="65" y="343" />
+   <health x="65" y="430" />
   </target>
-  <misc x="40" y="424" w="112" h="100" />
+  <misc w="110" h="134" x="60" y="460" />
  </gui>
 </GUIs>
