@@ -1,70 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GUIs>
  <gui gfx="minimal" name="minimal">
-  <offset>
-   <x>-65</x>
-   <y>0</y>
-  </offset>
-  <radar type="circle">
-   <w>70</w>
-   <x>72</x>
-   <y>72</y>
-  </radar>
-  <nav>
-   <x>40</x>
-   <y>151</y>
-   <w>112</w>
-   <h>42</h>
-  </nav>
+  <offset x="-65" y="0" />
+  <radar type="circle" w="70" x="72" y="72" />
+  <nav x="40" y="151" w="112" h="42" />
   <health>
-   <shield>
-    <w>98</w>
-    <h>8</h>
-    <x>52</x>
-    <y>201</y>
-   </shield>
-   <armour>
-    <w>98</w>
-    <h>8</h>
-    <x>52</x>
-    <y>212</y>
-   </armour>
-   <energy>
-    <w>98</w>
-    <h>8</h>
-    <x>52</x>
-    <y>223</y>
-   </energy>
+   <shield w="98" h="8" x="52" y="201" />
+   <armour w="98" h="8" x="52" y="212" />
+   <energy w="98" h="8" x="52" y="223" />
   </health>
-  <weapon>
-   <x>40</x>
-   <y>239</y>
-   <w>112</w>
-   <h>42</h>
-  </weapon>
+  <weapon x="40" y="239" w="112" h="42" />
   <target>
-   <gfx>
-    <x>34</x>
-    <y>312</y>
-   </gfx>
-   <name>
-    <x>40</x>
-    <y>291</y>
-   </name>
-   <faction>
-    <x>40</x>
-    <y>304</y>
-   </faction>
-   <health>
-    <x>40</x>
-    <y>401</y>
-   </health>
+   <gfx x="34" y="312" />
+   <name x="40" y="291" />
+   <faction x="40" y="304" />
+   <health x="40" y="401" />
   </target>
-  <misc>
-   <x>40</x>
-   <y>424</y>
-   <w>112</w>
-   <h>100</h>
-  </misc>
+  <misc x="40" y="424" w="112" h="100" />
  </gui>
 </GUIs>

@@ -1481,58 +1481,44 @@ int gui_load( const char* name )
 }
 
 
-/*
- * used to pull out a rect from an xml node (<x><y><w><h>)
+/**
+ * @brief Parse a parameter of the rect node.
+ */
+static void rect_parseParam( const xmlNodePtr parent,
+      char *name, double *param )
+{
+   char *buf;
+
+   /* Get the attribute. */
+   xmlr_attr( parent, name, buf );
+
+   /* Wants attribute. */
+   if (param != NULL) {
+      if (buf == NULL)
+         WARN("Node '%s' missing 'x' parameter.", parent->name);
+      else if (buf != NULL)
+         *param = atoi(buf);
+   }
+   /* Doesn't want it. */
+   else if (buf != NULL)
+      WARN("Node '%s' has superfluous 'x' parameter.", parent->name);
+
+   /* Clean up. */
+   if (buf != NULL)
+      free(buf);
+}
+
+
+/**
+ * @brief Used to pull out a rect from an xml node.
  */
 static void rect_parse( const xmlNodePtr parent,
       double *x, double *y, double *w, double *h )
 {
-   xmlNodePtr cur;
-   int param;
-
-   param = 0;
-
-   cur = parent->children;
-   do {
-      if (xml_isNode(cur,"x")) {
-         if (x!=NULL) {
-            *x = xml_getFloat(cur);
-            param |= (1<<0);
-         }
-         else WARN("Extra parameter 'x' found for GUI node '%s'", parent->name);
-      }
-      else if (xml_isNode(cur,"y")) {
-         if (y!=NULL) {
-            *y = xml_getFloat(cur);
-            param |= (1<<1);
-         }
-         else WARN("Extra parameter 'y' found for GUI node '%s'", parent->name);
-      }
-      else if (xml_isNode(cur,"w")) {
-         if (w!=NULL) {
-            *w = xml_getFloat(cur);
-            param |= (1<<2);
-         }
-         else WARN("Extra parameter 'w' found for GUI node '%s'", parent->name);
-      }
-      else if (xml_isNode(cur,"h")) {
-         if (h!=NULL) {
-            *h = xml_getFloat(cur);
-            param |= (1<<3);
-         }
-         else WARN("Extra parameter 'h' found for GUI node '%s'", parent->name);
-      }
-   } while (xml_nextNode(cur));
-
-   /* check to see if we got everything we asked for */
-   if (x && !(param & (1<<0)))
-      WARN("Missing parameter 'x' for GUI node '%s'", parent->name);
-   else if (y && !(param & (1<<1))) 
-      WARN("Missing parameter 'y' for GUI node '%s'", parent->name);
-   else if (w && !(param & (1<<2))) 
-      WARN("Missing parameter 'w' for GUI node '%s'", parent->name);
-   else if (h && !(param & (1<<3))) 
-      WARN("Missing parameter 'h' for GUI node '%s'", parent->name);
+   rect_parseParam( parent, "w", w );
+   rect_parseParam( parent, "h", h );
+   rect_parseParam( parent, "x", x );
+   rect_parseParam( parent, "y", y );
 }
 
 
