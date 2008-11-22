@@ -1675,29 +1675,40 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
                rect_parse( cur, &gui.shield.x, &gui.shield.y,
                      &gui.shield.w, &gui.shield.h );
                tmp = xml_get(cur);
-               if (tmp != NULL)
-                  gui.gfx_shield = gl_newImage( tmp );
+               if (tmp != NULL) {
+                  snprintf( buf, PATH_MAX, GUI_GFX"%s.png", tmp );
+                  gui.gfx_shield = gl_newImage( buf );
+               }
                RELATIVIZE(gui.shield);
             }
             if (xml_isNode(cur,"armour")) {
                rect_parse( cur, &gui.armour.x, &gui.armour.y,
                      &gui.armour.w, &gui.armour.h );
-               if (tmp != NULL)
-                  gui.gfx_armour = gl_newImage( tmp );
+               tmp = xml_get(cur);
+               if (tmp != NULL) {
+                  snprintf( buf, PATH_MAX, GUI_GFX"%s.png", tmp );
+                  gui.gfx_armour = gl_newImage( buf );
+               }
                RELATIVIZE(gui.armour);
             }
             if (xml_isNode(cur,"energy")) {
                rect_parse( cur, &gui.energy.x, &gui.energy.y,
                      &gui.energy.w, &gui.energy.h );
-               if (tmp != NULL)
-                  gui.gfx_energy = gl_newImage( tmp );
+               tmp = xml_get(cur);
+               if (tmp != NULL) {
+                  snprintf( buf, PATH_MAX, GUI_GFX"%s.png", tmp );
+                  gui.gfx_energy = gl_newImage( buf );
+               }
                RELATIVIZE(gui.energy);
             }
             if (xml_isNode(cur,"fuel")) {
                rect_parse( cur, &gui.fuel.x, &gui.fuel.y,
                      &gui.fuel.w, &gui.fuel.h );
-               if (tmp != NULL)
-                  gui.gfx_fuel = gl_newImage( tmp );
+               tmp = xml_get(cur);
+               if (tmp != NULL) {
+                  snprintf( buf, PATH_MAX, GUI_GFX"%s.png", tmp );
+                  gui.gfx_fuel = gl_newImage( buf );
+               }
                RELATIVIZE(gui.fuel);
             }
          } while (xml_nextNode(cur));
