@@ -68,7 +68,7 @@ void opt_menuKeybinds (void)
 
    /* Create the list. */
    for (i=0; strcmp(keybindNames[i],"end"); i++);
-   str = malloc(sizeof(char*) * (i-1));
+   str = malloc(sizeof(char*) * i);
    for (j=0; j < i; j++) {
       str[j] = malloc(sizeof(char) * 64);
       key = input_getKeybind( keybindNames[j], &type, &mod, &reverse );
@@ -92,7 +92,7 @@ void opt_menuKeybinds (void)
       }
    }
    window_addList( wid, 20, -40, 200, KEYBINDS_HEIGHT-60, "lstKeybinds",
-         str, i-1, 0, menuKeybinds_update );
+         str, i, 0, menuKeybinds_update );
 
    /* Update the list. */
    menuKeybinds_update( wid, NULL );
