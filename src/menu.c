@@ -53,7 +53,7 @@
 #define DEATH_WIDTH     130 /**< Death menu width. */
 #define DEATH_HEIGHT    150 /**< Death menu height. */
 
-#define OPTIONS_WIDTH   240 /**< Options menu width. */
+#define OPTIONS_WIDTH   360 /**< Options menu width. */
 #define OPTIONS_HEIGHT  90  /**< Options menu height. */
 
 #define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
@@ -689,6 +689,9 @@ void menu_options (void)
    window_addButton( wid, -20 - (BUTTON_WIDTH+20), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnKeybinds", "Keybindings", (void(*)(unsigned int,char*))opt_menuKeybinds );
+   window_addButton( wid, -20 - 2 * (BUTTON_WIDTH+20), 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnAudio", "Audio", (void(*)(unsigned int,char*))opt_menuAudio );
    menu_Open(MENU_OPTIONS);
 }
 /**

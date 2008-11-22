@@ -9,6 +9,7 @@
 
 
 void opt_menuKeybinds (void);
+void opt_menuAudio (void);
 
 
 #endif /* OPTIONS_H */

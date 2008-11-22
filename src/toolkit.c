@@ -38,7 +38,9 @@ typedef enum WidgetType_ {
    WIDGET_RECT,
    WIDGET_CUST,
    WIDGET_INPUT,
-   WIDGET_IMAGEARRAY
+   WIDGET_IMAGEARRAY,
+   WIDGET_SCROLLBAR,
+   WIDGET_FADER
 } WidgetType;
 
 /**
@@ -130,6 +132,17 @@ typedef struct Widget_ {
          int ih; /**< Image height to use. */
          void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
       } iar; /**< WIDGET_IMAGEARRAY */
+      
+      struct { /* WIDGET_SCROLLBAR */
+         double value; /**< Current value. */
+      } scb; /**< WIDGET_SCROLLBAR */
+      
+      struct { /* WIDGET_FADER */
+         double value; /**< Current value. */
+         double min;   /**< Minimum value. */
+         double max;   /**< Maximum value. */
+         void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on value change. */
+      } fad; /**< WIDGET_FADER */
    } dat; /**< Stores the widget specific data. */
 } Widget;
 
@@ -219,6 +232,7 @@ static Widget* toolkit_getFocus (void);
 static void toolkit_listScroll( Widget* wgt, int direction );
 static void toolkit_listFocus( Widget* lst, double bx, double by );
 static void toolkit_imgarrFocus( Widget* iar, double bx, double by );
+static void toolkit_faderSetValue(Widget *fad, double value);
 /* render */
 static void window_render( Window* w );
 static void toolkit_renderButton( Widget* btn, double bx, double by );
@@ -229,6 +243,8 @@ static void toolkit_renderRect( Widget* rct, double bx, double by );
 static void toolkit_renderCust( Widget* cst, double bx, double by );
 static void toolkit_renderInput( Widget* inp, double bx, double by );
 static void toolkit_renderImageArray( Widget* iar, double bx, double by );
+static void toolkit_renderScrollbar( Widget* scb, double bx, double by );
+static void toolkit_renderFader( Widget* fad, double bx, double by );
 static void toolkit_drawOutline( double x, double y,
       double w, double h, double b,
       glColour* c, glColour* lc );
@@ -530,7 +546,60 @@ void window_addImageArray( const unsigned int wid,
       toolkit_nextFocus();
 }
 
+void window_addScrollbar( const unsigned int wid,
+      const int x, const int y, /* position */
+      const int w, const int h, /* size */
+      char* name, double value)
+{
+   Window *wdw = window_wget(wid);
+   Widget *wgt = window_newWidget(wdw);
 
+   /* generic */
+   wgt->type = WIDGET_SCROLLBAR;
+   wgt->name = strdup(name);
+
+   /* specific */
+   wgt->dat.scb.value = value;
+   
+   /* position/size */
+   wgt->w = (double) w;
+   wgt->h = (double) h;
+   toolkit_setPos( wdw, wgt, x, y );
+
+   if (wdw->focus == -1) /* initialize the focus */
+      toolkit_nextFocus();
+}
+
+void window_addFader( const unsigned int wid,
+      const int x, const int y, /* position */
+      const int w, const int h, /* size, if w > h fader is horizontal, else vertical */
+      char* name, const double min, const double max, /* name, minimum & maximum values */
+      const double def,
+      void (*call) (unsigned int,char*) )
+{
+   Window *wdw = window_wget(wid);
+   Widget *wgt = window_newWidget(wdw);
+
+   /* generic */
+   wgt->type = WIDGET_FADER;
+   wgt->name = strdup(name);
+
+   /* specific */
+   wgt->dat.fad.value = min;
+   wgt->dat.fad.min = min;
+   wgt->dat.fad.max = max;
+   wgt->dat.fad.value = MAX(min,MIN(max,def));
+   wgt->dat.fad.fptr = call;
+
+   
+   /* position/size */
+   wgt->w = (double) w;
+   wgt->h = (double) h;
+   toolkit_setPos( wdw, wgt, x, y );
+
+   if (wdw->focus == -1) /* initialize the focus */
+      toolkit_nextFocus();
+}
 
 /*
  * returns pointer to a newly alloced Widget
@@ -674,6 +743,40 @@ void window_imgColour( const unsigned int wid,
    wgt->dat.img.colour = colour;
 }
 
+/*
+ * sets scrollbar value
+ */
+void window_scrollbarValue( const unsigned int wid,
+      char* name, double value )
+{
+   Widget *wgt = window_getwgt(wid,name);
+
+   wgt->dat.scb.value = value;
+}
+
+/*
+ * sets fader value
+ */
+void window_faderValue( const unsigned int wid,
+      char* name, double value )
+{
+   Widget *wgt = window_getwgt(wid,name);
+   toolkit_faderSetValue(wgt, value);
+}
+
+/*
+ * sets minimum and maximum fader values.
+ */
+void window_faderBounds( const unsigned int wid,
+      char* name, double min, double max )
+{
+   Widget *wgt = window_getwgt(wid,name);
+   wgt->dat.fad.min = min;
+   wgt->dat.fad.max = max;
+   double value = MAX(MIN(value, wgt->dat.fad.max), wgt->dat.fad.min);
+   toolkit_faderSetValue(wgt, value);
+}
+
 
 /*
  * gets the image from an image widget
@@ -694,6 +797,23 @@ char* window_getInput( const unsigned int wid, char* name )
    return (wgt) ? wgt->dat.inp.input : NULL;
 }
 
+/*
+ * gets the value from an scrollbar widget
+ */
+double window_getScrollbarValue( const unsigned int wid, char* name )
+{
+   Widget *wgt = window_getwgt(wid,name);
+   return (wgt) ? wgt->dat.scb.value : 0.;
+}
+
+/*
+ * gets value of fader
+ */
+double window_getFaderValue(const unsigned int wid, char* name)
+{
+   Widget *wgt = window_getwgt(wid,name);
+   return (wgt) ? wgt->dat.fad.value : 0.;
+}
 
 
 /*
@@ -1282,6 +1402,13 @@ static void window_render( Window* w )
          case WIDGET_IMAGEARRAY:
             toolkit_renderImageArray( &w->widgets[i], x, y );
             break;
+         
+         case WIDGET_SCROLLBAR:
+            toolkit_renderScrollbar( &w->widgets[i], x, y );
+            break;
+         
+         case WIDGET_FADER:
+            toolkit_renderFader( &w->widgets[i], x, y );
       }
    }
 
@@ -1700,6 +1827,56 @@ static void toolkit_drawScrollbar( double x, double y, double w, double h, doubl
    toolkit_drawOutline( x, sy, w, 30., 0., toolkit_colDark, NULL );
 }
 
+/**
+ * @brief Renders a scrollbar
+ *
+ *    @param scb WIDGET_SCROLLBAR widget to render.
+ *    @param bx Base X position.
+ *    @param by Base Y position.
+ */
+static void toolkit_renderScrollbar( Widget* scb, double bx, double by )
+{
+   toolkit_drawScrollbar(bx + scb->x, by + scb->y,
+         scb->w, scb->h,
+         scb->dat.scb.value);
+}
+
+/**
+ * @brief Renders a fader
+ *
+ *    @param fad WIDGET_FADER widget to render.
+ *    @param bx Base X position.
+ *    @param by Base Y position.
+ */
+static void toolkit_renderFader( Widget* fad, double bx, double by )
+{
+   double pos;
+   double w,h;
+   double tx,ty, tw,th;
+   double kx,ky, kw,kh;
+
+   /* Some values. */
+   pos = fad->dat.fad.value / (fad->dat.fad.max - fad->dat.fad.min);
+   w = fad->w;
+   h = fad->h;
+
+   /* Track. */
+   tx = bx + fad->x + (h > w ? (w - 5.) / 2 : 0);
+   ty = by + fad->y + (h < w ? (h - 5.) / 2 : 0);
+   tw = (h < w ? w : 5.);
+   th = (h > w ? h : 5.);
+   toolkit_drawRect(tx, ty, tw , th, toolkit_colDark, toolkit_colDark);
+
+   /* Knob. */
+   kx = bx + fad->x + (h < w ? w * pos - 5. : 0);
+   ky = by + fad->y + (h > w ? h * pos - 5. : 0);
+   kw = (h < w ? 15. : w);
+   kh = (h > w ? 15. : h);
+
+   /* Draw. */
+   toolkit_drawRect(kx, ky, kw , kh, toolkit_colDark, toolkit_colLight);
+   toolkit_drawOutline(kx, ky, kw , kh, 1., &cBlack, toolkit_colDark);
+}
 
 
 /**
@@ -1825,6 +2002,7 @@ static int mouse_down = 0;
 static void toolkit_mouseEvent( SDL_Event* event )
 {
    int i;
+   double d;
    double x,y, rel_x,rel_y;
    Window *w;
    Widget *wgt, *wgt_func;
@@ -1878,6 +2056,12 @@ static void toolkit_mouseEvent( SDL_Event* event )
                         toolkit_listMove( wgt, y-wgt->y );
                      if (wgt->type == WIDGET_IMAGEARRAY)
                         toolkit_imgarrMove( wgt, rel_y );
+                     if (wgt->type == WIDGET_SCROLLBAR)
+                        wgt->dat.scb.value -= rel_y / wgt->h;
+                     if (wgt->type == WIDGET_FADER) {
+                        d = (wgt->w > wgt->h) ? rel_x / wgt->w : rel_y / wgt->h;
+                        toolkit_faderSetValue(wgt, wgt->dat.fad.value + d);
+                     }
                   }
                   break;
 
@@ -2210,10 +2394,20 @@ static void toolkit_listScroll( Widget* wgt, int direction )
    }
 }
 
+/** 
+ * @brief Changes fader value
+ */
+static void toolkit_faderSetValue(Widget *fad, double value)
+{
+   Window *w = &windows[nwindows-1];
+   value = MAX(MIN(value, fad->dat.fad.max), fad->dat.fad.min);
+   fad->dat.fad.value = value;
+   if (fad->dat.fad.fptr != NULL)
+      (*fad->dat.fad.fptr)(w->id, fad->name);
+}
+
 
 /**
- * @fn char* toolkit_getList( const unsigned int wid, char* name )
- *
  * @brief Gets what is selected currently in a list.
  *
  * List includes Image Arrays.
@@ -2453,7 +2647,6 @@ static void toolkit_imgarrMove( Widget* iar, double ry )
       toolkit_listScroll(iar, 0);
    }
 }
-
 
 
 /*

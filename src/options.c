@@ -3,9 +3,9 @@
  */
 
 /**
- * @file menu.h
+ * @file options.c
  *
- * @brief Handles the important game menus.
+ * @brief Options menu
  */
 
 
@@ -19,10 +19,14 @@
 #include "naev.h"
 #include "input.h"
 #include "toolkit.h"
+#include "sound.h"
+#include "music.h"
 
 
 #define KEYBINDS_WIDTH  440 /**< Options menu width. */
 #define KEYBINDS_HEIGHT 300 /**< Options menu height. */
+#define AUDIO_WIDTH  340 /**< Options menu width. */
+#define AUDIO_HEIGHT 200 /**< Options menu height. */
 
 #define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
@@ -39,7 +43,8 @@ extern const char *keybindNames[]; /* input.c */
  */
 static const char* modToText( SDLMod mod );
 static void menuKeybinds_update( unsigned int wid, char *name );
-
+static void opt_setSFXLevel( unsigned int wid, char *str );
+static void opt_setMusicLevel( unsigned int wid, char *str );
 
 /**
  * @brief Opens the keybindings menu.
@@ -184,4 +189,65 @@ static void menuKeybinds_update( unsigned int wid, char *name )
    snprintf(buf, 1024, "%s\n\n%s\n", desc, bind);
    window_modifyText( wid, "txtDesc", buf );
 }
+
+
+/**
+ * @brief Callback to set the sound level.
+ */
+static void opt_setSFXLevel( unsigned int wid, char *str )
+{
+	double vol;
+   vol = window_getFaderValue(wid, str);
+	sound_volume(vol);
+}
+
+
+/**
+ * @brief Callback to set the music level.
+ */
+static void opt_setMusicLevel( unsigned int wid, char *str )
+{
+   double vol;
+   vol = window_getFaderValue(wid, str);
+	music_volume(vol);
+}
+
+
+/**
+ * @brief Opens the audio settings menu.
+ */
+void opt_menuAudio (void)
+{
+   unsigned int wid;
+
+   /* Create the window. */
+   wid = window_create( "Audio", -1, -1, AUDIO_WIDTH, AUDIO_HEIGHT );
+
+   /* Sound fader. */
+   if (!sound_disabled) {
+      window_addFader( wid, 20, -40, 160, 20, "fadSound", 0., 1.,
+            sound_defVolume, opt_setSFXLevel );
+      window_addText( wid, 200, -40, AUDIO_WIDTH-220, 20, 1, "txtSound",
+            NULL, NULL, "Sound Volume" );
+   }
+   else
+      window_addText( wid, 200, -40, AUDIO_WIDTH-220, 20, 1, "txtSound",
+            NULL, NULL, "Sound Disabled" );
+
+   /* Music fader. */
+   if (!music_disabled) {
+      window_addFader( wid, 20, -80, 160, 20, "fadMusic", 0., 1.,
+            music_defVolume, opt_setMusicLevel );
+      window_addText( wid, 200, -80, AUDIO_WIDTH-220, 20, 1, "txtMusic",
+            NULL, NULL, "Music Volume" );
+   }
+   else
+      window_addText( wid, 200, -80, AUDIO_WIDTH-220, 20, 1, "txtMusic",
+            NULL, NULL, "Music Disabled" );
+
+   /* Close button */
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClose", "Close", window_close );
+}
+
 
