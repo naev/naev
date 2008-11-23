@@ -99,6 +99,12 @@ void player_rmShip( char* shipname );
 void player_missionFinished( int id );
 int player_missionAlreadyDone( int id );
 
+/*
+ * licenses
+ */
+void player_addLicense( char *license );
+int player_hasLicense( char *license );
+
 /* 
  * keybind actions
  */

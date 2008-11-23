@@ -70,6 +70,13 @@ static char *player_mission = NULL; /**< More hack. */
 
 
 /*
+ * Licenses.
+ */
+static char **player_licenses = NULL; /**< Licenses player has. */
+static int player_nlicenses = 0; /**< Number of licenses player has. */
+
+
+/*
  * player sounds.
  */
 static int snd_target = -1; /**< Sound when targetting. */
@@ -258,6 +265,7 @@ static int player_saveShip( xmlTextWriterPtr writer,
       Pilot* ship, char* loc );
 static int player_parse( xmlNodePtr parent );
 static int player_parseDone( xmlNodePtr parent );
+static int player_parseLicenses( xmlNodePtr parent );
 static int player_parseShip( xmlNodePtr parent, int is_player );
 /* 
  * externed
@@ -674,6 +682,15 @@ void player_cleanup (void)
       missions_done = NULL;
       missions_ndone = 0;
       missions_mdone = 0;
+   }
+
+   /* Clean up licenses. */
+   if (player_nlicenses > 0) {
+      for (i=0; i<player_nlicenses; i++)
+         free(player_licenses[i]);
+      free(player_licenses);
+      player_licenses = NULL;
+      player_nlicenses = 0;
    }
 
    /* just in case purge the pilot stack */
@@ -2527,8 +2544,6 @@ void player_ships( char** sships, glTexture** tships )
 
 
 /**
- * @fn int player_nships (void)
- *
  * @brief Gets the amount of ships player has in storage.
  *
  *    @return The number of ships the player has.
@@ -2539,8 +2554,11 @@ int player_nships (void)
 }
 
 
-/*
- * returns a specific ship
+/**
+ * @brief Gets a specific ship.
+ *
+ *    @param shipname Nome of the ship to get.
+ *    @return The ship matching name.
  */
 Pilot* player_getShip( char* shipname )
 {
@@ -2555,8 +2573,11 @@ Pilot* player_getShip( char* shipname )
 }
 
 
-/*
- * returns where a specific ship is
+/**
+ * @brief Gets where a specific ship is.
+ *
+ *    @param shipname Ship to check where it is.
+ *    @return The location of the ship.
  */
 char* player_getLoc( char* shipname )
 {
@@ -2571,8 +2592,11 @@ char* player_getLoc( char* shipname )
 }
 
 
-/*
- * sets the location of a specific ship
+/**
+ * @brief Sets the location of a specific ship.
+ *
+ *    @param shipname Name of the ship to change location of.
+ *    @param loc Location of the ship to change to.
  */
 void player_setLoc( char* shipname, char* loc )
 {
@@ -2590,8 +2614,10 @@ void player_setLoc( char* shipname, char* loc )
 }
 
 
-/*
- * marks a mission as completed
+/**
+ * @brief Marks a mission as completed.
+ *
+ *    @param id ID of the mission to mark as completed.
  */
 void player_missionFinished( int id )
 {
@@ -2604,13 +2630,15 @@ void player_missionFinished( int id )
 }
 
 
-/*
- * has player already completed a mission?
+/**
+ * @brief Checks to see if player has already completed a mission.
+ *
+ *    @param id ID of the mission to see if player has completed.
+ *    @return 1 if player has completed the mission, 0 otherwise.
  */
 int player_missionAlreadyDone( int id )
 {
    int i;
-
    for (i=0; i<missions_ndone; i++)
       if (missions_done[i] == id)
          return 1;
@@ -2618,8 +2646,45 @@ int player_missionAlreadyDone( int id )
 }
 
 
-/*
- * save the freaking player in a freaking xmlfile
+/**
+ * @brief Checks to see if player has license.
+ *
+ *    @param license License to check to see if the player has.
+ *    @return 1 if has license,  0 if doesn't.
+ */
+int player_hasLicense( char *license )
+{
+   int i;
+   for (i=0; i<player_nlicenses; i++)
+      if (strcmp(license, player_licenses[i])==0)
+         return 1;
+   return 0;
+}
+
+
+/**
+ * @brief Gives the player a license.
+ *
+ *    @brief license License to give the player.
+ */
+void player_addLicense( char *license )
+{
+   /* Player already has license. */
+   if (player_hasLicense(license))
+      return;
+
+   /* Add the license. */
+   player_nlicenses++;
+   player_licenses = realloc( player_licenses, sizeof(char*)*player_nlicenses );
+   player_licenses[player_nlicenses-1] = strdup(license);
+}
+
+
+/**
+ * @brief Save the freaking player in a freaking xmlfile.
+ *
+ *    @param writer xml Writer to use.
+ *    @return 0 on success.
  */
 int player_save( xmlTextWriterPtr writer )
 {
@@ -2627,19 +2692,28 @@ int player_save( xmlTextWriterPtr writer )
    MissionData *m;
 
    xmlw_startElem(writer,"player");
-   xmlw_attr(writer,"name",player_name);
 
+   /* Standard player details. */
+   xmlw_attr(writer,"name",player_name);
    xmlw_elem(writer,"rating","%f",player_crating);
    xmlw_elem(writer,"credits","%d",player->credits);
    xmlw_elem(writer,"time","%d",ntime_get());
 
+   /* Current ship. */
    xmlw_elem(writer,"location",land_planet->name);
    player_saveShip( writer, player, NULL ); /* current ship */
 
+   /* Ships. */
    xmlw_startElem(writer,"ships");
    for (i=0; i<player_nstack; i++)
       player_saveShip( writer, player_stack[i], player_lstack[i] );
    xmlw_endElem(writer); /* "ships" */
+
+   /* Licenses. */
+   xmlw_startElem(writer,"licenses");
+   for (i=0; i<player_nlicenses; i++)
+      xmlw_elem(writer,"license",player_licenses[i]);
+   xmlw_endElem(writer); /* "licenses" */
 
    xmlw_endElem(writer); /* "player" */
 
@@ -2657,6 +2731,13 @@ int player_save( xmlTextWriterPtr writer )
 }
 
 
+/**
+ * @brief Saves a ship.
+ *
+ *    @param write XML writer.
+ *    @param ship Ship to save.
+ *    @param loc Location of the ship.
+ */
 static int player_saveShip( xmlTextWriterPtr writer,
       Pilot* ship, char* loc )
 {
@@ -2730,8 +2811,11 @@ static int player_saveShip( xmlTextWriterPtr writer,
 }
 
 
-/*
- * loads the player stuff
+/**
+ * @brief Loads the player stuff.
+ *
+ *    @param parent Node where the player stuff is to be found.
+ *    @return 0 on success.
  */
 int player_load( xmlNodePtr parent )
 {
@@ -2755,6 +2839,14 @@ int player_load( xmlNodePtr parent )
 
    return 0;
 }
+
+
+/**
+ * @brief Parses the player node.
+ *
+ *    @param parent The player node.
+ *    @return 0 on success.
+ */
 static int player_parse( xmlNodePtr parent )
 {
    unsigned int player_time;
@@ -2778,7 +2870,7 @@ static int player_parse( xmlNodePtr parent )
       if (xml_isNode(node,"ship"))
          player_parseShip(node, 1);
       
-      if (xml_isNode(node,"ships")) {
+      else if (xml_isNode(node,"ships")) {
          cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur,"ship"))
@@ -2786,8 +2878,9 @@ static int player_parse( xmlNodePtr parent )
          } while (xml_nextNode(cur));
       }
 
-      if (xml_isNode(node,"missions_done"))
-         player_parseDone(node);
+      else if (xml_isNode(node,"licenses"))
+         player_parseLicenses(node);
+
    } while (xml_nextNode(node));
 
    /* set global thingies */
@@ -2812,6 +2905,14 @@ static int player_parse( xmlNodePtr parent )
 
    return 0;
 }
+
+
+/**
+ * @brief Parses player's done missions.
+ *
+ *    @param parent Node of the missions.
+ *    @return 0 on success.
+ */
 static int player_parseDone( xmlNodePtr parent )
 {
    xmlNodePtr node;
@@ -2825,6 +2926,36 @@ static int player_parseDone( xmlNodePtr parent )
 
    return 0;
 }
+
+
+/**
+ * @brief Parses player's licenses.
+ *
+ *    @param parent Node of the licenses.
+ *    @return 0 on success.
+ */
+static int player_parseLicenses( xmlNodePtr parent )
+{
+   xmlNodePtr node;
+
+   node = parent->xmlChildrenNode;
+
+   do {
+      if (xml_isNode(node,"license"))
+         player_addLicense( xml_get(node) );
+   } while (xml_nextNode(node));
+
+   return 0;
+}
+
+
+/**
+ * @brief Parses a player's ship.
+ *
+ *    @param parent Node of the ship.
+ *    @param is_player Is it the ship the player is currently in?
+ *    @return 0 on success.
+ */
 static int player_parseShip( xmlNodePtr parent, int is_player )
 {
    char *name, *model, *loc, *q, *id;

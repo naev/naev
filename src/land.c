@@ -303,7 +303,7 @@ static void outfits_open (void)
 
    /* the descriptive text */
    window_addText( wid, 40+300+20, -60,
-         80, 140, 0, "txtSDesc", &gl_smallFont, &cDConsole,
+         80, 160, 0, "txtSDesc", &gl_smallFont, &cDConsole,
          "Name:\n"
          "Type:\n"
          "Owned:\n"
@@ -312,10 +312,11 @@ static void outfits_open (void)
          "Free Space:\n"
          "\n"
          "Price:\n"
-         "Money:\n" );
+         "Money:\n"
+         "License:\n" );
    window_addText( wid, 40+300+40+60, -60,
-         250, 140, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, 20+300+40, -220,
+         250, 160, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+   window_addText( wid, 20+300+40, -240,
          OUTFITS_WIDTH-400, 180, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 
@@ -357,14 +358,14 @@ static void outfits_update( unsigned int wid, char* str )
    (void)str;
    char *outfitname;
    Outfit* outfit;
-   char buf[128], buf2[16], buf3[16];
+   char buf[PATH_MAX], buf2[16], buf3[16];
 
    outfitname = toolkit_getList( wid, "iarOutfits" );
    if (strcmp(outfitname,"None")==0) { /* No outfits */
       window_modifyImage( wid, "imgOutfit", NULL );
       window_disableButton( wid, "btnBuyOutfit" );
       window_disableButton( wid, "btnSellOutfit" );
-      snprintf( buf, 128,
+      snprintf( buf, PATH_MAX,
             "None\n"
             "NA\n"
             "NA\n"
@@ -372,6 +373,7 @@ static void outfits_update( unsigned int wid, char* str )
             "NA\n"
             "%d\n"
             "\n"
+            "NA\n"
             "NA\n"
             "NA\n",
             pilot_freeSpace(player) );
@@ -399,7 +401,7 @@ static void outfits_update( unsigned int wid, char* str )
    window_modifyText( wid, "txtDescription", outfit->description );
    credits2str( buf2, outfit->price, 2 );
    credits2str( buf3, player->credits, 2 );
-   snprintf( buf, 128,
+   snprintf( buf, PATH_MAX,
          "%s\n"
          "%s\n"
          "%d\n"
@@ -408,14 +410,16 @@ static void outfits_update( unsigned int wid, char* str )
          "%d\n"
          "\n"
          "%s credits\n"
-         "%s credits\n",
+         "%s credits\n"
+         "%s\n",
          outfit->name,
          outfit_getType(outfit),
          player_outfitOwned(outfitname),
          outfit->mass,
          pilot_freeSpace(player),
          buf2,
-         buf3 );
+         buf3,
+         (outfit->license != NULL) ? outfit->license : "None" );
    window_modifyText( wid,  "txtDDesc", buf );
 }
 static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
@@ -461,6 +465,19 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
    else if (outfit_isMap(outfit) && map_isMapped(NULL,outfit->u.map.radius)) {
       if (errmsg != 0)
          dialogue_alert( "You already own this map." );
+      return 0;
+   }
+   /* Already has license. */
+   else if (outfit_isLicense(outfit) && player_hasLicense(outfit->name)) {
+      if (errmsg != 0)
+         dialogue_alert( "You already have this license." );
+      return 0;
+   }
+   /* Needs license. */
+   else if ((outfit->license != NULL) && !player_hasLicense(outfit->name)) {
+      if (errmsg != 0)
+         dialogue_alert( "You need the '%s' license to buy this outfit.",
+               outfit->license );
       return 0;
    }
 
@@ -604,16 +621,17 @@ static void shipyard_open (void)
 
    /* text */
    window_addText( wid, 40+300+40, -55,
-         80, 96, 0, "txtSDesc", &gl_smallFont, &cDConsole,
+         80, 128, 0, "txtSDesc", &gl_smallFont, &cDConsole,
          "Name:\n"
          "Class:\n"
          "Fabricator:\n"
          "\n"
          "Price:\n"
-         "Money:\n" );
+         "Money:\n"
+         "License:\n" );
    window_addText( wid, 40+300+40+80, -55,
-         130, 96, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, 20+310+40, -175,
+         130, 128, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+   window_addText( wid, 20+310+40, -55-128-20,
          SHIPYARD_WIDTH-(20+310+40) - 20, 185, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 
@@ -654,7 +672,7 @@ static void shipyard_update( unsigned int wid, char* str )
    (void)str;
    char *shipname;
    Ship* ship;
-   char buf[80], buf2[16], buf3[16];
+   char buf[PATH_MAX], buf2[16], buf3[16];
    
    shipname = toolkit_getList( wid, "iarShipyard" );
 
@@ -663,11 +681,12 @@ static void shipyard_update( unsigned int wid, char* str )
       window_modifyImage( wid, "imgTarget", NULL );
       window_disableButton( wid, "btnBuyShip");
       window_disableButton( wid, "btnInfoShip");
-      snprintf( buf, 80,
+      snprintf( buf, PATH_MAX,
             "None\n"
             "NA\n"
             "NA\n"
             "\n"
+            "NA\n"
             "NA\n"
             "NA\n" );
       window_modifyText( wid,  "txtDDesc", buf );
@@ -687,18 +706,20 @@ static void shipyard_update( unsigned int wid, char* str )
    window_modifyText( wid, "txtDescription", ship->description );
    credits2str( buf2, ship->price, 2 );
    credits2str( buf3, player->credits, 2 );
-   snprintf( buf, 80,
+   snprintf( buf, PATH_MAX,
          "%s\n"
          "%s\n"
          "%s\n"
          "\n"
          "%s credits\n"
-         "%s credits\n",
+         "%s credits\n"
+         "%s\n",
          ship->name,
          ship_class(ship),
          ship->fabricator,
          buf2,
-         buf3);
+         buf3,
+         (ship->license != NULL) ? ship->license : "None" );
    window_modifyText( wid,  "txtDDesc", buf );
 
    if (ship->price > player->credits)
@@ -725,6 +746,13 @@ static void shipyard_buy( unsigned int wid, char* str )
    /* Must have enough money. */
    if (ship->price > player->credits) {
       dialogue_alert( "Not enough credits!" );
+      return;
+   }
+
+   /* Must have license. */
+   if ((ship->license != NULL) && !player_hasLicense(ship->license)) {
+      dialogue_alert( "You do not have the '%s' license required to buy this ship.",
+            ship->license);
       return;
    }
 

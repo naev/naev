@@ -65,6 +65,7 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
+static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
 
 
 /**
@@ -356,6 +357,15 @@ int outfit_isMap( const Outfit* o )
 {
    return (o->type==OUTFIT_TYPE_MAP);
 }
+/**
+ * @brief Checks if outfit is a license.
+ *    @param o Outfit to check.
+ *    @return 1 if o is a map.
+ */
+int outfit_isLicense( const Outfit* o )
+{
+   return (o->type==OUTFIT_TYPE_LICENSE);
+}
 
 
 /**
@@ -492,7 +502,8 @@ const char* outfit_getType( const Outfit* o )
          "Jammer",
          "Fighter Bay",
          "Fighter",
-         "Map"
+         "Map",
+         "License"
    };
    return outfit_typename[o->type];
 }
@@ -519,6 +530,7 @@ const char* outfit_getTypeBroad( const Outfit* o )
    else if (outfit_isFighterBay(o)) return "Fighter Bay";
    else if (outfit_isFighter(o)) return "Fighter";
    else if (outfit_isMap(o)) return "Map";
+   else if (outfit_isLicense(o)) return "License";
    else return "Unknown";
 }
 
@@ -571,10 +583,11 @@ static OutfitType outfit_strToOutfitType( char *buf )
    O_CMP("missile swarm smart ammo",OUTFIT_TYPE_MISSILE_SWARM_SMART_AMMO);
    O_CMP("modification",OUTFIT_TYPE_MODIFCATION);
    O_CMP("afterburner",OUTFIT_TYPE_AFTERBURNER);
-   O_CMP("map",OUTFIT_TYPE_MAP);
    O_CMP("fighter bay",OUTFIT_TYPE_FIGHTER_BAY);
    O_CMP("fighter",OUTFIT_TYPE_FIGHTER);
    O_CMP("jammer",OUTFIT_TYPE_JAMMER);
+   O_CMP("map",OUTFIT_TYPE_MAP);
+   O_CMP("license",OUTFIT_TYPE_LICENSE);
 
    WARN("Invalid outfit type: '%s'",buf);
    return  OUTFIT_TYPE_NULL;
@@ -583,8 +596,6 @@ static OutfitType outfit_strToOutfitType( char *buf )
 
 
 /**
- * @fn static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node )
- *
  * @brief Parses a damage node.
  *
  * Example damage node would be:
@@ -952,8 +963,6 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 }
 
 /**
- * @fn static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
- *
  * @brief Parses the map tidbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
@@ -974,8 +983,27 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 
 
 /**
- * @fn static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
+ * @brief Parses the license tidbits of the outfit.
  *
+ *    @param temp Outfit to finish loading.
+ *    @param parent Outfit's parent node.
+ */
+static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
+{
+   /* Licenses have no specific tidbits. */
+   (void) temp;
+   (void) parent;
+   /*
+   xmlNodePtr node;
+   node = parent->children;
+
+   do {
+   } while (xml_nextNode(node));
+   */
+}
+
+
+/**
  * @brief Parses the jammer tidbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
@@ -1030,6 +1058,7 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
          do {
             xmlr_int(cur,"max",temp->max);
             xmlr_int(cur,"tech",temp->tech);
+            xmlr_strd(cur,"license",temp->license);
             xmlr_int(cur,"mass",temp->mass);
             xmlr_int(cur,"price",temp->price);
             xmlr_strd(cur,"description",temp->description);
@@ -1078,6 +1107,8 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
             outfit_parseSFighter( temp, node );
          else if (outfit_isMap(temp))
             outfit_parseSMap( temp, node );
+         else if (outfit_isLicense(temp))
+            outfit_parseSLicense( temp, node );
       }
    } while (xml_nextNode(node));
 

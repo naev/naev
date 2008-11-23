@@ -78,6 +78,7 @@ extern double player_faceHyperspace (void);
 extern void player_dead (void);
 extern void player_destroyed (void);
 extern int gui_load( const char *name );
+extern void player_addLicense( char *license );
 /* internal */
 static int pilot_getStackPos( const unsigned int id );
 static void pilot_shootWeapon( Pilot* p, PilotOutfit* w );
@@ -1114,7 +1115,14 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 
    /* special case if it's a map */
    if (outfit_isMap(outfit)) {
-      map_map(NULL,outfit->u.map.radius);
+      if (pilot == player) /* Only player can get it. */
+         map_map(NULL,outfit->u.map.radius);
+      return 1; /* must return 1 for paying purposes */
+   }
+   /* special case if it's a license. */
+   else if (outfit_isLicense(outfit)) {
+      if (pilot == player) /* Only player can get it. */
+         player_addLicense(outfit->name);
       return 1; /* must return 1 for paying purposes */
    }
 

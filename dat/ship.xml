@@ -287,6 +287,7 @@
   <price>900000</price>
   <fabricator>Melendez Corp.</fabricator>
   <tech>5</tech>
+  <license>Large Civilian Vessel License</license>
   <description>A heavy liner specialized in freighting cargo all over the universe.  Also has good accomodations for passengers depending on the model allowing for enjoyable cruises.  Was a favorite target of pirates until they added stock turrets to the new models which can now defend themselves properly.</description>
   <movement>
    <thrust>100</thrust>

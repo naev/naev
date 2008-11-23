@@ -347,6 +347,7 @@ static Ship* ship_parse( xmlNodePtr parent )
       }
       xmlr_int(node,"price",temp->price);
       xmlr_int(node,"tech",temp->tech);
+      xmlr_strd(node,"license",temp->license);
       xmlr_strd(node,"fabricator",temp->fabricator);
       xmlr_strd(node,"description",temp->description);
       if (xml_isNode(node,"movement")) {

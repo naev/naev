@@ -52,6 +52,7 @@ typedef enum OutfitType_ {
    OUTFIT_TYPE_FIGHTER_BAY, /**< Contains other ships. */
    OUTFIT_TYPE_FIGHTER, /**< Ship contained in FIGHTER_BAY. */
    OUTFIT_TYPE_MAP, /**< Gives the player more knowledge about systems. */
+   OUTFIT_TYPE_LICENSE, /**< License that allows player to buy special stuff. */
    OUTFIT_TYPE_SENTINEL /**< indicates last type */
 } OutfitType;
 
@@ -246,6 +247,7 @@ typedef struct Outfit_ {
    /* general specs */
    int max; /**< Maximum amount one can own. */
    int tech; /**< Tech needed to sell it. */
+   char *license; /**< Licenses needed to buy it. */
    int mass; /**< How much weapon capacity is needed. */
 
    /* store stuff */
@@ -298,6 +300,7 @@ int outfit_isJammer( const Outfit* o );
 int outfit_isFighterBay( const Outfit* o );
 int outfit_isFighter( const Outfit* o );
 int outfit_isMap( const Outfit* o );
+int outfit_isLicense( const Outfit* o );
 const char* outfit_getType( const Outfit* o );
 const char* outfit_getTypeBroad( const Outfit* o );
 

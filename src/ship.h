@@ -79,7 +79,8 @@ typedef struct Ship_ {
 
    /* store stuff */
    unsigned int price; /**< cost to buy */
-   int tech; /**< see space.h */
+   int tech; /**< Tech needed for it to be available.  See space.h. */
+   char* license; /**< License needed to buy it. */
    char* fabricator; /**< company that makes it */
    char* description; /**< selling description */
 
@@ -97,7 +98,7 @@ typedef struct Ship_ {
    char* gui; /**< Name of the GUI the ship uses by default. */
 
    /* sound */
-   int sound; /**< Sound motor uses.  Unused atm. */
+   int sound; /**< Sound motor uses. */
 
    /* characteristics */
    int crew; /**< Crew members. */
