@@ -189,18 +189,6 @@ int main( int argc, char** argv )
 
 
    /*
-    * OpenAL - Sound
-    */
-   if (nosound) {
-      LOG("Sound is disabled!");
-      sound_disabled = 1;
-      music_disabled = 1;
-   }
-   if (sound_init()) WARN("Problem setting up sound!");
-   music_choose("load");
-
-
-   /*
     * Input
     */
    if ((indjoystick >= 0) || (namjoystick != NULL)) {
@@ -218,6 +206,19 @@ int main( int argc, char** argv )
             input_setDefault();
          }
    }
+
+
+   /*
+    * OpenAL - Sound
+    */
+   if (nosound) {
+      LOG("Sound is disabled!");
+      sound_disabled = 1;
+      music_disabled = 1;
+   }
+   if (sound_init()) WARN("Problem setting up sound!");
+   music_choose("load");
+
 
    /* Misc */
    if (ai_init()) WARN("Error initializing AI");
