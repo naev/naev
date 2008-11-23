@@ -74,6 +74,7 @@
   <price>1200000</price>
   <fabricator>Nexus</fabricator>
   <tech>8</tech>
+  <license>Medium Combat Vessel License</license>
   <description>The Pacifier is one of the older and trustier designs of the Nexus Corporation.  Was constructed mainly to patrol border systems.  They are very heavy fighters designed to be able to take a pounding and dish out damage, but the cost has been maneuverability.  No reason to run though if you're in one of these.</description>
   <movement>
    <thrust>180</thrust>
@@ -110,6 +111,7 @@
   <price>1200000</price>
   <fabricator>Nexus</fabricator>
   <tech>9999</tech>
+  <license>Medium Combat Vessel License</license>
   <description>An Empire Pacifier.</description>
   <movement>
    <thrust>180</thrust>
@@ -146,6 +148,7 @@
   <price>7500000</price>
   <fabricator>Nexus</fabricator>
   <tech>9</tech>
+  <license>Heavy Combat Vessel License</license>
   <description>A heavy frigate designed for heavy combat.  Used widely by the empire to establish control on its territory.  Has more then enough firepower to not be taken lightly.</description>
   <movement>
    <thrust>80</thrust>
@@ -181,6 +184,7 @@
   <price>7500000</price>
   <fabricator>Nexus</fabricator>
   <tech>9999</tech>
+  <license>Heavy Combat Vessel License</license>
   <description>An Empire Hawking.</description>
   <movement> 
    <thrust>80</thrust>
@@ -216,6 +220,7 @@
   <price>500000</price>
   <fabricator>Nexus</fabricator>
   <tech>7</tech>
+  <license>Light Combat Vessel License</license>
   <description>One of the Nexus' prize heavy fighters.  Was originally a secret design for the Empire military, but then disclosed.  Now a modified version is available for civilians, although it doesn't meet up to the original specifications.Used by security agencies all over the universe for its reliability and availability. Proudly enforcing your security since UST 1132.</description>
   <movement>
    <thrust>220</thrust>
@@ -251,6 +256,7 @@
   <price>500000</price>
   <fabricator>Nexus</fabricator>
   <tech>9999</tech>
+  <license>Light Combat Vessel License</license>
   <description>An Empire Lancelot.</description>
   <movement>
    <thrust>220</thrust>
@@ -387,6 +393,7 @@
   <price>11500000</price>
   <fabricator>House Goddard</fabricator>
   <tech>1001</tech>
+  <license>Heavy Combat Vessel License</license>
   <description>The archaic design of the Goddard is decieving.  Although it takes the shape of traditional flying intra-planet vessels, it's very suited for space travel.Production is entirely done on Zhiru en the Goddard system by House Goddard the sole providor and dealer in Goddards.  Over time, specialization and improvements on the original time have kept it very competitive in the market.  It's a classic of space.</description>
   <movement>
    <thrust>100</thrust>
@@ -423,6 +430,7 @@
   <price>11500000</price>
   <fabricator>House Goddard</fabricator> 
   <tech>9999</tech>
+  <license>Heavy Combat Vessel License</license>
   <description>A Dvaered Goddard.</description>
   <movement>
    <thrust>100</thrust>
@@ -458,6 +466,7 @@
   <price>900000</price>
   <fabricator>Nexus</fabricator>
   <tech>10</tech>
+  <license>Medium Combat Vessel License</license>
   <description>A very versatile combat ship.  Nexus defines it as the combination between the ruggedness of the Pacifier and the agility of the Lancelot.  Overall a very solid fighter.</description>
   <movement>
    <thrust>200</thrust>
@@ -530,6 +539,7 @@
   <price>900000</price>
   <fabricator>Nexus</fabricator>
   <tech>9999</tech>
+  <license>Medium Combat Vessel License</license>
   <description>An Empire Admonisher.</description>
   <movement>
    <thrust>200</thrust>
@@ -600,6 +610,7 @@
   <price>400000</price>
   <fabricator>House Dvaered</fabricator>
   <tech>8</tech>
+  <license>Light Combat Vessel License</license>
   <description>The Vendetta displays the House Dvaered philosophy very well.  Give a ship as many intimidating guns as you can, layer it with as much armour and you can, and sort of forget about giving it proper electronics.  It's amazing to see that these fly.</description>
   <movement>
    <thrust>200</thrust>
@@ -702,6 +713,7 @@
   <price>600000</price>
   <fabricator>House Dvaered</fabricator>
   <tech>9</tech>
+  <license>Light Combat Vessel License</license>
   <description>Commonly referred to as the little Goddard, the Ancestor also has its roots in the primitive flying machines used by men many ages ago.  Unlike the Goddard though, the electronics are done by House Dvaered, making it considerably inferior in that area.</description>
   <movement>
    <thrust>180</thrust>
@@ -737,6 +749,7 @@
   <price>600000</price>
   <fabricator>House Dvaered</fabricator>
   <tech>9999</tech>
+  <license>Light Combat Vessel License</license>
   <description>A Dvaered Ancestor.</description>
   <movement>
    <thrust>180</thrust>
