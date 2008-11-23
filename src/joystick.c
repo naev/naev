@@ -68,7 +68,7 @@ int joystick_use( int indjoystick )
       return -1;
    }
    LOG("Using joystick %d - %s", indjoystick, SDL_JoystickName(indjoystick));
-   DEBUG("  with %d axes, %d buttons, %d balls and %d hats",
+   DEBUG("  with %d axes, %d buttons, %d balls and %d hats\n",
          SDL_JoystickNumAxes(joystick), SDL_JoystickNumButtons(joystick),
          SDL_JoystickNumBalls(joystick), SDL_JoystickNumHats(joystick));
 
