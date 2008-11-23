@@ -346,7 +346,7 @@ const char* input_getKeybindDescription( char *keybind )
  *    @param abs Whether or not it's an absolute value (for them joystick).
  */
 #define KEY(s)    (strcmp(input_keybinds[keynum]->name,s)==0) /**< Shortcut for ease. */
-#define INGAME()  (!toolkit) /**< Makes sure player is in game. */
+#define INGAME()  (!toolkit && !paused) /**< Makes sure player is in game. */
 #define NOHYP()   \
 (player && !pilot_isFlag(player,PILOT_HYP_PREP) &&\
 !pilot_isFlag(player,PILOT_HYP_BEGIN) &&\
