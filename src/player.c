@@ -2681,6 +2681,19 @@ void player_addLicense( char *license )
 
 
 /**
+ * @brief Gets the player's licenses.
+ *
+ *    @param nlicenses Amount of licenses the player has.
+ *    @return Name of the licenses he has.
+ */
+char **player_getLicenses( int *nlicenses )
+{
+   *nlicenses = player_nlicenses;
+   return player_licenses;
+}
+
+
+/**
  * @brief Save the freaking player in a freaking xmlfile.
  *
  *    @param writer xml Writer to use.

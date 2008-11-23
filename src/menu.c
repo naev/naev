@@ -44,6 +44,9 @@
 #define OUTFITS_WIDTH   400 /**< Outfit menu width. */
 #define OUTFITS_HEIGHT  200 /**< Outfit menu height. */
 
+#define LICENSES_WIDTH  300 /**< Licenses menu width. */
+#define LICENSES_HEIGHT  300 /**< Licenses menu height. */
+
 #define CARGO_WIDTH     300 /**< Cargo menu width. */
 #define CARGO_HEIGHT    300 /**< Cargo menu height. */
 
@@ -80,6 +83,8 @@ static void exit_game (void);
 static void menu_info_close( unsigned int wid, char* str );
 /* outfits submenu */
 static void info_outfits_menu( unsigned int parent, char* str );
+/* licenses submenu. */
+static void info_licenses_menu( unsigned int parent, char* str );
 /* cargo submenu */
 static void info_cargo_menu( unsigned int parent, char* str );
 static void cargo_update( unsigned int wid, char* str );
@@ -409,6 +414,40 @@ static void info_outfits_menu( unsigned int parent, char* str )
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "closeOutfits", "Close", window_close );
+   window_addButton( wid, -20-BUTTON_WIDTH-20, 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnLicenses", "Licenses", info_licenses_menu );
+}
+
+
+/**
+ * @brief Opens the licenses menu.
+ */
+static void info_licenses_menu( unsigned int parent, char* str )
+{
+   (void) str;
+   (void) parent;
+   unsigned int wid;
+   char **licenses;
+   int nlicenses;
+   int i;
+   char **buf;
+
+   /* Create window */
+   wid = window_create( "Licenses", -1, -1, LICENSES_WIDTH, LICENSES_HEIGHT );
+
+   /* List. */
+   buf = player_getLicenses( &nlicenses );
+   licenses = malloc(sizeof(char*)*nlicenses);
+   for (i=0; i<nlicenses; i++)
+      licenses[i] = strdup(buf[i]);
+   window_addList( wid, 20, -40, LICENSES_WIDTH-40, LICENSES_HEIGHT-80-BUTTON_HEIGHT,
+         "lstLicenses", licenses, nlicenses, 0, NULL );
+
+   /* Buttons */
+   window_addButton( wid, -20, 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "closeLicenses", "Close", window_close );
 }
 
 

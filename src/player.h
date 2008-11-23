@@ -104,6 +104,7 @@ int player_missionAlreadyDone( int id );
  */
 void player_addLicense( char *license );
 int player_hasLicense( char *license );
+char **player_getLicenses( int *nlicenses );
 
 /* 
  * keybind actions
