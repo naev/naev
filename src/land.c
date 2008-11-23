@@ -414,7 +414,9 @@ static void outfits_update( unsigned int wid, char* str )
          "%s\n",
          outfit->name,
          outfit_getType(outfit),
-         player_outfitOwned(outfitname),
+         (outfit_isLicense(outfit)) ?
+               player_hasLicense(outfit->name) :
+               player_outfitOwned(outfitname),
          outfit->mass,
          pilot_freeSpace(player),
          buf2,
@@ -474,7 +476,7 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
       return 0;
    }
    /* Needs license. */
-   else if ((outfit->license != NULL) && !player_hasLicense(outfit->name)) {
+   else if ((outfit->license != NULL) && !player_hasLicense(outfit->license)) {
       if (errmsg != 0)
          dialogue_alert( "You need the '%s' license to buy this outfit.",
                outfit->license );
