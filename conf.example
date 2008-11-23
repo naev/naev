@@ -94,7 +94,7 @@ autonav        = { type = "keyboard", key = "N" }
 --mapzoomin    = { type = "keyboard", key = "[+]", mod = "any" }
 --mapzoomout   = { type = "keyboard", key = "[-]", mod = "any" }
 --screenshot   = { type = "keyboard", key = "[*]", mod = "any" }
---pause        = { type = "keyboard", key = "P" }
+--pause        = { type = "keyboard", key = "Z" }
 --speed        = { type = "keyboard", key = "`" }
 --menu         = { type = "keyboard", key = "escape", mod = "any" }
 --info         = { type = "keyboard", key = "I" }
