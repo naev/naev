@@ -10,7 +10,7 @@
 #include <unistd.h> /* WRITE() */
 #include <errno.h> /* error numbers */
 #include <string.h> /* strlen() and friends */
-#include <malloc.h> /* malloc */
+#include <stdlib.h> /* malloc */
 
 #include "log.h"
 #include "md5.h"

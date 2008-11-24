@@ -11,7 +11,7 @@
 
 #include "faction.h"
 
-#include <malloc.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "xml.h"

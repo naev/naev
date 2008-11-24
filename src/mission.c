@@ -13,7 +13,7 @@
 
 #include <stdint.h>
 #include <string.h>
-#include <malloc.h>
+#include <stdlib.h>
 
 #include "nlua.h"
 #include "nlua_space.h"

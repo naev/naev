@@ -1,7 +1,7 @@
 
 
 #include <stdlib.h>
-#include <malloc.h>
+#include <stdlib.h>
 
 #include <png.h>
 

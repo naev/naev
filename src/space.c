@@ -10,7 +10,7 @@
 
 #include "space.h"
 
-#include <malloc.h>
+#include <stdlib.h>
 #include <math.h>
 
 #include "xml.h"

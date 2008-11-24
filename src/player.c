@@ -11,7 +11,7 @@
 
 #include "player.h"
 
-#include <malloc.h>
+#include <stdlib.h>
 
 #include "xml.h"
 #include "naev.h"

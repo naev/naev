@@ -13,6 +13,7 @@
 #include <stdio.h>
 #endif /* not _POSIX_SOURCE */
 #include <stdint.h> /* uint32_t */
+#include <sys/types.h> /* ssize_t */
 
 
 /**
