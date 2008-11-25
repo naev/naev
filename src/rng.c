@@ -18,10 +18,10 @@
 #include <unistd.h>
 #include <time.h>
 #include <errno.h>
-#ifdef LINUX
+#ifdef _POSIX_SOURCE
 #include <sys/time.h>
 #include <fcntl.h>
-#endif
+#endif /* _POSIX_SOURCE */
 #include "SDL.h"
 
 #include "naev.h"

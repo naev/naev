@@ -188,7 +188,11 @@ double vect_dot( Vector2d* a, Vector2d* b )
 /*
  * S O L I D
  */
-/*
+/**
+ * @fn static void simple_update (Solid *obj, const double dt)
+ *
+ * @brief Updates the solid's position using an euler integration.
+ *
  * Simple method
  *
  *   d^2 x(t) / d t^2 = a, a = constant (acceleration)
@@ -201,24 +205,27 @@ double vect_dot( Vector2d* a, Vector2d* b )
  *   so watch out with big values for dt
  *
  */
-#if 0
+#if defined(FREEBSD)
 static void simple_update (Solid *obj, const double dt)
 {
-   /* make sure angle doesn't flip */
-   obj->dir += M_PI/360.*obj->dir_vel*dt;
-   if (obj->dir > 2*M_PI) obj->dir -= 2*M_PI;
-   if (obj->dir < 0.) obj->dir += 2*M_PI;
+   double px,py, vx,vy, ax,ay;
 
-   double px, py, vx, vy;
-   px = obj->pos->x;
-   py = obj->pos->y;
-   vx = obj->vel->x;
-   vy = obj->vel->y;
+   /* make sure angle doesn't flip */
+   obj->dir += M_PI/180.*obj->dir_vel*dt;
+   if (obj->dir > 2*M_PI)
+      obj->dir -= 2*M_PI;
+   if (obj->dir < 0.)
+      obj->dir += 2*M_PI;
+
+   /* Initial positions. */
+   px = obj->pos.x;
+   py = obj->pos.y;
+   vx = obj->vel.x;
+   vy = obj->vel.y;
 
    if (obj->force.mod) { /* force applied on object */
-      double ax, ay;
-      ax = obj->force->x/obj->mass;
-      ay = obj->force->y/obj->mass;
+      ax = obj->force.x / obj->mass;
+      ay = obj->force.y / obj->mass;
 
       vx += ax*dt;
       vy += ay*dt;
@@ -233,15 +240,18 @@ static void simple_update (Solid *obj, const double dt)
       px += vx*dt;
       py += vy*dt;
    }
-   obj->pos.mod = MOD(px,py);
-   obj->pos.angle = ANGLE(px,py);
+
+   /* Update position and velocity. */
+   vect_cset( &obj->vel, vx, vy );
+   vect_cset( &obj->pos, px, py );
 }
-#endif
+#endif /* defined(FREEBSD) */
+
 
 /**
  * @fn static void rk4_update (Solid *obj, const double dt)
  *
- * @brief Runge-Kutta method of updatting a solid based on it's acceleration.
+ * @brief Runge-Kutta method of updating a solid based on it's acceleration.
  *
  * Runge-Kutta 4 method
  *
@@ -257,7 +267,13 @@ static void simple_update (Solid *obj, const double dt)
  *    k4 = f(t_n + h, X_n + h*k3)
  *
  *   x_{n+1} = x_n + h/6*(6x'_n + 3*h*a, 4*a)
+ *
+ *
+ * Main advantage comes thanks to the fact that NAEV is on a 2d plane.
+ *  Therefore RK chops it up in chunks and actually creates a tiny curve
+ *  instead of aproximating the curve for a tiny straight line.
  */
+#if !defined(FREEBSD)
 #define RK4_MIN_H 0.01 /**< Minimal pass we want. */
 static void rk4_update (Solid *obj, const double dt)
 {
@@ -267,17 +283,20 @@ static void rk4_update (Solid *obj, const double dt)
 
    /* make sure angle doesn't flip */
    obj->dir += M_PI/180.*obj->dir_vel*dt;
-   if (obj->dir >= 2.*M_PI) obj->dir -= 2*M_PI;
-   else if (obj->dir < 0.) obj->dir += 2*M_PI;
+   if (obj->dir >= 2.*M_PI)
+      obj->dir -= 2*M_PI;
+   else if (obj->dir < 0.)
+      obj->dir += 2*M_PI;
 
+   /* Initial RK parameters. */
    N = (dt>RK4_MIN_H) ? (int)(dt/RK4_MIN_H) : 1 ;
    h = dt / (double)N; /* step */
 
+   /* Initial positions and velocity. */
    px = obj->pos.x;
    py = obj->pos.y;
    vx = obj->vel.x;
    vy = obj->vel.y;
-
 
    if (obj->force.mod) { /* force applied on object */
 
@@ -315,6 +334,7 @@ static void rk4_update (Solid *obj, const double dt)
    }
    vect_cset( &obj->pos, px, py );
 }
+#endif /* !defined(FREEBSD) */
 
 
 /**
@@ -331,20 +351,38 @@ void solid_init( Solid* dest, const double mass, const double dir,
 {
    dest->mass = mass;
 
+   /* Set direction velocity. */
    dest->dir_vel = 0.;
 
-   vect_cset( &dest->force, 0., 0.);
+   /* Set force. */
+   vectnull( &dest->force );
+
+   /* Set direction. */
    dest->dir = dir;
    if ((dest->dir > 2.*M_PI) || (dest->dir < 0.))
       dest->dir = fmod(dest->dir,2*M_PI);
 
-   if (vel == NULL) vectnull( &dest->vel );
-   else vectcpy( &dest->vel, vel );
+   /* Set velocity. */
+   if (vel == NULL)
+      vectnull( &dest->vel );
+   else
+      vectcpy( &dest->vel, vel );
 
-   if (pos == NULL) vectnull( &dest->pos );
-   else vectcpy( &dest->pos, pos);
+   /* Set position. */
+   if (pos == NULL)
+      vectnull( &dest->pos );
+   else
+      vectcpy( &dest->pos, pos);
 
+/*
+ * FreeBSD seems to have a bug with optimizations in rk4_update causing it to
+ * eventually become NaN.
+ */
+#if defined(FREEBSD)
+   dest->update = simple_update;
+#else /* defined(FREEBSD) */
    dest->update = rk4_update;
+#endif /* defined(FREEBSD) */
 }
 
 
