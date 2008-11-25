@@ -71,9 +71,9 @@ void rng_init (void)
    }
    else
       i = rng_timeEntropy();
-#else
+#else /* LINUX */
    i = rng_timeEntropy();
-#endif
+#endif /* LINUX */
 
    if (need_init)
       mt_initArray( i );
@@ -92,14 +92,16 @@ void rng_init (void)
 static uint32_t rng_timeEntropy (void)
 {
    int i;
-#ifdef WIN32
+#if defined(_POSIX_SOURCE)
+   struct timeval tv;
+   gettimeofday( &tv, NULL );
+   i = tv.tv_sec * 1000000 + tv.tv_usec;
+#elif defined(WIN32)
    struct _timeb tb;
    _ftime( &tb );
    i = tb.time * 1000 + tb.millitm;
 #else
-   struct timeval tv;
-   gettimeofday( &tv, NULL );
-   i = tv.tv_sec * 1000000 + tv.tv_usec;
+#error "Needs implementation."
 #endif
    return i;
 }
