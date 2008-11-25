@@ -786,12 +786,10 @@ static const char* debug_sigCodeToStr( int sig, int sig_code )
          case SEGV_ACCERR: return "SIGSEGV (invalid permissions for mapped object)";
          default: return "SIGSEGV";
       }
-   else if (sig == SIGTRAP)
+   else if (sig == SIGABRT)
       switch (sig_code) {
-         case SI_USER: return "SIGTRAP (raised by program)";
-         case TRAP_BRKPT: return "SIGTRAP (process breakpoint)";
-         case TRAP_TRACE: return "SIGTRAP (process trace trap)";
-         default: return "SIGTRAP";
+         case SI_USER: return "SIGABRT (raised by program)";
+         default: return "SIGABRT";
       }
 
    /* No suitable code found. */
@@ -849,8 +847,8 @@ static void debug_sigInit (void)
    sigaction(SIGFPE, &sa, &so);
    if (so.sa_handler == SIG_IGN)
       DEBUG("Unable to set up SIGFPE signal handler.");
-   sigaction(SIGTRAP, &sa, &so);
+   sigaction(SIGABRT, &sa, &so);
    if (so.sa_handler == SIG_IGN)
-      DEBUG("Unable to set up SIGTRAP signal handler.");
+      DEBUG("Unable to set up SIGABRT signal handler.");
 #endif /* defined(LINUX) && !defined(DEBUG) */
 }

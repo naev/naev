@@ -16,7 +16,7 @@
 #include <stdio.h> 
 #include <string.h>
 #include <stdarg.h>
-#ifdef LINUX
+#if defined(LINUX) || defined(FREEBSD)
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -41,7 +41,7 @@ char* nfile_basePath (void)
    char *home;
 
    if (naev_base[0] == '\0') {
-#ifdef LINUX
+#if defined(LINUX) || defined(FREEBSD)
       home = getenv("HOME");
       snprintf(naev_base,PATH_MAX,"%s/.naev/",home);
 #else
@@ -74,7 +74,7 @@ int nfile_dirMakeExist( const char* path, ... )
       va_end(ap);
    }
 
-#ifdef LINUX
+#if defined(LINUX) || defined(FREEBSD)
    struct stat buf;
 
    stat(file,&buf);
@@ -109,7 +109,7 @@ int nfile_fileExists( const char* path, ... )
       vsnprintf(file, PATH_MAX, path, ap);
       va_end(ap);
    }
-#ifdef LINUX
+#if defined(LINUX) || defined(FREEBSD)
    struct stat buf;
 
    if (stat(file,&buf)==0) /* stat worked, file must exist */
@@ -154,7 +154,7 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
       va_end(ap);
    }
 
-#ifdef LINUX
+#if defined(LINUX) || defined(FREEBSD)
    int i,j,k, n;
    DIR *d;
    struct dirent *dir;
