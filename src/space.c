@@ -609,8 +609,6 @@ void space_update( const double dt )
 
 
 /**
- * @fn static void space_addFleet( Fleet* fleet, int init )
- *
  * @brief Creates a fleet.
  *
  *    @param fleet Fleet to add to the system.
@@ -621,6 +619,7 @@ static void space_addFleet( Fleet* fleet, int init )
    FleetPilot *plt;
    Planet *planet;
    int i, c;
+   unsigned int flags;
    double a, d;
    Vector2d vv,vp, vn;
 
@@ -679,10 +678,13 @@ static void space_addFleet( Fleet* fleet, int init )
          vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
                RNG(75,150) * (RNG(0,1) ? 1 : -1));
          a = vect_angle(&vp, &vn);
+         flags = 0;
 
          /* Entering via hyperspace. */
-         if (c==0)
+         if (c==0) {
             vect_pset( &vv, HYPERSPACE_VEL, a );
+            flags |= PILOT_HYP_END;
+         }
          /* Starting out landed. */
          else if (c==1)
             vectnull(&vv);
@@ -698,7 +700,7 @@ static void space_addFleet( Fleet* fleet, int init )
                a,
                &vp,
                &vv,
-               0 );
+               flags );
       }
 }
 

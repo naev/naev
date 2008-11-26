@@ -641,9 +641,12 @@ void pilot_dead( Pilot* p )
    p->timer[1] = p->timer[0]; /* explosion timer */
 
    /* flag cleanup - fixes some issues */
-   if (pilot_isFlag(p,PILOT_HYP_PREP)) pilot_rmFlag(p,PILOT_HYP_PREP);
-   if (pilot_isFlag(p,PILOT_HYP_BEGIN)) pilot_rmFlag(p,PILOT_HYP_BEGIN);
-   if (pilot_isFlag(p,PILOT_HYPERSPACE)) pilot_rmFlag(p,PILOT_HYPERSPACE);
+   if (pilot_isFlag(p,PILOT_HYP_PREP))
+      pilot_rmFlag(p,PILOT_HYP_PREP);
+   if (pilot_isFlag(p,PILOT_HYP_BEGIN))
+      pilot_rmFlag(p,PILOT_HYP_BEGIN);
+   if (pilot_isFlag(p,PILOT_HYPERSPACE))
+      pilot_rmFlag(p,PILOT_HYPERSPACE);
 
    /* PILOT R OFFICIALLY DEADZ0R */
    pilot_setFlag(p,PILOT_DEAD);
@@ -861,8 +864,6 @@ void pilot_explode( double x, double y, double radius,
 
 
 /**
- * @fn void pilot_render( Pilot* p )
- *
  * @brief Renders the pilot.
  *
  *    @param p Pilot to render.
@@ -876,8 +877,6 @@ void pilot_render( Pilot* p )
 
 
 /**
- * @fn static void pilot_update( Pilot* pilot, const double dt )
- *
  * @brief Updates the pilot.
  *
  *    @param pilot Pilot to update.
@@ -1610,9 +1609,6 @@ void pilot_addHook( Pilot *pilot, int type, int hook )
 
 
 /**
- * @fn void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, char *ai,
- *          const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
- *
  * @brief Initialize pilot.
  *
  *    @param ship Ship pilot will be flying.
@@ -1625,7 +1621,8 @@ void pilot_addHook( Pilot *pilot, int type, int hook )
  *    @param flags Used for tweaking the pilot.
  */
 void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, char *ai,
-      const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
+      const double dir, const Vector2d* pos, const Vector2d* vel,
+      const unsigned int flags )
 {
    ShipOutfit* so;
 
@@ -1687,6 +1684,9 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, char *ai,
       pilot->think = ai_think;
       pilot->render = pilot_render;
    }
+   /* Set enter hyperspace flag if needed. */
+   if (flags & PILOT_HYP_END)
+      pilot_setFlag(pilot, PILOT_HYP_END);
 
    /* all update the same way */
    pilot->update = pilot_update;
@@ -1706,9 +1706,6 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, char *ai,
 
 
 /**
- * @fn unsigned int pilot_create( Ship* ship, char* name, int faction, char *ai,
- *       const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
- *
  * @brief Creates a new pilot
  *
  * See pilot_init for parameters.
@@ -1718,7 +1715,8 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, char *ai,
  * @sa pilot_init
  */
 unsigned int pilot_create( Ship* ship, char* name, int faction, char *ai,
-      const double dir, const Vector2d* pos, const Vector2d* vel, const int flags )
+      const double dir, const Vector2d* pos, const Vector2d* vel,
+      const unsigned int flags )
 {
    Pilot *dyn;
    
@@ -1744,9 +1742,6 @@ unsigned int pilot_create( Ship* ship, char* name, int faction, char *ai,
 
 
 /**
- * @fn Pilot* pilot_createEmpty( Ship* ship, char* name,
- *       int faction, char *ai, const int flags )
- *
  * @brief Creates a pilot without adding it to the stack.
  *
  *    @param ship Ship for the pilot to use.
@@ -1757,7 +1752,7 @@ unsigned int pilot_create( Ship* ship, char* name, int faction, char *ai,
  *    @return Pointer to the new pilot (not added to stack).
  */
 Pilot* pilot_createEmpty( Ship* ship, char* name,
-      int faction, char *ai, const int flags )
+      int faction, char *ai, const unsigned int flags )
 {
    Pilot* dyn;
    dyn = MALLOC_ONE(Pilot);
@@ -1927,22 +1922,31 @@ void pilots_cleanAll (void)
 void pilots_update( double dt )
 {
    int i;
+   Pilot *p;
+
    for ( i=0; i < pilot_nstack; i++ ) {
-      if (pilot_stack[i]->think && /* think */
-            !pilot_isDisabled(pilot_stack[i])) {
+      p = pilot_stack[i];
+
+      /* See if should think. */
+      if (p->think && !pilot_isDisabled(p)) {
 
          /* hyperspace gets special treatment */
-         if (pilot_isFlag(pilot_stack[i], PILOT_HYP_PREP))
-            pilot_hyperspace(pilot_stack[i]);
+         if (pilot_isFlag(p, PILOT_HYP_PREP))
+            pilot_hyperspace(p);
+         /* Entering hyperspace. */
+         else if (pilot_isFlag(p, PILOT_HYP_END)) {
+            if (VMOD(p->solid->vel) < 2*p->speed)
+               pilot_rmFlag(p, PILOT_HYP_END);
+         }
          else
-            pilot_stack[i]->think(pilot_stack[i]);
+            p->think(p);
 
       }
-      if (pilot_stack[i]->update) { /* update */
-         if (pilot_isFlag(pilot_stack[i], PILOT_DELETE))
-            pilot_destroy(pilot_stack[i]);
+      if (p->update) { /* update */
+         if (pilot_isFlag(p, PILOT_DELETE))
+            pilot_destroy(p);
          else
-            pilot_stack[i]->update( pilot_stack[i], dt );
+            p->update( p, dt );
       }
    }
 }

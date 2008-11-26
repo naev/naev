@@ -64,8 +64,9 @@
 #define PILOT_HYP_PREP     (1<<15) /**< Pilot is getting ready for hyperspace. */
 #define PILOT_HYP_BEGIN    (1<<16) /**< Pilot is starting engines. */
 #define PILOT_HYPERSPACE   (1<<17) /**< Pilot is in hyperspace. */
-#define PILOT_BOARDED      (1<<18) /**< Pilot has been boarded already. */
-#define PILOT_BRIBED       (1<<19) /**< Pilot has been bribed already. */
+#define PILOT_HYP_END      (1<<18) /**< Pilot is exiting hyperspace. */
+#define PILOT_BOARDED      (1<<20) /**< Pilot has been boarded already. */
+#define PILOT_BRIBED       (1<<21) /**< Pilot has been bribed already. */
 #define PILOT_DISABLED     (1<<26) /**< Pilot is disabled. */
 #define PILOT_DEAD         (1<<27) /**< Pilot is in it's dying throes */
 #define PILOT_DEATH_SOUND  (1<<28) /**< Pilot just did death explosion. */
@@ -295,11 +296,13 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison );
  * creation
  */
 void pilot_init( Pilot* dest, Ship* ship, char* name, int faction, char *ai,
-      const double dir, const Vector2d* pos, const Vector2d* vel, const int flags );
+      const double dir, const Vector2d* pos, const Vector2d* vel,
+      const unsigned int flags );
 unsigned int pilot_create( Ship* ship, char* name, int faction, char *ai,
-      const double dir, const Vector2d* pos, const Vector2d* vel, const int flags );
+      const double dir, const Vector2d* pos, const Vector2d* vel,
+      const unsigned int flags );
 Pilot* pilot_createEmpty( Ship* ship, char* name,
-      int faction, char *ai, const int flags );
+      int faction, char *ai, const unsigned int flags );
 Pilot* pilot_copy( Pilot* src );
 
 
