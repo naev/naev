@@ -1,11 +1,11 @@
 syntax: glob
 
 *.o
+*.a
 *.pyc
 .hgignore
 VERSION
 ndata
-lib/lua/liblua.a
 mkspr
 naev
 pack
