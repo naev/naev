@@ -38,6 +38,9 @@
 #define BUTTON_HEIGHT 30 /**< Button height in ship view window. */
 
 
+#define CHUNK_SIZE    32 /**< Rate at which to allocate memory. */
+
+
 static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
 static int ship_nstack = 0; /**< Number of ships in the stack. */
 
@@ -45,12 +48,10 @@ static int ship_nstack = 0; /**< Number of ships in the stack. */
 /*
  * Prototypes
  */
-static Ship* ship_parse( xmlNodePtr parent );
+static int ship_parse( Ship *temp, xmlNodePtr parent );
 
 
 /**
- * @fn Ship* ship_get( const char* name )
- *
  * @brief Gets a ship based on its name.
  *
  *    @param name Name to match.
@@ -72,8 +73,6 @@ Ship* ship_get( const char* name )
 
 
 /**
- * @fn char** ship_getTech( int *n, const int *tech, const int techmax )
- *
  * @brief Gets all the ships in text form matching tech.
  *
  * You have to free all the strings created in the string array too.
@@ -144,8 +143,6 @@ Ship** ship_getTech( int *n, const int *tech, const int techmax )
 
 
 /**
- * @fn char* ship_class( Ship* s )
- *
  * @brief Gets the ship's class name in human readable form.
  *
  *    @param s Ship to get the class name from.
@@ -205,8 +202,6 @@ char* ship_class( Ship* s )
 
 
 /**
- * @fn ShipClass ship_classFromString( char* str )
- *
  * @brief Gets the machine ship class identifier from a human readable string.
  *
  *    @param str String to extract ship class identifier from.
@@ -259,8 +254,6 @@ ShipClass ship_classFromString( char* str )
 
 
 /**
- * @fn int ship_basePrice( Ship* s )
- *
  * @brief Gets the ship's base price (no outfits).
  */
 int ship_basePrice( Ship* s )
@@ -283,27 +276,29 @@ int ship_basePrice( Ship* s )
 
 
 /**
- * @fn static Ship* ship_parse( xmlNodePtr parent )
- *
  * @brief Extracts the ingame ship from an XML node.
  *
  *    @param parent Node to get ship from.
  *    @return The newly created ship.
  */
-static Ship* ship_parse( xmlNodePtr parent )
+static int ship_parse( Ship *temp, xmlNodePtr parent )
 {
    xmlNodePtr cur, node;
-   Ship* temp = CALLOC_ONE(Ship);
    ShipOutfit *otemp, *ocur;
 
    char str[PATH_MAX] = "\0";
    char* stmp;
 
+   /* Clear memory. */
+   memset( temp, 0, sizeof(Ship) );
+
+   /* Get name. */
    xmlr_attr(parent,"name",temp->name);
-   if (temp->name == NULL) WARN("Ship in "SHIP_DATA" has invalid or no name");
+   if (temp->name == NULL)
+      WARN("Ship in "SHIP_DATA" has invalid or no name");
 
+   /* Load data. */
    node = parent->xmlChildrenNode;
-
    do { /* load all the data */
       if (xml_isNode(node,"GFX")) {
 
@@ -437,26 +432,23 @@ static Ship* ship_parse( xmlNodePtr parent )
    MELEMENT(temp->cap_weapon==0,"cap_weapon");
 #undef MELEMENT
 
-   return temp;
+   return 0;
 }
 
 
 /**
- * @fn int ships_load(void)
- *
  * @brief Loads all the ships in the data files.
  *
  *    @return 0 on success.
  */
-int ships_load(void)
+int ships_load (void)
 {
+   int mem;
    uint32_t bufsize;
    char *buf = pack_readfile(DATA, SHIP_DATA, &bufsize);
 
    xmlNodePtr node;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );
-
-   Ship* temp = NULL;
 
    node = doc->xmlChildrenNode; /* Ships node */
    if (strcmp((char*)node->name,XML_ID)) {
@@ -470,15 +462,24 @@ int ships_load(void)
       return -1;
    }
 
+   mem = 0;
    do {
-      if (node->type ==XML_NODE_START &&
-            strcmp((char*)node->name,XML_SHIP)==0) {
-         temp = ship_parse(node);
-         ship_stack = realloc(ship_stack, sizeof(Ship)*(++ship_nstack));
-         memcpy(ship_stack+ship_nstack-1, temp, sizeof(Ship));
-         free(temp);
+      if (xml_isNode(node, XML_SHIP)) {
+         ship_nstack++;
+
+         /* Check to see if need to grow memory. */
+         if (ship_nstack > mem) {
+            mem += CHUNK_SIZE;
+            ship_stack = realloc(ship_stack, sizeof(Ship)*mem);
+         }
+
+         /* Load the ship. */
+         ship_parse(&ship_stack[ship_nstack-1], node);
       }
    } while (xml_nextNode(node));
+
+   /* Shrink to minimum size - won't change later. */
+   ship_stack = realloc(ship_stack, sizeof(Ship) * ship_nstack);
 
    xmlFreeDoc(doc);
    free(buf);
@@ -492,7 +493,7 @@ int ships_load(void)
 /**
  * @brief Frees all the ships.
  */
-void ships_free()
+void ships_free (void)
 {
    ShipOutfit *so, *sot;
    int i;
