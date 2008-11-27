@@ -67,6 +67,9 @@ clean:
 	@$(RM) $(ALL_T) $(ALL_O)
 	@echo "   Cleaning Lua"
 
+distclean: clean
+	@$(RM) $(LUA_A)
+
 depend:
 	@$(CC) $(CFLAGS) -MM l*.c print.c
 
