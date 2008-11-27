@@ -38,12 +38,13 @@ OBJS    := $(patsubst %.c,%.o,$(wildcard src/*.c))
 #   CFLAGS
 #
 CLUA   := -Ilib/lua
+CCSPARSE := -Ilib/csparse
 CSDL   := $(shell sdl-config --cflags) -DGL_GLEXT_PROTOTYPES
 CXML   := $(shell xml2-config --cflags)
 CTTF   := $(shell freetype-config --cflags)
 CPNG   := $(shell libpng-config --cflags)
 CGL    :=
-CFLAGS := $(CLUA) $(CSDL) $(CXML) $(CTTF) $(CPNG) $(CGL) $(VERSION) -D$(OS)
+CFLAGS := $(CLUA) $(CCSPARSE) $(CSDL) $(CXML) $(CTTF) $(CPNG) $(CGL) $(VERSION) -D$(OS)
 ifdef DATA_DEF
 CFLAGS += -DDATA_DEF=$(DATA_DEF)
 endif
@@ -54,12 +55,13 @@ endif
 #   LDFLAGS
 #
 LDLUA   := lib/lua/liblua.a
+LDCSPARSE := lib/csparse/libcsparse.a
 LDSDL   := $(shell sdl-config --libs) -lSDL_image -lSDL_mixer
 LDXML   := $(shell xml2-config --libs)
 LDTTF   := $(shell freetype-config --libs)
 LDPNG   := $(shell libpng-config --libs)
 LDGL    := -lGL
-LDFLAGS := -lm $(LDLUA) $(LDSDL) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
+LDFLAGS := -lm $(LDLUA) $(LDCSPARSE) $(LDSDL) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
 
 
 # OS Stuff
@@ -131,7 +133,7 @@ DATAFILES := 	$(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN)
 #
 #   TARGETS
 #
-.PHONY: all help lua utils docs clean distclean
+.PHONY: all help lua csparse utils docs clean distclean
 
 
 %.o:	%.c %.h
@@ -139,12 +141,13 @@ DATAFILES := 	$(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN)
 	@echo "   CC   $@"
 
 
-all:	utils ndata lua naev
+all:	utils ndata lua csparse naev
 
 
 help:
 	@echo "Possible targets are:":
 	@echo "       lua - builds Lua support"
+	@echo "   csparse - builds CSparse support"
 	@echo "      naev - builds the naev binary"
 	@echo "     mkpsr - builds the mkspr utilitily"
 	@echo "     ndata - creates the ndata file"
@@ -155,7 +158,7 @@ help:
 
 
 $(APPNAME): $(OBJS)
-	@$(CC) $(LDFLAGS) -o $(APPNAME) $(OBJS) lib/lua/liblua.a
+	@$(CC) $(LDFLAGS) -o $(APPNAME) $(OBJS) lib/lua/liblua.a lib/csparse/libcsparse.a
 	@echo "   LD   $(APPNAME)"
 
 
@@ -164,6 +167,13 @@ lua: lib/lua/liblua.a
 
 lib/lua/liblua.a:
 	+@$(MAKE) -C lib/lua a
+
+
+csparse: lib/csparse/libcsparse.a
+
+
+lib/lua/libcsparse.a:
+	+@$(MAKE) -C lib/csparse
 
 
 pack: src/md5.c src/pack.c utils/pack/main.c
@@ -205,7 +215,9 @@ distclean: clean
 	@$(MAKE) -C utils/pack clean
 	@$(MAKE) -C utils/mkspr clean
 	@echo "   Cleaning Lua"
-	@$(MAKE) -C lib/lua clean
+	@$(MAKE) -C lib/lua distclean
+	@echo "   Cleaning CSparse"
+	@$(MAKE) -C lib/csparse distclean
 	@echo "   Removing build tool binaries"
 	@$(RM) mkspr pack
 
