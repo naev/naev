@@ -511,6 +511,7 @@ int economy_update( unsigned int dt )
       /*
        * Get the minimum and maximum to scale.
        */
+      /*
       min = +HUGE_VALF;
       max = -HUGE_VALF;
       for (i=0; i<systems_nstack; i++) {
@@ -519,16 +520,15 @@ int economy_update( unsigned int dt )
          if (X[i] > max)
             max = X[i];
       }
+      scale = 1. / (max - min);
+      offset = 0.5 - min * scale;
+      */
 
       /* 
        * I'm not sure I like the filtering of the results, but it would take
        * much more work to get a sane system working without the need of post
        * filtering.
        */
-      /*
-      scale = 1. / (max - min);
-      offset = 0.5 - min * scale;
-      */
       scale = 1.;
       offset = 1.;
       for (i=0; i<systems_nstack; i++) {
