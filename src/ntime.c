@@ -24,6 +24,7 @@
 
 #include "naev.h"
 #include "hook.h"
+#include "economy.h"
 
 
 static unsigned int naev_time = 0; /**< Contains the current time in mSTU. */
@@ -97,6 +98,8 @@ void ntime_inc( unsigned int t )
    naev_time += t;
 
    hooks_run("time");
+
+   economy_update( t );
 }
 
 

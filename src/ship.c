@@ -490,8 +490,6 @@ int ships_load(void)
 
 
 /**
- * @fn void ships_free()
- *
  * @brief Frees all the ships.
  */
 void ships_free()
@@ -500,10 +498,16 @@ void ships_free()
    int i;
    for (i = 0; i < ship_nstack; i++) {
       /* free stored strings */
-      if (ship_stack[i].name) free(ship_stack[i].name);
-      if (ship_stack[i].description) free(ship_stack[i].description);
-      if (ship_stack[i].gui) free(ship_stack[i].gui);
-      if (ship_stack[i].fabricator) free(ship_stack[i].fabricator);
+      if (ship_stack[i].name != NULL)
+         free(ship_stack[i].name);
+      if (ship_stack[i].description != NULL)
+         free(ship_stack[i].description);
+      if (ship_stack[i].gui != NULL)
+         free(ship_stack[i].gui);
+      if (ship_stack[i].fabricator != NULL)
+         free(ship_stack[i].fabricator);
+      if (ship_stack[i].license != NULL)
+         free(ship_stack[i].license);
 
       so = ship_stack[i].outfit;
       while (so) { /* free the outfits */

@@ -450,6 +450,9 @@ static int player_newMake (void)
    /* clear the map */
    map_clear();
 
+   /* Start the economy. */
+   economy_init();
+
    return 0;
 }
 

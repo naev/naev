@@ -140,6 +140,9 @@ static void misn_update( unsigned int wid, char* str );
 static void land_checkAddRefuel (void);
 static unsigned int refuel_price (void);
 static void spaceport_refuel( unsigned int wid, char *str );
+/* external */
+extern unsigned int economy_getPrice( const Commodity *com,
+      const StarSystem *sys, const Planet *p );
 
 
 /*
@@ -214,7 +217,7 @@ static void commodity_update( unsigned int wid, char* str )
          "\n"
          "%d tons\n",
          player_cargoOwned( comname ),
-         com->medium,
+         economy_getPrice(com, cur_system, land_planet),
          pilot_cargoFree(player));
    window_modifyText( wid, "txtDInfo", buf );
    window_modifyText( wid, "txtDesc", com->description );
@@ -225,13 +228,14 @@ static void commodity_buy( unsigned int wid, char* str )
    (void)str;
    char *comname;
    Commodity *com;
-   int q;
+   unsigned int q, price;
 
    q = 10;
    comname = toolkit_getList( wid, "lstGoods" );
    com = commodity_get( comname );
+   price = economy_getPrice(com, cur_system, land_planet);
 
-   if (player->credits < q * com->medium) {
+   if (player->credits < q * price) {
       dialogue_alert( "Not enough credits!" );
       return;
    }
@@ -241,7 +245,7 @@ static void commodity_buy( unsigned int wid, char* str )
    }
 
    q = pilot_addCargo( player, com, q );
-   player->credits -= q * com->medium;
+   player->credits -= q * price;
    land_checkAddRefuel();
    commodity_update(wid, NULL);
 }
@@ -250,14 +254,15 @@ static void commodity_sell( unsigned int wid, char* str )
    (void)str;
    char *comname;
    Commodity *com;
-   int q;
+   unsigned int q, price;
 
    q = 10;
    comname = toolkit_getList( wid, "lstGoods" );
    com = commodity_get( comname );
+   price = economy_getPrice(com, cur_system, land_planet);
 
    q = pilot_rmCargo( player, com, q );
-   player->credits += q * com->medium;
+   player->credits += q * price;
    land_checkAddRefuel();
    commodity_update(wid, NULL);
 }

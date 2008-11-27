@@ -269,7 +269,6 @@ int main( int argc, char** argv )
    gui_free(); /* cleans up the player's GUI */
    weapon_exit(); /* destroys all active weapons */
    pilots_free(); /* frees the pilots, they were locked up :( */
-   space_exit(); /* cleans up the universe itself */
 
    /* data unloading */
    unload_all();
@@ -440,7 +439,9 @@ void load_all (void)
  */
 void unload_all (void)
 {
-   /* data unloading - order shouldn't matter, but inverse load_all is good */
+   /* data unloading - inverse load_all is a good order */
+   economy_destroy(); /* must be called before space_exit */
+   space_exit(); /* cleans up the universe itself */
    fleet_free();
    ships_free();
    outfit_free();

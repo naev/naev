@@ -839,8 +839,6 @@ static int planets_load ( void )
 
 
 /**
- * @fn static int planet_parse( Planet *planet, const xmlNodePtr parent )
- *
  * @brief Parses a planet from an xml node.
  *
  *    @param planet Planet to fill up.
@@ -896,6 +894,12 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
       else if (xml_isNode(node,"general")) {
          cur = node->children;
          do {
+            /* Direct reads. */
+            xmlr_strd(cur, "bar", planet->bar_description);
+            xmlr_strd(cur, "description", planet->description );
+            xmlr_long(cur, "population", planet->population );
+            xmlr_float(cur, "prodfactor", planet->prodfactor );
+
             if (xml_isNode(cur,"class"))
                planet->class =
                   planetclass_get(cur->children->content[0]);
@@ -903,17 +907,10 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                flags |= FLAG_FACTIONSET;
                planet->faction = faction_get( xml_get(cur) );
             }
-            else if (xml_isNode(cur, "description"))
-               planet->description = xml_getStrd(cur);
-
-            else if (xml_isNode(cur, "bar"))
-               planet->bar_description = xml_getStrd(cur);
-
             else if (xml_isNode(cur, "services")) {
                flags |= FLAG_SERVICESSET;
                planet->services = xml_getInt(cur); /* flags gotten by data */
             }
-
             else if (xml_isNode(cur, "tech")) {
                ccur = cur->children;
                do {
@@ -957,6 +954,10 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    MELEMENT(planet->gfx_space==NULL,"GFX space");
    MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
          planet->gfx_exterior==NULL,"GFX exterior");
+   MELEMENT( planet_hasService(planet,PLANET_SERVICE_BASIC) &&
+         (planet->population==0), "population");
+   MELEMENT( planet_hasService(planet,PLANET_SERVICE_BASIC) &&
+         (planet->prodfactor==0.), "prodfactor");
    MELEMENT((flags&FLAG_XSET)==0,"x");
    MELEMENT((flags&FLAG_YSET)==0,"y");
    MELEMENT(planet->class==PLANET_CLASS_NULL,"class");
@@ -979,8 +980,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
 
 
 /**
- * @fn int system_addPlanet( StarSystem *sys, char *planetname )
- *
  * @brief Adds a planet to a star system.
  *
  *    @param sys Star System to add planet to.
@@ -1019,13 +1018,14 @@ int system_addPlanet( StarSystem *sys, char *planetname )
 
    system_setFaction(sys);
 
+   /* Regenerate the economy stuff. */
+   economy_refresh();
+
    return 0;
 }
 
 
 /**
- * @fn int system_rmPlanet( StarSystem *sys, char *planetname )
- *
  * @brief Removes a planet from a star system.
  *
  *    @param sys Star System to remove planet from.
@@ -1075,6 +1075,9 @@ int system_rmPlanet( StarSystem *sys, char *planetname )
             planetname, sys->name );
 
    system_setFaction(sys);
+
+   /* Regenerate the economy stuff. */
+   economy_refresh();
 
    return 0;
 }
@@ -1570,8 +1573,10 @@ void space_exit (void)
    int i;
 
    /* Free the names. */
-   if (planetname_stack) free(planetname_stack);
-   if (systemname_stack) free(systemname_stack);
+   if (planetname_stack)
+      free(planetname_stack);
+   if (systemname_stack)
+      free(systemname_stack);
    spacename_nstack = 0;
 
    /* Free the planets. */

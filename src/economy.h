@@ -19,17 +19,30 @@ typedef struct Commodity_ {
    char* name; /**< Name of the commodity. */
    char* description; /**< Description of the commodity. */
    /* Prices. */
-   unsigned int low; /**< Lowest price on the market. */
-   unsigned int medium; /**< Average price on the market. */
-   unsigned int high; /**< Highest price on the market. */
+   double price; /**< Base price of the commodity. */
 } Commodity;
 
-/* commodity stuff */
+
+/*
+ * Commodity stuff.
+ */
 Commodity* commodity_get( const char* name );
 int commodity_load (void);
 void commodity_free (void);
 
-/* misc stuff */
+
+/*
+ * Economy stuff.
+ */
+int economy_init (void);
+int economy_update( unsigned int dt );
+int economy_refresh (void);
+void economy_destroy (void);
+
+
+/* 
+ * Misc stuff.
+ */
 void credits2str( char *str, unsigned int credits, int decimals );
 void commodity_Jettison( int pilot, Commodity* com, int quantity );
 

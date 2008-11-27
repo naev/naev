@@ -277,6 +277,9 @@ static int load_game( char* file )
    hook_load(node);
    space_sysLoad(node);
 
+   /* Initialize the economy. */
+   economy_init();
+
    /* Need to run takeoff hooks since player just "took off" */
    hooks_run("takeoff");
    hooks_run("enter");

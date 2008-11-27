@@ -18,15 +18,15 @@
 #include "colour.h"
 
 
-#define MAP_WDWNAME     "Star Map"
-#define WINDOW_WIDTH    650
-#define WINDOW_HEIGHT   540
+#define MAP_WDWNAME     "Star Map" /**< Map window name. */
+#define WINDOW_WIDTH    650 /**< Map window width. */
+#define WINDOW_HEIGHT   540 /**< Map window height. */
 
-#define MAP_WIDTH       (WINDOW_WIDTH-150)
-#define MAP_HEIGHT      (WINDOW_HEIGHT-100)
+#define MAP_WIDTH       (WINDOW_WIDTH-150) /**< Map width. */
+#define MAP_HEIGHT      (WINDOW_HEIGHT-100) /**< Map height. */
 
-#define BUTTON_WIDTH    60
-#define BUTTON_HEIGHT   30
+#define BUTTON_WIDTH    60 /**< Map button width. */
+#define BUTTON_HEIGHT   30 /**< Map button height. */
 
 
 static double map_zoom = 1.; /**< Zoom of the map. */
@@ -277,6 +277,7 @@ static void map_update( unsigned int wid )
    for (i=0; i<sys->nplanets; i++)
       services |= sys->planets[i]->services;
    buf[0] = '\0';
+   /*snprintf(buf, sizeof(buf), "%f\n", sys->prices[0]); *//*Hack to control prices. */
    if (services & PLANET_SERVICE_COMMODITY)
       strcat(buf, "Commodity\n");
    if (services & PLANET_SERVICE_OUTFITS)

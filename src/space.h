@@ -79,20 +79,24 @@ typedef struct Planet_ {
    char* name; /**< planet name */
    Vector2d pos; /**< position in star system */
 
+   /* Planet details. */
    PlanetClass class; /**< planet type */
    int faction; /**< planet faction */
-   
+   int population; /**< Population of the planet. */
+   double prodfactor; /**< Production factor of the planet. */
+  
+   /* Landing details. */
    char* description; /**< planet description */
    char* bar_description; /**< spaceport bar description */
    unsigned int services; /**< what services they offer */
    Commodity **commodities; /**< what commodities they sell */
    int ncommodities; /**< the amount they have */
-
    int tech[PLANET_TECH_MAX]; /**< tech[0] stores global tech level
                                    (everything that and below) while
                                    tech[1-PLANET_TECH_MAX] store the
                                    "unique" tech levels (only matches */
 
+   /* Graphics. */
    glTexture* gfx_space; /**< graphic in space */
    char *gfx_exterior; /**< Don't actually load the texture */
 } Planet;
@@ -101,9 +105,9 @@ typedef struct Planet_ {
 /* 
  * star system flags
  */
-#define SYSTEM_KNOWN    (1<<0) /**< System is known. */
-#define SYSTEM_MARKED   (1<<1) /**< System is marked by a mission. */
-#define SYSTEM_CMARKED  (1<<2) /**< System is marked by a computer mission. */
+#define SYSTEM_KNOWN       (1<<0) /**< System is known. */
+#define SYSTEM_MARKED      (1<<1) /**< System is marked by a mission. */
+#define SYSTEM_CMARKED     (1<<2) /**< System is marked by a computer mission. */
 #define sys_isFlag(s,f)    ((s)->flags & (f)) /**< Checks system flag. */
 #define sys_setFlag(s,f)   ((s)->flags |= (f)) /**< Sets a system flag. */
 #define sys_rmFlag(s,f)    ((s)->flags &= ~(f)) /**< Removes a system flag. */
@@ -149,6 +153,8 @@ typedef struct StarSystem_ {
 
    double nebu_density; /**< Nebulae density (0. - 1000.) */
    double nebu_volatility; /**< Nebulae volatility (0. - 1000.) */
+
+   double *prices; /**< Handles the prices in the system. */
 
    unsigned int flags; /**< flags for system properties */
 } StarSystem;
