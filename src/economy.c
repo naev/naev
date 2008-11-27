@@ -7,7 +7,9 @@
  *
  * @brief Handles economy stuff.
  *
- * @todo Use Nodal Analysis to create a real dynamic economy.
+ * Economy is handled with Nodal Analysis.  Systems are modelled as nodes,
+ *  jump routes are resistances and production is modeled as node intensity.
+ *  This is then solved with linear algebra after each time increment.
  */
 
 
@@ -38,7 +40,7 @@
  * Economy Nodal Analysis parameters.
  */
 #define ECON_BASE_RES      30. /**< Base resistance value for any system. */
-#define ECON_SELF_RES      30. /**< Additional resistance for the self node. */
+#define ECON_SELF_RES      3. /**< Additional resistance for the self node. */
 #define ECON_FACTION_MOD   0.1 /**< Modifier on Base for faction standings. */
 #define ECON_PROD_MODIFIER 500000. /**< Production modifier, divide production by this amount. */
 
@@ -489,7 +491,7 @@ int economy_update( unsigned int dt )
    int i, j;
    double *X;
    double scale, offset;
-   double min, max;
+   /*double min, max;*/
 
    /* Create the vector to solve the system. */
    X = malloc(sizeof(double)*systems_nstack);
