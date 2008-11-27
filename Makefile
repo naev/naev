@@ -172,7 +172,7 @@ lib/lua/liblua.a:
 csparse: lib/csparse/libcsparse.a
 
 
-lib/lua/libcsparse.a:
+lib/csparse/libcsparse.a:
 	+@$(MAKE) -C lib/csparse
 
 
