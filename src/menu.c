@@ -138,7 +138,6 @@ void menu_main (void)
    menu_Open(MENU_MAIN);
 }
 /**
- * @fn void menu_main_close (void)
  * @brief Closes the main menu.
  */
 void menu_main_close (void)
@@ -151,7 +150,6 @@ void menu_main_close (void)
    menu_Close(MENU_MAIN);
 }
 /**
- * @fn static void menu_main_load( unsigned int wid, char* str )
  * @brief Function to active the load game menu.
  *    @param str Unused.
  */
@@ -162,7 +160,6 @@ static void menu_main_load( unsigned int wid, char* str )
    load_game_menu();
 }
 /**
- * @fn static void menu_main_new( unsigned int wid, char* str )
  * @brief Function to active the new game menu.
  *    @param str Unused.
  */
@@ -174,7 +171,6 @@ static void menu_main_new( unsigned int wid, char* str )
    player_new();
 }
 /**
- * @fn static void menu_main_exit( unsigned int wid, char* str )
  * @brief Function to exit the main menu and game.
  *    @param str Unused.
  */
@@ -206,8 +202,6 @@ static void menu_main_exit( unsigned int wid, char* str )
  *
  */
 /**
- * @fnvoid menu_small (void)
- *
  * @brief Opens the small ingame menu.
  */
 void menu_small (void)
@@ -239,7 +233,6 @@ void menu_small (void)
    menu_Open(MENU_SMALL);
 }
 /**
- * @fn static void menu_small_close( unsigned int wid, char* str )
  * @brief Closes the small ingame menu.
  *    @param str Unused.
  */
@@ -250,7 +243,6 @@ static void menu_small_close( unsigned int wid, char* str )
    menu_Close(MENU_SMALL);
 }
 /**
- * @fn static void menu_small_exit( unsigned int wid, char* str )
  * @brief Closes the small ingame menu and goes back to the main menu.
  *    @param str Unused.
  */
@@ -286,8 +278,6 @@ static void menu_small_exit( unsigned int wid, char* str )
 
 
 /**
- * @fn static void exit_game (void)
- *
  * @brief Exits the game.
  */
 static void exit_game (void)
@@ -312,8 +302,6 @@ static void exit_game (void)
  *
  */
 /**
- * @fn void menu_info (void)
- *
  * @brief Opens the information menu.
  */
 void menu_info (void)
@@ -502,7 +490,6 @@ static void info_cargo_menu( unsigned int parent, char* str )
    cargo_update(wid, NULL);
 }
 /**
- * @fn static void cargo_update( unsigned int wid, char* str )
  * @brief Updates the player's cargo in the cargo menu.
  *    @param str Unused.
  */
@@ -522,7 +509,6 @@ static void cargo_update( unsigned int wid, char* str )
       window_enableButton( wid, "btnJettisonCargo" );
 }
 /**
- * @fn static void cargo_jettison( unsigned int wid, char* str )
  * @brief Makes the player jettison the currently selected cargo.
  *    @param str Unused.
  */
@@ -613,7 +599,6 @@ static void mission_menu_genList( unsigned int wid, int first )
    mission_menu_update(wid ,NULL);
 }
 /**
- * @fn static void mission_menu_update( unsigned int wid, char* str )
  * @brief Updates the mission menu mission information based on what's selected.
  *    @param str Unusued.
  */
@@ -638,7 +623,6 @@ static void mission_menu_update( unsigned int wid, char* str )
    window_enableButton( wid, "btnAbortMission" );
 }
 /**
- * @fn static void mission_menu_abort( unsigned int wid, char* str )
  * @brief Aborts a mission in the mission menu.
  *    @param str Unused.
  */
@@ -667,6 +651,7 @@ static void mission_menu_abort( unsigned int wid, char* str )
          mission_cleanup( misn );
          memmove( misn, &player_missions[pos+1], 
                sizeof(Mission) * (MISSION_MAX-pos-1) );
+         memset( &player_missions[MISSION_MAX-1], 0, sizeof(Mission) );
       }
 
       /* Regenerate list. */
@@ -677,8 +662,6 @@ static void mission_menu_abort( unsigned int wid, char* str )
 
 
 /**
- * @fn void menu_death (void)
- *
  * @brief Player death menu, appears when player got creamed.
  */
 void menu_death (void)

@@ -405,7 +405,8 @@ void mission_sysMark (void)
    space_clearMarkers();
 
    for (i=0; i<MISSION_MAX; i++) {
-      if (player_missions[i].sys_marker != NULL) {
+      if ((player_missions[i].id != 0) &&
+            (player_missions[i].sys_marker != NULL)) {
          sys = system_get(player_missions[i].sys_marker);
          sys_setFlag(sys,SYSTEM_MARKED);
       }
@@ -522,26 +523,16 @@ void missions_update( const double dt )
 void mission_cleanup( Mission* misn )
 {
    int i;
-   if (misn->id != 0) {
+   if (misn->id != 0)
       hook_rmParent( misn->id ); /* remove existing hooks */
-      misn->id = 0;
-   }
-   if (misn->title != NULL) {
+   if (misn->title != NULL)
       free(misn->title);
-      misn->title = NULL;
-   }
-   if (misn->desc != NULL) {
+   if (misn->desc != NULL)
       free(misn->desc);
-      misn->desc = NULL;
-   }
-   if (misn->reward != NULL) {
+   if (misn->reward != NULL)
       free(misn->reward);
-      misn->reward = NULL;
-   }
-   if (misn->sys_marker != NULL) {
+   if (misn->sys_marker != NULL)
       free(misn->sys_marker);
-      misn->sys_marker = NULL;
-   }
    if (misn->cargo != NULL) {
       for (i=0; i<misn->ncargo; i++) { /* must unlink all the cargo */
          if (player != NULL) /* Only remove if player exists. */
@@ -549,20 +540,16 @@ void mission_cleanup( Mission* misn )
          mission_unlinkCargo( misn, misn->cargo[i] );
       }
       free(misn->cargo);
-      misn->cargo = NULL;
-      misn->ncargo = 0;
    }
    for (i=0; i<MISSION_TIMER_MAX; i++) {
-      misn->timer[i] = 0.;
-      if (misn->tfunc[i] != NULL) {
+      if (misn->tfunc[i] != NULL)
          free(misn->tfunc[i]);
-         misn->tfunc[i] = NULL;
-      }
    }
-   if (misn->L) {
+   if (misn->L)
       lua_close(misn->L);
-      misn->L = NULL;
-   }
+
+   /* Clear the memory. */
+   memset( misn, 0, sizeof(Mission) );
 }
 
 

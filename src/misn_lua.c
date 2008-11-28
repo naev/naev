@@ -369,6 +369,7 @@ static int misn_runTopStack( Mission *misn, char *func)
          if (cur_mission == &player_missions[i]) {
             memmove( &player_missions[i], &player_missions[i+1],
                   sizeof(Mission) * (MISSION_MAX-i-1) );
+            memset( &player_missions[MISSION_MAX-1], 0, sizeof(Mission) );
             break;
          }
    }
