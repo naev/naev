@@ -81,8 +81,6 @@ int missions_loadActive( xmlNodePtr parent );
 
 
 /**
- * @fn static unsigned int mission_genID (void)
- *
  * @brief Generates a new id for the mission.
  *
  *    @return New id for the mission.
@@ -101,8 +99,6 @@ static unsigned int mission_genID (void)
 }
 
 /**
- * @fn int mission_getID( char* name )
- *
  * @brief Gets id from mission name.
  *
  *    @param name Name to match.
@@ -122,8 +118,6 @@ int mission_getID( char* name )
 
 
 /**
- * @fn MissionData* mission_get( int id )
- *
  * @brief Gets a MissionData based on ID.
  *
  *    @param id ID to match.
@@ -137,8 +131,6 @@ MissionData* mission_get( int id )
 
 
 /**
- * @fn static int mission_init( Mission* mission, MissionData* misn, int load )
- *
  * @brief Initializes a mission.
  *
  *    @param mission Mission to initialize.
@@ -203,8 +195,6 @@ static int mission_init( Mission* mission, MissionData* misn, int load )
 
 
 /**
- * @fn int mission_accept( Mission* mission )
- *
  * @brief Small wrapper for misn_run.
  *
  *    @param mission Mission to accept.
@@ -222,8 +212,6 @@ int mission_accept( Mission* mission )
 
 
 /**
- * @fn static int mission_alreadyRunning( MissionData* misn )
- *
  * @brief Checks to see if mission is already running.
  *
  *    @param misn Mission to check if is already running.
@@ -241,8 +229,6 @@ static int mission_alreadyRunning( MissionData* misn )
 
 static lua_State* mission_cond_L = NULL; /**< Mission conditional Lua state. */
 /**
- * @fn static int mission_meetCond( MissionData* misn )
- *
  * @brief Checks to see if the mission conditional data is met.
  *
  *    @param misn Mission to check.
@@ -304,8 +290,6 @@ static int mission_meetCond( MissionData* misn )
 
 
 /**
- * @fn static int mission_meetReq( int mission, int faction, char* planet, char* sysname )
- *
  * @brief Checks to see if a mission meets the requirements.
  *
  *    @param mission ID of the mission to check.
@@ -349,8 +333,6 @@ static int mission_meetReq( int mission, int faction, char* planet, char* sysnam
 
 
 /**
- * @fn void missions_run( int loc, int faction, char* planet, char* sysname )
- *
  * @brief Runs missions matching location, all Lua side and one-shot.
  *
  *    @param loc Location to match.
@@ -469,8 +451,6 @@ int mission_linkCargo( Mission* misn, unsigned int cargo_id )
 
 
 /**
- * @fn void mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
- *
  * @brief Unlinks cargo from the mission, removes it from the player.
  *
  *    @param misn Mission to unlink cargo from.
@@ -535,8 +515,6 @@ void missions_update( const double dt )
 
 
 /**
- * @fn void mission_cleanup( Mission* misn )
- *
  * @brief Cleans up a mission.
  *
  *    @param misn Mission to clean up.
@@ -589,8 +567,6 @@ void mission_cleanup( Mission* misn )
 
 
 /**
- * @fn static void mission_freeData( MissionData* mission )
- *
  * @brief Frees MissionData.
  *
  *    @param mission MissionData to free.
@@ -609,8 +585,6 @@ static void mission_freeData( MissionData* mission )
 
 
 /**
- * @fn static int mission_matchFaction( MissionData* misn, int faction )
- *
  * @brief Checks to see if a mission matches the faction requirements.
  *
  *    @param misn Mission to check.
@@ -674,8 +648,6 @@ Mission* missions_computer( int *n, int faction, char* planet, char* sysname )
 
 
 /**
- * @fn static int mission_location( char* loc )
- *
  * @brief Gets location based on a human readable string.
  *
  *    @param loc String to get the location of.
@@ -695,8 +667,6 @@ static int mission_location( char* loc )
 
 
 /**
- * @fn static MissionData* mission_parse( const xmlNodePtr parent )
- *
  * @brief Parses a node of a mission.
  *
  *    @param parent Node containing the mission.
@@ -765,8 +735,6 @@ static MissionData* mission_parse( const xmlNodePtr parent )
 
 
 /**
- * @fn int missions_load (void)
- *
  * @brief Loads all the mission data.
  *
  *    @return 0 on success.
@@ -813,8 +781,6 @@ int missions_load (void)
 
 
 /**
- * @fn void missions_free (void)
- *
  * @brief Frees all the mission data.
  */
 void missions_free (void)
@@ -837,8 +803,6 @@ void missions_free (void)
 
 
 /**
- * @fn void missions_cleanup (void)
- *
  * @brief Cleans up all the player's active missions.
  */
 void missions_cleanup (void)
@@ -852,9 +816,6 @@ void missions_cleanup (void)
 
 
 /**
- * @fn static int mission_saveData( xmlTextWriterPtr writer,
- *       char *type, char *name, char *value )
- *
  * @brief Persists Lua data.
  *
  *    @param writer XML Writer to use to persist stuff.
@@ -879,8 +840,6 @@ static int mission_saveData( xmlTextWriterPtr writer,
 
 
 /**
- * @fn static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
- *
  * @brief Persists all the mission Lua data.
  *
  * Does not save anything in tables nor functions of any type.
@@ -944,8 +903,6 @@ static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
 
 
 /**
- * @fn static int mission_unpersistData( lua_State *L, xmlNodePtr parent )
- *
  * @brief Unpersists Lua data.
  *
  *    @param L State to unperisist data into.
@@ -999,8 +956,6 @@ static int mission_unpersistData( lua_State *L, xmlNodePtr parent )
 
 
 /**
- * @fn int missions_saveActive( xmlTextWriterPtr writer )
- *
  * @brief Saves the player's active missions.
  *
  *    @param writer XML Write to use to save missions.
@@ -1066,8 +1021,6 @@ int missions_saveActive( xmlTextWriterPtr writer )
 
 
 /**
- * @fn int missions_loadActive( xmlNodePtr parent )
- *
  * @brief Loads the player's active missions from a save.
  *
  *    @param parent Node containing the player's active missions.
@@ -1091,8 +1044,6 @@ int missions_loadActive( xmlNodePtr parent )
 
 
 /**
- * @fn static int missions_parseActive( xmlNodePtr parent )
- *
  * @brief Parses the actual individual mission nodes.
  *
  *    @param parent Parent node to parse.
