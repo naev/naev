@@ -29,6 +29,9 @@
 #define MUSIC_LUA_PATH     "snd/music.lua" /**<  Lua music control file. */
 
 
+#define CHUNK_SIZE         32 /**< Size of a chunk to allocate. */
+
+
 int music_disabled = 0; /**< Whether or not music is disabled. */
 double music_defVolume = 0.8; /**< Music default volume. */
 
@@ -198,6 +201,7 @@ static int music_find (void)
    uint32_t nfiles,i;
    char tmp[64];
    int len;
+   int mem;
 
    if (music_disabled) return 0;
 
@@ -205,13 +209,18 @@ static int music_find (void)
    files = pack_listfiles( data, &nfiles );
 
    /* load the profiles */
-   for (i=0; i<nfiles; i++)
+   mem = 0;
+   for (i=0; i<nfiles; i++) {
       if ((strncmp( files[i], MUSIC_PREFIX, strlen(MUSIC_PREFIX))==0) &&
             (strncmp( files[i] + strlen(files[i]) - strlen(MUSIC_SUFFIX),
                       MUSIC_SUFFIX, strlen(MUSIC_SUFFIX))==0)) {
 
          /* grow the selection size */
-         music_selection = realloc( music_selection, ++nmusic_selection*sizeof(char*));
+         nmusic_selection++;
+         if (nmusic_selection > mem) {
+            mem += CHUNK_SIZE;
+            music_selection = realloc( music_selection, sizeof(char*)*mem);
+         }
 
          /* remove the prefix and suffix */
          len = strlen(files[i]) - strlen(MUSIC_SUFFIX MUSIC_PREFIX);
@@ -221,6 +230,8 @@ static int music_find (void)
          /* give it the new name */
          music_selection[nmusic_selection-1] = strdup(tmp);
       }
+   }
+   music_selection = realloc( music_selection, sizeof(char*)*nmusic_selection);
 
    /* free the char* allocated by pack */
    for (i=0; i<nfiles; i++)
