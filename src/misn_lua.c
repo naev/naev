@@ -203,8 +203,6 @@ static const luaL_reg diff_cond_methods[] = {
 
 
 /**
- * @fn int misn_loadLibs( lua_State *L )
- *
  * @brief Registers all the mission libraries.
  *
  *    @param L Lua state.
@@ -228,8 +226,6 @@ int misn_loadLibs( lua_State *L )
    return 0;
 }
 /**
- * @fn int misn_loadCondLibs( lua_State *L )
- *
  * @brief Registers all the mission conditional libraries.
  *
  *    @param L Lua state.
@@ -384,8 +380,6 @@ static int misn_runTopStack( Mission *misn, char *func)
 
 
 /**
- * @fn int var_save( xmlTextWriterPtr writer )
- *
  * @brief Saves the mission variables.
  *
  *    @param writer XML Writer to use.
@@ -430,8 +424,6 @@ int var_save( xmlTextWriterPtr writer )
 
 
 /**
- * @fn int var_load( xmlNodePtr parent )
- *
  * @brief Loads the vars from XML file.
  *
  *    @param parent Parent node containing the variables.
@@ -486,8 +478,6 @@ int var_load( xmlNodePtr parent )
 
 
 /**
- * @fn static int var_add( misn_var *new_var )
- *
  * @brief Adds a var to the stack, strings will be SHARED, don't free.
  *
  *    @param new_var Variable to add.
@@ -533,8 +523,6 @@ static int var_add( misn_var *new_var )
  * @{
  */
 /**
- * @fn static int misn_setTitle( lua_State *L )
- *
  * @brief setTitle( string title )
  *
  * Sets the current mission title.
@@ -552,8 +540,6 @@ static int misn_setTitle( lua_State *L )
    return 0;
 }
 /**
- * @fn static int misn_setDesc( lua_State *L )
- *
  * @brief setDesc( string desc )
  *
  * Sets the current mission description.
@@ -572,8 +558,6 @@ static int misn_setDesc( lua_State *L )
    return 0;
 }
 /**
- * @fn static int misn_setReward( lua_State *L )
- *
  * @brief setReward( string reward )
  *
  * Sets the current mission reward description.
@@ -592,8 +576,6 @@ static int misn_setReward( lua_State *L )
    return 0;
 }
 /**
- * @fn static int misn_setMarker( lua_State *L )
- *
  * @brief setMarker( [system sys )
  *
  * Sets the mission marker on the system.  If no parameters are passed it
@@ -623,8 +605,6 @@ static int misn_setMarker( lua_State *L )
    return 0;
 }
 /**
- * @fn static int misn_factions( lua_State *L )
- *
  * @brief table factions( nil )
  *
  * Gets the factions the mission is available for.
@@ -650,8 +630,6 @@ static int misn_factions( lua_State *L )
    return 1;
 }
 /**
- * @fn static int misn_accept( lua_State *L )
- *
  * @brief bool accept( nil )
  *
  * Attempts to accept the mission.
@@ -680,8 +658,6 @@ static int misn_accept( lua_State *L )
    return 1;
 }
 /**
- * @fn static int misn_finish( lua_State *L )
- *
  * @brief finish( bool properly )
  *
  * Finishes the mission.
@@ -714,8 +690,6 @@ static int misn_finish( lua_State *L )
 }
 
 /**
- * @fn static int misn_timerStart( lua_State *L )
- *
  * @brief number timerStart( string func, number delay )
  *
  * Starts a timer.
@@ -759,8 +733,6 @@ static int misn_timerStart( lua_State *L )
 }
 
 /**
- * @fn static int misn_timerStop( lua_State *L )
- *
  * @brief timerStop( number t )
  *
  * Stops a timer previously started with timerStart().
@@ -810,8 +782,6 @@ static int misn_timerStop( lua_State *L )
  * @endcode
  */
 /**
- * @fn int var_checkflag( char* str )
- *
  * @brief Checks to see if a mission var exists.
  *
  *    @param str Name of the mission var.
@@ -827,7 +797,6 @@ int var_checkflag( char* str )
    return 0;
 }
 /**
- * @fn static int var_peek( lua_State *L )
  * @ingroup VAR
  *
  * @brief misn_var peek( string name )
@@ -873,7 +842,6 @@ static int var_peek( lua_State *L )
    return 1;
 }
 /**
- * @fn static int var_pop( lua_State *L )
  * @ingroup VAR
  *
  * @brief pop( string name )
@@ -906,7 +874,6 @@ static int var_pop( lua_State *L )
    return 0;
 }
 /**
- * @fn static int var_push( lua_State *L )
  * @ingroup VAR
  *
  * @brief push( string name, value )
@@ -954,8 +921,6 @@ static int var_push( lua_State *L )
    return 0;
 }
 /**
- * @fn static void var_free( misn_var* var )
- *
  * @brief Frees a mission variable.
  *
  *    @param var Mission variable to free.
@@ -981,8 +946,6 @@ static void var_free( misn_var* var )
    }
 }
 /**
- * @fn void var_cleanup (void)
- *
  * @brief Cleans up all the mission variables.
  */
 void var_cleanup (void)
@@ -1013,8 +976,6 @@ void var_cleanup (void)
  * @{
  */
 /**
- * @fn static int player_getname( lua_State *L )
- *
  * @brief string name( nil )
  *
  * Gets the player's name.
@@ -1027,8 +988,6 @@ static int player_getname( lua_State *L )
    return 1;
 }
 /**
- * @fn static int player_shipname( lua_State *L )
- *
  * @brief string ship( nil )
  *
  * Gets the player's ship's name.
@@ -1041,8 +1000,6 @@ static int player_shipname( lua_State *L )
    return 1;
 }
 /**
- * @fn static int player_freeSpace( lua_State *L )
- *
  * @brief number freeCargo( nil )
  *
  * Gets the free cargo space the player has.
@@ -1055,8 +1012,6 @@ static int player_freeSpace( lua_State *L )
    return 1;
 }
 /**
- * @fn static int player_addCargo( lua_State *L )
- *
  * @brief number addCargo( string cargo, number quantity )
  *
  * Adds some mission cargo to the player.  He cannot sell it nor get rid of it
@@ -1086,8 +1041,6 @@ static int player_addCargo( lua_State *L )
    return 1;
 }
 /**
- * @fn static int player_rmCargo( lua_State *L )
- *
  * @brief bool rmCargo( number cargoid )
  *
  * Removes the mission cargo.
@@ -1147,8 +1100,6 @@ static int player_jetCargo( lua_State *L )
    return 1;
 }
 /**
- * @fn static int player_pay( lua_State *L )
- *
  * @brief pay( number amount )
  *
  * Pays the player an amount of money.
@@ -1169,8 +1120,6 @@ static int player_pay( lua_State *L )
    return 0;
 }
 /**
- * @fn static int player_msg( lua_State *L )
- *
  * @brief msg( string message )
  *
  * Sends the player an ingame message.
@@ -1189,8 +1138,6 @@ static int player_msg( lua_State *L )
    return 0;
 }
 /**
- * @fn static int player_modFaction( lua_State *L )
- *
  * @brief modFaction( string faction, number mod )
  *
  * Increases the player's standing to a faction by an amount.  This will
@@ -1216,8 +1163,6 @@ static int player_modFaction( lua_State *L )
    return 0;
 }
 /**
- * @fn static int player_modFactionRaw( lua_State *L )
- *
  * @brief modFactionRaw( string faction, number mod )
  *
  * Increases the player's standing to a faction by a fixed amount without
@@ -1243,8 +1188,6 @@ static int player_modFactionRaw( lua_State *L )
    return 0;
 }
 /**
- * @fn static int player_getFaction( lua_State *L )
- *
  * @brief number getFaction( string faction )
  *
  * Gets the standing of the player with a certain faction.
@@ -1265,8 +1208,6 @@ static int player_getFaction( lua_State *L )
    return 1;
 }
 /**
- * @fn static int player_getRating( lua_State *L )
- *
  * @brief number, string getRating( nil )
  *
  * Gets the player's combat rating.
@@ -1282,8 +1223,6 @@ static int player_getRating( lua_State *L )
 }
 
 /**
- * @fn static int player_getPosition( lua_State *L )
- *
  * @brief Vec2 getPos( nil )
  *
  * Gets the player's position.
@@ -1300,8 +1239,6 @@ static int player_getPosition( lua_State *L )
 }
 
 /**
- * @fn static int player_getPilot( lua_State *L )
- *
  * @brief Pilot getPilot( nil )
  *
  * Gets the player's associated pilot.
@@ -1333,8 +1270,6 @@ static int player_getPilot( lua_State *L )
  * @endcode
  */
 /**
- * @fn static unsigned int hook_generic( lua_State *L, char* stack, int pos )
- *
  * @brief Creates a mission hook to a certain stack.
  *
  * Basically a generic approach to hooking.
@@ -1367,7 +1302,6 @@ static unsigned int hook_generic( lua_State *L, char* stack, int pos )
    return hook_add( cur_mission->id, func, stack );
 }
 /**
- * @fn static int hook_land( lua_State *L )
  * @ingroup HOOK
  *
  * @brief number land( string func )
@@ -1383,7 +1317,6 @@ static int hook_land( lua_State *L )
    return 0;
 }
 /**
- * @fn static int hook_takeoff( lua_State *L )
  * @ingroup HOOK
  *
  * @brief number takeoff( string func )
@@ -1399,7 +1332,6 @@ static int hook_takeoff( lua_State *L )
    return 0;
 }
 /**
- * @fn static int hook_time( lua_State *L )
  * @ingroup HOOK
  *
  * @brief number time( string func )
@@ -1415,7 +1347,6 @@ static int hook_time( lua_State *L )
    return 0;
 }
 /**
- * @fn static int hook_enter( lua_State *L )
  * @ingroup HOOK
  *
  * @brief number enter( string func )
@@ -1432,7 +1363,6 @@ static int hook_enter( lua_State *L )
    return 0;
 }
 /**
- * @fn static int hook_pilot( lua_State *L )
  * @ingroup HOOK
  *
  * @brief number pilot( Pilot pilot, string type, string func )
@@ -1498,8 +1428,6 @@ static int hook_pilot( lua_State *L )
  * @{
  */
 /**
- * @fn static int diff_applyL( lua_State *L )
- *
  * @brief apply( string name )
  *
  * Applies a diff by name.
@@ -1517,8 +1445,6 @@ static int diff_applyL( lua_State *L )
    return 0;
 }
 /**
- * @fn static int diff_removeL( lua_State *L )
- *
  * @brief remove( string name )
  *
  * Removes a diff by name.
@@ -1536,8 +1462,6 @@ static int diff_removeL( lua_State *L )
    return 0;
 }
 /**
- * @fn static int diff_isappliedL( lua_State *L )
- *
  * @brief bool isApplied( string name )
  *
  * Checks to see if a diff is currently applied.

@@ -65,8 +65,6 @@ int hook_load( xmlNodePtr parent );
 
 
 /**
- * @fn static int hook_run( Hook *hook )
- *
  * @brief Runs a hook.
  *
  *    @param hook Hook to run.
@@ -99,8 +97,6 @@ static int hook_run( Hook *hook )
 
 
 /**
- * @fn unsigned int hook_add( unsigned int parent, char *func, char *stack )
- *
  * @brief Adds a new hook.
  *
  *    @param parent Hook mission parent.
@@ -133,8 +129,6 @@ unsigned int hook_add( unsigned int parent, char *func, char *stack )
 
 
 /**
- * @fn void hook_rm( unsigned int id )
- *
  * @brief Removes a hook.
  *
  *    @param id Identifier of the hook to remove.
@@ -174,8 +168,6 @@ void hook_rm( unsigned int id )
 
 
 /**
- * @fn void hook_rmParent( unsigned int parent )
- *
  * @brief Removes all hooks belonging to parent.
  *
  *    @param parent Parent id to remove all hooks belonging to.
@@ -193,8 +185,6 @@ void hook_rmParent( unsigned int parent )
 
 
 /**
- * @fn int hooks_run( char* stack )
- *
  * @brief Runs all the hooks of stack.
  *
  *    @param stack Stack to run.
@@ -222,8 +212,6 @@ int hooks_run( char* stack )
 
 
 /**
- * @fn void hook_runID( unsigned int id )
- *
  * @brief Runs a single hook by id.
  *
  *    @param id Identifier of the hook to run.
@@ -242,8 +230,6 @@ void hook_runID( unsigned int id )
 
 
 /**
- * @fn static void hook_free( Hook *h )
- *
  * @brief Frees a hook.
  *
  *    @param h Hook to free.
@@ -256,8 +242,6 @@ static void hook_free( Hook *h )
 
 
 /**
- * @fn void hook_cleanup (void)
- *
  * @brief Gets rid of all current hooks.
  */
 void hook_cleanup (void)
@@ -275,8 +259,6 @@ void hook_cleanup (void)
 
 
 /**
- * @fn static int hook_needSave( Hook *h )
- *
  * @brief Checks if a hook needs to be saved.
  *
  *    @param h Hook to check if it should be saved.
@@ -297,8 +279,6 @@ static int hook_needSave( Hook *h )
 
 
 /**
- * @fn int hook_save( xmlTextWriterPtr writer )
- *
  * @brief Saves all the hooks.
  *
  *    @param writer XML Writer to use.
@@ -331,8 +311,6 @@ int hook_save( xmlTextWriterPtr writer )
 
 
 /**
- * @fn int hook_load( xmlNodePtr parent )
- *
  * @brief Loads hooks for a player.
  *
  *    @param parent Parent xml node containing the hooks.
@@ -355,8 +333,6 @@ int hook_load( xmlNodePtr parent )
 
 
 /**
- * @fn static int hook_parse( xmlNodePtr base )
- *
  * @brief Parses an individual hook.
  *
  *    @param base Parent xml node of the hook.
