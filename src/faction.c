@@ -34,6 +34,9 @@
 #define PLAYER_ALLY        70. /**< above this player is considered ally */
 
 
+#define CHUNK_SIZE         32 /**< Size of chunk for allocation. */
+
+
 /**
  * @struct Faction
  *
@@ -69,7 +72,7 @@ static int faction_nstack = 0; /**< Number of factions in the faction stack. */
 /* static */
 static int faction_isFaction( int f );
 static void faction_sanitizePlayer( Faction* faction );
-static Faction* faction_parse( xmlNodePtr parent );
+static int faction_parse( Faction* temp, xmlNodePtr parent );
 static void faction_parseSocial( xmlNodePtr parent );
 /* externed */
 int pfaction_save( xmlTextWriterPtr writer );
@@ -77,8 +80,6 @@ int pfaction_load( xmlNodePtr parent );
 
 
 /**
- * @fn int faction_get( const char* name )
- *
  * @brief Gets a faction ID by name.
  *
  *    @param name Name of the faction to seek.
@@ -99,8 +100,6 @@ int faction_get( const char* name )
 
 
 /**
- * @fn char* faction_name( int f )
- *
  * @brief Get's a factions short name.
  *
  *    @param f Faction to get the name of.
@@ -120,8 +119,6 @@ char* faction_name( int f )
 
 
 /**
- * @fn char* faction_longname( int f )
- *
  * @brief Gets the faction's long name (formal).
  *
  *    @param f Faction to get the name of.
@@ -140,8 +137,6 @@ char* faction_longname( int f )
 
 
 /**
- * @fn glTexture* faction_logoSmall( int f )
- *
  * @brief Gets the faction's small logo.
  *
  *    @param f Faction to get the logo of.
@@ -158,8 +153,6 @@ glTexture* faction_logoSmall( int f )
 
 
 /**
- * @fn static void faction_sanitizePlayer( Faction* faction )
- *
  * @brief Sanitizes player faction standing.
  *
  *    @param faction Faction to sanitize.
@@ -174,8 +167,6 @@ static void faction_sanitizePlayer( Faction* faction )
 
 
 /**
- * @fn void faction_modPlayer( int f, double mod )
- *
  * @brief Modifies the player's standing with a faction.
  *
  * Affects enemies and allies too.
@@ -231,8 +222,6 @@ void faction_modPlayer( int f, double mod )
 
 
 /**
- * @fn void faction_modPlayerRaw( int f, double mod )
- *
  * @brief Modifies the player's standing without affecting others.
  *
  * Does not affect allies nor enemies.
@@ -259,8 +248,6 @@ void faction_modPlayerRaw( int f, double mod )
 
 
 /**
- * @fn double faction_getPlayer( int f )
- *
  * @brief Gets the player's standing with a faction.
  *
  *    @param f Faction to get player's standing from.
@@ -279,8 +266,6 @@ double faction_getPlayer( int f )
 
 
 /**
- * @fn glColour* faction_getColour( int f )
- *
  * @brief Gets the colour of the faction based on it's standing with the player.
  *
  * Used to unify the colour checks all over.
@@ -335,8 +320,6 @@ char *faction_getStandingBroad( double mod )
 
 
 /**
- * @fn int areEnemies( int a, int b)
- *
  * @brief Checks whether two factions are enemies.
  *
  *    @param a Faction A.
@@ -403,8 +386,6 @@ int areEnemies( int a, int b)
 
 
 /**
- * @fn int areAllies( int a, int b )
- *
  * @brief Checks whether two factions are allies or not.
  *
  *    @param a Faction A.
@@ -473,8 +454,6 @@ int areAllies( int a, int b )
 
 
 /**
- * @fn static int faction_isFaction( int f )
- *
  * @brief Checks whether or not a faction is valid.
  *
  *    @param f Faction to check for validity.
@@ -489,21 +468,19 @@ static int faction_isFaction( int f )
 
 
 /**
- * @fn static Faction* faction_parse( xmlNodePtr parent )
- *
  * @brief Parses a single faction, but doesn't set the allies/enemies bit.
  *
  *    @param parent Parent node to extract faction from.
  *    @return Faction created from parent node.
  */
-static Faction* faction_parse( xmlNodePtr parent )
+static int faction_parse( Faction* temp, xmlNodePtr parent )
 {
    xmlNodePtr node;
    int player;
-   Faction* temp;
    char buf[PATH_MAX];
-   
-   temp = CALLOC_ONE(Faction);
+
+   /* Clear memory. */
+   memset( temp, 0, sizeof(Faction) );
 
    temp->name = xml_nodeProp(parent,"name");
    if (temp->name == NULL) WARN("Faction from "FACTION_DATA" has invalid or no name");
@@ -529,13 +506,11 @@ static Faction* faction_parse( xmlNodePtr parent )
 
    if (player==0) DEBUG("Faction '%s' missing player tag.", temp->name);
 
-   return temp;
+   return 0;
 }
 
 
 /**
- * @fn static void faction_parseSocial( xmlNodePtr parent )
- *
  * @brief Parses the social tidbits of a faction: allies and enemies.
  *
  *    @param parent Node containing the faction.
@@ -572,7 +547,7 @@ static void faction_parseSocial( xmlNodePtr parent )
       if (xml_isNode(node,"enemies")) {
          cur = node->xmlChildrenNode;
 
-         do {                           
+         do {
             if (xml_isNode(cur,"enemy")) {
                mod = faction_get(xml_get(cur));
                base->nenemies++;
@@ -587,8 +562,6 @@ static void faction_parseSocial( xmlNodePtr parent )
 
 
 /**
- * @fn void factions_reset (void)
- *
  * @brief Resets the player's standing with the factions to default.
  */
 void factions_reset (void)
@@ -600,21 +573,18 @@ void factions_reset (void)
 
 
 /**
- * @fn int factions_load (void)
- *
  * @brief Loads up all the factions from the data file.
  *
  *    @return 0 on success.
  */
 int factions_load (void)
 {
+   int mem;
    uint32_t bufsize;
    char *buf = pack_readfile(DATA, FACTION_DATA, &bufsize);
 
    xmlNodePtr factions, node;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );
-
-   Faction* temp = NULL;
 
    node = doc->xmlChildrenNode; /* Factions node */
    if (!xml_isNode(node,XML_FACTION_ID)) {
@@ -636,14 +606,23 @@ int factions_load (void)
 
    /* First pass - gets factions */
    node = factions;
+   mem = 0;
    do {
       if (xml_isNode(node,XML_FACTION_TAG)) {
-         temp = faction_parse(node);
-         faction_stack = realloc(faction_stack, sizeof(Faction)*(++faction_nstack));        
-         memcpy(faction_stack+faction_nstack-1, temp, sizeof(Faction));                  
-         free(temp);
+         /* See if must grow memory.  */
+         faction_nstack++;
+         if (faction_nstack > mem) {
+            mem += CHUNK_SIZE;
+            faction_stack = realloc(faction_stack, sizeof(Faction)*mem);
+         }
+
+         /* Load faction. */
+         faction_parse(&faction_stack[faction_nstack-1], node);
       }
    } while (xml_nextNode(node));
+
+   /* Shrink to minimum size. */
+   faction_stack = realloc(faction_stack, sizeof(Faction)*faction_nstack);
 
    /* Second pass - sets allies and enemies */
    node = factions;
@@ -663,8 +642,6 @@ int factions_load (void)
 
 
 /**
- * @fn void factions_free (void)
- *
  * @brief Frees the factions.
  */
 void factions_free (void)
@@ -686,8 +663,6 @@ void factions_free (void)
 
 
 /**
- * @fn int pfaction_save( xmlTextWriterPtr writer )
- *
  * @brief Saves player's standings with the factions.
  *
  *    @param writer The xml writer to use.
@@ -715,8 +690,6 @@ int pfaction_save( xmlTextWriterPtr writer )
 
 
 /**
- * @fn int pfaction_load( xmlNodePtr parent )
- *
  * @brief Loads the player's faction standings.
  *
  *    @param parent Parent xml node to read from.
