@@ -546,7 +546,8 @@ static void faction_parseSocial( xmlNodePtr parent )
                base->allies[base->nallies-1] = mod;
             }
          } while (xml_nextNode(cur));
-         base->allies = realloc(base->allies, sizeof(int)*base->nallies);
+         if (base->nallies > 0)
+            base->allies = realloc(base->allies, sizeof(int)*base->nallies);
       }
 
       /* Grab the enemies */
@@ -565,7 +566,8 @@ static void faction_parseSocial( xmlNodePtr parent )
                base->enemies[base->nenemies-1] = mod;
             }
          } while (xml_nextNode(cur));
-         base->enemies = realloc(base->enemies, sizeof(int)*base->nenemies);
+         if (base->nenemies > 0)
+            base->enemies = realloc(base->enemies, sizeof(int)*base->nenemies);
       }
    } while (xml_nextNode(node));
 }

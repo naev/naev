@@ -1218,6 +1218,8 @@ void outfit_free (void)
          free(o->description);
       if (o->gfx_store)
          gl_freeTexture(o->gfx_store);
+      if (o->license)
+         free(o->license);
       free(o->name);
    }
    free(outfit_stack);
