@@ -521,6 +521,7 @@ static void faction_parseSocial( xmlNodePtr parent )
    char *buf;
    Faction *base;
    int mod;
+   int mem;
 
    buf = xml_nodeProp(parent,"name");
    base = &faction_stack[faction_get(buf)];
@@ -533,29 +534,38 @@ static void faction_parseSocial( xmlNodePtr parent )
       if (xml_isNode(node,"allies")) {
          cur = node->xmlChildrenNode;
 
+         mem = 0;
          do {
             if (xml_isNode(cur,"ally")) {
                mod = faction_get(xml_get(cur));
                base->nallies++;
-               base->allies = realloc(base->allies, sizeof(int)*base->nallies);
+               if (base->nallies > mem) {
+                  mem += CHUNK_SIZE;
+                  base->allies = realloc(base->allies, sizeof(int)*mem);
+               }
                base->allies[base->nallies-1] = mod;
             }
          } while (xml_nextNode(cur));
+         base->allies = realloc(base->allies, sizeof(int)*base->nallies);
       }
 
       /* Grab the enemies */
       if (xml_isNode(node,"enemies")) {
          cur = node->xmlChildrenNode;
 
+         mem = 0;
          do {
             if (xml_isNode(cur,"enemy")) {
                mod = faction_get(xml_get(cur));
                base->nenemies++;
-               base->enemies = realloc(base->enemies, sizeof(int)*base->nenemies);
+               if (base->nenemies > mem) {
+                  mem += CHUNK_SIZE;
+                  base->enemies = realloc(base->enemies, sizeof(int)*mem);
+               }
                base->enemies[base->nenemies-1] = mod;
             }
          } while (xml_nextNode(cur));
-
+         base->enemies = realloc(base->enemies, sizeof(int)*base->nenemies);
       }
    } while (xml_nextNode(node));
 }
