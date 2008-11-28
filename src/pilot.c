@@ -39,6 +39,9 @@
 #define PILOT_CHUNK     32 /**< Chunks to increment pilot_stack by */
 
 
+#define CHUNK_SIZE      32 /**< Size to allocate memory by. */
+
+
 /* ID Generators. */
 static unsigned int pilot_id = PLAYER_ID; /**< Stack of pilot ids to assure uniqueness */
 static unsigned int mission_cargo_id = 0; /**< ID generator for special mission cargo.
@@ -87,7 +90,7 @@ static void pilot_hyperspace( Pilot* pilot );
 void pilot_render( Pilot* pilot ); /* externed in player.c */
 static void pilot_calcCargo( Pilot* pilot );
 void pilot_free( Pilot* p );
-static Fleet* fleet_parse( const xmlNodePtr parent );
+static int fleet_parse( Fleet *temp, const xmlNodePtr parent );
 static void pilot_dead( Pilot* p );
 
 
@@ -1969,21 +1972,22 @@ void pilots_render (void)
 
 
 /**
- * @fn static Fleet* fleet_parse( const xmlNodePtr parent )
- *
  * @brief Parses the fleet node.
  *
+ *    @param temp Fleet to load.
  *    @param parent Parent xml node of the fleet in question.
  *    @return A newly allocated fleet loaded with data in parent node.
  */
-static Fleet* fleet_parse( const xmlNodePtr parent )
+static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
 {
    xmlNodePtr cur, node;
    FleetPilot* pilot;
    char* c;
+   int mem;
    node = parent->xmlChildrenNode;
 
-   Fleet* temp = CALLOC_ONE(Fleet);
+   /* Sane defaults and clean up. */
+   memset( temp, 0, sizeof(Fleet) );
    temp->faction = -1;
 
    temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name"); /* already mallocs */
@@ -1996,10 +2000,20 @@ static Fleet* fleet_parse( const xmlNodePtr parent )
          temp->ai = xml_getStrd(node);
       else if (xml_isNode(node,"pilots")) {
          cur = node->children;     
+         mem = 0;
          do {
             if (xml_isNode(cur,"pilot")) {
-               temp->npilots++; /* pilot count */
-               pilot = MALLOC_ONE(FleetPilot);
+
+               /* See if must grow. */
+               temp->npilots++;
+               if (temp->npilots > mem) {
+                  mem += CHUNK_SIZE;
+                  temp->pilots = realloc(temp->pilots, mem * sizeof(FleetPilot));
+               }
+               pilot = &temp->pilots[temp->npilots-1];
+
+               /* Clear memory. */
+               memset( pilot, 0, sizeof(FleetPilot) );
 
                /* Check for name override */
                xmlr_attr(cur,"name",c);
@@ -2019,14 +2033,13 @@ static Fleet* fleet_parse( const xmlNodePtr parent )
                if (pilot->chance == 0)
                   WARN("Pilot %s in Fleet %s has 0%% chance of appearing",
                      pilot->name, temp->name );
-               if (c!=NULL) free(c); /* free the external malloc */
-
-               /* memory silliness */
-               temp->pilots = realloc(temp->pilots, sizeof(FleetPilot)*temp->npilots);
-               memcpy(temp->pilots+(temp->npilots-1), pilot, sizeof(FleetPilot));
-               free(pilot);
+               if (c!=NULL)
+                  free(c); /* free the external malloc */
             }
          } while (xml_nextNode(cur));
+
+         /* Resize to minimum. */
+         temp->pilots = realloc(temp->pilots, sizeof(FleetPilot)*temp->npilots);
       }
    } while (xml_nextNode(node));
 
@@ -2036,7 +2049,7 @@ static Fleet* fleet_parse( const xmlNodePtr parent )
    MELEMENT(temp->pilots==NULL,"pilots");
 #undef MELEMENT
 
-   return temp;
+   return 0;
 }
 
 
@@ -2049,13 +2062,12 @@ static Fleet* fleet_parse( const xmlNodePtr parent )
  */
 int fleet_load (void)
 {
+   int mem;
    uint32_t bufsize;
    char *buf = pack_readfile(DATA, FLEET_DATA, &bufsize);
 
    xmlNodePtr node;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );
-
-   Fleet* temp = NULL;
 
    node = doc->xmlChildrenNode; /* Ships node */
    if (strcmp((char*)node->name,XML_ID)) {
@@ -2069,14 +2081,22 @@ int fleet_load (void)
       return -1;
    }
 
-   do {  
+   mem = 0;
+   do { 
       if (xml_isNode(node,XML_FLEET)) {
-         temp = fleet_parse(node);
-         fleet_stack = realloc(fleet_stack, sizeof(Fleet)*(++nfleets));
-         memcpy(fleet_stack+nfleets-1, temp, sizeof(Fleet));
-         free(temp);
+         /* See if memory must grow. */
+         nfleets++;
+         if (nfleets > mem) {
+            mem += CHUNK_SIZE;
+            fleet_stack = realloc(fleet_stack, sizeof(Fleet) * mem);
+         }
+
+         /* Load the fleet. */
+         fleet_parse( &fleet_stack[nfleets-1], node );
       }
    } while (xml_nextNode(node));
+   /* Shrink to minimum. */
+   fleet_stack = realloc(fleet_stack, sizeof(Fleet) * nfleets);
 
    xmlFreeDoc(doc);
    free(buf);
