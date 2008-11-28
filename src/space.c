@@ -947,6 +947,9 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
 
+   /* Some postprocessing. */
+   planet->cur_prodfactor = planet->prodfactor;
+
 /* 
  * verification
  */

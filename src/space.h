@@ -83,7 +83,8 @@ typedef struct Planet_ {
    PlanetClass class; /**< planet type */
    int faction; /**< planet faction */
    int population; /**< Population of the planet. */
-   double prodfactor; /**< Production factor of the planet. */
+   double prodfactor; /**< Default Production factor of the planet. */
+   double cur_prodfactor; /**< Current real production factor of the planet. */
   
    /* Landing details. */
    char* description; /**< planet description */

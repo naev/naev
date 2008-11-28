@@ -29,6 +29,7 @@
 #include "pilot.h"
 #include "rng.h"
 #include "space.h"
+#include "ntime.h"
 
 
 #define XML_COMMODITY_ID      "Commodities" /**< XML document identifier */
@@ -43,6 +44,7 @@
 #define ECON_SELF_RES      3. /**< Additional resistance for the self node. */
 #define ECON_FACTION_MOD   0.1 /**< Modifier on Base for faction standings. */
 #define ECON_PROD_MODIFIER 500000. /**< Production modifier, divide production by this amount. */
+#define ECON_PROD_VAR      0.01 /**< Defines the variability of production. */
 
 
 /* commodity stack */
@@ -355,18 +357,39 @@ static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
    (void) price;
    int i;
    double I;
-   double p;
+   double prodfactor, p, pp;
+   double ddt;
    Planet *planet;
+
+   ddt = (double)(dt / NTIME_UNIT_LENGTH);
 
    /* Calculate production level. */
    p = 0.;
    for (i=0; i<sys->nplanets; i++) {
       planet = sys->planets[i];
-      if (planet_hasService(planet, PLANET_SERVICE_BASIC))
-         p += planet->prodfactor * sqrt(planet->population);
+      if (planet_hasService(planet, PLANET_SERVICE_BASIC)) {
+         /*
+          * Calculate production.
+          */
+         /* We base off the current production. */
+         prodfactor  = planet->cur_prodfactor;
+         /* Add a variability factor based on the gaussian distribution. */
+         prodfactor += ECON_PROD_VAR *
+               NormalInverse( RNGF()*0.90 + 0.05 )*ddt;
+         /* Add a tendency to return to the planet's base production. */
+         prodfactor -= ECON_PROD_VAR *
+               (planet->cur_prodfactor - prodfactor)*ddt;
+         /* Save for next iteration. */
+         planet->cur_prodfactor = prodfactor;
+         /* We base off the sqrt of the population otherwise it changes too fast. */
+         p += prodfactor * sqrt(planet->population);
+
+         /* Add it to the current system production. */
+         p += pp;
+      }
    }
 
-   /* Intensity is the production minus the consumption. */
+   /* The intensity is basically the modified production. */
    I = p / ECON_PROD_MODIFIER;
 
    return I;
@@ -404,7 +427,7 @@ static int econ_createGMatrix (void)
          R = 1./R; /* Must be inverted. */
          Rsum += R;
          
-         /* Matrix is symetrical. */
+         /* Matrix is symetrical and non-diagonal is negative. */
          ret = cs_entry( M, i, sys->jumps[j], -R );
          if (ret != 1)
             WARN("Unable to enter CSparse Matrix Cell.");
@@ -414,7 +437,8 @@ static int econ_createGMatrix (void)
       }
 
       /* Set the diagonal. */
-      cs_entry( M, i, i, Rsum + 1./ECON_SELF_RES );
+      Rsum += 1./ECON_SELF_RES; /* We add a resistence for dampening. */
+      cs_entry( M, i, i, Rsum );
    }
 
    /* Compress M matrix and put into G. */
@@ -433,6 +457,8 @@ static int econ_createGMatrix (void)
 
 /**
  * @brief Initializes the economy.
+ *
+ *    @return 0 on success.
  */
 int economy_init (void)
 {
@@ -445,15 +471,11 @@ int economy_init (void)
       systems_stack[i].prices = calloc(econ_nprices, sizeof(double));
    }
 
-   /* Create the resistence matrix. */
-   if (econ_createGMatrix())
-      return -1;
-
-   /* Initialize the prices. */
-   economy_update( 0 );
-
    /* Mark economy as initialized. */
    econ_initialized = 1;
+
+   /* Refresh economy. */
+   economy_refresh();
 
    return 0;
 }
