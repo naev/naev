@@ -6,13 +6,13 @@
       *) Interference
       *) Asteroids
    *) Real news
+   *) Event system
+      *) Like mission system, but they occur naturally/randomly
+      *) Has similar power to mission system
 
 
    MAJOR
 
-   *) Event system
-      *) Like mission system, but they occur naturally/randomly
-      *) Has similar power to mission system
    *) Unique pilot system (besides mission uniques)
    *) Escorts available for hire
    *) Better AI
