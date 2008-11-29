@@ -272,7 +272,7 @@
   </fleets>
   <jumps>
    <jump>Coriolis</jump>
-   <jump>NCG-7789</jump>
+   <jump>NGC-7789</jump>
    <jump>Eridani</jump>
    <jump>NGC-7693</jump>
    <jump>Alteris</jump>
@@ -462,7 +462,7 @@
    <stars>200</stars>
   </general>
  </ssys>
- <ssys name="NCG-8037">
+ <ssys name="NGC-8037">
   <fleets/>
   <jumps>
    <jump>Arcanis</jump>
@@ -539,7 +539,7 @@
    <fleet chance="20">FLF Pacifier</fleet>
   </fleets>
   <jumps>
-   <jump>NCG-8037</jump>
+   <jump>NGC-8037</jump>
    <jump>Tau Prime</jump>
    <jump>Zylex</jump>
    <jump>Raelid</jump>
@@ -1137,7 +1137,7 @@
    <stars>200</stars>
   </general>
  </ssys>
- <ssys name="NCG-7789">
+ <ssys name="NGC-7789">
   <fleets>
    <fleet chance="50">Pirate Hyena</fleet>
    <fleet chance="30">Pirate Hyena</fleet>
@@ -1231,7 +1231,7 @@
  <ssys name="Sigur">
   <fleets/>
   <jumps>
-   <jump>NCG-8037</jump>
+   <jump>NGC-8037</jump>
    <jump>Zylex</jump>
    <jump>Doeston</jump>
    <jump>Arcanis</jump>
