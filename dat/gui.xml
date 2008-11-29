@@ -2,7 +2,7 @@
 <GUIs>
  <gui gfx="minimal" name="minimal">
   <offset x="0" y="0" />
-  <radar type="circle" w="80" x="83" y="90" />
+  <radar type="circle" w="82" x="83" y="90" />
   <health>
    <shield w="103" h="7" x="68" y="185" />
    <armour w="103" h="7" x="68" y="199" />
