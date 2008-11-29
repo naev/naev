@@ -600,7 +600,7 @@ static void render_all (void)
    player_render();
    spfx_render(SPFX_LAYER_FRONT);
    space_renderOverlay(dt);
-   player_renderGUI();
+   player_renderGUI(dt);
    display_fps(cur_dt); /* Exception. */
 }
 

@@ -123,12 +123,9 @@ void weapon_minimap( const double res, const double w,
 
 #define PIXEL(x,y)      \
    if ((shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
-         (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y))<rc)))   \
+         (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) <= rc)))   \
    glVertex2i((x),(y)) /**< Sets a pixel if within range. */
 /**
- * @fn void weapon_minimap( const double res, const double w,
- *       const double h, const RadarShape shape )
- *
  * @brief Draws the minimap weapons (used in player.c).
  *
  *    @param res Minimap resolution.
@@ -142,8 +139,14 @@ void weapon_minimap( const double res, const double w,
    int i, rc;
    double x, y;
 
-   if (shape==RADAR_CIRCLE) rc = (int)(w*w);
+   /* Begin the points. */
+   glBegin(GL_POINTS);
+   COLOUR(cRadar_weap);
 
+   if (shape==RADAR_CIRCLE)
+      rc = (int)(w*w);
+
+   /* Draw the points for weapons on all layers. */
    for (i=0; i<nwbackLayer; i++) {
       x = (wbackLayer[i]->solid->pos.x - player->solid->pos.x) / res;
       y = (wbackLayer[i]->solid->pos.y - player->solid->pos.y) / res;
@@ -154,6 +157,9 @@ void weapon_minimap( const double res, const double w,
       y = (wfrontLayer[i]->solid->pos.y - player->solid->pos.y) / res;
       PIXEL(x,y);
    }
+
+   /* End the points. */
+   glEnd(); /* GL_POINTS */
 }
 #undef PIXEL
 

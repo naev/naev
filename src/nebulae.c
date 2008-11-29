@@ -84,8 +84,6 @@ static SDL_Surface* nebu_surfaceFromNebulaeMap( float* map, const int w, const i
 
 
 /**
- * @fn int nebu_init (void)
- *
  * @brief Initializes the nebulae.
  *
  *    @return 0 on success.
@@ -142,8 +140,6 @@ int nebu_init (void)
 
 
 /**
- * @fn static void nebu_loadTexture( SDL_Surface *sur, int w, int h, GLuint tex )
- *
  * @brief Loads sur into tex, checks for expected size of w and h.
  *
  *    @param sur Surface to load into texture.
@@ -180,8 +176,6 @@ static void nebu_loadTexture( SDL_Surface *sur, int w, int h, GLuint tex )
 
 
 /**
- * @fn void nebu_exit (void)
- *
  * @brief Cleans up the nebu subsystem.
  */
 void nebu_exit (void)
@@ -196,8 +190,6 @@ void nebu_exit (void)
 
 
 /**
- * @fn void nebu_render( const double dt )
- *
  * @brief Renders the nebulae.
  *
  *    @param dt Current delta tick.
@@ -317,8 +309,6 @@ void nebu_render( const double dt )
 
 
 /**
- * @fn void nebu_renderOverlay( const double dt )
- *
  * @brief Renders the nebulae overlay (hides what player can't see).
  *
  *    @param dt Current delta tick.
@@ -425,8 +415,6 @@ void nebu_renderOverlay( const double dt )
 
 
 /**
- * @fn void nebu_renderPuffs( const double dt, int below_player )
- *
  * @brief Renders the puffs.
  *
  *    @param dt Current delta tick.
@@ -470,8 +458,6 @@ void nebu_renderPuffs( const double dt, int below_player )
 
 
 /**
- * @fn void nebu_prep( double density, double volatility )
- *
  * @brief Prepares the nebualae to be rendered.
  *
  *    @param density Density of the nebulae (0-1000).
@@ -502,8 +488,6 @@ void nebu_prep( double density, double volatility )
 
 
 /**
- * @fn void nebu_forceGenerate (void)
- *
  * @brief Forces generation of new nebulae on init.
  */
 void nebu_forceGenerate (void)
@@ -513,8 +497,6 @@ void nebu_forceGenerate (void)
 
 
 /**
- * @fn static int nebu_generate (void)
- *
  * @brief Generates the nebulae.
  *
  *    @return 0 on success.
@@ -554,8 +536,6 @@ static int nebu_generate (void)
 
 
 /**
- * @fn static void nebu_generatePuffs (void)
- *
  * @brief Generates nebulae puffs.
  */
 static void nebu_generatePuffs (void)
@@ -584,8 +564,6 @@ static void nebu_generatePuffs (void)
 
 
 /**
- * @fn static int nebu_checkCompat( const char* file )
- *
  * @brief Checks the validity of a nebulae.
  *
  *    @param file Path of the nebulae to check (relative to base directory).
@@ -601,9 +579,6 @@ static int nebu_checkCompat( const char* file )
 
 
 /**
- * @fn static int saveNebulae( float *map, const uint32_t w, 
- *                             const uint32_t h, const char* file )
- *
  * @brief Saves a nebulae.
  *
  *    @param map Nebulae map to save.
@@ -634,8 +609,6 @@ static int saveNebulae( float *map, const uint32_t w, const uint32_t h, const ch
 
 
 /**
- * @fn static SDL_Surface* loadNebulae( const char* file )
- *
  * @brief Loads the nebuale from file.
  *
  *    @param file Path of the nebulae to load.  Relative to base directory.
@@ -660,9 +633,6 @@ static SDL_Surface* loadNebulae( const char* file )
 
 
 /**
- * @fn static SDL_Surface* nebu_surfaceFromNebulaeMap( float* map,
- *                         const int w, const int h )
- *
  * @brief Generates a SDL_Surface from a 2d nebulae map
  *
  *    @param map Nebulae map to use.

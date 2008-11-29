@@ -397,6 +397,62 @@ void TCOD_noise_delete(perlin_data_t* noise) {
 
 
 /**
+ * @brief Generates radar interference.
+ *
+ *    @param w Width to generate.
+ *    @param h Height to generate.
+ *    @param rug Rugosity of the interference.
+ *    @return The map generated.
+ */
+float* noise_genRadarInt( const int w, const int h, float rug )
+{
+   int x, y;
+   float f[2];
+   int octaves;
+   float hurst;
+   float lacunarity;
+   perlin_data_t* noise;
+   float *map;
+   float value;
+
+   /* pretty default values */
+   octaves = 3;
+   hurst = TCOD_NOISE_DEFAULT_HURST;
+   lacunarity = TCOD_NOISE_DEFAULT_LACUNARITY;
+
+   /* create noise and data */
+   noise = TCOD_noise_new( 2, hurst, lacunarity );
+   map = malloc(sizeof(float)*w*h);
+   if (map == NULL) {
+      WARN("Out of memory!");
+      return NULL;
+   }
+
+   /* Start to create the nebulae */
+   for (y=0; y<h; y++) {
+
+      f[1] = rug * (float)y / (float)h;
+      for (x=0; x<w; x++) {
+
+         f[0] = rug * (float)x / (float)w;
+
+         /* Get the 2d noise. */
+         value = TCOD_noise_get2( noise, f );
+
+         /* Set the value to [0,1]. */
+         map[y*w + x] = (value + 1.) / 2.;
+      }
+   }
+
+   /* Clean up */
+   TCOD_noise_delete( noise );
+
+   /* Results */
+   return map;
+}
+
+
+/**
  * @brief Generates a 3d nebulae map.
  *
  *    @param w Width of the map.

@@ -147,7 +147,7 @@ int space_sysLoad( xmlNodePtr parent );
 
 #define PIXEL(x,y)      \
    if ((shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
-         (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y))<rc)))   \
+         (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) <= rc)))   \
    glVertex2i((x),(y))
 /**
  * @brief Draws the planets in the minimap.  Used by player.c.

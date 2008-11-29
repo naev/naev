@@ -39,6 +39,7 @@
 #include "unidiff.h"
 #include "comm.h"
 #include "intro.h"
+#include "perlin.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
@@ -57,6 +58,10 @@
 #define PLAYER_RESERVED_CHANNELS 6 /**< Number of channels to reserve for player sounds. */
 #define PLAYER_ENGINE_CHANNEL    8 /**< Player channel for engine noises. */
 #define PLAYER_GUI_CHANNEL       9 /**< Player channel. */
+
+
+#define INTERFERENCE_LAYERS      16 /**< Number of interference layers. */
+#define INTERFERENCE_CHANGE_DT   0.1 /**< Speed to change at. */
 
 
 /*
@@ -107,6 +112,10 @@ int hyperspace_target = -1; /**< Targetted hyperspace route. -1 is none. */
 /* for death and such */
 static unsigned int player_timer = 0; /**< For death and such. */
 static Vector2d player_cam; /**< For death and such. */
+/* for interference. */
+static int interference_layer = 5; /**< Layer of the current interference. */
+static double interference_alpha = 0.; /**< Alpha of the current interference layer. */
+static double interference_t = 0.; /**< Interference timer to control transitions. */
 
 
 /* 
@@ -143,9 +152,10 @@ typedef struct Radar_ {
    double x; /**< X position. */
    double y; /**< Y Position */
    double w; /**< Width. */
-   double h; /**< Hegiht. */
+   double h; /**< Height. */
    RadarShape shape; /**< Shape */
    double res; /**< Resolution */
+   glTexture *interference[INTERFERENCE_LAYERS]; /**< Interference texture. */
 } Radar;
 /* radar resolutions */
 #define RADAR_RES_MAX      100. /**< Maximum radar resolution. */
@@ -251,15 +261,18 @@ static void player_newShipMake( char *name );
 /* sound */
 static void player_initSound (void);
 /* gui */
+static void gui_createInterference (void);
 static void rect_parseParam( const xmlNodePtr parent,
       char *name, double *param );
 static void rect_parse( const xmlNodePtr parent,
       double *x, double *y, double *w, double *h );
 static int gui_parse( const xmlNodePtr parent, const char *name );
+static void gui_cleanup (void);
+/* Render GUI. */
 static void gui_renderPilot( const Pilot* p );
 static void gui_renderHealth( const glColour* c,
       const Rect* r, const glTexture *tex, const double w );
-static void gui_cleanup (void);
+static void gui_renderInterference( double dt );
 /* save/load */
 static int player_saveShip( xmlTextWriterPtr writer, 
       Pilot* ship, char* loc );
@@ -960,13 +973,11 @@ void player_render (void)
 }
 
 
+static int can_jump = 0; /**< Stores whether or not the player is able to jump. */
 /**
- * @fn void player_renderGUI (void)
- *
  * @brief Renders the player's GUI.
  */
-static int can_jump = 0; /**< Stores whether or not the player is able to jump. */
-void player_renderGUI (void)
+void player_renderGUI( double dt )
 {
    int i, j;
    double x, y;
@@ -1039,16 +1050,16 @@ void player_renderGUI (void)
    /*
     * weapons
     */
-   glBegin(GL_POINTS);
-      COLOUR(cRadar_weap);
-      weapon_minimap(gui.radar.res, gui.radar.w, gui.radar.h, gui.radar.shape);
-   glEnd(); /* GL_POINTS */
+   weapon_minimap(gui.radar.res, gui.radar.w, gui.radar.h, gui.radar.shape);
 
 
    /* render the pilot_nstack */
-   for (j=0, i=1; i<pilot_nstack; i++) { /* skip the player */
-      if (pilot_stack[i]->id == player->target) j = i;
-      else gui_renderPilot(pilot_stack[i]);
+   j = 0;
+   for (i=1; i<pilot_nstack; i++) { /* skip the player */
+      if (pilot_stack[i]->id == player->target)
+         j = i;
+      else
+         gui_renderPilot(pilot_stack[i]);
    }
    /* render the targetted pilot */
    if (j!=0)
@@ -1065,6 +1076,9 @@ void player_renderGUI (void)
    glEnd(); /* GL_LINES */
 
    glPopMatrix(); /* GL_PROJECTION */
+
+   /* Intereference. */
+   gui_renderInterference(dt);
 
 
    /*
@@ -1325,6 +1339,49 @@ void player_renderGUI (void)
    }
 }
 
+
+/**
+ * @brief Renders interference if needed.
+ *
+ *    @param dt Current deltatick.
+ */
+static void gui_renderInterference( double dt )
+{
+   glColour c;
+   glTexture *tex;
+   int t;
+
+   /* Must be displaying interference. */
+   if (interference_alpha <= 0.)
+      return;
+
+   /* Calculate frame to draw. */
+   interference_t += dt;
+   if (interference_t > INTERFERENCE_CHANGE_DT) { /* Time to change */
+      t = RNG(0, INTERFERENCE_LAYERS-1);
+      if (t != interference_layer)
+         interference_layer = t;
+      else
+         interference_layer = (interference_layer == INTERFERENCE_LAYERS-1) ?
+               0 : interference_layer+1;
+      interference_t -= INTERFERENCE_CHANGE_DT;
+   }
+
+   /* Render the interference. */
+   c.r = c.g = c.b = 1.;
+   c.a = interference_alpha;
+   tex = gui.radar.interference[interference_layer];
+   if (gui.radar.shape == RADAR_CIRCLE)
+      gl_blitStatic( tex,
+            gui.radar.x - gui.radar.w,
+            gui.radar.y - gui.radar.w, &c );
+   else if (gui.radar.shape == RADAR_RECT)
+      gl_blitStatic( tex,
+            gui.radar.x - gui.radar.w/2,
+            gui.radar.y - gui.radar.h/2, &c );
+}
+
+
 /*
  * renders a pilot
  */
@@ -1358,8 +1415,8 @@ static void gui_renderPilot( const Pilot* p )
          if (gui.radar.shape==RADAR_CIRCLE)  {
             /* We'll create a line. */
             a = ANGLE(x,y);
-            x = gui.radar.w*cos(a);
-            y = gui.radar.w*sin(a);
+            x = gui.radar.w * cos(a);
+            y = gui.radar.w * sin(a);
             sx = 0.85 * x;
             sy = 0.85 * y;
 
@@ -1597,11 +1654,89 @@ static void rect_parse( const xmlNodePtr parent,
 }
 
 
-/*
- * parse a gui node
+/**
+ * @brief Creates teh interference map for the current gui.
  */
+static void gui_createInterference (void)
+{
+   uint8_t raw;
+   int i, j, k;
+   float *map;
+   uint32_t *pix;
+   SDL_Surface *sur;
+   int w,h, hw,hh;
+   float c;
+   int r;
+
+   /* Dimension shortcuts. */
+   if (gui.radar.shape == RADAR_CIRCLE) {
+      w = gui.radar.w*2.;
+      h = w;
+   }
+   else if (gui.radar.shape == RADAR_RECT) {
+      w = gui.radar.w;
+      h = gui.radar.h;
+   }
+
+   for (k=0; k<INTERFERENCE_LAYERS; k++) {
+
+      /* Free the old texture. */
+      if (gui.radar.interference[k] != NULL)
+         gl_freeTexture(gui.radar.interference[k]);
+
+      /* Create the temporary surface. */
+      sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );
+      pix = sur->pixels;
+
+      /* Load the interference map. */
+      map = noise_genRadarInt( w, h, 100. );
+
+      /* Create the texture. */
+      SDL_LockSurface( sur );
+      if (gui.radar.shape == RADAR_CIRCLE) {
+         r = pow2((int)gui.radar.w);
+         hw = w/2;
+         hh = h/2;
+         for (i=0; i<h; i++) {
+            for (j=0; j<w; j++) {
+               /* Must be in circle. */
+               if (pow2(i-hh) + pow2(j-hw) > r)
+                  continue;
+               c = map[i*w + j];
+               raw = 0xff & (uint8_t)((float)0xff * c);
+               memset( &pix[i*w + j], raw, sizeof(uint32_t) );
+               pix[i*w + j] |= AMASK;
+            }
+         }
+      }
+      else if (gui.radar.shape == RADAR_RECT) {
+         for (i=0; i<h*w; i++) {
+            /* Process pixels. */
+            c = map[i];
+            raw = 0xff & (uint8_t)((float)0xff * c);
+            memset( &pix[i], raw, sizeof(uint32_t) );
+            pix[i] |= AMASK;
+         }
+      }
+      SDL_UnlockSurface( sur );
+
+      /* Set the interference. */
+      gui.radar.interference[k] = gl_loadImage( sur );
+
+      /* Clean up. */
+      free(map);
+   }
+}
+
+
 #define RELATIVIZE(a)   \
 {(a).x+=VX(gui.frame); (a).y=VY(gui.frame)+gui.gfx_frame->h-(a).y;}
+/**
+ * @brief Parses a gui node.
+ *
+ *    @param Parent node to parse from.
+ *    @param name Name of the GUI to load.
+ */
 static int gui_parse( const xmlNodePtr parent, const char *name )
 {
    xmlNodePtr cur, node;
@@ -1782,6 +1917,9 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
       }
    } while (xml_nextNode(node));
 
+   /* Some postprocessing. */
+   gui_createInterference();
+
    return 0;
 }
 #undef RELATIVIZE
@@ -1792,6 +1930,8 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
  */
 static void gui_cleanup (void)
 {
+   int i;
+
    /* Free textures. */
    if (gui.gfx_frame != NULL) {
       gl_freeTexture( gui.gfx_frame );
@@ -1821,6 +1961,12 @@ static void gui_cleanup (void)
    if (gui.gfx_fuel != NULL) {
       gl_freeTexture(gui.gfx_fuel);
       gui.gfx_fuel = NULL;
+   }
+   for (i=0; i<INTERFERENCE_LAYERS; i++) {
+      if (gui.radar.interference[i] != NULL) {
+         gl_freeTexture(gui.radar.interference[i]);
+         gui.radar.interference[i] = NULL;
+      }
    }
 }
 
