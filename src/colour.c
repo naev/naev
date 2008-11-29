@@ -58,5 +58,5 @@ glColour cRadar_weap    =  { .r = 0.8, .g = 0.2, .b = 0.2, .a = 1.  }; /**< Weap
 glColour cShield        =  { .r = 0.2, .g = 0.2, .b = 0.8, .a = 1.  }; /**< Shield bar colour. */
 glColour cArmour        =  { .r = 0.5, .g = 0.5, .b = 0.5, .a = 1.  }; /**< Armour bar colour. */
 glColour cEnergy        =  { .r = 0.2, .g = 0.8, .b = 0.2, .a = 1.  }; /**< Energy bar colour. */
-glColour cFuel          =  { .r = 0.8, .g = 0.2, .b = 0.8, .a = 1.  }; /**< Fuel bar colour. */
+glColour cFuel          =  { .r = 0.9, .g = 0.1, .b = 0.4, .a = 1.  }; /**< Fuel bar colour. */
 
