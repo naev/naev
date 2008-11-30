@@ -16,6 +16,8 @@
    <fleet name="Collective Sml Swarm" chance="80">remove</fleet>
    <fleet name="Collective Sml Swarm" chance="80">remove</fleet>
    <fleet name="Collective Drone" chance="80">remove</fleet>
+   <fleet name="Empire Pacifier" chance="50">add</fleet>
+   <fleet name="Empire Pacifier" chance="30">add</fleet>
   </system>
   <system name="C-28">
    <planet name="S38729">remove</planet>
