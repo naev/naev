@@ -632,10 +632,9 @@ void pilot_dead( Pilot* p )
 
    /* basically just set timers */
    if (p->id==PLAYER_ID) player_dead();
-   p->timer[0] = SDL_GetTicks(); /* no need for AI anymore */
-   p->ptimer = p->timer[0] + 1000 +
-      (unsigned int)sqrt(10*p->armour_max*p->shield_max);
-   p->timer[1] = p->timer[0]; /* explosion timer */
+   p->timer[0] = 0.; /* no need for AI anymore */
+   p->ptimer = 1. + sqrt(10*p->armour_max*p->shield_max) / 1000.;
+   p->timer[1] = 0.; /* explosion timer */
 
    /* flag cleanup - fixes some issues */
    if (pilot_isFlag(p,PILOT_HYP_PREP))
@@ -882,16 +881,29 @@ void pilot_render( Pilot* p )
 static void pilot_update( Pilot* pilot, const double dt )
 {
    int i;
-   unsigned int t, l;
+   unsigned int l;
    double a, px,py, vx,vy;
    char buf[16];
    PilotOutfit *o;
 
-   /* he's dead */
-   if (pilot_isFlag(pilot,PILOT_DEAD)) {
-      t = SDL_GetTicks();
 
-      if (t > pilot->ptimer) { /* completely destroyed with final explosion */
+   /*
+    * Update timers.
+    */
+   pilot->ptimer -= dt;
+   pilot->tcontrol -= dt;
+   for (i=0; i<MAX_AI_TIMERS; i++)
+      pilot->timer[i] -= dt;
+   for (i=0; i<pilot->noutfits; i++) {
+      o = &pilot->outfits[i];
+      if (o->timer > 0.)
+         o->timer -= dt;
+   }
+
+
+   /* he's dead jim */
+   if (pilot_isFlag(pilot,PILOT_DEAD)) {
+      if (pilot->ptimer < 0.) { /* completely destroyed with final explosion */
          if (pilot->id==PLAYER_ID) /* player handled differently */
             player_destroyed();
          pilot_setFlag(pilot,PILOT_DELETE); /* will get deleted next frame */
@@ -899,7 +911,7 @@ static void pilot_update( Pilot* pilot, const double dt )
       }
 
       /* pilot death sound */
-      if (!pilot_isFlag(pilot,PILOT_DEATH_SOUND) && (t > pilot->ptimer - 50)) {
+      if (!pilot_isFlag(pilot,PILOT_DEATH_SOUND) && (pilot->ptimer < 0.050)) {
          
          /* Play random explsion sound. */
          snprintf(buf, 16, "explosion%d", RNG(0,2));
@@ -908,7 +920,7 @@ static void pilot_update( Pilot* pilot, const double dt )
          pilot_setFlag(pilot,PILOT_DEATH_SOUND);
       }
       /* final explosion */
-      else if (!pilot_isFlag(pilot,PILOT_EXPLODED) && (t > pilot->ptimer - 200)) {
+      else if (!pilot_isFlag(pilot,PILOT_EXPLODED) && (pilot->ptimer < 0.200)) {
 
          /* Damagae from explosion. */
          a = sqrt(pilot->solid->mass);
@@ -925,10 +937,9 @@ static void pilot_update( Pilot* pilot, const double dt )
                   pilot->commodities[i].quantity );
       }
       /* reset random explosion timer */
-      else if (t > pilot->timer[1]) {
-         pilot->timer[1] = t + (unsigned int)(100
-               *(double)(pilot->ptimer - pilot->timer[1])
-               /(double)(pilot->ptimer - pilot->timer[0]));
+      else if (pilot->timer[1] < 0.) {
+         pilot->timer[1] = 0.08 * (pilot->ptimer - pilot->timer[1]) /
+               pilot->ptimer;
 
          /* random position on ship */
          a = RNGF()*2.*M_PI;
@@ -1009,22 +1020,10 @@ static void pilot_update( Pilot* pilot, const double dt )
       else /* normal limit */
          limit_speed( &pilot->solid->vel, pilot->speed, dt );
    }
-
-
-   /*
-    * Update outfits.
-    */
-   for (i=0; i<pilot->noutfits; i++) {
-      o = &pilot->outfits[i];
-      if (o->timer > 0.)
-         o->timer -= dt;
-   }
 }
 
 
 /**
- * @fn static void pilot_hyperspace( Pilot* p )
- *
  * @brief Handles pilot's hyperspace states.
  *
  *    @param p Pilot to handle hyperspace navigation.
@@ -1037,7 +1036,7 @@ static void pilot_hyperspace( Pilot* p )
    if (pilot_isFlag(p, PILOT_HYPERSPACE)) {
 
       /* has jump happened? */
-      if (SDL_GetTicks() > p->ptimer) {
+      if (p->ptimer < 0.) {
          if (p == player) { /* player just broke hyperspace */
             player_brokeHyperspace();
          }
@@ -1054,8 +1053,8 @@ static void pilot_hyperspace( Pilot* p )
    /* engines getting ready for the jump */
    else if (pilot_isFlag(p, PILOT_HYP_BEGIN)) {
 
-      if (SDL_GetTicks() > p->ptimer) { /* engines ready */
-         p->ptimer = SDL_GetTicks() + HYPERSPACE_FLY_DELAY;
+      if (p->ptimer < 0.) { /* engines ready */
+         p->ptimer = HYPERSPACE_FLY_DELAY;
          pilot_setFlag(p, PILOT_HYPERSPACE);
       }
    }
@@ -1081,7 +1080,7 @@ static void pilot_hyperspace( Pilot* p )
 
          if (ABS(diff) < MAX_DIR_ERR) { /* we can now prepare the jump */
             p->solid->dir_vel = 0.;
-            p->ptimer = SDL_GetTicks() + HYPERSPACE_ENGINE_DELAY;
+            p->ptimer = HYPERSPACE_ENGINE_DELAY;
             pilot_setFlag(p, PILOT_HYP_BEGIN);
          }
       }

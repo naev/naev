@@ -1459,7 +1459,6 @@ void space_renderOverlay( const double dt )
 static void space_renderStars( const double dt )
 {
    int i;
-   unsigned int t, timer;
    double x, y, m, b;
 
    /*
@@ -1471,14 +1470,9 @@ static void space_renderStars( const double dt )
       glTranslated( -(double)SCREEN_W/2., -(double)SCREEN_H/2., 0);
 
 
-   t = SDL_GetTicks();
    if (!player_isFlag(PLAYER_DESTROYED) && !player_isFlag(PLAYER_CREATING) &&
          pilot_isFlag(player,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
-         ((!paused && (player->ptimer-HYPERSPACE_STARS_BLUR < t)) ||
-            (paused && (player->ptimer < HYPERSPACE_STARS_BLUR)))) {
-
-      timer = player->ptimer - HYPERSPACE_STARS_BLUR;
-      if (paused) timer += t;
+         (player->ptimer < HYPERSPACE_STARS_BLUR)) {
 
       glShadeModel(GL_SMOOTH);
 
@@ -1489,7 +1483,9 @@ static void space_renderStars( const double dt )
       glBegin(GL_LINES);
 
       /* lines will be based on velocity */
-      m = HYPERSPACE_STARS_LENGTH * (double)(t-timer) / (HYPERSPACE_STARS_BLUR);
+      m  = HYPERSPACE_STARS_BLUR-player->ptimer;
+      m /= HYPERSPACE_STARS_BLUR;
+      m *= HYPERSPACE_STARS_LENGTH;
       x = m*cos(VANGLE(player->solid->vel)+M_PI);
       y = m*sin(VANGLE(player->solid->vel)+M_PI);
 

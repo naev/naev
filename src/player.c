@@ -1321,12 +1321,10 @@ void player_renderGUI( double dt )
    /*
     * hyperspace
     */
-   if (pilot_isFlag(player, PILOT_HYPERSPACE)) {
-      i = (int)player->ptimer - HYPERSPACE_FADEOUT;
-      if (paused) i += t;
-      j = (int)t;
+   if (pilot_isFlag(player, PILOT_HYPERSPACE) &&
+         (player->ptimer < HYPERSPACE_FADEOUT)) {
       if (i < j) {
-         x = (double)(j-i) / HYPERSPACE_FADEOUT;
+         x = (HYPERSPACE_FADEOUT-player->ptimer) / HYPERSPACE_FADEOUT;
          glColor4d(1.,1.,1., x );
          glBegin(GL_QUADS);
             glVertex2d( -SCREEN_W/2., -SCREEN_H/2. );

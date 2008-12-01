@@ -23,18 +23,8 @@ int paused = 0; /**< is paused? */
 double dt_mod = 1.; /**< dt modifier. */
 
 
-/* from pilot.c */
-extern Pilot** pilot_stack;
-extern int pilot_nstack;
 /* from main.c */
 extern unsigned int time;
-
-/*
- * prototypes
- */
-static void pilot_pause (void);
-static void pilot_unpause (void);
-static void pilot_delay( unsigned int delay );
 
 
 /**
@@ -43,8 +33,6 @@ static void pilot_delay( unsigned int delay );
 void pause_game (void)
 {
    if (paused) return; /* already paused */
-
-   pilot_pause();
 
    paused = 1; /* officially paused */
 }
@@ -57,8 +45,6 @@ void unpause_game (void)
 {
    if (!paused) return; /* already unpaused */
 
-   pilot_unpause();
-
    paused = 0; /* officially unpaused */
 }
 
@@ -68,7 +54,7 @@ void unpause_game (void)
  */
 void pause_delay( unsigned int delay )
 {
-   pilot_delay(delay);
+   (void) delay;
 }
 
 /**
@@ -79,48 +65,4 @@ void pause_setSpeed( double mod )
    dt_mod = mod;
 }
 
-
-/**
- * @brief Pilot_stack pausing/unpausing.
- */
-static void pilot_pause (void)
-{
-   int i, j;
-   unsigned int t = SDL_GetTicks();
-   for (i=0; i<pilot_nstack; i++) {
-
-      pilot_stack[i]->ptimer -= t;
-
-      /* Pause timers. */
-      pilot_stack[i]->tcontrol -= t;
-      for (j=0; j<MAX_AI_TIMERS; j++)
-         pilot_stack[i]->timer[j] -= t;
-   }
-}
-static void pilot_unpause (void)
-{
-   int i, j;
-   unsigned int t = SDL_GetTicks();
-   for (i=0; i<pilot_nstack; i++) {
-   
-      pilot_stack[i]->ptimer += t;
-
-      /* Rerun timers. */
-      pilot_stack[i]->tcontrol += t;
-      for (j=0; j<MAX_AI_TIMERS; j++)
-         pilot_stack[i]->timer[j] += t;
-   }
-}
-static void pilot_delay( unsigned int delay )
-{
-   int i, j;
-   for (i=0; i<pilot_nstack; i++) {
-
-      pilot_stack[i]->ptimer += delay;
-
-      pilot_stack[i]->tcontrol += delay;
-      for (j=0; j<MAX_AI_TIMERS; j++)
-         pilot_stack[i]->timer[j] += delay;
-   }
-}
 

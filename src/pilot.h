@@ -20,14 +20,14 @@
 
 
 /* Hyperspace parameters. */
-#define HYPERSPACE_ENGINE_DELAY  3000 /**< time to warm up engine */
-#define HYPERSPACE_FLY_DELAY     5000 /**< time it takes to hyperspace */
-#define HYPERSPACE_STARS_BLUR    2000 /**< how long the stars blur */
-#define HYPERSPACE_STARS_LENGTH  1000 /**< length the stars blur to at max */
-#define HYPERSPACE_FADEOUT       1000 /**< how long the fade is */
+#define HYPERSPACE_ENGINE_DELAY  3. /**< Time to warm up engine (seconds). */
+#define HYPERSPACE_FLY_DELAY     5. /**< Time it takes to hyperspace (seconds). */
+#define HYPERSPACE_STARS_BLUR    2. /**< How long the stars blur at max (pixels). */
+#define HYPERSPACE_STARS_LENGTH  1000 /**< Length the stars blur to at max (seconds). */
+#define HYPERSPACE_FADEOUT       1. /**< How long the fade is (seconds). */
 #define HYPERSPACE_FUEL          100  /**< how much fuel it takes */
 #define HYPERSPACE_THRUST        2000./**< How much thrust you use in hyperspace. */
-#define HYPERSPACE_VEL           HYPERSPACE_THRUST*(HYPERSPACE_FLY_DELAY/1000) /**< Velocity at hyperspace. */
+#define HYPERSPACE_VEL           HYPERSPACE_THRUST*HYPERSPACE_FLY_DELAY /**< Velocity at hyperspace. */
 #define HYPERSPACE_ENTER_MIN     HYPERSPACE_VEL*0.5 /**< Minimum entering distance. */
 #define HYPERSPACE_ENTER_MAX     HYPERSPACE_VEL*0.6 /**< Maxmimu entering distance. */
 #define HYPERSPACE_EXIT_MIN      1500. /**< Minimum distance to begin jumping. */
@@ -183,7 +183,7 @@ typedef struct Pilot_ {
 
    /* Misc */
    uint32_t flags; /**< used for AI and others */
-   unsigned int ptimer; /**< generic timer for internal pilot use */
+   double ptimer; /**< generic timer for internal pilot use */
    int lockons; /**< Stores how many seeking weapons are targetting pilot */
 
    /* Hook attached to the pilot */
@@ -198,8 +198,8 @@ typedef struct Pilot_ {
    /* AI */
    unsigned int target; /**< AI target. */
    AI_Profile* ai; /**< ai personality profile */
-   unsigned int tcontrol; /**< timer for control tick */
-   unsigned int timer[MAX_AI_TIMERS]; /**< timers for AI */
+   double tcontrol; /**< timer for control tick */
+   double timer[MAX_AI_TIMERS]; /**< timers for AI */
    Task* task; /**< current action */
 } Pilot;
 

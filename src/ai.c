@@ -585,10 +585,10 @@ void ai_think( Pilot* pilot )
 
    
    /* control function if pilot is idle or tick is up */
-   if ((cur_pilot->tcontrol < SDL_GetTicks()) || (cur_pilot->task == NULL)) {
+   if ((cur_pilot->tcontrol < 0.) || (cur_pilot->task == NULL)) {
       ai_run(L, "control"); /* run control */
       lua_getglobal(L,"control_rate");
-      cur_pilot->tcontrol = SDL_GetTicks() +  (int)(1000.*lua_tonumber(L,-1));
+      cur_pilot->tcontrol = lua_tonumber(L,-1);
    }
 
    /* pilot has a currently running task */
@@ -1743,7 +1743,7 @@ static int ai_settimer( lua_State *L )
    int n; /* get the timer */
    if (lua_isnumber(L,1)) n = lua_tonumber(L,1);
 
-   cur_pilot->timer[n] = (lua_isnumber(L,2)) ? lua_tonumber(L,2) + SDL_GetTicks() : 0;
+   cur_pilot->timer[n] = (lua_isnumber(L,2)) ? lua_tonumber(L,2)/1000. : 0;
 
    return 0;
 }
@@ -1758,7 +1758,7 @@ static int ai_timeup( lua_State *L )
    int n; /* get the timer */
    if (lua_isnumber(L,1)) n = lua_tonumber(L,1);
 
-   lua_pushboolean(L, cur_pilot->timer[n] < SDL_GetTicks());
+   lua_pushboolean(L, cur_pilot->timer[n] < 0.);
    return 1;
 }
 
