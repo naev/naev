@@ -92,7 +92,7 @@ void opt_menuKeybinds (void)
             snprintf(str[j], 64, "%s <ja%d>", keybindNames[j], key);
             break;
          default:
-            snprintf(str[j], 64, keybindNames[j]);
+            snprintf(str[j], 64, "%s", keybindNames[j]);
             break;
       }
    }
