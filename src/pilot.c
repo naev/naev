@@ -432,15 +432,8 @@ void pilot_shootStop( Pilot* p, const int secondary )
  */
 static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 {
-   int quantity, delay;
-
-   /* will segfault when trying to launch with 0 ammo otherwise */
-   quantity = pilot_oquantity(p,w);
-   delay = outfit_delay(w->outfit);
-   
    /* check to see if weapon is ready */
-   if ((w->timer > 0) &&
-         (SDL_GetTicks() - w->timer) < (unsigned int)(delay / quantity))
+   if (w->timer > 0.)
       return;
 
    /*
@@ -522,8 +515,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
       WARN("Shooting unknown weapon type: %s", w->outfit->name);
    }
 
-   /* Update weapon last used timer. */
-   w->timer = SDL_GetTicks();
+   w->timer += ((double)outfit_delay( w->outfit ) / (double)w->quantity)/1000.;
 }
 
 
@@ -893,6 +885,7 @@ static void pilot_update( Pilot* pilot, const double dt )
    unsigned int t, l;
    double a, px,py, vx,vy;
    char buf[16];
+   PilotOutfit *o;
 
    /* he's dead */
    if (pilot_isFlag(pilot,PILOT_DEAD)) {
@@ -990,7 +983,7 @@ static void pilot_update( Pilot* pilot, const double dt )
    pilot->energy += pilot->energy_regen * dt;
 
    /* check limits */
-   if (pilot->armour > pilot->armour_max) pilot->armour = pilot->armour_max;
+   if (pilot->armour > pilot->armour_max)pilot->armour = pilot->armour_max;
    if (pilot->shield > pilot->shield_max) pilot->shield = pilot->shield_max;
    if (pilot->energy > pilot->energy_max) pilot->energy = pilot->energy_max;
 
@@ -1015,6 +1008,16 @@ static void pilot_update( Pilot* pilot, const double dt )
       }
       else /* normal limit */
          limit_speed( &pilot->solid->vel, pilot->speed, dt );
+   }
+
+
+   /*
+    * Update outfits.
+    */
+   for (i=0; i<pilot->noutfits; i++) {
+      o = &pilot->outfits[i];
+      if (o->timer > 0.)
+         o->timer -= dt;
    }
 }
 

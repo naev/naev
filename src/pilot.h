@@ -102,7 +102,7 @@ typedef struct PilotOutfit_ {
    int quantity; /**< Number of outfits of this type pilot has. */
    PilotOutfitState state; /**< State of the outfit. */
    int beamid; /**< ID of the beam used in this outfit, only used for beams. */
-   unsigned int timer; /**< Used to store when it was last used. */
+   double timer; /**< Used to store when it was last used. */
 } PilotOutfit;
 
 

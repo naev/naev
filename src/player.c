@@ -1162,8 +1162,7 @@ void player_renderGUI( double dt )
       delay = outfit_delay(player->secondary->outfit);
 
       /* check to see if weapon is ready */
-      if ((player->secondary->timer > 0) &&
-            (SDL_GetTicks() - player->secondary->timer) < (unsigned int)(delay / quantity))
+      if (player->secondary->timer > 0.)
          c = &cGrey;
       else
          c = &cConsole;

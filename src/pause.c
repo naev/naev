@@ -95,12 +95,6 @@ static void pilot_pause (void)
       pilot_stack[i]->tcontrol -= t;
       for (j=0; j<MAX_AI_TIMERS; j++)
          pilot_stack[i]->timer[j] -= t;
-
-      /* Pause outfits. */
-      for (j=0; j<pilot_stack[i]->noutfits; j++) {
-         if (pilot_stack[i]->outfits[j].timer > 0)
-            pilot_stack[i]->outfits[j].timer -= t;
-      }
    }
 }
 static void pilot_unpause (void)
@@ -115,12 +109,6 @@ static void pilot_unpause (void)
       pilot_stack[i]->tcontrol += t;
       for (j=0; j<MAX_AI_TIMERS; j++)
          pilot_stack[i]->timer[j] += t;
-
-      /* Pause outfits. */
-      for (j=0; j<pilot_stack[i]->noutfits; j++) {
-         if (pilot_stack[i]->outfits[j].timer > 0)
-            pilot_stack[i]->outfits[j].timer += t;
-      }
    }
 }
 static void pilot_delay( unsigned int delay )
@@ -133,11 +121,6 @@ static void pilot_delay( unsigned int delay )
       pilot_stack[i]->tcontrol += delay;
       for (j=0; j<MAX_AI_TIMERS; j++)
          pilot_stack[i]->timer[j] += delay;
-
-      for (j=0; j<pilot_stack[i]->noutfits; j++) {
-         if (pilot_stack[i]->outfits[j].timer > 0)
-            pilot_stack[i]->outfits[j].timer += delay;
-      }
    }
 }
 
