@@ -30,7 +30,7 @@
 #include "toolkit.h"
 #include "dialogue.h"
 #include "mission.h"
-#include "misn_lua.h"
+#include "nlua_misn.h"
 #include "ntime.h"
 #include "hook.h"
 #include "map.h"
@@ -113,7 +113,7 @@ int hyperspace_target = -1; /**< Targetted hyperspace route. -1 is none. */
 static unsigned int player_timer = 0; /**< For death and such. */
 static Vector2d player_cam; /**< For death and such. */
 /* for interference. */
-static int interference_layer = 5; /**< Layer of the current interference. */
+static int interference_layer = 0; /**< Layer of the current interference. */
 static double interference_alpha = 0.; /**< Alpha of the current interference layer. */
 static double interference_t = 0.; /**< Interference timer to control transitions. */
 

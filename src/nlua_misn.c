@@ -3,13 +3,13 @@
  */
 
 /**
- * @file misn_lua.c
+ * @file nlua_misn.c
  *
  * @brief Handles the mission lua bindings.
  */
 
 
-#include "misn_lua.h"
+#include "nlua_misn.h"
 
 #include <stdlib.h>
 #include <stdio.h>

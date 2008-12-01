@@ -57,7 +57,7 @@
 #include "economy.h"
 #include "menu.h"
 #include "mission.h"
-#include "misn_lua.h"
+#include "nlua_misn.h"
 #include "nfile.h"
 #include "nebulae.h"
 #include "unidiff.h"

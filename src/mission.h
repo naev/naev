@@ -7,7 +7,7 @@
 #  define MISSION_H
 
 
-#include "misn_lua.h"
+#include "nlua_misn.h"
 
 
 /* availability by location */
@@ -130,7 +130,7 @@ void missions_free (void);
 void missions_cleanup (void);
 
 /*
- * Actually in misn_lua.h
+ * Actually in nlua_misn.h
  */
 int misn_tryRun( Mission *misn, char *func );
 int misn_run( Mission *misn, char *func );

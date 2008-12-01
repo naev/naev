@@ -17,7 +17,7 @@
 
 #include "nlua.h"
 #include "nluadef.h"
-#include "misn_lua.h"
+#include "nlua_misn.h"
 #include "naev.h"
 #include "log.h"
 #include "pack.h"

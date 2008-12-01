@@ -3,8 +3,8 @@
  */
 
 
-#ifndef MISN_LUA
-#  define MISN_LUA
+#ifndef NLUA_MISN
+#  define NLUA_MISN
 
 #include "lua.h"
 
@@ -25,4 +25,4 @@ int lua_loadHook( lua_State *L );
 int lua_loadDiff( lua_State *L, int readonly );
 
 
-#endif /* MISN_LUA */
+#endif /* NLUA_MISN */
