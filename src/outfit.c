@@ -174,9 +174,6 @@ Outfit** outfit_getTech( int *n, const int *tech, const int techmax )
 
 
 /**
- * @fn void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
- *       DamageType dtype, double dmg )
- *
  * @brief Gives the real shield damage, armour damage and knockback modifier.
  *
  *    @param[out] dshield Real shield damage.
@@ -383,11 +380,22 @@ glTexture* outfit_gfx( const Outfit* o )
  * @brief Gets the outfit's sound effect.
  *    @param o Outfit to get information from.
  */
-int outfit_spfx( const Outfit* o )
+int outfit_spfxArmour( const Outfit* o )
 {
-   if (outfit_isBolt(o)) return o->u.blt.spfx;
-   else if (outfit_isBeam(o)) return o->u.bem.spfx;
-   else if (outfit_isAmmo(o)) return o->u.amm.spfx;
+   if (outfit_isBolt(o)) return o->u.blt.spfx_armour;
+   else if (outfit_isBeam(o)) return o->u.bem.spfx_armour;
+   else if (outfit_isAmmo(o)) return o->u.amm.spfx_armour;
+   return -1;
+}
+/**
+ * @brief Gets the outfit's sound effect.
+ *    @param o Outfit to get information from.
+ */
+int outfit_spfxShield( const Outfit* o )
+{
+   if (outfit_isBolt(o)) return o->u.blt.spfx_shield;
+   else if (outfit_isBeam(o)) return o->u.bem.spfx_shield;
+   else if (outfit_isAmmo(o)) return o->u.amm.spfx_shield;
    return -1;
 }
 /**
@@ -644,7 +652,8 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    char str[PATH_MAX] = "\0";
 
    /* Defaults */
-   temp->u.blt.spfx = -1;
+   temp->u.blt.spfx_armour = -1;
+   temp->u.blt.spfx_shield = -1;
    temp->u.blt.sound = -1;
 
    node = parent->xmlChildrenNode;
@@ -660,8 +669,12 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          temp->u.blt.gfx_space = gl_newSprite(str, 6, 6);
          continue;
       }
-      if (xml_isNode(node,"spfx")) {
-         temp->u.blt.spfx = spfx_get(xml_get(node));
+      if (xml_isNode(node,"spfx_shield")) {
+         temp->u.blt.spfx_shield = spfx_get(xml_get(node));
+         continue;
+      }
+      if (xml_isNode(node,"spfx_armour")) {
+         temp->u.blt.spfx_armour = spfx_get(xml_get(node));
          continue;
       }
       if (xml_isNode(node,"sound")) {
@@ -677,7 +690,8 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->u.blt.gfx_space==NULL,"gfx");
-   MELEMENT(temp->u.blt.spfx==-1,"spfx");
+   MELEMENT(temp->u.blt.spfx_shield==-1,"spfx_shield");
+   MELEMENT(temp->u.blt.spfx_armour==-1,"spfx_armour");
    MELEMENT((sound_disabled!=0) && (temp->u.blt.sound<0),"sound");
    MELEMENT(temp->u.blt.delay==0,"delay");
    MELEMENT(temp->u.blt.speed==0,"speed");
@@ -702,7 +716,8 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    char str[PATH_MAX] = "\0";
 
    /* Defaults. */
-   temp->u.bem.spfx = -1;
+   temp->u.bem.spfx_armour = -1;
+   temp->u.bem.spfx_shield = -1;
    temp->u.bem.sound_warmup = -1;
    temp->u.bem.sound = -1;
    temp->u.bem.sound_off = -1;
@@ -727,8 +742,12 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          temp->u.bem.gfx = gl_newSprite(str, 1, 1);
          continue;
       }
-      if (xml_isNode(node,"spfx")) {
-         temp->u.bem.spfx = spfx_get(xml_get(node));
+      if (xml_isNode(node,"spfx_armour")) {
+         temp->u.bem.spfx_armour = spfx_get(xml_get(node));
+         continue;
+      }
+      if (xml_isNode(node,"spfx_shield")) {
+         temp->u.bem.spfx_shield = spfx_get(xml_get(node));
          continue;
       }
 
@@ -750,7 +769,8 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->u.bem.gfx==NULL,"gfx");
-   MELEMENT(temp->u.bem.spfx==-1,"spfx");
+   MELEMENT(temp->u.bem.spfx_shield==-1,"spfx_shield");
+   MELEMENT(temp->u.bem.spfx_armour==-1,"spfx_armour");
    MELEMENT((sound_disabled!=0) && (temp->u.bem.warmup > 0.) && (temp->u.bem.sound<0),"sound_warmup");
    MELEMENT((sound_disabled!=0) && (temp->u.bem.sound<0),"sound");
    MELEMENT((sound_disabled!=0) && (temp->u.bem.sound_off<0),"sound_off");
@@ -804,6 +824,11 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 
    char str[PATH_MAX] = "\0";
 
+   /* Defaults. */
+   temp->u.amm.spfx_armour = -1;
+   temp->u.amm.spfx_shield = -1;
+   temp->u.amm.sound = -1;
+
    do { /* load all the data */
       /* Basic */
       xmlr_float(node,"duration",temp->u.amm.duration);
@@ -819,8 +844,10 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          temp->u.amm.gfx_space = gl_newSprite(str, 6, 6);
          continue;
       }
-      else if (xml_isNode(node,"spfx"))
-         temp->u.amm.spfx = spfx_get(xml_get(node));
+      else if (xml_isNode(node,"spfx_armour"))
+         temp->u.amm.spfx_armour = spfx_get(xml_get(node));
+      else if (xml_isNode(node,"spfx_shield"))
+         temp->u.amm.spfx_shield = spfx_get(xml_get(node));
       else if (xml_isNode(node,"sound"))
          temp->u.amm.sound = sound_get( xml_get(node) );
       else if (xml_isNode(node,"damage"))
@@ -833,6 +860,8 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->u.amm.gfx_space==NULL,"gfx");
+   MELEMENT(temp->u.amm.spfx_shield==-1,"spfx_shield");
+   MELEMENT(temp->u.amm.spfx_armour==-1,"spfx_armour");
    MELEMENT((sound_disabled!=0) && (temp->u.amm.sound<0),"sound");
    MELEMENT(temp->u.amm.thrust==0,"thrust");
    /* Dumb missiles don't need everything */

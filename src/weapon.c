@@ -657,6 +657,13 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
 {
    Pilot *parent;
+   int spfx;
+
+   /* Choose spfx. */
+   if (p->shield > 0.)
+      spfx = outfit_spfxShield(w->outfit);
+   else
+      spfx = outfit_spfxArmour(w->outfit);
 
    /* inform the ai it has been attacked, useless if player */
    if (!pilot_isPlayer(p)) {
@@ -671,11 +678,11 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
          pilot_rmFlag( p, PILOT_BRIBED );
          ai_attacked( p, w->parent );
       }
-      spfx_add( outfit_spfx(w->outfit), pos->x, pos->y,
+      spfx_add( spfx, pos->x, pos->y,
             VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );
    }
    else
-      spfx_add( outfit_spfx(w->outfit), pos->x, pos->y,
+      spfx_add( spfx, pos->x, pos->y,
             VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_FRONT );
 
    /* inform the ship that it should take some damage */
@@ -703,6 +710,13 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
 {
    (void) layer;
    Pilot *parent;
+   int spfx;
+
+   /* Choose spfx. */
+   if (p->shield > 0.)
+      spfx = outfit_spfxShield(w->outfit);
+   else
+      spfx = outfit_spfxArmour(w->outfit);
 
    /* inform the ai it has been attacked, useless if player */
    if (!pilot_isPlayer(p)) {
@@ -719,17 +733,17 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
       }
 
       if (w->lockon == -1.) { /* Code to signal create explosions. */
-         spfx_add( outfit_spfx(w->outfit), pos[0].x, pos[0].y,
+         spfx_add( spfx, pos[0].x, pos[0].y,
                VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );
-         spfx_add( outfit_spfx(w->outfit), pos[1].x, pos[1].y,
+         spfx_add( spfx, pos[1].x, pos[1].y,
                VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );
          w->lockon = -2;
       }
    }
    else if (w->lockon == -1.) {
-      spfx_add( outfit_spfx(w->outfit), pos[0].x, pos[0].y,
+      spfx_add( spfx, pos[0].x, pos[0].y,
             VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_FRONT );
-      spfx_add( outfit_spfx(w->outfit), pos[1].x, pos[1].y,
+      spfx_add( spfx, pos[1].x, pos[1].y,
             VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_FRONT );
          w->lockon = -2;
    }

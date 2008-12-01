@@ -88,7 +88,9 @@ typedef struct OutfitBoltData_ {
    /* Sound and graphics. */
    glTexture* gfx_space; /**< graphic */
    int sound; /**< sound to play */
-   int spfx; /**< special effect on hit */
+   int spfx_armour; /**< special effect on hit */
+   int spfx_shield; /**< special effect on hit */
+   
 } OutfitBoltData;
 
 /**
@@ -111,7 +113,8 @@ typedef struct OutfitBeamData_ {
    
    /* Graphics and sound. */
    glTexture *gfx; /**< Base texture. */
-   int spfx; /**< Special effect on hit. */
+   int spfx_armour; /**< special effect on hit */
+   int spfx_shield; /**< special effect on hit */
    int sound_warmup; /**< Sound to play when warming up. @todo use. */
    int sound; /**< Sound to play. */
    int sound_off; /**< Sound to play when turning off. */
@@ -149,7 +152,8 @@ typedef struct OutfitAmmoData_ {
 
    glTexture* gfx_space; /**< graphic */
    int sound; /**< sound to play */
-   int spfx; /**< special effect on hit */
+   int spfx_armour; /**< special effect on hit */
+   int spfx_shield; /**< special effect on hit */
 } OutfitAmmoData;
 
 /**
@@ -308,7 +312,8 @@ const char* outfit_getTypeBroad( const Outfit* o );
  * get data from outfit
  */
 glTexture* outfit_gfx( const Outfit* o );
-int outfit_spfx( const Outfit* o );
+int outfit_spfxArmour( const Outfit* o );
+int outfit_spfxShield( const Outfit* o );
 double outfit_damage( const Outfit* o );
 DamageType outfit_damageType( const Outfit* o );
 int outfit_delay( const Outfit* o );
