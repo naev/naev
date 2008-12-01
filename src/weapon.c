@@ -188,8 +188,8 @@ static void think_seeker( Weapon* w, const double dt )
       return;
    }
 
-   /* ammo isn't locked on yet */
-   if (SDL_GetTicks() > (w->outfit->u.amm.lockon)) {
+   /* Only run if locked on. */
+   if (w->lockon < 0.) {
 
       switch (w->status) {
          case WEAPON_STATUS_OK: /* Check to see if can get jammed */
