@@ -1157,15 +1157,17 @@ static void misn_genList( unsigned int wid, int first )
       window_destroyWidget( wid, "lstMission" );
 
    /* list */
+   j = 1; /* make sure we don't accidently free the memory twice. */
    if (mission_ncomputer > 0) { /* there are missions */
       misn_names = malloc(sizeof(char*) * mission_ncomputer);
       j = 0;
       for (i=0; i<mission_ncomputer; i++)
-         if (mission_computer[i].title)
+         if (mission_computer[i].title != NULL)
             misn_names[j++] = strdup(mission_computer[i].title);
    }
-   if ((mission_ncomputer==0) || (j==0)) { /* no missions */
-      if (j==0) free(misn_names);
+   if ((mission_ncomputer==0) || (j==0)) { /* no missions. */
+      if (j==0)
+         free(misn_names);
       misn_names = malloc(sizeof(char*));
       misn_names[0] = strdup("No Missions");
       j = 1;
