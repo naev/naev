@@ -268,11 +268,13 @@ Packfile_t* pack_openFromCache( Packcache_t* cache, const char* filename )
             file->end += file->start;
          }
 
-         break;
+         return file;
       }
    }
 
-   return file;
+   free(file);
+   WARN("File '%s' not found in packfile.", filename);
+   return NULL;
 }
 
 
