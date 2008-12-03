@@ -19,6 +19,15 @@
 struct Packfile_s;
 typedef struct Packfile_s Packfile_t;
 
+struct Packcache_s;
+typedef struct Packcache_s Packcache_t;
+
+/*
+ * packcache manipulation.
+ */
+Packcache_t* pack_openCache( const char* packfile );
+void pack_closeCache( Packcache_t* cache );
+Packfile_t* pack_openFromCache( Packcache_t* cache, const char* filename );
 
 /*
  * packfile manipulation, automatically alloced and freed (with open and close)
