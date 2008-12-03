@@ -144,7 +144,7 @@ void input_setDefault (void)
 {
    /* Movement. */
    input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, KMOD_ALL, 0 );
-   input_setKeybind( "afterburn", KEYBIND_NULL, SDLK_UNKNOWN, KMOD_ALL, 0 ); /* not set */
+   input_setKeybind( "afterburn", KEYBIND_NULL, SDLK_UNKNOWN, KMOD_NONE, 0 ); /* not set */
    input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, KMOD_ALL, 0 );
    input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, KMOD_ALL, 0 );
    input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, KMOD_ALL, 0 );
@@ -154,7 +154,7 @@ void input_setDefault (void)
    input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_t, KMOD_NONE, 0 );
    input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, KMOD_NONE, 0 );
    /* Combat. */
-   input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, KMOD_NONE, 0 );
+   input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, KMOD_ALL, 0 );
    input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, KMOD_NONE, 0 );
    input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, KMOD_NONE, 0 );
    /* Secondary weapons. */
@@ -175,12 +175,12 @@ void input_setDefault (void)
    /* Communication. */
    input_setKeybind( "hail", KEYBIND_KEYBOARD, SDLK_y, KMOD_NONE, 0 );
    /* Misc. */
-   input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_KP_PLUS, KMOD_NONE, 0 );
-   input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_KP_MINUS, KMOD_NONE, 0 );
-   input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MULTIPLY, KMOD_NONE, 0 );
+   input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_KP_PLUS, KMOD_ALL, 0 );
+   input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_KP_MINUS, KMOD_ALL, 0 );
+   input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MULTIPLY, KMOD_ALL, 0 );
    input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_z, KMOD_NONE, 0 );
-   input_setKeybind( "speed", KEYBIND_KEYBOARD, SDLK_BACKQUOTE, KMOD_NONE, 0 );
-   input_setKeybind( "menu", KEYBIND_KEYBOARD, SDLK_ESCAPE, KMOD_NONE, 0 );
+   input_setKeybind( "speed", KEYBIND_KEYBOARD, SDLK_BACKQUOTE, KMOD_ALL, 0 );
+   input_setKeybind( "menu", KEYBIND_KEYBOARD, SDLK_ESCAPE, KMOD_ALL, 0 );
    input_setKeybind( "info", KEYBIND_KEYBOARD, SDLK_i, KMOD_NONE, 0 );
 }
 
@@ -439,7 +439,8 @@ static void input_key( int keynum, double value, int kabs )
          player_abortAutonav(NULL);
          player_setFlag(PLAYER_PRIMARY);
       }
-      else if (value==KEY_RELEASE) { player_rmFlag(PLAYER_PRIMARY); }
+      else if (value==KEY_RELEASE) 
+         player_rmFlag(PLAYER_PRIMARY);
    /* targetting */
    } else if (INGAME() && NODEAD() && KEY("target")) {
       if (value==KEY_PRESS) player_targetNext();

@@ -55,7 +55,6 @@ fullscreen = 1
 --right        = { type = "keyboard", key = "right", mod = "any" }
 --reverse      = { type = "keyboard", key = "down", mod = "any" }
 --afterburn    = { type = "keyboard", key = 0 }
-afterburn      = { type = "keyboard", key = 8 }
 
 -- Targetting.
 --target       = { type = "keyboard", key = "tab" }
@@ -64,7 +63,7 @@ afterburn      = { type = "keyboard", key = 8 }
 --target_hostile = { type = "keyboard", key = "R" }
 
 -- Fighting.
---primary      = { type = "keyboard", key = "space" }
+--primary      = { type = "keyboard", key = "space", mod = "any" }
 --face         = { type = "keyboard", key = "A" }
 --board        = { type = "keyboard", key = "B" }
 
@@ -95,6 +94,6 @@ autonav        = { type = "keyboard", key = "N" }
 --mapzoomout   = { type = "keyboard", key = "[-]", mod = "any" }
 --screenshot   = { type = "keyboard", key = "[*]", mod = "any" }
 --pause        = { type = "keyboard", key = "Z" }
---speed        = { type = "keyboard", key = "`" }
+--speed        = { type = "keyboard", key = "`", mod = "any" }
 --menu         = { type = "keyboard", key = "escape", mod = "any" }
 --info         = { type = "keyboard", key = "I" }
