@@ -16,21 +16,8 @@
 #include <sys/types.h> /* ssize_t */
 
 
-/**
- * @struct Packfile
- *
- * @brief Abstracts around packfiles.
- */
-typedef struct Packfile_ {
-#ifdef _POSIX_SOURCE
-   int fd; /**< file descriptor */
-#else /* not _POSIX_SOURCE */
-   FILE* fp; /**< For non-posix. */
-#endif /* _POSIX_SOURCE */
-   uint32_t pos; /**< cursor position */
-   uint32_t start; /**< File start. */
-   uint32_t end; /**< File end. */
-} Packfile;
+struct Packfile_s;
+typedef struct Packfile_s Packfile_t;
 
 
 /*
@@ -39,11 +26,11 @@ typedef struct Packfile_ {
 /* basic */
 int pack_check( const char* filename );
 int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles );
-int pack_open( Packfile* file, const char* packfile, const char* filename );
-ssize_t pack_read( Packfile* file, void* buf, const size_t count );
-off_t pack_seek( Packfile* file, off_t offset, int whence);
-long pack_tell( Packfile* file );
-int pack_close( Packfile* file );
+Packfile_t* pack_open( const char* packfile, const char* filename );
+ssize_t pack_read( Packfile_t* file, void* buf, const size_t count );
+off_t pack_seek( Packfile_t* file, off_t offset, int whence);
+long pack_tell( Packfile_t* file );
+int pack_close( Packfile_t* file );
 /* fancy */
 void* pack_readfile( const char* packfile, const char* filename, uint32_t *filesize );
 char** pack_listfiles( const char* packfile, uint32_t* nfiles );

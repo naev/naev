@@ -45,7 +45,6 @@
 #include "rng.h"
 #include "ai.h"
 #include "outfit.h"
-#include "pack.h"
 #include "weapon.h"
 #include "faction.h"
 #include "nxml.h"
@@ -61,11 +60,8 @@
 #include "nfile.h"
 #include "nebulae.h"
 #include "unidiff.h"
+#include "ndata.h"
 
-
-/* to get data info */
-#define XML_START_ID    "Start"  /**< XML document tag of module start file. */
-#define START_DATA      "dat/start.xml" /**< Path to module start file. */
 
 #define CONF_FILE       "conf" /**< Configuration file by default. */
 #define VERSION_FILE    "VERSION" /**< Version file by default. */
@@ -82,8 +78,6 @@ static char version[VERSION_LEN]; /***< Contains version. */
 static glTexture *loading; /**< Loading screen. */
 
 /* some defaults */
-char* data = NULL; /**< Path to datafile. */
-char *dataname = NULL; /**< Name of data file. */
 int nosound = 0; /**< Disables sound when loading. */
 int show_fps = 1; /**< Shows fps - default yes */
 int max_fps = 0; /**< Default fps limit, 0 is no limit. */
@@ -102,7 +96,6 @@ static void load_all (void);
 static void unload_all (void);
 static void display_fps( const double dt );
 static void window_caption (void);
-static void data_name (void);
 static void debug_sigInit (void);
 /* update */
 static void fps_control (void);
@@ -157,9 +150,12 @@ int main( int argc, char** argv )
    conf_loadConfig(buf); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
 
+   /* Open data. */
+   if (ndata_open() != 0)
+      ERR("Failed to open ndata.");
+
    /* Load the data basics. */
-   data_name();
-   LOG(" %s", dataname);
+   LOG(" %s", ndata_name());
    DEBUG();
 
    /* Display the SDL Version. */
@@ -277,6 +273,9 @@ int main( int argc, char** argv )
    gl_freeFont(NULL);
    gl_freeFont(&gl_smallFont);
 
+   /* Close data. */
+   ndata_close();
+
    /* exit subsystems */
    toolkit_exit(); /* kills the toolkit */
    ai_exit(); /* stops the Lua AI magic */
@@ -309,7 +308,7 @@ void loadscreen_load (void)
    int nload;
 
    /* Count the loading screens */
-   files = pack_listfiles( data, &nfiles );
+   files = ndata_list( "gfx/loading/", &nfiles );
    len = strlen("gfx/loading/");
    nload = 0;
    loadscreens = malloc(sizeof(char*) * nfiles);
@@ -318,10 +317,7 @@ void loadscreen_load (void)
          loadscreens[nload] = files[i];
          nload++;
       }
-      else
-         free(files[i]);
    }
-   free(files);
 
 
    /* Must have loading screens */
@@ -335,8 +331,6 @@ void loadscreen_load (void)
    loading = gl_newImage( file_path );
 
    /* Clean up. */
-   for (i =0; i<nload; i++)
-      free(loadscreens[i]);
    free(loadscreens);
 }
 
@@ -637,83 +631,16 @@ static void display_fps( const double dt )
 
 
 /**
- * @fn static void data_name (void)
- *
- * @brief Sets the data module's name.
- */
-static void data_name (void)
-{
-   uint32_t bufsize;
-   char *buf;
-
-   /* 
-    * check to see if data file is valid
-    */
-   if ((DATA == NULL) || (pack_check(DATA))) {
-      WARN("Data file '%s' not found",DATA);
-      WARN("You should specify which data file to use with '-d'");
-      WARN("See -h or --help for more information");
-      SDL_Quit();
-      exit(EXIT_FAILURE);
-   }
-
-
-   /*
-    * check the version
-    */
-   buf = pack_readfile( DATA, VERSION_FILE, &bufsize );
-
-   if (strncmp(buf, version, bufsize) != 0) {
-      WARN("NAEV version and data module version differ!");
-      WARN("NAEV is v%s, data is for v%s", version, buf );
-   }
-   
-   free(buf);
-   
-   
-   /*
-    * load the datafiles name
-    */
-   buf = pack_readfile( DATA, START_DATA, &bufsize );
-
-   xmlNodePtr node;
-   xmlDocPtr doc = xmlParseMemory( buf, bufsize );
-
-   node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,XML_START_ID)) {
-      ERR("Malformed '"START_DATA"' file: missing root element '"XML_START_ID"'");
-      return;
-   }
-
-   node = node->xmlChildrenNode; /* first system node */
-   if (node == NULL) {
-      ERR("Malformed '"START_DATA"' file: does not contain elements");
-      return;
-   }
-   do {
-      xmlr_strd(node, "name", dataname);
-   } while (xml_nextNode(node));
-
-   xmlFreeDoc(doc);
-   free(buf);
-}
-
-
-/**
  * @fn static void window_caption (void)
  *
  * @brief Sets the window caption.
  */
 static void window_caption (void)
 {
-   size_t len;
-   char *tmp;
+   char buf[PATH_MAX];
 
-   len = strlen(dataname) + strlen(APPNAME);
-   tmp = malloc(sizeof(char)*len);
-   snprintf(tmp, len ,APPNAME" - %s", dataname);
-   SDL_WM_SetCaption(tmp, NULL );
-   free(tmp);
+   snprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
+   SDL_WM_SetCaption(buf, NULL );
 }
 
 
@@ -728,7 +655,7 @@ static char human_version[50]; /**< Stores the human readable version string. */
 char *naev_version (void)
 {
    if (human_version[0] == '\0')
-      snprintf( human_version, 50, " "APPNAME" v%s - %s", version, dataname );
+      snprintf( human_version, 50, " "APPNAME" v%s - %s", version, ndata_name() );
 
    return human_version;
 }

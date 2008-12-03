@@ -38,15 +38,6 @@
 
 #define pow2(x)            ((x)*(x)) /**< ^2 */
 
-#define DATA_NAME          "ndata" /**< Default data name. */
-
-#ifndef DATA_DEF
-#  define DATA_DEF         DATA_NAME /**< Default data packfile. */
-#endif /* DATA_DEF */
-extern char* data; /**< Modifiable datafile */
-#define DATA               data /**< Standard data file to use. */
-extern char *dataname; /**< Datafile name. */
-
 /* maximum filename path */
 #ifndef PATH_MAX
 #  define PATH_MAX         256 /**< If not already defined. */

@@ -68,7 +68,7 @@
 #include "pilot.h"
 #include "player.h"
 #include "physics.h"
-#include "pack.h"
+#include "ndata.h"
 #include "rng.h"
 #include "space.h"
 #include "faction.h"
@@ -439,7 +439,7 @@ int ai_init (void)
    uint32_t nfiles,i;
 
    /* get the file list */
-   files = pack_listfiles( data, &nfiles );
+   files = ndata_list( AI_PREFIX, &nfiles );
 
    /* load the profiles */
    for (i=0; i<nfiles; i++)
@@ -450,11 +450,6 @@ int ai_init (void)
                AI_SUFFIX, strlen(AI_SUFFIX))==0))
          if (ai_loadProfile(files[i])) /* Load the profile */
             WARN("Error loading AI profile '%s'", files[i]);
-
-   /* free the char* allocated by pack */
-   for (i=0; i<nfiles; i++)
-      free(files[i]);
-   free(files);
 
    DEBUG("Loaded %d AI Profile%c", nprofiles, (nprofiles==1)?' ':'s');
 
@@ -506,7 +501,7 @@ static int ai_loadProfile( char* filename )
    lua_loadVector(L);
 
    /* now load the file since all the functions have been previously loaded */
-   buf = pack_readfile( DATA, filename, &bufsize );
+   buf = ndata_read( filename, &bufsize );
    if (luaL_dobuffer(L, buf, bufsize, filename) != 0) {
       ERR("Error loading AI file: %s\n"
           "%s\n"

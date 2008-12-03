@@ -20,7 +20,7 @@
 #include "nlua_misn.h"
 #include "naev.h"
 #include "log.h"
-#include "pack.h"
+#include "ndata.h"
 
 
 #define MUSIC_PREFIX       "snd/music/" /**< Prefix of where tho find musics. */
@@ -206,7 +206,7 @@ static int music_find (void)
    if (music_disabled) return 0;
 
    /* get the file list */
-   files = pack_listfiles( data, &nfiles );
+   files = ndata_list( MUSIC_PREFIX, &nfiles );
 
    /* load the profiles */
    mem = 0;
@@ -232,11 +232,6 @@ static int music_find (void)
       }
    }
    music_selection = realloc( music_selection, sizeof(char*)*nmusic_selection);
-
-   /* free the char* allocated by pack */
-   for (i=0; i<nfiles; i++)
-      free(files[i]);
-   free(files);
 
    DEBUG("Loaded %d song%c", nmusic_selection, (nmusic_selection==1)?' ':'s');
 
@@ -274,7 +269,7 @@ void music_load( const char* name )
 
    /* Load the data */
    snprintf( filename, PATH_MAX, MUSIC_PREFIX"%s"MUSIC_SUFFIX, name); 
-   music_data = pack_readfile( DATA, filename, &size );
+   music_data = ndata_read( filename, &size );
    music_rw = SDL_RWFromMem(music_data, size);
    music_music = Mix_LoadMUS_RW(music_rw);
    if (music_music == NULL)
@@ -382,7 +377,7 @@ static int music_luaInit (void)
    lua_loadMusic(music_lua,0); /* write it */
 
    /* load the actual lua music code */
-   buf = pack_readfile( DATA, MUSIC_LUA_PATH, &bufsize );
+   buf = ndata_read( MUSIC_LUA_PATH, &bufsize );
    if (luaL_dobuffer(music_lua, buf, bufsize, MUSIC_LUA_PATH) != 0) {
       ERR("Error loading music file: %s\n"
           "%s\n"

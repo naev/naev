@@ -21,7 +21,7 @@
 #include "opengl.h"
 #include "music.h"
 #include "nebulae.h"
-#include "pack.h"
+#include "ndata.h"
 #include "nfile.h"
 
 
@@ -105,34 +105,6 @@ static void print_usage( char **argv )
  */
 void conf_setDefaults (void)
 {
-   int i, nfiles;
-   char **files;
-   size_t len;
-
-   /* find data */
-   if (nfile_fileExists("%s-%d.%d.%d", DATA_NAME, VMAJOR, VMINOR, VREV )) {
-      data = malloc(PATH_MAX);
-      snprintf( data, PATH_MAX, "%s-%d.%d.%d", DATA_NAME, VMAJOR, VMINOR, VREV );
-   }
-   else if (nfile_fileExists(DATA_DEF))
-      data = DATA_DEF;
-   else {
-      files = nfile_readDir( &nfiles, "." );
-      len = strlen(DATA_NAME);
-      for (i=0; i<nfiles; i++) {
-         if (strncmp(files[i], DATA_NAME, len)==0) {
-            /* Must be packfile. */
-            if (pack_check(files[i]))
-               continue;
-
-            data = strdup(files[i]);
-         }
-      }
-
-      for (i=0; i<nfiles; i++)
-         free(files[i]);
-      free(files);
-   }
    /* opengl */
    gl_screen.w = 800;
    gl_screen.h = 600;
@@ -168,7 +140,10 @@ int conf_loadConfig ( const char* file )
    if (luaL_dofile(L, file) == 0) { /* configuration file exists */
 
       /* global */
-      conf_loadString("data",data);
+      lua_getglobal(L, "data");
+      if (lua_isstring(L, -1))
+         ndata_setPath( (char*)lua_tostring(L, -1) );
+      lua_remove(L,-1);
 
       /*
        * opengl properties
@@ -242,14 +217,11 @@ int conf_loadConfig ( const char* file )
        * Joystick.
        */
       lua_getglobal(L, "joystick");
-      if (lua_isnumber(L, -1)) {
+      if (lua_isnumber(L, -1))
          indjoystick = (int)lua_tonumber(L, -1);
-         lua_remove(L,-1);
-      }
-      else if (lua_isstring(L, -1)) {
+      else if (lua_isstring(L, -1))
          namjoystick = strdup((char*)lua_tostring(L, -1));
-         lua_remove(L,-1);
-      }
+      lua_remove(L,-1);
 
 
       /*
@@ -402,7 +374,7 @@ void conf_parseCLI( int argc, char** argv )
             gl_screen.flags |= OPENGL_VSYNC;
             break;
          case 'd': 
-            data = strdup(optarg);
+            ndata_setPath(optarg);
             break;
          case 'j':
             indjoystick = atoi(optarg);

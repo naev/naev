@@ -21,7 +21,7 @@
 #include "naev.h"
 #include "log.h"
 #include "weapon.h"
-#include "pack.h"
+#include "ndata.h"
 #include "spfx.h"
 #include "rng.h"
 #include "hook.h"
@@ -2075,7 +2075,7 @@ int fleet_load (void)
 {
    int mem;
    uint32_t bufsize;
-   char *buf = pack_readfile(DATA, FLEET_DATA, &bufsize);
+   char *buf = ndata_read( FLEET_DATA, &bufsize);
 
    xmlNodePtr node;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );

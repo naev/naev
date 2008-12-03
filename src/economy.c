@@ -23,7 +23,7 @@
 
 #include "naev.h"
 #include "nxml.h"
-#include "pack.h"
+#include "ndata.h"
 #include "log.h"
 #include "spfx.h"
 #include "pilot.h"
@@ -217,7 +217,7 @@ void commodity_Jettison( int pilot, Commodity* com, int quantity )
 int commodity_load (void)
 {
    uint32_t bufsize;
-   char *buf = pack_readfile(DATA, COMMODITY_DATA, &bufsize);
+   char *buf = ndata_read( COMMODITY_DATA, &bufsize);
 
    xmlNodePtr node;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );

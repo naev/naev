@@ -19,7 +19,7 @@
 #include "log.h"
 #include "opengl.h"
 #include "font.h"
-#include "pack.h"
+#include "ndata.h"
 #include "space.h"
 #include "rng.h"
 #include "land.h"
@@ -380,7 +380,7 @@ static int player_newMake (void)
    sysname = NULL;
    player_mission = NULL;
 
-   buf = pack_readfile( DATA, START_DATA, &bufsize );
+   buf = ndata_read( START_DATA, &bufsize );
 
    xmlNodePtr node, cur, tmp;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );
@@ -1560,7 +1560,7 @@ int gui_init (void)
 int gui_load( const char* name )
 {
    uint32_t bufsize;
-   char *buf = pack_readfile( DATA, GUI_DATA, &bufsize );
+   char *buf = ndata_read( GUI_DATA, &bufsize );
    char *tmp;
    int found = 0;
 

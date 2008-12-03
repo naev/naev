@@ -19,7 +19,7 @@
 #include "opengl.h"
 #include "log.h"
 #include "rng.h"
-#include "pack.h"
+#include "ndata.h"
 #include "player.h"
 #include "pause.h"
 #include "weapon.h"
@@ -792,7 +792,7 @@ static int planets_load ( void )
    xmlNodePtr node;
    xmlDocPtr doc;
 
-   buf = pack_readfile( DATA, PLANET_DATA, &bufsize );
+   buf = ndata_read( PLANET_DATA, &bufsize );
    doc = xmlParseMemory( buf, bufsize );
 
    node = doc->xmlChildrenNode;
@@ -1349,7 +1349,7 @@ int space_load (void)
 static int systems_load (void)
 {
    uint32_t bufsize;
-   char *buf = pack_readfile( DATA, SYSTEM_DATA, &bufsize );
+   char *buf = ndata_read( SYSTEM_DATA, &bufsize );
 
    xmlNodePtr node;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );

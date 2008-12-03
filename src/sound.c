@@ -19,7 +19,7 @@
 
 #include "naev.h"
 #include "log.h"
-#include "pack.h"
+#include "ndata.h"
 #include "music.h"
 #include "physics.h"
 
@@ -464,7 +464,7 @@ static int sound_makeList (void)
    if (sound_disabled) return 0;
 
    /* get the file list */
-   files = pack_listfiles( data, &nfiles );
+   files = ndata_list( SOUND_PREFIX, &nfiles );
 
    /* load the profiles */
    mem = 0;
@@ -491,11 +491,6 @@ static int sound_makeList (void)
       }
    /* shrink to minimum ram usage */
    sound_list = realloc( sound_list, sound_nlist*sizeof(alSound));
-
-   /* free the char* allocated by pack */
-   for (i=0; i<nfiles; i++)
-      free(files[i]);
-   free(files);
 
    DEBUG("Loaded %d sound%s", sound_nlist, (sound_nlist==1)?"":"s");
 
@@ -534,7 +529,7 @@ static Mix_Chunk* sound_load( char *filename )
    if (sound_disabled) return NULL;
 
    /* get the file data buffer from packfile */
-   wavdata = pack_readfile( DATA, filename, &size );
+   wavdata = ndata_read( filename, &size );
    rw = SDL_RWFromMem(wavdata, size);
 
    /* bind to OpenAL buffer */

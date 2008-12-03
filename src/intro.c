@@ -20,7 +20,7 @@
 
 #include "naev.h"
 #include "log.h"
-#include "pack.h"
+#include "ndata.h"
 #include "font.h"
 #include "music.h"
 
@@ -56,7 +56,7 @@ static int intro_load (void)
    int mem;
 
    /* Load text. */
-   intro_buf = pack_readfile( DATA, "dat/intro", &intro_size );
+   intro_buf = ndata_read( "dat/intro", &intro_size );
    intro_length = intro_size; /* Length aproximation. */
 
    /* Create intro font. */

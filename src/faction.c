@@ -19,7 +19,7 @@
 #include "opengl.h"
 #include "naev.h"
 #include "log.h"
-#include "pack.h"
+#include "ndata.h"
 #include "rng.h"
 #include "colour.h"
 
@@ -593,7 +593,7 @@ int factions_load (void)
 {
    int mem;
    uint32_t bufsize;
-   char *buf = pack_readfile(DATA, FACTION_DATA, &bufsize);
+   char *buf = ndata_read( FACTION_DATA, &bufsize);
 
    xmlNodePtr factions, node;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );

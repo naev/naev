@@ -27,7 +27,7 @@
 #include "land.h"
 #include "nluadef.h"
 #include "map.h"
-#include "pack.h"
+#include "ndata.h"
 
 
 /*
@@ -184,9 +184,9 @@ static int nlua_packfileLoader( lua_State* L )
    filename = (char*) lua_tostring(L,1);
 
    /* try to locate the data */
-   buf = pack_readfile( DATA, filename, &bufsize );
+   buf = ndata_read( filename, &bufsize );
    if (buf == NULL) {
-      lua_pushfstring(L, "%s not found in packfile %s", filename, DATA);
+      lua_pushfstring(L, "%s not found in ndata.", filename);
       return 1;
    }
    

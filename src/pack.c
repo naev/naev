@@ -45,13 +45,33 @@
  */
 
 
+
+/**
+ * @struct Packfile
+ *
+ * @brief Abstracts around packfiles.
+ */
+struct Packfile_s {
+#ifdef _POSIX_SOURCE
+   int fd; /**< file descriptor */
+#else /* not _POSIX_SOURCE */
+   FILE* fp; /**< For non-posix. */
+#endif /* _POSIX_SOURCE */
+   uint32_t pos; /**< cursor position */
+   uint32_t start; /**< File start. */
+   uint32_t end; /**< File end. */
+};
+
+
 #undef DEBUG /* mucho spamo */
 #define DEBUG(str, args...)      do {;} while(0)
 
 
 #define BLOCKSIZE    128*1024 /**< The read/write block size. */
 
-#define MAX_FILENAME 128   /**< maximum file name length. */
+#ifndef PATH_MAX
+#define PATH_MAX     256   /**< maximum file name length. */
+#endif
 
 
 #define PERMS   S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH /**< default permissions. */
@@ -190,9 +210,9 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
          ERR("File %s does not exist", infiles[i]);
          return -1;
       }
-      if (strlen(infiles[i]) > MAX_FILENAME) {
+      if (strlen(infiles[i]) > PATH_MAX) {
          ERR("Filename '%s' is too long, should be only %d characters",
-               infiles[i], MAX_FILENAME );
+               infiles[i], PATH_MAX );
          return -1;
       }
       namesize += strlen(infiles[i]);
@@ -277,9 +297,16 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
 #undef WRITE
 
 
+#ifdef _POSIX_SOURCE
+#define READ(b,n)  if (read(file->fd,(b),(n))!=(n)) { \
+   ERR("Fewer bytes read then expected"); \
+   free(buf); return NULL; }
+#else /* not _POSIX_SOURCE */
+#define READ(b,n)  if (fread((b),1,(n),file->fp)!=(n)) { \
+   ERR("Fewer bytes read then expected"); \
+   free(buf); return NULL; }
+#endif /* _POSIX_SOURCE */
 /**
- * @fn int pack_open( Packfile* file, const char* packfile, const char* filename )
- *
  * @brief Opens a file in the packfile for reading.
  *
  *    @param file Packfile to store data into.
@@ -287,22 +314,17 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
  *    @param filename Name of the file within th. packfile.
  *    @return 0 on success.
  */
-#ifdef _POSIX_SOURCE
-#define READ(b,n)  if (read(file->fd,(b),(n))!=(n)) { \
-   ERR("Fewer bytes read then expected"); \
-   free(buf); return -1; }
-#else /* not _POSIX_SOURCE */
-#define READ(b,n)  if (fread((b),1,(n),file->fp)!=(n)) { \
-   ERR("Fewer bytes read then expected"); \
-   free(buf); return -1; }
-#endif /* _POSIX_SOURCE */
-int pack_open( Packfile* file, const char* packfile, const char* filename )
+Packfile_t* pack_open( const char* packfile, const char* filename )
 {
    int j;
    uint32_t nfiles, i;
-   char* buf = malloc(MAX_FILENAME);
+   char* buf = malloc(PATH_MAX);
+   Packfile_t *file;
 
-   file->start = file->end = 0;
+   /* Allocate memory. */
+   file = malloc(sizeof(Packfile_t));
+   memset( file, 0, sizeof(Packfile_t) );
+   buf = malloc(PATH_MAX);
 
 #ifdef _POSIX_SOURCE
    file->fd = open( packfile, O_RDONLY );
@@ -312,13 +334,13 @@ int pack_open( Packfile* file, const char* packfile, const char* filename )
    if (file->fp == NULL) {
 #endif /* _POSIX_SOURCE */
       ERR("Erroring opening %s: %s", filename, strerror(errno));
-      return -1;
+      return NULL;
    }
 
    READ( buf, sizeof(magic)); /* make sure it's a packfile */
    if (memcmp(buf, &magic, sizeof(magic))) {
       ERR("File %s is not a valid packfile", filename);
-      return -1;
+      return NULL;
    }
 
    READ( &nfiles, 4 );
@@ -349,7 +371,7 @@ int pack_open( Packfile* file, const char* packfile, const char* filename )
       if (errno) {
 #endif /* _POSIX_SOURCE */
          ERR("Failure to seek to file start: %s", strerror(errno));
-         return -1;
+         return NULL;
       }
       READ( &file->end, 4 );
       DEBUG("\t%d bytes", file->end);
@@ -358,16 +380,16 @@ int pack_open( Packfile* file, const char* packfile, const char* filename )
    }
    else {
       ERR("File '%s' not found in packfile '%s'", filename, packfile);
-      return -1;
+      return NULL;
    }
 
-   return 0;
+   return file;
 }
 #undef READ
 
 
 /**
- * @fn ssize_t pack_read( Packfile* file, void* buf, size_t count )
+ * @fn ssize_t pack_read( Packfile_t* file, void* buf, size_t count )
  *
  * @brief Reads data from a packfile.
  *
@@ -378,7 +400,7 @@ int pack_open( Packfile* file, const char* packfile, const char* filename )
  *    @param count Bytes to read.
  *    @return Bytes read or -1 on error.
  */
-ssize_t pack_read( Packfile* file, void* buf, size_t count )
+ssize_t pack_read( Packfile_t* file, void* buf, size_t count )
 {
    if ((file->pos + count) > file->end)
       count = file->end - file->pos; /* can't go past end */
@@ -401,7 +423,7 @@ ssize_t pack_read( Packfile* file, void* buf, size_t count )
 
 
 /**
- * @fn off_t pack_seek( Packfile* file, off_t offset, int whence)
+ * @fn off_t pack_seek( Packfile_t* file, off_t offset, int whence)
  *
  * @brief Seeks within a file inside a packfile.
  *
@@ -414,7 +436,7 @@ ssize_t pack_read( Packfile* file, void* buf, size_t count )
  *    @param whence Either SEEK_SET, SEEK_CUR or SEEK_END.
  *    @return The position moved to.
  */
-off_t pack_seek( Packfile* file, off_t offset, int whence)
+off_t pack_seek( Packfile_t* file, off_t offset, int whence)
 {
    DEBUG("attempting to seek offset: %d, whence: %d", offset, whence);
    off_t ret;
@@ -462,14 +484,14 @@ off_t pack_seek( Packfile* file, off_t offset, int whence)
 
 
 /**
- * @fn long pack_tell( Packfile* file )
+ * @fn long pack_tell( Packfile_t* file )
  *
  * @brief Gets the current position in the file.
  *
  *    @param file Packfile to get the position from.
  *    @return The current position in the file.
  */
-long pack_tell( Packfile* file )
+long pack_tell( Packfile_t* file )
 {
    return file->pos - file->start;
 }
@@ -487,16 +509,19 @@ long pack_tell( Packfile* file )
  */
 void* pack_readfile( const char* packfile, const char* filename, uint32_t *filesize )
 {
-   Packfile* file = malloc(sizeof(Packfile));
+   Packfile_t* file;
    void* buf;
    char* str;
    int size, bytes;
 
+   /* Initialize size to 0. */
    if (filesize)
       *filesize = 0;
 
-   if (pack_open( file, packfile, filename )) {
-      ERR("Opening packfile");
+   /* Open the packfile. */
+   file = pack_open( packfile, filename );
+   if (file == NULL) {
+      ERR("Opening packfile '%s'.", packfile);
       return NULL;
    }
    DEBUG("Opened file '%s' from '%s'", filename, packfile );
@@ -546,7 +571,6 @@ void* pack_readfile( const char* packfile, const char* filename, uint32_t *files
       return NULL;
    }
    DEBUG("Closed '%s' in '%s'", filename, packfile );
-   free(file);
 
    if (filesize)
       *filesize = size;
@@ -609,7 +633,7 @@ char** pack_listfiles( const char* packfile, uint32_t* nfiles )
    filenames = malloc(((*nfiles)+1)*sizeof(char*));
    for (i=0; i<*nfiles; i++) { /* start to search files */
       j = 0;
-      filenames[i] = malloc(MAX_FILENAME*sizeof(char));
+      filenames[i] = malloc(PATH_MAX*sizeof(char));
       READ( &filenames[i][j], 1 ); /* get the name */
       while ( filenames[i][j++] != '\0' )
          READ( &filenames[i][j], 1 );
@@ -629,14 +653,14 @@ char** pack_listfiles( const char* packfile, uint32_t* nfiles )
 
 
 /**
- * @fn int pack_close( Packfile* file )
+ * @fn int pack_close( Packfile_t* file )
  *
  * @brief Closes a packfile.
  *
  *    @param file Packfile to close.
  *    @return 0 on success.
  */
-int pack_close( Packfile* file )
+int pack_close( Packfile_t* file )
 {
    int i;
 #ifdef _POSIX_SOURCE

@@ -21,6 +21,7 @@
 #include "menu.h"
 #include "nfile.h"
 #include "hook.h"
+#include "ndata.h"
 
 
 #define LOAD_WIDTH      400 /**< Load window width. */
@@ -105,7 +106,7 @@ int save_all (void)
    /* save the version and such */
    xmlw_startElem(writer,"version");
    xmlw_elem( writer, "naev", "%d.%d.%d", VMAJOR, VMINOR, VREV );
-   xmlw_elem( writer, "data", dataname );
+   xmlw_elem( writer, "data", ndata_name() );
    xmlw_endElem(writer); /* "version" */
 
    if (save_data(writer) < 0) {

@@ -22,7 +22,7 @@
 
 #include "naev.h"
 #include "log.h"
-#include "pack.h"
+#include "ndata.h"
 #include "spfx.h"
 
 
@@ -1200,7 +1200,7 @@ int outfit_load (void)
 {
    int i, mem;
    uint32_t bufsize;
-   char *buf = pack_readfile( DATA, OUTFIT_DATA, &bufsize );
+   char *buf = ndata_read( OUTFIT_DATA, &bufsize );
 
    xmlNodePtr node;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );

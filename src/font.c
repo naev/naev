@@ -27,7 +27,7 @@
 
 #include "naev.h"
 #include "log.h"
-#include "pack.h"
+#include "ndata.h"
 
 
 #define FONT_DEF  "dat/font.ttf" /**< Default font path. */
@@ -548,7 +548,7 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
 
    if (font == NULL) font = &gl_defFont;
 
-   FT_Byte* buf = pack_readfile( DATA, (fname!=NULL) ? fname : FONT_DEF, &bufsize );
+   FT_Byte* buf = ndata_read( (fname!=NULL) ? fname : FONT_DEF, &bufsize );
 
    /* allocage */
    font->textures = malloc(sizeof(GLuint)*128);

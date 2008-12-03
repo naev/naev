@@ -19,7 +19,7 @@
 
 #include "naev.h"
 #include "log.h"
-#include "pack.h"
+#include "ndata.h"
 
 
 /*
@@ -464,9 +464,9 @@ static glTexture* gl_loadNewImage( const char* path )
    char *buf;
 
    /* load from packfile */
-   buf = pack_readfile( DATA, (char*)path, &filesize );
+   buf = ndata_read( path, &filesize );
    if (buf == NULL) {
-      ERR("Loading surface from packfile");
+      ERR("Loading surface from ndata.");
       return NULL;
    }
    SDL_RWops *rw = SDL_RWFromMem(buf, filesize);

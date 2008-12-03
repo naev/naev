@@ -18,7 +18,7 @@
 
 #include "naev.h"
 #include "log.h"
-#include "pack.h"
+#include "ndata.h"
 #include "toolkit.h"
 
 
@@ -439,7 +439,7 @@ int ships_load (void)
 {
    int mem;
    uint32_t bufsize;
-   char *buf = pack_readfile(DATA, SHIP_DATA, &bufsize);
+   char *buf = ndata_read( SHIP_DATA, &bufsize);
 
    xmlNodePtr node;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );

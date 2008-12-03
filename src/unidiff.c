@@ -22,7 +22,7 @@
 #include "log.h"
 #include "nxml.h"
 #include "space.h"
-#include "pack.h"
+#include "ndata.h"
 
 
 #define CHUNK_SIZE      32 /**< Size of chunk to allocate. */
@@ -183,7 +183,7 @@ int diff_apply( char *name )
    if (diff_isApplied(name))
       return 0;
 
-   buf = pack_readfile( DATA, DIFF_DATA, &bufsize );
+   buf = ndata_read( DIFF_DATA, &bufsize );
    doc = xmlParseMemory( buf, bufsize );
 
    node = doc->xmlChildrenNode;

@@ -23,7 +23,7 @@
 #include "naev.h"
 #include "log.h"
 #include "hook.h"
-#include "pack.h"
+#include "ndata.h"
 #include "nxml.h"
 #include "faction.h"
 #include "player.h"
@@ -171,7 +171,7 @@ static int mission_init( Mission* mission, MissionData* misn, int load )
    misn_loadLibs( mission->L ); /* load our custom libraries */
 
    /* load the file */
-   buf = pack_readfile( DATA, misn->lua, &bufsize );
+   buf = ndata_read( misn->lua, &bufsize );
    if (luaL_dobuffer(mission->L, buf, bufsize, misn->lua) != 0) {
       ERR("Error loading mission file: %s\n"
           "%s\n"
@@ -729,7 +729,7 @@ static MissionData* mission_parse( const xmlNodePtr parent )
 int missions_load (void)
 {
    uint32_t bufsize;
-   char *buf = pack_readfile( DATA, MISSION_DATA, &bufsize );
+   char *buf = ndata_read( MISSION_DATA, &bufsize );
 
    MissionData *temp;
 
