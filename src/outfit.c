@@ -17,7 +17,7 @@
 #include <math.h>
 #include <string.h>
 
-#include "xml.h"
+#include "nxml.h"
 #include "SDL_thread.h"
 
 #include "naev.h"

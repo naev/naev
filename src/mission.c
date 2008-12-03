@@ -24,7 +24,7 @@
 #include "log.h"
 #include "hook.h"
 #include "pack.h"
-#include "xml.h"
+#include "nxml.h"
 #include "faction.h"
 #include "player.h"
 #include "base64.h"

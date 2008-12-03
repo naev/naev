@@ -22,7 +22,7 @@
 #include "cs.h"
 
 #include "naev.h"
-#include "xml.h"
+#include "nxml.h"
 #include "pack.h"
 #include "log.h"
 #include "spfx.h"

@@ -14,7 +14,7 @@
 
 #include "naev.h"
 #include "log.h"
-#include "xml.h"
+#include "nxml.h"
 #include "player.h"
 #include "toolkit.h"
 #include "dialogue.h"

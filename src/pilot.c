@@ -16,7 +16,7 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "xml.h"
+#include "nxml.h"
 
 #include "naev.h"
 #include "log.h"

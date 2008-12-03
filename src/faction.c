@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "xml.h"
+#include "nxml.h"
 
 #include "opengl.h"
 #include "naev.h"

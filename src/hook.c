@@ -18,7 +18,7 @@
 
 #include "log.h"
 #include "naev.h"
-#include "xml.h"
+#include "nxml.h"
 
 
 #define HOOK_CHUNK   32 /**< Size to grow by when out of space */

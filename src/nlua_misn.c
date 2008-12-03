@@ -34,7 +34,7 @@
 #include "pilot.h"
 #include "player.h"
 #include "ntime.h"
-#include "xml.h"
+#include "nxml.h"
 #include "nluadef.h"
 #include "music.h"
 #include "unidiff.h"

@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "xml.h"
+#include "nxml.h"
 
 #include "naev.h"
 #include "opengl.h"
@@ -868,8 +868,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          cur = node->children;
          do {
             if (xml_isNode(cur,"space")) { /* load space gfx */
-               snprintf( str, PATH_MAX, PLANET_GFX_SPACE"%s", xml_get(cur));
-               planet->gfx_space = gl_newImage(str);
+               planet->gfx_space = xml_parseTexture( cur,
+                     PLANET_GFX_SPACE"%s", 1, 1 );
             }
             else if (xml_isNode(cur,"exterior")) { /* load land gfx */
                len = strlen(xml_raw(cur)) + sizeof(PLANET_GFX_EXTERIOR);

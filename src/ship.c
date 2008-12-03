@@ -14,7 +14,7 @@
 #include <string.h>
 #include <limits.h>
 
-#include "xml.h"
+#include "nxml.h"
 
 #include "naev.h"
 #include "log.h"
@@ -303,29 +303,23 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       if (xml_isNode(node,"GFX")) {
 
          /* Load the base graphic */
-         snprintf( str, strlen(xml_raw(node))+
-               sizeof(SHIP_GFX)+sizeof(SHIP_EXT),
-               SHIP_GFX"%s"SHIP_EXT, xml_get(node));
-         temp->gfx_space = gl_newSprite(str, 6, 6);
+         temp->gfx_space = xml_parseTexture( node,
+               SHIP_GFX"%s"SHIP_EXT, 6, 6);
 
          /* Load the comm graphic. */
-         snprintf( str, strlen(xml_raw(node))+
-               sizeof(SHIP_GFX)+sizeof(SHIP_COMM)+sizeof(SHIP_EXT),
-               SHIP_GFX"%s"SHIP_COMM SHIP_EXT, xml_get(node));
-         temp->gfx_comm = gl_newImage(str);
+         temp->gfx_comm = xml_parseTexture( node,
+               SHIP_GFX"%s"SHIP_COMM SHIP_EXT, 1, 1);
 
          /* Load the target graphic. */
          xmlr_attr(node,"target",stmp);
          if (stmp != NULL) {
-            snprintf( str, strlen(stmp)+
-                  sizeof(SHIP_GFX)+sizeof(SHIP_TARGET)+sizeof(SHIP_EXT),
+            snprintf( str, PATH_MAX,
                   SHIP_GFX"%s"SHIP_TARGET SHIP_EXT, stmp);
             temp->gfx_target = gl_newImage(str);
             free(stmp);
          }
          else { /* Load standard target graphic */
-            snprintf( str, strlen(xml_raw(node))+
-                  sizeof(SHIP_GFX)+sizeof(SHIP_TARGET)+sizeof(SHIP_EXT),
+            snprintf( str, PATH_MAX,
                   SHIP_GFX"%s"SHIP_TARGET SHIP_EXT, xml_get(node));
             temp->gfx_target = gl_newImage(str);
          }
