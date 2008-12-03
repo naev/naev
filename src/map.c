@@ -277,7 +277,7 @@ static void map_update( unsigned int wid )
    for (i=0; i<sys->nplanets; i++)
       services |= sys->planets[i]->services;
    buf[0] = '\0';
-   /*snprintf(buf, sizeof(buf), "%f\n", sys->prices[0]); *//*Hack to control prices. */
+   /*snprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
    if (services & PLANET_SERVICE_COMMODITY)
       strcat(buf, "Commodity\n");
    if (services & PLANET_SERVICE_OUTFITS)

@@ -24,7 +24,22 @@ function control ()
 
    -- Try to jump when far enough away
    elseif task == "runaway" then
-      if ai.dist( ai.pos( ai.target() ) ) > 400 then
+      target = ai.target()
+
+      -- Check if should still run.
+      if not ai.exists(target) then
+         ai.poptask()
+         return
+      end
+
+      -- See if another enemy is closer
+      if enemy ~= target then
+         ai.poptask()
+         ai.pushtask(0,"runaway",enemy)
+      end
+
+      -- Try to jump.
+      if ai.dist( target ) > 400 then
          ai.hyperspace()
       end
 

@@ -20,7 +20,7 @@
 
 #include "naev.h"
 #include "log.h"
-#include "xml.h"
+#include "nxml.h"
 #include "space.h"
 #include "pack.h"
 

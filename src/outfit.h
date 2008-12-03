@@ -18,6 +18,7 @@
 #define outfit_isProp(o,p)          ((o)->properties & p) /**< Checks an outfit for property. */
 /* property flags */
 #define OUTFIT_PROP_WEAP_SECONDARY  (1<<0) /**< Is a secondary weapon? */
+#define OUTFIT_PROP_WEAP_SPIN       (1<<1) /**< Should weapon spin around? */
 
 
 struct Outfit_;
@@ -38,6 +39,8 @@ typedef enum OutfitType_ {
    OUTFIT_TYPE_TURRET_BEAM, /**< Rotary beam turret. */
    OUTFIT_TYPE_MISSILE_DUMB, /**< Dumb missile launcher. */
    OUTFIT_TYPE_MISSILE_DUMB_AMMO, /**< Dumb missile ammo. */
+   OUTFIT_TYPE_TURRET_DUMB, /**< Dumb missile turret launcher. */
+   OUTFIT_TYPE_TURRET_DUMB_AMMO, /**< Dumb missile turrent ammo. */
    OUTFIT_TYPE_MISSILE_SEEK, /**< Seeker missile launcher. */
    OUTFIT_TYPE_MISSILE_SEEK_AMMO, /**< Seeker missile ammo. */
    OUTFIT_TYPE_MISSILE_SEEK_SMART, /**< ATM equivalent to SEEK */
@@ -67,7 +70,8 @@ typedef enum DamageType_ {
    DAMAGE_TYPE_ENERGY, /**< Energy-based weapons. */
    DAMAGE_TYPE_KINETIC, /**< Physic impact weapons. */
    DAMAGE_TYPE_ION, /**< Ion-based weapons. */
-   DAMAGE_TYPE_RADIATION /**< Radioactive weapons. */
+   DAMAGE_TYPE_RADIATION, /**< Radioactive weapons. */
+   DAMAGE_TYPE_EMP /**< Electromagnetic pulse weapons. */
 } DamageType;
 
 
@@ -87,6 +91,7 @@ typedef struct OutfitBoltData_ {
 
    /* Sound and graphics. */
    glTexture* gfx_space; /**< graphic */
+   double spin; /**< Graphic spin rate. */
    int sound; /**< sound to play */
    int spfx_armour; /**< special effect on hit */
    int spfx_shield; /**< special effect on hit */
@@ -151,6 +156,7 @@ typedef struct OutfitAmmoData_ {
    double damage; /**< damage */
 
    glTexture* gfx_space; /**< graphic */
+   double spin; /**< Graphic spin rate. */
    int sound; /**< sound to play */
    int spfx_armour; /**< special effect on hit */
    int spfx_shield; /**< special effect on hit */
@@ -297,6 +303,7 @@ int outfit_isBolt( const Outfit* o );
 int outfit_isBeam( const Outfit* o );
 int outfit_isLauncher( const Outfit* o );
 int outfit_isAmmo( const Outfit* o );
+int outfit_isSeeker( const Outfit* o );
 int outfit_isTurret( const Outfit* o );
 int outfit_isMod( const Outfit* o );
 int outfit_isAfterburner( const Outfit* o );
@@ -321,7 +328,7 @@ Outfit* outfit_ammo( const Outfit* o );
 double outfit_energy( const Outfit* o );
 double outfit_range( const Outfit* o );
 double outfit_speed( const Outfit* o );
-int outfit_isSeeker( const Outfit* o );
+double outfit_spin( const Outfit* o );
 
 /*
  * loading/freeing outfit stack

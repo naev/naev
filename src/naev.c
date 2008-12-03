@@ -48,7 +48,7 @@
 #include "pack.h"
 #include "weapon.h"
 #include "faction.h"
-#include "xml.h"
+#include "nxml.h"
 #include "toolkit.h"
 #include "pause.h"
 #include "sound.h"

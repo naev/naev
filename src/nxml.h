@@ -12,6 +12,7 @@
 #include "libxml/xmlwriter.h"
 
 #include "log.h"
+#include "opengl.h"
 
 
 #define XML_NODE_START  1 
@@ -87,6 +88,12 @@ if (xmlTextWriterStartDocument(writer, NULL, "UTF-8", NULL) < 0) { \
 if (xmlTextWriterEndDocument(w) < 0) { \
    ERR("xmlw: unable to end document"); return -1; }
 
+
+/*
+ * Functions for generic complex reading.
+ */
+glTexture* xml_parseTexture( xmlNodePtr node,
+      const char *path, int defsx, int defsy );
 
 
 #endif /* XML_H */

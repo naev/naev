@@ -555,6 +555,40 @@
    <damage type="kinetic">35</damage>
   </specific>
  </outfit>
+ <outfit name="EMP Grenade Launcher">
+  <general>
+   <max>2</max>
+   <tech>7</tech>
+   <mass>17</mass>
+   <price>31000</price>
+   <gfx_store>empgrenadelauncher</gfx_store>
+   <description>This launcher can fire EMP grenades in any direction using a unique internal guidance system.  These are favored by Traders for escaping from pirates.</description>
+  </general>
+  <specific type="turret dumb" secondary="1">
+   <ammo>EMP Grenade</ammo>
+   <delay>2000</delay>
+  </specific>
+ </outfit>
+ <outfit name="EMP Grenade">
+  <general>
+   <max>30</max>
+   <tech>6</tech>
+   <mass>1</mass>
+   <price>600</price>
+   <gfx_store>empgrenade</gfx_store>
+   <description>This is a grenade that can be launched to unleash EMP blasts rendering most electronics in the area useless.  Good for taking ships alive instead of killing them as the EMP blasts rarely destroy the ship instead leaving it intact with non-working electronics.</description>
+  </general>
+  <specific type="turret dumb ammo">
+   <gfx spin="0.3">empgrenade</gfx>
+   <sound>missile</sound>
+   <spfx_shield>EmpS</spfx_shield>
+   <spfx_armour>EmpM</spfx_armour>
+   <duration>1.3</duration>
+   <thrust>0</thrust>
+   <speed>400</speed>
+   <damage type="emp">40</damage>
+  </specific>
+ </outfit>
  <outfit name="Plasteel Plating">
   <general>
    <max>1</max>

@@ -16,7 +16,7 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "xml.h"
+#include "nxml.h"
 
 #include "naev.h"
 #include "log.h"
@@ -550,9 +550,6 @@ void pilot_switchSecondary( Pilot* p, int i )
 
 
 /**
- * @fn void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
- *                     const DamageType dtype, const double damage )
- *
  * @brief Damages the pilot.
  *
  *    @param p Pilot that is taking damage.
@@ -585,30 +582,40 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       p->shield = 0.;
       dam_mod = (damage_shield+damage_armour) / (p->shield_max+p->armour_max);
    }
-   else if (p->armour-damage_armour > 0.) {
+   else if (p->armour > 0.) {
       p->armour -= damage_armour;
-      dam_mod = damage_armour/p->armour_max;
 
-      if (p->id == PLAYER_ID) /* a bit of shaking */
-         spfx_shake( dam_mod*100. );
-   }
-   else { /* officially dead */
+      /* EMP don't kill. */
+      if ((dtype == DAMAGE_TYPE_EMP) &&
+            (p->armour < PILOT_DISABLED_ARMOR * p->armour_max))
+         p->armour = PILOT_DISABLED_ARMOR * p->armour_max - 1.;
 
-      p->armour = 0.;
-      dam_mod = 0.;
+      /* Officially dead. */
+      if (p->armour <= 0.) {
+         p->armour = 0.;
+         dam_mod = 0.;
 
-      if (!pilot_isFlag(p, PILOT_DEAD)) {
-         pilot_dead(p);
+         if (!pilot_isFlag(p, PILOT_DEAD)) {
+            pilot_dead(p);
 
-         /* adjust the combat rating based on pilot mass and ditto faction */
-         pshooter = pilot_get(shooter);
-         if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
-            mod = sqrt(p->ship->mass) / 5;
-            player_crating += 2*mod; /* Crating changes faster. */
-            faction_modPlayer( p->faction, -mod );
+            /* adjust the combat rating based on pilot mass and ditto faction */
+            pshooter = pilot_get(shooter);
+            if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
+               mod = sqrt(p->ship->mass) / 5;
+               player_crating += 2*mod; /* Crating changes faster. */
+               faction_modPlayer( p->faction, -mod );
+            }
          }
       }
+      /* Some minor effects and stuff. */
+      else {
+         dam_mod = damage_armour/p->armour_max;
+
+         if (p->id == PLAYER_ID) /* a bit of shaking */
+            spfx_shake( dam_mod*100. );
+      }
    }
+
 
    if (shooter != 0)
       /* knock back effect is dependent on both damage and mass of the weapon 

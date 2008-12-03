@@ -13,7 +13,7 @@
 
 #include <stdlib.h>
 
-#include "xml.h"
+#include "nxml.h"
 #include "naev.h"
 #include "pilot.h"
 #include "log.h"

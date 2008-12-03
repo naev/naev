@@ -71,7 +71,8 @@ typedef struct Weapon_ {
    int voice; /**< Weapon's voice. */
    double lockon; /**< some weapons have a lockon delay */
    double timer; /**< mainly used to see when the weapon was fired */
-   double anim; /**< Used for beam weapon graphics. */
+   double anim; /**< Used for beam weapon graphics and others. */
+   int sprite; /**< Used for spinning outfits. */
 
    /* position update and render */
    void (*update)(struct Weapon_*, const double, WeaponLayer); /**< Updates the weapon */
@@ -375,6 +376,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
             /* purpose fallthrough */
 
          /* bolts too */
+         case OUTFIT_TYPE_TURRET_DUMB_AMMO:
          case OUTFIT_TYPE_MISSILE_DUMB_AMMO: /* Dumb missiles are like bolts */
             limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );
          case OUTFIT_TYPE_BOLT:
@@ -424,8 +426,6 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 
 
 /**
- * @fn void weapons_render( const WeaponLayer layer, const double dt )
- *
  * @brief Renders all the weapons in a layer.
  *
  *    @param layer Layer to render.
@@ -479,10 +479,31 @@ static void weapon_render( Weapon* w, const double dt )
       case OUTFIT_TYPE_BOLT:
       case OUTFIT_TYPE_TURRET_BOLT:
       case OUTFIT_TYPE_MISSILE_DUMB_AMMO:
+      case OUTFIT_TYPE_TURRET_DUMB_AMMO:
          gfx = outfit_gfx(w->outfit);
-         /* get the sprite corresponding to the direction facing */
-         gl_getSpriteFromDir( &sx, &sy, gfx, w->solid->dir );
-         gl_blitSprite( gfx, w->solid->pos.x, w->solid->pos.y, sx, sy, NULL );
+
+         /* Outfit spins around. */
+         if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_SPIN)) {
+            /* Check timer. */
+            w->anim -= dt;
+            if (w->anim < 0.) {
+               w->anim = outfit_spin(w->outfit);
+
+               /* Increment sprite. */
+               w->sprite++;
+               if (w->sprite >= gfx->sx*gfx->sy)
+                  w->sprite = 0;
+            }
+
+            /* Render. */
+            gl_blitSprite( gfx, w->solid->pos.x, w->solid->pos.y,
+                  w->sprite % (int)gfx->sx, w->sprite / (int)gfx->sx, NULL );
+         }
+         /* Outfit faces direction. */
+         else {
+            gl_getSpriteFromDir( &sx, &sy, gfx, w->solid->dir );
+            gl_blitSprite( gfx, w->solid->pos.x, w->solid->pos.y, sx, sy, NULL );
+         }
          break;
 
       /* Beam weapons. */
@@ -755,10 +776,6 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
 
 
 /**
- * @fn static Weapon* weapon_create( const Outfit* outfit,
- *                    const double dir, const Vector2d* pos, const Vector2d* vel,
- *                    const unsigned int parent, const unsigned int target )
- *
  * @brief Creates a new weapon.
  *
  *    @param outfit Outfit which spawned the weapon.
@@ -780,7 +797,7 @@ static Weapon* weapon_create( const Outfit* outfit,
    Weapon* w;
   
    /* Create basic features */
-   w = MALLOC_ONE(Weapon);
+   w = CALLOC_ONE(Weapon);
    w->faction = pilot_get(parent)->faction; /* non-changeable */
    w->parent = parent; /* non-changeable */
    w->target = target; /* non-changeable */
@@ -824,8 +841,7 @@ static Weapon* weapon_create( const Outfit* outfit,
                }
 
                /* Set angle to face. */
-               vect_cset( &v, x, y );
-               rdir = VANGLE(v);
+               rdir = ANGLE(x, y);
             }
          }
          else /* fire straight */
@@ -888,6 +904,54 @@ static Weapon* weapon_create( const Outfit* outfit,
                w->solid->pos.y + w->solid->vel.y);
          break;
 
+      /* Turrets are a special case. */
+      case OUTFIT_TYPE_TURRET_DUMB_AMMO:
+         pilot_target = pilot_get(w->target);
+         if (pilot_target == NULL)
+            rdir = dir;
+
+         else {
+            /* Get the distance */
+            dist = vect_dist( pos, &pilot_target->solid->pos );
+
+            /* Aim. */
+            if (dist > outfit->u.blt.range*1.2) {
+               x = pilot_target->solid->pos.x - pos->x;
+               y = pilot_target->solid->pos.y - pos->y;
+            }
+            else {
+               /* Try to predict where the enemy will be. */
+               /* Time for shots to reach that distance */
+               t = dist / w->outfit->u.amm.speed;
+
+               /* Position is calculated on where it should be */
+               x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
+                  - (pos->x + vel->x*t);
+               y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
+                  - (pos->y + vel->y*t);
+            }
+
+            /* Set angle to face. */
+            rdir = ANGLE(x, y);
+         }
+
+         /* If thrust is 0. we assume it starts out at speed. */
+         vectcpy( &v, vel );
+         if (outfit->u.amm.thrust == 0.)
+            vect_cadd( &v, cos(rdir) * w->outfit->u.amm.speed,
+                  sin(rdir) * w->outfit->u.amm.speed );
+
+         mass = w->outfit->mass;
+         w->timer = outfit->u.amm.duration;
+         w->solid = solid_create( mass, rdir, pos, &v );
+         if (w->outfit->u.amm.thrust != 0.)
+            vect_pset( &w->solid->force, w->outfit->u.amm.thrust, rdir );
+         w->think = NULL; /* No AI */
+         w->voice = sound_playPos(w->outfit->u.amm.sound,
+               w->solid->pos.x + w->solid->vel.x,
+               w->solid->pos.y + w->solid->vel.y);
+         break;
+
       /* Dumb missiles are a mixture of missile and bolt */
       case OUTFIT_TYPE_MISSILE_DUMB_AMMO:
          mass = w->outfit->mass;
@@ -895,7 +959,6 @@ static Weapon* weapon_create( const Outfit* outfit,
          w->solid = solid_create( mass, dir, pos, vel );
          vect_pset( &w->solid->force, w->outfit->u.amm.thrust, dir );
          w->think = NULL; /* No AI */
-
          w->voice = sound_playPos(w->outfit->u.amm.sound,
                w->solid->pos.x + w->solid->vel.x,
                w->solid->pos.y + w->solid->vel.y);

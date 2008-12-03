@@ -17,7 +17,7 @@
 #include <math.h>
 #include <string.h>
 
-#include "xml.h"
+#include "nxml.h"
 #include "SDL_thread.h"
 
 #include "naev.h"
@@ -207,6 +207,11 @@ void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
          da = dmg;
          kn = 0.8;
          break;
+      case DAMAGE_TYPE_EMP:
+         ds = dmg*0.6;
+         da = dmg*1.3;
+         kn = 0.;
+         break;
 
       default:
          WARN("Unknown damage type: %d!", dtype);
@@ -258,6 +263,7 @@ int outfit_isBeam( const Outfit* o )
 int outfit_isLauncher( const Outfit* o )
 {
    return ( (o->type==OUTFIT_TYPE_MISSILE_DUMB) ||
+         (o->type==OUTFIT_TYPE_TURRET_DUMB)     ||
          (o->type==OUTFIT_TYPE_MISSILE_SEEK)    ||
          (o->type==OUTFIT_TYPE_MISSILE_SEEK_SMART) ||
          (o->type==OUTFIT_TYPE_MISSILE_SWARM)   ||
@@ -271,6 +277,7 @@ int outfit_isLauncher( const Outfit* o )
 int outfit_isAmmo( const Outfit* o )
 {
    return ( (o->type==OUTFIT_TYPE_MISSILE_DUMB_AMMO)  ||
+         (o->type==OUTFIT_TYPE_TURRET_DUMB_AMMO)     ||
          (o->type==OUTFIT_TYPE_MISSILE_SEEK_AMMO)     ||
          (o->type==OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO) ||
          (o->type==OUTFIT_TYPE_MISSILE_SWARM_AMMO)    ||
@@ -297,8 +304,9 @@ int outfit_isSeeker( const Outfit* o )
  */
 int outfit_isTurret( const Outfit* o )
 {
-   return ( (o->type==OUTFIT_TYPE_TURRET_BOLT) ||
-         (o->type==OUTFIT_TYPE_TURRET_BEAM) );
+   return ( (o->type==OUTFIT_TYPE_TURRET_BOLT)  ||
+         (o->type==OUTFIT_TYPE_TURRET_BEAM)     ||
+         (o->type==OUTFIT_TYPE_TURRET_DUMB) );
 }
 /**
  * @brief Checks if outfit is a ship modification.
@@ -466,7 +474,6 @@ double outfit_range( const Outfit* o )
    return -1.;
 }
 /**
- * @fn glTexture* outfit_speed( const Outfit* o )
  * @brief Gets the outfit's speed.
  *    @param o Outfit to get information from.
  */
@@ -476,7 +483,16 @@ double outfit_speed( const Outfit* o )
    else if (outfit_isAmmo(o)) return o->u.amm.speed;
    return -1.;
 }
-
+/**
+ * @brief Gets the outfit's animation spin.
+ *    @param o Outfit to get information from.
+ */
+double outfit_spin( const Outfit* o )
+{
+   if (outfit_isBolt(o)) return o->u.blt.spin;
+   else if (outfit_isAmmo(o)) return o->u.amm.spin;
+   return -1.;
+}
 
 
 /**
@@ -497,6 +513,8 @@ const char* outfit_getType( const Outfit* o )
          "Beam Turret",
          "Dumb Missile",
          "Dumb Missile Ammunition",
+         "Projectile Turret",
+         "Projectile Turret Ammunition",
          "Seeker Missile",
          "Seeker Missile Ammunition",
          "Smart Seeker Missile",
@@ -557,6 +575,7 @@ static DamageType outfit_strToDamageType( char *buf )
    else if (strcmp(buf,"kinetic")==0) return DAMAGE_TYPE_KINETIC;
    else if (strcmp(buf,"ion")==0) return DAMAGE_TYPE_ION;
    else if (strcmp(buf,"radiation")==0) return DAMAGE_TYPE_RADIATION;
+   else if (strcmp(buf,"emp")==0) return DAMAGE_TYPE_EMP;
 
    WARN("Invalid damage type: '%s'", buf);
    return DAMAGE_TYPE_NULL;
@@ -581,6 +600,8 @@ static OutfitType outfit_strToOutfitType( char *buf )
    O_CMP("turret beam",OUTFIT_TYPE_TURRET_BEAM);
    O_CMP("missile dumb",OUTFIT_TYPE_MISSILE_DUMB);
    O_CMP("missile dumb ammo",OUTFIT_TYPE_MISSILE_DUMB_AMMO);
+   O_CMP("turret dumb",OUTFIT_TYPE_TURRET_DUMB);
+   O_CMP("turret dumb ammo",OUTFIT_TYPE_TURRET_DUMB_AMMO);
    O_CMP("missile seek",OUTFIT_TYPE_MISSILE_SEEK);
    O_CMP("missile seek ammo",OUTFIT_TYPE_MISSILE_SEEK_AMMO);
    O_CMP("missile smart",OUTFIT_TYPE_MISSILE_SEEK_SMART);
@@ -649,7 +670,7 @@ static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node )
 static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 {
    xmlNodePtr node;
-   char str[PATH_MAX] = "\0";
+   char *buf;
 
    /* Defaults */
    temp->u.blt.spfx_armour = -1;
@@ -665,8 +686,14 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"energy",temp->u.blt.energy);
 
       if (xml_isNode(node,"gfx")) {
-         snprintf( str, PATH_MAX, OUTFIT_GFX"space/%s.png", xml_get(node));
-         temp->u.blt.gfx_space = gl_newSprite(str, 6, 6);
+         temp->u.blt.gfx_space = xml_parseTexture( node,
+               OUTFIT_GFX"space/%s.png", 6, 6 );
+         xmlr_attr(node, "spin", buf);
+         if (buf != NULL) {
+            outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
+            temp->u.blt.spin = atof( buf );
+            free(buf);
+         }
          continue;
       }
       if (xml_isNode(node,"spfx_shield")) {
@@ -713,7 +740,6 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 {
    xmlNodePtr node;
-   char str[PATH_MAX] = "\0";
 
    /* Defaults. */
    temp->u.bem.spfx_armour = -1;
@@ -738,8 +764,8 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 
       /* Graphic stuff. */
       if (xml_isNode(node,"gfx")) {
-         snprintf( str, PATH_MAX, OUTFIT_GFX"space/%s.png", xml_get(node));
-         temp->u.bem.gfx = gl_newSprite(str, 1, 1);
+         temp->u.bem.gfx = xml_parseTexture( node,
+               OUTFIT_GFX"space/%s.png", 1, 1 );
          continue;
       }
       if (xml_isNode(node,"spfx_armour")) {
@@ -820,9 +846,9 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 {
    xmlNodePtr node;
-   node = parent->xmlChildrenNode;
+   char *buf;
 
-   char str[PATH_MAX] = "\0";
+   node = parent->xmlChildrenNode;
 
    /* Defaults. */
    temp->u.amm.spfx_armour = -1;
@@ -840,8 +866,14 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"speed",temp->u.amm.speed);
       xmlr_float(node,"energy",temp->u.amm.energy);
       if (xml_isNode(node,"gfx")) {
-         snprintf( str, PATH_MAX, OUTFIT_GFX"space/%s.png", xml_get(node));
-         temp->u.amm.gfx_space = gl_newSprite(str, 6, 6);
+         temp->u.amm.gfx_space = xml_parseTexture( node,
+               OUTFIT_GFX"space/%s.png", 6, 6 );
+         xmlr_attr(node, "spin", buf);
+         if (buf != NULL) {
+            outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
+            temp->u.blt.spin = atof( buf );
+            free(buf);
+         }
          continue;
       }
       else if (xml_isNode(node,"spfx_armour"))
@@ -863,9 +895,9 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->u.amm.spfx_shield==-1,"spfx_shield");
    MELEMENT(temp->u.amm.spfx_armour==-1,"spfx_armour");
    MELEMENT((sound_disabled!=0) && (temp->u.amm.sound<0),"sound");
-   MELEMENT(temp->u.amm.thrust==0,"thrust");
+   /* MELEMENT(temp->u.amm.thrust==0,"thrust"); */
    /* Dumb missiles don't need everything */
-   if (temp->type != OUTFIT_TYPE_MISSILE_DUMB_AMMO) {
+   if (outfit_isSeeker(temp)) {
       MELEMENT(temp->u.amm.turn==0,"turn");
       MELEMENT(temp->u.amm.lockon==0,"lockon");
    }
