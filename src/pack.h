@@ -43,6 +43,8 @@ int pack_close( Packfile_t* file );
 /* fancy */
 void* pack_readfile( const char* packfile, const char* filename, uint32_t *filesize );
 char** pack_listfiles( const char* packfile, uint32_t* nfiles );
+void* pack_readfileCached( Packcache_t* cache, const char* filename, uint32_t *filesize );
+const char** pack_listfilesCached( Packcache_t* cache, uint32_t* nfiles );
 
 
 #endif /* PACK_H */

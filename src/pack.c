@@ -184,7 +184,6 @@ Packcache_t* pack_openCache( const char* packfile )
       cache->index[i] = strdup(buf);
       READ( cache, &cache->start[i], 4 );
       DEBUG("'%s' found at %d", filename, cache->start[i]);
-      break;
    }
 
    /*
@@ -271,7 +270,8 @@ Packfile_t* pack_openFromCache( Packcache_t* cache, const char* filename )
          break;
       }
    }
-   return NULL;
+
+   return file;
 }
 
 
@@ -670,31 +670,14 @@ long pack_tell( Packfile_t* file )
 
 
 /**
- * @brief Reads an entire file into memory.
- *
- *    @param packfile Name of the packfile to read frome.
- *    @param filename Name of the packed file to read.
- *    @param filesize Is set to the size of the file.
- *    @return A pointer to the data in the file or NULL if an error occurred.
+ * @brief Reads a file from a Packfile.
  */
-void* pack_readfile( const char* packfile, const char* filename, uint32_t *filesize )
+static void* pack_readfilePack( Packfile_t *file,
+      const char* filename, uint32_t *filesize )
 {
-   Packfile_t* file;
    void* buf;
    char* str;
    int size, bytes;
-
-   /* Initialize size to 0. */
-   if (filesize)
-      *filesize = 0;
-
-   /* Open the packfile. */
-   file = pack_open( packfile, filename );
-   if (file == NULL) {
-      ERR("Opening packfile '%s'.", packfile);
-      return NULL;
-   }
-   DEBUG("Opened file '%s' from '%s'", filename, packfile );
 
    /* read the entire file */
    size = file->end - file->start;
@@ -705,8 +688,8 @@ void* pack_readfile( const char* packfile, const char* filename, uint32_t *files
       return NULL;
    }
    if ((bytes = pack_read( file, buf, size)) != size) {
-      ERR("Reading '%s' from packfile '%s'.  Expected %d bytes got %d bytes",
-            filename, packfile, size, bytes );
+      ERR("Reading '%s' from packfile.  Expected %d bytes got %d bytes",
+            filename, size, bytes );
       free(buf);
       free(file);
       return NULL;
@@ -745,6 +728,34 @@ void* pack_readfile( const char* packfile, const char* filename, uint32_t *files
    if (filesize)
       *filesize = size;
    return buf;
+}
+
+
+/**
+ * @brief Reads an entire file into memory.
+ *
+ *    @param packfile Name of the packfile to read frome.
+ *    @param filename Name of the packed file to read.
+ *    @param filesize Is set to the size of the file.
+ *    @return A pointer to the data in the file or NULL if an error occurred.
+ */
+void* pack_readfile( const char* packfile, const char* filename, uint32_t *filesize )
+{
+   Packfile_t* file;
+
+   /* Initialize size to 0. */
+   if (filesize)
+      *filesize = 0;
+
+   /* Open the packfile. */
+   file = pack_open( packfile, filename );
+   if (file == NULL) {
+      ERR("Opening packfile '%s'.", packfile);
+      return NULL;
+   }
+   DEBUG("Opened file '%s' from '%s'", filename, packfile );
+
+   return pack_readfilePack( file, filename, filesize );
 }
 
 
@@ -806,6 +817,33 @@ char** pack_listfiles( const char* packfile, uint32_t* nfiles )
    return filenames;
 }
 
+
+/**
+ * @brief Reads an entire file from the cache.
+ */
+void* pack_readfileCached( Packcache_t* cache, const char* filename, uint32_t *filesize )
+{
+   Packfile_t *file;
+
+   file = pack_openFromCache( cache, filename );
+   if (file == NULL)
+      ERR("Unable to create packfile from packcache.");
+   return pack_readfilePack( file, filename, filesize );
+}
+
+
+/**
+ * @brief Gets the list of files en a Packcache.
+ *
+ *    @param cache Cache to get list of files from.
+ *    @param nfiles Number of files in the list.
+ *    @return A read only list of files from the pack cache.
+ */
+const char** pack_listfilesCached( Packcache_t* cache, uint32_t* nfiles )
+{
+   *nfiles = cache->nindex;
+   return (const char**) cache->index;
+}
 
 
 /**

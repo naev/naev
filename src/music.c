@@ -197,7 +197,7 @@ static void music_free (void)
  */
 static int music_find (void)
 {
-   char** files;
+   const char** files;
    uint32_t nfiles,i;
    char tmp[64];
    int len;

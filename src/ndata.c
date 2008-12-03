@@ -32,13 +32,13 @@
  * Packfile.
  */
 static char* ndata_filename = NULL; /**< Packfile name. */
-static Packfile_t *ndata_pack = NULL; /**< Actual packfile. */
+static Packcache_t *ndata_cache = NULL; /**< Actual packfile. */
 static char* ndata_packName = NULL; /**< Name of the ndata module. */
 
 /*
  * File list.
  */
-static char **ndata_fileList = NULL; /**< List of files in the packfile. */
+static const char **ndata_fileList = NULL; /**< List of files in the packfile. */
 static uint32_t ndata_fileNList = 0; /**< Number of files in ndata_fileList. */
 
 
@@ -78,30 +78,45 @@ static int ndata_openPackfile (void)
    int nfiles;
    size_t len;
 
-   if (nfile_fileExists("%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV )) {
-      ndata_filename = malloc(PATH_MAX);
-      snprintf( ndata_filename, PATH_MAX, "%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV );
-   }
-   else if (nfile_fileExists(NDATA_DEF))
-      ndata_filename = strdup(NDATA_DEF);
-   else {                                                                 
-      files = nfile_readDir( &nfiles, "." );
-      len = strlen(NDATA_FILENAME);
-      for (i=0; i<nfiles; i++) {
-         if (strncmp(files[i], NDATA_FILENAME, len)==0) {
-            /* Must be packfile. */
-            if (pack_check(files[i]))
-               continue;
-
-            ndata_filename = strdup(files[i]);
-            break;
-         }
+   /*
+    * Try to find the ndata file.
+    */
+   if (ndata_filename == NULL) {
+      /* Check ndata with version appended. */
+      if (nfile_fileExists("%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV )) {
+         ndata_filename = malloc(PATH_MAX);
+         snprintf( ndata_filename, PATH_MAX, "%s-%d.%d.%d",
+               NDATA_FILENAME, VMAJOR, VMINOR, VREV );
       }
+      /* Check default ndata. */
+      else if (nfile_fileExists(NDATA_DEF))
+         ndata_filename = strdup(NDATA_DEF);
+      /* Try to open any ndata in path. */
+      else {                                                                 
+         files = nfile_readDir( &nfiles, "." );
+         len = strlen(NDATA_FILENAME);
+         for (i=0; i<nfiles; i++) {
+            if (strncmp(files[i], NDATA_FILENAME, len)==0) {
+               /* Must be packfile. */
+               if (pack_check(files[i]))
+                  continue;
 
-      for (i=0; i<nfiles; i++)
-         free(files[i]);
-      free(files);
+               ndata_filename = strdup(files[i]);
+               break;
+            }
+         }
+
+         /* Clean up. */
+         for (i=0; i<nfiles; i++)
+            free(files[i]);
+         free(files);
+      }
    }
+
+   /* Open the cache. */
+   ndata_cache = pack_openCache( ndata_filename );
+   if (ndata_cache == NULL)
+      WARN("Unable to create Packcache from '%s'.", ndata_filename );
 
    return 0;
 }
@@ -114,7 +129,6 @@ static int ndata_openPackfile (void)
  */
 int ndata_open (void)
 {
-
    return 0;
 }
 
@@ -124,8 +138,6 @@ int ndata_open (void)
  */
 void ndata_close (void)
 {
-   unsigned int i;
-
    /* Destroy the name. */
    if (ndata_packName != NULL) {
       free(ndata_packName);
@@ -134,19 +146,16 @@ void ndata_close (void)
 
    /* Destroy the list. */
    if (ndata_fileList != NULL) {
-      for (i=0; i<ndata_fileNList; i++)
-         free(ndata_fileList[i]);
-
-      free(ndata_fileList);
+      /* No need to free memory since cache does that. */
       ndata_fileList = NULL;
       ndata_fileNList = 0;
    }
 
    /* Close the packfile. */
-   /*
-   pack_close(ndata_pack);
-   ndata_pack = NULL;
-   */
+   if (ndata_cache) {
+      pack_closeCache(ndata_cache);
+      ndata_cache = NULL;
+   }
 }
 
 
@@ -155,7 +164,7 @@ void ndata_close (void)
  *
  *    @return The ndata's name.
  */
-char* ndata_name (void)
+const char* ndata_name (void)
 {
    char *buf;
    uint32_t size;
@@ -203,16 +212,16 @@ char* ndata_name (void)
  */
 void* ndata_read( const char* filename, uint32_t *filesize )
 {
-   if (ndata_filename == NULL)
+   if (ndata_cache == NULL)
       ndata_openPackfile();
-   return pack_readfile( ndata_filename, filename, filesize );
+   return pack_readfileCached( ndata_cache, filename, filesize );
 }
 
 
 /**
  * @brief Gets the list of files in the ndata.
  */
-char** ndata_list( const char* path, uint32_t* nfiles )
+const char** ndata_list( const char* path, uint32_t* nfiles )
 {
    (void) path;
 
@@ -221,10 +230,10 @@ char** ndata_list( const char* path, uint32_t* nfiles )
       return ndata_fileList;
    }
 
-   if (ndata_filename == NULL)
+   if (ndata_cache == NULL)
       ndata_openPackfile();
 
-   ndata_fileList = pack_listfiles( ndata_filename, &ndata_fileNList );
+   ndata_fileList = pack_listfilesCached( ndata_cache, &ndata_fileNList );
    *nfiles = ndata_fileNList;
    return ndata_fileList;
 }

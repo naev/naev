@@ -124,7 +124,7 @@ extern int pilot_nstack;
  */
 /* Internal C routines */
 static void ai_run( lua_State *L, const char *funcname );
-static int ai_loadProfile( char* filename );
+static int ai_loadProfile( const char* filename );
 static void ai_freetask( Task* t );
 static void ai_setMemory (void);
 static void ai_create( Pilot* pilot, char *param );
@@ -435,7 +435,7 @@ void ai_destroy( Pilot* p )
  */
 int ai_init (void)
 {
-   char** files;
+   const char** files;
    uint32_t nfiles,i;
 
    /* get the file list */
@@ -463,7 +463,7 @@ int ai_init (void)
  *    @param[in] filename File to create the profile from.
  *    @return 0 on no error.
  */
-static int ai_loadProfile( char* filename )
+static int ai_loadProfile( const char* filename )
 {
    char* buf = NULL;
    uint32_t bufsize = 0;

@@ -21,13 +21,13 @@ void ndata_close (void);
  */
 int ndata_check( char* path );
 int ndata_setPath( char* path );
-char* ndata_name (void);
+const char* ndata_name (void);
 
 /*
  * Individual file functions.
  */
 void* ndata_read( const char* filename, uint32_t *filesize );
-char** ndata_list( const char *path, uint32_t* nfiles );
+const char** ndata_list( const char *path, uint32_t* nfiles );
 
 
 #endif /* NDATA_H */

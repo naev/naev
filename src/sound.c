@@ -101,7 +101,7 @@ static alVoice *voice_pool = NULL; /**< Pool of free voices. */
 /* General. */
 static void print_MixerVersion (void);
 static int sound_makeList (void);
-static Mix_Chunk *sound_load( char *filename );
+static Mix_Chunk *sound_load( const char *filename );
 static void sound_free( alSound *snd );
 /* Voices. */
 static void voice_markStopped( int channel );
@@ -455,7 +455,7 @@ int sound_updateListener( double dir, double x, double y )
  */
 static int sound_makeList (void)
 {
-   char** files;
+   const char** files;
    uint32_t nfiles,i;
    char tmp[64];
    int len;
@@ -519,7 +519,7 @@ int sound_volume( const double vol )
  *
  * @sa sound_makeList
  */
-static Mix_Chunk* sound_load( char *filename )
+static Mix_Chunk* sound_load( const char *filename )
 {
    void* wavdata;
    unsigned int size;

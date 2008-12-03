@@ -301,8 +301,8 @@ void loadscreen_load (void)
 {
    int i;
    char file_path[PATH_MAX];
-   char **loadscreens;
-   char **files;
+   const char **loadscreens;
+   const char **files;
    uint32_t nfiles;
    size_t len;
    int nload;
