@@ -3,6 +3,7 @@
 #
 DEBUG := 1
 #DEBUG_PARANOID := 1
+export DEBUG
 
 
 # OS
@@ -14,7 +15,7 @@ export OS
 
 
 # Data path
-#DATA_DEF := \"ndata\"
+#NDATA_DEF := \"ndata\"
 
 
 #
@@ -45,8 +46,8 @@ CTTF   := $(shell freetype-config --cflags)
 CPNG   := $(shell libpng-config --cflags)
 CGL    :=
 CFLAGS := $(CLUA) $(CCSPARSE) $(CSDL) $(CXML) $(CTTF) $(CPNG) $(CGL) $(VERSION) -D$(OS)
-ifdef DATA_DEF
-CFLAGS += -DDATA_DEF=$(DATA_DEF)
+ifdef NDATA_DEF
+CFLAGS += -DNDATA_DEF=$(DATA_DEF)
 endif
 
 

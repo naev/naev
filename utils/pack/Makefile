@@ -5,7 +5,12 @@ LOCALDIR := utils/pack/
 
 COBJS    := $(SRCDIR)pack.o $(SRCDIR)md5.o main.o
 
-CFLAGS   += -I$(SRCDIR) -O2 -Wall
+CFLAGS   += -W -Wall
+ifdef DEBUG
+CFLAGS   += -I$(SRCDIR) -g
+else
+CFLAGS   += -I$(SRCDIR) -O2
+endif
 
 APPNAME  := pack
 

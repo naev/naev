@@ -15,7 +15,7 @@ int main( int argc, char** argv )
    char** list;
    uint32_t nlist;
    uint32_t nfiles;
-   int i;
+   uint32_t i;
 
    if (argc == 1) {
       fprintf(stderr, "Missing output file\n");
