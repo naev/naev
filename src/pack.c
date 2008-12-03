@@ -220,6 +220,7 @@ void pack_closeCache( Packcache_t* cache )
       free(cache->index);
       free(cache->start);
    }
+   free(cache);
 }
 
 
@@ -855,6 +856,8 @@ const char** pack_listfilesCached( Packcache_t* cache, uint32_t* nfiles )
 int pack_close( Packfile_t* file )
 {
    int i;
+
+   /* Close files. */
 #ifdef _POSIX_SOURCE
    i = close( file->fd );
 #else /* not _POSIX_SOURCE */
@@ -863,6 +866,10 @@ int pack_close( Packfile_t* file )
    else
       i = fclose( file->fp );
 #endif /* _POSIX_SOURCE */
+
+   /* Free memory. */
+   free(file);
+
    return (i) ? -1 : 0 ;
 }
 
