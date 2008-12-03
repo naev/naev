@@ -165,9 +165,14 @@ int spfx_load (void)
    spfx_base_load( "ExpS", 400, 400, "exps.png", 6, 5 );
    spfx_base_load( "ExpM", 450, 450, "expm.png", 6, 5 );
    spfx_base_load( "ExpL", 500, 500, "expl.png", 6, 5 );
+   /* Cargo rotation. */
    spfx_base_load( "cargo", 15000, 5000, "cargo.png", 6, 6 );
+   /* EMP blasts. */
    spfx_base_load( "EmpS", 400, 400, "emps.png", 6, 5 );
    spfx_base_load( "EmpM", 450, 450, "empm.png", 6, 5 );
+   /* Shield hits. */
+   spfx_base_load( "ShiS", 400, 400, "shis.png", 6, 5 );
+   spfx_base_load( "ShiM", 450, 450, "shim.png", 6, 5 );
 
    return 0;
 }

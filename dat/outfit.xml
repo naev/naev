@@ -13,7 +13,7 @@
   <specific type="bolt">
    <gfx>ripper</gfx>
    <sound>laser</sound>
-   <spfx_shield>ExpS</spfx_shield>
+   <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <delay>700</delay>
    <speed>700</speed>
@@ -35,7 +35,7 @@
   <specific type="bolt">
    <gfx>laserred</gfx>
    <sound>laser</sound>
-   <spfx_shield>ExpS</spfx_shield>
+   <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <delay>500</delay>
    <speed>550</speed>
@@ -58,7 +58,7 @@
   <specific type="turret bolt">
    <gfx>laserred</gfx>
    <sound>laser</sound>
-   <spfx_shield>ExpS</spfx_shield>
+   <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <delay>300</delay>
    <speed>550</speed>
@@ -80,7 +80,7 @@
   <specific type="bolt">
    <gfx>plasma</gfx>
    <sound>laser</sound>
-   <spfx_shield>ExpS</spfx_shield>
+   <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <delay>400</delay>
    <speed>450</speed>
@@ -103,7 +103,7 @@
   <specific type="bolt">
    <gfx>ion</gfx>
    <sound>ion</sound>
-   <spfx_shield>ExpS</spfx_shield>
+   <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <delay>800</delay>
    <speed>500</speed>
@@ -126,7 +126,7 @@
   <specific type="turret bolt">
    <gfx>ion</gfx>
    <sound>ion</sound>
-   <spfx_shield>ExpS</spfx_shield>
+   <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <delay>400</delay>
    <speed>500</speed>
@@ -149,8 +149,8 @@
   <specific type="bolt" secondary="1">
    <gfx>mass</gfx>
    <sound>mass</sound>
-   <spfx_shield>ExpS</spfx_shield>
-   <spfx_armour>ExpS</spfx_armour>
+   <spfx_shield>ShiM</spfx_shield>
+   <spfx_armour>ExpM</spfx_armour>
    <delay>1100</delay>
    <speed>650</speed>
    <range>500</range>
@@ -175,7 +175,7 @@
    <range>300</range>
    <energy>70</energy>
    <damage type="energy">40</damage>
-   <spfx_shield>ExpS</spfx_shield>
+   <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <gfx>beam_orion</gfx>
    <sound>beam0</sound>
@@ -198,7 +198,7 @@
    <turn>50</turn>
    <energy>130</energy>
    <damage type="energy">100</damage>
-   <spfx_shield>ExpS</spfx_shield>
+   <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <gfx>beam_ragnarok</gfx>
    <sound>beam0</sound>
@@ -292,7 +292,7 @@
   <specific type="bolt">
    <gfx>neutron</gfx>
    <sound>neutron</sound>
-   <spfx_shield>ExpS</spfx_shield>
+   <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <delay>400</delay>
    <speed>650</speed>
