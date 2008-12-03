@@ -22,7 +22,9 @@
 
 
 #define NDATA_FILENAME  "ndata"
-#define NDATA_DEF       "ndata"
+#ifndef NDATA_DEF
+#define NDATA_DEF       NDATA_FILENAME
+#endif /* NDATA_DEF */
 
 #define XML_START_ID    "Start"  /**< XML document tag of module start file. */
 #define START_DATA      "dat/start.xml" /**< Path to module start file. */
