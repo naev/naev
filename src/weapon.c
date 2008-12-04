@@ -606,9 +606,6 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
    for (i=0; i<pilot_nstack; i++) {
 
-      /* check for player to exists */
-      if ((i==0) && (player==NULL)) continue;
-
       psx = pilot_stack[i]->tsx;
       psy = pilot_stack[i]->tsy;
 
@@ -697,8 +694,8 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
          }
          pilot_setFlag( p, PILOT_HOSTILE );
          pilot_rmFlag( p, PILOT_BRIBED );
-         ai_attacked( p, w->parent );
       }
+      ai_attacked( p, w->parent );
       spfx_add( spfx, pos->x, pos->y,
             VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );
    }
@@ -750,8 +747,8 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
          }
          pilot_rmFlag( p, PILOT_BRIBED );
          pilot_setFlag( p, PILOT_HOSTILE);
-         ai_attacked( p, w->parent );
       }
+      ai_attacked( p, w->parent );
 
       if (w->lockon == -1.) { /* Code to signal create explosions. */
          spfx_add( spfx, pos[0].x, pos[0].y,
