@@ -173,6 +173,10 @@ int spfx_load (void)
    /* Shield hits. */
    spfx_base_load( "ShiS", 400, 400, "shis.png", 6, 5 );
    spfx_base_load( "ShiM", 450, 450, "shim.png", 6, 5 );
+   /* Plasma hits. */
+   spfx_base_load( "PlaS", 400, 400, "plas.png", 6, 5 );
+   spfx_base_load( "PlaM", 450, 450, "plam.png", 6, 5 );
+
 
    return 0;
 }

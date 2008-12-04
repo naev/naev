@@ -81,7 +81,7 @@
    <gfx>plasma</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
-   <spfx_armour>ExpS</spfx_armour>
+   <spfx_armour>PlaS</spfx_armour>
    <delay>400</delay>
    <speed>450</speed>
    <range>250</range>
