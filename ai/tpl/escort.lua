@@ -91,7 +91,9 @@ end
 -- Attack target
 function e_attack( target )
    if command then
-      ai.pushtask(0, "attack", target)
+      if target ~= nil then
+         ai.pushtask(0, "attack", target)
+      end
    end
 end
 -- Hold position

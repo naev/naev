@@ -16,7 +16,7 @@ function control ()
       enemy = ai.getenemy()
 
       -- There is an enemy
-      if enemy ~= 0 then
+      if enemy ~= nil then
          if ai.dist(enemy) < enemy_dist or ai.haslockon() then
             ai.pushtask(0, "runaway", enemy)
             return
