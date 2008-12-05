@@ -91,7 +91,7 @@ function attacked ( attacker )
          ai.pushtask(0, "attack", attacker)
       end
    elseif task == "runaway" then
-      if ai.ptarget() ~= attacker then
+      if ai.target() ~= attacker then
          ai.poptask()
          ai.pushtask(0, "runaway", attacker)
       end
