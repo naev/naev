@@ -10,3 +10,4 @@ mkspr
 naev
 pack
 docs/doxygen/*
+docs/lua/*

@@ -199,7 +199,7 @@ utils: pack mkspr
 
 
 docs:
-	@( cd src; doxygen )
+	+@$(MAKE) -C docs/
 
 
 clean:

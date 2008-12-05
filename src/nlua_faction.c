@@ -114,7 +114,7 @@ static int factionL_createmetatable( lua_State *L, int readonly )
  * @defgroup FACTION Faction Lua bindings.
  *
  * @brief Lua bindings to deal with factions.
- *
+ * @luamod faction
  * Use with:
  * @code
  * faction.func( params )
@@ -278,12 +278,11 @@ static int factionL_longname( lua_State *L )
 }
 
 /**
- * @brief bool areEnemies( faction f )
- *
- * Checks to see if f is an enemy.
+ * @brief Checks to see if f is an enemy.
  *
  *    @param f Faction to check if is an enemy.
  *    @return true if they are enemies, false if they aren't.
+ * @luafunc areEnemies(f)
  */
 static int factionL_areenemies( lua_State *L )
 {
@@ -297,12 +296,11 @@ static int factionL_areenemies( lua_State *L )
 }
 
 /**
- * @brief bool areEnemies( faction f )
- *
- * Checks to see if f is an enemy.
+ * @brief Checks to see if f is an enemy.
  *
  *    @param f Faction to check if is an enemy.
  *    @return true if they are enemies, false if they aren't.
+ * @luafunc areAllies(f)
  */
 static int factionL_areallies( lua_State *L )
 {
