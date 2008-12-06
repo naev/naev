@@ -55,7 +55,6 @@ static int pilotL_velocity( lua_State *L );
 static int pilotL_warp( lua_State *L );
 static int pilotL_broadcast( lua_State *L );
 static int pilotL_setFaction( lua_State *L );
-static int pilotL_setName( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    { "__eq", pilotL_eq },
    { "name", pilotL_name },
@@ -66,7 +65,6 @@ static const luaL_reg pilotL_methods[] = {
    { "warp", pilotL_warp },
    { "broadcast", pilotL_broadcast },
    { "setFaction", pilotL_setFaction },
-   { "setName", pilotL_setName },
    {0,0}
 }; /**< Pilot metatable methods. */
 
@@ -126,7 +124,7 @@ static int pilotL_createmetatable( lua_State *L )
  * @defgroup PILOT Pilot Lua bindings.
  *
  * @brief Lua bindings to interact with pilots.
- *
+ * @luamod pilot
  * Functions should be called like:
  *
  * @code
@@ -206,11 +204,9 @@ int lua_ispilot( lua_State *L, int ind )
 /**
  * @ingroup PILOT
  *
- * @brief pilot player(nil)
- *
- * Gets the player's pilot.
- *
+ * @brief Gets the player's pilot.
  *    @return Pilot pointing to the player.
+ * @luafunc player()
  */
 static int pilot_getPlayer( lua_State *L )
 {
@@ -227,17 +223,14 @@ static int pilot_getPlayer( lua_State *L )
 }
 
 /**
- * @fn static int pilot_addFleet( lua_State *L )
  * @ingroup PILOT
  *
- * @brief table add( string fleetname [, string ai, Vec2 pos ] )
- *
- * Adds a fleet to the system.
- *
- *    @param fleetname Name of the fleet to add.
- *    @param ai If set will override the standard fleet AI.  "def" means use default.
- *    @param pos Position to create pilots around instead of choosing randomly.
+ * @brief Adds a fleet to the system.
+ *    @luaparam fleetname Name of the fleet to add.
+ *    @luaparam ai If set will override the standard fleet AI.  "def" means use default.
+ *    @luaparam pos Position to create pilots around instead of choosing randomly.
  *    @return Table populated with all the pilots created.
+ * @luafunc add( fleetname, ai, pos )
  */
 static int pilot_addFleet( lua_State *L )
 {
@@ -344,12 +337,10 @@ static int pilot_addFleet( lua_State *L )
    return 1;
 }
 /**
- * @fn static int pilot_clear( lua_State *L )
  * @ingroup PILOT
  *
- * @brief clear( nil )
- *
- * Clears the current system of pilots.  Used for epic battles and such.
+ * @brief Clears the current system of pilots.  Used for epic battles and such.
+ * @luafunc clear()
  */
 static int pilot_clear( lua_State *L )
 {
@@ -358,16 +349,13 @@ static int pilot_clear( lua_State *L )
    return 0;
 }
 /**
- * @fn static int pilot_toggleSpawn( lua_State *L )
  * @ingroup PILOT
  *
- * @brief bool togglespawn( [bool enable] )
- *
- * Disables or enables pilot spawning in the current system.  If player jumps
- *  the spawn is enabled again automatically.
- *
- *    @param enable true enables spawn, false disables it.
+ * @brief Disables or enables pilot spawning in the current system.  If player
+ *  jumps the spawn is enabled again automatically.
+ *    @luaparam enable true enables spawn, false disables it.
  *    @return The current spawn state.
+ * @brief togglespawn( enable )
  */
 static int pilot_toggleSpawn( lua_State *L )
 {
@@ -383,15 +371,12 @@ static int pilot_toggleSpawn( lua_State *L )
 }
 
 /**
- * @fn static int pilotL_eq( lua_State *L )
  * @ingroup META_PILOT
  *
- * @brief bool __eq( Pilot p )
- *
- * Checks to see if pilot and p are the same.
- *
- *    @param p Pilot to compare against.
+ * @brief Checks to see if pilot and p are the same.
+ *    @luaparam p Pilot to compare against.
  *    @return true if they are the same.
+ * @luafunc __eq( pilot )
  */
 static int pilotL_eq( lua_State *L )
 {
@@ -410,14 +395,11 @@ static int pilotL_eq( lua_State *L )
 }
 
 /**
- * @fn static int pilotL_name( lua_State *L )
  * @ingroup META_PILOT
  *
- * @brief string name( nil )
- *
- * Gets the pilot's current name.
- *
+ * @brief Gets the pilot's current name.
  *    @return The current name of the pilot.
+ * @luafunc name()
  */
 static int pilotL_name( lua_State *L )
 {
@@ -438,14 +420,11 @@ static int pilotL_name( lua_State *L )
 }
 
 /**
- * @fn static int pilotL_alive( lua_State *L )
  * @ingroup META_PILOT
  *
- * @brief bool alive( nil )
- *
- * Checks to see if pilot is still alive.
- *
+ * @brief Checks to see if pilot is still alive.
  *    @return true if pilot is still alive.
+ * @luafunc alive()
  */
 static int pilotL_alive( lua_State *L )
 {
@@ -463,14 +442,11 @@ static int pilotL_alive( lua_State *L )
 }
 
 /**
- * @fn static int pilotL_rename( lua_State *L )
  * @ingroup META_PILOT
  *
- * @brief rename( string name )
- *
- * Changes the pilot's name.
- *
+ * @brief Changes the pilot's name.
  *    @param name Name to change to.
+ * @luafunc rename( name )
  */
 static int pilotL_rename( lua_State *L )
 {
@@ -498,14 +474,11 @@ static int pilotL_rename( lua_State *L )
 }
 
 /**
- * @fn static int pilotL_position( lua_State *L )
  * @ingroup META_PILOT
  *
- * @brief Vec2 pos( nil )
- *
- * Gets the pilot's position.
- *
+ * @brief Gets the pilot's position.
  *    @return The pilot's current position.
+ * @luafunc pos()
  */
 static int pilotL_position( lua_State *L )
 {
@@ -531,11 +504,9 @@ static int pilotL_position( lua_State *L )
  * @fn static int pilotL_velocity( lua_State *L )
  * @ingroup META_PILOT
  *
- * @brief Vec2 vel( nil )
- *
- * Gets the pilot's velocity.
- *
+ * @brief Gets the pilot's velocity.
  *    @return The pilot's current velocity.
+ * @luafunc vel()
  */
 static int pilotL_velocity( lua_State *L )
 {
@@ -558,14 +529,11 @@ static int pilotL_velocity( lua_State *L )
 }
 
 /**
- * @fn static int pilotL_warp( lua_State *L )
  * @ingroup META_PILOT
  *
- * @brief Vec2 position( nil )
- *
- * Gets the pilot's position.
- *
- *    @return The pilot's current position.
+ * @brief Sets the pilot's position.
+ *    @luaparam pos Position to set.
+ * @luafunc warp( pos )
  */
 static int pilotL_warp( lua_State *L )
 {
@@ -591,14 +559,11 @@ static int pilotL_warp( lua_State *L )
 }
 
 /**
- * @fn static int pilotL_broadcast( lua_State *L )
  * @ingroup META_PILOT
  *
- * @brief broadcast( string msg )
- *
- * Makes the pilot broadcast a message.
- *
- *    @param msg Message to broadcast.
+ * @brief Makes the pilot broadcast a message.
+ *    @luaparam msg Message to broadcast.
+ * @luafunc broadcast( msg )
  */
 static int pilotL_broadcast( lua_State *L )
 {
@@ -624,10 +589,11 @@ static int pilotL_broadcast( lua_State *L )
 }
 
 /**
- * @fn static int pilotL_setFaction( lua_State *L )
  * @ingroup META_PILOT
  *
- * @brief setFaction( string faction )
+ * @brief Sets the pilot's faction.
+ *    @luaparam faction Faction to set by name or faction.
+ * @luafunc setFaction( faction )
  */
 static int pilotL_setFaction( lua_State *L )
 {
@@ -656,36 +622,6 @@ static int pilotL_setFaction( lua_State *L )
 
    /* Set the new faction. */
    p->faction = fid;
-
-   return 0;
-}
-
-/**
- * @ingroup META_PILOT
- *
- * @brief setName( string name )
- */
-static int pilotL_setName( lua_State *L )
-{
-   NLUA_MIN_ARGS(2);
-   LuaPilot *lp;
-   Pilot *p;
-   char *name;
-
-   /* Get the parameters. */
-   lp = lua_topilot(L,1);
-   if (lua_isstring(L,2))
-      name = (char*) lua_tostring(L,2);
-   else NLUA_INVALID_PARAMETER();
-
-   /* Get the pilot. */
-   p = pilot_get(lp->pilot);
-   if (p==NULL) return 0;
-
-   /* Set the name. */
-   if (p->name != NULL)
-      free(p->name);
-   p->name = strdup(name);
 
    return 0;
 }

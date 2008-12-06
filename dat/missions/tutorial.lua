@@ -182,7 +182,7 @@ function brakeOver ()
       pilots = pilot.add( "Sml Trader Convoy", "dummy" )
       for k,v in ipairs(pilots) do
          v:setFaction("Dummy")
-         v:setName("Dummy")
+         v:rename("Dummy")
       end
       misn.timerStart( "targetOver", 20000 ) -- 20 seconds to target
    else
@@ -211,7 +211,7 @@ function addLlamaDummy ()
    pilots = pilot.add( "Trader Llama", "dummy" )
    for k,v in ipairs(pilots) do
       v:setFaction("Dummy")
-      v:setName("Dummy")
+      v:rename("Dummy")
       hook.pilot( v, "disable", "llamaDisabled" )
       hook.pilot( v, "death", "llamaDead" )
       hook.pilot( v, "board", "llamaBoard" )

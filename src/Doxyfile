@@ -186,7 +186,9 @@ TAB_SIZE               = 3
 # will result in a user-defined paragraph with heading "Side Effects:". 
 # You can put \n's in the value part of an alias to insert newlines.
 
-ALIASES                = 
+ALIASES                = "luamod=<em>Lua module:</em>"
+ALIASES               += "luafunc=<em>Lua function:</em> "
+ALIASES               += "luaparam=<em>Lua function parameter:</em> "
 
 # Set the OPTIMIZE_OUTPUT_FOR_C tag to YES if your project consists of C 
 # sources only. Doxygen will then generate output that is more tailored for C. 

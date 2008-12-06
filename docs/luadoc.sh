@@ -1,6 +1,6 @@
 #run this from docs directory
 #create docs/lua directory
-if [ ! -d lua ]; then mkdir lua; fi
+test -d lua || mkdir lua
 #convert doxygen comments to luadoc comments
 for F in ../src/nlua_*.c
 do
@@ -16,8 +16,9 @@ sed -n '
 	s|^ *\* *@luamod *\(.*\)|module "\1"|p
 #rename some tags:
 	s|^ *\* *@brief|-- @description|p
+	s|^ *\* *@luaparam|-- @param|p
 #keep tags luadoc understands:
-	s|^ *\* *@param|-- @param|p
+#	s|^ *\* *@param|-- @param|p # use luaparam, param reserved for C arguments
 	s|^ *\* *@see|-- @see|p
 	s|^ *\* *@return|-- @return|p
 	s|^ *\* *@usage|-- @usage|p

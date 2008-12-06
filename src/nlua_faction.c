@@ -223,16 +223,11 @@ int lua_isfaction( lua_State *L, int ind )
 }
 
 /**
- * @fn static int factionL_eq( lua_State *L )
- *
- * @brief bool __eq( faction comp )
- *
- * __eq (equality) metamethod for factions.
- *
+ * @brief __eq (equality) metamethod for factions.
  * You can use the '=' operator within Lua to compare factions with this.
- *
- *    @param comp faction to compare against.
+ *    @luaparam comp faction to compare against.
  *    @return true if both factions are the same.
+ * @luafunc __eq( comp )
  */
 static int factionL_eq( lua_State *L )
 {
@@ -244,13 +239,9 @@ static int factionL_eq( lua_State *L )
 }
 
 /**
- * @fn static int factionL_name( lua_State *L )
- *
- * @brief string name( nil )
- *
- * Gets the faction's name.
- *
+ * @brief Gets the faction's name.
  *    @return The name of the faction.
+ * @luafunc name()
  */
 static int factionL_name( lua_State *L )
 {
@@ -261,13 +252,9 @@ static int factionL_name( lua_State *L )
 }
 
 /**
- * @fn static int factionL_longname( lua_State *L )
- *
- * @brief string longname( nil )
- *
- * Gets the faction's long name.
- *
+ * @brief Gets the faction's long name.
  *    @return The long name of the faction.
+ * @luafunc longname()
  */
 static int factionL_longname( lua_State *L )
 {
@@ -279,10 +266,9 @@ static int factionL_longname( lua_State *L )
 
 /**
  * @brief Checks to see if f is an enemy.
- *
- *    @param f Faction to check if is an enemy.
+ *    @luaparam f Faction to check if is an enemy.
  *    @return true if they are enemies, false if they aren't.
- * @luafunc areEnemies(f)
+ * @luafunc areEnemies( f )
  */
 static int factionL_areenemies( lua_State *L )
 {
@@ -297,10 +283,9 @@ static int factionL_areenemies( lua_State *L )
 
 /**
  * @brief Checks to see if f is an enemy.
- *
- *    @param f Faction to check if is an enemy.
+ *    @luaparam f Faction to check if is an enemy.
  *    @return true if they are enemies, false if they aren't.
- * @luafunc areAllies(f)
+ * @luafunc areAllies( f )
  */
 static int factionL_areallies( lua_State *L )
 {
@@ -314,11 +299,9 @@ static int factionL_areallies( lua_State *L )
 }
 
 /**
- * @brief modPlayer( number mod )
- *
- * Modifies the player's standing with the faction.
- *
- *    @param mod The modifier to modify faction by.
+ * @brief Modifies the player's standing with the faction.
+ *    @luaparam mod The modifier to modify faction by.
+ * @luafunc modPlayer( mod )
  */
 static int factionL_modplayer( lua_State *L )
 {
@@ -334,15 +317,10 @@ static int factionL_modplayer( lua_State *L )
 }
 
 /**
- * @fn static int factionL_modplayerraw( lua_State *L )
- *
- * @brief modPlayerRaw( number mod )
- *
- * Modifies the player's standing with the faction.
- *
+ * @brief Modifies the player's standing with the faction.
  * Does not affect other faction standings.
- *
- *    @param mod The modifier to modify faction by.
+ *    @lua param mod The modifier to modify faction by.
+ * @luafunc modPlayerRaw( mod )
  */
 static int factionL_modplayerraw( lua_State *L )
 {
@@ -358,13 +336,9 @@ static int factionL_modplayerraw( lua_State *L )
 }
 
 /**
- * @fn static int factionL_playerstanding( lua_State *L )
- *
- * @brief number, string playerStanding( nil )
- *
- * Gets the player's standing with the faction.
- *
+ * @brief Gets the player's standing with the faction.
  *    @return The value of the standing and the human readable string.
+ * @luafunc playerStanding()
  */
 static int factionL_playerstanding( lua_State *L )
 {

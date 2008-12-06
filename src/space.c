@@ -356,8 +356,6 @@ char planet_getClass( Planet *p )
 
 
 /**
- * @Fn int space_canHyperspace( Pilot* p)
- *
  * @brief Checks to make sure if pilot is far enough away to hyperspace.
  *
  *    @param p Pilot to check if he can hyperspace.
@@ -379,8 +377,6 @@ int space_canHyperspace( Pilot* p)
 
 
 /**
- * @fn int space_hyperspace( Pilot* p )
- *
  * @brief Tries to get the pilot into hyperspace.
  *
  *    @param p Pilot to try to start hyperspacing.
@@ -399,8 +395,6 @@ int space_hyperspace( Pilot* p )
 
 
 /**
- * @fn char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
- *
  * @brief Gets the name of all the planets that belong to factions.
  *
  *    @param[out] nplanets Number of planets found.
@@ -441,8 +435,6 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
 
 
 /**
- * @fn char* space_getRndPlanet (void)
- *
  * @brief Gets the name of a random planet.
  *
  *    @return The name of a random planet.
@@ -477,8 +469,6 @@ char* space_getRndPlanet (void)
 
 
 /**
- * @fn int space_sysReachable( StarSystem *sys )
- *
  * @brief Sees if a system is reachable.
  *
  *    @return 1 if target system is reachable, 0 if it isn't.
@@ -499,8 +489,6 @@ int space_sysReachable( StarSystem *sys )
 
 
 /**
- * @fn StarSystem* system_get( const char* sysname )
- *
  * @brief Get the system from it's name.
  *
  *    @param sysname Name to match.
@@ -520,8 +508,6 @@ StarSystem* system_get( const char* sysname )
 
 
 /**
- * @fn char* planet_getSystem( char* planetname )
- *
  * @brief Get the name of a system from a planetname.
  *
  *    @param planetname Planet name to match.
@@ -541,8 +527,6 @@ char* planet_getSystem( char* planetname )
 
 
 /**
- * @fn Planet* planet_get( char* planetname )
- *
  * @brief Gets a planet based on it's name.
  *
  *    @param planetname Name to match.
@@ -562,8 +546,6 @@ Planet* planet_get( char* planetname )
 
 
 /**
- * @fn void space_update( const double dt )
- *
  * @brief Controls fleet spawning.
  *
  *    @param dt Current delta tick.
@@ -706,8 +688,6 @@ static void space_addFleet( Fleet* fleet, int init )
 
 
 /**
- * @fn void space_init ( const char* sysname )
- *
  * @brief Initializes the system.
  *
  *    @param sysname Name of the system to initialize.
@@ -779,8 +759,6 @@ void space_init ( const char* sysname )
 
 
 /**
- * @fn static int planets_load ( void )
- *
  * @brief Loads all the planets in the game.
  *
  *    @return 0 on success.
@@ -1087,8 +1065,6 @@ int system_rmPlanet( StarSystem *sys, char *planetname )
 
 
 /**
- * @fn int system_addFleet( StarSystem *sys, SystemFleet *fleet )
- *
  * @brief Adds a fleet to a star system.
  *
  *    @param sys Star System to add fleet to.
@@ -1108,8 +1084,6 @@ int system_addFleet( StarSystem *sys, SystemFleet *fleet )
 
 
 /**
- * @fn int system_rmFleet( StarSystem *sys, SystemFleet *fleet )
- *
  * @brief Removes a fleet from a star system.
  *
  *    @param sys Star System to remove fleet from.
