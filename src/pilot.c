@@ -1245,24 +1245,26 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 char* pilot_getOutfits( Pilot* pilot )
 {
    int i;
-   char buf[64], *str;
+   char *buf;
+   int p, len;
 
-   str = malloc(sizeof(char)*1024);
+   len = 1024;
+
+   buf = malloc(sizeof(char)*len);
    buf[0] = '\0';
+   p = 0;
    /* first outfit */
    if (pilot->noutfits>0)
-      snprintf( str, 1024, "%dx %s",
+      p += snprintf( &buf[p], len-p, "%dx %s",
             pilot->outfits[0].quantity, pilot->outfits[0].outfit->name );
    else
-      snprintf( str, 1024, "None" );
+      p += snprintf( &buf[p], len-p, "None" );
    /* rest of the outfits */
-   for (i=1; i<pilot->noutfits; i++) {
-      snprintf( buf, 64, ", %dx %s",
+   for (i=1; i<pilot->noutfits; i++)
+      p += snprintf( &buf[p], len-p, ", %dx %s",
             pilot->outfits[i].quantity, pilot->outfits[i].outfit->name );
-      strcat( str, buf );
-   }
 
-   return str;
+   return buf;
 }
 
 

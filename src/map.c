@@ -255,12 +255,12 @@ static void map_update( unsigned int wid )
       window_modifyText( wid, "txtPlanets", buf );
    }
    else {
+      p = 0;
       buf[0] = '\0';
       if (sys->nplanets > 0)
-         strcat( buf, sys->planets[0]->name );
+         p += snprintf( &buf[p], PATH_MAX-p, "%s", sys->planets[0]->name );
       for (i=1; i<sys->nplanets; i++) {
-         strcat( buf, ",\n" );
-         strcat( buf, sys->planets[i]->name );
+         p += snprintf( &buf[p], PATH_MAX-p, ",\n%s", sys->planets[i]->name );
       }
 
       window_modifyText( wid, "txtPlanets", buf );
@@ -278,15 +278,16 @@ static void map_update( unsigned int wid )
    for (i=0; i<sys->nplanets; i++)
       services |= sys->planets[i]->services;
    buf[0] = '\0';
+   p = 0;
    /*snprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
    if (services & PLANET_SERVICE_COMMODITY)
-      strcat(buf, "Commodity\n");
+      p += snprintf( &buf[p], PATH_MAX-p, "Commodity\n");
    if (services & PLANET_SERVICE_OUTFITS)
-      strcat(buf, "Outfits\n");
+      p += snprintf( &buf[p], PATH_MAX-p, "Outfits\n");
    if (services & PLANET_SERVICE_SHIPYARD)
-      strcat(buf, "Shipyard\n");
+      p += snprintf( &buf[p], PATH_MAX-p, "Shipyard\n");
    if (buf[0] == '\0')
-      strcat(buf, "None");
+      p += snprintf( &buf[p], PATH_MAX-p, "None");
    window_modifyText( wid, "txtServices", buf );
 
 

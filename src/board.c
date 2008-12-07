@@ -273,42 +273,33 @@ static int board_fail( unsigned int wdw )
  */
 static void board_update( unsigned int wdw )
 {
-   int i, len;
-   char str[128], buf[32];
+   int i, j;
+   char str[PATH_MAX];
    char cred[10];
    Pilot* p;
 
    p = pilot_get(player->target);
+   j = 0;
 
    /* Credits. */
    credits2str( cred, p->credits, 2 );
-   snprintf( str, 128,
-         "%s\n", cred );
-   len = strlen(str);
+   j += snprintf( &str[j], PATH_MAX-j, "%s\n", cred );
 
    /* Commodities. */
-   if (p->ncommodities==0) {
-      strncat( str, "none\n", 128-len );
-      len = strlen(str);
-   }
+   if (p->ncommodities==0)
+      j += snprintf( &str[j], PATH_MAX-j, "none\n" );
    else {
-      for (i=0; i<p->ncommodities; i++) {
-         snprintf( buf, 32,
+      for (i=0; i<p->ncommodities; i++)
+         j += snprintf( &str[j], PATH_MAX-j,
                "%d %s\n",
                p->commodities[i].quantity, p->commodities[i].commodity->name );
-         strncat( str, buf, 128-len );
-         len = strlen(str);
-      }
    }
 
    /* Fuel. */
    if (p->fuel <= 0.)
-      strncat( str, "none\n", 128-len );
-   else {
-      snprintf( buf, 32, "%.0f Units\n", p->fuel );
-      strncat( str, buf, 128-len );
-   }
-   len = strlen(str);
+      j += snprintf( &str[j], PATH_MAX-j, "none\n" );
+   else
+      j += snprintf( &str[j], PATH_MAX-j, "%.0f Units\n", p->fuel );
 
    window_modifyText( wdw, "txtData", str ); 
 }
