@@ -114,7 +114,7 @@ static unsigned int player_timer = 0; /**< For death and such. */
 static Vector2d player_cam; /**< For death and such. */
 /* for interference. */
 static int interference_layer = 0; /**< Layer of the current interference. */
-static double interference_alpha = 0.; /**< Alpha of the current interference layer. */
+double interference_alpha = 0.; /**< Alpha of the current interference layer. */
 static double interference_t = 0.; /**< Interference timer to control transitions. */
 
 
@@ -249,9 +249,9 @@ static Mesg* mesg_stack; /**< Stack of mesages, will be of mesg_max size. */
  */
 extern void pilot_render( const Pilot* pilot ); /* from pilot.c */
 extern void weapon_minimap( const double res, const double w, const double h,
-      const RadarShape shape ); /* from weapon.c */
+      const RadarShape shape, double alpha ); /* from weapon.c */
 extern void planets_minimap( const double res, const double w, const double h,
-      const RadarShape shape ); /* from space.c */
+      const RadarShape shape, double alpha ); /* from space.c */
 /* 
  * internal
  */
@@ -1045,12 +1045,14 @@ void player_renderGUI( double dt )
    /*
     * planets
     */
-   planets_minimap(gui.radar.res, gui.radar.w, gui.radar.h, gui.radar.shape);
+   planets_minimap(gui.radar.res, gui.radar.w, gui.radar.h,
+         gui.radar.shape, 1.-interference_alpha);
 
    /*
     * weapons
     */
-   weapon_minimap(gui.radar.res, gui.radar.w, gui.radar.h, gui.radar.shape);
+   weapon_minimap(gui.radar.res, gui.radar.w, gui.radar.h,
+         gui.radar.shape, 1.-interference_alpha);
 
 
    /* render the pilot_nstack */
@@ -1065,6 +1067,18 @@ void player_renderGUI( double dt )
    if (j!=0)
       gui_renderPilot(pilot_stack[j]);
 
+   glPopMatrix(); /* GL_PROJECTION */
+
+   /* Intereference. */
+   gui_renderInterference(dt);
+
+   glPushMatrix();
+   if (gui.radar.shape==RADAR_RECT)
+      glTranslated( gui.radar.x - SCREEN_W/2. + gui.radar.w/2.,
+            gui.radar.y - SCREEN_H/2. - gui.radar.h/2., 0.);
+   else if (gui.radar.shape==RADAR_CIRCLE)
+      glTranslated( gui.radar.x - SCREEN_W/2.,
+            gui.radar.y - SCREEN_H/2., 0.);
 
    /* the + sign in the middle of the radar representing the player */
    glBegin(GL_LINES);
@@ -1076,9 +1090,6 @@ void player_renderGUI( double dt )
    glEnd(); /* GL_LINES */
 
    glPopMatrix(); /* GL_PROJECTION */
-
-   /* Intereference. */
-   gui_renderInterference(dt);
 
 
    /*
@@ -1379,8 +1390,10 @@ static void gui_renderInterference( double dt )
 }
 
 
-/*
- * renders a pilot
+/**
+ * @brief Renders a pilot in the GUI radar.
+ *
+ *    @param p Pilot to render.
  */
 static void gui_renderPilot( const Pilot* p )
 {
@@ -1443,7 +1456,7 @@ static void gui_renderPilot( const Pilot* p )
       else if (pilot_isFlag(p,PILOT_BRIBED)) col = &cNeutral;
       else if (pilot_isFlag(p,PILOT_HOSTILE)) col = &cHostile;
       else col = faction_getColour(p->faction);
-      COLOUR(*col);
+      ACOLOUR(*col, 1-interference_alpha); /**< Makes it much harder to see. */
 
       /* image */
       glVertex2d( MAX(x-sx,-w), MIN(y+sy, h) ); /* top-left */

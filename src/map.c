@@ -168,7 +168,8 @@ static void map_update( unsigned int wid )
    StarSystem* sys;
    int f, y, h, standing, nstanding;
    unsigned int services;
-   char buf[128];
+   char buf[PATH_MAX];
+   int p;
 
    /* Needs map to update. */
    if (!map_isOpen())
@@ -220,7 +221,7 @@ static void map_update( unsigned int wid )
       }
       else if (f != sys->planets[i]->faction && /** @todo more verbosity */
             (sys->planets[i]->faction>0)) {
-         snprintf( buf, 100, "Multiple" );
+         snprintf( buf, PATH_MAX, "Multiple" );
          break;
       }
    }
@@ -234,7 +235,7 @@ static void map_update( unsigned int wid )
    }
    else {
       if (i==sys->nplanets) /* saw them all and all the same */
-         snprintf( buf, 100, "%s", faction_longname(f) );
+         snprintf( buf, PATH_MAX, "%s", faction_longname(f) );
 
       /* Modify the text */
       window_modifyText( wid, "txtFaction", buf );
@@ -250,7 +251,7 @@ static void map_update( unsigned int wid )
 
    /* Get planets */
    if (sys->nplanets == 0) {
-      strncpy( buf, "None", 128 );
+      strncpy( buf, "None", PATH_MAX );
       window_modifyText( wid, "txtPlanets", buf );
    }
    else {
@@ -293,21 +294,38 @@ static void map_update( unsigned int wid )
     * System Status
     */
    buf[0] = '\0';
-   if (sys->nebu_density > 0.) { /* Has nebulae */
+   p = 0;
+   /* Nebulae. */
+   if (sys->nebu_density > 0.) {
 
       /* Volatility */
       if (sys->nebu_volatility > 700.)
-         strcat(buf," Volatile");
+         p += snprintf(&buf[p], PATH_MAX-p, " Volatile");
       else if (sys->nebu_volatility > 300.)
-         strcat(buf," Dangerous");
+         p += snprintf(&buf[p], PATH_MAX-p, " Dangerous");
       else if (sys->nebu_volatility > 0.)
-         strcat(buf," Unstable");
+         p += snprintf(&buf[p], PATH_MAX-p, " Unstable");
+
       /* Density */
       if (sys->nebu_density > 700.)
-         strcat(buf," Dense");
+         p += snprintf(&buf[p], PATH_MAX-p, " Dense");
       else if (sys->nebu_density < 300.)
-         strcat(buf," Light");
-      strcat(buf," Nebulae");
+         p += snprintf(&buf[p], PATH_MAX-p, " Light");
+      p += snprintf(&buf[p], PATH_MAX-p, " Nebulae");
+   }
+   /* Interference. */
+   if (sys->interference > 0.) {
+
+      if (buf[0] != '\0')
+         p += snprintf(&buf[p], PATH_MAX-p, ",");
+
+      /* Density. */
+      if (sys->interference > 700.)
+         p += snprintf(&buf[p], PATH_MAX-p, " Dense");
+      else if (sys->interference < 300.)
+         p += snprintf(&buf[p], PATH_MAX-p, " Light");
+
+      p += snprintf(&buf[p], PATH_MAX-p, " Interference");
    }
    window_modifyText( wid, "txtSystemStatus", buf );
 }

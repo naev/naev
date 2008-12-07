@@ -119,7 +119,7 @@ static void think_seeker( Weapon* w, const double dt );
 static void think_beam( Weapon* w, const double dt );
 /* externed */
 void weapon_minimap( const double res, const double w,
-      const double h, const RadarShape shape );
+      const double h, const RadarShape shape, double alpha );
 
 
 #define PIXEL(x,y)      \
@@ -133,16 +133,17 @@ void weapon_minimap( const double res, const double w,
  *    @param w Width of minimap.
  *    @param h Height of minimap.
  *    @param shape Shape of the minimap.
+ *    @param alpha Alpha to draw points at.
  */
 void weapon_minimap( const double res, const double w,
-      const double h, const RadarShape shape )
+      const double h, const RadarShape shape, double alpha )
 {
    int i, rc;
    double x, y;
 
    /* Begin the points. */
    glBegin(GL_POINTS);
-   COLOUR(cRadar_weap);
+   ACOLOUR(cRadar_weap, alpha);
 
    if (shape==RADAR_CIRCLE)
       rc = (int)(w*w);

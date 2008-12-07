@@ -112,6 +112,14 @@ static int mstars = 0; /**< memory stars are taking */
 
 
 /*
+ * Interference.
+ */
+extern double interference_alpha; /* player.c */
+static double interference_target = 0.; /**< Target alpha level. */
+static double interference_timer = 0.; /**< Interference timer. */
+
+
+/*
  * External stuff.
  */
 extern int planet_target; /* player.c */
@@ -139,7 +147,7 @@ extern void player_message ( const char *fmt, ... );
  * Externed prototypes.
  */
 void planets_minimap( const double res, const double w,
-      const double h, const RadarShape shape );
+      const double h, const RadarShape shape, double alpha );
 int space_sysSave( xmlTextWriterPtr writer );
 int space_sysLoad( xmlNodePtr parent );
 
@@ -158,9 +166,10 @@ int space_sysLoad( xmlNodePtr parent );
  *    @param w Current minimap width.
  *    @param h Current minimap height.
  *    @param shape Current minimap shape.
+ *    @param alpha Alpha to draw planets at.
  */
 void planets_minimap( const double res, const double w,
-      const double h, const RadarShape shape )
+      const double h, const RadarShape shape, double alpha )
 {
    int i;
    int cx, cy, x, y, r, rc;
@@ -181,7 +190,7 @@ void planets_minimap( const double res, const double w,
          col = &cRadar_tPlanet;
       else if ((col != &cHostile) && !planet_hasService(planet,PLANET_SERVICE_BASIC))
          col = &cInert; /* Override non-hostile planets without service. */
-      COLOUR(*col);
+      ACOLOUR(*col, alpha);
 
       /* Some parameters. */
       r = (int)(cur_system->planets[i]->gfx_space->sw / res);
@@ -554,9 +563,14 @@ void space_update( const double dt )
 {
    int i, j, f;
 
-   if (cur_system == NULL) return; /* can't update a null system */
+   /* Needs a current system. */
+   if (cur_system == NULL)
+      return;
 
-   /* Spawning. */
+
+   /*
+    * Spawning.
+    */
    if (space_spawn) {
       spawn_timer -= dt;
 
@@ -580,12 +594,48 @@ void space_update( const double dt )
       }
    }
 
-   /* Volatile system. */
+
+   /*
+    * Volatile systems.
+    */
    if (cur_system->nebu_volatility > 0.) {
       /* Player takes damage. */
       if (player)
          pilot_hit( player, NULL, 0, DAMAGE_TYPE_RADIATION,
                pow2(cur_system->nebu_volatility) / 500. * dt );
+   }
+
+
+   /*
+    * Interference.
+    */
+   if (cur_system->interference > 0.) {
+      /* Always dark. */
+      if (cur_system->interference >= 1000.)
+         interference_alpha = 1.;
+
+      /* Normal scenario. */
+      else {
+         interference_timer -= dt;
+         if (interference_timer < 0.) {
+            interference_timer += (1000. - cur_system->interference) / 1000. *
+                  (3. + NormalInverse( 0.25 + 0.95*RNGF() ));
+            interference_target = cur_system->interference/1000. * 3. *
+                  (1. + NormalInverse( 0.25 + 0.95*RNGF() ));
+         }
+
+         /* Head towards target. */
+         if (fabs(interference_alpha - interference_target) > 1e-05) {
+            /* Assymptotic. */
+            interference_alpha += (interference_target - interference_alpha) * dt;
+
+            /* Limit alpha to [0.-1.]. */
+            if (interference_alpha > 1.)
+               interference_alpha = 1.;
+            else if (interference_alpha < 0.)
+               interference_alpha = 0.;
+         }
+      }
    }
 }
 
@@ -703,6 +753,7 @@ void space_init ( const char* sysname )
    weapon_clear(); /* get rid of all the weapons */
    spfx_clear(); /* get rid of the explosions */
    space_spawn = 1; /* spawn is enabled by default. */
+   interference_timer = 0.; /* Restart timer. */
 
    /* Clear player escorts since they don't automatically follow. */
    if (player) {
@@ -1162,7 +1213,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
             }
             else if (xml_isNode(cur,"interference")) {
                flags |= FLAG_INTERFERENCESET;
-               sys->interference = xml_getFloat(cur)/100.;
+               sys->interference = xml_getFloat(cur);
             }
             else if (xml_isNode(cur,"nebulae")) {
                ptrc = xml_nodeProp(cur,"volatility");

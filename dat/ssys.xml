@@ -32,7 +32,7 @@
   </planets>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>50</interference>
    <nebulae volatility="0">0</nebulae>
    <stars>500</stars>
   </general>
@@ -57,9 +57,43 @@
   <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>50</interference>
    <nebulae volatility="0">0</nebulae>
    <stars>160</stars>
+  </general>
+ </ssys>
+ <ssys name="Theras">
+  <fleets>
+   <fleet chance="60">Trader Mule</fleet>
+   <fleet chance="60">Trader Mule</fleet>
+   <fleet chance="40">Trader Llama</fleet>
+   <fleet chance="40">Trader Llama</fleet>
+   <fleet chance="40">Sml Trader Convoy</fleet>
+   <fleet chance="60">Dvaered Vendetta</fleet>
+   <fleet chance="20">FLF Sml Force</fleet>
+   <fleet chance="30">FLF Vendetta</fleet>
+   <fleet chance="5">FLF Med Force</fleet>
+   <fleet chance="50">Trader Koala</fleet>
+  </fleets>
+  <jumps>
+   <jump>Slaccid</jump>
+   <jump>Toaxis</jump>
+   <jump>Zacron</jump>
+   <jump>Klantar</jump>
+   <jump>Haleb</jump>
+  </jumps>
+  <pos>
+   <y>-266</y>
+   <x>321</x>
+  </pos>
+  <planets>
+   <planet>Cetrat</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>50</interference>
+   <nebulae volatility="0">0</nebulae>
+   <stars>400</stars>
   </general>
  </ssys>
  <ssys name="Raelid">
@@ -92,7 +126,7 @@
   </planets>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>100</interference>
    <nebulae volatility="0">100</nebulae>
    <stars>500</stars>
   </general>
@@ -119,7 +153,7 @@
   <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>300</interference>
    <nebulae volatility="0">250</nebulae>
    <stars>400</stars>
   </general>
@@ -142,7 +176,7 @@
   <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>600</interference>
    <nebulae volatility="100">600</nebulae>
    <stars>500</stars>
   </general>
@@ -205,37 +239,40 @@
    <stars>200</stars>
   </general>
  </ssys>
- <ssys name="Doranthex">
-  <fleets>
-   <fleet chance="20">Trader Mule</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="40">Empire Lancelot</fleet>
-   <fleet chance="70">Dvaered Vendetta</fleet>
-   <fleet chance="70">Dvaered Vendetta</fleet>
-   <fleet chance="60">Dvaered Ancestor</fleet>
-   <fleet chance="40">Empire Pacifier</fleet>
-   <fleet chance="20">Dvaered Goddard</fleet>
-   <fleet chance="20">FLF Pacifier</fleet>
-   <fleet chance="50">Trader Koala</fleet>
-  </fleets>
+ <ssys name="NGC-8037">
+  <fleets/>
   <jumps>
-   <jump>Draygar</jump>
-   <jump>Torg</jump>
-   <jump>Goddard</jump>
+   <jump>Arcanis</jump>
+   <jump>Sigur</jump>
   </jumps>
   <pos>
-   <y>-176</y>
-   <x>109</x>
+   <y>19</y>
+   <x>368</x>
   </pos>
-  <planets>
-   <planet>Doranthex Prime</planet>
-  </planets>
+  <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
-   <stars>500</stars>
+   <interference>300</interference>
+   <nebulae volatility="0">250</nebulae>
+   <stars>400</stars>
+  </general>
+ </ssys>
+ <ssys name="Tormulex">
+  <fleets/>
+  <jumps>
+   <jump>Myad</jump>
+   <jump>Toros</jump>
+  </jumps>
+  <pos>
+   <y>-78</y>
+   <x>636</x>
+  </pos>
+  <planets/>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>500</interference>
+   <nebulae volatility="100">500</nebulae>
+   <stars>400</stars>
   </general>
  </ssys>
  <ssys name="NGC-7843">
@@ -257,7 +294,7 @@
   <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>100</interference>
    <nebulae volatility="0">0</nebulae>
    <stars>120</stars>
   </general>
@@ -310,27 +347,9 @@
   <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>150</interference>
    <nebulae volatility="0">150</nebulae>
    <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="Slaccid">
-  <fleets/>
-  <jumps>
-   <jump>Theras</jump>
-   <jump>Haleb</jump>
-  </jumps>
-  <pos>
-   <y>-379</y>
-   <x>342</x>
-  </pos>
-  <planets/>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
-   <stars>500</stars>
   </general>
  </ssys>
  <ssys name="Doeston">
@@ -354,7 +373,7 @@
   </planets>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>400</interference>
    <nebulae volatility="0">400</nebulae>
    <stars>400</stars>
   </general>
@@ -432,7 +451,7 @@
   <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>700</interference>
    <nebulae volatility="250">750</nebulae>
    <stars>500</stars>
   </general>
@@ -462,22 +481,22 @@
    <stars>200</stars>
   </general>
  </ssys>
- <ssys name="NGC-8037">
+ <ssys name="Slaccid">
   <fleets/>
   <jumps>
-   <jump>Arcanis</jump>
-   <jump>Sigur</jump>
+   <jump>Theras</jump>
+   <jump>Haleb</jump>
   </jumps>
   <pos>
-   <y>19</y>
-   <x>368</x>
+   <y>-379</y>
+   <x>342</x>
   </pos>
   <planets/>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">250</nebulae>
-   <stars>400</stars>
+   <nebulae volatility="0">0</nebulae>
+   <stars>500</stars>
   </general>
  </ssys>
  <ssys name="NGC-7414">
@@ -552,7 +571,7 @@
   <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>200</interference>
    <nebulae volatility="0">200</nebulae>
    <stars>500</stars>
   </general>
@@ -589,37 +608,34 @@
    <stars>300</stars>
   </general>
  </ssys>
- <ssys name="Cygnus">
+ <ssys name="Draconis">
   <fleets>
-   <fleet chance="60">Trader Mule</fleet>
-   <fleet chance="60">Trader Mule</fleet>
-   <fleet chance="60">Trader Llama</fleet>
+   <fleet chance="30">Trader Llama</fleet>
+   <fleet chance="30">Trader Llama</fleet>
+   <fleet chance="30">Empire Lancelot</fleet>
+   <fleet chance="30">Empire Lancelot</fleet>
    <fleet chance="30">Sml Trader Convoy</fleet>
-   <fleet chance="50">Empire Lancelot</fleet>
+   <fleet chance="50">Trader Mule</fleet>
    <fleet chance="20">Empire Pacifier</fleet>
-   <fleet chance="40">Empire Admonisher</fleet>
-   <fleet chance="30">Pirate Hyena Pack</fleet>
+   <fleet chance="20">Pirate Admonisher</fleet>
    <fleet chance="50">Trader Koala</fleet>
   </fleets>
   <jumps>
-   <jump>Delta Pavonis</jump>
    <jump>Tau Prime</jump>
-   <jump>Borla</jump>
-   <jump>Goddard</jump>
-   <jump>Draygar</jump>
+   <jump>Mizar</jump>
   </jumps>
   <pos>
-   <y>-85</y>
-   <x>88</x>
+   <y>-33</y>
+   <x>220</x>
   </pos>
   <planets>
-   <planet>Torloth</planet>
+   <planet>Zabween</planet>
   </planets>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
-   <stars>400</stars>
+   <interference>100</interference>
+   <nebulae volatility="0">100</nebulae>
+   <stars>600</stars>
   </general>
  </ssys>
  <ssys name="Tau Prime">
@@ -656,7 +672,7 @@
   </planets>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>100</interference>
    <nebulae volatility="0">100</nebulae>
    <stars>600</stars>
   </general>
@@ -675,7 +691,7 @@
   <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>800</interference>
    <nebulae volatility="300">800</nebulae>
    <stars>400</stars>
   </general>
@@ -720,7 +736,7 @@
   <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>300</interference>
    <nebulae volatility="0">200</nebulae>
    <stars>300</stars>
   </general>
@@ -843,7 +859,7 @@
   <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>100</interference>
    <nebulae volatility="0">100</nebulae>
    <stars>500</stars>
   </general>
@@ -886,39 +902,42 @@
   <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>450</interference>
    <nebulae volatility="50">500</nebulae>
    <stars>400</stars>
   </general>
  </ssys>
- <ssys name="Draconis">
+ <ssys name="Cygnus">
   <fleets>
-   <fleet chance="30">Trader Llama</fleet>
-   <fleet chance="30">Trader Llama</fleet>
-   <fleet chance="30">Empire Lancelot</fleet>
-   <fleet chance="30">Empire Lancelot</fleet>
+   <fleet chance="60">Trader Mule</fleet>
+   <fleet chance="60">Trader Mule</fleet>
+   <fleet chance="60">Trader Llama</fleet>
    <fleet chance="30">Sml Trader Convoy</fleet>
-   <fleet chance="50">Trader Mule</fleet>
+   <fleet chance="50">Empire Lancelot</fleet>
    <fleet chance="20">Empire Pacifier</fleet>
-   <fleet chance="20">Pirate Admonisher</fleet>
+   <fleet chance="40">Empire Admonisher</fleet>
+   <fleet chance="30">Pirate Hyena Pack</fleet>
    <fleet chance="50">Trader Koala</fleet>
   </fleets>
   <jumps>
+   <jump>Delta Pavonis</jump>
    <jump>Tau Prime</jump>
-   <jump>Mizar</jump>
+   <jump>Borla</jump>
+   <jump>Goddard</jump>
+   <jump>Draygar</jump>
   </jumps>
   <pos>
-   <y>-33</y>
-   <x>220</x>
+   <y>-85</y>
+   <x>88</x>
   </pos>
   <planets>
-   <planet>Zabween</planet>
+   <planet>Torloth</planet>
   </planets>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebulae volatility="0">100</nebulae>
-   <stars>600</stars>
+   <interference>50</interference>
+   <nebulae volatility="0">0</nebulae>
+   <stars>400</stars>
   </general>
  </ssys>
  <ssys name="Myad">
@@ -935,7 +954,7 @@
   <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>350</interference>
    <nebulae volatility="0">300</nebulae>
    <stars>400</stars>
   </general>
@@ -1037,22 +1056,37 @@
    <stars>400</stars>
   </general>
  </ssys>
- <ssys name="Tormulex">
-  <fleets/>
+ <ssys name="Doranthex">
+  <fleets>
+   <fleet chance="20">Trader Mule</fleet>
+   <fleet chance="50">Trader Llama</fleet>
+   <fleet chance="50">Trader Llama</fleet>
+   <fleet chance="40">Empire Lancelot</fleet>
+   <fleet chance="70">Dvaered Vendetta</fleet>
+   <fleet chance="70">Dvaered Vendetta</fleet>
+   <fleet chance="60">Dvaered Ancestor</fleet>
+   <fleet chance="40">Empire Pacifier</fleet>
+   <fleet chance="20">Dvaered Goddard</fleet>
+   <fleet chance="20">FLF Pacifier</fleet>
+   <fleet chance="50">Trader Koala</fleet>
+  </fleets>
   <jumps>
-   <jump>Myad</jump>
-   <jump>Toros</jump>
+   <jump>Draygar</jump>
+   <jump>Torg</jump>
+   <jump>Goddard</jump>
   </jumps>
   <pos>
-   <y>-78</y>
-   <x>636</x>
+   <y>-176</y>
+   <x>109</x>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Doranthex Prime</planet>
+  </planets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="100">500</nebulae>
-   <stars>400</stars>
+   <nebulae volatility="0">0</nebulae>
+   <stars>500</stars>
   </general>
  </ssys>
  <ssys name="Toros">
@@ -1070,7 +1104,7 @@
   <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>650</interference>
    <nebulae volatility="150">700</nebulae>
    <stars>400</stars>
   </general>
@@ -1101,7 +1135,7 @@
   <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>200</interference>
    <nebulae volatility="0">150</nebulae>
    <stars>500</stars>
   </general>
@@ -1137,29 +1171,6 @@
    <stars>200</stars>
   </general>
  </ssys>
- <ssys name="NGC-7789">
-  <fleets>
-   <fleet chance="50">Pirate Hyena</fleet>
-   <fleet chance="30">Pirate Hyena</fleet>
-   <fleet chance="30">Pirate Admonisher</fleet>
-   <fleet chance="30">Pirate Ancestor</fleet>
-   <fleet chance="30">Empire Pacifier</fleet>
-  </fleets>
-  <jumps>
-   <jump>Dune</jump>
-  </jumps>
-  <pos>
-   <y>156</y>
-   <x>176</x>
-  </pos>
-  <planets/>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
-   <stars>100</stars>
-  </general>
- </ssys>
  <ssys name="New Haven">
   <fleets>
    <fleet chance="70">Pirate Hyena</fleet>
@@ -1181,7 +1192,7 @@
   </planets>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>300</interference>
    <nebulae volatility="0">0</nebulae>
    <stars>100</stars>
   </general>
@@ -1199,7 +1210,7 @@
   <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>800</interference>
    <nebulae volatility="400">800</nebulae>
    <stars>400</stars>
   </general>
@@ -1244,42 +1255,8 @@
   <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>350</interference>
    <nebulae volatility="0">300</nebulae>
-   <stars>400</stars>
-  </general>
- </ssys>
- <ssys name="Theras">
-  <fleets>
-   <fleet chance="60">Trader Mule</fleet>
-   <fleet chance="60">Trader Mule</fleet>
-   <fleet chance="40">Trader Llama</fleet>
-   <fleet chance="40">Trader Llama</fleet>
-   <fleet chance="40">Sml Trader Convoy</fleet>
-   <fleet chance="60">Dvaered Vendetta</fleet>
-   <fleet chance="20">FLF Sml Force</fleet>
-   <fleet chance="30">FLF Vendetta</fleet>
-   <fleet chance="5">FLF Med Force</fleet>
-   <fleet chance="50">Trader Koala</fleet>
-  </fleets>
-  <jumps>
-   <jump>Slaccid</jump>
-   <jump>Toaxis</jump>
-   <jump>Zacron</jump>
-   <jump>Klantar</jump>
-   <jump>Haleb</jump>
-  </jumps>
-  <pos>
-   <y>-266</y>
-   <x>321</x>
-  </pos>
-  <planets>
-   <planet>Cetrat</planet>
-  </planets>
-  <general>
-   <asteroids>0</asteroids>
-   <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
    <stars>400</stars>
   </general>
  </ssys>
@@ -1297,7 +1274,7 @@
   <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>950</interference>
    <nebulae volatility="500">900</nebulae>
    <stars>500</stars>
   </general>
@@ -1318,7 +1295,7 @@
   <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>50</interference>
    <nebulae volatility="0">0</nebulae>
    <stars>140</stars>
   </general>
@@ -1352,7 +1329,7 @@
   </planets>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>50</interference>
    <nebulae volatility="0">0</nebulae>
    <stars>500</stars>
   </general>
@@ -1449,6 +1426,29 @@
    <stars>500</stars>
   </general>
  </ssys>
+ <ssys name="NGC-7789">
+  <fleets>
+   <fleet chance="50">Pirate Hyena</fleet>
+   <fleet chance="30">Pirate Hyena</fleet>
+   <fleet chance="30">Pirate Admonisher</fleet>
+   <fleet chance="30">Pirate Ancestor</fleet>
+   <fleet chance="30">Empire Pacifier</fleet>
+  </fleets>
+  <jumps>
+   <jump>Dune</jump>
+  </jumps>
+  <pos>
+   <y>156</y>
+   <x>176</x>
+  </pos>
+  <planets/>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
+   <stars>100</stars>
+  </general>
+ </ssys>
  <ssys name="Zacron">
   <fleets>
    <fleet chance="40">Dvaered Ancestor</fleet>
@@ -1476,7 +1476,7 @@
   <planets/>
   <general>
    <asteroids>0</asteroids>
-   <interference>0</interference>
+   <interference>50</interference>
    <nebulae volatility="0">0</nebulae>
    <stars>500</stars>
   </general>
