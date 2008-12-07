@@ -2,9 +2,7 @@
 
    VITAL
 
-   *) System obstacles and such
-      *) Interference
-      *) Asteroids
+   *) Asteroids
    *) Real news
    *) Event system
       *) Like mission system, but they occur naturally/randomly
