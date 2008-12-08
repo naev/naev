@@ -145,9 +145,9 @@ static float lattice2( perlin_data_t *pdata, int ix, float fx, int iy, float fy 
 }
 
 
-#define SWAP(a, b, t)      t = a; a = b; b = t
-#define FLOOR(a) ((int)a - (a < 0 && a != (int)a))
-#define CUBIC(a)  ( a * a * (3 - 2*a) )
+#define SWAP(a, b, t)      t = a; a = b; b = t /**< Swaps two values. */
+#define FLOOR(a) ((int)a - (a < 0 && a != (int)a)) /**< Limits to 0. */
+#define CUBIC(a)  ( a * a * (3 - 2*a) ) /**< Does cubic filtering. */
 
 
 /**

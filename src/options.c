@@ -35,7 +35,7 @@
 /*
  * External stuff.
  */
-extern const char *keybindNames[]; /* input.c */
+extern const char *keybindNames[]; /**< from input.c */
 
 
 /*

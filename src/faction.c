@@ -470,6 +470,7 @@ static int faction_isFaction( int f )
 /**
  * @brief Parses a single faction, but doesn't set the allies/enemies bit.
  *
+ *    @param temp Faction to load data into.
  *    @param parent Parent node to extract faction from.
  *    @return Faction created from parent node.
  */

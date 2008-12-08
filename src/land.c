@@ -71,8 +71,8 @@
 #define VISITED_BAR           (1<<2) /**< Player already visited bar. */
 #define VISITED_OUTFITS       (1<<3) /**< Player already visited outfits. */
 #define VISITED_SHIPYARD      (1<<4) /**< Player already visited shipyard. */
-#define visited(f)            (land_visited |= (f))
-#define has_visited(f)        (land_visited & (f))
+#define visited(f)            (land_visited |= (f)) /**< Mark place is visited. */
+#define has_visited(f)        (land_visited & (f)) /**< Check if player has visited. */
 static unsigned int land_visited = 0; /**< Contains what the player visited. */
 
 
@@ -80,21 +80,21 @@ static unsigned int land_visited = 0; /**< Contains what the player visited. */
 /*
  * land variables
  */
-int landed = 0;
+int landed = 0; /**< Is player landed. */
 static unsigned int land_wid = 0; /**< Land window ID. */
-Planet* land_planet = NULL;
-static glTexture *gfx_exterior = NULL;
-
+Planet* land_planet = NULL; /**< Planet player landed at. */
+static glTexture *gfx_exterior = NULL; /**< Exterior graphic of the landed planet. */
+ 
 /*
  * mission computer stack
  */
-static Mission* mission_computer = NULL;
-static int mission_ncomputer = 0;
+static Mission* mission_computer = NULL; /**< Missions at the computer. */
+static int mission_ncomputer = 0; /**< Number of missions at the computer. */
 
 /*
  * player stuff
  */
-extern int hyperspace_target;
+extern int hyperspace_target; /**< from player.c */
 
 
 /*
@@ -145,8 +145,8 @@ extern unsigned int economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p );
 
 
-/*
- * the local market
+/**
+ * @brief Opens the local market window.
  */
 static void commodity_exchange_open (void)
 {
@@ -200,6 +200,11 @@ static void commodity_exchange_open (void)
       visited(VISITED_COMMODITY);
    }
 }
+/**
+ * @brief Updates the commodity window.
+ *    @param wid Window to update.
+ *    @param str Unused.
+ */
 static void commodity_update( unsigned int wid, char* str )
 {
    (void)str;
@@ -221,8 +226,12 @@ static void commodity_update( unsigned int wid, char* str )
          pilot_cargoFree(player));
    window_modifyText( wid, "txtDInfo", buf );
    window_modifyText( wid, "txtDesc", com->description );
-
 }
+/**
+ * @brief Buys the selected commodity.
+ *    @param wid Window buying from.
+ *    @param str Unused.
+ */
 static void commodity_buy( unsigned int wid, char* str )
 {
    (void)str;
@@ -249,6 +258,11 @@ static void commodity_buy( unsigned int wid, char* str )
    land_checkAddRefuel();
    commodity_update(wid, NULL);
 }
+/**
+ * @brief Attempts to sell a commodity.
+ *    @param wid Window selling commodity from.
+ *    @param str Unused.
+ */
 static void commodity_sell( unsigned int wid, char* str )
 {
    (void)str;
@@ -268,8 +282,8 @@ static void commodity_sell( unsigned int wid, char* str )
 }
 
 
-/*
- * ze outfits
+/**
+ * @brief Opens the outfit exchange center window.
  */
 static void outfits_open (void)
 {
@@ -358,6 +372,11 @@ static void outfits_open (void)
       visited(VISITED_OUTFITS);
    }
 }
+/**
+ * @brief Updates the outfits in the outfit window.
+ *    @param wid Window to update the outfits in.
+ *    @param str Unused.
+ */
 static void outfits_update( unsigned int wid, char* str )
 {
    (void)str;
@@ -429,6 +448,12 @@ static void outfits_update( unsigned int wid, char* str )
          (outfit->license != NULL) ? outfit->license : "None" );
    window_modifyText( wid,  "txtDDesc", buf );
 }
+/**
+ * @brief Checks to see if the player can buy the outfit.
+ *    @param outfit Outfit to buy.
+ *    @param q Quantity to buy.
+ *    @param errmsg Should alert the player?
+ */
 static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
 {
    char buf[16];
@@ -490,6 +515,11 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
 
    return 1;
 }
+/**
+ * @brief Attempts to buy the outfit that is selected.
+ *    @param wid Window buying outfit from.
+ *    @param str Unused.
+ */
 static void outfits_buy( unsigned int wid, char* str )
 {
    (void)str;
@@ -511,6 +541,12 @@ static void outfits_buy( unsigned int wid, char* str )
    land_checkAddRefuel();
    outfits_update(wid, NULL);
 }
+/**
+ * @brief Checks to see if the player can sell the selected outfit.
+ *    @param outfit Outfit to try to sell.
+ *    @param q Quantity to try to sell.
+ *    @param errmsg Should alert player?
+ */
 static int outfit_canSell( Outfit* outfit, int q, int errmsg )
 {
    /* has no outfits to sell */
@@ -534,6 +570,11 @@ static int outfit_canSell( Outfit* outfit, int q, int errmsg )
 
    return 1;
 }
+/**
+ * @brief Attempts to sell the selected outfit the player has.
+ *    @param wid Window selling outfits from.
+ *    @param str Unused.
+ */
 static void outfits_sell( unsigned int wid, char* str )
 {
    (void)str;
@@ -554,8 +595,9 @@ static void outfits_sell( unsigned int wid, char* str )
    land_checkAddRefuel();
    outfits_update(wid, NULL);
 }
-/*
- * returns the current modifier status
+/**
+ * @brief Gets the current modifier status.
+ *    @return The amount modifier when buying or selling outfits.
  */
 static int outfits_getMod (void)
 {
@@ -564,11 +606,20 @@ static int outfits_getMod (void)
 
    mods = SDL_GetModState();
    q = 1;
-   if (mods & (KMOD_LCTRL | KMOD_RCTRL)) q *= 5;
-   if (mods & (KMOD_LSHIFT | KMOD_RSHIFT)) q *= 10;
+   if (mods & (KMOD_LCTRL | KMOD_RCTRL))
+      q *= 5;
+   if (mods & (KMOD_LSHIFT | KMOD_RSHIFT))
+      q *= 10;
 
    return q;
 }
+/**
+ * @brief Renders the outfit buying modifier.
+ *    @param bx Base X position to render at.
+ *    @param by Base Y position to render at.
+ *    @param w Width to render at.
+ *    @param h Height to render at.
+ */
 static void outfits_renderMod( double bx, double by, double w, double h )
 {
    (void) h;
@@ -576,7 +627,7 @@ static void outfits_renderMod( double bx, double by, double w, double h )
    char buf[8];
 
    q = outfits_getMod();
-   if (q==1) return;
+   if (q==1) return; /* Ignore no modifier. */
 
    snprintf( buf, 8, "%dx", q );
    gl_printMid( &gl_smallFont, w,
@@ -588,8 +639,8 @@ static void outfits_renderMod( double bx, double by, double w, double h )
 
 
 
-/*
- * ze shipyard
+/**
+ * @brief Opens the shipyard window.
  */
 static void shipyard_open (void)
 {
@@ -674,6 +725,11 @@ static void shipyard_open (void)
       visited(VISITED_SHIPYARD);
    }
 }
+/**
+ * @brief Updates the ships in the shipyard window.
+ *    @param wid Window to update the ships in.
+ *    @param str Unused.
+ */
 static void shipyard_update( unsigned int wid, char* str )
 {
    (void)str;
@@ -733,6 +789,11 @@ static void shipyard_update( unsigned int wid, char* str )
       window_disableButton( wid, "btnBuyShip");
    else window_enableButton( wid, "btnBuyShip");
 }
+/**
+ * @brief Opens the ship's information window.
+ *    @param wid Window to find out selected ship.
+ *    @param str Unused.
+ */
 static void shipyard_info( unsigned int wid, char* str )
 {
    (void)str;
@@ -741,6 +802,11 @@ static void shipyard_info( unsigned int wid, char* str )
    shipname = toolkit_getList( wid, "iarShipyard" );
    ship_view(0, shipname);
 }
+/**
+ * @brief Player attempts to buy a ship.
+ *    @param wid Window player is buying ship from.
+ *    @param str Unused.
+ */
 static void shipyard_buy( unsigned int wid, char* str )
 {
    (void)str;
@@ -784,6 +850,11 @@ static void shipyard_buy( unsigned int wid, char* str )
 
    shipyard_update(wid, NULL);
 }
+/**
+ * @brief Opens the player's ship window.
+ *    @param parent Unused.
+ *    @param str Unused.
+ */
 static void shipyard_yours_open( unsigned int parent, char* str )
 {
    (void) str;
@@ -852,6 +923,11 @@ static void shipyard_yours_open( unsigned int parent, char* str )
 
    shipyard_yoursUpdate(wid, NULL);
 }
+/**
+ * @brief Updates the player's ship window.
+ *    @param wid Window to update.
+ *    @param str Unused.
+ */
 static void shipyard_yoursUpdate( unsigned int wid, char* str )
 {
    (void)str;
@@ -917,6 +993,11 @@ static void shipyard_yoursUpdate( unsigned int wid, char* str )
    /* If ship is there you can always sell. */
    window_enableButton( wid, "btnSellShip" );
 }
+/**
+ * @brief Player attempts to change ship.
+ *    @param wid Window player is attempting to change ships in.
+ *    @param str Unused.
+ */
 static void shipyard_yoursChange( unsigned int wid, char* str )
 {
    (void)str;
@@ -947,6 +1028,11 @@ static void shipyard_yoursChange( unsigned int wid, char* str )
    window_destroy(wid);
    shipyard_yours_open(0, NULL);
 }
+/**
+ * @brief Player tries to sell a ship.
+ *    @param wid Window player is selling ships in.
+ *    @param str Unused.
+ */
 static void shipyard_yoursSell( unsigned int wid, char* str )
 {
    (void)str;
@@ -980,6 +1066,11 @@ static void shipyard_yoursSell( unsigned int wid, char* str )
    window_destroy(wid);
    shipyard_yours_open(0, NULL);
 }
+/**
+ * @brief Player attempts to transport his ship to the planet he is at.
+ *    @param wid Window player is trying to transport his ship from.
+ *    @param str Unused.
+ */
 static void shipyard_yoursTransport( unsigned int wid, char* str )
 {
    (void)str;
@@ -1012,25 +1103,30 @@ static void shipyard_yoursTransport( unsigned int wid, char* str )
    /* update the window to reflect the change */
    shipyard_yoursUpdate(wid, NULL);
 }
+/**
+ * @brief Gets the ship's transport price.
+ *    @param shipname Name of the ship to get the transport price.
+ *    @return The price to transport the ship to the current planet.
+ */
 static unsigned int shipyard_yoursTransportPrice( char* shipname )
 {
    char *loc;
    Pilot* ship;
-   int price;
+   unsigned int price;
 
    ship = player_getShip(shipname);
    loc = player_getLoc(shipname);
    if (strcmp(loc,land_planet->name)==0) /* already here */
       return 0;
 
-   price = (int)(sqrt(ship->solid->mass)*5000.);
+   price = (unsigned int)(sqrt(ship->solid->mass)*5000.);
 
    return price;
 }
 
 
-/*
- * the spaceport bar
+/**
+ * @brief Opens the spaceport bar window.
  */
 static void spaceport_bar_open (void)
 {
@@ -1062,8 +1158,8 @@ static void spaceport_bar_open (void)
 
 
 
-/*
- * the planetary news reports
+/**
+ * Opens the planetary news reports window.
  */
 static void news_open( unsigned int parent, char *str )
 {
@@ -1088,8 +1184,8 @@ static void news_open( unsigned int parent, char *str )
 }
 
 
-/*
- * mission computer, cuz missions rock
+/**
+ * @brief Opens the mission computer window.
  */
 static void misn_open (void)
 {
@@ -1119,18 +1215,28 @@ static void misn_open (void)
 
    misn_genList(wid, 1);
 }
+/**
+ * @brief Closes the mission computer window.
+ *    @param wid Window to close.
+ *    @param name Unused.
+ */
 static void misn_close( unsigned int wid, char *name )
 {
    /* Remove computer markers just in case. */
    space_clearComputerMarkers();
    window_close( wid, name );
 }
+/**
+ * @brief Accepts the selected mission.
+ *    @param wid Window of the mission computer.
+ *    @param str Unused.
+ */
 static void misn_accept( unsigned int wid, char* str )
 {
+   (void) str;
    char* misn_name;
    Mission* misn;
    int pos;
-   (void)str;
 
    misn_name = toolkit_getList( wid, "lstMission" );
 
@@ -1148,6 +1254,11 @@ static void misn_accept( unsigned int wid, char* str )
       }
    }
 }
+/**
+ * @brief Generates the mission list.
+ *    @param wid Window to generate the mission list for.
+ *    @param first Is it the first time generated?
+ */
 static void misn_genList( unsigned int wid, int first )
 {
    int i,j;
@@ -1178,12 +1289,16 @@ static void misn_genList( unsigned int wid, int first )
 
    misn_update(wid, NULL);
 }
+/**
+ * @brief Updates the mission list.
+ *    @param wid Window of the mission computer.
+ *    @param str Unused.
+ */
 static void misn_update( unsigned int wid, char* str )
 {
+   (void) str;
    char *active_misn;
    Mission* misn;
-
-   (void)str;
 
    active_misn = toolkit_getList( wid, "lstMission" );
    if (strcmp(active_misn,"No Missions")==0) {
@@ -1203,10 +1318,7 @@ static void misn_update( unsigned int wid, char* str )
 
 
 /**
- * @fn static int refuel_price (void)
- *
  * @brief Gets how much it will cost to refuel the player.
- *
  *    @return Refuel price.
  */
 static unsigned int refuel_price (void)
@@ -1217,7 +1329,6 @@ static unsigned int refuel_price (void)
 
 /**
  * @brief Refuels the player.
- *
  *    @param str Unused.
  */
 static void spaceport_refuel( unsigned int wid, char *str )
@@ -1271,7 +1382,6 @@ static void land_checkAddRefuel (void)
 
 /**
  * @brief Opens up all the land dialogue stuff.
- *
  *    @param p Planet to open stuff for.
  */
 void land( Planet* p )

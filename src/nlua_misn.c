@@ -184,7 +184,7 @@ static const luaL_reg hook_methods[] = {
    { "enter", hook_enter },
    { "pilot", hook_pilot },
    {0,0}
-}; /**< Hook lua methods. */
+}; /**< Hook Lua methods. */
 /* diffs */
 static int diff_applyL( lua_State *L );
 static int diff_removeL( lua_State *L );
@@ -194,11 +194,11 @@ static const luaL_reg diff_methods[] = {
    { "remove", diff_removeL },
    { "isApplied", diff_isappliedL },
    {0,0}
-};
+}; /**< Unidiff Lua methods. */
 static const luaL_reg diff_cond_methods[] = {
    { "isApplied", diff_isappliedL },
    {0,0}
-};
+}; /**< Unidiff Lua read only methods. */
 
 
 
@@ -256,6 +256,7 @@ int lua_loadMisn( lua_State *L )
  * @brief Loads the mission variable lua library.
  *    @param L Lua state.
  *    @param readonly Whether to open in read-only form.
+ *    @return 0 on success.
  */
 int lua_loadVar( lua_State *L, int readonly )
 {
@@ -281,6 +282,7 @@ int lua_loadPlayer( lua_State *L, int readonly )
 /**
  * @brief Loads the hook lua library.
  *    @param L Lua state.
+ *    @return 0 on success.
  */
 int lua_loadHook( lua_State *L )
 {
@@ -291,6 +293,7 @@ int lua_loadHook( lua_State *L )
  * @brief Loads the diff Lua library.
  *    @param L Lua state.
  *    @param readonly Load read only functions?
+ *    @return 0 on success.
  */
 int lua_loadDiff( lua_State *L, int readonly )
 {

@@ -84,11 +84,11 @@ struct Packcache_s {
 #ifdef _POSIX_SOURCE
 #define READ(f,b,n)  if (read((f)->fd,(b),(n))!=(n)) { \
    ERR("Fewer bytes read then expected"); \
-   return NULL; }
+   return NULL; } /**< Helper define to check for errors. */
 #else /* not _POSIX_SOURCE */
 #define READ(f,b,n)  if (fread((b),1,(n),(f)->fp)!=(n)) { \
    ERR("Fewer bytes read then expected"); \
-   return NULL; }
+   return NULL; } /**< Helper define to check for errors. */
 #endif /* _POSIX_SOURCE */
 
 #undef DEBUG /* mucho spamo */
@@ -361,14 +361,6 @@ int pack_check( const char* filename )
 }
 
 
-/**
- * @brief Packages files into a packfile.
- *
- *    @param outfile Name of the file to output to.
- *    @param infiles Array of filenames to package.
- *    @param nfiles Number of filenames in infiles.
- *    @return 0 on success.
- */
 #ifdef _POSIX_SOURCE
 #define WRITE(b,n)    if (write(outfd,b,n)==-1) { \
    ERR("Error writing to file: %s", strerror(errno)); \
@@ -378,6 +370,14 @@ int pack_check( const char* filename )
    ERR("Error writing to file: %s", strerror(errno)); \
    free(buf); return -1; }
 #endif /* _POSIX_SOURCE */
+/**
+ * @brief Packages files into a packfile.
+ *
+ *    @param outfile Name of the file to output to.
+ *    @param infiles Array of filenames to package.
+ *    @param nfiles Number of filenames in infiles.
+ *    @return 0 on success.
+ */
 int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles )
 {
    void *buf;
@@ -493,10 +493,9 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
 /**
  * @brief Opens a file in the packfile for reading.
  *
- *    @param file Packfile to store data into.
  *    @param packfile Path to the real packfile.
  *    @param filename Name of the file within th. packfile.
- *    @return 0 on success.
+ *    @return The newly created packfile or NULL on error.
  */
 Packfile_t* pack_open( const char* packfile, const char* filename )
 {

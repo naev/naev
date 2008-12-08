@@ -33,9 +33,9 @@
 
 
 /* Externs */
-extern double gui_xoff, gui_yoff;
-extern Vector2d shake_pos;
-extern void loadscreen_render( double done, const char *msg );
+extern double gui_xoff, gui_yoff; /**< from player.c */
+extern Vector2d shake_pos; /**< from spfx.c */
+extern void loadscreen_render( double done, const char *msg ); /**< from naev.c */
 
 
 /* The nebulae textures */
@@ -315,9 +315,9 @@ void nebu_render( const double dt )
  */
 void nebu_renderOverlay( const double dt )
 {
-#define ANG45     0.70710678118654757
-#define COS225    0.92387953251128674
-#define SIN225    0.38268343236508978
+#define ANG45     0.70710678118654757 /**< sqrt(2) */
+#define COS225    0.92387953251128674 /**< cos(225) */
+#define SIN225    0.38268343236508978 /**< sin(225) */
 
    /*
     * Renders the puffs

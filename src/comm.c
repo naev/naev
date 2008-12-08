@@ -37,7 +37,7 @@ static void comm_bribe( unsigned int wid, char *unused );
 static unsigned int comm_getBribeAmount (void);
 static char* comm_getBribeString( char *str );
 /* Extern. */
-extern void ai_setPilot( Pilot *p );
+extern void ai_setPilot( Pilot *p ); /**< from ai.c */
 
 
 /**

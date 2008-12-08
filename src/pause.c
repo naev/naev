@@ -23,8 +23,7 @@ int paused = 0; /**< is paused? */
 double dt_mod = 1.; /**< dt modifier. */
 
 
-/* from main.c */
-extern unsigned int time;
+extern unsigned int time; /**< from naev.c */
 
 
 /**
@@ -49,8 +48,9 @@ void unpause_game (void)
 }
 
 
-/*
- * sets the timers back delay
+/**
+ * @brief Sets the timers back.
+ *    @param delay Delay to set timers back.
  */
 void pause_delay( unsigned int delay )
 {

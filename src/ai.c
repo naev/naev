@@ -1540,6 +1540,11 @@ static int ai_settarget( lua_State *L )
 }
 
 
+/**
+ * @brief Checks to see if an outfit is a melee weapon.
+ *    @param p Pilot to check for.
+ *    @param o Outfit to check.
+ */
 static int outfit_isMelee( Pilot *p, PilotOutfit *o )
 {
    (void) p;
@@ -1547,6 +1552,11 @@ static int outfit_isMelee( Pilot *p, PilotOutfit *o )
       return 1;
    return 0;
 }
+/**
+ * @brief Checks to see if an outfit is a ranged weapon.
+ *    @param p Pilot to check for.
+ *    @param o Outfit to check.
+ */
 static int outfit_isRanged( Pilot *p, PilotOutfit *o )
 {
    if (outfit_isFighterBay(o->outfit) || outfit_isLauncher(o->outfit)) {

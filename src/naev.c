@@ -74,7 +74,7 @@
 
 static int quit = 0; /**< For primary loop */
 static unsigned int time = 0; /**< used to calculate FPS and movement, in pause.c */
-static char version[VERSION_LEN]; /***< Contains version. */
+static char version[VERSION_LEN]; /**< Contains version. */
 static glTexture *loading; /**< Loading screen. */
 
 /* some defaults */
@@ -447,8 +447,6 @@ void unload_all (void)
 }
 
 /**
- * @fn void main_loop (void)
- *
  * @brief Split main loop from main() for secondary loop hack in toolkit.c.
  */
 void main_loop (void)
@@ -471,11 +469,9 @@ void main_loop (void)
 }
 
 
-static double fps_dt = 1.;
-static double cur_dt = 0.; /* used also a bit in render_all */
+static double fps_dt = 1.; /**< Display fps accumulator. */
+static double cur_dt = 0.; /**< Current deltatick. */
 /**
- * @fn static void fps_control (void)
- *
  * @brief Controls the FPS.
  */
 static void fps_control (void)
@@ -599,11 +595,9 @@ static void render_all (void)
 }
 
 
-static double fps = 0.;
-static double fps_cur = 0.;
+static double fps = 0.; /**< FPS to finally display. */
+static double fps_cur = 0.; /**< FPS accumulator to trigger change. */
 /**
- * @fn static void display_fps( const double dt )
- *
  * @brief Displays FPS on the screen.
  *
  *    @param[in] dt Current delta tick.

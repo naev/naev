@@ -713,6 +713,7 @@ static MissionData* mission_parse( const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
    if (o) WARN("Mission '%s' missing/invalid '"s"' element", temp->name)
+/**< Hack to check for missing elements. */
    MELEMENT(temp->lua==NULL,"lua");
    MELEMENT(temp->avail.loc==-1,"location");
 #undef MELEMENT

@@ -54,7 +54,7 @@ static const luaL_reg faction_methods_cond[] = {
    { "areAllies", factionL_areallies },
    { "playerStanding", factionL_playerstanding },
    {0,0}
-};
+}; /**< Factions read only metatable methods. */
 
 
 /* Global faction functions. */
@@ -62,15 +62,14 @@ static int factionL_get( lua_State *L );
 static const luaL_reg factionL_methods[] = {
    { "get", factionL_get },
    {0,0}
-};
+}; /**< Faction module functions. */
 
 
 /**
- * @fn int lua_loadFaction( lua_State *L, int readonly )
- *
  * @brief Loads the faction library.
  *
  *    @param L State to load faction library into.
+ *    @param readonoly Load as read only?
  *    @return 0 on success.
  */
 int lua_loadFaction( lua_State *L, int readonly )
@@ -86,8 +85,6 @@ int lua_loadFaction( lua_State *L, int readonly )
 
 
 /**
- * @fn static int factionL_createmetatable( lua_State *L, int readonly )
- *
  * @brief Registers the faction metatable.
  *
  *    @param L Lua state to register metatable in.
@@ -123,8 +120,6 @@ static int factionL_createmetatable( lua_State *L, int readonly )
  * @{
  */
 /**
- * @fn static int factionL_get( lua_State *L )
- *
  * @brief faction get( string name )
  *
  * Gets the faction based on it's name.
@@ -163,8 +158,6 @@ static int factionL_get( lua_State *L )
  * @{
  */
 /**
- * @fn LuaFaction* lua_tofaction( lua_State *L, int ind )
- *
  * @brief Gets faction at index.
  *
  *    @param L Lua state to get faction from.
@@ -180,8 +173,6 @@ LuaFaction* lua_tofaction( lua_State *L, int ind )
    return NULL;
 }
 /**
- * @fn LuaFaction* lua_pushfaction( lua_State *L, LuaFaction faction )
- *
  * @brief Pushes a faction on the stack.
  *
  *    @param L Lua state to push faction into.
@@ -198,8 +189,6 @@ LuaFaction* lua_pushfaction( lua_State *L, LuaFaction faction )
    return f;
 }
 /**
- * @fn int lua_isfaction( lua_State *L, int ind )
- *
  * @brief Checks to see if ind is a faction.
  *
  *    @param L Lua state to check.

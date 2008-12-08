@@ -71,17 +71,17 @@ static int nfleets = 0; /**< Number of fleets. */
  */
 /* external */
 /* ai.c */
-extern AI_Profile* ai_pinit( Pilot *p, char *ai );
-extern void ai_destroy( Pilot* p );
-extern void ai_think( Pilot* pilot );
+extern AI_Profile* ai_pinit( Pilot *p, char *ai ); /**< from ai.c */
+extern void ai_destroy( Pilot* p ); /**< from ai.c */
+extern void ai_think( Pilot* pilot ); /**< from ai.c */
 /* player.c */
-extern void player_think( Pilot* pilot );
-extern void player_brokeHyperspace (void);
-extern double player_faceHyperspace (void);
-extern void player_dead (void);
-extern void player_destroyed (void);
-extern int gui_load( const char *name );
-extern void player_addLicense( char *license );
+extern void player_think( Pilot* pilot ); /**< from player.c */
+extern void player_brokeHyperspace (void); /**< from player.c */
+extern double player_faceHyperspace (void); /**< from palyer.c */
+extern void player_dead (void); /**< from palyer.c */
+extern void player_destroyed (void); /**< from palyer.c */
+extern int gui_load( const char *name ); /**< from palyer.c */
+extern void player_addLicense( char *license ); /**< from palyer.c */
 /* internal */
 static int pilot_getStackPos( const unsigned int id );
 static void pilot_shootWeapon( Pilot* p, PilotOutfit* w );
@@ -95,8 +95,6 @@ static void pilot_dead( Pilot* p );
 
 
 /**
- * @fn static int pilot_getStackPos( const unsigned int id )
- *
  * @brief Gets the pilot's position in the stack.
  *
  *    @param id ID of the pilot to get.
@@ -121,8 +119,6 @@ static int pilot_getStackPos( const unsigned int id )
 
 
 /**
- * @fn unsigned int pilot_getNextID( const unsigned int id )
- *
  * @brief Gets the next pilot based on id.
  *
  *    @param id ID of current pilot.
@@ -139,8 +135,6 @@ unsigned int pilot_getNextID( const unsigned int id )
 
 
 /**
- * @fn unsigned int pilot_getPrevID( const unsigned int id )
- *
  * @brief Gets the previous pilot based on ID.
  *
  *    @param id ID of the current pilot.
@@ -158,8 +152,6 @@ unsigned int pilot_getPrevID( const unsigned int id )
 
 
 /**
- * @fnunsigned int pilot_getNearestEnemy( const Pilot* p )
- *
  * @brief Gets the nearest enemy to the pilot.
  *
  *    @param p Pilot to get his nearest enemy.
@@ -190,8 +182,6 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
 
 
 /**
- * @fn unsigned int pilot_getNearestPilot( const Pilot* p )
- *
  * @brief Get the nearest pilot to a pilot.
  *
  *    @param p Pilot to get his nearest pilot.
@@ -218,8 +208,6 @@ unsigned int pilot_getNearestPilot( const Pilot* p )
 
 
 /**
- * @fn Pilot* pilot_get( const unsigned int id )
- *
  * @brief Pulls a pilot out of the pilot_stack based on ID.
  *
  * It's a binary search ( O(logn) ) therefore it's pretty fast and can be
@@ -245,8 +233,6 @@ Pilot* pilot_get( const unsigned int id )
 
 
 /**
- * @fn Fleet* fleet_get( const char* name )
- *
  * @brief Grabs a fleet out of the stack.
  *
  *    @param name Name of the fleet to match.
@@ -266,8 +252,6 @@ Fleet* fleet_get( const char* name )
 
 
 /**
- * @fn double pilot_face( Pilot* p, const double dir )
- *
  * @brief Tries to turn the pilot to face dir.
  *
  * Sets the direction velocity property of the pilot's solid, does not
@@ -296,8 +280,6 @@ double pilot_face( Pilot* p, const double dir )
 
 
 /**
- * @fn int pilot_getJumps( const Pilot* p )
- *
  * @brief Gets the amount of jumps the pilot has left.
  *
  *    @param p Pilot to get the jumps left.
@@ -310,8 +292,6 @@ int pilot_getJumps( const Pilot* p )
 
 
 /**
- * @fn int pilot_oquantity( Pilot* p, PilotOutfit* w )
- *
  * @brief Gets the quantity of a pilot outfit.
  *
  *    @param p Pilot to which the outfit belongs.
@@ -326,8 +306,6 @@ int pilot_oquantity( Pilot* p, PilotOutfit* w )
 
 
 /**
- * @fn int pilot_freeSpace( Pilot* p )
- *
  * @brief Gets pilot's free weapon space.
  *
  *    @param p Pilot to get free space of.
@@ -347,8 +325,6 @@ int pilot_freeSpace( Pilot* p )
 
 
 /**
- * @fn void pilot_shoot( Pilot* p, const int secondary )
- *
  * @brief Makes the pilot shoot.
  *
  *    @param p The pilot which is shooting.
@@ -380,8 +356,6 @@ void pilot_shoot( Pilot* p, const int secondary )
 
 
 /**
- * @fn void pilot_shootStop( Pilot* p, const int secondary )
- *
  * @brief Have pilot stop shooting his weapon.
  *
  * Only really deals with beam weapons.
@@ -423,8 +397,6 @@ void pilot_shootStop( Pilot* p, const int secondary )
 
 
 /**
- * @fn static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
- *
  * @brief Actually handles the shooting, how often the player can shoot and such.
  *
  *    @param p Pilot that is shooting.
@@ -521,8 +493,6 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 
 
 /**
- * @fn void pilot_switchSecondary( Pilot* p, int i )
- *
  * @brief Sets the pilot's secondary weapon.
  *
  *    @param p Pilot to set secondary weapon.
@@ -627,8 +597,6 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
 
 /**
- * @fn void pilot_dead( Pilot* p )
- *
  * @brief Pilot is dead, now will slowly explode.
  *
  *    @param p Pilot that just died.
@@ -706,9 +674,7 @@ void pilot_setSecondary( Pilot* p, const char* secondary )
 
 
 /**
- * @fn void pilot_setAmmo( Pilot* p )
- *
- * @param Sets the pilot's ammo based on their secondary weapon.
+ * @brief Sets the pilot's ammo based on their secondary weapon.
  *
  *    @param p Pilot to set ammo.
  */
@@ -737,8 +703,6 @@ void pilot_setAmmo( Pilot* p )
 
 
 /**
- * @fn int pilot_getAmmo( Pilot* p, Outfit* o )
- *
  * @brief Gets the amount of ammo pilot has for a certain outfit.
  *
  *    @param p Pilot to get amount of ammo for.
@@ -766,8 +730,6 @@ int pilot_getAmmo( Pilot* p, Outfit* o )
 
 
 /**
- * @fn void pilot_setAfterburner( Pilot* p )
- *
  * @brief Sets the pilot's afterburner if he has one.
  *
  *    @param p Pilot to set afterburner.
@@ -786,8 +748,6 @@ void pilot_setAfterburner( Pilot* p )
 
 
 /**
- * @fn int pilot_dock( Pilot *p, Pilot *target )
- *
  * @brief Docks the pilot on it's target pilot.
  *
  *    @param p Pilot that wants to dock.
@@ -831,6 +791,13 @@ int pilot_dock( Pilot *p, Pilot *target )
 
 
 /**
+ * @brief Makes the pilot explosion.
+ *    @param x X position of the pilot.
+ *    @param y Y position of the pilot.
+ *    @param radius Radius of the explosion.
+ *    @param dtype Damage type of the explosion.
+ *    @param damage Amount of damage by the explosion.
+ *    @param parent ID of the pilot exploding.
  */
 void pilot_explode( double x, double y, double radius,
       DamageType dtype, double damage, unsigned int parent )
@@ -1096,8 +1063,6 @@ static void pilot_hyperspace( Pilot* p )
 
 
 /**
- * @fn void pilot_hyperspaceAbort( Pilot* p )
- *
  * @brief Stops the pilot from hyperspacing.
  *
  * Can only stop in preparation mode.
@@ -1115,8 +1080,13 @@ void pilot_hyperspaceAbort( Pilot* p )
 }
 
 
-/*
- * adds an outfit to the pilot
+/**
+ * @brief Adds an outfit to the pilot.
+ *
+ *    @param pilot Pilot to add the outfit to.
+ *    @param outfit Outfit to add to the pilot.
+ *    @param quantity Amount of the outfit to add.
+ *    @return Amount of the outfit added.
  */
 int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 {
@@ -1198,8 +1168,13 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 }
 
 
-/*
- * removes an outfit from the pilot
+/**
+ * @brief Removes an outfit from the pilot.
+ *
+ *    @param pilot Pilot to remove the outfit from.
+ *    @param outfit Outfit to remove from the pilot.
+ *    @param quantity Amount of outfits to remove from the pilot.
+ *    @return Number of outfits removed from the pilot.
  */
 int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 {
@@ -1239,8 +1214,10 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 }
 
 
-/*
- * returns all the outfits in nice text form
+/**
+ * @brief Gets all the outfits in nice text form.
+ *    
+ *    @param pilot Pilot to get the oufits from.
  */
 char* pilot_getOutfits( Pilot* pilot )
 {
@@ -1269,8 +1246,6 @@ char* pilot_getOutfits( Pilot* pilot )
 
 
 /**
- * @fn void pilot_calcStats( Pilot* pilot )
- *
  * @brief Recalculates the pilot's stats based on his outfits.
  *
  *    @param pilot Pilot to recalculate his stats.
@@ -1366,8 +1341,11 @@ void pilot_calcStats( Pilot* pilot )
 }
 
 
-/*
- * pilot free cargo space
+/**
+ * @brief Gets the piilot's free cargo space.
+ *
+ *    @param p Pilot to get the the free space of.
+ *    @param Free cargo space on pilot.
  */
 int pilot_cargoFree( Pilot* p )
 {
@@ -1456,8 +1434,11 @@ int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )
 }
 
 
-/*
- * returns how much cargo ship has on board
+/**
+ * @brief Gets how much cargo ship has on board.
+ *
+ *    @param pilot Pilot to get used cargo space of.
+ *    @return The used cargo space by pilot.
  */
 int pilot_cargoUsed( Pilot* pilot )
 {
@@ -1471,8 +1452,10 @@ int pilot_cargoUsed( Pilot* pilot )
 }
 
 
-/*
- * calculates how much cargo ship has left and such
+/**
+ * @brief Calculates how much cargo ship has left and such.
+ *
+ *    @param pilot Pilot to calculate free cargo space of.
  */
 static void pilot_calcCargo( Pilot* pilot )
 {
@@ -1485,7 +1468,7 @@ static void pilot_calcCargo( Pilot* pilot )
 }
 
 
-/***
+/**
  * @brief Adds special mission cargo, can't sell it and such.
  *
  *    @param pilot Pilot to add it to.
@@ -1535,7 +1518,7 @@ unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity
  *
  *    @param pilot Pilot to remove cargo from.
  *    @param cargo_id ID of the cargo to remove.
- *    @param jettiosn Should jettison the cargo?
+ *    @param jettison Should jettison the cargo?
  *    @return 0 on success (cargo removed).
  */
 int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
@@ -1567,8 +1550,13 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
 
 
 
-/*
- * tries to get rid of quantity cargo from pilot, returns quantity actually removed
+/**
+ * @brief Tries to get rid of quantity cargo from pilot.
+ * 
+ *    @param pilot Pilot to get rid of cargo.
+ *    @param cargo Cargo to get rid of.
+ *    @param quantity Amount of cargo to get rid of.
+ *    @return Amount of cargo gotten rid of.
  */
 int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
 {
@@ -1600,8 +1588,6 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
 
 
 /**
- * @fn void pilot_addHook( Pilot *pilot, int type, int hook )
- *
  * @brief Adds a hook to the pilot.
  *
  *    @param pilot Pilot to add the hook to.
@@ -1627,6 +1613,7 @@ void pilot_addHook( Pilot *pilot, int type, int hook )
 /**
  * @brief Initialize pilot.
  *
+ *    @param pilot Pilot to initialise.
  *    @param ship Ship pilot will be flying.
  *    @param name Pilot's name, if NULL ship's name will be used.
  *    @param faction Faction of the pilot.
@@ -1778,8 +1765,6 @@ Pilot* pilot_createEmpty( Ship* ship, char* name,
 
 
 /**
- * @fn Pilot* pilot_copy( Pilot* src )
- *
  * @brief Copies src pilot to dest.
  *
  *    @param src Pilot to copy.
@@ -1820,8 +1805,6 @@ Pilot* pilot_copy( Pilot* src )
 
 
 /**
- * @fn void pilot_free( Pilot* p )
- *
  * @brief Frees and cleans up a pilot
  *
  *    @param p Pilot to free.
@@ -1849,8 +1832,6 @@ void pilot_free( Pilot* p )
 
 
 /**
- * @fn void pilot_destroy(Pilot* p)
- *
  * @brief Destroys pilot from stack
  *
  *    @param p Pilot to destroy.
@@ -1874,8 +1855,6 @@ void pilot_destroy(Pilot* p)
 
 
 /**
- * @fn void pilots_free (void)
- *
  * @brief Frees the pilot stack.
  */
 void pilots_free (void)
@@ -1891,8 +1870,6 @@ void pilots_free (void)
 
 
 /**
- * @fn void pilots_clean (void)
- *
  * @brief Cleans up the pilot stack - leaves the player.
  */
 void pilots_clean (void)
@@ -1913,8 +1890,6 @@ void pilots_clean (void)
 
 
 /**
- * @fn void pilots_cleanAll (void)
- *
  * @brief Even cleans up the player.
  */
 void pilots_cleanAll (void)
@@ -1929,8 +1904,6 @@ void pilots_cleanAll (void)
 
 
 /**
- * @fn void pilots_update( double dt )
- *
  * @brief Updates all the pilots.
  *
  *    @param dt Delta tick for the update.
@@ -1969,8 +1942,6 @@ void pilots_update( double dt )
 
 
 /**
- * @fn void pilots_render (void)
- *
  * @brief Renders all the pilots.
  */
 void pilots_render (void)
@@ -2056,7 +2027,9 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
       }
    } while (xml_nextNode(node));
 
-#define MELEMENT(o,s)      if (o) WARN("Fleet '%s' missing '"s"' element", temp->name)
+#define MELEMENT(o,s) \
+if (o) WARN("Fleet '%s' missing '"s"' element", temp->name)
+/**< Hack to check for missing fields. */
    MELEMENT(temp->ai==NULL,"ai");
    MELEMENT(temp->faction==-1,"faction");
    MELEMENT(temp->pilots==NULL,"pilots");
@@ -2067,8 +2040,6 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
 
 
 /**
- * @fn int fleet_load (void)
- *
  * @brief Loads all the fleets.
  *
  *    @return 0 on success.
@@ -2121,8 +2092,6 @@ int fleet_load (void)
 
 
 /**
- * @fn void fleet_free (void)
- *
  * @brief Cleans up by freeing all the fleet data.
  */
 void fleet_free (void)

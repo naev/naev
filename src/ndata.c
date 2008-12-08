@@ -21,9 +21,9 @@
 #include "nfile.h"
 
 
-#define NDATA_FILENAME  "ndata"
+#define NDATA_FILENAME  "ndata" /**< Generic ndata file name. */
 #ifndef NDATA_DEF
-#define NDATA_DEF       NDATA_FILENAME
+#define NDATA_DEF       NDATA_FILENAME /**< Default ndata to use. */
 #endif /* NDATA_DEF */
 
 #define XML_START_ID    "Start"  /**< XML document tag of module start file. */

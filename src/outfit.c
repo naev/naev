@@ -582,16 +582,14 @@ static DamageType outfit_strToDamageType( char *buf )
 }
 
 
+#define O_CMP(s,t) \
+if (strcmp(buf,(s))==0) return t /**< Define to help with outfit_strToOutfitType. */
 /**
- * @fn static OutfitType outfit_strToOutfitType( char *buf )
- *
  * @brief Gets the outfit type from a human readable string.
  *
  *    @param buf String to extract outfit type from.
  *    @return Outfit type stored in buf.
  */
-#define O_CMP(s,t) \
-if (strcmp(buf,(s))==0) return t; 
 static OutfitType outfit_strToOutfitType( char *buf )
 {
    O_CMP("bolt",OUTFIT_TYPE_BOLT);
@@ -628,14 +626,14 @@ static OutfitType outfit_strToOutfitType( char *buf )
  * @brief Parses a damage node.
  *
  * Example damage node would be:
- * @startcode
+ * @code
  * <damage type="kinetic">10</damage>
  * @endcode
  *
  *    @param[out] dtype Stores the damage type here.
  *    @param[out] dmg Storse the damage here.
  *    @param[in] node Node to parse damage from.
- *    @param return 0 on success.
+ *    @return 0 on success.
  */
 static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node )
 {
@@ -716,6 +714,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
+/**< Define to help check for data errors. */
    MELEMENT(temp->u.blt.gfx_space==NULL,"gfx");
    MELEMENT(temp->u.blt.spfx_shield==-1,"spfx_shield");
    MELEMENT(temp->u.blt.spfx_armour==-1,"spfx_armour");
@@ -794,6 +793,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
+/**< Define to help check for data errors. */
    MELEMENT(temp->u.bem.gfx==NULL,"gfx");
    MELEMENT(temp->u.bem.spfx_shield==-1,"spfx_shield");
    MELEMENT(temp->u.bem.spfx_armour==-1,"spfx_armour");
@@ -828,7 +828,9 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_strd(node,"ammo",temp->u.lau.ammo_name);
    } while (xml_nextNode(node));
 
-#define MELEMENT(o,s)      if (o) WARN("Outfit '%s' missing '"s"' element", temp->name)
+#define MELEMENT(o,s) \
+if (o) WARN("Outfit '%s' missing '"s"' element", temp->name)
+/**< Define to help check for data errors. */
    MELEMENT(temp->u.lau.ammo_name==NULL,"ammo");
    MELEMENT(temp->u.lau.delay==0,"delay");
 #undef MELEMENT
@@ -891,6 +893,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
+/**< Define to help check for data errors. */
    MELEMENT(temp->u.amm.gfx_space==NULL,"gfx");
    MELEMENT(temp->u.amm.spfx_shield==-1,"spfx_shield");
    MELEMENT(temp->u.amm.spfx_armour==-1,"spfx_armour");
@@ -995,6 +998,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
+/**< Define to help check for data errors. */
    MELEMENT(temp->u.bay.delay==0,"delay");
    MELEMENT(temp->u.bay.ammo_name==NULL,"ammo");
 #undef MELEMENT
@@ -1019,6 +1023,7 @@ static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
+/**< Define to help check for data errors. */
    MELEMENT(temp->u.fig.ship==NULL,"ship");
 #undef MELEMENT
 }
@@ -1086,6 +1091,7 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
+/**< Define to help check for data errors. */
    MELEMENT(temp->u.jam.range==0.,"range");
    MELEMENT(temp->u.jam.chance==0.,"chance");
 #undef MELEMENT
@@ -1175,6 +1181,7 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
+/**< Define to help check for data errors. */
    MELEMENT(temp->name==NULL,"name");
    MELEMENT(temp->max==0,"max");
    MELEMENT(temp->tech==0,"tech");
