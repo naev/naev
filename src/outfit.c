@@ -713,8 +713,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \
-if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
-/**< Define to help check for data errors. */
+if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.blt.gfx_space==NULL,"gfx");
    MELEMENT(temp->u.blt.spfx_shield==-1,"spfx_shield");
    MELEMENT(temp->u.blt.spfx_armour==-1,"spfx_armour");
@@ -792,8 +791,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \
-if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
-/**< Define to help check for data errors. */
+if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.bem.gfx==NULL,"gfx");
    MELEMENT(temp->u.bem.spfx_shield==-1,"spfx_shield");
    MELEMENT(temp->u.bem.spfx_armour==-1,"spfx_armour");
@@ -829,8 +827,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \
-if (o) WARN("Outfit '%s' missing '"s"' element", temp->name)
-/**< Define to help check for data errors. */
+if (o) WARN("Outfit '%s' missing '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.lau.ammo_name==NULL,"ammo");
    MELEMENT(temp->u.lau.delay==0,"delay");
 #undef MELEMENT
@@ -892,8 +889,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    temp->u.amm.resist /= 100.; /* Set it in per one */
 
 #define MELEMENT(o,s) \
-if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
-/**< Define to help check for data errors. */
+if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.amm.gfx_space==NULL,"gfx");
    MELEMENT(temp->u.amm.spfx_shield==-1,"spfx_shield");
    MELEMENT(temp->u.amm.spfx_armour==-1,"spfx_armour");
@@ -997,8 +993,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \
-if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
-/**< Define to help check for data errors. */
+if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.bay.delay==0,"delay");
    MELEMENT(temp->u.bay.ammo_name==NULL,"ammo");
 #undef MELEMENT
@@ -1090,8 +1085,7 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
    temp->u.jam.energy /= 60.; /* It's per minute */
 
 #define MELEMENT(o,s) \
-if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
-/**< Define to help check for data errors. */
+if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.jam.range==0.,"range");
    MELEMENT(temp->u.jam.chance==0.,"chance");
 #undef MELEMENT
@@ -1180,8 +1174,7 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \
-if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
-/**< Define to help check for data errors. */
+if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->name==NULL,"name");
    MELEMENT(temp->max==0,"max");
    MELEMENT(temp->tech==0,"tech");

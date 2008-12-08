@@ -22,7 +22,7 @@
  * @brief Stores data in funky format.
  *
  *
- * Format Overview:
+ * Format Overview
  *
  *   1.1) Index
  *     1.1.1) Magic Number (16 bytes)
@@ -92,7 +92,7 @@ struct Packcache_s {
 #endif /* _POSIX_SOURCE */
 
 #undef DEBUG /* mucho spamo */
-#define DEBUG(str, args...)      do {;} while(0)
+#define DEBUG(str, args...)      do {;} while(0) /**< Hack to disable debugging. */
 
 
 #define BLOCKSIZE    128*1024 /**< The read/write block size. */
@@ -364,11 +364,11 @@ int pack_check( const char* filename )
 #ifdef _POSIX_SOURCE
 #define WRITE(b,n)    if (write(outfd,b,n)==-1) { \
    ERR("Error writing to file: %s", strerror(errno)); \
-   free(buf); return -1; }
+   free(buf); return -1; } /**< Macro to help check for errors. */
 #else /* not _POSIX_SOURCE */
 #define WRITE(b,n)    if (fwrite(b,1,n,outf)==0) { \
    ERR("Error writing to file: %s", strerror(errno)); \
-   free(buf); return -1; }
+   free(buf); return -1; } /**< Macro to help check for errors. */
 #endif /* _POSIX_SOURCE */
 /**
  * @brief Packages files into a packfile.

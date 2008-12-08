@@ -108,7 +108,7 @@ static void dialogue_alertClose( unsigned int wid, char* str )
  * @brief Gets the size needed for the dialogue.
  * 
  *    @param msg Message of the dialogue.
- *    @param[out] wdth Gets the width needed.
+ *    @param[out] width Gets the width needed.
  *    @param[out] height Gets the height needed.
  *    @return The font that matches the size.
  */

@@ -69,7 +69,11 @@
  */
 Pilot* player = NULL; /**< Ze player. */
 static Ship* player_ship = NULL; /**< Temporary ship to hold when naming it */
-static double player_px, player_py, player_vx, player_vy, player_dir; /**< More hack. */
+static double player_px = 0.; /**< Temporary X position. */
+static double player_py = 0.; /**< Temporary Y position. */
+static double player_vx = 0.; /**< Temporory X velocity. */
+static double player_vy = 0.; /**< Temporary Y velocity. */
+static double player_dir = 0.; /**< Temporary direction. */
 static int player_credits = 0; /**< Temporary hack for when creating. */
 static char *player_mission = NULL; /**< More hack. */
 
@@ -247,11 +251,11 @@ static Mesg* mesg_stack; /**< Stack of mesages, will be of mesg_max size. */
 /* 
  * external
  */
-extern void pilot_render( const Pilot* pilot ); /* from pilot.c */
+extern void pilot_render( const Pilot* pilot ); /**< from pilot.c */
 extern void weapon_minimap( const double res, const double w, const double h,
-      const RadarShape shape, double alpha ); /* from weapon.c */
+      const RadarShape shape, double alpha ); /**< from weapon.c */
 extern void planets_minimap( const double res, const double w, const double h,
-      const RadarShape shape, double alpha ); /* from space.c */
+      const RadarShape shape, double alpha ); /**< from space.c */
 /* 
  * internal
  */
@@ -293,8 +297,6 @@ double player_faceHyperspace (void); /* pilot.c */
 
 
 /**
- * @fn void player_new (void)
- * 
  * @brief Creates a new player.
  *
  *   - Cleans up after old players.
@@ -471,9 +473,6 @@ static int player_newMake (void)
 
 
 /**
- * @fn void player_newShip( Ship* ship, double px, double py,
- *           double vx, double vy, double dir )
- *
  * @brief Creates a new ship for player.
  *
  *    @return 0 indicates success, -1 means dialogue was cancelled.
@@ -507,8 +506,6 @@ int player_newShip( Ship* ship, double px, double py,
 }
 
 /**
- * @fn static void player_newShipMake( char* name )
- *
  * @brief Actually creates the new ship.
  */
 static void player_newShipMake( char* name )
@@ -594,8 +591,6 @@ void player_swapShip( char* shipname )
 
 
 /**
- * @fn int player_shipPrice( char* shipname )
- *
  * @brief Calculates the price of one of the player's ships.
  *
  *    @param shipname Name of the ship.
@@ -718,12 +713,10 @@ void player_cleanup (void)
 }
 
 
+static int player_soundReserved = 0; /**< Has the player already reserved sound? */
 /**
- * @fn static void player_initSound (void)
- *
  * @brief Initializes the player sounds.
  */
-static int player_soundReserved = 0; /**< Has the player already reserved sound? */
 static void player_initSound (void)
 {
    if (player_soundReserved) return;
@@ -742,8 +735,6 @@ static void player_initSound (void)
 
 
 /**
- * @fn static void player_playSound( int sound, int once )
- *
  * @brief Plays a sound at the player.
  *
  *    @param sound ID of the sound to play.
@@ -766,8 +757,6 @@ void player_stopSound (void)
 
 
 /**
- * @fn void player_message ( const char *fmt, ... )
- *
  * @brief Adds a mesg to the queue to be displayed on screen.
  *
  *    @param fmt String with formatting like printf.
@@ -797,8 +786,6 @@ void player_message ( const char *fmt, ... )
 
 
 /**
- * @fn void player_warp( const double x, const double y )
- *
  * @brief Warps the player to the new position
  *
  *    @param x X value of the position to warp to.
@@ -811,8 +798,6 @@ void player_warp( const double x, const double y )
 
 
 /**
- * @fn void player_clear (void)
- *
  * @brief Clears the targets.
  */
 void player_clear (void)
@@ -824,13 +809,6 @@ void player_clear (void)
 }
 
 
-/**
- * @fn const char* player_rating (void)
- *
- * @brief Gets the player's combat rating in a human-readable string.
- *
- *    @return The player's combat rating in a human readable string.
- */
 static char* player_ratings[] = {
       "None",
       "Smallfry",
@@ -840,7 +818,12 @@ static char* player_ratings[] = {
       "Major",
       "Fearsome",
       "Godlike"
-};
+}; /**< Combat ratings. */
+/**
+ * @brief Gets the player's combat rating in a human-readable string.
+ *
+ *    @return The player's combat rating in a human readable string.
+ */
 const char* player_rating (void)
 {
    if (player_crating == 0.) return player_ratings[0];
@@ -855,8 +838,6 @@ const char* player_rating (void)
 
 
 /**
- * @fn int player_outfitOwned( const char* outfitname )
- *
  * @brief Gets how many of the outfit the player owns.
  *
  *    @param outfitname Outfit to check how many the player owns.
@@ -874,8 +855,6 @@ int player_outfitOwned( const char* outfitname )
 
 
 /**
- * @fn int player_cargoOwned( const char* commodityname )
- *
  * @brief Gets how many of the commodity the player has.
  *
  *    @param commodityname Commodity to check how many the player owns.
@@ -894,8 +873,6 @@ int player_cargoOwned( const char* commodityname )
 
 
 /**
- * @fn void player_renderBG (void)
- *
  * @brief Renders the background player stuff, namely planet target gfx
  */
 void player_renderBG (void)
@@ -929,8 +906,6 @@ void player_renderBG (void)
 }
 
 /**
- * @fn void player_render (void)
- *
  * @brief Renders the player
  */
 void player_render (void)
@@ -1529,8 +1504,6 @@ static void gui_renderHealth( const glColour* c,
 
 
 /**
- * @fn int gui_init (void)
- *
  * @brief Initializes the GUI system.
  *
  *    @return 0 on success;
@@ -1563,8 +1536,6 @@ int gui_init (void)
 
 
 /**
- * @fn int gui_load (const char* name)
- *
  * @brief Attempts to load the actual GUI.
  *
  *    @param name Name of the GUI to load.
@@ -1741,6 +1712,7 @@ static void gui_createInterference (void)
 
 #define RELATIVIZE(a)   \
 {(a).x+=VX(gui.frame); (a).y=VY(gui.frame)+gui.gfx_frame->h-(a).y;}
+/**< Converts a rect to absolute coords. */
 /**
  * @brief Parses a gui node.
  *
@@ -1995,8 +1967,6 @@ void gui_free (void)
 
 
 /**
- * @fn void player_startAutonav (void)
- *
  * @brief Starts autonav.
  */
 void player_startAutonav (void)
@@ -2042,8 +2012,6 @@ void player_abortAutonav( char *reason )
 
 
 /**
- * @fn void player_think( Pilot* pplayer )
- *
  * @brief Basically uses keyboard input instead of AI input. Used in pilot.c.
  *
  *    @param pplayer Player to think.
@@ -2155,8 +2123,6 @@ void player_think( Pilot* pplayer )
  *
  */
 /**
- * @fn void player_setRadarRel( int mod )
- *
  * @brief Modifies the radar resolution.
  *
  *    @param mod Number of intervals to jump (up or down).
@@ -2172,8 +2138,6 @@ void player_setRadarRel( int mod )
 
 
 /**
- * @fn void player_secondaryNext (void)
- *
  * @brief Get the next secondary weapon.
  */
 void player_secondaryNext (void)
@@ -2205,8 +2169,6 @@ void player_secondaryNext (void)
 
 
 /**
- * @fn void player_targetPlanet (void)
- *
  * @brief Cycle through planet targets.
  */
 void player_targetPlanet (void)
@@ -2231,8 +2193,6 @@ void player_targetPlanet (void)
 
 
 /**
- * @fn void player_land (void)
- *
  * @brief Try to land or target closest planet if no land target.
  */
 void player_land (void)
@@ -2317,8 +2277,6 @@ void player_land (void)
 
 
 /**
- * @fn void player_targetHyperspace (void)
- *
  * @brief Gets a hyperspace target.
  */
 void player_targetHyperspace (void)
@@ -2345,8 +2303,6 @@ void player_targetHyperspace (void)
 
 
 /**
- * @fn void player_jump (void)
- *
  * @brief Actually attempts to jump in hyperspace.
  */
 void player_jump (void)
@@ -2384,8 +2340,6 @@ void player_jump (void)
 
 
 /**
- * @fn void player_brokeHyperspace (void)
- *
  * @brief Player actually broke hyperspace (entering new system).
  */
 void player_brokeHyperspace (void)
@@ -2434,8 +2388,6 @@ void player_brokeHyperspace (void)
 
 
 /**
- * @fn double player_faceHyperspace (void)
- *
  * @brief Makes player face his hyperspace target.
  *
  *    @return direction to face.
@@ -2452,8 +2404,6 @@ double player_faceHyperspace (void)
 
 
 /**
- * @fn void player_afterburn (void)
- *
  * @brief Activate the afterburner.
  */
 void player_afterburn (void)
@@ -2471,8 +2421,6 @@ void player_afterburn (void)
 
 
 /**
- * @fn void player_afterburnOver (void)
- *
  * @brief Deactivates the afterburner.
  */
 void player_afterburnOver (void)
@@ -2486,8 +2434,6 @@ void player_afterburnOver (void)
 
 
 /**
- * @fn void player_accel( double acc )
- *
  * @brief Start accelerating.
  *
  *    @param acc How much thrust should beb applied of maximum (0 - 1).
@@ -2504,8 +2450,6 @@ void player_accel( double acc )
 
 
 /**
- * @fn void player_accelOver (void)
- *
  * @brief Done accelerating.
  */
 void player_accelOver (void)
@@ -2516,8 +2460,6 @@ void player_accelOver (void)
 
 
 /**
- * @fn void player_targetHostile (void)
- *
  * @brief Targets the nearest hostile enemy to the player.
  */
 void player_targetHostile (void)
@@ -2552,8 +2494,6 @@ void player_targetHostile (void)
 
 
 /**
- * @fn void player_targetNext (void)
- *
  * @brief Cycles to next target.
  */
 void player_targetNext (void)
@@ -2566,8 +2506,6 @@ void player_targetNext (void)
 
 
 /**
- * @fn void player_targetPrev (void)
- *
  * @brief Cycles to previous target.
  */
 void player_targetPrev (void)
@@ -2580,8 +2518,6 @@ void player_targetPrev (void)
 
 
 /**
- * @fn player_targetNearest (void)
- *
  * @brief Player targets nearest pilot.
  */
 void player_targetNearest (void)
@@ -2596,12 +2532,10 @@ void player_targetNearest (void)
 }
 
 
+static int screenshot_cur = 0; /**< Current screenshot at. */
 /**
- * @fn void player_screenshot (void)
- *
  * @brief Takes a screenshot.
  */
-static int screenshot_cur = 0; /**< Current screenshot at. */
 void player_screenshot (void)
 {
    FILE *fp;
@@ -2638,7 +2572,7 @@ void player_screenshot (void)
 
 
 /**
- * @fn void player_hail (void)
+ * @brief Opens communication with the player's target.
  */
 void player_hail (void)
 {
@@ -2648,8 +2582,6 @@ void player_hail (void)
 
 
 /**
- * @fn void player_dead (void)
- *
  * @brief Player got pwned.
  */
 void player_dead (void)
@@ -2660,8 +2592,6 @@ void player_dead (void)
 
 
 /**
- * @fn void player_destroyed (void)
- *
  * @brief Player blew up in a fireball.
  */
 void player_destroyed (void)
@@ -2676,8 +2606,6 @@ void player_destroyed (void)
 
 
 /**
- * @fn void player_ships( char** sships, glTexture** tships )
- *
  * @brief Returns a buffer with all the player's ships names
  *        or "None" if there are no ships.
  *

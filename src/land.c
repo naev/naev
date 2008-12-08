@@ -142,7 +142,7 @@ static unsigned int refuel_price (void);
 static void spaceport_refuel( unsigned int wid, char *str );
 /* external */
 extern unsigned int economy_getPrice( const Commodity *com,
-      const StarSystem *sys, const Planet *p );
+      const StarSystem *sys, const Planet *p ); /**< from economy.c */
 
 
 /**
@@ -1329,6 +1329,7 @@ static unsigned int refuel_price (void)
 
 /**
  * @brief Refuels the player.
+ *    @param wid Land window.
  *    @param str Unused.
  */
 static void spaceport_refuel( unsigned int wid, char *str )
