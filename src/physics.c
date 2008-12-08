@@ -188,9 +188,8 @@ double vect_dot( Vector2d* a, Vector2d* b )
 /*
  * S O L I D
  */
+#if defined(FREEBSD)
 /**
- * @fn static void simple_update (Solid *obj, const double dt)
- *
  * @brief Updates the solid's position using an euler integration.
  *
  * Simple method
@@ -205,7 +204,6 @@ double vect_dot( Vector2d* a, Vector2d* b )
  *   so watch out with big values for dt
  *
  */
-#if defined(FREEBSD)
 static void simple_update (Solid *obj, const double dt)
 {
    double px,py, vx,vy, ax,ay;

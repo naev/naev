@@ -41,7 +41,6 @@ extern double gui_yoff;
  * graphic list
  */
 /**
- * @typedef glTexList
  * @brief Represents a node in the texture list.
  */
 typedef struct glTexList_ {

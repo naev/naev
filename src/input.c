@@ -29,7 +29,6 @@
 
 /* keybinding structure */
 /**
- * @typedef Keybind
  * @brief NAEV Keybinding.
  */
 typedef struct Keybind_ {

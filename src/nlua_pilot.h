@@ -12,11 +12,11 @@
 #include "pilot.h"
 
 
-#define PILOT_METATABLE   "Pilot"
+#define PILOT_METATABLE   "Pilot" /**< Pilot metatable identifier. */
 
 
-/*
- * Lua wrappers.
+/**
+ * @brief Lua wrapper for pilots.
  */
 typedef struct LuaPilot_s {
    unsigned int pilot; /**< ID of the pilot. */

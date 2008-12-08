@@ -696,7 +696,8 @@ void map_select( StarSystem *sys )
 /*
  * A* algorithm for shortest path finding
  */
-/* the node struct */
+/**
+ * @brief Node structure for A* pathfinding. */
 typedef struct SysNode_ {
    struct SysNode_ *next, *gnext; /**< Next nodes. */
 

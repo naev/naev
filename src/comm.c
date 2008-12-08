@@ -37,7 +37,7 @@ static void comm_bribe( unsigned int wid, char *unused );
 static unsigned int comm_getBribeAmount (void);
 static char* comm_getBribeString( char *str );
 /* Extern. */
-void ai_setPilot( Pilot *p );
+extern void ai_setPilot( Pilot *p );
 
 
 /**
@@ -132,7 +132,7 @@ int comm_open( unsigned int pilot )
  * @brief Tries to bribe the pilot.
  *
  *    @param wid ID of window calling the function.
- *    @param str Unused.
+ *    @param unused Unused.
  */
 static void comm_bribe( unsigned int wid, char *unused )
 {

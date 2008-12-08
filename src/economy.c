@@ -139,6 +139,7 @@ static void commodity_freeOne( Commodity* com )
 /**
  * @brief Loads a commodity.
  *
+ *    @param temp Commodity to load data into.
  *    @param parent XML node to load from.
  *    @return Commodity loaded from parent.
  */

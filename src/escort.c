@@ -36,7 +36,7 @@
 /* Static */
 static int escort_command( Pilot *parent, int cmd, int param );
 /* Extern */
-extern void ai_setPilot( Pilot *p );
+extern void ai_setPilot( Pilot *p ); /**< from ai.c */
 
 
 /**

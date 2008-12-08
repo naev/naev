@@ -55,29 +55,32 @@
 #include "nfile.h"
 
 
-#define TCOD_NOISE_MAX_OCTAVES            4
-#define TCOD_NOISE_DEFAULT_HURST          0.5
-#define TCOD_NOISE_DEFAULT_LACUNARITY     2.
+#define TCOD_NOISE_MAX_OCTAVES            4 /**< Default octaves for noise. */
+#define TCOD_NOISE_DEFAULT_HURST          0.5 /**< Default hurst for noise. */
+#define TCOD_NOISE_DEFAULT_LACUNARITY     2. /**< Default lacunarity for noise. */
 
 
+/**
+ * @brief Ponderates x between a and b.
+ */
 #define LERP(a, b, x)      ( a + x * (b - a) )
+/**
+ * @brief Clamps x between a and b: a <= x <= b.
+ */
 #define CLAMP(a, b, x)     ((x) < (a) ? (a) : ((x) > (b) ? (b) : (x)))
 
 
-typedef void *TCOD_noise_t;
-
-
-/*
- * Used internally
+/**
+ * @brief Structure used for generating noise.
  */
-typedef struct {
+typedef struct perlin_data_s {
    int ndim; /**< Dimension of the noise. */
    unsigned char map[256]; /**< Randomized map of indexes into buffer */
    float buffer[256][3];   /**< Random 256 x 3 buffer */
    /* fractal stuff */
-   float H;
-   float lacunarity;
-   float exponent[TCOD_NOISE_MAX_OCTAVES];
+   float H; /**< Not sure. */
+   float lacunarity; /**< Not sure. */
+   float exponent[TCOD_NOISE_MAX_OCTAVES]; /**< Not sure. */
 } perlin_data_t; /**< Internal perlin noise data. */
 
 

@@ -457,7 +457,7 @@ int ai_init (void)
 }
 
 
-/*
+/**
  * @brief Initializes an AI_Profile and adds it to the stack.
  *
  *    @param[in] filename File to create the profile from.
@@ -696,7 +696,7 @@ static void ai_freetask( Task* t )
 
 
 /**
- * @group AI Lua AI Bindings
+ * @defgroup AI Lua AI Bindings
  *
  * @brief Handles how the AI interacts with the universe.
  *
@@ -708,12 +708,13 @@ static void ai_freetask( Task* t )
  * @{
  */
 /**
- * @brief pushtask( number pos, string func [, data] )
- *
- *    @param pos Position to push into stack, 0 is front, 1 is back.
- *    @param func Function to call for task.
- *    @param data Data to pass to the function.  Only lightuserdata or number
+ * @brief Pushes a task onto the pilot's task list.
+ *    @luaparam pos Position to push into stack, 0 is front, 1 is back.
+ *    @luaparam func Function to call for task.
+ *    @luaparam data Data to pass to the function.  Only lightuserdata or number
  *           is currently supported.
+ * @luafunc pushtask( pos, func, data )
+ *    @param L Lua state.
  */
 static int ai_pushtask( lua_State *L )
 {

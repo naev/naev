@@ -24,6 +24,8 @@
  *
  *    @param x X position of explosion center.
  *    @param y Y position of explosion center.
+ *    @param vx X velocity of explosion center.
+ *    @param vy Y velocity of explosion center.
  *    @param radius Radius of the explosion.
  *    @param dtype Damage type.
  *    @param damage Damage amount.

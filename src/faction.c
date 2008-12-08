@@ -282,7 +282,7 @@ glColour* faction_getColour( int f )
 }
 
 
-#define STANDING(m,s)  if (mod >= m) return s;
+#define STANDING(m,s)  if (mod >= m) return s /**< Hack to get standings easily. */
 /**
  * @brief Get's the player's standing in human readable form.
  *

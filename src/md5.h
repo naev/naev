@@ -68,7 +68,6 @@ typedef uint8_t md5_byte_t; /**< 8-bit byte */
 typedef uint32_t md5_word_t; /**< 32-bit word */
 
 /**
- * @typedef md5_state_t
  * @brief Define the state of the MD5 Algorithm.
  */
 typedef struct md5_state_s {

@@ -93,6 +93,7 @@ void dialogue_alert( const char *fmt, ... )
 }
 /**
  * @brief Closes the alert dialogue.
+ *    @param wid Window being closed.
  *    @param str Unused.
  */
 static void dialogue_alertClose( unsigned int wid, char* str )
@@ -104,8 +105,6 @@ static void dialogue_alertClose( unsigned int wid, char* str )
 
 
 /**
- * @fn static glFont* dialogue_getSize( char* msg, int* w, int* h )
- *
  * @brief Gets the size needed for the dialogue.
  * 
  *    @param msg Message of the dialogue.
@@ -183,6 +182,7 @@ void dialogue_msg( char* caption, const char *fmt, ... )
 }
 /**
  * @brief Closes a message dialogue.
+ *    @param wid Window being closed.
  *    @param str Unused.
  */
 static void dialogue_msgClose( unsigned int wid, char* str )
@@ -241,13 +241,16 @@ int dialogue_YesNo( char* caption, const char *fmt, ... )
 }
 /**
  * @brief Closes a yesno dialogue.
+ *    @param wid Window being closed.
  *    @param str Unused.
  */
 static void dialogue_YesNoClose( unsigned int wid, char* str )
 {
    /* store the result */
-   if (strcmp(str,"btnYes")==0) yesno_result = 1;
-   else if (strcmp(str,"btnNo")==0) yesno_result = 0;
+   if (strcmp(str,"btnYes")==0)
+      yesno_result = 1;
+   else if (strcmp(str,"btnNo")==0)
+      yesno_result = 0;
 
    /* destroy the window */
    window_destroy( wid );
@@ -261,8 +264,6 @@ static void dialogue_YesNoClose( unsigned int wid, char* str )
 static unsigned int input_wid = 0; /**< Stores the input window id. */
 static int input_cancelled = 0; /**< Stores whether or not the input was cancelled. */
 /**
- * @fn char* dialogue_input( char* title, int min, int max, const char *fmt, ... )
- *
  * @brief Creates a dialogue that allows the player to write a message.
  *
  * You must free the result if it's not null.
@@ -339,6 +340,7 @@ char* dialogue_input( char* title, int min, int max, const char *fmt, ... )
 }
 /**
  * @brief Closes an input dialogue.
+ *    @param wid Unused.
  *    @param str Unused.
  */
 static void dialogue_inputClose( unsigned int wid, char* str )
@@ -351,6 +353,7 @@ static void dialogue_inputClose( unsigned int wid, char* str )
 }
 /**
  * @brief Cancels an input dialogue.
+ *    @param wid Window being closed.
  *    @param str Unused.
  */
 static void dialogue_inputCancel( unsigned int wid, char* str )

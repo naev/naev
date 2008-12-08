@@ -21,21 +21,18 @@
  * Lua wrappers.
  */
 /**
- * @typedef LuaPlanet
  * @brief Lua Planet Wrapper.
  */
 typedef struct LuaPlanet_s {
    Planet *p; /**< Pointer to the real Planet. */
 } LuaPlanet;
 /**
- * @typedef LuaSystem
  * @brief Lua StarSystem Wrapper.
  */
 typedef struct LuaSystem_s {
    StarSystem *s; /**< Pointer to the real StarSystem. */
 } LuaSystem;
 /**
- * @typedef LuaVector
  * @brief Lua Vector2d Wrapper.
  */
 typedef struct LuaVector_s {

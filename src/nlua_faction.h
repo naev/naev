@@ -10,14 +10,14 @@
 #include "lua.h"
 
 
-#define FACTION_METATABLE  "Faction"
+#define FACTION_METATABLE  "Faction" /**< Faction metatable identifier. */
 
 
-/*
- * Lua wrappers.
+/**
+ * @brief Lua wrapper for a faction.
  */
 typedef struct LuaFaction_s {
-   int f;
+   int f; /**< Internal use faction identifier. */
 } LuaFaction;
 
 

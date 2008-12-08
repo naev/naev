@@ -11,20 +11,20 @@
 #include <math.h>
 
 
-#define VX(v)     ((v).x)
-#define VY(v)     ((v).y)
-#define VMOD(v)   ((v).mod)
-#define VANGLE(v) ((v).angle)
+#define VX(v)     ((v).x) /**< Gets the X component of a vector. */
+#define VY(v)     ((v).y) /**< Gets the Y component of a vector. */
+#define VMOD(v)   ((v).mod) /**< Gets the modulus of a vector. */
+#define VANGLE(v) ((v).angle) /**< Gets the angle of a vector. */
 
-#define MOD(x,y)  (sqrt((x)*(x)+(y)*(y)))
-#define ANGLE(x,y) (atan2(y,x))
+#define MOD(x,y)  (sqrt((x)*(x)+(y)*(y))) /**< Gets the modulus of a vector by cartesian coordinates. */
+#define ANGLE(x,y) (atan2(y,x)) /**< Gets the angle of two cartesian coordinates. */
 
-#define vect_dist(v,u)  MOD((v)->x-(u)->x,(v)->y-(u)->y)
-#define vect_odist(v)   MOD((v)->x,(v)->y)
+#define vect_dist(v,u)  MOD((v)->x-(u)->x,(v)->y-(u)->y) /**< Gets the distance between two vectors. */
+#define vect_odist(v)   MOD((v)->x,(v)->y) /**< Gets the distance of a vector from the origin. */
 
 
-/*
- * base of all 2d Vector work
+/**
+ * @brief Represents a 2d vector.
  */
 typedef struct Vector2d_ {                                          
    double x, y; /**< cartesian values */                              
@@ -53,8 +53,8 @@ void vect_reflect( Vector2d* r, Vector2d* v, Vector2d* n );
 double vect_dot( Vector2d* a, Vector2d* b );
 
 
-/*
- * used to describe any Solid in 2d space
+/**
+ * @brief Represents a solid in the game.
  */
 typedef struct Solid_ {
    double mass, dir, dir_vel; /* properties */
