@@ -27,8 +27,10 @@
  * @brief Represents a 2d vector.
  */
 typedef struct Vector2d_ {                                          
-   double x, y; /**< cartesian values */                              
-   double mod, angle; /**< polar values */
+   double x; /**< X cartesian position of the vector. */
+   double y; /**< Y cartesian position of the vector. */
+   double mod; /**< Modulus of the vector. */
+   double angle; /**< Angle of the vector. */
 } Vector2d; /**< 2 dimensional vector. */
 
 
@@ -57,9 +59,13 @@ double vect_dot( Vector2d* a, Vector2d* b );
  * @brief Represents a solid in the game.
  */
 typedef struct Solid_ {
-   double mass, dir, dir_vel; /* properties */
-   Vector2d vel, pos, force; /* position/velocity vectors */
-   void (*update)( struct Solid_*, const double ); /* update method */
+   double mass; /**< Solid's mass. */
+   double dir; /**< Direction solid is facing. */
+   double dir_vel; /**< Velocity at which solid is rotating. */
+   Vector2d vel; /**< Velocity of the solid. */
+   Vector2d pos; /**< Position of the solid. */
+   Vector2d force; /**< Forces acting on the solid. */
+   void (*update)( struct Solid_*, const double ); /**< Update method. */
 } Solid;
 
 

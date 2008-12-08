@@ -699,7 +699,8 @@ void map_select( StarSystem *sys )
 /**
  * @brief Node structure for A* pathfinding. */
 typedef struct SysNode_ {
-   struct SysNode_ *next, *gnext; /**< Next nodes. */
+   struct SysNode_ *next; /**< Next node */
+   struct SysNode_ *gnext; /**< Next node in the garbage collector. */
 
    struct SysNode_ *parent; /**< Parent node. */
    StarSystem* sys; /**< System in node. */

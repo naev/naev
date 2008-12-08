@@ -98,8 +98,6 @@ static const luaL_reg vector_methods[] = {
 
 
 /**
- * @fn int lua_loadSpace( lua_State *L, int readonly )
- *
  * @brief Loads the space library.
  *
  *    @param L State to load space library into.
@@ -122,8 +120,6 @@ int lua_loadSpace( lua_State *L, int readonly )
 
 
 /**
- * @fn int lua_loadVector( lua_State *L )
- *
  * @brief Loads the vector metatable.
  *
  *    @param L State to load the vector metatable into.
@@ -138,8 +134,6 @@ int lua_loadVector( lua_State *L )
 
 
 /**
- * @fn static int planetL_createmetatable( lua_State *L )
- *
  * @brief Registers the planet metatable.
  *
  *    @param L Lua state to register metatable in.
@@ -160,8 +154,6 @@ static int planetL_createmetatable( lua_State *L )
    return 0; /* No error */
 }
 /**
- * @fn static int systemL_createmetatable( lua_State *L )
- *
  * @brief Registers the system metatable.
  *
  *    @param L Lua state to register metatable in.
@@ -182,8 +174,6 @@ static int systemL_createmetatable( lua_State *L )
    return 0; /* No error */
 }
 /**
- * @fn static int vectorL_createmetatable( lua_State *L )
- *
  * @brief Registers the vector metatable.
  *
  *    @param L Lua state to register metatable in.
@@ -224,8 +214,6 @@ static int vectorL_createmetatable( lua_State *L )
  * @endcode
  */
 /**
- * @fn LuaPlanet* lua_toplanet( lua_State *L, int ind )
- *
  * @brief Gets planet at index.
  *
  *    @param L Lua state to get planet from.
@@ -241,8 +229,6 @@ LuaPlanet* lua_toplanet( lua_State *L, int ind )
    return NULL;
 }
 /**
- * @fn LuaPlanet* lua_pushplanet( lua_State *L, LuaPlanet planet )
- *
  * @brief Pushes a planet on the stack.
  *
  *    @param L Lua state to push planet into.
@@ -259,8 +245,6 @@ LuaPlanet* lua_pushplanet( lua_State *L, LuaPlanet planet )
    return p;
 }
 /**
- * @fn int lua_isplanet( lua_State *L, int ind )
- *
  * @brief Checks to see if ind is a planet.
  *
  *    @param L Lua state to check.
@@ -284,7 +268,6 @@ int lua_isplanet( lua_State *L, int ind )
 }
 
 /**
- * @fn static int planetL_get( lua_State *L )
  * @ingroup SPACE
  *
  * @brief planet, system getPlanet( [param] )
@@ -379,7 +362,6 @@ static int planetL_get( lua_State *L )
 }
 
 /**
- * @fn static int planetL_eq( lua_State *L )
  * @ingroup META_PLANET
  *
  * @brief bool __eq( planet comp )
@@ -404,7 +386,6 @@ static int planetL_eq( lua_State *L )
 }
 
 /**
- * @fn static int planetL_name( lua_State *L )
  * @ingroup META_PLANET
  *
  * @brief string name( nil )
@@ -422,7 +403,6 @@ static int planetL_name( lua_State *L )
 }
 
 /**
- * @fn static int planetL_faction( lua_State *L )
  * @ingroup META_PLANET
  *
  * @brief number faction( nil )
@@ -442,7 +422,6 @@ static int planetL_faction( lua_State *L )
 }
 
 /**
- * @fn static int planetL_class(lua_State *L )
  * @ingroup META_PLANET
  *
  * @brief string class( nil )
@@ -463,7 +442,6 @@ static int planetL_class(lua_State *L )
 }
 
 /**
- * @fn static int planetL_services( lua_State *L )
  * @ingroup META_PLANET
  *
  * @brief number services( nil )
@@ -481,7 +459,6 @@ static int planetL_services( lua_State *L )
 }
 
 /**
- * @fn static int planetL_position( lua_State *L )
  * @ingroup META_PLANET
  *
  * @brief Vec2 pos( nil )
@@ -513,8 +490,6 @@ static int planetL_position( lua_State *L )
  * @endcode
  */
 /**
- * @fn LuaSystem* lua_tosystem( lua_State *L, int ind )
- *
  * @brief Gets system at index.
  *
  *    @param L Lua state to get system from.
@@ -531,8 +506,6 @@ LuaSystem* lua_tosystem( lua_State *L, int ind )
 }
 
 /**
- * @fn LuaSystem* lua_pushsystem( lua_State *L, LuaSystem sys )
- *
  * @brief Pushes a system on the stack.
  *
  *    @param L Lua state to push system onto.
@@ -550,8 +523,6 @@ LuaSystem* lua_pushsystem( lua_State *L, LuaSystem sys )
 }
 
 /**
- * @fn int lua_issystem( lua_State *L, int ind )
- *
  * @brief Checks to see if ind is a system.
  *
  *    @param L Lua state to check.
@@ -576,7 +547,6 @@ int lua_issystem( lua_State *L, int ind )
 
 
 /**
- * @fn static int systemL_get( lua_State *L )
  * @ingroup SPACE
  *
  * @brief system getSystem( [param] )
@@ -617,7 +587,6 @@ static int systemL_get( lua_State *L )
 }
 
 /**
- * @fn static int systemL_eq( lua_State *L )
  * @ingroup META_SYSTEM
  *
  * @brief bool __eq( system comp )
@@ -642,7 +611,6 @@ static int systemL_eq( lua_State *L )
 }
 
 /**
- * @fn static int systemL_name( lua_State *L )
  * @ingroup META_SYSTEM
  *
  * @brief string name( nil )
@@ -660,7 +628,6 @@ static int systemL_name( lua_State *L )
 }
 
 /**
- * @fn static int systemL_faction( lua_State *L )
  * @ingroup META_SYSTEM
  *
  * @brief table faction( nil )
@@ -696,7 +663,6 @@ static int systemL_faction( lua_State *L )
 }
 
 /**
- * @fn static int systemL_jumpdistance( lua_State *L )
  * @ingroup META_SYSTEM
  *
  * @brief number jumpDist( [param] )
@@ -809,7 +775,6 @@ int lua_isvector( lua_State *L, int ind )
 }
 
 /**
- * @fn static int vectorL_new( lua_State *L )
  * @ingroup META_VECTOR
  *
  * @brief Vec2 new( [number x, number y] )
@@ -840,7 +805,6 @@ static int vectorL_new( lua_State *L )
 }
 
 /**
- * @fn static int vectorL_add( lua_State *L )
  * @ingroup META_VECTOR
  *
  * @brief __add( Vec2 vector )
@@ -877,14 +841,15 @@ static int vectorL_add( lua_State *L )
 }
 
 /**
- * @fn static int vectorL_sub( lua_State *L )
  * @ingroup META_VECTOR
  *
- * @brief __sub( Vec2 vector )
- *
- * __sub( number x, number y )
- *
- * Subtracts two vectors or a vector and some cartesian coordinates.
+ * @brief Subtracts a vector and some cartesian coordinates.
+ *    @luaparam x X coordinate to subtract.
+ *    @luaparam y Y cooridinate to subtract.
+ * @luafunc __sub( vector )
+ * @brief Subtracts two vectors.
+ *    @luaparam x
+ * @luafunc __sub( x, y )
  */
 static int vectorL_sub( lua_State *L )
 {
@@ -914,14 +879,11 @@ static int vectorL_sub( lua_State *L )
 }
 
 /**
- * @fn static int vectorL_mul( lua_State *L )
  * @ingroup META_VECTOR
  *
- * @brief __mul( number mod )
- *
- * Multiplies a vector by a number.
- *
- *    @param mod Amount to multiply by.
+ * @brief Multiplies a vector by a number.
+ *    @luaparam mod Amount to multiply by.
+ * @luafunc __mul( mod )
  */
 static int vectorL_mul( lua_State *L )
 {
@@ -943,14 +905,11 @@ static int vectorL_mul( lua_State *L )
 }
 
 /**
- * @fn static int vectorL_div( lua_State *L )
  * @ingroup META_VECTOR
  *
- * @brief __div( number mod )
- *
- * Divides a vector by a number.
- *
- *    @param mod Amount to divide by.
+ * @brief Divides a vector by a number.
+ *    @luaparam mod Amount to divide by.
+ * @luafunc __div( mod )
  */
 static int vectorL_div( lua_State *L )
 {
@@ -973,14 +932,11 @@ static int vectorL_div( lua_State *L )
 
 
 /**
- * @fn static int vectorL_get( lua_State *L )
  * @ingroup META_VECTOR
  *
- * @brief number, number get( nil )
- *
- * Gets the cartesian positions of the vector.
- *
+ * @brief Gets the cartesian positions of the vector.
  *    @return X and Y position of the vector.
+ * @luafunc get()
  */
 static int vectorL_get( lua_State *L )
 {
@@ -997,15 +953,12 @@ static int vectorL_get( lua_State *L )
 }
 
 /**
- * @fn static int vectorL_set( lua_State *L )
  * @ingroup META_VECTOR
  *
- * @brief set( number x, number y )
- *
- * Sets the vector by cartesian coordinates.
- *
- *    @param x X coordinate to set.
- *    @param y Y coordinate to set.
+ * @brief Sets the vector by cartesian coordinates.
+ *    @luaparam x X coordinate to set.
+ *    @luaparam y Y coordinate to set.
+ * @luafunc set( x, y )
  */
 static int vectorL_set( lua_State *L )
 {
@@ -1029,15 +982,12 @@ static int vectorL_set( lua_State *L )
 }
 
 /**
- * @fn static int vectorL_distance( lua_State *L )
  * @ingroup META_VECTOR
  *
- * @brief number dist( [Vec2 vector] )
- *
- * Gets the distance from the Vec2.
- *
+ * @brief Gets the distance from the Vec2.
  *    @param vector Vector to get distance from, uses origin (0,0) if not set.
  *    @return The distance calculated.
+ * @luafunc dist( vector )
  */
 static int vectorL_distance( lua_State *L )
 {
@@ -1070,11 +1020,9 @@ static int vectorL_distance( lua_State *L )
 /**
  * @ingroup META_VECTOR
  *
- * @brief number mod( nil )
- *
- * Gets the modulus of the vector.
- *
+ * @brief Gets the modulus of the vector.
  *    @return The modulus of the vector.
+ * @luafunc mod()
  */
 static int vectorL_mod( lua_State *L )
 {

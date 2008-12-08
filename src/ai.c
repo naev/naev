@@ -301,8 +301,6 @@ static int ai_status = AI_STATUS_NORMAL; /**< Current AI run status. */
 
 
 /**
- * @fn static void ai_setMemory (void)
- *
  * @brief Sets the cur_pilot's ai.
  */
 static void ai_setMemory (void)
@@ -318,9 +316,9 @@ static void ai_setMemory (void)
 
 
 /**
- * @fn void ai_setPilot( Pilot *p )
- *
  * @brief Sets the pilot for furthur AI calls.
+ *
+ *    @param p Pilot to set.
  */
 void ai_setPilot( Pilot *p )
 {
@@ -330,8 +328,6 @@ void ai_setPilot( Pilot *p )
 
 
 /**
- * @fn static void ai_run( lua_State *L, const char *funcname )
- *
  * @brief Attempts to run a function.
  *
  *    @param[in] L Lua state to run function on.
@@ -346,8 +342,6 @@ static void ai_run( lua_State *L, const char *funcname )
 
 
 /**
- * @fn int ai_pinit( Pilot *p, char *ai )
- *
  * @brief Initializes the pilot in the ai.
  *
  * Mainly used to create the pilot's memory table.
@@ -402,8 +396,6 @@ int ai_pinit( Pilot *p, char *ai )
 
 
 /**
- * @fn void ai_destroy( Pilot* p )
- *
  * @brief Destroys the ai part of the pilot
  *
  *    @param[in] p Pilot to destroy it's AI part.
@@ -427,8 +419,6 @@ void ai_destroy( Pilot* p )
 
 
 /**
- * @fn int ai_init (void)
- *
  * @brief Initializes the AI stuff which is basically Lua.
  *
  *    @return 0 on no errors.
@@ -520,8 +510,6 @@ static int ai_loadProfile( const char* filename )
 
 
 /**
- * @fn AI_Profile* ai_getProfile( char* name )
- *
  * @brief Gets the AI_Profile by name.
  *
  *    @param[in] name Name of the profile to get.
@@ -543,8 +531,6 @@ AI_Profile* ai_getProfile( char* name )
 
 
 /**
- * @fn void ai_exit (void)
- *
  * @brief Cleans up global AI.
  */
 void ai_exit (void)
@@ -559,8 +545,6 @@ void ai_exit (void)
 
 
 /**
- * @fn void ai_think( Pilot* pilot )
- *
  * @brief Heart of the AI, brains of the pilot.
  *
  *    @param pilot Pilot that needs to think.
@@ -608,8 +592,6 @@ void ai_think( Pilot* pilot )
 
 
 /**
- * @fn void ai_attacked( Pilot* attacked, const unsigned int attacker )
- *
  * @brief Triggers the attacked() function in the pilot's AI.
  *
  *    @param attacked Pilot that is attacked.
@@ -629,8 +611,6 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker )
 
 
 /**
- * @fn static void ai_create( Pilot* pilot, char *param )
- *
  * @brief Runs the create() function in the pilot.
  *
  * Should create all the gear and sucth the pilot has.
@@ -677,8 +657,6 @@ static void ai_create( Pilot* pilot, char *param )
  * internal use C functions
  */
 /**
- * @fn static void ai_freetask( Task* t )
- *
  * @brief Frees an AI task.
  *
  *    @param t Task to free.
@@ -715,6 +693,7 @@ static void ai_freetask( Task* t )
  *           is currently supported.
  * @luafunc pushtask( pos, func, data )
  *    @param L Lua state.
+ *    @return Number of Lua parameters.
  */
 static int ai_pushtask( lua_State *L )
 {
@@ -754,11 +733,10 @@ static int ai_pushtask( lua_State *L )
    return 0;
 }
 /**
- * @fn static int ai_poptask( lua_State *L )
- *
- * @brief poptask( nil )
- *
- * Pops the current running task.
+ * @brief Pops the current running task.
+ * @luafunc poptask()
+ *    @param L Lua state.
+ *    @return Number of Lua parameters.
  */
 static int ai_poptask( lua_State *L )
 {
@@ -777,8 +755,12 @@ static int ai_poptask( lua_State *L )
    return 0;
 }
 
-/*
- * gets the current task's name
+/**
+ * @brief Gets the current task's name.
+ *    @return The current task name or "none" if there are no tasks.
+ * @luafunc taskname()
+ *    @param L Lua state.
+ *    @return Number of Lua parameters.
  */
 static int ai_taskname( lua_State *L )
 {
@@ -787,8 +769,12 @@ static int ai_taskname( lua_State *L )
    return 1;
 }
 
-/*
- * Gets the player.
+/**
+ * @brief Gets the player.
+ *    @return The player's ship identifier.
+ * @luafunc getPlayer()
+ *    @param L Lua state.
+ *    @return Number of Lua parameters.
  */
 static int ai_getplayer( lua_State *L )
 {
@@ -796,8 +782,12 @@ static int ai_getplayer( lua_State *L )
    return 1;
 }
 
-/*
- * gets the target
+/**
+ * @brief Gets the pilot's target.
+ *    @return The pilot's target ship identifier or nil if no target.
+ * @luafunc target()
+ *    @param L Lua state.
+ *    @return Number of Lua parameters.
  */
 static int ai_gettarget( lua_State *L )
 {
@@ -811,12 +801,28 @@ static int ai_gettarget( lua_State *L )
    }
 }
 
-/*
- * Gets a random target's ID
+/**
+ * @brief Gets a random target's ID
+ *    @return Gets a random pilot in the system.
+ * @luafunc rndpilot()
+ *    @param L Lua state.
+ *    @return Number of Lua parameters.
  */
 static int ai_getrndpilot( lua_State *L )
 {
-   lua_pushnumber(L, pilot_stack[ RNG(0, pilot_nstack-1) ]->id );
+   int p;
+   p = RNG(0, pilot_nstack-1);
+   /* Make sure it can't be the same pilot. */
+   if (pilot_stack[p]->id == cur_pilot->id) {
+      p++;
+      if (p >= pilot_nstack)
+         p = 0;
+   }
+   /* Last check. */
+   if (pilot_stack[p]->id == cur_pilot->id)
+      return 0;
+   /* Actually found a pilot. */
+   lua_pushnumber(L, pilot_stack[p]->id );
    return 1;
 }
 
