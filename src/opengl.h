@@ -51,8 +51,10 @@
  * @brief Stores data about the current opengl environment.
  */
 typedef struct glInfo_ {
-   int w; /**< Window width. */
-   int h; /**< Window height. */
+   int w; /**< Window viewport width. */
+   int h; /**< Window viewport height. */
+   int rw; /**< Real window width. */
+   int rh; /**< Real window height. */
    int depth; /**< Depth in bpp */
    int r; /**< How many red bits we have. */
    int g; /**< How many green bits we have. */

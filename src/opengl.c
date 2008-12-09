@@ -979,6 +979,7 @@ void gl_checkErr (void)
  */
 int gl_init()
 {
+   double dmin;
    int doublebuf, depth, i, j, off, toff, supported, fsaa;
    SDL_Rect** modes;
    int flags = SDL_OPENGL;
@@ -1080,6 +1081,10 @@ int gl_init()
       }
    }
 
+   /* Save real window width/height. */
+   gl_screen.rw = SCREEN_W;
+   gl_screen.rh = SCREEN_H;
+
    /* Get info about the OpenGL window */
    SDL_GL_GetAttribute( SDL_GL_RED_SIZE, &gl_screen.r );
    SDL_GL_GetAttribute( SDL_GL_GREEN_SIZE, &gl_screen.g );
@@ -1134,6 +1139,18 @@ int gl_init()
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* good blend model */
 
    /* set up the matrix */
+   dmin = 1.;
+   if ((SCREEN_W < 640) && (SCREEN_W <= SCREEN_H)) {
+      gl_screen.w  = (gl_screen.w * 640) / SCREEN_H;
+      gl_screen.rw = (gl_screen.rw * SCREEN_H) / 640;
+      gl_screen.h  = 640;
+   }
+   else if ((SCREEN_W >= 640) && (SCREEN_W >= SCREEN_H)) {
+      gl_screen.w  = (gl_screen.w * 640) / SCREEN_H;
+      gl_screen.rw = (gl_screen.rw * SCREEN_H) / 640;
+      gl_screen.h  = 640;
+   }
+   DEBUG("%dx%d on %dx%d", gl_screen.w, gl_screen.h, gl_screen.rw, gl_screen.rh);
    gl_defViewport();
 
    /* finishing touches */
@@ -1151,12 +1168,14 @@ void gl_defViewport (void)
 {
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
+   /*glViewport( 0, 0, (GLsizei)SCREEN_W, (GLsizei)SCREEN_H );*/
    glOrtho( -SCREEN_W/2, /* left edge */
          SCREEN_W/2, /* right edge */
          -SCREEN_H/2, /* bottom edge */
          SCREEN_H/2, /* top edge */
          -1., /* near */
          1. ); /* far */
+   glScaled( gl_screen.w / gl_screen.rw, gl_screen.h / gl_screen.rh, 1. );
 }
 
 
