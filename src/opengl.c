@@ -76,8 +76,10 @@ static GLboolean gl_hasExt( char *name );
  * M I S C
  *
  */
-/*
- * gets the closest power of two
+/**
+ * @brief Gets the closest power of two.
+ *    @param n Number to get closest power of two to.
+ *    @return Closest power of two to the number.
  */
 int gl_pot( int n )
 {
@@ -88,10 +90,11 @@ int gl_pot( int n )
 }
 
 
-/*
- * flips the surface vertically
+/**
+ * @brief Flips the surface vertically.
  *
- * returns 0 on success
+ *    @param surface Surface to flip.
+ *    @return 0 on success.
  */
 static int SDL_VFlipSurface( SDL_Surface* surface )
 {
@@ -121,8 +124,13 @@ static int SDL_VFlipSurface( SDL_Surface* surface )
 }
 
 
-/*
- * returns true if position (x,y) of s is transparent
+/**
+ * @brief Checks to see if a position of the surface is transparent.
+ *
+ *    @param s Surface to check for transparency.
+ *    @param x X position of the pixel to check.
+ *    @param y Y position of the pixel to check.
+ *    @return 0 if the pixel isn't transparent, 0 if it is.
  */
 static int SDL_IsTrans( SDL_Surface* s, int x, int y )
 {
@@ -158,10 +166,14 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
 }
 
 
-/*
- * maps the surface transparency
+/**
+ * @brief Maps the surface transparency.
  *
- * returns 0 on success
+ * Basically generates a map of what pixels are transparent.  Good for pixel
+ *  perfect collision routines.
+ *
+ *    @param s Surface to map it's transparency.
+ *    @return 0 on success.
  */
 static uint8_t* SDL_MapTrans( SDL_Surface* s )
 {
@@ -184,8 +196,10 @@ static uint8_t* SDL_MapTrans( SDL_Surface* s )
 }
 
 
-/*
- * takes a screenshot
+/**
+ * @brief Takes a screenshot.
+ *
+ *    @param filename Name of the file to save screenshot as.
  */
 void gl_screenshot( const char *filename )
 {
@@ -205,29 +219,32 @@ void gl_screenshot( const char *filename )
 }
 
 
-/*
- * Saves a surface to a file as a png.
+/**
+ * @brief Saves a surface to a file as a png.
  *
  * Ruthlessly stolen from "pygame - Python Game Library"
  *    by Pete Shinners (pete@shinners.org)
+ *
+ *    @param surface Surface to save.
+ *    @param file Path to save surface to.
+ *    @return 0 on success.;
  */
 int SDL_SavePNG( SDL_Surface *surface, const char *file )
 {
-   static unsigned char** ss_rows;
-   static int ss_size;
-   static int ss_w, ss_h;
+   unsigned char** ss_rows;
+   int ss_size;
+   int ss_w, ss_h;
    SDL_Surface *ss_surface;
    SDL_Rect ss_rect;
    int r, i;
-   int alpha = 0;
-   int pixel_bits = 32;
+   int alpha;
+   int pixel_bits;
+   unsigned int surf_flags;
+   unsigned int surf_alpha;
 
-   unsigned surf_flags;
-   unsigned surf_alpha;
-
-   ss_rows = 0;
+   ss_rows = NULL;
    ss_size = 0;
-   ss_surface = 0;
+   ss_surface = NULL;
 
    ss_w = surface->w;
    ss_h = surface->h;
@@ -235,16 +252,17 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
    if (surface->format->Amask) {
       alpha = 1;
       pixel_bits = 32;
-   } else {                        
+   }
+   else {                        
+      alpha = 0;
       pixel_bits = 24;
    }
 
    ss_surface = SDL_CreateRGBSurface( SDL_SWSURFACE | SDL_SRCALPHA, ss_w, ss_h,
          pixel_bits, RGBAMASK );
 
-   if( ss_surface == 0 ) {
+   if (ss_surface == NULL)
       return -1;
-   }
 
    surf_flags = surface->flags & (SDL_SRCALPHA | SDL_SRCCOLORKEY);
    surf_alpha = surface->format->alpha;
@@ -259,31 +277,27 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
    ss_rect.h = ss_h;
    SDL_BlitSurface(surface, &ss_rect, ss_surface, 0);
 
-   if ( ss_size == 0 ) {
+   if (ss_size == 0) {
       ss_size = ss_h;
       ss_rows = (unsigned char**)malloc(sizeof(unsigned char*) * ss_size);
-      if( ss_rows == 0 ) {
+      if (ss_rows == NULL)
          return -1;
-      }
    }
    if ( surf_flags & SDL_SRCALPHA )
       SDL_SetAlpha(surface, SDL_SRCALPHA, (Uint8)surf_alpha);
    if ( surf_flags & SDL_SRCCOLORKEY )
       SDL_SetColorKey(surface, SDL_SRCCOLORKEY, surface->format->colorkey);
 
-   for (i = 0; i < ss_h; i++) {
+   for (i = 0; i < ss_h; i++)
       ss_rows[i] = ((unsigned char*)ss_surface->pixels) + i * ss_surface->pitch;
-   }
 
-   if (alpha) {
+   if (alpha)
       r = write_png(file, ss_rows, surface->w, surface->h, PNG_COLOR_TYPE_RGB_ALPHA, 8);
-   } else {
+   else
       r = write_png(file, ss_rows, surface->w, surface->h, PNG_COLOR_TYPE_RGB, 8);
-   }
 
    free(ss_rows);
    SDL_FreeSurface(ss_surface);
-   ss_surface = NULL;
 
    return r;
 }
@@ -295,8 +309,11 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
  * G L _ T E X T U R E
  *
  */
-/*
- * Prepares the surface to be loaded
+/**
+ * @brief Prepares the surface to be loaded as a texture.
+ *
+ *    @param surface to load that is freed in the process.
+ *    @return New surface that is prepared for texture loading.
  */
 SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
 {
@@ -900,8 +917,11 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
  *
  */
 
-/*
- * checks for extensions
+/**
+ * @brief Checks for on opengl extension.
+ *
+ *    @param name Extension to check for.
+ *    @return GL_TRUE if found, GL_FALSE if isn't.
  */
 static GLboolean gl_hasExt( char *name )
 {
@@ -929,10 +949,10 @@ static GLboolean gl_hasExt( char *name )
 }
 
 
-/*
- * checks and reports if there's been an error
+#ifndef gl_checkErr /**< i agree it's a bit hackish :) */
+/**
+ * @brief Checks and reports if there's been an error.
  */
-#ifndef gl_checkErr /* i agree it's a bit hackish :) */
 void gl_checkErr (void)
 {
    GLenum err;
@@ -974,12 +994,12 @@ void gl_checkErr (void)
 #endif /* DEBUG */
 
 
-/*
- * Initializes SDL/OpenGL and the works
+/**
+ * @brief Initializes SDL/OpenGL and the works.
+ *    @return 0 on success.
  */
-int gl_init()
+int gl_init (void)
 {
-   double dmin;
    int doublebuf, depth, i, j, off, toff, supported, fsaa;
    SDL_Rect** modes;
    int flags = SDL_OPENGL;
@@ -1081,10 +1101,6 @@ int gl_init()
       }
    }
 
-   /* Save real window width/height. */
-   gl_screen.rw = SCREEN_W;
-   gl_screen.rh = SCREEN_H;
-
    /* Get info about the OpenGL window */
    SDL_GL_GetAttribute( SDL_GL_RED_SIZE, &gl_screen.r );
    SDL_GL_GetAttribute( SDL_GL_GREEN_SIZE, &gl_screen.g );
@@ -1138,19 +1154,19 @@ int gl_init()
    glShadeModel( GL_FLAT ); /* default shade model, functions should keep this when done */
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* good blend model */
 
-   /* set up the matrix */
-   dmin = 1.;
+   /* Set up the proper viewport to use. */
+   gl_screen.rw = SCREEN_W;
+   gl_screen.rh = SCREEN_H;
    if ((SCREEN_W < 640) && (SCREEN_W <= SCREEN_H)) {
       gl_screen.w  = (gl_screen.w * 640) / SCREEN_H;
       gl_screen.rw = (gl_screen.rw * SCREEN_H) / 640;
       gl_screen.h  = 640;
    }
-   else if ((SCREEN_W >= 640) && (SCREEN_W >= SCREEN_H)) {
+   else if ((SCREEN_H < 640) && (SCREEN_W >= SCREEN_H)) {
       gl_screen.w  = (gl_screen.w * 640) / SCREEN_H;
       gl_screen.rw = (gl_screen.rw * SCREEN_H) / 640;
       gl_screen.h  = 640;
    }
-   DEBUG("%dx%d on %dx%d", gl_screen.w, gl_screen.h, gl_screen.rw, gl_screen.rh);
    gl_defViewport();
 
    /* finishing touches */
@@ -1168,21 +1184,22 @@ void gl_defViewport (void)
 {
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
-   /*glViewport( 0, 0, (GLsizei)SCREEN_W, (GLsizei)SCREEN_H );*/
    glOrtho( -SCREEN_W/2, /* left edge */
          SCREEN_W/2, /* right edge */
          -SCREEN_H/2, /* bottom edge */
          SCREEN_H/2, /* top edge */
          -1., /* near */
          1. ); /* far */
-   glScaled( gl_screen.w / gl_screen.rw, gl_screen.h / gl_screen.rh, 1. );
+   /* Take into account posible scaling. */
+   glScaled( (double)gl_screen.w / (double)gl_screen.rw,
+         (double)gl_screen.h / (double)gl_screen.rh, 1. );
 }
 
 
-/*
- * Cleans up OpenGL, the works
+/**
+ * @brief Cleans up OpenGL, the works.
  */
-void gl_exit()
+void gl_exit (void)
 {
    glTexList *tex;
 
@@ -1198,13 +1215,20 @@ void gl_exit()
 }
 
 
-/*
- * saves a png
+/**
+ * @brief Saves a png.
+ *
+ *    @param file_name Name of the file to save the png as.
+ *    @param rows Rows containing the data.
+ *    @param w Width of the png.
+ *    @param h Height of the png.
+ *    @param colourtype Colour type of the png.
+ *    @param bitdepth Bit depth of the png.
+ *    @return 0 on success.
  */
 int write_png( const char *file_name, png_bytep *rows,
       int w, int h, int colourtype, int bitdepth )
 {
-
    png_structp png_ptr;
    png_infop info_ptr;
    FILE *fp = NULL;
