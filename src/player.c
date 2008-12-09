@@ -1276,7 +1276,7 @@ void player_renderGUI( double dt )
    gl_print( &gl_smallFont,
          gui.misc.x + 8, j,
          &cConsole, "Free:" );
-   i = gl_printWidth( &gl_smallFont, "%d", player->ship->cap_cargo );
+   i = gl_printWidth( &gl_smallFont, "%d", pilot_cargoFree(player) );
    gl_print( &gl_smallFont,
          gui.misc.x + gui.misc.w - 8 - i, j,
          NULL, "%d", pilot_cargoFree(player) );
