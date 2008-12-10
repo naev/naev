@@ -2,6 +2,32 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+/**
+ * @file opengl.c
+ *
+ * @brief This file handles most of the more generic opengl functions.
+ *
+ * The main way to work with opengl in naev is to create glTextures and then
+ *  use the blit functions to draw them on the screen.  This system will
+ *  handle relative and absolute positions.
+ *
+ * There are two coordinate systems: relative and absolute.
+ *
+ * Relative:
+ *  * Everything is drawn relative to the player, if it doesn't fit on screen
+ *    it is clipped.
+ *  * Origin (0., 0.) wouldbe ontop of the player.
+ *
+ * Absolute:
+ *  * Everything is drawn in "screen coordinates".
+ *  * (0., 0.) is bottom left.
+ *  * (SCREEN_W, SCREEN_H) is top right.
+ *
+ * Note that the game actually uses a third type of coordinates for when using
+ *  raw commands.  In this third type, the (0.,0.) is actually in middle of the
+ *  screen.  (-SCREEN_W/2.,-SCREEN_H/2.) is bottom left and
+ *  (+SCREEN_W/2.,+SCREEN_H/2.) is top right.
+ */
 
 
 #include "opengl.h"

@@ -3,7 +3,6 @@
  */
 
 
-
 #ifndef OPENGL_H
 #  define OPENGL_H
 
@@ -18,15 +17,15 @@
 
 /* Recommended for compatibility and such */
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-#  define RMASK   0xff000000
-#  define GMASK   0x00ff0000
-#  define BMASK   0x0000ff00
-#  define AMASK   0x000000ff
+#  define RMASK   0xff000000 /**< Red bit mask. */
+#  define GMASK   0x00ff0000 /**< Green bit mask. */
+#  define BMASK   0x0000ff00 /**< Blue bit mask. */
+#  define AMASK   0x000000ff /**< Alpha bit mask. */
 #else
-#  define RMASK   0x000000ff
-#  define GMASK   0x0000ff00
-#  define BMASK   0x00ff0000
-#  define AMASK   0xff000000
+#  define RMASK   0x000000ff /**< Red bit mask. */
+#  define GMASK   0x0000ff00 /**< Green bit mask. */
+#  define BMASK   0x00ff0000 /**< Blue bit mask. */
+#  define AMASK   0xff000000 /**< Alpha bit mask. */
 #endif
 #define RGBAMASK  RMASK,GMASK,BMASK,AMASK
 
@@ -46,8 +45,6 @@
 #define OPENGL_FSAA        (1<<9) /**< Full Screen Anti Aliasing. */
 #define gl_has(f)    (gl_screen.flags & (f)) /**< Check for the flag */
 /**
- * @struct glInfo
- *
  * @brief Stores data about the current opengl environment.
  */
 typedef struct glInfo_ {
@@ -164,7 +161,7 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file );
 #if DEBUG == 1
 void gl_checkErr (void);
 #else /* DEBUG */
-#define gl_checkErr()
+#define gl_checkErr() /**< Hack to ignore errors when debugging. */
 #endif /* DEBUG */
 
 
