@@ -285,12 +285,14 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 {
    xmlNodePtr cur, node;
    ShipOutfit *otemp, *ocur;
-
-   char str[PATH_MAX] = "\0";
+   char str[PATH_MAX];
    char* stmp;
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Ship) );
+
+   /* Defaults. */
+   str[0] = '\0';
 
    /* Get name. */
    xmlr_attr(parent,"name",temp->name);
