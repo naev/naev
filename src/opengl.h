@@ -50,11 +50,15 @@
 typedef struct glInfo_ {
    int w; /**< Window viewport width. */
    int h; /**< Window viewport height. */
+   int nw; /**< Scaled window width. */
+   int nh; /**< Scaled window height. */
    int rw; /**< Real window width. */
    int rh; /**< Real window height. */
    double scale; /**< Scale factor. */
    double wscale; /**< Width scale factor. */
    double hscale; /**< Height scale factor. */
+   double mxscale; /**< Mouse X scale factor. */
+   double myscale; /**< Mouse y scale factor. */
    int depth; /**< Depth in bpp */
    int r; /**< How many red bits we have. */
    int g; /**< How many green bits we have. */

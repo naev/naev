@@ -1290,23 +1290,28 @@ int gl_init (void)
    /* Set up the proper viewport to use. */
    gl_screen.rw = SCREEN_W;
    gl_screen.rh = SCREEN_H;
+   gl_screen.nw = SCREEN_W;
+   gl_screen.nh = SCREEN_H;
    gl_screen.scale = 1.;
    if ((SCREEN_W < 600) && (SCREEN_W <= SCREEN_H)) {
       gl_screen.scale = (double)gl_screen.w / 600.;
       /* Must keep the proportion the same for the screen. */
-      gl_screen.w  = (gl_screen.w * 600) / SCREEN_H;
-      gl_screen.rw = (gl_screen.rw * SCREEN_H) / 600;
-      gl_screen.h  = 600;
+      gl_screen.h  = (gl_screen.h * 600) / SCREEN_W;
+      gl_screen.nh = (gl_screen.rh * SCREEN_W) / 600;
+      gl_screen.w  = 600;
    }
    else if ((SCREEN_H < 600) && (SCREEN_W >= SCREEN_H)) {
       gl_screen.scale = (double)gl_screen.h / 600.;
       /* Must keep the proportion the same for the screen. */
       gl_screen.w  = (gl_screen.w * 600) / SCREEN_H;
-      gl_screen.rw = (gl_screen.rw * SCREEN_H) / 600;
+      gl_screen.nw = (gl_screen.rw * SCREEN_H) / 600;
       gl_screen.h  = 600;
    }
-   gl_screen.wscale = (double)gl_screen.w / (double)gl_screen.rw;
-   gl_screen.hscale = (double)gl_screen.h / (double)gl_screen.rh;
+   /* Set scale factors. */
+   gl_screen.wscale = (double)gl_screen.nw / (double)gl_screen.w;
+   gl_screen.hscale = (double)gl_screen.nh / (double)gl_screen.h;
+   gl_screen.mxscale = (double)gl_screen.w / (double)gl_screen.rw;
+   gl_screen.myscale = (double)gl_screen.h / (double)gl_screen.rh;
    /* Handle setting the default viewport. */
    gl_defViewport();
 
@@ -1325,10 +1330,10 @@ void gl_defViewport (void)
 {
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
-   glOrtho( -SCREEN_W/2, /* left edge */
-         SCREEN_W/2, /* right edge */
-         -SCREEN_H/2, /* bottom edge */
-         SCREEN_H/2, /* top edge */
+   glOrtho( -(double)gl_screen.nw/2, /* left edge */
+         (double)gl_screen.nw/2, /* right edge */
+         -(double)gl_screen.nh/2, /* bottom edge */
+         (double)gl_screen.nh/2, /* top edge */
          -1., /* near */
          1. ); /* far */
    /* Take into account posible scaling. */

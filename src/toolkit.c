@@ -2008,13 +2008,16 @@ static void toolkit_mouseEvent( SDL_Event* event )
    Widget *wgt, *wgt_func;
 
    /* set mouse button status */
-   if (event->type==SDL_MOUSEBUTTONDOWN) mouse_down = 1;
-   else if (event->type==SDL_MOUSEBUTTONUP) mouse_down = 0;
+   if (event->type==SDL_MOUSEBUTTONDOWN)
+      mouse_down = 1;
+   else if (event->type==SDL_MOUSEBUTTONUP)
+      mouse_down = 0;
 
    /* absolute positions */
    if (event->type==SDL_MOUSEMOTION) {
+      /* Convert to local screen coords. */
       x = (double)event->motion.x;
-      y = SCREEN_H - (double)event->motion.y;
+      y = (double)gl_screen.rh - (double)event->motion.y;
       /* Create relative events. */
       rel_x = x - last_x;
       rel_y = y - last_y;
@@ -2023,9 +2026,14 @@ static void toolkit_mouseEvent( SDL_Event* event )
    }
    else if ((event->type==SDL_MOUSEBUTTONDOWN) || (event->type==SDL_MOUSEBUTTONUP)) {
       x = (double)event->button.x;
-      y = SCREEN_H - (double)event->button.y;
+      y = (double)gl_screen.rh - (double)event->button.y;
    }
 
+   /* Handle possible window scaling. */
+   x *= gl_screen.mxscale;
+   y *= gl_screen.myscale;
+
+   /* Get the window. */
    w = &windows[nwindows-1];
 
    /* always treat button ups to stop hanging states */
