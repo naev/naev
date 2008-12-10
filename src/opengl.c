@@ -1283,20 +1283,22 @@ int gl_init (void)
    gl_screen.rw = SCREEN_W;
    gl_screen.rh = SCREEN_H;
    gl_screen.scale = 1.;
-   if ((SCREEN_W < 640) && (SCREEN_W <= SCREEN_H)) {
-      gl_screen.scale = (double)gl_screen.w / 640.;
+   if ((SCREEN_W < 600) && (SCREEN_W <= SCREEN_H)) {
+      gl_screen.scale = (double)gl_screen.w / 600.;
       /* Must keep the proportion the same for the screen. */
-      gl_screen.w  = (gl_screen.w * 640) / SCREEN_H;
-      gl_screen.rw = (gl_screen.rw * SCREEN_H) / 640;
-      gl_screen.h  = 640;
+      gl_screen.w  = (gl_screen.w * 600) / SCREEN_H;
+      gl_screen.rw = (gl_screen.rw * SCREEN_H) / 600;
+      gl_screen.h  = 600;
    }
-   else if ((SCREEN_H < 640) && (SCREEN_W >= SCREEN_H)) {
-      gl_screen.scale = (double)gl_screen.h / 640.;
+   else if ((SCREEN_H < 600) && (SCREEN_W >= SCREEN_H)) {
+      gl_screen.scale = (double)gl_screen.h / 600.;
       /* Must keep the proportion the same for the screen. */
-      gl_screen.w  = (gl_screen.w * 640) / SCREEN_H;
-      gl_screen.rw = (gl_screen.rw * SCREEN_H) / 640;
-      gl_screen.h  = 640;
+      gl_screen.w  = (gl_screen.w * 600) / SCREEN_H;
+      gl_screen.rw = (gl_screen.rw * SCREEN_H) / 600;
+      gl_screen.h  = 600;
    }
+   gl_screen.wscale = (double)gl_screen.w / (double)gl_screen.rw;
+   gl_screen.hscale = (double)gl_screen.h / (double)gl_screen.rh;
    /* Handle setting the default viewport. */
    gl_defViewport();
 
@@ -1323,7 +1325,7 @@ void gl_defViewport (void)
          1. ); /* far */
    /* Take into account posible scaling. */
    if (gl_screen.scale != 1.)
-      glScaled( gl_screen.scale, gl_screen.scale, 1. );
+      glScaled( gl_screen.wscale, gl_screen.hscale, 1. );
 }
 
 

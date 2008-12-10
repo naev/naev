@@ -53,6 +53,8 @@ typedef struct glInfo_ {
    int rw; /**< Real window width. */
    int rh; /**< Real window height. */
    double scale; /**< Scale factor. */
+   double wscale; /**< Width scale factor. */
+   double hscale; /**< Height scale factor. */
    int depth; /**< Depth in bpp */
    int r; /**< How many red bits we have. */
    int g; /**< How many green bits we have. */
@@ -77,8 +79,6 @@ extern glInfo gl_screen; /* local structure set with gl_init and co */
 
 
 /**
- * @struct glTexture
- *
  * @brief Abstraction for rendering spriteshets.
  *
  * The basic unit all the graphic rendering works with.
