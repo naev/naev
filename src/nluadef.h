@@ -16,8 +16,13 @@
  * debug stuff
  */
 #ifndef NODEBUG
+#ifdef DEBUG_PARANOID
+#define NLUA_DEBUG(str, args...) \
+   (fprintf(stdout,"Lua: "str"\n", ## args), abort())
+#else /* DEBUG_PARANOID */
 #define NLUA_DEBUG(str, args...) \
    (fprintf(stdout,"Lua: "str"\n", ## args))
+#endif /* DEBUG_PARANOID */
 #define NLUA_INVALID_PARAMETER()    \
 { \
    NLUA_DEBUG("[%s] Invalid parameter (%s:%d)", __func__, __FILE__, __LINE__); \
