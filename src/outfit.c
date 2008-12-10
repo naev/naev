@@ -685,7 +685,8 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 
       if (xml_isNode(node,"gfx")) {
          temp->u.blt.gfx_space = xml_parseTexture( node,
-               OUTFIT_GFX"space/%s.png", 6, 6 );
+               OUTFIT_GFX"space/%s.png", 6, 6,
+               OPENGL_TEX_MAPTRANS );
          xmlr_attr(node, "spin", buf);
          if (buf != NULL) {
             outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
@@ -763,7 +764,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       /* Graphic stuff. */
       if (xml_isNode(node,"gfx")) {
          temp->u.bem.gfx = xml_parseTexture( node,
-               OUTFIT_GFX"space/%s.png", 1, 1 );
+               OUTFIT_GFX"space/%s.png", 1, 1, 0 );
          continue;
       }
       if (xml_isNode(node,"spfx_armour")) {
@@ -866,7 +867,8 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"energy",temp->u.amm.energy);
       if (xml_isNode(node,"gfx")) {
          temp->u.amm.gfx_space = xml_parseTexture( node,
-               OUTFIT_GFX"space/%s.png", 6, 6 );
+               OUTFIT_GFX"space/%s.png", 6, 6,
+               OPENGL_TEX_MAPTRANS );
          xmlr_attr(node, "spin", buf);
          if (buf != NULL) {
             outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
@@ -1103,7 +1105,6 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
 {
    xmlNodePtr cur, node;
    char *prop;
-   char str[PATH_MAX] = "\0";
 
    /* Clear data. */
    memset( temp, 0, sizeof(Outfit) );
@@ -1124,8 +1125,8 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
             xmlr_int(cur,"price",temp->price);
             xmlr_strd(cur,"description",temp->description);
             if (xml_isNode(cur,"gfx_store")) {
-               snprintf( str, PATH_MAX, OUTFIT_GFX"store/%s.png", xml_get(cur));
-               temp->gfx_store = gl_newImage(str);
+               temp->gfx_store = xml_parseTexture( cur,
+                     OUTFIT_GFX"store/%s.png", 1, 1, 0 );
             }
 
          } while (xml_nextNode(cur));

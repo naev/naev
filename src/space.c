@@ -898,7 +898,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"space")) { /* load space gfx */
                planet->gfx_space = xml_parseTexture( cur,
-                     PLANET_GFX_SPACE"%s", 1, 1 );
+                     PLANET_GFX_SPACE"%s", 1, 1, 0 );
             }
             else if (xml_isNode(cur,"exterior")) { /* load land gfx */
                len = strlen(xml_raw(cur)) + sizeof(PLANET_GFX_EXTERIOR);

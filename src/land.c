@@ -1394,7 +1394,7 @@ void land( Planet* p )
 
    /* Load stuff */
    land_planet = p;
-   gfx_exterior = gl_newImage( p->gfx_exterior );
+   gfx_exterior = gl_newImage( p->gfx_exterior, 0 );
    land_wid = window_create( p->name, -1, -1, LAND_WIDTH, LAND_HEIGHT );
    
    /*

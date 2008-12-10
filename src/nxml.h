@@ -93,7 +93,8 @@ if (xmlTextWriterEndDocument(w) < 0) { \
  * Functions for generic complex reading.
  */
 glTexture* xml_parseTexture( xmlNodePtr node,
-      const char *path, int defsx, int defsy );
+      const char *path, int defsx, int defsy,
+      const unsigned int flags );
 
 
 #endif /* XML_H */

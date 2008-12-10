@@ -500,7 +500,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
 
       if (xml_isNode(node,"logo")) {
          snprintf( buf, PATH_MAX, FACTION_LOGO_PATH"%s_small.png", xml_get(node));
-         temp->logo_small = gl_newImage(buf);
+         temp->logo_small = gl_newImage(buf, 0);
          continue;
       }
    } while (xml_nextNode(node));

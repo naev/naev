@@ -304,24 +304,25 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
          /* Load the base graphic */
          temp->gfx_space = xml_parseTexture( node,
-               SHIP_GFX"%s"SHIP_EXT, 6, 6);
+               SHIP_GFX"%s"SHIP_EXT, 6, 6,
+               OPENGL_TEX_MAPTRANS );
 
          /* Load the comm graphic. */
          temp->gfx_comm = xml_parseTexture( node,
-               SHIP_GFX"%s"SHIP_COMM SHIP_EXT, 1, 1);
+               SHIP_GFX"%s"SHIP_COMM SHIP_EXT, 1, 1, 0);
 
          /* Load the target graphic. */
          xmlr_attr(node,"target",stmp);
          if (stmp != NULL) {
             snprintf( str, PATH_MAX,
                   SHIP_GFX"%s"SHIP_TARGET SHIP_EXT, stmp);
-            temp->gfx_target = gl_newImage(str);
+            temp->gfx_target = gl_newImage(str, 0);
             free(stmp);
          }
          else { /* Load standard target graphic */
             snprintf( str, PATH_MAX,
                   SHIP_GFX"%s"SHIP_TARGET SHIP_EXT, xml_get(node));
-            temp->gfx_target = gl_newImage(str);
+            temp->gfx_target = gl_newImage(str, 0);
          }
       }
 

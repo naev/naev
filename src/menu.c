@@ -108,7 +108,7 @@ void menu_main (void)
    unsigned int bwid, wid;
    glTexture *tex;
 
-   tex = gl_newImage( "gfx/NAEV.png" );
+   tex = gl_newImage( "gfx/NAEV.png", 0 );
    nebu_prep( 300., 0. ); /* Needed for nebulae to not spaz out */
 
    /* create background image window */

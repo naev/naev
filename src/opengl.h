@@ -78,6 +78,11 @@ extern glInfo gl_screen; /* local structure set with gl_init and co */
 #define ACOLOUR(x,a) glColor4d((x).r,(x).g,(x).b,a) /**< Change colour and override alpha. */
 
 
+/*
+ * Texture flags.
+ */
+#define OPENGL_TEX_MAPTRANS   (1<<0)  /**< Create a transparency map. */
+
 /**
  * @brief Abstraction for rendering spriteshets.
  *
@@ -112,9 +117,10 @@ typedef struct glTexture_ {
  * glTexture loading / freeing
  */
 SDL_Surface* gl_prepareSurface( SDL_Surface* surface ); /* Only preps it */
-glTexture* gl_loadImage( SDL_Surface* surface ); /* frees the surface */
-glTexture* gl_newImage( const char* path );
-glTexture* gl_newSprite( const char* path, const int sx, const int sy );
+glTexture* gl_loadImage( SDL_Surface* surface ); /* Frees the surface. */
+glTexture* gl_newImage( const char* path, const unsigned int flags );
+glTexture* gl_newSprite( const char* path, const int sx, const int sy,
+      const unsigned int flags );
 void gl_freeTexture( glTexture* texture );
 
 /*

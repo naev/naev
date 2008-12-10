@@ -1742,13 +1742,13 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
    /* load gfx */
    /* frame */
    snprintf( buf, PATH_MAX, GUI_GFX"%s.png", tmp );
-   gui.gfx_frame = gl_newImage( buf );
+   gui.gfx_frame = gl_newImage( buf, 0 );
    /* pilot */
    snprintf( buf, PATH_MAX, GUI_GFX"%s_pilot.png", tmp );
-   gui.gfx_targetPilot = gl_newSprite( buf, 2, 2 );
+   gui.gfx_targetPilot = gl_newSprite( buf, 2, 2, 0 );
    /* planet */
    snprintf( buf, PATH_MAX, GUI_GFX"%s_planet.png", tmp );
-   gui.gfx_targetPlanet = gl_newSprite( buf, 2, 2 );
+   gui.gfx_targetPlanet = gl_newSprite( buf, 2, 2, 0 );
    free(tmp);
 
    /*
@@ -1814,7 +1814,7 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
                tmp = xml_get(cur);
                if (tmp != NULL) {
                   snprintf( buf, PATH_MAX, GUI_GFX"%s.png", tmp );
-                  gui.gfx_shield = gl_newImage( buf );
+                  gui.gfx_shield = gl_newImage( buf, 0 );
                }
                RELATIVIZE(gui.shield);
             }
@@ -1824,7 +1824,7 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
                tmp = xml_get(cur);
                if (tmp != NULL) {
                   snprintf( buf, PATH_MAX, GUI_GFX"%s.png", tmp );
-                  gui.gfx_armour = gl_newImage( buf );
+                  gui.gfx_armour = gl_newImage( buf, 0 );
                }
                RELATIVIZE(gui.armour);
             }
@@ -1834,7 +1834,7 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
                tmp = xml_get(cur);
                if (tmp != NULL) {
                   snprintf( buf, PATH_MAX, GUI_GFX"%s.png", tmp );
-                  gui.gfx_energy = gl_newImage( buf );
+                  gui.gfx_energy = gl_newImage( buf, 0 );
                }
                RELATIVIZE(gui.energy);
             }
@@ -1844,7 +1844,7 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
                tmp = xml_get(cur);
                if (tmp != NULL) {
                   snprintf( buf, PATH_MAX, GUI_GFX"%s.png", tmp );
-                  gui.gfx_fuel = gl_newImage( buf );
+                  gui.gfx_fuel = gl_newImage( buf, 0 );
                }
                RELATIVIZE(gui.fuel);
             }

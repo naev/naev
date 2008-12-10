@@ -328,7 +328,7 @@ void loadscreen_load (void)
 
    /* Load the texture */
    strncpy(file_path, loadscreens[RNG(0,nload-1)], PATH_MAX);
-   loading = gl_newImage( file_path );
+   loading = gl_newImage( file_path, 0 );
 
    /* Clean up. */
    free(loadscreens);

@@ -22,10 +22,12 @@
  *           "PREFIX%sSUFFIX".
  *    @param defsx Default X sprites.
  *    @param defsy Default Y sprites.
+ *    @param flags Image parameter control flags.
  *    @return The texture from the node or NULL if an error occurred.
  */
 glTexture* xml_parseTexture( xmlNodePtr node,
-      const char *path, int defsx, int defsy )
+      const char *path, int defsx, int defsy,
+      const unsigned int flags )
 {
    int sx, sy;
    char *buf, filename[PATH_MAX];
@@ -61,9 +63,9 @@ glTexture* xml_parseTexture( xmlNodePtr node,
 
    /* Load the graphic. */
    if ((sx == 1) && (sy == 1))
-      tex = gl_newImage( filename );
+      tex = gl_newImage( filename, flags );
    else
-      tex = gl_newSprite( filename, sx, sy );
+      tex = gl_newSprite( filename, sx, sy, flags );
 
    /* Return result. */
    return tex;

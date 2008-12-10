@@ -60,8 +60,8 @@ Vector2d* gl_camera; /**< Camera we are using. */
 /*
  * used to adjust the pilot's place onscreen to be in the middle even with the GUI
  */
-extern double gui_xoff;
-extern double gui_yoff;
+extern double gui_xoff; /**< GUI X offset. */
+extern double gui_yoff; /**< GUI Y offset. */
 
 /*
  * graphic list
@@ -86,7 +86,7 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y );
 static uint8_t* SDL_MapTrans( SDL_Surface* s );
 /* glTexture */
 static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh );
-static glTexture* gl_loadNewImage( const char* path );
+static glTexture* gl_loadNewImage( const char* path, unsigned int flags );
 static void gl_blitTexture( const glTexture* texture, 
       const double x, const double y,
       const double tx, const double ty, const glColour *c );
@@ -479,9 +479,10 @@ glTexture* gl_loadImage( SDL_Surface* surface )
  * May not necessarily load the image but use one if it's already open.
  *
  *    @param path Image to load.
+ *    @param flags Flags to control image parameters.
  *    @return Texture loaded from image.
  */
-glTexture* gl_newImage( const char* path )
+glTexture* gl_newImage( const char* path, const unsigned int flags )
 {
    glTexList *cur, *last;
 
@@ -502,7 +503,7 @@ glTexture* gl_newImage( const char* path )
    cur->used = 1;
 
    /* Load the image */
-   cur->tex = gl_loadNewImage(path);
+   cur->tex = gl_loadNewImage(path, flags);
 
    if (texture_list == NULL) /* special condition - creating new list */
       texture_list = cur;
@@ -517,9 +518,10 @@ glTexture* gl_newImage( const char* path )
  * @brief Only loads the image, does not add to stack unlike gl_newImage.
  *
  *    @param path Image to load.
+ *    @param flags Flags to control image parameters.
  *    @return Texture loaded from image.
  */
-static glTexture* gl_loadNewImage( const char* path )
+static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
 {
    SDL_Surface *temp, *surface;
    glTexture* t;
@@ -557,9 +559,13 @@ static glTexture* gl_loadNewImage( const char* path )
    }
 
    /* do after flipping for collision detection */
-   SDL_LockSurface(surface);
-   trans = SDL_MapTrans(surface);
-   SDL_UnlockSurface(surface);
+   if (flags & OPENGL_TEX_MAPTRANS) {
+      SDL_LockSurface(surface);
+      trans = SDL_MapTrans(surface);
+      SDL_UnlockSurface(surface);
+   }
+   else
+      trans = NULL;
 
    /* set the texture */
    t = gl_loadImage(surface);
@@ -575,12 +581,14 @@ static glTexture* gl_loadNewImage( const char* path )
  *    @param path Image to load.
  *    @param sx Number of X sprites in image.
  *    @param sy Number of Y sprites in image.
+ *    @param flags Flags to control image parameters.
  *    @return Texture loaded.
  */
-glTexture* gl_newSprite( const char* path, const int sx, const int sy )
+glTexture* gl_newSprite( const char* path, const int sx, const int sy,
+      const unsigned int flags )
 {
    glTexture* texture;
-   if ((texture = gl_newImage(path)) == NULL)
+   if ((texture = gl_newImage(path, flags)) == NULL)
       return NULL;
 
    /* will possibly overwrite an existing textur properties
