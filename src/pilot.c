@@ -582,17 +582,16 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
          dam_mod = damage_armour/p->armour_max;
 
          if (p->id == PLAYER_ID) /* a bit of shaking */
-            spfx_shake( dam_mod*100. );
+            spfx_shake( SHAKE_MAX*dam_mod );
       }
    }
 
 
-   if (shooter != 0)
-      /* knock back effect is dependent on both damage and mass of the weapon 
-       * should probably get turned into a partial conservative collision */
-      vect_cadd( &p->solid->vel,
-            knockback * (w->vel.x * (dam_mod/6. + w->mass/p->solid->mass/6.)),
-            knockback * (w->vel.y * (dam_mod/6. + w->mass/p->solid->mass/6.)) );
+   /* knock back effect is dependent on both damage and mass of the weapon 
+    * should probably get turned into a partial conservative collision */
+   vect_cadd( &p->solid->vel,
+         knockback * (w->vel.x * (dam_mod/6. + w->mass/p->solid->mass/6.)),
+         knockback * (w->vel.y * (dam_mod/6. + w->mass/p->solid->mass/6.)) );
 }
 
 
@@ -822,12 +821,15 @@ void pilot_explode( double x, double y, double radius,
       if (dist < rad2) {
 
          /* Impact settings. */
-         s.mass = (rad2 - dist) / 10.;
+         s.mass =  pow2(damage) * sqrt(rad2 - dist) / 30.;
          s.vel.x = rx;
          s.vel.y = ry;
 
          /* Actual damage calculations. */
          pilot_hit( p, &s, parent, dtype, damage );
+
+         /* Shock wave from the explosion. */
+         spfx_shake( pow2(damage) / pow2(100.) * SHAKE_MAX );
       }
    }
 }
@@ -987,7 +989,7 @@ static void pilot_update( Pilot* pilot, const double dt )
                pilot->afterburner->outfit->u.afb.speed_abs, dt );
 
          if (pilot->id == PLAYER_ID)
-            spfx_shake( SHAKE_DECAY*0.75 * dt); /* shake goes down at half speed */
+            spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
 
          pilot->energy -= pilot->afterburner->outfit->u.afb.energy * dt; /* energy loss */
       }

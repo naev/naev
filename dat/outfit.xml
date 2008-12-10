@@ -409,7 +409,7 @@
    <gfx_store>afterburner</gfx_store>
   </general>
   <specific type="afterburner">
-   <rumble>30</rumble>
+   <rumble>0.5</rumble>
    <sound>afterburner</sound>
    <thrust_perc>100</thrust_perc>
    <thrust_abs>50</thrust_abs>
@@ -428,7 +428,7 @@
    <gfx_store>afterburner2</gfx_store>
   </general>
   <specific type="afterburner">
-   <rumble>50</rumble>
+   <rumble>0.9</rumble>
    <sound>afterburner</sound>
    <thrust_perc>185</thrust_perc>
    <thrust_abs>100</thrust_abs>

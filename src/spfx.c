@@ -26,8 +26,7 @@
 
 #define SPFX_CHUNK      32 /**< chunk to alloc when needed */
 
-#define SHAKE_VEL_MOD   0.0006 /**< Shake modifier. */
-#define SHAKE_MOD_FACTOR 0.2 /**< Shake modifier factor. */
+#define SHAKE_VEL_MOD   0.0008 /**< Shake modifier. */
 
 
 /*
@@ -370,7 +369,7 @@ void spfx_start( const double dt )
          }
 
          /* the shake decays over time */
-         shake_rad -= SHAKE_DECAY*dt*SHAKE_MOD_FACTOR;
+         shake_rad -= SHAKE_DECAY*dt;
          if (shake_rad < 0.) shake_rad = 0.;
 
          x = shake_pos.x;
@@ -400,7 +399,7 @@ void spfx_start( const double dt )
  */
 void spfx_shake( double mod )
 {
-   shake_rad += mod*SHAKE_MOD_FACTOR;
+   shake_rad += mod;
    if (shake_rad > SHAKE_MAX) shake_rad = SHAKE_MAX;
    shake_off = 0;
 
