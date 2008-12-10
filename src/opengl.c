@@ -365,17 +365,24 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
    return surface;
 }
 
-/*
- * returns the texture ID
- * stores real sizes in rw/rh (from POT padding)
+/**
+ * @brief Loads a surface into an opengl texture.
+ *
+ *    @param surface Surface to load into a texture.
+ *    @param[out] rw Real width of the texture.
+ *    @param[out] rh Real height of the texture.
+ *    @return The opengl texture id.
  */
 static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
 {
    GLuint texture;
 
+   /* Prepare the surface. */
    surface = gl_prepareSurface( surface );
-   if (rw != NULL) (*rw) = surface->w;
-   if (rh != NULL) (*rh) = surface->h;
+   if (rw != NULL)
+      (*rw) = surface->w;
+   if (rh != NULL) 
+      (*rh) = surface->h;
 
    /* opengl texture binding */
    glGenTextures( 1, &texture ); /* Creates the texture */
@@ -383,10 +390,14 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
 
    /* Filtering, LINEAR is better for scaling, nearest looks nicer, LINEAR
     * also seems to create a bit of artifacts around the edges */
-   /* glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);*/
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+   if (gl_screen.scale != 1.) {
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+   }
+   else {
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+   }
 
    /* Always wrap just in case. */
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -405,8 +416,11 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
    return texture;
 }
 
-/*
- * loads the SDL_Surface to an opengl texture
+/**
+ * @brief Loads the SDL_Surface to a glTexture.
+ *
+ *    @param surface Surface to load.
+ *    @return The glTexture for surface.
  */
 glTexture* gl_loadImage( SDL_Surface* surface )
 {
@@ -433,8 +447,13 @@ glTexture* gl_loadImage( SDL_Surface* surface )
 }
 
 
-/*
- * loads image if not loaded already
+/**
+ * @brief Loads an image as a texture.
+ *
+ * May not necessarily load the image but use one if it's already open.
+ *
+ *    @param path Image to load.
+ *    @return Texture loaded from image.
  */
 glTexture* gl_newImage( const char* path )
 {
@@ -468,14 +487,17 @@ glTexture* gl_newImage( const char* path )
 }
 
 
-/*
- * loads the image as an opengl texture directly
+/**
+ * @brief Only loads the image, does not add to stack unlike gl_newImage.
+ *
+ *    @param path Image to load.
+ *    @return Texture loaded from image.
  */
 static glTexture* gl_loadNewImage( const char* path )
 {
    SDL_Surface *temp, *surface;
    glTexture* t;
-   uint8_t* trans = NULL;
+   uint8_t* trans;
    uint32_t filesize;
    char *buf;
 
@@ -521,8 +543,13 @@ static glTexture* gl_loadNewImage( const char* path )
 }
 
 
-/*
- * Loads the texture immediately, but also sets it as a sprite
+/**
+ * @brief Loads the texture immediately, but also sets it as a sprite.
+ *
+ *    @param path Image to load.
+ *    @param sx Number of X sprites in image.
+ *    @param sy Number of Y sprites in image.
+ *    @return Texture loaded.
  */
 glTexture* gl_newSprite( const char* path, const int sx, const int sy )
 {
@@ -540,8 +567,10 @@ glTexture* gl_newSprite( const char* path, const int sx, const int sy )
 }
 
 
-/*
- * frees the texture
+/**
+ * @brief Frees a texture.
+ *
+ *    @param texture Texture to free.
  */
 void gl_freeTexture( glTexture* texture )
 {
@@ -595,8 +624,13 @@ void gl_freeTexture( glTexture* texture )
 }
 
 
-/*
- * returns true if pixel at pos (x,y) is transparent
+/**
+ * @brief Checks to see if a pixel is transparent in a texture.
+ *
+ *    @param t Texture to check for transparency.
+ *    @param x X position of the pixel.
+ *    @param y Y position of the pixel.
+ *    @return 1 if the pixel is transparent or 0 if it isn't.
  */
 int gl_isTrans( const glTexture* t, const int x, const int y )
 {
@@ -604,10 +638,16 @@ int gl_isTrans( const glTexture* t, const int x, const int y )
 }
 
 
-/*
- * sets x and y to be the appropriate sprite for glTexture using dir
+/**
+ * @brief Sets x and y to be the appropriate sprite for glTexture using dir.
  *
- * gprof claims to be second slowest thing in the game
+ * Very slow, try to cache if possible like the pilots do instead of using
+ *  in O(n^2) or worse functions.
+ *
+ *    @param[out] x X sprite to use.
+ *    @param[out] y Y sprite to use.
+ *    @param t Texture to get sprite from.
+ *    @param dir Direction to get sprite from.
  */
 void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 {
@@ -619,7 +659,8 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 
    /* real dir is slightly moved downwards */
    rdir = dir + shard/2.;
-   if (rdir < 0.) rdir = 0.;
+   if (rdir < 0.)
+      rdir = 0.;
   
    /* now calculate the sprite we need */
    s = (int)(rdir / shard);
@@ -627,7 +668,8 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
    sy = t->sy;
 
    /* makes sure the sprite is "in range" */
-   if (s > (sy*sx-1)) s = s % (sy*sx);
+   if (s > (sy*sx-1))
+      s = s % (sy*sx);
 
    (*x) = s % sx;
    (*y) = s / sx;
@@ -639,6 +681,16 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
  *
  * B L I T T I N G
  *
+ */
+/**
+ * @brief Blits a texture.
+ *
+ *    @param texture Texture to blit.
+ *    @param x X position of the texture on the screen.
+ *    @param y Y position of the texture on the screen.
+ *    @param tx X position within the texture.
+ *    @param ty Y position within the texture.
+ *    @param c Colour to use (modifies texture colour).
  */
 static void gl_blitTexture( const glTexture* texture,
       const double x, const double y,
@@ -674,8 +726,15 @@ static void gl_blitTexture( const glTexture* texture,
    /* anything failed? */
    gl_checkErr();
 }
-/*
- * blits a sprite at pos (blits relative to player)
+/**
+ * @brief Blits a sprite, position is relative to the player.
+ *
+ *    @param texture Sprite to blit.
+ *    @param bx X position of the texture relative to the player.
+ *    @param by Y position of the texture relative to the player.
+ *    @param sx X position of the sprite to use.
+ *    @param sy Y position of the sprite to use.
+ *    @param c Colour to use (modifies texture colour).
  */
 void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
       const int sx, const int sy, const glColour* c )
@@ -697,8 +756,15 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
 
    gl_blitTexture( sprite, x, y, tx, ty, c );
 }
-/*
- * blits the sprite at pos (blits absolute pos)
+/**
+ * @brief Blits a sprite, position is in absolute screen coordinates.
+ *
+ *    @param texture Sprite to blit.
+ *    @param bx X position of the texture in screen coordinates.
+ *    @param by Y position of the texture in screen coordinates.
+ *    @param sx X position of the sprite to use.
+ *    @param sy Y position of the sprite to use.
+ *    @param c Colour to use (modifies texture colour).
  */
 void gl_blitStaticSprite( const glTexture* sprite, const double bx, const double by,
       const int sx, const int sy, const glColour* c )
@@ -717,8 +783,15 @@ void gl_blitStaticSprite( const glTexture* sprite, const double bx, const double
 }
 
 
-/*
- * Like gl_blitStatic but scales to size
+/**
+ * @brief Blits a texture scaling it.
+ *
+ *    @param texture Texture to blit.
+ *    @param bx X position of the texture in screen coordinates.
+ *    @param by Y position of the texture in screen coordinates.
+ *    @param bw Width to scale to.
+ *    @param bh Height to scale to.
+ *    @param c Colour to use (modifies texture colour).
  */
 void gl_blitScale( const glTexture* texture,
       const double bx, const double by,     
@@ -762,8 +835,13 @@ void gl_blitScale( const glTexture* texture,
    gl_checkErr();
 }
 
-/*
- * straight out blits a texture at position
+/**
+ * @brief Blits a texture to a position
+ *
+ *    @param texture Texture to blit.
+ *    @param bx X position of the texture in screen coordinates.
+ *    @param by Y position of the texture in screen coordinates.
+ *    @param c Colour to use (modifies texture colour).
  */
 void gl_blitStatic( const glTexture* texture, 
       const double bx, const double by, const glColour* c )
@@ -779,17 +857,26 @@ void gl_blitStatic( const glTexture* texture,
 }
 
 
-/*
- * Binds the camero to a vector
+/**
+ * @brief Binds the camera to a vector.
+ *
+ * All stuff displayed with relative functions will be affected by the camera's
+ *  position.  Does not affect stuff in screen coordinates.
+ *
+ *    @param pos Vector to use as camera.
  */
-void gl_bindCamera( const Vector2d* pos )
+void gl_bindCamera( Vector2d* pos )
 {
-   gl_camera = (Vector2d*)pos;
+   gl_camera = pos;
 }
 
 
-/*
- * draws a circle
+/**
+ * @brief Draws a circle.
+ *
+ *    @param cx X position of the center in screen coordinates..
+ *    @param cy Y position of the center in screen coordinates.
+ *    @param r Radius of the circle.
  */
 void gl_drawCircle( const double cx, const double cy, const double r )
 {
@@ -841,12 +928,23 @@ void gl_drawCircle( const double cx, const double cy, const double r )
 }
 
 
-/*
- * draws a circle in a rect
+/**
+ * @brief Only displays the pixel if it's in the screen.
  */
 #define PIXEL(x,y)   \
-if ((x>rx)&&(y>ry)&&(x<rxw)&&(y<ryh))  \
+if ((x>rx) && (y>ry) && (x<rxw) && (y<ryh))  \
    glVertex2d(x,y)
+/**
+ * @brief Draws a circle in a rectangle.
+ *
+ *    @param cx X position of the center in screen coordinates..
+ *    @param cy Y position of the center in screen coordinates.
+ *    @param r Radius of the circle.
+ *    @param rx X position of the rectangle limiting the circle in screen coords.
+ *    @param ry Y position of the rectangle limiting the circle in screen coords.
+ *    @param rw Width of the limiting rectangle.
+ *    @param rh Height of the limiting rectangle.
+ */
 void gl_drawCircleInRect( const double cx, const double cy, const double r,
       const double rx, const double ry, const double rw, const double rh )
 {
@@ -1074,7 +1172,7 @@ int gl_init (void)
       }
    }
    
-   /* test the setup - aim for 32 */
+   /* Test the setup - aim for 32. */
    gl_screen.depth = 32;
    depth = SDL_VideoModeOK( SCREEN_W, SCREEN_H, gl_screen.depth, flags);
    if (depth == 0)
@@ -1082,11 +1180,10 @@ int gl_init (void)
            "   going to try to create it anyways...",
             SCREEN_W, SCREEN_H, gl_screen.depth );
    if (depth != gl_screen.depth)
-      LOG("Depth %d bpp unavailable, will use %d bpp", gl_screen.depth, depth);
-
+      DEBUG("Depth %d bpp unavailable, will use %d bpp", gl_screen.depth, depth);
    gl_screen.depth = depth;
 
-   /* actually creating the screen */
+   /* Actually creating the screen. */
    if (SDL_SetVideoMode( SCREEN_W, SCREEN_H, gl_screen.depth, flags)==NULL) {
       /* Try again possibly disabling FSAA. */
       if (gl_has(OPENGL_FSAA)) {
@@ -1108,7 +1205,9 @@ int gl_init (void)
    SDL_GL_GetAttribute( SDL_GL_ALPHA_SIZE, &gl_screen.a );
    SDL_GL_GetAttribute( SDL_GL_DOUBLEBUFFER, &doublebuf );
    SDL_GL_GetAttribute( SDL_GL_MULTISAMPLESAMPLES, &fsaa);
-   if (doublebuf) gl_screen.flags |= OPENGL_DOUBLEBUF;
+   if (doublebuf)
+      gl_screen.flags |= OPENGL_DOUBLEBUF;
+   /* Calculate real depth. */
    gl_screen.depth = gl_screen.r + gl_screen.g + gl_screen.b + gl_screen.a;
 
    /* Get info about some extensions */
@@ -1130,7 +1229,7 @@ int gl_init (void)
          fsaa, gl_screen.tex_max);
    DEBUG("Renderer: %s", glGetString(GL_RENDERER));
    DEBUG("Version: %s", glGetString(GL_VERSION));
-   /* Now check for things that can be bad */
+   /* Now check for things that can be bad. */
    if (gl_screen.multitex_max < OPENGL_REQ_MULTITEX)
       WARN("Missing texture units (%d required, %d found)",
             OPENGL_REQ_MULTITEX, gl_screen.multitex_max );
@@ -1141,35 +1240,41 @@ int gl_init (void)
       DEBUG("No fragment shader extension detected"); /* Not a warning yet... */
    DEBUG("");
 
-   /* some OpenGL options */
+   /* Some OpenGL options. */
    glClearColor( 0., 0., 0., 1. );
 
-   /* enable/disable */
+   /* Set default opengl state. */
    glDisable( GL_DEPTH_TEST ); /* set for doing 2d */
 /* glEnable(  GL_TEXTURE_2D ); never enable globally, breaks non-texture blits */
    glDisable( GL_LIGHTING ); /* no lighting, it's done when rendered */
    glEnable(  GL_BLEND ); /* alpha blending ftw */
 
-   /* models */
+   /* Set the blending/shading model to use. */
    glShadeModel( GL_FLAT ); /* default shade model, functions should keep this when done */
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* good blend model */
 
    /* Set up the proper viewport to use. */
    gl_screen.rw = SCREEN_W;
    gl_screen.rh = SCREEN_H;
+   gl_screen.scale = 1.;
    if ((SCREEN_W < 640) && (SCREEN_W <= SCREEN_H)) {
+      gl_screen.scale = (double)gl_screen.w / 640.;
+      /* Must keep the proportion the same for the screen. */
       gl_screen.w  = (gl_screen.w * 640) / SCREEN_H;
       gl_screen.rw = (gl_screen.rw * SCREEN_H) / 640;
       gl_screen.h  = 640;
    }
    else if ((SCREEN_H < 640) && (SCREEN_W >= SCREEN_H)) {
+      gl_screen.scale = (double)gl_screen.h / 640.;
+      /* Must keep the proportion the same for the screen. */
       gl_screen.w  = (gl_screen.w * 640) / SCREEN_H;
       gl_screen.rw = (gl_screen.rw * SCREEN_H) / 640;
       gl_screen.h  = 640;
    }
+   /* Handle setting the default viewport. */
    gl_defViewport();
 
-   /* finishing touches */
+   /* Finishing touches. */
    glClear( GL_COLOR_BUFFER_BIT ); /* must clear the buffer first */
    gl_checkErr();
 
@@ -1177,8 +1282,8 @@ int gl_init (void)
 }
 
 
-/*
- * Resets viewport to default
+/**
+ * @brief Resets viewport to default
  */
 void gl_defViewport (void)
 {
@@ -1191,8 +1296,8 @@ void gl_defViewport (void)
          -1., /* near */
          1. ); /* far */
    /* Take into account posible scaling. */
-   glScaled( (double)gl_screen.w / (double)gl_screen.rw,
-         (double)gl_screen.h / (double)gl_screen.rh, 1. );
+   if (gl_screen.scale != 1.)
+      glScaled( gl_screen.scale, gl_screen.scale, 1. );
 }
 
 

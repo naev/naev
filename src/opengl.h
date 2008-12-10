@@ -55,6 +55,7 @@ typedef struct glInfo_ {
    int h; /**< Window viewport height. */
    int rw; /**< Real window width. */
    int rh; /**< Real window height. */
+   double scale; /**< Scale factor. */
    int depth; /**< Depth in bpp */
    int r; /**< How many red bits we have. */
    int g; /**< How many green bits we have. */
@@ -138,7 +139,7 @@ void gl_blitScale( const glTexture* texture,
 void gl_blitStatic( const glTexture* texture,
       const double bx, const double by, const glColour *c );
 /* binds the camera to a vector */
-void gl_bindCamera( const Vector2d* pos );
+void gl_bindCamera( Vector2d* pos );
 /* circle drawing */
 void gl_drawCircle( const double x, const double y, const double r );
 void gl_drawCircleInRect( const double x, const double y, const double r,
