@@ -38,8 +38,6 @@
  * Author: Vega Strike, License: GPLv2
    * outfit
      * space
-       * beam_orion.png (modified by Bobbens)
-       * beam_ragnarok.png (modified by Bobbens)
        * ion.png
        * laserred.png
        * mass.png
@@ -204,6 +202,8 @@
        * empgrenadelauncher.png
      * space
        * empgrenade.png
+       * beam_orion.png
+       * beam_ragnarok.png
    * gfx
      * spfx
        * emps.png
