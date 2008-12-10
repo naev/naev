@@ -876,16 +876,14 @@ static int planets_load ( void )
  */
 static int planet_parse( Planet *planet, const xmlNodePtr parent )
 {
-   int i;
+   int i, mem;
    char str[PATH_MAX];
    xmlNodePtr node, cur, ccur;
-   int len;
    unsigned int flags;
 
    /* Clear up memory for sane defaults. */
    memset( planet, 0, sizeof(Planet) );
    planet->faction = -1;
-   str[0] = '\0';
    flags = 0;
 
    /* Get the name. */
@@ -901,9 +899,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                      PLANET_GFX_SPACE"%s", 1, 1, 0 );
             }
             else if (xml_isNode(cur,"exterior")) { /* load land gfx */
-               len = strlen(xml_raw(cur)) + sizeof(PLANET_GFX_EXTERIOR);
-               planet->gfx_exterior = malloc( len );
-               snprintf( planet->gfx_exterior, len, PLANET_GFX_EXTERIOR"%s", xml_get(cur));
+               snprintf( str, PATH_MAX, PLANET_GFX_EXTERIOR"%s", xml_get(cur));
+               planet->gfx_exterior = strdup(str);
             }
          } while (xml_nextNode(cur));
       }
@@ -961,15 +958,23 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
 
             else if (xml_isNode(cur, "commodities")) {
                ccur = cur->children;
+               mem = 0;
                do {
                   if (xml_isNode(ccur,"commodity")) {
-                     planet->commodities = realloc(planet->commodities,
-                           (planet->ncommodities+1) * sizeof(Commodity*));
-                     planet->commodities[planet->ncommodities] =
-                        commodity_get( xml_get(ccur) );
                      planet->ncommodities++;
+                     /* Memory must grow. */
+                     if (planet->ncommodities > mem) {
+                        mem += CHUNK_SIZE_SMALL;
+                        planet->commodities = realloc(planet->commodities,
+                              mem * sizeof(Commodity*));
+                     }
+                     planet->commodities[planet->ncommodities-1] =
+                        commodity_get( xml_get(ccur) );
                   }
                } while (xml_nextNode(ccur));
+               /* Shrink to minimum size. */
+               planet->commodities = realloc(planet->commodities,
+                     planet->ncommodities * sizeof(Commodity*));
             }
          } while(xml_nextNode(cur));
       }
