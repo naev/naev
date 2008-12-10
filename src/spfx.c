@@ -26,7 +26,7 @@
 
 #define SPFX_CHUNK      32 /**< chunk to alloc when needed */
 
-#define SHAKE_VEL_MOD   0.0012 /**< Shake modifier. */
+#define SHAKE_VEL_MOD   0.0006 /**< Shake modifier. */
 #define SHAKE_MOD_FACTOR 0.2 /**< Shake modifier factor. */
 
 
