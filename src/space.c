@@ -620,7 +620,7 @@ void space_update( const double dt )
          if (interference_timer < 0.) {
             interference_timer += (1000. - cur_system->interference) / 1000. *
                   (3. + NormalInverse( 0.25 + 0.95*RNGF() ));
-            interference_target = cur_system->interference/1000. * 3. *
+            interference_target = cur_system->interference/1000. * 2. *
                   (1. + NormalInverse( 0.25 + 0.95*RNGF() ));
          }
 
