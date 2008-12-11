@@ -216,7 +216,7 @@
   </general>
   <specific type="missile seek" secondary="1">
    <ammo>Seeker Missile</ammo>
-   <delay>1200</delay>
+   <delay>1800</delay>
   </specific>
  </outfit>
  <outfit name="Seeker Missile">
@@ -253,7 +253,7 @@
   </general>
   <specific type="missile smart" secondary="1">
    <ammo>Headhunter</ammo>
-   <delay>1400</delay>
+   <delay>2200</delay>
   </specific>
  </outfit>
  <outfit name="Headhunter">
