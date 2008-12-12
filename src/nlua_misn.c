@@ -351,13 +351,15 @@ static int misn_runTopStack( Mission *misn, char *func)
 {
    int i, ret;
    char* err;
+   lua_State *L;
 
    cur_mission = misn;
    misn_delete = 0;
+   L = misn->L;
 
-   ret = lua_pcall(misn->L, 0, 0, 0);
+   ret = lua_pcall(L, 0, 0, 0);
    if (ret != 0) { /* error has occured */
-      err = (lua_isstring(misn->L,-1)) ? (char*) lua_tostring(misn->L,-1) : NULL;
+      err = (lua_isstring(L,-1)) ? (char*) lua_tostring(L,-1) : NULL;
       if (strcmp(err,"Mission Done")!=0)
          WARN("Mission '%s' -> '%s': %s",
                cur_mission->data->name, func, (err) ? err : "unknown error");
