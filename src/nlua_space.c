@@ -49,6 +49,7 @@ static int planetL_services( lua_State *L );
 static int planetL_position( lua_State *L );
 static const luaL_reg planet_methods[] = {
    { "__eq", planetL_eq },
+   { "__tostring", planetL_name },
    { "name", planetL_name },
    { "faction", planetL_faction },
    { "class", planetL_class },
@@ -64,6 +65,7 @@ static int systemL_faction( lua_State *L );
 static int systemL_jumpdistance( lua_State *L );
 static const luaL_reg system_methods[] = {
    { "__eq", systemL_eq },
+   { "__tostring", systemL_name },
    { "name", systemL_name },
    { "faction", systemL_faction },
    { "jumpDist", systemL_jumpdistance },

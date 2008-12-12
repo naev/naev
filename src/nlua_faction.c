@@ -37,6 +37,7 @@ static int factionL_modplayerraw( lua_State *L );
 static int factionL_playerstanding( lua_State *L );
 static const luaL_reg faction_methods[] = {
    { "__eq", factionL_eq },
+   { "__tostring", factionL_name },
    { "name", factionL_name },
    { "longname", factionL_longname },
    { "areEnemies", factionL_areenemies },
@@ -48,6 +49,7 @@ static const luaL_reg faction_methods[] = {
 }; /**< Faction metatable methods. */
 static const luaL_reg faction_methods_cond[] = {
    { "__eq", factionL_eq },
+   { "__tostring", factionL_name },
    { "name", factionL_name },
    { "longname", factionL_longname },
    { "areEnemies", factionL_areenemies },
