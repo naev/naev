@@ -103,6 +103,9 @@ static int factionL_createmetatable( lua_State *L, int readonly )
    /* Register the values */
    luaL_register(L, NULL, (readonly) ? faction_methods_cond : faction_methods);
 
+   /* Clean up. */
+   lua_pop(L,1);
+
    return 0; /* No error */
 }
 

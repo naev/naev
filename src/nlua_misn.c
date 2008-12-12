@@ -355,7 +355,8 @@ static int misn_runTopStack( Mission *misn, char *func)
    cur_mission = misn;
    misn_delete = 0;
 
-   if ((ret = lua_pcall(misn->L, 0, 0, 0))) { /* error has occured */
+   ret = lua_pcall(misn->L, 0, 0, 0);
+   if (ret != 0) { /* error has occured */
       err = (lua_isstring(misn->L,-1)) ? (char*) lua_tostring(misn->L,-1) : NULL;
       if (strcmp(err,"Mission Done")!=0)
          WARN("Mission '%s' -> '%s': %s",

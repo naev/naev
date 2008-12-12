@@ -151,6 +151,9 @@ static int planetL_createmetatable( lua_State *L )
    /* Register the values */
    luaL_register(L, NULL, planet_methods);
 
+   /* Clean up. */
+   lua_pop(L,1);
+
    return 0; /* No error */
 }
 /**
@@ -171,6 +174,9 @@ static int systemL_createmetatable( lua_State *L )
    /* Register the values */
    luaL_register(L, NULL, system_methods);
 
+   /* Clean up. */
+   lua_pop(L,1);
+
    return 0; /* No error */
 }
 /**
@@ -190,6 +196,9 @@ static int vectorL_createmetatable( lua_State *L )
 
    /* Register the values */
    luaL_register(L, NULL, vector_methods);
+
+   /* Clean up. */
+   lua_pop(L,1);
 
    return 0; /* No error */
 }
