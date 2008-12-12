@@ -312,6 +312,7 @@ static void ai_setMemory (void)
    lua_pushnumber(L, cur_pilot->id);
    lua_gettable(L, -2);
    lua_setglobal(L, "mem");
+   lua_pop(L,1);
 }
 
 
@@ -387,6 +388,7 @@ int ai_pinit( Pilot *p, char *ai )
    lua_pushnumber(L, p->id);
    lua_newtable(L);
    lua_settable(L,-3);
+   lua_pop(L,1);
 
    /* Create the pilot. */
    ai_create( p, (n!=0) ? param : NULL );
@@ -410,6 +412,7 @@ void ai_destroy( Pilot* p )
    lua_pushnumber(L, p->id);
    lua_pushnil(L);
    lua_settable(L,-3);
+   lua_pop(L,1);
 
    /* Clean up tasks. */
    if (p->task)
@@ -562,12 +565,12 @@ void ai_think( Pilot* pilot )
    pilot_flags = 0;
    cur_pilot->target = cur_pilot->id;
 
-   
    /* control function if pilot is idle or tick is up */
    if ((cur_pilot->tcontrol < 0.) || (cur_pilot->task == NULL)) {
       ai_run(L, "control"); /* run control */
       lua_getglobal(L,"control_rate");
       cur_pilot->tcontrol = lua_tonumber(L,-1);
+      lua_pop(L,1);;
    }
 
    /* pilot has a currently running task */

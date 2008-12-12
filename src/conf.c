@@ -30,14 +30,14 @@ lua_getglobal(L,n); \
 if (lua_isnumber(L, -1)) { \
    i = (int)lua_tonumber(L, -1); \
 } \
-lua_remove(L,-1);
+lua_pop(L,1);
 
 #define  conf_loadFloat(n,f)    \
 lua_getglobal(L,n); \
 if (lua_isnumber(L, -1)) { \
    f = (double)lua_tonumber(L, -1); \
 } \
-lua_remove(L,-1);
+lua_pop(L,1);
 
 #define  conf_loadBool(n,b)   \
 lua_getglobal(L, n); \
@@ -47,14 +47,14 @@ if (lua_isnumber(L, -1)) { \
 } \
 else if (lua_isboolean(L, -1)) \
    b = lua_toboolean(L, -1); \
-lua_remove(L,-1);
+lua_pop(L,1);
 
 #define  conf_loadString(n,s) \
    lua_getglobal(L, n); \
 if (lua_isstring(L, -1)) { \
    s = strdup((char*)lua_tostring(L, -1));   \
 } \
-lua_remove(L,-1);
+lua_pop(L,1);
 
 
 /* from main.c */
@@ -143,7 +143,7 @@ int conf_loadConfig ( const char* file )
       lua_getglobal(L, "data");
       if (lua_isstring(L, -1))
          ndata_setPath( (char*)lua_tostring(L, -1) );
-      lua_remove(L,-1);
+      lua_pop(L,1);
 
       /*
        * opengl properties
@@ -221,7 +221,7 @@ int conf_loadConfig ( const char* file )
          indjoystick = (int)lua_tonumber(L, -1);
       else if (lua_isstring(L, -1))
          namjoystick = strdup((char*)lua_tostring(L, -1));
-      lua_remove(L,-1);
+      lua_pop(L,1);
 
 
       /*
@@ -243,7 +243,7 @@ int conf_loadConfig ( const char* file )
                WARN("Found keybind with invalid type field!");
                str = "null";
             }
-            lua_remove(L, -1);
+            lua_pop(L,1);
 
             /* gets the key */
             lua_pushstring(L, "key");
@@ -260,7 +260,7 @@ int conf_loadConfig ( const char* file )
                WARN("Found keybind with invalid key field!");
                key = SDLK_UNKNOWN;
             }
-            lua_remove(L, -1);
+            lua_pop(L,1);
 
             /* is reversed, only useful for axis */
             lua_pushstring(L, "reverse");
@@ -271,7 +271,7 @@ int conf_loadConfig ( const char* file )
                reverse = lua_toboolean(L, -1);
             else
                reverse = 0;
-            lua_remove(L, -1);
+            lua_pop(L,1);
 
             /* Get the modifier. */
             lua_pushstring(L, "mod");
@@ -280,7 +280,7 @@ int conf_loadConfig ( const char* file )
                mod = (char*)lua_tostring(L, -1);
             else
                mod = NULL;
-            lua_remove(L, -1);
+            lua_pop(L,1);
 
             if (str != NULL) { /* keybind is valid */
                /* get type */
@@ -318,10 +318,9 @@ int conf_loadConfig ( const char* file )
             else {
                WARN("Malformed keybind for '%s' in '%s'.", keybindNames[i], file);
             }
-
-            /* clean up after table stuff */
-            lua_remove(L,-1);
          }
+         /* clean up after table stuff */
+         lua_pop(L,1);
       }
    }
    else { /* failed to load the config file */
