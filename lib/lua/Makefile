@@ -4,11 +4,9 @@
 
 # == CHANGE THE SETTINGS BELOW TO SUIT YOUR ENVIRONMENT =======================
 
-#CC      := gcc
-CFLAGS  := -O2 -Wall
+CFLAGS  := -W -Wall
 AR      := ar rcu
 RANLIB  := ranlib
-#RM      := rm -f
 LIBS    := -lm
 RELPATH := lib/lua/
 
@@ -17,7 +15,9 @@ CFLAGS += -DLUA_USE_POSIX
 endif
 
 ifdef DEBUG
-CFLAGS += -DLUA_USE_APICHECK
+CFLAGS += -g -DLUA_USE_APICHECK
+else
+CFLAGS += -O2
 endif
 
 
