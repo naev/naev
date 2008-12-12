@@ -132,4 +132,19 @@
    <planet>Omega Station</planet>
   </avail>
  </mission>
+ <mission name="Nebulae Satellite">
+  <lua>nebu_satellite</lua>
+  <flags>
+   <unique>1</unique>
+  </flags>
+  <avail>
+   <chance>15</chance>
+   <location>Bar</location>
+   <faction>Independent</faction>
+   <faction>Empire</faction>
+   <faction>Soromid</faction>
+   <faction>Dvaered</faction>
+   <faction>Frontier</faction>
+  </avail>
+ </mission>
 </Missions>

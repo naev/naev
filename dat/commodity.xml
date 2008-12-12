@@ -25,4 +25,5 @@
  <commodity name="Tourists"/>
  <commodity name="Pilgrims"/>
  <commodity name="Datapad"/>
+ <commodity name="Satellite"/>
 </Commodities>
