@@ -1134,16 +1134,21 @@ int gl_init (void)
 {
    int doublebuf, depth, i, j, off, toff, supported, fsaa;
    SDL_Rect** modes;
-   int flags = SDL_OPENGL;
-   flags |= SDL_FULLSCREEN * (gl_has(OPENGL_FULLSCREEN) ? 1 : 0);
+   int flags;
 
+   /* Defaults. */
    supported = 0;
+   flags  = SDL_OPENGL;
+   flags |= SDL_FULLSCREEN * (gl_has(OPENGL_FULLSCREEN) ? 1 : 0);
 
    /* Initializes Video */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
       WARN("Unable to initialize SDL Video: %s", SDL_GetError());
       return -1;
    }
+
+   /* Get the video information. */
+   const SDL_VideoInfo *vidinfo = SDL_GetVideoInfo();
 
    /* Set opengl flags. */
    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); /* Ideally want double buffering. */
@@ -1158,7 +1163,6 @@ int gl_init (void)
       /* Try to use desktop resolution if nothing is specifically set. */
 #if SDL_VERSION_ATLEAST(1,2,10)
       if (!gl_has(OPENGL_DIM_DEF)) {
-         const SDL_VideoInfo *vidinfo = SDL_GetVideoInfo();
          gl_screen.w = vidinfo->current_w;
          gl_screen.h = vidinfo->current_h;
       }
@@ -1205,6 +1209,15 @@ int gl_init (void)
          gl_screen.h = modes[j]->h;
       }
    }
+
+   /* Check to see if trying to create above screen resolution without player
+    * asking for such a large size. */
+#if SDL_VERSION_ATLEAST(1,2,10)
+      if (!gl_has(OPENGL_DIM_DEF)) {
+         gl_screen.w = MIN(gl_screen.w, vidinfo->current_w);
+         gl_screen.h = MIN(gl_screen.h, vidinfo->current_h);
+      }
+#endif /* SDL_VERSION_ATLEAST(1,2,10) */
    
    /* Test the setup - aim for 32. */
    gl_screen.depth = 32;
