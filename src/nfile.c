@@ -30,6 +30,10 @@
 
 
 
+#define BLOCK_SIZE      128*1024 /**< 128 kilobytes. */
+
+
+
 static char naev_base[PATH_MAX] = "\0"; /**< Stores naev's base path. */
 /**
  * @brief Gets naev's base path (for saves and such).
@@ -252,6 +256,63 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    }
 
    return files;
+}
+
+
+/**
+ * @brief Tries to read a file.
+ *
+ *    @param filesize Stores the size of the file.
+ *    @param path Path of the file.
+ *    @return The file data.
+ */
+char* nfile_readFile( int* filesize, const char* path, ... )
+{
+   char base[PATH_MAX];
+   char *buf;
+   FILE *file;
+   int len, pos;
+   va_list ap;
+
+   if (path == NULL) {
+      *filesize = 0;
+      return NULL;
+   }
+   else { /* get the message */
+      va_start(ap, path);
+      vsnprintf(base, PATH_MAX, path, ap);
+      va_end(ap);
+   }
+
+   /* Open file. */
+   file = fopen( base, "r" );
+   if (file == NULL)
+      return NULL;
+
+   /* Get file size. */
+   len = fseek( file, 0, SEEK_END );
+   if (len == -1) {
+      fclose(file);
+      return NULL;
+   }
+   len = ftell(file);
+   fseek( file, 0, SEEK_SET );
+
+   /* Allocate buffer. */
+   buf = malloc( len );
+   if (buf == NULL) {
+      WARN("Out of Memory!");
+      fclose(file);
+      return NULL;
+   }
+
+   /* Read the file. */
+   pos = fread( buf, len, 1, file );
+   if (pos != 1)
+      WARN("Error occurred while reading '%s'.", base);
+
+   *filesize = len;
+   return buf;
 }
 
 

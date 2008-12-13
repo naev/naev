@@ -380,6 +380,8 @@ int ai_pinit( Pilot *p, char *ai )
    else buf[i] = '\0';
 
    prof = ai_getProfile(buf);
+   if (prof == NULL)
+      WARN("AI Profile '%s' not found.", buf);
    p->ai = prof;
    L = p->ai->L;
 
@@ -428,23 +430,33 @@ void ai_destroy( Pilot* p )
  */
 int ai_init (void)
 {
-   const char** files;
-   uint32_t nfiles,i;
+   char** files;
+   uint32_t nfiles, i;
+   char path[PATH_MAX];
+   int flen, suflen;
 
    /* get the file list */
    files = ndata_list( AI_PREFIX, &nfiles );
 
    /* load the profiles */
-   for (i=0; i<nfiles; i++)
-      if ((strncmp( files[i], AI_PREFIX, strlen(AI_PREFIX))==0) && /* prefixed */
-            (strncmp( files[i] + strlen(AI_PREFIX), AI_INCLUDE, /* not an include */
-               strlen(AI_INCLUDE))!=0) &&
-            (strncmp( files[i] + strlen(files[i]) - strlen(AI_SUFFIX), /* suffixed */
-               AI_SUFFIX, strlen(AI_SUFFIX))==0))
-         if (ai_loadProfile(files[i])) /* Load the profile */
-            WARN("Error loading AI profile '%s'", files[i]);
+   suflen = strlen(AI_SUFFIX);
+   for (i=0; i<nfiles; i++) {
+      flen = strlen(files[i]);
+      if (strncmp(&files[i][flen-suflen], AI_SUFFIX, suflen)==0) {
+
+         snprintf( path, PATH_MAX, AI_PREFIX"%s", files[i] );
+         if (ai_loadProfile(path)) /* Load the profile */
+            WARN("Error loading AI profile '%s'", path);
+      }
+
+      /* Clean up. */
+      free(files[i]);
+   }
 
    DEBUG("Loaded %d AI Profile%c", nprofiles, (nprofiles==1)?' ':'s');
+
+   /* More clean up. */
+   free(files);
 
    return 0;
 }

@@ -44,6 +44,13 @@ static const char **ndata_fileList = NULL; /**< List of files in the packfile. *
 static uint32_t ndata_fileNList = 0; /**< Number of files in ndata_fileList. */
 
 
+/*
+ * Prototypes.
+ */
+static char** filterList( const char** list, int nlist,
+      const char* path, uint32_t* nfiles );
+
+
 /**
  * @brief Checks to see if path is a ndata file.
  *
@@ -60,6 +67,7 @@ int ndata_check( char* path )
  * @brief Sets the current ndata path to use.
  *
  *    @param path Path to set.
+ *    @return 0 on success.
  */
 int ndata_setPath( char* path )
 {
@@ -72,6 +80,8 @@ int ndata_setPath( char* path )
 
 /**
  * @brief Opens a packfile if needed.
+ *
+ *    @return 0 on success.
  */
 static int ndata_openPackfile (void)
 {
@@ -211,32 +221,111 @@ const char* ndata_name (void)
 
 /**
  * @brief Reads a file from the ndata.
+ *
+ *    @param filename Name of the file to read.
+ *    @param[out] Stores the size of the file.
+ *    @return The file data or NULL on error.
  */
 void* ndata_read( const char* filename, uint32_t *filesize )
 {
-   if (ndata_cache == NULL)
+   char *buf;
+   int nbuf;
+
+   /* See if needs to load packfile. */
+   if (ndata_cache == NULL) {
+
+      /* Try to read the file as locally. */
+      buf = nfile_readFile( &nbuf, filename );
+      if (buf != NULL) {
+         *filesize = nbuf;
+         return buf;
+      }
+
+      /* Load the packfile. */
       ndata_openPackfile();
+   }
+
+   /* Get data from packfile. */
    return pack_readfileCached( ndata_cache, filename, filesize );
 }
 
 
 /**
- * @brief Gets the list of files in the ndata.
+ * @brief Filters a file list to match path.
+ *
+ *    @param list List to filter.
+ *    @param nlist Members in list.
+ *    @param path Path to filter.
+ *    @param[out] nfiles Files that match.
  */
-const char** ndata_list( const char* path, uint32_t* nfiles )
+static char** filterList( const char** list, int nlist,
+      const char* path, uint32_t* nfiles )
 {
-   (void) path;
+   char **filtered;
+   int i, j, k;
+   int len;
 
-   if (ndata_fileList != NULL) {
-      *nfiles = ndata_fileNList;
-      return ndata_fileList;
+   /* Maximum size by default. */
+   filtered = malloc(sizeof(char*) * nlist);
+   len = strlen( path );
+
+   /* Filter list. */
+   j = 0;
+   for (i=0; i<nlist; i++) {
+      /* Must match path. */
+      if (strncmp(list[i], path, len)!=0)
+         continue;
+
+      /* Make sure there are no stray '/'. */
+      for (k=len; list[i][k] != '\0'; k++)
+         if (list[i][k] == '/')
+            break;
+      if (list[i][k] != '\0')
+         continue;
+
+      /* Copy the file name without the path. */
+      filtered[j++] = strdup(&list[i][len]);
    }
 
-   if (ndata_cache == NULL)
-      ndata_openPackfile();
+   /* Return results. */
+   *nfiles = j;
+   return filtered;
+}
 
+
+/**
+ * @brief Gets the list of files in the ndata.
+ *
+ *    @param path List files in path.
+ *    @param nfiles Number of files found.
+ *    @return List of files found.
+ */
+char** ndata_list( const char* path, uint32_t* nfiles )
+{
+   (void) path;
+   char **files;
+   int n;
+
+   /* Already loaded the list. */
+   if (ndata_fileList != NULL)
+      return filterList( ndata_fileList, ndata_fileNList, path, nfiles );
+
+   /* See if can load from local directory. */
+   if (ndata_cache == NULL) {
+      files = nfile_readDir( &n, path );
+
+      /* Found locally. */
+      if (files != NULL) {
+         *nfiles = n;
+         return files;
+      }
+
+      /* Open packfile. */
+      ndata_openPackfile();
+   }
+
+   /* Load list. */
    ndata_fileList = pack_listfilesCached( ndata_cache, &ndata_fileNList );
-   *nfiles = ndata_fileNList;
-   return ndata_fileList;
+   return filterList( ndata_fileList, ndata_fileNList, path, nfiles );
 }
 

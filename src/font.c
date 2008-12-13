@@ -565,7 +565,8 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
 
    /* object which freetype uses to store font info */
    if (FT_New_Memory_Face( library, buf, bufsize, 0, &face ))
-      WARN("FT_New_Face failed loading library from %s", fname );
+      WARN("FT_New_Face failed loading library from %s",
+            (fname!=NULL) ? fname : FONT_DEF );
 
    /* Try to resize. */
    if (FT_IS_SCALABLE(face)) {

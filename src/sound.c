@@ -455,10 +455,11 @@ int sound_updateListener( double dir, double x, double y )
  */
 static int sound_makeList (void)
 {
-   const char** files;
+   char** files;
    uint32_t nfiles,i;
+   char path[PATH_MAX];
    char tmp[64];
-   int len;
+   int len, suflen, flen;
    int mem;
 
    if (sound_disabled) return 0;
@@ -468,10 +469,11 @@ static int sound_makeList (void)
 
    /* load the profiles */
    mem = 0;
-   for (i=0; i<nfiles; i++)
-      if ((strncmp( files[i], SOUND_PREFIX, strlen(SOUND_PREFIX))==0) &&
-            (strncmp( files[i] + strlen(files[i]) - strlen(SOUND_SUFFIX),
-                      SOUND_SUFFIX, strlen(SOUND_SUFFIX))==0)) {
+   suflen = strlen(SOUND_SUFFIX);
+   for (i=0; i<nfiles; i++) {
+      flen = strlen(files[i]);
+      if (strncmp( &files[i][flen - suflen],
+               SOUND_SUFFIX, suflen)==0) {
 
          /* grow the selection size */
          sound_nlist++;
@@ -480,19 +482,29 @@ static int sound_makeList (void)
             sound_list = realloc( sound_list, mem*sizeof(alSound));
          }
 
-         /* remove the prefix and suffix */
-         len = strlen(files[i]) - strlen(SOUND_SUFFIX SOUND_PREFIX);
-         strncpy( tmp, files[i] + strlen(SOUND_PREFIX), len );
+         /* remove the suffix */
+         len = flen - suflen;
+         strncpy( tmp, files[i], len );
          tmp[len] = '\0';
 
          /* give it the new name */
          sound_list[sound_nlist-1].name = strdup(tmp);
-         sound_list[sound_nlist-1].buffer = sound_load( files[i] );
+
+         /* Load the sound. */
+         snprintf( path, PATH_MAX, SOUND_PREFIX"%s", files[i] );
+         sound_list[sound_nlist-1].buffer = sound_load( path );
       }
+
+      /* Clean up. */
+      free(files[i]);
+   }
    /* shrink to minimum ram usage */
    sound_list = realloc( sound_list, sound_nlist*sizeof(alSound));
 
    DEBUG("Loaded %d sound%s", sound_nlist, (sound_nlist==1)?"":"s");
+
+   /* More clean up. */
+   free(files);
 
    return 0;
 }

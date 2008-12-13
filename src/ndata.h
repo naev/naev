@@ -27,7 +27,7 @@ const char* ndata_name (void);
  * Individual file functions.
  */
 void* ndata_read( const char* filename, uint32_t *filesize );
-const char** ndata_list( const char *path, uint32_t* nfiles );
+char** ndata_list( const char *path, uint32_t* nfiles );
 
 
 #endif /* NDATA_H */

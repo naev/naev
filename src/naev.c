@@ -299,26 +299,13 @@ int main( int argc, char** argv )
  */
 void loadscreen_load (void)
 {
-   int i;
+   unsigned int i;
    char file_path[PATH_MAX];
-   const char **loadscreens;
-   const char **files;
-   uint32_t nfiles;
-   size_t len;
-   int nload;
+   char **loadscreens;
+   uint32_t nload;
 
    /* Count the loading screens */
-   files = ndata_list( "gfx/loading/", &nfiles );
-   len = strlen("gfx/loading/");
-   nload = 0;
-   loadscreens = malloc(sizeof(char*) * nfiles);
-   for (i=0; i<(int)nfiles; i++) {
-      if (strncmp(files[i], "gfx/loading/", len)==0) {
-         loadscreens[nload] = files[i];
-         nload++;
-      }
-   }
-
+   loadscreens = ndata_list( "gfx/loading/", &nload );
 
    /* Must have loading screens */
    if (nload==0) {
@@ -327,10 +314,12 @@ void loadscreen_load (void)
    }
 
    /* Load the texture */
-   strncpy(file_path, loadscreens[RNG(0,nload-1)], PATH_MAX);
+   snprintf( file_path, PATH_MAX, "gfx/loading/%s", loadscreens[ RNG_SANE(0,nload-1) ] );
    loading = gl_newImage( file_path, 0 );
 
    /* Clean up. */
+   for (i=0; i<nload; i++)
+      free(loadscreens[i]);
    free(loadscreens);
 }
 
