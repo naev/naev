@@ -8,7 +8,6 @@
  <faction name="Independent">
   <player>0</player>
   <allies>
-   <ally>Militia</ally>
    <ally>Trader</ally>
   </allies>
   <enemies>
@@ -32,7 +31,6 @@
   <longname>Space Traders Guild</longname>
   <player>0</player>
   <allies>
-   <ally>Militia</ally>
    <ally>Independent</ally>
    <ally>Empire</ally>
    <ally>Soromid</ally>
@@ -55,18 +53,6 @@
    <enemy>Soromid</enemy>
    <enemy>Sirius</enemy>
    <enemy>Frontier</enemy>
-  </enemies>
- </faction>
- <faction name="Militia">
-  <player>0</player>
-  <allies>
-   <ally>Independent</ally>
-   <ally>Trader</ally>
-  </allies>
-  <enemies>
-   <enemy>Pirate</enemy>
-   <enemy>Collective</enemy>
-   <enemy>FLF</enemy>
   </enemies>
  </faction>
  <faction name="Empire">
