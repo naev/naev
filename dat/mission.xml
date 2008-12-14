@@ -10,7 +10,7 @@
   </avail>
  </mission>
  <mission name="Cargo">
-  <lua>cargo</lua>
+  <lua>neutral/cargo</lua>
   <avail>
    <chance>960</chance>
    <location>Computer</location>
@@ -22,7 +22,7 @@
   </avail>
  </mission>
  <mission name="Empire Recruitment">
-  <lua>emp_cargo00</lua>
+  <lua>empire/emp_cargo00</lua>
   <flags>
    <unique>1</unique>
   </flags>
@@ -33,7 +33,7 @@
   </avail>
  </mission>
  <mission name="Empire Shipping">
-  <lua>es_cargo</lua>
+  <lua>empire/es_cargo</lua>
   <avail>
    <cond>player.getFaction("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
    <chance>350</chance>
@@ -43,7 +43,7 @@
   </avail>
  </mission>
  <mission name="Collective Scouting">
-  <lua>emp_collective00</lua>
+  <lua>empire/collective/ec00</lua>
   <flags>
    <unique>1</unique>
   </flags>
@@ -55,7 +55,7 @@
   </avail>
  </mission>
  <mission name="Collective Espionage 1">
-  <lua>emp_collective01</lua>
+  <lua>empire/collective/ec01</lua>
   <flags>
    <unique>1</unique>
   </flags>
@@ -68,7 +68,7 @@
   </avail>
  </mission>
  <mission name="Collective Espionage 2">
-  <lua>emp_collective02</lua>
+  <lua>empire/collective/ec02</lua>
   <flags>
    <unique>1</unique>
   </flags>
@@ -81,7 +81,7 @@
   </avail>
  </mission>
  <mission name="Collective Espionage 3">
-  <lua>emp_collective03</lua>
+  <lua>empire/collective/ec03</lua>
   <flags>
    <unique>1</unique>
   </flags>
@@ -94,7 +94,7 @@
   </avail>
  </mission>
  <mission name="Collective Distraction">
-  <lua>emp_collective04</lua>
+  <lua>empire/collective/ec04</lua>
   <flags>
    <unique>1</unique>
   </flags>
@@ -107,7 +107,7 @@
   </avail>
  </mission>
  <mission name="Operation Black Trinity">
-  <lua>emp_collective05</lua>
+  <lua>empire/collective/ec05</lua>
   <flags>
    <unique>1</unique>
   </flags>
@@ -120,7 +120,7 @@
   </avail>
  </mission>
  <mission name="Operation Cold Metal">
-  <lua>emp_collective06</lua>
+  <lua>empire/collective/ec06</lua>
   <flags>
    <unique>1</unique>
   </flags>
@@ -133,7 +133,7 @@
   </avail>
  </mission>
  <mission name="Nebulae Satellite">
-  <lua>nebu_satellite</lua>
+  <lua>neutral/nebu_satellite</lua>
   <flags>
    <unique>1</unique>
   </flags>
