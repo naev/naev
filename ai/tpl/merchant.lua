@@ -33,7 +33,7 @@ function control ()
       end
 
       -- See if another enemy is closer
-      if enemy ~= target then
+      if enemy ~= nil and enemy ~= target then
          ai.poptask()
          ai.pushtask(0,"runaway",enemy)
       end
