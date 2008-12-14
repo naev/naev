@@ -333,8 +333,6 @@ static void map_update( unsigned int wid )
 
 
 /**
- * @fn int map_isOpen (void)
- *
  * @brief Checks to see if the map is open.
  *
  *    @return 0 if map is closed, non-zero if it's open.
@@ -621,8 +619,6 @@ void map_clear (void)
 
 
 /**
- * @fn static void map_selectCur (void)
- *
  * @brief Tries to select the current system.
  */
 static void map_selectCur (void)
@@ -634,13 +630,12 @@ static void map_selectCur (void)
       map_selected = -1;
 }
 
-/*
- * updates the map after a jump
+/**
+ * @brief Updates the map after a jump.
  */
 void map_jump (void)
 {
    int j;
-
 
    /* set selected system to self */
    map_selectCur();
@@ -654,6 +649,8 @@ void map_jump (void)
       if (map_npath == 0) { /* path is empty */
          free (map_path);
          map_path = NULL;
+         planet_target = -1;
+         hyperspace_target = -1;
       }
       else { /* get rid of bottom of the path */
          memmove( &map_path[0], &map_path[1], sizeof(StarSystem*) * map_npath );
@@ -674,8 +671,6 @@ void map_jump (void)
 
 
 /**
- * @fn void map_select( StarSystem *sys )
- *
  * @brief Selects the system in the map.
  *
  *    @param sys System to select.
