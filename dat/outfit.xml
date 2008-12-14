@@ -280,6 +280,43 @@
    <damage type="kinetic">20</damage>
   </specific>
  </outfit>
+ <outfit name="Banshee Launcher">
+  <general>
+   <max>2</max>
+   <tech>4</tech>
+   <license>Medium Weapon License</license>
+   <mass>10</mass>
+   <price>25000</price>
+   <gfx_store>bansheelauncher</gfx_store>
+   <description>The Banshee Launcher uses a quick action firing mechanism to be able to quickly launch the banshee rockets.  The only drawback is that this mechanism can only be used with light rockets, limiting the payload the rockets can have.</description>
+  </general>
+  <specific type="missile dumb" secondary="1">
+   <ammo>Banshee Rocket</ammo>
+   <delay>300</delay>
+  </specific>
+ </outfit>
+ <outfit name="Banshee Rocket">
+  <general>
+   <max>40</max>
+   <tech>7</tech>
+   <license>Medium Weapon License</license>
+   <mass>0</mass>
+   <price>100</price>
+   <description>The Banshee Rocket gets it's name from the wail it makes when launched.  They carry an EMP payload which is very helpful when attempting to disable ships.</description>
+   <gfx_store>banshee</gfx_store>
+  </general>
+  <specific type="missile dumb ammo">
+   <gfx>banshee</gfx>
+   <sound>missile</sound>
+   <spfx_shield>EmpS</spfx_shield>
+   <spfx_armour>EmpS</spfx_armour>
+   <duration>0.8</duration>
+   <accuracy>12</accuracy>
+   <thrust>0</thrust>
+   <speed>600</speed>
+   <damage type="emp">15</damage>
+  </specific>
+ </outfit>
  <outfit name="Neutron Disruptor">
   <general>
    <max>3</max>

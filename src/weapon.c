@@ -801,7 +801,6 @@ static Weapon* weapon_create( const Outfit* outfit,
    w->target = target; /* non-changeable */
    w->outfit = outfit; /* non-changeable */
    w->update = weapon_update;
-   w->think = NULL;
    w->status = WEAPON_STATUS_OK;
 
    switch (outfit->type) {
@@ -847,7 +846,8 @@ static Weapon* weapon_create( const Outfit* outfit,
 
          rdir += NormalInverse( RNGF()*0.9 + 0.05 ) /* Get rid of extreme values */
                * outfit->u.blt.accuracy/2. * 1./180.*M_PI;
-         if ((rdir > 2.*M_PI) || (rdir < 0.)) rdir = fmod(rdir, 2.*M_PI);
+         if ((rdir > 2.*M_PI) || (rdir < 0.))
+            rdir = fmod(rdir, 2.*M_PI);
 
          mass = 1; /* Lasers are presumed to have unitary mass */
          vectcpy( &v, vel );
@@ -869,7 +869,7 @@ static Weapon* weapon_create( const Outfit* outfit,
          }
          else
             rdir = dir;
-         mass = 1.;
+         mass = 1.; /**< Needs a mass. */
          w->solid = solid_create( mass, rdir, pos, NULL );
          w->think = think_beam;
          w->timer = outfit->u.bem.duration;
@@ -882,6 +882,15 @@ static Weapon* weapon_create( const Outfit* outfit,
       case OUTFIT_TYPE_MISSILE_SEEK_AMMO:
       case OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO:
          mass = w->outfit->mass;
+
+         rdir = dir;
+         if (outfit->u.amm.accuracy != 0.) {
+            rdir += NormalInverse( RNGF()*0.9 + 0.05 ) /* Get rid of extreme values */
+               * outfit->u.amm.accuracy/2. * 1./180.*M_PI;
+            if ((rdir > 2.*M_PI) || (rdir < 0.))
+               rdir = fmod(rdir, 2.*M_PI);
+         }
+
          w->lockon = outfit->u.amm.lockon;
          w->timer = outfit->u.amm.duration;
          w->solid = solid_create( mass, dir, pos, vel );
@@ -913,24 +922,24 @@ static Weapon* weapon_create( const Outfit* outfit,
             dist = vect_dist( pos, &pilot_target->solid->pos );
 
             /* Aim. */
-            if (dist > outfit->u.blt.range*1.2) {
-               x = pilot_target->solid->pos.x - pos->x;
-               y = pilot_target->solid->pos.y - pos->y;
-            }
-            else {
-               /* Try to predict where the enemy will be. */
-               /* Time for shots to reach that distance */
-               t = dist / w->outfit->u.amm.speed;
+            /* Try to predict where the enemy will be. */
+            /* Time for shots to reach that distance */
+            t = dist / w->outfit->u.amm.speed;
 
-               /* Position is calculated on where it should be */
-               x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
-                  - (pos->x + vel->x*t);
-               y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
-                  - (pos->y + vel->y*t);
-            }
+            /* Position is calculated on where it should be */
+            x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
+               - (pos->x + vel->x*t);
+            y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
+               - (pos->y + vel->y*t);
 
             /* Set angle to face. */
             rdir = ANGLE(x, y);
+         }
+         if (outfit->u.amm.accuracy != 0.) {
+            rdir += NormalInverse( RNGF()*0.9 + 0.05 ) /* Get rid of extreme values */
+               * outfit->u.amm.accuracy/2. * 1./180.*M_PI;
+            if ((rdir > 2.*M_PI) || (rdir < 0.))
+               rdir = fmod(rdir, 2.*M_PI);
          }
 
          /* If thrust is 0. we assume it starts out at speed. */
@@ -944,7 +953,6 @@ static Weapon* weapon_create( const Outfit* outfit,
          w->solid = solid_create( mass, rdir, pos, &v );
          if (w->outfit->u.amm.thrust != 0.)
             vect_pset( &w->solid->force, w->outfit->u.amm.thrust, rdir );
-         w->think = NULL; /* No AI */
          w->voice = sound_playPos(w->outfit->u.amm.sound,
                w->solid->pos.x + w->solid->vel.x,
                w->solid->pos.y + w->solid->vel.y);
@@ -953,10 +961,24 @@ static Weapon* weapon_create( const Outfit* outfit,
       /* Dumb missiles are a mixture of missile and bolt */
       case OUTFIT_TYPE_MISSILE_DUMB_AMMO:
          mass = w->outfit->mass;
+
+         rdir = dir;
+
+         if (outfit->u.amm.accuracy != 0.) {
+            rdir += NormalInverse( RNGF()*0.9 + 0.05 ) /* Get rid of extreme values */
+               * outfit->u.amm.accuracy/2. * 1./180.*M_PI;
+            if ((rdir > 2.*M_PI) || (rdir < 0.))
+               rdir = fmod(rdir, 2.*M_PI);
+         }
+         
+         /* If thrust is 0. we assume it starts out at speed. */
+         if (outfit->u.amm.thrust == 0.)
+            vect_pset( &v, w->outfit->u.amm.speed, rdir );
+         else
+            vectnull( &v );
+
          w->timer = outfit->u.amm.duration;
-         w->solid = solid_create( mass, dir, pos, vel );
-         vect_pset( &w->solid->force, w->outfit->u.amm.thrust, dir );
-         w->think = NULL; /* No AI */
+         w->solid = solid_create( mass, rdir, pos, &v );
          w->voice = sound_playPos(w->outfit->u.amm.sound,
                w->solid->pos.x + w->solid->vel.x,
                w->solid->pos.y + w->solid->vel.y);

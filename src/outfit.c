@@ -864,6 +864,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"thrust",temp->u.amm.thrust);
       xmlr_float(node,"turn",temp->u.amm.turn);
       xmlr_float(node,"speed",temp->u.amm.speed);
+      xmlr_float(node,"accuracy",temp->u.amm.accuracy);
       xmlr_float(node,"energy",temp->u.amm.energy);
       if (xml_isNode(node,"gfx")) {
          temp->u.amm.gfx_space = xml_parseTexture( node,

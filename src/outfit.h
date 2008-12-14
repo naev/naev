@@ -148,6 +148,7 @@ typedef struct OutfitAmmoData_ {
    double lockon; /**< time it takes to lock on the target */
    double resist; /**< lowers chance of jamming by this amount */
 
+   double accuracy; /**< desviation accuracy */
    double speed; /**< maximum speed */
    double turn; /**< turn velocity */
    double thrust; /**< acceleration */
