@@ -25,12 +25,12 @@
 #endif /* DEBUG_PARANOID */
 #define NLUA_INVALID_PARAMETER()    \
 { \
-   NLUA_DEBUG("[%s] Invalid parameter (%s:%d)", __func__, __FILE__, __LINE__); \
+   luaL_error( L, "Invalid parameter for %s.", __func__ ); \
    return 0; \
 }
 #define NLUA_MIN_ARGS(n)     \
    if (lua_gettop(L) < n) { \
-      NLUA_DEBUG("[%s] Too few arguments (%s:%d)", __func__, __FILE__, __LINE__); \
+      luaL_error( L, "Too few arguments for %s.", __func__ ); \
       return 0; \
    }
 #else /* NODEBUG */
