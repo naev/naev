@@ -830,7 +830,8 @@ void pilot_explode( double x, double y, double radius,
          pilot_hit( p, &s, parent, dtype, damage );
 
          /* Shock wave from the explosion. */
-         spfx_shake( pow2(damage) / pow2(100.) * SHAKE_MAX );
+         if (p->id == PILOT_PLAYER)
+            spfx_shake( pow2(damage) / pow2(100.) * SHAKE_MAX );
       }
    }
 }
