@@ -17,6 +17,7 @@ sed -n '
 #rename some tags:
 	s|^ *\* *@brief|-- @description|p
 	s|^ *\* *@luaparam|-- @param|p
+	s|^ *\* *@luareturn|-- @return|p #we accept both @luareturn & @return 
 #keep tags luadoc understands:
 #	s|^ *\* *@param|-- @param|p # use luaparam, param reserved for C arguments
 	s|^ *\* *@see|-- @see|p

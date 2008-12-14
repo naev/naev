@@ -217,6 +217,8 @@ static int vectorL_createmetatable( lua_State *L )
  *
  * @brief The planet metatable is a way to represent a planet in Lua.
  *
+ * @luamod planet
+ *
  * It allows all sorts of operators making it much more natural to use.
  *
  * To call members of the metatable always use:
@@ -495,6 +497,8 @@ static int planetL_position( lua_State *L )
  *
  * @brief Represents a system in Lua.
  *
+ * @luamod system
+ *
  * To call members of the metatable always use:
  * @code 
  * system:function( param )
@@ -724,6 +728,8 @@ static int systemL_jumpdistance( lua_State *L )
  *
  * @brief Represents a 2d vector in Lua.
  *
+ * @luamod vec2
+ *
  * To call members of the metatable always use:
  * @code 
  * vector:function( param )
@@ -946,7 +952,7 @@ static int vectorL_div( lua_State *L )
  * @ingroup META_VECTOR
  *
  * @brief Gets the cartesian positions of the vector.
- *    @return X and Y position of the vector.
+ *    @luareturn X and Y position of the vector.
  * @luafunc get()
  */
 static int vectorL_get( lua_State *L )
@@ -997,7 +1003,7 @@ static int vectorL_set( lua_State *L )
  *
  * @brief Gets the distance from the Vec2.
  *    @param vector Vector to get distance from, uses origin (0,0) if not set.
- *    @return The distance calculated.
+ *    @luareturn The distance calculated.
  * @luafunc dist( vector )
  */
 static int vectorL_distance( lua_State *L )
@@ -1032,7 +1038,7 @@ static int vectorL_distance( lua_State *L )
  * @ingroup META_VECTOR
  *
  * @brief Gets the modulus of the vector.
- *    @return The modulus of the vector.
+ *    @luareturn The modulus of the vector.
  * @luafunc mod()
  */
 static int vectorL_mod( lua_State *L )
