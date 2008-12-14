@@ -845,4 +845,40 @@
    <outfit quantity="1">Laser Cannon</outfit>
   </outfits>
  </ship>
+ <ship name="Kestrel">
+  <GFX>kestrel</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Cruiser</class>
+  <price>6000000</price>
+  <fabricator>Krain Industries</fabricator>
+  <tech>12</tech>
+  <license>Heavy Combat Vessel License</license>
+  <description>The Kestrel was designed to be a sleek heavy assault cruiser.  Generally more fragile then other cruisers, although it doesn't fall behind in firepower.  Probably one of the most elegant cruisers on the market.</description>
+  <movement>
+   <thrust>120</thrust>
+   <turn>100</turn>
+   <speed>140</speed>
+  </movement>
+  <health>
+   <shield>550</shield>
+   <armour>300</armour>
+   <energy>800</energy>
+   <shield_regen>360</shield_regen>
+   <armour_regen>100</armour_regen>
+   <energy_regen>1400</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>27</crew>
+   <mass>2800</mass>
+   <fuel>300</fuel>
+   <cap_weapon>150</cap_weapon>
+   <cap_cargo>50</cap_cargo>
+  </caracteristics>
+  <outfits>
+   <outfit quantity="2">Heavy Ion Turret</outfit>
+   <outfit quantity="2">Seeker Launcher</outfit>
+   <outfit quantity="20">Seeker Missile</outfit>
+  </outfits>
+ </ship>
 </Ships>

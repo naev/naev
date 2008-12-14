@@ -41,11 +41,11 @@
        * ion.png
        * laserred.png
        * mass.png
-       * missile.png (rendered by Bobbens)
+       * missile.png
        * neutron.png
        * particle.png
        * plasma.png
-       * ripper.png (modified by Bobbens)
+       * ripper.png
      * store
        * afterburner.png
        * afterburner2.png
@@ -81,53 +81,53 @@
        * oceanic.png
        * snow.png
        * traderoom.png
-       * station00.png (rendered by Bobbens)
-       * station01.png (rendered by Bobbens)
-       * station02.png (rendered by Bobbens)
+       * station00.png
+       * station01.png
+       * station02.png
      * space
-       * 000.png (rendered by Bobbens)
-       * 001.png (rendered by Bobbens)
-       * 002.png (rendered by Bobbens)
-       * 003.png (rendered by Bobbens)
+       * 000.png
+       * 001.png
+       * 002.png
+       * 003.png
    * spfx
-     * cargo.png (rendered by Bobbens)
+     * cargo.png
    * ship
-     * admonisher.png (rendered by Bobbens)
-     * admonisher_empire.png (textured, rendered by Bobbens)
-     * admonisher_pirate.png (rendered by Bobbens)
-     * admonisher_target.png (modified, rendered by Bobbens)
-     * ancestor.png (rendered by Bobbens)
-     * ancestor_dvaered.png (textured, rendered by Bobbens)
-     * ancestor_pirate.png (rendered by Bobbens)
-     * ancestor_target.png (modified, rendered by Bobbens)
-     * drone.png (rendered by Bobbens)
-     * drone_target.png (modified, rendered by Bobbens)
-     * gawain.png (rendered by Bobbens)
-     * gawain_target.png (modified, rendered by Bobbens)
-     * goddard.png (rendered by Bobbens)
-     * goddard_dvaered.png (textured, rendered by Bobbens)
-     * goddard_target.png (modified, rendered by Bobbens)
-     * hawking.png (rendered by Bobbens)
-     * hawking_empire.png (textured, rendered by Bobbens)
-     * hawking_target.png (modified, rendered by Bobbens)
-     * hyena.png (rendered by Bobbens)
-     * hyena_target.png (modified, rendered by Bobbens)
-     * lancelot.png (rendered by Bobbens)
-     * lancelot_empire.png (textured, rendered by Bobbens)
-     * lancelot_target.png (modified, rendered by Bobbens)
-     * llama.png (rendered by Bobbens)
-     * llama_target.png (modified, rendered by Bobbens)
-     * mule.png (rendered by Bobbens)
-     * mule_target.png (modified, rendered by Bobbens)
-     * pacifier.png (rendered by Bobbens)
-     * pacifier_empire.png (textured, rendered by Bobbens)
-     * pacifier_target.png (modified, rendered by Bobbens)
-     * schroedinger.png (rendered by Bobbens)
-     * schroedinger_target.png (modified, rendered by Bobbens)
-     * vendetta.png (rendered by Bobbens)
-     * vendetta_dvaered.png (textured, rendered by Bobbens)
-     * vendetta_pirate.png (rendered by Bobbens)
-     * vendetta_target.png (modified, rendered by Bobbens)
+     * admonisher.png
+     * admonisher_empire.png
+     * admonisher_pirate.png
+     * admonisher_target.png
+     * ancestor.png
+     * ancestor_dvaered.png
+     * ancestor_pirate.png
+     * ancestor_target.png
+     * drone.png
+     * drone_target.png
+     * gawain.png
+     * gawain_target.png
+     * goddard.png
+     * goddard_dvaered.png
+     * goddard_target.png
+     * hawking.png
+     * hawking_empire.png
+     * hawking_target.png
+     * hyena.png
+     * hyena_target.png
+     * lancelot.png
+     * lancelot_empire.png
+     * lancelot_target.png
+     * llama.png
+     * llama_target.png
+     * mule.png
+     * mule_target.png
+     * pacifier.png
+     * pacifier_empire.png
+     * pacifier_target.png
+     * schroedinger.png
+     * schroedinger_target.png
+     * vendetta.png
+     * vendetta_dvaered.png
+     * vendetta_pirate.png
+     * vendetta_target.png
  
  * Author: Joel Hans, License: PD
    * planet
@@ -138,10 +138,10 @@
  * Author: Jordi Pegueroles, License: PD
    * outfit
      * space
-       * headhunter.png (rendered by Bobbens)
-       * mace.png (textured, rendered by Bobbens)
+       * headhunter.png
+       * mace.png
      * store
-       * mace.png (textured, rendered by Bobbens)
+       * mace.png
    * spfx
      * exps.png
      * expm.png
@@ -160,7 +160,7 @@
  * Author: United States Department of Energy, License: PD
    * outfit
      * store
-       * solar.png (modified by Bobbens)
+       * solar.png
 
  * Author: Dennis Myts, License: PD
    * outfit
@@ -212,3 +212,9 @@
        * shim.png
        * plas.png
        * plam.png
+ 
+ * Author: Joss, License: UNKNOWN
+   * ship
+     * kestrel.png
+     * kestrel_comm.png
+     * kestrel_target.png
