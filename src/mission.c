@@ -236,6 +236,7 @@ static lua_State* mission_cond_L = NULL; /**< Mission conditional Lua state. */
  */
 static int mission_meetCond( MissionData* misn )
 {
+   int b;
    int ret;
    char buf[256];
 
@@ -279,7 +280,9 @@ static int mission_meetCond( MissionData* misn )
 
    /* Check the result. */
    if (lua_isboolean(mission_cond_L, -1)) {
-      if (lua_toboolean(mission_cond_L, -1))
+      b = lua_toboolean(mission_cond_L, -1);
+      lua_pop(mission_cond_L, 1);
+      if (b)
          return 1;
       else
          return 0;
