@@ -14,9 +14,15 @@ function atk_g_think ()
    enemy = ai.getenemy()
    target = ai.target()
 
+   -- Stop attacking if it doesn't exist
+	if not ai.exists(target) then
+		ai.poptask()
+		return
+	end
+
    -- Get new target if it's closer
    if enemy ~= target and enemy ~= nil then
-      dist = ai.dist( ai.pos(target) )
+      dist = ai.dist( target )
       range = ai.getweaprange()
 
       -- Shouldn't switch targets if close
@@ -34,19 +40,20 @@ end
 function atk_g ()
 	target = ai.target()
 
+	-- make sure pilot exists
+	if not ai.exists(target) then
+		ai.poptask()
+		return
+	end
+
    -- Check if is bribed by target
    if ai.isbribed(target) then
       ai.poptask()
       return
    end
 
+   -- Targetting stuff
    ai.hostile(target) -- Mark as hostile
-
-	-- make sure pilot exists
-	if not ai.exists(target) then
-		ai.poptask()
-		return
-	end
    ai.settarget(target)
 
    -- Get stats about enemy

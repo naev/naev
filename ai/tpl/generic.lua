@@ -37,6 +37,11 @@ function control ()
    elseif task == "attack" then
       target = ai.target()
 
+      -- Needs to have a target
+      if target == nil then
+         ai.poptask()
+      end
+
       -- Runaway if needed
       if (shield_run > 0 and ai.pshield() < shield_run
                and ai.pshield() < ai.pshield(target) ) or
@@ -51,7 +56,8 @@ function control ()
 
    -- Pilot is running away
    elseif task == "runaway" then
-      dist = ai.dist( ai.pos( ai.target() ) )
+      target = ai.target()
+      dist = ai.dist( target )
 
       -- Should return to combat?
       if aggressive and ((shield_return > 0 and ai.pshield() >= shield_return) or
