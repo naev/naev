@@ -2,6 +2,10 @@
 
    VITAL
 
+   *) Developer mode
+      *) Lua console
+      *) Run missions
+      *) See mount points
    *) Asteroids
    *) Real news
    *) Event system
