@@ -1322,10 +1322,13 @@ static int ai_getlandplanet( lua_State *L )
    Planet** planets;
    int nplanets, i;
    LuaVector lv;
-   planets = malloc( sizeof(Planet*) * cur_system->nplanets );
 
    if (cur_system->nplanets == 0) return 0; /* no planets */
 
+   /* Allocate memory. */
+   planets = malloc( sizeof(Planet*) * cur_system->nplanets );
+
+   /* Copy friendly planet.s */
    for (nplanets=0, i=0; i<cur_system->nplanets; i++)
       if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_BASIC) &&
             !areEnemies(cur_pilot->faction,cur_system->planets[i]->faction))
