@@ -735,7 +735,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
             ((player->target == p->id) || (RNGF() < 0.30*dt))) { /* 30% chance per second */
          parent = pilot_get(w->parent);
          if ((parent != NULL) && (parent->faction == FACTION_PLAYER) &&
-               (!pilot_isFlag(p,PILOT_HOSTILE) || (RNGF()*dt < 0.5))) { /* 50% chance */
+               (!pilot_isFlag(p,PILOT_HOSTILE) || (RNGF() < 0.50*dt))) { /* 50% chance */
             faction_modPlayer( p->faction, -1. ); /* slowly lower faction */
          }
          pilot_rmFlag( p, PILOT_BRIBED );
