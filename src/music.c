@@ -213,7 +213,8 @@ static int music_find (void)
    suflen = strlen(MUSIC_SUFFIX);
    for (i=0; i<nfiles; i++) {
       flen = strlen(files[i]);
-      if (strncmp( &files[i][flen - suflen], MUSIC_SUFFIX, suflen)==0) {
+      if ((flen > suflen) &&
+            strncmp( &files[i][flen - suflen], MUSIC_SUFFIX, suflen)==0) {
 
          /* grow the selection size */
          nmusic_selection++;

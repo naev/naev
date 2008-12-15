@@ -442,7 +442,8 @@ int ai_init (void)
    suflen = strlen(AI_SUFFIX);
    for (i=0; i<nfiles; i++) {
       flen = strlen(files[i]);
-      if (strncmp(&files[i][flen-suflen], AI_SUFFIX, suflen)==0) {
+      if ((flen > suflen) &&
+            strncmp(&files[i][flen-suflen], AI_SUFFIX, suflen)==0) {
 
          snprintf( path, PATH_MAX, AI_PREFIX"%s", files[i] );
          if (ai_loadProfile(path)) /* Load the profile */

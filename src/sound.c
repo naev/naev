@@ -472,8 +472,8 @@ static int sound_makeList (void)
    suflen = strlen(SOUND_SUFFIX);
    for (i=0; i<nfiles; i++) {
       flen = strlen(files[i]);
-      if (strncmp( &files[i][flen - suflen],
-               SOUND_SUFFIX, suflen)==0) {
+      if ((flen > suflen) &&
+            strncmp( &files[i][flen - suflen], SOUND_SUFFIX, suflen)==0) {
 
          /* grow the selection size */
          sound_nlist++;
