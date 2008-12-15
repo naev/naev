@@ -200,10 +200,13 @@
        * license.png
        * empgrenade.png
        * empgrenadelauncher.png
+       * banshee.png
+       * basheelauncher.png
      * space
        * empgrenade.png
        * beam_orion.png
        * beam_ragnarok.png
+       * banshee.png
    * gfx
      * spfx
        * emps.png
@@ -218,3 +221,5 @@
      * kestrel.png
      * kestrel_comm.png
      * kestrel_target.png
+     * kestrel_pirate.png
+     * kestrel_pirate_comm.png
