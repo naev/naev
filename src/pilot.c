@@ -1142,11 +1142,11 @@ static int pilot_setOutfitMounts( Pilot *p, PilotOutfit* po, int o, int q )
    po->mounts = realloc(po->mounts, o+q * sizeof(int));
 
    /* Has to be done for each outfit added. */
-   for (n=q; n > 0; n--) {
+   for (n=o; n < o+q; n++) {
 
       /* Special case no ship mounts. */
       if (p->mounted == NULL) {
-         po->mounts[o+n-1] = 0;
+         po->mounts[n] = 0;
          continue;
       }
 
@@ -1161,7 +1161,7 @@ static int pilot_setOutfitMounts( Pilot *p, PilotOutfit* po, int o, int q )
          }
       }
       /* Add the mount point. */
-      po->mounts[o+n-1] = k;
+      po->mounts[n] = k;
       p->mounted[k]++;
    }
 
@@ -1247,7 +1247,6 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
       q -= po->quantity - outfit->max;
       po->quantity = outfit->max;
    }
-   po->timer = 0; /* reset timer */
 
    if (outfit_isTurret(outfit)) { /* used to speed up AI */
       /* If it's a turret we need to find a mount spot for it. */
@@ -1759,14 +1758,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, char *ai,
    if (!(flags & PILOT_NO_OUTFITS)) {
       if (ship->outfit) {
          for (so=ship->outfit; so; so=so->next) {
-            pilot->outfits = realloc(pilot->outfits,
-                  (pilot->noutfits+1)*sizeof(PilotOutfit));
-            pilot->outfits[pilot->noutfits].outfit = so->data;
-            pilot->outfits[pilot->noutfits].quantity = so->quantity;
-            pilot->outfits[pilot->noutfits].timer = 0;
-            (pilot->noutfits)++;
-            if (outfit_isTurret(so->data)) /* used to speed up AI */
-               pilot_setFlag(pilot, PILOT_HASTURRET);
+            pilot_addOutfit( pilot, so->data, so->quantity );
          }
       }
    }
