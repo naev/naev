@@ -73,6 +73,7 @@ typedef struct Weapon_ {
    double timer; /**< mainly used to see when the weapon was fired */
    double anim; /**< Used for beam weapon graphics and others. */
    int sprite; /**< Used for spinning outfits. */
+   int mount; /**< Used for beam weapons. */
 
    /* position update and render */
    void (*update)(struct Weapon_*, const double, WeaponLayer); /**< Updates the weapon */
@@ -265,6 +266,7 @@ static void think_beam( Weapon* w, const double dt )
    (void)dt;
    Pilot *p, *t;
    double diff;
+   Vector2d v;
 
    /* Get pilot, if pilot is dead beam is destroyed. */
    p = pilot_get(w->parent);
@@ -281,9 +283,10 @@ static void think_beam( Weapon* w, const double dt )
       return;
    }
 
-   /* Update beam position to match pilot. */
-   w->solid->pos.x = p->solid->pos.x;
-   w->solid->pos.y = p->solid->pos.y;
+   /* Use mount position. */
+   pilot_getMount( p, w->mount, &v );
+   w->solid->pos.x = v.x;
+   w->solid->pos.y = v.y;
 
    /* Handle aiming. */
    switch (w->outfit->type) {
@@ -585,8 +588,6 @@ static void weapon_render( Weapon* w, const double dt )
 
 
 /**
- * @fn static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
- *
  * @brief Updates an individual weapon.
  *
  *    @param w Weapon to update.
@@ -614,6 +615,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
       /* Beam weapons have special collisions. */
       if (outfit_isBeam(w->outfit)) {
+         /* Check for collision. */
          if (!areAllies(w->faction,pilot_stack[i]->faction) &&
                CollideLineSprite( &w->solid->pos, w->solid->dir,
                      w->outfit->u.bem.range,
@@ -743,7 +745,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
             ((player->target == p->id) || (RNGF() < 0.30*dt))) { /* 30% chance per second */
          parent = pilot_get(w->parent);
          if ((parent != NULL) && (parent->faction == FACTION_PLAYER) &&
-               (!pilot_isFlag(p,PILOT_HOSTILE) || (RNGF() < 0.5))) { /* 50% chance */
+               (!pilot_isFlag(p,PILOT_HOSTILE) || (RNGF()*dt < 0.5))) { /* 50% chance */
             faction_modPlayer( p->faction, -1. ); /* slowly lower faction */
          }
          pilot_rmFlag( p, PILOT_BRIBED );
@@ -1065,10 +1067,6 @@ void weapon_add( const Outfit* outfit, const double dir,
 
 
 /**
- * @fn int beam_start( const Outfit* outfit,
- *       const double dir, const Vector2d* pos, const Vector2d* vel,
- *       const unsigned int parent, const unsigned int target )
- *
  * @brief Starts a beam weaapon.
  *
  *    @param outfit Outfit which spawns the weapon.
@@ -1077,13 +1075,15 @@ void weapon_add( const Outfit* outfit, const double dir,
  *    @param vel Velocity of the shooter.
  *    @param parent Pilot ID of the shooter.
  *    @param target Target ID that is getting shot.
+ *    @param mount Mount on the ship.
  *    @return The identifier of the beam weapon.
  *
  * @sa beam_end
  */
 int beam_start( const Outfit* outfit,
       const double dir, const Vector2d* pos, const Vector2d* vel,
-      const unsigned int parent, const unsigned int target )
+      const unsigned int parent, const unsigned int target,
+      const int mount )
 {
    WeaponLayer layer;
    Weapon *w;
@@ -1098,6 +1098,7 @@ int beam_start( const Outfit* outfit,
    layer = (parent==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
    w = weapon_create( outfit, dir, pos, vel, parent, target );
    w->ID = ++beam_idgen;
+   w->mount = mount;
 
    /* set the proper layer */
    switch (layer) {
@@ -1138,8 +1139,6 @@ int beam_start( const Outfit* outfit,
 
 
 /**
- * @fn void beam_end( const unsigned int parent, int beam )
- *
  * @brief Ends a beam weapon.
  *
  *    @param parent ID of the parent of the beam.

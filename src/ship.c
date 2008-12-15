@@ -73,6 +73,54 @@ Ship* ship_get( const char* name )
 
 
 /**
+ * @brief Get the position of a ship mount point.
+ *
+ *    @param s Ship to get the mount point of.
+ *    @param dir Direction ship is facing.
+ *    @param id ID of the mount point to get.
+ *    @param[out] The position of the mount point.
+ *    @return 0 on success.
+ */
+int ship_getMount( Ship* s, double dir, const int id, Vector2d *p )
+{
+   ShipMount *m;
+   double cm, sm;
+
+   /* Special case no mounts. */
+   if ((id == 0) && (s->nmounts == 0)) {
+      p->x = 0.;
+      p->y = 0.;
+      return 0;
+   }
+
+   /* Check to see if mount is valid. */
+   if ((id >= s->nmounts) || (id < 0)) {
+      WARN("Invalid mount point id '%d' on ship class '%s'.", id,  s->name);
+      p->x = 0.;
+      p->y = 0.;
+      return 1;
+   }
+
+   m = &s->mounts[id];
+   /* 2d rotation matrix
+    * [ x' ]   [  cos  sin  ]   [ x ]
+    * [ y' ] = [ -sin  cos  ] * [ y ]
+    *
+    * dir is inverted so that rotation is counter-clockwise.
+    */
+   cm = cos(-dir);
+   sm = sin(-dir);
+   p->x = m->x * cm + m->y * sm;
+   p->y = m->x *-sm + m->y * cm;
+
+   /* Don't forget to add height. */
+   p->y += m->h;
+
+   return 0;
+}
+
+
+/**
  * @brief Gets all the ships in text form matching tech.
  *
  * You have to free all the strings created in the string array too.
@@ -287,6 +335,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    ShipOutfit *otemp, *ocur;
    char str[PATH_MAX];
    char* stmp;
+   int id;
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Ship) );
@@ -308,6 +357,10 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          temp->gfx_space = xml_parseTexture( node,
                SHIP_GFX"%s"SHIP_EXT, 6, 6,
                OPENGL_TEX_MAPTRANS );
+
+         /* Calculate mount angle. */
+         temp->mangle  = 2.*M_PI;
+         temp->mangle /= temp->gfx_space->sx * temp->gfx_space->sy;
 
          /* Load the comm graphic. */
          temp->gfx_comm = xml_parseTexture( node,
@@ -399,6 +452,32 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             }
          } while (xml_nextNode(cur));
          continue;
+      }
+      if (xml_isNode(node,"mounts")) {
+         /* First pass, get number of mounts. */
+         cur = node->children;
+         do {
+            if (xml_isNode(cur,"mount"))
+               temp->nmounts++;
+         } while (xml_nextNode(cur));
+         /* Allocate the space. */
+         temp->mounts = calloc( temp->nmounts, sizeof(ShipMount) );
+         /* Second pass, initialize the mounts. */
+         cur = node->children;
+         do {
+            if (xml_isNode(cur,"mount")) {
+               id = xml_getInt(cur);
+               xmlr_attr(cur,"x",stmp);
+               temp->mounts[id].x = atof(stmp);
+               free(stmp);
+               xmlr_attr(cur,"y",stmp);
+               temp->mounts[id].y = atof(stmp);
+               free(stmp);
+               xmlr_attr(cur,"h",stmp);
+               temp->mounts[id].h = atof(stmp);
+               free(stmp);
+            }
+         } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
    temp->thrust *= temp->mass; /* helps keep numbers sane */
@@ -492,30 +571,39 @@ int ships_load (void)
  */
 void ships_free (void)
 {
+   Ship *s;
    ShipOutfit *so, *sot;
    int i;
    for (i = 0; i < ship_nstack; i++) {
-      /* free stored strings */
-      if (ship_stack[i].name != NULL)
-         free(ship_stack[i].name);
-      if (ship_stack[i].description != NULL)
-         free(ship_stack[i].description);
-      if (ship_stack[i].gui != NULL)
-         free(ship_stack[i].gui);
-      if (ship_stack[i].fabricator != NULL)
-         free(ship_stack[i].fabricator);
-      if (ship_stack[i].license != NULL)
-         free(ship_stack[i].license);
+      s = &ship_stack[i];
 
-      so = ship_stack[i].outfit;
-      while (so) { /* free the outfits */
+      /* Free stored strings. */
+      if (s->name != NULL)
+         free(s->name);
+      if (s->description != NULL)
+         free(s->description);
+      if (s->gui != NULL)
+         free(s->gui);
+      if (s->fabricator != NULL)
+         free(s->fabricator);
+      if (s->license != NULL)
+         free(s->license);
+
+      /* Free outfits. */
+      so = s->outfit;
+      while (so) {
          sot = so;
          so = so->next;
          free(sot);
       }
 
-      gl_freeTexture(ship_stack[i].gfx_space);
-      gl_freeTexture(ship_stack[i].gfx_comm);
+      /* Free mounts. */
+      if (s->nmounts > 0)
+         free(s->mounts);
+
+      /* Free graphics. */
+      gl_freeTexture(s->gfx_space);
+      gl_freeTexture(s->gfx_comm);
       gl_freeTexture(ship_stack[i].gfx_target);
    }
    free(ship_stack);

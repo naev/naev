@@ -15,6 +15,7 @@
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #include "nxml.h"
 
@@ -89,9 +90,10 @@ static void pilot_update( Pilot* pilot, const double dt );
 static void pilot_hyperspace( Pilot* pilot );
 void pilot_render( Pilot* pilot ); /* externed in player.c */
 static void pilot_calcCargo( Pilot* pilot );
-void pilot_free( Pilot* p );
+void pilot_free( Pilot* p ); /* externed in player.c */
 static int fleet_parse( Fleet *temp, const xmlNodePtr parent );
 static void pilot_dead( Pilot* p );
+static int pilot_setOutfitMounts( Pilot *p, PilotOutfit* po, int o, int q );
 
 
 /**
@@ -397,6 +399,30 @@ void pilot_shootStop( Pilot* p, const int secondary )
 
 
 /**
+ * @brief Gets the mount position of a pilot.
+ *
+ *    @param p Pilot to get mount position of.
+ *    @param id ID of the mount.
+ *    @param[out] v Position of the mount.
+ *    @return 0 on success.
+ */
+int pilot_getMount( Pilot *p, int id, Vector2d *v )
+{
+   double a;
+
+   /* Calculate the sprite angle. */
+   a  = (double)(p->tsy * p->ship->gfx_space->sx + p->tsx);
+   a *= p->ship->mangle;
+
+   /* Get the mount and add the player offset. */
+   ship_getMount( p->ship, a, id, v );
+   vect_cadd( v, p->solid->pos.x, p->solid->pos.y );
+
+   return 0;
+}
+
+
+/**
  * @brief Actually handles the shooting, how often the player can shoot and such.
  *
  *    @param p Pilot that is shooting.
@@ -404,9 +430,19 @@ void pilot_shootStop( Pilot* p, const int secondary )
  */
 static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 {
+   int id;
+   Vector2d v;
+
    /* check to see if weapon is ready */
    if (w->timer > 0.)
       return;
+
+   /* Get weapon mount position. */
+   if (w->mounts == NULL)
+      id = 0;
+   else if (outfit_isTurret(w->outfit))
+      id = w->mounts[w->lastshot];
+   pilot_getMount( p, id, &v );
 
    /*
     * regular bolt weapons
@@ -418,7 +454,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 
       p->energy -= outfit_energy(w->outfit);
       weapon_add( w->outfit, p->solid->dir,
-            &p->solid->pos, &p->solid->vel, p->id, p->target );
+            &v, &p->solid->vel, p->id, p->target );
    }
 
    /*
@@ -432,7 +468,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
       /** @todo Handle warmup stage. */
       w->state = PILOT_OUTFIT_ON;
       w->beamid = beam_start( w->outfit, p->solid->dir,
-            &p->solid->pos, &p->solid->vel, p->id, p->target );
+            &v, &p->solid->vel, p->id, p->target, id );
    }
 
    /*
@@ -456,7 +492,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 
       p->energy -= outfit_energy(w->outfit);
       weapon_add( p->ammo->outfit, p->solid->dir,
-            &p->solid->pos, &p->solid->vel, p->id, p->target );
+            &v, &p->solid->vel, p->id, p->target );
 
       p->ammo->quantity -= 1; /* we just shot it */
       if (p->ammo->quantity <= 0) /* Out of ammo. */
@@ -476,7 +512,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 
       /* Create the escort. */
       escort_create( p->id, p->ammo->outfit->u.fig.ship,
-            &p->solid->pos, &p->solid->vel, 1 );
+            &v, &p->solid->vel, 1 );
 
       p->ammo->quantity -= 1; /* we just shot it */
       if (p->ammo->quantity <= 0) /* Out of ammo. */
@@ -487,7 +523,13 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
       WARN("Shooting unknown weapon type: %s", w->outfit->name);
    }
 
+   /* Reset timer. */
    w->timer += ((double)outfit_delay( w->outfit ) / (double)w->quantity)/1000.;
+
+   /* Mark last updated. */
+   w->lastshot++;
+   if (w->lastshot >= w->quantity)
+      w->lastshot = 0;
 }
 
 
@@ -1085,6 +1127,49 @@ void pilot_hyperspaceAbort( Pilot* p )
 
 
 /**
+ * @brief Sets the mount points for an outfit.
+ *
+ *    @param po Outfit to set mount points for.
+ *    @param o Original number of outfits.
+ *    @param q Outfits added.
+ *    @return 0 on success;
+ */
+static int pilot_setOutfitMounts( Pilot *p, PilotOutfit* po, int o, int q )
+{
+   int i, n, k, min;
+
+   /* Grow the memory. */
+   po->mounts = realloc(po->mounts, o+q * sizeof(int));
+
+   /* Has to be done for each outfit added. */
+   for (n=q; n > 0; n--) {
+
+      /* Special case no ship mounts. */
+      if (p->mounted == NULL) {
+         po->mounts[o+n-1] = 0;
+         continue;
+      }
+
+      /* Default to 0. */
+      k = 0;
+      min = INT_MAX;
+      /* Find mount with fewest spots. */
+      for (i=1; i<p->ship->nmounts; i++) {
+         if (p->mounted[i] < min) {
+            k = i;
+            min = p->mounted[i];
+         }
+      }
+      /* Add the mount point. */
+      po->mounts[o+n-1] = k;
+      p->mounted[k]++;
+   }
+
+   return 0;
+}
+
+
+/**
  * @brief Adds an outfit to the pilot.
  *
  *    @param pilot Pilot to add the outfit to.
@@ -1094,8 +1179,10 @@ void pilot_hyperspaceAbort( Pilot* p )
  */
 int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 {
-   int i, q, free_space;
+   int i;
+   int o, q, free_space;
    char *osec;
+   PilotOutfit *po;
 
    free_space = pilot_freeSpace( pilot );
    q = quantity;
@@ -1124,12 +1211,18 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
    /* does outfit already exist? */
    for (i=0; i<pilot->noutfits; i++)
       if (strcmp(outfit->name, pilot->outfits[i].outfit->name)==0) {
-         pilot->outfits[i].quantity += q;
+         po = &pilot->outfits[i];
+         o = po->quantity;
+         po->quantity += q;
          /* can't be over max */
-         if (pilot->outfits[i].quantity > outfit->max) {
-            q -= pilot->outfits[i].quantity - outfit->max;
-            pilot->outfits[i].quantity = outfit->max;
+         if (po->quantity > outfit->max) {
+            q -= po->quantity - outfit->max;
+            po->quantity = outfit->max;
          }
+
+         /* If it's a turret we need to find a mount spot for it. */
+         if (outfit_isTurret(outfit))
+            pilot_setOutfitMounts( pilot, po, o, q );
 
          /* recalculate the stats */
          pilot_calcStats(pilot);
@@ -1142,22 +1235,25 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
     * since pilot has only one afterburner it's handled at the end */
 
    /* grow the outfits */
-   pilot->outfits = realloc(pilot->outfits, (pilot->noutfits+1)*sizeof(PilotOutfit));
-   pilot->outfits[pilot->noutfits].outfit = outfit;
-   pilot->outfits[pilot->noutfits].quantity = q;
-   pilot->outfits[pilot->noutfits].timer = 0;
-   pilot->outfits[pilot->noutfits].beamid = 0;
+   pilot->noutfits++;
+   pilot->outfits = realloc(pilot->outfits, pilot->noutfits*sizeof(PilotOutfit));
+   po = &pilot->outfits[pilot->noutfits-1];
+   memset(po, 0, sizeof(PilotOutfit));
+   po->outfit = outfit;
+   po->quantity = q;
 
    /* can't be over max */
-   if (pilot->outfits[pilot->noutfits].quantity > outfit->max) {
-      q -= pilot->outfits[pilot->noutfits].quantity - outfit->max;
-      pilot->outfits[i].quantity = outfit->max;
+   if (po->quantity > outfit->max) {
+      q -= po->quantity - outfit->max;
+      po->quantity = outfit->max;
    }
-   pilot->outfits[pilot->noutfits].timer = 0; /* reset timer */
-   (pilot->noutfits)++;
+   po->timer = 0; /* reset timer */
 
-   if (outfit_isTurret(outfit)) /* used to speed up AI */
+   if (outfit_isTurret(outfit)) { /* used to speed up AI */
+      /* If it's a turret we need to find a mount spot for it. */
+      pilot_setOutfitMounts( pilot, po, 0, q );
       pilot_setFlag(pilot, PILOT_HASTURRET);
+   }
 
    if (outfit_isBeam(outfit)) /* Used to speed up some calculations. */
       pilot_setFlag(pilot, PILOT_HASBEAMS);
@@ -1197,6 +1293,10 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 
             /* hack in case it reallocs - can happen even when shrinking */
             osec = (pilot->secondary) ? pilot->secondary->outfit->name : NULL;
+
+            /* free some memory if needed. */
+            if (pilot->outfits[i].mounts != NULL)
+               free(pilot->outfits[i].mounts);
 
             /* remove the outfit */
             memmove( &pilot->outfits[i], &pilot->outfits[i+1],
@@ -1651,6 +1751,10 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, char *ai,
    /* solid */
    pilot->solid = solid_create(ship->mass, dir, pos, vel);
 
+   /* mounts */
+   if (ship->nmounts > 0)
+      pilot->mounted = calloc( ship->nmounts, sizeof(int) );
+
    /* outfits */
    if (!(flags & PILOT_NO_OUTFITS)) {
       if (ship->outfit) {
@@ -1822,15 +1926,23 @@ void pilot_free( Pilot* p )
       if (p->hook_type[i] != PILOT_HOOK_NONE)
          hook_rm( p->hook[i] );
 
+   free(p->name);
+
    /* Clean up data. */
    if (p->ai != NULL)
       ai_destroy(p); /* Must be destroyed first if applicable. */
-   if (player==p) player = NULL;
+   /* Case if pilot is the player. */
+   if (player==p)
+      player = NULL;
    solid_free(p->solid);
-   if (p->outfits) free(p->outfits);
-   free(p->name);
-   if (p->commodities) free(p->commodities);
-   if (p->escorts) free(p->escorts);
+   if (p->mounted != NULL)
+      free(p->mounted);
+   if (p->outfits)
+      free(p->outfits);
+   if (p->commodities)
+      free(p->commodities);
+   if (p->escorts)
+      free(p->escorts);
    free(p);
 }
 

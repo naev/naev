@@ -880,6 +880,12 @@
    <outfit quantity="2">Seeker Launcher</outfit>
    <outfit quantity="20">Seeker Missile</outfit>
   </outfits>
+  <mounts>
+   <mount x="30"  y="0"  h="3">0</mount>
+   <mount x="-18" y="-5" h="10">1</mount>
+   <mount x="-18" y="5"  h="10">2</mount>
+   <mount x="30"  y="0"  h="3">3</mount>
+  </mounts>
  </ship>
  <ship name="Pirate Kestrel">
   <GFX target="kestrel">kestrel_pirate</GFX>
@@ -915,5 +921,11 @@
    <outfit quantity="2">Seeker Launcher</outfit>
    <outfit quantity="20">Seeker Missile</outfit>
   </outfits>
+  <mounts>
+   <mount x="30"  y="0"  h="3">0</mount>
+   <mount x="-18" y="-5" h="10">1</mount>
+   <mount x="-18" y="5"  h="10">2</mount>
+   <mount x="30"  y="0"  h="3">3</mount>
+  </mounts>
  </ship>
 </Ships>

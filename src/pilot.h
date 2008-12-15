@@ -102,6 +102,8 @@ typedef struct PilotOutfit_ {
    int quantity; /**< Number of outfits of this type pilot has. */
    PilotOutfitState state; /**< State of the outfit. */
    int beamid; /**< ID of the beam used in this outfit, only used for beams. */
+   int *mounts; /**< ID of each outfit mount. */
+   int lastshot; /**< ID of the outfit that last shot. */
    double timer; /**< Used to store when it was last used. */
 } PilotOutfit;
 
@@ -185,6 +187,7 @@ typedef struct Pilot_ {
    uint32_t flags; /**< used for AI and others */
    double ptimer; /**< generic timer for internal pilot use */
    int lockons; /**< Stores how many seeking weapons are targetting pilot */
+   int *mounted; /**< Number of mounted outfits on the mount. */
 
    /* Hook attached to the pilot */
    int hook_type[PILOT_HOOKS]; /**< Type of the hook attached to the pilot. */
@@ -264,6 +267,7 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 double pilot_face( Pilot* p, const double dir );
 void pilot_hyperspaceAbort( Pilot* p );
 /* special outfit stuff. */
+int pilot_getMount( Pilot *p, int id, Vector2d *v );
 void pilot_switchSecondary( Pilot* p, int i );
 void pilot_setSecondary( Pilot* p, const char* secondary );
 void pilot_setAmmo( Pilot* p );

@@ -944,6 +944,25 @@ void player_render (void)
 
       /* Player is ontop of targeting graphic */
       pilot_render(player);
+
+   /* Use to test and debug mounts. */
+#if 0
+      int i;
+      Vector2d v;
+      double a;
+      for (i=0; i<player->ship->nmounts; i++) {
+         a  = (double)(player->tsy * player->ship->gfx_space->sx + player->tsx);
+         a *= player->ship->mangle;
+         ship_getMount( player->ship, a, i, &v );
+         glBegin(GL_LINES);
+            COLOUR(cRadar_player);
+            glVertex2d( v.x + 0., v.y + -3. );
+            glVertex2d( v.x + 0., v.y + 3. );
+            glVertex2d( v.x +-3., v.y + 0. );
+            glVertex2d( v.x + 3., v.y + 0. );
+         glEnd(); /* GL_LINES */
+      }
+#endif
    }
 }
 
@@ -2018,6 +2037,8 @@ void player_abortAutonav( char *reason )
  */
 void player_think( Pilot* pplayer )
 {
+   Pilot *target;
+
    /* last i heard, the dead don't think */
    if (pilot_isFlag(pplayer,PILOT_DEAD)) {
       /* no sense in accelerating or turning */
@@ -2043,10 +2064,12 @@ void player_think( Pilot* pplayer )
 
    /* turning taken over by PLAYER_FACE */
    if (player_isFlag(PLAYER_FACE)) { 
-      if (player->target != PLAYER_ID)
-         pilot_face( pplayer,
-               vect_angle( &player->solid->pos,
-                  &pilot_get(player->target)->solid->pos ));
+      if (player->target != PLAYER_ID) {
+         target = pilot_get(player->target);
+         if (target != NULL)
+            pilot_face( pplayer,
+                  vect_angle( &player->solid->pos, &target->solid->pos ));
+      }
       else if (planet_target != -1)
          pilot_face( pplayer,
                vect_angle( &player->solid->pos,

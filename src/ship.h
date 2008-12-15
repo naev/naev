@@ -19,8 +19,6 @@
 
 
 /**
- * @typedef ShipClass
- *
  * @brief Contains the different types of ships.
  *
  * See docs/ships/classification for more details.
@@ -56,8 +54,17 @@ typedef enum ShipClass_ {
 
 
 /**
- * @struct ShipOutfit
- *
+ * @brief Represents a ship weapon mount point.
+ */
+typedef struct ShipMount_ {
+   double x; /**< X position of the mount point. */
+   double y; /**< Y position of the mount point. */
+   double h; /**< Mount point height (displacement). */
+} ShipMount;
+
+
+
+/**
  * @brief Little wrapper for outfits.
  */
 typedef struct ShipOutfit_ {
@@ -68,8 +75,6 @@ typedef struct ShipOutfit_ {
 
 
 /**
- * @struct Ship
- *
  * @brief Represents a space ship.
  */
 typedef struct Ship_ {
@@ -120,6 +125,10 @@ typedef struct Ship_ {
    /* outfits */
    ShipOutfit* outfit; /**< Linked list of outfits. */
 
+   /* mounts */
+   ShipMount* mounts; /**< Ship weapon mount points.  First is primary weapon. */
+   int nmounts; /**< Number of mount points ship has. */
+   double mangle; /**< Mount angle to simplify mount calculations. */
 } Ship;
 
 
@@ -133,6 +142,7 @@ void ships_free (void);
 /*
  * get
  */
+int ship_getMount( Ship* s, double dir, const int id, Vector2d *p );
 Ship* ship_get( const char* name );
 Ship** ship_getTech( int *n, const int* tech, const int techmax );
 char* ship_class( Ship* s );
