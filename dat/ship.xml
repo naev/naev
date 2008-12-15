@@ -881,4 +881,39 @@
    <outfit quantity="20">Seeker Missile</outfit>
   </outfits>
  </ship>
+ <ship name="Pirate Kestrel">
+  <GFX target="kestrel">kestrel_pirate</GFX>
+  <GUI>minimal</GUI>
+  <sound>engine</sound>
+  <class>Cruiser</class>
+  <price>5700000</price>
+  <fabricator>Skull and Bones</fabricator>
+  <tech>9009</tech>
+  <description>The Kestrel is the best ship made the the Skull and Bones.  It is extremely agile for a cruiser yet doesn't even lack the firepower necessary to question the authority of the Empire.  A very strong ship for those pirates who can afford it.</description>
+  <movement>
+   <thrust>130</thrust>
+   <turn>110</turn>
+   <speed>150</speed>
+  </movement>
+  <health>
+   <shield>600</shield>
+   <armour>280</armour>
+   <energy>830</energy>
+   <shield_regen>380</shield_regen>
+   <armour_regen>90</armour_regen>
+   <energy_regen>1300</energy_regen>
+  </health>
+  <caracteristics>
+   <crew>28</crew>
+   <mass>2725</mass>
+   <fuel>300</fuel>
+   <cap_weapon>160</cap_weapon>
+   <cap_cargo>55</cap_cargo>
+  </caracteristics>
+  <outfits>
+   <outfit quantity="2">Heavy Ion Turret</outfit>
+   <outfit quantity="2">Seeker Launcher</outfit>
+   <outfit quantity="20">Seeker Missile</outfit>
+  </outfits>
+ </ship>
 </Ships>
