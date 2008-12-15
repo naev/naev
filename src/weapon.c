@@ -179,6 +179,7 @@ static void think_seeker( Weapon* w, const double dt )
    double vel;
    Pilot *p;
    int effect;
+   int spfx;
 
    if (w->target == w->parent) return; /* no self shooting */
 
@@ -205,6 +206,10 @@ static void think_seeker( Weapon* w, const double dt )
                   switch (effect) {
                      case 0: /* Blow up */
                         w->timer = -1.;
+                        spfx = outfit_spfxArmour(w->outfit);
+                        spfx_add( spfx, w->solid->pos.x, w->solid->pos.y,
+                              w->solid->vel.x, w->solid->vel.y,
+                              SPFX_LAYER_BACK ); /* presume back. */
                         break;
                      case 1: /* Stuck in left loop */
                         w->solid->dir_vel = w->outfit->u.amm.turn;
