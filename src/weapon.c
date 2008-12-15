@@ -168,8 +168,6 @@ void weapon_minimap( const double res, const double w,
 
 
 /**
- * @fn static void think_seeker( Weapon* w, const double dt )
- *
  * @brief The AI of seeker missiles.
  *
  *    @param w Weapon to do the thinking.
@@ -254,8 +252,6 @@ static void think_seeker( Weapon* w, const double dt )
 
 
 /**
- * @fn static void think_beam( Weapon* w, const double dt )
- *
  * @brief The pseudo-ai of the beam weapons.
  *
  *    @param w Weapon to do the thinking.
@@ -322,8 +318,6 @@ static void think_beam( Weapon* w, const double dt )
 
 
 /**
- * @fn void weapons_update( const double dt )
- *
  * @brief Updates all the weapon layers.
  *
  *    @param dt Current delta tick.
@@ -336,8 +330,6 @@ void weapons_update( const double dt )
 
 
 /**
- * @fn static void weapons_updateLayer( const double dt, const WeaponLayer layer )
- *
  * @brief Updates all the weapons in the layer.
  *
  *    @param dt Current delta tick.
@@ -461,8 +453,6 @@ void weapons_render( const WeaponLayer layer, const double dt )
 
 
 /**
- * @fn static void weapon_render( Weapon* w, const double dt )
- *
  * @brief Renders an individual weapon.
  *
  *    @param w Weapon to render.
@@ -666,8 +656,6 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
 
 /**
- * @fn static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
- *
  * @brief Weapon hit the pilot.
  *
  *    @param w Weapon involved in the collision.
@@ -715,9 +703,6 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
 
 
 /**
- * @fn static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
- *       Vector2d pos[2], const double dt )
- *
  * @brief Weapon hit the pilot.
  *
  *    @param w Weapon involved in the collision.
@@ -1000,10 +985,6 @@ static Weapon* weapon_create( const Outfit* outfit,
 
 
 /**
- * @fn void weapon_add( const Outfit* outfit, const double dir,
- *                      const Vector2d* pos, const Vector2d* vel,
- *                      unsigned int parent, unsigned int target )
- *
  * @brief Creates a new weapon.
  *
  *    @param outfit Outfit which spawns the weapon.
@@ -1183,8 +1164,6 @@ void beam_end( const unsigned int parent, int beam )
 
 
 /**
- * @fn static void weapon_destroy( Weapon* w, WeaponLayer layer )
- *
  * @brief Destroys a weapon.
  *
  *    @param w Weapon to destroy.
@@ -1242,8 +1221,6 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
 
 
 /**
- * @fn static void weapon_free( Weapon* w )
- *
  * @brief Frees the weapon.
  *
  *    @param w Weapon to free.
@@ -1255,8 +1232,6 @@ static void weapon_free( Weapon* w )
 }
 
 /**
- * @fn void weapon_clear (void)
- *
  * @brief Clears all the weapons, does NOT free the layers.
  */
 void weapon_clear (void)
@@ -1271,8 +1246,6 @@ void weapon_clear (void)
 }
 
 /**
- * @fn void weapon_exit (void)
- *
  * @brief Destroys all the weapons and frees it all.
  */
 void weapon_exit (void)
@@ -1294,10 +1267,6 @@ void weapon_exit (void)
 
 
 /**
- * @fn void weapon_explode( double x, double y, double radius,
- *       DamageType dtype, double damage,
- *       unsigned int parent, int mode )
- *
  * @brief Clears possible exploded weapons.
  */
 void weapon_explode( double x, double y, double radius,
