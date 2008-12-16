@@ -1284,7 +1284,7 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
    c = (outfit_isMod(outfit)) ? outfit->u.mod.cargo : 0;
    q = quantity;
    for (i=0; i<pilot->noutfits; i++)
-      if (strcmp(outfit->name, pilot->outfits[i].outfit->name)==0) {
+      if (pilot->outfits[i].outfit == outfit) {
          po = &pilot->outfits[i];
 
          /* Remove quantity. */
