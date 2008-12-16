@@ -509,6 +509,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    MELEMENT(temp->mass==0,"mass");
    MELEMENT(temp->cap_cargo==0,"cap_cargo");
    MELEMENT(temp->cap_weapon==0,"cap_weapon");
+   MELEMENT(temp->mounts==NULL,"mounts");
 #undef MELEMENT
 
    return 0;
