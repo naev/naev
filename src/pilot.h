@@ -269,7 +269,6 @@ void pilot_hyperspaceAbort( Pilot* p );
 /* special outfit stuff. */
 int pilot_getMount( Pilot *p, int id, Vector2d *v );
 void pilot_switchSecondary( Pilot* p, int i );
-void pilot_setSecondary( Pilot* p, const char* secondary );
 void pilot_setAmmo( Pilot* p );
 int pilot_getAmmo( Pilot* p, Outfit* o );
 void pilot_setAfterburner( Pilot* p );

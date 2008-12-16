@@ -94,6 +94,7 @@ void pilot_free( Pilot* p ); /* externed in player.c */
 static int fleet_parse( Fleet *temp, const xmlNodePtr parent );
 static void pilot_dead( Pilot* p );
 static int pilot_setOutfitMounts( Pilot *p, PilotOutfit* po, int o, int q );
+static void pilot_setSecondary( Pilot* p, Outfit* o );
 
 
 /**
@@ -690,12 +691,12 @@ void pilot_runHook( Pilot* p, int hook_type )
  *    @param p Pilot to set secondary weapon.
  *    @param secondary Name of the secondary weapon to set.
  */
-void pilot_setSecondary( Pilot* p, const char* secondary )
+static void pilot_setSecondary( Pilot* p, Outfit* o )
 {
    int i;
 
    /* no need for ammo if there is no secondary */
-   if (secondary == NULL) {
+   if (o == NULL) {
       p->secondary = NULL;
       p->ammo = NULL;
       return;
@@ -703,7 +704,7 @@ void pilot_setSecondary( Pilot* p, const char* secondary )
 
    /* find which is the secondary and set ammo appropriately */
    for (i=0; i<p->noutfits; i++) {
-      if (strcmp(secondary, p->outfits[i].outfit->name)==0) {
+      if (p->outfits[i].outfit == o) {
          p->secondary = &p->outfits[i];
          pilot_setAmmo( p );
          return;
@@ -1181,7 +1182,7 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 {
    int i;
    int o, q, free_space;
-   char *osec;
+   Outfit *osec;
    PilotOutfit *po;
 
    free_space = pilot_freeSpace( pilot );
@@ -1230,7 +1231,7 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
       }
 
    /* hacks in case it reallocs */
-   osec = (pilot->secondary) ? pilot->secondary->outfit->name : NULL;
+   osec = (pilot->secondary) ? pilot->secondary->outfit : NULL;
    /* no need for ammo since it's handled in setSecondary,
     * since pilot has only one afterburner it's handled at the end */
 
@@ -1278,7 +1279,7 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 {
    int i, j, q, c, o;
-   char* osec;
+   Outfit *osec;
    PilotOutfit *po;
 
    c = (outfit_isMod(outfit)) ? outfit->u.mod.cargo : 0;
@@ -1306,7 +1307,7 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
             q += po->quantity;
 
             /* hack in case it reallocs - can happen even when shrinking */
-            osec = (pilot->secondary) ? pilot->secondary->outfit->name : NULL;
+            osec = (pilot->secondary) ? pilot->secondary->outfit : NULL;
 
             /* free some memory if needed. */
             if (po->mounts != NULL)
