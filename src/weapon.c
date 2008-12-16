@@ -780,7 +780,7 @@ static Weapon* weapon_create( const Outfit* outfit,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const unsigned int parent, const unsigned int target )
 {
-   Vector2d v, vp;
+   Vector2d v;
    double mass, rdir;
    Pilot *pilot_target;
    double x,y, t, dist;
@@ -841,15 +841,11 @@ static Weapon* weapon_create( const Outfit* outfit,
          if ((rdir > 2.*M_PI) || (rdir < 0.))
             rdir = fmod(rdir, 2.*M_PI);
 
-         /* Set the position to incude sprite size. */
-         vect_cset( &vp, pos->x + cos(rdir)*w->outfit->u.blt.gfx_space->sx/2.,
-               pos->y + sin(rdir)*w->outfit->u.blt.gfx_space->sy/2. );
-
          mass = 1; /* Lasers are presumed to have unitary mass */
          vectcpy( &v, vel );
          vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
          w->timer = outfit->u.blt.range/outfit->u.blt.speed;
-         w->solid = solid_create( mass, rdir, &vp, &v );
+         w->solid = solid_create( mass, rdir, pos, &v );
          w->voice = sound_playPos(w->outfit->u.blt.sound, 
                w->solid->pos.x + w->solid->vel.x, 
                w->solid->pos.y + w->solid->vel.y);
