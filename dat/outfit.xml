@@ -283,7 +283,7 @@
  <outfit name="Banshee Launcher">
   <general>
    <max>2</max>
-   <tech>4</tech>
+   <tech>9</tech>
    <license>Medium Weapon License</license>
    <mass>10</mass>
    <price>25000</price>
@@ -298,7 +298,7 @@
  <outfit name="Banshee Rocket">
   <general>
    <max>40</max>
-   <tech>7</tech>
+   <tech>6</tech>
    <license>Medium Weapon License</license>
    <mass>0</mass>
    <price>100</price>
