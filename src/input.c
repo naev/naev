@@ -387,34 +387,46 @@ static void input_key( int keynum, double value, int kabs )
       if (value==KEY_PRESS) input_accelLast = t;
    /* Afterburning. */
    } else if (KEY("afterburn") && INGAME() && NOHYP()) {
-      if (value==KEY_PRESS) player_afterburn();
-      else if (value==KEY_RELEASE) player_afterburnOver();
+      if (value==KEY_PRESS)
+         player_afterburn();
+      else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_AFTERBURNER))
+         player_afterburnOver();
 
    /* turning left */
    } else if (KEY("left")) {
-      /* set flags for facing correction */
-      if (value==KEY_PRESS) { 
-         player_abortAutonav(NULL);
-         player_setFlag(PLAYER_TURN_LEFT); 
-      }
-      else if (value==KEY_RELEASE) player_rmFlag(PLAYER_TURN_LEFT);
+      if (kabs)
+         player_turn = -value;
+      else {
+         /* set flags for facing correction */
+         if (value==KEY_PRESS) { 
+            player_abortAutonav(NULL);
+            player_setFlag(PLAYER_TURN_LEFT); 
+         }
+         else if (value==KEY_RELEASE)
+            player_rmFlag(PLAYER_TURN_LEFT);
 
-      if (kabs) { player_turn = -value; }
-      else { player_turn -= value; }
-      if (player_turn < -1.) player_turn = -1.; /* make sure value is sane */
+         player_turn -= value;
+      }
+      /* Make sure the value is sane. */
+      if (player_turn < -1.) player_turn = -1.;
 
    /* turning right */
    } else if (KEY("right")) {
-      /* set flags for facing correction */
-      if (value==KEY_PRESS) {
-         player_abortAutonav(NULL);
-         player_setFlag(PLAYER_TURN_RIGHT);
-      }
-      else if (value==KEY_RELEASE) player_rmFlag(PLAYER_TURN_RIGHT);
+      if (kabs)
+         player_turn = value;
+      else {
+         /* set flags for facing correction */
+         if (value==KEY_PRESS) {
+            player_abortAutonav(NULL);
+            player_setFlag(PLAYER_TURN_RIGHT);
+         }
+         else if (value==KEY_RELEASE)
+            player_rmFlag(PLAYER_TURN_RIGHT);
 
-      if (kabs) { player_turn = value; }
-      else { player_turn += value; }
-      if (player_turn > 1.) { player_turn = 1.; } /* make sure value is sane */
+         player_turn += value;
+      }
+      /* Make sure the value is sane. */
+      if (player_turn > 1.) player_turn = 1.;
    
    /* turn around to face vel */
    } else if (KEY("reverse")) {
@@ -422,7 +434,7 @@ static void input_key( int keynum, double value, int kabs )
          player_abortAutonav(NULL);
          player_setFlag(PLAYER_REVERSE);
       }
-      else if (value==KEY_RELEASE) {
+      else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_REVERSE)) {
          player_rmFlag(PLAYER_REVERSE);
          player_turn = 0; /* turning corrections */
          if (player_isFlag(PLAYER_TURN_LEFT)) { player_turn -= 1; }
@@ -456,7 +468,7 @@ static void input_key( int keynum, double value, int kabs )
          player_abortAutonav(NULL);
          player_setFlag(PLAYER_FACE);
       }
-      else if (value==KEY_RELEASE) {
+      else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_FACE)) {
          player_rmFlag(PLAYER_FACE);
          player_turn = 0; /* turning corrections */
          if (player_isFlag(PLAYER_TURN_LEFT)) { player_turn -= 1; }
@@ -488,9 +500,12 @@ static void input_key( int keynum, double value, int kabs )
     */
    /* shooting secondary weapon */
    } else if (KEY("secondary") && NOHYP()) {
-      player_abortAutonav(NULL);
-      if (value==KEY_PRESS) { player_setFlag(PLAYER_SECONDARY); }
-      else if (value==KEY_RELEASE) { player_rmFlag(PLAYER_SECONDARY); }
+      if (value==KEY_PRESS) {
+         player_abortAutonav(NULL);
+         player_setFlag(PLAYER_SECONDARY);
+      }
+      else if (value==KEY_RELEASE)
+         player_rmFlag(PLAYER_SECONDARY);
 
    /* selecting secondary weapon */
    } else if (KEY("secondary_next") && INGAME()) {
@@ -624,11 +639,16 @@ static void input_keyevent( int event, SDLKey key, SDLMod mod )
 
    mod &= ~(KMOD_CAPS | KMOD_NUM | KMOD_MODE); /* We want to ignore "global" modifiers. */
 
-   for (i=0; strcmp(keybindNames[i],"end"); i++)
+   for (i=0; strcmp(keybindNames[i],"end"); i++) {
       if ((input_keybinds[i]->type == KEYBIND_KEYBOARD) &&
-            (input_keybinds[i]->key == key) &&
-            ((input_keybinds[i]->mod == mod) || (input_keybinds[i]->mod == KMOD_ALL))) 
-         input_key(i, event, 0);
+            (input_keybinds[i]->key == key)) {
+         if ((input_keybinds[i]->mod == mod) ||
+               (input_keybinds[i]->mod == KMOD_ALL) ||
+               (event == KEY_RELEASE)) /**< Release always gets through. */
+            input_key(i, event, 0);
+            /* No break so all keys get pressed if needed. */
+      }
+   }
 }
 
 
