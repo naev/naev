@@ -113,6 +113,9 @@ int ship_getMount( Ship* s, double dir, const int id, Vector2d *p )
    p->x = m->x * cm + m->y * sm;
    p->y = m->x *-sm + m->y * cm;
 
+   /* Correction for ortho perspective. */
+   p->y *= M_SQRT1_2;
+
    /* Don't forget to add height. */
    p->y += m->h;
 
