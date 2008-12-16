@@ -1277,25 +1277,40 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
  */
 int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 {
-   int i, q, c;
+   int i, j, q, c, o;
    char* osec;
+   PilotOutfit *po;
 
    c = (outfit_isMod(outfit)) ? outfit->u.mod.cargo : 0;
    q = quantity;
    for (i=0; i<pilot->noutfits; i++)
       if (strcmp(outfit->name, pilot->outfits[i].outfit->name)==0) {
-         pilot->outfits[i].quantity -= quantity;
-         if (pilot->outfits[i].quantity <= 0) {
+         po = &pilot->outfits[i];
+
+         /* Remove quantity. */
+         o = po->quantity;
+         po->quantity -= quantity;
+
+         /* Remove from mount points. */
+         if ((pilot->mounted != NULL) && (po->mounts != NULL)) {
+            for (j=o-1; j >= po->quantity; j--) {
+               if (po->mounts[j] != 0)
+                  pilot->mounted[ po->mounts[j] ]--;
+            }
+         }
+
+         /* Need to remove the outfit. */
+         if (po->quantity <= 0) {
 
             /* we didn't actually remove the full amount */
-            q += pilot->outfits[i].quantity;
+            q += po->quantity;
 
             /* hack in case it reallocs - can happen even when shrinking */
             osec = (pilot->secondary) ? pilot->secondary->outfit->name : NULL;
 
             /* free some memory if needed. */
-            if (pilot->outfits[i].mounts != NULL)
-               free(pilot->outfits[i].mounts);
+            if (po->mounts != NULL)
+               free(po->mounts);
 
             /* remove the outfit */
             memmove( &pilot->outfits[i], &pilot->outfits[i+1],
