@@ -860,6 +860,8 @@ void pilot_explode( double x, double y, double radius,
       rx = p->solid->pos.x - x;
       ry = p->solid->pos.y - y;
       dist = pow2(rx) + pow2(ry);
+      /* Take into account ship size. */
+      dist += pow2(p->ship->gfx_space->sw) + pow2(p->ship->gfx_space->sh);
 
       /* Pilot is hit. */
       if (dist < rad2) {
