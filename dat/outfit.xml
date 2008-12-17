@@ -811,7 +811,7 @@ By adding quite a dense layer of Plasteel to your ship you can increase it's stu
  <outfit name="Heavy Combat Vessel License">
   <general>
    <max>1</max>
-   <tech>9999</tech>
+   <tech>13</tech>
    <mass>0</mass>
    <price>900000</price>
    <gfx_store>license</gfx_store>
