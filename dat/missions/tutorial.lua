@@ -111,7 +111,7 @@ Try to board the ship now.]]
    2) Get away from gravity wells until navigation turns green or use autopilot 'ctrl + j'.
    3) Use 'j' to initialize the jump.
    
-Try doing this now, since you haven't explored any systems just pick any one and try jumping.]]
+Try doing this now, since you haven't explored any systems just pick any one and try jumping.  I'd recommend the one on the bottom right if you don't want trouble.]]
    -- Stage 9
    title[14] = "Tutorial Finished"
    text[28] = [[And this concludes the tutorial.  You should now know how to:
