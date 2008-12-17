@@ -474,7 +474,10 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
                temp->mounts[id].x = atof(stmp);
                free(stmp);
                xmlr_attr(cur,"y",stmp);
-               temp->mounts[id].y = atof(stmp);
+               temp->mounts[id].y  = atof(stmp);
+               /* Since we measure in pixels, we have to modify it so it
+                *  doesn't get corrected by the ortho correction. */
+               temp->mounts[id].y *= M_SQRT2;
                free(stmp);
                xmlr_attr(cur,"h",stmp);
                temp->mounts[id].h = atof(stmp);
