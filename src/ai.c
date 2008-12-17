@@ -308,11 +308,17 @@ static void ai_setMemory (void)
    lua_State *L;
    L = cur_pilot->ai->L;
 
+   /* */
    lua_getglobal(L, "pilotmem");
+   /* pilotmem */
    lua_pushnumber(L, cur_pilot->id);
+   /* pilotmem, id */
    lua_gettable(L, -2);
+   /* pilotmem, table */
    lua_setglobal(L, "mem");
+   /* pilotmem */
    lua_pop(L,1);
+   /* */
 }
 
 
