@@ -22,7 +22,7 @@ function escort ()
    target = mem.escort
 
    -- Will just float without a target to escort.
-   if target == nil then
+   if not ai.exists(target) then
       return
    end
    
