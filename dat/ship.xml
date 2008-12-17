@@ -1006,7 +1006,7 @@
   <price>5700000</price>
   <fabricator>Skull and Bones</fabricator>
   <tech>9009</tech>
-  <description>The Kestrel is the best ship made the Skull and Bones.  It is extremely agile for a cruiser yet doesn't even lack the firepower necessary to question the authority of the Empire.  A very strong ship for those pirates who can afford it.</description>
+  <description>The Kestrel is the best ship made by the Skull and Bones.  It is extremely agile for a cruiser yet doesn't even lack the firepower necessary to question the authority of the Empire.  A very strong ship for those pirates who can afford it.</description>
   <movement>
    <thrust>130</thrust>
    <turn>110</turn>
