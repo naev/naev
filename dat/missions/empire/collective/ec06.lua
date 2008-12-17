@@ -231,7 +231,7 @@ function land ()
    -- Final landing stage
    if misn_stage == 4 and planet == misn_base then
 
-      tk.msg( title[3], text[3] )
+      tk.msg( title[3], string.format(text[3], misn_base:name()) )
 
       -- Rewards
       player.modFaction("Empire",5)
