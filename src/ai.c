@@ -1487,6 +1487,7 @@ static int ai_aim( lua_State *L )
    Vector2d tv;
    double dist, diff;
    double mod;
+   double speed;
    NLUA_MIN_ARGS(1);
 
    /* Only acceptable parameter is pilot id */
@@ -1505,8 +1506,17 @@ static int ai_aim( lua_State *L )
    /* Get the distance */
    dist = vect_dist( &cur_pilot->solid->pos, &p->solid->pos );
 
+   /* Check if should recalculate weapon speed with secondary weapon. */
+   if ((cur_pilot->secondary != NULL) &&
+         outfit_isBolt(cur_pilot->secondary->outfit) &&
+         (cur_pilot->secondary->outfit->type == OUTFIT_TYPE_MISSILE_DUMB)) {
+      speed  = cur_pilot->weap_speed + outfit_speed(cur_pilot->secondary->outfit);
+      speed /= 2.;
+   }
+   else speed = cur_pilot->weap_speed;
+
    /* Time for shots to reach that distance */
-   t = dist / cur_pilot->weap_speed;
+   t = dist / speed;
 
    /* Position is calculated on where it should be */
    x = p->solid->pos.x + p->solid->vel.x*t
@@ -1567,7 +1577,8 @@ static int ai_settarget( lua_State *L )
 static int outfit_isMelee( Pilot *p, PilotOutfit *o )
 {
    (void) p;
-   if (outfit_isBolt(o->outfit) || outfit_isBeam(o->outfit))
+   if (outfit_isBolt(o->outfit) || outfit_isBeam(o->outfit) ||
+         (o->outfit->type == OUTFIT_TYPE_MISSILE_DUMB))
       return 1;
    return 0;
 }
@@ -1578,7 +1589,9 @@ static int outfit_isMelee( Pilot *p, PilotOutfit *o )
  */
 static int outfit_isRanged( Pilot *p, PilotOutfit *o )
 {
-   if (outfit_isFighterBay(o->outfit) || outfit_isLauncher(o->outfit)) {
+   if (outfit_isFighterBay(o->outfit) ||
+         (outfit_isLauncher(o->outfit) &&
+            (o->outfit->type != OUTFIT_TYPE_MISSILE_DUMB))) {
       /* Must have ammo. */
       if (pilot_getAmmo( p, o->outfit ) <= 0)
          return 0;
