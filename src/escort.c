@@ -63,7 +63,7 @@ int escort_create( unsigned int parent, char *ship,
    /* Get important stuff. */
    p = pilot_get(parent);
    s = ship_get(ship);
-   snprintf(buf, 16, "tpl/escort*%u", parent);
+   snprintf(buf, 16, "escort*%u", parent);
 
    /* Set flags. */
    f = PILOT_ESCORT;
