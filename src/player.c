@@ -2063,7 +2063,7 @@ void player_think( Pilot* pplayer )
    }
 
    /* turning taken over by PLAYER_FACE */
-   if (player_isFlag(PLAYER_FACE)) { 
+   else if (player_isFlag(PLAYER_FACE)) { 
       if (player->target != PLAYER_ID) {
          target = pilot_get(player->target);
          if (target != NULL)
