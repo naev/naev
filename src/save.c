@@ -95,7 +95,7 @@ int save_all (void)
    xmlTextWriterPtr writer;
 
    /* Create the writer. */
-   writer = xmlNewTextWriterDoc(&doc, 0);
+   writer = xmlNewTextWriterDoc(&doc, 1);
    if (writer == NULL) {
       ERR("testXmlwriterDoc: Error creating the xml writer");
       return -1;
