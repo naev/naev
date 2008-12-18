@@ -903,29 +903,35 @@ static Weapon* weapon_create( const Outfit* outfit,
                w->solid->pos.y + w->solid->vel.y);
          break;
 
-      /* Turrets are a special case. */
+      /* Dumb missiles and turrets. */
       case OUTFIT_TYPE_TURRET_DUMB_AMMO:
-         pilot_target = pilot_get(w->target);
-         if (pilot_target == NULL)
-            rdir = dir;
+      case OUTFIT_TYPE_MISSILE_DUMB_AMMO:
+         if (w->outfit->type == OUTFIT_TYPE_TURRET_DUMB_AMMO) {
+            pilot_target = pilot_get(w->target);
+            if (pilot_target == NULL)
+               rdir = dir;
 
+            else {
+               /* Get the distance */
+               dist = vect_dist( pos, &pilot_target->solid->pos );
+
+               /* Aim. */
+               /* Try to predict where the enemy will be. */
+               /* Time for shots to reach that distance */
+               t = dist / w->outfit->u.amm.speed;
+
+               /* Position is calculated on where it should be */
+               x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
+                  - (pos->x + vel->x*t);
+               y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
+                  - (pos->y + vel->y*t);
+
+               /* Set angle to face. */
+               rdir = ANGLE(x, y);
+            }
+         }
          else {
-            /* Get the distance */
-            dist = vect_dist( pos, &pilot_target->solid->pos );
-
-            /* Aim. */
-            /* Try to predict where the enemy will be. */
-            /* Time for shots to reach that distance */
-            t = dist / w->outfit->u.amm.speed;
-
-            /* Position is calculated on where it should be */
-            x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
-               - (pos->x + vel->x*t);
-            y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
-               - (pos->y + vel->y*t);
-
-            /* Set angle to face. */
-            rdir = ANGLE(x, y);
+            rdir = dir;
          }
          if (outfit->u.amm.accuracy != 0.) {
             rdir += NormalInverse( RNGF()*0.9 + 0.05 ) /* Get rid of extreme values */
@@ -944,33 +950,7 @@ static Weapon* weapon_create( const Outfit* outfit,
          w->timer = outfit->u.amm.duration;
          w->solid = solid_create( mass, rdir, pos, &v );
          if (w->outfit->u.amm.thrust != 0.)
-            vect_pset( &w->solid->force, w->outfit->u.amm.thrust, rdir );
-         w->voice = sound_playPos(w->outfit->u.amm.sound,
-               w->solid->pos.x + w->solid->vel.x,
-               w->solid->pos.y + w->solid->vel.y);
-         break;
-
-      /* Dumb missiles are a mixture of missile and bolt */
-      case OUTFIT_TYPE_MISSILE_DUMB_AMMO:
-         mass = w->outfit->mass;
-
-         rdir = dir;
-
-         if (outfit->u.amm.accuracy != 0.) {
-            rdir += NormalInverse( RNGF()*0.9 + 0.05 ) /* Get rid of extreme values */
-               * outfit->u.amm.accuracy/2. * 1./180.*M_PI;
-            if ((rdir > 2.*M_PI) || (rdir < 0.))
-               rdir = fmod(rdir, 2.*M_PI);
-         }
-         
-         /* If thrust is 0. we assume it starts out at speed. */
-         if (outfit->u.amm.thrust == 0.)
-            vect_pset( &v, w->outfit->u.amm.speed, rdir );
-         else
-            vectnull( &v );
-
-         w->timer = outfit->u.amm.duration;
-         w->solid = solid_create( mass, rdir, pos, &v );
+            vect_pset( &w->solid->force, w->outfit->u.amm.thrust * mass, rdir );
          w->voice = sound_playPos(w->outfit->u.amm.sound,
                w->solid->pos.x + w->solid->vel.x,
                w->solid->pos.y + w->solid->vel.y);
@@ -1290,7 +1270,7 @@ static void weapon_explodeLayer( WeaponLayer layer,
       unsigned int parent, int mode )
 {
    (void)parent;
-   int i;
+   int i;   
    Weapon **curLayer;
    int *nLayer;
    double dist, rad2;
