@@ -94,21 +94,28 @@ int save_all (void)
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
 
+   /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);
    if (writer == NULL) {
       ERR("testXmlwriterDoc: Error creating the xml writer");
       return -1;
    }
 
+   /* Set the writer parameters. */
+   xmlTextWriterSetIndentString(writer, (const xmlChar*)" ");
+   xmlTextWriterSetIndent(writer, 1);
+
+   /* Start element. */
    xmlw_start(writer);
    xmlw_startElem(writer,"naev_save");
 
-   /* save the version and such */
+   /* Save the version and such. */
    xmlw_startElem(writer,"version");
    xmlw_elem( writer, "naev", "%d.%d.%d", VMAJOR, VMINOR, VREV );
    xmlw_elem( writer, "data", ndata_name() );
    xmlw_endElem(writer); /* "version" */
 
+   /* Save the data. */
    if (save_data(writer) < 0) {
       ERR("Trying to save game data");
       xmlFreeTextWriter(writer);
@@ -116,9 +123,11 @@ int save_all (void)
       return -1;
    }
 
+   /* Finish element. */
    xmlw_endElem(writer); /* "naev_save" */
    xmlw_done(writer);
 
+   /* Write to file. */
    if (nfile_dirMakeExist("%ssaves", nfile_basePath()) < 0) {
       WARN("aborting save...");
       xmlFreeTextWriter(writer);
