@@ -365,7 +365,7 @@
    <energy_regen>75</energy_regen>
   </specific>
  </outfit>
- <outfit name="Shield Capacitator">
+ <outfit name="Shield Capacitor">
   <general>
    <max>12</max>
    <tech>9</tech>
