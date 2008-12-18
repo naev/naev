@@ -16,7 +16,7 @@ done
 cd ..
 
 # Check unused exterior gfx
-echo "   Unused planet space gfx"
+echo "   Unused planet exterior gfx"
 cd exterior
 for SPACE in *.png; do
    if [ -z "`grep $SPACE ../$DATA`" ]; then
@@ -42,7 +42,7 @@ done
 cd ..
 
 # Check unused exterior gfx
-echo "   Overused planet space gfx"
+echo "   Overused planet exterior gfx"
 cd exterior
 for SPACE in *.png; do
    COUNT=`grep -c $SPACE ../$DATA`
