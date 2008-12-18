@@ -5,7 +5,7 @@
    Fifth mission in the collective mini campaign.
 
    You must go rescue a team of commandos after being attacked by collective
-    forces on a surveillence mission.
+    forces on a surveillance mission.
 
 ]]--
 

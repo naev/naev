@@ -12,8 +12,8 @@
   <general>
    <population>17000000</population>
    <prodfactor>0.5</prodfactor>
-   <bar>The bar is just off the starport with a great view of the harbour.  You could watch the fishermen run frantically about attending their duties for hours.</bar>
-   <description>The surface of the planet is predominantly covered with water and the planetary climate is characterised by abundant precipitation and strong winds, yet tolerable enough to make special and expensive weather control measures unnecessary. Habitable land is often characterised by soft meadows, swamps and dense forests. The resource base of Caladan consists mainly of agriculture and biomass, with the locally bred and grown pundi rice being its main export, and fishing a traditional source of sustenance for its people. Other traditional products include wine and various livestock, most prominently cattle. Cuisine on Caladan is rather refined, with most dishes containing meat.</description>
+   <bar>The bar is just off the starport with a great view of the harbor.  You could watch the fishermen run frantically about attending their duties for hours.</bar>
+   <description>The surface of the planet is predominantly covered with water and the planetary climate is characterized by abundant precipitation and strong winds, yet tolerable enough to make special and expensive weather control measures unnecessary. Habitable land is often characterized by soft meadows, swamps and dense forests. The resource base of Caladan consists mainly of agriculture and biomass, with the locally bred and grown pundi rice being its main export, and fishing a traditional source of sustenance for its people. Other traditional products include wine and various livestock, most prominently cattle. Cuisine on Caladan is rather refined, with most dishes containing meat.</description>
    <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -159,7 +159,7 @@
    <population>700</population>
    <prodfactor>0.5</prodfactor>
    <bar>The bar is maintained by off-duty scientists and soldiers.  It's very small and doesn't have much offerings.  There's not much ambient noise, it seems like the boredom has gotten the best of most of the people.</bar>
-   <description>Named after the guardian dog of hell for its role in monitoring and observing the immense Sol nebulae.  It was created shortly after the nebulae stabilized.  Exact details are confidential and there's more then enough military influence to make it suspicious.  With all the conspiration theories around the Incident, one can never be too sure where reality ends and fiction starts.</description>
+   <description>Named after the guardian dog of hell for its role in monitoring and observing the immense Sol nebulae.  It was created shortly after the nebulae stabilized.  Exact details are confidential and there's more then enough military influence to make it suspicious.  With all the conspiracy theories around the Incident, one can never be too sure where reality ends and fiction starts.</description>
    <faction>Empire</faction>
    <tech>
     <main>0</main>
@@ -198,7 +198,7 @@
   <general>
    <population>12000</population>
    <prodfactor>0.8</prodfactor>
-   <bar>The Tau Prime algae has a very strong stench which seems to envelope the bar completely.  The smell is soo strong you can actually taste it.  It doesn't taste nearly as good unprocessed. Most algae runners stop to grab drinks between runs to try to get the taste of the algae out of their mouth, although the usually use licor made out of processed algae to do that.</bar>
+   <bar>The Tau Prime algae has a very strong stench which seems to envelope the bar completely.  The smell is so strong you can actually taste it.  It doesn't taste nearly as good unprocessed. Most algae runners stop to grab drinks between runs to try to get the taste of the algae out of their mouth, although the usually use liquor made out of processed algae to do that.</bar>
    <description>Tau Station was constructed with the sole purpose of exploiting the algae produced on Tau Prime.  Being a completely watery algae world with a very corrosive environment, it was deemed more profitable to build a space station then a city on the planet surface.   From the station windows you can see heavy algae collectors flying to and from the surface on their endless algae runs.</description>
    <faction>Empire</faction>
    <commodities>
@@ -225,7 +225,7 @@
    <population>20000</population>
    <prodfactor>0.7</prodfactor>
    <bar>The drinks served in the Furnance, as the bar calls itself are of a pretty strange variety.  They are generally very strong and served at a warm temperature.  The house specialties also contain volcanic ash which is harvested on the planet surface.  A strange bar indeed.</bar>
-   <description>Doranthex Prime is a mostly molten planet.  The only exception is a small island that drifts around the surface mainly around the polar regions.  On this island the Dvaered have established a small base, mainly for research and military prototyping, although civilians are allowed in the main facilities.  Due to the intense temperatures they are shielded by over 50 m of temperature isolating plating, which doesn't allow any views of the planet itself once you've landed.</description>
+   <description>Doranthex Prime is a mostly molten planet.  The only exception is a small island that drifts around the surface mainly around the polar regions.  On this island the Dvaered have established a small base, mainly for research and military prototyping, although civilians are allowed in the main facilities.  Due to the intense temperatures they are shielded by over 50m of temperature isolating plating, which doesn't allow any views of the planet itself once you've landed.</description>
    <faction>Dvaered</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -278,7 +278,7 @@
   <general>
    <population>14000</population>
    <prodfactor>0.3</prodfactor>
-   <bar>The Omega Canteen is a dark place that seems calm, although everytime a robotic drone approaches an alarm sounds sending pilots to man their ships to  fight off the menace.</bar>
+   <bar>The Omega Canteen is a dark place that seems calm, although everytime a robotic drone approaches an alarm sounds sending pilots to man their ships to fight off the menace.</bar>
    <description>Built to defend the Empire from the Collective.  The Omega Station has been the observer of countless battles fought in its sector.  It's helped keep a stalemate in the sector.</description>
    <faction>Empire</faction>
    <commodities>
@@ -461,8 +461,8 @@
   <general>
    <population>9000</population>
    <prodfactor>0.6</prodfactor>
-   <bar>The Slop and Grill is one of the nastiest taverns in the universe.  The food and drink doesn't exactly help.  Most of it is brewed on New Haven and wouldn't pass any of the minimal health insurance tests.  Some of the booze even doubles as ship fuel if needed, which says a lot about the quality.The clients are also deep space thugs, pirates, contrabandiers, mercenaries and othe shady folk that insist on keeping the ground coated with blood and broken teeth.  Not a great place to bring the family.</bar>
-   <description>New Haven is a small planet located beyond the boundries of law and justice.  Founded by Bartax the Great, one of the most successful pirates to ever live after the old Haven was annihilated.The planet is mostly covered by very toxic gases and has a lot of radiation if you stray from the stronghold.  These very features are what made the Empire qualify it as uninhabitable as it doesn't have any strategic resources.  It's distance from other civilized worlds also gives it a nice cover from prying eyes.</description>
+   <bar>The Slop and Grill is one of the nastiest taverns in the universe.  The food and drink doesn't exactly help.  Most of it is brewed on New Haven and wouldn't pass any of the minimal health insurance tests.  Some of the booze even doubles as ship fuel if needed, which says a lot about the quality.The clients are also deep space thugs, pirates, black marketers, mercenaries and other shady folk that insist on keeping the ground coated with blood and broken teeth.  Not a great place to bring the family.</bar>
+   <description>New Haven is a small planet located beyond the boundaries of law and justice.  Founded by Bartax the Great, one of the most successful pirates to ever live after the old Haven was annihilated.The planet is mostly covered by very toxic gases and has a lot of radiation if you stray from the stronghold.  These very features are what made the Empire qualify it as uninhabitable as it doesn't have any strategic resources.  It's distance from other civilized worlds also gives it a nice cover from prying eyes.</description>
    <faction>Pirate</faction>
    <commodities>
     <commodity>Medicine</commodity>
@@ -546,7 +546,7 @@
    <population>3000</population>
    <prodfactor>0.2</prodfactor>
    <bar>Another big dirty bar full of hulking, smelly, sweaty Dvaereds.  They make a good brew though.</bar>
-   <description>Constructed by many captured and then enslaved FLF armsmen.  The design is pretty sturdy but you can't help to think there must be a hidden bomb somewhere, just waiting to go off and kill the Dvaered opressors.</description>
+   <description>Constructed by many captured and then enslaved FLF armsmen.  The design is pretty sturdy but you can't help to think there must be a hidden bomb somewhere, just waiting to go off and kill the Dvaered oppressors.</description>
    <faction>Dvaered</faction>
    <tech>
     <main>3</main>
@@ -599,7 +599,7 @@
    <population>130000</population>
    <prodfactor>0.3</prodfactor>
    <bar>There's nothing remarkable about the Nor spaceport bar.  It's full of drunken Dvaereds trying to forget their hard labour.</bar>
-   <description>Nor was one of the first Dvaered worlds to be terraformed.  It's abundance in gas and ores made it a strategic location and has since then been heavily reenforced after FLF attacks and sabotages.</description>
+   <description>Nor was one of the first Dvaered worlds to be terraformed.  It's abundance in gas and ores made it a strategic location and has since then been heavily reinforced after FLF attacks and sabotages.</description>
    <faction>Dvaered</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -663,7 +663,7 @@
   <general>
    <population>70000</population>
    <prodfactor>0.4</prodfactor>
-   <bar>The spaceport bar is aproximately 3 km below the surface of the planet.  Most of the walls are of a hardened transparet polymer that allows you to see into the darkness of the water.  Every so often you can notice a gelatinous creature slide around, barely illuminated by the bar lighting.</bar>
+   <bar>The spaceport bar is approximately 3 km below the surface of the planet.  Most of the walls are of a hardened transparent polymer that allows you to see into the darkness of the water.  Every so often you can notice a gelatinous creature slide around, barely illuminated by the bar lighting.</bar>
    <description>Anecu is a completely aquatic planet.  It's surface is covered completely by water.  In the shallow areas great underwater cities are constructed, as the climate above the water can be very harsh (waves been recorded to be up to 2 km high).  The planet boasts of extensive ship designing facilities, using the high pressure water as a testbed for ships of all sorts.</description>
    <faction>Dvaered</faction>
    <commodities>

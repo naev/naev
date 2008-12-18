@@ -44,7 +44,7 @@ else -- default english
 They start leading you away from the bar through some hallways you've never been through.  Must be all those 'Authorized Personnel Only' signs and the armed guards that didn't make them too appealing.
 Finally they toss you into what seems to be an interrogation room, telling you just to wait there.]]
    text[2] = [[After what seems to be a decaSTU you hear the door open.  You see a condecorated women walk in with two soldiers at the door.  She seems to be a Commodore from the insignia on her uniform.
-"Hello, I'm Commodore Keer, I've taken over the Collective issue.  I have heard about your success in the previous missions and would like to offer you more continued work.  However furthur procedings must be kept in strict confidentiality for the interest of the Empire.  You willing to go all the way with this?"]]
+"Hello, I'm Commodore Keer, I've taken over the Collective issue.  I have heard about your success in the previous missions and would like to offer you more continued work.  However further proceedings must be kept in strict confidentiality for the interest of the Empire.  You willing to go all the way with this?"]]
    text[3] = [[You accept and she then dismisses both of the soldiers who proceed to wait outside.
 "We've been following Sergeant Dimitri's progress since he started at %s.  The datapad you brought back has confirmed what we have suspected.  We have a undercover Collective agent somewhere in the military who's been feeding ex-Commodore Welsh data.  You don't understand right?  Let me explain."]]
    text[4] = [["The Collective was actually a project for the Empire, they were supposed to  be the ultimate weapon in flexibility and offense.  Commodore Welsh was in charge of the secret science facility on %s.  Shortly after the Incident we stopped hearing from the science facility.  We sent a recon and were met with hostile Collective drones.  It seems like the project had been a success, but the traitor Welsh went rogue.  Under normal circumstances we would have easily crushed the Collective, but after the incident these are hardly normal circumstances."
@@ -54,7 +54,7 @@ She goes on, "Things have gone out of hand.  We have had chances to crush Welsh,
    text[6] = [[You see Commodore Keer with a dozen soldiers waiting for you outside the landing pad.
 "Congratulations on the success %s.  We never really expected to take Zakred alive.  Good riddance.  The next step is to begin an all out attack on Collective territory.  Meet up in the bar when you're ready.  We'll need all available pilots."]]
    text[7] = [[You see Commodore Keer with a dozen soldiers waiting for you outside the landing pad.
-"You weren't supposed to let the Trinity get away!  Now we have no cards to play, we must wait for the Collective response or new information before being able to continue.  We'll notify you if we have somthing you can do for us, but for now we just wait."]]
+"You weren't supposed to let the Trinity get away!  Now we have no cards to play, we must wait for the Collective response or new information before being able to continue.  We'll notify you if we have something you can do for us, but for now we just wait."]]
    -- Conversation between pilots
    talk = {}
    talk[1] = "ESS Trinity:  Please turn off your engines and prepare to be boarded."

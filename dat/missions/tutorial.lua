@@ -55,7 +55,7 @@ else -- default english
    'ctrl + tab' cycles through ships backwards.
    't' targets nearest ship.
    'r' targets nearest hostile.]]
-   text[7] = [[I'll bring in a couple of ships so you can try playing around with targetting.  You'll notice your targetted ship gets hilighted blue in the radar (top-right).  You can use the + and - key on the keypad to change the zoom on the map.  Yellow is neutral, red is hostile, green is friendly and grey is inert.  The new ships will be yellow.]]
+   text[7] = [[I'll bring in a couple of ships so you can try playing around with targetting.  You'll notice your targetted ship gets highlighted blue in the radar (top-right).  You can use the + and - key on the keypad to change the zoom on the map.  Yellow is neutral, red is hostile, green is friendly and grey is inert.  The new ships will be yellow.]]
    -- Step 4
    title[4] = "Combat Tutorial"
    text[8] = [[Now let's try using the weapon systems.  There are primarily three keys:
@@ -64,7 +64,7 @@ else -- default english
    'shift' shoots secondary weapon.]]
    text[9] = [[Your ship (Llama) only has a single Laser Cannon as a primary weapon, so we'll try using that.  I'll put in a Dummy Llama so you can try destroying it.  So try targetting it with 'tab' or 't' and then approach it and shoot it with 'space' until it is disabled.  You can also use 'a' to autoface the target you have selected.]]
    -- Step 5
-   text[10] = [[Good.  Now that the Llama is disabled you can try to board it.  To board a ship you must target it and then go very slow and stop above it.  Once you're ontop of the ship you can hit 'b' which will allow you to board the ship to steal resources.
+   text[10] = [[Good.  Now that the Llama is disabled you can try to board it.  To board a ship you must target it and then go very slow and stop above it.  Once you're on top of the ship you can hit 'b' which will allow you to board the ship to steal resources.
 Try to board the ship now.]]
    -- Back to Step 4
    text[11] = [[You weren't supposed to destroy the Llama!  I'll add another so you can try again.]]
@@ -77,7 +77,7 @@ Try to board the ship now.]]
    text[15] = [[Landing is also how you save in NAEV.  Every time you land, it'll save your game.  So don't land if you just screwed up an important mission or pissed off a big faction.  The keys involved with landing are:
    'p' cycles through planets.
    'l' lands or targets nearest planet if none selected.  Needed to get confirmation.]]
-   text[16] = [[The easiest way to land is to hit 'l' to get the first land target and get the lack acknowledgement.  Then you have to "board" the planet, meaning go and brake on top of it.  Then you hit 'l' again to land.  Try doing this now.]]
+   text[16] = [[The easiest way to land is to hit 'l' to get the first land target and get the lack acknowledgment.  Then you have to "board" the planet, meaning go and brake on top of it.  Then you hit 'l' again to land.  Try doing this now.]]
    text[17] = [[This is the land window.  Here you can see an image of where you are with a  description of where you landed.  Depending on the planet you'll have various services available.  Services include:
    * Commodity Exchange
    * Spaceport Bar
@@ -100,7 +100,7 @@ Try to board the ship now.]]
    text[24] = [[In this final part of the tutorial we'll deal with long-distance navigation.  All ships in NAEV are equipped with a hyperspace drive and universe map.  Important keys to remember:
    'm' opens the system map.
    'h' cycles through hyperspace targets.
-   'j' attemps to enter hyperspace or aborts an attempt.
+   'j' attempts to enter hyperspace or aborts an attempt.
    'ctrl + j' actives autonavigation pilot.]]
    title[12] = "System Map"
    text[25] = [[We'll first talk about the map.  When you open your map you'll notice it's very empty.  That's because you haven't explored much yet.  As you explore stuff or buy star maps it'll expand.  Each circle represents a system, and the lines represent hyperspace routes.  You can click on a system to select it as a hyperspace target.  If it's far away the autonav system will make a route to it which your autonavigation pilot can use.  The colour of each jump indicates whether you have enough fuel or not to make it.]]

@@ -32,7 +32,7 @@ else -- default english
    msg_msg = {}
    msg_title[1] = "Too many missions"
    msg_msg[1] = "You have too many active missions."
-   msg_title[2] = "Succesful Delivery"
+   msg_title[2] = "Successful Delivery"
    msg_msg[2] = "The workers unload the %s at the docks."
    msg_msg[5] = "The %s leave your ship."
    msg_title[3] = "Cargo Missing"

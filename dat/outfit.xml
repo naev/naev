@@ -97,7 +97,7 @@
    <license>Medium Weapon License</license>
    <mass>9</mass>
    <price>15000</price>
-   <description>Ion pulses were originally intended only to deactivate shields since they had completely nullified the old radiation technology weapons.  It was thought that by figuring out a way to deactivate shields fast the radiation technology would still be able to destroy the armour.  By combining shield destruction power and armour destruction power, the perfect weopns could be designed.  The Ion pulses ended up being very effective against armour and electronics.  With the invention of the latest generation shields and armour materials, Ion pulses have lost much of the terrain they had as newfound technology.</description>
+   <description>Ion pulses were originally intended only to deactivate shields since they had completely nullified the old radiation technology weapons.  It was thought that by figuring out a way to deactivate shields fast the radiation technology would still be able to destroy the armour.  By combining shield destruction power and armour destruction power, the perfect weapons could be designed.  The Ion pulses ended up being very effective against armour and electronics.  With the invention of the latest generation shields and armour materials, Ion pulses have lost much of the terrain they had as newfound technology.</description>
    <gfx_store>medium</gfx_store>
   </general>
   <specific type="bolt">
@@ -120,7 +120,7 @@
    <mass>35</mass>
    <license>Heavy Weapon License</license>
    <price>75000</price>
-   <description>The heavy Ion Turret uses a bigger generator for each cannon giving it more punch then the Ion cannnon.  The drawback is that this augments the power usage considerably.  Being designed for capital ships, this doesn't seem to worry the makers too much.</description>
+   <description>The heavy Ion Turret uses a bigger generator for each cannon giving it more punch then the Ion cannon.  The drawback is that this augments the power usage considerably.  Being designed for capital ships, this doesn't seem to worry the makers too much.</description>
    <gfx_store>turret2</gfx_store>
   </general>
   <specific type="turret bolt">
@@ -188,7 +188,7 @@
    <tech>13</tech>
    <mass>60</mass>
    <price>745000</price>
-   <description>The Ragnorak Beam is one of the most powerful beam class weapons on the market.  It's designed for capital ship combat, although it's extremely high payload makes it also somewhat useful for clearing enemy fighters.</description>
+   <description>The Ragnorak Beam is one of the most powerful beam class weapons on the market.  It's designed for capital ship combat, although its extremely large payload makes it also somewhat useful for clearing enemy fighters.</description>
    <gfx_store>turret3</gfx_store>
   </general>
   <specific type="turret beam" secondary="1">
@@ -248,7 +248,7 @@
    <license>Medium Weapon License</license>
    <mass>12</mass>
    <price>40000</price>
-   <description>The Headhunter Launcher is one of the most used missile launcher by the security companies.  Much more reliable then the regular missiles, Headhunters feature more sensors and an advanced tracking system making them much better at hitting their targets.</description>
+   <description>The Headhunter Launcher is one of the most used missile launchers by the security companies.  Much more reliable then the regular missiles, Headhunters feature more sensors and an advanced tracking system making them much better at hitting their targets.</description>
    <gfx_store>missile</gfx_store>
   </general>
   <specific type="missile smart" secondary="1">
@@ -384,7 +384,7 @@
    <tech>10</tech>
    <mass>5</mass>
    <price>145000</price>
-   <description>A shield generator that feeds off the ship's main energy line.  It will allow you to generate your shield faster and give you a small maximum shield boost at the expense of draining osem of the ship's energy.</description>
+   <description>A shield generator that feeds off the ship's main energy line.  It will allow you to generate your shield faster and give you a small maximum shield boost at the expense of draining some of the ship's energy.</description>
    <gfx_store>shield</gfx_store>
   </general>
   <specific type="modification">
@@ -428,7 +428,7 @@
    <tech>13</tech>
    <mass>1</mass>
    <price>130000</price>
-   <description>With the adding of a couple additional steering thruster you can make it so that your ship is much agile at turning.</description>
+   <description>With the adding of a couple of additional steering thrusters you can make your ship very agile at turning.</description>
    <gfx_store>thruster</gfx_store>
   </general>
   <specific type="modification">
@@ -493,7 +493,7 @@
    <tech>6</tech>
    <mass>15</mass>
    <price>35000</price>
-   <description>Cargo Pods are big containers you can attach to dedicated weapon space allowing you to transport more cargo.  The drawback is that you lose alot of weapon space and won't be able to defend your cargo as well...</description>
+   <description>Cargo Pods are big containers you can attach to dedicated weapon space allowing you to transport more cargo.  The drawback is that you lose a lot of weapon space and won't be able to defend your cargo as well...</description>
    <gfx_store>cargo_pod</gfx_store>
   </general>
   <specific type="modification">
@@ -532,7 +532,7 @@
    <tech>7</tech>
    <mass>2</mass>
    <price>40000</price>
-   <description>This jammer allows you to block the targetting systems of some of the missiles headed towards you, causing them to do unpredictable behaviours and not impact against your ship.</description>
+   <description>This jammer allows you to block the targetting systems of some of the missiles headed towards you, giving them unpredictable behaviors, likely not to impact with your ship.</description>
    <gfx_store>jammer0</gfx_store>
   </general>
   <specific type="jammer">
@@ -578,7 +578,7 @@
    <license>Medium Weapon License</license>
    <mass>2</mass>
    <price>700</price>
-   <description>The Mace rocket is a very heavy fast accelerating rocket designed for high speed collisions.  The rockets doesn't have too much explosive, instead it has a lot of fuel for the acceleration it uses to combust.  Most of the damage it does is from the impact and not the explosion though.</description>
+   <description>The Mace rocket is a very heavy, fast accelerating rocket designed for high speed collisions.  The rockets doesn't have too much explosive, instead it has a lot of fuel it uses for the acceleration.  Most of the damage it does is from the impact and not the explosion though.</description>
    <gfx_store>mace</gfx_store>
   </general>
   <specific type="missile dumb ammo">
@@ -599,7 +599,7 @@
    <mass>17</mass>
    <price>31000</price>
    <gfx_store>empgrenadelauncher</gfx_store>
-   <description>This launcher can fire EMP grenades in any direction using a unique internal guidance system.  These are favored by Traders for escaping from pirates.</description>
+   <description>This launcher can fire EMP grenades in any direction using a unique internal guidance system.  These are favored by traders for escaping from pirates.</description>
   </general>
   <specific type="turret dumb" secondary="1">
    <ammo>EMP Grenade</ammo>
@@ -613,7 +613,7 @@
    <mass>1</mass>
    <price>600</price>
    <gfx_store>empgrenade</gfx_store>
-   <description>This is a grenade that can be launched to unleash EMP blasts rendering most electronics in the area useless.  Good for taking ships alive instead of killing them as the EMP blasts rarely destroy the ship instead leaving it intact with non-working electronics.</description>
+   <description>This is a grenade that can be launched to unleash EMP blasts rendering most electronics in the area useless.  Good for taking ships alive instead of killing them, as the EMP blasts rarely destroy the ship, leaving it intact with non-working electronics instead.</description>
   </general>
   <specific type="turret dumb ammo">
    <gfx spin="0.3">empgrenade</gfx>
@@ -633,7 +633,7 @@
    <mass>15</mass>
    <price>65000</price>
    <gfx_store>plasteel</gfx_store>
-   <description>Plasteel was one of man's greatest improvements on materials.  It's a cheap, very strong armour that seems to take the best from both the plastic and steel.  You can bend it relatively easily while keeping it's incredible strength.  The Second Growth was only possible with this amazing new material.
+   <description>Plasteel was one of man's greatest improvements on materials.  It's a cheap, very strong armour that seems to take the best from both plastic and steel.  You can bend it relatively easily while keeping it's incredible strength.  The Second Growth was only possible with this amazing new material.
 By adding quite a dense layer of Plasteel to your ship you can increase it's sturdiness by a lot.  Although with the advent of even newer materials Plasteel is starting to fade in popularity, although it's lower price tag always seems to keep a loyal customer base.</description>
   </general>
   <specific type="modification">
@@ -647,7 +647,7 @@ By adding quite a dense layer of Plasteel to your ship you can increase it's stu
    <mass>35</mass>
    <price>365000</price>
    <gfx_store>nanobond</gfx_store>
-   <description>Nanobond is the succesor to Plasteel.  It follows the same approach but has a much more refined manufacturing process with much more control on the small scale.  The result is a much more robust and dense material although much more expensive.</description>
+   <description>Nanobond is the successor to Plasteel.  It follows the same approach but has a much more refined manufacturing process with much more control on the small scale.  The result is a much more robust and dense material although much more expensive.</description>
   </general>
   <specific type="modification">
    <armour>120</armour>
@@ -660,7 +660,7 @@ By adding quite a dense layer of Plasteel to your ship you can increase it's stu
    <mass>57</mass>
    <price>1120000</price>
    <gfx_store>biometal</gfx_store>
-   <description>Biometal is a metal armour that will actually regenerate itself thanks to some special bacteria it uses.  The downside is that this makes it much bulkier and expensive then just using more refined Nanobond.  The results are pretty formidable, but it's hard to equip such an armour on anything short of a Destroyer.</description>
+   <description>Biometal is a metal armour that will actually regenerate itself thanks to some special bacteria it uses.  The downside is that this makes it much bulkier and more expensive then just using a more refined Nanobond.  The results are pretty formidable, but it's hard to equip such armour on anything short of a Destroyer.</description>
   </general>
   <specific type="modification">
    <armour>150</armour>
@@ -674,7 +674,7 @@ By adding quite a dense layer of Plasteel to your ship you can increase it's stu
    <mass>3</mass>
    <price>430000</price>
    <gfx_store>droid</gfx_store>
-   <description>The low maintenance droid crew will scour your ship to repair any damages caused by space hazards.  They are very small and able to work both on interior or exterior of the ship.  Power is drawn from the ship to feed the robots, although the load is generally very low compared to the benefits of having a robotic repair crew.</description>
+   <description>This low maintenance droid crew will scour your ship to repair any damages caused by space hazards.  They are very small and able to work both on the interior or exterior of the ship.  Power is drawn from the ship to feed the robots, although the load is generally very low compared to the benefits of having a robotic repair crew.</description>
   </general>
   <specific type="modification">
    <armour_regen>30</armour_regen>
@@ -689,7 +689,7 @@ By adding quite a dense layer of Plasteel to your ship you can increase it's stu
    <mass>12</mass>
    <price>170000</price>
    <gfx_store>reactor_i</gfx_store>
-   <description>Adding a complementary reactor to your ship is a great way to get that extra energy boost you need.  This do not replace the existing reactor but work alongside it and hook up directly to the energy flux.</description>
+   <description>Adding a complementary reactor to your ship is a great way to get that extra energy boost you need.  This do not replace the existing reactor but works alongside it and hooks up directly to the energy flux.</description>
   </general>
   <specific type="modification">
    <energy>20</energy>
@@ -717,7 +717,7 @@ By adding quite a dense layer of Plasteel to your ship you can increase it's stu
    <mass>46</mass>
    <price>970000</price>
    <gfx_store>reactor_iii</gfx_store>
-   <description>The class III reactor pretty much makes all your energy worries negligable.  It follows the traditional fusion approach of the class I reactor, only making it much bigger.  The size increase makes it only fit comfortably on large vessels, but the energy output is also suited for those.</description>
+   <description>The class III reactor pretty much makes all your energy worries negligible.  It follows the traditional fusion approach of the class I reactor, only making it much bigger.  The size increase makes it only fit comfortably on large vessels, but the energy output is also suited for those.</description>
   </general>
   <specific type="modification">
    <energy>100</energy>

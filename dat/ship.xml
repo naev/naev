@@ -8,7 +8,7 @@
   <price>120000</price>
   <fabricator>Melendez Corp.</fabricator>
   <tech>2</tech>
-  <description>One of the most widely used ships in the galaxy.  Renowned for itss stability and stubborness.  The design hasn't been modified much since its creation many many years ago.  It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
+  <description>One of the most widely used ships in the galaxy.  Renowned for its stability and stubbornness.  The design hasn't been modified much since its creation many many years ago.  It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
   <movement>
    <thrust>220</thrust>
    <turn>150</turn>
@@ -83,7 +83,7 @@
   <fabricator>Nexus</fabricator>
   <tech>8</tech>
   <license>Medium Combat Vessel License</license>
-  <description>The Pacifier is one of the older and trustier designs of the Nexus Corporation.  Was constructed mainly to patrol border systems.  They are very heavy fighters designed to be able to take a pounding and dish out damage, but the cost has been maneuverability.  No reason to run though if you're in one of these.</description>
+  <description>The Pacifier is one of the older and trustier designs of the Nexus Corporation.  Was constructed mainly to patrol border systems.  They are very heavy fighters designed to be able to take a pounding and dish out damage, but the cost has been maneuverability.  No reason to run away if you're in one of these.</description>
   <movement>
    <thrust>180</thrust>
    <turn>115</turn>
@@ -249,7 +249,7 @@
   <fabricator>Nexus</fabricator>
   <tech>7</tech>
   <license>Light Combat Vessel License</license>
-  <description>One of the Nexus' prize heavy fighters.  Was originally a secret design for the Empire military, but then disclosed.  Now a modified version is available for civilians, although it doesn't meet up to the original specifications.Used by security agencies all over the universe for its reliability and availability. Proudly enforcing your security since UST 1132.</description>
+  <description>One of the Nexus' prize heavy fighters.  Was originally a secret design for the Empire military, but then disclosed.  Now a modified version is available for civilians, although it doesn't meet up to the original specifications.  Used by security agencies all over the universe for its reliability and availability.  Proudly enforcing your security since UST 1132.</description>
   <movement>
    <thrust>220</thrust>
    <turn>135</turn>
@@ -330,7 +330,7 @@
   <fabricator>Melendez Corp.</fabricator>
   <tech>5</tech>
   <license>Large Civilian Vessel License</license>
-  <description>A heavy liner specialized in freighting cargo all over the universe.  Also has good accomodations for passengers depending on the model allowing for enjoyable cruises.  Was a favorite target of pirates until they added stock turrets to the new models which can now defend themselves properly.</description>
+  <description>A heavy liner specialized in freighting cargo all over the universe.  Also has good accommodations for passengers depending on the model, allowing for enjoyable cruises.  Was a favorite target of pirates until they added stock turrets to the new models which can now defend themselves properly.</description>
   <movement>
    <thrust>100</thrust>
    <turn>100</turn>
@@ -405,7 +405,7 @@
   <price>500000</price>
   <fabricator>Nexus</fabricator>
   <tech>11</tech>
-  <description>The Gawain is a very high end ship that heavily uses the technology developed with the Lancelot.  It's widely used as a sporting rig as it is extremely maneuverable, although they are rarely used in combat because they are too expensive for the little firepower they can apport.</description>
+  <description>The Gawain is a very high end ship that heavily uses the technology developed with the Lancelot.  It's widely used as a sporting rig as it is extremely maneuverable, although they are rarely used in combat because they are too expensive for the little firepower they can support.</description>
   <movement>
    <thrust>320</thrust>
    <turn>170</turn>
@@ -443,7 +443,7 @@
   <fabricator>House Goddard</fabricator>
   <tech>1001</tech>
   <license>Heavy Combat Vessel License</license>
-  <description>The archaic design of the Goddard is decieving.  Although it takes the shape of traditional flying intra-planet vessels, it's very suited for space travel.Production is entirely done on Zhiru en the Goddard system by House Goddard the sole providor and dealer in Goddards.  Over time, specialization and improvements on the original time have kept it very competitive in the market.  It's a classic of space.</description>
+  <description>The archaic design of the Goddard is deceiving.  Although it takes the shape of traditional flying intra-planet vessels, it's very suited for space travel.  Production is entirely done on Zhiru in the Goddard system by House Goddard the sole provider and dealer in Goddards.  Over time, specialization and improvements on the original design have kept it very competitive in the market.  It's a classic of space.</description>
   <movement>
    <thrust>100</thrust>
    <turn>80</turn>
@@ -656,7 +656,7 @@
   <price>180000</price>
   <fabricator>Sirius Systems</fabricator>
   <tech>5</tech>
-  <description>The Schroedinger is primarily used as a reconnaissance vessel.  It has very far autonomy thanks to its special fuel tanks and light frame.  The downside is that the ship is extremely vulnerable to attack.  It also sports a twin pair of Eraedon engines, making it pretty maneuverable.</description>
+  <description>The Schroedinger is primarily used as a reconnaissance vessel.  It is very autonomous thanks to its special fuel tanks and light frame.  The downside is that the ship is extremely vulnerable to attack.  It also sports a twin pair of Eraedon engines, making it pretty maneuverable.</description>
   <movement>
    <thrust>260</thrust>
    <turn>165</turn>
@@ -1006,7 +1006,7 @@
   <price>5700000</price>
   <fabricator>Skull and Bones</fabricator>
   <tech>9009</tech>
-  <description>The Kestrel is the best ship made by the Skull and Bones.  It is extremely agile for a cruiser yet doesn't even lack the firepower necessary to question the authority of the Empire.  A very strong ship for those pirates who can afford it.</description>
+  <description>The Kestrel is the best ship made by the Skull and Bones.  It is extremely agile for a cruiser yet doesn't lack the firepower necessary to question the authority of the Empire.  A very strong ship for those pirates who can afford it.</description>
   <movement>
    <thrust>130</thrust>
    <turn>110</turn>

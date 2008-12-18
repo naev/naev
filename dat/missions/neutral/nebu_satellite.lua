@@ -26,7 +26,7 @@ else -- default english
    text = {}
    text[1] = [[You are sitting at the bar when you are approached by a couple of short guys.  They seem a bit nervous and one mutters something about whether it's a good idea or not.  Eventually one of them comes up to you.
 "Hello Captain, we're looking for a ship to take us into the Sol Nebulae.  Would you be willing to take us there?"]]
-   text[2] = [["We had a trip scheduled with some Space Trader ship, but they backed out at the last minute.  So we were stuck here until you came.  We've got probe satellite that we have to release in the %s system to monitor the nebulae's growth rate.  The probe launch procedure is pretty straightforward and shouldn't have any complications."
+   text[2] = [["We had a trip scheduled with some Space Trader ship, but they backed out at the last minute.  So we were stuck here until you came.  We've got probe satellite that we have to release in the %s system to monitor the nebula's growth rate.  The probe launch procedure is pretty straightforward and shouldn't have any complications."
 He takes a deep breath, "We hope to be able to find out more secrets of the Sol Nebulae so man can once again regain it's lost patrimony.  So far the radiation and volatility of the deeper areas haven't been very kind to our instruments.  That's why we designed this Satellite we're going to launch."]]
    text[3] = [["The plan is for you to take us to %s so we can launch the probe then back to our home at %s in the %s system.  The probe will automatically send us the data we need if all goes well.  You'll be paid %d credits when we arrive."]]
    text[4] = [[The scientists thank you for your help before going back to their home to continue their nebulae research.]]

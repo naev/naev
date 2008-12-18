@@ -19,7 +19,7 @@ else -- default english
    msg_title = {}
    msg_title[1] = "Mission Accepted"
    msg_title[2] = "Too many missions"
-   msg_title[3] = "Succesful Delivery"
+   msg_title[3] = "Successful Delivery"
    msg_msg = {}
    msg_msg[1] = "The Empire workers load the %d tons of %s onto your ship."
    msg_msg[2] = "You have too many active missions."
