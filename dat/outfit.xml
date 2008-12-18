@@ -586,8 +586,8 @@
    <sound>missile</sound>
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <duration>5</duration>
-   <thrust>600</thrust>
+   <duration>3</duration>
+   <thrust>300</thrust>
    <speed>1000</speed>
    <damage type="kinetic">35</damage>
   </specific>
