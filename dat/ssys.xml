@@ -81,6 +81,7 @@
    <jump>Zacron</jump>
    <jump>Klantar</jump>
    <jump>Haleb</jump>
+   <jump>Dakron</jump>
   </jumps>
   <pos>
    <y>-266</y>
@@ -1003,6 +1004,7 @@
   <jumps>
    <jump>Torg</jump>
    <jump>Theras</jump>
+   <jump>Dakron</jump>
   </jumps>
   <pos>
    <y>-296</y>
@@ -1509,6 +1511,44 @@
   </pos>
   <planets>
    <planet>Zhiru</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="Dakron">
+  <fleets>
+   <fleet chance="30">FLF Pacifier</fleet>
+   <fleet chance="30">Dvaered Sml Force</fleet>
+   <fleet chance="50">Dvaered Vendetta</fleet>
+   <fleet chance="50">Dvaered Vendetta</fleet>
+   <fleet chance="50">Dvaered Ancestor</fleet>
+   <fleet chance="50">Dvaered Ancestor</fleet>
+   <fleet chance="10">Dvaered Goddard</fleet>
+   <fleet chance="50">Trader Mule</fleet>
+   <fleet chance="50">Trader Mule</fleet>
+   <fleet chance="57">Trader Llama</fleet>
+   <fleet chance="57">Trader Llama</fleet>
+   <fleet chance="50">Sml Trader Convoy</fleet>
+   <fleet chance="50">Trader Koala</fleet>
+   <fleet chance="50">Trader Koala</fleet>
+   <fleet chance="10">FLF Sml Force</fleet>
+   <fleet chance="5">FLF Pacifier</fleet>
+   <fleet chance="15">FLF Vendetta</fleet>
+  </fleets>
+  <jumps>
+   <jump>Slaccid</jump>
+   <jump>Klantar</jump>
+  </jumps>
+  <pos>
+   <y>-388</y>
+   <x>250</x>
+  </pos>
+  <planets>
+   <planet>Thar</planet>
   </planets>
   <general>
    <asteroids>0</asteroids>

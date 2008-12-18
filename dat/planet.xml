@@ -681,4 +681,30 @@
    <class>M</class>
   </general>
  </planet>
+  <planet name="Thar">
+  <GFX>
+   <exterior>mining.png</exterior>
+   <space>L00.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <population>2000</population>
+   <prodfactor>0.5</prodfactor>
+   <bar>"The bar has a strange old meter on one of the walls that seems to dance erratically.  When you ask the bartender about it he mentions it measures the current pressure outside.</bar>
+   <description>Thar is a simple mining world owned by the Dvaered.  It has a very variable atmosphere that can go from a few kilometers wide to barely existent in no time.  The pressure changes are harmful to most lifeforms, making it an almost completely sterile planet.  With the advent of terraforming techniques it was finally made habitable for humans so they could exploit some of the resources it has.</description>"
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Ore</commodity>
+   </commodities>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>7</services>
+   <class>L</class>
+  </general>
+ </planet>
 </Planets>
