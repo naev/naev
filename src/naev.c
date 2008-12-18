@@ -595,7 +595,7 @@ static void display_fps( const double dt )
 {
    double x,y;
 
-   fps_dt += dt;
+   fps_dt += dt / dt_mod;
    fps_cur += 1.;
    if (fps_dt > 1.) { /* recalculate every second */
       fps = fps_cur / fps_dt;
