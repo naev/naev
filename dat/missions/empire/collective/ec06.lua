@@ -90,6 +90,8 @@ function jump ()
 
    if misn_stage == 0 then
 
+      offset = 500
+
       -- Entering target system?
       if sys == misn_target_sys then
 
@@ -102,9 +104,13 @@ function jump ()
          emp_fleets[1] = "Empire Sml Attack"
          emp_fleets[2] = "Empire Sml Attack"
          emp_fleets[3] = "Dvaered Goddard" -- They help empire
+         -- Get position
+         x,y = enter_vect:get()
+         spawn_vect = enter_vect.new( x, y )
+         -- Add pilots
          for k,v in ipairs(emp_fleets) do
-            enter_vect:add( rnd.int(-500,500), rnd.int(-500,500) )
-            pilot.add( v, "def", enter_vect )
+            spawn_vect:add( rnd.int(-offset,offset), rnd.int(-offset,offset) )
+            pilot.add( v, "def", spawn_vect )
          end
          -- Collective
          col_fleets = {}
@@ -113,12 +119,12 @@ function jump ()
          col_fleets[3] = "Collective Sml Swarm"
          -- Set up position
          x,y = enter_vect:get()
-         enter_vect:set(-x, -y)
+         spawn_vect = enter_vect.new( -x, -y )
          -- Count amount created
          col_alive = 0
          for k,v in ipairs(col_fleets) do
-            enter_vect:add( rnd.int(-500,500), rnd.int(-500,500) )
-            pilots = pilot.add( v, "def", enter_vect )
+            spawn_vect:add( rnd.int(-offset,offset), rnd.int(-offset,offset) )
+            pilots = pilot.add( v, "def", spawn_vect )
             col_alive = col_alive + #pilots
             for k,v in ipairs(pilots) do
                hook.pilot( v, "disable", "col_dead" )
@@ -142,9 +148,13 @@ function jump ()
          emp_fleets[1] = "Empire Lge Attack"
          emp_fleets[2] = "Empire Med Attack"
          emp_fleets[3] = "Dvaered Goddard" -- They help empire
+         -- Get position
+         x,y = enter_vect:get()
+         spawn_vect = enter_vect.new( x, y )
+         -- Add pilots
          for k,v in ipairs(emp_fleets) do
-            enter_vect:add( rnd.int(-500,500), rnd.int(-500,500) )
-            pilot.add( v, "def", enter_vect )
+            spawn_vect:add( rnd.int(-offset,offset), rnd.int(-offset,offset) )
+            pilot.add( v, "def", spawn_vect )
          end
          -- Collective
          col_fleets = {}
@@ -154,12 +164,14 @@ function jump ()
          if var.peek("trinity") == true then
             col_fleets[4] = "Trinity"
          end
+         -- Set up position
          x,y = enter_vect:get()
-         enter_vect:set(-x, -y)
+         spawn_vect = enter_vect.new( -x, -y )
+         -- Add pilots
          col_alive = 0
          for k,v in ipairs(col_fleets) do
-            enter_vect:add( rnd.int(-500,500), rnd.int(-500,500) )
-            pilots = pilot.add( v, "def", enter_vect )
+            spawn_vect:add( rnd.int(-offset,offset), rnd.int(-offset,offset) )
+            pilots = pilot.add( v, "def", spawn_vect )
 
             -- Handle special ships
             if v == "Starfire" then
