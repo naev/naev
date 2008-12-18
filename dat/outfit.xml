@@ -40,7 +40,7 @@
    <delay>500</delay>
    <speed>550</speed>
    <range>300</range>
-   <accuracy>30</accuracy>
+   <accuracy>25</accuracy>
    <energy>8</energy>
    <damage type="energy">10</damage>
   </specific>
@@ -63,7 +63,7 @@
    <delay>300</delay>
    <speed>550</speed>
    <range>300</range>
-   <accuracy>30</accuracy>
+   <accuracy>25</accuracy>
    <energy>10</energy>
    <damage type="energy">10</damage>
   </specific>
