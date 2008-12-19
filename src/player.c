@@ -2268,7 +2268,12 @@ void player_land (void)
          return;
       }
 
-      land(planet); /* land the player */
+      /* Stop acceleration / afterburning. */
+      player_accelOver();
+      player_afterburnOver();
+
+      /* Open land menu. */
+      land(planet);
    }
    else { /* get nearest planet target */
 
