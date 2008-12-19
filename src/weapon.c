@@ -836,8 +836,7 @@ static Weapon* weapon_create( const Outfit* outfit,
          else /* fire straight */
             rdir = dir;
 
-         rdir += NormalInverse( RNGF()*0.9 + 0.05 ) /* Get rid of extreme values */
-               * outfit->u.blt.accuracy/2. * 1./180.*M_PI;
+         rdir += RNG_2SIGMA() * outfit->u.blt.accuracy/2. * 1./180.*M_PI;
          if ((rdir > 2.*M_PI) || (rdir < 0.))
             rdir = fmod(rdir, 2.*M_PI);
 
@@ -877,8 +876,7 @@ static Weapon* weapon_create( const Outfit* outfit,
 
          rdir = dir;
          if (outfit->u.amm.accuracy != 0.) {
-            rdir += NormalInverse( RNGF()*0.9 + 0.05 ) /* Get rid of extreme values */
-               * outfit->u.amm.accuracy/2. * 1./180.*M_PI;
+            rdir += RNG_2SIGMA() * outfit->u.amm.accuracy/2. * 1./180.*M_PI;
             if ((rdir > 2.*M_PI) || (rdir < 0.))
                rdir = fmod(rdir, 2.*M_PI);
          }
@@ -934,8 +932,7 @@ static Weapon* weapon_create( const Outfit* outfit,
             rdir = dir;
          }
          if (outfit->u.amm.accuracy != 0.) {
-            rdir += NormalInverse( RNGF()*0.9 + 0.05 ) /* Get rid of extreme values */
-               * outfit->u.amm.accuracy/2. * 1./180.*M_PI;
+            rdir += RNG_2SIGMA() * outfit->u.amm.accuracy/2. * 1./180.*M_PI;
             if ((rdir > 2.*M_PI) || (rdir < 0.))
                rdir = fmod(rdir, 2.*M_PI);
          }

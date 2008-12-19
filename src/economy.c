@@ -375,8 +375,7 @@ static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
          /* We base off the current production. */
          prodfactor  = planet->cur_prodfactor;
          /* Add a variability factor based on the gaussian distribution. */
-         prodfactor += ECON_PROD_VAR *
-               NormalInverse( RNGF()*0.90 + 0.05 )*ddt;
+         prodfactor += ECON_PROD_VAR * RNG_2SIGMA() * ddt;
          /* Add a tendency to return to the planet's base production. */
          prodfactor -= ECON_PROD_VAR *
                (planet->cur_prodfactor - prodfactor)*ddt;
