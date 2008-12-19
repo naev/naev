@@ -13,6 +13,8 @@
 
 #include <stdlib.h>
 
+#include "SDL_mixer.h" /** @todo Remove dependency. */
+
 #include "nxml.h"
 #include "naev.h"
 #include "pilot.h"
@@ -2273,12 +2275,13 @@ void player_land (void)
          return;
       }
 
-      /* Stop acceleration / afterburning. */
-      player_accelOver();
+      /* Stop afterburning. */
       player_afterburnOver();
 
       /* Open land menu. */
+      player_soundPause();
       land(planet);
+      player_soundResume();
    }
    else { /* get nearest planet target */
 
@@ -2449,6 +2452,8 @@ void player_afterburn (void)
       sound_stopGroup( PLAYER_ENGINE_CHANNEL );
       sound_playGroup( PLAYER_ENGINE_CHANNEL, 
             player->afterburner->outfit->u.afb.sound, 0 );
+      if (toolkit)
+         player_soundPause();
    }
 }
 
@@ -2478,6 +2483,8 @@ void player_accel( double acc )
       sound_stopGroup( PLAYER_ENGINE_CHANNEL );
       sound_playGroup( PLAYER_ENGINE_CHANNEL,
             player->ship->sound, 0 );
+      if (toolkit)
+         player_soundPause();
    }
 }
 
@@ -2489,6 +2496,32 @@ void player_accelOver (void)
 {
    player_acc = 0.;
    sound_stopGroup( PLAYER_ENGINE_CHANNEL );
+}
+
+
+/**
+ * @brief Pauses the ship's sounds.
+ *
+ * @todo Not use hardcoded PLAYER_ENGINE_CHANNEL sound...  Ideally add support
+ *  for pausing/resuming groups in SDL_Mixer.
+ */
+void player_soundPause (void)
+{
+   if (!Mix_Paused(0))
+      Mix_Pause(0);
+}
+
+
+/**
+ * @brief Resumes the ship's sounds.
+ *
+ * @todo Not use hardcoded PLAYER_ENGINE_CHANNEL sound...  Ideally add support
+ *  for pausing/resuming groups in SDL_Mixer.
+ */
+void player_soundResume (void)
+{
+   if (Mix_Paused(0))
+      Mix_Resume(0);
 }
 
 
