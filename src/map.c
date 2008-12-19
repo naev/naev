@@ -29,6 +29,10 @@
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
 
+#define MAP_LOOP_PROT   250 /**< Number of iterations max in pathfinding before
+                                 aborting. */
+
+
 static double map_zoom = 1.; /**< Zoom of the map. */
 static double map_xpos = 0.; /**< Map X position. */
 static double map_ypos = 0.; /**< Map Y .osition. */
@@ -832,7 +836,7 @@ static void A_freeList( SysNode *first )
 }
 StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend, int ignore_known )
 {
-   int i, cost;
+   int i, j, cost;
 
    StarSystem *sys, *ssys, *esys, **res;
 
@@ -858,7 +862,14 @@ StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend, int ign
    cur = A_newNode( ssys, NULL );
    open = A_add( open, cur ); /* inital open node is the start system */
 
+   j = 0;
    while ((cur = A_lowest(open))->sys != esys) {
+
+      /* Break if infinite loop. */
+      j++;
+      if (j > MAP_LOOP_PROT)
+         break;
+
       /* get best from open and toss to closed */
       open = A_rm( open, cur->sys );
       closed = A_add( closed, cur );
@@ -894,12 +905,18 @@ StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend, int ign
       }
    }
 
-   /* build path backwards */
-   (*njumps) = A_g(cur);
-   res = malloc( sizeof(StarSystem*) * (*njumps) );
-   for (i=0; i<(*njumps); i++) {
-      res[(*njumps)-i-1] = cur->sys;
-      cur = cur->parent;
+   /* build path backwards if not broken from loop. */
+   if (j <= MAP_LOOP_PROT) {
+      (*njumps) = A_g(cur);
+      res = malloc( sizeof(StarSystem*) * (*njumps) );
+      for (i=0; i<(*njumps); i++) {
+         res[(*njumps)-i-1] = cur->sys;
+         cur = cur->parent;
+      }
+   }
+   else {
+      (*njumps) = 0;
+      res = NULL;
    }
 
    /* free the linked lists */
