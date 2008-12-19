@@ -16,7 +16,7 @@
 
 #include "pause.h"
 
-#include "pilot.h"
+#include "player.h"
 
 
 int paused = 0; /**< is paused? */
@@ -33,6 +33,8 @@ void pause_game (void)
 {
    if (paused) return; /* already paused */
 
+   player_soundPause();
+
    paused = 1; /* officially paused */
 }
 
@@ -43,6 +45,8 @@ void pause_game (void)
 void unpause_game (void)
 {
    if (!paused) return; /* already unpaused */
+
+   player_soundResume();
 
    paused = 0; /* officially unpaused */
 }
