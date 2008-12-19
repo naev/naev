@@ -581,7 +581,7 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    /* calculate the damage */
    outfit_calcDamage( &damage_shield, &damage_armour, &knockback, dtype, damage );
 
-   if ((p->id == PLAYER_ID) &&
+   if ((w != NULL) && (p->id == PLAYER_ID) &&
          !pilot_isFlag(player, PILOT_HYP_BEGIN) &&
          !pilot_isFlag(player, PILOT_HYPERSPACE))
       player_abortAutonav("Sustaining Damage");
