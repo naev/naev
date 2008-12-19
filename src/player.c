@@ -710,6 +710,11 @@ void player_cleanup (void)
       pilot_free(player);
       player = NULL;
    }
+
+   /* Clean up interference. */
+   interference_alpha = 0.;
+   interference_layer = 0;
+   interference_t     = 0.;
 }
 
 
