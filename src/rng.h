@@ -41,7 +41,7 @@
  *
  * 99.8% Confidence interval.
  */
-#define RNG_2SIGMA()       NormalInverse(0.001 + RNGF()*(1.-0.001*2.))
+#define RNG_3SIGMA()       NormalInverse(0.001 + RNGF()*(1.-0.001*2.))
 
 
 /* Init */
