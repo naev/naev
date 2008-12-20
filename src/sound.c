@@ -252,9 +252,11 @@ int sound_play( int sound )
       return -1;
 
    v->channel = Mix_PlayChannel( -1, sound_list[sound].buffer, 0 );
-   
+  
+   /*
    if (v->channel < 0)
       WARN("Unable to play sound: %s", Mix_GetError());
+   */
 
    v->state = VOICE_PLAYING;
    v->id = ++voice_genid;
@@ -299,16 +301,20 @@ int sound_playPos( int sound, double x, double y )
    v->channel = Mix_PlayChannel( -1, sound_list[sound].buffer, 0 );
 
    if (v->channel < 0) {
+      /*
       WARN("Unable to play sound: %s", Mix_GetError());
       return -1;
+      */
    }
+   else {
 
-   /* Need to make sure distance doesn't overflow. */
-   idist = (int) dist / 13.;
-   if (idist > 255) idist = 255;
-   if (Mix_SetPosition( v->channel, (Sint16)angle, (Uint8)idist) < 0) {
-      WARN("Unable to set sound position: %s", Mix_GetError());
-      return -1;
+      /* Need to make sure distance doesn't overflow. */
+      idist = (int) dist / 13.;
+      if (idist > 255) idist = 255;
+      if (Mix_SetPosition( v->channel, (Sint16)angle, (Uint8)idist) < 0) {
+         WARN("Unable to set sound position: %s", Mix_GetError());
+         return -1;
+      }
    }
 
    /* Actually add the voice to the list. */
