@@ -13,8 +13,6 @@
 
 #include <stdlib.h>
 
-#include "SDL_mixer.h" /** @todo Remove dependency. */
-
 #include "nxml.h"
 #include "naev.h"
 #include "pilot.h"
@@ -2507,8 +2505,7 @@ void player_accelOver (void)
  */
 void player_soundPause (void)
 {
-   if (!Mix_Paused(0))
-      Mix_Pause(0);
+   sound_pauseChannel(0);
 }
 
 
@@ -2520,8 +2517,7 @@ void player_soundPause (void)
  */
 void player_soundResume (void)
 {
-   if (Mix_Paused(0))
-      Mix_Resume(0);
+   sound_resumeChannel(0);
 }
 
 

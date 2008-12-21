@@ -41,4 +41,11 @@ int sound_playGroup( int group, int sound, int once );
 void sound_stopGroup( int group );
 
 
+/*
+ * Not too portable functions that should be eliminated someday.
+ */
+void sound_pauseChannel( int num );
+void sound_resumeChannel( int num );
+
+
 #endif /* SOUND_H */

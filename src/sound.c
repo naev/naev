@@ -767,3 +767,31 @@ static alVoice* voice_get( int id )
    return NULL;
 }
 
+
+/**
+ * @brief Pauses a channel, should be eliminated to pause groups also.
+ *
+ *    @param num Channel to pause, not that channel != voice.
+ */
+void sound_pauseChannel( int num )
+{
+   if (sound_disabled) return;
+
+   if (!Mix_Paused(num))
+      Mix_Pause(num);
+}
+
+
+/**
+ * @brief Resumes a channel, should be eliminated to resume groups also.
+ *
+ *    @param num Channel to resume, not that channel != voice.
+ */
+void sound_resumeChannel( int num )
+{
+   if (sound_disabled) return;
+
+   if (Mix_Paused(num))
+      Mix_Resume(num);
+}
+
