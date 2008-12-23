@@ -1936,6 +1936,14 @@ void pilot_free( Pilot* p )
       if (p->hook_type[i] != PILOT_HOOK_NONE)
          hook_rm( p->hook[i] );
 
+   /* Remove outfits. */
+   while (p->outfits != NULL)
+      pilot_rmOutfit( p, p->outfits[0].outfit, p->outfits[0].quantity );
+
+   /* Remove commodities. */
+   if (p->commodities)
+      free(p->commodities);
+
    free(p->name);
 
    /* Clean up data. */
@@ -1947,12 +1955,6 @@ void pilot_free( Pilot* p )
    solid_free(p->solid);
    if (p->mounted != NULL)
       free(p->mounted);
-   while (p->outfits != NULL)
-      pilot_rmOutfit( p, p->outfits[0].outfit, p->outfits[0].quantity );
-   if (p->outfits)
-      free(p->outfits);
-   if (p->commodities)
-      free(p->commodities);
    if (p->escorts)
       free(p->escorts);
    free(p);
