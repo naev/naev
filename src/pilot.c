@@ -1890,6 +1890,7 @@ Pilot* pilot_createEmpty( Ship* ship, char* name,
  */
 Pilot* pilot_copy( Pilot* src )
 {
+   int i;
    Pilot *dest = malloc(sizeof(Pilot));
 
    memcpy( dest, src, sizeof(Pilot) );
@@ -1899,24 +1900,31 @@ Pilot* pilot_copy( Pilot* src )
    dest->solid = malloc(sizeof(Solid));
    memcpy( dest->solid, src->solid, sizeof(Solid) );
 
+   /* copy mountpoints. */
+   if (src->mounted != NULL) {
+      dest->mounted = malloc( sizeof(int)*src->ship->nmounts );
+      memcpy( dest->mounted, src->mounted, sizeof(int)*src->ship->nmounts );
+   }
+
    /* copy outfits */
-   dest->outfits = malloc( sizeof(PilotOutfit)*src->noutfits );
-   memcpy( dest->outfits, src->outfits,
-         sizeof(PilotOutfit)*src->noutfits );
+   dest->outfits = NULL;
+   dest->noutfits = 0;
    dest->secondary = NULL;
    dest->ammo = NULL;
    dest->afterburner = NULL;
+   for (i=0; i<src->noutfits; i++)
+      pilot_addOutfit( dest, src->outfits[i].outfit,
+            src->outfits[i].quantity );
 
    /* copy commodities */
-   dest->commodities = malloc( sizeof(PilotCommodity)*src->ncommodities );
-   memcpy( dest->commodities, src->commodities,
-         sizeof(PilotCommodity)*src->ncommodities);
+   dest->commodities = NULL;
+   dest->ncommodities = 0;
+   for (i=0; i<src->ncommodities; i++)
+      pilot_addCargo( dest, src->commodities[i].commodity,
+            src->commodities[i].quantity );
 
    /* ai is not copied */
    dest->task = NULL;
-
-   /* will set afterburner and correct stats */
-   pilot_calcStats( dest );
 
    return dest;
 }
