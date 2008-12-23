@@ -1947,6 +1947,8 @@ void pilot_free( Pilot* p )
    solid_free(p->solid);
    if (p->mounted != NULL)
       free(p->mounted);
+   while (p->outfits != NULL)
+      pilot_rmOutfit( p, p->outfits[0].outfit, p->outfits[0].quantity );
    if (p->outfits)
       free(p->outfits);
    if (p->commodities)
