@@ -2271,6 +2271,8 @@ void player_land (void)
 
       /* Stop afterburning. */
       player_afterburnOver();
+      /* Stop accelerating. */
+      player_accelOver();
 
       /* Open land menu. */
       player_soundPause();
@@ -2438,6 +2440,9 @@ double player_faceHyperspace (void)
  */
 void player_afterburn (void)
 {
+   if (pilot_isFlag(player, PILOT_HYP_PREP) || pilot_isFlag(player, PILOT_HYPERSPACE))
+      return;
+
    /** @todo fancy effect? */
    if ((player != NULL) && (player->afterburner!=NULL)) {
       player_setFlag(PLAYER_AFTERBURNER);
@@ -2446,7 +2451,7 @@ void player_afterburn (void)
       sound_stopGroup( PLAYER_ENGINE_CHANNEL );
       sound_playGroup( PLAYER_ENGINE_CHANNEL, 
             player->afterburner->outfit->u.afb.sound, 0 );
-      if (toolkit)
+      if (toolkit || paused)
          player_soundPause();
    }
 }
@@ -2472,12 +2477,15 @@ void player_afterburnOver (void)
  */
 void player_accel( double acc )
 {
+   if (pilot_isFlag(player, PILOT_HYP_PREP) || pilot_isFlag(player, PILOT_HYPERSPACE))
+      return;
+
    if (player != NULL) {
       player_acc = acc;
       sound_stopGroup( PLAYER_ENGINE_CHANNEL );
       sound_playGroup( PLAYER_ENGINE_CHANNEL,
             player->ship->sound, 0 );
-      if (toolkit)
+      if (toolkit || paused)
          player_soundPause();
    }
 }
