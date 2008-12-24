@@ -622,8 +622,6 @@ int player_shipPrice( char* shipname )
 
 
 /**
- * @brief void player_rmShip( char* shipname )
- * 
  * @brief Removes one of the player's ships.
  *
  *    @param shipname Name of the ship to remove.
@@ -656,8 +654,6 @@ void player_rmShip( char* shipname )
 
 
 /**
- * @brief void player_cleanup (void)
- *
  * @brief Cleans up player stuff like player_stack.
  */
 void player_cleanup (void)
