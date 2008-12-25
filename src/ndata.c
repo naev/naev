@@ -126,6 +126,12 @@ static int ndata_openPackfile (void)
    }
 
    /* Open the cache. */
+   if (nfile_fileExists( ndata_filename ) != 1) {
+      WARN("Cannot find ndata file!");
+      WARN("Please specify ndata file with -d or data in the conf file.");
+      exit(1);
+      return -1;
+   }
    ndata_cache = pack_openCache( ndata_filename );
    if (ndata_cache == NULL)
       WARN("Unable to create Packcache from '%s'.", ndata_filename );
