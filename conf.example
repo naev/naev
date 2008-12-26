@@ -76,6 +76,7 @@ fullscreen = 1
 -- Secondary weapons.
 --secondary    = { type = "keyboard", key = "left shift", mod = "any" }
 --secondary_next = { type = "keyboard", key = "W" }
+--secondary_prev = { type = "keyboard", key = "W", mod = "lctrl" }
 
 -- Space navigation.
 --autonav      = { type = "keyboard", key = "J", mod = "lctrl" }
