@@ -118,6 +118,7 @@ void player_targetPrev (void);
 void player_targetNearest (void);
 void player_setRadarRel( int mod );
 void player_secondaryNext (void);
+void player_secondaryPrev (void);
 void player_targetPlanet (void);
 void player_land (void);
 void player_targetHyperspace (void);

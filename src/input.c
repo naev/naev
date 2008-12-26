@@ -51,7 +51,7 @@ const char *keybindNames[] = {
    /* Fighting. */
    "primary", "face", "board",
    /* Secondary weapons. */
-   "secondary", "secondary_next",
+   "secondary", "secondary_next", "secondary_prev",
    /* Escorts. */
    "e_attack", "e_hold", "e_return", "e_clear",
    /* Space navigation. */
@@ -85,6 +85,7 @@ const char *keybindDescription[] = {
    /* Secondary weapons. */
    "Fires your secondary weapon.",
    "Cycles through secondary weapons.",
+   "Cycles backwards through secondary weapons.",
    /* Escorts. */
    "Tells your escorts to attack your target.",
    "Tells your escorts to hold their positions.",
@@ -162,6 +163,7 @@ void input_setDefault (void)
    /* Secondary weapons. */
    input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, KMOD_ALL, 0 );
    input_setKeybind( "secondary_next", KEYBIND_KEYBOARD, SDLK_w, KMOD_NONE, 0 );
+   input_setKeybind( "secondary_prev", KEYBIND_KEYBOARD, SDLK_w, KMOD_LCTRL, 0 );
    /* Escorts. */
    input_setKeybind( "e_attack", KEYBIND_KEYBOARD, SDLK_f, KMOD_NONE, 0 );
    input_setKeybind( "e_hold", KEYBIND_KEYBOARD, SDLK_g, KMOD_NONE, 0 );
@@ -510,6 +512,8 @@ static void input_key( int keynum, double value, int kabs )
    /* selecting secondary weapon */
    } else if (KEY("secondary_next") && INGAME()) {
       if (value==KEY_PRESS) player_secondaryNext();
+   } else if (KEY("secondary_prev") && INGAME()) {
+      if (value==KEY_PRESS) player_secondaryPrev();
 
 
    /*                                                                     

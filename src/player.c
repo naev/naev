@@ -2166,15 +2166,13 @@ void player_setRadarRel( int mod )
  */
 void player_secondaryNext (void)
 {
-   int i = 0;
+   int i;
    
    /* get current secondary weapon pos */
    if (player->secondary != NULL)   
-      for (i=0; i<player->noutfits; i++)
-         if (&player->outfits[i] == player->secondary) {
-            i++;
-            break;
-         }
+      i = player->secondary - player->outfits + 1;
+   else
+      i = 0;
 
    /* get next secondary weapon */
    for (; i<player->noutfits; i++)
@@ -2185,6 +2183,35 @@ void player_secondaryNext (void)
 
    /* found no bugger outfit */
    if (i >= player->noutfits)
+      pilot_switchSecondary( player, -1 );
+
+   /* set ammo */
+   pilot_setAmmo(player);
+}
+
+
+/**
+ * @brief Get the previous secondary weapon.
+ */
+void player_secondaryPrev (void)
+{
+   int i;
+   
+   /* get current secondary weapon pos */
+   if (player->secondary != NULL)   
+      i = player->secondary - player->outfits - 1;
+   else
+      i = player->noutfits - 1;
+
+   /* get next secondary weapon */
+   for (; i>= 0; i--)
+      if (outfit_isProp(player->outfits[i].outfit, OUTFIT_PROP_WEAP_SECONDARY)) {
+         pilot_switchSecondary( player, i );
+         break;
+      }
+
+   /* found no bugger outfit */
+   if (i < 0)
       pilot_switchSecondary( player, -1 );
 
    /* set ammo */
