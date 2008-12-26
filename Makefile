@@ -112,21 +112,15 @@ endif # DEBUG
 #   DATA
 #
 DATA_AI   := 	$(wildcard ai/*.lua \
-					ai/include/*.lua \
-					ai/tpl/*.lua )
+					ai/*/*.lua )
 DATA_GFX  := 	$(wildcard gfx/*.png \
-					gfx/loading/*.png \
-					gfx/gui/*.png \
-					gfx/logo/*.png \
-					gfx/outfit/space/*.png \
-					gfx/outfit/store/*.png \
-					gfx/planet/exterior/*.png \
-					gfx/planet/space/*.png \
-					gfx/ship/*.png \
-					gfx/spfx/*.png)
+					gfx/*/*.png \
+					gfx/*/*/*.png )
 DATA_XML  := 	$(wildcard dat/*.xml dat/*.ttf dat/intro)
 DATA_SND  := 	$(wildcard snd/music/*.ogg snd/sounds/*.wav) snd/music.lua
-DATA_MISN := 	$(wildcard dat/missions/*.lua)
+DATA_MISN := 	$(wildcard dat/missions/*.lua \
+					dat/missions/*/*.lua \
+					dat/missions/*/*/*.lua)
 DATA      := 	ndata
 DATAFILES := 	$(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN)
 
