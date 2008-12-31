@@ -730,7 +730,7 @@ static int ai_pushtask( lua_State *L )
    if (lua_isstring(L,2)) func = (char*)lua_tostring(L,2);
    else NLUA_INVALID_PARAMETER();
 
-   t = MALLOC_ONE(Task);
+   t = malloc(sizeof(Task));
    t->next = NULL;
    t->name = strdup(func);
    t->dtype = TYPE_NULL;

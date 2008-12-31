@@ -787,7 +787,8 @@ static Weapon* weapon_create( const Outfit* outfit,
    Weapon* w;
   
    /* Create basic features */
-   w = CALLOC_ONE(Weapon);
+   w = malloc(sizeof(Weapon));
+   memset(w, 0, sizeof(Weapon));
    w->faction = pilot_get(parent)->faction; /* non-changeable */
    w->parent = parent; /* non-changeable */
    w->target = target; /* non-changeable */
@@ -1210,6 +1211,11 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
 static void weapon_free( Weapon* w )
 {
    solid_free(w->solid);
+
+#ifdef DEBUGGING
+   memset(w, 0, sizeof(Weapon));
+#endif /* DEBUGGING */
+
    free(w);
 }
 

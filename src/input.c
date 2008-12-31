@@ -203,7 +203,7 @@ void input_init (void)
 
    /* creates a null keybinding for each */
    for (i=0; strcmp(keybindNames[i],"end"); i++) {
-      temp = MALLOC_ONE(Keybind);
+      temp = malloc(sizeof(Keybind));
       temp->name = (char*)keybindNames[i];
       temp->type = KEYBIND_NULL;
       temp->key = SDLK_UNKNOWN;

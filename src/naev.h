@@ -27,9 +27,6 @@
 
 #define APPNAME            "NAEV" /**< Application name. */
 
-#define MALLOC_ONE(type)   (malloc(sizeof(type))) /**< Deprecated. */
-#define CALLOC_ONE(type)   (calloc(1,sizeof(type))) /**< Deprecated. */
-
 #define ABS(x)             (((x)<0)?-(x):(x)) /**< Returns absolute value. */
 #define FABS(x)            (((x)<0.)?-(x):(x)) /**< Returns float absolute value. */
 

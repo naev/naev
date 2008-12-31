@@ -1841,7 +1841,7 @@ unsigned int pilot_create( Ship* ship, char* name, int faction, char *ai,
 {
    Pilot *dyn;
    
-   dyn = MALLOC_ONE(Pilot);
+   dyn = malloc(sizeof(Pilot));
    if (dyn == NULL) {
       WARN("Unable to allocate memory");
       return 0;
@@ -1876,7 +1876,7 @@ Pilot* pilot_createEmpty( Ship* ship, char* name,
       int faction, char *ai, const unsigned int flags )
 {
    Pilot* dyn;
-   dyn = MALLOC_ONE(Pilot);
+   dyn = malloc(sizeof(Pilot));
    pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags | PILOT_EMPTY );
    return dyn;
 }
@@ -1965,6 +1965,11 @@ void pilot_free( Pilot* p )
       free(p->mounted);
    if (p->escorts)
       free(p->escorts);
+
+#ifdef DEBUGGING
+   memset( p, 0, sizeof(Pilot) );
+#endif /* DEBUGGING */
+
    free(p);
 }
 

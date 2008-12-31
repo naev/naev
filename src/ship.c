@@ -437,7 +437,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          cur = node->children;
          do {
             if (xml_isNode(cur,"outfit")) {
-               otemp = MALLOC_ONE(ShipOutfit);
+               otemp = malloc(sizeof(ShipOutfit));
                otemp->data = outfit_get(xml_get(cur));
                stmp = xml_nodeProp(cur,"quantity");
                if (!stmp)

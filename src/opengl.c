@@ -453,7 +453,7 @@ glTexture* gl_loadImage( SDL_Surface* surface )
    int rw, rh;
 
    /* set up the texture defaults */
-   glTexture *texture = MALLOC_ONE(glTexture);
+   glTexture *texture = malloc(sizeof(glTexture));
    texture->w = (double)surface->w;
    texture->h = (double)surface->h;
    texture->sx = 1.;

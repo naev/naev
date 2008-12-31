@@ -396,7 +396,7 @@ void solid_init( Solid* dest, const double mass, const double dir,
 Solid* solid_create( const double mass, const double dir,
       const Vector2d* pos, const Vector2d* vel )
 {
-   Solid* dyn = MALLOC_ONE(Solid);
+   Solid* dyn = malloc(sizeof(Solid));
    if (dyn==NULL) ERR("Out of Memory");
    solid_init( dyn, mass, dir, pos, vel );
    return dyn;
