@@ -1477,6 +1477,8 @@ int pilot_cargoFree( Pilot* p )
 /**
  * @brief Moves cargo from one pilot to another.
  *
+ * At the end has dest have exactly the same cargo as src and leaves src with none.
+ *
  *    @param dest Destination pilot.
  *    @param src Source pilot.
  *    @return 0 on success.
@@ -1877,6 +1879,10 @@ Pilot* pilot_createEmpty( Ship* ship, char* name,
 {
    Pilot* dyn;
    dyn = malloc(sizeof(Pilot));
+   if (dyn == NULL) {
+      WARN("Unable to allocate memory");
+      return 0;
+   }
    pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags | PILOT_EMPTY );
    return dyn;
 }
@@ -1893,20 +1899,26 @@ Pilot* pilot_copy( Pilot* src )
    int i;
    Pilot *dest = malloc(sizeof(Pilot));
 
+   /* Copy data over, we'll have to reset all the pointers though. */
    memcpy( dest, src, sizeof(Pilot) );
-   if (src->name) dest->name = strdup(src->name);
 
-   /* solid */
+   /* Copy names. */
+   if (src->name)
+      dest->name = strdup(src->name);
+   if (src->title)
+      dest->title = strdup(src->title);
+
+   /* Copy solid. */
    dest->solid = malloc(sizeof(Solid));
    memcpy( dest->solid, src->solid, sizeof(Solid) );
 
-   /* copy mountpoints. */
+   /* Copy mountpoints. */
    if (src->mounted != NULL) {
       dest->mounted = malloc( sizeof(int)*src->ship->nmounts );
       memcpy( dest->mounted, src->mounted, sizeof(int)*src->ship->nmounts );
    }
 
-   /* copy outfits */
+   /* Copy outfits. */
    dest->outfits = NULL;
    dest->noutfits = 0;
    dest->secondary = NULL;
@@ -1916,14 +1928,22 @@ Pilot* pilot_copy( Pilot* src )
       pilot_addOutfit( dest, src->outfits[i].outfit,
             src->outfits[i].quantity );
 
-   /* copy commodities */
+   /* Copy commodities. */
    dest->commodities = NULL;
    dest->ncommodities = 0;
    for (i=0; i<src->ncommodities; i++)
       pilot_addCargo( dest, src->commodities[i].commodity,
             src->commodities[i].quantity );
 
-   /* ai is not copied */
+   /* Hooks get cleared. */
+   memset( dest->hook_type, 0, sizeof(int)*PILOT_HOOKS);
+   memset( dest->hook, 0, sizeof(int)*PILOT_HOOKS);
+
+   /* Copy has no escorts. */
+   dest->escorts = NULL;
+   dest->nescorts = 0;
+
+   /* AI is not copied. */
    dest->task = NULL;
 
    return dest;
@@ -1949,10 +1969,14 @@ void pilot_free( Pilot* p )
       pilot_rmOutfit( p, p->outfits[0].outfit, p->outfits[0].quantity );
 
    /* Remove commodities. */
-   if (p->commodities)
-      free(p->commodities);
+   if (p->commodities != NULL)
+      pilot_rmCargo( p, p->commodities[0].commodity, p->commodities[0].quantity );
 
-   free(p->name);
+   /* Free name and title. */
+   if (p->name != NULL)
+      free(p->name);
+   if (p->title != NULL)
+      free(p->title);
 
    /* Clean up data. */
    if (p->ai != NULL)
