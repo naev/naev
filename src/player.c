@@ -519,7 +519,8 @@ static void player_newShipMake( char* name )
       player_lstack = realloc(player_lstack, sizeof(char*)*(player_nstack+1));
       player_lstack[player_nstack] = strdup( land_planet->name );
       player_nstack++;
-      if (!player_credits) player_credits = player->credits;
+      if (!player_credits)
+         player_credits = player->credits;
       pilot_destroy( player );
    }
 

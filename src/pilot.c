@@ -1213,7 +1213,7 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 
    /* does outfit already exist? */
    for (i=0; i<pilot->noutfits; i++)
-      if (strcmp(outfit->name, pilot->outfits[i].outfit->name)==0) {
+      if (pilot->outfits[i].outfit == outfit) {
          po = &pilot->outfits[i];
          o = po->quantity;
          po->quantity += q;
@@ -1918,23 +1918,6 @@ Pilot* pilot_copy( Pilot* src )
       memcpy( dest->mounted, src->mounted, sizeof(int)*src->ship->nmounts );
    }
 
-   /* Copy outfits. */
-   dest->outfits = NULL;
-   dest->noutfits = 0;
-   dest->secondary = NULL;
-   dest->ammo = NULL;
-   dest->afterburner = NULL;
-   for (i=0; i<src->noutfits; i++)
-      pilot_addOutfit( dest, src->outfits[i].outfit,
-            src->outfits[i].quantity );
-
-   /* Copy commodities. */
-   dest->commodities = NULL;
-   dest->ncommodities = 0;
-   for (i=0; i<src->ncommodities; i++)
-      pilot_addCargo( dest, src->commodities[i].commodity,
-            src->commodities[i].quantity );
-
    /* Hooks get cleared. */
    memset( dest->hook_type, 0, sizeof(int)*PILOT_HOOKS);
    memset( dest->hook, 0, sizeof(int)*PILOT_HOOKS);
@@ -1945,6 +1928,29 @@ Pilot* pilot_copy( Pilot* src )
 
    /* AI is not copied. */
    dest->task = NULL;
+
+   /* Set pointers and friends to NULL. */
+   /* Outfits. */
+   dest->outfits = NULL;
+   dest->noutfits = 0;
+   dest->secondary = NULL;
+   dest->ammo = NULL;
+   dest->afterburner = NULL;
+   /* Commodities. */
+   dest->commodities = NULL;
+   dest->ncommodities = 0;
+   /* Calculate stats. */
+   pilot_calcStats(dest);
+
+   /* Copy outfits. */
+   for (i=0; i<src->noutfits; i++)
+      pilot_addOutfit( dest, src->outfits[i].outfit,
+            src->outfits[i].quantity );
+
+   /* Copy commodities. */
+   for (i=0; i<src->ncommodities; i++)
+      pilot_addCargo( dest, src->commodities[i].commodity,
+            src->commodities[i].quantity );
 
    return dest;
 }
