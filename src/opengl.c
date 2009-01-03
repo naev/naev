@@ -1215,10 +1215,10 @@ int gl_init (void)
    /* Check to see if trying to create above screen resolution without player
     * asking for such a large size. */
 #if SDL_VERSION_ATLEAST(1,2,10)
-      if (!gl_has(OPENGL_DIM_DEF)) {
-         gl_screen.w = MIN(gl_screen.w, vidinfo->current_w);
-         gl_screen.h = MIN(gl_screen.h, vidinfo->current_h);
-      }
+   if (!gl_has(OPENGL_DIM_DEF)) {
+      gl_screen.w = MIN(gl_screen.w, vidinfo->current_w);
+      gl_screen.h = MIN(gl_screen.h, vidinfo->current_h);
+   }
 #endif /* SDL_VERSION_ATLEAST(1,2,10) */
    
    /* Test the setup - aim for 32. */
@@ -1253,7 +1253,7 @@ int gl_init (void)
    SDL_GL_GetAttribute( SDL_GL_BLUE_SIZE, &gl_screen.b );
    SDL_GL_GetAttribute( SDL_GL_ALPHA_SIZE, &gl_screen.a );
    SDL_GL_GetAttribute( SDL_GL_DOUBLEBUFFER, &doublebuf );
-   SDL_GL_GetAttribute( SDL_GL_MULTISAMPLESAMPLES, &fsaa);
+   SDL_GL_GetAttribute( SDL_GL_MULTISAMPLESAMPLES, &fsaa );
    if (doublebuf)
       gl_screen.flags |= OPENGL_DOUBLEBUF;
    /* Calculate real depth. */
@@ -1323,8 +1323,8 @@ int gl_init (void)
       gl_screen.h  = 600;
    }
    /* Set scale factors. */
-   gl_screen.wscale = (double)gl_screen.nw / (double)gl_screen.w;
-   gl_screen.hscale = (double)gl_screen.nh / (double)gl_screen.h;
+   gl_screen.wscale  = (double)gl_screen.nw / (double)gl_screen.w;
+   gl_screen.hscale  = (double)gl_screen.nh / (double)gl_screen.h;
    gl_screen.mxscale = (double)gl_screen.w / (double)gl_screen.rw;
    gl_screen.myscale = (double)gl_screen.h / (double)gl_screen.rh;
    /* Handle setting the default viewport. */
