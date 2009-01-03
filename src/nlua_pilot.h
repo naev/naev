@@ -16,7 +16,7 @@
 
 
 /**
- * @brief Lua wrapper for pilots.
+ * @brief Lua Pilot wrapper.
  */
 typedef struct LuaPilot_s {
    unsigned int pilot; /**< ID of the pilot. */

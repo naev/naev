@@ -14,7 +14,7 @@
 
 
 /**
- * @brief Lua wrapper for a faction.
+ * @brief Lua Faction wrapper.
  */
 typedef struct LuaFaction_s {
    int f; /**< Internal use faction identifier. */
