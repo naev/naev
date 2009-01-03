@@ -39,7 +39,6 @@ typedef enum WidgetType_ {
    WIDGET_CUST,
    WIDGET_INPUT,
    WIDGET_IMAGEARRAY,
-   WIDGET_SCROLLBAR,
    WIDGET_FADER
 } WidgetType;
 
@@ -66,6 +65,8 @@ typedef enum WidgetStatus_ {
 typedef struct Widget_ {
    char* name; /**< Widget's name. */
    WidgetType type; /**< Widget's type. */
+
+   unsigned int wdw; /**< Widget's parent window. */
 
    double x; /**< X position within the window. */
    double y; /**< Y position within the window. */
@@ -132,10 +133,6 @@ typedef struct Widget_ {
          int ih; /**< Image height to use. */
          void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
       } iar; /**< WIDGET_IMAGEARRAY */
-      
-      struct { /* WIDGET_SCROLLBAR */
-         double value; /**< Current value. */
-      } scb; /**< WIDGET_SCROLLBAR */
       
       struct { /* WIDGET_FADER */
          double value; /**< Current value. */
@@ -243,7 +240,6 @@ static void toolkit_renderRect( Widget* rct, double bx, double by );
 static void toolkit_renderCust( Widget* cst, double bx, double by );
 static void toolkit_renderInput( Widget* inp, double bx, double by );
 static void toolkit_renderImageArray( Widget* iar, double bx, double by );
-static void toolkit_renderScrollbar( Widget* scb, double bx, double by );
 static void toolkit_renderFader( Widget* fad, double bx, double by );
 static void toolkit_drawOutline( double x, double y,
       double w, double h, double b,
@@ -255,8 +251,13 @@ static void toolkit_drawRect( double x, double y,
       double w, double h, glColour* c, glColour* lc );
 
 
-/*
- * Sets the internal widget position.
+/**
+ * @brief Sets the internal widget position.
+ *
+ *    @param wdw Window to which the widget belongs.
+ *    @param wgt Widget to set position of.
+ *    @param x X position to use.
+ *    @param y Y position to use.
  */
 static void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
 {
@@ -273,12 +274,12 @@ static void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
  * Position origin is 0,0 at bottom left.  If you use negative X or Y
  *  positions.  They actually count from the opposite side in.
  *
- *    @param wid ID of the window to add the button widget to.
+ *    @param wid ID of the window to add the widget to.
  *    @param x X position within the window to use.
  *    @param y Y position within the window to use.
- *    @param w Width of the button.
- *    @param h Height of the button.
- *    @param name Name of the button to use internally.
+ *    @param w Width of the widget.
+ *    @param h Height of the widget.
+ *    @param name Name of the widget to use internally.
  *    @param display Text displayed on the button (centered).
  *    @param call Function to call when button is pressed. Parameter passed
  *                is the name of the button.
@@ -287,7 +288,7 @@ void window_addButton( const unsigned int wid,
                        const int x, const int y,
                        const int w, const int h,
                        char* name, char* display,
-                       void (*call) (unsigned int,char*) )
+                       void (*call) (unsigned int wgt, char* wdwname) )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
@@ -295,6 +296,7 @@ void window_addButton( const unsigned int wid,
    /* generic */
    wgt->type = WIDGET_BUTTON;
    wgt->name = strdup(name);
+   wgt->wdw = wid;
    
    /* specific */
    wgt->dat.btn.display = strdup(display);
@@ -313,14 +315,28 @@ void window_addButton( const unsigned int wid,
 }
 
 
-/*
- * adds text to the window
+/**
+ * @brief Adds a text widget to the window.
+ *
+ * Position origin is 0,0 at bottom left.  If you use negative X or Y
+ *  positions.  They actually count from the opposite side in.
+ *
+ *    @param wid ID of the window to add the widget to.
+ *    @param x X position within the window to use.
+ *    @param y Y position within the window to use.
+ *    @param w Maximum width of the text.
+ *    @param h Maximum height of the text.
+ *    @param centered Whether text should be centered.
+ *    @param name Name of the widget to use internally.
+ *    @param font Font to use (NULL is default).
+ *    @param colour Colour to use (NULL is default).
+ *    @param string Text to display.
  */
 void window_addText( const unsigned int wid,
-      const int x, const int y,
-      const int w, const int h,
-      const int centered, char* name,
-      glFont* font, glColour* colour, char* string )
+                     const int x, const int y,
+                     const int w, const int h,
+                     const int centered, char* name,
+                     glFont* font, glColour* colour, char* string )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
@@ -328,6 +344,7 @@ void window_addText( const unsigned int wid,
    /* generic */
    wgt->type = WIDGET_TEXT;
    wgt->name = strdup(name);
+   wgt->wdw = wid;
 
    /* specific */
    if (font==NULL) wgt->dat.txt.font = &gl_defFont;
@@ -347,12 +364,22 @@ void window_addText( const unsigned int wid,
 }
 
 
-/*
- * adds a graphic to the window
+/**
+ * @brief Adds an image widget to the window.
+ *
+ * Position origin is 0,0 at bottom left.  If you use negative X or Y
+ *  positions.  They actually count from the opposite side in.
+ *
+ *    @param wid ID of the window to add the widget to.
+ *    @param x X position within the window to use.
+ *    @param y Y position within the window to use.
+ *    @param name Name of the widget to use internally.
+ *    @param image Image to use.
+ *    @param border Whether to use a border.
  */
 void window_addImage( const unsigned int wid,
-      const int x, const int y,
-      char* name, glTexture* image, int border )
+                      const int x, const int y,
+                      char* name, glTexture* image, int border )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
@@ -360,6 +387,7 @@ void window_addImage( const unsigned int wid,
    /* generic */
    wgt->type = WIDGET_IMAGE;
    wgt->name = strdup(name);
+   wgt->wdw = wid;
 
    /* specific */
    wgt->dat.img.image = image;
@@ -373,14 +401,29 @@ void window_addImage( const unsigned int wid,
 }
 
 
-/*
- * adds a list to the window
+/**
+ * @brief Adds a list widget to a window.
+ *
+ * Position origin is 0,0 at bottom left.  If you use negative X or Y
+ *  positions.  They actually count from the opposite side in.
+ *
+ *    @param wid ID of the window to add the widget to.
+ *    @param x X position within the window to use.
+ *    @param y Y position within the window to use.
+ *    @param w Width of the widget.
+ *    @param h Height of the widget.
+ *    @param name Name of the widget to use internally.
+ *    @param items Items in the list (will be freed automatically).
+ *    @param nitems Number of items in items parameter.
+ *    @param defitem Default item to select.
+ *    @param call Function to call when new item is selected. Parameter passed
+ *                is the name of the list.
  */
 void window_addList( const unsigned int wid,
-      const int x, const int y,
-      const int w, const int h,
-      char* name, char **items, int nitems, int defitem,
-      void (*call) (unsigned int,char*) )
+                     const int x, const int y,
+                     const int w, const int h,
+                     char* name, char **items, int nitems, int defitem,
+                     void (*call) (unsigned int wdw, char* wgtname) )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
@@ -388,6 +431,7 @@ void window_addList( const unsigned int wid,
    /* generic */
    wgt->type = WIDGET_LIST;
    wgt->name = strdup(name);
+   wgt->wdw = wid;
 
    /* specific */
    wgt->dat.lst.options = items;
@@ -412,13 +456,25 @@ void window_addList( const unsigned int wid,
 }
 
 
-/*
- * adds a rectangle to the window
+/**
+ * @brief Adds a rectangle widget to a window.
+ *
+ * Position origin is 0,0 at bottom left.  If you use negative X or Y
+ *  positions.  They actually count from the opposite side in.
+ *
+ *    @param wid ID of the window to add the widget to.
+ *    @param x X position within the window to use.
+ *    @param y Y position within the window to use.
+ *    @param w Width of the widget.
+ *    @param h Height of the widget.
+ *    @param name Name of the widget to use internally.
+ *    @param colour Colour of the rectangle.
+ *    @param border Whether or not it should have a border.
  */
 void window_addRect( const unsigned int wid,
-      const int x, const int y, /* position */
-      const int w, const int h, /* size */
-      char* name, glColour* colour, int border ) /* properties */
+                     const int x, const int y, /* position */
+                     const int w, const int h, /* size */
+                     char* name, glColour* colour, int border )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
@@ -426,6 +482,7 @@ void window_addRect( const unsigned int wid,
    /* generic */
    wgt->type = WIDGET_RECT;
    wgt->name = strdup(name);
+   wgt->wdw = wid;
 
    /* specific */
    wgt->dat.rct.colour = colour;
@@ -438,15 +495,34 @@ void window_addRect( const unsigned int wid,
 }
 
 
-/*
- * adds a custom widget
+/**
+ * @brief Adds a custom widget to a window.
+ *
+ * Position origin is 0,0 at bottom left.  If you use negative X or Y
+ *  positions.  They actually count from the opposite side in.
+ *
+ * You are in charge of the rendering and handling mouse input for this widget.
+ *  Mouse events outside the widget position won't be passed on.
+ *
+ *    @param wid ID of the window to add the widget to.
+ *    @param x X position within the window to use.
+ *    @param y Y position within the window to use.
+ *    @param w Width of the widget.
+ *    @param h Height of the widget.
+ *    @param name Name of the widget to use internally.
+ *    @param border Whether or not it should have a border.
+ *    @param render Render function, passes the position and dimensions of the
+ *                  widget as parameters.
+ *    @param mouse Mouse function, passes the window id, event and position as
+ *                 parameters.
  */
 void window_addCust( const unsigned int wid,
-      const int x, const int y, /* position */
-      const int w, const int h, /* size */
-      char* name, const int border,
-      void (*render) (double x, double y, double w, double h),
-      void (*mouse) (unsigned int wid, SDL_Event* event, double x, double y) )
+                     const int x, const int y, /* position */
+                     const int w, const int h, /* size */
+                     char* name, const int border,
+                     void (*render) (double x, double y, double w, double h),
+                     void (*mouse) (unsigned int wid, SDL_Event* event,
+                                    double x, double y) )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
@@ -454,6 +530,7 @@ void window_addCust( const unsigned int wid,
    /* generic */
    wgt->type = WIDGET_CUST;
    wgt->name = strdup(name);
+   wgt->wdw = wid;
 
    /* specific */
    wgt->dat.cst.border = border;
@@ -467,13 +544,25 @@ void window_addCust( const unsigned int wid,
 }
 
 
-/*
- * adds an input widget
+/**
+ * @brief Adds an input widget to a window.
+ *
+ * Position origin is 0,0 at bottom left.  If you use negative X or Y
+ *  positions.  They actually count from the opposite side in.
+ *
+ *    @param wid ID of the window to add the widget to.
+ *    @param x X position within the window to use.
+ *    @param y Y position within the window to use.
+ *    @param w Width of the widget.
+ *    @param h Height of the widget.
+ *    @param name Name of the widget to use internally.
+ *    @param max Max amount of characters that can be written.
+ *    @param oneline Whether widget should only be one line long.
  */
 void window_addInput( const unsigned int wid,
-      const int x, const int y, /* position */
-      const int w, const int h, /* size */
-      char* name, const int max, const int oneline )
+                      const int x, const int y, /* position */
+                      const int w, const int h, /* size */
+                      char* name, const int max, const int oneline )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
@@ -481,6 +570,7 @@ void window_addInput( const unsigned int wid,
    /* generic */
    wgt->type = WIDGET_INPUT;
    wgt->name = strdup(name);
+   wgt->wdw = wid;
 
    /* specific */
    wgt->dat.inp.max = max+1;
@@ -498,7 +588,10 @@ void window_addInput( const unsigned int wid,
 
 
 /**
- * @brief Adds an Image Array.
+ * @brief Adds an Image Array widget.
+ *
+ * Position origin is 0,0 at bottom left.  If you use negative X or Y
+ *  positions.  They actually count from the opposite side in.
  *
  *    @param wid Window to add to.
  *    @param x X position.
@@ -514,11 +607,11 @@ void window_addInput( const unsigned int wid,
  *    @param call Callback when modified.
  */
 void window_addImageArray( const unsigned int wid,
-      const int x, const int y, /* position */
-      const int w, const int h, /* size */
-      char* name, const int iw, const int ih, /* name and image sizes */
-      glTexture** tex, char** caption, int nelem, /* elements */
-      void (*call) (unsigned int,char*) )
+                           const int x, const int y, /* position */
+                           const int w, const int h, /* size */
+                           char* name, const int iw, const int ih,
+                           glTexture** tex, char** caption, int nelem,
+                           void (*call) (unsigned int wdw, char* wgtname) )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
@@ -526,6 +619,7 @@ void window_addImageArray( const unsigned int wid,
    /* generic */
    wgt->type = WIDGET_IMAGEARRAY;
    wgt->name = strdup(name);
+   wgt->wdw = wid;
 
    /* specific */
    wgt->dat.iar.images = tex;
@@ -546,36 +640,32 @@ void window_addImageArray( const unsigned int wid,
       toolkit_nextFocus();
 }
 
-void window_addScrollbar( const unsigned int wid,
-      const int x, const int y, /* position */
-      const int w, const int h, /* size */
-      char* name, double value)
-{
-   Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw);
 
-   /* generic */
-   wgt->type = WIDGET_SCROLLBAR;
-   wgt->name = strdup(name);
-
-   /* specific */
-   wgt->dat.scb.value = value;
-   
-   /* position/size */
-   wgt->w = (double) w;
-   wgt->h = (double) h;
-   toolkit_setPos( wdw, wgt, x, y );
-
-   if (wdw->focus == -1) /* initialize the focus */
-      toolkit_nextFocus();
-}
-
+/**
+ * @brief Adds an Image Array widget.
+ *
+ * Position origin is 0,0 at bottom left.  If you use negative X or Y
+ *  positions.  They actually count from the opposite side in.
+ *
+ * If width is bigger the height it's horizontal, otherwise it's vertical.
+ *
+ *    @param wid Window to add to.
+ *    @param x X position.
+ *    @param y Y position.
+ *    @param w Width.
+ *    @param h Height.
+ *    @param name Internal widget name.
+ *    @param min Minimum value.
+ *    @param max Maximum value.
+ *    @param def Default value.
+ *    @param call Callback when fader is modified.
+ */
 void window_addFader( const unsigned int wid,
-      const int x, const int y, /* position */
-      const int w, const int h, /* size, if w > h fader is horizontal, else vertical */
-      char* name, const double min, const double max, /* name, minimum & maximum values */
-      const double def,
-      void (*call) (unsigned int,char*) )
+                      const int x, const int y, /* position */
+                      const int w, const int h, /* size */
+                      char* name, const double min, const double max,
+                      const double def,
+                      void (*call) (unsigned int,char*) )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
@@ -583,6 +673,7 @@ void window_addFader( const unsigned int wid,
    /* generic */
    wgt->type = WIDGET_FADER;
    wgt->name = strdup(name);
+   wgt->wdw = wid;
 
    /* specific */
    wgt->dat.fad.value = min;
@@ -590,7 +681,6 @@ void window_addFader( const unsigned int wid,
    wgt->dat.fad.max = max;
    wgt->dat.fad.value = MAX(min,MIN(max,def));
    wgt->dat.fad.fptr = call;
-
    
    /* position/size */
    wgt->w = (double) w;
@@ -601,28 +691,39 @@ void window_addFader( const unsigned int wid,
       toolkit_nextFocus();
 }
 
-/*
- * returns pointer to a newly alloced Widget
+
+/**
+ * @brief Allocates room for a new widget.
+ *
+ *    @param w Window to create widget in.
+ *    @return Newly allocated widget.
  */
 static Widget* window_newWidget( Window* w )
 {
    Widget* wgt = NULL;
 
+   /* Grow widget list. */
    w->nwidgets++;
    w->widgets = realloc( w->widgets,
          sizeof(Widget)*w->nwidgets );
-   if (w->widgets == NULL) WARN("Out of Memory");
+   if (w->widgets == NULL)
+      WARN("Out of Memory");
 
+   /* Set sane defaults. */
    wgt = &w->widgets[ w->nwidgets - 1 ]; 
-
+   memset( wgt, 0, sizeof(Widget) );
    wgt->type = WIDGET_NULL;
    wgt->status = WIDGET_STATUS_NORMAL;
+
    return wgt;
 }
 
 
-/*
- * returns the window of id wid
+/**
+ * @brief Gets a Window by ID.
+ *
+ *    @param wid ID of the window to get.
+ *    @return Window matching wid.
  */
 static Window* window_wget( const unsigned int wid )
 {
@@ -635,14 +736,24 @@ static Window* window_wget( const unsigned int wid )
 }
 
 
-/*
- * gets the wgt from the window
+/**
+ * @brief Gets a widget from window id and widgetname.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget to get.
+ *    @return Widget matching name in the window.
  */
 static Widget* window_getwgt( const unsigned int wid, char* name )
 {
    int i;
-   Window *wdw = window_wget(wid);
+   Window *wdw;
 
+   /* Get the window. */
+   wdw = window_wget(wid);
+   if (wdw == NULL)
+      return NULL;
+
+   /* Find the widget. */
    for (i=0; i<wdw->nwidgets; i++)
       if (strcmp(wdw->widgets[i].name, name)==0)
          return &wdw->widgets[i];
@@ -652,172 +763,344 @@ static Widget* window_getwgt( const unsigned int wid, char* name )
 }
 
 
-/*
- * modifies an existing text string
+/**
+ * @brief Modifies an existing text widget.
+ *
+ *    @param wid Window to which the text widget belongs.
+ *    @param name Name of the text widget.
+ *    @param newstring String to set for the text widget.
  */
 void window_modifyText( const unsigned int wid,
       char* name, char* newstring )
 {
-   Widget *wgt = window_getwgt(wid,name);
+   Widget *wgt;
 
-   if (wgt->dat.txt.text) free(wgt->dat.txt.text);
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+
+   /* Check type. */
+   if (wgt->type != WIDGET_TEXT) {
+      WARN("Not modifying text on non-text widget '%s'.", name);
+      return;
+   }
+
+   /* Set text. */
+   if (wgt->dat.txt.text)
+      free(wgt->dat.txt.text);
    wgt->dat.txt.text = (newstring) ?  strdup(newstring) : NULL;
 }
 
 
-/*
- * Gets a widget's position.
+/**
+ * @brief Gets a widget's position.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget to get position of.
+ *    @param[out] x X position of the widget.
+ *    @param[out] y Y position of the widget.
  */
 void window_posWidget( const unsigned int wid,
       char* name, int *x, int *y )
 {
-   Widget *wgt = window_getwgt(wid,name);
+   Widget *wgt;
+  
+   /* Get widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
 
-   (*x) = wgt->x;
-   (*y) = wgt->y;
+   /* Return position. */
+   if (x != NULL)
+      (*x) = wgt->x;
+   if (y != NULL)
+      (*y) = wgt->y;
 }
 
 
-/*
- * Moves a widget.
+/**
+ * @brief Moves a widget.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget to set position to.
+ *    @param x New X position to set widget to.
+ *    @param y New Y position to set widget to.
  */
 void window_moveWidget( const unsigned int wid,
       char* name, int x, int y )
 {
-   Window *wdw = window_wget(wid);
-   Widget *wgt = window_getwgt(wid,name);
+   Window *wdw;
+   Widget *wgt;
+  
+   /* Get window. */
+   wdw = window_wget(wid);
+   if (wdw == NULL)
+      return;
 
+   /* Get widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+
+   /* Set position. */
    toolkit_setPos( wdw, wgt, x, y );
 }
 
 
-/*
- * disables a button
+/**
+ * @brief Disables a button.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the button to disable.
  */
 void window_disableButton( const unsigned int wid, char* name )
 {
-   Widget *wgt = window_getwgt(wid,name);
+   Widget *wgt;
 
-   if (wgt->type!=WIDGET_BUTTON) {
+   /* Get widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+
+   /* Check type. */
+   if (wgt->type != WIDGET_BUTTON) {
       DEBUG("Trying to disable a non-button widget '%s'", name);
       return;
    }
+
+   /* Disable button. */
    wgt->dat.btn.disabled = 1;
 }
+
+
 /* 
- * enables a button
+ * @brief Enables a button.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the button to enable.
  */
 void window_enableButton( const unsigned int wid, char *name )
 {
-   Widget *wgt = window_getwgt(wid,name);
+   Widget *wgt;
+  
+   /* Get widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
 
-   if (wgt->type!=WIDGET_BUTTON) {
+   /* Check type. */
+   if (wgt->type != WIDGET_BUTTON) {
       DEBUG("Trying to enable a non-button widget '%s'", name);
       return;
    }
+
+   /* Enable button. */
    wgt->dat.btn.disabled = 0;
 
 }
 
 
-/*
- * modifies an existing image's image
+/**
+ * Modifies an existing image's image.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget to modify image of.
+ *    @param image New image to set.
  */
 void window_modifyImage( const unsigned int wid,
       char* name, glTexture* image )
 {
-   Widget *wgt = window_getwgt(wid,name);
+   Widget *wgt;
 
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+
+   /* Check the type. */
+   if (wgt->type != WIDGET_IMAGE) {
+      WARN("Not modifying image on non-image widget '%s'.", name);
+      return;
+   }
+
+   /* Set the image. */
    wgt->dat.img.image = image;
 }
 
 
-/*
- * changes an existing image's colour
+/**
+ * Modifies an existing image's colour.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget to modify image colour of.
+ *    @param colour New colour to use.
  */
 void window_imgColour( const unsigned int wid,
       char* name, glColour* colour )
 {
-   Widget *wgt = window_getwgt(wid,name);
+   Widget *wgt;
 
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+
+   /* Check the type. */
+   if (wgt->type != WIDGET_IMAGE) {
+      WARN("Not modifying image on non-image widget '%s'.", name);
+      return;
+   }
+
+   /* Set the colour. */
    wgt->dat.img.colour = colour;
 }
 
-/*
- * sets scrollbar value
- */
-void window_scrollbarValue( const unsigned int wid,
-      char* name, double value )
-{
-   Widget *wgt = window_getwgt(wid,name);
 
-   wgt->dat.scb.value = value;
-}
-
-/*
- * sets fader value
+/**
+ * @brief Sets a fader widget's value.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget.
+ *    @para value Value to set fader to.
  */
 void window_faderValue( const unsigned int wid,
       char* name, double value )
 {
-   Widget *wgt = window_getwgt(wid,name);
+   Widget *wgt;
+
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+
+   /* Check the type. */
+   if (wgt->type != WIDGET_FADER) {
+      WARN("Not setting fader value on non-fader widget '%s'.", name);
+      return;
+   }
+
+   /* Set fader value. */
    toolkit_faderSetValue(wgt, value);
 }
 
-/*
- * sets minimum and maximum fader values.
+
+/**
+ * @brief Sets a fader widget's boundries.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget.
+ *    @para value Value to set fader to.
  */
 void window_faderBounds( const unsigned int wid,
       char* name, double min, double max )
 {
-   Widget *wgt = window_getwgt(wid,name);
+   double value;
+   Widget *wgt;
+  
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+
+   /* Check the type. */
+   if (wgt->type != WIDGET_FADER) {
+      WARN("Not setting fader value on non-fader widget '%s'.", name);
+      return;
+   }
+
+   /* Set the fader boundries. */
    wgt->dat.fad.min = min;
    wgt->dat.fad.max = max;
-   double value = MAX(MIN(value, wgt->dat.fad.max), wgt->dat.fad.min);
+  
+   /* Set the value. */
+   value = MAX(MIN(value, wgt->dat.fad.max), wgt->dat.fad.min);
    toolkit_faderSetValue(wgt, value);
 }
 
 
-/*
- * gets the image from an image widget
+/**
+ * @brief Gets the image from an image widget
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget.
  */
 glTexture* window_getImage( const unsigned int wid, char* name )
 {
-   Widget *wgt = window_getwgt(wid,name);
+   Widget *wgt;
+  
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return NULL;
+
+   /* Check the type. */
+   if (wgt->type != WIDGET_IMAGE) {
+      WARN("Trying to get image from non-image widget '%s'.", name);
+      return NULL;
+   }
+
+   /* Get the value. */
    return (wgt) ? wgt->dat.img.image : NULL;
 }
 
 
-/*
- * gets the input from an input widget
+/**
+ * @brief Gets the input from an input widget.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget.
  */
 char* window_getInput( const unsigned int wid, char* name )
 {
-   Widget *wgt = window_getwgt(wid,name);
+   Widget *wgt;
+
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return NULL;
+
+   /* Check the type. */
+   if (wgt->type != WIDGET_INPUT) {
+      WARN("Trying to get input from non-input widget '%s'.", name);
+      return NULL;
+   }
+
+   /* Get the value. */
    return (wgt) ? wgt->dat.inp.input : NULL;
 }
 
-/*
- * gets the value from an scrollbar widget
+/**
+ * @brief Gets value of fader widget.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget.
  */
-double window_getScrollbarValue( const unsigned int wid, char* name )
+double window_getFaderValue( const unsigned int wid, char* name )
 {
-   Widget *wgt = window_getwgt(wid,name);
-   return (wgt) ? wgt->dat.scb.value : 0.;
-}
+   Widget *wgt;
 
-/*
- * gets value of fader
- */
-double window_getFaderValue(const unsigned int wid, char* name)
-{
-   Widget *wgt = window_getwgt(wid,name);
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return 0.;
+
+   /* Check the type. */
+   if (wgt->type != WIDGET_FADER) {
+      WARN("Trying to get fader value from non-fader widget '%s'.", name);
+      return 0.;
+   }
+
+   /* Return the value. */
    return (wgt) ? wgt->dat.fad.value : 0.;
 }
 
 
-/*
- * checks to see if a window exists
+/**
+ * @brief Checks to see if a window exists.
+ *
+ *    @param wdwname Name of the window to check.
+ *    @return 1 if it exists, 0 if it doesn't.
  */
 int window_exists( const char* wdwname )
 {
@@ -829,8 +1112,11 @@ int window_exists( const char* wdwname )
 }
 
 
-/*
- * returns the id of a window
+/**
+ * @brief Gets the ID of a window.
+ *
+ *    @param wdwname Name of the window to get ID of.
+ *    @return ID of the window.
  */
 unsigned int window_get( const char* wdwname )
 {
@@ -842,8 +1128,15 @@ unsigned int window_get( const char* wdwname )
 }
 
 
-/*
- * creates a window
+/**
+ * @brief Creates a window.
+ *
+ *    @param name Name of the window to create.
+ *    @param x X position of the window (-1 centers).
+ *    @param y Y position of the window (-1 centers).
+ *    @param w Width of the window.
+ *    @param h Height of the window.
+ *    @return Newly created window's ID.
  */
 unsigned int window_create( char* name,
       const int x, const int y, const int w, const int h )
@@ -901,9 +1194,7 @@ unsigned int window_create( char* name,
 
 
 /**
- * @fn void window_setAccept( const unsigned int wid, void (*accept)(unsigned int,char*) )
- *
- * @ brief Sets the default accept function of the window.
+ * @ rief Sets the default accept function of the window.
  *
  * This function is called whenever 'enter' is pressed and the current widget
  *  does not catch it.  NULL disables the accept function.
@@ -916,14 +1207,17 @@ void window_setAccept( const unsigned int wid, void (*accept)(unsigned int,char*
 {
    Window *wdw;
 
+   /* Get the window. */
    wdw = window_wget( wid );
-   if (wdw != NULL) wdw->accept_fptr = accept;
+   if (wdw == NULL) 
+      return;
+
+   /* Set the accept function. */
+   wdw->accept_fptr = accept;
 }
 
 
 /**
- * @fn void window_setCancel( const unsigned int wid, void (*cancel)(unsigned int,char*) )
- *
  * @brief Sets the default cancel function of the window.
  *
  * This function is called whenever 'escape' is hit and the current widget
@@ -937,20 +1231,30 @@ void window_setCancel( const unsigned int wid, void (*cancel)(unsigned int,char*
 {
    Window *wdw;
 
+   /* Get the window. */
    wdw = window_wget( wid );
-   if (wdw != NULL) wdw->cancel_fptr = cancel;
+   if (wdw == NULL)
+      return;
+
+   /* Set the cancel function. */
+   wdw->cancel_fptr = cancel;
 }
 
 
-/*
- * destroys a widget
+/**
+ * @brief Destroys a widget.
+ *
+ *    @param widget Widget to destroy.
  */
 static void widget_cleanup( Widget *widget )
 {
    int i;
 
-   if (widget->name) free(widget->name);
+   /* General freeing. */
+   if (widget->name)
+      free(widget->name);
 
+   /* Type specific. */
    switch (widget->type) {
       case WIDGET_BUTTON: /* must clear the button display text */
          if (widget->dat.btn.display) free(widget->dat.btn.display);
@@ -993,6 +1297,7 @@ static void widget_cleanup( Widget *widget )
 
 /**
  * @brief Helper function to automatically close the window calling it.
+ *
  *    @param wid Window to close.
  *    @param str Unused.
  */
@@ -1401,10 +1706,6 @@ static void window_render( Window* w )
 
          case WIDGET_IMAGEARRAY:
             toolkit_renderImageArray( &w->widgets[i], x, y );
-            break;
-         
-         case WIDGET_SCROLLBAR:
-            toolkit_renderScrollbar( &w->widgets[i], x, y );
             break;
          
          case WIDGET_FADER:
@@ -1827,19 +2128,6 @@ static void toolkit_drawScrollbar( double x, double y, double w, double h, doubl
    toolkit_drawOutline( x, sy, w, 30., 0., toolkit_colDark, NULL );
 }
 
-/**
- * @brief Renders a scrollbar
- *
- *    @param scb WIDGET_SCROLLBAR widget to render.
- *    @param bx Base X position.
- *    @param by Base Y position.
- */
-static void toolkit_renderScrollbar( Widget* scb, double bx, double by )
-{
-   toolkit_drawScrollbar(bx + scb->x, by + scb->y,
-         scb->w, scb->h,
-         scb->dat.scb.value);
-}
 
 /**
  * @brief Renders a fader
@@ -1955,8 +2243,8 @@ static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key )
 }
 
 
-/*
- * renders the windows
+/**
+ * @brief Renders the windows.
  */
 void toolkit_render (void)
 {
@@ -1973,9 +2261,11 @@ void toolkit_render (void)
 }
 
 
-/*
- * toolkit input handled here
- * if return is 1, then the input isn't passed along
+/**
+ * @brief Toolkit input handled here.
+ *
+ *    @param event Event to handle.
+ *    @return 1 if input was used, 0 if it wasn't.
  */
 int toolkit_input( SDL_Event* event )
 {
@@ -1995,10 +2285,12 @@ int toolkit_input( SDL_Event* event )
 }
 
 
-/*
- * input
+static int mouse_down = 0; /**< Records if mouse is down. */
+/**
+ * @brief Handles the mouse events.
+ *
+ *    @param event Mouse event to handle.
  */
-static int mouse_down = 0;
 static void toolkit_mouseEvent( SDL_Event* event )
 {
    int i;
@@ -2064,8 +2356,6 @@ static void toolkit_mouseEvent( SDL_Event* event )
                         toolkit_listMove( wgt, y-wgt->y );
                      if (wgt->type == WIDGET_IMAGEARRAY)
                         toolkit_imgarrMove( wgt, rel_y );
-                     if (wgt->type == WIDGET_SCROLLBAR)
-                        wgt->dat.scb.value -= rel_y / wgt->h;
                      if (wgt->type == WIDGET_FADER) {
                         d = (wgt->w > wgt->h) ? rel_x / wgt->w : rel_y / wgt->h;
                         toolkit_faderSetValue(wgt, wgt->dat.fad.value + d);
@@ -2131,8 +2421,10 @@ static void toolkit_mouseEvent( SDL_Event* event )
 }
 
 
-/*
- * handles the key events
+/**
+ * @brief Registers a key as down (for key repetition).
+ *
+ *    @param key Key to register as down.
  */
 static void toolkit_regKey( SDLKey key )
 {
@@ -2142,6 +2434,11 @@ static void toolkit_regKey( SDLKey key )
       input_keyCounter = 0;
    }
 }
+/**
+ * @brief Unregisters a key.
+ *
+ *    @param key Key to unregister.
+ */
 static void toolkit_unregKey( SDLKey key )
 {
    if (input_key == key) {
@@ -2150,20 +2447,32 @@ static void toolkit_unregKey( SDLKey key )
       input_keyCounter = 0;
    }
 }
+/**
+ * @brief Clears the registered keys.
+ */
 static void toolkit_clearKey (void)
 {
    input_key = 0;
    input_keyTime = 0;
    input_keyCounter = 0;
 }
+/**
+ * @brief Handles keyboard events.
+ *
+ *    @param event Keyboard event to handle.
+ *    @return 1 if the event is used, 0 if it isn't.
+ */
 static int toolkit_keyEvent( SDL_Event* event )
 {
    Window *wdw; 
    Widget *wgt;
    SDLKey key;
 
-   if (nwindows<=0) return 0;
+   /* Needs to have at least one window. */
+   if (nwindows<=0)
+      return 0;
 
+   /* Get event and key. */
    wdw = &windows[nwindows-1];
    wgt = (wdw->focus != -1) ? &wdw->widgets[ wdw->focus ] : NULL;
    key = event->key.keysym.sym;
@@ -2176,8 +2485,10 @@ static int toolkit_keyEvent( SDL_Event* event )
 
    /* handle input widgets */
    if (wgt && (wgt->type==WIDGET_INPUT)) /* grabs all the events it wants */
-      if (toolkit_inputInput( event->type, wgt, key)) return 1;
+      if (toolkit_inputInput( event->type, wgt, key))
+         return 1;
 
+   /* Key specific. */
    switch (key) {
       case SDLK_TAB:
          if (event->type == SDL_KEYDOWN)
@@ -2221,8 +2532,8 @@ static int toolkit_keyEvent( SDL_Event* event )
 }
 
 
-/*
- * updates the toolkit input for repeating keys
+/**
+ * @brief Updates the toolkit input for repeating keys.
  */
 void toolkit_update (void)
 {
@@ -2232,13 +2543,18 @@ void toolkit_update (void)
 
    t = SDL_GetTicks();
 
-   if (input_key == 0) return;
+   /* Must have a key pressed. */
+   if (input_key == 0)
+      return;
 
+   /* Should be repeating. */
    if (input_keyTime + INPUT_DELAY + input_keyCounter*INPUT_FREQ > t)
       return;
 
+   /* Increment counter. */
    input_keyCounter++;
 
+   /* Check to see what it affects. */
    if (nwindows > 0) {
       wdw = &windows[nwindows-1];
       wgt = (wdw->focus >= 0) ? &wdw->widgets[ wdw->focus ] : NULL;
@@ -2247,6 +2563,7 @@ void toolkit_update (void)
          toolkit_inputInput( SDL_KEYDOWN, wgt, input_key );
    }
 
+   /* Handle the press. */
    switch (input_key) {
 
       case SDLK_UP:
@@ -2262,8 +2579,8 @@ void toolkit_update (void)
 }
 
 
-/*
- * focus next widget
+/**
+ * @brief Focus next widget.
  */
 static void toolkit_nextFocus (void)
 {
@@ -2281,16 +2598,22 @@ static void toolkit_nextFocus (void)
 }
 
 
-/*
- * returns 1 if the window is focusable
+/**
+ * @brief Checks to see if a widget is focusable.
+ *
+ *    @param wgt Widget to check if is focusable.
+ *    @return 1 if it's focusable, 0 if it isn't.
  */
 static int toolkit_isFocusable( Widget *wgt )
 {
-   if (wgt==NULL) return 0;
+   if (wgt==NULL)
+      return 0;
 
+   /* Type specific. */
    switch (wgt->type) {
       case WIDGET_BUTTON:
-         if (wgt->dat.btn.disabled==1) return 0;
+         if (wgt->dat.btn.disabled==1)
+            return 0;
       case WIDGET_LIST:
       case WIDGET_INPUT:
       case WIDGET_IMAGEARRAY:
@@ -2302,8 +2625,8 @@ static int toolkit_isFocusable( Widget *wgt )
 }
 
 
-/*
- * trigger the focused widget
+/**
+ * @brief Trigger the focused widget.
  */
 static void toolkit_triggerFocus (void)
 {
@@ -2402,16 +2725,21 @@ static void toolkit_listScroll( Widget* wgt, int direction )
    }
 }
 
+
 /** 
  * @brief Changes fader value
+ *
+ *    @param fad Fader to set value of.
+ *    @param value Value to set fader to.
  */
-static void toolkit_faderSetValue(Widget *fad, double value)
+static void toolkit_faderSetValue( Widget *fad, double value )
 {
-   Window *w = &windows[nwindows-1];
-   value = MAX(MIN(value, fad->dat.fad.max), fad->dat.fad.min);
-   fad->dat.fad.value = value;
+   /* Sanity check and value set. */
+   fad->dat.fad.value = MAX(MIN(value, fad->dat.fad.max), fad->dat.fad.min);
+
+   /* Run function if needed. */
    if (fad->dat.fad.fptr != NULL)
-      (*fad->dat.fad.fptr)(w->id, fad->name);
+      (*fad->dat.fad.fptr)(fad->wdw, fad->name);
 }
 
 
@@ -2657,22 +2985,27 @@ static void toolkit_imgarrMove( Widget* iar, double ry )
 }
 
 
-/*
- * returns the focused widget
+/**
+ * @brief Gets the focused widget.
+ *
+ *    @return The focused widget.
  */
 static Widget* toolkit_getFocus (void)
 {
    Window* wdw;
    wdw = &windows[nwindows-1];
    
-   if (wdw->focus == -1) return NULL;
+   if (wdw->focus == -1)
+      return NULL;
 
    return &wdw->widgets[wdw->focus];
 }
 
 
-/*
- * initializes the toolkit
+/**
+ * @brief Initializes the toolkit.
+ *
+ *    @return 0 on success.
  */
 int toolkit_init (void)
 {
@@ -2685,8 +3018,8 @@ int toolkit_init (void)
 }
 
 
-/*
- * exits the toolkit
+/**
+ * @brief Exits the toolkit.
  */
 void toolkit_exit (void)
 {

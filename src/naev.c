@@ -21,7 +21,7 @@
 
 /* global */
 #include <string.h> /* strdup */
-#if defined(LINUX) && !defined(NODEBUG)
+#if defined(LINUX) && !defined(DEBUGGING)
 #include <signal.h>
 #include <execinfo.h>
 #include <stdlib.h>
@@ -667,7 +667,7 @@ static void print_SDLversion (void)
 }
 
 
-#if defined(LINUX) && !defined(NODEBUG)
+#if defined(LINUX) && !defined(DEBUGGING)
 /**
  * @brief Gets the string related to the signal code.
  *
@@ -742,7 +742,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
  */
 static void debug_sigInit (void)
 {
-#if defined(LINUX) && !defined(NODEBUG)
+#if defined(LINUX) && !defined(DEBUGGING)
    struct sigaction sa, so;
 
    /* Set up handler. */
