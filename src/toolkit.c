@@ -874,7 +874,7 @@ void window_disableButton( const unsigned int wid, char* name )
 }
 
 
-/* 
+/**
  * @brief Enables a button.
  *
  *    @param wid ID of the window to get widget from.
@@ -990,7 +990,8 @@ void window_faderValue( const unsigned int wid,
  *
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the widget.
- *    @para value Value to set fader to.
+ *    @param min Minimum fader value.
+ *    @param max Maximum fader value.
  */
 void window_faderBounds( const unsigned int wid,
       char* name, double min, double max )
@@ -1445,6 +1446,18 @@ static void toolkit_drawOutline( double x, double y,
       glVertex2d( x - b,      y         );
    glEnd(); /* GL_LINES */
 }
+/**
+ * @brief Draws a rectangle.
+ *
+ * If lc is NULL, colour will be flat.
+ *
+ *    @param x X position to draw at.
+ *    @param y Y position to draw at.
+ *    @param w Width.
+ *    @param h Height.
+ *    @param c Colour.
+ *    @param lc Light colour.
+ */
 static void toolkit_drawRect( double x, double y,
       double w, double h, glColour* c, glColour* lc )
 {
@@ -1729,7 +1742,7 @@ static void window_render( Window* w )
 /**
  * @brief Renders a button widget.
  *
- *    @param wct WIDGET_BUTTON widget to render.
+ *    @param btn WIDGET_BUTTON widget to render.
  *    @param bx Base X position.
  *    @param by Base Y position.
  */
@@ -1795,7 +1808,7 @@ static void toolkit_renderButton( Widget* btn, double bx, double by )
 /**
  * @brief Renders a text widget.
  *
- *    @param wct WIDGET_TEXT widget to render.
+ *    @param txt Text widget to render.
  *    @param bx Base X position.
  *    @param by Base Y position.
  */
@@ -1819,7 +1832,7 @@ static void toolkit_renderText( Widget* txt, double bx, double by )
 /**
  * @brief Renders a image widget.
  *
- *    @param wct WIDGET_IMAGE widget to render.
+ *    @param img Image widget to render.
  *    @param bx Base X position.
  *    @param by Base Y position.
  */
@@ -1854,7 +1867,7 @@ static void toolkit_renderImage( Widget* img, double bx, double by )
 /**
  * @brief Renders a list widget.
  *
- *    @param wct WIDGET_LIST widget to render.
+ *    @param lst List widget to render.
  *    @param bx Base X position.
  *    @param by Base Y position.
  */
@@ -1913,7 +1926,7 @@ static void toolkit_renderList( Widget* lst, double bx, double by )
 /**
  * @brief Renders a rectangle widget.
  *
- *    @param wct WIDGET_RECT widget to render.
+ *    @param wct Rectangle widget to render.
  *    @param bx Base X position.
  *    @param by Base Y position.
  */
@@ -1941,7 +1954,7 @@ static void toolkit_renderRect( Widget* rct, double bx, double by )
 /**
  * @brief Renders a custom widget.
  *
- *    @param cst WIDGET_CUST widget to render.
+ *    @param cst Custom widget to render.
  *    @param bx Base X position.
  *    @param by Base Y position.
  */
@@ -1970,7 +1983,7 @@ static void toolkit_renderCust( Widget* cst, double bx, double by )
 /**
  * @brief Renders a input widget.
  *
- *    @param cst WIDGET_INPUT widget to render.
+ *    @param inp Input widget to render.
  *    @param bx Base X position.
  *    @param by Base Y position.
  */
@@ -2003,7 +2016,7 @@ static void toolkit_renderInput( Widget* inp, double bx, double by )
 /**
  * @brief Renders an image array.
  *
- *    @param cst WIDGET_IMAGEARRAY widget to render.
+ *    @param iar Image array widget to render.
  *    @param bx Base X position.
  *    @param by Base Y position.
  */

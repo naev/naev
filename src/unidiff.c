@@ -125,13 +125,11 @@ static void diff_hunkSuccess( UniDiff_t *diff, UniHunk_t *hunk );
 static void diff_cleanup( UniDiff_t *diff );
 static void diff_cleanupHunk( UniHunk_t *hunk );
 /* Externed. */
-int diff_save( xmlTextWriterPtr writer );
-int diff_load( xmlNodePtr parent );
+int diff_save( xmlTextWriterPtr writer ); /**< Used in save.c */
+int diff_load( xmlNodePtr parent ); /**< Used in save.c */
 
 
 /**
- * @fn int diff_isApplied( char *name )
- *
  * @brief Checks if a diff is currently applied.
  *
  *    @param name Diff to check.
@@ -146,8 +144,6 @@ int diff_isApplied( char *name )
 
 
 /**
- * @fn static UniDiff_t* diff_get( char *name )
- *
  * @brief Gets a diff by name.
  *
  *    @param name Name of the diff to get.
@@ -164,8 +160,6 @@ static UniDiff_t* diff_get( char *name )
 
 
 /**
- * @fn int diff_apply( char *name )
- *
  * @brief Applies a diff to the universe.
  *
  *    @param name Diff to apply.
@@ -227,8 +221,6 @@ int diff_apply( char *name )
 
 
 /**
- * @fn static int diff_patch( xmlNodePtr parent )
- *
  * @brief Actually applies a diff in XML node form.
  *
  *    @param parent Node containing the diff information.
@@ -349,8 +341,6 @@ static int diff_patch( xmlNodePtr parent )
 
 
 /**
- * @fn static int diff_patchHunk( UniHunk_t *hunk )
- *
  * @brief Applies a hunk and adds it to the diff.
  *
  *    @param diff Diff to which the hunk belongs.
@@ -384,8 +374,6 @@ static int diff_patchHunk( UniHunk_t *hunk )
 
 
 /**
- * @fn static void diff_hunkFailed( UniDiff_t *diff, UniHunk_t *hunk )
- *
  * @brief Adds a hunk to the failed list.
  *
  *    @param diff Diff to add hunk to.
@@ -406,8 +394,6 @@ static void diff_hunkFailed( UniDiff_t *diff, UniHunk_t *hunk )
 
 
 /**
- * @fn static void diff_hunkSuccess( UniDiff_t *diff, UniHunk_t *hunk )
- *
  * @brief Adds a hunk to the applied list.
  *
  *    @param diff Diff to add hunk to.
@@ -428,8 +414,6 @@ static void diff_hunkSuccess( UniDiff_t *diff, UniHunk_t *hunk )
 
 
 /**
- * @fn void diff_remove( char *name )
- *
  * @brief Removes a diff from the universe.
  *
  *    @param name Diff to remove.
@@ -448,8 +432,6 @@ void diff_remove( char *name )
 
 
 /**
- * @fn int diff_clear (void)
- *
  * @brief Removes all active diffs.
  */
 void diff_clear (void)
@@ -461,8 +443,6 @@ void diff_clear (void)
 
 
 /**
- * @fn static UniDiff_t *diff_newDiff (void)
- *
  * @brief Creates a new UniDiff_t for usage.
  *
  *    @return A newly created UniDiff_t.
@@ -489,8 +469,6 @@ static UniDiff_t *diff_newDiff (void)
 
 
 /**
- * @fn static int diff_removeDiff( UniDiff_t *diff )
- *
  * @brief Removes a diff.
  *
  *    @param diff Diff to remove.
@@ -539,8 +517,6 @@ static int diff_removeDiff( UniDiff_t *diff )
 
 
 /**
- * @fn static void diff_cleanup( UniDiff_t *diff )
- *
  * @brief Cleans up a diff.
  *
  *    @param diff Diff to clean up.
@@ -563,8 +539,6 @@ static void diff_cleanup( UniDiff_t *diff )
 
 
 /**
- * @fn static void diff_cleanupHunk( UniHunk_t *hunk )
- *
  * @brief Cleans up a hunk.
  *
  *    @param hunk Hunk to clean up.
@@ -589,8 +563,6 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
 
 
 /**
- * @fn int diff_save( xmlTextWriterPtr writer )
- *
  * @brief Saves the active diffs.
  *
  *    @param writer XML Writer to use.
@@ -614,8 +586,6 @@ int diff_save( xmlTextWriterPtr writer )
 }
 
 /**
- * @fn int diff_load( xmlNodePtr parent )
- *
  * @brief Loads the diffs.
  *
  *    @param parent Parent node containing diffs.
