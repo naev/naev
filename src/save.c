@@ -35,21 +35,29 @@
  * prototypes
  */
 /* externs */
-extern int player_save( xmlTextWriterPtr writer ); /* alot of stuff :P */
-extern int player_load( xmlNodePtr parent );
-extern int missions_saveActive( xmlTextWriterPtr writer ); /* active missions */
-extern int missions_loadActive( xmlNodePtr parent );
-extern int var_save( xmlTextWriterPtr writer ); /* misn var */
-extern int var_load( xmlNodePtr parent );
-extern int pfaction_save( xmlTextWriterPtr writer ); /* faction data */
-extern int pfaction_load( xmlNodePtr parent );
-extern int hook_save( xmlTextWriterPtr writer ); /* hooks */
-extern int hook_load( xmlNodePtr parent );
-extern int space_sysSave( xmlTextWriterPtr writer ); /* space stuff */
-extern int space_sysLoad( xmlNodePtr parent );
-extern int diff_save( xmlTextWriterPtr writer );
-extern int diff_load( xmlNodePtr parent );
-extern void menu_main_close (void);
+/* player.c */
+extern int player_save( xmlTextWriterPtr writer ); /**< Saves player related stuff. */
+extern int player_load( xmlNodePtr parent ); /**< Loads player related stuff. */
+/* mission.c */
+extern int missions_saveActive( xmlTextWriterPtr writer ); /**< Saves active missions. */
+extern int missions_loadActive( xmlNodePtr parent ); /**< Loads active missions. */
+/* nlua_misn.c */
+extern int var_save( xmlTextWriterPtr writer ); /**< Saves mission variables. */
+extern int var_load( xmlNodePtr parent ); /**< Loads mission variables. */
+/* faction.c */
+extern int pfaction_save( xmlTextWriterPtr writer ); /**< Saves faction data. */
+extern int pfaction_load( xmlNodePtr parent ); /**< Loads faction data. */
+/* hook.c */
+extern int hook_save( xmlTextWriterPtr writer ); /**< Saves hooks. */
+extern int hook_load( xmlNodePtr parent ); /**< Loads hooks. */
+/* space.c */
+extern int space_sysSave( xmlTextWriterPtr writer ); /**< Saves the space stuff. */
+extern int space_sysLoad( xmlNodePtr parent ); /**< Loads the space stuff. */
+/* unidiff.c */
+extern int diff_save( xmlTextWriterPtr writer ); /**< Saves the universe diffs. */
+extern int diff_load( xmlNodePtr parent ); /**< Loads the universe diffs. */
+/* menu.c */
+extern void menu_main_close (void); /**< Closes the main menu. */
 /* static */
 static int save_data( xmlTextWriterPtr writer );
 static void load_menu_close( unsigned int wdw, char *str );
@@ -232,6 +240,7 @@ static void load_menu_load( unsigned int wdw, char *str )
 }
 /**
  * @brief Deletes an old game.
+ *    @param wdw Window to delete.
  *    @param str Unused.
  */
 static void load_menu_delete( unsigned int wdw, char *str )

@@ -103,6 +103,7 @@ static const luaL_reg vector_methods[] = {
  * @brief Loads the space library.
  *
  *    @param L State to load space library into.
+ *    @param readonly Load read only functions?
  *    @return 0 on success.
  */
 int lua_loadSpace( lua_State *L, int readonly )
@@ -755,7 +756,7 @@ LuaVector* lua_tovector( lua_State *L, int ind )
  * @brief Pushes a vector on the stack.
  *
  *    @param L Lua state to push vector onto.
- *    @param sys Vector to push.
+ *    @param vec Vector to push.
  *    @return Vector just pushed.
  */
 LuaVector* lua_pushvector( lua_State *L, LuaVector vec )

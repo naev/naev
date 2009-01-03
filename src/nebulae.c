@@ -308,6 +308,9 @@ void nebu_render( const double dt )
 }
 
 
+#define ANG45     0.70710678118654757 /**< sqrt(2) */
+#define COS225    0.92387953251128674 /**< cos(225) */
+#define SIN225    0.38268343236508978 /**< sin(225) */
 /**
  * @brief Renders the nebulae overlay (hides what player can't see).
  *
@@ -315,9 +318,6 @@ void nebu_render( const double dt )
  */
 void nebu_renderOverlay( const double dt )
 {
-#define ANG45     0.70710678118654757 /**< sqrt(2) */
-#define COS225    0.92387953251128674 /**< cos(225) */
-#define SIN225    0.38268343236508978 /**< sin(225) */
 
    /*
     * Renders the puffs
@@ -408,10 +408,10 @@ void nebu_renderOverlay( const double dt )
    glPopMatrix(); /* GL_PROJECTION */
 
    gl_checkErr();
+}
 #undef ANG45
 #undef COS225
 #undef SIN225
-}
 
 
 /**

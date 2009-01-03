@@ -229,7 +229,7 @@ const char* ndata_name (void)
  * @brief Reads a file from the ndata.
  *
  *    @param filename Name of the file to read.
- *    @param[out] Stores the size of the file.
+ *    @param[out] filesize Stores the size of the file.
  *    @return The file data or NULL on error.
  */
 void* ndata_read( const char* filename, uint32_t *filesize )

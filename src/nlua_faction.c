@@ -71,7 +71,7 @@ static const luaL_reg factionL_methods[] = {
  * @brief Loads the faction library.
  *
  *    @param L State to load faction library into.
- *    @param readonoly Load as read only?
+ *    @param readonly Load as read only?
  *    @return 0 on success.
  */
 int lua_loadFaction( lua_State *L, int readonly )

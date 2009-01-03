@@ -78,7 +78,7 @@ Ship* ship_get( const char* name )
  *    @param s Ship to get the mount point of.
  *    @param dir Direction ship is facing.
  *    @param id ID of the mount point to get.
- *    @param[out] The position of the mount point.
+ *    @param[out] p The position of the mount point.
  *    @return 0 on success.
  */
 int ship_getMount( Ship* s, double dir, const int id, Vector2d *p )
@@ -329,8 +329,9 @@ int ship_basePrice( Ship* s )
 /**
  * @brief Extracts the ingame ship from an XML node.
  *
+ *    @param temp Ship to load data into.
  *    @param parent Node to get ship from.
- *    @return The newly created ship.
+ *    @return 0 on success.
  */
 static int ship_parse( Ship *temp, xmlNodePtr parent )
 {

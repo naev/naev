@@ -21,14 +21,13 @@
  *
  * @brief Stores data in funky format.
  *
- *
- * Format Overview
+ * Format Overview:
  *
  *   1.1) Index
  *     1.1.1) Magic Number (16 bytes)
  *     1.1.2) Number of Files (uint32_t)
  *     1.1.3) Files in format Name/Location
- *       1.1.3.1) File Name (128 bytes max, ended in \0)
+ *       1.1.3.1) File Name (128 bytes max, ended in NUL)
  *       1.1.3.2) File Location (uint32_t)
  *   1.2) File data in format Size/Data
  *     1.2.1) File Size (uint32_t)

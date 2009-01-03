@@ -686,10 +686,10 @@ void pilot_runHook( Pilot* p, int hook_type )
 
 
 /**
- * @brief Sets the pilot's secondary weapon based on it's name.
+ * @brief Sets the pilot's secondary weapon.
  *
  *    @param p Pilot to set secondary weapon.
- *    @param secondary Name of the secondary weapon to set.
+ *    @param o Outfit to set as secondary. 
  */
 static void pilot_setSecondary( Pilot* p, Outfit* o )
 {
@@ -1132,6 +1132,7 @@ void pilot_hyperspaceAbort( Pilot* p )
 /**
  * @brief Sets the mount points for an outfit.
  *
+ *    @param p Pilot to set mounts on.
  *    @param po Outfit to set mount points for.
  *    @param o Original number of outfits.
  *    @param q Outfits added.
@@ -1466,7 +1467,7 @@ void pilot_calcStats( Pilot* pilot )
  * @brief Gets the piilot's free cargo space.
  *
  *    @param p Pilot to get the the free space of.
- *    @param Free cargo space on pilot.
+ *    @return Free cargo space on pilot.
  */
 int pilot_cargoFree( Pilot* p )
 {
@@ -1742,8 +1743,8 @@ void pilot_addHook( Pilot *pilot, int type, int hook )
  *    @param faction Faction of the pilot.
  *    @param ai Name of the AI profile to use for the pilot.
  *    @param dir Initial direction to face (radians).
- *    @param vel Initial velocity.
  *    @param pos Initial position.
+ *    @param vel Initial velocity.
  *    @param flags Used for tweaking the pilot.
  */
 void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, char *ai,

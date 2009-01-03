@@ -1737,7 +1737,7 @@ static void gui_createInterference (void)
 /**
  * @brief Parses a gui node.
  *
- *    @param Parent node to parse from.
+ *    @param parent node to parse from.
  *    @param name Name of the GUI to load.
  */
 static int gui_parse( const xmlNodePtr parent, const char *name )
@@ -2928,9 +2928,10 @@ int player_save( xmlTextWriterPtr writer )
 /**
  * @brief Saves a ship.
  *
- *    @param write XML writer.
+ *    @param writer XML writer.
  *    @param ship Ship to save.
  *    @param loc Location of the ship.
+ *    @return 0 on success.
  */
 static int player_saveShip( xmlTextWriterPtr writer,
       Pilot* ship, char* loc )

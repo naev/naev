@@ -765,7 +765,7 @@ static void gl_blitTexture( const glTexture* texture,
 /**
  * @brief Blits a sprite, position is relative to the player.
  *
- *    @param texture Sprite to blit.
+ *    @param sprite Sprite to blit.
  *    @param bx X position of the texture relative to the player.
  *    @param by Y position of the texture relative to the player.
  *    @param sx X position of the sprite to use.
@@ -792,10 +792,12 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
 
    gl_blitTexture( sprite, x, y, tx, ty, c );
 }
+
+
 /**
  * @brief Blits a sprite, position is in absolute screen coordinates.
  *
- *    @param texture Sprite to blit.
+ *    @param sprite Sprite to blit.
  *    @param bx X position of the texture in screen coordinates.
  *    @param by Y position of the texture in screen coordinates.
  *    @param sx X position of the sprite to use.

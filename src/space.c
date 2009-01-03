@@ -156,7 +156,7 @@ int space_sysLoad( xmlNodePtr parent );
 #define PIXEL(x,y)      \
    if ((shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
          (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) <= rc)))   \
-   glVertex2i((x),(y))
+   glVertex2i((x),(y)) /**< Puts a pixel on radar if inbounds. */
 /**
  * @brief Draws the planets in the minimap.  Used by player.c.
  *
@@ -272,8 +272,6 @@ void planets_minimap( const double res, const double w,
 
 
 /**
- * @fn static PlanetClass planetclass_get( const char a )
- *
  * @brief Basically returns a PlanetClass integer from a char
  *
  *    @param a Char to get class from.
@@ -318,8 +316,6 @@ static PlanetClass planetclass_get( const char a )
    };
 }
 /**
- * @fn char planet_getClass( Planet *p )
- *
  * @brief Gets the char representing the planet class from the planet.
  *
  *    @param p Planet to get the class char from.
@@ -1281,8 +1277,6 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 
 
 /**
- * @fn static void system_setFaction( StarSystem *sys )
- *
  * @brief Sets the system faction based on the planets it has.
  *
  *    @param sys System to set the faction of.
@@ -1300,8 +1294,6 @@ static void system_setFaction( StarSystem *sys )
 
 
 /**
- * @fn static void system_parseJumps( const xmlNodePtr parent )
- *
  * @brief Loads the jumps into a system.
  *
  *    @param parent System parent node.
@@ -1346,8 +1338,6 @@ static void system_parseJumps( const xmlNodePtr parent )
 
 
 /**
- * @fn int space_load (void)
- *
  * @brief Loads the entire universe into ram - pretty big feat eh?
  *
  *    @return 0 on success.
@@ -1367,8 +1357,6 @@ int space_load (void)
 }
 
 /**
- * @fn int systems_load (void)
- *
  * @brief Loads the entire systems, needs to be called after planets_load.
  *
  * Uses a two system pass to first load the star systems_stack and then set
@@ -1446,8 +1434,6 @@ static int systems_load (void)
 
 
 /**
- * @fn void space_render( const double dt )
- *
  * @brief Renders the system.
  *
  *    @param dt Current delta tick.
@@ -1464,8 +1450,6 @@ void space_render( const double dt )
 
 
 /**
- * @fn void space_renderOverlay( const double dt )
- *
  * @brief Renders the system overlay.
  *
  *    @param dt Current delta tick.
@@ -1480,8 +1464,6 @@ void space_renderOverlay( const double dt )
 
 
 /**
- * @fn static void space_renderStars( const double dt )
- *
  * @brief Renders the starry background.
  *
  *    @param dt Current delta tick.
@@ -1576,8 +1558,6 @@ static void space_renderStars( const double dt )
 
 
 /**
- * @fn void planets_render (void)
- *
  * @brief Renders the current systemsplanets.
  */
 void planets_render (void)
@@ -1593,8 +1573,6 @@ void planets_render (void)
 
 
 /**
- * @fn void space_exit (void)
- *
  * @brief Cleans up the system.
  */
 void space_exit (void)
@@ -1655,8 +1633,6 @@ void space_exit (void)
 
 
 /**
- * @fn void space_clearKnown (void)
- *
  * @brief Clears all system knowledge.
  */
 void space_clearKnown (void)
@@ -1690,8 +1666,6 @@ void space_clearComputerMarkers (void)
 
 
 /**
- * @fn int space_sysSave( xmlTextWriterPtr writer )
- *
  * @brief Saves what is needed to be saved for space.
  *
  *    @param writer XML writer to use.
@@ -1717,8 +1691,6 @@ int space_sysSave( xmlTextWriterPtr writer )
 
 
 /**
- * @fn int space_sysLoad( xmlNodePtr parent )
- *
  * @brief Loads player's space properties from an XML node.
  *
  *    @param parent Parent node for space.

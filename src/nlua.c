@@ -75,8 +75,6 @@ static const luaL_reg tk_methods[] = {
 
 
 /**
- * @fn lua_State *nlua_newState (void)
- *
  * @brief Wrapper around luaL_newstate.
  *
  *    @return A newly created lua_State.
@@ -97,8 +95,6 @@ lua_State *nlua_newState (void)
 
 
 /**
- * @fn int nlua_load( lua_State* L, lua_CFunction f )
- *
  * @brief Opens a lua library.
  *
  *    @param L Lua state to load the library into.
@@ -115,8 +111,6 @@ int nlua_load( lua_State* L, lua_CFunction f )
 
 
 /**
- * @fn int nlua_loadBasic( lua_State* L )
- *
  * @brief Loads specially modified basic stuff.
  *
  *    @param L Lua State to load the basic stuff into.
@@ -160,8 +154,6 @@ int nlua_loadBasic( lua_State* L )
 
 
 /**
- * @fn static int nlua_packfileLoader( lua_State* L )
- *
  * @brief include( string module )
  *
  * Loads a module into the current Lua state from inside the data file.
@@ -269,8 +261,6 @@ int lua_loadTk( lua_State *L )
  * @{
  */
 /**
- * @fn static int naev_lang( lua_State *L )
- *
  * @brief string lang( nil )
  *
  * Gets the language NAEV is currently using.
@@ -302,8 +292,6 @@ static int naev_lang( lua_State *L )
  * @{
  */
 /**
- * @fn static int time_get( lua_State *L )
- *
  * @brief number get( nil )
  *
  * Gets the current time in internal representation time.
@@ -316,8 +304,6 @@ static int time_get( lua_State *L )
    return 1;
 }
 /**
- * @fn static int time_str( lua_State *L )
- *
  * @brief string str( [number t] )
  *
  * Converts the time to a pretty human readable format.
@@ -338,8 +324,6 @@ static int time_str( lua_State *L )
    return 1;
 }
 /**
- * @fn static int time_units( lua_State *L )
- *
  * @brief number units( [number stu] ) 
  *
  * Converts stu to internal representation time.
@@ -376,8 +360,6 @@ static int time_units( lua_State *L )
  * @{
  */
 /**
- * @fn static int rnd_int( lua_State *L )
- *
  * @brief number int( [number x, number y] )
  *
  * Gets a random number.  With no parameters it returns a random float between
@@ -432,8 +414,6 @@ static int rnd_int( lua_State *L )
  * @{
  */
 /**
- * @fn static int tk_msg( lua_State *L )
- *
  * @brief msg( string title, string message )
  *
  * Creates a window with an ok button.
@@ -455,8 +435,6 @@ static int tk_msg( lua_State *L )
    return 0;
 }
 /**
- * @fn static int tk_yesno( lua_State *L )
- *
  * @brief bool yesno( string title, string message )
  *
  * Displays a window with Yes and No buttons.
@@ -481,8 +459,6 @@ static int tk_yesno( lua_State *L )
    return 1;
 }
 /**
- * @fn static int tk_input( lua_State *L )
- *
  * @brief string input( string title, number min, number max, string str )
  *
  * Creates a window that allows player to write text input.
