@@ -160,12 +160,15 @@ static int SDL_VFlipSurface( SDL_Surface* surface )
  */
 static int SDL_IsTrans( SDL_Surface* s, int x, int y )
 {
-   int bpp = s->format->BytesPerPixel; 
+   int bpp;
+   Uint8 *p;
+   Uint32 pixelcolour;
+   
+   bpp = s->format->BytesPerPixel; 
    /* here p is the address to the pixel we want to retrieve */
-   Uint8 *p = (Uint8 *)s->pixels + y*s->pitch + x*bpp; 
+   p = (Uint8 *)s->pixels + y*s->pitch + x*bpp; 
 
-   Uint32 pixelcolour = 0; 
-
+   pixelcolour = 0;
    switch(bpp) {        
       case 1: 
          pixelcolour = *p; 
@@ -188,7 +191,11 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
    } 
 
    /* test whether pixels colour == colour of transparent pixels for that surface */
+#if SDL_VERSION_ATLEAST(1,3,0)
+   return ((pixelcolour & s->format->Amask) == 0);
+#else /* SDL_VERSION_ATLEAST(1,3,0) */
    return (pixelcolour == s->format->colorkey);
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 }
 
 
@@ -203,17 +210,20 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
  */
 static uint8_t* SDL_MapTrans( SDL_Surface* s )
 {
-   /* alloc memory for just enough bits to hold all the data we need */
-   int size = s->w*s->h/8 + ((s->w*s->h%8)?1:0);
-   uint8_t* t = malloc(size);
-   memset(t,0,size); /* important, must be set to zero */
+   int i,j;
+   int size;
+   uint8_t *t;
 
+   /* alloc memory for just enough bits to hold all the data we need */
+   size = s->w*s->h/8 + ((s->w*s->h%8)?1:0);;
+   t = malloc(size);
    if (t==NULL) {
       WARN("Out of Memory");
       return NULL;
    }
+   memset(t, 0, size); /* important, must be set to zero */
 
-   int i,j;
+   /* Check each pixel individually. */
    for (i=0; i<s->h; i++)
       for (j=0; j<s->w; j++) /* sets each bit to be 1 if not transparent or 0 if is */
          t[(i*s->w+j)/8] |= (SDL_IsTrans(s,j,i)) ? 0 : (1<<((i*s->w+j)%8));
@@ -265,8 +275,10 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
    int r, i;
    int alpha;
    int pixel_bits;
+#if ! SDL_VERSION_ATLEAST(1,3,0)
    unsigned int surf_flags;
    unsigned int surf_alpha;
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    ss_rows = NULL;
    ss_size = 0;
@@ -290,18 +302,22 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
    if (ss_surface == NULL)
       return -1;
 
+#if SDL_VERSION_ATLEAST(1,3,0)
+   SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
+#else /* SDL_VERSION_ATLEAST(1,3,0) */
    surf_flags = surface->flags & (SDL_SRCALPHA | SDL_SRCCOLORKEY);
    surf_alpha = surface->format->alpha;
    if(surf_flags & SDL_SRCALPHA)
       SDL_SetAlpha(surface, 0, SDL_ALPHA_OPAQUE);
    if(surf_flags & SDL_SRCCOLORKEY)
       SDL_SetColorKey(surface, 0, surface->format->colorkey);
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    ss_rect.x = 0;
    ss_rect.y = 0;
    ss_rect.w = ss_w;
    ss_rect.h = ss_h;
-   SDL_BlitSurface(surface, &ss_rect, ss_surface, 0);
+   SDL_BlitSurface(surface, &ss_rect, ss_surface, NULL);
 
    if (ss_size == 0) {
       ss_size = ss_h;
@@ -309,10 +325,13 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
       if (ss_rows == NULL)
          return -1;
    }
+#if SDL_VERSION_ATLEAST(1,3,0)
+#else /* SDL_VERSION_ATLEAST(1,3,0) */
    if ( surf_flags & SDL_SRCALPHA )
       SDL_SetAlpha(surface, SDL_SRCALPHA, (Uint8)surf_alpha);
    if ( surf_flags & SDL_SRCCOLORKEY )
       SDL_SetColorKey(surface, SDL_SRCCOLORKEY, surface->format->colorkey);
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    for (i = 0; i < ss_h; i++)
       ss_rows[i] = ((unsigned char*)ss_surface->pixels) + i * ss_surface->pitch;
@@ -344,10 +363,12 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
 SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
 {
    SDL_Surface* temp;
-   Uint32 saved_flags;
-   Uint8 saved_alpha;
    int potw, poth;
    SDL_Rect rtemp;
+#if ! SDL_VERSION_ATLEAST(1,3,0)
+   Uint32 saved_flags;
+   Uint8 saved_alpha;
+#endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Make size power of two */
    potw = gl_pot(surface->w);
@@ -359,6 +380,13 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
    rtemp.h = surface->h;
 
    /* saves alpha */
+#if SDL_VERSION_ATLEAST(1,3,0)
+   SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
+
+   /* create the temp POT surface */
+   temp = SDL_CreateRGBSurface( 0, potw, poth,
+         surface->format->BytesPerPixel*8, RGBAMASK );
+#else /* SDL_VERSION_ATLEAST(1,3,0) */
    saved_flags = surface->flags & (SDL_SRCALPHA | SDL_RLEACCELOK);
    saved_alpha = surface->format->alpha;
    if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
@@ -369,6 +397,8 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
    /* create the temp POT surface */
    temp = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
          potw, poth, surface->format->BytesPerPixel*8, RGBAMASK );
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
+
    if (temp == NULL) {
       WARN("Unable to create POT surface: %s", SDL_GetError());
       return 0;
@@ -384,9 +414,11 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
    SDL_FreeSurface( surface );
    surface = temp;
 
+#if ! SDL_VERSION_ATLEAST(1,3,0)
    /* set saved alpha */
    if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
       SDL_SetAlpha( surface, 0, 0 );
+#endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
 
    return surface;
 }
@@ -1161,7 +1193,11 @@ int gl_init (void)
       SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, gl_screen.fsaa);
    }
    if (gl_has(OPENGL_VSYNC))
+#if SDL_VERSION_ATLEAST(1,3,0)
+      SDL_GL_SetSwapInterval(1);
+#else /* SDL_VERSION_ATLEAST(1,3,0) */
       SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, 1);
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    if (gl_has(OPENGL_FULLSCREEN)) {
       /* Try to use desktop resolution if nothing is specifically set. */

@@ -128,7 +128,12 @@ extern double player_turn;
 /*
  * Key conversion table.
  */
-static const char *keyconv[SDLK_LAST]; /**< Key conversion table. */
+#if SDL_VERSION_ATLEAST(1,3,0)
+#  define INPUT_NUMKEYS     SDL_NUM_SCANCODES /**< Number of keys available. */
+#else /* SDL_VERSION_ATLEAST(1,3,0) */
+#  define INPUT_NUMKEYS     SDLK_LAST /**< Number of keys available. */
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
+static char *keyconv[INPUT_NUMKEYS]; /**< Key conversion table. */
 
 
 /*
@@ -198,10 +203,42 @@ void input_init (void)
 {  
    Keybind *temp;
    int i;
-   for (i=0; strcmp(keybindNames[i],"end"); i++); /* gets number of bindings */
+
+#if SDL_VERSION_ATLEAST(1,3,0)
+   /* Window. */
+   SDL_EventState( SDL_WINDOWEVENT,     SDL_DISABLE );
+   SDL_EventState( SDL_SYSWMEVENT,      SDL_DISABLE );
+
+   /* Keyboard. */
+   SDL_EventState( SDL_KEYDOWN,         SDL_ENABLE );
+   SDL_EventState( SDL_KEYUP,           SDL_ENABLE );
+   SDL_EventState( SDL_TEXTINPUT,       SDL_DISABLE );
+
+   /* Mice. */
+   SDL_EventState( SDL_MOUSEMOTION,     SDL_ENABLE );
+   SDL_EventState( SDL_MOUSEBUTTONDOWN, SDL_ENABLE );
+   SDL_EventState( SDL_MOUSEBUTTONUP,   SDL_ENABLE );
+   SDL_EventState( SDL_MOUSEWHEEL,      SDL_ENABLE );
+   
+   /* Joystick, enabled in joystick.c if needed. */
+   SDL_EventState( SDL_JOYAXISMOTION,   SDL_DISABLE );
+   SDL_EventState( SDL_JOYHATMOTION,    SDL_DISABLE );
+   SDL_EventState( SDL_JOYBUTTONDOWN,   SDL_DISABLE );
+   SDL_EventState( SDL_JOYBUTTONUP,     SDL_DISABLE );
+
+   /* Quit. */
+   SDL_EventState( SDL_QUIT,            SDL_ENABLE );
+
+   /* Proximity. */
+   SDL_EventState( SDL_PROXIMITYIN,     SDL_DISABLE );
+   SDL_EventState( SDL_PROXIMITYOUT,    SDL_DISABLE );
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
+
+   /* Get the number of keybindings. */
+   for (i=0; strcmp(keybindNames[i],"end"); i++);
       input_keybinds = malloc(i*sizeof(Keybind*));
 
-   /* creates a null keybinding for each */
+   /* Create sane null keybinding for each. */
    for (i=0; strcmp(keybindNames[i],"end"); i++) {
       temp = malloc(sizeof(Keybind));
       temp->name = (char*)keybindNames[i];
@@ -212,6 +249,7 @@ void input_init (void)
       input_keybinds[i] = temp;
    }
 
+   /* Generate Key translation table. */
    input_keyConvGen();
 }
 
@@ -239,8 +277,8 @@ static void input_keyConvGen (void)
 {
    SDLKey k;
 
-   for (k=SDLK_FIRST; k < SDLK_LAST; k++)
-      keyconv[k] = SDL_GetKeyName(k);
+   for (k=0; k < INPUT_NUMKEYS; k++)
+      keyconv[k] = strdup( SDL_GetKeyName(k) );
 }
 
 
@@ -249,6 +287,10 @@ static void input_keyConvGen (void)
  */
 static void input_keyConvDestroy (void)
 {
+   int i;
+
+   for (i=0; i < INPUT_NUMKEYS; i++)
+      free( keyconv[i] );
 }
 
 
@@ -267,7 +309,7 @@ SDLKey input_keyConv( char *name )
    l = strlen(name);
    buf[0] = tolower(name[0]);
    buf[1] = '\0';
-   for (k=SDLK_FIRST; k < SDLK_LAST; k++)
+   for (k=0; k < INPUT_NUMKEYS; k++)
       if (strcmp((l==1) ? buf : name , keyconv[k])==0)
          return k;
 

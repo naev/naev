@@ -249,7 +249,8 @@ int main( int argc, char** argv )
    /* primary loop */
    while (!quit) {
       while (SDL_PollEvent(&event)) { /* event loop */
-         if (event.type == SDL_QUIT) quit = 1; /* quit is handled here */
+         if (event.type == SDL_QUIT)
+            quit = 1; /* quit is handled here */
 
          input_handle(&event); /* handles all the events and player keybinds */
       }

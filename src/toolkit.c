@@ -2492,9 +2492,11 @@ static int toolkit_keyEvent( SDL_Event* event )
 
    /* hack to simulate key repetition */
    if ((key==SDLK_BACKSPACE) || isalnum(key)) {
-      if (event->type==SDL_KEYDOWN) toolkit_regKey(key);
-      else if (event->type==SDL_KEYUP) toolkit_unregKey(key);
-   }   
+      if (event->type == SDL_KEYDOWN)
+         toolkit_regKey(key);
+      else if (event->type == SDL_KEYUP)
+         toolkit_unregKey(key);
+   }
 
    /* handle input widgets */
    if (wgt && (wgt->type==WIDGET_INPUT)) /* grabs all the events it wants */
