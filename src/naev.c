@@ -109,8 +109,6 @@ void main_loop (void); /* dialogue.c */
 
 
 /**
- * @fn int main( int argc, char** argv )
- *
  * @brief The entry point of NAEV.
  *
  *    @param[in] argc Number of arguments.
@@ -293,8 +291,6 @@ int main( int argc, char** argv )
 
 
 /**
- * @fn void loadscreen_load (void)
- *
  * @brief Loads a loading screen.
  */
 void loadscreen_load (void)
@@ -325,8 +321,6 @@ void loadscreen_load (void)
 
 
 /**
- * @fn void loadscreen_render( double done, const char *msg )
- *
  * @brief Renders the load screen with message.
  *
  *    @param done Amount done (1. == completed).
@@ -375,8 +369,6 @@ void loadscreen_render( double done, const char *msg )
 
 
 /**
- * @fn static void loadscreen_unload (void)
- *
  * @brief Frees the loading screen.
  */
 static void loadscreen_unload (void)
@@ -388,8 +380,6 @@ static void loadscreen_unload (void)
 
 
 /**
- * @fn void load_all (void)
- *
  * @brief Loads all the data, makes main() simpler.
  */
 #define LOADING_STAGES     9. /**< Amount of loading stages. */
@@ -416,8 +406,6 @@ void load_all (void)
    xmlCleanupParser(); /* Only needed to be run after all the loading is done. */
 }
 /**
- * @fn void unload_all (void)
- *
  * @brief Unloads all data, simplifies main().
  */
 void unload_all (void)
@@ -488,8 +476,6 @@ static void fps_control (void)
 
 static const double fps_min = 1./50.; /**< Minimum fps to run at. */
 /**
- * @fn static void update_all (void)
- *
  * @brief Updates the game itself (player flying around and friends).
  */
 static void update_all (void)
@@ -522,8 +508,6 @@ static void update_all (void)
 
 
 /**
- * @fn static void update_routine( double dt )
- *
  * @brief Actually runs the updates
  *
  *    @param[in] dt Current delta tick.
@@ -539,8 +523,6 @@ static void update_routine( double dt )
 
 
 /**
- * @fn static void render_all (void)
- *
  * @brief Renders the game itself (player flying around and friends).
  *
  * Blitting order (layers):
@@ -614,8 +596,6 @@ static void display_fps( const double dt )
 
 
 /**
- * @fn static void window_caption (void)
- *
  * @brief Sets the window caption.
  */
 static void window_caption (void)
@@ -629,8 +609,6 @@ static void window_caption (void)
 
 static char human_version[50]; /**< Stores the human readable version string. */
 /**
- * @fn char *naev_version (void)
- *
  * @brief Returns the version in a human readable string.
  *
  *    @return The human readable version string.
@@ -645,8 +623,6 @@ char *naev_version (void)
 
 
 /**
- * @fn static void print_SDLversion.
- *
  * @brief Prints the SDL version to console.
  */
 static void print_SDLversion (void)
