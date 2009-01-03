@@ -191,6 +191,7 @@ ALIASES               += "luafunc=@param L Lua State                      \
                           @return Number of variables on the Lua State stack.\n\
                           <p><em>Lua function:</em>"
 ALIASES               += "luaparam=<em>Lua function parameter:</em> "
+ALIASES               += "luareturn=<em>Lua return parameter:</em> "
 
 # Set the OPTIMIZE_OUTPUT_FOR_C tag to YES if your project consists of C 
 # sources only. Doxygen will then generate output that is more tailored for C. 
