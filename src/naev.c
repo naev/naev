@@ -26,7 +26,7 @@
 #include <execinfo.h>
 #include <stdlib.h>
 #include <unistd.h>
-#endif /* defined(LINUX) && !defined(DEBUG) */
+#endif /* defined(LINUX) && !defined(DEBUGGING) */
 
 
 /* local */
@@ -711,7 +711,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
 
    exit(1);
 }
-#endif /* defined(LINUX) && !defined(DEBUG) */
+#endif /* defined(LINUX) && !defined(DEBUGGING) */
 
 
 /**
@@ -738,5 +738,5 @@ static void debug_sigInit (void)
    sigaction(SIGABRT, &sa, &so);
    if (so.sa_handler == SIG_IGN)
       DEBUG("Unable to set up SIGABRT signal handler.");
-#endif /* defined(LINUX) && !defined(DEBUG) */
+#endif /* defined(LINUX) && !defined(DEBUGGING) */
 }
