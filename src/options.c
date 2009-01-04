@@ -21,6 +21,7 @@
 #include "toolkit.h"
 #include "sound.h"
 #include "music.h"
+#include "nstd.h"
 
 
 #define KEYBINDS_WIDTH  440 /**< Options menu width. */
@@ -41,31 +42,10 @@ extern const char *keybindNames[]; /**< from input.c */
 /*
  * prototypes
  */
-static int opt_isalpha( SDLKey k );
 static const char* modToText( SDLMod mod );
 static void menuKeybinds_update( unsigned int wid, char *name );
 static void opt_setSFXLevel( unsigned int wid, char *str );
 static void opt_setMusicLevel( unsigned int wid, char *str );
-
-
-/**
- * @brief Checks to see if a key is alpha.
- *
- *    @param k Key to check.
- *    @return 1 if is alpha.
- */
-static int opt_isalpha( SDLKey k )
-{
-   int ret;
-
-   ret = 0;
-
-   /* Alpha. */
-   if ((k >= SDLK_a) && (k <= SDLK_z))
-      ret = 1;
-
-   return ret;
-}
 
 
 /**
@@ -102,7 +82,7 @@ void opt_menuKeybinds (void)
       switch (type) {
          case KEYBIND_KEYBOARD:
             /* SDL_GetKeyName returns lowercase which is ugly. */
-            if (opt_isalpha(key))
+            if (nstd_isalpha(key))
                snprintf(str[j], 64, "%s <%c>", keybindNames[j], toupper(key) );
             else
                snprintf(str[j], 64, "%s <%s>", keybindNames[j], SDL_GetKeyName(key) );
@@ -188,7 +168,7 @@ static void menuKeybinds_update( unsigned int wid, char *name )
          break;
       case KEYBIND_KEYBOARD:
          /* SDL_GetKeyName returns lowercase which is ugly. */
-         if (opt_isalpha(key))
+         if (nstd_isalpha(key))
             snprintf(bind, 32, "keyboard:   %s%s%c",
                   (mod != KMOD_NONE) ? modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
