@@ -304,14 +304,25 @@ SDLKey input_keyConv( char *name )
 {
    SDLKey k;
    size_t l;
-   char buf[2];
+   char buf;
+   int m;
 
    l = strlen(name);
-   buf[0] = tolower(name[0]);
-   buf[1] = '\0';
-   for (k=0; k < INPUT_NUMKEYS; k++)
-      if (strcmp((l==1) ? buf : name , keyconv[k])==0)
-         return k;
+   buf = tolower(name[0]);
+
+   /* Compare for single character. */
+   if (l == 1) {
+      m = MIN(256, INPUT_NUMKEYS);
+      for (k=0; k < m; k++) /* Only valid for char range. */
+         if ((buf == tolower(keyconv[k][0])) && (keyconv[k][1] == '\0'))
+            return k;
+   }
+   /* Compare for strings. */
+   else {
+      for (k=0; k < INPUT_NUMKEYS; k++)
+         if (strcmp(name , keyconv[k])==0)
+            return k;
+   }
 
    WARN("Keyname '%s' doesn't match any key.", name);
    return SDLK_UNKNOWN;

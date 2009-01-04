@@ -249,6 +249,8 @@ static void toolkit_clip( double x, double y, double w, double h );
 static void toolkit_unclip (void);
 static void toolkit_drawRect( double x, double y,
       double w, double h, glColour* c, glColour* lc );
+/* misc */
+static int toolkit_isalnum( SDLKey k );
 
 
 /**
@@ -2470,6 +2472,28 @@ static void toolkit_clearKey (void)
    input_keyCounter = 0;
 }
 /**
+ * @brief like isalnum but for keysyms.
+ *
+ *    @param k Key to check.
+ *    @return 1 if is alnum.
+ */
+static int toolkit_isalnum( SDLKey k )
+{
+   int ret;
+
+   ret = 0;
+
+   /* Alpha. */
+   if ((k >= SDLK_a) && (k <= SDLK_z))
+      ret = 1;
+
+   /* Number. */
+   if ((k >= SDLK_0) && (k <= SDLK_9))
+      ret = 1;
+
+   return ret;
+}
+/**
  * @brief Handles keyboard events.
  *
  *    @param event Keyboard event to handle.
@@ -2491,7 +2515,7 @@ static int toolkit_keyEvent( SDL_Event* event )
    key = event->key.keysym.sym;
 
    /* hack to simulate key repetition */
-   if ((key==SDLK_BACKSPACE) || isalnum(key)) {
+   if ((key==SDLK_BACKSPACE) || toolkit_isalnum(key)) {
       if (event->type == SDL_KEYDOWN)
          toolkit_regKey(key);
       else if (event->type == SDL_KEYUP)
@@ -2574,7 +2598,7 @@ void toolkit_update (void)
       wdw = &windows[nwindows-1];
       wgt = (wdw->focus >= 0) ? &wdw->widgets[ wdw->focus ] : NULL;
       if (wgt && (wgt->type==WIDGET_INPUT) &&
-            (input_key==SDLK_BACKSPACE || isalnum(input_key)))
+            (input_key==SDLK_BACKSPACE || toolkit_isalnum(input_key)))
          toolkit_inputInput( SDL_KEYDOWN, wgt, input_key );
    }
 
