@@ -2194,7 +2194,13 @@ static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key )
    int n;
    SDLMod mods;
 
-   if (inp->type != WIDGET_INPUT) return 0;
+   /* Must be input widget. */
+   if (inp->type != WIDGET_INPUT)
+      return 0;
+
+   /* We only actually handle keydowns. */
+   if (type != SDL_KEYDOWN)
+      return 0;
 
    /*
     * Handle arrow keys.
@@ -2218,11 +2224,16 @@ static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key )
    }
 #endif
 
+   /* Only catch some keys. */
+   if (!toolkit_isalnum(key) && (key != SDLK_BACKSPACE) &&
+         (key != SDLK_SPACE) && (key != SDLK_RETURN))
+      return 0;
+
    mods = SDL_GetModState();
    if (inp->dat.inp.oneline && isascii(key)) {
 
       /* backspace -> delete text */
-      if ((type==SDL_KEYDOWN) && (key=='\b') && (inp->dat.inp.pos > 0)) {
+      if ((key == SDLK_BACKSPACE) && (inp->dat.inp.pos > 0)) {
          inp->dat.inp.input[ --inp->dat.inp.pos ] = '\0';
          
          if (inp->dat.inp.view > 0) {
@@ -2233,7 +2244,8 @@ static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key )
          }
       }
 
-      else if ((type==SDL_KEYDOWN) && (inp->dat.inp.pos < inp->dat.inp.max-1)) {
+      /* in limits. */
+      else if ((inp->dat.inp.pos < inp->dat.inp.max-1)) {
          
          if ((key==SDLK_RETURN) && !inp->dat.inp.oneline)
             inp->dat.inp.input[ inp->dat.inp.pos++ ] = '\n';
@@ -2597,8 +2609,7 @@ void toolkit_update (void)
    if (nwindows > 0) {
       wdw = &windows[nwindows-1];
       wgt = (wdw->focus >= 0) ? &wdw->widgets[ wdw->focus ] : NULL;
-      if (wgt && (wgt->type==WIDGET_INPUT) &&
-            (input_key==SDLK_BACKSPACE || toolkit_isalnum(input_key)))
+      if (wgt && (wgt->type==WIDGET_INPUT))
          toolkit_inputInput( SDL_KEYDOWN, wgt, input_key );
    }
 
