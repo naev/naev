@@ -526,6 +526,7 @@ void missions_update( const double dt )
 void mission_cleanup( Mission* misn )
 {
    int i;
+
    if (misn->id != 0)
       hook_rmParent( misn->id ); /* remove existing hooks */
    if (misn->title != NULL)

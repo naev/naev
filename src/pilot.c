@@ -113,7 +113,7 @@ static int pilot_getStackPos( const unsigned int id )
       m = (l+h) >> 1; /* for impossible overflow returning neg value */
       if (pilot_stack[m]->id > id) h = m-1;
       else if (pilot_stack[m]->id < id) l = m+1;
-      else return m;;
+      else return m;
    }
 
    /* Not found. */
