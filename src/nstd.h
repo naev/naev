@@ -13,6 +13,7 @@
 
 int nstd_isalpha( SDLKey k );
 int nstd_isalnum( SDLKey k );
+int nstd_iscntrl( SDLKey k );
 
 
 #endif /* NSTD_H */

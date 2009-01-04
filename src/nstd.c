@@ -12,6 +12,9 @@
 #include "nstd.h"
 
 
+#define nstd_checkascii(k)       ((k & 0xff) == k) /**< Checks to see if k is in ascii area. */
+
+
 /**
  * @brief Checks to see if a key is alpha.
  *
@@ -33,10 +36,10 @@ int nstd_isalpha( SDLKey k )
 
 
 /**
- * @brief like isalnum but for keysyms.
+ * @brief Checks to see if a key is alphanumeric.
  *
  *    @param k Key to check.
- *    @return 1 if is alnum.
+ *    @return 1 if is alphanumeric.
  */
 int nstd_isalnum( SDLKey k )
 {  
@@ -55,4 +58,15 @@ int nstd_isalnum( SDLKey k )
    return ret;
 }
 
+
+/**
+ * @brief Checks to see if a key is a control character.
+ *
+ *    @param k Key to check.
+ *    @return 1 if is a control character.
+ */
+int nstd_iscntrl( SDLKey k )
+{
+   return nstd_checkascii(k) ? iscntrl(k) : 0;
+}
 

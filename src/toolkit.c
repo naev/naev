@@ -2229,7 +2229,7 @@ static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key )
       return 0;
 
    mods = SDL_GetModState();
-   if (inp->dat.inp.oneline && isascii(key)) {
+   if (inp->dat.inp.oneline) {
 
       /* backspace -> delete text */
       if ((key == SDLK_BACKSPACE) && (inp->dat.inp.pos > 0)) {
@@ -2254,7 +2254,7 @@ static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key )
             inp->dat.inp.input[ inp->dat.inp.pos++ ] = toupper(key);
 
          /* rest */
-         else if (!iscntrl(key))
+         else if (!nstd_iscntrl(key))
             inp->dat.inp.input[ inp->dat.inp.pos++ ] = key;
 
          /* didn't get a useful key */

@@ -195,10 +195,14 @@ static void menuKeybinds_update( unsigned int wid, char *name )
 
 /**
  * @brief Callback to set the sound level.
+ *
+ *    @param wid Window calling the callback.
+ *    @param str Name of the widget calling the callback.
  */
 static void opt_setSFXLevel( unsigned int wid, char *str )
 {
 	double vol;
+
    vol = window_getFaderValue(wid, str);
 	sound_volume(vol);
 }
@@ -206,10 +210,14 @@ static void opt_setSFXLevel( unsigned int wid, char *str )
 
 /**
  * @brief Callback to set the music level.
+ *
+ *    @param wid Window calling the callback.
+ *    @param str Name of the widget calling the callback.
  */
 static void opt_setMusicLevel( unsigned int wid, char *str )
 {
    double vol;
+
    vol = window_getFaderValue(wid, str);
 	music_volume(vol);
 }
