@@ -302,10 +302,9 @@ static void input_keyConvDestroy (void)
  */
 SDLKey input_keyConv( char *name )
 {
-   SDLKey k;
+   SDLKey k, m;
    size_t l;
    char buf;
-   int m;
 
    l = strlen(name);
    buf = tolower(name[0]);
