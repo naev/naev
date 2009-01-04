@@ -75,7 +75,8 @@ static int hook_run( Hook *hook )
    int i;
    Mission* misn;
 
-   if (hook->delete) return 0; /* hook should be deleted not run */
+   if (hook->delete)
+      return 0; /* hook should be deleted not run */
 
    /* locate the mission */
    for (i=0; i<MISSION_MAX; i++)
@@ -132,38 +133,50 @@ unsigned int hook_add( unsigned int parent, char *func, char *stack )
  * @brief Removes a hook.
  *
  *    @param id Identifier of the hook to remove.
+ *    @return 1 if hook was removed, 2 if hook was scheduled for removal and
+ *            0 if it wasn't removed.
  */
-void hook_rm( unsigned int id )
+int hook_rm( unsigned int id )
 {
-   int l,m,h;
+   int l,m,h,f;
 
+   /* Binary search. */
+   f = 0;
    l = 0;
    h = hook_nstack-1;
    while (l <= h) {
       m = (l+h)/2;
       if (hook_stack[m].id > id) h = m-1;
       else if (hook_stack[m].id < id) l = m+1;
-      else break;
+      else {
+         f = 1;
+         break;
+      }
    }
 
-   /* mark to delete, but do not delete yet, hooks are running */
+   /* Check if hook was found. */
+   if (f == 0)
+      return 0;
+
+   /* Mark to delete, but do not delete yet, hooks are running. */
    if (hook_runningstack) {
       hook_stack[m].delete = 1;
-      return;
+      return 2;
    }
 
-   /* Free the hook */
+   /* Free the hook. */
    hook_free( &hook_stack[m] );
 
-   /* last hook, just clip the stack */
+   /* Last hook, just clip the stack. */
    if (m == (hook_nstack-1)) {
       hook_nstack--;
-      return;
+      return 1;
    }
 
-   /* move it! */
+   /* Move it! */
    memmove( &hook_stack[m], &hook_stack[m+1], sizeof(Hook) * (hook_nstack-m-1) );
    hook_nstack--;
+   return 1;
 }
 
 
@@ -178,8 +191,9 @@ void hook_rmParent( unsigned int parent )
 
    for (i=0; i<hook_nstack; i++)
       if (parent == hook_stack[i].parent) {
-         hook_rm( hook_stack[i].id );
-         if (!hook_runningstack) i--;
+         /* Only decrement if hook was actually removed. */
+         if (hook_rm( hook_stack[i].id ) == 1)
+            i--;
       }
 }
 
@@ -215,17 +229,26 @@ int hooks_run( char* stack )
  * @brief Runs a single hook by id.
  *
  *    @param id Identifier of the hook to run.
+ *    @return The ID of the hook or 0 if it got deleted.
  */
 void hook_runID( unsigned int id )
 {
-   int i;
+   Hook *h;
+   int i, ret;
 
+   /* Try to find the hook and run it. */
+   ret = 0;
    for (i=0; i<hook_nstack; i++)
       if (hook_stack[i].id == id) {
-         hook_run( &hook_stack[i] );
-         return;
+         h = &hook_stack[i];
+         hook_run( h );
+         ret = 1;
+         break;
       }
-   DEBUG("Attempting to run hook of id '%d' which is not in the stack", id);
+
+   /* Hook not found. */
+   if (ret == 0)
+      DEBUG("Attempting to run hook of id '%d' which is not in the stack", id);
 }
 
 
@@ -236,8 +259,10 @@ void hook_runID( unsigned int id )
  */
 static void hook_free( Hook *h )
 {
-   if (h->func != NULL) free(h->func);
-   if (h->stack != NULL) free(h->stack);
+   if (h->func != NULL)
+      free(h->func);
+   if (h->stack != NULL)
+      free(h->stack);
 }
 
 

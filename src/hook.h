@@ -12,7 +12,7 @@
 
 /* add/run hooks */
 unsigned int hook_add( unsigned int parent, char *func, char *stack );
-void hook_rm( unsigned int id );
+int hook_rm( unsigned int id );
 void hook_rmParent( unsigned int parent );
 
 /* 
