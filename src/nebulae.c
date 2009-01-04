@@ -510,7 +510,7 @@ static int nebu_generate (void)
    int ret;
 
    /* Warn user of what is happening. */
-   loadscreen_render( 0.05, "Generating Nebulae..." );
+   loadscreen_render( 0.05, "Generating Nebulae (slow, run once)..." );
 
    /* Get resolution to create at. */
    w = SCREEN_W;
