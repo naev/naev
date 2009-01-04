@@ -11,6 +11,7 @@
 #include "save.h"
 
 #include <stdio.h> /* remove() */
+#include <errno.h> /* errno */
 
 #include "naev.h"
 #include "log.h"
@@ -67,8 +68,6 @@ static int load_game( char* file );
 
 
 /**
- * @fn static int save_data( xmlTextWriterPtr writer )
- *
  * @brief Saves all the player's game data.
  *
  *    @param writer XML writer to use.
@@ -90,15 +89,13 @@ static int save_data( xmlTextWriterPtr writer )
 
 
 /**
- * @fn int save_all (void)
- *
  * @brief Saves the current game.
  *
  *    @return 0 on success.
  */
 int save_all (void)
 {
-   char file[PATH_MAX];
+   char file[PATH_MAX], old[PATH_MAX];
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
 
@@ -126,9 +123,7 @@ int save_all (void)
    /* Save the data. */
    if (save_data(writer) < 0) {
       ERR("Trying to save game data");
-      xmlFreeTextWriter(writer);
-      xmlFreeDoc(doc);
-      return -1;
+      goto err_writer;
    }
 
    /* Finish element. */
@@ -137,25 +132,40 @@ int save_all (void)
 
    /* Write to file. */
    if (nfile_dirMakeExist("%ssaves", nfile_basePath()) < 0) {
-      WARN("aborting save...");
-      xmlFreeTextWriter(writer);
-      xmlFreeDoc(doc);
-      return -1;
+      WARN("Aborting save...");
+      goto err_writer;
    }
-   snprintf(file, PATH_MAX,"%ssaves/%s.ns", nfile_basePath(), player_name);
+   snprintf(file, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player_name);
 
-   /* Critical section, if crashes here player's game gets corrupted. */
+   /* Back up old savegame. */
+   snprintf(old, PATH_MAX, "%s.backup", file);
+   if (nfile_fileExists(file)) {
+      if (rename(file, old) < 0) {
+         WARN("Unable to back up old save: %s. Not saving!", strerror(errno));
+         goto err_writer;
+      }
+   }
+
+   /* Critical section, if crashes here player's game gets corrupted.
+    * Luckily we have a copy just in case... */
    xmlFreeTextWriter(writer);
-   xmlSaveFileEnc(file, doc, "UTF-8");
+   if (xmlSaveFileEnc(file, doc, "UTF-8") < 0) {
+      WARN("Failed to write savegame!  You'll most likely have to restore it by copying your backup savegame over your current savegame.");
+      goto err;
+   }
    xmlFreeDoc(doc);
 
    return 0;
+
+err_writer:
+   xmlFreeTextWriter(writer);
+err:
+   xmlFreeDoc(doc);
+   return -1;
 }
 
 
 /**
- * @fn void load_game_menu (void)
- *
  * @brief Opens the load game menu.
  */
 void load_game_menu (void)
@@ -269,8 +279,6 @@ static void load_menu_delete( unsigned int wdw, char *str )
 
 
 /**
- * @fn static int load_game( char* file )
- * 
  * @brief Actually loads a new game based on file.
  *
  *    @param file File that contains the new game.

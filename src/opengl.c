@@ -702,7 +702,12 @@ void gl_freeTexture( glTexture* texture )
  */
 int gl_isTrans( const glTexture* t, const int x, const int y )
 {
-   return !(t->trans[(y*(int)(t->w)+x)/8] & (1<<((y*(int)(t->w)+x)%8)));
+   int i;
+
+   /* Get the position in the sheet. */
+   i = y*(int)(t->w) + x ;
+   /* Now we have to pull out the individual bit. */
+   return !(t->trans[ i/8 ] & (1 << (i%8)));
 }
 
 

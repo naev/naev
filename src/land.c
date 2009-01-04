@@ -208,7 +208,7 @@ static void commodity_exchange_open (void)
 static void commodity_update( unsigned int wid, char* str )
 {
    (void)str;
-   char buf[128];
+   char buf[PATH_MAX];
    char *comname;
    Commodity *com;
 
@@ -216,7 +216,7 @@ static void commodity_update( unsigned int wid, char* str )
    com = commodity_get( comname );
 
    /* modify text */
-   snprintf( buf, 128,
+   snprintf( buf, PATH_MAX,
          "%d tons\n"
          "%d credits/ton\n"
          "\n"
@@ -1517,7 +1517,9 @@ void takeoff (void)
    hyperspace_target = h;
 
    /* cleanup */
-   save_all(); /* must be before cleaning up planet */
+   if (save_all() < 0) { /* must be before cleaning up planet */
+      dialogue_alert( "Failed to save game!  You should exit and check the log to see what happened and then file a bug report!" );
+   }
    land_cleanup(); /* Cleanup stuff */
    hooks_run("takeoff"); /* Must be run after cleanup since we don't want the
                             missions to think we are landed. */
