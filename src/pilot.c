@@ -1671,8 +1671,13 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
    memmove( &pilot->commodities[i], &pilot->commodities[i+1],
          sizeof(PilotCommodity) * (pilot->ncommodities-i-1) );
    pilot->ncommodities--;
-   pilot->commodities = realloc( pilot->commodities,
-         sizeof(PilotCommodity) * pilot->ncommodities );
+   if (pilot->ncommodities == 0) {
+      free( pilot->commodities );
+      pilot->commodities = NULL;
+   }
+   else
+      pilot->commodities = realloc( pilot->commodities,
+            sizeof(PilotCommodity) * pilot->ncommodities );
 
    return 0;
 }
