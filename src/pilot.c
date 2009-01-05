@@ -1320,8 +1320,13 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
             memmove( &pilot->outfits[i], &pilot->outfits[i+1],
                   sizeof(PilotOutfit) * (pilot->noutfits-i-1) );
             pilot->noutfits--;
-            pilot->outfits = realloc( pilot->outfits,
-                  sizeof(PilotOutfit) * (pilot->noutfits) );
+            if (pilot->noutfits == 0) {
+                free(pilot->outfits);
+                pilot->outfits = NULL;
+            }
+            else
+                pilot->outfits = realloc( pilot->outfits,
+                      sizeof(PilotOutfit) * (pilot->noutfits) );
 
             /* set secondary  and afterburner */
             pilot_setSecondary( pilot, osec );
