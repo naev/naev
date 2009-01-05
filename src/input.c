@@ -21,6 +21,7 @@
 #include "map.h"
 #include "escort.h"
 #include "land.h"
+#include "nstd.h"
 
 
 #define KEY_PRESS    ( 1.) /**< Key is pressed. */

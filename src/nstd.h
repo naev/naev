@@ -10,6 +10,8 @@
 
 #include <ctype.h>
 
+#include "SDL.h"
+
 
 /**
  * @brief Checks to see if k is in ascii area.
@@ -20,19 +22,29 @@
 /**
  * @brief Checks to see if a key is alpha.
  */
-#define nstd_isalpha(k) (nstd_checkascii(k) ? isalpha(k) : 0)
+#define nstd_isalpha(k)    (nstd_checkascii(k) ? isalpha(k) : 0)
 /**
  * @brief Checks to see if a key is alphanumeric.
  */
-#define nstd_isalnum(k) (nstd_checkascii(k) ? isalnum(k) : 0)
+#define nstd_isalnum(k)    (nstd_checkascii(k) ? isalnum(k) : 0)
 /**
  * @brief Checks to see if a key is a control character.
  */
-#define nstd_iscntrl(k) (nstd_checkascii(k) ? iscntrl(k) : 0)
+#define nstd_iscntrl(k)    (nstd_checkascii(k) ? iscntrl(k) : 0)
 /**
  * @brief Checks to see if a key is a space character.
  */
-#define nstd_isspace(k) (nstd_checkascii(k) ? isspace(k) : 0)
+#define nstd_isspace(k)    (nstd_checkascii(k) ? isspace(k) : 0)
+
+
+/**
+ * @brief Converts a key to lowercase if applicable.
+ */
+#define nstd_tolower(k)    (nstd_checkascii(k) ? (SDLKey)tolower(k) : k)
+/**
+ * @brief Cnoverts a key to uppercase if applicable.
+ */
+#define nstd_toupper(k)    (nstd_checkascii(k) ? (SDLKey)toupper(k) : k)
 
 
 #endif /* NSTD_H */

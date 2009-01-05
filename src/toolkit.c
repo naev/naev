@@ -2251,7 +2251,7 @@ static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key )
 
          /* upper case characters */
          else if (nstd_isalpha(key) && (mods & (KMOD_LSHIFT | KMOD_RSHIFT)))
-            inp->dat.inp.input[ inp->dat.inp.pos++ ] = toupper(key);
+            inp->dat.inp.input[ inp->dat.inp.pos++ ] = nstd_toupper(key);
 
          /* rest */
          else if (!nstd_iscntrl(key))

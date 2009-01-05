@@ -83,7 +83,7 @@ void opt_menuKeybinds (void)
          case KEYBIND_KEYBOARD:
             /* SDL_GetKeyName returns lowercase which is ugly. */
             if (nstd_isalpha(key))
-               snprintf(str[j], 64, "%s <%c>", keybindNames[j], toupper(key) );
+               snprintf(str[j], 64, "%s <%c>", keybindNames[j], nstd_toupper(key) );
             else
                snprintf(str[j], 64, "%s <%s>", keybindNames[j], SDL_GetKeyName(key) );
             break;
@@ -172,7 +172,7 @@ static void menuKeybinds_update( unsigned int wid, char *name )
             snprintf(bind, 32, "keyboard:   %s%s%c",
                   (mod != KMOD_NONE) ? modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
-                  toupper(key));
+                  nstd_toupper(key));
          else
             snprintf(bind, 32, "keyboard:   %s%s%s",
                   (mod != KMOD_NONE) ? modToText(mod) : "",
