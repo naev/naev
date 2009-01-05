@@ -21,14 +21,25 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "naev.h"
 #include "hook.h"
 #include "economy.h"
 
 
-static unsigned int naev_time = 0; /**< Contains the current time in mSTU. */
+/**
+ * @brief Used for storing time increments to not trigger hooks during Lua
+ *        calls and such.
+ */
+typedef struct NTimeUpdate_s {
+   struct NTimeUpdate_s *next; /**< Next in the linked list. */
+   unsigned int inc; /**< Time increment assosciated. */
+} NTimeUpdate_t;
+static NTimeUpdate_t *ntime_inclist = NULL; /**< Time increment list. */
 
+
+static unsigned int naev_time = 0; /**< Contains the current time in mSTU. */
 
 
 /**
@@ -90,11 +101,63 @@ void ntime_set( unsigned int t )
 void ntime_inc( unsigned int t )
 {
    naev_time += t;
-
    hooks_run("time");
-
    economy_update( t );
 }
 
 
+/**
+ * @brief Sets the time relatively.
+ *
+ * This does NOT call hooks and such, they must be run with ntime_refresh
+ *  manually later.
+ *
+ *    @param t Time modifier in STU.
+ */
+void ntime_incLagged( unsigned int t )
+{
+   NTimeUpdate_t *ntu, *iter;
+
+   /* Create the time increment. */
+   ntu = malloc(sizeof(NTimeUpdate_t));
+   ntu->next = NULL;
+   ntu->inc = t;
+
+   /* Only member. */
+   if (ntime_inclist == NULL)
+      ntime_inclist = ntu;
+
+   else {
+      /* Find end of list. */
+      for (iter = ntime_inclist; iter->next != NULL; iter = iter->next);
+      /* Append to end. */
+      iter->next = ntu;
+   }
+}
+
+
+/**
+ * @brief Checks to see if ntime has any hooks pending to run.
+ */
+void ntime_refresh (void)
+{
+   NTimeUpdate_t *ntu;
+
+   /* We have to run all the increments one by one to ensure all hooks get
+    * run and that no collisions occur. */
+   while (ntime_inclist != NULL) {
+      ntu = ntime_inclist;
+
+      /* Run hook stuff and actually update time. */
+      naev_time += ntu->inc;
+      hooks_run("time");
+      economy_update( ntu->inc );
+
+      /* Remove the increment. */
+      ntime_inclist = ntu->next;
+
+      /* Free the increment. */
+      free(ntu);
+   }
+}
 

@@ -17,6 +17,10 @@ char* ntime_pretty( unsigned int t );
 /* set */
 void ntime_set( unsigned int t );
 void ntime_inc( unsigned int t );
+void ntime_incLagged( unsigned int t );
+
+/* misc */
+void ntime_refresh (void);
 
 
 #endif /* NTIME_H */
