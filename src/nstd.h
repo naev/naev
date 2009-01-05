@@ -29,6 +29,10 @@
  * @brief Checks to see if a key is a control character.
  */
 #define nstd_iscntrl(k) (nstd_checkascii(k) ? iscntrl(k) : 0)
+/**
+ * @brief Checks to see if a key is a space character.
+ */
+#define nstd_isspace(k) (nstd_checkascii(k) ? isspace(k) : 0)
 
 
 #endif /* NSTD_H */

@@ -23,6 +23,7 @@
 #include "ndata.h"
 #include "font.h"
 #include "music.h"
+#include "nstd.h"
 
 
 #define INTRO_FONT_SIZE    18. /**< Intro text font size. */
@@ -161,10 +162,10 @@ int intro_display (void)
                   offset = max * (intro_font.h + 5.);
 
                /* Only Handle space from here down. */
-               else if (!isspace(event.key.keysym.sym))
+               else if (!nstd_isspace(event.key.keysym.sym))
                   break;
 
-                  /* Purpose fallthrough. */
+               /* Purpose fallthrough. */
             case SDL_JOYBUTTONDOWN:
                offset += 250.;
             default:
