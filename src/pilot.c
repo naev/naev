@@ -2090,6 +2090,12 @@ void pilots_update( double dt )
    for ( i=0; i < pilot_nstack; i++ ) {
       p = pilot_stack[i];
 
+      /* Destroy pilot and go on. */
+      if (pilot_isFlag(p, PILOT_DELETE)) {
+         pilot_destroy(p);
+         continue;
+      }
+
       /* See if should think. */
       if (p->think && !pilot_isDisabled(p)) {
 
@@ -2105,11 +2111,10 @@ void pilots_update( double dt )
             p->think(p);
 
       }
+
+      /* Just update the pilot. */
       if (p->update) { /* update */
-         if (pilot_isFlag(p, PILOT_DELETE))
-            pilot_destroy(p);
-         else
-            p->update( p, dt );
+         p->update( p, dt );
       }
    }
 }
