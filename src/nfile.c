@@ -16,14 +16,14 @@
 #include <stdio.h> 
 #include <string.h>
 #include <stdarg.h>
-#if defined(LINUX) || defined(FREEBSD)
+#ifdef _POSIX_SOURCE
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h> 
 #include <errno.h>
-#endif /* LINUX */
+#endif /* _POSIX_SOURCE */
 
 #include "naev.h"
 #include "log.h"
@@ -78,7 +78,7 @@ int nfile_dirMakeExist( const char* path, ... )
       va_end(ap);
    }
 
-#if defined(LINUX) || defined(FREEBSD)
+#ifdef _POSIX_SOURCE
    struct stat buf;
 
    stat(file,&buf);
@@ -87,9 +87,9 @@ int nfile_dirMakeExist( const char* path, ... )
          WARN("Dir '%s' does not exist and unable to create", file);
          return -1;
       }
-#else
+#else /* _POSIX_SOURCE */
 #error "Needs implementation."
-#endif /* LINUX */
+#endif /* _POSIX_SOURCE */
 
    return 0;
 }
@@ -113,13 +113,13 @@ int nfile_fileExists( const char* path, ... )
       vsnprintf(file, PATH_MAX, path, ap);
       va_end(ap);
    }
-#if defined(LINUX) || defined(FREEBSD)
+#ifdef _POSIX_SOURCE
    struct stat buf;
 
    if (stat(file,&buf)==0) /* stat worked, file must exist */
       return 1;
 
-#else /* LINUX */
+#else /* _POSIX_SOURCE */
    FILE *f;
 
    /* Try to open the file, C89 compliant, but not as precise as stat. */
@@ -128,7 +128,7 @@ int nfile_fileExists( const char* path, ... )
       fclose(f);
       return 1;
    }
-#endif
+#endif /* _POSIX_SOURCE */
    return 0;
 }
 
@@ -158,7 +158,7 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
       va_end(ap);
    }
 
-#if defined(LINUX) || defined(FREEBSD)
+#ifdef _POSIX_SOURCE
    int i,j,k, n;
    DIR *d;
    struct dirent *dir;
@@ -245,9 +245,9 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    free(tfiles);
    free(tt);
 
-#else /* LINUX */
+#else /* _POSIX_SOURCE */
 #error "Needs implementation."
-#endif /* LINUX */
+#endif /* _POSIX_SOURCE */
 
    /* found nothing */
    if ((*nfiles) == 0) {
