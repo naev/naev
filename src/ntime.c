@@ -32,9 +32,9 @@ static unsigned int naev_time = 0; /**< Contains the current time in mSTU. */
 
 
 /**
- * @fn unsigned int ntime_get (void)
- *
  * @brief Gets the current time.
+ *
+ *    @return The current time in mSTU.
  */
 unsigned int ntime_get (void)
 {
@@ -43,8 +43,6 @@ unsigned int ntime_get (void)
 
 
 /**
- * @fn char* ntime_pretty( unsigned int t )
- *
  * @brief Gets the time in a pretty human readable format.
  *
  *    @param t Time to print (in STU), if 0 it'll use the current time.
@@ -74,8 +72,6 @@ char* ntime_pretty( unsigned int t )
 
 
 /**
- * @fn void ntime_set( unsigned int t )
- *
  * @brief Sets the time absolutely, does NOT generate an event, used at init.
  *
  *    @param t Absolute time to set to in STU.
@@ -87,8 +83,6 @@ void ntime_set( unsigned int t )
 
 
 /**
- * @fn void ntime_inc( unsigned int t )
- *
  * @brief Sets the time relatively.
  *
  *    @param t Time modifier in STU.
