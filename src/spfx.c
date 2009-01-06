@@ -108,7 +108,7 @@ static void spfx_destroy( SPFX *layer, int *nlayer, int spfx );
 static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt );
 /* Haptic. */
 static int spfx_hapticInit (void);
-static void spfx_hapticRumble (void);
+static void spfx_hapticRumble( double mod );
 
 
 /**
@@ -436,7 +436,7 @@ void spfx_shake( double mod )
    vect_pset( &shake_vel, SHAKE_VEL_MOD*shake_rad, RNGF() * 2. * M_PI );
 
    /* Rumble if it wasn't rumbling before. */
-   spfx_hapticRumble();
+   spfx_hapticRumble(mod);
 
    /* Notify that rumble is active. */
    shake_off = 0;
@@ -476,8 +476,10 @@ static int spfx_hapticInit (void)
 
 /**
  * @brief Runs a rumble effect.
+ *
+ *    @brief Current modifier being added.
  */
-static void spfx_hapticRumble (void)
+static void spfx_hapticRumble( double mod )
 {
 #if SDL_VERSION_ATLEAST(1,3,0)
    SDL_HapticEffect *efx;
@@ -486,7 +488,7 @@ static void spfx_hapticRumble (void)
    if (haptic_rumble >= 0) {
 
       /* Not time to update yet. */
-      if ((haptic_lastUpdate > 0.) || shake_off )
+      if ((haptic_lastUpdate > 0.) || shake_off || (mod > SHAKE_MAX/3.))
          return;
 
       /* Stop the effect if it was playing. */
@@ -512,6 +514,8 @@ static void spfx_hapticRumble (void)
       /* Set timer again. */
       haptic_lastUpdate = HAPTIC_UPDATE_INTERVAL;
    }
+#else /* SDL_VERSION_ATLEAST(1,3,0) */
+   (void) mod;
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 }
 
