@@ -40,6 +40,7 @@
 #include "comm.h"
 #include "intro.h"
 #include "perlin.h"
+#include "ai.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
@@ -2040,6 +2041,7 @@ void player_abortAutonav( char *reason )
 void player_think( Pilot* pplayer )
 {
    Pilot *target;
+   double d;
 
    /* last i heard, the dead don't think */
    if (pilot_isFlag(pplayer,PILOT_DEAD)) {
@@ -2051,27 +2053,33 @@ void player_think( Pilot* pplayer )
 
    /* Autonav takes over normal controls. */
    if (player_isFlag(PLAYER_AUTONAV)) {
+      /* Abort if lockons detected. */
       if (pplayer->lockons > 0)
          player_abortAutonav("Missile Lockon Detected");
 
-      if (space_canHyperspace(pplayer)) {
+      /* Try to jump. */
+      if (space_canHyperspace(pplayer))
          player_jump();
-      }
+
+      /* Keey on moving. */
       else  {
-         pilot_face( pplayer, VANGLE(pplayer->solid->pos) );
-         if (player_acc < 1.)
+         /* Only accelerate if facing move dir. */
+         d = pilot_face( pplayer, VANGLE(pplayer->solid->pos) );
+         if ((player_acc < 1.) && (d < MIN_DIR_ERR))
             player_accel( 1. );
       }
    }
 
    /* turning taken over by PLAYER_FACE */
    else if (player_isFlag(PLAYER_FACE)) { 
+      /* Try to face pilot target. */
       if (player->target != PLAYER_ID) {
          target = pilot_get(player->target);
          if (target != NULL)
             pilot_face( pplayer,
                   vect_angle( &player->solid->pos, &target->solid->pos ));
       }
+      /* If not try to face planet target. */
       else if (planet_target != -1)
          pilot_face( pplayer,
                vect_angle( &player->solid->pos,
@@ -2079,8 +2087,25 @@ void player_think( Pilot* pplayer )
    }
 
    /* turning taken over by PLAYER_REVERSE */
-   else if (player_isFlag(PLAYER_REVERSE) && (VMOD(pplayer->solid->vel) > 0.))
+   else if (player_isFlag(PLAYER_REVERSE)) {
+      
+      /* Check to see if already stopped. */
+      /*
+      if (VMOD(pplayer->solid->vel) < MIN_VEL_ERR)
+         player_accel( 0. );
+
+      else {
+         d = pilot_face( pplayer, VANGLE(player->solid->vel) + M_PI );
+         if ((player_acc < 1.) && (d < MAX_DIR_ERR))
+            player_accel( 1. );
+      }
+      */
+
+      /*
+       * I don't think automatic braking is good.
+       */
       pilot_face( pplayer, VANGLE(player->solid->vel) + M_PI );
+   }
 
    /* normal turning scheme */
    else {
