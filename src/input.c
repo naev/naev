@@ -313,15 +313,27 @@ SDLKey input_keyConv( char *name )
    /* Compare for single character. */
    if (l == 1) {
       m = MIN(256, INPUT_NUMKEYS);
-      for (k=0; k < m; k++) /* Only valid for char range. */
+      for (k=0; k < m; k++) { /* Only valid for char range. */
+         /* Must not be NULL. */
+         if (keyconv[k] == NULL)
+            continue;
+
+         /* Check if is also a single char. */
          if ((buf == tolower(keyconv[k][0])) && (keyconv[k][1] == '\0'))
             return k;
+      }
    }
    /* Compare for strings. */
    else {
-      for (k=0; k < INPUT_NUMKEYS; k++)
+      for (k=0; k < INPUT_NUMKEYS; k++) {
+         /* Must not be NULL. */
+         if (keyconv[k] == NULL)
+            continue;
+
+         /* Compare strings. */
          if (strcmp(name , keyconv[k])==0)
             return k;
+      }
    }
 
    WARN("Keyname '%s' doesn't match any key.", name);
