@@ -370,13 +370,13 @@ void spfx_start( const double dt )
    GLdouble bx, by, x, y;
    double inc;
 
-   /* Decrement the haptic timer. */
-   if (haptic_lastUpdate > 0.)
-      haptic_lastUpdate -= dt;
-
    /* Save cycles. */
    if (shake_off == 1)
       return;
+
+   /* Decrement the haptic timer. */
+   if (haptic_lastUpdate > 0.)
+      haptic_lastUpdate -= dt;
 
    /* set defaults */
    bx = SCREEN_W/2;
@@ -479,19 +479,26 @@ static void spfx_hapticRumble (void)
 {
 #if SDL_VERSION_ATLEAST(1,3,0)
    SDL_HapticEffect *efx;
+   double len, mag;
 
    if (haptic_rumble >= 0) {
 
       /* Not time to update yet. */
-      if (haptic_lastUpdate > 0.)
+      if ((haptic_lastUpdate > 0.) || shake_off )
          return;
 
       /* Stop the effect if it was playing. */
       SDL_HapticStopEffect( haptic, haptic_rumble );
 
+      /* Get length and magnitude. */
+      len = 1000. * shake_rad / SHAKE_DECAY;
+      mag = 32767. * (shake_rad / SHAKE_MAX);
+
       /* Update the effect. */
       efx = &haptic_rumbleEffect;
-      efx->periodic.length = (uint32_t)(1000. * shake_rad / SHAKE_DECAY);
+      efx->periodic.magnitude    = (uint32_t)mag;;
+      efx->periodic.length       = (uint32_t)len;
+      efx->periodic.fade_length  = MIN( efx->periodic.length, 1000 );
       if (SDL_HapticUpdateEffect( haptic, haptic_rumble, &haptic_rumbleEffect ) < 0) {
          WARN("Failed to update haptic effect: %s.", SDL_GetError());
          return;
