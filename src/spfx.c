@@ -374,9 +374,11 @@ void spfx_start( const double dt )
    if (shake_off == 1)
       return;
 
+#if SDL_VERSION_ATLEAST(1,3,0)
    /* Decrement the haptic timer. */
    if (haptic_lastUpdate > 0.)
       haptic_lastUpdate -= dt;
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* set defaults */
    bx = SCREEN_W/2;
