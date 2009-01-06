@@ -12,18 +12,32 @@
 #include "joystick.h"
 
 #include <string.h>
+
 #include "SDL.h"
+#include "SDL_joystick.h"
+#if SDL_VERSION_ATLEAST(1,3,0)
+#include "SDL_haptic.h"
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
 #include "naev.h"
 #include "log.h"
 
 
-static SDL_Joystick* joystick = NULL; /**< Current joystick in use. */
+static SDL_Joystick *joystick = NULL; /**< Current joystick in use. */
+#if SDL_VERSION_ATLEAST(1,3,0)
+static int has_haptic = 0; /**< Does the player have haptic? */
+SDL_Haptic *haptic = NULL; /**< Current haptic in use, externed in spfx.c. */
+unsigned int haptic_query = 0; /**< Properties of the haptic device. */
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
+
+
+/*
+ * Prototypes.
+ */
+static void joystick_initHaptic (void);
 
 
 /**
- * @fn int joystick_get( char* namjoystick )
- *
  * @brief Gets the joystick index by name.
  *
  *    @param namjoystick Looks for this string in the joystick name.
@@ -43,8 +57,6 @@ int joystick_get( char* namjoystick )
 
 
 /**
- * @fn int joystick_use( int indjoystick )
- *
  * @brief Makes the game use a joystick by index.
  *
  *    @param indjoystick Index of the joystick to use.
@@ -52,33 +64,76 @@ int joystick_get( char* namjoystick )
  */
 int joystick_use( int indjoystick )
 {
+   /* Check to see if it exists. */
    if ((indjoystick < 0) || (indjoystick >= SDL_NumJoysticks())) {
       WARN("Joystick of index number %d does not existing, switching to default 0",
             indjoystick);
       indjoystick = 0;
    }
 
-   if (joystick) /* close the joystick if it's already open */
+   /* Close if already open. */
+   if (joystick != NULL) {
       SDL_JoystickClose(joystick);
+      joystick = NULL;
+   }
 
-   /* start using joystick */
+   /* Start using joystick. */
    joystick = SDL_JoystickOpen(indjoystick);
-   if (joystick==NULL) {
+   if (joystick == NULL) {
       WARN("Error opening joystick %d [%s]", indjoystick, SDL_JoystickName(indjoystick));
       return -1;
    }
    LOG("Using joystick %d - %s", indjoystick, SDL_JoystickName(indjoystick));
-   DEBUG("  with %d axes, %d buttons, %d balls and %d hats\n",
+   DEBUG("   with %d axes, %d buttons, %d balls and %d hats",
          SDL_JoystickNumAxes(joystick), SDL_JoystickNumButtons(joystick),
          SDL_JoystickNumBalls(joystick), SDL_JoystickNumHats(joystick));
+
+   /* Initialize the haptic if possible. */
+   joystick_initHaptic();
+
+   /* For style purposes. */
+   DEBUG();
 
    return 0;
 }
 
 
 /**
- * @fn int joystick_init (void)
- *
+ * @brief Initializes force feedback for the loaded device.
+ */
+static void joystick_initHaptic (void)
+{
+#if SDL_VERSION_ATLEAST(1,3,0)
+   if (has_haptic && SDL_JoystickIsHaptic(joystick)) {
+
+      /* Close haptic if already open. */
+      if (haptic != NULL) {
+         SDL_HapticClose(haptic);
+         haptic = NULL;
+      }
+
+      /* Try to create haptic device. */
+      haptic = SDL_HapticOpenFromJoystick(joystick);
+      if (haptic == NULL) {
+         WARN("Unable to initialize force feedback.");
+         return;
+      }
+
+      /* Check to see what it supports. */
+      haptic_query = SDL_HapticQuery(haptic);
+      if (!(haptic_query & SDL_HAPTIC_SINE)) {
+         SDL_HapticClose(haptic);
+         haptic = NULL;
+         return;
+      }
+
+      DEBUG("   force feedback enabled");
+   }
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
+}
+
+
+/**
  * @brief Initializes the joystick subsystem.
  *
  *    @return 0 on success.
@@ -92,6 +147,11 @@ int joystick_init (void)
       WARN("Unable to initialize the joystick subsystem");
       return -1;
    }
+
+#if SDL_VERSION_ATLEAST(1,3,0)
+   if (SDL_InitSubSystem(SDL_INIT_HAPTIC) == 0)
+      has_haptic = 1;
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* figure out how many joysticks there are */
    numjoysticks = SDL_NumJoysticks();
@@ -107,13 +167,21 @@ int joystick_init (void)
 
 
 /**
- * @fn void joystick_exit (void)
- *
  * @brief Exits the joystick subsystem.
  */
 void joystick_exit (void)
 {
-   SDL_JoystickClose(joystick);
+#if SDL_VERSION_ATLEAST(1,3,0)
+   if (haptic != NULL) {
+      SDL_HapticClose(haptic);
+      haptic = NULL;
+   }
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
+
+   if (joystick != NULL) {
+      SDL_JoystickClose(joystick);
+      joystick = NULL;
+   }
 }
 
 

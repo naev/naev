@@ -11,7 +11,12 @@
 
 #include "spfx.h"
 
+#include <inttypes.h>
+
 #include "SDL.h"
+#if SDL_VERSION_ATLEAST(1,3,0)
+#include "SDL_haptic.h"
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
 #include "naev.h"
 #include "log.h"
@@ -37,6 +42,14 @@ static double shake_rad = 0.; /**< Current shake radius (0 = no shake). */
 Vector2d shake_pos = { .x = 0., .y = 0. }; /**< Current shake position. Used in nebulae.c */
 static Vector2d shake_vel = { .x = 0., .y = 0. }; /**< Current shake velocity. */
 static int shake_off = 1; /**< 1 if shake is not active. */
+
+
+#if SDL_VERSION_ATLEAST(1,3,0)
+extern SDL_Haptic *haptic; /**< From joystick.c */
+extern unsigned int haptic_query; /**< From joystick.c */
+static int haptic_rumble = -1; /**< Haptic rumble effect ID. */
+static SDL_HapticEffect haptic_rumbleEffect; /**< Haptic rumble effect. */
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
 
 /**
@@ -85,10 +98,14 @@ static int spfx_mstack_back = 0; /**< Memory allocated for special effects in ba
 /*
  * prototypes
  */
+/* General. */
 static int spfx_base_load( char* name, int ttl, int anim, char* gfx, int sx, int sy );
 static void spfx_base_free( SPFX_Base *effect );
 static void spfx_destroy( SPFX *layer, int *nlayer, int spfx );
 static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt );
+/* Haptic. */
+static int spfx_hapticInit (void);
+static void spfx_hapticRumble (void);
 
 
 /**
@@ -176,6 +193,7 @@ int spfx_load (void)
    spfx_base_load( "PlaS", 400, 400, "plas.png", 6, 5 );
    spfx_base_load( "PlaM", 450, 450, "plam.png", 6, 5 );
 
+   spfx_hapticInit();
 
    return 0;
 }
@@ -370,7 +388,8 @@ void spfx_start( const double dt )
 
          /* the shake decays over time */
          shake_rad -= SHAKE_DECAY*dt;
-         if (shake_rad < 0.) shake_rad = 0.;
+         if (shake_rad < 0.)
+            shake_rad = 0.;
 
          x = shake_pos.x;
          y = shake_pos.y;  
@@ -399,11 +418,77 @@ void spfx_start( const double dt )
  */
 void spfx_shake( double mod )
 {
+   /* Add the modifier. */
    shake_rad += mod;
-   if (shake_rad > SHAKE_MAX) shake_rad = SHAKE_MAX;
-   shake_off = 0;
-
+   if (shake_rad > SHAKE_MAX)
+      shake_rad = SHAKE_MAX;
    vect_pset( &shake_vel, SHAKE_VEL_MOD*shake_rad, RNGF() * 2. * M_PI );
+
+   /* Rumble if it wasn't rumbling before. */
+   if (shake_off == 1)
+      spfx_hapticRumble();
+
+   /* Notify that rumble is active. */
+   shake_off = 0;
+}
+
+
+/**
+ * @brief Initializes the rumble effect.
+ *
+ *    @return 0 on success.
+ */
+static int spfx_hapticInit (void)
+{
+#if SDL_VERSION_ATLEAST(1,3,0)
+   SDL_HapticEffect *efx;
+
+   efx = &haptic_rumbleEffect;
+   memset( efx, 0, sizeof(SDL_HapticEffect) );
+   efx->type = SDL_HAPTIC_SINE;
+   efx->periodic.direction.type   = SDL_HAPTIC_POLAR;
+   efx->periodic.length           = 1000;
+   efx->periodic.period           = 200;
+   efx->periodic.magnitude        = 0x4000;
+   efx->periodic.fade_length      = 1000;
+   efx->periodic.fade_level       = 0;
+
+   haptic_rumble = SDL_HapticNewEffect( haptic, efx );
+   if (haptic_rumble < 0) {
+      WARN("Unable to upload haptic effect: %s.", SDL_GetError());
+      return -1;
+   }
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
+
+   return 0;
+}
+
+
+/**
+ * @brief Runs a rumble effect.
+ */
+static void spfx_hapticRumble (void)
+{
+#if SDL_VERSION_ATLEAST(1,3,0)
+   SDL_HapticEffect *efx;
+
+   if (haptic_rumble >= 0) {
+
+      /* Stop the effect if it was playing. */
+      SDL_HapticStopEffect( haptic, haptic_rumble );
+
+      /* Update the effect. */
+      efx = &haptic_rumbleEffect;
+      efx->periodic.length = (uint32_t)(1000. * shake_rad / SHAKE_DECAY);
+      if (SDL_HapticUpdateEffect( haptic, haptic_rumble, &haptic_rumbleEffect ) < 0) {
+         WARN("Failed to update haptic effect: %s.", SDL_GetError());
+         return;
+      }
+
+      /* Run the new effect. */
+      SDL_HapticRunEffect( haptic, haptic_rumble, 1 );
+   }
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 }
 
 
