@@ -33,6 +33,8 @@
 
 #define SHAKE_VEL_MOD   0.0008 /**< Shake modifier. */
 
+#define HAPTIC_UPDATE_INTERVAL   0.1 /**< Time between haptic updates. */
+
 
 /*
  * special hardcoded special effects
@@ -49,6 +51,7 @@ extern SDL_Haptic *haptic; /**< From joystick.c */
 extern unsigned int haptic_query; /**< From joystick.c */
 static int haptic_rumble = -1; /**< Haptic rumble effect ID. */
 static SDL_HapticEffect haptic_rumbleEffect; /**< Haptic rumble effect. */
+static double haptic_lastUpdate = 0.; /**< Timer to update haptic effect again. */
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
 
@@ -367,7 +370,13 @@ void spfx_start( const double dt )
    GLdouble bx, by, x, y;
    double inc;
 
-   if (shake_off == 1) return; /* save the cycles! */
+   /* Decrement the haptic timer. */
+   if (haptic_lastUpdate > 0.)
+      haptic_lastUpdate -= dt;
+
+   /* Save cycles. */
+   if (shake_off == 1)
+      return;
 
    /* set defaults */
    bx = SCREEN_W/2;
@@ -425,8 +434,7 @@ void spfx_shake( double mod )
    vect_pset( &shake_vel, SHAKE_VEL_MOD*shake_rad, RNGF() * 2. * M_PI );
 
    /* Rumble if it wasn't rumbling before. */
-   if (shake_off == 1)
-      spfx_hapticRumble();
+   spfx_hapticRumble();
 
    /* Notify that rumble is active. */
    shake_off = 0;
@@ -474,6 +482,10 @@ static void spfx_hapticRumble (void)
 
    if (haptic_rumble >= 0) {
 
+      /* Not time to update yet. */
+      if (haptic_lastUpdate > 0.)
+         return;
+
       /* Stop the effect if it was playing. */
       SDL_HapticStopEffect( haptic, haptic_rumble );
 
@@ -487,6 +499,9 @@ static void spfx_hapticRumble (void)
 
       /* Run the new effect. */
       SDL_HapticRunEffect( haptic, haptic_rumble, 1 );
+
+      /* Set timer again. */
+      haptic_lastUpdate = HAPTIC_UPDATE_INTERVAL;
    }
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 }
