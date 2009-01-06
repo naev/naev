@@ -2530,17 +2530,17 @@ void player_afterburnOver (void)
  */
 void player_accel( double acc )
 {
-   if (pilot_isFlag(player, PILOT_HYP_PREP) || pilot_isFlag(player, PILOT_HYPERSPACE))
+   if ((player == NULL) || pilot_isFlag(player, PILOT_HYP_PREP) ||
+         pilot_isFlag(player, PILOT_HYPERSPACE))
       return;
 
-   if (player != NULL) {
-      player_acc = acc;
-      sound_stopGroup( PLAYER_ENGINE_CHANNEL );
-      sound_playGroup( PLAYER_ENGINE_CHANNEL,
-            player->ship->sound, 0 );
-      if (toolkit || paused)
-         player_soundPause();
-   }
+
+   player_acc = acc;
+   sound_stopGroup( PLAYER_ENGINE_CHANNEL );
+   sound_playGroup( PLAYER_ENGINE_CHANNEL,
+         player->ship->sound, 0 );
+   if (toolkit || paused)
+      player_soundPause();
 }
 
 
