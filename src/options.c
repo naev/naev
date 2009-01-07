@@ -59,7 +59,6 @@ void opt_menuKeybinds (void)
    SDLKey key;
    KeybindType type;
    SDLMod mod;
-   int reverse;
 
    /* Create the window. */
    wid = window_create( "Keybindings", -1, -1, KEYBINDS_WIDTH, KEYBINDS_HEIGHT );
@@ -78,7 +77,7 @@ void opt_menuKeybinds (void)
    str = malloc(sizeof(char*) * i);
    for (j=0; j < i; j++) {
       str[j] = malloc(sizeof(char) * 64);
-      key = input_getKeybind( keybindNames[j], &type, &mod, &reverse );
+      key = input_getKeybind( keybindNames[j], &type, &mod );
       switch (type) {
          case KEYBIND_KEYBOARD:
             /* SDL_GetKeyName returns lowercase which is ugly. */
@@ -87,11 +86,14 @@ void opt_menuKeybinds (void)
             else
                snprintf(str[j], 64, "%s <%s>", keybindNames[j], SDL_GetKeyName(key) );
             break;
-         case KEYBIND_JAXIS:
-            snprintf(str[j], 64, "%s <jb%d>", keybindNames[j], key);
+         case KEYBIND_JAXISPOS:
+            snprintf(str[j], 64, "%s <ja+%d>", keybindNames[j], key);
+            break;
+         case KEYBIND_JAXISNEG:
+            snprintf(str[j], 64, "%s <ja-%d>", keybindNames[j], key);
             break;
          case KEYBIND_JBUTTON:
-            snprintf(str[j], 64, "%s <ja%d>", keybindNames[j], key);
+            snprintf(str[j], 64, "%s <jb%d>", keybindNames[j], key);
             break;
          default:
             snprintf(str[j], 64, "%s", keybindNames[j]);
@@ -144,7 +146,6 @@ static void menuKeybinds_update( unsigned int wid, char *name )
    SDLKey key;
    KeybindType type;
    SDLMod mod;
-   int reverse;
    char buf[1024];
    char bind[32];
 
@@ -159,7 +160,7 @@ static void menuKeybinds_update( unsigned int wid, char *name )
 
    /* Get information. */
    desc = input_getKeybindDescription( keybind );
-   key = input_getKeybind( keybind, &type, &mod, &reverse );
+   key = input_getKeybind( keybind, &type, &mod );
 
    /* Create the text. */
    switch (type) {
@@ -179,8 +180,11 @@ static void menuKeybinds_update( unsigned int wid, char *name )
                   (mod != KMOD_NONE) ? " + " : "",
                   SDL_GetKeyName(key));
          break;
-      case KEYBIND_JAXIS:
-         snprintf(bind, 64, "joy axis:   <%d>%s", key, (reverse) ? " rev" : "");
+      case KEYBIND_JAXISPOS:
+         snprintf(bind, 64, "joy axis pos:   <%d>", key );
+         break;
+      case KEYBIND_JAXISNEG:
+         snprintf(bind, 64, "joy axis neg:   <%d>", key );
          break;
       case KEYBIND_JBUTTON:
          snprintf(bind, 64, "joy button:   <%d>", key);

@@ -109,7 +109,8 @@ char* player_name = NULL; /**< Ze name. */
 double player_crating = 0; /**< Ze combat rating. */
 unsigned int player_flags = 0; /**< Player flags. */
 /* used in input.c */
-double player_turn = 0.; /**< Turn velocity from input. */
+double player_left = 0.; /**< Player left turn velocity from input. */
+double player_right = 0.; /**< Player right turn velocity from input. */
 static double player_acc = 0.; /**< Accel velocity from input. */
 /* used in map.c */
 int planet_target = -1; /**< Targetted planet. -1 is none. */
@@ -2042,6 +2043,7 @@ void player_think( Pilot* pplayer )
 {
    Pilot *target;
    double d;
+   double turn;
 
    /* last i heard, the dead don't think */
    if (pilot_isFlag(pplayer,PILOT_DEAD)) {
@@ -2110,8 +2112,12 @@ void player_think( Pilot* pplayer )
    /* normal turning scheme */
    else {
       pplayer->solid->dir_vel = 0.;
-      if (player_turn)
-         pplayer->solid->dir_vel -= pplayer->turn * player_turn;
+      turn = 0;
+      if (player_isFlag(PLAYER_TURN_LEFT))
+         turn -= player_left;
+      if (player_isFlag(PLAYER_TURN_RIGHT))
+         turn += player_right;
+      pplayer->solid->dir_vel -= pplayer->turn * turn;
    }
 
    /*

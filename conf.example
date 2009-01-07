@@ -41,7 +41,7 @@ fullscreen = 1
 
 -- Keybindings.
 --
--- type can be keyboard, jaxis or jbutton
+-- type can be keyboard, jaxispos, jaxisneg or jbutton
 --
 -- If left is an axis it'll automatically set right to the same axis.
 -- Therefore you set both to the same axis (key). You can use the reverse = 1

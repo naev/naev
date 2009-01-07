@@ -18,7 +18,8 @@
 typedef enum {
    KEYBIND_NULL, /**< Null keybinding. */
    KEYBIND_KEYBOARD, /**< Keyboard keybinding. */
-   KEYBIND_JAXIS, /**< Joystick axis keybinding. */
+   KEYBIND_JAXISPOS, /**< Joystick axis positive side keybinding. */
+   KEYBIND_JAXISNEG, /**< Joystick axis negative side keybinding. */
    KEYBIND_JBUTTON /**< Joystick button keybinding. */
 } KeybindType; /**< Keybind types. */
 
@@ -28,8 +29,8 @@ typedef enum {
  */
 void input_setDefault (void);
 SDLKey input_keyConv( char *name );
-void input_setKeybind( char *keybind, KeybindType type, int key, SDLMod mod, int reverse );
-SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod, int *reverse );
+void input_setKeybind( char *keybind, KeybindType type, int key, SDLMod mod );
+SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod );
 const char* input_getKeybindDescription( char *keybind );
 
 /*

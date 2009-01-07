@@ -36,7 +36,6 @@ typedef struct Keybind_ {
    char *name; /**< keybinding name, taken from keybindNames */
    KeybindType type; /**< type, defined in playe.h */
    SDLKey key; /**< key/axis/button event number */
-   double reverse; /**< 1. if normal, -1. if reversed, only useful for joystick axis */
    SDLMod mod; /**< Key modifiers (where applicable). */
 } Keybind;
 
@@ -123,7 +122,8 @@ unsigned int input_afterburnSensibility = 250; /**< ms between taps to afterburn
 /*
  * from player.c
  */
-extern double player_turn;
+extern double player_left; /**< player.c */
+extern double player_right; /**< player.c */
 
 
 /*
@@ -145,59 +145,55 @@ static void input_keyConvDestroy (void);
 
 
 /**
- * @fn void input_setDefault (void)
- *
  * @brief Sets the default input keys.
  */
 void input_setDefault (void)
 {
    /* Movement. */
-   input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, KMOD_ALL, 0 );
-   input_setKeybind( "afterburn", KEYBIND_NULL, SDLK_UNKNOWN, KMOD_NONE, 0 ); /* not set */
-   input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, KMOD_ALL, 0 );
-   input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, KMOD_ALL, 0 );
-   input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, KMOD_ALL, 0 );
+   input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, KMOD_ALL );
+   input_setKeybind( "afterburn", KEYBIND_NULL, SDLK_UNKNOWN, KMOD_NONE ); /* not set */
+   input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, KMOD_ALL );
+   input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, KMOD_ALL );
+   input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, KMOD_ALL );
    /* Targetting. */
-   input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, KMOD_NONE, 0 );
-   input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_TAB, KMOD_LCTRL, 0 );
-   input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_t, KMOD_NONE, 0 );
-   input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, KMOD_NONE, 0 );
+   input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, KMOD_NONE );
+   input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_TAB, KMOD_LCTRL );
+   input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_t, KMOD_NONE );
+   input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, KMOD_NONE );
    /* Combat. */
-   input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, KMOD_ALL, 0 );
-   input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, KMOD_NONE, 0 );
-   input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, KMOD_NONE, 0 );
+   input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, KMOD_ALL );
+   input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, KMOD_NONE );
+   input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, KMOD_NONE );
    /* Secondary weapons. */
-   input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, KMOD_ALL, 0 );
-   input_setKeybind( "secondary_next", KEYBIND_KEYBOARD, SDLK_w, KMOD_NONE, 0 );
-   input_setKeybind( "secondary_prev", KEYBIND_KEYBOARD, SDLK_w, KMOD_LCTRL, 0 );
+   input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, KMOD_ALL );
+   input_setKeybind( "secondary_next", KEYBIND_KEYBOARD, SDLK_w, KMOD_NONE );
+   input_setKeybind( "secondary_prev", KEYBIND_KEYBOARD, SDLK_w, KMOD_LCTRL );
    /* Escorts. */
-   input_setKeybind( "e_attack", KEYBIND_KEYBOARD, SDLK_f, KMOD_NONE, 0 );
-   input_setKeybind( "e_hold", KEYBIND_KEYBOARD, SDLK_g, KMOD_NONE, 0 );
-   input_setKeybind( "e_return", KEYBIND_KEYBOARD, SDLK_c, KMOD_LCTRL, 0 );
-   input_setKeybind( "e_clear", KEYBIND_KEYBOARD, SDLK_c, KMOD_NONE, 0 );
+   input_setKeybind( "e_attack", KEYBIND_KEYBOARD, SDLK_f, KMOD_NONE );
+   input_setKeybind( "e_hold", KEYBIND_KEYBOARD, SDLK_g, KMOD_NONE );
+   input_setKeybind( "e_return", KEYBIND_KEYBOARD, SDLK_c, KMOD_LCTRL );
+   input_setKeybind( "e_clear", KEYBIND_KEYBOARD, SDLK_c, KMOD_NONE );
    /* Space. */
-   input_setKeybind( "autonav", KEYBIND_KEYBOARD, SDLK_j, KMOD_LCTRL, 0 );
-   input_setKeybind( "target_planet", KEYBIND_KEYBOARD, SDLK_p, KMOD_NONE, 0 );
-   input_setKeybind( "land", KEYBIND_KEYBOARD, SDLK_l, KMOD_NONE, 0 );
-   input_setKeybind( "thyperspace", KEYBIND_KEYBOARD, SDLK_h, KMOD_NONE, 0 );
-   input_setKeybind( "starmap", KEYBIND_KEYBOARD, SDLK_m, KMOD_NONE, 0 );
-   input_setKeybind( "jump", KEYBIND_KEYBOARD, SDLK_j, KMOD_NONE, 0 );
+   input_setKeybind( "autonav", KEYBIND_KEYBOARD, SDLK_j, KMOD_LCTRL );
+   input_setKeybind( "target_planet", KEYBIND_KEYBOARD, SDLK_p, KMOD_NONE );
+   input_setKeybind( "land", KEYBIND_KEYBOARD, SDLK_l, KMOD_NONE );
+   input_setKeybind( "thyperspace", KEYBIND_KEYBOARD, SDLK_h, KMOD_NONE );
+   input_setKeybind( "starmap", KEYBIND_KEYBOARD, SDLK_m, KMOD_NONE );
+   input_setKeybind( "jump", KEYBIND_KEYBOARD, SDLK_j, KMOD_NONE );
    /* Communication. */
-   input_setKeybind( "hail", KEYBIND_KEYBOARD, SDLK_y, KMOD_NONE, 0 );
+   input_setKeybind( "hail", KEYBIND_KEYBOARD, SDLK_y, KMOD_NONE );
    /* Misc. */
-   input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_KP_PLUS, KMOD_ALL, 0 );
-   input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_KP_MINUS, KMOD_ALL, 0 );
-   input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MULTIPLY, KMOD_ALL, 0 );
-   input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_z, KMOD_NONE, 0 );
-   input_setKeybind( "speed", KEYBIND_KEYBOARD, SDLK_BACKQUOTE, KMOD_ALL, 0 );
-   input_setKeybind( "menu", KEYBIND_KEYBOARD, SDLK_ESCAPE, KMOD_ALL, 0 );
-   input_setKeybind( "info", KEYBIND_KEYBOARD, SDLK_i, KMOD_NONE, 0 );
+   input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_KP_PLUS, KMOD_ALL );
+   input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_KP_MINUS, KMOD_ALL );
+   input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MULTIPLY, KMOD_ALL );
+   input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_z, KMOD_NONE );
+   input_setKeybind( "speed", KEYBIND_KEYBOARD, SDLK_BACKQUOTE, KMOD_ALL );
+   input_setKeybind( "menu", KEYBIND_KEYBOARD, SDLK_ESCAPE, KMOD_ALL );
+   input_setKeybind( "info", KEYBIND_KEYBOARD, SDLK_i, KMOD_NONE );
 }
 
 
 /**
- * @fn void input_init (void)
- *
  * @brief Initializes the input subsystem (does not set keys).
  */
 void input_init (void)
@@ -246,7 +242,6 @@ void input_init (void)
       temp->type = KEYBIND_NULL;
       temp->key = SDLK_UNKNOWN;
       temp->mod = KMOD_NONE;
-      temp->reverse = 1.;
       input_keybinds[i] = temp;
    }
 
@@ -256,8 +251,6 @@ void input_init (void)
 
 
 /**
- * @fn void input_exit (void)
- *
  * @brief Exits the input subsystem.
  */
 void input_exit (void)
@@ -342,19 +335,14 @@ SDLKey input_keyConv( char *name )
 
 
 /**
- * @fn void input_setKeybind( char *keybind, KeybindType type, int key,
- *       SDLMod mod, int reverse )
- *
  * @brief Binds key of type type to action keybind.
  *
  *    @param keybind The name of the keybind defined above.
  *    @param type The type of the keybind.
  *    @param key The key to bind to.
  *    @param mod Modifiers to check for.
- *    @param reverse Whether to reverse it or not.
  */
-void input_setKeybind( char *keybind, KeybindType type, int key,
-      SDLMod mod, int reverse )
+void input_setKeybind( char *keybind, KeybindType type, int key, SDLMod mod )
 {  
    int i;
    for (i=0; strcmp(keybindNames[i],"end"); i++)
@@ -363,7 +351,6 @@ void input_setKeybind( char *keybind, KeybindType type, int key,
          input_keybinds[i]->key = key;
          /* Non-keyboards get mod KMOD_ALL to always match. */
          input_keybinds[i]->mod = (type==KEYBIND_KEYBOARD) ? mod : KMOD_ALL;
-         input_keybinds[i]->reverse = (reverse) ? -1. : 1. ;
          return;
       }
    WARN("Unable to set keybinding '%s', that command doesn't exist", keybind);
@@ -372,15 +359,21 @@ void input_setKeybind( char *keybind, KeybindType type, int key,
 
 /**
  * @brief Gets the value of a keybind.
+ *
+ *    @brief keybind Name of the keybinding to get.
+ *    @param[out] type Stores the type of the keybinding.
+ *    @param[out] mod Stores the modifiers used with the keybinding.
+ *    @return The key assosciated with the keybinding.
  */
-SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod, int *reverse )
+SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod )
 {
    int i;
    for (i=0; strcmp(keybindNames[i],"end"); i++)
       if (strcmp(keybind, input_keybinds[i]->name)==0) {
-         if (type != NULL) (*type) = input_keybinds[i]->type;
-         if (mod != NULL) (*mod) = input_keybinds[i]->mod;
-         if (reverse != NULL) (*reverse) = input_keybinds[i]->reverse;
+         if (type != NULL)
+            (*type) = input_keybinds[i]->type;
+         if (mod != NULL)
+            (*mod) = input_keybinds[i]->mod;
          return input_keybinds[i]->key;
       }
    WARN("Unable to get keybinding '%s', that command doesn't exist", keybind);
@@ -418,9 +411,9 @@ const char* input_getKeybindDescription( char *keybind )
  *
  *    @param keynum The index of the  keybind.
  *    @param value The value of the keypress (defined above).
- *    @param kabs Whether or not it's an absolute value (for them joystick).
+ *    @param kabs The absolute value.
  */
-static void input_key( int keynum, double value, int kabs )
+static void input_key( int keynum, double value, double kabs )
 {
    unsigned int t;
 
@@ -440,7 +433,8 @@ static void input_key( int keynum, double value, int kabs )
             player_accel(1.);
          }
             
-         else if (value==KEY_RELEASE) player_accelOver();
+         else if (value==KEY_RELEASE)
+            player_accelOver();
       }
 
       /* double tap accel = afterburn! */
@@ -461,39 +455,43 @@ static void input_key( int keynum, double value, int kabs )
 
    /* turning left */
    } else if (KEY("left")) {
-      if (kabs)
-         player_turn = -value;
+      if (kabs) {
+         player_abortAutonav(NULL);
+         player_setFlag(PLAYER_TURN_LEFT); 
+         player_left = value;
+      }
       else {
          /* set flags for facing correction */
          if (value==KEY_PRESS) { 
             player_abortAutonav(NULL);
             player_setFlag(PLAYER_TURN_LEFT); 
+            player_left = 1.;
          }
-         else if (value==KEY_RELEASE)
+         else if (value==KEY_RELEASE) {
             player_rmFlag(PLAYER_TURN_LEFT);
-
-         player_turn -= value;
+            player_left = 0.;
+         }
       }
-      /* Make sure the value is sane. */
-      if (player_turn < -1.) player_turn = -1.;
 
    /* turning right */
    } else if (KEY("right")) {
-      if (kabs)
-         player_turn = value;
+      if (kabs) {
+         player_abortAutonav(NULL);
+         player_setFlag(PLAYER_TURN_RIGHT);
+         player_right = value;
+      }
       else {
          /* set flags for facing correction */
          if (value==KEY_PRESS) {
             player_abortAutonav(NULL);
             player_setFlag(PLAYER_TURN_RIGHT);
+            player_right = 1.;
          }
-         else if (value==KEY_RELEASE)
+         else if (value==KEY_RELEASE) {
             player_rmFlag(PLAYER_TURN_RIGHT);
-
-         player_turn += value;
+            player_right = 0.;
+         }
       }
-      /* Make sure the value is sane. */
-      if (player_turn > 1.) player_turn = 1.;
    
    /* turn around to face vel */
    } else if (KEY("reverse")) {
@@ -501,12 +499,8 @@ static void input_key( int keynum, double value, int kabs )
          player_abortAutonav(NULL);
          player_setFlag(PLAYER_REVERSE);
       }
-      else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_REVERSE)) {
+      else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_REVERSE))
          player_rmFlag(PLAYER_REVERSE);
-         player_turn = 0; /* turning corrections */
-         if (player_isFlag(PLAYER_TURN_LEFT)) { player_turn -= 1; }
-         if (player_isFlag(PLAYER_TURN_RIGHT)) { player_turn += 1; }
-      }
 
 
    /*
@@ -535,12 +529,9 @@ static void input_key( int keynum, double value, int kabs )
          player_abortAutonav(NULL);
          player_setFlag(PLAYER_FACE);
       }
-      else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_FACE)) {
+      else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_FACE))
          player_rmFlag(PLAYER_FACE);
-         player_turn = 0; /* turning corrections */
-         if (player_isFlag(PLAYER_TURN_LEFT)) { player_turn -= 1; }
-         if (player_isFlag(PLAYER_TURN_RIGHT)) { player_turn += 1; }
-      }
+
    /* board them ships */
    } else if (KEY("board") && INGAME() && NOHYP()) {
       if (value==KEY_PRESS) {
@@ -674,10 +665,24 @@ static void input_keyevent( const int event, const SDLKey key, const SDLMod mod 
  */
 static void input_joyaxis( const SDLKey axis, const int value )
 {
-   int i;
-   for (i=0; strcmp(keybindNames[i],"end"); i++)
-      if (input_keybinds[i]->type == KEYBIND_JAXIS && input_keybinds[i]->key == axis)
-         input_key(i,-(input_keybinds[i]->reverse)*(double)value/32767.,1);
+   int i, k;
+   for (i=0; strcmp(keybindNames[i],"end"); i++) {
+      if (input_keybinds[i]->key == axis) {
+         /* Positive axis keybinding. */
+         if ((input_keybinds[i]->type == KEYBIND_JAXISPOS)
+               && (value >= 0)) {
+            k = (value > 0) ? KEY_PRESS : KEY_RELEASE;
+            input_key( i, k, fabs(((double)value)/32767.) );
+         }
+
+         /* Negative axis keybinding. */
+         if ((input_keybinds[i]->type == KEYBIND_JAXISNEG)
+               && (value <= 0)) {
+            k = (value < 0) ? KEY_PRESS : KEY_RELEASE;
+            input_key( i, k, fabs(((double)value)/32767.) );
+         }
+      }
+   }
 }
 /**
  * @brief Filters a joystick button event.
@@ -689,7 +694,7 @@ static void input_joyevent( const int event, const SDLKey button )
    int i;
    for (i=0; strcmp(keybindNames[i],"end"); i++)
       if (input_keybinds[i]->type == KEYBIND_JBUTTON && input_keybinds[i]->key == button)
-         input_key(i, event, 0);
+         input_key(i, event, 0.);
 }
 
 
@@ -716,7 +721,7 @@ static void input_keyevent( const int event, SDLKey key, const SDLMod mod )
          if ((input_keybinds[i]->mod == mod_filtered) ||
                (input_keybinds[i]->mod == KMOD_ALL) ||
                (event == KEY_RELEASE)) /**< Release always gets through. */
-            input_key(i, event, 0);
+            input_key(i, event, 0.);
             /* No break so all keys get pressed if needed. */
       }
    }

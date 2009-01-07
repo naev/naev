@@ -129,7 +129,7 @@ int conf_loadConfig ( const char* file )
    double d;
    char *str, *mod;
    SDLKey key;
-   int type, reverse;
+   int type;
    int w,h, fsaa;
    SDLMod m;
 
@@ -262,17 +262,6 @@ int conf_loadConfig ( const char* file )
             }
             lua_pop(L,1);
 
-            /* is reversed, only useful for axis */
-            lua_pushstring(L, "reverse");
-            lua_gettable(L, -2);
-            if (lua_isnumber(L, -1))
-               reverse = !!(int)lua_tonumber(L, -1);
-            else if (lua_isboolean(L, -1))
-               reverse = lua_toboolean(L, -1);
-            else
-               reverse = 0;
-            lua_pop(L,1);
-
             /* Get the modifier. */
             lua_pushstring(L, "mod");
             lua_gettable(L, -2);
@@ -286,7 +275,8 @@ int conf_loadConfig ( const char* file )
                /* get type */
                if (strcmp(str,"null")==0)          type = KEYBIND_NULL;
                else if (strcmp(str,"keyboard")==0) type = KEYBIND_KEYBOARD;
-               else if (strcmp(str,"jaxis")==0)    type = KEYBIND_JAXIS;
+               else if (strcmp(str,"jaxispos")==0) type = KEYBIND_JAXISPOS;
+               else if (strcmp(str,"jaxisneg")==0) type = KEYBIND_JAXISNEG;
                else if (strcmp(str,"jbutton")==0)  type = KEYBIND_JBUTTON;
                else {
                   WARN("Unkown keybinding of type %s", str);
@@ -313,7 +303,7 @@ int conf_loadConfig ( const char* file )
                   m = KMOD_NONE;
 
                /* set the keybind */
-               input_setKeybind( (char*)keybindNames[i], type, key, m, reverse );
+               input_setKeybind( (char*)keybindNames[i], type, key, m );
             }
             else {
                WARN("Malformed keybind for '%s' in '%s'.", keybindNames[i], file);
