@@ -693,7 +693,8 @@ static void input_joyevent( const int event, const SDLKey button )
 {
    int i;
    for (i=0; strcmp(keybindNames[i],"end"); i++)
-      if (input_keybinds[i]->type == KEYBIND_JBUTTON && input_keybinds[i]->key == button)
+      if ((input_keybinds[i]->type == KEYBIND_JBUTTON) &&
+            (input_keybinds[i]->key == button))
          input_key(i, event, 0.);
 }
 
