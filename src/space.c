@@ -792,6 +792,10 @@ void space_init ( const char* sysname )
       }
    }
 
+   /* Clear interference if you leave system with interference. */
+   if (cur_system->interference == 0.)
+      interference_alpha = 0.;
+
    /* Reset player enemies. */
    player_enemies = 0;
 
