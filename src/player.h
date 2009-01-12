@@ -38,6 +38,7 @@ extern Pilot* player; /**< Player himself. */
 extern char* player_name; /**< Player's name. */
 extern unsigned int player_flags; /**< Player's flags. */
 extern double player_crating; /**< Player's combat rating. */
+extern int player_enemies; /**< Amount of enemies player has. */
 
 
 /*

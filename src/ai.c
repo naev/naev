@@ -1746,7 +1746,7 @@ static int ai_hostile( lua_State *L )
    NLUA_MIN_ARGS(1);
 
    if (lua_isnumber(L,1) && ((unsigned int)lua_tonumber(L,1) == PLAYER_ID))
-      pilot_setFlag(cur_pilot, PILOT_HOSTILE);
+      pilot_setHostile(cur_pilot);
 
    return 0;
 }

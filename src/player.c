@@ -77,6 +77,7 @@ static double player_vy = 0.; /**< Temporary Y velocity. */
 static double player_dir = 0.; /**< Temporary direction. */
 static int player_credits = 0; /**< Temporary hack for when creating. */
 static char *player_mission = NULL; /**< More hack. */
+int player_enemies = 0; /**< Number of enemies player has in system. */
 
 
 /*

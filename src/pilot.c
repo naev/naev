@@ -61,6 +61,7 @@ static int pilot_mstack = 0; /**< Memory allocated for pilot_stack. */
 extern Pilot* player;
 extern double player_crating; /**< Player's combat rating. */
 extern void player_abortAutonav( char *reason );
+extern int player_enemies;
 
 /* stack of fleets */
 static Fleet* fleet_stack = NULL; /**< Fleet stack. */
@@ -279,6 +280,20 @@ double pilot_face( Pilot* p, const double dir )
       p->solid->dir_vel -= p->turn * turn;
 
    return diff;
+}
+
+
+/**
+ * @brief Marks pilot as hostile to player.
+ *
+ *    @param p Pilot to mark as hostile to player.
+ */
+void pilot_setHostile( Pilot* p )
+{
+   if (!pilot_isFlag(p, PILOT_HOSTILE)) {
+      player_enemies++;
+      pilot_setFlag(p, PILOT_HOSTILE);
+   }
 }
 
 
@@ -986,6 +1001,13 @@ static void pilot_update( Pilot* pilot, const double dt )
 
       /* First time pilot is disabled */
       if (!pilot_isFlag(pilot,PILOT_DISABLED)) {
+
+         /* If hostile, must remove counter. */
+         if (pilot_isFlag(pilot,PILOT_HOSTILE)) {
+            player_enemies--;
+            pilot_rmFlag(pilot,PILOT_HOSTILE);
+         }
+
          pilot_setFlag(pilot,PILOT_DISABLED); /* set as disabled */
          /* run hook */
          pilot_runHook( pilot, PILOT_HOOK_DISABLE );
@@ -1985,6 +2007,12 @@ void pilot_free( Pilot* p )
    for (i=0; i<PILOT_HOOKS; i++)
       if (p->hook_type[i] != PILOT_HOOK_NONE)
          hook_rm( p->hook[i] );
+
+   /* If hostile, must remove counter. */
+   if (pilot_isFlag(p,PILOT_HOSTILE)) {
+      player_enemies--;
+      pilot_rmFlag(p,PILOT_HOSTILE);
+   }
 
    /* Remove outfits. */
    while (p->outfits != NULL)

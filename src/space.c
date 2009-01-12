@@ -792,6 +792,9 @@ void space_init ( const char* sysname )
       }
    }
 
+   /* Reset player enemies. */
+   player_enemies = 0;
+
    /* set up fleets -> pilots */
    for (i=0; i < cur_system->nfleets; i++)
       if (RNG(0,100) <= (cur_system->fleets[i].chance/2)) /* fleet check (50% chance) */
