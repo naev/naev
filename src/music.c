@@ -59,11 +59,13 @@ static int musicL_load( lua_State* L );
 static int musicL_play( lua_State* L );
 static int musicL_stop( lua_State* L );
 static int musicL_isPlaying( lua_State* L );
+static int musicL_current( lua_State* L );
 static const luaL_reg music_methods[] = {
    { "load", musicL_load },
    { "play", musicL_play },
    { "stop", musicL_stop },
    { "isPlaying", musicL_isPlaying },
+   { "current", musicL_current },
    {0,0}
 }; /**< Music specific methods. */
 
@@ -78,6 +80,7 @@ static int nmusic_selection = 0; /**< Size of available music selection. */
 /*
  * The current music.
  */
+static char *music_name = NULL; /**< Current music name. */
 static void *music_data = NULL; /**< Current music data. */
 static SDL_RWops *music_rw = NULL; /**< Current music RWops. */
 static Mix_Music *music_music = NULL; /**< Current music. */
@@ -188,9 +191,11 @@ static void music_free (void)
       Mix_FreeMusic(music_music);
       /*SDL_FreeRW(music_rw);*/ /* FreeMusic frees it itself */
       free(music_data);
+      free(music_name);
+      music_name  = NULL;
       music_music = NULL;
-      music_rw = NULL;
-      music_data = NULL;
+      music_rw    = NULL;
+      music_data  = NULL;
    }
 }
 
@@ -281,6 +286,7 @@ void music_load( const char* name )
 
    /* Load the data */
    snprintf( filename, PATH_MAX, MUSIC_PREFIX"%s"MUSIC_SUFFIX, name); 
+   music_name = strdup(name);
    music_data = ndata_read( filename, &size );
    music_rw = SDL_RWFromMem(music_data, size);
    music_music = Mix_LoadMUS_RW(music_rw);
@@ -507,6 +513,11 @@ static int musicL_stop( lua_State *L )
 static int musicL_isPlaying( lua_State* L )
 {
    lua_pushboolean(L, music_isPlaying());
+   return 1;
+}
+static int musicL_current( lua_State* L )
+{
+   lua_pushstring(L, (music_name != NULL) ? music_name : "none" );
    return 1;
 }
 

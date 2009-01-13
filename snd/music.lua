@@ -99,6 +99,8 @@ end
 last_sysFaction = nil
 last_sysNebuDens = nil
 last_sysNebuVol = nil
+ambient_neutral = { "ambient2", "mission",
+      "peace1", "peace2", "peace4", "peace6" }
 -- Choose ambient songs
 function choose_ambient ()
    force = true
@@ -143,20 +145,39 @@ function choose_ambient ()
  
    -- Must be forced
    if force then
-      -- Stop playing first and have this trigger again
-      if music.isPlaying() then
-         music.stop()
-         return
-      end
-
       -- Choose the music, bias by faction first
+      add_neutral = false
       if factions["Collective"] then
          ambient = { "collective1" }
-      elseif nebu and rnd.int(0,1) == 0 then
-         ambient = { "ambient1" }
+      elseif factions["Empire"] then
+         ambient = { "empire1", "empire1", "empire1", "empire1" }
+         add_neutral = true
+      elseif nebu then
+         ambient = { "ambient1", "ambient1", "ambient1", "ambient1" }
+         add_neutral = true
       else
-         ambient = { "ambient2", "mission",
-                     "peace1", "peace2", "peace4", "peace6" }
+         ambient = ambient_neutral
+      end
+
+      -- Check if needs to append neutral ambient songs
+      if add_neutral then
+         for k,v in pairs(ambient_neutral) do
+            table.insert(ambient, v)
+         end
+      end
+
+      -- Make sure it's not already in the list or that we have to stop the
+      -- currently playing song.
+      if music.isPlaying() then
+         cur = music.current()
+         for k,v in pairs(ambient) do
+            if cur == v then
+               return
+            end
+         end
+
+         music.stop()
+         return
       end
 
       -- Load music and play
@@ -171,3 +192,4 @@ function choose_battle ()
    music.load( "galacticbattle" )
    music.play()
 end
+

@@ -145,6 +145,7 @@ int nlua_loadBasic( lua_State* L )
    }
 
    nlua_load(L,luaopen_math); /* open math. */
+   nlua_load(L,luaopen_table); /* open table. */
 
    /* add our own */
    lua_register(L, "include", nlua_packfileLoader);
