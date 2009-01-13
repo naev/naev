@@ -41,6 +41,7 @@
 #include "intro.h"
 #include "perlin.h"
 #include "ai.h"
+#include "music.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
@@ -3124,6 +3125,7 @@ static int player_parse( xmlNodePtr parent )
    gl_bindCamera(&player->solid->pos);
 
    /* initialize the system */
+   music_choose("takeoff");
    space_init( planet_getSystem(planet) );
    map_clear(); /* sets the map up */
 

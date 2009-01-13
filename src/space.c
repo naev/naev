@@ -27,6 +27,7 @@
 #include "spfx.h"
 #include "ntime.h"
 #include "nebulae.h"
+#include "music.h"
 
 
 #define XML_PLANET_ID         "Planets" /**< Planet xml document tag. */
@@ -795,6 +796,9 @@ void space_init ( const char* sysname )
    /* Clear interference if you leave system with interference. */
    if (cur_system->interference == 0.)
       interference_alpha = 0.;
+
+   /* See if we should get a new music song. */
+   music_choose(NULL);
 
    /* Reset player enemies. */
    player_enemies = 0;

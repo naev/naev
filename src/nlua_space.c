@@ -62,12 +62,14 @@ static const luaL_reg planet_methods[] = {
 static int systemL_eq( lua_State *L );
 static int systemL_name( lua_State *L );
 static int systemL_faction( lua_State *L );
+static int systemL_nebulae( lua_State *L );
 static int systemL_jumpdistance( lua_State *L );
 static const luaL_reg system_methods[] = {
    { "__eq", systemL_eq },
    { "__tostring", systemL_name },
    { "name", systemL_name },
    { "faction", systemL_faction },
+   { "nebulae", systemL_nebulae },
    { "jumpDist", systemL_jumpdistance },
    {0,0}
 }; /**< System metatable methods. */
@@ -677,6 +679,23 @@ static int systemL_faction( lua_State *L )
    return 1;
 
 }
+
+
+/**
+ * @ingroup META_SYSTEM
+ */
+static int systemL_nebulae( lua_State *L )
+{
+   LuaSystem *sys;
+   sys = lua_tosystem(L,1);
+
+   /* Push the density and volatility. */
+   lua_pushnumber(L, sys->s->nebu_density);
+   lua_pushnumber(L, sys->s->nebu_volatility);
+
+   return 2;
+}
+
 
 /**
  * @ingroup META_SYSTEM

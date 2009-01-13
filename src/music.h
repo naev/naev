@@ -38,6 +38,7 @@ void music_stop (void);
 void music_pause (void);
 void music_resume (void);
 void music_setPos( double sec );
+int music_isPlaying (void);
 
 
 /*

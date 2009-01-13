@@ -58,10 +58,12 @@ static int music_runLua( char *situation );
 static int musicL_load( lua_State* L );
 static int musicL_play( lua_State* L );
 static int musicL_stop( lua_State* L );
+static int musicL_isPlaying( lua_State* L );
 static const luaL_reg music_methods[] = {
    { "load", musicL_load },
    { "play", musicL_play },
    { "stop", musicL_stop },
+   { "isPlaying", musicL_isPlaying },
    {0,0}
 }; /**< Music specific methods. */
 
@@ -312,7 +314,7 @@ void music_stop (void)
 
    if (music_music == NULL) return;
 
-   if (Mix_FadeOutMusic(500) < 0)
+   if (Mix_FadeOutMusic(2000) < 0)
       WARN("SDL_Mixer: %s", Mix_GetError());
 }
 
@@ -340,6 +342,17 @@ void music_resume (void)
    if (music_music == NULL) return;
 
    Mix_ResumeMusic();
+}
+
+
+/**
+ * @brief Checks to see if the music is playing.
+ */
+int music_isPlaying (void)
+{
+   if (music_disabled) return 0; /* Always playing when music is off. */
+
+   return Mix_PlayingMusic();
 }
 
 
@@ -490,6 +503,11 @@ static int musicL_stop( lua_State *L )
    (void)L;
    music_stop();
    return 0;
+}
+static int musicL_isPlaying( lua_State* L )
+{
+   lua_pushboolean(L, music_isPlaying());
+   return 1;
 }
 
 
