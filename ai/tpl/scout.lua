@@ -1,8 +1,8 @@
 include("ai/include/basic.lua")
 
 -- Variables
-planet_dist = 1000 -- distance to keep from planets
-enemy_dist = 700 -- distance to keep from enemies
+planet_dist = 1500 -- distance to keep from planets
+enemy_dist = 800 -- distance to keep from enemies
 
 
 -- Required control rate
@@ -24,7 +24,9 @@ function control ()
       end
 
       -- nothing to do so check if we are too far form the planet (if there is one)
-      mem.approach = ai.rndplanet()
+      if mem.approach == nil then
+         mem.approach = ai.rndplanet()
+      end
       planet = mem.approach
 
       if planet ~= nil then
@@ -96,8 +98,16 @@ end
 -- Approaches the target
 function approach ()
    target = mem.approach
-   ai.face(target)
-   ai.accel()
+   dir = ai.face(target)
+   dist = ai.dist(target)
+
+   -- See if should accel or brake
+   if dist > planet_dist then
+      ai.accel()
+   else
+      ai.poptask()
+      ai.pushtask(0, "idle")
+   end
 end
 
 
