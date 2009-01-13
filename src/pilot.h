@@ -261,6 +261,7 @@ int pilot_getJumps( const Pilot* p );
  * misc
  */
 void pilot_setHostile( Pilot* p );
+void pilot_rmHostile( Pilot* p );
 void pilot_shoot( Pilot* p, const int secondary );
 void pilot_shootStop( Pilot* p, const int secondary );
 void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,

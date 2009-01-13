@@ -129,7 +129,10 @@ static int music_runLua( char *situation )
 
    /* Run the choose function in Lua. */
    lua_getglobal( music_lua, "choose" );
-   lua_pushstring( music_lua, situation );
+   if (situation != NULL)
+      lua_pushstring( music_lua, situation );
+   else
+      lua_pushnil( music_lua );
    if (lua_pcall(music_lua, 1, 0, 0)) /* error has occured */
       WARN("Error while choosing music: %s", (char*) lua_tostring(music_lua,-1));
 

@@ -298,6 +298,20 @@ void pilot_setHostile( Pilot* p )
 
 
 /**
+ * @brief Unmarks a pilot as neutral to player.
+ *
+ *    @param p Pilot to mark as neutral to player.
+ */
+void pilot_rmHostile( Pilot* p )
+{
+   if (pilot_isFlag(p, PILOT_HOSTILE)) {
+      player_enemies--;
+      pilot_rmFlag(p, PILOT_HOSTILE);
+   }
+}
+
+
+/**
  * @brief Gets the amount of jumps the pilot has left.
  *
  *    @param p Pilot to get the jumps left.
@@ -1003,10 +1017,7 @@ static void pilot_update( Pilot* pilot, const double dt )
       if (!pilot_isFlag(pilot,PILOT_DISABLED)) {
 
          /* If hostile, must remove counter. */
-         if (pilot_isFlag(pilot,PILOT_HOSTILE)) {
-            player_enemies--;
-            pilot_rmFlag(pilot,PILOT_HOSTILE);
-         }
+         pilot_rmHostile(pilot);
 
          pilot_setFlag(pilot,PILOT_DISABLED); /* set as disabled */
          /* run hook */
@@ -2009,10 +2020,7 @@ void pilot_free( Pilot* p )
          hook_rm( p->hook[i] );
 
    /* If hostile, must remove counter. */
-   if (pilot_isFlag(p,PILOT_HOSTILE)) {
-      player_enemies--;
-      pilot_rmFlag(p,PILOT_HOSTILE);
-   }
+   pilot_rmHostile(p);
 
    /* Remove outfits. */
    while (p->outfits != NULL)

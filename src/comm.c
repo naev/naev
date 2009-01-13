@@ -185,6 +185,7 @@ static void comm_bribe( unsigned int wid, char *unused )
 
       /* Mark as bribed and don't allow bribing again. */
       pilot_setFlag( comm_pilot, PILOT_BRIBED );
+      pilot_rmHostile( comm_pilot );
       L = comm_pilot->ai->L;
       lua_getglobal(L, "mem");
       lua_pushnil(L);
