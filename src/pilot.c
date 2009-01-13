@@ -29,6 +29,7 @@
 #include "map.h"
 #include "explosion.h"
 #include "escort.h"
+#include "music.h"
 
 
 #define XML_ID          "Fleets"  /**< XML document identifier. */
@@ -291,6 +292,10 @@ double pilot_face( Pilot* p, const double dir )
 void pilot_setHostile( Pilot* p )
 {
    if (!pilot_isFlag(p, PILOT_HOSTILE)) {
+      /* Time to play combat music. */
+      if (player_enemies == 0)
+         music_choose("combat");
+
       player_enemies++;
       pilot_setFlag(p, PILOT_HOSTILE);
    }
@@ -307,6 +312,10 @@ void pilot_rmHostile( Pilot* p )
    if (pilot_isFlag(p, PILOT_HOSTILE)) {
       player_enemies--;
       pilot_rmFlag(p, PILOT_HOSTILE);
+
+      /* Change music back to ambient if no more enemies. */
+      if (player_enemies == 0)
+         music_choose("ambient");
    }
 }
 

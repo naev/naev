@@ -34,7 +34,7 @@ function choose( str )
 
    elseif str == "combat" then
 
-      choose_battle()
+      choose_combat()
 
    elseif str == "idle" and last ~= "idle" then
 
@@ -181,15 +181,23 @@ function choose_ambient ()
       end
 
       -- Load music and play
-      music.load( ambient[ rnd.int(1,#ambient) ])
+      music.load( ambient[ rnd.int(1,#ambient) ] )
       music.play()
    end
 end
 
 
 -- Battle songs
-function choose_battle ()
-   music.load( "galacticbattle" )
+function choose_combat ()
+   -- Stop music first, but since it'll get saved it'll run this next
+   if music.isPlaying() then
+      music.stop()
+      return
+   end
+
+   combat = { "galacticbattle" }
+
+   music.load( combat[ rnd.int(1,#combat) ] )
    music.play()
 end
 
