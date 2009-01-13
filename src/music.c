@@ -119,6 +119,9 @@ void music_update (void)
 
    music_runLua( buf );
 
+   /* Make sure music is playing. */
+   if (!music_isPlaying())
+      music_choose("idle");
 }
 
 
