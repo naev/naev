@@ -195,7 +195,16 @@ function choose_combat ()
       return
    end
 
-   combat = { "galacticbattle" }
+   -- Get some data about the system
+   sys = space.getSystem()
+   nebu_dens, nebu_vol = sys:nebulae()
+
+   nebu = nebu_dens > 0
+   if nebu then
+      combat = { "nebu_battle1" }
+   else
+      combat = { "galacticbattle" }
+   end
 
    music.load( combat[ rnd.int(1,#combat) ] )
    music.play()
