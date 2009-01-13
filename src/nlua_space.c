@@ -470,7 +470,7 @@ static int planetL_services( lua_State *L )
 {
    LuaPlanet *p;
    p = lua_toplanet(L,1);
-   lua_pushnumber(L,p->p->services);
+   lua_pushnumber(L, (p->p->services & (~PLANET_SERVICE_LAND)));
    return 1;
 }
 
