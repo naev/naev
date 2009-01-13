@@ -62,6 +62,11 @@ function land()
 
    -- First mission part is landing on the planet
    if misn_stage == 0 and planet == misn_target then
+      -- Sinister music landing
+      music.load("landing_sinister")
+      music.play()
+
+      -- Some text
       tk.msg( title[1], string.format(text[4], misn_target:name()) )
       misn_stage = 1
       misn.setDesc( string.format(misn_desc[1], misn_base:name(), misn_base_sys:name() ))

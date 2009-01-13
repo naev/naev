@@ -1455,7 +1455,7 @@ void land( Planet* p )
    /* Change the music */
    music_choose("land");
 
-   /* Run hooks */
+   /* Run hooks, run after music in case hook wants to change music. */
    hooks_run("land");
 
    /* generate mission computer stuff */
