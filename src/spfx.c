@@ -135,7 +135,7 @@ static int spfx_base_load( char* name, int ttl, int anim, char* gfx, int sx, int
    cur->name = strdup(name);
    cur->anim = (double)anim / 1000.;
    cur->ttl = (double)ttl / 1000.;
-   sprintf(buf, SPFX_GFX"%s", gfx);
+   snprintf(buf, PATH_MAX, SPFX_GFX"%s", gfx);
    cur->gfx = gl_newSprite( buf, sx, sy, 0 );
 
    return 0;
