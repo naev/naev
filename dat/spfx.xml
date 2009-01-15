@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spfxs>
+ <spfx name="ExpS">
+  <gfx x="6" y="5">exps</gfx>
+  <anim>400</anim>
+ </spfx>
+ <spfx name="ExpM">
+  <gfx x="6" y="5">expm</gfx>
+  <anim>450</anim>
+ </spfx>
+ <spfx name="ExpL">
+  <gfx x="6" y="5">expl</gfx>
+  <anim>500</anim>
+ </spfx>
+ <spfx name="cargo">
+  <gfx x="6" y="6">cargo</gfx>
+  <ttl>15000</ttl>
+  <anim>5000</anim>
+ </spfx>
+ <spfx name="EmpS">
+  <gfx x="6" y="5">emps</gfx>
+  <anim>400</anim>
+ </spfx>
+ <spfx name="EmpM">
+  <gfx x="6" y="5">empm</gfx>
+  <anim>450</anim>
+ </spfx>
+ <spfx name="ShiS">
+  <gfx x="6" y="5">shis</gfx>
+  <anim>400</anim>
+ </spfx>
+ <spfx name="ShiM">
+  <gfx x="6" y="5">shim</gfx>
+  <anim>450</anim>
+ </spfx>
+ <spfx name="PlaS">
+  <gfx x="6" y="5">plas</gfx>
+  <anim>400</anim>
+ </spfx>
+ <spfx name="PlaM">
+  <gfx x="6" y="5">plam</gfx>
+  <anim>450</anim>
+ </spfx>
+</spfxs>

@@ -25,9 +25,18 @@
 #include "opengl.h"
 #include "pause.h"
 #include "rng.h"
+#include "ndata.h"
+#include "nxml.h"
 
 
-#define SPFX_GFX        "gfx/spfx/" /**< location of the graphic */
+#define SPFX_XML_ID     "spfxs" /**< XML Document tag. */
+#define SPFX_XML_TAG    "spfx" /**< SPFX XML node tag. */
+
+#define SPFX_DATA       "dat/spfx.xml" /**< Location of the spfx datafile. */
+#define SPFX_GFX_PRE    "gfx/spfx/" /**< location of the graphic */
+#define SPFX_GFX_SUF    ".png" /**< Suffix of graphics. */
+
+#define CHUNK_SIZE      32 /**< Chunk size to allocate spfx bases. */
 
 #define SPFX_CHUNK      32 /**< chunk to alloc when needed */
 
@@ -102,7 +111,7 @@ static int spfx_mstack_back = 0; /**< Memory allocated for special effects in ba
  * prototypes
  */
 /* General. */
-static int spfx_base_load( char* name, int ttl, int anim, char* gfx, int sx, int sy );
+static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent );
 static void spfx_base_free( SPFX_Base *effect );
 static void spfx_destroy( SPFX *layer, int *nlayer, int spfx );
 static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt );
@@ -112,31 +121,44 @@ static void spfx_hapticRumble( double mod );
 
 
 /**
- * @brief Loads a SPFX_Base into the stack based on some parameters.
+ * @brief Parses an xml node containing a SPFX.
  *
- *    @param name Name of the spfx.
- *    @param ttl Time to live of the spfx.
- *    @param anim Total duration in ms of the animation.
- *    @param gfx Name of the graphic effect to use.
- *    @param sx Number of x sprites in the graphic.
- *    @param sy Number of y sprites in the graphic.
+ *    @param temp Address to load SPFX into.
+ *    @param parent XML Node containing the SPFX data.
  *    @return 0 on success.
  */
-static int spfx_base_load( char* name, int ttl, int anim, char* gfx, int sx, int sy )
+static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
 {
-   SPFX_Base *cur;
-   char buf[PATH_MAX];
+   xmlNodePtr node;
 
-   /* Create new effect */
-   spfx_effects = realloc( spfx_effects, ++spfx_neffects*sizeof(SPFX_Base) );
-   cur = &spfx_effects[spfx_neffects-1];
+   /* Clear data. */
+   memset( temp, 0, sizeof(SPFX_Base) );
 
-   /* Fill it with ze data */
-   cur->name = strdup(name);
-   cur->anim = (double)anim / 1000.;
-   cur->ttl = (double)ttl / 1000.;
-   snprintf(buf, PATH_MAX, SPFX_GFX"%s", gfx);
-   cur->gfx = gl_newSprite( buf, sx, sy, 0 );
+   /* Get the name (mallocs). */
+   temp->name = xml_nodeProp(parent,"name");
+
+   /* Extract the data. */
+   node = parent->xmlChildrenNode;
+   do {
+      xmlr_float(node, "anim", temp->anim);
+      xmlr_float(node, "ttl", temp->ttl);
+      if (xml_isNode(node,"gfx"))
+         temp->gfx = xml_parseTexture( node,
+               SPFX_GFX_PRE"%s"SPFX_GFX_SUF, 6, 5, 0 );
+   } while (xml_nextNode(node));
+
+   /* Convert from ms to s. */
+   temp->anim /= 1000.;
+   temp->ttl  /= 1000.;
+   if (temp->ttl == 0.)
+      temp->ttl = temp->anim;
+
+#define MELEMENT(o,s) \
+   if (o) WARN("SPFX '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
+   MELEMENT(temp->anim==0.,"anim");
+   MELEMENT(temp->ttl==0.,"ttl");
+   MELEMENT(temp->gfx==NULL,"gfx");
+#undef MELEMENT
 
    return 0;
 }
@@ -149,8 +171,14 @@ static int spfx_base_load( char* name, int ttl, int anim, char* gfx, int sx, int
  */
 static void spfx_base_free( SPFX_Base *effect )
 {
-   if (effect->name != NULL) free(effect->name);
-   if (effect->gfx != NULL) gl_freeTexture(effect->gfx);
+   if (effect->name != NULL) {
+      free(effect->name);
+      effect->name = NULL;
+   }
+   if (effect->gfx != NULL) {
+      gl_freeTexture(effect->gfx);
+      effect->gfx = NULL;
+   }
 }
 
 
@@ -180,22 +208,50 @@ int spfx_get( char* name )
  */
 int spfx_load (void)
 {
-   /* Standard explosion effects */
-   spfx_base_load( "ExpS", 400, 400, "exps.png", 6, 5 );
-   spfx_base_load( "ExpM", 450, 450, "expm.png", 6, 5 );
-   spfx_base_load( "ExpL", 500, 500, "expl.png", 6, 5 );
-   /* Cargo rotation. */
-   spfx_base_load( "cargo", 15000, 5000, "cargo.png", 6, 6 );
-   /* EMP blasts. */
-   spfx_base_load( "EmpS", 400, 400, "emps.png", 6, 5 );
-   spfx_base_load( "EmpM", 450, 450, "empm.png", 6, 5 );
-   /* Shield hits. */
-   spfx_base_load( "ShiS", 400, 400, "shis.png", 6, 5 );
-   spfx_base_load( "ShiM", 450, 450, "shim.png", 6, 5 );
-   /* Plasma hits. */
-   spfx_base_load( "PlaS", 400, 400, "plas.png", 6, 5 );
-   spfx_base_load( "PlaM", 450, 450, "plam.png", 6, 5 );
+   int mem;
+   uint32_t bufsize;
+   char *buf;
+   xmlNodePtr node;
+   xmlDocPtr doc;
 
+   /* Load and read the data. */
+   buf = ndata_read( SPFX_DATA, &bufsize );
+   doc = xmlParseMemory( buf, bufsize );
+
+   /* Check to see if document exists. */
+   node = doc->xmlChildrenNode;
+   if (!xml_isNode(node,SPFX_XML_ID)) {
+      ERR("Malformed '"SPFX_DATA"' file: missing root element '"SPFX_XML_ID"'");
+      return -1;
+   }
+
+   /* Check to see if is populated. */
+   node = node->xmlChildrenNode; /* first system node */
+   if (node == NULL) {
+      ERR("Malformed '"SPFX_DATA"' file: does not contain elements");
+      return -1;
+   }
+
+   /* First pass, loads up ammunition. */
+   mem = 0;
+   do {
+      if (xml_isNode(node,SPFX_XML_TAG)) {
+
+         spfx_neffects++;
+         if (spfx_neffects > mem) {
+            mem += CHUNK_SIZE;
+            spfx_effects = realloc(spfx_effects, sizeof(SPFX_Base)*mem);
+         }
+         spfx_base_parse( &spfx_effects[spfx_neffects-1], node );
+      }
+   } while (xml_nextNode(node));
+   /* Shrink back to minimum - shouldn't change ever. */
+   spfx_effects = realloc(spfx_effects, sizeof(SPFX_Base) * spfx_neffects);
+
+
+   /*
+    * Now initialize force feedback.
+    */
    spfx_hapticInit();
 
    return 0;
