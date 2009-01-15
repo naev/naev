@@ -118,7 +118,7 @@ static double player_acc = 0.; /**< Accel velocity from input. */
 int planet_target = -1; /**< Targetted planet. -1 is none. */
 int hyperspace_target = -1; /**< Targetted hyperspace route. -1 is none. */
 /* for death and such */
-static unsigned int player_timer = 0; /**< For death and such. */
+static double player_timer = 0.; /**< For death and such. */
 static Vector2d player_cam; /**< For death and such. */
 /* for interference. */
 static int interference_layer = 0; /**< Layer of the current interference. */
@@ -220,22 +220,22 @@ typedef struct GUI_ {
    Rect misc; /**< Misc stuff: credits, cargo... */
    /* Messages. */
    Rect mesg; /**< Where messages go. */
-   
+
    /* positions */
    Vector2d frame; /**< Global frame position. */
    Vector2d target; /**< Global target position. */
 
 } GUI;
 static GUI gui = { .gfx_frame = NULL,
-      .gfx_targetPilot = NULL,
-      .gfx_targetPlanet = NULL }; /**< Ze GUI. */
+   .gfx_targetPilot = NULL,
+   .gfx_targetPlanet = NULL }; /**< Ze GUI. */
 /* needed to render properly */
 double gui_xoff = 0.; /**< X Offset that GUI introduces. */
 double gui_yoff = 0.; /**< Y offset that GUI introduces. */
 
 /* messages */
 #define MESG_SIZE_MAX   120 /**< Maxmimu message length. */
-int mesg_timeout = 5000; /**< How long it takes for a message to timeout. */
+double mesg_timeout = 5.; /**< How long it takes for a message to timeout. */
 int mesg_max = 5; /**< Maximum messages onscreen */
 /**
  * @struct Mesg
@@ -244,7 +244,7 @@ int mesg_max = 5; /**< Maximum messages onscreen */
  */
 typedef struct Mesg_ {
    char str[MESG_SIZE_MAX]; /**< The message. */
-   unsigned int t; /**< Time of creation. */
+   double t; /* Timer related to message. */
 } Mesg;
 static Mesg* mesg_stack; /**< Stack of mesages, will be of mesg_max size. */
 
@@ -277,6 +277,7 @@ static void rect_parse( const xmlNodePtr parent,
 static int gui_parse( const xmlNodePtr parent, const char *name );
 static void gui_cleanup (void);
 /* Render GUI. */
+static void gui_renderMessages( double dt );
 static void gui_renderPilot( const Pilot* p );
 static void gui_renderHealth( const glColour* c,
       const Rect* r, const glTexture *tex, const double w );
@@ -583,7 +584,8 @@ void player_swapShip( char* shipname )
          player_stack[i] = player;
          for (j=0; j<pilot_nstack; j++) /* find pilot in stack to swap */
             if (pilot_stack[j] == player) {
-               pilot_stack[j] = player = ship;
+               player         = ship;
+               pilot_stack[j] = ship;
                break;
             }
 
@@ -675,7 +677,7 @@ void player_cleanup (void)
       memset( mesg_stack[i].str, '\0', MESG_SIZE_MAX );
 
    /* clean up the stack */
-   if (player_stack != NULL) {                
+   if (player_nstack > 0) {                
       for (i=0; i<player_nstack; i++) {
          pilot_free(player_stack[i]);
          free(player_lstack[i]);
@@ -689,7 +691,7 @@ void player_cleanup (void)
    }
 
    /* clean up misions */
-   if (missions_done != NULL) {
+   if (missions_ndone > 0) {
       free(missions_done);
       missions_done = NULL;
       missions_ndone = 0;
@@ -787,7 +789,7 @@ void player_message ( const char *fmt, ... )
    vsprintf( mesg_stack[0].str, fmt, ap );
    va_end(ap);
 
-   mesg_stack[0].t = SDL_GetTicks() + mesg_timeout;
+   mesg_stack[0].t = mesg_timeout;
 }
 
 
@@ -980,23 +982,21 @@ static int can_jump = 0; /**< Stores whether or not the player is able to jump. 
 void player_renderGUI( double dt )
 {
    int i, j;
-   double x, y;
+   double x;
    char str[10];
    Pilot* p;
-   glColour* c, c2;
+   glColour* c;
    glFont* f;
    StarSystem *sys;
-   unsigned int t;
    int quantity, delay;
 
-   t = SDL_GetTicks();
-
-      /* pilot is dead or being created, just render him and stop */
+   /* If player is dead just render the cinematic mode. */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
-        pilot_isFlag(player,PILOT_DEAD)) {
+        ((player != NULL) && pilot_isFlag(player,PILOT_DEAD))) {
       if (player_isFlag(PLAYER_DESTROYED)) {
+         player_timer -= dt;
          if (!toolkit && !player_isFlag(PLAYER_CREATING) &&
-               (t > player_timer)) {
+               (player_timer < 0.)) {
             menu_death();
          }
       }
@@ -1307,26 +1307,8 @@ void player_renderGUI( double dt )
          NULL, "%d", pilot_cargoFree(player) );
 
 
-   /*
-    * messages
-    */
-   x = gui.mesg.x;
-   y = gui.mesg.y + (double)(gl_defFont.h*mesg_max)*1.2;
-   c2.r = c2.g = c2.b = 1.;
-   for (i=0; i<mesg_max; i++) {
-      y -= (double)gl_defFont.h*1.2;
-      if (mesg_stack[mesg_max-i-1].str[0]!='\0') {
-         if (mesg_stack[mesg_max-i-1].t < t)
-            mesg_stack[mesg_max-i-1].str[0] = '\0';
-         else {
-            if (mesg_stack[mesg_max-i-1].t - mesg_timeout/2 < t)
-               c2.a = (double)(mesg_stack[mesg_max-i-1].t - t) / (double)(mesg_timeout/2);
-            else
-               c2.a = 1.;
-            gl_print( NULL, x, y, &c2, "%s", mesg_stack[mesg_max-i-1].str );
-         }
-      }
-   }
+   /* Messages. */
+   gui_renderMessages(dt);
 
 
    /*
@@ -1345,6 +1327,49 @@ void player_renderGUI( double dt )
          glEnd(); /* GL_QUADS */
       }
    }
+}
+
+
+/**
+ * @brief Renders the player's messages on screen.
+ *
+ *    @param dt Current delta tick.
+ */
+static void gui_renderMessages( double dt )
+{
+   double x, y;
+   glColour c;
+   int i;
+
+   x = gui.mesg.x;
+   y = gui.mesg.y + (double)(gl_defFont.h*mesg_max)*1.2;
+   c.r = c.g = c.b = 1.;
+
+   for (i=mesg_max-1; i>=0; i--) {
+      y -= (double)gl_defFont.h*1.2;
+
+      /* Only handle non-NULL messages. */
+      if (mesg_stack[i].str[0] != '\0') {
+
+         /* Decrement timer. */
+         mesg_stack[i].t -= dt;
+
+         /* Set to NULL if timer is up. */
+         if (mesg_stack[i].t < 0.)
+            mesg_stack[i].str[0] = '\0';
+
+         /* Draw with variable alpha. */
+         else {
+            if (mesg_stack[i].t - mesg_timeout/2 < 0.)
+               c.a = mesg_stack[i].t / (mesg_timeout/2.);
+            else
+               c.a = 1.;
+            gl_print( NULL, x, y, &c, "%s", mesg_stack[i].str );
+         }
+      }
+   }
+
+
 }
 
 
@@ -2728,7 +2753,7 @@ void player_destroyed (void)
    vectcpy( &player_cam, &player->solid->pos );
    gl_bindCamera( &player_cam );
    player_setFlag(PLAYER_DESTROYED);
-   player_timer = SDL_GetTicks() + 5000;
+   player_timer = 5.;
 }
 
 
