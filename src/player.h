@@ -40,12 +40,19 @@ extern unsigned int player_flags; /**< Player's flags. */
 extern double player_crating; /**< Player's combat rating. */
 extern int player_enemies; /**< Amount of enemies player has. */
 
+/*
+ * Targetting.
+ */
+extern int planet_target; /**< Targetted planet. -1 is none. */
+extern int hyperspace_target; /**< Targetted hyperspace route. -1 is none. */
+
 
 /*
- * enums
+ * Common player sounds.
  */
-typedef enum RadarShape_ { RADAR_RECT, RADAR_CIRCLE
-} RadarShape; /**< Player's radar shape. */
+extern int snd_target; /**< Sound when targetting. */
+extern int snd_jump; /**< Sound when can jump. */
+extern int snd_nav; /**< Sound when changing nav computer. */
 
 
 /*
@@ -61,17 +68,13 @@ int gui_load (const char* name);
 /*
  * render
  */
-int gui_init (void);
-void gui_free (void);
-void player_render (void);
-void player_renderBG (void); /* renders BG layer player stuff */
-void player_renderGUI( double dt ); /* renders GUI stuff */
+void player_render( double dt );
 
 
 /*
  * misc
  */
-void player_message( const char *fmt, ... );
+void player_message ( const char *fmt, ... );
 void player_clear (void);
 void player_warp( const double x, const double y );
 const char* player_rating (void);
@@ -117,7 +120,6 @@ void player_targetHostile (void);
 void player_targetNext (void);
 void player_targetPrev (void);
 void player_targetNearest (void);
-void player_setRadarRel( int mod );
 void player_secondaryNext (void);
 void player_secondaryPrev (void);
 void player_targetPlanet (void);

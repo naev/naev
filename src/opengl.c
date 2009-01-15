@@ -46,6 +46,7 @@
 #include "naev.h"
 #include "log.h"
 #include "ndata.h"
+#include "gui.h"
 
 
 /*
@@ -56,12 +57,6 @@
 
 glInfo gl_screen; /**< Gives data of current opengl settings. */
 Vector2d* gl_camera; /**< Camera we are using. */
-
-/*
- * used to adjust the pilot's place onscreen to be in the middle even with the GUI
- */
-extern double gui_xoff; /**< GUI X offset. */
-extern double gui_yoff; /**< GUI Y offset. */
 
 /*
  * graphic list

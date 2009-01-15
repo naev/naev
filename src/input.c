@@ -22,6 +22,7 @@
 #include "escort.h"
 #include "land.h"
 #include "nstd.h"
+#include "gui.h"
 
 
 #define KEY_PRESS    ( 1.) /**< Key is pressed. */
@@ -614,10 +615,10 @@ static void input_key( int keynum, double value, double kabs )
     */
    /* zooming in */
    } else if (KEY("mapzoomin") && INGAME()) {
-      if (value==KEY_PRESS) player_setRadarRel(1);
+      if (value==KEY_PRESS) gui_setRadarRel(1);
    /* zooming out */
    } else if (KEY("mapzoomout") && INGAME()) {
-      if (value==KEY_PRESS) player_setRadarRel(-1);
+      if (value==KEY_PRESS) gui_setRadarRel(-1);
    /* take a screenshot */
    } else if (KEY("screenshot")) {
       if (value==KEY_PRESS) player_screenshot();

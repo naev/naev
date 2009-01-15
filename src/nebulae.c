@@ -23,6 +23,7 @@
 #include "menu.h"
 #include "player.h"
 #include "pause.h"
+#include "gui.h"
 
 
 #define NEBULAE_Z             16 /**< Z plane */
@@ -33,7 +34,6 @@
 
 
 /* Externs */
-extern double gui_xoff, gui_yoff; /**< from player.c */
 extern Vector2d shake_pos; /**< from spfx.c */
 extern void loadscreen_render( double done, const char *msg ); /**< from naev.c */
 

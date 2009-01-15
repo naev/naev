@@ -61,6 +61,7 @@
 #include "nebulae.h"
 #include "unidiff.h"
 #include "ndata.h"
+#include "gui.h"
 
 
 #define CONF_FILE       "conf" /**< Configuration file by default. */
@@ -552,17 +553,17 @@ static void render_all (void)
    /* BG */
    space_render(dt);
    planets_render();
-   player_renderBG();
+   gui_renderBG(dt);
    weapons_render(WEAPON_LAYER_BG, dt);
    /* N */
    pilots_render();
    weapons_render(WEAPON_LAYER_FG, dt);
    spfx_render(SPFX_LAYER_BACK);
    /* FG */
-   player_render();
+   player_render(dt);
    spfx_render(SPFX_LAYER_FRONT);
    space_renderOverlay(dt);
-   player_renderGUI(dt);
+   gui_render(dt);
    display_fps(cur_dt); /* Exception. */
 }
 

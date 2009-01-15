@@ -27,6 +27,7 @@
 #include "spfx.h"
 #include "opengl.h"
 #include "explosion.h"
+#include "gui.h"
 
 
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */

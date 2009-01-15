@@ -16,6 +16,7 @@
 #include "opengl.h"
 #include "mission.h"
 #include "colour.h"
+#include "player.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -48,9 +49,6 @@ static int map_drag = 0; /**< Is the user dragging the map? */
 /* space.c */
 extern StarSystem *systems_stack;
 extern int systems_nstack;
-/* player.c */
-extern int planet_target;
-extern int hyperspace_target;
 
 
 /*

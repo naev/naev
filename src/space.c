@@ -28,6 +28,7 @@
 #include "ntime.h"
 #include "nebulae.h"
 #include "music.h"
+#include "gui.h"
 
 
 #define XML_PLANET_ID         "Planets" /**< Planet xml document tag. */
@@ -115,15 +116,9 @@ static int mstars = 0; /**< memory stars are taking */
 /*
  * Interference.
  */
-extern double interference_alpha; /* player.c */
+extern double interference_alpha; /* gui.c */
 static double interference_target = 0.; /**< Target alpha level. */
 static double interference_timer = 0.; /**< Interference timer. */
-
-
-/*
- * External stuff.
- */
-extern int planet_target; /* player.c */
 
 
 /* 
@@ -140,10 +135,6 @@ static void system_setFaction( StarSystem *sys );
 static void space_renderStars( const double dt );
 static void space_addFleet( Fleet* fleet, int init );
 static PlanetClass planetclass_get( const char a );
-/*
- * External prototypes.
- */
-extern void player_message ( const char *fmt, ... );
 /*
  * Externed prototypes.
  */
