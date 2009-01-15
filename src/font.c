@@ -150,7 +150,7 @@ void gl_print( const glFont *ft_font,
    if (fmt == NULL) return;
    else { /* convert the symbols to text */
       va_start(ap, fmt);
-      vsprintf(text, fmt, ap);
+      vsnprintf(text, 256, fmt, ap);
       va_end(ap);
    }
 
@@ -200,7 +200,7 @@ int gl_printMax( const glFont *ft_font, const int max,
    if (fmt == NULL) return -1;
    else { /* convert the symbols to text */
       va_start(ap, fmt);
-      vsprintf(text, fmt, ap);
+      vsnprintf(text, 256, fmt, ap);
       va_end(ap);
    }
 
@@ -259,7 +259,7 @@ int gl_printMid( const glFont *ft_font, const int width,
    if (fmt == NULL) return -1;
    else { /* convert the symbols to text */
       va_start(ap, fmt);
-      vsprintf(text, fmt, ap);
+      vsnprintf(text, 256, fmt, ap);
       va_end(ap);
    }
 
@@ -320,7 +320,7 @@ int gl_printText( const glFont *ft_font,
    if (fmt == NULL) return -1;
    else { /* convert the symbols to text */
       va_start(ap, fmt);
-      vsprintf(text, fmt, ap);
+      vsnprintf(text, 4096, fmt, ap);
       va_end(ap);
    }
    bx -= (double)SCREEN_W/2.;
@@ -381,7 +381,7 @@ int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
    if (fmt == NULL) return 0;
    else { /* convert the symbols to text */
       va_start(ap, fmt);
-      vsprintf(text, fmt, ap);
+      vsnprintf(text, 256, fmt, ap);
       va_end(ap);
    }
 
@@ -415,7 +415,7 @@ int gl_printHeight( const glFont *ft_font,
    if (fmt == NULL) return -1;
    else { /* convert the symbols to text */
       va_start(ap, fmt);
-      vsprintf(text, fmt, ap);
+      vsnprintf(text, 1024, fmt, ap);
       va_end(ap);
    } 
 

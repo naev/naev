@@ -76,7 +76,7 @@ void dialogue_alert( const char *fmt, ... )
    if (fmt == NULL) return;
    else { /* get the message */
       va_start(ap, fmt);
-      vsprintf(msg, fmt, ap);
+      vsnprintf(msg, 512, fmt, ap);
       va_end(ap);
    }
 
@@ -165,7 +165,7 @@ void dialogue_msg( char* caption, const char *fmt, ... )
    if (fmt == NULL) return;
    else { /* get the message */
       va_start(ap, fmt);
-      vsprintf(msg, fmt, ap);
+      vsnprintf(msg, 4096, fmt, ap);
       va_end(ap);
    }
 
@@ -216,7 +216,7 @@ int dialogue_YesNo( char* caption, const char *fmt, ... )
    if (fmt == NULL) return -1;
    else { /* get the message */
       va_start(ap, fmt);
-      vsprintf(msg, fmt, ap);
+      vsnprintf(msg, 4096, fmt, ap);
       va_end(ap);
    }
 
@@ -286,7 +286,7 @@ char* dialogue_input( char* title, int min, int max, const char *fmt, ... )
    if (fmt == NULL) return NULL;
    else { /* get the message */
       va_start(ap, fmt);
-      vsprintf(msg, fmt, ap);
+      vsnprintf(msg, 512, fmt, ap);
       va_end(ap);
    }
 
