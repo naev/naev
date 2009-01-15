@@ -19,6 +19,7 @@
    <faction>Soromid</faction>
    <faction>Dvaered</faction>
    <faction>Frontier</faction>
+   <faction>Goddard</faction>
   </avail>
  </mission>
  <mission name="Empire Recruitment">
@@ -145,6 +146,7 @@
    <faction>Soromid</faction>
    <faction>Dvaered</faction>
    <faction>Frontier</faction>
+   <faction>Goddard</faction>
   </avail>
  </mission>
 </Missions>
