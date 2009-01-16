@@ -64,6 +64,7 @@ static int systemL_name( lua_State *L );
 static int systemL_faction( lua_State *L );
 static int systemL_nebulae( lua_State *L );
 static int systemL_jumpdistance( lua_State *L );
+static int systemL_adjacent( lua_State *L );
 static const luaL_reg system_methods[] = {
    { "__eq", systemL_eq },
    { "__tostring", systemL_name },
@@ -71,6 +72,7 @@ static const luaL_reg system_methods[] = {
    { "faction", systemL_faction },
    { "nebulae", systemL_nebulae },
    { "jumpDist", systemL_jumpdistance },
+   { "adjacentSystems", systemL_adjacent },
    {0,0}
 }; /**< System metatable methods. */
 
@@ -738,6 +740,29 @@ static int systemL_jumpdistance( lua_State *L )
    free(s);
 
    lua_pushnumber(L,jumps);
+   return 1;
+}
+
+
+/**
+ * @ingroup META_SYSTEM
+ */
+static int systemL_adjacent( lua_State *L )
+{
+   int i;
+   LuaSystem *sys, sysp;
+
+   sys = lua_tosystem(L,1);
+
+   /* Push all adjacent systems. */
+   lua_newtable(L);
+   for (i=0; i<sys->s->njumps; i++) {
+      sysp.s = system_getIndex( sys->s->jumps[i] );
+      lua_pushnumber(L,i+1); /* key */
+      lua_pushsystem(L,sysp); /* value */
+      lua_rawset(L,-3);
+   }
+
    return 1;
 }
 

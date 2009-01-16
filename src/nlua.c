@@ -57,8 +57,15 @@ static const luaL_reg time_methods[] = {
 }; /**< Time Lua methods. */
 /* rnd */
 static int rnd_int( lua_State *L );
+static int rnd_sigma( lua_State *L );
+static int rnd_twosigma( lua_State *L );
+static int rnd_threesigma( lua_State *L );
 static const luaL_reg rnd_methods[] = {
-   { "int", rnd_int },
+   { "int", rnd_int }, /* obsolete, rnd.rnd is prefered. */
+   { "rnd", rnd_int },
+   { "sigma", rnd_sigma },
+   { "twosigma", rnd_twosigma },
+   { "threesigma", rnd_threesigma },
    {0,0}
 }; /**< Random Lua methods. */
 /* toolkit */
@@ -394,6 +401,21 @@ static int rnd_int( lua_State *L )
    else NLUA_INVALID_PARAMETER();
    
    return 1; /* unless it's returned 0 already it'll always return a parameter */
+}
+static int rnd_sigma( lua_State *L )
+{
+   lua_pushnumber(L, RNG_1SIGMA());
+   return 1;
+}
+static int rnd_twosigma( lua_State *L )
+{
+   lua_pushnumber(L, RNG_2SIGMA());
+   return 1;
+}
+static int rnd_threesigma( lua_State *L )
+{
+   lua_pushnumber(L, RNG_3SIGMA());
+   return 1;
 }
 /**
  * @}

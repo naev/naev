@@ -149,4 +149,12 @@
    <faction>Goddard</faction>
   </avail>
  </mission>
+ <mission name="Dvaered Patrol">
+  <lua>dvaered/dv_patrol</lua>
+  <avail>
+   <chance>366</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+  </avail>
+ </mission>
 </Missions>
