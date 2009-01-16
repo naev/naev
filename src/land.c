@@ -1237,10 +1237,21 @@ static void misn_accept( unsigned int wid, char* str )
    char* misn_name;
    Mission* misn;
    int pos;
+   int i;
 
    misn_name = toolkit_getList( wid, "lstMission" );
 
-   if (strcmp(misn_name,"No Missions")==0) return;
+   /* Make sure you have missions. */
+   if (strcmp(misn_name,"No Missions")==0)
+      return;
+
+   /* Make sure player can accept the mission. */
+   for (i=0; i<MISSION_MAX; i++)
+      if (player_missions[i].data == NULL) break;
+   if (i >= MISSION_MAX) {
+      dialogue_alert("You have too many active missions.");
+      return;
+   }
 
    if (dialogue_YesNo("Accept Mission",
          "Are you sure you want to accept this mission?")) {
