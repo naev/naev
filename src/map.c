@@ -68,7 +68,9 @@ static void map_selectCur (void);
 void map_open (void)
 {
    unsigned int wid;
+   StarSystem *cur;
 
+   /* Destroy window if exists. */
    wid = window_get(MAP_WDWNAME);
    if (wid > 0) {
       window_destroy( wid );
@@ -86,6 +88,10 @@ void map_open (void)
    if (map_selected == -1)
       map_selectCur();
 
+   /* get the selected system. */
+   cur = system_getIndex( map_selected );
+
+   /* create the window. */
    wid = window_create( MAP_WDWNAME, -1, -1,
          WINDOW_WIDTH, WINDOW_HEIGHT );
 
@@ -113,7 +119,7 @@ void map_open (void)
 
    /* System Name */
    window_addText( wid, -20, -20, 100, 20, 1, "txtSysname",
-         &gl_defFont, &cDConsole, systems_stack[ map_selected ].name );
+         &gl_defFont, &cDConsole, cur->name );
    /* Faction */
    window_addText( wid, -20, -60, 90, 20, 0, "txtSFaction",
          &gl_smallFont, &cDConsole, "Faction:" );
@@ -177,7 +183,7 @@ static void map_update( unsigned int wid )
    if (!map_isOpen())
       return;
 
-   sys = &systems_stack[ map_selected ];
+   sys = system_getIndex( map_selected );
  
 
    /*
@@ -372,7 +378,7 @@ static void map_render( double bx, double by, double w, double h )
 {
    int i,j, n,m;
    double x,y,r, tx,ty;
-   StarSystem* sys;
+   StarSystem *sys, *jsys, *hsys;
    glColour* col;
 
    r = 5.;
@@ -392,7 +398,7 @@ static void map_render( double bx, double by, double w, double h )
    /* render the star systems */
    for (i=0; i<systems_nstack; i++) {
       
-      sys = &systems_stack[i];
+      sys = system_getIndex( i );
 
       /* check to make sure system is known or adjacent to known (or marked) */
       if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED) && !space_sysReachable(sys))
@@ -441,14 +447,17 @@ static void map_render( double bx, double by, double w, double h )
        * from where to where the line must go :) */  
       for (j=0; j<sys->njumps; j++) {
 
-         n = map_inPath(&systems_stack[ sys->jumps[j]]);
+         jsys = system_getIndex( sys->jumps[j] );
+         hsys = system_getIndex( cur_system->jumps[hyperspace_target] );
+
+         n = map_inPath(jsys);
          m = map_inPath(sys);
          /* set the colours */
          /* is the route the current one? */
          if ((hyperspace_target != -1) && 
                ( ((cur_system==sys) && (j==hyperspace_target)) ||
-                  ((cur_system==&systems_stack[ sys->jumps[j] ]) &&
-                     (sys==&systems_stack[ cur_system->jumps[hyperspace_target] ] )))) {
+                  ((cur_system==jsys) &&
+                     (sys==hsys )))) {
             if (player->fuel < HYPERSPACE_FUEL)
                col = &cRed;
             else
@@ -470,12 +479,12 @@ static void map_render( double bx, double by, double w, double h )
             ty = y + sys->pos.y * map_zoom;
             glVertex2d( tx, ty );
             COLOUR(*col);
-            tx += (systems_stack[ sys->jumps[j] ].pos.x - sys->pos.x)/2. * map_zoom;
-            ty += (systems_stack[ sys->jumps[j] ].pos.y - sys->pos.y)/2. * map_zoom;
+            tx += (jsys->pos.x - sys->pos.x)/2. * map_zoom;
+            ty += (jsys->pos.y - sys->pos.y)/2. * map_zoom;
             glVertex2d( tx, ty );
             ACOLOUR(*col,0.);
-            tx = x + systems_stack[ sys->jumps[j] ].pos.x * map_zoom;
-            ty = y + systems_stack[ sys->jumps[j] ].pos.y * map_zoom;
+            tx = x + jsys->pos.x * map_zoom;
+            ty = y + jsys->pos.y * map_zoom;
             glVertex2d( tx, ty );
          glEnd(); /* GL_LINE_STRIP */
       }
@@ -484,7 +493,7 @@ static void map_render( double bx, double by, double w, double h )
 
    /* selected planet */
    if (map_selected != -1) {
-      sys = &systems_stack[ map_selected ];
+      sys = system_getIndex( map_selected );
       COLOUR(cRed);
       gl_drawCircleInRect( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
             r+3., bx, by, w, h );
@@ -516,7 +525,7 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my 
          /* selecting star system */
          else {
             for (i=0; i<systems_nstack; i++) {
-               sys = &systems_stack[i];
+               sys = system_getIndex( i );
 
                /* must be reachable */
                if (!space_sysReachable(sys))
@@ -540,7 +549,7 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my 
                   else 
                      /* see if it is a valid hyperspace target */
                      for (j=0; j<cur_system->njumps; j++) {
-                        if (map_path[0]==&systems_stack[cur_system->jumps[j]]) {
+                        if (map_path[0]==system_getIndex(cur_system->jumps[j])) {
                            planet_target = -1; /* override planet_target */
                            hyperspace_target = j;
                            break;
@@ -660,7 +669,7 @@ void map_jump (void)
 
          /* set the next jump to be to the next in path */
          for (j=0; j<cur_system->njumps; j++) {
-            if (map_path[0]==&systems_stack[cur_system->jumps[j]]) {
+            if (map_path[0]==system_getIndex(cur_system->jumps[j])) {
                planet_target = -1; /* override planet_target */
                hyperspace_target = j;
                break;
@@ -874,7 +883,7 @@ StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend, int ign
       cost = A_g(cur) + 1;
 
       for (i=0; i<cur->sys->njumps; i++) {
-         sys = &systems_stack[cur->sys->jumps[i]];
+         sys = system_getIndex( cur->sys->jumps[i] );
 
          /* Make sure it's reachable */
          if (!ignore_known &&
@@ -952,7 +961,7 @@ int map_map( char* targ_sys, int r )
 
       /* check it's jumps */
       for (i=0; i<sys->njumps; i++) {
-         jsys = &systems_stack[cur->sys->jumps[i]];
+         jsys = system_getIndex( cur->sys->jumps[i] );
 
          /* System has already been parsed or is too deep */
          if ((A_in(closed,jsys) != NULL) || (dep+1 > r))
@@ -1002,7 +1011,7 @@ int map_isMapped( char* targ_sys, int r )
 
       /* check it's jumps */
       for (i=0; i<sys->njumps; i++) {
-         jsys = &systems_stack[cur->sys->jumps[i]];
+         jsys = system_getIndex( cur->sys->jumps[i] );
          
          /* System has already been parsed or is too deep */
          if ((A_in(closed,jsys) != NULL) || (dep+1 > r))

@@ -203,6 +203,7 @@ void space_update( const double dt );
  * misc
  */
 StarSystem* system_get( const char* sysname );
+StarSystem* system_getIndex( int id );
 int space_canHyperspace( Pilot* p);
 int space_hyperspace( Pilot* p );
 int space_sysReachable( StarSystem *sys );

@@ -478,7 +478,7 @@ int space_sysReachable( StarSystem *sys )
 
    /* check to see if it is adjacent to known */
    for (i=0; i<sys->njumps; i++)
-      if (sys_isKnown(&systems_stack[ sys->jumps[i]]))
+      if (sys_isKnown(system_getIndex( sys->jumps[i] )))
          return 1;
 
    return 0;
@@ -501,6 +501,18 @@ StarSystem* system_get( const char* sysname )
 
    DEBUG("System '%s' not found in stack", sysname);
    return NULL;
+}
+
+
+/**
+ * @brief Get the system by it's index.
+ *
+ *    @param id Index to match.
+ *    @return System matching index.
+ */
+StarSystem* system_getIndex( int id )
+{
+   return &systems_stack[ id ];
 }
 
 

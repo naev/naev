@@ -53,13 +53,6 @@ static int mission_nstack = 0; /**< Mssions in stack. */
 
 
 /*
- * external space stack
- */
-extern StarSystem *systems_stack;
-extern int systems_nstack;
-
-
-/*
  * prototypes
  */
 /* static */

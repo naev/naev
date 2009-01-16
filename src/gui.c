@@ -70,11 +70,6 @@ extern Pilot** pilot_stack;
 extern int pilot_nstack;
 
 /*
- * space stuff for GUI
- */
-extern StarSystem *systems_stack;
-
-/*
  * map stuff for autonav
  */
 extern int map_npath;
@@ -398,7 +393,7 @@ void gui_render( double dt )
    }
    else if (hyperspace_target >= 0) { /* hyperspace target */
 
-      sys = &systems_stack[cur_system->jumps[hyperspace_target]];
+      sys = system_getIndex( cur_system->jumps[hyperspace_target] );
 
       /* Determine if we have to play the "enter hyperspace range" sound. */
       i = space_canHyperspace(player);

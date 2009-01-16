@@ -126,12 +126,6 @@ extern int pilot_nstack;
 
 
 /*
- * Stuff for autonav and friends.
- */
-extern StarSystem *systems_stack;
-
-
-/*
  * map stuff for autonav
  */
 extern int map_npath;
@@ -1147,7 +1141,7 @@ void player_targetHyperspace (void)
       if (hyperspace_target == -1)
          map_select( NULL );
       else
-         map_select( &systems_stack[cur_system->jumps[hyperspace_target]] );
+         map_select( system_getIndex( cur_system->jumps[hyperspace_target] ) );
    }
 
 }
@@ -1206,7 +1200,7 @@ void player_brokeHyperspace (void)
    ntime_inc( RNG( tl, th ) );
 
    /* enter the new system */
-   space_init( systems_stack[cur_system->jumps[hyperspace_target]].name );
+   space_init( system_getIndex( cur_system->jumps[hyperspace_target] )->name );
 
    /* set position, the pilot_update will handle lowering vel */
    d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
@@ -1246,10 +1240,10 @@ void player_brokeHyperspace (void)
 double player_faceHyperspace (void)
 {
    double a;
-   a = ANGLE( systems_stack[ cur_system->jumps[hyperspace_target] ].pos.x -
-            cur_system->pos.x,
-         systems_stack[ cur_system->jumps[hyperspace_target] ].pos.y -
-            cur_system->pos.y );
+   StarSystem *sys;
+
+   sys = system_getIndex( cur_system->jumps[hyperspace_target] );
+   a = ANGLE( sys->pos.x - cur_system->pos.x, sys->pos.y - cur_system->pos.y );
    return pilot_face( player, a );
 }
 
