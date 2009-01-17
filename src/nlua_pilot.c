@@ -27,6 +27,13 @@
 
 
 /*
+ * From pilot.c
+ */
+extern Pilot** pilot_stack;
+extern int pilot_nstack;
+
+
+/*
  * Prototypes
  */
 static int pilotL_createmetatable( lua_State *L );
@@ -36,11 +43,13 @@ static int pilot_getPlayer( lua_State *L );
 static int pilot_addFleet( lua_State *L );
 static int pilot_clear( lua_State *L );
 static int pilot_toggleSpawn( lua_State *L );
+static int pilot_getPilots( lua_State *L );
 static const luaL_reg pilot_methods[] = {
    { "player", pilot_getPlayer },
    { "add", pilot_addFleet },
    { "clear", pilot_clear },
    { "toggleSpawn", pilot_toggleSpawn },
+   { "get", pilot_getPilots },
    {0,0}
 }; /**< Pilot lua methods. */
 
@@ -367,6 +376,55 @@ static int pilot_toggleSpawn( lua_State *L )
       space_spawn = !space_spawn;
 
    lua_pushboolean(L, space_spawn);
+   return 1;
+}
+/**
+ * @ingroup PILOT
+ */
+static int pilot_getPilots( lua_State *L )
+{
+   int i, j, k;
+   int *factions;
+   int nfactions;
+   LuaFaction *f;
+   LuaPilot p;
+
+   /* Check for belonging to faction. */
+   if (lua_istable(L,1)) {
+      /* Get table length and preallocate. */
+      nfactions = (int) lua_objlen(L,1);
+      factions = malloc( sizeof(int) * nfactions );
+      /* Load up the table. */
+      lua_pushnil(L);
+      i = 0;
+      while (lua_next(L, -2) != 0) {
+         f = lua_tofaction(L, -1);
+         factions[i++] = f->f;
+         lua_pop(L,1);
+      }
+
+      /* Now put all the matching pilots in a table. */
+      lua_newtable(L);
+      k = 1;
+      for (i=0; i<pilot_nstack; i++) {
+         for (j=0; j<nfactions; j++) {
+            if ((pilot_stack[i]->faction == factions[j]) &&
+                  !pilot_isDisabled(pilot_stack[i])) {
+               lua_pushnumber(L, k++); /* key */
+               p.pilot = pilot_stack[i]->id;
+               lua_pushpilot(L, p); /* value */
+               lua_rawset(L,-3); /* table[key] = value */
+               break; /* Continue to next pilot. */
+            }
+         }
+      }
+
+      /* clean up. */
+      free(factions);
+   }
+   else
+      NLUA_INVALID_PARAMETER();
+
    return 1;
 }
 

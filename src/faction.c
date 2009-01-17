@@ -153,6 +153,42 @@ glTexture* faction_logoSmall( int f )
 
 
 /**
+ * @brief Gets the list of enemies of a faction.
+ *
+ *    @param f Faction to get enemies of.
+ *    @param[out] Number of enemies.
+ *    @return The enemies of the faction.
+ */
+int* faction_getEnemies( int f, int *n )
+{
+   if ((f < 0) || (f >= faction_nstack)) {
+      WARN("Faction id '%d' is invalid.",f);
+      return NULL;
+   }
+   *n = faction_stack[f].nenemies;
+   return faction_stack[f].enemies;
+}
+
+
+/**
+ * @brief Gets the list of allies of a faction.
+ *
+ *    @param f Faction to get allies of.
+ *    @param[out] Number of allies.
+ *    @return The allies of the faction.
+ */
+int* faction_getAllies( int f, int *n )
+{
+   if ((f < 0) || (f >= faction_nstack)) {
+      WARN("Faction id '%d' is invalid.",f);
+      return NULL;
+   }
+   *n = faction_stack[f].nallies;
+   return faction_stack[f].allies;
+}
+
+
+/**
  * @brief Sanitizes player faction standing.
  *
  *    @param faction Faction to sanitize.

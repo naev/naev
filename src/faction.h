@@ -19,6 +19,8 @@ int faction_get( const char* name );
 char* faction_name( int f );
 char* faction_longname( int f );
 glTexture* faction_logoSmall( int f );
+int* faction_getEnemies( int f, int *n );
+int* faction_getAllies( int f, int *n );
 
 /* player stuff */
 void faction_modPlayer( int f, double mod );

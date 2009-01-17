@@ -35,6 +35,8 @@ static int factionL_areallies( lua_State *L );
 static int factionL_modplayer( lua_State *L );
 static int factionL_modplayerraw( lua_State *L );
 static int factionL_playerstanding( lua_State *L );
+static int factionL_enemies( lua_State *L );
+static int factionL_allies( lua_State *L );
 static const luaL_reg faction_methods[] = {
    { "__eq", factionL_eq },
    { "__tostring", factionL_name },
@@ -45,6 +47,8 @@ static const luaL_reg faction_methods[] = {
    { "modPlayer", factionL_modplayer },
    { "modPlayerRaw", factionL_modplayerraw },
    { "playerStanding", factionL_playerstanding },
+   { "enemies", factionL_enemies },
+   { "allies", factionL_allies },
    {0,0}
 }; /**< Faction metatable methods. */
 static const luaL_reg faction_methods_cond[] = {
@@ -55,6 +59,8 @@ static const luaL_reg faction_methods_cond[] = {
    { "areEnemies", factionL_areenemies },
    { "areAllies", factionL_areallies },
    { "playerStanding", factionL_playerstanding },
+   { "enemies", factionL_enemies },
+   { "allies", factionL_allies },
    {0,0}
 }; /**< Factions read only metatable methods. */
 
@@ -342,6 +348,58 @@ static int factionL_playerstanding( lua_State *L )
    n = faction_getPlayer(f->f);
    lua_pushnumber(L, n);
    lua_pushstring(L, faction_getStanding(n));
+   return 1;
+}
+
+/**
+ * @brief Gets the enemies of the faction.
+ *    @return A table containing the enemies of the faction.
+ * @luafunc enemies()
+ */
+static int factionL_enemies( lua_State *L )
+{
+   int i, n;
+   int *factions;
+   LuaFaction *f, fe;
+
+   f = lua_tofaction(L,1);
+
+   /* Push the enemies in a table. */
+   lua_newtable(L);
+   factions = faction_getEnemies( f->f, &n );
+   for (i=0; i<n; i++) {
+      lua_pushnumber(L, i+1); /* key */
+      fe.f = factions[i];
+      lua_pushfaction(L, fe); /* value */
+      lua_rawset(L, -3);
+   }
+
+   return 1;
+}
+
+/**
+ * @brief Gets the allies of the faction.
+ *    @return A table containing the allies of the faction.
+ * @luafunc allies()
+ */
+static int factionL_allies( lua_State *L )
+{
+   int i, n;
+   int *factions;
+   LuaFaction *f, fa;
+
+   f = lua_tofaction(L,1);
+
+   /* Push the enemies in a table. */
+   lua_newtable(L);
+   factions = faction_getAllies( f->f, &n );
+   for (i=0; i<n; i++) {
+      lua_pushnumber(L, i+1); /* key */
+      fa.f = factions[i];
+      lua_pushfaction(L, fa); /* value */
+      lua_rawset(L, -3);
+   }
+
    return 1;
 }
 

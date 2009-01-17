@@ -2,6 +2,10 @@
 
    Handles random Dvaered Patrol missions.
 
+   Stage 1: Travelling
+   Stage 2: Must clear enemies.
+   Stage 3: Continue travelling.
+
 ]]--
 
 lang = naev.lang()
@@ -12,6 +16,7 @@ else -- default english
    misn_desc[1] = "Patrol %d systems for hostiles: "
    misn_desc[2] = "Travel to the %s system and check for hostiles."
    misn_desc[3] = "Return to %s in the %s system for payment."
+   misn_desc[4] = "Clear %s of hostiles."
    misn_reward = "%d credits"
    title = {}
    title[1] = "DV: Routine %d sector patrol"
@@ -22,6 +27,10 @@ else -- default english
    msg_msg = {}
    msg_title[1] = "Mission Success"
    msg_msg[1] = "You are greeted by a Dvaered official and recieve your payment of %d credits for your contribution in keeping Dvaered systems clean."
+   msg_msg[2] = "DV: Engage hostiles."
+   msg_msg[3] = "MISSION FAILED: Fled from the heat of battle."
+   msg_msg[4] = "DV: System clear, continue patrol."
+   msg_msg[5] = "DV: Patrol finished, return to base."
 end
 
       
@@ -92,21 +101,61 @@ function jump ()
       if sys == systems[visited+1] then
          visited = visited + 1
 
-         -- Finished visiting systems
-         if visited >= #systems then
-            misn_stage = 2
-            misn.setDesc( string.format( misn_desc[3], base:name(), base_sys:name() ) )
-            misn.setMarker(base_sys)
+         -- Get the next goal
+         setNextGoal()
+      end
+   elseif misn_stage == 3 then
 
-         -- Need to visit more systems
-         else
-            misn.setDesc( string.format( misn_desc[2], systems[visited+1]:name() ) )
-            misn.setMarker(systems[visited+1])
-         end
+      player.msg(msg_msg[3])
+      misn.finish(false)
+   end
+end
+
+-- Sets the next goal
+function setNextGoal ()
+   -- Check to see if there are enemies
+   f = faction.get("Dvaered")
+   enemies = pilot.get( f:enemies() )
+   hostiles = #enemies
+   if hostiles > 0 then
+      misn_stage = 3
+
+      -- Set hooks
+      for k,v in ipairs(enemies) do
+         hook.pilot( v, "disable", "death" )
+         hook.pilot( v, "jump", "death" )
+      end
+
+      -- Update description and send messages
+      player.msg(msg_msg[2])
+      misn.setDesc( string.format( misn_desc[4], sys:name() ) )
+
+   -- No hostiles, continue route
+   else
+      -- Finished visiting systems
+      if visited >= #systems then
+         misn_stage = 2
+         player.msg(msg_msg[5])
+         misn.setDesc( string.format( misn_desc[3], base:name(), base_sys:name() ) )
+         misn.setMarker(base_sys)
+
+      -- Need to visit more systems
+      else
+         player.msg(msg_msg[4])
+         misn.setDesc( string.format( misn_desc[2], systems[visited+1]:name() ) )
+         misn.setMarker(systems[visited+1])
       end
    end
 end
 
+-- Pilot death hook
+function death ()
+   hostiles = hostiles - 1
+   if hostiles <= 0 then
+      misn_stage = 1
+      setNextGoal()
+   end
+end
 
 -- Land hook
 function land ()

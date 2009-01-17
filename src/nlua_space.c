@@ -345,7 +345,7 @@ static int planetL_get( lua_State *L )
       /* Get table length and preallocate. */
       nfactions = (int) lua_objlen(L,1);
       factions = malloc( sizeof(int) * nfactions );
-      /*Lload up the table. */
+      /* Load up the table. */
       lua_pushnil(L);
       i = 0;
       while (lua_next(L, -2) != 0) {
