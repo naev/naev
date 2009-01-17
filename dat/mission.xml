@@ -153,6 +153,7 @@
   <lua>dvaered/dv_patrol</lua>
   <avail>
    <chance>366</chance>
+   <cond>player.getFaction("Dvaered") &gt; 5 and player.getRating() &gt; 100</cond>
    <location>Computer</location>
    <faction>Dvaered</faction>
   </avail>
