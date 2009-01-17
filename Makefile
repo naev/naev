@@ -111,18 +111,19 @@ endif # DEBUG
 #
 #   DATA
 #
+DATA_MISC :=   AUTHORS VERSION
 DATA_AI   := 	$(wildcard ai/*.lua \
-					ai/*/*.lua )
+						ai/*/*.lua )
 DATA_GFX  := 	$(wildcard gfx/*.png \
-					gfx/*/*.png \
-					gfx/*/*/*.png )
+						gfx/*/*.png \
+						gfx/*/*/*.png )
 DATA_XML  := 	$(wildcard dat/*.xml dat/*.ttf dat/intro)
 DATA_SND  := 	$(wildcard snd/music/*.ogg snd/sounds/*.wav) snd/music.lua
 DATA_MISN := 	$(wildcard dat/missions/*.lua \
-					dat/missions/*/*.lua \
-					dat/missions/*/*/*.lua)
+						dat/missions/*/*.lua \
+						dat/missions/*/*/*.lua)
 DATA      := 	ndata
-DATAFILES := 	$(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN)
+DATAFILES := 	$(DATA_MISC) $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN)
 
 
 #
@@ -186,7 +187,7 @@ $(VERSIONFILE):
 ndata: pack $(DATAFILES)
 	@echo -n "$(VMAJOR).$(VMINOR).$(VREV)" > $(VERSIONFILE)
 	@echo "   DAT  ndata"
-	@./pack $(DATA) $(DATAFILES) $(VERSIONFILE)
+	@./pack $(DATA) $(DATAFILES)
 
 
 utils: pack mkspr
