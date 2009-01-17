@@ -122,6 +122,7 @@ function setNextGoal ()
 
       -- Set hooks
       for k,v in ipairs(enemies) do
+         v:setHostile() -- should be hostile to player
          hook.pilot( v, "disable", "death" )
          hook.pilot( v, "jump", "death" )
       end
