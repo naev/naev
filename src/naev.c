@@ -19,14 +19,16 @@
 /* localised global */
 #include "SDL.h"
 
+#include "ncompat.h"
+
 /* global */
 #include <string.h> /* strdup */
-#if defined(LINUX) && !defined(DEBUGGING)
+#if HAS_LINUX && defined(DEBUG) /* DEBUGGING isn't defined yet. */
 #include <signal.h>
 #include <execinfo.h>
 #include <stdlib.h>
 #include <unistd.h>
-#endif /* defined(LINUX) && !defined(DEBUGGING) */
+#endif /* HAS_LINUX && defined(DEBUG) */
 
 
 /* local */
@@ -645,7 +647,7 @@ static void print_SDLversion (void)
 }
 
 
-#if defined(LINUX) && !defined(DEBUGGING)
+#if HAS_LINUX && defined(DEBUGGING)
 /**
  * @brief Gets the string related to the signal code.
  *
@@ -712,7 +714,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
 
    exit(1);
 }
-#endif /* defined(LINUX) && !defined(DEBUGGING) */
+#endif /* HAS_LINUX && defined(DEBUGGING) */
 
 
 /**
@@ -720,7 +722,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
  */
 static void debug_sigInit (void)
 {
-#if defined(LINUX) && !defined(DEBUGGING)
+#if HAS_LINUX && defined(DEBUGGING)
    struct sigaction sa, so;
 
    /* Set up handler. */
@@ -739,5 +741,5 @@ static void debug_sigInit (void)
    sigaction(SIGABRT, &sa, &so);
    if (so.sa_handler == SIG_IGN)
       DEBUG("Unable to set up SIGABRT signal handler.");
-#endif /* defined(LINUX) && !defined(DEBUGGING) */
+#endif /* HAS_LINUX && defined(DEBUGGING) */
 }

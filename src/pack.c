@@ -6,7 +6,12 @@
 #include "pack.h"
 
 #include <stdio.h> /* printf() */
+#include <fcntl.h> /* creat() and friends */
+#include <stdint.h> /* uint32_t */
+#if HAS_POSIX
+#include <sys/types.h> /* ssize_t */
 #include <sys/stat.h> /* S_IRUSR */
+#endif /* HAS_POSIX */
 #include <unistd.h> /* WRITE() */
 #include <errno.h> /* error numbers */
 #include <string.h> /* strlen() and friends */
@@ -49,11 +54,11 @@
  * @brief Abstracts around packfiles.
  */
 struct Packfile_s {
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
    int fd; /**< file descriptor */
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
    FILE* fp; /**< For non-posix. */
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
    uint32_t pos; /**< cursor position */
    uint32_t start; /**< File start. */
    uint32_t end; /**< File end. */
@@ -66,11 +71,11 @@ struct Packfile_s {
  * @brief Allows much faster creation of packfiles.
  */
 struct Packcache_s {
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
    int fd; /**< file descriptor */
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
    FILE* fp; /**< For non-posix. */
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
 
    char **index; /**< Cached index for faster lookups. */
    uint32_t *start; /**< Cached index starts. */
@@ -80,15 +85,15 @@ struct Packcache_s {
 /*
  * Helper defines.
  */
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
 #define READ(f,b,n)  if (read((f)->fd,(b),(n))!=(n)) { \
    ERR("Fewer bytes read then expected"); \
    return NULL; } /**< Helper define to check for errors. */
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
 #define READ(f,b,n)  if (fread((b),1,(n),(f)->fp)!=(n)) { \
    ERR("Fewer bytes read then expected"); \
    return NULL; } /**< Helper define to check for errors. */
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
 
 #undef DEBUG /* mucho spamo */
 #define DEBUG(str, args...)      do {;} while(0) /**< Hack to disable debugging. */
@@ -144,13 +149,13 @@ Packcache_t* pack_openCache( const char* packfile )
    /*
     * Open file.
     */
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
    cache->fd = open( packfile, O_RDONLY );
    if (cache->fd == -1) {
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
    cache->fp = fopen( packfile, "rb" );
    if (cache>fp == NULL) {
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
       ERR("Erroring opening %s: %s", packfile, strerror(errno));
       return NULL;
    }
@@ -204,11 +209,11 @@ void pack_closeCache( Packcache_t* cache )
    /*
     * Close file.
     */
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
    close( cache->fd );
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
    fclose( cache->fp );
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
 
    /*
     * Free memory.
@@ -240,7 +245,7 @@ Packfile_t* pack_openFromCache( Packcache_t* cache, const char* filename )
    for (i=0; i<cache->nindex; i++) {
       if (strcmp(cache->index[i], filename)==0) {
          /* Copy file. */
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
          file->fd = dup(cache->fd);
 #else
          file->fp = cache->fp;
@@ -252,12 +257,12 @@ Packfile_t* pack_openFromCache( Packcache_t* cache, const char* filename )
 
          /* Seek. */
          if (file->start) { /* go to the beginning of the file */
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
             if ((uint32_t)lseek( file->fd, file->start, SEEK_SET ) != file->start) {
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
             fseek( file->fp, file->start, SEEK_SET );
             if (errno) {
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
                ERR("Failure to seek to file start: %s", strerror(errno));
                return NULL;
             }
@@ -285,7 +290,7 @@ Packfile_t* pack_openFromCache( Packcache_t* cache, const char* filename )
  */
 static off_t getfilesize( const char* filename )
 {
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
    struct stat file;
 
    if (!stat( filename, &file ))
@@ -293,7 +298,7 @@ static off_t getfilesize( const char* filename )
 
    ERR( "Unable to get filesize of %s", filename );
    return 0;
-#else  /* not _POSIX_SOURCE */
+#else  /* not HAS_POSIX */
    long size;
    FILE* fp = fopen( filename, "rb" );
    if (fp == NULL) return 0;
@@ -304,7 +309,7 @@ static off_t getfilesize( const char* filename )
    fclose(fp);
 
    return size;
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
 }
 
 
@@ -321,7 +326,7 @@ int pack_check( const char* filename )
    
    buf = malloc(sizeof(magic));
 
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
    int fd = open( filename, O_RDONLY );
    if (fd == -1) {
       ERR("Erroring opening %s: %s", filename, strerror(errno));
@@ -336,7 +341,7 @@ int pack_check( const char* filename )
 
    ret = (memcmp(buf,&magic,sizeof(magic))==0) ? 0 : 1 ;
    close(fd);
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
    FILE* file = fopen( filename, "rb" );
    if (file == NULL) {
       ERR("Erroring opening '%s': %s", filename, strerror(errno));
@@ -352,7 +357,7 @@ int pack_check( const char* filename )
 
    ret = (memcmp(buf,&magic,sizeof(magic))==0) ? 0 : 1 ;
    fclose( file );
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
 
    free(buf);
 
@@ -360,15 +365,15 @@ int pack_check( const char* filename )
 }
 
 
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
 #define WRITE(b,n)    if (write(outfd,b,n)==-1) { \
    ERR("Error writing to file: %s", strerror(errno)); \
    free(buf); return -1; } /**< Macro to help check for errors. */
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
 #define WRITE(b,n)    if (fwrite(b,1,n,outf)==0) { \
    ERR("Error writing to file: %s", strerror(errno)); \
    free(buf); return -1; } /**< Macro to help check for errors. */
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
 /**
  * @brief Packages files into a packfile.
  *
@@ -380,12 +385,12 @@ int pack_check( const char* filename )
 int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles )
 {
    void *buf;
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
    struct stat file;
    int outfd, infd;
-#else /* _POSIX_SOURCE */
+#else /* HAS_POSIX */
    FILE *outf, *inf;
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
    uint32_t i;
    int namesize;
    uint32_t indexsize, pointer;
@@ -394,11 +399,11 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
 
    
    for (namesize=0,i=0; i < nfiles; i++) { /* make sure files exist before writing */
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
       if (stat(infiles[i], &file)) {
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
       if (getfilesize(infiles[i]) == 0) {
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
          ERR("File %s does not exist", infiles[i]);
          return -1;
       }
@@ -415,13 +420,13 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
    DEBUG("Index size is %d", indexsize );
 
    /* creates the output file */
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
    outfd = creat( outfile, PERMS );
    if (outfd == -1) {
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
    outf = fopen( outfile, "wb" );
    if (outf == NULL) {
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
       ERR("Unable to open %s for writing", outfile);
       return -1;
    }
@@ -455,32 +460,32 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
       WRITE( &bytes, 4 ); /* filesize */
       DEBUG("About to write file '%s' of %d bytes", infiles[i], bytes);
       md5_init(&md5);
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
       infd = open( infiles[i], O_RDONLY );
       while ((bytes = read( infd, buf, BLOCKSIZE ))) {
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
       inf = fopen( infiles[i], "rb" );
       while ((bytes = fread( buf, 1, BLOCKSIZE, inf ))) {
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
          WRITE( buf, bytes ); /* data */
          md5_append( &md5, buf, bytes );
       }
       md5_finish(&md5, md5val);
       WRITE( md5val, 16 );
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
       close(infd);
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
       fclose(inf);
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
       DEBUG("Wrote file '%s'", infiles[i]);
    }
    free(md5val);
 
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
    close( outfd );
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
    fclose( outf );
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
    free(buf);
 
    DEBUG("Packfile success\n\t%d files\n\t%d bytes", nfiles, (int)getfilesize(outfile));
@@ -507,13 +512,13 @@ Packfile_t* pack_open( const char* packfile, const char* filename )
    file = malloc(sizeof(Packfile_t));
    memset( file, 0, sizeof(Packfile_t) );
 
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
    file->fd = open( packfile, O_RDONLY );
    if (file->fd == -1) {
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
    file->fp = fopen( packfile, "rb" );
    if (file->fp == NULL) {
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
       ERR("Erroring opening %s: %s", filename, strerror(errno));
       return NULL;
    }
@@ -536,20 +541,20 @@ Packfile_t* pack_open( const char* packfile, const char* filename )
          DEBUG("'%s' found at %d", filename, file->start);
          break;
       }
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
       lseek( file->fd, 4, SEEK_CUR ); /* ignore the file location */
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
       fseek( file->fp, 4, SEEK_CUR );
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
    }
    
    if (file->start) { /* go to the beginning of the file */
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
       if ((uint32_t)lseek( file->fd, file->start, SEEK_SET ) != file->start) {
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
       fseek( file->fp, file->start, SEEK_SET );
       if (errno) {
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
          ERR("Failure to seek to file start: %s", strerror(errno));
          return NULL;
       }
@@ -585,11 +590,11 @@ ssize_t pack_read( Packfile_t* file, void* buf, size_t count )
       count = file->end - file->pos; /* can't go past end */
    if (count == 0) return 0;
 
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
    if ((bytes = read( file->fd, buf, count )) == -1) {
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
    if ((bytes = fread( buf, 1, count, file->fp)) == -1) {
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
       ERR("Error while reading file: %s", strerror(errno));
       return -1;
    }
@@ -616,7 +621,7 @@ off_t pack_seek( Packfile_t* file, off_t offset, int whence)
    DEBUG("attempting to seek offset: %d, whence: %d", offset, whence);
    off_t ret;
    switch (whence) {
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
       case SEEK_SET:
          if ((file->start + offset) > file->end) return -1;
          ret = lseek( file->fd, file->start + offset, SEEK_SET );
@@ -632,7 +637,7 @@ off_t pack_seek( Packfile_t* file, off_t offset, int whence)
          ret = lseek( file->fd, file->end - offset - 1, SEEK_SET );
          if (ret != ((off_t)file->end - offset)) return -1;
          break;
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
       case SEEK_SET:
          if ((file->start + offset) > file->end) return -1;
          ret = fseek( file->fp, file->start + offset, SEEK_SET );
@@ -648,7 +653,7 @@ off_t pack_seek( Packfile_t* file, off_t offset, int whence)
          ret = fseek( file->fp, file->end - offset, SEEK_SET );
          if (ret == -1) return -1;
          break;
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
 
       default:
          ERR("Whence is not one of SEEK_SET, SEEK_CUR or SEEK_END");
@@ -706,11 +711,11 @@ static void* pack_readfilePack( Packfile_t *file,
    md5_init(&md5);
    md5_append( &md5, buf, bytes );
    md5_finish(&md5, md5val);
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
    if ((bytes = read( file->fd, md5fd, 16 )) == -1)
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
    if ((bytes = fread( md5fd, 1, 16, file->fp )) == -1)
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
       WARN("Failure to read MD5, continuing anyways...");
    else if (memcmp( md5val, md5fd, 16 ))
       WARN("MD5 gives different value, possible memory corruption, continuing...");
@@ -781,13 +786,13 @@ char** pack_listfiles( const char* packfile, uint32_t* nfiles )
 
    *nfiles = 0;
 
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
    file.fd = open( packfile, O_RDONLY );
    if (file.fd == -1) {
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
    file.fp = fopen( packfile, "rb" );
    if (file.fp == NULL) {
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
       ERR("Erroring opening %s: %s", packfile, strerror(errno));
       return NULL;
    }
@@ -809,11 +814,11 @@ char** pack_listfiles( const char* packfile, uint32_t* nfiles )
       READ( &file, buf, 4 ); /* skip the location */
    }
    free(buf);
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
    close(file.fd);
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
    fclose(file.fp);
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
 
    return filenames;
 }
@@ -858,14 +863,14 @@ int pack_close( Packfile_t* file )
    int i;
 
    /* Close files. */
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
    i = close( file->fd );
-#else /* not _POSIX_SOURCE */
+#else /* not HAS_POSIX */
    if (file->flags & PACKFILE_FROMCACHE)
       i = 0;
    else
       i = fclose( file->fp );
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
 
    /* Free memory. */
    free(file);

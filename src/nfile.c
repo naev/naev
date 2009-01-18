@@ -13,17 +13,19 @@
 
 #include "nfile.h"
 
+#include "ncompat.h"
+
 #include <stdio.h> 
 #include <string.h>
 #include <stdarg.h>
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h> 
 #include <errno.h>
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
 
 #include "naev.h"
 #include "log.h"
@@ -45,12 +47,12 @@ char* nfile_basePath (void)
    char *home;
 
    if (naev_base[0] == '\0') {
-#if defined(LINUX) || defined(FREEBSD)
+#if HAS_UNIX
       home = getenv("HOME");
       snprintf(naev_base,PATH_MAX,"%s/.naev/",home);
-#else
-#error "Needs implementation."
-#endif /* LINUX */
+#else /* HAS_UNIX */
+#error "Feature needs implementation on this Operating System for NAEV to work."
+#endif /* HAS_UNIX */
    }
    
    return naev_base;
@@ -78,7 +80,7 @@ int nfile_dirMakeExist( const char* path, ... )
       va_end(ap);
    }
 
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
    struct stat buf;
 
    stat(file,&buf);
@@ -87,9 +89,9 @@ int nfile_dirMakeExist( const char* path, ... )
          WARN("Dir '%s' does not exist and unable to create", file);
          return -1;
       }
-#else /* _POSIX_SOURCE */
-#error "Needs implementation."
-#endif /* _POSIX_SOURCE */
+#else /* HAS_POSIX */
+#error "Feature needs implementation on this Operating System for NAEV to work."
+#endif /* HAS_POSIX */
 
    return 0;
 }
@@ -113,13 +115,13 @@ int nfile_fileExists( const char* path, ... )
       vsnprintf(file, PATH_MAX, path, ap);
       va_end(ap);
    }
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
    struct stat buf;
 
    if (stat(file,&buf)==0) /* stat worked, file must exist */
       return 1;
 
-#else /* _POSIX_SOURCE */
+#else /* HAS_POSIX */
    FILE *f;
 
    /* Try to open the file, C89 compliant, but not as precise as stat. */
@@ -128,7 +130,7 @@ int nfile_fileExists( const char* path, ... )
       fclose(f);
       return 1;
    }
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
    return 0;
 }
 
@@ -158,7 +160,7 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
       va_end(ap);
    }
 
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
    int i,j,k, n;
    DIR *d;
    struct dirent *dir;
@@ -245,9 +247,9 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    free(tfiles);
    free(tt);
 
-#else /* _POSIX_SOURCE */
-#error "Needs implementation."
-#endif /* _POSIX_SOURCE */
+#else /* HAS_POSIX */
+#error "Feature needs implementation on this Operating System for NAEV to work."
+#endif /* HAS_POSIX */
 
    /* found nothing */
    if ((*nfiles) == 0) {

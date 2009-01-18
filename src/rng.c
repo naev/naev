@@ -13,15 +13,17 @@
 
 #include "rng.h"
 
+#include "ncompat.h"
+
 #include <stdint.h>
 #include <math.h>
 #include <unistd.h>
 #include <time.h>
 #include <errno.h>
-#ifdef _POSIX_SOURCE
+#if HAS_POSIX
 #include <sys/time.h>
 #include <fcntl.h>
-#endif /* _POSIX_SOURCE */
+#endif /* HAS_POSIX */
 #include "SDL.h"
 
 #include "naev.h"
@@ -58,7 +60,7 @@ void rng_init (void)
    int need_init;
 
    need_init = 1; /* initialize by default */
-#ifdef LINUX
+#if HAS_LINUX
    int fd;
    fd = open("/dev/urandom", O_RDONLY); /* /dev/urandom is better then time seed */
    if (fd != -1) {
@@ -71,9 +73,9 @@ void rng_init (void)
    }
    else
       i = rng_timeEntropy();
-#else /* LINUX */
+#else /* HAS_LINUX */
    i = rng_timeEntropy();
-#endif /* LINUX */
+#endif /* HAS_LINUX */
 
    if (need_init)
       mt_initArray( i );
@@ -92,16 +94,16 @@ void rng_init (void)
 static uint32_t rng_timeEntropy (void)
 {
    int i;
-#if defined(_POSIX_SOURCE)
+#if HAS_POSIX
    struct timeval tv;
    gettimeofday( &tv, NULL );
    i = tv.tv_sec * 1000000 + tv.tv_usec;
-#elif defined(WIN32)
+#elif HAS_WIN32
    struct _timeb tb;
    _ftime( &tb );
    i = tb.time * 1000 + tb.millitm;
 #else
-#error "Needs implementation."
+#error "Feature needs implementation on this Operating System for NAEV to work."
 #endif
    return i;
 }

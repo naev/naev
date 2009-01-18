@@ -64,24 +64,7 @@ LDPNG   := $(shell libpng-config --libs)
 LDGL    := -lGL
 LDFLAGS := -lm $(LDLUA) $(LDCSPARSE) $(LDSDL) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
 
-
-# OS Stuff
-#
-# Linux stuff
-#
-ifeq ($(OS),LINUX)
-CFLAGS += -D_POSIX_SOURCE
-endif
-#
-# FreeBSD stuff
-#
-ifeq ($(OS),FREEBSD)
-CFLAGS += -D_POSIX_SOURCE -D__BSD_VISIBLE
-endif
-
-
 # Debug stuff
-
 ifdef DEBUG
 CFLAGS += -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -fstack-protector -fstack-protector-all -g -DDEBUG -DLUA_USE_APICHECK -std=c99 -ansi
 
@@ -96,12 +79,6 @@ endif # DEBUG_PARANOID
 ifeq ($(OS),LINUX)
 LDFLAGS += -rdynamic
 endif # LINUX
-#
-# FreeBSD stuff
-#
-ifeq ($(OS),FREEBSD)
-LDFLAGS += -rdynamic
-endif # FREEBSD
 
 else # DEBUG
 CFLAGS += -O2 -funroll-loops -pipe -std=c99 -ansi

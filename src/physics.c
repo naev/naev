@@ -188,7 +188,7 @@ double vect_dot( Vector2d* a, Vector2d* b )
 /*
  * S O L I D
  */
-#if defined(FREEBSD)
+#if HAS_FREEBSD
 /**
  * @brief Updates the solid's position using an euler integration.
  *
@@ -243,7 +243,7 @@ static void simple_update (Solid *obj, const double dt)
    vect_cset( &obj->vel, vx, vy );
    vect_cset( &obj->pos, px, py );
 }
-#endif /* defined(FREEBSD) */
+#endif /* HAS_FREEBSD */
 
 
 /**
@@ -271,7 +271,7 @@ static void simple_update (Solid *obj, const double dt)
  *  Therefore RK chops it up in chunks and actually creates a tiny curve
  *  instead of aproximating the curve for a tiny straight line.
  */
-#if !defined(FREEBSD)
+#if !HAS_FREEBSD
 #define RK4_MIN_H 0.01 /**< Minimal pass we want. */
 static void rk4_update (Solid *obj, const double dt)
 {
@@ -332,7 +332,7 @@ static void rk4_update (Solid *obj, const double dt)
    }
    vect_cset( &obj->pos, px, py );
 }
-#endif /* !defined(FREEBSD) */
+#endif /* !HAS_FREEBSD */
 
 
 /**
@@ -376,11 +376,11 @@ void solid_init( Solid* dest, const double mass, const double dir,
  * FreeBSD seems to have a bug with optimizations in rk4_update causing it to
  * eventually become NaN.
  */
-#if defined(FREEBSD)
+#if HAS_FREEBSD
    dest->update = simple_update;
-#else /* defined(FREEBSD) */
+#else /* HAS_FREEBSD */
    dest->update = rk4_update;
-#endif /* defined(FREEBSD) */
+#endif /* HAS_FREEBSD */
 }
 
 
