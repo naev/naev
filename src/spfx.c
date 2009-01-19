@@ -248,6 +248,10 @@ int spfx_load (void)
    /* Shrink back to minimum - shouldn't change ever. */
    spfx_effects = realloc(spfx_effects, sizeof(SPFX_Base) * spfx_neffects);
 
+   /* Clean up. */
+   xmlFreeDoc(doc);
+   free(buf);
+
 
    /*
     * Now initialize force feedback.
