@@ -509,6 +509,10 @@ static int spfx_hapticInit (void)
 #if SDL_VERSION_ATLEAST(1,3,0)
    SDL_HapticEffect *efx;
 
+   /* Haptic must be enabled. */
+   if (haptic == NULL)
+      return 0;
+
    efx = &haptic_rumbleEffect;
    memset( efx, 0, sizeof(SDL_HapticEffect) );
    efx->type = SDL_HAPTIC_SINE;
