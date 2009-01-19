@@ -76,15 +76,15 @@
 
 
 static int quit = 0; /**< For primary loop */
-static unsigned int time = 0; /**< used to calculate FPS and movement, in pause.c */
+static unsigned int time = 0; /**< used to calculate FPS and movement. */
 static char version[VERSION_LEN]; /**< Contains version. */
 static glTexture *loading; /**< Loading screen. */
 
 /* some defaults */
-int nosound = 0; /**< Disables sound when loading. */
-int show_fps = 1; /**< Shows fps - default yes */
-int max_fps = 0; /**< Default fps limit, 0 is no limit. */
-int indjoystick = -1; /**< Index of joystick to use, -1 is none. */
+int nosound       = 0; /**< Disables sound when loading. */
+int show_fps      = 1; /**< Shows fps - default yes */
+int max_fps       = 0; /**< Default fps limit, 0 is no limit. */
+int indjoystick   = -1; /**< Index of joystick to use, -1 is none. */
 char* namjoystick = NULL; /**< Name of joystick to use, NULL is none. */
 
 
