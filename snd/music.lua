@@ -20,6 +20,14 @@ function choose( str )
 
       choose_load()
 
+   elseif str == "intro" then
+
+      choose_intro()
+
+   elseif str == "credits" then
+
+      choose_credits()
+
    elseif str == "land" then
 
       choose_land()
@@ -52,9 +60,49 @@ function choose( str )
 end
 
 
+function checkIfPlayingOrStop( song )
+   if music.isPlaying() then
+      if music.current() ~= song then
+         music.stop()
+      end
+      return true
+   end
+   return false
+end
+
+
 -- Loading songs.
 function choose_load ()
-   music.load( "machina" )
+   load_song = "machina"
+   -- Don't play again if needed
+   if checkIfPlayingOrStop( load_song ) then
+      return
+   end
+   music.load( load_song )
+   music.play()
+end
+
+
+-- Intro music.
+function choose_intro ()
+   intro_song = "intro"
+   -- Don't play again if needed
+   if checkIfPlayingOrStop( intro_song ) then
+      return
+   end
+   music.load( intro_song )
+   music.play()
+end
+
+
+-- Credits music.
+function choose_credits ()
+   credits_song = "empire1"
+   -- Don't play again if needed
+   if checkIfPlayingOrStop( credits_song ) then
+      return
+   end
+   music.load( credits_song )
    music.play()
 end
 

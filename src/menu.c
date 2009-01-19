@@ -30,10 +30,12 @@
 #include "nebulae.h"
 #include "pause.h"
 #include "options.h"
+#include "intro.h"
+#include "music.h"
 
 
 #define MAIN_WIDTH      130 /**< Main menu width. */
-#define MAIN_HEIGHT     250 /**< Main menu height. */
+#define MAIN_HEIGHT     300 /**< Main menu height. */
 
 #define MENU_WIDTH      130 /**< Escape menu width. */
 #define MENU_HEIGHT     200 /**< Escape menu height. */
@@ -74,6 +76,7 @@ int menu_open = 0; /**< Stores the opened/closed menus. */
 void menu_main_close (void); /**< Externed in save.c */
 static void menu_main_load( unsigned int wid, char* str );
 static void menu_main_new( unsigned int wid, char* str );
+static void menu_main_credits( unsigned int wid, char* str );
 static void menu_main_exit( unsigned int wid, char* str );
 /* small menu */
 static void menu_small_close( unsigned int wid, char* str );
@@ -105,33 +108,61 @@ static void menu_options_close( unsigned int parent, char* str );
  */
 void menu_main (void)
 {
+   int offset_logo, offset_wdw, freespace;
    unsigned int bwid, wid;
    glTexture *tex;
 
+   /* Play load music. */
+   music_choose("load");
+
+   /* Load background and friends. */
    tex = gl_newImage( "gfx/NAEV.png", 0 );
    nebu_prep( 300., 0. ); /* Needed for nebulae to not spaz out */
+
+   /* Calculate Logo and window offset. */
+   freespace = SCREEN_H - tex->sh - MAIN_HEIGHT;
+   if (freespace < 0) { /* Not enough freespace, this can get ugly. */
+      offset_logo = SCREEN_W - tex->sh;
+      offset_wdw  = 0;
+   }
+   else {
+      /* We'll want a maximum seperation of 30 between logo and text. */
+      if (freespace/3 > 25) {
+         freespace -= 25;
+         offset_logo = -25;
+         offset_wdw  = -25 - tex->sh - 25;
+      }
+      /* Otherwise space evenly. */
+      else {
+         offset_logo = -freespace/3;
+         offset_wdw  = freespace/3;
+      }
+   }
 
    /* create background image window */
    bwid = window_create( "BG", -1, -1, SCREEN_W, SCREEN_H );
    window_addRect( bwid, 0, 0, SCREEN_W, SCREEN_H, "rctBG", &cBlack, 0 );
    window_addCust( bwid, 0, 0, SCREEN_W, SCREEN_H, "cstBG", 0,
          (void(*)(double,double,double,double)) nebu_render, NULL );
-   window_addImage( bwid, (SCREEN_W-tex->sw)/2., -50, "imgLogo", tex, 0 );
-   window_addText( bwid, 0., 20, SCREEN_W, 30., 1, "txtBG", NULL,
+   window_addImage( bwid, (SCREEN_W-tex->sw)/2., offset_logo, "imgLogo", tex, 0 );
+   window_addText( bwid, 0., 10, SCREEN_W, 30., 1, "txtBG", NULL,
          &cWhite, naev_version() );
 
    /* create menu window */
-   wid = window_create( "Main Menu", -1, -70-tex->sh,
+   wid = window_create( "Main Menu", -1, offset_wdw,
          MAIN_WIDTH, MAIN_HEIGHT );
-   window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*3,
+   window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*4,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnLoad", "Load Game", menu_main_load );
-   window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*2,
+   window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*3,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnNew", "New Game", menu_main_new );
-   window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20),
+   window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*2,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOptions", "Options", (void(*)(unsigned int,char*))menu_options );
+   window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20),
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnOptions", "Credits", menu_main_credits );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnExit", "Exit", menu_main_exit );
 
@@ -169,6 +200,18 @@ static void menu_main_new( unsigned int wid, char* str )
    (void) wid;
    menu_main_close();
    player_new();
+}
+/**
+ * @brief Function to exit the main menu and game.
+ *    @param str Unused.
+ */
+static void menu_main_credits( unsigned int wid, char* str )
+{
+   (void) str;
+   (void) wid;
+   intro_display( "AUTHORS", "credits" );
+   /* We'll need to start music again. */
+   music_choose("load");
 }
 /**
  * @brief Function to exit the main menu and game.

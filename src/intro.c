@@ -115,7 +115,7 @@ static void intro_cleanup (void)
  * @brief Displays the introduction sequence.
  *
  *    @brief text Path of text file to use.
- *    @brief mus Name of music to use.
+ *    @brief mus Type of music to use (run through music.lua).
  *    @return 0 on success.
  */
 int intro_display( const char *text, const char *mus )
@@ -138,10 +138,8 @@ int intro_display( const char *text, const char *mus )
    vel = INTRO_SPEED / density;  /* (char / s) * (pixel / char) = pixel / s */
 
    /* Change music to intro music. */
-   if (mus != NULL) {
-      music_load(mus);
-      music_play();
-   }
+   if (mus != NULL)
+      music_choose(mus);
 
    /* Prepare for intro loop. */
    x = 100.;
@@ -175,6 +173,9 @@ int intro_display( const char *text, const char *mus )
             default:
                break;
          }
+
+         /* Only thing we actually care about updating is music. */
+         music_update();
       }
    
       /* Increment position. */

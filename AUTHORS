@@ -3,8 +3,8 @@
 Core Developement Team
 ---------------------------------------
 
-	Edgar Simo <bobbens@gmail.com>
-		* Lead Developer
+   Edgar Simo <bobbens@gmail.com>
+      * Lead Developer
 
 
    Nikola Whallon <6.saturn.6@gmail.com>
@@ -15,36 +15,36 @@ Contributions
 ---------------------------------------
 
 
-	Vega Strike <http://vegastrike.sf.net>
-		* Ship Models
-		* Music
-		* Sounds
-		* Planet images
+   Vega Strike <http://vegastrike.sf.net>
+      * Ship Models
+      * Music
+      * Sounds
+      * Planet images
     Wouldn't have been possible without the Vega Strike team, although they
    didn't actively participate, by allowing me to use their data they did me
    a great favour and let me concentrate on the coding.
 
 
-	Joel Hans <wolorf@gmail.com>
-		* Planet Graphics
-		* Render Script
+   Joel Hans <wolorf@gmail.com>
+      * Planet Graphics
+      * Render Script
     Helped out when the project was starting.  Great morale booster.
-	
+   
 
-	Amir Taaki <genjix@gmail.com>
-	Rob Loach <http://robloach.net>
-		* SDL_collide
+   Amir Taaki <genjix@gmail.com>
+   Rob Loach <http://robloach.net>
+      * SDL_collide
     Although we don't use the SDL_collide library itself, it was inspirational
    for NAEV's own collision routines.
-	
+   
 
-	Pete Shinners <pete@shinners.org>
-		* SavePNG
+   Pete Shinners <pete@shinners.org>
+      * SavePNG
     Great function ripped straight out of pygame.  Works marvelously!
-	
-	
-	Aurore D. "Rore" <aurore.d@gmail.com>
-		* Planet gimp script
+   
+   
+   Aurore D. "Rore" <aurore.d@gmail.com>
+      * Planet gimp script
     Saved a lot of trouble by allowing us to quickly create space planet
    graphics.
 

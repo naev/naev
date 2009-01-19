@@ -54,7 +54,7 @@ static char music_situation[PATH_MAX]; /**< What situation music is in. */
  */
 static lua_State *music_lua = NULL; /**< The Lua music control state. */
 /* functions */
-static int music_runLua( char *situation );
+static int music_runLua( const char *situation );
 static int musicL_load( lua_State* L );
 static int musicL_play( lua_State* L );
 static int musicL_stop( lua_State* L );
@@ -131,7 +131,7 @@ void music_update (void)
  *    @param situation Situation in to choose music for.
  *    @return 0 on success.
  */
-static int music_runLua( char *situation )
+static int music_runLua( const char *situation )
 {
    if (music_disabled) return 0;
 
@@ -459,7 +459,7 @@ int lua_loadMusic( lua_State *L, int read_only )
  *    @param situation Choose a new music to play.
  *    @return 0 on success.
  */
-int music_choose( char* situation )
+int music_choose( const char* situation )
 {
    if (music_disabled) return 0;
 
