@@ -97,7 +97,7 @@ typedef struct Ship_ {
    /* graphics */
    glTexture *gfx_space; /**< Space sprite sheet. */
    glTexture *gfx_target; /**< Targetting window graphic. */
-   glTexture *gfx_comm; /**< Graphic for communication window. */
+   char* gfx_comm; /**< Name of graphic for communication. */
 
    /* GUI interface */
    char* gui; /**< Name of the GUI the ship uses by default. */
@@ -148,6 +148,7 @@ Ship** ship_getTech( int *n, const int* tech, const int techmax );
 char* ship_class( Ship* s );
 ShipClass ship_classFromString( char* str );
 int ship_basePrice( Ship* s );
+glTexture* ship_loadCommGFX( Ship* s );
 
 
 /*

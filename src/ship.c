@@ -327,6 +327,19 @@ int ship_basePrice( Ship* s )
 
 
 /**
+ * @brief Loads the ship's comm graphic.
+ *
+ * Must be freed afterwards.
+ */
+glTexture* ship_loadCommGFX( Ship* s )
+{
+   char buf[PATH_MAX];
+   snprintf( buf, PATH_MAX, SHIP_GFX"%s"SHIP_COMM SHIP_EXT, s->gfx_comm );
+   return gl_newImage( buf, 0 );
+}
+
+
+/**
  * @brief Extracts the ingame ship from an XML node.
  *
  *    @param temp Ship to load data into.
@@ -366,9 +379,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          temp->mangle  = 2.*M_PI;
          temp->mangle /= temp->gfx_space->sx * temp->gfx_space->sy;
 
-         /* Load the comm graphic. */
-         temp->gfx_comm = xml_parseTexture( node,
-               SHIP_GFX"%s"SHIP_COMM SHIP_EXT, 1, 1, 0);
+         /* Get the comm graphic for future loading. */
+         temp->gfx_comm = xml_getStrd(node);
 
          /* Load the target graphic. */
          xmlr_attr(node,"target",stmp);
@@ -611,8 +623,8 @@ void ships_free (void)
 
       /* Free graphics. */
       gl_freeTexture(s->gfx_space);
-      gl_freeTexture(s->gfx_comm);
       gl_freeTexture(ship_stack[i].gfx_target);
+      free(s->gfx_comm);
    }
    free(ship_stack);
    ship_stack = NULL;

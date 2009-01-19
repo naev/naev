@@ -20,6 +20,7 @@
 #include "rng.h"
 #include "nlua.h"
 #include "player.h"
+#include "opengl.h"
 
 
 #define BUTTON_WIDTH    80 /**< Button width. */
@@ -27,12 +28,14 @@
 
 
 static Pilot *comm_pilot = NULL; /**< Pilot currently talking to. */
+static glTexture *comm_graphic = NULL; /**< Pilot's graphic. */
 
 
 /*
  * Prototypes.
  */
 /* Static. */
+static void comm_close( unsigned int wid, char *unused );
 static void comm_bribe( unsigned int wid, char *unused );
 static unsigned int comm_getBribeAmount (void);
 static char* comm_getBribeString( char *str );
@@ -49,7 +52,7 @@ extern void ai_setPilot( Pilot *p ); /**< from ai.c */
 int comm_open( unsigned int pilot )
 {
    int x,y, w;
-   glTexture *logo, *gfx_comm;
+   glTexture *logo;
    char *name, *stand;
    unsigned int wid;
    glColour *c;
@@ -65,7 +68,7 @@ int comm_open( unsigned int pilot )
    }
 
    /* Get graphics and text. */
-   gfx_comm = comm_pilot->ship->gfx_comm;
+   comm_graphic = ship_loadCommGFX( comm_pilot->ship );
    logo = faction_logoSmall(comm_pilot->faction);
    name = comm_pilot->name;
    /* Get standing colour / text. */
@@ -83,36 +86,36 @@ int comm_open( unsigned int pilot )
       w += logo->w;
       y = MAX( y, logo->w );
    }
-   x = (gfx_comm->w - w) / 2;
+   x = (comm_graphic->w - w) / 2;
 
    /* Create the window. */
    wid = window_create( "Communication Channel", -1, -1,
-         20 + gfx_comm->w + 20 + BUTTON_WIDTH + 20, 30 + gfx_comm->h + y + 5 + 20 );
+         20 + comm_graphic->w + 20 + BUTTON_WIDTH + 20, 30 + comm_graphic->h + y + 5 + 20 );
 
    /* Create the ship image. */
-   window_addRect( wid, 20, -30, gfx_comm->w, gfx_comm->h + y + 5, "rctShip", &cGrey10, 1 );
-   window_addImage( wid, 20, -30, "imgShip", gfx_comm, 0 );
+   window_addRect( wid, 20, -30, comm_graphic->w, comm_graphic->h + y + 5, "rctShip", &cGrey10, 1 );
+   window_addImage( wid, 20, -30, "imgShip", comm_graphic, 0 );
 
    /* Faction logo. */
    if (logo != NULL) {
-      window_addImage( wid, x, -30 - gfx_comm->h - 5,
+      window_addImage( wid, x, -30 - comm_graphic->h - 5,
             "imgFaction", logo, 0 );
       x += logo->w + 10;
       y -= (logo->w - (gl_defFont.h*2 + 15)) / 2;
    }
    
    /* Name. */
-   window_addText( wid, x, -30 - gfx_comm->h - y + gl_defFont.h*2 + 10,
-         gfx_comm->w - x, 20, 0, "txtName",
+   window_addText( wid, x, -30 - comm_graphic->h - y + gl_defFont.h*2 + 10,
+         comm_graphic->w - x, 20, 0, "txtName",
          NULL, &cDConsole, name );
 
    /* Standing. */
-   window_addText( wid, x, -30 - gfx_comm->h - y + gl_defFont.h + 5,
-         gfx_comm->w - x, 20, 0, "txtStanding", NULL, c, stand );
+   window_addText( wid, x, -30 - comm_graphic->h - y + gl_defFont.h + 5,
+         comm_graphic->w - x, 20, 0, "txtStanding", NULL, c, stand );
 
    /* Buttons. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", "Close", window_close );
+         "btnClose", "Close", comm_close );
    window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnGreet", "Greet", NULL );
    if (!pilot_isFlag(comm_pilot, PILOT_BRIBED) && /* Not already bribed. */
@@ -125,6 +128,25 @@ int comm_open( unsigned int pilot )
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnRequest", "Request...", NULL );
 
    return 0;
+}
+
+
+/**
+ * @brief Closes the comm window.
+ *
+ *    @param wid ID of window calling the function.
+ *    @param unused Unused.
+ */
+static void comm_close( unsigned int wid, char *unused )
+{
+   /* Clean up a bit after ourselves. */
+   if (comm_graphic != NULL) {
+      gl_freeTexture(comm_graphic);
+      comm_graphic = NULL;
+   }
+   comm_pilot = NULL;
+   /* Close the window. */
+   window_close( wid, unused );
 }
 
 
