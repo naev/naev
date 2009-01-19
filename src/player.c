@@ -220,7 +220,7 @@ void player_new (void)
    if (player_newMake())
       return;
 
-   intro_display();
+   intro_display( "dat/intro", "intro" );
 
    /* Add the mission if found. */
    if (player_mission != NULL) {

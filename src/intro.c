@@ -42,14 +42,14 @@ static glFont intro_font; /**< Introduction font. */
 /*
  * Prototypes.
  */
-static int intro_load (void);
+static int intro_load( const char *text );
 static void intro_cleanup (void);
 
 
 /**
  * @brief Loads the intro stuff.
  */
-static int intro_load (void)
+static int intro_load( const char *text )
 {
    uint32_t intro_size;
    char *intro_buf;
@@ -57,7 +57,7 @@ static int intro_load (void)
    int mem;
 
    /* Load text. */
-   intro_buf = ndata_read( "dat/intro", &intro_size );
+   intro_buf = ndata_read( text, &intro_size );
    intro_length = intro_size; /* Length aproximation. */
 
    /* Create intro font. */
@@ -114,9 +114,11 @@ static void intro_cleanup (void)
 /**
  * @brief Displays the introduction sequence.
  *
+ *    @brief text Path of text file to use.
+ *    @brief mus Name of music to use.
  *    @return 0 on success.
  */
-int intro_display (void)
+int intro_display( const char *text, const char *mus )
 {
    int i, max;
    unsigned int tcur, tlast;
@@ -127,7 +129,7 @@ int intro_display (void)
    SDL_Event event;
 
    /* Load the introduction. */
-   if (intro_load() < 0)
+   if (intro_load(text) < 0)
       return -1;
 
    /* Calculate velocity. */
@@ -136,8 +138,10 @@ int intro_display (void)
    vel = INTRO_SPEED / density;  /* (char / s) * (pixel / char) = pixel / s */
 
    /* Change music to intro music. */
-   music_load("intro");
-   music_play();
+   if (mus != NULL) {
+      music_load(mus);
+      music_play();
+   }
 
    /* Prepare for intro loop. */
    x = 100.;

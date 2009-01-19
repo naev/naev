@@ -7,7 +7,7 @@
 #  define INTRO_H
 
 
-int intro_display (void);
+int intro_display( const char *text, const char *mus );
 
 
 #endif /* INTRO_H */
