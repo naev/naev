@@ -120,6 +120,7 @@ void player_targetHostile (void);
 void player_targetNext (void);
 void player_targetPrev (void);
 void player_targetNearest (void);
+void player_targetEscort( int prev );
 void player_secondaryNext (void);
 void player_secondaryPrev (void);
 void player_targetPlanet (void);

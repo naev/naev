@@ -1397,6 +1397,54 @@ void player_targetPrev (void)
 
 
 /**
+ * @brief Targets the pilot.
+ *
+ *    @param prev 1 if is cycling backwards.
+ */
+void player_targetEscort( int prev )
+{
+   int i;
+
+   /* Check if current target is an escort. */
+   for (i=0; i<player->nescorts; i++) {
+      if (player->target == player->escorts[i]) {
+
+         /* Cycle targets. */
+         if (prev)
+            player->target = (i > 0) ?
+                  player->escorts[i-1] : PLAYER_ID;
+         else
+            player->target = (i < player->nescorts-1) ?
+                  player->escorts[i+1] : PLAYER_ID;
+
+         break;
+      }
+   }
+
+   /* Not found in loop. */
+   if (i >= player->nescorts) {
+
+      /* Check to see if he actually has escorts. */
+      if (player->nescorts > 0) {
+
+         /* Cycle forward or backwards. */
+         if (prev)
+            player->target = player->escorts[player->nescorts-1];
+         else
+            player->target = player->escorts[0];
+      }
+      else
+         player->target = PLAYER_ID;
+   }
+
+
+   if (player->target != PLAYER_ID)
+      player_playSound( snd_target, 1 );
+}
+
+
+
+/**
  * @brief Player targets nearest pilot.
  */
 void player_targetNearest (void)
@@ -2021,5 +2069,4 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
    return 0;
 }
-
 

@@ -54,7 +54,7 @@ const char *keybindNames[] = {
    /* Secondary weapons. */
    "secondary", "secondary_next", "secondary_prev",
    /* Escorts. */
-   "e_attack", "e_hold", "e_return", "e_clear",
+   "e_targetNext", "e_targetPrev", "e_attack", "e_hold", "e_return", "e_clear",
    /* Space navigation. */
    "autonav", "target_planet", "land", "thyperspace", "starmap", "jump",
    /* Communication. */
@@ -88,6 +88,8 @@ const char *keybindDescription[] = {
    "Cycles through secondary weapons.",
    "Cycles backwards through secondary weapons.",
    /* Escorts. */
+   "Cycles through your escorts.",
+   "Cycles backwards through your escorts.",
    "Tells your escorts to attack your target.",
    "Tells your escorts to hold their positions.",
    "Tells your escorts to return to your ship hangars.",
@@ -170,6 +172,8 @@ void input_setDefault (void)
    input_setKeybind( "secondary_next", KEYBIND_KEYBOARD, SDLK_w, KMOD_NONE );
    input_setKeybind( "secondary_prev", KEYBIND_KEYBOARD, SDLK_w, KMOD_LCTRL );
    /* Escorts. */
+   input_setKeybind( "e_targetNext", KEYBIND_KEYBOARD, SDLK_e, KMOD_NONE );
+   input_setKeybind( "e_targetPrev", KEYBIND_KEYBOARD, SDLK_e, KMOD_LCTRL );
    input_setKeybind( "e_attack", KEYBIND_KEYBOARD, SDLK_f, KMOD_NONE );
    input_setKeybind( "e_hold", KEYBIND_KEYBOARD, SDLK_g, KMOD_NONE );
    input_setKeybind( "e_return", KEYBIND_KEYBOARD, SDLK_c, KMOD_LCTRL );
@@ -544,6 +548,10 @@ static void input_key( int keynum, double value, double kabs )
    /*
     * Escorts.
     */
+   } else if (INGAME() && NODEAD() && KEY("e_targetNext")) {
+      if (value==KEY_PRESS) player_targetEscort(0);
+   } else if (INGAME() && NODEAD() && KEY("e_targetPrev")) {
+      if (value==KEY_PRESS) player_targetEscort(1);
    } else if (INGAME() && NODEAD() && KEY("e_attack")) {
       if (value==KEY_PRESS) escorts_attack(player);
    } else if (INGAME() && NODEAD() && KEY("e_hold")) {

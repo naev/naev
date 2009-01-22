@@ -848,6 +848,26 @@ int pilot_dock( Pilot *p, Pilot *target )
    if (vect_dist(&p->solid->vel, &target->solid->vel) > 2*MIN_VEL_ERR)
       return -1;
 
+   /* Remove from pilot's escort list. */
+   for (i=0; i<target->nescorts; i++) {
+      if (target->escorts[i] == p->id)
+         break;
+   }
+   /* Not found as pilot's escorts. */
+   if (i >= target->nescorts)
+      return -1;
+   /* Free if last pilot. */
+   if (target->nescorts == 1) {
+      free(target->escorts);
+      target->escorts = NULL;
+      target->nescorts = 0;
+   }
+   else {
+      memmove( &target->escorts[i], &target->escorts[i+1],
+            sizeof(unsigned int) * p->nescorts-i-1 );
+      target->nescorts--;
+   }
+
    /* Check to see if target has an available bay. */
    for (i=0; i<target->noutfits; i++) {
       if (outfit_isFighterBay(target->outfits[i].outfit)) {

@@ -68,6 +68,8 @@ fullscreen = 1
 --board        = { type = "keyboard", key = "B" }
 
 -- Escorts.
+--e_targetNext = { type = "keyboard", key = "E" }
+--e_targetPrev = { type = "keyboard", key = "E", mod = "lctrl" }
 --e_attack     = { type = "keyboard", key = "F" }
 --e_hold       = { type = "keyboard", key = "G" }
 --e_return     = { type = "keyboard", key = "C", mod = "lctrl" }
