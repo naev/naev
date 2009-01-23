@@ -165,7 +165,7 @@ function land ()
       player.pay( reward )
       tk.msg( msg_title[1], string.format( msg_msg[1], reward ))
 
-      -- increase empire shipping mission counter
+      -- increase dvaered patrol mission counter
       n = var.peek("dv_patrol")
       if n ~= nil then
          var.push("dv_patrol", n+1)
