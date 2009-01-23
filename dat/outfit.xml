@@ -617,7 +617,7 @@
   </general>
   <specific type="turret dumb ammo">
    <gfx spin="0.3">empgrenade</gfx>
-   <sound>missile</sound>
+   <sound>grenade</sound>
    <spfx_shield>EmpS</spfx_shield>
    <spfx_armour>EmpM</spfx_armour>
    <duration>1.3</duration>
