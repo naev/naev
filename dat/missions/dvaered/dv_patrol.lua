@@ -165,6 +165,14 @@ function land ()
       player.pay( reward )
       tk.msg( msg_title[1], string.format( msg_msg[1], reward ))
 
+      -- increase empire shipping mission counter
+      n = var.peek("dv_patrol")
+      if n ~= nil then
+         var.push("dv_patrol", n+1)
+      else
+         var.push("dv_patrol", 1)
+      end      
+
       -- modify the faction standing
       if player.getFaction("Dvaered") < 70 then
          player.modFaction("Dvaered", rnd.rnd(1, num_systems/2) );
