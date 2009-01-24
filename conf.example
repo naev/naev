@@ -28,7 +28,7 @@ fullscreen = 1
 --maxfps = 60
 
 -- Input.
---afterburn = 3
+--afterburn_sensibility = 250 -- ms between accel taps to trigger afterburner
 
 -- Sound.
 --nosound = 1

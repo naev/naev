@@ -190,7 +190,9 @@ int conf_loadConfig ( const char* file )
       conf_loadInt("maxfps",max_fps);
 
       /* input */
-      conf_loadInt("afterburn",input_afterburnSensibility);
+      i = 250;
+      conf_loadInt("afterburn_sensibility",i);
+      input_afterburnSensibility = (i < 0) ? UINT_MAX : (unsigned int)i;
 
       /* 
        * sound
