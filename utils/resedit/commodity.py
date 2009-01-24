@@ -14,7 +14,13 @@ class Commodities:
    def loadCommodities(self, xmlfile=None):
       if xmlfile == None:
          xmlFile = self.commoditiesXML
-      self.commodities = data.load( xmlfile, "commodity", True )
+      temp = data.load( xmlfile, "commodity", True )
+      for t in temp:
+         try:
+            if temp[t]['price'] != None:
+               self.commodities[t] = temp[t]
+         except:
+            continue
      
    def data(self):
       return self.commodities
