@@ -192,7 +192,7 @@ int conf_loadConfig ( const char* file )
       /* input */
       i = 250;
       conf_loadInt("afterburn_sensibility",i);
-      input_afterburnSensibility = (i < 0) ? UINT_MAX : (unsigned int)i;
+      input_afterburnSensibility = (i < 0) ? 0 : (unsigned int)i;
 
       /* 
        * sound
