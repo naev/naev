@@ -65,6 +65,7 @@ static int pilotL_warp( lua_State *L );
 static int pilotL_broadcast( lua_State *L );
 static int pilotL_setFaction( lua_State *L );
 static int pilotL_setHostile( lua_State *L );
+static int pilotL_setFriendly( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    { "__eq", pilotL_eq },
    { "name", pilotL_name },
@@ -76,6 +77,7 @@ static const luaL_reg pilotL_methods[] = {
    { "broadcast", pilotL_broadcast },
    { "setFaction", pilotL_setFaction },
    { "setHostile", pilotL_setHostile },
+   { "setFriendly", pilotL_setFriendly },
    {0,0}
 }; /**< Pilot metatable methods. */
 
@@ -705,6 +707,29 @@ static int pilotL_setHostile( lua_State *L )
 
    /* Set as hostile. */
    pilot_setHostile(p);
+
+   return 0;
+}
+
+
+/**
+ * @ingroup META_PILOT
+ *
+ * @brief Sets the pilot as friendly to player.
+ * @luafunc setHostile()
+ */
+static int pilotL_setFriendly( lua_State *L )
+{
+   LuaPilot *lp;
+   Pilot *p;
+
+   /* Get the pilot. */
+   lp = lua_topilot(L,1);
+   p = pilot_get(lp->pilot);
+   if (p==NULL) return 0;
+
+   /* Remove hostile and mark as friendly. */
+   pilot_setFriendly(p);
 
    return 0;
 }

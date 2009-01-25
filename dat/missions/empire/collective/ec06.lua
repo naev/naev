@@ -110,7 +110,10 @@ function jump ()
          -- Add pilots
          for k,v in ipairs(emp_fleets) do
             spawn_vect:add( rnd.int(-offset,offset), rnd.int(-offset,offset) )
-            pilot.add( v, "def", spawn_vect )
+            pilots = pilot.add( v, "def", spawn_vect )
+            for k,v in ipairs(pilots) do
+               v:setFriendly()
+            end
          end
          -- Collective
          col_fleets = {}
@@ -127,6 +130,7 @@ function jump ()
             pilots = pilot.add( v, "def", spawn_vect )
             col_alive = col_alive + #pilots
             for k,v in ipairs(pilots) do
+               v:setHostile()
                hook.pilot( v, "disable", "col_dead" )
             end
          end
@@ -154,7 +158,10 @@ function jump ()
          -- Add pilots
          for k,v in ipairs(emp_fleets) do
             spawn_vect:add( rnd.int(-offset,offset), rnd.int(-offset,offset) )
-            pilot.add( v, "def", spawn_vect )
+            pilots = pilot.add( v, "def", spawn_vect )
+            for k,v in ipairs(pilot) do
+               v:setFriendly()
+            end
          end
          -- Collective
          col_fleets = {}
@@ -183,6 +190,7 @@ function jump ()
             -- Count amount created
             col_alive = col_alive + #pilots
             for k,v in ipairs(pilots) do
+               v:setHostile()
                hook.pilot( v, "disable", "col_dead" )
             end
          end

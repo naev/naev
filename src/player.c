@@ -1355,8 +1355,7 @@ void player_targetHostile (void)
          continue;
    
       /* Normal unbribed check. */
-      if (pilot_isFlag(pilot_stack[i],PILOT_HOSTILE) ||
-            areEnemies(FACTION_PLAYER,pilot_stack[i]->faction)) {
+      if (pilot_isHostile(pilot_stack[i])) {
          td = vect_dist(&pilot_stack[i]->solid->pos, &player->solid->pos);       
          if (!pilot_isDisabled(pilot_stack[i]) && ((tp==PLAYER_ID) || (td < d))) {
             d = td;

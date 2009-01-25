@@ -59,8 +59,9 @@
 #define PILOT_HASBEAMS     (1<<10) /**< Pilot has beam weapons. */
 /* dynamic */
 #define PILOT_HOSTILE      (1<<11) /**< Pilot is hostile to the player. */
-#define PILOT_COMBAT       (1<<12) /**< Pilot is engaged in combat. */
-#define PILOT_AFTERBURNER  (1<<13) /**< Pilot has his afterburner activated. */
+#define PILOT_FRIENDLY     (1<<12) /**< Pilot is friendly to the player. */
+#define PILOT_COMBAT       (1<<13) /**< Pilot is engaged in combat. */
+#define PILOT_AFTERBURNER  (1<<14) /**< Pilot has his afterburner activated. */
 #define PILOT_HYP_PREP     (1<<15) /**< Pilot is getting ready for hyperspace. */
 #define PILOT_HYP_BEGIN    (1<<16) /**< Pilot is starting engines. */
 #define PILOT_HYPERSPACE   (1<<17) /**< Pilot is in hyperspace. */
@@ -260,8 +261,6 @@ int pilot_getJumps( const Pilot* p );
 /*
  * misc
  */
-void pilot_setHostile( Pilot* p );
-void pilot_rmHostile( Pilot* p );
 void pilot_shoot( Pilot* p, const int secondary );
 void pilot_shootStop( Pilot* p, const int secondary );
 void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
@@ -328,6 +327,18 @@ void fleet_free (void);
  */
 void pilots_update( double dt );
 void pilots_render (void);
+
+
+/*
+ * faction
+ */
+void pilot_setHostile( Pilot *p );
+void pilot_rmHostile( Pilot *p );
+void pilot_setFriendly( Pilot *p );
+void pilot_rmFriendly( Pilot *p );
+int pilot_isHostile( const Pilot *p );
+int pilot_isNeutral( const Pilot *p );
+int pilot_isFriendly( const Pilot *p );
 
 
 /*

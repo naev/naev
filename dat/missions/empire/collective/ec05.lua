@@ -206,18 +206,21 @@ function add_escorts ()
       enter_vect:add( rnd.int(-50,50), rnd.int(-50,50) )
       paci = pilot.add("Empire Pacifier", "escort_player", enter_vect)
       paci = paci[1]
+      paci:setFriendly()
       hook.pilot(paci, "death", "paci_dead")
    end
    if esc_lancelot1 then
       enter_vect:add( rnd.int(-50,50), rnd.int(-50,50) )
       lance1 = pilot.add("Empire Lancelot", "escort_player", enter_vect)
       lance1 = lance1[1]
+      lance1:setFriendly()
       hook.pilot(lance1, "death", "lance1_dead")
    end
    if esc_lancelot2 then
       enter_vect:add( rnd.int(-50,50), rnd.int(-50,50) )
       lance2 = pilot.add("Empire Lancelot", "escort_player", enter_vect)
       lance2 = lance2[1]
+      lance2:setFriendly()
       hook.pilot(lance2, "death", "lance2_dead")
    end
 end

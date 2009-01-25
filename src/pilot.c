@@ -257,6 +257,50 @@ Fleet* fleet_get( const char* name )
 
 
 /**
+ * @brief Checks to see if pilot is hostile to the player.
+ *
+ *    @param p Player to see if is hostile.
+ *    @return 1 if pilot is hostile to the player.
+ */
+int pilot_isHostile( const Pilot *p )
+{
+   if (pilot_isFlag(p, PILOT_HOSTILE) ||
+         areEnemies(FACTION_PLAYER,p->faction))
+      return 1;
+   return 0;
+}
+
+
+/**
+ * @brief Checks to see if pilot is neutral to the player.
+ *
+ *    @param p Player to see if is neutral.
+ *    @return 1 if pilot is neutral to the player.
+ */
+int pilot_isNeutral( const Pilot *p )
+{
+   if (!pilot_isHostile(p) && !pilot_isFriendly(p))
+      return 1;
+   return 0;
+}
+
+
+/**
+ * @brief Checks to see if pilot is friendly to the player.
+ *
+ *    @param p Player to see if is friendly.
+ *    @return 1 if pilot is friendly to the player.
+ */
+int pilot_isFriendly( const Pilot *p )
+{
+   if (pilot_isFlag(p, PILOT_FRIENDLY) ||
+         areAllies(FACTION_PLAYER,p->faction))
+      return 1;
+   return 0;
+}
+
+
+/**
  * @brief Tries to turn the pilot to face dir.
  *
  * Sets the direction velocity property of the pilot's solid, does not
@@ -303,9 +347,9 @@ void pilot_setHostile( Pilot* p )
 
 
 /**
- * @brief Unmarks a pilot as neutral to player.
+ * @brief Unmarks a pilot as hostile to player.
  *
- *    @param p Pilot to mark as neutral to player.
+ *    @param p Pilot to mark as hostile to player.
  */
 void pilot_rmHostile( Pilot* p )
 {
@@ -317,6 +361,29 @@ void pilot_rmHostile( Pilot* p )
       if (player_enemies == 0)
          music_choose("ambient");
    }
+}
+
+
+/**
+ * @brief Marks pilot as friendly to player.
+ *
+ *    @param p Pilot to mark as friendly to player.
+ */
+void pilot_setFriendly( Pilot* p )
+{
+   pilot_rmHostile(p);
+   pilot_setFlag(p, PILOT_FRIENDLY);
+}
+
+
+/**
+ * @brief Unmarks a pilot as friendly to player.
+ *
+ *    @param p Pilot to mark as friendly to player.
+ */
+void pilot_rmFriendly( Pilot* p )
+{
+   pilot_rmFlag(p, PILOT_FRIENDLY);
 }
 
 

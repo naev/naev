@@ -72,7 +72,7 @@ int comm_open( unsigned int pilot )
    logo = faction_logoSmall(comm_pilot->faction);
    name = comm_pilot->name;
    /* Get standing colour / text. */
-   if (pilot_isFlag(comm_pilot, PILOT_HOSTILE)) {
+   if (pilot_isHostile(comm_pilot)) {
       stand = "Hostile";
       c = &cHostile;
    }
@@ -120,7 +120,7 @@ int comm_open( unsigned int pilot )
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnGreet", "Greet", NULL );
    if (!pilot_isFlag(comm_pilot, PILOT_BRIBED) && /* Not already bribed. */
          ((faction_getPlayer( comm_pilot->faction ) < 0) || /* Hostile. */
-            pilot_isFlag(comm_pilot, PILOT_HOSTILE)))
+            pilot_isHostile(comm_pilot)))
       window_addButton( wid, -20, 20 + 2*BUTTON_HEIGHT + 40,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", "Bribe", comm_bribe );
    else

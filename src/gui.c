@@ -306,8 +306,10 @@ void gui_renderTarget( double dt )
          c = &cInert;
       else if (pilot_isFlag(p,PILOT_BRIBED))
          c = &cNeutral;
-      else if (pilot_isFlag(p,PILOT_HOSTILE))
+      else if (pilot_isHostile(p))
          c = &cHostile;
+      else if (pilot_isFriendly(p))
+         c = &cFriend;
       else
          c = faction_getColour(p->faction);
 
@@ -835,7 +837,8 @@ static void gui_renderPilot( const Pilot* p )
       if (p->id == player->target) col = &cRadar_tPilot;
       else if (pilot_isDisabled(p)) col = &cInert;
       else if (pilot_isFlag(p,PILOT_BRIBED)) col = &cNeutral;
-      else if (pilot_isFlag(p,PILOT_HOSTILE)) col = &cHostile;
+      else if (pilot_isHostile(p)) col = &cHostile;
+      else if (pilot_isFriendly(p)) col = &cFriend;
       else col = faction_getColour(p->faction);
       ACOLOUR(*col, 1-interference_alpha); /**< Makes it much harder to see. */
 
