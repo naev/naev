@@ -66,7 +66,7 @@ extern char* namjoystick;
 /* from player.c */
 extern const char *keybindNames[]; /* keybindings */
 /* from input.c */
-extern unsigned int input_afterburnSensibility;
+extern unsigned int input_afterburnSensitivity;
 
 
 /*
@@ -191,8 +191,8 @@ int conf_loadConfig ( const char* file )
 
       /* input */
       i = 250;
-      conf_loadInt("afterburn_sensibility",i);
-      input_afterburnSensibility = (i < 0) ? 0 : (unsigned int)i;
+      conf_loadInt("afterburn_sensitivity",i);
+      input_afterburnSensitivity = (i < 0) ? 0 : (unsigned int)i;
       i = 0;
 
       /* 

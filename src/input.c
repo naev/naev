@@ -119,7 +119,7 @@ const char *keybindDescription[] = {
  * accel hacks
  */
 static unsigned int input_accelLast = 0; /**< Used to see if double tap */
-unsigned int input_afterburnSensibility = 250; /**< ms between taps to afterburn */
+unsigned int input_afterburnSensitivity = 250; /**< ms between taps to afterburn */
 
 
 /*
@@ -445,7 +445,7 @@ static void input_key( int keynum, double value, double kabs )
       /* double tap accel = afterburn! */
       t = SDL_GetTicks();
       if ((value==KEY_PRESS) && INGAME() && NOHYP() &&
-            (t-input_accelLast <= input_afterburnSensibility))
+            (t-input_accelLast <= input_afterburnSensitivity))
          player_afterburn();
       else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_AFTERBURNER))
          player_afterburnOver();
