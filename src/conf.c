@@ -193,6 +193,7 @@ int conf_loadConfig ( const char* file )
       i = 250;
       conf_loadInt("afterburn_sensibility",i);
       input_afterburnSensibility = (i < 0) ? 0 : (unsigned int)i;
+      i = 0;
 
       /* 
        * sound
