@@ -1145,6 +1145,10 @@ static void pilot_update( Pilot* pilot, const double dt )
       pilot_rmFlag(pilot, PILOT_AFTERBURNER); /* Break efterburner */
    pilot->energy += pilot->energy_regen * dt;
 
+   /* Player damage decay. */
+   if (pilot->player_damage > 0.)
+      pilot->player_damage -= dt * PILOT_HOSTILE_DECAY;
+
    /* check limits */
    if (pilot->armour > pilot->armour_max)pilot->armour = pilot->armour_max;
    if (pilot->shield > pilot->shield_max) pilot->shield = pilot->shield_max;

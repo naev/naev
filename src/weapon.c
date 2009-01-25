@@ -39,6 +39,7 @@
 #define WEAPON_STATUS_JAMMED     1 /**< Got jammed */
 #define WEAPON_STATUS_UNJAMMED   2 /**< Survived jamming */
 
+
 /*
  * opengl stuff.
  */
@@ -673,6 +674,8 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
 {
    Pilot *parent;
    int spfx;
+   double damage;
+   DamageType dtype;
 
    /* Choose spfx. */
    if (p->shield > 0.)
@@ -680,18 +683,20 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    else
       spfx = outfit_spfxArmour(w->outfit);
 
+   /* Get general details. */
+   parent = pilot_get(w->parent);
+   damage = outfit_damage(w->outfit);
+   dtype = outfit_damageType(w->outfit);
+
+   /* Update damage. */
+   if ((parent != NULL) && (parent->faction == FACTION_PLAYER))
+      p->player_damage += damage / (p->shield_max + p->armour_max);
+
    /* inform the ai it has been attacked, useless if player */
-   if (!pilot_isPlayer(p)) {
-      if ((player != NULL) && (w->parent == player->id) &&
-            ((player->target == p->id) || (RNGF() < 0.33))) { /* 33% chance */
-         parent = pilot_get(w->parent);
-         if ((parent != NULL) && (parent->faction == FACTION_PLAYER) &&
-               (!pilot_isHostile(p) || (RNGF() < 0.5))) { /* 50% chance */
-            faction_modPlayer( p->faction, -1. ); /* slowly lower faction */
-         }
-         pilot_setHostile(p);
-         pilot_rmFlag( p, PILOT_BRIBED );
-      }
+   if (!pilot_isPlayer(p) && (pilot_isPlayer(parent)) &&
+         ((player->target == p->id) || (p->player_damage > PILOT_HOSTILE_THRESHOLD))) {
+      pilot_setHostile(p);
+      pilot_rmFlag( p, PILOT_BRIBED );
       ai_attacked( p, w->parent );
       spfx_add( spfx, pos->x, pos->y,
             VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );
@@ -701,8 +706,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
             VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_FRONT );
 
    /* inform the ship that it should take some damage */
-   pilot_hit( p, w->solid, w->parent, 
-         outfit_damageType(w->outfit), outfit_damage(w->outfit) );
+   pilot_hit( p, w->solid, w->parent, dtype, damage );
    /* no need for the weapon particle anymore */
    weapon_destroy(w,layer);
 }
@@ -723,6 +727,8 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    (void) layer;
    Pilot *parent;
    int spfx;
+   double damage;
+   DamageType dtype;
 
    /* Choose spfx. */
    if (p->shield > 0.)
@@ -730,19 +736,23 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    else
       spfx = outfit_spfxArmour(w->outfit);
 
+   /* Get general details. */
+   parent = pilot_get(w->parent);
+   damage = outfit_damage(w->outfit) * dt;
+   dtype = outfit_damageType(w->outfit);
+
+   /* Update damage. */
+   if ((parent != NULL) && (parent->faction == FACTION_PLAYER))
+      p->player_damage += damage / (p->shield_max + p->armour_max);
+
    /* inform the ai it has been attacked, useless if player */
    if (!pilot_isPlayer(p)) {
-      if ((player != NULL) && (w->parent == player->id) &&
-            ((player->target == p->id) || (RNGF() < 0.30*dt))) { /* 30% chance per second */
-         parent = pilot_get(w->parent);
-         if ((parent != NULL) && (parent->faction == FACTION_PLAYER) &&
-               (!pilot_isHostile(p) || (RNGF() < 0.50*dt))) { /* 50% chance */
-            faction_modPlayer( p->faction, -1. ); /* slowly lower faction */
-         }
+      if (pilot_isPlayer(parent) &&
+            ((player->target == p->id) || (p->player_damage > PILOT_HOSTILE_THRESHOLD))) {
          pilot_setHostile(p);
          pilot_rmFlag( p, PILOT_BRIBED );
+         ai_attacked( p, w->parent );
       }
-      ai_attacked( p, w->parent );
 
       if (w->lockon == -1.) { /* Code to signal create explosions. */
          spfx_add( spfx, pos[0].x, pos[0].y,
@@ -761,8 +771,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    }
 
    /* inform the ship that it should take some damage */
-   pilot_hit( p, w->solid, w->parent, 
-         outfit_damageType(w->outfit), outfit_damage(w->outfit)*dt );
+   pilot_hit( p, w->solid, w->parent, dtype, damage );
 }
 
 

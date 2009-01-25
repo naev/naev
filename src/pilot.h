@@ -45,6 +45,11 @@
 #define PILOT_HOOK_JUMP    4 /**< Pilot jumped. */
 
 
+/* damage */
+#define PILOT_HOSTILE_THRESHOLD  0.09 /**< Point at which pilot becomes hostile. */
+#define PILOT_HOSTILE_DECAY      0.005 /**< Rate at which hostility decays. */
+
+
 /* flags */
 #define pilot_isFlag(p,f)  ((p)->flags & (f)) /**< Checks if flag f is set on pilot p. */
 #define pilot_setFlag(p,f) ((p)->flags |= (f)) /**< Sets flag f on pilot p. */
@@ -189,6 +194,8 @@ typedef struct Pilot_ {
    double ptimer; /**< generic timer for internal pilot use */
    int lockons; /**< Stores how many seeking weapons are targetting pilot */
    int *mounted; /**< Number of mounted outfits on the mount. */
+   double player_damage; /**< Accumulates damage done by player for hostileness.
+                              In per one of max shield + armour. */
 
    /* Hook attached to the pilot */
    int hook_type[PILOT_HOOKS]; /**< Type of the hook attached to the pilot. */
