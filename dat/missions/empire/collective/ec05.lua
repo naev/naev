@@ -184,6 +184,7 @@ function final_talk ()
 
       -- ESS Trinity becomes collective now.
       trinity:setFaction("Collective")
+      trinity:setHostile()
 
       final_fight = 3
       misn.timerStart( "final_talk", rnd.int( 4000, 5000 ))
@@ -196,7 +197,10 @@ end
 
 -- Calls help for the ESS Trinity.
 function call_drones ()
-   pilot.add("Collective Sml Swarm")
+   pilots = pilot.add("Collective Sml Swarm")
+   for k,v in ipairs(pilots) do
+      v:setHostile()
+   end
 end
 
 
