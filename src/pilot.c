@@ -1148,6 +1148,8 @@ static void pilot_update( Pilot* pilot, const double dt )
    /* Player damage decay. */
    if (pilot->player_damage > 0.)
       pilot->player_damage -= dt * PILOT_HOSTILE_DECAY;
+   else
+      pilot->player_damage = 0.;
 
    /* check limits */
    if (pilot->armour > pilot->armour_max)pilot->armour = pilot->armour_max;
