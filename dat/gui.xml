@@ -4,18 +4,18 @@
   <offset x="0" y="0" />
   <radar type="circle" w="82" x="83" y="90" />
   <health>
-   <shield w="103" h="7" x="68" y="185" />
-   <armour w="103" h="7" x="68" y="199" />
-   <energy w="0" h="0" x="97" y="177">minimal_energy</energy>
-   <fuel w="0" h="0" x="95" y="78">minimal_fuel</fuel>
+   <shield alpha="0.70" w="103" h="7" x="68" y="185" />
+   <armour alpha="0.70" w="103" h="7" x="68" y="199" />
+   <energy alpha="0.70" w="0"   h="0" x="97" y="177"  >minimal_energy</energy>
+   <fuel   alpha="0.70" w="0"   h="0" x="95" y="78"   >minimal_fuel</fuel>
   </health>
-  <nav w="110" h="40" x="60" y="220" />
+  <nav    w="110" h="40" x="60" y="220" />
   <weapon w="110" h="32" x="60" y="274" />
   <target>
-   <gfx x="55" y="343" /> 
-   <name x="65" y="330" />
+   <gfx     x="55" y="343" /> 
+   <name    x="65" y="330" />
    <faction x="65" y="343" />
-   <health x="65" y="430" />
+   <health  x="65" y="430" />
   </target>
   <misc w="110" h="134" x="60" y="460" />
  </gui>

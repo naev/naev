@@ -107,6 +107,13 @@ typedef struct Rect_ {
    double h; /**< Height. */
 } Rect;
 
+
+typedef struct HealthBar_ {
+   Rect rect;
+   glColour col;
+   glTexture *gfx;
+} HealthBar;
+
 /**
  * @struct GUI
  *
@@ -126,14 +133,10 @@ typedef struct GUI_ {
    /* Navigation. */
    Rect nav; /**< Navigation computer. */
    /* Health. */
-   Rect shield; /**< Shield bar. */
-   glTexture *gfx_shield; /**< Shield bar texture if applicable. */
-   Rect armour; /**< Armour bar. */
-   glTexture *gfx_armour; /**< Armour bar texture if applicable. */
-   Rect energy; /**< Energy bar. */
-   glTexture *gfx_energy; /**< Energy bar texture if applicable. */
-   Rect fuel; /**< Fuel bar. */
-   glTexture *gfx_fuel; /**< Fuel bar texture if applicable. */
+   HealthBar shield; /**< Shield bar. */
+   HealthBar armour; /**< Armour bar. */
+   HealthBar energy; /**< Energy bar. */
+   HealthBar fuel; /**< Fuel bar. */
    /* Weapon. */
    Rect weapon; /**< Weapon targetting system. */
    /* Targetting. */
@@ -192,13 +195,14 @@ static void rect_parseParam( const xmlNodePtr parent,
       char *name, double *param );
 static void rect_parse( const xmlNodePtr parent,
       double *x, double *y, double *w, double *h );
+static int gui_parseBar( xmlNodePtr parent, HealthBar *bar, const glColour *col );
 static int gui_parse( const xmlNodePtr parent, const char *name );
+static void gui_cleanupBar( HealthBar *bar );
 /* Render GUI. */
 static void gui_renderRadar( double dt );
 static void gui_renderMessages( double dt );
 static void gui_renderPilot( const Pilot* p );
-static void gui_renderHealth( const glColour* c,
-      const Rect* r, const glTexture *tex, const double w );
+static void gui_renderHealth( const HealthBar *bar, const double w );
 static void gui_renderInterference( double dt );
 
 
@@ -433,14 +437,10 @@ void gui_render( double dt )
    /*
     * health
     */
-   gui_renderHealth( &cShield,  &gui.shield, gui.gfx_shield,
-         player->shield / player->shield_max );
-   gui_renderHealth( &cArmour, &gui.armour, gui.gfx_armour,
-         player->armour / player->armour_max );
-   gui_renderHealth( &cEnergy, &gui.energy, gui.gfx_energy,
-         player->energy / player->energy_max );
-   gui_renderHealth( &cFuel, &gui.fuel, gui.gfx_fuel,
-         player->fuel / player->fuel_max );
+   gui_renderHealth( &gui.shield, player->shield / player->shield_max );
+   gui_renderHealth( &gui.armour, player->armour / player->armour_max );
+   gui_renderHealth( &gui.energy, player->energy / player->energy_max );
+   gui_renderHealth( &gui.fuel,   player->fuel / player->fuel_max );
 
 
    /* 
@@ -853,22 +853,24 @@ static void gui_renderPilot( const Pilot* p )
 
 /**
  * @brief Renders a health bar.
+ *
+ *    @param bar Health bar to render.
+ *    @param w Width of the health bar.
  */
-static void gui_renderHealth( const glColour* c,
-      const Rect* r, const glTexture *tex, const double w )
+static void gui_renderHealth( const HealthBar *bar, const double w )
 {
    double x,y, sx,sy, tx,ty;
 
    /* Set the colour. */
-   COLOUR(*c); 
+   COLOUR(bar->col); 
 
    /* Just create a bar. */
-   if (tex == NULL) {
+   if (bar->gfx == NULL) {
       /* Set the position values. */
-      x = r->x - SCREEN_W/2.;
-      y = r->y - SCREEN_H/2.;
-      sx = w * r->w;
-      sy = r->h;
+      x = bar->rect.x - SCREEN_W/2.;
+      y = bar->rect.y - SCREEN_H/2.;
+      sx = w * bar->rect.w;
+      sy = bar->rect.h;
 
       glBegin(GL_QUADS);
          glVertex2d( x, y );
@@ -880,18 +882,17 @@ static void gui_renderHealth( const glColour* c,
    /* Render the texture. */
    else {
       /* Set the position values. */
-      x = r->x - SCREEN_W/2.;
-      y = r->y - SCREEN_H/2. + tex->sh;
-      sx = w * tex->sw;
-      sy = tex->sh;
-      tx = tex->sw / tex->rw;
-      ty = tex->sh / tex->rh;
+      x = bar->rect.x - SCREEN_W/2.;
+      y = bar->rect.y - SCREEN_H/2. + bar->gfx->sh;
+      sx = w * bar->gfx->sw;
+      sy = bar->gfx->sh;
+      tx = bar->gfx->sw / bar->gfx->rw;
+      ty = bar->gfx->sh / bar->gfx->rh;
 
       /* Draw the image. */
       glEnable(GL_TEXTURE_2D);
-      glBindTexture( GL_TEXTURE_2D, tex->texture);
+      glBindTexture( GL_TEXTURE_2D, bar->gfx->texture);
       glBegin(GL_QUADS);
-         COLOUR(*c); 
 
          glTexCoord2d( 0., ty );
          glVertex2d( x, y );
@@ -1119,6 +1120,39 @@ static void gui_createInterference (void)
 }
 
 
+/**
+ * @brief Parses a healthbar.
+ *
+ *    @param parent Parent node of the healthbar.
+ *    @param bar Bar to load into.
+ *    @param col Default colour to use.
+ */
+static int gui_parseBar( xmlNodePtr parent, HealthBar *bar, const glColour *col )
+{
+   char *tmp, buf[PATH_MAX];
+
+   /* Parse the rectangle. */
+   rect_parse( parent, &bar->rect.x, &bar->rect.y,
+         &bar->rect.w, &bar->rect.h );
+
+   /* Load the colour. */
+   memcpy( &bar->col, col, sizeof(glColour) );
+   xmlr_attr( parent, "alpha", tmp );
+   if (tmp != NULL) {
+      bar->col.a = atof(tmp);
+      free(tmp);
+   }
+
+   /* Check for graphics. */
+   tmp = xml_get(parent);
+   if (tmp != NULL) {
+      snprintf( buf, PATH_MAX, GUI_GFX"%s.png", tmp );
+      bar->gfx = gl_newImage( buf, 0 );
+   }
+
+   return 0;
+}
+
 #define RELATIVIZE(a)   \
 {(a).x+=VX(gui.frame); (a).y=VY(gui.frame)+gui.gfx_frame->h-(a).y;}
 /**< Converts a rect to absolute coords. */
@@ -1218,44 +1252,20 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
          cur = node->children;
          do {
             if (xml_isNode(cur,"shield")) {
-               rect_parse( cur, &gui.shield.x, &gui.shield.y,
-                     &gui.shield.w, &gui.shield.h );
-               tmp = xml_get(cur);
-               if (tmp != NULL) {
-                  snprintf( buf, PATH_MAX, GUI_GFX"%s.png", tmp );
-                  gui.gfx_shield = gl_newImage( buf, 0 );
-               }
-               RELATIVIZE(gui.shield);
+               gui_parseBar( cur, &gui.shield, &cShield );
+               RELATIVIZE(gui.shield.rect);
             }
             if (xml_isNode(cur,"armour")) {
-               rect_parse( cur, &gui.armour.x, &gui.armour.y,
-                     &gui.armour.w, &gui.armour.h );
-               tmp = xml_get(cur);
-               if (tmp != NULL) {
-                  snprintf( buf, PATH_MAX, GUI_GFX"%s.png", tmp );
-                  gui.gfx_armour = gl_newImage( buf, 0 );
-               }
-               RELATIVIZE(gui.armour);
+               gui_parseBar( cur, &gui.armour, &cArmour );
+               RELATIVIZE(gui.armour.rect);
             }
             if (xml_isNode(cur,"energy")) {
-               rect_parse( cur, &gui.energy.x, &gui.energy.y,
-                     &gui.energy.w, &gui.energy.h );
-               tmp = xml_get(cur);
-               if (tmp != NULL) {
-                  snprintf( buf, PATH_MAX, GUI_GFX"%s.png", tmp );
-                  gui.gfx_energy = gl_newImage( buf, 0 );
-               }
-               RELATIVIZE(gui.energy);
+               gui_parseBar( cur, &gui.energy, &cEnergy );
+               RELATIVIZE(gui.energy.rect);
             }
             if (xml_isNode(cur,"fuel")) {
-               rect_parse( cur, &gui.fuel.x, &gui.fuel.y,
-                     &gui.fuel.w, &gui.fuel.h );
-               tmp = xml_get(cur);
-               if (tmp != NULL) {
-                  snprintf( buf, PATH_MAX, GUI_GFX"%s.png", tmp );
-                  gui.gfx_fuel = gl_newImage( buf, 0 );
-               }
-               RELATIVIZE(gui.fuel);
+               gui_parseBar( cur, &gui.fuel, &cFuel );
+               RELATIVIZE(gui.fuel.rect);
             }
          } while (xml_nextNode(cur));
       }
@@ -1317,6 +1327,18 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
 
 
 /**
+ * @brief Cleans up a health bar.
+ */
+static void gui_cleanupBar( HealthBar *bar )
+{
+   if (bar->gfx != NULL) {
+      gl_freeTexture( bar->gfx );
+      bar->gfx = NULL;
+   }
+}
+
+
+/**
  * @brief Cleans up the GUI.
  */
 void gui_cleanup (void)
@@ -1337,22 +1359,11 @@ void gui_cleanup (void)
       gui.gfx_targetPlanet = NULL;
    }
    /* Health textures. */
-   if (gui.gfx_shield != NULL) {
-      gl_freeTexture(gui.gfx_shield);
-      gui.gfx_shield = NULL;
-   }
-   if (gui.gfx_armour != NULL) {
-      gl_freeTexture(gui.gfx_armour);
-      gui.gfx_armour = NULL;
-   }
-   if (gui.gfx_energy != NULL) {
-      gl_freeTexture(gui.gfx_energy);
-      gui.gfx_energy = NULL;
-   }
-   if (gui.gfx_fuel != NULL) {
-      gl_freeTexture(gui.gfx_fuel);
-      gui.gfx_fuel = NULL;
-   }
+   gui_cleanupBar( &gui.shield );
+   gui_cleanupBar( &gui.armour );
+   gui_cleanupBar( &gui.energy );
+   gui_cleanupBar( &gui.fuel );
+   /* Interference. */
    for (i=0; i<INTERFERENCE_LAYERS; i++) {
       if (gui.radar.interference[i] != NULL) {
          gl_freeTexture(gui.radar.interference[i]);
