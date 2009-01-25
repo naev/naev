@@ -147,6 +147,24 @@
    <stars>500</stars>
   </general>
  </ssys>
+ <ssys name="Sirou">
+  <fleets/>
+  <jumps>
+   <jump>Shakar</jump>
+   <jump>Gamma Polaris</jump>
+  </jumps>
+  <pos>
+   <y>-237</y>
+   <x>-45</x>
+  </pos>
+  <planets/>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
+   <stars>100</stars>
+  </general>
+ </ssys>
  <ssys name="NGC-7690">
   <fleets>
    <fleet chance="50">Pirate Hyena</fleet>
@@ -241,6 +259,7 @@
    <jump>Vlexon</jump>
    <jump>Draygar</jump>
    <jump>Torg</jump>
+   <jump>Gamma Polaris</jump>
    <jump>Goddard</jump>
   </jumps>
   <pos>
@@ -281,33 +300,67 @@
    <stars>120</stars>
   </general>
  </ssys>
- <ssys name="Dune">
+ <ssys name="Arcanis">
   <fleets>
-   <fleet chance="60">Trader Llama</fleet>
-   <fleet chance="60">Trader Mule</fleet>
-   <fleet chance="30">Pirate Admonisher</fleet>
-   <fleet chance="20">Pirate Hyena Pack</fleet>
-   <fleet chance="20">Pirate Vendetta</fleet>
+   <fleet chance="30">Dvaered Ancestor</fleet>
+   <fleet chance="30">Dvaered Vendetta</fleet>
+   <fleet chance="20">Empire Pacifier</fleet>
+   <fleet chance="20">FLF Sml Force</fleet>
+   <fleet chance="20">FLF Pacifier</fleet>
   </fleets>
   <jumps>
-   <jump>Coriolis</jump>
-   <jump>NGC-7789</jump>
-   <jump>Eridani</jump>
-   <jump>NGC-7693</jump>
-   <jump>Alteris</jump>
+   <jump>NGC-8037</jump>
+   <jump>Tau Prime</jump>
+   <jump>Zylex</jump>
+   <jump>Raelid</jump>
+   <jump>Sigur</jump>
   </jumps>
   <pos>
-   <y>90</y>
-   <x>120</x>
+   <y>-57</y>
+   <x>333</x>
+  </pos>
+  <planets/>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>200</interference>
+   <nebulae volatility="0">200</nebulae>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="Shakar">
+  <fleets>
+   <fleet chance="50">Empire Admonisher</fleet>
+   <fleet chance="50">Empire Lancelot</fleet>
+   <fleet chance="50">Empire Lancelot</fleet>
+   <fleet chance="50">Trader Koala</fleet>
+   <fleet chance="50">Trader Koala</fleet>
+   <fleet chance="50">Trader Llama</fleet>
+   <fleet chance="50">Trader Llama</fleet>
+   <fleet chance="30">Trader Mule</fleet>
+   <fleet chance="30">Trader Mule</fleet>
+   <fleet chance="30">Pirate Vendetta</fleet>
+   <fleet chance="30">Pirate Admonisher</fleet>
+   <fleet chance="30">Pirate Ancestor</fleet>
+   <fleet chance="70">Empire Pacifier</fleet>
+  </fleets>
+  <jumps>
+   <jump>Borla</jump>
+   <jump>Sirou</jump>
+   <jump>Goddard</jump>
+   <jump>Gamma Polaris</jump>
+  </jumps>
+  <pos>
+   <y>-140</y>
+   <x>-47</x>
   </pos>
   <planets>
-   <planet>Arrakis</planet>
+   <planet>Nova Shakar</planet>
   </planets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
    <nebulae volatility="0">0</nebulae>
-   <stars>300</stars>
+   <stars>500</stars>
   </general>
  </ssys>
  <ssys name="NGC-7968">
@@ -536,31 +589,33 @@
    <stars>300</stars>
   </general>
  </ssys>
- <ssys name="Arcanis">
+ <ssys name="Dune">
   <fleets>
-   <fleet chance="30">Dvaered Ancestor</fleet>
-   <fleet chance="30">Dvaered Vendetta</fleet>
-   <fleet chance="20">Empire Pacifier</fleet>
-   <fleet chance="20">FLF Sml Force</fleet>
-   <fleet chance="20">FLF Pacifier</fleet>
+   <fleet chance="60">Trader Llama</fleet>
+   <fleet chance="60">Trader Mule</fleet>
+   <fleet chance="30">Pirate Admonisher</fleet>
+   <fleet chance="20">Pirate Hyena Pack</fleet>
+   <fleet chance="20">Pirate Vendetta</fleet>
   </fleets>
   <jumps>
-   <jump>NGC-8037</jump>
-   <jump>Tau Prime</jump>
-   <jump>Zylex</jump>
-   <jump>Raelid</jump>
-   <jump>Sigur</jump>
+   <jump>Coriolis</jump>
+   <jump>NGC-7789</jump>
+   <jump>Eridani</jump>
+   <jump>NGC-7693</jump>
+   <jump>Alteris</jump>
   </jumps>
   <pos>
-   <y>-57</y>
-   <x>333</x>
+   <y>90</y>
+   <x>120</x>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Arrakis</planet>
+  </planets>
   <general>
    <asteroids>0</asteroids>
-   <interference>200</interference>
-   <nebulae volatility="0">200</nebulae>
-   <stars>500</stars>
+   <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
+   <stars>300</stars>
   </general>
  </ssys>
  <ssys name="Coriolis">
@@ -619,6 +674,46 @@
    <x>342</x>
   </pos>
   <planets/>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="Gamma Polaris">
+  <fleets>
+   <fleet chance="50">Empire Pacifier</fleet>
+   <fleet chance="70">Empire Lancelot</fleet>
+   <fleet chance="70">Empire Lancelot</fleet>
+   <fleet chance="50">Trader Mule</fleet>
+   <fleet chance="50">Trader Mule</fleet>
+   <fleet chance="50">Trader Koala</fleet>
+   <fleet chance="50">Trader Koala</fleet>
+   <fleet chance="50">Trader Llama</fleet>
+   <fleet chance="50">Trader Llama</fleet>
+   <fleet chance="50">Trader Llama</fleet>
+   <fleet chance="50">Trader Koala</fleet>
+   <fleet chance="50">Sml Trader Convoy</fleet>
+   <fleet chance="50">Sml Trader Convoy</fleet>
+   <fleet chance="90">Empire Sml Defense</fleet>
+   <fleet chance="50">Empire Admonisher</fleet>
+  </fleets>
+  <jumps>
+   <jump>Doranthex</jump>
+   <jump>Vlexon</jump>
+   <jump>Sirou</jump>
+   <jump>Goddard</jump>
+   <jump>Shakar</jump>
+  </jumps>
+  <pos>
+   <y>-204</y>
+   <x>6</x>
+  </pos>
+  <planets>
+   <planet>Emperor's Fist</planet>
+   <planet>Polaris Prime</planet>
+  </planets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
@@ -835,11 +930,12 @@
    <fleet chance="20">Trader Koala</fleet>
   </fleets>
   <jumps>
-   <jump>Delta Pavonis</jump>
-   <jump>NGC-6938</jump>
-   <jump>NGC-7273</jump>
-   <jump>Goddard</jump>
    <jump>Cygnus</jump>
+   <jump>NGC-7273</jump>
+   <jump>NGC-6938</jump>
+   <jump>Shakar</jump>
+   <jump>Delta Pavonis</jump>
+   <jump>Goddard</jump>
   </jumps>
   <pos>
    <y>-68</y>
@@ -1499,6 +1595,7 @@
   <jumps>
    <jump>Doranthex</jump>
    <jump>Torg</jump>
+   <jump>Gamma Polaris</jump>
    <jump>Tuoladis</jump>
   </jumps>
   <pos>
@@ -1622,6 +1719,8 @@
   <jumps>
    <jump>Doranthex</jump>
    <jump>Borla</jump>
+   <jump>Gamma Polaris</jump>
+   <jump>Shakar</jump>
    <jump>Cygnus</jump>
   </jumps>
   <pos>

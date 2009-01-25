@@ -67,6 +67,35 @@
    <faction>Collective</faction>
   </general>
  </planet>
+ <planet name="Nor">
+  <GFX>
+   <exterior>gas.png</exterior>
+   <space>I01.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.3</prodfactor>
+   <bar>There's nothing remarkable about the Nor spaceport bar.  It's full of drunken Dvaereds trying to forget their hard labour.</bar>
+   <description>Nor was one of the first Dvaered worlds to be terraformed.  It's abundance in gas and ores made it a strategic location and has since then been heavily reinforced after FLF attacks and sabotages.</description>
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>7</services>
+   <class>I</class>
+   <population>130000</population>
+  </general>
+ </planet>
  <planet name="Jorlan">
   <GFX>
    <exterior>traderoom.png</exterior>
@@ -293,6 +322,29 @@
    <population>14000</population>
   </general>
  </planet>
+ <planet name="Emperor's Fist">
+  <GFX>
+   <exterior>mining.png</exterior>
+   <space>C00.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <population>127000</population>
+   <prodfactor>0.4</prodfactor>
+   <bar>The bar is designed for the workers of the terraforming project.  It's a simple dusty bar constantly full of workers.</bar>
+   <description>Emperor's Fist is intended to be the new homeworld of the Emperor itself since the last one was destroyed in the Incident.  It's a gigantic project that is attempting to completely adapt a C-class world to be suitable for the highest ranks of the Empire's aristocracy.  Currently it doesn't have much past the Starport.</description>
+   <faction>Empire</faction>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>3</services>
+   <class>C</class>
+  </general>
+ </planet>
  <planet name="Tau Prime">
   <GFX>
    <space>M02.png</space>
@@ -384,6 +436,36 @@
    <faction>Collective</faction>
   </general>
  </planet>
+ <planet name="Polaris Prime">
+  <GFX>
+   <exterior>traderoom.png</exterior>
+   <space>002.png</space>
+  </GFX>
+  <pos>
+   <y>77</y>
+   <x>-42</x>
+  </pos>
+  <general>
+   <population>318000</population>
+   <prodfactor>0.5</prodfactor>
+   <bar>Since you aren't allowed in the fancier bars you wander into the spaceport bar.  You can only imagine how the Emperor's bar itself can be like.</bar>
+   <description>Polaris Prime has become recent home to the Emperor himself as he plans and constructs his new stronghold on Emperor's Fist.  It is an immense station that has most things anyone would want.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Luxury Goods</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>15</main>
+    <special>0</special>
+   </tech>
+   <services>31</services>
+   <class>1</class>
+  </general>
+ </planet>
  <planet name="Jorcan">
   <GFX>
    <exterior>mining.png</exterior>
@@ -422,7 +504,6 @@
   </pos>
   <general>
    <prodfactor>0.5</prodfactor>
-   <population>2500</population>
    <bar>The Vlexair bar is small as far as Dvaered bars go.  There's not much variety of drink other then the standard Dvaered grogs.</bar>
    <description>Vlexair is a harsh frozen world.  The planet wasn't always frozen though, it used to be a lush world until the planet's core froze.  Since then it's an extremely dangerous environment suitable only to the Dvaered workers.</description>
    <faction>Dvaered</faction>
@@ -438,6 +519,7 @@
    </tech>
    <services>7</services>
    <class>P</class>
+   <population>2500</population>
   </general>
  </planet>
  <planet name="S72839">
@@ -643,20 +725,21 @@
    <population>14000</population>
   </general>
  </planet>
- <planet name="Nor">
+ <planet name="Nova Shakar">
   <GFX>
-   <exterior>gas.png</exterior>
-   <space>I01.png</space>
+   <exterior>oceanic.png</exterior>
+   <space>M05.png</space>
   </GFX>
   <pos>
    <y>0</y>
    <x>0</x>
   </pos>
   <general>
-   <prodfactor>0.3</prodfactor>
-   <bar>There's nothing remarkable about the Nor spaceport bar.  It's full of drunken Dvaereds trying to forget their hard labour.</bar>
-   <description>Nor was one of the first Dvaered worlds to be terraformed.  It's abundance in gas and ores made it a strategic location and has since then been heavily reinforced after FLF attacks and sabotages.</description>
-   <faction>Dvaered</faction>
+   <population>812000</population>
+   <prodfactor>0.5</prodfactor>
+   <bar>The bar is a nice clean place unlike most other bars.  It's been cleaned thoroughly for all the Empire officials that are starting to use the planet as their home.</bar>
+   <description>Nova Shakar was a somewhat abandoned Empire planet until the Emperor's Fist project was started.  Since then it's become a major producer of goods for the project and has started to gain importance.</description>
+   <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
     <commodity>Medicine</commodity>
@@ -664,12 +747,11 @@
     <commodity>Industrial Goods</commodity>
    </commodities>
    <tech>
-    <main>0</main>
+    <main>6</main>
     <special>0</special>
    </tech>
-   <services>7</services>
-   <class>I</class>
-   <population>130000</population>
+   <services>15</services>
+   <class>M</class>
   </general>
  </planet>
  <planet name="S49281">
