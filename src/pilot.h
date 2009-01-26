@@ -215,42 +215,6 @@ typedef struct Pilot_ {
 } Pilot;
 
 
-/**
- * @struct FleetPilot
- *
- * @brief Represents a pilot in a fleet.
- *
- * @sa Fleet
- * @sa Pilot
- */   
-typedef struct FleetPilot_ {
-   Ship* ship; /**< ship the pilot is flying */
-   char* name; /**< used if they have a special name like uniques */
-   int chance; /**< chance of this pilot appearing in the leet */
-   char *ai; /**< ai different of fleet's global ai */
-} FleetPilot;
-
-/**
- * @struct Fleet
- *
- * @brief Represents a fleet.
- *
- * Fleets are used to create pilots, both from being in a system and from
- *  mission triggers.
- *
- * @sa FleetPilot
- */
-typedef struct Fleet_ {
-   char* name; /**< fleet name, used as the identifier */
-   int faction; /**< faction of the fleet */
-
-   char *ai; /**< AI profile to use */
-
-   FleetPilot* pilots; /**< the pilots in the fleet */
-   int npilots; /**< total number of pilots */
-} Fleet;
-
-
 /*
  * getting pilot stuff
  */
@@ -261,7 +225,6 @@ unsigned int pilot_getPrevID( const unsigned int id );
 unsigned int pilot_getNearestEnemy( const Pilot* p );
 unsigned int pilot_getNearestHostile (void); /* only for the player */
 unsigned int pilot_getNearestPilot( const Pilot* p );
-Fleet* fleet_get( const char* name );
 int pilot_getJumps( const Pilot* p );
 
 
@@ -325,8 +288,6 @@ void pilots_free (void);
 void pilots_clean (void);
 void pilots_cleanAll (void);
 void pilot_free( Pilot* p );
-int fleet_load (void);
-void fleet_free (void);
 
 
 /*

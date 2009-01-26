@@ -40,6 +40,7 @@
 #include "font.h"
 #include "ship.h"
 #include "pilot.h"
+#include "fleet.h"
 #include "player.h"
 #include "input.h"
 #include "joystick.h"

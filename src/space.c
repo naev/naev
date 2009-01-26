@@ -29,6 +29,7 @@
 #include "nebulae.h"
 #include "music.h"
 #include "gui.h"
+#include "fleet.h"
 
 
 #define XML_PLANET_ID         "Planets" /**< Planet xml document tag. */

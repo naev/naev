@@ -23,6 +23,7 @@
 #include "nxml.h"
 #include "space.h"
 #include "ndata.h"
+#include "fleet.h"
 
 
 #define CHUNK_SIZE      32 /**< Size of chunk to allocate. */

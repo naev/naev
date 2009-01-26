@@ -12,6 +12,7 @@
 #include "opengl.h"
 #include "pilot.h"
 #include "economy.h"
+#include "fleet.h"
 
 
 #define MAX_HYPERSPACE_VEL    25 /**< Speed to brake to before jumping. */
