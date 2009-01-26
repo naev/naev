@@ -32,6 +32,7 @@
 
 #define MAX(x,y)           (((x)>(y))?(x):(y)) /**< Returns maximum. */
 #define MIN(x,y)           (((x)>(y))?(y):(x)) /**< Returns minimum. */
+#define CLAMP(a, b, x)     ((x)<(a)?(a):((x)>(b)?(b):(x))) /**< Clamps x between a and b: a <= x <= b. */
 
 #define pow2(x)            ((x)*(x)) /**< ^2 */
 
