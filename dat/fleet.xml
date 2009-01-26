@@ -131,6 +131,13 @@
    <pilot name="Ancestor" chance="100">Pirate Ancestor</pilot>
   </pilots>
  </fleet>
+ <fleet name="Pirate Kestrel">
+  <ai>pirate</ai>
+  <faction>Pirate</faction>
+  <pilots>
+   <pilot name="Kestrel" chance="100">Pirate Kestrel</pilot>
+  </pilots>
+ </fleet>
  <fleet name="Collective Drone">
   <ai>collective</ai>
   <faction>Collective</faction>

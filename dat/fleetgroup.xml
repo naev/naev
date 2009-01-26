@@ -56,6 +56,7 @@
   <fleet chance="50">Pirate Ancestor</fleet>
   <fleet chance="50">Pirate Hyena Pack</fleet>
   <fleet chance="40">Pirate Admonisher</fleet>
+  <fleet chance="20">Pirate Kestrel</fleet>
  </fleetgroup>
  <fleetgroup name="Empire Patrol Prescence">
   <fleet chance="70">Empire Pacifier</fleet>
