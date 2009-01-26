@@ -650,6 +650,9 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    double damage_shield, damage_armour, knockback, dam_mod;
    Pilot *pshooter;
 
+   /* Defaults. */
+   dam_mod = 0.;
+
    /* calculate the damage */
    outfit_calcDamage( &damage_shield, &damage_armour, &knockback, dtype, damage );
 
