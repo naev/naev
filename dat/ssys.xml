@@ -2,18 +2,9 @@
 <Systems>
  <ssys name="Draygar">
   <fleets>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Sml Trader Convoy</fleet>
-   <fleet chance="50">Trader Mule</fleet>
-   <fleet chance="50">Trader Mule</fleet>
-   <fleet chance="40">Dvaered Ancestor</fleet>
-   <fleet chance="60">Dvaered Vendetta</fleet>
-   <fleet chance="30">Empire Lancelot</fleet>
-   <fleet chance="20">Dvaered Goddard</fleet>
-   <fleet chance="20">Empire Pacifier</fleet>
-   <fleet chance="20">FLF Sml Force</fleet>
-   <fleet chance="50">Trader Koala</fleet>
+   <fleet>Pirate Light Prescence</fleet>
+   <fleet>Dvaered Medium Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Torg</jump>
@@ -39,11 +30,8 @@
  </ssys>
  <ssys name="NGC-7723">
   <fleets>
-   <fleet chance="50">Pirate Hyena</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Pirate Admonisher</fleet>
-   <fleet chance="30">Pirate Hyena Pack</fleet>
-   <fleet chance="40">Pirate Ancestor</fleet>
+   <fleet>Pirate Medium Prescence</fleet>
+   <fleet>Empire Patrol Prescence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7783</jump>
@@ -64,17 +52,9 @@
  </ssys>
  <ssys name="Raelid">
   <fleets>
-   <fleet chance="60">Dvaered Vendetta</fleet>
-   <fleet chance="40">Dvaered Ancestor</fleet>
-   <fleet chance="20">Dvaered Goddard</fleet>
-   <fleet chance="30">Dvaered Sml Force</fleet>
-   <fleet chance="60">Trader Mule</fleet>
-   <fleet chance="40">Trader Llama</fleet>
-   <fleet chance="40">Trader Llama</fleet>
-   <fleet chance="40">Trader Llama</fleet>
-   <fleet chance="20">Empire Pacifier</fleet>
-   <fleet chance="20">FLF Sml Force</fleet>
-   <fleet chance="50">Trader Koala</fleet>
+   <fleet>Empire Light Prescence</fleet>
+   <fleet>Dvaered Medium Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Draygar</jump>
@@ -99,11 +79,7 @@
  </ssys>
  <ssys name="Zylex">
   <fleets>
-   <fleet chance="30">Dvaered Vendetta</fleet>
-   <fleet chance="30">Dvaered Ancestor</fleet>
-   <fleet chance="20">Empire Pacifier</fleet>
-   <fleet chance="20">FLF Sml Force</fleet>
-   <fleet chance="20">FLF Pacifier</fleet>
+   <fleet>Empire Patrol Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Myad</jump>
@@ -125,9 +101,7 @@
   </general>
  </ssys>
  <ssys name="Arandon">
-  <fleets>
-   <fleet chance="10">Empire Pacifier</fleet>
-  </fleets>
+  <fleets/>
   <jumps>
    <jump>Zerantix</jump>
    <jump>Polaris</jump>
@@ -148,7 +122,10 @@
   </general>
  </ssys>
  <ssys name="Sirou">
-  <fleets/>
+  <fleets>
+   <fleet>Empire Heavy Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+  </fleets>
   <jumps>
    <jump>Shakar</jump>
    <jump>Gamma Polaris</jump>
@@ -167,13 +144,8 @@
  </ssys>
  <ssys name="NGC-7690">
   <fleets>
-   <fleet chance="50">Pirate Hyena</fleet>
-   <fleet chance="50">Trader Mule</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Empire Pacifier</fleet>
-   <fleet chance="30">Pirate Admonisher</fleet>
-   <fleet chance="20">Pirate Hyena Pack</fleet>
-   <fleet chance="40">Pirate Vendetta</fleet>
+   <fleet>Pirate Medium Prescence</fleet>
+   <fleet>Empire Patrol Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Coriolis</jump>
@@ -195,15 +167,8 @@
  </ssys>
  <ssys name="NGC-7693">
   <fleets>
-   <fleet chance="30">Trader Mule</fleet>
-   <fleet chance="30">Pirate Hyena</fleet>
-   <fleet chance="30">Trader Llama</fleet>
-   <fleet chance="40">Empire Pacifier</fleet>
-   <fleet chance="50">Pirate Admonisher</fleet>
-   <fleet chance="30">Pirate Hyena Pack</fleet>
-   <fleet chance="50">Pirate Vendetta</fleet>
-   <fleet chance="40">Pirate Ancestor</fleet>
-   <fleet chance="30">Trader Koala</fleet>
+   <fleet>Pirate Medium Prescence</fleet>
+   <fleet>Empire Patrol Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Coriolis</jump>
@@ -224,7 +189,9 @@
   </general>
  </ssys>
  <ssys name="NGC-8037">
-  <fleets/>
+  <fleets>
+   <fleet>Empire Patrol Prescence</fleet>
+  </fleets>
   <jumps>
    <jump>Arcanis</jump>
    <jump>Sigur</jump>
@@ -243,17 +210,9 @@
  </ssys>
  <ssys name="Doranthex">
   <fleets>
-   <fleet chance="20">Trader Mule</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="40">Empire Lancelot</fleet>
-   <fleet chance="70">Dvaered Vendetta</fleet>
-   <fleet chance="70">Dvaered Vendetta</fleet>
-   <fleet chance="60">Dvaered Ancestor</fleet>
-   <fleet chance="40">Empire Pacifier</fleet>
-   <fleet chance="20">Dvaered Goddard</fleet>
-   <fleet chance="20">FLF Pacifier</fleet>
-   <fleet chance="50">Trader Koala</fleet>
+   <fleet>Pirate Light Prescence</fleet>
+   <fleet>Dvaered Medium Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Vlexon</jump>
@@ -278,11 +237,7 @@
  </ssys>
  <ssys name="NGC-7843">
   <fleets>
-   <fleet chance="50">Pirate Hyena</fleet>
-   <fleet chance="50">Pirate Admonisher</fleet>
-   <fleet chance="40">Pirate Hyena Pack</fleet>
-   <fleet chance="50">Pirate Ancestor</fleet>
-   <fleet chance="50">Pirate Vendetta</fleet>
+   <fleet>Pirate Heavy Prescence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7723</jump>
@@ -302,11 +257,7 @@
  </ssys>
  <ssys name="Arcanis">
   <fleets>
-   <fleet chance="30">Dvaered Ancestor</fleet>
-   <fleet chance="30">Dvaered Vendetta</fleet>
-   <fleet chance="20">Empire Pacifier</fleet>
-   <fleet chance="20">FLF Sml Force</fleet>
-   <fleet chance="20">FLF Pacifier</fleet>
+   <fleet>Empire Patrol Prescence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-8037</jump>
@@ -329,19 +280,9 @@
  </ssys>
  <ssys name="Shakar">
   <fleets>
-   <fleet chance="50">Empire Admonisher</fleet>
-   <fleet chance="50">Empire Lancelot</fleet>
-   <fleet chance="50">Empire Lancelot</fleet>
-   <fleet chance="50">Trader Koala</fleet>
-   <fleet chance="50">Trader Koala</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="30">Trader Mule</fleet>
-   <fleet chance="30">Trader Mule</fleet>
-   <fleet chance="30">Pirate Vendetta</fleet>
-   <fleet chance="30">Pirate Admonisher</fleet>
-   <fleet chance="30">Pirate Ancestor</fleet>
-   <fleet chance="70">Empire Pacifier</fleet>
+   <fleet>Empire Medium Prescence</fleet>
+   <fleet>Trader Heavy Prescence</fleet>
+   <fleet>Pirate Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Borla</jump>
@@ -365,11 +306,7 @@
  </ssys>
  <ssys name="NGC-7968">
   <fleets>
-   <fleet chance="50">Pirate Hyena</fleet>
-   <fleet chance="30">Trader Llama</fleet>
-   <fleet chance="30">Pirate Admonisher</fleet>
-   <fleet chance="40">Pirate Ancestor</fleet>
-   <fleet chance="50">Pirate Vendetta</fleet>
+   <fleet>Pirate Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Mizar</jump>
@@ -389,8 +326,7 @@
  </ssys>
  <ssys name="Doeston">
   <fleets>
-   <fleet chance="70">Empire Pacifier</fleet>
-   <fleet chance="20">Dvaered Vendetta</fleet>
+   <fleet>Empire Patrol Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Arandon</jump>
@@ -415,15 +351,9 @@
  </ssys>
  <ssys name="Torg">
   <fleets>
-   <fleet chance="20">Dvaered Goddard</fleet>
-   <fleet chance="70">Dvaered Vendetta</fleet>
-   <fleet chance="70">Dvaered Vendetta</fleet>
-   <fleet chance="60">Dvaered Ancestor</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="40">Trader Mule</fleet>
-   <fleet chance="20">FLF Sml Force</fleet>
-   <fleet chance="50">Trader Koala</fleet>
+   <fleet>Dvaered Medium Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
    <jump>Draygar</jump>
@@ -449,11 +379,7 @@
  </ssys>
  <ssys name="C-00">
   <fleets>
-   <fleet chance="80">Collective Sml Swarm</fleet>
-   <fleet chance="80">Collective Sml Swarm</fleet>
-   <fleet chance="80">Collective Sml Swarm</fleet>
-   <fleet chance="80">Collective Drone</fleet>
-   <fleet chance="80">Collective Drone</fleet>
+   <fleet>Collective Medium Prescence</fleet>
   </fleets>
   <jumps>
    <jump>C-28</jump>
@@ -469,6 +395,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
    <stars>100</stars>
   </general>
  </ssys>
@@ -495,9 +422,7 @@
  </ssys>
  <ssys name="C-28">
   <fleets>
-   <fleet chance="60">Collective Sml Swarm</fleet>
-   <fleet chance="60">Collective Sml Swarm</fleet>
-   <fleet chance="80">Collective Drone</fleet>
+   <fleet>Collective Medium Prescence</fleet>
   </fleets>
   <jumps>
    <jump>C-00</jump>
@@ -515,11 +440,14 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
    <stars>200</stars>
   </general>
  </ssys>
  <ssys name="Sigur">
-  <fleets/>
+  <fleets>
+   <fleet>Empire Patrol Prescence</fleet>
+  </fleets>
   <jumps>
    <jump>NGC-8037</jump>
    <jump>Zylex</jump>
@@ -541,9 +469,8 @@
  </ssys>
  <ssys name="NGC-7414">
   <fleets>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Pirate Hyena</fleet>
-   <fleet chance="50">Empire Pacifier</fleet>
+   <fleet>Pirate Light Prescence</fleet>
+   <fleet>Empire Patrol Prescence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7291</jump>
@@ -557,18 +484,14 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
    <stars>150</stars>
   </general>
  </ssys>
  <ssys name="NGC-7273">
   <fleets>
-   <fleet chance="70">Empire Lancelot</fleet>
-   <fleet chance="50">Trader Mule</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Empire Pacifier</fleet>
-   <fleet chance="40">Empire Admonisher</fleet>
-   <fleet chance="50">Trader Koala</fleet>
+   <fleet>Pirate Medium Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7291</jump>
@@ -591,11 +514,9 @@
  </ssys>
  <ssys name="Dune">
   <fleets>
-   <fleet chance="60">Trader Llama</fleet>
-   <fleet chance="60">Trader Mule</fleet>
-   <fleet chance="30">Pirate Admonisher</fleet>
-   <fleet chance="20">Pirate Hyena Pack</fleet>
-   <fleet chance="20">Pirate Vendetta</fleet>
+   <fleet>Pirate Light Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+   <fleet>Empire Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Coriolis</jump>
@@ -620,17 +541,9 @@
  </ssys>
  <ssys name="Coriolis">
   <fleets>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Trader Mule</fleet>
-   <fleet chance="50">Pirate Hyena</fleet>
-   <fleet chance="50">Empire Pacifier</fleet>
-   <fleet chance="30">Empire Lancelot</fleet>
-   <fleet chance="30">Pirate Admonisher</fleet>
-   <fleet chance="40">Empire Admonisher</fleet>
-   <fleet chance="30">Pirate Hyena Pack</fleet>
-   <fleet chance="50">Pirate Ancestor</fleet>
-   <fleet chance="50">Pirate Vendetta</fleet>
-   <fleet chance="50">Trader Koala</fleet>
+   <fleet>Pirate Medium Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+   <fleet>Empire Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Dune</jump>
@@ -652,17 +565,8 @@
  </ssys>
  <ssys name="Slaccid">
   <fleets>
-   <fleet chance="50">Trader Koala</fleet>
-   <fleet chance="50">Trader Mule</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="4">FLF Med Force</fleet>
-   <fleet chance="20">Dvaered Goddard</fleet>
-   <fleet chance="40">Dvaered Vendetta</fleet>
-   <fleet chance="30">FLF Vendetta</fleet>
-   <fleet chance="7">FLF Sml Force</fleet>
-   <fleet chance="25">FLF Pacifier</fleet>
-   <fleet chance="30">Dvaered Sml Force</fleet>
+   <fleet>Trader Light Prescence</fleet>
+   <fleet>FLF Medium Guerrilla</fleet>
   </fleets>
   <jumps>
    <jump>Dakron</jump>
@@ -683,21 +587,9 @@
  </ssys>
  <ssys name="Gamma Polaris">
   <fleets>
-   <fleet chance="50">Empire Pacifier</fleet>
-   <fleet chance="70">Empire Lancelot</fleet>
-   <fleet chance="70">Empire Lancelot</fleet>
-   <fleet chance="50">Trader Mule</fleet>
-   <fleet chance="50">Trader Mule</fleet>
-   <fleet chance="50">Trader Koala</fleet>
-   <fleet chance="50">Trader Koala</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Trader Koala</fleet>
-   <fleet chance="50">Sml Trader Convoy</fleet>
-   <fleet chance="50">Sml Trader Convoy</fleet>
-   <fleet chance="90">Empire Sml Defense</fleet>
-   <fleet chance="50">Empire Admonisher</fleet>
+   <fleet>Trader Heavy Prescence</fleet>
+   <fleet>Empire Heavy Prescence</fleet>
+   <fleet>Dvaered Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Doranthex</jump>
@@ -723,15 +615,9 @@
  </ssys>
  <ssys name="Cygnus">
   <fleets>
-   <fleet chance="60">Trader Mule</fleet>
-   <fleet chance="60">Trader Mule</fleet>
-   <fleet chance="60">Trader Llama</fleet>
-   <fleet chance="30">Sml Trader Convoy</fleet>
-   <fleet chance="50">Empire Lancelot</fleet>
-   <fleet chance="20">Empire Pacifier</fleet>
-   <fleet chance="40">Empire Admonisher</fleet>
-   <fleet chance="30">Pirate Hyena Pack</fleet>
-   <fleet chance="50">Trader Koala</fleet>
+   <fleet>Pirate Light Prescence</fleet>
+   <fleet>Trader Medium Prescence</fleet>
+   <fleet>Empire Medium Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Delta Pavonis</jump>
@@ -756,20 +642,9 @@
  </ssys>
  <ssys name="Tau Prime">
   <fleets>
-   <fleet chance="50">Trader Mule</fleet>
-   <fleet chance="50">Trader Mule</fleet>
-   <fleet chance="40">Sml Trader Convoy</fleet>
-   <fleet chance="30">Trader Llama</fleet>
-   <fleet chance="30">Trader Llama</fleet>
-   <fleet chance="30">Trader Llama</fleet>
-   <fleet chance="30">Empire Lancelot</fleet>
-   <fleet chance="50">Empire Lancelot</fleet>
-   <fleet chance="20">Empire Pacifier</fleet>
-   <fleet chance="30">Pirate Admonisher</fleet>
-   <fleet chance="40">Empire Admonisher</fleet>
-   <fleet chance="30">Pirate Hyena Pack</fleet>
-   <fleet chance="20">FLF Pacifier</fleet>
-   <fleet chance="50">Trader Koala</fleet>
+   <fleet>Pirate Light Prescence</fleet>
+   <fleet>Trader Medium Prescence</fleet>
+   <fleet>Empire Medium Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Draconis</jump>
@@ -814,9 +689,8 @@
  </ssys>
  <ssys name="NGC-7549">
   <fleets>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Pirate Hyena</fleet>
-   <fleet chance="20">Pirate Admonisher</fleet>
+   <fleet>Pirate Light Prescence</fleet>
+   <fleet>Empire Patrol Prescence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7690</jump>
@@ -835,12 +709,7 @@
  </ssys>
  <ssys name="Haven">
   <fleets>
-   <fleet chance="70">Pirate Hyena</fleet>
-   <fleet chance="20">Empire Pacifier</fleet>
-   <fleet chance="40">Pirate Hyena</fleet>
-   <fleet chance="30">Pirate Admonisher</fleet>
-   <fleet chance="40">Pirate Ancestor</fleet>
-   <fleet chance="30">Pirate Vendetta</fleet>
+   <fleet>Pirate Medium Prescence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7968</jump>
@@ -859,9 +728,7 @@
  </ssys>
  <ssys name="C-43">
   <fleets>
-   <fleet chance="80">Collective Drone</fleet>
-   <fleet chance="60">Collective Sml Swarm</fleet>
-   <fleet chance="60">Collective Sml Swarm</fleet>
+   <fleet>Collective Medium Prescence</fleet>
   </fleets>
   <jumps>
    <jump>C-14</jump>
@@ -886,14 +753,9 @@
  </ssys>
  <ssys name="NGC-7291">
   <fleets>
-   <fleet chance="60">Trader Llama</fleet>
-   <fleet chance="60">Collective Drone</fleet>
-   <fleet chance="80">Trader Mule</fleet>
-   <fleet chance="50">Collective Sml Swarm</fleet>
-   <fleet chance="50">Empire Sml Defense</fleet>
-   <fleet chance="60">Empire Lancelot</fleet>
-   <fleet chance="50">Empire Pacifier</fleet>
-   <fleet chance="40">Empire Admonisher</fleet>
+   <fleet>Collective Light Prescence</fleet>
+   <fleet>Empire Heavy Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7324</jump>
@@ -917,17 +779,10 @@
  </ssys>
  <ssys name="Borla">
   <fleets>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="40">Trader Mule</fleet>
-   <fleet chance="70">Pirate Hyena</fleet>
-   <fleet chance="30">Empire Lancelot</fleet>
-   <fleet chance="40">Empire Pacifier</fleet>
-   <fleet chance="50">Pirate Admonisher</fleet>
-   <fleet chance="20">Pirate Hyena Pack</fleet>
-   <fleet chance="40">Pirate Vendetta</fleet>
-   <fleet chance="30">Pirate Ancestor</fleet>
-   <fleet chance="20">Trader Koala</fleet>
+   <fleet>Pirate Medium Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+   <fleet>Empire Light Prescence</fleet>
+   <fleet>Empire Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Cygnus</jump>
@@ -951,18 +806,9 @@
  </ssys>
  <ssys name="Mizar">
   <fleets>
-   <fleet chance="60">Pirate Hyena</fleet>
-   <fleet chance="40">Trader Mule</fleet>
-   <fleet chance="40">Trader Mule</fleet>
-   <fleet chance="30">Empire Lancelot</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="40">Empire Pacifier</fleet>
-   <fleet chance="30">Pirate Admonisher</fleet>
-   <fleet chance="40">Empire Admonisher</fleet>
-   <fleet chance="20">Pirate Hyena Pack</fleet>
-   <fleet chance="40">Pirate Ancestor</fleet>
-   <fleet chance="50">Pirate Vendetta</fleet>
-   <fleet chance="50">Trader Koala</fleet>
+   <fleet>Pirate Medium Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+   <fleet>Empire Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Draconis</jump>
@@ -983,11 +829,7 @@
  </ssys>
  <ssys name="NGC-7132">
   <fleets>
-   <fleet chance="60">Collective Sml Swarm</fleet>
-   <fleet chance="40">Empire Lancelot</fleet>
-   <fleet chance="60">Collective Drone</fleet>
-   <fleet chance="30">Empire Pacifier</fleet>
-   <fleet chance="30">Collective Sml Swarm</fleet>
+   <fleet>Collective Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7291</jump>
@@ -1026,15 +868,9 @@
  </ssys>
  <ssys name="Draconis">
   <fleets>
-   <fleet chance="30">Trader Llama</fleet>
-   <fleet chance="30">Trader Llama</fleet>
-   <fleet chance="30">Empire Lancelot</fleet>
-   <fleet chance="30">Empire Lancelot</fleet>
-   <fleet chance="30">Sml Trader Convoy</fleet>
-   <fleet chance="50">Trader Mule</fleet>
-   <fleet chance="20">Empire Pacifier</fleet>
-   <fleet chance="20">Pirate Admonisher</fleet>
-   <fleet chance="50">Trader Koala</fleet>
+   <fleet>Pirate Light Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+   <fleet>Empire Medium Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Tau Prime</jump>
@@ -1055,7 +891,9 @@
   </general>
  </ssys>
  <ssys name="Myad">
-  <fleets/>
+  <fleets>
+   <fleet>Empire Patrol Prescence</fleet>
+  </fleets>
   <jumps>
    <jump>Doeston</jump>
    <jump>Zylex</jump>
@@ -1075,11 +913,8 @@
  </ssys>
  <ssys name="NGC-6938">
   <fleets>
-   <fleet chance="40">Trader Llama</fleet>
-   <fleet chance="20">Trader Mule</fleet>
-   <fleet chance="50">Pirate Hyena</fleet>
-   <fleet chance="50">Empire Pacifier</fleet>
-   <fleet chance="30">Pirate Ancestor</fleet>
+   <fleet>Pirate Light Prescence</fleet>
+   <fleet>Empire Patrol Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Borla</jump>
@@ -1099,20 +934,9 @@
  </ssys>
  <ssys name="Klantar">
   <fleets>
-   <fleet chance="5">FLF Med Force</fleet>
-   <fleet chance="10">FLF Pacifier</fleet>
-   <fleet chance="10">FLF Vendetta</fleet>
-   <fleet chance="10">FLF Sml Force</fleet>
-   <fleet chance="40">Dvaered Goddard</fleet>
-   <fleet chance="70">Dvaered Vendetta</fleet>
-   <fleet chance="70">Dvaered Vendetta</fleet>
-   <fleet chance="50">Dvaered Ancestor</fleet>
-   <fleet chance="50">Dvaered Ancestor</fleet>
-   <fleet chance="30">Dvaered Sml Force</fleet>
-   <fleet chance="80">Trader Mule</fleet>
-   <fleet chance="80">Trader Mule</fleet>
-   <fleet chance="50">Sml Trader Convoy</fleet>
-   <fleet chance="50">Trader Koala</fleet>
+   <fleet>Dvaered Medium Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
    <jump>Torg</jump>
@@ -1136,19 +960,9 @@
  </ssys>
  <ssys name="Alteris">
   <fleets>
-   <fleet chance="40">Sml Trader Convoy</fleet>
-   <fleet chance="40">Trader Llama</fleet>
-   <fleet chance="60">Pirate Hyena</fleet>
-   <fleet chance="50">Trader Mule</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="20">Pirate Admonisher</fleet>
-   <fleet chance="10">Pirate Hyena Pack</fleet>
-   <fleet chance="40">Pirate Ancestor</fleet>
-   <fleet chance="40">Pirate Vendetta</fleet>
-   <fleet chance="30">Empire Pacifier</fleet>
-   <fleet chance="40">Empire Lancelot</fleet>
-   <fleet chance="10">Empire Sml Defense</fleet>
-   <fleet chance="40">Trader Koala</fleet>
+   <fleet>Pirate Heavy Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+   <fleet>Empire Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Coriolis</jump>
@@ -1192,22 +1006,9 @@
  </ssys>
  <ssys name="Dakron">
   <fleets>
-   <fleet chance="30">FLF Pacifier</fleet>
-   <fleet chance="30">Dvaered Sml Force</fleet>
-   <fleet chance="50">Dvaered Vendetta</fleet>
-   <fleet chance="50">Dvaered Vendetta</fleet>
-   <fleet chance="50">Dvaered Ancestor</fleet>
-   <fleet chance="50">Dvaered Ancestor</fleet>
-   <fleet chance="10">Dvaered Goddard</fleet>
-   <fleet chance="50">Trader Mule</fleet>
-   <fleet chance="57">Trader Llama</fleet>
-   <fleet chance="57">Trader Llama</fleet>
-   <fleet chance="50">Sml Trader Convoy</fleet>
-   <fleet chance="50">Trader Koala</fleet>
-   <fleet chance="50">Trader Koala</fleet>
-   <fleet chance="10">FLF Sml Force</fleet>
-   <fleet chance="5">FLF Pacifier</fleet>
-   <fleet chance="15">FLF Vendetta</fleet>
+   <fleet>Dvaered Medium Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
    <jump>Slaccid</jump>
@@ -1251,16 +1052,9 @@
  </ssys>
  <ssys name="Toaxis">
   <fleets>
-   <fleet chance="20">Empire Pacifier</fleet>
-   <fleet chance="20">Dvaered Goddard</fleet>
-   <fleet chance="60">Dvaered Ancestor</fleet>
-   <fleet chance="60">Dvaered Vendetta</fleet>
-   <fleet chance="30">Dvaered Sml Force</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="30">Trader Llama</fleet>
-   <fleet chance="30">Trader Mule</fleet>
-   <fleet chance="20">FLF Pacifier</fleet>
-   <fleet chance="20">FLF Sml Force</fleet>
+   <fleet>Dvaered Light Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+   <fleet>FLF Medium Guerrilla</fleet>
   </fleets>
   <jumps>
    <jump>Zacron</jump>
@@ -1282,17 +1076,9 @@
  </ssys>
  <ssys name="Tuoladis">
   <fleets>
-   <fleet chance="3">FLF Med Force</fleet>
-   <fleet chance="10">FLF Pacifier</fleet>
-   <fleet chance="10">Sml Trader Convoy</fleet>
-   <fleet chance="10">FLF Vendetta</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Trader Mule</fleet>
-   <fleet chance="20">Dvaered Vendetta</fleet>
-   <fleet chance="10">Dvaered Goddard</fleet>
-   <fleet chance="40">Dvaered Ancestor</fleet>
-   <fleet chance="5">FLF Sml Force</fleet>
-   <fleet chance="50">Trader Koala</fleet>
+   <fleet>Dvaered Medium Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+   <fleet>FLF Medium Guerrilla</fleet>
   </fleets>
   <jumps>
    <jump>Vlexon</jump>
@@ -1314,15 +1100,9 @@
  </ssys>
  <ssys name="NGC-7324">
   <fleets>
-   <fleet chance="70">Empire Lancelot</fleet>
-   <fleet chance="50">Pirate Hyena</fleet>
-   <fleet chance="50">Trader Mule</fleet>
-   <fleet chance="50">Trader Llama</fleet>
-   <fleet chance="50">Empire Pacifier</fleet>
-   <fleet chance="20">Pirate Admonisher</fleet>
-   <fleet chance="40">Pirate Vendetta</fleet>
-   <fleet chance="30">Pirate Ancestor</fleet>
-   <fleet chance="50">Trader Koala</fleet>
+   <fleet>Pirate Medium Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+   <fleet>Empire Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7291</jump>
@@ -1345,12 +1125,7 @@
  </ssys>
  <ssys name="New Haven">
   <fleets>
-   <fleet chance="70">Pirate Hyena</fleet>
-   <fleet chance="50">Pirate Hyena</fleet>
-   <fleet chance="50">Pirate Admonisher</fleet>
-   <fleet chance="40">Pirate Hyena Pack</fleet>
-   <fleet chance="50">Pirate Ancestor</fleet>
-   <fleet chance="50">Pirate Vendetta</fleet>
+   <fleet>Pirate Heavy Prescence</fleet>
   </fleets>
   <jumps>
    <jump>NGC-7843</jump>
@@ -1389,9 +1164,7 @@
  </ssys>
  <ssys name="C-14">
   <fleets>
-   <fleet chance="80">Collective Drone</fleet>
-   <fleet chance="80">Collective Sml Swarm</fleet>
-   <fleet chance="80">Collective Sml Swarm</fleet>
+   <fleet>Collective Medium Prescence</fleet>
   </fleets>
   <jumps>
    <jump>C-00</jump>
@@ -1408,21 +1181,15 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
    <stars>100</stars>
   </general>
  </ssys>
  <ssys name="Theras">
   <fleets>
-   <fleet chance="60">Trader Mule</fleet>
-   <fleet chance="60">Trader Mule</fleet>
-   <fleet chance="40">Trader Llama</fleet>
-   <fleet chance="40">Trader Llama</fleet>
-   <fleet chance="40">Sml Trader Convoy</fleet>
-   <fleet chance="60">Dvaered Vendetta</fleet>
-   <fleet chance="20">FLF Sml Force</fleet>
-   <fleet chance="30">FLF Vendetta</fleet>
-   <fleet chance="5">FLF Med Force</fleet>
-   <fleet chance="50">Trader Koala</fleet>
+   <fleet>Dvaered Light Prescence</fleet>
+   <fleet>Trader Medium Prescence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
    <jump>Dakron</jump>
@@ -1466,11 +1233,7 @@
   </general>
  </ssys>
  <ssys name="NGC-7783">
-  <fleets>
-   <fleet chance="50">Pirate Vendetta</fleet>
-   <fleet chance="40">Pirate Ancestor</fleet>
-   <fleet chance="60">Pirate Hyena</fleet>
-  </fleets>
+  <fleets/>
   <jumps>
    <jump>NGC-7723</jump>
   </jumps>
@@ -1488,17 +1251,9 @@
  </ssys>
  <ssys name="Eridani">
   <fleets>
-   <fleet chance="80">Empire Lancelot</fleet>
-   <fleet chance="40">Trader Mule</fleet>
-   <fleet chance="40">Trader Mule</fleet>
-   <fleet chance="40">Trader Llama</fleet>
-   <fleet chance="40">Trader Llama</fleet>
-   <fleet chance="30">Sml Trader Convoy</fleet>
-   <fleet chance="20">Empire Pacifier</fleet>
-   <fleet chance="20">Pirate Admonisher</fleet>
-   <fleet chance="20">Pirate Vendetta</fleet>
-   <fleet chance="40">Pirate Ancestor</fleet>
-   <fleet chance="50">Trader Koala</fleet>
+   <fleet>Pirate Light Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+   <fleet>Empire Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Delta Pavonis</jump>
@@ -1522,9 +1277,7 @@
  </ssys>
  <ssys name="C-59">
   <fleets>
-   <fleet chance="60">Collective Sml Swarm</fleet>
-   <fleet chance="80">Collective Drone</fleet>
-   <fleet chance="50">Collective Sml Swarm</fleet>
+   <fleet>Collective Medium Prescence</fleet>
   </fleets>
   <jumps>
    <jump>C-28</jump>
@@ -1541,24 +1294,15 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
+   <nebulae volatility="0">0</nebulae>
    <stars>200</stars>
   </general>
  </ssys>
  <ssys name="Haleb">
   <fleets>
-   <fleet chance="5">FLF Med Force</fleet>
-   <fleet chance="10">FLF Pacifier</fleet>
-   <fleet chance="10">FLF Sml Force</fleet>
-   <fleet chance="15">Dvaered Goddard</fleet>
-   <fleet chance="50">Dvaered Vendetta</fleet>
-   <fleet chance="40">Dvaered Ancestor</fleet>
-   <fleet chance="20">FLF Vendetta</fleet>
-   <fleet chance="20">Dvaered Sml Force</fleet>
-   <fleet chance="50">Trader Mule</fleet>
-   <fleet chance="50">Trader Mule</fleet>
-   <fleet chance="70">Trader Llama</fleet>
-   <fleet chance="70">Trader Llama</fleet>
-   <fleet chance="50">Trader Koala</fleet>
+   <fleet>Dvaered Medium Prescence</fleet>
+   <fleet>Trader Medium Prescence</fleet>
+   <fleet>FLF Light Guerrilla</fleet>
   </fleets>
   <jumps>
    <jump>Slaccid</jump>
@@ -1582,15 +1326,9 @@
  </ssys>
  <ssys name="Vlexon">
   <fleets>
-   <fleet chance="50">Dvaered Ancestor</fleet>
-   <fleet chance="50">Dvaered Vendetta</fleet>
-   <fleet chance="20">Dvaered Goddard</fleet>
-   <fleet chance="50">Dvaered Vendetta</fleet>
-   <fleet chance="40">Trader Mule</fleet>
-   <fleet chance="60">Trader Llama</fleet>
-   <fleet chance="60">Trader Llama</fleet>
-   <fleet chance="50">Trader Koala</fleet>
-   <fleet chance="50">Trader Koala</fleet>
+   <fleet>Empire Light Prescence</fleet>
+   <fleet>Dvaered Medium Prescence</fleet>
+   <fleet>Trader Medium Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Doranthex</jump>
@@ -1614,14 +1352,9 @@
  </ssys>
  <ssys name="Delta Pavonis">
   <fleets>
-   <fleet chance="40">Sml Trader Convoy</fleet>
-   <fleet chance="60">Pirate Hyena</fleet>
-   <fleet chance="40">Trader Llama</fleet>
-   <fleet chance="50">Trader Mule</fleet>
-   <fleet chance="40">Empire Admonisher</fleet>
-   <fleet chance="20">Empire Pacifier</fleet>
-   <fleet chance="80">Empire Lancelot</fleet>
-   <fleet chance="40">Trader Koala</fleet>
+   <fleet>Pirate Light Prescence</fleet>
+   <fleet>Trader Medium Prescence</fleet>
+   <fleet>Empire Medium Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Cygnus</jump>
@@ -1646,11 +1379,8 @@
  </ssys>
  <ssys name="NGC-7789">
   <fleets>
-   <fleet chance="50">Pirate Hyena</fleet>
-   <fleet chance="30">Pirate Hyena</fleet>
-   <fleet chance="30">Pirate Admonisher</fleet>
-   <fleet chance="30">Pirate Ancestor</fleet>
-   <fleet chance="30">Empire Pacifier</fleet>
+   <fleet>Pirate Light Prescence</fleet>
+   <fleet>Empire Patrol Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Dune</jump>
@@ -1669,16 +1399,9 @@
  </ssys>
  <ssys name="Zacron">
   <fleets>
-   <fleet chance="40">Dvaered Ancestor</fleet>
-   <fleet chance="60">Dvaered Vendetta</fleet>
-   <fleet chance="20">Dvaered Goddard</fleet>
-   <fleet chance="40">Pirate Hyena</fleet>
-   <fleet chance="40">Pirate Ancestor</fleet>
-   <fleet chance="40">Pirate Vendetta</fleet>
-   <fleet chance="20">Pirate Admonisher</fleet>
-   <fleet chance="20">Empire Pacifier</fleet>
-   <fleet chance="20">FLF Sml Force</fleet>
-   <fleet chance="30">Trader Koala</fleet>
+   <fleet>Dvaered Medium Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+   <fleet>FLF Medium Guerrilla</fleet>
   </fleets>
   <jumps>
    <jump>Draygar</jump>
@@ -1701,20 +1424,10 @@
  </ssys>
  <ssys name="Goddard">
   <fleets>
-   <fleet chance="70">Goddard Goddard</fleet>
-   <fleet chance="50">Goddard Goddard</fleet>
-   <fleet chance="30">Trader Llama</fleet>
-   <fleet chance="30">Trader Llama</fleet>
-   <fleet chance="30">Trader Mule</fleet>
-   <fleet chance="30">Trader Mule</fleet>
-   <fleet chance="30">Sml Trader Convoy</fleet>
-   <fleet chance="50">Empire Lancelot</fleet>
-   <fleet chance="30">Pirate Ancestor</fleet>
-   <fleet chance="20">Pirate Admonisher</fleet>
-   <fleet chance="40">Empire Lancelot</fleet>
-   <fleet chance="30">Pirate Hyena</fleet>
-   <fleet chance="30">Trader Koala</fleet>
-   <fleet chance="30">Trader Koala</fleet>
+   <fleet>Pirate Light Prescence</fleet>
+   <fleet>Trader Heavy Prescence</fleet>
+   <fleet>Goddard Prescence</fleet>
+   <fleet>Empire Light Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Doranthex</jump>
