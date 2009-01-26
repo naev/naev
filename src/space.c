@@ -1311,27 +1311,9 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"fleet")) {
 
-               /* Load the fleet. */
-               flt = fleet_get(xml_get(cur));
-               if (flt != NULL) {
-
-                  /* Get the fleet. */
-                  fleet.fleet = flt;
-
-                  /* Get the chance. */
-                  xmlr_attr(cur,"chance",ptrc); /* mallocs ptrc */
-                  fleet.chance = (ptrc==NULL) ? 0 : atoi(ptrc);
-                  if (fleet.chance == 0)
-                     WARN("Fleet '%s' for Star System '%s' has 0%% chance to appear",
-                        fleet.fleet->name, sys->name);
-                  if (ptrc)
-                     free(ptrc); /* free the ptrc */
-
-                  /* Add the fleet. */
-                  system_addFleet( sys, &fleet );
-               }
-               else {
-
+               /* Try to load it as a FleetGroup. */
+               fltgrp = fleet_getGroup(xml_get(cur));
+               if (fltgrp != NULL) {
                   /* Try to load it as a FleetGroup. */
                   fltgrp = fleet_getGroup(xml_get(cur));
                   if (fltgrp == NULL) {
@@ -1342,6 +1324,30 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 
                   /* Add the fleetgroup. */
                   system_addFleetGroup( sys, fltgrp );
+               }
+               else {
+
+                  /* Try to load it as a fleet. */
+                  flt = fleet_get(xml_get(cur));
+                  if (flt == NULL) {
+                     WARN("Fleet '%s' for Star System '%s' not found",
+                           xml_get(cur), sys->name);
+                     continue;
+                  }
+                  /* Get the fleet. */
+                  fleet.fleet = flt;
+
+                  /* Get the chance. */
+                  xmlr_attr(cur,"chance",ptrc); /* mallocs ptrc */
+                  fleet.chance = (ptrc==NULL) ? 0 : atoi(ptrc);
+                  if (fleet.chance == 0)
+                     WARN("Fleet '%s' for Star System '%s' has 0%% chance to appear",
+                           fleet.fleet->name, sys->name);
+                  if (ptrc)
+                     free(ptrc); /* free the ptrc */
+
+                  /* Add the fleet. */
+                  system_addFleet( sys, &fleet );
                }
             }
          } while (xml_nextNode(cur));
