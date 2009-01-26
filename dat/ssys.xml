@@ -960,9 +960,9 @@
  </ssys>
  <ssys name="Alteris">
   <fleets>
-   <fleet>Pirate Heavy Prescence</fleet>
+   <fleet>Pirate Medium Prescence</fleet>
    <fleet>Trader Light Prescence</fleet>
-   <fleet>Empire Light Prescence</fleet>
+   <fleet>Empire Medium Prescence</fleet>
   </fleets>
   <jumps>
    <jump>Coriolis</jump>
