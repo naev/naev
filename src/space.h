@@ -187,6 +187,8 @@ int system_addPlanet( StarSystem *sys, char *planetname );
 int system_rmPlanet( StarSystem *sys, char *planetname );
 int system_addFleet( StarSystem *sys, SystemFleet *fleet );
 int system_rmFleet( StarSystem *sys, SystemFleet *fleet );
+int system_addFleetGroup( StarSystem *sys, FleetGroup *fltgrp );
+int system_rmFleetGroup( StarSystem *sys, FleetGroup *fltgrp );
 
 /*
  * render
