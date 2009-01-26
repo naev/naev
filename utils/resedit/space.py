@@ -28,13 +28,13 @@ class Space:
 
    def loadSystems(self, xmlfile):
       self.systems = data.load(xmlfile, "ssys", True,
-            ["jumps","planets"], {"fleets":"chance"},
+            ["jumps","planets","fleets"], None,
             {"nebulae":"volatility"})
 
 
    def saveSystems(self, xmlfile):
       data.save( "ssys.xml", self.systems, "Systems", "ssys", True,
-            {"jumps":"jump","planets":"planet"}, {"fleets":["fleet","chance"]},
+            {"jumps":"jump","planets":"planet","fleets":"fleet"}, None,
             {"nebulae":"volatility"})
 
 
@@ -370,22 +370,17 @@ class Space:
       wgt.set_model(jumps)
 
       # load fleets
-      fleets = gtk.ListStore(str,int)
-      for item in system["fleets"]:
-         for fleet,chance in item.items():
-            treenode = fleets.append([fleet,int(chance)])
+      fleets = gtk.ListStore(str)
+      for fleet in system["fleets"]:
+         treenode = fleets.append([fleet])
       wgt = self.__swidget("treFleets")
       if wgt.get_column(0):
          wgt.remove_column( wgt.get_column(0) )
-         wgt.remove_column( wgt.get_column(0) )
-      columns = [None]*2
-      columns[0] = gtk.TreeViewColumn('Fleet')
-      columns[1] = gtk.TreeViewColumn('Chance')
-      for n in range(2):
-         wgt.append_column(columns[n])
-         columns[n].cell = gtk.CellRendererText()
-         columns[n].pack_start(columns[n].cell, True)
-         columns[n].set_attributes(columns[n].cell, text=n)
+      col = gtk.TreeViewColumn('Fleet')
+      cell = gtk.CellRendererText()
+      wgt.append_column(col)
+      col.pack_start( cell, True )
+      col.add_attribute( cell, 'text', 0 )
       wgt.set_model(fleets)
 
       self.__space_draw()
@@ -806,24 +801,22 @@ class Space:
          iter = tree.get_selection().get_selected()[1]
       except:
          return ""
-      return model.get_value(iter,0), model.get_value(iter,1)
+      return model.get_value(iter,0)
    def __fleet_add(self, wgt=None, event=None):
       fleet = self.__swidget("comFleets").get_active_text()
-      value = self.__swidget("spiFleets").get_value_as_int()
-      if fleet != "None" and value > 0:
-         self.systems[self.cur_system]["fleets"].append( {fleet:str(value)} )
+      if fleet != "None":
+         self.systems[self.cur_system]["fleets"].append( fleet )
          self.__supdate()
    def __fleet_rm(self, wgt=None, event=None):
-      sel, chance = self.__fleet_sel()
+      sel = self.__fleet_sel()
       if sel is "":
          return
       i = 0
-      for item in self.systems[self.cur_system]["fleets"]:
-         for key, value in item.items():
-            if key == sel and value == str(chance):
-               self.systems[self.cur_system]["fleets"].pop(i)
-               self.__supdate()
-               return
+      for fleet in self.systems[self.cur_system]["fleets"]:
+         if fleet == sel:
+            self.systems[self.cur_system]["fleets"].pop(i)
+            self.__supdate()
+            return
          i = i+1
 
    """
