@@ -5,9 +5,9 @@
   <fleet chance="50">Goddard Goddard</fleet>
  </fleetgroup>
  <fleetgroup name="Trader Light Prescence">
+  <fleet chance="70">Trader Llama</fleet>
   <fleet chance="50">Trader Llama</fleet>
-  <fleet chance="40">Trader Llama</fleet>
-  <fleet chance="40">Trader Koala</fleet>
+  <fleet chance="50">Trader Koala</fleet>
   <fleet chance="30">Trader Koala</fleet>
   <fleet chance="30">Trader Mule</fleet>
  </fleetgroup>
