@@ -336,6 +336,7 @@ int sound_playPos( int sound, double x, double y )
 int sound_updatePos( int voice, double x, double y )
 {
    alVoice *v;
+   int idist;
    double angle, dist;
    double px, py;
 
@@ -352,7 +353,10 @@ int sound_updatePos( int voice, double x, double y )
       angle = sound_pos[2] - ANGLE(px,py)/M_PI*180.;
       dist = MOD(px,py);
 
-      if (Mix_SetPosition( v->channel, (int)angle, (int)dist / 10 ) < 0) {
+      idist = (int) dist / 13.;
+      if (idist > 255) idist = 255;
+
+      if (Mix_SetPosition( v->channel, (Sint16)angle, (Uint8)idist) < 0) {
          WARN("Unable to set sound position: %s", Mix_GetError());
          return -1;
       }
@@ -452,6 +456,7 @@ int sound_updateListener( double dir, double x, double y )
    sound_pos[0] = x;
    sound_pos[1] = y;
    sound_pos[2] = dir/M_PI*180.;
+
    return 0;
 }
 
