@@ -9,12 +9,12 @@ import data
 class Fleets:
    def __init__(self):
       self.fleets = {}
-      self.fleetsXML = "../../dat/fleet.xml"
+      self.fleetsXML = "../../dat/fleetgroup.xml"
 
    def loadFleets(self, xmlfile=None):
       if xmlfile == None:
-         xmlFile = self.fleetsXML
-      self.fleets = data.load( xmlfile, "fleet", True )
+         xmlfile = self.fleetsXML
+      self.fleets = data.load( xmlfile, "fleetgroup", True )
      
    def data(self):
       return self.fleets

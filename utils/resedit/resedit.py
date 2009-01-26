@@ -37,7 +37,7 @@ factions.loadFactions(path+"faction.xml")
 
 # load the fleets
 fleets = fleet.Fleets()
-fleets.loadFleets(path+"fleet.xml")
+fleets.loadFleets(path+"fleetgroup.xml")
 
 # load the commodities
 commodities = commodity.Commodities()
