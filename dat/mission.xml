@@ -44,7 +44,10 @@
   </avail>
  </mission>
  <mission name="Empire Shipping 1">
-  <lua>empire/shipping/es00.lua</lua>
+  <lua>empire/shipping/es00</lua>
+  <flags>
+   <unique>1</unique>
+  </flags>
   <avail>
    <cond>player.getFaction("Empire") &gt;= 0 and var.peek("es_misn") &gt;= 3</cond>
    <chance>30</chance>
