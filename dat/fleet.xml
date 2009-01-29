@@ -217,6 +217,20 @@
    <pilot name="Goddard" chance="20">Dvaered Goddard</pilot>
   </pilots>
  </fleet>
+ <fleet name="Dvaered Med Force">
+  <ai>dvaered</ai>
+  <faction>Dvaered</faction>
+  <pilots>
+   <pilot name="Vendetta" chance="100">Dvaered Vendetta</pilot>
+   <pilot name="Vendetta" chance="80">Dvaered Vendetta</pilot>
+   <pilot name="Vendetta" chance="60">Dvaered Vendetta</pilot>
+   <pilot name="Vendetta" chance="40">Dvaered Vendetta</pilot>
+   <pilot name="Ancestor" chance="60">Dvaered Ancestor</pilot>
+   <pilot name="Ancestor" chance="40">Dvaered Ancestor</pilot>
+   <pilot name="Ancestor" chance="20">Dvaered Ancestor</pilot>
+   <pilot name="Goddard" chance="60">Dvaered Goddard</pilot>
+  </pilots>
+ </fleet>
  <fleet name="Empire Lancelot">
   <ai>empire</ai>
   <faction>Empire</faction>

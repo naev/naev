@@ -1482,6 +1482,12 @@ void land( Planet* p )
 
    /* Add fuel button if needed - AFTER missions pay :). */
    land_checkAddRefuel();
+
+   /* Mission forced take off. */
+   if (landed == 0) {
+      landed = 1; /* ugly hack to make takeoff not complain. */
+      takeoff();
+   }
 }
 
 

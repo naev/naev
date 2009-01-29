@@ -43,6 +43,15 @@
    <faction>Soromid</faction>
   </avail>
  </mission>
+ <mission name="Empire Shipping 1">
+  <lua>empire/shipping/es00.lua</lua>
+  <avail>
+   <cond>player.getFaction("Empire") &gt;= 0 and var.peek("es_misn") &gt;= 3</cond>
+   <chance>30</chance>
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission>
  <mission name="Collective Scouting">
   <lua>empire/collective/ec00</lua>
   <flags>
