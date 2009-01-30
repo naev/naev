@@ -276,6 +276,7 @@ static int fleet_parseGroup( FleetGroup *fltgrp, xmlNodePtr parent )
             continue;
          }
          fltgrp->chance[fltgrp->nfleets-1] = CLAMP( 0, 100, atoi(buf));
+         free(buf);
 
       }
    } while (xml_nextNode(node));
