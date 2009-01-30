@@ -617,8 +617,6 @@ ssize_t pack_read( Packfile_t* file, void* buf, size_t count )
  *
  * Behaves like lseek/fseek.
  *
- * @todo It's broken, needs fixing.
- *
  *    @param file File to seek.
  *    @param offset Position to seek to.
  *    @param whence Either SEEK_SET, SEEK_CUR or SEEK_END.
