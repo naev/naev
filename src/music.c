@@ -81,7 +81,6 @@ static int nmusic_selection = 0; /**< Size of available music selection. */
  * The current music.
  */
 static char *music_name = NULL; /**< Current music name. */
-static void *music_data = NULL; /**< Current music data. */
 static SDL_RWops *music_rw = NULL; /**< Current music RWops. */
 static Mix_Music *music_music = NULL; /**< Current music. */
 
@@ -193,12 +192,10 @@ static void music_free (void)
       Mix_HaltMusic();
       Mix_FreeMusic(music_music);
       /*SDL_FreeRW(music_rw);*/ /* FreeMusic frees it itself */
-      free(music_data);
       free(music_name);
       music_name  = NULL;
       music_music = NULL;
       music_rw    = NULL;
-      music_data  = NULL;
    }
 }
 
@@ -280,7 +277,6 @@ int music_volume( const double vol )
  */
 void music_load( const char* name )
 {
-   unsigned int size;
    char filename[PATH_MAX];
 
    if (music_disabled) return;
@@ -290,8 +286,7 @@ void music_load( const char* name )
    /* Load the data */
    snprintf( filename, PATH_MAX, MUSIC_PREFIX"%s"MUSIC_SUFFIX, name); 
    music_name = strdup(name);
-   music_data = ndata_read( filename, &size );
-   music_rw = SDL_RWFromMem(music_data, size);
+   music_rw = ndata_rwops( filename );
    music_music = Mix_LoadMUS_RW(music_rw);
    if (music_music == NULL)
       WARN("SDL_Mixer: %s", Mix_GetError());

@@ -5,12 +5,13 @@ LOCALDIR := utils/pack/
 
 COBJS    := $(SRCDIR)pack.o $(SRCDIR)md5.o main.o
 
-CFLAGS   += -W -Wall
+CFLAGS   += -W -Wall $(shell sdl-config --cflags)
 ifdef DEBUG
 CFLAGS   += -I$(SRCDIR) -g
 else
 CFLAGS   += -I$(SRCDIR) -O2
 endif
+LDFLAGS  := $(shell sdl-config --libs)
 
 APPNAME  := pack
 
@@ -23,7 +24,7 @@ APPNAME  := pack
 all: $(ROOTDIR)$(APPNAME)
 
 $(ROOTDIR)$(APPNAME): $(COBJS)
-	@$(CC) $(CFLAGS) -o $(ROOTDIR)$(APPNAME) $(COBJS)
+	@$(CC) $(LDFLAGS) $(CFLAGS) -o $(ROOTDIR)$(APPNAME) $(COBJS)
 	@echo "   LD   $(APPNAME)"
 
 clean:

@@ -9,6 +9,8 @@
 
 #include <stdint.h>
 
+#include "SDL.h"
+
 
 /*
  * ndata open/close
@@ -28,6 +30,12 @@ const char* ndata_name (void);
  */
 void* ndata_read( const char* filename, uint32_t *filesize );
 char** ndata_list( const char *path, uint32_t* nfiles );
+
+
+/*
+ * RWops.
+ */
+SDL_RWops *ndata_rwops( const char* filename );
 
 
 #endif /* NDATA_H */

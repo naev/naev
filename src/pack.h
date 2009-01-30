@@ -10,6 +10,8 @@
 
 #include "ncompat.h"
 
+#include "SDL.h"
+
 
 #include <fcntl.h> /* creat() and friends */
 #include <stdint.h> /* uint32_t */
@@ -47,6 +49,12 @@ void* pack_readfile( const char* packfile, const char* filename, uint32_t *files
 char** pack_listfiles( const char* packfile, uint32_t* nfiles );
 void* pack_readfileCached( Packcache_t* cache, const char* filename, uint32_t *filesize );
 const char** pack_listfilesCached( Packcache_t* cache, uint32_t* nfiles );
+
+/*
+ * for rwops.
+ */
+SDL_RWops *pack_rwops( const char* packfile, const char* filename );
+SDL_RWops *pack_rwopsCached( Packcache_t* cache, const char* filename );
 
 
 #endif /* PACK_H */

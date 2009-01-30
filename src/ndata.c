@@ -45,11 +45,6 @@ static char* ndata_packName = NULL; /**< Name of the ndata module. */
 static const char **ndata_fileList = NULL; /**< List of files in the packfile. */
 static uint32_t ndata_fileNList = 0; /**< Number of files in ndata_fileList. */
 
-/*
- * Lock.
- */
-static SDL_mutex *ndata_lock = NULL;
-
 
 /*
  * Prototypes.
@@ -158,13 +153,6 @@ static int ndata_openPackfile (void)
  */
 int ndata_open (void)
 {
-   /* Create the lock. */
-   ndata_lock = SDL_CreateMutex();
-   if (ndata_lock == NULL) {
-      WARN("Unable to create ndata lock.");
-      return -1;
-   }
-
    return 0;
 }
 
@@ -174,9 +162,6 @@ int ndata_open (void)
  */
 void ndata_close (void)
 {
-   /* Lock the mutex. */
-   SDL_mutexP(ndata_lock);
-
    /* Destroy the name. */
    if (ndata_packName != NULL) {
       free(ndata_packName);
@@ -195,13 +180,6 @@ void ndata_close (void)
       pack_closeCache(ndata_cache);
       ndata_cache = NULL;
    }
-
-   /* Unlock the mutex. */
-   SDL_mutexV(ndata_lock);
-
-   /* Destroy the mutex. */
-   SDL_DestroyMutex(ndata_lock);
-   ndata_lock = NULL;
 }
 
 
@@ -258,8 +236,6 @@ const char* ndata_name (void)
 /**
  * @brief Reads a file from the ndata.
  *
- * Thread safe.
- *
  *    @param filename Name of the file to read.
  *    @param[out] filesize Stores the size of the file.
  *    @return The file data or NULL on error.
@@ -272,9 +248,6 @@ void* ndata_read( const char* filename, uint32_t *filesize )
    /* See if needs to load packfile. */
    if (ndata_cache == NULL) {
 
-      /* Lock the mutex. */
-      SDL_mutexP(ndata_lock);
-
       /* Try to read the file as locally. */
       buf = nfile_readFile( &nbuf, filename );
       if (buf != NULL) {
@@ -284,9 +257,6 @@ void* ndata_read( const char* filename, uint32_t *filesize )
 
       /* Load the packfile. */
       ndata_openPackfile();
-
-      /* Unock the mutex. */
-      SDL_mutexV(ndata_lock);
    }
 
    /* Get data from packfile. */
@@ -295,9 +265,32 @@ void* ndata_read( const char* filename, uint32_t *filesize )
 
 
 /**
- * @brief Filters a file list to match path.
+ * @brief Creates an rwops from a file in the ndata.
  *
- * Uses read only data, should be thread safe.
+ *    @param filename Name of the file to create rwops of.
+ *    @return rwops that accesses the file in the ndata.
+ */
+SDL_RWops *ndata_rwops( const char* filename )
+{
+   SDL_RWops *rw;
+
+   if (ndata_cache == NULL) {
+
+      /* Try to open from file. */
+      rw = SDL_RWFromFile( filename, "rb" );
+      if (rw != NULL)
+         return rw;
+
+      /* Load the packfile. */
+      ndata_openPackfile();
+   }
+
+   return pack_rwopsCached( ndata_cache, filename );
+}
+
+
+/**
+ * @brief Filters a file list to match path.
  *
  *    @param list List to filter.
  *    @param nlist Members in list.
@@ -342,8 +335,6 @@ static char** filterList( const char** list, int nlist,
 /**
  * @brief Gets the list of files in the ndata.
  *
- * Thread safe.
- *
  *    @param path List files in path.
  *    @param nfiles Number of files found.
  *    @return List of files found.
@@ -360,9 +351,6 @@ char** ndata_list( const char* path, uint32_t* nfiles )
 
    /* See if can load from local directory. */
    if (ndata_cache == NULL) {
-      /* Lock the mutex. */
-      SDL_mutexP(ndata_lock);
-
       files = nfile_readDir( &n, path );
 
       /* Found locally. */
@@ -373,19 +361,10 @@ char** ndata_list( const char* path, uint32_t* nfiles )
 
       /* Open packfile. */
       ndata_openPackfile();
-
-      /* Unock the mutex. */
-      SDL_mutexV(ndata_lock);
    }
-
-   /* Lock the mutex. */
-   SDL_mutexP(ndata_lock);
 
    /* Load list. */
    ndata_fileList = pack_listfilesCached( ndata_cache, &ndata_fileNList );
-
-   /* Unock the mutex. */
-   SDL_mutexV(ndata_lock);
 
    return filterList( ndata_fileList, ndata_fileNList, path, nfiles );
 }

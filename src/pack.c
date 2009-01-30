@@ -123,6 +123,11 @@ const uint64_t magic =  0x25524573; /**< File magic number: sER% */
  * Prototypes.
  */
 static off_t getfilesize( const char* filename );
+/* RWops stuff. */
+static int packrw_seek( SDL_RWops *rw, int offset, int whence );
+static int packrw_read( SDL_RWops *rw, void *ptr, int size, int maxnum );
+static int packrw_write( SDL_RWops *rw, const void *ptr, int size, int num );
+static int packrw_close( SDL_RWops *rw );
 
 
 /**
@@ -621,8 +626,10 @@ ssize_t pack_read( Packfile_t* file, void* buf, size_t count )
  */
 off_t pack_seek( Packfile_t* file, off_t offset, int whence)
 {
-   DEBUG("attempting to seek offset: %d, whence: %d", offset, whence);
    off_t ret;
+
+   DEBUG("attempting to seek offset: %d, whence: %d", offset, whence);
+
    switch (whence) {
 #if HAS_POSIX
       case SEEK_SET:
@@ -636,8 +643,8 @@ off_t pack_seek( Packfile_t* file, off_t offset, int whence)
          if (ret != ((off_t)file->pos + offset)) return -1;
          break;
       case SEEK_END:
-         if ((file->end - offset) < file->start) return -1;
-         ret = lseek( file->fd, file->end - offset - 1, SEEK_SET );
+         if ((file->end + offset) < file->start) return -1;
+         ret = lseek( file->fd, file->end + offset, SEEK_SET );
          if (ret != ((off_t)file->end - offset)) return -1;
          break;
 #else /* not HAS_POSIX */
@@ -648,12 +655,12 @@ off_t pack_seek( Packfile_t* file, off_t offset, int whence)
          break;
       case SEEK_CUR:
          if ((file->pos + offset) > file->end) return -1;
-         ret = fseek( file->fp, file->pos + offset, SEEK_SET );
+         ret = fseek( file->fp, file->pos + offset - 1, SEEK_SET );
          if (ret == -1) return -1;
          break;
       case SEEK_END:
-         if ((file->end - offset) < file->start) return -1;
-         ret = fseek( file->fp, file->end - offset, SEEK_SET );
+         if ((file->end + offset) < file->start) return -1;
+         ret = fseek( file->fp, file->end + offset, SEEK_SET );
          if (ret == -1) return -1;
          break;
 #endif /* HAS_POSIX */
@@ -878,4 +885,119 @@ int pack_close( Packfile_t* file )
    return (i) ? -1 : 0 ;
 }
 
+
+
+static int packrw_seek( SDL_RWops *rw, int offset, int whence )
+{
+   Packfile_t *packfile;
+   packfile = rw->hidden.unknown.data1;
+
+   return pack_seek( packfile, offset, whence );
+}
+static int packrw_read( SDL_RWops *rw, void *ptr, int size, int maxnum )
+{
+   int i;
+   ssize_t ret;
+   char *buf;
+   Packfile_t *packfile;
+   packfile = rw->hidden.unknown.data1;
+
+   buf = ptr;
+
+   /* Read the data. */
+   for (i=0; i<maxnum; i++) {
+      ret = pack_read( packfile, &buf[i*size], size );
+      if (ret != size)
+         break;
+   }
+
+   return i;
+}
+static int packrw_write( SDL_RWops *rw, const void *ptr, int size, int num )
+{
+   (void) rw;
+   (void) ptr;
+   (void) size;
+   (void) num;
+   return -1;
+}
+static int packrw_close( SDL_RWops *rw )
+{
+   Packfile_t *packfile;
+   packfile = rw->hidden.unknown.data1;
+
+   return pack_close( packfile );
+}
+
+
+/**
+ * @brief Creates a rwops from a packfile.
+ *
+ *    @param packfile Packfile to create rwops from.
+ *    @return rwops created from packfile.
+ */
+static SDL_RWops *pack_rwopsRaw( Packfile_t *packfile )
+{
+   SDL_RWops *rw;
+
+   /* Create the rwops. */
+   rw = SDL_AllocRW();
+   if (rw == NULL) {
+      WARN("Unable to allocate SDL_RWops.");
+      return NULL;
+   }
+
+   /* Set the functions. */
+   rw->seek = packrw_seek;
+   rw->read = packrw_read;
+   rw->write = packrw_write;
+   rw->close = packrw_close;
+
+   /* Set the packfile as the hidden data. */
+   rw->hidden.unknown.data1 = packfile;
+
+   return rw;
+}
+
+
+/**
+ * @brief Creates an rwops for a file in a packfile.
+ *
+ *    @param packfile Packfile to get file from.
+ *    @param filename File within packfile to create rwops from.
+ *    @return SDL_RWops interacting with the file in the packfile.
+ */
+SDL_RWops *pack_rwops( const char* packfile, const char* filename )
+{
+   Packfile_t *pack;
+
+   /* Open the packfile. */
+   pack = pack_open( packfile, filename );
+   if (pack == NULL)
+      return NULL;
+
+   /* Return the rwops. */
+   return pack_rwopsRaw( pack );
+}
+
+
+/**
+ * @brief Creates an rwops for a file in a packcache.
+ *
+ *    @param cache Packcache to get file from.
+ *    @param filename File within the cache to create rwops from.
+ *    @return SDL_RWops interacting with the file in the packcache.
+ */
+SDL_RWops *pack_rwopsCached( Packcache_t* cache, const char* filename )
+{
+   Packfile_t *packfile;
+
+   /* Open the packfile. */
+   packfile = pack_openFromCache( cache, filename );
+   if (packfile == NULL)
+      return NULL;
+
+   /* Return the rwops. */
+   return pack_rwopsRaw( packfile );
+}
 
