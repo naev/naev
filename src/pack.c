@@ -156,7 +156,7 @@ Packcache_t* pack_openCache( const char* packfile )
 #else /* not HAS_POSIX */
    cache->name = strdup(packfile);
    cache->fp = fopen( packfile, "rb" );
-   if (cache>fp == NULL) {
+   if (cache->fp == NULL) {
 #endif /* HAS_POSIX */
       ERR("Erroring opening %s: %s", packfile, strerror(errno));
       return NULL;
@@ -251,7 +251,7 @@ Packfile_t* pack_openFromCache( Packcache_t* cache, const char* filename )
 #if HAS_POSIX
          file->fd = dup(cache->fd);
 #else
-         file->fp = fopen( file->name, "rb" );
+         file->fp = fopen( cache->name, "rb" );
 #endif
 
          /* Copy information. */
