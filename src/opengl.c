@@ -553,18 +553,15 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    SDL_Surface *temp, *surface;
    glTexture* t;
    uint8_t* trans;
-   uint32_t filesize;
-   char *buf;
+   SDL_RWops *rw;
 
    /* load from packfile */
-   buf = ndata_read( path, &filesize );
-   if (buf == NULL) {
+   rw =  ndata_rwops( path );
+   if (rw == NULL) {
       ERR("Loading surface from ndata.");
       return NULL;
    }
-   SDL_RWops *rw = SDL_RWFromMem(buf, filesize);
    temp = IMG_Load_RW( rw, 1 );
-   free(buf);
 
    if (temp == 0) {
       ERR("'%s' could not be opened: %s", path, IMG_GetError());

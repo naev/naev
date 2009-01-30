@@ -544,16 +544,13 @@ int sound_volume( const double vol )
  */
 static Mix_Chunk* sound_load( const char *filename )
 {
-   void* wavdata;
-   unsigned int size;
    SDL_RWops *rw;
    Mix_Chunk *buffer;
 
    if (sound_disabled) return NULL;
 
    /* get the file data buffer from packfile */
-   wavdata = ndata_read( filename, &size );
-   rw = SDL_RWFromMem(wavdata, size);
+   rw = ndata_rwops( filename );
 
    /* bind to OpenAL buffer */
    buffer = Mix_LoadWAV_RW(rw,1);
@@ -561,8 +558,6 @@ static Mix_Chunk* sound_load( const char *filename )
    if (buffer == NULL)
       DEBUG("Unable to load sound '%s': %s", filename, Mix_GetError());
 
-   /* finish */
-   free( wavdata );
    return buffer;
 }
 
