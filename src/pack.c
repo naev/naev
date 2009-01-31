@@ -624,49 +624,46 @@ ssize_t pack_read( Packfile_t* file, void* buf, size_t count )
  */
 off_t pack_seek( Packfile_t* file, off_t offset, int whence)
 {
-   off_t ret;
+   off_t base, target, ret;
 
    DEBUG("attempting to seek offset: %d, whence: %d", offset, whence);
 
+   /* Find where offset is relative to. */
    switch (whence) {
-#if HAS_POSIX
       case SEEK_SET:
-         if ((file->start + offset) > file->end) return -1;
-         ret = lseek( file->fd, file->start + offset, SEEK_SET );
-         if (ret != ((off_t)file->start + offset)) return -1;
+         base = file->start;
          break;
+
       case SEEK_CUR:
-         if ((file->pos + offset) > file->end) return -1;
-         ret = lseek( file->fd, file->pos + offset, SEEK_SET );
-         if (ret != ((off_t)file->pos + offset)) return -1;
+         base = file->pos;
          break;
+
       case SEEK_END:
-         if ((file->end + offset) < file->start) return -1;
-         ret = lseek( file->fd, file->end + offset, SEEK_SET );
-         if (ret != ((off_t)file->end - offset)) return -1;
+         base = file->end;
          break;
-#else /* not HAS_POSIX */
-      case SEEK_SET:
-         if ((file->start + offset) > file->end) return -1;
-         ret = fseek( file->fp, file->start + offset, SEEK_SET );
-         if (ret == -1) return -1;
-         break;
-      case SEEK_CUR:
-         if ((file->pos + offset) > file->end) return -1;
-         ret = fseek( file->fp, file->pos + offset - 1, SEEK_SET );
-         if (ret == -1) return -1;
-         break;
-      case SEEK_END:
-         if ((file->end + offset) < file->start) return -1;
-         ret = fseek( file->fp, file->end + offset, SEEK_SET );
-         if (ret == -1) return -1;
-         break;
-#endif /* HAS_POSIX */
 
       default:
          ERR("Whence is not one of SEEK_SET, SEEK_CUR or SEEK_END");
          return -1;
    }
+
+   /* Get the target. */
+   target = base + offset;
+
+   /* Limit checks. */
+   if ((target < file->start) || (target >= file->end))
+      return -1;
+
+#if HAS_POSIX
+   ret = lseek( file->fd, target, SEEK_SET );
+   if (ret != target)
+      return -1;
+#else /* not HAS_POSIX */
+   ret = fseek( file->fp, target, SEEK_SET );
+   if (ret != 0)
+      return -1;
+#endif /* HAS_POSIX */
+
    return ret - file->start;
 }
 
