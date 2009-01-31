@@ -37,6 +37,12 @@
 #define CHUNK_SIZE         32 /**< Size of chunk for allocation. */
 
 
+#define FACTION_STATIC        (1<<0) /**< Faction doesn't change standing with player. */
+
+#define faction_setFlag(fa,f) ((fa)->flags |= (f))
+#define faction_isFlag(fa,f)  ((fa)->flags & (f))
+
+
 /**
  * @struct Faction
  *
@@ -59,6 +65,8 @@ typedef struct Faction_ {
 
    double player_def; /**< Default player standing. */
    double player; /**< Standing with player - from -100 to 100 */
+
+   unsigned int flags; /**< Flags affecting the faction. */
 } Faction;
 
 
@@ -225,6 +233,10 @@ void faction_modPlayer( int f, double mod )
 
    faction = &faction_stack[f];
 
+   /* Make sure it's not static. */
+   if (faction_isFlag(faction, FACTION_STATIC))
+      return;
+
    /* Faction in question gets direct increment. */
    faction->player += mod;
    faction_sanitizePlayer(faction);
@@ -277,6 +289,10 @@ void faction_modPlayerRaw( int f, double mod )
    }
 
    faction = &faction_stack[f];
+
+   /* Make sure it's not static. */
+   if (faction_isFlag(faction, FACTION_STATIC))
+      return;
 
    faction->player += mod;
    faction_sanitizePlayer(faction);
@@ -537,6 +553,11 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node,"logo")) {
          snprintf( buf, PATH_MAX, FACTION_LOGO_PATH"%s_small.png", xml_get(node));
          temp->logo_small = gl_newImage(buf, 0);
+         continue;
+      }
+
+      if (xml_isNode(node,"static")) {
+         faction_setFlag(temp, FACTION_STATIC);
          continue;
       }
    } while (xml_nextNode(node));
