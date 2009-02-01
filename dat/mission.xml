@@ -55,6 +55,19 @@
    <faction>Empire</faction>
   </avail>
  </mission>
+ <mission name="Empire Shipping 2">
+  <lua>empire/shipping/es01</lua>
+  <flags>
+   <unique>1</unique>
+  </flags>
+  <avail>
+   <cond>player.getFaction("Empire") &gt;= 0</cond>
+   <chance>100</chance>
+   <done>Empire Shipping 1</done>
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission>
  <mission name="Collective Scouting">
   <lua>empire/collective/ec00</lua>
   <flags>

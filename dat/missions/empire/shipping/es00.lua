@@ -27,9 +27,9 @@ else -- default english
 From the cockpit you see how the marines lead the prisoners in front of them with their guns to their back.  You notice that some people step out of the shadows with weapons too, most likely the FLF.]]
    text[5] = [[You suddenly hear a blaring siren and hear shooting.  You quickly start your engines and prepare for take off.  You see shots all over and a couple of prisoner corpses as you leave the starport.  As you remember the explosives you hear loud detonations behind you.  This doesn't look to good.
 You start your climb out of the atmosphere and notice how you're picking up many FLF and Dvaered ships.  Looks like you're going to have quite a run to get the hell out of here.  It didn't go as you expected.]]
-   text[6] = [[After you leave your ship in the Starport you meet up with Commander Soldner.  From the look on his face it seems like he already knows about what happened.
+   text[6] = [[After you leave your ship in the starport you meet up with Commander Soldner.  From the look on his face it seems like he already knows about what happened.
 "It was all the  Dvaered's fault.  They just came in out of no where and started shooting.  What a horrible mess.  We're already working on sorting out the blame, we had good men there."
-He sighs, "Didn't want you to start with a mess like this, but if you're interested in another meet me up in the bar in a while.  We get no rest here.  We alread transfered the payment to your bank account."]]
+He sighs, "Didn't want you to start with a mess like this, but if you're interested in another meet me up in the bar in a while.  We get no rest here.  We already transfered the payment to your bank account."]]
 end
 
 
@@ -108,7 +108,11 @@ function enter ()
       enter_vect:add( math.cos(a) * d, math.sin(a) * d )
 
       -- Create some pilots to go after the player
-      pilot.add( "FLF Sml Force", "def", enter_vect )
+      p = pilot.add( "FLF Sml Force", "def", enter_vect )
+      -- Set hostile
+      for k,v in ipairs(p) do
+         v:setHostile()
+      end
 
       -- Get a far away position for fighting to happen
       -- We'll put the FLF first

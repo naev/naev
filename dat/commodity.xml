@@ -27,4 +27,5 @@
  <commodity name="Datapad"/>
  <commodity name="Satellite"/>
  <commodity name="Prisoners"/>
+ <commodity name="Packages"/>
 </Commodities>

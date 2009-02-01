@@ -320,4 +320,25 @@
    <pilot name="Starfire" chance="100">Goddard</pilot>
   </pilots>
  </fleet>
+ <fleet name="Mercenary Pacifier">
+  <ai>generic</ai>
+  <faction>Mercenary</faction>
+  <pilots>
+   <pilot chance="100">Pacifier</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Mercenary Ancestor">
+  <ai>generic</ai>
+  <faction>Mercenary</faction>
+  <pilots>
+   <pilot chance="100">Ancestor</pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Mercenary Vendetta">
+  <ai>generic</ai>
+  <faction>Mercenary</faction>
+  <pilots>
+   <pilot chance="100">Vendetta</pilot>
+  </pilots>
+ </fleet>
 </Fleets>
