@@ -419,13 +419,13 @@ static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt )
 
 
 /**
- * @brief Preperase the rendering for the special effects.
+ * @brief Prepares the rendering for the special effects.
  *
  * Should be called at the beginning of the rendering loop.
  *
  *    @param dt Current delta tick.
  */
-void spfx_start( const double dt )
+void spfx_begin( const double dt )
 {
    GLdouble bx, by, x, y;
    double inc;
@@ -477,6 +477,34 @@ void spfx_start( const double dt )
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
    glOrtho( -bx+x, bx+x, -by+y, by+y, -1., 1. );
+}
+
+
+/**
+ * @brief Indicates the end of the spfx loop.
+ *
+ * Should be called before the HUD.
+ */
+void spfx_end (void)
+{
+   GLdouble bx, by, x, y;
+
+   /* Save cycles. */
+   if (shake_off == 1)
+      return;
+
+   /* set defaults */
+   bx = SCREEN_W/2;
+   by = SCREEN_H/2;
+
+   /* shake stuff */
+   x = shake_pos.x;
+   y = shake_pos.y;  
+
+   /* set the new viewport */
+   glMatrixMode(GL_PROJECTION);
+   glLoadIdentity();
+   glOrtho( -bx+x*0.5, bx+x*0.5, -by+y*0.5, by+y*0.5, -1., 1. );
 }
 
 

@@ -40,7 +40,8 @@ void spfx_clear (void);
 /*
  * get ready to rumble
  */
-void spfx_start( const double dt );
+void spfx_begin( const double dt );
+void spfx_end (void);
 void spfx_shake( double mod );
 
 

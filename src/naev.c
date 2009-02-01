@@ -552,7 +552,7 @@ static void render_all (void)
    dt = (paused) ? 0. : cur_dt;
 
    /* setup */
-   spfx_start(dt);
+   spfx_begin(dt);
    /* BG */
    space_render(dt);
    planets_render();
@@ -566,6 +566,7 @@ static void render_all (void)
    player_render(dt);
    spfx_render(SPFX_LAYER_FRONT);
    space_renderOverlay(dt);
+   spfx_end();
    gui_render(dt);
    display_fps(cur_dt); /* Exception. */
 }
