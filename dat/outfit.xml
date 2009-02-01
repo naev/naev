@@ -297,7 +297,7 @@
  </outfit>
  <outfit name="Banshee Rocket">
   <general>
-   <max>40</max>
+   <max>80</max>
    <tech>6</tech>
    <license>Medium Weapon License</license>
    <mass>0</mass>
