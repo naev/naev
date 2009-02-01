@@ -113,7 +113,8 @@ function enter ()
       -- Put the VIP at the far end of the player
       enter_vect = player.pos()
       x,y = enter_vect:get()
-      enter_vect:set( -x, -y )
+      d = 1200
+      enter_vect:set( d * -x / math.abs(x), d * -y / math.abs(y) )
       p = pilot.add( "Trader Gawain", "dummy", enter_vect )
       for k,v in ipairs(p) do
          v:warp( enter_vect ) -- Will clear velocity
@@ -126,7 +127,7 @@ function enter ()
       -- We'll toss all other ships in the middle
       -- FLF first
       a = rnd.rnd() * 2 * math.pi
-      d = rnd.rnd( 100, 500 )
+      d = rnd.rnd( 0, 700 )
       enter_vect:set( math.cos(a) * d, math.sin(a) * d )
       p = pilot.add( "FLF Lge Force", "def", enter_vect )
       for k,v in ipairs(p) do
@@ -134,7 +135,7 @@ function enter ()
       end
       -- Now Dvaered
       a = rnd.rnd() * 2 * math.pi
-      d = rnd.rnd( 100, 500 )
+      d = rnd.rnd( 0, 700 )
       enter_vect:set( math.cos(a) * d, math.sin(a) * d )
       p = pilot.add( "Dvaered Med Force", "def", enter_vect )
       for k,v in ipairs(p) do
@@ -167,7 +168,7 @@ end
 function delay_flf ()
 
    -- More ships to pressue player from behind
-   p = pilot.add( "FLF Sml Force", "def", enter_vect )
+   p = pilot.add( "FLF Med Force", "def", enter_vect )
    for k,v in ipairs(p) do
       v:setHostile()
    end
