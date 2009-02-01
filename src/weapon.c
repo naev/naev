@@ -689,6 +689,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       else if (weapon_isSmart(w)) {
 
          if ((pilot_stack[i]->id == w->target) &&
+               weapon_checkCanHit(w,p) &&
                CollideSprite( gfx, wsx, wsy, &w->solid->pos,
                      p->ship->gfx_space, psx, psy,
                      &p->solid->pos,
