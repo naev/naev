@@ -44,6 +44,7 @@ void beam_end( const unsigned int parent, int beam );
 void weapon_explode( double x, double y, double radius,
       DamageType dtype, double damage,
       unsigned int parent, int mode );
+void weapon_toggleSafety (void);
 
 
 /*

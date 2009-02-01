@@ -1083,7 +1083,10 @@ static void pilot_update( Pilot* pilot, const double dt )
       if (!pilot_isFlag(pilot,PILOT_DISABLED)) {
 
          /* If hostile, must remove counter. */
+         i = (pilot_isHostile(pilot)) ? 1 : 0;
          pilot_rmHostile(pilot);
+         if (i == 1) /* Horrible hack to make sure player can hit it if it was hostile. */
+            pilot_setFlag(pilot, PILOT_HOSTILE);
 
          pilot_setFlag(pilot,PILOT_DISABLED); /* set as disabled */
          /* run hook */

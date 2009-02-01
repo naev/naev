@@ -23,6 +23,7 @@
 #include "land.h"
 #include "nstd.h"
 #include "gui.h"
+#include "weapon.h"
 
 
 #define KEY_PRESS    ( 1.) /**< Key is pressed. */
@@ -50,7 +51,7 @@ const char *keybindNames[] = {
   /* Targetting. */
    "target", "target_prev", "target_nearest", "target_hostile",
    /* Fighting. */
-   "primary", "face", "board",
+   "primary", "face", "board", "safety",
    /* Secondary weapons. */
    "secondary", "secondary_next", "secondary_prev",
    /* Escorts. */
@@ -83,6 +84,7 @@ const char *keybindDescription[] = {
    "Fires your primary weapons.",
    "Faces your target (ship target if you have one, otherwise your planet target).",
    "Attempts to board your target ship.",
+   "Toggles weapon safety (hitting of friendly ships).",
    /* Secondary weapons. */
    "Fires your secondary weapon.",
    "Cycles through secondary weapons.",
@@ -167,6 +169,7 @@ void input_setDefault (void)
    input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, KMOD_ALL );
    input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, KMOD_NONE );
    input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, KMOD_NONE );
+   input_setKeybind( "safety", KEYBIND_KEYBOARD, SDLK_s, KMOD_LCTRL );
    /* Secondary weapons. */
    input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, KMOD_ALL );
    input_setKeybind( "secondary_next", KEYBIND_KEYBOARD, SDLK_w, KMOD_NONE );
@@ -543,6 +546,9 @@ static void input_key( int keynum, double value, double kabs )
          player_abortAutonav(NULL);
          player_board();
       }
+   } else if (KEY("safety") && INGAME()) {
+      if (value==KEY_PRESS)
+         weapon_toggleSafety();
 
 
    /*

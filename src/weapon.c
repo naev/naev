@@ -56,6 +56,12 @@ extern int pilot_nstack;
 extern void ai_attacked( Pilot* attacked, const unsigned int attacker ); /**< Triggers the "attacked" function in the ai */
 
 
+/*
+ * Weapon stuff.
+ */
+static int weapon_safety = 1; /**< Enables shooting friendlies. */
+
+
 /**
  * @struct Weapon
  *
@@ -117,6 +123,7 @@ static void weapon_free( Weapon* w );
 static void weapon_explodeLayer( WeaponLayer layer,
       double x, double y, double radius,
       unsigned int parent, int mode );
+static int weapon_checkCanHit( Weapon* w, Pilot *p );
 /* think */
 static void think_seeker( Weapon* w, const double dt );
 static void think_beam( Weapon* w, const double dt );
@@ -167,6 +174,17 @@ void weapon_minimap( const double res, const double w,
    glEnd(); /* GL_POINTS */
 }
 #undef PIXEL
+
+
+void weapon_toggleSafety (void)
+{
+   weapon_safety = !weapon_safety;
+
+   if (weapon_safety)
+      player_message( "Enabling weapon safety." );
+   else
+      player_message( "Disabling weapon safety." );
+}
 
 
 /**
@@ -585,6 +603,32 @@ static void weapon_render( Weapon* w, const double dt )
 
 
 /**
+ * @brief Checks to see if the weapon can hit the pilot.
+ *
+ *    @param w Weapon to check if hits pilot.
+ *    @param p Pilot to check if is hit by weapon.
+ *    @return 1 if can be hit, 0 if can't.
+ */
+static int weapon_checkCanHit( Weapon* w, Pilot *p )
+{
+   /* Player hits hostiles or everything with safety off. */
+   if (w->faction == FACTION_PLAYER) {
+      if (!weapon_safety)
+         return 1;
+
+      if (pilot_isFlag(p, PILOT_HOSTILE))
+         return 1;
+   }
+
+   /* Hit non-allies. */
+   if (!areAllies(w->faction, p->faction))
+      return 1;
+
+   return 0;
+}
+
+
+/**
  * @brief Updates an individual weapon.
  *
  *    @param w Weapon to update.
@@ -596,6 +640,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    int i, wsx,wsy, psx,psy;
    glTexture *gfx;
    Vector2d crash[2];
+   Pilot *p;
 
    /* Get the sprite direction to speed up calculations. */
    if (!outfit_isBeam(w->outfit)) {
@@ -605,6 +650,8 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
    for (i=0; i<pilot_nstack; i++) {
 
+      p = pilot_stack[i];
+
       psx = pilot_stack[i]->tsx;
       psy = pilot_stack[i]->tsy;
 
@@ -613,13 +660,13 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       /* Beam weapons have special collisions. */
       if (outfit_isBeam(w->outfit)) {
          /* Check for collision. */
-         if (!areAllies(w->faction,pilot_stack[i]->faction) &&
+         if (weapon_checkCanHit(w,p) &&
                CollideLineSprite( &w->solid->pos, w->solid->dir,
                      w->outfit->u.bem.range,
-                     pilot_stack[i]->ship->gfx_space, psx, psy,
-                     &pilot_stack[i]->solid->pos,
+                     p->ship->gfx_space, psx, psy,
+                     &p->solid->pos,
                      crash)) {
-            weapon_hitBeam( w, pilot_stack[i], layer, crash, dt );
+            weapon_hitBeam( w, p, layer, crash, dt );
             /* No return because beam can still think, it's not
              * destroyed like the other weapons.*/
          }
@@ -629,22 +676,21 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
          if ((pilot_stack[i]->id == w->target) &&
                CollideSprite( gfx, wsx, wsy, &w->solid->pos,
-                     pilot_stack[i]->ship->gfx_space, psx, psy,
-                     &pilot_stack[i]->solid->pos,
+                     p->ship->gfx_space, psx, psy,
+                     &p->solid->pos,
                      &crash[0] )) {
-            weapon_hit( w, pilot_stack[i], layer, &crash[0] );
+            weapon_hit( w, p, layer, &crash[0] );
             return; /* Weapon is destroyed. */
          }
       }
       /* dump weapons hit anything not of the same faction */
       else {
-
-         if (!areAllies(w->faction,pilot_stack[i]->faction) &&
+         if (weapon_checkCanHit(w,p) &&
                CollideSprite( gfx, wsx, wsy, &w->solid->pos,
-                     pilot_stack[i]->ship->gfx_space, psx, psy,
-                     &pilot_stack[i]->solid->pos,
+                     p->ship->gfx_space, psx, psy,
+                     &p->solid->pos,
                      &crash[0] )) {
-            weapon_hit( w, pilot_stack[i], layer, &crash[0] );
+            weapon_hit( w, p, layer, &crash[0] );
             return; /* Weapon is destroyed. */
          }
       }
