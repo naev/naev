@@ -28,6 +28,13 @@
    <pilot chance="100">Mule</pilot>
   </pilots>
  </fleet>
+ <fleet name="Trader Gawain">
+  <ai>trader</ai>
+  <faction>Trader</faction>
+  <pilots>
+   <pilot chance="100">Gawain</pilot>
+  </pilots>
+ </fleet>
  <fleet name="Sml Trader Convoy">
   <ai>trader</ai>
   <faction>Trader</faction>

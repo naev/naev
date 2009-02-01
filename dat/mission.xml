@@ -3,7 +3,7 @@
  <mission name="Tutorial">
   <lua>tutorial</lua>
   <flags>
-   <unique>1</unique>
+   <unique />
   </flags>
   <avail>
    <location>None</location>
@@ -25,7 +25,7 @@
  <mission name="Empire Recruitment">
   <lua>empire/emp_cargo00</lua>
   <flags>
-   <unique>1</unique>
+   <unique />
   </flags>
   <avail>
    <chance>80</chance>
@@ -46,7 +46,7 @@
  <mission name="Empire Shipping 1">
   <lua>empire/shipping/es00</lua>
   <flags>
-   <unique>1</unique>
+   <unique />
   </flags>
   <avail>
    <cond>player.getFaction("Empire") &gt;= 0 and var.peek("es_misn") &gt;= 3</cond>
@@ -58,32 +58,46 @@
  <mission name="Empire Shipping 2">
   <lua>empire/shipping/es01</lua>
   <flags>
-   <unique>1</unique>
+   <unique />
   </flags>
   <avail>
    <cond>player.getFaction("Empire") &gt;= 0</cond>
    <chance>100</chance>
    <done>Empire Shipping 1</done>
    <location>Bar</location>
-   <faction>Empire</faction>
+   <planet>Polaris Prime</planet>
+  </avail>
+ </mission>
+ <mission name="Empire Shipping 3">
+  <lua>empire/shipping/es02</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <cond>player.getFaction("Empire") &gt;= 0</cond>
+   <chance>100</chance>
+   <done>Empire Shipping 2</done>
+   <location>Bar</location>
+   <planet>Polaris Prime</planet>
   </avail>
  </mission>
  <mission name="Collective Scouting">
   <lua>empire/collective/ec00</lua>
   <flags>
-   <unique>1</unique>
+   <unique />
   </flags>
   <avail>
    <cond>var.peek("es_cargo") == true and space.getSystem("NGC-7291"):jumpDist() &lt; 5 and player.getFaction("Empire") &gt; 5 and player.getRating() &gt; 5 and var.peek("collective_fail") ~= true</cond>
    <chance>80</chance>
    <location>Bar</location>
+   <done>Empire Shipping 3</done>
    <faction>Empire</faction>
   </avail>
  </mission>
  <mission name="Collective Espionage 1">
   <lua>empire/collective/ec01</lua>
   <flags>
-   <unique>1</unique>
+   <unique />
   </flags>
   <avail>
    <cond>player.getFaction("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
@@ -96,7 +110,7 @@
  <mission name="Collective Espionage 2">
   <lua>empire/collective/ec02</lua>
   <flags>
-   <unique>1</unique>
+   <unique />
   </flags>
   <avail>
    <cond>player.getFaction("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
@@ -109,7 +123,7 @@
  <mission name="Collective Espionage 3">
   <lua>empire/collective/ec03</lua>
   <flags>
-   <unique>1</unique>
+   <unique />
   </flags>
   <avail>
    <cond>player.getFaction("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
@@ -122,7 +136,7 @@
  <mission name="Collective Distraction">
   <lua>empire/collective/ec04</lua>
   <flags>
-   <unique>1</unique>
+   <unique />
   </flags>
   <avail>
    <cond>player.getFaction("Empire") &gt; 5 and var.peek("emp_commando") ~= nil and time.get() &gt; var.peek("emp_commando")</cond>
@@ -135,7 +149,7 @@
  <mission name="Operation Black Trinity">
   <lua>empire/collective/ec05</lua>
   <flags>
-   <unique>1</unique>
+   <unique />
   </flags>
   <avail>
    <cond>player.getFaction("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
@@ -148,7 +162,7 @@
  <mission name="Operation Cold Metal">
   <lua>empire/collective/ec06</lua>
   <flags>
-   <unique>1</unique>
+   <unique />
   </flags>
   <avail>
    <cond>player.getFaction("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
@@ -161,7 +175,7 @@
  <mission name="Nebulae Satellite">
   <lua>neutral/nebu_satellite</lua>
   <flags>
-   <unique>1</unique>
+   <unique />
   </flags>
   <avail>
    <chance>15</chance>
@@ -180,6 +194,7 @@
    <chance>366</chance>
    <cond>player.getFaction("Dvaered") &gt; 5 and player.getRating() &gt; 100</cond>
    <location>Computer</location>
+   <done>Empire Shipping 3</done>
    <faction>Dvaered</faction>
   </avail>
  </mission>

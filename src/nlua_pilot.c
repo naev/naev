@@ -66,6 +66,7 @@ static int pilotL_broadcast( lua_State *L );
 static int pilotL_setFaction( lua_State *L );
 static int pilotL_setHostile( lua_State *L );
 static int pilotL_setFriendly( lua_State *L );
+static int pilotL_disable( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    { "__eq", pilotL_eq },
    { "name", pilotL_name },
@@ -78,6 +79,7 @@ static const luaL_reg pilotL_methods[] = {
    { "setFaction", pilotL_setFaction },
    { "setHostile", pilotL_setHostile },
    { "setFriendly", pilotL_setFriendly },
+   { "disable", pilotL_disable },
    {0,0}
 }; /**< Pilot metatable methods. */
 
@@ -730,6 +732,31 @@ static int pilotL_setFriendly( lua_State *L )
 
    /* Remove hostile and mark as friendly. */
    pilot_setFriendly(p);
+
+   return 0;
+}
+
+
+/**
+ * @ingroup META_PILOT
+ *
+ * @brief Disables a pilot.
+ * @luafunc disable()
+ */
+static int pilotL_disable( lua_State *L )
+{
+   LuaPilot *lp;
+   Pilot *p;
+
+   /* Get the pilot. */
+   lp = lua_topilot(L,1);
+   p = pilot_get(lp->pilot);
+   if (p==NULL) return 0;
+
+   /* Disable the pilot. */
+   p->shield = 0.;
+   p->armour = PILOT_DISABLED_ARMOR * p->armour_max;
+   pilot_setFlag( p, PILOT_DISABLED );
 
    return 0;
 }

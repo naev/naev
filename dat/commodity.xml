@@ -28,4 +28,5 @@
  <commodity name="Satellite"/>
  <commodity name="Prisoners"/>
  <commodity name="Packages"/>
+ <commodity name="VIP"/>
 </Commodities>

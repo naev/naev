@@ -73,6 +73,7 @@
   </enemies>
  </faction>
  <faction name="Collective">
+  <static />
   <player>-100</player>
   <enemies>
    <enemy>Empire</enemy>
