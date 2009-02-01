@@ -71,7 +71,7 @@ typedef struct Weapon_ {
    Solid *solid; /**< Actually has its own solid :) */
    int ID; /**< Only used for beam weapons. */
 
-   unsigned int faction; /**< faction of pilot that shot it */
+   int faction; /**< faction of pilot that shot it */
    unsigned int parent; /**< pilot that shot it */
    unsigned int target; /**< target to hit, only used by seeking things */
    const Outfit* outfit; /**< related outfit that fired it or whatnot */
@@ -611,12 +611,26 @@ static void weapon_render( Weapon* w, const double dt )
  */
 static int weapon_checkCanHit( Weapon* w, Pilot *p )
 {
+   Pilot *parent;
+
+   /* Can never hit same faction. */
+   if (p->faction == w->faction)
+      return 0;
+
    /* Player hits hostiles or everything with safety off. */
    if (w->faction == FACTION_PLAYER) {
+
       if (!weapon_safety)
          return 1;
 
       if (pilot_isFlag(p, PILOT_HOSTILE))
+         return 1;
+   }
+
+   /* Let hostiles hit player. */
+   if (p->faction == FACTION_PLAYER) {
+      parent = pilot_get(w->parent);
+      if ((parent != NULL) && pilot_isFlag(parent, PILOT_HOSTILE))
          return 1;
    }
 
