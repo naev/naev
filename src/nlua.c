@@ -454,7 +454,7 @@ static int tk_msg( lua_State *L )
    if (lua_isstring(L,2)) str = (char*) lua_tostring(L,2);
    else NLUA_INVALID_PARAMETER();
    
-   dialogue_msg( title, str );
+   dialogue_msgRaw( title, str );
    return 0;
 }
 /**
@@ -477,7 +477,7 @@ static int tk_yesno( lua_State *L )
    if (lua_isstring(L,2)) str = (char*) lua_tostring(L,2);
    else NLUA_INVALID_PARAMETER();
    
-   ret = dialogue_YesNo( title, str );
+   ret = dialogue_YesNoRaw( title, str );
    lua_pushboolean(L,ret);
    return 1;
 }
@@ -507,7 +507,7 @@ static int tk_input( lua_State *L )
    if (lua_isstring(L,4)) str = (char*) lua_tostring(L,4);
    else NLUA_INVALID_PARAMETER();
    
-   ret = dialogue_input( title, min, max, str );
+   ret = dialogue_inputRaw( title, min, max, str );
    if (ret != NULL) {
       lua_pushstring(L, ret);
       free(ret);

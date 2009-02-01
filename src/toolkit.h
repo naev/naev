@@ -20,7 +20,7 @@ extern int toolkit;
 /*
  * creation
  */
-unsigned int window_create( char* name,
+unsigned int window_create( const char* name,
       const int x, const int y, /* position */
       const int w, const int h ); /* dimensions */
 void window_addButton( const unsigned int wid,
@@ -32,7 +32,7 @@ void window_addText( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
       const int centered, char* name, /* text is centered? label name */
-      glFont* font, glColour* colour, char* string ); /* font, colour and actual text */
+      glFont* font, glColour* colour, const char* string ); /* font, colour and actual text */
 void window_addImage( const unsigned int wid,
       const int x, const int y, /* position */
       char* name, glTexture* image, int border ); /* label and image itself */

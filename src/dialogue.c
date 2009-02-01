@@ -42,7 +42,7 @@ int dialogue_open; /**< Number of dialogues open. */
 /* extern */
 extern void main_loop (void); /* from naev.c */
 /* dialogues */
-static glFont* dialogue_getSize( char* msg, int* w, int* h );
+static glFont* dialogue_getSize( const char* msg, int* w, int* h );
 static void dialogue_alertClose( unsigned int wid, char* str );
 static void dialogue_msgClose( unsigned int wid, char* str );
 static void dialogue_YesNoClose( unsigned int wid, char* str );
@@ -112,7 +112,7 @@ static void dialogue_alertClose( unsigned int wid, char* str )
  *    @param[out] height Gets the height needed.
  *    @return The font that matches the size.
  */
-static glFont* dialogue_getSize( char* msg, int* width, int* height )
+static glFont* dialogue_getSize( const char* msg, int* width, int* height )
 {
    glFont* font;
    double w, h, d;
@@ -154,13 +154,10 @@ static glFont* dialogue_getSize( char* msg, int* width, int* height )
  *    @param caption Window title.
  *    @param fmt Printf style message to display.
  */
-void dialogue_msg( char* caption, const char *fmt, ... )
+void dialogue_msg( const char* caption, const char *fmt, ... )
 {
    char msg[4096];
    va_list ap;
-   int w,h;
-   glFont* font;
-   unsigned int msg_wid;
 
    if (fmt == NULL) return;
    else { /* get the message */
@@ -169,7 +166,23 @@ void dialogue_msg( char* caption, const char *fmt, ... )
       va_end(ap);
    }
 
-   font =dialogue_getSize( msg, &w, &h );
+   dialogue_msgRaw( caption, msg );
+}
+
+
+/**
+ * @brief Opens a dialogue window with an ok button and a fixed message.
+ *
+ *    @param caption Window title.
+ *    @param text Message to display.
+ */    
+void dialogue_msgRaw( const char* caption, const char *msg )
+{
+   int w,h;
+   glFont* font;
+   unsigned int msg_wid;
+
+   font = dialogue_getSize( msg, &w, &h );
 
    /* create the window */
    msg_wid = window_create( caption, -1, -1, w, 110 + h );
@@ -181,6 +194,7 @@ void dialogue_msg( char* caption, const char *fmt, ... )
    dialogue_open++;
    toolkit_loop();
 }
+
 /**
  * @brief Closes a message dialogue.
  *    @param wid Window being closed.
@@ -204,12 +218,10 @@ static unsigned int yesno_wid = 0; /**< Stores the yesno window id. */
  *    @param fmt Printf style message.
  *    @return 1 if yes is clicked or 0 if no is clicked.
  */
-int dialogue_YesNo( char* caption, const char *fmt, ... )
+int dialogue_YesNo( const char* caption, const char *fmt, ... )
 {
    char msg[4096];
    va_list ap;
-   int w,h;
-   glFont* font;
 
    if (yesno_wid) return -1;
 
@@ -219,6 +231,22 @@ int dialogue_YesNo( char* caption, const char *fmt, ... )
       vsnprintf(msg, 4096, fmt, ap);
       va_end(ap);
    }
+
+   return dialogue_YesNoRaw( caption, msg );
+}
+
+
+/**
+ * @brief Runs a dialogue with both yes and no options.
+ *
+ *    @param caption Caption to use for the dialogue.
+ *    @param msg Message to display.
+ *    @return 1 if yes is clicked or 0 if no is clicked.
+ */
+int dialogue_YesNoRaw( const char* caption, const char *msg )
+{
+   int w,h;
+   glFont* font;
 
    font = dialogue_getSize( msg, &w, &h );
 
@@ -275,11 +303,10 @@ static int input_cancelled = 0; /**< Stores whether or not the input was cancell
  *    @param fmt Printf style message to display on the dialogue.
  *    @return The message the player typed or NULL if it was cancelled.
  */
-char* dialogue_input( char* title, int min, int max, const char *fmt, ... )
+char* dialogue_input( const char* title, int min, int max, const char *fmt, ... )
 {
-   char msg[512], *input;
+   char msg[512];
    va_list ap;
-   int h;
 
    if (input_wid) return NULL;
 
@@ -289,6 +316,25 @@ char* dialogue_input( char* title, int min, int max, const char *fmt, ... )
       vsnprintf(msg, 512, fmt, ap);
       va_end(ap);
    }
+
+   return dialogue_inputRaw( title, min, max, msg );
+}
+
+/**
+ * @brief Creates a dialogue that allows the player to write a message.
+ *
+ * You must free the result if it's not null.
+ *
+ *    @param title Title of the dialogue window.
+ *    @param min Minimum length of the message (must be non-zero).
+ *    @param max Maximum length of the message (must be non-zero).
+ *    @param fmt Printf style message to display on the dialogue.
+ *    @return The message the player typed or NULL if it was cancelled.
+ */
+char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
+{
+   char *input;
+   int h;
 
    /* Start out not cancelled. */
    input_cancelled = 0;

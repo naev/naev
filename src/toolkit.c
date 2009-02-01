@@ -337,7 +337,7 @@ void window_addText( const unsigned int wid,
                      const int x, const int y,
                      const int w, const int h,
                      const int centered, char* name,
-                     glFont* font, glColour* colour, char* string )
+                     glFont* font, glColour* colour, const char* string )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw);
@@ -1140,7 +1140,7 @@ unsigned int window_get( const char* wdwname )
  *    @param h Height of the window.
  *    @return Newly created window's ID.
  */
-unsigned int window_create( char* name,
+unsigned int window_create( const char* name,
       const int x, const int y, const int w, const int h )
 {
    Window *wdw;
