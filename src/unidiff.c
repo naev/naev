@@ -67,7 +67,9 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_PLANET_ADD,
    HUNK_TYPE_PLANET_REMOVE,
    HUNK_TYPE_FLEET_ADD,
-   HUNK_TYPE_FLEET_REMOVE
+   HUNK_TYPE_FLEET_REMOVE,
+   HUNK_TYPE_FLEETGROUP_ADD,
+   HUNK_TYPE_FLEETGROUP_REMOVE
 } UniHunkType_t;
 
 
@@ -83,6 +85,7 @@ typedef struct UniHunk_ {
    union {
       char *name;
       SystemFleet fleet;
+      FleetGroup *fleetgroup;
    } u; /**< Actual data to patch. */
 } UniHunk_t;
 
@@ -262,13 +265,12 @@ static int diff_patch( xmlNodePtr parent )
 
                /* Get the type. */
                buf = xml_get(cur);
-               if (strcmp(buf,"add")==0) {
+               if (strcmp(buf,"add")==0)
                   hunk.type = HUNK_TYPE_PLANET_ADD;
-               }
-               else if (strcmp(buf,"remove")==0) {
+               else if (strcmp(buf,"remove")==0)
                   hunk.type = HUNK_TYPE_PLANET_REMOVE;
-               }
 
+               /* Apply diff. */
                if (diff_patchHunk( &hunk ) < 0)
                   diff_hunkFailed( diff, &hunk );
                else
@@ -288,13 +290,34 @@ static int diff_patch( xmlNodePtr parent )
 
                /* Get the type. */
                buf = xml_get(cur);
-               if (strcmp(buf,"add")==0) {
+               if (strcmp(buf,"add")==0)
                   hunk.type = HUNK_TYPE_FLEET_ADD;
-               }
-               else if (strcmp(buf,"remove")==0) {
+               else if (strcmp(buf,"remove")==0)
                   hunk.type = HUNK_TYPE_FLEET_REMOVE;
-               }
 
+               /* Apply diff. */
+               if (diff_patchHunk( &hunk ) < 0)
+                  diff_hunkFailed( diff, &hunk );
+               else
+                  diff_hunkSuccess( diff, &hunk );
+            }
+            else if (xml_isNode(cur, "fleetgroup")) {
+               hunk.target.type = base.target.type;
+               hunk.target.u.name = strdup(base.target.u.name);
+
+               /* Get the fleet properties. */
+               xmlr_attr(cur,"name",buf);
+               hunk.u.fleetgroup = fleet_getGroup(buf);
+               free(buf);
+
+               /* Get the type. */
+               buf = xml_get(cur);
+               if (strcmp(buf,"add")==0)
+                  hunk.type = HUNK_TYPE_FLEETGROUP_ADD;
+               else if (strcmp(buf,"remove")==0)
+                  hunk.type = HUNK_TYPE_FLEETGROUP_REMOVE;
+
+               /* Apply diff. */
                if (diff_patchHunk( &hunk ) < 0)
                   diff_hunkFailed( diff, &hunk );
                else
@@ -307,7 +330,7 @@ static int diff_patch( xmlNodePtr parent )
          base.target.u.name = NULL;
 
       }
-   } while(xml_nextNode(node));
+   } while (xml_nextNode(node));
 
    if (diff->nfailed > 0) {
       DEBUG("Unidiff '%s' failed %d hunks.", diff->name, diff->nfailed);
@@ -328,6 +351,14 @@ static int diff_patch( xmlNodePtr parent )
             case HUNK_TYPE_FLEET_REMOVE:
                DEBUG("   [%s] fleet remove: '%s' (%d%% chance)", target,
                      fail->u.fleet.fleet->name, fail->u.fleet.chance );
+               break;
+            case HUNK_TYPE_FLEETGROUP_ADD:
+               DEBUG("   [%s] fleetgroup add: '%s'", target, 
+                     fail->u.fleetgroup->name );
+               break;
+            case HUNK_TYPE_FLEETGROUP_REMOVE:
+               DEBUG("   [%s] fleetgroup remove: '%s'", target,
+                     fail->u.fleetgroup->name );
                break;
 
             default:
@@ -364,6 +395,15 @@ static int diff_patchHunk( UniHunk_t *hunk )
       /* Removing a fleet. */
       case HUNK_TYPE_FLEET_REMOVE:
          return system_rmFleet( system_get(hunk->target.u.name), &hunk->u.fleet );
+
+      /* Adding a fleetgroup. */
+      case HUNK_TYPE_FLEETGROUP_ADD:
+         return system_addFleetGroup( system_get(hunk->target.u.name),
+               hunk->u.fleetgroup );
+      /* Removing a fleetgroup. */
+      case HUNK_TYPE_FLEETGROUP_REMOVE:
+         return system_rmFleetGroup( system_get(hunk->target.u.name),
+               hunk->u.fleetgroup );
 
       default:
          WARN("Unknown hunk type '%d'.", hunk->type);
