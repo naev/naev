@@ -43,6 +43,7 @@
 #include "perlin.h"
 #include "ai.h"
 #include "music.h"
+#include "nmath.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
@@ -109,9 +110,13 @@ typedef struct Rect_ {
 
 
 typedef struct HealthBar_ {
-   Rect rect;
-   glColour col;
-   glTexture *gfx;
+   Rect rect; /**< Position and dimensions. */
+   glColour col; /**< Colour. */
+   glTexture *gfx; /**< Graphic to use (if NULL uses a bar). */
+   /* Used to do fill aproximation. */
+   double area; /**< Total area of the graphic. */
+   double slope; /**< Slope of the aproximation. */
+   double offset; /**< Offset of the aproximation. */
 } HealthBar;
 
 /**
@@ -859,6 +864,7 @@ static void gui_renderPilot( const Pilot* p )
  */
 static void gui_renderHealth( const HealthBar *bar, const double w )
 {
+   double res[2], rw;
    double x,y, sx,sy, tx,ty;
 
    /* Set the colour. */
@@ -881,10 +887,17 @@ static void gui_renderHealth( const HealthBar *bar, const double w )
    }
    /* Render the texture. */
    else {
+      /* Calculate the line.
+       * y = slope * x + offset
+       * w = 1 / area * ( slope * x^2 / 2 + offset )
+       * we need to isolate x. */
+      nmath_solve2Eq( res, bar->slope / 2., bar->offset, -bar->area * w );
+      rw = res[0] / bar->gfx->sw;
+
       /* Set the position values. */
       x = bar->rect.x - SCREEN_W/2.;
       y = bar->rect.y - SCREEN_H/2. + bar->gfx->sh;
-      sx = w * bar->gfx->sw;
+      sx = rw * bar->gfx->sw;
       sy = bar->gfx->sh;
       tx = bar->gfx->sw / bar->gfx->rw;
       ty = bar->gfx->sh / bar->gfx->rh;
@@ -897,10 +910,10 @@ static void gui_renderHealth( const HealthBar *bar, const double w )
          glTexCoord2d( 0., ty );
          glVertex2d( x, y );
 
-         glTexCoord2d( w*tx, ty );
+         glTexCoord2d( rw*tx, ty );
          glVertex2d( x + sx, y );
          
-         glTexCoord2d( w*tx, 0. );
+         glTexCoord2d( rw*tx, 0. );
          glVertex2d( x + sx, y - sy );
 
          glTexCoord2d( 0., 0. );
@@ -1129,7 +1142,10 @@ static void gui_createInterference (void)
  */
 static int gui_parseBar( xmlNodePtr parent, HealthBar *bar, const glColour *col )
 {
+   int i, j;
    char *tmp, buf[PATH_MAX];
+   double x, y, n;
+   double sumx, sumy, sumxx, sumxy;
 
    /* Parse the rectangle. */
    rect_parse( parent, &bar->rect.x, &bar->rect.y,
@@ -1147,7 +1163,38 @@ static int gui_parseBar( xmlNodePtr parent, HealthBar *bar, const glColour *col 
    tmp = xml_get(parent);
    if (tmp != NULL) {
       snprintf( buf, PATH_MAX, GUI_GFX"%s.png", tmp );
-      bar->gfx = gl_newImage( buf, 0 );
+      bar->gfx = gl_newImage( buf, OPENGL_TEX_MAPTRANS );
+
+      /* We do a slope aproximation now. */
+      n = 0.;
+      sumx = 0.;
+      sumy = 0.;
+      sumxx = 0.;
+      sumxy = 0.;
+      for (i=0; i<bar->gfx->sw; i++) {
+         x = (double)i;
+         for (j=0; j<bar->gfx->sh; j++) {
+            y = (double)j;
+            /* Count dots. */
+            if (gl_isTrans( bar->gfx, i, j)) {
+               sumx += x;
+               sumy += y;
+               sumxx += x*x;
+               sumxy += x*y;
+               n++;
+            }
+         }
+      }
+
+      /* Now calculate slope parameters. */
+      bar->slope  = (sumx*sumy - n*sumxy);
+      bar->slope /= (sumx*sumx - n*sumxx);
+      bar->offset = (sumy - bar->slope*sumx) / n;
+      if (bar->offset < 0.) /* must be positive to ensure solution. */
+         bar->offset = 0.;
+
+      /* Calculate the area. */
+      bar->area = bar->slope/2. * pow(bar->gfx->sw, 2.) + bar->offset * bar->gfx->sw;
    }
 
    return 0;
