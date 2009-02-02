@@ -150,23 +150,41 @@ void weapon_minimap( const double res, const double w,
 {
    int i, rc;
    double x, y;
+   Weapon *wp;
 
    /* Begin the points. */
    glBegin(GL_POINTS);
-   ACOLOUR(cRadar_weap, alpha);
 
    if (shape==RADAR_CIRCLE)
       rc = (int)(w*w);
 
    /* Draw the points for weapons on all layers. */
    for (i=0; i<nwbackLayer; i++) {
-      x = (wbackLayer[i]->solid->pos.x - player->solid->pos.x) / res;
-      y = (wbackLayer[i]->solid->pos.y - player->solid->pos.y) / res;
+      wp = wbackLayer[i];
+
+      /* Choose colour based on if it'll hit player. */
+      if (areAllies(FACTION_PLAYER, wp->faction))
+         ACOLOUR(cNeutral, alpha);
+      else
+         ACOLOUR(cHostile, alpha);
+
+      /* Put the pixel. */
+      x = (wp->solid->pos.x - player->solid->pos.x) / res;
+      y = (wp->solid->pos.y - player->solid->pos.y) / res;
       PIXEL(x,y);
    }
    for (i=0; i<nwfrontLayer; i++) {
-      x = (wfrontLayer[i]->solid->pos.x - player->solid->pos.x) / res;
-      y = (wfrontLayer[i]->solid->pos.y - player->solid->pos.y) / res;
+      wp = wfrontLayer[i];
+
+      /* Choose colour based on if it'll hit player. */
+      if (areAllies(FACTION_PLAYER, wp->faction))
+         ACOLOUR(cNeutral, alpha);
+      else
+         ACOLOUR(cHostile, alpha);
+
+      /* Put the pixel. */
+      x = (wp->solid->pos.x - player->solid->pos.x) / res;
+      y = (wp->solid->pos.y - player->solid->pos.y) / res;
       PIXEL(x,y);
    }
 
