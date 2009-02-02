@@ -163,7 +163,9 @@ void weapon_minimap( const double res, const double w,
       wp = wbackLayer[i];
 
       /* Choose colour based on if it'll hit player. */
-      if ((wp->target == PLAYER_ID) || !areAllies(FACTION_PLAYER, wp->faction))
+      if (outfit_isSeeker(wp->outfit) && (wp->target != PLAYER_ID))
+         ACOLOUR(cNeutral, alpha);
+      else if ((wp->target == PLAYER_ID) || !areAllies(FACTION_PLAYER, wp->faction))
          ACOLOUR(cHostile, alpha);
       else
          ACOLOUR(cNeutral, alpha);
@@ -177,7 +179,9 @@ void weapon_minimap( const double res, const double w,
       wp = wfrontLayer[i];
 
       /* Choose colour based on if it'll hit player. */
-      if ((wp->target == PLAYER_ID) || !areAllies(FACTION_PLAYER, wp->faction))
+      if (outfit_isSeeker(wp->outfit) && (wp->target != PLAYER_ID))
+         ACOLOUR(cNeutral, alpha);
+      else if ((wp->target == PLAYER_ID) || !areAllies(FACTION_PLAYER, wp->faction))
          ACOLOUR(cHostile, alpha);
       else
          ACOLOUR(cNeutral, alpha);
