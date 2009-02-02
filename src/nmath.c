@@ -8,7 +8,7 @@
  * @brief Some math routines for naev.
  */
 
-#include "ndata.h"
+#include "nmath.h"
 
 #include <math.h>
 
