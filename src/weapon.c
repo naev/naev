@@ -642,6 +642,10 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
    if (p->faction == w->faction)
       return 0;
 
+   /* Go "through" dead pilots. */
+   if (pilot_isFlag(p, PILOT_DEAD))
+      return 0;
+
    /* Player behaves differently. */
    if (w->faction == FACTION_PLAYER) {
 
