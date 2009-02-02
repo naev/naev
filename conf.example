@@ -66,6 +66,7 @@ fullscreen = 1
 --primary      = { type = "keyboard", key = "space", mod = "any" }
 --face         = { type = "keyboard", key = "A" }
 --board        = { type = "keyboard", key = "B" }
+--safety       = { type = "keyboard", key = "S", mod = "lctrl" }
 
 -- Escorts.
 --e_targetNext = { type = "keyboard", key = "E" }
