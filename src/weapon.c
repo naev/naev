@@ -176,6 +176,9 @@ void weapon_minimap( const double res, const double w,
 #undef PIXEL
 
 
+/**
+ * @brief Toggles the player's weapon safety.
+ */
 void weapon_toggleSafety (void)
 {
    weapon_safety = !weapon_safety;
@@ -617,14 +620,28 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
    if (p->faction == w->faction)
       return 0;
 
-   /* Player hits hostiles or everything with safety off. */
+   /* Player behaves differently. */
    if (w->faction == FACTION_PLAYER) {
 
+      /* Always hit without safety. */
       if (!weapon_safety)
          return 1;
 
-      if (pilot_isFlag(p, PILOT_HOSTILE))
+      /* Always hit target. */
+      else if (w->target == p->id)
          return 1;
+
+      /* Always hit hostiles. */
+      else if (pilot_isFlag(p, PILOT_HOSTILE))
+         return 1;
+
+      /* Always hit enemies. */
+      else if (areEnemies(w->faction, p->faction))
+        return 1;
+
+      /* Miss rest - can be neutral/ally. */
+      else
+         return 0;
    }
 
    /* Let hostiles hit player. */
