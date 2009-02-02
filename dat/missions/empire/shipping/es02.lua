@@ -188,14 +188,16 @@ end
 
 
 function death ()
-   -- Notify of death
-   player.msg( msg[1] )
+   if misn_stage == 1 then
+      -- Notify of death
+      player.msg( msg[1] )
 
-   -- Update mission details
-   misn_stage = 3
-   --[[
-   misn.setMarker(retsys)
-   misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name() ))
-   ]]--
-   misn.finish(false)
+      -- Update mission details
+      misn_stage = 3
+      --[[
+      misn.setMarker(retsys)
+      misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name() ))
+      ]]--
+      misn.finish(false)
+   end
 end
