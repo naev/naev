@@ -35,6 +35,7 @@
  */
 int sound_disabled = 0; /**< Whether sound is disabled. */
 double sound_defVolume = 0.4; /**< Sound default volume. */
+static double sound_curVolume = 0.; /**< Current sound volume. */
 static int sound_reserved = 0; /**< Amount of reserved channels. */
 static double sound_pos[3]; /**< Position of listener. */
 
@@ -530,7 +531,20 @@ static int sound_makeList (void)
 int sound_volume( const double vol )
 {
    if (sound_disabled) return 0;
-   return Mix_Volume( -1, MIX_MAX_VOLUME*vol);
+
+   sound_curVolume = MIX_MAX_VOLUME*vol;
+   return Mix_Volume( -1, sound_curVolume);
+}
+
+
+/**
+ * @brief Gets the current sound volume.
+ *
+ *    @return The current sound volume level.
+ */
+double sound_getVolume (void)
+{
+   return sound_curVolume / MIX_MAX_VOLUME;
 }
 
 

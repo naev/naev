@@ -34,6 +34,7 @@
 
 int music_disabled = 0; /**< Whether or not music is disabled. */
 double music_defVolume = 0.8; /**< Music default volume. */
+static double music_curVolume = 0.; /**< Music volume. */
 
 
 /*
@@ -266,7 +267,19 @@ int music_volume( const double vol )
 {
    if (music_disabled) return 0;
 
-   return Mix_VolumeMusic(MIX_MAX_VOLUME*vol);
+   music_curVolume = MIX_MAX_VOLUME*vol;
+   return Mix_VolumeMusic(music_curVolume);
+}
+
+
+/**
+ * @brief Gets the current music volume.
+ *
+ *    @return The current music volume.
+ */
+double music_getVolume (void)
+{
+   return music_curVolume / MIX_MAX_VOLUME;
 }
 
 

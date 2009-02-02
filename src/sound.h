@@ -25,6 +25,7 @@ int sound_update (void);
  */
 int sound_get( char* name );
 int sound_volume( const double vol );
+double sound_getVolume (void);
 int sound_play( int sound );
 int sound_playPos( int sound, double x, double y );
 void sound_stop( int voice );

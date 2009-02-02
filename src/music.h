@@ -32,6 +32,7 @@ void music_exit (void);
  * music control
  */
 int music_volume( const double vol );
+double music_getVolume (void);
 void music_load( const char* name );
 void music_play (void);
 void music_stop (void);

@@ -240,7 +240,7 @@ void opt_menuAudio (void)
    /* Sound fader. */
    if (!sound_disabled) {
       window_addFader( wid, 20, -40, 160, 20, "fadSound", 0., 1.,
-            sound_defVolume, opt_setSFXLevel );
+            sound_getVolume(), opt_setSFXLevel );
       window_addText( wid, 200, -40, AUDIO_WIDTH-220, 20, 1, "txtSound",
             NULL, NULL, "Sound Volume" );
    }
@@ -251,7 +251,7 @@ void opt_menuAudio (void)
    /* Music fader. */
    if (!music_disabled) {
       window_addFader( wid, 20, -80, 160, 20, "fadMusic", 0., 1.,
-            music_defVolume, opt_setMusicLevel );
+            music_getVolume(), opt_setMusicLevel );
       window_addText( wid, 200, -80, AUDIO_WIDTH-220, 20, 1, "txtMusic",
             NULL, NULL, "Music Volume" );
    }
