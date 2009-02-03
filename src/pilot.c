@@ -681,7 +681,7 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       dam_mod = damage_shield/p->shield_max;
    }
    else if (p->shield > 0.) { /* shields can take part of the blow */
-      p->armour -= p->shield/damage_shield*damage_armour;
+      p->armour -= (1. - p->shield/damage_shield) * damage_armour;
       p->shield = 0.;
       dam_mod = (damage_shield+damage_armour) / (p->shield_max+p->armour_max);
    }
