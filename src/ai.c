@@ -1720,7 +1720,7 @@ static int ai_shoot( lua_State *L )
 
    if (lua_isboolean(L,1))
       s = lua_toboolean(L,1);
-   if (s && lua_isnumber(L,2))
+   if (!s && lua_isnumber(L,2))
       pilot_firemode = (int)lua_tonumber(L,2);
 
    if (s)
