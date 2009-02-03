@@ -891,7 +891,8 @@ static void gui_renderHealth( const HealthBar *bar, const double w )
        * y = slope * x + offset
        * w = 1 / area * ( slope * x^2 / 2 + offset )
        * we need to isolate x. */
-      nmath_solve2Eq( res, bar->slope / 2., bar->offset, -bar->area * w );
+      nmath_solve2Eq( res, bar->slope / 2.,
+            bar->offset, -bar->area * w );
       rw = res[0] / bar->gfx->sw;
 
       /* Set the position values. */
@@ -1144,7 +1145,7 @@ static int gui_parseBar( xmlNodePtr parent, HealthBar *bar, const glColour *col 
 {
    int i, j;
    char *tmp, buf[PATH_MAX];
-   double x, y, n;
+   double x, y, m, n;
    double sumx, sumy, sumxx, sumxy;
 
    /* Parse the rectangle. */
@@ -1195,6 +1196,14 @@ static int gui_parseBar( xmlNodePtr parent, HealthBar *bar, const glColour *col 
 
       /* Calculate the area. */
       bar->area = bar->slope/2. * pow(bar->gfx->sw, 2.) + bar->offset * bar->gfx->sw;
+
+      /* Check to see if area is the top triangle or bottom one. */
+      m = sumx / n;
+      if ((bar->slope/2. * pow(m, 2.) + bar->offset * m) > (sumy / n)) {
+         bar->slope = -bar->slope;
+         bar->offset = bar->gfx->sh - bar->offset;
+         bar->area = (bar->gfx->sw * bar->gfx->sh) - bar->area;
+      }
    }
 
    return 0;
