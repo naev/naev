@@ -540,6 +540,14 @@ static int diff_removeDiff( UniDiff_t *diff )
             hunk.type = HUNK_TYPE_FLEET_ADD;
             break;
 
+         case HUNK_TYPE_FLEETGROUP_ADD:
+            hunk.type = HUNK_TYPE_FLEETGROUP_ADD;
+            break;
+
+         case HUNK_TYPE_FLEETGROUP_REMOVE:
+            hunk.type = HUNK_TYPE_FLEETGROUP_REMOVE;
+            break;
+
          default:
             WARN("Unknown Hunk type '%d'.", hunk.type);
             continue;
