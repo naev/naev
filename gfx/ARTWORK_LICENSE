@@ -50,7 +50,6 @@
        * afterburner.png
        * afterburner2.png
        * capacitator.png
-       * fuel_pod.png
        * heavy.png
        * jammer0.png
        * jammer1.png
@@ -218,6 +217,7 @@
  * Author: Josiah Schwartfeger, License: CC-by v3.0
    * outfit
      * store
+       * fuel_pod.png
        * cargo_pod.png
    * ship
      * kestrel.png
