@@ -766,6 +766,11 @@ void player_startAutonav (void)
    if (hyperspace_target == -1)
       return;
 
+   if (player->fuel < HYPERSPACE_FUEL) {
+      player_message("Not enough fuel to jump for autonav.");
+      return;
+   }
+
    player_message("Autonav initialized.");
    player_setFlag(PLAYER_AUTONAV);
 }
@@ -828,8 +833,12 @@ void player_think( Pilot* pplayer )
       if (pplayer->lockons > 0)
          player_abortAutonav("Missile Lockon Detected");
 
+      /* Need fuel. */
+      else if (pplayer->fuel < HYPERSPACE_FUEL)
+         player_abortAutonav("Not enough fuel for autonav to continue.");
+
       /* Try to jump. */
-      if (space_canHyperspace(pplayer))
+      else if (space_canHyperspace(pplayer))
          player_jump();
 
       /* Keey on moving. */
