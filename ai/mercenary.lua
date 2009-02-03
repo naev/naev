@@ -8,7 +8,7 @@ aggressive = true
 
 function create ()
 
-   ai.setcredits( rnd.int(1000, ai.shipprice()/70) )
+   ai.setcredits( rnd.int(ai.shipprice()/150, ai.shipprice()/50) )
 
    if rnd.int() > 0.7 then
       mem.bribe = math.sqrt( ai.shipmass() ) * (750. * rnd.int() + 2500.)

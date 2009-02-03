@@ -9,7 +9,7 @@ land_planet = false
 
 
 function create ()
-   ai.setcredits(ai.shipprice()/1000 , ai.shipprice()/100 )
+   ai.setcredits(ai.shipprice()/600 , ai.shipprice()/100 )
    attack_choose()
 end
 

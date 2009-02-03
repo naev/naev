@@ -6,7 +6,7 @@ aggressive = true
 
 -- Create function
 function create ()
-   ai.setcredits( rnd.int(1000, ai.shipprice()/200) )
+   ai.setcredits( rnd.int(ai.shipprice()/500, ai.shipprice()/200) )
    attack_choose()
    if rnd.int() > 0.4 then
       mem.bribe_no = "\"I shall especially enjoy your death.\""

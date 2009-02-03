@@ -14,7 +14,7 @@ end
 
 
 function create ()
-   ai.setcredits( rnd.int(100, ai.shipprice()/25) )
+   ai.setcredits( rnd.int(ai.shipprice()/100, ai.shipprice()/25) )
 
    mem.bribe_no = "\"The Space Traders do not negotiate with criminals.\""
 

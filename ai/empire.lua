@@ -8,7 +8,7 @@ aggressive = true
 
 function create ()
 
-   ai.setcredits( rnd.int(1000, ai.shipprice()/70) )
+   ai.setcredits( rnd.int(ai.shipprice()/300, ai.shipprice()/70) )
 
    if rnd.int(0,2)==0 then
       ai.broadcast("The Empire is watching you.")
