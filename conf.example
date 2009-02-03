@@ -68,6 +68,11 @@ fullscreen = 1
 --board        = { type = "keyboard", key = "B" }
 --safety       = { type = "keyboard", key = "S", mod = "lctrl" }
 
+-- Fire modes.
+--weap_all     = { type = "keyboard", key = "1" }
+--weap_turret  = { type = "keyboard", key = "2" }
+--weap_forward = { type = "keyboard", key = "3" }
+
 -- Escorts.
 --e_targetNext = { type = "keyboard", key = "E" }
 --e_targetPrev = { type = "keyboard", key = "E", mod = "lctrl" }
