@@ -213,7 +213,7 @@ static void board_stealFuel( unsigned int wdw, char* str )
 
    p = pilot_get(player->target);
 
-   if (player->fuel <= 0.) { /* no fuel. */
+   if (p->fuel <= 0.) { /* no fuel. */
       player_message("The ship has no fuel.");
       return;
    }
