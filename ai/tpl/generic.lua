@@ -84,6 +84,8 @@ end
 -- Required "attacked" function
 function attacked ( attacker )
    task = ai.taskname()
+   target = ai.target()
+
    if task ~= "attack" and task ~= "runaway" then
 
       -- some taunting
@@ -93,7 +95,8 @@ function attacked ( attacker )
       ai.pushtask(0, "attack", attacker)
 
    elseif task == "attack" then
-      if ai.target() ~= attacker then
+      if ai.target() ~= attacker and 
+            ai.dist(attacker) < ai.dist(target) then
          ai.pushtask(0, "attack", attacker)
       end
    elseif task == "runaway" then
