@@ -102,6 +102,7 @@ unsigned int player_flags = 0; /**< Player flags. */
 double player_left = 0.; /**< Player left turn velocity from input. */
 double player_right = 0.; /**< Player right turn velocity from input. */
 static double player_acc = 0.; /**< Accel velocity from input. */
+static int player_firemode = 0; /**< Player fire mode. */
 /* used in map.c */
 int planet_target = -1; /**< Targetted planet. -1 is none. */
 int hyperspace_target = -1; /**< Targetted hyperspace route. -1 is none. */
@@ -903,7 +904,7 @@ void player_think( Pilot* pplayer )
     */
    /* Primary weapon. */
    if (player_isFlag(PLAYER_PRIMARY)) {
-      pilot_shoot( pplayer, 0 );
+      pilot_shoot( pplayer, player_firemode );
       player_setFlag(PLAYER_PRIMARY_L);
    }
    else if (player_isFlag(PLAYER_PRIMARY_L)) {
@@ -919,7 +920,7 @@ void player_think( Pilot* pplayer )
          pilot_shootStop( pplayer, 1 );
       }
       else
-         pilot_shoot( pplayer, 1 );
+         pilot_shootSecondary( pplayer );
 
       player_setFlag(PLAYER_SECONDARY_L);
    }
@@ -1513,6 +1514,22 @@ void player_hail (void)
 {
    if (player->target != player->id)
       comm_open(player->target);
+}
+
+
+void player_setFireMode( int mode )
+{
+   if (player_firemode == mode)
+      return;
+
+   player_firemode = mode;
+
+   if (player_firemode == 0)
+      player_message("Fire mode set to all weapons.");
+   else if (player_firemode == 1)
+      player_message("Fire mode set to turret weapons.");
+   else if (player_firemode == 2)
+      player_message("Fire mode set to forward weapons.");
 }
 
 

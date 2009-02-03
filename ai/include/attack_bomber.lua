@@ -11,6 +11,7 @@ function atk_b_think ()
 end
 
 
+
 --[[
 -- Attacks the current target, task pops when target is dead.
 --
@@ -29,37 +30,54 @@ function atk_b ()
    ai.settarget(target)
 
    -- Get stats about enemy
-	dist = ai.dist( ai.pos(target) ) -- get distance
+	dist = ai.dist( target ) -- get distance
 
    -- Get bombing tool
    secondary, special = ai.secondary("ranged")
    if secondary ~= "Launcher" or special == "Dumb" then -- No launcher, must melee
-      range = ai.getweaprange()
+      atk_b_melee( target, dist, secondary, special )
+   end
 
-      -- Must approach
-      if dist > range then
-         dir = ai.face(target)
-         if dir < 10 then
-            ai.accel()
-         end
+   atk_b_ranged( target, dist )
+end
 
-      -- Time to shoot
-      else
-         dir = ai.aim(target) -- We aim instead of face
-         
-         -- Fire secondary
-         if dir < 10 or special == "Turret" then
-            ai.shoot(1)
-         end
 
-         -- Fire primary
-         if dir < 10 or ai.hasturrets() then
-            ai.shoot()
-         end
+--[[
+--   Melee combat.
+--]]
+function atk_b_melee( target, dist, secondary, special )
+   range = ai.getweaprange()
+
+   -- Must approach
+   if dist > range then
+      dir = ai.face(target)
+      if dir < 10 then
+         ai.accel()
       end
 
-      return -- No need to do ranged attack calculations
+   -- Time to shoot
+   else
+      dir = ai.aim(target) -- We aim instead of face
+      
+      -- Fire secondary
+      if dir < 10 or special == "Turret" then
+         ai.shoot(true)
+      end
+
+      -- Fire primary
+      if dir < 10 then
+         ai.shoot(false)
+      elseif ai.hasturrets() then
+         ai.shoot(false, 1)
+      end
    end
+end
+
+
+--[[
+--   The heart and soul of the bomber.
+--]]
+function atk_b_ranged( target, dist )
 
    -- Get ranges relative to bombing weapon of choice
    bombrange = ai.getweaprange(1)
@@ -82,11 +100,11 @@ function atk_b ()
 
          -- More lenient with aiming
          if special == "Smart" and dir < 30 then
-            ai.shoot(2)
+            ai.shoot(true)
 
          -- Non-smart miss more
          elseif dir < 10 then
-            ai.shoot(2)
+            ai.shoot(true)
          end
       end
 
@@ -94,15 +112,24 @@ function atk_b ()
 
    -- Time to break attack and get back to bomb
    else
-      range = ai.getweaprange()
-
-      -- Flee
-      ai.face(target, true)
-      ai.accel()
-
-      -- Fire turret if being chased
-      if dist < range and ai.hasturrets() then
-         ai.shoot()
-      end
+      ai.pushtask( 0, "atk_b_backoff" )
    end
 end
+
+
+--[[
+--   Back off and come back when ready to kill
+--]]
+function atk_b_backoff ()
+   range = ai.getweaprange()
+
+   -- Flee
+   ai.face(target, true)
+   ai.accel()
+
+   -- Fire turret if being chased
+   if dist < range and ai.hasturrets() then
+      ai.shoot(false, 1)
+   end
+end
+

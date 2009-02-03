@@ -91,11 +91,11 @@ function atk_g_ranged( target, dist )
 
       -- More lenient with aiming
       if special == "Smart" and dir < 30 then
-         ai.shoot(2)
+         ai.shoot(true)
 
       -- Non-smart miss more
       elseif dir < 10 then
-         ai.shoot(2)
+         ai.shoot(true)
       end
    end
 
@@ -129,7 +129,7 @@ function atk_g_melee( target, dist )
    if (secondary == "Launcher" and special ~= "Smart") or
          secondary == "Beam Weapon" then
       if dir < 10 or special == "Turret" then -- Need good acuracy
-         ai.shoot(2)
+         ai.shoot(true)
       end
    end
 
@@ -139,8 +139,12 @@ function atk_g_melee( target, dist )
    end
 
    -- Shoot if should be shooting.
-   if (dir < 10 and dist < range) or ai.hasturrets() then
-      ai.shoot()
+   if dist < range then
+      if dir < 10 then
+         ai.shoot(false)
+      elseif ai.hasturrets() then
+         ai.shoot(false, 1)
+      end
    end
 end
 

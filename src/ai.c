@@ -291,6 +291,7 @@ static Pilot *cur_pilot = NULL; /**< Current pilot.  All functions use this. */
 static double pilot_acc = 0.; /**< Current pilot's acceleration. */
 static double pilot_turn = 0.; /**< Current pilot's turning. */
 static int pilot_flags = 0; /**< Handle stuff like weapon firing. */
+static int pilot_firemode = 0; /**< Method pilot is using to shoot. */
 
 /*
  * ai status, used so that create functions can't be used elsewhere
@@ -582,6 +583,7 @@ void ai_think( Pilot* pilot )
    pilot_acc = 0;
    pilot_turn = 0.;
    pilot_flags = 0;
+   pilot_firemode = 0;
    cur_pilot->target = cur_pilot->id;
 
    /* control function if pilot is idle or tick is up */
@@ -608,8 +610,10 @@ void ai_think( Pilot* pilot )
          cur_pilot->thrust * pilot_acc, cur_pilot->solid->dir );
 
    /* fire weapons if needed */
-   if (ai_isFlag(AI_PRIMARY)) pilot_shoot(cur_pilot, 0); /* primary */
-   if (ai_isFlag(AI_SECONDARY)) pilot_shoot(cur_pilot, 1); /* secondary */
+   if (ai_isFlag(AI_PRIMARY))
+      pilot_shoot(cur_pilot, pilot_firemode); /* primary */
+   if (ai_isFlag(AI_SECONDARY))
+      pilot_shootSecondary(cur_pilot); /* secondary */
 }
 
 
@@ -1710,12 +1714,19 @@ static int ai_hasturrets( lua_State *L )
  */
 static int ai_shoot( lua_State *L )
 {
-   int n = 1;
-   if (lua_isnumber(L,1)) n = (int)lua_tonumber(L,1);
+   int s;
 
-   if (n==1) ai_setFlag(AI_PRIMARY);
-   else if (n==2) ai_setFlag(AI_SECONDARY);
-   else if  (n==3) ai_setFlag(AI_PRIMARY | AI_SECONDARY );
+   s = 0;
+
+   if (lua_isboolean(L,1))
+      s = lua_toboolean(L,1);
+   if (s && lua_isnumber(L,2))
+      pilot_firemode = (int)lua_tonumber(L,2);
+
+   if (s)
+      ai_setFlag(AI_SECONDARY);
+   else
+      ai_setFlag(AI_PRIMARY);
 
    return 0;
 }

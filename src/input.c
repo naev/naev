@@ -52,6 +52,8 @@ const char *keybindNames[] = {
    "target", "target_prev", "target_nearest", "target_hostile",
    /* Fighting. */
    "primary", "face", "board", "safety",
+   /* Weapon selection. */
+   "weap_all", "weap_turret", "weap_forward",
    /* Secondary weapons. */
    "secondary", "secondary_next", "secondary_prev",
    /* Escorts. */
@@ -85,6 +87,10 @@ const char *keybindDescription[] = {
    "Faces your target (ship target if you have one, otherwise your planet target).",
    "Attempts to board your target ship.",
    "Toggles weapon safety (hitting of friendly ships).",
+   /* Weapon selection. */
+   "Sets fire mode to use all weapons available (both turret and forward mounts).",
+   "Sets fire mode to only use turret-class primary weapons.",
+   "Sets fire mode to only use forward-class primary weapons.",
    /* Secondary weapons. */
    "Fires your secondary weapon.",
    "Cycles through secondary weapons.",
@@ -170,6 +176,10 @@ void input_setDefault (void)
    input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, KMOD_NONE );
    input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, KMOD_NONE );
    input_setKeybind( "safety", KEYBIND_KEYBOARD, SDLK_s, KMOD_LCTRL );
+   /* Weapon selection. */
+   input_setKeybind( "weap_all", KEYBIND_KEYBOARD, SDLK_1, KMOD_NONE );
+   input_setKeybind( "weap_turret", KEYBIND_KEYBOARD, SDLK_2, KMOD_NONE );
+   input_setKeybind( "weap_forward", KEYBIND_KEYBOARD, SDLK_3, KMOD_NONE );
    /* Secondary weapons. */
    input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, KMOD_ALL );
    input_setKeybind( "secondary_next", KEYBIND_KEYBOARD, SDLK_w, KMOD_NONE );
@@ -549,6 +559,17 @@ static void input_key( int keynum, double value, double kabs )
    } else if (KEY("safety") && INGAME()) {
       if (value==KEY_PRESS)
          weapon_toggleSafety();
+
+
+   /* 
+    * Weapon selection.
+    */
+   } else if (KEY("weap_all") && INGAME() && NODEAD()) {
+      if (value==KEY_PRESS) player_setFireMode( 0 );
+   } else if (KEY("weap_turret") && INGAME() && NODEAD()) {
+      if (value==KEY_PRESS) player_setFireMode( 1 );
+   } else if (KEY("weap_forward") && INGAME() && NODEAD()) {
+      if (value==KEY_PRESS) player_setFireMode( 2 );
 
 
    /*

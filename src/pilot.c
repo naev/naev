@@ -403,30 +403,45 @@ int pilot_freeSpace( Pilot* p )
  * @brief Makes the pilot shoot.
  *
  *    @param p The pilot which is shooting.
- *    @param secondary Whether they are shooting secondary weapons or primary weapons.
+ *    @param type Indicate what shoot group to use.
+ *           0 = all
+ *           1 = turrets
+ *           2 = forward
  */
-void pilot_shoot( Pilot* p, const int secondary )
+void pilot_shoot( Pilot* p, int group )
 {
    int i;
    Outfit* o;
 
    if (!p->outfits) return; /* no outfits */
 
-   if (!secondary) { /* primary weapons */
+   for (i=0; i<p->noutfits; i++) { /* cycles through outfits to find primary weapons */
+      o = p->outfits[i].outfit;
+      if (!outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY) &&
+            (outfit_isBolt(o) || outfit_isBeam(o))) {
 
-      for (i=0; i<p->noutfits; i++) { /* cycles through outfits to find primary weapons */
-         o = p->outfits[i].outfit;
-         if (!outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY) &&
-               (outfit_isBolt(o) || outfit_isBeam(o) || outfit_isFighterBay(o))) /** @todo possibly make this neater. */
+         /* Choose what to shoot dependent on type. */
+         if ((group == 0) ||
+               ((group == 1) && outfit_isTurret(o)) ||
+               ((group == 2) && !outfit_isTurret(o)))
             pilot_shootWeapon( p, &p->outfits[i] );
       }
    }
-   else { /* secondary weapon */
+}
 
-      if (!p->secondary) return; /* no secondary weapon */
-      pilot_shootWeapon( p, p->secondary );
 
-   }
+/**
+ * @brief Makes the pilot shoot it's currently selected secondary weapon.
+ *
+ *    @param p The pilot which is to shoot.
+ */
+void pilot_shootSecondary( Pilot* p )
+{
+   /* No secondary weapon. */
+   if (!p->secondary)
+      return;
+
+   pilot_shootWeapon( p, p->secondary );
 }
 
 

@@ -85,7 +85,7 @@ function runaway ()
       dist = ai.dist( ai.pos(target) )
       if dist < ai.getweaprange() then
          ai.settarget(target)
-         ai.shoot()
+         ai.shoot(false, 1)
       end
    end
 end

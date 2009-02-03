@@ -135,6 +135,7 @@ void player_accelOver (void);
 void player_startAutonav (void);
 void player_abortAutonav( char *reason );
 void player_hail (void);
+void player_setFireMode( int mode );
 
 
 #endif /* PLAYER_H */
