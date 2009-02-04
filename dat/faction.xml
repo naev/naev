@@ -7,7 +7,7 @@
   <enemies />
  </faction>
  <faction name="Independent">
-  <player>0</player>
+  <player>3</player>
   <allies>
    <ally>Trader</ally>
   </allies>
@@ -19,7 +19,7 @@
  </faction>
  <faction name="Frontier">
   <longname>Frontier Alliance</longname>
-  <player>0</player>
+  <player>3</player>
   <allies>
    <ally>Trader</ally>
   </allies>
@@ -30,7 +30,7 @@
  </faction>
  <faction name="Trader">
   <longname>Space Traders Guild</longname>
-  <player>0</player>
+  <player>3</player>
   <allies>
    <ally>Independent</ally>
    <ally>Empire</ally>
@@ -58,7 +58,7 @@
  </faction>
  <faction name="Empire">
   <logo>empire</logo>
-  <player>0</player>
+  <player>1</player>
   <allies>
    <ally>Dvaered</ally>
    <ally>Soromid</ally>
@@ -100,7 +100,7 @@
  <faction name="Dvaered">
   <logo>dvaered</logo>
   <longname>House Dvaered</longname>
-  <player>0</player>
+  <player>1</player>
   <allies>
    <ally>Empire</ally>
   </allies>
@@ -113,7 +113,7 @@
  <faction name="Za'lek">
   <logo>zalek</logo>
   <longname>House Za'lek</longname>
-  <player>0</player>
+  <player>2</player>
   <allies>
    <ally>Empire</ally>
   </allies>
@@ -126,7 +126,7 @@
  <faction name="Sirius">
   <logo>sirius</logo>
   <longname>House Sirius</longname>
-  <player>0</player>
+  <player>3</player>
   <allies>
    <ally>Empire</ally>
   </allies>
@@ -138,7 +138,7 @@
  </faction>
  <faction name="Soromid">
   <longname>House Soromid</longname>
-  <player>0</player>
+  <player>3</player>
   <allies>
    <ally>Empire</ally>
    <ally>Trader</ally>
@@ -152,7 +152,7 @@
  <faction name="Goddard">
   <logo>goddard</logo>
   <longname>House Goddard</longname>
-  <player>0</player>
+  <player>2</player>
   <allies>
    <ally>Empire</ally>
    <ally>Trader</ally>
