@@ -799,9 +799,18 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    /* inform the ai it has been attacked, useless if player */
    if (!pilot_isPlayer(p) && (pilot_isPlayer(parent)) &&
          ((player->target == p->id) || (p->player_damage > PILOT_HOSTILE_THRESHOLD))) {
+
+      /* Set as hostile. */
       pilot_setHostile(p);
       pilot_rmFlag( p, PILOT_BRIBED );
+
+      /* Inform attacked. */
       ai_attacked( p, w->parent );
+
+      /* Modify faction, about 1 for a llama, 4.2 for a hawking */
+      faction_modPlayer( p->faction, pow(p->ship->mass, 0.2) - 1. );
+
+      /* Add sprite. */
       spfx_add( spfx, pos->x, pos->y,
             VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );
    }
