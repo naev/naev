@@ -195,7 +195,7 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
       /* Enough memory? */
       if ((*nfiles)+1 > mfiles) {
          mfiles += 100;
-         tfiles = realloc( files, sizeof(char*) * mfiles );
+         tfiles = realloc( tfiles, sizeof(char*) * mfiles );
          tt = realloc( tt, sizeof(time_t) * mfiles );
       }
 
