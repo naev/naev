@@ -1872,11 +1872,26 @@ static int ai_credits( lua_State *L )
 static int ai_cargo( lua_State *L )
 {
    NLUA_MIN_ARGS(2);
+   int q;
+   char *s;
+
    if (ai_status != AI_STATUS_CREATE) return 0;
 
-   if (lua_isstring(L,1) && lua_isnumber(L,2))
-      pilot_addCargo( cur_pilot, commodity_get(lua_tostring(L,1)),
-            (int)lua_tonumber(L,2));
+   /* Get parameters. */
+   if (lua_isstring(L,1))
+      s = (char*)lua_tostring(L,1);
+   else
+      NLUA_INVALID_PARAMETER();
+   if (lua_isnumber(L,2))
+      q = (int) lua_tonumber(L,2);
+   else
+      NLUA_INVALID_PARAMETER();
+
+   /* Quantity must be valid. */
+   if (q<=0)
+      return 0;
+
+   pilot_addCargo( cur_pilot, commodity_get(s), q);
 
    return 0;
 }
