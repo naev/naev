@@ -851,7 +851,7 @@ void pilot_switchSecondary( Pilot* p, int i )
 void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       const DamageType dtype, const double damage )
 {
-   int mod;
+   int mod, h;
    double damage_shield, damage_armour, knockback, dam_mod;
    Pilot *pshooter;
 
@@ -883,6 +883,29 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
             (p->armour < PILOT_DISABLED_ARMOR * p->armour_max))
          p->armour = PILOT_DISABLED_ARMOR * p->armour_max - 1.;
 
+      /* Disabled always run before dead to ensure crating boost. */
+      if (!pilot_isFlag(p,PILOT_DISABLED) && (p != player) &&
+            (p->armour < PILOT_DISABLED_ARMOR*p->armour_max)) { /* disabled */
+
+         /* If hostile, must remove counter. */
+         h = (pilot_isHostile(p)) ? 1 : 0;
+         pilot_rmHostile(p);
+         if (h == 1) /* Horrible hack to make sure player can hit it if it was hostile. */
+            pilot_setFlag(p, PILOT_HOSTILE);
+
+         if (pshooter == player) {
+            /* About 3 for a llama, 26 for hawking. */
+            mod = pow(p->ship->mass,0.4) - 1.;
+
+            /* Modify combat rating. */
+            player_crating += 2*mod;
+         }
+
+         pilot_setFlag( p,PILOT_DISABLED ); /* set as disabled */
+         /* run hook */
+         pilot_runHook( p, PILOT_HOOK_DISABLE );
+      }
+
       /* Officially dead. */
       if (p->armour <= 0.) {
          p->armour = 0.;
@@ -898,9 +921,6 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
                /* About 3 for a llama, 26 for hawking. */
                mod = pow(p->ship->mass,0.4) - 1.;
 
-               /* Modify combat rating. */
-               player_crating += 2*mod;
-
                /* Modify faction for him and friends. */
                faction_modPlayer( p->faction, -mod );
 
@@ -909,6 +929,7 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
             }
          }
       }
+
       /* Some minor effects and stuff. */
       else {
          dam_mod = damage_armour/p->armour_max;
@@ -1290,22 +1311,7 @@ static void pilot_update( Pilot* pilot, const double dt )
          pilot_dead(pilot); /* start death stuff */
 
    /* purpose fallthrough to get the movement like disabled */
-   if ((pilot != player) &&
-         (pilot->armour < PILOT_DISABLED_ARMOR*pilot->armour_max)) { /* disabled */
-
-      /* First time pilot is disabled */
-      if (!pilot_isFlag(pilot,PILOT_DISABLED)) {
-
-         /* If hostile, must remove counter. */
-         i = (pilot_isHostile(pilot)) ? 1 : 0;
-         pilot_rmHostile(pilot);
-         if (i == 1) /* Horrible hack to make sure player can hit it if it was hostile. */
-            pilot_setFlag(pilot, PILOT_HOSTILE);
-
-         pilot_setFlag(pilot,PILOT_DISABLED); /* set as disabled */
-         /* run hook */
-         pilot_runHook( pilot, PILOT_HOOK_DISABLE );
-      }
+   if (pilot_isDisabled(pilot)) {
 
       /* Do the slow brake thing */
       vect_pset( &pilot->solid->vel, /* slowly brake */
