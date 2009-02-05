@@ -300,6 +300,8 @@ static int load_game( char* file )
    /* Clean up possible stuff that should be cleaned. */
    player_cleanup();
    diff_clear();
+   var_cleanup();
+   missions_cleanup();
 
    /* Now begin to load. */
    diff_load(node); /* Must load first to work properly. */
