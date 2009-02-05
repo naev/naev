@@ -1,6 +1,7 @@
 include("ai/tpl/merchant.lua")
 
 
+-- Sends a distress signal which causes faction loss
 function sos ()
    msg = {
       "Mayday! We are under attack!",
@@ -9,7 +10,8 @@ function sos ()
       "Help! Ship under fire!",
       string.format("Mayday! Merchant %s being assaulted!", ai.shipclass())
    }
-   ai.broadcast(msg[ rnd.int(1,#msg) ])
+   ai.settarget( ai.target() )
+   ai.distress( msg[ rnd.int(1,#msg) ])
 end
 
 

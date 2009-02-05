@@ -807,9 +807,6 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
       /* Inform attacked. */
       ai_attacked( p, w->parent );
 
-      /* Modify faction, about 1 for a llama, 4.2 for a hawking */
-      faction_modPlayer( p->faction, pow(p->ship->mass, 0.2) - 1. );
-
       /* Add sprite. */
       spfx_add( spfx, pos->x, pos->y,
             VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );

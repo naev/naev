@@ -157,13 +157,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player );
 /* 
  * externed
  */
-void player_dead (void); /* pilot.c */
-void player_destroyed (void); /* pilot.c */
 int player_save( xmlTextWriterPtr writer ); /* save.c */
 int player_load( xmlNodePtr parent ); /* save.c */
-void player_think( Pilot* player ); /* pilot.c */
-void player_brokeHyperspace (void); /* pilot.c */
-double player_faceHyperspace (void); /* pilot.c */
 
 
 /**
@@ -1936,8 +1931,14 @@ static int player_parse( xmlNodePtr parent )
 
    } while (xml_nextNode(node));
 
+   /* Make sure player exists. */
+   if (player == NULL) {
+      WARN("Savegame has no primary ship node!");
+      return -1;
+   }
+
    /* set global thingies */
-   player->credits =player_credits;
+   player->credits = player_credits;
    ntime_set(player_time);
 
    /* set player in system */

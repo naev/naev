@@ -70,6 +70,9 @@ function runaway ()
       ai.poptask()
       return
    end
+
+   -- Good to set the target for distress calls
+   ai.settarget( target )
    
    dir = ai.face(target, true)
    ai.accel()
@@ -82,9 +85,8 @@ function runaway ()
    ]]--
 
    if ai.hasturrets() then
-      dist = ai.dist( ai.pos(target) )
+      dist = ai.dist( target )
       if dist < ai.getweaprange() then
-         ai.settarget(target)
          ai.shoot(false, 1)
       end
    end

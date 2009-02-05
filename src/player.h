@@ -113,6 +113,16 @@ void player_addLicense( char *license );
 int player_hasLicense( char *license );
 char **player_getLicenses( int *nlicenses );
 
+/*
+ * pilot related stuff
+ */
+void player_dead (void);
+void player_destroyed (void); 
+void player_think( Pilot* player );
+void player_brokeHyperspace (void);
+double player_faceHyperspace (void);
+
+
 /* 
  * keybind actions
  */

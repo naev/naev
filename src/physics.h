@@ -20,6 +20,7 @@
 #define ANGLE(x,y) (atan2(y,x)) /**< Gets the angle of two cartesian coordinates. */
 
 #define vect_dist(v,u)  MOD((v)->x-(u)->x,(v)->y-(u)->y) /**< Gets the distance between two vectors. */
+#define vect_dist2(v,u) (((v)->x-(u)->x)*((v)->x-(u)->x)+((v)->y-(u)->y)*((v)->y-(u)->y))
 #define vect_odist(v)   MOD((v)->x,(v)->y) /**< Gets the distance of a vector from the origin. */
 
 

@@ -619,8 +619,18 @@ void space_update( const double dt )
       else {
          interference_timer -= dt;
          if (interference_timer < 0.) {
+            /* 0    ->  [   1,   5   ]
+             * 250  ->  [ 0.75, 3.75 ]
+             * 500  ->  [  0.5, 2.5  ]
+             * 750  ->  [ 0.25, 1.25 ]
+             * 1000 ->  [   0,   0   ] */
             interference_timer += (1000. - cur_system->interference) / 1000. *
                   (3. + RNG_2SIGMA() );
+
+            /* 0    ->  [  0,   0  ]
+             * 250  ->  [-0.5, 1.5 ]
+             * 500  ->  [ -1,   3  ]
+             * 1000 ->  [  0,   6  ] */
             interference_target = cur_system->interference/1000. * 2. *
                   (1. + RNG_2SIGMA() );
          }

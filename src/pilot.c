@@ -30,6 +30,8 @@
 #include "explosion.h"
 #include "escort.h"
 #include "music.h"
+#include "player.h"
+#include "gui.h"
 
 
 #define PILOT_CHUNK     32 /**< Chunks to increment pilot_stack by */
@@ -48,13 +50,11 @@ Pilot** pilot_stack = NULL; /**< Not static, used in player.c, weapon.c, pause.c
 int pilot_nstack = 0; /**< same */
 static int pilot_mstack = 0; /**< Memory allocated for pilot_stack. */
 
-/*
- * stuff from player.c
- */
-extern Pilot* player;
-extern double player_crating; /**< Player's combat rating. */
-extern void player_abortAutonav( char *reason );
-extern int player_enemies;
+
+/* misc */
+static double sensor_curRange = 0.; /**< Current sensor range, set in pilots_update
+                                         and used to check if in range. */
+
 
 /*
  * prototyes
@@ -64,15 +64,9 @@ extern int player_enemies;
 extern AI_Profile* ai_pinit( Pilot *p, char *ai ); /**< from ai.c */
 extern void ai_destroy( Pilot* p ); /**< from ai.c */
 extern void ai_think( Pilot* pilot ); /**< from ai.c */
-/* player.c */
-extern void player_think( Pilot* pilot ); /**< from player.c */
-extern void player_brokeHyperspace (void); /**< from player.c */
-extern double player_faceHyperspace (void); /**< from palyer.c */
-extern void player_dead (void); /**< from palyer.c */
-extern void player_destroyed (void); /**< from palyer.c */
-extern int gui_load( const char *name ); /**< from palyer.c */
-extern void player_addLicense( char *license ); /**< from palyer.c */
 /* internal */
+static int pilot_inRange( const Pilot *p, const Pilot *target );
+static int pilot_inRangePlanet( const Pilot *p, const Planet *target );
 static int pilot_getStackPos( const unsigned int id );
 static void pilot_shootWeapon( Pilot* p, PilotOutfit* w );
 static void pilot_update( Pilot* pilot, const double dt );
@@ -117,11 +111,29 @@ static int pilot_getStackPos( const unsigned int id )
  */
 unsigned int pilot_getNextID( const unsigned int id )
 {
-   int m;
+   int m, p;
+
+   /* Player must exist. */
+   if (player == NULL)
+      return PLAYER_ID;
+
+   /* Get the pilot. */
    m = pilot_getStackPos(id);
 
-   if ((m == (pilot_nstack-1)) || (m == -1)) return PLAYER_ID;
-   else return pilot_stack[m+1]->id;
+   /* Unselect. */
+   if ((m == (pilot_nstack-1)) || (m == -1))
+      return PLAYER_ID;
+
+   /* Get first one in range. */
+   p = m+1;
+   while (p < pilot_nstack) {
+      if (pilot_inRange( player, pilot_stack[p] ))
+         return pilot_stack[p]->id;
+      p++;
+   }
+
+   /* None found. */
+   return PLAYER_ID;
 }
 
 
@@ -133,12 +145,32 @@ unsigned int pilot_getNextID( const unsigned int id )
  */
 unsigned int pilot_getPrevID( const unsigned int id )
 {
-   int m;
+   int m, p;
+
+   /* Player must exist. */
+   if (player == NULL)
+      return PLAYER_ID;
+
+   /* Get the pilot. */
    m = pilot_getStackPos(id);
 
-   if (m == -1) return PLAYER_ID;
-   else if (m == 0) return pilot_stack[pilot_nstack-1]->id;
-   else return pilot_stack[m-1]->id;
+   /* Check to see what position to try. */
+   if (m == -1)
+      return PLAYER_ID;
+   else if (m == 0)
+      p = pilot_nstack-1;
+   else
+      p = m-1;
+
+   /* Get first one in range. */
+   while (p >= 0) {
+      if (pilot_inRange( player, pilot_stack[p] ))
+         return pilot_stack[p]->id;
+      p--;
+   }
+
+   /* None found. */
+   return PLAYER_ID;
 }
 
 
@@ -153,7 +185,10 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
    unsigned int tp;
    int i;
    double d, td;
-   for (tp=0,d=0.,i=0; i<pilot_nstack; i++) {
+
+   tp = 0;
+   d = 0.;
+   for (i=0; i<pilot_nstack; i++) {
       /* Must not be bribed. */
       if ((pilot_stack[i]->id == PLAYER_ID) && pilot_isFlag(p,PILOT_BRIBED))
          continue;
@@ -161,8 +196,18 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
       if ((areEnemies(p->faction, pilot_stack[i]->faction) || /* Enemy faction. */
             ((pilot_stack[i]->id == PLAYER_ID) && 
                pilot_isFlag(p,PILOT_HOSTILE)))) { /* Hostile to player. */
-         td = vect_dist(&pilot_stack[i]->solid->pos, &p->solid->pos);
-         if (!pilot_isDisabled(pilot_stack[i]) && ((!tp) || (td < d))) {
+
+         /* Shouldn't be disabled. */
+         if (pilot_isDisabled(pilot_stack[i]))
+            continue;
+
+         /* Must be in range. */
+         if (!pilot_inRange( p, pilot_stack[i] ))
+            continue;
+
+         /* Check distance. */
+         td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos);
+         if (!tp || (td < d)) {
             d = td;
             tp = pilot_stack[i]->id;
          }
@@ -188,8 +233,17 @@ unsigned int pilot_getNearestPilot( const Pilot* p )
    d=0;
    for (i=0; i<pilot_nstack; i++)
       if (pilot_stack[i] != p) {
-         td = vect_dist(&pilot_stack[i]->solid->pos, &player->solid->pos);       
-         if (!pilot_isDisabled(pilot_stack[i]) && ((tp==PLAYER_ID) || (td < d))) {
+
+         /* Shouldn't be disabled. */
+         if (pilot_isDisabled(pilot_stack[i]))
+            continue;
+
+         /* Must be in range. */
+         if (!pilot_inRange( p, pilot_stack[i] ))
+            continue;
+
+         td = vect_dist2(&pilot_stack[i]->solid->pos, &player->solid->pos);       
+         if (((tp==PLAYER_ID) || (td < d))) {
             d = td;
             tp = pilot_stack[i]->id;
          }
@@ -310,6 +364,139 @@ void pilot_setHostile( Pilot* p )
       player_enemies++;
       pilot_setFlag(p, PILOT_HOSTILE);
    }
+}
+
+
+/**
+ * @brief Check to see if a pilot is in sensor range of another.
+ *
+ *    @param p Pilot who is trying to check to see if other is in sensor range.
+ *    @param target Target of p to check to see if is in sensor range.
+ *    @return 1 if they are in range, 0 if they aren't.
+ */
+static int pilot_inRange( const Pilot *p, const Pilot *target )
+{
+   double d;
+
+   if (cur_system->interference == 0.)
+      return 1;
+
+   /* Get distance. */
+   d = vect_dist2( &p->solid->pos, &target->solid->pos );
+
+   if (d < pow2(sensor_curRange))
+      return 1;
+
+   return 0;
+}
+
+
+/**
+ * @brief Check to see if a planet is in sensor range of the pilot.
+ *
+ *    @param p Pilot who is trying to check to see if the planet is in sensor range.
+ *    @param target Planet to see if is in sensor range.
+ *    @return 1 if they are in range, 0 if they aren't.
+ */
+static int pilot_inRangePlanet( const Pilot *p, const Planet *target )
+{
+   double d;
+
+   if (cur_system->interference == 0.)
+      return 1;
+
+   /* Get distance. */
+   d = vect_dist2( &p->solid->pos, &target->pos );
+
+   if (d < pow2(sensor_curRange))
+      return 1;
+
+   return 0;
+}
+
+
+/**
+ * @brief Have pilot send a message to another.
+ *
+ *    @param p Pilot sending message.
+ *    @param target Target of the message.
+ *    @param msg The message.
+ */
+void pilot_message( Pilot *p, unsigned int target, const char *msg )
+{
+   Pilot *t;
+
+   /* Get the target. */
+   t = pilot_get(target);
+   if (t == NULL)
+      return;
+
+   /* Must be in range. */
+   if (!pilot_inRange( p, t ))
+      return;
+
+   /* Only really affects player atm. */
+   if (target == PLAYER_ID)
+      player_message( "Comm %s> \"%s\"", p->name, msg );
+}
+
+
+/**
+ * @brief Has the pilot broadcast a message.
+ */
+void pilot_broadcast( Pilot *p, const char *msg )
+{
+   /* Only display if player exists and is in range. */
+   if ((player==NULL) || !pilot_inRange( player, p ))
+      return;
+
+   player_message( "Broadcast %s> \"%s\"", p->name, msg );
+}
+
+
+/**
+ * @brief Has the pilot broadcast a distress signal.
+ *
+ * Can do a faction hit on the player.
+ */
+void pilot_distress( Pilot *p, const char *msg )
+{
+   int i, r;
+   Pilot *t;
+
+   /* Broadcast the message. */
+   pilot_broadcast( p, msg );
+
+   /* Get the target to see if it's the player. */
+   t = pilot_get(p->target);
+   if ((t == NULL) || (t->faction != FACTION_PLAYER))
+      return;
+
+   /* Now proceed to see if player should incur faction loss because
+    * of the broadcast signal. */
+
+   /* Consider not in range at first. */
+   r = 0;
+
+   /* Check if planet is in range. */
+   for (i=0; i<cur_system->nplanets; i++)
+      if (pilot_inRangePlanet(p, cur_system->planets[i])) {
+         r = 1;
+         break;
+      }
+
+   /* Now we must check to see if a pilot is in range. */
+   if (!r) {
+      for (i=0; i<pilot_nstack; i++)
+         if (pilot_inRange(p, pilot_stack[i])) {
+            r = 1;
+            break; 
+         }
+   }
+
+   /* Modify faction, about 1 for a llama, 4.2 for a hawking */
+   if (r)
+      faction_modPlayer( p->faction, pow(p->ship->mass, 0.2) - 1. );
 }
 
 
@@ -2237,6 +2424,22 @@ void pilots_update( double dt )
    int i;
    Pilot *p;
 
+   /* Calculate the sensor range. */
+   if (cur_system->interference == 0.)
+      sensor_curRange = 0.; /* Doesn't matter since it isn't used. */
+   else if (cur_system->interference >= 999.)
+      sensor_curRange = 0.; /* No range. */
+   else {
+      /* 0    ->    inf
+       * 250  ->   3000.
+       * 500  ->   1500.
+       * 750  ->   1125.
+       * 1000 ->    750. */
+      sensor_curRange  = 750.;
+      sensor_curRange /= (cur_system->interference / 1000.);
+   }
+
+   /* Now update all the pilots. */
    for ( i=0; i < pilot_nstack; i++ ) {
       p = pilot_stack[i];
 

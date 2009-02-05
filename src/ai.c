@@ -207,6 +207,7 @@ static int ai_timeup( lua_State *L ); /* boolean timeup( number ) */
 /* messages */
 static int ai_comm( lua_State *L ); /* say( number, string ) */
 static int ai_broadcast( lua_State *L ); /* broadcast( string ) */
+static int ai_distress( lua_State *L ); /* distress( string ) */
 
 /* loot */
 static int ai_credits( lua_State *L ); /* credits( number ) */
@@ -275,6 +276,7 @@ static const luaL_reg ai_methods[] = {
    /* messages */
    { "comm", ai_comm },
    { "broadcast", ai_broadcast },
+   { "distress", ai_distress },
    /* loot */
    { "setcredits", ai_credits },
    { "setcargo", ai_cargo },
@@ -817,6 +819,11 @@ static int ai_getplayer( lua_State *L )
  */
 static int ai_gettarget( lua_State *L )
 {
+   /* Must have a task. */
+   if (cur_pilot->task == NULL)
+      return 0;
+
+   /* Pask task type. */
    switch (cur_pilot->task->dtype) {
       case TYPE_INT:
          lua_pushnumber(L, cur_pilot->task->dat.num);
@@ -1830,9 +1837,21 @@ static int ai_timeup( lua_State *L )
 static int ai_comm( lua_State *L )
 {
    NLUA_MIN_ARGS(2);
-   
-   if (lua_isnumber(L,1) && (lua_tonumber(L,1)==PLAYER_ID) && lua_isstring(L,2))
-      player_message( "Comm %s> \"%s\"", cur_pilot->name, lua_tostring(L,2));
+   int p;
+   char *s;
+ 
+   /* Get parameters. */
+   if (lua_isnumber(L,1))
+      p = (int) lua_tonumber(L,1);
+   else
+      NLUA_INVALID_PARAMETER();
+   if (lua_isstring(L,2))
+      s = (char*) lua_tostring(L,2);
+   else
+      NLUA_INVALID_PARAMETER();
+
+   /* Send the message. */
+   pilot_message( cur_pilot, p, s );
 
    return 0;
 }
@@ -1845,7 +1864,25 @@ static int ai_broadcast( lua_State *L )
    NLUA_MIN_ARGS(1);
 
    if (lua_isstring(L,1))
-      player_message( "Broadcast %s> \"%s\"", cur_pilot->name, lua_tostring(L,1));
+      pilot_broadcast( cur_pilot, lua_tostring(L, 1));
+   else
+      NLUA_INVALID_PARAMETER();
+
+   return 0;
+}
+
+
+/*
+ * Sends a distress signal.
+ */
+static int ai_distress( lua_State *L )
+{
+   NLUA_MIN_ARGS(1);
+
+   if (lua_isstring(L,1))
+      pilot_distress( cur_pilot, lua_tostring(L,1) );
+   else
+      NLUA_INVALID_PARAMETER();
 
    return 0;
 }
