@@ -529,8 +529,10 @@ void player_cleanup (void)
    player_clear();
 
    /* clean up name */
-   if (player_name != NULL)
+   if (player_name != NULL) {
       free(player_name);
+      player_name = NULL;
+   }
 
    /* Clean up gui. */
    gui_cleanup();
