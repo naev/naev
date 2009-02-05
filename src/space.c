@@ -767,7 +767,7 @@ void space_init ( const char* sysname )
    interference_timer = 0.; /* Restart timer. */
 
    /* Clear player escorts since they don't automatically follow. */
-   if (player) {
+   if (player != NULL) {
       player->nescorts = 0;
       if (player->escorts) {
          free(player->escorts);
@@ -782,7 +782,8 @@ void space_init ( const char* sysname )
          if (strcmp(sysname, systems_stack[i].name)==0)
             break;
 
-      if (i==systems_nstack) ERR("System %s not found in stack", sysname);
+      if (i>=systems_nstack)
+         ERR("System %s not found in stack", sysname);
       cur_system = systems_stack+i;
 
       nt = ntime_pretty(0);
@@ -818,9 +819,10 @@ void space_init ( const char* sysname )
    player_enemies = 0;
 
    /* set up fleets -> pilots */
-   for (i=0; i < cur_system->nfleets; i++)
+   for (i=0; i < cur_system->nfleets; i++) {
       if (RNG(0,100) <= (cur_system->fleets[i].chance/2)) /* fleet check (50% chance) */
          space_addFleet( cur_system->fleets[i].fleet, 1 );
+   }
    
    /* start the spawn timer */
    spawn_timer = 120./(float)(cur_system->nfleets+1);
@@ -1151,8 +1153,9 @@ int system_addFleet( StarSystem *sys, SystemFleet *fleet )
    if (sys == NULL)
       return -1;
 
-   sys->fleets = realloc(sys->fleets, sizeof(SystemFleet)*(++sys->nfleets));
-   memcpy(sys->fleets+(sys->nfleets-1), fleet, sizeof(SystemFleet));
+   sys->nfleets++;
+   sys->fleets = realloc( sys->fleets, sizeof(SystemFleet)*sys->nfleets );
+   memcpy( &sys->fleets[sys->nfleets-1], fleet, sizeof(SystemFleet) );
 
    return 0;
 }

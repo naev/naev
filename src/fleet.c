@@ -329,7 +329,7 @@ static int fleet_loadFleetGroups (void)
       }
    } while (xml_nextNode(node));
    /* Shrink to minimum. */
-   fleet_stack = realloc(fleet_stack, sizeof(Fleet) * nfleets);
+   fleetgroup_stack = realloc(fleetgroup_stack, sizeof(FleetGroup) * nfleetgroups);
 
    xmlFreeDoc(doc);
    free(buf);
