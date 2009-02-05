@@ -23,6 +23,7 @@
 #include "nfile.h"
 #include "hook.h"
 #include "ndata.h"
+#include "unidiff.h"
 
 
 #define LOAD_WIDTH      400 /**< Load window width. */
@@ -296,6 +297,11 @@ static int load_game( char* file )
       return -1;
    }
 
+   /* Clean up possible stuff that should be cleaned. */
+   player_cleanup();
+   diff_clear();
+
+   /* Now begin to load. */
    diff_load(node); /* Must load first to work properly. */
    player_load(node);
    var_load(node);

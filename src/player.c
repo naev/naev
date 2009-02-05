@@ -186,12 +186,12 @@ void player_new (void)
    player_initSound();
 
    /* Clean up player stuff if we'll be recreating. */
+   diff_clear();
    player_cleanup();
    var_cleanup();
    missions_cleanup();
    space_clearKnown();
    land_cleanup();
-   diff_clear();
    factions_reset();
    map_close();
 
@@ -1871,9 +1871,6 @@ int player_load( xmlNodePtr parent )
 
    /* some cleaning up */
    player_flags = 0;
-   player_cleanup();
-   var_cleanup();
-   missions_cleanup();
    map_close();
 
    node = parent->xmlChildrenNode;

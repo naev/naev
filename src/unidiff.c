@@ -333,7 +333,7 @@ static int diff_patch( xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    if (diff->nfailed > 0) {
-      DEBUG("Unidiff '%s' failed %d hunks.", diff->name, diff->nfailed);
+      DEBUG("Unidiff '%s' failed to apply %d hunks.", diff->name, diff->nfailed);
       for (i=0; i<diff->nfailed; i++) {
          fail = &diff->failed[i];
          target = fail->target.u.name;
@@ -541,11 +541,11 @@ static int diff_removeDiff( UniDiff_t *diff )
             break;
 
          case HUNK_TYPE_FLEETGROUP_ADD:
-            hunk.type = HUNK_TYPE_FLEETGROUP_ADD;
+            hunk.type = HUNK_TYPE_FLEETGROUP_REMOVE;
             break;
 
          case HUNK_TYPE_FLEETGROUP_REMOVE:
-            hunk.type = HUNK_TYPE_FLEETGROUP_REMOVE;
+            hunk.type = HUNK_TYPE_FLEETGROUP_ADD;
             break;
 
          default:
@@ -553,7 +553,8 @@ static int diff_removeDiff( UniDiff_t *diff )
             continue;
       }
 
-      diff_patchHunk(&hunk);
+      if (diff_patchHunk(&hunk))
+         DEBUG("Failed to remove hunk type '%d'.", hunk.type);
    }
 
    diff_cleanup(diff);
