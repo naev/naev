@@ -2434,11 +2434,11 @@ void pilots_update( double dt )
       sensor_curRange = 0.; /* No range. */
    else {
       /* 0    ->    inf
-       * 250  ->   3000.
-       * 500  ->   1500.
-       * 750  ->   1125.
-       * 1000 ->    750. */
-      sensor_curRange  = 750.;
+       * 250  ->   1500.
+       * 500  ->    750.
+       * 750  ->    500.
+       * 1000 ->    300. */
+      sensor_curRange  = 375.;
       sensor_curRange /= (cur_system->interference / 1000.);
    }
 
