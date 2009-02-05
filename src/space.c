@@ -1053,12 +1053,10 @@ int system_addPlanet( StarSystem *sys, char *planetname )
 
    /* Check if need to grow the star system planet stack. */
    sys->nplanets++;
-   if (sys->planets == NULL) {
+   if (sys->planets == NULL)
       sys->planets = malloc( sizeof(Planet*) * CHUNK_SIZE_SMALL );
-   }
-   else if (sys->nplanets > CHUNK_SIZE_SMALL) {
+   else if (sys->nplanets > CHUNK_SIZE_SMALL)
       sys->planets = realloc( sys->planets, sizeof(Planet*) * sys->nplanets );
-   }
    planet = planet_get(planetname);
    sys->planets[sys->nplanets-1] = planet;
 

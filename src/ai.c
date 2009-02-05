@@ -45,6 +45,8 @@
  * the pilot to keep some memory always accesible between runs without having
  * to rely on the storage space a task has.
  *
+ * @note Nothing in this file can be considered reentrant.  Plan accordingly.
+ *
  * @todo Clean up most of the code, it was written as one of the first
  *         subsystems and is pretty lacking in quite a few aspects. Notably
  *         removing the entire lightuserdata thing and actually go with full
@@ -89,12 +91,16 @@
 
 /*
  * ai flags
+ *
+ * They can be used for stuff like movement or for pieces of code which might
+ *  run AI stuff when the AI module is not reentrant.
  */
 #define ai_setFlag(f)   (pilot_flags |= f ) /**< Sets pilot flag f */
 #define ai_isFlag(f)    (pilot_flags & f ) /**< Checks pilot flag f */
 /* flags */
 #define AI_PRIMARY      (1<<0)   /**< Firing primary weapon */
 #define AI_SECONDARY    (1<<1)   /**< Firing secondary weapon */
+#define AI_DISTRESS     (1<<2)   /**< Sent distress signal. */
 
 
 /*
@@ -130,6 +136,7 @@ static void ai_setMemory (void);
 static void ai_create( Pilot* pilot, char *param );
 /* External C routines */
 void ai_attacked( Pilot* attacked, const unsigned int attacker ); /* weapon.c */
+void ai_getDistress( Pilot* p, const Pilot* distressed );
 /* C Routines made External */
 int ai_pinit( Pilot *p, char *ai ); /* pilot.c */
 void ai_destroy( Pilot* p ); /* pilot.c */
@@ -294,6 +301,7 @@ static double pilot_acc = 0.; /**< Current pilot's acceleration. */
 static double pilot_turn = 0.; /**< Current pilot's turning. */
 static int pilot_flags = 0; /**< Handle stuff like weapon firing. */
 static int pilot_firemode = 0; /**< Method pilot is using to shoot. */
+static char ai_distressmsg[PATH_MAX]; /**< Buffer to store distress message. */
 
 /*
  * ai status, used so that create functions can't be used elsewhere
@@ -616,6 +624,10 @@ void ai_think( Pilot* pilot )
       pilot_shoot(cur_pilot, pilot_firemode); /* primary */
    if (ai_isFlag(AI_SECONDARY))
       pilot_shootSecondary(cur_pilot); /* secondary */
+
+   /* other behaviours. */
+   if (ai_isFlag(AI_DISTRESS))
+      pilot_distress(cur_pilot, ai_distressmsg);
 }
 
 
@@ -635,6 +647,34 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker )
    lua_pushnumber(L, attacker);
    if (lua_pcall(L, 1, 0, 0))
       WARN("Pilot '%s' ai -> 'attacked': %s", cur_pilot->name, lua_tostring(L,-1));
+}
+
+
+/**
+ * @brief Sends a distress signal to a pilot.
+ *
+ *    @param p Pilot recieving the distress signal.
+ *    @param distressed Pilot sending the distress signal.
+ */
+void ai_getDistress( Pilot* p, const Pilot* distressed )
+{
+   lua_State *L;
+
+   /* Set up the environment. */
+   ai_setPilot(p);
+   L = cur_pilot->ai->L;
+
+   /* See if function exists. */
+   lua_getglobal(L, "distress");
+   if (lua_isnil(L,-1)) {
+      lua_pop(L,1);
+      return;
+   }
+
+   /* Run the function. */
+   lua_pushnumber(L, distressed->id);
+   if (lua_pcall(L, 1, 0, 0))
+      WARN("Pilot '%s' ai -> 'distress': %s", cur_pilot->name, lua_tostring(L,-1));
 }
 
 
@@ -1129,9 +1169,20 @@ static int ai_isstopped( lua_State *L )
  */
 static int ai_isenemy( lua_State *L )
 {
+   Pilot *p;
+
+   /* Get the pilot. */
    if (lua_isnumber(L,1))
-      lua_pushboolean(L,areEnemies(cur_pilot->faction,
-            pilot_get(lua_tonumber(L,1))->faction));
+      p = pilot_get(lua_tonumber(L,1));
+   else
+      NLUA_INVALID_PARAMETER();
+
+   /* Make sure is valid. */
+   if (p==NULL)
+      return 0;
+
+   /* Check if is ally. */
+   lua_pushboolean(L,areEnemies(cur_pilot->faction, p->faction));
    return 1;
 }
 
@@ -1140,9 +1191,20 @@ static int ai_isenemy( lua_State *L )
  */
 static int ai_isally( lua_State *L )
 {
+   Pilot *p;
+
+   /* Get the pilot. */
    if (lua_isnumber(L,1))
-      lua_pushboolean(L,areAllies(cur_pilot->faction,
-            pilot_get(lua_tonumber(L,1))->faction));
+      p = pilot_get(lua_tonumber(L,1));
+   else
+      NLUA_INVALID_PARAMETER();
+
+   /* Make sure is valid. */
+   if (p==NULL)
+      return 0;
+
+   /* Check if is ally. */
+   lua_pushboolean(L,areAllies(cur_pilot->faction, p->faction));
    return 1;
 }
 
@@ -1880,9 +1942,12 @@ static int ai_distress( lua_State *L )
    NLUA_MIN_ARGS(1);
 
    if (lua_isstring(L,1))
-      pilot_distress( cur_pilot, lua_tostring(L,1) );
+      snprintf( ai_distressmsg, PATH_MAX, "%s", lua_tostring(L,1) );
    else
       NLUA_INVALID_PARAMETER();
+
+   /* Set flag because code isn't reentrant. */
+   ai_setFlag(AI_DISTRESS);
 
    return 0;
 }

@@ -319,8 +319,10 @@ int misn_tryRun( Mission *misn, char *func )
 {
    /* Get the function to run. */
    lua_getglobal( misn->L, func );
-   if (lua_isnil( misn->L, -1 ))
+   if (lua_isnil( misn->L, -1 )) {
+      lua_pop(misn->L,1);
       return 0;
+   }
    return misn_runTopStack( misn, func );
 }
 

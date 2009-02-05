@@ -61,6 +61,7 @@ static double sensor_curRange = 0.; /**< Current sensor range, set in pilots_upd
  */
 /* external */
 /* ai.c */
+extern void ai_getDistress( Pilot* p, const Pilot* distressed );
 extern AI_Profile* ai_pinit( Pilot *p, char *ai ); /**< from ai.c */
 extern void ai_destroy( Pilot* p ); /**< from ai.c */
 extern void ai_think( Pilot* pilot ); /**< from ai.c */
@@ -469,7 +470,6 @@ void pilot_distress( Pilot *p, const char *msg )
 
    /* Get the target to see if it's the player. */
    t = pilot_get(p->target);
-   if ((t == NULL) || (t->faction != FACTION_PLAYER))
       return;
 
    /* Now proceed to see if player should incur faction loss because
@@ -490,15 +490,19 @@ void pilot_distress( Pilot *p, const char *msg )
    if (!r) {
       for (i=0; i<pilot_nstack; i++)
          if ((pilot_stack[i]->id != p->id) &&
-               pilot_inRange(p, pilot_stack[i]) &&
-               !areEnemies(p->faction, pilot_stack[i]->faction)) {
-            r = 1;
-            break; 
+               pilot_inRange(p, pilot_stack[i])) {
+
+            /* Send AI the distress signal. */
+            ai_getDistress( pilot_stack[i], p );
+
+            /* Check if should take faction hit. */
+            if (!areEnemies(p->faction, pilot_stack[i]->faction))
+               r = 1;
          }
    }
 
    /* Modify faction, about 1 for a llama, 4.2 for a hawking */
-   if (r)
+   if ((t != NULL) && (t->faction == FACTION_PLAYER) && r)
       faction_modPlayer( p->faction, pow(p->ship->mass, 0.2) - 1. );
 }
 
