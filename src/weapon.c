@@ -797,7 +797,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
       p->player_damage += damage / (p->shield_max + p->armour_max);
 
    /* inform the ai it has been attacked, useless if player */
-   if (!pilot_isPlayer(p) && (pilot_isPlayer(parent)) &&
+   if (!pilot_isPlayer(p) && (parent != NULL) && (pilot_isPlayer(parent)) &&
          ((player->target == p->id) || (p->player_damage > PILOT_HOSTILE_THRESHOLD))) {
 
       /* Set as hostile. */
