@@ -624,7 +624,7 @@ ssize_t pack_read( Packfile_t* file, void* buf, size_t count )
  */
 off_t pack_seek( Packfile_t* file, off_t offset, int whence)
 {
-   off_t base, target, ret;
+   uint32_t base, target, ret;
 
    DEBUG("attempting to seek offset: %d, whence: %d", offset, whence);
 
