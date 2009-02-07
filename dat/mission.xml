@@ -49,7 +49,7 @@
    <unique />
   </flags>
   <avail>
-   <cond>player.getFaction("Empire") &gt;= 0 and var.peek("es_misn") &gt;= 3</cond>
+   <cond>player.getFaction("Empire") &gt;= 0 and var.peek("es_misn") ~= nil and var.peek("es_misn") &gt;= 3</cond>
    <chance>30</chance>
    <location>Bar</location>
    <faction>Empire</faction>
