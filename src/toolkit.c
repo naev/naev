@@ -122,6 +122,14 @@ typedef struct WidgetFaderData_{ /* WIDGET_FADER */
    double max;   /**< Maximum value. */
    void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on value change. */
 } WidgetFaderData; /**< WIDGET_FADER */
+
+
+#define WGT_FLAG_CANFOCUS     (1<<0)   /**< Widget can get focus. */
+#define wgt_setFlag(w,f)      ((w)->flags |= (f))
+#define wgt_rmFlag(w,f)       ((w)->flags &= ~(f))
+#define wgt_isFlag(w,f)       ((w)->flags & (f))
+
+
 /**
  * @struct Widget
  *
@@ -140,6 +148,8 @@ typedef struct Widget_ {
    double y; /**< Y position within the window. */
    double w; /**< Widget width. */
    double h; /**< Widget height. */
+
+   unsigned int flags; /**< Widget flags. */
 
    /* Event abstraction. */
    void (*keyevent) ( SDLKey k, SDLMod m ); /**< Key event handler function for the widget. */
@@ -323,6 +333,7 @@ void window_addButton( const unsigned int wid,
    
    /* specific */
    wgt->render = toolkit_renderButton;
+   wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->dat.btn.display = strdup(display);
    wgt->dat.btn.disabled = 0; /* initially enabled */
    wgt->dat.btn.fptr = call;
@@ -461,6 +472,7 @@ void window_addList( const unsigned int wid,
 
    /* specific */
    wgt->render = toolkit_renderList;
+   wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->dat.lst.options = items;
    wgt->dat.lst.noptions = nitems;
    wgt->dat.lst.selected = defitem; /* -1 would be none */
@@ -603,6 +615,7 @@ void window_addInput( const unsigned int wid,
 
    /* specific */
    wgt->render = toolkit_renderInput;
+   wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->dat.inp.max = max+1;
    wgt->dat.inp.oneline = oneline;
    wgt->dat.inp.pos = 0;
@@ -653,6 +666,7 @@ void window_addImageArray( const unsigned int wid,
 
    /* specific */
    wgt->render = toolkit_renderImageArray;
+   wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->dat.iar.images = tex;
    wgt->dat.iar.captions = caption;
    wgt->dat.iar.nelements = nelem;
@@ -708,6 +722,7 @@ void window_addFader( const unsigned int wid,
 
    /* specific */
    wgt->render = toolkit_renderFader;
+   /*wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);*/
    wgt->dat.fad.value = min;
    wgt->dat.fad.min = min;
    wgt->dat.fad.max = max;
@@ -903,6 +918,7 @@ void window_disableButton( const unsigned int wid, char* name )
 
    /* Disable button. */
    wgt->dat.btn.disabled = 1;
+   wgt_rmFlag(wgt, WGT_FLAG_CANFOCUS);
 }
 
 
@@ -929,7 +945,7 @@ void window_enableButton( const unsigned int wid, char *name )
 
    /* Enable button. */
    wgt->dat.btn.disabled = 0;
-
+   wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
 }
 
 
@@ -2629,19 +2645,7 @@ static int toolkit_isFocusable( Widget *wgt )
    if (wgt==NULL)
       return 0;
 
-   /* Type specific. */
-   switch (wgt->type) {
-      case WIDGET_BUTTON:
-         if (wgt->dat.btn.disabled==1)
-            return 0;
-      case WIDGET_LIST:
-      case WIDGET_INPUT:
-      case WIDGET_IMAGEARRAY:
-         return 1;
-
-      default:
-         return 0;
-   }
+   return wgt_isFlag(wgt, WGT_FLAG_CANFOCUS);
 }
 
 
