@@ -64,18 +64,30 @@ typedef enum WidgetStatus_ {
  * @brief Represents a widget.
  */
 typedef struct Widget_ {
+   /* Basic properties. */
    char* name; /**< Widget's name. */
    WidgetType type; /**< Widget's type. */
 
+   /* Inheritance. */
    unsigned int wdw; /**< Widget's parent window. */
 
+   /* Position and dimensions. */
    double x; /**< X position within the window. */
    double y; /**< Y position within the window. */
    double w; /**< Widget width. */
    double h; /**< Widget height. */
 
+   /* Event abstraction. */
+   void (*keyevent) ( SDLKey k, SDLMod m );
+   void (*mouseevent) ( double x, double y, double rx, double ry );
+
+   /* Misc. routines. */
+   void (*render) ( struct Widget_ *wgt, double x, double y );
+
+   /* Status of the widget. */
    WidgetStatus status; /**< Widget status. */
 
+   /* Type specific data (defined by type). */
    union {
       struct { /* WIDGET_BUTTON */
          void (*fptr) (unsigned int,char*); /**< Activate callback. */
@@ -160,6 +172,7 @@ typedef struct Window_ {
    void (*accept_fptr)(unsigned int,char*); /**< Triggered by hitting 'enter' with no widget that catches the keypress. */
    void (*cancel_fptr)(unsigned int,char*); /**< Triggered by hitting 'escape' with no widget that catches the keypress. */
 
+   /* Position and dimensions. */
    double x; /**< X position of the window. */
    double y; /**< Y position of the window. */
    double w; /**< Window width. */
@@ -300,6 +313,7 @@ void window_addButton( const unsigned int wid,
    wgt->wdw = wid;
    
    /* specific */
+   wgt->render = toolkit_renderButton;
    wgt->dat.btn.display = strdup(display);
    wgt->dat.btn.disabled = 0; /* initially enabled */
    wgt->dat.btn.fptr = call;
@@ -348,6 +362,7 @@ void window_addText( const unsigned int wid,
    wgt->wdw = wid;
 
    /* specific */
+   wgt->render = toolkit_renderText;
    if (font==NULL) wgt->dat.txt.font = &gl_defFont;
    else wgt->dat.txt.font = font;
    if (font==NULL) wgt->dat.txt.font = &gl_defFont;
@@ -391,6 +406,7 @@ void window_addImage( const unsigned int wid,
    wgt->wdw = wid;
 
    /* specific */
+   wgt->render = toolkit_renderImage;
    wgt->dat.img.image = image;
    wgt->dat.img.border = border;
    wgt->dat.img.colour = NULL; /* normal colour */
@@ -435,6 +451,7 @@ void window_addList( const unsigned int wid,
    wgt->wdw = wid;
 
    /* specific */
+   wgt->render = toolkit_renderList;
    wgt->dat.lst.options = items;
    wgt->dat.lst.noptions = nitems;
    wgt->dat.lst.selected = defitem; /* -1 would be none */
@@ -486,6 +503,7 @@ void window_addRect( const unsigned int wid,
    wgt->wdw = wid;
 
    /* specific */
+   wgt->render = toolkit_renderRect;
    wgt->dat.rct.colour = colour;
    wgt->dat.rct.border = border;
 
@@ -534,6 +552,7 @@ void window_addCust( const unsigned int wid,
    wgt->wdw = wid;
 
    /* specific */
+   wgt->render = toolkit_renderCust;
    wgt->dat.cst.border = border;
    wgt->dat.cst.render = render;
    wgt->dat.cst.mouse = mouse;
@@ -574,6 +593,7 @@ void window_addInput( const unsigned int wid,
    wgt->wdw = wid;
 
    /* specific */
+   wgt->render = toolkit_renderInput;
    wgt->dat.inp.max = max+1;
    wgt->dat.inp.oneline = oneline;
    wgt->dat.inp.pos = 0;
@@ -623,6 +643,7 @@ void window_addImageArray( const unsigned int wid,
    wgt->wdw = wid;
 
    /* specific */
+   wgt->render = toolkit_renderImageArray;
    wgt->dat.iar.images = tex;
    wgt->dat.iar.captions = caption;
    wgt->dat.iar.nelements = nelem;
@@ -643,7 +664,7 @@ void window_addImageArray( const unsigned int wid,
 
 
 /**
- * @brief Adds an Image Array widget.
+ * @brief Adds a Fader widget.
  *
  * Position origin is 0,0 at bottom left.  If you use negative X or Y
  *  positions.  They actually count from the opposite side in.
@@ -677,6 +698,7 @@ void window_addFader( const unsigned int wid,
    wgt->wdw = wid;
 
    /* specific */
+   wgt->render = toolkit_renderFader;
    wgt->dat.fad.value = min;
    wgt->dat.fad.min = min;
    wgt->dat.fad.max = max;
@@ -1685,47 +1707,9 @@ static void window_render( Window* w )
    /*
     * widgets
     */
-   for (i=0; i<w->nwidgets; i++) {
-
-      switch (w->widgets[i].type) {
-         case WIDGET_NULL: break;
-
-         case WIDGET_BUTTON:
-            toolkit_renderButton( &w->widgets[i], x, y );
-            break;
-
-         case WIDGET_TEXT:
-            toolkit_renderText( &w->widgets[i], x, y );
-            break;
-
-         case WIDGET_IMAGE:
-            toolkit_renderImage( &w->widgets[i], x, y );
-            break;
-
-         case WIDGET_LIST:
-            toolkit_renderList( &w->widgets[i], x, y );
-            break;
-
-         case WIDGET_RECT:
-            toolkit_renderRect( &w->widgets[i], x, y );
-            break;
-
-         case WIDGET_CUST:
-            toolkit_renderCust( &w->widgets[i], x, y );
-            break;
-
-         case WIDGET_INPUT:
-            toolkit_renderInput( &w->widgets[i], x, y );
-            break;
-
-         case WIDGET_IMAGEARRAY:
-            toolkit_renderImageArray( &w->widgets[i], x, y );
-            break;
-         
-         case WIDGET_FADER:
-            toolkit_renderFader( &w->widgets[i], x, y );
-      }
-   }
+   for (i=0; i<w->nwidgets; i++)
+      if (w->widgets[i].render != NULL)
+         w->widgets[i].render( &w->widgets[i], x, y );
 
    /*
     * focused widget
