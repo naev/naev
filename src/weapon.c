@@ -857,7 +857,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
 
    /* inform the ai it has been attacked, useless if player */
    if (!pilot_isPlayer(p)) {
-      if (pilot_isPlayer(parent) &&
+      if ((parent!=NULL) && pilot_isPlayer(parent) &&
             ((player->target == p->id) || (p->player_damage > PILOT_HOSTILE_THRESHOLD))) {
          pilot_setHostile(p);
          pilot_rmFlag( p, PILOT_BRIBED );
