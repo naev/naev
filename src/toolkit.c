@@ -58,6 +58,70 @@ typedef enum WidgetStatus_ {
 } WidgetStatus;
 
 
+typedef struct WidgetButtonData_ { /* WIDGET_BUTTON */
+   void (*fptr) (unsigned int,char*); /**< Activate callback. */
+   char *display; /**< Displayed text. */
+   int disabled; /**< 1 if button is disabled, 0 if enabled. */
+} WidgetButtonData; /**< WIDGET_BUTTON */
+
+typedef struct WidgetTextData_ { /* WIDGET_TEXT */
+   char *text; /**< Text to display, using printMid if centered, else printText. */
+   glFont* font; /**< Text font. */
+   glColour* colour; /**< Text colour. */
+   int centered; /**< 1 if text is centered, 0 if it isn't. */
+} WidgetTextData; /**< WIDGET_TEXT */
+
+typedef struct WidgetImageData_{ /* WIDGET_IMAGE */
+   glTexture* image; /**< Image to display. */
+   glColour* colour; /**< Colour to warp to. */
+   int border; /**< 1 if widget should have border. */
+} WidgetImageData; /**< WIDGET_IMAGE */
+
+typedef struct WidgetListData_ { /* WIDGET_LIST */
+   char **options; /**< Pointer to the options. */
+   int noptions; /**< Total number of options. */
+   int selected; /**< Which option is currently selected. */
+   int pos; /** Current topmost option (in view). */
+   void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
+   int height; /**< Real height. */
+} WidgetListData; /**< WIDGET_LIST */
+
+typedef struct WidgetRectData_{ /* WIDGET_RECT */
+   glColour* colour; /**< Background colour. */
+   int border; /**< 1 if widget should have border, 0 if it shouldn't. */
+} WidgetRectData; /**< WIDGET_RECT */
+
+typedef struct WidgetCustData_ { /* WIDGET_CUST */
+   int border; /**< 1 if widget should have border, 0 if it shouldn't. */
+   void (*render) (double bx, double by, double bw, double bh); /**< Function to run when rendering. */
+   void (*mouse) (unsigned int wid, SDL_Event* event, double bx, double by); /**< Function to run when recieving mous events. */
+} WidgetCustData; /**< WIDGET_CUST */
+
+typedef struct WidgetInputData_ { /* WIDGET_INPUT */
+   char *input; /**< Input buffer. */
+   int max; /**< Maximum length. */
+   int oneline; /**< Is it a one-liner? no '\n' and friends */
+   int view; /**< View position. */
+   int pos; /**< Cursor position. */
+} WidgetInputData; /**< WIDGET_INPUT */
+
+typedef struct WidgetImageArrayData_ { /* WIDGET_IMAGEARRAY */
+   glTexture **images; /**< Image array. */
+   char **captions; /**< Corresponding caption array. */
+   int nelements; /**< Number of elements. */
+   int selected; /**< Currently selected element. */
+   double pos; /**< Current y position. */
+   int iw; /**< Image width to use. */
+   int ih; /**< Image height to use. */
+   void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
+} WidgetImageArrayData; /**< WIDGET_IMAGEARRAY */
+
+typedef struct WidgetFaderData_{ /* WIDGET_FADER */
+   double value; /**< Current value. */
+   double min;   /**< Minimum value. */
+   double max;   /**< Maximum value. */
+   void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on value change. */
+} WidgetFaderData; /**< WIDGET_FADER */
 /**
  * @struct Widget
  *
@@ -78,81 +142,26 @@ typedef struct Widget_ {
    double h; /**< Widget height. */
 
    /* Event abstraction. */
-   void (*keyevent) ( SDLKey k, SDLMod m );
-   void (*mouseevent) ( double x, double y, double rx, double ry );
+   void (*keyevent) ( SDLKey k, SDLMod m ); /**< Key event handler function for the widget. */
+   void (*mouseevent) ( double x, double y, double rx, double ry ); /**< Mouse event handler function for the widget. */
 
    /* Misc. routines. */
-   void (*render) ( struct Widget_ *wgt, double x, double y );
+   void (*render) ( struct Widget_ *wgt, double x, double y ); /**< Render function for the widget. */
 
    /* Status of the widget. */
    WidgetStatus status; /**< Widget status. */
 
    /* Type specific data (defined by type). */
    union {
-      struct { /* WIDGET_BUTTON */
-         void (*fptr) (unsigned int,char*); /**< Activate callback. */
-         char *display; /**< Displayed text. */
-         int disabled; /**< 1 if button is disabled, 0 if enabled. */
-      } btn; /**< WIDGET_BUTTON */
-
-      struct { /* WIDGET_TEXT */
-         char *text; /**< Text to display, using printMid if centered, else printText. */
-         glFont* font; /**< Text font. */
-         glColour* colour; /**< Text colour. */
-         int centered; /**< 1 if text is centered, 0 if it isn't. */
-      } txt; /**< WIDGET_TEXT */
-
-      struct { /* WIDGET_IMAGE */
-         glTexture* image; /**< Image to display. */
-         glColour* colour; /**< Colour to warp to. */
-         int border; /**< 1 if widget should have border. */
-      } img; /**< WIDGET_IMAGE */
-
-      struct { /* WIDGET_LIST */
-         char **options; /**< Pointer to the options. */
-         int noptions; /**< Total number of options. */
-         int selected; /**< Which option is currently selected. */
-         int pos; /** Current topmost option (in view). */
-         void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
-         int height; /**< Real height. */
-      } lst; /**< WIDGET_LIST */
-
-      struct { /* WIDGET_RECT */
-         glColour* colour; /**< Background colour. */
-         int border; /**< 1 if widget should have border, 0 if it shouldn't. */
-      } rct; /**< WIDGET_RECT */
-
-      struct { /* WIDGET_CUST */
-         int border; /**< 1 if widget should have border, 0 if it shouldn't. */
-         void (*render) (double bx, double by, double bw, double bh); /**< Function to run when rendering. */
-         void (*mouse) (unsigned int wid, SDL_Event* event, double bx, double by); /**< Function to run when recieving mous events. */
-      } cst; /**< WIDGET_CUST */
-
-      struct { /* WIDGET_INPUT */
-         char *input; /**< Input buffer. */
-         int max; /**< Maximum length. */
-         int oneline; /**< Is it a one-liner? no '\n' and friends */
-         int view; /**< View position. */
-         int pos; /**< Cursor position. */
-      } inp; /**< WIDGET_INPUT */
-
-      struct { /* WIDGET_IMAGEARRAY */
-         glTexture **images; /**< Image array. */
-         char **captions; /**< Corresponding caption array. */
-         int nelements; /**< Number of elements. */
-         int selected; /**< Currently selected element. */
-         double pos; /**< Current y position. */
-         int iw; /**< Image width to use. */
-         int ih; /**< Image height to use. */
-         void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
-      } iar; /**< WIDGET_IMAGEARRAY */
-      
-      struct { /* WIDGET_FADER */
-         double value; /**< Current value. */
-         double min;   /**< Minimum value. */
-         double max;   /**< Maximum value. */
-         void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on value change. */
-      } fad; /**< WIDGET_FADER */
+      WidgetButtonData btn; /**< WIDGET_BUTTON */
+      WidgetTextData txt; /**< WIDGET_TEXT */
+      WidgetImageData img; /**< WIDGET_IMAGE */
+      WidgetListData lst; /**< WIDGET_LIST */
+      WidgetRectData rct; /**< WIDGET_RECT */
+      WidgetCustData cst; /**< WIDGET_CUST */
+      WidgetInputData inp; /**< WIDGET_INPUT */
+      WidgetImageArrayData iar; /**< WIDGET_IMAGEARRAY */
+      WidgetFaderData fad; /**< WIDGET_FADER */
    } dat; /**< Stores the widget specific data. */
 } Widget;
 
