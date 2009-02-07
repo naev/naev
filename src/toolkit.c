@@ -152,8 +152,8 @@ typedef struct Widget_ {
    unsigned int flags; /**< Widget flags. */
 
    /* Event abstraction. */
-   void (*keyevent) ( SDLKey k, SDLMod m ); /**< Key event handler function for the widget. */
-   void (*mouseevent) ( double x, double y, double rx, double ry ); /**< Mouse event handler function for the widget. */
+   int (*keyevent) ( struct Widget_ *wgt, SDLKey k, SDLMod m ); /**< Key event handler function for the widget. */
+   int (*mouseevent) ( struct Widget_ *wgt, double x, double y, double rx, double ry ); /**< Mouse event handler function for the widget. */
 
    /* Misc. routines. */
    void (*render) ( struct Widget_ *wgt, double x, double y ); /**< Render function for the widget. */
@@ -248,17 +248,20 @@ static Window* window_wget( const unsigned int wid );
 static Widget* window_getwgt( const unsigned int wid, char* name );
 static void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y );
 /* input */
-static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key );
 static void toolkit_mouseEvent( SDL_Event* event );
 static int toolkit_keyEvent( SDL_Event* event );
 static void toolkit_listMove( Widget* lst, double ay );
 static void toolkit_imgarrMove( Widget* iar, double ry );
 static void toolkit_clearKey (void);
+/* widget input. */
+static int toolkit_keyButton( Widget* btn, SDLKey key, SDLMod mod );
+static int toolkit_keyInput( Widget* inp, SDLKey key, SDLMod mod );
+static int toolkit_keyList( Widget* lst, SDLKey key, SDLMod mod );
+static int toolkit_keyImageArray( Widget* iar, SDLKey key, SDLMod mod );
 /* focus */
 static void toolkit_nextFocus (void);
 static int toolkit_isFocusable( Widget *wgt );
-static void toolkit_triggerFocus (void);
-static Widget* toolkit_getFocus (void);
+static Widget* toolkit_getFocus( Window *wdw );
 static void toolkit_listScroll( Widget* wgt, int direction );
 static void toolkit_listFocus( Widget* lst, double bx, double by );
 static void toolkit_imgarrFocus( Widget* iar, double bx, double by );
@@ -332,18 +335,22 @@ void window_addButton( const unsigned int wid,
    wgt->wdw = wid;
    
    /* specific */
+   wgt->keyevent = toolkit_keyButton;
    wgt->render = toolkit_renderButton;
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->dat.btn.display = strdup(display);
    wgt->dat.btn.disabled = 0; /* initially enabled */
    wgt->dat.btn.fptr = call;
-   if (wgt->dat.btn.fptr == NULL) /* Disable if function is NULL. */
-      wgt->dat.btn.disabled = 1;
 
    /* position/size */
    wgt->w = (double) w;
    wgt->h = (double) h;
    toolkit_setPos( wdw, wgt, x, y );
+
+   if (wgt->dat.btn.fptr == NULL) { /* Disable if function is NULL. */
+      wgt->dat.btn.disabled = 1;
+      wgt_rmFlag(wgt, WGT_FLAG_CANFOCUS);
+   }
 
    if (wdw->focus == -1) /* initialize the focus */
       toolkit_nextFocus();
@@ -473,6 +480,7 @@ void window_addList( const unsigned int wid,
    /* specific */
    wgt->render = toolkit_renderList;
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
+   wgt->keyevent = toolkit_keyList;
    wgt->dat.lst.options = items;
    wgt->dat.lst.noptions = nitems;
    wgt->dat.lst.selected = defitem; /* -1 would be none */
@@ -616,6 +624,7 @@ void window_addInput( const unsigned int wid,
    /* specific */
    wgt->render = toolkit_renderInput;
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
+   wgt->keyevent = toolkit_keyInput;
    wgt->dat.inp.max = max+1;
    wgt->dat.inp.oneline = oneline;
    wgt->dat.inp.pos = 0;
@@ -667,6 +676,7 @@ void window_addImageArray( const unsigned int wid,
    /* specific */
    wgt->render = toolkit_renderImageArray;
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
+   wgt->keyevent = toolkit_keyImageArray;
    wgt->dat.iar.images = tex;
    wgt->dat.iar.captions = caption;
    wgt->dat.iar.nelements = nelem;
@@ -2191,23 +2201,40 @@ static void toolkit_renderFader( Widget* fad, double bx, double by )
 
 
 /**
+ * @brief Handles input for an button widget.
+ *
+ *    @param btn Button widget to handle event.
+ *    @param key Key being handled.
+ *    @param mod Mods when key is being pressed.
+ *    @return 1 if the event was used, 0 if it wasn't.
+ */
+static int toolkit_keyButton( Widget* btn, SDLKey key, SDLMod mod )
+{
+   (void) mod;
+
+   if (key == SDLK_RETURN)
+      if (btn->dat.btn.fptr != NULL) {
+         (*btn->dat.btn.fptr)(btn->wdw, btn->name);
+         return 1;
+      }
+   return 0;
+}
+
+
+/**
  * @brief Handles input for an input widget.
  *
- *    @param type Event type.
  *    @param inp Input widget to handle event.
  *    @param key Key being handled.
+ *    @param mod Mods when key is being pressed.
+ *    @return 1 if the event was used, 0 if it wasn't.
  */
-static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key )
+static int toolkit_keyInput( Widget* inp, SDLKey key, SDLMod mod )
 {
    int n;
-   SDLMod mods;
 
    /* Must be input widget. */
    if (inp->type != WIDGET_INPUT)
-      return 0;
-
-   /* We only actually handle keydowns. */
-   if (type != SDL_KEYDOWN)
       return 0;
 
    /*
@@ -2237,7 +2264,6 @@ static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key )
          (key != SDLK_SPACE) && (key != SDLK_RETURN))
       return 0;
 
-   mods = SDL_GetModState();
    if (inp->dat.inp.oneline) {
 
       /* backspace -> delete text */
@@ -2259,7 +2285,7 @@ static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key )
             inp->dat.inp.input[ inp->dat.inp.pos++ ] = '\n';
 
          /* upper case characters */
-         else if (nstd_isalpha(key) && (mods & (KMOD_LSHIFT | KMOD_RSHIFT)))
+         else if (nstd_isalpha(key) && (mod & (KMOD_LSHIFT | KMOD_RSHIFT)))
             inp->dat.inp.input[ inp->dat.inp.pos++ ] = nstd_toupper(key);
 
          /* rest */
@@ -2273,6 +2299,61 @@ static int toolkit_inputInput( Uint8 type, Widget* inp, SDLKey key )
          if (n+10 > inp->w) inp->dat.inp.view++;
          return 1;
       }
+   }
+   return 0;
+}
+
+
+/**
+ * @brief Handles input for a list widget.
+ *
+ *    @param lst List widget to handle event.
+ *    @param key Key being handled.
+ *    @param mod Mods when key is being pressed.
+ *    @return 1 if the event was used, 0 if it wasn't.
+ */
+static int toolkit_keyList( Widget* lst, SDLKey key, SDLMod mod )
+{
+   (void) mod;
+
+   switch (key) {
+      case SDLK_UP:
+         toolkit_listScroll( lst, +1 );
+         return 1;
+      case SDLK_DOWN:
+         toolkit_listScroll( lst, -1 );
+         return 1;
+
+      default:
+         break;
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Handles input for an image array widget.
+ *
+ *    @param iar Image array widget to handle event.
+ *    @param key Key being handled.
+ *    @param mod Mods when key is being pressed.
+ *    @return 1 if the event was used, 0 if it wasn't.
+ */
+static int toolkit_keyImageArray( Widget* iar, SDLKey key, SDLMod mod )
+{
+   (void) mod;
+
+   switch (key) {
+      case SDLK_UP:
+         toolkit_listScroll( iar, +1 );
+         break;
+      case SDLK_DOWN:
+         toolkit_listScroll( iar, -1 );
+         break;
+
+      default:
+         break;
    }
    return 0;
 }
@@ -2509,63 +2590,41 @@ static int toolkit_keyEvent( SDL_Event* event )
 
    /* Get event and key. */
    wdw = &windows[nwindows-1];
-   wgt = (wdw->focus != -1) ? &wdw->widgets[ wdw->focus ] : NULL;
+   wgt = toolkit_getFocus( wdw );
    key = event->key.keysym.sym;
 
    /* hack to simulate key repetition */
-   if ((key==SDLK_BACKSPACE) || nstd_isalnum(key)) {
-      if (event->type == SDL_KEYDOWN)
-         toolkit_regKey(key);
-      else if (event->type == SDL_KEYUP)
-         toolkit_unregKey(key);
-   }
+   if (event->type == SDL_KEYDOWN)
+      toolkit_regKey(key);
+   else if (event->type == SDL_KEYUP)
+      toolkit_unregKey(key);
 
-   /* handle input widgets */
-   if (wgt && (wgt->type==WIDGET_INPUT)) /* grabs all the events it wants */
-      if (toolkit_inputInput( event->type, wgt, key))
+   /* We only want keydown from now on. */
+   if (event->type != SDL_KEYDOWN)
+      return 0;
+
+   /* Trigger event function if exists. */
+   if ((wgt != NULL) && (wgt->keyevent != NULL))
+      if ((*wgt->keyevent)( wgt, key, 0 ))
          return 1;
 
-   /* Key specific. */
+   /* Handle other cases where event might be used by the window. */
    switch (key) {
       case SDLK_TAB:
-         if (event->type == SDL_KEYDOWN)
-            toolkit_nextFocus();
-         return 1;
-
-      case SDLK_RETURN:
-         if (event->type == SDL_KEYDOWN)
-            toolkit_triggerFocus();
-         return 1;
-
+         toolkit_nextFocus();
+         break;
       case SDLK_ESCAPE:
-         if (event->type == SDL_KEYDOWN)
-            if (wdw->cancel_fptr != NULL) {
-               (*wdw->cancel_fptr)(wdw->id,wdw->name);
-               return 1;
-            }
-         return 0;
-
-      case SDLK_UP:
-         if (event->type == SDL_KEYDOWN) {
-            toolkit_regKey(SDLK_UP);
-            toolkit_listScroll( toolkit_getFocus(), +1 );
+         if (wdw->cancel_fptr != NULL) {
+            (*wdw->cancel_fptr)(wdw->id,wdw->name);
+            return 1;
          }
-         else if (event->type == SDL_KEYUP)
-            toolkit_unregKey(SDLK_UP);
-         return 0;
-
-      case SDLK_DOWN:
-         if (event->type == SDL_KEYDOWN) {
-            toolkit_regKey(SDLK_DOWN);
-            toolkit_listScroll( toolkit_getFocus(), -1 );
-         }
-         else if (event->type == SDL_KEYUP)
-            toolkit_unregKey(SDLK_DOWN);
-         return 0;
+         break;
 
       default:
-         return 0;
+         break;
    }
+
+   return 0;
 }
 
 
@@ -2594,23 +2653,9 @@ void toolkit_update (void)
    /* Check to see what it affects. */
    if (nwindows > 0) {
       wdw = &windows[nwindows-1];
-      wgt = (wdw->focus >= 0) ? &wdw->widgets[ wdw->focus ] : NULL;
-      if (wgt && (wgt->type==WIDGET_INPUT))
-         toolkit_inputInput( SDL_KEYDOWN, wgt, input_key );
-   }
-
-   /* Handle the press. */
-   switch (input_key) {
-
-      case SDLK_UP:
-         toolkit_listScroll( toolkit_getFocus(), +1 );
-         break;
-      case SDLK_DOWN:
-         toolkit_listScroll( toolkit_getFocus(), -1 );
-         break;
-
-      default:
-         break;
+      wgt = toolkit_getFocus( wdw );
+      if ((wgt != NULL) && (wgt->keyevent != NULL))
+         wgt->keyevent( wgt, input_key, 0 );
    }
 }
 
@@ -2650,34 +2695,6 @@ static int toolkit_isFocusable( Widget *wgt )
 
 
 /**
- * @brief Trigger the focused widget.
- */
-static void toolkit_triggerFocus (void)
-{
-   Window* wdw;
-   Widget* wgt;
-
-   wdw = &windows[nwindows-1];
-   if (wdw->focus == -1) return;
-   wgt = &wdw->widgets[wdw->focus];
-
-   switch (wgt->type) {
-
-      case WIDGET_BUTTON:
-         if (wgt->dat.btn.fptr) (*wgt->dat.btn.fptr)(wdw->id,wgt->name);
-         else DEBUG("Toolkit: Button '%s' of Window '%s' "
-               "doesn't have a function trigger",
-               wgt->name, wdw->name );
-         break;
-
-      default:
-         if (wdw->accept_fptr) (*wdw->accept_fptr)(wdw->id,wgt->name);
-         break;
-   }
-}
-
-
-/**
  * @brief Tries to scroll a widget up/down by direction.
  *
  *    @param wgt Widget to scroll.
@@ -2702,8 +2719,7 @@ static void toolkit_listScroll( Widget* wgt, int direction )
          wgt->dat.lst.selected -= direction;
 
          /* boundry check. */
-         wgt->dat.lst.selected = MAX(0,wgt->dat.lst.selected);
-         wgt->dat.lst.selected = MIN(wgt->dat.lst.selected, wgt->dat.lst.noptions-1);
+         wgt->dat.lst.selected = CLAMP( 0, wgt->dat.lst.noptions-1, wgt->dat.lst.selected);
 
          /* see if we have to scroll. */
          pos = (wgt->dat.lst.selected - wgt->dat.lst.pos);
@@ -2738,8 +2754,7 @@ static void toolkit_listScroll( Widget* wgt, int direction )
          wgt->dat.iar.pos -= direction * h;
 
          /* Boundry check. */
-         wgt->dat.iar.pos = MAX(wgt->dat.iar.pos, 0.);
-         wgt->dat.iar.pos = MIN(wgt->dat.iar.pos, hmax);
+         wgt->dat.iar.pos = CLAMP( 0., hmax, wgt->dat.iar.pos );
          if (wgt->dat.iar.fptr)
             (*wgt->dat.iar.fptr)(wdw->id,wgt->name);
          break;
@@ -2759,7 +2774,7 @@ static void toolkit_listScroll( Widget* wgt, int direction )
 static void toolkit_faderSetValue( Widget *fad, double value )
 {
    /* Sanity check and value set. */
-   fad->dat.fad.value = MAX(MIN(value, fad->dat.fad.max), fad->dat.fad.min);
+   fad->dat.fad.value = CLAMP( fad->dat.fad.min, fad->dat.fad.max, value );
 
    /* Run function if needed. */
    if (fad->dat.fad.fptr != NULL)
@@ -3010,15 +3025,13 @@ static void toolkit_imgarrMove( Widget* iar, double ry )
 
 
 /**
- * @brief Gets the focused widget.
+ * @brief Gets the focused widget in a window.
  *
+ *    @param wdw The window to get the focused widget from.
  *    @return The focused widget.
  */
-static Widget* toolkit_getFocus (void)
+static Widget* toolkit_getFocus( Window *wdw )
 {
-   Window* wdw;
-   wdw = &windows[nwindows-1];
-   
    if (wdw->focus == -1)
       return NULL;
 
