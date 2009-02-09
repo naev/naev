@@ -25,10 +25,6 @@ extern int toolkit;
 unsigned int window_create( const char* name,
       const int x, const int y, /* position */
       const int w, const int h ); /* dimensions */
-void window_addInput( const unsigned int wid,
-      const int x, const int y, /* position */
-      const int w, const int h, /* size */
-      char* name, const int max, const int oneline );
 void window_addImageArray( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
@@ -52,7 +48,6 @@ void window_setCancel( const unsigned int wid, void (*cancel)(unsigned int,char*
 int window_exists( const char* wdwname );
 int widget_exists( const unsigned int wid, const char* wgtname );
 unsigned int window_get( const char* wdwname );
-char* window_getInput( const unsigned int wid, char* name );
 void window_posWidget( const unsigned int wid,
       char* name, int *x, int *y );
 void window_moveWidget( const unsigned int wid,

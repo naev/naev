@@ -62,14 +62,6 @@ typedef enum WidgetStatus_ {
 #define wgt_isFlag(w,f)       ((w)->flags & (f)) /**< Checks if a widget has a fla.g */
 
 
-typedef struct WidgetInputData_ { /* WIDGET_INPUT */
-   char *input; /**< Input buffer. */
-   int max; /**< Maximum length. */                                 
-   int oneline; /**< Is it a one-liner? no '\n' and friends */
-   int view; /**< View position. */
-   int pos; /**< Cursor position. */
-} WidgetInputData; /**< WIDGET_INPUT */
-
 typedef struct WidgetImageArrayData_ { /* WIDGET_IMAGEARRAY */
    glTexture **images; /**< Image array. */
    char **captions; /**< Corresponding caption array. */
