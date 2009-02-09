@@ -4,8 +4,8 @@
 
 
 
-#ifndef IMAGE_H
-#  define IMAGE_H
+#ifndef WGT_IMAGE_H
+#  define WGT_IMAGE_H
 
 
 #include "font.h"
@@ -15,7 +15,7 @@
 /**
  * @brief The image widget data
  */
-typedef struct WidgetImageData_{ /* WIDGET_IMAGE */
+typedef struct WidgetImageData_{
    glTexture* image; /**< Image to display. */
    glColour* colour; /**< Colour to warp to. */
    int border; /**< 1 if widget should have border. */
@@ -35,5 +35,5 @@ void window_imgColour( const unsigned int wid,
 glTexture* window_getImage( const unsigned int wid, char* name );
 
 
-#endif /* IMAGE_H */
+#endif /* WGT_IMAGE_H */
 

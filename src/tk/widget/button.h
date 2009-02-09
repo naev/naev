@@ -4,8 +4,8 @@
 
 
 
-#ifndef BUTTON_H
-#  define BUTTON_H
+#ifndef WGT_BUTTON_H
+#  define WGT_BUTTON_H
 
 
 /**
@@ -30,5 +30,5 @@ void window_disableButton( const unsigned int wid, char* name );
 void window_enableButton( const unsigned int wid, char *name );
 
 
-#endif /* BUTTON_H */
+#endif /* WGT_BUTTON_H */
 

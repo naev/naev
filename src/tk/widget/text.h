@@ -4,8 +4,8 @@
 
 
 
-#ifndef TEXT_H
-#  define TEXT_H
+#ifndef WGT_TEXT_H
+#  define WGT_TEXT_H
 
 
 #include "font.h"
@@ -15,7 +15,7 @@
 /**
  * @brief The text widget data.
  */
-typedef struct WidgetTextData_ { /* WIDGET_TEXT */
+typedef struct WidgetTextData_ {
    char *text; /**< Text to display, using printMid if centered, else printText. */
    glFont* font; /**< Text font. */
    glColour* colour; /**< Text colour. */
@@ -35,5 +35,5 @@ void window_modifyText( const unsigned int wid,
       char* name, char* newstring );
 
 
-#endif /* TEXT_H */
+#endif /* WGT_TEXT_H */
 

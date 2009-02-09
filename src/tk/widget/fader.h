@@ -4,8 +4,8 @@
 
 
 
-#ifndef FADER_H
-#  define FADER_H
+#ifndef WGT_FADER_H
+#  define WGT_FADER_H
 
 
 #include "font.h"
@@ -15,7 +15,7 @@
 /**
  * @brief The fader widget data.
  */
-typedef struct WidgetFaderData_{ /* WIDGET_FADER */
+typedef struct WidgetFaderData_{
    double value; /**< Current value. */
    double min;   /**< Minimum value. */
    double max;   /**< Maximum value. */
@@ -39,5 +39,5 @@ void window_faderBounds( const unsigned int wid,
 double window_getFaderValue( const unsigned int wid, char* name );
 
 
-#endif /* FADER_H */
+#endif /* WGT_FADER_H */
 

@@ -4,8 +4,8 @@
 
 
 
-#ifndef RECT_H
-#  define RECT_H
+#ifndef WGT_RECT_H
+#  define WGT_RECT_H
 
 
 #include "colour.h"
@@ -14,7 +14,7 @@
 /**
  * @brief The rectangle widget data.
  */
-typedef struct WidgetRectData_{ /* WIDGET_RECT */
+typedef struct WidgetRectData_{
    glColour* colour; /**< Background colour. */
    int border; /**< 1 if widget should have border, 0 if it shouldn't. */
 } WidgetRectData;
@@ -27,5 +27,5 @@ void window_addRect( const unsigned int wid,
       char* name, glColour* colour, int border ); /* properties */
 
 
-#endif /* RECT_H */
+#endif /* WGT_RECT_H */
 

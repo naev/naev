@@ -4,8 +4,8 @@
 
 
 
-#ifndef IMAGEARRAY_H
-#  define IMAGEARRAY_H
+#ifndef WGT_IMAGEARRAY_H
+#  define WGT_IMAGEARRAY_H
 
 
 #include "opengl.h"
@@ -16,7 +16,7 @@
 /**
  * @brief The image array widget data.
  */
-typedef struct WidgetImageArrayData_ { /* WIDGET_IMAGEARRAY */
+typedef struct WidgetImageArrayData_ {
    glTexture **images; /**< Image array. */
    char **captions; /**< Corresponding caption array. */
    int nelements; /**< Number of elements. */
@@ -40,5 +40,5 @@ void window_addImageArray( const unsigned int wid,
 char* toolkit_getImageArray( const unsigned int wid, char* name );
 
 
-#endif /* IMAGEARRAY_H */
+#endif /* WGT_IMAGEARRAY_H */
 

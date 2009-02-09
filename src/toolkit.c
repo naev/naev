@@ -972,7 +972,7 @@ static void toolkit_mouseEvent( SDL_Event* event )
          else
             switch (event->type) {
                case SDL_MOUSEMOTION:
-                  /* Change the status of the widget. */
+                  /* Change the status of the widget if mouse isn't down. */
                   if (!(event->motion.state & SDL_BUTTON(1)))
                      wgt->status = WIDGET_STATUS_MOUSEOVER;
 
@@ -982,7 +982,8 @@ static void toolkit_mouseEvent( SDL_Event* event )
 
                   /* Try to give the event to the widget. */
                   if (wgt->mmoveevent != NULL)
-                     (*wgt->mmoveevent)( wgt, (SDL_MouseMotionEvent*) event );
+                     if ((*wgt->mmoveevent)( wgt, (SDL_MouseMotionEvent*) event ))
+                        return;
 
                   /* Undo coordinate change. */
                   event->motion.x += wgt->x;
@@ -991,7 +992,8 @@ static void toolkit_mouseEvent( SDL_Event* event )
 
                case SDL_MOUSEBUTTONDOWN:
                   /* Update the status. */
-                  wgt->status = WIDGET_STATUS_MOUSEDOWN;
+                  if (event->button.button == SDL_BUTTON_LEFT)
+                     wgt->status = WIDGET_STATUS_MOUSEDOWN;
 
                   if (toolkit_isFocusable(wgt))
                      w->focus = i;
@@ -1008,7 +1010,6 @@ static void toolkit_mouseEvent( SDL_Event* event )
                   /* Undo coordinate change. */
                   event->button.x += wgt->x;
                   event->button.y += wgt->y;
-
                   break;
 
                case SDL_MOUSEBUTTONUP:
@@ -1024,8 +1025,10 @@ static void toolkit_mouseEvent( SDL_Event* event )
                            DEBUG("Toolkit: Button '%s' of Window '%s' "
                                  "doesn't have a function trigger",
                                  wgt->name, w->name );
-                        else
-                           wgt_func = wgt; /* run it at the end in case of close */
+                        else {
+                           (*wgt_func->dat.btn.fptr)(w->id, wgt_func->name);
+                           return;
+                        }
                      }
                   }
                   wgt->status = WIDGET_STATUS_NORMAL;
@@ -1039,11 +1042,6 @@ static void toolkit_mouseEvent( SDL_Event* event )
       else
          wgt->status = WIDGET_STATUS_NORMAL;
    }
-
-   /* We trigger this at the end in case it destroys the window that is calling
-    * this function.  Otherwise ugly segfaults appear. */
-   if (wgt_func)
-      (*wgt_func->dat.btn.fptr)(w->id, wgt_func->name);
 }
 
 

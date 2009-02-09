@@ -372,6 +372,8 @@ static void iar_focus( Widget* iar, double bx, double by )
    xspace = (((int)iar->w - 10) % (int)w) / (xelem + 1);
    yelem = (int)iar->dat.iar.nelements / xelem + 1;
 
+   DEBUG("%f < %f", bx, iar->w - 10.);
+
    /* Normal click. */
    if (bx < iar->w - 10.) {
 

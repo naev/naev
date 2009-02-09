@@ -4,14 +4,14 @@
 
 
 
-#ifndef INPUT_H
-#  define INPUT_H
+#ifndef WGT_INPUT_H
+#  define WGT_INPUT_H
 
 
 /**
  * @brief The input widget data.
  */
-typedef struct WidgetInputData_ { /* WIDGET_INPUT */
+typedef struct WidgetInputData_ {
    char *input; /**< Input buffer. */
    int max; /**< Maximum length. */
    int oneline; /**< Is it a one-liner? no '\n' and friends */
@@ -30,5 +30,5 @@ void window_addInput( const unsigned int wid,
 char* window_getInput( const unsigned int wid, char* name );
 
 
-#endif /* INPUT_H */
+#endif /* WGT_INPUT_H */
 

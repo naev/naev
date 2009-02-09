@@ -4,14 +4,14 @@
 
 
 
-#ifndef LIST_H
-#  define LIST_H
+#ifndef WGT_LIST_H
+#  define WGT_LIST_H
 
 
 /**
  * @brief The list widget data.
  */
-typedef struct WidgetListData_ { /* WIDGET_LIST */
+typedef struct WidgetListData_ {
    char **options; /**< Pointer to the options. */
    int noptions; /**< Total number of options. */
    int selected; /**< Which option is currently selected. */
@@ -33,5 +33,5 @@ char* toolkit_getList( const unsigned int wid, char* name );
 int toolkit_getListPos( const unsigned int wid, char* name );
 
 
-#endif /* LIST_H */
+#endif /* WGT_LIST_H */
 
