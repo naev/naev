@@ -62,18 +62,6 @@ typedef enum WidgetStatus_ {
 #define wgt_isFlag(w,f)       ((w)->flags & (f)) /**< Checks if a widget has a fla.g */
 
 
-typedef struct WidgetImageArrayData_ { /* WIDGET_IMAGEARRAY */
-   glTexture **images; /**< Image array. */
-   char **captions; /**< Corresponding caption array. */
-   int nelements; /**< Number of elements. */
-   int selected; /**< Currently selected element. */
-   double pos; /**< Current y position. */
-   int iw; /**< Image width to use. */
-   int ih; /**< Image height to use. */
-   void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
-} WidgetImageArrayData; /**< WIDGET_IMAGEARRAY */
-
-
 /**
  * @struct Widget
  *                                                                  

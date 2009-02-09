@@ -15,6 +15,7 @@
 #include "tk/widget/fader.h"
 #include "tk/widget/list.h"
 #include "tk/widget/input.h"
+#include "tk/widget/imagearray.h"
 #include "tk/widget/cust.h"
 
 

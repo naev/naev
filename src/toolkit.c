@@ -71,17 +71,13 @@ static void toolkit_mouseEvent( SDL_Event* event );
 static int toolkit_keyEvent( SDL_Event* event );
 static void toolkit_imgarrMove( Widget* iar, double ry );
 static void toolkit_clearKey (void);
-/* widget input. */
-static int toolkit_keyImageArray( Widget* iar, SDLKey key, SDLMod mod );
 /* focus */
 static int toolkit_isFocusable( Widget *wgt );
 static Widget* toolkit_getFocus( Window *wdw );
-static void toolkit_listScroll( Widget* wgt, int direction );
 static void toolkit_listFocus( Widget* lst, double bx, double by );
 static void toolkit_imgarrFocus( Widget* iar, double bx, double by );
 /* render */
 static void window_render( Window* w );
-static void toolkit_renderImageArray( Widget* iar, double bx, double by );
 
 
 /**
@@ -105,63 +101,6 @@ void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
       wgt->y = wdw->h - wgt->h + y;
    else
       wgt->y = (double) y;
-}
-
-
-/**
- * @brief Adds an Image Array widget.
- *
- * Position origin is 0,0 at bottom left.  If you use negative X or Y
- *  positions.  They actually count from the opposite side in.
- *
- *    @param wid Window to add to.
- *    @param x X position.
- *    @param y Y position.
- *    @param w Width.
- *    @param h Height.
- *    @param name Internal widget name.
- *    @param iw Image width to use.
- *    @param ih Image height to use.
- *    @param tex Texture array to use (not freed).
- *    @param caption Caption array to use (freed).
- *    @param nelem Elements in tex and caption.
- *    @param call Callback when modified.
- */
-void window_addImageArray( const unsigned int wid,
-                           const int x, const int y, /* position */
-                           const int w, const int h, /* size */
-                           char* name, const int iw, const int ih,
-                           glTexture** tex, char** caption, int nelem,
-                           void (*call) (unsigned int wdw, char* wgtname) )
-{
-   Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw);
-
-   /* generic */
-   wgt->type = WIDGET_IMAGEARRAY;
-   wgt->name = strdup(name);
-   wgt->wdw = wid;
-
-   /* specific */
-   wgt->render = toolkit_renderImageArray;
-   wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
-   wgt->keyevent = toolkit_keyImageArray;
-   wgt->dat.iar.images = tex;
-   wgt->dat.iar.captions = caption;
-   wgt->dat.iar.nelements = nelem;
-   wgt->dat.iar.selected = 0;
-   wgt->dat.iar.pos = 0;
-   wgt->dat.iar.iw = iw;
-   wgt->dat.iar.ih = ih;
-   wgt->dat.iar.fptr = call;
-   
-   /* position/size */
-   wgt->w = (double) w;
-   wgt->h = (double) h;
-   toolkit_setPos( wdw, wgt, x, y );
-
-   if (wdw->focus == -1) /* initialize the focus */
-      toolkit_nextFocus();
 }
 
 
@@ -529,32 +468,13 @@ void window_setCancel( const unsigned int wid, void (*cancel)(unsigned int,char*
  */
 void widget_cleanup( Widget *widget )
 {
-   int i;
-
    /* General freeing. */
    if (widget->name)
       free(widget->name);
 
+   /* Type specific clean up. */
    if (widget->cleanup != NULL)
       (*widget->cleanup)(widget);
-
-   /* Type specific. */
-   switch (widget->type) {
-      case WIDGET_IMAGEARRAY:
-         if (widget->dat.iar.nelements > 0) { /* Free each text individually */
-            for (i=0; i<widget->dat.iar.nelements; i++)
-               if (widget->dat.iar.captions[i])
-                  free(widget->dat.iar.captions[i]);
-            /* Free the arrays */
-            free( widget->dat.iar.captions );
-            free( widget->dat.iar.images );
-         }
-         break;
-
-
-      default:
-         break;
-   }
 }
 
 
@@ -964,110 +884,6 @@ static void window_render( Window* w )
 
 
 /**
- * @brief Renders an image array.
- *
- *    @param iar Image array widget to render.
- *    @param bx Base X position.
- *    @param by Base Y position.
- */
-static void toolkit_renderImageArray( Widget* iar, double bx, double by )
-{
-   int i,j;
-   double x,y, w,h, xcurs,ycurs;
-   double scroll_pos;
-   int xelem,yelem, xspace;
-   glColour *c, *dc, *lc;
-   int is_selected;
-
-   /*
-    * Calculations.
-    */
-   /* position */
-   x = bx + iar->x;
-   y = by + iar->y;
-
-   /* element dimensions */
-   w = iar->dat.iar.iw + 5.*2.; /* includes border */
-   h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
-
-   /* number of elements */
-   xelem = (int)((iar->w - 10.) / w);
-   xspace = (((int)iar->w - 10) % (int)w) / (xelem + 1);
-   yelem = (int)iar->dat.iar.nelements / xelem + 1;
-
-   /* background */
-   toolkit_drawRect( x, y, iar->w, iar->h, &cBlack, NULL );
-
-   /* 
-    * Scrollbar.
-    */
-   scroll_pos = iar->dat.iar.pos / (h * (yelem - (int)(iar->h / h)));
-   toolkit_drawScrollbar( x + iar->w - 10., y, 10., iar->h, scroll_pos );
-
-   /* 
-    * Main drawing loop.
-    */
-   toolkit_clip( x, y, iar->w, iar->h );
-   ycurs = y + iar->h + (double)SCREEN_H/2. - h + iar->dat.iar.pos;
-   for (j=0; j<yelem; j++) {
-      xcurs = x + xspace + (double)SCREEN_W/2.;
-      for (i=0; i<xelem; i++) {
-
-         /* Out of elements. */
-         if ((j*xelem + i) >= iar->dat.iar.nelements)
-            break;
-
-         is_selected = (iar->dat.iar.selected == j*xelem + i) ? 1 : 0;
-
-         if (is_selected)
-            toolkit_drawRect( xcurs-(double)SCREEN_W/2. + 2.,
-                  ycurs-(double)SCREEN_H/2. + 2.,
-                  w - 4., h - 4., &cDConsole, NULL );
-
-         /* image */
-         if (iar->dat.iar.images[j*xelem + i] != NULL)
-            gl_blitScale( iar->dat.iar.images[j*xelem + i],
-                  xcurs + 5., ycurs + gl_smallFont.h + 7.,
-                  iar->dat.iar.iw, iar->dat.iar.ih, NULL );
-
-         /* caption */
-         gl_printMid( &gl_smallFont, iar->dat.iar.iw, xcurs + 5., ycurs + 5.,
-                  (is_selected) ? &cBlack : &cWhite,
-                  iar->dat.iar.captions[j*xelem + i] );
-         
-         /* outline */
-         if (is_selected) {
-            lc = &cWhite;
-            c = &cGrey80;
-            dc = &cGrey60;
-         }
-         else {
-            lc = toolkit_colLight;
-            c = toolkit_col;
-            dc = toolkit_colDark;
-         }
-         toolkit_drawOutline( xcurs-(double)SCREEN_W/2. + 2.,
-               ycurs-(double)SCREEN_H/2. + 2.,
-               w - 4., h - 4., 1., lc, c );
-         toolkit_drawOutline( xcurs-(double)SCREEN_W/2. + 2.,
-               ycurs-(double)SCREEN_H/2. + 2.,
-               w - 4., h - 4., 2., dc, NULL );
-         xcurs += w + xspace;
-      }
-      ycurs -= h;
-   }
-   toolkit_unclip();
-
-   /*
-    * Final outline.
-    */
-   toolkit_drawOutline( x, y+1, iar->w-1, iar->h-1, 1., toolkit_colLight, toolkit_col );
-   toolkit_drawOutline( x, y+1, iar->w-1, iar->h-1, 2., toolkit_colDark, NULL );
-
-}
-
-
-/**
  * @brief Draws a scrollbar.
  *
  *    @param x X position of scrollbar.
@@ -1089,33 +905,6 @@ void toolkit_drawScrollbar( double x, double y, double w, double h, double pos )
    sy = y + (h - 30.) * (1.-pos);
    toolkit_drawRect( x, sy, w, 30., toolkit_colLight, toolkit_col );
    toolkit_drawOutline( x, sy, w, 30., 0., toolkit_colDark, NULL );
-}
-
-
-/**
- * @brief Handles input for an image array widget.
- *
- *    @param iar Image array widget to handle event.
- *    @param key Key being handled.
- *    @param mod Mods when key is being pressed.
- *    @return 1 if the event was used, 0 if it wasn't.
- */
-static int toolkit_keyImageArray( Widget* iar, SDLKey key, SDLMod mod )
-{
-   (void) mod;
-
-   switch (key) {
-      case SDLK_UP:
-         toolkit_listScroll( iar, +1 );
-         return 1;
-      case SDLK_DOWN:
-         toolkit_listScroll( iar, -1 );
-         return 1;
-
-      default:
-         break;
-   }
-   return 0;
 }
 
 
@@ -1239,16 +1028,6 @@ static void toolkit_mouseEvent( SDL_Event* event )
                   if (wgt->mclickevent != NULL)
                      if ((*wgt->mclickevent)( wgt, (SDL_MouseButtonEvent*) event ))
                         return;
-
-                  /* Handle mouse wheel. */
-                  if (event->button.button == SDL_BUTTON_WHEELUP) {
-                     toolkit_listScroll( wgt, +1 );
-                     break;
-                  }
-                  else if (event->button.button == SDL_BUTTON_WHEELDOWN) {
-                     toolkit_listScroll( wgt, -1 );
-                     break;
-                  }
 
                   if (toolkit_isFocusable(wgt))
                      w->focus = i;
@@ -1455,77 +1234,6 @@ static int toolkit_isFocusable( Widget *wgt )
 
 
 /**
- * @brief Tries to scroll a widget up/down by direction.
- *
- *    @param wgt Widget to scroll.
- *    @param direction Direction to scroll.  Positive is up, negative
- *           is down and absolute value is number of elements to scroll.
- */
-static void toolkit_listScroll( Widget* wgt, int direction )
-{
-   double w,h;
-   int xelem, yelem;
-   double hmax;
-   Window *wdw;
-   int pos;
-
-   if (wgt == NULL) return;
-
-   wdw = toolkit_getActiveWindow();
-
-   switch (wgt->type) {
-
-      case WIDGET_LIST:
-         wgt->dat.lst.selected -= direction;
-
-         /* boundry check. */
-         wgt->dat.lst.selected = CLAMP( 0, wgt->dat.lst.noptions-1, wgt->dat.lst.selected);
-
-         /* see if we have to scroll. */
-         pos = (wgt->dat.lst.selected - wgt->dat.lst.pos);
-         if (pos < 0) {
-            wgt->dat.lst.pos += pos;
-            if (wgt->dat.lst.pos < 0)
-               wgt->dat.lst.pos = 0;
-         }
-         else if (2 + (pos+1) * (gl_defFont.h + 2) > wgt->h) {
-            wgt->dat.lst.pos += (2 + (pos+1) * (gl_defFont.h + 2) - wgt->h) / (gl_defFont.h + 2);
-         }
-
-         if (wgt->dat.lst.fptr)
-            (*wgt->dat.lst.fptr)(wdw->id,wgt->name);
-         break;
-
-      case WIDGET_IMAGEARRAY:
-         /* element dimensions */
-         w = wgt->dat.iar.iw + 5.*2.; /* includes border */
-         h = wgt->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
-
-         /* number of elements */
-         xelem = (int)((wgt->w - 10.) / w);
-         yelem = (int)wgt->dat.iar.nelements / xelem + 1;
-
-         /* maximum */
-         hmax = h * (yelem - (int)(wgt->h / h));
-         if (hmax < 0.)
-            hmax = 0.;
-         
-         /* move */
-         wgt->dat.iar.pos -= direction * h;
-
-         /* Boundry check. */
-         wgt->dat.iar.pos = CLAMP( 0., hmax, wgt->dat.iar.pos );
-         if (wgt->dat.iar.fptr)
-            (*wgt->dat.iar.fptr)(wdw->id,wgt->name);
-         break;
-
-      default:
-         break;
-   }
-}
-
-
-/**
  * @brief Gets the active window in the toolkit.
  *
  *    @return The active window in the toolkit.
@@ -1599,6 +1307,7 @@ int toolkit_getListPos( const unsigned int wid, char* name )
  */
 static void toolkit_listFocus( Widget* lst, double bx, double by )
 {
+#if 0
    int i;
    double y, w;
    double scroll_pos;
@@ -1631,6 +1340,7 @@ static void toolkit_listFocus( Widget* lst, double bx, double by )
       else
          lst->status = WIDGET_STATUS_SCROLLING;
    }
+#endif
 }
 
 /**
@@ -1695,6 +1405,7 @@ static void toolkit_imgarrFocus( Widget* iar, double bx, double by )
       scroll_pos = iar->dat.iar.pos / hmax;
       y = iar->h - (iar->h - 30.) * scroll_pos - 15.;
 
+#if 0
       /* Click below the bar. */
       if (by < y-15.)
          toolkit_listScroll( iar, -2 );
@@ -1704,6 +1415,7 @@ static void toolkit_imgarrFocus( Widget* iar, double bx, double by )
       /* Click on the bar. */
       else
          iar->status = WIDGET_STATUS_SCROLLING;
+#endif
    }
 }
 
@@ -1735,7 +1447,9 @@ static void toolkit_imgarrMove( Widget* iar, double ry )
       iar->dat.iar.pos -= ry * hmax / (iar->h - 30.);
 
       /* Does boundry checks. */
+#if 0
       toolkit_listScroll(iar, 0);
+#endif
    }
 }
 
