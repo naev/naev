@@ -10,8 +10,7 @@
 
 #include "SDL.h"
 
-#include "tk/widget/button.h"
-#include "tk/widget/text.h"
+#include "tk/widget.h"
 
 #include "opengl.h"
 #include "font.h"
@@ -26,14 +25,6 @@ extern int toolkit;
 unsigned int window_create( const char* name,
       const int x, const int y, /* position */
       const int w, const int h ); /* dimensions */
-void window_addText( const unsigned int wid,
-      const int x, const int y, /* position */
-      const int w, const int h, /* size */
-      const int centered, char* name, /* text is centered? label name */
-      glFont* font, glColour* colour, const char* string ); /* font, colour and actual text */
-void window_addImage( const unsigned int wid,
-      const int x, const int y, /* position */
-      char* name, glTexture* image, int border ); /* label and image itself */
 void window_addList( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
@@ -73,11 +64,6 @@ void window_addFader( const unsigned int wid,
 /* window */
 void window_setAccept( const unsigned int wid, void (*fptr)(unsigned int,char*) );
 void window_setCancel( const unsigned int wid, void (*cancel)(unsigned int,char*) );
-/* image */
-void window_modifyImage( const unsigned int wid,
-      char* name, glTexture* image );
-void window_imgColour( const unsigned int wid,
-      char* name, glColour* colour );
 /* fader */
 void window_faderValue( const unsigned int wid,
       char* name, double value );

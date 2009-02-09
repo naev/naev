@@ -59,9 +59,9 @@ static double last_y = 0.; /**< Last y mouse position. */
 /*
  * default outline colours
  */
-static glColour* toolkit_colLight = &cGrey90; /**< Light outline colour. */
-static glColour* toolkit_col      = &cGrey70; /**< Normal outline colour. */
-static glColour* toolkit_colDark  = &cGrey30; /**< Dark outline colour. */
+glColour* toolkit_colLight = &cGrey90; /**< Light outline colour. */
+glColour* toolkit_col      = &cGrey70; /**< Normal outline colour. */
+glColour* toolkit_colDark  = &cGrey30; /**< Dark outline colour. */
 
 /*
  * static prototypes
@@ -85,7 +85,6 @@ static void toolkit_imgarrFocus( Widget* iar, double bx, double by );
 static void toolkit_faderSetValue(Widget *fad, double value);
 /* render */
 static void window_render( Window* w );
-static void toolkit_renderImage( Widget* img, double bx, double by );
 static void toolkit_renderList( Widget* lst, double bx, double by );
 static void toolkit_renderRect( Widget* rct, double bx, double by );
 static void toolkit_renderCust( Widget* cst, double bx, double by );
@@ -115,44 +114,6 @@ void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
       wgt->y = wdw->h - wgt->h + y;
    else
       wgt->y = (double) y;
-}
-
-
-/**
- * @brief Adds an image widget to the window.
- *
- * Position origin is 0,0 at bottom left.  If you use negative X or Y
- *  positions.  They actually count from the opposite side in.
- *
- *    @param wid ID of the window to add the widget to.
- *    @param x X position within the window to use.
- *    @param y Y position within the window to use.
- *    @param name Name of the widget to use internally.
- *    @param image Image to use.
- *    @param border Whether to use a border.
- */
-void window_addImage( const unsigned int wid,
-                      const int x, const int y,
-                      char* name, glTexture* image, int border )
-{
-   Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw);
-
-   /* generic */
-   wgt->type = WIDGET_IMAGE;
-   wgt->name = strdup(name);
-   wgt->wdw = wid;
-
-   /* specific */
-   wgt->render = toolkit_renderImage;
-   wgt->dat.img.image = image;
-   wgt->dat.img.border = border;
-   wgt->dat.img.colour = NULL; /* normal colour */
-
-   /* position/size */
-   wgt->w = (image==NULL) ? 0 : wgt->dat.img.image->sw;
-   wgt->h = (image==NULL) ? 0 : wgt->dat.img.image->sh;
-   toolkit_setPos( wdw, wgt, x, y );
 }
 
 
@@ -1407,41 +1368,6 @@ static void window_render( Window* w )
       wid = w->widgets[w->focus].w;
       hei = w->widgets[w->focus].h;
       toolkit_drawOutline( x, y, wid, hei, 3, &cBlack, NULL );
-   }
-}
-
-
-/**
- * @brief Renders a image widget.
- *
- *    @param img Image widget to render.
- *    @param bx Base X position.
- *    @param by Base Y position.
- */
-static void toolkit_renderImage( Widget* img, double bx, double by )
-{
-   double x,y;
-
-   if (img->dat.img.image == NULL) return;
-
-   x = bx + img->x;
-   y = by + img->y;
-
-   /*
-    * image
-    */
-   gl_blitStatic( img->dat.img.image,
-         x + (double)SCREEN_W/2.,
-         y + (double)SCREEN_H/2.,
-         img->dat.img.colour );
-
-   if (img->dat.img.border) {
-      /* inner outline (outwards) */
-      toolkit_drawOutline( x, y+1, img->dat.img.image->sw-1,
-         img->dat.img.image->sh-1, 1., toolkit_colLight, toolkit_col );
-      /* outter outline */
-      toolkit_drawOutline( x, y+1, img->dat.img.image->sw-1,
-            img->dat.img.image->sh-1, 2., toolkit_colDark, NULL );
    }
 }
 

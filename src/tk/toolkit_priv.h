@@ -11,8 +11,15 @@
 #include "naev.h"
 #include "log.h"
 
-#include "tk/widget/button.h"
-#include "tk/widget/text.h"
+#include "tk/widget.h"
+
+
+/*
+ * Colours to use.
+ */
+extern glColour* toolkit_colLight;
+extern glColour* toolkit_col;
+extern glColour* toolkit_colDark;
 
 
 /**
@@ -54,12 +61,6 @@ typedef enum WidgetStatus_ {
 #define wgt_rmFlag(w,f)       ((w)->flags &= ~(f)) /**< Removes a widget flag. */
 #define wgt_isFlag(w,f)       ((w)->flags & (f)) /**< Checks if a widget has a fla.g */
 
-
-typedef struct WidgetImageData_{ /* WIDGET_IMAGE */
-   glTexture* image; /**< Image to display. */
-   glColour* colour; /**< Colour to warp to. */
-   int border; /**< 1 if widget should have border. */
-} WidgetImageData; /**< WIDGET_IMAGE */
 
 typedef struct WidgetListData_ { /* WIDGET_LIST */
    char **options; /**< Pointer to the options. */
