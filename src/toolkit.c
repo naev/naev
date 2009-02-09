@@ -1157,6 +1157,14 @@ static int toolkit_keyEvent( SDL_Event* event )
       case SDLK_TAB:
          toolkit_nextFocus();
          break;
+
+      case SDLK_RETURN:
+         if (wdw->accept_fptr != NULL) {
+            (*wdw->accept_fptr)(wdw->id,wdw->name);
+            return 1;
+         }
+         break;
+
       case SDLK_ESCAPE:
          if (wdw->cancel_fptr != NULL) {
             (*wdw->cancel_fptr)(wdw->id,wdw->name);
