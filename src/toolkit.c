@@ -69,13 +69,11 @@ glColour* toolkit_colDark  = &cGrey30; /**< Dark outline colour. */
 /* input */
 static void toolkit_mouseEvent( SDL_Event* event );
 static int toolkit_keyEvent( SDL_Event* event );
-static void toolkit_imgarrMove( Widget* iar, double ry );
 static void toolkit_clearKey (void);
 /* focus */
 static int toolkit_isFocusable( Widget *wgt );
 static Widget* toolkit_getFocus( Window *wdw );
 static void toolkit_listFocus( Widget* lst, double bx, double by );
-static void toolkit_imgarrFocus( Widget* iar, double bx, double by );
 /* render */
 static void window_render( Window* w );
 
@@ -1010,32 +1008,41 @@ static void toolkit_mouseEvent( SDL_Event* event )
                   if (!(event->motion.state & SDL_BUTTON(1)))
                      wgt->status = WIDGET_STATUS_MOUSEOVER;
 
+                  /* Do a coordinate change for the event. */
+                  event->motion.x -= wgt->x;
+                  event->motion.y -= wgt->y;
+
                   /* Try to give the event to the widget. */
                   if (wgt->mmoveevent != NULL)
                      (*wgt->mmoveevent)( wgt, (SDL_MouseMotionEvent*) event );
 
-                  else {
-                     if (wgt->type == WIDGET_IMAGEARRAY)
-                        toolkit_imgarrMove( wgt, rel_y );
-                  }
+                  /* Undo coordinate change. */
+                  event->motion.x += wgt->x;
+                  event->motion.y += wgt->y;
                   break;
 
                case SDL_MOUSEBUTTONDOWN:
                   /* Update the status. */
                   wgt->status = WIDGET_STATUS_MOUSEDOWN;
 
+                  if (toolkit_isFocusable(wgt))
+                     w->focus = i;
+
+                  /* Do a coordinate change for the event. */
+                  event->button.x -= wgt->x;
+                  event->button.y -= wgt->y;
+
                   /* Try to give the event to the widget. */
                   if (wgt->mclickevent != NULL)
                      if ((*wgt->mclickevent)( wgt, (SDL_MouseButtonEvent*) event ))
                         return;
 
-                  if (toolkit_isFocusable(wgt))
-                     w->focus = i;
+                  /* Undo coordinate change. */
+                  event->button.x += wgt->x;
+                  event->button.y += wgt->y;
 
                   if (wgt->type == WIDGET_LIST)
                      toolkit_listFocus( wgt, x-wgt->x, y-wgt->y );
-                  else if (wgt->type == WIDGET_IMAGEARRAY)
-                     toolkit_imgarrFocus( wgt, x-wgt->x, y-wgt->y );
                   break;
 
                case SDL_MOUSEBUTTONUP:
@@ -1341,116 +1348,6 @@ static void toolkit_listFocus( Widget* lst, double bx, double by )
          lst->status = WIDGET_STATUS_SCROLLING;
    }
 #endif
-}
-
-/**
- * @brief Mouse event focus on image array.
- *
- *    @param iar Image Array widget.
- *    @param bx X position click.
- *    @param by Y position click.
- */
-static void toolkit_imgarrFocus( Widget* iar, double bx, double by )
-{
-   int i,j;
-   double x,y, w,h, ycurs,xcurs;
-   double scroll_pos, hmax;
-   int xelem, xspace, yelem;
-   Window *wdw;
-
-   wdw = toolkit_getActiveWindow();
-
-   /* positions */
-   x = bx + iar->x;
-   y = by + iar->y;
-
-   /* element dimensions */
-   w = iar->dat.iar.iw + 5.*2.; /* includes border */
-   h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
-
-   /* number of elements */
-   xelem = (int)((iar->w - 10.) / w);
-   xspace = (((int)iar->w - 10) % (int)w) / (xelem + 1);
-   yelem = (int)iar->dat.iar.nelements / xelem + 1;
-
-   /* Normal click. */
-   if (bx < iar->w - 10.) { 
-
-      /* Loop through elements until finding collision. */
-      ycurs = iar->h - h + iar->dat.iar.pos;
-      for (j=0; j<yelem; j++) {
-         xcurs = xspace;
-         for (i=0; i<xelem; i++) {
-            /* Out of elements. */
-            if ((j*xelem + i) >= iar->dat.iar.nelements)
-               break;
-
-            /* Check for collision. */
-            if ((bx > xcurs) && (bx < xcurs+w-4.) &&
-                  (by > ycurs) && (by < ycurs+h-4.)) {
-               iar->dat.iar.selected = j*xelem + i;
-               if (iar->dat.iar.fptr != NULL)
-                  (*iar->dat.iar.fptr)(wdw->id, iar->name);
-               return;
-            }
-            xcurs += xspace + w;
-         }
-         ycurs -= h;
-      }
-   }
-   /* Scrollbar click. */
-   else {
-      /* Get bar position (center). */
-      hmax = h * (yelem - (int)(iar->h / h));
-      scroll_pos = iar->dat.iar.pos / hmax;
-      y = iar->h - (iar->h - 30.) * scroll_pos - 15.;
-
-#if 0
-      /* Click below the bar. */
-      if (by < y-15.)
-         toolkit_listScroll( iar, -2 );
-      /* Click above the bar. */
-      else if (by > y+15.)
-         toolkit_listScroll( iar, +2 );
-      /* Click on the bar. */
-      else
-         iar->status = WIDGET_STATUS_SCROLLING;
-#endif
-   }
-}
-
-
-/**
- * @brief Handles Image Array movement.
- *
- *    @param iar Image Array that has mouse movement.
- *    @param ry Relative Y mouse movement.
- */
-static void toolkit_imgarrMove( Widget* iar, double ry )
-{
-   double w,h;
-   int xelem, yelem;
-   double hmax;
-
-   if (iar->status == WIDGET_STATUS_SCROLLING) {
-
-      /* element dimensions */
-      w = iar->dat.iar.iw + 5.*2.; /* includes border */
-      h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
-
-      /* number of elements */
-      xelem = (int)((iar->w - 10.) / w);
-      yelem = (int)iar->dat.iar.nelements / xelem + 1;
-
-      hmax = h * (yelem - (int)(iar->h / h));
-
-      iar->dat.iar.pos -= ry * hmax / (iar->h - 30.);
-
-      /* Does boundry checks. */
-#if 0
-      toolkit_listScroll(iar, 0);
-#endif
-   }
 }
 
 

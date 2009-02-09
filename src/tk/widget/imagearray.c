@@ -15,7 +15,9 @@
 static void iar_render( Widget* iar, double bx, double by );
 static int iar_key( Widget* iar, SDLKey key, SDLMod mod );
 static int iar_mclick( Widget* iar, SDL_MouseButtonEvent *mclick );
+static int iar_mmove( Widget* iar, SDL_MouseMotionEvent *mmove );
 static void iar_cleanup( Widget* iar );
+static void iar_focus( Widget* iar, double bx, double by );
 static void iar_scroll( Widget* iar, int direction );
 
 
@@ -59,6 +61,7 @@ void window_addImageArray( const unsigned int wid,
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->keyevent           = iar_key;
    wgt->mclickevent        = iar_mclick;
+   wgt->mmoveevent         = iar_mmove;
    wgt->dat.iar.images     = tex;
    wgt->dat.iar.captions   = caption;
    wgt->dat.iar.nelements  = nelem;
@@ -217,6 +220,10 @@ static int iar_key( Widget* iar, SDLKey key, SDLMod mod )
  */
 static int iar_mclick( Widget* iar, SDL_MouseButtonEvent *mclick )
 {
+   /* Focus the widget. */
+   iar_focus( iar, mclick->x, mclick->y );
+
+   /* Handle different mouse clicks. */
    switch (mclick->button) {
       case SDL_BUTTON_WHEELUP:
          iar_scroll( iar, +1 );
@@ -228,6 +235,47 @@ static int iar_mclick( Widget* iar, SDL_MouseButtonEvent *mclick )
       default:
          break;
    }
+   return 0;
+}
+
+
+/**
+ * @brief Handles mouse movement for an image array.
+ *
+ *    @param iar Widget handling the mouse motion.
+ *    @param mmove Mouse motion event to handle.
+ *    @return 1 if the event is used.
+ */
+static int iar_mmove( Widget* iar, SDL_MouseMotionEvent *mmove )
+{
+   double w,h;
+   int xelem, yelem;
+   double hmax;
+
+   /* Only handle button 1. */
+   if (!(mmove->state & SDL_BUTTON(1)))
+      return 0;
+
+   if (iar->status == WIDGET_STATUS_SCROLLING) {
+
+      /* element dimensions */
+      w = iar->dat.iar.iw + 5.*2.; /* includes border */
+      h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
+
+      /* number of elements */
+      xelem = (int)((iar->w - 10.) / w);
+      yelem = (int)iar->dat.iar.nelements / xelem + 1;
+
+      hmax = h * (yelem - (int)(iar->h / h));
+
+      iar->dat.iar.pos -= mmove->yrel * hmax / (iar->h - 30.);
+
+      /* Does boundry checks. */
+      iar_scroll(iar, 0);
+
+      return 1;
+   }
+
    return 0;
 }
 
@@ -290,5 +338,81 @@ static void iar_scroll( Widget* iar, int direction )
    iar->dat.iar.pos = CLAMP( 0., hmax, iar->dat.iar.pos );
    if (iar->dat.iar.fptr)
       (*iar->dat.iar.fptr)(wdw->id,iar->name);
+}
+
+
+
+/**
+ * @brief Mouse event focus on image array.
+ *
+ *    @param iar Image Array widget.
+ *    @param bx X position click.
+ *    @param by Y position click.
+ */
+static void iar_focus( Widget* iar, double bx, double by )
+{
+   int i,j;
+   double x,y, w,h, ycurs,xcurs;
+   double scroll_pos, hmax;
+   int xelem, xspace, yelem;
+   Window *wdw;
+
+   wdw = toolkit_getActiveWindow();
+
+   /* positions */
+   x = bx + iar->x;
+   y = by + iar->y;
+
+   /* element dimensions */
+   w = iar->dat.iar.iw + 5.*2.; /* includes border */
+   h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
+
+   /* number of elements */
+   xelem = (int)((iar->w - 10.) / w);
+   xspace = (((int)iar->w - 10) % (int)w) / (xelem + 1);
+   yelem = (int)iar->dat.iar.nelements / xelem + 1;
+
+   /* Normal click. */
+   if (bx < iar->w - 10.) {
+
+      /* Loop through elements until finding collision. */
+      ycurs = iar->h - h + iar->dat.iar.pos;
+      for (j=0; j<yelem; j++) {
+         xcurs = xspace;
+         for (i=0; i<xelem; i++) {
+            /* Out of elements. */
+            if ((j*xelem + i) >= iar->dat.iar.nelements)
+               break;
+
+            /* Check for collision. */
+            if ((bx > xcurs) && (bx < xcurs+w-4.) &&
+                  (by > ycurs) && (by < ycurs+h-4.)) {
+               iar->dat.iar.selected = j*xelem + i;
+               if (iar->dat.iar.fptr != NULL)
+                  (*iar->dat.iar.fptr)(wdw->id, iar->name);
+               return;
+            }
+            xcurs += xspace + w;
+         }
+         ycurs -= h;
+      }
+   }
+   /* Scrollbar click. */
+   else {
+      /* Get bar position (center). */
+      hmax = h * (yelem - (int)(iar->h / h));
+      scroll_pos = iar->dat.iar.pos / hmax;
+      y = iar->h - (iar->h - 30.) * scroll_pos - 15.;
+
+      /* Click below the bar. */
+      if (by < y-15.)
+         iar_scroll( iar, -2 );
+      /* Click above the bar. */
+      else if (by > y+15.)
+         iar_scroll( iar, +2 );
+      /* Click on the bar. */
+      else
+         iar->status = WIDGET_STATUS_SCROLLING;
+   }
 }
 
