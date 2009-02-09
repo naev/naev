@@ -13,7 +13,7 @@
 
 
 /**
- * @brief The button widget.
+ * @brief The text widget data.
  */
 typedef struct WidgetTextData_ { /* WIDGET_TEXT */
    char *text; /**< Text to display, using printMid if centered, else printText. */
