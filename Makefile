@@ -32,7 +32,7 @@ VERSIONFILE := VERSION
 #   OBJS
 #
 APPNAME := naev
-OBJS    := $(patsubst %.c,%.o,$(wildcard src/*.c))
+OBJS    := $(patsubst %.c,%.o,$(wildcard src/*.c src/tk/*.c src/tk/widget/*.c))
 
 
 #
@@ -45,7 +45,7 @@ CXML   := $(shell xml2-config --cflags)
 CTTF   := $(shell freetype-config --cflags)
 CPNG   := $(shell libpng-config --cflags)
 CGL    :=
-CFLAGS := $(CLUA) $(CCSPARSE) $(CSDL) $(CXML) $(CTTF) $(CPNG) $(CGL) $(VERSION) -D$(OS)
+CFLAGS := -Isrc $(CLUA) $(CCSPARSE) $(CSDL) $(CXML) $(CTTF) $(CPNG) $(CGL) $(VERSION) -D$(OS)
 ifdef NDATA_DEF
 CFLAGS += -DNDATA_DEF=$(NDATA_DEF)
 endif

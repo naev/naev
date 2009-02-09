@@ -10,6 +10,9 @@
 
 #include "SDL.h"
 
+#include "tk/widget/button.h"
+#include "tk/widget/text.h"
+
 #include "opengl.h"
 #include "font.h"
 
@@ -23,11 +26,6 @@ extern int toolkit;
 unsigned int window_create( const char* name,
       const int x, const int y, /* position */
       const int w, const int h ); /* dimensions */
-void window_addButton( const unsigned int wid,
-      const int x, const int y, /* position */
-      const int w, const int h, /* size */
-      char* name, char* display, /* label name, display name */
-      void (*call) (unsigned int,char*) ); /* function to call when clicked */
 void window_addText( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
@@ -75,12 +73,6 @@ void window_addFader( const unsigned int wid,
 /* window */
 void window_setAccept( const unsigned int wid, void (*fptr)(unsigned int,char*) );
 void window_setCancel( const unsigned int wid, void (*cancel)(unsigned int,char*) );
-/* text */
-void window_modifyText( const unsigned int wid,
-      char* name, char* newstring );
-/* button */
-void window_disableButton( const unsigned int wid, char* name );
-void window_enableButton( const unsigned int wid, char *name );
 /* image */
 void window_modifyImage( const unsigned int wid,
       char* name, glTexture* image );

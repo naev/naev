@@ -13,6 +13,8 @@
 
 #include <stdarg.h>
 
+#include "tk/toolkit_priv.h"
+
 #include "naev.h"
 #include "log.h"
 #include "pause.h"
@@ -23,183 +25,6 @@
 
 #define INPUT_DELAY     500 /**< Delay before starting to repeat. */
 #define INPUT_FREQ      100 /**< Interval between repetition. */
-
-
-/**
- * @typedef WidgetType
- *
- * @brief Represents the widget types.
- */
-typedef enum WidgetType_ {
-   WIDGET_NULL,
-   WIDGET_BUTTON,
-   WIDGET_TEXT,
-   WIDGET_IMAGE,
-   WIDGET_LIST,
-   WIDGET_RECT,
-   WIDGET_CUST,
-   WIDGET_INPUT,
-   WIDGET_IMAGEARRAY,
-   WIDGET_FADER
-} WidgetType;
-
-/**
- * @typedef WidgetStatus
- *
- * @brief Represents widget status.
- *
- * Only really used by buttons.
- */
-typedef enum WidgetStatus_ {
-   WIDGET_STATUS_NORMAL,
-   WIDGET_STATUS_MOUSEOVER,
-   WIDGET_STATUS_MOUSEDOWN,
-   WIDGET_STATUS_SCROLLING
-} WidgetStatus;
-
-
-typedef struct WidgetButtonData_ { /* WIDGET_BUTTON */
-   void (*fptr) (unsigned int,char*); /**< Activate callback. */
-   char *display; /**< Displayed text. */
-   int disabled; /**< 1 if button is disabled, 0 if enabled. */
-} WidgetButtonData; /**< WIDGET_BUTTON */
-
-typedef struct WidgetTextData_ { /* WIDGET_TEXT */
-   char *text; /**< Text to display, using printMid if centered, else printText. */
-   glFont* font; /**< Text font. */
-   glColour* colour; /**< Text colour. */
-   int centered; /**< 1 if text is centered, 0 if it isn't. */
-} WidgetTextData; /**< WIDGET_TEXT */
-
-typedef struct WidgetImageData_{ /* WIDGET_IMAGE */
-   glTexture* image; /**< Image to display. */
-   glColour* colour; /**< Colour to warp to. */
-   int border; /**< 1 if widget should have border. */
-} WidgetImageData; /**< WIDGET_IMAGE */
-
-typedef struct WidgetListData_ { /* WIDGET_LIST */
-   char **options; /**< Pointer to the options. */
-   int noptions; /**< Total number of options. */
-   int selected; /**< Which option is currently selected. */
-   int pos; /** Current topmost option (in view). */
-   void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
-   int height; /**< Real height. */
-} WidgetListData; /**< WIDGET_LIST */
-
-typedef struct WidgetRectData_{ /* WIDGET_RECT */
-   glColour* colour; /**< Background colour. */
-   int border; /**< 1 if widget should have border, 0 if it shouldn't. */
-} WidgetRectData; /**< WIDGET_RECT */
-
-typedef struct WidgetCustData_ { /* WIDGET_CUST */
-   int border; /**< 1 if widget should have border, 0 if it shouldn't. */
-   void (*render) (double bx, double by, double bw, double bh); /**< Function to run when rendering. */
-   void (*mouse) (unsigned int wid, SDL_Event* event, double bx, double by); /**< Function to run when recieving mous events. */
-} WidgetCustData; /**< WIDGET_CUST */
-
-typedef struct WidgetInputData_ { /* WIDGET_INPUT */
-   char *input; /**< Input buffer. */
-   int max; /**< Maximum length. */
-   int oneline; /**< Is it a one-liner? no '\n' and friends */
-   int view; /**< View position. */
-   int pos; /**< Cursor position. */
-} WidgetInputData; /**< WIDGET_INPUT */
-
-typedef struct WidgetImageArrayData_ { /* WIDGET_IMAGEARRAY */
-   glTexture **images; /**< Image array. */
-   char **captions; /**< Corresponding caption array. */
-   int nelements; /**< Number of elements. */
-   int selected; /**< Currently selected element. */
-   double pos; /**< Current y position. */
-   int iw; /**< Image width to use. */
-   int ih; /**< Image height to use. */
-   void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
-} WidgetImageArrayData; /**< WIDGET_IMAGEARRAY */
-
-typedef struct WidgetFaderData_{ /* WIDGET_FADER */
-   double value; /**< Current value. */
-   double min;   /**< Minimum value. */
-   double max;   /**< Maximum value. */
-   void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on value change. */
-} WidgetFaderData; /**< WIDGET_FADER */
-
-
-#define WGT_FLAG_CANFOCUS     (1<<0)   /**< Widget can get focus. */
-#define wgt_setFlag(w,f)      ((w)->flags |= (f))
-#define wgt_rmFlag(w,f)       ((w)->flags &= ~(f))
-#define wgt_isFlag(w,f)       ((w)->flags & (f))
-
-
-/**
- * @struct Widget
- *
- * @brief Represents a widget.
- */
-typedef struct Widget_ {
-   /* Basic properties. */
-   char* name; /**< Widget's name. */
-   WidgetType type; /**< Widget's type. */
-
-   /* Inheritance. */
-   unsigned int wdw; /**< Widget's parent window. */
-
-   /* Position and dimensions. */
-   double x; /**< X position within the window. */
-   double y; /**< Y position within the window. */
-   double w; /**< Widget width. */
-   double h; /**< Widget height. */
-
-   unsigned int flags; /**< Widget flags. */
-
-   /* Event abstraction. */
-   int (*keyevent) ( struct Widget_ *wgt, SDLKey k, SDLMod m ); /**< Key event handler function for the widget. */
-   int (*mouseevent) ( struct Widget_ *wgt, double x, double y, double rx, double ry ); /**< Mouse event handler function for the widget. */
-
-   /* Misc. routines. */
-   void (*render) ( struct Widget_ *wgt, double x, double y ); /**< Render function for the widget. */
-
-   /* Status of the widget. */
-   WidgetStatus status; /**< Widget status. */
-
-   /* Type specific data (defined by type). */
-   union {
-      WidgetButtonData btn; /**< WIDGET_BUTTON */
-      WidgetTextData txt; /**< WIDGET_TEXT */
-      WidgetImageData img; /**< WIDGET_IMAGE */
-      WidgetListData lst; /**< WIDGET_LIST */
-      WidgetRectData rct; /**< WIDGET_RECT */
-      WidgetCustData cst; /**< WIDGET_CUST */
-      WidgetInputData inp; /**< WIDGET_INPUT */
-      WidgetImageArrayData iar; /**< WIDGET_IMAGEARRAY */
-      WidgetFaderData fad; /**< WIDGET_FADER */
-   } dat; /**< Stores the widget specific data. */
-} Widget;
-
-
-/**
- * @struct Window
- *
- * @brief Represents a graphical window.
- */
-typedef struct Window_ {
-   unsigned int id; /**< Unique ID. */
-   char *name; /**< Window name - should be unique. */
-
-   int hidden; /**< Is window hidden? - @todo use */
-   int focus; /**< Current focused widget. */
-
-   void (*accept_fptr)(unsigned int,char*); /**< Triggered by hitting 'enter' with no widget that catches the keypress. */
-   void (*cancel_fptr)(unsigned int,char*); /**< Triggered by hitting 'escape' with no widget that catches the keypress. */
-
-   /* Position and dimensions. */
-   double x; /**< X position of the window. */
-   double y; /**< Y position of the window. */
-   double w; /**< Window width. */
-   double h; /**< Window height. */
-
-   Widget *widgets; /**< Widget storage. */
-   int nwidgets; /**< Total number of widgets. */
-} Window;
 
 
 static unsigned int genwid = 0; /**< Generates unique window ids, > 0 */
@@ -235,18 +60,12 @@ static double last_y = 0.; /**< Last y mouse position. */
  * default outline colours
  */
 static glColour* toolkit_colLight = &cGrey90; /**< Light outline colour. */
-static glColour* toolkit_col = &cGrey70; /**< Normal outline colour. */
-static glColour* toolkit_colDark = &cGrey30; /**< Dark outline colour. */
+static glColour* toolkit_col      = &cGrey70; /**< Normal outline colour. */
+static glColour* toolkit_colDark  = &cGrey30; /**< Dark outline colour. */
 
 /*
  * static prototypes
  */
-/* widgets */
-static Widget* window_newWidget( Window* w );
-static void widget_cleanup( Widget *widget );
-static Window* window_wget( const unsigned int wid );
-static Widget* window_getwgt( const unsigned int wid, char* name );
-static void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y );
 /* input */
 static void toolkit_mouseEvent( SDL_Event* event );
 static int toolkit_keyEvent( SDL_Event* event );
@@ -254,12 +73,10 @@ static void toolkit_listMove( Widget* lst, double ay );
 static void toolkit_imgarrMove( Widget* iar, double ry );
 static void toolkit_clearKey (void);
 /* widget input. */
-static int toolkit_keyButton( Widget* btn, SDLKey key, SDLMod mod );
 static int toolkit_keyInput( Widget* inp, SDLKey key, SDLMod mod );
 static int toolkit_keyList( Widget* lst, SDLKey key, SDLMod mod );
 static int toolkit_keyImageArray( Widget* iar, SDLKey key, SDLMod mod );
 /* focus */
-static void toolkit_nextFocus (void);
 static int toolkit_isFocusable( Widget *wgt );
 static Widget* toolkit_getFocus( Window *wdw );
 static void toolkit_listScroll( Widget* wgt, int direction );
@@ -268,8 +85,6 @@ static void toolkit_imgarrFocus( Widget* iar, double bx, double by );
 static void toolkit_faderSetValue(Widget *fad, double value);
 /* render */
 static void window_render( Window* w );
-static void toolkit_renderButton( Widget* btn, double bx, double by );
-static void toolkit_renderText( Widget* txt, double bx, double by );
 static void toolkit_renderImage( Widget* img, double bx, double by );
 static void toolkit_renderList( Widget* lst, double bx, double by );
 static void toolkit_renderRect( Widget* rct, double bx, double by );
@@ -277,14 +92,6 @@ static void toolkit_renderCust( Widget* cst, double bx, double by );
 static void toolkit_renderInput( Widget* inp, double bx, double by );
 static void toolkit_renderImageArray( Widget* iar, double bx, double by );
 static void toolkit_renderFader( Widget* fad, double bx, double by );
-static void toolkit_drawOutline( double x, double y,
-      double w, double h, double b,
-      glColour* c, glColour* lc );
-static void toolkit_drawScrollbar( double x, double y, double w, double h, double pos );
-static void toolkit_clip( double x, double y, double w, double h );
-static void toolkit_unclip (void);
-static void toolkit_drawRect( double x, double y,
-      double w, double h, glColour* c, glColour* lc );
 
 
 /**
@@ -295,115 +102,19 @@ static void toolkit_drawRect( double x, double y,
  *    @param x X position to use.
  *    @param y Y position to use.
  */
-static void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
+void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
 {
-   if (x < 0) wgt->x = wdw->w - wgt->w + x;
-   else wgt->x = (double) x;
-   if (y < 0) wgt->y = wdw->h - wgt->h + y;
-   else wgt->y = (double) y;
-}
+   /* X position. */
+   if (x < 0)
+      wgt->x = wdw->w - wgt->w + x;
+   else
+      wgt->x = (double) x;
 
-
-/**
- * @brief Adds a button widget to a window.
- *
- * Position origin is 0,0 at bottom left.  If you use negative X or Y
- *  positions.  They actually count from the opposite side in.
- *
- *    @param wid ID of the window to add the widget to.
- *    @param x X position within the window to use.
- *    @param y Y position within the window to use.
- *    @param w Width of the widget.
- *    @param h Height of the widget.
- *    @param name Name of the widget to use internally.
- *    @param display Text displayed on the button (centered).
- *    @param call Function to call when button is pressed. Parameter passed
- *                is the name of the button.
- */
-void window_addButton( const unsigned int wid,
-                       const int x, const int y,
-                       const int w, const int h,
-                       char* name, char* display,
-                       void (*call) (unsigned int wgt, char* wdwname) )
-{
-   Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw);
-
-   /* generic */
-   wgt->type = WIDGET_BUTTON;
-   wgt->name = strdup(name);
-   wgt->wdw = wid;
-   
-   /* specific */
-   wgt->keyevent = toolkit_keyButton;
-   wgt->render = toolkit_renderButton;
-   wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
-   wgt->dat.btn.display = strdup(display);
-   wgt->dat.btn.disabled = 0; /* initially enabled */
-   wgt->dat.btn.fptr = call;
-
-   /* position/size */
-   wgt->w = (double) w;
-   wgt->h = (double) h;
-   toolkit_setPos( wdw, wgt, x, y );
-
-   if (wgt->dat.btn.fptr == NULL) { /* Disable if function is NULL. */
-      wgt->dat.btn.disabled = 1;
-      wgt_rmFlag(wgt, WGT_FLAG_CANFOCUS);
-   }
-
-   if (wdw->focus == -1) /* initialize the focus */
-      toolkit_nextFocus();
-}
-
-
-/**
- * @brief Adds a text widget to the window.
- *
- * Position origin is 0,0 at bottom left.  If you use negative X or Y
- *  positions.  They actually count from the opposite side in.
- *
- *    @param wid ID of the window to add the widget to.
- *    @param x X position within the window to use.
- *    @param y Y position within the window to use.
- *    @param w Maximum width of the text.
- *    @param h Maximum height of the text.
- *    @param centered Whether text should be centered.
- *    @param name Name of the widget to use internally.
- *    @param font Font to use (NULL is default).
- *    @param colour Colour to use (NULL is default).
- *    @param string Text to display.
- */
-void window_addText( const unsigned int wid,
-                     const int x, const int y,
-                     const int w, const int h,
-                     const int centered, char* name,
-                     glFont* font, glColour* colour, const char* string )
-{
-   Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw);
-
-   /* generic */
-   wgt->type = WIDGET_TEXT;
-   wgt->name = strdup(name);
-   wgt->wdw = wid;
-
-   /* specific */
-   wgt->render = toolkit_renderText;
-   if (font==NULL) wgt->dat.txt.font = &gl_defFont;
-   else wgt->dat.txt.font = font;
-   if (font==NULL) wgt->dat.txt.font = &gl_defFont;
-   else wgt->dat.txt.font = font;
-   if (colour==NULL) wgt->dat.txt.colour = &cBlack;
-   else wgt->dat.txt.colour = colour;
-   wgt->dat.txt.centered = centered;
-   if (string) wgt->dat.txt.text = strdup(string);
-   else wgt->dat.txt.text = NULL;
-
-   /* position/size */
-   wgt->w = (double) w;
-   wgt->h = (double) h;
-   toolkit_setPos( wdw, wgt, x, y );
+   /* Y position. */
+   if (y < 0)
+      wgt->y = wdw->h - wgt->h + y;
+   else
+      wgt->y = (double) y;
 }
 
 
@@ -755,7 +466,7 @@ void window_addFader( const unsigned int wid,
  *    @param w Window to create widget in.
  *    @return Newly allocated widget.
  */
-static Widget* window_newWidget( Window* w )
+Widget* window_newWidget( Window* w )
 {
    Widget* wgt = NULL;
 
@@ -782,7 +493,7 @@ static Widget* window_newWidget( Window* w )
  *    @param wid ID of the window to get.
  *    @return Window matching wid.
  */
-static Window* window_wget( const unsigned int wid )
+Window* window_wget( const unsigned int wid )
 {
    int i;
    for (i=0; i<nwindows; i++)
@@ -800,7 +511,7 @@ static Window* window_wget( const unsigned int wid )
  *    @param name Name of the widget to get.
  *    @return Widget matching name in the window.
  */
-static Widget* window_getwgt( const unsigned int wid, char* name )
+Widget* window_getwgt( const unsigned int wid, char* name )
 {
    int i;
    Window *wdw;
@@ -902,60 +613,6 @@ void window_moveWidget( const unsigned int wid,
 
    /* Set position. */
    toolkit_setPos( wdw, wgt, x, y );
-}
-
-
-/**
- * @brief Disables a button.
- *
- *    @param wid ID of the window to get widget from.
- *    @param name Name of the button to disable.
- */
-void window_disableButton( const unsigned int wid, char* name )
-{
-   Widget *wgt;
-
-   /* Get widget. */
-   wgt = window_getwgt(wid,name);
-   if (wgt == NULL)
-      return;
-
-   /* Check type. */
-   if (wgt->type != WIDGET_BUTTON) {
-      DEBUG("Trying to disable a non-button widget '%s'", name);
-      return;
-   }
-
-   /* Disable button. */
-   wgt->dat.btn.disabled = 1;
-   wgt_rmFlag(wgt, WGT_FLAG_CANFOCUS);
-}
-
-
-/**
- * @brief Enables a button.
- *
- *    @param wid ID of the window to get widget from.
- *    @param name Name of the button to enable.
- */
-void window_enableButton( const unsigned int wid, char *name )
-{
-   Widget *wgt;
-  
-   /* Get widget. */
-   wgt = window_getwgt(wid,name);
-   if (wgt == NULL)
-      return;
-
-   /* Check type. */
-   if (wgt->type != WIDGET_BUTTON) {
-      DEBUG("Trying to enable a non-button widget '%s'", name);
-      return;
-   }
-
-   /* Enable button. */
-   wgt->dat.btn.disabled = 0;
-   wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
 }
 
 
@@ -1305,7 +962,7 @@ void window_setCancel( const unsigned int wid, void (*cancel)(unsigned int,char*
  *
  *    @param widget Widget to destroy.
  */
-static void widget_cleanup( Widget *widget )
+void widget_cleanup( Widget *widget )
 {
    int i;
 
@@ -1313,16 +970,11 @@ static void widget_cleanup( Widget *widget )
    if (widget->name)
       free(widget->name);
 
+   if (widget->cleanup != NULL)
+      (*widget->cleanup)(widget);
+
    /* Type specific. */
    switch (widget->type) {
-      case WIDGET_BUTTON: /* must clear the button display text */
-         if (widget->dat.btn.display) free(widget->dat.btn.display);
-         break;
-
-      case WIDGET_TEXT: /* must clear the text */
-         if (widget->dat.txt.text) free(widget->dat.txt.text);
-         break;
-
       case WIDGET_LIST: /* must clear the list */
          if (widget->dat.lst.options) {
             for (i=0; i<widget->dat.lst.noptions; i++)
@@ -1479,7 +1131,7 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
  *    @param c Colour.
  *    @param lc Light colour.
  */
-static void toolkit_drawOutline( double x, double y, 
+void toolkit_drawOutline( double x, double y, 
       double w, double h, double b,
       glColour* c, glColour* lc )
 {
@@ -1516,7 +1168,7 @@ static void toolkit_drawOutline( double x, double y,
  *    @param c Colour.
  *    @param lc Light colour.
  */
-static void toolkit_drawRect( double x, double y,
+void toolkit_drawRect( double x, double y,
       double w, double h, glColour* c, glColour* lc )
 {
    glShadeModel( (lc) ? GL_SMOOTH : GL_FLAT );
@@ -1542,7 +1194,7 @@ static void toolkit_drawRect( double x, double y,
  *    @param w Width of the rectangle.
  *    @param h Height of the rectangle.
  */
-static void toolkit_clip( double x, double y, double w, double h )
+void toolkit_clip( double x, double y, double w, double h )
 {
    GLdouble ctop[4] = { 0.,  1., 0., -y  };
    GLdouble cbot[4] = { 0., -1., 0., y+h };
@@ -1562,7 +1214,7 @@ static void toolkit_clip( double x, double y, double w, double h )
 /**
  * @brief Clears the 2d clipping planes.
  */
-static void toolkit_unclip (void)
+void toolkit_unclip (void)
 {
    glDisable(GL_CLIP_PLANE0);
    glDisable(GL_CLIP_PLANE1);
@@ -1756,96 +1408,6 @@ static void window_render( Window* w )
       hei = w->widgets[w->focus].h;
       toolkit_drawOutline( x, y, wid, hei, 3, &cBlack, NULL );
    }
-}
-
-
-/**
- * @brief Renders a button widget.
- *
- *    @param btn WIDGET_BUTTON widget to render.
- *    @param bx Base X position.
- *    @param by Base Y position.
- */
-static void toolkit_renderButton( Widget* btn, double bx, double by )
-{
-   glColour *c, *dc, *lc;
-   double x, y;
-
-   x = bx + btn->x;
-   y = by + btn->y;
-
-   /* set the colours */
-   if (btn->dat.btn.disabled==1) {
-      lc = &cGrey60;
-      c = &cGrey20;
-      dc = &cGrey40;
-   }
-   else {
-      switch (btn->status) {
-         case WIDGET_STATUS_NORMAL:
-            lc = &cGrey80;
-            c = &cGrey60;
-            dc = &cGrey40;
-            break;
-         case WIDGET_STATUS_MOUSEOVER:
-            lc = &cWhite;
-            c = &cGrey80;
-            dc = &cGrey60;
-            break;
-         case WIDGET_STATUS_MOUSEDOWN:
-            lc = &cGreen;
-            c = &cGreen;
-            dc = &cGrey40;
-            break;
-         default:
-            break;
-      }
-   }
-
-
-   /* shaded base */
-   if (btn->dat.btn.disabled==1) {
-      toolkit_drawRect( x, y,            btn->w, 0.4*btn->h, dc, NULL );
-      toolkit_drawRect( x, y+0.4*btn->h, btn->w, 0.6*btn->h, dc, c );
-   }
-   else {
-      toolkit_drawRect( x, y,            btn->w, 0.6*btn->h, dc, c );
-      toolkit_drawRect( x, y+0.6*btn->h, btn->w, 0.4*btn->h, c, NULL );
-   }
-   
-   /* inner outline */
-   toolkit_drawOutline( x, y, btn->w, btn->h, 0., lc, c );
-   /* outter outline */
-   toolkit_drawOutline( x, y, btn->w, btn->h, 1., &cBlack, NULL );
-
-   gl_printMid( NULL, (int)btn->w,
-         bx + (double)SCREEN_W/2. + btn->x,
-         by + (double)SCREEN_H/2. + btn->y + (btn->h - gl_defFont.h)/2.,
-         &cDarkRed, btn->dat.btn.display );
-}
-
-
-/**
- * @brief Renders a text widget.
- *
- *    @param txt Text widget to render.
- *    @param bx Base X position.
- *    @param by Base Y position.
- */
-static void toolkit_renderText( Widget* txt, double bx, double by )
-{
-   if (txt->dat.txt.text==NULL) return;
-   
-   if (txt->dat.txt.centered)
-      gl_printMid( txt->dat.txt.font, txt->w,
-            bx + (double)SCREEN_W/2. + txt->x,
-            by + (double)SCREEN_H/2. + txt->y,
-            txt->dat.txt.colour, txt->dat.txt.text );
-   else
-      gl_printText( txt->dat.txt.font, txt->w, txt->h,
-            bx + (double)SCREEN_W/2. + txt->x,
-            by + (double)SCREEN_H/2. + txt->y,
-            txt->dat.txt.colour, txt->dat.txt.text );
 }
 
 
@@ -2146,7 +1708,7 @@ static void toolkit_renderImageArray( Widget* iar, double bx, double by )
  *    @param h Height of the scrollbar.
  *    @param pos Position at [0:1].
  */
-static void toolkit_drawScrollbar( double x, double y, double w, double h, double pos )
+void toolkit_drawScrollbar( double x, double y, double w, double h, double pos )
 {
    double sy;
 
@@ -2197,27 +1759,6 @@ static void toolkit_renderFader( Widget* fad, double bx, double by )
    /* Draw. */
    toolkit_drawRect(kx, ky, kw , kh, toolkit_colDark, toolkit_colLight);
    toolkit_drawOutline(kx, ky, kw , kh, 1., &cBlack, toolkit_colDark);
-}
-
-
-/**
- * @brief Handles input for an button widget.
- *
- *    @param btn Button widget to handle event.
- *    @param key Key being handled.
- *    @param mod Mods when key is being pressed.
- *    @return 1 if the event was used, 0 if it wasn't.
- */
-static int toolkit_keyButton( Widget* btn, SDLKey key, SDLMod mod )
-{
-   (void) mod;
-
-   if (key == SDLK_RETURN)
-      if (btn->dat.btn.fptr != NULL) {
-         (*btn->dat.btn.fptr)(btn->wdw, btn->name);
-         return 1;
-      }
-   return 0;
 }
 
 
@@ -2347,14 +1888,62 @@ static int toolkit_keyImageArray( Widget* iar, SDLKey key, SDLMod mod )
    switch (key) {
       case SDLK_UP:
          toolkit_listScroll( iar, +1 );
-         break;
+         return 1;
       case SDLK_DOWN:
          toolkit_listScroll( iar, -1 );
-         break;
+         return 1;
 
       default:
          break;
    }
+   return 0;
+}
+
+
+/**
+ * @brief Handles List movement.
+ *
+ *    @param lst List that has mouse movement.
+ *    @param mmove Mouse movement event.
+ *    @return 1 if movement was used, 0 if movement wasn't used.
+ */
+static int toolkit_mmoveList( Widget* lst, SDL_MouseMotionEvent *mmove )
+{
+   Window *wdw;
+   int psel;
+   double p;
+   int h;
+  
+   /* Ignore mouse downs. */
+   if (!(mmove->state & SDL_BUTTON(1)))
+      return 0;
+
+   /* Handle the scrolling if scrolling. */
+   if (lst->status == WIDGET_STATUS_SCROLLING) {
+      h = lst->h / (2 + gl_defFont.h) - 1;
+
+      /* Save previous position. */
+      psel = lst->dat.lst.pos;
+
+      /* Find absolute position. */
+      p  = (lst->h - mmove->y) / lst->h * (lst->dat.lst.height - lst->h);
+      p /= (2 + gl_defFont.h);
+      lst->dat.lst.pos = (int)round(p);
+
+      /* Does boundry checks. */
+      lst->dat.lst.selected = CLAMP( lst->dat.lst.pos,
+            lst->dat.lst.pos+h, lst->dat.lst.selected );
+
+      /* Run change if position changed. */
+      if (lst->dat.lst.selected != psel)
+         if (lst->dat.lst.fptr) {
+            wdw = &windows[nwindows-1]; /* get active window */
+            (*lst->dat.lst.fptr)(wdw->id,lst->name);
+         }
+
+      return 1;
+   }
+
    return 0;
 }
 
@@ -2401,7 +1990,6 @@ int toolkit_input( SDL_Event* event )
 }
 
 
-static int mouse_down = 0; /**< Records if mouse is down. */
 /**
  * @brief Handles the mouse events.
  *
@@ -2414,12 +2002,6 @@ static void toolkit_mouseEvent( SDL_Event* event )
    double x,y, rel_x,rel_y;
    Window *w;
    Widget *wgt, *wgt_func;
-
-   /* set mouse button status */
-   if (event->type==SDL_MOUSEBUTTONDOWN)
-      mouse_down = 1;
-   else if (event->type==SDL_MOUSEBUTTONUP)
-      mouse_down = 0;
 
    /* absolute positions */
    if (event->type==SDL_MOUSEMOTION) {
@@ -2465,11 +2047,15 @@ static void toolkit_mouseEvent( SDL_Event* event )
          else
             switch (event->type) {
                case SDL_MOUSEMOTION:
-                  if (!mouse_down)
+                  /* Change the status of the widget. */
+                  if (!(event->motion.state & SDL_BUTTON(1)))
                      wgt->status = WIDGET_STATUS_MOUSEOVER;
+
+                  /* Try to give the event to the widget. */
+                  if (wgt->mmoveevent != NULL)
+                     (*wgt->mmoveevent)( wgt, (SDL_MouseMotionEvent*) event );
+
                   else {
-                     if (wgt->type == WIDGET_LIST)
-                        toolkit_listMove( wgt, y-wgt->y );
                      if (wgt->type == WIDGET_IMAGEARRAY)
                         toolkit_imgarrMove( wgt, rel_y );
                      if (wgt->type == WIDGET_FADER) {
@@ -2480,7 +2066,13 @@ static void toolkit_mouseEvent( SDL_Event* event )
                   break;
 
                case SDL_MOUSEBUTTONDOWN:
+                  /* Update the status. */
                   wgt->status = WIDGET_STATUS_MOUSEDOWN;
+
+                  /* Try to give the event to the widget. */
+                  if (wgt->mclickevent != NULL)
+                     if ((*wgt->mclickevent)( wgt, (SDL_MouseButtonEvent*) event ))
+                        return;
 
                   /* Handle mouse wheel. */
                   if (event->button.button == SDL_BUTTON_WHEELUP) {
@@ -2526,7 +2118,7 @@ static void toolkit_mouseEvent( SDL_Event* event )
       else if ((wgt->type==WIDGET_CUST) &&
             (event->type==SDL_MOUSEBUTTONUP) && wgt->dat.cst.mouse)
             (*wgt->dat.cst.mouse)( w->id, event, x-wgt->x, y-wgt->y );
-      else if (!mouse_down)
+      else
          wgt->status = WIDGET_STATUS_NORMAL;
    }
 
@@ -2663,7 +2255,7 @@ void toolkit_update (void)
 /**
  * @brief Focus next widget.
  */
-static void toolkit_nextFocus (void)
+void toolkit_nextFocus (void)
 {
    Window* wdw = &windows[nwindows-1]; /* get active window */
 
@@ -2950,44 +2542,6 @@ static void toolkit_imgarrFocus( Widget* iar, double bx, double by )
       /* Click on the bar. */
       else
          iar->status = WIDGET_STATUS_SCROLLING;
-   }
-}
-
-
-/**
- * @brief Handles List movement.
- *
- *    @param lst List that has mouse movement.
- *    @param ay Absolute Y mouse movement.
- */
-static void toolkit_listMove( Widget* lst, double ay )
-{
-   Window *wdw;
-   int psel;
-   double p;
-   int h;
-
-   if (lst->status == WIDGET_STATUS_SCROLLING) {
-      h = lst->h / (2 + gl_defFont.h) - 1;
-
-      /* Save previous position. */
-      psel = lst->dat.lst.pos;
-
-      /* Find absolute position. */
-      p  = (lst->h - ay) / lst->h * (lst->dat.lst.height - lst->h);
-      p /= (2 + gl_defFont.h);
-      lst->dat.lst.pos = (int)round(p);
-
-      /* Does boundry checks. */
-      lst->dat.lst.selected = MAX(lst->dat.lst.selected, lst->dat.lst.pos);
-      lst->dat.lst.selected = MIN(lst->dat.lst.selected, lst->dat.lst.pos+h);
-
-      /* Run change if position changed. */
-      if (lst->dat.lst.selected != psel)
-         if (lst->dat.lst.fptr) {
-            wdw = &windows[nwindows-1]; /* get active window */
-            (*lst->dat.lst.fptr)(wdw->id,lst->name);
-         }
    }
 }
 
