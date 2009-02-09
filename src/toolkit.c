@@ -948,13 +948,15 @@ int toolkit_input( SDL_Event* event )
 static void toolkit_mouseEvent( SDL_Event* event )
 {
    int i;
-   double x,y, rel_x,rel_y;
+   double x,y;
    Window *w;
    Widget *wgt, *wgt_func;
 
-   /* absolute positions */
+   /* Get the window. */
+   w = toolkit_getActiveWindow();
+
+   /* Extract the position as event. */
    if (event->type==SDL_MOUSEMOTION) {
-      /* Convert to local screen coords. */
       x = (double)event->motion.x;
       y = (double)gl_screen.rh - (double)event->motion.y;
    }
@@ -967,17 +969,26 @@ static void toolkit_mouseEvent( SDL_Event* event )
    x *= gl_screen.mxscale;
    y *= gl_screen.myscale;
 
-   /* Get the window. */
-   w = toolkit_getActiveWindow();
-
-   /* always treat button ups to stop hanging states */
-   if ((event->type!=SDL_MOUSEBUTTONUP) &&
-      ((x < w->x) || (x > (w->x + w->w)) || (y < w->y) || (y > (w->y + w->h))))
-      return; /* not in current window */
-
-   /* relative positions */
+   /* Transform to relative to window. */
    x -= w->x;
    y -= w->y;
+
+   /* Check if inbounds (always handle mouseup). */
+   if ((event->type!=SDL_MOUSEBUTTONUP) &&
+      ((x < 0.) || (x > w->w) || (y < 0.) || (y > w->h)))
+      return; /* not in current window */
+
+   /* Update the event. */
+   if (event->type==SDL_MOUSEMOTION) {
+      event->motion.x = x;
+      event->motion.y = y;
+   }
+   else if ((event->type==SDL_MOUSEBUTTONDOWN) || (event->type==SDL_MOUSEBUTTONUP)) {
+      event->button.x = x;
+      event->button.y = y;
+      event->motion.yrel = ((double)event->motion.yrel * gl_screen.mxscale);
+      event->motion.xrel = ((double)event->motion.xrel * gl_screen.myscale);
+   }
 
    wgt_func = NULL;
    for (i=0; i<w->nwidgets; i++) {
