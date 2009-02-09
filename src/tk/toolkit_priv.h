@@ -90,14 +90,6 @@ typedef struct WidgetImageArrayData_ { /* WIDGET_IMAGEARRAY */
    void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
 } WidgetImageArrayData; /**< WIDGET_IMAGEARRAY */
 
-typedef struct WidgetFaderData_{ /* WIDGET_FADER */
-   double value; /**< Current value. */
-   double min;   /**< Minimum value. */
-   double max;   /**< Maximum value. */
-   void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on value change. */
-} WidgetFaderData; /**< WIDGET_FADER */
-
-
 
 /**
  * @struct Widget
