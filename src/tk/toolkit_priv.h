@@ -70,11 +70,6 @@ typedef struct WidgetListData_ { /* WIDGET_LIST */
    void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */  
    int height; /**< Real height. */
 } WidgetListData; /**< WIDGET_LIST */
-
-typedef struct WidgetRectData_{ /* WIDGET_RECT */
-   glColour* colour; /**< Background colour. */
-   int border; /**< 1 if widget should have border, 0 if it shouldn't. */
-} WidgetRectData; /**< WIDGET_RECT */
    
 typedef struct WidgetCustData_ { /* WIDGET_CUST */
    int border; /**< 1 if widget should have border, 0 if it shouldn't. */

@@ -30,10 +30,6 @@ void window_addList( const unsigned int wid,
       const int w, const int h, /* size */
       char* name, char **items, int nitems, int defitem,
       void (*call) (unsigned int,char*) );
-void window_addRect( const unsigned int wid,
-      const int x, const int y, /* position */
-      const int w, const int h, /* size */
-      char* name, glColour* colour, int border ); /* properties */
 void window_addCust( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */

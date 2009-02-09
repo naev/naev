@@ -11,6 +11,7 @@
 #include "tk/widget/button.h"
 #include "tk/widget/text.h"
 #include "tk/widget/image.h"
+#include "tk/widget/rect.h"
 
 
 #endif /* WIDGET_H */
