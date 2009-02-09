@@ -73,7 +73,6 @@ static void toolkit_clearKey (void);
 /* focus */
 static int toolkit_isFocusable( Widget *wgt );
 static Widget* toolkit_getFocus( Window *wdw );
-static void toolkit_listFocus( Widget* lst, double bx, double by );
 /* render */
 static void window_render( Window* w );
 
@@ -1041,8 +1040,6 @@ static void toolkit_mouseEvent( SDL_Event* event )
                   event->button.x += wgt->x;
                   event->button.y += wgt->y;
 
-                  if (wgt->type == WIDGET_LIST)
-                     toolkit_listFocus( wgt, x-wgt->x, y-wgt->y );
                   break;
 
                case SDL_MOUSEBUTTONUP:
@@ -1310,52 +1307,6 @@ int toolkit_getListPos( const unsigned int wid, char* name )
       return -1;
 
    return wgt->dat.lst.selected;
-}
-
-
-/**
- * @brief Handles mouse event focus on a list widget.
- *
- *    @param lst List widget.
- *    @param bx Base X mouse click.
- *    @param by Base Y mouse click.
- */
-static void toolkit_listFocus( Widget* lst, double bx, double by )
-{
-#if 0
-   int i;
-   double y, w;
-   double scroll_pos;
-
-   /* Get the actual width. */
-   w = lst->w;
-   if (lst->dat.lst.height > 0)
-      w -= 10.;
-
-   if (bx < w) {
-      i = lst->dat.lst.pos + (lst->h - by) / (gl_defFont.h + 2.);
-      if (i < lst->dat.lst.noptions) { /* shouldn't be out of boundries */
-         lst->dat.lst.selected = i;
-         toolkit_listScroll( lst, 0 ); /* checks boundries and triggers callback */
-      }
-   }
-   else {
-      /* Get bar position (center). */
-      scroll_pos  = (double)(lst->dat.lst.pos * (2 + gl_defFont.h));
-      scroll_pos /= (double)lst->dat.lst.height - lst->h;
-      y = (lst->h - 30.) * (1.-scroll_pos) + 15.;
-
-      /* Click below the bar. */
-      if (by < y-15.)
-         toolkit_listScroll( lst, -5 );
-      /* Click above the bar. */
-      else if (by > y+15.)
-         toolkit_listScroll( lst, +5 );
-      /* Click on the bar. */
-      else
-         lst->status = WIDGET_STATUS_SCROLLING;
-   }
-#endif
 }
 
 

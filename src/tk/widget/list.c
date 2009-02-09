@@ -13,7 +13,8 @@
 
 
 static void lst_render( Widget* lst, double bx, double by );
-static int lst_key( Widget* lst, SDLKey key, SDLMod mod ); 
+static int lst_key( Widget* lst, SDLKey key, SDLMod mod );
+static int lst_mclick( Widget* lst, SDL_MouseButtonEvent *mclick );
 static int lst_mmove( Widget* lst, SDL_MouseMotionEvent *mmove );
 static void lst_cleanup( Widget* lst );
 
@@ -57,13 +58,14 @@ void window_addList( const unsigned int wid,
    wgt->cleanup            = lst_cleanup;
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->keyevent           = lst_key;
+   wgt->mclickevent        = lst_mclick;
    wgt->mmoveevent         = lst_mmove;
    wgt->dat.lst.options    = items;
    wgt->dat.lst.noptions   = nitems;
    wgt->dat.lst.selected   = defitem; /* -1 would be none */
    wgt->dat.lst.pos        = 0;
    wgt->dat.lst.fptr       = call;
-   
+
    /* position/size */
    wgt->w = (double) w;
    wgt->h = (double) h - ((h % (gl_defFont.h+2)) - 2);
@@ -110,7 +112,7 @@ static void lst_render( Widget* lst, double bx, double by )
    if (lst->dat.lst.height > 0) {
       /* We need to make room for list. */
       w -= 10.;
-      
+
       scroll_pos  = (double)(lst->dat.lst.pos * (2 + gl_defFont.h));
       scroll_pos /= (double)lst->dat.lst.height - lst->h;
       toolkit_drawScrollbar( x + lst->w - 10., y, 10., lst->h, scroll_pos );
@@ -148,9 +150,9 @@ static void lst_render( Widget* lst, double bx, double by )
  *    @return 1 if the event was used, 0 if it wasn't.
  */
 static int lst_key( Widget* lst, SDLKey key, SDLMod mod )
-{  
+{
    (void) mod;
-   
+
    switch (key) {
       case SDLK_UP:
          lst_scroll( lst, +1 );
@@ -162,8 +164,59 @@ static int lst_key( Widget* lst, SDLKey key, SDLMod mod )
       default:
          break;
    }
-   
+
    return 0;
+}
+
+
+/**
+ * @brief Handler for mouse click events for the list widget.
+ *
+ *    @param lst The widget handling the mouse click event.
+ *    @param mclick The event the widget should handle.
+ *    @return 1 if the widget uses the event.
+ */
+static int lst_mclick( Widget* lst, SDL_MouseButtonEvent *mclick )
+{
+   int i;
+   double bx, by;
+   double y, w;
+   double scroll_pos;
+
+   /* Get click position. */
+   bx = mclick->x;
+   by = mclick->y;
+
+   /* Get the actual width. */
+   w = lst->w;
+   if (lst->dat.lst.height > 0)
+      w -= 10.;
+
+   if (bx < w) {
+      i = lst->dat.lst.pos + (lst->h - by) / (gl_defFont.h + 2.);
+      if (i < lst->dat.lst.noptions) { /* shouldn't be out of boundries */
+         lst->dat.lst.selected = i;
+         lst_scroll( lst, 0 ); /* checks boundries and triggers callback */
+      }
+   }
+   else {
+      /* Get bar position (center). */
+      scroll_pos  = (double)(lst->dat.lst.pos * (2 + gl_defFont.h));
+      scroll_pos /= (double)lst->dat.lst.height - lst->h;
+      y = (lst->h - 30.) * (1.-scroll_pos) + 15.;
+
+      /* Click below the bar. */
+      if (by < y-15.)
+         lst_scroll( lst, -5 );
+      /* Click above the bar. */
+      else if (by > y+15.)
+         lst_scroll( lst, +5 );
+      /* Click on the bar. */
+      else
+         lst->status = WIDGET_STATUS_SCROLLING;
+   }
+
+   return 1;
 }
 
 
@@ -199,7 +252,7 @@ static int lst_mmove( Widget* lst, SDL_MouseMotionEvent *mmove )
 
       /* Does boundry checks. */
       lst->dat.lst.selected = CLAMP( lst->dat.lst.pos,
-            lst->dat.lst.pos+h, lst->dat.lst.selected );            
+            lst->dat.lst.pos+h, lst->dat.lst.selected );
 
       /* Run change if position changed. */
       if (lst->dat.lst.selected != psel)
@@ -248,7 +301,7 @@ static void lst_scroll( Widget* lst, int direction )
    if (lst == NULL) return;
 
    wdw = toolkit_getActiveWindow();
-          
+
    lst->dat.lst.selected -= direction;
 
    /* boundry check. */
