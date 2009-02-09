@@ -43,7 +43,7 @@ static void iar_scroll( Widget* iar, int direction );
 void window_addImageArray( const unsigned int wid,
                            const int x, const int y, /* position */
                            const int w, const int h, /* size */
-                           char* name, const int iw, const int ih,  
+                           char* name, const int iw, const int ih,
                            glTexture** tex, char** caption, int nelem,
                            void (*call) (unsigned int wdw, char* wgtname) )
 {
@@ -51,7 +51,7 @@ void window_addImageArray( const unsigned int wid,
    Widget *wgt = window_newWidget(wdw);
 
    /* generic */
-   wgt->type   = WIDGET_IMAGEARRAY;                                   
+   wgt->type   = WIDGET_IMAGEARRAY;
    wgt->name   = strdup(name);
    wgt->wdw    = wid;
 
@@ -103,8 +103,8 @@ static void iar_render( Widget* iar, double bx, double by )
    /* position */
    x = bx + iar->x;
    y = by + iar->y;
-                                                                    
-   /* element dimensions */                                         
+
+   /* element dimensions */
    w = iar->dat.iar.iw + 5.*2.; /* includes border */
    h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
 
@@ -116,13 +116,13 @@ static void iar_render( Widget* iar, double bx, double by )
    /* background */
    toolkit_drawRect( x, y, iar->w, iar->h, &cBlack, NULL );
 
-   /* 
+   /*
     * Scrollbar.
     */
    scroll_pos = iar->dat.iar.pos / (h * (yelem - (int)(iar->h / h)));
    toolkit_drawScrollbar( x + iar->w - 10., y, 10., iar->h, scroll_pos );
 
-   /* 
+   /*
     * Main drawing loop.
     */
    toolkit_clip( x, y, iar->w, iar->h );
@@ -308,16 +308,16 @@ static void iar_cleanup( Widget* iar )
  *           is down and absolute value is number of elements to scroll.
  */
 static void iar_scroll( Widget* iar, int direction )
-{  
+{
    double w,h;
    int xelem, yelem;
    double hmax;
    Window *wdw;
-   
+
    if (iar == NULL) return;
-   
+
    wdw = toolkit_getActiveWindow();
-   
+
    /* element dimensions */
    w = iar->dat.iar.iw + 5.*2.; /* includes border */
    h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
@@ -414,5 +414,33 @@ static void iar_focus( Widget* iar, double bx, double by )
       else
          iar->status = WIDGET_STATUS_SCROLLING;
    }
+}
+
+/**
+ * @brief Gets what is selected currently in a list.
+ *
+ * List includes Image Arrays.
+ */
+char* toolkit_getImageArray( const unsigned int wid, char* name )
+{
+   Widget *wgt = window_getwgt(wid,name);
+
+   /* Must be found in stack. */
+   if (wgt == NULL) {
+      WARN("Widget '%s' not found", name);
+      return NULL;
+   }
+
+   /* Must be an image array. */
+   if (wgt->type != WIDGET_IMAGEARRAY) {
+      WARN("Widget '%s' is not an image array.", name);
+      return NULL;
+   }
+
+   /* Nothing selected. */
+   if (wgt->dat.iar.selected == -1)
+      return NULL;
+
+   return wgt->dat.iar.captions[ wgt->dat.iar.selected ];
 }
 

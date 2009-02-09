@@ -322,3 +322,60 @@ static void lst_scroll( Widget* lst, int direction )
       (*lst->dat.lst.fptr)(wdw->id,lst->name);
 }
 
+
+/**
+ * @brief Gets what is selected currently in a list.
+ *
+ * List includes Image Arrays.
+ */
+char* toolkit_getList( const unsigned int wid, char* name )
+{  
+   Widget *wgt = window_getwgt(wid,name);
+  
+   /* Must be in stack. */
+   if (wgt == NULL) {
+      WARN("Widget '%s' not found", name);
+      return NULL;
+   }
+
+   /* Must be a list. */
+   if (wgt->type != WIDGET_LIST) {
+      WARN("Widget '%s' is not a list", name);
+      return NULL;
+   }
+  
+   /* Nothing selected. */
+   if (wgt->dat.lst.selected == -1)
+      return NULL;
+
+   return wgt->dat.lst.options[ wgt->dat.lst.selected ];
+}
+
+
+/**
+ * @brief Get the position of current item in the list.
+ *
+ *    @param wid Window identifier where the list is.
+ *    @param name Name of the list.
+ *    @return The position in the list or -1 on error.
+ */
+int toolkit_getListPos( const unsigned int wid, char* name )
+{
+   Widget *wgt = window_getwgt(wid,name);
+
+   /* Widget must be in stack. */
+   if (wgt == NULL) {
+      WARN("Widget '%s' not found", name);
+      return -1;
+   }
+
+   /* Must be a list. */
+   if (wgt->type != WIDGET_LIST) {
+      WARN("Widget '%s' is not a list", name);
+      return -1;
+   }
+
+   return wgt->dat.lst.selected;
+}
+
+

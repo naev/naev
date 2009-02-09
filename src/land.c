@@ -384,7 +384,7 @@ static void outfits_update( unsigned int wid, char* str )
    Outfit* outfit;
    char buf[PATH_MAX], buf2[16], buf3[16];
 
-   outfitname = toolkit_getList( wid, "iarOutfits" );
+   outfitname = toolkit_getImageArray( wid, "iarOutfits" );
    if (strcmp(outfitname,"None")==0) { /* No outfits */
       window_modifyImage( wid, "imgOutfit", NULL );
       window_disableButton( wid, "btnBuyOutfit" );
@@ -527,7 +527,7 @@ static void outfits_buy( unsigned int wid, char* str )
    Outfit* outfit;
    int q;
 
-   outfitname = toolkit_getList( wid, "iarOutfits" );
+   outfitname = toolkit_getImageArray( wid, "iarOutfits" );
    outfit = outfit_get( outfitname );
 
    q = outfits_getMod();
@@ -582,7 +582,7 @@ static void outfits_sell( unsigned int wid, char* str )
    Outfit* outfit;
    int q;
 
-   outfitname = toolkit_getList( wid, "iarOutfits" );
+   outfitname = toolkit_getImageArray( wid, "iarOutfits" );
    outfit = outfit_get( outfitname );
 
    q = outfits_getMod();
@@ -737,7 +737,7 @@ static void shipyard_update( unsigned int wid, char* str )
    Ship* ship;
    char buf[PATH_MAX], buf2[16], buf3[16];
    
-   shipname = toolkit_getList( wid, "iarShipyard" );
+   shipname = toolkit_getImageArray( wid, "iarShipyard" );
 
    /* No ships */
    if (strcmp(shipname,"None")==0) {
@@ -799,7 +799,7 @@ static void shipyard_info( unsigned int wid, char* str )
    (void)str;
    char *shipname;
 
-   shipname = toolkit_getList( wid, "iarShipyard" );
+   shipname = toolkit_getImageArray( wid, "iarShipyard" );
    ship_view(0, shipname);
 }
 /**
@@ -813,7 +813,7 @@ static void shipyard_buy( unsigned int wid, char* str )
    char *shipname, buf[16];
    Ship* ship;
 
-   shipname = toolkit_getList( wid, "iarShipyard" );
+   shipname = toolkit_getImageArray( wid, "iarShipyard" );
    ship = ship_get( shipname );
 
    /* Must have enough money. */

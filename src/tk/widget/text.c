@@ -99,3 +99,33 @@ static void txt_cleanup( Widget* txt )
       free(txt->dat.txt.text);
 }
 
+
+/**
+ * @brief Modifies an existing text widget.
+ *
+ *    @param wid Window to which the text widget belongs.
+ *    @param name Name of the text widget.
+ *    @param newstring String to set for the text widget.
+ */
+void window_modifyText( const unsigned int wid,
+      char* name, char* newstring )
+{  
+   Widget *wgt;
+   
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+   
+   /* Check type. */
+   if (wgt->type != WIDGET_TEXT) {
+      WARN("Not modifying text on non-text widget '%s'.", name);
+      return;
+   }
+   
+   /* Set text. */
+   if (wgt->dat.txt.text)
+      free(wgt->dat.txt.text);
+   wgt->dat.txt.text = (newstring) ?  strdup(newstring) : NULL;
+}
+

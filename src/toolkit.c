@@ -166,36 +166,6 @@ Widget* window_getwgt( const unsigned int wid, char* name )
 
 
 /**
- * @brief Modifies an existing text widget.
- *
- *    @param wid Window to which the text widget belongs.
- *    @param name Name of the text widget.
- *    @param newstring String to set for the text widget.
- */
-void window_modifyText( const unsigned int wid,
-      char* name, char* newstring )
-{
-   Widget *wgt;
-
-   /* Get the widget. */
-   wgt = window_getwgt(wid,name);
-   if (wgt == NULL)
-      return;
-
-   /* Check type. */
-   if (wgt->type != WIDGET_TEXT) {
-      WARN("Not modifying text on non-text widget '%s'.", name);
-      return;
-   }
-
-   /* Set text. */
-   if (wgt->dat.txt.text)
-      free(wgt->dat.txt.text);
-   wgt->dat.txt.text = (newstring) ?  strdup(newstring) : NULL;
-}
-
-
-/**
  * @brief Gets a widget's position.
  *
  *    @param wid ID of the window to get widget from.
@@ -1252,60 +1222,6 @@ static int toolkit_isFocusable( Widget *wgt )
 Window* toolkit_getActiveWindow (void)
 {
    return &windows[nwindows-1];
-}
-
-
-/**
- * @brief Gets what is selected currently in a list.
- *
- * List includes Image Arrays.
- */
-char* toolkit_getList( const unsigned int wid, char* name )
-{
-   Widget *wgt = window_getwgt(wid,name);
-
-   if (wgt == NULL) {
-      WARN("Widget '%s' not found", name);
-      return NULL;
-   }
-
-   switch (wgt->type) {
-      case WIDGET_LIST:
-         if (wgt->dat.lst.selected == -1)
-            return NULL;
-         return wgt->dat.lst.options[ wgt->dat.lst.selected ];
-
-      case WIDGET_IMAGEARRAY:
-         if (wgt->dat.iar.selected == -1)
-            return NULL;
-         return wgt->dat.iar.captions[ wgt->dat.iar.selected ];
-
-      default:
-         return NULL;
-   }
-}
-
-
-/**
- * @brief Get the position of current item in the list.
- *
- *    @param wid Window identifier where the list is.
- *    @param name Name of the list.
- *    @return The position in the list or -1 on error.
- */
-int toolkit_getListPos( const unsigned int wid, char* name )
-{
-   Widget *wgt = window_getwgt(wid,name);
-
-   if (wgt == NULL) {
-      WARN("Widget '%s' not found", name);
-      return -1;
-   }
-
-   if ((wgt->type != WIDGET_LIST) || (wgt->dat.lst.selected == -1))
-      return -1;
-
-   return wgt->dat.lst.selected;
 }
 
 

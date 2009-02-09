@@ -36,6 +36,9 @@ void window_addImageArray( const unsigned int wid,
       glTexture** tex, char** caption, int nelem, /* elements */    
       void (*call) (unsigned int,char*) );
 
+/* Misc functions. */
+char* toolkit_getImageArray( const unsigned int wid, char* name );
+
 
 #endif /* IMAGEARRAY_H */
 
