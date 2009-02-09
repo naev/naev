@@ -69,11 +69,9 @@ glColour* toolkit_colDark  = &cGrey30; /**< Dark outline colour. */
 /* input */
 static void toolkit_mouseEvent( SDL_Event* event );
 static int toolkit_keyEvent( SDL_Event* event );
-static void toolkit_listMove( Widget* lst, double ay );
 static void toolkit_imgarrMove( Widget* iar, double ry );
 static void toolkit_clearKey (void);
 /* widget input. */
-static int toolkit_keyInput( Widget* inp, SDLKey key, SDLMod mod );
 static int toolkit_keyImageArray( Widget* iar, SDLKey key, SDLMod mod );
 /* focus */
 static int toolkit_isFocusable( Widget *wgt );
@@ -81,10 +79,8 @@ static Widget* toolkit_getFocus( Window *wdw );
 static void toolkit_listScroll( Widget* wgt, int direction );
 static void toolkit_listFocus( Widget* lst, double bx, double by );
 static void toolkit_imgarrFocus( Widget* iar, double bx, double by );
-static void toolkit_faderSetValue(Widget *fad, double value);
 /* render */
 static void window_render( Window* w );
-static void toolkit_renderInput( Widget* inp, double bx, double by );
 static void toolkit_renderImageArray( Widget* iar, double bx, double by );
 
 
@@ -378,121 +374,6 @@ void window_imgColour( const unsigned int wid,
 
    /* Set the colour. */
    wgt->dat.img.colour = colour;
-}
-
-
-/**
- * @brief Sets a fader widget's value.
- *
- *    @param wid ID of the window to get widget from.
- *    @param name Name of the widget.
- *    @para value Value to set fader to.
- */
-void window_faderValue( const unsigned int wid,
-      char* name, double value )
-{
-   Widget *wgt;
-
-   /* Get the widget. */
-   wgt = window_getwgt(wid,name);
-   if (wgt == NULL)
-      return;
-
-   /* Check the type. */
-   if (wgt->type != WIDGET_FADER) {
-      WARN("Not setting fader value on non-fader widget '%s'.", name);
-      return;
-   }
-
-   /* Set fader value. */
-   toolkit_faderSetValue(wgt, value);
-}
-
-
-/**
- * @brief Sets a fader widget's boundries.
- *
- *    @param wid ID of the window to get widget from.
- *    @param name Name of the widget.
- *    @param min Minimum fader value.
- *    @param max Maximum fader value.
- */
-void window_faderBounds( const unsigned int wid,
-      char* name, double min, double max )
-{
-   double value;
-   Widget *wgt;
-  
-   /* Get the widget. */
-   wgt = window_getwgt(wid,name);
-   if (wgt == NULL)
-      return;
-
-   /* Check the type. */
-   if (wgt->type != WIDGET_FADER) {
-      WARN("Not setting fader value on non-fader widget '%s'.", name);
-      return;
-   }
-
-   /* Set the fader boundries. */
-   wgt->dat.fad.min = min;
-   wgt->dat.fad.max = max;
-  
-   /* Set the value. */
-   value = MAX(MIN(value, wgt->dat.fad.max), wgt->dat.fad.min);
-   toolkit_faderSetValue(wgt, value);
-}
-
-
-/**
- * @brief Gets the image from an image widget
- *
- *    @param wid ID of the window to get widget from.
- *    @param name Name of the widget.
- */
-glTexture* window_getImage( const unsigned int wid, char* name )
-{
-   Widget *wgt;
-  
-   /* Get the widget. */
-   wgt = window_getwgt(wid,name);
-   if (wgt == NULL)
-      return NULL;
-
-   /* Check the type. */
-   if (wgt->type != WIDGET_IMAGE) {
-      WARN("Trying to get image from non-image widget '%s'.", name);
-      return NULL;
-   }
-
-   /* Get the value. */
-   return (wgt) ? wgt->dat.img.image : NULL;
-}
-
-
-/**
- * @brief Gets value of fader widget.
- *
- *    @param wid ID of the window to get widget from.
- *    @param name Name of the widget.
- */
-double window_getFaderValue( const unsigned int wid, char* name )
-{
-   Widget *wgt;
-
-   /* Get the widget. */
-   wgt = window_getwgt(wid,name);
-   if (wgt == NULL)
-      return 0.;
-
-   /* Check the type. */
-   if (wgt->type != WIDGET_FADER) {
-      WARN("Trying to get fader value from non-fader widget '%s'.", name);
-      return 0.;
-   }
-
-   /* Return the value. */
-   return (wgt) ? wgt->dat.fad.value : 0.;
 }
 
 
@@ -1288,7 +1169,6 @@ int toolkit_input( SDL_Event* event )
 static void toolkit_mouseEvent( SDL_Event* event )
 {
    int i;
-   double d;
    double x,y, rel_x,rel_y;
    Window *w;
    Widget *wgt, *wgt_func;
@@ -1348,10 +1228,6 @@ static void toolkit_mouseEvent( SDL_Event* event )
                   else {
                      if (wgt->type == WIDGET_IMAGEARRAY)
                         toolkit_imgarrMove( wgt, rel_y );
-                     if (wgt->type == WIDGET_FADER) {
-                        d = (wgt->w > wgt->h) ? rel_x / wgt->w : rel_y / wgt->h;
-                        toolkit_faderSetValue(wgt, wgt->dat.fad.value + d);
-                     }
                   }
                   break;
 
@@ -1646,23 +1522,6 @@ static void toolkit_listScroll( Widget* wgt, int direction )
       default:
          break;
    }
-}
-
-
-/** 
- * @brief Changes fader value
- *
- *    @param fad Fader to set value of.
- *    @param value Value to set fader to.
- */
-static void toolkit_faderSetValue( Widget *fad, double value )
-{
-   /* Sanity check and value set. */
-   fad->dat.fad.value = CLAMP( fad->dat.fad.min, fad->dat.fad.max, value );
-
-   /* Run function if needed. */
-   if (fad->dat.fad.fptr != NULL)
-      (*fad->dat.fad.fptr)(fad->wdw, fad->name);
 }
 
 

@@ -13,6 +13,8 @@
 
 
 static void fad_render( Widget* fad, double bx, double by );
+static int fad_mmove( Widget* fad, SDL_MouseMotionEvent *mmove );
+static void fad_setValue( Widget *fad, double value );
 
 
 /**
@@ -52,10 +54,11 @@ void window_addFader( const unsigned int wid,
    /* specific */
    wgt->render          = fad_render;
    /*wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);*/ /**< @todo Let faders focus. */
+   wgt->mmoveevent      = fad_mmove;
    wgt->dat.fad.value   = min;
    wgt->dat.fad.min     = min;
    wgt->dat.fad.max     = max;
-   wgt->dat.fad.value   = CLAMP(min, max, def);;
+   wgt->dat.fad.value   = CLAMP(min, max, def);
    wgt->dat.fad.fptr    = call;
 
    /* position/size */
@@ -106,3 +109,128 @@ static void fad_render( Widget* fad, double bx, double by )
 }
 
 
+/**
+ * @brief handles mouse movements over the fader.
+ *
+ *    @param fad The fader widget handling the mouse movements.
+ *    @param mmove The event being generated.
+ */
+static int fad_mmove( Widget* fad, SDL_MouseMotionEvent* mmove )
+{
+   double d;
+
+   /* Must be dragging mouse. */
+   if (!(mmove->state & SDL_BUTTON(1)))
+      return 0;
+
+   /* Set the fader value. */
+   d = (fad->w > fad->h) ? mmove->xrel / fad->w : mmove->yrel / fad->h;
+   fad_setValue(fad, fad->dat.fad.value + d);
+
+   return 1;
+}
+
+
+/**
+ * @brief Gets value of fader widget.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget.
+ */
+double window_getFaderValue( const unsigned int wid, char* name )
+{  
+   Widget *wgt;
+   
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return 0.;
+   
+   /* Check the type. */
+   if (wgt->type != WIDGET_FADER) {
+      WARN("Trying to get fader value from non-fader widget '%s'.", name);
+      return 0.;
+   }
+   
+   /* Return the value. */
+   return (wgt) ? wgt->dat.fad.value : 0.;
+}
+
+
+/** 
+ * @brief Changes fader value
+ *
+ *    @param fad Fader to set value of.
+ *    @param value Value to set fader to.
+ */
+static void fad_setValue( Widget *fad, double value )
+{
+   /* Sanity check and value set. */
+   fad->dat.fad.value = CLAMP( fad->dat.fad.min, fad->dat.fad.max, value );
+
+   /* Run function if needed. */
+   if (fad->dat.fad.fptr != NULL)
+      (*fad->dat.fad.fptr)(fad->wdw, fad->name);
+}
+
+
+/**
+ * @brief Sets a fader widget's value.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget.
+ *    @para value Value to set fader to.
+ */
+void window_faderValue( const unsigned int wid,
+      char* name, double value )
+{
+   Widget *wgt;
+
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+
+   /* Check the type. */
+   if (wgt->type != WIDGET_FADER) {
+      WARN("Not setting fader value on non-fader widget '%s'.", name);
+      return;
+   }
+
+   /* Set fader value. */
+   fad_setValue(wgt, value);
+}
+
+
+/**
+ * @brief Sets a fader widget's boundries.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget.
+ *    @param min Minimum fader value.
+ *    @param max Maximum fader value.
+ */
+void window_faderBounds( const unsigned int wid,
+      char* name, double min, double max )
+{  
+   double value;
+   Widget *wgt;
+   
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+   
+   /* Check the type. */
+   if (wgt->type != WIDGET_FADER) {
+      WARN("Not setting fader value on non-fader widget '%s'.", name);
+      return;
+   }
+   
+   /* Set the fader boundries. */
+   wgt->dat.fad.min = min;
+   wgt->dat.fad.max = max;
+   
+   /* Set the value. */
+   fad_setValue(wgt, value);                               
+}

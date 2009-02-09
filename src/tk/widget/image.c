@@ -88,3 +88,28 @@ static void img_render( Widget* img, double bx, double by )
 }
 
 
+/**
+ * @brief Gets the image from an image widget
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget.
+ */
+glTexture* window_getImage( const unsigned int wid, char* name )
+{  
+   Widget *wgt;
+   
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return NULL;
+   
+   /* Check the type. */
+   if (wgt->type != WIDGET_IMAGE) {
+      WARN("Trying to get image from non-image widget '%s'.", name);
+      return NULL;
+   }
+   
+   /* Get the value. */
+   return (wgt) ? wgt->dat.img.image : NULL;
+}
+

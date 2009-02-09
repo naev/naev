@@ -32,6 +32,7 @@ void window_modifyImage( const unsigned int wid,
       char* name, glTexture* image );
 void window_imgColour( const unsigned int wid,
       char* name, glColour* colour );
+glTexture* window_getImage( const unsigned int wid, char* name );
 
 
 #endif /* IMAGE_H */

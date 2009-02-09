@@ -52,8 +52,6 @@ void window_posWidget( const unsigned int wid,
       char* name, int *x, int *y );
 void window_moveWidget( const unsigned int wid,
       char* name, int x, int y );
-/* specific */
-glTexture* window_getImage( const unsigned int wid, char* name );
 
 /*
  * destruction
