@@ -44,16 +44,9 @@ static int mwindows = 0; /**< Allocated windows in the stack. */
 /*
  * simulate keypresses when holding
  */
-static SDLKey input_key; /**< Current pressed key. */
-static unsigned int input_keyTime; /**< Tick pressed. */
-static int input_keyCounter; /**< Number of repetitions. */
-
-
-/*
- * Converts absolute mouse events to relative mouse events.
- */
-static double last_x = 0.; /**< Last x mouse position. */
-static double last_y = 0.; /**< Last y mouse position. */
+static SDLKey input_key             = 0; /**< Current pressed key. */
+static unsigned int input_keyTime   = 0; /**< Tick pressed. */
+static int input_keyCounter         = 0; /**< Number of repetitions. */
 
 
 /*
@@ -964,11 +957,6 @@ static void toolkit_mouseEvent( SDL_Event* event )
       /* Convert to local screen coords. */
       x = (double)event->motion.x;
       y = (double)gl_screen.rh - (double)event->motion.y;
-      /* Create relative events. */
-      rel_x = x - last_x;
-      rel_y = y - last_y;
-      last_x = x;
-      last_y = y;
    }
    else if ((event->type==SDL_MOUSEBUTTONDOWN) || (event->type==SDL_MOUSEBUTTONUP)) {
       x = (double)event->button.x;
