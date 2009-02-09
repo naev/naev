@@ -74,7 +74,6 @@ static void toolkit_imgarrMove( Widget* iar, double ry );
 static void toolkit_clearKey (void);
 /* widget input. */
 static int toolkit_keyInput( Widget* inp, SDLKey key, SDLMod mod );
-static int toolkit_keyList( Widget* lst, SDLKey key, SDLMod mod );
 static int toolkit_keyImageArray( Widget* iar, SDLKey key, SDLMod mod );
 /* focus */
 static int toolkit_isFocusable( Widget *wgt );
@@ -85,7 +84,6 @@ static void toolkit_imgarrFocus( Widget* iar, double bx, double by );
 static void toolkit_faderSetValue(Widget *fad, double value);
 /* render */
 static void window_render( Window* w );
-static void toolkit_renderList( Widget* lst, double bx, double by );
 static void toolkit_renderInput( Widget* inp, double bx, double by );
 static void toolkit_renderImageArray( Widget* iar, double bx, double by );
 
@@ -111,64 +109,6 @@ void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
       wgt->y = wdw->h - wgt->h + y;
    else
       wgt->y = (double) y;
-}
-
-
-/**
- * @brief Adds a list widget to a window.
- *
- * Position origin is 0,0 at bottom left.  If you use negative X or Y
- *  positions.  They actually count from the opposite side in.
- *
- *    @param wid ID of the window to add the widget to.
- *    @param x X position within the window to use.
- *    @param y Y position within the window to use.
- *    @param w Width of the widget.
- *    @param h Height of the widget.
- *    @param name Name of the widget to use internally.
- *    @param items Items in the list (will be freed automatically).
- *    @param nitems Number of items in items parameter.
- *    @param defitem Default item to select.
- *    @param call Function to call when new item is selected. Parameter passed
- *                is the name of the list.
- */
-void window_addList( const unsigned int wid,
-                     const int x, const int y,
-                     const int w, const int h,
-                     char* name, char **items, int nitems, int defitem,
-                     void (*call) (unsigned int wdw, char* wgtname) )
-{
-   Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw);
-
-   /* generic */
-   wgt->type = WIDGET_LIST;
-   wgt->name = strdup(name);
-   wgt->wdw = wid;
-
-   /* specific */
-   wgt->render = toolkit_renderList;
-   wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
-   wgt->keyevent = toolkit_keyList;
-   wgt->dat.lst.options = items;
-   wgt->dat.lst.noptions = nitems;
-   wgt->dat.lst.selected = defitem; /* -1 would be none */
-   wgt->dat.lst.pos = 0;
-   wgt->dat.lst.fptr = call;
-   
-   /* position/size */
-   wgt->w = (double) w;
-   wgt->h = (double) h - ((h % (gl_defFont.h+2)) - 2);
-   toolkit_setPos( wdw, wgt, x, y );
-
-   /* check if needs scrollbar. */
-   if (2 + (nitems * (gl_defFont.h + 2)) > (int)wgt->h)
-      wgt->dat.lst.height = (2 + gl_defFont.h) * nitems + 2;
-   else
-      wgt->dat.lst.height = 0;
-
-   if (wdw->focus == -1) /* initialize the focus */
-      toolkit_nextFocus();
 }
 
 
@@ -790,15 +730,6 @@ void widget_cleanup( Widget *widget )
 
    /* Type specific. */
    switch (widget->type) {
-      case WIDGET_LIST: /* must clear the list */
-         if (widget->dat.lst.options) {
-            for (i=0; i<widget->dat.lst.noptions; i++)
-               if (widget->dat.lst.options[i])
-                  free(widget->dat.lst.options[i]);
-            free( widget->dat.lst.options );
-         }
-         break;
-
       case WIDGET_INPUT:
          free(widget->dat.inp.input); /* frees the input buffer */
          break;
@@ -1227,65 +1158,6 @@ static void window_render( Window* w )
 
 
 /**
- * @brief Renders a list widget.
- *
- *    @param lst List widget to render.
- *    @param bx Base X position.
- *    @param by Base Y position.
- */
-static void toolkit_renderList( Widget* lst, double bx, double by )
-{
-   int i;
-   double x,y, tx,ty, miny;
-   double w, scroll_pos;
-
-   w = lst->w;
-   x = bx + lst->x;
-   y = by + lst->y;
-
-   /* lst bg */
-   toolkit_drawRect( x, y, lst->w, lst->h, &cWhite, NULL );
-
-   /* inner outline */
-   toolkit_drawOutline( x, y, lst->w, lst->h, 0.,
-         toolkit_colLight, toolkit_col );
-   /* outter outline */
-   toolkit_drawOutline( x, y, lst->w, lst->h, 1., toolkit_colDark, NULL );
-
-   /* Draw scrollbar. */
-   if (lst->dat.lst.height > 0) {
-      /* We need to make room for list. */
-      w -= 10.;
-
-      scroll_pos  = (double)(lst->dat.lst.pos * (2 + gl_defFont.h));
-      scroll_pos /= (double)lst->dat.lst.height - lst->h;
-      toolkit_drawScrollbar( x + lst->w - 10., y, 10., lst->h, scroll_pos );
-   }
-
-   /* draw selected */
-   toolkit_drawRect( x, y - 1. + lst->h -
-         (1 + lst->dat.lst.selected - lst->dat.lst.pos)*(gl_defFont.h+2.),
-         w, gl_defFont.h + 2., &cHilight, NULL );
-
-   /* draw content */
-   tx = (double)SCREEN_W/2. + x + 2.;
-   ty = (double)SCREEN_H/2. + y + lst->h - 2. - gl_defFont.h;
-   miny = ty - lst->h + 2 + gl_defFont.h;
-   y = ty - 2.;
-   w -= 4;
-   for (i=lst->dat.lst.pos; i<lst->dat.lst.noptions; i++) {
-      gl_printMax( &gl_defFont, (int)w,
-            tx, ty, &cBlack, lst->dat.lst.options[i] );
-      ty -= 2 + gl_defFont.h;
-
-      /* Check if out of bounds. */
-      if (ty < miny)
-         break;
-   }
-}
-
-
-/**
  * @brief Renders a input widget.
  *
  *    @param inp Input widget to render.
@@ -1531,34 +1403,6 @@ static int toolkit_keyInput( Widget* inp, SDLKey key, SDLMod mod )
 
 
 /**
- * @brief Handles input for a list widget.
- *
- *    @param lst List widget to handle event.
- *    @param key Key being handled.
- *    @param mod Mods when key is being pressed.
- *    @return 1 if the event was used, 0 if it wasn't.
- */
-static int toolkit_keyList( Widget* lst, SDLKey key, SDLMod mod )
-{
-   (void) mod;
-
-   switch (key) {
-      case SDLK_UP:
-         toolkit_listScroll( lst, +1 );
-         return 1;
-      case SDLK_DOWN:
-         toolkit_listScroll( lst, -1 );
-         return 1;
-
-      default:
-         break;
-   }
-
-   return 0;
-}
-
-
-/**
  * @brief Handles input for an image array widget.
  *
  *    @param iar Image array widget to handle event.
@@ -1581,54 +1425,6 @@ static int toolkit_keyImageArray( Widget* iar, SDLKey key, SDLMod mod )
       default:
          break;
    }
-   return 0;
-}
-
-
-/**
- * @brief Handles List movement.
- *
- *    @param lst List that has mouse movement.
- *    @param mmove Mouse movement event.
- *    @return 1 if movement was used, 0 if movement wasn't used.
- */
-static int toolkit_mmoveList( Widget* lst, SDL_MouseMotionEvent *mmove )
-{
-   Window *wdw;
-   int psel;
-   double p;
-   int h;
-  
-   /* Ignore mouse downs. */
-   if (!(mmove->state & SDL_BUTTON(1)))
-      return 0;
-
-   /* Handle the scrolling if scrolling. */
-   if (lst->status == WIDGET_STATUS_SCROLLING) {
-      h = lst->h / (2 + gl_defFont.h) - 1;
-
-      /* Save previous position. */
-      psel = lst->dat.lst.pos;
-
-      /* Find absolute position. */
-      p  = (lst->h - mmove->y) / lst->h * (lst->dat.lst.height - lst->h);
-      p /= (2 + gl_defFont.h);
-      lst->dat.lst.pos = (int)round(p);
-
-      /* Does boundry checks. */
-      lst->dat.lst.selected = CLAMP( lst->dat.lst.pos,
-            lst->dat.lst.pos+h, lst->dat.lst.selected );
-
-      /* Run change if position changed. */
-      if (lst->dat.lst.selected != psel)
-         if (lst->dat.lst.fptr) {
-            wdw = &windows[nwindows-1]; /* get active window */
-            (*lst->dat.lst.fptr)(wdw->id,lst->name);
-         }
-
-      return 1;
-   }
-
    return 0;
 }
 
@@ -1709,7 +1505,7 @@ static void toolkit_mouseEvent( SDL_Event* event )
    y *= gl_screen.myscale;
 
    /* Get the window. */
-   w = &windows[nwindows-1];
+   w = toolkit_getActiveWindow();
 
    /* always treat button ups to stop hanging states */
    if ((event->type!=SDL_MOUSEBUTTONUP) &&
@@ -1866,7 +1662,7 @@ static int toolkit_keyEvent( SDL_Event* event )
       return 0;
 
    /* Get event and key. */
-   wdw = &windows[nwindows-1];
+   wdw = toolkit_getActiveWindow();
    wgt = toolkit_getFocus( wdw );
    key = event->key.keysym.sym;
 
@@ -1929,7 +1725,7 @@ void toolkit_update (void)
 
    /* Check to see what it affects. */
    if (nwindows > 0) {
-      wdw = &windows[nwindows-1];
+      wdw = toolkit_getActiveWindow();
       wgt = toolkit_getFocus( wdw );
       if ((wgt != NULL) && (wgt->keyevent != NULL))
          wgt->keyevent( wgt, input_key, 0 );
@@ -1942,7 +1738,9 @@ void toolkit_update (void)
  */
 void toolkit_nextFocus (void)
 {
-   Window* wdw = &windows[nwindows-1]; /* get active window */
+   Window *wdw;
+
+   wdw = toolkit_getActiveWindow();
 
    if (wdw->nwidgets==0) /* special case no widgets */
       wdw->focus = -1;
@@ -1988,7 +1786,7 @@ static void toolkit_listScroll( Widget* wgt, int direction )
 
    if (wgt == NULL) return;
 
-   wdw = &windows[nwindows-1]; /* get active window */
+   wdw = toolkit_getActiveWindow();
 
    switch (wgt->type) {
 
@@ -2056,6 +1854,17 @@ static void toolkit_faderSetValue( Widget *fad, double value )
    /* Run function if needed. */
    if (fad->dat.fad.fptr != NULL)
       (*fad->dat.fad.fptr)(fad->wdw, fad->name);
+}
+
+
+/**
+ * @brief Gets the active window in the toolkit.
+ *
+ *    @return The active window in the toolkit.
+ */
+Window* toolkit_getActiveWindow (void)
+{
+   return &windows[nwindows-1];
 }
 
 
@@ -2171,7 +1980,7 @@ static void toolkit_imgarrFocus( Widget* iar, double bx, double by )
    int xelem, xspace, yelem;
    Window *wdw;
 
-   wdw = &windows[nwindows-1]; /* get active window */
+   wdw = toolkit_getActiveWindow();
 
    /* positions */
    x = bx + iar->x;

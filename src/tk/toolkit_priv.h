@@ -62,15 +62,6 @@ typedef enum WidgetStatus_ {
 #define wgt_isFlag(w,f)       ((w)->flags & (f)) /**< Checks if a widget has a fla.g */
 
 
-typedef struct WidgetListData_ { /* WIDGET_LIST */
-   char **options; /**< Pointer to the options. */
-   int noptions; /**< Total number of options. */
-   int selected; /**< Which option is currently selected. */
-   int pos; /** Current topmost option (in view). */
-   void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */  
-   int height; /**< Real height. */
-} WidgetListData; /**< WIDGET_LIST */
-
 typedef struct WidgetInputData_ { /* WIDGET_INPUT */
    char *input; /**< Input buffer. */
    int max; /**< Maximum length. */                                 
@@ -187,6 +178,7 @@ void toolkit_drawRect( double x, double y,
 
 /* Misc stuff. */
 void toolkit_nextFocus (void);
+Window* toolkit_getActiveWindow (void);
 
 
 #endif /* TOOLKIT_PRIV_H */

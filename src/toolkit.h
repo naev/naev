@@ -25,11 +25,6 @@ extern int toolkit;
 unsigned int window_create( const char* name,
       const int x, const int y, /* position */
       const int w, const int h ); /* dimensions */
-void window_addList( const unsigned int wid,
-      const int x, const int y, /* position */
-      const int w, const int h, /* size */
-      char* name, char **items, int nitems, int defitem,
-      void (*call) (unsigned int,char*) );
 void window_addInput( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
@@ -63,8 +58,6 @@ void window_posWidget( const unsigned int wid,
 void window_moveWidget( const unsigned int wid,
       char* name, int x, int y );
 /* specific */
-char* toolkit_getList( const unsigned int wid, char* name );
-int toolkit_getListPos( const unsigned int wid, char* name );
 glTexture* window_getImage( const unsigned int wid, char* name );
 
 /*
