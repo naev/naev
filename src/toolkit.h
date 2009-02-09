@@ -30,12 +30,6 @@ void window_addList( const unsigned int wid,
       const int w, const int h, /* size */
       char* name, char **items, int nitems, int defitem,
       void (*call) (unsigned int,char*) );
-void window_addCust( const unsigned int wid,
-      const int x, const int y, /* position */
-      const int w, const int h, /* size */
-      char* name, const int border,
-      void (*render) (double x, double y, double w, double h),
-      void (*mouse) (unsigned int wid, SDL_Event* event, double x, double y) );
 void window_addInput( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */

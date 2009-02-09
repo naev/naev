@@ -70,12 +70,6 @@ typedef struct WidgetListData_ { /* WIDGET_LIST */
    void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */  
    int height; /**< Real height. */
 } WidgetListData; /**< WIDGET_LIST */
-   
-typedef struct WidgetCustData_ { /* WIDGET_CUST */
-   int border; /**< 1 if widget should have border, 0 if it shouldn't. */
-   void (*render) (double bx, double by, double bw, double bh); /**< Function to run when rendering. */
-   void (*mouse) (unsigned int wid, SDL_Event* event, double bx, double by); /**< Function to run when recieving mous events. */
-} WidgetCustData; /**< WIDGET_CUST */
 
 typedef struct WidgetInputData_ { /* WIDGET_INPUT */
    char *input; /**< Input buffer. */

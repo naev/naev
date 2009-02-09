@@ -86,7 +86,6 @@ static void toolkit_faderSetValue(Widget *fad, double value);
 /* render */
 static void window_render( Window* w );
 static void toolkit_renderList( Widget* lst, double bx, double by );
-static void toolkit_renderCust( Widget* cst, double bx, double by );
 static void toolkit_renderInput( Widget* inp, double bx, double by );
 static void toolkit_renderImageArray( Widget* iar, double bx, double by );
 static void toolkit_renderFader( Widget* fad, double bx, double by );
@@ -171,56 +170,6 @@ void window_addList( const unsigned int wid,
 
    if (wdw->focus == -1) /* initialize the focus */
       toolkit_nextFocus();
-}
-
-
-/**
- * @brief Adds a custom widget to a window.
- *
- * Position origin is 0,0 at bottom left.  If you use negative X or Y
- *  positions.  They actually count from the opposite side in.
- *
- * You are in charge of the rendering and handling mouse input for this widget.
- *  Mouse events outside the widget position won't be passed on.
- *
- *    @param wid ID of the window to add the widget to.
- *    @param x X position within the window to use.
- *    @param y Y position within the window to use.
- *    @param w Width of the widget.
- *    @param h Height of the widget.
- *    @param name Name of the widget to use internally.
- *    @param border Whether or not it should have a border.
- *    @param render Render function, passes the position and dimensions of the
- *                  widget as parameters.
- *    @param mouse Mouse function, passes the window id, event and position as
- *                 parameters.
- */
-void window_addCust( const unsigned int wid,
-                     const int x, const int y, /* position */
-                     const int w, const int h, /* size */
-                     char* name, const int border,
-                     void (*render) (double x, double y, double w, double h),
-                     void (*mouse) (unsigned int wid, SDL_Event* event,
-                                    double x, double y) )
-{
-   Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw);
-
-   /* generic */
-   wgt->type = WIDGET_CUST;
-   wgt->name = strdup(name);
-   wgt->wdw = wid;
-
-   /* specific */
-   wgt->render = toolkit_renderCust;
-   wgt->dat.cst.border = border;
-   wgt->dat.cst.render = render;
-   wgt->dat.cst.mouse = mouse;
-
-   /* position/size */
-   wgt->w = (double) w;
-   wgt->h = (double) h;
-   toolkit_setPos( wdw, wgt, x, y );
 }
 
 
@@ -1391,35 +1340,6 @@ static void toolkit_renderList( Widget* lst, double bx, double by )
 
 
 /**
- * @brief Renders a custom widget.
- *
- *    @param cst Custom widget to render.
- *    @param bx Base X position.
- *    @param by Base Y position.
- */
-static void toolkit_renderCust( Widget* cst, double bx, double by )
-{
-   double x,y;
-
-   x = bx + cst->x;
-   y = by + cst->y;
-
-   if (cst->dat.cst.border) {
-      /* inner outline */
-      toolkit_drawOutline( x-1, y+1, cst->w+1, cst->h+1, 0.,
-            toolkit_colLight, toolkit_col );
-      /* outter outline */
-      toolkit_drawOutline( x-1, y, cst->w+1, cst->h+1, 1.,
-            toolkit_colDark, NULL );
-   }
-
-   toolkit_clip( x, y, cst->w, cst->h );
-   (*cst->dat.cst.render) ( x, y, cst->w, cst->h );
-   toolkit_unclip();
-}
-
-
-/**
  * @brief Renders a input widget.
  *
  *    @param inp Input widget to render.
@@ -1974,7 +1894,7 @@ static void toolkit_mouseEvent( SDL_Event* event )
       /* otherwise custom widgets can get stuck on mousedown */
       else if ((wgt->type==WIDGET_CUST) &&
             (event->type==SDL_MOUSEBUTTONUP) && wgt->dat.cst.mouse)
-            (*wgt->dat.cst.mouse)( w->id, event, x-wgt->x, y-wgt->y );
+         (*wgt->dat.cst.mouse)( w->id, event, x-wgt->x, y-wgt->y );
       else
          wgt->status = WIDGET_STATUS_NORMAL;
    }
