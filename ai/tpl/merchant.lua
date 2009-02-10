@@ -34,17 +34,19 @@ function control ()
 
       dist = ai.dist( target )
 
-      -- Increment distress
-      if mem.distressed == nil then
-         mem.distressed = 10 -- Distresses more quickly at first
-      else
-         mem.distressed = mem.distressed + 1
-      end
+      if mem.attacked then
+         -- Increment distress
+         if mem.distressed == nil then
+            mem.distressed = 10 -- Distresses more quickly at first
+         else
+            mem.distressed = mem.distressed + 1
+         end
 
-      -- Check to see if should send distress signal.
-      if mem.distressed > 10 then
-         sos()
-         mem.distressed = 1
+         -- Check to see if should send distress signal.
+         if mem.distressed > 10 then
+            sos()
+            mem.distressed = 1
+         end
       end
 
       -- See if another enemy is closer
@@ -86,6 +88,8 @@ end
 
 -- Required "attacked" function
 function attacked ( attacker )
+   mem.attacked = true
+
    if ai.taskname() ~= "runaway" then
       -- Sir Robin bravely ran away
       ai.pushtask(0, "runaway", attacker)
