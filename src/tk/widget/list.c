@@ -18,6 +18,7 @@ static int lst_mclick( Widget* lst, SDL_MouseButtonEvent *mclick );
 static int lst_mmove( Widget* lst, SDL_MouseMotionEvent *mmove );
 static void lst_cleanup( Widget* lst );
 
+static int lst_focus( Widget* lst, double bx, double by );
 static void lst_scroll( Widget* lst, int direction );
 
 
@@ -178,14 +179,37 @@ static int lst_key( Widget* lst, SDLKey key, SDLMod mod )
  */
 static int lst_mclick( Widget* lst, SDL_MouseButtonEvent *mclick )
 {
+   switch (mclick->button) {
+      case SDL_BUTTON_LEFT:
+         lst_focus( lst, mclick->x, mclick->y );
+         return 1;
+      case SDL_BUTTON_WHEELUP:
+         lst_scroll( lst, +5 );
+         return 1;
+      case SDL_BUTTON_WHEELDOWN:
+         lst_scroll( lst, -5 );
+         return 1;
+
+      default:
+         break;
+   }
+   return 0;
+}
+
+
+/**
+ * @brief Handles a mouse click focusing on widget.
+ *
+ *    @param lst Widget to focus.
+ *    @param bx Base x click.
+ *    @param by Base y click.
+ *    @return 1 if event was used.
+ */
+static int lst_focus( Widget* lst, double bx, double by )
+{
    int i;
-   double bx, by;
    double y, w;
    double scroll_pos;
-
-   /* Get click position. */
-   bx = mclick->x;
-   by = mclick->y;
 
    /* Get the actual width. */
    w = lst->w;
