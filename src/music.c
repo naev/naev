@@ -300,6 +300,10 @@ void music_load( const char* name )
    snprintf( filename, PATH_MAX, MUSIC_PREFIX"%s"MUSIC_SUFFIX, name); 
    music_name = strdup(name);
    music_rw = ndata_rwops( filename );
+   if (music_rw == NULL) {
+      WARN("Music '%s' not found.", filename);
+      return;
+   }
    music_music = Mix_LoadMUS_RW(music_rw);
    if (music_music == NULL)
       WARN("SDL_Mixer: %s", Mix_GetError());
