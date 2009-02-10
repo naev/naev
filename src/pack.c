@@ -88,11 +88,11 @@ struct Packcache_s {
  */
 #if HAS_POSIX
 #define READ(f,b,n)  if (read((f)->fd,(b),(n))!=(n)) { \
-   ERR("Fewer bytes read then expected"); \
+   WARN("Fewer bytes read then expected"); \
    return NULL; } /**< Helper define to check for errors. */
 #else /* not HAS_POSIX */
 #define READ(f,b,n)  if (fread((b),1,(n),(f)->fp)!=(n)) { \
-   ERR("Fewer bytes read then expected"); \
+   WARN("Fewer bytes read then expected"); \
    return NULL; } /**< Helper define to check for errors. */
 #endif /* HAS_POSIX */
 
@@ -148,7 +148,7 @@ Packcache_t* pack_openCache( const char* packfile )
     */
    cache = calloc(1, sizeof(Packcache_t));
    if (cache == NULL) {
-      ERR("Out of Memory.");
+      WARN("Out of Memory.");
       return NULL;
    }
 
@@ -163,7 +163,7 @@ Packcache_t* pack_openCache( const char* packfile )
    cache->fp = fopen( packfile, "rb" );
    if (cache->fp == NULL) {
 #endif /* HAS_POSIX */
-      ERR("Erroring opening %s: %s", packfile, strerror(errno));
+      WARN("Erroring opening %s: %s", packfile, strerror(errno));
       return NULL;
    }
 
@@ -172,7 +172,7 @@ Packcache_t* pack_openCache( const char* packfile )
     */
    READ( cache, buf, sizeof(magic));
    if (memcmp(buf, &magic, sizeof(magic))) {
-      ERR("File %s is not a valid packfile", packfile);
+      WARN("File %s is not a valid packfile", packfile);
       return NULL;
    }
 
@@ -271,7 +271,7 @@ Packfile_t* pack_openFromCache( Packcache_t* cache, const char* filename )
             fseek( file->fp, file->start, SEEK_SET );
             if (errno) {
 #endif /* HAS_POSIX */
-               ERR("Failure to seek to file start: %s", strerror(errno));
+               WARN("Failure to seek to file start: %s", strerror(errno));
                return NULL;
             }
             READ( file, &file->end, 4 );
@@ -304,7 +304,7 @@ static off_t getfilesize( const char* filename )
    if (!stat( filename, &file ))
       return file.st_size;
 
-   ERR( "Unable to get filesize of %s", filename );
+   WARN( "Unable to get filesize of %s", filename );
    return 0;
 #else  /* not HAS_POSIX */
    long size;
@@ -337,12 +337,12 @@ int pack_check( const char* filename )
 #if HAS_POSIX
    int fd = open( filename, O_RDONLY );
    if (fd == -1) {
-      ERR("Erroring opening %s: %s", filename, strerror(errno));
+      WARN("Erroring opening %s: %s", filename, strerror(errno));
       return -1;
    }
 
    if (read( fd, buf, sizeof(magic) ) != sizeof(magic)) {
-      ERR("Error reading magic number: %s", strerror(errno));
+      WARN("Error reading magic number: %s", strerror(errno));
       free(buf);
       return -1;
    }
@@ -352,13 +352,13 @@ int pack_check( const char* filename )
 #else /* not HAS_POSIX */
    FILE* file = fopen( filename, "rb" );
    if (file == NULL) {
-      ERR("Erroring opening '%s': %s", filename, strerror(errno));
+      WARN("Erroring opening '%s': %s", filename, strerror(errno));
       return -1;
    }
 
    buf = malloc(sizeof(magic));
    if (fread( buf, 1, sizeof(magic), file ) != sizeof(magic)) {
-      ERR("Error reading magic number: %s", strerror(errno));
+      WARN("Error reading magic number: %s", strerror(errno));
       free(buf);
       return -1;
    }
@@ -375,11 +375,11 @@ int pack_check( const char* filename )
 
 #if HAS_POSIX
 #define WRITE(b,n)    if (write(outfd,b,n)==-1) { \
-   ERR("Error writing to file: %s", strerror(errno)); \
+   WARN("Error writing to file: %s", strerror(errno)); \
    free(buf); return -1; } /**< Macro to help check for errors. */
 #else /* not HAS_POSIX */
 #define WRITE(b,n)    if (fwrite(b,1,n,outf)==0) { \
-   ERR("Error writing to file: %s", strerror(errno)); \
+   WARN("Error writing to file: %s", strerror(errno)); \
    free(buf); return -1; } /**< Macro to help check for errors. */
 #endif /* HAS_POSIX */
 /**
@@ -412,11 +412,11 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
 #else /* not HAS_POSIX */
       if (getfilesize(infiles[i]) == 0) {
 #endif /* HAS_POSIX */
-         ERR("File %s does not exist", infiles[i]);
+         WARN("File %s does not exist", infiles[i]);
          return -1;
       }
       if (strlen(infiles[i]) > PATH_MAX) {
-         ERR("Filename '%s' is too long, should be only %d characters",
+         WARN("Filename '%s' is too long, should be only %d characters",
                infiles[i], PATH_MAX );
          return -1;
       }
@@ -435,7 +435,7 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
    outf = fopen( outfile, "wb" );
    if (outf == NULL) {
 #endif /* HAS_POSIX */
-      ERR("Unable to open %s for writing", outfile);
+      WARN("Unable to open %s for writing", outfile);
       return -1;
    }
 
@@ -527,13 +527,13 @@ Packfile_t* pack_open( const char* packfile, const char* filename )
    file->fp = fopen( packfile, "rb" );
    if (file->fp == NULL) {
 #endif /* HAS_POSIX */
-      ERR("Erroring opening %s: %s", filename, strerror(errno));
+      WARN("Erroring opening %s: %s", filename, strerror(errno));
       return NULL;
    }
 
    READ( file, buf, sizeof(magic)); /* make sure it's a packfile */
    if (memcmp(buf, &magic, sizeof(magic))) {
-      ERR("File %s is not a valid packfile", filename);
+      WARN("File %s is not a valid packfile", filename);
       return NULL;
    }
 
@@ -563,7 +563,7 @@ Packfile_t* pack_open( const char* packfile, const char* filename )
       fseek( file->fp, file->start, SEEK_SET );
       if (errno) {
 #endif /* HAS_POSIX */
-         ERR("Failure to seek to file start: %s", strerror(errno));
+         WARN("Failure to seek to file start: %s", strerror(errno));
          return NULL;
       }
       READ( file, &file->end, 4 );
@@ -572,7 +572,7 @@ Packfile_t* pack_open( const char* packfile, const char* filename )
       file->end += file->start;
    }
    else {
-      ERR("File '%s' not found in packfile '%s'", filename, packfile);
+      WARN("File '%s' not found in packfile '%s'", filename, packfile);
       return NULL;
    }
 
@@ -603,7 +603,7 @@ ssize_t pack_read( Packfile_t* file, void* buf, size_t count )
 #else /* not HAS_POSIX */
    if ((bytes = fread( buf, 1, count, file->fp)) == -1) {
 #endif /* HAS_POSIX */
-      ERR("Error while reading file: %s", strerror(errno));
+      WARN("Error while reading file: %s", strerror(errno));
       return -1;
    }
    file->pos += bytes;
@@ -643,7 +643,7 @@ off_t pack_seek( Packfile_t* file, off_t offset, int whence)
          break;
 
       default:
-         ERR("Whence is not one of SEEK_SET, SEEK_CUR or SEEK_END");
+         WARN("Whence is not one of SEEK_SET, SEEK_CUR or SEEK_END");
          return -1;
    }
 
@@ -694,12 +694,12 @@ static void* pack_readfilePack( Packfile_t *file,
    size = file->end - file->start;
    buf = malloc( size + 1 );
    if (buf == NULL) {
-      ERR("Unable to allocate %d bytes of memory!", size+1);
+      WARN("Unable to allocate %d bytes of memory!", size+1);
       free(file);
       return NULL;
    }
    if ((bytes = pack_read( file, buf, size)) != size) {
-      ERR("Reading '%s' from packfile.  Expected %d bytes got %d bytes",
+      WARN("Reading '%s' from packfile.  Expected %d bytes got %d bytes",
             filename, size, bytes );
       free(buf);
       free(file);
@@ -730,7 +730,7 @@ static void* pack_readfilePack( Packfile_t *file,
 
    /* cleanup */
    if (pack_close( file ) == -1) {
-      ERR("Closing packfile");
+      WARN("Closing packfile");
       free(file);
       return NULL;
    }
@@ -761,7 +761,7 @@ void* pack_readfile( const char* packfile, const char* filename, uint32_t *files
    /* Open the packfile. */
    file = pack_open( packfile, filename );
    if (file == NULL) {
-      ERR("Opening packfile '%s'.", packfile);
+      WARN("Opening packfile '%s'.", packfile);
       return NULL;
    }
    DEBUG("Opened file '%s' from '%s'", filename, packfile );
@@ -798,13 +798,13 @@ char** pack_listfiles( const char* packfile, uint32_t* nfiles )
    file.fp = fopen( packfile, "rb" );
    if (file.fp == NULL) {
 #endif /* HAS_POSIX */
-      ERR("Erroring opening %s: %s", packfile, strerror(errno));
+      WARN("Erroring opening %s: %s", packfile, strerror(errno));
       return NULL;
    }
 
    READ( &file, buf, sizeof(magic)); /* make sure it's a packfile */
    if (memcmp(buf, &magic, sizeof(magic))) {
-      ERR("File %s is not a valid packfile", packfile);
+      WARN("File %s is not a valid packfile", packfile);
       return NULL;
    }
 
@@ -837,8 +837,10 @@ void* pack_readfileCached( Packcache_t* cache, const char* filename, uint32_t *f
    Packfile_t *file;
 
    file = pack_openFromCache( cache, filename );
-   if (file == NULL)
-      ERR("Unable to create packfile from packcache.");
+   if (file == NULL) {
+      WARN("Unable to create packfile from packcache.");
+      return NULL;
+   }
    return pack_readfilePack( file, filename, filesize );
 }
 
