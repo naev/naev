@@ -920,7 +920,7 @@ static void toolkit_mouseEvent( SDL_Event* event )
    int i;
    double x,y;
    Window *w;
-   Widget *wgt, *wgt_func;
+   Widget *wgt;
 
    /* Get the window. */
    w = toolkit_getActiveWindow();
@@ -956,11 +956,11 @@ static void toolkit_mouseEvent( SDL_Event* event )
    else if ((event->type==SDL_MOUSEBUTTONDOWN) || (event->type==SDL_MOUSEBUTTONUP)) {
       event->button.x = x;
       event->button.y = y;
-      event->motion.yrel = ((double)event->motion.yrel * gl_screen.mxscale);
+      /* Don't forget y has to be inverted. */
+      event->motion.yrel = -((double)event->motion.yrel * gl_screen.mxscale);
       event->motion.xrel = ((double)event->motion.xrel * gl_screen.myscale);
    }
 
-   wgt_func = NULL;
    for (i=0; i<w->nwidgets; i++) {
       wgt = &w->widgets[i];
       /* widget in range? */
@@ -973,8 +973,10 @@ static void toolkit_mouseEvent( SDL_Event* event )
             switch (event->type) {
                case SDL_MOUSEMOTION:
                   /* Change the status of the widget if mouse isn't down. */
-                  if (!(event->motion.state & SDL_BUTTON(1)))
+                  /*
+                  if (!(event->motion.state & SDL_BUTTON(SDL_BUTTON_LEFT)))
                      wgt->status = WIDGET_STATUS_MOUSEOVER;
+                     */
 
                   /* Do a coordinate change for the event. */
                   event->motion.x -= wgt->x;
@@ -1026,7 +1028,7 @@ static void toolkit_mouseEvent( SDL_Event* event )
                                  "doesn't have a function trigger",
                                  wgt->name, w->name );
                         else {
-                           (*wgt_func->dat.btn.fptr)(w->id, wgt_func->name);
+                           (*wgt->dat.btn.fptr)(w->id, wgt->name);
                            return;
                         }
                      }

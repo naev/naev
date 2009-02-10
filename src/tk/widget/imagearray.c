@@ -253,7 +253,7 @@ static int iar_mmove( Widget* iar, SDL_MouseMotionEvent *mmove )
    double hmax;
 
    /* Only handle button 1. */
-   if (!(mmove->state & SDL_BUTTON(1)))
+   if (!(mmove->state & SDL_BUTTON(SDL_BUTTON_LEFT)))
       return 0;
 
    if (iar->status == WIDGET_STATUS_SCROLLING) {
@@ -268,7 +268,7 @@ static int iar_mmove( Widget* iar, SDL_MouseMotionEvent *mmove )
 
       hmax = h * (yelem - (int)(iar->h / h));
 
-      iar->dat.iar.pos -= mmove->yrel * hmax / (iar->h - 30.);
+      iar->dat.iar.pos += mmove->yrel * hmax / (iar->h - 30.);
 
       /* Does boundry checks. */
       iar_scroll(iar, 0);
@@ -335,7 +335,9 @@ static void iar_scroll( Widget* iar, int direction )
    iar->dat.iar.pos -= direction * h;
 
    /* Boundry check. */
+   DEBUG("pos: %f, hmax: %f", iar->dat.iar.pos, hmax);
    iar->dat.iar.pos = CLAMP( 0., hmax, iar->dat.iar.pos );
+   DEBUG("clamped: %f", iar->dat.iar.pos);
    if (iar->dat.iar.fptr)
       (*iar->dat.iar.fptr)(wdw->id,iar->name);
 }
@@ -371,8 +373,6 @@ static void iar_focus( Widget* iar, double bx, double by )
    xelem = (int)((iar->w - 10.) / w);
    xspace = (((int)iar->w - 10) % (int)w) / (xelem + 1);
    yelem = (int)iar->dat.iar.nelements / xelem + 1;
-
-   DEBUG("%f < %f", bx, iar->w - 10.);
 
    /* Normal click. */
    if (bx < iar->w - 10.) {
