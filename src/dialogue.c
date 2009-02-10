@@ -422,7 +422,7 @@ static int toolkit_loop (void)
    SDL_Event event;
 
    loop_done = 0;
-   while (!loop_done && toolkit) {
+   while (!loop_done && toolkit_isOpen()) {
       /* Loop first so exit condition is checked before next iteration. */
       main_loop();
 

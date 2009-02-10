@@ -717,7 +717,7 @@ void player_render( double dt )
     */
    if (player_isFlag(PLAYER_DESTROYED)) {
       player_timer -= dt;
-      if (!toolkit && !player_isFlag(PLAYER_CREATING) &&
+      if (!toolkit_isOpen() && !player_isFlag(PLAYER_CREATING) &&
             (player_timer < 0.)) {
          menu_death();
       }
@@ -1271,7 +1271,7 @@ void player_afterburn (void)
       sound_stopGroup( PLAYER_ENGINE_CHANNEL );
       sound_playGroup( PLAYER_ENGINE_CHANNEL, 
             player->afterburner->outfit->u.afb.sound, 0 );
-      if (toolkit || paused)
+      if (toolkit_isOpen() || paused)
          player_soundPause();
    }
 }
@@ -1306,7 +1306,7 @@ void player_accel( double acc )
    sound_stopGroup( PLAYER_ENGINE_CHANNEL );
    sound_playGroup( PLAYER_ENGINE_CHANNEL,
          player->ship->sound, 0 );
-   if (toolkit || paused)
+   if (toolkit_isOpen() || paused)
       player_soundPause();
 }
 

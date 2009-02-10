@@ -433,20 +433,28 @@ void unload_all (void)
  */
 void main_loop (void)
 {
+   int tk;
+
+   /* Check to see if toolkit is open. */
+   tk = toolkit_isOpen();
+
+   /* Clear buffer. */
    glClear(GL_COLOR_BUFFER_BIT);
 
    fps_control(); /* everyone loves fps control */
 
    sound_update(); /* Update sounds. */
-   if (toolkit) toolkit_update(); /* to simulate key repetition */
+   if (tk) toolkit_update(); /* to simulate key repetition */
    if (!menu_isOpen(MENU_MAIN)) {
       if (!paused) update_all(); /* update game */
       render_all();
    }
-   if (toolkit) toolkit_render();
+   /* Toolkit is rendered on top. */
+   if (tk) toolkit_render();
 
    gl_checkErr(); /* check error every loop */
 
+   /* Draw buffer. */
    SDL_GL_SwapBuffers();
 }
 

@@ -30,7 +30,7 @@
 static unsigned int genwid = 0; /**< Generates unique window ids, > 0 */
 
 
-int toolkit = 0; /**< 1 if toolkit is in use, 0 else. */
+static int toolkit_open = 0; /**< 1 if toolkit is in use, 0 else. */
 
 /* 
  * window stuff
@@ -68,6 +68,17 @@ static int toolkit_isFocusable( Widget *wgt );
 static Widget* toolkit_getFocus( Window *wdw );
 /* render */
 static void window_render( Window* w );
+
+
+/**
+ * @brief Checks to see if the toolkit is open.
+ *
+ *    @return 1 if the toolkit is open.
+ */
+int toolkit_isOpen (void)
+{
+   return !!toolkit_open;
+}
 
 
 /**
@@ -362,9 +373,9 @@ unsigned int window_create( const char* name,
 
    nwindows++;
    
-   if (toolkit==0) { /* toolkit is on */
+   if (toolkit_open==0) { /* toolkit is on */
       SDL_ShowCursor(SDL_ENABLE);
-      toolkit = 1; /* enable toolkit */
+      toolkit_open = 1; /* enable toolkit */
       pause_game();
       gl_defViewport(); /* Reset the default viewport */
    }
@@ -482,7 +493,7 @@ void window_destroy( const unsigned int wid )
    nwindows--;
    if (nwindows==0) { /* no windows left */
       SDL_ShowCursor(SDL_DISABLE);
-      toolkit = 0; /* disable toolkit */
+      toolkit_open = 0; /* disable toolkit */
       if (paused) unpause_game();
    }
 

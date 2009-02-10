@@ -417,7 +417,7 @@ const char* input_getKeybindDescription( char *keybind )
 
 
 #define KEY(s)    (strcmp(input_keybinds[keynum]->name,s)==0) /**< Shortcut for ease. */
-#define INGAME()  (!toolkit && !paused) /**< Makes sure player is in game. */
+#define INGAME()  (!toolkit_isOpen() && !paused) /**< Makes sure player is in game. */
 #define NOHYP()   \
 (player && !pilot_isFlag(player,PILOT_HYP_PREP) &&\
 !pilot_isFlag(player,PILOT_HYP_BEGIN) &&\
@@ -660,7 +660,7 @@ static void input_key( int keynum, double value, double kabs )
    /* pause the games */
    } else if (KEY("pause") && NOHYP()) {
       if (value==KEY_PRESS) {
-         if (!toolkit) {
+         if (!toolkit_isOpen()) {
             if (paused) unpause_game();
             else pause_game();
          }
@@ -774,7 +774,7 @@ static void input_keyevent( const int event, SDLKey key, const SDLMod mod )
  */
 void input_handle( SDL_Event* event )
 {
-   if (toolkit) /* toolkit handled seperately completely */
+   if (toolkit_isOpen()) /* toolkit handled seperately completely */
       if (toolkit_input(event))
          return; /* we don't process it if toolkit grabs it */
 

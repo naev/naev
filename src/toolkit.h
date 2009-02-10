@@ -16,7 +16,7 @@
 #include "font.h"
 
 
-extern int toolkit;
+int toolkit_isOpen (void);
 
 
 /*
