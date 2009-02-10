@@ -220,11 +220,11 @@ static int iar_key( Widget* iar, SDLKey key, SDLMod mod )
  */
 static int iar_mclick( Widget* iar, SDL_MouseButtonEvent *mclick )
 {
-   /* Focus the widget. */
-   iar_focus( iar, mclick->x, mclick->y );
-
    /* Handle different mouse clicks. */
    switch (mclick->button) {
+      case SDL_BUTTON_LEFT:
+         iar_focus( iar, mclick->x, mclick->y );
+         return 1;
       case SDL_BUTTON_WHEELUP:
          iar_scroll( iar, +1 );
          return 1;
@@ -335,9 +335,7 @@ static void iar_scroll( Widget* iar, int direction )
    iar->dat.iar.pos -= direction * h;
 
    /* Boundry check. */
-   DEBUG("pos: %f, hmax: %f", iar->dat.iar.pos, hmax);
    iar->dat.iar.pos = CLAMP( 0., hmax, iar->dat.iar.pos );
-   DEBUG("clamped: %f", iar->dat.iar.pos);
    if (iar->dat.iar.fptr)
       (*iar->dat.iar.fptr)(wdw->id,iar->name);
 }
