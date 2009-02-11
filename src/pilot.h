@@ -239,6 +239,7 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       const DamageType dtype, const double damage );
 double pilot_face( Pilot* p, const double dir );
 void pilot_hyperspaceAbort( Pilot* p );
+void pilot_clearTimers( Pilot *pilot );
 /* special outfit stuff. */
 int pilot_getMount( Pilot *p, int id, Vector2d *v );
 void pilot_switchSecondary( Pilot* p, int i );

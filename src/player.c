@@ -1545,7 +1545,8 @@ void player_dead (void)
  */
 void player_destroyed (void)
 {
-   if (player_isFlag(PLAYER_DESTROYED)) return;
+   if (player_isFlag(PLAYER_DESTROYED))
+      return;
 
    vectcpy( &player_cam, &player->solid->pos );
    gl_bindCamera( &player_cam );

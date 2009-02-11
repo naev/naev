@@ -968,7 +968,8 @@ void pilot_dead( Pilot* p )
    if (pilot_isFlag(p,PILOT_DEAD)) return; /* he's already dead */
 
    /* basically just set timers */
-   if (p->id==PLAYER_ID) player_dead();
+   if (p->id==PLAYER_ID)
+      player_dead();
    p->timer[0] = 0.; /* no need for AI anymore */
    p->ptimer = 1. + sqrt(10*p->armour_max*p->shield_max) / 1000.;
    p->timer[1] = 0.; /* explosion timer */
@@ -2405,7 +2406,7 @@ void pilots_clean (void)
 {
    int i;
    for (i=0; i < pilot_nstack; i++)
-      /* we'll set player at priveleged position */
+      /* we'll set player at privileged position */
       if ((player != NULL) && (pilot_stack[i] == player)) {
          pilot_stack[0] = player;
          pilot_stack[0]->lockons = 0; /* Clear lockons. */
@@ -2413,8 +2414,10 @@ void pilots_clean (void)
       else /* rest get killed */
          pilot_free(pilot_stack[i]);
 
-   if (player != NULL) /* set stack to 1 if pilot exists */
+   if (player != NULL) { /* set stack to 1 if pilot exists */
       pilot_nstack = 1;
+      pilot_clearTimers( player ); /* Reset the player's timers. */
+   }
 }
 
 
@@ -2505,3 +2508,23 @@ void pilots_render (void)
 }
 
 
+/**
+ * @brief Clears the pilot's timers.
+ *
+ *    @param pilot Pilot to clear timers of.
+ */
+void pilot_clearTimers( Pilot *pilot )
+{
+   int i;
+   PilotOutfit *o;
+
+   pilot->ptimer = 0.;
+   pilot->tcontrol = 0.;
+   for (i=0; i<MAX_AI_TIMERS; i++)
+      pilot->timer[i] = 0.;
+   for (i=0; i<pilot->noutfits; i++) {
+      o = &pilot->outfits[i];
+      if (o->timer > 0.)
+         o->timer = 0.;
+   }
+}
