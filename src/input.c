@@ -422,7 +422,7 @@ const char* input_getKeybindDescription( char *keybind )
 (player && !pilot_isFlag(player,PILOT_HYP_PREP) &&\
 !pilot_isFlag(player,PILOT_HYP_BEGIN) &&\
 !pilot_isFlag(player,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
-#define NODEAD()  (player) /**< Player isn't dead. */
+#define NODEAD()  (player && !pilot_isFlag(player,PILOT_DEAD)) /**< Player isn't dead. */
 #define NOLAND()  (!landed) /**< Player isn't landed. */
 /**
  * @brief Runs the input command.
@@ -465,7 +465,7 @@ static void input_key( int keynum, double value, double kabs )
 
       if (value==KEY_PRESS) input_accelLast = t;
    /* Afterburning. */
-   } else if (KEY("afterburn") && INGAME() && NOHYP()) {
+   } else if (KEY("afterburn") && INGAME() && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS)
          player_afterburn();
       else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_AFTERBURNER))
@@ -525,7 +525,7 @@ static void input_key( int keynum, double value, double kabs )
     * combat
     */
    /* shooting primary weapon */
-   } else if (KEY("primary")) {
+   } else if (KEY("primary") && NODEAD()) {
       if (value==KEY_PRESS) { 
          player_abortAutonav(NULL);
          player_setFlag(PLAYER_PRIMARY);
@@ -551,7 +551,7 @@ static void input_key( int keynum, double value, double kabs )
          player_rmFlag(PLAYER_FACE);
 
    /* board them ships */
-   } else if (KEY("board") && INGAME() && NOHYP()) {
+   } else if (KEY("board") && INGAME() && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS) {
          player_abortAutonav(NULL);
          player_board();
@@ -593,7 +593,7 @@ static void input_key( int keynum, double value, double kabs )
     * secondary weapons
     */
    /* shooting secondary weapon */
-   } else if (KEY("secondary") && NOHYP()) {
+   } else if (KEY("secondary") && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS) {
          player_abortAutonav(NULL);
          player_setFlag(PLAYER_SECONDARY);
@@ -602,22 +602,22 @@ static void input_key( int keynum, double value, double kabs )
          player_rmFlag(PLAYER_SECONDARY);
 
    /* selecting secondary weapon */
-   } else if (KEY("secondary_next") && INGAME()) {
+   } else if (KEY("secondary_next") && INGAME() && NODEAD()) {
       if (value==KEY_PRESS) player_secondaryNext();
-   } else if (KEY("secondary_prev") && INGAME()) {
+   } else if (KEY("secondary_prev") && INGAME() && NODEAD()) {
       if (value==KEY_PRESS) player_secondaryPrev();
 
 
    /*                                                                     
     * space
     */
-   } else if (KEY("autonav") && INGAME() && NOHYP()) {
+   } else if (KEY("autonav") && INGAME() && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS) player_startAutonav();
    /* target planet (cycles like target) */
-   } else if (KEY("target_planet") && INGAME() && NOHYP()) {
+   } else if (KEY("target_planet") && INGAME() && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS) player_targetPlanet();
    /* target nearest planet or attempt to land */
-   } else if (KEY("land") && INGAME() && NOHYP()) {
+   } else if (KEY("land") && INGAME() && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS) {
          player_abortAutonav(NULL);
          player_land();
@@ -639,7 +639,7 @@ static void input_key( int keynum, double value, double kabs )
    /*
     * Communication.
     */
-   } else if (KEY("hail") && INGAME() && NOHYP()) {
+   } else if (KEY("hail") && INGAME() && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS) {
          player_hail();
       }
@@ -649,10 +649,10 @@ static void input_key( int keynum, double value, double kabs )
     * misc
     */
    /* zooming in */
-   } else if (KEY("mapzoomin") && INGAME()) {
+   } else if (KEY("mapzoomin") && INGAME() && NODEAD()) {
       if (value==KEY_PRESS) gui_setRadarRel(1);
    /* zooming out */
-   } else if (KEY("mapzoomout") && INGAME()) {
+   } else if (KEY("mapzoomout") && INGAME() && NODEAD()) {
       if (value==KEY_PRESS) gui_setRadarRel(-1);
    /* take a screenshot */
    } else if (KEY("screenshot")) {
@@ -672,11 +672,11 @@ static void input_key( int keynum, double value, double kabs )
          else pause_setSpeed(1.);
       }
    /* opens a small menu */
-   } else if (KEY("menu")) {
+   } else if (KEY("menu") && NODEAD()) {
       if (value==KEY_PRESS) menu_small();
    
    /* shows pilot information */
-   } else if (KEY("info") && NOHYP()) {
+   } else if (KEY("info") && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS) menu_info();
    }
 }
