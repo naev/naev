@@ -194,7 +194,7 @@ Packcache_t* pack_openCache( const char* packfile )
 
       cache->index[i] = strdup(buf);
       READ( cache, &cache->start[i], 4 );
-      DEBUG("'%s' found at %d", filename, cache->start[i]);
+      DEBUG("'%s' found at %d", cache->index[i], cache->start[i]);
    }
 
    /*
@@ -275,9 +275,11 @@ Packfile_t* pack_openFromCache( Packcache_t* cache, const char* filename )
                return NULL;
             }
             READ( file, &file->end, 4 );
-            DEBUG("\t%d bytes", file->end);
-            file->pos = file->start;
-            file->end += file->start;
+            file->start += 4;
+            file->pos    = file->start;
+            file->end   += file->start;
+            DEBUG("Opened '%s' from cache from %u to %u (%u long)", filename,
+                  file->start, file->end, file->end - file->start);
          }
 
          return file;
@@ -422,7 +424,7 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
       }
       namesize += strlen(infiles[i]);
    }
-   indexsize = (sizeof(magic)+ 4 + /* magic number and number of files */
+   indexsize = (sizeof(magic) + 4 + /* magic number and number of files */
          namesize + /* total length of file names */
          (1+4)*nfiles); /* file size and extra end of string char '\0' */
    DEBUG("Index size is %d", indexsize );
@@ -453,7 +455,7 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
    pointer = indexsize;
    for (i=0; i<nfiles; i++) {
       WRITE( infiles[i], strlen(infiles[i]) );
-      DEBUG("Fie '%s' at %d", infiles[i], pointer);
+      DEBUG("File '%s' at %d", infiles[i], pointer);
       WRITE( &b, 1 );
       WRITE( &pointer, 4 );
       pointer += 4 + getfilesize( infiles[i] ) + 16; /* set pointer to be next file pos */
@@ -568,8 +570,9 @@ Packfile_t* pack_open( const char* packfile, const char* filename )
       }
       READ( file, &file->end, 4 );
       DEBUG("\t%d bytes", file->end);
-      file->pos = file->start;
-      file->end += file->start;
+      file->start += 4;
+      file->pos    = file->start;
+      file->end   += file->start;
    }
    else {
       WARN("File '%s' not found in packfile '%s'", filename, packfile);
@@ -596,7 +599,8 @@ ssize_t pack_read( Packfile_t* file, void* buf, size_t count )
 
    if ((file->pos + count) > file->end)
       count = file->end - file->pos; /* can't go past end */
-   if (count == 0) return 0;
+   if (count == 0)
+      return 0;
 
 #if HAS_POSIX
    if ((bytes = read( file->fd, buf, count )) == -1) {
@@ -607,6 +611,10 @@ ssize_t pack_read( Packfile_t* file, void* buf, size_t count )
       return -1;
    }
    file->pos += bytes;
+
+   DEBUG("Read %d bytes from packfile: offset = %u", bytes, file->pos);
+   DEBUG("start: %u, pos: %u, end: %u -> %d", file->start, file->pos, file->end,
+         bytes );
 
    return bytes;
 }
@@ -626,7 +634,7 @@ off_t pack_seek( Packfile_t* file, off_t offset, int whence)
 {
    uint32_t base, target, ret;
 
-   DEBUG("attempting to seek offset: %d, whence: %d", offset, whence);
+   DEBUG("attempting to seek offset: %ld, whence: %d", offset, whence);
 
    /* Find where offset is relative to. */
    switch (whence) {
@@ -662,9 +670,15 @@ off_t pack_seek( Packfile_t* file, off_t offset, int whence)
    ret = fseek( file->fp, target, SEEK_SET );
    if (ret != 0)
       return -1;
+   ret = offset + file->start; /* fseek returns 0. */
 #endif /* HAS_POSIX */
 
-   return ret - file->start;
+   /* Set the position in the file. */
+   file->pos = ret;
+   DEBUG("start: %u, pos: %u, end: %u -> %u", file->start, file->pos, file->end,
+         file->pos - file->start );
+
+   return file->pos - file->start;
 }
 
 
@@ -734,7 +748,7 @@ static void* pack_readfilePack( Packfile_t *file,
       free(file);
       return NULL;
    }
-   DEBUG("Closed '%s' in '%s'", filename, packfile );
+   DEBUG("Closed '%s' in packfile", filename );
 
    if (filesize)
       *filesize = size;
@@ -879,6 +893,8 @@ int pack_close( Packfile_t* file )
    /* Free memory. */
    free(file);
 
+   DEBUG("Closing packfile.");
+
    return (i) ? -1 : 0 ;
 }
 
@@ -886,29 +902,31 @@ int pack_close( Packfile_t* file )
 
 static int packrw_seek( SDL_RWops *rw, int offset, int whence )
 {
+   int wh;
    Packfile_t *packfile;
    packfile = rw->hidden.unknown.data1;
+
+   if (whence == RW_SEEK_SET)
+      wh = SEEK_SET;
+   else if (whence == RW_SEEK_CUR)
+      wh = SEEK_CUR;
+   else if (whence == RW_SEEK_END)
+      wh = SEEK_END;
+   else
+      return -1;
 
    return pack_seek( packfile, offset, whence );
 }
 static int packrw_read( SDL_RWops *rw, void *ptr, int size, int maxnum )
 {
-   int i;
    ssize_t ret;
-   char *buf;
    Packfile_t *packfile;
    packfile = rw->hidden.unknown.data1;
 
-   buf = ptr;
-
    /* Read the data. */
-   for (i=0; i<maxnum; i++) {
-      ret = pack_read( packfile, &buf[i*size], size );
-      if (ret != size)
-         break;
-   }
+   ret = pack_read( packfile, ptr, size*maxnum );
 
-   return i;
+   return ret / size;
 }
 static int packrw_write( SDL_RWops *rw, const void *ptr, int size, int num )
 {
@@ -945,8 +963,8 @@ static SDL_RWops *pack_rwopsRaw( Packfile_t *packfile )
    }
 
    /* Set the functions. */
-   rw->seek = packrw_seek;
-   rw->read = packrw_read;
+   rw->seek  = packrw_seek;
+   rw->read  = packrw_read;
    rw->write = packrw_write;
    rw->close = packrw_close;
 
