@@ -16,7 +16,6 @@
    <location>Computer</location>
    <faction>Independent</faction>
    <faction>Empire</faction>
-   <faction>Soromid</faction>
    <faction>Dvaered</faction>
    <faction>Frontier</faction>
    <faction>Goddard</faction>
@@ -40,7 +39,6 @@
    <chance>350</chance>
    <location>Computer</location>
    <faction>Empire</faction>
-   <faction>Soromid</faction>
   </avail>
  </mission>
  <mission name="Empire Shipping 1">
@@ -182,7 +180,6 @@
    <location>Bar</location>
    <faction>Independent</faction>
    <faction>Empire</faction>
-   <faction>Soromid</faction>
    <faction>Dvaered</faction>
    <faction>Frontier</faction>
    <faction>Goddard</faction>

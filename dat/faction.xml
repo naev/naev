@@ -34,7 +34,6 @@
   <allies>
    <ally>Independent</ally>
    <ally>Empire</ally>
-   <ally>Soromid</ally>
    <ally>Frontier</ally>
   </allies>
   <enemies>
@@ -51,9 +50,11 @@
    <enemy>Dvaered</enemy>
    <enemy>Za'lek</enemy>
    <enemy>Collective</enemy>
-   <enemy>Soromid</enemy>
    <enemy>Sirius</enemy>
    <enemy>Frontier</enemy>
+   <enemy>Trader</enemy>
+   <enemy>Independent</enemy>
+   <enemy>Goddard</enemy>
   </enemies>
  </faction>
  <faction name="Empire">
@@ -61,10 +62,10 @@
   <player>1</player>
   <allies>
    <ally>Dvaered</ally>
-   <ally>Soromid</ally>
    <ally>Za'lek</ally>
    <ally>Trader</ally>
    <ally>Sirius</ally>
+   <ally>Goddard</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
@@ -79,11 +80,13 @@
    <enemy>Empire</enemy>
    <enemy>Dvaered</enemy>
    <enemy>Za'lek</enemy>
-   <enemy>Soromid</enemy>
    <enemy>Pirate</enemy>
    <enemy>FLF</enemy>
    <enemy>Sirius</enemy>
    <enemy>Frontier</enemy>
+   <enemy>Trader</enemy>
+   <enemy>Independent</enemy>
+   <enemy>Goddard</enemy>
   </enemies>
  </faction>
  <faction name="FLF">
@@ -92,9 +95,8 @@
   <enemies>
    <enemy>Empire</enemy>
    <enemy>Dvaered</enemy>
-   <enemy>Za'lek</enemy>
    <enemy>Collective</enemy>
-   <enemy>Soromid</enemy>
+   <enemy>Trader</enemy>
   </enemies>
  </faction>
  <faction name="Dvaered">
@@ -136,26 +138,12 @@
    <enemy>FLF</enemy>
   </enemies>
  </faction>
- <faction name="Soromid">
-  <longname>House Soromid</longname>
-  <player>3</player>
-  <allies>
-   <ally>Empire</ally>
-   <ally>Trader</ally>
-  </allies>
-  <enemies>
-   <enemy>Pirate</enemy>
-   <enemy>FLF</enemy>
-   <enemy>Collective</enemy>
-  </enemies>
- </faction>
  <faction name="Goddard">
   <logo>goddard</logo>
   <longname>House Goddard</longname>
   <player>2</player>
   <allies>
    <ally>Empire</ally>
-   <ally>Trader</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
