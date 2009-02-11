@@ -8,12 +8,15 @@ aggressive = true
 
 function create ()
 
+   -- Not too many credits.
    ai.setcredits( rnd.int(ai.shipprice()/300, ai.shipprice()/70) )
 
+   -- Like to annoy the player
    if rnd.int(0,2)==0 then
       ai.broadcast("The Empire is watching you.")
    end
 
+   -- See if can be bribed
    if rnd.int() > 0.7 then
       mem.bribe = math.sqrt( ai.shipmass() ) * (500. * rnd.int() + 1750.)
       mem.bribe_prompt = string.format("\"For some %d credits I could forget about seeing you.\"", mem.bribe )
@@ -26,6 +29,7 @@ function create ()
       end
    end
 
+   -- Choose how to attack
    attack_choose()
 end
 

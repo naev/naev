@@ -354,6 +354,16 @@ void ai_setPilot( Pilot *p )
 static void ai_run( lua_State *L, const char *funcname )
 {
    lua_getglobal(L, funcname);
+
+#ifdef DEBUGGING
+   if (lua_isnil(L, -1)) {
+      WARN("Pilot '%s' ai -> '%s': attempting to run non-existant function",
+            cur_pilot->name, funcname );
+      lua_pop(L,1);
+      return;
+   }
+#endif /* DEBUGGING */
+
    if (lua_pcall(L, 0, 0, 0)) /* error has occured */
       WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, funcname, lua_tostring(L,-1));
 }
@@ -590,10 +600,10 @@ void ai_think( Pilot* pilot )
    L = cur_pilot->ai->L; /* set the AI profile to the current pilot's */
 
    /* clean up some variables */
-   pilot_acc = 0;
-   pilot_turn = 0.;
-   pilot_flags = 0;
-   pilot_firemode = 0;
+   pilot_acc         = 0;
+   pilot_turn        = 0.;
+   pilot_flags       = 0;
+   pilot_firemode    = 0;
    cur_pilot->target = cur_pilot->id;
 
    /* control function if pilot is idle or tick is up */
@@ -673,7 +683,8 @@ void ai_getDistress( Pilot* p, const Pilot* distressed )
 
    /* Run the function. */
    lua_pushnumber(L, distressed->id);
-   if (lua_pcall(L, 1, 0, 0))
+   lua_pushnumber(L, distressed->target);
+   if (lua_pcall(L, 2, 0, 0))
       WARN("Pilot '%s' ai -> 'distress': %s", cur_pilot->name, lua_tostring(L,-1));
 }
 

@@ -470,7 +470,6 @@ void pilot_distress( Pilot *p, const char *msg )
 
    /* Get the target to see if it's the player. */
    t = pilot_get(p->target);
-      return;
 
    /* Now proceed to see if player should incur faction loss because
     * of the broadcast signal. */
@@ -479,26 +478,27 @@ void pilot_distress( Pilot *p, const char *msg )
    r = 0;
 
    /* Check if planet is in range. */
-   for (i=0; i<cur_system->nplanets; i++)
+   for (i=0; i<cur_system->nplanets; i++) {
       if (pilot_inRangePlanet(p, cur_system->planets[i]) &&
             !areEnemies(p->faction, cur_system->planets[i]->faction)) {
          r = 1;
          break;
       }
+   }
 
    /* Now we must check to see if a pilot is in range. */
-   if (!r) {
-      for (i=0; i<pilot_nstack; i++)
-         if ((pilot_stack[i]->id != p->id) &&
-               pilot_inRange(p, pilot_stack[i])) {
+   for (i=0; i<pilot_nstack; i++) {
+      if ((pilot_stack[i]->id != p->id) &&
+            pilot_inRange(p, pilot_stack[i])) {
 
-            /* Send AI the distress signal. */
+         /* Send AI the distress signal. */
+         if (pilot_stack[i]->ai != NULL)
             ai_getDistress( pilot_stack[i], p );
 
-            /* Check if should take faction hit. */
-            if (!areEnemies(p->faction, pilot_stack[i]->faction))
-               r = 1;
-         }
+         /* Check if should take faction hit. */
+         if (!areEnemies(p->faction, pilot_stack[i]->faction))
+            r = 1;
+      }
    }
 
    /* Modify faction, about 1 for a llama, 4.2 for a hawking */

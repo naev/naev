@@ -137,3 +137,42 @@ function taunt ( target, offensive )
    -- Empty stub
 end
 
+
+-- Handle distress signals
+function distress ( pilot, attacker )
+
+   -- Must be aggressive
+   if not aggressive then
+      return
+   end
+
+   -- Make sure pilot is setting his target properly
+   if pilot == attacker then
+      return
+   end
+
+   -- If ally, engage offender
+   if ai.isally(pilot) then
+      t = attacker
+   -- If enemy, engage distressed pilot
+   elseif ai.isenemy(pilot) then
+      t = pilot
+   -- Else ignore
+   else
+      return
+   end
+
+   task = ai.taskname()
+   -- If not attacking nor fleeing, begin attacking
+   if task ~= "attack" and task ~= "runaway" then
+      ai.pushtask( 0, "attack", t )
+   -- We're sort of busy
+   elseif task == "attack" then
+      target = ai.target()
+
+      if ai.dist(target) > ai.dist(t) then
+         ai.pushtask( 0, "attack", t )
+      end
+   end
+end
+
