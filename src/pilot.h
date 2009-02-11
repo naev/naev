@@ -73,6 +73,7 @@
 #define PILOT_HYP_END      (1<<18) /**< Pilot is exiting hyperspace. */
 #define PILOT_BOARDED      (1<<20) /**< Pilot has been boarded already. */
 #define PILOT_BRIBED       (1<<21) /**< Pilot has been bribed already. */
+#define PILOT_DISTRESSED   (1<<22) /**< Pilot has distressed once already. */
 #define PILOT_DISABLED     (1<<26) /**< Pilot is disabled. */
 #define PILOT_DEAD         (1<<27) /**< Pilot is in it's dying throes */
 #define PILOT_DEATH_SOUND  (1<<28) /**< Pilot just did death explosion. */

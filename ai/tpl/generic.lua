@@ -13,6 +13,8 @@ shield_return = 0 -- At which shield to return to combat
 aggressive = false -- Should pilot actively attack enemies?
 safe_distance = 300 -- Safe distance from enemies to jump
 land_planet = true -- Should land on planets?
+distressrate = 3 -- Number of ticks before calling for help
+distressmsg = nil -- Message when calling for help
 
 
 -- Required control rate
@@ -40,6 +42,7 @@ function control ()
       -- Needs to have a target
       if target == nil then
          ai.poptask()
+         return
       end
 
       -- Runaway if needed
@@ -54,9 +57,19 @@ function control ()
          attack_think()
       end
 
+      -- Handle distress
+      gen_distress()
+
    -- Pilot is running away
    elseif task == "runaway" then
       target = ai.target()
+
+      -- Needs to have a target
+      if target == nil then
+         ai.poptask()
+         return
+      end
+
       dist = ai.dist( target )
 
       -- Should return to combat?
@@ -68,6 +81,9 @@ function control ()
       elseif dist > safe_distance then
          ai.hyperspace()
       end
+
+      -- Handle distress
+      gen_distress()
 
    -- Enemy sighted, handled after running away
    elseif enemy ~= nil and aggressive then
@@ -85,6 +101,9 @@ end
 function attacked ( attacker )
    task = ai.taskname()
    target = ai.target()
+
+   -- Notify that pilot has been attacked before
+   mem.attacked = true
 
    if task ~= "attack" and task ~= "runaway" then
 
@@ -174,5 +193,34 @@ function distress ( pilot, attacker )
          ai.pushtask( 0, "attack", t )
       end
    end
+end
+
+
+-- Handles generating distress messages
+function gen_distress ( target )
+
+   -- Must have a valid distress rate
+   if distressrate <= 0 then
+      return
+   end
+
+   -- Only generate distress if have been attacked before
+   if not mem.attacked then
+      return
+   end
+
+   -- Update distres counter
+   if mem.distressed == nil then
+      mem.distressed = 1
+   else
+      mem.distressed = mem.distressed + 1
+   end
+
+   -- See if it's time to trigger distress
+   if mem.distressed > distressrate then
+      ai.distress( distressmsg )
+      mem.distressed = 1
+   end
+
 end
 

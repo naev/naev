@@ -214,7 +214,7 @@ static int ai_timeup( lua_State *L ); /* boolean timeup( number ) */
 /* messages */
 static int ai_comm( lua_State *L ); /* say( number, string ) */
 static int ai_broadcast( lua_State *L ); /* broadcast( string ) */
-static int ai_distress( lua_State *L ); /* distress( string ) */
+static int ai_distress( lua_State *L ); /* distress( string [, bool] ) */
 
 /* loot */
 static int ai_credits( lua_State *L ); /* credits( number ) */
@@ -1954,6 +1954,8 @@ static int ai_distress( lua_State *L )
 
    if (lua_isstring(L,1))
       snprintf( ai_distressmsg, PATH_MAX, "%s", lua_tostring(L,1) );
+   else if (lua_isnil(L,1))
+      ai_distressmsg[0] = '\0';
    else
       NLUA_INVALID_PARAMETER();
 

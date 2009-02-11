@@ -466,7 +466,8 @@ void pilot_distress( Pilot *p, const char *msg )
    Pilot *t;
 
    /* Broadcast the message. */
-   pilot_broadcast( p, msg );
+   if (msg[0] != '\0')
+      pilot_broadcast( p, msg );
 
    /* Get the target to see if it's the player. */
    t = pilot_get(p->target);
@@ -501,9 +502,16 @@ void pilot_distress( Pilot *p, const char *msg )
       }
    }
 
-   /* Modify faction, about 1 for a llama, 4.2 for a hawking */
-   if ((t != NULL) && (t->faction == FACTION_PLAYER) && r)
-      faction_modPlayer( p->faction, pow(p->ship->mass, 0.2) - 1. );
+   /* Player only gets one faction hit per pilot. */
+   if (!pilot_isFlag(p, PILOT_DISTRESSED)) {
+
+      /* Modify faction, about 1 for a llama, 4.2 for a hawking */
+      if ((t != NULL) && (t->faction == FACTION_PLAYER) && r)
+         faction_modPlayer( p->faction, pow(p->ship->mass, 0.2) - 1. );
+
+      /* Set flag to avoid a second faction hit. */
+      pilot_setFlag(p, PILOT_DISTRESSED);
+   }
 }
 
 
