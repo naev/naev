@@ -918,7 +918,7 @@ static void shipyard_yours_open( unsigned int parent, char* str )
    tships = malloc(sizeof(glTexture*)*nships);
    player_ships( sships, tships );
    window_addImageArray( wid, 20, 40,
-         310, SHIPYARD_HEIGHT-80, "lstYourShips", 64./96.*128., 64.,
+         310, SHIPYARD_HEIGHT-80, "iarYourShips", 64./96.*128., 64.,
          tships, sships, nships, shipyard_yoursUpdate );
 
    shipyard_yoursUpdate(wid, NULL);
@@ -937,7 +937,7 @@ static void shipyard_yoursUpdate( unsigned int wid, char* str )
    char* loc;
    unsigned int price;
 
-   shipname = toolkit_getList( wid, "lstYourShips" );
+   shipname = toolkit_getImageArray( wid, "iarYourShips" );
    if (strcmp(shipname,"None")==0) { /* no ships */
       window_disableButton( wid, "btnChangeShip" );
       window_disableButton( wid, "btnTransportShip" );
@@ -1004,7 +1004,7 @@ static void shipyard_yoursChange( unsigned int wid, char* str )
    char *shipname, *loc;
    Pilot *newship;
 
-   shipname = toolkit_getList( wid, "lstYourShips" );
+   shipname = toolkit_getImageArray( wid, "iarYourShips" );
    newship = player_getShip(shipname);
    if (strcmp(shipname,"None")==0) { /* no ships */
       dialogue_alert( "You need another ship to change ships!" );
@@ -1039,7 +1039,7 @@ static void shipyard_yoursSell( unsigned int wid, char* str )
    char *shipname, buf[16];
    int price;
 
-   shipname = toolkit_getList( wid, "lstYourShips" );
+   shipname = toolkit_getImageArray( wid, "iarYourShips" );
    if (strcmp(shipname,"None")==0) { /* no ships */
       dialogue_alert( "You can't sell nothing!" );
       return;
@@ -1077,7 +1077,7 @@ static void shipyard_yoursTransport( unsigned int wid, char* str )
    unsigned int price;
    char *shipname, buf[16];
 
-   shipname = toolkit_getList( wid, "lstYourShips" );
+   shipname = toolkit_getImageArray( wid, "iarYourShips" );
    if (strcmp(shipname,"None")==0) { /* no ships */
       dialogue_alert( "You can't transport nothing here!" );
       return;
