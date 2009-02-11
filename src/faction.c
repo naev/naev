@@ -693,6 +693,43 @@ int factions_load (void)
          faction_parseSocial(node);
    } while (xml_nextNode(node));
 
+#ifdef DEBUGGING
+   int i, j, k, r;
+   Faction *f, *sf;
+
+   /* Third pass, makes sure allies/enemies are sane. */
+   for (i=0; i<faction_nstack; i++) {
+      f = &faction_stack[i];
+
+      /* First run over allies and make sure it's mutual. */
+      for (j=0; j < f->nallies; j++) {
+         sf = &faction_stack[ f->allies[j] ];
+
+         r = 0;
+         for (k=0; k < sf->nallies; k++)
+            if (sf->allies[k] == i)
+               r = 1;
+
+         if (r == 0)
+            WARN("Faction: %s and %s aren't completely mutual allies!",
+                  f->name, sf->name );
+      }
+
+      /* Now run over enemies. */
+      for (j=0; j < f->nenemies; j++) {
+         sf = &faction_stack[ f->enemies[j] ];
+
+         r = 0;
+         for (k=0; k < sf->nenemies; k++)
+            if (sf->enemies[k] == i)
+               r = 1;
+
+         if (r == 0)
+            WARN("Faction: %s and %s aren't completely mutual enemies!",
+                  f->name, sf->name );
+      }
+   }
+#endif /* DEBUGGING */
 
    xmlFreeDoc(doc);
    free(buf);

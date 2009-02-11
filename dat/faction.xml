@@ -14,7 +14,6 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Collective</enemy>
-   <enemy>FLF</enemy>
   </enemies>
  </faction>
  <faction name="Frontier">
@@ -122,7 +121,6 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Collective</enemy>
-   <enemy>FLF</enemy>
   </enemies>
  </faction>
  <faction name="Sirius">
@@ -135,7 +133,6 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Collective</enemy>
-   <enemy>FLF</enemy>
   </enemies>
  </faction>
  <faction name="Goddard">
@@ -147,7 +144,6 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-   <enemy>FLF</enemy>
    <enemy>Collective</enemy>
   </enemies>
  </faction>
