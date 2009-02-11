@@ -78,6 +78,7 @@
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_space.h"
+#include "board.h"
 
 
 /**
@@ -162,7 +163,7 @@ static int ai_parmour( lua_State *L ); /* parmour() */
 static int ai_pshield( lua_State *L ); /* pshield() */
 static int ai_getdistance( lua_State *L ); /* number getdist(Vector2d) */
 static int ai_getpos( lua_State *L ); /* getpos(number) */
-static int ai_minbrakedist( lua_State *L ); /* number minbrakedist() */
+static int ai_minbrakedist( lua_State *L ); /* number minbrakedist( [number] ) */
 static int ai_cargofree( lua_State *L ); /* number cargofree() */
 static int ai_shipclass( lua_State *L ); /* string shipclass( [number] ) */
 static int ai_shipmass( lua_State *L ); /* string shipmass( [number] ) */
@@ -175,6 +176,7 @@ static int ai_isstopped( lua_State *L ); /* boolean isstopped() */
 static int ai_isenemy( lua_State *L ); /* boolean isenemy( number ) */
 static int ai_isally( lua_State *L ); /* boolean isally( number ) */
 static int ai_incombat( lua_State *L ); /* boolean incombat( [number] ) */
+static int ai_isdisabled( lua_State *L ); /* boolean isdisabled( number ) */
 static int ai_haslockon( lua_State *L ); /* boolean haslockon() */
 
 /* movement */
@@ -206,6 +208,8 @@ static int ai_shoot( lua_State *L ); /* shoot( number ); number = 1,2,3 */
 static int ai_getenemy( lua_State *L ); /* number getenemy() */
 static int ai_hostile( lua_State *L ); /* hostile( number ) */
 static int ai_getweaprange( lua_State *L ); /* number getweaprange() */
+static int ai_canboard( lua_State *L ); /* boolean canboard( number ) */
+static int ai_board( lua_State *L ); /* boolean board() */
 
 /* timers */
 static int ai_settimer( lua_State *L ); /* settimer( number, number ) */
@@ -234,6 +238,7 @@ static const luaL_reg ai_methods[] = {
    { "isenemy", ai_isenemy },
    { "isally", ai_isally },
    { "incombat", ai_incombat },
+   { "isdisabled", ai_isdisabled },
    { "haslockon", ai_haslockon },
    /* get */
    { "getPlayer", ai_getplayer },
@@ -277,6 +282,8 @@ static const luaL_reg ai_methods[] = {
    { "getenemy", ai_getenemy },
    { "hostile", ai_hostile },
    { "getweaprange", ai_getweaprange },
+   { "canboard", ai_canboard },
+   { "board", ai_board },
    /* timers */
    { "settimer", ai_settimer },
    { "timeup", ai_timeup },
@@ -364,8 +371,10 @@ static void ai_run( lua_State *L, const char *funcname )
    }
 #endif /* DEBUGGING */
 
-   if (lua_pcall(L, 0, 0, 0)) /* error has occured */
+   if (lua_pcall(L, 0, 0, 0)) { /* error has occured */
       WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, funcname, lua_tostring(L,-1));
+      lua_pop(L,1);
+   }
 }
 
 
@@ -655,8 +664,10 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker )
    L = cur_pilot->ai->L;
    lua_getglobal(L, "attacked");
    lua_pushnumber(L, attacker);
-   if (lua_pcall(L, 1, 0, 0))
+   if (lua_pcall(L, 1, 0, 0)) {
       WARN("Pilot '%s' ai -> 'attacked': %s", cur_pilot->name, lua_tostring(L,-1));
+      lua_pop(L,1);
+   }
 }
 
 
@@ -684,8 +695,10 @@ void ai_getDistress( Pilot* p, const Pilot* distressed )
    /* Run the function. */
    lua_pushnumber(L, distressed->id);
    lua_pushnumber(L, distressed->target);
-   if (lua_pcall(L, 2, 0, 0))
+   if (lua_pcall(L, 2, 0, 0)) {
       WARN("Pilot '%s' ai -> 'distress': %s", cur_pilot->name, lua_tostring(L,-1));
+      lua_pop(L,1);
+   }
 }
 
 
@@ -724,8 +737,10 @@ static void ai_create( Pilot* pilot, char *param )
    }
 
    /* Run function. */
-   if (lua_pcall(L, (param!=NULL) ? 1 : 0, 0, 0)) /* error has occured */
+   if (lua_pcall(L, (param!=NULL) ? 1 : 0, 0, 0)) { /* error has occured */
       WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, "create", lua_tostring(L,-1));
+      lua_pop(L,1);
+   }
 
    /* Recover normal mode. */
    ai_status = AI_STATUS_NORMAL;
@@ -1045,12 +1060,49 @@ static int ai_getpos( lua_State *L )
 static int ai_minbrakedist( lua_State *L )
 {
    double time, dist, vel;
-   time = VMOD(cur_pilot->solid->vel) /
-         (cur_pilot->thrust / cur_pilot->solid->mass);
+   Vector2d vv;
+   unsigned int id;
+   Pilot *p;
 
-   vel = MIN(cur_pilot->speed,VMOD(cur_pilot->solid->vel));
-   dist = vel*(time+1.1*180./cur_pilot->turn) -
-         0.5*(cur_pilot->thrust/cur_pilot->solid->mass)*time*time;
+   /* More complicated calculation based on relative velocity. */
+   if (lua_gettop(L) > 0) {
+      /* Get target. */
+      id = luaL_checklong(L,1);
+      p = pilot_get(id);
+      if (p==NULL)
+         return 0;
+
+      /* Set up the vectors. */
+      vect_cset( &vv, p->solid->vel.x - cur_pilot->solid->vel.x,
+            p->solid->vel.y - cur_pilot->solid->vel.y );
+   
+      /* Run the same calculations. */
+      time = VMOD(vv) /
+            (cur_pilot->thrust / cur_pilot->solid->mass);
+
+      /* Get relative velocity. */
+      vel = MIN(cur_pilot->speed - VMOD(p->solid->vel), VMOD(vv));
+      if (vel < 0.)
+         vel = 0.;
+
+      /* Get distance to brake. */
+      dist = vel*(time+1.1*180./cur_pilot->turn) -
+            0.5*(cur_pilot->thrust/cur_pilot->solid->mass)*time*time;
+   }
+
+   /* Simple calculation based on distance. */
+   else {
+      /* Get current time to reach target. */
+      time = VMOD(cur_pilot->solid->vel) /
+            (cur_pilot->thrust / cur_pilot->solid->mass);
+
+      /* Get velocity. */
+      vel = MIN(cur_pilot->speed,VMOD(cur_pilot->solid->vel));
+
+      /* Get distance. */
+      dist = vel*(time+1.1*180./cur_pilot->turn) -
+            0.5*(cur_pilot->thrust/cur_pilot->solid->mass)*time*time;
+   }
 
    lua_pushnumber(L, dist); /* return */
    return 1; /* returns one thing */
@@ -1226,10 +1278,38 @@ static int ai_incombat( lua_State *L )
 {
    Pilot* p;
 
-   if (lua_isnumber(L,1)) p = pilot_get((unsigned int)lua_tonumber(L,1));
-   else p = cur_pilot;
+   if (lua_isnumber(L,1))
+      p = pilot_get((unsigned int)lua_tonumber(L,1));
+   else
+      p = cur_pilot;
+
+   /* Make sure is valid. */
+   if (p==NULL)
+      return 0;
 
    lua_pushboolean(L, pilot_isFlag(p, PILOT_COMBAT));
+   return 1;
+}
+
+
+/**
+ * @brief Checks to see if the target is disabled.
+ *
+ *    @luaparam p Pilot to see if is disabled.
+ *    @luareturn true if pilot is disabled.
+ * @luafunc isdisabled( p )
+ */
+static int ai_isdisabled( lua_State *L )
+{
+   Pilot *p;
+   unsigned int id;
+
+   id = luaL_checklong(L, 1);
+   p = pilot_get(id);
+   if (p==NULL)
+      return 0;
+
+   lua_pushboolean(L, pilot_isDisabled(p));
    return 1;
 }
 
@@ -1871,6 +1951,49 @@ static int ai_getweaprange( lua_State *L )
 
    lua_pushnumber(L,cur_pilot->weap_range);
    return 1;
+}
+
+
+/**
+ * @brief Checks to see if pilot can board the target.
+ *
+ *    @luaparam p Target to see if pilot can board.
+ *    @luareturn true if pilot can board, false if it can't.
+ * @luafunc canboard( p )
+ */
+static int ai_canboard( lua_State *L )
+{
+   unsigned int id;
+   Pilot *p;
+
+   /* Get parameters. */
+   id = luaL_checklong(L, 1);
+   p = pilot_get(id);
+   if (p==NULL)
+      return 0;
+
+   /* Must be disabled. */
+   if (!pilot_isDisabled(p)) {
+      lua_pushboolean(L, 0);
+      return 1;
+   }
+
+   /* Check if can be boarded. */
+   lua_pushboolean(L, !pilot_isFlag(p, PILOT_BOARDED));
+   return 1;
+}
+
+
+/**
+ * @brief Attempts to board the pilot's target.
+ *
+ *    @luareturn true if was able to board the target.
+ * @luafunc board( p )
+ */
+static int ai_board( lua_State *L )
+{
+   (void) L;
+   return pilot_board( cur_pilot );
 }
 
 

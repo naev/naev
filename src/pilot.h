@@ -71,7 +71,8 @@
 #define PILOT_HYP_BEGIN    (1<<16) /**< Pilot is starting engines. */
 #define PILOT_HYPERSPACE   (1<<17) /**< Pilot is in hyperspace. */
 #define PILOT_HYP_END      (1<<18) /**< Pilot is exiting hyperspace. */
-#define PILOT_BOARDED      (1<<20) /**< Pilot has been boarded already. */
+#define PILOT_BOARDED      (1<<19) /**< Pilot has been boarded already. */
+#define PILOT_BOARDING     (1<<20) /**< Pilot is currently boarding it's target. */
 #define PILOT_BRIBED       (1<<21) /**< Pilot has been bribed already. */
 #define PILOT_DISTRESSED   (1<<22) /**< Pilot has distressed once already. */
 #define PILOT_DISABLED     (1<<26) /**< Pilot is disabled. */

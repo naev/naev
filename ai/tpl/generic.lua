@@ -35,6 +35,10 @@ function control ()
          idle()
       end
 
+   -- Don't stop boarding
+   elseif task == "boardstop" then
+      return
+
    -- Think for attacking
    elseif task == "attack" then
       target = ai.target()

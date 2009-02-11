@@ -1,14 +1,15 @@
 include("ai/tpl/generic.lua")
 
 -- Settings
-aggressive = true
-safe_distance = 500
-armour_run = 80
-armour_return = 100
+aggressive     = true
+safe_distance  = 500
+armour_run     = 80
+armour_return  = 100
+atk_board      = true
+atk_kill       = false
 
 
 function create ()
-   attack_choose()
    ai.setcredits(ai.shipprice()/120 , ai.shipprice()/40 )
 
    -- Deal with bribeability
@@ -24,6 +25,9 @@ function create ()
          mem.bribe_paid = "\"Life doesn't get easier then this.\""
       end
    end
+
+   -- Choose attack format
+   attack_choose()
 end
 
 

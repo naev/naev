@@ -32,6 +32,7 @@
 #include "music.h"
 #include "player.h"
 #include "gui.h"
+#include "board.h"
 
 
 #define PILOT_CHUNK     32 /**< Chunks to increment pilot_stack by */
@@ -1245,6 +1246,7 @@ static void pilot_update( Pilot* pilot, const double dt )
 {
    int i;
    unsigned int l;
+   Pilot *target;
    double a, px,py, vx,vy;
    char buf[16];
    PilotOutfit *o;
@@ -1262,7 +1264,6 @@ static void pilot_update( Pilot* pilot, const double dt )
       if (o->timer > 0.)
          o->timer -= dt;
    }
-
 
    /* he's dead jim */
    if (pilot_isFlag(pilot,PILOT_DEAD)) {
@@ -1355,9 +1356,25 @@ static void pilot_update( Pilot* pilot, const double dt )
       pilot->player_damage = 0.;
 
    /* check limits */
-   if (pilot->armour > pilot->armour_max)pilot->armour = pilot->armour_max;
-   if (pilot->shield > pilot->shield_max) pilot->shield = pilot->shield_max;
-   if (pilot->energy > pilot->energy_max) pilot->energy = pilot->energy_max;
+   if (pilot->armour > pilot->armour_max)
+      pilot->armour = pilot->armour_max;
+   if (pilot->shield > pilot->shield_max)
+      pilot->shield = pilot->shield_max;
+   if (pilot->energy > pilot->energy_max)
+      pilot->energy = pilot->energy_max;
+
+   /* Hack to match speed with boarding target. */
+   if (pilot_isFlag(pilot, PILOT_BOARDING)) {
+      target = pilot_get(pilot->target);
+      if (target==NULL)
+         pilot_rmFlag(pilot, PILOT_BOARDING);
+      else {
+         vectcpy( &pilot->solid->vel, &target->solid->vel );
+         /* See if boarding is finished. */
+         if (pilot->ptimer < 0.)
+            pilot_boardComplete(pilot);
+      }
+   }
 
    /* update the solid */
    (*pilot->solid->update)( pilot->solid, dt );
@@ -1728,24 +1745,24 @@ void pilot_calcStats( Pilot* pilot )
     * set up the basic stuff
     */
    /* movement */
-   pilot->thrust = pilot->ship->thrust;
-   pilot->turn = pilot->ship->turn;
-   pilot->speed = pilot->ship->speed;
+   pilot->thrust        = pilot->ship->thrust;
+   pilot->turn          = pilot->ship->turn;
+   pilot->speed         = pilot->ship->speed;
    /* health */
    ac = pilot->armour / pilot->armour_max;
    sc = pilot->shield / pilot->shield_max;
    ec = pilot->energy / pilot->energy_max;
-   fc = pilot->fuel / pilot->fuel_max;
-   pilot->armour_max = pilot->ship->armour;
-   pilot->shield_max = pilot->ship->shield;
-   pilot->energy_max = pilot->ship->energy;
-   pilot->fuel_max = pilot->ship->fuel;
-   pilot->armour_regen = pilot->ship->armour_regen;
-   pilot->shield_regen = pilot->ship->shield_regen;
-   pilot->energy_regen = pilot->ship->energy_regen;
+   fc = pilot->fuel   / pilot->fuel_max;
+   pilot->armour_max    = pilot->ship->armour;
+   pilot->shield_max    = pilot->ship->shield;
+   pilot->energy_max    = pilot->ship->energy;
+   pilot->fuel_max      = pilot->ship->fuel;
+   pilot->armour_regen  = pilot->ship->armour_regen;
+   pilot->shield_regen  = pilot->ship->shield_regen;
+   pilot->energy_regen  = pilot->ship->energy_regen;
    /* Jamming */
-   pilot->jam_range = 0.;
-   pilot->jam_chance = 0.;
+   pilot->jam_range     = 0.;
+   pilot->jam_chance    = 0.;
 
    /* cargo has to be reset */
    pilot_calcCargo(pilot);
@@ -1761,20 +1778,20 @@ void pilot_calcStats( Pilot* pilot )
 
       if (outfit_isMod(o)) { /* Modification */
          /* movement */
-         pilot->thrust += o->u.mod.thrust * q;
-         pilot->turn += o->u.mod.turn * q;
-         pilot->speed += o->u.mod.speed * q;
+         pilot->thrust        += o->u.mod.thrust * q;
+         pilot->turn          += o->u.mod.turn * q;
+         pilot->speed         += o->u.mod.speed * q;
          /* health */
-         pilot->armour_max += o->u.mod.armour * q;
-         pilot->armour_regen += o->u.mod.armour_regen * q;
-         pilot->shield_max += o->u.mod.shield * q;
-         pilot->shield_regen += o->u.mod.shield_regen * q;
-         pilot->energy_max += o->u.mod.energy * q;
-         pilot->energy_regen += o->u.mod.energy_regen * q;
+         pilot->armour_max    += o->u.mod.armour * q;
+         pilot->armour_regen  += o->u.mod.armour_regen * q;
+         pilot->shield_max    += o->u.mod.shield * q;
+         pilot->shield_regen  += o->u.mod.shield_regen * q;
+         pilot->energy_max    += o->u.mod.energy * q;
+         pilot->energy_regen  += o->u.mod.energy_regen * q;
          /* fuel */
-         pilot->fuel_max += o->u.mod.fuel * q;
+         pilot->fuel_max      += o->u.mod.fuel * q;
          /* misc */
-         pilot->cargo_free += o->u.mod.cargo * q;
+         pilot->cargo_free    += o->u.mod.cargo * q;
       }
       else if (outfit_isAfterburner(o)) /* Afterburner */
          pilot->afterburner = &pilot->outfits[i]; /* Set afterburner */
@@ -2144,7 +2161,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, char *ai,
    pilot->armour = pilot->armour_max = 1.; /* hack to have full armour */
    pilot->shield = pilot->shield_max = 1.; /* ditto shield */
    pilot->energy = pilot->energy_max = 1.; /* ditto energy */
-   pilot->fuel = pilot->fuel_max = 1.; /* ditto fuel */
+   pilot->fuel   = pilot->fuel_max   = 1.; /* ditto fuel */
    pilot_calcStats(pilot);
 
    /* set flags and functions */
@@ -2277,22 +2294,22 @@ Pilot* pilot_copy( Pilot* src )
    memset( dest->hook, 0, sizeof(int)*PILOT_HOOKS);
 
    /* Copy has no escorts. */
-   dest->escorts = NULL;
-   dest->nescorts = 0;
+   dest->escorts        = NULL;
+   dest->nescorts       = 0;
 
    /* AI is not copied. */
-   dest->task = NULL;
+   dest->task           = NULL;
 
    /* Set pointers and friends to NULL. */
    /* Outfits. */
-   dest->outfits = NULL;
-   dest->noutfits = 0;
-   dest->secondary = NULL;
-   dest->ammo = NULL;
-   dest->afterburner = NULL;
+   dest->outfits        = NULL;
+   dest->noutfits       = 0;
+   dest->secondary      = NULL;
+   dest->ammo           = NULL;
+   dest->afterburner    = NULL;
    /* Commodities. */
-   dest->commodities = NULL;
-   dest->ncommodities = 0;
+   dest->commodities    = NULL;
+   dest->ncommodities   = 0;
    /* Calculate stats. */
    pilot_calcStats(dest);
 
@@ -2481,7 +2498,8 @@ void pilots_update( double dt )
             if (VMOD(p->solid->vel) < 2*p->speed)
                pilot_rmFlag(p, PILOT_HYP_END);
          }
-         else
+         /* Only doesn't think while boarded. */
+         else if (!pilot_isFlag(p, PILOT_BOARDING))
             p->think(p);
 
       }

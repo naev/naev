@@ -2,9 +2,11 @@
 --    Generic attack functions
 --]]
 
-atk_changetarget = 1.8
-atk_approach     = 1.4
-atk_aim          = 1.0
+atk_changetarget  = 1.8 -- Distance at which target changes
+atk_approach      = 1.4 -- Distance that marks approach
+atk_aim           = 1.0 -- Distance that marks aim
+atk_board         = false -- Whether or not to board the target
+atk_kill          = true -- Whether or not to finish off the target
 
 
 --[[
@@ -52,12 +54,24 @@ function atk_g ()
       return
    end
 
+   -- Check if we want to board
+   if atk_board and ai.canboard(target) then
+      board(target)
+      return
+   end
+
+   -- Check to see if target is disabled
+   if not atk_kill and ai.isdisabled(target) then
+      ai.poptask()
+      return
+   end
+
    -- Targetting stuff
    ai.hostile(target) -- Mark as hostile
    ai.settarget(target)
 
    -- Get stats about enemy
-	dist = ai.dist( ai.pos(target) ) -- get distance
+	dist = ai.dist( target ) -- get distance
    range = ai.getweaprange()
 
    -- We first bias towards range
@@ -148,3 +162,55 @@ function atk_g_melee( target, dist )
    end
 end
 
+
+--[[
+-- Boards the target
+--]]
+function board( target )
+
+   -- Get ready to board
+   ai.settarget(target)
+   dir   = ai.face(target)
+   dist  = ai.dist(target)
+   bdist = ai.minbrakedist(target)
+
+   -- See if must brake or approach
+   if dist < bdist then
+      ai.pushtask( 0, "boardstop", target )
+   elseif dir < 10 then
+      ai.accel()
+   end
+end
+
+
+--[[
+-- Attempts to brake on the target.
+--]]
+function boardstop ()
+   target = ai.target()
+
+	-- make sure pilot exists
+	if not ai.exists(target) then
+		ai.poptask()
+		return
+	end
+
+   ai.settarget(target)
+   vel = ai.relvel(target)
+
+   if vel < 10 then
+      -- Try to board
+      if ai.board(target) then
+         ai.poptask()
+         return
+      end
+   end
+
+   -- Just brake
+   ai.brake()
+
+   -- If stopped try again
+   if ai.isstopped() then
+      ai.poptask()
+   end
+end

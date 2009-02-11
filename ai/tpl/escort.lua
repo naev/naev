@@ -26,8 +26,8 @@ function escort ()
       return
    end
    
-   dir = ai.face(target)
-   dist = ai.dist(target)
+   dir   = ai.face(target)
+   dist  = ai.dist(target)
    bdist = ai.minbrakedist()
 
    -- Close enough.
