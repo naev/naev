@@ -223,7 +223,7 @@ static void faction_sanitizePlayer( Faction* faction )
 void faction_modPlayer( int f, double mod )
 {
    int i;
-   Faction *faction, *ally, *enemy;
+   Faction *faction;
    double m;
 
    if (!faction_isFaction(f)) {
@@ -231,40 +231,32 @@ void faction_modPlayer( int f, double mod )
       return;
    }
 
-   faction = &faction_stack[f];
-
-   /* Make sure it's not static. */
-   if (faction_isFlag(faction, FACTION_STATIC))
-      return;
-
-   /* Faction in question gets direct increment. */
-   faction->player += mod;
-   faction_sanitizePlayer(faction);
+   /* Modify faction standing with parent faction. */
+   faction_modPlayerRaw( f, mod );
 
    /* Now mod allies to a lesser degree */
+   faction = &faction_stack[f];
    for (i=0; i<faction->nallies; i++) {
-      ally = &faction_stack[faction->allies[i]];
 
       /* Enemies are made faster. */
-      m = RNGF();
+      m = RNG_2SIGMA()/4. + 0.5;
       if (mod > 0.)
          m *= 0.75;
 
-      ally->player += m*mod;
-      faction_sanitizePlayer(ally);
+      /* Modify faction standing */
+      faction_modPlayerRaw( faction->allies[i], m*mod );
    }
 
    /* Now mod enemies */
    for (i=0; i<faction->nenemies; i++) {
-      enemy = &faction_stack[faction->enemies[i]];
 
       /* Enemies are made faster. */
-      m = RNGF();
+      m = RNG_2SIGMA()/4. + 0.5;
       if (mod < 0.)
          m *= 0.75;
 
-      enemy->player -= m*mod;
-      faction_sanitizePlayer(enemy);
+      /* Modify faction standing. */
+      faction_modPlayerRaw( faction->enemies[i], -m*mod );
    }
 }
 
@@ -721,10 +713,14 @@ void factions_free (void)
    /* free factions */
    for (i=0; i<faction_nstack; i++) {
       free(faction_stack[i].name);
-      if (faction_stack[i].longname != NULL) free(faction_stack[i].longname);
-      if (faction_stack[i].logo_small != NULL) gl_freeTexture(faction_stack[i].logo_small);
-      if (faction_stack[i].nallies > 0) free(faction_stack[i].allies);
-      if (faction_stack[i].nenemies > 0) free(faction_stack[i].enemies);
+      if (faction_stack[i].longname != NULL)
+         free(faction_stack[i].longname);
+      if (faction_stack[i].logo_small != NULL)
+         gl_freeTexture(faction_stack[i].logo_small);
+      if (faction_stack[i].nallies > 0)
+         free(faction_stack[i].allies);
+      if (faction_stack[i].nenemies > 0)
+         free(faction_stack[i].enemies);
    }
    free(faction_stack);
    faction_stack = NULL;

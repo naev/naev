@@ -930,14 +930,11 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
             pshooter = pilot_get(shooter);
             if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
 
-               /* About 3 for a llama, 26 for hawking. */
-               mod = pow(p->ship->mass,0.4) - 1.;
+               /* About 6 for a llama, 52 for hawking. */
+               mod = 2*(pow(p->ship->mass,0.4) - 1.);
 
                /* Modify faction for him and friends. */
                faction_modPlayer( p->faction, -mod );
-
-               /* Extra negative hit for the faction. */
-               faction_modPlayerRaw( p->faction, -mod );
             }
          }
       }
