@@ -984,10 +984,8 @@ static void toolkit_mouseEvent( SDL_Event* event )
             switch (event->type) {
                case SDL_MOUSEMOTION:
                   /* Change the status of the widget if mouse isn't down. */
-                  /*
                   if (!(event->motion.state & SDL_BUTTON(SDL_BUTTON_LEFT)))
                      wgt->status = WIDGET_STATUS_MOUSEOVER;
-                     */
 
                   /* Do a coordinate change for the event. */
                   event->motion.x -= wgt->x;
