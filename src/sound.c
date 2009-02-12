@@ -288,7 +288,7 @@ static int sound_updatePosVoice( alVoice *v, double x, double y )
    px = v->pos[0] - sound_pos[0];
    py = v->pos[1] - sound_pos[1];
 
-   angle = ANGLE(px,py)/M_PI*180. - sound_pos[2];
+   angle = sound_pos[2] - ANGLE(px,py)/M_PI*180.;
    dist = MOD(px,py);
 
    /* Need to make sure distance doesn't overflow. */
