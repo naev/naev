@@ -105,6 +105,7 @@ static int sound_makeList (void);
 static Mix_Chunk *sound_load( const char *filename );
 static void sound_free( alSound *snd );
 /* Voices. */
+static int sound_updatePosVoice( alVoice *v, double x, double y );
 static void voice_markStopped( int channel );
 static alVoice* voice_new (void);
 static int voice_add( alVoice* v );
@@ -268,6 +269,43 @@ int sound_play( int sound )
 
 
 /**
+ * @brief Updates the position of a voice.
+ *
+ *    @param v Voice to update.
+ *    @param x New X position for the voice.
+ *    @param y New Y position for the voice.
+ *    @return 0 on success.
+ */
+static int sound_updatePosVoice( alVoice *v, double x, double y )
+{
+   double angle, dist;
+   double px, py;
+   int idist;
+
+   v->pos[0] = x;
+   v->pos[1] = y;
+
+   px = v->pos[0] - sound_pos[0];
+   py = v->pos[1] - sound_pos[1];
+
+   angle = ANGLE(px,py)/M_PI*180. - sound_pos[2];
+   dist = MOD(px,py);
+
+   /* Need to make sure distance doesn't overflow. */
+   idist = (int) dist / 13.;
+   if (idist > 255) idist = 255;
+
+   /* Try to play the song. */
+   if (Mix_SetPosition( v->channel, (Sint16)angle, (Uint8)idist) < 0) {
+      WARN("Unable to set sound position: %s", Mix_GetError());
+      return -1;
+   }
+
+   return 0;
+}
+
+
+/**
  * @brief Plays a sound based on position.
  *
  *    @param sound Sound to play.
@@ -278,9 +316,6 @@ int sound_play( int sound )
 int sound_playPos( int sound, double x, double y )
 {
    alVoice *v;
-   double angle, dist;
-   double px, py;
-   int idist;
 
    if (sound_disabled) return 0;
 
@@ -289,15 +324,6 @@ int sound_playPos( int sound, double x, double y )
 
    /* Gets a new voice. */
    v = voice_new();
-
-   v->pos[0] = x;
-   v->pos[1] = y;
-
-   px = v->pos[0] - sound_pos[0];
-   py = v->pos[1] - sound_pos[1];
-
-   angle = sound_pos[2] - ANGLE(px,py)/M_PI*180.;
-   dist = MOD(px,py);
 
    v->channel = Mix_PlayChannel( -1, sound_list[sound].buffer, 0 );
 
@@ -308,14 +334,9 @@ int sound_playPos( int sound, double x, double y )
       */
    }
    else {
-
-      /* Need to make sure distance doesn't overflow. */
-      idist = (int) dist / 13.;
-      if (idist > 255) idist = 255;
-      if (Mix_SetPosition( v->channel, (Sint16)angle, (Uint8)idist) < 0) {
-         WARN("Unable to set sound position: %s", Mix_GetError());
+      /* Update the voice. */
+      if (sound_updatePosVoice( v, x, y))
          return -1;
-      }
    }
 
    /* Actually add the voice to the list. */
@@ -337,30 +358,15 @@ int sound_playPos( int sound, double x, double y )
 int sound_updatePos( int voice, double x, double y )
 {
    alVoice *v;
-   int idist;
-   double angle, dist;
-   double px, py;
 
    if (sound_disabled) return 0;
 
    v = voice_get(voice);
    if (v != NULL) {
-      v->pos[0] = x;
-      v->pos[1] = y;
 
-      px = x - sound_pos[0];
-      py = y - sound_pos[1];
-
-      angle = sound_pos[2] - ANGLE(px,py)/M_PI*180.;
-      dist = MOD(px,py);
-
-      idist = (int) dist / 13.;
-      if (idist > 255) idist = 255;
-
-      if (Mix_SetPosition( v->channel, (Sint16)angle, (Uint8)idist) < 0) {
-         WARN("Unable to set sound position: %s", Mix_GetError());
+      /* Update the voice. */
+      if (sound_updatePosVoice( v, x, y))
          return -1;
-      }
    }
 
    return 0;
