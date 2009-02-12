@@ -47,8 +47,6 @@
        * plasma.png
        * ripper.png
      * store
-       * afterburner.png
-       * afterburner2.png
        * capacitator.png
        * heavy.png
        * jammer0.png
@@ -219,6 +217,8 @@
      * store
        * fuel_pod.png
        * cargo_pod.png
+       * afterburner.png
+       * afterburner2.png
    * ship
      * kestrel.png
      * kestrel_comm.png
