@@ -123,7 +123,7 @@ Try doing this now, since you haven't explored any systems just pick any one and
 
 You should start getting better by getting cargo missions at Mission Computers, which will also help you explore the universe.
 
-Enjoy them game!]]
+Enjoy the game!]]
    -- Mission details
    misn_title = "NAEV Tutorial"
    misn_reward = "Knowledge of how to play the game."
