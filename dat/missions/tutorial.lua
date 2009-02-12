@@ -93,7 +93,7 @@ Try to board the ship now.]]
    title[9] = "Outfitting"
    text[21] = [[The more advanced planets and stations will have Outfitting available.  There you can modify your ship and add all sorts of gadgets allowing you to increase your ship's efficiency giving you an edge over the rest.  Not every place has every outfit so it's good to travel all over to see what's available.  It's advisable to always buy maps if they're available.]]
    title[10] = "Shipyard"
-   text[22] = [[In the Shipyard you can buy ships.  You can also store the ships you are own and switch between them or sell them.  It's very expensive to transport ships between systems, so it's usually best to go to where the ship is.]]
+   text[22] = [[In the Shipyard you can buy ships.  You can also store the ships you already own and switch between them or sell them.  It's very expensive to transport ships between systems, so it's usually best to go to where the ship is.]]
    text[23] = [[Try exploring a bit around the planet.  When you're ready to leave click on 'Takeoff' and we'll continue the tutorial.]]
    -- Step 8
    title[11] = "Navigation Tutorial"
