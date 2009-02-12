@@ -216,7 +216,11 @@ void player_new (void)
    if (player_newMake())
       return;
 
+   /* Display the intro. */
    intro_display( "dat/intro", "intro" );
+
+   /* Play music. */
+   music_choose( "ambient" );
 
    /* Add the mission if found. */
    if (player_mission != NULL) {
