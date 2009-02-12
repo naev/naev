@@ -2071,14 +2071,15 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                xmlr_attr(cur,"quantity",q);
                xmlr_attr(cur,"id",id);
                n = atoi(q);
-               if (id == NULL) i = 0;
-               else i = atoi(id);
+               i = (id==NULL) ? 0 : atoi(id);
                free(q);
-               if (id != NULL) free(id);
+               if (id != NULL)
+                  free(id);
 
                /* actually add the cargo with id hack */
                pilot_addCargo( ship, commodity_get(xml_get(cur)), n );
-               if (i != 0) ship->commodities[ ship->ncommodities-1 ].id = i;
+               if (i != 0)
+                  ship->commodities[ ship->ncommodities-1 ].id = i;
             }
          } while (xml_nextNode(cur));
       }
