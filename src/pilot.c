@@ -481,7 +481,8 @@ void pilot_distress( Pilot *p, const char *msg )
 
    /* Check if planet is in range. */
    for (i=0; i<cur_system->nplanets; i++) {
-      if (pilot_inRangePlanet(p, cur_system->planets[i]) &&
+      if (planet_hasService(cur_system->planets[i], PLANET_SERVICE_BASIC) &&
+            pilot_inRangePlanet(p, cur_system->planets[i]) &&
             !areEnemies(p->faction, cur_system->planets[i]->faction)) {
          r = 1;
          break;
