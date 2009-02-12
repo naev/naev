@@ -448,7 +448,8 @@ static void map_render( double bx, double by, double w, double h )
       for (j=0; j<sys->njumps; j++) {
 
          jsys = system_getIndex( sys->jumps[j] );
-         hsys = system_getIndex( cur_system->jumps[hyperspace_target] );
+         if (hyperspace_target != -1)
+            hsys = system_getIndex( cur_system->jumps[hyperspace_target] );
 
          n = map_inPath(jsys);
          m = map_inPath(sys);
