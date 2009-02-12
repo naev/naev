@@ -174,10 +174,11 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
          break; 
 
       case 3: 
-         if(SDL_BYTEORDER == SDL_BIG_ENDIAN) 
-            pixelcolour = p[0] << 16 | p[1] << 8 | p[2]; 
-         else     
-            pixelcolour = p[0] | p[1] << 8 | p[2] << 16; 
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+         pixelcolour = p[0] << 16 | p[1] << 8 | p[2]; 
+#else /* SDL_BYTEORDER == SDL_BIG_ENDIAN */
+         pixelcolour = p[0] | p[1] << 8 | p[2] << 16; 
+#endif /* SDL_BYTEORDER == SDL_BIG_ENDIAN */
          break; 
 
       case 4: 
