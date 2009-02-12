@@ -173,9 +173,6 @@ int intro_display( const char *text, const char *mus )
             default:
                break;
          }
-
-         /* Only thing we actually care about updating is music. */
-         music_update();
       }
    
       /* Increment position. */
@@ -205,6 +202,9 @@ int intro_display( const char *text, const char *mus )
          i--;
          y += intro_font.h + 5.;
       }
+
+      /* Only thing we actually care about updating is music. */
+      music_update();
 
       /* Display stuff. */
       SDL_GL_SwapBuffers();
