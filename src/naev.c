@@ -476,8 +476,6 @@ static void fps_control (void)
    cur_dt /= 1000.; /* Convert to seconds. */
    time = t;
 
-   if (paused) SDL_Delay(10); /* drop paused FPS - we are nice to the CPU :) */
-
    /* if fps is limited */                       
    if ((max_fps != 0) && (cur_dt < 1./max_fps)) {
       delay = 1./max_fps - cur_dt;
