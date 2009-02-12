@@ -57,55 +57,55 @@
 /*
  * player stuff
  */
-Pilot* player = NULL; /**< Ze player. */
-static Ship* player_ship = NULL; /**< Temporary ship to hold when naming it */
-static double player_px = 0.; /**< Temporary X position. */
-static double player_py = 0.; /**< Temporary Y position. */
-static double player_vx = 0.; /**< Temporory X velocity. */
-static double player_vy = 0.; /**< Temporary Y velocity. */
-static double player_dir = 0.; /**< Temporary direction. */
-static int player_credits = 0; /**< Temporary hack for when creating. */
-static char *player_mission = NULL; /**< More hack. */
-int player_enemies = 0; /**< Number of enemies player has in system. */
+Pilot* player                 = NULL; /**< Ze player. */
+static Ship* player_ship      = NULL; /**< Temporary ship to hold when naming it */
+static double player_px       = 0.; /**< Temporary X position. */
+static double player_py       = 0.; /**< Temporary Y position. */
+static double player_vx       = 0.; /**< Temporory X velocity. */
+static double player_vy       = 0.; /**< Temporary Y velocity. */
+static double player_dir      = 0.; /**< Temporary direction. */
+static int player_credits     = 0; /**< Temporary hack for when creating. */
+static char *player_mission   = NULL; /**< More hack. */
+int player_enemies            = 0; /**< Number of enemies player has in system. */
 
 
 /*
  * Licenses.
  */
 static char **player_licenses = NULL; /**< Licenses player has. */
-static int player_nlicenses = 0; /**< Number of licenses player has. */
+static int player_nlicenses   = 0; /**< Number of licenses player has. */
 
 
 /*
  * player sounds.
  */
-int snd_target = -1; /**< Sound when targetting. */
-int snd_jump = -1; /**< Sound when can jump. */
-int snd_nav = -1; /**< Sound when changing nav computer. */
+int snd_target    = -1; /**< Sound when targetting. */
+int snd_jump      = -1; /**< Sound when can jump. */
+int snd_nav       = -1; /**< Sound when changing nav computer. */
 
 
 /* 
  * player pilot stack - ships he has 
  */
-static Pilot** player_stack = NULL; /**< Stack of ships player has. */
-static char** player_lstack = NULL; /**< Names of the planet the ships are at. */
-static int player_nstack = 0; /**< Number of ships player has. */
+static Pilot** player_stack   = NULL; /**< Stack of ships player has. */
+static char** player_lstack   = NULL; /**< Names of the planet the ships are at. */
+static int player_nstack      = 0; /**< Number of ships player has. */
 
 
 /* 
  * player global properties
  */
-char* player_name = NULL; /**< Ze name. */
-double player_crating = 0; /**< Ze combat rating. */
-unsigned int player_flags = 0; /**< Player flags. */
+char* player_name          = NULL; /**< Ze name. */
+double player_crating      = 0; /**< Ze combat rating. */
+unsigned int player_flags  = 0; /**< Player flags. */
 /* used in input.c */
-double player_left = 0.; /**< Player left turn velocity from input. */
-double player_right = 0.; /**< Player right turn velocity from input. */
-static double player_acc = 0.; /**< Accel velocity from input. */
+double player_left         = 0.; /**< Player left turn velocity from input. */
+double player_right        = 0.; /**< Player right turn velocity from input. */
+static double player_acc   = 0.; /**< Accel velocity from input. */
 static int player_firemode = 0; /**< Player fire mode. */
 /* used in map.c */
-int planet_target = -1; /**< Targetted planet. -1 is none. */
-int hyperspace_target = -1; /**< Targetted hyperspace route. -1 is none. */
+int planet_target          = -1; /**< Targetted planet. -1 is none. */
+int hyperspace_target      = -1; /**< Targetted hyperspace route. -1 is none. */
 /* for death and such */
 static double player_timer = 0.; /**< For death and such. */
 static Vector2d player_cam; /**< For death and such. */
@@ -114,9 +114,9 @@ static Vector2d player_cam; /**< For death and such. */
 /* 
  * unique mission stack
  */
-static int* missions_done = NULL; /**< Saves position of completed missions. */
-static int missions_mdone = 0; /**< Memory size of completed missions. */
-static int missions_ndone = 0; /**< Number of completed missions. */
+static int* missions_done  = NULL; /**< Saves position of completed missions. */
+static int missions_mdone  = 0; /**< Memory size of completed missions. */
+static int missions_ndone  = 0; /**< Number of completed missions. */
 
 
 /*
@@ -353,14 +353,14 @@ int player_newShip( Ship* ship, double px, double py,
    char* ship_name;
 
    /* temporary values while player doesn't exist */
-   player_ship = ship;
-   player_px = px;
-   player_py = py;
-   player_vx = vx;
-   player_vy = vy;
-   player_dir = dir;
-   ship_name = dialogue_input( "Ship Name", 3, 20,
-         "Please name your brand new %s:", ship->name );
+   player_ship    = ship;
+   player_px      = px;
+   player_py      = py;
+   player_vx      = vx;
+   player_vy      = vy;
+   player_dir     = dir;
+   ship_name      = dialogue_input( "Ship Name", 3, 20,
+         "Please name your brand new %s %s:", ship->fabricator, ship->name );
 
    /* Dialogue cancelled. */
    if (ship_name == NULL)
