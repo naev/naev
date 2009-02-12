@@ -19,6 +19,7 @@
 #include "log.h"
 #include "naev.h"
 #include "nxml.h"
+#include "player.h"
 
 
 #define HOOK_CHUNK   32 /**< Size to grow by when out of space */
@@ -208,6 +209,10 @@ int hooks_run( char* stack )
 {
    int i;
 
+   /* Don't update if player is dead. */
+   if ((player==NULL) || player_isFlag(PLAYER_DESTROYED))
+      return 0;
+
    hook_runningstack = 1; /* running hooks */
    for (i=0; i<hook_nstack; i++)
       if ((strcmp(stack, hook_stack[i].stack)==0) && !hook_stack[i].delete) {
@@ -235,6 +240,10 @@ void hook_runID( unsigned int id )
 {
    Hook *h;
    int i, ret;
+
+   /* Don't update if player is dead. */
+   if ((player==NULL) || player_isFlag(PLAYER_DESTROYED))
+      return;
 
    /* Try to find the hook and run it. */
    ret = 0;

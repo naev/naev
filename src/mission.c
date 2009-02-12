@@ -487,7 +487,7 @@ void missions_update( const double dt )
    int i,j;
 
    /* Don't update if player is dead. */
-   if ((player==NULL) || pilot_isFlag(player,PILOT_DEAD))
+   if ((player==NULL) || player_isFlag(PLAYER_DESTROYED))
       return;
 
    for (i=0; i<MISSION_MAX; i++) {
