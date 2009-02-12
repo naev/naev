@@ -101,7 +101,7 @@ Try to board the ship now.]]
    'm' opens the system map.
    'h' cycles through hyperspace targets.
    'j' attempts to enter hyperspace or aborts an attempt.
-   'ctrl + j' actives autonavigation pilot.]]
+   'ctrl + j' activates autonavigation pilot.]]
    title[12] = "System Map"
    text[25] = [[We'll first talk about the map.  When you open your map you'll notice it's very empty.  That's because you haven't explored much yet.  As you explore stuff or buy star maps it'll expand.  Each circle represents a system, and the lines represent hyperspace routes.  You can click on a system to select it as a hyperspace target.  If it's far away the autonav system will make a route to it which your autonavigation pilot can use.  The colour of each jump indicates whether you have enough fuel or not to make it.]]
    title[13] = "Nav System"
