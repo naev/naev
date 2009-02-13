@@ -1104,6 +1104,7 @@ static int toolkit_keyEvent( SDL_Event* event )
    Window *wdw; 
    Widget *wgt;
    SDLKey key;
+   SDLMod mod;
 
    /* Needs to have at least one window. */
    if (nwindows<=0)
@@ -1113,6 +1114,7 @@ static int toolkit_keyEvent( SDL_Event* event )
    wdw = toolkit_getActiveWindow();
    wgt = toolkit_getFocus( wdw );
    key = event->key.keysym.sym;
+   mod = event->key.keysym.mod;
 
    /* hack to simulate key repetition */
    if (event->type == SDL_KEYDOWN)
@@ -1126,7 +1128,7 @@ static int toolkit_keyEvent( SDL_Event* event )
 
    /* Trigger event function if exists. */
    if ((wgt != NULL) && (wgt->keyevent != NULL))
-      if ((*wgt->keyevent)( wgt, key, 0 ))
+      if ((*wgt->keyevent)( wgt, key, mod ))
          return 1;
 
    /* Handle other cases where event might be used by the window. */
