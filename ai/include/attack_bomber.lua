@@ -80,7 +80,7 @@ end
 function atk_b_ranged( target, dist )
 
    -- Get ranges relative to bombing weapon of choice
-   bombrange = ai.getweaprange(1)
+   bombrange = ai.getweaprange(true)
    backoff = bombrange / 4
 
    -- Must get closer to be able to bomb
@@ -96,7 +96,7 @@ function atk_b_ranged( target, dist )
 
       -- Shoot missiles if in range
       if secondary == "Launcher" and
-            dist < ai.getweaprange(1) then
+            dist < bombrange then
 
          -- More lenient with aiming
          if special == "Smart" and dir < 30 then

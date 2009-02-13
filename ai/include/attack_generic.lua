@@ -101,7 +101,7 @@ function atk_g_ranged( target, dist )
 
    -- Shoot missiles if in range
    elseif secondary == "Launcher" and
-         dist < ai.getweaprange(1) then
+         dist < ai.getweaprange(true) then
 
       -- More lenient with aiming
       if special == "Smart" and dir < 30 then

@@ -1946,23 +1946,28 @@ static int ai_getweaprange( lua_State *L )
    double range;
 
    /* if 1 is passed as a parameter, secondary weapon is checked */
-   if (lua_isnumber(L,1) && ((int)lua_tonumber(L,1) == 1))
-      if (cur_pilot->secondary != NULL) {
-         /* get range, launchers use ammo's range */
-         if (outfit_isLauncher(cur_pilot->secondary->outfit) && (cur_pilot->ammo != NULL))
-            range = outfit_range(cur_pilot->ammo->outfit);
-         else
-            range = outfit_range(cur_pilot->secondary->outfit);
+   if (lua_gettop(L) > 0) {
+      if (lua_isboolean(L,1) && lua_toboolean(L,1)) {
+         if (cur_pilot->secondary != NULL) {
+            /* get range, launchers use ammo's range */
+            if (outfit_isLauncher(cur_pilot->secondary->outfit) && (cur_pilot->ammo != NULL))
+               range = outfit_range(cur_pilot->ammo->outfit);
+            else
+               range = outfit_range(cur_pilot->secondary->outfit);
 
-         if (range < 0.) {
-            lua_pushnumber(L, 0.); /* secondary doesn't have range */
+            if (range < 0.) {
+               lua_pushnumber(L, 0.); /* secondary doesn't have range */
+               return 1;
+            }
+
+            /* secondary does have range */
+            lua_pushnumber(L, range);
             return 1;
          }
-
-         /* secondary does have range */
-         lua_pushnumber(L, range);
-         return 1;
       }
+      else
+         NLUA_INVALID_PARAMETER();
+   }
 
    lua_pushnumber(L,cur_pilot->weap_range);
    return 1;

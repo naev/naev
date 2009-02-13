@@ -17,10 +17,10 @@ function land ()
       return
    end
 
-   target = mem.land
-   dir = ai.face( target )
-   dist = ai.dist( target )
-   bdist = ai.minbrakedist()
+   target   = mem.land
+   dir      = ai.face( target )
+   dist     = ai.dist( target )
+   bdist    = ai.minbrakedist()
 
    -- Need to get closer
    if dir < 10 and dist > bdist then
@@ -87,7 +87,9 @@ function runaway ()
    -- See if we have some turret to use
    secondary, special = ai.secondary("melee")
    if special == "Turret" then
-      ai.shoot(true)
+      if dist < ai.getweaprange(true) then
+         ai.shoot(true)
+      end
    end
 
    if ai.hasturrets() then

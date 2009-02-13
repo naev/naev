@@ -6,19 +6,19 @@ include("ai/include/attack.lua")
 --
 -- These variables can be used to adjust the generic AI to suit other roles.
 --]]
-armour_run = 0 -- At which damage to run at
-armour_return = 0 -- At which armour to return to combat
-shield_run = 0 -- At which shield to run
-shield_return = 0 -- At which shield to return to combat
-aggressive = false -- Should pilot actively attack enemies?
-safe_distance = 300 -- Safe distance from enemies to jump
-land_planet = true -- Should land on planets?
-distressrate = 3 -- Number of ticks before calling for help
-distressmsg = nil -- Message when calling for help
+armour_run     = 0 -- At which damage to run at
+armour_return  = 0 -- At which armour to return to combat
+shield_run     = 0 -- At which shield to run
+shield_return  = 0 -- At which shield to return to combat
+aggressive     = false -- Should pilot actively attack enemies?
+safe_distance  = 300 -- Safe distance from enemies to jump
+land_planet    = true -- Should land on planets?
+distressrate   = 3 -- Number of ticks before calling for help
+distressmsg    = nil -- Message when calling for help
 
 
 -- Required control rate
-control_rate = 2
+control_rate   = 2
 
 -- Required "control" function
 function control ()
@@ -37,7 +37,8 @@ function control ()
 
    -- Don't stop boarding
    elseif task == "boardstop" then
-      return
+      -- We want to think in case another attacker gets close
+      attack_think()
 
    -- Think for attacking
    elseif task == "attack" then
