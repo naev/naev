@@ -176,7 +176,7 @@ int mesg_max = 5; /**< Maximum messages onscreen */
  */
 typedef struct Mesg_ {
    char str[MESG_SIZE_MAX]; /**< The message. */
-   double t; /* Timer related to message. */
+   double t; /**< Timer related to message. */
 } Mesg;
 static Mesg* mesg_stack; /**< Stack of mesages, will be of mesg_max size. */
 
