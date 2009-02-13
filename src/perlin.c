@@ -61,7 +61,7 @@
 
 
 /**
- * @brief Ponderates x between a and b.
+ * @brief Linearly Interpolates x between a and b.
  */
 #define LERP(a, b, x)      ( a + x * (b - a) )
 
