@@ -49,7 +49,6 @@
      * store
        * capacitator.png
        * heavy.png
-       * jammer0.png
        * jammer1.png
        * laser.png
        * medium.png
@@ -219,6 +218,7 @@
        * cargo_pod.png
        * afterburner.png
        * afterburner2.png
+       * jammer0.png
    * ship
      * kestrel.png
      * kestrel_comm.png
