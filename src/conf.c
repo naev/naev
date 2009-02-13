@@ -136,8 +136,13 @@ int conf_loadConfig ( const char* file )
    i = 0;
    d = 0.;
 
+   /* Check to see if file exists. */
+   if (!nfile_fileExists(file))
+      return nfile_touch(file);
+
+   /* Load the configuration. */
    lua_State *L = nlua_newState();
-   if (luaL_dofile(L, file) == 0) { /* configuration file exists */
+   if (luaL_dofile(L, file) == 0) {
 
       /* global */
       lua_getglobal(L, "data");
@@ -317,9 +322,9 @@ int conf_loadConfig ( const char* file )
       }
    }
    else { /* failed to load the config file */
+      WARN("Config file '%s' has invalid syntax:", file );
+      WARN("   %s", lua_tostring(L,-1));
       lua_close(L);
-      DEBUG("config file '%s' not found", file);
-      nfile_touch(file);
       return 1;
    }
 
