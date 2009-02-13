@@ -1748,7 +1748,8 @@ static int outfit_isMelee( Pilot *p, PilotOutfit *o )
 {
    (void) p;
    if (outfit_isBolt(o->outfit) || outfit_isBeam(o->outfit) ||
-         (o->outfit->type == OUTFIT_TYPE_MISSILE_DUMB))
+         (o->outfit->type == OUTFIT_TYPE_MISSILE_DUMB) ||
+         (o->outfit->type == OUTFIT_TYPE_TURRET_DUMB))
       return 1;
    return 0;
 }
@@ -1778,6 +1779,7 @@ static int ai_secondary( lua_State *L )
    int i, melee;
    char *str;
    const char *otype;
+   int r;
 
    po = NULL;
 
@@ -1826,6 +1828,9 @@ static int ai_secondary( lua_State *L )
       }
    }
 
+   /* Return 0 by default. */
+   r = 0;
+
    /* Check to see if we have a good secondary weapon. */
    if (po != NULL) {
       cur_pilot->secondary = po;
@@ -1833,29 +1838,39 @@ static int ai_secondary( lua_State *L )
       otype = outfit_getTypeBroad(po->outfit);
       lua_pushstring( L, otype );
 
-      /* Set special flags */
-      if (outfit_isLauncher(po->outfit)) {
-         if ((po->outfit->type != OUTFIT_TYPE_MISSILE_DUMB))
-            lua_pushstring( L, "Smart" );
-         else
-            lua_pushstring( L, "Dumb" );
+      r = 1;
 
+      /* Turret gets priority over launcher. */
+      if (outfit_isTurret(po->outfit)) {
+         lua_pushstring( L, "Turret" );
+         r += 1;
+      }
+
+      /* Now we check for launcher. */
+      if (outfit_isLauncher(po->outfit)) {
+
+         /* Only if r == 1 in case of dumb turrets. */
+         if (r == 1) {
+            if ((po->outfit->type != OUTFIT_TYPE_MISSILE_DUMB))
+               lua_pushstring( L, "Smart" );
+            else
+               lua_pushstring( L, "Dumb" );
+            r += 1;
+         }
+
+         /* Get ammo. */
          if (cur_pilot->ammo == NULL)
             lua_pushnumber( L, 0. );
          else
             lua_pushnumber( L, cur_pilot->ammo->quantity );
-         return 3;
-      }
-      else if (outfit_isTurret(po->outfit)) {
-         lua_pushstring( L, "Turret" );
-         return 2;
+         r += 1;
       }
 
-      return 1;
+      return r;
    }
 
-   /* Nothing found */
-   return 0;
+   /* Return what was found. */
+   return r;
 }
 
 
