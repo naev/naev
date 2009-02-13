@@ -1870,9 +1870,9 @@ int pilot_moveCargo( Pilot* dest, Pilot* src )
          sizeof(PilotCommodity) * src->ncommodities);
 
    /* Clean src. */
-   src->ncommodities = 0;
    if (src->commodities != NULL)
       free(src->commodities);
+   src->ncommodities = 0;
    src->commodities = NULL;
 
    return 0;
@@ -2350,7 +2350,7 @@ void pilot_free( Pilot* p )
       pilot_rmOutfit( p, p->outfits[0].outfit, p->outfits[0].quantity );
 
    /* Remove commodities. */
-   if (p->commodities != NULL)
+   while (p->commodities != NULL)
       pilot_rmCargo( p, p->commodities[0].commodity, p->commodities[0].quantity );
 
    /* Free name and title. */
