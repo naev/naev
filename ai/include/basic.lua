@@ -84,6 +84,12 @@ function runaway ()
    end
    ]]--
 
+   -- See if we have some turret to use
+   secondary, special = ai.secondary("melee")
+   if special == "Turret" then
+      ai.shoot(true)
+   end
+
    if ai.hasturrets() then
       dist = ai.dist( target )
       if dist < ai.getweaprange() then
