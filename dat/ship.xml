@@ -352,7 +352,9 @@
    <cap_cargo>250</cap_cargo>
   </caracteristics>
   <outfits>
-   <outfit quantity="2">Laser Turret</outfit>
+   <outfit quantity="1">Laser Turret</outfit>
+   <outfit quantity="1">EMP Grenade Launcher</outfit>
+   <outfit quantity="8">EMP Grenade</outfit>
   </outfits>
   <mounts>
    <mount x="25"  y="0" h="0">0</mount>
