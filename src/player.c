@@ -574,10 +574,6 @@ void player_cleanup (void)
 
    /* just in case purge the pilot stack */
    pilots_cleanAll();
-   if (player != NULL) { /* and the player */
-      pilot_free(player);
-      player = NULL;
-   }
 }
 
 
@@ -596,9 +592,9 @@ static void player_initSound (void)
    player_soundReserved = 1;
 
    /* Get sounds. */
-   snd_target = sound_get("target");
-   snd_jump = sound_get("jump");
-   snd_nav = sound_get("nav");
+   snd_target  = sound_get("target");
+   snd_jump    = sound_get("jump");
+   snd_nav     = sound_get("nav");
 }
 
 
