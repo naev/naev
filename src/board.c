@@ -262,7 +262,11 @@ static int board_trySteal( Pilot *p )
 
    /* Triggered self destruct. */
    if (RNGF() < 0.4) {
-      target->armour = -1.;
+      /* Don't actually kill. */
+      target->armour = 1.;
+      /* This will make the boarding ship take the possible faction hit. */
+      pilot_hit( target, NULL, p->id, DAMAGE_TYPE_KINETIC, 100. );
+      /* Return ship dead. */
       return -1;
    }
 
