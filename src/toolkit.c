@@ -62,7 +62,6 @@ glColour* toolkit_colDark  = &cGrey30; /**< Dark outline colour. */
 /* input */
 static void toolkit_mouseEvent( SDL_Event* event );
 static int toolkit_keyEvent( SDL_Event* event );
-static void toolkit_clearKey (void);
 /* focus */
 static int toolkit_isFocusable( Widget *wgt );
 static Widget* toolkit_getFocus( Window *wdw );
@@ -379,6 +378,9 @@ unsigned int window_create( const char* name,
       pause_game();
       gl_defViewport(); /* Reset the default viewport */
    }
+
+   /* Clear key repeat. */
+   toolkit_clearKey();
 
    return wid;
 }
@@ -1064,9 +1066,9 @@ static void toolkit_mouseEvent( SDL_Event* event )
 static void toolkit_regKey( SDLKey key )
 {
    if ((input_key==0) && (input_keyTime==0)) {
-      input_key = key;
-      input_keyTime = SDL_GetTicks();
-      input_keyCounter = 0;
+      input_key         = key;
+      input_keyTime     = SDL_GetTicks();
+      input_keyCounter  = 0;
    }
 }
 /**
@@ -1077,19 +1079,19 @@ static void toolkit_regKey( SDLKey key )
 static void toolkit_unregKey( SDLKey key )
 {
    if (input_key == key) {
-      input_key = 0;
-      input_keyTime = 0;
-      input_keyCounter = 0;
+      input_key         = 0;
+      input_keyTime     = 0;
+      input_keyCounter  = 0;
    }
 }
 /**
  * @brief Clears the registered keys.
  */
-static void toolkit_clearKey (void)
+void toolkit_clearKey (void)
 {
-   input_key = 0;
-   input_keyTime = 0;
-   input_keyCounter = 0;
+   input_key         = 0;
+   input_keyTime     = 0;
+   input_keyCounter  = 0;
 }
 /**
  * @brief Handles keyboard events.

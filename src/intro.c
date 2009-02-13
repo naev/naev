@@ -24,6 +24,7 @@
 #include "font.h"
 #include "music.h"
 #include "nstd.h"
+#include "toolkit.h"
 
 
 #define INTRO_FONT_SIZE    18. /**< Intro text font size. */
@@ -140,6 +141,9 @@ int intro_display( const char *text, const char *mus )
    /* Change music to intro music. */
    if (mus != NULL)
       music_choose(mus);
+
+   /* We need to clear key repeat to avoid infinite loops. */
+   toolkit_clearKey();
 
    /* Prepare for intro loop. */
    x = 100.;
