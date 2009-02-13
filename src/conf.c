@@ -302,6 +302,7 @@ int conf_loadConfig ( const char* file )
                   else if (strcmp(mod,"lmeta")==0)    m = KMOD_LMETA;
                   else if (strcmp(mod,"rmeta")==0)    m = KMOD_RMETA;
                   else if (strcmp(mod,"any")==0)      m = KMOD_ALL;
+                  else if (strcmp(mod,"none")==0)     m = 0;
                   else {
                      WARN("Unknown keybinding mod of type %s", mod);
                      m = KMOD_NONE;
