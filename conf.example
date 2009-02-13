@@ -1,8 +1,8 @@
 -- This is a comment
 -- Configuration file is written in lua
 
--- Data file.
---data = /path/to/data/file
+-- Data file.  Should have the actual ndata file in the path.
+--data = "/the/path/ndata"
 
 -- Dimensions.
 width  = 1280
