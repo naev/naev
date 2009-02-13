@@ -1380,10 +1380,12 @@ void player_targetHostile (void)
 
 /**
  * @brief Cycles to next target.
+ *
+ *    @param mode Mode to target. 0 is normal, 1 is hostiles.
  */
-void player_targetNext (void)
+void player_targetNext( int mode )
 {
-   player->target = pilot_getNextID(player->target);
+   player->target = pilot_getNextID(player->target, mode);
 
    if (player->target != PLAYER_ID)
       player_playSound( snd_target, 1 );
@@ -1392,10 +1394,12 @@ void player_targetNext (void)
 
 /**
  * @brief Cycles to previous target.
+ *
+ *    @param mode Mode to target. 0 is normal, 1 is hostiles.
  */
-void player_targetPrev (void)
+void player_targetPrev( int mode )
 {
-   player->target = pilot_getPrevID(player->target);
+   player->target = pilot_getPrevID(player->target, mode);
 
    if (player->target != PLAYER_ID)
       player_playSound( snd_target, 1 );

@@ -49,7 +49,8 @@ const char *keybindNames[] = {
    /* Movement. */
    "accel", "left", "right", "reverse", "afterburn",
   /* Targetting. */
-   "target", "target_prev", "target_nearest", "target_hostile",
+   "target_next", "target_prev", "target_nearest",
+   "target_nextHostile", "target_prevHostile", "target_hostile",
    /* Fighting. */
    "primary", "face", "board", "safety",
    /* Weapon selection. */
@@ -81,6 +82,8 @@ const char *keybindDescription[] = {
    "Cycles through ship targets.",
    "Cycles backwards through ship targets.",
    "Targets the nearest non-disabled ship.",
+   "Cycles through hostile ship targets.",
+   "Cycles backwards through hostile ship targets."
    "Targets the nearest hostile ship.",
    /* Fighting. */
    "Fires your primary weapons.",
@@ -167,9 +170,11 @@ void input_setDefault (void)
    input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, KMOD_ALL );
    input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, KMOD_ALL );
    /* Targetting. */
-   input_setKeybind( "target", KEYBIND_KEYBOARD, SDLK_TAB, KMOD_NONE );
+   input_setKeybind( "target_next", KEYBIND_KEYBOARD, SDLK_TAB, KMOD_NONE );
    input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_TAB, KMOD_LCTRL );
    input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_t, KMOD_NONE );
+   input_setKeybind( "target_nextHostile", KEYBIND_KEYBOARD, SDLK_r, KMOD_LCTRL );
+   input_setKeybind( "target_prevHostile", KEYBIND_KEYBOARD, SDLK_UNKNOWN, KMOD_NONE );
    input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, KMOD_NONE );
    /* Combat. */
    input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, KMOD_ALL );
@@ -533,12 +538,16 @@ static void input_key( int keynum, double value, double kabs )
       else if (value==KEY_RELEASE) 
          player_rmFlag(PLAYER_PRIMARY);
    /* targetting */
-   } else if (INGAME() && NODEAD() && KEY("target")) {
-      if (value==KEY_PRESS) player_targetNext();
+   } else if (INGAME() && NODEAD() && KEY("target_next")) {
+      if (value==KEY_PRESS) player_targetNext(0);
    } else if (INGAME() && NODEAD() && KEY("target_prev")) {
-      if (value==KEY_PRESS) player_targetPrev();
+      if (value==KEY_PRESS) player_targetPrev(0);
    } else if (INGAME() && NODEAD() && KEY("target_nearest")) {
       if (value==KEY_PRESS) player_targetNearest();
+   } else if (INGAME() && NODEAD() && KEY("target_nextHostile")) {
+      if (value==KEY_PRESS) player_targetNext(1);
+   } else if (INGAME() && NODEAD() && KEY("target_prevHostile")) {
+      if (value==KEY_PRESS) player_targetPrev(1);
    } else if (INGAME() && NODEAD() && KEY("target_hostile")) {
       if (value==KEY_PRESS) player_targetHostile();
    /* face the target */

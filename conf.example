@@ -89,9 +89,11 @@ fullscreen = 1
 --afterburn      = { type = "keyboard", key = 0 }
 
 -- Targetting.
---target         = { type = "keyboard", key = "tab" }
+--target_next    = { type = "keyboard", key = "tab" }
 --target_prev    = { type = "keyboard", key = "tab", mod = "lctrl" }
 --target_nearest = { type = "keyboard", key = "T" }
+--target_nextHostile = { type = "keyboard", key = "R", mod = "lctrl" }
+--target_prevHostile = { type = "keyboard", key = 0 }
 --target_hostile = { type = "keyboard", key = "R" }
 
 -- Fighting.

@@ -127,8 +127,8 @@ double player_faceHyperspace (void);
  * keybind actions
  */
 void player_targetHostile (void);
-void player_targetNext (void);
-void player_targetPrev (void);
+void player_targetNext( int mode );
+void player_targetPrev( int mode );
 void player_targetNearest (void);
 void player_targetEscort( int prev );
 void player_secondaryNext (void);

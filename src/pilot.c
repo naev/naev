@@ -109,9 +109,10 @@ static int pilot_getStackPos( const unsigned int id )
  * @brief Gets the next pilot based on id.
  *
  *    @param id ID of current pilot.
+ *    @param mode Method to use when cycling.  0 is normal, 1 is hostiles.
  *    @return ID of next pilot or PLAYER_ID if no next pilot.
  */
-unsigned int pilot_getNextID( const unsigned int id )
+unsigned int pilot_getNextID( const unsigned int id, int mode )
 {
    int m, p;
 
@@ -128,10 +129,22 @@ unsigned int pilot_getNextID( const unsigned int id )
 
    /* Get first one in range. */
    p = m+1;
-   while (p < pilot_nstack) {
-      if (pilot_inRange( player, pilot_stack[p] ))
-         return pilot_stack[p]->id;
-      p++;
+   if (mode == 0) {
+      while (p < pilot_nstack) {
+         if (pilot_inRange( player, pilot_stack[p] ))
+            return pilot_stack[p]->id;
+         p++;
+      }
+   }
+   /* Get first hostile in range. */
+   if (mode == 1) {
+      while (p < pilot_nstack) {
+         if (pilot_inRange( player, pilot_stack[p] ) &&
+               (pilot_isFlag(pilot_stack[p],PILOT_HOSTILE) ||
+                  areEnemies( FACTION_PLAYER, pilot_stack[p]->faction)))
+            return pilot_stack[p]->id;
+         p++;
+      }
    }
 
    /* None found. */
@@ -145,7 +158,7 @@ unsigned int pilot_getNextID( const unsigned int id )
  *    @param id ID of the current pilot.
  *    @return ID of previous pilot or PLAYER_ID if no previous pilot.
  */
-unsigned int pilot_getPrevID( const unsigned int id )
+unsigned int pilot_getPrevID( const unsigned int id, int mode )
 {
    int m, p;
 
@@ -165,10 +178,22 @@ unsigned int pilot_getPrevID( const unsigned int id )
       p = m-1;
 
    /* Get first one in range. */
-   while (p >= 0) {
-      if (pilot_inRange( player, pilot_stack[p] ))
-         return pilot_stack[p]->id;
-      p--;
+   if (mode == 0) {
+      while (p >= 0) {
+         if (pilot_inRange( player, pilot_stack[p] ))
+            return pilot_stack[p]->id;
+         p--;
+      }
+   }
+   /* Get first hostile in range. */
+   else if (mode == 1) {
+      while (p >= 0) {
+         if (pilot_inRange( player, pilot_stack[p] ) &&
+               (pilot_isFlag(pilot_stack[p],PILOT_HOSTILE) ||
+                  areEnemies( FACTION_PLAYER, pilot_stack[p]->faction)))
+            return pilot_stack[p]->id;
+         p--;
+      }
    }
 
    /* None found. */
