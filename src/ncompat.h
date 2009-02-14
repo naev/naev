@@ -9,14 +9,38 @@
 
 
 /* System specific. */
+/**
+ * @brief System is Linux-class.
+ */
 #define HAS_LINUX    (defined(linux) || defined(__linux) || defined(__linux__))
+/**
+ * @brief System is FreeBSD.
+ */
 #define HAS_FREEBSD  (defined(__FreeBSD__))
+/**
+ * @brief System is Windows-class.
+ */
 #define HAS_WIN32    (defined(_WIN32))
+/**
+ * @brief System is Mac OS X.
+ */
+#define HAS_MACOSX   (defined(__APPLE__) && defined(__MACH__))
 
 
 /* Standard specific. */
+/**
+ * @brief Whether or not the system is compliant to POSIX.1.
+ *
+ * @note Most systems don't actually follow it fully so they don't declare that
+ *       they support it.  We consider unix good enough.
+ */
 #define HAS_POSIX    HAS_UNIX /* (defined(_POSIX_VERSION) && (_POSIX_VERSION >= 200112L)) */
-#define HAS_UNIX     (defined(__unix__) || defined(__unix))
+/**
+ * @brief Whether or not the system follows unix standards like $HOME.
+ *
+ * @note Mac OS X does not define these macros, but does follow unix somewhat.
+ */
+#define HAS_UNIX     (defined(__unix__) || defined(__unix) || HAS_MACOSX)
 
 
 #endif /* NCOMPAT_H */
