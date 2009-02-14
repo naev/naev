@@ -83,11 +83,12 @@ endif # LINUX
 else # DEBUG
 CFLAGS += -O2 -funroll-loops -pipe -std=c99 -ansi
 
-ifeq ($(OS),MACOSX)
-LDGL   += -framework OpenGL
-endif # MACOSX
-
 endif # DEBUG
+
+ifeq ($(OS),MACOSX)
+LDFLAGS += 	-framework OpenGL \
+				-L/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries 
+endif # MACOSX
 
 
 #
