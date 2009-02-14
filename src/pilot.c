@@ -1044,8 +1044,8 @@ static void pilot_setSecondary( Pilot* p, Outfit* o )
 
    /* no need for ammo if there is no secondary */
    if (o == NULL) {
-      p->secondary = NULL;
-      p->ammo = NULL;
+      p->secondary   = NULL;
+      p->ammo        = NULL;
       return;
    }
 
@@ -1058,8 +1058,8 @@ static void pilot_setSecondary( Pilot* p, Outfit* o )
       }
    }
 
-   p->secondary = NULL;
-   p->ammo = NULL;
+   p->secondary   = NULL;
+   p->ammo        = NULL;
 }
 
 
@@ -1887,7 +1887,7 @@ int pilot_moveCargo( Pilot* dest, Pilot* src )
    /* Allocate new space. */
    i = dest->ncommodities;
    dest->ncommodities += src->ncommodities;
-   dest->commodities = realloc( dest->commodities,
+   dest->commodities   = realloc( dest->commodities,
          sizeof(PilotCommodity)*dest->ncommodities);
   
    /* Copy over. */
@@ -1898,7 +1898,7 @@ int pilot_moveCargo( Pilot* dest, Pilot* src )
    if (src->commodities != NULL)
       free(src->commodities);
    src->ncommodities = 0;
-   src->commodities = NULL;
+   src->commodities  = NULL;
 
    return 0;
 }
@@ -2047,18 +2047,22 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
             pilot->commodities[i].quantity );
 
    /* remove cargo */
-   pilot->cargo_free += pilot->commodities[i].quantity;
-   pilot->solid->mass -= pilot->commodities[i].quantity;
-   memmove( &pilot->commodities[i], &pilot->commodities[i+1],
-         sizeof(PilotCommodity) * (pilot->ncommodities-i-1) );
+   pilot->cargo_free    += pilot->commodities[i].quantity;
+   pilot->solid->mass   -= pilot->commodities[i].quantity;
    pilot->ncommodities--;
-   if (pilot->ncommodities == 0) {
-      free( pilot->commodities );
-      pilot->commodities = NULL;
+   if (pilot->ncommodities <= 0) {
+      if (pilot->commodities != NULL) {
+         free( pilot->commodities );
+         pilot->commodities   = NULL;
+      }
+      pilot->ncommodities  = 0;
    }
-   else
+   else {
+      memmove( &pilot->commodities[i], &pilot->commodities[i+1],
+            sizeof(PilotCommodity) * (pilot->ncommodities-i) );
       pilot->commodities = realloc( pilot->commodities,
             sizeof(PilotCommodity) * pilot->ncommodities );
+   }
 
    return 0;
 }
@@ -2086,21 +2090,25 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
             q = pilot->commodities[i].quantity;
 
             /* remove cargo */
-            memmove( pilot->commodities+i, pilot->commodities+i+1,
-                  sizeof(PilotCommodity) * (pilot->ncommodities-i-1) );
             pilot->ncommodities--;
-            if (pilot->ncommodities == 0) {
-               free( pilot->commodities );
-               pilot->commodities = NULL;
+            if (pilot->ncommodities <= 0) {
+               if (pilot->commodities != NULL) {
+                  free( pilot->commodities );
+                  pilot->commodities   = NULL;
+               }
+               pilot->ncommodities  = 0;
             }
-            else
+            else {
+               memmove( &pilot->commodities[i], &pilot->commodities[i+1],
+                     sizeof(PilotCommodity) * (pilot->ncommodities-i) );
                pilot->commodities = realloc( pilot->commodities,
                      sizeof(PilotCommodity) * pilot->ncommodities );
+            }
          }
          else
             pilot->commodities[i].quantity -= q;
-         pilot->cargo_free += q;
-         pilot->solid->mass -= q;
+         pilot->cargo_free    += q;
+         pilot->solid->mass   -= q;
          return q;
       }
    return 0; /* pilot didn't have it */
