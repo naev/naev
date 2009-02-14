@@ -1536,13 +1536,13 @@ static int pilot_setOutfitMounts( Pilot *p, PilotOutfit* po, int o, int q )
       }
 
       /* Default to 0. */
-      k = 0;
-      min = INT_MAX;
+      k     = 0;
+      min   = INT_MAX;
       /* Find mount with fewest spots. */
       for (i=1; i<p->ship->nmounts; i++) {
          if (p->mounted[i] < min) {
-            k = i;
-            min = p->mounted[i];
+            k     = i;
+            min   = p->mounted[i];
          }
       }
       /* Add the mount point. */
@@ -1694,20 +1694,26 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
             osec = (pilot->secondary) ? pilot->secondary->outfit : NULL;
 
             /* free some memory if needed. */
-            if (po->mounts != NULL)
+            if (po->mounts != NULL) {
                free(po->mounts);
+               po->mounts = NULL;
+            }
 
             /* remove the outfit */
-            memmove( &pilot->outfits[i], &pilot->outfits[i+1],
-                  sizeof(PilotOutfit) * (pilot->noutfits-i-1) );
             pilot->noutfits--;
-            if (pilot->noutfits == 0) {
-                free(pilot->outfits);
-                pilot->outfits = NULL;
+            if (pilot->noutfits <= 0) {
+               if (pilot->outfits != NULL) {
+                   free(pilot->outfits);
+                   pilot->outfits = NULL;
+               }
+               pilot->noutfits = 0;
             }
-            else
-                pilot->outfits = realloc( pilot->outfits,
-                      sizeof(PilotOutfit) * (pilot->noutfits) );
+            else {
+               memmove( &pilot->outfits[i], &pilot->outfits[i+1],
+                     sizeof(PilotOutfit) * (pilot->noutfits-i) );
+               pilot->outfits = realloc( pilot->outfits,
+                     sizeof(PilotOutfit) * (pilot->noutfits) );
+            }
 
             /* set secondary  and afterburner */
             pilot_setSecondary( pilot, osec );
