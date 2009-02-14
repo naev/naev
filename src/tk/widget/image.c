@@ -113,3 +113,59 @@ glTexture* window_getImage( const unsigned int wid, char* name )
    return (wgt) ? wgt->dat.img.image : NULL;
 }
 
+
+/**
+ * Modifies an existing image's image.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget to modify image of.
+ *    @param image New image to set.
+ */
+void window_modifyImage( const unsigned int wid,
+      char* name, glTexture* image )
+{  
+   Widget *wgt;
+   
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+   
+   /* Check the type. */
+   if (wgt->type != WIDGET_IMAGE) {
+      WARN("Not modifying image on non-image widget '%s'.", name);
+      return;
+   }
+   
+   /* Set the image. */
+   wgt->dat.img.image = image;
+}
+
+
+/**
+ * Modifies an existing image's colour.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget to modify image colour of.
+ *    @param colour New colour to use.
+ */
+void window_imgColour( const unsigned int wid,
+      char* name, glColour* colour )
+{  
+   Widget *wgt;
+   
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+   
+   /* Check the type. */
+   if (wgt->type != WIDGET_IMAGE) {
+      WARN("Not modifying image on non-image widget '%s'.", name);
+      return;
+   }
+   
+   /* Set the colour. */
+   wgt->dat.img.colour = colour;
+}
+

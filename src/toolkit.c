@@ -231,62 +231,6 @@ void window_moveWidget( const unsigned int wid,
 
 
 /**
- * Modifies an existing image's image.
- *
- *    @param wid ID of the window to get widget from.
- *    @param name Name of the widget to modify image of.
- *    @param image New image to set.
- */
-void window_modifyImage( const unsigned int wid,
-      char* name, glTexture* image )
-{
-   Widget *wgt;
-
-   /* Get the widget. */
-   wgt = window_getwgt(wid,name);
-   if (wgt == NULL)
-      return;
-
-   /* Check the type. */
-   if (wgt->type != WIDGET_IMAGE) {
-      WARN("Not modifying image on non-image widget '%s'.", name);
-      return;
-   }
-
-   /* Set the image. */
-   wgt->dat.img.image = image;
-}
-
-
-/**
- * Modifies an existing image's colour.
- *
- *    @param wid ID of the window to get widget from.
- *    @param name Name of the widget to modify image colour of.
- *    @param colour New colour to use.
- */
-void window_imgColour( const unsigned int wid,
-      char* name, glColour* colour )
-{
-   Widget *wgt;
-
-   /* Get the widget. */
-   wgt = window_getwgt(wid,name);
-   if (wgt == NULL)
-      return;
-
-   /* Check the type. */
-   if (wgt->type != WIDGET_IMAGE) {
-      WARN("Not modifying image on non-image widget '%s'.", name);
-      return;
-   }
-
-   /* Set the colour. */
-   wgt->dat.img.colour = colour;
-}
-
-
-/**
  * @brief Checks to see if a window exists.
  *
  *    @param wdwname Name of the window to check.
@@ -342,17 +286,21 @@ unsigned int window_create( const char* name,
 
    wdw = &windows[nwindows];
 
-   wdw->id = wid;
-   wdw->name = strdup(name);
+   wdw->id           = wid;
+   wdw->name         = strdup(name);
 
    /* Sane defaults. */
-   wdw->hidden = 0;
-   wdw->focus = -1;
-   wdw->accept_fptr = NULL;
-   wdw->cancel_fptr = NULL;
+   wdw->hidden       = 0;
+   wdw->focus        = -1;
+   wdw->accept_fptr  = NULL;
+   wdw->cancel_fptr  = NULL;
 
-   wdw->w = (double) w;
-   wdw->h = (double) h;
+   /* Widgets */
+   wdw->widgets      = NULL;
+   wdw->nwidgets     = 0;
+
+   wdw->w            = (double) w;
+   wdw->h            = (double) h;
    /* x pos */
    if (x==-1) /* center */
       wdw->x = (SCREEN_W - wdw->w)/2.;
@@ -365,10 +313,6 @@ unsigned int window_create( const char* name,
    else if (y < 0)
       wdw->y = SCREEN_H - wdw->h + (double) y;
    else wdw->y = (double) y;
-
-   /* Widgets */
-   wdw->widgets = NULL;
-   wdw->nwidgets = 0;
 
    nwindows++;
    
@@ -387,7 +331,7 @@ unsigned int window_create( const char* name,
 
 
 /**
- * @ rief Sets the default accept function of the window.
+ * @brief Sets the default accept function of the window.
  *
  * This function is called whenever 'enter' is pressed and the current widget
  *  does not catch it.  NULL disables the accept function.
