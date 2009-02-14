@@ -1633,10 +1633,14 @@ static void space_renderStars( const double dt )
             stars[i].y -= player->solid->vel.y/b*dt;
 
             /* check boundries */
-            if (stars[i].x > SCREEN_W + STAR_BUF) stars[i].x = -STAR_BUF;
-            else if (stars[i].x < -STAR_BUF) stars[i].x = SCREEN_W + STAR_BUF;
-            if (stars[i].y > SCREEN_H + STAR_BUF) stars[i].y = -STAR_BUF;
-            else if (stars[i].y < -STAR_BUF) stars[i].y = SCREEN_H + STAR_BUF;
+            if (stars[i].x > SCREEN_W + STAR_BUF)
+               stars[i].x -= SCREEN_W + 2*STAR_BUF;
+            else if (stars[i].x < -STAR_BUF)
+               stars[i].x += SCREEN_W + 2*STAR_BUF;
+            if (stars[i].y > SCREEN_H + STAR_BUF)
+               stars[i].y -= SCREEN_H + 2*STAR_BUF;
+            else if (stars[i].y < -STAR_BUF)
+               stars[i].y += SCREEN_H + 2*STAR_BUF;
 
             /* render */
             if ((stars[i].x < SCREEN_W) && (stars[i].x > 0) &&
