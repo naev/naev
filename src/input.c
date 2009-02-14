@@ -83,7 +83,7 @@ const char *keybindDescription[] = {
    "Cycles backwards through ship targets.",
    "Targets the nearest non-disabled ship.",
    "Cycles through hostile ship targets.",
-   "Cycles backwards through hostile ship targets."
+   "Cycles backwards through hostile ship targets.",
    "Targets the nearest hostile ship.",
    /* Fighting. */
    "Fires your primary weapons.",
