@@ -6,6 +6,6 @@ aggressive = true
 land_planet = false
 
 function create ()
-   mem.bribe_no = "No response."
+   mem.comm_no = "No response."
    attack_choose()
 end

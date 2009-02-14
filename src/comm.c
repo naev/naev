@@ -37,8 +37,8 @@ static glTexture *comm_graphic = NULL; /**< Pilot's graphic. */
 /* Static. */
 static void comm_close( unsigned int wid, char *unused );
 static void comm_bribe( unsigned int wid, char *unused );
-static unsigned int comm_getBribeAmount (void);
-static char* comm_getBribeString( char *str );
+static int comm_getNumber( double *val, char* str );
+static const char* comm_getString( char *str );
 /* Extern. */
 extern void ai_setPilot( Pilot *p ); /**< from ai.c */
 
@@ -54,6 +54,7 @@ int comm_open( unsigned int pilot )
    int x,y, w;
    glTexture *logo;
    char *name, *stand;
+   const char *msg;
    unsigned int wid;
    glColour *c;
 
@@ -65,6 +66,14 @@ int comm_open( unsigned int pilot )
    /* Must not be disabled. */
    if (pilot_isFlag(comm_pilot, PILOT_DISABLED)) {
       player_message("%s does not respond.", comm_pilot->name);
+      return 0;
+   }
+
+   /* Check to see if pilot wants to communicate. */
+   msg = comm_getString( "comm_no" );   
+   if (msg != NULL) {
+      player_message( msg );
+      return 0;
    }
 
    /* Get graphics and text. */
@@ -90,10 +99,12 @@ int comm_open( unsigned int pilot )
 
    /* Create the window. */
    wid = window_create( "Communication Channel", -1, -1,
-         20 + comm_graphic->w + 20 + BUTTON_WIDTH + 20, 30 + comm_graphic->h + y + 5 + 20 );
+         20 + comm_graphic->w + 20 + BUTTON_WIDTH + 20,
+         30 + comm_graphic->h + y + 5 + 20 );
 
    /* Create the ship image. */
-   window_addRect( wid, 20, -30, comm_graphic->w, comm_graphic->h + y + 5, "rctShip", &cGrey10, 1 );
+   window_addRect( wid, 20, -30, comm_graphic->w, comm_graphic->h + y + 5,
+         "rctShip", &cGrey10, 1 );
    window_addImage( wid, 20, -30, "imgShip", comm_graphic, 0 );
 
    /* Faction logo. */
@@ -160,18 +171,17 @@ static void comm_bribe( unsigned int wid, char *unused )
 {
    (void) unused;
    int answer;
+   double d;
    unsigned int price;
-   char *str;
+   const char *str;
    lua_State *L;
 
    /* Set up for the comm_get* functions. */
    ai_setPilot( comm_pilot );
 
-   price = comm_getBribeAmount();
-
    /* Unbribeable. */
    if (price == 0) {
-      str = comm_getBribeString( "bribe_no" );
+      str = comm_getString( "bribe_no" );
       if (str == NULL)
          dialogue_msg("Bribe Pilot", "\"Money won't save your hide now!\"");
       else
@@ -179,8 +189,16 @@ static void comm_bribe( unsigned int wid, char *unused )
       return;
    }
 
+   /* Get amount pilot wants. */
+   if (comm_getNumber( &d, "bribe" )) {
+      WARN("Pilot '%s' accepts bribes but doesn't give price!", comm_pilot->name );
+      d = 9.;
+   }
+   price = (unsigned int) d;
+
+
    /* Bribe message. */
-   str = comm_getBribeString( "bribe_prompt" );
+   str = comm_getString( "bribe_prompt" );
    if (str == NULL) {
       answer = dialogue_YesNo( "Bribe Pilot", "\"I'm gonna need at least %d credits to not leave you as a hunk of floating debris.\"\n\nPay %d credits?", price, price );
    }
@@ -199,7 +217,7 @@ static void comm_bribe( unsigned int wid, char *unused )
    }
    else {
       player->credits -= price;
-      str = comm_getBribeString( "bribe_paid" );
+      str = comm_getString( "bribe_paid" );
       if (str == NULL)
          dialogue_msg("Bribe Pilot", "\"Pleasure to do business with you.\"");
       else
@@ -224,28 +242,33 @@ static void comm_bribe( unsigned int wid, char *unused )
 /**
  * @brief Gets the amount the communicating pilot wants as a bribe.
  *
- * Note: It's a hack around the AI stuff, probably not too good of an idea.
+ * Valid targets for now are:
+ *    - "bribe": amount pilot wants to be paid. 
  *
- *    @return Amount pilot wants.
+ *    @param[out] val Value of the number gotten.
+ *    @param str Name of number to get.
+ *    @return 0 for success, 1 on error (including not found).
  */
-static unsigned int comm_getBribeAmount (void)
+static int comm_getNumber( double *val, char* str )
 {
+   int ret;
    lua_State *L;
-   unsigned int bribe;
 
    /* Set up the state. */
    L = comm_pilot->ai->L;
    lua_getglobal( L, "mem" );
 
    /* Get the bribe amount. */
-   lua_getfield( L, -1, "bribe" );
+   lua_getfield( L, -1, str );
    /* If not number consider unbribeable. */
    if (!lua_isnumber(L, -1))
-      bribe = 0;
-   else
-      bribe = (unsigned int) lua_tonumber(L, -1);
+      ret = 1;
+   else {
+      *val = lua_tonumber(L, -1);
+      ret = 0;
+   }
    lua_pop(L, 2);
-   return bribe;
+   return ret;
 }
 
 
@@ -253,17 +276,18 @@ static unsigned int comm_getBribeAmount (void)
  * @brief Gets a string from the pilot's memory.
  *
  * Valid targets are:
- *    * bribe_no: unbribe message
- *    * bribe_prompt: bribe prompt
- *    * bribe_paid: paid message
+ *    - comm_no: message of communication failure.
+ *    - bribe_no: unbribe message
+ *    - bribe_prompt: bribe prompt
+ *    - bribe_paid: paid message
  *
  *    @param str String to get.
  *    @return String matching str.
  */
-static char* comm_getBribeString( char *str )
+static const char* comm_getString( char *str )
 {
    lua_State *L;
-   char *ret;
+   const char *ret;
 
    /* Get memory table. */
    L = comm_pilot->ai->L;
@@ -274,7 +298,7 @@ static char* comm_getBribeString( char *str )
    if (!lua_isstring(L, -1))
       ret = NULL;
    else
-      ret = (char*) lua_tostring(L, -1);
+      ret = lua_tostring(L, -1);
    lua_pop(L, 2);
 
    return ret;
