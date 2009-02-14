@@ -113,20 +113,20 @@ function choose_land ()
    class = planet:class()
 
    if class == "M" then
-      mus = "agriculture"
+      mus = { "agriculture" }
    elseif name == "Anecu" then -- TODO we need a way to differenciate aquatics
-      mus = "ocean"
+      mus = { "ocean" }
    elseif class == "P" then
-      mus = "snow"
+      mus = { "snow" }
    else
       if planet:services() > 0 then
-         mus = "cosmostation"
+         mus = { "cosmostation", "upbeat" }
       else
-         mus = "agriculture"
+         mus = { "agriculture" }
       end
    end
 
-   music.load( mus )
+   music.load( mus[ rnd.rnd(1, #mus) ] )
    music.play()
 end
 
@@ -138,7 +138,7 @@ function choose_takeoff ()
       return
    end
    takeoff = { "liftoff", "launch2", "launch3chatstart" }
-   music.load( takeoff[ rnd.int(1,#takeoff) ])
+   music.load( takeoff[ rnd.rnd(1,#takeoff) ])
    music.play()
 end
 
@@ -229,7 +229,7 @@ function choose_ambient ()
       end
 
       -- Load music and play
-      music.load( ambient[ rnd.int(1,#ambient) ] )
+      music.load( ambient[ rnd.rnd(1,#ambient) ] )
       music.play()
    end
 end
@@ -254,7 +254,7 @@ function choose_combat ()
       combat = { "galacticbattle" }
    end
 
-   music.load( combat[ rnd.int(1,#combat) ] )
+   music.load( combat[ rnd.rnd(1,#combat) ] )
    music.play()
 end
 
