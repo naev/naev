@@ -895,7 +895,8 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    Pilot *pshooter;
 
    /* Defaults. */
-   dam_mod = 0.;
+   pshooter = NULL;
+   dam_mod  = 0.;
 
    /* calculate the damage */
    outfit_calcDamage( &damage_shield, &damage_armour, &knockback, dtype, damage );
@@ -932,7 +933,8 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
          if (h == 1) /* Horrible hack to make sure player can hit it if it was hostile. */
             pilot_setFlag(p, PILOT_HOSTILE);
 
-         if (pshooter == player) {
+         pshooter = pilot_get(shooter);
+         if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
             /* About 3 for a llama, 26 for hawking. */
             mod = pow(p->ship->mass,0.4) - 1.;
 
@@ -954,7 +956,8 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
             pilot_dead(p);
 
             /* adjust the combat rating based on pilot mass and ditto faction */
-            pshooter = pilot_get(shooter);
+            if (pshooter == NULL)
+               pshooter = pilot_get(shooter);
             if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
 
                /* About 6 for a llama, 52 for hawking. */
