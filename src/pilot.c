@@ -2084,8 +2084,7 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
    /* check if pilot has it */
    q = quantity;
    for (i=0; i<pilot->ncommodities; i++)
-      /* doesn't remove mission cargo */
-      if (!pilot->commodities[i].id && (pilot->commodities[i].commodity == cargo)) {
+      if (pilot->commodities[i].commodity == cargo) {
          if (quantity >= pilot->commodities[i].quantity) {
             q = pilot->commodities[i].quantity;
 
