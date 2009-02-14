@@ -121,7 +121,8 @@ const char *keybindDescription[] = {
    "Pauses the game.",
    "Toggles 2x speed modifier.",
    "Opens the small ingame menu.",
-   "Opens the information menu."
+   "Opens the information menu.",
+   NULL /* To match sentinel. */
 }; /**< Descriptions of the keybindings.  Should be in the same position as the
         matching keybinding name. */
 
@@ -223,6 +224,15 @@ void input_init (void)
 {  
    Keybind *temp;
    int i;
+
+#ifdef DEBUGGING
+   /* To avoid stupid segfaults like in the 0.3.6 release. */
+   if (sizeof(keybindNames) != sizeof(keybindDescription)) {
+      WARN("Keybind names and descriptions aren't of the same size!");
+      WARN("   %lu descriptions for %lu names",
+            sizeof(keybindNames), sizeof(keybindDescription));
+   }
+#endif /* DEBUGGING */
 
 #if SDL_VERSION_ATLEAST(1,3,0)
    /* Window. */
