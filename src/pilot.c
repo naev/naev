@@ -1524,7 +1524,7 @@ static int pilot_setOutfitMounts( Pilot *p, PilotOutfit* po, int o, int q )
    int i, n, k, min;
 
    /* Grow the memory. */
-   po->mounts = realloc(po->mounts, o+q * sizeof(int));
+   po->mounts = realloc(po->mounts, (o+q) * sizeof(int));
 
    /* Has to be done for each outfit added. */
    for (n=o; n < o+q; n++) {
@@ -1545,6 +1545,7 @@ static int pilot_setOutfitMounts( Pilot *p, PilotOutfit* po, int o, int q )
             min   = p->mounted[i];
          }
       }
+
       /* Add the mount point. */
       po->mounts[n] = k;
       p->mounted[k]++;
