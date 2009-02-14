@@ -10,7 +10,7 @@ export DEBUG
 OS := LINUX
 #OS := FREEBSD
 #OS := WIN32
-#OS := MACOS
+#OS := MACOSX
 export OS
 
 
@@ -82,6 +82,11 @@ endif # LINUX
 
 else # DEBUG
 CFLAGS += -O2 -funroll-loops -pipe -std=c99 -ansi
+
+ifeq ($(OS),MACOSX)
+LDGL   += -framework OpenGL
+endif # MACOSX
+
 endif # DEBUG
 
 
