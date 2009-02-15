@@ -108,7 +108,7 @@
    <outfit quantity="2">Laser Cannon</outfit>
    <outfit quantity="1">Laser Turret</outfit>
    <outfit quantity="2">Headhunter Launcher</outfit>
-   <outfit quantity="40">Headhunter</outfit>
+   <outfit quantity="40">Headhunter Missile</outfit>
   </outfits>
   <mounts>
    <mount x="15" y="0" h="-8">0</mount>
@@ -149,7 +149,7 @@
    <outfit quantity="2">Ion Cannon</outfit>
    <outfit quantity="1">Heavy Ion Turret</outfit>
    <outfit quantity="2">Headhunter Launcher</outfit>
-   <outfit quantity="20">Headhunter</outfit>
+   <outfit quantity="20">Headhunter Missile</outfit>
   </outfits>
   <mounts>
    <mount x="15" y="0" h="-8">0</mount>
@@ -189,7 +189,7 @@
   <outfits>
    <outfit quantity="3">Laser Turret</outfit>
    <outfit quantity="2">Headhunter Launcher</outfit>
-   <outfit quantity="40">Headhunter</outfit>
+   <outfit quantity="40">Headhunter Missile</outfit>
   </outfits>
   <mounts>
    <mount x="45"  y="0" h="2">0</mount>
@@ -231,7 +231,7 @@
   <outfits>
    <outfit quantity="3">Heavy Ion Turret</outfit>
    <outfit quantity="2">Headhunter Launcher</outfit>
-   <outfit quantity="40">Headhunter</outfit>
+   <outfit quantity="40">Headhunter Missile</outfit>
   </outfits>
   <mounts>
    <mount x="45"  y="0" h="2">0</mount>
@@ -313,7 +313,7 @@
   <outfits>
    <outfit quantity="2">Ripper MK2</outfit>
    <outfit quantity="1">Headhunter Launcher</outfit>
-   <outfit quantity="6">Headhunter</outfit>
+   <outfit quantity="6">Headhunter Missile</outfit>
    <outfit quantity="1">Milspec Jammer</outfit>
   </outfits>
   <mounts>
@@ -470,7 +470,7 @@
    <outfit quantity="2">Heavy Ion Turret</outfit>
    <outfit quantity="2">Laser Turret</outfit>
    <outfit quantity="2">Headhunter Launcher</outfit>
-   <outfit quantity="40">Headhunter</outfit>
+   <outfit quantity="40">Headhunter Missile</outfit>
   </outfits>
   <mounts>
    <mount x="35" y="0"   h="-2">0</mount>
@@ -559,7 +559,7 @@
    <outfit quantity="1">Laser Cannon</outfit>
    <outfit quantity="2">Plasma Blaster</outfit>
    <outfit quantity="1">Headhunter Launcher</outfit>
-   <outfit quantity="10">Headhunter</outfit>
+   <outfit quantity="10">Headhunter Missile</outfit>
   </outfits>
   <mounts>
    <mount x="15"  y="0" h="2">0</mount>
@@ -642,7 +642,7 @@
    <outfit quantity="1">Ripper MK2</outfit>
    <outfit quantity="2">Ion Cannon</outfit>
    <outfit quantity="1">Headhunter Launcher</outfit>
-   <outfit quantity="10">Headhunter</outfit>
+   <outfit quantity="10">Headhunter Missile</outfit>
    <outfit quantity="1">Milspec Jammer</outfit>
   </outfits>
   <mounts>
