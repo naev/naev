@@ -290,12 +290,12 @@ static int load_game( char* file )
    xmlNodePtr node;
    xmlDocPtr doc;
 
-   doc = xmlParseFile(file);
-   node = doc->xmlChildrenNode; /* base node */
-   if (node == NULL) {
-      WARN("Savegame '%s' invalid!", file);
-      return -1;
-   }
+   doc   = xmlParseFile(file);
+   if (doc == NULL)
+      goto err;
+   node  = doc->xmlChildrenNode; /* base node */
+   if (node == NULL)
+      goto err_doc;
 
    /* Clean up possible stuff that should be cleaned. */
    player_cleanup();
@@ -323,6 +323,13 @@ static int load_game( char* file )
    xmlCleanupParser();
    
    return 0;
+
+err_doc:
+   xmlFreeDoc(doc);
+   xmlCleanupParser();
+err:
+   WARN("Savegame '%s' invalid!", file);
+   return -1;
 }
 
 
