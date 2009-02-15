@@ -74,6 +74,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w );
 static void pilot_update( Pilot* pilot, const double dt );
 static void pilot_hyperspace( Pilot* pilot );
 void pilot_render( Pilot* pilot ); /* externed in player.c */
+static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup );
 static void pilot_calcCargo( Pilot* pilot );
 void pilot_free( Pilot* p ); /* externed in player.c */
 static void pilot_dead( Pilot* p );
@@ -2078,16 +2079,16 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
 }
 
 
-
 /**
- * @brief Tries to get rid of quantity cargo from pilot.
+ * @brief Tries to get rid of quantity cargo from pilot.  Can remove mission cargo.
  * 
  *    @param pilot Pilot to get rid of cargo.
  *    @param cargo Cargo to get rid of.
  *    @param quantity Amount of cargo to get rid of.
+ *    @param cleanup Whether we're cleaning up or not (removes mission cargo).
  *    @return Amount of cargo gotten rid of.
  */
-int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
+static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup )
 {
    int i, q;
 
@@ -2095,6 +2096,11 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
    q = quantity;
    for (i=0; i<pilot->ncommodities; i++)
       if (pilot->commodities[i].commodity == cargo) {
+
+         /* Must not be missino cargo unless cleaning up. */
+         if (!cleanup && (pilot->commodities[i].id != 0))
+            continue;
+
          if (quantity >= pilot->commodities[i].quantity) {
             q = pilot->commodities[i].quantity;
 
@@ -2121,6 +2127,19 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
          return q;
       }
    return 0; /* pilot didn't have it */
+}
+
+/**
+ * @brief Tries to get rid of quantity cargo from pilot.
+ * 
+ *    @param pilot Pilot to get rid of cargo.
+ *    @param cargo Cargo to get rid of.
+ *    @param quantity Amount of cargo to get rid of.
+ *    @return Amount of cargo gotten rid of.
+ */
+int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
+{
+   return pilot_rmCargoRaw( pilot, cargo, quantity, 0 );
 }
 
 
@@ -2393,7 +2412,8 @@ void pilot_free( Pilot* p )
 
    /* Remove commodities. */
    while (p->commodities != NULL)
-      pilot_rmCargo( p, p->commodities[0].commodity, p->commodities[0].quantity );
+      pilot_rmCargoRaw( p, p->commodities[0].commodity,
+            p->commodities[0].quantity, 1 );
 
    /* Free name and title. */
    if (p->name != NULL)
