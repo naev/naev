@@ -1,0 +1,11 @@
+*.o
+*.a
+*.pyc
+.hgignore
+VERSION
+ndata
+mkspr
+naev
+pack
+docs/doxygen/*
+docs/lua/*
