@@ -27,7 +27,7 @@
 #define BUTTON_HEIGHT   30 /**< Button height. */
 
 
-static Pilot *comm_pilot = NULL; /**< Pilot currently talking to. */
+static Pilot *comm_pilot       = NULL; /**< Pilot currently talking to. */
 static glTexture *comm_graphic = NULL; /**< Pilot's graphic. */
 
 
@@ -77,6 +77,11 @@ int comm_open( unsigned int pilot )
    }
 
    /* Get graphics and text. */
+   if (comm_graphic != NULL) {
+      /* First clean up if needed. */
+      gl_freeTexture(comm_graphic);
+      comm_graphic = NULL;
+   }
    comm_graphic = ship_loadCommGFX( comm_pilot->ship );
    logo = faction_logoSmall(comm_pilot->faction);
    name = comm_pilot->name;
@@ -180,22 +185,24 @@ static void comm_bribe( unsigned int wid, char *unused )
    ai_setPilot( comm_pilot );
 
    /* Unbribeable. */
-   if (price == 0) {
-      str = comm_getString( "bribe_no" );
-      if (str == NULL)
-         dialogue_msg("Bribe Pilot", "\"Money won't save your hide now!\"");
-      else
-         dialogue_msg("Bribe Pilot", "%s", str );
+   str = comm_getString( "bribe_no" );
+   if (str != NULL) {
+      dialogue_msg("Bribe Pilot", "%s", str );
       return;
    }
 
    /* Get amount pilot wants. */
    if (comm_getNumber( &d, "bribe" )) {
       WARN("Pilot '%s' accepts bribes but doesn't give price!", comm_pilot->name );
-      d = 9.;
+      d = 0.;
    }
    price = (unsigned int) d;
 
+   /* Check to see if already bribed. */
+   if (price == 0) {
+      dialogue_msg("Bribe Pilot", "\"Money won't save your hide now!\"");
+      return;
+   }
 
    /* Bribe message. */
    str = comm_getString( "bribe_prompt" );
@@ -228,7 +235,7 @@ static void comm_bribe( unsigned int wid, char *unused )
       pilot_rmHostile( comm_pilot );
       L = comm_pilot->ai->L;
       lua_getglobal(L, "mem");
-      lua_pushnil(L);
+      lua_pushnumber(L, 0);
       lua_setfield(L, -2, "bribe");
       lua_pop(L,1);
 
