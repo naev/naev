@@ -229,8 +229,9 @@ void input_init (void)
    /* To avoid stupid segfaults like in the 0.3.6 release. */
    if (sizeof(keybindNames) != sizeof(keybindDescription)) {
       WARN("Keybind names and descriptions aren't of the same size!");
-      WARN("   %lu descriptions for %lu names",
-            sizeof(keybindNames), sizeof(keybindDescription));
+      WARN("   %u descriptions for %u names",
+            (unsigned int) sizeof(keybindNames),
+            (unsigned int) sizeof(keybindDescription));
    }
 #endif /* DEBUGGING */
 
