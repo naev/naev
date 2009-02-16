@@ -346,7 +346,7 @@
    <mass>2</mass>
    <price>22500</price>
    <description>A heavy battery that will increase your ship's energy capacity, allowing you to pack more firepower.</description>
-   <gfx_store>capacitator</gfx_store>
+   <gfx_store>capacitor</gfx_store>
   </general>
   <specific type="modification">
    <energy>30</energy>
@@ -372,7 +372,7 @@
    <mass>3</mass>
    <price>75000</price>
    <description>An enhancement for the shield power system, allowing it to resist heavier fire.</description>
-   <gfx_store>capacitator</gfx_store>
+   <gfx_store>capacitor</gfx_store>
   </general>
   <specific type="modification">
    <shield>15</shield>
