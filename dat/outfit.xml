@@ -97,7 +97,7 @@
    <license>Medium Weapon License</license>
    <mass>9</mass>
    <price>15000</price>
-   <description>Ion pulses were originally intended only to deactivate shields since they had completely nullified the old radiation technology weapons. It was thought that by figuring out a way to deactivate shields quickly, the radiation technology would still be able to destroy the armour. By combining shield and armour destruction power, the perfect weapons could be designed. Ultimately, the ion pulses ended up being very effective against armour and electronics, rendering radiation-based weapons obsolete..  With the invention of the latest generation shields and armour materials, ion pulses have lost much of the terrain they had as newfound technology.</description>
+   <description>Ion pulses were originally intended only to deactivate shields, which had completely nullified older radiation-based weaponry. It was thought that by figuring out a way to disable shields quickly, the radiation weapons would still be able to destroy the armour. By combining shield and armour destruction power, the perfect weapons could be designed. Ultimately, the ion pulses were highly effective against both armour and shields, rendering radiation-based weapons obsolete. With the latest generation of shields and armour materials, ion pulses have lost much of the terrain they had as newfound technology.</description>
    <gfx_store>medium</gfx_store>
   </general>
   <specific type="bolt">
@@ -120,7 +120,7 @@
    <mass>35</mass>
    <license>Heavy Weapon License</license>
    <price>75000</price>
-   <description>The heavy ion turret uses a more powerful generator for each cannon, giving each more punch than a lone ion cannon. The drawback is that this increases the power consumption considerably. Given their intended mounting on capital ships, their power consumption should not be entirely unexpected.</description>
+   <description>The heavy ion turret uses a more powerful generator for each of its two ion cannons, giving each more punch than a lone ion cannon. The drawback is that this increases the power consumption considerably. Given their intended mounting on capital ships, their power consumption is eclipsed by the firepower they provide.</description>
    <gfx_store>turret2</gfx_store>
   </general>
   <specific type="turret bolt">
@@ -143,7 +143,7 @@
    <license>Heavy Weapon License</license>
    <mass>15</mass>
    <price>85000</price>
-   <description>The railgun is a cannon that uses heavy magnetic pulses to accelerate pieces of debris to extremely high velocities.  The impact caused by the pieces of debris can tear apart even the strongest ship hulls.</description>
+   <description>The railgun is a cannon that uses heavy magnetic pulses to accelerate pieces of debris to extremely high velocities. The impact caused by the pieces of debris can tear apart even the strongest ship hulls.</description>
    <gfx_store>heavy</gfx_store>
   </general>
   <specific type="bolt" secondary="1">
@@ -225,7 +225,7 @@
    <tech>2</tech>
    <mass>1</mass>
    <price>800</price>
-   <description>The cheapest smart missile on the market, what it lacks in a decent tracking system it makes up for in affordability and firepower.</description>
+   <description>The cheapest smart missile on the market, while it lacks advanced tracking abilities, it makes up for that with affordability and firepower in spades.</description>
    <gfx_store>missile</gfx_store>
   </general>
   <specific type="missile seek ammo">
@@ -345,7 +345,7 @@
    <tech>3</tech>
    <mass>2</mass>
    <price>22500</price>
-   <description>A heavy battery that will increase your ship's energy, allowing you to pack more firepower.</description>
+   <description>A heavy battery that will increase your ship's energy capacity, allowing you to pack more firepower.</description>
    <gfx_store>capacitator</gfx_store>
   </general>
   <specific type="modification">
@@ -358,7 +358,7 @@
    <tech>5</tech>
    <mass>3</mass>
    <price>55000</price>
-   <description>A large panel that will generate energy based off of solar energy. This will allow your ship to regenerate its energy supplies more quickly.</description>
+   <description>A large panel that generates energy by collecting light and converting it into electricity. This will allow your ship to regenerate its energy supplies more quickly.</description>
    <gfx_store>solar</gfx_store>
   </general>
   <specific type="modification">
@@ -371,7 +371,7 @@
    <tech>9</tech>
    <mass>3</mass>
    <price>75000</price>
-   <description>An enhancement for the shield power system, allowing it to resist much heavier fire.</description>
+   <description>An enhancement for the shield power system, allowing it to resist heavier fire.</description>
    <gfx_store>capacitator</gfx_store>
   </general>
   <specific type="modification">
@@ -613,7 +613,7 @@
    <mass>1</mass>
    <price>600</price>
    <gfx_store>empgrenade</gfx_store>
-   <description>This is a grenade that can be launched to unleash electromagnetic pulses, rapidly disabling electronics of enemy ships. Useful for taking ships alive, as the EM pulses rarely destroy the ship; leaving it floating disabled in space.</description>
+   <description>This is a grenade that can be launched to unleash an electromagnetic pulse, rapidly disabling the electronics of enemy ships. Useful for taking ships alive, as the EM pulses rarely destroy the ship; leaving it floating disabled in space.</description>
   </general>
   <specific type="turret dumb ammo">
    <gfx spin="0.3">empgrenade</gfx>
@@ -633,8 +633,8 @@
    <mass>15</mass>
    <price>65000</price>
    <gfx_store>plasteel</gfx_store>
-   <description>Plasteel was one of man's greatest improvements on materials.  It's a cheap, very strong armour that seems to take the best from both plastic and steel.  You can bend it relatively easily while keeping its incredible strength.  The Second Growth was only possible with this amazing new material.
-By adding a dense layer of Plasteel to your ship you can increase its sturdiness substantially.  Although with the advent of newer materials Plasteel is starting to fade in popularity, its lower price point maintains a loyal customer base.</description>
+   <description>Plasteel was one of man's greatest improvements on materials. It's a cheap, very strong armour that seems to take the best from both plastic and steel. You can bend it relatively easily while keeping its incredible strength. The Second Growth was only possible with this amazing new material.
+By adding a dense layer of Plasteel to your ship you can increase its sturdiness substantially. Although with the advent of newer materials Plasteel is starting to fade in popularity, its lower price point maintains a loyal customer base.</description>
   </general>
   <specific type="modification">
    <armour>35</armour>
@@ -674,7 +674,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <mass>3</mass>
    <price>430000</price>
    <gfx_store>droid</gfx_store>
-   <description>This low maintenance droid crew will scour your ship to repair any damages caused by space hazards.  They are very small and able to work both on the interior or exterior of the ship.  Power is drawn from the ship to feed the robots, although the load is generally very low compared to the benefits of having a robotic repair crew.</description>
+   <description>This low maintenance droid crew will scour your ship to repair any damages caused by space hazards. They are very small and able to work both on the interior or exterior of the ship. Power is drawn from the ship to feed the robots, although the load is generally very low compared to the benefits of having a robotic repair crew.</description>
   </general>
   <specific type="modification">
    <armour_regen>30</armour_regen>
@@ -689,7 +689,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <mass>12</mass>
    <price>170000</price>
    <gfx_store>reactor_i</gfx_store>
-   <description>Adding a complementary reactor to your ship is a great way to get that extra energy boost you need.  This does not replace the existing reactor but works alongside it and hooks up directly to the energy flux.</description>
+   <description>Adding a complementary reactor to your ship is a great way to get that extra energy boost you need. This does not replace the existing reactor but works alongside it and hooks up directly to the energy flux.</description>
   </general>
   <specific type="modification">
    <energy>20</energy>
