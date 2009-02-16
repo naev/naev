@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Outfits>
  <outfit name="Ripper MK2">
   <general>
@@ -7,7 +7,7 @@
    <license>Medium Weapon License</license>
    <mass>12</mass>
    <price>95000</price>
-   <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devestating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
+   <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
    <gfx_store>heavy</gfx_store>
   </general>
   <specific type="bolt">
@@ -29,7 +29,7 @@
    <tech>2</tech>
    <mass>5</mass>
    <price>5000</price>
-   <description>The laser cannon is a standard weapon on many vessels. It fires charged energy beams that do a decent amount of damage to both shield and armour, while remaining efficient enough to mount on smaller ships.</description>
+   <description>The laser cannon is a standard weapon on many vessels. It fires charged energy beams that do a decent amount of damage to both shield and armour, while remaining efficient enough to mount several even on small ships.</description>
    <gfx_store>laser</gfx_store>
   </general>
   <specific type="bolt">
@@ -52,7 +52,7 @@
    <license>Medium Weapon License</license>
    <mass>20</mass>
    <price>25000</price>
-   <description>Two laser cannons on a rotating turret, allowing for 360 degrees of firepower.</description>
+   <description>A pair of laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. With a full 360 degrees of rotation, laser turrets provide affordable, energy-efficient firepower to less manoeuvrable ships.</description>
    <gfx_store>turret</gfx_store>
   </general>
   <specific type="turret bolt">
@@ -74,7 +74,7 @@
    <tech>3</tech>
    <mass>5</mass>
    <price>9000</price>
-   <description>Plasma is very volatile; if properly controlled it can be very destructive, though it does tend to dissipate quickly.</description>
+   <description>Highly volatile, the plasma blaster is among the best choices for fast attacks. As a result of its volatility, it is a potent weapon against both shields and armour, though it is known for dissipating quickly after being fired.</description>
    <gfx_store>laser</gfx_store>
   </general>
   <specific type="bolt">
@@ -97,7 +97,7 @@
    <license>Medium Weapon License</license>
    <mass>9</mass>
    <price>15000</price>
-   <description>Ion pulses were originally intended only to deactivate shields since they had completely nullified the old radiation technology weapons. It was thought that by figuring out a way to deactivate shields quickly the radiation technology would still be able to destroy the armour. By combining shield and armour destruction power, the perfect weapons could be designed.  The ion pulses ended up being very effective against armour and electronics.  With the invention of the latest generation shields and armour materials, ion pulses have lost much of the terrain they had as newfound technology.</description>
+   <description>Ion pulses were originally intended only to deactivate shields since they had completely nullified the old radiation technology weapons. It was thought that by figuring out a way to deactivate shields quickly, the radiation technology would still be able to destroy the armour. By combining shield and armour destruction power, the perfect weapons could be designed. Ultimately, the ion pulses ended up being very effective against armour and electronics, rendering radiation-based weapons obsolete..  With the invention of the latest generation shields and armour materials, ion pulses have lost much of the terrain they had as newfound technology.</description>
    <gfx_store>medium</gfx_store>
   </general>
   <specific type="bolt">
@@ -120,7 +120,7 @@
    <mass>35</mass>
    <license>Heavy Weapon License</license>
    <price>75000</price>
-   <description>The heavy Ion Turret uses a bigger generator for each cannon giving it more punch then the Ion cannon. The drawback is that this augments the power usage considerably. Being designed for capital ships, this doesn't seem to worry the makers too much.</description>
+   <description>The heavy ion turret uses a more powerful generator for each cannon, giving each more punch than a lone ion cannon. The drawback is that this increases the power consumption considerably. Given their intended mounting on capital ships, their power consumption should not be entirely unexpected.</description>
    <gfx_store>turret2</gfx_store>
   </general>
   <specific type="turret bolt">
@@ -166,7 +166,7 @@
    <license>Heavy Weapon License</license>
    <mass>20</mass>
    <price>184000</price>
-   <description>One of the more popular beam weapons, for it's simplicity and size.  Most heavy fighters have no trouble fitting one of these. Being fixed-mount it inherits their maneuverability, allowing for greater precision on agile ships.</description>
+   <description>One of the more popular beam weapons, for its simplicity and size. Most heavy fighters have no trouble fitting one of these. Being fixed-mount, it inherits their manoeuvrability, allowing for greater precision on agile ships.</description>
    <gfx_store>orion</gfx_store>
   </general>
   <specific type="beam" secondary="1">
@@ -188,7 +188,7 @@
    <tech>13</tech>
    <mass>60</mass>
    <price>745000</price>
-   <description>The Ragnorak Beam is one of the most powerful beam class weapons on the market.  It's designed for capital ship combat, although its extremely large payload makes it somewhat useful for clearing enemy fighters.</description>
+   <description>The Ragnarok Beam is one of the most powerful beam class weapons on the market. It's designed for capital ship combat, although its extremely large payload makes it somewhat useful for clearing enemy fighters.</description>
    <gfx_store>turret3</gfx_store>
   </general>
   <specific type="turret beam" secondary="1">
@@ -211,7 +211,7 @@
    <tech>4</tech>
    <mass>10</mass>
    <price>25000</price>
-   <description>Base for launching seeking missiles.</description>
+   <description>A compact base for launching Seeker missiles, a Seeker launcher is an inexpensive way to augment a ship's ranged combat capabilities.</description>
    <gfx_store>missile</gfx_store>
   </general>
   <specific type="missile seek" secondary="1">
@@ -248,7 +248,7 @@
    <license>Medium Weapon License</license>
    <mass>12</mass>
    <price>40000</price>
-   <description>The Headhunter Launcher is one of the most-used missile launchers by the security companies. Far more reliable then the regular missiles, Headhunters feature more sensors and an advanced tracking system making them much better at hitting their targets.</description>
+   <description>The Headhunter launcher is one of the most-used missile launchers by the security companies. Far more reliable than Seeker missiles, Headhunters feature newer sensors and an advanced tracking system making them much better at hitting their targets.</description>
    <gfx_store>missile</gfx_store>
   </general>
   <specific type="missile smart" secondary="1">
@@ -288,7 +288,7 @@
    <mass>10</mass>
    <price>25000</price>
    <gfx_store>bansheelauncher</gfx_store>
-   <description>The Banshee Launcher uses a quick action firing mechanism to be able to quickly launch the banshee rockets. The only drawback is that this mechanism can only be used with light rockets, limiting the payload the rockets can have.</description>
+   <description>The Banshee Launcher uses a quick-action firing mechanism to be able to quickly launch the Banshee rockets. The only drawback is that this mechanism can only be used with light rockets, limiting the payload the rockets can have.</description>
   </general>
   <specific type="missile dumb" secondary="1">
    <ammo>Banshee Rocket</ammo>
@@ -358,7 +358,7 @@
    <tech>5</tech>
    <mass>3</mass>
    <price>55000</price>
-   <description>A large panel that will generate energy based off solar energy. This will allow your ship to regenerate its energy supplies more quickly.</description>
+   <description>A large panel that will generate energy based off of solar energy. This will allow your ship to regenerate its energy supplies more quickly.</description>
    <gfx_store>solar</gfx_store>
   </general>
   <specific type="modification">
@@ -384,7 +384,7 @@
    <tech>10</tech>
    <mass>5</mass>
    <price>145000</price>
-   <description>A shield generator that feeds off the ship's main energy line. It will allow you to regenerate your shield faster and give you a small maximum shield boost, at the expense of draining some of the ship's energy.</description>
+   <description>A shield generator that feeds off the ship's main energy line. It will allow you to regenerate your shield faster and give you a small shield capacity boost, at the expense of draining some of the ship's energy.</description>
    <gfx_store>shield</gfx_store>
   </general>
   <specific type="modification">
@@ -428,7 +428,7 @@
    <tech>13</tech>
    <mass>1</mass>
    <price>130000</price>
-   <description>With the addition of several additional steering thrusters, you can make your ship very agile at turning.</description>
+   <description>With the addition of several additional steering thrusters, you can increase your ship's turning rate. A favourite among fighter pilots.</description>
    <gfx_store>thruster</gfx_store>
   </general>
   <specific type="modification">
@@ -442,7 +442,7 @@
    <tech>3</tech>
    <mass>2</mass>
    <price>20000</price>
-   <description>Being able to run from your enemies is a very powerful ability. A generic afterburner will allow you to do that. It may not be as powerful as some of the more high-end afterburners, but they're not nearly as affordable as a generic one.</description>
+   <description>Being able to run from your enemies has saved many a pilot, and a generic afterburner will allow you that luxury. Though it may not be as powerful as higher-end alternatives, it makes up for that difference by entering at a much lower price point.</description>
    <gfx_store>afterburner</gfx_store>
   </general>
   <specific type="afterburner">
@@ -461,7 +461,7 @@
    <tech>13</tech>
    <mass>4</mass>
    <price>95000</price>
-   <description>The Hellburner is one of the best afterburners on the market. It provides far more thrust and greater efficiency than the generic model.  A must for any spacefarer who is proud of his ship.</description>
+   <description>The Hellburner is one of the best afterburners on the market. Through proprietary pressurization ducts, the Hellburner is able to generate far more thrust than generic alternatives, despite using only slightly more energy. A great asset to any pilot who seeks manoeuvrability and speed..</description>
    <gfx_store>afterburner2</gfx_store>
   </general>
   <specific type="afterburner">
@@ -480,7 +480,7 @@
    <tech>3</tech>
    <mass>5</mass>
    <price>15000</price>
-   <description>The Fuel Pod allows a ship to store more fuel for hyperspace jumps.  Each pod effectively increases a ship's range by a jump.</description>
+   <description>The fuel pod allows a ship to store more fuel for hyperspace jumps. Each pod effectively increases a ship's range by a jump. Without these, long-range interstellar trade would slow to a crawl.</description>
    <gfx_store>fuel_pod</gfx_store>
   </general>
   <specific type="modification">
@@ -493,7 +493,7 @@
    <tech>6</tech>
    <mass>15</mass>
    <price>35000</price>
-   <description>Cargo Pods are large containers you can attach to dedicated weapon space allowing you to transport more cargo. The drawback is that you lose a substantial amount of weapon space and won't be able to defend your cargo as well.</description>
+   <description>Cargo pods are large containers you can attach to dedicated weapon space allowing you to transport more cargo. The drawback is that you lose a substantial amount of weapon space and won't be able to defend your cargo as well.</description>
    <gfx_store>cargo_pod</gfx_store>
   </general>
   <specific type="modification">
@@ -506,7 +506,7 @@
    <tech>8</tech>
    <mass>-10</mass>
    <price>65000</price>
-   <description>Adding a Weapon Rack to your ship will allow you to enjoy the benefits of more weapon space at the cost of cargo space. It's often wiser to have less cargo, but to guard it well.</description>
+   <description>Adding a weapon rack to your ship will allow you to enjoy the benefits of more weapon space at the cost of cargo space. It's often wiser to have less cargo, but to guard it well.</description>
    <gfx_store>weapon_rack</gfx_store>
   </general>
   <specific type="modification">
@@ -519,7 +519,7 @@
    <tech>4</tech>
    <mass>0</mass>
    <price>7000</price>
-   <description>A Star Map will give you details about all systems up to 2 jumps away. It's a great risk-free way to discover parts of the universe.</description>
+   <description>A star map will give you details about all systems up to 2 jumps away. It's a great risk-free way to discover parts of the universe.</description>
    <gfx_store>map</gfx_store>
   </general>
   <specific type="map">
@@ -532,7 +532,7 @@
    <tech>7</tech>
    <mass>2</mass>
    <price>40000</price>
-   <description>This jammer allows you to interfere with the targetting systems of some of the missiles headed towards you, giving them unpredictable behaviors, likely not to impact with your ship.</description>
+   <description>This jammer allows you to interfere with the targeting systems of missiles headed toward you, yielding an unpredictable change in trajectory likely to miss your ship. Though it is widely used, many have derided the civilian jammer for its unreliable nature.</description>
    <gfx_store>jammer0</gfx_store>
   </general>
   <specific type="jammer">
@@ -599,7 +599,7 @@
    <mass>17</mass>
    <price>31000</price>
    <gfx_store>empgrenadelauncher</gfx_store>
-   <description>This launcher can fire EMP grenades in any direction using a unique internal guidance system. These are favored by traders for escaping from pirates.</description>
+   <description>This launcher can fire EMP grenades in any direction using a unique internal guidance system. These are favoured by traders for escaping from pirates.</description>
   </general>
   <specific type="turret dumb" secondary="1">
    <ammo>EMP Grenade</ammo>
@@ -613,7 +613,7 @@
    <mass>1</mass>
    <price>600</price>
    <gfx_store>empgrenade</gfx_store>
-   <description>This is a grenade that can be launched to unleash electromagnetic pulses, rapidly disabling electronics of enemy ships. Useful for taking ships alive, as the EM pulses rarely destroy the ship; leaving it floating dead in space instead.</description>
+   <description>This is a grenade that can be launched to unleash electromagnetic pulses, rapidly disabling electronics of enemy ships. Useful for taking ships alive, as the EM pulses rarely destroy the ship; leaving it floating disabled in space.</description>
   </general>
   <specific type="turret dumb ammo">
    <gfx spin="0.3">empgrenade</gfx>
@@ -689,7 +689,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <mass>12</mass>
    <price>170000</price>
    <gfx_store>reactor_i</gfx_store>
-   <description>Adding a complementary reactor to your ship is a great way to get that extra energy boost you need.  This do not replace the existing reactor but works alongside it and hooks up directly to the energy flux.</description>
+   <description>Adding a complementary reactor to your ship is a great way to get that extra energy boost you need.  This does not replace the existing reactor but works alongside it and hooks up directly to the energy flux.</description>
   </general>
   <specific type="modification">
    <energy>20</energy>
