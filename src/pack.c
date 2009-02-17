@@ -255,9 +255,9 @@ Packfile_t* pack_openFromCache( Packcache_t* cache, const char* filename )
          /* Copy file. */
 #if HAS_POSIX
          file->fd = dup(cache->fd);
-#else
+#else /* not HAS_POSIX */
          file->fp = fopen( cache->name, "rb" );
-#endif
+#endif /* HAS_POSIX */
 
          /* Copy information. */
          file->flags |= PACKFILE_FROMCACHE;

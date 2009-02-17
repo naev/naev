@@ -557,20 +557,20 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    SDL_RWops *rw;
 
    /* load from packfile */
-   rw =  ndata_rwops( path );
+   rw = ndata_rwops( path );
    if (rw == NULL) {
       ERR("Loading surface from ndata.");
       return NULL;
    }
    temp = IMG_Load_RW( rw, 1 );
 
-   if (temp == 0) {
+   if (temp == NULL) {
       ERR("'%s' could not be opened: %s", path, IMG_GetError());
       return NULL;
    }
 
    surface = SDL_DisplayFormatAlpha( temp ); /* sets the surface to what we use */
-   if (surface == 0) {
+   if (surface == NULL) {
       WARN( "Error converting image to screen format: %s", SDL_GetError() );
       return NULL;
    }
