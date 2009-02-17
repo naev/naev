@@ -225,6 +225,8 @@ static void think_seeker( Weapon* w, const double dt )
    Pilot *p;
    int effect;
    int spfx;
+            Vector2d v;
+            double t;
 
    if (w->target == w->parent) return; /* no self shooting */
 
@@ -274,8 +276,28 @@ static void think_seeker( Weapon* w, const double dt )
         
          /* Purpose fallthrough */
          case WEAPON_STATUS_UNJAMMED: /* Work as expected */
-            diff = angle_diff(w->solid->dir, /* Get angle to target pos */
-                  vect_angle(&w->solid->pos, &p->solid->pos));
+
+            /* Smart seekers take into account ship velocity. */
+            if (w->outfit->type == OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO) {
+
+               /* Calculate time to reach target. */
+               vect_cset( &v, p->solid->pos.x - w->solid->pos.x,
+                     p->solid->pos.y - w->solid->pos.y );
+               t = vect_odist( &v ) / w->outfit->u.amm.speed;
+
+               /* Calculate target's movement. */
+               vect_cset( &v, v.x + t*(p->solid->vel.x - w->solid->vel.x),
+                     v.y + t*(p->solid->vel.y - w->solid->vel.y) );
+
+               /* Get the angle now. */
+               diff = angle_diff(w->solid->dir, VANGLE(v) );
+            }
+            /* Other seekers are stupid. */
+            else {
+               diff = angle_diff(w->solid->dir, /* Get angle to target pos */
+                     vect_angle(&w->solid->pos, &p->solid->pos));
+            }
+
             w->solid->dir_vel = 10 * diff *  w->outfit->u.amm.turn; /* Face pos */
             /* Check for under/overflows */
             if (w->solid->dir_vel > w->outfit->u.amm.turn)
