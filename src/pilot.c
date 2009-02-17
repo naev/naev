@@ -1681,6 +1681,13 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
          o = po->quantity;
          po->quantity -= quantity;
 
+         /* Calculate q. */
+         if (po->quantity <= 0) {
+            /* we didn't actually remove the full amount */
+            q += po->quantity;
+            po->quantity = 0.;
+         }
+
          /* Remove from mount points. */
          if ((pilot->mounted != NULL) && (po->mounts != NULL)) {
             for (j=o-1; j >= po->quantity; j--) {
@@ -1691,9 +1698,6 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 
          /* Need to remove the outfit. */
          if (po->quantity <= 0) {
-
-            /* we didn't actually remove the full amount */
-            q += po->quantity;
 
             /* hack in case it reallocs - can happen even when shrinking */
             osec = (pilot->secondary) ? pilot->secondary->outfit : NULL;
