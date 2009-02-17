@@ -193,6 +193,7 @@ static int nlua_packfileLoader( lua_State* L )
    /* run the buffer */
    if (luaL_dobuffer(L, buf, bufsize, filename) != 0) {
       /* will push the current error from the dobuffer */
+      lua_error(L);
       return 1;
    }
 
