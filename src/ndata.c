@@ -35,15 +35,15 @@
 /*
  * Packfile.
  */
-static char* ndata_filename = NULL; /**< Packfile name. */
-static Packcache_t *ndata_cache = NULL; /**< Actual packfile. */
-static char* ndata_packName = NULL; /**< Name of the ndata module. */
+static char* ndata_filename         = NULL; /**< Packfile name. */
+static Packcache_t *ndata_cache     = NULL; /**< Actual packfile. */
+static char* ndata_packName         = NULL; /**< Name of the ndata module. */
 
 /*
  * File list.
  */
-static const char **ndata_fileList = NULL; /**< List of files in the packfile. */
-static uint32_t ndata_fileNList = 0; /**< Number of files in ndata_fileList. */
+static const char **ndata_fileList  = NULL; /**< List of files in the packfile. */
+static uint32_t ndata_fileNList     = 0; /**< Number of files in ndata_fileList. */
 
 
 /*
@@ -153,6 +153,10 @@ static int ndata_openPackfile (void)
  */
 int ndata_open (void)
 {
+   /* If user enforces ndata filename, we'll respect that. */
+   if (ndata_filename != NULL)
+      return ndata_openPackfile();
+
    return 0;
 }
 
