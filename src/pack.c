@@ -941,6 +941,9 @@ static int packrw_close( SDL_RWops *rw )
    Packfile_t *packfile;
    packfile = rw->hidden.unknown.data1;
 
+   /* Free the data. */
+   SDL_FreeRW(rw);
+
    return pack_close( packfile );
 }
 
