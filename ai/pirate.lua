@@ -1,5 +1,11 @@
 include("ai/tpl/generic.lua")
 
+--[[
+
+   Pirate AI
+
+--]]
+
 -- Settings
 aggressive     = true
 safe_distance  = 500
@@ -10,6 +16,8 @@ atk_kill       = false
 
 
 function create ()
+
+   -- Not too much money
    ai.setcredits(ai.shipprice()/120 , ai.shipprice()/40 )
 
    -- Deal with bribeability
@@ -25,6 +33,12 @@ function create ()
          mem.bribe_paid = "\"Life doesn't get easier then this.\""
       end
    end
+
+   -- Deal with refueling
+   mem.refuel = rnd.rnd( 2000, 4000 )
+   mem.refuel_msg = string.format("\"For you, only %d credits for fuel for a jump.\"",
+         mem.refuel);
+
 
    -- Choose attack format
    attack_choose()

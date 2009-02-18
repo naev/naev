@@ -16,9 +16,15 @@ end
 
 
 function create ()
+
+   -- Probably the ones with the most money
    ai.setcredits( rnd.int(ai.shipprice()/100, ai.shipprice()/25) )
 
+   -- Communication stuff
    mem.bribe_no = "\"The Space Traders do not negotiate with criminals.\""
+   mem.refuel = rnd.rnd( 3000, 5000 )
+   mem.refuel_msg = string.format("\"I'll supply your ship with fuel for %d credits.\"",
+         mem.refuel);
 
    -- Some stuff has more chance then others
    num = rnd.int(12)
@@ -35,3 +41,4 @@ function create ()
    end
    ai.setcargo( cargo, rnd.int(0, ai.cargofree() ) )
 end
+

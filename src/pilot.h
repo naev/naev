@@ -25,16 +25,17 @@
 #define HYPERSPACE_STARS_BLUR    2. /**< How long the stars blur at max (pixels). */
 #define HYPERSPACE_STARS_LENGTH  1000 /**< Length the stars blur to at max (seconds). */
 #define HYPERSPACE_FADEOUT       1. /**< How long the fade is (seconds). */
-#define HYPERSPACE_FUEL          100  /**< how much fuel it takes */
+#define HYPERSPACE_FUEL          100.  /**< how much fuel it takes */
 #define HYPERSPACE_THRUST        2000./**< How much thrust you use in hyperspace. */
 #define HYPERSPACE_VEL           HYPERSPACE_THRUST*HYPERSPACE_FLY_DELAY /**< Velocity at hyperspace. */
 #define HYPERSPACE_ENTER_MIN     HYPERSPACE_VEL*0.5 /**< Minimum entering distance. */
 #define HYPERSPACE_ENTER_MAX     HYPERSPACE_VEL*0.6 /**< Maxmimu entering distance. */
 #define HYPERSPACE_EXIT_MIN      1500. /**< Minimum distance to begin jumping. */
 
-
-#define PILOT_SIZE_APROX      0.8   /**, aproximation for pilot size */
+#define PILOT_SIZE_APROX      0.8   /**< aproximation for pilot size */
 #define PILOT_DISABLED_ARMOR  0.3   /**< armour % that gets it disabled */
+#define PILOT_REFUEL_TIME     3. /**< Time to complete refueling. */
+#define PILOT_REFUEL_RATE     HYPERSPACE_FUEL/PILOT_REFUEL_TIME /**< Fuel per second. */
 
 /* hooks */
 #define PILOT_HOOKS        4 /**< Max number of hooks a pilot can have. */
@@ -75,6 +76,8 @@
 #define PILOT_BOARDING     (1<<20) /**< Pilot is currently boarding it's target. */
 #define PILOT_BRIBED       (1<<21) /**< Pilot has been bribed already. */
 #define PILOT_DISTRESSED   (1<<22) /**< Pilot has distressed once already. */
+#define PILOT_REFUELING    (1<<23) /**< Pilot is trying to refueling. */
+#define PILOT_REFUELBOARDING (1<<24) /**< Pilot is actively refueling. */
 #define PILOT_DISABLED     (1<<26) /**< Pilot is disabled. */
 #define PILOT_DEAD         (1<<27) /**< Pilot is in it's dying throes */
 #define PILOT_DEATH_SOUND  (1<<28) /**< Pilot just did death explosion. */
@@ -231,35 +234,40 @@ int pilot_getJumps( const Pilot* p );
 
 
 /*
- * misc
+ * Combat.
  */
 void pilot_shoot( Pilot* p, int type );
 void pilot_shootSecondary( Pilot* p );
 void pilot_shootStop( Pilot* p, const int secondary );
 void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       const DamageType dtype, const double damage );
-double pilot_face( Pilot* p, const double dir );
-void pilot_hyperspaceAbort( Pilot* p );
-void pilot_clearTimers( Pilot *pilot );
-/* special outfit stuff. */
-int pilot_getMount( Pilot *p, int id, Vector2d *v );
-void pilot_switchSecondary( Pilot* p, int i );
-void pilot_setAmmo( Pilot* p );
-int pilot_getAmmo( Pilot* p, Outfit* o );
-void pilot_setAfterburner( Pilot* p );
-/* Escort stuff. */
-int pilot_dock( Pilot *p, Pilot *target );
-/* explosion. */
 void pilot_explode( double x, double y, double radius,
       DamageType dtype, double damage, unsigned int parent );
-/* outfits */
+double pilot_face( Pilot* p, const double dir );
+
+
+/*
+ * Outfits.
+ */
+/* Generic stuff. */
 int pilot_freeSpace( Pilot* p ); /* weapon space */
 int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity );
 int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity );
 char* pilot_getOutfits( Pilot* pilot );
 void pilot_calcStats( Pilot* pilot );
 int pilot_oquantity( Pilot* p, PilotOutfit* w );
-/* normal cargo */
+/* Special outfit stuff. */
+int pilot_getMount( Pilot *p, int id, Vector2d *v );
+void pilot_switchSecondary( Pilot* p, int i );
+void pilot_setAmmo( Pilot* p );
+int pilot_getAmmo( Pilot* p, Outfit* o );
+void pilot_setAfterburner( Pilot* p );
+
+
+/*
+ * Cargo.
+ */
+/* Normal. */
 int pilot_cargoUsed( Pilot* pilot ); /* gets how much cargo it has onboard */
 int pilot_cargoFree( Pilot* p ); /* cargo space */
 int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity );
@@ -268,6 +276,13 @@ int pilot_moveCargo( Pilot* dest, Pilot* src );
 /* mission cargo - not to be confused with normal cargo */
 unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity );
 int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison );
+
+
+/* Misc. */
+int pilot_refuelStart( Pilot *p );
+void pilot_hyperspaceAbort( Pilot* p );
+void pilot_clearTimers( Pilot *pilot );
+int pilot_dock( Pilot *p, Pilot *target );
 
 
 /*

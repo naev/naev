@@ -61,25 +61,32 @@ static double sensor_curRange = 0.; /**< Current sensor range, set in pilots_upd
  * prototyes
  */
 /* external */
-/* ai.c */
-extern void ai_getDistress( Pilot* p, const Pilot* distressed );
+extern void ai_getDistress( Pilot* p, const Pilot* distressed ); /**< from ai.c */
 extern AI_Profile* ai_pinit( Pilot *p, char *ai ); /**< from ai.c */
 extern void ai_destroy( Pilot* p ); /**< from ai.c */
 extern void ai_think( Pilot* pilot ); /**< from ai.c */
 /* internal */
+/* sensors. */
 static int pilot_inRange( const Pilot *p, const Pilot *target );
 static int pilot_inRangePlanet( const Pilot *p, const Planet *target );
-static int pilot_getStackPos( const unsigned int id );
+/* update. */
 static void pilot_shootWeapon( Pilot* p, PilotOutfit* w );
-static void pilot_update( Pilot* pilot, const double dt );
 static void pilot_hyperspace( Pilot* pilot );
+static void pilot_refuel( Pilot *p, double dt );
+static void pilot_update( Pilot* pilot, const double dt );
+/* render */
 void pilot_render( Pilot* pilot ); /* externed in player.c */
+/* cargo. */
 static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup );
 static void pilot_calcCargo( Pilot* pilot );
-void pilot_free( Pilot* p ); /* externed in player.c */
-static void pilot_dead( Pilot* p );
+/* outfits. */
 static int pilot_setOutfitMounts( Pilot *p, PilotOutfit* po, int o, int q );
 static void pilot_setSecondary( Pilot* p, Outfit* o );
+/* clean up. */
+void pilot_free( Pilot* p ); /* externed in player.c */
+static void pilot_dead( Pilot* p );
+/* misc */
+static int pilot_getStackPos( const unsigned int id );
 
 
 /**
@@ -1281,7 +1288,6 @@ static void pilot_update( Pilot* pilot, const double dt )
    char buf[16];
    PilotOutfit *o;
 
-
    /*
     * Update timers.
     */
@@ -1393,13 +1399,19 @@ static void pilot_update( Pilot* pilot, const double dt )
    if (pilot->energy > pilot->energy_max)
       pilot->energy = pilot->energy_max;
 
-   /* Hack to match speed with boarding target. */
+   /* Pilot is board/refueling.  Hack to match speeds. */
+   if (pilot_isFlag(pilot, PILOT_REFUELBOARDING))
+      pilot_refuel(pilot, dt);
+
+   /* Pilot is boarding it's target.  Hack to match speeds. */
    if (pilot_isFlag(pilot, PILOT_BOARDING)) {
       target = pilot_get(pilot->target);
       if (target==NULL)
          pilot_rmFlag(pilot, PILOT_BOARDING);
       else {
+         /* Match speeds. */
          vectcpy( &pilot->solid->vel, &target->solid->vel );
+
          /* See if boarding is finished. */
          if (pilot->ptimer < 0.)
             pilot_boardComplete(pilot);
@@ -1510,6 +1522,76 @@ void pilot_hyperspaceAbort( Pilot* p )
          pilot_rmFlag(p, PILOT_HYP_BEGIN);
       if (pilot_isFlag(p, PILOT_HYP_PREP))
          pilot_rmFlag(p, PILOT_HYP_PREP);
+   }
+}
+
+
+/**
+ * @brief Attempts to start refueling the pilot's target.
+ *
+ *    @param p Pilot to try to start refueling.
+ */
+int pilot_refuelStart( Pilot *p )
+{
+   Pilot *target;
+
+   /* Check to see if target exists, remove flag if not. */
+   target = pilot_get(p->target);
+   if (target == NULL) {
+      pilot_rmFlag(p, PILOT_REFUELING);
+      return 0;
+   }
+
+   /* Conditions are the same as boarding, except disabled. */
+   if (vect_dist(&p->solid->pos, &target->solid->pos) >
+         target->ship->gfx_space->sw * PILOT_SIZE_APROX )
+      return 0;
+   else if ((pow2(VX(p->solid->vel)-VX(target->solid->vel)) +
+            pow2(VY(p->solid->vel)-VY(target->solid->vel))) >
+         (double)pow2(MAX_HYPERSPACE_VEL))
+      return 0;
+
+   /* Now start the boarding to refuel. */
+   pilot_setFlag(p, PILOT_REFUELBOARDING);
+   p->ptimer  = PILOT_REFUEL_TIME; /* Use timer to handle refueling. */
+   return 1;
+}
+
+
+/**
+ * @brief Has the pilot refuel it's target.
+ *
+ *    @param p Pilot that is actively refueling.
+ *    @param dt Current delta tick.
+ */
+static void pilot_refuel( Pilot *p, double dt )
+{
+   Pilot *target;
+
+   /* Check to see if target exists, remove flag if not. */
+   target = pilot_get(p->target);
+   if (target == NULL) {
+      pilot_rmFlag(p, PILOT_REFUELBOARDING);
+      pilot_rmFlag(p, PILOT_REFUELING);
+      return;
+   }
+
+   /* Match speeds. */
+   vectcpy( &p->solid->vel, &target->solid->vel );
+
+   /* Move fuel. */
+   p->fuel        -= PILOT_REFUEL_RATE*dt;
+   target->fuel   += PILOT_REFUEL_RATE*dt;
+   /* Stop refueling at max. */
+   if (target->fuel > target->fuel_max) {
+      p->ptimer      = -1.;
+      target->fuel   = target->fuel_max;
+   }
+
+   /* Check to see if done. */
+   if (p->ptimer < 0.) {
+      pilot_rmFlag(p, PILOT_REFUELBOARDING);
+      pilot_rmFlag(p, PILOT_REFUELING);
    }
 }
 
@@ -2557,7 +2639,7 @@ void pilots_update( double dt )
       /* See if should think. */
       if (p->think && !pilot_isDisabled(p)) {
 
-         /* hyperspace gets special treatment */
+         /* Hyperspace gets special treatment */
          if (pilot_isFlag(p, PILOT_HYP_PREP))
             pilot_hyperspace(p);
          /* Entering hyperspace. */
@@ -2565,8 +2647,9 @@ void pilots_update( double dt )
             if (VMOD(p->solid->vel) < 2*p->speed)
                pilot_rmFlag(p, PILOT_HYP_END);
          }
-         /* Only doesn't think while boarded. */
-         else if (!pilot_isFlag(p, PILOT_BOARDING))
+         /* Must not be boarding to think. */
+         else if (!pilot_isFlag(p, PILOT_BOARDING) &&
+               !pilot_isFlag(p, PILOT_REFUELBOARDING))
             p->think(p);
 
       }

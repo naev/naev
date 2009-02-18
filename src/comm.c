@@ -37,9 +37,11 @@ static glTexture *comm_graphic = NULL; /**< Pilot's graphic. */
 /* Static. */
 static void comm_close( unsigned int wid, char *unused );
 static void comm_bribe( unsigned int wid, char *unused );
+static void comm_requestFuel( unsigned int wid, char *unused );
 static int comm_getNumber( double *val, char* str );
 static const char* comm_getString( char *str );
 /* Extern. */
+extern void ai_refuel( Pilot* refueler, unsigned int target ); /**< ai.c */
 extern void ai_setPilot( Pilot *p ); /**< from ai.c */
 
 
@@ -75,6 +77,9 @@ int comm_open( unsigned int pilot )
       player_message( msg );
       return 0;
    }
+
+   /* Set up for the comm_get* functions. */
+   ai_setPilot( comm_pilot );
 
    /* Get graphics and text. */
    if (comm_graphic != NULL) {
@@ -141,7 +146,8 @@ int comm_open( unsigned int pilot )
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", "Bribe", comm_bribe );
    else
       window_addButton( wid, -20, 20 + 2*BUTTON_HEIGHT + 40,
-            BUTTON_WIDTH, BUTTON_HEIGHT, "btnRequest", "Request...", NULL );
+            BUTTON_WIDTH, BUTTON_HEIGHT, "btnRequest",
+            "Refuel", comm_requestFuel );
 
    return 0;
 }
@@ -180,9 +186,6 @@ static void comm_bribe( unsigned int wid, char *unused )
    unsigned int price;
    const char *str;
    lua_State *L;
-
-   /* Set up for the comm_get* functions. */
-   ai_setPilot( comm_pilot );
 
    /* Unbribeable. */
    str = comm_getString( "bribe_no" );
@@ -247,10 +250,81 @@ static void comm_bribe( unsigned int wid, char *unused )
 
 
 /**
+ * @brief Tries to request help from the pilot.
+ *
+ *    @param wid ID of window calling the function.
+ *    @param unused Unused.
+ */
+static void comm_requestFuel( unsigned int wid, char *unused )
+{
+   (void) wid;
+   (void) unused;
+   double val;
+   const char *msg;
+   int ret;
+   unsigned int price;
+
+   /* Must need refueling. */
+   if (player->fuel >= player->fuel_max) {
+      dialogue_msg( "Request Fuel", "Your fuel deposits are already full." );
+      return;
+   }
+
+   /* See if pilot has enough fuel. */
+   if (comm_pilot->fuel < 200.) {
+      dialogue_msg( "Request Fuel",
+            "\"Sorry, I don't have enough fuel to spare at the moment.\"" );
+      return;
+   }
+
+   /* See if player can get refueled. */
+   ret = comm_getNumber( &val, "refuel" );
+   msg = comm_getString( "refuel_msg" );
+   if ((ret != 0) || (msg == NULL)) {
+      dialogue_msg( "Request Fuel", "\"Sorry, I'm busy now.\"" );
+      return;
+   }
+   price = (int) val;
+
+   /* Check to see if is already refueling. */
+   if (pilot_isFlag(comm_pilot, PILOT_REFUELING)) {
+      dialogue_msg( "Request Fuel", "Pilot is already refueling you." );
+      return;
+   }
+
+   /* See if player really wants to pay. */
+   ret = dialogue_YesNo( "Request Fuel", "%s\n\nPay %d credits?", msg, price );
+   if (ret == 0) {
+      dialogue_msg( "Request Fuel", "You decide not to pay." );
+      return;
+   }
+
+   /* Check if he has the money. */
+   if (player->credits < price) {
+      dialogue_msg( "Request Fuel", "You need %d more credits!",
+            player->credits - price);
+      return;
+   }
+
+   /* Take money. */
+   player->credits      -= price;
+   comm_pilot->credits  += price;
+
+   /* Start refueling. */
+   pilot_setFlag(comm_pilot, PILOT_REFUELING);
+   ai_refuel( comm_pilot, player->id );
+
+   /* Last message. */
+   dialogue_msg( "Request Fuel", "\"On my way.\"" );
+}
+
+
+/**
  * @brief Gets the amount the communicating pilot wants as a bribe.
  *
  * Valid targets for now are:
  *    - "bribe": amount pilot wants to be paid. 
+ *    - "refuel": amount pilot wants to be paid for refueling the player.
  *
  *    @param[out] val Value of the number gotten.
  *    @param str Name of number to get.
@@ -265,15 +339,16 @@ static int comm_getNumber( double *val, char* str )
    L = comm_pilot->ai->L;
    lua_getglobal( L, "mem" );
 
-   /* Get the bribe amount. */
+   /* Get number amount. */
    lua_getfield( L, -1, str );
-   /* If not number consider unbribeable. */
+   /* Check to see if it's a number. */
    if (!lua_isnumber(L, -1))
       ret = 1;
    else {
       *val = lua_tonumber(L, -1);
       ret = 0;
    }
+   /* Clean up. */
    lua_pop(L, 2);
    return ret;
 }

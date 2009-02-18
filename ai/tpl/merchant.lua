@@ -8,7 +8,7 @@ control_rate = 2
 
 -- Required "control" function
 function control ()
-   task = ai.taskname()
+   task  = ai.taskname()
    enemy = ai.getenemy()
 
    -- Runaway if enemy is near

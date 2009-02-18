@@ -14,6 +14,7 @@
 #include "ndata.h"
 
 #include "SDL.h"
+#include "SDL_mutex.h"
 
 #include "naev.h"
 #include "log.h"
@@ -38,6 +39,7 @@
 static char* ndata_filename         = NULL; /**< Packfile name. */
 static Packcache_t *ndata_cache     = NULL; /**< Actual packfile. */
 static char* ndata_packName         = NULL; /**< Name of the ndata module. */
+static SDL_mutex *ndata_lock        = NULL; /**< Lock for ndata creation. */
 
 /*
  * File list.
@@ -96,6 +98,15 @@ static int ndata_openPackfile (void)
    int nfiles;
    size_t len;
 
+   /* Must be thread safe. */
+   SDL_mutexP(ndata_lock);
+
+   /* Was opened while locked. */
+   if (ndata_cache != NULL) {
+      SDL_mutexV(ndata_lock);
+      return 0;
+   }
+
    /*
     * Try to find the ndata file.
     */
@@ -136,11 +147,13 @@ static int ndata_openPackfile (void)
       WARN("Cannot find ndata file!");
       WARN("Please specify ndata file with -d or data in the conf file.");
       exit(1);
-      return -1;
    }
    ndata_cache = pack_openCache( ndata_filename );
    if (ndata_cache == NULL)
       WARN("Unable to create Packcache from '%s'.", ndata_filename );
+
+   /* Close lock. */
+   SDL_mutexV(ndata_lock);
 
    return 0;
 }
@@ -153,6 +166,9 @@ static int ndata_openPackfile (void)
  */
 int ndata_open (void)
 {
+   /* Create the lock. */
+   ndata_lock = SDL_CreateMutex();
+
    /* If user enforces ndata filename, we'll respect that. */
    if (ndata_filename != NULL)
       return ndata_openPackfile();
@@ -183,6 +199,12 @@ void ndata_close (void)
    if (ndata_cache) {
       pack_closeCache(ndata_cache);
       ndata_cache = NULL;
+   }
+
+   /* Destroy the lock. */
+   if (ndata_lock != NULL) {
+      SDL_DestroyMutex(ndata_lock);
+      ndata_lock = NULL;
    }
 }
 

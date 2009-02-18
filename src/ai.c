@@ -137,7 +137,8 @@ static void ai_setMemory (void);
 static void ai_create( Pilot* pilot, char *param );
 /* External C routines */
 void ai_attacked( Pilot* attacked, const unsigned int attacker ); /* weapon.c */
-void ai_getDistress( Pilot* p, const Pilot* distressed );
+void ai_refuel( Pilot* refueler, unsigned int target ); /* comm.c */
+void ai_getDistress( Pilot* p, const Pilot* distressed ); /* pilot.c */
 /* C Routines made External */
 int ai_pinit( Pilot *p, char *ai ); /* pilot.c */
 void ai_destroy( Pilot* p ); /* pilot.c */
@@ -149,152 +150,159 @@ void ai_setPilot( Pilot *p ); /* escort.c */
  * AI routines for Lua
  */
 /* tasks */
-static int ai_pushtask( lua_State *L ); /* pushtask( string, number/pointer, number ) */
-static int ai_poptask( lua_State *L ); /* poptask() */
-static int ai_taskname( lua_State *L ); /* number taskname() */
+static int aiL_pushtask( lua_State *L ); /* pushtask( string, number/pointer, number ) */
+static int aiL_poptask( lua_State *L ); /* poptask() */
+static int aiL_taskname( lua_State *L ); /* number taskname() */
 
 /* consult values */
-static int ai_getplayer( lua_State *L ); /* number getPlayer() */
-static int ai_gettarget( lua_State *L ); /* pointer gettarget() */
-static int ai_getrndpilot( lua_State *L ); /* number getrndpilot() */
-static int ai_armour( lua_State *L ); /* armour() */
-static int ai_shield( lua_State *L ); /* shield() */
-static int ai_parmour( lua_State *L ); /* parmour() */
-static int ai_pshield( lua_State *L ); /* pshield() */
-static int ai_getdistance( lua_State *L ); /* number getdist(Vector2d) */
-static int ai_getpos( lua_State *L ); /* getpos(number) */
-static int ai_minbrakedist( lua_State *L ); /* number minbrakedist( [number] ) */
-static int ai_cargofree( lua_State *L ); /* number cargofree() */
-static int ai_shipclass( lua_State *L ); /* string shipclass( [number] ) */
-static int ai_shipmass( lua_State *L ); /* string shipmass( [number] ) */
-static int ai_isbribed( lua_State *L ); /* bool isbribed( number ) */
+static int aiL_getplayer( lua_State *L ); /* number getPlayer() */
+static int aiL_gettarget( lua_State *L ); /* pointer gettarget() */
+static int aiL_getrndpilot( lua_State *L ); /* number getrndpilot() */
+static int aiL_armour( lua_State *L ); /* armour() */
+static int aiL_shield( lua_State *L ); /* shield() */
+static int aiL_parmour( lua_State *L ); /* parmour() */
+static int aiL_pshield( lua_State *L ); /* pshield() */
+static int aiL_getdistance( lua_State *L ); /* number getdist(Vector2d) */
+static int aiL_getpos( lua_State *L ); /* getpos(number) */
+static int aiL_minbrakedist( lua_State *L ); /* number minbrakedist( [number] ) */
+static int aiL_cargofree( lua_State *L ); /* number cargofree() */
+static int aiL_shipclass( lua_State *L ); /* string shipclass( [number] ) */
+static int aiL_shipmass( lua_State *L ); /* string shipmass( [number] ) */
+static int aiL_isbribed( lua_State *L ); /* bool isbribed( number ) */
 
 /* boolean expressions */
-static int ai_exists( lua_State *L ); /* boolean exists() */
-static int ai_ismaxvel( lua_State *L ); /* boolean ismaxvel() */
-static int ai_isstopped( lua_State *L ); /* boolean isstopped() */
-static int ai_isenemy( lua_State *L ); /* boolean isenemy( number ) */
-static int ai_isally( lua_State *L ); /* boolean isally( number ) */
-static int ai_incombat( lua_State *L ); /* boolean incombat( [number] ) */
-static int ai_isdisabled( lua_State *L ); /* boolean isdisabled( number ) */
-static int ai_haslockon( lua_State *L ); /* boolean haslockon() */
+static int aiL_exists( lua_State *L ); /* boolean exists() */
+static int aiL_ismaxvel( lua_State *L ); /* boolean ismaxvel() */
+static int aiL_isstopped( lua_State *L ); /* boolean isstopped() */
+static int aiL_isenemy( lua_State *L ); /* boolean isenemy( number ) */
+static int aiL_isally( lua_State *L ); /* boolean isally( number ) */
+static int aiL_incombat( lua_State *L ); /* boolean incombat( [number] ) */
+static int aiL_isdisabled( lua_State *L ); /* boolean isdisabled( number ) */
+static int aiL_haslockon( lua_State *L ); /* boolean haslockon() */
 
 /* movement */
-static int ai_accel( lua_State *L ); /* accel(number); number <= 1. */
-static int ai_turn( lua_State *L ); /* turn(number); abs(number) <= 1. */
-static int ai_face( lua_State *L ); /* face(number/pointer) */
-static int ai_aim( lua_State *L ); /* aim(number) */
-static int ai_brake( lua_State *L ); /* brake() */
-static int ai_getnearestplanet( lua_State *L ); /* Vec2 getnearestplanet() */
-static int ai_getrndplanet( lua_State *L ); /* Vec2 getrndplanet() */
-static int ai_getlandplanet( lua_State *L ); /* Vec2 getlandplanet() */
-static int ai_hyperspace( lua_State *L ); /* [number] hyperspace() */
-static int ai_stop( lua_State *L ); /* stop() */
-static int ai_relvel( lua_State *L ); /* relvel( number ) */
+static int aiL_accel( lua_State *L ); /* accel(number); number <= 1. */
+static int aiL_turn( lua_State *L ); /* turn(number); abs(number) <= 1. */
+static int aiL_face( lua_State *L ); /* face(number/pointer) */
+static int aiL_aim( lua_State *L ); /* aim(number) */
+static int aiL_brake( lua_State *L ); /* brake() */
+static int aiL_getnearestplanet( lua_State *L ); /* Vec2 getnearestplanet() */
+static int aiL_getrndplanet( lua_State *L ); /* Vec2 getrndplanet() */
+static int aiL_getlandplanet( lua_State *L ); /* Vec2 getlandplanet() */
+static int aiL_hyperspace( lua_State *L ); /* [number] hyperspace() */
+static int aiL_stop( lua_State *L ); /* stop() */
+static int aiL_relvel( lua_State *L ); /* relvel( number ) */
 
 /* escorts */
-static int ai_e_attack( lua_State *L ); /* bool e_attack() */
-static int ai_e_hold( lua_State *L ); /* bool e_hold() */
-static int ai_e_clear( lua_State *L ); /* bool e_clear() */
-static int ai_e_return( lua_State *L ); /* bool e_return() */
-static int ai_dock( lua_State *L ); /* dock( number ) */
+static int aiL_e_attack( lua_State *L ); /* bool e_attack() */
+static int aiL_e_hold( lua_State *L ); /* bool e_hold() */
+static int aiL_e_clear( lua_State *L ); /* bool e_clear() */
+static int aiL_e_return( lua_State *L ); /* bool e_return() */
+static int aiL_dock( lua_State *L ); /* dock( number ) */
 
 /* combat */
-static int ai_combat( lua_State *L ); /* combat( number ) */
-static int ai_settarget( lua_State *L ); /* settarget( number ) */
-static int ai_secondary( lua_State *L ); /* string secondary() */
-static int ai_hasturrets( lua_State *L ); /* bool hasturrets() */
-static int ai_shoot( lua_State *L ); /* shoot( number ); number = 1,2,3 */
-static int ai_getenemy( lua_State *L ); /* number getenemy() */
-static int ai_hostile( lua_State *L ); /* hostile( number ) */
-static int ai_getweaprange( lua_State *L ); /* number getweaprange() */
-static int ai_canboard( lua_State *L ); /* boolean canboard( number ) */
-static int ai_board( lua_State *L ); /* boolean board() */
+static int aiL_combat( lua_State *L ); /* combat( number ) */
+static int aiL_settarget( lua_State *L ); /* settarget( number ) */
+static int aiL_secondary( lua_State *L ); /* string secondary() */
+static int aiL_hasturrets( lua_State *L ); /* bool hasturrets() */
+static int aiL_shoot( lua_State *L ); /* shoot( number ); number = 1,2,3 */
+static int aiL_getenemy( lua_State *L ); /* number getenemy() */
+static int aiL_hostile( lua_State *L ); /* hostile( number ) */
+static int aiL_getweaprange( lua_State *L ); /* number getweaprange() */
+static int aiL_canboard( lua_State *L ); /* boolean canboard( number ) */
 
 /* timers */
-static int ai_settimer( lua_State *L ); /* settimer( number, number ) */
-static int ai_timeup( lua_State *L ); /* boolean timeup( number ) */
+static int aiL_settimer( lua_State *L ); /* settimer( number, number ) */
+static int aiL_timeup( lua_State *L ); /* boolean timeup( number ) */
 
 /* messages */
-static int ai_comm( lua_State *L ); /* say( number, string ) */
-static int ai_broadcast( lua_State *L ); /* broadcast( string ) */
-static int ai_distress( lua_State *L ); /* distress( string [, bool] ) */
+static int aiL_comm( lua_State *L ); /* say( number, string ) */
+static int aiL_broadcast( lua_State *L ); /* broadcast( string ) */
+static int aiL_distress( lua_State *L ); /* distress( string [, bool] ) */
 
 /* loot */
-static int ai_credits( lua_State *L ); /* credits( number ) */
-static int ai_cargo( lua_State *L ); /* cargo( name, quantity ) */
-static int ai_shipprice( lua_State *L ); /* shipprice() */
+static int aiL_credits( lua_State *L ); /* credits( number ) */
+static int aiL_cargo( lua_State *L ); /* cargo( name, quantity ) */
+static int aiL_shipprice( lua_State *L ); /* shipprice() */
+
+/* misc */
+static int aiL_board( lua_State *L ); /* boolean board() */
+static int aiL_refuel( lua_State *L ); /* boolean, boolean refuel() */
+static int aiL_donerefuel( lua_State *L ); /* boolean donerefuel() */
 
 
-static const luaL_reg ai_methods[] = {
+static const luaL_reg aiL_methods[] = {
    /* tasks */
-   { "pushtask", ai_pushtask },
-   { "poptask", ai_poptask },
-   { "taskname", ai_taskname },
+   { "pushtask", aiL_pushtask },
+   { "poptask", aiL_poptask },
+   { "taskname", aiL_taskname },
    /* is */
-   { "exists", ai_exists },
-   { "ismaxvel", ai_ismaxvel },
-   { "isstopped", ai_isstopped },
-   { "isenemy", ai_isenemy },
-   { "isally", ai_isally },
-   { "incombat", ai_incombat },
-   { "isdisabled", ai_isdisabled },
-   { "haslockon", ai_haslockon },
+   { "exists", aiL_exists },
+   { "ismaxvel", aiL_ismaxvel },
+   { "isstopped", aiL_isstopped },
+   { "isenemy", aiL_isenemy },
+   { "isally", aiL_isally },
+   { "incombat", aiL_incombat },
+   { "isdisabled", aiL_isdisabled },
+   { "haslockon", aiL_haslockon },
    /* get */
-   { "getPlayer", ai_getplayer },
-   { "target", ai_gettarget },
-   { "rndpilot", ai_getrndpilot },
-   { "armour", ai_armour },
-   { "shield", ai_shield },
-   { "parmour", ai_parmour },
-   { "pshield", ai_pshield },
-   { "dist", ai_getdistance },
-   { "pos", ai_getpos },
-   { "minbrakedist", ai_minbrakedist },
-   { "cargofree", ai_cargofree },
-   { "shipclass", ai_shipclass },
-   { "shipmass", ai_shipmass },
-   { "isbribed", ai_isbribed },
+   { "getPlayer", aiL_getplayer },
+   { "target", aiL_gettarget },
+   { "rndpilot", aiL_getrndpilot },
+   { "armour", aiL_armour },
+   { "shield", aiL_shield },
+   { "parmour", aiL_parmour },
+   { "pshield", aiL_pshield },
+   { "dist", aiL_getdistance },
+   { "pos", aiL_getpos },
+   { "minbrakedist", aiL_minbrakedist },
+   { "cargofree", aiL_cargofree },
+   { "shipclass", aiL_shipclass },
+   { "shipmass", aiL_shipmass },
+   { "isbribed", aiL_isbribed },
    /* movement */
-   { "nearestplanet", ai_getnearestplanet },
-   { "rndplanet", ai_getrndplanet },
-   { "landplanet", ai_getlandplanet },
-   { "accel", ai_accel },
-   { "turn", ai_turn },
-   { "face", ai_face },
-   { "brake", ai_brake },
-   { "stop", ai_stop },
-   { "hyperspace", ai_hyperspace },
-   { "relvel", ai_relvel },
+   { "nearestplanet", aiL_getnearestplanet },
+   { "rndplanet", aiL_getrndplanet },
+   { "landplanet", aiL_getlandplanet },
+   { "accel", aiL_accel },
+   { "turn", aiL_turn },
+   { "face", aiL_face },
+   { "brake", aiL_brake },
+   { "stop", aiL_stop },
+   { "hyperspace", aiL_hyperspace },
+   { "relvel", aiL_relvel },
    /* escorts */
-   { "e_attack", ai_e_attack },
-   { "e_hold", ai_e_hold },
-   { "e_clear", ai_e_clear },
-   { "e_return", ai_e_return },
-   { "dock", ai_dock },
+   { "e_attack", aiL_e_attack },
+   { "e_hold", aiL_e_hold },
+   { "e_clear", aiL_e_clear },
+   { "e_return", aiL_e_return },
+   { "dock", aiL_dock },
    /* combat */
-   { "aim", ai_aim },
-   { "combat", ai_combat },
-   { "settarget", ai_settarget },
-   { "secondary", ai_secondary },
-   { "hasturrets", ai_hasturrets },
-   { "shoot", ai_shoot },
-   { "getenemy", ai_getenemy },
-   { "hostile", ai_hostile },
-   { "getweaprange", ai_getweaprange },
-   { "canboard", ai_canboard },
-   { "board", ai_board },
+   { "aim", aiL_aim },
+   { "combat", aiL_combat },
+   { "settarget", aiL_settarget },
+   { "secondary", aiL_secondary },
+   { "hasturrets", aiL_hasturrets },
+   { "shoot", aiL_shoot },
+   { "getenemy", aiL_getenemy },
+   { "hostile", aiL_hostile },
+   { "getweaprange", aiL_getweaprange },
+   { "canboard", aiL_canboard },
    /* timers */
-   { "settimer", ai_settimer },
-   { "timeup", ai_timeup },
+   { "settimer", aiL_settimer },
+   { "timeup", aiL_timeup },
    /* messages */
-   { "comm", ai_comm },
-   { "broadcast", ai_broadcast },
-   { "distress", ai_distress },
+   { "comm", aiL_comm },
+   { "broadcast", aiL_broadcast },
+   { "distress", aiL_distress },
    /* loot */
-   { "setcredits", ai_credits },
-   { "setcargo", ai_cargo },
-   { "shipprice", ai_shipprice },
+   { "setcredits", aiL_credits },
+   { "setcargo", aiL_cargo },
+   { "shipprice", aiL_shipprice },
+   /* misc */
+   { "board", aiL_board },
+   { "refuel", aiL_refuel },
+   { "donerefuel", aiL_donerefuel },
    {0,0} /* end */
 }; /**< Lua AI Function table. */
 
@@ -308,14 +316,14 @@ static double pilot_acc = 0.; /**< Current pilot's acceleration. */
 static double pilot_turn = 0.; /**< Current pilot's turning. */
 static int pilot_flags = 0; /**< Handle stuff like weapon firing. */
 static int pilot_firemode = 0; /**< Method pilot is using to shoot. */
-static char ai_distressmsg[PATH_MAX]; /**< Buffer to store distress message. */
+static char aiL_distressmsg[PATH_MAX]; /**< Buffer to store distress message. */
 
 /*
  * ai status, used so that create functions can't be used elsewhere
  */
 #define AI_STATUS_NORMAL      1 /**< Normal ai function behaviour. */
 #define AI_STATUS_CREATE      2 /**< AI is running create function. */
-static int ai_status = AI_STATUS_NORMAL; /**< Current AI run status. */
+static int aiL_status = AI_STATUS_NORMAL; /**< Current AI run status. */
 
 
 /**
@@ -415,11 +423,16 @@ int ai_pinit( Pilot *p, char *ai )
    if (n!=0) param[i-n] = '\0'; /* Terminate string if needed. */
    else buf[i] = '\0';
 
+   /* Set up the profile. */
    prof = ai_getProfile(buf);
    if (prof == NULL)
       WARN("AI Profile '%s' not found.", buf);
    p->ai = prof;
    L = p->ai->L;
+
+   /* Set fuel.  Hack until we do it through AI itself. */
+   p->fuel  = (RNG_2SIGMA()/4. + 0.5) * (p->fuel_max - HYPERSPACE_FUEL);
+   p->fuel += HYPERSPACE_FUEL;
 
    /* Adds a new pilot memory in the memory table. */
    lua_getglobal(L, "pilotmem");
@@ -536,7 +549,7 @@ static int ai_loadProfile( const char* filename )
    lua_regnumber(L, "player", PLAYER_ID); /* player ID */
 
    /* Register C functions in Lua */
-   luaL_register(L, "ai", ai_methods);
+   luaL_register(L, "ai", aiL_methods);
    lua_loadRnd(L);
 
    /* Metatables to register. */
@@ -646,7 +659,7 @@ void ai_think( Pilot* pilot )
 
    /* other behaviours. */
    if (ai_isFlag(AI_DISTRESS))
-      pilot_distress(cur_pilot, ai_distressmsg);
+      pilot_distress(cur_pilot, aiL_distressmsg);
 }
 
 
@@ -668,6 +681,31 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker )
       WARN("Pilot '%s' ai -> 'attacked': %s", cur_pilot->name, lua_tostring(L,-1));
       lua_pop(L,1);
    }
+}
+
+
+/**
+ * @brief Has a pilot attempt to refuel the other.
+ *
+ *    @param refueler Pilot doing the refueling.
+ *    @param target Pilot to refuel.
+ */
+void ai_refuel( Pilot* refueler, unsigned int target )
+{
+   Task *t;
+
+   /* Create the task. */
+   t = malloc(sizeof(Task));
+   t->next     = NULL;
+   t->name     = strdup("refuel");
+   t->dtype    = TYPE_INT;
+   t->dat.num  = target;
+
+   /* Prepend the task. */
+   t->next = refueler->task;
+   refueler->task = t;
+
+   return;
 }
 
 
@@ -718,7 +756,7 @@ static void ai_create( Pilot* pilot, char *param )
    L = cur_pilot->ai->L;
 
    /* Set creation mode. */
-   ai_status = AI_STATUS_CREATE;
+   aiL_status = AI_STATUS_CREATE;
 
    /* Prepare stack. */
    lua_getglobal(L, "create");
@@ -743,7 +781,7 @@ static void ai_create( Pilot* pilot, char *param )
    }
 
    /* Recover normal mode. */
-   ai_status = AI_STATUS_NORMAL;
+   aiL_status = AI_STATUS_NORMAL;
 }
 
 
@@ -789,7 +827,7 @@ static void ai_freetask( Task* t )
  *    @param L Lua state.
  *    @return Number of Lua parameters.
  */
-static int ai_pushtask( lua_State *L )
+static int aiL_pushtask( lua_State *L )
 {
    NLUA_MIN_ARGS(2);
    int pos;
@@ -832,7 +870,7 @@ static int ai_pushtask( lua_State *L )
  *    @param L Lua state.
  *    @return Number of Lua parameters.
  */
-static int ai_poptask( lua_State *L )
+static int aiL_poptask( lua_State *L )
 {
    (void)L; /* hack to avoid -W -Wall warnings */
    Task* t = cur_pilot->task;
@@ -856,7 +894,7 @@ static int ai_poptask( lua_State *L )
  *    @param L Lua state.
  *    @return Number of Lua parameters.
  */
-static int ai_taskname( lua_State *L )
+static int aiL_taskname( lua_State *L )
 {
    if (cur_pilot->task) lua_pushstring(L, cur_pilot->task->name);
    else lua_pushstring(L, "none");
@@ -870,7 +908,7 @@ static int ai_taskname( lua_State *L )
  *    @param L Lua state.
  *    @return Number of Lua parameters.
  */
-static int ai_getplayer( lua_State *L )
+static int aiL_getplayer( lua_State *L )
 {
    lua_pushnumber(L, PLAYER_ID);
    return 1;
@@ -883,7 +921,7 @@ static int ai_getplayer( lua_State *L )
  *    @param L Lua state.
  *    @return Number of Lua parameters.
  */
-static int ai_gettarget( lua_State *L )
+static int aiL_gettarget( lua_State *L )
 {
    /* Must have a task. */
    if (cur_pilot->task == NULL)
@@ -907,7 +945,7 @@ static int ai_gettarget( lua_State *L )
  *    @param L Lua state.
  *    @return Number of Lua parameters.
  */
-static int ai_getrndpilot( lua_State *L )
+static int aiL_getrndpilot( lua_State *L )
 {
    int p;
    p = RNG(0, pilot_nstack-1);
@@ -928,7 +966,7 @@ static int ai_getrndpilot( lua_State *L )
 /*
  * gets the pilot's armour
  */
-static int ai_armour( lua_State *L )
+static int aiL_armour( lua_State *L )
 {
    double d;
 
@@ -942,7 +980,7 @@ static int ai_armour( lua_State *L )
 /*
  * gets the pilot's shield
  */
-static int ai_shield( lua_State *L )
+static int aiL_shield( lua_State *L )
 {
    double d;
 
@@ -956,7 +994,7 @@ static int ai_shield( lua_State *L )
 /*
  * gets the pilot's armour in percent
  */
-static int ai_parmour( lua_State *L )
+static int aiL_parmour( lua_State *L )
 {
    double d;
    Pilot* p;
@@ -974,7 +1012,7 @@ static int ai_parmour( lua_State *L )
 /* 
  * gets the pilot's shield in percent
  */              
-static int ai_pshield( lua_State *L )
+static int aiL_pshield( lua_State *L )
 {
    double d;
    Pilot* p;
@@ -992,7 +1030,7 @@ static int ai_pshield( lua_State *L )
 /*
  * gets the distance from the pointer
  */
-static int ai_getdistance( lua_State *L )
+static int aiL_getdistance( lua_State *L )
 {
    Vector2d *v;
    LuaVector *lv;
@@ -1032,7 +1070,7 @@ static int ai_getdistance( lua_State *L )
 /*
  * gets the pilot's position
  */
-static int ai_getpos( lua_State *L )
+static int aiL_getpos( lua_State *L )
 {
    Pilot *p;
 
@@ -1057,7 +1095,7 @@ static int ai_getpos( lua_State *L )
  *
  * I hate this function and it'll probably need to get changed in the future
  */
-static int ai_minbrakedist( lua_State *L )
+static int aiL_minbrakedist( lua_State *L )
 {
    double time, dist, vel;
    Vector2d vv;
@@ -1111,7 +1149,7 @@ static int ai_minbrakedist( lua_State *L )
 /*
  * gets the pilot's free cargo space
  */
-static int ai_cargofree( lua_State *L )
+static int aiL_cargofree( lua_State *L )
 {
    lua_pushnumber(L, pilot_cargoFree(cur_pilot));
    return 1;
@@ -1121,7 +1159,7 @@ static int ai_cargofree( lua_State *L )
 /*
  * gets the pilot's ship class.
  */
-static int ai_shipclass( lua_State *L )
+static int aiL_shipclass( lua_State *L )
 {
    Pilot *p;
 
@@ -1146,7 +1184,7 @@ static int ai_shipclass( lua_State *L )
 /*
  * Gets the ship's mass.
  */
-static int ai_shipmass( lua_State *L )
+static int aiL_shipmass( lua_State *L )
 {
    Pilot *p;
 
@@ -1171,7 +1209,7 @@ static int ai_shipmass( lua_State *L )
 /*
  * Checks to see if target has bribed pilot.
  */
-static int ai_isbribed( lua_State *L )
+static int aiL_isbribed( lua_State *L )
 {
    unsigned int target;
 
@@ -1187,7 +1225,7 @@ static int ai_isbribed( lua_State *L )
 /*
  * pilot exists?
  */
-static int ai_exists( lua_State *L )
+static int aiL_exists( lua_State *L )
 {
    Pilot *p;
    int i;
@@ -1210,7 +1248,7 @@ static int ai_exists( lua_State *L )
 /*
  * is at maximum velocity?
  */
-static int ai_ismaxvel( lua_State *L )
+static int aiL_ismaxvel( lua_State *L )
 {
    lua_pushboolean(L,(VMOD(cur_pilot->solid->vel) > cur_pilot->speed-MIN_VEL_ERR));
    return 1;
@@ -1220,7 +1258,7 @@ static int ai_ismaxvel( lua_State *L )
 /*
  * is stopped?
  */
-static int ai_isstopped( lua_State *L )
+static int aiL_isstopped( lua_State *L )
 {
    lua_pushboolean(L,(VMOD(cur_pilot->solid->vel) < MIN_VEL_ERR));
    return 1;
@@ -1230,7 +1268,7 @@ static int ai_isstopped( lua_State *L )
 /*
  * checks if pilot is an enemy
  */
-static int ai_isenemy( lua_State *L )
+static int aiL_isenemy( lua_State *L )
 {
    Pilot *p;
 
@@ -1252,7 +1290,7 @@ static int ai_isenemy( lua_State *L )
 /*
  * checks if pillot is an ally
  */
-static int ai_isally( lua_State *L )
+static int aiL_isally( lua_State *L )
 {
    Pilot *p;
 
@@ -1274,7 +1312,7 @@ static int ai_isally( lua_State *L )
 /*
  * checks to see if the pilot is in combat, defaults to self
  */
-static int ai_incombat( lua_State *L )
+static int aiL_incombat( lua_State *L )
 {
    Pilot* p;
 
@@ -1299,7 +1337,7 @@ static int ai_incombat( lua_State *L )
  *    @luareturn true if pilot is disabled.
  * @luafunc isdisabled( p )
  */
-static int ai_isdisabled( lua_State *L )
+static int aiL_isdisabled( lua_State *L )
 {
    Pilot *p;
    unsigned int id;
@@ -1317,7 +1355,7 @@ static int ai_isdisabled( lua_State *L )
 /*
  * pilot has is locked by some missile
  */
-static int ai_haslockon( lua_State *L )
+static int aiL_haslockon( lua_State *L )
 {
    lua_pushboolean(L, cur_pilot->lockons > 0);
    return 1;
@@ -1327,7 +1365,7 @@ static int ai_haslockon( lua_State *L )
 /*
  * starts accelerating the pilot based on a parameter
  */
-static int ai_accel( lua_State *L )
+static int aiL_accel( lua_State *L )
 {
    double n;
 
@@ -1350,7 +1388,7 @@ static int ai_accel( lua_State *L )
 /*
  * starts turning the pilot based on a parameter
  */
-static int ai_turn( lua_State *L )
+static int aiL_turn( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
    pilot_turn = (lua_isnumber(L,1)) ? (double)lua_tonumber(L,1) : 0. ;
@@ -1361,7 +1399,7 @@ static int ai_turn( lua_State *L )
 /*
  * faces the target
  */
-static int ai_face( lua_State *L )
+static int aiL_face( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
    LuaVector *lv;
@@ -1416,7 +1454,7 @@ static int ai_face( lua_State *L )
 /*
  * brakes the pilot
  */
-static int ai_brake( lua_State *L )
+static int aiL_brake( lua_State *L )
 {
    (void)L; /* hack to avoid -W -Wall warnings */
    double diff, d;
@@ -1436,7 +1474,7 @@ static int ai_brake( lua_State *L )
 /*
  * returns the nearest friendly planet's position to the pilot
  */
-static int ai_getnearestplanet( lua_State *L )
+static int aiL_getnearestplanet( lua_State *L )
 {
    double dist, d;
    int i, j;
@@ -1467,7 +1505,7 @@ static int ai_getnearestplanet( lua_State *L )
 /*
  * returns a random planet's position to the pilot
  */
-static int ai_getrndplanet( lua_State *L )
+static int aiL_getrndplanet( lua_State *L )
 {
    LuaVector lv;
    int p;
@@ -1487,7 +1525,7 @@ static int ai_getrndplanet( lua_State *L )
 /*
  * returns a random friendly planet's position to the pilot
  */
-static int ai_getlandplanet( lua_State *L )
+static int aiL_getlandplanet( lua_State *L )
 {
    Planet** planets;
    int nplanets, i;
@@ -1523,7 +1561,7 @@ static int ai_getlandplanet( lua_State *L )
 /*
  * tries to enter the pilot in hyperspace, returns the distance if too far away
  */
-static int ai_hyperspace( lua_State *L )
+static int aiL_hyperspace( lua_State *L )
 {
    int dist;
    
@@ -1539,7 +1577,7 @@ static int ai_hyperspace( lua_State *L )
 /*
  * Gets the relative velocity of a pilot.
  */
-static int ai_relvel( lua_State *L )
+static int aiL_relvel( lua_State *L )
 {
    unsigned int id;
    double dot, mod;
@@ -1572,7 +1610,7 @@ static int ai_relvel( lua_State *L )
 /*
  * completely stops the pilot if it is below minimum vel error (no instastops)
  */
-static int ai_stop( lua_State *L )
+static int aiL_stop( lua_State *L )
 {
    (void) L; /* avoid gcc warning */
 
@@ -1585,7 +1623,7 @@ static int ai_stop( lua_State *L )
 /*
  * Tells the pilot's escort's to attack it's target.
  */
-static int ai_e_attack( lua_State *L )
+static int aiL_e_attack( lua_State *L )
 {
    int ret;
    ret = escorts_attack(cur_pilot);
@@ -1596,7 +1634,7 @@ static int ai_e_attack( lua_State *L )
 /* 
  * Tells the pilot's escorts to hold position.
  */
-static int ai_e_hold( lua_State *L )
+static int aiL_e_hold( lua_State *L )
 {
    int ret;
    ret = escorts_hold(cur_pilot);
@@ -1607,7 +1645,7 @@ static int ai_e_hold( lua_State *L )
 /*
  * Tells the pilot's escorts to clear orders.
  */
-static int ai_e_clear( lua_State *L )
+static int aiL_e_clear( lua_State *L )
 {
    int ret;
    ret = escorts_clear(cur_pilot);
@@ -1618,7 +1656,7 @@ static int ai_e_clear( lua_State *L )
 /*
  * Tells the pilot's escorts to return to dock.
  */
-static int ai_e_return( lua_State *L )
+static int aiL_e_return( lua_State *L )
 {
    int ret;
    ret = escorts_return(cur_pilot);
@@ -1629,7 +1667,7 @@ static int ai_e_return( lua_State *L )
 /*
  * Docks the ship.
  */
-static int ai_dock( lua_State *L )
+static int aiL_dock( lua_State *L )
 {
    Pilot *p;
 
@@ -1648,7 +1686,7 @@ static int ai_dock( lua_State *L )
 /*
  * Aims at the pilot, trying to hit it.
  */
-static int ai_aim( lua_State *L )
+static int aiL_aim( lua_State *L )
 {
    int id;
    double x,y;
@@ -1709,7 +1747,7 @@ static int ai_aim( lua_State *L )
 /*
  * toggles the combat flag, default is on
  */
-static int ai_combat( lua_State *L )
+static int aiL_combat( lua_State *L )
 {
    int i;
 
@@ -1727,7 +1765,7 @@ static int ai_combat( lua_State *L )
 /*
  * sets the pilot's target
  */
-static int ai_settarget( lua_State *L )
+static int aiL_settarget( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
 
@@ -1773,7 +1811,7 @@ static int outfit_isRanged( Pilot *p, PilotOutfit *o )
 /*
  * sets the secondary weapon, biased towards launchers
  */
-static int ai_secondary( lua_State *L )
+static int aiL_secondary( lua_State *L )
 {
    PilotOutfit *co, *po;
    int i, melee;
@@ -1877,7 +1915,7 @@ static int ai_secondary( lua_State *L )
 /*
  * returns true if the pilot has turrets
  */
-static int ai_hasturrets( lua_State *L )
+static int aiL_hasturrets( lua_State *L )
 {
    lua_pushboolean( L, pilot_isFlag(cur_pilot, PILOT_HASTURRET) );
    return 1;
@@ -1887,7 +1925,7 @@ static int ai_hasturrets( lua_State *L )
 /*
  * makes the pilot shoot
  */
-static int ai_shoot( lua_State *L )
+static int aiL_shoot( lua_State *L )
 {
    int s;
 
@@ -1910,7 +1948,7 @@ static int ai_shoot( lua_State *L )
 /*
  * gets the nearest enemy
  */
-static int ai_getenemy( lua_State *L )
+static int aiL_getenemy( lua_State *L )
 {
    unsigned int p;
 
@@ -1927,7 +1965,7 @@ static int ai_getenemy( lua_State *L )
 /*
  * sets the enemy hostile (basically notifies of an impending attack)
  */
-static int ai_hostile( lua_State *L )
+static int aiL_hostile( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
 
@@ -1941,7 +1979,7 @@ static int ai_hostile( lua_State *L )
 /*
  * returns the maximum range of weapons, if parameter is 1, then does secondary
  */
-static int ai_getweaprange( lua_State *L )
+static int aiL_getweaprange( lua_State *L )
 {
    double range;
 
@@ -1981,7 +2019,7 @@ static int ai_getweaprange( lua_State *L )
  *    @luareturn true if pilot can board, false if it can't.
  * @luafunc canboard( p )
  */
-static int ai_canboard( lua_State *L )
+static int aiL_canboard( lua_State *L )
 {
    unsigned int id;
    Pilot *p;
@@ -2010,17 +2048,41 @@ static int ai_canboard( lua_State *L )
  *    @luareturn true if was able to board the target.
  * @luafunc board( p )
  */
-static int ai_board( lua_State *L )
+static int aiL_board( lua_State *L )
 {
-   (void) L;
-   return pilot_board( cur_pilot );
+   lua_pushboolean(L, pilot_board( cur_pilot ));
+   return 1;
+}
+
+
+/**
+ * @brief Sees if pilot has finished refueling the target.
+ *
+ *    @luareturn true if target has finished refueling or false if it hasn't.
+ */
+static int aiL_donerefuel( lua_State *L )
+{
+   lua_pushboolean(L, !pilot_isFlag(cur_pilot, PILOT_REFUELING));
+   return 1;
+}
+
+
+/**
+ * @brief Attempts to refuel the pilot's target.
+ *
+ *    @luareturn true if pilot has begun refueling, false if it hasn't.
+ */
+static int aiL_refuel( lua_State *L )
+{
+   lua_pushboolean(L,pilot_refuelStart(cur_pilot));
+   return 1;
 }
 
 
 /*
  * sets the timer
  */
-static int ai_settimer( lua_State *L )
+static int aiL_settimer( lua_State *L )
 {
    NLUA_MIN_ARGS(2);
 
@@ -2035,7 +2097,7 @@ static int ai_settimer( lua_State *L )
 /*
  * checks the timer
  */
-static int ai_timeup( lua_State *L )
+static int aiL_timeup( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
 
@@ -2050,7 +2112,7 @@ static int ai_timeup( lua_State *L )
 /*
  * makes the pilot say something to the player
  */
-static int ai_comm( lua_State *L )
+static int aiL_comm( lua_State *L )
 {
    NLUA_MIN_ARGS(2);
    int p;
@@ -2075,7 +2137,7 @@ static int ai_comm( lua_State *L )
 /*
  * broadcasts to the entire area
  */
-static int ai_broadcast( lua_State *L )
+static int aiL_broadcast( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
 
@@ -2091,14 +2153,14 @@ static int ai_broadcast( lua_State *L )
 /*
  * Sends a distress signal.
  */
-static int ai_distress( lua_State *L )
+static int aiL_distress( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
 
    if (lua_isstring(L,1))
-      snprintf( ai_distressmsg, PATH_MAX, "%s", lua_tostring(L,1) );
+      snprintf( aiL_distressmsg, PATH_MAX, "%s", lua_tostring(L,1) );
    else if (lua_isnil(L,1))
-      ai_distressmsg[0] = '\0';
+      aiL_distressmsg[0] = '\0';
    else
       NLUA_INVALID_PARAMETER();
 
@@ -2112,10 +2174,10 @@ static int ai_distress( lua_State *L )
 /*
  * sets the pilot_nstack credits
  */
-static int ai_credits( lua_State *L )
+static int aiL_credits( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
-   if (ai_status != AI_STATUS_CREATE) return 0;
+   if (aiL_status != AI_STATUS_CREATE) return 0;
 
    if (lua_isnumber(L,1))
       cur_pilot->credits = (int)lua_tonumber(L,1);
@@ -2127,13 +2189,13 @@ static int ai_credits( lua_State *L )
 /*
  * sets the pilot_nstack cargo
  */
-static int ai_cargo( lua_State *L )
+static int aiL_cargo( lua_State *L )
 {
    NLUA_MIN_ARGS(2);
    int q;
    char *s;
 
-   if (ai_status != AI_STATUS_CREATE) return 0;
+   if (aiL_status != AI_STATUS_CREATE) return 0;
 
    /* Get parameters. */
    if (lua_isstring(L,1))
@@ -2158,7 +2220,7 @@ static int ai_cargo( lua_State *L )
 /*
  * gets the pilot's ship value
  */
-static int ai_shipprice( lua_State *L )
+static int aiL_shipprice( lua_State *L )
 {
    lua_pushnumber(L, cur_pilot->ship->price);
    return 1;

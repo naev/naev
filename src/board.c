@@ -86,12 +86,6 @@ void player_board (void)
 
 
    /*
-    * Tweak some values.
-    */
-   p->fuel = (double)RNG(100, p->fuel_max);
-
-
-   /*
     * create the boarding window
     */
    wdw = window_create( "Boarding", -1, -1, BOARDING_WIDTH, BOARDING_HEIGHT );

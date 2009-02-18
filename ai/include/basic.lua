@@ -44,7 +44,7 @@ function landstop ()
 end
 function landwait ()
    target = mem.land
-   dist = ai.dist( target )
+   dist   = ai.dist( target )
 
    -- In case for some reason landed far away
    if dist > 50 then
@@ -64,7 +64,7 @@ end
 --]]
 function runaway ()
    target = ai.target()
-  
+
    -- Target must exist
    if not ai.exists(target) then
       ai.poptask()
@@ -73,7 +73,7 @@ function runaway ()
 
    -- Good to set the target for distress calls
    ai.settarget( target )
-   
+
    dir = ai.face(target, true)
    ai.accel()
 
@@ -119,4 +119,128 @@ function hyperspace ()
 end
 
 
+--[[
+-- Boards the target
+--]]
+function board( target )
+   target = target or ai.target()
+
+   -- Get ready to board
+   ai.settarget(target)
+   dir   = ai.face(target)
+   dist  = ai.dist(target)
+   bdist = ai.minbrakedist(target)
+
+   -- See if must brake or approach
+   if dist < bdist then
+      ai.pushtask( 0, "boardstop", target )
+   elseif dir < 10 then
+      ai.accel()
+   end
+end
+
+
+--[[
+-- Attempts to brake on the target.
+--]]
+function boardstop ()
+   target = ai.target()
+
+   -- make sure pilot exists
+   if not ai.exists(target) then
+      ai.poptask()
+      return
+   end
+
+   ai.settarget(target)
+   vel = ai.relvel(target)
+
+   if vel < 10 then
+      -- Try to board
+      if ai.board(target) then
+         ai.poptask()
+         return
+      end
+   end
+
+   -- Just brake
+   ai.brake()
+
+   -- If stopped try again
+   if ai.isstopped() then
+      ai.poptask()
+   end
+end
+
+
+
+--[[
+-- Boards the target
+--]]
+function refuel ()
+
+   -- Get the target
+   target = ai.target()
+
+   -- make sure pilot exists
+   if not ai.exists(target) then
+      ai.poptask()
+      return
+   end
+
+   -- See if finished refueling
+   if ai.donerefuel(target) then
+      ai.poptask()
+      return
+   end
+
+   -- Get ready to board
+   ai.settarget(target)
+   dir   = ai.face(target)
+   dist  = ai.dist(target)
+   bdist = ai.minbrakedist(target)
+
+   -- See if must brake or approach
+   if dist < bdist then
+      ai.pushtask( 0, "refuelstop", target )
+   elseif dir < 10 then
+      ai.accel()
+   end
+end
+
+--[[
+-- Attempts to brake on the target.
+--]]
+function refuelstop ()
+   target = ai.target()
+
+   -- make sure pilot exists
+   if not ai.exists(target) then
+      ai.poptask()
+      return
+   end
+
+   -- Set the target
+   ai.settarget(target)
+
+   -- See if finished refueling
+   if ai.donerefuel(target) then
+      ai.comm(target, "Finished fuel transfer.")
+      ai.poptask()
+      return
+   end
+
+   -- Try to board
+   if ai.refuel(target) then
+      return
+   end
+
+   -- Just brake
+   ai.brake()
+
+   -- If stopped try again
+   if ai.isstopped() then
+      ai.poptask()
+   end
+end
 
