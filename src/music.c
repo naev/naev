@@ -75,14 +75,14 @@ static const luaL_reg music_methods[] = {
  * what is available
  */
 static char** music_selection = NULL; /**< Available music selection. */
-static int nmusic_selection = 0; /**< Size of available music selection. */
+static int nmusic_selection   = 0; /**< Size of available music selection. */
 
 
 /*
  * The current music.
  */
-static char *music_name = NULL; /**< Current music name. */
-static SDL_RWops *music_rw = NULL; /**< Current music RWops. */
+static char *music_name       = NULL; /**< Current music name. */
+static SDL_RWops *music_rw    = NULL; /**< Current music RWops. */
 static Mix_Music *music_music = NULL; /**< Current music. */
 
 

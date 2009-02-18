@@ -190,8 +190,6 @@ void ndata_close (void)
 /**
  * @brief Gets the ndata's name.
  *
- * Thread safe (uses ndata_read).
- *
  *    @return The ndata's name.
  */
 const char* ndata_name (void)

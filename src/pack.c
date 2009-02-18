@@ -74,10 +74,10 @@ struct Packcache_s {
 #if HAS_POSIX
    int fd; /**< file descriptor */
 #else /* not HAS_POSIX */
-   char *name; /**< Hack to emulate dup2 by calling fopen again. */
    FILE *fp; /**< For non-posix. */
 #endif /* HAS_POSIX */
 
+   char *name; /**< To open the file again. */
    char **index; /**< Cached index for faster lookups. */
    uint32_t *start; /**< Cached index starts. */
    uint32_t nindex; /**< Number of index entries. */
@@ -155,11 +155,11 @@ Packcache_t* pack_openCache( const char* packfile )
    /*
     * Open file.
     */
+   cache->name = strdup(packfile);
 #if HAS_POSIX
    cache->fd = open( packfile, O_RDONLY );
    if (cache->fd == -1) {
 #else /* not HAS_POSIX */
-   cache->name = strdup(packfile);
    cache->fp = fopen( packfile, "rb" );
    if (cache->fp == NULL) {
 #endif /* HAS_POSIX */
@@ -219,9 +219,9 @@ void pack_closeCache( Packcache_t* cache )
 #if HAS_POSIX
    close( cache->fd );
 #else /* not HAS_POSIX */
-   free( cache->name );
    fclose( cache->fp );
 #endif /* HAS_POSIX */
+   free( cache->name );
 
    /*
     * Free memory.
@@ -254,7 +254,7 @@ Packfile_t* pack_openFromCache( Packcache_t* cache, const char* filename )
       if (strcmp(cache->index[i], filename)==0) {
          /* Copy file. */
 #if HAS_POSIX
-         file->fd = dup(cache->fd);
+         file->fd = open( cache->name, O_RDONLY );
 #else /* not HAS_POSIX */
          file->fp = fopen( cache->name, "rb" );
 #endif /* HAS_POSIX */
