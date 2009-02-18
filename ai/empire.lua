@@ -9,20 +9,28 @@ aggressive = true
 function create ()
 
    -- Not too many credits.
-   ai.setcredits( rnd.int(ai.shipprice()/300, ai.shipprice()/70) )
+   ai.setcredits( rnd.rnd(ai.shipprice()/300, ai.shipprice()/70) )
 
    -- Like to annoy the player
-   if rnd.int(0,2)==0 then
+   if rnd.rnd(0,2)==0 then
       ai.broadcast("The Empire is watching you.")
    end
 
+   -- Most likely no chance to refuel
+   if rnd.rnd() > 0.2 then
+      mem.refuel_no = "\"My fuel is property of the Empire.\""
+   else
+      mem.refuel = rnd.rnd( 2000, 4000 )
+      mem.refuel_msg = string.format( "\"I suppose I could lose some fuel for %d credits\"", mem.refuel )
+   end
+
    -- See if can be bribed
-   if rnd.int() > 0.7 then
-      mem.bribe = math.sqrt( ai.shipmass() ) * (500. * rnd.int() + 1750.)
+   if rnd.rnd() > 0.7 then
+      mem.bribe = math.sqrt( ai.shipmass() ) * (500. * rnd.rnd() + 1750.)
       mem.bribe_prompt = string.format("\"For some %d credits I could forget about seeing you.\"", mem.bribe )
       mem.bribe_paid = "\"Now scram before I change my mind.\""
    else
-      if rnd.int() > 0.5 then
+      if rnd.rnd() > 0.5 then
          mem.bribe_no = "\"You won't buy your way out of this one.\""
       else
          mem.bribe_no = "\"The Empire likes to make examples out of scum like you.\""
@@ -37,7 +45,7 @@ end
 function taunt ( target, offense )
 
    -- Only 50% of actually taunting.
-   if rnd.int(0,1) == 0 then
+   if rnd.rnd(0,1) == 0 then
       return
    end
 
@@ -57,7 +65,7 @@ function taunt ( target, offense )
       }
    end
 
-   ai.comm(target, taunts[ rnd.int(1,#taunts) ])
+   ai.comm(target, taunts[ rnd.rnd(1,#taunts) ])
 end
 
 

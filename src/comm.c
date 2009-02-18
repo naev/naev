@@ -264,6 +264,13 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    int ret;
    unsigned int price;
 
+   /* Check to see if ship has a no refuel message. */
+   msg = comm_getString( "refuel_no" );
+   if (msg != NULL) {
+      dialogue_msg( "Request Fuel", msg );
+      return;
+   }
+
    /* Must need refueling. */
    if (player->fuel >= player->fuel_max) {
       dialogue_msg( "Request Fuel", "Your fuel deposits are already full." );
