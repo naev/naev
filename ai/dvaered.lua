@@ -18,7 +18,7 @@ function create ()
    end
 
    -- Handle refueling
-   standing = ai.getstanding( ai.getPlayer() )
+   standing = ai.getstanding( ai.getPlayer() ) or -1
    mem.refuel = rnd.rnd( 1000, 3000 )
    if standing < 50 then
       mem.refuel_no = "\"You are not worthy of my attention.\""

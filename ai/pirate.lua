@@ -35,7 +35,7 @@ function create ()
    end
 
    -- Deal with refueling
-   standing = ai.getstanding( ai.getPlayer() )
+   standing = ai.getstanding( ai.getPlayer() ) or -1
    mem.refuel = rnd.rnd( 2000, 4000 )
    if standing > 60 then
       mem.refuel = mem.refuel * 0.5

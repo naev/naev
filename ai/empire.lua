@@ -17,7 +17,7 @@ function create ()
    end
 
    -- Get refuel chance
-   standing = ai.getstanding( ai.getPlayer() )
+   standing = ai.getstanding( ai.getPlayer() ) or -1
    mem.refuel = rnd.rnd( 2000, 4000 )
    if standing < 20 then
       mem.refuel_no = "\"My fuel is property of the Empire.\""

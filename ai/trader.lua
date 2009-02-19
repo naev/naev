@@ -23,7 +23,7 @@ function create ()
    -- Communication stuff
    mem.bribe_no = "\"The Space Traders do not negotiate with criminals.\""
    mem.refuel = rnd.rnd( 3000, 5000 )
-   standing = ai.getstanding( ai.getPlayer() )
+   standing = ai.getstanding( ai.getPlayer() ) or -1
    if standing > 50 then mem.refuel = mem.refuel * 0.75
    elseif standing > 80 then mem.refuel = mem.refuel * 0.5
    end
