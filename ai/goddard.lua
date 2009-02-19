@@ -6,7 +6,21 @@ aggressive = true
 
 -- Create function
 function create ()
+
+   -- Credits
    ai.setcredits( rnd.int(ai.shipprice()/300, ai.shipprice()/70) )
+
+   -- Bribing
+   mem.bribe_no = "\"Be gone!\""
+
+   -- Refueling
+   standing = ai.getstanding( ai.getPlayer() )
+   mem.refuel = rnd.rnd( 2000, 4000 )
+   if standing > 60 then mem.refuel = mem.refuel * 0.7 end
+   mem.refuel_msg = string.format( "\"I could do you the favour of refueling for the price of %d credits.\"",
+         mem.refuel )
+
+   -- Get attack
    attack_choose()
 end
 
