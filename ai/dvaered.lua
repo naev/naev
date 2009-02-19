@@ -6,13 +6,28 @@ aggressive = true
 
 -- Create function
 function create ()
+
+   -- Credits.
    ai.setcredits( rnd.int(ai.shipprice()/500, ai.shipprice()/200) )
-   attack_choose()
+
+   -- Handle bribing
    if rnd.int() > 0.4 then
       mem.bribe_no = "\"I shall especially enjoy your death.\""
    else
       mem.bribe_no = "\"You shall not buy my honour!\""
    end
+
+   -- Handle refueling
+   standing = ai.getstanding( ai.getPlayer() )
+   mem.refuel = rnd.rnd( 1000, 3000 )
+   if standing < 50 then
+      mem.refuel_no = "\"You are not worthy of my attention.\""
+   else
+      mem.refuel_msg = string.format("\"For you I could make an exception for %d credits.\"", mem.refuel)
+   end
+
+   -- Get attack function.
+   attack_choose()
 end
 
 -- taunts

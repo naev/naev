@@ -16,13 +16,20 @@ function create ()
       ai.broadcast("The Empire is watching you.")
    end
 
-   -- Most likely no chance to refuel
-   if rnd.rnd() > 0.2 then
+   -- Get refuel chance
+   standing = ai.getstanding( ai.getPlayer() )
+   mem.refuel = rnd.rnd( 2000, 4000 )
+   if standing < 20 then
       mem.refuel_no = "\"My fuel is property of the Empire.\""
+   elseif standing < 70 then
+      if rnd.rnd() > 0.2 then
+         mem.refuel_no = "\"My fuel is property of the Empire.\""
+      end
    else
-      mem.refuel = rnd.rnd( 2000, 4000 )
-      mem.refuel_msg = string.format( "\"I suppose I could lose some fuel for %d credits\"", mem.refuel )
+      mem.refuel = mem.refuel * 0.6
    end
+   -- Most likely no chance to refuel
+   mem.refuel_msg = string.format( "\"I suppose I could lose some fuel for %d credits\"", mem.refuel )
 
    -- See if can be bribed
    if rnd.rnd() > 0.7 then

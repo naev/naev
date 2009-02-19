@@ -35,7 +35,11 @@ function create ()
    end
 
    -- Deal with refueling
+   standing = ai.getstanding( ai.getPlayer() )
    mem.refuel = rnd.rnd( 2000, 4000 )
+   if standing > 60 then
+      mem.refuel = mem.refuel * 0.5
+   end
    mem.refuel_msg = string.format("\"For you, only %d credits for fuel for a jump.\"",
          mem.refuel);
 

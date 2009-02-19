@@ -169,6 +169,7 @@ static int aiL_cargofree( lua_State *L ); /* number cargofree() */
 static int aiL_shipclass( lua_State *L ); /* string shipclass( [number] ) */
 static int aiL_shipmass( lua_State *L ); /* string shipmass( [number] ) */
 static int aiL_isbribed( lua_State *L ); /* bool isbribed( number ) */
+static int aiL_getstanding( lua_State *L ); /* number getstanding( number ) */
 
 /* boolean expressions */
 static int aiL_exists( lua_State *L ); /* boolean exists() */
@@ -260,6 +261,7 @@ static const luaL_reg aiL_methods[] = {
    { "shipclass", aiL_shipclass },
    { "shipmass", aiL_shipmass },
    { "isbribed", aiL_isbribed },
+   { "getstanding", aiL_getstanding },
    /* movement */
    { "nearestplanet", aiL_getnearestplanet },
    { "rndplanet", aiL_getrndplanet },
@@ -1212,12 +1214,41 @@ static int aiL_shipmass( lua_State *L )
 static int aiL_isbribed( lua_State *L )
 {
    unsigned int target;
-
-   if (lua_isnumber(L,1))
-      target = (unsigned int) lua_tonumber(L,1);
-   else NLUA_INVALID_PARAMETER();
-
+   target = luaL_checklong(L,1);
    lua_pushboolean(L, (target == PLAYER_ID) && pilot_isFlag(cur_pilot,PILOT_BRIBED));
+   return 1;
+}
+
+
+/**
+ * @brief Gets the standing of the target pilot with the current pilot.
+ *
+ *    @luaparam target Target pilot to get faction standing of.
+ *    @luareturn The faction standing of the target [-100,100] or nil if invalid.
+ * @luafunc getstanding( target )
+ */
+static int aiL_getstanding( lua_State *L )
+{
+   unsigned int id;
+   Pilot *p;
+   /* Get parameters. */
+   id = luaL_checklong(L,1);
+   p = pilot_get(id);
+   if (p==NULL)
+      return 0;
+
+   /* Get faction standing. */
+   if (p->faction == FACTION_PLAYER)
+      lua_pushnumber(L, faction_getPlayer(cur_pilot->faction));
+   else {
+      if (areAllies( cur_pilot->faction, p->faction ))
+         lua_pushnumber(L, 100);
+      else if (areEnemies( cur_pilot->faction, p->faction ))
+         lua_pushnumber(L,-100);
+      else
+         lua_pushnumber(L, 0);
+   }
+
    return 1;
 }
 
