@@ -46,7 +46,7 @@ else -- default english
    title[2] = "Flight Tutorial"
    text[3] = [[We'll first start off by flying around.  Use the 'left' and 'right' keys to turn and the 'up' key to accelerate.  Try flying around the planet, it's hard at first but you'll get the hang of it eventually.]]
    -- Step 2
-   text[4] = [[Good.  Now we'll try braking.  Since you can only accelerate forward, you'll have to turn backwards and accelerate to break.  To make this easier you can use the 'down' key to turn around automatically.  Then you accelerate until you stop.  Look at the stars in the background for an indication of your velocity.  Try braking now.]]
+   text[4] = [[Good.  Now we'll try braking.  Since you can only accelerate forward, you'll have to turn backwards and accelerate to break.  To make this easier you can use the 'down' key to turn around automatically.  Then you accelerate until you stop.  Look at the stars in the background for an indication of your velocity.  Try braking to a complete stop now.]]
    text[5] = [[ Now you're getting the hang of it.  It'll still take a while until you can fly well, but this is the start. ]]
    -- Step 3
    title[3] = "Targetting Tutorial"
