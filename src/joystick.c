@@ -115,7 +115,7 @@ static void joystick_initHaptic (void)
       /* Try to create haptic device. */
       haptic = SDL_HapticOpenFromJoystick(joystick);
       if (haptic == NULL) {
-         WARN("Unable to initialize force feedback.");
+         WARN("Unable to initialize force feedback: %s", SDL_GetError());
          return;
       }
 
