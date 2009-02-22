@@ -124,9 +124,15 @@ const uint64_t magic =  0x25524573; /**< File magic number: sER% */
  */
 static off_t getfilesize( const char* filename );
 /* RWops stuff. */
+#if SDL_VERSION_ATLEAST(1,3,0)
+static long packrw_seek( SDL_RWops *rw, long offset, int whence );
+static size_t packrw_read( SDL_RWops *rw, void *ptr, size_t size, size_t maxnum );
+static size_t packrw_write( SDL_RWops *rw, const void *ptr, size_t size, size_t num );
+#else /* SDL_VERSION_ATLEAST(1,3,0) */
 static int packrw_seek( SDL_RWops *rw, int offset, int whence );
 static int packrw_read( SDL_RWops *rw, void *ptr, int size, int maxnum );
 static int packrw_write( SDL_RWops *rw, const void *ptr, int size, int num );
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 static int packrw_close( SDL_RWops *rw );
 
 
@@ -899,8 +905,11 @@ int pack_close( Packfile_t* file )
 }
 
 
-
+#if SDL_VERSION_ATLEAST(1,3,0)
+static long packrw_seek( SDL_RWops *rw, long offset, int whence )
+#else /* SDL_VERSION_ATLEAST(1,3,0) */
 static int packrw_seek( SDL_RWops *rw, int offset, int whence )
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 {
    int wh;
    Packfile_t *packfile;
@@ -917,7 +926,11 @@ static int packrw_seek( SDL_RWops *rw, int offset, int whence )
 
    return pack_seek( packfile, offset, whence );
 }
+#if SDL_VERSION_ATLEAST(1,3,0)
+static size_t packrw_read( SDL_RWops *rw, void *ptr, size_t size, size_t maxnum )
+#else /* SDL_VERSION_ATLEAST(1,3,0) */
 static int packrw_read( SDL_RWops *rw, void *ptr, int size, int maxnum )
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 {
    ssize_t ret;
    Packfile_t *packfile;
@@ -928,7 +941,11 @@ static int packrw_read( SDL_RWops *rw, void *ptr, int size, int maxnum )
 
    return ret / size;
 }
+#if SDL_VERSION_ATLEAST(1,3,0)
+static size_t packrw_write( SDL_RWops *rw, const void *ptr, size_t size, size_t num )
+#else /* SDL_VERSION_ATLEAST(1,3,0) */
 static int packrw_write( SDL_RWops *rw, const void *ptr, int size, int num )
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 {
    (void) rw;
    (void) ptr;
