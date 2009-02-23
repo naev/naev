@@ -6,6 +6,7 @@
 #include "map.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 #include <float.h>
 
@@ -17,7 +18,6 @@
 #include "mission.h"
 #include "colour.h"
 #include "player.h"
-#include "tk/toolkit_priv.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -58,7 +58,8 @@ extern int systems_nstack;
 static void map_update( unsigned int wid );
 static int map_inPath( StarSystem *sys );
 static void map_render( double bx, double by, double w, double h );
-static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my );
+static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+      double w, double h );
 static void map_buttonZoom( unsigned int wid, char* str );
 static void map_selectCur (void);
 
@@ -81,6 +82,9 @@ void map_open (void)
    /* set position to focus on current system */
    map_xpos = cur_system->pos.x;
    map_ypos = cur_system->pos.y;
+
+   /* reset zoom. */
+   map_zoom = 1.;
 
    /* mark systems as needed */
    mission_sysMark();
@@ -504,8 +508,8 @@ static void map_render( double bx, double by, double w, double h )
 /*
  * map event handling
  */
-#include <stdio.h>
-static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my )
+static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+      double w, double h )
 {
    int i, j;
    double x,y, t;
@@ -513,9 +517,8 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my 
 
    t = 15.*15.; /* threshold */
 
-   Widget *wdw = window_getwgt(wid, "cstMap");
-   mx -= wdw->w/2 - map_xpos;
-   my -= wdw->h/2 - map_ypos;
+   mx -= w/2 - map_xpos;
+   my -= h/2 - map_ypos;
 
    switch (event->type) {
       
@@ -584,6 +587,11 @@ static void map_buttonZoom( unsigned int wid, char* str )
 {
    (void) wid;
 
+   /* Transform coords to normal. */
+   map_xpos /= map_zoom;
+   map_ypos /= map_zoom;
+
+   /* Apply zoom. */
    if (strcmp(str,"btnZoomIn")==0) {
       map_zoom += (map_zoom >= 1.) ? 0.5 : 0.25;
       map_zoom = MIN(2.5, map_zoom);
@@ -592,6 +600,10 @@ static void map_buttonZoom( unsigned int wid, char* str )
       map_zoom -= (map_zoom > 1.) ? 0.5 : 0.25;
       map_zoom = MAX(0.25, map_zoom);
    }
+
+   /* Transform coords back. */
+   map_xpos *= map_zoom;
+   map_ypos *= map_zoom;
 }
 
 
@@ -1032,11 +1044,26 @@ int map_isMapped( char* targ_sys, int r )
    return ret;
 }
 
+
 /**
  * @brief shows a map at x, y (relative to wid) with size w,h
+ *
+ *    @param wid Window to show map on.
+ *    @param x X position to put map at.
+ *    @param y Y position to put map at.
+ *    @param w Width of map to open.
+ *    @param h Height of map to open.
+ *    @param zoom Default zoom to use.
  */
-void map_show( int wid, int x, int y, int w, int h )
+void map_show( int wid, int x, int y, int w, int h, double zoom )
 {
+   /* Set position to focus on current system. */
+   map_xpos = cur_system->pos.x * zoom;
+   map_ypos = cur_system->pos.y * zoom;
+
+   /* Set zoom. */
+   map_zoom = zoom;
+
    window_addCust( wid, x, y, w, h,
-		 "cstMap", 1, map_render, map_mouse);
+         "cstMap", 1, map_render, map_mouse);
 }

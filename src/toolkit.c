@@ -925,7 +925,7 @@ static void toolkit_mouseEvent( SDL_Event* event )
             (y > wgt->y) && (y < (wgt->y + wgt->h))) {
          /* custom widgets take it from here */
          if ((wgt->type==WIDGET_CUST) && wgt->dat.cst.mouse) 
-            (*wgt->dat.cst.mouse)( w->id, event, x-wgt->x, y-wgt->y );
+            (*wgt->dat.cst.mouse)( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h );
          else
             switch (event->type) {
                case SDL_MOUSEMOTION:
@@ -995,7 +995,7 @@ static void toolkit_mouseEvent( SDL_Event* event )
       /* otherwise custom widgets can get stuck on mousedown */
       else if ((wgt->type==WIDGET_CUST) &&
             (event->type==SDL_MOUSEBUTTONUP) && wgt->dat.cst.mouse)
-         (*wgt->dat.cst.mouse)( w->id, event, x-wgt->x, y-wgt->y );
+         (*wgt->dat.cst.mouse)( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h );
       else
          wgt->status = WIDGET_STATUS_NORMAL;
    }

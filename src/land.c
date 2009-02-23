@@ -1206,17 +1206,17 @@ static void misn_open (void)
    /* text */
    window_addText( wid, MISSION_WIDTH/2 + 10, -60,
          MISSION_WIDTH/2 - 30, 20, 0,
-		 "txtSReward", &gl_smallFont, &cDConsole, "Reward:" );
+         "txtSReward", &gl_smallFont, &cDConsole, "Reward:" );
    window_addText( wid, MISSION_WIDTH/2 + 70, -60,
          MISSION_WIDTH/2 - 30, 20, 0,
-		 "txtReward", &gl_smallFont, &cBlack, NULL );
+         "txtReward", &gl_smallFont, &cBlack, NULL );
    window_addText( wid, MISSION_WIDTH/2 + 10, -80,
          MISSION_WIDTH/2 - 30, MISSION_HEIGHT/2-90, 0,
          "txtDesc", &gl_smallFont, &cBlack, NULL );
 
    /* map */
    map_show( wid, 20, 20,
-		 MISSION_WIDTH-BUTTON_WIDTH-60, MISSION_HEIGHT/2 - 35 );
+         MISSION_WIDTH/2 - 30, MISSION_HEIGHT/2 - 35, 0.5 );
 
 
    misn_genList(wid, 1);
