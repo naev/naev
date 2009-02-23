@@ -31,7 +31,7 @@ function taunt ( target, offense )
    else
       taunts = {
             "You are no match for the FLF.",
-            "I've killed scum much more dangerous then you."
+            "I've killed scum much more dangerous than you."
       }
    end
 
