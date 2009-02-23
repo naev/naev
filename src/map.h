@@ -26,5 +26,9 @@ StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend, int ign
 int map_map( char* targ_sys, int r );
 int map_isMapped( char* targ_sys, int r );
 
+/* shows a map at x, y (relative to wid) with size w,h  */
+void map_show( int wid, int x, int y, int w, int h );
+
+
 
 #endif /* MAP_H */

@@ -17,6 +17,7 @@
 #include "mission.h"
 #include "colour.h"
 #include "player.h"
+#include "tk/toolkit_priv.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -503,6 +504,7 @@ static void map_render( double bx, double by, double w, double h )
 /*
  * map event handling
  */
+#include <stdio.h>
 static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my )
 {
    int i, j;
@@ -511,8 +513,9 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my 
 
    t = 15.*15.; /* threshold */
 
-   mx -= MAP_WIDTH/2 - map_xpos;
-   my -= MAP_HEIGHT/2 - map_ypos;
+   Widget *wdw = window_getwgt(wid, "cstMap");
+   mx -= wdw->w/2 - map_xpos;
+   my -= wdw->h/2 - map_ypos;
 
    switch (event->type) {
       
@@ -1029,3 +1032,11 @@ int map_isMapped( char* targ_sys, int r )
    return ret;
 }
 
+/**
+ * @brief shows a map at x, y (relative to wid) with size w,h
+ */
+void map_show( int wid, int x, int y, int w, int h )
+{
+   window_addCust( wid, x, y, w, h,
+		 "cstMap", 1, map_render, map_mouse);
+}

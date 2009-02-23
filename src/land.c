@@ -1204,14 +1204,20 @@ static void misn_open (void)
          "Accept", misn_accept );
 
    /* text */
-   window_addText( wid, 300+40, -60,
-         300, 40, 0, "txtSReward",
-         &gl_smallFont, &cDConsole, "Reward:" );
-   window_addText( wid, 300+100, -60,
-         240, 40, 0, "txtReward", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, 300+40, -100,
-         300, MISSION_HEIGHT - BUTTON_WIDTH - 120, 0,
+   window_addText( wid, MISSION_WIDTH/2 + 10, -60,
+         MISSION_WIDTH/2 - 30, 20, 0,
+		 "txtSReward", &gl_smallFont, &cDConsole, "Reward:" );
+   window_addText( wid, MISSION_WIDTH/2 + 70, -60,
+         MISSION_WIDTH/2 - 30, 20, 0,
+		 "txtReward", &gl_smallFont, &cBlack, NULL );
+   window_addText( wid, MISSION_WIDTH/2 + 10, -80,
+         MISSION_WIDTH/2 - 30, MISSION_HEIGHT/2-90, 0,
          "txtDesc", &gl_smallFont, &cBlack, NULL );
+
+   /* map */
+   map_show( wid, 20, 20,
+		 MISSION_WIDTH-BUTTON_WIDTH-60, MISSION_HEIGHT/2 - 35 );
+
 
    misn_genList(wid, 1);
 }
@@ -1295,7 +1301,7 @@ static void misn_genList( unsigned int wid, int first )
       j = 1;
    }
    window_addList( wid, 20, -40,
-         300, MISSION_HEIGHT-60,
+         MISSION_WIDTH/2 - 30, MISSION_HEIGHT/2 - 35,
          "lstMission", misn_names, j, 0, misn_update );
 
    misn_update(wid, NULL);
