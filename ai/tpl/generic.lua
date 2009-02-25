@@ -165,6 +165,12 @@ end
 -- Handle distress signals
 function distress ( pilot, attacker )
 
+   -- Make suree target exists
+   if not ai.exists( attacker ) then
+      ai.poptask()
+      return
+   end
+
    -- Must be aggressive
    if not aggressive then
       return
