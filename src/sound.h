@@ -18,6 +18,8 @@ extern double sound_defVolume;
 int sound_init (void);
 void sound_exit (void);
 int sound_update (void);
+void sound_pause (void);
+void sound_resume (void);
 
 
 /*

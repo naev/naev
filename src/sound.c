@@ -427,6 +427,24 @@ int sound_update (void)
 
 
 /**
+ * @brief Pauses all the sounds.
+ */
+void sound_pause (void)
+{
+   Mix_Pause(-1);
+}
+
+
+/**
+ * @brief Resumes all the sounds.
+ */
+void sound_resume (void)
+{
+   Mix_Resume(-1);
+}
+
+
+/**
  * @brief Stops a voice from playing.
  *
  *    @param voice Identifier of the voice to stop.

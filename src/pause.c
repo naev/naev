@@ -28,7 +28,7 @@ void pause_game (void)
 {
    if (paused) return; /* already paused */
 
-   player_soundPause();
+   sound_pause();
 
    paused = 1; /* officially paused */
 }
@@ -41,7 +41,7 @@ void unpause_game (void)
 {
    if (!paused) return; /* already unpaused */
 
-   player_soundResume();
+   sound_resume();
 
    paused = 0; /* officially unpaused */
 }
