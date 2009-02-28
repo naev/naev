@@ -56,7 +56,7 @@ function atk_g ()
 
    -- Check if we want to board
    if atk_board and ai.canboard(target) then
-      board(target)
+      ai.pushtask( 0, "board", target );
       return
    end
 

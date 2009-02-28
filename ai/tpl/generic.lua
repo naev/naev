@@ -36,7 +36,7 @@ function control ()
       end
 
    -- Don't stop boarding
-   elseif task == "boardstop" then
+   elseif task == "board" or task == "boardstop" then
       -- We want to think in case another attacker gets close
       attack_think()
 
