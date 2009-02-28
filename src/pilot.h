@@ -239,7 +239,7 @@ int pilot_getJumps( const Pilot* p );
 void pilot_shoot( Pilot* p, int type );
 void pilot_shootSecondary( Pilot* p );
 void pilot_shootStop( Pilot* p, const int secondary );
-void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
+double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       const DamageType dtype, const double damage );
 void pilot_explode( double x, double y, double radius,
       DamageType dtype, double damage, unsigned int parent );

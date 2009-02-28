@@ -894,96 +894,112 @@ void pilot_switchSecondary( Pilot* p, int i )
  *    @param shooter Attacker that shot the pilot.
  *    @param dtype Type of damage.
  *    @param damage Amount of damage.
+ *    @return The real damage done.
  */
-void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
+double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       const DamageType dtype, const double damage )
 {
    int mod, h;
-   double damage_shield, damage_armour, knockback, dam_mod;
+   double damage_shield, damage_armour, knockback, dam_mod, dmg;
    Pilot *pshooter;
 
    /* Defaults. */
    pshooter = NULL;
    dam_mod  = 0.;
+   dmg      = 0.;
 
    /* calculate the damage */
    outfit_calcDamage( &damage_shield, &damage_armour, &knockback, dtype, damage );
 
+   /* Player breaks autonav. */
    if ((w != NULL) && (p->id == PLAYER_ID) &&
          !pilot_isFlag(player, PILOT_HYP_BEGIN) &&
          !pilot_isFlag(player, PILOT_HYPERSPACE))
       player_abortAutonav("Sustaining Damage");
 
-   if (p->shield-damage_shield > 0.) { /* shields take the whole blow */
+   /*
+    * Shields take entire blow.
+    */
+   if (p->shield-damage_shield > 0.) {
+      dmg        = damage_shield;
       p->shield -= damage_shield;
-      dam_mod = damage_shield/p->shield_max;
+      dam_mod    = damage_shield/p->shield_max;
    }
-   else if (p->shield > 0.) { /* shields can take part of the blow */
+   /*
+    * Shields take part of the blow.
+    */
+   else if (p->shield > 0.) {
+      dmg        = p->shield + (1. - p->shield/damage_shield) * damage_armour;
       p->armour -= (1. - p->shield/damage_shield) * damage_armour;
-      p->shield = 0.;
-      dam_mod = (damage_shield+damage_armour) / (p->shield_max+p->armour_max);
+      p->shield  = 0.;
+      dam_mod    = (damage_shield+damage_armour) /
+                   ((p->shield_max+p->armour_max) / 2.);
    }
+   /*
+    * Armour takes the entire blow.
+    */
    else if (p->armour > 0.) {
+      dmg        = damage_armour;
       p->armour -= damage_armour;
+   }
 
-      /* EMP don't kill. */
-      if ((dtype == DAMAGE_TYPE_EMP) &&
-            (p->armour < PILOT_DISABLED_ARMOR * p->armour_max))
-         p->armour = PILOT_DISABLED_ARMOR * p->armour_max - 1.;
+   /* EMP don't kill. */
+   if ((dtype == DAMAGE_TYPE_EMP) &&
+         (p->armour < PILOT_DISABLED_ARMOR * p->armour_max))
+      p->armour = PILOT_DISABLED_ARMOR * p->armour_max - 1.;
 
-      /* Disabled always run before dead to ensure crating boost. */
-      if (!pilot_isFlag(p,PILOT_DISABLED) && (p != player) &&
-            (p->armour < PILOT_DISABLED_ARMOR*p->armour_max)) { /* disabled */
+   /* Disabled always run before dead to ensure crating boost. */
+   if (!pilot_isFlag(p,PILOT_DISABLED) && (p != player) &&
+         (p->armour < PILOT_DISABLED_ARMOR*p->armour_max)) { /* disabled */
 
-         /* If hostile, must remove counter. */
-         h = (pilot_isHostile(p)) ? 1 : 0;
-         pilot_rmHostile(p);
-         if (h == 1) /* Horrible hack to make sure player can hit it if it was hostile. */
-            pilot_setFlag(p, PILOT_HOSTILE);
+      /* If hostile, must remove counter. */
+      h = (pilot_isHostile(p)) ? 1 : 0;
+      pilot_rmHostile(p);
+      if (h == 1) /* Horrible hack to make sure player can hit it if it was hostile. */
+         pilot_setFlag(p, PILOT_HOSTILE);
 
-         pshooter = pilot_get(shooter);
+      pshooter = pilot_get(shooter);
+      if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
+         /* About 3 for a llama, 26 for hawking. */
+         mod = pow(p->ship->mass,0.4) - 1.;
+
+         /* Modify combat rating. */
+         player_crating += 2*mod;
+      }
+
+      pilot_setFlag( p,PILOT_DISABLED ); /* set as disabled */
+      /* run hook */
+      pilot_runHook( p, PILOT_HOOK_DISABLE );
+   }
+
+   /* Officially dead. */
+   if (p->armour <= 0.) {
+      p->armour = 0.;
+      dam_mod   = 0.;
+
+      if (!pilot_isFlag(p, PILOT_DEAD)) {
+         pilot_dead(p);
+
+         /* adjust the combat rating based on pilot mass and ditto faction */
+         if (pshooter == NULL)
+            pshooter = pilot_get(shooter);
          if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
-            /* About 3 for a llama, 26 for hawking. */
-            mod = pow(p->ship->mass,0.4) - 1.;
 
-            /* Modify combat rating. */
-            player_crating += 2*mod;
-         }
+            /* About 6 for a llama, 52 for hawking. */
+            mod = 2*(pow(p->ship->mass,0.4) - 1.);
 
-         pilot_setFlag( p,PILOT_DISABLED ); /* set as disabled */
-         /* run hook */
-         pilot_runHook( p, PILOT_HOOK_DISABLE );
-      }
-
-      /* Officially dead. */
-      if (p->armour <= 0.) {
-         p->armour = 0.;
-         dam_mod = 0.;
-
-         if (!pilot_isFlag(p, PILOT_DEAD)) {
-            pilot_dead(p);
-
-            /* adjust the combat rating based on pilot mass and ditto faction */
-            if (pshooter == NULL)
-               pshooter = pilot_get(shooter);
-            if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
-
-               /* About 6 for a llama, 52 for hawking. */
-               mod = 2*(pow(p->ship->mass,0.4) - 1.);
-
-               /* Modify faction for him and friends. */
-               faction_modPlayer( p->faction, -mod );
-            }
+            /* Modify faction for him and friends. */
+            faction_modPlayer( p->faction, -mod );
          }
       }
+   }
 
-      /* Some minor effects and stuff. */
-      else {
-         dam_mod = damage_armour/p->armour_max;
+   /* Some minor effects and stuff. */
+   else if (p->shield <= 0.) {
+      dam_mod = damage_armour/p->armour_max;
 
-         if (p->id == PLAYER_ID) /* a bit of shaking */
-            spfx_shake( SHAKE_MAX*dam_mod );
-      }
+      if (p->id == PLAYER_ID) /* a bit of shaking */
+         spfx_shake( SHAKE_MAX*dam_mod );
    }
 
 
@@ -993,6 +1009,8 @@ void pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       vect_cadd( &p->solid->vel,
             knockback * (w->vel.x * (dam_mod/6. + w->mass/p->solid->mass/6.)),
             knockback * (w->vel.y * (dam_mod/6. + w->mass/p->solid->mass/6.)) );
+
+   return dmg;
 }
 
 

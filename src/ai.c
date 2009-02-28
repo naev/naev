@@ -675,6 +675,10 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker )
 {
    lua_State *L;
 
+   /* Must have an AI profile. */
+   if (attacked->ai == NULL)
+      return;
+
    ai_setPilot(attacked);
    L = cur_pilot->ai->L;
    lua_getglobal(L, "attacked");

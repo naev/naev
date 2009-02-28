@@ -790,6 +790,42 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
 
 /**
+ * @brief Informs the AI if needed that it's been hit.
+ *
+ *    @param p Pilot being hit.
+ *    @param shooter Pilot that shot.
+ *    @param dmg Damage done to p.
+ */
+static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
+{
+   /* Must be a valid shooter. */
+   if (shooter == NULL)
+      return;
+     
+   /* Player is handled differently. */
+   if (shooter->faction == FACTION_PLAYER) {
+
+      /* Increment damage done to by player. */
+      p->player_damage += dmg / (p->shield_max + p->armour_max);
+
+      /* If damage is over threshold, inform pilot or if is targetted. */
+      if ((p->player_damage > PILOT_HOSTILE_THRESHOLD) ||
+            (shooter->target==p->id)) {
+         /* Inform attacked. */
+         ai_attacked( p, shooter->id );
+
+         /* Set as hostile. */
+         pilot_setHostile(p);
+         pilot_rmFlag( p, PILOT_BRIBED );
+      }
+   }
+   /* Otherwise just inform of being attacked. */
+   else
+      ai_attacked( p, shooter->id );
+}
+
+
+/**
  * @brief Weapon hit the pilot.
  *
  *    @param w Weapon involved in the collision.
@@ -803,6 +839,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    int spfx;
    double damage;
    DamageType dtype;
+   WeaponLayer spfx_layer;
 
    /* Choose spfx. */
    if (p->shield > 0.)
@@ -810,36 +847,24 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    else
       spfx = outfit_spfxArmour(w->outfit);
 
+   /* Get the layer. */
+   spfx_layer = (p==player) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
+
    /* Get general details. */
    parent = pilot_get(w->parent);
    damage = outfit_damage(w->outfit);
    dtype = outfit_damageType(w->outfit);
 
-   /* Update damage. */
-   if ((parent != NULL) && (parent->faction == FACTION_PLAYER))
-      p->player_damage += damage / (p->shield_max + p->armour_max);
+   /* Add sprite, layer depends on whether player shot or not. */
+   spfx_add( spfx, pos->x, pos->y,
+         VX(p->solid->vel), VY(p->solid->vel), spfx_layer );
 
-   /* inform the ai it has been attacked, useless if player */
-   if (!pilot_isPlayer(p) && (parent != NULL) && (pilot_isPlayer(parent)) &&
-         ((player->target == p->id) || (p->player_damage > PILOT_HOSTILE_THRESHOLD))) {
+   /* Have pilot take damage and get real damage done. */
+   damage = pilot_hit( p, w->solid, w->parent, dtype, damage );
 
-      /* Set as hostile. */
-      pilot_setHostile(p);
-      pilot_rmFlag( p, PILOT_BRIBED );
+   /* Inform AI that it's been hit. */
+   weapon_hitAI( p, parent, damage );
 
-      /* Inform attacked. */
-      ai_attacked( p, w->parent );
-
-      /* Add sprite. */
-      spfx_add( spfx, pos->x, pos->y,
-            VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );
-   }
-   else
-      spfx_add( spfx, pos->x, pos->y,
-            VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_FRONT );
-
-   /* inform the ship that it should take some damage */
-   pilot_hit( p, w->solid, w->parent, dtype, damage );
    /* no need for the weapon particle anymore */
    weapon_destroy(w,layer);
 }
@@ -862,6 +887,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    int spfx;
    double damage;
    DamageType dtype;
+   WeaponLayer spfx_layer;
 
    /* Choose spfx. */
    if (p->shield > 0.)
@@ -869,42 +895,28 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    else
       spfx = outfit_spfxArmour(w->outfit);
 
+   /* Get the layer. */
+   spfx_layer = (p==player) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
+
    /* Get general details. */
    parent = pilot_get(w->parent);
    damage = outfit_damage(w->outfit) * dt;
-   dtype = outfit_damageType(w->outfit);
+   dtype  = outfit_damageType(w->outfit);
 
-   /* Update damage. */
-   if ((parent != NULL) && (parent->faction == FACTION_PLAYER))
-      p->player_damage += damage / (p->shield_max + p->armour_max);
-
-   /* inform the ai it has been attacked, useless if player */
-   if (!pilot_isPlayer(p)) {
-      if ((parent!=NULL) && pilot_isPlayer(parent) &&
-            ((player->target == p->id) || (p->player_damage > PILOT_HOSTILE_THRESHOLD))) {
-         pilot_setHostile(p);
-         pilot_rmFlag( p, PILOT_BRIBED );
-         ai_attacked( p, w->parent );
-      }
-
-      if (w->lockon == -1.) { /* Code to signal create explosions. */
-         spfx_add( spfx, pos[0].x, pos[0].y,
-               VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );
-         spfx_add( spfx, pos[1].x, pos[1].y,
-               VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_BACK );
-         w->lockon = -2;
-      }
-   }
-   else if (w->lockon == -1.) {
+   /* Add sprite, layer depends on whether player shot or not. */
+   if (w->lockon == -1.) {
       spfx_add( spfx, pos[0].x, pos[0].y,
-            VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_FRONT );
+            VX(p->solid->vel), VY(p->solid->vel), spfx_layer );
       spfx_add( spfx, pos[1].x, pos[1].y,
-            VX(p->solid->vel), VY(p->solid->vel), SPFX_LAYER_FRONT );
+            VX(p->solid->vel), VY(p->solid->vel), spfx_layer );
          w->lockon = -2;
    }
 
-   /* inform the ship that it should take some damage */
-   pilot_hit( p, w->solid, w->parent, dtype, damage );
+   /* Have pilot take damage and get real damage done. */
+   damage = pilot_hit( p, w->solid, w->parent, dtype, damage );
+
+   /* Inform AI that it's been hit. */
+   weapon_hitAI( p, parent, damage );
 }
 
 
