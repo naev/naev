@@ -273,7 +273,7 @@ static void think_seeker( Weapon* w, const double dt )
                else /* Can't get jammed anymore */
                   w->status = WEAPON_STATUS_UNJAMMED;
             }
-        
+
          /* Purpose fallthrough */
          case WEAPON_STATUS_UNJAMMED: /* Work as expected */
 
@@ -518,7 +518,7 @@ void weapons_render( const WeaponLayer layer, const double dt )
       default:
          WARN("Unknown weapon layer!");
    }
-   
+
    for (i=0; i<(*nlayer); i++)
       weapon_render( wlayer[i], dt );
 }
@@ -594,7 +594,7 @@ static void weapon_render( Weapon* w, const double dt )
 
          /* Actual rendering. */
          glBegin(GL_QUAD_STRIP);
-            
+
             /* Start faded. */
             ACOLOUR(cWhite, 0.);
 
@@ -640,7 +640,7 @@ static void weapon_render( Weapon* w, const double dt )
          glPopMatrix(); /* GL_PROJECTION */
          gl_checkErr();
          break;
-      
+
       default:
          WARN("Weapon of type '%s' has no render implemented yet!",
                w->outfit->name);
@@ -928,7 +928,7 @@ static Weapon* weapon_create( const Outfit* outfit,
    Pilot *pilot_target;
    double x,y, t, dist;
    Weapon* w;
-  
+
    /* Create basic features */
    w = malloc(sizeof(Weapon));
    memset(w, 0, sizeof(Weapon));
@@ -989,8 +989,8 @@ static Weapon* weapon_create( const Outfit* outfit,
          vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
          w->timer = outfit->u.blt.range/outfit->u.blt.speed;
          w->solid = solid_create( mass, rdir, pos, &v );
-         w->voice = sound_playPos(w->outfit->u.blt.sound, 
-               w->solid->pos.x + w->solid->vel.x, 
+         w->voice = sound_playPos(w->outfit->u.blt.sound,
+               w->solid->pos.x + w->solid->vel.x,
                w->solid->pos.y + w->solid->vel.y);
          break;
 
@@ -1129,7 +1129,7 @@ void weapon_add( const Outfit* outfit, const double dir,
    Weapon **curLayer;
    int *mLayer, *nLayer;
 
-   if (!outfit_isBolt(outfit) && 
+   if (!outfit_isBolt(outfit) &&
          !outfit_isAmmo(outfit)) {
       ERR("Trying to create a Weapon from a non-Weapon type Outfit");
       return;
@@ -1250,7 +1250,7 @@ int beam_start( const Outfit* outfit,
  *
  *    @param parent ID of the parent of the beam.
  *    @param beam ID of the beam to destroy.
- */    
+ */
 void beam_end( const unsigned int parent, int beam )
 {
    int i;
@@ -1368,11 +1368,16 @@ static void weapon_free( Weapon* w )
 void weapon_clear (void)
 {
    int i;
-   for (i=0; i < nwbackLayer; i++)
+   /* Don't forget to stop the sounds. */
+   for (i=0; i < nwbackLayer; i++) {
+      sound_stop(wbackLayer[i]->voice);
       weapon_free(wbackLayer[i]);
+   }
    nwbackLayer = 0;
-   for (i=0; i < nwfrontLayer; i++)
-      weapon_free(wfrontLayer[i]);                                          
+   for (i=0; i < nwfrontLayer; i++) {
+      sound_stop(wfrontLayer[i]->voice);
+      weapon_free(wfrontLayer[i]);
+   }
    nwfrontLayer = 0;
 }
 
@@ -1416,7 +1421,7 @@ static void weapon_explodeLayer( WeaponLayer layer,
       unsigned int parent, int mode )
 {
    (void)parent;
-   int i;   
+   int i;
    Weapon **curLayer;
    int *nLayer;
    double dist, rad2;
