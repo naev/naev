@@ -595,14 +595,15 @@ void space_update( const double dt )
          }
 
          /* Base timer. */
-         spawn_timer = 60./cur_system->avg_pilot;
+         spawn_timer = 90./cur_system->avg_pilot;
 
          /* Calculate ship modifier, it tries to stabilize at avg pilots. */
          /* First get pilot facton ==> [-1., inf ] */
-         mod  = ((double)pilot_nstack - cur_system->avg_pilot);
+         mod  = (double)pilot_nstack - cur_system->avg_pilot;
          mod /= cur_system->avg_pilot;
          /* Scale and offset. */
          /*mod = 2.*mod + 1.5;*/
+         mod = MIN( mod, -0.5 );
          /* Modify timer. */
          spawn_timer *= 1. + mod;
       }
