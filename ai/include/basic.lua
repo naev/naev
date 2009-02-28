@@ -122,8 +122,20 @@ end
 --[[
 -- Boards the target
 --]]
-function board( target )
-   target = target or ai.target()
+function board ()
+   target = ai.target()
+
+   -- Make sure pilot exists
+   if not ai.exists(target) then
+      ai.poptask()
+      return
+   end
+
+   -- Must be able to board
+   if not ai.canboard(target) then
+      ai.poptask()
+      return
+   end
 
    -- Get ready to board
    ai.settarget(target)
