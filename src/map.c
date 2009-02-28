@@ -420,20 +420,6 @@ static void map_render( double bx, double by, double w, double h )
       ty = y + sys->pos.y*map_zoom;
       gl_drawCircleInRect( tx, ty, r, bx, by, w, h );
 
-      /* mark the system if needed */
-      if (sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)) {
-         if (sys_isFlag(sys, SYSTEM_CMARKED))
-            COLOUR(cGreen);
-         else if (sys_isFlag(sys, SYSTEM_MARKED))
-            COLOUR(cRed);
-
-         glBegin(GL_TRIANGLES);
-            glVertex2d( tx+r+9, ty+r+3 );
-            glVertex2d( tx+r+3, ty+r+3 );
-            glVertex2d( tx+r+3, ty+r+9 );
-         glEnd(); /* GL_TRIANGLES */
-      }
-
       /* draw the system name */
       if (sys_isKnown(sys) && (map_zoom > 0.5 )) {
          tx = x + 7. + sys->pos.x * map_zoom;
@@ -495,6 +481,32 @@ static void map_render( double bx, double by, double w, double h )
          glEnd(); /* GL_LINE_STRIP */
       }
       glShadeModel(GL_FLAT);
+   }
+
+   /* Second pass to put markers. */
+   for (i=0; i<systems_nstack; i++) {
+      sys = system_getIndex( i );
+
+      /* We only care about marked now. */
+      if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED))
+         continue;
+
+      /* Get colour marking. */
+      if (sys_isFlag(sys, SYSTEM_CMARKED))
+         COLOUR(cGreen);
+      else if (sys_isFlag(sys, SYSTEM_MARKED))
+         COLOUR(cRed);
+
+      /* Get the position. */
+      tx = x + sys->pos.x*map_zoom;
+      ty = y + sys->pos.y*map_zoom;
+
+      /* Draw the marking triangle. */
+      glBegin(GL_TRIANGLES);
+         glVertex2d( tx+r+9, ty+r+3 );
+         glVertex2d( tx+r+3, ty+r+3 );
+         glVertex2d( tx+r+3, ty+r+9 );
+      glEnd(); /* GL_TRIANGLES */
    }
 
    /* selected planet */
