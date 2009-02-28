@@ -224,28 +224,28 @@ static void comm_bribe( unsigned int wid, char *unused )
    /* Check if has the money. */
    if (player->credits < price) {
       dialogue_msg("Bribe Pilot", "You don't have enough credits for the bribery.");
+      return;
    }
-   else {
-      player->credits -= price;
-      str = comm_getString( "bribe_paid" );
-      if (str == NULL)
-         dialogue_msg("Bribe Pilot", "\"Pleasure to do business with you.\"");
-      else
-         dialogue_msg("Bribe Pilot", "%s", str);
 
-      /* Mark as bribed and don't allow bribing again. */
-      pilot_setFlag( comm_pilot, PILOT_BRIBED );
-      pilot_rmHostile( comm_pilot );
-      L = comm_pilot->ai->L;
-      lua_getglobal(L, "mem");
-      lua_pushnumber(L, 0);
-      lua_setfield(L, -2, "bribe");
-      lua_pop(L,1);
+   player->credits -= price;
+   str = comm_getString( "bribe_paid" );
+   if (str == NULL)
+      dialogue_msg("Bribe Pilot", "\"Pleasure to do business with you.\"");
+   else
+      dialogue_msg("Bribe Pilot", "%s", str);
 
-      /* Reopen window. */
-      window_destroy( wid );
-      comm_open( comm_pilot->id );
-   }
+   /* Mark as bribed and don't allow bribing again. */
+   pilot_setFlag( comm_pilot, PILOT_BRIBED );
+   pilot_rmHostile( comm_pilot );
+   L = comm_pilot->ai->L;
+   lua_getglobal(L, "mem");
+   lua_pushnumber(L, 0);
+   lua_setfield(L, -2, "bribe");
+   lua_pop(L,1);
+
+   /* Reopen window. */
+   window_destroy( wid );
+   comm_open( comm_pilot->id );
 }
 
 
