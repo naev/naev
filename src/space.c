@@ -69,7 +69,7 @@ static int spacename_nstack = 0; /**< Size of planet<->system stack. */
 static int spacename_mstack = 0; /**< Size of memory in planet<->system stack. */
 
 
-/* 
+/*
  * Star system stack.
  */
 StarSystem *systems_stack = NULL; /**< Star system stack. */
@@ -94,6 +94,7 @@ StarSystem *cur_system = NULL; /**< Current star system. */
  */
 int space_spawn = 1; /**< Spawn enabled by default. */
 static double spawn_timer = 0; /**< Timer that controls spawn rate. */
+extern int pilot_nstack;
 
 
 /*
@@ -122,7 +123,7 @@ static double interference_target = 0.; /**< Target alpha level. */
 static double interference_timer = 0.; /**< Interference timer. */
 
 
-/* 
+/*
  * Internal Prototypes.
  */
 /* planet load */
@@ -239,14 +240,14 @@ void planets_minimap( const double res, const double w,
             PIXEL( cx+y, cy   );
             PIXEL( cx-y, cy   );
          }
-         else 
+         else
             if (x==y) {
                PIXEL( cx+x, cy+y );
                PIXEL( cx-x, cy+y );
                PIXEL( cx+x, cy-y );
                PIXEL( cx-x, cy-y );
             }
-            else 
+            else
                if (x<y) {
                PIXEL( cx+x, cy+y );
                PIXEL( cx-x, cy+y );
@@ -346,7 +347,7 @@ char planet_getClass( Planet *p )
       case STATION_CLASS_C: return '2';
       case STATION_CLASS_D: return '3';
 
-      default: 
+      default:
          WARN("Invalid planet class.");
          return 0;
    };
@@ -458,11 +459,11 @@ char* space_getRndPlanet (void)
          }
          tmp[ntmp-1] = systems_stack[i].planets[j]->name;
       }
-   
+
    res = tmp[RNG(0,ntmp-1)];
    free(tmp);
 
-   return res; 
+   return res;
 }
 
 
@@ -530,7 +531,7 @@ char* planet_getSystem( char* planetname )
    for (i=0; i<spacename_nstack; i++)
       if (strcmp(planetname_stack[i],planetname)==0)
          return systemname_stack[i];
-   
+
    DEBUG("Planet '%s' not found in planetname stack", planetname);
    return NULL;
 }
@@ -563,6 +564,7 @@ Planet* planet_get( char* planetname )
 void space_update( const double dt )
 {
    int i, j, f;
+   double mod;
 
    /* Needs a current system. */
    if (cur_system == NULL)
@@ -575,9 +577,10 @@ void space_update( const double dt )
    if (space_spawn) {
       spawn_timer -= dt;
 
-      if (cur_system->nfleets == 0) /* stop checking if there are no fleets */
+      /* Only check if there are fleets and pilots. */
+      if ((cur_system->nfleets == 0) || (cur_system->avg_pilot == 0.))
          spawn_timer = 300.;
-      
+
       if (spawn_timer < 0.) { /* time to possibly spawn */
 
          /* spawn chance is based on overall % */
@@ -591,7 +594,17 @@ void space_update( const double dt )
             }
          }
 
-         spawn_timer = 60./(float)cur_system->nfleets;
+         /* Base timer. */
+         spawn_timer = 60./cur_system->avg_pilot;
+
+         /* Calculate ship modifier, it tries to stabilize at avg pilots. */
+         /* First get pilot facton ==> [-1., inf ] */
+         mod  = ((double)pilot_nstack - cur_system->avg_pilot);
+         mod /= cur_system->avg_pilot;
+         /* Scale and offset. */
+         /*mod = 2.*mod + 1.5;*/
+         /* Modify timer. */
+         spawn_timer *= 1. + mod;
       }
    }
 
@@ -823,9 +836,9 @@ void space_init ( const char* sysname )
       if (RNG(0,100) <= (cur_system->fleets[i].chance/2)) /* fleet check (50% chance) */
          space_addFleet( cur_system->fleets[i].fleet, 1 );
    }
-   
+
    /* start the spawn timer */
-   spawn_timer = 120./(float)(cur_system->nfleets+1);
+   spawn_timer = -1.;
 
    /* we now know this system */
    sys_setFlag(cur_system,SYSTEM_KNOWN);
@@ -1007,7 +1020,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    /* Some postprocessing. */
    planet->cur_prodfactor = planet->prodfactor;
 
-/* 
+/*
  * verification
  */
 #define MELEMENT(o,s)   if (o) WARN("Planet '%s' missing '"s"' element", planet->name)
@@ -1150,12 +1163,23 @@ int system_rmPlanet( StarSystem *sys, char *planetname )
  */
 int system_addFleet( StarSystem *sys, SystemFleet *fleet )
 {
+   int i;
+   double avg;
+
    if (sys == NULL)
       return -1;
 
+   /* Add the fleet. */
    sys->nfleets++;
    sys->fleets = realloc( sys->fleets, sizeof(SystemFleet)*sys->nfleets );
    memcpy( &sys->fleets[sys->nfleets-1], fleet, sizeof(SystemFleet) );
+
+   /* Adjust the system average. */
+   avg = 0.;
+   for (i=0; i < fleet->fleet->npilots; i++)
+      avg += ((double)fleet->fleet->pilots[i].chance) / 100.;
+   avg *= ((double)fleet->chance) / 100.;
+   sys->avg_pilot += avg;
 
    return 0;
 }
@@ -1171,6 +1195,7 @@ int system_addFleet( StarSystem *sys, SystemFleet *fleet )
 int system_rmFleet( StarSystem *sys, SystemFleet *fleet )
 {
    int i;
+   double avg;
 
    /* Find a matching fleet (will grab first since can be duplicates). */
    for (i=0; i<sys->nfleets; i++)
@@ -1181,10 +1206,18 @@ int system_rmFleet( StarSystem *sys, SystemFleet *fleet )
    /* Not found. */
    if (i >= sys->nfleets)
       return -1;
-   
+
+   /* Remove the fleet. */
    sys->nfleets--;
    memmove(&sys->fleets[i], &sys->fleets[i+1], sizeof(SystemFleet) * (sys->nfleets - i));
    sys->fleets = realloc(sys->fleets, sizeof(SystemFleet) * sys->nfleets);
+
+   /* Adjust the system average. */
+   avg = 0.;
+   for (i=0; i < fleet->fleet->npilots; i++)
+      avg += ((double)fleet->fleet->pilots[i].chance) / 100.;
+   avg *= ((double)fleet->chance) / 100.;
+   sys->avg_pilot -= avg;
 
    return 0;
 }
@@ -1263,10 +1296,10 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 
    /* Clear memory for sane defaults. */
    memset( sys, 0, sizeof(StarSystem) );
-   sys->faction = -1;
-   planet = NULL;
-   size = 0;
-   
+   sys->faction   = -1;
+   planet         = NULL;
+   size           = 0;
+
    sys->name = xml_nodeProp(parent,"name"); /* already mallocs */
 
    node  = parent->xmlChildrenNode;
@@ -1509,8 +1542,8 @@ static int systems_load (void)
          }
 
          system_parse(&systems_stack[systems_nstack-1],node);
-      }                                                                             
-   } while (xml_nextNode(node));                                       
+      }
+   } while (xml_nextNode(node));
 
    /*
     * second pass - loads all the jump routes
@@ -1717,7 +1750,7 @@ void space_exit (void)
    planet_stack = NULL;
    planet_nstack = 0;
    planet_mstack = 0;
-   
+
    /* Free the systems. */
    for (i=0; i < systems_nstack; i++) {
       free(systems_stack[i].name);

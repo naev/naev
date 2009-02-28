@@ -149,6 +149,7 @@ typedef struct StarSystem_ {
 
    SystemFleet* fleets; /**< fleets that can appear in the current system */
    int nfleets; /**< total number of fleets */
+   double avg_pilot; /**< Target amount of pilots in the system. */
 
    int *jumps; /**< adjacent star system index numbers */
    int njumps; /**< number of adjacent jumps */
