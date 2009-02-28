@@ -45,7 +45,7 @@ function control ()
       target = ai.target()
 
       -- Needs to have a target
-      if target == nil then
+      if not ai.exists(target) then
          ai.poptask()
          return
       end
@@ -70,7 +70,7 @@ function control ()
       target = ai.target()
 
       -- Needs to have a target
-      if target == nil then
+      if not ai.exists(target) then
          ai.poptask()
          return
       end
@@ -200,7 +200,7 @@ function distress ( pilot, attacker )
    elseif task == "attack" then
       target = ai.target()
 
-      if target == nil or ai.dist(target) > ai.dist(t) then
+      if not ai.exists(target) or ai.dist(target) > ai.dist(t) then
          ai.pushtask( 0, "attack", t )
       end
    end
