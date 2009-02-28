@@ -683,8 +683,9 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
       else if (pilot_isFlag(p, PILOT_HOSTILE))
          return 1;
 
-      /* Always hit enemies. */
-      else if (areEnemies(w->faction, p->faction))
+      /* Always hit unbribed enemies. */
+      else if (!pilot_isFlag(p, PILOT_BRIBED) &&
+            areEnemies(w->faction, p->faction))
         return 1;
 
       /* Miss rest - can be neutral/ally. */
