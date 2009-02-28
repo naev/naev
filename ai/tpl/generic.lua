@@ -200,7 +200,7 @@ function distress ( pilot, attacker )
    elseif task == "attack" then
       target = ai.target()
 
-      if ai.dist(target) > ai.dist(t) then
+      if target == nil or ai.dist(target) > ai.dist(t) then
          ai.pushtask( 0, "attack", t )
       end
    end
