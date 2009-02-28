@@ -909,13 +909,12 @@ static void toolkit_mouseEvent( SDL_Event* event )
    if (event->type==SDL_MOUSEMOTION) {
       event->motion.x = x;
       event->motion.y = y;
+      event->motion.yrel = (double)event->motion.yrel * gl_screen.mxscale;
+      event->motion.xrel = (double)event->motion.xrel * gl_screen.myscale;
    }
    else if ((event->type==SDL_MOUSEBUTTONDOWN) || (event->type==SDL_MOUSEBUTTONUP)) {
       event->button.x = x;
       event->button.y = y;
-      /* Don't forget y has to be inverted. */
-      event->motion.yrel = -((double)event->motion.yrel * gl_screen.mxscale);
-      event->motion.xrel = ((double)event->motion.xrel * gl_screen.myscale);
    }
 
    for (i=0; i<w->nwidgets; i++) {
