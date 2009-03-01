@@ -66,6 +66,9 @@
    *) Improve font system to handle unicode
    *) Mission improvements
       *) Allow creation of OSD (On screen displays)
+   *) Simplify controls
+      *) Emacs-style bindings
+      *) Combine similar commands into one
 
 
    MAYBE... SOMEDAY...
