@@ -74,6 +74,7 @@ function runaway ()
    -- Good to set the target for distress calls
    ai.settarget( target )
 
+   dist = ai.getdist(target)
    dir = ai.face(target, true)
    ai.accel()
 
