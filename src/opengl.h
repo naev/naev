@@ -126,6 +126,7 @@ glTexture* gl_newImage( const char* path, const unsigned int flags );
 glTexture* gl_newSprite( const char* path, const int sx, const int sy,
       const unsigned int flags );
 void gl_freeTexture( glTexture* texture );
+glTexture* gl_dupTexture( glTexture *texture );
 
 /*
  * opengl drawing

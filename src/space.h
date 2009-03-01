@@ -97,6 +97,7 @@ typedef struct Planet_ {
                                    (everything that and below) while
                                    tech[1-PLANET_TECH_MAX] store the
                                    "unique" tech levels (only matches */
+   int bribed; /**< If planet has been bribed. */
 
    /* Graphics. */
    glTexture* gfx_space; /**< graphic in space */

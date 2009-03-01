@@ -7,7 +7,11 @@
 #  define COMM_H
 
 
-int comm_open( unsigned int pilot );
+#include "space.h"
+
+
+int comm_openPilot( unsigned int pilot );
+int comm_openPlanet( Planet *planet );
 
 
 #endif /* COMM_H */

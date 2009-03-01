@@ -26,8 +26,12 @@
 #define BUTTON_WIDTH    80 /**< Button width. */
 #define BUTTON_HEIGHT   30 /**< Button height. */
 
+#define GRAPHIC_WIDTH  256 /**< Width of graphic. */
+#define GRAPHIC_HEIGHT 256 /**< Height of graphic. */
+
 
 static Pilot *comm_pilot       = NULL; /**< Pilot currently talking to. */
+static Planet *comm_planet     = NULL; /**< Planet currently talking to. */
 static glTexture *comm_graphic = NULL; /**< Pilot's graphic. */
 
 
@@ -35,8 +39,10 @@ static glTexture *comm_graphic = NULL; /**< Pilot's graphic. */
  * Prototypes.
  */
 /* Static. */
+static unsigned int comm_open( glTexture *gfx, int faction, int override, char *name );
 static void comm_close( unsigned int wid, char *unused );
-static void comm_bribe( unsigned int wid, char *unused );
+static void comm_bribePilot( unsigned int wid, char *unused );
+static void comm_bribePlanet( unsigned int wid, char *unused );
 static void comm_requestFuel( unsigned int wid, char *unused );
 static int comm_getNumber( double *val, char* str );
 static const char* comm_getString( char *str );
@@ -51,14 +57,10 @@ extern void ai_setPilot( Pilot *p ); /**< from ai.c */
  *    @param pilot Pilot to communicate with.
  *    @return 0 on success.
  */
-int comm_open( unsigned int pilot )
+int comm_openPilot( unsigned int pilot )
 {
-   int x,y, w;
-   glTexture *logo;
-   char *name, *stand;
    const char *msg;
    unsigned int wid;
-   glColour *c;
 
    /* Get the pilot. */
    comm_pilot = pilot_get( pilot );
@@ -81,23 +83,101 @@ int comm_open( unsigned int pilot )
    /* Set up for the comm_get* functions. */
    ai_setPilot( comm_pilot );
 
-   /* Get graphics and text. */
+   /* Create the generic comm window. */
+   wid = comm_open( ship_loadCommGFX( comm_pilot->ship ),
+         comm_pilot->faction,
+         pilot_isHostile(comm_pilot) ? -1 : pilot_isFriendly(comm_pilot) ? 1 : 0,
+         comm_pilot->name );
+
+   /* Add special buttons. */
+   window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT, "btnGreet", "Greet", NULL );
+   if (!pilot_isFlag(comm_pilot, PILOT_BRIBED) && /* Not already bribed. */
+         ((faction_getPlayer( comm_pilot->faction ) < 0) || /* Hostile. */
+            pilot_isHostile(comm_pilot)))
+      window_addButton( wid, -20, 20 + 2*BUTTON_HEIGHT + 40,
+            BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", "Bribe", comm_bribePilot );
+   else
+      window_addButton( wid, -20, 20 + 2*BUTTON_HEIGHT + 40,
+            BUTTON_WIDTH, BUTTON_HEIGHT, "btnRequest",
+            "Refuel", comm_requestFuel );
+
+   return 0;
+}
+
+
+/**
+ * @brief Opens a communication dialogue with a planet.
+ *
+ *    @param planet Planet to communicate with.
+ *    @return 0 on success.
+ */
+int comm_openPlanet( Planet *planet )
+{
+   unsigned int wid;
+
+   /* Must not be disabled. */
+   if (!planet_hasService(planet, PLANET_SERVICE_BASIC)) {
+      player_message("%s does not respond.", planet->name);
+      return 0;
+   }
+
+   comm_planet = planet;
+
+   /* Create the generic comm window. */
+   wid = comm_open( gl_dupTexture( comm_planet->gfx_space ),
+         comm_planet->faction, 0, comm_planet->name );
+
+   /* Add special buttons. */
+   if (areEnemies(player->faction, planet->faction) &&
+         !planet->bribed)
+      window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
+            BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", "Bribe", comm_bribePlanet );
+
+   return 0;
+}
+
+
+/**
+ * @brief Sets up the comm window.
+ *
+ *    @param gfx Graphic to use for the comm window (is freed).
+ *    @param faction Faction of what you're communicating with.
+ *    @param override If positive sets to ally, if negative sets to hostile.
+ *    @param name Name of object talking to.
+ *    @return The comm window id.
+ */
+static unsigned int comm_open( glTexture *gfx, int faction, int override, char *name )
+{
+   int x,y, w;
+   glTexture *logo;
+   char *stand;
+   unsigned int wid;
+   glColour *c;
+
+   /* Clean up. */
    if (comm_graphic != NULL) {
       /* First clean up if needed. */
       gl_freeTexture(comm_graphic);
       comm_graphic = NULL;
    }
-   comm_graphic = ship_loadCommGFX( comm_pilot->ship );
-   logo = faction_logoSmall(comm_pilot->faction);
-   name = comm_pilot->name;
+
+   /* Get faction details. */
+   comm_graphic   = gfx;
+   logo           = faction_logoSmall(faction);
+
    /* Get standing colour / text. */
-   if (pilot_isHostile(comm_pilot)) {
+   if (override < 0) {
       stand = "Hostile";
       c = &cHostile;
    }
+   else if (override > 0) {
+      stand = "Friendly";
+      c = &cFriend;
+   }
    else {
-      stand = faction_getStandingBroad(faction_getPlayer( comm_pilot->faction ));
-      c = faction_getColour( comm_pilot->faction );
+      stand = faction_getStandingBroad(faction_getPlayer( faction ));
+      c = faction_getColour( faction );
    }
    w = MAX(gl_printWidth( NULL, name ), gl_printWidth( NULL, stand ));
    y = gl_defFont.h*2 + 15;
@@ -105,51 +185,42 @@ int comm_open( unsigned int pilot )
       w += logo->w;
       y = MAX( y, logo->w );
    }
-   x = (comm_graphic->w - w) / 2;
+   x = (GRAPHIC_WIDTH - w) / 2;
 
    /* Create the window. */
    wid = window_create( "Communication Channel", -1, -1,
-         20 + comm_graphic->w + 20 + BUTTON_WIDTH + 20,
-         30 + comm_graphic->h + y + 5 + 20 );
+         20 + GRAPHIC_WIDTH + 20 + BUTTON_WIDTH + 20,
+         30 + GRAPHIC_HEIGHT + y + 5 + 20 );
 
    /* Create the ship image. */
-   window_addRect( wid, 20, -30, comm_graphic->w, comm_graphic->h + y + 5,
-         "rctShip", &cGrey10, 1 );
-   window_addImage( wid, 20, -30, "imgShip", comm_graphic, 0 );
+   window_addRect( wid, 20, -30, GRAPHIC_WIDTH, GRAPHIC_HEIGHT + y + 5,
+         "rctGFX", &cGrey10, 1 );
+   window_addImage( wid, 20 + (GRAPHIC_WIDTH-comm_graphic->w)/2,
+         -30 - (GRAPHIC_HEIGHT-comm_graphic->h)/2,
+         "imgGFX", comm_graphic, 0 );
 
    /* Faction logo. */
    if (logo != NULL) {
-      window_addImage( wid, x, -30 - comm_graphic->h - 5,
+      window_addImage( wid, x, -30 - GRAPHIC_HEIGHT - 5,
             "imgFaction", logo, 0 );
       x += logo->w + 10;
       y -= (logo->w - (gl_defFont.h*2 + 15)) / 2;
    }
    
    /* Name. */
-   window_addText( wid, x, -30 - comm_graphic->h - y + gl_defFont.h*2 + 10,
-         comm_graphic->w - x, 20, 0, "txtName",
+   window_addText( wid, x, -30 - GRAPHIC_HEIGHT - y + gl_defFont.h*2 + 10,
+         GRAPHIC_WIDTH - x, 20, 0, "txtName",
          NULL, &cDConsole, name );
 
    /* Standing. */
-   window_addText( wid, x, -30 - comm_graphic->h - y + gl_defFont.h + 5,
-         comm_graphic->w - x, 20, 0, "txtStanding", NULL, c, stand );
+   window_addText( wid, x, -30 - GRAPHIC_HEIGHT - y + gl_defFont.h + 5,
+         GRAPHIC_WIDTH - x, 20, 0, "txtStanding", NULL, c, stand );
 
    /* Buttons. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", comm_close );
-   window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnGreet", "Greet", NULL );
-   if (!pilot_isFlag(comm_pilot, PILOT_BRIBED) && /* Not already bribed. */
-         ((faction_getPlayer( comm_pilot->faction ) < 0) || /* Hostile. */
-            pilot_isHostile(comm_pilot)))
-      window_addButton( wid, -20, 20 + 2*BUTTON_HEIGHT + 40,
-            BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", "Bribe", comm_bribe );
-   else
-      window_addButton( wid, -20, 20 + 2*BUTTON_HEIGHT + 40,
-            BUTTON_WIDTH, BUTTON_HEIGHT, "btnRequest",
-            "Refuel", comm_requestFuel );
 
-   return 0;
+   return wid;
 }
 
 
@@ -166,7 +237,8 @@ static void comm_close( unsigned int wid, char *unused )
       gl_freeTexture(comm_graphic);
       comm_graphic = NULL;
    }
-   comm_pilot = NULL;
+   comm_pilot  = NULL;
+   comm_planet = NULL;
    /* Close the window. */
    window_close( wid, unused );
 }
@@ -178,7 +250,7 @@ static void comm_close( unsigned int wid, char *unused )
  *    @param wid ID of window calling the function.
  *    @param unused Unused.
  */
-static void comm_bribe( unsigned int wid, char *unused )
+static void comm_bribePilot( unsigned int wid, char *unused )
 {
    (void) unused;
    int answer;
@@ -210,10 +282,10 @@ static void comm_bribe( unsigned int wid, char *unused )
    /* Bribe message. */
    str = comm_getString( "bribe_prompt" );
    if (str == NULL) {
-      answer = dialogue_YesNo( "Bribe Pilot", "\"I'm gonna need at least %d credits to not leave you as a hunk of floating debris.\"\n\nPay %d credits?", price, price );
+      answer = dialogue_YesNo( "Bribe Pilot", "\"I'm gonna need at least %u credits to not leave you as a hunk of floating debris.\"\n\nPay %u credits?", price, price );
    }
    else
-      answer = dialogue_YesNo( "Bribe Pilot", "%s\n\nPay %d credits?", str, price );
+      answer = dialogue_YesNo( "Bribe Pilot", "%s\n\nPay %u credits?", str, price );
 
    /* Said no. */
    if (answer == 0) {
@@ -245,7 +317,52 @@ static void comm_bribe( unsigned int wid, char *unused )
 
    /* Reopen window. */
    window_destroy( wid );
-   comm_open( comm_pilot->id );
+   comm_openPilot( comm_pilot->id );
+}
+
+
+/**
+ * @brief Tries to bribe the planet
+ *
+ *    @param wid ID of window calling the function.
+ *    @param unused Unused.
+ */
+static void comm_bribePlanet( unsigned int wid, char *unused )
+{
+   (void) unused;
+   int answer;
+   unsigned int price;
+
+   /* Unbribeable. */
+   price = 31337;
+
+   /* Yes/No input. */
+   answer = dialogue_YesNo( "Bribe Starport",
+         "\"I'll let you land for the small sum of %u credits.\"\n\nPay %u credits?",
+         price,  price );
+
+   /* Said no. */
+   if (answer == 0) {
+      dialogue_msg("Bribe Starport", "You decide not to pay.");
+      return;
+   }
+
+   /* Check if has the money. */
+   if (player->credits < price) {
+      dialogue_msg("Bribe Starport", "You don't have enough credits for the bribery.");
+      return;
+   }
+
+   /* Pay the money. */
+   player->credits -= price;
+   dialogue_msg("Bribe Starport", "You have permission to dock.");
+
+   /* Mark as bribed and don't allow bribing again. */
+   comm_planet->bribed = 1;
+
+   /* Reopen window. */
+   window_destroy( wid );
+   comm_openPlanet( comm_planet );
 }
 
 
@@ -300,7 +417,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    }
 
    /* See if player really wants to pay. */
-   ret = dialogue_YesNo( "Request Fuel", "%s\n\nPay %d credits?", msg, price );
+   ret = dialogue_YesNo( "Request Fuel", "%s\n\nPay %u credits?", msg, price );
    if (ret == 0) {
       dialogue_msg( "Request Fuel", "You decide not to pay." );
       return;
@@ -308,7 +425,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
 
    /* Check if he has the money. */
    if (player->credits < price) {
-      dialogue_msg( "Request Fuel", "You need %d more credits!",
+      dialogue_msg( "Request Fuel", "You need %u more credits!",
             player->credits - price);
       return;
    }

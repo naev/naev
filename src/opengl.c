@@ -686,6 +686,36 @@ void gl_freeTexture( glTexture* texture )
 
 
 /**
+ * @brief Duplicates a texture.
+ *
+ *    @param texture Texture to duplicate.
+ *    @return Duplicate of texture.
+ */
+glTexture* gl_dupTexture( glTexture *texture )
+{
+   glTexList *cur, *last;
+
+   /* No segfaults kthxbye. */
+   if (texture == NULL)
+      return NULL;
+
+   /* check to see if it already exists */
+   if (texture_list != NULL) {
+      for (cur=texture_list; cur!=NULL; cur=cur->next) {
+         if (texture == cur->tex) {
+            cur->used += 1;
+            return cur->tex;
+         }
+         last = cur;
+      }
+   }
+
+   /* Invalid texture. */
+   return NULL;
+}
+
+
+/**
  * @brief Checks to see if a pixel is transparent in a texture.
  *
  *    @param t Texture to check for transparency.

@@ -1065,7 +1065,8 @@ void player_land (void)
       }
       else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
          if (planet_hasService(planet,PLANET_SERVICE_BASIC)) { /* Basic services */
-            if (!areEnemies( player->faction, planet->faction )) { /* Friendly */
+            if (!areEnemies( player->faction, planet->faction ) ||  /* friendly */
+                  planet->bribed ) { /* Bribed. */
                player_message( "%s> Permission to land granted.", planet->name );
                player_setFlag(PLAYER_LANDACK);
                player_playSound(snd_nav,1);
@@ -1514,7 +1515,11 @@ void player_screenshot (void)
 void player_hail (void)
 {
    if (player->target != player->id)
-      comm_open(player->target);
+      comm_openPilot(player->target);
+   else if(planet_target != -1)
+      comm_openPlanet( cur_system->planets[ planet_target ] );
+   else
+      player_message("Who are you hailing?");
 }
 
 

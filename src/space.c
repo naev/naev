@@ -822,6 +822,10 @@ void space_init ( const char* sysname )
       }
    }
 
+   /* Iterate through planets to clear bribes. */
+   for (i=0; i<cur_system->nplanets; i++)
+      cur_system->planets[i]->bribed = 0;
+
    /* Clear interference if you leave system with interference. */
    if (cur_system->interference == 0.)
       interference_alpha = 0.;
