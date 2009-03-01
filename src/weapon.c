@@ -701,7 +701,7 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
    }
 
    /* Hit non-allies. */
-   if (!areAllies(w->faction, p->faction))
+   if (areEnemies(w->faction, p->faction))
       return 1;
 
    return 0;
