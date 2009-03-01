@@ -46,6 +46,7 @@
   <fleet chance="50">Pirate Ancestor</fleet>
   <fleet chance="30">Pirate Hyena Pack</fleet>
   <fleet chance="20">Pirate Admonisher</fleet>
+  <fleet chance="3">Pirate Kestrel</fleet>
  </fleetgroup>
  <fleetgroup name="Pirate Heavy Prescence">
   <fleet chance="80">Pirate Hyena</fleet>
