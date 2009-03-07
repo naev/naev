@@ -55,6 +55,11 @@ void window_addImageArray( const unsigned int wid,
    wgt->name   = strdup(name);
    wgt->wdw    = wid;
 
+   /* position/size */
+   wgt->w = (double) w;
+   wgt->h = (double) h;
+   toolkit_setPos( wdw, wgt, x, y );
+
    /* specific */
    wgt->render             = iar_render;
    wgt->cleanup            = iar_cleanup;
@@ -70,11 +75,9 @@ void window_addImageArray( const unsigned int wid,
    wgt->dat.iar.iw         = iw;
    wgt->dat.iar.ih         = ih;
    wgt->dat.iar.fptr       = call;
-
-   /* position/size */
-   wgt->w = (double) w;
-   wgt->h = (double) h;
-   toolkit_setPos( wdw, wgt, x, y );
+   wgt->dat.iar.xelem      = (int)((w - 10.) / wgt->dat.iar.iw);
+   wgt->dat.iar.yelem      = (wgt->dat.iar.xelem == 0) ? 0 :
+         (int)wgt->dat.iar.nelements / wgt->dat.iar.xelem + 1;
 
    if (wdw->focus == -1) /* initialize the focus */
       toolkit_nextFocus();
@@ -109,9 +112,9 @@ static void iar_render( Widget* iar, double bx, double by )
    h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
 
    /* number of elements */
-   xelem = (int)((iar->w - 10.) / w);
+   xelem = iar->dat.iar.xelem;
+   yelem = iar->dat.iar.yelem;
    xspace = (((int)iar->w - 10) % (int)w) / (xelem + 1);
-   yelem = (int)iar->dat.iar.nelements / xelem + 1;
 
    /* background */
    toolkit_drawRect( x, y, iar->w, iar->h, &cBlack, NULL );
@@ -198,16 +201,28 @@ static int iar_key( Widget* iar, SDLKey key, SDLMod mod )
 
    switch (key) {
       case SDLK_UP:
-         iar_scroll( iar, +1 );
-         return 1;
+         iar->dat.iar.selected -= iar->dat.iar.xelem;
+         break;
       case SDLK_DOWN:
-         iar_scroll( iar, -1 );
-         return 1;
+         iar->dat.iar.selected += iar->dat.iar.xelem;
+         break;
+      case SDLK_RIGHT:
+         iar->dat.iar.selected += 1;
+         break;
+      case SDLK_LEFT:
+         iar->dat.iar.selected -= 1;
+         break;
 
       default:
-         break;
+         return 0;
    }
-   return 0;
+
+   /* Check boundries. */
+   iar->dat.iar.selected = CLAMP( 0, iar->dat.iar.nelements-1, iar->dat.iar.selected);
+   if (iar->dat.iar.fptr)
+      (*iar->dat.iar.fptr)(iar->wdw, iar->name);
+
+   return 1;
 }
 
 
@@ -263,8 +278,8 @@ static int iar_mmove( Widget* iar, SDL_MouseMotionEvent *mmove )
       h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
 
       /* number of elements */
-      xelem = (int)((iar->w - 10.) / w);
-      yelem = (int)iar->dat.iar.nelements / xelem + 1;
+      xelem = iar->dat.iar.xelem;
+      yelem = iar->dat.iar.yelem;
 
       hmax = h * (yelem - (int)(iar->h / h));
 
@@ -323,8 +338,8 @@ static void iar_scroll( Widget* iar, int direction )
    h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
 
    /* number of elements */
-   xelem = (int)((iar->w - 10.) / w);
-   yelem = (int)iar->dat.iar.nelements / xelem + 1;
+   xelem = iar->dat.iar.xelem;
+   yelem = iar->dat.iar.yelem;
 
    /* maximum */
    hmax = h * (yelem - (int)(iar->h / h));
@@ -368,9 +383,9 @@ static void iar_focus( Widget* iar, double bx, double by )
    h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
 
    /* number of elements */
-   xelem = (int)((iar->w - 10.) / w);
+   xelem = iar->dat.iar.xelem;
+   yelem = iar->dat.iar.yelem;
    xspace = (((int)iar->w - 10) % (int)w) / (xelem + 1);
-   yelem = (int)iar->dat.iar.nelements / xelem + 1;
 
    /* Normal click. */
    if (bx < iar->w - 10.) {

@@ -20,6 +20,8 @@ typedef struct WidgetImageArrayData_ {
    glTexture **images; /**< Image array. */
    char **captions; /**< Corresponding caption array. */
    int nelements; /**< Number of elements. */
+   int xelem; /**< Number of horizontal elements. */
+   int yelem; /**< Number of vertical elements. */
    int selected; /**< Currently selected element. */
    double pos; /**< Current y position. */
    int iw; /**< Image width to use. */
