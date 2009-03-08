@@ -30,6 +30,7 @@
 #include "save.h"
 #include "music.h"
 #include "map.h"
+#include "news.h"
 
 
 /* global/main window */
@@ -1165,7 +1166,10 @@ static void news_open( unsigned int parent, char *str )
 {
    (void) parent;
    (void) str;
+   int i, p;
    unsigned int wid;
+   char *buf;
+   char news[2048];
 
    /* create window */
    wid = window_create( "News Reports",
@@ -1176,11 +1180,18 @@ static void news_open( unsigned int parent, char *str )
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseNews",
          "Close", window_close );
 
+   /* Create the text. */
+   p = 0;
+   for (i=0; i<10; i++) {
+      buf = news_get();
+      p += snprintf( &news[p], 2048-p, "* %s\n", buf );
+      free(buf);
+   }
+
    /* text */
    window_addText( wid, 20, 20 + BUTTON_HEIGHT + 20,
          NEWS_WIDTH-40, NEWS_HEIGHT - 20 - BUTTON_HEIGHT - 20 - 20 - 20,
-         0, "txtNews", &gl_smallFont, &cBlack,
-         "News reporters report that they are on strike!");
+         0, "txtNews", &gl_defFont, &cBlack, news );
 }
 
 

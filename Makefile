@@ -100,7 +100,7 @@ DATA_AI   := 	$(wildcard ai/*.lua \
 DATA_GFX  := 	$(wildcard gfx/*.png \
 						gfx/*/*.png \
 						gfx/*/*/*.png )
-DATA_XML  := 	$(wildcard dat/*.xml dat/*.ttf dat/intro)
+DATA_XML  := 	$(wildcard dat/*.xml dat/*.ttf dat/intro dat/news.lua)
 DATA_SND  := 	$(wildcard snd/music/*.ogg snd/sounds/*.wav) snd/music.lua
 DATA_MISN := 	$(wildcard dat/missions/*.lua \
 						dat/missions/*/*.lua \

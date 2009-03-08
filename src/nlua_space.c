@@ -294,13 +294,15 @@ int lua_isplanet( lua_State *L, int ind )
  *
  * Possible values of param:
  *    - nil : Gets the current landed planet or nil if there is none.
- *    - number : Gets random planet belonging to faction matching the number.
+ *    - bool : Gets a random planet.
+ *    - faction : Gets random planet belonging to faction matching the number.
  *    - string : Gets the planet by name.
  *    - table : Gets random planet belonging to any of the factions in the
  *               table.
  *
- *    @param param See description.
- *    @return Returns the planet and the system it belongs to.
+ *    @luaparam param See description.
+ *    @luareturn Returns the planet and the system it belongs to.
+ * @luafunc getPlanet( param )
  */
 static int planetL_get( lua_State *L )
 {
@@ -327,6 +329,15 @@ static int planetL_get( lua_State *L )
          return 2;
       }
       return 0; /* Not landed. */
+   }
+
+   /* If boolean return random. */
+   else if (lua_isboolean(L,1)) {
+      planet.p = planet_get( space_getRndPlanet() );
+      lua_pushplanet(L,planet);
+      sys.s = system_get( planet_getSystem(land_planet->name) );
+      lua_pushsystem(L,sys);
+      return 2;
    }
 
    /* Get a planet by faction */

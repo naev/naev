@@ -20,21 +20,20 @@
 #include "SDL.h"
 
 #include "ncompat.h"
+#include "log.h"
 
 /* global */
 #include <string.h> /* strdup */
-#if HAS_LINUX && defined(DEBUG) /* DEBUGGING isn't defined yet. */
+#if HAS_LINUX && defined(DEBUGGING)
 #include <signal.h>
 #include <execinfo.h>
 #include <stdlib.h>
 #include <unistd.h>
-#endif /* HAS_LINUX && defined(DEBUG) */
-
+#endif /* HAS_LINUX && defined(DEBUGGING) */
 
 /* local */
 #include "naev.h"
 #include "conf.h"
-#include "log.h"
 #include "physics.h"
 #include "opengl.h"
 #include "font.h"
@@ -65,6 +64,7 @@
 #include "unidiff.h"
 #include "ndata.h"
 #include "gui.h"
+#include "news.h"
 
 
 #define CONF_FILE       "conf" /**< Configuration file by default. */
@@ -287,6 +287,7 @@ int main( int argc, char** argv )
    nebu_exit(); /* destroys the nebulae */
    gl_exit(); /* kills video output */
    sound_exit(); /* kills the sound */
+   news_exit(); /* destroys the news. */
    SDL_Quit(); /* quits SDL */
 
 
