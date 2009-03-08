@@ -413,7 +413,7 @@ int var_save( xmlTextWriterPtr writer )
             break;
          case MISN_VAR_NUM:
             xmlw_attr(writer,"type","num");
-            xmlw_str(writer,"%d",var_stack[i].d.num);
+            xmlw_str(writer,"%f",var_stack[i].d.num);
             break;
          case MISN_VAR_BOOL:
             xmlw_attr(writer,"type","bool");
