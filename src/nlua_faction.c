@@ -147,6 +147,8 @@ static int factionL_get( lua_State *L )
    else NLUA_INVALID_PARAMETER();
 
    f.f = faction_get(name);
+   if (f.f < 0)
+      return 0;
    lua_pushfaction(L,f);
    return 1;
 }

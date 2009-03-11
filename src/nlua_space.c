@@ -445,6 +445,8 @@ static int planetL_faction( lua_State *L )
    LuaPlanet *p;
    LuaFaction f;
    p = lua_toplanet(L,1);
+   if (p->p->faction < 0)
+      return 0;
    f.f = p->p->faction;
    lua_pushfaction(L, f);
    return 1;
