@@ -1215,10 +1215,15 @@ static void news_open( unsigned int parent, char *str )
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseNews",
          "Close", window_close );
 
+   /* some fancyness. */
+   window_addRect( wid, 20, -40,
+         NEWS_WIDTH-40, NEWS_HEIGHT-80 - BUTTON_HEIGHT,
+         "rctNews", &cBlack, 1 );
+
    /* text */
-   window_addText( wid, 20, 20 + BUTTON_HEIGHT + 20,
-         NEWS_WIDTH-40, NEWS_HEIGHT - 20 - BUTTON_HEIGHT - 20 - 20 - 20,
-         0, "txtNews", &gl_defFont, &cBlack, news_buf );
+   window_addText( wid, 20 + 10, 20 + BUTTON_HEIGHT + 20 + 10,
+         NEWS_WIDTH-40-20, NEWS_HEIGHT - 20 - BUTTON_HEIGHT - 20 - 20 - 20 - 20,
+         0, "txtNews", &gl_defFont, &cConsole, news_buf );
 }
 
 
