@@ -93,6 +93,11 @@ static Mission* mission_computer = NULL; /**< Missions at the computer. */
 static int mission_ncomputer = 0; /**< Number of missions at the computer. */
 
 /*
+ * News stack.
+ */
+static char* news_buf = NULL; /**< News buffer. */
+
+/*
  * player stuff
  */
 extern int hyperspace_target; /**< from player.c */
@@ -1158,6 +1163,39 @@ static void spaceport_bar_open (void)
 }
 
 
+/**
+ * @brief Loads the news.
+ *
+ *    @return 0 on success.
+ * */
+static int news_load (void)
+{
+   int i, p;
+   char *buf;
+
+   /* Clean up if needed. */
+   if (news_buf != NULL)
+      free(news_buf);
+
+   /* Get the space. */
+   news_buf = malloc(sizeof(char) * 2048);
+
+   /* Create the text. */
+   p = 0;
+   for (i=0; i<10; i++) {
+
+      /* Get the news. */
+      buf = news_get();
+      if (buf == NULL)
+         break;
+
+      p += snprintf( &news_buf[p], 2048-p, "* %s\n", buf );
+      free(buf);
+   }
+
+   return 0;
+}
+
 
 /**
  * Opens the planetary news reports window.
@@ -1166,10 +1204,7 @@ static void news_open( unsigned int parent, char *str )
 {
    (void) parent;
    (void) str;
-   int i, p;
    unsigned int wid;
-   char *buf;
-   char news[2048];
 
    /* create window */
    wid = window_create( "News Reports",
@@ -1180,18 +1215,10 @@ static void news_open( unsigned int parent, char *str )
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseNews",
          "Close", window_close );
 
-   /* Create the text. */
-   p = 0;
-   for (i=0; i<10; i++) {
-      buf = news_get();
-      p += snprintf( &news[p], 2048-p, "* %s\n", buf );
-      free(buf);
-   }
-
    /* text */
    window_addText( wid, 20, 20 + BUTTON_HEIGHT + 20,
          NEWS_WIDTH-40, NEWS_HEIGHT - 20 - BUTTON_HEIGHT - 20 - 20 - 20,
-         0, "txtNews", &gl_defFont, &cBlack, news );
+         0, "txtNews", &gl_defFont, &cBlack, news_buf );
 }
 
 
@@ -1490,6 +1517,9 @@ void land( Planet* p )
    mission_computer = missions_computer( &mission_ncomputer,
          land_planet->faction, land_planet->name, cur_system->name );
 
+   /* Generate the news. */
+   news_load();
+
    /* Check land missions. */
    if (!has_visited(VISITED_LAND)) {
       missions_run(MIS_AVAIL_LAND, land_planet->faction,
@@ -1513,7 +1543,7 @@ void land( Planet* p )
  */
 void takeoff (void)
 {
-   int sw,sh, i, h;
+   int sw,sh, h;
    char *nt;
 
    if (!landed) return;
@@ -1558,13 +1588,6 @@ void takeoff (void)
    hooks_run("takeoff"); /* Must be run after cleanup since we don't want the
                             missions to think we are landed. */
    hooks_run("enter");
-
-   /* cleanup mission computer */
-   for (i=0; i<mission_ncomputer; i++)
-      mission_cleanup( &mission_computer[i] );
-   free(mission_computer);
-   mission_computer = NULL;
-   mission_ncomputer = 0;
 }
 
 
@@ -1573,21 +1596,38 @@ void takeoff (void)
  */
 void land_cleanup (void)
 {
+   int i;
+
    /* Clean up default stuff. */
-   land_planet = NULL;
-   landed = 0;
-   land_visited = 0;
+   land_planet    = NULL;
+   landed         = 0;
+   land_visited   = 0;
   
    /* Destroy window. */
    if (land_wid > 0) {
       window_destroy(land_wid);
-      land_wid = 0;
+      land_wid    = 0;
    }
 
    /* Clean up possible stray graphic. */
    if (gfx_exterior != NULL) {
       gl_freeTexture( gfx_exterior );
       gfx_exterior = NULL;
+   }
+
+   /* Free news buffer. */
+   if (news_buf != NULL) {
+      free( news_buf );
+      news_buf    = NULL;
+   }
+
+   /* Clean up mission computer. */
+   if (mission_computer != NULL) {
+      for (i=0; i<mission_ncomputer; i++)
+         mission_cleanup( &mission_computer[i] );
+      free(mission_computer);
+      mission_computer  = NULL;
+      mission_ncomputer = 0;
    }
 }
 
