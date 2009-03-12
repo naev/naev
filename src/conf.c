@@ -110,6 +110,7 @@ void conf_setDefaults (void)
    gl_screen.h = 600;
    gl_screen.flags = 0;
    gl_screen.fsaa = 4; /* Only used if activated. */
+   gl_setScale(1.); /* No scaling. */
    /* openal */
    nosound = 0;
    /* joystick */
@@ -165,6 +166,11 @@ int conf_loadConfig ( const char* file )
          gl_screen.flags |= OPENGL_DIM_DEF;
          gl_screen.h = h;
       }
+      /* Scalefactor. */
+      d = 1.;
+      conf_loadFloat("scalefactor",d);
+      if (d!=1.)
+         gl_setScale(d);
       /* FSAA */
       fsaa = 0;
       conf_loadInt("fsaa",fsaa);

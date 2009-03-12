@@ -56,7 +56,8 @@
 
 
 glInfo gl_screen; /**< Gives data of current opengl settings. */
-Vector2d* gl_camera; /**< Camera we are using. */
+Vector2d* gl_camera  = NULL; /**< Camera we are using. */
+static int gl_activated = 0; /**< Whether or not a window is activated. */
 
 /*
  * graphic list
@@ -1312,6 +1313,9 @@ int gl_init (void)
          return -1;
       }
    }
+   gl_screen.rw = SCREEN_W;
+   gl_screen.rh = SCREEN_H;
+   gl_activated = 1; /* Opengl is now activated. */
 
    /* Get info about the OpenGL window */
    SDL_GL_GetAttribute( SDL_GL_RED_SIZE, &gl_screen.r );
@@ -1368,13 +1372,16 @@ int gl_init (void)
    glShadeModel( GL_FLAT ); /* default shade model, functions should keep this when done */
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* good blend model */
 
-   /* Set up the proper viewport to use. */
-   gl_screen.rw = SCREEN_W;
-   gl_screen.rh = SCREEN_H;
-   gl_screen.nw = SCREEN_W;
-   gl_screen.nh = SCREEN_H;
-   gl_screen.scale = 1.;
+   /* New window is real window scaled. */
+   gl_screen.nw = (double)gl_screen.rw * gl_screen.scale;
+   gl_screen.nh = (double)gl_screen.rh * gl_screen.scale;
+   /* Viewport matches new window size. */
+   gl_screen.w  = gl_screen.nw;
+   gl_screen.h  = gl_screen.nh;
+   /* Small windows get handled here. */
    if ((SCREEN_W < 600) && (SCREEN_W <= SCREEN_H)) {
+      if (gl_screen.scale != 1.)
+         DEBUG("Screen size too small, upscaling...");
       gl_screen.scale = (double)gl_screen.w / 600.;
       /* Must keep the proportion the same for the screen. */
       gl_screen.h  = (gl_screen.h * 600) / SCREEN_W;
@@ -1382,6 +1389,8 @@ int gl_init (void)
       gl_screen.w  = 600;
    }
    else if ((SCREEN_H < 600) && (SCREEN_W >= SCREEN_H)) {
+      if (gl_screen.scale != 1.)
+         DEBUG("Screen size too small, upscaling...");
       gl_screen.scale = (double)gl_screen.h / 600.;
       /* Must keep the proportion the same for the screen. */
       gl_screen.w  = (gl_screen.w * 600) / SCREEN_H;
@@ -1401,6 +1410,20 @@ int gl_init (void)
    gl_checkErr();
 
    return 0;
+}
+
+
+/**
+ * @brief Sets the scale factor.
+ *
+ *    @param scalefactor Factor to scale by.
+ */
+double gl_setScale( double scalefactor )
+{
+   gl_screen.scale = 1./scalefactor;
+
+   /* Return actual used scalefactor. */
+   return gl_screen.scale;
 }
 
 

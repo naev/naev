@@ -163,6 +163,7 @@ void gl_exit (void);
 /*
  * misc
  */
+double gl_setScale( double scalefactor );
 void gl_defViewport (void);
 int gl_pot( int n );
 int gl_isTrans( const glTexture* t, const int x, const int y );

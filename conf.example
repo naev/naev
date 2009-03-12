@@ -24,6 +24,11 @@ height = 1024
 fullscreen = 1
 
 --[[
+-- Scale factor of the screen.  2. would make screen twice as big.
+--]]
+scalefactor = 1.
+
+--[[
 -- Anti aliasing.  Shouldn't be used, will probably be removed soon.
 --]]
 --aa = 1
