@@ -92,19 +92,22 @@ FleetGroup* fleet_getGroup( const char* name )
  *    @param dir Direction to face.
  *    @param pos Position to create at.
  *    @param vel Initial velocity.
+ *    @param ai AI to use (NULL is default).
  *    @param flags Flags to create with.
  *    @return The ID of the pilot created.
  *
  * @sa pilot_create
  */
 int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
-      Vector2d *pos, Vector2d *vel, unsigned int flags )
+      Vector2d *pos, Vector2d *vel, char* ai, unsigned int flags )
 {
    unsigned int p;
    p = pilot_create( plt->ship,
          plt->name,
          flt->faction,
-         (plt->ai != NULL) ? plt->ai : flt->ai, /* Pilot AI override */
+         (ai != NULL) ? ai :
+               (plt->ai != NULL) ? plt->ai :
+                     flt->ai,
          dir,
          pos,
          vel,

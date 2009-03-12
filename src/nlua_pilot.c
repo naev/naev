@@ -67,6 +67,8 @@ static int pilotL_setFaction( lua_State *L );
 static int pilotL_setHostile( lua_State *L );
 static int pilotL_setFriendly( lua_State *L );
 static int pilotL_disable( lua_State *L );
+static int pilotL_addOutfit( lua_State *L );
+static int pilotL_rmOutfit( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    { "__eq", pilotL_eq },
    { "name", pilotL_name },
@@ -80,6 +82,8 @@ static const luaL_reg pilotL_methods[] = {
    { "setHostile", pilotL_setHostile },
    { "setFriendly", pilotL_setFriendly },
    { "disable", pilotL_disable },
+   { "addOutfit", pilotL_addOutfit },
+   { "rmOutfit", pilotL_rmOutfit },
    {0,0}
 }; /**< Pilot metatable methods. */
 
@@ -330,17 +334,7 @@ static int pilot_addFleet( lua_State *L )
          }
 
          /* Create the pilot. */
-         p = pilot_create( plt->ship,
-               plt->name,
-               flt->faction,
-               (fltai != NULL) ? /* Lua AI Override */
-                     fltai : 
-                     (plt->ai != NULL) ? /* Pilot AI Override */
-                        plt->ai : flt->ai,
-               a,
-               &vp,
-               &vv,
-               0 );
+         p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, 0 );
 
          /* we push each pilot created into a table and return it */
          lua_pushnumber(L,++j); /* index, starts with 1 */
@@ -759,5 +753,81 @@ static int pilotL_disable( lua_State *L )
    pilot_setFlag( p, PILOT_DISABLED );
 
    return 0;
+}
+
+
+/**
+ * @ingroup META_PILOT
+ *
+ * @brief Adds an outfit to a pilot.
+ *    @luaparam outfit Name of the outfit to add.
+ *    @luaparam q Amount to add.
+ * @luareturn The amount actually added.
+ * @luafunc addOutfit( outfit, q )
+ */
+static int pilotL_addOutfit( lua_State *L )
+{
+   LuaPilot *lp;
+   Pilot *p;
+   const char *outfit;
+   int q, n;
+   Outfit *o;
+
+   /* Get the pilot. */
+   lp = lua_topilot(L,1);
+   p = pilot_get(lp->pilot);
+   if (p==NULL) return 0;
+
+   /* Get parameters. */
+   outfit = luaL_checkstring(L,2);
+   q      = luaL_checkint(L,3);
+
+   /* Get the outfit. */
+   o = outfit_get( outfit );
+   if (o == NULL)
+      return 0;
+   
+   /* Add outfit. */
+   n = pilot_addOutfit( p, o, q );
+   lua_pushnumber(L,n);
+   return 1;
+}
+
+
+/**
+ * @ingroup META_PILOT
+ *
+ * @brief Removes an outfit from a pilot.
+ *    @luaparam outfit Name of the outfit to remove.
+ *    @luaparam q Amount to remove.
+ * @luareturn The amount actually removed.
+ * @luafunc rmOutfit( outfit, q )
+ */
+static int pilotL_rmOutfit( lua_State *L )
+{
+   LuaPilot *lp;
+   Pilot *p;
+   const char *outfit;
+   int q, n;
+   Outfit *o;
+
+   /* Get the pilot. */
+   lp = lua_topilot(L,1);
+   p = pilot_get(lp->pilot);
+   if (p==NULL) return 0;
+
+   /* Get parameters. */
+   outfit = luaL_checkstring(L,2);
+   q      = luaL_checkint(L,3);
+
+   /* Get the outfit. */
+   o = outfit_get( outfit );
+   if (o == NULL)
+      return 0;
+   
+   /* Add outfit. */
+   n = pilot_rmOutfit( p, o, q );
+   lua_pushnumber(L,n);
+   return 1;
 }
 

@@ -246,10 +246,11 @@ function boardOver ()
    pilot.clear() -- Get rid of disabled llama
    pilots = pilot.add( "Pirate Hyena" )
    for k,v in ipairs(pilots) do
+       v:rmOutfit( "Laser Cannon", 1 ) -- Make it weaker
        hook.pilot( v, "death", "hyenaDead" )
        hook.pilot( v, "jump", "hyenaDead" ) -- Treat jump as dead
    end
-   misn.timerStart( "bringHelp", 9000 ) -- Player "should" surive 9 seconds
+   misn.timerStart( "bringHelp", 5000 ) -- Player "should" surive 5 seconds
 end
 
 

@@ -751,7 +751,7 @@ static void space_addFleet( Fleet* fleet, int init )
             vect_pset( &vv, plt->ship->speed * 0.5, a );
 
          /* Create the pilot. */
-         fleet_createPilot( fleet, plt, a, &vp, &vv, flags );
+         fleet_createPilot( fleet, plt, a, &vp, &vv, NULL, flags );
       }
 }
 
