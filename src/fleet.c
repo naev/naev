@@ -73,7 +73,6 @@ Fleet* fleet_get( const char* name )
  *    @return The fleetgroup matching name or NULL if not found.
  */
 FleetGroup* fleet_getGroup( const char* name )
-{
 {  
    int i;
    
@@ -83,7 +82,36 @@ FleetGroup* fleet_getGroup( const char* name )
    
    return NULL;
 }
+
+
+/**
+ * @brief Creates a pilot belonging to afleet.
+ *
+ *    @param flt Fleet to which pilot belongs to.
+ *    @param plt Pilot to create.
+ *    @param dir Direction to face.
+ *    @param pos Position to create at.
+ *    @param vel Initial velocity.
+ *    @param flags Flags to create with.
+ *    @return The ID of the pilot created.
+ *
+ * @sa pilot_create
+ */
+int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
+      Vector2d *pos, Vector2d *vel, unsigned int flags )
+{
+   unsigned int p;
+   p = pilot_create( plt->ship,
+         plt->name,
+         flt->faction,
+         (plt->ai != NULL) ? plt->ai : flt->ai, /* Pilot AI override */
+         dir,
+         pos,
+         vel,
+         flags );
+   return p;
 }
+
 
 
 /**

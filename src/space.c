@@ -750,14 +750,8 @@ static void space_addFleet( Fleet* fleet, int init )
             /* Put speed at half in case they start very near. */
             vect_pset( &vv, plt->ship->speed * 0.5, a );
 
-         pilot_create( plt->ship,
-               plt->name,
-               fleet->faction,
-               (plt->ai != NULL) ? plt->ai : fleet->ai, /* Pilot AI override */
-               a,
-               &vp,
-               &vv,
-               flags );
+         /* Create the pilot. */
+         fleet_createPilot( fleet, plt, a, &vp, &vv, flags );
       }
 }
 

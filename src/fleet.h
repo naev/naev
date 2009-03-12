@@ -21,6 +21,7 @@ typedef struct FleetPilot_ {
    char *name; /**< Used if they have a special name like uniques. */
    int chance; /**< Chance of this pilot appearing in the fleet. */
    char *ai; /**< AI different of fleet's global AI. */
+   ShipOutfit *outfits; /**< Outfits the fleet pilot has besides standard. */
 } FleetPilot;
 
 
@@ -70,6 +71,13 @@ FleetGroup* fleet_getGroup( const char* name );
  */
 int fleet_load (void);
 void fleet_free (void);
+
+
+/*
+ * creation
+ */
+int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
+      Vector2d *pos, Vector2d *vel, unsigned int flags );
 
 
 #endif /* FLEET_H */
