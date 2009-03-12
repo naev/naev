@@ -138,9 +138,14 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
                xmlr_attr(cur,"ai",pilot->ai);
 
                /* Load pilot's ship */
-               pilot->ship = ship_get(xml_get(cur));
-               if (pilot->ship == NULL)
+               xmlr_attr(cur,"ship",c);
+               if (c==NULL)
                   WARN("Pilot %s in Fleet %s has null ship", pilot->name, temp->name);
+               pilot->ship = ship_get(c);
+               if (pilot->ship == NULL)
+                  WARN("Pilot %s in Fleet %s has invalid ship", pilot->name, temp->name);
+               if (c!=NULL)
+                  free(c);
 
                /* Load chance */
                xmlr_attr(cur,"chance",c);
