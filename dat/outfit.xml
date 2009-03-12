@@ -778,6 +778,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
  </outfit>
  <outfit name="Heavy Weapon License">
   <general>
+   <license>Medium Weapon License</license>
    <max>1</max>
    <tech>9</tech>
    <mass>0</mass>
@@ -800,6 +801,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
  </outfit>
  <outfit name="Medium Combat Vessel License">
   <general>
+   <license>Light Combat Vessel License</license>
    <max>1</max>
    <tech>11</tech>
    <mass>0</mass>
@@ -811,6 +813,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
  </outfit>
  <outfit name="Heavy Combat Vessel License">
   <general>
+   <license>Medium Combat Vessel License</license>
    <max>1</max>
    <tech>13</tech>
    <mass>0</mass>
