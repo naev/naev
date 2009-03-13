@@ -30,7 +30,7 @@
    <mass>5</mass>
    <price>5000</price>
    <description>The laser cannon is a standard weapon on many vessels. It fires charged energy beams that do a decent amount of damage to both shield and armour, while remaining efficient enough to mount several even on small ships.</description>
-   <gfx_store>laser</gfx_store>
+   <gfx_store>lasercannon</gfx_store>
   </general>
   <specific type="bolt">
    <gfx>laserred</gfx>

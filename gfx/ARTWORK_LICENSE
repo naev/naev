@@ -49,7 +49,6 @@
      * store
        * capacitator.png
        * heavy.png
-       * jammer1.png
        * laser.png
        * medium.png
        * missile.png
@@ -65,7 +64,6 @@
        * turret2.png
        * turret3.png
        * turret.png
-       * weapon_rack.png
    * planet
      * exterior
        * aquatic.png
@@ -219,6 +217,9 @@
        * afterburner.png
        * afterburner2.png
        * jammer0.png
+       * jammer1.png
+       * weapon_rack.png
+       * lasercannon.png
    * ship
      * kestrel.png
      * kestrel_comm.png
