@@ -156,7 +156,7 @@ function news_addGeneric( rawtable )
       },
       {
          title = "Empire Relies on Prison Labour",
-         desc = "A recent report by the Soromid House Ways and Means Committee"
+         desc = "A recent report by the Soromid House Ways and Means Committee suggests infrastructure may be too dependent the on the incarcerated population."
       },
       {
          title = "Imperial Oversight Scandal",
@@ -191,7 +191,7 @@ function news_addGeneric( rawtable )
       },
       {
          title = "Admiral's Ball a Triumph",
-         desc = "The glamorous season drew to a close with an underwater themed ball held in air bubbles deep under the oceans of XXXXX.  All the seasons debutantes attended."
+         desc = "The glamorous season drew to a close with an underwater themed ball held in air bubbles deep under the oceans of Anecu.  All the seasons debutantes attended."
       },
       {
          title = "Amazing Survival Story",
