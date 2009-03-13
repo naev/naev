@@ -14,10 +14,18 @@ typedef struct news_s {
 } news_t;
 
 
+/*
+ * Create/destroy
+ */
 int news_init (void);
 void news_exit (void);
 
+
+/*
+ * Display.
+ */
 const news_t *news_generate( int *ngen, int n );
+void news_widget( unsigned int wid, int x, int y, int w, int h );
 
 
 #endif /* NEWS_H */

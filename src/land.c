@@ -93,11 +93,6 @@ static Mission* mission_computer = NULL; /**< Missions at the computer. */
 static int mission_ncomputer = 0; /**< Number of missions at the computer. */
 
 /*
- * News stack.
- */
-static char* news_buf = NULL; /**< News buffer. */
-
-/*
  * player stuff
  */
 extern int hyperspace_target; /**< from player.c */
@@ -1170,27 +1165,7 @@ static void spaceport_bar_open (void)
  * */
 static int news_load (void)
 {
-   int i, p, n;
-   const news_t *buf;
-
-   /* Clean up if needed. */
-   if (news_buf != NULL)
-      free(news_buf);
-
-   /* Get the space. */
-   news_buf = malloc(sizeof(char) * 2048);
-
-   buf = news_generate( &n, 10 );
-
-   /* Create the text. */
-   p = 0;
-   for (i=0; i<n; i++) {
-      p += snprintf( &news_buf[p], 2048-p,
-            "* %s\n"
-            "  %s\n"
-            , buf[i].title, buf[i].desc );
-   }
-
+   news_generate( NULL, 10 );
    return 0;
 }
 
@@ -1213,15 +1188,9 @@ static void news_open( unsigned int parent, char *str )
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseNews",
          "Close", window_close );
 
-   /* some fancyness. */
-   window_addRect( wid, 20, -40,
-         NEWS_WIDTH-40, NEWS_HEIGHT-80 - BUTTON_HEIGHT,
-         "rctNews", &cBlack, 1 );
-
-   /* text */
-   window_addText( wid, 20 + 10, 20 + BUTTON_HEIGHT + 20 + 10,
-         NEWS_WIDTH-40-20, NEWS_HEIGHT - 20 - BUTTON_HEIGHT - 20 - 20 - 20 - 20,
-         0, "txtNews", &gl_defFont, &cConsole, news_buf );
+   /* Add the news. */
+   news_widget( wid, 20, -40,
+         NEWS_WIDTH-40, NEWS_HEIGHT-80 - BUTTON_HEIGHT );
 }
 
 
@@ -1257,7 +1226,7 @@ static void misn_open (void)
 
    /* map */
    map_show( wid, 20, 20,
-         MISSION_WIDTH/2 - 30, MISSION_HEIGHT/2 - 35, 0.5 );
+         MISSION_WIDTH/2 - 30, MISSION_HEIGHT/2 - 35, 0.75 );
 
 
    misn_genList(wid, 1);
@@ -1616,12 +1585,6 @@ void land_cleanup (void)
    if (gfx_exterior != NULL) {
       gl_freeTexture( gfx_exterior );
       gfx_exterior = NULL;
-   }
-
-   /* Free news buffer. */
-   if (news_buf != NULL) {
-      free( news_buf );
-      news_buf    = NULL;
    }
 
    /* Clean up mission computer. */
