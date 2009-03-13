@@ -1170,8 +1170,8 @@ static void spaceport_bar_open (void)
  * */
 static int news_load (void)
 {
-   int i, p;
-   char *buf;
+   int i, p, n;
+   const news_t *buf;
 
    /* Clean up if needed. */
    if (news_buf != NULL)
@@ -1180,17 +1180,15 @@ static int news_load (void)
    /* Get the space. */
    news_buf = malloc(sizeof(char) * 2048);
 
+   buf = news_generate( &n, 10 );
+
    /* Create the text. */
    p = 0;
-   for (i=0; i<10; i++) {
-
-      /* Get the news. */
-      buf = news_get();
-      if (buf == NULL)
-         break;
-
-      p += snprintf( &news_buf[p], 2048-p, "* %s\n", buf );
-      free(buf);
+   for (i=0; i<n; i++) {
+      p += snprintf( &news_buf[p], 2048-p,
+            "* %s\n"
+            "  %s\n"
+            , buf[i].title, buf[i].desc );
    }
 
    return 0;

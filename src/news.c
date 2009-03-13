@@ -26,7 +26,23 @@
 #define LUA_NEWS     "dat/news.lua"
 
 
-static lua_State *news_state = NULL; /**< Lua news state. */
+/*
+ * News state.
+ */
+static lua_State *news_state  = NULL; /**< Lua news state. */
+
+
+/*
+ * News buffer.
+ */
+static news_t *news_buf       = NULL; /**< Buffer of news. */
+static int news_nbuf          = 0; /**< Size of news buffer. */
+
+
+/*
+ * Prototypes.
+ */
+static void news_cleanBuffer (void);
 
 
 /**
@@ -76,6 +92,25 @@ int news_init (void)
 
 
 /**
+ * @brief Cleans the news buffer.
+ */
+static void news_cleanBuffer (void)
+{
+   int i;
+
+   if (news_buf != NULL) {
+      for (i=0; i<news_nbuf; i++) {
+         free(news_buf[i].title);
+         free(news_buf[i].desc);
+      }
+      free(news_buf);
+      news_buf    = NULL;
+      news_nbuf   = 0;
+   }
+}
+
+
+/**
  * @brief Cleans up the news stuff.
  */
 void news_exit (void)
@@ -83,6 +118,8 @@ void news_exit (void)
    /* Already freed. */
    if (news_state == NULL)
       return;
+
+   news_cleanBuffer();
 
    /* Clean up. */
    lua_close(news_state);
@@ -93,9 +130,9 @@ void news_exit (void)
 /**
  * @brief Gets a news sentence.
  */
-char *news_get (void)
+const news_t *news_generate( int *ngen, int n )
 {
-   char *s;
+   int i;
    lua_State *L;
 
    /* Lazy allocation. */
@@ -103,17 +140,57 @@ char *news_get (void)
       news_init();
    L = news_state;
 
+   /* Clean up the old buffer. */
+   news_cleanBuffer();
+
+   /* Allocate news. */
+   news_buf = calloc( sizeof(news_t), n );
+   (*ngen)  = 0;
+
    /* Run the function. */
    lua_getglobal(L, "news");
-   if (lua_pcall(L, 0, 1, 0)) { /* error has occured */
+   lua_pushnumber(L, n);
+   if (lua_pcall(L, 1, 2, 0)) { /* error has occured */
       WARN("News: '%s' : %s", "news", lua_tostring(L,-1));
       lua_pop(L,1);
+      return NULL;
    }
 
-   /* Get the output. */
-   s = strdup( luaL_checkstring(L, -1) );
-   lua_pop(L,1);
-   return s;
+   /* Check to see if it's valid. */
+   if (!lua_isstring(L, -2) || !lua_istable(L, -1)) { 
+      WARN("News generated invalid output!");
+      lua_pop(L,1);
+      return NULL;
+   }
+
+   /* Create the title header. */
+   news_buf[0].title = strdup("TITLE");
+   news_buf[0].desc  = strdup( lua_tostring(L, -2) );
+
+   /* Pull it out of the table. */
+   i = 1;
+   lua_pushnil(L);
+   while ((lua_next(L,-2) != 0) && (i<n)) {
+      /* Pull out of the internal table the data. */
+      lua_getfield(L, -1, "title");
+      news_buf[i].title = strdup( luaL_checkstring(L, -1) );
+      lua_pop(L,1); /* pop the title string. */
+      lua_getfield(L, -1, "desc");
+      news_buf[i].desc = strdup( luaL_checkstring(L, -1) );
+      lua_pop(L,1); /* pop the desc string. */
+      /* Go to next element. */
+      lua_pop(L,1); /* pop the table. */
+      i++;
+   }
+
+   /* Clen up results. */
+   lua_pop(L,2);
+
+   /* Save news found. */
+   news_nbuf   = i;
+   (*ngen)     = news_nbuf;
+   
+   return news_buf;
 }
 
 
