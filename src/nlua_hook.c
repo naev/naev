@@ -73,6 +73,8 @@ int lua_loadHook( lua_State *L )
  *
  * @brief Lua bindings to manipulate hooks.
  *
+ * @luamod hook
+ *
  * Functions should be called like:
  *
  * @code
@@ -114,12 +116,11 @@ static unsigned int hook_generic( lua_State *L, char* stack, int pos )
 /**
  * @ingroup HOOK
  *
- * @brief number land( string func )
+ * @brief Hooks the function to the player landing.
  *
- * Hooks the function to the player landing.
- *
- *    @param func Function to run when hook is triggered.
- *    @return Hook identifier.
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luareturn Hook identifier.
+ * @luafunc land( funcname )
  */
 static int hook_land( lua_State *L )
 {
@@ -129,12 +130,11 @@ static int hook_land( lua_State *L )
 /**
  * @ingroup HOOK
  *
- * @brief number takeoff( string func )
+ * @brief Hooks the function to the player taking off.
  *
- * Hooks the function to the player taking off
- *
- *    @param func Function to run when hook is triggered.
- *    @return Hook identifier.
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luareturn Hook identifier.
+ * @luafunc takeoff( funcname )
  */
 static int hook_takeoff( lua_State *L )
 {
@@ -144,12 +144,11 @@ static int hook_takeoff( lua_State *L )
 /**
  * @ingroup HOOK
  *
- * @brief number time( string func )
+ * @brief Hooks the function to a time change.
  *
- * Hooks the function to a time change.
- *
- *    @param func Function to run when hook is triggered.
- *    @return Hook identifier.
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luareturn Hook identifier.
+ * @luafunc time( funcname )
  */
 static int hook_time( lua_State *L )
 {
@@ -159,13 +158,12 @@ static int hook_time( lua_State *L )
 /**
  * @ingroup HOOK
  *
- * @brief number enter( string func )
- *
- * Hooks the function to the player entering a system (triggers when taking
+ * @brief Hooks the function to the player entering a system (triggers when taking
  *  off too).
  *
- *    @param func Function to run when hook is triggered.
- *    @return Hook identifier.
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luareturn Hook identifier.
+ * @luafunc enter( funcname )
  */
 static int hook_enter( lua_State *L )
 {
@@ -175,9 +173,7 @@ static int hook_enter( lua_State *L )
 /**
  * @ingroup HOOK
  *
- * @brief number pilot( Pilot pilot, string type, string func )
- *
- * Hooks the function to a specific pilot.
+ * @brief Hooks the function to a specific pilot.
  *
  * You can hook to different actions.  Curently hook system only supports:
  *    - "death" :  triggered when pilot dies.
@@ -185,10 +181,11 @@ static int hook_enter( lua_State *L )
  *    - "disable" :  triggered when pilot is disabled.
  *    - "jump" : triggered when pilot jumps to hyperspace.
  *
- *    @param pilot Pilot identifier to hook.
- *    @param type One of the supported hook types.
- *    @param func Function to run when hook is triggered.
- *    @return Hook identifier.
+ *    @luaparam pilot Pilot identifier to hook.
+ *    @luaparam type One of the supported hook types.
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luareturn Hook identifier.
+ * @luafunc pilot( pilot, type, func )
  */
 static int hook_pilot( lua_State *L )
 {
