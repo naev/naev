@@ -460,7 +460,7 @@
    </commodities>
    <tech>
     <main>15</main>
-    <special>0</special>
+    <special>1002</special>
    </tech>
    <services>31</services>
    <class>1</class>

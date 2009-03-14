@@ -321,10 +321,11 @@
  <outfit name="Neutron Disruptor">
   <general>
    <max>3</max>
-   <tech>99</tech>
+   <tech>9999</tech>
    <mass>8</mass>
-   <price>25000</price>
-   <description>Neutron Disruptor.</description>
+   <price>45000</price>
+   <license>Heavy Weapon License</license>
+   <description>The Neutron Disruptor uses high energy focused pulses that manage to modify the base composition of molecules causing heavy damage.  This weapon was originally designed for the Collective because of the instability issues it had (could damage biological forms).  This is an upgraded version that doesn't have that issue and thus is usable even with living crew.</description>
    <gfx_store>neutron</gfx_store>
   </general>
   <specific type="bolt">

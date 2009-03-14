@@ -369,7 +369,7 @@
   <class>Drone</class>
   <price>300000</price>
   <fabricator>Robosys</fabricator>
-  <tech>99</tech>
+  <tech>9999</tech>
   <description>A robot drone.</description>
   <movement>
    <thrust>320</thrust>

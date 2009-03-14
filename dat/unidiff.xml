@@ -33,5 +33,8 @@
    <fleetgroup name="Collective Light Prescence">remove</fleetgroup>
    <fleetgroup name="Empire Patrol Prescence">add</fleetgroup>
   </system>
+  <outfit name="Neutron Disruptor">
+   <tech>1002</tech>
+  </outfit>
  </unidiff>
 </unidiffs>
