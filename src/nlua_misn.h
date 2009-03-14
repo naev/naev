@@ -17,7 +17,6 @@ int misn_loadCondLibs( lua_State *L ); /* safe read only stuff */
 int lua_loadMisn( lua_State *L );
 int lua_loadPlayer( lua_State *L, int readonnly );
 int lua_loadHook( lua_State *L );
-int lua_loadDiff( lua_State *L, int readonly );
 
 
 #endif /* NLUA_MISN */
