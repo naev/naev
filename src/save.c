@@ -24,6 +24,7 @@
 #include "hook.h"
 #include "ndata.h"
 #include "unidiff.h"
+#include "nlua_var.h"
 
 
 #define LOAD_WIDTH      400 /**< Load window width. */
