@@ -44,6 +44,7 @@ static int news_nbuf          = 0; /**< Size of news buffer. */
  * News line buffer.
  */
 static unsigned int news_tick = 0; /**< Last news tick. */
+static int news_drag          = 0; /**< Is dragging news? */
 static double news_pos        = 0.; /**< Position of the news feed. */
 static glFont *news_font      = &gl_defFont;
 static char **news_lines      = NULL; /**< Text per line. */
@@ -76,10 +77,12 @@ static void news_render( double bx, double by, double w, double h )
    double y, dt;
 
    /* Calculate offset. */
-   t = SDL_GetTicks();
-   dt = (double)(t-news_tick)/1000.;
-   news_tick = t;
-   news_pos += dt * 25.;
+   if (!news_drag) {
+      t = SDL_GetTicks();
+      dt = (double)(t-news_tick)/1000.;
+      news_tick = t;
+      news_pos += dt * 25.;
+   }
 
    /* background */
    COLOUR(cBlack);
@@ -134,6 +137,31 @@ static void news_render( double bx, double by, double w, double h )
 static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
       double w, double h )
 {
+   (void) wid;
+   (void) mx;
+   (void) my;
+   (void) w;
+
+   switch (event->type) {
+      case SDL_MOUSEBUTTONDOWN:
+         if (event->button.button == SDL_BUTTON_WHEELUP)
+            news_pos += h/3.;
+         else if (event->button.button == SDL_BUTTON_WHEELDOWN)
+            news_pos -= h/3.;
+         else if (!news_drag)
+            news_drag = 1;
+         break;
+
+      case SDL_MOUSEBUTTONUP:
+         if (news_drag)
+            news_drag = 0;
+         break;
+
+      case SDL_MOUSEMOTION:
+         if (news_drag)
+            news_pos -= event->motion.yrel;
+         break;
+   }
 }
 
 
