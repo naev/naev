@@ -840,11 +840,8 @@ static int var_peek( lua_State *L )
    int i;
    char *str;
 
-   if (lua_isstring(L,1)) str = (char*) lua_tostring(L,1);
-   else {
-      NLUA_DEBUG("Trying to peek a var with non-string name");
-      return 0;
-   }
+   /* Get the parameter. */
+   str = (char*) luaL_checkstring(L,1);
 
    for (i=0; i<var_nstack; i++)
       if (strcmp(str,var_stack[i].name)==0) {
@@ -865,8 +862,7 @@ static int var_peek( lua_State *L )
          return 1;
       }
 
-   lua_pushnil(L);
-   return 1;
+   return 0;
 }
 /**
  * @ingroup VAR
