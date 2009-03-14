@@ -83,6 +83,8 @@ int lua_loadPlayer( lua_State *L, int readonly )
  *
  * @brief Lua bindings to interact with the player.
  *
+ * @luamod player
+ *
  * Functions should be called like:
  *
  * @code
@@ -92,11 +94,10 @@ int lua_loadPlayer( lua_State *L, int readonly )
  * @{
  */
 /**
- * @brief string name( nil )
+ * @brief Gets the player's name.
  *
- * Gets the player's name.
- *
- *    @return The name of the player.
+ *    @luareturn The name of the player.
+ * @luafunc name()
  */
 static int player_getname( lua_State *L )
 {
@@ -104,11 +105,10 @@ static int player_getname( lua_State *L )
    return 1;
 }
 /**
- * @brief string ship( nil )
+ * @brief Gets the player's ship's name.
  *
- * Gets the player's ship's name.
- *
- *    @return The name of the ship the player is currently in.
+ *    @luareturn The name of the ship the player is currently in.
+ * @luafunc ship()
  */
 static int player_shipname( lua_State *L )
 {
@@ -116,11 +116,10 @@ static int player_shipname( lua_State *L )
    return 1;
 }
 /**
- * @brief number freeCargo( nil )
+ * @brief Gets the free cargo space the player has.
  *
- * Gets the free cargo space the player has.
- *
- *    @return The free cargo space in tons of the player.
+ *    @luareturn The free cargo space in tons of the player.
+ * @brief freeCargo()
  */
 static int player_freeSpace( lua_State *L )
 {
@@ -128,11 +127,10 @@ static int player_freeSpace( lua_State *L )
    return 1;
 }
 /**
- * @brief pay( number amount )
+ * @brief Pays the player an amount of money.
  *
- * Pays the player an amount of money.
- *
- *    @param amount Amount of money to pay the player in credits.
+ *    @luaparam amount Amount of money to pay the player in credits.
+ * @luafunc pay( amount )
  */
 static int player_pay( lua_State *L )
 {
@@ -148,11 +146,10 @@ static int player_pay( lua_State *L )
    return 0;
 }
 /**
- * @brief msg( string message )
+ * @brief Sends the player an ingame message.
  *
- * Sends the player an ingame message.
- *
- *    @param message Message to send the player.
+ *    @luaparam message Message to send the player.
+ * @luafunc msg( message )
  */
 static int player_msg( lua_State *L )
 {
@@ -166,13 +163,12 @@ static int player_msg( lua_State *L )
    return 0;
 }
 /**
- * @brief modFaction( string faction, number mod )
- *
- * Increases the player's standing to a faction by an amount.  This will
+ * @brief Increases the player's standing to a faction by an amount.  This will
  *  affect player's standing with that faction's allies and enemies also.
  *
- *    @param faction Name of the faction.
- *    @param mod Amount to modify standing by.
+ *    @luaparam faction Name of the faction.
+ *    @luaparam mod Amount to modify standing by.
+ * @luafunc modFaction( faction, mod )
  */
 static int player_modFaction( lua_State *L )
 {
@@ -191,13 +187,12 @@ static int player_modFaction( lua_State *L )
    return 0;
 }
 /**
- * @brief modFactionRaw( string faction, number mod )
- *
- * Increases the player's standing to a faction by a fixed amount without
+ * @brief Increases the player's standing to a faction by a fixed amount without
  *  touching other faction standings.
  *
- *    @param faction Name of the faction.
- *    @param mod Amount to modify standing by.
+ *    @luaparam faction Name of the faction.
+ *    @luaparam mod Amount to modify standing by.
+ * @luafunc modFactionRaw( faction, mod )
  */
 static int player_modFactionRaw( lua_State *L )
 {
@@ -216,12 +211,11 @@ static int player_modFactionRaw( lua_State *L )
    return 0;
 }
 /**
- * @brief number getFaction( string faction )
+ * @brief Gets the standing of the player with a certain faction.
  *
- * Gets the standing of the player with a certain faction.
- *
- *    @param faction Faction to get the standing of.
- *    @return The faction standing.
+ *    @luaparam faction Faction to get the standing of.
+ *    @luareturn The faction standing.
+ * @luafunc getFaction( faction )
  */
 static int player_getFaction( lua_State *L )
 {
@@ -236,12 +230,11 @@ static int player_getFaction( lua_State *L )
    return 1;
 }
 /**
- * @brief number, string getRating( nil )
+ * @brief Gets the player's combat rating.
  *
- * Gets the player's combat rating.
- *
- *    @return Returns the combat rating (in raw number) and the actual
+ *    @luareturn Returns the combat rating (in raw number) and the actual
  *             standing in human readable form.
+ * @luafunc getRating()
  */
 static int player_getRating( lua_State *L )
 {
@@ -251,11 +244,10 @@ static int player_getRating( lua_State *L )
 }
 
 /**
- * @brief Vec2 getPos( nil )
+ * @brief Gets the player's position.
  *
- * Gets the player's position.
- *
- *    @return The position of the player.
+ *    @luareturn The position of the player (Vec2).
+ * @luafunc getPos()
  */
 static int player_getPosition( lua_State *L )
 {
@@ -267,11 +259,10 @@ static int player_getPosition( lua_State *L )
 }
 
 /**
- * @brief Pilot getPilot( nil )
+ * @brief Gets the player's associated pilot.
  *
- * Gets the player's associated pilot.
- *
- *    @return The player's pilot.
+ *    @luareturn The player's pilot.
+ * @luafunc getPilot()
  */
 static int player_getPilot( lua_State *L )
 {
