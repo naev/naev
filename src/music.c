@@ -17,7 +17,8 @@
 
 #include "nlua.h"
 #include "nluadef.h"
-#include "nlua_misn.h"
+#include "nlua_var.h"
+#include "nlua_music.h"
 #include "naev.h"
 #include "log.h"
 #include "ndata.h"
@@ -56,19 +57,6 @@ static char music_situation[PATH_MAX]; /**< What situation music is in. */
 static lua_State *music_lua = NULL; /**< The Lua music control state. */
 /* functions */
 static int music_runLua( const char *situation );
-static int musicL_load( lua_State* L );
-static int musicL_play( lua_State* L );
-static int musicL_stop( lua_State* L );
-static int musicL_isPlaying( lua_State* L );
-static int musicL_current( lua_State* L );
-static const luaL_reg music_methods[] = {
-   { "load", musicL_load },
-   { "play", musicL_play },
-   { "stop", musicL_stop },
-   { "isPlaying", musicL_isPlaying },
-   { "current", musicL_current },
-   {0,0}
-}; /**< Music specific methods. */
 
 
 /*
@@ -368,12 +356,25 @@ void music_resume (void)
 
 /**
  * @brief Checks to see if the music is playing.
+ *
+ *    @return 0 if music isn't playing, 1 if is playing.
  */
 int music_isPlaying (void)
 {
    if (music_disabled) return 0; /* Always playing when music is off. */
 
    return Mix_PlayingMusic();
+}
+
+
+/**
+ * @brief Gets the name of the current playing song.
+ *
+ *    @return Name of the current playing song.
+ */
+const char *music_playingName (void)
+{
+   return music_name;
 }
 
 
@@ -451,21 +452,6 @@ static void music_luaQuit (void)
 
 
 /**
- * @brief Loads the music functions into a lua_State.
- *
- *    @param L Lua State to load the music functions into.
- *    @param read_only Load the write functions?
- *    @return 0 on success.
- */
-int lua_loadMusic( lua_State *L, int read_only )
-{
-   (void)read_only; /* future proof */
-   luaL_register(L, "music", music_methods);
-   return 0;
-}
-
-
-/**
  * @brief Actually runs the music stuff, based on situation.
  *
  *    @param situation Choose a new music to play.
@@ -496,45 +482,4 @@ static void music_rechoose (void)
    strncpy(music_situation, "idle", PATH_MAX);
    SDL_mutexV(music_lock);
 }
-
-
-/*
- * the music lua functions
- */
-static int musicL_load( lua_State *L )
-{
-   char* str;
-
-   /* check parameters */
-   NLUA_MIN_ARGS(1);
-   if (lua_isstring(L,1)) str = (char*)lua_tostring(L,1);
-   else NLUA_INVALID_PARAMETER();
-
-   music_load( str );
-   return 0;
-}
-static int musicL_play( lua_State *L )
-{
-   (void)L;
-   music_play();
-   return 0;
-}
-static int musicL_stop( lua_State *L )
-{
-   (void)L;
-   music_stop();
-   return 0;
-}
-static int musicL_isPlaying( lua_State* L )
-{
-   lua_pushboolean(L, music_isPlaying());
-   return 1;
-}
-static int musicL_current( lua_State* L )
-{
-   lua_pushstring(L, (music_name != NULL) ? music_name : "none" );
-   return 1;
-}
-
-
 
