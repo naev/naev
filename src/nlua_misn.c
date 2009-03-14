@@ -233,6 +233,8 @@ static int misn_runTopStack( Mission *misn, char *func)
  *
  * @brief Generic mission Lua bindings.
  *
+ * @luamod misn
+ *
  * Functions should be called like:
  *
  * @code
@@ -242,11 +244,10 @@ static int misn_runTopStack( Mission *misn, char *func)
  * @{
  */
 /**
- * @brief setTitle( string title )
+ * @brief Sets the current mission title.
  *
- * Sets the current mission title.
- *
- *    @param title Title to use for mission.
+ *    @luaparam title Title to use for mission.
+ * @luafunc setTitle( title )
  */
 static int misn_setTitle( lua_State *L )
 {
@@ -259,11 +260,10 @@ static int misn_setTitle( lua_State *L )
    return 0;
 }
 /**
- * @brief setDesc( string desc )
+ * @brief Sets the current mission description.
  *
- * Sets the current mission description.
- *
- *    @param desc Description to use for mission.
+ *    @luaparam desc Description to use for mission.
+ * @luafunc setDesc( desc )
  */
 static int misn_setDesc( lua_State *L )
 {
@@ -277,11 +277,10 @@ static int misn_setDesc( lua_State *L )
    return 0;
 }
 /**
- * @brief setReward( string reward )
+ * @brief Sets the current mission reward description.
  *
- * Sets the current mission reward description.
- *
- *    @param reward Description of the reward to use.
+ *    @luaparam reward Description of the reward to use.
+ * @luafunc setReward( reward )
  */
 static int misn_setReward( lua_State *L )
 {
@@ -295,12 +294,11 @@ static int misn_setReward( lua_State *L )
    return 0;
 }
 /**
- * @brief setMarker( [system sys )
- *
- * Sets the mission marker on the system.  If no parameters are passed it
+ * @brief Sets the mission marker on the system.  If no parameters are passed it
  * unsets the current marker.
  *
- *    @param sys System to mark.
+ *    @luaparam sys System to mark.  Unmarks if no parameter or nil is passed.
+ * @luafunc setMarker( sys )
  */
 static int misn_setMarker( lua_State *L )
 {
@@ -324,11 +322,10 @@ static int misn_setMarker( lua_State *L )
    return 0;
 }
 /**
- * @brief table factions( nil )
+ * @brief Gets the factions the mission is available for.
  *
- * Gets the factions the mission is available for.
- *
- *    @return A containing the factions.
+ *    @luareturn A containing the factions for whom the mission is available.
+ * @luafunc factions()
  */
 static int misn_factions( lua_State *L )
 {
@@ -349,11 +346,10 @@ static int misn_factions( lua_State *L )
    return 1;
 }
 /**
- * @brief bool accept( nil )
+ * @brief Attempts to accept the mission.
  *
- * Attempts to accept the mission.
- *
- *    @return true if mission was properly accepted.
+ *    @luareturn true if mission was properly accepted.
+ * @luafunc accept()
  */
 static int misn_accept( lua_State *L )
 {
@@ -377,14 +373,13 @@ static int misn_accept( lua_State *L )
    return 1;
 }
 /**
- * @brief finish( bool properly )
+ * @brief Finishes the mission.
  *
- * Finishes the mission.
- *
- *    @param properly If true and the mission is unique it marks the mission
+ *    @luaparam properly If true and the mission is unique it marks the mission
  *                     as completed.  If false it deletes the mission but
  *                     doesn't mark it as completed.  If the parameter isn't
  *                     passed it just ends the mission.
+ * @luafunc finish( properly )
  */
 static int misn_finish( lua_State *L )
 {
@@ -409,13 +404,12 @@ static int misn_finish( lua_State *L )
 }
 
 /**
- * @brief number timerStart( string func, number delay )
+ * @brief Starts a timer.
  *
- * Starts a timer.
- *
- *    @param func Function to run when timer is up.
- *    @param delay Milliseconds to wait for timer.
- *    @return The timer being used.
+ *    @luaparam funcname Name of the function to run when timer is up.
+ *    @luaparam delay Milliseconds to wait for timer.
+ *    @luareturn The timer being used.
+ * @luafunc timerStart( funcname, delay )
  */
 static int misn_timerStart( lua_State *L )
 {
@@ -452,11 +446,10 @@ static int misn_timerStart( lua_State *L )
 }
 
 /**
- * @brief timerStop( number t )
+ * @brief Stops a timer previously started with timerStart().
  *
- * Stops a timer previously started with timerStart().
- *
- *    @param t Timer to stop.
+ *    @luaparam t Timer to stop.
+ * @luafunc timerStop( t )
  */
 static int misn_timerStop( lua_State *L )
 {
@@ -498,14 +491,13 @@ static int misn_takeoff( lua_State *L )
 
 
 /**
- * @brief number addCargo( string cargo, number quantity )
- *
- * Adds some mission cargo to the player.  He cannot sell it nor get rid of it
+ * @brief Adds some mission cargo to the player.  He cannot sell it nor get rid of it
  *  unless he abandons the mission in which case it'll get eliminated.
  *
- *    @param cargo Name of the cargo to add.
- *    @param quantity Quantity of cargo to add.
- *    @return The id of the cargo which can be used in rmCargo.
+ *    @luaparam cargo Name of the cargo to add.
+ *    @luaparam quantity Quantity of cargo to add.
+ *    @luareturn The id of the cargo which can be used in rmCargo.
+ * @luafunc addCargo( cargo, quantity )
  */
 static int misn_addCargo( lua_State *L )
 {
@@ -527,12 +519,11 @@ static int misn_addCargo( lua_State *L )
    return 1;
 }
 /**
- * @brief bool rmCargo( number cargoid )
+ * @brief Removes the mission cargo.
  *
- * Removes the mission cargo.
- *
- *    @param cargoid Identifier of the mission cargo.
- *    @return true on success.
+ *    @luaparam cargoid Identifier of the mission cargo.
+ *    @luareturn true on success.
+ * @luafunc rmCargo( cargoid )
  */
 static int misn_rmCargo( lua_State *L )
 {
@@ -557,11 +548,11 @@ static int misn_rmCargo( lua_State *L )
    return 1;
 }
 /**
- * @brief jetCargo( number cargoid )
+ * @brief Jettisons the mission cargo.
  *
- * Jettisons the mission cargo.
- *
- *    @param cargoid ID of the cargo to jettison.
+ *    @luaparam cargoid ID of the cargo to jettison.
+ *    @luareturn true on success.
+ * @luafunc jetCargo( cargoid )
  */
 static int misn_jetCargo( lua_State *L )
 {
