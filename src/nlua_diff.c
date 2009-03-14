@@ -74,11 +74,10 @@ int lua_loadDiff( lua_State *L, int readonly )
  * @{
  */
 /**
- * @brief apply( string name )
- *
- * Applies a diff by name.
+ * @brief Applies a diff by name.
  *
  *    @param name Name of the diff to apply.
+ * @luafunc apply( name )
  */
 static int diff_applyL( lua_State *L )
 {
@@ -91,11 +90,10 @@ static int diff_applyL( lua_State *L )
    return 0;
 }
 /**
- * @brief remove( string name )
- *
- * Removes a diff by name.
+ * @brief Removes a diff by name.
  *
  *    @param name Name of the diff to remove.
+ * @luafunc remove( name )
  */
 static int diff_removeL( lua_State *L )
 {
@@ -108,12 +106,11 @@ static int diff_removeL( lua_State *L )
    return 0;
 }
 /**
- * @brief bool isApplied( string name )
- *
- * Checks to see if a diff is currently applied.
+ * @brief Checks to see if a diff is currently applied.
  *
  *    @param name Name of the diff to check.
  *    @return true if is applied, false if it isn't.
+ * @luafunc isApplied( name )
  */
 static int diff_isappliedL( lua_State *L )
 {
