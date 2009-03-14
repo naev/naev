@@ -236,6 +236,8 @@ static int var_add( misn_var *new_var )
  *  player across all the missions.  They are good for storing campaign or
  *  other global values.
  *
+ * @luamod var
+ *
  * Functions should be called like:
  *
  * @code
@@ -260,13 +262,12 @@ int var_checkflag( char* str )
 /**
  * @ingroup VAR
  *
- * @brief misn_var peek( string name )
+ * @brief Gets the mission variable value of a certain name.
  *
- * Gets the mission variable value of a certain name.
- *
- *    @param name Name of the mission variable to get.
- *    @return The value of the mission variable which will depend on what type
+ *    @luaparam name Name of the mission variable to get.
+ *    @luareturn The value of the mission variable which will depend on what type
  *             it is.
+ * @luafunc peek( name )
  */
 static int var_peek( lua_State *L )
 {
@@ -301,11 +302,10 @@ static int var_peek( lua_State *L )
 /**
  * @ingroup VAR
  *
- * @brief pop( string name )
+ * @brief Pops a mission variable off the stack, destroying it.
  *
- * Pops a mission variable off the stack, destroying it.
- *
- *    @param name Name of the mission variable to pop.
+ *    @luaparam name Name of the mission variable to pop.
+ * @luafunc pop( name )
  */
 static int var_pop( lua_State *L )
 {
@@ -333,13 +333,12 @@ static int var_pop( lua_State *L )
 /**
  * @ingroup VAR
  *
- * @brief push( string name, value )
+ * @brief Creates a new mission variable.
  *
- * Creates a new mission variable.
- *
- *    @param name Name to use for the new mission variable.
- *    @param value Value of the new mission variable.  Accepted types are:
+ *    @luaparam name Name to use for the new mission variable.
+ *    @luaparam value Value of the new mission variable.  Accepted types are:
  *                  nil, bool, string or number.
+ * @luafunc push( name, value )
  */
 static int var_push( lua_State *L )
 {
