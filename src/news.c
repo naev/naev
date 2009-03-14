@@ -20,6 +20,8 @@
 #include "nluadef.h"
 #include "nlua_misn.h"
 #include "nlua_faction.h"
+#include "nlua_diff.h"
+#include "nlua_var.h"
 #include "ndata.h"
 #include "toolkit.h"
 
