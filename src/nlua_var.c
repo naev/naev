@@ -3,9 +3,9 @@
  */
 
 /**
- * @file nlua_misn.c
+ * @file nlua_var.c
  *
- * @brief Handles the mission lua bindings.
+ * @brief Lua Variable module.
  */
 
 
