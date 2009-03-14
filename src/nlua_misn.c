@@ -72,9 +72,9 @@ static int misn_finish( lua_State *L );
 static int misn_timerStart( lua_State *L );
 static int misn_timerStop( lua_State *L );
 static int misn_takeoff( lua_State *L );
-static int player_addCargo( lua_State *L );
-static int player_rmCargo( lua_State *L );
-static int player_jetCargo( lua_State *L );
+static int misn_addCargo( lua_State *L );
+static int misn_rmCargo( lua_State *L );
+static int misn_jetCargo( lua_State *L );
 static const luaL_reg misn_methods[] = {
    { "setTitle", misn_setTitle },
    { "setDesc", misn_setDesc },
@@ -86,9 +86,9 @@ static const luaL_reg misn_methods[] = {
    { "timerStart", misn_timerStart },
    { "timerStop", misn_timerStop },
    { "takeoff", misn_takeoff },
-   { "addCargo", player_addCargo },
-   { "rmCargo", player_rmCargo },
-   { "jetCargo", player_jetCargo },
+   { "addCargo", misn_addCargo },
+   { "rmCargo", misn_rmCargo },
+   { "jetCargo", misn_jetCargo },
    {0,0}
 }; /**< Mission lua methods. */
 
@@ -507,7 +507,7 @@ static int misn_takeoff( lua_State *L )
  *    @param quantity Quantity of cargo to add.
  *    @return The id of the cargo which can be used in rmCargo.
  */
-static int player_addCargo( lua_State *L )
+static int misn_addCargo( lua_State *L )
 {
    Commodity *cargo;
    int quantity, ret;
@@ -534,7 +534,7 @@ static int player_addCargo( lua_State *L )
  *    @param cargoid Identifier of the mission cargo.
  *    @return true on success.
  */
-static int player_rmCargo( lua_State *L )
+static int misn_rmCargo( lua_State *L )
 {
    int ret;
    unsigned int id;
@@ -563,7 +563,7 @@ static int player_rmCargo( lua_State *L )
  *
  *    @param cargoid ID of the cargo to jettison.
  */
-static int player_jetCargo( lua_State *L )
+static int misn_jetCargo( lua_State *L )
 {
    int ret;
    unsigned int id;
