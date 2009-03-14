@@ -43,6 +43,7 @@
 #include "ai.h"
 #include "music.h"
 #include "gui.h"
+#include "nlua_var.h"
 
 
 #define XML_START_ID "Start" /**< Module start xml document identifier. */

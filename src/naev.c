@@ -65,6 +65,7 @@
 #include "ndata.h"
 #include "gui.h"
 #include "news.h"
+#include "nlua_var.h"
 
 
 #define CONF_FILE       "conf" /**< Configuration file by default. */
