@@ -8,6 +8,9 @@
 #  define NEWS_H
 
 
+/**
+ * @brief Represents a news article.
+ */
 typedef struct news_s {
    char *title; /**< Title of the news article. */
    char *desc; /**< Description of the news article. */
