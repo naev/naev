@@ -38,6 +38,13 @@ static const luaL_reg music_methods[] = {
 
 
 /**
+ * @brief Music Lua module.
+ *
+ * @luamod music
+ */
+
+
+/**
  * @brief Loads the music functions into a lua_State.
  *
  *    @param L Lua State to load the music functions into.
@@ -52,38 +59,70 @@ int lua_loadMusic( lua_State *L, int read_only )
 }
 
 
-/*
- * the music lua functions
+/**
+ * @brief Loads a song.
+ *
+ *    @luaparam name Name of the song to load.
+ * @luafunc load( name )
  */
 static int musicL_load( lua_State *L )
 {
-   char* str;
+   const char* str;
 
    /* check parameters */
    NLUA_MIN_ARGS(1);
-   if (lua_isstring(L,1)) str = (char*)lua_tostring(L,1);
-   else NLUA_INVALID_PARAMETER();
+   str = luaL_checkstring(L,1);
 
    music_load( str );
    return 0;
 }
+
+
+/**
+ * @brief Plays the loaded song.
+ *
+ * @luafunc play()
+ */
 static int musicL_play( lua_State *L )
 {
    (void)L;
    music_play();
    return 0;
 }
+
+
+/**
+ * @brief Stops playing the current song.
+ *
+ * @luafunc stop()
+ */
 static int musicL_stop( lua_State *L )
 {
    (void)L;
    music_stop();
    return 0;
 }
+
+
+/**
+ * @brief Checks to see if something is playing.
+ *
+ *    @luareturn true if something is playing.
+ * @luafunc isPlaying()
+ */
 static int musicL_isPlaying( lua_State* L )
 {
    lua_pushboolean(L, music_isPlaying());
    return 1;
 }
+
+
+/**
+ * @brief Gets the name of the current playing song.
+ *
+ *    @luareturn The name of the current playing song or "none" if no song is playing.
+ * @luafunc current()
+ */
 static int musicL_current( lua_State* L )
 {
    const char *music_name;
