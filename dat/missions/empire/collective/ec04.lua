@@ -90,12 +90,12 @@ function land ()
       misn_stage = 1
       misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
       misn.setMarker(misn_base_sys)
-      misn_cargo = player.addCargo( "Datapad", 0 )
+      misn_cargo = misn.addCargo( "Datapad", 0 )
 
    elseif misn_stage == 1 and planet == misn_base then
 
       tk.msg( title[3], text[4] )
-      player.rmCargo( misn_cargo )
+      misn.rmCargo( misn_cargo )
 
       -- Rewards
       player.modFaction("Empire",5)

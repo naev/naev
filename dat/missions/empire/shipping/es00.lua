@@ -57,7 +57,7 @@ function create ()
             dest:name(), ret:name(), retsys:name() ))
 
       -- Set up the goal
-      prisoners = player.addCargo("Prisoners", 0)
+      prisoners = misn.addCargo("Prisoners", 0)
       tk.msg( title[2], text[3] )
 
       -- Set hooks
@@ -70,7 +70,7 @@ end
 function land ()
    landed = space.getPlanet()
    if landed == dest and misn_stage == 0 then
-      if player.rmCargo(prisoners) then
+      if misn.rmCargo(prisoners) then
          -- Go on to next stage
          misn_stage = 1
 

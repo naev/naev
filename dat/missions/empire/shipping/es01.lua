@@ -84,7 +84,7 @@ function land ()
       end
 
       -- Update mission
-      package = player.addCargo("Packages", 3)
+      package = misn.addCargo("Packages", 3)
       misn_stage = 1
       jumped = 0
       misn.setDesc( string.format(misn_desc[2], dest:name(), destsys:name()))
@@ -94,7 +94,7 @@ function land ()
       tk.msg( title[2], string.format( text[4], dest:name(), destsys:name()) )
 
    elseif landed == dest and misn_stage == 1 then
-      if player.rmCargo(package) then
+      if misn.rmCargo(package) then
 
          -- Update mission
          misn_stage = 2

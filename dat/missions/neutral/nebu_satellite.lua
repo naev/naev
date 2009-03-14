@@ -55,7 +55,7 @@ function create()
       homeworld, homeworld_sys = space.getPlanet( misn.factions() )
       satellite_sys = space.getSystem("Arandon") -- Not too unstable
       credits = 75000
-      cargo = player.addCargo( "Satellite", 3 )
+      cargo = misn.addCargo( "Satellite", 3 )
 
       -- Set up mission information
       misn.setTitle( mtitle[1] )
@@ -119,7 +119,7 @@ end
 function launchSatellite ()
    misn_stage = 1
    player.msg( launch[3] )
-   player.jetCargo( cargo )
+   misn.jetCargo( cargo )
    misn.setDesc( string.format( mdesc[2], homeworld:name(), homeworld_sys:name() ) )
    misn.setMarker( homeworld_sys )
 end

@@ -82,7 +82,7 @@ function land ()
       if misn_stage == 2 then
 
          -- VIP gets off
-         player.rmCargo(vip)
+         misn.rmCargo(vip)
 
          -- Rewards
          player.pay(reward)
@@ -177,7 +177,7 @@ end
 
 function board ()
    -- VIP boards
-   vip = player.addCargo( "VIP", 0 )
+   vip = misn.addCargo( "VIP", 0 )
    tk.msg( title[2], text[4] )
 
    -- Update mission details
