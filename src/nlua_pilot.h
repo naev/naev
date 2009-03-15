@@ -12,7 +12,7 @@
 #include "pilot.h"
 
 
-#define PILOT_METATABLE   "Pilot" /**< Pilot metatable identifier. */
+#define PILOT_METATABLE   "pilot" /**< Pilot metatable identifier. */
 
 
 /**

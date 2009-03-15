@@ -33,28 +33,12 @@ extern Pilot** pilot_stack;
 extern int pilot_nstack;
 
 
-/*
- * Prototypes
- */
-static int pilotL_createmetatable( lua_State *L );
-
-/* pilots */
+/* Pilot metatable methods. */
 static int pilot_getPlayer( lua_State *L );
 static int pilot_addFleet( lua_State *L );
 static int pilot_clear( lua_State *L );
 static int pilot_toggleSpawn( lua_State *L );
 static int pilot_getPilots( lua_State *L );
-static const luaL_reg pilot_methods[] = {
-   { "player", pilot_getPlayer },
-   { "add", pilot_addFleet },
-   { "clear", pilot_clear },
-   { "toggleSpawn", pilot_toggleSpawn },
-   { "get", pilot_getPilots },
-   {0,0}
-}; /**< Pilot lua methods. */
-
-
-/* Pilot metatable methods. */
 static int pilotL_eq( lua_State *L );
 static int pilotL_name( lua_State *L );
 static int pilotL_alive( lua_State *L );
@@ -70,6 +54,11 @@ static int pilotL_disable( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
 static int pilotL_rmOutfit( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
+   { "player", pilot_getPlayer },
+   { "add", pilot_addFleet },
+   { "clear", pilot_clear },
+   { "toggleSpawn", pilot_toggleSpawn },
+   { "get", pilot_getPilots },
    { "__eq", pilotL_eq },
    { "name", pilotL_name },
    { "alive", pilotL_alive },
@@ -101,24 +90,6 @@ int lua_loadPilot( lua_State *L, int readonly )
    if (readonly) /* Nothing is read only */
       return 0;
 
-   /* Register the functions. */
-   luaL_register(L, "pilot", pilot_methods);
-
-   /* Register the metatables. */
-   pilotL_createmetatable( L );
-
-   return 0;
-}
-
-
-/**
- * @brief Registers the pilot metatable.
- *
- *    @param L Lua state to register metatable in.
- *    @return 0 on success.
- */
-static int pilotL_createmetatable( lua_State *L )
-{
    /* Create the metatable */
    luaL_newmetatable(L, PILOT_METATABLE);
 
@@ -129,10 +100,11 @@ static int pilotL_createmetatable( lua_State *L )
    /* Register the values */
    luaL_register(L, NULL, pilotL_methods);
 
-   return 0; /* No error */
+   /* Clean up. */
+   lua_setfield(L, LUA_GLOBALSINDEX, PILOT_METATABLE);
+
+   return 0;
 }
-
-
 
 
 /**
