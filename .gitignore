@@ -8,4 +8,7 @@ mkspr
 naev
 pack
 docs/doxygen/*
-docs/lua/*
+docs/lua/*.html
+docs/lua/*.css
+docs/lua/modules/*
+docs/lua/*.luadoc
