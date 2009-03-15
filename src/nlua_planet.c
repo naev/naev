@@ -73,7 +73,17 @@ int lua_loadPlanet( lua_State *L, int readonly )
 
 
 /**
- * @brief The planet metatable is a way to represent a planet in Lua.
+ * @brief This module allows you to handle the planets from Lua.
+ *
+ * Generally you do something like:
+ *
+ * @code
+ * p,s = planet.get() -- Get current planet and system
+ * if p:services() > 0 then -- planet has services
+ *    v = p:pos() -- Get the position
+ *    -- Do other stuff
+ * end
+ * @endcode
  *
  * @luamod planet
  */
