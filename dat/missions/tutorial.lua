@@ -288,7 +288,7 @@ end
 
 function tutTakeoff ()
    misn_stage = 8
-   misn_sys = space.getSystem()
+   misn_sys = system.get()
    tk.msg( title[11], text[24] )
    tk.msg( title[12], text[25] )
    tk.msg( title[13], text[26] )
@@ -297,7 +297,7 @@ end
 
 
 function tutEnter ()
-   enter_sys = space.getSystem()
+   enter_sys = system.get()
    if misn_stage ~= 8 then
       tk.msg( msg_abortTitle, msg_abort )
       misn.finish(false)

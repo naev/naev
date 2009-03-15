@@ -37,7 +37,7 @@ function create()
 
       misn.accept() -- we gots mission
 
-      dest = space.getPlanet( misn.factions() ) -- destination
+      dest = planet.get( misn.factions() ) -- destination
 
       -- Mission details
       misn.setTitle( misn_title )

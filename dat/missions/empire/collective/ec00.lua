@@ -40,9 +40,9 @@ function create()
       misn.accept()
 
       misn_stage = 0
-      misn_nearby = space.getSystem("Coriolis")
-      misn_target = space.getSystem("Dune")
-      misn_base,misn_base_sys = space.getPlanet("Omega Station")
+      misn_nearby = system.get("Coriolis")
+      misn_target = system.get("Dune")
+      misn_base,misn_base_sys = planet.get("Omega Station")
       misn.setMarker(misn_nearby) -- Not exact target
 
       -- Mission details
@@ -60,7 +60,7 @@ function create()
 end
 
 function enter()
-   sys = space.getSystem()
+   sys = system.get()
 
    -- additional fleets
    if sys:name() == "NGC-7291" then -- increase action for realism
@@ -82,9 +82,9 @@ function enter()
 end
 
 function land()
-   planet = space.getPlanet()
+   pnt = planet.get()
 
-   if misn_stage == 1 and  planet == misn_base then
+   if misn_stage == 1 and  pnt == misn_base then
       tk.msg( title[3], string.format(text[3],misn_target:name()) )
       player.modFaction("Empire",5)
       misn.finish(true)

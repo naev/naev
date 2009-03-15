@@ -52,8 +52,8 @@ function create()
 
       -- Set up mission variables
       misn_stage = 0
-      homeworld, homeworld_sys = space.getPlanet( misn.factions() )
-      satellite_sys = space.getSystem("Arandon") -- Not too unstable
+      homeworld, homeworld_sys = planet.get( misn.factions() )
+      satellite_sys = system.get("Arandon") -- Not too unstable
       credits = 75000
       cargo = misn.addCargo( "Satellite", 3 )
 
@@ -76,7 +76,7 @@ end
 
 
 function land ()
-   landed = space.getPlanet()
+   landed = planet.get()
    -- Mission success
    if misn_stage == 1 and landed == homeworld then
       tk.msg( title[3], text[4] )
@@ -87,7 +87,7 @@ end
 
 
 function jump ()
-   sys = space.getSystem()
+   sys = system.get()
    -- Launch satellite
    if misn_stage == 0 and sys == satellite_sys then
       misn.timerStart( "beginLaunch", 3000 )

@@ -41,8 +41,8 @@ function create ()
       misn.accept()
 
       -- target destination
-      dest,destsys = space.getPlanet( faction.get("Frontier") )
-      ret,retsys = space.getPlanet( "Polaris Prime" )
+      dest,destsys = planet.get( faction.get("Frontier") )
+      ret,retsys = planet.get( "Polaris Prime" )
       misn.setMarker(destsys)
 
       -- Mission details
@@ -68,7 +68,7 @@ end
 
 
 function land ()
-   landed = space.getPlanet()
+   landed = planet.get()
    if landed == dest and misn_stage == 0 then
       if misn.rmCargo(prisoners) then
          -- Go on to next stage
@@ -98,7 +98,7 @@ end
 
 
 function enter ()
-   sys = space.getSystem()
+   sys = system.get()
    if misn_stage == 1 and sys == destsys then
 
       -- Get a position near the player

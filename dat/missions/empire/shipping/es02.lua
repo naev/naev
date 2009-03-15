@@ -52,8 +52,8 @@ function create ()
       misn.accept()
 
       -- target destination
-      destsys = space.getSystem( "Slaccid" )
-      ret,retsys = space.getPlanet( "Polaris Prime" )
+      destsys = system.get( "Slaccid" )
+      ret,retsys = planet.get( "Polaris Prime" )
       misn.setMarker(destsys)
 
       -- Mission details
@@ -75,7 +75,7 @@ end
 
 
 function land ()
-   landed = space.getPlanet()
+   landed = planet.get()
 
    if landed == ret then
       -- Successfully rescued the VIP
@@ -106,7 +106,7 @@ end
 
 
 function enter ()
-   sys = space.getSystem()
+   sys = system.get()
 
    if misn_stage == 0 and sys == destsys then
 

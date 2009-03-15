@@ -78,8 +78,8 @@ function create ()
 
       -- Mission data
       misn_stage = 0
-      misn_base, misn_base_sys = space.getPlanet("Omega Station")
-      misn_target_sys = space.getSystem("NGC-7690")
+      misn_base, misn_base_sys = planet.get("Omega Station")
+      misn_target_sys = system.get("NGC-7690")
       misn.setMarker(misn_target_sys)
 
       -- Mission details
@@ -104,7 +104,7 @@ end
 function jump ()
    -- Only done for stage 1
    if misn_stage == 0 then
-      local sys = space.getSystem()
+      local sys = system.get()
 
       -- Escorts enter a while back
       enter_vect = player.pos()
@@ -238,10 +238,10 @@ function lance2_dead () esc_lancelot2 = false end
 
 -- Handles arrival back to base
 function land ()
-   local planet = space.getPlanet()
+   local pnt = planet.get()
 
    -- Just landing
-   if (misn_stage == 2 or misn_stage == 3) and planet == misn_base then
+   if (misn_stage == 2 or misn_stage == 3) and pnt == misn_base then
 
       if trinity_alive or misn_stage == 3 then
          -- Failure to kill

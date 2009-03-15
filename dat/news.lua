@@ -33,7 +33,7 @@ end
 function news_genTable ()
 
    -- Get current planet.
-   local curp, curs = space.getPlanet()
+   local curp, curs = planet.get()
    f = curp:faction()
 
    -- Create the output
@@ -281,7 +281,7 @@ end
    Generic planet news.
 --]]
 function news_generic ()
-   rndp, rnds = space.getPlanet( {
+   rndp, rnds = planet.get( {
          faction.get("Empire"),
          faction.get("Independent"),
          faction.get("Dvaered"),

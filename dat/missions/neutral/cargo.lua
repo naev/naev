@@ -45,7 +45,7 @@ end
 -- Create the mission
 function create()
 
-   landed, landed_sys = space.getPlanet() -- Get landed planet
+   landed, landed_sys = planet.get() -- Get landed planet
 
    -- Only 50% chance of appearing on Dvaered systems
    dv = faction.get("Dvaered")
@@ -56,15 +56,15 @@ function create()
    -- target destination
    i = 0
    repeat
-      planet,system = space.getPlanet( misn.factions() )
+      pnt,sys = planet.get( misn.factions() )
       i = i + 1
-   until system ~= landed_sys or i > 10
+   until sys ~= landed_sys or i > 10
    -- infinite loop protection
    if i > 10 then
       misn.finish(false)
    end
-   misn.setMarker(system) -- mark the system
-   misn_dist = system:jumpDist()
+   misn.setMarker(sys) -- mark the system
+   misn_dist = sys:jumpDist()
 
    -- mission generics
    i = rnd.int(6)
@@ -72,11 +72,11 @@ function create()
       misn_type = "Cargo"
       misn_faction = rnd.int(2)
       i = rnd.int(3)
-      misn.setTitle( string.format(title[i+1], planet:name()) )
+      misn.setTitle( string.format(title[i+1], pnt:name()) )
    elseif i < 6 then -- rush delivery
       misn_type = "Rush"
       misn_faction = rnd.int(5)
-      misn.setTitle( string.format(title[11], planet:name()) )
+      misn.setTitle( string.format(title[11], pnt:name()) )
    else -- people delivery :)
       misn_type = "People"
       misn_faction = rnd.int(1)
@@ -90,7 +90,7 @@ function create()
          carg_type = "Pilgrims"
       end
       i = rnd.int(1)
-      misn.setTitle( string.format(title[i+21], carg_type, planet:name()) )
+      misn.setTitle( string.format(title[i+21], carg_type, pnt:name()) )
    end
 
    -- more mission specifics
@@ -112,21 +112,21 @@ function create()
 
    -- Set reward and description
    if misn_type == "Cargo" then
-      misn.setDesc( string.format( misn_desc[1], planet:name(), system:name(), carg_mass, carg_type ) )
+      misn.setDesc( string.format( misn_desc[1], pnt:name(), sys:name(), carg_mass, carg_type ) )
       reward = misn_dist * carg_mass * (250+rnd.int(150)) +
             carg_mass * (150+rnd.int(75)) +
             rnd.int(1500)
    elseif misn_type == "Rush" then
       misn_time = time.get() + time.units(2) +
             rnd.int(time.units(2), time.units(4)) * misn_dist
-      misn.setDesc( string.format( misn_desc[11], planet:name(), system:name(),
+      misn.setDesc( string.format( misn_desc[11], pnt:name(), sys:name(),
             carg_mass, carg_type,
             time.str(misn_time), time.str(misn_time-time.get()) ) )
       reward = misn_dist * carg_mass * (450+rnd.int(250)) +
             carg_mass * (250+rnd.int(125)) +
             rnd.int(2500)
    elseif misn_type == "People" then
-      misn.setDesc( string.format( misn_desc[21], carg_type, planet:name(), system:name() ))
+      misn.setDesc( string.format( misn_desc[21], carg_type, pnt:name(), sys:name() ))
       reward = misn_dist * (1000+rnd.int(500)) + rnd.int(2000)
    end
    misn.setReward( string.format( misn_reward, reward ) )
@@ -160,8 +160,8 @@ end
 
 -- Land hook
 function land()
-   landed = space.getPlanet()
-   if landed == planet then
+   landed = planet.get()
+   if landed == pnt then
       if misn.rmCargo( carg_id ) then
          player.pay( reward )
          if misn_type == "People" then
@@ -193,7 +193,7 @@ function timeup ()
    if time.get() > misn_time then
       misn.timerStart("failed", 2000)
    else
-      misn.setDesc( string.format( misn_desc[11], planet:name(), system:name(),
+      misn.setDesc( string.format( misn_desc[11], pnt:name(), sys:name(),
             carg_mass, carg_type,
             time.str(misn_time), time.str(misn_time-time.get()) ) )
    end

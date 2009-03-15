@@ -41,14 +41,14 @@ function create ()
    -- Get systems to patrol
    num_systems = rnd.int(2,4)
    systems = {}
-   s = space.getSystem():adjacentSystems()
+   s = system.get():adjacentSystems()
    systems[1] = s[rnd.int(1,#s)]
    for i=2, num_systems do
       s = systems[i-1]:adjacentSystems()
       systems[i] = s[rnd.int(1,#s)]
    end
    system1, system2, system3, system4 = unpack(systems)
-   base, base_sys = space.getPlanet()
+   base, base_sys = planet.get()
    misn.setMarker(systems[1])
 
    -- Create the description.
@@ -90,7 +90,7 @@ end
 -- Jump hook
 function jump ()
    if misn_stage == 1 then
-      sys = space.getSystem()
+      sys = system.get()
 
       -- Hack in case it wasn't saved
       if systems == nil then
@@ -160,7 +160,7 @@ end
 
 -- Land hook
 function land ()
-   landed = space.getPlanet()
+   landed = planet.get()
    if misn_stage == 2 and landed == base then
       player.pay( reward )
       tk.msg( msg_title[1], string.format( msg_msg[1], reward ))

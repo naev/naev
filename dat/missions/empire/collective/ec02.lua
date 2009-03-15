@@ -41,8 +41,8 @@ function create()
 
       misn_stage = 0      
       systems_visited = 0 -- Number of Collective systems visited
-      misn_base, misn_base_sys = space.getPlanet("Omega Station")
-      misn_target, misn_target_sys = space.getPlanet("Eiroik")
+      misn_base, misn_base_sys = planet.get("Omega Station")
+      misn_target, misn_target_sys = planet.get("Eiroik")
       misn.setMarker(misn_target_sys)
 
       -- Mission details
@@ -58,10 +58,10 @@ function create()
 end
 
 function land()
-   planet = space.getPlanet()
+   pnt = planet.get()
 
    -- First mission part is landing on the planet
-   if misn_stage == 0 and planet == misn_target then
+   if misn_stage == 0 and pnt == misn_target then
       -- Sinister music landing
       music.load("landing_sinister")
       music.play()
@@ -73,7 +73,7 @@ function land()
       misn.setMarker(misn_base_sys)
 
    -- Return bit
-   elseif misn_stage == 1 and planet == misn_base then
+   elseif misn_stage == 1 and pnt == misn_base then
       tk.msg( title[2], text[5] )
 
       -- Rewards

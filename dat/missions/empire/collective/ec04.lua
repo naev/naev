@@ -35,7 +35,7 @@ end
 
 function create ()
 
-   misn_target, misn_target_sys = space.getPlanet("Eiroik")
+   misn_target, misn_target_sys = planet.get("Eiroik")
 
    -- Intro text
    if tk.yesno( title[1], string.format(text[1], misn_target:name()) )
@@ -43,8 +43,8 @@ function create ()
       misn.accept()
 
       misn_stage = 0
-      blockade_sys = space.getSystem("NGC-7132")
-      misn_base, misn_base_sys = space.getPlanet("Omega Station")
+      blockade_sys = system.get("NGC-7132")
+      misn_base, misn_base_sys = planet.get("Omega Station")
       misn.setMarker(misn_target_sys)
 
       -- Mission details
@@ -60,7 +60,7 @@ end
 
 -- Handles jumping to target system
 function jump ()
-   local sys = space.getSystem()
+   local sys = system.get()
    local factions = sys:faction()
 
    -- Create some havoc
@@ -76,10 +76,10 @@ end
 
 -- Handles arrival back to base
 function land ()
-   local planet = space.getPlanet()
+   local pnt = planet.get()
 
    -- Just landing
-   if misn_stage == 0 and planet == misn_target then
+   if misn_stage == 0 and pnt == misn_target then
 
       -- Sinister music landing
       music.load("landing_sinister")
@@ -92,7 +92,7 @@ function land ()
       misn.setMarker(misn_base_sys)
       misn_cargo = misn.addCargo( "Datapad", 0 )
 
-   elseif misn_stage == 1 and planet == misn_base then
+   elseif misn_stage == 1 and pnt == misn_base then
 
       tk.msg( title[3], text[4] )
       misn.rmCargo( misn_cargo )

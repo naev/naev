@@ -46,9 +46,9 @@ function create ()
       misn.accept()
 
       -- target destination
-      pickup,pickupsys = space.getPlanet( "Selphod" )
-      dest,destsys = space.getPlanet( "Cerberus" )
-      ret,retsys = space.getPlanet( "Polaris Prime" )
+      pickup,pickupsys = planet.get( "Selphod" )
+      dest,destsys = planet.get( "Cerberus" )
+      ret,retsys = planet.get( "Polaris Prime" )
       misn.setMarker(pickupsys)
 
       -- Mission details
@@ -73,7 +73,7 @@ end
 
 
 function land ()
-   landed = space.getPlanet()
+   landed = planet.get()
 
    if landed == pickup and misn_stage == 0 then
 
@@ -120,7 +120,7 @@ end
 
 
 function enter ()
-   sys = space.getSystem()
+   sys = system.get()
 
    if misn_stage == 1 then
 

@@ -38,7 +38,7 @@ function create()
 
       misn_stage = 0      
       systems_visited = 0 -- Number of Collective systems visited
-      misn_base,misn_base_sys = space.getPlanet("Omega Station")
+      misn_base,misn_base_sys = planet.get("Omega Station")
 
       -- Mission details
       misn.setTitle(misn_title)
@@ -52,7 +52,7 @@ function create()
 end
 
 function enter()
-   local sys = space.getSystem()
+   local sys = system.get()
    local factions = sys:faction()
 
    -- Increment System visited count
@@ -71,9 +71,9 @@ function enter()
 end
 
 function land()
-   local planet = space.getPlanet()
+   local pnt = planet.get()
 
-   if misn_stage == 1 and  planet == misn_base then
+   if misn_stage == 1 and  pnt == misn_base then
       tk.msg( title[3], text[3] )
       player.modFaction("Empire",5)
       misn.finish(true)

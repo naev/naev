@@ -65,9 +65,9 @@ function create ()
 
       -- Mission data
       misn_stage = 0
-      misn_base, misn_base_sys = space.getPlanet("Omega Station")
-      misn_target_sys = space.getSystem("C-43")
-      misn_final_sys = space.getSystem("C-28")
+      misn_base, misn_base_sys = planet.get("Omega Station")
+      misn_target_sys = system.get("C-43")
+      misn_final_sys = system.get("C-28")
       misn.setMarker(misn_target_sys)
 
       -- Mission details
@@ -86,7 +86,7 @@ end
 
 -- Handles jumping to target system
 function jump ()
-   sys = space.getSystem()
+   sys = system.get()
 
    if misn_stage == 0 then
 
@@ -246,10 +246,10 @@ end
 
 -- Handles arrival back to base
 function land ()
-   planet = space.getPlanet()
+   pnt = planet.get()
 
    -- Final landing stage
-   if misn_stage == 4 and planet == misn_base then
+   if misn_stage == 4 and pnt == misn_base then
 
       tk.msg( title[3], string.format(text[3], misn_base:name()) )
 
