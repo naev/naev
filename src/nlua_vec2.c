@@ -67,7 +67,7 @@ int lua_loadVector( lua_State *L )
    luaL_register(L, NULL, vector_methods);
 
    /* Clean up. */
-   lua_pop(L,1);
+   lua_setfield(L, LUA_GLOBALSINDEX, VECTOR_METATABLE);
 
    return 0;
 }
@@ -198,6 +198,7 @@ static int vectorL_new( lua_State *L )
  *    @luaparam v Vector getting stuff subtracted from.
  *    @luaparam x X coordinate or vector to add to.
  *    @luaparam y Y coordinate or nil to add to.
+ *    @luareturn The result of the vector operation.
  * @luafunc add( v, x, y )
  */
 static int vectorL_add( lua_State *L )
@@ -224,7 +225,8 @@ static int vectorL_add( lua_State *L )
 
    /* Actually add it */
    vect_cadd( &v1->vec, x, y );
-   return 0;
+   lua_pushvalue(L,1);
+   return 1;
 }
 
 /**
@@ -242,6 +244,7 @@ static int vectorL_add( lua_State *L )
  *    @luaparam v Vector getting stuff subtracted from.
  *    @luaparam x X coordinate or vector to subtract.
  *    @luaparam y Y coordinate or nil to subtract.
+ *    @luareturn The result of the vector operation.
  * @luafunc sub v, x, y )
  */
 static int vectorL_sub( lua_State *L )
@@ -268,7 +271,8 @@ static int vectorL_sub( lua_State *L )
 
    /* Actually add it */
    vect_cadd( &v1->vec, -x, -y );
-   return 0;
+   lua_pushvalue(L,1);
+   return 1;
 }
 
 /**
@@ -281,6 +285,7 @@ static int vectorL_sub( lua_State *L )
  *
  *    @luaparam v Vector to multiply.
  *    @luaparam mod Amount to multiply by.
+ *    @luareturn The result of the vector operation.
  * @luafunc mul( v, mod )
  */
 static int vectorL_mul( lua_State *L )
@@ -299,7 +304,8 @@ static int vectorL_mul( lua_State *L )
 
    /* Actually add it */
    vect_cadd( &v1->vec, v1->vec.x * mod, v1->vec.x * mod );
-   return 0;
+   lua_pushvalue(L,1);
+   return 1;
 }
 
 /**
@@ -312,6 +318,7 @@ static int vectorL_mul( lua_State *L )
  *
  *    @luaparam v Vector to divide.
  *    @luaparam mod Amount to divide by.
+ *    @luareturn The result of the vector operation.
  * @luafunc div( v, mod )
  */
 static int vectorL_div( lua_State *L )
@@ -330,7 +337,8 @@ static int vectorL_div( lua_State *L )
 
    /* Actually add it */
    vect_cadd( &v1->vec, v1->vec.x / mod, v1->vec.x / mod );
-   return 0;
+   lua_pushvalue(L,1);
+   return 1;
 }
 
 
@@ -364,7 +372,7 @@ static int vectorL_get( lua_State *L )
  *
  * @brief Sets the vector by cartesian coordinates.
  *
- * @usage my_vec:set( 5, 3) -- my_vec is now (5,3)
+ * @usage my_vec:set(5, 3) -- my_vec is now (5,3)
  *
  *    @luaparam v Vector to set coordinates of.
  *    @luaparam x X coordinate to set.
