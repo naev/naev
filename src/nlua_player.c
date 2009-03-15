@@ -79,19 +79,16 @@ int lua_loadPlayer( lua_State *L, int readonly )
 
 
 /**
- * @defgroup PLAYER Player Lua bindings
- *
  * @brief Lua bindings to interact with the player.
  *
- * @luamod player
- *
- * Functions should be called like:
- *
+ * These bindings let you modify stuff about the player and find out special
+ *  information. General usage would be calls like:
  * @code
- * player.function( parameters )
- * @endcode
- *
- * @{
+ * pname = player.name()
+ * shipname = player.ship()
+ * freecargo = player.freeCargo()
+ * rating = player.getRating()
+ * @luamod player
  */
 /**
  * @brief Gets the player's name.
@@ -262,7 +259,7 @@ static int player_getPosition( lua_State *L )
  * @brief Gets the player's associated pilot.
  *
  *    @luareturn The player's pilot.
- * @luafunc getPilot()
+ * @luafunc pilot()
  */
 static int player_getPilot( lua_State *L )
 {
@@ -271,7 +268,4 @@ static int player_getPilot( lua_State *L )
    lua_pushpilot(L, lp);
    return 1;
 }
-/**
- * @}
- */
 
