@@ -83,7 +83,7 @@ int lua_loadFaction( lua_State *L, int readonly )
    luaL_register(L, NULL, (readonly) ? faction_methods_cond : faction_methods);
 
    /* Clean up. */
-   lua_pop(L,1);
+   lua_setfield(L, LUA_GLOBALSINDEX, FACTION_METATABLE);
 
    return 0; /* No error */
 }
