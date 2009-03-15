@@ -78,6 +78,7 @@
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_space.h"
+#include "nlua_vec2.h"
 #include "board.h"
 
 

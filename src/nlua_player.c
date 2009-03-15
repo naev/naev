@@ -21,8 +21,8 @@
 
 #include "nlua.h"
 #include "nluadef.h"
-#include "nlua_space.h"
 #include "nlua_pilot.h"
+#include "nlua_vec2.h"
 #include "log.h"
 #include "naev.h"
 #include "player.h"

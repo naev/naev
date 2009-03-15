@@ -14,12 +14,12 @@
 
 #include "lauxlib.h"
 
-#include "log.h"
-#include "naev.h"
 #include "nlua.h"
 #include "nluadef.h"
-#include "nlua_space.h"
 #include "nlua_faction.h"
+#include "nlua_vec2.h"
+#include "log.h"
+#include "naev.h"
 #include "rng.h"
 #include "pilot.h"
 #include "player.h"
