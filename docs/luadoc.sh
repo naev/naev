@@ -28,6 +28,10 @@ sed -n '
 	s|^ *\* *@class|-- @class|p
 	s|^ *\* *@field|-- @field|p
 	s|^ *\* *@release|-- @release|p
+#custom tags
+   s|^ *\* *@code|-- <pre>|p
+   s|^ *\* *@endcode|-- </pre>|p
+   s|^ *\* *$|-- <br />|p
 #remove other tags:
 	\|^ *\* *@.*|d
 #insert newline between comments, replace */ by \n
@@ -41,6 +45,7 @@ done
 #run luadoc, put html files into lua dir
 (
 	cd lua
-	luadoc --nofiles *.luadoc
-	rm *.luadoc
+   LUAPATH=".." luadoc --nofiles --taglet "naev-taglet" *.luadoc
+   #lua /home/bobbens/src/luadoc-3.0.1/src/luadoc.lua.in --nofiles *.luadoc
+	#rm *.luadoc
 )
