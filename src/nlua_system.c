@@ -74,14 +74,17 @@ int lua_loadSystem( lua_State *L, int readonly )
 
 
 /**
- * @brief Represents a system in Lua.
+ * @brief Lua system module.
+ *
+ * This module allows you to use the Star Systems from Lua.
+ *
+ * Typical example would be something like:
+ * @code
+ * cur = system.get() -- Gets current system
+ * sys = system.get( "Gamma Polaris" )
+ * @endcode
  *
  * @luamod system
- *
- * To call members of the metatable always use:
- * @code 
- * system:function( param )
- * @endcode
  */
 /**
  * @brief Gets system at index.
@@ -141,19 +144,20 @@ int lua_issystem( lua_State *L, int ind )
 
 
 /**
- * @ingroup SPACE
- *
- * @brief system getSystem( [param] )
- *
- * Gets a system.
+ * @brief Gets a system.
  *
  * Behaves differently depending on what you pass as param:
  *    - nil : Gets the current system.
  *    - string : Gets the system by name.
  *    - planet : Gets the system by planet.
  *
- *    @param param Read description for details.
- *    @return System metatable matching param.
+ * @usage sys = system.get() -- Gets the current system.
+ * @usage sys = system.get( p ) -- Gets system where planet 'p' is located.
+ * @usage sys = system.get( "Gamma Polaris" ) -- Gets the system by name.
+ *
+ *    @luaparam param Read description for details.
+ *    @luareturn System metatable matching param.
+ * @luafunc get( param )
  */
 static int systemL_get( lua_State *L )
 {
@@ -181,14 +185,16 @@ static int systemL_get( lua_State *L )
 }
 
 /**
- * @brief bool __eq( system comp )
- *
- * Check systems for equality.
+ * @brief Check systems for equality.
  *
  * Allows you to use the '=' operator in Lua with systems.
  *
- *    @param comp System to compare against.
- *    @return true if both systems are the same.
+ * @usage if sys == system.get( "Draygar" ) then -- Do something
+ *
+ *    @luaparam s System comparing.
+ *    @luaparam comp System to compare against.
+ *    @luareturn true if both systems are the same.
+ * @luafunc __eq( s, comp )
  */
 static int systemL_eq( lua_State *L )
 {
@@ -203,11 +209,13 @@ static int systemL_eq( lua_State *L )
 }
 
 /**
- * @brief string name( nil )
+ * @brief Returns the system's name.
  *
- * Returns the system's name.
+ * @usage name = sys:name()
  *
- *    @return The name of the system.
+ *    @luaparam s System to get name of.
+ *    @luareturn The name of the system.
+ * @luafunc name( s )
  */
 static int systemL_name( lua_State *L )
 {
@@ -218,18 +226,19 @@ static int systemL_name( lua_State *L )
 }
 
 /**
- * @brief table faction( nil )
- *
- * Gets system factions.
+ * @brief Gets system factions.
  *
  * @code
- * foo = space.faction("foo")
- * if foo["bar"] then
- *    print( "faction 'bar' found" )
+ * sys = system.get() -- Get current system
+ * facts = sys:faction() -- Get factions
+ * if facts["Empire"] then
+ *    -- Do something since there is at least one Empire planet in the system
  * end
  * @endcode
  *
- *    @return A table containing all the factions in the system.
+ *    @luaparam s System to get the factions of.
+ *    @luareturn A table containing all the factions in the system.
+ * @luafunc faction( s )
  */
 static int systemL_faction( lua_State *L )
 {
@@ -252,6 +261,13 @@ static int systemL_faction( lua_State *L )
 
 
 /**
+ * @brief Gets the system's nebulae parameters.
+ *
+ * @usage density, volatility = sys:nebulae()
+ *
+ *    @luaparam s System to get nebulae parameters from.
+ *    @luareturn The density and volatility of the system.
+ * @luafunc nebulae( s )
  */
 static int systemL_nebulae( lua_State *L )
 {
@@ -267,17 +283,20 @@ static int systemL_nebulae( lua_State *L )
 
 
 /**
- * @brief number jumpDist( [param] )
- *
- * Gets jump distance from current system, or to another.
+ * @brief Gets jump distance from current system, or to another.
  *
  * Does different things depending on the parameter type:
  *    - nil : Gets distance from current system.
  *    - string : Gets distance from system matching name.
  *    - system : Gets distance from system
  *
- *    @param param See description.
- *    @return Number of jumps to system.
+ * @usage d = sys:jumpDist() -- Distance from current system.
+ * @usage d = sys:jumpDist( "Draygar" ) -- Distance from system Draygar.
+ * @usage d = sys:jumpDist( another_sys ) -- Distance from system another_sys.
+ *
+ *    @luaparam param See description.
+ *    @luareturn Number of jumps to system.
+ * @luafunc jumpDist( param )
  */
 static int systemL_jumpdistance( lua_State *L )
 {
@@ -310,6 +329,13 @@ static int systemL_jumpdistance( lua_State *L )
 
 
 /**
+ * @brief Gets all the ajacent systems to a system.
+ *
+ * @usage for k,v in pairs( sys:adjacentSystems() ) do -- Iterate over adjacent systems.
+ *
+ *    @luaparam s System to get adjacent systems of.
+ *    @luareturn A table with all the adjacent systems.
+ * @luafunc adjacentSystems( s )
  */
 static int systemL_adjacent( lua_State *L )
 {
