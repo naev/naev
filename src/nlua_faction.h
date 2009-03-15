@@ -10,7 +10,7 @@
 #include "lua.h"
 
 
-#define FACTION_METATABLE  "Faction" /**< Faction metatable identifier. */
+#define FACTION_METATABLE  "faction" /**< Faction metatable identifier. */
 
 
 /**

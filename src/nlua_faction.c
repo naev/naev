@@ -21,12 +21,8 @@
 #include "faction.h"
 
 
-/*
- * Prototypes
- */
-static int factionL_createmetatable( lua_State *L, int readonly );
-
 /* Faction metatable methods */
+static int factionL_get( lua_State *L );
 static int factionL_eq( lua_State *L );
 static int factionL_name( lua_State *L );
 static int factionL_longname( lua_State *L );
@@ -38,6 +34,7 @@ static int factionL_playerstanding( lua_State *L );
 static int factionL_enemies( lua_State *L );
 static int factionL_allies( lua_State *L );
 static const luaL_reg faction_methods[] = {
+   { "get", factionL_get },
    { "__eq", factionL_eq },
    { "__tostring", factionL_name },
    { "name", factionL_name },
@@ -52,6 +49,7 @@ static const luaL_reg faction_methods[] = {
    {0,0}
 }; /**< Faction metatable methods. */
 static const luaL_reg faction_methods_cond[] = {
+   { "get", factionL_get },
    { "__eq", factionL_eq },
    { "__tostring", factionL_name },
    { "name", factionL_name },
@@ -65,14 +63,6 @@ static const luaL_reg faction_methods_cond[] = {
 }; /**< Factions read only metatable methods. */
 
 
-/* Global faction functions. */
-static int factionL_get( lua_State *L );
-static const luaL_reg factionL_methods[] = {
-   { "get", factionL_get },
-   {0,0}
-}; /**< Faction module functions. */
-
-
 /**
  * @brief Loads the faction library.
  *
@@ -81,25 +71,6 @@ static const luaL_reg factionL_methods[] = {
  *    @return 0 on success.
  */
 int lua_loadFaction( lua_State *L, int readonly )
-{
-   /* Registers the faction functions. */
-   luaL_register(L, "faction", factionL_methods);
-
-   /* Register the metatables. */
-   factionL_createmetatable( L, readonly );
-
-   return 0;
-}
-
-
-/**
- * @brief Registers the faction metatable.
- *
- *    @param L Lua state to register metatable in.
- *    @param readonly Whether table should be readonly.
- *    @return 0 on success.
- */
-static int factionL_createmetatable( lua_State *L, int readonly )
 {
    /* Create the metatable */
    luaL_newmetatable(L, FACTION_METATABLE);
@@ -119,57 +90,40 @@ static int factionL_createmetatable( lua_State *L, int readonly )
 
 
 /**
- * @defgroup FACTION Faction Lua bindings.
- *
  * @brief Lua bindings to deal with factions.
- * @luamod faction
- * Use with:
+ *
+ * Use like:
  * @code
- * faction.func( params )
+ * f = faction.get( "Empire" )
+ * if f:playerStanding() < 0 then
+ *    -- player is hostile to "Empire"
+ * end
  * @endcode
  *
- * @{
+ * @luamod faction
  */
 /**
- * @brief faction get( string name )
+ * @brief Gets the faction based on it's name.
  *
- * Gets the faction based on it's name.
+ * @usage f = faction.get( "Empire" )
  *
- *    @param name Name of the faction to get.
- *    @return The faction matching name.
+ *    @luaparam name Name of the faction to get.
+ *    @luareturn The faction matching name.
+ * @luafunc get( name )
  */
 static int factionL_get( lua_State *L )
 {
    LuaFaction f;
-   char *name;
+   const char *name;
 
-   if (lua_isstring(L,1)) name = (char*) lua_tostring(L,1);
-   else NLUA_INVALID_PARAMETER();
-
+   name = luaL_checkstring(L,1);
    f.f = faction_get(name);
    if (f.f < 0)
       return 0;
    lua_pushfaction(L,f);
    return 1;
 }
-/**
- * @}
- */
 
-/**
- * @defgroup META_FACTION Faction Metatable
- *
- * @brief The faction metatable is a way to represent a faction in Lua.
- *
- * It allows all sorts of operators making it much more natural to use.
- *
- * To call members of the metatable always use:
- * @code 
- * faction:function( param )
- * @endcode
- *
- * @{
- */
 /**
  * @brief Gets faction at index.
  *
@@ -226,10 +180,15 @@ int lua_isfaction( lua_State *L, int ind )
 
 /**
  * @brief __eq (equality) metamethod for factions.
+ * 
  * You can use the '=' operator within Lua to compare factions with this.
+ *
+ * @usage if f == faction.get( "Dvaered" ) then
+ *
+ *    @luaparam f Faction comparing.
  *    @luaparam comp faction to compare against.
- *    @return true if both factions are the same.
- * @luafunc __eq( comp )
+ *    @luareturn true if both factions are the same.
+ * @luafunc __eq( f, comp )
  */
 static int factionL_eq( lua_State *L )
 {
@@ -242,8 +201,12 @@ static int factionL_eq( lua_State *L )
 
 /**
  * @brief Gets the faction's name.
- *    @return The name of the faction.
- * @luafunc name()
+ *
+ * @usage name = f:name()
+ *
+ *    @luaparam f The faction to get the name of.
+ *    @luareturn The name of the faction.
+ * @luafunc name( f )
  */
 static int factionL_name( lua_State *L )
 {
@@ -255,8 +218,11 @@ static int factionL_name( lua_State *L )
 
 /**
  * @brief Gets the faction's long name.
- *    @return The long name of the faction.
- * @luafunc longname()
+ *
+ * @usage longname = f:longname()
+ *    @luaparam f Faction to get long name of.
+ *    @luareturn The long name of the faction.
+ * @luafunc longname( f )
  */
 static int factionL_longname( lua_State *L )
 {
@@ -268,9 +234,13 @@ static int factionL_longname( lua_State *L )
 
 /**
  * @brief Checks to see if f is an enemy.
- *    @luaparam f Faction to check if is an enemy.
- *    @return true if they are enemies, false if they aren't.
- * @luafunc areEnemies( f )
+ *
+ * @usage if f:areEnemies( faction.get( "Dvaered" ) ) then
+ *
+ *    @luaparam f Faction to check against.
+ *    @luaparam e Faction to check if is an enemy.
+ *    @luareturn true if they are enemies, false if they aren't.
+ * @luafunc areEnemies( f, e )
  */
 static int factionL_areenemies( lua_State *L )
 {
@@ -285,9 +255,13 @@ static int factionL_areenemies( lua_State *L )
 
 /**
  * @brief Checks to see if f is an enemy.
- *    @luaparam f Faction to check if is an enemy.
- *    @return true if they are enemies, false if they aren't.
- * @luafunc areAllies( f )
+ *
+ * @usage if f:areAllies( faction.get( "Pirate" ) ) then
+ *
+ *    @luaparam f Faction to check against.
+ *    @luaparam a Faction to check if is an enemy.
+ *    @luareturn true if they are enemies, false if they aren't.
+ * @luafunc areAllies( f, a )
  */
 static int factionL_areallies( lua_State *L )
 {
@@ -302,8 +276,14 @@ static int factionL_areallies( lua_State *L )
 
 /**
  * @brief Modifies the player's standing with the faction.
+ *
+ * Will also modify standing with allies and enemies of the faction.
+ *
+ * @usage f:modPlayer( -5 ) -- Lowers faction by 5
+ *
+ *    @luaparam f Faction to modify player's standing with.
  *    @luaparam mod The modifier to modify faction by.
- * @luafunc modPlayer( mod )
+ * @luafunc modPlayer( f, mod )
  */
 static int factionL_modplayer( lua_State *L )
 {
@@ -320,7 +300,12 @@ static int factionL_modplayer( lua_State *L )
 
 /**
  * @brief Modifies the player's standing with the faction.
+ *
  * Does not affect other faction standings.
+ *
+ * @usage f:modPlayerRaw( 10 )
+ *
+ *    @luaparam f Faction to modify player's standing with.
  *    @luaparam mod The modifier to modify faction by.
  * @luafunc modPlayerRaw( mod )
  */
@@ -339,8 +324,12 @@ static int factionL_modplayerraw( lua_State *L )
 
 /**
  * @brief Gets the player's standing with the faction.
- *    @return The value of the standing and the human readable string.
- * @luafunc playerStanding()
+ *
+ * @usage if f:playerStanding() > 70 then -- Player is an ally
+ *
+ *    @luaparam f Faction to get player's standing with.
+ *    @luareturn The value of the standing and the human readable string.
+ * @luafunc playerStanding( f )
  */
 static int factionL_playerstanding( lua_State *L )
 {
@@ -355,8 +344,12 @@ static int factionL_playerstanding( lua_State *L )
 
 /**
  * @brief Gets the enemies of the faction.
- *    @return A table containing the enemies of the faction.
- * @luafunc enemies()
+ *
+ * @usage for k,v in pairs(f:enemies()) do -- Iterates over enemies
+ *
+ *    @luaparam f Faction to get enemies of.
+ *    @luareturn A table containing the enemies of the faction.
+ * @luafunc enemies( f )
  */
 static int factionL_enemies( lua_State *L )
 {
@@ -381,8 +374,12 @@ static int factionL_enemies( lua_State *L )
 
 /**
  * @brief Gets the allies of the faction.
- *    @return A table containing the allies of the faction.
- * @luafunc allies()
+ *
+ * @usage for k,v in pairs(f:allies()) do -- Iterate over faction allies
+ *
+ *    @luaparam f Faction to get allies of.
+ *    @luareturn A table containing the allies of the faction.
+ * @luafunc allies( f )
  */
 static int factionL_allies( lua_State *L )
 {
@@ -405,6 +402,3 @@ static int factionL_allies( lua_State *L )
    return 1;
 }
 
-/**
- * @}
- */
