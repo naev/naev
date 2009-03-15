@@ -79,6 +79,8 @@ void pilot_render( Pilot* pilot ); /* externed in player.c */
 /* cargo. */
 static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup );
 static void pilot_calcCargo( Pilot* pilot );
+static int pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
+      int quantity, unsigned int id );
 /* outfits. */
 static int pilot_setOutfitMounts( Pilot *p, PilotOutfit* po, int o, int q );
 static void pilot_setSecondary( Pilot* p, Outfit* o );
@@ -2006,7 +2008,7 @@ int pilot_moveCargo( Pilot* dest, Pilot* src )
          sizeof(PilotCommodity)*dest->ncommodities);
   
    /* Copy over. */
-   memmove(&dest->commodities[i], &src->commodities[0],
+   memmove( &dest->commodities[0], &src->commodities[0],
          sizeof(PilotCommodity) * src->ncommodities);
 
    /* Clean src. */
@@ -2020,6 +2022,65 @@ int pilot_moveCargo( Pilot* dest, Pilot* src )
 
 
 /**
+ * @brief Adds a cargo raw.
+ *
+ * Does not check if currently exists.
+ *
+ *    @param pilot Pilot to add cargo to.
+ *    @param cargo Cargo to add.
+ *    @param quantity Quantity to add.
+ *    @param id Mission ID to add (0 in none).
+ */
+static int pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
+      int quantity, unsigned int id )
+{
+   int i, q, f;
+
+   q = quantity;
+
+   /* If not mission cargo check to see if already exists. */
+   if (id == 0) {
+      for (i=0; i<pilot->ncommodities; i++)
+         if (!pilot->commodities[i].id &&
+               (pilot->commodities[i].commodity == cargo)) {
+
+            /* Check to see how much to add. */
+            f = pilot_cargoFree(pilot);
+            if (f < quantity)
+               q = f;
+
+            /* Tweak results. */
+            pilot->commodities[i].quantity += q;
+            pilot->cargo_free              -= q;
+            pilot->solid->mass             += q;
+            return q;
+         }
+   }
+
+   /* Create the memory space. */
+   pilot->commodities = realloc( pilot->commodities,
+         sizeof(PilotCommodity) * (pilot->ncommodities+1));
+   pilot->commodities[ pilot->ncommodities ].commodity = cargo;
+
+   /* See how much to add. */
+   f = pilot_cargoFree(pilot);
+   if (f < quantity)
+      q = f;
+
+   /* Set parameters. */
+   pilot->commodities[ pilot->ncommodities ].id       = id;
+   pilot->commodities[ pilot->ncommodities ].quantity = q;
+
+   /* Tweak pilot. */
+   pilot->cargo_free    -= q;
+   pilot->solid->mass   += q;
+   pilot->ncommodities++;
+
+   return q;
+}
+
+
+/**
  * @brief Tries to add quantity of cargo to pilot.
  *
  *    @param pilot Pilot to add cargo to.
@@ -2029,33 +2090,7 @@ int pilot_moveCargo( Pilot* dest, Pilot* src )
  */
 int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )
 {
-   int i, q;
-
-   /* check if pilot has it first */
-   q = quantity;
-   for (i=0; i<pilot->ncommodities; i++)
-      if (!pilot->commodities[i].id && (pilot->commodities[i].commodity == cargo)) {
-         if (pilot_cargoFree(pilot) < quantity)
-            q = pilot_cargoFree(pilot);
-         pilot->commodities[i].quantity += q;
-         pilot->cargo_free -= q;
-         pilot->solid->mass += q;
-         return q;
-      }
-
-   /* must add another one */
-   pilot->commodities = realloc( pilot->commodities,
-         sizeof(PilotCommodity) * (pilot->ncommodities+1));
-   pilot->commodities[ pilot->ncommodities ].commodity = cargo;
-   if (pilot_cargoFree(pilot) < quantity)
-      q = pilot_cargoFree(pilot);
-   pilot->commodities[ pilot->ncommodities ].id = 0;
-   pilot->commodities[ pilot->ncommodities ].quantity = q;
-   pilot->cargo_free -= q;
-   pilot->solid->mass += q;
-   pilot->ncommodities++;
-
-   return q;
+   return pilot_addCargoRaw( pilot, cargo, quantity, 0 );
 }
 
 
@@ -2120,19 +2155,8 @@ unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity
       mission_cargo_id = max_id;
    id = ++mission_cargo_id;
 
-   /* Grow commodities. */
-   pilot->commodities = realloc( pilot->commodities,
-         sizeof(PilotCommodity) * (pilot->ncommodities+1));
-   pilot->commodities[ pilot->ncommodities ].commodity = cargo;
-   /* Add commodity. */
-   if (pilot_cargoFree(pilot) < quantity)
-      q = pilot_cargoFree(pilot);
-   pilot->commodities[ pilot->ncommodities ].id = id;
-   pilot->commodities[ pilot->ncommodities ].quantity = q;
-   /* Postfixing. */
-   pilot->cargo_free -= q;
-   pilot->solid->mass += q;
-   pilot->ncommodities++;
+   /* Add the cargo. */
+   pilot_addCargoRaw( pilot, cargo, quantity, id );
 
    return id;
 }
@@ -2486,8 +2510,8 @@ Pilot* pilot_copy( Pilot* src )
 
    /* Copy commodities. */
    for (i=0; i<src->ncommodities; i++)
-      pilot_addCargo( dest, src->commodities[i].commodity,
-            src->commodities[i].quantity );
+      pilot_addCargoRaw( dest, src->commodities[i].commodity,
+            src->commodities[i].quantity, src->commodities[i].id );
 
    return dest;
 }
