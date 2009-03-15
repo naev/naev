@@ -40,12 +40,10 @@ static const luaL_reg music_methods[] = {
 /**
  * @brief Music Lua module.
  *
- * You call the module with:
+ * Typical usage would be something like:
  * @code
- * ret = music.function( parameters )
- * -- Where function is the function you want to call.
- * -- parameters are the parameters of the function.
- * -- ret are the return parameters (can be more then one.
+ * music.load( "intro" ) -- Load the song
+ * music.play() -- Play it
  * @endcode
  *
  * @luamod music

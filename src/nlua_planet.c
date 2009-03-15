@@ -142,9 +142,7 @@ int lua_isplanet( lua_State *L, int ind )
 }
 
 /**
- * @brief planet, system getPlanet( [param] )
- *
- * Gets a planet.
+ * @brief Gets a planet.
  *
  * Possible values of param:
  *    - nil : Gets the current landed planet or nil if there is none.
@@ -162,7 +160,7 @@ int lua_isplanet( lua_State *L, int ind )
  *
  *    @luaparam param See description.
  *    @luareturn Returns the planet and the system it belongs to.
- * @luafunc getPlanet( param )
+ * @luafunc get( param )
  */
 static int planetL_get( lua_State *L )
 {
