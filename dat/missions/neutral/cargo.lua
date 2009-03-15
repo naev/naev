@@ -45,7 +45,7 @@ end
 -- Create the mission
 function create()
 
-   landed = space.getPlanet() -- Get landed planet
+   landed, landed_sys = space.getPlanet() -- Get landed planet
 
    -- Only 50% chance of appearing on Dvaered systems
    dv = faction.get("Dvaered")
@@ -58,7 +58,7 @@ function create()
    repeat
       planet,system = space.getPlanet( misn.factions() )
       i = i + 1
-   until planet ~= landed or i > 10
+   until system ~= landed_sys or i > 10
    -- infinite loop protection
    if i > 10 then
       misn.finish(false)

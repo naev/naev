@@ -40,11 +40,11 @@ function create()
 
    -- target destination
    local i = 0
-   local landed = space.getPlanet()
+   local landed, landed_sys = space.getPlanet()
    repeat
       planet,system = space.getPlanet( misn.factions() )
       i = i + 1
-   until planet ~= landed or i > 10
+   until system ~= landed_sys or i > 10
    -- infinite loop protection
    if i > 10 then
       misn.finish(false)
