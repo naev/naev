@@ -157,7 +157,6 @@ int lua_isplanet( lua_State *L, int ind )
  * @usage p,s = planet.get( faction.get( "Empire" ) ) -- Gets random Empire planet
  * @usage p,s = planet.get(true) -- Gets completely random planet
  * @usage p,s = planet.get( { faction.get("Empire"), faction.get("Dvaered") } ) -- Random planet belonging to Empire or Dvaered
- *
  *    @luaparam param See description.
  *    @luareturn Returns the planet and the system it belongs to.
  * @luafunc get( param )
@@ -253,7 +252,6 @@ static int planetL_get( lua_State *L )
  *
  * @usage if p.__eq( planet.get( "Anecu" ) ) then -- Do something
  * @usage if p == planet.get( "Anecu" ) then -- Do something
- *
  *    @luaparam p Planet comparing.
  *    @luaparam comp planet to compare against.
  *    @luareturn true if both planets are the same.
@@ -275,7 +273,6 @@ static int planetL_eq( lua_State *L )
  * @brief Gets the planet's name.
  *
  * @usage name = p:name()
- *
  *    @luaparam p Planet to get the name of.
  *    @luareturn The name of the planet.
  * @luafunc name( p )
@@ -292,7 +289,6 @@ static int planetL_name( lua_State *L )
  * @brief Gets the planet's faction.
  *
  * @usage f = p:faction()
- *
  *    @luaparam p Planet to get the faction of.
  *    @luareturn The planet's faction.
  * @luafunc faction( p )
@@ -316,7 +312,6 @@ static int planetL_faction( lua_State *L )
  * for stations.
  *
  * @usage c = p:class()
- *
  *    @luaparam p Planet to get the class of.
  *    @luareturn The class of the planet in a one char identifier.
  * @luafunc class( p )
@@ -339,7 +334,6 @@ static int planetL_class(lua_State *L )
  * this basically checks to see if the planet has services like refueling...
  *
  * @usage if p:services() > 0 then -- Planet has services
- *
  *    @luaparam p Planet to get the services of.
  *    @luareturn The services the planet has it stored bitwise.
  * @luafunc services( p )
@@ -356,7 +350,6 @@ static int planetL_services( lua_State *L )
  * @brief Gets the position of the planet in the system.
  *
  * @usage v = p:pos()
- *
  *    @luaparam p Planet to get the position of.
  *    @luareturn The position of the planet in the system as a vec2.
  * @luafunc pos( p )

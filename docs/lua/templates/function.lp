@@ -28,12 +28,12 @@ end
 <%if type(func.usage) == "string" then%>
 <br />
 <h3>Usage:</h3>
-<%=func.usage%>
+<code><%=func.usage%></code>
 <%elseif type(func.usage) == "table" then%>
 <h3>Usage</h3>
 <ul>
 	<%for _, usage in ipairs(func.usage) do%>
-	<li><tt><%= usage %></tt>
+	<li><code><%= usage %></code>
 	<%end%>
 </ul>
 <%end%>

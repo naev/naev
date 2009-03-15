@@ -59,19 +59,17 @@ int lua_loadDiff( lua_State *L, int readonly )
 
 
 /**
- * @defgroup DIFF Universe Diff Lua Bindings
- *
  * @brief Lua bindings to apply/remove Universe Diffs.
  *
- * @luamod diff
+ * Universe Diffs are patches you can apply to the universe to do permanent
+ *  changes.  They are defined in dat/unidiff.xml.
  *
- * Functions should be called like:
- *
+ * Typical usage would be:
  * @code
- * diff.function( parameters )
- * @endcode
+ * diff.apply( "collective_dead" )
+ * @encode
  *
- * @{
+ * @luamod diff
  */
 /**
  * @brief Applies a diff by name.
@@ -122,6 +120,3 @@ static int diff_isappliedL( lua_State *L )
    lua_pushboolean(L,diff_isApplied(name));
    return 1;
 }
-/**
- * @}
- */

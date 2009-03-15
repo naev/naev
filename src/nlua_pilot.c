@@ -91,8 +91,6 @@ static const luaL_reg pilotL_methods[] = {
 
 
 /**
- * @fn int lua_loadPilot( lua_State *L, int readonly )
- *
  * @brief Loads the space library.
  *
  *    @param L State to load space library into.
@@ -114,8 +112,6 @@ int lua_loadPilot( lua_State *L, int readonly )
 
 
 /**
- * @fn static int pilotL_createmetatable( lua_State *L )
- *
  * @brief Registers the pilot metatable.
  *
  *    @param L Lua state to register metatable in.
@@ -140,29 +136,21 @@ static int pilotL_createmetatable( lua_State *L )
 
 
 /**
- * @defgroup PILOT Pilot Lua bindings.
- *
  * @brief Lua bindings to interact with pilots.
- * @luamod pilot
- * Functions should be called like:
  *
+ * This will allow you to create and manipulate pilots in-game.
+ *
+ * An example would be:
  * @code
- * pilot.function( parameters )
+ * p = pilot.add( "Sml Trader Convoy" ) -- Create a trader convoy
+ * for k,v in pairs(p) do
+ *    v:setFriendly() -- Make it friendly
+ * end
  * @endcode
+ *
+ * @luamod pilot
  */
 /**
- * @defgroup META_PILOT Pilot Metatable
- *
- * @brief Reperesents a pilot in Lua.
- *
- * To call members of the metatable always use:
- * @code 
- * pilot:function( param )
- * @endcode
- */
-/**
- * @fn LuaPilot* lua_topilot( lua_State *L, int ind )
- *
  * @brief Gets pilot at index.
  *
  *    @param L Lua state to get pilot from.
@@ -178,8 +166,6 @@ LuaPilot* lua_topilot( lua_State *L, int ind )
    return NULL;
 }
 /**
- * @fn LuaPilot* lua_pushpilot( lua_State *L, LuaPilot planet )
- *
  * @brief Pushes a pilot on the stack.
  *
  *    @param L Lua state to push pilot into.
@@ -196,8 +182,6 @@ LuaPilot* lua_pushpilot( lua_State *L, LuaPilot pilot )
    return p;
 }
 /**
- * @fn int lua_ispilot( lua_State *L, int ind )
- *
  * @brief Checks to see if ind is a pilot.
  *
  *    @param L Lua state to check.
@@ -221,10 +205,11 @@ int lua_ispilot( lua_State *L, int ind )
 }
 
 /**
- * @ingroup PILOT
- *
  * @brief Gets the player's pilot.
- *    @return Pilot pointing to the player.
+ *
+ * @usage player = pilot.player()
+ *
+ *    @luareturn Pilot pointing to the player.
  * @luafunc player()
  */
 static int pilot_getPlayer( lua_State *L )
@@ -242,13 +227,24 @@ static int pilot_getPlayer( lua_State *L )
 }
 
 /**
- * @ingroup PILOT
- *
  * @brief Adds a fleet to the system.
+ *
+ * You can then iterate over the pilots to change parameters like so:
+ * @code
+ * p = pilot.add( "Sml Trader Convoy" )
+ * for k,v in pairs(p) do
+ *    v:setHostile()
+ * end
+ * @endcode
+ *
+ * @usage p = pilot.add( "Pirate Hyena" )
+ * @usage p = pilot.add( "Trader Llama", "dummy" )
+ * @usage p = pilot.add( "Sml Trader Convoy", "def", vec2.new( 1000, 200 ) )
+ *
  *    @luaparam fleetname Name of the fleet to add.
  *    @luaparam ai If set will override the standard fleet AI.  "def" means use default.
  *    @luaparam pos Position to create pilots around instead of choosing randomly.
- *    @return Table populated with all the pilots created.
+ *    @luareturn Table populated with all the pilots created.
  * @luafunc add( fleetname, ai, pos )
  */
 static int pilot_addFleet( lua_State *L )
@@ -346,9 +342,10 @@ static int pilot_addFleet( lua_State *L )
    return 1;
 }
 /**
- * @ingroup PILOT
- *
  * @brief Clears the current system of pilots.  Used for epic battles and such.
+ *
+ * @usage pilot.clear()
+ * 
  * @luafunc clear()
  */
 static int pilot_clear( lua_State *L )
@@ -358,13 +355,15 @@ static int pilot_clear( lua_State *L )
    return 0;
 }
 /**
- * @ingroup PILOT
+ * @brief Disables or enables pilot spawning in the current system.
  *
- * @brief Disables or enables pilot spawning in the current system.  If player
- *  jumps the spawn is enabled again automatically.
+ * If player jumps the spawn is enabled again automatically.
+ *
+ * @usage pilot.togglespawn( false )
+ *
  *    @luaparam enable true enables spawn, false disables it.
- *    @return The current spawn state.
- * @brief togglespawn( enable )
+ *    @luareturn The current spawn state.
+ * @luafunc togglespawn( enable )
  */
 static int pilot_toggleSpawn( lua_State *L )
 {
@@ -379,7 +378,14 @@ static int pilot_toggleSpawn( lua_State *L )
    return 1;
 }
 /**
- * @ingroup PILOT
+ * @brief Gets the pilots available in the system by a certain criteria.
+ *
+ * @usage p = pilot.get() -- Gets all the pilots
+ * @usage p = pilot.get( { faction.get("Empire") } ) -- Only gets empire pilots.
+ *
+ *    @luaparam f If f is a table of factions, it will only get pilots matching those factions.  Otherwise it gets all the pilots.
+ *    @luareturn A table containing the pilots.
+ * @luafunc pilot.get( f )
  */
 static int pilot_getPilots( lua_State *L )
 {
@@ -422,19 +428,33 @@ static int pilot_getPilots( lua_State *L )
       /* clean up. */
       free(factions);
    }
-   else
-      NLUA_INVALID_PARAMETER();
+   else {
+      /* Now put all the matching pilots in a table. */
+      lua_newtable(L);
+      k = 1;
+      for (i=0; i<pilot_nstack; i++) {
+         if (!pilot_isDisabled(pilot_stack[i])) {
+            lua_pushnumber(L, k++); /* key */
+            p.pilot = pilot_stack[i]->id;
+            lua_pushpilot(L, p); /* value */
+            lua_rawset(L,-3); /* table[key] = value */
+            break; /* Continue to next pilot. */
+         }
+      }
+   }
 
    return 1;
 }
 
 /**
- * @ingroup META_PILOT
- *
  * @brief Checks to see if pilot and p are the same.
- *    @luaparam p Pilot to compare against.
- *    @return true if they are the same.
- * @luafunc __eq( pilot )
+ *
+ * @usage if p == p2 then -- Pilot 'p' and 'p2' match.
+ *
+ *    @luaparam p Pilot to compare.
+ *    @luaparam comp Pilot to compare against.
+ *    @luareturn true if they are the same.
+ * @luafunc __eq( p, comp )
  */
 static int pilotL_eq( lua_State *L )
 {
@@ -453,11 +473,13 @@ static int pilotL_eq( lua_State *L )
 }
 
 /**
- * @ingroup META_PILOT
- *
  * @brief Gets the pilot's current name.
- *    @return The current name of the pilot.
- * @luafunc name()
+ *
+ * @usage name = p:name()
+ *
+ *    @luaparam p Pilot to get the name of.
+ *    @luareturn The current name of the pilot.
+ * @luafunc name( p )
  */
 static int pilotL_name( lua_State *L )
 {
@@ -478,11 +500,13 @@ static int pilotL_name( lua_State *L )
 }
 
 /**
- * @ingroup META_PILOT
- *
  * @brief Checks to see if pilot is still alive.
- *    @return true if pilot is still alive.
- * @luafunc alive()
+ *
+ * @usage if p:alive() then -- Pilot is still alive
+ *
+ *    @luaparam p Pilot to check to see if is still alive.
+ *    @luareturn true if pilot is still alive.
+ * @luafunc alive( p )
  */
 static int pilotL_alive( lua_State *L )
 {
@@ -500,11 +524,13 @@ static int pilotL_alive( lua_State *L )
 }
 
 /**
- * @ingroup META_PILOT
- *
  * @brief Changes the pilot's name.
- *    @param name Name to change to.
- * @luafunc rename( name )
+ *
+ * @usage p:rename( "Black Beard" )
+ *
+ *    @luaparam p Pilot to change name of.
+ *    @luaparam name Name to change to.
+ * @luafunc rename( p, name )
  */
 static int pilotL_rename( lua_State *L )
 {
@@ -532,11 +558,13 @@ static int pilotL_rename( lua_State *L )
 }
 
 /**
- * @ingroup META_PILOT
- *
  * @brief Gets the pilot's position.
- *    @return The pilot's current position.
- * @luafunc pos()
+ *
+ * @usage v = p:pos()
+ *
+ *    @luaparam p Pilot to get the position of.
+ *    @luareturn The pilot's current position as a vec2.
+ * @luafunc pos( p )
  */
 static int pilotL_position( lua_State *L )
 {
@@ -559,12 +587,13 @@ static int pilotL_position( lua_State *L )
 }
 
 /**
- * @fn static int pilotL_velocity( lua_State *L )
- * @ingroup META_PILOT
- *
  * @brief Gets the pilot's velocity.
- *    @return The pilot's current velocity.
- * @luafunc vel()
+ *
+ * @usage vel = p:vel()
+ *
+ *    @luaparam p Pilot to get the velocity of.
+ *    @luareturn The pilot's current velocity as a vec2.
+ * @luafunc vel( p )
  */
 static int pilotL_velocity( lua_State *L )
 {
@@ -587,11 +616,13 @@ static int pilotL_velocity( lua_State *L )
 }
 
 /**
- * @ingroup META_PILOT
- *
  * @brief Sets the pilot's position.
+ *
+ * @usage p:warp( vec2.new( 300, 200 ) )
+ *
+ *    @luaparam p Pilot to set the position of.
  *    @luaparam pos Position to set.
- * @luafunc warp( pos )
+ * @luafunc warp( p, pos )
  */
 static int pilotL_warp( lua_State *L )
 {
@@ -617,11 +648,13 @@ static int pilotL_warp( lua_State *L )
 }
 
 /**
- * @ingroup META_PILOT
- *
  * @brief Makes the pilot broadcast a message.
+ *
+ * @usage p:broadcast( "Mayday! Requesting assistance!" )
+ *
+ *    @luaparam p Pilot to broadcast the message.
  *    @luaparam msg Message to broadcast.
- * @luafunc broadcast( msg )
+ * @luafunc broadcast( p, msg )
  */
 static int pilotL_broadcast( lua_State *L )
 {
@@ -647,9 +680,12 @@ static int pilotL_broadcast( lua_State *L )
 }
 
 /**
- * @ingroup META_PILOT
- *
  * @brief Sets the pilot's faction.
+ *
+ * @usage p:setFaction( "Empire" )
+ * @usage p:setFaction( faction.get( "Dvaered" ) )
+ *
+ *    @luaparam p Pilot to change faction of.
  *    @luaparam faction Faction to set by name or faction.
  * @luafunc setFaction( faction )
  */
@@ -686,10 +722,12 @@ static int pilotL_setFaction( lua_State *L )
 
 
 /**
- * @ingroup META_PILOT
- *
  * @brief Sets the pilot as hostile to player.
- * @luafunc setHostile()
+ *
+ * @usage p:setHostile()
+ *
+ *    @luaparam p Pilot to set as hostile.
+ * @luafunc setHostile( p )
  */
 static int pilotL_setHostile( lua_State *L )
 {
@@ -709,10 +747,12 @@ static int pilotL_setHostile( lua_State *L )
 
 
 /**
- * @ingroup META_PILOT
- *
  * @brief Sets the pilot as friendly to player.
- * @luafunc setHostile()
+ *
+ * @usage p:setFriendly()
+ *
+ *    @luaparam p Pilot to set as friendly.
+ * @luafunc setFriendly( p )
  */
 static int pilotL_setFriendly( lua_State *L )
 {
@@ -732,10 +772,12 @@ static int pilotL_setFriendly( lua_State *L )
 
 
 /**
- * @ingroup META_PILOT
- *
  * @brief Disables a pilot.
- * @luafunc disable()
+ *
+ * @usage p:disable()
+ *
+ *    @luaparam p Pilot to disable.
+ * @luafunc disable( p )
  */
 static int pilotL_disable( lua_State *L )
 {
@@ -757,13 +799,15 @@ static int pilotL_disable( lua_State *L )
 
 
 /**
- * @ingroup META_PILOT
- *
  * @brief Adds an outfit to a pilot.
+ *
+ * @usage added = p:addOutfit( "Laser Cannon", 5 ) -- Adds 5 laser cannons to p
+ *
+ *    @luaparam p Pilot to add outfit to.
  *    @luaparam outfit Name of the outfit to add.
  *    @luaparam q Amount to add.
- * @luareturn The amount actually added.
- * @luafunc addOutfit( outfit, q )
+ *    @luareturn The amount actually added.
+ * @luafunc addOutfit( p, outfit, q )
  */
 static int pilotL_addOutfit( lua_State *L )
 {
@@ -795,13 +839,15 @@ static int pilotL_addOutfit( lua_State *L )
 
 
 /**
- * @ingroup META_PILOT
- *
  * @brief Removes an outfit from a pilot.
+ *
+ * @usage p:rmOutfit( "Neutron Disruptor", 1 ) -- Removes a neutron disruptor.
+ *
+ *    @luparam p Pilot to remove outfit from.
  *    @luaparam outfit Name of the outfit to remove.
  *    @luaparam q Amount to remove.
- * @luareturn The amount actually removed.
- * @luafunc rmOutfit( outfit, q )
+ *    @luareturn The amount actually removed.
+ * @luafunc rmOutfit( p, outfit, q )
  */
 static int pilotL_rmOutfit( lua_State *L )
 {

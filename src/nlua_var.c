@@ -228,21 +228,23 @@ static int var_add( misn_var *new_var )
 
 
 /**
- * @defgroup VAR Mission Variable Lua bindings
- *
  * @brief Mission variable Lua bindings.
  *
  * Mission variables are similar to Lua variables, but are conserved for each
  *  player across all the missions.  They are good for storing campaign or
  *  other global values.
  *
- * @luamod var
- *
- * Functions should be called like:
- *
+ * Typical usage would be:
  * @code
- * var.function( parameters )
+ * v = var.peek( "es_misn" ) -- Get the value
+ * if v == nil then -- Doesn't exist, so create
+ *    var.push( "es_misn", 1 )
+ * else
+ *    var.push( "es_misn", v+1 ) -- Increment value
+ * end
  * @endcode
+ *
+ * @luamod var
  */
 /**
  * @brief Checks to see if a mission var exists.
@@ -260,8 +262,6 @@ int var_checkflag( char* str )
    return 0;
 }
 /**
- * @ingroup VAR
- *
  * @brief Gets the mission variable value of a certain name.
  *
  *    @luaparam name Name of the mission variable to get.
@@ -300,8 +300,6 @@ static int var_peek( lua_State *L )
    return 0;
 }
 /**
- * @ingroup VAR
- *
  * @brief Pops a mission variable off the stack, destroying it.
  *
  *    @luaparam name Name of the mission variable to pop.
@@ -331,8 +329,6 @@ static int var_pop( lua_State *L )
    return 0;
 }
 /**
- * @ingroup VAR
- *
  * @brief Creates a new mission variable.
  *
  *    @luaparam name Name to use for the new mission variable.
