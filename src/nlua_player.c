@@ -88,6 +88,7 @@ int lua_loadPlayer( lua_State *L, int readonly )
  * shipname = player.ship()
  * freecargo = player.freeCargo()
  * rating = player.getRating()
+ * @endcode
  * @luamod player
  */
 /**

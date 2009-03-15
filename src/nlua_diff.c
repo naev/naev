@@ -67,7 +67,7 @@ int lua_loadDiff( lua_State *L, int readonly )
  * Typical usage would be:
  * @code
  * diff.apply( "collective_dead" )
- * @encode
+ * @endcode
  *
  * @luamod diff
  */

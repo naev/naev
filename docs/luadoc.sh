@@ -31,7 +31,6 @@ sed -n '
 #custom tags
    s|^ *\* *@code|-- <pre>|p
    s|^ *\* *@endcode|-- </pre>|p
-   s|^ *\* *$|-- <br />|p
 #remove other tags:
 	\|^ *\* *@.*|d
 #insert newline between comments, replace */ by \n
@@ -46,5 +45,5 @@ done
 (
    cd lua
    luadoc --nofiles --taglet "naev-taglet" -t templates/ *.luadoc
-	#rm *.luadoc
+	rm *.luadoc
 )
