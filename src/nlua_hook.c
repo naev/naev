@@ -69,17 +69,21 @@ int lua_loadHook( lua_State *L )
 
 
 /**
- * @defgroup HOOK Hook Lua bindings
- *
  * @brief Lua bindings to manipulate hooks.
  *
- * @luamod hook
+ * Hooks allow you to trigger functions to certain actions like when the player
+ * jumps or a pilot dies.
  *
- * Functions should be called like:
- *
+ * Example usage would be:
  * @code
- * hook.function( parameters )
+ * function penter ()
+ *    -- Function to run when player enters a system
+ * end
+ *
+ * hookid = hook.enter( "penter" )
  * @endcode
+ *
+ * @luamod hook
  */
 /**
  * @brief Creates a mission hook to a certain stack.
@@ -114,8 +118,6 @@ static unsigned int hook_generic( lua_State *L, char* stack, int pos )
    return hook_add( cur_mission->id, func, stack );
 }
 /**
- * @ingroup HOOK
- *
  * @brief Hooks the function to the player landing.
  *
  *    @luaparam funcname Name of function to run when hook is triggered.
@@ -128,8 +130,6 @@ static int hook_land( lua_State *L )
    return 0;
 }
 /**
- * @ingroup HOOK
- *
  * @brief Hooks the function to the player taking off.
  *
  *    @luaparam funcname Name of function to run when hook is triggered.
@@ -142,8 +142,6 @@ static int hook_takeoff( lua_State *L )
    return 0;
 }
 /**
- * @ingroup HOOK
- *
  * @brief Hooks the function to a time change.
  *
  *    @luaparam funcname Name of function to run when hook is triggered.
@@ -156,8 +154,6 @@ static int hook_time( lua_State *L )
    return 0;
 }
 /**
- * @ingroup HOOK
- *
  * @brief Hooks the function to the player entering a system (triggers when taking
  *  off too).
  *
@@ -171,8 +167,6 @@ static int hook_enter( lua_State *L )
    return 0;
 }
 /**
- * @ingroup HOOK
- *
  * @brief Hooks the function to a specific pilot.
  *
  * You can hook to different actions.  Curently hook system only supports:
