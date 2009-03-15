@@ -109,8 +109,8 @@ end
 
 -- Landing songs
 function choose_land ()
-   planet = space.getPlanet()
-   class = planet:class()
+   pnt = planet.get()
+   class = pnt:class()
 
    if class == "M" then
       mus = { "agriculture" }
@@ -119,7 +119,7 @@ function choose_land ()
    elseif class == "P" then
       mus = { "snow" }
    else
-      if planet:services() > 0 then
+      if pnt:services() > 0 then
          mus = { "cosmostation", "upbeat" }
       else
          mus = { "agriculture" }
@@ -163,7 +163,7 @@ function choose_ambient ()
    end
 
    -- Get information about the current system
-   sys = space.getSystem()
+   sys = system.get()
    factions = sys:faction()
    nebu_dens, nebu_vol = sys:nebulae()
 
@@ -244,7 +244,7 @@ function choose_combat ()
    end
 
    -- Get some data about the system
-   sys = space.getSystem()
+   sys = system.get()
    nebu_dens, nebu_vol = sys:nebulae()
 
    nebu = nebu_dens > 0

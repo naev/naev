@@ -12,7 +12,7 @@
 #include "space.h"
 
 
-#define SYSTEM_METATABLE   "System" /**< System metatable identifier. */
+#define SYSTEM_METATABLE   "system" /**< System metatable identifier. */
 
 
 /**

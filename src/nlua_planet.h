@@ -12,7 +12,7 @@
 #include "space.h"
 
 
-#define PLANET_METATABLE   "Planet" /**< Planet metatable identifier. */
+#define PLANET_METATABLE   "planet" /**< Planet metatable identifier. */
 
 
 /**
