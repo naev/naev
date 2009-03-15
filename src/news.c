@@ -347,18 +347,20 @@ const news_t *news_generate( int *ngen, int n )
       (*ngen)  = 0;
 
    /* Run the function. */
-   lua_getglobal(L, "news");
-   lua_pushnumber(L, n);
+   lua_getglobal(L, "news"); /* f */
+   lua_pushnumber(L, n); /* f, n */
    if (lua_pcall(L, 1, 2, 0)) { /* error has occured */
       WARN("News: '%s' : %s", "news", lua_tostring(L,-1));
-      lua_pop(L,1);
+      lua_pop(L,2);
       return NULL;
    }
+   /* str, t */
+
 
    /* Check to see if it's valid. */
    if (!lua_isstring(L, -2) || !lua_istable(L, -1)) { 
       WARN("News generated invalid output!");
-      lua_pop(L,1);
+      lua_pop(L,2);
       return NULL;
    }
 
@@ -368,22 +370,27 @@ const news_t *news_generate( int *ngen, int n )
 
    /* Pull it out of the table. */
    i = 1;
-   lua_pushnil(L);
+   lua_pushnil(L); /* str, table, nil */
    while ((lua_next(L,-2) != 0) && (i<n)) {
       /* Pull out of the internal table the data. */
-      lua_getfield(L, -1, "title");
+      lua_getfield(L, -1, "title"); /* str, table, key, val, str */
       news_buf[i].title = strdup( luaL_checkstring(L, -1) );
-      lua_pop(L,1); /* pop the title string. */
-      lua_getfield(L, -1, "desc");
+      lua_pop(L,1); /* str, table, key, val */
+      lua_getfield(L, -1, "desc"); /* str, table, key, val, str */
       news_buf[i].desc = strdup( luaL_checkstring(L, -1) );
-      lua_pop(L,1); /* pop the desc string. */
+      lua_pop(L,1); /* str, table, key, val */
       /* Go to next element. */
-      lua_pop(L,1); /* pop the table. */
+      lua_pop(L,1); /* str, table, key */
       i++;
    }
 
-   /* Clen up results. */
-   lua_pop(L,2);
+   if (i>=n) { /* Need to pop two extras. */
+      lua_pop(L,2);
+   }
+   /* str, table */
+
+   /* Clean up results. */
+   lua_pop(L,2); /* */
 
    /* Save news found. */
    news_nbuf   = i;
