@@ -44,8 +44,7 @@ sed -n '
 done
 #run luadoc, put html files into lua dir
 (
-	cd lua
-   LUAPATH=".." luadoc --nofiles --taglet "naev-taglet" *.luadoc
-   #lua /home/bobbens/src/luadoc-3.0.1/src/luadoc.lua.in --nofiles *.luadoc
+   cd lua
+   luadoc --nofiles --taglet "naev-taglet" -t templates/ *.luadoc
 	#rm *.luadoc
 )

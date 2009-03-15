@@ -10,6 +10,7 @@ local util = require "luadoc.util"
 local tags = require "luadoc.taglet.standard.tags"
 local string = require "string"
 local table = require "table"
+local print = print
 
 module 'naev-taglet'
 
@@ -368,6 +369,7 @@ function parse_file (filepath, doc)
 		-- make functions table
 		doc.modules[modulename].functions = {}
 		for f in class_iterator(blocks, "function")() do
+         f.name = modulename .. "." .. f.name
 			table.insert(doc.modules[modulename].functions, f.name)
 			doc.modules[modulename].functions[f.name] = f
 		end
