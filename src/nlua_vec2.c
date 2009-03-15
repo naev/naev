@@ -56,20 +56,6 @@ static const luaL_reg vector_methods[] = {
  */
 int lua_loadVector( lua_State *L )
 {
-   vectorL_createmetatable( L );
-
-   return 0;
-}
-
-
-/**
- * @brief Registers the vector metatable.
- *
- *    @param L Lua state to register metatable in.
- *    @return 0 on success.
- */
-int vectorL_createmetatable( lua_State *L )
-{
    /* Create the metatable */
    luaL_newmetatable(L, VECTOR_METATABLE);
 
@@ -83,7 +69,7 @@ int vectorL_createmetatable( lua_State *L )
    /* Clean up. */
    lua_pop(L,1);
 
-   return 0; /* No error */
+   return 0;
 }
 
 

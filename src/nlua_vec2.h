@@ -11,7 +11,7 @@
 #include "physics.h"
 
 
-#define VECTOR_METATABLE   "Vec2"   /**< Vector metatable identifier. */
+#define VECTOR_METATABLE   "vec2"   /**< Vector metatable identifier. */
 
 
 /**
@@ -25,7 +25,6 @@ typedef struct LuaVector_s {
 /*
  * Vector library.
  */
-int vectorL_createmetatable( lua_State *L );
 int lua_loadVector( lua_State *L );
 
 /*
