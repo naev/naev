@@ -437,12 +437,12 @@ static void menu_info_close( unsigned int wid, char* str )
 static void info_outfits_menu( unsigned int parent, char* str )
 {
    (void) str;
-   (void) parent;
    char *buf;
    unsigned int wid;
 
    /* Create window */
    wid = window_create( "Outfits", -1, -1, OUTFITS_WIDTH, OUTFITS_HEIGHT );
+   window_setParent( wid, parent );
 
    /* Text */
    window_addText( wid, 20, -40, 100, OUTFITS_HEIGHT-40,
@@ -470,7 +470,6 @@ static void info_outfits_menu( unsigned int parent, char* str )
 static void info_licenses_menu( unsigned int parent, char* str )
 {
    (void) str;
-   (void) parent;
    unsigned int wid;
    char **licenses;
    int nlicenses;
@@ -479,6 +478,7 @@ static void info_licenses_menu( unsigned int parent, char* str )
 
    /* Create window */
    wid = window_create( "Licenses", -1, -1, LICENSES_WIDTH, LICENSES_HEIGHT );
+   window_setParent( wid, parent );
 
    /* List. */
    buf = player_getLicenses( &nlicenses );
@@ -503,7 +503,6 @@ static void info_licenses_menu( unsigned int parent, char* str )
 static void info_cargo_menu( unsigned int parent, char* str )
 {
    (void) str;
-   (void) parent;
    unsigned int wid;
    char **buf;
    int nbuf;
@@ -511,6 +510,7 @@ static void info_cargo_menu( unsigned int parent, char* str )
 
    /* Create the window */
    wid = window_create( "Cargo", -1, -1, CARGO_WIDTH, CARGO_HEIGHT );
+   window_setParent( wid, parent );
 
    /* Buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -598,11 +598,11 @@ static void cargo_jettison( unsigned int wid, char* str )
 static void info_missions_menu( unsigned int parent, char* str )
 {
    (void) str;
-   (void) parent;
    unsigned int wid;
 
    /* create the window */
    wid = window_create( "Missions", -1, -1, MISSIONS_WIDTH, MISSIONS_HEIGHT );
+   window_setParent( wid, parent );
 
    /* buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,

@@ -292,6 +292,8 @@ unsigned int window_create( const char* name,
    /* Sane defaults. */
    wdw->hidden       = 0;
    wdw->focus        = -1;
+   wdw->parent       = 0;
+   wdw->close_fptr   = NULL;
    wdw->accept_fptr  = NULL;
    wdw->cancel_fptr  = NULL;
 
@@ -327,6 +329,51 @@ unsigned int window_create( const char* name,
    toolkit_clearKey();
 
    return wid;
+}
+
+
+/**
+ * @brief Sets a window as a window's parent.
+ *
+ * When a window's parent closes, it closes the window also.
+ *
+ *    @param wid Window to set as child.
+ *    @param parent Window to set as parent.
+ */
+void window_setParent( unsigned int wid, unsigned int parent )
+{
+   Window *wdw;
+
+   /* Get the window. */
+   wdw = window_wget( wid );
+   if (wdw == NULL) 
+      return;
+
+   /* Set the parent. */
+   wdw->parent = parent;
+}
+
+
+/**
+ * @brief Sets the default close function of the window.
+ *
+ * This function is called when the window is closed.
+ *
+ *    @param wid Window to set close function of.
+ *    @param Function to tirgger when window is closed, parameter is window id
+ *           and name.
+ */
+void window_onClose( unsigned int wid, void (*fptr)(unsigned int,char*) )
+{
+   Window *wdw;
+
+   /* Get the window. */
+   wdw = window_wget( wid );
+   if (wdw == NULL) 
+      return;
+
+   /* Set the close function. */
+   wdw->close_fptr = fptr;
 }
 
 
@@ -404,6 +451,7 @@ void widget_cleanup( Widget *widget )
 void window_close( unsigned int wid, char *str )
 {
    (void) str;
+
    window_destroy( wid );
 }
 
@@ -417,10 +465,25 @@ void window_destroy( const unsigned int wid )
 {
    int i,j;
 
-   /* destroy the window */
+   /* Destroy children first. */
+   for (i=0; i<nwindows; i++) {
+      if (windows[i].parent == wid) {
+         window_destroy( windows[i].id );
+         i = -1; /* Ugly hack in case a window gets destroyed midway. */
+      }
+   }
+
+   /* Destroy the window */
    for (i=0; i<nwindows; i++)
       if (windows[i].id == wid) {
-         if (windows[i].name) free(windows[i].name);
+
+         /* Run the close function first. */
+         if (windows[i].close_fptr != NULL)
+            (*windows[i].close_fptr) (windows[i].id, windows[i].name);
+
+         /* Destroy the window. */
+         if (windows[i].name)
+            free(windows[i].name);
          for (j=0; j<windows[i].nwidgets; j++)
             widget_cleanup(&windows[i].widgets[j]);
          free(windows[i].widgets);

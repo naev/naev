@@ -102,12 +102,12 @@ extern int hyperspace_target; /**< from player.c */
  * prototypes
  */
 /* commodity exchange */
-static void commodity_exchange_open (void);
+static void commodity_exchange_open( unsigned int parent, char* str );
 static void commodity_update( unsigned int wid, char* str );
 static void commodity_buy( unsigned int wid, char* str );
 static void commodity_sell( unsigned int wid, char* str );
 /* outfits */
-static void outfits_open (void);
+static void outfits_open( unsigned int parent, char* str );
 static void outfits_update( unsigned int wid, char* str );
 static int outfit_canBuy( Outfit* outfit, int q, int errmsg );
 static void outfits_buy( unsigned int wid, char* str );
@@ -116,7 +116,7 @@ static void outfits_sell( unsigned int wid, char* str );
 static int outfits_getMod (void);
 static void outfits_renderMod( double bx, double by, double w, double h );
 /* shipyard */
-static void shipyard_open (void);
+static void shipyard_open( unsigned int parent, char* str );
 static void shipyard_update( unsigned int wid, char* str );
 static void shipyard_info( unsigned int wid, char* str );
 static void shipyard_buy( unsigned int wid, char* str );
@@ -128,11 +128,11 @@ static void shipyard_yoursSell( unsigned int wid, char* str );
 static void shipyard_yoursTransport( unsigned int wid, char* str );
 static unsigned int shipyard_yoursTransportPrice( char* shipname );
 /* spaceport bar */
-static void spaceport_bar_open (void);
+static void spaceport_bar_open( unsigned int parent, char* str );
 /* news */
 static void news_open(unsigned int parent, char *str);
 /* mission computer */
-static void misn_open (void);
+static void misn_open( unsigned int parent, char* str );
 static void misn_close( unsigned int wid, char *name );
 static void misn_accept( unsigned int wid, char* str );
 static void misn_genList( unsigned int wid, int first );
@@ -149,8 +149,9 @@ extern unsigned int economy_getPrice( const Commodity *com,
 /**
  * @brief Opens the local market window.
  */
-static void commodity_exchange_open (void)
+static void commodity_exchange_open( unsigned int parent, char *str )
 {
+   (void) str;
    int i;
    char **goods;
    unsigned int wid;
@@ -158,6 +159,7 @@ static void commodity_exchange_open (void)
    /* window */
    wid = window_create( "Commodity Exchange",
          -1, -1, COMMODITY_WIDTH, COMMODITY_HEIGHT );
+   window_setParent( wid, parent );
 
    /* buttons */
    window_addButton( wid, -20, 20,
@@ -286,8 +288,9 @@ static void commodity_sell( unsigned int wid, char* str )
 /**
  * @brief Opens the outfit exchange center window.
  */
-static void outfits_open (void)
+static void outfits_open( unsigned int parent, char* str )
 {
+   (void) str;
    int i;
    Outfit **outfits;
    char **soutfits;
@@ -300,6 +303,7 @@ static void outfits_open (void)
    snprintf(buf,128,"%s - Outfits", land_planet->name );
    wid = window_create( buf, -1, -1,
          OUTFITS_WIDTH, OUTFITS_HEIGHT );
+   window_setParent( wid, parent );
    window_setAccept( wid, outfits_buy ); /* will allow buying from keyboard */
 
    /* buttons */
@@ -643,8 +647,9 @@ static void outfits_renderMod( double bx, double by, double w, double h )
 /**
  * @brief Opens the shipyard window.
  */
-static void shipyard_open (void)
+static void shipyard_open( unsigned int parent, char* str )
 {
+   (void) str;
    int i;
    Ship **ships;
    char **sships;
@@ -657,6 +662,7 @@ static void shipyard_open (void)
    snprintf( buf, 128, "%s - Shipyard", land_planet->name );
    wid = window_create( buf,
          -1, -1, SHIPYARD_WIDTH, SHIPYARD_HEIGHT );
+   window_setParent( wid, parent );
 
    /* buttons */
    window_addButton( wid, -20, 20,
@@ -859,7 +865,6 @@ static void shipyard_buy( unsigned int wid, char* str )
 static void shipyard_yours_open( unsigned int parent, char* str )
 {
    (void) str;
-   (void) parent;
    char **sships;
    glTexture **tships;
    int nships;
@@ -868,6 +873,7 @@ static void shipyard_yours_open( unsigned int parent, char* str )
    /* create window */
    wid = window_create( "Your Ships",
          -1, -1, SHIPYARD_WIDTH, SHIPYARD_HEIGHT );
+   window_setParent( wid, parent );
 
    /* buttons */
    window_addButton( wid, -20, 20,
@@ -1129,13 +1135,15 @@ static unsigned int shipyard_yoursTransportPrice( char* shipname )
 /**
  * @brief Opens the spaceport bar window.
  */
-static void spaceport_bar_open (void)
+static void spaceport_bar_open( unsigned int parent, char* str )
 {
+   (void) str;
    unsigned int wid;
 
    /* window */
    wid = window_create( "Spaceport Bar",
          -1, -1, BAR_WIDTH, BAR_HEIGHT );
+   window_setParent( wid, parent );
 
    /* buttons */
    window_addButton( wid, -20, 20,
@@ -1175,13 +1183,13 @@ static int news_load (void)
  */
 static void news_open( unsigned int parent, char *str )
 {
-   (void) parent;
    (void) str;
    unsigned int wid;
 
    /* create window */
    wid = window_create( "News Reports",
          -1, -1, NEWS_WIDTH, NEWS_HEIGHT );
+   window_setParent( wid, parent );
 
    /* buttons */
    window_addButton( wid, -20, 20,
@@ -1197,19 +1205,22 @@ static void news_open( unsigned int parent, char *str )
 /**
  * @brief Opens the mission computer window.
  */
-static void misn_open (void)
+static void misn_open( unsigned int parent, char* str )
 {
+   (void) str;
    unsigned int wid;
    char *buf;
 
    /* create window */
    wid = window_create( "Mission Computer",
          -1, -1, MISSION_WIDTH, MISSION_HEIGHT );
+   window_setParent( wid, parent );
+   window_onClose( wid, misn_close );
 
    /* buttons */
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseMission",
-         "Close", misn_close );
+         "Close", window_close );
    window_addButton( wid, -20, 40+BUTTON_HEIGHT,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnAcceptMission",
          "Accept", misn_accept );
@@ -1247,9 +1258,11 @@ static void misn_open (void)
  */
 static void misn_close( unsigned int wid, char *name )
 {
+   (void) wid;
+   (void) name;
+
    /* Remove computer markers just in case. */
    space_clearComputerMarkers();
-   window_close( wid, name );
 }
 /**
  * @brief Accepts the selected mission.
