@@ -52,8 +52,8 @@ typedef struct misn_var_ {
  * variable stack
  */
 static misn_var* var_stack = NULL; /**< Stack of mission variables. */
-static int var_nstack = 0; /**< Number of mission variables. */
-static int var_mstack = 0; /**< Memory size of the mission variable stack. */
+static int var_nstack      = 0; /**< Number of mission variables. */
+static int var_mstack      = 0; /**< Memory size of the mission variable stack. */
 
 
 /*
@@ -273,10 +273,10 @@ static int var_peek( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
    int i;
-   char *str;
+   const char *str;
 
    /* Get the parameter. */
-   str = (char*) luaL_checkstring(L,1);
+   str = luaL_checkstring(L,1);
 
    for (i=0; i<var_nstack; i++)
       if (strcmp(str,var_stack[i].name)==0) {
@@ -321,7 +321,7 @@ static int var_pop( lua_State *L )
       if (strcmp(str,var_stack[i].name)==0) {
          var_free( &var_stack[i] );
          memmove( &var_stack[i], &var_stack[i+1], sizeof(misn_var)*(var_nstack-i-1) );
-         var_stack--;
+         var_nstack--;
          return 0;
       } 
 
@@ -339,14 +339,10 @@ static int var_pop( lua_State *L )
 static int var_push( lua_State *L )
 {
    NLUA_MIN_ARGS(2);
-   char *str;
+   const char *str;
    misn_var var;
 
-   if (lua_isstring(L,1)) str = (char*) lua_tostring(L,1);
-   else {
-      NLUA_DEBUG("Trying to push a var with non-string name");
-      return 0;
-   }
+   str = luaL_checkstring(L,1);
    var.name = strdup(str);
    
    /* store appropriate data */
