@@ -150,6 +150,7 @@ static int rnd_twosigma( lua_State *L )
  *
  * @usage n = 5.5 + rnd.threesigma()/6. -- Creates a number from 5 to 6 totally biased to 5.5.
  *
+ *    @luareturn Returns a number from [-3:3] biased totally towards 0.
  * @luafunc threesigma()
  */
 static int rnd_threesigma( lua_State *L )
