@@ -18,12 +18,6 @@ int nlua_load( lua_State* L, lua_CFunction f );
 int nlua_loadBasic( lua_State* L );
 
 
-/* 
- * individual custom library loaders
- */
-int lua_loadTk( lua_State *L ); /* always read only */
-
-
 #endif /* NLUA_H */
 
 
