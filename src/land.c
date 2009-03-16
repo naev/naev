@@ -1347,7 +1347,8 @@ static void misn_update( unsigned int wid, char* str )
 
    misn = &mission_computer[ toolkit_getListPos( wid, "lstMission" ) ];
    mission_sysComputerMark( misn );
-   map_center( misn->sys_marker );
+   if (misn->sys_marker != NULL)
+      map_center( misn->sys_marker );
    window_modifyText( wid, "txtReward", misn->reward );
    window_modifyText( wid, "txtDesc", misn->desc );
    window_enableButton( wid, "btnAcceptMission" );
