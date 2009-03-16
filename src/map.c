@@ -1075,6 +1075,9 @@ int map_isMapped( char* targ_sys, int r )
  */
 void map_show( int wid, int x, int y, int w, int h, double zoom )
 {
+   /* mark systems as needed */
+   mission_sysMark();
+
    /* Set position to focus on current system. */
    map_xpos = cur_system->pos.x * zoom;
    map_ypos = cur_system->pos.y * zoom;
