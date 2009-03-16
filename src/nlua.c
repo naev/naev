@@ -5,28 +5,17 @@
 /**
  * @file nlua.c
  *
- * @brief Contains some standard Lua binding libraries.
- *
- * Namely:
- *    - naev : General game stuff.
- *    - time : For manipulating time.
- *    - rnd : For access to the random number generator.
- *    - tk : Access to the toolkit.
+ * @brief Handles creating and setting up basic Lua environments.
  */
 
 #include "nlua.h"
 
 #include "lauxlib.h"
 
+#include "nluadef.h"
 #include "log.h"
 #include "naev.h"
-#include "rng.h"
-#include "ntime.h"
 #include "dialogue.h"
-#include "space.h"
-#include "land.h"
-#include "nluadef.h"
-#include "map.h"
 #include "ndata.h"
 
 
@@ -39,19 +28,6 @@ static int nlua_packfileLoader( lua_State* L );
 /*
  * libraries
  */
-/* rnd */
-static int rnd_int( lua_State *L );
-static int rnd_sigma( lua_State *L );
-static int rnd_twosigma( lua_State *L );
-static int rnd_threesigma( lua_State *L );
-static const luaL_reg rnd_methods[] = {
-   { "int", rnd_int }, /* obsolete, rnd.rnd is prefered. */
-   { "rnd", rnd_int },
-   { "sigma", rnd_sigma },
-   { "twosigma", rnd_twosigma },
-   { "threesigma", rnd_threesigma },
-   {0,0}
-}; /**< Random Lua methods. */
 /* toolkit */
 static int tk_msg( lua_State *L );
 static int tk_yesno( lua_State *L );
@@ -192,17 +168,6 @@ static int nlua_packfileLoader( lua_State* L )
  * individual library loading
  */
 /**
- * @brief Loads the Random Number Lua library.
- *
- *    @param L Lua state.
- *    @return 0 on success.
- */
-int lua_loadRnd( lua_State *L )
-{
-   luaL_register(L, "rnd", rnd_methods);
-   return 0;
-}
-/**
  * @brief Loads the Toolkit Lua library.
  *
  *    @param L Lua state.
@@ -213,75 +178,6 @@ int lua_loadTk( lua_State *L )
    luaL_register(L, "tk", tk_methods);
    return 0;
 }
-
-
-/**
- * @defgroup RND Random Number Lua Bindings
- *
- * @brief Bindings for interacting with the random number generator.
- *
- * Functions should be called like:
- *
- * @code
- * rnd.function( parameters )
- * @endcode
- *
- * @{
- */
-/**
- * @brief number int( [number x, number y] )
- *
- * Gets a random number.  With no parameters it returns a random float between
- *  0 and 1 (yes I know name is misleading).  With one parameter it returns a
- *  whole number between 0 and that number (both included).  With two
- *  parameters it returns a whole number between both parameters (both
- *  included).
- *
- *    @param x First parameter, read description for details.
- *    @param y Second parameter, read description for details.
- *    @return A randomly generated number, read description for details.
- */
-static int rnd_int( lua_State *L )
-{  
-   int o;
-   
-   o = lua_gettop(L);
-   
-   if (o==0) lua_pushnumber(L, RNGF() ); /* random double 0 <= x <= 1 */
-   else if (o==1) { /* random int 0 <= x <= parameter */
-      if (lua_isnumber(L, 1))
-         lua_pushnumber(L, RNG(0, (int)lua_tonumber(L, 1)));
-      else return 0;
-   }
-   else if (o>=2) { /* random int paramater 1 <= x <= parameter 2 */
-      if (lua_isnumber(L, 1) && lua_isnumber(L, 2))
-         lua_pushnumber(L,
-               RNG((int)lua_tonumber(L, 1), (int)lua_tonumber(L, 2)));
-      else return 0;
-   }
-   else NLUA_INVALID_PARAMETER();
-   
-   return 1; /* unless it's returned 0 already it'll always return a parameter */
-}
-static int rnd_sigma( lua_State *L )
-{
-   lua_pushnumber(L, RNG_1SIGMA());
-   return 1;
-}
-static int rnd_twosigma( lua_State *L )
-{
-   lua_pushnumber(L, RNG_2SIGMA());
-   return 1;
-}
-static int rnd_threesigma( lua_State *L )
-{
-   lua_pushnumber(L, RNG_3SIGMA());
-   return 1;
-}
-/**
- * @}
- */
-
 
 
 /**

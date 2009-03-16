@@ -21,7 +21,6 @@ int nlua_loadBasic( lua_State* L );
 /* 
  * individual custom library loaders
  */
-int lua_loadRnd( lua_State *L ); /* always read only */
 int lua_loadTk( lua_State *L ); /* always read only */
 
 
