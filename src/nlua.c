@@ -39,12 +39,6 @@ static int nlua_packfileLoader( lua_State* L );
 /*
  * libraries
  */
-/* naev */
-static int naev_lang( lua_State *L );
-static const luaL_reg naev_methods[] = {
-   { "lang", naev_lang },
-   {0,0}
-}; /**< NAEV Lua methods. */
 /* rnd */
 static int rnd_int( lua_State *L );
 static int rnd_sigma( lua_State *L );
@@ -198,17 +192,6 @@ static int nlua_packfileLoader( lua_State* L )
  * individual library loading
  */
 /**
- * @brief Loads the NAEV Lua library.
- *
- *    @param L Lua state.
- *    @return 0 on success.
- */
-int lua_loadNaev( lua_State *L )
-{  
-   luaL_register(L, "naev", naev_methods);
-   return 0;
-}
-/**
  * @brief Loads the Random Number Lua library.
  *
  *    @param L Lua state.
@@ -230,38 +213,6 @@ int lua_loadTk( lua_State *L )
    luaL_register(L, "tk", tk_methods);
    return 0;
 }
-
-
-
-/**
- * @defgroup NAEV NAEV Generic Lua Bindings
- *
- * @brief Bindings for interacting with general NAEV stuff.
- *
- * Functions should be called like:
- *
- * @code
- * naev.function( parameters )
- * @endcode
- *
- * @{
- */
-/**
- * @brief string lang( nil )
- *
- * Gets the language NAEV is currently using.
- *
- *    @return Two character identifier of the language.
- */
-static int naev_lang( lua_State *L )
-{  
-   /** @todo multilanguage stuff */
-   lua_pushstring(L,"en");
-   return 1;
-}
-/**
- * @}
- */
 
 
 /**

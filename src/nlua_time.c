@@ -8,7 +8,7 @@
  * @brief Time manipulation Lua bindings.
  */
 
-#include "nlua.h"
+#include "nlua_time.h"
 
 #include <stdlib.h>
 
