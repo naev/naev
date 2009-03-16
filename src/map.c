@@ -615,8 +615,8 @@ void map_close (void)
 }
 
 
-/*
- * sets the map to sane defaults
+/**
+ * @brief Sets the map to sane defaults
  */
 void map_clear (void)
 {

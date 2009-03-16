@@ -718,6 +718,9 @@ static void mission_menu_abort( unsigned int wid, char* str )
          memset( &player_missions[MISSION_MAX-1], 0, sizeof(Mission) );
       }
 
+      /* Reset markers. */
+      mission_sysMark();
+
       /* Regenerate list. */
       mission_menu_genList(wid ,0);
    }
