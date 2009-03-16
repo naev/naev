@@ -1200,6 +1200,7 @@ static void news_open( unsigned int parent, char *str )
 static void misn_open (void)
 {
    unsigned int wid;
+   char *buf;
 
    /* create window */
    wid = window_create( "Mission Computer",
@@ -1216,11 +1217,19 @@ static void misn_open (void)
    /* text */
    window_addText( wid, MISSION_WIDTH/2 + 10, -60,
          MISSION_WIDTH/2 - 30, 20, 0,
-         "txtSReward", &gl_smallFont, &cDConsole, "Reward:" );
+         "txtSDate", NULL, &cDConsole, "Date:" );
+   buf = ntime_pretty(0);
    window_addText( wid, MISSION_WIDTH/2 + 70, -60,
+         MISSION_WIDTH/2 - 90, 20, 0,
+         "txtDate", NULL, &cBlack, buf );
+   free(buf);
+   window_addText( wid, MISSION_WIDTH/2 + 10, -100,
          MISSION_WIDTH/2 - 30, 20, 0,
+         "txtSReward", &gl_smallFont, &cDConsole, "Reward:" );
+   window_addText( wid, MISSION_WIDTH/2 + 70, -100,
+         MISSION_WIDTH/2 - 90, 20, 0,
          "txtReward", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, MISSION_WIDTH/2 + 10, -80,
+   window_addText( wid, MISSION_WIDTH/2 + 10, -120,
          MISSION_WIDTH/2 - 30, MISSION_HEIGHT/2-90, 0,
          "txtDesc", &gl_smallFont, &cBlack, NULL );
 
