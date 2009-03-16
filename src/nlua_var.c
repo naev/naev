@@ -309,13 +309,9 @@ static int var_pop( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
    int i;
-   char* str;
+   const char* str;
 
-   if (lua_isstring(L,1)) str = (char*) lua_tostring(L,1);
-   else {
-      NLUA_DEBUG("Trying to pop a var with non-string name");
-      return 0;
-   }
+   str = luaL_checkstring(L,1);
 
    for (i=0; i<var_nstack; i++)
       if (strcmp(str,var_stack[i].name)==0) {
@@ -358,7 +354,7 @@ static int var_push( lua_State *L )
    }
    else if (lua_isstring(L,2)) {
       var.type = MISN_VAR_STR;
-      var.d.str = strdup( (char*) lua_tostring(L,2) );
+      var.d.str = strdup( lua_tostring(L,2) );
    }
    else {
       NLUA_DEBUG("Trying to push a var of invalid data type to stack");
@@ -402,9 +398,10 @@ void var_cleanup (void)
    for (i=0; i<var_nstack; i++)
       var_free( &var_stack[i] );
 
-   if (var_stack!=NULL) free( var_stack );
-   var_stack = NULL;
-   var_nstack = 0;
-   var_mstack = 0;
+   if (var_stack!=NULL)
+      free( var_stack );
+   var_stack   = NULL;
+   var_nstack  = 0;
+   var_mstack  = 0;
 }
 
