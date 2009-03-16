@@ -28,7 +28,8 @@ int map_isMapped( char* targ_sys, int r );
 
 /* shows a map at x, y (relative to wid) with size w,h  */
 void map_show( int wid, int x, int y, int w, int h, double zoom );
-
+int map_center( const char *sys );
 
 
 #endif /* MAP_H */
+

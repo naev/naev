@@ -523,7 +523,8 @@ static void map_render( double bx, double by, double w, double h )
 static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h )
 {
-   int i, j;
+   (void) wid;
+   int i;
    double x,y, t;
    StarSystem *sys;
 
@@ -556,25 +557,7 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
 
                if ((pow2(mx-x)+pow2(my-y)) < t) {
 
-                  /* select the current system and make a path to it */
-                  map_selected = i;
-                  if (map_path)
-                     free(map_path);
-                  map_path = map_getJumpPath( &map_npath,
-                        cur_system->name, sys->name, 0 );
-
-                  if (map_npath==0)
-                     hyperspace_target = -1;
-                  else 
-                     /* see if it is a valid hyperspace target */
-                     for (j=0; j<cur_system->njumps; j++) {
-                        if (map_path[0]==system_getIndex(cur_system->jumps[j])) {
-                           planet_target = -1; /* override planet_target */
-                           hyperspace_target = j;
-                           break;
-                        }
-                     }
-                  map_update( wid );
+                  map_select( sys );
                   break;
                }
             }
@@ -717,13 +700,36 @@ void map_jump (void)
 void map_select( StarSystem *sys )
 {
    unsigned int wid;
+   int i;
 
    wid = window_get(MAP_WDWNAME);
 
-   if (sys == NULL)
+   if (sys == NULL) {
       map_selectCur();
-   else
+   }
+   else {
       map_selected = sys - systems_stack;
+
+      /* select the current system and make a path to it */
+      if (map_path)
+         free(map_path);
+      map_path = map_getJumpPath( &map_npath,
+            cur_system->name, sys->name, 0 );
+
+      if (map_npath==0)
+         hyperspace_target = -1;
+      else  {
+         /* see if it is a valid hyperspace target */
+         for (i=0; i<cur_system->njumps; i++) {
+            if (map_path[0]==system_getIndex(cur_system->jumps[i])) {
+               planet_target = -1; /* override planet_target */
+               hyperspace_target = i;
+               break;
+            }
+         }
+      }
+   }
+
    map_update(wid);
 }
 
@@ -1058,7 +1064,7 @@ int map_isMapped( char* targ_sys, int r )
 
 
 /**
- * @brief shows a map at x, y (relative to wid) with size w,h
+ * @brief Shows a map at x, y (relative to wid) with size w,h.
  *
  *    @param wid Window to show map on.
  *    @param x X position to put map at.
@@ -1079,3 +1085,31 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
    window_addCust( wid, x, y, w, h,
          "cstMap", 1, map_render, map_mouse);
 }
+
+
+/**
+ * @brief Centers the map on a planet.
+ *
+ *    @param sys System to center the map on.
+ *    @return 0 on success.
+ */
+int map_center( const char *sys )
+{
+   StarSystem *ssys;
+
+   /* Get the system. */
+   ssys = system_get( sys );
+   if (sys == NULL)
+      return -1;
+
+   /* Center on the system. */
+   map_xpos = ssys->pos.x * map_zoom;
+   map_ypos = ssys->pos.y * map_zoom;
+
+   /* Select the system. */
+   map_select( ssys );
+
+   return 0;
+}
+
+
