@@ -48,7 +48,7 @@ static int news_nbuf          = 0; /**< Size of news buffer. */
 static unsigned int news_tick = 0; /**< Last news tick. */
 static int news_drag          = 0; /**< Is dragging news? */
 static double news_pos        = 0.; /**< Position of the news feed. */
-static glFont *news_font      = &gl_defFont;
+static glFont *news_font      = &gl_defFont; /**< Font to use. */
 static char **news_lines      = NULL; /**< Text per line. */
 static int news_nlines        = 0; /**< Number of lines used. */
 static int news_mlines        = 0; /**< Lines allocated. */
@@ -85,6 +85,10 @@ static void news_render( double bx, double by, double w, double h )
       news_tick = t;
       news_pos += dt * 25.;
    }
+
+   /* Make sure user isn't silly and drags it to negative values. */
+   if (news_pos < 0.)
+      news_pos += (news_font->h + 5.) * news_nlines + h + 3;
 
    /* background */
    COLOUR(cBlack);
