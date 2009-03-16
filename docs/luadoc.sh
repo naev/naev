@@ -7,7 +7,7 @@ do
 sed -n '
 	1 i -- This is file was generated automatically from C sources to feed luadoc
 #converts doxygens /** to luadocs ---
-	s|^ */\*\*|---|p 
+	s|^ */\*\* *$|---|p 
 #convert special tags to lua expressions.
 #notice lines after @luafunc & @luamod will be ignored by luadoc
 #also doxygen comments that do not contain a any of this tags have no
