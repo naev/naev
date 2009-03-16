@@ -16,7 +16,6 @@
 #include <stdlib.h>
 
 #include "nlua.h"
-#include "nlua_space.h"
 #include "nluadef.h"
 
 #include "rng.h"
@@ -160,7 +159,6 @@ static int mission_init( Mission* mission, MissionData* misn, int load )
       return -1;
    }
    nlua_loadBasic( mission->L ); /* pairs and such */
-   nlua_load( mission->L, luaopen_string ); /* string.format can be very useful */
    misn_loadLibs( mission->L ); /* load our custom libraries */
 
    /* load the file */

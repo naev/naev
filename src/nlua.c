@@ -16,6 +16,16 @@
 #include "log.h"
 #include "naev.h"
 #include "ndata.h"
+#include "nlua_rnd.h"
+#include "nlua_faction.h"
+#include "nlua_diff.h"
+#include "nlua_var.h"
+#include "nlua_naev.h"
+#include "nlua_space.h"
+#include "nlua_time.h"
+#include "nlua_player.h"
+#include "nlua_pilot.h"
+#include "nlua_vec2.h"
 
 
 /*
@@ -96,6 +106,7 @@ int nlua_loadBasic( lua_State* L )
 
    nlua_load(L,luaopen_math); /* open math. */
    nlua_load(L,luaopen_table); /* open table. */
+   nlua_load(L, luaopen_string); /* open string. */
 
    /* add our own */
    lua_register(L, "include", nlua_packfileLoader);
@@ -143,5 +154,45 @@ static int nlua_packfileLoader( lua_State* L )
    /* cleanup, success */
    free(buf);
    return 0;
+}
+
+
+/**
+ * @brief Loads the standard NAEV Lua API.
+ *
+ * Loads the modules:
+ *  - naev
+ *  - space
+ *    - planet
+ *    - system
+ *  - var
+ *  - pilot
+ *  - time
+ *  - player
+ *  - diff
+ *  - faction
+ *  - vec2
+ *
+ *    @param L Lua State to load modules into.
+ *    @param readonly Load as readonly (good for sandboxing).
+ *    @return 0 on success.
+ */
+int nlua_loadStandard( lua_State *L, int readonly )
+{
+   int r;
+
+   r = 0;
+   r |= lua_loadNaev(L);
+   r |= lua_loadVar(L,readonly);
+   r |= lua_loadSpace(L,readonly); /* planet, system */
+   r |= lua_loadTime(L,readonly);
+   r |= lua_loadPlayer(L,readonly);
+   r |= lua_loadPilot(L,readonly);
+   r |= lua_loadRnd(L);
+   r |= lua_loadDiff(L,readonly);
+   r |= lua_loadFaction(L,readonly);
+   r |= lua_loadVector(L);
+
+   return r;
 }
 

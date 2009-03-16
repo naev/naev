@@ -79,6 +79,7 @@
 #include "nluadef.h"
 #include "nlua_space.h"
 #include "nlua_vec2.h"
+#include "nlua_rnd.h"
 #include "board.h"
 
 
@@ -546,7 +547,6 @@ static int ai_loadProfile( const char* filename )
 
    /* open basic lua stuff */
    nlua_loadBasic(L);
-   nlua_load(L,luaopen_string); /* open string. */
 
    /* constants */
    lua_regnumber(L, "player", PLAYER_ID); /* player ID */

@@ -243,14 +243,7 @@ int news_init (void)
    /* Load the libraries. */
    nlua_loadBasic(L);
    nlua_load(L,luaopen_string);
-   lua_loadNaev(L);
-   lua_loadVar(L,1);
-   lua_loadSpace(L,1);
-   lua_loadTime(L,1);
-   lua_loadPlayer(L,1);
-   lua_loadRnd(L);
-   lua_loadDiff(L,1);
-   lua_loadFaction(L,1);
+   nlua_loadStandard(L, 1);
 
    /* Load the news file. */
    buf = ndata_read( LUA_NEWS, &bufsize );
