@@ -45,16 +45,6 @@ static const luaL_reg naev_methods[] = {
    { "lang", naev_lang },
    {0,0}
 }; /**< NAEV Lua methods. */
-/* time */
-static int time_get( lua_State *L );
-static int time_str( lua_State *L );
-static int time_units( lua_State *L );
-static const luaL_reg time_methods[] = {
-   { "get", time_get },
-   { "str", time_str },
-   { "units", time_units },
-   {0,0}                                                                  
-}; /**< Time Lua methods. */
 /* rnd */
 static int rnd_int( lua_State *L );
 static int rnd_sigma( lua_State *L );
@@ -219,19 +209,6 @@ int lua_loadNaev( lua_State *L )
    return 0;
 }
 /**
- * @brief Loads the Time Lua library.
- *
- *    @param L Lua state.
- *    @param readonly Whether to open it as read only.
- *    @return 0 on success.
- */
-int lua_loadTime( lua_State *L, int readonly )
-{
-   (void)readonly;
-   luaL_register(L, "time", time_methods);
-   return 0;
-}
-/**
  * @brief Loads the Random Number Lua library.
  *
  *    @param L Lua state.
@@ -285,74 +262,6 @@ static int naev_lang( lua_State *L )
 /**
  * @}
  */
-
-
-/**
- * @defgroup TIME Time Lua Bindings
- *
- * @brief Bindings for interacting with the time.
- *
- * Functions should be called like:
- *
- * @code
- * time.function( parameters )
- * @endcode
- *
- * @{
- */
-/**
- * @brief number get( nil )
- *
- * Gets the current time in internal representation time.
- *
- *    @return Time in internal representation time.
- */
-static int time_get( lua_State *L )
-{
-   lua_pushnumber( L, ntime_get() );
-   return 1;
-}
-/**
- * @brief string str( [number t] )
- *
- * Converts the time to a pretty human readable format.
- *
- *    @param t Time to convert to pretty format.  If ommitted, current time is
- *              used.
- *    @return The time in human readable format.
- */
-static int time_str( lua_State *L )
-{
-   char *nt;
-   if ((lua_gettop(L) > 0) && (lua_isnumber(L,1)))
-      nt = ntime_pretty( (unsigned int) lua_tonumber(L,1) );
-   else
-      nt = ntime_pretty( ntime_get() );
-   lua_pushstring(L, nt);
-   free(nt);
-   return 1;
-}
-/**
- * @brief number units( [number stu] ) 
- *
- * Converts stu to internal representation time.
- *
- *    @param stu Time in stu to convert to internal representation time.  If
- *                ommitted, 1 stu is used.
- *    @return The value of stu in internal representation time.
- */
-static int time_units( lua_State *L )
-{  
-   if ((lua_gettop(L) > 0) && (lua_isnumber(L,1)))
-      lua_pushnumber( L, (unsigned int)lua_tonumber(L,1) * NTIME_UNIT_LENGTH );
-   else
-      lua_pushnumber( L, NTIME_UNIT_LENGTH );
-   return 1;
-}
-/**
- * @}
- */
-
 
 
 /**
