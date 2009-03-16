@@ -85,7 +85,7 @@
    <unique />
   </flags>
   <avail>
-   <cond>var.peek("es_cargo") == true and space.getSystem("NGC-7291"):jumpDist() &lt; 5 and player.getFaction("Empire") &gt; 5 and player.getRating() &gt; 5 and var.peek("collective_fail") ~= true</cond>
+   <cond>var.peek("es_cargo") == true and system.get("NGC-7291"):jumpDist() &lt; 5 and player.getFaction("Empire") &gt; 5 and player.getRating() &gt; 5 and var.peek("collective_fail") ~= true</cond>
    <chance>80</chance>
    <location>Bar</location>
    <done>Empire Shipping 3</done>
