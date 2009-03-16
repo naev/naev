@@ -603,6 +603,16 @@ static void map_buttonZoom( unsigned int wid, char* str )
 
 
 /**
+ * @brief Cleans up the map stuff.
+ */
+void map_cleanup (void)
+{
+   map_close();
+   map_clear();
+}
+
+
+/**
  * @brief Closes the map.
  */
 void map_close (void)

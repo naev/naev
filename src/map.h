@@ -18,6 +18,7 @@ int map_isOpen (void);
 
 /* misc */
 void map_select( StarSystem *sys );
+void map_cleanup (void);
 void map_clear (void);
 void map_jump (void);
 

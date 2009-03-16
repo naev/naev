@@ -194,7 +194,7 @@ void player_new (void)
    space_clearKnown();
    land_cleanup();
    factions_reset();
-   map_close();
+   map_cleanup();
 
    player_name = dialogue_input( "Player Name", 3, 20,
          "Please write your name:" );
@@ -1884,7 +1884,7 @@ int player_load( xmlNodePtr parent )
 
    /* some cleaning up */
    player_flags = 0;
-   map_close();
+   map_cleanup();
 
    node = parent->xmlChildrenNode;
 
