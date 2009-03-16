@@ -18,7 +18,6 @@
 #include "ndata.h"
 #include "nlua_rnd.h"
 #include "nlua_faction.h"
-#include "nlua_diff.h"
 #include "nlua_var.h"
 #include "nlua_naev.h"
 #include "nlua_space.h"
@@ -26,6 +25,7 @@
 #include "nlua_player.h"
 #include "nlua_pilot.h"
 #include "nlua_vec2.h"
+#include "nlua_diff.h"
 
 
 /*
@@ -172,6 +172,12 @@ static int nlua_packfileLoader( lua_State* L )
  *  - diff
  *  - faction
  *  - vec2
+ *
+ * Only is missing:
+ *  - misn
+ *  - tk
+ *  - hook
+ *  - music
  *
  *    @param L Lua State to load modules into.
  *    @param readonly Load as readonly (good for sandboxing).

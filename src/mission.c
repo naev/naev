@@ -17,7 +17,7 @@
 
 #include "nlua.h"
 #include "nluadef.h"
-
+#include "nlua_space.h"
 #include "rng.h"
 #include "naev.h"
 #include "log.h"

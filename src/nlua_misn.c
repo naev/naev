@@ -20,13 +20,11 @@
 #include "lauxlib.h"
 
 #include "nlua.h"
-#include "nlua_space.h"
-#include "nlua_pilot.h"
-#include "nlua_faction.h"
-#include "nlua_var.h"
-#include "nlua_diff.h"
 #include "nlua_hook.h"
 #include "nlua_player.h"
+#include "nlua_tk.h"
+#include "nlua_faction.h"
+#include "nlua_space.h"
 #include "player.h"
 #include "mission.h"
 #include "log.h"
@@ -101,19 +99,11 @@ static const luaL_reg misn_methods[] = {
  */
 int misn_loadLibs( lua_State *L )
 {
-   lua_loadNaev(L);
+   nlua_loadStandard(L,0);
    lua_loadMisn(L);
-   lua_loadVar(L,0);
-   lua_loadSpace(L,0);
-   lua_loadTime(L,0);
-   lua_loadPlayer(L,0);
-   lua_loadRnd(L);
    lua_loadTk(L);
    lua_loadHook(L);
-   lua_loadPilot(L,0);
    lua_loadMusic(L,0);
-   lua_loadDiff(L,0);
-   lua_loadFaction(L,0);
    return 0;
 }
 /**
@@ -124,11 +114,7 @@ int misn_loadLibs( lua_State *L )
  */
 int misn_loadCondLibs( lua_State *L )
 {
-   lua_loadTime(L,1);
-   lua_loadSpace(L,1);
-   lua_loadVar(L,1);
-   lua_loadPlayer(L,1);
-   lua_loadDiff(L,1);
+   nlua_loadStandard(L,1);
    return 0;
 }
 /*

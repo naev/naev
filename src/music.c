@@ -412,13 +412,8 @@ static int music_luaInit (void)
       music_luaQuit();
 
    music_lua = nlua_newState();
-
-   luaL_openlibs(music_lua);
-
-   lua_loadSpace(music_lua,1); /* space and time are readonly */
-   lua_loadTime(music_lua,1);
-   lua_loadRnd(music_lua);
-   lua_loadVar(music_lua,1); /* also read only */
+   nlua_loadBasic(music_lua);
+   nlua_loadStandard(music_lua,1);
    lua_loadMusic(music_lua,0); /* write it */
 
    /* load the actual lua music code */
