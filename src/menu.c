@@ -32,6 +32,7 @@
 #include "options.h"
 #include "intro.h"
 #include "music.h"
+#include "map.h"
 
 
 #define MAIN_WIDTH      130 /**< Main menu width. */
@@ -53,7 +54,7 @@
 #define CARGO_HEIGHT    300 /**< Cargo menu height. */
 
 #define MISSIONS_WIDTH  600 /**< Mission menu width. */
-#define MISSIONS_HEIGHT 400 /**< Mission menu height. */
+#define MISSIONS_HEIGHT 500 /**< Mission menu height. */
 
 #define DEATH_WIDTH     130 /**< Death menu width. */
 #define DEATH_HEIGHT    150 /**< Death menu height. */
@@ -620,6 +621,9 @@ static void info_missions_menu( unsigned int parent, char* str )
          200, MISSIONS_HEIGHT - BUTTON_WIDTH - 120, 0,
          "txtDesc", &gl_smallFont, &cBlack, NULL );
 
+   /* Put a map. */
+   map_show( wid, 20, 20, 300, 260, 0.75 );
+
    /* list */
    mission_menu_genList(wid ,1);
 }
@@ -648,7 +652,7 @@ static void mission_menu_genList( unsigned int wid, int first )
       j = 1;
    }
    window_addList( wid, 20, -40,
-         300, MISSIONS_HEIGHT-60,
+         300, MISSIONS_HEIGHT-340,
          "lstMission", misn_names, j, 0, mission_menu_update );
 
    mission_menu_update(wid ,NULL);
@@ -672,10 +676,15 @@ static void mission_menu_update( unsigned int wid, char* str )
       return;
    }
 
+   /* Modify the text. */
    misn = &player_missions[ toolkit_getListPos(wid, "lstMission" ) ];
    window_modifyText( wid, "txtReward", misn->reward );
    window_modifyText( wid, "txtDesc", misn->desc );
    window_enableButton( wid, "btnAbortMission" );
+
+   /* Select the system. */
+   if (misn->sys_marker != NULL)
+      map_center( misn->sys_marker );
 }
 /**
  * @brief Aborts a mission in the mission menu.
