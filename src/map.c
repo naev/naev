@@ -391,7 +391,7 @@ static int map_inPath( StarSystem *sys )
 static void map_drawMarker( double x, double y, double r,
       int num, int cur, int type )
 {
-   double a, c,s;
+   double a, c,s, d;
 
    /* Get colour marking. */
    switch (type) {
@@ -419,14 +419,15 @@ static void map_drawMarker( double x, double y, double r,
    else
       a = M_PI/2.;
    a += M_PI*2. * (double)cur/(double)num;
+   d = MAX(r, 8. * 2. * map_zoom);
    c  = cos(a);
    s  = sin(a);
 
    /* Draw the marking triangle. */
    glBegin(GL_TRIANGLES);
-      glVertex2d( x + (r+9.)*c,            y + (r+9.)*s );
-      glVertex2d( x + (r+17.)*c - (4.)*s,  y + (r+17.)*s + (4.)*c );
-      glVertex2d( x + (r+17.)*c - (-4.)*s, y + (r+17.)*s + (-4.)*c );
+      glVertex2d( x + (d)*c,              y + (d)*s );
+      glVertex2d( x + (d+8.)*c - (4.)*s,  y + (d+8.)*s + (4.)*c );
+      glVertex2d( x + (d+8.)*c - (-4.)*s, y + (d+8.)*s + (-4.)*c );
    glEnd(); /* GL_TRIANGLES */
 }
 
