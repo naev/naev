@@ -38,7 +38,6 @@
 #define PILOT_REFUEL_RATE     HYPERSPACE_FUEL/PILOT_REFUEL_TIME /**< Fuel per second. */
 
 /* hooks */
-#define PILOT_HOOKS        4 /**< Max number of hooks a pilot can have. */
 #define PILOT_HOOK_NONE    0 /**< No hook. */
 #define PILOT_HOOK_DEATH   1 /**< Pilot died. */
 #define PILOT_HOOK_BOARD   2 /**< Pilot got boarded. */
@@ -90,8 +89,6 @@
 
 
 /**
- * @enum PilotOutfitState
- *
  * @brief Contains the state of the outfit.
  *
  * Currently only applicable to beam weapons.
@@ -104,8 +101,6 @@ typedef enum PilotOutfitState_ {
 
 
 /**
- * @struct PilotOutfit
- *
  * @brief Stores an outfit the pilot has.
  */
 typedef struct PilotOutfit_ {
@@ -120,8 +115,6 @@ typedef struct PilotOutfit_ {
 
 
 /**
- * @struct PilotCommodity
- *
  * @brief Stores a pilot commodity.
  */
 typedef struct PilotCommodity_ {
@@ -132,8 +125,15 @@ typedef struct PilotCommodity_ {
 
 
 /**
- * @struct Pilot
- *
+ * @brief A wrapper for pilot hooks.
+ */
+typedef struct PilotHook_ {
+   int type; /**< Type of hook. */
+   int id; /**< Hook ID assosciated with pilot hook. */
+} PilotHook;
+
+
+/**
  * @brief The representation of an in-game pilot.
  */
 typedef struct Pilot_ {
@@ -203,8 +203,8 @@ typedef struct Pilot_ {
                               In per one of max shield + armour. */
 
    /* Hook attached to the pilot */
-   int hook_type[PILOT_HOOKS]; /**< Type of the hook attached to the pilot. */
-   int hook[PILOT_HOOKS]; /**< Hook ID */
+   PilotHook *hooks; /**< Pilot hooks. */
+   int nhooks; /**< Number of pilot hooks. */
 
    /* Escort stuff. */
    unsigned int parent; /**< Pilot's parent. */

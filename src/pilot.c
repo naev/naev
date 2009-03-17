@@ -1057,9 +1057,9 @@ void pilot_dead( Pilot* p )
 void pilot_runHook( Pilot* p, int hook_type )
 {
    int i;
-   for (i=0; i<PILOT_HOOKS; i++)
-      if (p->hook_type[i] == hook_type)
-         hook_runID( p->hook[i] );
+   for (i=0; i<p->nhooks; i++)
+      if (p->hooks[i].type == hook_type)
+         hook_runID( p->hooks[i].id );
 }
 
 
@@ -2280,17 +2280,10 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
  */
 void pilot_addHook( Pilot *pilot, int type, int hook )
 {
-   int i;
-
-   for (i=0; i<PILOT_HOOKS; i++) {
-      if (pilot->hook_type[i] == PILOT_HOOK_NONE) {
-         pilot->hook_type[i] = type;
-         pilot->hook[i] = hook;
-         return;
-      }
-   }
-
-   WARN("Pilot has maximum amount of hooks, cannot add another.");
+   pilot->nhooks++;
+   pilot->hooks = realloc( pilot->hooks, sizeof(PilotHook) * pilot->nhooks );
+   pilot->hooks[pilot->nhooks-1].type  = type;
+   pilot->hooks[pilot->nhooks-1].id    = hook;
 }
 
 
@@ -2480,8 +2473,8 @@ Pilot* pilot_copy( Pilot* src )
    }
 
    /* Hooks get cleared. */
-   memset( dest->hook_type, 0, sizeof(int)*PILOT_HOOKS);
-   memset( dest->hook, 0, sizeof(int)*PILOT_HOOKS);
+   dest->hooks          = NULL;
+   dest->nhooks         = 0;
 
    /* Copy has no escorts. */
    dest->escorts        = NULL;
@@ -2527,9 +2520,11 @@ void pilot_free( Pilot* p )
    int i;
   
    /* Clear up pilot hooks. */
-   for (i=0; i<PILOT_HOOKS; i++)
-      if (p->hook_type[i] != PILOT_HOOK_NONE)
-         hook_rm( p->hook[i] );
+   if (p->hooks) {
+      for (i=0; i<p->nhooks; i++)
+         hook_rm( p->hooks[i].id );
+      free(p->hooks);
+   }
 
    /* If hostile, must remove counter. */
    pilot_rmHostile(p);
