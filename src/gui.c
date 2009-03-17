@@ -837,22 +837,38 @@ static void gui_renderPilot( const Pilot* p )
       h = gui.radar.w;
    }
 
-   glBegin(GL_QUADS);
-      /* colors */
-      if (p->id == player->target) col = &cRadar_tPilot;
-      else if (pilot_isDisabled(p)) col = &cInert;
-      else if (pilot_isFlag(p,PILOT_BRIBED)) col = &cNeutral;
-      else if (pilot_isHostile(p)) col = &cHostile;
-      else if (pilot_isFriendly(p)) col = &cFriend;
-      else col = faction_getColour(p->faction);
-      ACOLOUR(*col, 1-interference_alpha); /**< Makes it much harder to see. */
+   /* colors */
+   if (p->id == player->target) col = &cRadar_tPilot;
+   else if (pilot_isDisabled(p)) col = &cInert;
+   else if (pilot_isFlag(p,PILOT_BRIBED)) col = &cNeutral;
+   else if (pilot_isHostile(p)) col = &cHostile;
+   else if (pilot_isFriendly(p)) col = &cFriend;
+   else col = faction_getColour(p->faction);
+   ACOLOUR(*col, 1-interference_alpha); /**< Makes it much harder to see. */
 
-      /* image */
-      glVertex2d( MAX(x-sx,-w), MIN(y+sy, h) ); /* top-left */
-      glVertex2d( MIN(x+sx, w), MIN(y+sy, h) );/* top-right */
-      glVertex2d( MIN(x+sx, w), MAX(y-sy,-h) );/* bottom-right */
-      glVertex2d( MAX(x-sx,-w), MAX(y-sy,-h) );/* bottom-left */
-   glEnd(); /* GL_QUADS */
+   /* Target is a cross. */
+   if (p->id == player->target) {
+      if (sx < 3.)
+         sx = 3.;
+      if (sy < 3.)
+         sy = 3.;
+      glBegin(GL_LINES);
+         glVertex2d( MAX(x-sx-2.,-w), CLAMP(-h,h,y) ); /* left */
+         glVertex2d( MIN(x+sx+2., w), CLAMP(-h,h,y) ); /* right */
+         glVertex2d( CLAMP(-w,w,x), MIN(y+sy+2., h) ); /* top */
+         glVertex2d( CLAMP(-w,w,x), MAX(y-sy-2.,-h) ); /* bottom */
+      glEnd(); /* GL_LINES */
+   }
+   /* Otherwise is square. */
+   else {
+      glBegin(GL_QUADS);
+         /* image */
+         glVertex2d( MAX(x-sx,-w), MIN(y+sy, h) ); /* top-left */
+         glVertex2d( MIN(x+sx, w), MIN(y+sy, h) ); /* top-right */
+         glVertex2d( MIN(x+sx, w), MAX(y-sy,-h) ); /* bottom-right */
+         glVertex2d( MAX(x-sx,-w), MAX(y-sy,-h) ); /* bottom-left */
+      glEnd(); /* GL_QUADS */
+   }
 }
 
 
