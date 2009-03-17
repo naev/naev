@@ -394,15 +394,14 @@ int mission_start( char *name )
 void mission_sysMark (void)
 {
    int i;
-   StarSystem *sys;
 
    space_clearMarkers();
 
    for (i=0; i<MISSION_MAX; i++) {
       if ((player_missions[i].id != 0) &&
             (player_missions[i].sys_marker != NULL)) {
-         sys = system_get(player_missions[i].sys_marker);
-         sys_setFlag(sys,SYSTEM_MARKED);
+         space_addMarker(player_missions[i].sys_marker,
+               player_missions[i].sys_markerType);
       }
    }
 }

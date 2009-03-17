@@ -62,6 +62,8 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h );
 static void map_buttonZoom( unsigned int wid, char* str );
 static void map_selectCur (void);
+static void map_drawMarker( double x, double y, double r,
+      int num, int cur, int type );
 
 
 /**
@@ -376,6 +378,51 @@ static int map_inPath( StarSystem *sys )
 }
 
 
+/**
+ * @brief Draws a mission marker on the map.
+ *
+ * @param x X position to draw at.
+ * @param y Y position to draw at.
+ * @param r Radius of system.
+ * @param num Total number of markers.
+ * @param cur Current marker to draw.
+ * @param type Type to draw.
+ */
+static void map_drawMarker( double x, double y, double r,
+      int num, int cur, int type )
+{
+   double a, c,s;
+
+   /* Get colour marking. */
+   switch (type) {
+      case 0:
+         COLOUR(cGreen);
+         break;
+      case 1:
+         COLOUR(cBlue);
+         break;
+      case 2:
+         COLOUR(cRed);
+         break;
+      case 3:
+         COLOUR(cOrange);
+         break;
+   }
+
+   /* Calculate the angle. */
+   a = M_PI/4. + M_PI*2. * (double)cur/(double)num;
+   c = cos(a);
+   s = sin(a);
+
+   /* Draw the marking triangle. */
+   glBegin(GL_TRIANGLES);
+      glVertex2d( x + (r+9.)*c  - r*s,      y + (r+9.)*s  + r*c );
+      glVertex2d( x + (r+17.)*c - (r+4.)*s, y + (r+17.)*s + (r+4.)*c );
+      glVertex2d( x + (r+17.)*c - (r-4.)*s, y + (r+17.)*s + (r-4.)*c );
+   glEnd(); /* GL_TRIANGLES */
+}
+
+
 /*
  * renders the map as a custom widget
  */
@@ -491,22 +538,34 @@ static void map_render( double bx, double by, double w, double h )
       if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED))
          continue;
 
-      /* Get colour marking. */
-      if (sys_isFlag(sys, SYSTEM_CMARKED))
-         COLOUR(cGreen);
-      else if (sys_isFlag(sys, SYSTEM_MARKED))
-         COLOUR(cRed);
-
       /* Get the position. */
       tx = x + sys->pos.x*map_zoom;
       ty = y + sys->pos.y*map_zoom;
 
-      /* Draw the marking triangle. */
-      glBegin(GL_TRIANGLES);
-         glVertex2d( tx+r+9, ty+r+3 );
-         glVertex2d( tx+r+3, ty+r+3 );
-         glVertex2d( tx+r+3, ty+r+9 );
-      glEnd(); /* GL_TRIANGLES */
+      /* Count markers. */
+      n  = (sys_isFlag(sys, SYSTEM_CMARKED)) ? 1 : 0;
+      n += sys->markers_misc;
+      n += sys->markers_cargo;
+      n += sys->markers_rush;
+
+      /* Draw the markers. */
+      j = 0;
+      if (sys_isFlag(sys, SYSTEM_CMARKED)) {
+         map_drawMarker( tx, ty, r, n, j, 0 );
+         j++;
+      }
+      for (m=0; m<sys->markers_misc; m++) {
+         map_drawMarker( tx, ty, r, n, j, 1 );
+         j++;
+      }
+      for (m=0; m<sys->markers_rush; m++) {
+         map_drawMarker( tx, ty, r, n, j, 2 );
+         j++;
+      }
+      for (m=0; m<sys->markers_cargo; m++) {
+         map_drawMarker( tx, ty, r, n, j, 3 );
+         j++;
+      }
    }
 
    /* selected planet */

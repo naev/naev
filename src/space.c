@@ -30,6 +30,7 @@
 #include "music.h"
 #include "gui.h"
 #include "fleet.h"
+#include "mission.h"
 
 
 #define XML_PLANET_ID         "Planets" /**< Planet xml document tag. */
@@ -1790,8 +1791,12 @@ void space_clearKnown (void)
 void space_clearMarkers (void)
 {
    int i;
-   for (i=0; i<systems_nstack; i++)
-      sys_rmFlag(&systems_stack[i],SYSTEM_MARKED);
+   for (i=0; i<systems_nstack; i++) {
+      sys_rmFlag(&systems_stack[i], SYSTEM_MARKED);
+      systems_stack[i].markers_misc  = 0;
+      systems_stack[i].markers_rush  = 0;
+      systems_stack[i].markers_cargo = 0;
+   }
 }
 
 
@@ -1803,6 +1808,85 @@ void space_clearComputerMarkers (void)
    int i;
    for (i=0; i<systems_nstack; i++)
       sys_rmFlag(&systems_stack[i],SYSTEM_CMARKED);
+}
+
+
+/**
+ * @brief Adds a marker to a system.
+ *
+ *    @param sys Name of the system to add marker to.
+ *    @param type Type of the marker to add.
+ *    @return 0 on success.
+ */
+int space_addMarker( const char *sys, SysMarker type )
+{
+   StarSystem *ssys;
+   int *markers;
+
+   /* Get the system. */
+   ssys = system_get(sys);
+   if (ssys == NULL)
+      return -1;
+
+   /* Get the marker. */
+   switch (type) {
+      case SYSMARKER_MISC:
+         markers = &ssys->markers_misc;
+         break;
+      case SYSMARKER_RUSH:
+         markers = &ssys->markers_rush;
+         break;
+      case SYSMARKER_CARGO:
+         markers = &ssys->markers_cargo;
+         break;
+   }
+
+   /* Decrement markers. */
+   (*markers)++;
+   sys_setFlag(ssys, SYSTEM_MARKED);
+
+   return 0;
+}
+
+
+/**
+ * @brief Removes a marker from a system.
+ *
+ *    @param sys Name of the system to remove marker from.
+ *    @param type Type of the marker to remove.
+ *    @return 0 on success.
+ */
+int space_rmMarker( const char *sys, SysMarker type )
+{
+   StarSystem *ssys;
+   int *markers;
+
+   /* Get the system. */
+   ssys = system_get(sys);
+   if (ssys == NULL)
+      return -1;
+
+   /* Get the marker. */
+   switch (type) {
+      case SYSMARKER_MISC:
+         markers = &ssys->markers_misc;
+         break;
+      case SYSMARKER_RUSH:
+         markers = &ssys->markers_rush;
+         break;
+      case SYSMARKER_CARGO:
+         markers = &ssys->markers_cargo;
+         break;
+   }
+
+   /* Decrement markers. */
+   (*markers)--;
+   if (*markers <= 0) {
+      sys_rmFlag(ssys, SYSTEM_MARKED);
+      (*markers) = 0;
+   }
+
+   return 0;
 }
 
 

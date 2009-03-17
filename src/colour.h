@@ -41,6 +41,7 @@ extern glColour cGrey10;
 extern glColour cGreen;
 extern glColour cDarkRed;
 extern glColour cRed;
+extern glColour cOrange;
 extern glColour cYellow;
 extern glColour cDarkBlue;
 extern glColour cBlue;

@@ -31,6 +31,17 @@
 
 
 /**
+ * @brief Different type of system markers.
+ */
+typedef enum SysMarker_ {
+   SYSMARKER_MISC,
+   SYSMARKER_RUSH,
+   SYSMARKER_CARGO
+} SysMarker;
+
+
+
+/**
  * @struct MissionData
  *
  * @brief Static mission data.
@@ -79,6 +90,7 @@ typedef struct Mission_ {
    int ncargo; /**< Number of cargos given to player. */
 
    char *sys_marker; /**< System to mark. */
+   SysMarker sys_markerType; /**< Type of the marker. */
 
    /* Timers. */
    double timer[MISSION_TIMER_MAX]; /**< Mission timers. */

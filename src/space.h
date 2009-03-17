@@ -13,6 +13,7 @@
 #include "pilot.h"
 #include "economy.h"
 #include "fleet.h"
+#include "mission.h"
 
 
 #define MAX_HYPERSPACE_VEL    25 /**< Speed to brake to before jumping. */
@@ -22,8 +23,6 @@
 
 
 /**
- * @enum PlanetClass
- *
  * @brief Different planet classes.
  *
  * Planets types, taken from
@@ -109,7 +108,7 @@ typedef struct Planet_ {
  * star system flags
  */
 #define SYSTEM_KNOWN       (1<<0) /**< System is known. */
-#define SYSTEM_MARKED      (1<<1) /**< System is marked by a mission. */
+#define SYSTEM_MARKED      (1<<1) /**< System is marked by a regular mission. */
 #define SYSTEM_CMARKED     (1<<2) /**< System is marked by a computer mission. */
 #define sys_isFlag(s,f)    ((s)->flags & (f)) /**< Checks system flag. */
 #define sys_setFlag(s,f)   ((s)->flags |= (f)) /**< Sets a system flag. */
@@ -159,6 +158,10 @@ typedef struct StarSystem_ {
    double nebu_volatility; /**< Nebulae volatility (0. - 1000.) */
 
    double *prices; /**< Handles the prices in the system. */
+
+   int markers_misc; /**< Number of misc mission markers on system. */
+   int markers_rush; /**< Number of rush mission markers on system. */
+   int markers_cargo; /**< Number of cargo mission markers on system. */
 
    unsigned int flags; /**< flags for system properties */
 } StarSystem;
@@ -214,6 +217,8 @@ int space_hyperspace( Pilot* p );
 int space_sysReachable( StarSystem *sys );
 char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions );
 char* space_getRndPlanet (void);
+int space_addMarker( const char *sys, SysMarker type );
+int space_rmMarker( const char *sys, SysMarker type );
 void space_clearKnown (void);
 void space_clearMarkers (void);
 void space_clearComputerMarkers (void);
