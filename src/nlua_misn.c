@@ -283,11 +283,25 @@ static int misn_setReward( lua_State *L )
  * @brief Sets the mission marker on the system.  If no parameters are passed it
  * unsets the current marker.
  *
+ * There are basically three different types of markers:
+ *
+ *  - "misc" : These markers are for unique or non-standard missions.
+ *  - "cargo" : These markers are for regular cargo hauling missions.
+ *  - "rush" : These markers are for timed missions.
+ *
+ * @usage misn.setMarker() -- Clears the marker
+ * @usage misn.setMarker( sys, "misc" ) -- Misc mission marker.
+ * @usage misn.setMarker( sys, "cargo" ) -- Cargo mission marker.
+ * @usage misn.setMarker( sys, "rush" ) -- Rush mission marker.
+ *
  *    @luaparam sys System to mark.  Unmarks if no parameter or nil is passed.
- * @luafunc setMarker( sys )
+ *    @luaparam type Optional parameter that specifies mission type.  Can be one of
+ *          "misc", "rush" or "cargo".
+ * @luafunc setMarker( sys, type )
  */
 static int misn_setMarker( lua_State *L )
 {
+   const char *str;
    LuaSystem *sys;
 
    /* No parameter clears the marker */
@@ -301,9 +315,20 @@ static int misn_setMarker( lua_State *L )
    if (lua_issystem(L,1)) {
       sys = lua_tosystem(L,1);
       cur_mission->sys_marker = strdup(sys->s->name);
-      mission_sysMark(); /* mark the system */
    }
    else NLUA_INVALID_PARAMETER();
+
+   /* Get the type. */
+   if (lua_isstring(L,2)) {
+      if (strcmp(str, "misc"))
+         cur_mission->sys_markerType = SYSMARKER_MISC;
+      else if (strcmp(str, "rush"))
+         cur_mission->sys_markerType = SYSMARKER_RUSH;
+      else if (strcmp(str, "cargo"))
+         cur_mission->sys_markerType = SYSMARKER_CARGO;
+   }
+
+   mission_sysMark(); /* mark the system */
 
    return 0;
 }

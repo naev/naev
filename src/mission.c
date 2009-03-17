@@ -963,8 +963,12 @@ int missions_saveActive( xmlTextWriterPtr writer )
          xmlw_elem(writer,"title",player_missions[i].title);
          xmlw_elem(writer,"desc",player_missions[i].desc);
          xmlw_elem(writer,"reward",player_missions[i].reward);
-         if (player_missions[i].sys_marker != NULL)
-            xmlw_elem(writer,"marker",player_missions[i].sys_marker);
+         if (player_missions[i].sys_marker != NULL) {
+            xmlw_startElem(writer,"marker");
+            xmlw_attr(writer,"type","%d",player_missions[i].sys_markerType);
+            xmlw_str(writer,player_missions[i].sys_marker);
+            xmlw_endElem(writer); /* "marker" */
+         }
 
          /* Cargo */
          xmlw_startElem(writer,"cargos");
@@ -1064,7 +1068,15 @@ static int missions_parseActive( xmlNodePtr parent )
             xmlr_strd(cur,"title",misn->title);
             xmlr_strd(cur,"desc",misn->desc);
             xmlr_strd(cur,"reward",misn->reward);
-            xmlr_strd(cur,"marker",misn->sys_marker);
+
+            /* Get the marker. */
+            if (xml_isNode(cur,"marker")) {
+               xmlr_attr(cur,"type",buf);
+               misn->sys_markerType = (buf != NULL) ? atoi(buf) : 0;
+               if (buf != NULL)
+                  free(buf);
+               misn->sys_marker = xml_getStrd(cur);
+            }
 
             /* Cargo. */
             if (xml_isNode(cur,"cargos")) {
