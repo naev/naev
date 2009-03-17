@@ -35,14 +35,14 @@
                                  aborting. */
 
 
-static double map_zoom = 1.; /**< Zoom of the map. */
-static double map_xpos = 0.; /**< Map X position. */
-static double map_ypos = 0.; /**< Map Y .osition. */
-static int map_selected = -1; /**< What system is selected on the map. */
-static StarSystem **map_path = NULL; /**< The path to current selected system. */
-int map_npath = 0; /**< Number of systems in map_path. */
+static double map_zoom        = 1.; /**< Zoom of the map. */
+static double map_xpos        = 0.; /**< Map X position. */
+static double map_ypos        = 0.; /**< Map Y .osition. */
+static int map_drag           = 0; /**< Is the user dragging the map? */
+static int map_selected       = -1; /**< What system is selected on the map. */
+static StarSystem **map_path  = NULL; /**< The path to current selected system. */
+int map_npath                 = 0; /**< Number of systems in map_path. */
 
-static int map_drag = 0; /**< Is the user dragging the map? */
 
 /*
  * extern
@@ -358,8 +358,13 @@ int map_isOpen (void)
 }
 
 
-/*
- * returns 1 if sys is part of the map_path, 2 if won't have enough fuel
+/**
+ * @brief Checks to see if a system is part of the path.
+ *
+ *    @param sys System to check.
+ *    @return 1 if system is part of the path, 2 if system is part of the path
+ *          but pilot won't have enough fuel and 0 if system is not part of the
+ *          path.
  */
 static int map_inPath( StarSystem *sys )
 {
@@ -432,8 +437,13 @@ static void map_drawMarker( double x, double y, double r,
 }
 
 
-/*
- * renders the map as a custom widget
+/**
+ * @brief Renders the custom map widget.
+ *
+ *    @param bx Base X position to render at.
+ *    @param by Base Y position to render at.
+ *    @param w Width of the widget.
+ *    @param h Height of the widget.
  */
 static void map_render( double bx, double by, double w, double h )
 {
@@ -585,8 +595,15 @@ static void map_render( double bx, double by, double w, double h )
             r+3., bx, by, w, h );
    }
 }
-/*
- * map event handling
+/**
+ * @brief Map custom widget mouse handling.
+ *
+ *    @param wid Window sending events.
+ *    @param event Event window is sending.
+ *    @param mx Mouse X position.
+ *    @param my Mouse Y position.
+ *    @param w Width of the widget.
+ *    @param h Height of the widget.
  */
 static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h )
@@ -646,6 +663,12 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
          break;
    }
 }
+/**
+ * @brief Handles the button zoom clicks.
+ *
+ *    @param wid Unused.
+ *    @param str Name of the button creating the event.
+ */
 static void map_buttonZoom( unsigned int wid, char* str )
 {
    (void) wid;
@@ -815,7 +838,8 @@ void map_select( StarSystem *sys )
  * A* algorithm for shortest path finding
  */
 /**
- * @brief Node structure for A* pathfinding. */
+ * @brief Node structure for A* pathfinding.
+ */
 typedef struct SysNode_ {
    struct SysNode_ *next; /**< Next node */
    struct SysNode_ *gnext; /**< Next node in the garbage collector. */
@@ -835,7 +859,7 @@ static SysNode* A_rm( SysNode *first, StarSystem *cur );
 static SysNode* A_in( SysNode *first, StarSystem *cur );
 static SysNode* A_lowest( SysNode *first );
 static void A_freeList( SysNode *first );
-/* creates a new node linke to star system */
+/** @brief Creates a new node linke to star system. */
 static SysNode* A_newNode( StarSystem* sys, SysNode* parent )
 {
    SysNode* n;
@@ -853,6 +877,7 @@ static SysNode* A_newNode( StarSystem* sys, SysNode* parent )
 
    return n;
 }
+/** @brief Heurestic model to use. */
 static double A_h( StarSystem *n, StarSystem *g )
 {
    (void)n;
@@ -861,12 +886,12 @@ static double A_h( StarSystem *n, StarSystem *g )
    /*return sqrt(pow2(n->pos.x - g->pos.x) + pow2(n->pos.y - g->pos.y))/100.;*/
    return 0.;
 }
-/* gets the g from a node */
+/** @brief Gets the g from a node. */
 static double A_g( SysNode* n )
 {
    return n->g;
 }
-/* adds a node to the linked list */
+/** @brief Adds a node to the linked list. */
 static SysNode* A_add( SysNode *first, SysNode *cur )
 {
    SysNode *n;
@@ -881,7 +906,7 @@ static SysNode* A_add( SysNode *first, SysNode *cur )
 
    return first;
 }
-/* removes a node from a linked list */
+/* @brief Removes a node from a linked list. */
 static SysNode* A_rm( SysNode *first, StarSystem *cur )
 {
    SysNode *n, *p;
@@ -905,7 +930,7 @@ static SysNode* A_rm( SysNode *first, StarSystem *cur )
 
    return first;
 }
-/* checks to see if node is in linked list */
+/** @brief Checks to see if node is in linked list. */
 static SysNode* A_in( SysNode *first, StarSystem *cur )
 {
    SysNode *n;
@@ -920,7 +945,7 @@ static SysNode* A_in( SysNode *first, StarSystem *cur )
    } while ((n=n->next) != NULL);
    return NULL;
 }
-/* returns the lowest ranking node from a linked list of nodes */
+/** @brief Returns the lowest ranking node from a linked list of nodes. */
 static SysNode* A_lowest( SysNode *first )
 {
    SysNode *lowest, *n;
@@ -936,7 +961,7 @@ static SysNode* A_lowest( SysNode *first )
    } while ((n=n->next) != NULL);
    return lowest;
 }
-/* frees a linked list */
+/** @brief Frees a linked list. */
 static void A_freeList( SysNode *first )
 {
    SysNode *p, *n;
@@ -953,6 +978,15 @@ static void A_freeList( SysNode *first )
    } while ((n=n->gnext) != NULL);
    free(p);
 }
+/**
+ * @brief Gets the jump path between two systems.
+ *
+ *    @param[out] njumps Number of jumps in the path.
+ *    @param sysstart Name of the system to start from.
+ *    @param sysend Name of the system to end at.
+ *    @param ignore_known Whether or not to ignore if systems are known.
+ *    @return NULL on failure, the list of njumps elements systems in the path.
+ */
 StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend, int ignore_known )
 {
    int i, j, cost;
@@ -1044,8 +1078,12 @@ StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend, int ign
 }
 
 
-/*
- * marks maps around a radius of currenty system as known
+/**
+ * @brief Marks maps around a radius of currenty system as known.
+ *
+ *    @param targ_sys System at center of the "known" circle.
+ *    @param r Radius (in jumps) to mark as known.
+ *    @return 0 on success.
  */
 int map_map( char* targ_sys, int r )
 {
@@ -1091,8 +1129,12 @@ int map_map( char* targ_sys, int r )
 }
 
 
-/*
- * Check to see if radius is mapped.
+/**
+ * @brief Check to see if radius is mapped (known).
+ *
+ *    @param targ_sys Name of the system in the center of the "known" circle.
+ *    @param r Radius to check (in jumps) if is mapped.
+ *    @return 1 if circle was already mapped, 0 if it wasn't.
  */
 int map_isMapped( char* targ_sys, int r )
 {
