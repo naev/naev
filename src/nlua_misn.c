@@ -320,6 +320,8 @@ static int misn_setMarker( lua_State *L )
 
    /* Get the type. */
    if (lua_isstring(L,2)) {
+      str = lua_tostring(L,2);
+      DEBUG("%s",str);
       if (strcmp(str, "misc"))
          cur_mission->sys_markerType = SYSMARKER_MISC;
       else if (strcmp(str, "rush"))

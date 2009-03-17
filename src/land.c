@@ -1301,6 +1301,9 @@ static void misn_accept( unsigned int wid, char* str )
          mission_ncomputer--;
          misn_genList(wid, 0);
       }
+
+      /* Reset markers. */
+      mission_sysMark();
    }
 }
 /**
