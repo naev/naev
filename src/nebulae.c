@@ -40,18 +40,18 @@ extern void loadscreen_render( double done, const char *msg ); /**< from naev.c 
 
 /* The nebulae textures */
 static GLuint nebu_textures[NEBULAE_Z]; /**< BG Nebulae textures. */
-static int nebu_w = 0; /**< BG Nebulae width. */
-static int nebu_h = 0; /**< BG Nebulae height. */
-static int nebu_pw = 0; /**< BG Padded Nebulae width. */
-static int nebu_ph = 0; /**< BG Padded Nebulae height. */
+static int nebu_w    = 0; /**< BG Nebulae width. */
+static int nebu_h    = 0; /**< BG Nebulae height. */
+static int nebu_pw   = 0; /**< BG Padded Nebulae width. */
+static int nebu_ph   = 0; /**< BG Padded Nebulae height. */
 
 /* Information on rendering */
-static int cur_nebu[2] = { 0, 1 }; /**< Nebulaes currently rendering. */
-static unsigned int last_render = 0; /**< When they were last rendered. */
+static int cur_nebu[2]           = { 0, 1 }; /**< Nebulaes currently rendering. */
+static unsigned int last_render  = 0; /**< When they were last rendered. */
 
 /* Nebulae properties */
 static double nebu_view = 0.; /**< How far player can see. */
-static double nebu_dt = 0.; /**< How fast nebulae changes. */
+static double nebu_dt   = 0.; /**< How fast nebulae changes. */
 
 /* puff textures */
 static glTexture *nebu_pufftexs[NEBULAE_PUFFS]; /**< Nebulae puffs. */
@@ -67,8 +67,8 @@ typedef struct NebulaePuff_ {
    double height; /**< height vs player */
    int tex; /**< Texture */
 } NebulaePuff;
-static NebulaePuff *nebu_puffs = NULL; /**< Stack of puffs. */
-static int nebu_npuffs = 0; /**< Number of puffs. */
+static NebulaePuff *nebu_puffs   = NULL; /**< Stack of puffs. */
+static int nebu_npuffs           = 0; /**< Number of puffs. */
 
 
 /*

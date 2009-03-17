@@ -318,7 +318,7 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
 
    if (ss_size == 0) {
       ss_size = ss_h;
-      ss_rows = (unsigned char**)malloc(sizeof(unsigned char*) * ss_size);
+      ss_rows = malloc(sizeof(unsigned char*) * ss_size);
       if (ss_rows == NULL)
          return -1;
    }
@@ -1200,6 +1200,7 @@ int gl_init (void)
    int doublebuf, depth, i, j, off, toff, supported, fsaa;
    SDL_Rect** modes;
    int flags;
+   const SDL_VideoInfo *vidinfo;
 
    /* Defaults. */
    supported = 0;
@@ -1213,7 +1214,7 @@ int gl_init (void)
    }
 
    /* Get the video information. */
-   const SDL_VideoInfo *vidinfo = SDL_GetVideoInfo();
+   vidinfo = SDL_GetVideoInfo();
 
    /* Set opengl flags. */
    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); /* Ideally want double buffering. */
