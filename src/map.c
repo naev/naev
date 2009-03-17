@@ -419,7 +419,7 @@ static void map_drawMarker( double x, double y, double r,
    else
       a = M_PI/2.;
    a += M_PI*2. * (double)cur/(double)num;
-   d = MAX(r, 8. * 2. * map_zoom);
+   d = MAX(r, 8. * 1.5 * map_zoom);
    c  = cos(a);
    s  = sin(a);
 
