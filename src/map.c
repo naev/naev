@@ -1119,9 +1119,6 @@ int map_center( const char *sys )
    map_xpos = ssys->pos.x * map_zoom;
    map_ypos = ssys->pos.y * map_zoom;
 
-   /* Select the system. */
-   map_select( ssys );
-
    return 0;
 }
 
