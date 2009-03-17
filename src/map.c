@@ -416,9 +416,9 @@ static void map_drawMarker( double x, double y, double r,
 
    /* Draw the marking triangle. */
    glBegin(GL_TRIANGLES);
-      glVertex2d( x + (r+9.)*c  - r*s,      y + (r+9.)*s  + r*c );
-      glVertex2d( x + (r+17.)*c - (r+4.)*s, y + (r+17.)*s + (r+4.)*c );
-      glVertex2d( x + (r+17.)*c - (r-4.)*s, y + (r+17.)*s + (r-4.)*c );
+      glVertex2d( x + (r+9.)*c,            y + (r+9.)*s );
+      glVertex2d( x + (r+17.)*c - (4.)*s,  y + (r+17.)*s + (4.)*c );
+      glVertex2d( x + (r+17.)*c - (-4.)*s, y + (r+17.)*s + (-4.)*c );
    glEnd(); /* GL_TRIANGLES */
 }
 
