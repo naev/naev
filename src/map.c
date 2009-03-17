@@ -399,7 +399,7 @@ static void map_drawMarker( double x, double y, double r,
          COLOUR(cGreen);
          break;
       case 1:
-         COLOUR(cBlue);
+         COLOUR(cLightBlue);
          break;
       case 2:
          COLOUR(cRed);
@@ -410,9 +410,17 @@ static void map_drawMarker( double x, double y, double r,
    }
 
    /* Calculate the angle. */
-   a = M_PI/4. + M_PI*2. * (double)cur/(double)num;
-   c = cos(a);
-   s = sin(a);
+   if ((num == 1) || (num == 2) || (num == 4))
+      a = M_PI/4.;
+   else if (num == 3)
+      a = M_PI/6.;
+   else if (num == 5)
+      a = M_PI/10.;
+   else
+      a = M_PI/2.;
+   a += M_PI*2. * (double)cur/(double)num;
+   c  = cos(a);
+   s  = sin(a);
 
    /* Draw the marking triangle. */
    glBegin(GL_TRIANGLES);
