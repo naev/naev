@@ -1199,12 +1199,12 @@ int pilot_dock( Pilot *p, Pilot *target )
    /* Free if last pilot. */
    if (target->nescorts == 1) {
       free(target->escorts);
-      target->escorts = NULL;
-      target->nescorts = 0;
+      target->escorts   = NULL;
+      target->nescorts  = 0;
    }
    else {
       memmove( &target->escorts[i], &target->escorts[i+1],
-            sizeof(unsigned int) * p->nescorts-i-1 );
+            sizeof(unsigned int) * (target->nescorts-i-1) );
       target->nescorts--;
    }
 
