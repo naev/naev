@@ -367,7 +367,7 @@ void loadscreen_render( double done, const char *msg )
    glEnd();
 
    /* Draw text. */
-   gl_print( &gl_defFont, x + gl_screen.w/2., y + gl_screen.h/2 + 2. + h,
+   gl_printRaw( &gl_defFont, x + gl_screen.w/2., y + gl_screen.h/2 + 2. + h,
          &cConsole, msg );
 
    /* Flip buffers. */

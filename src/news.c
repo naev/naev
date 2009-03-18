@@ -119,7 +119,7 @@ static void news_render( double bx, double by, double w, double h )
          continue;
       }
 
-      gl_printMid( news_font, w-40.,
+      gl_printMidRaw( news_font, w-40.,
             bx+10 + (double)SCREEN_W/2., by+y + (double)SCREEN_H/2.,
             &cConsole, news_lines[i] );
 

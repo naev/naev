@@ -22,8 +22,8 @@
 #include "font.h"
 
 #include "ft2build.h"
-#include FT_FREETYPE_H 
-#include FT_GLYPH_H 
+#include FT_FREETYPE_H
+#include FT_GLYPH_H
 
 #include "naev.h"
 #include "log.h"
@@ -38,7 +38,7 @@ glFont gl_defFont; /**< Default font. */
 glFont gl_smallFont; /**< Small font. */
 
 
-/* 
+/*
  * prototypes
  */
 static void glFontMakeDList( FT_Face face, char ch,
@@ -58,12 +58,11 @@ static int font_limitSize( const glFont *ft_font, int *width,
 static int font_limitSize( const glFont *ft_font, int *width,
       const char *text, const int max )
 {
-   int n, len, i;
+   int n, i;
 
    /* limit size */
-   len = (int)strlen(text);
    n = 0;
-   for (i=0; i<len; i++) {
+   for (i=0; text[i] != '\0'; i++) {
       n += ft_font->w[ (int)text[i] ];
       if (n > max) {
          n -= ft_font->w[ (int)text[i] ]; /* actual size */
@@ -89,10 +88,10 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
       const int width )
 {
    int i, n, lastspace;
-   
+
    if (ft_font == NULL)
       ft_font = &gl_defFont;
-   
+
    /* limit size per line */
    lastspace = 0; /* last ' ' or '\n' in the text */
    n = 0; /* current width */
@@ -114,7 +113,7 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
 
       /* Check if out of bounds. */
       if (n > width)
-         return lastspace;   
+         return lastspace;
 
       /* Check next character. */
       i++;
@@ -139,6 +138,9 @@ void gl_printRaw( const glFont *ft_font,
       const double x, const double y,
       const glColour* c, const char *text )
 {
+   if (ft_font == NULL)
+      ft_font = &gl_defFont;
+
    glEnable(GL_TEXTURE_2D);
 
    glListBase(ft_font->list_base);
@@ -150,7 +152,7 @@ void gl_printRaw( const glFont *ft_font,
 
    if (c==NULL) glColor4d( 1., 1., 1., 1. );
    else COLOUR(*c);
-   glCallLists(strlen(text), GL_UNSIGNED_BYTE, &text);
+   glCallLists(strlen(text), GL_UNSIGNED_BYTE, text);
 
    glPopMatrix(); /* translation matrix */
    glDisable(GL_TEXTURE_2D);
@@ -177,9 +179,6 @@ void gl_print( const glFont *ft_font,
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
    char text[256]; /* holds the string */
    va_list ap;
-
-   if (ft_font == NULL)
-      ft_font = &gl_defFont;                            
 
    if (fmt == NULL) return;
    else { /* convert the symbols to text */
@@ -211,6 +210,9 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
 
    ret = 0; /* default return value */
 
+   if (ft_font == NULL)
+      ft_font = &gl_defFont;
+
    /* limit size */
    ret = font_limitSize( ft_font, NULL, text, max );
 
@@ -226,7 +228,7 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
 
    if (c==NULL) glColor4d( 1., 1., 1., 1. );
    else COLOUR(*c);
-   glCallLists(ret, GL_UNSIGNED_BYTE, &text);
+   glCallLists(ret, GL_UNSIGNED_BYTE, text);
 
    glPopMatrix(); /* translation matrix */
    glDisable(GL_TEXTURE_2D);
@@ -256,9 +258,6 @@ int gl_printMax( const glFont *ft_font, const int max,
    int ret;
 
    ret = 0; /* default return value */
-
-   if (ft_font == NULL)
-      ft_font = &gl_defFont;
 
    if (fmt == NULL) return -1;
    else { /* convert the symbols to text */
@@ -291,6 +290,9 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
    int n, ret;
 
+   if (ft_font == NULL)
+      ft_font = &gl_defFont;
+
    ret = 0; /* default return value */
 
    /* limit size */
@@ -309,7 +311,7 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
 
    if (c==NULL) glColor4d( 1., 1., 1., 1. );
    else COLOUR(*c);
-   glCallLists(ret, GL_UNSIGNED_BYTE, &text);
+   glCallLists(ret, GL_UNSIGNED_BYTE, text);
 
    glPopMatrix(); /* translation matrix */
    glDisable(GL_TEXTURE_2D);
@@ -338,12 +340,6 @@ int gl_printMid( const glFont *ft_font, const int width,
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
    char text[256]; /* holds the string */
    va_list ap;
-   int ret;
-
-   ret = 0; /* default return value */
-
-   if (ft_font == NULL)
-      ft_font = &gl_defFont;
 
    if (fmt == NULL) return -1;
    else { /* convert the symbols to text */
@@ -352,7 +348,7 @@ int gl_printMid( const glFont *ft_font, const int width,
       va_end(ap);
    }
 
-   return gl_printMaxRaw( ft_font, width, x, y, c, text );
+   return gl_printMidRaw( ft_font, width, x, y, c, text );
 }
 
 
@@ -379,6 +375,9 @@ int gl_printTextRaw( const glFont *ft_font,
    int i, p;
    double x,y;
 
+   if (ft_font == NULL)
+      ft_font = &gl_defFont;
+
    bx -= (double)SCREEN_W/2.;
    by -= (double)SCREEN_H/2.;
    x = bx;
@@ -395,7 +394,7 @@ int gl_printTextRaw( const glFont *ft_font,
       i = gl_printWidthForText( ft_font, &text[p], width );
 
       glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
-      glPushMatrix(); /* translation matrix */                               
+      glPushMatrix(); /* translation matrix */
          glTranslated( round(x), round(y), 0);
 
       glCallLists(i, GL_UNSIGNED_BYTE, &text[p]); /* the actual displaying */
@@ -440,9 +439,6 @@ int gl_printText( const glFont *ft_font,
    char text[4096]; /* holds the string */
    va_list ap;
 
-   if (ft_font == NULL)
-      ft_font = &gl_defFont;
-
    if (fmt == NULL) return -1;
    else { /* convert the symbols to text */
       va_start(ap, fmt);
@@ -464,8 +460,11 @@ int gl_printText( const glFont *ft_font,
  *    @return The length of the text in pixels.
  */
 int gl_printWidthRaw( const glFont *ft_font, const char *text )
-{  
+{
    int i, n;
+
+   if (ft_font == NULL)
+      ft_font = &gl_defFont;
 
    for (n=0,i=0; i<(int)strlen(text); i++)
       n += ft_font->w[ (int)text[i] ];
@@ -484,12 +483,9 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
  *    @return The length of the text in pixels.
  */
 int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
-{  
+{
    char text[256]; /* holds the string */
-   va_list ap;                                                            
-
-   if (ft_font == NULL)
-      ft_font = &gl_defFont;
+   va_list ap;
 
    if (fmt == NULL) return 0;
    else { /* convert the symbols to text */
@@ -518,16 +514,16 @@ int gl_printHeight( const glFont *ft_font,
    va_list ap;
    int i, p;
    double y;
-   
-   if (ft_font == NULL) 
+
+   if (ft_font == NULL)
       ft_font = &gl_defFont;
-   
+
    if (fmt == NULL) return -1;
    else { /* convert the symbols to text */
       va_start(ap, fmt);
       vsnprintf(text, 1024, fmt, ap);
       va_end(ap);
-   } 
+   }
 
    /* Check 0 length strings. */
    if (text[0] == '\0')
@@ -540,7 +536,7 @@ int gl_printHeight( const glFont *ft_font,
       p += i + 1;
       y += 1.5*(double)ft_font->h; /* move position down */
    } while (text[p-1] != '\0');
-   
+
    return (int) (y - 0.5*(double)ft_font->h);
 }
 
@@ -558,7 +554,7 @@ int gl_printHeight( const glFont *ft_font,
  */
 static void glFontMakeDList( FT_Face face, char ch,
       GLuint list_base, GLuint *tex_base, int* width_base )
-{  
+{
    FT_Bitmap bitmap;
    GLubyte* expanded_data;
    FT_GlyphSlot slot;
@@ -570,7 +566,7 @@ static void glFontMakeDList( FT_Face face, char ch,
 
    /* Load the glyph. */
    if (FT_Load_Char( face, ch, FT_LOAD_RENDER ))
-      WARN("FT_Load_Char failed.");                                       
+      WARN("FT_Load_Char failed.");
 
    bitmap = slot->bitmap; /* to simplify */
 
@@ -606,7 +602,7 @@ static void glFontMakeDList( FT_Face face, char ch,
 
    /* corrects a spacing flaw between letters and
     * downwards correction for letters like g or y */
-   glPushMatrix();                                                        
+   glPushMatrix();
       glTranslated( (double)slot->bitmap_left, (double)(slot->bitmap_top-bitmap.rows), 0. );
 
    /* take into account opengl POT wrapping */
@@ -619,13 +615,13 @@ static void glFontMakeDList( FT_Face face, char ch,
 
       glTexCoord2d( 0., 0. );
          glVertex2d( 0., (double)bitmap.rows );
-      
+
       glTexCoord2d( x, 0. );
          glVertex2d( (double)bitmap.width, (double)bitmap.rows );
 
       glTexCoord2d( x, y );
          glVertex2d( (double)bitmap.width, 0. );
-      
+
       glTexCoord2d( 0., y );
          glVertex2d( 0., 0. );
 
