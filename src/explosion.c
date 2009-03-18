@@ -19,6 +19,11 @@
 #include "rng.h"
 
 
+static int exp_s = -1; /**< Small explosion spfx. */
+static int exp_m = -1; /**< Medium explosion spfx. */
+static int exp_l = -1; /**< Large explosion spfx. */
+
+
 /**
  * @brief Does explosion in a radius (damage and graphics).
  *
@@ -42,12 +47,13 @@ void expl_explode( double x, double y, double vx, double vy,
    double ex, ey;
    int layer;
    int efx;
-   int exp_s, exp_m, exp_l;
 
-   /* Standard stuff. */
-   exp_s = spfx_get("ExpS");
-   exp_m = spfx_get("ExpM");
-   exp_l = spfx_get("ExpL");
+   /* Standard stuff - lazy allocation. */
+   if (exp_s == -1) {
+      exp_s = spfx_get("ExpS");
+      exp_m = spfx_get("ExpM");
+      exp_l = spfx_get("ExpL");
+   }
    layer = SPFX_LAYER_FRONT;
 
    /* Number of explosions. */
