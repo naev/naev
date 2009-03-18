@@ -40,9 +40,6 @@ extern void ai_setPilot( Pilot *p ); /**< from ai.c */
 
 
 /**
- * @fn int escort_create( unsigned int parent, char *ship,
- *       Vector2d *pos, Vector2d *vel, int carried )
- *
  * @brief Creates an escort.
  *
  *    @param parent Parent of the escort (who he's guarding).
@@ -91,8 +88,6 @@ int escort_create( unsigned int parent, char *ship,
 
 
 /**
- * @fn static int escort_command( Pilot *parent, int cmd, int param )
- *
  * @brief Runs an escort command on all of a pilot's escorts.
  *
  *    @param parent Pilot who is giving orders.
@@ -156,8 +151,6 @@ static int escort_command( Pilot *parent, int cmd, int param )
 
 
 /**
- * @fn int escorts_attack( Pilot *parent )
- *
  * @brief Have a pilot order it's escorts to attack it's target.
  *
  *    @param parent Pilot giving the order.
@@ -178,8 +171,6 @@ int escorts_attack( Pilot *parent )
    return ret;
 }
 /**
- * @fn int escorts_hold( Pilot *parent )
- *
  * @brief Have a pilot order it's escorts to hold position.
  *
  *    @param parent Pilot giving the order.
@@ -193,8 +184,6 @@ int escorts_hold( Pilot *parent )
    return ret;
 }
 /**
- * @fn int escorts_return( Pilot *parent )
- *
  * @brief Have a pilot order it's escorts to dock.
  *
  *    @param parent Pilot giving the order.
@@ -208,8 +197,6 @@ int escorts_return( Pilot *parent )
    return ret;
 }
 /**
- * @fn int escorts_clear( Pilot *parent )
- *
  * @brief Have a pilot order it's escorts to clear orders.
  *
  *    @param parent Pilot giving the order.
