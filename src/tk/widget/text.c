@@ -76,12 +76,12 @@ static void txt_render( Widget* txt, double bx, double by )
       return;
    
    if (txt->dat.txt.centered)
-      gl_printMid( txt->dat.txt.font, txt->w,
+      gl_printMidRaw( txt->dat.txt.font, txt->w,
             bx + (double)SCREEN_W/2. + txt->x,
             by + (double)SCREEN_H/2. + txt->y,
             txt->dat.txt.colour, txt->dat.txt.text );
    else
-      gl_printText( txt->dat.txt.font, txt->w, txt->h,
+      gl_printTextRaw( txt->dat.txt.font, txt->w, txt->h,
             bx + (double)SCREEN_W/2. + txt->x,
             by + (double)SCREEN_H/2. + txt->y,
             txt->dat.txt.colour, txt->dat.txt.text );

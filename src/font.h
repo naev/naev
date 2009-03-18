@@ -35,6 +35,27 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h );
 void gl_freeFont( glFont* font );
 
 
+/*
+ * const char printing
+ */
+void gl_printRaw( const glFont *ft_font,
+      const double x, const double y,
+      const glColour* c, const char *text );
+int gl_printMaxRaw( const glFont *ft_font, const int max,
+      const double x, const double y,
+      const glColour* c, const char *text );
+int gl_printMidRaw( const glFont *ft_font, const int width,
+      double x, const double y,
+      const glColour* c, const char *text );
+int gl_printTextRaw( const glFont *ft_font,
+      const int width, const int height,
+      double bx, double by,
+      glColour* c, const char *text );
+
+
+/*
+ * printf style printing.
+ */
 /* prints text normally */
 void gl_print( const glFont *ft_font, const double x, const double y,
       const glColour *c, const char *fmt, ... );
@@ -54,8 +75,9 @@ int gl_printText( const glFont *ft_font,
 
 
 /* Dimension stuff. */
-int gl_printWidthForText( const glFont *ft_font, char *text,
+int gl_printWidthForText( const glFont *ft_font, const char *text,
       const int width );
+int gl_printWidthRaw( const glFont *ft_font, const char *text );
 int gl_printWidth( const glFont *ft_font, const char *fmt, ... );
 int gl_printHeight( const glFont *ft_font,
       const int width, const char *fmt, ... );

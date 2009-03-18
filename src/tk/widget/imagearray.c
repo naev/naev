@@ -152,7 +152,7 @@ static void iar_render( Widget* iar, double bx, double by )
                   iar->dat.iar.iw, iar->dat.iar.ih, NULL );
 
          /* caption */
-         gl_printMid( &gl_smallFont, iar->dat.iar.iw, xcurs + 5., ycurs + 5.,
+         gl_printMidRaw( &gl_smallFont, iar->dat.iar.iw, xcurs + 5., ycurs + 5.,
                   (is_selected) ? &cBlack : &cWhite,
                   iar->dat.iar.captions[j*xelem + i] );
 

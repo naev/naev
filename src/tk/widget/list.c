@@ -131,7 +131,7 @@ static void lst_render( Widget* lst, double bx, double by )
    y = ty - 2.;
    w -= 4;
    for (i=lst->dat.lst.pos; i<lst->dat.lst.noptions; i++) {
-      gl_printMax( &gl_defFont, (int)w,
+      gl_printMaxRaw( &gl_defFont, (int)w,
             tx, ty, &cBlack, lst->dat.lst.options[i] );
       ty -= 2 + gl_defFont.h;
 

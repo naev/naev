@@ -86,7 +86,7 @@ static void inp_render( Widget* inp, double bx, double by )
    /* center vertically */
    if (inp->dat.inp.oneline) ty = y - (inp->h - gl_smallFont.h)/2.;
 
-   gl_printText( &gl_smallFont, inp->w-10., inp->h,
+   gl_printTextRaw( &gl_smallFont, inp->w-10., inp->h,
          x+5. + SCREEN_W/2., ty  + SCREEN_H/2.,
          &cBlack, inp->dat.inp.input + inp->dat.inp.view );
 
@@ -145,7 +145,7 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          inp->dat.inp.input[ --inp->dat.inp.pos ] = '\0';
 
          if (inp->dat.inp.view > 0) {
-            n = gl_printWidth( &gl_smallFont,
+            n = gl_printWidthRaw( &gl_smallFont,
                   inp->dat.inp.input + inp->dat.inp.view - 1 );
             if (n+10 < inp->w)
                inp->dat.inp.view--;
@@ -169,7 +169,7 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          /* didn't get a useful key */
          else return 0;
 
-         n = gl_printWidth( &gl_smallFont, inp->dat.inp.input+inp->dat.inp.view );
+         n = gl_printWidthRaw( &gl_smallFont, inp->dat.inp.input+inp->dat.inp.view );
          if (n+10 > inp->w) inp->dat.inp.view++;
          return 1;
       }

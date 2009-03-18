@@ -838,7 +838,7 @@ static void window_render( Window* w )
    /*
     * render window name
     */
-   gl_printMid( &gl_defFont, w->w,
+   gl_printMidRaw( &gl_defFont, w->w,
          x + (double)SCREEN_W/2.,
          y + w->h - 20. + (double)SCREEN_H/2.,
          &cBlack, w->name );

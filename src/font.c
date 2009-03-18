@@ -44,7 +44,7 @@ glFont gl_smallFont; /**< Small font. */
 static void glFontMakeDList( FT_Face face, char ch,
       GLuint list_base, GLuint *tex_base, int *width_base );
 static int font_limitSize( const glFont *ft_font, int *width,
-      char *text, const int max );
+      const char *text, const int max );
 
 
 /**
@@ -56,7 +56,7 @@ static int font_limitSize( const glFont *ft_font, int *width,
  *    @param max Max to look for.
  */
 static int font_limitSize( const glFont *ft_font, int *width,
-      char *text, const int max )
+      const char *text, const int max )
 {
    int n, len, i;
 
@@ -67,7 +67,6 @@ static int font_limitSize( const glFont *ft_font, int *width,
       n += ft_font->w[ (int)text[i] ];
       if (n > max) {
          n -= ft_font->w[ (int)text[i] ]; /* actual size */
-         text[i] = '\0';
          break;
       }
    }
@@ -86,7 +85,7 @@ static int font_limitSize( const glFont *ft_font, int *width,
  *    @param width Width to match.
  *    @return Number of characters that fit.
  */
-int gl_printWidthForText( const glFont *ft_font, char *text,
+int gl_printWidthForText( const glFont *ft_font, const char *text,
       const int width )
 {
    int i, n, lastspace;
@@ -126,6 +125,41 @@ int gl_printWidthForText( const glFont *ft_font, char *text,
 
 
 /**
+ * @brief Prints text on screen.
+ *
+ * Defaults ft_font to gl_defFont if NULL.
+ *
+ *    @param ft_font Font to use
+ *    @param x X position to put text at.
+ *    @param y Y position to put text at.
+ *    @param c Colour to use (uses white if NULL)
+ *    @param str String to display.
+ */
+void gl_printRaw( const glFont *ft_font,
+      const double x, const double y,
+      const glColour* c, const char *text )
+{
+   glEnable(GL_TEXTURE_2D);
+
+   glListBase(ft_font->list_base);
+
+   glMatrixMode(GL_MODELVIEW);
+   glPushMatrix(); /* translation matrix */
+      glTranslated( round(x-(double)SCREEN_W/2.),
+            round(y-(double)SCREEN_H/2.), 0);
+
+   if (c==NULL) glColor4d( 1., 1., 1., 1. );
+   else COLOUR(*c);
+   glCallLists(strlen(text), GL_UNSIGNED_BYTE, &text);
+
+   glPopMatrix(); /* translation matrix */
+   glDisable(GL_TEXTURE_2D);
+
+   gl_checkErr();
+}
+
+
+/**
  * @brief Prints text on screen like printf.
  *
  * Defaults ft_font to gl_defFont if NULL.
@@ -154,23 +188,52 @@ void gl_print( const glFont *ft_font,
       va_end(ap);
    }
 
+   gl_printRaw( ft_font, x, y, c, text );
+}
+
+
+/**
+ * @brief Behavise like gl_printRaw but stops displaying text after a certain distance.
+ *
+ *    @param ft_font Font to use.
+ *    @param max Maximum length to reach.
+ *    @param x X position to display text at.
+ *    @param y Y position to display text at.
+ *    @param c Colour to use (NULL defaults to white).
+ *    @param fmt String to display formatted like printf.
+ *    @return The number of characters it had to suppress.
+ */
+int gl_printMaxRaw( const glFont *ft_font, const int max,
+      const double x, const double y,
+      const glColour* c, const char *text )
+{
+   int ret;
+
+   ret = 0; /* default return value */
+
+   /* limit size */
+   ret = font_limitSize( ft_font, NULL, text, max );
+
+   /* display the text */
    glEnable(GL_TEXTURE_2D);
 
    glListBase(ft_font->list_base);
 
-   glMatrixMode(GL_MODELVIEW);
+   glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
    glPushMatrix(); /* translation matrix */
       glTranslated( round(x-(double)SCREEN_W/2.),
             round(y-(double)SCREEN_H/2.), 0);
 
    if (c==NULL) glColor4d( 1., 1., 1., 1. );
    else COLOUR(*c);
-   glCallLists(strlen(text), GL_UNSIGNED_BYTE, &text);
+   glCallLists(ret, GL_UNSIGNED_BYTE, &text);
 
    glPopMatrix(); /* translation matrix */
    glDisable(GL_TEXTURE_2D);
 
    gl_checkErr();
+
+   return 0;
 }
 /**
  * @brief Behavise like gl_print but stops displaying text after reaching a certain length.
@@ -204,37 +267,16 @@ int gl_printMax( const glFont *ft_font, const int max,
       va_end(ap);
    }
 
-   /* limit size */
-   ret = font_limitSize( ft_font, NULL, text, max );
-
-   /* display the text */
-   glEnable(GL_TEXTURE_2D);
-
-   glListBase(ft_font->list_base);
-
-   glMatrixMode(GL_MODELVIEW); /* using MODELVIEW, PROJECTION gets full fast */
-   glPushMatrix(); /* translation matrix */
-      glTranslated( round(x-(double)SCREEN_W/2.),
-            round(y-(double)SCREEN_H/2.), 0);
-
-   if (c==NULL) glColor4d( 1., 1., 1., 1. );
-   else COLOUR(*c);
-   glCallLists(ret, GL_UNSIGNED_BYTE, &text);
-
-   glPopMatrix(); /* translation matrix */
-   glDisable(GL_TEXTURE_2D);
-
-   gl_checkErr();
-
-   return 0;
+   return gl_printMaxRaw( ft_font, max, x, y, c, text );
 }
+
 
 /**
  * @brief Displays text centered in position and width.
  *
  * Will truncate if text is too long.
  *
- *    @param ft_font Font to use (NULL defaults to gl_defFont)
+ *    @param ft_font Font to use.
  *    @param width Width of area to center in.
  *    @param x X position to display text at.
  *    @param y Y position to display text at.
@@ -242,26 +284,14 @@ int gl_printMax( const glFont *ft_font, const int max,
  *    @param fmt Text to display formatted like printf.
  *    @return The number of characters it had to truncate.
  */
-int gl_printMid( const glFont *ft_font, const int width,
+int gl_printMidRaw( const glFont *ft_font, const int width,
       double x, const double y,
-      const glColour* c, const char *fmt, ... )
+      const glColour* c, const char *text )
 {
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
-   char text[256]; /* holds the string */
-   va_list ap;
    int n, ret;
 
    ret = 0; /* default return value */
-
-   if (ft_font == NULL)
-      ft_font = &gl_defFont;
-
-   if (fmt == NULL) return -1;
-   else { /* convert the symbols to text */
-      va_start(ap, fmt);
-      vsnprintf(text, 256, fmt, ap);
-      va_end(ap);
-   }
 
    /* limit size */
    ret = font_limitSize( ft_font, &n, text, width );
@@ -289,11 +319,49 @@ int gl_printMid( const glFont *ft_font, const int width,
    return 0;
 }
 /**
+ * @brief Displays text centered in position and width.
+ *
+ * Will truncate if text is too long.
+ *
+ *    @param ft_font Font to use (NULL defaults to gl_defFont)
+ *    @param width Width of area to center in.
+ *    @param x X position to display text at.
+ *    @param y Y position to display text at.
+ *    @param c Colour to use for text (NULL defaults to white).
+ *    @param fmt Text to display formatted like printf.
+ *    @return The number of characters it had to truncate.
+ */
+int gl_printMid( const glFont *ft_font, const int width,
+      double x, const double y,
+      const glColour* c, const char *fmt, ... )
+{
+   /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
+   char text[256]; /* holds the string */
+   va_list ap;
+   int ret;
+
+   ret = 0; /* default return value */
+
+   if (ft_font == NULL)
+      ft_font = &gl_defFont;
+
+   if (fmt == NULL) return -1;
+   else { /* convert the symbols to text */
+      va_start(ap, fmt);
+      vsnprintf(text, 256, fmt, ap);
+      va_end(ap);
+   }
+
+   return gl_printMaxRaw( ft_font, width, x, y, c, text );
+}
+
+
+/**
  * @brief Prints a block of text that fits in the dimensions given.
  *
  * Positions are based on origin being top-left.
  *
- *    @param ft_font Font to use (NULL defaults to gl_defFont).
+ *    @param ft_font Font to use.
  *    @param width Maximum width to print to.
  *    @param height Maximum height to print to.
  *    @param bx X position to display text at.
@@ -303,26 +371,14 @@ int gl_printMid( const glFont *ft_font, const int width,
  *    @return 0 on success.
  * prints text with line breaks included to a maximum width and height preset
  */
-int gl_printText( const glFont *ft_font,
+int gl_printTextRaw( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
-      glColour* c, const char *fmt, ... )
+      glColour* c, const char *text )
 {
-   /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
-   char text[4096]; /* holds the string */
-   va_list ap;
    int i, p;
    double x,y;
 
-   if (ft_font == NULL)
-      ft_font = &gl_defFont;
-
-   if (fmt == NULL) return -1;
-   else { /* convert the symbols to text */
-      va_start(ap, fmt);
-      vsnprintf(text, 4096, fmt, ap);
-      va_end(ap);
-   }
    bx -= (double)SCREEN_W/2.;
    by -= (double)SCREEN_H/2.;
    x = bx;
@@ -361,6 +417,64 @@ int gl_printText( const glFont *ft_font,
 
 
 /**
+ * @brief Prints a block of text that fits in the dimensions given.
+ *
+ * Positions are based on origin being top-left.
+ *
+ *    @param ft_font Font to use (NULL defaults to gl_defFont).
+ *    @param width Maximum width to print to.
+ *    @param height Maximum height to print to.
+ *    @param bx X position to display text at.
+ *    @param by Y position to display text at.
+ *    @param c Colour to use (NULL defaults to white).
+ *    @param fmt Text to display formatted like printf.
+ *    @return 0 on success.
+ * prints text with line breaks included to a maximum width and height preset
+ */
+int gl_printText( const glFont *ft_font,
+      const int width, const int height,
+      double bx, double by,
+      glColour* c, const char *fmt, ... )
+{
+   /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
+   char text[4096]; /* holds the string */
+   va_list ap;
+
+   if (ft_font == NULL)
+      ft_font = &gl_defFont;
+
+   if (fmt == NULL) return -1;
+   else { /* convert the symbols to text */
+      va_start(ap, fmt);
+      vsnprintf(text, 4096, fmt, ap);
+      va_end(ap);
+   }
+
+   return gl_printTextRaw( ft_font, width, height, bx, by, c, text );
+}
+
+
+/**
+ * @brief Gets the width that it would take to print some text.
+ *
+ * Does not display text on screen.
+ *
+ *    @param ft_font Font to use (NULL defaults to gl_defFont).
+ *    @param fmt Text to calculate the length of.
+ *    @return The length of the text in pixels.
+ */
+int gl_printWidthRaw( const glFont *ft_font, const char *text )
+{  
+   int i, n;
+
+   for (n=0,i=0; i<(int)strlen(text); i++)
+      n += ft_font->w[ (int)text[i] ];
+
+   return n;
+}
+
+
+/**
  * @brief Gets the width that it would take to print some text.
  *
  * Does not display text on screen.
@@ -371,7 +485,6 @@ int gl_printText( const glFont *ft_font,
  */
 int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
 {  
-   int i, n;
    char text[256]; /* holds the string */
    va_list ap;                                                            
 
@@ -385,10 +498,7 @@ int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
       va_end(ap);
    }
 
-   for (n=0,i=0; i<(int)strlen(text); i++)
-      n += ft_font->w[ (int)text[i] ];
-
-   return n;
+   return gl_printWidthRaw( ft_font, text );
 }
 
 /**
