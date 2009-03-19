@@ -58,6 +58,7 @@
 #define PILOT_PLAYER       (1<<0) /**< Pilot is a player. */
 #define PILOT_ESCORT       (1<<1) /**< Pilot is an escort. */
 #define PILOT_CARRIED      (1<<2) /**< Pilot usually resides in a fighter bay. */
+#define PILOT_CREATED_AI   (1<<3) /** Pilot has already created AI. */
 #define PILOT_EMPTY        (1<<5) /**< Do not add pilot to stack. */
 #define PILOT_NO_OUTFITS   (1<<6) /**< Do not create the pilot with outfits. */
 #define PILOT_HASTURRET    (1<<9) /**< Pilot has turrets. */

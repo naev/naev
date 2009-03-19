@@ -62,7 +62,7 @@ static double sensor_curRange = 0.; /**< Current sensor range, set in pilots_upd
  */
 /* external */
 extern void ai_getDistress( Pilot* p, const Pilot* distressed ); /**< from ai.c */
-extern AI_Profile* ai_pinit( Pilot *p, char *ai ); /**< from ai.c */
+extern AI_Profile* ai_pinit( Pilot *p, const char *ai ); /**< from ai.c */
 extern void ai_destroy( Pilot* p ); /**< from ai.c */
 extern void ai_think( Pilot* pilot ); /**< from ai.c */
 /* internal */

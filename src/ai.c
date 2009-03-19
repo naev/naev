@@ -142,8 +142,8 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker ); /* weapon.c */
 void ai_refuel( Pilot* refueler, unsigned int target ); /* comm.c */
 void ai_getDistress( Pilot* p, const Pilot* distressed ); /* pilot.c */
 /* C Routines made External */
-int ai_pinit( Pilot *p, char *ai ); /* pilot.c */
-void ai_destroy( Pilot* p ); /* pilot.c */
+int ai_pinit( Pilot *p, const char *ai );
+void ai_destroy( Pilot* p );
 void ai_think( Pilot* pilot ); /* pilot.c */
 void ai_setPilot( Pilot *p ); /* escort.c */
 
@@ -398,7 +398,7 @@ static void ai_run( lua_State *L, const char *funcname )
  *    @param p Pilot to initialize in AI.
  *    @param ai AI to initialize pilot.
  */
-int ai_pinit( Pilot *p, char *ai )
+int ai_pinit( Pilot *p, const char *ai )
 {
    int i, n;
    AI_Profile *prof;
@@ -446,7 +446,10 @@ int ai_pinit( Pilot *p, char *ai )
    lua_pop(L,1);
 
    /* Create the pilot. */
-   ai_create( p, (n!=0) ? param : NULL );
+   if (!pilot_isFlag(p, PILOT_CREATED_AI)) {
+      ai_create( p, (n!=0) ? param : NULL );
+      pilot_setFlag(p, PILOT_CREATED_AI);
+   }
 
    return 0;
 }

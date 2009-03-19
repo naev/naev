@@ -33,6 +33,14 @@ extern Pilot** pilot_stack;
 extern int pilot_nstack;
 
 
+/*
+ * Prototypes.
+ */
+/* External. */
+extern int ai_pinit( Pilot *p, const char *ai );
+extern void ai_destroy( Pilot* p );
+
+
 /* Pilot metatable methods. */
 static int pilot_getPlayer( lua_State *L );
 static int pilot_addFleet( lua_State *L );
@@ -53,6 +61,7 @@ static int pilotL_setFriendly( lua_State *L );
 static int pilotL_disable( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
 static int pilotL_rmOutfit( lua_State *L );
+static int pilotL_changeAI( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    { "player", pilot_getPlayer },
    { "add", pilot_addFleet },
@@ -73,6 +82,7 @@ static const luaL_reg pilotL_methods[] = {
    { "disable", pilotL_disable },
    { "addOutfit", pilotL_addOutfit },
    { "rmOutfit", pilotL_rmOutfit },
+   { "changeAI", pilotL_changeAI },
    {0,0}
 }; /**< Pilot metatable methods. */
 
@@ -846,6 +856,37 @@ static int pilotL_rmOutfit( lua_State *L )
    /* Add outfit. */
    n = pilot_rmOutfit( p, o, q );
    lua_pushnumber(L,n);
+   return 1;
+}
+
+/**
+ * @brief Changes the pilot's AI.
+ *
+ * @usage p:changeAI( "empire" ) -- set the pilot to use the Empire AI
+ *
+ * @luafunc changeAI( p, newai )
+ */
+static int pilotL_changeAI( lua_State *L )
+{
+   LuaPilot *lp;
+   Pilot *p;
+   const char *str;
+   int ret;
+
+   /* Get the pilot. */
+   lp = lua_topilot(L,1);
+   p = pilot_get(lp->pilot);
+   if (p==NULL) return 0;
+
+   /* Get parameters. */
+   str = luaL_checkstring(L,2);
+
+   /* Get rid of current AI. */
+   ai_destroy(p);
+
+   /* Create the new AI. */
+   ret = ai_pinit( p, str );
+   lua_pushboolean(L, ret);
    return 1;
 }
 
