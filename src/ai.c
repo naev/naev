@@ -446,10 +446,8 @@ int ai_pinit( Pilot *p, const char *ai )
    lua_pop(L,1);
 
    /* Create the pilot. */
-   if (!pilot_isFlag(p, PILOT_CREATED_AI)) {
-      ai_create( p, (n!=0) ? param : NULL );
-      pilot_setFlag(p, PILOT_CREATED_AI);
-   }
+   ai_create( p, (n!=0) ? param : NULL );
+   pilot_setFlag(p, PILOT_CREATED_AI);
 
    return 0;
 }
@@ -766,7 +764,8 @@ static void ai_create( Pilot* pilot, char *param )
    L = cur_pilot->ai->L;
 
    /* Set creation mode. */
-   aiL_status = AI_STATUS_CREATE;
+   if (!pilot_isFlag(pilot, PILOT_CREATED_AI))
+      aiL_status = AI_STATUS_CREATE;
 
    /* Prepare stack. */
    lua_getglobal(L, "create");
@@ -791,7 +790,8 @@ static void ai_create( Pilot* pilot, char *param )
    }
 
    /* Recover normal mode. */
-   aiL_status = AI_STATUS_NORMAL;
+   if (!pilot_isFlag(pilot, PILOT_CREATED_AI))
+      aiL_status = AI_STATUS_NORMAL;
 }
 
 
