@@ -27,6 +27,7 @@
 #include "rng.h"
 #include "ndata.h"
 #include "nxml.h"
+#include "debris.h"
 
 
 #define SPFX_XML_ID     "spfxs" /**< XML Document tag. */
@@ -194,7 +195,6 @@ int spfx_get( char* name )
    for (i=0; i<spfx_neffects; i++)
       if (strcmp(spfx_effects[i].name, name)==0)
          return i;
-   WARN("SPFX '%s' not found!", name );
    return -1;
 }
 
@@ -268,6 +268,9 @@ int spfx_load (void)
 void spfx_free (void)
 {
    int i;
+
+   /* Clean up the debris. */
+   debris_cleanup();
 
    /* get rid of all the particles and free the stacks */
    spfx_clear();

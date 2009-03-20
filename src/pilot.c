@@ -33,6 +33,7 @@
 #include "player.h"
 #include "gui.h"
 #include "board.h"
+#include "debris.h"
 
 
 #define PILOT_CHUNK     32 /**< Chunks to increment pilot_stack by */
@@ -1342,13 +1343,16 @@ static void pilot_update( Pilot* pilot, const double dt )
       /* final explosion */
       else if (!pilot_isFlag(pilot,PILOT_EXPLODED) && (pilot->ptimer < 0.200)) {
 
-         /* Damagae from explosion. */
+         /* Damage from explosion. */
          a = sqrt(pilot->solid->mass);
          expl_explode( pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y,
                pilot->ship->gfx_space->sw/2. + a,
                DAMAGE_TYPE_KINETIC, 2.*a - 20.,
                0, EXPL_MODE_SHIP );
+         debris_add( pilot->solid->mass, pilot->ship->gfx_space->sw/2.,
+               pilot->solid->pos.x, pilot->solid->pos.y,
+               pilot->solid->vel.x, pilot->solid->vel.y );
          pilot_setFlag(pilot,PILOT_EXPLODED);
 
          /* Release cargo */
