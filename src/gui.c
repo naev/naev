@@ -58,11 +58,16 @@
 #define INTERFERENCE_LAYERS      16 /**< Number of interference layers. */
 #define INTERFERENCE_CHANGE_DT   0.1 /**< Speed to change at. */
 
+#define RADAR_BLINK_PILOT       1. /**< Blink rate of the pilot target on radar. */
+
 
 /* for interference. */
 static int interference_layer = 0; /**< Layer of the current interference. */
-double interference_alpha = 0.; /**< Alpha of the current interference layer. */
-static double interference_t = 0.; /**< Interference timer to control transitions. */
+double interference_alpha     = 0.; /**< Alpha of the current interference layer. */
+static double interference_t  = 0.; /**< Interference timer to control transitions. */
+
+/* some blinking stuff. */
+static double blink_pilot     = 0.; /**< Timer on target blinking on radar. */
 
 /*
  * pilot stuff for GUI
@@ -367,6 +372,11 @@ void gui_render( double dt )
 
    /* Make sure player is valid. */
    if (player==NULL) return;
+
+   /*
+    * Countdown timers.
+    */
+   blink_pilot -= dt;
 
    /* Lockon warning */
    if (player->lockons > 0)
@@ -846,29 +856,31 @@ static void gui_renderPilot( const Pilot* p )
    else col = faction_getColour(p->faction);
    ACOLOUR(*col, 1-interference_alpha); /**< Makes it much harder to see. */
 
-   /* Target is a cross. */
+   /* Draw selection if targetted. */
    if (p->id == player->target) {
-      if (sx < 3.)
-         sx = 3.;
-      if (sy < 3.)
-         sy = 3.;
-      glBegin(GL_LINES);
-         glVertex2d( MAX(x-sx-2.,-w), CLAMP(-h,h,y) ); /* left */
-         glVertex2d( MIN(x+sx+2., w), CLAMP(-h,h,y) ); /* right */
-         glVertex2d( CLAMP(-w,w,x), MIN(y+sy+2., h) ); /* top */
-         glVertex2d( CLAMP(-w,w,x), MAX(y-sy-2.,-h) ); /* bottom */
-      glEnd(); /* GL_LINES */
+      if (blink_pilot < RADAR_BLINK_PILOT/2.) {
+         glBegin(GL_LINES);
+            glVertex2d( x-sx-1.5, y+sy+1.5 ); /* top-left */
+            glVertex2d( x-sx-3.3, y+sy+3.3 );
+            glVertex2d( x+sx+1.5, y+sy+1.5 ); /* top-right */
+            glVertex2d( x+sx+3.3, y+sy+3.3 );
+            glVertex2d( x+sx+1.5, y-sy-1.5 ); /* bottom-right */
+            glVertex2d( x+sx+3.3, y-sy-3.3 );
+            glVertex2d( x-sx-1.5, y-sy-1.5 ); /* bottom-left */
+            glVertex2d( x-sx-3.3, y-sy-3.3 );
+         glEnd(); /* GL_LINES */
+      }
+
+      if (blink_pilot < 0.)
+         blink_pilot = RADAR_BLINK_PILOT;
    }
-   /* Otherwise is square. */
-   else {
-      glBegin(GL_QUADS);
-         /* image */
-         glVertex2d( MAX(x-sx,-w), MIN(y+sy, h) ); /* top-left */
-         glVertex2d( MIN(x+sx, w), MIN(y+sy, h) ); /* top-right */
-         glVertex2d( MIN(x+sx, w), MAX(y-sy,-h) ); /* bottom-right */
-         glVertex2d( MAX(x-sx,-w), MAX(y-sy,-h) ); /* bottom-left */
-      glEnd(); /* GL_QUADS */
-   }
+   /* Draw square. */
+   glBegin(GL_QUADS);
+      glVertex2d( MAX(x-sx,-w), MIN(y+sy, h) ); /* top-left */
+      glVertex2d( MIN(x+sx, w), MIN(y+sy, h) ); /* top-right */
+      glVertex2d( MIN(x+sx, w), MAX(y-sy,-h) ); /* bottom-right */
+      glVertex2d( MAX(x-sx,-w), MAX(y-sy,-h) ); /* bottom-left */
+   glEnd(); /* GL_QUADS */
 }
 
 
