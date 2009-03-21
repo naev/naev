@@ -58,7 +58,8 @@
 #define INTERFERENCE_LAYERS      16 /**< Number of interference layers. */
 #define INTERFERENCE_CHANGE_DT   0.1 /**< Speed to change at. */
 
-#define RADAR_BLINK_PILOT       1. /**< Blink rate of the pilot target on radar. */
+#define RADAR_BLINK_PILOT        1. /**< Blink rate of the pilot target on radar. */
+#define RADAR_BLINK_PLANET       1. /**< Blink rate of the planet target on radar. */
 
 
 /* for interference. */
@@ -68,6 +69,7 @@ static double interference_t  = 0.; /**< Interference timer to control transitio
 
 /* some blinking stuff. */
 static double blink_pilot     = 0.; /**< Timer on target blinking on radar. */
+static double blink_planet    = 0.; /**< Timer on planet blinking on radar. */
 
 /*
  * pilot stuff for GUI
@@ -194,8 +196,6 @@ static Mesg* mesg_stack; /**< Stack of mesages, will be of mesg_max size. */
  */
 extern void weapon_minimap( const double res, const double w, const double h,
       const RadarShape shape, double alpha ); /**< from weapon.c */
-extern void planets_minimap( const double res, const double w, const double h,
-      const RadarShape shape, double alpha ); /**< from space.c */
 /* 
  * internal
  */
@@ -211,6 +211,7 @@ static void gui_cleanupBar( HealthBar *bar );
 /* Render GUI. */
 static void gui_renderRadar( double dt );
 static void gui_renderMessages( double dt );
+static void gui_renderPlanet( int i );
 static void gui_renderPilot( const Pilot* p );
 static void gui_renderHealth( const HealthBar *bar, const double w );
 static void gui_renderInterference( double dt );
@@ -377,6 +378,7 @@ void gui_render( double dt )
     * Countdown timers.
     */
    blink_pilot -= dt;
+   blink_planet -= dt;
 
    /* Lockon warning */
    if (player->lockons > 0)
@@ -655,8 +657,11 @@ static void gui_renderRadar( double dt )
    /*
     * planets
     */
-   planets_minimap(gui.radar.res, gui.radar.w, gui.radar.h,
-         gui.radar.shape, 1.-interference_alpha);
+   for (i=0; i<cur_system->nplanets; i++)
+      if (i != planet_target)
+         gui_renderPlanet( i );
+   if (planet_target > -1)
+      gui_renderPlanet( planet_target );
 
    /*
     * weapons
@@ -872,7 +877,7 @@ static void gui_renderPilot( const Pilot* p )
       }
 
       if (blink_pilot < 0.)
-         blink_pilot = RADAR_BLINK_PILOT;
+         blink_pilot += RADAR_BLINK_PILOT;
    }
    /* Draw square. */
    glBegin(GL_QUADS);
@@ -882,6 +887,137 @@ static void gui_renderPilot( const Pilot* p )
       glVertex2d( MAX(x-sx,-w), MAX(y-sy,-h) ); /* bottom-left */
    glEnd(); /* GL_QUADS */
 }
+
+
+#define PIXEL(x,y)      \
+   if ((gui.radar.shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
+         (gui.radar.shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) <= rc)))   \
+   glVertex2i((x),(y)) /**< Puts a pixel on radar if inbounds. */
+/**
+ * @brief Draws the planets in the minimap.
+ *
+ * Matrix mode is already displaced to center of the minimap.
+ */
+static void gui_renderPlanet( int i )
+{
+   int cx, cy, x, y, r, rc;
+   int w, h;
+   double res;
+   double p;
+   double a, tx,ty;
+   glColour *col;
+   Planet *planet;
+
+   /* Default values. */
+   res = gui.radar.res;
+   planet = cur_system->planets[i];
+   w = gui.radar.w;
+   h = gui.radar.h;
+   r = (int)(planet->gfx_space->sw / res);
+   cx = (int)((planet->pos.x - player->solid->pos.x) / res);
+   cy = (int)((planet->pos.y - player->solid->pos.y) / res);
+   if (gui.radar.shape==RADAR_CIRCLE)
+      rc = (int)(gui.radar.w*gui.radar.w);
+
+   /* Get the colour. */
+   col = faction_getColour(planet->faction);
+   if (i == planet_target)
+      col = &cRadar_tPlanet;
+   else if ((col != &cHostile) && !planet_hasService(planet,PLANET_SERVICE_BASIC))
+      col = &cInert; /* Override non-hostile planets without service. */
+   ACOLOUR(*col, 1.-interference_alpha);
+
+   /* Do the blink. */
+   if (i == planet_target) {
+      if (blink_planet < RADAR_BLINK_PLANET/2.) {
+         glBegin(GL_LINES);
+            glVertex2d( cx-r-1.5, cy+r+1.5 ); /* top-left */
+            glVertex2d( cx-r-3.3, cy+r+3.3 );
+            glVertex2d( cx+r+1.5, cy+r+1.5 ); /* top-right */
+            glVertex2d( cx+r+3.3, cy+r+3.3 );
+            glVertex2d( cx+r+1.5, cy-r-1.5 ); /* bottom-right */
+            glVertex2d( cx+r+3.3, cy-r-3.3 );
+            glVertex2d( cx-r-1.5, cy-r-1.5 ); /* bottom-left */
+            glVertex2d( cx-r-3.3, cy-r-3.3 );
+         glEnd(); /* GL_LINES */
+      }
+
+      if (blink_planet < 0.)
+         blink_planet += RADAR_BLINK_PLANET;
+   }
+
+   /* Check if in range. */
+   if (gui.radar.shape == RADAR_RECT) {
+      /* Out of range. */
+      if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.))
+         return;
+   }
+   else if (gui.radar.shape == RADAR_CIRCLE) {
+      x = ABS(cx)-r;
+      y = ABS(cy)-r;
+      /* Out of range. */
+      if (x*x + y*y > rc) {
+         if (planet_target == i) {
+            /* Draw a line like for pilots. */
+            a = ANGLE(cx,cy);
+            tx = w*cos(a);
+            ty = w*sin(a);
+
+            COLOUR(cRadar_tPlanet);
+            glBegin(GL_LINES);
+            glVertex2d(      tx,      ty );
+            glVertex2d( 0.85*tx, 0.85*ty );
+            glEnd(); /* GL_LINES */
+         }
+         return;
+      }
+   }
+
+   x = 0;
+   y = r;
+   p = (5. - (double)(r*4)) / 4.;
+
+   glBegin(GL_POINTS);
+
+   PIXEL( cx,   cy+y );
+   PIXEL( cx,   cy-y );
+   PIXEL( cx+y, cy   );
+   PIXEL( cx-y, cy   );
+
+   while (x<y) {
+      x++;
+      if (p < 0) p += 2*(double)(x)+1;
+      else p += 2*(double)(x-(--y))+1;
+
+      if (x==0) {
+         PIXEL( cx,   cy+y );
+         PIXEL( cx,   cy-y );
+         PIXEL( cx+y, cy   );
+         PIXEL( cx-y, cy   );
+      }
+      else
+         if (x==y) {
+            PIXEL( cx+x, cy+y );
+            PIXEL( cx-x, cy+y );
+            PIXEL( cx+x, cy-y );
+            PIXEL( cx-x, cy-y );
+         }
+         else
+            if (x<y) {
+               PIXEL( cx+x, cy+y );
+               PIXEL( cx-x, cy+y );
+               PIXEL( cx+x, cy-y );
+               PIXEL( cx-x, cy-y );
+               PIXEL( cx+y, cy+x );
+               PIXEL( cx-y, cy+x );
+               PIXEL( cx+y, cy-x );
+               PIXEL( cx-y, cy-x );
+            }
+   }
+   glEnd(); /* GL_POINTS */
+}
+#undef PIXEL
+
 
 
 /**
