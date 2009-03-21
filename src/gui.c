@@ -889,9 +889,11 @@ static void gui_renderPilot( const Pilot* p )
 }
 
 
+#define CHECK_PIXEL(x,y)   \
+(gui.radar.shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
+   (gui.radar.shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) <= rc))
 #define PIXEL(x,y)      \
-   if ((gui.radar.shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
-         (gui.radar.shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) <= rc)))   \
+   if (CHECK_PIXEL(x,y)) \
    glVertex2i((x),(y)) /**< Puts a pixel on radar if inbounds. */
 /**
  * @brief Draws the planets in the minimap.
@@ -927,25 +929,6 @@ static void gui_renderPlanet( int i )
       col = &cInert; /* Override non-hostile planets without service. */
    ACOLOUR(*col, 1.-interference_alpha);
 
-   /* Do the blink. */
-   if (i == planet_target) {
-      if (blink_planet < RADAR_BLINK_PLANET/2.) {
-         glBegin(GL_LINES);
-            glVertex2d( cx-r-1.5, cy+r+1.5 ); /* top-left */
-            glVertex2d( cx-r-3.3, cy+r+3.3 );
-            glVertex2d( cx+r+1.5, cy+r+1.5 ); /* top-right */
-            glVertex2d( cx+r+3.3, cy+r+3.3 );
-            glVertex2d( cx+r+1.5, cy-r-1.5 ); /* bottom-right */
-            glVertex2d( cx+r+3.3, cy-r-3.3 );
-            glVertex2d( cx-r-1.5, cy-r-1.5 ); /* bottom-left */
-            glVertex2d( cx-r-3.3, cy-r-3.3 );
-         glEnd(); /* GL_LINES */
-      }
-
-      if (blink_planet < 0.)
-         blink_planet += RADAR_BLINK_PLANET;
-   }
-
    /* Check if in range. */
    if (gui.radar.shape == RADAR_RECT) {
       /* Out of range. */
@@ -973,6 +956,34 @@ static void gui_renderPlanet( int i )
       }
    }
 
+   /* Do the blink. */
+   if (i == planet_target) {
+      if (blink_planet < RADAR_BLINK_PLANET/2.) {
+         glBegin(GL_LINES);
+            if (CHECK_PIXEL(cx-r-3.3, cy+r+3.3)) {
+               glVertex2d( cx-r-1.5, cy+r+1.5 ); /* top-left */
+               glVertex2d( cx-r-3.3, cy+r+3.3 );
+            }
+            if (CHECK_PIXEL(cx+r+3.3, cy+r+3.3)) {
+               glVertex2d( cx+r+1.5, cy+r+1.5 ); /* top-right */
+               glVertex2d( cx+r+3.3, cy+r+3.3 );
+            }
+            if (CHECK_PIXEL(cx+r+3.3, cy-r-3.3)) {
+               glVertex2d( cx+r+1.5, cy-r-1.5 ); /* bottom-right */
+               glVertex2d( cx+r+3.3, cy-r-3.3 );
+            }
+            if (CHECK_PIXEL(cx-r-3.3, cy-r-3.3)) {
+               glVertex2d( cx-r-1.5, cy-r-1.5 ); /* bottom-left */
+               glVertex2d( cx-r-3.3, cy-r-3.3 );
+            }
+         glEnd(); /* GL_LINES */
+      }
+
+      if (blink_planet < 0.)
+         blink_planet += RADAR_BLINK_PLANET;
+   }
+
+   /* Set up for circle drawing. */
    x = 0;
    y = r;
    p = (5. - (double)(r*4)) / 4.;
@@ -1017,6 +1028,7 @@ static void gui_renderPlanet( int i )
    glEnd(); /* GL_POINTS */
 }
 #undef PIXEL
+#undef CHECK_PIXEL
 
 
 
