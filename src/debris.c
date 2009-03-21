@@ -79,7 +79,7 @@ void debris_add( double mass, double r, double px, double py,
 {
    int i, n;
    double npx,npy, nvx,nvy;
-   double d;
+   double a, d;
 
    /* Lazy allocator. */
    if (debris_spfx == NULL)
@@ -92,14 +92,16 @@ void debris_add( double mass, double r, double px, double py,
    /* Now add the spfx. */
    for (i=0; i<n; i++) {
       /* Get position. */
-      d = r/2.;
-      npx = px + d*RNG_2SIGMA();
-      npy = py + d*RNG_2SIGMA();
+      d = r/2. * RNG_2SIGMA();
+      a = RNGF()*2*M_PI;
+      npx = px + d*cos(a);
+      npy = py + d*sin(a);
 
       /* Get velocity. */
-      d = n;
-      nvx = vx + d*RNG_2SIGMA();
-      nvy = vy + d*RNG_2SIGMA();
+      d = n * RNG_2SIGMA();
+      a = RNGF()*2*M_PI;
+      nvx = vx + d*cos(a);
+      nvy = vy + d*sin(a);
 
       /* Createsprite. */
       spfx_add( debris_spfx[ RNG( 0, debris_nspfx-1 ) ],
