@@ -25,7 +25,7 @@
 ; February 2007 : Small modifications to make it work on Gimp 2.3 and hopefully 2.4
 ;                 Use planet-render1-1.scm for Gimp 2.2	
 
-(define (script-fu-naev-mkplanet planetSize planetColor sunAngle sunTilt glowSize)
+(define (script-fu-naev-mkplanet planetSize planetColor sunAngle sunTilt glowSize atmosDensity)
 
  (let*
 
@@ -97,8 +97,8 @@
    ; add the light around the planet for the atmosphere
    (gimp-selection-layer-alpha layeratmosph)
    ;(gimp-selection-shrink theImage tenth)
-   (gimp-selection-shrink theImage (* tenth 2))
-   (gimp-selection-feather theImage (* 4 tenth)) 
+   (gimp-selection-shrink theImage (* tenth atmosDensity))
+   (gimp-selection-feather theImage (* atmosDensity tenth)) 
    (gimp-layer-set-lock-alpha layeratmosph 1)
    (gimp-selection-invert theImage)
    (gimp-context-set-background '(255 255 255) )
@@ -163,6 +163,7 @@
                    SF-COLOR _"Planet color" '(10 70 100)
                    SF-ADJUSTMENT _"Sun orientation (degrees) " '(45 0 360 1 10 1 0) 
 		             SF-ADJUSTMENT _"Sun Tilt " '(3.6 0 10 1 10 1 0)
-                   SF-ADJUSTMENT _"Planet Glow" '(.25 .1 .6667 1 2 1 0) )
+                   SF-ADJUSTMENT _"Planet Glow" '(.25 .1 .6667 1 2 1 0)
+                   SF-ADJUSTMENT _"Atmosphere Density" '(2 1 6 1 1 0 0) )
 (script-fu-menu-register "script-fu-naev-mkplanet"
-			 _"<Toolbox>/Xtns/naev")
+			                _"<Toolbox>/Xtns/naev")
