@@ -119,8 +119,8 @@ function attacked ( attacker )
       ai.pushtask(0, "attack", attacker)
 
    elseif task == "attack" then
-      if ai.target() ~= attacker and 
-            ai.dist(attacker) < ai.dist(target) then
+      if not ai.exists(target) or (target ~= attacker and 
+            ai.dist(attacker) < ai.dist(target)) then
          ai.pushtask(0, "attack", attacker)
       end
    elseif task == "runaway" then
