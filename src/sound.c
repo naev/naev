@@ -280,6 +280,7 @@ static int sound_updatePosVoice( alVoice *v, double x, double y )
 {
    double angle, dist;
    double px, py;
+   double d;
    int idist;
 
    v->pos[0] = x;
@@ -292,8 +293,9 @@ static int sound_updatePosVoice( alVoice *v, double x, double y )
    dist = MOD(px,py);
 
    /* Need to make sure distance doesn't overflow. */
-   idist = (int) dist / 9.;
-   if (idist > 255) idist = 255;
+   d = CLAMP( 0., 1., (dist - 50.) / 2500. );
+   d = 255. * sqrt(d);
+   idist = MIN( (int)d, 255);
 
    /* Try to play the song. */
    if (Mix_SetPosition( v->channel, (Sint16)angle, (Uint8)idist) < 0) {
