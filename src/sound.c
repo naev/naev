@@ -292,7 +292,7 @@ static int sound_updatePosVoice( alVoice *v, double x, double y )
    dist = MOD(px,py);
 
    /* Need to make sure distance doesn't overflow. */
-   idist = (int) dist / 6.;
+   idist = (int) dist / 9.;
    if (idist > 255) idist = 255;
 
    /* Try to play the song. */
