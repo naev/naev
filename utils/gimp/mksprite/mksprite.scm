@@ -1,4 +1,4 @@
-; naev-mksprite.scm
+; mksprite.scm
 ; (C) 2000 Andrew Mustun
 ; (C) 2008 Edgar Simo <bobbens@gmail.com>
 ;
@@ -88,15 +88,16 @@
   )
 
 (script-fu-register "script-fu-naev-mksprite"
-   "<Image>/Script-Fu/naev/Make Sprite..."
-   "Creates a spritesheet out of a static image (facing right) for use by naev"
-   "Andrew Mustun / bobbens"
-   "Andrew Mustun / bobbens"
-   "April 2000 / March 2008"
-   "RGB*"
-   SF-IMAGE "image" 0
-   SF-DRAWABLE "drawable" 0
-   SF-VALUE "Number X:" "6"
-   SF-VALUE "Number Y:" "6"
-)
+                    _"_mksprite..."
+                    "Creates a spritesheet out of a static image (facing right) for use by naev"
+                    "Andrew Mustun / bobbens"
+                    "Andrew Mustun / bobbens"
+                    "April 2000 / March 2008"
+                    "RGB*"
+                    SF-IMAGE "image" 0
+                    SF-DRAWABLE "drawable" 0
+                    SF-VALUE "Number X:" "6"
+                    SF-VALUE "Number Y:" "6" )
+(script-fu-menu-register "script-fu-naev-mksprite"
+                         _"<Toolbox>/Xtns/naev")
 
