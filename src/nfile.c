@@ -275,7 +275,7 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    files = malloc(sizeof(char*)*mfiles);
 
    /* Start listing stuff. */
-   hDir = FindFirstFile(TEXT("*.*"), &FileData);
+   hDir = FindFirstFile(TEXT("*"), &FileData);
    if (hDir == INVALID_HANDLE_VALUE) 
       return NULL;
   
