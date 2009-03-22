@@ -212,6 +212,45 @@ char* window_getInput( const unsigned int wid, char* name )
    }
 
    /* Get the value. */
-   return (wgt) ? wgt->dat.inp.input : NULL;
+   return wgt->dat.inp.input;
 }
+
+/**
+ * @brief Sets the input for an input widget.
+ *
+ *    @param wid Window to which the widget belongs.
+ *    @param name Name of the widget to modify.
+ *    @param msg Message to set for the input box or NULL to clear.
+ * @return The message actually set (can be truncated).
+ */
+char* window_setInput( const unsigned int wid, char* name, const char *msg )
+{
+   Widget *wgt;
+
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return NULL;
+
+   /* Check the type. */
+   if (wgt->type != WIDGET_INPUT) {
+      WARN("Trying to get input from non-input widget '%s'.", name);
+      return NULL;
+   }
+
+   /* Set the message. */
+   if (msg == NULL) {
+      memset( wgt->dat.inp.input, 0, wgt->dat.inp.max*sizeof(char) );
+      wgt->dat.inp.pos     = 0;
+      wgt->dat.inp.view    = 0;
+   }
+   else {
+      strncpy( wgt->dat.inp.input, msg, wgt->dat.inp.max );
+      wgt->dat.inp.pos = strlen( wgt->dat.inp.input );
+   }
+
+   /* Get the value. */
+   return wgt->dat.inp.input;
+}
+
 

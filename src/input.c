@@ -24,6 +24,7 @@
 #include "nstd.h"
 #include "gui.h"
 #include "weapon.h"
+#include "console.h"
 
 
 #define KEY_PRESS    ( 1.) /**< Key is pressed. */
@@ -65,6 +66,7 @@ const char *keybindNames[] = {
    "hail",
    /* Misc. */
    "mapzoomin", "mapzoomout", "screenshot", "pause", "speed", "menu", "info",
+   "console",
    /* Must terminate in "end". */
    "end"
 }; /**< Names of possible keybindings. */
@@ -122,6 +124,7 @@ const char *keybindDescription[] = {
    "Toggles 2x speed modifier.",
    "Opens the small ingame menu.",
    "Opens the information menu.",
+   "Opens the Lua console.",
    NULL /* To match sentinel. */
 }; /**< Descriptions of the keybindings.  Should be in the same position as the
         matching keybinding name. */
@@ -214,6 +217,7 @@ void input_setDefault (void)
    input_setKeybind( "speed", KEYBIND_KEYBOARD, SDLK_BACKQUOTE, KMOD_ALL );
    input_setKeybind( "menu", KEYBIND_KEYBOARD, SDLK_ESCAPE, KMOD_ALL );
    input_setKeybind( "info", KEYBIND_KEYBOARD, SDLK_i, KMOD_NONE );
+   input_setKeybind( "console", KEYBIND_KEYBOARD, SDLK_F2, KMOD_ALL );
 }
 
 
@@ -698,6 +702,10 @@ static void input_key( int keynum, double value, double kabs )
    /* shows pilot information */
    } else if (KEY("info") && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS) menu_info();
+
+   /* Opens the Lua console. */
+   } else if (KEY("console") && NODEAD()) {
+      if (value==KEY_PRESS) cli_open();
    }
 }
 #undef KEY
