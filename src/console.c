@@ -44,6 +44,7 @@ static glFont *cli_font     = NULL; /**< CLI font to use. */
 #define LINE_LENGTH        80 /**< Length of lines in the buffer. */
 static int cli_cursor      = 0; /**< Current cursor position. */
 static char cli_buffer[BUF_LINES][LINE_LENGTH]; /**< CLI buffer. */
+static int cli_viewport    = 0; /**< Current viewport. */
 
 
 /*
@@ -66,10 +67,17 @@ static void cli_render( double bx, double by, double w, double h );
  */
 static void cli_addMessage( const char *msg )
 {
+   int n;
+
    if (msg != NULL) {
       strncpy( cli_buffer[cli_cursor], msg, LINE_LENGTH );
    }
    cli_cursor = (cli_cursor+1) % BUF_LINES;
+
+   /* Move viewport if needed. */
+   n = (cli_cursor - cli_viewport) % BUF_LINES;
+   if ((n+1)*(cli_font->h+5) > CONSOLE_HEIGHT-80-BUTTON_HEIGHT)
+      cli_viewport = (cli_viewport+1) % BUF_LINES;
 }
 
 
@@ -81,12 +89,12 @@ static void cli_render( double bx, double by, double w, double h )
    int i, y;
 
    /* Draw the text. */
-   i = 0;
+   i = cli_viewport;
    for (y=h-cli_font->h-5; y>0; y -= cli_font->h + 5) {
       gl_printMaxRaw( cli_font, w,
             bx + SCREEN_W/2., by + y + SCREEN_H/2., 
             &cBlack, cli_buffer[i] );
-      i++;
+      i = (i + 1)  % BUF_LINES;
    }
 }
 
@@ -104,6 +112,7 @@ int cli_init (void)
    cli_state = nlua_newState();
    nlua_loadBasic( cli_state );
    nlua_loadStandard( cli_state, 0 );
+   lua_settop( cli_state, 0 );
 
    /* Set the font. */
    cli_font = &gl_smallFont;
@@ -153,6 +162,8 @@ static void cli_input( unsigned int wid, char *unused )
 
    /* Get the input. */
    str = window_getInput( wid, "inpInput" );
+
+   /* Ignore useless stuff. */
    if ((str == NULL) || (str[0] == '\0'))
       return;
 
@@ -163,6 +174,12 @@ static void cli_input( unsigned int wid, char *unused )
    L = cli_state;
    /* Load the string. */
    lua_pushstring( L, str );
+   /* Concat string if needed. */
+   if (!cli_firstline) {
+      lua_pushliteral(L, "\n");  /* add a new line... */
+      lua_insert(L, -2);  /* ...between the two lines */
+      lua_concat(L, 3);  /* join them */
+   }
    status = luaL_loadbuffer( L, lua_tostring(L,-1), lua_strlen(L,-1), "=cli" );
    /* String isn't proper Lua yet. */
    if (status == LUA_ERRSYNTAX) {
@@ -172,31 +189,19 @@ static void cli_input( unsigned int wid, char *unused )
       if (strstr(msg, LUA_QL("<eof>")) == tp) {
          /* Pop the loaded buffer. */
          lua_pop(L, 1);
-         /* Concatenate with the mother string. */
-         if (!cli_firstline) {
-            lua_pushliteral(L, "\n");  /* add a new line... */
-            lua_insert(L, -3);  /* ...between the two lines */
-            lua_concat(L, 3);  /* join them */
-         }
          cli_firstline = 0;
       }
       else {
          /* Real error, spew message and break. */
          cli_addMessage( lua_tostring(L, -1) );
          lua_settop(L, 0);
+         cli_firstline = 1;
       }
    }
    /* Print results - all went well. */
    else if (status == 0) {
       if (lua_pcall(L, 0, LUA_MULTRET, 0))
          cli_addMessage( lua_tostring(L, -1) );
-      else {
-         while (lua_gettop(L) > 0) {
-            /*cli_addMessage( lua_tostring(L, -1) );*/
-            lua_pop(L,1);
-         }
-      }
-
       /* Clear stack. */
       lua_settop(L, 0);
       cli_firstline = 1;
