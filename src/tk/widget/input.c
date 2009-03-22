@@ -212,6 +212,7 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
             if (n+10 < inp->w)
                inp->dat.inp.view--;
          }
+         return 1;
       }
 
       /* in limits. */
