@@ -24,11 +24,15 @@
 #include <sys/time.h>
 #include <fcntl.h>
 #endif /* HAS_POSIX */
+#if HAS_WIN32
+#include <sys/types.h>
+#include <sys/timeb.h>
+#endif /* HAS_WIN32 */
+
 #include "SDL.h"
 
 #include "naev.h"
 #include "log.h"
-
 
 
 /*
