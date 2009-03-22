@@ -229,6 +229,9 @@ void input_init (void)
    Keybind *temp;
    int i;
 
+   /* We need unicode for the input widget. */
+   SDL_EnableUNICODE(1);
+
 #ifdef DEBUGGING
    /* To avoid stupid segfaults like in the 0.3.6 release. */
    if (sizeof(keybindNames) != sizeof(keybindDescription)) {

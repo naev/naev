@@ -16,6 +16,8 @@
 
 static void inp_render( Widget* inp, double bx, double by );
 static int inp_key( Widget* inp, SDLKey key, SDLMod mod );
+static int inp_text( Widget* inp, const char *buf );
+static int inp_addKey( Widget* inp, SDLKey key );
 static void inp_cleanup( Widget* inp );
 
 
@@ -52,6 +54,8 @@ void window_addInput( const unsigned int wid,
    wgt->cleanup         = inp_cleanup;
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->keyevent        = inp_key;
+   wgt->textevent       = inp_text;
+   /*wgt->keyevent        = inp_key;*/
    wgt->dat.inp.max     = max+1;
    wgt->dat.inp.oneline = oneline;
    wgt->dat.inp.pos     = 0;
@@ -100,6 +104,64 @@ static void inp_render( Widget* inp, double bx, double by )
 
 
 /**
+ * @brief Handles input text.
+ *
+ *    @param inp Input widget to handle event.
+ *    @param buf Text to handle.
+ *    @return 1 if text was used;
+ */
+static int inp_text( Widget* inp, const char *buf )
+{
+   int i;
+   int ret;
+
+   i = 0;
+   ret = 0;
+   while (buf[i] != '\0') {
+      ret |= inp_addKey( inp, buf[i] );
+      i++;
+   }
+   return ret;
+}
+
+
+/**
+ * @brief Adds a single key to the input.
+ *
+ *    @param inp Input widget recieving the key.
+ *    @param key Key to recieve.
+ *    @return 1 if key was used.
+ */
+static int inp_addKey( Widget* inp, SDLKey key )
+{
+   int n;
+   
+   /*
+    * Handle arrow keys.
+    * @todo finish implementing, no cursor makes it complicated to see where you are.
+    */
+   /* Only catch some keys. */
+   if (!nstd_isgraph(key) && (key != ' '))
+      return 0;
+
+   if (inp->dat.inp.oneline) {
+
+      /* in limits. */
+      if ((inp->dat.inp.pos < inp->dat.inp.max-1)) {
+
+         /* add key. */
+         inp->dat.inp.input[ inp->dat.inp.pos++ ] = key;
+
+         n = gl_printWidthRaw( &gl_smallFont, inp->dat.inp.input+inp->dat.inp.view );
+         if (n+10 > inp->w) inp->dat.inp.view++;
+         return 1;
+      }
+   }
+   return 0;
+}
+
+
+/**
  * @brief Handles input for an input widget.
  *
  *    @param inp Input widget to handle event.
@@ -109,6 +171,7 @@ static void inp_render( Widget* inp, double bx, double by )
  */
 static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
 {  
+   (void) mod;
    int n;
    
    /*
@@ -134,8 +197,7 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
 #endif
 
    /* Only catch some keys. */
-   if (!nstd_isalnum(key) && (key != SDLK_BACKSPACE) &&
-         (key != SDLK_SPACE) && (key != SDLK_RETURN))
+   if ((key != SDLK_BACKSPACE) && (key != SDLK_RETURN))
       return 0;
 
    if (inp->dat.inp.oneline) {
@@ -155,23 +217,10 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
       /* in limits. */
       else if ((inp->dat.inp.pos < inp->dat.inp.max-1)) {
 
-         if ((key==SDLK_RETURN) && !inp->dat.inp.oneline)
+         if ((key==SDLK_RETURN) && !inp->dat.inp.oneline) {
             inp->dat.inp.input[ inp->dat.inp.pos++ ] = '\n';
-                                                                    
-         /* upper case characters */
-         else if (nstd_isalpha(key) && (mod & (KMOD_LSHIFT | KMOD_RSHIFT)))
-            inp->dat.inp.input[ inp->dat.inp.pos++ ] = nstd_toupper(key);
-
-         /* rest */
-         else if (!nstd_iscntrl(key))
-            inp->dat.inp.input[ inp->dat.inp.pos++ ] = key;
-
-         /* didn't get a useful key */
-         else return 0;
-
-         n = gl_printWidthRaw( &gl_smallFont, inp->dat.inp.input+inp->dat.inp.view );
-         if (n+10 > inp->w) inp->dat.inp.view++;
-         return 1;
+            return 1;
+         }
       }
    }
    return 0;
