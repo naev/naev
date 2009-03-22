@@ -39,6 +39,7 @@
    <enemy>Pirate</enemy>
    <enemy>FLF</enemy>
    <enemy>Collective</enemy>
+   <enemy>Raider</enemy>
   </enemies>
  </faction>
  <faction name="Pirate">
@@ -152,5 +153,12 @@
   <player>0</player>
   <allies />
   <enemies />
+ </faction>
+ <faction name="Raider">
+  <longname>Galactic Pirates</longname>
+  <player>-20</player>
+  <enemies>
+   <enemy>Trader</enemy>
+  </enemies>
  </faction>
 </Factions>

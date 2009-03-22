@@ -6,7 +6,7 @@
   <pilots ship="">
    <pilot chance="100" ship="Goddard"></pilot>
   </pilots>
- </fleet>
+ </fleet>   <pilot chance="100" ship="Hyena"></pilot>
  <fleet name="Trader Llama">
   <ai>trader</ai>
   <faction>Trader</faction>
@@ -345,6 +345,44 @@
   <faction>Mercenary</faction>
   <pilots ship="">
    <pilot chance="100" ship="Vendetta"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Pirate Raiders">
+  <ai>pirate</ai>
+  <faction>Raider</faction>
+  <pilots ship="">
+   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot chance="100" ship="Hyena"></pilot>
+   <pilot chance="100" ship="Hyena"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Defense Fleet">
+  <ai>empire</ai>
+  <faction>Trader</faction>
+  <pilots ship="">
+   <pilot chance="100" ship="Mule"></pilot>
+   <pilot chance="100" ship="Mule"></pilot>
+   <pilot chance="100" ship="Lancelot"></pilot>
+   <pilot chance="100" ship="Lancelot"></pilot>
+   <pilot chance="100" ship="Ancestor"></pilot>
+   <pilot chance="100" ship="Gawain"></pilot>
+   <pilot chance="100" ship="Gawain"></pilot>
+   <pilot chance="100" ship="Gawain"></pilot>
   </pilots>
  </fleet>
 </Fleets>
