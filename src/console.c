@@ -12,7 +12,10 @@
 
 #include <string.h>
 
+#define lua_c
+#include "lua.h"
 #include "lauxlib.h"
+#include "lualib.h"
 
 #include "naev.h"
 #include "log.h"
@@ -44,6 +47,12 @@ static char cli_buffer[BUF_LINES][LINE_LENGTH]; /**< CLI buffer. */
 
 
 /*
+ * Input handling.
+ */
+static int cli_firstline   = 1; /**< Is this the first line? */
+
+
+/*
  * Prototypes.
  */
 static void cli_addMessage( const char *msg );
@@ -57,7 +66,9 @@ static void cli_render( double bx, double by, double w, double h );
  */
 static void cli_addMessage( const char *msg )
 {
-   strncpy( cli_buffer[cli_cursor], msg, LINE_LENGTH );
+   if (msg != NULL) {
+      strncpy( cli_buffer[cli_cursor], msg, LINE_LENGTH );
+   }
    cli_cursor = (cli_cursor+1) % BUF_LINES;
 }
 
@@ -136,10 +147,60 @@ void cli_exit (void)
 static void cli_input( unsigned int wid, char *unused )
 {
    (void) unused;
+   int status;
    char *str;
+   lua_State *L;
 
    /* Get the input. */
    str = window_getInput( wid, "inpInput" );
+   if ((str == NULL) || (str[0] == '\0'))
+      return;
+
+   /* Put the message in the console. */
+   cli_addMessage( str );
+
+   /* Set up state. */
+   L = cli_state;
+   /* Load the string. */
+   lua_pushstring( L, str );
+   status = luaL_loadbuffer( L, lua_tostring(L,-1), lua_strlen(L,-1), "=cli" );
+   /* String isn't proper Lua yet. */
+   if (status == LUA_ERRSYNTAX) {
+      size_t lmsg;
+      const char *msg = lua_tolstring(L, -1, &lmsg);
+      const char *tp = msg + lmsg - (sizeof(LUA_QL("<eof>")) - 1);
+      if (strstr(msg, LUA_QL("<eof>")) == tp) {
+         /* Pop the loaded buffer. */
+         lua_pop(L, 1);
+         /* Concatenate with the mother string. */
+         if (!cli_firstline) {
+            lua_pushliteral(L, "\n");  /* add a new line... */
+            lua_insert(L, -3);  /* ...between the two lines */
+            lua_concat(L, 3);  /* join them */
+         }
+         cli_firstline = 0;
+      }
+      else {
+         /* Real error, spew message and break. */
+         cli_addMessage( lua_tostring(L, -1) );
+         lua_settop(L, 0);
+      }
+   }
+   /* Print results - all went well. */
+   else if (status == 0) {
+      if (lua_pcall(L, 0, LUA_MULTRET, 0))
+         cli_addMessage( lua_tostring(L, -1) );
+      else {
+         while (lua_gettop(L) > 0) {
+            /*cli_addMessage( lua_tostring(L, -1) );*/
+            lua_pop(L,1);
+         }
+      }
+
+      /* Clear stack. */
+      lua_settop(L, 0);
+      cli_firstline = 1;
+   }
 
    /* Clear the box now. */
    window_setInput( wid, "inpInput", NULL );
