@@ -1111,6 +1111,7 @@ static int toolkit_keyEvent( SDL_Event* event )
    Widget *wgt;
    SDLKey key;
    SDLMod mod;
+   char buf[2];
 
    /* Needs to have at least one window. */
    if (nwindows<=0)
@@ -1133,9 +1134,18 @@ static int toolkit_keyEvent( SDL_Event* event )
       return 0;
 
    /* Trigger event function if exists. */
-   if ((wgt != NULL) && (wgt->keyevent != NULL))
-      if ((*wgt->keyevent)( wgt, key, mod ))
-         return 1;
+   if (wgt != NULL) {
+      if (wgt->keyevent != NULL) {
+         if ((*wgt->keyevent)( wgt, key, mod ))
+            return 1;
+      }
+      if (wgt->textevent != NULL) {
+         buf[0] = event->key.keysym.unicode & 0x7f;
+         buf[1] = '\0';
+         if ((*wgt->textevent)( wgt, buf ))
+            return 1;
+      }
+   }
 
    /* Handle other cases where event might be used by the window. */
    switch (key) {

@@ -28,6 +28,7 @@ void window_addInput( const unsigned int wid,
 
 /* Misc functions. */
 char* window_getInput( const unsigned int wid, char* name );
+char* window_setInput( const unsigned int wid, char* name, const char *msg );
 
 
 #endif /* WGT_INPUT_H */

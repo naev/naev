@@ -18,14 +18,17 @@
 #include <stdio.h> 
 #include <string.h>
 #include <stdarg.h>
-#if HAS_POSIX
 #include <stdlib.h>
+#if HAS_POSIX
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h> 
 #include <errno.h>
 #endif /* HAS_POSIX */
+#if HAS_WIN32
+#include <windows.h>
+#endif /* HAS_WIN32 */
 
 #include "naev.h"
 #include "log.h"
@@ -49,10 +52,13 @@ char* nfile_basePath (void)
    if (naev_base[0] == '\0') {
 #if HAS_UNIX
       home = getenv("HOME");
-      snprintf(naev_base,PATH_MAX,"%s/.naev/",home);
-#else /* HAS_UNIX */
+      snprintf( naev_base, PATH_MAX, "%s/.naev/", home );
+#elif HAS_WIN32
+      home = getenv("%HOMEPATH%");
+      snprintf( naev_base, PATH_MAX, "%s/.naev/", home );
+#else
 #error "Feature needs implementation on this Operating System for NAEV to work."
-#endif /* HAS_UNIX */
+#endif
    }
    
    return naev_base;
@@ -89,9 +95,19 @@ int nfile_dirMakeExist( const char* path, ... )
          WARN("Dir '%s' does not exist and unable to create", file);
          return -1;
       }
-#else /* HAS_POSIX */
+#elif HAS_WIN32
+   DWORD attr;
+   
+   attr = GetFileAttributes( file );
+   if (!(attr & FILE_ATTRIBUTE_DIRECTORY)) {
+      if (!CreateDirectory(file, NULL))  {
+         WARN("Dir '%s' does not exist and unable to create", file);
+         return -1;
+      }
+   }
+#else
 #error "Feature needs implementation on this Operating System for NAEV to work."
-#endif /* HAS_POSIX */
+#endif
 
    return 0;
 }
@@ -115,6 +131,7 @@ int nfile_fileExists( const char* path, ... )
       vsnprintf(file, PATH_MAX, path, ap);
       va_end(ap);
    }
+
 #if HAS_POSIX
    struct stat buf;
 
@@ -125,7 +142,7 @@ int nfile_fileExists( const char* path, ... )
    FILE *f;
 
    /* Try to open the file, C89 compliant, but not as precise as stat. */
-   f = fopen(file, 'r');
+   f = fopen(file, "r");
    if (f != NULL) {
       fclose(f);
       return 1;
@@ -247,7 +264,45 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    free(tfiles);
    free(tt);
 
-#else /* HAS_POSIX */
+#elif HAS_WIN32
+   HANDLE hDir;
+   WIN32_FIND_DATA FileData; 
+   char *name;
+   int mfiles;
+
+   (*nfiles) = 0;
+   mfiles = 128;
+   files = malloc(sizeof(char*)*mfiles);
+
+   /* Start listing stuff. */
+   hDir = FindFirstFile(TEXT("*"), &FileData);
+   if (hDir == INVALID_HANDLE_VALUE) 
+      return NULL;
+  
+   /* Iterate until done. */
+   do {
+      name = FileData.cFileName;
+
+      /* Stat the file */
+      snprintf( file, PATH_MAX, "%s/%s", base, name );
+      if (!nfile_fileExists(file))
+         continue; /* Unable to stat */
+
+      /* Enough memory? */
+      if ((*nfiles)+1 > mfiles) {
+         mfiles += 128;
+         files = realloc( files, sizeof(char*) * mfiles );
+      }
+
+      /* Write the information */
+      files[(*nfiles)] = strdup(name);
+      (*nfiles)++;
+   } while (FindNextFile(hDir, &FileData));
+
+   /* Clean up. */
+   FindClose(hDir);
+
+#else
 #error "Feature needs implementation on this Operating System for NAEV to work."
 #endif /* HAS_POSIX */
 

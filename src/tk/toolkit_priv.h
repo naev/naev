@@ -85,6 +85,7 @@ typedef struct Widget_ {
 
    /* Event abstraction. */
    int (*keyevent) ( struct Widget_ *wgt, SDLKey k, SDLMod m ); /**< Key event handler function for the widget. */
+   int (*textevent) ( struct Widget_ *wgt, const char *text ); /**< Text event function handler for the widget. */
    int (*mmoveevent) ( struct Widget_ *wgt, SDL_MouseMotionEvent *mmove ); /**< Mouse movement handler function for the widget. */
    int (*mclickevent) ( struct Widget_ *wgt, SDL_MouseButtonEvent *mclick ); /**< Mouse click event handler function for the widget. */
 

@@ -12,6 +12,8 @@ RELPATH := lib/lua/
 
 ifeq ($(OS),LINUX)
 CFLAGS += -DLUA_USE_POSIX
+else
+CFLAGS += -DLUA_ANSI
 endif
 
 ifdef DEBUG
