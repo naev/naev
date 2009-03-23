@@ -345,7 +345,7 @@ static int pilot_clear( lua_State *L )
  *
  *    @luaparam enable true enables spawn, false disables it.
  *    @luareturn The current spawn state.
- * @luafunc togglespawn( enable )
+ * @luafunc toggleSpawn( enable )
  */
 static int pilot_toggleSpawn( lua_State *L )
 {
