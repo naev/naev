@@ -58,7 +58,6 @@ There's a shout and you turn to see the portmaster standing at the door.  "Liste
    comm[5] = "I've got one on me!"
 
 -- Stage three: Victorious comm chatter
-   comm = {}
    comm[6] = "That's right, run away you cowards."
    comm[7] = "Good job, everyone.  Let's get back planetside and get our reward."
 
@@ -145,16 +144,16 @@ function defend_system()
 
   -- Makes the system empty except for the two fleets.  No help coming.
       pilot.clear ()
-      --pilot.togglespawn( false )   -- causing an error
+      pilot.toggleSpawn( false )
 
   -- Create a fleet of raiding pirates
-      raider_fleet = pilot.add( "Pirate Raiders", "def", vec2.new( 400, 400) )
+      raider_fleet = pilot.add( "DTS Raiders", "def", vec2.new( 400, 400) )
       for k,v in ipairs( raider_fleet) do
          pilot.setHostile( v)
       end
 
   -- And a fleet of defending independents
-      defense_fleet = pilot.add( "Defense Fleet", "def", vec2.new( 0, 0) )
+      defense_fleet = pilot.add( "DTS Defense Fleet", "def", vec2.new( 0, 0) )
       for k,v in ipairs( defense_fleet) do
          pilot.setFriendly( v)
       end
@@ -182,7 +181,9 @@ function add_cas_and_check()
 
       casualties = casualties + 1
       if casualties > 6 then
-         for k, v in ipairs( raider_fleet) do
+
+         raiders_left = pilot.get( { faction.get("Raider") } )
+         for k, v in ipairs( raiders_left ) do
             pilot.changeAI( v, "flee")
             --[[
             if pilot.get( "Raider") then
