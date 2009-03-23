@@ -219,15 +219,17 @@ static int pilot_getPlayer( lua_State *L )
  * end
  * @endcode
  *
- * @usage p = pilot.add( "Pirate Hyena" )
- * @usage p = pilot.add( "Trader Llama", "dummy" )
- * @usage p = pilot.add( "Sml Trader Convoy", "def", vec2.new( 1000, 200 ) )
+ * @usage p = pilot.add( "Pirate Hyena" ) -- Just adds the pilot (will jump in).
+ * @usage p = pilot.add( "Trader Llama", "dummy" ) -- Overrides AI with dummy ai.
+ * @usage p = pilot.add( "Sml Trader Convoy", "def", vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
+ * @usage p = pilot.add( "Empire Pacifier", "def", vec2.new( 1000, 1000 ), true ) -- Have the pilot jump in.
  *
  *    @luaparam fleetname Name of the fleet to add.
  *    @luaparam ai If set will override the standard fleet AI.  "def" means use default.
  *    @luaparam pos Position to create pilots around instead of choosing randomly.
+ *    @luaparam jump true if pilots should jump in, false by default if pos is defined.
  *    @luareturn Table populated with all the pilots created.
- * @luafunc add( fleetname, ai, pos )
+ * @luafunc add( fleetname, ai, pos, jump )
  */
 static int pilot_addFleet( lua_State *L )
 {
@@ -242,6 +244,7 @@ static int pilot_addFleet( lua_State *L )
    FleetPilot *plt;
    LuaPilot lp;
    LuaVector *lv;
+   int jump;
 
    /* Parse first argument - Fleet Name */
    if (lua_isstring(L,1)) fltname = (char*) lua_tostring(L,1);
@@ -266,6 +269,17 @@ static int pilot_addFleet( lua_State *L )
    }
    else lv = NULL;
 
+   if (lua_gettop(L) > 3) {
+      jump = lua_toboolean(L,4);
+   }
+   else {
+      /* Only jump by default if not position was passed. */
+      if (lv==NULL)
+         jump = 1;
+      else
+         jump = 0;
+   }
+
    /* Needed to determine angle. */
    vectnull(&vn);
 
@@ -277,8 +291,15 @@ static int pilot_addFleet( lua_State *L )
    }
 
    /* Use position passed if possible. */
-   if (lv != NULL)
-      vectcpy( &vp, &lv->vec );
+   if (lv != NULL) {
+      if (!jump)
+         vectcpy( &vp, &lv->vec );
+      else {
+         /* Pilot is jumping in, we'll only use the vector angle. */
+         d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
+         vect_pset( &vp, d, VANGLE(lv->vec) );
+      }
+   }
    else {
       d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
       vect_pset( &vp, d, RNG(0,360)*M_PI/180.);
@@ -299,7 +320,7 @@ static int pilot_addFleet( lua_State *L )
 
          /* Set velocity only if no position is set.. */
          if (lv != NULL) {
-            if (VMOD(lv->vec) > HYPERSPACE_ENTER_MIN*0.9) {
+            if (jump) {
                a = vect_angle(&vp,&vn);
                vect_pset( &vv, HYPERSPACE_VEL, a );
             }
