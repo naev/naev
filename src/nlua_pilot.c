@@ -367,7 +367,7 @@ static int pilot_toggleSpawn( lua_State *L )
  *
  *    @luaparam f If f is a table of factions, it will only get pilots matching those factions.  Otherwise it gets all the pilots.
  *    @luareturn A table containing the pilots.
- * @luafunc pilot.get( f )
+ * @luafunc get( f )
  */
 static int pilot_getPilots( lua_State *L )
 {
