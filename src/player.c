@@ -1048,7 +1048,7 @@ void player_land (void)
    Planet *planet;
 
    if (landed) { /* player is already landed */
-      takeoff();
+      takeoff(1);
       return;
    }
 

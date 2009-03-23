@@ -101,6 +101,7 @@ extern int hyperspace_target; /**< from player.c */
 /*
  * prototypes
  */
+static void land_buttonTakeoff( unsigned int wid, char *unused );
 /* commodity exchange */
 static void commodity_exchange_open( unsigned int parent, char* str );
 static void commodity_update( unsigned int wid, char* str );
@@ -1436,6 +1437,21 @@ static void land_checkAddRefuel (void)
 
 
 /**
+ * @brief Wrapper for takeoff mission button.
+ *
+ *    @param wid Window causing takeoff.
+ *    @param unused Unused.
+ */
+static void land_buttonTakeoff( unsigned int wid, char *unused )
+{
+   (void) wid;
+   (void) unused;
+   /* We'll want the time delay. */
+   takeoff(1);
+}
+
+
+/**
  * @brief Opens up all the land dialogue stuff.
  *    @param p Planet to open stuff for.
  */
@@ -1478,7 +1494,7 @@ void land( Planet* p )
    /* first column */
    window_addButton( land_wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnTakeoff",
-         "Takeoff", (void(*)(unsigned int,char*))takeoff );
+         "Takeoff", land_buttonTakeoff );
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
       window_addButton( land_wid, -20, 20 + BUTTON_HEIGHT + 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnCommodity",
@@ -1532,15 +1548,17 @@ void land( Planet* p )
    /* Mission forced take off. */
    if (landed == 0) {
       landed = 1; /* ugly hack to make takeoff not complain. */
-      takeoff();
+      takeoff(0);
    }
 }
 
 
 /**
  * @brief Makes the player take off if landed.
+ *
+ *    @param delay Whether or not to have time pass as if the player landed normally.
  */
-void takeoff (void)
+void takeoff( int delay )
 {
    int sw,sh, h;
    char *nt;
@@ -1569,7 +1587,8 @@ void takeoff (void)
    player->energy = player->energy_max;
 
    /* time goes by, triggers hook before takeoff */
-   ntime_inc( RNG( 2*NTIME_UNIT_LENGTH, 3*NTIME_UNIT_LENGTH ) );
+   if (delay)
+      ntime_inc( RNG( 2*NTIME_UNIT_LENGTH, 3*NTIME_UNIT_LENGTH ) );
    nt = ntime_pretty(0);
    player_message("Taking off from %s on %s.", land_planet->name, nt);
    free(nt);
