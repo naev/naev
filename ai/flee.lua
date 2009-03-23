@@ -48,13 +48,15 @@ end
 -- Required "attacked" function
 function attacked ( attacker )
    task = ai.taskname()
-   target = ai.target()
 
    if task == "runaway" then
-      if ai.target() ~= attacker then
+      target = ai.target()
+      if target == nil or ai.target() ~= attacker then
          ai.poptask()
          ai.pushtask(0, "runaway", attacker)
       end
+   else
+      ai.pushtask(0, "runaway", attacker)
    end
 end
 
