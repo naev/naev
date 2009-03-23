@@ -90,6 +90,7 @@ static void inp_render( Widget* inp, double bx, double by )
    /* center vertically */
    if (inp->dat.inp.oneline) ty = y - (inp->h - gl_smallFont.h)/2.;
 
+   /* Draw text. */
    gl_printTextRaw( &gl_smallFont, inp->w-10., inp->h,
          x+5. + SCREEN_W/2., ty  + SCREEN_H/2.,
          &cBlack, inp->dat.inp.input + inp->dat.inp.view );
@@ -134,7 +135,9 @@ static int inp_text( Widget* inp, const char *buf )
  */
 static int inp_addKey( Widget* inp, SDLKey key )
 {
+   int i;
    int n;
+   char c;
    
    /*
     * Handle arrow keys.
@@ -144,13 +147,22 @@ static int inp_addKey( Widget* inp, SDLKey key )
    if (!nstd_isgraph(key) && (key != ' '))
       return 0;
 
+   /* No sense to use SDLKey below this. */
+   c = key;
+
    if (inp->dat.inp.oneline) {
 
       /* in limits. */
       if ((inp->dat.inp.pos < inp->dat.inp.max-1)) {
 
+         /* Check to see if is in filter to ignore. */
+         if (inp->dat.inp.filter != NULL)
+            for (i=0; inp->dat.inp.filter[i] != '\0'; i++)
+               if (inp->dat.inp.filter[i] == c)
+                  return 0; /* Ignored. */
+
          /* add key. */
-         inp->dat.inp.input[ inp->dat.inp.pos++ ] = key;
+         inp->dat.inp.input[ inp->dat.inp.pos++ ] = c;
 
          n = gl_printWidthRaw( &gl_smallFont, inp->dat.inp.input+inp->dat.inp.view );
          if (n+10 > inp->w) inp->dat.inp.view++;
@@ -236,6 +248,10 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
  */
 static void inp_cleanup( Widget* inp )
 {
+   /* Free filter if needed. */
+   if (inp->dat.inp.filter != NULL)
+      free(inp->dat.inp.filter);
+
    free(inp->dat.inp.input); /* frees the input buffer */
 }
 
@@ -284,7 +300,7 @@ char* window_setInput( const unsigned int wid, char* name, const char *msg )
 
    /* Check the type. */
    if (wgt->type != WIDGET_INPUT) {
-      WARN("Trying to get input from non-input widget '%s'.", name);
+      WARN("Trying to set input on non-input widget '%s'.", name);
       return NULL;
    }
 
@@ -303,4 +319,36 @@ char* window_setInput( const unsigned int wid, char* name, const char *msg )
    return wgt->dat.inp.input;
 }
 
+
+/**
+ * @brief Sets the input filter.
+ *
+ * This is a list of characters which won't be accepted as input.
+ *
+ *    @param wid Window to which input widget belongs.
+ *    @param name Input widget to set filter on.
+ *    @param filter '\0' terminated list of characters to filter.
+ */
+void window_setInputFilter( const unsigned int wid, char* name, const char *filter )
+{
+   Widget *wgt;
+
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+
+   /* Check the type. */
+   if (wgt->type != WIDGET_INPUT) {
+      WARN("Trying to set input filter on non-input widget '%s'.", name);
+      return;
+   }
+
+   /* Free if already exists. */
+   if (wgt->dat.inp.filter != NULL)
+      free(wgt->dat.inp.filter);
+
+   /* Copy filter over. */
+   wgt->dat.inp.filter = strdup( filter );
+}
 

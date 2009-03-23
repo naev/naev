@@ -12,6 +12,7 @@
  * @brief The input widget data.
  */
 typedef struct WidgetInputData_ {
+   char *filter; /**< Characters to filter. */
    char *input; /**< Input buffer. */
    int max; /**< Maximum length. */
    int oneline; /**< Is it a one-liner? no '\n' and friends */
@@ -29,6 +30,7 @@ void window_addInput( const unsigned int wid,
 /* Misc functions. */
 char* window_getInput( const unsigned int wid, char* name );
 char* window_setInput( const unsigned int wid, char* name, const char *msg );
+void window_setInputFilter( const unsigned int wid, char* name, const char *filter );
 
 
 #endif /* WGT_INPUT_H */
