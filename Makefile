@@ -62,8 +62,13 @@ LDSDL   := $(shell sdl-config --libs) -lSDL_image -lSDL_mixer
 LDXML   := $(shell xml2-config --libs)
 LDTTF   := $(shell freetype-config --libs)
 LDPNG   := $(shell libpng-config --libs)
+ifeq ($(OS),WIN32)
+LDGL    := -lglu32 -lopengl32
+LDFLAGS := -lmingw32 -mwindows -lm $(LDLUA) $(LDCSPARSE) $(LDSDL) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
+else # WIN32
 LDGL    := -lGL
 LDFLAGS := -lm $(LDLUA) $(LDCSPARSE) $(LDSDL) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
+endif # WIN32
 
 # Debug stuff
 ifdef DEBUG
