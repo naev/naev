@@ -107,7 +107,9 @@ struct Packcache_s {
 #endif
 
 
+#if HAS_FD
 #define PERMS   S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH /**< default permissions. */
+#endif /* HAS_FD */
 
 
 const uint64_t magic =  0x25524573; /**< File magic number: sER% */
