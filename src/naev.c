@@ -630,7 +630,13 @@ static char human_version[50]; /**< Stores the human readable version string. */
 char *naev_version (void)
 {
    if (human_version[0] == '\0')
-      snprintf( human_version, 50, " "APPNAME" v%s - %s", version, ndata_name() );
+      snprintf( human_version, 50, " "APPNAME" v%s%s - %s", version,
+#ifdef DEBUGGING
+            " debug",
+#else /* DEBUGGING */
+            "",
+#endif /* DEBUGGING */
+            ndata_name() );
 
    return human_version;
 }
