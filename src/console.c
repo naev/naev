@@ -99,6 +99,8 @@ static void cli_render( double bx, double by, double w, double h )
    for (y=h-cli_font->h-5; y>0; y -= cli_font->h + 5) {
       if (cli_buffer[i][0] == '>')
          c = &cDConsole;
+      else if (strncmp(cli_buffer[i], "cli:", 4)==0)
+         c = &cRed;
       else
          c = &cBlack;
       gl_printMaxRaw( cli_font, w,
