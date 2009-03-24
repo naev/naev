@@ -92,7 +92,7 @@ static int cli_print( lua_State *L ) {
                LUA_QL("print"));
 
       /* Add to console. */
-      p += snprintf( buf, LINE_LENGTH-p, "%s%s", (i>1) ? "   " : "", s );
+      p += snprintf( &buf[p], LINE_LENGTH-p, "%s%s", (i>1) ? "   " : "", s );
       if (p >= LINE_LENGTH) {
          cli_addMessage(buf);
          p = 0;
