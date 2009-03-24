@@ -57,10 +57,54 @@ static int cli_firstline   = 1; /**< Is this the first line? */
 
 
 /*
+ * CLI stuff.
+ */
+static int cli_print( lua_State *L );
+static const luaL_Reg cli_methods[] = {
+   { "print", cli_print },
+   {NULL, NULL}
+};
+
+
+
+/*
  * Prototypes.
  */
 static void cli_addMessage( const char *msg );
 static void cli_render( double bx, double by, double w, double h );
+
+
+static int cli_print( lua_State *L ) {
+   int n = lua_gettop(L);  /* number of arguments */
+   int i;
+   char buf[LINE_LENGTH];
+   int p;
+   p = 0;
+   lua_getglobal(L, "tostring");
+   for (i=1; i<=n; i++) {
+      const char *s;
+      lua_pushvalue(L, -1);  /* function to be called */
+      lua_pushvalue(L, i);   /* value to print */
+      lua_call(L, 1, 1);
+      s = lua_tostring(L, -1);  /* get result */
+      if (s == NULL)                                                         
+         return luaL_error(L, LUA_QL("tostring") " must return a string to "
+               LUA_QL("print"));
+
+      /* Add to console. */
+      p += snprintf( buf, LINE_LENGTH-p, "%s%s", (i>1) ? "   " : "", s );
+      if (p >= LINE_LENGTH) {
+         cli_addMessage(buf);
+         p = 0;
+      }
+      lua_pop(L, 1);  /* pop result */
+   }
+
+   /* Add last line if needed. */
+   cli_addMessage(buf);
+
+   return 0;
+}
 
 
 /**
@@ -124,6 +168,7 @@ int cli_init (void)
    cli_state = nlua_newState();
    nlua_loadBasic( cli_state );
    nlua_loadStandard( cli_state, 0 );
+   luaL_register( cli_state, "_G", cli_methods );
    lua_settop( cli_state, 0 );
 
    /* Set the font. */
