@@ -151,9 +151,9 @@ static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my
    switch (event->type) {
       case SDL_MOUSEBUTTONDOWN:
          if (event->button.button == SDL_BUTTON_WHEELUP)
-            news_pos += h/3.;
-         else if (event->button.button == SDL_BUTTON_WHEELDOWN)
             news_pos -= h/3.;
+         else if (event->button.button == SDL_BUTTON_WHEELDOWN)
+            news_pos += h/3.;
          else if (!news_drag)
             news_drag = 1;
          break;
