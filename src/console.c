@@ -24,6 +24,9 @@
 #include "toolkit.h"
 
 
+#define CONSOLE_FONT_SIZE  10
+
+
 #define CONSOLE_WIDTH   500 /**< Console window width. */
 #define CONSOLE_HEIGHT  400 /**< Console window height. */
 
@@ -69,9 +72,11 @@ static void cli_addMessage( const char *msg )
 {
    int n;
 
-   if (msg != NULL) {
+   if (msg != NULL)
       strncpy( cli_buffer[cli_cursor], msg, LINE_LENGTH );
-   }
+   else
+      cli_buffer[cli_cursor][0] = '\0';
+
    cli_cursor = (cli_cursor+1) % BUF_LINES;
 
    /* Move viewport if needed. */
@@ -87,13 +92,18 @@ static void cli_addMessage( const char *msg )
 static void cli_render( double bx, double by, double w, double h )
 {
    int i, y;
+   glColour *c;
 
    /* Draw the text. */
    i = cli_viewport;
    for (y=h-cli_font->h-5; y>0; y -= cli_font->h + 5) {
+      if (cli_buffer[i][0] == '>')
+         c = &cDConsole;
+      else
+         c = &cBlack;
       gl_printMaxRaw( cli_font, w,
             bx + SCREEN_W/2., by + y + SCREEN_H/2., 
-            &cBlack, cli_buffer[i] );
+            c, cli_buffer[i] );
       i = (i + 1)  % BUF_LINES;
    }
 }
@@ -115,7 +125,8 @@ int cli_init (void)
    lua_settop( cli_state, 0 );
 
    /* Set the font. */
-   cli_font = &gl_smallFont;
+   cli_font = malloc( sizeof(glFont) );
+   gl_fontInit( cli_font, "dat/mono.ttf", CONSOLE_FONT_SIZE );
 
    /* Clear the buffer. */
    memset( cli_buffer, 0, sizeof(cli_buffer) );
@@ -140,10 +151,11 @@ void cli_exit (void)
    }
 
    /* Free the font. */
-   /*if (cli_font != NULL) {
+   if (cli_font != NULL) {
       gl_freeFont( cli_font );
+      free( cli_font );
       cli_font = NULL;
-   }*/
+   }
 }
 
 
@@ -159,6 +171,7 @@ static void cli_input( unsigned int wid, char *unused )
    int status;
    char *str;
    lua_State *L;
+   char buf[LINE_LENGTH];
 
    /* Get the input. */
    str = window_getInput( wid, "inpInput" );
@@ -168,7 +181,9 @@ static void cli_input( unsigned int wid, char *unused )
       return;
 
    /* Put the message in the console. */
-   cli_addMessage( str );
+   snprintf( buf, LINE_LENGTH, "%s %s",
+         cli_firstline ? "> " : ">>", str );
+   cli_addMessage( buf );
 
    /* Set up state. */
    L = cli_state;
