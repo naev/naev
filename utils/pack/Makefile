@@ -8,6 +8,9 @@ COBJS    := $(SRCDIR)pack.o $(SRCDIR)md5.o main.o
 CFLAGS   += -W -Wall $(shell sdl-config --cflags)
 ifdef DEBUG
 CFLAGS   += -I$(SRCDIR) -g -DDEBUG
+ifdef DEBUG_PARANOID
+CFLAGS   += -DDEBUG_PARANOID
+endif
 else
 CFLAGS   += -I$(SRCDIR) -O2
 endif

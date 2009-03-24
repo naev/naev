@@ -4,6 +4,7 @@
 DEBUG := 1
 #DEBUG_PARANOID := 1
 export DEBUG
+export DEBUG_PARANOID
 
 
 # OS
