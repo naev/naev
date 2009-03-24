@@ -244,8 +244,10 @@ static int player_getRating( lua_State *L )
 /**
  * @brief Gets the player's position.
  *
+ * @usage v = player.pos()
+ *
  *    @luareturn The position of the player (Vec2).
- * @luafunc getPos()
+ * @luafunc pos()
  */
 static int player_getPosition( lua_State *L )
 {
