@@ -3,23 +3,19 @@
    VITAL
 
    *) Developer mode
-      *) Lua console
       *) Run missions
       *) See mount points
       *) Integrate the resource editor possibly.
    *) Asteroids
-   *) Real news
    *) Event system
       *) Like mission system, but they occur naturally/randomly
       *) Has similar power to mission system
    *) More missions
-       *) Empire Shipping Campaign
        *) FLF Nebulae Campaign
        *) Space Trader Missions
        *) Misc Empire Guard missions
        *) Pirate Missions
        *) FLF Missions
-   *) Be able to hail and thus bribe planets
 
 
    MAJOR
