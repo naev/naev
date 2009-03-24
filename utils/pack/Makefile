@@ -27,7 +27,7 @@ APPNAME  := pack
 all: $(ROOTDIR)$(APPNAME)
 
 $(ROOTDIR)$(APPNAME): $(COBJS)
-	@$(CC) $(LDFLAGS) $(CFLAGS) -o $(ROOTDIR)$(APPNAME) $(COBJS)
+	@$(CC) $(CFLAGS) $(LDFLAGS) -o $(ROOTDIR)$(APPNAME) $(COBJS)
 	@echo "   LD   $(APPNAME)"
 
 clean:
