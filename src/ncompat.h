@@ -47,11 +47,7 @@
 /**
  * @brief Whether or not to use filedescriptors.
  */
-#ifdef HAS_POSIX
-#  define HAS_FD     1
-#else
-#  define HAS_FD     0
-#endif
+#define HAS_FD     HAS_POSIX
 
 
 #endif /* NCOMPAT_H */
