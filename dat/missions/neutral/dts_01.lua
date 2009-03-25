@@ -1,10 +1,9 @@
 --[[
 
-   MISSION: Defend the System 1
+   MISSION: Defend the System 2
    DESCRIPTION: A mission to defend the system against swarm of pirate ships.
-                This will be the first in a planned series of random encounters.
-                After the third specifically scripted pirate invasion, a militia will form.
-                The player will have the option to join the militia.
+                This will be the second in a planned series of random encounters.
+                After the third mission, perhaps there'll be a regular diet of similar missions
                 Perhaps the random missions will eventually lead on to a plot line relating to the pirates.
 
       Notable events:
@@ -36,15 +35,15 @@ else -- default english
    title = {}
    text = {}
    title[1] = "In the bar"
-   text[1] = [[The bar is buzzing when you walk in.  All the pilots are talking at once.  Every screen in sight carries the same news feed: live footage of a space battle in orbit around %s.
+   text[1] = [[The barman has just asked you for your order when the portmaster bursts though the door, out of breath.  "Pirates, all over the system!  The navy's on maneuvers.  Quickly, we need to organize a defense."
 
-"A big fleet of pirates have just invaded the system," a woman wearing a Nexus insignia explains.  "They swarm any ship that tries to take off.  Shipping is at a standstill.  It's a disaster."
+All the pilots in the room scramble to their feet.  "How many are there?" someone asks.  "How long have they been in system?" another calls out.
 
-There's a shout and you turn to see the portmaster standing at the door.  "Listen up," he bellows.  "The thugs out there have caught us without a defense fleet in system and somehow they've jammed our link with the rest of the Empire.  So, I'm here looking for volunteers.  Everyone who steps forward will get forty thousand credits when they get back and of course the thanks of a grateful planet and the pride of serving the Empire.
+Into the confusion steps a steely-haired, upright, uniformed figure.  Her stripes mark her as a navy commander.
 
-"Are you brave enough?"]]
+"I'm with the navy and I will organize the defense," her voice cuts through the commotion.  "Who here is a pilot?  We must strike back quickly.  I will arrange a reward for everyone who volunteers.  We'll need as many pilots as possible.  Follow me."]]
    title[11] = "Volunteers"
-   text[11] = [[You step forward and eight other pilots join you.  Together, all of you march off to the your ships and take off to face the pirate horde.]]
+   text[11] = [["Take as many out of the fight early as you can," advises the commander before you board your ships.  "If you can't chase them off, you might at least improve the odds.  Good luck."]]
 
 -- Stage two: Vicious comm chatter
    comm = {}
@@ -55,39 +54,33 @@ There's a shout and you turn to see the portmaster standing at the door.  "Liste
    comm[5] = "I've got one on me!"
 
 -- Stage three: Victorious comm chatter
-   comm[6] = "That's right, run away you cowards."
-   comm[7] = "Good job, everyone.  Let's get back planetside and get our reward."
+   comm[6] = "We've got them on the run!"
+   comm[7] = "Well done, pilots.  Return to port."
 
--- Stage four: the portmaster greets you when you return to the planet
-   title[2] = "Welcome back"
-   text[2] = [[The portmaster greets the crowd of volunteers on the spaceport causeway.
+-- Stage four: the commander is getting instructions when you land
+   title[2] = "On the way in"
+   text[2] = [[As you taxi in to land, you can make out the tiny figure of the commander saluting a small group of individuals to the side of the landing pads.  After you and your fellow volunteers alight, she greets you with the portmaster by her side.]]
 
-"Well done.  You got those pirates on the run!"  He exclaims.  "Maybe they'll think twice now before bothering our peace.  I hope you all feel proud.  You've spared this planet millions in shipping, and saved countless lives.  And you've earned a reward.  Before you takeoff today, the port authority will give you each forty thousand credits.  Congratulations!"
-
-Your comrades raise a cheer everyone shakes the postmasters hand.  One of them kisses the master on both cheeks in the Goddard style, then the whole crowd moves toward the bar.]]
-
--- Stage five: talking afterward in the bar
-   title[3] = "Over drinks"
-   text[3] = [[Many hours later, the celebration has wound down.  You find yourself drinking with a small group of 'veterans of the battle of %s,' as some of them are calling it.  A older pilot sits across the table and stares pensively into his drink.
-
-"It's strange, though," he mutters.  "I've never seen pirates swarm like that before."]]
+-- Stage five: the commander welcomes you back
+   title[3] = "Thank you"
+   text[3] = [["That was good flying," the commander says with a tight smile.  "Thank you all for your help.  This gentleman has arranged a transfer of forty thousand credits to each of you.  You can be proud of what you've done today."]]
 
 -- Other text for the mission
    comm[8] = "You fled battle.  The Empire wont forget."
    title[4] = "Good job"
-   text[4] = [[You jump out of %s the sweat still running down your face.  The fight to clear the system was brief but intense.  After a moment, another ship enters on the same vector.  The blast marks on the sides of his craft show it too comes from combat with the pirates.  Your comm beeps.
+   text[4] = [[The debris from the battle disappears behind you in a blur of light.  A moment after you emerge from hyperspace, a Imperial ship jumps in behind you and hails you.
 
-"Good flying, mate.  We got those pirates on the run!"  The pilot exclaims.  "You didn't want to go back for the cash either, eh?  I don't blame you.  I hate pirates, but I don't want the Empire's money!"  He smiles grimly.  "It's strange, though.  I've never seen pirates swarm that way before."
+"Please hold course and confirm your identity, %s."  You send your license code and wait for a moment.  "Ok, that's fine.  We're just making sure no pirates escaped.  You were part of the battle, weren't you?  Surprised you didn't return for the bounty, pilot.  Listen, I appreciate what you did back there.  I have family on %s.  When I'm not flying overhead, it's good to know there are good samaritans like you who will step up.  Thanks."
 ]]
    title[5] = "Left behind"
-   text[5] = [[Eight pilots step forward.  The rest of you stand and watch as they file out the door.  The portmaster spares a withering glance for those left behind.
-
-"Don't get your petticoats caught in the crossfire on your way out of atmo," he sneers.  Then he turns to follow his volunteers.]]
+   text[5] = [[The commander turns and walks off.  Eight men and women follow her, but you stay put.
+   
+A man in a jumpsuit at the next table nods at you.  "What, they expect me to do their dirty work for them?" he shakes his head.  "It's going to be a hot ride out of the system though, with all that going on upstairs."]]
    bounce_title = "Not done yet."
    bounce_text = "The system isn't safe yet.  Get back out there!"
    noReward = "No reward for you."
    noDesc = "Watch others defend the system."
-   noTitle = "Watch the action."
+   noTitle = "Observe the action."
 
 end 
 
@@ -98,7 +91,7 @@ function create()
       this_planet, this_system = planet.get()
       planet_name = planet.name( this_planet)
       system_name = this_system:name()
-      if tk.yesno( title[1], string.format( text[1], planet_name ) ) then
+      if tk.yesno( title[1], text[1] ) then
          misn.accept()
          var.push( "dts_firstSystem", "planet_name")
          tk.msg( title[11], text[11])
@@ -169,7 +162,7 @@ function defend_system()
          pilot.setFriendly( v)
       end
 
-  --[[ How the Battle ends:
+  --[[ Set conditions for the end of the Battle:
     hook fleet departure to disabling or killing ships]]
       casualties = 0
       for k, v in ipairs( raider_fleet) do
@@ -180,10 +173,6 @@ function defend_system()
       if defender == false then
          misn.finish( true)
       end
-      
-      if pilot.get( "Raider") == {} then
-         player.msg( comm[7])
-      end
 
 end
 
@@ -191,13 +180,13 @@ end
 function add_cas_and_check()
 
       casualties = casualties + 1
-      if casualties > 8 then
+      if casualties > 9 then
 
          raiders_left = pilot.get( { faction.get("Raider") } )
          for k, v in ipairs( raiders_left ) do
             pilot.changeAI( v, "flee")
          end
-         if victory ~= true then   -- A few seconds after the raiders start to flee declare victory
+         if victory ~= true then  -- A few seconds after victory, the system is back under control
             victory = true
             player.msg( comm[6])
             misn.timerStart( "victorious", 8000)
@@ -206,10 +195,17 @@ function add_cas_and_check()
 
 end
 
--- Call ships back to base
+-- When the raiders are on the run then the Empire takes over
 function victorious()
 
+   -- Call ships to base
       player.msg( comm[7])
+   -- Get a position near the player for late Empire re-enforcements
+      starting_vect = player.pos()
+      a = rnd.rnd() * 2 * math.pi
+      d = rnd.rnd( 100, 200 )
+      empire_vect = starting_vect:add( math.cos(a) * d, math.sin(a) * d )
+      pilot.add( "Empire Med Attack", "def", empire_vect, true)
 
 end
 
@@ -217,10 +213,10 @@ end
 function celebrate_victory()
 
       if victory == true then
-         tk.msg( title[2], string.format( text[2], planet_name ) )
+         tk.msg( title[2], text[2] )
          player.pay( reward)
          player.modFaction( "Empire", 3)
-         tk.msg( title[3], string.format( text[3], system_name) )
+         tk.msg( title[3], text[3] )
          misn.finish( true)
       else
          tk.msg( bounce_title, bounce_text)   -- If any pirates still alive, send player back out.
@@ -233,11 +229,11 @@ end
 function ship_enters()
 
       enter_vect = player.pos()
-      pilot.add("Trader Mule", "def", enter_vect:add( 10, 10), true)
+      pilot.add("Empire Pacifier", "def", enter_vect:add( 10, 10), true)
       misn.timerStart( "congratulations", 1000)
 end
 function congratulations()
-      tk.msg( title[4], string.format( text[4], system_name))
+      tk.msg( title[4], string.format( text[4], player.ship(), planet_name))
       misn.finish( true)
 
 end
