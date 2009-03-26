@@ -178,6 +178,7 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    }
 
 #if HAS_POSIX
+   int i,j,k, n;
    DIR *d;
    struct dirent *dir;
    char *name;
@@ -263,7 +264,6 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    free(tfiles);
    free(tt);
 #elif HAS_WIN32
-   int i,j,k, n;
    DIR *d;
    struct dirent *dir;
    char *name;
