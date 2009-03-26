@@ -19,11 +19,11 @@
 #include <string.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <dirent.h> 
 #if HAS_POSIX
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <dirent.h> 
 #include <errno.h>
 #endif /* HAS_POSIX */
 #if HAS_WIN32
@@ -178,7 +178,6 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    }
 
 #if HAS_POSIX
-   int i,j,k, n;
    DIR *d;
    struct dirent *dir;
    char *name;
@@ -263,10 +262,10 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    /* Free temporary stuff */
    free(tfiles);
    free(tt);
-
 #elif HAS_WIN32
-   HANDLE hDir;
-   WIN32_FIND_DATA FileData; 
+   int i,j,k, n;
+   DIR *d;
+   struct dirent *dir;
    char *name;
    int mfiles;
 
@@ -274,19 +273,20 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    mfiles = 128;
    files = malloc(sizeof(char*)*mfiles);
 
-   /* Start listing stuff. */
-   hDir = FindFirstFile(TEXT("*"), &FileData);
-   if (hDir == INVALID_HANDLE_VALUE) 
+   d = opendir(base);
+   if (d == NULL)
       return NULL;
-  
-   /* Iterate until done. */
-   do {
-      name = FileData.cFileName;
+
+   /* Get the file list */
+   while ((dir = readdir(d)) != NULL) {
+      name = dir->d_name;
+
+      /* Skip hidden directories */
+      if (name[0] == '.')
+         continue;
 
       /* Stat the file */
       snprintf( file, PATH_MAX, "%s/%s", base, name );
-      if (!nfile_fileExists(file))
-         continue; /* Unable to stat */
 
       /* Enough memory? */
       if ((*nfiles)+1 > mfiles) {
@@ -297,11 +297,12 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
       /* Write the information */
       files[(*nfiles)] = strdup(name);
       (*nfiles)++;
-   } while (FindNextFile(hDir, &FileData));
+   }
 
-   /* Clean up. */
-   FindClose(hDir);
+   closedir(d);
 
+   /* Free temporary stuff */
+   free(files);
 #else
 #error "Feature needs implementation on this Operating System for NAEV to work."
 #endif /* HAS_POSIX */
