@@ -24,7 +24,7 @@
 #include "toolkit.h"
 
 
-#define CONSOLE_FONT_SIZE  10
+#define CONSOLE_FONT_SIZE  10 /**< Size of the console font. */
 
 
 #define CONSOLE_WIDTH   500 /**< Console window width. */
@@ -48,6 +48,7 @@ static glFont *cli_font     = NULL; /**< CLI font to use. */
 static int cli_cursor      = 0; /**< Current cursor position. */
 static char cli_buffer[BUF_LINES][LINE_LENGTH]; /**< CLI buffer. */
 static int cli_viewport    = 0; /**< Current viewport. */
+static int cli_history     = 0; /**< Position in history. */
 
 
 /*
@@ -63,17 +64,21 @@ static int cli_print( lua_State *L );
 static const luaL_Reg cli_methods[] = {
    { "print", cli_print },
    {NULL, NULL}
-};
+}; /**< Console only functions. */
 
 
 
 /*
  * Prototypes.
  */
+static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod );
 static void cli_addMessage( const char *msg );
 static void cli_render( double bx, double by, double w, double h );
 
 
+/**
+ * @brief Replacement for the internal Lua print to print to console instead of terminal.
+ */
 static int cli_print( lua_State *L ) {
    int n = lua_gettop(L);  /* number of arguments */
    int i;
@@ -122,6 +127,7 @@ static void cli_addMessage( const char *msg )
       cli_buffer[cli_cursor][0] = '\0';
 
    cli_cursor = (cli_cursor+1) % BUF_LINES;
+   cli_history = cli_cursor; /* History matches cursor. */
 
    /* Move viewport if needed. */
    n = (cli_cursor - cli_viewport) % BUF_LINES;
@@ -152,6 +158,58 @@ static void cli_render( double bx, double by, double w, double h )
             c, cli_buffer[i] );
       i = (i + 1)  % BUF_LINES;
    }
+}
+
+
+/**
+ * @brief Key handler for the console window.
+ */
+static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod )
+{
+   (void) mod;
+   int i;
+
+   switch (key) {
+
+      /* Go up in history. */
+      case SDLK_UP:
+         i = cli_history-1;
+         while (cli_buffer[i][0] != '\0') {
+            if (cli_buffer[i][0] == '>') {
+               window_setInput( wid, "inpInput", &cli_buffer[i][3] );
+               cli_history = i;
+               return 1;
+            }
+            i--;
+         }
+         return 1;
+
+      /* Go down in history. */
+      case SDLK_DOWN:
+         /* Clears buffer. */
+         if (cli_history >= cli_cursor) {
+            window_setInput( wid, "inpInput", NULL );
+            return 1;
+         }
+
+         /* Find next buffer. */
+         i = cli_history+1;
+         while (cli_buffer[i][0] != '\0') {
+            if (cli_buffer[i][0] == '>') {
+               window_setInput( wid, "inpInput", &cli_buffer[i][3] );
+               cli_history = i;
+               return 1;
+            }
+            i++;
+         }
+         window_setInput( wid, "inpInput", NULL );
+         return 1;
+
+      default:
+         break;
+   }
+
+   return 0;
 }
 
 
@@ -293,6 +351,7 @@ void cli_open (void)
    /* Window settings. */
    window_setAccept( wid, cli_input );
    window_setCancel( wid, window_close );
+   window_handleKeys( wid, cli_keyhandler );
 
    /* Input box. */
    window_addInput( wid, 20, 20,

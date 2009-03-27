@@ -128,6 +128,7 @@ typedef struct Window_ {
 
    void (*accept_fptr)(unsigned int,char*); /**< Triggered by hitting 'enter' with no widget that catches the keypress. */
    void (*cancel_fptr)(unsigned int,char*); /**< Triggered by hitting 'escape' with no widget that catches the keypress. */
+   int (*keyevent)(unsigned int,SDLKey,SDLMod); /**< User defined custom key event handler. */
 
    /* Position and dimensions. */
    double x; /**< X position of the window. */

@@ -426,6 +426,27 @@ void window_setCancel( const unsigned int wid, void (*cancel)(unsigned int,char*
 
 
 /**
+ * @brief Sets the key handler for the window.
+ *
+ * This function is only called if neither the active widget nor the window
+ *  itself grabs the input.
+ */
+void window_handleKeys( const unsigned int wid,
+      int (*keyhandler)(unsigned int,SDLKey,SDLMod) )
+{
+   Window *wdw;
+
+   /* Get the window. */
+   wdw = window_wget( wid );
+   if (wdw == NULL)
+      return;
+
+   /* Set key event handler function. */
+   wdw->keyevent = keyhandler;
+}
+
+
+/**
  * @brief Destroys a widget.
  *
  *    @param widget Widget to destroy.
@@ -1155,14 +1176,14 @@ static int toolkit_keyEvent( SDL_Event* event )
 
       case SDLK_RETURN:
          if (wdw->accept_fptr != NULL) {
-            (*wdw->accept_fptr)(wdw->id,wdw->name);
+            (*wdw->accept_fptr)( wdw->id, wdw->name );
             return 1;
          }
          break;
 
       case SDLK_ESCAPE:
          if (wdw->cancel_fptr != NULL) {
-            (*wdw->cancel_fptr)(wdw->id,wdw->name);
+            (*wdw->cancel_fptr)( wdw->id, wdw->name );
             return 1;
          }
          break;
@@ -1170,6 +1191,10 @@ static int toolkit_keyEvent( SDL_Event* event )
       default:
          break;
    }
+
+   /* Finally the stuff gets passed to the custom key handler if it's defined. */
+   if (wdw->keyevent != NULL)
+      (*wdw->keyevent)( wdw->id, key, mod );
 
    return 0;
 }
