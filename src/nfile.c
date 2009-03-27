@@ -59,6 +59,10 @@ char* nfile_basePath (void)
       snprintf( naev_base, PATH_MAX, "%s/.naev/", home );
 #elif HAS_WIN32
       home = getenv("HOMEPATH");
+      if (home == NULL) {
+         WARN("%%HOMEPATH%% isn't set, using current directory.");
+         home = ".";
+      }
       snprintf( naev_base, PATH_MAX, "%s/naev/", home );
 #else
 #error "Feature needs implementation on this Operating System for NAEV to work."
