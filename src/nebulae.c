@@ -28,7 +28,8 @@
 
 #define NEBULAE_Z             16 /**< Z plane */
 #define NEBULAE_PUFFS         32 /**< Amount of puffs to generate */
-#define NEBULAE_PATH_BG       "gen/nebu_bg_%dx%d_%02d.png" /**< Nebulae path format. */
+#define NEBULAE_DIR           "gen/" /**< Directory containing the nebulae stuff. */
+#define NEBULAE_PATH_BG       NEBULAE_DIR"nebu_bg_%dx%d_%02d.png" /**< Nebulae path format. */
 
 #define NEBULAE_PUFF_BUFFER   300 /**< Nebulae buffer */
 
@@ -517,7 +518,7 @@ static int nebu_generate (void)
    h = SCREEN_H;
 
    /* Try to make the dir first if it fails. */
-   nfile_dirMakeExist( "%sgen", nfile_basePath() );
+   nfile_dirMakeExist( "%s"NEBULAE_DIR, nfile_basePath() );
 
    /* Generate all the nebulae backgrounds */
    nebu = noise_genNebulaeMap( w, h, NEBULAE_Z, 5. );
