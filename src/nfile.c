@@ -104,14 +104,17 @@ int nfile_dirMakeExist( const char* path, ... )
          return -1;
       }
 #elif HAS_WIN32
-   DWORD attr;
-   
-   attr = GetFileAttributes( file );
-   if (!(attr & FILE_ATTRIBUTE_DIRECTORY)) {
+   DIR *d;
+
+   d = opendir(file);
+   if (d==NULL) {
       if (!CreateDirectory(file, NULL))  {
          WARN("Dir '%s' does not exist and unable to create", file);
          return -1;
       }
+   }
+   else {
+      closedir(d);
    }
 #else
 #error "Feature needs implementation on this Operating System for NAEV to work."
