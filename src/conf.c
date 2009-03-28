@@ -52,7 +52,7 @@ lua_pop(L,1);
 #define  conf_loadString(n,s) \
    lua_getglobal(L, n); \
 if (lua_isstring(L, -1)) { \
-   s = strdup((char*)lua_tostring(L, -1));   \
+   s = strdup(lua_tostring(L, -1));   \
 } \
 lua_pop(L,1);
 
@@ -128,7 +128,7 @@ int conf_loadConfig ( const char* file )
 {
    int i;
    double d;
-   char *str, *mod;
+   const char *str, *mod;
    SDLKey key;
    int type;
    int w,h, fsaa;
@@ -148,7 +148,7 @@ int conf_loadConfig ( const char* file )
       /* global */
       lua_getglobal(L, "data");
       if (lua_isstring(L, -1))
-         ndata_setPath( (char*)lua_tostring(L, -1) );
+         ndata_setPath( lua_tostring(L, -1) );
       lua_pop(L,1);
 
       /*
@@ -234,7 +234,7 @@ int conf_loadConfig ( const char* file )
       if (lua_isnumber(L, -1))
          indjoystick = (int)lua_tonumber(L, -1);
       else if (lua_isstring(L, -1))
-         namjoystick = strdup((char*)lua_tostring(L, -1));
+         namjoystick = strdup(lua_tostring(L, -1));
       lua_pop(L,1);
 
 
@@ -248,7 +248,7 @@ int conf_loadConfig ( const char* file )
             lua_pushstring(L, "type");
             lua_gettable(L, -2);
             if (lua_isstring(L, -1))
-               str = (char*)lua_tostring(L, -1);
+               str = lua_tostring(L, -1);
             else if (lua_isnil(L, -1)) {
                WARN("Found keybind with no type field!");
                str = "null";
@@ -265,7 +265,7 @@ int conf_loadConfig ( const char* file )
             if (lua_isnumber(L, -1))
                key = (int)lua_tonumber(L, -1);
             else if (lua_isstring(L, -1))
-               key = input_keyConv( (char*)lua_tostring(L, -1));
+               key = input_keyConv( lua_tostring(L, -1));
             else if (lua_isnil(L, -1)) {
                WARN("Found keybind with no key field!");
                key = SDLK_UNKNOWN;
@@ -280,7 +280,7 @@ int conf_loadConfig ( const char* file )
             lua_pushstring(L, "mod");
             lua_gettable(L, -2);
             if (lua_isstring(L, -1))
-               mod = (char*)lua_tostring(L, -1);
+               mod = lua_tostring(L, -1);
             else
                mod = NULL;
             lua_pop(L,1);
@@ -318,7 +318,7 @@ int conf_loadConfig ( const char* file )
                   m = KMOD_NONE;
 
                /* set the keybind */
-               input_setKeybind( (char*)keybindNames[i], type, key, m );
+               input_setKeybind( keybindNames[i], type, key, m );
             }
             else {
                WARN("Malformed keybind for '%s' in '%s'.", keybindNames[i], file);

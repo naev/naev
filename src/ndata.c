@@ -63,7 +63,7 @@ static char** filterList( const char** list, int nlist,
  *    @param path Path to check to see if it's an ndata file.
  *    @return 1 if it is an ndata file, 0 else.
  */
-int ndata_check( char* path )
+int ndata_check( const char* path )
 {
    return pack_check( path );
 }
@@ -77,7 +77,7 @@ int ndata_check( char* path )
  *    @param path Path to set.
  *    @return 0 on success.
  */
-int ndata_setPath( char* path )
+int ndata_setPath( const char* path )
 {
    if (ndata_filename != NULL)
       free(ndata_filename);

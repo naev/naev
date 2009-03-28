@@ -21,8 +21,8 @@ void ndata_close (void);
 /*
  * General.
  */
-int ndata_check( char* path );
-int ndata_setPath( char* path );
+int ndata_check( const char* path );
+int ndata_setPath( const char* path );
 const char* ndata_name (void);
 
 /*

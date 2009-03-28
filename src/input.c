@@ -335,7 +335,7 @@ static void input_keyConvDestroy (void)
  *    @param name Name of the key to get id from.
  *    @return ID of the key.
  */
-SDLKey input_keyConv( char *name )
+SDLKey input_keyConv( const char *name )
 {
    SDLKey k, m;
    size_t l;
@@ -383,7 +383,7 @@ SDLKey input_keyConv( char *name )
  *    @param key The key to bind to.
  *    @param mod Modifiers to check for.
  */
-void input_setKeybind( char *keybind, KeybindType type, int key, SDLMod mod )
+void input_setKeybind( const char *keybind, KeybindType type, int key, SDLMod mod )
 {  
    int i;
    for (i=0; strcmp(keybindNames[i],"end"); i++)
@@ -428,7 +428,7 @@ SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod )
  *    @param keybind Keybinding to get the description of.
  *    @return Description of the keybinding.
  */
-const char* input_getKeybindDescription( char *keybind )
+const char* input_getKeybindDescription( const char *keybind )
 {
    int i;
    for (i=0; strcmp(keybindNames[i],"end"); i++)

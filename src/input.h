@@ -28,10 +28,10 @@ typedef enum {
  * set input
  */
 void input_setDefault (void);
-SDLKey input_keyConv( char *name );
-void input_setKeybind( char *keybind, KeybindType type, int key, SDLMod mod );
+SDLKey input_keyConv( const char *name );
+void input_setKeybind( const char *keybind, KeybindType type, int key, SDLMod mod );
 SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod );
-const char* input_getKeybindDescription( char *keybind );
+const char* input_getKeybindDescription( const char *keybind );
 
 /*
  * handle input
