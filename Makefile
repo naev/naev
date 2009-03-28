@@ -110,9 +110,12 @@ DATA_XML  := 	$(wildcard dat/*.xml dat/*.ttf dat/intro dat/news.lua)
 DATA_SND  := 	$(wildcard snd/music/*.ogg snd/sounds/*.wav) snd/music.lua
 DATA_MISN := 	$(wildcard dat/missions/*.lua \
 						dat/missions/*/*.lua \
-						dat/missions/*/*/*.lua)
+						dat/missions/*/*/*.lua )
+DATA_SCRIPTS := $(wildcard scripts/*.lua \
+						scripts/*/*.lua \
+						scripts/*/*/*.lua )
 DATA      := 	ndata
-DATAFILES := 	$(DATA_MISC) $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN)
+DATAFILES := 	$(DATA_MISC) $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN) $(DATA_SCRIPTS)
 
 
 #
