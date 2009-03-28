@@ -844,6 +844,9 @@ static int pilotL_addOutfit( lua_State *L )
 /**
  * @brief Removes an outfit from a pilot.
  *
+ * "all" will remove all outfits.
+ *
+ * @usage p:rmOutfit( "all" ) -- Leaves the pilot naked.
  * @usage p:rmOutfit( "Neutron Disruptor", 1 ) -- Removes a neutron disruptor.
  *
  *    @luparam p Pilot to remove outfit from.
@@ -867,6 +870,19 @@ static int pilotL_rmOutfit( lua_State *L )
 
    /* Get parameters. */
    outfit = luaL_checkstring(L,2);
+
+   /* If outfit is "all", we remove everything. */
+   if (strcmp(outfit,"all")==0) {
+      n = 0;
+      while (p->outfits != NULL) {
+         pilot_rmOutfit( p, p->outfits[0].outfit, p->outfits[0].quantity );
+         n++;
+      }
+      lua_pushnumber(L,n);
+      return 1;
+   }
+
+   /* We'll need a quantity now. */
    q      = luaL_checkint(L,3);
 
    /* Get the outfit. */
