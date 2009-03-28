@@ -565,8 +565,10 @@ static void glFontMakeDList( FT_Face face, char ch,
    slot = face->glyph; /* Small shortcut. */
 
    /* Load the glyph. */
-   if (FT_Load_Char( face, ch, FT_LOAD_RENDER ))
+   if (FT_Load_Char( face, ch, FT_LOAD_RENDER )) {
       WARN("FT_Load_Char failed.");
+      return;
+   }
 
    bitmap = slot->bitmap; /* to simplify */
 
@@ -651,12 +653,20 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    FT_Face face;
    uint32_t bufsize;
    int i;
+   FT_Byte* buf;
 
-   if (font == NULL) font = &gl_defFont;
+   /* Get default font if not set. */
+   if (font == NULL)
+      font = &gl_defFont;
 
-   FT_Byte* buf = ndata_read( (fname!=NULL) ? fname : FONT_DEF, &bufsize );
+   /* Read the font. */
+   buf = ndata_read( (fname!=NULL) ? fname : FONT_DEF, &bufsize );
+   if (buf == NULL) {
+      WARN("Unable to read font: %s", (fname!=NULL) ? fname : FONT_DEF);
+      return;
+   }
 
-   /* allocage */
+   /* Allocage. */
    font->textures = malloc(sizeof(GLuint)*128);
    font->w = malloc(sizeof(int)*128);
    font->h = (int)h;
@@ -666,13 +676,18 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    }
 
    /* create a FreeType font library */
-   if (FT_Init_FreeType(&library))
-      WARN("FT_Init_FreeType failed.");
+   if (FT_Init_FreeType(&library)) {
+      WARN("FT_Init_FreeType failed with font %s.",
+            (fname!=NULL) ? fname : FONT_DEF );
+      return;
+   }
 
    /* object which freetype uses to store font info */
-   if (FT_New_Memory_Face( library, buf, bufsize, 0, &face ))
+   if (FT_New_Memory_Face( library, buf, bufsize, 0, &face )) {
       WARN("FT_New_Face failed loading library from %s",
             (fname!=NULL) ? fname : FONT_DEF );
+      return;
+   }
 
    /* Try to resize. */
    if (FT_IS_SCALABLE(face)) {
