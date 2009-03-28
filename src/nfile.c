@@ -341,7 +341,8 @@ char* nfile_readFile( int* filesize, const char* path, ... )
    char base[PATH_MAX];
    char *buf;
    FILE *file;
-   int len, pos;
+   int len;
+   size_t pos;
    va_list ap;
 
    if (path == NULL) {
@@ -356,23 +357,34 @@ char* nfile_readFile( int* filesize, const char* path, ... )
 
    /* Open file. */
    file = fopen( base, "r" );
-   if (file == NULL)
+   if (file == NULL) {
+      WARN("Error occurred while opening '%s'.", base);
+      *filesize = 0;
       return NULL;
+   }
 
    /* Get file size. */
-   len = fseek( file, 0, SEEK_END );
+   len = fseek( file, 0L, SEEK_END );
    if (len == -1) {
+      WARN("Error occurred while seeking '%s'.", base);
       fclose(file);
+      *filesize = 0;
       return NULL;
    }
    len = ftell(file);
-   fseek( file, 0, SEEK_SET );
+   if (fseek( file, 0L, SEEK_SET ) == -1) {
+      WARN("Error occurred while seeking '%s'.", base);
+      fclose(file);
+      *filesize = 0;
+      return NULL;
+   }
 
    /* Allocate buffer. */
    buf = malloc( len );
    if (buf == NULL) {
       WARN("Out of Memory!");
       fclose(file);
+      *filesize = 0;
       return NULL;
    }
 
@@ -380,8 +392,12 @@ char* nfile_readFile( int* filesize, const char* path, ... )
    n = 0;
    while (n < len) {
       pos = fread( &buf[n], 1, len-n, file );
-      if (pos <= 0)
+      if (pos <= 0) {
          WARN("Error occurred while reading '%s'.", base);
+         fclose(file);
+         *filesize = 0;
+         return NULL;
+      }
       n += pos;
    }
 
