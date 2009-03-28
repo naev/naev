@@ -358,7 +358,7 @@ char* nfile_readFile( int* filesize, const char* path, ... )
    /* Open file. */
    file = fopen( base, "r" );
    if (file == NULL) {
-      WARN("Error occurred while opening '%s'.", base);
+      WARN("Error occurred while opening '%s': %s", base, strerror(errno));
       *filesize = 0;
       return NULL;
    }
@@ -366,14 +366,14 @@ char* nfile_readFile( int* filesize, const char* path, ... )
    /* Get file size. */
    len = fseek( file, 0L, SEEK_END );
    if (len == -1) {
-      WARN("Error occurred while seeking '%s'.", base);
+      WARN("Error occurred while seeking '%s': %s", base, strerror(errno));
       fclose(file);
       *filesize = 0;
       return NULL;
    }
    len = ftell(file);
    if (fseek( file, 0L, SEEK_SET ) == -1) {
-      WARN("Error occurred while seeking '%s'.", base);
+      WARN("Error occurred while seeking '%s': %s", base, strerror(errno));
       fclose(file);
       *filesize = 0;
       return NULL;
@@ -393,7 +393,7 @@ char* nfile_readFile( int* filesize, const char* path, ... )
    while (n < len) {
       pos = fread( &buf[n], 1, len-n, file );
       if (pos <= 0) {
-         WARN("Error occurred while reading '%s'.", base);
+         WARN("Error occurred while reading '%s': %s", base, strerror(errno));
          fclose(file);
          *filesize = 0;
          return NULL;
