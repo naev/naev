@@ -337,6 +337,7 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
  */
 char* nfile_readFile( int* filesize, const char* path, ... )
 {
+   int n;
    char base[PATH_MAX];
    char *buf;
    FILE *file;
@@ -376,9 +377,13 @@ char* nfile_readFile( int* filesize, const char* path, ... )
    }
 
    /* Read the file. */
-   pos = fread( buf, len, 1, file );
-   if (pos != 1)
-      WARN("Error occurred while reading '%s'.", base);
+   n = 0;
+   while (n < len) {
+      pos = fread( &buf[n], 1, len-n, file );
+      if (pos <= 0)
+         WARN("Error occurred while reading '%s'.", base);
+      n += pos;
+   }
 
    *filesize = len;
    return buf;
