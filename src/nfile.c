@@ -100,7 +100,7 @@ int nfile_dirMakeExist( const char* path, ... )
    stat(file,&buf);
    if (!S_ISDIR(buf.st_mode))
       if (mkdir(file, S_IRWXU | S_IRWXG | S_IRWXO) < 0) {
-         WARN("Dir '%s' does not exist and unable to create", file);
+         WARN("Dir '%s' does not exist and unable to create: %s", file, strerror(errno));
          return -1;
       }
 #elif HAS_WIN32
@@ -109,7 +109,7 @@ int nfile_dirMakeExist( const char* path, ... )
    d = opendir(file);
    if (d==NULL) {
       if (!CreateDirectory(file, NULL))  {
-         WARN("Dir '%s' does not exist and unable to create", file);
+         WARN("Dir '%s' does not exist and unable to create: %s", file, strerror(errno));
          return -1;
       }
    }
@@ -364,8 +364,7 @@ char* nfile_readFile( int* filesize, const char* path, ... )
    }
 
    /* Get file size. */
-   len = fseek( file, 0L, SEEK_END );
-   if (len == -1) {
+   if (fseek( file, 0L, SEEK_END ) == -1) {
       WARN("Error occurred while seeking '%s': %s", base, strerror(errno));
       fclose(file);
       *filesize = 0;
