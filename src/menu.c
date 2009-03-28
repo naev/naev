@@ -181,9 +181,6 @@ void menu_main_close (void)
 {
    window_destroy( window_get("Main Menu") );
 
-   gl_freeTexture( window_getImage( window_get("BG"), "imgLogo" ) );
-   window_destroy( window_get("BG") );
-
    menu_Close(MENU_MAIN);
 }
 /**
