@@ -79,6 +79,7 @@ static void menu_main_load( unsigned int wid, char* str );
 static void menu_main_new( unsigned int wid, char* str );
 static void menu_main_credits( unsigned int wid, char* str );
 static void menu_main_exit( unsigned int wid, char* str );
+static void menu_main_cleanBG( unsigned int wid, char* str );
 /* small menu */
 static void menu_small_close( unsigned int wid, char* str );
 static void menu_small_exit( unsigned int wid, char* str );
@@ -142,6 +143,7 @@ void menu_main (void)
 
    /* create background image window */
    bwid = window_create( "BG", -1, -1, SCREEN_W, SCREEN_H );
+   window_onClose( bwid, menu_main_cleanBG );
    window_addRect( bwid, 0, 0, SCREEN_W, SCREEN_H, "rctBG", &cBlack, 0 );
    window_addCust( bwid, 0, 0, SCREEN_W, SCREEN_H, "cstBG", 0,
          (void(*)(double,double,double,double)) nebu_render, NULL );
@@ -166,6 +168,9 @@ void menu_main (void)
          "btnOptions", "Credits", menu_main_credits );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnExit", "Exit", menu_main_exit );
+
+   /* Make the background window a parent of the menu. */
+   window_setParent( bwid, wid );
 
    menu_Open(MENU_MAIN);
 }
@@ -222,9 +227,17 @@ static void menu_main_exit( unsigned int wid, char* str )
 {
    (void) str;
    (void) wid;
-   unsigned int bg;
 
-   bg = window_get( "BG" );
+   exit_game();
+}
+/**
+ * @brief Function to clean up the background window.
+ *    @param wid Window to clean.
+ *    @param str Unused.
+ */
+static void menu_main_cleanBG( unsigned int wid, char* str )
+{
+   (void) str;
 
    /* 
     * Ugly hack to prevent player.c from segfaulting due to the fact
@@ -233,10 +246,8 @@ static void menu_main_exit( unsigned int wid, char* str )
     * nor anything of the likes (nor toolkit to stop rendering) while
     * not leaking any texture.
     */
-   gl_freeTexture( window_getImage(bg, "imgLogo") );
-   window_modifyImage( bg, "imgLogo", NULL );
-
-   exit_game();
+   gl_freeTexture( window_getImage(wid, "imgLogo") );
+   window_modifyImage( wid, "imgLogo", NULL );
 }
 
 
