@@ -153,7 +153,7 @@ int nfile_fileExists( const char* path, ... )
    FILE *f;
 
    /* Try to open the file, C89 compliant, but not as precise as stat. */
-   f = fopen(file, "r");
+   f = fopen(file, "rb");
    if (f != NULL) {
       fclose(f);
       return 1;
@@ -356,7 +356,7 @@ char* nfile_readFile( int* filesize, const char* path, ... )
    }
 
    /* Open file. */
-   file = fopen( base, "r" );
+   file = fopen( base, "rb" );
    if (file == NULL) {
       WARN("Error occurred while opening '%s': %s", base, strerror(errno));
       *filesize = 0;
@@ -425,7 +425,7 @@ int nfile_touch( const char* path, ... )
    }
 
    /* Try to open the file, C89 compliant, but not as precise as stat. */
-   f = fopen(file, "a+");
+   f = fopen(file, "ba+");
    if (f == NULL) {
       WARN("Unable to touch file '%s': %s", file, strerror(errno));
       return -1;
