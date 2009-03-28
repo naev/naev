@@ -61,8 +61,10 @@ static int cli_firstline   = 1; /**< Is this the first line? */
  * CLI stuff.
  */
 static int cli_print( lua_State *L );
+static int cli_script( lua_State *L );
 static const luaL_Reg cli_methods[] = {
    { "print", cli_print },
+   { "script", cli_script },
    {NULL, NULL}
 }; /**< Console only functions. */
 
@@ -109,6 +111,19 @@ static int cli_print( lua_State *L ) {
    cli_addMessage(buf);
 
    return 0;
+}
+
+
+/**
+ * @brief Would be like "dofile" from the base Lua lib.
+ */
+static int cli_script( lua_State *L )
+{
+   const char *fname = luaL_optstring(L, 1, NULL);
+   int n = lua_gettop(L);
+   if (luaL_loadfile(L, fname) != 0) lua_error(L);
+   lua_call(L, 0, LUA_MULTRET);
+   return lua_gettop(L) - n;
 }
 
 
