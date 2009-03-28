@@ -1499,7 +1499,7 @@ static int aiL_brake( lua_State *L )
    double diff, d;
 
    d = cur_pilot->solid->dir+M_PI;
-   if (d >= 2*M_PI) d = fmodf(d, 2*M_PI);
+   if (d >= 2*M_PI) d = fmod(d, 2*M_PI);
    
    diff = angle_diff(d,VANGLE(cur_pilot->solid->vel));
    pilot_turn = 10*diff;
