@@ -54,17 +54,26 @@ Run misn.accept() here, this enables the mission to run when the player enters t
 If the mission doesn't get accepted, it gets trashed.
 Also set the mission details.
 --]]
+function create ()
+   -- Most missions will need the following to avoid crashing NAEV
 
-function create()
--- Most missions will need the following to avoid crashing NAEV
+   -- This will create the typical "Yesn/No" dialogue when mission is created
+   -- at bar.  It returns true if yes was selected.
+   if tk.yesno( title[1], text[1] ) then
 
--- Mission details:
+      -- Generally the first thing you want to do when giving the mission is accept
+      -- it so that functions work as expected.
+      misn.accept()  -- For missions from the Bar only.
+
+      -- Mission details:
+      -- You should always set mission details right after accepting the mission
       misn.setTitle( misn_title)
       misn.setReward( misn_reward)
       misn.setDesc( misn_desc)
+      -- Markers indicate a target system on the map, it may not be needed
+      -- depending on the type of mission you're writing.
       misn.setMarker( systemX, "" ) --change as appropriate to point to a system object and marker style.
-
---      misn.accept()  -- For missions from the Bar only.
+   end
 
 end
 

@@ -54,15 +54,17 @@ Do not run misn.accept() here, but do set the strings for reward/desc/title.
 These strings are what will appear in the mission computer screen.
 
 --]]
+function create ()
+   -- Most missions will need the following to avoid crashing NAEV
 
-function create()
--- Most missions will need the following to avoid crashing NAEV
+   -- Mission details: these will appear in the Computer window
+   -- You should always set these as soon as possible.
+   misn.setTitle( misn_title)
+   misn.setReward( misn_reward)
+   misn.setDesc( misn_desc)
 
--- Mission details: these will appear in the Computer window
-      misn.setTitle( misn_title)
-      misn.setReward( misn_reward)
-      misn.setDesc( misn_desc)
-      misn.setMarker( systemX, "" ) --change as appropriate to point to a system object and marker style.
+   -- Markers indicate target system, you may or may not be interested in setting it.
+   misn.setMarker( systemX, "" ) --change as appropriate to point to a system object and marker style.
 
 end
 
@@ -71,10 +73,10 @@ The *accept* function runs when the player accepts the mission from the misssion
 *Obligatory* for missions from the computer;
 ignored otherwise, unless called from another function.
 --]]
-function accept()
+function accept ()
 
---      misn.accept()   -- for missions from the mission computer only.
---      hook.land()    -- only set hooks after accepting.
+--   misn.accept()   -- for missions from the mission computer only.
+--   hook.land()    -- only set hooks after accepting.
 
 end
 
