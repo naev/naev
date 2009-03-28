@@ -1477,8 +1477,6 @@ static int screenshot_cur = 0; /**< Current screenshot at. */
  */
 void player_screenshot (void)
 {
-   FILE *fp;
-   int done;
    char filename[PATH_MAX];
 
    if (nfile_dirMakeExist("%sscreenshots", nfile_basePath())) {
@@ -1486,23 +1484,18 @@ void player_screenshot (void)
       return;
    }
 
-   done = 0;
-   do {
-      if (screenshot_cur >= 999) { /* in case the crap system breaks :) */
-         WARN("You have reached the maximum amount of screenshots [999]");
-         return;
-      }
+   /* Try to find current screenshots. */
+   for ( ; screenshot_cur < 1000; screenshot_cur++) {
       snprintf( filename, PATH_MAX, "%sscreenshots/screenshot%03d.png",
             nfile_basePath(), screenshot_cur );
-      fp = fopen( filename, "r" ); /* yes i know it's a cheesy way to check */
-      if (fp==NULL) done = 1;
-      else { /* next */
-         screenshot_cur++;
-         fclose(fp);
-      }
-      fp = NULL;
-   } while (!done);
+      if (!nfile_fileExists( filename ))
+         break;
+   }
 
+   if (screenshot_cur >= 999) { /* in case the crap system breaks :) */
+      WARN("You have reached the maximum amount of screenshots [999]");
+      return;
+   }
 
    /* now proceed to take the screenshot */
    DEBUG( "Taking screenshot [%03d]...", screenshot_cur );
