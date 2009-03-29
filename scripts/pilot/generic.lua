@@ -15,16 +15,20 @@
 function pilot_outfitAdd( p, o, outfits )
    r = rnd.rnd(1, #outfits)
    if type(outfits[r]) == "string" then
-      q = p:addOutfit( outfits[r], 1 )
-      _insertOutfit( o, outfits[r], q )
+      _insertOutfit( p, o, outfits[r], 1 )
    elseif type(outfits[r]) == "table" then
-      q = p:addOutfit( outfits[r][2][1], outfits[r][2][2] )
-      _insertOutfit( o, outfits[r][2][1], q )
-      q = p:addOutfit( outfits[r][1], 1 ) -- Add launcher later.
-      _insertOutfit( o, outfits[r][1], q )
+      _insertOutfit( p, o, outfits[r][2][1], outfits[r][2][2] )
+      _insertOutfit( p, o, outfits[r][1], 1 ) -- Add launcher later
    end
 end
-function _insertOutfit( o, name, q )
+function _insertOutfit( p, o, name, quantity )
+   -- If pilot actually exists, add outfit
+   if type(p) == "userdata" then
+      q = p:addOutfit( name, quantity )
+   else
+      q = quantity
+   end
+
    -- Must have quantity
    if q <= 0 then
       return

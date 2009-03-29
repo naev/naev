@@ -4,20 +4,29 @@ include("scripts/pilot/generic.lua")
 --[[
 -- Creates a might pirate to be killed
 --]]
-function pirate_create ()
+function pirate_create( pirate_create )
+   -- Create by default
+   if pirate_create == nil then
+      pirate_create = true
+   end
+
+   -- Choose pirate type
    r = rnd.rnd()
    if r < 0.25 then
-      p,o = pirate_createKestrel()
+      p,o = pirate_createKestrel( pirate_create )
    elseif r < 0.5 then
-      p,o = pirate_createAdmonisher()
+      p,o = pirate_createAdmonisher( pirate_create )
    elseif r < 0.75 then
-      p,o = pirate_createAncestor()
+      p,o = pirate_createAncestor( pirate_create )
    else
-      p,o = pirate_createVendetta()
+      p,o = pirate_createVendetta( pirate_create )
    end
 
    -- Set name
-   p:rename( pirate_name() )
+   if pirate_create then
+      p:rename( pirate_name() )
+   end
+   return p,o
 end
 
 
@@ -131,8 +140,12 @@ end
 
 
 -- Creates a pirate flying a "Pirate Kestrel"
-function pirate_createKestrel ()
-   p = pirate_createEmpty( "Pirate Kestrel" )
+function pirate_createKestrel( pirate_create )
+   if pirate_create then
+      p = pirate_createEmpty( "Pirate Kestrel" )
+   else
+      p = "Pirate Kestrel"
+   end
 
    -- Kestrel gets some good stuff
    o = {}
@@ -153,8 +166,12 @@ end
 
 
 -- Creates a pirate flying a "Pirate Admonisher"
-function pirate_createAdmonisher ()
-   p = pirate_createEmpty( "Pirate Admonisher" )
+function pirate_createAdmonisher( pirate_create )
+   if pirate_create then
+      p = pirate_createEmpty( "Pirate Admonisher" )
+   else
+      p = "Pirate Admonisher"
+   end
 
    -- Make sure Admonisher has at least one cannon
    o = {}
@@ -174,7 +191,11 @@ end
 
 -- Creates a pirate flying a "Pirate Ancestor"
 function pirate_createAncestor ()
-   p = pirate_createEmpty( "Pirate Ancestor" )
+   if pirate_create then
+      p = pirate_createEmpty( "Pirate Ancestor" )
+   else
+      p = "Pirate Ancestor"
+   end
 
    -- Should have at least one cannon and ranged
    o = {}
@@ -192,7 +213,11 @@ end
 
 -- Ceates a pirate flying a "Pirate Vendetta"
 function pirate_createVendetta ()
-   p = pirate_createEmpty( "Pirate Vendetta" )
+   if pirate_create then
+      p = pirate_createEmpty( "Pirate Vendetta" )
+   else
+      p = "Pirate Vendetta"
+   end
 
    -- Biased towards cannons
    o = {}
