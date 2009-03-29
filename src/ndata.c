@@ -123,20 +123,20 @@ static int ndata_openPackfile (void)
       /* Try to open any ndata in path. */
       else {                                                                 
          files = nfile_readDir( &nfiles, "." );
-         len   = strlen(NDATA_FILENAME);
-         for (i=0; i<nfiles; i++) {
-            if (strncmp(files[i], NDATA_FILENAME, len)==0) {
-               /* Must be packfile. */
-               if (pack_check(files[i]))
-                  continue;
-
-               ndata_filename = strdup(files[i]);
-               break;
-            }
-         }
-
-         /* Clean up. */
          if (files != NULL) {
+            len   = strlen(NDATA_FILENAME);
+            for (i=0; i<nfiles; i++) {
+               if (strncmp(files[i], NDATA_FILENAME, len)==0) {
+                  /* Must be packfile. */
+                  if (pack_check(files[i]))
+                     continue;
+
+                  ndata_filename = strdup(files[i]);
+                  break;
+               }
+            }
+
+            /* Clean up. */
             for (i=0; i<nfiles; i++)
                free(files[i]);
             free(files);
