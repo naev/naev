@@ -2,7 +2,13 @@ include("scripts/pilot/generic.lua")
 
 
 --[[
--- Creates a might pirate to be killed
+-- @brief Creates a mighty pirate of epic proportions.
+--
+--    @param pirate_create If nil or true actually creates a pirate with a
+--           random name and all, otherwise it'll give ship type and outfits.
+--    @return If pirate_create is false it'll return a string containing the
+--           name of the ship of the pirate and a table containing the outfits,
+--           otherwise it'll return the pirate itself and the outfit table.
 --]]
 function pirate_create( pirate_create )
    -- Create by default
