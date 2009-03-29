@@ -85,10 +85,10 @@ typedef struct perlin_data_s {
  */
 /* perlin data handling. */
 static perlin_data_t* TCOD_noise_new( int dim, float hurst, float lacunarity );
-static void TCOD_noise_delete(perlin_data_t* noise);
+static void TCOD_noise_delete( perlin_data_t* noise );
 /* normalizing. */
-static void normalize3(float f[3]);
-static void normalize2(float f[2]);
+static void normalize3( float f[3] );
+static void normalize2( float f[2] );
 /* noise processing. */
 static float lattice3( perlin_data_t *pdata, int ix, float fx,
       int iy, float fy, int iz, float fz );
@@ -151,7 +151,7 @@ static float lattice2( perlin_data_t *pdata, int ix, float fx, int iy, float fy 
  *
  *    @param f Vector to normalize.
  */
-static void normalize3(float f[3])
+static void normalize3( float f[3] )
 {
    float magnitude;
 
@@ -167,7 +167,7 @@ static void normalize3(float f[3])
  *
  *    @param f Vector to normalize.
  */
-static void normalize2(float f[2])
+static void normalize2( float f[2] )
 {
    float magnitude;
 
@@ -390,7 +390,8 @@ static float TCOD_noise_turbulence2( perlin_data_t* noise, float f[2], int octav
  *
  *    @param noise Noise data to free.
  */
-void TCOD_noise_delete(perlin_data_t* noise) {
+void TCOD_noise_delete( perlin_data_t* noise )
+{
    free(noise);
 }
 
@@ -607,3 +608,5 @@ float* noise_genNebulaePuffMap( const int w, const int h, float rug )
    /* Results */
    return nebulae;
 }
+
+
