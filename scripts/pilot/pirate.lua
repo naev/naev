@@ -15,6 +15,9 @@ function pirate_create ()
    else
       p,o = pirate_createVendetta()
    end
+
+   -- Set name
+   p:rename( pirate_name() )
 end
 
 
@@ -206,4 +209,50 @@ function pirate_createVendetta ()
 end
 
 
-
+--[[
+-- @brief Generates pilot names
+--]]
+function pirate_name ()
+   descriptors = {
+      "The Lustful",
+      "The Black",
+      "The Red",
+      "The Green",
+      "The Blue",
+      "The Bloody",
+      "The Morbid",
+      "The Horrible",
+      "The Dark",
+      "The Evil",
+      "Pirate's",
+      "Night's",
+      "Space's",
+      "Astro",
+      "Destroyer"
+   }
+   actors = {
+      "Green Beard",
+      "Black Beard",
+      "Brown Beard",
+      "Red Beard",
+      "Blue Beard",
+      "Corpsebride",
+      "Vengeance",
+      "Corsair",
+      "Pride",
+      "Insanity",
+      "Peril",
+      "Death",
+      "Doom",
+      "Raider",
+      "Devil",
+      "Serpent",
+      "Executioner",
+      "Killer",
+      "Thunder",
+      "Lance"
+   }
+   descriptor = descriptors[ rnd.rnd(1,#descriptors) ]
+   actor = actors[ rnd.rnd(1,#actors) ]
+   return descriptor .. " " .. actor
+end
