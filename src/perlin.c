@@ -415,13 +415,13 @@ float* noise_genRadarInt( const int w, const int h, float rug )
    float value;
 
    /* pretty default values */
-   octaves = 3;
-   hurst = TCOD_NOISE_DEFAULT_HURST;
-   lacunarity = TCOD_NOISE_DEFAULT_LACUNARITY;
+   octaves     = 3;
+   hurst       = TCOD_NOISE_DEFAULT_HURST;
+   lacunarity  = TCOD_NOISE_DEFAULT_LACUNARITY;
 
    /* create noise and data */
-   noise = TCOD_noise_new( 2, hurst, lacunarity );
-   map = malloc(sizeof(float)*w*h);
+   noise       = TCOD_noise_new( 2, hurst, lacunarity );
+   map         = malloc(sizeof(float)*w*h);
    if (map == NULL) {
       WARN("Out of memory!");
       return NULL;
@@ -475,14 +475,14 @@ float* noise_genNebulaeMap( const int w, const int h, const int n, float rug )
    unsigned int *t, s;
 
    /* pretty default values */
-   octaves = 3;
-   hurst = TCOD_NOISE_DEFAULT_HURST;
-   lacunarity = TCOD_NOISE_DEFAULT_LACUNARITY;
-   zoom = rug * ((float)h/768.)*((float)w/1024.);
+   octaves     = 3;
+   hurst       = TCOD_NOISE_DEFAULT_HURST;
+   lacunarity  = TCOD_NOISE_DEFAULT_LACUNARITY;
+   zoom        = rug * ((float)h/768.)*((float)w/1024.);
 
    /* create noise and data */
-   noise = TCOD_noise_new( 3, hurst, lacunarity );
-   nebulae = malloc(sizeof(float)*w*h*n);
+   noise       = TCOD_noise_new( 3, hurst, lacunarity );
+   nebulae     = malloc(sizeof(float)*w*h*n);
    if (nebulae == NULL) {
       WARN("Out of memory!");
       return NULL;
@@ -559,24 +559,24 @@ float* noise_genNebulaePuffMap( const int w, const int h, float rug )
    float max;
 
    /* pretty default values */
-   octaves = 3;
-   hurst = TCOD_NOISE_DEFAULT_HURST;
-   lacunarity = TCOD_NOISE_DEFAULT_LACUNARITY;
-   zoom = rug;
+   octaves     = 3;
+   hurst       = TCOD_NOISE_DEFAULT_HURST;
+   lacunarity  = TCOD_NOISE_DEFAULT_LACUNARITY;
+   zoom        = rug;
 
    /* create noise and data */
-   noise = TCOD_noise_new( 2, hurst, lacunarity );
-   nebulae = malloc(sizeof(float)*w*h);
+   noise       = TCOD_noise_new( 2, hurst, lacunarity );
+   nebulae     = malloc(sizeof(float)*w*h);
    if (nebulae == NULL) {
       WARN("Out of memory!");
       return NULL;
    }
 
    /* Start to create the nebulae */
-   max = 0.;
-   hw = w/2;
-   hh = h/2;
-   d = (float)MIN(hw,hh);
+   max   = 0.;
+   hw    = w/2;
+   hh    = h/2;
+   d     = (float)MIN(hw,hh);
    for (y=0; y<h; y++) {
 
       f[1] = zoom * (float)y / (float)h;
