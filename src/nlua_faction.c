@@ -143,7 +143,7 @@ LuaFaction* lua_tofaction( lua_State *L, int ind )
  */
 LuaFaction* luaL_checkfaction( lua_State *L, int ind )
 {
-   if (lua_isuserdata(L,ind))
+   if (lua_isfaction(L,ind))
       return lua_tofaction(L,ind);
    luaL_typerror(L, ind, FACTION_METATABLE);
    return NULL;

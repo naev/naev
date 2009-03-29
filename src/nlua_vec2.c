@@ -115,7 +115,7 @@ LuaVector* lua_tovector( lua_State *L, int ind )
  */
 LuaVector* luaL_checkvector( lua_State *L, int ind )
 {
-   if (lua_isuserdata(L,ind))
+   if (lua_isvector(L,ind))
       return (LuaVector*) lua_touserdata(L,ind);
    luaL_typerror(L, ind, VECTOR_METATABLE);
    return NULL;

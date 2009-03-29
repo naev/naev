@@ -107,7 +107,7 @@ LuaPlanet* lua_toplanet( lua_State *L, int ind )
  */
 LuaPlanet* luaL_checkplanet( lua_State *L, int ind )
 {
-   if (lua_isuserdata(L,ind))
+   if (lua_isplanet(L,ind))
       return lua_toplanet(L,ind);
    luaL_typerror(L, ind, PLANET_METATABLE);
    return NULL;
