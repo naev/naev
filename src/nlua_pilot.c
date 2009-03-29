@@ -141,10 +141,7 @@ int lua_loadPilot( lua_State *L, int readonly )
  */
 LuaPilot* lua_topilot( lua_State *L, int ind )
 {
-   if (lua_ispilot(L,ind)) {
-      return (LuaPilot*) lua_touserdata(L,ind);
-   }
-   return NULL;
+   return (LuaPilot*) lua_touserdata(L,ind);
 }
 /**
  * @brief Gets pilot at index or raises error if there is no pilot at index.
@@ -155,13 +152,10 @@ LuaPilot* lua_topilot( lua_State *L, int ind )
  */
 LuaPilot* luaL_checkpilot( lua_State *L, int ind )
 {
-   LuaPilot *p;
-   p = lua_topilot(L,ind);
-   if ((p == NULL) && !lua_ispilot(L,ind)) {
-      luaL_typerror(L, ind, PILOT_METATABLE);
-      return NULL;
-   }
-   return p;
+   if (lua_ispilot(L,ind))
+      return lua_topilot(L,ind);
+   luaL_typerror(L, ind, PILOT_METATABLE);
+   return NULL;
 }
 /**
  * @brief Pushes a pilot on the stack.
@@ -278,9 +272,7 @@ static int pilot_addFleet( lua_State *L )
 
    /* Parse third argument - Position */
    if (lua_gettop(L) > 2) {
-      if (lua_isvector(L,3))
-         lv = lua_tovector(L,3);
-      else NLUA_INVALID_PARAMETER();
+      lv = luaL_checkvector(L,3);
    }
    else lv = NULL;
 
@@ -640,10 +632,8 @@ static int pilotL_warp( lua_State *L )
 
    /* Parse parameters */
    p1 = luaL_checkpilot(L,1);
-   p = pilot_get( p1->pilot );
-   if (lua_isvector(L,2))
-      v = lua_tovector(L,2);
-   else NLUA_INVALID_PARAMETER();
+   p  = pilot_get( p1->pilot );
+   v  = luaL_checkvector(L,2);
 
    /* Pilot must exist. */
    if (p == NULL) return 0;

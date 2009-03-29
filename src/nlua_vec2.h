@@ -31,6 +31,7 @@ int lua_loadVector( lua_State *L );
  * Vector operations.
  */
 LuaVector* lua_tovector( lua_State *L, int ind );
+LuaVector* luaL_checkvector( lua_State *L, int ind );
 LuaVector* lua_pushvector( lua_State *L, LuaVector vec );
 int lua_isvector( lua_State *L, int ind );
 

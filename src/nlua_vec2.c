@@ -91,7 +91,7 @@ int lua_loadVector( lua_State *L )
  * @luamod vec2
  *
  * To call members of the metatable always use:
- * @code 
+ * @code
  * vector:function( param )
  * @endcode
  */
@@ -103,10 +103,20 @@ int lua_loadVector( lua_State *L )
  *    @return The LuaVector at ind.
  */
 LuaVector* lua_tovector( lua_State *L, int ind )
-{     
-   if (lua_isuserdata(L,ind)) {
+{
+   return (LuaVector*) lua_touserdata(L,ind);
+}
+/**
+ * @brief Gets vector at index making sure type is valid.
+ *
+ *    @param L Lua state to get vector from.
+ *    @param ind Index position of vector.
+ *    @return The LuaVector at ind.
+ */
+LuaVector* luaL_checkvector( lua_State *L, int ind )
+{
+   if (lua_isuserdata(L,ind))
       return (LuaVector*) lua_touserdata(L,ind);
-   }
    luaL_typerror(L, ind, VECTOR_METATABLE);
    return NULL;
 }
@@ -136,7 +146,7 @@ LuaVector* lua_pushvector( lua_State *L, LuaVector vec )
  *    @return 1 if there is a vector at index position.
  */
 int lua_isvector( lua_State *L, int ind )
-{  
+{
    int ret;
 
    if (lua_getmetatable(L,ind)==0)
@@ -144,7 +154,7 @@ int lua_isvector( lua_State *L, int ind )
    lua_getfield(L, LUA_REGISTRYINDEX, VECTOR_METATABLE);
 
    ret = 0;
-   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */ 
+   if (lua_rawequal(L, -1, -2))  /* does it have the correct mt? */
       ret = 1;
 
    lua_pop(L, 2);  /* remove both metatables */
@@ -203,12 +213,11 @@ static int vectorL_new( lua_State *L )
  */
 static int vectorL_add( lua_State *L )
 {
-   NLUA_MIN_ARGS(2);
    LuaVector *v1, *v2;
    double x, y;
 
    /* Get self. */
-   v1 = lua_tovector(L,1);
+   v1    = luaL_checkvector(L,1);
 
    /* Get rest of parameters. */
    v2 = NULL;
@@ -249,12 +258,11 @@ static int vectorL_add( lua_State *L )
  */
 static int vectorL_sub( lua_State *L )
 {
-   NLUA_MIN_ARGS(2);
    LuaVector *v1, *v2;
    double x, y;
 
    /* Get self. */
-   v1 = lua_tovector(L,1);
+   v1    = luaL_checkvector(L,1);
 
    /* Get rest of parameters. */
    v2 = NULL;
@@ -290,17 +298,12 @@ static int vectorL_sub( lua_State *L )
  */
 static int vectorL_mul( lua_State *L )
 {
-   NLUA_MIN_ARGS(2);
    LuaVector *v1;
    double mod;
 
-   /* Get self. */
-   v1 = lua_tovector(L,1);
-
-   /* Get rest of parameters. */
-   if (lua_isnumber(L,2))
-      mod = lua_tonumber(L,2);
-   else NLUA_INVALID_PARAMETER();
+   /* Get parameters. */
+   v1    = luaL_checkvector(L,1);
+   mod   = luaL_checknumber(L,2);
 
    /* Actually add it */
    vect_cadd( &v1->vec, v1->vec.x * mod, v1->vec.x * mod );
@@ -323,17 +326,12 @@ static int vectorL_mul( lua_State *L )
  */
 static int vectorL_div( lua_State *L )
 {
-   NLUA_MIN_ARGS(2);
    LuaVector *v1;
    double mod;
 
-   /* Get self. */
-   v1 = lua_tovector(L,1);
-
-   /* Get rest of parameters. */
-   if (lua_isnumber(L,2))
-      mod = lua_tonumber(L,2);
-   else NLUA_INVALID_PARAMETER();
+   /* Get parameters. */
+   v1    = luaL_checkvector(L,1);
+   mod   = luaL_checknumber(L,2);
 
    /* Actually add it */
    vect_cadd( &v1->vec, v1->vec.x / mod, v1->vec.x / mod );
@@ -355,11 +353,10 @@ static int vectorL_div( lua_State *L )
  */
 static int vectorL_get( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
    LuaVector *v1;
 
    /* Get self. */
-   v1 = lua_tovector(L,1);
+   v1 = luaL_checkvector(L,1);
 
    /* Push the vector. */
    lua_pushnumber(L, v1->vec.x);
@@ -385,16 +382,10 @@ static int vectorL_set( lua_State *L )
    LuaVector *v1;
    double x, y;
 
-   /* Get self. */
-   v1 = lua_tovector(L,1);
-
    /* Get parameters. */
-   if (lua_isnumber(L,2))
-      x = lua_tonumber(L,2);
-   else NLUA_INVALID_PARAMETER();
-   if (lua_isnumber(L,3))
-      y = lua_tonumber(L,3);
-   else NLUA_INVALID_PARAMETER();
+   v1 = luaL_checkvector(L,1);
+   x  = luaL_checknumber(L,2);
+   y  = luaL_checknumber(L,3);
 
    vect_cset( &v1->vec, x, y );
    return 0;
@@ -415,19 +406,16 @@ static int vectorL_set( lua_State *L )
  */
 static int vectorL_distance( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
    LuaVector *v1, *v2;
    double dist;
 
    /* Get self. */
-   v1 = lua_tovector(L,1);
+   v1 = luaL_checkvector(L,1);
 
    /* Get rest of parameters. */
    v2 = NULL;
    if (lua_gettop(L) > 1) {
-      if (lua_isvector(L,2))
-         v2 = lua_tovector(L,2);
-      else NLUA_INVALID_PARAMETER();
+      v2 = luaL_checkvector(L,2);
    }
 
    /* Get distance. */
@@ -451,10 +439,9 @@ static int vectorL_distance( lua_State *L )
  */
 static int vectorL_mod( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
    LuaVector *v;
 
-   v = lua_tovector(L,1);
+   v = luaL_checkvector(L,1);
    lua_pushnumber(L, VMOD(v->vec));
    return 1;
 }
