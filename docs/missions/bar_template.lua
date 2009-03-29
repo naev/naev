@@ -85,3 +85,11 @@ For example you can put hooks in the body of the main create() and accept() func
 When the mission ends, use misn.finish( [true or false] ).
 The misn.finish() function clears the mission from memory and determines if it will appear again.
 --]]
+
+
+--[[
+OPTIONAL function that will be run if player aborts the mission.
+Nothing happens if it isn't found and the mission fails.
+--]]
+function abort ()
+end
