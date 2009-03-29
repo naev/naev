@@ -96,9 +96,19 @@ int lua_loadPlanet( lua_State *L, int readonly )
  */
 LuaPlanet* lua_toplanet( lua_State *L, int ind )
 {
-   if (lua_isuserdata(L,ind)) {
-      return (LuaPlanet*) lua_touserdata(L,ind);
-   }
+   return (LuaPlanet*) lua_touserdata(L,ind);
+}
+/**
+ * @brief Gets planet at index raising an error if isn't a planet.
+ *
+ *    @param L Lua state to get planet from.
+ *    @param ind Index position to find the planet.
+ *    @return Planet found at the index in the state.
+ */
+LuaPlanet* luaL_checkplanet( lua_State *L, int ind )
+{
+   if (lua_isuserdata(L,ind))
+      return lua_toplanet(L,ind);
    luaL_typerror(L, ind, PLANET_METATABLE);
    return NULL;
 }
@@ -260,12 +270,9 @@ static int planetL_get( lua_State *L )
 static int planetL_eq( lua_State *L )
 {
    LuaPlanet *a, *b;
-   a = lua_toplanet(L,1);
-   b = lua_toplanet(L,2);
-   if (a->p == b->p)
-      lua_pushboolean(L,1);
-   else
-      lua_pushboolean(L,0);
+   a = luaL_checkplanet(L,1);
+   b = luaL_checkplanet(L,2);
+   lua_pushboolean(L,(a->p == b->p));
    return 1;
 }
 
@@ -280,7 +287,7 @@ static int planetL_eq( lua_State *L )
 static int planetL_name( lua_State *L )
 {
    LuaPlanet *p;
-   p = lua_toplanet(L,1);
+   p = luaL_checkplanet(L,1);
    lua_pushstring(L,p->p->name);
    return 1;
 }
@@ -297,7 +304,7 @@ static int planetL_faction( lua_State *L )
 {
    LuaPlanet *p;
    LuaFaction f;
-   p = lua_toplanet(L,1);
+   p = luaL_checkplanet(L,1);
    if (p->p->faction < 0)
       return 0;
    f.f = p->p->faction;
@@ -320,7 +327,7 @@ static int planetL_class(lua_State *L )
 {
    char buf[2];
    LuaPlanet *p;
-   p = lua_toplanet(L,1);
+   p = luaL_checkplanet(L,1);
    buf[0] = planet_getClass(p->p);
    buf[1] = '\0';
    lua_pushstring(L,buf);
@@ -341,7 +348,7 @@ static int planetL_class(lua_State *L )
 static int planetL_services( lua_State *L )
 {
    LuaPlanet *p;
-   p = lua_toplanet(L,1);
+   p = luaL_checkplanet(L,1);
    lua_pushnumber(L, (p->p->services & (~PLANET_SERVICE_LAND)));
    return 1;
 }
@@ -358,7 +365,7 @@ static int planetL_position( lua_State *L )
 {
    LuaPlanet *p;
    LuaVector v;
-   p = lua_toplanet(L,1);
+   p = luaL_checkplanet(L,1);
    vectcpy(&v.vec, &p->p->pos);
    lua_pushvector(L, v);
    return 1;
