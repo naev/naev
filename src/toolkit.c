@@ -284,23 +284,17 @@ unsigned int window_create( const char* name,
 
    const int wid = (++genwid); /* unique id */
 
+   /* Create the window. */
    wdw = &windows[nwindows];
+   memset( wdw, 0, sizeof(Window) );
 
    wdw->id           = wid;
    wdw->name         = strdup(name);
 
    /* Sane defaults. */
-   wdw->hidden       = 0;
    wdw->focus        = -1;
-   wdw->parent       = 0;
-   wdw->close_fptr   = NULL;
-   wdw->accept_fptr  = NULL;
-   wdw->cancel_fptr  = NULL;
 
-   /* Widgets */
-   wdw->widgets      = NULL;
-   wdw->nwidgets     = 0;
-
+   /* Dimensions. */
    wdw->w            = (double) w;
    wdw->h            = (double) h;
    /* x pos */
