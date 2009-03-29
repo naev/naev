@@ -309,7 +309,7 @@ void nebu_render( const double dt )
 }
 
 
-#define ANG45     0.70710678118654757 /**< sqrt(2) */
+#define ANG45     0.70710678118654757 /**< 1./sqrt(2) */
 #define COS225    0.92387953251128674 /**< cos(225) */
 #define SIN225    0.38268343236508978 /**< sin(225) */
 /**
@@ -442,13 +442,13 @@ void nebu_renderPuffs( const double dt, int below_player )
 
          /* Check boundries */
          if (nebu_puffs[i].x > SCREEN_W + NEBULAE_PUFF_BUFFER)
-            nebu_puffs[i].x = -NEBULAE_PUFF_BUFFER;
+            nebu_puffs[i].x -= SCREEN_W + 2*NEBULAE_PUFF_BUFFER;
          else if (nebu_puffs[i].y > SCREEN_H + NEBULAE_PUFF_BUFFER)
-            nebu_puffs[i].y = -NEBULAE_PUFF_BUFFER;
+            nebu_puffs[i].y -= SCREEN_H + 2*NEBULAE_PUFF_BUFFER;
          else if (nebu_puffs[i].x < -NEBULAE_PUFF_BUFFER)
-            nebu_puffs[i].x = SCREEN_W + NEBULAE_PUFF_BUFFER;
+            nebu_puffs[i].x += SCREEN_W + 2*NEBULAE_PUFF_BUFFER;
          else if (nebu_puffs[i].y < -NEBULAE_PUFF_BUFFER)
-            nebu_puffs[i].y = SCREEN_H + NEBULAE_PUFF_BUFFER;
+            nebu_puffs[i].y += SCREEN_H + 2*NEBULAE_PUFF_BUFFER;
 
          /* Render */
          gl_blitStatic( nebu_pufftexs[nebu_puffs[i].tex],
