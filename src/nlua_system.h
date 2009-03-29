@@ -32,6 +32,7 @@ int lua_loadSystem( lua_State *L, int readonly );
  * System operations.
  */
 LuaSystem* lua_tosystem( lua_State *L, int ind );
+LuaSystem* luaL_checksystem( lua_State *L, int ind );
 LuaSystem* lua_pushsystem( lua_State *L, LuaSystem sys );
 int lua_issystem( lua_State *L, int ind );
 

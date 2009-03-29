@@ -313,15 +313,13 @@ static int misn_setMarker( lua_State *L )
    }
 
    /* Passing in a Star System */
-   if (lua_issystem(L,1)) {
-      sys = lua_tosystem(L,1);
-      cur_mission->sys_marker = strdup(sys->s->name);
-   }
-   else NLUA_INVALID_PARAMETER();
+   sys = luaL_checksystem(L,1);
+   sys = lua_tosystem(L,1);
+   cur_mission->sys_marker = strdup(sys->s->name);
 
    /* Get the type. */
-   if (lua_isstring(L,2)) {
-      str = lua_tostring(L,2);
+   if (lua_gettop(L) > 1) {
+      str = luaL_checkstring(L,2);
       if (strcmp(str, "misc")==0)
          cur_mission->sys_markerType = SYSMARKER_MISC;
       else if (strcmp(str, "rush")==0)

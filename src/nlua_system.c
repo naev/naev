@@ -95,9 +95,19 @@ int lua_loadSystem( lua_State *L, int readonly )
  */
 LuaSystem* lua_tosystem( lua_State *L, int ind )
 {     
-   if (lua_isuserdata(L,ind)) {
-      return (LuaSystem*) lua_touserdata(L,ind);
-   }
+   return (LuaSystem*) lua_touserdata(L,ind);
+}
+/**
+ * @brief Gets system at index raising an error if type doesn't match.
+ *
+ *    @param L Lua state to get system from.
+ *    @param ind Index position of system.
+ *    @return The LuaSystem at ind.
+ */
+LuaSystem* luaL_checksystem( lua_State *L, int ind )
+{     
+   if (lua_issystem(L,ind))
+      return lua_tosystem(L,ind);
    luaL_typerror(L, ind, SYSTEM_METATABLE);
    return NULL;
 }
@@ -199,8 +209,8 @@ static int systemL_get( lua_State *L )
 static int systemL_eq( lua_State *L )
 {
    LuaSystem *a, *b;
-   a = lua_tosystem(L,1);
-   b = lua_tosystem(L,2);
+   a = luaL_checksystem(L,1);
+   b = luaL_checksystem(L,2);
    if (a->s == b->s)
       lua_pushboolean(L,1);
    else
@@ -220,7 +230,7 @@ static int systemL_eq( lua_State *L )
 static int systemL_name( lua_State *L )
 {
    LuaSystem *sys;
-   sys = lua_tosystem(L,1);
+   sys = luaL_checksystem(L,1);
    lua_pushstring(L,sys->s->name);
    return 1;
 }
@@ -244,7 +254,7 @@ static int systemL_faction( lua_State *L )
 {
    int i;
    LuaSystem *sys;
-   sys = lua_tosystem(L,1);
+   sys = luaL_checksystem(L,1);
 
    /* Return result in table */
    lua_newtable(L);
@@ -272,7 +282,7 @@ static int systemL_faction( lua_State *L )
 static int systemL_nebulae( lua_State *L )
 {
    LuaSystem *sys;
-   sys = lua_tosystem(L,1);
+   sys = luaL_checksystem(L,1);
 
    /* Push the density and volatility. */
    lua_pushnumber(L, sys->s->nebu_density);
@@ -300,13 +310,12 @@ static int systemL_nebulae( lua_State *L )
  */
 static int systemL_jumpdistance( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
    LuaSystem *sys, *sysp;
    StarSystem **s;
    int jumps;
    const char *start, *goal;
 
-   sys = lua_tosystem(L,1);
+   sys = luaL_checksystem(L,1);
    start = sys->s->name;
 
    if (lua_gettop(L) > 1) {
@@ -316,6 +325,7 @@ static int systemL_jumpdistance( lua_State *L )
          sysp = lua_tosystem(L,2);
          goal = sysp->s->name;
       }
+      else NLUA_INVALID_PARAMETER();
    }
    else
       goal = cur_system->name;
@@ -342,7 +352,7 @@ static int systemL_adjacent( lua_State *L )
    int i;
    LuaSystem *sys, sysp;
 
-   sys = lua_tosystem(L,1);
+   sys = luaL_checksystem(L,1);
 
    /* Push all adjacent systems. */
    lua_newtable(L);
