@@ -178,10 +178,9 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    char **files;
    va_list ap;
 
-   if (path == NULL) {
-      *nfiles = 0;
+   (*nfiles) = 0;
+   if (path == NULL)
       return NULL;
-   }
    else { /* get the message */
       va_start(ap, path);
       vsnprintf(base, PATH_MAX, path, ap);
@@ -198,10 +197,9 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    time_t *tt, *ft;
    char **tfiles;
 
-   (*nfiles) = 0;
-   mfiles = 128;
-   tfiles = malloc(sizeof(char*)*mfiles);
-   tt = malloc(sizeof(time_t)*mfiles);
+   mfiles      = 128;
+   tfiles      = malloc(sizeof(char*)*mfiles);
+   tt          = malloc(sizeof(time_t)*mfiles);
 
    d = opendir(base);
    if (d == NULL)
@@ -280,13 +278,14 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    char *name;
    int mfiles;
 
-   (*nfiles) = 0;
-   mfiles = 128;
-   files = malloc(sizeof(char*)*mfiles);
+   mfiles      = 128;
+   files       = malloc(sizeof(char*)*mfiles);
 
    d = opendir(base);
-   if (d == NULL)
+   if (d == NULL) {
+      free(files);
       return NULL;
+   }
 
    /* Get the file list */
    while ((dir = readdir(d)) != NULL) {

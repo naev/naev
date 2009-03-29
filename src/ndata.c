@@ -123,7 +123,7 @@ static int ndata_openPackfile (void)
       /* Try to open any ndata in path. */
       else {                                                                 
          files = nfile_readDir( &nfiles, "." );
-         len = strlen(NDATA_FILENAME);
+         len   = strlen(NDATA_FILENAME);
          for (i=0; i<nfiles; i++) {
             if (strncmp(files[i], NDATA_FILENAME, len)==0) {
                /* Must be packfile. */
@@ -136,9 +136,11 @@ static int ndata_openPackfile (void)
          }
 
          /* Clean up. */
-         for (i=0; i<nfiles; i++)
-            free(files[i]);
-         free(files);
+         if (files != NULL) {
+            for (i=0; i<nfiles; i++)
+               free(files[i]);
+            free(files);
+         }
       }
    }
 
@@ -227,6 +229,10 @@ const char* ndata_name (void)
 
    /* We'll just read it and parse it. */
    buf = ndata_read( START_DATA, &size );
+   if (buf == NULL) {
+      WARN("Unable to open '%s'.", START_DATA);
+      return NULL;
+   }
    doc = xmlParseMemory( buf, size );
 
    /* Make sure it's what we are looking for. */
@@ -273,10 +279,12 @@ void* ndata_read( const char* filename, uint32_t *filesize )
    if (ndata_cache == NULL) {
 
       /* Try to read the file as locally. */
-      buf = nfile_readFile( &nbuf, filename );
-      if (buf != NULL) {
-         *filesize = nbuf;
-         return buf;
+      if (nfile_fileExists( filename )) {
+         buf = nfile_readFile( &nbuf, filename );
+         if (buf != NULL) {
+            *filesize = nbuf;
+            return buf;
+         }
       }
 
       /* Load the packfile. */
