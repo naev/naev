@@ -125,7 +125,7 @@ static int diff_mstack = 0; /**< Currently allocated diffs. */
 /*
  * Prototypes.
  */
-static UniDiff_t* diff_get( char *name );
+static UniDiff_t* diff_get( const char *name );
 static UniDiff_t *diff_newDiff (void);
 static int diff_removeDiff( UniDiff_t *diff );
 static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node );
@@ -147,7 +147,7 @@ int diff_load( xmlNodePtr parent ); /**< Used in save.c */
  *    @param name Diff to check.
  *    @return 0 if it's not applied, 1 if it is.
  */
-int diff_isApplied( char *name )
+int diff_isApplied( const char *name )
 {
    if (diff_get(name) != NULL)
       return 1;
@@ -161,7 +161,7 @@ int diff_isApplied( char *name )
  *    @param name Name of the diff to get.
  *    @return The diff if found or NULL if not found.
  */
-static UniDiff_t* diff_get( char *name )
+static UniDiff_t* diff_get( const char *name )
 {
    int i;
    for (i=0; i<diff_nstack; i++)
@@ -177,7 +177,7 @@ static UniDiff_t* diff_get( char *name )
  *    @param name Diff to apply.
  *    @return 0 on success.
  */
-int diff_apply( char *name )
+int diff_apply( const char *name )
 {
    xmlNodePtr node;
    xmlDocPtr doc;
@@ -562,7 +562,7 @@ static void diff_hunkSuccess( UniDiff_t *diff, UniHunk_t *hunk )
  *
  *    @param name Diff to remove.
  */
-void diff_remove( char *name )
+void diff_remove( const char *name )
 {
    UniDiff_t *diff;
 

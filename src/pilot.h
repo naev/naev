@@ -289,14 +289,14 @@ int pilot_dock( Pilot *p, Pilot *target );
 /*
  * creation
  */
-void pilot_init( Pilot* dest, Ship* ship, char* name, int faction, char *ai,
+void pilot_init( Pilot* dest, Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const unsigned int flags );
-unsigned int pilot_create( Ship* ship, char* name, int faction, char *ai,
+unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const unsigned int flags );
-Pilot* pilot_createEmpty( Ship* ship, char* name,
-      int faction, char *ai, const unsigned int flags );
+Pilot* pilot_createEmpty( Ship* ship, const char* name,
+      int faction, const char *ai, const unsigned int flags );
 Pilot* pilot_copy( Pilot* src );
 
 

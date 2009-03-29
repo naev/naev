@@ -810,7 +810,7 @@ void missions_cleanup (void)
  *    @return 0 on success.
  */
 static int mission_saveData( xmlTextWriterPtr writer,
-      char *type, char *name, char *value )
+      const char *type, const char *name, const char *value )
 {
    xmlw_startElem(writer,"data");
 
@@ -846,7 +846,7 @@ static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
       switch (lua_type(L, -1)) {
          case LUA_TNUMBER:
             mission_saveData( writer, "number",
-                  (char*)lua_tostring(L,-2), (char*)lua_tostring(L,-1) );
+                  lua_tostring(L,-2), lua_tostring(L,-1) );
             break;
          case LUA_TBOOLEAN:
             /* lua_tostring doesn't work on booleans. */
@@ -854,11 +854,11 @@ static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
             else buf[0] = '0';
             buf[1] = '\0';
             mission_saveData( writer, "bool",
-                  (char*)lua_tostring(L,-2), buf );
+                  lua_tostring(L,-2), buf );
             break;
          case LUA_TSTRING:
             mission_saveData( writer, "string",
-                  (char*)lua_tostring(L,-2), (char*)lua_tostring(L,-1) );
+                  lua_tostring(L,-2), lua_tostring(L,-1) );
             break;
 
          /* User data must be hardcoded here. */
@@ -866,13 +866,13 @@ static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
             if (lua_isplanet(L,-1)) {
                p = lua_toplanet(L,-1);
                mission_saveData( writer, "planet",
-                     (char*)lua_tostring(L,-2), p->p->name );
+                     lua_tostring(L,-2), p->p->name );
                break;
             }
             else if (lua_issystem(L,-1)) {
                s = lua_tosystem(L,-1);
                mission_saveData( writer, "system",
-                     (char*)lua_tostring(L,-2), s->s->name );
+                     lua_tostring(L,-2), s->s->name );
                break;
             }
 

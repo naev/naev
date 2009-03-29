@@ -2304,7 +2304,7 @@ void pilot_addHook( Pilot *pilot, int type, int hook )
  *    @param vel Initial velocity.
  *    @param flags Used for tweaking the pilot.
  */
-void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, char *ai,
+void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const unsigned int flags )
 {
@@ -2395,7 +2395,7 @@ void pilot_init( Pilot* pilot, Ship* ship, char* name, int faction, char *ai,
  *
  * @sa pilot_init
  */
-unsigned int pilot_create( Ship* ship, char* name, int faction, char *ai,
+unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const unsigned int flags )
 {
@@ -2432,8 +2432,8 @@ unsigned int pilot_create( Ship* ship, char* name, int faction, char *ai,
  *    @param flags Flags for tweaking, PILOT_EMPTY is added.
  *    @return Pointer to the new pilot (not added to stack).
  */
-Pilot* pilot_createEmpty( Ship* ship, char* name,
-      int faction, char *ai, const unsigned int flags )
+Pilot* pilot_createEmpty( Ship* ship, const char* name,
+      int faction, const char *ai, const unsigned int flags )
 {
    Pilot* dyn;
    dyn = malloc(sizeof(Pilot));

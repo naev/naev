@@ -130,7 +130,7 @@ static int music_runLua( const char *situation )
    else
       lua_pushnil( music_lua );
    if (lua_pcall(music_lua, 1, 0, 0)) /* error has occured */
-      WARN("Error while choosing music: %s", (char*) lua_tostring(music_lua,-1));
+      WARN("Error while choosing music: %s", lua_tostring(music_lua,-1));
 
    return 0;
 }

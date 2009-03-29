@@ -178,7 +178,7 @@ int misn_run( Mission *misn, char *func )
 static int misn_runTopStack( Mission *misn, char *func)
 {
    int i, ret;
-   char* err;
+   const char* err;
    lua_State *L;
 
    cur_mission = misn;
@@ -187,7 +187,7 @@ static int misn_runTopStack( Mission *misn, char *func)
 
    ret = lua_pcall(L, 0, 0, 0);
    if (ret != 0) { /* error has occured */
-      err = (lua_isstring(L,-1)) ? (char*) lua_tostring(L,-1) : NULL;
+      err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
       if (strcmp(err,"Mission Done")!=0)
          WARN("Mission '%s' -> '%s': %s",
                cur_mission->data->name, func, (err) ? err : "unknown error");
@@ -237,12 +237,13 @@ static int misn_runTopStack( Mission *misn, char *func)
  */
 static int misn_setTitle( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
-   if (lua_isstring(L, 1)) {
-      if (cur_mission->title) /* cleanup old title */
-         free(cur_mission->title);
-      cur_mission->title = strdup((char*)lua_tostring(L, 1));
-   }
+   const char *str;
+
+   str = luaL_checkstring(L,1);
+
+   if (cur_mission->title) /* cleanup old title */
+      free(cur_mission->title);
+   cur_mission->title = strdup(str);
    return 0;
 }
 /**
@@ -253,13 +254,13 @@ static int misn_setTitle( lua_State *L )
  */
 static int misn_setDesc( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
-   if (lua_isstring(L, 1)) {    
-      if (cur_mission->desc) /* cleanup old description */
-         free(cur_mission->desc);
-      cur_mission->desc = strdup((char*)lua_tostring(L, 1));
-   }
-   else NLUA_INVALID_PARAMETER();
+   const char *str;
+
+   str = luaL_checkstring(L,1);
+
+   if (cur_mission->desc) /* cleanup old description */
+      free(cur_mission->desc);
+   cur_mission->desc = strdup(str);
    return 0;
 }
 /**
@@ -270,13 +271,13 @@ static int misn_setDesc( lua_State *L )
  */
 static int misn_setReward( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
-   if (lua_isstring(L, 1)) {    
-      if (cur_mission->reward != NULL) /* cleanup old reward */
-         free(cur_mission->reward);
-      cur_mission->reward = strdup((char*)lua_tostring(L, 1));
-   }
-   else NLUA_INVALID_PARAMETER();
+   const char *str;
+
+   str = luaL_checkstring(L,1);
+
+   if (cur_mission->reward) /* cleanup old reward */
+      free(cur_mission->reward);
+   cur_mission->reward = strdup(str);
    return 0;
 }
 /**
@@ -338,6 +339,7 @@ static int misn_setMarker( lua_State *L )
 /**
  * @brief Gets the factions the mission is available for.
  *
+ * @usage f = misn.factions()
  *    @luareturn A containing the factions for whom the mission is available.
  * @luafunc factions()
  */
@@ -362,6 +364,7 @@ static int misn_factions( lua_State *L )
 /**
  * @brief Attempts to accept the mission.
  *
+ * @usage if not misn.accept() then return end
  *    @luareturn true if mission was properly accepted.
  * @luafunc accept()
  */
@@ -427,18 +430,13 @@ static int misn_finish( lua_State *L )
  */
 static int misn_timerStart( lua_State *L )
 {
-   NLUA_MIN_ARGS(2);
    int i;
-   char *func;
+   const char *func;
    double delay;
 
    /* Parse arguments. */
-   if (lua_isstring(L,1))
-      func = (char*) lua_tostring(L,1);
-   else NLUA_INVALID_PARAMETER();
-   if (lua_isnumber(L,2))
-      delay = lua_tonumber(L,2);
-   else NLUA_INVALID_PARAMETER();
+   func  = luaL_checkstring(L,1);
+   delay = luaL_checknumber(L,2);
 
    /* Add timer */
    for (i=0; i<MISSION_TIMER_MAX; i++) {
@@ -467,13 +465,10 @@ static int misn_timerStart( lua_State *L )
  */
 static int misn_timerStop( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
    int t;
 
    /* Parse parameters. */
-   if (lua_isnumber(L,1))
-      t = (int)lua_tonumber(L,1);
-   else NLUA_INVALID_PARAMETER();
+   t = luaL_checkint(L,1);
 
    /* Stop the timer. */
    if (cur_mission->timer[t] != 0.) {
@@ -515,15 +510,14 @@ static int misn_takeoff( lua_State *L )
  */
 static int misn_addCargo( lua_State *L )
 {
+   const char *cname;
    Commodity *cargo;
    int quantity, ret;
 
-   NLUA_MIN_ARGS(2);
-
-   if (lua_isstring(L,1)) cargo = commodity_get( (char*) lua_tostring(L,1) );
-   else NLUA_INVALID_PARAMETER();
-   if (lua_isnumber(L,2)) quantity = (int) lua_tonumber(L,2);
-   else NLUA_INVALID_PARAMETER();
+   /* Parameters. */
+   cname    = luaL_checkstring(L,1);
+   quantity = luaL_checkint(L,2);
+   cargo = commodity_get( cname );
 
    /* First try to add the cargo. */
    ret = pilot_addMissionCargo( player, cargo, quantity );
@@ -544,10 +538,7 @@ static int misn_rmCargo( lua_State *L )
    int ret;
    unsigned int id;
 
-   NLUA_MIN_ARGS(1);
-
-   if (lua_isnumber(L,1)) id = (unsigned int) lua_tonumber(L,1);
-   else NLUA_INVALID_PARAMETER();
+   id = luaL_checklong(L,1);
 
    /* First try to remove the cargo from player. */
    if (pilot_rmMissionCargo( player, id, 0 ) != 0) {
@@ -573,10 +564,7 @@ static int misn_jetCargo( lua_State *L )
    int ret;
    unsigned int id;
 
-   NLUA_MIN_ARGS(1);
-
-   if (lua_isnumber(L,1)) id = (unsigned int) lua_tonumber(L,1);
-   else NLUA_INVALID_PARAMETER();
+   id = luaL_checklong(L,1);
 
    /* First try to remove the cargo from player. */
    if (pilot_rmMissionCargo( player, id, 1 ) != 0) {

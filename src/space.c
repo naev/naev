@@ -404,7 +404,7 @@ StarSystem* system_getIndex( int id )
  *    @param planetname Planet name to match.
  *    @return Name of the system planet belongs to.
  */
-char* planet_getSystem( char* planetname )
+char* planet_getSystem( const char* planetname )
 {
    int i;
 
@@ -423,7 +423,7 @@ char* planet_getSystem( char* planetname )
  *    @param planetname Name to match.
  *    @return Planet matching planetname.
  */
-Planet* planet_get( char* planetname )
+Planet* planet_get( const char* planetname )
 {
    int i;
 
@@ -938,7 +938,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
  *    @param planetname Name of the planet to add.
  *    @return 0 on success.
  */
-int system_addPlanet( StarSystem *sys, char *planetname )
+int system_addPlanet( StarSystem *sys, const char *planetname )
 {
    Planet *planet;
 
@@ -982,7 +982,7 @@ int system_addPlanet( StarSystem *sys, char *planetname )
  *    @param planetname Name of the planet to remove.
  *    @return 0 on success.
  */
-int system_rmPlanet( StarSystem *sys, char *planetname )
+int system_rmPlanet( StarSystem *sys, const char *planetname )
 {
    int i, found;
    Planet *planet ;

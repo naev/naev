@@ -76,13 +76,11 @@ int lua_loadTk( lua_State *L )
  */
 static int tk_msg( lua_State *L )
 {  
-   char *title, *str;
+   const char *title, *str;
    NLUA_MIN_ARGS(2);
-   
-   if (lua_isstring(L,1)) title = (char*) lua_tostring(L,1);
-   else NLUA_INVALID_PARAMETER();
-   if (lua_isstring(L,2)) str = (char*) lua_tostring(L,2);
-   else NLUA_INVALID_PARAMETER();
+  
+   title = luaL_checkstring(L,1);
+   str   = luaL_checkstring(L,2);
    
    dialogue_msgRaw( title, str );
    return 0;
@@ -100,13 +98,11 @@ static int tk_msg( lua_State *L )
 static int tk_yesno( lua_State *L )
 {  
    int ret;
-   char *title, *str;
+   const char *title, *str;
    NLUA_MIN_ARGS(2);
-   
-   if (lua_isstring(L,1)) title = (char*) lua_tostring(L,1);
-   else NLUA_INVALID_PARAMETER();
-   if (lua_isstring(L,2)) str = (char*) lua_tostring(L,2);
-   else NLUA_INVALID_PARAMETER();
+  
+   title = luaL_checkstring(L,1);
+   str   = luaL_checkstring(L,2);
    
    ret = dialogue_YesNoRaw( title, str );
    lua_pushboolean(L,ret);
@@ -126,18 +122,15 @@ static int tk_yesno( lua_State *L )
  */
 static int tk_input( lua_State *L )
 {  
-   char *title, *str, *ret;
+   const char *title, *str;
+   char *ret;
    int min, max;
    NLUA_MIN_ARGS(4);
 
-   if (lua_isstring(L,1)) title = (char*) lua_tostring(L,1);
-   else NLUA_INVALID_PARAMETER();
-   if (lua_isnumber(L,2)) min = (int) lua_tonumber(L,2);
-   else NLUA_INVALID_PARAMETER();
-   if (lua_isnumber(L,3)) max = (int) lua_tonumber(L,3);
-   else NLUA_INVALID_PARAMETER();
-   if (lua_isstring(L,4)) str = (char*) lua_tostring(L,4);
-   else NLUA_INVALID_PARAMETER();
+   title = luaL_checkstring(L,1);
+   min   = luaL_checkint(L,2);
+   max   = luaL_checkint(L,3);
+   str   = luaL_checkstring(L,4);
    
    ret = dialogue_inputRaw( title, min, max, str );
    if (ret != NULL) {

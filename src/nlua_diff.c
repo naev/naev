@@ -79,10 +79,9 @@ int lua_loadDiff( lua_State *L, int readonly )
  */
 static int diff_applyL( lua_State *L )
 {
-   char *name;
+   const char *name;
 
-   if (lua_isstring(L,1)) name = (char*)lua_tostring(L,1);
-   else NLUA_INVALID_PARAMETER();
+   name = luaL_checkstring(L,1);
 
    diff_apply( name );
    return 0;
@@ -95,10 +94,9 @@ static int diff_applyL( lua_State *L )
  */
 static int diff_removeL( lua_State *L )
 {
-   char *name;
+   const char *name;
 
-   if (lua_isstring(L,1)) name = (char*)lua_tostring(L,1);
-   else NLUA_INVALID_PARAMETER();
+   name = luaL_checkstring(L,1);
 
    diff_remove( name );
    return 0;
@@ -112,10 +110,9 @@ static int diff_removeL( lua_State *L )
  */
 static int diff_isappliedL( lua_State *L )
 {
-   char *name;
+   const char *name;
 
-   if (lua_isstring(L,1)) name = (char*)lua_tostring(L,1);
-   else NLUA_INVALID_PARAMETER();
+   name = luaL_checkstring(L,1);
 
    lua_pushboolean(L,diff_isApplied(name));
    return 1;

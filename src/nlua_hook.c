@@ -53,7 +53,7 @@ static const luaL_reg hook_methods[] = {
 /*
  * Prototypes.
  */
-static unsigned int hook_generic( lua_State *L, char* stack, int pos );
+static unsigned int hook_generic( lua_State *L, const char* stack, int pos );
 
 
 /**
@@ -95,16 +95,13 @@ int lua_loadHook( lua_State *L )
  *    @param pos Position in the stack of the function name.
  *    @return The hook ID or 0 on error.
  */
-static unsigned int hook_generic( lua_State *L, char* stack, int pos )
+static unsigned int hook_generic( lua_State *L, const char* stack, int pos )
 {
    int i;
-   char *func;
-
-   NLUA_MIN_ARGS(1);
+   const char *func;
 
    /* Last parameter must be function to hook */
-   if (lua_isstring(L,pos)) func = (char*)lua_tostring(L,pos);
-   else NLUA_INVALID_PARAMETER();
+   func = luaL_checkstring(L,pos);
 
    /* make sure mission is a player mission */
    for (i=0; i<MISSION_MAX; i++)
@@ -187,15 +184,14 @@ static int hook_pilot( lua_State *L )
    unsigned int h;
    LuaPilot *p;
    int type;
-   char *hook_type;
+   const char *hook_type;
 
    /* First parameter parameter - pilot to hook */
    if (lua_ispilot(L,1)) p = lua_topilot(L,1);
    else NLUA_INVALID_PARAMETER();
 
    /* Second parameter - hook name */
-   if (lua_isstring(L,2)) hook_type = (char*) lua_tostring(L,2);
-   else NLUA_INVALID_PARAMETER();
+   hook_type = luaL_checkstring(L,2);
 
    /* Check to see if hook_type is valid */
    if (strcmp(hook_type,"death")==0) type = PILOT_HOOK_DEATH;

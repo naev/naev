@@ -106,7 +106,7 @@ static int hook_run( Hook *hook )
  *    @param stack Stack hook belongs to.
  *    @return The new hooks identifier.
  */
-unsigned int hook_add( unsigned int parent, char *func, char *stack )
+unsigned int hook_add( unsigned int parent, const char *func, const char *stack )
 {
    Hook *new_hook;
 
@@ -205,7 +205,7 @@ void hook_rmParent( unsigned int parent )
  *    @param stack Stack to run.
  *    @return 0 on success.
  */
-int hooks_run( char* stack )
+int hooks_run( const char* stack )
 {
    int i;
 

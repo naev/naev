@@ -168,7 +168,7 @@ static int planetL_get( lua_State *L )
    int nfactions;
    char **planets;
    int nplanets;
-   char *rndplanet;
+   const char *rndplanet;
    LuaPlanet planet;
    LuaSystem sys;
    LuaFaction *f;
@@ -205,7 +205,7 @@ static int planetL_get( lua_State *L )
 
    /* Get a planet by name */
    else if (lua_isstring(L,1)) {
-      rndplanet = (char*) lua_tostring(L,1);
+      rndplanet = lua_tostring(L,1);
    }
 
    /* Get a planet from faction list */

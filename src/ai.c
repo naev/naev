@@ -841,13 +841,13 @@ static int aiL_pushtask( lua_State *L )
 {
    NLUA_MIN_ARGS(2);
    int pos;
-   char *func;
+   const char *func;
    Task *t, *pointer;
 
    /* Parse basic parameters. */
    if (lua_isnumber(L,1)) pos = (int)lua_tonumber(L,1);
    else NLUA_INVALID_PARAMETER();
-   if (lua_isstring(L,2)) func = (char*)lua_tostring(L,2);
+   if (lua_isstring(L,2)) func = lua_tostring(L,2);
    else NLUA_INVALID_PARAMETER();
 
    t = malloc(sizeof(Task));
@@ -1854,7 +1854,7 @@ static int aiL_secondary( lua_State *L )
 {
    PilotOutfit *co, *po;
    int i, melee;
-   char *str;
+   const char *str;
    const char *otype;
    int r;
 
@@ -1862,7 +1862,7 @@ static int aiL_secondary( lua_State *L )
 
    /* Parse the parameters. */
    if (lua_isstring(L,1)) {
-      str = (char*) lua_tostring(L, 1);
+      str = lua_tostring(L, 1);
       if (strcmp(str, "melee")==0)
          melee = 1;
       else if (strcmp(str, "ranged")==0)
@@ -2155,7 +2155,7 @@ static int aiL_comm( lua_State *L )
 {
    NLUA_MIN_ARGS(2);
    int p;
-   char *s;
+   const char *s;
  
    /* Get parameters. */
    if (lua_isnumber(L,1))
@@ -2163,7 +2163,7 @@ static int aiL_comm( lua_State *L )
    else
       NLUA_INVALID_PARAMETER();
    if (lua_isstring(L,2))
-      s = (char*) lua_tostring(L,2);
+      s = lua_tostring(L,2);
    else
       NLUA_INVALID_PARAMETER();
 
@@ -2232,13 +2232,14 @@ static int aiL_cargo( lua_State *L )
 {
    NLUA_MIN_ARGS(2);
    int q;
-   char *s;
+   const char *s;
 
-   if (aiL_status != AI_STATUS_CREATE) return 0;
+   if (aiL_status != AI_STATUS_CREATE)
+      return 0;
 
    /* Get parameters. */
    if (lua_isstring(L,1))
-      s = (char*)lua_tostring(L,1);
+      s = lua_tostring(L,1);
    else
       NLUA_INVALID_PARAMETER();
    if (lua_isnumber(L,2))

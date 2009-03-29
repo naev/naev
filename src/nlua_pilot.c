@@ -235,7 +235,7 @@ static int pilot_addFleet( lua_State *L )
 {
    NLUA_MIN_ARGS(1);
    Fleet *flt;
-   char *fltname, *fltai;
+   const char *fltname, *fltai;
    int i, j;
    unsigned int p;
    double a;
@@ -247,13 +247,12 @@ static int pilot_addFleet( lua_State *L )
    int jump;
 
    /* Parse first argument - Fleet Name */
-   if (lua_isstring(L,1)) fltname = (char*) lua_tostring(L,1);
-   else NLUA_INVALID_PARAMETER();
+   fltname = luaL_checkstring(L,1);
    
    /* Parse second argument - Fleet AI Override */
    if (lua_gettop(L) > 1) {
       if (lua_isstring(L,2)) {
-         fltai = (char*) lua_tostring(L,2);
+         fltai = lua_tostring(L,2);
          if (strcmp(fltai, "def")==0) /* Check if set to default */
             fltai = NULL;
       }
@@ -539,15 +538,13 @@ static int pilotL_rename( lua_State *L )
 {
    NLUA_MIN_ARGS(2);
    LuaPilot *p1;
-   char *name;
+   const char *name;
    Pilot *p;
 
    /* Parse parameters */
-   p1 = lua_topilot(L,1);
-   p = pilot_get( p1->pilot );
-   if (lua_isstring(L,2))
-      name = (char*)lua_tostring(L, 2);
-   else NLUA_INVALID_PARAMETER();
+   p1    = lua_topilot(L,1);
+   p     = pilot_get( p1->pilot );
+   name  = luaL_checkstring(L,2);
 
    /* Pilot must exist. */
    if (p == NULL) return 0;
@@ -664,13 +661,11 @@ static int pilotL_broadcast( lua_State *L )
    NLUA_MIN_ARGS(2);
    Pilot *p;
    LuaPilot *lp;
-   char *msg;
+   const char *msg;
 
    /* Parse parameters. */
-   lp = lua_topilot(L,1);
-   if (lua_isstring(L,2))
-      msg = (char*) lua_tostring(L,2);
-   else NLUA_INVALID_PARAMETER();
+   lp    = lua_topilot(L,1);
+   msg   = luaL_checkstring(L,2);
 
    /* Check to see if pilot is valid. */
    p = pilot_get(lp->pilot);
@@ -699,12 +694,12 @@ static int pilotL_setFaction( lua_State *L )
    LuaPilot *lp;
    LuaFaction *f;
    int fid;
-   char *faction;
+   const char *faction;
 
    /* Parse parameters. */
    lp = lua_topilot(L,1);
    if (lua_isstring(L,2)) {
-      faction = (char*) lua_tostring(L,2);
+      faction = lua_tostring(L,2);
       fid = faction_get(faction);
    }
    else if (lua_isfaction(L,2)) {

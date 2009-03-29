@@ -8,10 +8,10 @@
 #  define UNIDIFF_H
 
 
-int diff_apply( char *name );
-void diff_remove( char *name );
+int diff_apply( const char *name );
+void diff_remove( const char *name );
 void diff_clear (void);
-int diff_isApplied( char *name );
+int diff_isApplied( const char *name );
 
 
 #endif /* UNIDIFF_H */

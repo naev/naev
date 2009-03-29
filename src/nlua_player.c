@@ -134,11 +134,7 @@ static int player_pay( lua_State *L )
 {
    int money;
 
-   NLUA_MIN_ARGS(1);
-
-   if (lua_isnumber(L,1)) money = (int) lua_tonumber(L,1);
-   else NLUA_INVALID_PARAMETER();
-
+   money = luaL_checkint(L,1);
    player->credits += money;
 
    return 0;
@@ -151,13 +147,11 @@ static int player_pay( lua_State *L )
  */
 static int player_msg( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
-   char* str;
+   const char* str;
 
-   if (lua_isstring(L,-1)) str = (char*) lua_tostring(L,-1);
-   else NLUA_INVALID_PARAMETER();
-
+   str = luaL_checkstring(L,1);
    player_message(str);
+
    return 0;
 }
 /**
@@ -170,16 +164,13 @@ static int player_msg( lua_State *L )
  */
 static int player_modFaction( lua_State *L )
 {
-   NLUA_MIN_ARGS(2);
    int f;
    double mod;
 
    if (lua_isstring(L,1)) f = faction_get( lua_tostring(L,1) );
    else NLUA_INVALID_PARAMETER();
 
-   if (lua_isnumber(L,2)) mod = lua_tonumber(L,2);
-   else NLUA_INVALID_PARAMETER();
-
+   mod = luaL_checknumber(L,2);
    faction_modPlayer( f, mod );
 
    return 0;
@@ -200,10 +191,7 @@ static int player_modFactionRaw( lua_State *L )
 
    if (lua_isstring(L,1)) f = faction_get( lua_tostring(L,1) );
    else NLUA_INVALID_PARAMETER();
-
-   if (lua_isnumber(L,2)) mod = lua_tonumber(L,2);
-   else NLUA_INVALID_PARAMETER();
-
+   mod = luaL_checknumber(L,2);
    faction_modPlayerRaw( f, mod );
 
    return 0;

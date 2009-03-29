@@ -987,7 +987,8 @@ static void A_freeList( SysNode *first )
  *    @param ignore_known Whether or not to ignore if systems are known.
  *    @return NULL on failure, the list of njumps elements systems in the path.
  */
-StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend, int ignore_known )
+StarSystem** map_getJumpPath( int* njumps,
+      const char* sysstart, const char* sysend, int ignore_known )
 {
    int i, j, cost;
 
@@ -1085,7 +1086,7 @@ StarSystem** map_getJumpPath( int* njumps, char* sysstart, char* sysend, int ign
  *    @param r Radius (in jumps) to mark as known.
  *    @return 0 on success.
  */
-int map_map( char* targ_sys, int r )
+int map_map( const char* targ_sys, int r )
 {
    int i, dep;
    StarSystem *sys, *jsys;
@@ -1136,7 +1137,7 @@ int map_map( char* targ_sys, int r )
  *    @param r Radius to check (in jumps) if is mapped.
  *    @return 1 if circle was already mapped, 0 if it wasn't.
  */
-int map_isMapped( char* targ_sys, int r )
+int map_isMapped( const char* targ_sys, int r )
 {
    int i, dep, ret;
    StarSystem *sys, *jsys;

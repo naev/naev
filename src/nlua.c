@@ -125,17 +125,11 @@ int nlua_loadBasic( lua_State* L )
  */
 static int nlua_packfileLoader( lua_State* L )
 {
-   char *buf, *filename;
+   const char *filename;
+   char *buf;
    uint32_t bufsize;
 
-   NLUA_MIN_ARGS(1);
-
-   if (!lua_isstring(L,1)) {
-      NLUA_INVALID_PARAMETER();
-      return 0;
-   }
-
-   filename = (char*) lua_tostring(L,1);
+   filename = luaL_checkstring(L,1);
 
    /* try to locate the data */
    buf = ndata_read( filename, &bufsize );

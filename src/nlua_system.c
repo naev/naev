@@ -170,7 +170,7 @@ static int systemL_get( lua_State *L )
    }
    /* Passing a string (systemname) */
    else if (lua_isstring(L,1)) {
-      sys.s = system_get( (char*) lua_tostring(L,1) );
+      sys.s = system_get( lua_tostring(L,1) );
    }
    /* Passing a planet */
    else if (lua_isplanet(L,1)) {
@@ -304,14 +304,14 @@ static int systemL_jumpdistance( lua_State *L )
    LuaSystem *sys, *sysp;
    StarSystem **s;
    int jumps;
-   char *start, *goal;
+   const char *start, *goal;
 
    sys = lua_tosystem(L,1);
    start = sys->s->name;
 
    if (lua_gettop(L) > 1) {
       if (lua_isstring(L,2))
-         goal = (char*) lua_tostring(L,2);
+         goal = lua_tostring(L,2);
       else if (lua_issystem(L,2)) {
          sysp = lua_tosystem(L,2);
          goal = sysp->s->name;

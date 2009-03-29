@@ -77,7 +77,7 @@ void fleet_free (void);
  * creation
  */
 int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
-      Vector2d *pos, Vector2d *vel, char* ai, unsigned int flags );
+      Vector2d *pos, Vector2d *vel, const char* ai, unsigned int flags );
 
 
 #endif /* FLEET_H */
