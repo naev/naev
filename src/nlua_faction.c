@@ -123,7 +123,6 @@ static int factionL_get( lua_State *L )
    lua_pushfaction(L,f);
    return 1;
 }
-
 /**
  * @brief Gets faction at index.
  *
@@ -133,9 +132,19 @@ static int factionL_get( lua_State *L )
  */
 LuaFaction* lua_tofaction( lua_State *L, int ind )
 {
-   if (lua_isuserdata(L,ind)) {
-      return (LuaFaction*) lua_touserdata(L,ind);
-   }
+   return (LuaFaction*) lua_touserdata(L,ind);
+}
+/**
+ * @brief Gets faction at index raising error if type isn't faction.
+ *
+ *    @param L Lua state to get faction from.
+ *    @param ind Index position to find the faction.
+ *    @return Faction found at the index in the state.
+ */
+LuaFaction* luaL_checkfaction( lua_State *L, int ind )
+{
+   if (lua_isuserdata(L,ind))
+      return lua_tofaction(L,ind);
    luaL_typerror(L, ind, FACTION_METATABLE);
    return NULL;
 }
@@ -193,8 +202,8 @@ int lua_isfaction( lua_State *L, int ind )
 static int factionL_eq( lua_State *L )
 {
    LuaFaction *a, *b;
-   a = lua_tofaction(L,1);
-   b = lua_tofaction(L,2);
+   a = luaL_checkfaction(L,1);
+   b = luaL_checkfaction(L,2);
    lua_pushboolean(L, a->f == b->f);
    return 1;
 }
@@ -211,7 +220,7 @@ static int factionL_eq( lua_State *L )
 static int factionL_name( lua_State *L )
 {
    LuaFaction *f;
-   f = lua_tofaction(L,1);
+   f = luaL_checkfaction(L,1);
    lua_pushstring(L, faction_name(f->f));
    return 1;
 }
@@ -227,7 +236,7 @@ static int factionL_name( lua_State *L )
 static int factionL_longname( lua_State *L )
 {
    LuaFaction *f;
-   f = lua_tofaction(L,1);
+   f = luaL_checkfaction(L,1);
    lua_pushstring(L, faction_longname(f->f));
    return 1;
 }
@@ -245,9 +254,8 @@ static int factionL_longname( lua_State *L )
 static int factionL_areenemies( lua_State *L )
 {
    LuaFaction *f, *ff;
-   f = lua_tofaction(L,1);
-   if (lua_isfaction(L,2)) ff = lua_tofaction(L,2);
-   else NLUA_INVALID_PARAMETER();
+   f  = luaL_checkfaction(L,1);
+   ff = luaL_checkfaction(L,2);
 
    lua_pushboolean(L, areEnemies( f->f, ff->f ));
    return 1;
@@ -266,9 +274,8 @@ static int factionL_areenemies( lua_State *L )
 static int factionL_areallies( lua_State *L )
 {
    LuaFaction *f, *ff;
-   f = lua_tofaction(L,1);
-   if (lua_isfaction(L,2)) ff = lua_tofaction(L,2);
-   else NLUA_INVALID_PARAMETER();
+   f  = luaL_checkfaction(L,1);
+   ff = luaL_checkfaction(L,2);
 
    lua_pushboolean(L, areAllies( f->f, ff->f ));
    return 1;
@@ -289,12 +296,11 @@ static int factionL_modplayer( lua_State *L )
 {
    LuaFaction *f;
    double n;
-   f = lua_tofaction(L,1);
 
-   if (lua_isnumber(L,2)) n = lua_tonumber(L,2);
-   else NLUA_INVALID_PARAMETER();
-
+   f = luaL_checkfaction(L,1);
+   n = luaL_checknumber(L,2);
    faction_modPlayer( f->f, n );
+
    return 0;
 }
 
@@ -313,12 +319,11 @@ static int factionL_modplayerraw( lua_State *L )
 {
    LuaFaction *f;
    double n;
-   f = lua_tofaction(L,1);
 
-   if (lua_isnumber(L,2)) n = lua_tonumber(L,2);
-   else NLUA_INVALID_PARAMETER();
-
+   f = luaL_checkfaction(L,1);
+   n = luaL_checknumber(L,2);
    faction_modPlayerRaw( f->f, n );
+
    return 0;
 }
 
@@ -335,10 +340,13 @@ static int factionL_playerstanding( lua_State *L )
 {
    LuaFaction *f;
    int n;
-   f = lua_tofaction(L,1);
+
+   f = luaL_checkfaction(L,1);
    n = faction_getPlayer(f->f);
+
    lua_pushnumber(L, n);
    lua_pushstring(L, faction_getStanding(n));
+
    return 1;
 }
 
@@ -357,7 +365,7 @@ static int factionL_enemies( lua_State *L )
    int *factions;
    LuaFaction *f, fe;
 
-   f = lua_tofaction(L,1);
+   f = luaL_checkfaction(L,1);
 
    /* Push the enemies in a table. */
    lua_newtable(L);
@@ -387,7 +395,7 @@ static int factionL_allies( lua_State *L )
    int *factions;
    LuaFaction *f, fa;
 
-   f = lua_tofaction(L,1);
+   f = luaL_checkfaction(L,1);
 
    /* Push the enemies in a table. */
    lua_newtable(L);
