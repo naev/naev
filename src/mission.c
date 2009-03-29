@@ -18,6 +18,7 @@
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_space.h"
+#include "nlua_faction.h"
 #include "rng.h"
 #include "naev.h"
 #include "log.h"
@@ -837,7 +838,9 @@ static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
 {
    LuaPlanet *p;
    LuaSystem *s;
+   LuaFaction *f;
    char buf[PATH_MAX];
+   const char *str;
 
    lua_pushnil(L);
    /* nil */
@@ -875,6 +878,15 @@ static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
                      lua_tostring(L,-2), s->s->name );
                break;
             }
+            else if (lua_isfaction(L,-1)) {
+               f = lua_tofaction(L,-1);
+               str = faction_name( f->f );
+               if (str == NULL)
+                  break;
+               mission_saveData( writer, "faction",
+                     lua_tostring(L,-2), str );
+               break;
+            }
 
          default:
             break;
@@ -898,6 +910,7 @@ static int mission_unpersistData( lua_State *L, xmlNodePtr parent )
 {
    LuaPlanet p;
    LuaSystem s;
+   LuaFaction f;
    xmlNodePtr node;
    char *name, *type;
 
@@ -921,6 +934,10 @@ static int mission_unpersistData( lua_State *L, xmlNodePtr parent )
          else if (strcmp(type,"system")==0) {
             s.s = system_get(xml_get(node));
             lua_pushsystem(L,s);
+         }
+         else if (strcmp(type,"faction")==0) {
+            f.f = faction_get(xml_get(node));
+            lua_pushfaction(L,f);
          }
          else {
             WARN("Unknown lua data type!");
