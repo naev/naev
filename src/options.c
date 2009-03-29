@@ -147,7 +147,7 @@ static void menuKeybinds_update( unsigned int wid, char *name )
    KeybindType type;
    SDLMod mod;
    char buf[1024];
-   char bind[32];
+   char binding[32];
 
    /* Get the keybind. */
    selected = toolkit_getList( wid, "lstKeybinds" );
@@ -165,34 +165,34 @@ static void menuKeybinds_update( unsigned int wid, char *name )
    /* Create the text. */
    switch (type) {
       case KEYBIND_NULL:
-         snprintf(bind, 64, "Not bound");
+         snprintf(binding, 64, "Not bound");
          break;
       case KEYBIND_KEYBOARD:
          /* SDL_GetKeyName returns lowercase which is ugly. */
          if (nstd_isalpha(key))
-            snprintf(bind, 32, "keyboard:   %s%s%c",
+            snprintf(binding, 32, "keyboard:   %s%s%c",
                   (mod != KMOD_NONE) ? modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
                   nstd_toupper(key));
          else
-            snprintf(bind, 32, "keyboard:   %s%s%s",
+            snprintf(binding, 32, "keyboard:   %s%s%s",
                   (mod != KMOD_NONE) ? modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
                   SDL_GetKeyName(key));
          break;
       case KEYBIND_JAXISPOS:
-         snprintf(bind, 64, "joy axis pos:   <%d>", key );
+         snprintf(binding, 64, "joy axis pos:   <%d>", key );
          break;
       case KEYBIND_JAXISNEG:
-         snprintf(bind, 64, "joy axis neg:   <%d>", key );
+         snprintf(binding, 64, "joy axis neg:   <%d>", key );
          break;
       case KEYBIND_JBUTTON:
-         snprintf(bind, 64, "joy button:   <%d>", key);
+         snprintf(binding, 64, "joy button:   <%d>", key);
          break;
    }
 
    /* Update text. */
-   snprintf(buf, 1024, "%s\n\n%s\n", desc, bind);
+   snprintf(buf, 1024, "%s\n\n%s\n", desc, binding);
    window_modifyText( wid, "txtDesc", buf );
 }
 
