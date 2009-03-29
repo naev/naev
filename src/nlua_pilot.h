@@ -32,6 +32,7 @@ int lua_loadPilot( lua_State *L, int readonly );
  * Pilot operations
  */
 LuaPilot* lua_topilot( lua_State *L, int ind );
+LuaPilot* luaL_checkpilot( lua_State *L, int ind );
 LuaPilot* lua_pushpilot( lua_State *L, LuaPilot pilot );
 int lua_ispilot( lua_State *L, int ind );
 

@@ -141,11 +141,27 @@ int lua_loadPilot( lua_State *L, int readonly )
  */
 LuaPilot* lua_topilot( lua_State *L, int ind )
 {
-   if (lua_isuserdata(L,ind)) {
+   if (lua_ispilot(L,ind)) {
       return (LuaPilot*) lua_touserdata(L,ind);
    }
-   luaL_typerror(L, ind, PILOT_METATABLE);
    return NULL;
+}
+/**
+ * @brief Gets pilot at index or raises error if there is no pilot at index.
+ *
+ *    @param L Lua state to get pilot from.
+ *    @param ind Index position to find pilot.
+ *    @return Pilot found at the index in the state.
+ */
+LuaPilot* luaL_checkpilot( lua_State *L, int ind )
+{
+   LuaPilot *p;
+   p = lua_topilot(L,ind);
+   if ((p == NULL) && !lua_ispilot(L,ind)) {
+      luaL_typerror(L, ind, PILOT_METATABLE);
+      return NULL;
+   }
+   return p;
 }
 /**
  * @brief Pushes a pilot on the stack.
@@ -460,14 +476,11 @@ static int pilot_getPilots( lua_State *L )
  */
 static int pilotL_eq( lua_State *L )
 {
-   NLUA_MIN_ARGS(2);
    LuaPilot *p1, *p2;
 
    /* Get parameters. */
-   p1 = lua_topilot(L,1);
-   if (lua_ispilot(L,2))
-      p2 = lua_topilot(L,2);
-   else NLUA_INVALID_PARAMETER();
+   p1 = luaL_checkpilot(L,1);
+   p2 = luaL_checkpilot(L,2);
 
    /* Push result. */
    lua_pushboolean(L, p1->pilot == p2->pilot);
@@ -485,13 +498,12 @@ static int pilotL_eq( lua_State *L )
  */
 static int pilotL_name( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
    LuaPilot *p1;
    Pilot *p;
 
    /* Parse parameters. */
-   p1 = lua_topilot(L,1);
-   p = pilot_get( p1->pilot );
+   p1 = luaL_checkpilot(L,1);
+   p  = pilot_get( p1->pilot );
 
    /* Pilot must exist. */
    if (p == NULL) return 0;
@@ -512,13 +524,12 @@ static int pilotL_name( lua_State *L )
  */
 static int pilotL_alive( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
    LuaPilot *lp;
    Pilot *p;
 
    /* Parse parameters. */
-   lp = lua_topilot(L,1);
-   p = pilot_get( lp->pilot );
+   lp = luaL_checkpilot(L,1);
+   p  = pilot_get( lp->pilot );
 
    /* Check if is alive. */
    lua_pushboolean(L, p!=NULL);
@@ -536,13 +547,12 @@ static int pilotL_alive( lua_State *L )
  */
 static int pilotL_rename( lua_State *L )
 {
-   NLUA_MIN_ARGS(2);
    LuaPilot *p1;
    const char *name;
    Pilot *p;
 
    /* Parse parameters */
-   p1    = lua_topilot(L,1);
+   p1    = luaL_checkpilot(L,1);
    p     = pilot_get( p1->pilot );
    name  = luaL_checkstring(L,2);
 
@@ -568,14 +578,13 @@ static int pilotL_rename( lua_State *L )
  */
 static int pilotL_position( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
    LuaPilot *p1;
    Pilot *p;
    LuaVector v;
 
    /* Parse parameters */
-   p1 = lua_topilot(L,1);
-   p = pilot_get( p1->pilot );
+   p1 = luaL_checkpilot(L,1);
+   p  = pilot_get( p1->pilot );
 
    /* Pilot must exist. */
    if (p == NULL) return 0;
@@ -597,14 +606,13 @@ static int pilotL_position( lua_State *L )
  */
 static int pilotL_velocity( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
    LuaPilot *p1;
    Pilot *p;
    LuaVector v;
 
    /* Parse parameters */
-   p1 = lua_topilot(L,1);
-   p = pilot_get( p1->pilot );
+   p1 = luaL_checkpilot(L,1);
+   p  = pilot_get( p1->pilot );
 
    /* Pilot must exist. */
    if (p == NULL) return 0;
@@ -626,13 +634,12 @@ static int pilotL_velocity( lua_State *L )
  */
 static int pilotL_warp( lua_State *L )
 {
-   NLUA_MIN_ARGS(2);
    LuaPilot *p1;
    Pilot *p;
    LuaVector *v;
 
    /* Parse parameters */
-   p1 = lua_topilot(L,1);
+   p1 = luaL_checkpilot(L,1);
    p = pilot_get( p1->pilot );
    if (lua_isvector(L,2))
       v = lua_tovector(L,2);
@@ -658,13 +665,12 @@ static int pilotL_warp( lua_State *L )
  */
 static int pilotL_broadcast( lua_State *L )
 {
-   NLUA_MIN_ARGS(2);
    Pilot *p;
    LuaPilot *lp;
    const char *msg;
 
    /* Parse parameters. */
-   lp    = lua_topilot(L,1);
+   lp    = luaL_checkpilot(L,1);
    msg   = luaL_checkstring(L,2);
 
    /* Check to see if pilot is valid. */
@@ -689,7 +695,6 @@ static int pilotL_broadcast( lua_State *L )
  */
 static int pilotL_setFaction( lua_State *L )
 {
-   NLUA_MIN_ARGS(2);
    Pilot *p;
    LuaPilot *lp;
    LuaFaction *f;
@@ -697,7 +702,7 @@ static int pilotL_setFaction( lua_State *L )
    const char *faction;
 
    /* Parse parameters. */
-   lp = lua_topilot(L,1);
+   lp = luaL_checkpilot(L,1);
    if (lua_isstring(L,2)) {
       faction = lua_tostring(L,2);
       fid = faction_get(faction);
@@ -733,8 +738,8 @@ static int pilotL_setHostile( lua_State *L )
    Pilot *p;
 
    /* Get the pilot. */
-   lp = lua_topilot(L,1);
-   p = pilot_get(lp->pilot);
+   lp = luaL_checkpilot(L,1);
+   p  = pilot_get(lp->pilot);
    if (p==NULL) return 0;
 
    /* Set as hostile. */
@@ -758,7 +763,7 @@ static int pilotL_setFriendly( lua_State *L )
    Pilot *p;
 
    /* Get the pilot. */
-   lp = lua_topilot(L,1);
+   lp = luaL_checkpilot(L,1);
    p = pilot_get(lp->pilot);
    if (p==NULL) return 0;
 
@@ -783,8 +788,8 @@ static int pilotL_disable( lua_State *L )
    Pilot *p;
 
    /* Get the pilot. */
-   lp = lua_topilot(L,1);
-   p = pilot_get(lp->pilot);
+   lp = luaL_checkpilot(L,1);
+   p  = pilot_get(lp->pilot);
    if (p==NULL) return 0;
 
    /* Disable the pilot. */
@@ -816,8 +821,8 @@ static int pilotL_addOutfit( lua_State *L )
    Outfit *o;
 
    /* Get the pilot. */
-   lp = lua_topilot(L,1);
-   p = pilot_get(lp->pilot);
+   lp = luaL_checkpilot(L,1);
+   p  = pilot_get(lp->pilot);
    if (p==NULL) return 0;
 
    /* Get parameters. */
@@ -859,8 +864,8 @@ static int pilotL_rmOutfit( lua_State *L )
    Outfit *o;
 
    /* Get the pilot. */
-   lp = lua_topilot(L,1);
-   p = pilot_get(lp->pilot);
+   lp = luaL_checkpilot(L,1);
+   p  = pilot_get(lp->pilot);
    if (p==NULL) return 0;
 
    /* Get parameters. */
@@ -906,8 +911,8 @@ static int pilotL_changeAI( lua_State *L )
    int ret;
 
    /* Get the pilot. */
-   lp = lua_topilot(L,1);
-   p = pilot_get(lp->pilot);
+   lp = luaL_checkpilot(L,1);
+   p  = pilot_get(lp->pilot);
    if (p==NULL) return 0;
 
    /* Get parameters. */

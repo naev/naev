@@ -186,12 +186,9 @@ static int hook_pilot( lua_State *L )
    int type;
    const char *hook_type;
 
-   /* First parameter parameter - pilot to hook */
-   if (lua_ispilot(L,1)) p = lua_topilot(L,1);
-   else NLUA_INVALID_PARAMETER();
-
-   /* Second parameter - hook name */
-   hook_type = luaL_checkstring(L,2);
+   /* Parameters. */
+   p           = luaL_checkpilot(L,1);
+   hook_type   = luaL_checkstring(L,2);
 
    /* Check to see if hook_type is valid */
    if (strcmp(hook_type,"death")==0) type = PILOT_HOOK_DEATH;
