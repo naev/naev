@@ -141,6 +141,12 @@ end
 
 -- Creates a pirate flying a "Pirate Kestrel"
 function pirate_createKestrel( pirate_create )
+   -- Create by default
+   if pirate_create == nil then
+      pirate_create = true
+   end
+
+   -- Create the pirate ship
    if pirate_create then
       p = pirate_createEmpty( "Pirate Kestrel" )
    else
@@ -167,6 +173,12 @@ end
 
 -- Creates a pirate flying a "Pirate Admonisher"
 function pirate_createAdmonisher( pirate_create )
+   -- Create by default
+   if pirate_create == nil then
+      pirate_create = true
+   end
+
+   -- Create the pirate ship
    if pirate_create then
       p = pirate_createEmpty( "Pirate Admonisher" )
    else
@@ -190,7 +202,13 @@ end
 
 
 -- Creates a pirate flying a "Pirate Ancestor"
-function pirate_createAncestor ()
+function pirate_createAncestor( pirate_create )
+   -- Create by default
+   if pirate_create == nil then
+      pirate_create = true
+   end
+
+   -- Create the pirate ship
    if pirate_create then
       p = pirate_createEmpty( "Pirate Ancestor" )
    else
@@ -212,7 +230,13 @@ end
 
 
 -- Ceates a pirate flying a "Pirate Vendetta"
-function pirate_createVendetta ()
+function pirate_createVendetta( pirate_create )
+   -- Create by default
+   if pirate_create == nil then
+      pirate_create = true
+   end
+
+   -- Create the pirate ship
    if pirate_create then
       p = pirate_createEmpty( "Pirate Vendetta" )
    else
