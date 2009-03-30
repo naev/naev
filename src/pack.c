@@ -2,25 +2,6 @@
  * See Licensing and Copyright notice in naev.h
  */
 
-
-#include "pack.h"
-
-#include <stdio.h> /* printf() */
-#include <fcntl.h> /* creat() and friends */
-#include <stdint.h> /* uint32_t */
-#if HAS_FD
-#include <sys/types.h> /* ssize_t */
-#include <sys/stat.h> /* S_IRUSR */
-#endif /* HAS_FD */
-#include <unistd.h> /* WRITE() */
-#include <errno.h> /* error numbers */
-#include <string.h> /* strlen() and friends */
-#include <stdlib.h> /* malloc */
-
-#include "log.h"
-#include "md5.h"
-
-
 /**
  * @file pack.c
  *
@@ -48,6 +29,23 @@
  *   3,3) Pack the files
  */
 
+
+#include "pack.h"
+
+#include <stdio.h> /* printf() */
+#include <fcntl.h> /* creat() and friends */
+#include <stdint.h> /* uint32_t */
+#if HAS_FD
+#include <sys/types.h> /* ssize_t */
+#include <sys/stat.h> /* S_IRUSR */
+#endif /* HAS_FD */
+#include <unistd.h> /* WRITE() */
+#include <errno.h> /* error numbers */
+#include <string.h> /* strlen() and friends */
+#include <stdlib.h> /* malloc */
+
+#include "log.h"
+#include "md5.h"
 
 
 /**

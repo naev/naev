@@ -72,7 +72,11 @@ endif # WIN32
 
 # Debug stuff
 ifdef DEBUG
+ifeq ($(OS),WIN32)
+CFLAGS += -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -g -DDEBUG -DLUA_USE_APICHECK -std=c99
+else # WIN32
 CFLAGS += -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -fstack-protector -fstack-protector-all -g -DDEBUG -DLUA_USE_APICHECK -std=c99 -ansi
+endif # WIN32
 
 ifdef DEBUG_PARANOID
 CFLAGS += -DDEBUG_PARANOID

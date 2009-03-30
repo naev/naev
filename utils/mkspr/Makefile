@@ -5,7 +5,7 @@ LOCALDIR := utils/mksprite/
 COBJS    := main.o
 
 CFLAGS   := $(shell sdl-config --cflags) $(shell libpng-config --cflags) -O2 -Wall
-LFLAGS   := $(sdl-config --libs) -lSDL_image $(shell libpng-config --libs)
+LDFLAGS  := $(shell libpng-config --libs) $(shell sdl-config --libs) -lSDL_image -lSDL_mixer
 
 APPNAME  := mkspr
 
@@ -18,7 +18,7 @@ APPNAME  := mkspr
 all: $(ROOTDIR)$(APPNAME)
 
 $(ROOTDIR)$(APPNAME): $(COBJS)
-	@$(CC) $(LFLAGS) $(CFLAGS) -o $(ROOTDIR)$(APPNAME) $(COBJS)
+	@$(CC) $(LDFLAGS) $(CFLAGS) -o $(ROOTDIR)$(APPNAME) $(COBJS)
 	@echo "   LD   $(APPNAME)"
 
 clean:
