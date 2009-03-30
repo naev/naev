@@ -241,13 +241,19 @@ void gl_screenshot( const char *filename )
    unsigned char screenbuf[screen->h][rowbytes], *rows[screen->h];
    int i;
 
+   /* Read pixels from buffer -- SLOW. */
    glReadPixels( 0, 0, screen->w, screen->h,
          GL_RGBA, GL_UNSIGNED_BYTE, screenbuf );
 
-   for (i = 0; i < screen->h; i++) rows[i] = screenbuf[screen->h - i - 1];
+   /* Convert data. */
+   for (i = 0; i < screen->h; i++)
+      rows[i] = screenbuf[screen->h - i - 1];
+
+   /* Save PNG. */
    write_png( filename, rows, screen->w, screen->h,
          PNG_COLOR_TYPE_RGBA, 8);
 
+   /* Check to see if an error occured. */
    gl_checkErr();
 }
 
@@ -264,80 +270,71 @@ void gl_screenshot( const char *filename )
  */
 int SDL_SavePNG( SDL_Surface *surface, const char *file )
 {
-   unsigned char** ss_rows;
+   png_bytep* ss_rows;
    int ss_size;
    int ss_w, ss_h;
    SDL_Surface *ss_surface;
-   SDL_Rect ss_rect;
    int r, i;
-   int alpha;
-   int pixel_bits;
 #if ! SDL_VERSION_ATLEAST(1,3,0)
    unsigned int surf_flags;
    unsigned int surf_alpha;
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
-   ss_rows = NULL;
-   ss_size = 0;
-   ss_surface = NULL;
+   /* Initialize parameters. */
+   ss_rows     = NULL;
+   ss_size     = 0;
+   ss_surface  = NULL;
 
-   ss_w = surface->w;
-   ss_h = surface->h;
+   /* Set size. */
+   ss_w        = surface->w;
+   ss_h        = surface->h;
 
-   if (surface->format->Amask) {
-      alpha = 1;
-      pixel_bits = 32;
-   }
-   else {                        
-      alpha = 0;
-      pixel_bits = 24;
-   }
-
-   ss_surface = SDL_CreateRGBSurface( SDL_SWSURFACE | SDL_SRCALPHA, ss_w, ss_h,
-         pixel_bits, RGBAMASK );
-
-   if (ss_surface == NULL)
-      return -1;
-
+   /* Handle alpha. */
 #if SDL_VERSION_ATLEAST(1,3,0)
    SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
+
+   /* Create base surface. */
+   ss_surface = SDL_CreateRGBSurface( 0, ss_w, ss_h, 32, RGBAMASK );
 #else /* SDL_VERSION_ATLEAST(1,3,0) */
    surf_flags = surface->flags & (SDL_SRCALPHA | SDL_SRCCOLORKEY);
    surf_alpha = surface->format->alpha;
-   if(surf_flags & SDL_SRCALPHA)
-      SDL_SetAlpha(surface, 0, SDL_ALPHA_OPAQUE);
-   if(surf_flags & SDL_SRCCOLORKEY)
-      SDL_SetColorKey(surface, 0, surface->format->colorkey);
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
-
-   ss_rect.x = 0;
-   ss_rect.y = 0;
-   ss_rect.w = ss_w;
-   ss_rect.h = ss_h;
-   SDL_BlitSurface(surface, &ss_rect, ss_surface, NULL);
-
-   if (ss_size == 0) {
-      ss_size = ss_h;
-      ss_rows = malloc(sizeof(unsigned char*) * ss_size);
-      if (ss_rows == NULL)
-         return -1;
+   if ((surf_flags & SDL_SRCALPHA) == SDL_SRCALPHA) {
+      SDL_SetAlpha( surface, 0, SDL_ALPHA_OPAQUE );
+      SDL_SetColorKey( surface, 0, surface->format->colorkey );
    }
-#if SDL_VERSION_ATLEAST(1,3,0)
-#else /* SDL_VERSION_ATLEAST(1,3,0) */
-   if ( surf_flags & SDL_SRCALPHA )
-      SDL_SetAlpha(surface, SDL_SRCALPHA, (Uint8)surf_alpha);
-   if ( surf_flags & SDL_SRCCOLORKEY )
-      SDL_SetColorKey(surface, SDL_SRCCOLORKEY, surface->format->colorkey);
+
+   /* Create base surface. */
+   ss_surface = SDL_CreateRGBSurface( SDL_SRCCOLORKEY, ss_w, ss_h, 32, RGBAMASK );
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
+   if (ss_surface == NULL) {
+      WARN("Unable to create RGB surface.");
+      return -1;
+   }
 
+   /* Blit to new surface. */
+   SDL_BlitSurface(surface, NULL, ss_surface, NULL);
+
+   /* Allocate space. */
+   ss_size = ss_h;
+   ss_rows = malloc(sizeof(png_bytep) * ss_size);
+   if (ss_rows == NULL)
+      return -1;
+
+   /* Reset flags. */
+#if ! SDL_VERSION_ATLEAST(1,3,0)
+   /* Set saved alpha */
+   if ((surf_flags & SDL_SRCALPHA) == SDL_SRCALPHA)
+      SDL_SetAlpha( surface, 0, 0 );
+#endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
+
+   /* Copy pixels into data. */
    for (i = 0; i < ss_h; i++)
-      ss_rows[i] = ((unsigned char*)ss_surface->pixels) + i * ss_surface->pitch;
+      ss_rows[i] = ((png_bytep)ss_surface->pixels) + i*ss_surface->pitch;
 
-   if (alpha)
-      r = write_png(file, ss_rows, surface->w, surface->h, PNG_COLOR_TYPE_RGB_ALPHA, 8);
-   else
-      r = write_png(file, ss_rows, surface->w, surface->h, PNG_COLOR_TYPE_RGB, 8);
+   /* Save to PNG. */
+   r = write_png(file, ss_rows, surface->w, surface->h, PNG_COLOR_TYPE_RGB_ALPHA, 8);
 
+   /* Clean up. */
    free(ss_rows);
    SDL_FreeSurface(ss_surface);
 
@@ -386,10 +383,10 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
 #else /* SDL_VERSION_ATLEAST(1,3,0) */
    saved_flags = surface->flags & (SDL_SRCALPHA | SDL_RLEACCELOK);
    saved_alpha = surface->format->alpha;
-   if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
+   if ((saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA) {
       SDL_SetAlpha( surface, 0, SDL_ALPHA_OPAQUE );
-   if ( (saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA )
       SDL_SetColorKey( surface, 0, surface->format->colorkey );
+   }
 
    /* create the temp POT surface */
    temp = SDL_CreateRGBSurface( SDL_SRCCOLORKEY,
@@ -1482,41 +1479,40 @@ int write_png( const char *file_name, png_bytep *rows,
 {
    png_structp png_ptr;
    png_infop info_ptr;
-   FILE *fp = NULL;
-   char *doing = "open for writing";
+   FILE *fp;
 
-   if (!(fp = fopen(file_name, "wb"))) goto fail;
+   /* Open file for writing. */
+   if (!(fp = fopen(file_name, "wb"))) {
+      WARN("Unable to open '%s' for writing.", file_name);
+      return -1;
+   }
 
-   doing = "create png write struct";
-   if (!(png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL))) goto fail;
+   /* Create working structs. */
+   if (!(png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL))) {
+      WARN("Unable to create png write struct.");
+      return -1;
+   }
+   if (!(info_ptr = png_create_info_struct(png_ptr))) {
+      WARN("Unable to create PNG info struct.");
+      return -1;
+   }
 
-   doing = "create png info struct";
-   if (!(info_ptr = png_create_info_struct(png_ptr))) goto fail;
-   if (setjmp(png_jmpbuf(png_ptr))) goto fail;
-
-   doing = "init IO";
+   /* Set image details. */
    png_init_io(png_ptr, fp);
-
-   doing = "write header";
+   png_set_compression_level(png_ptr, Z_BEST_COMPRESSION);
    png_set_IHDR(png_ptr, info_ptr, w, h, bitdepth, colourtype, 
-         PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE,
-         PNG_FILTER_TYPE_BASE);
+         PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT,
+         PNG_FILTER_TYPE_DEFAULT);
 
-   doing = "write info";
+   /* Write image. */
    png_write_info(png_ptr, info_ptr);
-
-   doing = "write image";
    png_write_image(png_ptr, rows);
-
-   doing = "write end";
    png_write_end(png_ptr, NULL);
 
-   doing = "closing file";
-   if(0 != fclose(fp)) goto fail;
+   /* Clean up. */
+   fclose(fp);
 
    return 0;
 
-fail:
-   WARN( "Write_png: could not %s", doing );
-   return -1;
-}   
+}
+
