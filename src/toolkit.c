@@ -24,7 +24,7 @@
 
 
 #define INPUT_DELAY     500 /**< Delay before starting to repeat. */
-#define INPUT_FREQ      100 /**< Interval between repetition. */
+#define INPUT_FREQ       30 /**< Interval between repetition. */
 
 
 static unsigned int genwid = 0; /**< Generates unique window ids, > 0 */
@@ -47,6 +47,7 @@ static int mwindows = 0; /**< Allocated windows in the stack. */
 static SDLKey input_key             = 0; /**< Current pressed key. */
 static unsigned int input_keyTime   = 0; /**< Tick pressed. */
 static int input_keyCounter         = 0; /**< Number of repetitions. */
+static char input_text              = 0; /**< Current character. */
 
 
 /*
@@ -1084,12 +1085,13 @@ static void toolkit_mouseEvent( SDL_Event* event )
  *
  *    @param key Key to register as down.
  */
-static void toolkit_regKey( SDLKey key )
+static void toolkit_regKey( SDLKey key, char c )
 {
    if ((input_key==0) && (input_keyTime==0)) {
       input_key         = key;
       input_keyTime     = SDL_GetTicks();
       input_keyCounter  = 0;
+      input_text        = c;
    }
 }
 /**
@@ -1099,11 +1101,8 @@ static void toolkit_regKey( SDLKey key )
  */
 static void toolkit_unregKey( SDLKey key )
 {
-   if (input_key == key) {
-      input_key         = 0;
-      input_keyTime     = 0;
-      input_keyCounter  = 0;
-   }
+   if (input_key == key)
+      toolkit_clearKey();
 }
 /**
  * @brief Clears the registered keys.
@@ -1113,6 +1112,7 @@ void toolkit_clearKey (void)
    input_key         = 0;
    input_keyTime     = 0;
    input_keyCounter  = 0;
+   input_text        = 0;
 }
 /**
  * @brief Handles keyboard events.
@@ -1140,7 +1140,7 @@ static int toolkit_keyEvent( SDL_Event* event )
 
    /* hack to simulate key repetition */
    if (event->type == SDL_KEYDOWN)
-      toolkit_regKey(key);
+      toolkit_regKey(key, event->key.keysym.unicode & 0x7f);
    else if (event->type == SDL_KEYUP)
       toolkit_unregKey(key);
 
@@ -1202,6 +1202,7 @@ void toolkit_update (void)
    unsigned int t;
    Window *wdw;
    Widget *wgt;
+   char buf[2];
 
    t = SDL_GetTicks();
 
@@ -1222,6 +1223,11 @@ void toolkit_update (void)
       wgt = toolkit_getFocus( wdw );
       if ((wgt != NULL) && (wgt->keyevent != NULL))
          wgt->keyevent( wgt, input_key, 0 );
+      if ((wgt != NULL) && (wgt->textevent != NULL)) {
+         buf[0] = input_text;
+         buf[1] = '\0';
+         wgt->textevent( wgt, buf );
+      }
    }
 }
 
