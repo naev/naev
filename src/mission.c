@@ -66,7 +66,9 @@ static int mission_matchFaction( MissionData* misn, int faction );
 static int mission_location( char* loc );
 static MissionData* mission_parse( const xmlNodePtr parent );
 static int missions_parseActive( xmlNodePtr parent );
+static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer );
 static int mission_persistData( lua_State *L, xmlTextWriterPtr writer );
+static int mission_unpersistDataNode( lua_State *L, xmlNodePtr parent );
 static int mission_unpersistData( lua_State *L, xmlNodePtr parent );
 /* externed */
 int missions_saveActive( xmlTextWriterPtr writer );
@@ -826,6 +828,108 @@ static int mission_saveData( xmlTextWriterPtr writer,
 
 
 /**
+ * @brief Persists the node on the top of the stack and pops it.
+ *
+ *    @param L Lua state with node to persist on top of the stack.
+ *    @param writer XML Writer to use.
+ *    @return 0 on success.
+ */
+static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
+{
+   int ret, b;
+   LuaPlanet *p;
+   LuaSystem *s;
+   LuaFaction *f;
+   char buf[PATH_MAX];
+   const char *name, *str;
+
+   ret = 0;
+   lua_pushvalue(L,-2); /* Don't tostring the key directly or the lua_next may
+                           blow up. */
+   name = lua_tostring(L,-1);
+   lua_pop(L,1);
+
+   switch (lua_type(L, -1)) {
+      /* Recursive for tables. */
+      case LUA_TTABLE:
+         /* Check if should save. */
+         lua_getfield(L, -1, "__save");
+         b = lua_toboolean(L,-1);
+         lua_pop(L,1);
+         if (!b) /* No need to save. */
+            break;
+         /* Start the table. */
+         xmlw_startElem(writer,"data");
+         xmlw_attr(writer,"type","table");
+         xmlw_attr(writer,"name",name);
+         lua_pushnil(L);
+         /* key, value, nil */
+         while (lua_next(L, -2) != 0) {
+            /* key, value, key, value */
+            ret = mission_persistDataNode( L, writer );
+            /* key, value, key */
+         }
+         /* key, value */
+         xmlw_endElem(writer); /* "table" */
+         break;
+
+      /* Normal number. */
+      case LUA_TNUMBER:
+         mission_saveData( writer, "number",
+               name, lua_tostring(L,-1) );
+         break;
+
+      /* Boolean is either 1 or 0. */
+      case LUA_TBOOLEAN:
+         /* lua_tostring doesn't work on booleans. */
+         if (lua_toboolean(L,-1)) buf[0] = '1';
+         else buf[0] = '0';
+         buf[1] = '\0';
+         mission_saveData( writer, "bool",
+               name, buf );
+         break;
+
+      /* String is saved normally. */
+      case LUA_TSTRING:
+         mission_saveData( writer, "string",
+               name, lua_tostring(L,-1) );
+         break;
+
+      /* User data must be handled here. */
+      case LUA_TUSERDATA:
+         if (lua_isplanet(L,-1)) {
+            p = lua_toplanet(L,-1);
+            mission_saveData( writer, "planet",
+                  name, p->p->name );
+            break;
+         }
+         else if (lua_issystem(L,-1)) {
+            s = lua_tosystem(L,-1);
+            mission_saveData( writer, "system",
+                  name, s->s->name );
+            break;
+         }
+         else if (lua_isfaction(L,-1)) {
+            f = lua_tofaction(L,-1);
+            str = faction_name( f->f );
+            if (str == NULL)
+               break;
+            mission_saveData( writer, "faction",
+                  name, str );
+            break;
+         }
+
+      /* Rest gets ignored, like functions, etc... */
+      default:
+         break;
+   }
+   lua_pop(L,1);
+
+   return ret;
+}
+
+
+/**
  * @brief Persists all the mission Lua data.
  *
  * Does not save anything in tables nor functions of any type.
@@ -836,66 +940,18 @@ static int mission_saveData( xmlTextWriterPtr writer,
  */
 static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
 {
-   LuaPlanet *p;
-   LuaSystem *s;
-   LuaFaction *f;
-   char buf[PATH_MAX];
-   const char *str;
+   int ret;
 
+   lua_pushstring(L,"_G");
    lua_pushnil(L);
    /* nil */
    while (lua_next(L, LUA_GLOBALSINDEX) != 0) {
       /* key, value */
-      switch (lua_type(L, -1)) {
-         case LUA_TNUMBER:
-            mission_saveData( writer, "number",
-                  lua_tostring(L,-2), lua_tostring(L,-1) );
-            break;
-         case LUA_TBOOLEAN:
-            /* lua_tostring doesn't work on booleans. */
-            if (lua_toboolean(L,-1)) buf[0] = '1';
-            else buf[0] = '0';
-            buf[1] = '\0';
-            mission_saveData( writer, "bool",
-                  lua_tostring(L,-2), buf );
-            break;
-         case LUA_TSTRING:
-            mission_saveData( writer, "string",
-                  lua_tostring(L,-2), lua_tostring(L,-1) );
-            break;
-
-         /* User data must be hardcoded here. */
-         case LUA_TUSERDATA:
-            if (lua_isplanet(L,-1)) {
-               p = lua_toplanet(L,-1);
-               mission_saveData( writer, "planet",
-                     lua_tostring(L,-2), p->p->name );
-               break;
-            }
-            else if (lua_issystem(L,-1)) {
-               s = lua_tosystem(L,-1);
-               mission_saveData( writer, "system",
-                     lua_tostring(L,-2), s->s->name );
-               break;
-            }
-            else if (lua_isfaction(L,-1)) {
-               f = lua_tofaction(L,-1);
-               str = faction_name( f->f );
-               if (str == NULL)
-                  break;
-               mission_saveData( writer, "faction",
-                     lua_tostring(L,-2), str );
-               break;
-            }
-
-         default:
-            break;
-      }
-      lua_pop(L,1);
+      ret = mission_persistDataNode( L, writer );
       /* key */
    }
 
-   return 0;
+   return ret;
 }
 
 
@@ -906,13 +962,13 @@ static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
  *    @param parent Node containing all the Lua persisted data.
  *    @return 0 on success.
  */
-static int mission_unpersistData( lua_State *L, xmlNodePtr parent )
+static int mission_unpersistDataNode( lua_State *L, xmlNodePtr parent )
 {
    LuaPlanet p;
    LuaSystem s;
    LuaFaction f;
    xmlNodePtr node;
-   char *name, *type;
+   char *name, *type, *buf;
 
    node = parent->xmlChildrenNode;
    do {
@@ -921,7 +977,17 @@ static int mission_unpersistData( lua_State *L, xmlNodePtr parent )
          xmlr_attr(node,"type",type);
 
          /* handle data types */
-         if (strcmp(type,"number")==0)
+         /* Recursive tables. */
+         if (strcmp(type,"table")==0) {
+            xmlr_attr(node,"name",buf);
+            /* Create new table. */
+            lua_newtable(L);
+            /* Save data. */
+            mission_unpersistDataNode(L,node);
+            /* Set table. */
+            free(buf);
+         }
+         else if (strcmp(type,"number")==0)
             lua_pushnumber(L,xml_getFloat(node));
          else if (strcmp(type,"bool")==0)
             lua_pushboolean(L,xml_getInt(node));
@@ -945,7 +1011,7 @@ static int mission_unpersistData( lua_State *L, xmlNodePtr parent )
          }
 
          /* Set as global */
-         lua_setglobal(L,name);
+         lua_setfield(L, -2, name);
          
          /* cleanup */
          free(type);
@@ -954,6 +1020,25 @@ static int mission_unpersistData( lua_State *L, xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    return 0;
+}
+
+
+/**
+ * @brief Unpersists Lua data.
+ *
+ *    @param L State to unperisist data into.
+ *    @param parent Node containing all the Lua persisted data.
+ *    @return 0 on success.
+ */
+static int mission_unpersistData( lua_State *L, xmlNodePtr parent )
+{
+   int ret;
+
+   lua_pushvalue(L,LUA_GLOBALSINDEX);
+   ret = mission_unpersistDataNode(L,parent);
+   lua_pop(L,1);
+
+   return ret;
 }
 
 
