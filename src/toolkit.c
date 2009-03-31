@@ -1085,13 +1085,13 @@ static void toolkit_mouseEvent( SDL_Event* event )
  *
  *    @param key Key to register as down.
  */
-static void toolkit_regKey( SDLKey key, char c )
+static void toolkit_regKey( SDLKey key, SDLKey c )
 {
    if ((input_key==0) && (input_keyTime==0)) {
       input_key         = key;
       input_keyTime     = SDL_GetTicks();
       input_keyCounter  = 0;
-      input_text        = c;
+      input_text        = nstd_checkascii(c) ? c : 0;
    }
 }
 /**
@@ -1140,7 +1140,7 @@ static int toolkit_keyEvent( SDL_Event* event )
 
    /* hack to simulate key repetition */
    if (event->type == SDL_KEYDOWN)
-      toolkit_regKey(key, event->key.keysym.unicode & 0x7f);
+      toolkit_regKey(key, event->key.keysym.unicode);
    else if (event->type == SDL_KEYUP)
       toolkit_unregKey(key);
 
@@ -1223,7 +1223,7 @@ void toolkit_update (void)
       wgt = toolkit_getFocus( wdw );
       if ((wgt != NULL) && (wgt->keyevent != NULL))
          wgt->keyevent( wgt, input_key, 0 );
-      if ((wgt != NULL) && (wgt->textevent != NULL)) {
+      if ((input_text != 0) && (wgt != NULL) && (wgt->textevent != NULL)) {
          buf[0] = input_text;
          buf[1] = '\0';
          wgt->textevent( wgt, buf );
