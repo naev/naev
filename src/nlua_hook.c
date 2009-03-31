@@ -176,7 +176,7 @@ static int hook_enter( lua_State *L )
  *    @luaparam type One of the supported hook types.
  *    @luaparam funcname Name of function to run when hook is triggered.
  *    @luareturn Hook identifier.
- * @luafunc pilot( pilot, type, func )
+ * @luafunc pilot( pilot, type, funcname )
  */
 static int hook_pilot( lua_State *L )
 {
