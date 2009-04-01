@@ -17,6 +17,7 @@
 #include "naev.h"
 #include "log.h"
 #include "opengl.h"
+#include "opengl_ext.h"
 #include "nfile.h"
 #include "perlin.h"
 #include "rng.h"
@@ -82,6 +83,8 @@ static void nebu_generatePuffs (void);
 static int saveNebulae( float *map, const uint32_t w, const uint32_t h, const char* file );
 static SDL_Surface* loadNebulae( const char* file );
 static SDL_Surface* nebu_surfaceFromNebulaeMap( float* map, const int w, const int h );
+/* Nebulae render methods. */
+static void nebu_renderMultitexture( const double dt );
 
 
 /**
@@ -197,6 +200,23 @@ void nebu_exit (void)
  */
 void nebu_render( const double dt )
 {
+   if (nglActiveTexture != NULL) {
+      nebu_renderMultitexture(dt);
+   }
+
+   /* Now render the puffs, they are generic. */
+   nebu_renderPuffs( dt, 1 );
+}
+
+
+/**
+ * @brief Renders the nebulae using the multitexture approach.
+ *
+ *    @param dt Current delta tick.
+ */
+static void nebu_renderMultitexture( const double dt )
+{
+   (void) dt;
    unsigned int t;
    double ndt;
    double tw,th;
@@ -230,14 +250,14 @@ void nebu_render( const double dt )
 
    /* Set up the targets */
    /* Texture 0 */
-   glActiveTexture( GL_TEXTURE0 );
+   nglActiveTexture( GL_TEXTURE0 );
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, nebu_textures[cur_nebu[1]]);
 
    glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
 
    /* Texture 1 */
-   glActiveTexture( GL_TEXTURE1 );
+   nglActiveTexture( GL_TEXTURE1 );
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, nebu_textures[cur_nebu[0]]);
 
@@ -274,20 +294,20 @@ void nebu_render( const double dt )
 
    /* Now render! */
    glBegin(GL_QUADS);
-      glMultiTexCoord2d( GL_TEXTURE0, 0., 0. );
-      glMultiTexCoord2d( GL_TEXTURE1, 0., 0. );
+      nglMultiTexCoord2d( GL_TEXTURE0, 0., 0. );
+      nglMultiTexCoord2d( GL_TEXTURE1, 0., 0. );
       glVertex2d( -SCREEN_W/2., -SCREEN_H/2. );
 
-      glMultiTexCoord2d( GL_TEXTURE0, tw, 0. );
-      glMultiTexCoord2d( GL_TEXTURE1, tw, 0. );
+      nglMultiTexCoord2d( GL_TEXTURE0, tw, 0. );
+      nglMultiTexCoord2d( GL_TEXTURE1, tw, 0. );
       glVertex2d(  SCREEN_W/2., -SCREEN_H/2. );
 
-      glMultiTexCoord2d( GL_TEXTURE0, tw, th );
-      glMultiTexCoord2d( GL_TEXTURE1, tw, th );
+      nglMultiTexCoord2d( GL_TEXTURE0, tw, th );
+      nglMultiTexCoord2d( GL_TEXTURE1, tw, th );
       glVertex2d(  SCREEN_W/2.,  SCREEN_H/2. );
       
-      glMultiTexCoord2d( GL_TEXTURE0, 0., th );
-      glMultiTexCoord2d( GL_TEXTURE1, 0., th );
+      nglMultiTexCoord2d( GL_TEXTURE0, 0., th );
+      nglMultiTexCoord2d( GL_TEXTURE1, 0., th );
       glVertex2d( -SCREEN_W/2.,  SCREEN_H/2. );
    glEnd(); /* GL_QUADS */
 
@@ -297,15 +317,12 @@ void nebu_render( const double dt )
    /* Set values to defaults */
    glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
    glDisable(GL_TEXTURE_2D);
-   glActiveTexture( GL_TEXTURE0 );
+   nglActiveTexture( GL_TEXTURE0 );
    glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
    glDisable(GL_TEXTURE_2D);
 
    /* Anything failed? */
    gl_checkErr();
-
-   /* Now render the puffs */
-   nebu_renderPuffs( dt, 1 );
 }
 
 

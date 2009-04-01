@@ -45,6 +45,7 @@
 
 #include "naev.h"
 #include "log.h"
+#include "opengl_ext.h"
 #include "ndata.h"
 #include "gui.h"
 
@@ -1199,6 +1200,29 @@ void gl_checkErr (void)
 
 
 /**
+ * @brief Initializes opengl extensions.
+ *
+ *    @return 0 on success.
+ */
+static int gl_initExtensions (void)
+{
+   /* Clear values. */
+   nglActiveTexture = NULL;
+   nglMultiTexCoord2d = 0;
+
+   /* Multitexture. */
+   if (gl_hasExt("GL_ARB_multitexture")) {
+      nglActiveTexture = SDL_GL_GetProcAddress("glActiveTexture");
+      nglMultiTexCoord2d = SDL_GL_GetProcAddress("glMultiTexCoord2d");
+   }
+   else
+      WARN("GL_ARB_multitexture not found!");
+
+   return 0;
+}
+
+
+/**
  * @brief Initializes SDL/OpenGL and the works.
  *    @return 0 on success.
  */
@@ -1363,8 +1387,8 @@ int gl_init (void)
    if (gl_has(OPENGL_FSAA) && (fsaa != gl_screen.fsaa))
       WARN("Unable to get requested FSAA level (%d requested, got %d)",
             gl_screen.fsaa, fsaa );
-   if (!gl_has(OPENGL_FRAG_SHADER))
-      DEBUG("No fragment shader extension detected"); /* Not a warning yet... */
+   /* Initialize extensions. */
+   gl_initExtensions();
    DEBUG("");
 
    /* Some OpenGL options. */
