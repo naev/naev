@@ -275,6 +275,7 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
    int ss_w, ss_h;
    SDL_Surface *ss_surface;
    int r, i;
+   SDL_Rect rtemp;
 #if ! SDL_VERSION_ATLEAST(1,3,0)
    unsigned int surf_flags;
    unsigned int surf_alpha;
@@ -310,9 +311,18 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
       WARN("Unable to create RGB surface.");
       return -1;
    }
+   if (SDL_FillRect( ss_surface, NULL,
+            SDL_MapRGBA(surface->format,0,0,0,SDL_ALPHA_TRANSPARENT))) {
+      WARN("Unable to fill rect: %s", SDL_GetError());
+      return 0;
+   }
+
 
    /* Blit to new surface. */
-   SDL_BlitSurface(surface, NULL, ss_surface, NULL);
+   rtemp.x = rtemp.y = 0;
+   rtemp.w = surface->w;
+   rtemp.h = surface->h;
+   SDL_BlitSurface(surface, &rtemp, ss_surface, &rtemp);
 
    /* Allocate space. */
    ss_size = ss_h;
