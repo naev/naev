@@ -228,4 +228,13 @@
    <faction>Goddard</faction>
   </avail>
  </mission>
+ <mission name="Pirate Bounty">
+  <lua>empire/emp_pirbounty</lua>
+  <avail>
+   <cond>player.getRating() &gt; 50</cond>
+   <chance>5</chance>
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission>
 </Missions>
