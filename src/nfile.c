@@ -310,9 +310,6 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    }
 
    closedir(d);
-
-   /* Free temporary stuff */
-   free(files);
 #else
 #error "Feature needs implementation on this Operating System for NAEV to work."
 #endif /* HAS_POSIX */
