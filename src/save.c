@@ -142,6 +142,9 @@ int save_all (void)
    /* Back up old savegame. */
    snprintf(old, PATH_MAX, "%s.backup", file);
    if (nfile_fileExists(file)) {
+      /* To be "portable" */
+      if (nfile_fileExists(old))
+         remove(old);
       if (rename(file, old) < 0) {
          WARN("Unable to back up old save: %s. Not saving!", strerror(errno));
          goto err_writer;
