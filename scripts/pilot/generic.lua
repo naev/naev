@@ -50,7 +50,7 @@ end
 --    @param set Set of outfits to add.
 --]]
 function pilot_outfitAddSet( p, set )
-   for k,v in set do
+   for k,v in ipairs(set) do
       p:addOutfit( v[1], v[2] )
    end
 end
