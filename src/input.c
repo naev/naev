@@ -36,7 +36,7 @@
  * @brief NAEV Keybinding.
  */
 typedef struct Keybind_ {
-   char *name; /**< keybinding name, taken from keybindNames */
+   const char *name; /**< keybinding name, taken from keybindNames */
    KeybindType type; /**< type, defined in playe.h */
    SDLKey key; /**< key/axis/button event number */
    SDLMod mod; /**< Key modifiers (where applicable). */
@@ -279,10 +279,11 @@ void input_init (void)
    /* Create sane null keybinding for each. */
    for (i=0; strcmp(keybindNames[i],"end"); i++) {
       temp = malloc(sizeof(Keybind));
-      temp->name = (char*)keybindNames[i];
-      temp->type = KEYBIND_NULL;
-      temp->key = SDLK_UNKNOWN;
-      temp->mod = KMOD_NONE;
+      memset( temp, 0, sizeof(Keybind) );
+      temp->name        = keybindNames[i];
+      temp->type        = KEYBIND_NULL;
+      temp->key         = SDLK_UNKNOWN;
+      temp->mod         = KMOD_NONE;
       input_keybinds[i] = temp;
    }
 
