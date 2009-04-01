@@ -66,7 +66,7 @@ static int mission_matchFaction( MissionData* misn, int faction );
 static int mission_location( char* loc );
 static MissionData* mission_parse( const xmlNodePtr parent );
 static int missions_parseActive( xmlNodePtr parent );
-static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer );
+static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int intable );
 static int mission_persistData( lua_State *L, xmlTextWriterPtr writer );
 static int mission_unpersistDataNode( lua_State *L, xmlNodePtr parent );
 static int mission_unpersistData( lua_State *L, xmlNodePtr parent );
@@ -832,9 +832,10 @@ static int mission_saveData( xmlTextWriterPtr writer,
  *
  *    @param L Lua state with node to persist on top of the stack.
  *    @param writer XML Writer to use.
+ *    @param Are we parsing a node in a table?  Avoids checking for extra __save.
  *    @return 0 on success.
  */
-static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
+static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int intable )
 {
    int ret, b;
    LuaPlanet *p;
@@ -852,12 +853,14 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
    switch (lua_type(L, -1)) {
       /* Recursive for tables. */
       case LUA_TTABLE:
-         /* Check if should save. */
-         lua_getfield(L, -1, "__save");
-         b = lua_toboolean(L,-1);
-         lua_pop(L,1);
-         if (!b) /* No need to save. */
-            break;
+         /* Check if should save -- only if not in table.. */
+         if (!intable) {
+            lua_getfield(L, -1, "__save");
+            b = lua_toboolean(L,-1);
+            lua_pop(L,1);
+            if (!b) /* No need to save. */
+               break;
+         }
          /* Start the table. */
          xmlw_startElem(writer,"data");
          xmlw_attr(writer,"type","table");
@@ -866,7 +869,7 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
          /* key, value, nil */
          while (lua_next(L, -2) != 0) {
             /* key, value, key, value */
-            ret = mission_persistDataNode( L, writer );
+            ret = mission_persistDataNode( L, writer, 1 );
             /* key, value, key */
          }
          /* key, value */
@@ -947,7 +950,7 @@ static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
    /* nil */
    while (lua_next(L, LUA_GLOBALSINDEX) != 0) {
       /* key, value */
-      ret = mission_persistDataNode( L, writer );
+      ret = mission_persistDataNode( L, writer, 0 );
       /* key */
    }
 
