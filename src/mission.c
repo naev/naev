@@ -167,7 +167,7 @@ static int mission_init( Mission* mission, MissionData* misn, int load )
    /* load the file */
    buf = ndata_read( misn->lua, &bufsize );
    if (luaL_dobuffer(mission->L, buf, bufsize, misn->lua) != 0) {
-      ERR("Error loading mission file: %s\n"
+      WARN("Error loading mission file: %s\n"
           "%s\n"
           "Most likely Lua file has improper syntax, please check",
             misn->lua, lua_tostring(mission->L,-1));
@@ -813,12 +813,15 @@ void missions_cleanup (void)
  *    @return 0 on success.
  */
 static int mission_saveData( xmlTextWriterPtr writer,
-      const char *type, const char *name, const char *value )
+      const char *type, const char *name, const char *value,
+      int keynum )
 {
    xmlw_startElem(writer,"data");
 
    xmlw_attr(writer,"type",type);
    xmlw_attr(writer,"name",name);
+   if (keynum)
+      xmlw_attr(writer,"keynum","1");
    xmlw_str(writer,"%s",value);
 
    xmlw_endElem(writer); /* "data" */
@@ -843,13 +846,35 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int i
    LuaFaction *f;
    char buf[PATH_MAX];
    const char *name, *str;
+   int keynum;
 
-   ret = 0;
-   lua_pushvalue(L,-2); /* Don't tostring the key directly or the lua_next may
-                           blow up. */
-   name = lua_tostring(L,-1);
-   lua_pop(L,1);
+   /* Default values. */
+   ret   = 0;
 
+   /* Handle different types of keys. */
+   switch (lua_type(L, -2)) {
+      case LUA_TSTRING:
+         /* Can just tostring directly. */
+         name     = lua_tostring(L,-2);
+         /* Isn't a number key. */
+         keynum   = 0;
+         break;
+      case LUA_TNUMBER:
+         /* Can't tostring directly. */
+         lua_pushvalue(L,-2);
+         name     = lua_tostring(L,-1);
+         lua_pop(L,1);
+         /* Is a number key. */
+         keynum   = 1;
+         break;
+
+      /* We only handle string or number keys, so ignore the rest. */
+      default:
+         lua_pop(L,1);
+         return 0;
+   }
+
+   /* Now handle the value. */
    switch (lua_type(L, -1)) {
       /* Recursive for tables. */
       case LUA_TTABLE:
@@ -865,6 +890,8 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int i
          xmlw_startElem(writer,"data");
          xmlw_attr(writer,"type","table");
          xmlw_attr(writer,"name",name);
+         if (keynum)
+            xmlw_attr(writer,"keynum","1");
          lua_pushnil(L);
          /* key, value, nil */
          while (lua_next(L, -2) != 0) {
@@ -879,7 +906,7 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int i
       /* Normal number. */
       case LUA_TNUMBER:
          mission_saveData( writer, "number",
-               name, lua_tostring(L,-1) );
+               name, lua_tostring(L,-1), keynum );
          break;
 
       /* Boolean is either 1 or 0. */
@@ -889,13 +916,13 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int i
          else buf[0] = '0';
          buf[1] = '\0';
          mission_saveData( writer, "bool",
-               name, buf );
+               name, buf, keynum );
          break;
 
       /* String is saved normally. */
       case LUA_TSTRING:
          mission_saveData( writer, "string",
-               name, lua_tostring(L,-1) );
+               name, lua_tostring(L,-1), keynum );
          break;
 
       /* User data must be handled here. */
@@ -903,13 +930,13 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int i
          if (lua_isplanet(L,-1)) {
             p = lua_toplanet(L,-1);
             mission_saveData( writer, "planet",
-                  name, p->p->name );
+                  name, p->p->name, keynum );
             break;
          }
          else if (lua_issystem(L,-1)) {
             s = lua_tosystem(L,-1);
             mission_saveData( writer, "system",
-                  name, s->s->name );
+                  name, s->s->name, keynum );
             break;
          }
          else if (lua_isfaction(L,-1)) {
@@ -918,7 +945,7 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int i
             if (str == NULL)
                break;
             mission_saveData( writer, "faction",
-                  name, str );
+                  name, str, keynum );
             break;
          }
 
@@ -971,13 +998,24 @@ static int mission_unpersistDataNode( lua_State *L, xmlNodePtr parent )
    LuaSystem s;
    LuaFaction f;
    xmlNodePtr node;
-   char *name, *type, *buf;
+   char *name, *type, *buf, *num;
+   int keynum;
 
    node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node,"data")) {
+         /* Get general info. */
          xmlr_attr(node,"name",name);
          xmlr_attr(node,"type",type);
+         /* Check to see if key is a number. */
+         xmlr_attr(node,"keynum",num);
+         if (num != NULL) {
+            keynum = 1;
+            lua_pushnumber(L, atof(name));
+            free(num);
+         }
+         else
+            lua_pushstring(L, name);
 
          /* handle data types */
          /* Recursive tables. */
@@ -1010,11 +1048,12 @@ static int mission_unpersistDataNode( lua_State *L, xmlNodePtr parent )
          }
          else {
             WARN("Unknown lua data type!");
+            lua_pop(L,1);
             return -1;
          }
 
-         /* Set as global */
-         lua_setfield(L, -2, name);
+         /* Set field. */
+         lua_settable(L, -3);
          
          /* cleanup */
          free(type);
