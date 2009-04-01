@@ -66,7 +66,7 @@ static int save_data( xmlTextWriterPtr writer );
 static void load_menu_close( unsigned int wdw, char *str );
 static void load_menu_load( unsigned int wdw, char *str );
 static void load_menu_delete( unsigned int wdw, char *str );
-static int load_game( char* file );
+static int load_game( const char* file );
 
 
 /**
@@ -286,7 +286,7 @@ static void load_menu_delete( unsigned int wdw, char *str )
  *    @param file File that contains the new game.
  *    @return 0 on success.
  */
-static int load_game( char* file )
+static int load_game( const char* file )
 {
    xmlNodePtr node;
    xmlDocPtr doc;
