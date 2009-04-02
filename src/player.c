@@ -246,15 +246,20 @@ static int player_newMake (void)
    char *buf;
    int l,h, tl,th;
    double x,y;
+   xmlNodePtr node, cur, tmp;
+   xmlDocPtr doc;
 
    /* Sane defaults. */
    sysname = NULL;
    player_mission = NULL;
 
+   /* Try to read teh file. */
    buf = ndata_read( START_DATA, &bufsize );
+   if (buf == NULL)
+      return -1;
 
-   xmlNodePtr node, cur, tmp;
-   xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+   /* Load the XML file. */
+   doc = xmlParseMemory( buf, bufsize );
 
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,XML_START_ID)) {
