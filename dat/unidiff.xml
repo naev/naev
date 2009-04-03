@@ -37,4 +37,14 @@
    <tech>1002</tech>
   </outfit>
  </unidiff>
+ <unidiff name="heavy_weapons_license">
+  <outfit name="Heavy Weapon License">
+   <tech>1002</tech>
+  </outfit>
+ </unidiff>
+ <unidiff name="heavy_combat_vessel_license">
+  <outfit name="Heavy Combat Vessel License">
+   <tech>1002</tech>
+  </outfit>
+ </unidiff>
 </unidiffs>
