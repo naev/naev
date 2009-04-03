@@ -41,6 +41,12 @@
 
 
 /*
+ * Error stuff.
+ */
+#define NLUA_ERROR(L,str)  (lua_pushstring(L,str), lua_error(L))
+
+
+/*
  * comfortability macros
  */
 #define luaL_dobuffer(L, b, n, s) \

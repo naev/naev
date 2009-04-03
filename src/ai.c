@@ -845,10 +845,8 @@ static int aiL_pushtask( lua_State *L )
    Task *t, *pointer;
 
    /* Parse basic parameters. */
-   if (lua_isnumber(L,1)) pos = (int)lua_tonumber(L,1);
-   else NLUA_INVALID_PARAMETER();
-   if (lua_isstring(L,2)) func = lua_tostring(L,2);
-   else NLUA_INVALID_PARAMETER();
+   pos   = luaL_checkint(L,1);
+   func  = luaL_checkstring(L,2);
 
    t = malloc(sizeof(Task));
    t->next = NULL;
@@ -978,9 +976,17 @@ static int aiL_getrndpilot( lua_State *L )
  */
 static int aiL_armour( lua_State *L )
 {
+   Pilot *p;
    double d;
 
-   if (lua_isnumber(L,1)) d = pilot_get((unsigned int)lua_tonumber(L,1))->armour;
+   if (lua_isnumber(L,1)) {
+      p = pilot_get((unsigned int)lua_tonumber(L,1));
+      if (p==NULL) {
+         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+         return 0;
+      }
+      d = p->armour;
+   }
    else d = cur_pilot->armour;
 
    lua_pushnumber(L, d);
@@ -992,9 +998,17 @@ static int aiL_armour( lua_State *L )
  */
 static int aiL_shield( lua_State *L )
 {
+   Pilot *p;
    double d;
 
-   if (lua_isnumber(L,1)) d = pilot_get((unsigned int)lua_tonumber(L,1))->shield;
+   if (lua_isnumber(L,1)) {
+      p = pilot_get((unsigned int)lua_tonumber(L,1));
+      if (p==NULL) {
+         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+         return 0;
+      }
+      d = p->shield;
+   }
    else d = cur_pilot->shield;
 
    lua_pushnumber(L, d);
@@ -1011,6 +1025,10 @@ static int aiL_parmour( lua_State *L )
 
    if (lua_isnumber(L,1)) {
       p = pilot_get((unsigned int)lua_tonumber(L,1));
+      if (p==NULL) {
+         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+         return 0;
+      }
       d = p->armour / p->armour_max * 100.;
    }
    else d = cur_pilot->armour / cur_pilot->armour_max * 100.;
@@ -1029,6 +1047,10 @@ static int aiL_pshield( lua_State *L )
 
    if (lua_isnumber(L,1)) {
       p = pilot_get((unsigned int)lua_tonumber(L,1));
+      if (p==NULL) {
+         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+         return 0;
+      }
       d = p->shield / p->shield_max * 100.;
    }
    else d = cur_pilot->shield / cur_pilot->shield_max * 100.;
@@ -1063,7 +1085,7 @@ static int aiL_getdistance( lua_State *L )
       n = (unsigned int) lua_tonumber(L,1);
       pilot = pilot_get( (unsigned int) lua_tonumber(L,1) );
       if (pilot==NULL) { 
-         NLUA_DEBUG("Pilot '%d' not found in stack", n );
+         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
          return 0;
       }
       v = &pilot->solid->pos;
@@ -1085,8 +1107,11 @@ static int aiL_getpos( lua_State *L )
    Pilot *p;
 
    if (lua_isnumber(L,1)) {
-      p = pilot_get((int)lua_tonumber(L,1)); /* Pilot ID */
-      if (p==NULL) return 0;
+      p = pilot_get((unsigned int)lua_tonumber(L,1)); /* Pilot ID */
+      if (p==NULL) { 
+         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+         return 0;
+      }
    }
    else p = cur_pilot; /* default to self */
 
@@ -1117,8 +1142,10 @@ static int aiL_minbrakedist( lua_State *L )
       /* Get target. */
       id = luaL_checklong(L,1);
       p = pilot_get(id);
-      if (p==NULL)
+      if (p==NULL) { 
+         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
          return 0;
+      }
 
       /* Set up the vectors. */
       vect_cset( &vv, p->solid->vel.x - cur_pilot->solid->vel.x,
@@ -1171,20 +1198,19 @@ static int aiL_cargofree( lua_State *L )
  */
 static int aiL_shipclass( lua_State *L )
 {
+   unsigned int l;
    Pilot *p;
 
    if (lua_gettop(L) > 0) {
-      if (lua_isnumber(L,1))
-         p = pilot_get( (unsigned int) lua_tonumber(L,1));
-      else NLUA_INVALID_PARAMETER();
+      l = luaL_checklong(L,1);
+      p = pilot_get(l);
+      if (p==NULL) { 
+         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+         return 0;
+      }
    }
    else
       p = cur_pilot;
-
-   if (p == NULL) {
-      NLUA_DEBUG("Trying to get class of unexistant ship!");
-      return 0;
-   }
 
    lua_pushstring(L, ship_class(p->ship));
    return 1;
@@ -1196,20 +1222,19 @@ static int aiL_shipclass( lua_State *L )
  */
 static int aiL_shipmass( lua_State *L )
 {
+   unsigned int l;
    Pilot *p;
 
    if (lua_gettop(L) > 0) {
-      if (lua_isnumber(L,1))
-         p = pilot_get( (unsigned int) lua_tonumber(L,1));
-      else NLUA_INVALID_PARAMETER();
+      l = luaL_checklong(L,1);
+      p = pilot_get(l);
+      if (p==NULL) { 
+         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+         return 0;
+      }
    }
    else
       p = cur_pilot;
-
-   if (p == NULL) {
-      NLUA_DEBUG("Trying to get class of unexistant ship!");
-      return 0;
-   }
 
    lua_pushnumber(L, p->solid->mass);
    return 1;
@@ -1242,8 +1267,10 @@ static int aiL_getstanding( lua_State *L )
    /* Get parameters. */
    id = luaL_checklong(L,1);
    p = pilot_get(id);
-   if (p==NULL)
+   if (p==NULL) { 
+      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
       return 0;
+   }
 
    /* Get faction standing. */
    if (p->faction == FACTION_PLAYER)
@@ -1309,17 +1336,16 @@ static int aiL_isstopped( lua_State *L )
  */
 static int aiL_isenemy( lua_State *L )
 {
+   unsigned int id;
    Pilot *p;
 
    /* Get the pilot. */
-   if (lua_isnumber(L,1))
-      p = pilot_get(lua_tonumber(L,1));
-   else
-      NLUA_INVALID_PARAMETER();
-
-   /* Make sure is valid. */
-   if (p==NULL)
+   id = luaL_checklong(L,1);
+   p = pilot_get(id);
+   if (p==NULL) { 
+      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
       return 0;
+   }
 
    /* Check if is ally. */
    lua_pushboolean(L,areEnemies(cur_pilot->faction, p->faction));
@@ -1353,16 +1379,20 @@ static int aiL_isally( lua_State *L )
  */
 static int aiL_incombat( lua_State *L )
 {
+   unsigned int id;
    Pilot* p;
 
-   if (lua_isnumber(L,1))
-      p = pilot_get((unsigned int)lua_tonumber(L,1));
+   /* Get the pilot. */
+   if (lua_gettop(L) > 0) {
+      id = luaL_checklong(L,1);
+      p = pilot_get(id);
+      if (p==NULL) { 
+         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+         return 0;
+      }
+   }
    else
       p = cur_pilot;
-
-   /* Make sure is valid. */
-   if (p==NULL)
-      return 0;
 
    lua_pushboolean(L, pilot_isFlag(p, PILOT_COMBAT));
    return 1;
@@ -1383,8 +1413,10 @@ static int aiL_isdisabled( lua_State *L )
 
    id = luaL_checklong(L, 1);
    p = pilot_get(id);
-   if (p==NULL)
+   if (p==NULL) { 
+      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
       return 0;
+   }
 
    lua_pushboolean(L, pilot_isDisabled(p));
    return 1;
@@ -1429,8 +1461,7 @@ static int aiL_accel( lua_State *L )
  */
 static int aiL_turn( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
-   pilot_turn = (lua_isnumber(L,1)) ? (double)lua_tonumber(L,1) : 0. ;
+   pilot_turn = luaL_checknumber(L,1);
    return 0;
 }
 
@@ -1445,19 +1476,19 @@ static int aiL_face( lua_State *L )
    Vector2d sv, tv; /* get the position to face */
    Pilot* p;
    double mod, diff;
-   int n;
+   unsigned int id;
 
    /* Get first parameter, aka what to face. */
-   n = -2;
+   id = 0;
    lv = NULL;
    if (lua_isnumber(L,1)) {
-      n = (int)lua_tonumber(L,1);
-      if (n >= 0 ) {
-         p = pilot_get(n);
-         if (p==NULL)
-            return 0; /* make sure pilot is valid */
-         vect_cset( &tv, VX(p->solid->pos), VY(p->solid->pos) );
+      id = (unsigned int)lua_tonumber(L,1);
+      p = pilot_get(id);
+      if (p==NULL) { 
+         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+         return 0;
       }
+      vect_cset( &tv, VX(p->solid->pos), VY(p->solid->pos) );
    }
    else if (lua_isvector(L,1))
       lv = lua_tovector(L,1);
@@ -1475,11 +1506,11 @@ static int aiL_face( lua_State *L )
 
    if (lv==NULL) /* target is dynamic */
       diff = angle_diff(cur_pilot->solid->dir,
-            (n==-1) ? VANGLE(sv) :
+            (id==0) ? VANGLE(sv) :
             vect_angle(&sv, &tv));
    else /* target is static */
       diff = angle_diff( cur_pilot->solid->dir,   
-            (n==-1) ? VANGLE(cur_pilot->solid->pos) :
+            (id==0) ? VANGLE(cur_pilot->solid->pos) :
             vect_angle(&cur_pilot->solid->pos, &lv->vec));
 
    /* Make pilot turn. */
@@ -1623,14 +1654,10 @@ static int aiL_relvel( lua_State *L )
    Pilot *p;
    Vector2d vv, pv;
 
-   NLUA_MIN_ARGS(1);
-
-   if (lua_isnumber(L,1)) id = (unsigned int) lua_tonumber(L,1);
-   else NLUA_INVALID_PARAMETER();
-
+   id = luaL_checklong(L,1);
    p = pilot_get(id);
    if (p==NULL) {
-      NLUA_DEBUG("Invalid pilot identifier.");
+      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
       return 0;
    }
 
@@ -1708,15 +1735,17 @@ static int aiL_e_return( lua_State *L )
  */
 static int aiL_dock( lua_State *L )
 {
+   unsigned int id;
    Pilot *p;
 
    /* Target is another ship. */
-   if (lua_isnumber(L,1)) {
-      p = pilot_get(lua_tonumber(L,1));
-      if (p==NULL) return 0;
-      pilot_dock(cur_pilot, p);
+   id = luaL_checklong(L,1);
+   p = pilot_get(id);
+   if (p==NULL) {
+      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+      return 0;
    }
-   else NLUA_INVALID_PARAMETER();
+   pilot_dock(cur_pilot, p);
 
    return 0;
 }
@@ -1727,7 +1756,7 @@ static int aiL_dock( lua_State *L )
  */
 static int aiL_aim( lua_State *L )
 {
-   int id;
+   unsigned int id;
    double x,y;
    double t;
    Pilot *p;
@@ -1738,15 +1767,10 @@ static int aiL_aim( lua_State *L )
    NLUA_MIN_ARGS(1);
 
    /* Only acceptable parameter is pilot id */
-   if (lua_isnumber(L,1))
-      id = lua_tonumber(L,1);
-   else
-      NLUA_INVALID_PARAMETER();
-
-   /* Get pilot */
+   id = luaL_checklong(L,1);
    p = pilot_get(id);
    if (p==NULL) {
-      WARN("Pilot invalid");
+      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
       return 0;
    }
 
@@ -1790,8 +1814,8 @@ static int aiL_combat( lua_State *L )
 {
    int i;
 
-   if (lua_isnumber(L,1)) {
-      i = (int)lua_tonumber(L,1);
+   if (lua_gettop(L) > 0) {
+      i = lua_toboolean(L,1);
       if (i==1) pilot_setFlag(cur_pilot, PILOT_COMBAT);
       else if (i==0) pilot_rmFlag(cur_pilot, PILOT_COMBAT);
    }
@@ -1806,14 +1830,7 @@ static int aiL_combat( lua_State *L )
  */
 static int aiL_settarget( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
-
-   if (lua_isnumber(L,1)) {
-      cur_pilot->target = (int)lua_tonumber(L,1);
-      return 1;
-   }
-   NLUA_INVALID_PARAMETER();
-
+   cur_pilot->target = luaL_checklong(L,1);
    return 0;
 }
 
@@ -1863,14 +1880,11 @@ static int aiL_secondary( lua_State *L )
    po = NULL;
 
    /* Parse the parameters. */
-   if (lua_isstring(L,1)) {
-      str = lua_tostring(L, 1);
-      if (strcmp(str, "melee")==0)
-         melee = 1;
-      else if (strcmp(str, "ranged")==0)
-         melee = 0;
-      else NLUA_INVALID_PARAMETER();
-   }
+   str = luaL_checkstring(L,1);
+   if (strcmp(str, "melee")==0)
+      melee = 1;
+   else if (strcmp(str, "ranged")==0)
+      melee = 0;
    else NLUA_INVALID_PARAMETER();
 
    /* Pilot has secondary selected - use that */
@@ -2008,9 +2022,10 @@ static int aiL_getenemy( lua_State *L )
  */
 static int aiL_hostile( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
+   unsigned int id;
 
-   if (lua_isnumber(L,1) && ((unsigned int)lua_tonumber(L,1) == PLAYER_ID))
+   id = luaL_checklong(L,1);
+   if (id == PLAYER_ID)
       pilot_setHostile(cur_pilot);
 
    return 0;
@@ -2025,27 +2040,23 @@ static int aiL_getweaprange( lua_State *L )
    double range;
 
    /* if 1 is passed as a parameter, secondary weapon is checked */
-   if (lua_gettop(L) > 0) {
-      if (lua_isboolean(L,1) && lua_toboolean(L,1)) {
-         if (cur_pilot->secondary != NULL) {
-            /* get range, launchers use ammo's range */
-            if (outfit_isLauncher(cur_pilot->secondary->outfit) && (cur_pilot->ammo != NULL))
-               range = outfit_range(cur_pilot->ammo->outfit);
-            else
-               range = outfit_range(cur_pilot->secondary->outfit);
+   if (lua_toboolean(L,1)) {
+      if (cur_pilot->secondary != NULL) {
+         /* get range, launchers use ammo's range */
+         if (outfit_isLauncher(cur_pilot->secondary->outfit) && (cur_pilot->ammo != NULL))
+            range = outfit_range(cur_pilot->ammo->outfit);
+         else
+            range = outfit_range(cur_pilot->secondary->outfit);
 
-            if (range < 0.) {
-               lua_pushnumber(L, 0.); /* secondary doesn't have range */
-               return 1;
-            }
-
-            /* secondary does have range */
-            lua_pushnumber(L, range);
+         if (range < 0.) {
+            lua_pushnumber(L, 0.); /* secondary doesn't have range */
             return 1;
          }
+
+         /* secondary does have range */
+         lua_pushnumber(L, range);
+         return 1;
       }
-      else
-         NLUA_INVALID_PARAMETER();
    }
 
    lua_pushnumber(L,cur_pilot->weap_range);
@@ -2066,10 +2077,12 @@ static int aiL_canboard( lua_State *L )
    Pilot *p;
 
    /* Get parameters. */
-   id = luaL_checklong(L, 1);
+   id = luaL_checklong(L,1);
    p = pilot_get(id);
-   if (p==NULL)
+   if (p==NULL) {
+      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
       return 0;
+   }
 
    /* Must be disabled. */
    if (!pilot_isDisabled(p)) {
@@ -2125,11 +2138,12 @@ static int aiL_refuel( lua_State *L )
  */
 static int aiL_settimer( lua_State *L )
 {
-   NLUA_MIN_ARGS(2);
+   int n;
 
-   int n; /* get the timer */
-   if (lua_isnumber(L,1)) n = lua_tonumber(L,1);
+   /* Get parameters. */
+   n = luaL_checkint(L,1);
 
+   /* Set timer. */
    cur_pilot->timer[n] = (lua_isnumber(L,2)) ? lua_tonumber(L,2)/1000. : 0;
 
    return 0;
@@ -2140,10 +2154,10 @@ static int aiL_settimer( lua_State *L )
  */
 static int aiL_timeup( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
+   int n;
 
-   int n; /* get the timer */
-   if (lua_isnumber(L,1)) n = lua_tonumber(L,1);
+   /* Get parameters. */
+   n = luaL_checkint(L,1);
 
    lua_pushboolean(L, cur_pilot->timer[n] < 0.);
    return 1;
@@ -2155,19 +2169,12 @@ static int aiL_timeup( lua_State *L )
  */
 static int aiL_comm( lua_State *L )
 {
-   NLUA_MIN_ARGS(2);
-   int p;
+   unsigned int p;
    const char *s;
  
    /* Get parameters. */
-   if (lua_isnumber(L,1))
-      p = (int) lua_tonumber(L,1);
-   else
-      NLUA_INVALID_PARAMETER();
-   if (lua_isstring(L,2))
-      s = lua_tostring(L,2);
-   else
-      NLUA_INVALID_PARAMETER();
+   p = luaL_checklong(L,1);
+   s = luaL_checkstring(L,2);
 
    /* Send the message. */
    pilot_message( cur_pilot, p, s );
@@ -2180,12 +2187,10 @@ static int aiL_comm( lua_State *L )
  */
 static int aiL_broadcast( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
+   const char *str;
 
-   if (lua_isstring(L,1))
-      pilot_broadcast( cur_pilot, lua_tostring(L, 1));
-   else
-      NLUA_INVALID_PARAMETER();
+   str = luaL_checkstring(L,1);
+   pilot_broadcast( cur_pilot, str );
 
    return 0;
 }
@@ -2217,11 +2222,12 @@ static int aiL_distress( lua_State *L )
  */
 static int aiL_credits( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
-   if (aiL_status != AI_STATUS_CREATE) return 0;
+   if (aiL_status != AI_STATUS_CREATE) {
+      NLUA_ERROR(L, "This function must be called in \"create\" only.");
+      return 0;
+   }
 
-   if (lua_isnumber(L,1))
-      cur_pilot->credits = (int)lua_tonumber(L,1);
+   cur_pilot->credits = luaL_checkint(L,1);
    
    return 0;
 }
@@ -2236,18 +2242,14 @@ static int aiL_cargo( lua_State *L )
    int q;
    const char *s;
 
-   if (aiL_status != AI_STATUS_CREATE)
+   if (aiL_status != AI_STATUS_CREATE) {
+      NLUA_ERROR(L, "This function must be called in \"create\" only.");
       return 0;
+   }
 
    /* Get parameters. */
-   if (lua_isstring(L,1))
-      s = lua_tostring(L,1);
-   else
-      NLUA_INVALID_PARAMETER();
-   if (lua_isnumber(L,2))
-      q = (int) lua_tonumber(L,2);
-   else
-      NLUA_INVALID_PARAMETER();
+   s = luaL_checkstring(L,1);
+   q = luaL_checkint(L,2);
 
    /* Quantity must be valid. */
    if (q<=0)
