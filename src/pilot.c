@@ -759,7 +759,7 @@ int pilot_getMount( Pilot *p, int id, Vector2d *v )
 static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 {
    int id;
-   Vector2d v;
+   Vector2d vp, vv;
 
    /* check to see if weapon is ready */
    if (w->timer > 0.)
@@ -770,7 +770,11 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
       id = 0;
    else if (outfit_isTurret(w->outfit))
       id = w->mounts[w->lastshot];
-   pilot_getMount( p, id, &v );
+   pilot_getMount( p, id, &vp );
+
+   /* Modify velocity to take into account the rotation. */
+   vect_cset( &vv, p->solid->vel.x + vp.x*p->solid->dir_vel,
+         p->solid->vel.y + vp.y*p->solid->dir_vel );
 
    /*
     * regular bolt weapons
@@ -782,7 +786,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 
       p->energy -= outfit_energy(w->outfit);
       weapon_add( w->outfit, p->solid->dir,
-            &v, &p->solid->vel, p->id, p->target );
+            &vp, &p->solid->vel, p->id, p->target );
    }
 
    /*
@@ -796,7 +800,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
       /** @todo Handle warmup stage. */
       w->state = PILOT_OUTFIT_ON;
       w->beamid = beam_start( w->outfit, p->solid->dir,
-            &v, &p->solid->vel, p->id, p->target, id );
+            &vp, &p->solid->vel, p->id, p->target, id );
    }
 
    /*
@@ -820,7 +824,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 
       p->energy -= outfit_energy(w->outfit);
       weapon_add( p->ammo->outfit, p->solid->dir,
-            &v, &p->solid->vel, p->id, p->target );
+            &vp, &p->solid->vel, p->id, p->target );
 
       p->ammo->quantity -= 1; /* we just shot it */
       if (p->ammo->quantity <= 0) /* Out of ammo. */
@@ -840,7 +844,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 
       /* Create the escort. */
       escort_create( p->id, p->ammo->outfit->u.fig.ship,
-            &v, &p->solid->vel, 1 );
+            &vp, &p->solid->vel, 1 );
 
       p->ammo->quantity -= 1; /* we just shot it */
       if (p->ammo->quantity <= 0) /* Out of ammo. */
