@@ -1813,6 +1813,8 @@ static int aiL_settarget( lua_State *L )
       return 1;
    }
    NLUA_INVALID_PARAMETER();
+
+   return 0;
 }
 
 
