@@ -33,6 +33,8 @@
 
    MINOR
 
+   *) Add more threads to speed up loading
+      *) Thread nebulae generation.
    *) Hybrid ships
       *) Start out with X skillpoints that get spread out by use, use fast at first
       *) Can't use normal gear
