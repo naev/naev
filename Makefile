@@ -75,7 +75,7 @@ ifdef DEBUG
 ifeq ($(OS),WIN32)
 CFLAGS += -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -g -DDEBUG -DLUA_USE_APICHECK -std=c99
 else # WIN32
-CFLAGS += -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -fstack-protector -fstack-protector-all -g -DDEBUG -DLUA_USE_APICHECK -std=c99 -ansi
+CFLAGS += -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -fstack-protector -fstack-protector-all -g -DDEBUG -DLUA_USE_APICHECK -ansi
 endif # WIN32
 
 ifdef DEBUG_PARANOID
@@ -91,7 +91,7 @@ LDFLAGS += -rdynamic
 endif # LINUX
 
 else # DEBUG
-CFLAGS += -O2 -funroll-loops -pipe -std=c99 -ansi
+CFLAGS += -O2 -pipe -ansi
 
 endif # DEBUG
 
