@@ -1475,20 +1475,26 @@ static int aiL_face( lua_State *L )
    LuaVector *lv;
    Vector2d sv, tv; /* get the position to face */
    Pilot* p;
-   double mod, diff;
+   double d, mod, diff;
    unsigned int id;
+   int n;
 
    /* Get first parameter, aka what to face. */
-   id = 0;
+   n  = -2;
    lv = NULL;
    if (lua_isnumber(L,1)) {
-      id = (unsigned int)lua_tonumber(L,1);
-      p = pilot_get(id);
-      if (p==NULL) { 
-         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
-         return 0;
+      d = (double)lua_tonumber(L,1);
+      if (d < 0.)
+         n = -1;
+      else {
+         id = (unsigned int)d;
+         p = pilot_get(id);
+         if (p==NULL) { 
+            NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+            return 0;
+         }
+         vect_cset( &tv, VX(p->solid->pos), VY(p->solid->pos) );
       }
-      vect_cset( &tv, VX(p->solid->pos), VY(p->solid->pos) );
    }
    else if (lua_isvector(L,1))
       lv = lua_tovector(L,1);
@@ -1506,11 +1512,11 @@ static int aiL_face( lua_State *L )
 
    if (lv==NULL) /* target is dynamic */
       diff = angle_diff(cur_pilot->solid->dir,
-            (id==0) ? VANGLE(sv) :
+            (n==-1) ? VANGLE(sv) :
             vect_angle(&sv, &tv));
    else /* target is static */
       diff = angle_diff( cur_pilot->solid->dir,   
-            (id==0) ? VANGLE(cur_pilot->solid->pos) :
+            (n==-1) ? VANGLE(cur_pilot->solid->pos) :
             vect_angle(&cur_pilot->solid->pos, &lv->vec));
 
    /* Make pilot turn. */
