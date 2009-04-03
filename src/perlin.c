@@ -104,7 +104,8 @@ static float TCOD_noise_turbulence2( perlin_data_t* noise, float f[2], int octav
 /**
  * @brief Not sure what it does.
  */
-static float lattice3( perlin_data_t *pdata, int ix, float fx, int iy, float fy, int iz, float fz )
+static __inline float lattice3( perlin_data_t *pdata, int ix, float fx, int iy, float fy, 
+int iz, float fz )
 {
    int nIndex;
    float value;
@@ -242,14 +243,15 @@ static perlin_data_t* TCOD_noise_new( int dim, float hurst, float lacunarity )
  */
 static float TCOD_noise_get3( perlin_data_t* pdata, float f[3] )
 {
-   int n[3]; /* Indexes to pass to lattice function */
-   float r[3]; /* Remainders to pass to lattice function */
-   float w[3]; /* Cubic values to pass to interpolation function */
+   int n[3] __attribute__ ((aligned (32))); /* Indexes to pass to lattice function */
+   float r[3] __attribute__ ((aligned (32))); /* Remainders to pass to lattice function */
+   float w[3] __attribute__ ((aligned (32))); /* Cubic values to pass to interpolation function */
    float value;
+   float v[8] __attribute__ ((aligned (32))); 
 
-   n[0] = FLOOR(f[0]);
-   n[1] = FLOOR(f[1]);
-   n[2] = FLOOR(f[2]);
+   n[0] = (int)f[0];
+   n[1] = (int)f[1];
+   n[2] = (int)f[2];
 
    r[0] = f[0] - n[0];
    r[1] = f[1] - n[1];
@@ -262,21 +264,27 @@ static float TCOD_noise_get3( perlin_data_t* pdata, float f[3] )
    /*
     * This is the big ugly bit in dire need of optimization
     */
-   value = LERP(LERP(LERP(lattice3(pdata,n[0], r[0], n[1], r[1], n[2], r[2]),
-               lattice3(pdata,n[0]+1, r[0]-1, n[1], r[1], n[2], r[2]),
-               w[0]),
-            LERP(lattice3(pdata,n[0], r[0], n[1]+1, r[1]-1, n[2], r[2]),
-               lattice3(pdata,n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2], r[2]),
-               w[0]),
-            w[1]),
-         LERP(LERP(lattice3(pdata,n[0], r[0], n[1], r[1], n[2]+1, r[2]-1),
-               lattice3(pdata,n[0]+1, r[0]-1, n[1], r[1], n[2]+1, r[2]-1),
-               w[0]),
-            LERP(lattice3(pdata,n[0], r[0], n[1]+1, r[1]-1, n[2]+1, r[2]-1),
-               lattice3(pdata,n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2]+1, r[2]-1),
-               w[0]),
-            w[1]),
-         w[2]);
+	v[0] = lattice3(pdata, n[0],   r[0],   n[1],   r[1],   n[2],   r[2]);
+	v[1] = lattice3(pdata, n[0]+1, r[0]-1, n[1],   r[1],   n[2],   r[2]);
+	v[2] = lattice3(pdata, n[0],   r[0],   n[1]+1, r[1]-1, n[2],   r[2]);
+	v[3] = lattice3(pdata, n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2],   r[2]);
+	v[4] = lattice3(pdata, n[0],   r[0],   n[1],   r[1],   n[2]+1, r[2]-1);
+	v[5] = lattice3(pdata, n[0]+1, r[0]-1, n[1],   r[1],   n[2]+1, r[2]-1);
+	v[6] = lattice3(pdata, n[0],   r[0],   n[1]+1, r[1]-1, n[2]+1, r[2]-1);
+	v[7] = lattice3(pdata, n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2]+1, r[2]-1);
+   value = LERP(  
+         LERP(  
+            LERP(v[0], v[1], w[0]), 
+            LERP(v[2], v[3], w[0]),
+            w[1]
+            ),
+         LERP(
+            LERP(v[4], v[5], w[0]),
+            LERP(v[6], v[7], w[0]),
+            w[1]
+            ),
+         w[2]
+         );
 
    return CLAMP(-0.99999f, 0.99999f, value);
 }
@@ -292,10 +300,11 @@ static float TCOD_noise_get3( perlin_data_t* pdata, float f[3] )
  */
 static float TCOD_noise_get2( perlin_data_t* pdata, float f[2] )
 {
-   int n[2]; /* Indexes to pass to lattice function */
-   float r[2]; /* Remainders to pass to lattice function */
-   float w[2]; /* Cubic values to pass to interpolation function */
-   float value;
+   int n[2] __attribute__ ((aligned (32))); /* Indexes to pass to lattice function */
+   float r[2] __attribute__ ((aligned (32))); /* Remainders to pass to lattice function */
+   float w[2] __attribute__ ((aligned (32))); /* Cubic values to pass to interpolation function */
+   float value __attribute__ ((aligned (32)));
+   float v[4] __attribute__ ((aligned (32)));
 
    n[0] = FLOOR(f[0]);
    n[1] = FLOOR(f[1]);
@@ -309,12 +318,12 @@ static float TCOD_noise_get2( perlin_data_t* pdata, float f[2] )
    /*
     * Much faster in 2d.
     */
-   value = LERP(LERP(lattice2(pdata,n[0], r[0], n[1], r[1]),
-            lattice2(pdata,n[0]+1, r[0]-1, n[1], r[1]),
-            w[0]),
-         LERP(lattice2(pdata,n[0], r[0], n[1]+1, r[1]-1),
-            lattice2(pdata,n[0]+1, r[0]-1, n[1]+1, r[1]-1),
-            w[0]),
+   v[0] = lattice2(pdata,n[0],   r[0],   n[1],   r[1]);
+   v[1] = lattice2(pdata,n[0]+1, r[0]-1, n[1],   r[1]);
+   v[2] = lattice2(pdata,n[0],   r[0],   n[1]+1, r[1]-1);
+   v[3] = lattice2(pdata,n[0]+1, r[0]-1, n[1]+1, r[1]-1);
+   value = LERP(LERP(v[0], v[1], w[0]),
+         LERP(v[2], v[3], w[0]),
          w[1]);
 
    return CLAMP(-0.99999f, 0.99999f, value);
