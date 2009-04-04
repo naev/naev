@@ -209,9 +209,12 @@ static int gui_parseBar( xmlNodePtr parent, HealthBar *bar, const glColour *col 
 static int gui_parse( const xmlNodePtr parent, const char *name );
 static void gui_cleanupBar( HealthBar *bar );
 /* Render GUI. */
+static void gui_renderBorder( double dt );
 static void gui_renderRadar( double dt );
 static void gui_renderMessages( double dt );
+static glColour *gui_getPlanetColour( int i );
 static void gui_renderPlanet( int i );
+static glColour* gui_getPilotColour( const Pilot* p );
 static void gui_renderPilot( const Pilot* p );
 static void gui_renderHealth( const HealthBar *bar, const double w );
 static void gui_renderInterference( double dt );
@@ -346,6 +349,104 @@ void gui_renderTarget( double dt )
 }
 
 
+/**
+ * @brief Renders the ships/planets in the border.
+ *
+ *    @param dt Current delta tick.
+ */
+static void gui_renderBorder( double dt )
+{
+   (void) dt;
+   int i;
+   Pilot *plt;
+   Planet *pnt;
+   glTexture *tex;
+   Vector2d *pos;
+   int hw, hh;
+   int cw, ch;
+   int x,y;
+   int rx,ry;
+   double cx,cy;
+   glColour *col;
+
+   /* Get player position. */
+   pos   = &player->solid->pos;
+   x     = (int)(pos->x + gui_xoff);
+   y     = (int)(pos->y + gui_yoff);
+   hw    = SCREEN_W/2;  
+   hh    = SCREEN_H/2;
+
+   /* Draw planets. */
+   for (i=0; i<cur_system->nplanets; i++) {
+      pnt = cur_system->planets[i];
+      tex = pnt->gfx_space;
+
+      /* Get relative positions. */
+      rx = pnt->pos.x - x;
+      ry = pnt->pos.y - y;
+
+      /* Compare dimensions. */
+      cw = hw + tex->sw/2;
+      ch = hh + tex->sh/2;
+
+      /* Check if out of range. */
+      if ((ABS(rx) > cw) || (ABS(ry) > ch)) {
+         /* Get center. */
+         cx = rx;
+         cy = ry;
+         if (ABS(rx) > cw)
+            cx = (rx > 0) ? hw-7 : -hw+7;
+         if (ABS(ry) > ch)
+            cy = (ry > 0) ? hh-7 : -hh+7;
+
+         col = gui_getPlanetColour(i);
+         COLOUR(*col);
+         glBegin(GL_LINE_STRIP);
+            glVertex2d(cx-5., cy-5.);
+            glVertex2d(cx-5., cy+5.);
+            glVertex2d(cx+5., cy+5.);
+            glVertex2d(cx+5., cy-5.);
+            glVertex2d(cx-5., cy-5.);
+         glEnd(); /* GL_LINES */
+      }
+   }
+
+   /* Draw pilots. */
+   for (i=1; i<pilot_nstack; i++) { /* skip the player */
+      plt = pilot_stack[i];
+      tex = plt->ship->gfx_space;
+
+      /* Get relative positions. */
+      rx = plt->solid->pos.x - x;
+      ry = plt->solid->pos.y - y;
+
+      /* Compare dimensions. */
+      cw = hw + tex->sw/2;
+      ch = hh + tex->sh/2;
+
+      /* Check if out of range. */
+      if ((ABS(rx) > cw) || (ABS(ry) > ch)) {
+         /* Get center. */
+         cx = rx;
+         cy = ry;
+         if (ABS(rx) > cw)
+            cx = (rx > 0) ? hw-7 : -hw+7;
+         if (ABS(ry) > ch)
+            cy = (ry > 0) ? hh-7 : -hh+7;
+
+         col = gui_getPilotColour(plt);
+         COLOUR(*col);
+         glBegin(GL_LINES);
+            glVertex2d(cx-5., cy-5.);
+            glVertex2d(cx+5., cy+5.);
+            glVertex2d(cx+5., cy-5.);
+            glVertex2d(cx-5., cy+5.);
+         glEnd(); /* GL_LINES */
+      }
+   }
+}
+
+
 static int can_jump = 0; /**< Stores whether or not the player is able to jump. */
 /**
  * @brief Renders the player's GUI.
@@ -379,6 +480,9 @@ void gui_render( double dt )
     */
    blink_pilot -= dt;
    blink_planet -= dt;
+
+   /* Render the border ships. */
+   gui_renderBorder(dt);
 
    /* Lockon warning */
    if (player->lockons > 0)
@@ -794,6 +898,27 @@ static void gui_renderInterference( double dt )
 
 
 /**
+ * @brief Gets the pilot colour.
+ *
+ *    @param p Pilot to get colour of.
+ *    @return The colour of the pilot.
+ */
+static glColour* gui_getPilotColour( const Pilot* p )
+{
+   glColour *col;
+
+   if (p->id == player->target) col = &cRadar_tPilot;
+   else if (pilot_isDisabled(p)) col = &cInert;
+   else if (pilot_isFlag(p,PILOT_BRIBED)) col = &cNeutral;
+   else if (pilot_isHostile(p)) col = &cHostile;
+   else if (pilot_isFriendly(p)) col = &cFriend;
+   else col = faction_getColour(p->faction);
+
+   return col;
+}
+
+
+/**
  * @brief Renders a pilot in the GUI radar.
  *
  *    @param p Pilot to render.
@@ -853,12 +978,7 @@ static void gui_renderPilot( const Pilot* p )
    }
 
    /* colors */
-   if (p->id == player->target) col = &cRadar_tPilot;
-   else if (pilot_isDisabled(p)) col = &cInert;
-   else if (pilot_isFlag(p,PILOT_BRIBED)) col = &cNeutral;
-   else if (pilot_isHostile(p)) col = &cHostile;
-   else if (pilot_isFriendly(p)) col = &cFriend;
-   else col = faction_getColour(p->faction);
+   col = gui_getPilotColour(p);
    ACOLOUR(*col, 1-interference_alpha); /**< Makes it much harder to see. */
 
    /* Draw selection if targetted. */
@@ -886,6 +1006,29 @@ static void gui_renderPilot( const Pilot* p )
       glVertex2d( MIN(x+sx, w), MAX(y-sy,-h) ); /* bottom-right */
       glVertex2d( MAX(x-sx,-w), MAX(y-sy,-h) ); /* bottom-left */
    glEnd(); /* GL_QUADS */
+}
+
+
+/**
+ * @brief Gets the colour of a planet.
+ *
+ *    @param i Index of the planet to get colour of.
+ *    @return Colour of the planet.
+ */
+static glColour *gui_getPlanetColour( int i )
+{
+   glColour *col;
+   Planet *planet;
+
+   planet = cur_system->planets[i];
+
+   col = faction_getColour(planet->faction);
+   if (i == planet_target)
+      col = &cRadar_tPlanet;
+   else if ((col != &cHostile) && !planet_hasService(planet,PLANET_SERVICE_BASIC))
+      col = &cInert; /* Override non-hostile planets without service. */
+   
+   return col;
 }
 
 
@@ -922,11 +1065,7 @@ static void gui_renderPlanet( int i )
       rc = (int)(gui.radar.w*gui.radar.w);
 
    /* Get the colour. */
-   col = faction_getColour(planet->faction);
-   if (i == planet_target)
-      col = &cRadar_tPlanet;
-   else if ((col != &cHostile) && !planet_hasService(planet,PLANET_SERVICE_BASIC))
-      col = &cInert; /* Override non-hostile planets without service. */
+   col = gui_getPlanetColour(i);
    ACOLOUR(*col, 1.-interference_alpha);
 
    /* Check if in range. */
