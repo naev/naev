@@ -21,11 +21,6 @@
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
-#define WINDOW_WIDTH    650 /**< Map window width. */
-#define WINDOW_HEIGHT   540 /**< Map window height. */
-
-#define MAP_WIDTH       (WINDOW_WIDTH-150) /**< Map width. */
-#define MAP_HEIGHT      (WINDOW_HEIGHT-100) /**< Map height. */
 
 #define BUTTON_WIDTH    60 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
@@ -73,6 +68,7 @@ void map_open (void)
 {
    unsigned int wid;
    StarSystem *cur;
+   int w,h;
 
    /* Destroy window if exists. */
    wid = window_get(MAP_WDWNAME);
@@ -98,9 +94,12 @@ void map_open (void)
    /* get the selected system. */
    cur = system_getIndex( map_selected );
 
+   /* Set up window size. */
+   w = MAX(600, SCREEN_W - 100);
+   h = MAX(540, SCREEN_H - 100);
+
    /* create the window. */
-   wid = window_create( MAP_WDWNAME, -1, -1,
-         WINDOW_WIDTH, WINDOW_HEIGHT );
+   wid = window_create( MAP_WDWNAME, -1, -1, w, h );
 
    /* 
     * SIDE TEXT
@@ -155,7 +154,7 @@ void map_open (void)
    /*
     * The map itself.
     */
-   window_addCust( wid, 20, -40, MAP_WIDTH, MAP_HEIGHT,
+   window_addCust( wid, 20, -40, w-150, h-100,
          "cstMap", 1, map_render, map_mouse );
 
    /*
@@ -167,7 +166,7 @@ void map_open (void)
    window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", map_buttonZoom );
    window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", map_buttonZoom );
    /* Situation text */
-   window_addText( wid, 140, 10, WINDOW_WIDTH - 80 - 30 - 30, 30, 0,
+   window_addText( wid, 140, 10, w - 80 - 30 - 30, 30, 0,
          "txtSystemStatus", &gl_smallFont, &cBlack, NULL );
 
    map_update( wid );
