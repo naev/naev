@@ -67,61 +67,34 @@
    <faction>Collective</faction>
   </general>
  </planet>
- <planet name="Nor">
+ <planet name="Polaris Prime">
   <GFX>
-   <exterior>gas.png</exterior>
-   <space>I01.png</space>
+   <exterior>traderoom.png</exterior>
+   <space>002.png</space>
   </GFX>
   <pos>
-   <y>0</y>
-   <x>0</x>
+   <y>77</y>
+   <x>-42</x>
   </pos>
   <general>
-   <prodfactor>0.3</prodfactor>
-   <bar>There's nothing remarkable about the Nor spaceport bar.  It's full of drunken Dvaereds trying to forget their hard labour.</bar>
-   <description>Nor was one of the first Dvaered worlds to be terraformed.  It's abundance in gas and ores made it a strategic location and has since then been heavily reinforced after FLF attacks and sabotages.</description>
-   <faction>Dvaered</faction>
+   <prodfactor>0.5</prodfactor>
+   <bar>Since you aren't allowed in the fancier bars you wander into the spaceport bar.  You can only imagine how the Emperor's bar itself can be like.</bar>
+   <description>Polaris Prime has become recent home to the Emperor himself as he plans and constructs his new stronghold on Emperor's Fist.  It is an immense station that has most things anyone would want.</description>
+   <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
     <commodity>Medicine</commodity>
     <commodity>Ore</commodity>
+    <commodity>Luxury Goods</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
    <tech>
-    <main>0</main>
-    <special>0</special>
+    <main>15</main>
+    <special>1002</special>
    </tech>
-   <services>7</services>
-   <class>I</class>
-   <population>130000</population>
-  </general>
- </planet>
- <planet name="Jorlan">
-  <GFX>
-   <exterior>traderoom.png</exterior>
-   <space>D01.png</space>
-  </GFX>
-  <pos>
-   <y>120</y>
-   <x>-97</x>
-  </pos>
-  <general>
-   <prodfactor>0.5</prodfactor>
-   <bar>The Jorlan people don't really have a habit for drinking.  You only seem to see other spacefarers in the bar, but no natives.</bar>
-   <description>Jorlan is a small moon that orbits Haleb IV.  It's inhabitants are mostly part of the ore refining process, as it supplies most of the Frontier with all sorts of alloys.  Gas miners are also sent down to Haleb IV every dozen STU when the planetary conditions are favorable, otherwise the incredible winds can crush many ships like tin cans.</description>
-   <faction>Frontier</faction>
-   <commodities>
-    <commodity>Food</commodity>
-    <commodity>Ore</commodity>
-    <commodity>Industrial Goods</commodity>
-   </commodities>
-   <tech>
-    <main>6</main>
-    <special>0</special>
-   </tech>
-   <services>15</services>
-   <class>D</class>
-   <population>5000000</population>
+   <services>31</services>
+   <class>1</class>
+   <population>318000</population>
   </general>
  </planet>
  <planet name="Selphod">
@@ -152,30 +125,27 @@
    <population>27000</population>
   </general>
  </planet>
- <planet name="Doranthex Prime">
+ <planet name="Raglan Outpost">
   <GFX>
-   <exterior>lava.png</exterior>
-   <space>A01.png</space>
+   <exterior>station00.png</exterior>
+   <space>000.png</space>
   </GFX>
   <pos>
-   <y>0</y>
-   <x>0</x>
+   <y>17</y>
+   <x>394</x>
   </pos>
   <general>
-   <prodfactor>0.7</prodfactor>
-   <bar>The drinks served in the Furnance, as the bar calls itself are of a pretty strange variety.  They are generally very strong and served at a warm temperature.  The house specialties also contain volcanic ash which is harvested on the planet surface.  A strange bar indeed.</bar>
-   <description>Doranthex Prime is a mostly molten planet.  The only exception is a small island that drifts around the surface mainly around the polar regions.  On this island the Dvaered have established a small base, mainly for research and military prototyping, although civilians are allowed in the main facilities.  Due to the intense temperatures they are shielded by over 50m of temperature isolating plating, which doesn't allow any views of the planet itself once you've landed.</description>
+   <prodfactor>0.5</prodfactor>
+   <bar>The Raglan bar is a pretty small bar for Dvaered standards, and quite empty too.</bar>
+   <description>Raglan Outpost was established after the Dvaered-Frontier war broke out before the Incident.  To this day the Frontier still is demanding for its dismantling in the halls of the Emperor, although he has yet to make a statement.  Meanwhile the Dvaereds use this base intensively in their fight against the FLF.</description>
    <faction>Dvaered</faction>
-   <commodities>
-    <commodity>Food</commodity>
-   </commodities>
    <tech>
-    <main>0</main>
+    <main>7</main>
     <special>0</special>
    </tech>
    <services>3</services>
-   <class>A</class>
-   <population>20000</population>
+   <class>1</class>
+   <population>7000</population>
   </general>
  </planet>
  <planet name="Cerberus">
@@ -244,27 +214,57 @@
    <population>12000</population>
   </general>
  </planet>
- <planet name="Raglan Outpost">
+ <planet name="Oma">
   <GFX>
-   <exterior>station00.png</exterior>
-   <space>000.png</space>
+   <exterior>desertic.png</exterior>
+   <space>H01.png</space>
   </GFX>
   <pos>
-   <y>17</y>
-   <x>394</x>
+   <y>0</y>
+   <x>0</x>
   </pos>
   <general>
-   <prodfactor>0.5</prodfactor>
-   <bar>The Raglan bar is a pretty small bar for Dvaered standards, and quite empty too.</bar>
-   <description>Raglan Outpost was established after the Dvaered-Frontier war broke out before the Incident.  To this day the Frontier still is demanding for its dismantling in the halls of the Emperor, although he has yet to make a statement.  Meanwhile the Dvaereds use this base intensively in their fight against the FLF.</description>
-   <faction>Dvaered</faction>
+   <prodfactor>0.2</prodfactor>
+   <population>20000</population>
+   <bar>The Lost Drunk isn't much of a bar.  The high price of most liquids and the low population doesn't attract many people.  From what you can see it's mainly just shipping pilots and the odd mercenary sitting apart from each other.  Not a jolly place.</bar>
+   <description>Oma is one of the harsher desert worlds.  The outdoors temperature variates up to 400 degrees a day making it completely inhospitable.  The lack of proper terraforming equipment also makes it hard on the visitors by the drastic temperature changes they endure across the station.</description>
+   <faction>Empire</faction>
+   <services>7</services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+   </commodities>
    <tech>
-    <main>7</main>
+    <main>4</main>
+    <special>0</special>
+   </tech>
+   <class>H</class>
+  </general>
+ </planet>
+ <planet name="Doranthex Prime">
+  <GFX>
+   <exterior>lava.png</exterior>
+   <space>A01.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.7</prodfactor>
+   <bar>The drinks served in the Furnance, as the bar calls itself are of a pretty strange variety.  They are generally very strong and served at a warm temperature.  The house specialties also contain volcanic ash which is harvested on the planet surface.  A strange bar indeed.</bar>
+   <description>Doranthex Prime is a mostly molten planet.  The only exception is a small island that drifts around the surface mainly around the polar regions.  On this island the Dvaered have established a small base, mainly for research and military prototyping, although civilians are allowed in the main facilities.  Due to the intense temperatures they are shielded by over 50m of temperature isolating plating, which doesn't allow any views of the planet itself once you've landed.</description>
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <tech>
+    <main>0</main>
     <special>0</special>
    </tech>
    <services>3</services>
-   <class>1</class>
-   <population>7000</population>
+   <class>A</class>
+   <population>20000</population>
   </general>
  </planet>
  <planet name="Torloth">
@@ -332,7 +332,6 @@
    <x>0</x>
   </pos>
   <general>
-   <population>127000</population>
    <prodfactor>0.4</prodfactor>
    <bar>The bar is designed for the workers of the terraforming project.  It's a simple dusty bar constantly full of workers.</bar>
    <description>Emperor's Fist is intended to be the new homeworld of the Emperor itself since the last one was destroyed in the Incident.  It's a gigantic project that is attempting to completely adapt a C-class world to be suitable for the highest ranks of the Empire's aristocracy.  Currently it doesn't have much past the Starport.</description>
@@ -343,6 +342,7 @@
    </tech>
    <services>3</services>
    <class>C</class>
+   <population>127000</population>
   </general>
  </planet>
  <planet name="Tau Prime">
@@ -387,6 +387,34 @@
    <services>7</services>
    <class>H</class>
    <population>32000</population>
+  </general>
+ </planet>
+ <planet name="Ammu">
+  <GFX>
+   <exterior>lava.png</exterior>
+   <space>A00.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.3</prodfactor>
+   <population>60000</population>
+   <bar>The Ammu Spaceport Bar is usually known as "The Heatsink", due to the fact that it tends to be much colder then the rest of the station.  However it still serves some excellent flaming drinks.</bar>
+   <description>Ammu is a generally calm planet once you get accustomed to the constant intense noise of the lava flows not too far from beyond the sunken spaceport walls.  Occasionally there are big rumbles as lava erupts but the way it doesn't make the natives flinch makes you a bit less unsteady.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>6</main>
+    <special>0</special>
+   </tech>
+   <services>15</services>
+   <class>A</class>
   </general>
  </planet>
  <planet name="Thar">
@@ -436,34 +464,32 @@
    <faction>Collective</faction>
   </general>
  </planet>
- <planet name="Polaris Prime">
+ <planet name="Jorlan">
   <GFX>
    <exterior>traderoom.png</exterior>
-   <space>002.png</space>
+   <space>D01.png</space>
   </GFX>
   <pos>
-   <y>77</y>
-   <x>-42</x>
+   <y>120</y>
+   <x>-97</x>
   </pos>
   <general>
-   <population>318000</population>
    <prodfactor>0.5</prodfactor>
-   <bar>Since you aren't allowed in the fancier bars you wander into the spaceport bar.  You can only imagine how the Emperor's bar itself can be like.</bar>
-   <description>Polaris Prime has become recent home to the Emperor himself as he plans and constructs his new stronghold on Emperor's Fist.  It is an immense station that has most things anyone would want.</description>
-   <faction>Empire</faction>
+   <bar>The Jorlan people don't really have a habit for drinking.  You only seem to see other spacefarers in the bar, but no natives.</bar>
+   <description>Jorlan is a small moon that orbits Haleb IV.  It's inhabitants are mostly part of the ore refining process, as it supplies most of the Frontier with all sorts of alloys.  Gas miners are also sent down to Haleb IV every dozen STU when the planetary conditions are favorable, otherwise the incredible winds can crush many ships like tin cans.</description>
+   <faction>Frontier</faction>
    <commodities>
     <commodity>Food</commodity>
-    <commodity>Medicine</commodity>
     <commodity>Ore</commodity>
-    <commodity>Luxury Goods</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
    <tech>
-    <main>15</main>
-    <special>1002</special>
+    <main>6</main>
+    <special>0</special>
    </tech>
-   <services>31</services>
-   <class>1</class>
+   <services>15</services>
+   <class>D</class>
+   <population>5000000</population>
   </general>
  </planet>
  <planet name="Jorcan">
@@ -520,6 +546,35 @@
    <services>7</services>
    <class>P</class>
    <population>2500</population>
+  </general>
+ </planet>
+ <planet name="Nova Shakar">
+  <GFX>
+   <exterior>oceanic.png</exterior>
+   <space>M05.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.5</prodfactor>
+   <bar>The bar is a nice clean place unlike most other bars.  It's been cleaned thoroughly for all the Empire officials that are starting to use the planet as their home.</bar>
+   <description>Nova Shakar was a somewhat abandoned Empire planet until the Emperor's Fist project was started.  Since then it's become a major producer of goods for the project and has started to gain importance.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>6</main>
+    <special>0</special>
+   </tech>
+   <services>15</services>
+   <class>M</class>
+   <population>812000</population>
   </general>
  </planet>
  <planet name="S72839">
@@ -725,21 +780,20 @@
    <population>14000</population>
   </general>
  </planet>
- <planet name="Nova Shakar">
+ <planet name="Nor">
   <GFX>
-   <exterior>oceanic.png</exterior>
-   <space>M05.png</space>
+   <exterior>gas.png</exterior>
+   <space>I01.png</space>
   </GFX>
   <pos>
    <y>0</y>
    <x>0</x>
   </pos>
   <general>
-   <population>812000</population>
-   <prodfactor>0.5</prodfactor>
-   <bar>The bar is a nice clean place unlike most other bars.  It's been cleaned thoroughly for all the Empire officials that are starting to use the planet as their home.</bar>
-   <description>Nova Shakar was a somewhat abandoned Empire planet until the Emperor's Fist project was started.  Since then it's become a major producer of goods for the project and has started to gain importance.</description>
-   <faction>Empire</faction>
+   <prodfactor>0.3</prodfactor>
+   <bar>There's nothing remarkable about the Nor spaceport bar.  It's full of drunken Dvaereds trying to forget their hard labour.</bar>
+   <description>Nor was one of the first Dvaered worlds to be terraformed.  It's abundance in gas and ores made it a strategic location and has since then been heavily reinforced after FLF attacks and sabotages.</description>
+   <faction>Dvaered</faction>
    <commodities>
     <commodity>Food</commodity>
     <commodity>Medicine</commodity>
@@ -747,11 +801,12 @@
     <commodity>Industrial Goods</commodity>
    </commodities>
    <tech>
-    <main>6</main>
+    <main>0</main>
     <special>0</special>
    </tech>
-   <services>15</services>
-   <class>M</class>
+   <services>7</services>
+   <class>I</class>
+   <population>130000</population>
   </general>
  </planet>
  <planet name="S49281">
