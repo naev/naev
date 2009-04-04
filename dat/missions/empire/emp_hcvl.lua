@@ -1,8 +1,8 @@
 --[[
 
-   Pirate Bounty
+   Empire Heavy Combat Vessel License Mision
 
-   Randomly appearing bar mission to kill a unique pirate.
+   Mission that is basically a one-time pirate bounty mission.
 
 --]]
 
@@ -11,22 +11,20 @@ lang = naev.lang()
 if lang == "es" then
 else -- Default to English
    -- Mission details
-   misn_title  = "Pirate Bounty near %s"
-   misn_reward = "%d credits"
-   misn_desc   = "There is a bounty on the head of the pirate known as %s who was last seen near the %s system."
+   misn_title  = "Kill %s"
+   misn_reward = "Authorization for Heavy Combat Vessel License"
+   misn_desc   = "There is a pirate knows as %s who must be terminated.  He was last seen near the %s system."
 
    -- Text
    title    = {}
    text     = {}
    title[1] = "Spaceport Bar"
-   text[1]  = [[You are enjoying your drinks when an Empire official bursts in and declares a bounty on the head of a pirate terrorizing the area known as %s for %d credits.  It seems like he was last seen in the %s system. Quite a few other mercenaries seem interested and it looks like you'll have to outrace them.
-   
-Will you take up the bounty?]]
-   text[2] = [[You roll up your sleeve and grab one of the pamphlets given out by the Empire official.]]
+   text[1]  = [[You are greeted by an Empire official while at the bar, "Hello %s, Commander Soldner has spoken well of you.  We have an issue with a pirate known as %s near the system %s.  The mission would serve as your test for the Heavy Combat Vessel License.  Would you be interested?"]]
+   text[2]  = [["Good luck!  The pirate has already killed his last contender, although I don't think he'll be a match for you."]]
 
    -- Messages
    msg      = {}
-   msg[1]   = "MISSION SUCCESS!  Payment received."
+   msg[1]   = "MISSION SUCCESS!  You are now authorized for the Heavy Combat Vessel License."
    msg[2]   = "Pursue %s!"
 end
 
@@ -77,6 +75,9 @@ function give_rewards ()
 
    -- Give factions
    player.modFaction( "Empire", 5 )
+   
+   -- The goods
+   diff.apply("heavy_combat_vessel_license")
    
    -- Finish mission
    misn.finish(true)
