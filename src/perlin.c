@@ -264,14 +264,14 @@ static float TCOD_noise_get3( perlin_data_t* pdata, float f[3] )
    /*
     * This is the big ugly bit in dire need of optimization
     */
-	v[0] = lattice3(pdata, n[0],   r[0],   n[1],   r[1],   n[2],   r[2]);
-	v[1] = lattice3(pdata, n[0]+1, r[0]-1, n[1],   r[1],   n[2],   r[2]);
-	v[2] = lattice3(pdata, n[0],   r[0],   n[1]+1, r[1]-1, n[2],   r[2]);
-	v[3] = lattice3(pdata, n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2],   r[2]);
-	v[4] = lattice3(pdata, n[0],   r[0],   n[1],   r[1],   n[2]+1, r[2]-1);
-	v[5] = lattice3(pdata, n[0]+1, r[0]-1, n[1],   r[1],   n[2]+1, r[2]-1);
-	v[6] = lattice3(pdata, n[0],   r[0],   n[1]+1, r[1]-1, n[2]+1, r[2]-1);
-	v[7] = lattice3(pdata, n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2]+1, r[2]-1);
+   v[0] = lattice3(pdata, n[0],   r[0],   n[1],   r[1],   n[2],   r[2]);
+   v[1] = lattice3(pdata, n[0]+1, r[0]-1, n[1],   r[1],   n[2],   r[2]);
+   v[2] = lattice3(pdata, n[0],   r[0],   n[1]+1, r[1]-1, n[2],   r[2]);
+   v[3] = lattice3(pdata, n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2],   r[2]);
+   v[4] = lattice3(pdata, n[0],   r[0],   n[1],   r[1],   n[2]+1, r[2]-1);
+   v[5] = lattice3(pdata, n[0]+1, r[0]-1, n[1],   r[1],   n[2]+1, r[2]-1);
+   v[6] = lattice3(pdata, n[0],   r[0],   n[1]+1, r[1]-1, n[2]+1, r[2]-1);
+   v[7] = lattice3(pdata, n[0]+1, r[0]-1, n[1]+1, r[1]-1, n[2]+1, r[2]-1);
    value = LERP(  
          LERP(  
             LERP(v[0], v[1], w[0]), 
