@@ -1399,6 +1399,7 @@ static void spaceport_refuel( unsigned int wid, char *str )
    player->credits -= refuel_price();
    player->fuel = player->fuel_max;
    window_destroyWidget( wid, "btnRefuel" );
+   window_destroyWidget( wid, "txtRefuel" );
 }
 
 
@@ -1420,14 +1421,24 @@ static void land_checkAddRefuel (void)
    /* Just enable button if it exists. */
    if (widget_exists( land_wid, "btnRefuel" )) {
       window_enableButton( land_wid, "btnRefuel");
+      credits2str( cred, player->credits, 2 );
+      snprintf( buf, 32, "Credits: %s", cred );
+      window_modifyText( land_wid, "txtRefuel", buf );
    }
    /* Else create it. */
    else {
+      /* Refuel button. */
       credits2str( cred, refuel_price(), 2 );
       snprintf( buf, 32, "Refuel %s", cred );
       window_addButton( land_wid, -20, 20 + 2*(BUTTON_HEIGHT + 20),
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnRefuel",
             buf, spaceport_refuel );
+      /* Player credits. */
+      credits2str( cred, player->credits, 2 );
+      snprintf( buf, 32, "Credits: %s", cred );
+      window_addText( land_wid, -20, 20 + 3*(BUTTON_HEIGHT + 20),
+            BUTTON_WIDTH, gl_smallFont.h, 1, "txtRefuel",
+            &gl_smallFont, &cBlack, buf );
    }
    
    /* Make sure player can click it. */
