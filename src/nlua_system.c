@@ -32,6 +32,7 @@ static int systemL_faction( lua_State *L );
 static int systemL_nebulae( lua_State *L );
 static int systemL_jumpdistance( lua_State *L );
 static int systemL_adjacent( lua_State *L );
+static int systemL_hasPresence( lua_State *L );
 static const luaL_reg system_methods[] = {
    { "get", systemL_get },
    { "__eq", systemL_eq },
@@ -41,6 +42,7 @@ static const luaL_reg system_methods[] = {
    { "nebulae", systemL_nebulae },
    { "jumpDist", systemL_jumpdistance },
    { "adjacentSystems", systemL_adjacent },
+   { "hasPresence", systemL_hasPresence },
    {0,0}
 }; /**< System metatable methods. */
 
@@ -363,6 +365,53 @@ static int systemL_adjacent( lua_State *L )
       lua_rawset(L,-3);
    }
 
+   return 1;
+}
+
+
+/**
+ * @brief Checks to see if a faction has prescence in a system.
+ *
+ * This checks to see if the faction has a possibility of having any ships at all
+ *  be randomly generated in the system.
+ *
+ *  @usage if sys:hasPresence( "Empire" ) then -- Checks to see if Empire has ships in the system
+ *  @usage if sys:hasPresence( faction.get("Pirate") ) then -- Checks to see if the Pirate has ships in the system
+ *
+ *    @luaparam s System to check to see if has presence of a certain faction.
+ *    @luaparam f Faction or name of faction to check to see if has presence in the system.
+ *    @luareturn true If faction has presence in the system, false otherwise.
+ * @luafunc hasPresence( s, f )
+ */
+static int systemL_hasPresence( lua_State *L )
+{
+   LuaSystem *sys;
+   LuaFaction *lf;
+   int fct;
+   int i, found;
+
+   sys = luaL_checksystem(L,1);
+
+   /* Get the second parameter. */
+   if (lua_isstring(L,2)) {
+      fct = faction_get( lua_tostring(L,2) );
+   }
+   else if (lua_isfaction(L,2)) {
+      lf = lua_tofaction(L,2);
+      fct = lf->f;
+   }
+   else NLUA_INVALID_PARAMETER();
+
+   /* Try to find a fleet of the faction. */
+   found = 0;
+   for (i=0; i<sys->s->nfleets; i++) {
+      if (sys->s->fleets[i].fleet->faction == fct) {
+         found = 1;
+         break;
+      }
+   }
+
+   lua_pushboolean(L, found);
    return 1;
 }
 
