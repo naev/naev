@@ -540,6 +540,9 @@ static int nebu_generate (void)
    /* Generate all the nebulae backgrounds */
    nebu = noise_genNebulaeMap( w, h, NEBULAE_Z, 5. );
 
+   /* Start saving - compression can take a bit. */
+   loadscreen_render( 0.05, "Compressing Nebulae layers..." );
+
    /* Save each nebulae as an image */
    for (i=0; i<NEBULAE_Z; i++) {
       snprintf( nebu_file, PATH_MAX, NEBULAE_PATH_BG, w, h, i );
