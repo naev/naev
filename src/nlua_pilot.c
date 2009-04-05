@@ -238,7 +238,7 @@ static int pilot_getPlayer( lua_State *L )
  *    @luaparam ai If set will override the standard fleet AI.  "def" means use default.
  *    @luaparam pos Position to create pilots around instead of choosing randomly.
  *    @luaparam jump true if pilots should jump in, false by default if pos is defined.
- *    @luareturn Table populated with all the pilots created.
+ *    @luareturn Table populated with all the pilots created.  The keys are ordered numbers.
  * @luafunc add( fleetname, ai, pos, jump )
  */
 static int pilot_addFleet( lua_State *L )
