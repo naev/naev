@@ -645,7 +645,7 @@ void player_clear (void)
 {
    if (player != NULL)
       player->target = PLAYER_ID;
-   planet_target = -1;
+   planet_target     = -1;
    hyperspace_target = -1;
 }
 
@@ -1023,22 +1023,25 @@ void player_secondaryPrev (void)
  */
 void player_targetPlanet (void)
 {
+   /* Clean up some stuff. */
    hyperspace_target = -1;
    player_rmFlag(PLAYER_LANDACK);
 
-   /* no target */
-   if ((planet_target==-1) && (cur_system->nplanets > 0)) {
-      planet_target = 0;
-      player_playSound(snd_nav, 1);
-      return;
-   }
-   
+   /* Find next planet target. */
    planet_target++;
+   while (planet_target < cur_system->nplanets) {
 
-   if (planet_target >= cur_system->nplanets) /* last system */
-      planet_target = -1;
-   else
-      player_playSound(snd_nav, 1);
+      /* In range, target planet. */
+      if (pilot_inRangePlanet( player, planet_target )) {
+         player_playSound(snd_nav, 1);
+         return;
+      }
+
+      planet_target++;
+   }
+
+   /* Untarget if out of range. */
+   planet_target = -1;
 }
 
 
@@ -1118,8 +1121,9 @@ void player_land (void)
       for (i=0; i<cur_system->nplanets; i++) {
          planet = cur_system->planets[i];
          d = vect_dist(&player->solid->pos,&planet->pos);
-         if (planet_hasService(planet,PLANET_SERVICE_LAND) &&
-                  ((tp==-1) || ((td == -1) || (td > d)))) {
+         if (pilot_inRangePlanet( player, i ) &&
+               planet_hasService(planet,PLANET_SERVICE_LAND) &&
+               ((tp==-1) || ((td == -1) || (td > d)))) {
             tp = i;
             td = d;
          }
@@ -1367,7 +1371,11 @@ void player_targetHostile (void)
       /* Don't get if is bribed. */
       if (pilot_isFlag(pilot_stack[i],PILOT_BRIBED))
          continue;
-   
+ 
+      /* Must be in range. */
+      if (!pilot_inRange( player, pilot_stack[i] ))
+         continue;
+
       /* Normal unbribed check. */
       if (pilot_isHostile(pilot_stack[i])) {
          td = vect_dist(&pilot_stack[i]->solid->pos, &player->solid->pos);       

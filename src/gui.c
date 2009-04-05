@@ -278,24 +278,33 @@ void gui_renderBG( double dt )
       ((player != NULL) && pilot_isFlag(player,PILOT_DEAD)))
       return;
 
-   if (planet_target >= 0) {
-      planet = cur_system->planets[planet_target];
+   /* Make sure target exists. */
+   if (planet_target < 0)
+      return;
 
-      c = faction_getColour(planet->faction);
-
-      x = planet->pos.x - planet->gfx_space->sw/2.;
-      y = planet->pos.y + planet->gfx_space->sh/2.;
-      gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 0, c ); /* top left */
-
-      x += planet->gfx_space->sw;
-      gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 0, c ); /* top right */
-
-      y -= planet->gfx_space->sh;
-      gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 1, c ); /* bottom right */
-
-      x -= planet->gfx_space->sw;
-      gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 1, c ); /* bottom left */
+   /* Make sure targets are still in range. */
+   if (!pilot_inRangePlanet( player, planet_target )) {
+      planet_target = -1;
+      return;
    }
+
+   /* Draw planet target graphics. */
+   planet = cur_system->planets[planet_target];
+
+   c = faction_getColour(planet->faction);
+
+   x = planet->pos.x - planet->gfx_space->sw/2.;
+   y = planet->pos.y + planet->gfx_space->sh/2.;
+   gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 0, c ); /* top left */
+
+   x += planet->gfx_space->sw;
+   gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 0, c ); /* top right */
+
+   y -= planet->gfx_space->sh;
+   gl_blitSprite( gui.gfx_targetPlanet, x, y, 1, 1, c ); /* bottom right */
+
+   x -= planet->gfx_space->sw;
+   gl_blitSprite( gui.gfx_targetPlanet, x, y, 0, 1, c ); /* bottom left */
 }
 
 
@@ -316,36 +325,42 @@ void gui_renderTarget( double dt )
       p = pilot_get(player->target);
    else p = NULL;
 
-   if ((p==NULL) || pilot_isFlag(p,PILOT_DEAD))
-      player->target = PLAYER_ID; /* no more pilot_target */
-
-   else { /* still is a pilot_target */
-      if (pilot_isDisabled(p)) 
-         c = &cInert;
-      else if (pilot_isFlag(p,PILOT_BRIBED))
-         c = &cNeutral;
-      else if (pilot_isHostile(p))
-         c = &cHostile;
-      else if (pilot_isFriendly(p))
-         c = &cFriend;
-      else
-         c = faction_getColour(p->faction);
-
-      x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.;
-      y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2.;
-      gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 0, c ); /* top left */
-
-      x += p->ship->gfx_space->sw * PILOT_SIZE_APROX;
-      gl_blitSprite( gui.gfx_targetPilot, x, y, 1, 0, c ); /* top right */
-
-      y -= p->ship->gfx_space->sh * PILOT_SIZE_APROX;
-      gl_blitSprite( gui.gfx_targetPilot, x, y, 1, 1, c ); /* bottom right */
-
-      x -= p->ship->gfx_space->sw * PILOT_SIZE_APROX;
-      gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 1, c ); /* bottom left */
+   /* Make sure pilot exists and is still alive. */
+   if ((p==NULL) || pilot_isFlag(p,PILOT_DEAD)) {
+      player->target = PLAYER_ID;
+      return;
    }
 
+   /* Make sure target is still in range. */
+   if (!pilot_inRange( player, p )) {
+      player->target = PLAYER_ID;
+      return;
+   }
 
+   /* Draw the pilot target. */
+   if (pilot_isDisabled(p)) 
+      c = &cInert;
+   else if (pilot_isFlag(p,PILOT_BRIBED))
+      c = &cNeutral;
+   else if (pilot_isHostile(p))
+      c = &cHostile;
+   else if (pilot_isFriendly(p))
+      c = &cFriend;
+   else
+      c = faction_getColour(p->faction);
+
+   x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.;
+   y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2.;
+   gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 0, c ); /* top left */
+
+   x += p->ship->gfx_space->sw * PILOT_SIZE_APROX;
+   gl_blitSprite( gui.gfx_targetPilot, x, y, 1, 0, c ); /* top right */
+
+   y -= p->ship->gfx_space->sh * PILOT_SIZE_APROX;
+   gl_blitSprite( gui.gfx_targetPilot, x, y, 1, 1, c ); /* bottom right */
+
+   x -= p->ship->gfx_space->sw * PILOT_SIZE_APROX;
+   gl_blitSprite( gui.gfx_targetPilot, x, y, 0, 1, c ); /* bottom left */
 }
 
 
@@ -364,15 +379,12 @@ static void gui_renderBorder( double dt )
    Vector2d *pos;
    int hw, hh;
    int cw, ch;
-   int x,y;
-   int rx,ry;
+   double rx,ry;
    double cx,cy;
    glColour *col;
 
    /* Get player position. */
    pos   = &player->solid->pos;
-   x     = (int)(pos->x + gui_xoff);
-   y     = (int)(pos->y + gui_yoff);
    hw    = SCREEN_W/2;  
    hh    = SCREEN_H/2;
 
@@ -382,8 +394,16 @@ static void gui_renderBorder( double dt )
       tex = pnt->gfx_space;
 
       /* Get relative positions. */
-      rx = pnt->pos.x - x;
-      ry = pnt->pos.y - y;
+      rx = pnt->pos.x - player->solid->pos.x;
+      ry = pnt->pos.y - player->solid->pos.y;
+
+      /* See if in sensor range. */
+      if (!pilot_inRangePlanet(player, i))
+         continue;
+
+      /* Correct for offset. */
+      rx -= gui_xoff;
+      ry -= gui_yoff;
 
       /* Compare dimensions. */
       cw = hw + tex->sw/2;
@@ -417,8 +437,16 @@ static void gui_renderBorder( double dt )
       tex = plt->ship->gfx_space;
 
       /* Get relative positions. */
-      rx = plt->solid->pos.x - x;
-      ry = plt->solid->pos.y - y;
+      rx = plt->solid->pos.x - player->solid->pos.x;
+      ry = plt->solid->pos.y - player->solid->pos.y;
+
+      /* See if in sensor range. */
+      if (!pilot_inRange(player, plt))
+         continue;
+
+      /* Correct for offset. */
+      rx -= gui_xoff;
+      ry -= gui_yoff;
 
       /* Compare dimensions. */
       cw = hw + tex->sw/2;

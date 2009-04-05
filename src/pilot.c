@@ -54,8 +54,8 @@ static int pilot_mstack = 0; /**< Memory allocated for pilot_stack. */
 
 
 /* misc */
-static double sensor_curRange = 0.; /**< Current sensor range, set in pilots_update
-                                         and used to check if in range. */
+static double sensor_curRange = 0.; /**< Current base sensor range, used to calculate
+                                         what is in range and what isn't. */
 
 
 /*
@@ -67,9 +67,6 @@ extern AI_Profile* ai_pinit( Pilot *p, const char *ai ); /**< from ai.c */
 extern void ai_destroy( Pilot* p ); /**< from ai.c */
 extern void ai_think( Pilot* pilot ); /**< from ai.c */
 /* internal */
-/* sensors. */
-static int pilot_inRange( const Pilot *p, const Pilot *target );
-static int pilot_inRangePlanet( const Pilot *p, const Planet *target );
 /* update. */
 static void pilot_shootWeapon( Pilot* p, PilotOutfit* w );
 static void pilot_hyperspace( Pilot* pilot );
@@ -412,7 +409,7 @@ void pilot_setHostile( Pilot* p )
  *    @param target Target of p to check to see if is in sensor range.
  *    @return 1 if they are in range, 0 if they aren't.
  */
-static int pilot_inRange( const Pilot *p, const Pilot *target )
+int pilot_inRange( const Pilot *p, const Pilot *target )
 {
    double d;
 
@@ -422,7 +419,7 @@ static int pilot_inRange( const Pilot *p, const Pilot *target )
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &target->solid->pos );
 
-   if (d < pow2(sensor_curRange))
+   if (d < sensor_curRange)
       return 1;
 
    return 0;
@@ -436,17 +433,21 @@ static int pilot_inRange( const Pilot *p, const Pilot *target )
  *    @param target Planet to see if is in sensor range.
  *    @return 1 if they are in range, 0 if they aren't.
  */
-static int pilot_inRangePlanet( const Pilot *p, const Planet *target )
+int pilot_inRangePlanet( const Pilot *p, int target )
 {
    double d;
+   Planet *pnt;
 
    if (cur_system->interference == 0.)
       return 1;
 
-   /* Get distance. */
-   d = vect_dist2( &p->solid->pos, &target->pos );
+   /* Get the planet. */
+   pnt = cur_system->planets[target];
 
-   if (d < pow2(sensor_curRange))
+   /* Get distance. */
+   d = vect_dist2( &p->solid->pos, &pnt->pos );
+
+   if (d < sensor_curRange)
       return 1;
 
    return 0;
@@ -518,7 +519,7 @@ void pilot_distress( Pilot *p, const char *msg )
    /* Check if planet is in range. */
    for (i=0; i<cur_system->nplanets; i++) {
       if (planet_hasService(cur_system->planets[i], PLANET_SERVICE_BASIC) &&
-            pilot_inRangePlanet(p, cur_system->planets[i]) &&
+            pilot_inRangePlanet(p, i) &&
             !areEnemies(p->faction, cur_system->planets[i]->faction)) {
          r = 1;
          break;
@@ -2647,18 +2648,13 @@ void pilots_cleanAll (void)
 
 
 /**
- * @brief Updates all the pilots.
- *
- *    @param dt Delta tick for the update.
+ * @brief Updates the system's base sensor range.
  */
-void pilots_update( double dt )
+void pilot_updateSensorRange (void)
 {
-   int i;
-   Pilot *p;
-
-   /* Calculate the sensor range. */
+   /* Calculate the sensor sensor_curRange. */
    if (cur_system->interference == 0.)
-      sensor_curRange = 0.; /* Doesn't matter since it isn't used. */
+      sensor_curRange = INFINITY;
    else if (cur_system->interference >= 999.)
       sensor_curRange = 0.; /* No range. */
    else {
@@ -2670,6 +2666,21 @@ void pilots_update( double dt )
       sensor_curRange  = 375.;
       sensor_curRange /= (cur_system->interference / 1000.);
    }
+
+   /* Speeds up calculations. */
+   sensor_curRange = pow2(sensor_curRange);
+}
+
+
+/**
+ * @brief Updates all the pilots.
+ *
+ *    @param dt Delta tick for the update.
+ */
+void pilots_update( double dt )
+{
+   int i;
+   Pilot *p;
 
    /* Now update all the pilots. */
    for ( i=0; i < pilot_nstack; i++ ) {
