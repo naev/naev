@@ -94,6 +94,7 @@ function sys_enter ()
       p     = pilot.add(pir_ship)
       pir   = p[1]
       pir:rename(pir_name)
+      pir:setHostile()
       pir:rmOutfit("all") -- Start naked
       pilot_outfitAddSet( pir, pir_outfits )
       hook.pilot( pir, "death", "pir_dead" )
