@@ -29,6 +29,10 @@
    *) Secondary weapon revamp
       *) Players should be able to configure what outfit they want as secondary
       *) Players should also be able to set hotkeys for secondary weapons
+   *) Simplify controls
+      *) Emacs-style bindings
+      *) Combine similar commands into one
+      *) Short cut keys for buttons in toolkit windows like land
 
 
    MINOR
@@ -64,9 +68,6 @@
    *) Improve font system to handle unicode
    *) Mission improvements
       *) Allow creation of OSD (On screen displays)
-   *) Simplify controls
-      *) Emacs-style bindings
-      *) Combine similar commands into one
 
 
    MAYBE... SOMEDAY...
