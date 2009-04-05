@@ -1373,7 +1373,7 @@ void player_targetHostile (void)
          continue;
  
       /* Must be in range. */
-      if (!pilot_inRange( player, pilot_stack[i] ))
+      if (!pilot_inRangePilot( player, pilot_stack[i] ))
          continue;
 
       /* Normal unbribed check. */

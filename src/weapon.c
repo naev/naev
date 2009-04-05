@@ -162,6 +162,10 @@ void weapon_minimap( const double res, const double w,
    for (i=0; i<nwbackLayer; i++) {
       wp = wbackLayer[i];
 
+      /* Make sure is in range. */
+      if (!pilot_inRange( player, wp->solid->pos.x, wp->solid->pos.y ))
+         continue;
+
       /* Choose colour based on if it'll hit player. */
       if (outfit_isSeeker(wp->outfit) && (wp->target != PLAYER_ID))
          ACOLOUR(cNeutral, alpha);
@@ -177,6 +181,10 @@ void weapon_minimap( const double res, const double w,
    }
    for (i=0; i<nwfrontLayer; i++) {
       wp = wfrontLayer[i];
+
+      /* Make sure is in range. */
+      if (!pilot_inRange( player, wp->solid->pos.x, wp->solid->pos.y ))
+         continue;
 
       /* Choose colour based on if it'll hit player. */
       if (outfit_isSeeker(wp->outfit) && (wp->target != PLAYER_ID))

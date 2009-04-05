@@ -329,7 +329,8 @@ void pilot_distress( Pilot *p, const char *msg );
  * Sensors.
  */
 void pilot_updateSensorRange (void);
-int pilot_inRange( const Pilot *p, const Pilot *target );
+int pilot_inRange( const Pilot *p, double x, double y );
+int pilot_inRangePilot( const Pilot *p, const Pilot *target );
 int pilot_inRangePlanet( const Pilot *p, int target );
 
 

@@ -139,7 +139,7 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
    p = m+1;
    if (mode == 0) {
       while (p < pilot_nstack) {
-         if (pilot_inRange( player, pilot_stack[p] ))
+         if (pilot_inRangePilot( player, pilot_stack[p] ))
             return pilot_stack[p]->id;
          p++;
       }
@@ -147,7 +147,7 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
    /* Get first hostile in range. */
    if (mode == 1) {
       while (p < pilot_nstack) {
-         if (pilot_inRange( player, pilot_stack[p] ) &&
+         if (pilot_inRangePilot( player, pilot_stack[p] ) &&
                (pilot_isFlag(pilot_stack[p],PILOT_HOSTILE) ||
                   areEnemies( FACTION_PLAYER, pilot_stack[p]->faction)))
             return pilot_stack[p]->id;
@@ -188,7 +188,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
    /* Get first one in range. */
    if (mode == 0) {
       while (p >= 0) {
-         if (pilot_inRange( player, pilot_stack[p] ))
+         if (pilot_inRangePilot( player, pilot_stack[p] ))
             return pilot_stack[p]->id;
          p--;
       }
@@ -196,7 +196,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
    /* Get first hostile in range. */
    else if (mode == 1) {
       while (p >= 0) {
-         if (pilot_inRange( player, pilot_stack[p] ) &&
+         if (pilot_inRangePilot( player, pilot_stack[p] ) &&
                (pilot_isFlag(pilot_stack[p],PILOT_HOSTILE) ||
                   areEnemies( FACTION_PLAYER, pilot_stack[p]->faction)))
             return pilot_stack[p]->id;
@@ -237,7 +237,7 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
             continue;
 
          /* Must be in range. */
-         if (!pilot_inRange( p, pilot_stack[i] ))
+         if (!pilot_inRangePilot( p, pilot_stack[i] ))
             continue;
 
          /* Check distance. */
@@ -274,7 +274,7 @@ unsigned int pilot_getNearestPilot( const Pilot* p )
             continue;
 
          /* Must be in range. */
-         if (!pilot_inRange( p, pilot_stack[i] ))
+         if (!pilot_inRangePilot( p, pilot_stack[i] ))
             continue;
 
          td = vect_dist2(&pilot_stack[i]->solid->pos, &player->solid->pos);       
@@ -403,13 +403,38 @@ void pilot_setHostile( Pilot* p )
 
 
 /**
+ * @brief Check to see if a position is in range of the pilot.
+ *
+ *    @param p Pilot to check to see if position is in his sensor range.
+ *    @param x X position to check.
+ *    @param y Y position to check.
+ *    @return 1 if the position is in range, 0 if it isn't.
+ */
+int pilot_inRange( const Pilot *p, double x, double y )
+{
+   double d;
+
+   if (cur_system->interference == 0.)
+      return 1;
+
+   /* Get distance. */
+   d = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
+
+   if (d < sensor_curRange)
+      return 1;
+
+   return 0;
+}
+
+
+/**
  * @brief Check to see if a pilot is in sensor range of another.
  *
  *    @param p Pilot who is trying to check to see if other is in sensor range.
  *    @param target Target of p to check to see if is in sensor range.
  *    @return 1 if they are in range, 0 if they aren't.
  */
-int pilot_inRange( const Pilot *p, const Pilot *target )
+int pilot_inRangePilot( const Pilot *p, const Pilot *target )
 {
    double d;
 
@@ -471,7 +496,7 @@ void pilot_message( Pilot *p, unsigned int target, const char *msg )
       return;
 
    /* Must be in range. */
-   if (!pilot_inRange( p, t ))
+   if (!pilot_inRangePilot( p, t ))
       return;
 
    /* Only really affects player atm. */
@@ -486,7 +511,7 @@ void pilot_message( Pilot *p, unsigned int target, const char *msg )
 void pilot_broadcast( Pilot *p, const char *msg )
 {
    /* Only display if player exists and is in range. */
-   if ((player==NULL) || !pilot_inRange( player, p ))
+   if ((player==NULL) || !pilot_inRangePilot( player, p ))
       return;
 
    player_message( "Broadcast %s> \"%s\"", p->name, msg );
@@ -529,7 +554,7 @@ void pilot_distress( Pilot *p, const char *msg )
    /* Now we must check to see if a pilot is in range. */
    for (i=0; i<pilot_nstack; i++) {
       if ((pilot_stack[i]->id != p->id) &&
-            pilot_inRange(p, pilot_stack[i])) {
+            pilot_inRangePilot(p, pilot_stack[i])) {
 
          /* Send AI the distress signal. */
          if (pilot_stack[i]->ai != NULL)

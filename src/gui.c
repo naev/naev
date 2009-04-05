@@ -332,7 +332,7 @@ void gui_renderTarget( double dt )
    }
 
    /* Make sure target is still in range. */
-   if (!pilot_inRange( player, p )) {
+   if (!pilot_inRangePilot( player, p )) {
       player->target = PLAYER_ID;
       return;
    }
@@ -441,7 +441,7 @@ static void gui_renderBorder( double dt )
       ry = plt->solid->pos.y - player->solid->pos.y;
 
       /* See if in sensor range. */
-      if (!pilot_inRange(player, plt))
+      if (!pilot_inRangePilot(player, plt))
          continue;
 
       /* Correct for offset. */
@@ -958,6 +958,10 @@ static void gui_renderPilot( const Pilot* p )
    glColour *col;
    double a;
 
+   /* Make sure is in range. */
+   if (!pilot_inRangePilot( player, p ))
+      return;
+
    /* Get position. */
    x = (p->solid->pos.x - player->solid->pos.x) / gui.radar.res;
    y = (p->solid->pos.y - player->solid->pos.y) / gui.radar.res;
@@ -1080,6 +1084,10 @@ static void gui_renderPlanet( int i )
    double a, tx,ty;
    glColour *col;
    Planet *planet;
+
+   /* Make sure is in range. */
+   if (!pilot_inRangePlanet( player, i ))
+      return;
 
    /* Default values. */
    res = gui.radar.res;
