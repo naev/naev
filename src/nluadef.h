@@ -43,7 +43,7 @@
 /*
  * Error stuff.
  */
-#define NLUA_ERROR(L,str)  (lua_pushstring(L,str), lua_error(L))
+#define NLUA_ERROR(L,str)  (luaL_error(L,str))
 
 
 /*
