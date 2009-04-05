@@ -157,14 +157,24 @@ function defend_system()
       pilot.clear ()
       pilot.toggleSpawn( false )
 
+  -- Set up distances
+      angle = rnd.rnd() * 2 * math.pi
+      if defender == true then
+         raider_position  = vec2.new( 400*math.cos(angle), 400*math.sin(angle) )
+         defense_position = vec2.new( 0, 0 )
+      else
+         raider_position  = vec2.new( 800*math.cos(angle), 800*math.sin(angle) )
+         defense_position = vec2.new( 400*math.cos(angle), 400*math.sin(angle) )
+      end
+
   -- Create a fleet of raiding pirates
-      raider_fleet = pilot.add( "DTS Raiders", "def", vec2.new( 400, 400) )
+      raider_fleet = pilot.add( "DTS Raiders", "def", raider_position )
       for k,v in ipairs( raider_fleet) do
          pilot.setHostile( v)
       end
 
   -- And a fleet of defending independents
-      defense_fleet = pilot.add( "DTS Defense Fleet", "def", vec2.new( 0, 0) )
+      defense_fleet = pilot.add( "DTS Defense Fleet", "def", defense_position )
       for k,v in ipairs( defense_fleet) do
          pilot.setFriendly( v)
       end
