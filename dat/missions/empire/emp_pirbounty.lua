@@ -43,9 +43,7 @@ function create ()
    pir_name, pir_ship, pir_outfits = pir_generate()
 
    -- Get target system
-   cur_sys  = system.get()
-   adj_sys  = cur_sys:adjacentSystems()
-   near_sys = adj_sys[ rnd.rnd(1,#adj_sys) ]
+   near_sys = get_pir_system( system.get() )
 
    -- Get credits
    credits  = rnd.rnd(5,10) * 10000
@@ -69,6 +67,26 @@ function create ()
    end
 end
 
+
+-- Gets a piratey system
+function get_pir_system( sys )
+   local adj_sys = sys:adjacentSystems()
+
+   -- Only take into account system with pirates.
+   local pir_sys = {}
+   for k,v in adj_sys do
+      if v:hasPresence( "Pirate" ) then
+         table.insert( pir_sys, v )
+      end
+   end
+
+   -- Make sure system has pirates
+   if #pir_sys == nil then
+      return sys
+   else
+      return pir_sys[ rnd.rnd(1,#pir_sys) ]
+   end
+end
 
 -- Player won, gives rewards.
 function give_rewards ()
@@ -114,8 +132,7 @@ function pir_jump ()
    player.msg( string.format(msg[2], pir_name) )
 
    -- Basically just swap the system
-   adj_sys  = near_sys:adjacentSystems()
-   near_sys = adj_sys[ rnd.rnd(1,#adj_sys) ]
+   near_sys = get_pir_system( near_sys )
 end
 
 
