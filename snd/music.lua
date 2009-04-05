@@ -251,7 +251,7 @@ function choose_combat ()
    if nebu then
       combat = { "nebu_battle1" }
    else
-      combat = { "galacticbattle" }
+      combat = { "galacticbattle", "flf_battle1" }
    end
 
    music.load( combat[ rnd.rnd(1,#combat) ] )
