@@ -1,0 +1,44 @@
+#
+#   VERSION
+#
+VMAJOR      := 0
+VMINOR      := 3
+VREV        := 7
+VERSION     := -DVMAJOR=$(VMAJOR) -DVMINOR=$(VMINOR) -DVREV=$(VREV)
+VERSIONFILE := VERSION
+
+
+#
+#   OBJS
+#
+APPNAME := naev
+OBJS    := $(patsubst %.c,%.o,$(wildcard src/*.c src/tk/*.c src/tk/widget/*.c))
+
+
+#
+#   CFLAGS
+#
+ifdef NDATA_DEF
+COMMON_CFLAGS := -DNDATA_DEF=$(NDATA_DEF)
+endif
+
+
+#
+#   DATA
+#
+DATA_MISC :=   AUTHORS VERSION
+DATA_AI   := 	$(wildcard ai/*.lua \
+						ai/*/*.lua )
+DATA_GFX  := 	$(wildcard gfx/*.png \
+						gfx/*/*.png \
+						gfx/*/*/*.png )
+DATA_XML  := 	$(wildcard dat/*.xml dat/*.ttf dat/intro dat/news.lua)
+DATA_SND  := 	$(wildcard snd/music/*.ogg snd/sounds/*.wav) snd/music.lua
+DATA_MISN := 	$(wildcard dat/missions/*.lua \
+						dat/missions/*/*.lua \
+						dat/missions/*/*/*.lua )
+DATA_SCRIPTS := $(wildcard scripts/*.lua \
+						scripts/*/*.lua \
+						scripts/*/*/*.lua )
+DATA      := 	ndata
+DATAFILES := 	$(DATA_MISC) $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN) $(DATA_SCRIPTS)
