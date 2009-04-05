@@ -17,6 +17,6 @@
    <faction x="65" y="343" />
    <health  x="65" y="430" />
   </target>
-  <misc w="110" h="134" x="60" y="460" />
+  <misc w="110" h="104" x="60" y="460" />
  </gui>
 </GUIs>

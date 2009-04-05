@@ -394,9 +394,9 @@ static void gui_renderBorder( double dt )
          /* Get center. */
          cx = rx;
          cy = ry;
-         if (ABS(rx) > cw)
+         if (ABS(rx) > hw)
             cx = (rx > 0) ? hw-7 : -hw+7;
-         if (ABS(ry) > ch)
+         if (ABS(ry) > hh)
             cy = (ry > 0) ? hh-7 : -hh+7;
 
          col = gui_getPlanetColour(i);
@@ -429,9 +429,9 @@ static void gui_renderBorder( double dt )
          /* Get center. */
          cx = rx;
          cy = ry;
-         if (ABS(rx) > cw)
+         if (ABS(rx) > hw)
             cx = (rx > 0) ? hw-7 : -hw+7;
-         if (ABS(ry) > ch)
+         if (ABS(ry) > hh)
             cy = (ry > 0) ? hh-7 : -hh+7;
 
          col = gui_getPilotColour(plt);
@@ -1525,7 +1525,8 @@ static int gui_parseBar( xmlNodePtr parent, HealthBar *bar, const glColour *col 
 }
 
 #define RELATIVIZE(a)   \
-{(a).x+=VX(gui.frame); (a).y=VY(gui.frame)+gui.gfx_frame->h-(a).y;}
+{(a).x += VX(gui.frame); \
+(a).y = VY(gui.frame)+gui.gfx_frame->h-(a).y;}
 /**< Converts a rect to absolute coords. */
 /**
  * @brief Parses a gui node.
@@ -1569,8 +1570,8 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
     * frame (based on gfx)
     */
    vect_csetmin( &gui.frame,
-         SCREEN_W - gui.gfx_frame->w,     /* x */
-         SCREEN_H - gui.gfx_frame->h );   /* y */
+         SCREEN_W - gui.gfx_frame->w - 15,     /* x */
+         SCREEN_H - gui.gfx_frame->h - 15);   /* y */
 
    /* now actually parse the data */
    node = parent->children;
