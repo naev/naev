@@ -14,11 +14,14 @@ function create ()
    mem.bribe_no = "\"Be gone!\""
 
    -- Refueling
-   standing = ai.getstanding( ai.getPlayer() ) or -1
-   mem.refuel = rnd.rnd( 2000, 4000 )
-   if standing > 60 then mem.refuel = mem.refuel * 0.7 end
-   mem.refuel_msg = string.format( "\"I could do you the favour of refueling for the price of %d credits.\"",
-         mem.refuel )
+   p = ai.getPlayer()
+   if ai.exists(p) then
+      standing = ai.getstanding( p ) or -1
+      mem.refuel = rnd.rnd( 2000, 4000 )
+      if standing > 60 then mem.refuel = mem.refuel * 0.7 end
+      mem.refuel_msg = string.format( "\"I could do you the favour of refueling for the price of %d credits.\"",
+            mem.refuel )
+   end
 
    -- Get attack
    attack_choose()

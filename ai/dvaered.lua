@@ -18,12 +18,15 @@ function create ()
    end
 
    -- Handle refueling
-   standing = ai.getstanding( ai.getPlayer() ) or -1
-   mem.refuel = rnd.rnd( 1000, 3000 )
-   if standing < 50 then
-      mem.refuel_no = "\"You are not worthy of my attention.\""
-   else
-      mem.refuel_msg = string.format("\"For you I could make an exception for %d credits.\"", mem.refuel)
+   p = ai.getPlayer()
+   if ai.exists(p) then
+      standing = ai.getstanding( p ) or -1
+      mem.refuel = rnd.rnd( 1000, 3000 )
+      if standing < 50 then
+         mem.refuel_no = "\"You are not worthy of my attention.\""
+      else
+         mem.refuel_msg = string.format("\"For you I could make an exception for %d credits.\"", mem.refuel)
+      end
    end
 
    -- Get attack function.

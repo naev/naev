@@ -14,7 +14,12 @@ function create ()
    ai.setcredits(ai.shipprice()/600 , ai.shipprice()/100 )
 
    -- Get standing.
-   standing = ai.getstanding( ai.getPlayer() ) or -1
+   p = ai.getPlayer()
+   if ai.exists(p) then
+      standing = ai.getstanding( p ) or -1
+   else
+      standing = -1
+   end
 
    -- Handle bribes.
    if standing < -30 then
