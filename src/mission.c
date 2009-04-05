@@ -851,6 +851,7 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int i
    /* Default values. */
    ret   = 0;
 
+   /* key, value */
    /* Handle different types of keys. */
    switch (lua_type(L, -2)) {
       case LUA_TSTRING:
@@ -871,8 +872,10 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int i
       /* We only handle string or number keys, so ignore the rest. */
       default:
          lua_pop(L,1);
+         /* key */
          return 0;
    }
+   /* key, value */
 
    /* Now handle the value. */
    switch (lua_type(L, -1)) {
@@ -892,7 +895,7 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int i
          xmlw_attr(writer,"name",name);
          if (keynum)
             xmlw_attr(writer,"keynum","1");
-         lua_pushnil(L);
+         lua_pushnil(L); /* key, value, nil */
          /* key, value, nil */
          while (lua_next(L, -2) != 0) {
             /* key, value, key, value */
@@ -907,6 +910,7 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int i
       case LUA_TNUMBER:
          mission_saveData( writer, "number",
                name, lua_tostring(L,-1), keynum );
+         /* key, value */
          break;
 
       /* Boolean is either 1 or 0. */
@@ -917,12 +921,14 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int i
          buf[1] = '\0';
          mission_saveData( writer, "bool",
                name, buf, keynum );
+         /* key, value */
          break;
 
       /* String is saved normally. */
       case LUA_TSTRING:
          mission_saveData( writer, "string",
                name, lua_tostring(L,-1), keynum );
+         /* key, value */
          break;
 
       /* User data must be handled here. */
@@ -931,12 +937,14 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int i
             p = lua_toplanet(L,-1);
             mission_saveData( writer, "planet",
                   name, p->p->name, keynum );
+            /* key, value */
             break;
          }
          else if (lua_issystem(L,-1)) {
             s = lua_tosystem(L,-1);
             mission_saveData( writer, "system",
                   name, s->s->name, keynum );
+            /* key, value */
             break;
          }
          else if (lua_isfaction(L,-1)) {
@@ -946,14 +954,17 @@ static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int i
                break;
             mission_saveData( writer, "faction",
                   name, str, keynum );
+            /* key, value */
             break;
          }
 
       /* Rest gets ignored, like functions, etc... */
       default:
+         /* key, value */
          break;
    }
    lua_pop(L,1);
+   /* key */
 
    return ret;
 }
@@ -974,12 +985,14 @@ static int mission_persistData( lua_State *L, xmlTextWriterPtr writer )
 
    lua_pushstring(L,"_G");
    lua_pushnil(L);
-   /* nil */
+   /* str, nil */
    while (lua_next(L, LUA_GLOBALSINDEX) != 0) {
-      /* key, value */
+      /* str, key, value */
       ret = mission_persistDataNode( L, writer, 0 );
-      /* key */
+      /* str, key */
    }
+   /* str */
+   lua_pop(L,1);
 
    return ret;
 }
