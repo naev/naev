@@ -198,7 +198,7 @@ function choose_ambient ()
       if factions["Collective"] then
          ambient = { "collective1" }
       elseif factions["Empire"] then
-         ambient = { "empire1", "empire1", "empire1", "empire1" }
+         ambient = { "empire2", "empire2", "empire2", "empire1", "empire1", "empire1" }
          add_neutral = true
       elseif nebu then
          ambient = { "ambient1", "ambient1", "ambient1", "ambient1" }
