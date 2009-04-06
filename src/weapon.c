@@ -772,7 +772,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
             return; /* Weapon is destroyed. */
          }
       }
-      /* dump weapons hit anything not of the same faction */
+      /* dumb weapons hit anything not of the same faction */
       else {
          if (weapon_checkCanHit(w,p) &&
                CollideSprite( gfx, wsx, wsy, &w->solid->pos,
