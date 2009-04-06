@@ -309,7 +309,7 @@ static int pilot_addFleet( lua_State *L )
    }
    else {
       d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
-      vect_pset( &vp, d, RNG(0,360)*M_PI/180.);
+      vect_pset( &vp, d, RNGF() * 2.*M_PI);
    }
 
    /* now we start adding pilots and toss ids into the table we return */
