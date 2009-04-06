@@ -339,6 +339,10 @@ static int pilot_addFleet( lua_State *L )
             vect_pset( &vv, HYPERSPACE_VEL, a );
          }
 
+         /* Make sure angle is sane. */
+         if (a < 0.)
+            a += 2.*M_PI;
+
          /* Create the pilot. */
          p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, 0 );
 
