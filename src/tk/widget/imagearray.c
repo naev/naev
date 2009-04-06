@@ -198,6 +198,11 @@ static void iar_render( Widget* iar, double bx, double by )
 static int iar_key( Widget* iar, SDLKey key, SDLMod mod )
 {
    (void) mod;
+   int x,y;
+   double h;
+   double hmax;
+   int yscreen;
+   double ypos;
 
    switch (key) {
       case SDLK_UP:
@@ -219,6 +224,23 @@ static int iar_key( Widget* iar, SDLKey key, SDLMod mod )
 
    /* Check boundries. */
    iar->dat.iar.selected = CLAMP( 0, iar->dat.iar.nelements-1, iar->dat.iar.selected);
+
+   /* Move if needed. */
+   h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
+   hmax = h * (iar->dat.iar.yelem - (int)(iar->h / h));
+   yscreen = (double)iar->h / h;
+   x = iar->dat.iar.selected % iar->dat.iar.xelem;
+   y = iar->dat.iar.selected / iar->dat.iar.xelem;
+   ypos = y * h;
+   /* Below. */
+   if (ypos-h < iar->dat.iar.pos)
+      iar->dat.iar.pos += (ypos-h) - iar->dat.iar.pos;
+   /* Above. */
+   if (ypos+2.*h > iar->dat.iar.pos + iar->h)
+      iar->dat.iar.pos += (ypos+2.*h) - (iar->dat.iar.pos + iar->h);
+   iar->dat.iar.pos = CLAMP( 0., hmax, iar->dat.iar.pos );
+
+   /* Run function pointer if needed. */
    if (iar->dat.iar.fptr)
       (*iar->dat.iar.fptr)(iar->wdw, iar->name);
 
