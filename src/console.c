@@ -21,6 +21,7 @@
 
 #include "log.h"
 #include "nlua.h"
+#include "nlua_cli.h"
 #include "font.h"
 #include "toolkit.h"
 
@@ -245,6 +246,7 @@ int cli_init (void)
    cli_state = nlua_newState();
    nlua_loadBasic( cli_state );
    nlua_loadStandard( cli_state, 0 );
+   nlua_loadCLI( cli_state );
    luaL_register( cli_state, "_G", cli_methods );
    lua_settop( cli_state, 0 );
 

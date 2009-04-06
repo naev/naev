@@ -55,7 +55,7 @@ static int hook_runningstack = 0; /**< Check if stack is running. */
  * prototypes
  */
 /* extern */
-extern int misn_run( Mission *misn, char *func );
+extern int misn_run( Mission *misn, const char *func );
 /* intern */
 static int hook_run( Hook *hook );
 static void hook_free( Hook *h );

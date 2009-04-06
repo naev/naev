@@ -196,7 +196,7 @@ static int planetL_get( lua_State *L )
          lua_pushsystem(L,sys);
          return 2;
       }
-      NLUA_ERROR("Attempting to get landed planet when player not landed.");
+      NLUA_ERROR(L,"Attempting to get landed planet when player not landed.");
       return 0; /* Not landed. */
    }
 
