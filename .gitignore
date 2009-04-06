@@ -6,8 +6,11 @@
 VERSION
 ndata
 mkspr
+mkspr.exe
 naev
+naev.exe
 pack
+pack.exe
 docs/doxygen/*
 docs/lua/*.html
 docs/lua/*.css

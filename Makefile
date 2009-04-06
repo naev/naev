@@ -8,10 +8,10 @@ export DEBUG_PARANOID
 
 
 # OS
-OS := LINUX
-#OS := FREEBSD
-#OS := WIN32
-#OS := MACOSX
+#
+# Possible choices: LINUX|FREEBSD|WIN32|MACOSX
+#
+OS ?= LINUX
 export OS
 
 
