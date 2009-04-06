@@ -419,20 +419,20 @@ static void gui_renderBorder( double dt )
 
          /* Handle by quadrant. */
          if ((a > M_PI/4.) && (a < M_PI*3./4.)) {
-            cx = cos(a) * (hw-7.);
+            cx = cos(a) * (hw-7.) * M_SQRT2;
             cy = hh-7.;
          }
          else if ((a > M_PI*3./4.) && (a < M_PI*5./4.)) {
             cx = -hw+7.;
-            cy = sin(a) * (hh-7.);
+            cy = sin(a) * (hh-7.) * M_SQRT2;
          }
          else if ((a > M_PI*5./4.) && (a < M_PI*7./4.)) {
-            cx = cos(a) * (hw-7.);
+            cx = cos(a) * (hw-7.) * M_SQRT2;
             cy = -hh+7.;
          }
          else {
             cx = hw-7.;
-            cy = sin(a) * (hh-7.);
+            cy = sin(a) * (hh-7.) * M_SQRT2;
          }
 
          col = gui_getPlanetColour(i);
