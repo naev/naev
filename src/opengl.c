@@ -92,6 +92,7 @@ int write_png( const char *file_name, png_bytep *rows,
       int w, int h, int colourtype, int bitdepth );
 /* global */
 static GLboolean gl_hasExt( char *name );
+static GLboolean gl_hasVersion( int major, int minor );
 
 
 /*
@@ -491,6 +492,8 @@ glTexture* gl_loadImage( SDL_Surface* surface )
 
    /* set up the texture defaults */
    glTexture *texture = malloc(sizeof(glTexture));
+   memset( texture, 0, sizeof(glTexture) );
+
    texture->w = (double)surface->w;
    texture->h = (double)surface->h;
    texture->sx = 1.;
@@ -504,7 +507,7 @@ glTexture* gl_loadImage( SDL_Surface* surface )
    texture->sh = texture->h;
 
    texture->trans = NULL;
-   texture->name = NULL;
+   texture->name  = NULL;
 
    return texture;
 }
@@ -604,7 +607,7 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    /* set the texture */
    t = gl_loadImage(surface);
    t->trans = trans;
-   t->name = strdup(path);
+   t->name  = strdup(path);
    return t;
 }
 
@@ -1122,6 +1125,31 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
  *
  */
 
+
+/**
+ * @brief Checks to see if opengl version is at least major.minor.
+ *
+ *    @param major Major version to check.
+ *    @param minor Minor version to check.
+ */
+static GLboolean gl_hasVersion( int major, int minor )
+{
+   const char *p;
+   double f, c;
+
+   p = (const char*) glGetString(GL_VERSION);
+
+   /* Get version and compare version. */
+   f = atof(p);
+   c  = (double) major;
+   c += 0.1 * (double) minor;
+
+   if (f <= c)
+      return GL_TRUE;
+   return GL_FALSE;
+}
+
+
 /**
  * @brief Checks for on opengl extension.
  *
@@ -1136,10 +1164,10 @@ static GLboolean gl_hasExt( char *name )
     * other extension names.  Could use strtok() but the constant
     * string returned by glGetString can be in read-only memory.
     */
-   char *p, *end;
+   const char *p, *end;
    size_t len, n;
 
-   p = (char*) glGetString(GL_EXTENSIONS);
+   p = (const char*) glGetString(GL_EXTENSIONS);
    len = strlen(name);
    end = p + strlen(p);
 
@@ -1208,7 +1236,7 @@ static int gl_initExtensions (void)
 {
    /* Clear values. */
    nglActiveTexture = NULL;
-   nglMultiTexCoord2d = 0;
+   nglMultiTexCoord2d = NULL;
 
    /* Multitexture. */
    if (gl_hasExt("GL_ARB_multitexture")) {
@@ -1217,6 +1245,24 @@ static int gl_initExtensions (void)
    }
    else
       WARN("GL_ARB_multitexture not found!");
+
+   /* Vertex Buffers. */
+   if (gl_hasVersion( 1, 5)) {
+      nglGenBuffers = SDL_GL_GetProcAddress("glGenBuffers");
+      nglBindBuffer = SDL_GL_GetProcAddress("glBindBuffer");
+      nglBufferData = SDL_GL_GetProcAddress("glBufferData");
+      nglBufferSubData = SDL_GL_GetProcAddress("glBufferSubData");
+      nglDeleteBuffers = SDL_GL_GetProcAddress("glDeleteBuffers");
+   }
+   else if (gl_hasExt("GL_ARB_vertex_buffer_object")) {
+      nglGenBuffers = SDL_GL_GetProcAddress("glGenBuffersARB");
+      nglBindBuffer = SDL_GL_GetProcAddress("glBindBufferARB");
+      nglBufferData = SDL_GL_GetProcAddress("glBufferDataARB");
+      nglBufferSubData = SDL_GL_GetProcAddress("glBufferSubDataARB");
+      nglDeleteBuffers = SDL_GL_GetProcAddress("glDeleteBuffersARB");
+   }
+   else
+      WARN("GL_ARB_vertex_buffer_object not found!");
 
    return 0;
 }

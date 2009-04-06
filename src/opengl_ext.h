@@ -14,6 +14,13 @@
 void (APIENTRY *nglActiveTexture)(GLenum texture);
 void (APIENTRY *nglMultiTexCoord2d)(GLenum target,GLdouble s,GLdouble t);
 
+/* GL_ARB_vertex_buffer_object */
+void (APIENTRY *nglGenBuffers)(GLsizei n, GLuint* ids);
+void (APIENTRY *nglBindBuffer)(GLenum target, GLuint id);
+void (APIENTRY *nglBufferData)(GLenum target, GLsizei size, const void* data, GLenum usage);
+void (APIENTRY *nglBufferSubData)(GLenum target, GLint offset, GLsizei size, void* data);
+void (APIENTRY *nglDeleteBuffers)(GLsizei n, const GLuint* ids);
+
 
 #endif /* OPENGL_EXT_H */
    
