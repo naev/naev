@@ -2413,6 +2413,10 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->target = pilot->id; /* Self = no target. */
    if (ai != NULL)
       ai_pinit( pilot, ai ); /* Must run before ai_create */
+
+   /* Update the x and y sprite positions. */
+   gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
+         pilot->ship->gfx_space, pilot->solid->dir );
 }
 
 
