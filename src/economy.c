@@ -49,7 +49,7 @@
 
 /* commodity stack */
 static Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
-static int commodity_nstack = 0; /**< Number of commodities in the stack. */
+static int commodity_nstack       = 0; /**< Number of commodities in the stack. */
 
 
 /* systems stack. */
@@ -60,10 +60,10 @@ extern int systems_nstack; /**< Number of star systems. */
 /*
  * Nodal analysis simulation for dynamic economies.
  */
-static int econ_initialized = 0; /**< Is economy system initialized? */
-static int *econ_comm = NULL; /**< Commodities to calculate. */
-static int econ_nprices = 0; /**< Number of prices to calculate. */
-static cs *econ_G = NULL; /**< Admittance matrix. */
+static int econ_initialized   = 0; /**< Is economy system initialized? */
+static int *econ_comm         = NULL; /**< Commodities to calculate. */
+static int econ_nprices       = 0; /**< Number of prices to calculate. */
+static cs *econ_G             = NULL; /**< Admittance matrix. */
 
 
 /*
@@ -199,8 +199,8 @@ void commodity_Jettison( int pilot, Commodity* com, int quantity )
       effect = spfx_get("cargo");
 
       /* Radial distribution gives much nicer results */
-      r = RNGF()*25 - 12.5;
-      a = (double)RNG(0,359);
+      r  = RNGF()*25 - 12.5;
+      a  = 2. * M_PI * RNGF();
       vx = bvx + r*cos(a);
       vy = bvy + r*sin(a);
       
@@ -218,10 +218,21 @@ void commodity_Jettison( int pilot, Commodity* com, int quantity )
 int commodity_load (void)
 {
    uint32_t bufsize;
-   char *buf = ndata_read( COMMODITY_DATA, &bufsize);
-
+   char *buf;
    xmlNodePtr node;
-   xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+   xmlDocPtr doc;
+  
+   /* Load the file. */
+   buf = ndata_read( COMMODITY_DATA, &bufsize);
+   if (buf == NULL)
+      return -1;
+
+   /* Handle the XML. */
+   doc = xmlParseMemory( buf, bufsize );
+   if (doc == NULL) {
+      WARN("'%s' is not valid XML.", COMMODITY_DATA);
+      return -1;
+   }
 
    node = doc->xmlChildrenNode; /* Commoditys node */
    if (strcmp((char*)node->name,XML_COMMODITY_ID)) {
@@ -416,15 +427,15 @@ static int econ_createGMatrix (void)
 
    /* Fill the matrix. */
    for (i=0; i < systems_nstack; i++) {
-      sys = &systems_stack[i];
+      sys   = &systems_stack[i];
       Rsum = 0.;
 
       /* Set some values. */
       for (j=0; j < sys->njumps; j++) {
 
          /* Get the resistances. */
-         R = econ_calcJumpR( sys, &systems_stack[sys->jumps[j]] );
-         R = 1./R; /* Must be inverted. */
+         R     = econ_calcJumpR( sys, &systems_stack[sys->jumps[j]] );
+         R     = 1./R; /* Must be inverted. */
          Rsum += R;
          
          /* Matrix is symetrical and non-diagonal is negative. */
@@ -517,8 +528,10 @@ int economy_update( unsigned int dt )
 
    /* Create the vector to solve the system. */
    X = malloc(sizeof(double)*systems_nstack);
-   if (X == NULL)
+   if (X == NULL) {
+      WARN("Out of Memory!");
       return -1;
+   }
 
    /* Calculate the results for each price set. */
    for (j=0; j<econ_nprices; j++) {
@@ -553,8 +566,8 @@ int economy_update( unsigned int dt )
        * much more work to get a sane system working without the need of post
        * filtering.
        */
-      scale = 1.;
-      offset = 1.;
+      scale    = 1.;
+      offset   = 1.;
       for (i=0; i<systems_nstack; i++) {
          systems_stack[i].prices[j] = X[i] * scale + offset;
       }
