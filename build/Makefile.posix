@@ -53,18 +53,27 @@ LDFLAGS += 	-framework OpenGL \
 endif # MACOSX
 
 
+DEPS := $(OBJS:%.o=%.d)
+
+
 #
 #   TARGETS
 #
 .PHONY: all help lua csparse utils docs clean distclean
 
 
-%.o:	%.c %.h
+all:	utils ndata lua csparse naev
+
+
+%.d: %.c
+	@$(CC) -MT $(<:.c=.o) -MM $(CFLAGS) $< > $@
+	@echo "   DEP  $@"
+
+-include $(DEPS)
+
+%.o: %.c
 	@$(CC) -c $(CFLAGS) -o $@ $<
 	@echo "   CC   $@"
-
-
-all:	utils ndata lua csparse naev
 
 
 help:
@@ -128,7 +137,7 @@ clean:
 	@echo "   Removing ndata"
 	@$(RM) $(DATA)
 	@echo "   Removing object files"
-	@$(RM) $(OBJS)
+	@$(RM) $(OBJS) $(DEPS)
 	@echo "   Removing main binary ($(APPNAME))"
 	@$(RM) $(APPNAME)
 

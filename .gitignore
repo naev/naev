@@ -1,4 +1,5 @@
 *.o
+*.d
 *.a
 *.pyc
 .hgignore
