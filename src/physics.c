@@ -17,6 +17,17 @@
 /*
  * M I S C
  */
+static double angle_cleanup( double a )
+{
+   double na;
+   if (FABS(a) >= 2.*M_PI) {
+      na = fmod(a, 2.*M_PI);
+      if (a < 0.)
+         na += 2.*M_PI;
+      return  na;
+   }
+   return a;
+}
 /**
  * @brief Gets the difference between two angles.
  *
@@ -26,10 +37,17 @@
 double angle_diff( const double ref, double a )
 {
    double d;
+   double a1, a2;
 
-   if (a < M_PI) a += 2*M_PI;
-   d = fmod((a-ref),2*M_PI);
-   return (d <= M_PI) ? d : d - 2*M_PI ;
+   /* Get angles. */
+   a1 = angle_cleanup(ref);
+   a2 = angle_cleanup(a);
+   d  = a2 - a1;
+
+   /* Filter offsets. */
+   d  = (d < M_PI)  ? d : d - 2.*M_PI;
+   d  = (d > -M_PI) ? d : d + 2.*M_PI;
+   return d;;
 }
 /**
  * @brief Limits the speed of an object.
@@ -62,9 +80,9 @@ void limit_speed( Vector2d* vel, const double speed, const double dt )
  */
 void vect_cset( Vector2d* v, const double x, const double y )
 {
-   v->x = x;
-   v->y = y;
-   v->mod = MOD(x,y);
+   v->x     = x;
+   v->y     = y;
+   v->mod   = MOD(x,y);
    v->angle = ANGLE(x,y);
 }
 
@@ -92,10 +110,10 @@ void vect_csetmin( Vector2d* v, const double x, const double y )
  */
 void vect_pset( Vector2d* v, const double mod, const double angle )
 {
-   v->mod = mod;
+   v->mod   = mod;
    v->angle = angle;
-   v->x = v->mod*cos(v->angle);
-   v->y = v->mod*sin(v->angle);
+   v->x     = v->mod*cos(v->angle);
+   v->y     = v->mod*sin(v->angle);
 }
 
 
@@ -107,9 +125,9 @@ void vect_pset( Vector2d* v, const double mod, const double angle )
  */
 void vectcpy( Vector2d* dest, const Vector2d* src )
 {
-   dest->x = src->x;
-   dest->y = src->y;
-   dest->mod = src->mod;
+   dest->x     = src->x;
+   dest->y     = src->y;
+   dest->mod   = src->mod;
    dest->angle = src->angle;
 }
 
@@ -121,7 +139,10 @@ void vectcpy( Vector2d* dest, const Vector2d* src )
  */
 void vectnull( Vector2d* v )
 {
-   v->x = v->y = v->mod = v->angle = 0.;
+   v->x     = 0.;
+   v->y     = 0.;
+   v->mod   = 0.;
+   v->angle = 0.;
 }
 
 
@@ -134,7 +155,12 @@ void vectnull( Vector2d* v )
  */
 double vect_angle( const Vector2d* ref, const Vector2d* v )
 {
-   return ANGLE( v->x - ref->x, v->y - ref->y);
+   double x,y;
+   
+   x = v->x - ref->x;
+   y = v->y - ref->y;
+
+   return ANGLE( x, y );
 }
 
 
@@ -147,9 +173,9 @@ double vect_angle( const Vector2d* ref, const Vector2d* v )
  */
 void vect_cadd( Vector2d* v, const double x, const double y )
 {
-   v->x += x;
-   v->y += y;
-   v->mod = MOD(v->x,v->y);
+   v->x    += x;
+   v->y    += y;
+   v->mod   = MOD(v->x,v->y);
    v->angle = ANGLE(v->x,v->y);
 }
 
@@ -165,10 +191,10 @@ void vect_reflect( Vector2d* r, Vector2d* v, Vector2d* n )
 {
    double dot;
 
-   dot = vect_dot( v, n );
-   r->x = v->x - ((2. * dot) * n->x);
-   r->y = v->y - ((2. * dot) * n->y);
-   r->mod = MOD(r->x,r->y);
+   dot      = vect_dot( v, n );
+   r->x     = v->x - ((2. * dot) * n->x);
+   r->y     = v->y - ((2. * dot) * n->y);
+   r->mod   = MOD(r->x,r->y);
    r->angle = MOD(r->x,r->y);
 }
 
@@ -358,7 +384,7 @@ void solid_init( Solid* dest, const double mass, const double dir,
    /* Set direction. */
    dest->dir = dir;
    if ((dest->dir > 2.*M_PI) || (dest->dir < 0.))
-      dest->dir = fmod(dest->dir,2*M_PI);
+      dest->dir = fmod(dest->dir, 2*M_PI);
 
    /* Set velocity. */
    if (vel == NULL)
