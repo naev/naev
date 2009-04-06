@@ -839,7 +839,7 @@ static void shipyard_buy( unsigned int wid, char* str )
 
    /* we now move cargo to the new ship */
    if (pilot_cargoUsed(player) > ship->cap_cargo) {
-      dialogue_alert("You won't have space to move your current cargo onto the new ship.");
+      dialogue_alert("You won't have enough space to move your current cargo into the new ship.");
       return; 
    }
    credits2str( buf, ship->price, 2 );
@@ -1392,7 +1392,7 @@ static void spaceport_refuel( unsigned int wid, char *str )
    (void)str;
 
    if (player->credits < refuel_price()) { /* player is out of money after landing */
-      dialogue_alert("You seem to not have enough credits to refuel your ship" );
+      dialogue_alert("You seem to not have enough credits to refuel your ship." );
       return;
    }
 
