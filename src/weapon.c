@@ -1001,8 +1001,10 @@ static Weapon* weapon_create( const Outfit* outfit,
             rdir = dir;
 
          rdir += RNG_2SIGMA() * outfit->u.blt.accuracy/2. * 1./180.*M_PI;
-         if ((rdir > 2.*M_PI) || (rdir < 0.))
-            rdir = fmod(rdir, 2.*M_PI);
+         if (rdir < 0.)
+            rdir += 2.*M_PI;
+         else if (rdir >= 2.*M_PI)
+            rdir -= 2.*M_PI;
 
          mass = 1; /* Lasers are presumed to have unitary mass */
          vectcpy( &v, vel );
@@ -1024,6 +1026,10 @@ static Weapon* weapon_create( const Outfit* outfit,
          }
          else
             rdir = dir;
+         if (rdir < 0.)
+            rdir += 2.*M_PI;
+         else if (rdir >= 2.*M_PI)
+            rdir -= 2.*M_PI;
          mass = 1.; /**< Needs a mass. */
          w->solid = solid_create( mass, rdir, pos, NULL );
          w->think = think_beam;
@@ -1041,9 +1047,11 @@ static Weapon* weapon_create( const Outfit* outfit,
          rdir = dir;
          if (outfit->u.amm.accuracy != 0.) {
             rdir += RNG_2SIGMA() * outfit->u.amm.accuracy/2. * 1./180.*M_PI;
-            if ((rdir > 2.*M_PI) || (rdir < 0.))
-               rdir = fmod(rdir, 2.*M_PI);
          }
+         if (rdir < 0.)
+            rdir += 2.*M_PI;
+         else if (rdir >= 2.*M_PI)
+            rdir -= 2.*M_PI;
 
          w->lockon = outfit->u.amm.lockon;
          w->timer = outfit->u.amm.duration;
@@ -1100,6 +1108,10 @@ static Weapon* weapon_create( const Outfit* outfit,
             if ((rdir > 2.*M_PI) || (rdir < 0.))
                rdir = fmod(rdir, 2.*M_PI);
          }
+         if (rdir < 0.)
+            rdir += 2.*M_PI;
+         else if (rdir >= 2.*M_PI)
+            rdir -= 2.*M_PI;
 
          /* If thrust is 0. we assume it starts out at speed. */
          vectcpy( &v, vel );
