@@ -110,7 +110,7 @@ const char *keybindDescription[] = {
    /* Space navigation. */
    "Initializes the autonavigation system.",
    "Cycles through planet targets",
-   "Attempts to land on your targetted planet or targets nearest landable planet.  Requests for landing if you don't have permission yet.",
+   "Attempts to land on your targetted planet or targets the nearest landable planet.  Requests for landing if you don't have permission yet.",
    "Cycles through hyperspace targets.",
    "Opens the Star Map.",
    "Attempts to jump to your hyperspace target.",
