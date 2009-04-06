@@ -329,7 +329,7 @@ static int player_newMake (void)
    player_message( " v%d.%d.%d", VMAJOR, VMINOR, VREV );
 
    /* Try to create the pilot, if fails reask for player name. */
-   if (player_newShip( ship, x, y, 0., 0., RNG(0,359)/180.*M_PI ) != 0) {
+   if (player_newShip( ship, x, y, 0., 0., RNGF() * 2.*M_PI ) != 0) {
       player_new();
       return -1;
    }
@@ -899,6 +899,7 @@ void player_think( Pilot* pplayer )
          turn -= player_left;
       if (player_isFlag(PLAYER_TURN_RIGHT))
          turn += player_right;
+      turn = CLAMP( -1., 1., turn );
       pplayer->solid->dir_vel -= pplayer->turn * turn;
    }
 

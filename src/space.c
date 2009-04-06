@@ -577,7 +577,7 @@ static void space_addFleet( Fleet* fleet, int init )
    /* simulate they came from hyperspace */
    if (c==0) {
       d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
-      vect_pset( &vp, d, RNG(0,360)*M_PI/180.);
+      vect_pset( &vp, d, RNGF()*2.*M_PI);
    }
    /* Starting out landed or heading towards landing.. */
    else if ((c==1) || (c==2)) {
@@ -593,7 +593,7 @@ static void space_addFleet( Fleet* fleet, int init )
       /* No suitable planet found. */
       if (planet == NULL) {
          d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
-         vect_pset( &vp, d, RNG(0,360)*M_PI/180.);
+         vect_pset( &vp, d, RNGF()*2.*M_PI);
          c = 0;
       }
       else {
@@ -603,7 +603,7 @@ static void space_addFleet( Fleet* fleet, int init )
          /* Start out near landed. */
          else if (c==2) {
             d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
-            vect_pset( &vp, d, RNG(0,360)*M_PI/180.);
+            vect_pset( &vp, d, RNGF()*2.*M_PI);
          }
       }
    }
@@ -615,6 +615,8 @@ static void space_addFleet( Fleet* fleet, int init )
          vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
                RNG(75,150) * (RNG(0,1) ? 1 : -1));
          a = vect_angle(&vp, &vn);
+         if (a < 0.)
+            a += 2.*M_PI;
          flags = 0;
 
          /* Entering via hyperspace. */

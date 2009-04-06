@@ -637,7 +637,7 @@ void ai_think( Pilot* pilot )
       ai_run(L, "control"); /* run control */
       lua_getglobal(L,"control_rate");
       cur_pilot->tcontrol = lua_tonumber(L,-1);
-      lua_pop(L,1);;
+      lua_pop(L,1);
    }
 
    /* pilot has a currently running task */
@@ -645,9 +645,8 @@ void ai_think( Pilot* pilot )
       ai_run(L, cur_pilot->task->name);
 
    /* make sure pilot_acc and pilot_turn are legal */
-   if (pilot_acc > 1.) pilot_acc = 1.; /* value must be <= 1 */
-   if (pilot_turn > 1.) pilot_turn = 1.; /* value must between -1 and 1 */
-   else if (pilot_turn < -1.) pilot_turn = -1.;
+   pilot_acc   = CLAMP( 0., 1., pilot_acc );
+   pilot_turn  = CLAMP( -1., 1., pilot_turn );
 
    cur_pilot->solid->dir_vel = 0.;
    if (pilot_turn) /* set the turning velocity */

@@ -762,6 +762,11 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
    int s, sx, sy;
    double shard, rdir;
 
+#ifdef DEBUGGING
+   if ((dir > 2.*M_PI) || (dir < 0.))
+      WARN("Angle not between 0 and 2.*M_PI [%f].", dir);
+#endif /* DEBUGGING */
+
    /* what each image represents in angle */
    shard = 2.0*M_PI / (t->sy*t->sx);
 
