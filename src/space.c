@@ -1387,10 +1387,20 @@ int space_load (void)
 static int systems_load (void)
 {
    uint32_t bufsize;
-   char *buf = ndata_read( SYSTEM_DATA, &bufsize );
-
+   char *buf;
    xmlNodePtr node;
-   xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+   xmlDocPtr doc;
+
+   /* Load the file. */
+   buf = ndata_read( SYSTEM_DATA, &bufsize );
+   if (buf == NULL)
+      return -1;
+
+   doc = xmlParseMemory( buf, bufsize );
+   if (doc == NULL) {
+      WARN("'%s' is not a valid XML file.", SYSTEM_DATA);
+      return -1;
+   }
 
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,XML_SYSTEM_ID)) {
