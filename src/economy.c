@@ -475,6 +475,10 @@ int economy_init (void)
 {
    int i;
 
+   /* Must not be initialized. */
+   if (econ_initialized)
+      return 0;
+
    /* Allocate price space. */
    for (i=0; i<systems_nstack; i++) {
       if (systems_stack[i].prices != NULL)
@@ -586,6 +590,10 @@ int economy_update( unsigned int dt )
 void economy_destroy (void)
 {
    int i;
+
+   /* Must be initialized. */
+   if (!econ_initialized)
+      return;
 
    /* Clean up the prices in the systems stack. */
    for (i=0; i<systems_nstack; i++) {
