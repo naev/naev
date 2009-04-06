@@ -530,6 +530,10 @@ int economy_update( unsigned int dt )
    double scale, offset;
    /*double min, max;*/
 
+   /* Economy must be initialized. */
+   if (econ_initialized == 0)
+      return 0;
+
    /* Create the vector to solve the system. */
    X = malloc(sizeof(double)*systems_nstack);
    if (X == NULL) {
