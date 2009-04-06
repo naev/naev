@@ -25,6 +25,7 @@
 /* global */
 #include <string.h> /* strdup */
 #if HAS_LINUX && defined(DEBUGGING)
+#include <fenv.h>
 #include <signal.h>
 #include <execinfo.h>
 #include <stdlib.h>
@@ -123,6 +124,11 @@ void main_loop (void); /* dialogue.c */
 int main( int argc, char** argv )
 {
    char buf[PATH_MAX];
+   
+   /* We'll want fpe exceptions. */
+#if HAS_LINUX && defined(DEBUGGING)
+   feenableexcept(FE_ALL_EXCEPT);
+#endif /* HAS_LINUX && defined(DEBUGGING) */
 
    /* print the version */
    snprintf( version, VERSION_LEN, "%d.%d.%d", VMAJOR, VMINOR, VREV );
