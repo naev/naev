@@ -331,8 +331,10 @@ static int pilot_addFleet( lua_State *L )
                a = vect_angle(&vp,&vn);
                vect_pset( &vv, HYPERSPACE_VEL, a );
             }
-            else
+            else {
+               a = RNGF() * 2.*M_PI;
                vectnull( &vv );
+            }
          }
          else { /* Entering via hyperspace. */
             a = vect_angle(&vp,&vn);
