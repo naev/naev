@@ -12,6 +12,7 @@
 #include "input.h"
 
 #include "naev.h"
+
 #include "log.h"
 #include "player.h"
 #include "pause.h"

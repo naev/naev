@@ -23,9 +23,10 @@
 
 #include "dialogue.h"
 
+#include "naev.h"
+
 #include <stdarg.h>
 
-#include "naev.h"
 #include "log.h"
 #include "toolkit.h"
 #include "pause.h"

@@ -13,6 +13,7 @@
 #include "comm.h"
 
 #include "naev.h"
+
 #include "log.h"
 #include "toolkit.h"
 #include "dialogue.h"

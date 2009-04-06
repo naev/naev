@@ -15,10 +15,11 @@
 
 #include "unidiff.h"
 
+#include "naev.h"
+
 #include <stdlib.h>
 #include <string.h>
 
-#include "naev.h"
 #include "log.h"
 #include "nxml.h"
 #include "space.h"

@@ -13,11 +13,12 @@
 
 #include "hook.h"
 
+#include "naev.h"
+
 #include <stdlib.h>
 #include <string.h>
 
 #include "log.h"
-#include "naev.h"
 #include "nxml.h"
 #include "player.h"
 

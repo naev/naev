@@ -11,6 +11,8 @@
 
 #include "nlua_misn.h"
 
+#include "naev.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -28,7 +30,6 @@
 #include "player.h"
 #include "mission.h"
 #include "log.h"
-#include "naev.h"
 #include "rng.h"
 #include "toolkit.h"
 #include "land.h"

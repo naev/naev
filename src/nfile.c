@@ -13,7 +13,7 @@
 
 #include "nfile.h"
 
-#include "ncompat.h"
+#include "naev.h"
 
 #include <stdio.h> 
 #include <string.h>
@@ -30,7 +30,6 @@
 #include <windows.h>
 #endif /* HAS_WIN32 */
 
-#include "naev.h"
 #include "log.h"
 
 

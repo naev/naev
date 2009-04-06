@@ -11,6 +11,8 @@
 
 #include "mission.h"
 
+#include "naev.h"
+
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
@@ -20,7 +22,6 @@
 #include "nlua_space.h"
 #include "nlua_faction.h"
 #include "rng.h"
-#include "naev.h"
 #include "log.h"
 #include "hook.h"
 #include "ndata.h"

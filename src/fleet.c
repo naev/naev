@@ -12,6 +12,8 @@
 
 #include "fleet.h"
 
+#include "naev.h"
+
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
@@ -19,7 +21,6 @@
 
 #include "nxml.h"
 
-#include "naev.h"
 #include "log.h"
 #include "pilot.h"
 #include "ndata.h"

@@ -11,12 +11,13 @@
 
 #include "land.h"
 
+#include "naev.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
 
-#include "naev.h"
 #include "log.h"
 #include "toolkit.h"
 #include "dialogue.h"

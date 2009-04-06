@@ -11,12 +11,13 @@
 
 #include "ship.h"
 
+#include "naev.h"
+
 #include <string.h>
 #include <limits.h>
 
 #include "nxml.h"
 
-#include "naev.h"
 #include "log.h"
 #include "ndata.h"
 #include "toolkit.h"

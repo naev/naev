@@ -11,6 +11,8 @@
 
 #include "music.h"
 
+#include "naev.h"
+
 #include "SDL.h"
 #include "SDL_mixer.h"
 #include "SDL_mutex.h"
@@ -19,7 +21,6 @@
 #include "nluadef.h"
 #include "nlua_var.h"
 #include "nlua_music.h"
-#include "naev.h"
 #include "log.h"
 #include "ndata.h"
 

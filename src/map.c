@@ -5,13 +5,14 @@
 
 #include "map.h"
 
+#include "naev.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 #include <float.h>
 
 #include "log.h"
-#include "naev.h"
 #include "toolkit.h"
 #include "space.h"
 #include "opengl.h"

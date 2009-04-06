@@ -12,6 +12,8 @@
 
 #include "nlua_pilot.h"
 
+#include "naev.h"
+
 #include "lauxlib.h"
 
 #include "nlua.h"
@@ -19,7 +21,6 @@
 #include "nlua_faction.h"
 #include "nlua_vec2.h"
 #include "log.h"
-#include "naev.h"
 #include "rng.h"
 #include "pilot.h"
 #include "player.h"

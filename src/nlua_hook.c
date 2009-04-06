@@ -11,6 +11,8 @@
 
 #include "nlua_hook.h"
 
+#include "naev.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -24,7 +26,6 @@
 #include "nlua_pilot.h"
 #include "hook.h"
 #include "log.h"
-#include "naev.h"
 #include "mission.h"
 
 

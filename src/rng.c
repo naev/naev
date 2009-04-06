@@ -13,7 +13,7 @@
 
 #include "rng.h"
 
-#include "ncompat.h"
+#include "naev.h"
 
 #include <stdint.h>
 #include <math.h>
@@ -31,7 +31,6 @@
 
 #include "SDL.h"
 
-#include "naev.h"
 #include "log.h"
 
 

@@ -32,6 +32,8 @@
 
 #include "opengl.h"
 
+#include "naev.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -43,7 +45,6 @@
 #include "SDL_image.h"
 #include "SDL_version.h"
 
-#include "naev.h"
 #include "log.h"
 #include "opengl_ext.h"
 #include "ndata.h"

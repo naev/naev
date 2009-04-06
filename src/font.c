@@ -21,11 +21,12 @@
 
 #include "font.h"
 
+#include "naev.h"
+
 #include "ft2build.h"
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
 
-#include "naev.h"
 #include "log.h"
 #include "ndata.h"
 

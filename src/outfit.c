@@ -14,13 +14,14 @@
 
 #include "outfit.h"
 
+#include "naev.h"
+
 #include <math.h>
 #include <string.h>
 
 #include "nxml.h"
 #include "SDL_thread.h"
 
-#include "naev.h"
 #include "log.h"
 #include "ndata.h"
 #include "spfx.h"

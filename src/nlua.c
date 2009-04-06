@@ -10,11 +10,12 @@
 
 #include "nlua.h"
 
+#include "naev.h"
+
 #include "lauxlib.h"
 
 #include "nluadef.h"
 #include "log.h"
-#include "naev.h"
 #include "ndata.h"
 #include "nlua_rnd.h"
 #include "nlua_faction.h"

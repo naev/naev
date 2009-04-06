@@ -10,6 +10,8 @@
 
 #include "console.h"
 
+#include "naev.h"
+
 #include <string.h>
 
 #define lua_c
@@ -17,7 +19,6 @@
 #include "lauxlib.h"
 #include "lualib.h"
 
-#include "naev.h"
 #include "log.h"
 #include "nlua.h"
 #include "font.h"

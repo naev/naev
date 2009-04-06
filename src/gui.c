@@ -11,11 +11,12 @@
 
 #include "gui.h"
 
+#include "naev.h"
+
 #include <stdlib.h>
 
 #include "player.h"
 #include "nxml.h"
-#include "naev.h"
 #include "pilot.h"
 #include "log.h"
 #include "opengl.h"

@@ -14,6 +14,8 @@
 
 #include "pause.h"
 
+#include "naev.h"
+
 #include "player.h"
 
 

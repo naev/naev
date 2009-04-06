@@ -10,12 +10,13 @@
 
 #include "space.h"
 
+#include "naev.h"
+
 #include <stdlib.h>
 #include <math.h>
 
 #include "nxml.h"
 
-#include "naev.h"
 #include "opengl.h"
 #include "log.h"
 #include "rng.h"

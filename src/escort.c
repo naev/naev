@@ -11,6 +11,7 @@
 #include "escort.h"
 
 #include "naev.h"
+
 #include "log.h"
 #include "player.h"
 #include "nlua.h"

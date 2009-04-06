@@ -25,6 +25,9 @@
 #  define NAEV_H
 
 
+#include "ncompat.h"
+
+
 #define APPNAME            "NAEV" /**< Application name. */
 
 #define ABS(x)             (((x)<0)?-(x):(x)) /**< Returns absolute value. */
