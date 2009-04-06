@@ -379,9 +379,10 @@ static void gui_renderBorder( double dt )
    Vector2d *pos;
    int hw, hh;
    int cw, ch;
-   double rx,ry;
+   double rx,ry, crx,cry;
    double cx,cy;
    glColour *col;
+   double a;
 
    /* Get player position. */
    pos   = &player->solid->pos;
@@ -402,22 +403,37 @@ static void gui_renderBorder( double dt )
          continue;
 
       /* Correct for offset. */
-      rx -= gui_xoff;
-      ry -= gui_yoff;
+      crx = rx - gui_xoff;
+      cry = ry - gui_yoff;
 
       /* Compare dimensions. */
       cw = hw + tex->sw/2;
       ch = hh + tex->sh/2;
 
       /* Check if out of range. */
-      if ((ABS(rx) > cw) || (ABS(ry) > ch)) {
-         /* Get center. */
-         cx = rx;
-         cy = ry;
-         if (ABS(rx) > hw)
-            cx = (rx > 0) ? hw-7 : -hw+7;
-         if (ABS(ry) > hh)
-            cy = (ry > 0) ? hh-7 : -hh+7;
+      if ((ABS(crx) > cw) || (ABS(cry) > ch)) {
+         /* Get angle. */
+         a = atan2( ry, rx );
+         if (a < 0.)
+            a += 2.*M_PI;
+
+         /* Handle by quadrant. */
+         if ((a > M_PI/4.) && (a < M_PI*3./4.)) {
+            cx = cos(a) * (hw-7.);
+            cy = hh-7.;
+         }
+         else if ((a > M_PI*3./4.) && (a < M_PI*5./4.)) {
+            cx = -hw+7.;
+            cy = sin(a) * (hh-7.);
+         }
+         else if ((a > M_PI*5./4.) && (a < M_PI*7./4.)) {
+            cx = cos(a) * (hw-7.);
+            cy = -hh+7.;
+         }
+         else {
+            cx = hw-7.;
+            cy = sin(a) * (hh-7.);
+         }
 
          col = gui_getPlanetColour(i);
          COLOUR(*col);
@@ -454,13 +470,28 @@ static void gui_renderBorder( double dt )
 
       /* Check if out of range. */
       if ((ABS(rx) > cw) || (ABS(ry) > ch)) {
-         /* Get center. */
-         cx = rx;
-         cy = ry;
-         if (ABS(rx) > hw)
-            cx = (rx > 0) ? hw-7 : -hw+7;
-         if (ABS(ry) > hh)
-            cy = (ry > 0) ? hh-7 : -hh+7;
+         /* Get angle. */
+         a = atan2( ry, rx );
+         if (a < 0.)
+            a += 2.*M_PI;
+
+         /* Handle by quadrant. */
+         if ((a > M_PI/4.) && (a < M_PI*3./4.)) {
+            cx = cos(a) * (hw-7.);
+            cy = hh-7.;
+         }
+         else if ((a > M_PI*3./4.) && (a < M_PI*5./4.)) {
+            cx = -hw+7.;
+            cy = sin(a) * (hh-7.);
+         }
+         else if ((a > M_PI*5./4.) && (a < M_PI*7./4.)) {
+            cx = cos(a) * (hw-7.);
+            cy = -hh+7.;
+         }
+         else {
+            cx = hw-7.;
+            cy = sin(a) * (hh-7.);
+         }
 
          col = gui_getPilotColour(plt);
          COLOUR(*col);
