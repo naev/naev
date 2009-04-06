@@ -108,11 +108,11 @@ lib/csparse/libcsparse.a:
 	+@$(MAKE) -C lib/csparse
 
 
-pack: src/md5.c src/pack.c utils/pack/main.c
+pack: src/md5.o src/pack.o utils/pack/main.o
 	+@$(MAKE) -C utils/pack
 
 
-mkspr: utils/mkspr/main.c
+mkspr: utils/mkspr/main.o
 	+@$(MAKE) -C utils/mkspr
 
 
