@@ -44,6 +44,16 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
    int rasy, rbsy;
    int abx,aby, bbx, bby;
 
+   /* Make sure the surfaces have transparency maps. */
+   if (at->trans == NULL) {
+      WARN("Texture '%s' has no transparency map.", at->name);
+      return 0;
+   }
+   if (bt->trans == NULL) {
+      WARN("Texture '%s' has no transparency map.", bt->name);
+      return 0;
+   }
+
    /* a - cube coordinates */ 
    ax1 = (int)VX(*ap) - (int)(at->sw)/2;
    ay1 = (int)VY(*ap) - (int)(at->sh)/2;
@@ -59,7 +69,6 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
    /* check if bounding boxes intersect */ 
    if((bx2 < ax1) || (ax2 < bx1)) return 0;
    if((by2 < ay1) || (ay2 < by1)) return 0;
-
 
    /* define the remaining binding box */ 
    inter_x0 = MAX( ax1, bx1 );
@@ -170,6 +179,12 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
    double ep[2], bl[2], tr[2], v[2], mod;
    int hits, real_hits;
    Vector2d tmp_crash, border[2];
+
+   /* Make sure texture has transparency map. */
+   if (bt->trans == NULL) {
+      WARN("Texture '%s' has no transparency map.", bt->name);
+      return 0;
+   }
 
    /* Set up end point of line. */
    ep[0] = ap->x + al*cos(ad);
