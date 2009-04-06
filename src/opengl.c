@@ -770,12 +770,10 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 #endif /* DEBUGGING */
 
    /* what each image represents in angle */
-   shard = 2.0*M_PI / (t->sy*t->sx);
+   shard = 2.*M_PI / (t->sy*t->sx);
 
    /* real dir is slightly moved downwards */
    rdir = dir + shard/2.;
-   if (rdir < 0.)
-      rdir = 0.;
   
    /* now calculate the sprite we need */
    s = (int)(rdir / shard);
