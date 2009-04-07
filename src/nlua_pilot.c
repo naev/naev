@@ -262,12 +262,9 @@ static int pilot_addFleet( lua_State *L )
    
    /* Parse second argument - Fleet AI Override */
    if (lua_gettop(L) > 1) {
-      if (lua_isstring(L,2)) {
-         fltai = lua_tostring(L,2);
-         if (strcmp(fltai, "def")==0) /* Check if set to default */
-            fltai = NULL;
-      }
-      else NLUA_INVALID_PARAMETER();
+      fltai = luaL_checkstring(L,2);
+      if (strcmp(fltai, "def")==0) /* Check if set to default */
+         fltai = NULL;
    }
    else fltai = NULL;
 
@@ -294,7 +291,7 @@ static int pilot_addFleet( lua_State *L )
    /* pull the fleet */
    flt = fleet_get( fltname );
    if (flt == NULL) {
-      NLUA_DEBUG("Fleet not found!");
+      NLUA_ERROR(L,"Fleet '%s' doesn't exist.", fltname);
       return 0;
    }
 
