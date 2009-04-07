@@ -666,7 +666,7 @@ void ship_view( unsigned int unused, char* shipname )
          "Cargo Space:\n"
          "Fuel:\n"
          );
-   h = gl_printHeight( &gl_smallFont, VIEW_WIDTH, buf );
+   h = gl_printHeightRaw( &gl_smallFont, VIEW_WIDTH, buf );
 
    wid = window_create( shipname, -1, -1, VIEW_WIDTH, h+60+BUTTON_HEIGHT );
    window_addText( wid, 20, -40, VIEW_WIDTH, h,

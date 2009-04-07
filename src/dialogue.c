@@ -81,7 +81,7 @@ void dialogue_alert( const char *fmt, ... )
       va_end(ap);
    }
 
-   h = gl_printHeight( &gl_smallFont, 260, msg );
+   h = gl_printHeightRaw( &gl_smallFont, 260, msg );
 
    /* create the window */
    wdw = window_create( "Warning", -1, -1, 300, 90 + h );
@@ -125,19 +125,19 @@ static glFont* dialogue_getSize( const char* msg, int* width, int* height )
    /* First we split by text length. */
    if (len < 50) {
       font = &gl_defFont;
-      h = gl_printHeight( font, w-40, msg );
+      h = gl_printHeightRaw( font, w-40, msg );
    }
    else {
       /* Now we look at proportion. */
       font = &gl_smallFont;
       /* font = &gl_defFont; */
-      h = gl_printHeight( font, w-40, msg );
+      h = gl_printHeightRaw( font, w-40, msg );
 
       d = ((double)w/(double)h)*(3./4.); /* deformation factor. */
       if (fabs(d) > 0.3) {
          if (h > w)
             w = h;
-         h = gl_printHeight( font, w-40, msg );
+         h = gl_printHeightRaw( font, w-40, msg );
       }
    }
 
@@ -341,7 +341,7 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
    input_cancelled = 0;
 
    /* get text height */
-   h = gl_printHeight( &gl_smallFont, 200, msg );
+   h = gl_printHeightRaw( &gl_smallFont, 200, msg );
 
    /* create window */
    input_wid = window_create( title, -1, -1, 240, h+140 );
