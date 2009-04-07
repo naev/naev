@@ -281,7 +281,7 @@ int music_load( const char* name )
 {
    char filename[PATH_MAX];
 
-   if (music_disabled) return;
+   if (music_disabled) return 0;
 
    music_free();
 

@@ -79,7 +79,7 @@ static int musicL_load( lua_State *L )
    /* check parameters */
    str = luaL_checkstring(L,1);
    if (music_load( str )) {
-      NLUA_ERROR("Music '%s' invalid or failed to load.", str );
+      NLUA_ERROR(L,"Music '%s' invalid or failed to load.", str );
       return 0;
    }
 
