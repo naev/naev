@@ -9,38 +9,44 @@ export OS
 C_COMPILER ?= gcc
 export CC := $(C_COMPILER)
 export RM := del /F
-DEPDIR ?= ../libs
-export DEPBINDIR := $(DEPDIR)/bin
-export DEPINCDIR := $(DEPDIR)/include
-export DEPLIBDIR := $(DEPDIR)/lib
+DEP_DIR ?= ../libs
+export DEP_BIN_DIR ?= $(DEP_DIR)/bin
+export DEP_INC_DIR ?= $(DEP_DIR)/include
+export DEP_LIB_DIR ?= $(DEP_DIR)/lib
+export DEP_SDL_INC_DIR ?= $(DEP_INC_DIR)/SDL
+DEP_XML_INC_DIR ?= $(DEP_INC_DIR)/libxml2
+DEP_TTF_INC_DIR ?= $(DEP_INC_DIR)/freetype2
+export DEP_PNG_INC_DIR ?= $(DEP_INC_DIR)
 
 #
 #   CFLAGS
 #
 CLUA   := -Ilib/lua
 CCSPARSE := -Ilib/csparse
-CSDL   := -I$(DEPINCDIR)/SDL -D_GNU_SOURCE=1 -Dmain=SDL_main -DGL_GLEXT_PROTOTYPES
-CXML   := -I$(DEPINCDIR)/libxml2
-CTTF   := -I$(DEPINCDIR)/freetype2
-CPNG   := -I$(DEPINCDIR)
+CSDL   := -D_GNU_SOURCE=1 -Dmain=SDL_main -DGL_GLEXT_PROTOTYPES
+CXML   :=
+CTTF   :=
+CPNG   :=
 CGL    :=
-CFLAGS := -D_GNU_SOURCE -Isrc -I$(DEPINCDIR) $(CLUA) $(CCSPARSE) $(CSDL) $(CXML) $(CTTF) $(CPNG) $(CGL) $(VERSION) -D$(OS) $(CFLAGS_COMMON)
-
-
+CFLAGS += -D_GNU_SOURCE -Isrc
+CFLAGS += -I$(DEP_INC_DIR)
+CFLAGS += -I$(DEP_SDL_INC_DIR) -I$(DEP_XML_INC_DIR) -I$(DEP_TTF_INC_DIR) -I$(DEP_PNG_INC_DIR)
+CFLAGS += $(CLUA) $(CCSPARSE) $(CSDL) $(CXML) $(CTTF) $(CPNG) $(CGL)
+CFLAGS += $(VERSION) -D$(OS) $(CFLAGS_COMMON)
 
 #
 #   LDFLAGS
 #
 LDLUA   := lib/lua/liblua.a
 LDCSPARSE := lib/csparse/libcsparse.a
-LDSDL   := -lSDL -lSDLmain
-LDSDLALL := $(LDSDL) -lSDL_image -lSDL_mixer
+LDSDL   := -lSDL -lSDLmain -lSDL_image -lSDL_mixer
 LDXML   := -llibxml2 -lz -liconv -lwsock32
 LDTTF   := -lfreetype -lz -lintl -lwsock32 -lole32 -luuid -lmsvcp60
 LDPNG   := -lpng12
-LDGL    :=
-#LDGL    := -lglu32 -lopengl32
-LDFLAGS := -lmingw32 -mwindows -lm -L$(DEPBINDIR) -L$(DEPLIBDIR) $(LDLUA) $(LDCSPARSE) $(LDSDLALL) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
+LDGL    := -lglu32 -lopengl32
+LDFLAGS += -lmingw32 -mwindows -lm
+LDFLAGS += -L$(DEP_BIN_DIR) -L$(DEP_LIB_DIR)
+LDFLAGS += $(LDLUA) $(LDCSPARSE) $(LDSDL) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
 
 # Debug stuff
 ifdef DEBUG
@@ -54,6 +60,11 @@ else # DEBUG
 CFLAGS += -O2 -pipe -ansi
 endif # DEBUG
 
+ifdef DEBUG
+export DEBUG
+
+ifdef DEBUG_PARANOID
+export DEBUG_PARANOID
 
 #
 #   TARGETS
