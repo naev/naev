@@ -168,6 +168,10 @@ static int mission_init( Mission* mission, MissionData* misn, int load )
 
    /* load the file */
    buf = ndata_read( misn->lua, &bufsize );
+   if (buf == NULL) {
+      WARN("Mission '%s' Lua script not found.", misn->lua );
+      return -1;
+   }
    if (luaL_dobuffer(mission->L, buf, bufsize, misn->lua) != 0) {
       WARN("Error loading mission file: %s\n"
           "%s\n"
@@ -1202,6 +1206,7 @@ int missions_loadActive( xmlNodePtr parent )
 static int missions_parseActive( xmlNodePtr parent )
 {
    Mission *misn;
+   MissionData *data;
    int m, i;
    char *buf;
 
@@ -1215,7 +1220,14 @@ static int missions_parseActive( xmlNodePtr parent )
 
          /* process the attributes to create the mission */
          xmlr_attr(node,"data",buf);
-         mission_init( misn, mission_get(mission_getID(buf)), 1 );
+         data = mission_get(mission_getID(buf));
+         if (data == NULL) {
+            WARN("Mission '%s' from savegame not found in game - ignoring.", buf);
+            free(buf);
+            continue;
+         }
+         else
+            mission_init( misn, data, 1 );
          free(buf);
 
          /* this will orphan an identifier */

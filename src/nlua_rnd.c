@@ -87,20 +87,20 @@ int lua_loadRnd( lua_State *L )
 static int rnd_int( lua_State *L )
 {  
    int o;
+   int l,h;
    
    o = lua_gettop(L);
    
-   if (o==0) lua_pushnumber(L, RNGF() ); /* random double 0 <= x <= 1 */
+   if (o==0)
+      lua_pushnumber(L, RNGF() ); /* random double 0 <= x <= 1 */
    else if (o==1) { /* random int 0 <= x <= parameter */
-      if (lua_isnumber(L, 1))
-         lua_pushnumber(L, RNG(0, (int)lua_tonumber(L, 1)));
-      else return 0;
+      l = luaL_checkint(L,1);
+      lua_pushnumber(L, RNG(0, l));
    }
    else if (o>=2) { /* random int paramater 1 <= x <= parameter 2 */
-      if (lua_isnumber(L, 1) && lua_isnumber(L, 2))
-         lua_pushnumber(L,
-               RNG((int)lua_tonumber(L, 1), (int)lua_tonumber(L, 2)));
-      else return 0;
+      l = luaL_checkint(L,1);
+      h = luaL_checkint(L,2);
+      lua_pushnumber(L, RNG(l,h));
    }
    else NLUA_INVALID_PARAMETER();
    
