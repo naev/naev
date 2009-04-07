@@ -504,7 +504,10 @@ static int pilotL_name( lua_State *L )
    p  = pilot_get( p1->pilot );
 
    /* Pilot must exist. */
-   if (p == NULL) return 0;
+   if (p == NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
 
    /* Get name. */
    lua_pushstring(L, p->name);
@@ -555,7 +558,10 @@ static int pilotL_rename( lua_State *L )
    name  = luaL_checkstring(L,2);
 
    /* Pilot must exist. */
-   if (p == NULL) return 0;
+   if (p == NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
 
    /* Change name. */
    if (p->name != NULL)
@@ -585,7 +591,10 @@ static int pilotL_position( lua_State *L )
    p  = pilot_get( p1->pilot );
 
    /* Pilot must exist. */
-   if (p == NULL) return 0;
+   if (p == NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
 
    /* Push position. */
    vectcpy( &v.vec, &p->solid->pos );
@@ -613,7 +622,10 @@ static int pilotL_velocity( lua_State *L )
    p  = pilot_get( p1->pilot );
 
    /* Pilot must exist. */
-   if (p == NULL) return 0;
+   if (p == NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
 
    /* Push velocity. */
    vectcpy( &v.vec, &p->solid->vel );
@@ -642,7 +654,10 @@ static int pilotL_warp( lua_State *L )
    v  = luaL_checkvector(L,2);
 
    /* Pilot must exist. */
-   if (p == NULL) return 0;
+   if (p == NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
 
    /* Warp pilot to new position. */
    vectcpy( &p->solid->pos, &v->vec );
@@ -675,8 +690,10 @@ static int pilotL_broadcast( lua_State *L )
 
    /* Check to see if pilot is valid. */
    p = pilot_get(lp->pilot);
-   if (p == NULL)
+   if (p == NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
       return 0;
+   }
 
    /* Broadcast message. */
    pilot_broadcast( p, msg, ignore_int );
@@ -769,7 +786,10 @@ static int pilotL_setFaction( lua_State *L )
 
    /* Get pilot/faction. */
    p = pilot_get(lp->pilot);
-   if (p==NULL) return 0;
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
 
    /* Set the new faction. */
    p->faction = fid;
@@ -794,7 +814,10 @@ static int pilotL_setHostile( lua_State *L )
    /* Get the pilot. */
    lp = luaL_checkpilot(L,1);
    p  = pilot_get(lp->pilot);
-   if (p==NULL) return 0;
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
 
    /* Set as hostile. */
    pilot_setHostile(p);
@@ -819,7 +842,10 @@ static int pilotL_setFriendly( lua_State *L )
    /* Get the pilot. */
    lp = luaL_checkpilot(L,1);
    p = pilot_get(lp->pilot);
-   if (p==NULL) return 0;
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
 
    /* Remove hostile and mark as friendly. */
    pilot_setFriendly(p);
@@ -844,7 +870,10 @@ static int pilotL_disable( lua_State *L )
    /* Get the pilot. */
    lp = luaL_checkpilot(L,1);
    p  = pilot_get(lp->pilot);
-   if (p==NULL) return 0;
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
 
    /* Disable the pilot. */
    p->shield = 0.;
@@ -877,7 +906,10 @@ static int pilotL_addOutfit( lua_State *L )
    /* Get the pilot. */
    lp = luaL_checkpilot(L,1);
    p  = pilot_get(lp->pilot);
-   if (p==NULL) return 0;
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
 
    /* Get parameters. */
    outfit = luaL_checkstring(L,2);
@@ -920,7 +952,10 @@ static int pilotL_rmOutfit( lua_State *L )
    /* Get the pilot. */
    lp = luaL_checkpilot(L,1);
    p  = pilot_get(lp->pilot);
-   if (p==NULL) return 0;
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
 
    /* Get parameters. */
    outfit = luaL_checkstring(L,2);
@@ -941,8 +976,10 @@ static int pilotL_rmOutfit( lua_State *L )
 
    /* Get the outfit. */
    o = outfit_get( outfit );
-   if (o == NULL)
+   if (o == NULL) {
+      NLUA_ERROR(L,"Outfit isn't found in outfit stack.");
       return 0;
+   }
    
    /* Add outfit. */
    n = pilot_rmOutfit( p, o, q );
@@ -967,7 +1004,10 @@ static int pilotL_changeAI( lua_State *L )
    /* Get the pilot. */
    lp = luaL_checkpilot(L,1);
    p  = pilot_get(lp->pilot);
-   if (p==NULL) return 0;
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
 
    /* Get parameters. */
    str = luaL_checkstring(L,2);
