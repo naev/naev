@@ -33,7 +33,7 @@ void music_exit (void);
  */
 int music_volume( const double vol );
 double music_getVolume (void);
-void music_load( const char* name );
+int music_load( const char* name );
 void music_play (void);
 void music_stop (void);
 void music_pause (void);

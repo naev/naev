@@ -277,7 +277,7 @@ double music_getVolume (void)
  *
  *    @param name Name of the file to load.
  */
-void music_load( const char* name )
+int music_load( const char* name )
 {
    char filename[PATH_MAX];
 
@@ -291,13 +291,18 @@ void music_load( const char* name )
    music_rw = ndata_rwops( filename );
    if (music_rw == NULL) {
       WARN("Music '%s' not found.", filename);
-      return;
+      return -1;
    }
    music_music = Mix_LoadMUS_RW(music_rw);
-   if (music_music == NULL)
+   if (music_music == NULL) {
       WARN("SDL_Mixer: %s", Mix_GetError());
+      Mix_HookMusicFinished(music_rechoose);
+      return -1;
+   }
 
    Mix_HookMusicFinished(music_rechoose);
+
+   return 0;
 }
 
 
