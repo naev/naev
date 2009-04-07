@@ -5,7 +5,6 @@ include build/Makefile.common
 #
 # This stuff needs to be set semi-manually on windows
 
-export OS
 C_COMPILER ?= gcc
 export CC := $(C_COMPILER)
 export RM := del /F
@@ -60,11 +59,6 @@ else # DEBUG
 CFLAGS += -O2 -pipe -ansi
 endif # DEBUG
 
-ifdef DEBUG
-export DEBUG
-
-ifdef DEBUG_PARANOID
-export DEBUG_PARANOID
 
 #
 #   TARGETS
