@@ -151,7 +151,7 @@ static int player_msg( lua_State *L )
    const char* str;
 
    str = luaL_checkstring(L,1);
-   player_message(str);
+   player_messageRaw(str);
 
    return 0;
 }

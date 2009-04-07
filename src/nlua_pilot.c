@@ -673,7 +673,7 @@ static int pilotL_broadcast( lua_State *L )
       return 0;
 
    /* Broadcast message. */
-   player_message( "Broadcast %s> \"%s\"", p->name, msg);
+   player_message( "Broadcast %s> \"%s\"", p->name, msg );
    return 0;
 }
 
