@@ -36,7 +36,6 @@ typedef struct Hook_ {
    unsigned int parent; /**< mission it's connected to */
    char *func; /**< function it runs */
    char *stack; /**< stack it's a part of */
-
    int delete; /**< indicates it should be deleted when possible */
 } Hook;
 
@@ -44,11 +43,11 @@ typedef struct Hook_ {
 /* 
  * the stack
  */
-static unsigned int hook_id = 0; /**< Unique hook id generator. */
-static Hook* hook_stack = NULL; /**< Stack of hooks. */
-static int hook_mstack = 0; /**< Size of hook memory. */
-static int hook_nstack = 0; /**< Number of hooks currently used. */
-static int hook_runningstack = 0; /**< Check if stack is running. */
+static unsigned int hook_id   = 0; /**< Unique hook id generator. */
+static Hook* hook_stack       = NULL; /**< Stack of hooks. */
+static int hook_mstack        = 0; /**< Size of hook memory. */
+static int hook_nstack        = 0; /**< Number of hooks currently used. */
+static int hook_runningstack  = 0; /**< Check if stack is running. */
 
 
 /*
@@ -114,16 +113,16 @@ unsigned int hook_add( unsigned int parent, const char *func, const char *stack 
    /* if memory must grow */
    if (hook_nstack+1 > hook_mstack) {
       hook_mstack += HOOK_CHUNK;
-      hook_stack = realloc(hook_stack, hook_mstack*sizeof(Hook));
+      hook_stack   = realloc(hook_stack, hook_mstack*sizeof(Hook));
    }
 
    /* create the new hook */
-   new_hook = &hook_stack[hook_nstack];
-   new_hook->id = ++hook_id;
-   new_hook->parent = parent;
-   new_hook->func = strdup(func);
-   new_hook->stack = strdup(stack);
-   new_hook->delete = 0;
+   new_hook          = &hook_stack[hook_nstack];
+   new_hook->id      = ++hook_id;
+   new_hook->parent  = parent;
+   new_hook->func    = strdup(func);
+   new_hook->stack   = strdup(stack);
+   new_hook->delete  = 0;
 
    hook_nstack++;
 
@@ -250,9 +249,9 @@ void hook_runID( unsigned int id )
    ret = 0;
    for (i=0; i<hook_nstack; i++)
       if (hook_stack[i].id == id) {
-         h = &hook_stack[i];
+         h     = &hook_stack[i];
          hook_run( h );
-         ret = 1;
+         ret   = 1;
          break;
       }
 
@@ -287,7 +286,7 @@ void hook_cleanup (void)
       hook_free( &hook_stack[i] );
    free( hook_stack );
    /* sane defaults just in case */
-   hook_stack = NULL;
+   hook_stack  = NULL;
    hook_nstack = 0;
    hook_mstack = 0;
 }
@@ -382,9 +381,9 @@ static int hook_parse( xmlNodePtr base )
    node = base->xmlChildrenNode;
    do {
       if (xml_isNode(node,"hook")) {
-         parent = 0;
-         func = NULL;
-         stack = NULL;
+         parent   = 0;
+         func     = NULL;
+         stack    = NULL;
 
          cur = node->xmlChildrenNode;
          do {
