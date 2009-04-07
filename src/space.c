@@ -688,6 +688,7 @@ void space_init ( const char* sysname )
          if (mstars < nstars) {
             star_vertex = realloc( star_vertex, nstars * sizeof(GLfloat) * 4 );
             star_colour = realloc( star_colour, nstars * sizeof(GLfloat) * 8 );
+            mstars = nstars;
          }
          for (i=0; i < nstars; i++) {
             /* Set the position. */
