@@ -320,9 +320,9 @@ void pilots_render (void);
 /*
  * communication
  */
-void pilot_message( Pilot *p, unsigned int target, const char *msg );
-void pilot_broadcast( Pilot *p, const char *msg );
-void pilot_distress( Pilot *p, const char *msg );
+void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_int );
+void pilot_broadcast( Pilot *p, const char *msg, int ignore_int );
+void pilot_distress( Pilot *p, const char *msg, int ignore_int );
 
 
 /*

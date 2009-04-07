@@ -654,20 +654,24 @@ static int pilotL_warp( lua_State *L )
  * @brief Makes the pilot broadcast a message.
  *
  * @usage p:broadcast( "Mayday! Requesting assistance!" )
+ * @usage p:broadcast( "Help!", true ) -- Will ignore interference
  *
  *    @luaparam p Pilot to broadcast the message.
  *    @luaparam msg Message to broadcast.
- * @luafunc broadcast( p, msg )
+ *    @luaparam ignore_int Whether or not it should ignore interference.
+ * @luafunc broadcast( p, msg, ignore_int )
  */
 static int pilotL_broadcast( lua_State *L )
 {
    Pilot *p;
    LuaPilot *lp;
    const char *msg;
+   int ignore_int;
 
    /* Parse parameters. */
    lp    = luaL_checkpilot(L,1);
    msg   = luaL_checkstring(L,2);
+   ignore_int = lua_toboolean(L,3);
 
    /* Check to see if pilot is valid. */
    p = pilot_get(lp->pilot);
@@ -675,7 +679,7 @@ static int pilotL_broadcast( lua_State *L )
       return 0;
 
    /* Broadcast message. */
-   pilot_broadcast( p, msg );
+   pilot_broadcast( p, msg, ignore_int );
    return 0;
 }
 
@@ -683,7 +687,9 @@ static int pilotL_broadcast( lua_State *L )
  * @brief Sends a message to the target or player if no target is passed.
  *
  * @usage p:comm( "How are you doing?" ) -- Messages the player
+ * @usage p:comm( "You got this?", true ) -- Messages the player ignoring interference
  * @usage p:comm( target, "Heya!" ) -- Messages target
+ * @usage p:comm( target, "Got this?", true ) -- Messages target ignoring interference
  *
  *    @luaparam p Pilot to message the player.
  *    @ulaparam target Target to send message to.
@@ -695,16 +701,19 @@ static int pilotL_comm( lua_State *L )
    Pilot *p, *t;
    LuaPilot *lp, *target;
    const char *msg;
+   int ignore_int;
 
    /* Parse parameters. */
    lp    = luaL_checkpilot(L,1);
-   if (lua_gettop(L) == 2) {
+   if (lua_isstring(L,2)) {
       target = NULL;
       msg   = luaL_checkstring(L,2);
+      ignore_int = lua_toboolean(L,3);
    }
    else {
       target = luaL_checkpilot(L,2);
       msg   = luaL_checkstring(L,3);
+      ignore_int = lua_toboolean(L,4);
    }
 
    /* Check to see if pilot is valid. */
@@ -724,7 +733,7 @@ static int pilotL_comm( lua_State *L )
    }
 
    /* Broadcast message. */
-   pilot_message( p, t->id, msg );
+   pilot_message( p, t->id, msg, ignore_int );
    return 0;
 }
 

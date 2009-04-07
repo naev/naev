@@ -483,8 +483,9 @@ int pilot_inRangePlanet( const Pilot *p, int target )
  *    @param p Pilot sending message.
  *    @param target Target of the message.
  *    @param msg The message.
+ *    @param ignore_int Whether or not should ignore interference.
  */
-void pilot_message( Pilot *p, unsigned int target, const char *msg )
+void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_int )
 {
    Pilot *t;
 
@@ -494,7 +495,7 @@ void pilot_message( Pilot *p, unsigned int target, const char *msg )
       return;
 
    /* Must be in range. */
-   if (!pilot_inRangePilot( p, t ))
+   if (!ignore_int && !pilot_inRangePilot( player, p ))
       return;
 
    /* Only really affects player atm. */
@@ -505,11 +506,19 @@ void pilot_message( Pilot *p, unsigned int target, const char *msg )
 
 /**
  * @brief Has the pilot broadcast a message.
+ *
+ *    @param p Pilot to broadcast the message.
+ *    @param msg Message to broadcast.
+ *    @param ignore_int Whether or not should ignore interference.
  */
-void pilot_broadcast( Pilot *p, const char *msg )
+void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
 {
    /* Only display if player exists and is in range. */
-   if ((player==NULL) || !pilot_inRangePilot( player, p ))
+   if (player==NULL)
+      return;
+
+   /* Check if should ignore interference. */
+   if (!ignore_int && !pilot_inRangePilot( player, p ))
       return;
 
    player_message( "Broadcast %s> \"%s\"", p->name, msg );
@@ -520,15 +529,19 @@ void pilot_broadcast( Pilot *p, const char *msg )
  * @brief Has the pilot broadcast a distress signal.
  *
  * Can do a faction hit on the player.
+ *
+ *    @param p Pilot to send distress signal.
+ *    @param msg Message in distress signal.
+ *    @param ignore_int Whether or not should ignore interference.
  */
-void pilot_distress( Pilot *p, const char *msg )
+void pilot_distress( Pilot *p, const char *msg, int ignore_int )
 {
    int i, r;
    Pilot *t;
 
    /* Broadcast the message. */
    if (msg[0] != '\0')
-      pilot_broadcast( p, msg );
+      pilot_broadcast( p, msg, ignore_int );
 
    /* Get the target to see if it's the player. */
    t = pilot_get(p->target);
@@ -542,7 +555,7 @@ void pilot_distress( Pilot *p, const char *msg )
    /* Check if planet is in range. */
    for (i=0; i<cur_system->nplanets; i++) {
       if (planet_hasService(cur_system->planets[i], PLANET_SERVICE_BASIC) &&
-            pilot_inRangePlanet(p, i) &&
+            (!ignore_int && pilot_inRangePlanet(p, i)) &&
             !areEnemies(p->faction, cur_system->planets[i]->faction)) {
          r = 1;
          break;
@@ -552,7 +565,7 @@ void pilot_distress( Pilot *p, const char *msg )
    /* Now we must check to see if a pilot is in range. */
    for (i=0; i<pilot_nstack; i++) {
       if ((pilot_stack[i]->id != p->id) &&
-            pilot_inRangePilot(p, pilot_stack[i])) {
+            (!ignore_int && pilot_inRangePilot(p, pilot_stack[i]))) {
 
          /* Send AI the distress signal. */
          if (pilot_stack[i]->ai != NULL)
