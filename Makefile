@@ -3,8 +3,6 @@
 #
 DEBUG := 1
 #DEBUG_PARANOID := 1
-export DEBUG
-export DEBUG_PARANOID
 
 
 # OS
@@ -12,7 +10,6 @@ export DEBUG_PARANOID
 # Possible choices: LINUX|FREEBSD|WIN32|MACOSX
 #
 OS ?= LINUX
-export OS
 
 
 # Data path

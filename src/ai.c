@@ -663,7 +663,7 @@ void ai_think( Pilot* pilot )
 
    /* other behaviours. */
    if (ai_isFlag(AI_DISTRESS))
-      pilot_distress(cur_pilot, aiL_distressmsg);
+      pilot_distress(cur_pilot, aiL_distressmsg, 0);
 }
 
 
@@ -2183,7 +2183,7 @@ static int aiL_comm( lua_State *L )
    s = luaL_checkstring(L,2);
 
    /* Send the message. */
-   pilot_message( cur_pilot, p, s );
+   pilot_message( cur_pilot, p, s, 0 );
 
    return 0;
 }
@@ -2196,7 +2196,7 @@ static int aiL_broadcast( lua_State *L )
    const char *str;
 
    str = luaL_checkstring(L,1);
-   pilot_broadcast( cur_pilot, str );
+   pilot_broadcast( cur_pilot, str, 0 );
 
    return 0;
 }
