@@ -74,6 +74,8 @@ Your comrades raise a cheer everyone shakes the postmasters hand.  One of them k
 
 -- Other text for the mission
    comm[8] = "You fled battle.  The Empire wont forget."
+   comm[9] = "Comm Trader>You're a coward, %s. You better hope I never see you again."
+   comm[10] = "Comm Trader>You're running away now, %s? The fight's finished, you know..."
    title[4] = "Good job"
    text[4] = [[You jump out of %s the sweat still running down your face.  The fight to clear the system was brief but intense.  After a moment, another ship enters on the same vector.  The blast marks on the sides of his craft show it too comes from combat with the pirates.  Your comm beeps.
 
@@ -96,6 +98,11 @@ end
 function create()
 
       this_planet, this_system = planet.get()
+      if ( this_system:hasPresence( "Pirate") or 
+           this_system:hasPresence( "Collective") or 
+           this_system:hasPresence( "FLF") ) 
+         then misn.finish(false) 
+      end
       planet_name = planet.name( this_planet)
       system_name = this_system:name()
       if tk.yesno( title[1], string.format( text[1], planet_name ) ) then
@@ -252,3 +259,14 @@ function congratulations()
 
 end
 
+function abort()
+
+      if victory ~= true then
+         player.modFaction( "Empire", -10)
+         player.modFaction( "Trader", -10)
+         player.msg( string.format( comm[9], player.name())
+      else
+         player.msg( string.format( comm[10], player.name())
+      end
+
+end
