@@ -1243,6 +1243,11 @@ static int gl_initExtensions (void)
    /* Clear values. */
    nglActiveTexture = NULL;
    nglMultiTexCoord2d = NULL;
+   nglGenBuffers = NULL;
+   nglBindBuffer = NULL;
+   nglBufferData = NULL;
+   nglBufferSubData = NULL;
+   nglDeleteBuffers = NULL;
 
    /* Multitexture. */
    if (gl_hasExt("GL_ARB_multitexture")) {
