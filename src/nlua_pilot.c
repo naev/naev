@@ -56,6 +56,7 @@ static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
 static int pilotL_warp( lua_State *L );
 static int pilotL_broadcast( lua_State *L );
+static int pilotL_comm( lua_State *L );
 static int pilotL_setFaction( lua_State *L );
 static int pilotL_setHostile( lua_State *L );
 static int pilotL_setFriendly( lua_State *L );
@@ -77,6 +78,7 @@ static const luaL_reg pilotL_methods[] = {
    { "vel", pilotL_velocity },
    { "warp", pilotL_warp },
    { "broadcast", pilotL_broadcast },
+   { "comm", pilotL_comm },
    { "setFaction", pilotL_setFaction },
    { "setHostile", pilotL_setHostile },
    { "setFriendly", pilotL_setFriendly },
@@ -673,7 +675,56 @@ static int pilotL_broadcast( lua_State *L )
       return 0;
 
    /* Broadcast message. */
-   player_message( "Broadcast %s> \"%s\"", p->name, msg );
+   pilot_broadcast( p, msg );
+   return 0;
+}
+
+/**
+ * @brief Sends a message to the target or player if no target is passed.
+ *
+ * @usage p:comm( "How are you doing?" ) -- Messages the player
+ * @usage p:comm( target, "Heya!" ) -- Messages target
+ *
+ *    @luaparam p Pilot to message the player.
+ *    @ulaparam target Target to send message to.
+ *    @luaparam msg Message to send.
+ * @luafunc comm( p, target, msg )
+ */
+static int pilotL_comm( lua_State *L )
+{
+   Pilot *p, *t;
+   LuaPilot *lp, *target;
+   const char *msg;
+
+   /* Parse parameters. */
+   lp    = luaL_checkpilot(L,1);
+   if (lua_gettop(L) == 2) {
+      target = NULL;
+      msg   = luaL_checkstring(L,2);
+   }
+   else {
+      target = luaL_checkpilot(L,2);
+      msg   = luaL_checkstring(L,3);
+   }
+
+   /* Check to see if pilot is valid. */
+   p = pilot_get(lp->pilot);
+   if (p == NULL) {
+      NLUA_ERROR(L,"Pilot param 1 not found in pilot stack!");
+      return 0;
+   }
+   if (target == NULL)
+      t = player;
+   else {
+      t = pilot_get(target->pilot);
+      if (t == NULL) {
+         NLUA_ERROR(L,"Pilot param 2 not found in pilot stack!");
+         return 0;
+      }
+   }
+
+   /* Broadcast message. */
+   pilot_message( p, t->id, msg );
    return 0;
 }
 
