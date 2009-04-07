@@ -14,11 +14,12 @@
 
 #include "weapon.h"
 
+#include "naev.h"
+
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "naev.h"
 #include "log.h"
 #include "rng.h"
 #include "pilot.h"

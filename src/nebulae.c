@@ -10,11 +10,12 @@
 
 #include "nebulae.h"
 
+#include "naev.h"
+
 #include <errno.h>
 
 #include "SDL_image.h"
 
-#include "naev.h"
 #include "log.h"
 #include "opengl.h"
 #include "opengl_ext.h"

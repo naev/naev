@@ -5,6 +5,8 @@
 
 #include "plasmaf.h"
 
+#include "naev.h"
+
 #include "math.h"
 
 #include "SDL.h"

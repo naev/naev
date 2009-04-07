@@ -11,12 +11,13 @@
 
 #include "options.h"
 
+#include "naev.h"
+
 #include <string.h>
 
 #include "SDL.h"
 
 #include "log.h"
-#include "naev.h"
 #include "input.h"
 #include "toolkit.h"
 #include "sound.h"

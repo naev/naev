@@ -1,4 +1,4 @@
-CFLAGS  := -O3
+CFLAGS  := -O2
 
 AR      := ar cr
 RANLIB  := ranlib

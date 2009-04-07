@@ -6,6 +6,8 @@
 
 #include "conf.h"
 
+#include "naev.h"
+
 #include <stdlib.h> /* atoi */
 #include <unistd.h> /* getopt */
 #include <string.h> /* strdup */
@@ -14,7 +16,6 @@
 #include "nlua.h"
 #include "lauxlib.h" /* luaL_dofile */
 
-#include "naev.h"
 #include "log.h"
 #include "player.h"
 #include "input.h"

@@ -111,16 +111,16 @@ extern Mission player_missions[MISSION_MAX]; /**< Player's active missions. */
  * creates missions for a planet and such
  */
 Mission* missions_computer( int *n, int faction,
-      char* planet, char* sysname ); /* for mission computer */
+      const char* planet, const char* sysname ); /* for mission computer */
 int mission_accept( Mission* mission ); /* player accepted mission - mission computer */
-void missions_run( int loc, int faction, char* planet, char* sysname );
-int mission_start( char *name );
+void missions_run( int loc, int faction, const char* planet, const char* sysname );
+int mission_start( const char *name );
 
 /*
  * misc
  */
 void missions_update( const double dt );
-int mission_getID( char* name );
+int mission_getID( const char* name );
 MissionData* mission_get( int id );
 void mission_sysMark (void);
 void mission_sysComputerMark( Mission* misn );
@@ -144,8 +144,8 @@ void missions_cleanup (void);
 /*
  * Actually in nlua_misn.h
  */
-int misn_tryRun( Mission *misn, char *func );
-int misn_run( Mission *misn, char *func );
+int misn_tryRun( Mission *misn, const char *func );
+int misn_run( Mission *misn, const char *func );
 
 
 #endif /* MISSION_H */

@@ -12,6 +12,7 @@
 #include "debris.h"
 
 #include "naev.h"
+
 #include "log.h"
 #include "pilot.h"
 #include "spfx.h"

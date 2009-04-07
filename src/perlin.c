@@ -43,13 +43,14 @@
 
 #include "perlin.h"
 
+#include "naev.h"
+
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "SDL.h"
 
-#include "naev.h"
 #include "log.h"
 #include "rng.h"
 #include "nfile.h"

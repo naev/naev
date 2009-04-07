@@ -10,9 +10,10 @@
 
 #include "nmath.h"
 
+#include "naev.h"
+
 #include <math.h>
 
-#include "naev.h"
 #include "log.h"
 
 

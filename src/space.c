@@ -10,12 +10,13 @@
 
 #include "space.h"
 
+#include "naev.h"
+
 #include <stdlib.h>
 #include <math.h>
 
 #include "nxml.h"
 
-#include "naev.h"
 #include "opengl.h"
 #include "log.h"
 #include "rng.h"
@@ -106,12 +107,8 @@ extern int pilot_nstack;
  * @struct Star
  *
  * @brief Represents a background star. */
-typedef struct Star_ {
-   double x; /**< X position of the star. */
-   double y; /**< Y position of the star. */
-   double brightness; /**< Brightness of the star, also affects movement speed. */
-} Star;
-static Star *stars = NULL; /**< star array */
+static GLfloat *star_vertex = NULL; /**< Vertex of the stars. */
+static GLfloat *star_colour = NULL; /**< Brightness of the stars. */
 static int nstars = 0; /**< total stars */
 static int mstars = 0; /**< memory stars are taking */
 
@@ -688,12 +685,24 @@ void space_init ( const char* sysname )
       else {
          /* Backrgound is Stary */
          nstars = (cur_system->stars*SCREEN_W*SCREEN_H+STAR_BUF*STAR_BUF)/(800*640);
-         if (mstars < nstars)
-            stars = realloc(stars,sizeof(Star)*nstars); /* should realloc, not malloc */
+         if (mstars < nstars) {
+            star_vertex = realloc( star_vertex, nstars * sizeof(GLfloat) * 4 );
+            star_colour = realloc( star_colour, nstars * sizeof(GLfloat) * 8 );
+            mstars = nstars;
+         }
          for (i=0; i < nstars; i++) {
-            stars[i].brightness = (double)RNG( 50, 200 )/256.;
-            stars[i].x = (double)RNG( -STAR_BUF, SCREEN_W + STAR_BUF );
-            stars[i].y = (double)RNG( -STAR_BUF, SCREEN_H + STAR_BUF );
+            /* Set the position. */
+            star_vertex[4*i+0] = RNGF()*(SCREEN_W + 2.*STAR_BUF) - STAR_BUF;
+            star_vertex[4*i+1] = RNGF()*(SCREEN_H + 2.*STAR_BUF) - STAR_BUF;
+            /* Set the colour. */
+            star_colour[8*i+0] = 1.;
+            star_colour[8*i+1] = 1.;
+            star_colour[8*i+2] = 1.;
+            star_colour[8*i+3] = RNGF()*0.6 + 0.2;
+            star_colour[8*i+4] = 1.;
+            star_colour[8*i+5] = 1.;
+            star_colour[8*i+6] = 1.;
+            star_colour[8*i+7] = 0.;
          }
       }
    }
@@ -1503,7 +1512,8 @@ void space_renderOverlay( const double dt )
 static void space_renderStars( const double dt )
 {
    int i;
-   double x, y, m, b;
+   GLfloat x, y, m, b;
+   GLfloat brightness;
 
    /*
     * gprof claims it's the slowest thing in the game!
@@ -1513,6 +1523,9 @@ static void space_renderStars( const double dt )
    glPushMatrix(); /* translation matrix */
       glTranslated( -(double)SCREEN_W/2., -(double)SCREEN_H/2., 0);
 
+   /* Enable vertex arrays. */
+   glEnableClientState(GL_VERTEX_ARRAY);
+   glEnableClientState(GL_COLOR_ARRAY);
 
    if (!player_isFlag(PLAYER_DESTROYED) && !player_isFlag(PLAYER_CREATING) &&
          pilot_isFlag(player,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
@@ -1524,8 +1537,6 @@ static void space_renderStars( const double dt )
       if (gl_has(OPENGL_AA_LINE))
          glEnable(GL_LINE_SMOOTH);
 
-      glBegin(GL_LINES);
-
       /* lines will be based on velocity */
       m  = HYPERSPACE_STARS_BLUR-player->ptimer;
       m /= HYPERSPACE_STARS_BLUR;
@@ -1533,14 +1544,17 @@ static void space_renderStars( const double dt )
       x = m*cos(VANGLE(player->solid->vel)+M_PI);
       y = m*sin(VANGLE(player->solid->vel)+M_PI);
 
+      /* Generate lines. */
       for (i=0; i < nstars; i++) {
-         glColor4d( 1., 1., 1., stars[i].brightness );
-         glVertex2d( stars[i].x, stars[i].y );
-         glColor4d( 1., 1., 1., 0. );
-         glVertex2d( stars[i].x + x*stars[i].brightness,
-               stars[i].y + y*stars[i].brightness );
+         brightness = star_colour[8*i+3];
+         star_vertex[4*i+2] = star_vertex[4*i+0] + x*brightness;
+         star_vertex[4*i+3] = star_vertex[4*i+1] + y*brightness;
       }
-      glEnd(); /* GL_LINES */
+
+      /* Draw the lines. */
+      glVertexPointer( 2, GL_FLOAT, 0, star_vertex );
+      glColorPointer(  4, GL_FLOAT, 0, star_colour );
+      glDrawArrays( GL_LINES, 0, nstars );
 
       if (gl_has(OPENGL_AA_LINE))
          glDisable(GL_LINE_SMOOTH);
@@ -1548,46 +1562,36 @@ static void space_renderStars( const double dt )
       glShadeModel(GL_FLAT);
    }
    else { /* normal rendering */
-      glBegin(GL_POINTS);
-
       if (!paused && !player_isFlag(PLAYER_DESTROYED) &&
             !player_isFlag(PLAYER_CREATING)) { /* update position */
          for (i=0; i < nstars; i++) {
 
             /* calculate new position */
-            b = 13.-10.*stars[i].brightness;
-            stars[i].x -= player->solid->vel.x/b*dt;
-            stars[i].y -= player->solid->vel.y/b*dt;
+            b = 13.-10.*star_colour[8*i+3];
+            star_vertex[4*i+0] -= (GLfloat)player->solid->vel.x / b*(GLfloat)dt;
+            star_vertex[4*i+1] -= (GLfloat)player->solid->vel.y / b*(GLfloat)dt;
 
             /* check boundries */
-            if (stars[i].x > SCREEN_W + STAR_BUF)
-               stars[i].x -= SCREEN_W + 2*STAR_BUF;
-            else if (stars[i].x < -STAR_BUF)
-               stars[i].x += SCREEN_W + 2*STAR_BUF;
-            if (stars[i].y > SCREEN_H + STAR_BUF)
-               stars[i].y -= SCREEN_H + 2*STAR_BUF;
-            else if (stars[i].y < -STAR_BUF)
-               stars[i].y += SCREEN_H + 2*STAR_BUF;
+            if (star_vertex[4*i+0] > SCREEN_W + STAR_BUF)
+               star_vertex[4*i+0] -= SCREEN_W + 2*STAR_BUF;
+            else if (star_vertex[4*i+0] < -STAR_BUF)
+               star_vertex[4*i+0] += SCREEN_W + 2*STAR_BUF;
+            if (star_vertex[4*i+1] > SCREEN_H + STAR_BUF)
+               star_vertex[4*i+1] -= SCREEN_H + 2*STAR_BUF;
+            else if (star_vertex[4*i+1] < -STAR_BUF)
+               star_vertex[4*i+1] += SCREEN_H + 2*STAR_BUF;
+         }
+      }
 
-            /* render */
-            if ((stars[i].x < SCREEN_W) && (stars[i].x > 0) &&
-                  (stars[i].y < SCREEN_H) && (stars[i].y > 0)) {
-               glColor4d( 1., 1., 1., stars[i].brightness );
-               glVertex2d( stars[i].x, stars[i].y );
-            }
-         }
-      }
-      else { /* just render */
-         for (i=0; i < nstars; i++) {
-            if ((stars[i].x < SCREEN_W) && (stars[i].x > 0) &&
-                  (stars[i].y < SCREEN_H) && (stars[i].y > 0)) {
-               glColor4d( 1., 1., 1., stars[i].brightness );
-               glVertex2d( stars[i].x, stars[i].y );
-            }
-         }
-      }
-      glEnd(); /* GL_POINTS */
+      /* Render. */
+      glVertexPointer( 2, GL_FLOAT, 2*sizeof(GL_FLOAT), star_vertex );
+      glColorPointer(  4, GL_FLOAT, 4*sizeof(GL_FLOAT), star_colour );
+      glDrawArrays( GL_POINTS, 0, nstars );
    }
+
+   /* Disable vertex array. */
+   glDisableClientState(GL_VERTEX_ARRAY);
+   glDisableClientState(GL_COLOR_ARRAY);
 
    glPopMatrix(); /* translation matrix */
 }
@@ -1661,8 +1665,14 @@ void space_exit (void)
    systems_mstack = 0;
 
    /* stars must be free too */
-   if (stars) free(stars);
-   stars = NULL;
+   if (star_vertex) {
+      free(star_vertex);
+      star_vertex = NULL;
+   }
+   if (star_colour) {
+      free(star_colour);
+      star_colour = NULL;
+   }
    nstars = 0;
    mstars = 0;
 }

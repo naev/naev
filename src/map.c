@@ -5,13 +5,14 @@
 
 #include "map.h"
 
+#include "naev.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 #include <float.h>
 
 #include "log.h"
-#include "naev.h"
 #include "toolkit.h"
 #include "space.h"
 #include "opengl.h"
@@ -257,7 +258,7 @@ static void map_update( unsigned int wid )
             faction_getStanding( standing / nstanding ) );
 
       /* Lower text if needed */
-      h = gl_printHeight( &gl_smallFont, 80, buf );
+      h = gl_printHeightRaw( &gl_smallFont, 80, buf );
       y = -100 - (h - gl_smallFont.h);
       window_moveWidget( wid, "txtSStanding", -20, y );
       window_moveWidget( wid, "txtStanding", -20, y-gl_smallFont.h-5 );
@@ -284,7 +285,7 @@ static void map_update( unsigned int wid )
    window_moveWidget( wid, "txtPlanets", -20, y-gl_smallFont.h-5 );
 
    /* Get the services */
-   h = gl_printHeight( &gl_smallFont, 80, buf );
+   h = gl_printHeightRaw( &gl_smallFont, 80, buf );
    y -= 40 + (h - gl_smallFont.h);
    window_moveWidget( wid, "txtSServices", -20, y );
    window_moveWidget( wid, "txtServices", -20, y-gl_smallFont.h-5 );

@@ -10,12 +10,13 @@
 
 #include "nlua_naev.h"
 
+#include "naev.h"
+
 #include "lauxlib.h"
 
 #include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
-#include "naev.h"
 
 
 /* naev */

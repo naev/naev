@@ -32,6 +32,8 @@
 
 #include "pack.h"
 
+#include "naev.h"
+
 #include <stdio.h> /* printf() */
 #include <fcntl.h> /* creat() and friends */
 #include <stdint.h> /* uint32_t */

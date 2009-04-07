@@ -19,8 +19,8 @@
 /* localised global */
 #include "SDL.h"
 
-#include "ncompat.h"
-#include "log.h"
+#include "naev.h"
+#include "log.h" /* for DEBUGGING */
 
 /* global */
 #include <string.h> /* strdup */
@@ -32,7 +32,6 @@
 #endif /* HAS_LINUX && defined(DEBUGGING) */
 
 /* local */
-#include "naev.h"
 #include "conf.h"
 #include "physics.h"
 #include "opengl.h"

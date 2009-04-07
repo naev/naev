@@ -11,6 +11,8 @@
 
 #include "nlua_misn.h"
 
+#include "naev.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -28,7 +30,6 @@
 #include "player.h"
 #include "mission.h"
 #include "log.h"
-#include "naev.h"
 #include "rng.h"
 #include "toolkit.h"
 #include "land.h"
@@ -49,9 +50,9 @@ static int misn_delete = 0; /**< if 1 delete current mission */
  * prototypes
  */
 /* static */
-static int misn_runTopStack( Mission *misn, char *func);
+static int misn_runTopStack( Mission *misn, const char *func);
 /* externed */
-int misn_run( Mission *misn, char *func );
+int misn_run( Mission *misn, const char *func );
 /* external */
 extern void mission_sysMark (void);
 
@@ -139,7 +140,7 @@ int lua_loadMisn( lua_State *L )
  *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
  *            and 0 normally.
  */
-int misn_tryRun( Mission *misn, char *func )
+int misn_tryRun( Mission *misn, const char *func )
 {
    /* Get the function to run. */
    lua_getglobal( misn->L, func );
@@ -159,7 +160,7 @@ int misn_tryRun( Mission *misn, char *func )
  *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
  *            and 0 normally.
  */
-int misn_run( Mission *misn, char *func )
+int misn_run( Mission *misn, const char *func )
 {
    /* Run the function. */
    lua_getglobal( misn->L, func );
@@ -175,7 +176,7 @@ int misn_run( Mission *misn, char *func )
  *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
  *            and 0 normally.
  */
-static int misn_runTopStack( Mission *misn, char *func)
+static int misn_runTopStack( Mission *misn, const char *func)
 {
    int i, ret;
    const char* err;

@@ -32,6 +32,8 @@
 
 #include "opengl.h"
 
+#include "naev.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -43,7 +45,6 @@
 #include "SDL_image.h"
 #include "SDL_version.h"
 
-#include "naev.h"
 #include "log.h"
 #include "opengl_ext.h"
 #include "ndata.h"
@@ -1242,6 +1243,11 @@ static int gl_initExtensions (void)
    /* Clear values. */
    nglActiveTexture = NULL;
    nglMultiTexCoord2d = NULL;
+   nglGenBuffers = NULL;
+   nglBindBuffer = NULL;
+   nglBufferData = NULL;
+   nglBufferSubData = NULL;
+   nglDeleteBuffers = NULL;
 
    /* Multitexture. */
    if (gl_hasExt("GL_ARB_multitexture")) {

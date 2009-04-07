@@ -12,12 +12,13 @@
 
 #include "nlua_vec2.h"
 
+#include "naev.h"
+
 #include "lauxlib.h"
 
 #include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
-#include "naev.h"
 
 
 /* Vector metatable methods */

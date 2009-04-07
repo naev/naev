@@ -12,10 +12,11 @@
 
 #include "nlua_space.h"
 
+#include "naev.h"
+
 #include "lauxlib.h"
 
 #include "log.h"
-#include "naev.h"
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_planet.h"

@@ -12,6 +12,7 @@
 #include "board.h"
 
 #include "naev.h"
+
 #include "log.h"
 #include "pilot.h"
 #include "player.h"

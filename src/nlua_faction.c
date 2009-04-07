@@ -12,10 +12,11 @@
 
 #include "nlua_faction.h"
 
+#include "naev.h"
+
 #include "lauxlib.h"
 
 #include "log.h"
-#include "naev.h"
 #include "nlua.h"
 #include "nluadef.h"
 #include "faction.h"

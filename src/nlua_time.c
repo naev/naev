@@ -10,6 +10,8 @@
 
 #include "nlua_time.h"
 
+#include "naev.h"
+
 #include <stdlib.h>
 
 #include "lauxlib.h"
@@ -17,7 +19,6 @@
 #include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
-#include "naev.h"
 #include "ntime.h"
 
 

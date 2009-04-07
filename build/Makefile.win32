@@ -1,16 +1,30 @@
 include build/Makefile.common
 
 #
+#   Win32 Shtuff
+#
+# This stuff needs to be set semi-manually on windows
+
+export OS
+C_COMPILER ?= gcc
+export CC := $(C_COMPILER)
+export RM := del /F
+DEPDIR ?= ../libs
+export DEPBINDIR := $(DEPDIR)/bin
+export DEPINCDIR := $(DEPDIR)/include
+export DEPLIBDIR := $(DEPDIR)/lib
+
+#
 #   CFLAGS
 #
 CLUA   := -Ilib/lua
 CCSPARSE := -Ilib/csparse
-CSDL   := $(shell sdl-config --cflags) -DGL_GLEXT_PROTOTYPES
-CXML   := $(shell xml2-config --cflags)
-CTTF   := $(shell freetype-config --cflags)
-CPNG   := $(shell libpng-config --cflags)
+CSDL   := -I$(DEPINCDIR)/SDL -D_GNU_SOURCE=1 -Dmain=SDL_main -DGL_GLEXT_PROTOTYPES
+CXML   := -I$(DEPINCDIR)/libxml2
+CTTF   := -I$(DEPINCDIR)/freetype2
+CPNG   := -I$(DEPINCDIR)
 CGL    :=
-CFLAGS := -Isrc $(CLUA) $(CCSPARSE) $(CSDL) $(CXML) $(CTTF) $(CPNG) $(CGL) $(VERSION) -D$(OS) $(CFLAGS_COMMON)
+CFLAGS := -D_GNU_SOURCE -Isrc -I$(DEPINCDIR) $(CLUA) $(CCSPARSE) $(CSDL) $(CXML) $(CTTF) $(CPNG) $(CGL) $(VERSION) -D$(OS) $(CFLAGS_COMMON)
 
 
 
@@ -19,12 +33,14 @@ CFLAGS := -Isrc $(CLUA) $(CCSPARSE) $(CSDL) $(CXML) $(CTTF) $(CPNG) $(CGL) $(VER
 #
 LDLUA   := lib/lua/liblua.a
 LDCSPARSE := lib/csparse/libcsparse.a
-LDSDL   := $(shell sdl-config --libs) -lSDL_image -lSDL_mixer
-LDXML   := $(shell xml2-config --libs)
-LDTTF   := $(shell freetype-config --libs)
-LDPNG   := $(shell libpng-config --libs)
-LDGL    := -lglu32 -lopengl32
-LDFLAGS := -lmingw32 -mwindows -lm $(LDLUA) $(LDCSPARSE) $(LDSDL) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
+LDSDL   := -lSDL -lSDLmain
+LDSDLALL := $(LDSDL) -lSDL_image -lSDL_mixer
+LDXML   := -llibxml2 -lz -liconv -lwsock32
+LDTTF   := -lfreetype -lz -lintl -lwsock32 -lole32 -luuid -lmsvcp60
+LDPNG   := -lpng12
+LDGL    :=
+#LDGL    := -lglu32 -lopengl32
+LDFLAGS := -lmingw32 -mwindows -lm -L$(DEPBINDIR) -L$(DEPLIBDIR) $(LDLUA) $(LDCSPARSE) $(LDSDLALL) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
 
 # Debug stuff
 ifdef DEBUG
@@ -85,11 +101,11 @@ lib/csparse/libcsparse.a:
 	+@$(MAKE) -C lib/csparse
 
 
-pack: src/md5.c src/pack.c utils/pack/main.c
+pack: src/md5.o src/pack.o utils/pack/main.o
 	+@$(MAKE) -C utils/pack
 
 
-mkspr: utils/mkspr/main.c
+mkspr: utils/mkspr/main.o
 	+@$(MAKE) -C utils/mkspr
 
 
@@ -107,7 +123,7 @@ utils: pack mkspr
 
 
 docs:
-	+@$(MAKE) -C docs/
+	@echo "The 'docs' target is not supported on this platform"
 
 
 clean:

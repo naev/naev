@@ -11,6 +11,8 @@
 
 #include "spfx.h"
 
+#include "naev.h"
+
 #include <inttypes.h>
 
 #include "SDL.h"
@@ -18,7 +20,6 @@
 #include "SDL_haptic.h"
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
-#include "naev.h"
 #include "log.h"
 #include "pilot.h"
 #include "physics.h"

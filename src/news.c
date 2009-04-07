@@ -11,10 +11,11 @@
 
 #include "news.h"
 
+#include "naev.h"
+
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "naev.h"
 #include "log.h"
 #include "nlua.h"
 #include "nluadef.h"

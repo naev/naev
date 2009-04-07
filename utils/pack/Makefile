@@ -5,7 +5,11 @@ LOCALDIR := utils/pack/
 
 COBJS    := $(SRCDIR)pack.o $(SRCDIR)md5.o main.o
 
+ifeq ($(OS),WIN32)
+CFLAGS   += -D_GNU_SOURCE -W -Wall -I$(ROOTDIR)$(DEPINCDIR)/SDL -D_GNU_SOURCE=1 -Dmain=SDL_main -DGL_GLEXT_PROTOTYPES -I$(ROOTDIR)$(DEPINCDIR)
+else
 CFLAGS   += -W -Wall $(shell sdl-config --cflags)
+endif
 ifdef DEBUG
 CFLAGS   += -I$(SRCDIR) -g -DDEBUG
 ifdef DEBUG_PARANOID
@@ -14,7 +18,11 @@ endif
 else
 CFLAGS   += -I$(SRCDIR) -O2
 endif
-LDFLAGS  := $(shell sdl-config --libs)
+ifeq ($(OS),WIN32)
+LDFLAGS  += -lmingw32 -mwindows -lSDL -lSDLmain -L$(ROOTDIR)$(DEPBINDIR) -L$(ROOTDIR)$(DEPLIBDIR)
+else
+LDFLAGS  += $(shell sdl-config --libs)
+endif
 
 APPNAME  := pack
 

@@ -11,6 +11,8 @@
 
 #include "mission.h"
 
+#include "naev.h"
+
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
@@ -20,7 +22,6 @@
 #include "nlua_space.h"
 #include "nlua_faction.h"
 #include "rng.h"
-#include "naev.h"
 #include "log.h"
 #include "hook.h"
 #include "ndata.h"
@@ -61,9 +62,10 @@ static int mission_init( Mission* mission, MissionData* misn, int load );
 static void mission_freeData( MissionData* mission );
 static int mission_alreadyRunning( MissionData* misn );
 static int mission_meetCond( MissionData* misn );
-static int mission_meetReq( int mission, int faction, char* planet, char* sysname );
+static int mission_meetReq( int mission, int faction,
+      const char* planet, const char* sysname );
 static int mission_matchFaction( MissionData* misn, int faction );
-static int mission_location( char* loc );
+static int mission_location( const char* loc );
 static MissionData* mission_parse( const xmlNodePtr parent );
 static int missions_parseActive( xmlNodePtr parent );
 static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int intable );
@@ -99,7 +101,7 @@ static unsigned int mission_genID (void)
  *    @param name Name to match.
  *    @return id of the matching mission.
  */
-int mission_getID( char* name )
+int mission_getID( const char* name )
 {
    int i;
 
@@ -166,6 +168,10 @@ static int mission_init( Mission* mission, MissionData* misn, int load )
 
    /* load the file */
    buf = ndata_read( misn->lua, &bufsize );
+   if (buf == NULL) {
+      WARN("Mission '%s' Lua script not found.", misn->lua );
+      return -1;
+   }
    if (luaL_dobuffer(mission->L, buf, bufsize, misn->lua) != 0) {
       WARN("Error loading mission file: %s\n"
           "%s\n"
@@ -295,7 +301,8 @@ static int mission_meetCond( MissionData* misn )
  *    @param sysname Name of the current system.
  *    @return 1 if requirements are met, 0 if they aren't.
  */
-static int mission_meetReq( int mission, int faction, char* planet, char* sysname )
+static int mission_meetReq( int mission, int faction,
+      const char* planet, const char* sysname )
 {
    MissionData* misn;
 
@@ -337,7 +344,7 @@ static int mission_meetReq( int mission, int faction, char* planet, char* sysnam
  *    @param planet Name of the current planet.
  *    @param sysname Name of the current system.
  */
-void missions_run( int loc, int faction, char* planet, char* sysname )
+void missions_run( int loc, int faction, const char* planet, const char* sysname )
 {
    MissionData* misn;
    Mission mission;
@@ -373,7 +380,7 @@ void missions_run( int loc, int faction, char* planet, char* sysname )
  *    @param name Name of the mission to start.
  *    @return 0 on success.
  */
-int mission_start( char *name )
+int mission_start( const char *name )
 {
    Mission mission;
    MissionData *mdat;
@@ -600,7 +607,8 @@ static int mission_matchFaction( MissionData* misn, int faction )
  *    @param sysname Name of the current system.
  *    @return The stack of Missions created with n members.
  */
-Mission* missions_computer( int *n, int faction, char* planet, char* sysname )
+Mission* missions_computer( int *n, int faction,
+      const char* planet, const char* sysname )
 {
    int i,j, m;
    double chance;
@@ -641,7 +649,7 @@ Mission* missions_computer( int *n, int faction, char* planet, char* sysname )
  *    @param loc String to get the location of.
  *    @return Location matching loc.
  */
-static int mission_location( char* loc )
+static int mission_location( const char* loc )
 {
    if (strcmp(loc,"None")==0) return MIS_AVAIL_NONE;
    else if (strcmp(loc,"Computer")==0) return MIS_AVAIL_COMPUTER;
@@ -1198,6 +1206,7 @@ int missions_loadActive( xmlNodePtr parent )
 static int missions_parseActive( xmlNodePtr parent )
 {
    Mission *misn;
+   MissionData *data;
    int m, i;
    char *buf;
 
@@ -1211,7 +1220,14 @@ static int missions_parseActive( xmlNodePtr parent )
 
          /* process the attributes to create the mission */
          xmlr_attr(node,"data",buf);
-         mission_init( misn, mission_get(mission_getID(buf)), 1 );
+         data = mission_get(mission_getID(buf));
+         if (data == NULL) {
+            WARN("Mission '%s' from savegame not found in game - ignoring.", buf);
+            free(buf);
+            continue;
+         }
+         else
+            mission_init( misn, data, 1 );
          free(buf);
 
          /* this will orphan an identifier */

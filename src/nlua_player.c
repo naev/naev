@@ -11,6 +11,8 @@
 
 #include "nlua_misn.h"
 
+#include "naev.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -24,7 +26,6 @@
 #include "nlua_pilot.h"
 #include "nlua_vec2.h"
 #include "log.h"
-#include "naev.h"
 #include "player.h"
 
 
@@ -150,7 +151,7 @@ static int player_msg( lua_State *L )
    const char* str;
 
    str = luaL_checkstring(L,1);
-   player_message(str);
+   player_messageRaw(str);
 
    return 0;
 }

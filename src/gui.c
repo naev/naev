@@ -11,11 +11,13 @@
 
 #include "gui.h"
 
+#include "naev.h"
+
 #include <stdlib.h>
+#include <string.h>
 
 #include "player.h"
 #include "nxml.h"
-#include "naev.h"
 #include "pilot.h"
 #include "log.h"
 #include "opengl.h"
@@ -231,6 +233,28 @@ void gui_setDefaults (void)
 }
 
 
+/**
+ * @brief Adds a mesg to the queue to be displayed on screen.
+ *
+ *    @param str Message to add.
+ */
+void player_messageRaw ( const char *str )
+{
+   int i;
+
+   /* copy old messages back */
+   for (i=1; i<mesg_max; i++) {
+      if (mesg_stack[mesg_max-i-1].str[0] != '\0') {
+         strcpy(mesg_stack[mesg_max-i].str, mesg_stack[mesg_max-i-1].str);
+         mesg_stack[mesg_max-i].t = mesg_stack[mesg_max-i-1].t;
+      }
+   }
+
+   /* add the new one */
+   strncpy( mesg_stack[0].str, str, MESG_SIZE_MAX );
+
+   mesg_stack[0].t = mesg_timeout;
+}
 
 /**
  * @brief Adds a mesg to the queue to be displayed on screen.

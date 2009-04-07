@@ -13,10 +13,11 @@
 
 #include "ndata.h"
 
+#include "naev.h"
+
 #include "SDL.h"
 #include "SDL_mutex.h"
 
-#include "naev.h"
 #include "log.h"
 #include "md5.h"
 #include "nxml.h"

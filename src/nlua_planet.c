@@ -10,6 +10,8 @@
 
 #include "nlua_planet.h"
 
+#include "naev.h"
+
 #include "lauxlib.h"
 
 #include "nlua.h"
@@ -18,7 +20,6 @@
 #include "nlua_vec2.h"
 #include "nlua_system.h"
 #include "log.h"
-#include "naev.h"
 #include "rng.h"
 #include "land.h"
 #include "map.h"
@@ -195,6 +196,7 @@ static int planetL_get( lua_State *L )
          lua_pushsystem(L,sys);
          return 2;
       }
+      NLUA_ERROR(L,"Attempting to get landed planet when player not landed.");
       return 0; /* Not landed. */
    }
 

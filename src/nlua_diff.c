@@ -11,6 +11,8 @@
 
 #include "nlua_diff.h"
 
+#include "naev.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -22,7 +24,6 @@
 #include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
-#include "naev.h"
 #include "unidiff.h"
 
 

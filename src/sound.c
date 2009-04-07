@@ -11,13 +11,14 @@
 
 #include "sound.h"
 
+#include "naev.h"
+
 #include <sys/stat.h>
 
 #include "SDL.h"
 #include "SDL_thread.h"
 #include "SDL_mixer.h"
 
-#include "naev.h"
 #include "log.h"
 #include "ndata.h"
 #include "music.h"

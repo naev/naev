@@ -79,6 +79,7 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
       const int width );
 int gl_printWidthRaw( const glFont *ft_font, const char *text );
 int gl_printWidth( const glFont *ft_font, const char *fmt, ... );
+int gl_printHeightRaw( const glFont *ft_font, const int width, const char *text );
 int gl_printHeight( const glFont *ft_font,
       const int width, const char *fmt, ... );
 

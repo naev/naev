@@ -11,13 +11,14 @@
 
 #include "faction.h"
 
+#include "naev.h"
+
 #include <stdlib.h>
 #include <string.h>
 
 #include "nxml.h"
 
 #include "opengl.h"
-#include "naev.h"
 #include "log.h"
 #include "ndata.h"
 #include "rng.h"

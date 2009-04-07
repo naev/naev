@@ -56,6 +56,8 @@
 
 #include "ai.h"
 
+#include "naev.h"
+
 #include <stdlib.h>
 #include <stdio.h> /* malloc realloc */
 #include <string.h> /* strncpy strlen strncat strcmp strdup */
@@ -65,7 +67,6 @@
 #include "lauxlib.h"
 #include "lualib.h"
 
-#include "naev.h"
 #include "log.h"
 #include "pilot.h"
 #include "player.h"

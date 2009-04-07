@@ -11,11 +11,12 @@
 
 #include "toolkit.h"
 
+#include "naev.h"
+
 #include <stdarg.h>
 
 #include "tk/toolkit_priv.h"
 
-#include "naev.h"
 #include "log.h"
 #include "pause.h"
 #include "opengl.h"

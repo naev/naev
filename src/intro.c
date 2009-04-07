@@ -14,11 +14,12 @@
 
 #include "intro.h"
 
+#include "naev.h"
+
 #include <string.h>
 
 #include "SDL.h"
 
-#include "naev.h"
 #include "log.h"
 #include "ndata.h"
 #include "font.h"

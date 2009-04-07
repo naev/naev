@@ -64,13 +64,38 @@ function jump ()
    local factions = sys:faction()
 
    -- Create some havoc
-   if factions["Collective"] then
+   if misn_stage == 1 and sys == misn_target_sys then
+      d = rnd.rnd( 900, 1200 )
+      a = rnd.rnd() * 2 * math.pi
+      swarm_position = vec2.new( d*math.cos(a), d*math.sin(a) )
+      pilot.add("Collective Sml Swarm", "def", swarm_position)
+      misn.timerStart( "reinforcements", 3000 )
+      misn.timerStart( "drone_incoming", 9000 )
+   elseif factions["Collective"] then
       pilot.add("Collective Sml Swarm")
       pilot.add("Collective Sml Swarm")
    elseif sys == blockade_sys then
       pilot.add("Collective Sml Swarm")
       pilot.add("Collective Sml Swarm")
+      pilot.add("Collective Sml Swarm")
       pilot.add("Empire Sml Defense")
+      pilot.add("Empire Sml Defense")
+   end
+end
+
+-- Creates reinforcements
+function reinforcements ()
+   player.msg("Reinforcements are here!")
+   pilot.add("Empire Med Attack")
+end
+
+
+-- Creates more drones
+function drone_incoming ()
+   local sys = system.get()
+   if sys == misn_target_sys then -- Not add indefinately
+      pilot.add("Collective Sml Swarm")
+      misn.timerStart( "drone_incoming", 9000 )
    end
 end
 

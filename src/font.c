@@ -21,11 +21,12 @@
 
 #include "font.h"
 
+#include "naev.h"
+
 #include "ft2build.h"
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
 
-#include "naev.h"
 #include "log.h"
 #include "ndata.h"
 
@@ -497,6 +498,41 @@ int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
    return gl_printWidthRaw( ft_font, text );
 }
 
+
+/**
+ * @brief Gets the height of a non-formatted string.
+ *
+ * Does not display the text on screen.
+ *
+ *    @param ft_font Font to use (NULL defaults to gl_defFont).
+ *    @param width Width to jump to next line once reached.
+ *    @param fmt Text to get the height of in printf format.
+ *    @return The height of the text.
+ */
+int gl_printHeightRaw( const glFont *ft_font,
+      const int width, const char *text )
+{
+   int i, p;
+   double y;
+
+   if (ft_font == NULL)
+      ft_font = &gl_defFont;
+
+   /* Check 0 length strings. */
+   if (text[0] == '\0')
+      return 0;
+
+   y = 0.;
+   p = 0;
+   do {
+      i = gl_printWidthForText( ft_font, &text[p], width );
+      p += i + 1;
+      y += 1.5*(double)ft_font->h; /* move position down */
+   } while (text[p-1] != '\0');
+
+   return (int) (y - 0.5*(double)ft_font->h);
+}
+
 /**
  * @brief Gets the height of the text if it were printed.
  *
@@ -512,11 +548,6 @@ int gl_printHeight( const glFont *ft_font,
 {
    char text[1024]; /* holds the string */
    va_list ap;
-   int i, p;
-   double y;
-
-   if (ft_font == NULL)
-      ft_font = &gl_defFont;
 
    if (fmt == NULL) return -1;
    else { /* convert the symbols to text */
@@ -525,19 +556,7 @@ int gl_printHeight( const glFont *ft_font,
       va_end(ap);
    }
 
-   /* Check 0 length strings. */
-   if (text[0] == '\0')
-      return 0;
-
-   y = 0.;
-   p = 0;
-   do {
-      i = gl_printWidthForText( ft_font, &text[p], width );
-      p += i + 1;
-      y += 1.5*(double)ft_font->h; /* move position down */
-   } while (text[p-1] != '\0');
-
-   return (int) (y - 0.5*(double)ft_font->h);
+   return gl_printHeightRaw( ft_font, width, text );
 }
 
 

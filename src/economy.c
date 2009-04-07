@@ -15,13 +15,14 @@
 
 #include "economy.h"
 
+#include "naev.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
 
 #include "cs.h"
 
-#include "naev.h"
 #include "nxml.h"
 #include "ndata.h"
 #include "log.h"

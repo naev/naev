@@ -10,10 +10,11 @@
 
 #include "save.h"
 
+#include "naev.h"
+
 #include <stdio.h> /* remove() */
 #include <errno.h> /* errno */
 
-#include "naev.h"
 #include "log.h"
 #include "nxml.h"
 #include "player.h"

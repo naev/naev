@@ -11,12 +11,13 @@
 
 #include "nlua_music.h"
 
+#include "naev.h"
+
 #include "SDL.h"
 
 #include "nlua.h"
 #include "nluadef.h"
 #include "music.h"
-#include "naev.h"
 #include "log.h"
 #include "ndata.h"
 

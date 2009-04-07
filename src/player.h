@@ -74,6 +74,7 @@ void player_render( double dt );
 /*
  * misc
  */
+void player_messageRaw ( const char *str );
 void player_message ( const char *fmt, ... );
 void player_clear (void);
 void player_warp( const double x, const double y );
