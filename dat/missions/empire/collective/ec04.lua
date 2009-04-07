@@ -77,6 +77,7 @@ function jump ()
    elseif sys == blockade_sys then
       pilot.add("Collective Sml Swarm")
       pilot.add("Collective Sml Swarm")
+      pilot.add("Collective Sml Swarm")
       pilot.add("Empire Sml Defense")
       pilot.add("Empire Sml Defense")
    end
