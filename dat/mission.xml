@@ -267,4 +267,17 @@
    <faction>Dvaered</faction>
   </avail>
  </mission>
+ <mission name="NAEV Needs You!">
+  <lua>naev_needs_YOU</lua>
+  <avail>
+   <cond></cond>
+   <chance>10</chance>
+   <location>Land</location>
+   <faction>Independent</faction>
+   <faction>Empire</faction>
+   <faction>Dvaered</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+  </avail>
+ </mission>
 </Missions>
