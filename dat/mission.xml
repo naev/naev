@@ -269,8 +269,10 @@
  </mission>
  <mission name="NAEV Needs You!">
   <lua>naev_needs_YOU</lua>
+  <flags>
+   <unique />
+  </flags>
   <avail>
-   <cond></cond>
    <chance>10</chance>
    <location>Land</location>
    <faction>Independent</faction>
