@@ -34,6 +34,7 @@ static int player_getname( lua_State *L );
 static int player_shipname( lua_State *L );
 static int player_freeSpace( lua_State *L );
 static int player_pay( lua_State *L );
+static int player_credits( lua_State *L );
 static int player_msg( lua_State *L );
 static int player_modFaction( lua_State *L );
 static int player_modFactionRaw( lua_State *L );
@@ -46,6 +47,7 @@ static const luaL_reg player_methods[] = {
    { "ship", player_shipname },
    { "freeCargo", player_freeSpace },
    { "pay", player_pay },
+   { "credits", player_credits },
    { "msg", player_msg },
    { "modFaction", player_modFaction },
    { "modFactionRaw", player_modFactionRaw },
@@ -128,6 +130,8 @@ static int player_freeSpace( lua_State *L )
 /**
  * @brief Pays the player an amount of money.
  *
+ * @usage player.pay( 500 ) -- Gives player 500 credits
+ *
  *    @luaparam amount Amount of money to pay the player in credits.
  * @luafunc pay( amount )
  */
@@ -139,6 +143,19 @@ static int player_pay( lua_State *L )
    player->credits += money;
 
    return 0;
+}
+/**
+ * @brief Gets how many credits the player has on him.
+ *
+ * @usage monies = player.credits()
+ *
+ *    @luareturn The amount of credits the player has on him.
+ * @luafunc credits()
+ */
+static int player_credits( lua_State *L )
+{
+   lua_pushnumber(L,player->credits);
+   return 1;
 }
 /**
  * @brief Sends the player an ingame message.
