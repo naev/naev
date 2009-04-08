@@ -24,7 +24,7 @@ else -- default english
    text = {}
    text[1] = [[You notice Sergeant Dimitri at the bar you calls you over.
 "We managed to capture the drone after you located it.  It didn't seem to be in good health.  Our scientists are studying it as we speak, but we've found something strange in it.  Some sort of weird wireless module.  We'd like you to go run through the Collective systems to see if you can pick up any strange wireless communications.  Just do a quick run through, be careful of the Collective though.  You interested in doing the run?  It'll be dangerous."]]
-   text[2] = [["Just run through some systems while keeping your communications system on logging.  We'll parse the results when you get back.  Good luck."]]
+   text[2] = [["Just run through some systems while keeping your communications system on logging.  We'll parse the results when you get back.  With just visiting 2 or 3 Collective systems it should be more then enough.  Good luck."]]
    text[3] = [[After landing Sergeant Dimitri greets you on the land pad.
 "I suppose all went well?  Those drones can really give a beating.  We'll have the researchers start looking at your logs right away.  Meet me in the bar again in a while."]]
 end
@@ -44,6 +44,7 @@ function create()
       misn.setTitle(misn_title)
       misn.setReward( misn_reward )
       misn.setDesc(misn_desc[1])
+      misn.setMarker( system.get("C-00"), "misc" )
 
       tk.msg( title[2], text[2] )
 
@@ -64,8 +65,9 @@ function enter()
          misn.setDesc( string.format(misn_desc[2],
                misn_base:name(), misn_base_sys:name()) )
          misn_stage = 1
-         misn.setMarker(misn_base_sys) -- now we mark return to base
+         misn.setMarker(misn_base_sys, "misc") -- now we mark return to base
          hook.land("land")
+         player.msg("You have enough recordings, return to base.");
       end
    end
 end
