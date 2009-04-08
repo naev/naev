@@ -102,6 +102,7 @@ extern int hyperspace_target; /**< from player.c */
 /*
  * prototypes
  */
+static void land_cleanupWindow( unsigned int wid, char *name );
 static void land_buttonTakeoff( unsigned int wid, char *unused );
 /* commodity exchange */
 static void commodity_exchange_open( unsigned int parent, char* str );
@@ -1464,6 +1465,25 @@ static void land_buttonTakeoff( unsigned int wid, char *unused )
 
 
 /**
+ * @brief Cleans up the land window.
+ *
+ *    @param wid Window closing.
+ *    @param name Unused.
+ */
+static void land_cleanupWindow( unsigned int wid, char *name )
+{
+   (void) wid;
+   (void) name;
+
+   /* Clean up possible stray graphic. */
+   if (gfx_exterior != NULL) {
+      gl_freeTexture( gfx_exterior );
+      gfx_exterior = NULL;
+   }
+}
+
+
+/**
  * @brief Opens up all the land dialogue stuff.
  *    @param p Planet to open stuff for.
  */
@@ -1478,6 +1498,8 @@ void land( Planet* p )
    land_planet = p;
    gfx_exterior = gl_newImage( p->gfx_exterior, 0 );
    land_wid = window_create( p->name, -1, -1, LAND_WIDTH, LAND_HEIGHT );
+   window_onClose( land_wid, land_cleanupWindow );
+
    
    /*
     * Faction logo.
