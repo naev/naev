@@ -644,7 +644,7 @@ void gui_render( double dt )
    gui_renderHealth( &gui.shield, player->shield / player->shield_max );
    gui_renderHealth( &gui.armour, player->armour / player->armour_max );
    gui_renderHealth( &gui.energy, player->energy / player->energy_max );
-   gui_renderHealth( &gui.fuel,   player->fuel / player->fuel_max );
+   gui_renderHealth( &gui.fuel, player->fuel / player->fuel_max );
 
 
    /* 
@@ -1297,9 +1297,14 @@ static void gui_renderHealth( const HealthBar *bar, const double w )
        * y = slope * x + offset
        * w = 1 / area * ( slope * x^2 / 2 + offset )
        * we need to isolate x. */
-      nmath_solve2Eq( res, bar->slope / 2.,
-            bar->offset, -bar->area * w );
-      rw = res[0] / bar->gfx->sw;
+      if (nmath_solve2Eq( res, bar->slope / 2.,
+            bar->offset, -bar->area * w ))
+         WARN("Failed to solve equation: %f*x^2 + %f*x + %f = 0",
+                bar->slope / 2., bar->offset, -bar->area * w );
+      if (res[0] > 0.)
+         rw = res[0] / bar->gfx->sw;
+      else
+         rw = res[1] / bar->gfx->sw;
 
       /* Set the position values. */
       x = bar->rect.x - SCREEN_W/2.;
@@ -1554,6 +1559,9 @@ static int gui_parseBar( xmlNodePtr parent, HealthBar *bar, const glColour *col 
    double x, y, m, n;
    double sumx, sumy, sumxx, sumxy;
 
+   /* Clear memory. */
+   memset( bar, 0, sizeof(HealthBar) );
+
    /* Parse the rectangle. */
    rect_parse( parent, &bar->rect.x, &bar->rect.y,
          &bar->rect.w, &bar->rect.h );
@@ -1605,7 +1613,8 @@ static int gui_parseBar( xmlNodePtr parent, HealthBar *bar, const glColour *col 
 
       /* Check to see if area is the top triangle or bottom one. */
       m = sumx / n;
-      if ((bar->slope/2. * pow(m, 2.) + bar->offset * m) > (sumy / n)) {
+      if (sumy/n < bar->gfx->sh/2.) {
+      /*if ((bar->slope/2. * pow(m, 2.) + bar->offset * m) < (sumy / n)) {*/
          bar->slope = -bar->slope;
          bar->offset = bar->gfx->sh - bar->offset;
          bar->area = (bar->gfx->sw * bar->gfx->sh) - bar->area;
