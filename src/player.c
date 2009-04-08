@@ -1213,8 +1213,8 @@ void player_brokeHyperspace (void)
    double d;
 
    /* calculates the time it takes, call before space_init */
-   tl = (unsigned int) floor( sqrt( (double)player->solid->mass)/5. );
-   th = (unsigned int) ceil( sqrt( (double)player->solid->mass)/5. );
+   tl = (unsigned int) floor( sqrt( player->solid->mass)/5. );
+   th = (unsigned int) ceil( sqrt( player->solid->mass)/5. );
    tl *= NTIME_UNIT_LENGTH;
    th *= NTIME_UNIT_LENGTH;
    ntime_inc( RNG( tl, th ) );
