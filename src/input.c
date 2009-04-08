@@ -466,9 +466,9 @@ static void input_key( int keynum, double value, double kabs )
     */
    /* accelerating */
    if (KEY("accel")) {
-      if (kabs) {
+      if (kabs >= 0.) {
          player_abortAutonav(NULL);
-         player_accel(value);
+         player_accel(kabs);
       }
       else { /* prevent it from getting stuck */
          if (value==KEY_PRESS) {
@@ -478,17 +478,18 @@ static void input_key( int keynum, double value, double kabs )
             
          else if (value==KEY_RELEASE)
             player_accelOver();
+
+         /* double tap accel = afterburn! */
+         t = SDL_GetTicks();
+         if ((input_afterburnSensitivity != 0) &&
+               (value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD() &&
+               (t-input_accelLast <= input_afterburnSensitivity))
+            player_afterburn();
+         else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_AFTERBURNER))
+            player_afterburnOver();
+
+         if (value==KEY_PRESS) input_accelLast = t;
       }
-
-      /* double tap accel = afterburn! */
-      t = SDL_GetTicks();
-      if ((value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD() &&
-            (t-input_accelLast <= input_afterburnSensitivity))
-         player_afterburn();
-      else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_AFTERBURNER))
-         player_afterburnOver();
-
-      if (value==KEY_PRESS) input_accelLast = t;
    /* Afterburning. */
    } else if (KEY("afterburn") && INGAME() && NOHYP() && NODEAD()) {
       if (value==KEY_PRESS)
@@ -498,10 +499,10 @@ static void input_key( int keynum, double value, double kabs )
 
    /* turning left */
    } else if (KEY("left")) {
-      if (kabs) {
+      if (kabs >= 0.) {
          player_abortAutonav(NULL);
          player_setFlag(PLAYER_TURN_LEFT); 
-         player_left = value;
+         player_left = kabs;
       }
       else {
          /* set flags for facing correction */
@@ -518,10 +519,10 @@ static void input_key( int keynum, double value, double kabs )
 
    /* turning right */
    } else if (KEY("right")) {
-      if (kabs) {
+      if (kabs >= 0.) {
          player_abortAutonav(NULL);
          player_setFlag(PLAYER_TURN_RIGHT);
-         player_right = value;
+         player_right = kabs;
       }
       else {
          /* set flags for facing correction */
@@ -764,7 +765,7 @@ static void input_joyevent( const int event, const SDLKey button )
    for (i=0; strcmp(keybindNames[i],"end"); i++)
       if ((input_keybinds[i]->type == KEYBIND_JBUTTON) &&
             (input_keybinds[i]->key == button))
-         input_key(i, event, 0.);
+         input_key(i, event, -1.);
 }
 
 
@@ -791,7 +792,7 @@ static void input_keyevent( const int event, SDLKey key, const SDLMod mod )
          if ((input_keybinds[i]->mod == mod_filtered) ||
                (input_keybinds[i]->mod == KMOD_ALL) ||
                (event == KEY_RELEASE)) /**< Release always gets through. */
-            input_key(i, event, 0.);
+            input_key(i, event, -1.);
             /* No break so all keys get pressed if needed. */
       }
    }
