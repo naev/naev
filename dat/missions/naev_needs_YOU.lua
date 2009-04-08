@@ -31,7 +31,7 @@ Then a voice speaks, louder than an earthquake.  It seems to sound inside your b
 
 Another voice laughs, musically, as if world itself were singing.  "bobbens, did you just destroy the universe, again?"
 
-"Mmmm, hold on," first voice rumbles.  "...SIGSEGV... libc start main+0xe5... ah ha!  There's the problem."  You feel something fundamental in the fabric of reality change.  The sensation is like sneezing and hiccupping at the same time.  "There that should fix it."
+"Mmmm, hold on," first voice rumbles.  "...SIGSEGV... libc start main+0xe5... ah ha!  There's the problem."  You feel something fundamental in the fabric of reality change.  The sensation is like sneezing and hiccuping at the same time.  "There that should fix it."
 
 A window opens in the darkness, infinitely far away and infinitely large.  A face peeps down at you from the height of eternity.
 
@@ -47,7 +47,7 @@ The creator turns to go, then pauses.
 
 The clockmaker lifts his eyes up beyond your frame of reference and smiles.
 
-"Ok then.  Pushed.  And we're back in 3... 2... 1..."]]
+"OK then.  Pushed.  And we're back in 3... 2... 1..."]]
 
 -- If no, the voice of your creator speaks to you:
    title[3] = "The voice of the creator"
@@ -59,13 +59,18 @@ The creator turns to go, then pauses.
 
 The clockmaker lifts his eyes up beyond your frame of reference and smiles.
 
-"Ok then.  Pushed.  And we're back in 3... 2... 1..."]]
+"OK then.  Pushed.  And we're back in 3... 2... 1..."]]
 
 end 
 
 
 -- The mission runs when the player lands.
 function create()
+
+      -- Mission should only appear if player has played a bit.
+      if player.credits() < 250000 then
+         misn.finish(false)
+      end
 
       if music.isPlaying() then
          music.stop()
