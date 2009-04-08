@@ -442,6 +442,7 @@ void space_update( const double dt )
 {
    int i, j, f;
    double mod;
+   double target;
 
    /* Needs a current system. */
    if (cur_system == NULL)
@@ -471,16 +472,19 @@ void space_update( const double dt )
             }
          }
 
+         /* Target is actually half of average pilots. */
+         target = cur_system->avg_pilot/2.;
+
          /* Base timer. */
-         spawn_timer = 90./cur_system->avg_pilot;
+         spawn_timer = 45./target;
 
          /* Calculate ship modifier, it tries to stabilize at avg pilots. */
          /* First get pilot facton ==> [-1., inf ] */
-         mod  = (double)pilot_nstack - cur_system->avg_pilot;
-         mod /= cur_system->avg_pilot;
+         mod  = (double)pilot_nstack - target;
+         mod /= target;
          /* Scale and offset. */
          /*mod = 2.*mod + 1.5;*/
-         mod = MIN( mod, -0.5 );
+         mod  = MIN( mod, -0.5 );
          /* Modify timer. */
          spawn_timer *= 1. + mod;
       }
