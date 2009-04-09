@@ -5,10 +5,12 @@
 --]]
 
 
+-- News files to include
 include("dat/news/news_generic.lua")
 include("dat/news/news_empire.lua")
 include("dat/news/news_dvaered.lua")
 include("dat/news/news_goddard.lua")
+include("dat/news/news_pirate.lua")
 
 
 function news( n )
@@ -43,21 +45,33 @@ function news_genTable ()
 
    rawtable = {}
 
-   -- Create the output
+   -- Empire news
    if f:name() == "Empire" then
       greet = news_greetEmpire()
       news_addGeneric( rawtable )
       news_addEmpire( rawtable )
+
+   -- Dvaered news
    elseif f:name() == "Dvaered" then
       greet = news_greetDvaered()
       news_addGeneric( rawtable )
       news_addEmpire( rawtable )
       news_addDvaered( rawtable )
+
+   -- Goddard news
    elseif f:name() == "Goddard" then
       greet = news_greetGoddard()
       news_addGeneric( rawtable )
       news_addEmpire( rawtable )
       news_addGoddard( rawtable )
+
+   -- Pirate news
+   elseif f:name() == "Pirate" then
+      greet = news_greetPirate()
+      news_addGeneric( rawtable )
+      news_addPirate( rawtable )
+
+   -- Generic news
    else
       greet = news_greetGeneric()
       news_addGeneric( rawtable )
