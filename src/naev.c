@@ -597,8 +597,8 @@ static void display_fps( const double dt )
       fps_dt = fps_cur = 0.;
    }
 
-   x = 10.;
-   y = (double)(gl_screen.h-20);
+   x = 15.;
+   y = (double)(gl_screen.h-15-gl_defFont.h);
    if (show_fps) {
       gl_print( NULL, x, y, NULL, "%3.2f", fps );
       y -= gl_defFont.h + 5.;
