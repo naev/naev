@@ -8,7 +8,7 @@
    <mass>12</mass>
    <price>95000</price>
    <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
-   <gfx_store>heavy</gfx_store>
+   <gfx_store>medium</gfx_store>
   </general>
   <specific type="bolt">
    <gfx>ripper</gfx>
@@ -98,7 +98,7 @@
    <mass>9</mass>
    <price>15000</price>
    <description>Ion pulses were originally intended only to deactivate shields, which had completely nullified older radiation-based weaponry. It was thought that by figuring out a way to disable shields quickly, the radiation weapons would still be able to destroy the armour. By combining shield and armour destruction power, the perfect weapons could be designed. Ultimately, the ion pulses were highly effective against both armour and shields, rendering radiation-based weapons obsolete. With the latest generation of shields and armour materials, ion pulses have lost much of the terrain they had as newfound technology.</description>
-   <gfx_store>medium</gfx_store>
+   <gfx_store>ioncannon</gfx_store>
   </general>
   <specific type="bolt">
    <gfx>ion</gfx>
