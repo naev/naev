@@ -49,5 +49,6 @@ DATA_MISN := 	$(wildcard dat/missions/*.lua \
 DATA_SCRIPTS := $(wildcard scripts/*.lua \
 						scripts/*/*.lua \
 						scripts/*/*/*.lua )
+DATA_NEWS :=	$(wildcard dat/news/*.lua)
 DATA      := 	ndata
-DATAFILES := 	$(DATA_MISC) $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN) $(DATA_SCRIPTS)
+DATAFILES := 	$(DATA_MISC) $(DATA_AI) $(DATA_GFX) $(DATA_XML) $(DATA_SND) $(DATA_MISN) $(DATA_SCRIPTS) $(DATA_NEWS)
