@@ -70,8 +70,6 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
 
 
 /**
- * @fn Outfit* outfit_get( const char* name )
- *
  * @brief Gets an outfit by name.
  *
  *    @param name Name to match.
@@ -90,8 +88,6 @@ Outfit* outfit_get( const char* name )
 
 
 /**
- * @fn Outfit** outfit_getTech( int *n, const int *tech, const int techmax )
- *
  * @brief Gets all the outfits matching technology requirements.
  *
  * Function will already sort the outfits by type and then by price making
@@ -430,7 +426,6 @@ DamageType outfit_damageType( const Outfit* o )
    return DAMAGE_TYPE_NULL;
 }
 /**
- * @fn glTexture* outfit_delay( const Outfit* o )
  * @brief Gets the outfit's delay.
  *    @param o Outfit to get information from.
  */
@@ -497,8 +492,6 @@ double outfit_spin( const Outfit* o )
 
 
 /**
- * @fn const char* outfit_getType( const Outfit* o )
- *
  * @brief Gets the outfit's specific type.
  *
  *    @param o Outfit to get specific type from.
@@ -537,8 +530,6 @@ const char* outfit_getType( const Outfit* o )
 
 
 /**
- * @fn const char* outfit_getTypeBroad( const Outfit* o )
- *
  * @brief Gets the outfit's broad type.
  *
  *    @param o Outfit to get the type of.
@@ -563,8 +554,6 @@ const char* outfit_getTypeBroad( const Outfit* o )
 
 
 /**
- * @fn static DamageType outfit_strToDamageType( char *buf )
- *
  * @brief Gets the damage type from a human readable string.
  *
  *    @param buf String to extract damage type from.
@@ -659,8 +648,6 @@ static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node )
 
 
 /**
- * @fn static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
- *
  * @brief Parses the specific area for a bolt weapon and loads it into Outfit.
  *
  *    @param temp Outfit to finish loading.
@@ -730,8 +717,6 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
 
 
 /**
- * @fn static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
- *
  * @brief Parses the beam weapon specifics of an outfit.
  *
  *    @param temp Outfit to finish loading.
@@ -811,8 +796,6 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
 
 
 /**
- * @fn static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
- *
  * @brief Parses the specific area for a launcher and loads it into Outfit.
  *
  *    @param temp Outfit to finish loading.
@@ -837,8 +820,6 @@ if (o) WARN("Outfit '%s' missing '"s"' element", temp->name) /**< Define to help
 
 
 /**
- * @fn static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
- *
  * @brief Parses the specific area for a weapon and loads it into Outfit.
  *
  *    @param temp Outfit to finish loading.
@@ -912,8 +893,6 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
 
 
 /**
- * @fn static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
- *
  * @brief Parses the modification tidbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
@@ -947,8 +926,6 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 
 
 /**
- * @fn static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
- *
  * @brief Parses the afterburner tidbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
@@ -979,8 +956,6 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
 }
 
 /**
- * @fn static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
- *
  * @brief Parses the fighter bay tidbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
@@ -1004,8 +979,6 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
 }
 
 /**
- * @fn static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent )
- *
  * @brief Parses the fighter tidbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
@@ -1193,8 +1166,6 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
 
 
 /**
- * @fn int outfit_load (void)
- *
  * @brief Loads all the outfits.
  *
  *    @return 0 on success.
@@ -1254,8 +1225,6 @@ int outfit_load (void)
 
 
 /**
- * @fn void outfit_free (void)
- *
  * @brief Frees the outfit stack.
  */
 void outfit_free (void)
