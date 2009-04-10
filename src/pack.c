@@ -45,9 +45,19 @@
 #include <errno.h> /* error numbers */
 #include <string.h> /* strlen() and friends */
 #include <stdlib.h> /* malloc */
+#include <arpa/inet.h> /* ntohl */
 
 #include "log.h"
 #include "md5.h"
+
+
+#if HAS_BIGENDIAN
+#define htonll(x)   (x)
+#define ntohll(x)   (x)
+#else /* HAS_BIGENDIAN */
+#define htonll(x)   ((((uint64_t)htonl(x)) << 32) + htonl(x >> 32))
+#define ntohll(x)   ((((uint64_t)ntohl(x)) << 32) + ntohl(x >> 32))
+#endif /* HAS_BIGENDIAN */
 
 
 /**
@@ -150,6 +160,7 @@ Packcache_t* pack_openCache( const char* packfile )
    uint32_t i;
    char buf[PATH_MAX];
    Packcache_t *cache;
+   uint64_t end64;
 
    /*
     * Allocate memory.
@@ -179,7 +190,8 @@ Packcache_t* pack_openCache( const char* packfile )
     * Check for validity.
     */
    READ( cache, buf, sizeof(magic));
-   if (memcmp(buf, &magic, sizeof(magic))) {
+   end64 = ntohll(magic);
+   if (memcmp(buf, &end64, sizeof(magic))) {
       WARN("File %s is not a valid packfile", packfile);
       return NULL;
    }
@@ -188,6 +200,7 @@ Packcache_t* pack_openCache( const char* packfile )
     * Get number of files and allocate memory.
     */
    READ( cache, &cache->nindex, 4 );
+   cache->nindex = htonl( cache->nindex );
    cache->index = calloc( cache->nindex, sizeof(char*) );
    cache->start = calloc( cache->nindex, sizeof(uint32_t) );
 
@@ -202,7 +215,8 @@ Packcache_t* pack_openCache( const char* packfile )
 
       cache->index[i] = strdup(buf);
       READ( cache, &cache->start[i], 4 );
-      DEBUG("'%s' found at %d", cache->index[i], cache->start[i]);
+      cache->start[i] = htonl( cache->start[i] );
+      LOG("'%s' found at %d", cache->index[i], cache->start[i]);
    }
 
    /*
@@ -282,6 +296,7 @@ Packfile_t* pack_openFromCache( Packcache_t* cache, const char* filename )
                return NULL;
             }
             READ( file, &file->end, 4 );
+            file->end = htonl( file->end );
             file->start += 4;
             file->pos    = file->start;
             file->end   += file->start;
@@ -413,6 +428,8 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
    uint32_t indexsize, pointer;
    int bytes;
    const uint8_t b = '\0';
+   uint32_t end32;
+   uint64_t end64;
 
    
    for (namesize=0,i=0; i < nfiles; i++) { /* make sure files exist before writing */
@@ -453,10 +470,12 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
     */
    buf = malloc(BLOCKSIZE);
    /* magic number */
-   WRITE( &magic, sizeof(magic));
+   end64 = htonll(magic);
+   WRITE( &end64, sizeof(magic));
    DEBUG("Wrote magic number");
    /* number of files */
-   WRITE( &nfiles, sizeof(nfiles));
+   end32 = htonl(nfiles);
+   WRITE( &end32, sizeof(nfiles));
    DEBUG("Wrote number of files: %d", nfiles);
    /* create file dependent index part */
    pointer = indexsize;
@@ -464,7 +483,8 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
       WRITE( infiles[i], strlen(infiles[i]) );
       DEBUG("File '%s' at %d", infiles[i], pointer);
       WRITE( &b, 1 );
-      WRITE( &pointer, 4 );
+      end32 = htonl(pointer);
+      WRITE( &end32, 4 );
       pointer += 4 + getfilesize( infiles[i] ) + 16; /* set pointer to be next file pos */
    }
    /*
@@ -474,7 +494,8 @@ int pack_files( const char* outfile, const char** infiles, const uint32_t nfiles
    md5_byte_t *md5val = malloc(16);
    for (i=0; i<nfiles; i++) {
       bytes = (uint32_t)getfilesize( infiles[i] );
-      WRITE( &bytes, 4 ); /* filesize */
+      end32 = htonl(bytes);
+      WRITE( &end32, 4 ); /* filesize */
       DEBUG("About to write file '%s' of %d bytes", infiles[i], bytes);
       md5_init(&md5);
 #if HAS_FD
@@ -524,6 +545,7 @@ Packfile_t* pack_open( const char* packfile, const char* filename )
    uint32_t nfiles, i;
    char buf[PATH_MAX];
    Packfile_t *file;
+   uint64_t end64;
 
    /* Allocate memory. */
    file = malloc(sizeof(Packfile_t));
@@ -541,12 +563,14 @@ Packfile_t* pack_open( const char* packfile, const char* filename )
    }
 
    READ( file, buf, sizeof(magic)); /* make sure it's a packfile */
-   if (memcmp(buf, &magic, sizeof(magic))) {
+   end64 = ntohll(magic);
+   if (memcmp(buf, &end64, sizeof(magic))) {
       WARN("File %s is not a valid packfile", filename);
       return NULL;
    }
 
    READ( file, &nfiles, 4 );
+   nfiles = htonl(nfiles);
    for (i=0; i<nfiles; i++) { /* start to search files */
       j = 0;
       READ( file, &buf[j], 1 ); /* get the name */
@@ -555,6 +579,7 @@ Packfile_t* pack_open( const char* packfile, const char* filename )
 
       if (strcmp(filename, buf)==0) { /* found file */
          READ( file, &file->start, 4 );
+         file->start = htonl( file->start );
          DEBUG("'%s' found at %d", filename, file->start);
          break;
       }
@@ -575,6 +600,7 @@ Packfile_t* pack_open( const char* packfile, const char* filename )
          return NULL;
       }
       READ( file, &file->end, 4 );
+      file->end = htonl( file->end );
       DEBUG("\t%d bytes", file->end);
       file->start += 4;
       file->pos    = file->start;
@@ -808,6 +834,7 @@ char** pack_listfiles( const char* packfile, uint32_t* nfiles )
    Packfile_t file;
    char** filenames;
    char* buf = malloc(sizeof(magic));
+   uint64_t end64;
 
    *nfiles = 0;
 
@@ -823,12 +850,14 @@ char** pack_listfiles( const char* packfile, uint32_t* nfiles )
    }
 
    READ( &file, buf, sizeof(magic)); /* make sure it's a packfile */
-   if (memcmp(buf, &magic, sizeof(magic))) {
+   end64 = ntohll( magic );
+   if (memcmp(buf, &end64, sizeof(magic))) {
       WARN("File %s is not a valid packfile", packfile);
       return NULL;
    }
 
    READ( &file, nfiles, 4 );
+   *nfiles = htonl( *nfiles );
    filenames = malloc(((*nfiles)+1)*sizeof(char*));
    for (i=0; i<*nfiles; i++) { /* start to search files */
       j = 0;

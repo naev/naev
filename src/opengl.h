@@ -14,9 +14,11 @@
 #include "physics.h"
 #include "colour.h"
 
+#include "ncompat.h"
+
 
 /* Recommended for compatibility and such */
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+#if HAS_BIGENDIAN
 #  define RMASK   0xff000000 /**< Red bit mask. */
 #  define GMASK   0x00ff0000 /**< Green bit mask. */
 #  define BMASK   0x0000ff00 /**< Blue bit mask. */

@@ -8,6 +8,9 @@
 #  define NCOMPAT_H
 
 
+#include "SDL.h"
+
+
 /* System specific. */
 /**
  * @brief System is Linux-class.
@@ -41,6 +44,19 @@
  * @note Mac OS X does not define these macros, but does follow unix somewhat.
  */
 #define HAS_UNIX     (defined(__unix__) || defined(__unix) || HAS_MACOSX)
+
+
+/*
+ * Endianness.
+ */
+/**
+ * @brief Whether or not the system is big endian.
+ */
+#define HAS_BIGENDIAN (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+/**
+ * @brief Whether or not the system is little endian.
+ */
+#define HAS_LILENDIAN (SDL_BYTEORDER == SDL_LIL_ENDIAN)
 
 
 /* Misc stuff - mainly for debugging. */
