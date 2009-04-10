@@ -42,7 +42,9 @@ lua_pop(L,1);
 
 #define  conf_loadBool(n,b)   \
 lua_getglobal(L, n); \
-if (!lua_isnil(L,-1)) \
+if (lua_isnumber(L,-1)) \
+   b = (lua_tonumber(L,-1) != 0.); \
+else if (!lua_isnil(L,-1)) \
    b = lua_toboolean(L, -1); \
 lua_pop(L,1);
 
