@@ -210,14 +210,14 @@ int conf_loadConfig ( const char* file )
       nosound = i; i = 0;
       conf_loadFloat("sound",d);
       if (d) {
-         sound_defVolume = MAX(MIN(d, 1.), 0.);
+         sound_defVolume = CLAMP( 0., 1., d );
          if (d == 0.)
             sound_disabled = 1;
          d = 0.;
       }
       conf_loadFloat("music",d);
       if (d) {
-         music_defVolume = MAX(MIN(d, 1.), 0.);
+         music_defVolume = CLAMP( 0., 1., d );
          if (d == 0.)
             music_disabled = 1;
          d = 0.;
