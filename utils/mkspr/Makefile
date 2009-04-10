@@ -4,18 +4,8 @@ LOCALDIR := utils/mksprite/
 
 COBJS    := main.o
 
-ifeq ($(OS),WIN32)
-CFLAGS   := -D_GNU_SOURCE -O2 -Wall
-CFLAGS   += -I$(ROOTDIR)$(DEP_SDL_INC_DIR) -D_GNU_SOURCE=1 -Dmain=SDL_main -DGL_GLEXT_PROTOTYPES
-CFLAGS   += -I$(ROOTDIR)$(DEP_PNG_INC_DIR)
-LDFLAGS  := -lmingw32 -mwindows
-LDFLAGS  += -lSDL -lSDLmain -lSDL_image -lSDL_mixer
-LDFLAGS  += -lpng12
-LDFLAGS  += -L$(ROOTDIR)$(DEP_BIN_DIR) -L$(ROOTDIR)$(DEP_LIB_DIR)
-else
 CFLAGS   := $(shell sdl-config --cflags) $(shell libpng-config --cflags) -O2 -Wall
-LDFLAGS  := $(shell libpng-config --libs) $(shell sdl-config --libs) -lSDL_image -lSDL_mixer
-endif
+LDFLAGS  := $(shell libpng-config --libs) $(shell sdl-config --libs) -lSDL_image
 
 APPNAME  := mkspr
 
@@ -28,7 +18,11 @@ APPNAME  := mkspr
 all: $(ROOTDIR)$(APPNAME)
 
 $(ROOTDIR)$(APPNAME): $(COBJS)
+ifeq ($(OS),WIN32)
+	$(CC) -lmingw32 -mwindows $(CFLAGS) -o $(ROOTDIR)$(APPNAME) $(COBJS) $(LDFLAGS)
+else
 	@$(CC) $(LDFLAGS) $(CFLAGS) -o $(ROOTDIR)$(APPNAME) $(COBJS)
+endif
 	@echo "   LD   $(APPNAME)"
 
 clean:

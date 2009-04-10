@@ -1,64 +1,46 @@
 include build/Makefile.common
 
 #
-#   Win32 Shtuff
-#
-# This stuff needs to be set semi-manually on windows
-
-C_COMPILER ?= gcc
-export CC := $(C_COMPILER)
-export RM := del /F
-DEP_DIR ?= ../libs
-export DEP_BIN_DIR ?= $(DEP_DIR)/bin
-export DEP_INC_DIR ?= $(DEP_DIR)/include
-export DEP_LIB_DIR ?= $(DEP_DIR)/lib
-export DEP_SDL_INC_DIR ?= $(DEP_INC_DIR)/SDL
-DEP_XML_INC_DIR ?= $(DEP_INC_DIR)/libxml2
-DEP_TTF_INC_DIR ?= $(DEP_INC_DIR)/freetype2
-export DEP_PNG_INC_DIR ?= $(DEP_INC_DIR)
-
-#
 #   CFLAGS
 #
 CLUA   := -Ilib/lua
 CCSPARSE := -Ilib/csparse
-CSDL   := -D_GNU_SOURCE=1 -Dmain=SDL_main -DGL_GLEXT_PROTOTYPES
-CXML   :=
-CTTF   :=
-CPNG   :=
+CSDL   := $(shell sdl-config --cflags) -DGL_GLEXT_PROTOTYPES
+CXML   := $(shell xml2-config --cflags)
+CTTF   := $(shell freetype-config --cflags)
+CPNG   := $(shell libpng-config --cflags)
 CGL    :=
-CFLAGS += -D_GNU_SOURCE -Isrc
-CFLAGS += -I$(DEP_INC_DIR)
-CFLAGS += -I$(DEP_SDL_INC_DIR) -I$(DEP_XML_INC_DIR) -I$(DEP_TTF_INC_DIR) -I$(DEP_PNG_INC_DIR)
-CFLAGS += $(CLUA) $(CCSPARSE) $(CSDL) $(CXML) $(CTTF) $(CPNG) $(CGL)
-CFLAGS += $(VERSION) -D$(OS) $(CFLAGS_COMMON)
+CFLAGS := -Isrc $(CLUA) $(CCSPARSE) $(CSDL) $(CXML) $(CTTF) $(CPNG) $(CGL) $(VERSION) -D$(OS) $(COMMON_FLAGS)
+ifdef NDATA_DEF
+CFLAGS += -DNDATA_DEF=$(NDATA_DEF)
+endif
+
+
 
 #
 #   LDFLAGS
 #
 LDLUA   := lib/lua/liblua.a
 LDCSPARSE := lib/csparse/libcsparse.a
-LDSDL   := -lSDL -lSDLmain -lSDL_image -lSDL_mixer
-LDXML   := -llibxml2 -lz -liconv -lwsock32
-LDTTF   := -lfreetype -lz -lintl -lwsock32 -lole32 -luuid -lmsvcp60
-LDPNG   := -lpng12
+LDSDL   := $(shell sdl-config --libs) -lSDL_image -lSDL_mixer
+LDXML   := $(shell xml2-config --libs)
+LDTTF   := $(shell freetype-config --libs)
+LDPNG   := $(shell libpng-config --libs)
 LDGL    := -lglu32 -lopengl32
-LDFLAGS += -lmingw32 -mwindows -lm
-LDFLAGS += -L$(DEP_BIN_DIR) -L$(DEP_LIB_DIR)
-LDFLAGS += $(LDLUA) $(LDCSPARSE) $(LDSDL) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
+LDFLAGS := -lmingw32 -mwindows -lm $(LDLUA) $(LDCSPARSE) $(LDSDL) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
 
 # Debug stuff
 ifdef DEBUG
-CFLAGS += -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -g -DDEBUG -DLUA_USE_APICHECK -std=c99
+CFLAGS += -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -DLUA_USE_APICHECK -std=c99
 
 ifdef DEBUG_PARANOID
 CFLAGS += -DDEBUG_PARANOID
 endif # DEBUG_PARANOID
 
 else # DEBUG
-CFLAGS += -O2 -pipe -ansi
-endif # DEBUG
+CFLAGS += -O2 -funroll-loops -pipe -std=c99 -ansi
 
+endif # DEBUG
 
 #
 #   TARGETS
@@ -88,7 +70,7 @@ help:
 
 
 $(APPNAME): $(OBJS)
-	@$(CC) $(LDFLAGS) -o $(APPNAME) $(OBJS) lib/lua/liblua.a lib/csparse/libcsparse.a
+	$(CC) -o $(APPNAME) $(OBJS) $(LDFLAGS) lib/lua/liblua.a lib/csparse/libcsparse.a
 	@echo "   LD   $(APPNAME)"
 
 
@@ -106,11 +88,11 @@ lib/csparse/libcsparse.a:
 	+@$(MAKE) -C lib/csparse
 
 
-pack: src/md5.o src/pack.o utils/pack/main.o
+pack: src/md5.c src/pack.c utils/pack/main.c
 	+@$(MAKE) -C utils/pack
 
 
-mkspr: utils/mkspr/main.o
+mkspr: utils/mkspr/main.c
 	+@$(MAKE) -C utils/mkspr
 
 
@@ -128,7 +110,7 @@ utils: pack mkspr
 
 
 docs:
-	@echo "The 'docs' target is not supported on this platform"
+	+@$(MAKE) -C docs/
 
 
 clean:
