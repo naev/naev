@@ -5,7 +5,7 @@
 --[[
 -- Data file.  Should have the actual ndata file in the path.
 --]]
---data = "/the/path/ndata"
+--data = "ndata"
 
 --[[
 -- Window Dimensions.
@@ -63,6 +63,7 @@
 -- Joystick.
 --]]
 -- can be by id number or substring of joystick name
+--joystick = nil -- default is no joystick
 --joystick = 0
 --joystick = "Precision"
 
