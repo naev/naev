@@ -156,6 +156,7 @@ static int ndata_openPackfile (void)
 
       /* Window users get hand holding. */
 #if HAS_WIN32
+      SDL_Quit(); /* Should destroy window and give focus to MessageBox. */
       MessageBox( NULL,
             "ndata file not found.\n"
             "Please specify ndata file with -d or data in the conf file.",
