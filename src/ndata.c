@@ -15,6 +15,10 @@
 
 #include "naev.h"
 
+#if HAS_WIN32
+#include <windows.h>
+#endif /* HAS_WIN32 */
+
 #include "SDL.h"
 #include "SDL_mutex.h"
 
@@ -149,6 +153,16 @@ static int ndata_openPackfile (void)
    if (nfile_fileExists( ndata_filename ) != 1) {
       WARN("Cannot find ndata file!");
       WARN("Please specify ndata file with -d or data in the conf file.");
+
+      /* Window users get hand holding. */
+#if HAS_WIN32
+      MessageBox( NULL,
+            "ndata file not found.\n"
+            "Please specify ndata file with -d or data in the conf file.",
+            "Cannot find ndata file!",
+            MB_OK | MB_ICONEXCLAMATION );
+#endif /* HAS_WIN32 */
+
       exit(1);
    }
    ndata_cache = pack_openCache( ndata_filename );
