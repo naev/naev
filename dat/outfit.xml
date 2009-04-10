@@ -31,7 +31,7 @@
    <price>5000</price>
    <description>The laser cannon is a standard weapon on many vessels. It fires charged energy beams that do a decent amount of damage to both shield and armour, while remaining efficient enough to mount several even on small ships.</description>
    <gfx_store>lasercannon</gfx_store>
-  </general>
+   </general>
   <specific type="bolt">
    <gfx>laserred</gfx>
    <sound>laser</sound>
@@ -41,8 +41,8 @@
    <speed>550</speed>
    <range>300</range>
    <accuracy>18</accuracy>
-   <energy>8</energy>
-   <damage type="energy">10</damage>
+   <energy>5</energy>
+   <damage type="energy">6</damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret">
@@ -60,12 +60,12 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>300</delay>
+   <delay>250</delay>
    <speed>550</speed>
    <range>300</range>
    <accuracy>18</accuracy>
-   <energy>10</energy>
-   <damage type="energy">10</damage>
+   <energy>9</energy>
+   <damage type="energy">9</damage>
   </specific>
  </outfit>
  <outfit name="Plasma Blaster">
@@ -82,16 +82,16 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS</spfx_armour>
-   <delay>400</delay>
+   <delay>375</delay>
    <speed>450</speed>
    <range>250</range>
    <accuracy>25</accuracy>
-   <energy>7</energy>
-   <damage type="energy">7</damage>
+   <energy>5</energy>
+   <damage type="energy">5</damage>
   </specific>
- </outfit>
- <outfit name="Ion Cannon">
-  <general>
+</outfit>
+<outfit name="Ion Cannon">
+ <general>
    <max>4</max>
    <tech>7</tech>
    <license>Medium Weapon License</license>
@@ -109,7 +109,7 @@
    <speed>500</speed>
    <range>400</range>
    <accuracy>13</accuracy>
-   <energy>13</energy>
+   <energy>14</energy>
    <damage type="ion">15</damage>
   </specific>
  </outfit>
@@ -132,8 +132,31 @@
    <speed>500</speed>
    <range>400</range>
    <accuracy>7</accuracy>
-   <energy>17</energy>
-   <damage type="ion">17</damage>
+   <energy>21</energy>
+   <damage type="ion">20</damage>
+  </specific>
+ </outfit>
+  <outfit name="30mm Gatling Gun">
+  <general>
+   <max>4</max>
+   <tech>4</tech>
+   <license>Medium Weapon License</license>
+   <mass>12</mass>
+   <price>25000</price>
+   <description>The Gatling design originated many centuries ago, though it has remained in service as an effective, if somewhat primitive design. The hail of shells it unleashes decimates armor while remaining useful against shielded enemies.</description>
+   <gfx_store>gatling</gfx_store>
+  </general>
+  <specific type="bolt">
+   <gfx>gatling</gfx>
+   <sound>gatling</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>160</delay>
+   <speed>500</speed>
+   <range>300</range>
+   <accuracy>20</accuracy>
+   <energy>3</energy>
+   <damage type="kinetic">4</damage>
   </specific>
  </outfit>
  <outfit name="150mm Railgun">
@@ -173,7 +196,7 @@
    <delay>6000</delay>
    <duration>3</duration>
    <range>300</range>
-   <energy>70</energy>
+   <energy>50</energy>
    <damage type="energy">40</damage>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
@@ -254,7 +277,7 @@
   </general>
   <specific type="missile smart" secondary="1">
    <ammo>Headhunter Missile</ammo>
-   <delay>2200</delay>
+   <delay>2000</delay>
   </specific>
  </outfit>
  <outfit name="Headhunter Missile">
@@ -293,7 +316,7 @@
   </general>
   <specific type="missile dumb" secondary="1">
    <ammo>Banshee Rocket</ammo>
-   <delay>300</delay>
+   <delay>375</delay>
   </specific>
  </outfit>
  <outfit name="Banshee Rocket">
