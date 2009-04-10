@@ -216,7 +216,7 @@ Packcache_t* pack_openCache( const char* packfile )
       cache->index[i] = strdup(buf);
       READ( cache, &cache->start[i], 4 );
       cache->start[i] = htonl( cache->start[i] );
-      LOG("'%s' found at %d", cache->index[i], cache->start[i]);
+      DEBUG("'%s' found at %d", cache->index[i], cache->start[i]);
    }
 
    /*
