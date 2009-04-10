@@ -10,8 +10,8 @@
 --[[
 -- Window Dimensions.
 --]]
-width  = 1280
-height = 1024
+--width  = 800
+--height = 600
 
 --[[
 -- FSAA.  Full Scene Anti Aliasing - can make the stars and such disappear.
@@ -21,12 +21,12 @@ height = 1024
 --[[
 -- Fullscreen.
 --]]
-fullscreen = 1
+--fullscreen = 0
 
 --[[
 -- Scale factor of the screen.  2. would make screen twice as big.
 --]]
-scalefactor = 1.
+--scalefactor = 1.
 
 --[[
 -- Anti aliasing.  Shouldn't be used, will probably be removed soon.
@@ -39,13 +39,13 @@ scalefactor = 1.
 --[[
 -- Vsync.  Doesn't work on all systems.
 --]]
---vsync = 1
+--vsync = 0
 
 --[[
 -- FPS.
 --]]
---showfps = 0 -- Whether or not to display them on screen.
---maxfps = 60 -- Limit FPS
+--showfps = true -- Whether or not to display them on screen.
+--maxfps = 0 -- 0 is unlimited fps
 
 --[[
 -- Input.
@@ -56,8 +56,8 @@ scalefactor = 1.
 -- Sound.
 --]]
 --nosound = 1
---sound = 0.7
---mosic = 0.5
+--sound = 0.4
+--music = 0.8
 
 --[[
 -- Joystick.
@@ -112,6 +112,11 @@ scalefactor = 1.
 --weap_turret    = { type = "keyboard", key = "2" }
 --weap_forward   = { type = "keyboard", key = "3" }
 
+-- Secondary weapons.
+--secondary      = { type = "keyboard", key = "left shift", mod = "any" }
+--secondary_next = { type = "keyboard", key = "W" }
+--secondary_prev = { type = "keyboard", key = "W", mod = "lctrl" }
+
 -- Escorts.
 --e_targetNext   = { type = "keyboard", key = "E" }
 --e_targetPrev   = { type = "keyboard", key = "E", mod = "lctrl" }
@@ -120,14 +125,8 @@ scalefactor = 1.
 --e_return       = { type = "keyboard", key = "C", mod = "lctrl" }
 --e_clear        = { type = "keyboard", key = "C" }
 
--- Secondary weapons.
---secondary      = { type = "keyboard", key = "left shift", mod = "any" }
---secondary_next = { type = "keyboard", key = "W" }
---secondary_prev = { type = "keyboard", key = "W", mod = "lctrl" }
-
 -- Space navigation.
 --autonav        = { type = "keyboard", key = "J", mod = "lctrl" }
-autonav        = { type = "keyboard", key = "N" }
 --target_planet  = { type = "keyboard", key = "P" }
 --land           = { type = "keyboard", key = "L" }
 --thyperspace    = { type = "keyboard", key = "H" }
@@ -145,3 +144,5 @@ autonav        = { type = "keyboard", key = "N" }
 --speed          = { type = "keyboard", key = "`", mod = "any" }
 --menu           = { type = "keyboard", key = "escape", mod = "any" }
 --info           = { type = "keyboard", key = "I" }
+--console        = { type = "keyboard", key = "f2" }
+
