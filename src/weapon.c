@@ -542,7 +542,7 @@ void weapons_render( const WeaponLayer layer, const double dt )
 static void weapon_render( Weapon* w, const double dt )
 {
    int sx, sy;
-   double x,y;
+   double x,y, cx,cy;
    glTexture *gfx;
 
    switch (w->outfit->type) {
@@ -587,8 +587,9 @@ static void weapon_render( Weapon* w, const double dt )
          gfx = outfit_gfx(w->outfit);
 
          /* Position. */
-         x = w->solid->pos.x - VX(*gl_camera) + gui_xoff;
-         y = w->solid->pos.y - VY(*gl_camera) + gui_yoff;
+         gl_cameraGet( &cx, &cy );
+         x = w->solid->pos.x - cx + gui_xoff;
+         y = w->solid->pos.y - cy + gui_yoff;
 
          /* Set up the matrix. */
          glMatrixMode(GL_PROJECTION);

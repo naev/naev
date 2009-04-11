@@ -35,7 +35,9 @@
 #include "gui.h"
 
 
-Vector2d* gl_camera  = NULL; /**< Camera we are using. */
+static Vector2d* gl_camera  = NULL; /**< Camera we are using. */
+static double gl_cameraX    = 0.; /**< X position of camera. */
+static double gl_cameraY    = 0.; /**< Y position of camera. */
 
 
 /*
@@ -130,11 +132,21 @@ static void gl_blitTextureVertexArray(  const glTexture* texture,
 void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
       const int sx, const int sy, const glColour* c )
 {
-   double x,y, tx,ty;
+   double x,y, tx,ty, cx,cy;
+
+   /* Choose camera. */
+   if (gl_camera != NULL) {
+      cx = gl_camera->x;
+      cy = gl_camera->y;
+   }
+   else {
+      cx = gl_cameraX;
+      cy = gl_cameraY;
+   }
 
    /* calculate position - we'll use relative coords to player */
-   x = bx - VX(*gl_camera) - sprite->sw/2. + gui_xoff;
-   y = by - VY(*gl_camera) - sprite->sh/2. + gui_yoff;
+   x = bx - cx - sprite->sw/2. + gui_xoff;
+   y = by - cy - sprite->sh/2. + gui_yoff;
 
    /* check if inbounds */
    if ((fabs(x) > SCREEN_W/2 + sprite->sw) ||
@@ -234,9 +246,42 @@ void gl_blitStatic( const glTexture* texture,
  *
  *    @param pos Vector to use as camera.
  */
-void gl_bindCamera( Vector2d* pos )
+void gl_cameraBind( Vector2d* pos )
 {
    gl_camera = pos;
+}
+
+
+/**
+ * @brief Makes the camera static and set on a position.
+ *
+ *    @param x X position to set camera to.
+ *    @param y Y position to set camera to.
+ */
+void gl_cameraStatic( double x, double y )
+{
+   gl_cameraX = x;
+   gl_cameraY = y;
+   gl_camera  = NULL;
+}
+
+
+/**
+ * @brief Gets the camera position.
+ *
+ *    @param[out] x X position to get.
+ *    @param[out] y Y position to get.
+ */
+void gl_cameraGet( double *x, double *y )
+{
+   if (gl_camera != NULL) {
+      *x = gl_camera->x;
+      *y = gl_camera->y;
+   }
+   else {
+      *x = gl_cameraX;
+      *y = gl_cameraY;
+   }
 }
 
 
@@ -395,5 +440,6 @@ int gl_initRender (void)
  */
 void gl_exitRender (void)
 {
+   gl_blitTexture = NULL;
 }
 

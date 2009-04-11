@@ -110,7 +110,6 @@ int planet_target          = -1; /**< Targetted planet. -1 is none. */
 int hyperspace_target      = -1; /**< Targetted hyperspace route. -1 is none. */
 /* for death and such */
 static double player_timer = 0.; /**< For death and such. */
-static Vector2d player_cam; /**< For death and such. */
 
 
 /* 
@@ -178,8 +177,7 @@ void player_new (void)
    /* to not segfault due to lack of environment */
    player_flags = 0;
    player_setFlag(PLAYER_CREATING);
-   vectnull( &player_cam );
-   gl_bindCamera( &player_cam );
+   gl_cameraStatic( 0., 0. );
 
    /* Set up GUI. */
    gui_setDefaults();
@@ -409,7 +407,7 @@ static void player_newShipMake( char* name )
    /* create the player */
    pilot_create( player_ship, name, faction_get("Player"), NULL,
          player_dir,  &vp, &vv, PILOT_PLAYER );
-   gl_bindCamera( &player->solid->pos ); /* set opengl camera */
+   gl_cameraBind( &player->solid->pos ); /* set opengl camera */
 
    /* copy cargo over. */
    if (player_nstack > 0) { /* not during creation though. */
@@ -459,7 +457,7 @@ void player_swapShip( char* shipname )
                break;
             }
 
-         gl_bindCamera( &player->solid->pos ); /* don't forget the camera */
+         gl_cameraBind( &player->solid->pos ); /* don't forget the camera */
          return;
       }
    }
@@ -1566,8 +1564,7 @@ void player_destroyed (void)
    if (player_isFlag(PLAYER_DESTROYED))
       return;
 
-   vectcpy( &player_cam, &player->solid->pos );
-   gl_bindCamera( &player_cam );
+   gl_cameraStatic( player->solid->pos.x, player->solid->pos.y );
    player_setFlag(PLAYER_DESTROYED);
    player_timer = 5.;
 }
@@ -1966,7 +1963,7 @@ static int player_parse( xmlNodePtr parent )
    player_warp( pnt->pos.x + RNG(-sw/2,sw/2),
          pnt->pos.y + RNG(-sh/2,sh/2) );
    player->solid->dir = RNG(0,359) * M_PI/180.;
-   gl_bindCamera(&player->solid->pos);
+   gl_cameraBind(&player->solid->pos);
 
    /* initialize the system */
    music_choose("takeoff");

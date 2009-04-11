@@ -17,8 +17,12 @@ int gl_initRender (void);
 void gl_exitRender (void);
 
 
-/* binds the camera to a vector */
-void gl_bindCamera( Vector2d* pos );
+/*
+ * Camera.
+ */
+void gl_cameraBind( Vector2d* pos );
+void gl_cameraStatic( double x, double y );
+void gl_cameraGet( double *x, double *y );
 
 
 /*
