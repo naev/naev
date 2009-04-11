@@ -228,6 +228,7 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
  *
  *    @param major Major version to check.
  *    @param minor Minor version to check.
+ *    @return True if major and minor version are met.
  */
 static double gl_contextVersion = -1.;
 GLboolean gl_hasVersion( int major, int minor )
@@ -353,6 +354,10 @@ static int gl_setupAttributes (void)
 
 /**
  * @brief Tries to set up fullscreen environment.
+ *
+ *    @param flags Flags to modify.
+ *    @param vidinfo Video information.
+ *    @return 0 on success.
  */
 static int gl_setupFullscreen( unsigned int *flags, const SDL_VideoInfo *vidinfo )
 {
@@ -526,7 +531,7 @@ static int gl_defState (void)
 /**
  * @brief Checks ot see if window needs to handle scaling.
  *
- *    @param return 0 on success.
+ *    @return 0 on success.
  */
 static int gl_setupScaling (void)
 {
