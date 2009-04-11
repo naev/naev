@@ -460,12 +460,6 @@ int gl_init (void)
    /* Calculate real depth. */
    gl_screen.depth = gl_screen.r + gl_screen.g + gl_screen.b + gl_screen.a;
 
-   /* Get info about some extensions */
-   if (gl_hasExt("GL_ARB_vertex_program")==GL_TRUE)
-      gl_screen.flags |= OPENGL_VERT_SHADER;
-   if (gl_hasExt("GL_ARB_fragment_program")==GL_TRUE)
-      gl_screen.flags |= OPENGL_FRAG_SHADER;
-
    /* Texture information */
    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &gl_screen.tex_max);
    glGetIntegerv(GL_MAX_TEXTURE_UNITS, &gl_screen.multitex_max);
