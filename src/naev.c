@@ -67,7 +67,7 @@
 #include "nlua_var.h"
 
 
-#define CONF_FILE       "conf" /**< Configuration file by default. */
+#define CONF_FILE       "conf.lua" /**< Configuration file by default. */
 #define VERSION_FILE    "VERSION" /**< Version file by default. */
 #define VERSION_LEN     10 /**< Maximum length of the version file. */
 #define FONT_SIZE       12 /**< Normal font size. */
