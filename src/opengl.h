@@ -16,6 +16,13 @@
 
 #include "ncompat.h"
 
+/*
+ * We put all the other opengl stuff here to only have to include one header.
+ */
+#include "opengl_tex.h"
+#include "opengl_ext.h"
+#include "opengl_render.h"
+
 
 /* Recommended for compatibility and such */
 #if HAS_BIGENDIAN
@@ -85,53 +92,6 @@ extern glInfo gl_screen; /* local structure set with gl_init and co */
 
 
 /*
- * Texture flags.
- */
-#define OPENGL_TEX_MAPTRANS   (1<<0)  /**< Create a transparency map. */
-
-/**
- * @brief Abstraction for rendering spriteshets.
- *
- * The basic unit all the graphic rendering works with.
- */
-typedef struct glTexture_ {
-   char *name; /**< name of the graphic */
-
-   /* dimensions */
-   double w; /**< Real width of the image. */
-   double h; /**< Real heiht of the image. */
-   double rw; /**< Padded POT width of the image. */
-   double rh; /**< Padded POT height of the image. */
-
-   /* sprites */
-   double sx; /**< Number of sprites on the x axis. */
-   double sy; /**< Number of sprites on the y axis. */
-   double sw; /**< Width of a sprite. */
-   double sh; /**< Height of a sprite. */
-
-   /* data */
-   GLuint texture; /**< the opengl texture itself */
-   uint8_t* trans; /**< maps the transparency */
-
-   /* properties */
-   uint8_t flags; /**< flags used for texture properties */
-} glTexture;
-
-
-
-/*
- * glTexture loading / freeing
- */
-SDL_Surface* gl_prepareSurface( SDL_Surface* surface ); /* Only preps it */
-glTexture* gl_loadImage( SDL_Surface* surface ); /* Frees the surface. */
-glTexture* gl_newImage( const char* path, const unsigned int flags );
-glTexture* gl_newSprite( const char* path, const int sx, const int sy,
-      const unsigned int flags );
-void gl_freeTexture( glTexture* texture );
-glTexture* gl_dupTexture( glTexture *texture );
-
-
-/*
  * initialization / cleanup
  */
 int gl_init (void);
@@ -150,9 +110,6 @@ GLboolean gl_hasVersion( int major, int minor );
  */
 double gl_setScale( double scalefactor );
 void gl_defViewport (void);
-int gl_pot( int n );
-int gl_isTrans( const glTexture* t, const int x, const int y );
-void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir );
 void gl_screenshot( const char *filename );
 int SDL_SavePNG( SDL_Surface *surface, const char *file );
 #if DEBUG == 1
@@ -160,13 +117,6 @@ void gl_checkErr (void);
 #else /* DEBUG */
 #define gl_checkErr() /**< Hack to ignore errors when debugging. */
 #endif /* DEBUG */
-
-
-/*
- * We put all the other opengl stuff here to only have to include one header.
- */
-#include "opengl_ext.h"
-#include "opengl_render.h"
 
 
 #endif /* OPENGL_H */
