@@ -1154,19 +1154,23 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
  *    @param major Major version to check.
  *    @param minor Minor version to check.
  */
+static double gl_contextVersion = -1.;
 GLboolean gl_hasVersion( int major, int minor )
 {
    const char *p;
    double f, c;
 
-   p = (const char*) glGetString(GL_VERSION);
+   if (gl_contextVersion < 0.) {
+      p = (const char*) glGetString(GL_VERSION);
 
-   /* Get version and compare version. */
-   f = atof(p);
+      /* Get version and compare version. */
+      gl_contextVersion = atof(p);
+   }
+
    c  = (double) major;
    c += 0.1 * (double) minor;
 
-   if (f <= c)
+   if (f <= gl_contextVersion)
       return GL_TRUE;
    return GL_FALSE;
 }
