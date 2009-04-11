@@ -43,6 +43,7 @@ Vector2d* gl_camera  = NULL; /**< Camera we are using. */
  */
 static void gl_blitTexture( const glTexture* texture, 
       const double x, const double y,
+      const double w, const double h,
       const double tx, const double ty, const glColour *c );
 
 
@@ -59,6 +60,7 @@ static void gl_blitTexture( const glTexture* texture,
  */
 static void gl_blitTexture( const glTexture* texture,
       const double x, const double y,
+      const double w, const double h,
       const double tx, const double ty, const glColour *c )
 {
    double tw,th;
@@ -79,11 +81,11 @@ static void gl_blitTexture( const glTexture* texture,
    glEnableClientState(GL_VERTEX_ARRAY);
    vertex[0] = (GLfloat)x;
    vertex[6] = vertex[0];
-   vertex[2] = vertex[0] + (GLfloat)texture->sw;
+   vertex[2] = vertex[0] + (GLfloat)w;
    vertex[4] = vertex[2];
    vertex[1] = (GLfloat)y;
    vertex[3] = vertex[1];
-   vertex[5] = vertex[1] + (GLfloat)texture->sh;
+   vertex[5] = vertex[1] + (GLfloat)h;
    vertex[7] = vertex[5];
    glVertexPointer( 2, GL_FLOAT, 0, vertex );
 
@@ -138,7 +140,7 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
    tx = sprite->sw*(double)(sx)/sprite->rw;
    ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
 
-   gl_blitTexture( sprite, x, y, tx, ty, c );
+   gl_blitTexture( sprite, x, y, sprite->sw, sprite->sh, tx, ty, c );
 }
 
 
@@ -165,7 +167,7 @@ void gl_blitStaticSprite( const glTexture* sprite, const double bx, const double
    ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
 
    /* actual blitting */
-   gl_blitTexture( sprite, x, y, tx, ty, c );
+   gl_blitTexture( sprite, x, y, sprite->sw, sprite->sh, tx, ty, c );
 }
 
 
@@ -184,7 +186,6 @@ void gl_blitScale( const glTexture* texture,
       const double bw, const double bh, const glColour* c )
 {
    double x,y;
-   double tw,th;
    double tx,ty;
 
    /* here we use absolute coords */
@@ -192,33 +193,10 @@ void gl_blitScale( const glTexture* texture,
    y = by - (double)SCREEN_H/2.;
 
    /* texture dimensions */
-   tw = texture->sw / texture->rw;
-   th = texture->sh / texture->rh;
    tx = ty = 0.;
 
-   glEnable(GL_TEXTURE_2D);
-   glBindTexture( GL_TEXTURE_2D, texture->texture);
-   glBegin(GL_QUADS);
-      /* set colour or default if not set */
-      if (c==NULL) glColor4d( 1., 1., 1., 1. );
-      else COLOUR(*c);
-
-      glTexCoord2d( tx, ty);
-      glVertex2d( x, y );
-
-      glTexCoord2d( tx + tw, ty);
-      glVertex2d( x + bw, y );
-
-      glTexCoord2d( tx + tw, ty + th);
-      glVertex2d( x + bw, y + bh );
-
-      glTexCoord2d( tx, ty + th);
-      glVertex2d( x, y + bh );
-   glEnd(); /* GL_QUADS */
-   glDisable(GL_TEXTURE_2D);
-
-   /* anything failed? */
-   gl_checkErr();
+   /* Actual blitting. */
+   gl_blitTexture( texture, x, y, bw, bh, tx, ty, c );
 }
 
 /**
@@ -239,7 +217,7 @@ void gl_blitStatic( const glTexture* texture,
    y = by - (double)SCREEN_H/2.;
 
    /* actual blitting */
-   gl_blitTexture( texture, x, y, 0, 0, c );
+   gl_blitTexture( texture, x, y, texture->sw, texture->sh, 0, 0, c );
 }
 
 
