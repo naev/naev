@@ -83,3 +83,14 @@ int gl_initExtensions (void)
 
    return 0;
 }
+
+
+/**
+ * @brief Cleans up the opengl extensions.
+ *
+ *    @return 0 on success.
+ */
+void gl_exitExtensions (void)
+{
+}
+

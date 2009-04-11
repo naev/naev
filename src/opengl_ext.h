@@ -26,6 +26,7 @@ void (APIENTRY *nglDeleteBuffers)(GLsizei n, const GLuint* ids);
  * Initializes the extensions.
  */
 int gl_initExtensions (void);
+void gl_exitExtensions (void);
 
 
 #endif /* OPENGL_EXT_H */

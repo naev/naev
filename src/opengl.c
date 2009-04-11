@@ -614,9 +614,6 @@ int gl_init (void)
    /* Get info about the OpenGL window */
    gl_getGLInfo();
 
-   /* Initialize extensions. */
-   gl_initExtensions();
-
    /* Some OpenGL options. */
    glClearColor( 0., 0., 0., 1. );
 
@@ -632,6 +629,11 @@ int gl_init (void)
    /* Finishing touches. */
    glClear( GL_COLOR_BUFFER_BIT ); /* must clear the buffer first */
    gl_checkErr();
+
+   /* Initialize subsystems.*/
+   gl_initExtensions();
+   gl_initTextures();
+   gl_initRender();
 
    /* Cosmetic new line. */
    DEBUG("");
@@ -679,6 +681,11 @@ void gl_defViewport (void)
 void gl_exit (void)
 {
    glTexList *tex;
+
+   /* Exit the OpenGL subsystems. */
+   gl_exitRender();
+   gl_exitTextures();
+   gl_exitExtensions();
 
    /* Make sure there's no texture leak */
    if (texture_list != NULL) {

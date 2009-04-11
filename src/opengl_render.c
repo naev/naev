@@ -41,15 +41,18 @@ Vector2d* gl_camera  = NULL; /**< Camera we are using. */
 /*
  * prototypes
  */
-static void gl_blitTexture( const glTexture* texture, 
+static void (*gl_blitTexture)( const glTexture* texture, 
+      const double x, const double y,
+      const double w, const double h,
+      const double tx, const double ty, const glColour *c );
+static void gl_blitTextureVertexArray(  const glTexture* texture,
       const double x, const double y,
       const double w, const double h,
       const double tx, const double ty, const glColour *c );
 
 
-
 /**
- * @brief Blits a texture.
+ * @brief Texture array backend of gl_blitTexture.
  *
  *    @param texture Texture to blit.
  *    @param x X position of the texture on the screen.
@@ -58,7 +61,7 @@ static void gl_blitTexture( const glTexture* texture,
  *    @param ty Y position within the texture.
  *    @param c Colour to use (modifies texture colour).
  */
-static void gl_blitTexture( const glTexture* texture,
+static void gl_blitTextureVertexArray(  const glTexture* texture,
       const double x, const double y,
       const double w, const double h,
       const double tx, const double ty, const glColour *c )
@@ -112,6 +115,8 @@ static void gl_blitTexture( const glTexture* texture,
    /* anything failed? */
    gl_checkErr();
 }
+
+
 /**
  * @brief Blits a sprite, position is relative to the player.
  *
@@ -371,4 +376,24 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
    gl_checkErr();
 }
 #undef PIXEL
+
+
+/**
+ * @brief Initializes the OpenGL rendering routines.
+ *
+ *    @return 0 on success.
+ */
+int gl_initRender (void)
+{
+   gl_blitTexture = gl_blitTextureVertexArray;
+   return 0;
+}
+
+
+/**
+ * @brief Cleans up the OpenGL rendering routines.
+ */
+void gl_exitRender (void)
+{
+}
 

@@ -67,6 +67,12 @@ typedef struct glTexture_ {
 } glTexture;
 
 
+/*
+ * Init/exit.
+ */
+int gl_initTextures (void);
+void gl_exitTextures (void);
+
 
 /*
  * Preparing.

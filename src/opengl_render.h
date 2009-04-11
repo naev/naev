@@ -10,6 +10,13 @@
 #include "opengl.h"
 
 
+/*
+ * Init/cleanup.
+ */
+int gl_initRender (void);
+void gl_exitRender (void);
+
+
 /* binds the camera to a vector */
 void gl_bindCamera( Vector2d* pos );
 

@@ -609,3 +609,22 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
    (*y) = s / sx;
 }
 
+
+/**
+ * @brief Initializes the opengl texture subsystem.
+ *
+ *    @return 0 on success.
+ */
+int gl_initTextures (void)
+{
+   return 0;
+}
+
+
+/**
+ * @brief Cleans up the opengl texture subsystem.
+ */
+void gl_exitTextures (void)
+{
+}
+
