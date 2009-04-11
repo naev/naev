@@ -22,5 +22,11 @@ void (APIENTRY *nglBufferSubData)(GLenum target, GLint offset, GLsizei size, voi
 void (APIENTRY *nglDeleteBuffers)(GLsizei n, const GLuint* ids);
 
 
+/*
+ * Initializes the extensions.
+ */
+int gl_initExtensions (void);
+
+
 #endif /* OPENGL_EXT_H */
    

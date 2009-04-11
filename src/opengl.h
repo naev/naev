@@ -162,6 +162,14 @@ void gl_drawCircleInRect( const double x, const double y, const double r,
 int gl_init (void);
 void gl_exit (void);
 
+
+/*
+ * Extensions and version.
+ */
+GLboolean gl_hasExt( char *name );
+GLboolean gl_hasVersion( int major, int minor );
+
+
 /*
  * misc
  */

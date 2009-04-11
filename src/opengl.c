@@ -91,9 +91,6 @@ static void gl_blitTexture( const glTexture* texture,
 /* png */
 int write_png( const char *file_name, png_bytep *rows,
       int w, int h, int colourtype, int bitdepth );
-/* global */
-static GLboolean gl_hasExt( char *name );
-static GLboolean gl_hasVersion( int major, int minor );
 
 
 /*
@@ -1157,7 +1154,7 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
  *    @param major Major version to check.
  *    @param minor Minor version to check.
  */
-static GLboolean gl_hasVersion( int major, int minor )
+GLboolean gl_hasVersion( int major, int minor )
 {
    const char *p;
    double f, c;
@@ -1181,7 +1178,7 @@ static GLboolean gl_hasVersion( int major, int minor )
  *    @param name Extension to check for.
  *    @return GL_TRUE if found, GL_FALSE if isn't.
  */
-static GLboolean gl_hasExt( char *name )
+GLboolean gl_hasExt( char *name )
 {
    /*
     * Search for name in the extensions string.  Use of strstr()
@@ -1250,52 +1247,6 @@ void gl_checkErr (void)
    WARN("OpenGL error: %s",errstr);
 }
 #endif /* DEBUG */
-
-
-/**
- * @brief Initializes opengl extensions.
- *
- *    @return 0 on success.
- */
-static int gl_initExtensions (void)
-{
-   /* Clear values. */
-   nglActiveTexture = NULL;
-   nglMultiTexCoord2d = NULL;
-   nglGenBuffers = NULL;
-   nglBindBuffer = NULL;
-   nglBufferData = NULL;
-   nglBufferSubData = NULL;
-   nglDeleteBuffers = NULL;
-
-   /* Multitexture. */
-   if (gl_hasExt("GL_ARB_multitexture")) {
-      nglActiveTexture = SDL_GL_GetProcAddress("glActiveTexture");
-      nglMultiTexCoord2d = SDL_GL_GetProcAddress("glMultiTexCoord2d");
-   }
-   else
-      WARN("GL_ARB_multitexture not found!");
-
-   /* Vertex Buffers. */
-   if (gl_hasVersion( 1, 5)) {
-      nglGenBuffers = SDL_GL_GetProcAddress("glGenBuffers");
-      nglBindBuffer = SDL_GL_GetProcAddress("glBindBuffer");
-      nglBufferData = SDL_GL_GetProcAddress("glBufferData");
-      nglBufferSubData = SDL_GL_GetProcAddress("glBufferSubData");
-      nglDeleteBuffers = SDL_GL_GetProcAddress("glDeleteBuffers");
-   }
-   else if (gl_hasExt("GL_ARB_vertex_buffer_object")) {
-      nglGenBuffers = SDL_GL_GetProcAddress("glGenBuffersARB");
-      nglBindBuffer = SDL_GL_GetProcAddress("glBindBufferARB");
-      nglBufferData = SDL_GL_GetProcAddress("glBufferDataARB");
-      nglBufferSubData = SDL_GL_GetProcAddress("glBufferSubDataARB");
-      nglDeleteBuffers = SDL_GL_GetProcAddress("glDeleteBuffersARB");
-   }
-   else
-      WARN("GL_ARB_vertex_buffer_object not found!");
-
-   return 0;
-}
 
 
 /**
