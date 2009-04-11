@@ -811,6 +811,7 @@ static void gl_blitTexture( const glTexture* texture,
       const double tx, const double ty, const glColour *c )
 {
    double tw,th;
+   GLfloat vertex[4*2], tex[4*2];
 
    /* texture dimensions */
    tw = texture->sw / texture->rw;
@@ -818,23 +819,41 @@ static void gl_blitTexture( const glTexture* texture,
 
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, texture->texture);
-   glBegin(GL_QUADS);
-      /* set colour or default if not set */
-      if (c==NULL) glColor4d( 1., 1., 1., 1. );
-      else COLOUR(*c);
 
-      glTexCoord2d( tx, ty);
-      glVertex2d( x, y );
+   if (c==NULL)
+      glColor4d( 1., 1., 1., 1. );
+   else COLOUR(*c);
 
-      glTexCoord2d( tx + tw, ty);
-      glVertex2d( x + texture->sw, y );
+   /* Set the vertex. */
+   glEnableClientState(GL_VERTEX_ARRAY);
+   vertex[0] = (GLfloat)x;
+   vertex[6] = vertex[0];
+   vertex[2] = vertex[0] + (GLfloat)texture->sw;
+   vertex[4] = vertex[2];
+   vertex[1] = (GLfloat)y;
+   vertex[3] = vertex[1];
+   vertex[5] = vertex[1] + (GLfloat)texture->sh;
+   vertex[7] = vertex[5];
+   glVertexPointer( 2, GL_FLOAT, 0, vertex );
 
-      glTexCoord2d( tx + tw, ty + th);
-      glVertex2d( x + texture->sw, y + texture->sh );
+   /* Set the texture. */
+   glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+   tex[0] = (GLfloat)tx;
+   tex[6] = tex[0];
+   tex[2] = tex[0] + (GLfloat)tw;
+   tex[4] = tex[2];
+   tex[1] = (GLfloat)ty;
+   tex[3] = tex[1];
+   tex[5] = tex[1] + (GLfloat)th;
+   tex[7] = tex[5];
+   glTexCoordPointer( 2, GL_FLOAT, 0, tex );
 
-      glTexCoord2d( tx, ty + th);
-      glVertex2d( x, y + texture->sh );
-   glEnd(); /* GL_QUADS */
+   /* Draw. */
+   glDrawArrays( GL_QUADS, 0, 4 );
+
+   glDisableClientState(GL_VERTEX_ARRAY);
+   glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
    glDisable(GL_TEXTURE_2D);
 
    /* anything failed? */
