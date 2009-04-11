@@ -1551,8 +1551,7 @@ void player_setFireMode( int mode )
  */
 void player_dead (void)
 {
-   gui_xoff = 0.;
-   gui_yoff = 0.;
+   gui_cleanup();
 }
 
 

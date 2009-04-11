@@ -42,11 +42,6 @@
 
 
 /*
- * opengl stuff.
- */
-extern Vector2d *gl_camera;
-extern double gui_xoff, gui_yoff;
-/*
  * pilot stuff
  */
 extern Pilot** pilot_stack;
@@ -542,7 +537,7 @@ void weapons_render( const WeaponLayer layer, const double dt )
 static void weapon_render( Weapon* w, const double dt )
 {
    int sx, sy;
-   double x,y, cx,cy;
+   double x,y, cx,cy, gx,gy;
    glTexture *gfx;
 
    switch (w->outfit->type) {
@@ -588,8 +583,9 @@ static void weapon_render( Weapon* w, const double dt )
 
          /* Position. */
          gl_cameraGet( &cx, &cy );
-         x = w->solid->pos.x - cx + gui_xoff;
-         y = w->solid->pos.y - cy + gui_yoff;
+         gui_getOffset( &gx, &gy );
+         x = w->solid->pos.x - cx + gx;
+         y = w->solid->pos.y - cy + gy;
 
          /* Set up the matrix. */
          glMatrixMode(GL_PROJECTION);

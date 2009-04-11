@@ -171,8 +171,8 @@ static GUI gui = { .gfx_frame = NULL,
    .gfx_targetPilot = NULL,
    .gfx_targetPlanet = NULL }; /**< Ze GUI. */
 /* needed to render properly */
-double gui_xoff = 0.; /**< X Offset that GUI introduces. */
-double gui_yoff = 0.; /**< Y offset that GUI introduces. */
+static double gui_xoff = 0.; /**< X Offset that GUI introduces. */
+static double gui_yoff = 0.; /**< Y offset that GUI introduces. */
 
 /* messages */
 #define MESG_SIZE_MAX   120 /**< Maxmimu message length. */
@@ -343,6 +343,10 @@ void gui_renderTarget( double dt )
    Pilot *p;
    glColour *c;
    double x, y;
+
+   /* Player is most likely dead. */
+   if (gui.gfx_targetPilot == NULL)
+      return;
 
    /* Get the target. */
    if (player->target != PLAYER_ID)
@@ -1847,6 +1851,10 @@ void gui_cleanup (void)
    interference_alpha = 0.; 
    interference_layer = 0; 
    interference_t     = 0.; 
+
+   /* Destroy offset. */
+   gui_xoff = 0.;
+   gui_yoff = 0.;
 }
 
 
@@ -1877,4 +1885,16 @@ void gui_setRadarRel( int mod )
    player_message( "Radar set to %dx.", (int)gui.radar.res );
 }
 
+
+/**
+ * @brief Gets the GUI offset.
+ *
+ *    @param x X offset.
+ *    @param y Y offset.
+ */
+void gui_getOffset( double *x, double *y )
+{
+   *x = gui_xoff;
+   *y = gui_yoff;
+}
 

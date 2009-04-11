@@ -17,10 +17,6 @@ typedef enum RadarShape_ {
 } RadarShape; /**< Player's radar shape. */
 
 
-extern double gui_xoff; /**< GUI X center offset. */
-extern double gui_yoff; /**< GUI Y center offset. */
-
-
 /*
  * Loading/cleaning up.
  */
@@ -44,6 +40,7 @@ void gui_render( double dt );
 void gui_setDefaults (void);
 void player_message( const char *fmt, ... );
 void gui_setRadarRel( int mod );
+void gui_getOffset( double *x, double *y );
 
 
 #endif /* GUI_H */

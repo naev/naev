@@ -132,21 +132,15 @@ static void gl_blitTextureVertexArray(  const glTexture* texture,
 void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
       const int sx, const int sy, const glColour* c )
 {
-   double x,y, tx,ty, cx,cy;
+   double x,y, tx,ty, cx,cy, gx,gy;
 
-   /* Choose camera. */
-   if (gl_camera != NULL) {
-      cx = gl_camera->x;
-      cy = gl_camera->y;
-   }
-   else {
-      cx = gl_cameraX;
-      cy = gl_cameraY;
-   }
+   /* Get parameters. */
+   gl_cameraGet( &cx, &cy );
+   gui_getOffset( &gx, &gy );
 
    /* calculate position - we'll use relative coords to player */
-   x = bx - cx - sprite->sw/2. + gui_xoff;
-   y = by - cy - sprite->sh/2. + gui_yoff;
+   x = bx - cx - sprite->sw/2. + gx;
+   y = by - cy - sprite->sh/2. + gy;
 
    /* check if inbounds */
    if ((fabs(x) > SCREEN_W/2 + sprite->sw) ||
