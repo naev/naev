@@ -365,6 +365,10 @@ void cli_open (void)
       if (cli_init())
          return;
 
+   /* Must not be already open. */
+   if (window_exists( "Lua Console" ))
+      return;
+
    /* Create the window. */
    wid = window_create( "Lua Console", -1, -1, cli_width, cli_height );
 
