@@ -130,31 +130,6 @@ glTexture* gl_newSprite( const char* path, const int sx, const int sy,
 void gl_freeTexture( glTexture* texture );
 glTexture* gl_dupTexture( glTexture *texture );
 
-/*
- * opengl drawing
- */
-/* blits a sprite, relative pos */
-void gl_blitSprite( const glTexture* sprite,
-      const double bx, const double by,
-      const int sx, const int sy, const glColour *c );
-/* blits a sprite, absolute pos */
-void gl_blitStaticSprite( const glTexture* sprite,
-      const double bx, const double by,
-      const int sx, const int sy, const glColour* c );
-/* blits a texture scaled, absolute pos */
-void gl_blitScale( const glTexture* texture,
-      const double bx, const double by,
-      const double bw, const double bh, const glColour* c );
-/* blits the entire image, absolute pos */
-void gl_blitStatic( const glTexture* texture,
-      const double bx, const double by, const glColour *c );
-/* binds the camera to a vector */
-void gl_bindCamera( Vector2d* pos );
-/* circle drawing */
-void gl_drawCircle( const double x, const double y, const double r );
-void gl_drawCircleInRect( const double x, const double y, const double r,
-      const double rx, const double ry, const double rw, const double rh );
-
 
 /*
  * initialization / cleanup
@@ -186,6 +161,8 @@ void gl_checkErr (void);
 #define gl_checkErr() /**< Hack to ignore errors when debugging. */
 #endif /* DEBUG */
 
+
+#include "opengl_render.h"
 
 #endif /* OPENGL_H */
    
