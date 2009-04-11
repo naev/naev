@@ -77,6 +77,13 @@ static glTexList* texture_list = NULL; /**< Texture list. */
 /*
  * prototypes
  */
+/* gl */
+static int gl_setupAttributes (void);
+static int gl_setupFullscreen( unsigned int *flags, const SDL_VideoInfo *vidinfo );
+static int gl_createWindow( unsigned int flags );
+static int gl_getGLInfo (void);
+static int gl_defState (void);
+static int gl_setupScaling (void);
 /* png */
 static int write_png( const char *file_name, png_bytep *rows,
       int w, int h, int colourtype, int bitdepth );
@@ -322,31 +329,12 @@ void gl_checkErr (void)
 
 
 /**
- * @brief Initializes SDL/OpenGL and the works.
+ * @brief Tries to set up the OpenGL attributes for the OpenGL context.
+ *
  *    @return 0 on success.
  */
-int gl_init (void)
+static int gl_setupAttributes (void)
 {
-   int doublebuf, depth, i, j, off, toff, supported, fsaa;
-   SDL_Rect** modes;
-   int flags;
-   const SDL_VideoInfo *vidinfo;
-
-   /* Defaults. */
-   supported = 0;
-   flags  = SDL_OPENGL;
-   flags |= SDL_FULLSCREEN * (gl_has(OPENGL_FULLSCREEN) ? 1 : 0);
-
-   /* Initializes Video */
-   if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
-      WARN("Unable to initialize SDL Video: %s", SDL_GetError());
-      return -1;
-   }
-
-   /* Get the video information. */
-   vidinfo = SDL_GetVideoInfo();
-
-   /* Set opengl flags. */
    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); /* Ideally want double buffering. */
    if (gl_has(OPENGL_FSAA)) {
       SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
@@ -359,66 +347,83 @@ int gl_init (void)
       SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, 1);
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
-   if (gl_has(OPENGL_FULLSCREEN)) {
-      /* Try to use desktop resolution if nothing is specifically set. */
-#if SDL_VERSION_ATLEAST(1,2,10)
-      if (!gl_has(OPENGL_DIM_DEF)) {
-         gl_screen.w = vidinfo->current_w;
-         gl_screen.h = vidinfo->current_h;
-      }
-#endif /* SDL_VERSION_ATLEAST(1,2,10) */
+   return 0;
+}
 
-      /* Get available modes and see what we can use. */
-      modes = SDL_ListModes( NULL, SDL_OPENGL | SDL_FULLSCREEN );
-      if (modes == NULL) { /* rare case, but could happen */
-         WARN("No fullscreen modes available");
-         if (flags & SDL_FULLSCREEN) {
-            WARN("Disabling fullscreen mode");
-            flags &= ~SDL_FULLSCREEN;
-         }
-      }
-      else if (modes == (SDL_Rect **)-1)
-         DEBUG("All fullscreen modes available");
-      else {
-         DEBUG("Available fullscreen modes:");
-         for (i=0; modes[i]; i++) {
-            DEBUG("  %d x %d", modes[i]->w, modes[i]->h);
-            if ((flags & SDL_FULLSCREEN) && (modes[i]->w == SCREEN_W) &&
-                  (modes[i]->h == SCREEN_H))
-               supported = 1; /* mode we asked for is supported */
-         }
-      }
-      /* makes sure fullscreen mode is supported */
-      if ((flags & SDL_FULLSCREEN) && !supported) {
 
-         /* try to get closest aproximation to mode asked for */
-         off = -1;
-         j = 0;
-         for (i=0; modes[i]; i++) {
-            toff = ABS(SCREEN_W-modes[i]->w) + ABS(SCREEN_H-modes[i]->h);
-            if ((off == -1) || (toff < off)) {
-               j = i;
-               off = toff;
-            }
-         }
-         WARN("Fullscreen mode %dx%d is not supported by your setup\n"
-               "   switching to %dx%d",
-               SCREEN_W, SCREEN_H,
-               modes[j]->w, modes[j]->h );
-         gl_screen.w = modes[j]->w;
-         gl_screen.h = modes[j]->h;
-      }
-   }
+/**
+ * @brief Tries to set up fullscreen environment.
+ */
+static int gl_setupFullscreen( unsigned int *flags, const SDL_VideoInfo *vidinfo )
+{
+   int i, j, off, toff, supported;
+   SDL_Rect** modes;
 
-   /* Check to see if trying to create above screen resolution without player
-    * asking for such a large size. */
+   /* Unsupported by default. */
+   supported = 0;
+
+   /* Try to use desktop resolution if nothing is specifically set. */
 #if SDL_VERSION_ATLEAST(1,2,10)
    if (!gl_has(OPENGL_DIM_DEF)) {
-      gl_screen.w = MIN(gl_screen.w, vidinfo->current_w);
-      gl_screen.h = MIN(gl_screen.h, vidinfo->current_h);
+      gl_screen.w = vidinfo->current_w;
+      gl_screen.h = vidinfo->current_h;
    }
 #endif /* SDL_VERSION_ATLEAST(1,2,10) */
-   
+
+   /* Get available modes and see what we can use. */
+   modes = SDL_ListModes( NULL, SDL_OPENGL | SDL_FULLSCREEN );
+   if (modes == NULL) { /* rare case, but could happen */
+      WARN("No fullscreen modes available");
+      if ((*flags) & SDL_FULLSCREEN) {
+         WARN("Disabling fullscreen mode");
+         (*flags) &= ~SDL_FULLSCREEN;
+      }
+   }
+   else if (modes == (SDL_Rect **)-1)
+      DEBUG("All fullscreen modes available");
+   else {
+      DEBUG("Available fullscreen modes:");
+      for (i=0; modes[i]; i++) {
+         DEBUG("  %d x %d", modes[i]->w, modes[i]->h);
+         if (((*flags) & SDL_FULLSCREEN) && (modes[i]->w == SCREEN_W) &&
+               (modes[i]->h == SCREEN_H))
+            supported = 1; /* mode we asked for is supported */
+      }
+   }
+   /* makes sure fullscreen mode is supported */
+   if (((*flags) & SDL_FULLSCREEN) && !supported) {
+
+      /* try to get closest aproximation to mode asked for */
+      off = -1;
+      j = 0;
+      for (i=0; modes[i]; i++) {
+         toff = ABS(SCREEN_W-modes[i]->w) + ABS(SCREEN_H-modes[i]->h);
+         if ((off == -1) || (toff < off)) {
+            j = i;
+            off = toff;
+         }
+      }
+      WARN("Fullscreen mode %dx%d is not supported by your setup\n"
+            "   switching to %dx%d",
+            SCREEN_W, SCREEN_H,
+            modes[j]->w, modes[j]->h );
+      gl_screen.w = modes[j]->w;
+      gl_screen.h = modes[j]->h;
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Creates the OpenGL window.
+ *
+ *    @return 0 on success.
+ */
+static int gl_createWindow( unsigned int flags )
+{
+   int depth;
+
    /* Test the setup - aim for 32. */
    gl_screen.depth = 32;
    depth = SDL_VideoModeOK( SCREEN_W, SCREEN_H, gl_screen.depth, flags);
@@ -448,7 +453,19 @@ int gl_init (void)
    gl_screen.rh = SCREEN_H;
    gl_activated = 1; /* Opengl is now activated. */
 
-   /* Get info about the OpenGL window */
+   return 0;
+}
+
+
+/**
+ * @brief Gets some information about the OpenGL window.
+ *
+ *    @return 0 on success.
+ */
+static int gl_getGLInfo (void)
+{
+   int doublebuf, fsaa;
+
    SDL_GL_GetAttribute( SDL_GL_RED_SIZE, &gl_screen.r );
    SDL_GL_GetAttribute( SDL_GL_GREEN_SIZE, &gl_screen.g );
    SDL_GL_GetAttribute( SDL_GL_BLUE_SIZE, &gl_screen.b );
@@ -473,6 +490,7 @@ int gl_init (void)
          fsaa, gl_screen.tex_max);
    DEBUG("Renderer: %s", glGetString(GL_RENDERER));
    DEBUG("Version: %s", glGetString(GL_VERSION));
+
    /* Now check for things that can be bad. */
    if (gl_screen.multitex_max < OPENGL_REQ_MULTITEX)
       WARN("Missing texture units (%d required, %d found)",
@@ -480,14 +498,18 @@ int gl_init (void)
    if (gl_has(OPENGL_FSAA) && (fsaa != gl_screen.fsaa))
       WARN("Unable to get requested FSAA level (%d requested, got %d)",
             gl_screen.fsaa, fsaa );
-   /* Initialize extensions. */
-   gl_initExtensions();
-   DEBUG("");
 
-   /* Some OpenGL options. */
-   glClearColor( 0., 0., 0., 1. );
+   return 0;
+}
 
-   /* Set default opengl state. */
+
+/**
+ * @brief Sets the opengl state to it's default parameters.
+ *
+ *    @return 0 on success.
+ */
+static int gl_defState (void)
+{
    glDisable( GL_DEPTH_TEST ); /* set for doing 2d */
 /* glEnable(  GL_TEXTURE_2D ); never enable globally, breaks non-texture blits */
    glDisable( GL_LIGHTING ); /* no lighting, it's done when rendered */
@@ -497,6 +519,17 @@ int gl_init (void)
    glShadeModel( GL_FLAT ); /* default shade model, functions should keep this when done */
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* good blend model */
 
+   return 0;
+}
+
+
+/**
+ * @brief Checks ot see if window needs to handle scaling.
+ *
+ *    @param return 0 on success.
+ */
+static int gl_setupScaling (void)
+{
    /* New window is real window scaled. */
    gl_screen.nw = (double)gl_screen.rw * gl_screen.scale;
    gl_screen.nh = (double)gl_screen.rh * gl_screen.scale;
@@ -527,12 +560,76 @@ int gl_init (void)
    gl_screen.hscale  = (double)gl_screen.nh / (double)gl_screen.h;
    gl_screen.mxscale = (double)gl_screen.w / (double)gl_screen.rw;
    gl_screen.myscale = (double)gl_screen.h / (double)gl_screen.rh;
+
+   return 0;
+}
+
+
+/**
+ * @brief Initializes SDL/OpenGL and the works.
+ *    @return 0 on success.
+ */
+int gl_init (void)
+{
+   unsigned int flags;
+   const SDL_VideoInfo *vidinfo;
+
+   /* Defaults. */
+   flags  = SDL_OPENGL;
+   flags |= SDL_FULLSCREEN * (gl_has(OPENGL_FULLSCREEN) ? 1 : 0);
+
+   /* Initializes Video */
+   if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
+      WARN("Unable to initialize SDL Video: %s", SDL_GetError());
+      return -1;
+   }
+
+   /* Get the video information. */
+   vidinfo = SDL_GetVideoInfo();
+
+   /* Set opengl flags. */
+   gl_setupAttributes();
+
+   /* See if should set up fullscreen. */
+   if (gl_has(OPENGL_FULLSCREEN))
+      gl_setupFullscreen( &flags, vidinfo );
+
+   /* Check to see if trying to create above screen resolution without player
+    * asking for such a large size. */
+#if SDL_VERSION_ATLEAST(1,2,10)
+   if (!gl_has(OPENGL_DIM_DEF)) {
+      gl_screen.w = MIN(gl_screen.w, vidinfo->current_w);
+      gl_screen.h = MIN(gl_screen.h, vidinfo->current_h);
+   }
+#endif /* SDL_VERSION_ATLEAST(1,2,10) */
+
+   /* Create the window. */
+   gl_createWindow( flags );
+
+   /* Get info about the OpenGL window */
+   gl_getGLInfo();
+
+   /* Initialize extensions. */
+   gl_initExtensions();
+
+   /* Some OpenGL options. */
+   glClearColor( 0., 0., 0., 1. );
+
+   /* Set default opengl state. */
+   gl_defState();
+
+   /* Set up possible scaling. */
+   gl_setupScaling();
+
    /* Handle setting the default viewport. */
    gl_defViewport();
 
    /* Finishing touches. */
    glClear( GL_COLOR_BUFFER_BIT ); /* must clear the buffer first */
    gl_checkErr();
+
+   /* Cosmetic new line. */
+   DEBUG("");
 
    return 0;
 }
