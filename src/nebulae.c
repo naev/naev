@@ -18,7 +18,6 @@
 
 #include "log.h"
 #include "opengl.h"
-#include "opengl_ext.h"
 #include "nfile.h"
 #include "perlin.h"
 #include "rng.h"

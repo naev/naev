@@ -26,12 +26,11 @@
  */
 
 
-#include "opengl_render.h"
+#include "opengl.h"
 
 #include "naev.h"
 
 #include "log.h"
-#include "opengl_ext.h"
 #include "ndata.h"
 #include "gui.h"
 

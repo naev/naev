@@ -9,7 +9,7 @@
  */
 
 
-#include "opengl_ext.h"
+#include "opengl.h"
 
 #include "naev.h"
 
@@ -18,7 +18,6 @@
 #include "SDL_version.h"
 
 #include "log.h"
-#include "opengl.h"
 
 
 /*

@@ -162,7 +162,12 @@ void gl_checkErr (void);
 #endif /* DEBUG */
 
 
+/*
+ * We put all the other opengl stuff here to only have to include one header.
+ */
+#include "opengl_ext.h"
 #include "opengl_render.h"
+
 
 #endif /* OPENGL_H */
    
