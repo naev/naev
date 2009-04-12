@@ -251,7 +251,7 @@ function choose_combat ()
 
    nebu = nebu_dens > 0
    if nebu then
-      combat = { "nebu_battle1" }
+      combat = { "nebu_battle1", "nebu_battle2" }
    else
       combat = { "galacticbattle", "flf_battle1" }
    end
