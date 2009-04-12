@@ -107,8 +107,8 @@ extern int pilot_nstack;
  * @struct Star
  *
  * @brief Represents a background star. */
-static GLuint star_vertexVBO = 0; /**< Star Vertex VBO. */
-static GLuint star_colourVBO = 0; /**< Star Colour VBO. */
+static gl_vbo *star_vertexVBO = NULL; /**< Star Vertex VBO. */
+static gl_vbo *star_colourVBO = NULL; /**< Star Colour VBO. */
 static GLfloat *star_vertex = NULL; /**< Vertex of the stars. */
 static GLfloat *star_colour = NULL; /**< Brightness of the stars. */
 static int nstars = 0; /**< total stars */
@@ -712,24 +712,21 @@ void space_init ( const char* sysname )
             star_colour[8*i+7] = 0.;
          }
 
-         /* Create VBO. */
-         if (nglGenBuffers != NULL) {
-            /* Destroy old VBO. */
-            if (star_vertexVBO > 0) {
-               gl_vboDestroy( star_vertexVBO );
-               star_vertexVBO = 0;
-            }
-            if (star_colourVBO > 0) {
-               gl_vboDestroy( star_colourVBO );
-               star_colourVBO = 0;
-            }
-
-            /* Create now VBO. */
-            star_vertexVBO = gl_vboCreate( GL_ARRAY_BUFFER,
-                  nstars * sizeof(GLfloat) * 4, star_vertex, GL_STREAM_DRAW );
-            star_colourVBO = gl_vboCreate( GL_ARRAY_BUFFER,
-                  nstars * sizeof(GLfloat) * 8, star_colour, GL_STATIC_DRAW );
+         /* Destroy old VBO. */
+         if (star_vertexVBO != NULL) {
+            gl_vboDestroy( star_vertexVBO );
+            star_vertexVBO = NULL;
          }
+         if (star_colourVBO != NULL) {
+            gl_vboDestroy( star_colourVBO );
+            star_colourVBO = NULL;
+         }
+
+         /* Create now VBO. */
+         star_vertexVBO = gl_vboCreateStream(
+               nstars * sizeof(GLfloat) * 4, star_vertex );
+         star_colourVBO = gl_vboCreateStatic(
+               nstars * sizeof(GLfloat) * 8, star_colour );
       }
    }
 
@@ -1572,12 +1569,7 @@ static void space_renderStars( const double dt )
       y = m*sin(VANGLE(player->solid->vel)+M_PI);
 
       /* Get the data. */
-      if (star_vertexVBO > 0) {
-         nglBindBuffer(GL_ARRAY_BUFFER, star_vertexVBO);
-         data = nglMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-      }
-      else
-         data = star_vertex;
+      data = gl_vboMap( star_vertexVBO );
 
       /* Generate lines. */
       for (i=0; i < nstars; i++) {
@@ -1586,20 +1578,10 @@ static void space_renderStars( const double dt )
          data[4*i+3] = star_vertex[4*i+1] + y*brightness;
       }
 
-      /* Unmap. */
-      if (star_vertexVBO > 0)
-         nglUnmapBuffer(GL_ARRAY_BUFFER);
-
       /* Draw the lines. */
-      if (star_vertexVBO > 0) { /* VBO */
-         glVertexPointer( 2, GL_FLOAT, 0, 0 );
-         nglBindBuffer(GL_ARRAY_BUFFER, star_colourVBO);
-         glColorPointer(  4, GL_FLOAT, 0, 0 );
-      }
-      else { /* Vertex Array */
-         glVertexPointer( 2, GL_FLOAT, 0, star_vertex );
-         glColorPointer(  4, GL_FLOAT, 0, star_colour );
-      }
+      gl_vboUnmap( star_vertexVBO );
+      gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 0 );
+      gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 0 );
       glDrawArrays( GL_LINES, 0, nstars );
 
       if (gl_has(OPENGL_AA_LINE))
@@ -1612,12 +1594,7 @@ static void space_renderStars( const double dt )
             !player_isFlag(PLAYER_CREATING)) { /* update position */
 
          /* Get the data. */
-         if (star_vertexVBO > 0) {
-            nglBindBuffer(GL_ARRAY_BUFFER, star_vertexVBO);
-            data = nglMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-         }
-         else
-            data = star_vertex;
+         data = gl_vboMap( star_vertexVBO );
 
          /* Calculate new star positions. */
          for (i=0; i < nstars; i++) {
@@ -1645,31 +1622,17 @@ static void space_renderStars( const double dt )
          }
 
          /* Unmap. */
-         if (star_vertexVBO > 0)
-            nglUnmapBuffer(GL_ARRAY_BUFFER);
-
+         gl_vboUnmap( star_vertexVBO );
       }
 
       /* Render. */
-      if (star_vertexVBO > 0) { /* VBO. */
-         nglBindBuffer(GL_ARRAY_BUFFER, star_vertexVBO); /* Needed if paused. */
-         glVertexPointer( 2, GL_FLOAT, 0, 0 );
-         nglBindBuffer(GL_ARRAY_BUFFER, star_colourVBO);
-         glColorPointer(  4, GL_FLOAT, 0, 0 );
-      }
-      else { /* Vertex Array. */
-         glVertexPointer( 2, GL_FLOAT, 2*sizeof(GL_FLOAT), star_vertex );
-         glColorPointer(  4, GL_FLOAT, 4*sizeof(GL_FLOAT), star_colour );
-      }
-
-      /* Draw the array. */
+      gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 0 );
+      gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 0 );
       glDrawArrays( GL_POINTS, 0, nstars );
    }
 
    /* Disable vertex array. */
-   nglBindBuffer(GL_ARRAY_BUFFER, 0);
-   glDisableClientState(GL_VERTEX_ARRAY);
-   glDisableClientState(GL_COLOR_ARRAY);
+   gl_vboDeactivate();
 
    glPopMatrix(); /* translation matrix */
 }
