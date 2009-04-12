@@ -159,15 +159,18 @@ typedef struct Pilot_ {
    /* Current health */
    double armour; /**< Current armour. */
    double shield; /**< Current shield. */
-   double energy; /**< Current energy. */
    double fuel; /**< Current fuel. */
    double armour_max; /**< Maximum armour. */
    double shield_max; /**< Maximum shield. */
-   double energy_max; /**< Maximum energy. */
    double fuel_max; /**< Maximum fuel. */
    double armour_regen; /**< Armour regeneration rate (per second). */
    double shield_regen; /**< Shield regeneration rate (per second). */
+
+   /* Energy is handled a bit differently. */
+   double energy; /**< Current energy. */
+   double energy_max; /**< Maximum energy. */
    double energy_regen; /**< Energy regeneration rate (per second). */
+   double energy_tau; /**< Tau regeneration rate for energy. */
 
    /* Associated functions */
    void (*think)(struct Pilot_*); /**< AI thinking for the pilot */

@@ -1448,7 +1448,22 @@ static void pilot_update( Pilot* pilot, const double dt )
    /* Update energy */
    if ((pilot->energy < 1.) && pilot_isFlag(pilot, PILOT_AFTERBURNER))
       pilot_rmFlag(pilot, PILOT_AFTERBURNER); /* Break efterburner */
-   pilot->energy += pilot->energy_regen * dt;
+
+   /*
+    * Using RC circuit eenergy loading.
+    *
+    * Calculations (using y = [0:1])
+    *
+    *                                          \
+    *    y = 1 - exp( -x / tau )               |
+    *    y + dy = 1 - exp( -( x + dx ) / tau ) |  ==>
+    *                                          /
+    *
+    *    ==> dy = exp( -x / tau ) * ( 1 - exp( -dx / tau ) ==>
+    *    ==> [ dy = (1 - y) * ( 1 - exp( -dx / tau ) ) ]
+    */
+   pilot->energy += (pilot->energy_max - pilot->energy) *
+         (1. - exp( -dt / pilot->energy_tau));
 
    /* Player damage decay. */
    if (pilot->player_damage > 0.)
@@ -1943,10 +1958,11 @@ void pilot_calcStats( Pilot* pilot )
    fc = pilot->fuel   / pilot->fuel_max;
    pilot->armour_max    = pilot->ship->armour;
    pilot->shield_max    = pilot->ship->shield;
-   pilot->energy_max    = pilot->ship->energy;
    pilot->fuel_max      = pilot->ship->fuel;
    pilot->armour_regen  = pilot->ship->armour_regen;
    pilot->shield_regen  = pilot->ship->shield_regen;
+   /* Energy. */
+   pilot->energy_max    = pilot->ship->energy;
    pilot->energy_regen  = pilot->ship->energy_regen;
    /* Jamming */
    pilot->jam_range     = 0.;
@@ -1998,6 +2014,9 @@ void pilot_calcStats( Pilot* pilot )
          wspeed += outfit_speed(o);
       }
    }
+
+   /* Set final energy tau. */
+   pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
 
    /* Set weapon range and speed */
    pilot->weap_range = wrange; /* Range is max */
