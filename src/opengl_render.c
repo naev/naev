@@ -38,23 +38,20 @@
 static Vector2d* gl_camera  = NULL; /**< Camera we are using. */
 static double gl_cameraX    = 0.; /**< X position of camera. */
 static double gl_cameraY    = 0.; /**< Y position of camera. */
+static gl_vbo *gl_renderVBO = 0; /**< VBO for rendering stuff. */
 
 
 /*
  * prototypes
  */
-static void (*gl_blitTexture)( const glTexture* texture, 
-      const double x, const double y,
-      const double w, const double h,
-      const double tx, const double ty, const glColour *c );
-static void gl_blitTextureVertexArray(  const glTexture* texture,
+static void gl_blitTexture(  const glTexture* texture,
       const double x, const double y,
       const double w, const double h,
       const double tx, const double ty, const glColour *c );
 
 
 /**
- * @brief Texture array backend of gl_blitTexture.
+ * @brief Texture blitting backend.
  *
  *    @param texture Texture to blit.
  *    @param x X position of the texture on the screen.
@@ -63,13 +60,13 @@ static void gl_blitTextureVertexArray(  const glTexture* texture,
  *    @param ty Y position within the texture.
  *    @param c Colour to use (modifies texture colour).
  */
-static void gl_blitTextureVertexArray(  const glTexture* texture,
+static void gl_blitTexture(  const glTexture* texture,
       const double x, const double y,
       const double w, const double h,
       const double tx, const double ty, const glColour *c )
 {
    double tw,th;
-   GLfloat vertex[4*2], tex[4*2];
+   GLfloat vertex[4*2], tex[4*2], col[4*4];
 
    /* texture dimensions */
    tw = texture->sw / texture->rw;
@@ -78,12 +75,10 @@ static void gl_blitTextureVertexArray(  const glTexture* texture,
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, texture->texture);
 
-   if (c==NULL)
-      glColor4d( 1., 1., 1., 1. );
-   else COLOUR(*c);
+   /* @todo Remove all glColor. */
+   glColor4d( 1., 1., 1., 1. );
 
    /* Set the vertex. */
-   glEnableClientState(GL_VERTEX_ARRAY);
    vertex[0] = (GLfloat)x;
    vertex[4] = vertex[0];
    vertex[2] = vertex[0] + (GLfloat)w;
@@ -92,10 +87,10 @@ static void gl_blitTextureVertexArray(  const glTexture* texture,
    vertex[3] = vertex[1];
    vertex[5] = vertex[1] + (GLfloat)h;
    vertex[7] = vertex[5];
-   glVertexPointer( 2, GL_FLOAT, 0, vertex );
+   gl_vboSubData( gl_renderVBO, 0, 4*2*sizeof(GLfloat), vertex );
+   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
-   glEnableClientState(GL_TEXTURE_COORD_ARRAY);
    tex[0] = (GLfloat)tx;
    tex[4] = tex[0];
    tex[2] = tex[0] + (GLfloat)tw;
@@ -104,14 +99,37 @@ static void gl_blitTextureVertexArray(  const glTexture* texture,
    tex[3] = tex[1];
    tex[5] = tex[1] + (GLfloat)th;
    tex[7] = tex[5];
-   glTexCoordPointer( 2, GL_FLOAT, 0, tex );
+   gl_vboSubData( gl_renderVBO, 4*2*sizeof(GLfloat), 4*2*sizeof(GLfloat), tex );
+   gl_vboActivateOffset( gl_renderVBO, GL_TEXTURE_COORD_ARRAY,
+         4*2*sizeof(GLfloat), 2, GL_FLOAT, 0 );
+
+   if (c!=NULL) {
+      col[0] = c->r;
+      col[1] = c->g;
+      col[2] = c->b;
+      col[3] = c->a;
+      col[4] = col[0];
+      col[5] = col[1];
+      col[6] = col[2];
+      col[7] = col[3];
+      col[8] = col[0];
+      col[9] = col[1];
+      col[10] = col[2];
+      col[11] = col[3];
+      col[12] = col[0];
+      col[13] = col[1];
+      col[14] = col[2];
+      col[15] = col[3];
+      gl_vboSubData( gl_renderVBO, 8*2*sizeof(GLfloat), 4*4*sizeof(GLfloat), col );
+      gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
+            8*2*sizeof(GLfloat), 4, GL_FLOAT, 0 );
+   }
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
-   glDisableClientState(GL_VERTEX_ARRAY);
-   glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
+   /* Clear state. */
+   gl_vboDeactivate();
    glDisable(GL_TEXTURE_2D);
 
    /* anything failed? */
@@ -424,7 +442,7 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
  */
 int gl_initRender (void)
 {
-   gl_blitTexture = gl_blitTextureVertexArray;
+   gl_renderVBO = gl_vboCreateStream( sizeof(GLfloat) * (4*2 + 4*2 + 4*4), NULL );
    return 0;
 }
 
@@ -434,6 +452,7 @@ int gl_initRender (void)
  */
 void gl_exitRender (void)
 {
-   gl_blitTexture = NULL;
+   gl_vboDestroy( gl_renderVBO );
+   gl_renderVBO = NULL;
 }
 

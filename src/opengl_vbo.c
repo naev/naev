@@ -16,6 +16,9 @@
 #include "log.h"
 
 
+#define BUFFER_OFFSET(i) ((char *)NULL + (i)) /**< Taken from OpengL spec. */
+
+
 /**
  * @brief VBO types.
  */
@@ -208,13 +211,29 @@ void gl_vboUnmap( gl_vbo *vbo )
  */
 void gl_vboActivate( gl_vbo *vbo, GLuint class, GLint size, GLenum type, GLsizei stride )
 {
+   gl_vboActivateOffset( vbo, class, 0, size, type, stride );
+}
+
+
+/**
+ * @brief Activates a VBO's offset.
+ *
+ *    @param vbo VBO to activate.
+ *    @param Should be one of GL_COLOR_ARRAY, GL_VERTEX_ARRAY, or GL_TEXTURE_COORD_ARRAY.
+ *    @param size Specifies components per point.
+ *    @param type Type of data (usually GL_FLOAT).
+ *    @param stride Offset between consecutive points.
+ */
+void gl_vboActivateOffset( gl_vbo *vbo, GLuint class, GLuint offset,
+      GLint size, GLenum type, GLsizei stride )
+{
    const GLvoid *pointer;
 
    /* Set up. */
    glEnableClientState(class);
    if (has_vbo) {
       nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
-      pointer = 0;
+      pointer = BUFFER_OFFSET(offset);
    }
    else
       pointer = vbo->data;
@@ -230,7 +249,7 @@ void gl_vboActivate( gl_vbo *vbo, GLuint class, GLint size, GLenum type, GLsizei
          break;
 
       case GL_TEXTURE_COORD_ARRAY:
-         glVertexPointer( size, type, stride, pointer );
+         glTexCoordPointer( size, type, stride, pointer );
          break;
 
       default:
