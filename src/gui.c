@@ -1277,6 +1277,10 @@ static void gui_renderHealth( const HealthBar *bar, const double w )
    double res[2], rw;
    double x,y, sx,sy, tx,ty;
 
+   /* Check if need to draw. */
+   if (w == 0.)
+      return;
+
    /* Set the colour. */
    COLOUR(bar->col); 
 
