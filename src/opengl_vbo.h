@@ -10,25 +10,8 @@
 #include "opengl.h"
 
 
-/**
- * @brief VBO types.
- */
-typedef enum gl_vboType_e {
-   NGL_VBO_NULL,
-   NGL_VBO_STREAM,
-   NGL_VBO_STATIC
-} gl_vboType;
-
-
-/**
- * @brief Contains the VBO.
- */
-typedef struct gl_vbo_s {
-   GLuint id;
-   gl_vboType type;
-   GLsizei size;
-   void* data;
-} gl_vbo;
+struct gl_vbo_s;
+typedef struct gl_vbo_s gl_vbo;
 
 
 /*
@@ -48,6 +31,7 @@ gl_vbo* gl_vboCreateStatic( GLsizei size, void* data );
 /*
  * Modify.
  */
+void gl_vboSubData( gl_vbo *vbo, GLint offset, GLsizei size, void* data );
 void* gl_vboMap( gl_vbo *vbo );
 void gl_vboUnmap( gl_vbo *vbo );
 void gl_vboActivate( gl_vbo *vbo, GLuint class, GLint size, GLenum type, GLsizei stride );

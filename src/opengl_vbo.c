@@ -16,6 +16,27 @@
 #include "log.h"
 
 
+/**
+ * @brief VBO types.
+ */
+typedef enum gl_vboType_e {
+   NGL_VBO_NULL,
+   NGL_VBO_STREAM,
+   NGL_VBO_STATIC
+} gl_vboType;
+
+
+/**
+ * @brief Contains the VBO.
+ */
+struct gl_vbo_s {
+   GLuint id;
+   gl_vboType type;
+   GLsizei size;
+   char* data;
+};
+
+
 static int has_vbo = 0; /**< Whether or not has VBO. */
 
 
@@ -81,13 +102,34 @@ static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, void* data, GLenum usa
    else {
       vbo->size = size;
       vbo->data = malloc(size);
-      memcpy( vbo->data, data, size );
+      if (data != NULL)
+         memcpy( vbo->data, data, size );
    }
 
    /* Check for errors. */
    gl_checkErr();
 
    return vbo;
+}
+
+
+/**
+ * @brief Loads some data into the VBO.
+ *
+ *    @param vbo VBO to load data into.
+ *    @param offset Offset location of the data (in bytes).
+ *    @param size Size of the data (in bytes).
+ *    @param data Pointer to the data.
+ */
+void gl_vboSubData( gl_vbo *vbo, GLint offset, GLsizei size, void* data )
+{
+   if (has_vbo) {
+      nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
+      nglBufferSubData( GL_ARRAY_BUFFER, offset, size, data );
+   }
+   else {
+      memcpy( &vbo->data[offset], data, size );
+   }
 }
 
 

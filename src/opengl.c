@@ -633,6 +633,7 @@ int gl_init (void)
    /* Initialize subsystems.*/
    gl_initExtensions();
    gl_initTextures();
+   gl_initVBO();
    gl_initRender();
 
    /* Cosmetic new line. */
@@ -684,6 +685,7 @@ void gl_exit (void)
 
    /* Exit the OpenGL subsystems. */
    gl_exitRender();
+   gl_exitVBO();
    gl_exitTextures();
    gl_exitExtensions();
 

@@ -1537,7 +1537,6 @@ static void space_renderStars( const double dt )
    int i;
    GLfloat x, y, m, b;
    GLfloat brightness;
-   GLfloat *data;
 
    /*
     * gprof claims it's the slowest thing in the game!
@@ -1568,18 +1567,15 @@ static void space_renderStars( const double dt )
       x = m*cos(VANGLE(player->solid->vel)+M_PI);
       y = m*sin(VANGLE(player->solid->vel)+M_PI);
 
-      /* Get the data. */
-      data = gl_vboMap( star_vertexVBO );
-
       /* Generate lines. */
       for (i=0; i < nstars; i++) {
          brightness = star_colour[8*i+3];
-         data[4*i+2] = star_vertex[4*i+0] + x*brightness;
-         data[4*i+3] = star_vertex[4*i+1] + y*brightness;
+         star_vertex[4*i+2] = star_vertex[4*i+0] + x*brightness;
+         star_vertex[4*i+3] = star_vertex[4*i+1] + y*brightness;
       }
 
       /* Draw the lines. */
-      gl_vboUnmap( star_vertexVBO );
+      gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
       gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 0 );
       gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 0 );
       glDrawArrays( GL_LINES, 0, nstars );
@@ -1592,9 +1588,6 @@ static void space_renderStars( const double dt )
    else { /* normal rendering */
       if (!paused && !player_isFlag(PLAYER_DESTROYED) &&
             !player_isFlag(PLAYER_CREATING)) { /* update position */
-
-         /* Get the data. */
-         data = gl_vboMap( star_vertexVBO );
 
          /* Calculate new star positions. */
          for (i=0; i < nstars; i++) {
@@ -1615,14 +1608,10 @@ static void space_renderStars( const double dt )
                star_vertex[4*i+1] -= SCREEN_H + 2*STAR_BUF;
             else if (star_vertex[4*i+1] < -STAR_BUF)
                star_vertex[4*i+1] += SCREEN_H + 2*STAR_BUF;
-
-            /* Upload data in case of VBO. */
-            data[4*i+0] = star_vertex[4*i+0];
-            data[4*i+1] = star_vertex[4*i+1];
          }
 
-         /* Unmap. */
-         gl_vboUnmap( star_vertexVBO );
+         /* Upload the data. */
+         gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
       }
 
       /* Render. */
