@@ -45,7 +45,12 @@
 #include <errno.h> /* error numbers */
 #include <string.h> /* strlen() and friends */
 #include <stdlib.h> /* malloc */
+#if HAS_POSIX
 #include <arpa/inet.h> /* ntohl */
+#endif /* HAS_POSIX */
+#if HAS_WIN32
+#include <winsock2.h> /* ntohl */
+#endif /* HAS_WIN32 */
 
 #include "log.h"
 #include "md5.h"
