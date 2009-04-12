@@ -489,6 +489,10 @@ void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_i
 {
    Pilot *t;
 
+   /* Makes no sense with no player atm. */
+   if (player==NULL)
+      return;
+
    /* Get the target. */
    t = pilot_get(target);
    if (t == NULL)
