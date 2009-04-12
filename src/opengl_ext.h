@@ -19,6 +19,8 @@ void (APIENTRY *nglGenBuffers)(GLsizei n, GLuint* ids);
 void (APIENTRY *nglBindBuffer)(GLenum target, GLuint id);
 void (APIENTRY *nglBufferData)(GLenum target, GLsizei size, const void* data, GLenum usage);
 void (APIENTRY *nglBufferSubData)(GLenum target, GLint offset, GLsizei size, void* data);
+void* (APIENTRY *nglMapBuffer)(GLenum target, GLenum access);
+void (APIENTRY *nglUnmapBuffer)(GLenum target);
 void (APIENTRY *nglDeleteBuffers)(GLsizei n, const GLuint* ids);
 
 

@@ -50,6 +50,8 @@ static int gl_extVBO (void)
       nglBindBuffer = SDL_GL_GetProcAddress("glBindBuffer");
       nglBufferData = SDL_GL_GetProcAddress("glBufferData");
       nglBufferSubData = SDL_GL_GetProcAddress("glBufferSubData");
+      nglMapBuffer = SDL_GL_GetProcAddress("glMapBuffer");
+      nglUnmapBuffer = SDL_GL_GetProcAddress("glUnmapBuffer");
       nglDeleteBuffers = SDL_GL_GetProcAddress("glDeleteBuffers");
    }
    else if (gl_hasExt("GL_ARB_vertex_buffer_object")) {
@@ -57,6 +59,8 @@ static int gl_extVBO (void)
       nglBindBuffer = SDL_GL_GetProcAddress("glBindBufferARB");
       nglBufferData = SDL_GL_GetProcAddress("glBufferDataARB");
       nglBufferSubData = SDL_GL_GetProcAddress("glBufferSubDataARB");
+      nglMapBuffer = SDL_GL_GetProcAddress("glMapBufferARB");
+      nglUnmapBuffer = SDL_GL_GetProcAddress("glUnmapBufferARB");
       nglDeleteBuffers = SDL_GL_GetProcAddress("glDeleteBuffersARB");
    }
    else {
@@ -64,6 +68,8 @@ static int gl_extVBO (void)
       nglBindBuffer = NULL;
       nglBufferData = NULL;
       nglBufferSubData = NULL;
+      nglMapBuffer = NULL;
+      nglUnmapBuffer = NULL;
       nglDeleteBuffers = NULL;
       WARN("GL_ARB_vertex_buffer_object not found!");
    }

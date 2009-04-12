@@ -21,6 +21,7 @@
  */
 #include "opengl_tex.h"
 #include "opengl_ext.h"
+#include "opengl_vbo.h"
 #include "opengl_render.h"
 
 
