@@ -75,8 +75,9 @@ static void gl_blitTexture(  const glTexture* texture,
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, texture->texture);
 
-   /* @todo Remove all glColor. */
-   glColor4d( 1., 1., 1., 1. );
+   /* Must have colour for now. */
+   if (c == NULL)
+      c = &cWhite;
 
    /* Set the vertex. */
    vertex[0] = (GLfloat)x;
