@@ -85,9 +85,9 @@ static void gl_blitTextureVertexArray(  const glTexture* texture,
    /* Set the vertex. */
    glEnableClientState(GL_VERTEX_ARRAY);
    vertex[0] = (GLfloat)x;
-   vertex[6] = vertex[0];
+   vertex[4] = vertex[0];
    vertex[2] = vertex[0] + (GLfloat)w;
-   vertex[4] = vertex[2];
+   vertex[6] = vertex[2];
    vertex[1] = (GLfloat)y;
    vertex[3] = vertex[1];
    vertex[5] = vertex[1] + (GLfloat)h;
@@ -97,9 +97,9 @@ static void gl_blitTextureVertexArray(  const glTexture* texture,
    /* Set the texture. */
    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
    tex[0] = (GLfloat)tx;
-   tex[6] = tex[0];
+   tex[4] = tex[0];
    tex[2] = tex[0] + (GLfloat)tw;
-   tex[4] = tex[2];
+   tex[6] = tex[2];
    tex[1] = (GLfloat)ty;
    tex[3] = tex[1];
    tex[5] = tex[1] + (GLfloat)th;
@@ -107,7 +107,7 @@ static void gl_blitTextureVertexArray(  const glTexture* texture,
    glTexCoordPointer( 2, GL_FLOAT, 0, tex );
 
    /* Draw. */
-   glDrawArrays( GL_QUADS, 0, 4 );
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    glDisableClientState(GL_VERTEX_ARRAY);
    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
