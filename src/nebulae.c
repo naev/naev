@@ -58,6 +58,9 @@ static double nebu_dt   = 0.; /**< How fast nebulae changes. */
 /* puff textures */
 static glTexture *nebu_pufftexs[NEBULAE_PUFFS]; /**< Nebulae puffs. */
 
+/* VBOs */
+static gl_vbo *nebu_overlayVBO = NULL; /**< Overlay VBO. */
+
 /**
  * @struct NebulaePuff
  *
@@ -83,6 +86,7 @@ static void nebu_generatePuffs (void);
 static int saveNebulae( float *map, const uint32_t w, const uint32_t h, const char* file );
 static SDL_Surface* loadNebulae( const char* file );
 static SDL_Surface* nebu_surfaceFromNebulaeMap( float* map, const int w, const int h );
+static void nebu_genOverlay (void);
 /* Nebulae render methods. */
 static void nebu_renderMultitexture( const double dt );
 
@@ -329,6 +333,40 @@ static void nebu_renderMultitexture( const double dt )
 #define ANG45     0.70710678118654757 /**< 1./sqrt(2) */
 #define COS225    0.92387953251128674 /**< cos(225) */
 #define SIN225    0.38268343236508978 /**< sin(225) */
+static void nebu_genOverlay (void)
+{
+   int i;
+   GLfloat *data;
+   double a;
+
+   /* See if need to generate overlay. */
+   if (nebu_overlayVBO == NULL) {
+      nebu_overlayVBO = gl_vboCreateStatic( sizeof(GLfloat)*(2*18 + 4*18), NULL );
+
+      /* Set colors, those will be pure static. */
+      data = gl_vboMap( nebu_overlayVBO );
+      for (i=0; i<18; i++) {
+         data[2*18 + 4*i + 0] = cPurple.r;
+         data[2*18 + 4*i + 1] = cPurple.g;
+         data[2*18 + 4*i + 2] = cPurple.b;
+         data[2*18 + 4*i + 3] = cPurple.a;
+      }
+      data[2*18 + 3] = 0.; /* Origin is transparent. */
+      gl_vboUnmap( nebu_overlayVBO );
+   }
+
+   /* Generate the main chunk. */
+   data = gl_vboMap( nebu_overlayVBO );
+   data[0] = 0.;
+   data[1] = 0.;
+   for (i=0; i<17; i++) {
+      a = M_PI*2./16. * (double)i;
+      data[2*(i+1) + 0] = nebu_view * cos(a);
+      data[2*(i+1) + 1] = nebu_view * sin(a);
+   }
+   gl_vboUnmap( nebu_overlayVBO );
+}
+
 /**
  * @brief Renders the nebulae overlay (hides what player can't see).
  *
@@ -357,28 +395,10 @@ void nebu_renderOverlay( const double dt )
     * Mask for area player can still see (partially)
     */
    glShadeModel(GL_SMOOTH);
-   glBegin(GL_TRIANGLE_FAN);
-      ACOLOUR(cPurple, 0.);
-      glVertex2d( 0., 0. );
-      ACOLOUR(cPurple, 1.);
-      glVertex2d( -nebu_view, 0. );
-      glVertex2d( -nebu_view*COS225, nebu_view*SIN225 );
-      glVertex2d( -nebu_view*ANG45, nebu_view*ANG45 );
-      glVertex2d( -nebu_view*SIN225, nebu_view*COS225 );
-      glVertex2d( 0., nebu_view );
-      glVertex2d( nebu_view*SIN225, nebu_view*COS225 );
-      glVertex2d( nebu_view*ANG45, nebu_view*ANG45 );
-      glVertex2d( nebu_view*COS225, nebu_view*SIN225 );
-      glVertex2d( nebu_view, 0. );
-      glVertex2d( nebu_view*COS225, -nebu_view*SIN225 );
-      glVertex2d( nebu_view*ANG45, -nebu_view*ANG45 );
-      glVertex2d( nebu_view*SIN225, -nebu_view*COS225 );
-      glVertex2d( 0., -nebu_view);
-      glVertex2d( -nebu_view*SIN225, -nebu_view*COS225 );
-      glVertex2d( -nebu_view*ANG45, -nebu_view*ANG45 );
-      glVertex2d( -nebu_view*COS225, -nebu_view*SIN225 );
-      glVertex2d( -nebu_view, 0. );
-   glEnd(); /* GL_TRIANGLE_FAN */
+   gl_vboActivateOffset( nebu_overlayVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( nebu_overlayVBO, GL_COLOR_ARRAY,
+         sizeof(GLfloat)*2*18, 4, GL_FLOAT, 0 );
+   glDrawArrays( GL_TRIANGLE_FAN, 0, 18 );
 
 
    /*
@@ -506,6 +526,9 @@ void nebu_prep( double density, double volatility )
       nebu_puffs[i].tex = RNG(0,NEBULAE_PUFFS-1);
       nebu_puffs[i].height = RNGF() + 0.2;
    }
+
+   /* Generate the overlay. */
+   nebu_genOverlay();
 }
 
 
