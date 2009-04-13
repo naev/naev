@@ -43,6 +43,11 @@ function news_genTable ()
    local curp, curs = planet.get()
    f = curp:faction()
 
+   -- Planets with no faction have no news.
+   if f == nil then
+      return
+   end
+
    rawtable = {}
 
    -- Empire news
