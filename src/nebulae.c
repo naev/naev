@@ -508,6 +508,7 @@ void nebu_renderOverlay( const double dt )
          sizeof(GLfloat)*(6*18 + 3*2*7), 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
 
+   gl_vboDeactivate();
    glPopMatrix(); /* GL_PROJECTION */
 
    gl_checkErr();
