@@ -305,6 +305,7 @@ static int player_fuel( lua_State *L )
  * @usage player.refuel( 200 ) -- Refuels partially
  *
  *    @param fuel Amount of fuel to add, will set to max if nil.
+ * @luafunc refuel( fuel )
  */
 static int player_refuel( lua_State *L )
 {
