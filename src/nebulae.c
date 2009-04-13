@@ -449,6 +449,10 @@ static void nebu_genOverlay (void)
 
    gl_vboUnmap( nebu_overlayVBO );
 }
+#undef ANG45
+#undef COS225
+#undef SIN225
+
 
 /**
  * @brief Renders the nebulae overlay (hides what player can't see).
@@ -493,11 +497,11 @@ void nebu_renderOverlay( const double dt )
          sizeof(GLfloat)*(6*18 + 2*28), 4, GL_FLOAT, 0 );
    /* Top left. */
    gl_vboActivateOffset( nebu_overlayVBO, GL_VERTEX_ARRAY,
-         sizeof(GLfloat)*6*18, 2, GL_FLOAT, 0 );
+         sizeof(GLfloat)*(6*18 + 0*2*7), 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
    /* Top right. */
    gl_vboActivateOffset( nebu_overlayVBO, GL_VERTEX_ARRAY,
-         sizeof(GLfloat)*(6*18 + 2*7), 2, GL_FLOAT, 0 );
+         sizeof(GLfloat)*(6*18 + 1*2*7), 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
    /* Bottom right. */
    gl_vboActivateOffset( nebu_overlayVBO, GL_VERTEX_ARRAY,
@@ -513,9 +517,6 @@ void nebu_renderOverlay( const double dt )
 
    gl_checkErr();
 }
-#undef ANG45
-#undef COS225
-#undef SIN225
 
 
 /**
