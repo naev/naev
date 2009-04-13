@@ -334,6 +334,7 @@ void loadscreen_load (void)
  */
 void loadscreen_render( double done, const char *msg )
 {
+   glColour col;
    double x,y, w,h, rh;
 
    /* Clear background. */
@@ -349,21 +350,17 @@ void loadscreen_render( double done, const char *msg )
    x = -w/2.;
    y = -h/2.;
    /* BG. */
-   ACOLOUR(cBlack, 0.7);
-   glBegin(GL_QUADS);
-      glVertex2d( x-2.,        y-2. + 0.  );
-      glVertex2d( x-2.,        y+2. + rh  );
-      glVertex2d( x-2. + w+4., y+2. + rh  );
-      glVertex2d( x-2. + w+4., y-2. + 0.  );
-   glEnd();
+   col.r = cBlack.r;
+   col.g = cBlack.g;
+   col.b = cBlack.b;
+   col.a = 0.7;
+   gl_renderRect( x-2., y-2., w+4., rh+4., &col );
    /* FG. */
-   ACOLOUR(cConsole, 0.7);
-   glBegin(GL_QUADS);
-      glVertex2d( x,          y + 0. );
-      glVertex2d( x,          y + h  );
-      glVertex2d( x + done*w, y + h  );
-      glVertex2d( x + done*w, y + 0. );
-   glEnd();
+   col.r = cConsole.r;
+   col.g = cConsole.g;
+   col.b = cConsole.b;
+   col.a = 0.7;
+   gl_renderRect( x, y, done*w, h, &col );
 
    /* Draw text. */
    gl_printRaw( &gl_defFont, x + gl_screen.w/2., y + gl_screen.h/2 + 2. + h,
