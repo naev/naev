@@ -42,6 +42,8 @@ static int player_getFaction( lua_State *L );
 static int player_getRating( lua_State *L );
 static int player_getPosition( lua_State *L );
 static int player_getPilot( lua_State *L );
+static int player_fuel( lua_State *L );
+static int player_refuel( lua_State *L );
 static const luaL_reg player_methods[] = {
    { "name", player_getname },
    { "ship", player_shipname },
@@ -55,6 +57,8 @@ static const luaL_reg player_methods[] = {
    { "getRating", player_getRating },
    { "pos", player_getPosition },
    { "pilot", player_getPilot },
+   { "fuel", player_fuel },
+   { "refuel", player_refuel },
    {0,0}
 }; /**< Player lua methods. */
 static const luaL_reg player_cond_methods[] = {
@@ -276,5 +280,46 @@ static int player_getPilot( lua_State *L )
    lp.pilot = PLAYER_ID;
    lua_pushpilot(L, lp);
    return 1;
+}
+
+
+/**
+ * @brief Gets the amount of fuel a player has.
+ *
+ * @usage fuel = player.fuel()
+ *
+ *    @luareturn The player's fuel.
+ * @luafunc fuel()
+ */
+static int player_fuel( lua_State *L )
+{
+   lua_pushnumber(L,player->fuel);
+   return 1;
+}
+
+
+/**
+ * @brief Refuels the player.
+ *
+ * @usage player.refuel() -- Refuel fully
+ * @usage player.refuel( 200 ) -- Refuels partially
+ *
+ *    @param fuel Amount of fuel to add, will set to max if nil.
+ */
+static int player_refuel( lua_State *L )
+{
+   double f;
+
+   if (lua_gettop(L) > 0) {
+      f = luaL_checknumber(L,1);
+      player->fuel += f;
+   }
+   else
+      player->fuel = player->fuel_max;
+
+   /* Make sure value is sane. */
+   player->fuel = CLAMP(0, player->fuel_max, player->fuel);
+
+   return 0;
 }
 
