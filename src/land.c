@@ -1567,7 +1567,8 @@ void land( Planet* p )
          land_planet->faction, land_planet->name, cur_system->name );
 
    /* Generate the news. */
-   news_load();
+   if (planet_hasService(land_planet, PLANET_SERVICE_BASIC))
+      news_load();
 
    /* Check land missions. */
    if (!has_visited(VISITED_LAND)) {
