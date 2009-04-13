@@ -23,9 +23,9 @@
  * @brief VBO types.
  */
 typedef enum gl_vboType_e {
-   NGL_VBO_NULL,
-   NGL_VBO_STREAM,
-   NGL_VBO_STATIC
+   NGL_VBO_NULL, /**< No VBO type. */
+   NGL_VBO_STREAM, /**< VBO streaming type. */
+   NGL_VBO_STATIC /**< VBO static type. */
 } gl_vboType;
 
 
@@ -33,10 +33,10 @@ typedef enum gl_vboType_e {
  * @brief Contains the VBO.
  */
 struct gl_vbo_s {
-   GLuint id;
-   gl_vboType type;
-   GLsizei size;
-   char* data;
+   GLuint id; /**< VBO ID. */
+   gl_vboType type; /**< VBO type. */
+   GLsizei size; /**< VBO size. */
+   char* data; /**< VBO data. */
 };
 
 
