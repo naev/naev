@@ -92,13 +92,7 @@ static void news_render( double bx, double by, double w, double h )
       news_pos += (news_font->h + 5.) * news_nlines + h + 3;
 
    /* background */
-   COLOUR(cBlack);
-   glBegin(GL_QUADS);
-      glVertex2d( bx, by );
-      glVertex2d( bx, by+h );
-      glVertex2d( bx+w, by+h );
-      glVertex2d( bx+w, by );
-   glEnd(); /* GL_QUADS */
+   gl_renderRect( bx, by, w, h, &cBlack );
 
    /* Render the text. */
    i = (int)(news_pos / (news_font->h + 5.));

@@ -623,23 +623,13 @@ static void spfx_hapticRumble( double mod )
  */
 void spfx_cinematic (void)
 {
-   glMatrixMode(GL_MODELVIEW);
-   glPushMatrix(); /* translation matrix */
-      glTranslated( -(double)SCREEN_W/2., -(double)SCREEN_H/2., 0);
+   double hw, hh;
 
-   COLOUR(cBlack);
-   glBegin(GL_QUADS);
-      glVertex2d( 0.,       0.           );
-      glVertex2d( 0.,       SCREEN_H*0.2 );
-      glVertex2d( SCREEN_W, SCREEN_H*0.2 );
-      glVertex2d( SCREEN_W, 0.           );
-      glVertex2d( 0.,       SCREEN_H     );
-      glVertex2d( SCREEN_W, SCREEN_H     );
-      glVertex2d( SCREEN_W, SCREEN_H*0.8 );
-      glVertex2d( 0.,       SCREEN_H*0.8 );
-   glEnd(); /* GL_QUADS */
+   hw = SCREEN_W/2.;
+   hh = SCREEN_H/2.;
 
-   glPopMatrix(); /* translation matrx */
+   gl_renderRect( -hw, -hh,     SCREEN_W, SCREEN_H*0.2, &cBlack );
+   gl_renderRect( -hw,  0.6*hh, SCREEN_W, SCREEN_H*0.2, &cBlack );
 }
 
 
