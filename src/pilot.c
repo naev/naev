@@ -1397,7 +1397,8 @@ static void pilot_update( Pilot* pilot, const double dt )
          expl_explode( pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y,
                pilot->ship->gfx_space->sw/2. + a,
-               DAMAGE_TYPE_KINETIC, MAX(0., 2.*a - 20.),
+               DAMAGE_TYPE_KINETIC,
+               MAX(0., a * (1. + sqrt(pilot->fuel + 1.) / 28.)),
                0, EXPL_MODE_SHIP );
          debris_add( pilot->solid->mass, pilot->ship->gfx_space->sw/2.,
                pilot->solid->pos.x, pilot->solid->pos.y,
