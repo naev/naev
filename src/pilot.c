@@ -1305,13 +1305,17 @@ void pilot_explode( double x, double y, double radius,
       ry = p->solid->pos.y - y;
       dist = pow2(rx) + pow2(ry);
       /* Take into account ship size. */
-      dist += pow2(p->ship->gfx_space->sw) + pow2(p->ship->gfx_space->sh);
+      dist -= pow2(p->ship->gfx_space->sw);
+      dist = MAX(0,dist);
 
       /* Pilot is hit. */
       if (dist < rad2) {
 
+         /* Adjust damage based on distance. */
+         damage *= 1. - sqrt(dist / rad2);
+
          /* Impact settings. */
-         s.mass =  pow2(damage) * sqrt(rad2 - dist) / 30.;
+         s.mass =  pow2(damage) / 30.;
          s.vel.x = rx;
          s.vel.y = ry;
 
@@ -1393,7 +1397,7 @@ static void pilot_update( Pilot* pilot, const double dt )
          expl_explode( pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y,
                pilot->ship->gfx_space->sw/2. + a,
-               DAMAGE_TYPE_KINETIC, 2.*a - 20.,
+               DAMAGE_TYPE_KINETIC, MAX(0., 2.*a - 20.),
                0, EXPL_MODE_SHIP );
          debris_add( pilot->solid->mass, pilot->ship->gfx_space->sw/2.,
                pilot->solid->pos.x, pilot->solid->pos.y,
