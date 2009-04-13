@@ -362,10 +362,10 @@ static void nebu_genOverlay (void)
 
       /* Solid overlay. */
       for (i=0; i<7; i++) {
-         data[6*18 + 2*28 + 4*i + 0] = cPurple.r;
-         data[6*18 + 2*28 + 4*i + 1] = cPurple.g;
-         data[4*18 + 2*28 + 4*i + 2] = cPurple.b;
-         data[4*18 + 2*28 + 4*i + 3] = cPurple.a;
+         data[(2+4)*18 + 2*28 + 4*i + 0] = cPurple.r;
+         data[(2+4)*18 + 2*28 + 4*i + 1] = cPurple.g;
+         data[(2+4)*18 + 2*28 + 4*i + 2] = cPurple.b;
+         data[(2+4)*18 + 2*28 + 4*i + 3] = cPurple.a;
       }
 
       gl_vboUnmap( nebu_overlayVBO );
@@ -494,22 +494,22 @@ void nebu_renderOverlay( const double dt )
    glShadeModel(GL_FLAT);
    /* Colour is shared. */
    gl_vboActivateOffset( nebu_overlayVBO, GL_COLOR_ARRAY,
-         sizeof(GLfloat)*(6*18 + 2*28), 4, GL_FLOAT, 0 );
+         sizeof(GLfloat)*((2+4)*18 + 2*28), 4, GL_FLOAT, 0 );
    /* Top left. */
    gl_vboActivateOffset( nebu_overlayVBO, GL_VERTEX_ARRAY,
-         sizeof(GLfloat)*(6*18 + 0*2*7), 2, GL_FLOAT, 0 );
+         sizeof(GLfloat)*((2+4)*18 + 0*2*7), 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
    /* Top right. */
    gl_vboActivateOffset( nebu_overlayVBO, GL_VERTEX_ARRAY,
-         sizeof(GLfloat)*(6*18 + 1*2*7), 2, GL_FLOAT, 0 );
+         sizeof(GLfloat)*((2+4)*18 + 1*2*7), 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
    /* Bottom right. */
    gl_vboActivateOffset( nebu_overlayVBO, GL_VERTEX_ARRAY,
-         sizeof(GLfloat)*(6*18 + 2*2*7), 2, GL_FLOAT, 0 );
+         sizeof(GLfloat)*((2+4)*18 + 2*2*7), 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
    /* Bottom left. */
    gl_vboActivateOffset( nebu_overlayVBO, GL_VERTEX_ARRAY,
-         sizeof(GLfloat)*(6*18 + 3*2*7), 2, GL_FLOAT, 0 );
+         sizeof(GLfloat)*((2+4)*18 + 3*2*7), 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
 
    gl_vboDeactivate();
