@@ -546,7 +546,7 @@ void gui_render( double dt )
    double x;
    char str[10];
    Pilot* p;
-   glColour* c;
+   glColour* c, col;
    glFont* f;
    StarSystem *sys;
    int quantity, delay;
@@ -815,13 +815,11 @@ void gui_render( double dt )
          (player->ptimer < HYPERSPACE_FADEOUT)) {
       if (i < j) {
          x = (HYPERSPACE_FADEOUT-player->ptimer) / HYPERSPACE_FADEOUT;
-         glColor4d(1.,1.,1., x );
-         glBegin(GL_QUADS);
-            glVertex2d( -SCREEN_W/2., -SCREEN_H/2. );
-            glVertex2d( -SCREEN_W/2.,  SCREEN_H/2. );
-            glVertex2d(  SCREEN_W/2.,  SCREEN_H/2. );
-            glVertex2d(  SCREEN_W/2., -SCREEN_H/2. );
-         glEnd(); /* GL_QUADS */
+         col.r = 1.;
+         col.g = 1.;
+         col.b = 1.;
+         col.a = x;
+         gl_renderRect( -SCREEN_W/2., -SCREEN_H/2., SCREEN_W, SCREEN_H, &col );
       }
    }
 }
@@ -1281,9 +1279,6 @@ static void gui_renderHealth( const HealthBar *bar, const double w )
    if (w == 0.)
       return;
 
-   /* Set the colour. */
-   COLOUR(bar->col); 
-
    /* Just create a bar. */
    if (bar->gfx == NULL) {
       /* Set the position values. */
@@ -1292,12 +1287,8 @@ static void gui_renderHealth( const HealthBar *bar, const double w )
       sx = w * bar->rect.w;
       sy = bar->rect.h;
 
-      glBegin(GL_QUADS);
-         glVertex2d( x, y );
-         glVertex2d( x + sx, y );
-         glVertex2d( x + sx, y - sy );
-         glVertex2d( x, y - sy );                                            
-      glEnd(); /* GL_QUADS */
+      /* Render the bar. */
+      gl_renderRect( x, y-sy, sx, sy, &bar->col );
    }
    /* Render the texture. */
    else {
@@ -1321,6 +1312,9 @@ static void gui_renderHealth( const HealthBar *bar, const double w )
       sy = bar->gfx->sh;
       tx = bar->gfx->sw / bar->gfx->rw;
       ty = bar->gfx->sh / bar->gfx->rh;
+
+      /* Set the colour. */
+      COLOUR(bar->col); 
 
       /* Draw the image. */
       glEnable(GL_TEXTURE_2D);

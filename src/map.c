@@ -457,14 +457,7 @@ static void map_render( double bx, double by, double w, double h )
    y = (by - map_ypos + h/2) * 1.;
 
    /* background */
-   COLOUR(cBlack);
-   glBegin(GL_QUADS);
-      glVertex2d( bx, by );
-      glVertex2d( bx, by+h );
-      glVertex2d( bx+w, by+h );
-      glVertex2d( bx+w, by );
-   glEnd(); /* GL_QUADS */
-
+   gl_renderRect( bx, by, w, h, &cBlack );
 
    /* render the star systems */
    for (i=0; i<systems_nstack; i++) {

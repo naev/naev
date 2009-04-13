@@ -59,7 +59,7 @@ static void gl_blitTexture(  const glTexture* texture,
  *    @param h Rectangle height.
  *    @param c Rectangle colour.
  */
-void gl_renderRect( double x, double y, double w, double h, glColour *c )
+void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 {
    GLfloat vertex[4*2], col[4*4];
 
