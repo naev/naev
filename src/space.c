@@ -690,7 +690,7 @@ void space_init ( const char* sysname )
       }
       else {
          /* Backrgound is Stary */
-         nstars = (cur_system->stars*SCREEN_W*SCREEN_H+STAR_BUF*STAR_BUF)/(800*640);
+         nstars = (int)((double)(cur_system->stars*SCREEN_W*SCREEN_H+STAR_BUF*STAR_BUF)/(800.*640.));
          if (mstars < nstars) {
             /* Create data. */
             star_vertex = realloc( star_vertex, nstars * sizeof(GLfloat) * 4 );
@@ -699,8 +699,8 @@ void space_init ( const char* sysname )
          }
          for (i=0; i < nstars; i++) {
             /* Set the position. */
-            star_vertex[4*i+0] = RNGF()*(SCREEN_W + 2.*STAR_BUF) - STAR_BUF;
-            star_vertex[4*i+1] = RNGF()*(SCREEN_H + 2.*STAR_BUF) - STAR_BUF;
+            star_vertex[4*i+0] = RNGF()*(SCREEN_W + 2.*STAR_BUF) - STAR_BUF - SCREEN_W/2.;
+            star_vertex[4*i+1] = RNGF()*(SCREEN_H + 2.*STAR_BUF) - STAR_BUF - SCREEN_H/2.;
             /* Set the colour. */
             star_colour[8*i+0] = 1.;
             star_colour[8*i+1] = 1.;
@@ -1535,16 +1535,13 @@ void space_renderOverlay( const double dt )
 static void space_renderStars( const double dt )
 {
    int i;
+   GLfloat hh, hw, h, w;
    GLfloat x, y, m, b;
    GLfloat brightness;
 
    /*
     * gprof claims it's the slowest thing in the game!
     */
-
-   glMatrixMode(GL_MODELVIEW);
-   glPushMatrix(); /* translation matrix */
-      glTranslated( -(double)SCREEN_W/2., -(double)SCREEN_H/2., 0);
 
    /* Enable vertex arrays. */
    glEnableClientState(GL_VERTEX_ARRAY);
@@ -1589,6 +1586,12 @@ static void space_renderStars( const double dt )
       if (!paused && !player_isFlag(PLAYER_DESTROYED) &&
             !player_isFlag(PLAYER_CREATING)) { /* update position */
 
+         /* Calculate some dimensions. */
+         hw = SCREEN_W / 2. + STAR_BUF;
+         hh = SCREEN_H / 2. + STAR_BUF;
+         w  = 2.*hw;
+         h  = 2.*hh;
+
          /* Calculate new star positions. */
          for (i=0; i < nstars; i++) {
 
@@ -1600,14 +1603,14 @@ static void space_renderStars( const double dt )
                (GLfloat)player->solid->vel.y / b*(GLfloat)dt;
 
             /* check boundries */
-            if (star_vertex[4*i+0] > SCREEN_W + STAR_BUF)
-               star_vertex[4*i+0] -= SCREEN_W + 2*STAR_BUF;
-            else if (star_vertex[4*i+0] < -STAR_BUF)
-               star_vertex[4*i+0] += SCREEN_W + 2*STAR_BUF;
-            if (star_vertex[4*i+1] > SCREEN_H + STAR_BUF)
-               star_vertex[4*i+1] -= SCREEN_H + 2*STAR_BUF;
-            else if (star_vertex[4*i+1] < -STAR_BUF)
-               star_vertex[4*i+1] += SCREEN_H + 2*STAR_BUF;
+            if (star_vertex[4*i+0] > hw)
+               star_vertex[4*i+0] -= w;
+            else if (star_vertex[4*i+0] < -hw)
+               star_vertex[4*i+0] += w;
+            if (star_vertex[4*i+1] > hh)
+               star_vertex[4*i+1] -= h;
+            else if (star_vertex[4*i+1] < -hh)
+               star_vertex[4*i+1] += h;
          }
 
          /* Upload the data. */
@@ -1622,8 +1625,6 @@ static void space_renderStars( const double dt )
 
    /* Disable vertex array. */
    gl_vboDeactivate();
-
-   glPopMatrix(); /* translation matrix */
 }
 
 
