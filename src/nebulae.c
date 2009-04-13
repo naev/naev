@@ -338,13 +338,20 @@ static void nebu_genOverlay (void)
    int i;
    GLfloat *data;
    double a;
+   double gx, gy;
+
+   /* Get GUI offsets. */
+   gui_getOffset( &gx, &gy );
 
    /* See if need to generate overlay. */
    if (nebu_overlayVBO == NULL) {
-      nebu_overlayVBO = gl_vboCreateStatic( sizeof(GLfloat)*(2*18 + 4*18), NULL );
+      nebu_overlayVBO = gl_vboCreateStatic( sizeof(GLfloat) *
+            ((2+4)*18 + 2*28 + 4*7), NULL );
 
       /* Set colors, those will be pure static. */
       data = gl_vboMap( nebu_overlayVBO );
+
+      /* Alpha overlay. */
       for (i=0; i<18; i++) {
          data[2*18 + 4*i + 0] = cPurple.r;
          data[2*18 + 4*i + 1] = cPurple.g;
@@ -352,11 +359,22 @@ static void nebu_genOverlay (void)
          data[2*18 + 4*i + 3] = cPurple.a;
       }
       data[2*18 + 3] = 0.; /* Origin is transparent. */
+
+      /* Solid overlay. */
+      for (i=0; i<7; i++) {
+         data[6*18 + 2*28 + 4*i + 0] = cPurple.r;
+         data[6*18 + 2*28 + 4*i + 1] = cPurple.g;
+         data[4*18 + 2*28 + 4*i + 2] = cPurple.b;
+         data[4*18 + 2*28 + 4*i + 3] = cPurple.a;
+      }
+
       gl_vboUnmap( nebu_overlayVBO );
    }
 
    /* Generate the main chunk. */
    data = gl_vboMap( nebu_overlayVBO );
+
+   /* Main chunk. */
    data[0] = 0.;
    data[1] = 0.;
    for (i=0; i<17; i++) {
@@ -364,6 +382,71 @@ static void nebu_genOverlay (void)
       data[2*(i+1) + 0] = nebu_view * cos(a);
       data[2*(i+1) + 1] = nebu_view * sin(a);
    }
+
+   /* Top Left */
+   data[(2+4)*18+0]  = -SCREEN_W/2.-gx;
+   data[(2+4)*18+1]  = SCREEN_H/2.-gy;
+   data[(2+4)*18+2]  = -nebu_view;
+   data[(2+4)*18+3]  = 0.;
+   data[(2+4)*18+4]  = -nebu_view*COS225;
+   data[(2+4)*18+5]  = nebu_view*SIN225;
+   data[(2+4)*18+6]  = -nebu_view*ANG45;
+   data[(2+4)*18+7]  = nebu_view*ANG45;
+   data[(2+4)*18+8]  = -nebu_view*SIN225;
+   data[(2+4)*18+9]  = nebu_view*COS225;
+   data[(2+4)*18+10] = 0.;
+   data[(2+4)*18+11] = nebu_view;
+   data[(2+4)*18+12] = SCREEN_W/2.-gx;
+   data[(2+4)*18+13] = SCREEN_H/2.-gy;
+
+   /* Top Right */
+   data[(2+4)*18+14] = SCREEN_W/2.-gx;
+   data[(2+4)*18+15] = SCREEN_H/2.-gy;
+   data[(2+4)*18+16] = 0.;
+   data[(2+4)*18+17] = nebu_view;
+   data[(2+4)*18+18] = nebu_view*SIN225;
+   data[(2+4)*18+19] = nebu_view*COS225;
+   data[(2+4)*18+20] = nebu_view*ANG45;
+   data[(2+4)*18+21] = nebu_view*ANG45;
+   data[(2+4)*18+22] = nebu_view*COS225;
+   data[(2+4)*18+23] = nebu_view*SIN225;
+   data[(2+4)*18+24] = nebu_view;
+   data[(2+4)*18+25] = 0.;
+   data[(2+4)*18+26] = SCREEN_W/2.-gx;
+   data[(2+4)*18+27] = -SCREEN_H/2.-gy;
+
+   /* Bottom Right */
+   data[(2+4)*18+28] = SCREEN_W/2.-gx;
+   data[(2+4)*18+29] = -SCREEN_H/2.-gy;
+   data[(2+4)*18+30] = nebu_view;
+   data[(2+4)*18+31] = 0.;
+   data[(2+4)*18+32] = nebu_view*COS225;
+   data[(2+4)*18+33] = -nebu_view*SIN225;
+   data[(2+4)*18+34] = nebu_view*ANG45;
+   data[(2+4)*18+35] = -nebu_view*ANG45;
+   data[(2+4)*18+36] = nebu_view*SIN225;
+   data[(2+4)*18+37] = -nebu_view*COS225;
+   data[(2+4)*18+38] = 0.;
+   data[(2+4)*18+39] = -nebu_view;
+   data[(2+4)*18+40] = -SCREEN_W/2.-gx;
+   data[(2+4)*18+41] = -SCREEN_H/2.-gy;
+      
+   /* Bottom left */
+   data[(2+4)*18+42] = -SCREEN_W/2.-gx;
+   data[(2+4)*18+43] = -SCREEN_H/2.-gy;
+   data[(2+4)*18+44] = 0.;
+   data[(2+4)*18+45] = -nebu_view;
+   data[(2+4)*18+46] = -nebu_view*SIN225;
+   data[(2+4)*18+47] = -nebu_view*COS225;
+   data[(2+4)*18+48] = -nebu_view*ANG45;
+   data[(2+4)*18+49] = -nebu_view*ANG45;
+   data[(2+4)*18+50] = -nebu_view*COS225;
+   data[(2+4)*18+51] = -nebu_view*SIN225;
+   data[(2+4)*18+52] = -nebu_view;
+   data[(2+4)*18+53] = 0.;
+   data[(2+4)*18+54] = -SCREEN_W/2.-gx;
+   data[(2+4)*18+55] = SCREEN_H/2.-gy;
+
    gl_vboUnmap( nebu_overlayVBO );
 }
 
@@ -405,47 +488,25 @@ void nebu_renderOverlay( const double dt )
     * Solid nebulae for areas the player can't see
     */
    glShadeModel(GL_FLAT);
-   ACOLOUR(cPurple, 1.);
-   glBegin(GL_TRIANGLE_FAN);
-      /* Top Left */
-      glVertex2d( -SCREEN_W/2.-gx, SCREEN_H/2.-gy );
-      glVertex2d( -nebu_view, 0. );
-      glVertex2d( -nebu_view*COS225, nebu_view*SIN225 );
-      glVertex2d( -nebu_view*ANG45, nebu_view*ANG45 );
-      glVertex2d( -nebu_view*SIN225, nebu_view*COS225 );
-      glVertex2d( 0., nebu_view );
-      glVertex2d( SCREEN_W/2.-gx, SCREEN_H/2.-gy );
-   glEnd(); /* GL_TRIANGLE_FAN */
-   glBegin(GL_TRIANGLE_FAN);
-      /* Top Right */
-      glVertex2d( SCREEN_W/2.-gx, SCREEN_H/2.-gy );
-      glVertex2d( 0., nebu_view );
-      glVertex2d( nebu_view*SIN225, nebu_view*COS225 );
-      glVertex2d( nebu_view*ANG45, nebu_view*ANG45 );
-      glVertex2d( nebu_view*COS225, nebu_view*SIN225 );
-      glVertex2d( nebu_view, 0. );
-      glVertex2d( SCREEN_W/2.-gx, -SCREEN_H/2.-gy );
-   glEnd(); /* GL_TRIANGLE_FAN */
-   glBegin(GL_TRIANGLE_FAN);
-      /* Bottom Right */
-      glVertex2d( SCREEN_W/2.-gx, -SCREEN_H/2.-gy );
-      glVertex2d( nebu_view, 0. );
-      glVertex2d( nebu_view*COS225, -nebu_view*SIN225 );
-      glVertex2d( nebu_view*ANG45, -nebu_view*ANG45 );
-      glVertex2d( nebu_view*SIN225, -nebu_view*COS225 );
-      glVertex2d( 0., -nebu_view);
-      glVertex2d( -SCREEN_W/2.-gx, -SCREEN_H/2.-gy );
-   glEnd(); /* GL_TRIANGLE_FAN */
-   glBegin(GL_TRIANGLE_FAN);
-      /* Bottom left */
-      glVertex2d( -SCREEN_W/2.-gx, -SCREEN_H/2.-gy );
-      glVertex2d( 0., -nebu_view);
-      glVertex2d( -nebu_view*SIN225, -nebu_view*COS225 );
-      glVertex2d( -nebu_view*ANG45, -nebu_view*ANG45 );
-      glVertex2d( -nebu_view*COS225, -nebu_view*SIN225 );
-      glVertex2d( -nebu_view, 0. );
-      glVertex2d( -SCREEN_W/2.-gx, SCREEN_H/2.-gy );
-   glEnd(); /* GL_TRIANGLE_FAN */
+   /* Colour is shared. */
+   gl_vboActivateOffset( nebu_overlayVBO, GL_COLOR_ARRAY,
+         sizeof(GLfloat)*(6*18 + 2*28), 4, GL_FLOAT, 0 );
+   /* Top left. */
+   gl_vboActivateOffset( nebu_overlayVBO, GL_VERTEX_ARRAY,
+         sizeof(GLfloat)*6*18, 2, GL_FLOAT, 0 );
+   glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
+   /* Top right. */
+   gl_vboActivateOffset( nebu_overlayVBO, GL_VERTEX_ARRAY,
+         sizeof(GLfloat)*(6*18 + 2*7), 2, GL_FLOAT, 0 );
+   glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
+   /* Bottom right. */
+   gl_vboActivateOffset( nebu_overlayVBO, GL_VERTEX_ARRAY,
+         sizeof(GLfloat)*(6*18 + 2*2*7), 2, GL_FLOAT, 0 );
+   glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
+   /* Bottom left. */
+   gl_vboActivateOffset( nebu_overlayVBO, GL_VERTEX_ARRAY,
+         sizeof(GLfloat)*(6*18 + 3*2*7), 2, GL_FLOAT, 0 );
+   glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
 
    glPopMatrix(); /* GL_PROJECTION */
 
