@@ -1012,7 +1012,8 @@ static void gui_renderPilot( const Pilot* p )
 {
    int x, y, sx, sy;
    double w, h;
-   glColour *col;
+   double px, py;
+   glColour *col, ccol;
    double a;
 
    /* Make sure is in range. */
@@ -1088,13 +1089,15 @@ static void gui_renderPilot( const Pilot* p )
       if (blink_pilot < 0.)
          blink_pilot += RADAR_BLINK_PILOT;
    }
+
    /* Draw square. */
-   glBegin(GL_QUADS);
-      glVertex2d( MAX(x-sx,-w), MIN(y+sy, h) ); /* top-left */
-      glVertex2d( MIN(x+sx, w), MIN(y+sy, h) ); /* top-right */
-      glVertex2d( MIN(x+sx, w), MAX(y-sy,-h) ); /* bottom-right */
-      glVertex2d( MAX(x-sx,-w), MAX(y-sy,-h) ); /* bottom-left */
-   glEnd(); /* GL_QUADS */
+   px = MAX(x-sx,-w);
+   py = MAX(y-sy, -h);
+   ccol.r = col->r;
+   ccol.g = col->g;
+   ccol.b = col->b;
+   ccol.a = 1.-interference_alpha;
+   gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &ccol );
 }
 
 
