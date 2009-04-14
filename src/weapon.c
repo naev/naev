@@ -1496,10 +1496,12 @@ void weapon_exit (void)
    }
 
    /* Destroy VBO. */
-   free( weapon_vboData );
-   weapon_vboData = NULL;
-   gl_vboDestroy( weapon_vbo );
-   weapon_vbo = NULL;
+   if (weapon_vbo != NULL) {
+      free( weapon_vboData );
+      weapon_vboData = NULL;
+      gl_vboDestroy( weapon_vbo );
+      weapon_vbo = NULL;
+   }
 }
 
 
