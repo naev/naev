@@ -166,6 +166,10 @@ void weapon_minimap( const double res, const double w,
       if (!pilot_inRange( player, wp->solid->pos.x, wp->solid->pos.y ))
          continue;
 
+      /* Get radar position. */
+      x = (wp->solid->pos.x - player->solid->pos.x) / res;
+      y = (wp->solid->pos.y - player->solid->pos.y) / res;
+
       /* Make sure in range. */
       if (shape==RADAR_RECT && (ABS(x)>w/2. || ABS(y)>h/2.))
          continue;
@@ -187,8 +191,8 @@ void weapon_minimap( const double res, const double w,
       weapon_vboData[ offset + 4*p + 3 ] = alpha;
 
       /* Put the pixel. */
-      weapon_vboData[ 2*p + 0 ] = (wp->solid->pos.x - player->solid->pos.x) / res;
-      weapon_vboData[ 2*p + 1 ] = (wp->solid->pos.y - player->solid->pos.y) / res;
+      weapon_vboData[ 2*p + 0 ] = x;
+      weapon_vboData[ 2*p + 1 ] = y;
 
       /* "Add" pixel. */
       p++;
@@ -200,6 +204,16 @@ void weapon_minimap( const double res, const double w,
       if (!pilot_inRange( player, wp->solid->pos.x, wp->solid->pos.y ))
          continue;
 
+      /* Get radar position. */
+      x = (wp->solid->pos.x - player->solid->pos.x) / res;
+      y = (wp->solid->pos.y - player->solid->pos.y) / res;
+
+      /* Make sure in range. */
+      if (shape==RADAR_RECT && (ABS(x)>w/2. || ABS(y)>h/2.))
+         continue;
+      if (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) > rc))
+         continue;
+
       /* Choose colour based on if it'll hit player. */
       if (outfit_isSeeker(wp->outfit) && (wp->target != PLAYER_ID))
          c = &cNeutral;
@@ -208,12 +222,6 @@ void weapon_minimap( const double res, const double w,
       else
          c = &cNeutral;
 
-      /* Make sure in range. */
-      if (shape==RADAR_RECT && (ABS(x)>w/2. || ABS(y)>h/2.))
-         continue;
-      if (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) > rc))
-         continue;
-
       /* Set the colour. */
       weapon_vboData[ offset + 4*p + 0 ] = c->r;
       weapon_vboData[ offset + 4*p + 1 ] = c->g;
@@ -221,8 +229,8 @@ void weapon_minimap( const double res, const double w,
       weapon_vboData[ offset + 4*p + 3 ] = alpha;
 
       /* Put the pixel. */
-      weapon_vboData[ 2*p + 0 ] = (wp->solid->pos.x - player->solid->pos.x) / res;
-      weapon_vboData[ 2*p + 1 ] = (wp->solid->pos.y - player->solid->pos.y) / res;
+      weapon_vboData[ 2*p + 0 ] = x;
+      weapon_vboData[ 2*p + 1 ] = y;
 
       /* "Add" pixel. */
       p++;
