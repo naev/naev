@@ -76,7 +76,7 @@ void gl_exitVBO (void)
  * @brief Creates a VBO.
  *
  *    @param target Target to create to (usually GL_ARRAY_BUFFER).
- *    @param size Size of the buffer (multiply by sizeof(type)).
+ *    @param size Size of the buffer (in bytes).
  *    @param data The actual datat to use.
  *    @param usage Usage to use.
  *    @return ID of the vbo.
@@ -105,7 +105,9 @@ static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, void* data, GLenum usa
    else {
       vbo->size = size;
       vbo->data = malloc(size);
-      if (data != NULL)
+      if (data == NULL)
+         memset( vbo->data, 0, size );
+      else
          memcpy( vbo->data, data, size );
    }
 
@@ -113,6 +115,41 @@ static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, void* data, GLenum usa
    gl_checkErr();
 
    return vbo;
+}
+
+
+/**
+ * @brief Reloads new data or grows the size of the vbo.
+ *
+ *    @param vbo VBO to get new data of.
+ *    @param size Size of new data.
+ *    @param data New data.
+ */
+void gl_vboData( gl_vbo *vbo, GLsizei size, void* data )
+{
+   GLenum usage;
+
+   vbo->size = size;
+
+   if (has_vbo) {
+      /* Get usage. */
+      if (vbo->type == NGL_VBO_STREAM)
+         usage = GL_STREAM_DRAW;
+      else if (vbo->type == NGL_VBO_STATIC)
+         usage = GL_STATIC_DRAW;
+
+      /* Get new data. */
+      nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
+      nglBufferData( GL_ARRAY_BUFFER, size, data, usage );
+   }
+   else {
+      /* Grow memory. */
+      vbo->data = realloc( vbo->data, size );
+      if (data == NULL)
+         memset( vbo->data, 0, size );
+      else
+         memcpy( vbo->data, data, size );
+   }
 }
 
 
@@ -219,7 +256,9 @@ void gl_vboActivate( gl_vbo *vbo, GLuint class, GLint size, GLenum type, GLsizei
  * @brief Activates a VBO's offset.
  *
  *    @param vbo VBO to activate.
- *    @param Should be one of GL_COLOR_ARRAY, GL_VERTEX_ARRAY, or GL_TEXTURE_COORD_ARRAY.
+ *    @param class Should be one of GL_COLOR_ARRAY, GL_VERTEX_ARRAY,
+ *           or GL_TEXTURE_COORD_ARRAY.
+ *    @param offset Offset (in bytes).
  *    @param size Specifies components per point.
  *    @param type Type of data (usually GL_FLOAT).
  *    @param stride Offset between consecutive points.

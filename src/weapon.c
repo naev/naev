@@ -33,7 +33,7 @@
 
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
 
-#define WEAPON_CHUNK          128 /**< Size to increase array with */
+#define WEAPON_CHUNK          256 /**< Size to increase array with */
 
 /* Weapon status */
 #define WEAPON_STATUS_OK         0 /**< Weapon is fine */
@@ -96,6 +96,11 @@ static Weapon** wfrontLayer = NULL; /**< infront of pilots, behind player */
 static int nwfrontLayer = 0; /**< number of elements */
 static int mwfrontLayer = 0; /**< alloced memory size */
 
+/* Graphics. */
+static gl_vbo  *weapon_vbo     = NULL; /**< Weapon VBO. */
+static GLfloat *weapon_vboData = NULL; /**< Data of weapon VBO. */
+static int weapon_vboSize      = 0; /**< Size of the VBO. */
+
 
 /* Internal stuff. */
 static int beam_idgen = 0; /**< Beam identifier generator. */
@@ -128,10 +133,6 @@ void weapon_minimap( const double res, const double w,
       const double h, const RadarShape shape, double alpha );
 
 
-#define PIXEL(x,y)      \
-   if ((shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
-         (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) <= rc)))   \
-   glVertex2i((x),(y)) /**< Sets a pixel if within range. */
 /**
  * @brief Draws the minimap weapons (used in player.c).
  *
@@ -144,12 +145,15 @@ void weapon_minimap( const double res, const double w,
 void weapon_minimap( const double res, const double w,
       const double h, const RadarShape shape, double alpha )
 {
-   int i, rc;
+   int i, rc, p;
    double x, y;
    Weapon *wp;
+   glColour *c;
+   GLsizei offset;
 
-   /* Begin the points. */
-   glBegin(GL_POINTS);
+   /* Get offset. */
+   p = 0;
+   offset = weapon_vboSize;
 
    if (shape==RADAR_CIRCLE)
       rc = (int)(w*w);
@@ -162,18 +166,32 @@ void weapon_minimap( const double res, const double w,
       if (!pilot_inRange( player, wp->solid->pos.x, wp->solid->pos.y ))
          continue;
 
+      /* Make sure in range. */
+      if (shape==RADAR_RECT && (ABS(x)>w/2. || ABS(y)>h/2.))
+         continue;
+      if (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) > rc))
+         continue;
+
       /* Choose colour based on if it'll hit player. */
       if (outfit_isSeeker(wp->outfit) && (wp->target != PLAYER_ID))
-         ACOLOUR(cNeutral, alpha);
+         c = &cNeutral;
       else if ((wp->target == PLAYER_ID) || !areAllies(FACTION_PLAYER, wp->faction))
-         ACOLOUR(cHostile, alpha);
+         c = &cHostile;
       else
-         ACOLOUR(cNeutral, alpha);
+         c = &cNeutral;
+
+      /* Set the colour. */
+      weapon_vboData[ offset + 4*p + 0 ] = c->r;
+      weapon_vboData[ offset + 4*p + 1 ] = c->g;
+      weapon_vboData[ offset + 4*p + 2 ] = c->b;
+      weapon_vboData[ offset + 4*p + 3 ] = alpha;
 
       /* Put the pixel. */
-      x = (wp->solid->pos.x - player->solid->pos.x) / res;
-      y = (wp->solid->pos.y - player->solid->pos.y) / res;
-      PIXEL(x,y);
+      weapon_vboData[ 2*p + 0 ] = (wp->solid->pos.x - player->solid->pos.x) / res;
+      weapon_vboData[ 2*p + 1 ] = (wp->solid->pos.y - player->solid->pos.y) / res;
+
+      /* "Add" pixel. */
+      p++;
    }
    for (i=0; i<nwfrontLayer; i++) {
       wp = wfrontLayer[i];
@@ -184,22 +202,51 @@ void weapon_minimap( const double res, const double w,
 
       /* Choose colour based on if it'll hit player. */
       if (outfit_isSeeker(wp->outfit) && (wp->target != PLAYER_ID))
-         ACOLOUR(cNeutral, alpha);
+         c = &cNeutral;
       else if ((wp->target == PLAYER_ID) || !areAllies(FACTION_PLAYER, wp->faction))
-         ACOLOUR(cHostile, alpha);
+         c = &cHostile;
       else
-         ACOLOUR(cNeutral, alpha);
+         c = &cNeutral;
+
+      /* Make sure in range. */
+      if (shape==RADAR_RECT && (ABS(x)>w/2. || ABS(y)>h/2.))
+         continue;
+      if (shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) > rc))
+         continue;
+
+      /* Set the colour. */
+      weapon_vboData[ offset + 4*p + 0 ] = c->r;
+      weapon_vboData[ offset + 4*p + 1 ] = c->g;
+      weapon_vboData[ offset + 4*p + 2 ] = c->b;
+      weapon_vboData[ offset + 4*p + 3 ] = alpha;
 
       /* Put the pixel. */
-      x = (wp->solid->pos.x - player->solid->pos.x) / res;
-      y = (wp->solid->pos.y - player->solid->pos.y) / res;
-      PIXEL(x,y);
+      weapon_vboData[ 2*p + 0 ] = (wp->solid->pos.x - player->solid->pos.x) / res;
+      weapon_vboData[ 2*p + 1 ] = (wp->solid->pos.y - player->solid->pos.y) / res;
+
+      /* "Add" pixel. */
+      p++;
    }
 
-   /* End the points. */
-   glEnd(); /* GL_POINTS */
+   /* Only render with something to draw. */
+   if (p > 0) {
+      /* Upload data changes. */
+      gl_vboSubData( weapon_vbo, 0, sizeof(GLfloat) * 2*p, weapon_vboData );
+      gl_vboSubData( weapon_vbo, offset * sizeof(GLfloat),
+            sizeof(GLfloat) * 4*p, &weapon_vboData[offset] );
+
+      /* Activate VBO. */
+      gl_vboActivateOffset( weapon_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+      gl_vboActivateOffset( weapon_vbo, GL_COLOR_ARRAY, offset * sizeof(GLfloat),
+            4, GL_FLOAT, 0 );
+
+      /* Render VBO. */
+      glDrawArrays( GL_POINTS, 0, p );
+
+      /* Disable VBO. */
+      gl_vboDeactivate();
+   }
 }
-#undef PIXEL
 
 
 /**
@@ -1158,6 +1205,7 @@ void weapon_add( const Outfit* outfit, const double dir,
    Weapon *w;
    Weapon **curLayer;
    int *mLayer, *nLayer;
+   GLsizei size;
 
    if (!outfit_isBolt(outfit) &&
          !outfit_isAmmo(outfit)) {
@@ -1199,6 +1247,13 @@ void weapon_add( const Outfit* outfit, const double dir,
             break;
       }
       curLayer[(*nLayer)++] = w;
+
+      /* Grow the vertex stuff. */
+      weapon_vboSize = mwfrontLayer + mwbacklayer;
+      size = sizeof(GLfloat) * (2+4) * weapon_vboSize;
+      weapon_vboData = realloc( weapon_vboData, size );
+      if (weapon_vbo == NULL)
+         weapon_vbo = gl_vboCreateStream( size, NULL );
    }
 }
 
@@ -1226,6 +1281,7 @@ int beam_start( const Outfit* outfit,
    Weapon *w;
    Weapon **curLayer;
    int *mLayer, *nLayer;
+   GLsizei size;
 
    if (!outfit_isBeam(outfit)) {
       ERR("Trying to create a Beam Weapon from a non-beam outfit.");
@@ -1269,6 +1325,13 @@ int beam_start( const Outfit* outfit,
             break;
       }
       curLayer[(*nLayer)++] = w;
+
+      /* Grow the vertex stuff. */
+      weapon_vboSize = mwfrontLayer + mwbacklayer;
+      size = sizeof(GLfloat) * (2+4) * weapon_vboSize;
+      weapon_vboData = realloc( weapon_vboData, size );
+      if (weapon_vbo == NULL)
+         weapon_vbo = gl_vboCreateStream( size, NULL );
    }
 
    return w->ID;
@@ -1418,17 +1481,25 @@ void weapon_exit (void)
 {
    weapon_clear();
 
+   /* Destroy front layer. */
    if (wbackLayer != NULL) {
       free(wbackLayer);
-      wbackLayer = NULL;
+      wbackLayer  = NULL;
       mwbacklayer = 0;
    }
 
+   /* Destroy back layer. */
    if (wfrontLayer != NULL) {
       free(wfrontLayer);
-      wfrontLayer = NULL;
+      wfrontLayer  = NULL;
       mwfrontLayer = 0;
    }
+
+   /* Destroy VBO. */
+   free( weapon_vboData );
+   weapon_vboData = NULL;
+   gl_vboDestroy( weapon_vbo );
+   weapon_vbo = NULL;
 }
 
 
