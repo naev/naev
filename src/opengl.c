@@ -234,7 +234,7 @@ static double gl_contextVersion = -1.;
 GLboolean gl_hasVersion( int major, int minor )
 {
    const char *p;
-   double f, c;
+   double f;
 
    if (gl_contextVersion < 0.) {
       p = (const char*) glGetString(GL_VERSION);
@@ -243,8 +243,8 @@ GLboolean gl_hasVersion( int major, int minor )
       gl_contextVersion = atof(p);
    }
 
-   c  = (double) major;
-   c += 0.1 * (double) minor;
+   f  = (double) major;
+   f += 0.1 * (double) minor;
 
    if (f <= gl_contextVersion)
       return GL_TRUE;
