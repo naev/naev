@@ -98,7 +98,6 @@ static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, void* data, GLenum usa
 
       /* Upload the data. */
       nglBindBuffer( target, vbo->id );
-      vbo->data = data;
       nglBufferData( target, size, data, usage );
       nglBindBuffer( target, 0 );
    }
@@ -318,10 +317,11 @@ void gl_vboDeactivate (void)
  */
 void gl_vboDestroy( gl_vbo *vbo )
 {
-   if (has_vbo) {
+   if (has_vbo)
       /* Destroy VBO. */
       nglDeleteBuffers( 1, &vbo->id );
-   }
+   else
+      free(vbo->data);
 
    /* Check for errors. */
    gl_checkErr();
