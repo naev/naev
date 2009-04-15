@@ -760,30 +760,16 @@ void toolkit_drawRect( double x, double y,
  */
 void toolkit_clip( double x, double y, double w, double h )
 {
-   GLdouble ctop[4] = { 0.,  1., 0., -y  };
-   GLdouble cbot[4] = { 0., -1., 0., y+h };
-   GLdouble clef[4] = {  1., 0., 0., -x  };
-   GLdouble crig[4] = { -1., 0., 0., x+w };
-
-   glClipPlane(GL_CLIP_PLANE0, ctop);
-   glClipPlane(GL_CLIP_PLANE1, cbot);
-   glClipPlane(GL_CLIP_PLANE2, clef);
-   glClipPlane(GL_CLIP_PLANE3, crig);
-
-   glEnable(GL_CLIP_PLANE0);
-   glEnable(GL_CLIP_PLANE1);
-   glEnable(GL_CLIP_PLANE2);
-   glEnable(GL_CLIP_PLANE3);
+   glScissor( x + SCREEN_W/2, y + SCREEN_H/2, w, h );
+   glEnable( GL_SCISSOR_TEST );
 }
 /**
  * @brief Clears the 2d clipping planes.
  */
 void toolkit_unclip (void)
 {
-   glDisable(GL_CLIP_PLANE0);
-   glDisable(GL_CLIP_PLANE1);
-   glDisable(GL_CLIP_PLANE2);
-   glDisable(GL_CLIP_PLANE3);
+   glDisable( GL_SCISSOR_TEST );
+   glScissor( 0, 0, gl_screen.rw, gl_screen.rh );
 }
 
 
