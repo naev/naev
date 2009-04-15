@@ -834,14 +834,13 @@ static void gui_renderRadar( double dt )
 {
    int i, j;
 
-   glMatrixMode(GL_PROJECTION);
-   glPushMatrix();
+   gl_matrixPush();
    if (gui.radar.shape==RADAR_RECT)
-      glTranslated( gui.radar.x - SCREEN_W/2. + gui.radar.w/2.,
-            gui.radar.y - SCREEN_H/2. - gui.radar.h/2., 0.);
+      gl_matrixTranslate( gui.radar.x - SCREEN_W/2. + gui.radar.w/2.,
+            gui.radar.y - SCREEN_H/2. - gui.radar.h/2.);
    else if (gui.radar.shape==RADAR_CIRCLE)
-      glTranslated( gui.radar.x - SCREEN_W/2.,
-            gui.radar.y - SCREEN_H/2., 0.);
+      gl_matrixTranslate( gui.radar.x - SCREEN_W/2.,
+            gui.radar.y - SCREEN_H/2.);
 
    /*
     * planets
@@ -871,18 +870,8 @@ static void gui_renderRadar( double dt )
    if (j!=0)
       gui_renderPilot(pilot_stack[j]);
 
-   glPopMatrix(); /* GL_PROJECTION */
-
    /* Intereference. */
    gui_renderInterference(dt);
-
-   glPushMatrix();
-   if (gui.radar.shape==RADAR_RECT)
-      glTranslated( gui.radar.x - SCREEN_W/2. + gui.radar.w/2.,
-            gui.radar.y - SCREEN_H/2. - gui.radar.h/2., 0.);
-   else if (gui.radar.shape==RADAR_CIRCLE)
-      glTranslated( gui.radar.x - SCREEN_W/2.,
-            gui.radar.y - SCREEN_H/2., 0.);
 
    /* the + sign in the middle of the radar representing the player */
    glBegin(GL_LINES);
@@ -893,7 +882,7 @@ static void gui_renderRadar( double dt )
       glVertex2d(  3.,  0. );
    glEnd(); /* GL_LINES */
 
-   glPopMatrix(); /* GL_PROJECTION */
+   gl_matrixPop();
 }
 
 

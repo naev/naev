@@ -19,8 +19,9 @@
 /*
  * We put all the other opengl stuff here to only have to include one header.
  */
-#include "opengl_tex.h"
 #include "opengl_ext.h"
+#include "opengl_tex.h"
+#include "opengl_matrix.h"
 #include "opengl_vbo.h"
 #include "opengl_render.h"
 

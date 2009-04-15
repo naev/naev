@@ -291,9 +291,8 @@ static void nebu_renderMultitexture( const double dt )
 
    /* Compensate possible rumble */
    if (!paused) {
-      glMatrixMode(GL_PROJECTION);
-      glPushMatrix();
-         glTranslated(shake_pos.x, shake_pos.y, 0.);
+      gl_matrixPush();
+      gl_matrixTranslate( shake_pos.x, shake_pos.y );
    }
 
    /* Now render! */
@@ -316,7 +315,7 @@ static void nebu_renderMultitexture( const double dt )
    glEnd(); /* GL_QUADS */
 
    if (!paused)
-      glPopMatrix(); /* GL_PROJECTION */
+      gl_matrixPop();
 
    /* Set values to defaults */
    glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
@@ -462,6 +461,7 @@ static void nebu_genOverlay (void)
 void nebu_renderOverlay( const double dt )
 {
    double gx, gy;
+   double ox, oy;
 
    /* Get GUI offsets. */
    gui_getOffset( &gx, &gy );
@@ -472,11 +472,14 @@ void nebu_renderOverlay( const double dt )
    nebu_renderPuffs( dt, 0 );
 
    /* Prepare the matrix */
-   glMatrixMode(GL_PROJECTION);
-   glPushMatrix();
-      glTranslated(gx, gy, 0.);
-   if (!paused)
-      glTranslated(shake_pos.x, shake_pos.y, 0.);
+   ox = gx;
+   oy = gy;
+   if (!paused) {
+      ox += shake_pos.x;
+      oy += shake_pos.y;
+   }
+   gl_matrixPush();
+   gl_matrixTranslate( ox, oy );
 
    /*
     * Mask for area player can still see (partially)
@@ -513,7 +516,7 @@ void nebu_renderOverlay( const double dt )
    glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
 
    gl_vboDeactivate();
-   glPopMatrix(); /* GL_PROJECTION */
+   gl_matrixPop();
 
    gl_checkErr();
 }

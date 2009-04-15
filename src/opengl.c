@@ -632,6 +632,7 @@ int gl_init (void)
 
    /* Initialize subsystems.*/
    gl_initExtensions();
+   gl_initMatrix();
    gl_initTextures();
    gl_initVBO();
    gl_initRender();
@@ -687,6 +688,7 @@ void gl_exit (void)
    gl_exitRender();
    gl_exitVBO();
    gl_exitTextures();
+   gl_exitMatrix();
    gl_exitExtensions();
 
    /* Make sure there's no texture leak */
