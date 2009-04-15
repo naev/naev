@@ -58,6 +58,14 @@ glColour* toolkit_colLight = &cGrey90; /**< Light outline colour. */
 glColour* toolkit_col      = &cGrey70; /**< Normal outline colour. */
 glColour* toolkit_colDark  = &cGrey30; /**< Dark outline colour. */
 
+
+/*
+ * VBO
+ */
+static gl_vbo *toolkit_vbo; /**< Toolkit VBO. */
+static GLsizei toolkit_vboColourOffset; /**< Colour offset. */
+
+
 /*
  * static prototypes
  */
@@ -604,26 +612,76 @@ void toolkit_drawOutline( double x, double y,
       double w, double h, double b,
       glColour* c, glColour* lc )
 {
+   int i;
+   static GLfloat lines[9*2], colours[9*4];
+
+   /* Set shade model. */
    glShadeModel( (lc==NULL) ? GL_FLAT : GL_SMOOTH );
-   if (!lc) COLOUR(*c);
-   glBegin(GL_LINE_LOOP);
-      /* left */
-      if (lc) COLOUR(*lc);
-      glVertex2d( x - b,      y         );
-      if (lc) COLOUR(*c);
-      glVertex2d( x - b,      y + h     );
-      /* top */
-      glVertex2d( x,          y + h + b );
-      glVertex2d( x + w,      y + h + b );
-      /* right */
-      glVertex2d( x + w + b, y + h      );
-      if (lc) COLOUR(*lc);
-      glVertex2d( x + w + b, y          );
-      /* bottom */
-      glVertex2d( x + w,      y - b     );
-      glVertex2d( x,          y - b     );
-      glVertex2d( x - b,      y         );
-   glEnd(); /* GL_LINES */
+
+   /* Lines. */
+   /* x */
+   lines[4]  = x;
+   lines[0]  = lines[4] - b;
+   lines[2]  = lines[0];
+   lines[6]  = lines[4] + w;
+   lines[8]  = lines[6] + b;
+   lines[10] = lines[8];
+   lines[12] = lines[6];
+   lines[14] = lines[4];
+   lines[16] = lines[0];
+   /* y */
+   lines[1]  = y;
+   lines[3]  = lines[1] + h;
+   lines[5]  = lines[3] + b;
+   lines[7]  = lines[5];
+   lines[9]  = lines[3];
+   lines[11] = lines[1];
+   lines[13] = lines[1] - b;
+   lines[15] = lines[13];
+   lines[17] = lines[1];
+
+   /* Colours. */
+   if (!lc) {
+      for (i=0; i<9; i++) {
+         colours[4*i + 0] = c->r;
+         colours[4*i + 1] = c->g;
+         colours[4*i + 2] = c->b;
+         colours[4*i + 3] = c->a;
+      }
+   }
+   else {
+      colours[0] = lc->r;
+      colours[1] = lc->g;
+      colours[2] = lc->b;
+      colours[3] = lc->a;
+      for (i=0; i<4; i++) {
+         colours[4 + 4*i + 0] = c->r;
+         colours[4 + 4*i + 1] = c->g;
+         colours[4 + 4*i + 2] = c->b;
+         colours[4 + 4*i + 3] = c->a;
+      }
+      for (i=0; i<4; i++) {
+         colours[20 + 4*i + 0] = lc->r;
+         colours[20 + 4*i + 1] = lc->g;
+         colours[20 + 4*i + 2] = lc->b;
+         colours[20 + 4*i + 3] = lc->a;
+      }
+   }
+
+   /* Upload to the VBO. */
+   gl_vboSubData( toolkit_vbo, 0, sizeof(GLfloat) * 2*9, lines );
+   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof(GLfloat) * 4*9, colours );
+
+   /* Set up the VBO. */
+   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
+         toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
+
+   /* Draw the VBO. */
+   glDrawArrays( GL_LINE_STRIP, 0, 9 );
+
+   /* Deactivate VBO. */
+   gl_vboDeactivate();
 }
 /**
  * @brief Draws a rectangle.
@@ -640,18 +698,55 @@ void toolkit_drawOutline( double x, double y,
 void toolkit_drawRect( double x, double y,
       double w, double h, glColour* c, glColour* lc )
 {
+   GLfloat vertex[2*4], colours[4*4];
+
+   /* Set shade model. */
    glShadeModel( (lc) ? GL_SMOOTH : GL_FLAT );
-   glBegin(GL_QUADS);
 
-      COLOUR(*c);
-      glVertex2d( x,     y     );
-      glVertex2d( x + w, y     );
+   /* Set up the vertex. */
+   vertex[0] = x;
+   vertex[1] = y;
+   vertex[2] = vertex[0];
+   vertex[3] = vertex[1] + h;
+   vertex[4] = vertex[0] + w;
+   vertex[5] = vertex[1];
+   vertex[6] = vertex[4];
+   vertex[7] = vertex[3];
 
-      COLOUR( (lc) ? *lc : *c );
-      glVertex2d( x + w, y + h );
-      glVertex2d( x,     y + h );
+   /* Set up the colours. */
+   if (lc == NULL)
+      lc = c;
+   colours[0]  = c->r;
+   colours[1]  = c->g;
+   colours[2]  = c->b;
+   colours[3]  = c->a;
+   colours[4]  = lc->r;
+   colours[5]  = lc->g;
+   colours[6]  = lc->b;
+   colours[7]  = lc->a;
+   colours[8]  = c->r;
+   colours[9]  = c->g;
+   colours[10] = c->b;
+   colours[11] = c->a;
+   colours[12] = lc->r;
+   colours[13] = lc->g;
+   colours[14] = lc->b;
+   colours[15] = lc->a;
 
-   glEnd(); /* GL_QUADS */
+   /* Upload to the VBO. */
+   gl_vboSubData( toolkit_vbo, 0, sizeof(GLfloat) * 2*4, vertex );
+   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset, sizeof(GLfloat) * 4*4, colours );
+
+   /* Set up the VBO. */
+   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
+         toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
+
+   /* Draw the VBO. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Deactivate VBO. */
+   gl_vboDeactivate();
 }
 
 
@@ -1302,9 +1397,19 @@ static Widget* toolkit_getFocus( Window *wdw )
  */
 int toolkit_init (void)
 {
+   GLsizei size;
+
+   /* Allocate some windows. */
    windows = malloc(sizeof(Window)*MIN_WINDOWS);
    nwindows = 0;
    mwindows = MIN_WINDOWS;
+
+   /* Create the VBO. */
+   toolkit_vboColourOffset = sizeof(GLfloat) * 2 * 31;
+   size = sizeof(GLfloat) * (2+4) * 31;
+   toolkit_vbo = gl_vboCreateStream( size, NULL );
+
+   /* DIsable the cursor. */
    SDL_ShowCursor(SDL_DISABLE);
 
    return 0;
@@ -1316,7 +1421,12 @@ int toolkit_init (void)
  */
 void toolkit_exit (void)
 {
+   /* Destroy the windows. */
    while (nwindows > 0)
       window_destroy(windows[0].id);
    free(windows);
+
+   /* Free the VBO. */
+   gl_vboDestroy( toolkit_vbo );
+   toolkit_vbo = NULL;
 }
