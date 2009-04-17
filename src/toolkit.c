@@ -781,8 +781,10 @@ void toolkit_unclip (void)
 static void window_render( Window* w )
 {
    int i;
+   GLfloat cx, cy;
    double x, y, wid, hei;
    glColour *lc, *c, *dc, *oc;
+   GLfloat vertex[31*4], colours[31*4];
 
    /* position */
    x = w->x - (double)SCREEN_W/2.;
@@ -802,56 +804,110 @@ static void window_render( Window* w )
    toolkit_drawRect( x+21, y+0.6*w->h, w->w-42., 0.4*w->h, c, NULL );
 
    glShadeModel(GL_SMOOTH);
-   /* left side */
-   glBegin(GL_POLYGON);
-      COLOUR(*c);
-      glVertex2d( x + 21., y + 0.6*w->h ); /* center */
-      COLOUR(*dc);
-      glVertex2d( x + 21., y       );
-      glVertex2d( x + 15., y + 1.  );
-      glVertex2d( x + 10., y + 3.  );
-      glVertex2d( x + 6.,  y + 6.  );
-      glVertex2d( x + 3.,  y + 10. );
-      glVertex2d( x + 1.,  y + 15. );
-      glVertex2d( x,       y + 21. );
-      COLOUR(*c);
-      glVertex2d( x,       y + 0.6*w->h ); /* infront of center */
-      glVertex2d( x,       y + w->h - 21. );
-      glVertex2d( x + 1.,  y + w->h - 15. );
-      glVertex2d( x + 3.,  y + w->h - 10. );
-      glVertex2d( x + 6.,  y + w->h - 6.  );
-      glVertex2d( x + 10., y + w->h - 3.  );
-      glVertex2d( x + 15., y + w->h - 1.  );
-      glVertex2d( x + 21., y + w->h       );
-   glEnd(); /* GL_POLYGON */
-   /* right side */
-   glBegin(GL_POLYGON);
-      COLOUR(*c);
-      glVertex2d( x + w->w - 21., y + 0.6*w->h ); /* center */
-      COLOUR(*dc);
-      glVertex2d( x + w->w - 21., y       );
-      glVertex2d( x + w->w - 15., y + 1.  );
-      glVertex2d( x + w->w - 10., y + 3.  );
-      glVertex2d( x + w->w - 6.,  y + 6.  );
-      glVertex2d( x + w->w - 3.,  y + 10. );
-      glVertex2d( x + w->w - 1.,  y + 15. );
-      glVertex2d( x + w->w,       y + 21. );
-      COLOUR(*c);
-      glVertex2d( x + w->w,       y + 0.6*w->h ); /* infront of center */
-      glVertex2d( x + w->w,       y + w->h - 21. );
-      glVertex2d( x + w->w - 1.,  y + w->h - 15. );
-      glVertex2d( x + w->w - 3.,  y + w->h - 10. );
-      glVertex2d( x + w->w - 6.,  y + w->h - 6.  );
-      glVertex2d( x + w->w - 10., y + w->h - 3.  );
-      glVertex2d( x + w->w - 15., y + w->h - 1.  );
-      glVertex2d( x + w->w - 21., y + w->h       );
-   glEnd(); /* GL_POLYGON */
+   /* Both sides. */
+   gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
+         toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
+   gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   /* Colour is shared. */
+   colours[0] = c->r;
+   colours[1] = c->g;
+   colours[2] = c->r;
+   colours[3] = c->a;
+   for (i=0; i<7; i++) {
+      colours[4 + 4*i + 0] = dc->r;
+      colours[4 + 4*i + 1] = dc->g;
+      colours[4 + 4*i + 2] = dc->r;
+      colours[4 + 4*i + 3] = dc->a;
+   }
+   for (i=0; i<8; i++) {
+      colours[32 + 4*i + 0] = c->r;
+      colours[32 + 4*i + 1] = c->g;
+      colours[32 + 4*i + 2] = c->r;
+      colours[32 + 4*i + 3] = c->a;
+   }
+   gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset,
+         sizeof(GLfloat) * 4*16, colours );
+   /* Left side vertex. */
+   cx = x;
+   cy = y;
+   vertex[0]  = cx + 21.;
+   vertex[1]  = cy + 0.6*w->h;
+   vertex[2]  = cx + 21.;
+   vertex[3]  = cy;
+   vertex[4]  = cx + 15.;
+   vertex[5]  = cy + 1.;
+   vertex[6]  = cx + 10.;
+   vertex[7]  = cy + 3.;
+   vertex[8]  = cx + 6.;
+   vertex[9]  = cy + 6.;
+   vertex[10] = cx + 3.;
+   vertex[11] = cy + 10.;
+   vertex[12] = cx + 1.;
+   vertex[13] = cy + 15.;
+   vertex[14] = cx;
+   vertex[15] = cy + 21.;
+   vertex[16] = cx;
+   vertex[17] = cy + 0.6*w->h;
+   vertex[18] = cx;
+   cy = y + w->h;
+   vertex[19] = cy - 21.;
+   vertex[20] = cx + 1.;
+   vertex[21] = cy - 15.;
+   vertex[22] = cx + 3.;
+   vertex[23] = cy - 10.;
+   vertex[24] = cx + 6.;
+   vertex[25] = cy - 6.;
+   vertex[26] = cx + 10.;
+   vertex[27] = cy - 3.;
+   vertex[28] = cx + 15.;
+   vertex[29] = cy - 1.;
+   vertex[30] = cx + 21.;
+   vertex[31] = cy;
+   gl_vboSubData( toolkit_vbo, 0, sizeof(GLfloat) * 2*16, vertex );
+   glDrawArrays( GL_POLYGON, 0, 16 );
+   /* Right side vertex. */
+   cx = x + w->w;
+   cy = y;
+   vertex[0]  = cx - 21.;
+   vertex[1]  = cy + 0.6*w->h;
+   vertex[2]  = cx - 21.;
+   vertex[3]  = cy;
+   vertex[4]  = cx - 15.;
+   vertex[5]  = cy + 1.;
+   vertex[6]  = cx - 10.;
+   vertex[7]  = cy + 3.;
+   vertex[8]  = cx - 6.;
+   vertex[9]  = cy + 6.;
+   vertex[10] = cx - 3.;
+   vertex[11] = cy + 10.;
+   vertex[12] = cx - 1.;
+   vertex[13] = cy + 15.;
+   vertex[14] = cx;
+   vertex[15] = cy + 21.;
+   vertex[16] = cx;
+   vertex[17] = cy + 0.6*w->h;
+   vertex[18] = cx;
+   cy = y + w->h;
+   vertex[19] = cy - 21.;
+   vertex[20] = cx - 1.;
+   vertex[21] = cy - 15.;
+   vertex[22] = cx - 3.;
+   vertex[23] = cy - 10.;
+   vertex[24] = cx - 6.;
+   vertex[25] = cy - 6.;
+   vertex[26] = cx - 10.;
+   vertex[27] = cy - 3.;
+   vertex[28] = cx - 15.;
+   vertex[29] = cy - 1.;
+   vertex[30] = cx - 21.;
+   vertex[31] = cy;
+   gl_vboSubData( toolkit_vbo, 0, sizeof(GLfloat) * 2*16, vertex );
+   glDrawArrays( GL_POLYGON, 0, 16 );
 
 
    /* 
     * inner outline
     */
-   glShadeModel(GL_SMOOTH);
    glBegin(GL_LINE_LOOP);
       /* left side */
       COLOUR(*c);
