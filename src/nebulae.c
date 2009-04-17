@@ -154,9 +154,9 @@ int nebu_init (void)
    vertex[1] = -SCREEN_H/2;
    vertex[2] = -vertex[0];
    vertex[3] =  vertex[0];
-   vertex[4] =  vertex[2];
+   vertex[4] =  vertex[0];
    vertex[5] = -vertex[1];
-   vertex[6] =  vertex[0];
+   vertex[6] =  vertex[2];
    vertex[7] =  vertex[5];
    /* Texture 0. */
    tw = (double)nebu_w / (double)nebu_pw;
@@ -165,18 +165,18 @@ int nebu_init (void)
    vertex[9]  = 0.;
    vertex[10] = tw;
    vertex[11] = 0.;
-   vertex[12] = tw;
+   vertex[12] = 0.;
    vertex[13] = th;
-   vertex[14] = 0.;
+   vertex[14] = tw;
    vertex[15] = th;
    /* Texture 1. */
    vertex[16] = 0.;
    vertex[17] = 0.;
    vertex[18] = tw;
    vertex[19] = 0.;
-   vertex[20] = tw;
+   vertex[20] = 0.;
    vertex[21] = th;
-   vertex[22] = 0.;
+   vertex[22] = tw;
    vertex[23] = th;
    nebu_vboBG = gl_vboCreateStatic( sizeof(GLfloat) * (4*2*3), vertex );
 
@@ -351,7 +351,7 @@ static void nebu_renderMultitexture( const double dt )
          sizeof(GL_FLOAT) * 1*2*4, 2, GL_FLOAT, 0 );
    gl_vboActivateOffset( nebu_vboBG, GL_TEXTURE1,
          sizeof(GL_FLOAT) * 2*2*4, 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_QUADS, 0, 4 );
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
    gl_vboDeactivate();
 
    if (!paused)
