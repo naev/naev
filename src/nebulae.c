@@ -272,7 +272,6 @@ static void nebu_renderMultitexture( const double dt )
    (void) dt;
    unsigned int t;
    double ndt;
-   double tw,th;
    GLfloat col[4];
    int temp;
 
@@ -297,9 +296,6 @@ static void nebu_renderMultitexture( const double dt )
    col[1] = cPurple.g;
    col[2] = cPurple.b;
    col[3] = ndt / nebu_dt;
-
-   tw = (double)nebu_w / (double)nebu_pw;
-   th = (double)nebu_h / (double)nebu_ph;
 
    /* Set up the targets */
    /* Texture 0 */
