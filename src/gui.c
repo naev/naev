@@ -73,6 +73,10 @@ static double interference_t  = 0.; /**< Interference timer to control transitio
 static double blink_pilot     = 0.; /**< Timer on target blinking on radar. */
 static double blink_planet    = 0.; /**< Timer on planet blinking on radar. */
 
+/* for VBO. */
+static gl_vbo *gui_vbo = NULL; /**< GUI VBO. */
+static GLsizei gui_vboColourOffset = 0; /**< Offset of colour pixels. */
+
 /*
  * pilot stuff for GUI
  */
@@ -187,7 +191,7 @@ typedef struct Mesg_ {
    char str[MESG_SIZE_MAX]; /**< The message. */
    double t; /**< Timer related to message. */
 } Mesg;
-static Mesg* mesg_stack; /**< Stack of mesages, will be of mesg_max size. */
+static Mesg* mesg_stack = NULL; /**< Stack of mesages, will be of mesg_max size. */
 
 
 /* 
@@ -400,7 +404,7 @@ void gui_renderTarget( double dt )
 static void gui_renderBorder( double dt )
 {
    (void) dt;
-   int i;
+   int i, j;
    Pilot *plt;
    Planet *pnt;
    glTexture *tex;
@@ -411,6 +415,7 @@ static void gui_renderBorder( double dt )
    double cx,cy;
    glColour *col;
    double a;
+   GLfloat vertex[5*2], colours[5*4];
 
    /* Get player position. */
    pos   = &player->solid->pos;
@@ -463,15 +468,34 @@ static void gui_renderBorder( double dt )
             cy = sin(a) * (hh-7.) * M_SQRT2;
          }
 
+
+         /* Set up colours. */
          col = gui_getPlanetColour(i);
-         COLOUR(*col);
-         glBegin(GL_LINE_STRIP);
-            glVertex2d(cx-5., cy-5.);
-            glVertex2d(cx-5., cy+5.);
-            glVertex2d(cx+5., cy+5.);
-            glVertex2d(cx+5., cy-5.);
-            glVertex2d(cx-5., cy-5.);
-         glEnd(); /* GL_LINES */
+         for (j=0; j<5; j++) {
+            colours[4*j + 0] = col->r;
+            colours[4*j + 1] = col->g;
+            colours[4*j + 2] = col->b;
+            colours[4*j + 3] = col->a;
+         }
+         gl_vboSubData( gui_vbo, gui_vboColourOffset,
+               sizeof(GLfloat) * 5*4, colours );
+         /* Set up vertex. */
+         vertex[0] = cx-5.;
+         vertex[1] = cy-5;
+         vertex[2] = cx-5.;
+         vertex[3] = cy+5;
+         vertex[4] = cx+5.;
+         vertex[5] = cy+5;
+         vertex[6] = cx+5.;
+         vertex[7] = cy-5;
+         vertex[8] = cx-5.;
+         vertex[9] = cy-5;
+         gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 5*2, vertex );
+         /* Draw tho VBO. */
+         gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+         gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
+               gui_vboColourOffset, 4, GL_FLOAT, 0 );
+         glDrawArrays( GL_LINE_STRIP, 0, 5 );
       }
    }
 
@@ -521,16 +545,36 @@ static void gui_renderBorder( double dt )
             cy = sin(a) * (hh-7.) * M_SQRT2;
          }
 
+         /* Set up colours. */
          col = gui_getPilotColour(plt);
-         COLOUR(*col);
-         glBegin(GL_LINES);
-            glVertex2d(cx-5., cy-5.);
-            glVertex2d(cx+5., cy+5.);
-            glVertex2d(cx+5., cy-5.);
-            glVertex2d(cx-5., cy+5.);
-         glEnd(); /* GL_LINES */
+         for (j=0; j<4; j++) {
+            colours[4*j + 0] = col->r;
+            colours[4*j + 1] = col->g;
+            colours[4*j + 2] = col->b;
+            colours[4*j + 3] = col->a;
+         }
+         gl_vboSubData( gui_vbo, gui_vboColourOffset,
+               sizeof(GLfloat) * 4*4, colours );
+         /* Set up vertex. */
+         vertex[0] = cx-5.;
+         vertex[1] = cy-5;
+         vertex[2] = cx+5.;
+         vertex[3] = cy+5;
+         vertex[4] = cx+5.;
+         vertex[5] = cy-5;
+         vertex[6] = cx-5.;
+         vertex[7] = cy+5;
+         gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 4*2, vertex );
+         /* Draw tho VBO. */
+         gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+         gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
+               gui_vboColourOffset, 4, GL_FLOAT, 0 );
+         glDrawArrays( GL_LINES, 0, 4 );
       }
    }
+
+   /* Deactivate the VBO. */
+   gl_vboDeactivate();
 }
 
 
@@ -1354,10 +1398,20 @@ int gui_init (void)
     */
    gui.mesg.x = 20;
    gui.mesg.y = 30;
-   mesg_stack = calloc(mesg_max, sizeof(Mesg));
    if (mesg_stack == NULL) {
-      ERR("Out of memory!");
-      return -1;
+      mesg_stack = calloc(mesg_max, sizeof(Mesg));
+      if (mesg_stack == NULL) {
+         ERR("Out of memory!");
+         return -1;
+      }
+   }
+
+   /*
+    * VBO.
+    */
+   if (gui_vbo == NULL) {
+      gui_vbo = gl_vboCreateStream( sizeof(GLfloat) * 8*(2+4), NULL );
+      gui_vboColourOffset = sizeof(GLfloat) * 8*2;
    }
 
    return 0;
@@ -1857,7 +1911,16 @@ void gui_free (void)
    gui_cleanup();
 
    /* Free messages. */
-   free(mesg_stack);
+   if (mesg_stack != NULL) {
+      free(mesg_stack);
+      mesg_stack = NULL;
+   }
+
+   /* Free VBO. */
+   if (gui_vbo != NULL) {
+      gl_vboDestroy( gui_vbo );
+      gui_vbo = NULL;
+   }
 }
 
 
@@ -1869,8 +1932,7 @@ void gui_free (void)
 void gui_setRadarRel( int mod )
 {
    gui.radar.res += mod * RADAR_RES_INTERVAL;
-   if (gui.radar.res > RADAR_RES_MAX) gui.radar.res = RADAR_RES_MAX;
-   else if (gui.radar.res < RADAR_RES_MIN) gui.radar.res = RADAR_RES_MIN;
+   gui.radar.res = CLAMP( RADAR_RES_MIN, RADAR_RES_MAX, gui.radar.res );
 
    player_message( "Radar set to %dx.", (int)gui.radar.res );
 }
