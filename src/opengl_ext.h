@@ -12,6 +12,7 @@
 
 /* GL_ARB_multitexture */
 void (APIENTRY *nglActiveTexture)(GLenum texture);
+void (APIENTRY *nglClientActiveTexture)(GLenum texture);
 void (APIENTRY *nglMultiTexCoord2d)(GLenum target,GLdouble s,GLdouble t);
 
 /* GL_ARB_vertex_buffer_object */

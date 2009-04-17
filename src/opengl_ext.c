@@ -30,12 +30,19 @@ static int gl_extMultitexture (void);
 static int gl_extMultitexture (void)
 {
    /* Multitexture. */
-   if (gl_hasExt("GL_ARB_multitexture")) {
+   if (gl_hasVersion( 1, 3 )) {
       nglActiveTexture = SDL_GL_GetProcAddress("glActiveTexture");
+      nglClientActiveTexture = SDL_GL_GetProcAddress("glClientActiveTexture");
       nglMultiTexCoord2d = SDL_GL_GetProcAddress("glMultiTexCoord2d");
+   }
+   else if (gl_hasExt("GL_ARB_multitexture")) {
+      nglActiveTexture = SDL_GL_GetProcAddress("glActiveTextureARB");
+      nglClientActiveTexture = SDL_GL_GetProcAddress("glClientActiveTextureARB");
+      nglMultiTexCoord2d = SDL_GL_GetProcAddress("glMultiTexCoord2dARB");
    }
    else {
       nglActiveTexture = NULL;
+      nglClientActiveTexture = NULL;
       nglMultiTexCoord2d = NULL;
       WARN("GL_ARB_multitexture not found!");
    }
@@ -45,7 +52,7 @@ static int gl_extMultitexture (void)
 static int gl_extVBO (void)
 {
    /* Vertex Buffers. */
-   if (gl_hasVersion( 1, 5)) {
+   if (gl_hasVersion( 1, 5 )) {
       nglGenBuffers = SDL_GL_GetProcAddress("glGenBuffers");
       nglBindBuffer = SDL_GL_GetProcAddress("glBindBuffer");
       nglBufferData = SDL_GL_GetProcAddress("glBufferData");

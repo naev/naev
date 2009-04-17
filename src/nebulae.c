@@ -59,7 +59,8 @@ static double nebu_dt   = 0.; /**< How fast nebulae changes. */
 static glTexture *nebu_pufftexs[NEBULAE_PUFFS]; /**< Nebulae puffs. */
 
 /* VBOs */
-static gl_vbo *nebu_overlayVBO = NULL; /**< Overlay VBO. */
+static gl_vbo *nebu_vboOverlay = NULL; /**< Overlay VBO. */
+static gl_vbo *nebu_vboBG = NULL; /**< BG VBO. */
 
 /**
  * @struct NebulaePuff
@@ -102,6 +103,8 @@ int nebu_init (void)
    char nebu_file[PATH_MAX];
    SDL_Surface* nebu_sur;
    int ret;
+   GLfloat vertex[4*3*2];
+   GLfloat tw, th;
 
    /* Special code to regenerate the nebulae */
    if ((nebu_w == -9) && (nebu_h == -9)) {
@@ -143,6 +146,40 @@ int nebu_init (void)
    }
 
    DEBUG("Loaded %d Nebulae Layers", NEBULAE_Z);
+
+
+   /* Create the VBO. */
+   /* Vertex. */
+   vertex[0] = -SCREEN_W/2;
+   vertex[1] = -SCREEN_H/2;
+   vertex[2] = -vertex[0];
+   vertex[3] =  vertex[0];
+   vertex[4] =  vertex[2];
+   vertex[5] = -vertex[1];
+   vertex[6] =  vertex[0];
+   vertex[7] =  vertex[5];
+   /* Texture 0. */
+   tw = (double)nebu_w / (double)nebu_pw;
+   th = (double)nebu_h / (double)nebu_ph;
+   vertex[8]  = 0.;
+   vertex[9]  = 0.;
+   vertex[10] = tw;
+   vertex[11] = 0.;
+   vertex[12] = tw;
+   vertex[13] = th;
+   vertex[14] = 0.;
+   vertex[15] = th;
+   /* Texture 1. */
+   vertex[16] = 0.;
+   vertex[17] = 0.;
+   vertex[18] = tw;
+   vertex[19] = 0.;
+   vertex[20] = tw;
+   vertex[21] = th;
+   vertex[22] = 0.;
+   vertex[23] = th;
+   nebu_vboBG = gl_vboCreateStatic( sizeof(GLfloat) * (4*2*3), vertex );
+
    return 0;
 }
 
@@ -190,10 +227,22 @@ void nebu_exit (void)
 {
    int i;
 
+   /* Free the Nebulae BG. */
    glDeleteTextures( NEBULAE_Z, nebu_textures );
 
+   /* Free the puffs. */
    for (i=0; i<NEBULAE_PUFFS; i++)
       gl_freeTexture( nebu_pufftexs[i] );
+
+   /* Free the VBO. */
+   if (nebu_vboBG != NULL) {
+      gl_vboDestroy( nebu_vboBG );
+      nebu_vboBG = NULL;
+   }
+   if (nebu_vboOverlay != NULL) {
+      gl_vboDestroy( nebu_vboOverlay );
+      nebu_vboOverlay= NULL;
+   }
 }
 
 
@@ -296,23 +345,14 @@ static void nebu_renderMultitexture( const double dt )
    }
 
    /* Now render! */
-   glBegin(GL_QUADS);
-      nglMultiTexCoord2d( GL_TEXTURE0, 0., 0. );
-      nglMultiTexCoord2d( GL_TEXTURE1, 0., 0. );
-      glVertex2d( -SCREEN_W/2., -SCREEN_H/2. );
-
-      nglMultiTexCoord2d( GL_TEXTURE0, tw, 0. );
-      nglMultiTexCoord2d( GL_TEXTURE1, tw, 0. );
-      glVertex2d(  SCREEN_W/2., -SCREEN_H/2. );
-
-      nglMultiTexCoord2d( GL_TEXTURE0, tw, th );
-      nglMultiTexCoord2d( GL_TEXTURE1, tw, th );
-      glVertex2d(  SCREEN_W/2.,  SCREEN_H/2. );
-      
-      nglMultiTexCoord2d( GL_TEXTURE0, 0., th );
-      nglMultiTexCoord2d( GL_TEXTURE1, 0., th );
-      glVertex2d( -SCREEN_W/2.,  SCREEN_H/2. );
-   glEnd(); /* GL_QUADS */
+   gl_vboActivateOffset( nebu_vboBG, GL_VERTEX_ARRAY, 
+         sizeof(GL_FLOAT) * 0*2*4, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( nebu_vboBG, GL_TEXTURE0,
+         sizeof(GL_FLOAT) * 1*2*4, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( nebu_vboBG, GL_TEXTURE1,
+         sizeof(GL_FLOAT) * 2*2*4, 2, GL_FLOAT, 0 );
+   glDrawArrays( GL_QUADS, 0, 4 );
+   gl_vboDeactivate();
 
    if (!paused)
       gl_matrixPop();
@@ -343,12 +383,12 @@ static void nebu_genOverlay (void)
    gui_getOffset( &gx, &gy );
 
    /* See if need to generate overlay. */
-   if (nebu_overlayVBO == NULL) {
-      nebu_overlayVBO = gl_vboCreateStatic( sizeof(GLfloat) *
+   if (nebu_vboOverlay == NULL) {
+      nebu_vboOverlay = gl_vboCreateStatic( sizeof(GLfloat) *
             ((2+4)*18 + 2*28 + 4*7), NULL );
 
       /* Set colors, those will be pure static. */
-      data = gl_vboMap( nebu_overlayVBO );
+      data = gl_vboMap( nebu_vboOverlay );
 
       /* Alpha overlay. */
       for (i=0; i<18; i++) {
@@ -367,11 +407,11 @@ static void nebu_genOverlay (void)
          data[(2+4)*18 + 2*28 + 4*i + 3] = cPurple.a;
       }
 
-      gl_vboUnmap( nebu_overlayVBO );
+      gl_vboUnmap( nebu_vboOverlay );
    }
 
    /* Generate the main chunk. */
-   data = gl_vboMap( nebu_overlayVBO );
+   data = gl_vboMap( nebu_vboOverlay );
 
    /* Main chunk. */
    data[0] = 0.;
@@ -446,7 +486,7 @@ static void nebu_genOverlay (void)
    data[(2+4)*18+54] = -SCREEN_W/2.-gx;
    data[(2+4)*18+55] = SCREEN_H/2.-gy;
 
-   gl_vboUnmap( nebu_overlayVBO );
+   gl_vboUnmap( nebu_vboOverlay );
 }
 #undef ANG45
 #undef COS225
@@ -485,8 +525,8 @@ void nebu_renderOverlay( const double dt )
     * Mask for area player can still see (partially)
     */
    glShadeModel(GL_SMOOTH);
-   gl_vboActivateOffset( nebu_overlayVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( nebu_overlayVBO, GL_COLOR_ARRAY,
+   gl_vboActivateOffset( nebu_vboOverlay, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( nebu_vboOverlay, GL_COLOR_ARRAY,
          sizeof(GLfloat)*2*18, 4, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_FAN, 0, 18 );
 
@@ -496,22 +536,22 @@ void nebu_renderOverlay( const double dt )
     */
    glShadeModel(GL_FLAT);
    /* Colour is shared. */
-   gl_vboActivateOffset( nebu_overlayVBO, GL_COLOR_ARRAY,
+   gl_vboActivateOffset( nebu_vboOverlay, GL_COLOR_ARRAY,
          sizeof(GLfloat)*((2+4)*18 + 2*28), 4, GL_FLOAT, 0 );
    /* Top left. */
-   gl_vboActivateOffset( nebu_overlayVBO, GL_VERTEX_ARRAY,
+   gl_vboActivateOffset( nebu_vboOverlay, GL_VERTEX_ARRAY,
          sizeof(GLfloat)*((2+4)*18 + 0*2*7), 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
    /* Top right. */
-   gl_vboActivateOffset( nebu_overlayVBO, GL_VERTEX_ARRAY,
+   gl_vboActivateOffset( nebu_vboOverlay, GL_VERTEX_ARRAY,
          sizeof(GLfloat)*((2+4)*18 + 1*2*7), 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
    /* Bottom right. */
-   gl_vboActivateOffset( nebu_overlayVBO, GL_VERTEX_ARRAY,
+   gl_vboActivateOffset( nebu_vboOverlay, GL_VERTEX_ARRAY,
          sizeof(GLfloat)*((2+4)*18 + 2*2*7), 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
    /* Bottom left. */
-   gl_vboActivateOffset( nebu_overlayVBO, GL_VERTEX_ARRAY,
+   gl_vboActivateOffset( nebu_vboOverlay, GL_VERTEX_ARRAY,
          sizeof(GLfloat)*((2+4)*18 + 3*2*7), 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
 

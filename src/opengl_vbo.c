@@ -256,7 +256,7 @@ void gl_vboActivate( gl_vbo *vbo, GLuint class, GLint size, GLenum type, GLsizei
  *
  *    @param vbo VBO to activate.
  *    @param class Should be one of GL_COLOR_ARRAY, GL_VERTEX_ARRAY,
- *           or GL_TEXTURE_COORD_ARRAY.
+ *           GL_TEXTURE_COORD_ARRAY, GL_TEXTURE0 or GL_TEXTURE1.
  *    @param offset Offset (in bytes).
  *    @param size Specifies components per point.
  *    @param type Type of data (usually GL_FLOAT).
@@ -268,7 +268,6 @@ void gl_vboActivateOffset( gl_vbo *vbo, GLuint class, GLuint offset,
    const GLvoid *pointer;
 
    /* Set up. */
-   glEnableClientState(class);
    if (has_vbo) {
       nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
       pointer = BUFFER_OFFSET(offset);
@@ -279,15 +278,30 @@ void gl_vboActivateOffset( gl_vbo *vbo, GLuint class, GLuint offset,
    /* Class specific. */
    switch (class) {
       case GL_COLOR_ARRAY:
+         glEnableClientState(class);
          glColorPointer( size, type, stride, pointer );
          break;
 
       case GL_VERTEX_ARRAY:
+         glEnableClientState(class);
          glVertexPointer( size, type, stride, pointer );
          break;
 
       case GL_TEXTURE_COORD_ARRAY:
+         glEnableClientState(class);
          glTexCoordPointer( size, type, stride, pointer );
+         break;
+
+      case GL_TEXTURE0:
+         nglClientActiveTexture( GL_TEXTURE0 );
+         glTexCoordPointer( size, type, stride, pointer );
+         glEnableClientState(GL_TEXTURE_COORD_ARRAY); 
+         break;
+
+      case GL_TEXTURE1:
+         nglClientActiveTexture( GL_TEXTURE1 );
+         glTexCoordPointer( size, type, stride, pointer );
+         glEnableClientState(GL_TEXTURE_COORD_ARRAY); 
          break;
 
       default:
@@ -307,6 +321,12 @@ void gl_vboDeactivate (void)
    glDisableClientState(GL_VERTEX_ARRAY);
    glDisableClientState(GL_COLOR_ARRAY);
    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+   if (nglClientActiveTexture != NULL) {
+      nglClientActiveTexture( GL_TEXTURE1 );
+      glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+      nglClientActiveTexture( GL_TEXTURE0 );
+      glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+   }
 }
 
 
