@@ -877,6 +877,7 @@ void gui_render( double dt )
 static void gui_renderRadar( double dt )
 {
    int i, j;
+   GLfloat vertex[2*4], colours[4*4];
 
    gl_matrixPush();
    if (gui.radar.shape==RADAR_RECT)
@@ -918,13 +919,30 @@ static void gui_renderRadar( double dt )
    gui_renderInterference(dt);
 
    /* the + sign in the middle of the radar representing the player */
-   glBegin(GL_LINES);
-      COLOUR(cRadar_player);
-      glVertex2d(  0., -3. );
-      glVertex2d(  0.,  3. );
-      glVertex2d( -3.,  0. );
-      glVertex2d(  3.,  0. );
-   glEnd(); /* GL_LINES */
+   for (i=0; i<4; i++) {
+      colours[4*i + 0] = cRadar_player.r;
+      colours[4*i + 1] = cRadar_player.g;
+      colours[4*i + 2] = cRadar_player.b;
+      colours[4*i + 3] = cRadar_player.a;
+   }
+   gl_vboSubData( gui_vbo, gui_vboColourOffset,
+         sizeof(GLfloat) * 4*4, colours );
+   /* Set up vertex. */
+   vertex[0] = 0.;
+   vertex[1] = -3.;
+   vertex[2] = 0.;
+   vertex[3] = +3.;
+   vertex[4] = -3.;
+   vertex[5] = 0.;
+   vertex[6] = +3.;
+   vertex[7] = 0.;
+   gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 4*2, vertex );
+   /* Draw tho VBO. */
+   gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
+         gui_vboColourOffset, 4, GL_FLOAT, 0 );
+   glDrawArrays( GL_LINES, 0, 4 );
+   gl_vboDeactivate();
 
    gl_matrixPop();
 }
@@ -1308,8 +1326,10 @@ static void gui_renderPlanet( int i )
  */
 static void gui_renderHealth( const HealthBar *bar, const double w )
 {
+   int i;
    double res[2], rw;
    double x,y, sx,sy, tx,ty;
+   GLfloat vertex[4*4], colours[4*4];
 
    /* Check if need to draw. */
    if (w == 0.)
@@ -1355,21 +1375,43 @@ static void gui_renderHealth( const HealthBar *bar, const double w )
       /* Draw the image. */
       glEnable(GL_TEXTURE_2D);
       glBindTexture( GL_TEXTURE_2D, bar->gfx->texture);
-      glBegin(GL_QUADS);
-
-         glTexCoord2d( 0., ty );
-         glVertex2d( x, y );
-
-         glTexCoord2d( rw*tx, ty );
-         glVertex2d( x + sx, y );
-         
-         glTexCoord2d( rw*tx, 0. );
-         glVertex2d( x + sx, y - sy );
-
-         glTexCoord2d( 0., 0. );
-         glVertex2d( x, y - sy );                                            
-
-      glEnd(); /* GL_QUADS */
+      /* Set up colours. */
+      for (i=0; i<4; i++) {
+         colours[4*i + 0] = bar->col.r;
+         colours[4*i + 1] = bar->col.g;
+         colours[4*i + 2] = bar->col.b;
+         colours[4*i + 3] = bar->col.a;
+      }
+      gl_vboSubData( gui_vbo, gui_vboColourOffset,
+            sizeof(GLfloat) * 4*4, colours );
+      /* Set up vertex. */
+      /* Position. */
+      vertex[0] = x;
+      vertex[1] = y;
+      vertex[2] = x + sx;
+      vertex[3] = y;
+      vertex[4] = x + sx;
+      vertex[5] = y - sy;
+      vertex[6] = x;
+      vertex[7] = y - sy;
+      /* Texture. */
+      vertex[8]  = 0.;
+      vertex[9]  = ty;
+      vertex[10] = rw*tx;
+      vertex[11] = ty;
+      vertex[12] = rw*tx;
+      vertex[13] = 0.;
+      vertex[14] = 0.;
+      vertex[15] = 0.;
+      gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 4*4, vertex );
+      /* Draw tho VBO. */
+      gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+      gl_vboActivateOffset( gui_vbo, GL_TEXTURE_COORD_ARRAY,
+            sizeof(GLfloat) * 2*4, 2, GL_FLOAT, 0 );
+      gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
+            gui_vboColourOffset, 4, GL_FLOAT, 0 );
+      glDrawArrays( GL_QUADS, 0, 4 );
+      gl_vboDeactivate();
       glDisable(GL_TEXTURE_2D);
    }
 
