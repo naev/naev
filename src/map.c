@@ -40,6 +40,10 @@ static StarSystem **map_path  = NULL; /**< The path to current selected system. 
 int map_npath                 = 0; /**< Number of systems in map_path. */
 
 
+/* VBO. */
+static gl_vbo *map_vbo = NULL; /**< Map VBO. */
+
+
 /*
  * extern
  */
@@ -63,6 +67,32 @@ static void map_drawMarker( double x, double y, double r,
 
 
 /**
+ * @brief Initializes the map subsystem.
+ *
+ *    @return 0 on success.
+ */
+int map_init (void)
+{
+   /* Create the VBO. */
+   map_vbo = gl_vboCreateStream( sizeof(GLfloat) * 3*(2+4), NULL );
+   return 0;
+}
+
+
+/**
+ * @brief Destroys the map subsystem.
+ */
+void map_exit (void)
+{
+   /* Destroy the VBO. */
+   if (map_vbo != NULL) {
+      gl_vboDestroy(map_vbo);
+      map_vbo = NULL;
+   }
+}
+
+
+/**
  * @brief Opens the map window.
  */
 void map_open (void)
@@ -81,9 +111,6 @@ void map_open (void)
    /* set position to focus on current system */
    map_xpos = cur_system->pos.x;
    map_ypos = cur_system->pos.y;
-
-   /* reset zoom. */
-   map_zoom = 1.;
 
    /* mark systems as needed */
    mission_sysMark();
@@ -155,8 +182,8 @@ void map_open (void)
    /*
     * The map itself.
     */
-   window_addCust( wid, 20, -40, w-150, h-100,
-         "cstMap", 1, map_render, map_mouse );
+   map_show( wid, 20, -40, w-150, h-100, 1. ); /* Reset zoom. */
+
 
    /*
     * Bottom stuff
@@ -396,21 +423,24 @@ static int map_inPath( StarSystem *sys )
 static void map_drawMarker( double x, double y, double r,
       int num, int cur, int type )
 {
+   int i;
    double a, c,s, d;
+   glColour *col;
+   GLfloat vertex[3*(2+4)];
 
    /* Get colour marking. */
    switch (type) {
       case 0:
-         COLOUR(cGreen);
+         col = &cGreen;
          break;
       case 1:
-         COLOUR(cLightBlue);
+         col = &cLightBlue;
          break;
       case 2:
-         COLOUR(cRed);
+         col = &cRed;
          break;
       case 3:
-         COLOUR(cOrange);
+         col = &cOrange;
          break;
    }
 
@@ -429,11 +459,24 @@ static void map_drawMarker( double x, double y, double r,
    s  = sin(a);
 
    /* Draw the marking triangle. */
-   glBegin(GL_TRIANGLES);
-      glVertex2d( x + (d)*c,              y + (d)*s );
-      glVertex2d( x + (d+8.)*c - (4.)*s,  y + (d+8.)*s + (4.)*c );
-      glVertex2d( x + (d+8.)*c - (-4.)*s, y + (d+8.)*s + (-4.)*c );
-   glEnd(); /* GL_TRIANGLES */
+   vertex[0] = x + (d)*c;
+   vertex[1] = y + (d)*s;
+   vertex[2] = x + (d+8.)*c - (4.)*s;
+   vertex[3] = y + (d+8.)*s + (4.)*c;
+   vertex[4] = x + (d+8.)*c - (-4.)*s;
+   vertex[5] = y + (d+8.)*s + (-4.)*c;
+   for (i=0; i<3; i++) {
+      vertex[6 + 4*i + 0] = col->r;
+      vertex[6 + 4*i + 1] = col->g;
+      vertex[6 + 4*i + 2] = col->b;
+      vertex[6 + 4*i + 3] = col->a;
+   }
+   gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
+   gl_vboActivateOffset( map_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( map_vbo, GL_COLOR_ARRAY,
+         sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
+   glDrawArrays( GL_TRIANGLES, 0, 3 );
+   gl_vboDeactivate();
 }
 
 
@@ -451,6 +494,7 @@ static void map_render( double bx, double by, double w, double h )
    double x,y,r, tx,ty;
    StarSystem *sys, *jsys, *hsys;
    glColour* col;
+   GLfloat vertex[8*(2+4)];
 
    r = 5.;
    x = (bx - map_xpos + w/2) * 1.;
@@ -524,20 +568,31 @@ static void map_render( double bx, double by, double w, double h )
          else
             col = &cDarkBlue;
 
-         glBegin(GL_LINE_STRIP);
-            ACOLOUR(*col,0.);
-            tx = x + sys->pos.x * map_zoom;
-            ty = y + sys->pos.y * map_zoom;
-            glVertex2d( tx, ty );
-            COLOUR(*col);
-            tx += (jsys->pos.x - sys->pos.x)/2. * map_zoom;
-            ty += (jsys->pos.y - sys->pos.y)/2. * map_zoom;
-            glVertex2d( tx, ty );
-            ACOLOUR(*col,0.);
-            tx = x + jsys->pos.x * map_zoom;
-            ty = y + jsys->pos.y * map_zoom;
-            glVertex2d( tx, ty );
-         glEnd(); /* GL_LINE_STRIP */
+         /* Draw the lines. */
+         vertex[0]  = x + sys->pos.x * map_zoom;
+         vertex[1]  = y + sys->pos.y * map_zoom;
+         vertex[2]  = vertex[0] + (jsys->pos.x - sys->pos.x)/2. * map_zoom;
+         vertex[3]  = vertex[1] + (jsys->pos.y - sys->pos.y)/2. * map_zoom;
+         vertex[4]  = x + jsys->pos.x * map_zoom;
+         vertex[5]  = y + jsys->pos.y * map_zoom;
+         vertex[6]  = col->r;
+         vertex[7]  = col->g;
+         vertex[8]  = col->b;
+         vertex[9]  = 0.;
+         vertex[10] = col->r;
+         vertex[11] = col->g;
+         vertex[12] = col->b;
+         vertex[13] = col->a;
+         vertex[14] = col->r;
+         vertex[15] = col->g;
+         vertex[16] = col->b;
+         vertex[17] = 0.;
+         gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
+         gl_vboActivateOffset( map_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+         gl_vboActivateOffset( map_vbo, GL_COLOR_ARRAY,
+               sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
+         glDrawArrays( GL_LINE_STRIP, 0, 3 );
+         gl_vboDeactivate();
       }
       glShadeModel(GL_FLAT);
    }

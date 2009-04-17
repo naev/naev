@@ -65,6 +65,7 @@
 #include "gui.h"
 #include "news.h"
 #include "nlua_var.h"
+#include "map.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -229,6 +230,7 @@ int main( int argc, char** argv )
    }
    gui_init(); /* initializes the GUI graphics */
    toolkit_init(); /* initializes the toolkit */
+   map_init(); /* initializes the map. */
 
    /* Data loading */
    load_all();
@@ -280,6 +282,7 @@ int main( int argc, char** argv )
    ndata_close();
 
    /* exit subsystems */
+   map_exit(); /* destroys the map. */
    toolkit_exit(); /* kills the toolkit */
    ai_exit(); /* stops the Lua AI magic */
    joystick_exit(); /* releases joystick */

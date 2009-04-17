@@ -11,6 +11,10 @@
 #include "space.h"
 
 
+/* init/exit */
+int map_init (void);
+void map_exit (void);
+
 /* open the map window */
 void map_open (void);
 void map_close (void);
