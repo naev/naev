@@ -1059,13 +1059,20 @@ static glColour* gui_getPilotColour( const Pilot* p )
  *
  *    @param p Pilot to render.
  */
+#define CHECK_PIXEL(x,y)   \
+(gui.radar.shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
+   (gui.radar.shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) <= rc))
 static void gui_renderPilot( const Pilot* p )
 {
+   int i, curs;
    int x, y, sx, sy;
    double w, h;
    double px, py;
    glColour *col, ccol;
    double a;
+   GLfloat vertex[2*8], colours[4*8];
+   GLfloat cx, cy;
+   int rc;
 
    /* Make sure is in range. */
    if (!pilot_inRangePilot( player, p ))
@@ -1099,11 +1106,26 @@ static void gui_renderPilot( const Pilot* p )
             sx = 0.85 * x;
             sy = 0.85 * y;
 
-            COLOUR(cRadar_tPilot);
-            glBegin(GL_LINES);
-               glVertex2d(  x,  y );
-               glVertex2d( sx, sy );
-            glEnd(); /* GL_LINES */
+            /* Set up colours. */
+            for (i=0; i<2; i++) {
+               colours[4*i + 0] = cRadar_tPilot.r;
+               colours[4*i + 1] = cRadar_tPilot.g;
+               colours[4*i + 2] = cRadar_tPilot.b;
+               colours[4*i + 3] = cRadar_tPilot.a;
+            }
+            gl_vboSubData( gui_vbo, gui_vboColourOffset,
+                  sizeof(GLfloat) * 2*4, colours );
+            /* Set up vertex. */
+            vertex[0] = x;
+            vertex[1] = y;
+            vertex[2] = sx;
+            vertex[3] = sy;
+            gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 2*2, vertex );
+            /* Draw tho VBO. */
+            gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+            gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
+                  gui_vboColourOffset, 4, GL_FLOAT, 0 );
+            glDrawArrays( GL_LINES, 0, 2 );
          }
       }
       return;
@@ -1116,6 +1138,7 @@ static void gui_renderPilot( const Pilot* p )
    else if (gui.radar.shape==RADAR_CIRCLE) {
       w = gui.radar.w;
       h = gui.radar.w;
+      rc = (int)(gui.radar.w*gui.radar.w);
    }
 
    /* colors */
@@ -1125,21 +1148,61 @@ static void gui_renderPilot( const Pilot* p )
    /* Draw selection if targetted. */
    if (p->id == player->target) {
       if (blink_pilot < RADAR_BLINK_PILOT/2.) {
-         glBegin(GL_LINES);
-            glVertex2d( x-sx-1.5, y+sy+1.5 ); /* top-left */
-            glVertex2d( x-sx-3.3, y+sy+3.3 );
-            glVertex2d( x+sx+1.5, y+sy+1.5 ); /* top-right */
-            glVertex2d( x+sx+3.3, y+sy+3.3 );
-            glVertex2d( x+sx+1.5, y-sy-1.5 ); /* bottom-right */
-            glVertex2d( x+sx+3.3, y-sy-3.3 );
-            glVertex2d( x-sx-1.5, y-sy-1.5 ); /* bottom-left */
-            glVertex2d( x-sx-3.3, y-sy-3.3 );
-         glEnd(); /* GL_LINES */
+         /* Set up colours. */
+         col = gui_getPilotColour(p);
+         for (i=0; i<8; i++) {
+            colours[4*i + 0] = col->r;
+            colours[4*i + 1] = col->g;
+            colours[4*i + 2] = col->b;
+            colours[4*i + 3] = col->a;
+         }
+         gl_vboSubData( gui_vbo, gui_vboColourOffset,
+               sizeof(GLfloat) * 8*4, colours );
+         /* Set up vertex. */
+         curs = 0;
+         cx = x-sx;
+         cy = y+sy;
+         if (CHECK_PIXEL(cx-3.3,cy+3.3)) {
+            vertex[curs++] = cx-1.5;
+            vertex[curs++] = cy+1.5;
+            vertex[curs++] = cx-3.3;
+            vertex[curs++] = cy+3.3;
+         }
+         cx = x+sx;
+         if (CHECK_PIXEL(cx+3.3,cy+3.3)) {
+            vertex[curs++] = cx+1.5;
+            vertex[curs++] = cy+1.5;
+            vertex[curs++] = cx+3.3;
+            vertex[curs++] = cy+3.3;
+         }
+         cy = y-sy;
+         if (CHECK_PIXEL(cx+3.3,cy-3.3)) {
+            vertex[curs++] = cx+1.5;
+            vertex[curs++] = cy-1.5;
+            vertex[curs++] = cx+3.3;
+            vertex[curs++] = cy-3.3;
+         }
+         cx = x-sx;
+         if (CHECK_PIXEL(cx-3.3,cy-3.3)) {
+            vertex[curs++] = cx-1.5;
+            vertex[curs++] = cy-1.5;
+            vertex[curs++] = cx-3.3;
+            vertex[curs++] = cy-3.3;
+         }
+         gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * (curs/2)*2, vertex );
+         /* Draw tho VBO. */
+         gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+         gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
+               gui_vboColourOffset, 4, GL_FLOAT, 0 );
+         glDrawArrays( GL_LINES, 0, curs/2 );
       }
 
       if (blink_pilot < 0.)
          blink_pilot += RADAR_BLINK_PILOT;
    }
+
+   /* Deactivate VBO. */
+   gl_vboDeactivate();
 
    /* Draw square. */
    px = MAX(x-sx,-w);
@@ -1175,9 +1238,6 @@ static glColour *gui_getPlanetColour( int i )
 }
 
 
-#define CHECK_PIXEL(x,y)   \
-(gui.radar.shape==RADAR_RECT && ABS(x)<w/2. && ABS(y)<h/2.) || \
-   (gui.radar.shape==RADAR_CIRCLE && (((x)*(x)+(y)*(y)) <= rc))
 #define PIXEL(x,y)      \
    if (CHECK_PIXEL(x,y)) \
    glVertex2i((x),(y)) /**< Puts a pixel on radar if inbounds. */
