@@ -420,7 +420,7 @@ int nfile_touch( const char* path, ... )
    }
 
    /* Try to open the file, C89 compliant, but not as precise as stat. */
-   f = fopen(file, "ba+");
+   f = fopen(file, "a+b");
    if (f == NULL) {
       WARN("Unable to touch file '%s': %s", file, strerror(errno));
       return -1;
