@@ -27,7 +27,7 @@
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
 
-#define MAP_LOOP_PROT   250 /**< Number of iterations max in pathfinding before
+#define MAP_LOOP_PROT   1000 /**< Number of iterations max in pathfinding before
                                  aborting. */
 
 
