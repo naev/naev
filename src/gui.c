@@ -1620,13 +1620,13 @@ static void rect_parseParam( const xmlNodePtr parent,
    /* Wants attribute. */
    if (param != NULL) {
       if (buf == NULL)
-         WARN("Node '%s' missing 'x' parameter.", parent->name);
+         WARN("Node '%s' missing '%s' parameter.", parent->name, name);
       else if (buf != NULL)
          *param = atoi(buf);
    }
    /* Doesn't want it. */
    else if (buf != NULL)
-      WARN("Node '%s' has superfluous 'x' parameter.", parent->name);
+      WARN("Node '%s' has superfluous '%s' parameter.", parent->name, name);
 
    /* Clean up. */
    if (buf != NULL)
