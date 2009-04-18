@@ -20,7 +20,7 @@
    <range>400</range>
    <accuracy>10</accuracy>
    <energy>22</energy>
-   <damage type="energy">18</damage>
+   <damage type="energy">28</damage>
   </specific>
  </outfit>
  <outfit name="Laser Cannon">
@@ -42,7 +42,7 @@
    <range>300</range>
    <accuracy>18</accuracy>
    <energy>5</energy>
-   <damage type="energy">6</damage>
+   <damage type="energy">7.5</damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret">
@@ -65,7 +65,7 @@
    <range>300</range>
    <accuracy>18</accuracy>
    <energy>9</energy>
-   <damage type="energy">9</damage>
+   <damage type="energy">11.25</damage>
   </specific>
  </outfit>
  <outfit name="Plasma Blaster">
@@ -87,7 +87,7 @@
    <range>250</range>
    <accuracy>25</accuracy>
    <energy>5</energy>
-   <damage type="energy">5</damage>
+   <damage type="energy">6.25</damage>
   </specific>
 </outfit>
 <outfit name="Ion Cannon">
@@ -110,7 +110,7 @@
    <range>400</range>
    <accuracy>13</accuracy>
    <energy>14</energy>
-   <damage type="ion">15</damage>
+   <damage type="ion">18.75</damage>
   </specific>
  </outfit>
  <outfit name="Heavy Ion Turret">
@@ -133,7 +133,7 @@
    <range>400</range>
    <accuracy>7</accuracy>
    <energy>21</energy>
-   <damage type="ion">20</damage>
+   <damage type="ion">25</damage>
   </specific>
  </outfit>
   <outfit name="30mm Gatling Gun">
@@ -156,7 +156,7 @@
    <range>300</range>
    <accuracy>20</accuracy>
    <energy>3</energy>
-   <damage type="kinetic">4</damage>
+   <damage type="kinetic">5</damage>
   </specific>
  </outfit>
  <outfit name="150mm Railgun">
@@ -179,7 +179,7 @@
    <range>500</range>
    <accuracy>10</accuracy>
    <energy>35</energy>
-   <damage type="kinetic">40</damage>
+   <damage type="kinetic">50</damage>
   </specific>
  </outfit>
  <outfit name="Orion Beam">
@@ -197,7 +197,7 @@
    <duration>3</duration>
    <range>300</range>
    <energy>50</energy>
-   <damage type="energy">40</damage>
+   <damage type="energy">50</damage>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <gfx>beam_orion</gfx>
@@ -219,9 +219,9 @@
    <delay>10000</delay>
    <duration>5</duration>
    <range>400</range>
-   <turn>50</turn>
+   <turn>35</turn>
    <energy>130</energy>
-   <damage type="energy">100</damage>
+   <damage type="energy">200</damage>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <gfx>beam_ragnarok</gfx>
@@ -262,7 +262,7 @@
    <thrust>400</thrust>
    <turn>60</turn>
    <speed>800</speed>
-   <damage type="kinetic">20</damage>
+   <damage type="kinetic">25</damage>
   </specific>
  </outfit>
  <outfit name="Headhunter Launcher">
@@ -301,7 +301,7 @@
    <thrust>325</thrust>
    <turn>90</turn>
    <speed>550</speed>
-   <damage type="kinetic">20</damage>
+   <damage type="kinetic">25</damage>
   </specific>
  </outfit>
  <outfit name="Banshee Launcher">
@@ -338,7 +338,7 @@
    <accuracy>12</accuracy>
    <thrust>0</thrust>
    <speed>600</speed>
-   <damage type="emp">15</damage>
+   <damage type="emp">18.75</damage>
   </specific>
  </outfit>
  <outfit name="Neutron Disruptor">
@@ -361,7 +361,7 @@
    <range>275</range>
    <accuracy>15</accuracy>
    <energy>5</energy>
-   <damage type="energy">7</damage>
+   <damage type="energy">8.75</damage>
   </specific>
  </outfit>
  <outfit name="Battery">
@@ -374,7 +374,7 @@
    <gfx_store>capacitor</gfx_store>
   </general>
   <specific type="modification">
-   <energy>30</energy>
+   <energy>40</energy>
   </specific>
  </outfit>
  <outfit name="Solar Panel">
@@ -387,7 +387,7 @@
    <gfx_store>solar</gfx_store>
   </general>
   <specific type="modification">
-   <energy_regen>75</energy_regen>
+   <energy_regen>100</energy_regen>
   </specific>
  </outfit>
  <outfit name="Shield Capacitor">
@@ -400,7 +400,7 @@
    <gfx_store>capacitor</gfx_store>
   </general>
   <specific type="modification">
-   <shield>15</shield>
+   <shield>30</shield>
   </specific>
  </outfit>
  <outfit name="Shield Booster">
@@ -614,7 +614,7 @@
    <duration>3</duration>
    <thrust>300</thrust>
    <speed>1000</speed>
-   <damage type="kinetic">35</damage>
+   <damage type="kinetic">44</damage>
   </specific>
  </outfit>
  <outfit name="EMP Grenade Launcher">
@@ -648,7 +648,7 @@
    <duration>1.3</duration>
    <thrust>0</thrust>
    <speed>400</speed>
-   <damage type="emp">40</damage>
+   <damage type="emp">50</damage>
   </specific>
  </outfit>
  <outfit name="Plasteel Plating">
@@ -675,7 +675,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <description>Nanobond is the successor to Plasteel. It follows the same approach but has a greatly refined manufacturing process, providing greater particle density. The result is a much more robust material, although it is substantially more expensive.</description>
   </general>
   <specific type="modification">
-   <armour>120</armour>
+   <armour>240</armour>
   </specific>
  </outfit>
  <outfit name="Biometal Armour">
@@ -688,8 +688,8 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <description>Biometal is a metal armour that regenerates itself due to genetically-engineered bacteria throughout it. Due to the compartmentalization to permit bacterial life, and the difficulty of culturing the bacteria, Biometal has greater bulk than alternatives, and is the most expensive hull plating. The results are formidable, but it's hard to equip such armour on anything short of a Destroyer.</description>
   </general>
   <specific type="modification">
-   <armour>150</armour>
-   <armour_regen>60</armour_regen>
+   <armour>300</armour>
+   <armour_regen>120</armour_regen>
   </specific>
  </outfit>
  <outfit name="Droid Repair Crew">
@@ -702,7 +702,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <description>This low maintenance droid crew will scour your ship to repair any damages caused by space hazards. They are very small and able to work both on the interior or exterior of the ship. Power is drawn from the ship to feed the robots, although the load is generally very low compared to the benefits of having a robotic repair crew.</description>
   </general>
   <specific type="modification">
-   <armour_regen>30</armour_regen>
+   <armour_regen>50</armour_regen>
    <energy>-5</energy>
    <energy_regen>-40</energy_regen>
   </specific>
@@ -717,8 +717,8 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <description>Adding a complementary reactor to your ship is a great way to get that extra energy boost you need. This does not replace the existing reactor but works alongside it and hooks up directly to the energy flux.</description>
   </general>
   <specific type="modification">
-   <energy>20</energy>
-   <energy_regen>330</energy_regen>
+   <energy>30</energy>
+   <energy_regen>490</energy_regen>
   </specific>
  </outfit>
  <outfit name="Reactor Class II">
@@ -731,8 +731,8 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <description>The class II reactor uses a newer fusion technology than the class I, permitting it to have greater energy density. The result is a mid-sized reactor that is best used on ships with moderate energy demands.</description>
   </general>
   <specific type="modification">
-   <energy>60</energy>
-   <energy_regen>720</energy_regen>
+   <energy>80</energy>
+   <energy_regen>1050</energy_regen>
   </specific>
  </outfit>
  <outfit name="Reactor Class III">
@@ -745,8 +745,8 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <description>The immense class III reactor provides enough power for nearly anything. The technology used in this reactor is particularly groundbreaking, with the best energy density of the three reactor classes. The huge size of the class III results in it only fitting comfortably on large vessels, though its energy output would be excessive for anything less.</description>
   </general>
   <specific type="modification">
-   <energy>100</energy>
-   <energy_regen>1620</energy_regen>
+   <energy>300</energy>
+   <energy_regen>2020</energy_regen>
   </specific>
  </outfit>
  <outfit name="Lancelot Fighter Bay">
