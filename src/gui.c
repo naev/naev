@@ -1111,7 +1111,7 @@ static void gui_renderPilot( const Pilot* p )
                colours[4*i + 0] = cRadar_tPilot.r;
                colours[4*i + 1] = cRadar_tPilot.g;
                colours[4*i + 2] = cRadar_tPilot.b;
-               colours[4*i + 3] = cRadar_tPilot.a;
+               colours[4*i + 3] = 1.-interference_alpha;
             }
             gl_vboSubData( gui_vbo, gui_vboColourOffset,
                   sizeof(GLfloat) * 2*4, colours );
@@ -1141,20 +1141,15 @@ static void gui_renderPilot( const Pilot* p )
       rc = (int)(gui.radar.w*gui.radar.w);
    }
 
-   /* colors */
-   col = gui_getPilotColour(p);
-   ACOLOUR(*col, 1-interference_alpha); /**< Makes it much harder to see. */
-
    /* Draw selection if targetted. */
    if (p->id == player->target) {
       if (blink_pilot < RADAR_BLINK_PILOT/2.) {
          /* Set up colours. */
-         col = gui_getPilotColour(p);
          for (i=0; i<8; i++) {
-            colours[4*i + 0] = col->r;
-            colours[4*i + 1] = col->g;
-            colours[4*i + 2] = col->b;
-            colours[4*i + 3] = col->a;
+            colours[4*i + 0] = cRadar_tPilot.r;
+            colours[4*i + 1] = cRadar_tPilot.g;
+            colours[4*i + 2] = cRadar_tPilot.b;
+            colours[4*i + 3] = 1.-interference_alpha;
          }
          gl_vboSubData( gui_vbo, gui_vboColourOffset,
                sizeof(GLfloat) * 8*4, colours );
@@ -1207,6 +1202,7 @@ static void gui_renderPilot( const Pilot* p )
    /* Draw square. */
    px = MAX(x-sx,-w);
    py = MAX(y-sy, -h);
+   col = gui_getPilotColour(p);
    ccol.r = col->r;
    ccol.g = col->g;
    ccol.b = col->b;
@@ -1246,23 +1242,26 @@ static glColour *gui_getPlanetColour( int i )
  *
  * Matrix mode is already displaced to center of the minimap.
  */
-static void gui_renderPlanet( int i )
+static void gui_renderPlanet( int ind )
 {
+   int i, curs;
    int cx, cy, x, y, r, rc;
    int w, h;
    double res;
    double p;
    double a, tx,ty;
+   GLfloat vx, vy;
    glColour *col;
    Planet *planet;
+   GLfloat vertex[8*2], colours[8*4];
 
    /* Make sure is in range. */
-   if (!pilot_inRangePlanet( player, i ))
+   if (!pilot_inRangePlanet( player, ind ))
       return;
 
    /* Default values. */
    res = gui.radar.res;
-   planet = cur_system->planets[i];
+   planet = cur_system->planets[ind];
    w = gui.radar.w;
    h = gui.radar.h;
    r = (int)(planet->gfx_space->sw / res);
@@ -1270,10 +1269,6 @@ static void gui_renderPlanet( int i )
    cy = (int)((planet->pos.y - player->solid->pos.y) / res);
    if (gui.radar.shape==RADAR_CIRCLE)
       rc = (int)(gui.radar.w*gui.radar.w);
-
-   /* Get the colour. */
-   col = gui_getPlanetColour(i);
-   ACOLOUR(*col, 1.-interference_alpha);
 
    /* Check if in range. */
    if (gui.radar.shape == RADAR_RECT) {
@@ -1286,53 +1281,102 @@ static void gui_renderPlanet( int i )
       y = ABS(cy)-r;
       /* Out of range. */
       if (x*x + y*y > rc) {
-         if (planet_target == i) {
+         if (planet_target == ind) {
             /* Draw a line like for pilots. */
             a = ANGLE(cx,cy);
             tx = w*cos(a);
             ty = w*sin(a);
 
-            COLOUR(cRadar_tPlanet);
-            glBegin(GL_LINES);
-            glVertex2d(      tx,      ty );
-            glVertex2d( 0.85*tx, 0.85*ty );
-            glEnd(); /* GL_LINES */
+            /* Set the colour. */
+            for (i=0; i<2; i++) {
+               colours[4*i + 0] = cRadar_tPlanet.r;
+               colours[4*i + 1] = cRadar_tPlanet.g;
+               colours[4*i + 2] = cRadar_tPlanet.b;
+               colours[4*i + 3] = 1.-interference_alpha;
+            }
+            gl_vboSubData( gui_vbo, gui_vboColourOffset,
+                  sizeof(GLfloat) * 2*4, colours );
+            /* Set the vertex. */
+            vertex[0] = tx;
+            vertex[1] = ty;
+            vertex[2] = 0.85*tx;
+            vertex[3] = 0.85*ty;
+            gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 2*2, vertex );
+            /* Draw tho VBO. */
+            gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+            gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
+                  gui_vboColourOffset, 4, GL_FLOAT, 0 );
+            glDrawArrays( GL_LINES, 0, 2 );
          }
          return;
       }
    }
 
    /* Do the blink. */
-   if (i == planet_target) {
+   if (ind == planet_target) {
       if (blink_planet < RADAR_BLINK_PLANET/2.) {
-         glBegin(GL_LINES);
-            if (CHECK_PIXEL(cx-r-3.3, cy+r+3.3)) {
-               glVertex2d( cx-r-1.5, cy+r+1.5 ); /* top-left */
-               glVertex2d( cx-r-3.3, cy+r+3.3 );
-            }
-            if (CHECK_PIXEL(cx+r+3.3, cy+r+3.3)) {
-               glVertex2d( cx+r+1.5, cy+r+1.5 ); /* top-right */
-               glVertex2d( cx+r+3.3, cy+r+3.3 );
-            }
-            if (CHECK_PIXEL(cx+r+3.3, cy-r-3.3)) {
-               glVertex2d( cx+r+1.5, cy-r-1.5 ); /* bottom-right */
-               glVertex2d( cx+r+3.3, cy-r-3.3 );
-            }
-            if (CHECK_PIXEL(cx-r-3.3, cy-r-3.3)) {
-               glVertex2d( cx-r-1.5, cy-r-1.5 ); /* bottom-left */
-               glVertex2d( cx-r-3.3, cy-r-3.3 );
-            }
-         glEnd(); /* GL_LINES */
+         curs = 0;
+         vx = cx-r;
+         vy = cy+r;
+         if (CHECK_PIXEL(vx-3.3, vy+3.3)) {
+            vertex[curs++] = vx-1.5;
+            vertex[curs++] = vy+1.5;
+            vertex[curs++] = vx-3.3;
+            vertex[curs++] = vy+3.3;
+         }
+         vx = cx+r;
+         if (CHECK_PIXEL(vx+3.3, vy+3.3)) {
+            vertex[curs++] = vx+1.5;
+            vertex[curs++] = vy+1.5;
+            vertex[curs++] = vx+3.3;
+            vertex[curs++] = vy+3.3;
+         }
+         vy = cy-r;
+         if (CHECK_PIXEL(vx+3.3, vy-3.3)) {
+            vertex[curs++] = vx+1.5;
+            vertex[curs++] = vy-1.5;
+            vertex[curs++] = vx+3.3;
+            vertex[curs++] = vy-3.3;
+         }
+         vx = cx-r;
+         if (CHECK_PIXEL(vx-3.3, vy-3.3)) {
+            vertex[curs++] = vx-1.5;
+            vertex[curs++] = vy-1.5;
+            vertex[curs++] = vx-3.3;
+            vertex[curs++] = vy-3.3;
+         }
+         gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * (curs/2)*2, vertex );
+         /* Set the colours. */
+         for (i=0; i<curs/2; i++) {
+            colours[4*i + 0] = cRadar_tPlanet.r;
+            colours[4*i + 1] = cRadar_tPlanet.g;
+            colours[4*i + 2] = cRadar_tPlanet.b;
+            colours[4*i + 3] = 1.-interference_alpha;
+         }
+         gl_vboSubData( gui_vbo, gui_vboColourOffset,
+               sizeof(GLfloat) * (curs/2)*4, colours );
+         /* Draw tho VBO. */
+         gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+         gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
+               gui_vboColourOffset, 4, GL_FLOAT, 0 );
+         glDrawArrays( GL_LINES, 0, curs/2 );
       }
 
       if (blink_planet < 0.)
          blink_planet += RADAR_BLINK_PLANET;
    }
 
+   /* Deactivate the VBO. */
+   gl_vboDeactivate();
+
    /* Set up for circle drawing. */
    x = 0;
    y = r;
    p = (5. - (double)(r*4)) / 4.;
+
+   /* Get the colour. */
+   col = gui_getPlanetColour(ind);
+   ACOLOUR(*col, 1.-interference_alpha);
 
    glBegin(GL_POINTS);
 
