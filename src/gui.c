@@ -1248,9 +1248,8 @@ static void gui_renderPlanet( int ind )
    int cx, cy, x, y, r, rc;
    int w, h;
    double res;
-   double p;
    double a, tx,ty;
-   GLfloat vx, vy;
+   GLfloat vx, vy, vr;
    glColour *col;
    Planet *planet;
    GLfloat vertex[8*2], colours[8*4];
@@ -1265,6 +1264,7 @@ static void gui_renderPlanet( int ind )
    w = gui.radar.w;
    h = gui.radar.h;
    r = (int)(planet->gfx_space->sw / res);
+   vr = r;
    cx = (int)((planet->pos.x - player->solid->pos.x) / res);
    cy = (int)((planet->pos.y - player->solid->pos.y) / res);
    if (gui.radar.shape==RADAR_CIRCLE)
@@ -1316,29 +1316,29 @@ static void gui_renderPlanet( int ind )
    if (ind == planet_target) {
       if (blink_planet < RADAR_BLINK_PLANET/2.) {
          curs = 0;
-         vx = cx-r;
-         vy = cy+r;
+         vx = cx-vr;
+         vy = cy+vr;
          if (CHECK_PIXEL(vx-3.3, vy+3.3)) {
             vertex[curs++] = vx-1.5;
             vertex[curs++] = vy+1.5;
             vertex[curs++] = vx-3.3;
             vertex[curs++] = vy+3.3;
          }
-         vx = cx+r;
+         vx = cx+vr;
          if (CHECK_PIXEL(vx+3.3, vy+3.3)) {
             vertex[curs++] = vx+1.5;
             vertex[curs++] = vy+1.5;
             vertex[curs++] = vx+3.3;
             vertex[curs++] = vy+3.3;
          }
-         vy = cy-r;
+         vy = cy-vr;
          if (CHECK_PIXEL(vx+3.3, vy-3.3)) {
             vertex[curs++] = vx+1.5;
             vertex[curs++] = vy-1.5;
             vertex[curs++] = vx+3.3;
             vertex[curs++] = vy-3.3;
          }
-         vx = cx-r;
+         vx = cx-vr;
          if (CHECK_PIXEL(vx-3.3, vy-3.3)) {
             vertex[curs++] = vx-1.5;
             vertex[curs++] = vy-1.5;
@@ -1366,56 +1366,39 @@ static void gui_renderPlanet( int ind )
          blink_planet += RADAR_BLINK_PLANET;
    }
 
-   /* Deactivate the VBO. */
-   gl_vboDeactivate();
-
-   /* Set up for circle drawing. */
-   x = 0;
-   y = r;
-   p = (5. - (double)(r*4)) / 4.;
-
    /* Get the colour. */
    col = gui_getPlanetColour(ind);
-   ACOLOUR(*col, 1.-interference_alpha);
-
-   glBegin(GL_POINTS);
-
-   PIXEL( cx,   cy+y );
-   PIXEL( cx,   cy-y );
-   PIXEL( cx+y, cy   );
-   PIXEL( cx-y, cy   );
-
-   while (x<y) {
-      x++;
-      if (p < 0) p += 2*(double)(x)+1;
-      else p += 2*(double)(x-(--y))+1;
-
-      if (x==0) {
-         PIXEL( cx,   cy+y );
-         PIXEL( cx,   cy-y );
-         PIXEL( cx+y, cy   );
-         PIXEL( cx-y, cy   );
-      }
-      else
-         if (x==y) {
-            PIXEL( cx+x, cy+y );
-            PIXEL( cx-x, cy+y );
-            PIXEL( cx+x, cy-y );
-            PIXEL( cx-x, cy-y );
-         }
-         else
-            if (x<y) {
-               PIXEL( cx+x, cy+y );
-               PIXEL( cx-x, cy+y );
-               PIXEL( cx+x, cy-y );
-               PIXEL( cx-x, cy-y );
-               PIXEL( cx+y, cy+x );
-               PIXEL( cx-y, cy+x );
-               PIXEL( cx+y, cy-x );
-               PIXEL( cx-y, cy-x );
-            }
+   for (i=0; i<5; i++) {
+      colours[4*i + 0] = col->r;
+      colours[4*i + 1] = col->g;
+      colours[4*i + 2] = col->b;
+      colours[4*i + 3] = 1.-interference_alpha;
    }
-   glEnd(); /* GL_POINTS */
+   gl_vboSubData( gui_vbo, gui_vboColourOffset,
+      sizeof(GLfloat) * 5*4, colours );
+   /* Now load the data. */
+   vx = cx;
+   vy = cy;
+   vr = MAX( vr, 3. ); /* Make sure it's visible. */
+   vertex[0] = vx;
+   vertex[1] = vy + vr;
+   vertex[2] = vx + vr;
+   vertex[3] = vy;
+   vertex[4] = vx;
+   vertex[5] = vy - vr;
+   vertex[6] = vx - vr;
+   vertex[7] = vy;
+   vertex[8] = vertex[0];
+   vertex[9] = vertex[1];
+   gl_vboSubData( gui_vbo, 0, sizeof(GLfloat) * 5*2, vertex );
+   /* Draw tho VBO. */
+   gl_vboActivateOffset( gui_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( gui_vbo, GL_COLOR_ARRAY,
+         gui_vboColourOffset, 4, GL_FLOAT, 0 );
+   glDrawArrays( GL_LINE_STRIP, 0, 5 );
+
+   /* Deactivate the VBO. */
+   gl_vboDeactivate();
 }
 #undef PIXEL
 #undef CHECK_PIXEL
