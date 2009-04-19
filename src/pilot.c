@@ -69,7 +69,7 @@ extern void ai_destroy( Pilot* p ); /**< from ai.c */
 extern void ai_think( Pilot* pilot ); /**< from ai.c */
 /* internal */
 /* update. */
-static void pilot_shootWeapon( Pilot* p, PilotOutfit* w );
+static int pilot_shootWeapon( Pilot* p, PilotOutfit* w );
 static void pilot_hyperspace( Pilot* pilot );
 static void pilot_refuel( Pilot *p, double dt );
 static void pilot_update( Pilot* pilot, const double dt );
@@ -691,7 +691,7 @@ int pilot_freeSpace( Pilot* p )
  */
 void pilot_shoot( Pilot* p, int group )
 {
-   int i;
+   int i, ret;
    Outfit* o;
 
    if (!p->outfits) return; /* no outfits */
@@ -704,8 +704,11 @@ void pilot_shoot( Pilot* p, int group )
          /* Choose what to shoot dependent on type. */
          if ((group == 0) ||
                ((group == 1) && outfit_isTurret(o)) ||
-               ((group == 2) && !outfit_isTurret(o)))
-            pilot_shootWeapon( p, &p->outfits[i] );
+               ((group == 2) && !outfit_isTurret(o))) {
+            ret = pilot_shootWeapon( p, &p->outfits[i] );
+            if (ret == 1)
+               i--;
+         }
       }
    }
 }
@@ -796,15 +799,20 @@ int pilot_getMount( Pilot *p, int id, Vector2d *v )
  *
  *    @param p Pilot that is shooting.
  *    @param w Pilot's outfit to shoot.
+ *    @return 0 if successful, 1 if ran out of ammo.
  */
-static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
+static int pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 {
    int id;
    Vector2d vp, vv;
+   int rm_outfit;
 
    /* check to see if weapon is ready */
    if (w->timer > 0.)
-      return;
+      return 0;
+
+   /* Defaults. */
+   rm_outfit = 0;
 
    /* Get weapon mount position. */
    if (w->mounts == NULL)
@@ -823,7 +831,8 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
    if (outfit_isBolt(w->outfit)) {
       
       /* enough energy? */
-      if (outfit_energy(w->outfit) > p->energy) return;
+      if (outfit_energy(w->outfit) > p->energy)
+         return 0;
 
       p->energy -= outfit_energy(w->outfit);
       weapon_add( w->outfit, p->solid->dir,
@@ -836,7 +845,8 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
    else if (outfit_isBeam(w->outfit)) {
 
       /* Check if enough energy to last a second. */
-      if (outfit_energy(w->outfit) > p->energy) return;
+      if (outfit_energy(w->outfit) > p->energy)
+         return 0;
 
       /** @todo Handle warmup stage. */
       w->state = PILOT_OUTFIT_ON;
@@ -853,15 +863,15 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 
       /* Shooter can't be the target - sanity check for the player */
       if ((w->outfit->type != OUTFIT_TYPE_MISSILE_DUMB) && (p->id==p->target))
-         return;
+         return 0;
 
       /* Must have ammo left. */
       if ((p->ammo == NULL) || (p->ammo->quantity <= 0))
-         return;
+         return 0;
 
       /* enough energy? */
       if (outfit_energy(w->outfit) > p->energy)
-         return;
+         return 0;
 
       p->energy -= outfit_energy(w->outfit);
       weapon_add( p->ammo->outfit, p->solid->dir,
@@ -869,7 +879,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 
       p->ammo->quantity -= 1; /* we just shot it */
       if (p->ammo->quantity <= 0) /* Out of ammo. */
-         pilot_rmOutfit( p, p->ammo->outfit, 0 ); /* It'll set p->ammo to NULL */
+         rm_outfit = 1;
    }
 
    /*
@@ -881,7 +891,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 
       /* Must have ammo left. */
       if ((p->ammo == NULL) || (p->ammo->quantity <= 0))
-         return;
+         return 0;
 
       /* Create the escort. */
       escort_create( p->id, p->ammo->outfit->u.fig.ship,
@@ -889,7 +899,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 
       p->ammo->quantity -= 1; /* we just shot it */
       if (p->ammo->quantity <= 0) /* Out of ammo. */
-         pilot_rmOutfit( p, p->ammo->outfit, 0 ); /* It'll set p->ammo to NULL */
+         rm_outfit = 1;
    }
 
    else {
@@ -903,6 +913,14 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
    w->lastshot++;
    if (w->lastshot >= w->quantity)
       w->lastshot = 0;
+
+   /* Remove outfit if needed last, to avoid possible free issues. */
+   if (rm_outfit) {
+      pilot_rmOutfit( p, p->ammo->outfit, 0 ); /* It'll set p->ammo to NULL */
+      return 1;
+   }
+
+   return 0;
 }
 
 
