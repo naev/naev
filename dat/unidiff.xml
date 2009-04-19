@@ -36,6 +36,12 @@
   <outfit name="Neutron Disruptor">
    <tech>1002</tech>
   </outfit>
+  <outfit name="Drone Fighter Bay">
+   <tech>1002</tech>
+  </outfit>
+  <outfit name="Drone Fighter">
+   <tech>1002</tech>
+  </outfit>
  </unidiff>
  <unidiff name="heavy_weapons_license">
   <outfit name="Heavy Weapon License">

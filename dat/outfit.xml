@@ -778,6 +778,35 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <ship>Lancelot</ship>
   </specific>
  </outfit>
+ <outfit name="Drone Fighter Bay">
+  <general>
+   <max>1</max>
+   <tech>9999</tech>
+   <license>Light Combat Vessel License</license>
+   <mass>90</mass>
+   <price>1200000</price>
+   <gfx_store>drone_fighter</gfx_store>
+   <description>The Drone Fighter bay uses the advanced collective technologies to sustain a trio of Drone Fighters.  Drone Fighters require no pilot making them a safer approach in dangerous situations.  They do however need some careful maintenance.  All the tools needed to take care of them are provided with the bay.</description>
+  </general>
+  <specific type="fighter bay" secondary="1">
+   <ammo>Drone Fighter</ammo>
+   <delay>1000</delay>
+  </specific>
+ </outfit>
+ <outfit name="Drone Fighter">
+  <general>
+   <max>3</max>
+   <tech>9999</tech>
+   <license>Light Combat Vessel License</license>
+   <mass>0</mass>
+   <price>700000</price>
+   <gfx_store>drone_fighter</gfx_store>
+   <description>The Drone is a fearsome craft using very advanced AI techniques to be able to pilot itself.  The fact it doesn't need a pilot nor life support systems makes it a much smaller and compact vessel.</description>
+  </general>
+  <specific type="fighter">
+   <ship>Drone</ship>
+  </specific>
+ </outfit>
  <outfit name="Large Civilian Vessel License">
   <general>
    <max>1</max>
