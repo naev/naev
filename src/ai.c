@@ -2029,9 +2029,16 @@ static int aiL_getenemy( lua_State *L )
 static int aiL_hostile( lua_State *L )
 {
    unsigned int id;
+   Pilot *p;
 
    id = luaL_checklong(L,1);
-   if (id == PLAYER_ID)
+   p = pilot_get(id);
+   if (p==NULL) {
+      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+      return 0;
+   }
+
+   if (p->faction == FACTION_PLAYER)
       pilot_setHostile(cur_pilot);
 
    return 0;
