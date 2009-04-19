@@ -659,6 +659,9 @@ void space_init ( const char* sysname )
    space_spawn = 1; /* spawn is enabled by default. */
    interference_timer = 0.; /* Restart timer. */
 
+   /* Must clear escorts to keep deployment sane. */
+   player_clearEscorts();
+
    if ((sysname==NULL) && (cur_system==NULL))
       ERR("Cannot reinit system if there is no system previously loaded");
    else if (sysname!=NULL) {

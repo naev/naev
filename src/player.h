@@ -117,6 +117,7 @@ char **player_getLicenses( int *nlicenses );
 /*
  * escorts
  */
+void player_clearEscorts (void);
 int player_addEscorts (void);
 
 /*
