@@ -236,14 +236,19 @@ int escorts_attack( Pilot *parent )
    int ret;
    Pilot *t;
 
+   /* Avoid killing self. */
+   t = pilot_get(parent->target);
+   if (t == NULL)
+      return 1;
+   if (t->faction == parent->faction)
+      return 1;
+
+   /* Send command. */
    ret = 1;
    if (parent->target != parent->id)
       ret = escort_command( parent, ESCORT_ATTACK, parent->target );
-   if ((ret == 0) && (parent == player)) {
-      t = pilot_get(parent->target);
-      if (t != NULL)
-         player_message("Escorts: Attacking %s.", t->name);
-   }
+   if ((ret == 0) && (parent == player))
+      player_message("Escorts: Attacking %s.", t->name);
    return ret;
 }
 /**
