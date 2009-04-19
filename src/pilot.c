@@ -747,9 +747,9 @@ void pilot_shootStop( Pilot* p, const int secondary )
          o = p->outfits[i].outfit;
          if (!outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY) &&
                outfit_isBeam(o)) /** @todo possibly make this neater. */
-            if (p->outfits[i].beamid > 0) {
-               beam_end( p->id, p->outfits[i].beamid );
-               p->outfits[i].beamid = 0;
+            if (p->outfits[i].u.beamid > 0) {
+               beam_end( p->id, p->outfits[i].u.beamid );
+               p->outfits[i].u.beamid = 0;
             }
       }
    }
@@ -759,9 +759,9 @@ void pilot_shootStop( Pilot* p, const int secondary )
       
       o = p->secondary->outfit;
 
-      if (outfit_isBeam(o) && (p->secondary->beamid > 0)) {
-         beam_end( p->id, p->secondary->beamid );
-         p->secondary->beamid = 0;
+      if (outfit_isBeam(o) && (p->secondary->u.beamid > 0)) {
+         beam_end( p->id, p->secondary->u.beamid );
+         p->secondary->u.beamid = 0;
       }
    }
 }
@@ -840,7 +840,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 
       /** @todo Handle warmup stage. */
       w->state = PILOT_OUTFIT_ON;
-      w->beamid = beam_start( w->outfit, p->solid->dir,
+      w->u.beamid = beam_start( w->outfit, p->solid->dir,
             &vp, &p->solid->vel, p->id, p->target, id );
    }
 
@@ -926,9 +926,9 @@ void pilot_switchSecondary( Pilot* p, int i )
 
    /* Check for weapon change. */
    if ((cur != NULL) && (player->secondary != cur)) {
-      if (outfit_isBeam(cur->outfit) && (cur->beamid > 0)) {
-         beam_end( p->id, cur->beamid );
-         cur->beamid = 0;
+      if (outfit_isBeam(cur->outfit) && (cur->u.beamid > 0)) {
+         beam_end( p->id, cur->u.beamid );
+         cur->u.beamid = 0;
       }
    }
 }
@@ -1075,7 +1075,7 @@ void pilot_dead( Pilot* p )
    if (p->id==PLAYER_ID)
       player_dead();
    p->timer[0] = 0.; /* no need for AI anymore */
-   p->ptimer = 1. + sqrt(10*p->armour_max*p->shield_max) / 1000.;
+   p->ptimer = 1. + sqrt(10*p->armour_max*p->shield_max) / 1500.;
    p->timer[1] = 0.; /* explosion timer */
 
    /* flag cleanup - fixes some issues */
@@ -1429,7 +1429,7 @@ static void pilot_update( Pilot* pilot, const double dt )
       }
    }
    else if (pilot->armour <= 0.) /* PWNED */
-         pilot_dead(pilot); /* start death stuff */
+      pilot_dead(pilot); /* start death stuff */
 
    /* purpose fallthrough to get the movement like disabled */
    if (pilot_isDisabled(pilot)) {

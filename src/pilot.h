@@ -108,7 +108,10 @@ typedef struct PilotOutfit_ {
    Outfit* outfit; /**< Associated outfit. */
    int quantity; /**< Number of outfits of this type pilot has. */
    PilotOutfitState state; /**< State of the outfit. */
-   int beamid; /**< ID of the beam used in this outfit, only used for beams. */
+   union {
+      int deployed; /**< Deployment status (if fighter craft). */
+      int beamid; /**< ID of the beam used in this outfit, only used for beams. */
+   } u;
    int *mounts; /**< ID of each outfit mount. */
    int lastshot; /**< ID of the outfit that last shot. */
    double timer; /**< Used to store when it was last used. */
