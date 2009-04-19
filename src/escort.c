@@ -82,9 +82,9 @@ int escort_create( unsigned int parent, char *ship,
    /* Add to escort list. */
    p->nescorts++;
    if (p->nescorts == 1)
-      p->escorts = malloc(sizeof(unsigned int) * ESCORT_PREALLOC);
+      p->escorts = malloc(sizeof(Escort_t) * ESCORT_PREALLOC);
    else if (p->nescorts > ESCORT_PREALLOC)
-      p->escorts = realloc( p->escorts, sizeof(unsigned int) * p->nescorts );
+      p->escorts = realloc( p->escorts, sizeof(Escort_t) * p->nescorts );
    p->escorts[p->nescorts-1].ship = ship;
    p->escorts[p->nescorts-1].type = ESCORT_TYPE_BAY;
    p->escorts[p->nescorts-1].id = e;
