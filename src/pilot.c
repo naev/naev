@@ -1848,64 +1848,67 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 
    c = (outfit_isMod(outfit)) ? outfit->u.mod.cargo : 0;
    q = quantity;
-   for (i=0; i<pilot->noutfits; i++)
-      if (pilot->outfits[i].outfit == outfit) {
-         po = &pilot->outfits[i];
+   for (i=0; i<pilot->noutfits; i++) {
+      if (pilot->outfits[i].outfit != outfit)
+         continue;
 
-         /* Remove quantity. */
-         o = po->quantity;
-         po->quantity -= quantity;
+      po = &pilot->outfits[i];
 
-         /* Calculate q. */
-         if (po->quantity <= 0) {
-            /* we didn't actually remove the full amount */
-            q += po->quantity;
-            po->quantity = 0.;
-         }
+      /* Remove quantity. */
+      o = po->quantity;
+      po->quantity -= quantity;
 
-         /* Remove from mount points. */
-         if ((pilot->mounted != NULL) && (po->mounts != NULL)) {
-            for (j=o-1; j >= po->quantity; j--) {
-               if (po->mounts[j] != 0)
-                  pilot->mounted[ po->mounts[j] ]--;
-            }
-         }
-
-         /* Need to remove the outfit. */
-         if (po->quantity <= 0) {
-
-            /* hack in case it reallocs - can happen even when shrinking */
-            osec = (pilot->secondary) ? pilot->secondary->outfit : NULL;
-
-            /* free some memory if needed. */
-            if (po->mounts != NULL) {
-               free(po->mounts);
-               po->mounts = NULL;
-            }
-
-            /* remove the outfit */
-            pilot->noutfits--;
-            if (pilot->noutfits <= 0) {
-               if (pilot->outfits != NULL) {
-                   free(pilot->outfits);
-                   pilot->outfits = NULL;
-               }
-               pilot->noutfits = 0;
-            }
-            else {
-               memmove( &pilot->outfits[i], &pilot->outfits[i+1],
-                     sizeof(PilotOutfit) * (pilot->noutfits-i) );
-               pilot->outfits = realloc( pilot->outfits,
-                     sizeof(PilotOutfit) * (pilot->noutfits) );
-            }
-
-            /* set secondary  and afterburner */
-            pilot_setSecondary( pilot, osec );
-            pilot_setAfterburner( pilot );
-         }
-         pilot_calcStats(pilot); /* recalculate stats */
-         return q;
+      /* Calculate q. */
+      if (po->quantity <= 0) {
+         /* we didn't actually remove the full amount */
+         q += po->quantity;
+         po->quantity = 0.;
       }
+
+      /* Remove from mount points. */
+      if ((pilot->mounted != NULL) && (po->mounts != NULL)) {
+         for (j=o-1; j >= po->quantity; j--) {
+            if (po->mounts[j] != 0)
+               pilot->mounted[ po->mounts[j] ]--;
+         }
+      }
+
+      /* Need to remove the outfit. */
+      if (po->quantity <= 0) {
+
+         /* hack in case it reallocs - can happen even when shrinking */
+         osec = (pilot->secondary) ? pilot->secondary->outfit : NULL;
+
+         /* free some memory if needed. */
+         if (po->mounts != NULL) {
+            free(po->mounts);
+            po->mounts = NULL;
+         }
+
+         /* remove the outfit */
+         pilot->noutfits--;
+         if (pilot->noutfits <= 0) {
+            if (pilot->outfits != NULL) {
+                free(pilot->outfits);
+                pilot->outfits = NULL;
+            }
+            pilot->noutfits = 0;
+         }
+         else {
+            memmove( &pilot->outfits[i], &pilot->outfits[i+1],
+                  sizeof(PilotOutfit) * (pilot->noutfits-i) );
+            pilot->outfits = realloc( pilot->outfits,
+                  sizeof(PilotOutfit) * (pilot->noutfits) );
+         }
+
+         /* set secondary  and afterburner */
+         pilot_setSecondary( pilot, osec );
+         pilot_setAfterburner( pilot );
+      }
+
+      pilot_calcStats(pilot); /* recalculate stats */
+      return q;
+   }
    WARN("Failure attempting to remove %d '%s' from pilot '%s'",
          quantity, outfit->name, pilot->name );
    return 0;
