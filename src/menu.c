@@ -34,6 +34,7 @@
 #include "intro.h"
 #include "music.h"
 #include "map.h"
+#include "nfile.h"
 
 
 #define MAIN_WIDTH      130 /**< Main menu width. */
@@ -753,6 +754,23 @@ static void menu_continue( unsigned int parent, char* str )
 }
 
 /**
+ * @brief Restart the game, when player want to continue after death but without a savegame
+ */
+static void menu_restart( unsigned int parent, char* str )
+{
+   (void) parent;
+   (void) str;
+
+   unsigned int wid;
+
+   wid = window_get( "Death" );
+   window_destroy( wid );
+   menu_Close(MENU_DEATH);
+
+   player_new();
+}
+
+/**
  * @brief Player death menu, appears when player got creamed.
  */
 void menu_death (void)
@@ -760,8 +778,17 @@ void menu_death (void)
    unsigned int wid;
    
    wid = window_create( "Death", -1, -1, DEATH_WIDTH, DEATH_HEIGHT );
-   window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
+
+   /* Propose the player to continue if the samegame exist, if not, propose to restart */
+   char path[PATH_MAX];
+   snprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player_name);
+   if (nfile_fileExists(path))
+      window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnContinue", "Continue", menu_continue );
+   else
+      window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnRestart", "Restart", menu_restart );
+
    window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20),
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnMain", "Main Menu", menu_death_main );
