@@ -322,6 +322,7 @@ static int load_game( const char* file )
 
    /* Need to run takeoff hooks since player just "took off" */
    hooks_run("takeoff");
+   player_addEscorts();
    hooks_run("enter");
 
    xmlFreeDoc(doc);

@@ -1641,6 +1641,7 @@ void takeoff( int delay )
    land_cleanup(); /* Cleanup stuff */
    hooks_run("takeoff"); /* Must be run after cleanup since we don't want the
                             missions to think we are landed. */
+   player_addEscorts();
    hooks_run("enter");
 }
 

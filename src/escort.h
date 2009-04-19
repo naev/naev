@@ -14,8 +14,9 @@
 
 /* Creation. */
 int escort_addList( Pilot *p, char *ship, EscortType_t type, unsigned int id );
-int escort_create( unsigned int parent, char *ship,
-      Vector2d *pos, Vector2d *vel, EscortType_t type, int add );
+unsigned int escort_create( Pilot *p, char *ship,
+      Vector2d *pos, Vector2d *vel, double dir,
+      EscortType_t type, int add );
 
 /* Keybind commands. */
 int escorts_attack( Pilot *parent );

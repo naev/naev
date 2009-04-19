@@ -1252,6 +1252,9 @@ void player_brokeHyperspace (void)
    /* update the map */
    map_jump();
 
+   /* Add the escorts. */
+   player_addEscorts();
+
    /* Disable autonavigation if arrived. */
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (hyperspace_target == -1) {
@@ -1764,6 +1767,32 @@ char **player_getLicenses( int *nlicenses )
 
 
 /**
+ * @brief Adds the player's escorts.
+ *
+ *    @return 0 on success.
+ */
+int player_addEscorts (void)
+{
+   int i;
+   double a;
+   Vector2d v;
+   unsigned int e;
+
+   for (i=0; i<player->nescorts; i++) {
+      a = RNGF() * 2 * M_PI;
+      vect_cset( &v, player->solid->pos.x + 50.*cos(a),
+            player->solid->pos.y + 50.*sin(a) );
+      e = escort_create( player, player->escorts[i].ship,
+            &v, &player->solid->vel, player->solid->dir,
+            player->escorts[i].type, 0 );
+      player->escorts[i].id = e; /* Important to update ID. */
+   }
+
+   return 0;
+}
+
+
+/**
  * @brief Saves the player's escorts.
  */
 static int player_saveEscorts( xmlTextWriterPtr writer )
@@ -1938,6 +1967,8 @@ int player_load( xmlNodePtr parent )
          player_parse( node );
       else if (xml_isNode(node,"missions_done"))
          player_parseDone( node );
+      else if (xml_isNode(node,"escorts"))
+         player_parseEscorts(node);
    } while (xml_nextNode(node));
 
    return 0;
@@ -1983,9 +2014,6 @@ static int player_parse( xmlNodePtr parent )
 
       else if (xml_isNode(node,"licenses"))
          player_parseLicenses(node);
-
-      else if (xml_isNode(node,"escorts"))
-         player_parseEscorts(node);
 
    } while (xml_nextNode(node));
 

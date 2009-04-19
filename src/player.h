@@ -115,6 +115,11 @@ int player_hasLicense( char *license );
 char **player_getLicenses( int *nlicenses );
 
 /*
+ * escorts
+ */
+int player_addEscorts (void);
+
+/*
  * pilot related stuff
  */
 void player_dead (void);

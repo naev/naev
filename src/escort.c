@@ -70,27 +70,28 @@ int escort_addList( Pilot *p, char *ship, EscortType_t type, unsigned int id )
 /**
  * @brief Creates an escort.
  *
- *    @param parent Parent of the escort (who he's guarding).
+ *    @param p Parent of the escort (who he's guarding).
  *    @param ship Name of the ship escort should have.
  *    @param pos Position to create escort at.
  *    @param vel Velocity to create escort with.
+ *    @param dir Direction to face.
  *    @param type Type of escort.
  *    @param add Whether or not to add it to the escort list.
- *    @return 0 on success.
+ *    @return The ID of the escort on success.
  */
-int escort_create( unsigned int parent, char *ship,
-      Vector2d *pos, Vector2d *vel, EscortType_t type,
-      int add )
+unsigned int escort_create( Pilot *p, char *ship,
+      Vector2d *pos, Vector2d *vel, double dir,
+      EscortType_t type, int add )
 {
    Ship *s;
-   Pilot *p, *pe;
+   Pilot *pe;
    char buf[16];
    unsigned int e, f;
-   double dir;
    unsigned int hook;
+   unsigned int parent;
 
    /* Get important stuff. */
-   p = pilot_get(parent);
+   parent = p->id;
    s = ship_get(ship);
    snprintf(buf, 16, "escort*%u", parent);
 
@@ -98,9 +99,6 @@ int escort_create( unsigned int parent, char *ship,
    f = PILOT_ESCORT;
    if (type == ESCORT_TYPE_BAY)
       f |= PILOT_CARRIED;
-
-   /* Get the direction. */
-   dir = (type == ESCORT_TYPE_BAY) ? p->solid->dir : 0.;
 
    /* Create the pilot. */
    e = pilot_create( s, NULL, p->faction, buf, dir, pos, vel, f );
@@ -115,7 +113,7 @@ int escort_create( unsigned int parent, char *ship,
    hook = hook_addFunc( escort_disabled, pe, "disable" );
    pilot_addHook( pe, PILOT_HOOK_DISABLE, hook );
 
-   return 0;
+   return e;
 }
 
 
