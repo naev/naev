@@ -2634,6 +2634,10 @@ void pilot_free( Pilot* p )
    solid_free(p->solid);
    if (p->mounted != NULL)
       free(p->mounted);
+
+   /* Free escorts. */
+   for (i=0; i<p->nescorts; i++)
+      free(p->escorts[i].ship);
    if (p->escorts)
       free(p->escorts);
 

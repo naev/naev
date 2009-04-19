@@ -59,7 +59,7 @@ int escort_addList( Pilot *p, char *ship, EscortType_t type, unsigned int id )
       p->escorts = malloc(sizeof(Escort_t) * ESCORT_PREALLOC);
    else if (p->nescorts > ESCORT_PREALLOC)
       p->escorts = realloc( p->escorts, sizeof(Escort_t) * p->nescorts );
-   p->escorts[p->nescorts-1].ship = ship;
+   p->escorts[p->nescorts-1].ship = strdup(ship);
    p->escorts[p->nescorts-1].type = type;
    p->escorts[p->nescorts-1].id   = id;
 

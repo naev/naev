@@ -1773,10 +1773,11 @@ char **player_getLicenses( int *nlicenses )
  */
 int player_addEscorts (void)
 {
-   int i;
+   int i, j;
    double a;
    Vector2d v;
    unsigned int e;
+   Outfit *o;
 
    for (i=0; i<player->nescorts; i++) {
       a = RNGF() * 2 * M_PI;
@@ -1786,6 +1787,20 @@ int player_addEscorts (void)
             &v, &player->solid->vel, player->solid->dir,
             player->escorts[i].type, 0 );
       player->escorts[i].id = e; /* Important to update ID. */
+
+      /* Update outfit if needed. */
+      if (player->escorts[i].type == ESCORT_TYPE_BAY) {
+         for (j=0; j<player->noutfits; j++) {
+            if (outfit_isFighterBay(player->outfits[j].outfit)) {
+               o = outfit_ammo(player->outfits[j].outfit);
+               if (outfit_isFighter(o) &&
+                     (strcmp(player->escorts[i].ship,o->u.fig.ship)==0)) {
+                  player->outfits[j].u.deployed += 1;
+                  break;
+               }
+            }
+         }
+      }
    }
 
    return 0;
@@ -1802,7 +1817,7 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
    for (i=0; i<player->nescorts; i++) {
       xmlw_startElem(writer, "escort");
       xmlw_attr(writer,"type","bay"); /**< @todo other types. */
-      xmlw_str(writer, player->escorts->ship);
+      xmlw_str(writer, player->escorts[i].ship);
       xmlw_endElem(writer); /* "escort" */
    }
 
