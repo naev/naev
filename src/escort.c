@@ -44,16 +44,40 @@ extern void ai_setPilot( Pilot *p ); /**< from ai.c */
 
 
 /**
+ * @brief Adds an escort to the escort list of a pilot.
+ *
+ *    @param p Pilot to add escort to.
+ *    @param ship Ship of the escort.
+ *    @param type Type of the escort.
+ *    @param id ID of the pilot representing the escort.
+ *    @return 0 on success.
+ */
+int escort_addList( Pilot *p, char *ship, EscortType_t type, unsigned int id )
+{
+   p->nescorts++;
+   if (p->nescorts == 1)
+      p->escorts = malloc(sizeof(Escort_t) * ESCORT_PREALLOC);
+   else if (p->nescorts > ESCORT_PREALLOC)
+      p->escorts = realloc( p->escorts, sizeof(Escort_t) * p->nescorts );
+   p->escorts[p->nescorts-1].ship = ship;
+   p->escorts[p->nescorts-1].type = type;
+   p->escorts[p->nescorts-1].id   = id;
+
+   return 0;
+}
+
+
+/**
  * @brief Creates an escort.
  *
  *    @param parent Parent of the escort (who he's guarding).
  *    @param ship Name of the ship escort should have.
  *    @param pos Position to create escort at.
  *    @param vel Velocity to create escort with.
- *    @param carried Does escort come out of the parent?
+ *    @param type Type of escort.
  */
 int escort_create( unsigned int parent, char *ship,
-      Vector2d *pos, Vector2d *vel, int carried )
+      Vector2d *pos, Vector2d *vel, EscortType_t type )
 {
    Ship *s;
    Pilot *p, *pe;
@@ -69,10 +93,11 @@ int escort_create( unsigned int parent, char *ship,
 
    /* Set flags. */
    f = PILOT_ESCORT;
-   if (carried) f |= PILOT_CARRIED;
+   if (type == ESCORT_TYPE_BAY)
+      f |= PILOT_CARRIED;
 
    /* Get the direction. */
-   dir = (carried) ? p->solid->dir : 0.;
+   dir = (type == ESCORT_TYPE_BAY) ? p->solid->dir : 0.;
 
    /* Create the pilot. */
    e = pilot_create( s, NULL, p->faction, buf, dir, pos, vel, f );
@@ -80,14 +105,7 @@ int escort_create( unsigned int parent, char *ship,
    pe->parent = parent;
 
    /* Add to escort list. */
-   p->nescorts++;
-   if (p->nescorts == 1)
-      p->escorts = malloc(sizeof(Escort_t) * ESCORT_PREALLOC);
-   else if (p->nescorts > ESCORT_PREALLOC)
-      p->escorts = realloc( p->escorts, sizeof(Escort_t) * p->nescorts );
-   p->escorts[p->nescorts-1].ship = ship;
-   p->escorts[p->nescorts-1].type = ESCORT_TYPE_BAY;
-   p->escorts[p->nescorts-1].id = e;
+   escort_addList( p, ship, type, e );
 
    /* Hook the disable to lose the count. */
    hook = hook_addFunc( escort_disabled, pe, "disable" );
@@ -126,6 +144,31 @@ static int escort_disabled( void *data )
             p->outfits[i].u.deployed -= 1;
             break;
          }
+      }
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Cleans up dead/disabled escorts from pilot's escort list.
+ *
+ *    @param p Pilot to clean up dead/disabled escorts.
+ *    @return 0 on success.
+ */
+int escorts_removeDead( Pilot *p )
+{
+   int i;
+   Pilot *e;
+
+   for (i=0; i<p->nescorts; i++) {
+      e = pilot_get(p->escorts[i].id);
+      if (e == NULL) { /* Escort is dead. */
+         p->nescorts--;
+         memmove( &p->escorts[i], &p->escorts[i+1],
+               sizeof(Escort_t)*(p->nescorts-i) );
+         i--; /* To keep loop sane. */
       }
    }
 

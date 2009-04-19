@@ -45,6 +45,7 @@
 #include "music.h"
 #include "gui.h"
 #include "nlua_var.h"
+#include "escort.h"
 
 
 #define XML_START_ID "Start" /**< Module start xml document identifier. */
@@ -149,12 +150,14 @@ static void player_newShipMake( char *name );
 /* sound */
 static void player_initSound (void);
 /* save/load */
+static int player_saveEscorts( xmlTextWriterPtr writer );
 static int player_saveShip( xmlTextWriterPtr writer, 
       Pilot* ship, char* loc );
 static int player_parse( xmlNodePtr parent );
 static int player_parseDone( xmlNodePtr parent );
 static int player_parseLicenses( xmlNodePtr parent );
 static int player_parseShip( xmlNodePtr parent, int is_player );
+static int player_parseEscorts( xmlNodePtr parent );
 /* 
  * externed
  */
@@ -1761,6 +1764,24 @@ char **player_getLicenses( int *nlicenses )
 
 
 /**
+ * @brief Saves the player's escorts.
+ */
+static int player_saveEscorts( xmlTextWriterPtr writer )
+{
+   int i;
+
+   for (i=0; i<player->nescorts; i++) {
+      xmlw_startElem(writer, "escort");
+      xmlw_attr(writer,"type","bay"); /**< @todo other types. */
+      xmlw_str(writer, player->escorts->ship);
+      xmlw_endElem(writer); /* "escort" */
+   }
+
+   return 0;
+}
+
+
+/**
  * @brief Save the freaking player in a freaking xmlfile.
  *
  *    @param writer xml Writer to use.
@@ -1797,7 +1818,6 @@ int player_save( xmlTextWriterPtr writer )
 
    xmlw_endElem(writer); /* "player" */
 
-
    /* Mission the player has done */
    xmlw_startElem(writer,"missions_done");
    for (i=0; i<missions_ndone; i++) {
@@ -1806,6 +1826,11 @@ int player_save( xmlTextWriterPtr writer )
          xmlw_elem(writer,"done",m->name);
    }
    xmlw_endElem(writer); /* "missions_done" */
+
+   /* Escorts. */
+   xmlw_startElem(writer, "escorts");
+   player_saveEscorts(writer);
+   xmlw_endElem(writer); /* "escorts" */
 
    return 0;
 }
@@ -1959,6 +1984,9 @@ static int player_parse( xmlNodePtr parent )
       else if (xml_isNode(node,"licenses"))
          player_parseLicenses(node);
 
+      else if (xml_isNode(node,"escorts"))
+         player_parseEscorts(node);
+
    } while (xml_nextNode(node));
 
    /* Make sure player exists. */
@@ -2028,6 +2056,42 @@ static int player_parseLicenses( xmlNodePtr parent )
    do {
       if (xml_isNode(node,"license"))
          player_addLicense( xml_get(node) );
+   } while (xml_nextNode(node));
+
+   return 0;
+}
+
+
+/**
+ * @brief Parses the escorts from the escort node.
+ *
+ *    @param parent "escorts" node to parse.
+ *    @return 0 on success.
+ */
+static int player_parseEscorts( xmlNodePtr parent )
+{
+   xmlNodePtr node;
+   char *buf, *ship;
+   EscortType_t type;
+
+   node = parent->xmlChildrenNode;
+
+   do {
+      if (xml_isNode(node,"escort")) {
+         xmlr_attr( node, "type", buf );
+         if (strcmp(buf,"bay")==0)
+            type = ESCORT_TYPE_BAY;
+         else {
+            WARN("Escort has invalid type '%s'.", buf);
+            type = ESCORT_TYPE_NULL;
+         }
+         free(buf);
+
+         ship = xml_get(node);
+
+         /* Add escort to the list. */
+         escort_addList( player, ship, type, 0 );
+      }
    } while (xml_nextNode(node));
 
    return 0;
