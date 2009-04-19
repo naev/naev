@@ -113,7 +113,7 @@ static unsigned int hook_generic( lua_State *L, const char* stack, int pos )
       return 0;
    }
 
-   return hook_add( cur_mission->id, func, stack );
+   return hook_addMisn( cur_mission->id, func, stack );
 }
 /**
  * @brief Hooks the function to the player landing.

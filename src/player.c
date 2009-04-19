@@ -683,13 +683,18 @@ const char* player_rating (void)
  *    @param outfitname Outfit to check how many the player owns.
  *    @return The number of outfits matching outfitname owned.
  */
-int player_outfitOwned( const char* outfitname )
+int player_outfitOwned( const Outfit* o )
 {
    int i;
 
    for (i=0; i<player->noutfits; i++)
-      if (strcmp(outfitname, player->outfits[i].outfit->name)==0)
+      if (player->outfits[i].outfit == o) {
+         /* Fighter bays need to count deployed. */
+         if (outfit_isFighter(o))
+            return player->outfits[i].quantity + player->outfits[i].u.deployed;
+         /* Otherwise just return quantity. */
          return player->outfits[i].quantity;
+      }
    return 0;
 }
 

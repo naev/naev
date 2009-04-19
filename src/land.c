@@ -448,7 +448,7 @@ static void outfits_update( unsigned int wid, char* str )
          outfit_getType(outfit),
          (outfit_isLicense(outfit)) ?
                player_hasLicense(outfit->name) :
-               player_outfitOwned(outfitname),
+               player_outfitOwned(outfit),
          outfit->mass,
          pilot_freeSpace(player),
          buf2,
@@ -474,7 +474,7 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
       return 0;
    }
    /* has too many already */
-   else if (player_outfitOwned(outfit->name) >= outfit->max) {
+   else if (player_outfitOwned(outfit) >= outfit->max) {
       if (errmsg != 0)
          dialogue_alert( "You can only carry %d of this outfit.",
                outfit->max );
@@ -558,7 +558,7 @@ static void outfits_buy( unsigned int wid, char* str )
 static int outfit_canSell( Outfit* outfit, int q, int errmsg )
 {
    /* has no outfits to sell */
-   if (player_outfitOwned(outfit->name) <= 0) {
+   if (player_outfitOwned(outfit) <= 0) {
       if (errmsg != 0)
          dialogue_alert( "You can't sell something you don't have." );
       return 0;

@@ -85,7 +85,7 @@ void player_stopSound (void);
 void player_soundPause (void);
 void player_soundResume (void);
 /* cargo */
-int player_outfitOwned( const char* outfitname );
+int player_outfitOwned( const Outfit *o );
 int player_cargoOwned( const char* commodityname );
 
 

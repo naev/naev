@@ -27,15 +27,34 @@
 
 
 /**
+ * @brief Types of hook.
+ */
+typedef enum HookType_e {
+   HOOK_TYPE_NULL, /**< Invalid hook type. */
+   HOOK_TYPE_MISN, /**< Mission hook type. */
+   HOOK_TYPE_FUNC /**< C function hook type. */
+} HookType_t;
+
+
+/**
  * @struct Hook
  *
  * @brief Internal representation of a hook.
  */
 typedef struct Hook_ {
    unsigned int id; /**< unique id */
-   unsigned int parent; /**< mission it's connected to */
-   char *func; /**< function it runs */
    char *stack; /**< stack it's a part of */
+   HookType_t type; /**< Type of hook. */
+   union {
+      struct {
+         unsigned int parent; /**< mission it's connected to */
+         char *func; /**< function it runs */
+      } misn; /**< Mission Lua function. */
+      struct {
+         int (*func)( void *data ); /**< C function to run. */
+         void *data; /**< Data to pass to C function. */
+      } func; /**< Normal C function hook. */
+   } u;
    int delete; /**< indicates it should be deleted when possible */
 } Hook;
 
@@ -56,6 +75,9 @@ static int hook_runningstack  = 0; /**< Check if stack is running. */
 /* extern */
 extern int misn_run( Mission *misn, const char *func );
 /* intern */
+static Hook* hook_new( HookType_t type, const char *stack );
+static int hook_runMisn( Hook *hook );
+static int hook_runFunc( Hook *hook );
 static int hook_run( Hook *hook );
 static void hook_free( Hook *h );
 static int hook_needSave( Hook *h );
@@ -66,22 +88,19 @@ int hook_load( xmlNodePtr parent );
 
 
 /**
- * @brief Runs a hook.
+ * @brief Runs a mission hook.
  *
  *    @param hook Hook to run.
  *    @return 0 on success.
  */
-static int hook_run( Hook *hook )
+static int hook_runMisn( Hook *hook )
 {
    int i;
    Mission* misn;
 
-   if (hook->delete)
-      return 0; /* hook should be deleted not run */
-
-   /* locate the mission */
+   /* Locate the mission */
    for (i=0; i<MISSION_MAX; i++)
-      if (player_missions[i].id == hook->parent)
+      if (player_missions[i].id == hook->u.misn.parent)
          break;
    if (i>=MISSION_MAX) {
       WARN("Trying to run hook with parent not in player mission stack: deleting");
@@ -90,23 +109,64 @@ static int hook_run( Hook *hook )
    }
    misn = &player_missions[i];
 
-   if (misn_run( misn, hook->func ) < 0) /* error has occured */
+   /* Run mission code. */
+   if (misn_run( misn, hook->u.misn.func ) < 0) /* error has occured */
       WARN("Hook [%s] '%d' -> '%s' failed", hook->stack,
-            hook->id, hook->func);
+            hook->id, hook->u.misn.func);
 
    return 0;
 }
 
 
 /**
- * @brief Adds a new hook.
+ * @brief Runs a C function hook.
  *
- *    @param parent Hook mission parent.
- *    @param func Function to run when hook is triggered.
- *    @param stack Stack hook belongs to.
- *    @return The new hooks identifier.
+ *    @param hook Hook to run.
+ *    @return 0 on success.
  */
-unsigned int hook_add( unsigned int parent, const char *func, const char *stack )
+static int hook_runFunc( Hook *hook )
+{
+   int ret;
+   ret = hook->u.func.func( hook->u.func.data );
+   if (ret != 0)
+      hook->delete = 1;
+   return 0;
+}
+
+
+/**
+ * @brief Runs a hook.
+ *
+ *    @param hook Hook to run.
+ *    @return 0 on success.
+ */
+static int hook_run( Hook *hook )
+{
+   if (hook->delete)
+      return 0; /* hook should be deleted not run */
+
+   switch (hook->type) {
+      case HOOK_TYPE_MISN:
+         return hook_runMisn(hook);
+
+      case HOOK_TYPE_FUNC:
+         return hook_runFunc(hook);
+
+      default:
+         WARN("Invalid hook type '%d', deleting.", hook->type);
+         hook->delete = 1;
+         return -1;
+   }
+}
+
+
+/**
+ * @brief Generates and allocates a new hook.
+ *
+ *    @param stack Stack to which the new hook belongs.
+ *    @return The newly allocated hook.
+ */
+static Hook* hook_new( HookType_t type, const char *stack )
 {
    Hook *new_hook;
 
@@ -116,15 +176,64 @@ unsigned int hook_add( unsigned int parent, const char *func, const char *stack 
       hook_stack   = realloc(hook_stack, hook_mstack*sizeof(Hook));
    }
 
-   /* create the new hook */
+   /* Get and create new hook. */
    new_hook          = &hook_stack[hook_nstack];
-   new_hook->id      = ++hook_id;
-   new_hook->parent  = parent;
-   new_hook->func    = strdup(func);
-   new_hook->stack   = strdup(stack);
-   new_hook->delete  = 0;
+   memset( new_hook, 0, sizeof(Hook) );
 
+   /* Fill out generic details. */
+   new_hook->type    = type;
+   new_hook->id      = ++hook_id;
+   new_hook->stack   = strdup(stack);
+
+   /* Increment stack size. */
    hook_nstack++;
+
+   return new_hook;
+}
+
+
+/**
+ * @brief Adds a new mission type hook.
+ *
+ *    @param parent Hook mission parent.
+ *    @param func Function to run when hook is triggered.
+ *    @param stack Stack hook belongs to.
+ *    @return The new hook identifier.
+ */
+unsigned int hook_addMisn( unsigned int parent, const char *func, const char *stack )
+{
+   Hook *new_hook;
+
+   /* Create the new hook. */
+   new_hook = hook_new( HOOK_TYPE_MISN, stack );
+
+   /* Put mission specific details. */
+   new_hook->u.misn.parent = parent;
+   new_hook->u.misn.func   = strdup(func);
+
+   return new_hook->id;
+}
+
+
+/**
+ * @brief Adds a new C function type hook.
+ *
+ *    @param func Function to hook.  Parameter is the data passed.  Function
+ *           should return 0 if hook should stay or 1 if it should be deleted.
+ *    @param data Data to pass to the hooked function.
+ *    @param stack Stack to which the hook belongs.
+ *    @return The new hook identifier.
+ */
+unsigned hook_addFunc( int (*func)(void*), void* data, const char *stack )
+{
+   Hook *new_hook;
+
+   /* Create the new hook. */
+   new_hook = hook_new( HOOK_TYPE_FUNC, stack );
+
+   /* Put mission specific details. */
+   new_hook->u.func.func = func;
+   new_hook->u.func.data = data;
 
    return new_hook->id;
 }
@@ -191,7 +300,7 @@ void hook_rmParent( unsigned int parent )
    int i;
 
    for (i=0; i<hook_nstack; i++)
-      if (parent == hook_stack[i].parent) {
+      if (parent == hook_stack[i].u.misn.parent) {
          /* Only decrement if hook was actually removed. */
          if (hook_rm( hook_stack[i].id ) == 1)
             i--;
@@ -268,10 +377,19 @@ void hook_runID( unsigned int id )
  */
 static void hook_free( Hook *h )
 {
-   if (h->func != NULL)
-      free(h->func);
+   /* Generic freeing. */
    if (h->stack != NULL)
       free(h->stack);
+
+   switch (h->type) {
+      case HOOK_TYPE_MISN:
+         if (h->u.misn.func != NULL)
+            free(h->u.misn.func);
+         break;
+
+      default:
+         break;
+   }
 }
 
 
@@ -304,7 +422,12 @@ static int hook_needSave( Hook *h )
    char *nosave[] = {
          "death", "board", "disable", "jump", /* pilot hooks */
          "end" };
-  
+ 
+   /* Impossible to save functions. */
+   if (h->type == HOOK_TYPE_FUNC)
+      return 0;
+
+   /* Make sure it's in the proper stack. */
    for (i=0; strcmp(nosave[i],"end") != 0; i++)
       if (strcmp(nosave[i],h->stack)==0) return 0;
 
@@ -331,9 +454,20 @@ int hook_save( xmlTextWriterPtr writer )
 
       xmlw_startElem(writer,"hook");
 
+      switch (h->type) {
+         case HOOK_TYPE_MISN:
+            xmlw_attr(writer,"type","misn"); /* Save attribute. */
+            xmlw_elem(writer,"parent","%u",h->u.misn.parent);
+            xmlw_elem(writer,"func","%s",h->u.misn.func);
+            break;
+
+         default:
+            WARN("Something has gone screwy here...");
+            break;
+      }
+
+      /* Generic information. */
       /* xmlw_attr(writer,"id","%u",h->id); I don't think it's needed */
-      xmlw_elem(writer,"parent","%u",h->parent);
-      xmlw_elem(writer,"func","%s",h->func);
       xmlw_elem(writer,"stack","%s",h->stack);
 
       xmlw_endElem(writer); /* "hook" */
@@ -375,8 +509,9 @@ int hook_load( xmlNodePtr parent )
 static int hook_parse( xmlNodePtr base )
 {
    xmlNodePtr node, cur;
-   char *func, *stack;
+   char *func, *stack, *stype;
    unsigned int parent;
+   HookType_t type;
 
    node = base->xmlChildrenNode;
    do {
@@ -386,17 +521,38 @@ static int hook_parse( xmlNodePtr base )
          stack    = NULL;
 
          cur = node->xmlChildrenNode;
+
+         /* Handle the type. */
+         xmlr_attr(cur,"type",stype);
+         /* Default to mission for old saves. */
+         if (stype == NULL)
+            type = HOOK_TYPE_MISN;
+         /* Mission type. */
+         else if (strcmp(stype,"misn")==0) {
+            type = HOOK_TYPE_MISN;
+            free(stype);
+         }
+
+         /* Handle the data. */
          do {
-            xmlr_long(cur,"parent",parent);
-            xmlr_str(cur,"func",func);
+            /* Generic. */
             xmlr_str(cur,"stack",stack);
+
+            /* Type specific. */
+            if (type == HOOK_TYPE_MISN) {
+               xmlr_long(cur,"parent",parent);
+               xmlr_str(cur,"func",func);
+            }
          } while (xml_nextNode(cur));
 
-         if ((parent == 0) || (func == NULL) || (stack == NULL)) {
-            WARN("Invalid hook.");
-            return -1;
+         /* Create the hook. */
+         if (type == HOOK_TYPE_MISN) {
+            if ((parent == 0) || (func == NULL) || (stack == NULL)) {
+               WARN("Invalid hook.");
+               return -1;
+            }
+            hook_addMisn( parent, func, stack );
          }
-         hook_add( parent, func, stack );
       }
    } while (xml_nextNode(node));
 

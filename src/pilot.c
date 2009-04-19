@@ -888,6 +888,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
             &vp, &p->solid->vel, 1 );
 
       p->ammo->quantity -= 1; /* we just shot it */
+      p->ammo->u.deployed += 1; /* Mark as deployed. */
       if (p->ammo->quantity <= 0) /* Out of ammo. */
          pilot_rmOutfit( p, p->ammo->outfit, 0 ); /* It'll set p->ammo to NULL */
    }
