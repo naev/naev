@@ -2352,7 +2352,7 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
  *    @param type Type of the hook to add.
  *    @param hook ID of the hook to add.
  */
-void pilot_addHook( Pilot *pilot, int type, int hook )
+void pilot_addHook( Pilot *pilot, int type, unsigned int hook )
 {
    pilot->nhooks++;
    pilot->hooks = realloc( pilot->hooks, sizeof(PilotHook) * pilot->nhooks );

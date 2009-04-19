@@ -355,7 +355,7 @@ int pilot_isFriendly( const Pilot *p );
 /*
  * hooks
  */
-void pilot_addHook( Pilot *pilot, int type, int hook );
+void pilot_addHook( Pilot *pilot, int type, unsigned int hook );
 void pilot_runHook( Pilot* p, int hook_type );
 
 
