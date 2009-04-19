@@ -58,7 +58,7 @@
 #define MISSIONS_HEIGHT 500 /**< Mission menu height. */
 
 #define DEATH_WIDTH     130 /**< Death menu width. */
-#define DEATH_HEIGHT    150 /**< Death menu height. */
+#define DEATH_HEIGHT    200 /**< Death menu height. */
 
 #define OPTIONS_WIDTH   360 /**< Options menu width. */
 #define OPTIONS_HEIGHT  90  /**< Options menu height. */
@@ -735,7 +735,22 @@ static void mission_menu_abort( unsigned int wid, char* str )
    }
 }
 
+/**
+ * @brief Reload the current savegame, when player want to continue after death
+ */
+static void menu_continue( unsigned int parent, char* str )
+{
+   (void) parent;
+   (void) str;
 
+   unsigned int wid;
+
+   wid = window_get( "Death" );
+   window_destroy( wid );
+   menu_Close(MENU_DEATH);
+
+   reload();
+}
 
 /**
  * @brief Player death menu, appears when player got creamed.
@@ -745,6 +760,8 @@ void menu_death (void)
    unsigned int wid;
    
    wid = window_create( "Death", -1, -1, DEATH_WIDTH, DEATH_HEIGHT );
+   window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnContinue", "Continue", menu_continue );
    window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20),
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnMain", "Main Menu", menu_death_main );
