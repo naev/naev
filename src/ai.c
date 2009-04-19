@@ -1347,6 +1347,13 @@ static int aiL_isenemy( lua_State *L )
       return 0;
    }
 
+   /* Player needs special handling in case of hostility. */
+   if (p->faction == FACTION_PLAYER) {
+      lua_pushboolean(L, pilot_isHostile(cur_pilot));
+      lua_pushboolean(L,1);
+      return 1;
+   }
+
    /* Check if is ally. */
    lua_pushboolean(L,areEnemies(cur_pilot->faction, p->faction));
    return 1;
@@ -1357,17 +1364,22 @@ static int aiL_isenemy( lua_State *L )
  */
 static int aiL_isally( lua_State *L )
 {
+   unsigned int id;
    Pilot *p;
 
    /* Get the pilot. */
-   if (lua_isnumber(L,1))
-      p = pilot_get(lua_tonumber(L,1));
-   else
-      NLUA_INVALID_PARAMETER();
-
-   /* Make sure is valid. */
-   if (p==NULL)
+   id = luaL_checklong(L,1);
+   p = pilot_get(id);
+   if (p==NULL) { 
+      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
       return 0;
+   }
+
+   /* Player needs special handling in case of friendliness. */
+   if (p->faction == FACTION_PLAYER) {
+      lua_pushboolean(L, pilot_isFriendly(cur_pilot));
+      return 1;
+   }
 
    /* Check if is ally. */
    lua_pushboolean(L,areAllies(cur_pilot->faction, p->faction));
@@ -2029,9 +2041,16 @@ static int aiL_getenemy( lua_State *L )
 static int aiL_hostile( lua_State *L )
 {
    unsigned int id;
+   Pilot *p;
 
    id = luaL_checklong(L,1);
-   if (id == PLAYER_ID)
+   p = pilot_get(id);
+   if (p==NULL) {
+      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+      return 0;
+   }
+
+   if (p->faction == FACTION_PLAYER)
       pilot_setHostile(cur_pilot);
 
    return 0;

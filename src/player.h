@@ -85,7 +85,7 @@ void player_stopSound (void);
 void player_soundPause (void);
 void player_soundResume (void);
 /* cargo */
-int player_outfitOwned( const char* outfitname );
+int player_outfitOwned( const Outfit *o );
 int player_cargoOwned( const char* commodityname );
 
 
@@ -113,6 +113,11 @@ int player_missionAlreadyDone( int id );
 void player_addLicense( char *license );
 int player_hasLicense( char *license );
 char **player_getLicenses( int *nlicenses );
+
+/*
+ * escorts
+ */
+int player_addEscorts (void);
 
 /*
  * pilot related stuff

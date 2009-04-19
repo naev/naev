@@ -32,6 +32,7 @@
 #include "music.h"
 #include "map.h"
 #include "news.h"
+#include "escort.h"
 
 
 /* global/main window */
@@ -448,7 +449,7 @@ static void outfits_update( unsigned int wid, char* str )
          outfit_getType(outfit),
          (outfit_isLicense(outfit)) ?
                player_hasLicense(outfit->name) :
-               player_outfitOwned(outfitname),
+               player_outfitOwned(outfit),
          outfit->mass,
          pilot_freeSpace(player),
          buf2,
@@ -474,7 +475,7 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
       return 0;
    }
    /* has too many already */
-   else if (player_outfitOwned(outfit->name) >= outfit->max) {
+   else if (player_outfitOwned(outfit) >= outfit->max) {
       if (errmsg != 0)
          dialogue_alert( "You can only carry %d of this outfit.",
                outfit->max );
@@ -558,7 +559,7 @@ static void outfits_buy( unsigned int wid, char* str )
 static int outfit_canSell( Outfit* outfit, int q, int errmsg )
 {
    /* has no outfits to sell */
-   if (player_outfitOwned(outfit->name) <= 0) {
+   if (player_outfitOwned(outfit) <= 0) {
       if (errmsg != 0)
          dialogue_alert( "You can't sell something you don't have." );
       return 0;
@@ -1532,24 +1533,24 @@ void land( Planet* p )
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
       window_addButton( land_wid, -20, 20 + BUTTON_HEIGHT + 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnCommodity",
-            "Commodity Exchange", (void(*)(unsigned int,char*))commodity_exchange_open);
+            "Commodity Exchange", commodity_exchange_open);
    /* second column */
    if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
       window_addButton( land_wid, -20 - BUTTON_WIDTH - 20, 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnShipyard",
-            "Shipyard", (void(*)(unsigned int,char*))shipyard_open);
+            "Shipyard", shipyard_open);
    if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS))
       window_addButton( land_wid, -20 - BUTTON_WIDTH - 20, 20 + BUTTON_HEIGHT + 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnOutfits",
-            "Outfits", (void(*)(unsigned int,char*))outfits_open);
+            "Outfits", outfits_open);
    /* third column */
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
       window_addButton( land_wid, 20, 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnNews",
-            "Mission Terminal", (void(*)(unsigned int,char*))misn_open);
+            "Mission Terminal", misn_open);
       window_addButton( land_wid, 20, 20 + BUTTON_HEIGHT + 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnBar",
-            "Spaceport Bar", (void(*)(unsigned int,char*))spaceport_bar_open);
+            "Spaceport Bar", spaceport_bar_open);
    }
 
 
@@ -1640,6 +1641,7 @@ void takeoff( int delay )
    land_cleanup(); /* Cleanup stuff */
    hooks_run("takeoff"); /* Must be run after cleanup since we don't want the
                             missions to think we are landed. */
+   player_addEscorts();
    hooks_run("enter");
 }
 
