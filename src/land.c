@@ -1495,9 +1495,6 @@ void land( Planet* p )
 
    if (landed) return;
 
-   /* Prune dead escorts. */
-   escorts_removeDead(player);
-
    /* Load stuff */
    land_planet = p;
    gfx_exterior = gl_newImage( p->gfx_exterior, 0 );

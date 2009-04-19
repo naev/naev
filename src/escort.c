@@ -75,9 +75,12 @@ int escort_addList( Pilot *p, char *ship, EscortType_t type, unsigned int id )
  *    @param pos Position to create escort at.
  *    @param vel Velocity to create escort with.
  *    @param type Type of escort.
+ *    @param add Whether or not to add it to the escort list.
+ *    @return 0 on success.
  */
 int escort_create( unsigned int parent, char *ship,
-      Vector2d *pos, Vector2d *vel, EscortType_t type )
+      Vector2d *pos, Vector2d *vel, EscortType_t type,
+      int add )
 {
    Ship *s;
    Pilot *p, *pe;
@@ -105,7 +108,8 @@ int escort_create( unsigned int parent, char *ship,
    pe->parent = parent;
 
    /* Add to escort list. */
-   escort_addList( p, ship, type, e );
+   if (add != 0)
+      escort_addList( p, ship, type, e );
 
    /* Hook the disable to lose the count. */
    hook = hook_addFunc( escort_disabled, pe, "disable" );
@@ -134,6 +138,16 @@ static int escort_disabled( void *data )
    if (p == NULL) /* Parent is no longer with us. */
       return 0;
 
+   /* Remove from escorts list. */
+   for (i=0; i<p->nescorts; i++) {
+      if (p->escorts[i].id == pe->id) {
+         p->nescorts--;
+         memmove( &p->escorts[i], &p->escorts[i+1],
+               sizeof(Escort_t)*(p->nescorts-i) );
+         break;
+      }
+   }
+
    /* Remove from deployed list. */
    for (i=0; i<p->noutfits; i++) {
       o = p->outfits[i].outfit;
@@ -144,31 +158,6 @@ static int escort_disabled( void *data )
             p->outfits[i].u.deployed -= 1;
             break;
          }
-      }
-   }
-
-   return 0;
-}
-
-
-/**
- * @brief Cleans up dead/disabled escorts from pilot's escort list.
- *
- *    @param p Pilot to clean up dead/disabled escorts.
- *    @return 0 on success.
- */
-int escorts_removeDead( Pilot *p )
-{
-   int i;
-   Pilot *e;
-
-   for (i=0; i<p->nescorts; i++) {
-      e = pilot_get(p->escorts[i].id);
-      if (e == NULL) { /* Escort is dead. */
-         p->nescorts--;
-         memmove( &p->escorts[i], &p->escorts[i+1],
-               sizeof(Escort_t)*(p->nescorts-i) );
-         i--; /* To keep loop sane. */
       }
    }
 

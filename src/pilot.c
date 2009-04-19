@@ -885,7 +885,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 
       /* Create the escort. */
       escort_create( p->id, p->ammo->outfit->u.fig.ship,
-            &vp, &p->solid->vel, ESCORT_TYPE_BAY );
+            &vp, &p->solid->vel, ESCORT_TYPE_BAY, 1 );
 
       p->ammo->quantity -= 1; /* we just shot it */
       p->secondary->u.deployed += 1; /* Mark as deployed. */
