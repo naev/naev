@@ -32,6 +32,7 @@
 #include "music.h"
 #include "map.h"
 #include "news.h"
+#include "escort.h"
 
 
 /* global/main window */
@@ -1494,6 +1495,9 @@ void land( Planet* p )
 
    if (landed) return;
 
+   /* Prune dead escorts. */
+   escorts_removeDead(player);
+
    /* Load stuff */
    land_planet = p;
    gfx_exterior = gl_newImage( p->gfx_exterior, 0 );
@@ -1532,24 +1536,24 @@ void land( Planet* p )
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
       window_addButton( land_wid, -20, 20 + BUTTON_HEIGHT + 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnCommodity",
-            "Commodity Exchange", (void(*)(unsigned int,char*))commodity_exchange_open);
+            "Commodity Exchange", commodity_exchange_open);
    /* second column */
    if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
       window_addButton( land_wid, -20 - BUTTON_WIDTH - 20, 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnShipyard",
-            "Shipyard", (void(*)(unsigned int,char*))shipyard_open);
+            "Shipyard", shipyard_open);
    if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS))
       window_addButton( land_wid, -20 - BUTTON_WIDTH - 20, 20 + BUTTON_HEIGHT + 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnOutfits",
-            "Outfits", (void(*)(unsigned int,char*))outfits_open);
+            "Outfits", outfits_open);
    /* third column */
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
       window_addButton( land_wid, 20, 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnNews",
-            "Mission Terminal", (void(*)(unsigned int,char*))misn_open);
+            "Mission Terminal", misn_open);
       window_addButton( land_wid, 20, 20 + BUTTON_HEIGHT + 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnBar",
-            "Spaceport Bar", (void(*)(unsigned int,char*))spaceport_bar_open);
+            "Spaceport Bar", spaceport_bar_open);
    }
 
 
