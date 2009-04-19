@@ -321,6 +321,8 @@ Pilot* pilot_get( const unsigned int id )
  */
 int pilot_isHostile( const Pilot *p )
 {
+   if (pilot_isFlag(p, PILOT_FRIENDLY))
+      return 0;
    if (pilot_isFlag(p, PILOT_HOSTILE) ||
          areEnemies(FACTION_PLAYER,p->faction))
       return 1;
@@ -350,6 +352,8 @@ int pilot_isNeutral( const Pilot *p )
  */
 int pilot_isFriendly( const Pilot *p )
 {
+   if (pilot_isFlag(p, PILOT_HOSTILE))
+      return 0;
    if (pilot_isFlag(p, PILOT_FRIENDLY) ||
          areAllies(FACTION_PLAYER,p->faction))
       return 1;
