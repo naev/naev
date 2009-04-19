@@ -170,6 +170,15 @@ err:
    return -1;
 }
 
+/**
+ * @brief Reload the current savegame.
+ */
+void reload (void)
+{
+   char path[PATH_MAX];
+   snprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player_name);
+   load_game( path );
+}
 
 /**
  * @brief Opens the load game menu.
