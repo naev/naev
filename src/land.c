@@ -558,6 +558,8 @@ static void outfits_buy( unsigned int wid, char* str )
  */
 static int outfit_canSell( Outfit* outfit, int q, int errmsg )
 {
+   int i;
+
    /* has no outfits to sell */
    if (player_outfitOwned(outfit) <= 0) {
       if (errmsg != 0)
@@ -575,6 +577,30 @@ static int outfit_canSell( Outfit* outfit, int q, int errmsg )
       if (errmsg != 0)
          dialogue_alert( "Get rid of other outfits first.");
       return 0;
+   }
+   /* Make sure no fighters are left stranded. */
+   else if (outfit_isFighterBay(outfit)) {
+      for (i=0; i<player->noutfits; i++) {
+         if (player->outfits[i].outfit == outfit) {
+            if (player->outfits[i].u.deployed > 0) {
+               if (errmsg != 0)
+                  dialogue_alert( "You can't leave the fighters stranded, dock them first." );
+               return 0;
+            }
+            break;
+         }
+      }
+   }
+   /* Make sure they don't sell virtual fighters. */
+   else if (outfit_isFighter(outfit)) {
+      for (i=0; i<player->noutfits; i++)
+         if (player->outfits[i].outfit == outfit)
+            break;
+      if (i >= player->noutfits) {
+         if (errmsg != 0)
+            dialogue_alert( "You can't sell undocked fighters." );
+         return 0;
+      }
    }
 
    return 1;
@@ -1501,7 +1527,6 @@ void land( Planet* p )
    land_wid = window_create( p->name, -1, -1, LAND_WIDTH, LAND_HEIGHT );
    window_onClose( land_wid, land_cleanupWindow );
 
-   
    /*
     * Faction logo.
     */

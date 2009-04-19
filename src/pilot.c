@@ -1257,6 +1257,24 @@ int pilot_dock( Pilot *p, Pilot *target )
    if (vect_dist(&p->solid->vel, &target->solid->vel) > 2*MIN_VEL_ERR)
       return -1;
 
+   /* Check to see if target has an available bay. */
+   for (i=0; i<target->noutfits; i++) {
+      if (outfit_isFighterBay(target->outfits[i].outfit)) {
+         o = outfit_ammo(target->outfits[i].outfit);
+         if (outfit_isFighter(o) &&
+               (strcmp(p->ship->name,o->u.fig.ship)==0)) {
+            target->outfits[i].u.deployed -= 1;
+            break;
+         }
+      }
+   }
+   if (i >= target->noutfits)
+      return -1;
+
+   /* Add the pilot's outfit. */
+   if (pilot_addOutfit(target, o, 1) != 1)
+      return -1;
+
    /* Remove from pilot's escort list. */
    for (i=0; i<target->nescorts; i++) {
       if ((target->escorts[i].type == ESCORT_TYPE_BAY) &&
@@ -1277,24 +1295,6 @@ int pilot_dock( Pilot *p, Pilot *target )
             sizeof(unsigned int) * (target->nescorts-i-1) );
       target->nescorts--;
    }
-
-   /* Check to see if target has an available bay. */
-   for (i=0; i<target->noutfits; i++) {
-      if (outfit_isFighterBay(target->outfits[i].outfit)) {
-         o = outfit_ammo(target->outfits[i].outfit);
-         if (outfit_isFighter(o) &&
-               (strcmp(p->ship->name,o->u.fig.ship)==0)) {
-            target->outfits[i].u.deployed -= 1;
-            break;
-         }
-      }
-   }
-   if (i >= target->noutfits)
-      return -1;
-
-   /* Add the pilot's outfit. */
-   if (pilot_addOutfit(target, o, 1) != 1)
-      return -1;
 
    /* Destroy the pilot. */
    pilot_setFlag(p,PILOT_DELETE);

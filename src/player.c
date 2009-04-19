@@ -690,26 +690,33 @@ int player_outfitOwned( const Outfit* o )
 {
    int i, j;
    int deployed;
+   int q;
 
+   /* Defaults. */
+   q = 0;
+
+   /* Get base quantity. */
    for (i=0; i<player->noutfits; i++)
       if (player->outfits[i].outfit == o) {
-         /* Fighter bays need to count deployed. */
-         if (outfit_isFighter(o)) {
-            deployed = 0;
-            for (j=0; j<player->noutfits; j++) {
-               if (outfit_isFighterBay(player->outfits[j].outfit)) {
-                  if (strcmp(o->name,player->outfits[j].outfit->u.bay.ammo_name)==0) {
-                     deployed = player->outfits[j].u.deployed;
-                     break;
-                  }
-               }
-            }
-            return player->outfits[i].quantity + deployed;
-         }
-         /* Otherwise just return quantity. */
-         return player->outfits[i].quantity;
+         q = player->outfits[i].quantity;
+         break;
       }
-   return 0;
+
+   /* Fighter bays need to count deployed. */
+   if (outfit_isFighter(o)) {
+      deployed = 0;
+      for (j=0; j<player->noutfits; j++) {
+         if (outfit_isFighterBay(player->outfits[j].outfit)) {
+            if (strcmp(o->name,player->outfits[j].outfit->u.bay.ammo_name)==0) {
+               deployed = player->outfits[j].u.deployed;
+               break;
+            }
+         }
+      }
+      q += deployed;
+   }
+
+   return q;
 }
 
 
@@ -1763,6 +1770,21 @@ char **player_getLicenses( int *nlicenses )
 {
    *nlicenses = player_nlicenses;
    return player_licenses;
+}
+
+
+/**
+ * @brief Clears escorts to make sure deployment is sane.
+ */
+void player_clearEscorts (void)
+{
+   int i;
+
+   for (i=0; i<player->noutfits; i++) {
+      if (outfit_isFighterBay(player->outfits[i].outfit)) {
+         player->outfits[i].u.deployed = 0;
+      }
+   }
 }
 
 
