@@ -1237,7 +1237,8 @@ int pilot_dock( Pilot *p, Pilot *target )
 
    /* Remove from pilot's escort list. */
    for (i=0; i<target->nescorts; i++) {
-      if (target->escorts[i] == p->id)
+      if ((target->escorts[i].type == ESCORT_TYPE_BAY) &&
+            (target->escorts[i].id == p->id))
          break;
    }
    /* Not found as pilot's escorts. */

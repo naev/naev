@@ -1448,15 +1448,15 @@ void player_targetEscort( int prev )
 
    /* Check if current target is an escort. */
    for (i=0; i<player->nescorts; i++) {
-      if (player->target == player->escorts[i]) {
+      if (player->target == player->escorts[i].id) {
 
          /* Cycle targets. */
          if (prev)
             player->target = (i > 0) ?
-                  player->escorts[i-1] : PLAYER_ID;
+                  player->escorts[i-1].id : PLAYER_ID;
          else
             player->target = (i < player->nescorts-1) ?
-                  player->escorts[i+1] : PLAYER_ID;
+                  player->escorts[i+1].id : PLAYER_ID;
 
          break;
       }
@@ -1470,9 +1470,9 @@ void player_targetEscort( int prev )
 
          /* Cycle forward or backwards. */
          if (prev)
-            player->target = player->escorts[player->nescorts-1];
+            player->target = player->escorts[player->nescorts-1].id;
          else
-            player->target = player->escorts[0];
+            player->target = player->escorts[0].id;
       }
       else
          player->target = PLAYER_ID;

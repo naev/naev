@@ -32,6 +32,7 @@
 #define ESCORT_CLEAR       4 /**< Clear orders. */
 
 
+
 /*
  * Prototypes.
  */
@@ -84,7 +85,9 @@ int escort_create( unsigned int parent, char *ship,
       p->escorts = malloc(sizeof(unsigned int) * ESCORT_PREALLOC);
    else if (p->nescorts > ESCORT_PREALLOC)
       p->escorts = realloc( p->escorts, sizeof(unsigned int) * p->nescorts );
-   p->escorts[p->nescorts-1] = e;
+   p->escorts[p->nescorts-1].ship = ship;
+   p->escorts[p->nescorts-1].type = ESCORT_TYPE_BAY;
+   p->escorts[p->nescorts-1].id = e;
 
    /* Hook the disable to lose the count. */
    hook = hook_addFunc( escort_disabled, pe, "disable" );
@@ -150,7 +153,7 @@ static int escort_command( Pilot *parent, int cmd, int param )
 
    n = 0;
    for (i=0; i<parent->nescorts; i++) {
-      e = pilot_get( parent->escorts[i] );
+      e = pilot_get( parent->escorts[i].id );
       if (e == NULL) /* Most likely died. */
          continue;
 

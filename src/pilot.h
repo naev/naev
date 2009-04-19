@@ -138,6 +138,27 @@ typedef struct PilotHook_ {
 
 
 /**
+ * @brief Different types of escorts.
+ */
+typedef enum EscortType_e {
+   ESCORT_TYPE_NULL, /**< Invalid escort type. */
+   ESCORT_TYPE_BAY, /**< Escort is from a fighter bay. */
+   ESCORT_TYPE_MERCENARY, /**< Escort is a mercenary. */
+   ESCORT_TYPE_ALLY /**< Escort is an ally. */
+} EscortType_t;
+
+
+/**
+ * @brief Stores an escort.
+ */
+typedef struct Escort_s {
+   char *ship; /**< Type of the ship escort is flying. */
+   EscortType_t type; /**< Type of escort. */
+   unsigned int id; /**< ID of in-game pilot. */
+} Escort_t;
+
+
+/**
  * @brief The representation of an in-game pilot.
  */
 typedef struct Pilot_ {
@@ -215,7 +236,7 @@ typedef struct Pilot_ {
 
    /* Escort stuff. */
    unsigned int parent; /**< Pilot's parent. */
-   unsigned int *escorts; /**< Pilot's escorts. */
+   Escort_t *escorts; /**< Pilot's escorts. */
    int nescorts; /**< Number of pilot escorts. */
 
    /* AI */
