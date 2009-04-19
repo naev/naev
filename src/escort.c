@@ -17,6 +17,7 @@
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_space.h"
+#include "hook.h"
 
 
 #define ESCORT_PREALLOC    8 /**< Number of escorts to automatically allocate first. */
@@ -35,6 +36,7 @@
  * Prototypes.
  */
 /* Static */
+static int escort_disabled( void *data );
 static int escort_command( Pilot *parent, int cmd, int param );
 /* Extern */
 extern void ai_setPilot( Pilot *p ); /**< from ai.c */
@@ -57,6 +59,7 @@ int escort_create( unsigned int parent, char *ship,
    char buf[16];
    unsigned int e, f;
    double dir;
+   unsigned int hook;
 
    /* Get important stuff. */
    p = pilot_get(parent);
@@ -68,8 +71,7 @@ int escort_create( unsigned int parent, char *ship,
    if (carried) f |= PILOT_CARRIED;
 
    /* Get the direction. */
-   if (carried) dir = p->solid->dir;
-   else dir = 0.;
+   dir = (carried) ? p->solid->dir : 0.;
 
    /* Create the pilot. */
    e = pilot_create( s, NULL, p->faction, buf, dir, pos, vel, f );
@@ -83,6 +85,46 @@ int escort_create( unsigned int parent, char *ship,
    else if (p->nescorts > ESCORT_PREALLOC)
       p->escorts = realloc( p->escorts, sizeof(unsigned int) * p->nescorts );
    p->escorts[p->nescorts-1] = e;
+
+   /* Hook the disable to lose the count. */
+   hook = hook_addFunc( escort_disabled, pe, "disable" );
+   pilot_addHook( pe, PILOT_HOOK_DISABLE, hook );
+
+   return 0;
+}
+
+
+/**
+ * @brief Hook to decrement count when pilot is disabled.
+ *
+ *    @param data Disabled pilot (should still be valid).
+ */
+static int escort_disabled( void *data )
+{
+   int i;
+   Pilot *pe, *p;
+   Outfit *o;
+
+   /* Get escort that got disabled. */
+   pe = (Pilot*) data;
+
+   /* Get parent. */
+   p = pilot_get( pe->parent );
+   if (p == NULL) /* Parent is no longer with us. */
+      return 0;
+
+   /* Remove from deployed list. */
+   for (i=0; i<p->noutfits; i++) {
+      o = p->outfits[i].outfit;
+      if (outfit_isFighterBay(o)) {
+         o = outfit_ammo(o);
+         if (outfit_isFighter(o) &&
+               (strcmp(pe->ship->name,o->u.fig.ship)==0)) {
+            p->outfits[i].u.deployed -= 1;
+            break;
+         }
+      }
+   }
 
    return 0;
 }

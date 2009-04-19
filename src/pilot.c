@@ -888,7 +888,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
             &vp, &p->solid->vel, 1 );
 
       p->ammo->quantity -= 1; /* we just shot it */
-      p->ammo->u.deployed += 1; /* Mark as deployed. */
+      p->secondary->u.deployed += 1; /* Mark as deployed. */
       if (p->ammo->quantity <= 0) /* Out of ammo. */
          pilot_rmOutfit( p, p->ammo->outfit, 0 ); /* It'll set p->ammo to NULL */
    }
@@ -1260,8 +1260,10 @@ int pilot_dock( Pilot *p, Pilot *target )
       if (outfit_isFighterBay(target->outfits[i].outfit)) {
          o = outfit_ammo(target->outfits[i].outfit);
          if (outfit_isFighter(o) &&
-               (strcmp(p->ship->name,o->u.fig.ship)==0))
+               (strcmp(p->ship->name,o->u.fig.ship)==0)) {
+            target->outfits[i].u.deployed -= 1;
             break;
+         }
       }
    }
    if (i >= target->noutfits)
