@@ -1357,17 +1357,16 @@ static int aiL_isenemy( lua_State *L )
  */
 static int aiL_isally( lua_State *L )
 {
+   unsigned int id;
    Pilot *p;
 
    /* Get the pilot. */
-   if (lua_isnumber(L,1))
-      p = pilot_get(lua_tonumber(L,1));
-   else
-      NLUA_INVALID_PARAMETER();
-
-   /* Make sure is valid. */
-   if (p==NULL)
+   id = luaL_checklong(L,1);
+   p = pilot_get(id);
+   if (p==NULL) { 
+      NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
       return 0;
+   }
 
    /* Check if is ally. */
    lua_pushboolean(L,areAllies(cur_pilot->faction, p->faction));
