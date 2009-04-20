@@ -95,9 +95,16 @@ int nfile_dirMakeExist( const char* path, ... )
 
 #if HAS_POSIX
    struct stat buf;
+   int ret;
 
-   stat(file,&buf);
-   if (!S_ISDIR(buf.st_mode))
+   ret = stat(file,&buf);
+   /* Check to see if there was a messed up error. */
+   if (ret && (errno != ENOENT)) {
+      WARN("Unable to stat '%s': %s", file, strerror(errno));
+      return -1;
+   }
+   /* Normal error/doesn't exist. */
+   else if ((ret && (errno == ENOENT)) || !S_ISDIR(buf.st_mode))
       if (mkdir(file, S_IRWXU | S_IRWXG | S_IRWXO) < 0) {
          WARN("Dir '%s' does not exist and unable to create: %s", file, strerror(errno));
          return -1;
