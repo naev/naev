@@ -8,6 +8,7 @@
 
 
 int save_all (void);
+void reload (void);
 void load_game_menu (void);
 
 
