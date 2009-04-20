@@ -75,12 +75,13 @@ int menu_open = 0; /**< Stores the opened/closed menus. */
 /*
  * prototypes
  */
+/* Generic. */
+static void menu_exit( unsigned int wid, char* str );
 /* main menu */
 void menu_main_close (void); /**< Externed in save.c */
 static void menu_main_load( unsigned int wid, char* str );
 static void menu_main_new( unsigned int wid, char* str );
 static void menu_main_credits( unsigned int wid, char* str );
-static void menu_main_exit( unsigned int wid, char* str );
 static void menu_main_cleanBG( unsigned int wid, char* str );
 /* small menu */
 static void menu_small_close( unsigned int wid, char* str );
@@ -102,6 +103,8 @@ static void mission_menu_abort( unsigned int wid, char* str );
 static void mission_menu_genList( unsigned int wid, int first );
 static void mission_menu_update( unsigned int wid, char* str );
 /* death menu */
+static void menu_death_continue( unsigned int wid, char* str );
+static void menu_death_restart( unsigned int wid, char* str );
 static void menu_death_main( unsigned int wid, char* str );
 /* Options menu. */
 static void menu_options_close( unsigned int parent, char* str );
@@ -169,7 +172,7 @@ void menu_main (void)
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOptions", "Credits", menu_main_credits );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnExit", "Exit", menu_main_exit );
+         "btnExit", "Exit", menu_exit );
 
    /* Make the background window a parent of the menu. */
    window_setParent( bwid, wid );
@@ -222,7 +225,7 @@ static void menu_main_credits( unsigned int wid, char* str )
  * @brief Function to exit the main menu and game.
  *    @param str Unused.
  */
-static void menu_main_exit( unsigned int wid, char* str )
+static void menu_exit( unsigned int wid, char* str )
 {
    (void) str;
    (void) wid;
@@ -431,6 +434,7 @@ void menu_info (void)
 static void menu_info_close( unsigned int wid, char* str )
 {
    (void) str;
+
    window_destroy( wid );
    menu_Close(MENU_INFO);
 
@@ -739,14 +743,10 @@ static void mission_menu_abort( unsigned int wid, char* str )
 /**
  * @brief Reload the current savegame, when player want to continue after death
  */
-static void menu_continue( unsigned int parent, char* str )
+static void menu_death_continue( unsigned int wid, char* str )
 {
-   (void) parent;
    (void) str;
 
-   unsigned int wid;
-
-   wid = window_get( "Death" );
    window_destroy( wid );
    menu_Close(MENU_DEATH);
 
@@ -756,14 +756,10 @@ static void menu_continue( unsigned int parent, char* str )
 /**
  * @brief Restart the game, when player want to continue after death but without a savegame
  */
-static void menu_restart( unsigned int parent, char* str )
+static void menu_death_restart( unsigned int wid, char* str )
 {
-   (void) parent;
    (void) str;
 
-   unsigned int wid;
-
-   wid = window_get( "Death" );
    window_destroy( wid );
    menu_Close(MENU_DEATH);
 
@@ -784,16 +780,16 @@ void menu_death (void)
    snprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player_name);
    if (nfile_fileExists(path))
       window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnContinue", "Continue", menu_continue );
+         "btnContinue", "Continue", menu_death_continue );
    else
       window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnRestart", "Restart", menu_restart );
+         "btnRestart", "Restart", menu_death_restart );
 
    window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20),
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnMain", "Main Menu", menu_death_main );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnExit", "Exit Game", (void(*)(unsigned int, char*)) exit_game );
+         "btnExit", "Exit Game", menu_exit );
    menu_Open(MENU_DEATH);
 
    /* Makes it all look cooler since everything still goes on. */
@@ -803,13 +799,10 @@ void menu_death (void)
  * @brief Closes the player death menu.
  *    @param str Unused.
  */
-static void menu_death_main( unsigned int parent, char* str )
+static void menu_death_main( unsigned int wid, char* str )
 {
-   (void) parent;
    (void) str;
-   unsigned int wid;
 
-   wid = window_get( "Death" );
    window_destroy( wid );
    menu_Close(MENU_DEATH);
 
@@ -840,13 +833,10 @@ void menu_options (void)
  * @brief Closes the options menu.
  *    @param str Unused.
  */
-static void menu_options_close( unsigned int parent, char* str )
+static void menu_options_close( unsigned int wid, char* str )
 {
-   (void) parent;
    (void) str;
-   unsigned int wid;
 
-   wid = window_get( "Options" );
    window_destroy( wid );
    menu_Close(MENU_OPTIONS);
 }
