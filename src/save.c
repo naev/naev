@@ -214,7 +214,7 @@ void load_game_menu (void)
       nfiles = 1;
    }
    window_addList( wid, 20, -50,
-         LOAD_WIDTH-BUTTON_WIDTH-50, LOAD_HEIGHT-90,
+         LOAD_WIDTH-BUTTON_WIDTH-50, LOAD_HEIGHT-110,
          "lstSaves", files, nfiles, 0, NULL );
 
    /* buttons */
@@ -222,7 +222,7 @@ void load_game_menu (void)
          "btnBack", "Back", load_menu_close );
    window_addButton( wid, -20, 30 + BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnLoad", "Load", load_menu_load );
-   window_addButton( wid, -20, 20 + 2*(10 + BUTTON_HEIGHT), BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDelete", "Del", load_menu_delete );
 
    /* default action */
