@@ -1311,6 +1311,23 @@ int pilot_dock( Pilot *p, Pilot *target, int deployed )
 
 
 /**
+ * @brief Checks to see if the pilot has deployed ships.
+ *
+ *    @param p Pilot to see if has deployed ships.
+ *    @return 1 if pilot has deployed ships, 0 otherwise.
+ */
+int pilot_hasDeployed( Pilot *p )
+{
+   int i;
+   for (i=0; i<p->noutfits; i++)
+      if (outfit_isFighterBay(p->outfits[i].outfit))
+         if (p->outfits[i].u.deployed > 0)
+            return 1;
+   return 0;
+}
+
+
+/**
  * @brief Makes the pilot explosion.
  *    @param x X position of the pilot.
  *    @param y Y position of the pilot.

@@ -858,6 +858,10 @@ static void shipyard_buy( unsigned int wid, char* str )
       dialogue_alert( "Not enough credits!" );
       return;
    }
+   else if (pilot_hasDeployed(player)) {
+      dialogue_alert( "You can't leave your fighters stranded. Recall them before buying a new ship." );
+      return;
+   }
 
    /* Must have license. */
    if ((ship->license != NULL) && !player_hasLicense(ship->license)) {
@@ -1056,6 +1060,10 @@ static void shipyard_yoursChange( unsigned int wid, char* str )
    }
    else if (pilot_cargoUsed(player) > pilot_cargoFree(newship)) {
       dialogue_alert( "You won't be able to fit your current cargo in the new ship." );
+      return;
+   }
+   else if (pilot_hasDeployed(player)) {
+      dialogue_alert( "You can't leave your fighters stranded. Recall them before changing ships." );
       return;
    }
 
