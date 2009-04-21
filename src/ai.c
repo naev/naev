@@ -1763,7 +1763,7 @@ static int aiL_dock( lua_State *L )
       NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
       return 0;
    }
-   pilot_dock(cur_pilot, p);
+   pilot_dock(cur_pilot, p, 1);
 
    return 0;
 }

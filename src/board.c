@@ -79,7 +79,17 @@ void player_board (void)
    else if (pilot_isFlag(p,PILOT_BOARDED)) {
       player_message("Your target cannot be boarded again.");
       return;
-   };
+   }
+   /* We'll recover it if it's the pilot's ex-escort. */
+   else if (p->parent == PLAYER_ID) {
+      /* Try to recover. */
+      pilot_dock( p, player, 0 );
+      if (pilot_isFlag(p, PILOT_DELETE )) { /* Hack to see if it boarded. */
+         player_message("You recover %s into your fighter bay.", p->name);
+         return;
+      }
+   }
+
 
    /* pilot will be boarded */
    pilot_setFlag(p,PILOT_BOARDED); 

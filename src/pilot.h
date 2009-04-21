@@ -310,7 +310,7 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison );
 int pilot_refuelStart( Pilot *p );
 void pilot_hyperspaceAbort( Pilot* p );
 void pilot_clearTimers( Pilot *pilot );
-int pilot_dock( Pilot *p, Pilot *target );
+int pilot_dock( Pilot *p, Pilot *target, int deployed );
 
 
 /*

@@ -1242,19 +1242,23 @@ void pilot_setAfterburner( Pilot* p )
  *
  *    @param p Pilot that wants to dock.
  *    @param target Pilot to dock on.
+ *    @param deployed Was pilot already deployed?
  *    @return 0 on successful docking.
  */
-int pilot_dock( Pilot *p, Pilot *target )
+int pilot_dock( Pilot *p, Pilot *target, int deployed )
 {
    int i;
    Outfit *o;
 
    /* Must be close. */
-   if (vect_dist(&p->solid->pos, &target->solid->pos) > 30.)
+   if (vect_dist(&p->solid->pos, &target->solid->pos) >
+         target->ship->gfx_space->sw * PILOT_SIZE_APROX )
       return -1;
 
    /* Cannot be going much faster. */
-   if (vect_dist(&p->solid->vel, &target->solid->vel) > 2*MIN_VEL_ERR)
+   if ((pow2(VX(p->solid->vel)-VX(target->solid->vel)) +
+            pow2(VY(p->solid->vel)-VY(target->solid->vel))) >
+         (double)pow2(MAX_HYPERSPACE_VEL))
       return -1;
 
    /* Check to see if target has an available bay. */
@@ -1263,7 +1267,8 @@ int pilot_dock( Pilot *p, Pilot *target )
          o = outfit_ammo(target->outfits[i].outfit);
          if (outfit_isFighter(o) &&
                (strcmp(p->ship->name,o->u.fig.ship)==0)) {
-            target->outfits[i].u.deployed -= 1;
+            if (deployed)
+               target->outfits[i].u.deployed -= 1;
             break;
          }
       }
@@ -1276,24 +1281,26 @@ int pilot_dock( Pilot *p, Pilot *target )
       return -1;
 
    /* Remove from pilot's escort list. */
-   for (i=0; i<target->nescorts; i++) {
-      if ((target->escorts[i].type == ESCORT_TYPE_BAY) &&
-            (target->escorts[i].id == p->id))
-         break;
-   }
-   /* Not found as pilot's escorts. */
-   if (i >= target->nescorts)
-      return -1;
-   /* Free if last pilot. */
-   if (target->nescorts == 1) {
-      free(target->escorts);
-      target->escorts   = NULL;
-      target->nescorts  = 0;
-   }
-   else {
-      memmove( &target->escorts[i], &target->escorts[i+1],
-            sizeof(unsigned int) * (target->nescorts-i-1) );
-      target->nescorts--;
+   if (deployed) {
+      for (i=0; i<target->nescorts; i++) {
+         if ((target->escorts[i].type == ESCORT_TYPE_BAY) &&
+               (target->escorts[i].id == p->id))
+            break;
+      }
+      /* Not found as pilot's escorts. */
+      if (i >= target->nescorts)
+         return -1;
+      /* Free if last pilot. */
+      if (target->nescorts == 1) {
+         free(target->escorts);
+         target->escorts   = NULL;
+         target->nescorts  = 0;
+      }
+      else {
+         memmove( &target->escorts[i], &target->escorts[i+1],
+               sizeof(unsigned int) * (target->nescorts-i-1) );
+         target->nescorts--;
+      }
    }
 
    /* Destroy the pilot. */
