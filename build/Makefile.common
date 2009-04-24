@@ -11,8 +11,8 @@ endif
 #   VERSION
 #
 VMAJOR      := 0
-VMINOR      := 3
-VREV        := 8
+VMINOR      := 4
+VREV        := 0
 VERSION     := -DVMAJOR=$(VMAJOR) -DVMINOR=$(VMINOR) -DVREV=$(VREV)
 VERSIONFILE := VERSION
 
