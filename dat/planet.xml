@@ -67,35 +67,6 @@
    <faction>Collective</faction>
   </general>
  </planet>
- <planet name="Nor">
-  <GFX>
-   <exterior>gas.png</exterior>
-   <space>I01.png</space>
-  </GFX>
-  <pos>
-   <y>0</y>
-   <x>0</x>
-  </pos>
-  <general>
-   <prodfactor>0.3</prodfactor>
-   <bar>There's nothing remarkable about the Nor spaceport bar.  It's full of drunken Dvaereds trying to forget their hard labour.</bar>
-   <description>Nor was one of the first Dvaered worlds to be terraformed.  It's abundance in gas and ores made it a strategic location and has since then been heavily reinforced after FLF attacks and sabotages.</description>
-   <faction>Dvaered</faction>
-   <commodities>
-    <commodity>Food</commodity>
-    <commodity>Medicine</commodity>
-    <commodity>Ore</commodity>
-    <commodity>Industrial Goods</commodity>
-   </commodities>
-   <tech>
-    <main>0</main>
-    <special>0</special>
-   </tech>
-   <services>7</services>
-   <class>I</class>
-   <population>130000</population>
-  </general>
- </planet>
  <planet name="Polaris Prime">
   <GFX>
    <exterior>traderoom.png</exterior>
@@ -154,30 +125,27 @@
    <population>27000</population>
   </general>
  </planet>
- <planet name="Doranthex Prime">
+ <planet name="Raglan Outpost">
   <GFX>
-   <exterior>lava.png</exterior>
-   <space>A01.png</space>
+   <exterior>station00.png</exterior>
+   <space>000.png</space>
   </GFX>
   <pos>
-   <y>0</y>
-   <x>0</x>
+   <y>17</y>
+   <x>394</x>
   </pos>
   <general>
-   <prodfactor>0.7</prodfactor>
-   <bar>The drinks served in the Furnance, as the bar calls itself are of a pretty strange variety.  They are generally very strong and served at a warm temperature.  The house specialties also contain volcanic ash which is harvested on the planet surface.  A strange bar indeed.</bar>
-   <description>Doranthex Prime is a mostly molten planet.  The only exception is a small island that drifts around the surface mainly around the polar regions.  On this island the Dvaered have established a small base, mainly for research and military prototyping, although civilians are allowed in the main facilities.  Due to the intense temperatures they are shielded by over 50m of temperature isolating plating, which doesn't allow any views of the planet itself once you've landed.</description>
+   <prodfactor>0.5</prodfactor>
+   <bar>The Raglan bar is a pretty small bar for Dvaered standards, and quite empty too.</bar>
+   <description>Raglan Outpost was established after the Dvaered-Frontier war broke out before the Incident.  To this day the Frontier still is demanding for its dismantling in the halls of the Emperor, although he has yet to make a statement.  Meanwhile the Dvaereds use this base intensively in their fight against the FLF.</description>
    <faction>Dvaered</faction>
-   <commodities>
-    <commodity>Food</commodity>
-   </commodities>
    <tech>
-    <main>0</main>
+    <main>7</main>
     <special>0</special>
    </tech>
    <services>3</services>
-   <class>A</class>
-   <population>20000</population>
+   <class>1</class>
+   <population>7000</population>
   </general>
  </planet>
  <planet name="Cerberus">
@@ -273,27 +241,30 @@
    <population>20000</population>
   </general>
  </planet>
- <planet name="Raglan Outpost">
+ <planet name="Doranthex Prime">
   <GFX>
-   <exterior>station00.png</exterior>
-   <space>000.png</space>
+   <exterior>lava.png</exterior>
+   <space>A01.png</space>
   </GFX>
   <pos>
-   <y>17</y>
-   <x>394</x>
+   <y>0</y>
+   <x>0</x>
   </pos>
   <general>
-   <prodfactor>0.5</prodfactor>
-   <bar>The Raglan bar is a pretty small bar for Dvaered standards, and quite empty too.</bar>
-   <description>Raglan Outpost was established after the Dvaered-Frontier war broke out before the Incident.  To this day the Frontier still is demanding for its dismantling in the halls of the Emperor, although he has yet to make a statement.  Meanwhile the Dvaereds use this base intensively in their fight against the FLF.</description>
+   <prodfactor>0.7</prodfactor>
+   <bar>The drinks served in the Furnance, as the bar calls itself are of a pretty strange variety.  They are generally very strong and served at a warm temperature.  The house specialties also contain volcanic ash which is harvested on the planet surface.  A strange bar indeed.</bar>
+   <description>Doranthex Prime is a mostly molten planet.  The only exception is a small island that drifts around the surface mainly around the polar regions.  On this island the Dvaered have established a small base, mainly for research and military prototyping, although civilians are allowed in the main facilities.  Due to the intense temperatures they are shielded by over 50m of temperature isolating plating, which doesn't allow any views of the planet itself once you've landed.</description>
    <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
    <tech>
-    <main>7</main>
+    <main>0</main>
     <special>0</special>
    </tech>
    <services>3</services>
-   <class>1</class>
-   <population>7000</population>
+   <class>A</class>
+   <population>20000</population>
   </general>
  </planet>
  <planet name="Torloth">
@@ -577,6 +548,65 @@
    <population>2500</population>
   </general>
  </planet>
+ <planet name="Nova Shakar">
+  <GFX>
+   <exterior>oceanic.png</exterior>
+   <space>M05.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.5</prodfactor>
+   <bar>The bar is a nice clean place unlike most other bars.  It's been cleaned thoroughly for all the Empire officials that are starting to use the planet as their home.</bar>
+   <description>Nova Shakar was a somewhat abandoned Empire planet until the Emperor's Fist project was started.  Since then it's become a major producer of goods for the project and has started to gain importance.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>6</main>
+    <special>0</special>
+   </tech>
+   <services>15</services>
+   <class>M</class>
+   <population>812000</population>
+  </general>
+ </planet>
+ <planet name="Em 5">
+  <GFX>
+   <exterior>oceanic.png</exterior>
+   <space>M03.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.6</prodfactor>
+   <population>150000</population>
+   <bar>The Drunken Lobster has a plaque remembering the day the Emperor came to Em 5.  It seems unlikely he ever came in this bar though.</bar>
+   <description>Em 5 is a quiet world.  Never really had anyone pay attention to it until after the Incident, when it became a temporary refuge of the Emperor.  Since then it's started become a place for the aristocracy to meet.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Luxury Goods</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>6</main>
+    <special>0</special>
+   </tech>
+   <services>31</services>
+   <class>M</class>
+  </general>
+ </planet>
  <planet name="S72839">
   <GFX>
    <exterior>station01.png</exterior>
@@ -761,7 +791,6 @@
   </pos>
   <general>
    <prodfactor>0.4</prodfactor>
-   <population>325000</population>
    <bar>The Dowue Spaceport Bar also known as the Frozen Shrimp after some ancient crustaceans found during the construction of the spaceport is a place where most of the personnel spends their time.  The dangers even with the headgear of the Dowue Syndrome persuades most people to stay indoors and the Bar lies in the heart of the spaceport.</bar>
    <description>Dowue is a planet known for the infamous "Dowue Syndrome", a condition where patients will temporarily go insane with hysteria due to prolonged expose of certain visual wavelengths.  This was at first attributed a contaminated shipment of food, but later it was found that the sun in the Apez system emitted under abnormal wavelengths that when multiplied by the effect of Dowue's atmosphere would cause this condition.  Since then everyone is required to wear special headgear to avoid this.</description>
    <faction>Empire</faction>
@@ -777,6 +806,24 @@
    </tech>
    <services>31</services>
    <class>P</class>
+   <population>325000</population>
+  </general>
+ </planet>
+ <planet name="Uhriabi-17">
+  <GFX>
+   <space>J02.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <services>0</services>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <class>J</class>
   </general>
  </planet>
  <planet name="Darkshed">
@@ -809,20 +856,20 @@
    <population>14000</population>
   </general>
  </planet>
- <planet name="Nova Shakar">
+ <planet name="Nor">
   <GFX>
-   <exterior>oceanic.png</exterior>
-   <space>M05.png</space>
+   <exterior>gas.png</exterior>
+   <space>I01.png</space>
   </GFX>
   <pos>
    <y>0</y>
    <x>0</x>
   </pos>
   <general>
-   <prodfactor>0.5</prodfactor>
-   <bar>The bar is a nice clean place unlike most other bars.  It's been cleaned thoroughly for all the Empire officials that are starting to use the planet as their home.</bar>
-   <description>Nova Shakar was a somewhat abandoned Empire planet until the Emperor's Fist project was started.  Since then it's become a major producer of goods for the project and has started to gain importance.</description>
-   <faction>Empire</faction>
+   <prodfactor>0.3</prodfactor>
+   <bar>There's nothing remarkable about the Nor spaceport bar.  It's full of drunken Dvaereds trying to forget their hard labour.</bar>
+   <description>Nor was one of the first Dvaered worlds to be terraformed.  It's abundance in gas and ores made it a strategic location and has since then been heavily reinforced after FLF attacks and sabotages.</description>
+   <faction>Dvaered</faction>
    <commodities>
     <commodity>Food</commodity>
     <commodity>Medicine</commodity>
@@ -830,12 +877,12 @@
     <commodity>Industrial Goods</commodity>
    </commodities>
    <tech>
-    <main>6</main>
+    <main>0</main>
     <special>0</special>
    </tech>
-   <services>15</services>
-   <class>M</class>
-   <population>812000</population>
+   <services>7</services>
+   <class>I</class>
+   <population>130000</population>
   </general>
  </planet>
  <planet name="S49281">
