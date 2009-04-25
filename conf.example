@@ -31,10 +31,10 @@
 --[[
 -- Anti aliasing.  Shouldn't be used, will probably be removed soon.
 --]]
---aa = 1
---aa_point = 1
---aa_line = 1
---aa_polygon = 1
+--aa = 0
+--aa_point = 0
+--aa_line = 0
+--aa_polygon = 0
 
 --[[
 -- Vsync.  Doesn't work on all systems.
@@ -44,8 +44,8 @@
 --[[
 -- FPS.
 --]]
---showfps = true -- Whether or not to display them on screen.
---maxfps = 0 -- 0 is unlimited fps
+--showfps = false -- Whether or not to display them on screen.
+--maxfps = 200 -- 0 is unlimited fps
 
 --[[
 -- Input.

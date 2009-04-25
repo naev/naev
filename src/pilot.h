@@ -108,7 +108,10 @@ typedef struct PilotOutfit_ {
    Outfit* outfit; /**< Associated outfit. */
    int quantity; /**< Number of outfits of this type pilot has. */
    PilotOutfitState state; /**< State of the outfit. */
-   int beamid; /**< ID of the beam used in this outfit, only used for beams. */
+   union {
+      int deployed; /**< Deployment status (if fighter craft). */
+      int beamid; /**< ID of the beam used in this outfit, only used for beams. */
+   } u;
    int *mounts; /**< ID of each outfit mount. */
    int lastshot; /**< ID of the outfit that last shot. */
    double timer; /**< Used to store when it was last used. */
@@ -132,6 +135,27 @@ typedef struct PilotHook_ {
    int type; /**< Type of hook. */
    int id; /**< Hook ID assosciated with pilot hook. */
 } PilotHook;
+
+
+/**
+ * @brief Different types of escorts.
+ */
+typedef enum EscortType_e {
+   ESCORT_TYPE_NULL, /**< Invalid escort type. */
+   ESCORT_TYPE_BAY, /**< Escort is from a fighter bay. */
+   ESCORT_TYPE_MERCENARY, /**< Escort is a mercenary. */
+   ESCORT_TYPE_ALLY /**< Escort is an ally. */
+} EscortType_t;
+
+
+/**
+ * @brief Stores an escort.
+ */
+typedef struct Escort_s {
+   char *ship; /**< Type of the ship escort is flying. */
+   EscortType_t type; /**< Type of escort. */
+   unsigned int id; /**< ID of in-game pilot. */
+} Escort_t;
 
 
 /**
@@ -212,7 +236,7 @@ typedef struct Pilot_ {
 
    /* Escort stuff. */
    unsigned int parent; /**< Pilot's parent. */
-   unsigned int *escorts; /**< Pilot's escorts. */
+   Escort_t *escorts; /**< Pilot's escorts. */
    int nescorts; /**< Number of pilot escorts. */
 
    /* AI */
@@ -286,7 +310,8 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison );
 int pilot_refuelStart( Pilot *p );
 void pilot_hyperspaceAbort( Pilot* p );
 void pilot_clearTimers( Pilot *pilot );
-int pilot_dock( Pilot *p, Pilot *target );
+int pilot_hasDeployed( Pilot *p );
+int pilot_dock( Pilot *p, Pilot *target, int deployed );
 
 
 /*
@@ -352,7 +377,7 @@ int pilot_isFriendly( const Pilot *p );
 /*
  * hooks
  */
-void pilot_addHook( Pilot *pilot, int type, int hook );
+void pilot_addHook( Pilot *pilot, int type, unsigned int hook );
 void pilot_runHook( Pilot* p, int hook_type );
 
 

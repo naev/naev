@@ -11,7 +11,8 @@
 
 
 /* add/run hooks */
-unsigned int hook_add( unsigned int parent, const char *func, const char *stack );
+unsigned int hook_addMisn( unsigned int parent, const char *func, const char *stack );
+unsigned int hook_addFunc( int (*func)(void*), void* data, const char *stack );
 int hook_rm( unsigned int id );
 void hook_rmParent( unsigned int parent );
 

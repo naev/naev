@@ -45,6 +45,7 @@
 #include "music.h"
 #include "gui.h"
 #include "nlua_var.h"
+#include "escort.h"
 
 
 #define XML_START_ID "Start" /**< Module start xml document identifier. */
@@ -149,12 +150,14 @@ static void player_newShipMake( char *name );
 /* sound */
 static void player_initSound (void);
 /* save/load */
+static int player_saveEscorts( xmlTextWriterPtr writer );
 static int player_saveShip( xmlTextWriterPtr writer, 
       Pilot* ship, char* loc );
 static int player_parse( xmlNodePtr parent );
 static int player_parseDone( xmlNodePtr parent );
 static int player_parseLicenses( xmlNodePtr parent );
 static int player_parseShip( xmlNodePtr parent, int is_player );
+static int player_parseEscorts( xmlNodePtr parent );
 /* 
  * externed
  */
@@ -683,14 +686,37 @@ const char* player_rating (void)
  *    @param outfitname Outfit to check how many the player owns.
  *    @return The number of outfits matching outfitname owned.
  */
-int player_outfitOwned( const char* outfitname )
+int player_outfitOwned( const Outfit* o )
 {
-   int i;
+   int i, j;
+   int deployed;
+   int q;
 
+   /* Defaults. */
+   q = 0;
+
+   /* Get base quantity. */
    for (i=0; i<player->noutfits; i++)
-      if (strcmp(outfitname, player->outfits[i].outfit->name)==0)
-         return player->outfits[i].quantity;
-   return 0;
+      if (player->outfits[i].outfit == o) {
+         q = player->outfits[i].quantity;
+         break;
+      }
+
+   /* Fighter bays need to count deployed. */
+   if (outfit_isFighter(o)) {
+      deployed = 0;
+      for (j=0; j<player->noutfits; j++) {
+         if (outfit_isFighterBay(player->outfits[j].outfit)) {
+            if (strcmp(o->name,player->outfits[j].outfit->u.bay.ammo_name)==0) {
+               deployed = player->outfits[j].u.deployed;
+               break;
+            }
+         }
+      }
+      q += deployed;
+   }
+
+   return q;
 }
 
 
@@ -1233,6 +1259,9 @@ void player_brokeHyperspace (void)
    /* update the map */
    map_jump();
 
+   /* Add the escorts. */
+   player_addEscorts();
+
    /* Disable autonavigation if arrived. */
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (hyperspace_target == -1) {
@@ -1432,15 +1461,15 @@ void player_targetEscort( int prev )
 
    /* Check if current target is an escort. */
    for (i=0; i<player->nescorts; i++) {
-      if (player->target == player->escorts[i]) {
+      if (player->target == player->escorts[i].id) {
 
          /* Cycle targets. */
          if (prev)
             player->target = (i > 0) ?
-                  player->escorts[i-1] : PLAYER_ID;
+                  player->escorts[i-1].id : PLAYER_ID;
          else
             player->target = (i < player->nescorts-1) ?
-                  player->escorts[i+1] : PLAYER_ID;
+                  player->escorts[i+1].id : PLAYER_ID;
 
          break;
       }
@@ -1454,9 +1483,9 @@ void player_targetEscort( int prev )
 
          /* Cycle forward or backwards. */
          if (prev)
-            player->target = player->escorts[player->nescorts-1];
+            player->target = player->escorts[player->nescorts-1].id;
          else
-            player->target = player->escorts[0];
+            player->target = player->escorts[0].id;
       }
       else
          player->target = PLAYER_ID;
@@ -1745,6 +1774,80 @@ char **player_getLicenses( int *nlicenses )
 
 
 /**
+ * @brief Clears escorts to make sure deployment is sane.
+ */
+void player_clearEscorts (void)
+{
+   int i;
+
+   for (i=0; i<player->noutfits; i++) {
+      if (outfit_isFighterBay(player->outfits[i].outfit)) {
+         player->outfits[i].u.deployed = 0;
+      }
+   }
+}
+
+
+/**
+ * @brief Adds the player's escorts.
+ *
+ *    @return 0 on success.
+ */
+int player_addEscorts (void)
+{
+   int i, j;
+   double a;
+   Vector2d v;
+   unsigned int e;
+   Outfit *o;
+
+   for (i=0; i<player->nescorts; i++) {
+      a = RNGF() * 2 * M_PI;
+      vect_cset( &v, player->solid->pos.x + 50.*cos(a),
+            player->solid->pos.y + 50.*sin(a) );
+      e = escort_create( player, player->escorts[i].ship,
+            &v, &player->solid->vel, player->solid->dir,
+            player->escorts[i].type, 0 );
+      player->escorts[i].id = e; /* Important to update ID. */
+
+      /* Update outfit if needed. */
+      if (player->escorts[i].type == ESCORT_TYPE_BAY) {
+         for (j=0; j<player->noutfits; j++) {
+            if (outfit_isFighterBay(player->outfits[j].outfit)) {
+               o = outfit_ammo(player->outfits[j].outfit);
+               if (outfit_isFighter(o) &&
+                     (strcmp(player->escorts[i].ship,o->u.fig.ship)==0)) {
+                  player->outfits[j].u.deployed += 1;
+                  break;
+               }
+            }
+         }
+      }
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Saves the player's escorts.
+ */
+static int player_saveEscorts( xmlTextWriterPtr writer )
+{
+   int i;
+
+   for (i=0; i<player->nescorts; i++) {
+      xmlw_startElem(writer, "escort");
+      xmlw_attr(writer,"type","bay"); /**< @todo other types. */
+      xmlw_str(writer, player->escorts[i].ship);
+      xmlw_endElem(writer); /* "escort" */
+   }
+
+   return 0;
+}
+
+
+/**
  * @brief Save the freaking player in a freaking xmlfile.
  *
  *    @param writer xml Writer to use.
@@ -1781,7 +1884,6 @@ int player_save( xmlTextWriterPtr writer )
 
    xmlw_endElem(writer); /* "player" */
 
-
    /* Mission the player has done */
    xmlw_startElem(writer,"missions_done");
    for (i=0; i<missions_ndone; i++) {
@@ -1790,6 +1892,11 @@ int player_save( xmlTextWriterPtr writer )
          xmlw_elem(writer,"done",m->name);
    }
    xmlw_endElem(writer); /* "missions_done" */
+
+   /* Escorts. */
+   xmlw_startElem(writer, "escorts");
+   player_saveEscorts(writer);
+   xmlw_endElem(writer); /* "escorts" */
 
    return 0;
 }
@@ -1897,6 +2004,8 @@ int player_load( xmlNodePtr parent )
          player_parse( node );
       else if (xml_isNode(node,"missions_done"))
          player_parseDone( node );
+      else if (xml_isNode(node,"escorts"))
+         player_parseEscorts(node);
    } while (xml_nextNode(node));
 
    return 0;
@@ -2012,6 +2121,42 @@ static int player_parseLicenses( xmlNodePtr parent )
    do {
       if (xml_isNode(node,"license"))
          player_addLicense( xml_get(node) );
+   } while (xml_nextNode(node));
+
+   return 0;
+}
+
+
+/**
+ * @brief Parses the escorts from the escort node.
+ *
+ *    @param parent "escorts" node to parse.
+ *    @return 0 on success.
+ */
+static int player_parseEscorts( xmlNodePtr parent )
+{
+   xmlNodePtr node;
+   char *buf, *ship;
+   EscortType_t type;
+
+   node = parent->xmlChildrenNode;
+
+   do {
+      if (xml_isNode(node,"escort")) {
+         xmlr_attr( node, "type", buf );
+         if (strcmp(buf,"bay")==0)
+            type = ESCORT_TYPE_BAY;
+         else {
+            WARN("Escort has invalid type '%s'.", buf);
+            type = ESCORT_TYPE_NULL;
+         }
+         free(buf);
+
+         ship = xml_get(node);
+
+         /* Add escort to the list. */
+         escort_addList( player, ship, type, 0 );
+      }
    } while (xml_nextNode(node));
 
    return 0;

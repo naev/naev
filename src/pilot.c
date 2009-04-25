@@ -69,7 +69,7 @@ extern void ai_destroy( Pilot* p ); /**< from ai.c */
 extern void ai_think( Pilot* pilot ); /**< from ai.c */
 /* internal */
 /* update. */
-static void pilot_shootWeapon( Pilot* p, PilotOutfit* w );
+static int pilot_shootWeapon( Pilot* p, PilotOutfit* w );
 static void pilot_hyperspace( Pilot* pilot );
 static void pilot_refuel( Pilot *p, double dt );
 static void pilot_update( Pilot* pilot, const double dt );
@@ -321,6 +321,8 @@ Pilot* pilot_get( const unsigned int id )
  */
 int pilot_isHostile( const Pilot *p )
 {
+   if (pilot_isFlag(p, PILOT_FRIENDLY))
+      return 0;
    if (pilot_isFlag(p, PILOT_HOSTILE) ||
          areEnemies(FACTION_PLAYER,p->faction))
       return 1;
@@ -350,6 +352,8 @@ int pilot_isNeutral( const Pilot *p )
  */
 int pilot_isFriendly( const Pilot *p )
 {
+   if (pilot_isFlag(p, PILOT_HOSTILE))
+      return 0;
    if (pilot_isFlag(p, PILOT_FRIENDLY) ||
          areAllies(FACTION_PLAYER,p->faction))
       return 1;
@@ -691,7 +695,7 @@ int pilot_freeSpace( Pilot* p )
  */
 void pilot_shoot( Pilot* p, int group )
 {
-   int i;
+   int i, ret;
    Outfit* o;
 
    if (!p->outfits) return; /* no outfits */
@@ -704,8 +708,11 @@ void pilot_shoot( Pilot* p, int group )
          /* Choose what to shoot dependent on type. */
          if ((group == 0) ||
                ((group == 1) && outfit_isTurret(o)) ||
-               ((group == 2) && !outfit_isTurret(o)))
-            pilot_shootWeapon( p, &p->outfits[i] );
+               ((group == 2) && !outfit_isTurret(o))) {
+            ret = pilot_shootWeapon( p, &p->outfits[i] );
+            if (ret == 1)
+               i--;
+         }
       }
    }
 }
@@ -747,9 +754,9 @@ void pilot_shootStop( Pilot* p, const int secondary )
          o = p->outfits[i].outfit;
          if (!outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY) &&
                outfit_isBeam(o)) /** @todo possibly make this neater. */
-            if (p->outfits[i].beamid > 0) {
-               beam_end( p->id, p->outfits[i].beamid );
-               p->outfits[i].beamid = 0;
+            if (p->outfits[i].u.beamid > 0) {
+               beam_end( p->id, p->outfits[i].u.beamid );
+               p->outfits[i].u.beamid = 0;
             }
       }
    }
@@ -759,9 +766,9 @@ void pilot_shootStop( Pilot* p, const int secondary )
       
       o = p->secondary->outfit;
 
-      if (outfit_isBeam(o) && (p->secondary->beamid > 0)) {
-         beam_end( p->id, p->secondary->beamid );
-         p->secondary->beamid = 0;
+      if (outfit_isBeam(o) && (p->secondary->u.beamid > 0)) {
+         beam_end( p->id, p->secondary->u.beamid );
+         p->secondary->u.beamid = 0;
       }
    }
 }
@@ -796,15 +803,20 @@ int pilot_getMount( Pilot *p, int id, Vector2d *v )
  *
  *    @param p Pilot that is shooting.
  *    @param w Pilot's outfit to shoot.
+ *    @return 0 if successful, 1 if ran out of ammo.
  */
-static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
+static int pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 {
    int id;
    Vector2d vp, vv;
+   int rm_outfit;
 
    /* check to see if weapon is ready */
    if (w->timer > 0.)
-      return;
+      return 0;
+
+   /* Defaults. */
+   rm_outfit = 0;
 
    /* Get weapon mount position. */
    if (w->mounts == NULL)
@@ -823,7 +835,8 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
    if (outfit_isBolt(w->outfit)) {
       
       /* enough energy? */
-      if (outfit_energy(w->outfit) > p->energy) return;
+      if (outfit_energy(w->outfit) > p->energy)
+         return 0;
 
       p->energy -= outfit_energy(w->outfit);
       weapon_add( w->outfit, p->solid->dir,
@@ -836,11 +849,12 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
    else if (outfit_isBeam(w->outfit)) {
 
       /* Check if enough energy to last a second. */
-      if (outfit_energy(w->outfit) > p->energy) return;
+      if (outfit_energy(w->outfit) > p->energy)
+         return 0;
 
       /** @todo Handle warmup stage. */
       w->state = PILOT_OUTFIT_ON;
-      w->beamid = beam_start( w->outfit, p->solid->dir,
+      w->u.beamid = beam_start( w->outfit, p->solid->dir,
             &vp, &p->solid->vel, p->id, p->target, id );
    }
 
@@ -853,15 +867,15 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 
       /* Shooter can't be the target - sanity check for the player */
       if ((w->outfit->type != OUTFIT_TYPE_MISSILE_DUMB) && (p->id==p->target))
-         return;
+         return 0;
 
       /* Must have ammo left. */
       if ((p->ammo == NULL) || (p->ammo->quantity <= 0))
-         return;
+         return 0;
 
       /* enough energy? */
       if (outfit_energy(w->outfit) > p->energy)
-         return;
+         return 0;
 
       p->energy -= outfit_energy(w->outfit);
       weapon_add( p->ammo->outfit, p->solid->dir,
@@ -869,7 +883,7 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 
       p->ammo->quantity -= 1; /* we just shot it */
       if (p->ammo->quantity <= 0) /* Out of ammo. */
-         pilot_rmOutfit( p, p->ammo->outfit, 0 ); /* It'll set p->ammo to NULL */
+         rm_outfit = 1;
    }
 
    /*
@@ -881,15 +895,16 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
 
       /* Must have ammo left. */
       if ((p->ammo == NULL) || (p->ammo->quantity <= 0))
-         return;
+         return 0;
 
       /* Create the escort. */
-      escort_create( p->id, p->ammo->outfit->u.fig.ship,
-            &vp, &p->solid->vel, 1 );
+      escort_create( p, p->ammo->outfit->u.fig.ship,
+            &vp, &p->solid->vel, p->solid->dir, ESCORT_TYPE_BAY, 1 );
 
       p->ammo->quantity -= 1; /* we just shot it */
+      p->secondary->u.deployed += 1; /* Mark as deployed. */
       if (p->ammo->quantity <= 0) /* Out of ammo. */
-         pilot_rmOutfit( p, p->ammo->outfit, 0 ); /* It'll set p->ammo to NULL */
+         rm_outfit = 1;
    }
 
    else {
@@ -903,6 +918,14 @@ static void pilot_shootWeapon( Pilot* p, PilotOutfit* w )
    w->lastshot++;
    if (w->lastshot >= w->quantity)
       w->lastshot = 0;
+
+   /* Remove outfit if needed last, to avoid possible free issues. */
+   if (rm_outfit) {
+      pilot_rmOutfit( p, p->ammo->outfit, 0 ); /* It'll set p->ammo to NULL */
+      return 1;
+   }
+
+   return 0;
 }
 
 
@@ -926,9 +949,9 @@ void pilot_switchSecondary( Pilot* p, int i )
 
    /* Check for weapon change. */
    if ((cur != NULL) && (player->secondary != cur)) {
-      if (outfit_isBeam(cur->outfit) && (cur->beamid > 0)) {
-         beam_end( p->id, cur->beamid );
-         cur->beamid = 0;
+      if (outfit_isBeam(cur->outfit) && (cur->u.beamid > 0)) {
+         beam_end( p->id, cur->u.beamid );
+         cur->u.beamid = 0;
       }
    }
 }
@@ -1075,7 +1098,7 @@ void pilot_dead( Pilot* p )
    if (p->id==PLAYER_ID)
       player_dead();
    p->timer[0] = 0.; /* no need for AI anymore */
-   p->ptimer = 1. + sqrt(10*p->armour_max*p->shield_max) / 1000.;
+   p->ptimer = 1. + sqrt(10*p->armour_max*p->shield_max) / 1500.;
    p->timer[1] = 0.; /* explosion timer */
 
    /* flag cleanup - fixes some issues */
@@ -1219,48 +1242,35 @@ void pilot_setAfterburner( Pilot* p )
  *
  *    @param p Pilot that wants to dock.
  *    @param target Pilot to dock on.
+ *    @param deployed Was pilot already deployed?
  *    @return 0 on successful docking.
  */
-int pilot_dock( Pilot *p, Pilot *target )
+int pilot_dock( Pilot *p, Pilot *target, int deployed )
 {
    int i;
    Outfit *o;
 
    /* Must be close. */
-   if (vect_dist(&p->solid->pos, &target->solid->pos) > 30.)
+   if (vect_dist(&p->solid->pos, &target->solid->pos) >
+         target->ship->gfx_space->sw * PILOT_SIZE_APROX )
       return -1;
 
    /* Cannot be going much faster. */
-   if (vect_dist(&p->solid->vel, &target->solid->vel) > 2*MIN_VEL_ERR)
+   if ((pow2(VX(p->solid->vel)-VX(target->solid->vel)) +
+            pow2(VY(p->solid->vel)-VY(target->solid->vel))) >
+         (double)pow2(MAX_HYPERSPACE_VEL))
       return -1;
-
-   /* Remove from pilot's escort list. */
-   for (i=0; i<target->nescorts; i++) {
-      if (target->escorts[i] == p->id)
-         break;
-   }
-   /* Not found as pilot's escorts. */
-   if (i >= target->nescorts)
-      return -1;
-   /* Free if last pilot. */
-   if (target->nescorts == 1) {
-      free(target->escorts);
-      target->escorts   = NULL;
-      target->nescorts  = 0;
-   }
-   else {
-      memmove( &target->escorts[i], &target->escorts[i+1],
-            sizeof(unsigned int) * (target->nescorts-i-1) );
-      target->nescorts--;
-   }
 
    /* Check to see if target has an available bay. */
    for (i=0; i<target->noutfits; i++) {
       if (outfit_isFighterBay(target->outfits[i].outfit)) {
          o = outfit_ammo(target->outfits[i].outfit);
          if (outfit_isFighter(o) &&
-               (strcmp(p->ship->name,o->u.fig.ship)==0))
+               (strcmp(p->ship->name,o->u.fig.ship)==0)) {
+            if (deployed)
+               target->outfits[i].u.deployed -= 1;
             break;
+         }
       }
    }
    if (i >= target->noutfits)
@@ -1270,9 +1280,49 @@ int pilot_dock( Pilot *p, Pilot *target )
    if (pilot_addOutfit(target, o, 1) != 1)
       return -1;
 
+   /* Remove from pilot's escort list. */
+   if (deployed) {
+      for (i=0; i<target->nescorts; i++) {
+         if ((target->escorts[i].type == ESCORT_TYPE_BAY) &&
+               (target->escorts[i].id == p->id))
+            break;
+      }
+      /* Not found as pilot's escorts. */
+      if (i >= target->nescorts)
+         return -1;
+      /* Free if last pilot. */
+      if (target->nescorts == 1) {
+         free(target->escorts);
+         target->escorts   = NULL;
+         target->nescorts  = 0;
+      }
+      else {
+         memmove( &target->escorts[i], &target->escorts[i+1],
+               sizeof(unsigned int) * (target->nescorts-i-1) );
+         target->nescorts--;
+      }
+   }
+
    /* Destroy the pilot. */
    pilot_setFlag(p,PILOT_DELETE);
 
+   return 0;
+}
+
+
+/**
+ * @brief Checks to see if the pilot has deployed ships.
+ *
+ *    @param p Pilot to see if has deployed ships.
+ *    @return 1 if pilot has deployed ships, 0 otherwise.
+ */
+int pilot_hasDeployed( Pilot *p )
+{
+   int i;
+   for (i=0; i<p->noutfits; i++)
+      if (outfit_isFighterBay(p->outfits[i].outfit))
+         if (p->outfits[i].u.deployed > 0)
+            return 1;
    return 0;
 }
 
@@ -1429,7 +1479,7 @@ static void pilot_update( Pilot* pilot, const double dt )
       }
    }
    else if (pilot->armour <= 0.) /* PWNED */
-         pilot_dead(pilot); /* start death stuff */
+      pilot_dead(pilot); /* start death stuff */
 
    /* purpose fallthrough to get the movement like disabled */
    if (pilot_isDisabled(pilot)) {
@@ -1844,64 +1894,67 @@ int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
 
    c = (outfit_isMod(outfit)) ? outfit->u.mod.cargo : 0;
    q = quantity;
-   for (i=0; i<pilot->noutfits; i++)
-      if (pilot->outfits[i].outfit == outfit) {
-         po = &pilot->outfits[i];
+   for (i=0; i<pilot->noutfits; i++) {
+      if (pilot->outfits[i].outfit != outfit)
+         continue;
 
-         /* Remove quantity. */
-         o = po->quantity;
-         po->quantity -= quantity;
+      po = &pilot->outfits[i];
 
-         /* Calculate q. */
-         if (po->quantity <= 0) {
-            /* we didn't actually remove the full amount */
-            q += po->quantity;
-            po->quantity = 0.;
-         }
+      /* Remove quantity. */
+      o = po->quantity;
+      po->quantity -= quantity;
 
-         /* Remove from mount points. */
-         if ((pilot->mounted != NULL) && (po->mounts != NULL)) {
-            for (j=o-1; j >= po->quantity; j--) {
-               if (po->mounts[j] != 0)
-                  pilot->mounted[ po->mounts[j] ]--;
-            }
-         }
-
-         /* Need to remove the outfit. */
-         if (po->quantity <= 0) {
-
-            /* hack in case it reallocs - can happen even when shrinking */
-            osec = (pilot->secondary) ? pilot->secondary->outfit : NULL;
-
-            /* free some memory if needed. */
-            if (po->mounts != NULL) {
-               free(po->mounts);
-               po->mounts = NULL;
-            }
-
-            /* remove the outfit */
-            pilot->noutfits--;
-            if (pilot->noutfits <= 0) {
-               if (pilot->outfits != NULL) {
-                   free(pilot->outfits);
-                   pilot->outfits = NULL;
-               }
-               pilot->noutfits = 0;
-            }
-            else {
-               memmove( &pilot->outfits[i], &pilot->outfits[i+1],
-                     sizeof(PilotOutfit) * (pilot->noutfits-i) );
-               pilot->outfits = realloc( pilot->outfits,
-                     sizeof(PilotOutfit) * (pilot->noutfits) );
-            }
-
-            /* set secondary  and afterburner */
-            pilot_setSecondary( pilot, osec );
-            pilot_setAfterburner( pilot );
-         }
-         pilot_calcStats(pilot); /* recalculate stats */
-         return q;
+      /* Calculate q. */
+      if (po->quantity <= 0) {
+         /* we didn't actually remove the full amount */
+         q += po->quantity;
+         po->quantity = 0.;
       }
+
+      /* Remove from mount points. */
+      if ((pilot->mounted != NULL) && (po->mounts != NULL)) {
+         for (j=o-1; j >= po->quantity; j--) {
+            if (po->mounts[j] != 0)
+               pilot->mounted[ po->mounts[j] ]--;
+         }
+      }
+
+      /* Need to remove the outfit. */
+      if (po->quantity <= 0) {
+
+         /* hack in case it reallocs - can happen even when shrinking */
+         osec = (pilot->secondary) ? pilot->secondary->outfit : NULL;
+
+         /* free some memory if needed. */
+         if (po->mounts != NULL) {
+            free(po->mounts);
+            po->mounts = NULL;
+         }
+
+         /* remove the outfit */
+         pilot->noutfits--;
+         if (pilot->noutfits <= 0) {
+            if (pilot->outfits != NULL) {
+                free(pilot->outfits);
+                pilot->outfits = NULL;
+            }
+            pilot->noutfits = 0;
+         }
+         else {
+            memmove( &pilot->outfits[i], &pilot->outfits[i+1],
+                  sizeof(PilotOutfit) * (pilot->noutfits-i) );
+            pilot->outfits = realloc( pilot->outfits,
+                  sizeof(PilotOutfit) * (pilot->noutfits) );
+         }
+
+         /* set secondary  and afterburner */
+         pilot_setSecondary( pilot, osec );
+         pilot_setAfterburner( pilot );
+      }
+
+      pilot_calcStats(pilot); /* recalculate stats */
+      return q;
+   }
    WARN("Failure attempting to remove %d '%s' from pilot '%s'",
          quantity, outfit->name, pilot->name );
    return 0;
@@ -2351,7 +2404,7 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
  *    @param type Type of the hook to add.
  *    @param hook ID of the hook to add.
  */
-void pilot_addHook( Pilot *pilot, int type, int hook )
+void pilot_addHook( Pilot *pilot, int type, unsigned int hook )
 {
    pilot->nhooks++;
    pilot->hooks = realloc( pilot->hooks, sizeof(PilotHook) * pilot->nhooks );
@@ -2630,6 +2683,10 @@ void pilot_free( Pilot* p )
    solid_free(p->solid);
    if (p->mounted != NULL)
       free(p->mounted);
+
+   /* Free escorts. */
+   for (i=0; i<p->nescorts; i++)
+      free(p->escorts[i].ship);
    if (p->escorts)
       free(p->escorts);
 
