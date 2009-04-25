@@ -673,6 +673,14 @@ static MissionData* mission_parse( const xmlNodePtr parent )
    MissionData *temp;
    xmlNodePtr cur, node;
 
+#ifdef DEBUGGING
+   /* To check if mission is valid. */
+   lua_State *L;
+   int ret;
+   char *buf;
+   uint32_t len;
+#endif /* DEBUGGING */
+
    temp = malloc(sizeof(MissionData));
    memset( temp, 0, sizeof(MissionData) );
 
@@ -689,6 +697,19 @@ static MissionData* mission_parse( const xmlNodePtr parent )
          snprintf( str, PATH_MAX, MISSION_LUA_PATH"%s.lua", xml_get(node) );
          temp->lua = strdup( str );
          str[0] = '\0';
+
+#ifdef DEBUGGING
+         /* Check to see if syntax is valid. */
+         L = luaL_newstate();
+         buf = ndata_read( temp->lua, &len );
+         ret = luaL_loadbuffer(L, buf, len, temp->name );
+         if (ret == LUA_ERRSYNTAX) {
+            WARN("Mission Lua '%s' of mission '%s' syntax error: %s",
+                  temp->name, temp->lua, lua_tostring(L,-1) );
+         }
+         free(buf);
+         lua_close(L);
+#endif /* DEBUGGING */
       }
       else if (xml_isNode(node,"flags")) { /* set the various flags */
          cur = node->children;
