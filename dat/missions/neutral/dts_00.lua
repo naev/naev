@@ -264,9 +264,9 @@ function abort()
       if victory ~= true then
          player.modFaction( "Empire", -10)
          player.modFaction( "Trader", -10)
-         player.msg( string.format( comm[9], player.name())
+         player.msg( string.format( comm[9], player.name()) )
       else
-         player.msg( string.format( comm[10], player.name())
+         player.msg( string.format( comm[10], player.name()) )
       end
 
 end
