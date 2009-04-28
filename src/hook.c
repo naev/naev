@@ -32,6 +32,7 @@
 typedef enum HookType_e {
    HOOK_TYPE_NULL, /**< Invalid hook type. */
    HOOK_TYPE_MISN, /**< Mission hook type. */
+   HOOK_TYPE_EVENT, /**< Event hook type. */
    HOOK_TYPE_FUNC /**< C function hook type. */
 } HookType_t;
 
@@ -50,6 +51,10 @@ typedef struct Hook_ {
          unsigned int parent; /**< mission it's connected to */
          char *func; /**< function it runs */
       } misn; /**< Mission Lua function. */
+      struct {
+         unsigned int parent; /**< Event it's connected to. */
+         char *func; /**< Function it runs. */
+      } event; /**< Event Lua function. */
       struct {
          int (*func)( void *data ); /**< C function to run. */
          void *data; /**< Data to pass to C function. */
@@ -77,6 +82,7 @@ extern int misn_run( Mission *misn, const char *func );
 /* intern */
 static Hook* hook_new( HookType_t type, const char *stack );
 static int hook_runMisn( Hook *hook );
+static int hook_runEvent( Hook *hook );
 static int hook_runFunc( Hook *hook );
 static int hook_run( Hook *hook );
 static void hook_free( Hook *h );
@@ -119,6 +125,18 @@ static int hook_runMisn( Hook *hook )
 
 
 /**
+ * @brief Runs a Event function hook.
+ *
+ *    @param hook Hook to run.
+ *    @return 0 on success.
+ */
+static int hook_runEvent( Hook *hook )
+{
+   /** @todo. */
+}
+
+
+/**
  * @brief Runs a C function hook.
  *
  *    @param hook Hook to run.
@@ -148,6 +166,9 @@ static int hook_run( Hook *hook )
    switch (hook->type) {
       case HOOK_TYPE_MISN:
          return hook_runMisn(hook);
+
+      case HOOK_TYPE_EVENT:
+         return hook_runEvent(hook);
 
       case HOOK_TYPE_FUNC:
          return hook_runFunc(hook);
@@ -210,6 +231,29 @@ unsigned int hook_addMisn( unsigned int parent, const char *func, const char *st
    /* Put mission specific details. */
    new_hook->u.misn.parent = parent;
    new_hook->u.misn.func   = strdup(func);
+
+   return new_hook->id;
+}
+
+
+/**
+ * @brief Adds a new event type hook.
+ *
+ *    @param parent Hook event parent.
+ *    @param func Function to run when hook is triggered.
+ *    @param stack Stack hook belongs to.
+ *    @return The new hook identifier.
+ */
+unsigned int hook_addEvent( unsigned int parent, const char *func, const char *stack )
+{
+   Hook *new_hook;
+
+   /* Create the new hook. */
+   new_hook = hook_new( HOOK_TYPE_EVENT, stack );
+
+   /* Put event specific details. */
+   new_hook->u.event.parent = parent;
+   new_hook->u.event.func   = strdup(func);
 
    return new_hook->id;
 }
@@ -387,6 +431,11 @@ static void hook_free( Hook *h )
             free(h->u.misn.func);
          break;
 
+      case HOOK_TYPE_EVENT:
+         if (h->u.event.func != NULL)
+            free(h->u.event.func);
+         break;
+
       default:
          break;
    }
@@ -461,6 +510,12 @@ int hook_save( xmlTextWriterPtr writer )
             xmlw_elem(writer,"func","%s",h->u.misn.func);
             break;
 
+         case HOOK_TYPE_EVENT:
+            xmlw_attr(writer,"type","event"); /* Save attribute. */
+            xmlw_elem(writer,"parent","%u",h->u.event.parent);
+            xmlw_elem(writer,"func","%s",h->u.event.func);
+            break;
+
          default:
             WARN("Something has gone screwy here...");
             break;
@@ -532,6 +587,16 @@ static int hook_parse( xmlNodePtr base )
             type = HOOK_TYPE_MISN;
             free(stype);
          }
+         /* Event type. */
+         else if (strcmp(stype,"event")==0) {
+            type = HOOK_TYPE_EVENT;
+            free(stype);
+         }
+         /* Unknown. */
+         else {
+            WARN("Hook of unknown type '%s' found, skipping.", stype);
+            free(stype);
+         }
 
          /* Handle the data. */
          do {
@@ -552,6 +617,13 @@ static int hook_parse( xmlNodePtr base )
                return -1;
             }
             hook_addMisn( parent, func, stack );
+         }
+         if (type == HOOK_TYPE_EVENT) {
+            if ((parent == 0) || (func == NULL) || (stack == NULL)) {
+               WARN("Invalid hook.");
+               return -1;
+            }
+            hook_addEvent( parent, func, stack );
          }
       }
    } while (xml_nextNode(node));
