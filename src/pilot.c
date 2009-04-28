@@ -1298,7 +1298,7 @@ int pilot_dock( Pilot *p, Pilot *target, int deployed )
       }
       else {
          memmove( &target->escorts[i], &target->escorts[i+1],
-               sizeof(unsigned int) * (target->nescorts-i-1) );
+               sizeof(Escort_t) * (target->nescorts-i-1) );
          target->nescorts--;
       }
    }
