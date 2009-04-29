@@ -40,6 +40,25 @@ typedef enum SysMarker_ {
 } SysMarker;
 
 
+/**
+ * @brief Defines the availability of a mission.
+ */
+typedef struct MissionAvail_s {
+   int loc; /* location */
+   int chance; /* chance of it appearing */
+
+   /* for specific cases */
+   char *planet; /**< Planet name. */
+   char *system; /**< System name. */
+
+   /* for generic cases */
+   int* factions; /**< To certain factions. */
+   int nfactions; /**< Number of factions in factions. */
+
+   char* cond; /**< Condition that must be met (Lua). */
+   char* done; /**< Previous mission that must have been done. */
+} MissionAvail_t;
+
 
 /**
  * @struct MissionData
@@ -49,25 +68,9 @@ typedef enum SysMarker_ {
 typedef struct MissionData_ {
    char *name; /**< The name of the mission. */
 
-   /* availability */
-   struct {
-      int loc; /* location */
-      int chance; /* chance of it appearing */
-
-      /* for specific cases */
-      char *planet; /**< Planet name. */
-      char *system; /**< System name. */
-
-      /* for generic cases */
-      int* factions; /**< To certain factions. */
-      int nfactions; /**< Number of factions in factions. */
-
-      char* cond; /**< Condition that must be met (Lua). */
-      char* done; /**< Previous mission that must have been done. */
-   } avail; /**< Availability. */
+   MissionAvail_t avail; /**< Mission availability. */
 
    unsigned int flags; /**< Flags to store binary properties */
-
    char* lua; /**< Lua file to use. */
 } MissionData;
 
