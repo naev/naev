@@ -414,13 +414,16 @@ static void gui_renderBorder( double dt )
    double rx,ry, crx,cry;
    double cx,cy;
    glColour *col;
-   double a;
+   double a, int_a;
    GLfloat vertex[5*2], colours[5*4];
 
    /* Get player position. */
    pos   = &player->solid->pos;
    hw    = SCREEN_W/2;  
    hh    = SCREEN_H/2;
+
+   /* Interference. */
+   int_a = 1. - interference_alpha;
 
    /* Draw planets. */
    for (i=0; i<cur_system->nplanets; i++) {
@@ -475,7 +478,7 @@ static void gui_renderBorder( double dt )
             colours[4*j + 0] = col->r;
             colours[4*j + 1] = col->g;
             colours[4*j + 2] = col->b;
-            colours[4*j + 3] = col->a;
+            colours[4*j + 3] = int_a;
          }
          gl_vboSubData( gui_vbo, gui_vboColourOffset,
                sizeof(GLfloat) * 5*4, colours );
@@ -551,7 +554,7 @@ static void gui_renderBorder( double dt )
             colours[4*j + 0] = col->r;
             colours[4*j + 1] = col->g;
             colours[4*j + 2] = col->b;
-            colours[4*j + 3] = col->a;
+            colours[4*j + 3] = int_a;
          }
          gl_vboSubData( gui_vbo, gui_vboColourOffset,
                sizeof(GLfloat) * 4*4, colours );
