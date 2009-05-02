@@ -327,6 +327,9 @@ void gl_vboDeactivate (void)
       nglClientActiveTexture( GL_TEXTURE0 );
       glDisableClientState(GL_TEXTURE_COORD_ARRAY);
    }
+
+   /* Check for errors. */
+   gl_checkErr();
 }
 
 

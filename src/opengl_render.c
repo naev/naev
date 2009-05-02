@@ -35,15 +35,29 @@
 #include "gui.h"
 
 
+#define OPENGL_RENDER_VBO_SIZE      256 /**< Size of VBO. */
+
+
 static Vector2d* gl_camera  = NULL; /**< Camera we are using. */
 static double gl_cameraX    = 0.; /**< X position of camera. */
 static double gl_cameraY    = 0.; /**< Y position of camera. */
 static gl_vbo *gl_renderVBO = 0; /**< VBO for rendering stuff. */
+static int gl_renderVBOtexOffset = 0; /**< VBO texture offset. */
+static int gl_renderVBOcolOffset = 0; /**< VBO colour offset. */
+
+
+/*
+ * Circle textures.
+ */
+static glTexture *gl_circle      = NULL; /**< Circle mipmap. */
 
 
 /*
  * prototypes
  */
+static void gl_drawCircleEmpty( const double cx, const double cy,
+      const double r, const glColour *c );
+static glTexture *gl_genCircle( int radius );
 static void gl_blitTexture(  const glTexture* texture,
       const double x, const double y,
       const double w, const double h,
@@ -92,9 +106,9 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
    col[13] = col[1];
    col[14] = col[2];
    col[15] = col[3];
-   gl_vboSubData( gl_renderVBO, 8*2*sizeof(GLfloat), 4*4*sizeof(GLfloat), col );
+   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, 4*4*sizeof(GLfloat), col );
    gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
-         8*2*sizeof(GLfloat), 4, GL_FLOAT, 0 );
+         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -157,31 +171,30 @@ static void gl_blitTexture(  const glTexture* texture,
    tex[3] = tex[1];
    tex[5] = tex[1] + (GLfloat)th;
    tex[7] = tex[5];
-   gl_vboSubData( gl_renderVBO, 4*2*sizeof(GLfloat), 4*2*sizeof(GLfloat), tex );
+   gl_vboSubData( gl_renderVBO, gl_renderVBOtexOffset, 4*2*sizeof(GLfloat), tex );
    gl_vboActivateOffset( gl_renderVBO, GL_TEXTURE_COORD_ARRAY,
-         4*2*sizeof(GLfloat), 2, GL_FLOAT, 0 );
+         gl_renderVBOtexOffset, 2, GL_FLOAT, 0 );
 
-   if (c!=NULL) {
-      col[0] = c->r;
-      col[1] = c->g;
-      col[2] = c->b;
-      col[3] = c->a;
-      col[4] = col[0];
-      col[5] = col[1];
-      col[6] = col[2];
-      col[7] = col[3];
-      col[8] = col[0];
-      col[9] = col[1];
-      col[10] = col[2];
-      col[11] = col[3];
-      col[12] = col[0];
-      col[13] = col[1];
-      col[14] = col[2];
-      col[15] = col[3];
-      gl_vboSubData( gl_renderVBO, 8*2*sizeof(GLfloat), 4*4*sizeof(GLfloat), col );
-      gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
-            8*2*sizeof(GLfloat), 4, GL_FLOAT, 0 );
-   }
+   /* Set the colour. */
+   col[0] = c->r;
+   col[1] = c->g;
+   col[2] = c->b;
+   col[3] = c->a;
+   col[4] = col[0];
+   col[5] = col[1];
+   col[6] = col[2];
+   col[7] = col[3];
+   col[8] = col[0];
+   col[9] = col[1];
+   col[10] = col[2];
+   col[11] = col[3];
+   col[12] = col[0];
+   col[13] = col[1];
+   col[14] = col[2];
+   col[15] = col[3];
+   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, 4*4*sizeof(GLfloat), col );
+   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
+         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -356,59 +369,106 @@ void gl_cameraGet( double *x, double *y )
 
 
 /**
+ * @brief Draws an empty circle.
+ *
+ *    @param cx X position of the center in screen coordinates..
+ *    @param cy Y position of the center in screen coordinates.
+ *    @param r Radius of the circle.
+ *    @param c Colour to use.
+ */
+#define PIXEL(x,y)   \
+if (i<OPENGL_RENDER_VBO_SIZE) { \
+   vertex[2*i+0] = x; \
+   vertex[2*i+1] = y; \
+   i++; \
+}
+static void gl_drawCircleEmpty( const double cx, const double cy,
+      const double r, const glColour *c )
+{
+   int i, j;
+   double x,y,p;
+   GLfloat vertex[2*OPENGL_RENDER_VBO_SIZE], col[4*OPENGL_RENDER_VBO_SIZE];
+
+   /* Starting parameters. */
+   i = 0;
+   x = 0;
+   y = r;    
+   p = (5. - (r*4.)) / 4.;
+
+   PIXEL( cx,   cy+y );
+   PIXEL( cx,   cy-y );
+   PIXEL( cx+y, cy   );
+   PIXEL( cx-y, cy   );
+
+   while (x<y) {
+      x++;
+      if (p < 0) p += 2*(double)(x)+1;
+      else p += 2*(double)(x-(--y))+1;
+
+      if (x==0) {
+         PIXEL( cx,   cy+y );
+         PIXEL( cx,   cy-y );
+         PIXEL( cx+y, cy   );
+         PIXEL( cx-y, cy   );
+      }         
+      else      
+         if (x==y) {
+            PIXEL( cx+x, cy+y );
+            PIXEL( cx-x, cy+y );
+            PIXEL( cx+x, cy-y );
+            PIXEL( cx-x, cy-y );
+         }        
+         else     
+            if (x<y) {
+               PIXEL( cx+x, cy+y );
+               PIXEL( cx-x, cy+y );
+               PIXEL( cx+x, cy-y );
+               PIXEL( cx-x, cy-y );
+               PIXEL( cx+y, cy+x );
+               PIXEL( cx-y, cy+x );
+               PIXEL( cx+y, cy-x );
+               PIXEL( cx-y, cy-x );
+            }
+   }
+   gl_vboSubData( gl_renderVBO, 0, i*2*sizeof(GLfloat), vertex );
+   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+
+   /* Set up the colour. */
+   for (j=0; j<i; j++) {
+      col[4*j+0] = c->r;
+      col[4*j+1] = c->g;
+      col[4*j+2] = c->b;
+      col[4*j+3] = c->a;
+   }
+   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, j*4*sizeof(GLfloat), col );
+   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
+         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
+
+   /* Draw. */
+   glDrawArrays( GL_POINTS, 0, i );
+
+   /* Clear state. */
+   gl_vboDeactivate();
+}
+#undef PIXEL
+
+
+/**
  * @brief Draws a circle.
  *
  *    @param cx X position of the center in screen coordinates..
  *    @param cy Y position of the center in screen coordinates.
  *    @param r Radius of the circle.
+ *    @param c Colour to use.
+ *    @param filled yWhether or not it should be filled.
  */
-void gl_drawCircle( const double cx, const double cy, const double r )
+void gl_drawCircle( const double cx, const double cy,
+      const double r, const glColour *c, int filled )
 {
-   double x,y,p;
-
-   x = 0;
-   y = r;
-   p = (5. - (r*4.)) / 4.;
-
-   glBegin(GL_POINTS);
-      glVertex2d( cx,   cy+y );
-      glVertex2d( cx,   cy-y );
-      glVertex2d( cx+y, cy   );
-      glVertex2d( cx-y, cy   );
-
-      while (x<y) {
-         x++;
-         if (p < 0) p += 2*(double)(x)+1;
-         else p += 2*(double)(x-(--y))+1;
-
-         if (x==0) {
-            glVertex2d( cx,   cy+y );
-            glVertex2d( cx,   cy-y );
-            glVertex2d( cx+y, cy   );
-            glVertex2d( cx-y, cy   );
-         }
-         else
-            if (x==y) {
-               glVertex2d( cx+x, cy+y );
-               glVertex2d( cx-x, cy+y );
-               glVertex2d( cx+x, cy-y );
-               glVertex2d( cx-x, cy-y );
-            }
-            else
-               if (x<y) {
-                  glVertex2d( cx+x, cy+y );
-                  glVertex2d( cx-x, cy+y );
-                  glVertex2d( cx+x, cy-y );
-                  glVertex2d( cx-x, cy-y );
-                  glVertex2d( cx+y, cy+x );
-                  glVertex2d( cx-y, cy+x );
-                  glVertex2d( cx+y, cy-x );
-                  glVertex2d( cx-y, cy-x );
-               }
-      }
-   glEnd(); /* GL_POINTS */
-
-   gl_checkErr();
+   if (filled)
+      gl_blitTexture( gl_circle, cx-r, cy-r, 2.*r, 2.*r, 0., 0., c );
+   else
+      gl_drawCircleEmpty( cx, cy, r, c );
 }
 
 
@@ -416,8 +476,11 @@ void gl_drawCircle( const double cx, const double cy, const double r )
  * @brief Only displays the pixel if it's in the screen.
  */
 #define PIXEL(x,y)   \
-if ((x>rx) && (y>ry) && (x<rxw) && (y<ryh))  \
-   glVertex2d(x,y)
+if ((x>rx) && (y>ry) && (x<rxw) && (y<ryh) && (i<OPENGL_RENDER_VBO_SIZE)) { \
+   vertex[2*i+0] = x; \
+   vertex[2*i+1] = y; \
+   i++; \
+}
 /**
  * @brief Draws a circle in a rectangle.
  *
@@ -428,11 +491,15 @@ if ((x>rx) && (y>ry) && (x<rxw) && (y<ryh))  \
  *    @param ry Y position of the rectangle limiting the circle in screen coords.
  *    @param rw Width of the limiting rectangle.
  *    @param rh Height of the limiting rectangle.
+ *    @param c Colour to use.
  */
 void gl_drawCircleInRect( const double cx, const double cy, const double r,
-      const double rx, const double ry, const double rw, const double rh )
+      const double rx, const double ry, const double rw, const double rh,
+      const glColour *c, int filled )
 {
+   int i, j;
    double rxw,ryh, x,y,p;
+   GLfloat vertex[2*OPENGL_RENDER_VBO_SIZE], col[4*OPENGL_RENDER_VBO_SIZE];
 
    rxw = rx+rw;
    ryh = ry+rh;
@@ -442,55 +509,113 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
       return;
    /* can be drawn normally? */
    else if ((cx-r > rx) && (cy-r > ry) && (cx+r < rxw) && (cy+r < ryh)) {
-      gl_drawCircle( cx, cy, r );
+      gl_drawCircle( cx, cy, r, c, filled );
       return;
    }
 
+   /* Starting parameters. */
+   i = 0;
    x = 0;
    y = r;    
    p = (5. - (r*4.)) / 4.;
 
-   glBegin(GL_POINTS);
-      PIXEL( cx,   cy+y );
-      PIXEL( cx,   cy-y );
-      PIXEL( cx+y, cy   );
-      PIXEL( cx-y, cy   );
+   PIXEL( cx,   cy+y );
+   PIXEL( cx,   cy-y );
+   PIXEL( cx+y, cy   );
+   PIXEL( cx-y, cy   );
 
-      while (x<y) {
-         x++;
-         if (p < 0) p += 2*(double)(x)+1;
-         else p += 2*(double)(x-(--y))+1;
+   while (x<y) {
+      x++;
+      if (p < 0) p += 2*(double)(x)+1;
+      else p += 2*(double)(x-(--y))+1;
 
-         if (x==0) {
-            PIXEL( cx,   cy+y );
-            PIXEL( cx,   cy-y );
-            PIXEL( cx+y, cy   );
-            PIXEL( cx-y, cy   );
-         }         
-         else      
-            if (x==y) {
+      if (x==0) {
+         PIXEL( cx,   cy+y );
+         PIXEL( cx,   cy-y );
+         PIXEL( cx+y, cy   );
+         PIXEL( cx-y, cy   );
+      }         
+      else      
+         if (x==y) {
+            PIXEL( cx+x, cy+y );
+            PIXEL( cx-x, cy+y );
+            PIXEL( cx+x, cy-y );
+            PIXEL( cx-x, cy-y );
+         }        
+         else     
+            if (x<y) {
                PIXEL( cx+x, cy+y );
                PIXEL( cx-x, cy+y );
                PIXEL( cx+x, cy-y );
                PIXEL( cx-x, cy-y );
-            }        
-            else     
-               if (x<y) {
-                  PIXEL( cx+x, cy+y );
-                  PIXEL( cx-x, cy+y );
-                  PIXEL( cx+x, cy-y );
-                  PIXEL( cx-x, cy-y );
-                  PIXEL( cx+y, cy+x );
-                  PIXEL( cx-y, cy+x );
-                  PIXEL( cx+y, cy-x );
-                  PIXEL( cx-y, cy-x );
-               }
-      }
-   glEnd(); /* GL_POINTS */
+               PIXEL( cx+y, cy+x );
+               PIXEL( cx-y, cy+x );
+               PIXEL( cx+y, cy-x );
+               PIXEL( cx-y, cy-x );
+            }
+   }
+   gl_vboSubData( gl_renderVBO, 0, i*2*sizeof(GLfloat), vertex );
+   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
 
-   gl_checkErr();
+   /* Set up the colour. */
+   for (j=0; j<i; j++) {
+      col[4*j+0] = c->r;
+      col[4*j+1] = c->g;
+      col[4*j+2] = c->b;
+      col[4*j+3] = c->a;
+   }
+   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, i*4*sizeof(GLfloat), col );
+   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
+         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
+
+   /* Draw. */
+   glDrawArrays( GL_POINTS, 0, i );
+
+   /* Clear state. */
+   gl_vboDeactivate();
 }
 #undef PIXEL
+
+ 
+
+/**
+ * @brief Generates an filled circle texture.
+ *
+ *    @param radius Radius of the circle to generate.
+ *    @return The tetxure containing the generated circle.
+ */
+static glTexture *gl_genCircle( int radius )
+{
+   int i,j;
+   SDL_Surface *sur;
+   uint32_t *pix;
+   int h, w;
+
+   /* Calculate parameters. */
+   w = 2*radius+1;
+   h = 2*radius+1;
+
+   /* Create the surface. */
+   sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );
+   pix = sur->pixels;
+
+   /* Clear pixels. */
+   memset( pix, 0, sizeof(uint32_t)*w*h );
+
+   /* Generate the circle. */
+   SDL_LockSurface( sur );
+   for (i=0; i<h; i++) {
+      for (j=0; j<w; j++) {
+         /* In radius. */
+         if (pow2(i-radius)+pow2(j-radius) < pow2(radius))
+            pix[i*w+j] = RMASK + BMASK + GMASK + AMASK;
+      }
+   }
+   SDL_UnlockSurface( sur );
+
+   /* Return texture. */
+   return gl_loadImage( sur, OPENGL_TEX_MIPMAPS );
+}
 
 
 /**
@@ -500,7 +625,15 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
  */
 int gl_initRender (void)
 {
-   gl_renderVBO = gl_vboCreateStream( sizeof(GLfloat) * (4*2 + 4*2 + 4*4), NULL );
+   /* Initialize the VBO. */
+   gl_renderVBO = gl_vboCreateStream( sizeof(GLfloat) *
+         OPENGL_RENDER_VBO_SIZE*(2 + 2 + 4), NULL );
+   gl_renderVBOtexOffset = sizeof(GLfloat) * OPENGL_RENDER_VBO_SIZE*2;
+   gl_renderVBOcolOffset = sizeof(GLfloat) * OPENGL_RENDER_VBO_SIZE*(2+2);
+
+   /* Initialize the circles. */
+   gl_circle      = gl_genCircle( 128 );
+
    return 0;
 }
 
@@ -510,7 +643,12 @@ int gl_initRender (void)
  */
 void gl_exitRender (void)
 {
+   /* Destroy the VBO. */
    gl_vboDestroy( gl_renderVBO );
    gl_renderVBO = NULL;
+
+   /* Destroy the circles. */
+   gl_freeTexture(gl_circle);
+   gl_circle = NULL;
 }
 

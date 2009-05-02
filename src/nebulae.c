@@ -708,7 +708,7 @@ static void nebu_generatePuffs (void)
       free(nebu);
       
       /* Load the texture */
-      nebu_pufftexs[i] =  gl_loadImage( sur );
+      nebu_pufftexs[i] =  gl_loadImage( sur, 0 );
    }
 }
 

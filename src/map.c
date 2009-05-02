@@ -516,12 +516,11 @@ static void map_render( double bx, double by, double w, double h )
       if (sys==cur_system) col = &cRadar_tPlanet;
       else if (!sys_isKnown(sys) || (sys->nplanets==0)) col = &cInert;
       else col = faction_getColour( sys->faction);
-      COLOUR(*col);
 
       /* draw the system */
       tx = x + sys->pos.x*map_zoom;
       ty = y + sys->pos.y*map_zoom;
-      gl_drawCircleInRect( tx, ty, r, bx, by, w, h );
+      gl_drawCircleInRect( tx, ty, r, bx, by, w, h, col, 0 );
 
       /* draw the system name */
       if (sys_isKnown(sys) && (map_zoom > 0.5 )) {
@@ -638,9 +637,8 @@ static void map_render( double bx, double by, double w, double h )
    /* selected planet */
    if (map_selected != -1) {
       sys = system_getIndex( map_selected );
-      COLOUR(cRed);
       gl_drawCircleInRect( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
-            r+3., bx, by, w, h );
+            r+3., bx, by, w, h, &cRed, 0 );
    }
 }
 /**

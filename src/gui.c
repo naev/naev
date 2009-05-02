@@ -1714,7 +1714,7 @@ static void gui_createInterference (void)
       SDL_UnlockSurface( sur );
 
       /* Set the interference. */
-      gui.radar.interference[k] = gl_loadImage( sur );
+      gui.radar.interference[k] = gl_loadImage( sur, 0 );
 
       /* Clean up. */
       free(map);

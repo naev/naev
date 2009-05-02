@@ -52,7 +52,7 @@ glTexture* pf_genFractal( const int w, const int h, double rug )
 
    free(map);
 
-   tex = gl_loadImage( sur );
+   tex = gl_loadImage( sur, 0 );
 
    return tex;
 }
