@@ -26,6 +26,7 @@ int* faction_getAllies( int f, int *n );
 void faction_modPlayer( int f, double mod );
 void faction_modPlayerRaw( int f, double mod );
 double faction_getPlayer( int f );
+double faction_getPlayerDef( int f );
 char* faction_getStanding( double mod );
 char *faction_getStandingBroad( double mod );
 glColour* faction_getColour( int f );

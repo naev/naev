@@ -496,7 +496,7 @@ static void map_render( double bx, double by, double w, double h )
    glColour* col;
    GLfloat vertex[8*(2+4)];
 
-   r = 5.;
+   r = 6.;
    x = (bx - map_xpos + w/2) * 1.;
    y = (by - map_ypos + h/2) * 1.;
 
@@ -512,15 +512,26 @@ static void map_render( double bx, double by, double w, double h )
       if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED) && !space_sysReachable(sys))
          continue;
 
-      /* system colours */
-      if (sys==cur_system) col = &cRadar_tPlanet;
-      else if (!sys_isKnown(sys) || (sys->nplanets==0)) col = &cInert;
-      else col = faction_getColour( sys->faction);
-
-      /* draw the system */
+      /* Draw the system. */
+      if (!sys_isKnown(sys)) col = &cInert;
+      else if (sys->security >= 1.) col = &cGreen;
+      else if (sys->security >= 0.6) col = &cOrange;
+      else if (sys->security >= 0.3) col = &cRed;
+      else col = &cDarkRed;
       tx = x + sys->pos.x*map_zoom;
       ty = y + sys->pos.y*map_zoom;
       gl_drawCircleInRect( tx, ty, r, bx, by, w, h, col, 0 );
+      /* If system is known fill it. */
+      if (sys_isKnown(sys) && (sys->nplanets > 0)) {
+
+         /* Planet colours */
+         if (!sys_isKnown(sys)) col = &cInert;
+         else if (sys->nplanets==0) col = &cInert;
+         else col = faction_getColour( sys->faction);
+
+         /* Radius slightly shorter. */
+         gl_drawCircleInRect( tx, ty, r-4, bx, by, w, h, col, 1 );
+      }
 
       /* draw the system name */
       if (sys_isKnown(sys) && (map_zoom > 0.5 )) {
@@ -634,12 +645,17 @@ static void map_render( double bx, double by, double w, double h )
       }
    }
 
-   /* selected planet */
+   /* Selected planet. */
    if (map_selected != -1) {
       sys = system_getIndex( map_selected );
       gl_drawCircleInRect( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
             r+3., bx, by, w, h, &cRed, 0 );
    }
+
+   /* Current planet. */
+   gl_drawCircleInRect( x + cur_system->pos.x * map_zoom,
+         y + cur_system->pos.y * map_zoom,
+         r+3., bx, by, w, h, &cRadar_tPlanet, 0 );
 }
 /**
  * @brief Map custom widget mouse handling.

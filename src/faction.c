@@ -311,6 +311,24 @@ double faction_getPlayer( int f )
 
 
 /**
+ * @brief Gets the player's default standing with a faction.
+ *
+ *    @param f Faction to get player's default standing from.
+ *    @return The default standing the player has with the faction.
+ */
+double faction_getPlayerDef( int f )
+{
+   if (faction_isFaction(f)) {
+      return faction_stack[f].player_def;
+   }    
+   else {
+      WARN("%d is an invalid faction", f);
+      return -1000;
+   }
+}
+
+
+/**
  * @brief Gets the colour of the faction based on it's standing with the player.
  *
  * Used to unify the colour checks all over.

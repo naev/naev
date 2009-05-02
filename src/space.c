@@ -1404,16 +1404,61 @@ int space_load (void)
    return 0;
 }
 
+
+/**
+ * @brief Calculates the security in a star system.
+ *
+ *    @param sys System to calculate security in.
+ *    @return 0 on success.
+ */
+static int system_calcSecurity( StarSystem *sys )
+{
+   int i, j;
+   double guard, hostile, c;
+   Fleet *f;
+
+   /* Defaults. */
+   guard    = 0.;
+   hostile  = 0.;
+
+   /* Calculate hostiles/friendlies. */
+   for (i=0; i<sys->nfleets; i++) {
+      f = sys->fleets[i].fleet;
+      c = (double)sys->fleets[i].chance / 100.;
+      if (fleet_isFlag(f, FLEET_FLAG_GUARD))
+         for (j=0; j<f->npilots; j++)
+            guard += c * f->pilots[j].chance;
+      else if (faction_getPlayerDef(f->faction) < 0)
+         for (j=0; j<f->npilots; j++)
+            hostile += c * f->pilots[j].chance;
+   }
+
+   /* Set security. */
+   if (guard == 0.)
+      sys->security = 0.;
+   else if (hostile == 0.)
+      sys->security = 1.;
+   else
+      sys->security = guard / (hostile + guard);
+
+   return 0;
+}
+
+
 /**
  * @brief Loads the entire systems, needs to be called after planets_load.
  *
- * Uses a two system pass to first load the star systems_stack and then set
- *  jump routes.
+ * Does multiple passes to load:
+ *
+ *  - First loads the star systems.
+ *  - Next sets the jump routes.
+ *  - Finally sets properties.
  *
  *    @return 0 on success.
  */
 static int systems_load (void)
 {
+   int i;
    uint32_t bufsize;
    char *buf;
    xmlNodePtr node;
@@ -1449,8 +1494,9 @@ static int systems_load (void)
       systems_nstack = 0;
    }
 
+
    /*
-    * first pass - loads all the star systems_stack
+    * First pass - loads all the star systems_stack.
     */
    do {
       if (xml_isNode(node,XML_SYSTEM_TAG)) {
@@ -1465,16 +1511,23 @@ static int systems_load (void)
       }
    } while (xml_nextNode(node));
 
+
    /*
-    * second pass - loads all the jump routes
+    * Second pass - loads all the jump routes.
     */
    node = doc->xmlChildrenNode->xmlChildrenNode;
    do {
-
       if (xml_isNode(node,XML_SYSTEM_TAG))
          system_parseJumps(node); /* will automatically load the jumps into the system */
 
    } while (xml_nextNode(node));
+
+
+   /*
+    * Third pass - sets properties.
+    */
+   for (i=0; i<systems_nstack; i++)
+      system_calcSecurity(&systems_stack[i]);
 
 
    /*
