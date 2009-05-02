@@ -38,6 +38,8 @@
 #define MISSION_DATA          "dat/mission.xml" /**< Path to missions XML. */
 #define MISSION_LUA_PATH      "dat/missions/" /**< Path to Lua files. */
 
+#define MISSION_CHUNK         32 /**< Chunk allocation. */
+
 
 /*
  * current player missions
@@ -66,7 +68,7 @@ static int mission_meetReq( int mission, int faction,
       const char* planet, const char* sysname );
 static int mission_matchFaction( MissionData* misn, int faction );
 static int mission_location( const char* loc );
-static MissionData* mission_parse( const xmlNodePtr parent );
+static int mission_parse( MissionData* temp, const xmlNodePtr parent );
 static int missions_parseActive( xmlNodePtr parent );
 static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int intable );
 static int mission_persistData( lua_State *L, xmlTextWriterPtr writer );
@@ -665,12 +667,12 @@ static int mission_location( const char* loc )
 /**
  * @brief Parses a node of a mission.
  *
+ *    @param temp Data to load into.
  *    @param parent Node containing the mission.
- *    @return The MissionData extracted from parent.
+ *    @return 0 on success.
  */
-static MissionData* mission_parse( const xmlNodePtr parent )
+static int mission_parse( MissionData* temp, const xmlNodePtr parent )
 {
-   MissionData *temp;
    xmlNodePtr cur, node;
 
 #ifdef DEBUGGING
@@ -681,7 +683,7 @@ static MissionData* mission_parse( const xmlNodePtr parent )
    uint32_t len;
 #endif /* DEBUGGING */
 
-   temp = malloc(sizeof(MissionData));
+   /* Clear memory. */
    memset( temp, 0, sizeof(MissionData) );
 
    /* get the name */
@@ -747,7 +749,7 @@ static MissionData* mission_parse( const xmlNodePtr parent )
    MELEMENT(temp->avail.loc==-1,"location");
 #undef MELEMENT
 
-   return temp;
+   return 0;
 }
 
 
@@ -758,10 +760,9 @@ static MissionData* mission_parse( const xmlNodePtr parent )
  */
 int missions_load (void)
 {
+   int m;
    uint32_t bufsize;
    char *buf = ndata_read( MISSION_DATA, &bufsize );
-
-   MissionData *temp;
 
    xmlNodePtr node;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );
@@ -778,16 +779,26 @@ int missions_load (void)
       return -1;
    }
 
+   m = 0;
    do {
       if (xml_isNode(node,XML_MISSION_TAG)) {
 
-         temp = mission_parse(node);
-         mission_stack = realloc(mission_stack, sizeof(MissionData)*(++mission_nstack));
-         memcpy(mission_stack+mission_nstack-1, temp, sizeof(MissionData));
-         free(temp);
+         /* See if must grow. */
+         mission_nstack++;
+         if (mission_nstack > m) {
+            m += MISSION_CHUNK;
+            mission_stack = realloc(mission_stack, sizeof(MissionData)*m);
+         }
+
+         /* Load it. */
+         mission_parse( &mission_stack[mission_nstack-1], node );
       }
    } while (xml_nextNode(node));
 
+   /* Shrink to minimum. */
+   mission_stack = realloc(mission_stack, sizeof(MissionData)*mission_nstack);
+
+   /* Clean up. */
    xmlFreeDoc(doc);
    free(buf);
 

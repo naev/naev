@@ -17,7 +17,7 @@
 #define  MIS_AVAIL_OUTFIT     3 /**< Mission is available at outfitter. */
 #define  MIS_AVAIL_SHIPYARD   4 /**< Mission is available at shipyard. */
 #define  MIS_AVAIL_LAND       5 /**< Mission is available on landing. */
-#define  MIS_AVAIL_COMMODITY 6 /**< Mission is available at commodity exchange. */
+#define  MIS_AVAIL_COMMODITY  6 /**< Mission is available at commodity exchange. */
 
 
 /* flag functions */
