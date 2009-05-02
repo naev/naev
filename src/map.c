@@ -164,15 +164,20 @@ void map_open (void)
          &gl_smallFont, &cDConsole, "Standing:" );
    window_addText( wid, -20, -100-gl_smallFont.h-5, 80, 100, 0, "txtStanding",
          &gl_smallFont, &cBlack, NULL );
+   /* Security. */
+   window_addText( wid, -20, -140, 90, 20, 0, "txtSSecurity",
+         &gl_smallFont, &cDConsole, "Security:" );
+   window_addText( wid, -20, -140-gl_smallFont.h-5, 80, 100, 0, "txtSecurity",
+         &gl_smallFont, &cBlack, NULL );
    /* Planets */
-   window_addText( wid, -20, -140, 90, 20, 0, "txtSPlanets",
+   window_addText( wid, -20, -180, 90, 20, 0, "txtSPlanets",
          &gl_smallFont, &cDConsole, "Planets:" );
-   window_addText( wid, -20, -140-gl_smallFont.h-5, 80, 100, 0, "txtPlanets",
+   window_addText( wid, -20, -180-gl_smallFont.h-5, 80, 100, 0, "txtPlanets",
          &gl_smallFont, &cBlack, NULL );
    /* Services */
-   window_addText( wid, -20, -180, 90, 20, 0, "txtSServices",
+   window_addText( wid, -20, -220, 90, 20, 0, "txtSServices",
          &gl_smallFont, &cDConsole, "Services:" );
-   window_addText( wid, -20, -180-gl_smallFont.h-5, 80, 100, 0, "txtServices",
+   window_addText( wid, -20, -220-gl_smallFont.h-5, 80, 100, 0, "txtServices",
          &gl_smallFont, &cBlack, NULL );
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -233,13 +238,17 @@ static void map_update( unsigned int wid )
       window_moveWidget( wid, "txtSStanding", -20, -100 );
       window_moveWidget( wid, "txtStanding", -20, -100-gl_smallFont.h-5 );
       window_modifyText( wid, "txtStanding", "Unknown" );
+      /* Security. */
+      window_moveWidget( wid, "txtSSecurity", -20, -140 );
+      window_moveWidget( wid, "txtSecurity",  -20, -140-gl_smallFont.h-5 );
+      window_modifyText( wid, "txtSecurity", "Unknown" );
       /* Planets */
-      window_moveWidget( wid, "txtSPlanets", -20, -140 );
-      window_moveWidget( wid, "txtPlanets", -20, -140-gl_smallFont.h-5 );
+      window_moveWidget( wid, "txtSPlanets", -20, -180 );
+      window_moveWidget( wid, "txtPlanets", -20, -180-gl_smallFont.h-5 );
       window_modifyText( wid, "txtPlanets", "Unknown" );
       /* Services */
-      window_moveWidget( wid, "txtSServices", -20, -180 );
-      window_moveWidget( wid, "txtServices", -20, -180-gl_smallFont.h-5 );
+      window_moveWidget( wid, "txtSServices", -20, -220 );
+      window_moveWidget( wid, "txtServices", -20, -220-gl_smallFont.h-5 );
       window_modifyText( wid, "txtServices", "Unknown" );
       
       /*
@@ -290,6 +299,13 @@ static void map_update( unsigned int wid )
       window_moveWidget( wid, "txtSStanding", -20, y );
       window_moveWidget( wid, "txtStanding", -20, y-gl_smallFont.h-5 );
    }
+
+   /* Get security. */
+   y -= 40;
+   snprintf(buf, PATH_MAX, "%.0f %%", sys->security * 100.);
+   window_moveWidget( wid, "txtSSecurity", -20, y );
+   window_moveWidget( wid, "txtSecurity", -20, y-gl_smallFont.h-5 );
+   window_modifyText( wid, "txtSecurity", buf );
 
    /* Get planets */
    if (sys->nplanets == 0) {
