@@ -58,6 +58,8 @@ typedef struct glTexture_ {
    double sy; /**< Number of sprites on the y axis. */
    double sw; /**< Width of a sprite. */
    double sh; /**< Height of a sprite. */
+   double srw; /**< Sprite render width - equivalent to sw/rw. */
+   double srh; /**< Sprite render height - equivalent to sh/rh. */
 
    /* data */
    GLuint texture; /**< the opengl texture itself */

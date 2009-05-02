@@ -339,17 +339,19 @@ glTexture* gl_loadImage( SDL_Surface* surface, unsigned int flags )
    glTexture *texture = malloc(sizeof(glTexture));
    memset( texture, 0, sizeof(glTexture) );
 
-   texture->w = (double)surface->w;
-   texture->h = (double)surface->h;
-   texture->sx = 1.;
-   texture->sy = 1.;
+   texture->w     = (double)surface->w;
+   texture->h     = (double)surface->h;
+   texture->sx    = 1.;
+   texture->sy    = 1.;
 
    texture->texture = gl_loadSurface( surface, &rw, &rh, flags );
 
-   texture->rw = (double)rw;
-   texture->rh = (double)rh;
-   texture->sw = texture->w;
-   texture->sh = texture->h;
+   texture->rw    = (double)rw;
+   texture->rh    = (double)rh;
+   texture->sw    = texture->w;
+   texture->sh    = texture->h;
+   texture->srw   = texture->sw / texture->rw;
+   texture->srh   = texture->sh / texture->rh;
 
    texture->trans = NULL;
    texture->name  = NULL;
@@ -475,10 +477,12 @@ glTexture* gl_newSprite( const char* path, const int sx, const int sy,
 
    /* will possibly overwrite an existing textur properties
     * so we have to load same texture always the same sprites */
-   texture->sx = (double)sx;
-   texture->sy = (double)sy;
-   texture->sw = texture->w/texture->sx;
-   texture->sh = texture->h/texture->sy;
+   texture->sx    = (double)sx;
+   texture->sy    = (double)sy;
+   texture->sw    = texture->w/texture->sx;
+   texture->sh    = texture->h/texture->sy;
+   texture->srw   = texture->sw / texture->rw;
+   texture->srh   = texture->sh / texture->rh;
    return texture;
 }
 
