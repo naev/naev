@@ -261,7 +261,10 @@ static void load_menu_load( unsigned int wdw, char *str )
    load_menu_close(wdw, NULL);
    menu_main_close();
 
-   load_game( path );
+   if (load_game( path )) {
+      menu_main();
+      load_game_menu();
+   }
 }
 /**
  * @brief Deletes an old game.
@@ -304,6 +307,13 @@ static int load_game( const char* file )
    xmlNodePtr node;
    xmlDocPtr doc;
 
+   /* Make sure it exists. */
+   if (!nfile_fileExists(file)) {
+      dialogue_alert("Savegame file seems to have been deleted.");
+      return -1;
+   }
+
+   /* Load the XML. */
    doc   = xmlParseFile(file);
    if (doc == NULL)
       goto err;

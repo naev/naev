@@ -135,34 +135,38 @@ typedef struct SystemFleet_ {
  * The star system is the basic setting in NAEV.
  */
 typedef struct StarSystem_ {
-   char* name; /**< star system name */
 
+   /* General. */
+   char* name; /**< star system name */
    Vector2d pos; /**< position */
+   int *jumps; /**< adjacent star system index numbers */
+   int njumps; /**< number of adjacent jumps */
+   Planet **planets; /**< planets */
+   int nplanets; /**< total number of planets */
+   int faction; /**< overall faction */
+
+   /* System details. */
    int stars; /**< Amount of "stars" it has. */
    int asteroids; /**< @todo implement asteroids */
    double interference; /**< in % @todo implement interference. */
+   double nebu_density; /**< Nebulae density (0. - 1000.) */
+   double nebu_volatility; /**< Nebulae volatility (0. - 1000.) */
 
-   int faction; /**< overall faction */
-
-   Planet **planets; /**< planets */
-   int nplanets; /**< total number of planets */
-
+   /* Fleets. */
    SystemFleet* fleets; /**< fleets that can appear in the current system */
    int nfleets; /**< total number of fleets */
    double avg_pilot; /**< Target amount of pilots in the system. */
 
-   int *jumps; /**< adjacent star system index numbers */
-   int njumps; /**< number of adjacent jumps */
-
-   double nebu_density; /**< Nebulae density (0. - 1000.) */
-   double nebu_volatility; /**< Nebulae volatility (0. - 1000.) */
-
+   /* Calculated. */
    double *prices; /**< Handles the prices in the system. */
+   double security; /**< % of security in this system. */
 
+   /* Markers. */
    int markers_misc; /**< Number of misc mission markers on system. */
    int markers_rush; /**< Number of rush mission markers on system. */
    int markers_cargo; /**< Number of cargo mission markers on system. */
 
+   /* Misc. */
    unsigned int flags; /**< flags for system properties */
 } StarSystem;
 

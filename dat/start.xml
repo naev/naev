@@ -4,7 +4,7 @@
  <player>
   <ship>Llama</ship>
   <credits>
-   <low>10000</low>
+   <low>15000</low>
    <high>20000</high>
   </credits>
   <date>
@@ -12,7 +12,7 @@
    <high>1336</high>
   </date>
   <system>
-   <name>Goddard</name>
+   <name>Apez</name>
    <x>150</x>
    <y>150</y>
   </system>

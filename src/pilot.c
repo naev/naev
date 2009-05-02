@@ -462,6 +462,13 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target )
  */
 int pilot_inRangePlanet( const Pilot *p, int target )
 {
+   (void)p;
+   (void)target;
+
+   /* Always consider planets in range. */
+   return 1;
+
+#if 0
    double d;
    Planet *pnt;
 
@@ -478,6 +485,7 @@ int pilot_inRangePlanet( const Pilot *p, int target )
       return 1;
 
    return 0;
+#endif
 }
 
 

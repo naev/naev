@@ -184,7 +184,8 @@ void menu_main (void)
  */
 void menu_main_close (void)
 {
-   window_destroy( window_get("Main Menu") );
+   if (window_exists("Main Menu"))
+      window_destroy( window_get("Main Menu") );
 
    menu_Close(MENU_MAIN);
 }
