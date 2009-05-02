@@ -512,7 +512,7 @@ static void map_render( double bx, double by, double w, double h )
    glColour* col;
    GLfloat vertex[8*(2+4)];
 
-   r = 6.;
+   r = CLAMP( 5., 15., 6. * sqrt(map_zoom) );
    x = (bx - map_xpos + w/2) * 1.;
    y = (by - map_ypos + h/2) * 1.;
 
