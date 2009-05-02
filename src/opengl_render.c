@@ -61,7 +61,8 @@ static glTexture *gl_genCircle( int radius );
 static void gl_blitTexture(  const glTexture* texture,
       const double x, const double y,
       const double w, const double h,
-      const double tx, const double ty, const glColour *c );
+      const double tx, const double ty,
+      const double tw, const double th, const glColour *c );
 
 
 /**
@@ -129,20 +130,19 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
  *    @param y Y position of the texture on the screen.
  *    @param tx X position within the texture.
  *    @param ty Y position within the texture.
+ *    @param tw Texture width.
+ *    @param th Texture height.
  *    @param c Colour to use (modifies texture colour).
  */
 static void gl_blitTexture(  const glTexture* texture,
       const double x, const double y,
       const double w, const double h,
-      const double tx, const double ty, const glColour *c )
+      const double tx, const double ty,
+      const double tw, const double th, const glColour *c )
 {
-   double tw,th;
    GLfloat vertex[4*2], tex[4*2], col[4*4];
 
-   /* texture dimensions */
-   tw = texture->sw / texture->rw;
-   th = texture->sh / texture->rh;
-
+   /* Bind the texture. */
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, texture->texture);
 
@@ -240,7 +240,8 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
    tx = sprite->sw*(double)(sx)/sprite->rw;
    ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
 
-   gl_blitTexture( sprite, x, y, sprite->sw, sprite->sh, tx, ty, c );
+   gl_blitTexture( sprite, x, y, sprite->sw, sprite->sh,
+         tx, ty, sprite->srw, sprite->srh, c );
 }
 
 
@@ -267,7 +268,8 @@ void gl_blitStaticSprite( const glTexture* sprite, const double bx, const double
    ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
 
    /* actual blitting */
-   gl_blitTexture( sprite, x, y, sprite->sw, sprite->sh, tx, ty, c );
+   gl_blitTexture( sprite, x, y, sprite->sw, sprite->sh,
+         tx, ty, sprite->srw, sprite->srh, c );
 }
 
 
@@ -296,7 +298,8 @@ void gl_blitScale( const glTexture* texture,
    tx = ty = 0.;
 
    /* Actual blitting. */
-   gl_blitTexture( texture, x, y, bw, bh, tx, ty, c );
+   gl_blitTexture( texture, x, y, bw, bh,
+         tx, ty, texture->srw, texture->srh, c );
 }
 
 /**
@@ -317,7 +320,8 @@ void gl_blitStatic( const glTexture* texture,
    y = by - (double)SCREEN_H/2.;
 
    /* actual blitting */
-   gl_blitTexture( texture, x, y, texture->sw, texture->sh, 0, 0, c );
+   gl_blitTexture( texture, x, y, texture->sw, texture->sh,
+         0., 0., texture->srw, texture->srh, c );
 }
 
 
@@ -466,7 +470,8 @@ void gl_drawCircle( const double cx, const double cy,
       const double r, const glColour *c, int filled )
 {
    if (filled)
-      gl_blitTexture( gl_circle, cx-r, cy-r, 2.*r, 2.*r, 0., 0., c );
+      gl_blitTexture( gl_circle, cx-r, cy-r, 2.*r, 2.*r,
+         0., 0., gl_circle->srw, gl_circle->srh, c );
    else
       gl_drawCircleEmpty( cx, cy, r, c );
 }
@@ -498,7 +503,7 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
       const glColour *c, int filled )
 {
    int i, j;
-   double rxw,ryh, x,y,p;
+   double rxw,ryh, x,y,p, w,h;
    GLfloat vertex[2*OPENGL_RENDER_VBO_SIZE], col[4*OPENGL_RENDER_VBO_SIZE];
 
    rxw = rx+rw;
@@ -510,6 +515,20 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
    /* can be drawn normally? */
    else if ((cx-r > rx) && (cy-r > ry) && (cx+r < rxw) && (cy+r < ryh)) {
       gl_drawCircle( cx, cy, r, c, filled );
+      return;
+   }
+
+   /* Case if filled. */
+   if (filled) {
+      x = CLAMP( rx, rxw, cx-r );
+      y = CLAMP( ry, ryh, cy-r );
+      w = CLAMP( 0., rxw-x,  2.*r );
+      h = CLAMP( 0., ryh-y,  2.*r );
+      gl_blitTexture( gl_circle, x, y, w, h,
+            (x-(cx-r))/(2.*r) * gl_circle->srw,
+            (y-(cy-r))/(2.*r) * gl_circle->srh,
+            (w/(2.*r)) * gl_circle->srw,
+            (h/(2.*r)) * gl_circle->srh, c );
       return;
    }
 
