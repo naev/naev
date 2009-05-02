@@ -1023,13 +1023,14 @@ static void gui_renderInterference( double dt )
    c.a = interference_alpha;
    tex = gui.radar.interference[interference_layer];
    if (gui.radar.shape == RADAR_CIRCLE)
-      gl_blitStatic( tex,
-            gui.radar.x - gui.radar.w,
-            gui.radar.y - gui.radar.w, &c );
+   gl_blitStatic( tex,
+      SCREEN_W/2. - gui.radar.w,
+      SCREEN_H/2. - gui.radar.w,
+      &c );
    else if (gui.radar.shape == RADAR_RECT)
       gl_blitStatic( tex,
-            gui.radar.x - gui.radar.w/2,
-            gui.radar.y - gui.radar.h/2, &c );
+            SCREEN_W/2. - gui.radar.w/2,
+            SCREEN_H/2. - gui.radar.h/2, &c );
 }
 
 
@@ -1680,6 +1681,9 @@ static void gui_createInterference (void)
       /* Create the temporary surface. */
       sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );
       pix = sur->pixels;
+
+      /* Clear pixels. */
+      memset( pix, 0, sizeof(uint32_t)*w*h );
 
       /* Load the interference map. */
       map = noise_genRadarInt( w, h, 100. );
