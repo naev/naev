@@ -91,6 +91,7 @@ void dialogue_alert( const char *fmt, ... )
          dialogue_alertClose );
 
    dialogue_open++;
+   toolkit_loop();
 }
 /**
  * @brief Closes the alert dialogue.
@@ -101,6 +102,7 @@ static void dialogue_alertClose( unsigned int wid, char* str )
 {
    (void)str;
    window_destroy( wid );
+   loop_done = 1;
    dialogue_open--;
 }
 
