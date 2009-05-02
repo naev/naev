@@ -91,6 +91,7 @@ void dialogue_alert( const char *fmt, ... )
          dialogue_alertClose );
 
    dialogue_open++;
+   toolkit_loop();
 }
 /**
  * @brief Closes the alert dialogue.
@@ -101,6 +102,7 @@ static void dialogue_alertClose( unsigned int wid, char* str )
 {
    (void)str;
    window_destroy( wid );
+   loop_done = 1;
    dialogue_open--;
 }
 
@@ -364,7 +366,8 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
          ((int)strlen(input) < min))) { /* must be longer then min */
 
       if (input) {
-         dialogue_alert( "Input must be at least %d characters long!", min );
+         dialogue_alert( "Input must be at least %d character%s long!",
+               min, (min==1) ? "s" : "" );
          free(input);
          input = NULL;
       }

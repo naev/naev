@@ -46,7 +46,7 @@ static int SDL_VFlipSurface( SDL_Surface* surface );
 static int SDL_IsTrans( SDL_Surface* s, int x, int y );
 static uint8_t* SDL_MapTrans( SDL_Surface* s );
 /* glTexture */
-static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh );
+static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags );
 static glTexture* gl_loadNewImage( const char* path, unsigned int flags );
 
 
@@ -254,13 +254,15 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
  * @brief Loads a surface into an opengl texture.
  *
  *    @param surface Surface to load into a texture.
+ *    @param flags Flags to use.
  *    @param[out] rw Real width of the texture.
  *    @param[out] rh Real height of the texture.
  *    @return The opengl texture id.
  */
-static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
+static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned int flags )
 {
    GLuint texture;
+   GLfloat param;
 
    /* Prepare the surface. */
    surface = gl_prepareSurface( surface );
@@ -284,6 +286,19 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
    }
 
+   /* Generate mipmaps if needed. */
+   if (flags & OPENGL_TEX_MIPMAPS) {
+      glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+      if (gl_hasExt("GL_EXT_texture_filter_anisotropic")) {
+         glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &param);
+         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, param);
+      }
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 9);
+   }
+
    /* Always wrap just in case. */
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -293,6 +308,14 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
    glTexImage2D( GL_TEXTURE_2D, 0, surface->format->BytesPerPixel,
          surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
    SDL_UnlockSurface( surface );
+
+   /* Disable mipmaps. */
+   if (flags & OPENGL_TEX_MIPMAPS) {
+      glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_FALSE);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
+      if (gl_hasExt("GL_EXT_texture_filter_anisotropic"))
+         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1.);
+   }
 
    /* cleanup */
    SDL_FreeSurface( surface );
@@ -305,9 +328,10 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh )
  * @brief Loads the SDL_Surface to a glTexture.
  *
  *    @param surface Surface to load.
+ *    @param flags Flags to use.
  *    @return The glTexture for surface.
  */
-glTexture* gl_loadImage( SDL_Surface* surface )
+glTexture* gl_loadImage( SDL_Surface* surface, unsigned int flags )
 {
    int rw, rh;
 
@@ -315,17 +339,19 @@ glTexture* gl_loadImage( SDL_Surface* surface )
    glTexture *texture = malloc(sizeof(glTexture));
    memset( texture, 0, sizeof(glTexture) );
 
-   texture->w = (double)surface->w;
-   texture->h = (double)surface->h;
-   texture->sx = 1.;
-   texture->sy = 1.;
+   texture->w     = (double)surface->w;
+   texture->h     = (double)surface->h;
+   texture->sx    = 1.;
+   texture->sy    = 1.;
 
-   texture->texture = gl_loadSurface( surface, &rw, &rh );
+   texture->texture = gl_loadSurface( surface, &rw, &rh, flags );
 
-   texture->rw = (double)rw;
-   texture->rh = (double)rh;
-   texture->sw = texture->w;
-   texture->sh = texture->h;
+   texture->rw    = (double)rw;
+   texture->rh    = (double)rh;
+   texture->sw    = texture->w;
+   texture->sh    = texture->h;
+   texture->srw   = texture->sw / texture->rw;
+   texture->srh   = texture->sh / texture->rh;
 
    texture->trans = NULL;
    texture->name  = NULL;
@@ -426,7 +452,7 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
       trans = NULL;
 
    /* set the texture */
-   t = gl_loadImage(surface);
+   t = gl_loadImage(surface, flags);
    t->trans = trans;
    t->name  = strdup(path);
    return t;
@@ -451,10 +477,12 @@ glTexture* gl_newSprite( const char* path, const int sx, const int sy,
 
    /* will possibly overwrite an existing textur properties
     * so we have to load same texture always the same sprites */
-   texture->sx = (double)sx;
-   texture->sy = (double)sy;
-   texture->sw = texture->w/texture->sx;
-   texture->sh = texture->h/texture->sy;
+   texture->sx    = (double)sx;
+   texture->sy    = (double)sy;
+   texture->sw    = texture->w/texture->sx;
+   texture->sh    = texture->h/texture->sy;
+   texture->srw   = texture->sw / texture->rw;
+   texture->srh   = texture->sh / texture->rh;
    return texture;
 }
 

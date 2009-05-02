@@ -198,7 +198,7 @@ void player_new (void)
    factions_reset();
    map_cleanup();
 
-   player_name = dialogue_input( "Player Name", 3, 20,
+   player_name = dialogue_input( "Player Name", 1, 20,
          "Please write your name:" );
 
    /* Player cancelled dialogue. */

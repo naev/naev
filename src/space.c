@@ -88,6 +88,7 @@ static int planet_mstack = 0; /**< Memory size of planet stack. */
 /*
  * Misc.
  */
+static int systems_loading = 1; /**< Systems are loading. */
 StarSystem *cur_system = NULL; /**< Current star system. */
 
 
@@ -133,6 +134,7 @@ static int systems_load (void);
 static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static void system_parseJumps( const xmlNodePtr parent );
 /* misc */
+static int system_calcSecurity( StarSystem *sys );
 static void system_setFaction( StarSystem *sys );
 static void space_renderStars( const double dt );
 static void space_addFleet( Fleet* fleet, int init );
@@ -1091,6 +1093,9 @@ int system_addFleet( StarSystem *sys, SystemFleet *fleet )
    avg *= ((double)fleet->chance) / 100.;
    sys->avg_pilot += avg;
 
+   /* Recalculate security. */
+   system_calcSecurity(sys);
+
    return 0;
 }
 
@@ -1128,6 +1133,9 @@ int system_rmFleet( StarSystem *sys, SystemFleet *fleet )
       avg += ((double)fleet->fleet->pilots[i].chance) / 100.;
    avg *= ((double)fleet->chance) / 100.;
    sys->avg_pilot -= avg;
+
+   /* Recalculate security. */
+   system_calcSecurity(sys);
 
    return 0;
 }
@@ -1392,7 +1400,11 @@ static void system_parseJumps( const xmlNodePtr parent )
  */
 int space_load (void)
 {
+   int i;
    int ret;
+
+   /* Loading. */
+   systems_loading = 1;
 
    ret = planets_load();
    if (ret < 0)
@@ -1401,14 +1413,66 @@ int space_load (void)
    if (ret < 0)
       return ret;
 
+   /* Done loading. */
+   systems_loading = 0;
+
+   /* Calculate system properties. */
+   for (i=0; i<systems_nstack; i++)
+      system_calcSecurity(&systems_stack[i]);
+
    return 0;
 }
+
+
+/**
+ * @brief Calculates the security in a star system.
+ *
+ *    @param sys System to calculate security in.
+ *    @return 0 on success.
+ */
+static int system_calcSecurity( StarSystem *sys )
+{
+   int i;
+   double guard, hostile, c;
+   Fleet *f;
+
+   /* Do not run while loading to speed up. */
+   if (systems_loading)
+      return 0;
+
+   /* Defaults. */
+   guard    = 0.;
+   hostile  = 0.;
+
+   /* Calculate hostiles/friendlies. */
+   for (i=0; i<sys->nfleets; i++) {
+      f = sys->fleets[i].fleet;
+      c = (double)sys->fleets[i].chance / 100.;
+      if (fleet_isFlag(f, FLEET_FLAG_GUARD))
+         guard += c * f->pilot_avg;
+      else if (faction_getPlayerDef(f->faction) < 0)
+         hostile += c * f->pilot_avg;
+   }
+
+   /* Set security. */
+   if (guard == 0.)
+      sys->security = 0.;
+   else if (hostile == 0.)
+      sys->security = 1.;
+   else
+      sys->security = guard / (hostile + guard);
+
+   return 0;
+}
+
 
 /**
  * @brief Loads the entire systems, needs to be called after planets_load.
  *
- * Uses a two system pass to first load the star systems_stack and then set
- *  jump routes.
+ * Does multiple passes to load:
+ *
+ *  - First loads the star systems.
+ *  - Next sets the jump routes.
  *
  *    @return 0 on success.
  */
@@ -1449,8 +1513,9 @@ static int systems_load (void)
       systems_nstack = 0;
    }
 
+
    /*
-    * first pass - loads all the star systems_stack
+    * First pass - loads all the star systems_stack.
     */
    do {
       if (xml_isNode(node,XML_SYSTEM_TAG)) {
@@ -1465,12 +1530,12 @@ static int systems_load (void)
       }
    } while (xml_nextNode(node));
 
+
    /*
-    * second pass - loads all the jump routes
+    * Second pass - loads all the jump routes.
     */
    node = doc->xmlChildrenNode->xmlChildrenNode;
    do {
-
       if (xml_isNode(node,XML_SYSTEM_TAG))
          system_parseJumps(node); /* will automatically load the jumps into the system */
 

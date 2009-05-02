@@ -15,9 +15,9 @@
    <speed>260</speed>
   </movement>
   <health>
-   <shield>50</shield>
-   <armour>60</armour>
-   <energy>240</energy>
+   <shield>100</shield>
+   <armour>120</armour>
+   <energy>320</energy>
    <shield_regen>80</shield_regen>
    <armour_regen>50</armour_regen>
    <energy_regen>500</energy_regen>
@@ -52,9 +52,9 @@
    <speed>330</speed>
   </movement>
   <health>
-   <shield>70</shield>
-   <armour>50</armour>
-   <energy>180</energy>
+   <shield>140</shield>
+   <armour>100</armour>
+   <energy>360</energy>
    <shield_regen>150</shield_regen>
    <armour_regen>60</armour_regen>
    <energy_regen>550</energy_regen>
@@ -90,9 +90,9 @@
    <speed>200</speed>
   </movement>
   <health>
-   <shield>260</shield>
-   <armour>180</armour>
-   <energy>420</energy>
+   <shield>520</shield>
+   <armour>360</armour>
+   <energy>840</energy>
    <shield_regen>240</shield_regen>
    <armour_regen>90</armour_regen>
    <energy_regen>1380</energy_regen>
@@ -131,9 +131,9 @@
    <speed>200</speed>
   </movement>
   <health>
-   <shield>275</shield>
-   <armour>200</armour>
-   <energy>420</energy>
+   <shield>550</shield>
+   <armour>400</armour>
+   <energy>840</energy>
    <shield_regen>250</shield_regen>
    <armour_regen>100</armour_regen>
    <energy_regen>1380</energy_regen>
@@ -172,9 +172,9 @@
    <speed>100</speed>
   </movement>
   <health>
-   <shield>600</shield>
-   <armour>400</armour>
-   <energy>900</energy>
+   <shield>1200</shield>
+   <armour>800</armour>
+   <energy>1800</energy>
    <shield_regen>300</shield_regen>
    <armour_regen>80</armour_regen>
    <energy_regen>1600</energy_regen>
@@ -214,9 +214,9 @@
    <speed>100</speed>
   </movement>
   <health>
-   <shield>630</shield>
-   <armour>420</armour>
-   <energy>900</energy>
+   <shield>1260</shield>
+   <armour>840</armour>
+   <energy>1800</energy>
    <shield_regen>330</shield_regen>
    <armour_regen>100</armour_regen>
    <energy_regen>1600</energy_regen>
@@ -256,9 +256,9 @@
    <speed>260</speed>
   </movement>
   <health>
-   <shield>140</shield>
-   <armour>100</armour>
-   <energy>280</energy>
+   <shield>280</shield>
+   <armour>200</armour>
+   <energy>560</energy>
    <shield_regen>180</shield_regen>
    <armour_regen>60</armour_regen>
    <energy_regen>980</energy_regen>
@@ -296,9 +296,9 @@
    <speed>260</speed>
   </movement>
   <health>
-   <shield>150</shield>
-   <armour>100</armour>
-   <energy>280</energy>
+   <shield>300</shield>
+   <armour>200</armour>
+   <energy>560</energy>
    <shield_regen>190</shield_regen>
    <armour_regen>60</armour_regen>
    <energy_regen>980</energy_regen>
@@ -337,9 +337,9 @@
    <speed>100</speed>
   </movement>
   <health>
-   <shield>160</shield>
-   <armour>200</armour>
-   <energy>300</energy>
+   <shield>320</shield>
+   <armour>400</armour>
+   <energy>600</energy>
    <shield_regen>100</shield_regen>
    <armour_regen>40</armour_regen>
    <energy_regen>800</energy_regen>
@@ -377,9 +377,9 @@
    <speed>360</speed>
   </movement>
   <health>
-   <shield>70</shield>
-   <armour>40</armour>
-   <energy>300</energy>
+   <shield>140</shield>
+   <armour>80</armour>
+   <energy>600</energy>
    <shield_regen>240</shield_regen>
    <armour_regen>420</armour_regen>
    <energy_regen>600</energy_regen>
@@ -414,9 +414,9 @@
    <speed>340</speed>
   </movement>
   <health>
-   <shield>90</shield>
-   <armour>50</armour>
-   <energy>240</energy>
+   <shield>180</shield>
+   <armour>100</armour>
+   <energy>480</energy>
    <shield_regen>100</shield_regen>
    <armour_regen>70</armour_regen>
    <energy_regen>700</energy_regen>
@@ -452,9 +452,9 @@
    <speed>130</speed>
   </movement>
   <health>
-   <shield>800</shield>
-   <armour>500</armour>
-   <energy>2000</energy>
+   <shield>1600</shield>
+   <armour>1000</armour>
+   <energy>4000</energy>
    <shield_regen>330</shield_regen>
    <armour_regen>90</armour_regen>
    <energy_regen>1700</energy_regen>
@@ -497,9 +497,9 @@
    <speed>130</speed>
   </movement>
   <health>
-   <shield>800</shield>
-   <armour>500</armour>
-   <energy>2000</energy>
+   <shield>1600</shield>
+   <armour>1000</armour>
+   <energy>4000</energy>
    <shield_regen>330</shield_regen>
    <armour_regen>90</armour_regen>
    <energy_regen>1700</energy_regen>
@@ -541,9 +541,9 @@
    <speed>200</speed>
   </movement>
   <health>
-   <shield>240</shield>
-   <armour>170</armour>
-   <energy>380</energy>
+   <shield>480</shield>
+   <armour>340</armour>
+   <energy>760</energy>
    <shield_regen>240</shield_regen>
    <armour_regen>90</armour_regen>
    <energy_regen>1180</energy_regen>
@@ -581,9 +581,9 @@
    <speed>210</speed>
   </movement>
   <health>
-   <shield>250</shield>
-   <armour>175</armour>
-   <energy>390</energy>
+   <shield>500</shield>
+   <armour>350</armour>
+   <energy>760</energy>
    <shield_regen>260</shield_regen>
    <armour_regen>60</armour_regen>
    <energy_regen>1180</energy_regen>
@@ -624,9 +624,9 @@
    <speed>200</speed>
   </movement>
   <health>
-   <shield>250</shield>
-   <armour>175</armour>
-   <energy>380</energy>
+   <shield>500</shield>
+   <armour>350</armour>
+   <energy>760</energy>
    <shield_regen>250</shield_regen>
    <armour_regen>100</armour_regen>
    <energy_regen>1180</energy_regen>
@@ -665,9 +665,9 @@
    <speed>300</speed>
   </movement>
   <health>
-   <shield>60</shield>
-   <armour>25</armour>
-   <energy>180</energy>
+   <shield>120</shield>
+   <armour>50</armour>
+   <energy>360</energy>
    <shield_regen>60</shield_regen>
    <armour_regen>30</armour_regen>
    <energy_regen>400</energy_regen>
@@ -703,9 +703,9 @@
    <speed>180</speed>
   </movement>
   <health>
-   <shield>70</shield>
-   <armour>160</armour>
-   <energy>500</energy>
+   <shield>140</shield>
+   <armour>320</armour>
+   <energy>800</energy>
    <shield_regen>90</shield_regen>
    <armour_regen>30</armour_regen>
    <energy_regen>600</energy_regen>
@@ -740,9 +740,9 @@
    <speed>180</speed>
   </movement>
   <health>
-   <shield>70</shield>
-   <armour>160</armour>
-   <energy>500</energy>
+   <shield>140</shield>
+   <armour>320</armour>
+   <energy>800</energy>
    <shield_regen>90</shield_regen>
    <armour_regen>30</armour_regen>
    <energy_regen>600</energy_regen>
@@ -779,9 +779,9 @@
    <speed>190</speed>
   </movement>
   <health>
-   <shield>80</shield>
-   <armour>150</armour>
-   <energy>540</energy>
+   <shield>160</shield>
+   <armour>300</armour>
+   <energy>820</energy>
    <shield_regen>95</shield_regen>
    <armour_regen>32</armour_regen>
    <energy_regen>625</energy_regen>
@@ -818,8 +818,8 @@
    <speed>220</speed>
   </movement>
   <health>
-   <shield>100</shield>
-   <armour>190</armour>
+   <shield>200</shield>
+   <armour>380</armour>
    <energy>600</energy>
    <shield_regen>90</shield_regen>
    <armour_regen>30</armour_regen>
@@ -858,8 +858,8 @@
    <speed>220</speed>
   </movement>
   <health>
-   <shield>100</shield>
-   <armour>190</armour>
+   <shield>200</shield>
+   <armour>380</armour>
    <energy>600</energy>
    <shield_regen>90</shield_regen>
    <armour_regen>30</armour_regen>
@@ -897,8 +897,8 @@
    <speed>225</speed>
   </movement>
   <health>
-   <shield>120</shield>
-   <armour>180</armour>
+   <shield>240</shield>
+   <armour>360</armour>
    <energy>600</energy>
    <shield_regen>100</shield_regen>
    <armour_regen>35</armour_regen>
@@ -936,9 +936,9 @@
    <speed>220</speed>
   </movement>
   <health>
-   <shield>70</shield>
-   <armour>90</armour>
-   <energy>270</energy>
+   <shield>140</shield>
+   <armour>180</armour>
+   <energy>405</energy>
    <shield_regen>90</shield_regen>
    <armour_regen>50</armour_regen>
    <energy_regen>500</energy_regen>
@@ -974,9 +974,9 @@
    <speed>140</speed>
   </movement>
   <health>
-   <shield>550</shield>
-   <armour>300</armour>
-   <energy>800</energy>
+   <shield>1100</shield>
+   <armour>600</armour>
+   <energy>1600</energy>
    <shield_regen>360</shield_regen>
    <armour_regen>100</armour_regen>
    <energy_regen>1400</energy_regen>
@@ -1015,9 +1015,9 @@
    <speed>150</speed>
   </movement>
   <health>
-   <shield>600</shield>
-   <armour>280</armour>
-   <energy>830</energy>
+   <shield>1200</shield>
+   <armour>560</armour>
+   <energy>1630</energy>
    <shield_regen>380</shield_regen>
    <armour_regen>90</armour_regen>
    <energy_regen>1300</energy_regen>

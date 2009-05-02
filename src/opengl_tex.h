@@ -36,7 +36,8 @@
 /*
  * Texture flags.
  */
-#define OPENGL_TEX_MAPTRANS   (1<<0)  /**< Create a transparency map. */
+#define OPENGL_TEX_MAPTRANS   (1<<0) /**< Create a transparency map. */
+#define OPENGL_TEX_MIPMAPS    (1<<1) /**< Creates mipmaps. */
 
 /**
  * @brief Abstraction for rendering spriteshets.
@@ -57,6 +58,8 @@ typedef struct glTexture_ {
    double sy; /**< Number of sprites on the y axis. */
    double sw; /**< Width of a sprite. */
    double sh; /**< Height of a sprite. */
+   double srw; /**< Sprite render width - equivalent to sw/rw. */
+   double srh; /**< Sprite render height - equivalent to sh/rh. */
 
    /* data */
    GLuint texture; /**< the opengl texture itself */
@@ -83,7 +86,7 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface ); /* Only preps it */
 /*
  * Creating.
  */
-glTexture* gl_loadImage( SDL_Surface* surface ); /* Frees the surface. */
+glTexture* gl_loadImage( SDL_Surface* surface, const unsigned int flags ); /* Frees the surface. */
 glTexture* gl_newImage( const char* path, const unsigned int flags );
 glTexture* gl_newSprite( const char* path, const int sx, const int sy,
       const unsigned int flags );

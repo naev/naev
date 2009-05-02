@@ -127,6 +127,7 @@ int fleet_createPilot( Fleet *flt, FleetPilot *plt, double dir,
  */
 static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
 {
+   int i;
    xmlNodePtr cur, node;
    FleetPilot* pilot;
    char* c;
@@ -141,10 +142,25 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
    if (temp->name == NULL) WARN("Fleet in "FLEET_DATA" has invalid or no name");
 
    do { /* load all the data */
+
+      /* Set faction. */
       if (xml_isNode(node,"faction"))
          temp->faction = faction_get(xml_get(node));
+
+      /* Set AI. */
       else if (xml_isNode(node,"ai"))
          temp->ai = xml_getStrd(node);
+
+      /* Set flags. */
+      else if (xml_isNode(node,"flags")){
+         cur = node->children;     
+         do {
+            if (xml_isNode(cur,"guard"))
+               fleet_setFlag(temp, FLEET_FLAG_GUARD);
+         } while (xml_nextNode(cur));
+      }
+
+      /* Load pilots. */
       else if (xml_isNode(node,"pilots")) {
          cur = node->children;     
          mem = 0;
@@ -194,6 +210,11 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
          temp->pilots = realloc(temp->pilots, sizeof(FleetPilot)*temp->npilots);
       }
    } while (xml_nextNode(node));
+
+   /* Calculate average amount of pilots. */
+   temp->pilot_avg = 0.;
+   for (i=0; i<temp->npilots; i++)
+      temp->pilot_avg += ((double)temp->pilots[i].chance / 100.);
 
 #define MELEMENT(o,s) \
 if (o) WARN("Fleet '%s' missing '"s"' element", temp->name)

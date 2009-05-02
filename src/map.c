@@ -164,15 +164,20 @@ void map_open (void)
          &gl_smallFont, &cDConsole, "Standing:" );
    window_addText( wid, -20, -100-gl_smallFont.h-5, 80, 100, 0, "txtStanding",
          &gl_smallFont, &cBlack, NULL );
+   /* Security. */
+   window_addText( wid, -20, -140, 90, 20, 0, "txtSSecurity",
+         &gl_smallFont, &cDConsole, "Security:" );
+   window_addText( wid, -20, -140-gl_smallFont.h-5, 80, 100, 0, "txtSecurity",
+         &gl_smallFont, &cBlack, NULL );
    /* Planets */
-   window_addText( wid, -20, -140, 90, 20, 0, "txtSPlanets",
+   window_addText( wid, -20, -180, 90, 20, 0, "txtSPlanets",
          &gl_smallFont, &cDConsole, "Planets:" );
-   window_addText( wid, -20, -140-gl_smallFont.h-5, 80, 100, 0, "txtPlanets",
+   window_addText( wid, -20, -180-gl_smallFont.h-5, 80, 100, 0, "txtPlanets",
          &gl_smallFont, &cBlack, NULL );
    /* Services */
-   window_addText( wid, -20, -180, 90, 20, 0, "txtSServices",
+   window_addText( wid, -20, -220, 90, 20, 0, "txtSServices",
          &gl_smallFont, &cDConsole, "Services:" );
-   window_addText( wid, -20, -180-gl_smallFont.h-5, 80, 100, 0, "txtServices",
+   window_addText( wid, -20, -220-gl_smallFont.h-5, 80, 100, 0, "txtServices",
          &gl_smallFont, &cBlack, NULL );
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -233,13 +238,17 @@ static void map_update( unsigned int wid )
       window_moveWidget( wid, "txtSStanding", -20, -100 );
       window_moveWidget( wid, "txtStanding", -20, -100-gl_smallFont.h-5 );
       window_modifyText( wid, "txtStanding", "Unknown" );
+      /* Security. */
+      window_moveWidget( wid, "txtSSecurity", -20, -140 );
+      window_moveWidget( wid, "txtSecurity",  -20, -140-gl_smallFont.h-5 );
+      window_modifyText( wid, "txtSecurity", "Unknown" );
       /* Planets */
-      window_moveWidget( wid, "txtSPlanets", -20, -140 );
-      window_moveWidget( wid, "txtPlanets", -20, -140-gl_smallFont.h-5 );
+      window_moveWidget( wid, "txtSPlanets", -20, -180 );
+      window_moveWidget( wid, "txtPlanets", -20, -180-gl_smallFont.h-5 );
       window_modifyText( wid, "txtPlanets", "Unknown" );
       /* Services */
-      window_moveWidget( wid, "txtSServices", -20, -180 );
-      window_moveWidget( wid, "txtServices", -20, -180-gl_smallFont.h-5 );
+      window_moveWidget( wid, "txtSServices", -20, -220 );
+      window_moveWidget( wid, "txtServices", -20, -220-gl_smallFont.h-5 );
       window_modifyText( wid, "txtServices", "Unknown" );
       
       /*
@@ -290,6 +299,13 @@ static void map_update( unsigned int wid )
       window_moveWidget( wid, "txtSStanding", -20, y );
       window_moveWidget( wid, "txtStanding", -20, y-gl_smallFont.h-5 );
    }
+
+   /* Get security. */
+   y -= 40;
+   snprintf(buf, PATH_MAX, "%.0f %%", sys->security * 100.);
+   window_moveWidget( wid, "txtSSecurity", -20, y );
+   window_moveWidget( wid, "txtSecurity", -20, y-gl_smallFont.h-5 );
+   window_modifyText( wid, "txtSecurity", buf );
 
    /* Get planets */
    if (sys->nplanets == 0) {
@@ -496,9 +512,9 @@ static void map_render( double bx, double by, double w, double h )
    glColour* col;
    GLfloat vertex[8*(2+4)];
 
-   r = 5.;
-   x = (bx - map_xpos + w/2) * 1.;
-   y = (by - map_ypos + h/2) * 1.;
+   r = round(CLAMP( 5., 15., 6. * sqrt(map_zoom) ));
+   x = round((bx - map_xpos + w/2) * 1.);
+   y = round((by - map_ypos + h/2) * 1.);
 
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
@@ -512,16 +528,26 @@ static void map_render( double bx, double by, double w, double h )
       if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED) && !space_sysReachable(sys))
          continue;
 
-      /* system colours */
-      if (sys==cur_system) col = &cRadar_tPlanet;
-      else if (!sys_isKnown(sys) || (sys->nplanets==0)) col = &cInert;
-      else col = faction_getColour( sys->faction);
-      COLOUR(*col);
-
-      /* draw the system */
+      /* Draw the system. */
+      if (!sys_isKnown(sys)) col = &cInert;
+      else if (sys->security >= 1.) col = &cGreen;
+      else if (sys->security >= 0.6) col = &cOrange;
+      else if (sys->security >= 0.3) col = &cRed;
+      else col = &cDarkRed;
       tx = x + sys->pos.x*map_zoom;
       ty = y + sys->pos.y*map_zoom;
-      gl_drawCircleInRect( tx, ty, r, bx, by, w, h );
+      gl_drawCircleInRect( tx, ty, r, bx, by, w, h, col, 0 );
+      /* If system is known fill it. */
+      if (sys_isKnown(sys) && (sys->nplanets > 0)) {
+
+         /* Planet colours */
+         if (!sys_isKnown(sys)) col = &cInert;
+         else if (sys->nplanets==0) col = &cInert;
+         else col = faction_getColour( sys->faction);
+
+         /* Radius slightly shorter. */
+         gl_drawCircleInRect( tx, ty, r-4, bx, by, w, h, col, 1 );
+      }
 
       /* draw the system name */
       if (sys_isKnown(sys) && (map_zoom > 0.5 )) {
@@ -635,13 +661,17 @@ static void map_render( double bx, double by, double w, double h )
       }
    }
 
-   /* selected planet */
+   /* Selected planet. */
    if (map_selected != -1) {
       sys = system_getIndex( map_selected );
-      COLOUR(cRed);
       gl_drawCircleInRect( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
-            r+3., bx, by, w, h );
+            r+3., bx, by, w, h, &cRed, 0 );
    }
+
+   /* Current planet. */
+   gl_drawCircleInRect( x + cur_system->pos.x * map_zoom,
+         y + cur_system->pos.y * map_zoom,
+         r+3., bx, by, w, h, &cRadar_tPlanet, 0 );
 }
 /**
  * @brief Map custom widget mouse handling.

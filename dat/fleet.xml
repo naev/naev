@@ -3,6 +3,9 @@
  <fleet name="Goddard Goddard">
   <ai>goddard</ai>
   <faction>Goddard</faction>
+  <flags>
+   <guard />
+  </flags>
   <pilots>
    <pilot chance="100" ship="Goddard"></pilot>
   </pilots>
@@ -193,6 +196,9 @@
  <fleet name="Dvaered Vendetta">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
+  <flags>
+   <guard />
+  </flags>
   <pilots>
    <pilot name="Vendetta" chance="100" ship="Dvaered Vendetta"></pilot>
   </pilots>
@@ -200,6 +206,9 @@
  <fleet name="Dvaered Ancestor">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
+  <flags>
+   <guard />
+  </flags>
   <pilots>
    <pilot name="Ancestor" chance="100" ship="Dvaered Ancestor"></pilot>
   </pilots>
@@ -207,6 +216,9 @@
  <fleet name="Dvaered Goddard">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
+  <flags>
+   <guard />
+  </flags>
   <pilots>
    <pilot name="Goddard" chance="100" ship="Dvaered Goddard"></pilot>
    <pilot name="Ancestor" chance="60" ship="Dvaered Ancestor"></pilot>
@@ -216,6 +228,9 @@
  <fleet name="Dvaered Sml Force">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
+  <flags>
+   <guard />
+  </flags>
   <pilots>
    <pilot name="Vendetta" chance="100" ship="Dvaered Vendetta"></pilot>
    <pilot name="Vendetta" chance="80" ship="Dvaered Vendetta"></pilot>
@@ -226,6 +241,9 @@
  <fleet name="Dvaered Med Force">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
+  <flags>
+   <guard />
+  </flags>
   <pilots>
    <pilot name="Vendetta" chance="100" ship="Dvaered Vendetta"></pilot>
    <pilot name="Vendetta" chance="80" ship="Dvaered Vendetta"></pilot>
@@ -240,6 +258,9 @@
  <fleet name="Empire Lancelot">
   <ai>empire</ai>
   <faction>Empire</faction>
+  <flags>
+   <guard />
+  </flags>
   <pilots>
    <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
   </pilots>
@@ -247,6 +268,9 @@
  <fleet name="Empire Sml Defense">
   <ai>empire</ai>
   <faction>Empire</faction>
+  <flags>
+   <guard />
+  </flags>
   <pilots>
    <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
    <pilot name="Lancelot" chance="80" ship="Empire Lancelot"></pilot>
@@ -301,6 +325,9 @@
  <fleet name="Empire Pacifier">
   <ai>empire</ai>
   <faction>Empire</faction>
+  <flags>
+   <guard />
+  </flags>
   <pilots>
    <pilot name="Pacifier" chance="100" ship="Empire Pacifier"></pilot>
   </pilots>
@@ -308,6 +335,9 @@
  <fleet name="Empire Admonisher">
   <ai>empire</ai>
   <faction>Empire</faction>
+  <flags>
+   <guard />
+  </flags>
   <pilots>
    <pilot name="Admonisher" chance="100" ship="Empire Admonisher"></pilot>
   </pilots>

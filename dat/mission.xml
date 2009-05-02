@@ -247,6 +247,9 @@
  </mission>
  <mission name="Empire HCVL">
   <lua>empire/emp_hcvl</lua>
+  <flags>
+   <unique />
+  </flags>
   <avail>
    <cond>player.getRating() &gt; 30 and system.get():hasPresence("Pirate")</cond>
    <chance>20</chance>
