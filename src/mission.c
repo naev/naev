@@ -30,6 +30,7 @@
 #include "player.h"
 #include "base64.h"
 #include "space.h"
+#include "cond.h"
 
 
 #define XML_MISSION_ID        "Missions" /**< XML document identifier */
@@ -63,7 +64,6 @@ static unsigned int mission_genID (void);
 static int mission_init( Mission* mission, MissionData* misn, int load );
 static void mission_freeData( MissionData* mission );
 static int mission_alreadyRunning( MissionData* misn );
-static int mission_meetCond( MissionData* misn );
 static int mission_meetReq( int mission, int faction,
       const char* planet, const char* sysname );
 static int mission_matchFaction( MissionData* misn, int faction );
@@ -229,71 +229,6 @@ static int mission_alreadyRunning( MissionData* misn )
 }
 
 
-static lua_State* mission_cond_L = NULL; /**< Mission conditional Lua state. */
-/**
- * @brief Checks to see if the mission conditional data is met.
- *
- *    @param misn Mission to check.
- *    @return 1 if is met, 0 if it isn't.
- */
-static int mission_meetCond( MissionData* misn )
-{
-   int b;
-   int ret;
-   char buf[256];
-
-   /* Create environment if needed. */
-   if (mission_cond_L == NULL) { /* must create the conditional environment */
-      mission_cond_L = nlua_newState();
-      misn_loadCondLibs( mission_cond_L );
-   }
-
-   /* Load the string. */ 
-   snprintf( buf, 256, "return %s", misn->avail.cond ); /* Must convert to Lua syntax */
-   ret = luaL_loadstring( mission_cond_L, buf );
-   switch (ret) {
-      case  LUA_ERRSYNTAX:
-         WARN("Mission '%s' Lua conditional syntax error", misn->name );
-         return 0;
-      case LUA_ERRMEM:
-         WARN("Mission '%s' Lua Conditional ran out of memory", misn->name );
-         return 0;
-      default:
-         break;
-   }
-
-   /* Run the string. */
-   ret = lua_pcall( mission_cond_L, 0, 1, 0 );
-   switch (ret) {
-      case LUA_ERRRUN:
-         WARN("Mission '%s' Lua Conditional had a runtime error: %s",
-               misn->name, lua_tostring(mission_cond_L, -1));
-         return 0;
-      case LUA_ERRMEM:
-         WARN("Mission '%s' Lua Conditional ran out of memory", misn->name);
-         return 0;
-      case LUA_ERRERR:
-         WARN("Mission '%s' Lua Conditional had an error while handling error function",
-               misn->name);
-         return 0;
-      default:
-         break;
-   }
-
-   /* Check the result. */
-   if (lua_isboolean(mission_cond_L, -1)) {
-      b = lua_toboolean(mission_cond_L, -1);
-      lua_pop(mission_cond_L, 1);
-      if (b)
-         return 1;
-      else
-         return 0;
-   }
-   WARN("Mission '%s' Conditional Lua didn't return a boolean", misn->name);
-   return 0;
-}
-
-
 /**
  * @brief Checks to see if a mission meets the requirements.
  *
@@ -326,7 +261,7 @@ static int mission_meetReq( int mission, int faction,
 
    /* Must meet Lua condition. */
    if ((misn->avail.cond != NULL) &&
-         !mission_meetCond(misn))
+         !cond_check(misn->avail.cond))
       return 0;
 
    /* Must meet previous mission requirements. */
@@ -821,12 +756,6 @@ void missions_free (void)
    free( mission_stack );
    mission_stack = NULL;
    mission_nstack = 0;
-
-   /* frees the lua stack */
-   if (mission_cond_L != NULL) {
-      lua_close( mission_cond_L );
-      mission_cond_L = NULL;
-   }
 }
 
 

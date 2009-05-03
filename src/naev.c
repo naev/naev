@@ -67,6 +67,7 @@
 #include "nlua_var.h"
 #include "map.h"
 #include "event.h"
+#include "cond.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -232,6 +233,7 @@ int main( int argc, char** argv )
    gui_init(); /* initializes the GUI graphics */
    toolkit_init(); /* initializes the toolkit */
    map_init(); /* initializes the map. */
+   cond_init(); /* Initialize conditional subsystem. */
 
    /* Data loading */
    load_all();
@@ -271,6 +273,7 @@ int main( int argc, char** argv )
    gui_free(); /* cleans up the player's GUI */
    weapon_exit(); /* destroys all active weapons */
    pilots_free(); /* frees the pilots, they were locked up :( */
+   cond_exit(); /* destroy conditional subsystem. */
 
    /* data unloading */
    unload_all();

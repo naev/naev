@@ -107,17 +107,6 @@ int misn_loadLibs( lua_State *L )
    lua_loadMusic(L,0);
    return 0;
 }
-/**
- * @brief Registers all the mission conditional libraries.
- *
- *    @param L Lua state.
- *    @return 0 on success.
- */
-int misn_loadCondLibs( lua_State *L )
-{
-   nlua_loadStandard(L,1);
-   return 0;
-}
 /*
  * individual library loading
  */
