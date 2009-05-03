@@ -762,7 +762,7 @@ static int pilotL_comm( lua_State *L )
  *
  *    @luaparam p Pilot to change faction of.
  *    @luaparam faction Faction to set by name or faction.
- * @luafunc setFaction( faction )
+ * @luafunc setFaction( p, faction )
  */
 static int pilotL_setFaction( lua_State *L )
 {
