@@ -60,12 +60,6 @@ int cond_check( const char* cond )
    int b;
    int ret;
 
-   /* Lazy loading. */
-   if (cond_L == NULL) { /* must create the conditional environment */
-      cond_L = nlua_newState();
-      nlua_loadStandard(cond_L,1);
-   }
-
    /* Load the string. */ 
    lua_pushstring(cond_L, "return ");
    lua_pushstring(cond_L, cond);
