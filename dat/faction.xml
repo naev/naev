@@ -161,4 +161,10 @@
    <enemy>Trader</enemy>
   </enemies>
  </faction>
+ <faction name="Derelict">
+  <static />
+  <player>0</player>
+  <allies />
+  <enemies />
+ </faction>
 </Factions>

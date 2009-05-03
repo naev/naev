@@ -7,6 +7,15 @@
 #  define EVENT_H
 
 
+/**
+ * @brief Possibly event triggers.
+ */
+typedef enum EventTrigger_s {
+   EVENT_TRIGGER_NULL, /**< Invalid trigger. */
+   EVENT_TRIGGER_ENTER /**< Entering a system (jump/takeoff). */
+} EventTrigger_t;
+
+
 /*
  * Loading/exitting.
  */

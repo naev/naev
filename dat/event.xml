@@ -1,0 +1,8 @@
+<Events>
+ <event name="Derelict">
+  <lua>neutral/derelict</lua>
+  <trigger>enter</trigger>
+  <chance>10</chance>
+  <cond>#system.get():faction() > 0</cond>
+ </event>
+</Events>
