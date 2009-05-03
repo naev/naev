@@ -21,19 +21,13 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "log.h"
 #include "nlua.h"
 #include "nluadef.h"
-#include "nlua_space.h"
-#include "nlua_faction.h"
 #include "rng.h"
-#include "log.h"
-#include "hook.h"
 #include "ndata.h"
 #include "nxml.h"
-#include "faction.h"
-#include "player.h"
-#include "base64.h"
-#include "space.h"
+#include "cond.h"
 
 
 #define XML_EVENT_ID          "Events" /**< XML document identifier */
@@ -73,7 +67,6 @@ typedef struct Event_s {
  */
 static EventData_t *event_data   = NULL; /**< Allocated event data. */
 static int event_ndata           = 0; /**< Number of actual event data. */
-static int event_mdata           = 0; /**< Number of event data allocated. */
 
 
 /*
@@ -87,7 +80,34 @@ static int event_mactive         = 0; /**< Allocated space for active events. */
 /*
  * Prototypes.
  */
+static int event_parse( EventData_t *temp, const xmlNodePtr parent );
+static void event_freeData( EventData_t *event );
 
+
+
+/**
+ * @brief Runs all the events matching a trigger.
+ *
+ *    @param trigger Trigger to match.
+ */
+void events_run( EventTrigger_t trigger )
+{
+   int i;
+
+   for (i=0; i<event_ndata; i++) {
+      /* Make sure trigger matches. */
+      if (event_data[i].trigger != trigger)
+         continue;
+
+      /* Make sure chance is succeeded. */
+      if (RNGF() > event_data[i].chance)
+         continue;
+
+      /* Test conditional. */
+      if (!check_cond(event_Data[i].cond))
+         continue;
+   }
+}
 
 
 /**
@@ -169,7 +189,6 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
 
    return 0;
 }
-
 
 
 /**
@@ -274,7 +293,6 @@ void events_exit (void)
       free(event_data);
       event_data  = NULL;
       event_ndata = 0;
-      event_mdata = 0;
    }
 }
 

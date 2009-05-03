@@ -26,7 +26,7 @@ void events_exit (void);
 /*
  * Triggering.
  */
-void events_trigger( int where );
+void events_run( EventTrigger_t trigger );
 
 
 #endif /* EVENT_H */
