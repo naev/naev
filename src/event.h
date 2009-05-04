@@ -26,7 +26,8 @@ void events_exit (void);
 /*
  * Triggering.
  */
-void events_run( EventTrigger_t trigger );
+int event_run( int eventid, const char *func );
+void events_trigger( EventTrigger_t trigger );
 
 
 #endif /* EVENT_H */

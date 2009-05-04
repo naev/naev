@@ -82,7 +82,105 @@ static int event_mactive         = 0; /**< Allocated space for active events. */
  */
 static int event_parse( EventData_t *temp, const xmlNodePtr parent );
 static void event_freeData( EventData_t *event );
+static int event_runLua( Event_t *ev, const char *func );
+static int event_create( int dataid );
 
+
+/**
+ * @brief Runs the event function.
+ *
+ *    @param eventid ID of the event to run Lua function on.
+ *    @param func Name of the function to run.
+ *    @return 0 on success.
+ */
+int event_run( int eventid, const char *func )
+{
+   Event_t *ev;
+
+#ifdef DEBUGGING
+   if ((eventid >= event_nactive) || (eventid < 0)) {
+      WARN("Event ID not valid.");
+      return -1;
+   }
+#endif /* DEBUGGING */
+
+   ev = &event_active[ eventid ];
+
+   return event_runLua( ev, func );
+}
+
+
+/**
+ * @brief Runs the Lua for an event.
+ */
+static int event_runLua( Event_t *ev, const char *func )
+{
+   int ret;
+   const char* err;
+   lua_State *L;
+
+   L = ev->L;
+
+   ret = lua_pcall(L, 0, 0, 0);
+   if (ret != 0) { /* error has occured */
+      err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
+      if (strcmp(err,"Event Done")!=0)
+         WARN("Event '%s' -> '%s': %s",
+               event_data[ev->data].name, func, (err) ? err : "unknown error");
+      else
+         ret = 1;
+   }
+
+   return ret;
+}
+
+
+/**
+ * @brief Creates an event.
+ *
+ *    @param data Data to base event off of.
+ */
+static int event_create( int dataid )
+{
+   lua_State *L;
+   uint32_t bufsize;
+   char *buf;
+   Event_t ev;
+   EventData_t *data;
+
+   /* Add the data. */
+   ev.data = dataid;
+   data = &event_data[dataid];
+
+   /* Open the new state. */
+   ev.L = nlua_newState();
+   L = ev.L;
+   nlua_loadStandard(L,0);
+
+   /* Load file. */
+   buf = ndata_read( data->lua, &bufsize );
+   if (buf == NULL) {
+      WARN("Event '%s' Lua script not found.", data->lua );
+      return -1;
+   }
+   if (luaL_dobuffer(L, buf, bufsize, data->lua) != 0) {
+      WARN("Error loading event file: %s\n"
+            "%s\n"
+            "Most likely Lua file has improper syntax, please check",
+            data->lua, lua_tostring(L,-1));
+      return -1;
+   }
+   free(buf);
+
+   /* Run Lua. */
+   event_runLua( &ev, "create" );
+
+   /* For now destroy state.
+    * @todo save state if needed. */
+   lua_close(L);
+
+   return 0;
+}
 
 
 /**
@@ -90,7 +188,7 @@ static void event_freeData( EventData_t *event );
  *
  *    @param trigger Trigger to match.
  */
-void events_run( EventTrigger_t trigger )
+void events_trigger( EventTrigger_t trigger )
 {
    int i;
 
@@ -104,8 +202,11 @@ void events_run( EventTrigger_t trigger )
          continue;
 
       /* Test conditional. */
-      if (!check_cond(event_Data[i].cond))
+      if (!cond_check(event_data[i].cond))
          continue;
+
+      /* Create the event. */
+      event_create( i );
    }
 }
 
