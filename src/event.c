@@ -121,12 +121,17 @@ static int event_runLua( Event_t *ev, const char *func )
 
    L = ev->L;
 
+   /* Get function. */
+   lua_getglobal(L, func );
+
    ret = lua_pcall(L, 0, 0, 0);
    if (ret != 0) { /* error has occured */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
-      if (strcmp(err,"Event Done")!=0)
+      if (strcmp(err,"Event Done")!=0) {
          WARN("Event '%s' -> '%s': %s",
                event_data[ev->data].name, func, (err) ? err : "unknown error");
+         lua_pop(L, 1);
+      }
       else
          ret = 1;
    }
