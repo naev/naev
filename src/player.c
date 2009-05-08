@@ -46,6 +46,7 @@
 #include "gui.h"
 #include "nlua_var.h"
 #include "escort.h"
+#include "event.h"
 
 
 #define XML_START_ID "Start" /**< Module start xml document identifier. */
@@ -1276,6 +1277,7 @@ void player_brokeHyperspace (void)
 
    /* run the jump hooks */
    hooks_run( "enter" );
+   events_trigger( EVENT_TRIGGER_ENTER );
 }
 
 

@@ -33,6 +33,7 @@
 #include "map.h"
 #include "news.h"
 #include "escort.h"
+#include "event.h"
 
 
 /* global/main window */
@@ -1676,6 +1677,7 @@ void takeoff( int delay )
                             missions to think we are landed. */
    player_addEscorts();
    hooks_run("enter");
+   events_trigger( EVENT_TRIGGER_ENTER );
 }
 
 

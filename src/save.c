@@ -26,6 +26,7 @@
 #include "ndata.h"
 #include "unidiff.h"
 #include "nlua_var.h"
+#include "event.h"
 
 
 #define LOAD_WIDTH      400 /**< Load window width. */
@@ -343,6 +344,7 @@ static int load_game( const char* file )
    hooks_run("takeoff");
    player_addEscorts();
    hooks_run("enter");
+   events_trigger( EVENT_TRIGGER_ENTER );
 
    xmlFreeDoc(doc);
    xmlCleanupParser();
