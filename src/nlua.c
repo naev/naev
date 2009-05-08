@@ -183,6 +183,7 @@ int nlua_loadStandard( lua_State *L, int readonly )
    int r;
 
    r = 0;
+   r |= nlua_loadBasic(L);
    r |= lua_loadNaev(L);
    r |= lua_loadVar(L,readonly);
    r |= lua_loadSpace(L,readonly); /* planet, system */
