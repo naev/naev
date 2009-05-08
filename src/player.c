@@ -57,6 +57,9 @@
 #define PLAYER_ENGINE_CHANNEL    8 /**< Player channel for engine noises. */
 #define PLAYER_GUI_CHANNEL       9 /**< Player channel. */
 
+#define ZOOM_OUT_MAX             0.5 /**< Maximum zoom out. */
+#define ZOOM_IN_MAX              1. /**< Maximum zoom in. */
+
 
 /*
  * player stuff
@@ -1000,11 +1003,11 @@ void player_think( Pilot* pplayer )
          dy = (SCREEN_H/2.) / (FABS(y) + 2*target->ship->gfx_space->sh);
 
          /* Get zoom. */
-         gl_cameraZoom( CLAMP( 0.5, 1., MIN( dx, dy ) ) );
+         gl_cameraZoom( CLAMP( ZOOM_OUT_MAX, ZOOM_IN_MAX, MIN( dx, dy ) ) );
       }
    }
    else
-      gl_cameraZoom( MAX( 1., z-0.01 ) ); /** @todo Change hack to dt based if possible. */
+      gl_cameraZoom( 1. );
 }
 
 
