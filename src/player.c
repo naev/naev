@@ -848,6 +848,7 @@ void player_think( Pilot* pplayer )
    Pilot *target;
    double d;
    double turn;
+   double x,y, z, dx, dy;
 
    /* last i heard, the dead don't think */
    if (pilot_isFlag(pplayer,PILOT_DEAD)) {
@@ -979,6 +980,31 @@ void player_think( Pilot* pplayer )
     */
    sound_updateListener( pplayer->solid->dir,
          pplayer->solid->pos.x, pplayer->solid->pos.y );
+
+
+   /*
+    * Set Zoom to pilot target.
+    */
+   gl_cameraZoomGet( &z );
+   if (player->target != PLAYER_ID) {
+      target = pilot_get(player->target);
+      if (target != NULL) {
+
+         /* Get current relative target position. */
+         gui_getOffset( &x, &y );
+         x += target->solid->pos.x - player->solid->pos.x;
+         y += target->solid->pos.y - player->solid->pos.y;
+
+         /* Get distance ratio. */
+         dx = (SCREEN_W/2.) / (FABS(x) + 2*target->ship->gfx_space->sw);
+         dy = (SCREEN_H/2.) / (FABS(y) + 2*target->ship->gfx_space->sh);
+
+         /* Get zoom. */
+         gl_cameraZoom( CLAMP( 0.5, 1., MIN( dx, dy ) ) );
+      }
+   }
+   else
+      gl_cameraZoom( MAX( 1., z-0.01 ) ); /** @todo Change hack to dt based if possible. */
 }
 
 

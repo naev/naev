@@ -39,6 +39,7 @@
 
 
 static Vector2d* gl_camera  = NULL; /**< Camera we are using. */
+static double gl_cameraZ    = 0.5; /**< Current in-game zoom. */
 static double gl_cameraX    = 0.; /**< X position of camera. */
 static double gl_cameraY    = 0.; /**< Y position of camera. */
 static gl_vbo *gl_renderVBO = 0; /**< VBO for rendering stuff. */
@@ -63,6 +64,30 @@ static void gl_blitTexture(  const glTexture* texture,
       const double w, const double h,
       const double tx, const double ty,
       const double tw, const double th, const glColour *c );
+
+
+/**
+ * @brief Sets the camera zoom.
+ *
+ * This is the zoom used in game coordinates.
+ *
+ *    @param zoom Zoom to set to.
+ */
+void gl_cameraZoom( double zoom )
+{
+   gl_cameraZ = zoom;
+}
+
+
+/**
+ * @brief Gets the camera zoom.
+ *
+ *    @param zoom Stores the camera zoom.
+ */
+void gl_cameraZoomGet( double * zoom )
+{
+   *zoom = gl_cameraZ;
+}
 
 
 /**
@@ -211,6 +236,9 @@ static void gl_blitTexture(  const glTexture* texture,
 /**
  * @brief Blits a sprite, position is relative to the player.
  *
+ * Since position is in "game coordinates" it is subject to all
+ * sorts of position transformations.
+ *
  *    @param sprite Sprite to blit.
  *    @param bx X position of the texture relative to the player.
  *    @param by Y position of the texture relative to the player.
@@ -228,8 +256,8 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
    gui_getOffset( &gx, &gy );
 
    /* calculate position - we'll use relative coords to player */
-   x = bx - cx - sprite->sw/2. + gx;
-   y = by - cy - sprite->sh/2. + gy;
+   x = (bx - cx - sprite->sw/2. + gx) * gl_cameraZ;
+   y = (by - cy - sprite->sh/2. + gy) * gl_cameraZ;
 
    /* check if inbounds */
    if ((fabs(x) > SCREEN_W/2 + sprite->sw) ||
@@ -240,7 +268,7 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
    tx = sprite->sw*(double)(sx)/sprite->rw;
    ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
 
-   gl_blitTexture( sprite, x, y, sprite->sw, sprite->sh,
+   gl_blitTexture( sprite, x, y, sprite->sw*gl_cameraZ, sprite->sh*gl_cameraZ,
          tx, ty, sprite->srw, sprite->srh, c );
 }
 
