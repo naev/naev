@@ -19,6 +19,10 @@
 /* property flags */
 #define OUTFIT_PROP_WEAP_SECONDARY  (1<<0) /**< Is a secondary weapon? */
 #define OUTFIT_PROP_WEAP_SPIN       (1<<1) /**< Should weapon spin around? */
+#define OUTFIT_PROP_WEAP_BLOWUP_ARMOUR (1<<2) /**< Weapon blows up (armour spfx)
+                                                   when timer is up. */
+#define OUTFIT_PROP_WEAP_BLOWUP_SHIELD (1<<3) /**< Weapon blows up (shield spfx)
+                                                   when timer is up. */
 
 
 struct Outfit_;

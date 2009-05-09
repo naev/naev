@@ -667,9 +667,23 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    do { /* load all the data */
       xmlr_float(node,"speed",temp->u.blt.speed);
       xmlr_float(node,"delay",temp->u.blt.delay);
-      xmlr_float(node,"range",temp->u.blt.range);
       xmlr_float(node,"accuracy",temp->u.blt.accuracy);
       xmlr_float(node,"energy",temp->u.blt.energy);
+      if (xml_isNode(node,"range")) {
+         buf = xml_nodeProp(node,"blowup");
+         if (buf != NULL) {
+            if (strcmp(buf,"armour")==0)
+               outfit_setProp(temp, OUTFIT_PROP_WEAP_BLOWUP_SHIELD);
+            else if (strcmp(buf,"shield")==0)
+               outfit_setProp(temp, OUTFIT_PROP_WEAP_BLOWUP_ARMOUR);
+            else
+               WARN("Outfit '%s' has invalid blowup property: '%s'",
+                     temp->name, buf );
+            free(buf);
+         }
+         temp->u.blt.range = xml_getFloat(node);
+         continue;
+      }
 
       if (xml_isNode(node,"gfx")) {
          temp->u.blt.gfx_space = xml_parseTexture( node,
@@ -839,7 +853,21 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 
    do { /* load all the data */
       /* Basic */
-      xmlr_float(node,"duration",temp->u.amm.duration);
+      if (xml_isNode(node,"duration")) {
+         buf = xml_nodeProp(node,"blowup");
+         if (buf != NULL) {
+            if (strcmp(buf,"armour")==0)
+               outfit_setProp(temp, OUTFIT_PROP_WEAP_BLOWUP_SHIELD);
+            else if (strcmp(buf,"shield")==0)
+               outfit_setProp(temp, OUTFIT_PROP_WEAP_BLOWUP_ARMOUR);
+            else
+               WARN("Outfit '%s' has invalid blowup property: '%s'",
+                     temp->name, buf );
+            free(buf);
+         }
+         temp->u.amm.duration = xml_getFloat(node);
+         continue;
+      }
       xmlr_float(node,"lockon",temp->u.amm.lockon);
       xmlr_float(node,"resist",temp->u.amm.resist);
       /* Movement */
