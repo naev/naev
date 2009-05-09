@@ -404,6 +404,7 @@ void gui_renderTarget( double dt )
 static void gui_renderBorder( double dt )
 {
    (void) dt;
+   double z;
    int i, j;
    Pilot *plt;
    Planet *pnt;
@@ -416,6 +417,9 @@ static void gui_renderBorder( double dt )
    glColour *col;
    double a, int_a;
    GLfloat vertex[5*2], colours[5*4];
+
+   /* Get zoom. */
+   gl_cameraZoomGet( &z );
 
    /* Get player position. */
    pos   = &player->solid->pos;
@@ -430,13 +434,13 @@ static void gui_renderBorder( double dt )
       pnt = cur_system->planets[i];
       tex = pnt->gfx_space;
 
-      /* Get relative positions. */
-      rx = pnt->pos.x - player->solid->pos.x;
-      ry = pnt->pos.y - player->solid->pos.y;
-
       /* See if in sensor range. */
       if (!pilot_inRangePlanet(player, i))
          continue;
+
+      /* Get relative positions. */
+      rx = (pnt->pos.x - player->solid->pos.x) * z;
+      ry = (pnt->pos.y - player->solid->pos.y) * z;
 
       /* Correct for offset. */
       crx = rx - gui_xoff;
@@ -507,13 +511,13 @@ static void gui_renderBorder( double dt )
       plt = pilot_stack[i];
       tex = plt->ship->gfx_space;
 
-      /* Get relative positions. */
-      rx = plt->solid->pos.x - player->solid->pos.x;
-      ry = plt->solid->pos.y - player->solid->pos.y;
-
       /* See if in sensor range. */
       if (!pilot_inRangePilot(player, plt))
          continue;
+
+      /* Get relative positions. */
+      rx = (plt->solid->pos.x - player->solid->pos.x)*z;
+      ry = (plt->solid->pos.y - player->solid->pos.y)*z;
 
       /* Correct for offset. */
       rx -= gui_xoff;
