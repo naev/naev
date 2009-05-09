@@ -138,7 +138,8 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
    p = m+1;
    if (mode == 0) {
       while (p < pilot_nstack) {
-         if ((pilot_stack[p]->faction != FACTION_PLAYER) &&
+         if (((pilot_stack[p]->faction != FACTION_PLAYER) ||
+                  (pilot_isFlag(pilot_stack[p], PILOT_DISABLED))) &&
                pilot_inRangePilot( player, pilot_stack[p] ))
             return pilot_stack[p]->id;
          p++;
@@ -189,7 +190,8 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
    /* Get first one in range. */
    if (mode == 0) {
       while (p >= 0) {
-         if ((pilot_stack[p]->faction != FACTION_PLAYER) &&
+         if (((pilot_stack[p]->faction != FACTION_PLAYER) ||
+                  (pilot_isFlag(pilot_stack[p], PILOT_DISABLED))) &&
                pilot_inRangePilot( player, pilot_stack[p] ))
             return pilot_stack[p]->id;
          p--;
