@@ -9,7 +9,6 @@
 
 
 extern int sound_disabled;
-extern double sound_defVolume;
 
 
 /*

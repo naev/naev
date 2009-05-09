@@ -27,6 +27,7 @@
 #include "nxml.h"
 #include "pack.h"
 #include "nfile.h"
+#include "conf.h"
 
 
 #define NDATA_FILENAME  "ndata" /**< Generic ndata file name. */
@@ -190,6 +191,9 @@ int ndata_open (void)
    /* If user enforces ndata filename, we'll respect that. */
    if (ndata_filename != NULL)
       return ndata_openPackfile();
+
+   /* Set path to configuration. */
+   ndata_setPath(conf.ndata);
 
    return 0;
 }

@@ -49,12 +49,15 @@ else if (!lua_isnil(L,-1)) \
 lua_pop(L,1);
 
 #define  conf_loadString(n,s) \
-   lua_getglobal(L, n); \
+lua_getglobal(L, n); \
 if (lua_isstring(L, -1)) { \
    s = strdup(lua_tostring(L, -1));   \
 } \
 lua_pop(L,1);
 
+
+/* Global configuration. */
+PlayerConf_t conf;
 
 /* from main.c */
 extern int nosound;
@@ -104,19 +107,54 @@ static void print_usage( char **argv )
  */
 void conf_setDefaults (void)
 {
-   /* opengl */
-   gl_screen.w = 800;
-   gl_screen.h = 600;
-   gl_screen.flags = 0;
-   gl_screen.fsaa = 4; /* Only used if activated. */
-   gl_setScale(1.); /* No scaling. */
-   /* openal */
-   nosound = 0;
-   /* joystick */
-   indjoystick = -1;
-   namjoystick = NULL;
-   /* input */
+   conf_cleanup();
+
+   /* ndata. */
+   conf.ndata        = NULL;
+
+   /* opengl. */
+   conf.fsaa         = 1;
+   conf.vsync        = 0;
+
+   /* Window. */
+   conf.width        = 800;
+   conf.height       = 600;
+   conf.explicit_dim = 0;
+   conf.scalefactor  = 1.;
+   conf.fullscreen   = 0.;
+
+   /* Sound. */
+   conf.nosound      = 0;
+   conf.sound        = 0.6;
+   conf.music        = 0.4;
+
+   /* FPS. */
+   conf.fps_show     = 0;
+   conf.fps_max      = 200;
+
+   /* Joystick. */
+   conf.joystick_ind = -1;
+   conf.joystick_nam = NULL;
+
+   /* Misc. */
+   conf.zoom_min     = 0.5;
+   conf.zoom_max     = 1.;
+   conf.afterburn_sens = 250;
+
+   /* Input */
    input_setDefault();
+}
+
+
+/*
+ * Frees some memory the conf allocated.
+ */
+void conf_cleanup (void)
+{
+   if (conf.ndata != NULL)
+      free(conf.ndata);
+   if (conf.joystick_nam != NULL)
+      free(conf.joystick_nam);
 }
 
 
@@ -130,7 +168,7 @@ int conf_loadConfig ( const char* file )
    const char *str, *mod;
    SDLKey key;
    int type;
-   int w,h, fsaa;
+   int w,h;
    SDLMod m;
 
    i = 0;
@@ -144,97 +182,49 @@ int conf_loadConfig ( const char* file )
    lua_State *L = nlua_newState();
    if (luaL_dofile(L, file) == 0) {
 
-      /* global */
-      lua_getglobal(L, "data");
-      if (lua_isstring(L, -1))
-         ndata_setPath( lua_tostring(L, -1) );
-      lua_pop(L,1);
+      /* ndata. */
+      conf_loadString("data",conf.ndata);
 
-      /*
-       * opengl properties
-       */
-      /* Dimensions. */
+      /* OpenGL. */
+      conf_loadInt("fsaa",conf.fsaa);
+      conf_loadBool("vsync",conf.vsync);
+
+      /* Window. */
       w = h = 0;
       conf_loadInt("width",w);
       conf_loadInt("height",h);
       if (w != 0) {
-         gl_screen.flags |= OPENGL_DIM_DEF;
-         gl_screen.w = w;
+         conf.explicit_dim = 1;
+         conf.width = w;
       }
       if (h != 0) {
-         gl_screen.flags |= OPENGL_DIM_DEF;
-         gl_screen.h = h;
+         conf.explicit_dim = 1;
+         conf.height = h;
       }
-      /* Scalefactor. */
-      d = 1.;
-      conf_loadFloat("scalefactor",d);
-      if (d!=1.)
-         gl_setScale(d);
-      /* FSAA */
-      fsaa = 0;
-      conf_loadInt("fsaa",fsaa);
-      if (fsaa > 0) {
-         gl_screen.flags |= OPENGL_FSAA;
-         gl_screen.fsaa = fsaa;
-      }
-      /* Fullscreen. */
-      conf_loadBool("fullscreen",i);
-      if (i) { gl_screen.flags |= OPENGL_FULLSCREEN; i = 0; }
-      /* Anti aliasing. */
-      conf_loadBool("aa",i);
-      if (i) {
-         gl_screen.flags |= OPENGL_AA_POINT | OPENGL_AA_LINE | OPENGL_AA_POLYGON;
-         i = 0; }
-      conf_loadBool("aa_point",i);
-      if (i) { gl_screen.flags |= OPENGL_AA_POINT; i = 0; }
-      conf_loadBool("aa_line",i);
-      if (i) { gl_screen.flags |= OPENGL_AA_LINE; i = 0; }
-      conf_loadBool("aa_polygon",i);
-      if (i) { gl_screen.flags |= OPENGL_AA_POLYGON; i = 0; }
-      /* Vsync. */
-      conf_loadBool("vsync",i);
-      if (i) { gl_screen.flags |= OPENGL_VSYNC; i = 0; }
+      conf_loadFloat("scalefactor",conf.scalefactor);
+      conf_loadBool("fullscreen",conf.fullscreen);
 
       /* FPS */
-      conf_loadBool("showfps",show_fps);
-      conf_loadInt("maxfps",max_fps);
+      conf_loadBool("showfps",conf.fps_show);
+      conf_loadInt("maxfps",conf.fps_max);
 
-      /* input */
-      i = 250;
-      conf_loadInt("afterburn_sensitivity",i);
-      input_afterburnSensitivity = (i < 0) ? 0 : (unsigned int)i;
-      i = 0;
+      /* Sound. */
+      conf_loadBool("nosound",conf.nosound);
+      conf_loadFloat("sound",conf.sound);
+      conf_loadFloat("music",conf.music);
 
-      /* 
-       * sound
-       */
-      conf_loadBool("nosound",i)
-      nosound = i; i = 0;
-      conf_loadFloat("sound",d);
-      if (d) {
-         sound_defVolume = CLAMP( 0., 1., d );
-         if (d == 0.)
-            sound_disabled = 1;
-         d = 0.;
-      }
-      conf_loadFloat("music",d);
-      if (d) {
-         music_defVolume = CLAMP( 0., 1., d );
-         if (d == 0.)
-            music_disabled = 1;
-         d = 0.;
-      }
-
-
-      /* 
-       * Joystick.
-       */
+      /* Joystick. */
       lua_getglobal(L, "joystick");
       if (lua_isnumber(L, -1))
-         indjoystick = (int)lua_tonumber(L, -1);
+         conf.joystick_ind = (int)lua_tonumber(L, -1);
       else if (lua_isstring(L, -1))
-         namjoystick = strdup(lua_tostring(L, -1));
+         conf.joystick_nam = strdup(lua_tostring(L, -1));
       lua_pop(L,1);
+
+      /* Misc. */
+      conf_loadFloat("zoom_min",conf.zoom_min);
+      conf_loadFloat("zoom_max",conf.zoom_max);
+      conf_loadInt("afterburn_sensitivity",conf.afterburn_sens);
 
 
       /*
@@ -362,54 +352,47 @@ void conf_parseCLI( int argc, char** argv )
       { NULL, 0, 0, 0 } };
    int option_index = 0;
    int c = 0;
-   double d;
    while ((c = getopt_long(argc, argv,
          "fF:Vd:j:J:W:H:MSm:s:Ghv",
          long_options, &option_index)) != -1) {
       switch (c) {
          case 'f':
-            gl_screen.flags |= OPENGL_FULLSCREEN;
+            conf.fullscreen = 1;
             break;
          case 'F':
-            max_fps = atoi(optarg);
+            conf.fps_max = atoi(optarg);
             break;
          case 'V':
-            gl_screen.flags |= OPENGL_VSYNC;
+            conf.vsync = 1;
             break;
          case 'd': 
-            ndata_setPath(optarg);
+            conf.ndata = strdup(optarg);
             break;
          case 'j':
-            indjoystick = atoi(optarg);
+            conf.joystick_ind = atoi(optarg);
             break;
          case 'J':
-            namjoystick = strdup(optarg);
+            conf.joystick_nam = strdup(optarg);
             break;
          case 'W':
-            gl_screen.w = atoi(optarg);
-            gl_screen.flags |= OPENGL_DIM_DEF;
+            conf.width = atoi(optarg);
+            conf.explicit_dim = 1;
             break;
          case 'H':
-            gl_screen.h = atoi(optarg);
-            gl_screen.flags |= OPENGL_DIM_DEF;
+            conf.height = atoi(optarg);
+            conf.explicit_dim = 1;
             break;
          case 'M':
-            nosound = 1;
+            conf.nosound = 1;
             break;
          case 'S':
-            nosound = 0;
+            conf.nosound = 0;
             break;
          case 'm':
-            d = atof(optarg);
-            music_defVolume = MAX(MIN(d, 1.), 0.);
-            if (d == 0.)
-               music_disabled = 1;
+            conf.music = atof(optarg);
             break;
          case 's':
-            d = atof(optarg);
-            sound_defVolume = MAX(MIN(d, 1.), 0.);
-            if (d == 0.)
-               sound_disabled = 1;
+            conf.sound = atof(optarg);
             break;
          case 'G':
             nebu_forceGenerate();

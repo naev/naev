@@ -1612,10 +1612,6 @@ static void space_renderStars( const double dt )
 
       glShadeModel(GL_SMOOTH);
 
-      /* Enable AA if possible. */
-      if (gl_has(OPENGL_AA_LINE))
-         glEnable(GL_LINE_SMOOTH);
-
       /* lines will be based on velocity */
       m  = HYPERSPACE_STARS_BLUR-player->ptimer;
       m /= HYPERSPACE_STARS_BLUR;
@@ -1635,9 +1631,6 @@ static void space_renderStars( const double dt )
       gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 0 );
       gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 0 );
       glDrawArrays( GL_LINES, 0, nstars );
-
-      if (gl_has(OPENGL_AA_LINE))
-         glDisable(GL_LINE_SMOOTH);
 
       glShadeModel(GL_FLAT);
    }

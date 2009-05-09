@@ -84,13 +84,6 @@ static unsigned int time = 0; /**< used to calculate FPS and movement. */
 static char version[VERSION_LEN]; /**< Contains version. */
 static glTexture *loading; /**< Loading screen. */
 
-/* some defaults */
-int nosound       = 0; /**< Disables sound when loading. */
-int show_fps      = 0; /**< Shows fps - default yes */
-int max_fps       = 200; /**< Default fps limit, 0 is no limit. */
-int indjoystick   = -1; /**< Index of joystick to use, -1 is none. */
-char* namjoystick = NULL; /**< Name of joystick to use, NULL is none. */
-
 
 /*
  * prototypes
@@ -192,17 +185,17 @@ int main( int argc, char** argv )
    /*
     * Input
     */
-   if ((indjoystick >= 0) || (namjoystick != NULL)) {
+   if ((conf.joystick_ind >= 0) || (conf.joystick_nam != NULL)) {
       if (joystick_init()) WARN("Error initializing joystick input");
-      if (namjoystick != NULL) { /* use the joystick name to find a joystick */
-         if (joystick_use(joystick_get(namjoystick))) {
+      if (conf.joystick_nam != NULL) { /* use the joystick name to find a joystick */
+         if (joystick_use(joystick_get(conf.joystick_nam))) {
             WARN("Failure to open any joystick, falling back to default keybinds");
             input_setDefault();
          }
-         free(namjoystick);
+         free(conf.joystick_nam);
       }
-      else if (indjoystick >= 0) /* use a joystick id instead */
-         if (joystick_use(indjoystick)) {
+      else if (conf.joystick_ind >= 0) /* use a joystick id instead */
+         if (joystick_use(conf.joystick_ind)) {
             WARN("Failure to open any joystick, falling back to default keybinds");
             input_setDefault();
          }
@@ -212,7 +205,7 @@ int main( int argc, char** argv )
    /*
     * OpenAL - Sound
     */
-   if (nosound) {
+   if (conf.nosound) {
       LOG("Sound is disabled!");
       sound_disabled = 1;
       music_disabled = 1;
@@ -284,6 +277,9 @@ int main( int argc, char** argv )
 
    /* Close data. */
    ndata_close();
+
+   /* Destroy conf. */
+   conf_cleanup(); /* Frees some memory the configuration allocated. */
 
    /* exit subsystems */
    map_exit(); /* destroys the map. */
@@ -484,8 +480,8 @@ static void fps_control (void)
    time = t;
 
    /* if fps is limited */                       
-   if ((max_fps != 0) && (cur_dt < 1./max_fps)) {
-      delay = 1./max_fps - cur_dt;
+   if ((conf.fps_max != 0) && (cur_dt < 1./conf.fps_max)) {
+      delay = 1./conf.fps_max - cur_dt;
       SDL_Delay( (unsigned int)(delay * 1000) );
       fps_dt += delay; /* makes sure it displays the proper fps */
    }
@@ -605,7 +601,7 @@ static void display_fps( const double dt )
 
    x = 15.;
    y = (double)(gl_screen.h-15-gl_defFont.h);
-   if (show_fps) {
+   if (conf.fps_show) {
       gl_print( NULL, x, y, NULL, "%3.2f", fps );
       y -= gl_defFont.h + 5.;
    }

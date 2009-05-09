@@ -47,6 +47,7 @@
 #include "nlua_var.h"
 #include "escort.h"
 #include "event.h"
+#include "conf.h"
 
 
 #define XML_START_ID "Start" /**< Module start xml document identifier. */
@@ -57,8 +58,8 @@
 #define PLAYER_ENGINE_CHANNEL    8 /**< Player channel for engine noises. */
 #define PLAYER_GUI_CHANNEL       9 /**< Player channel. */
 
-#define ZOOM_OUT_MAX             0.5 /**< Maximum zoom out. */
-#define ZOOM_IN_MAX              1. /**< Maximum zoom in. */
+#define ZOOM_OUT_MAX             conf.zoom_min /**< Maximum zoom out. */
+#define ZOOM_IN_MAX              conf.zoom_max /**< Maximum zoom in. */
 
 
 /*

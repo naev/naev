@@ -46,12 +46,8 @@
  */
 #define OPENGL_FULLSCREEN  (1<<0) /**< Fullscreen. */
 #define OPENGL_DOUBLEBUF   (1<<1) /**< Doublebuffer. */
-#define OPENGL_AA_POINT    (1<<2) /**< Antialiasing points. */
-#define OPENGL_AA_LINE     (1<<3) /**< Antialiasing lines. */
-#define OPENGL_AA_POLYGON  (1<<4) /**< Antialiasing polygons. */
-#define OPENGL_VSYNC       (1<<5) /**< Sync to monitor vertical refresh rate. */
-#define OPENGL_DIM_DEF     (1<<6) /**< Dimensions specifically defined. */
-#define OPENGL_FSAA        (1<<7) /**< Full Screen Anti Aliasing. */
+#define OPENGL_VSYNC       (1<<2) /**< Sync to monitor vertical refresh rate. */
+#define OPENGL_FSAA        (1<<3) /**< Full Screen Anti Aliasing. */
 #define gl_has(f)    (gl_screen.flags & (f)) /**< Check for the flag */
 /**
  * @brief Stores data about the current opengl environment.

@@ -1158,14 +1158,8 @@ void toolkit_render (void)
 {
    int i;
 
-   if (gl_has(OPENGL_AA_LINE)) glEnable(GL_LINE_SMOOTH);
-   if (gl_has(OPENGL_AA_POLYGON)) glEnable(GL_POLYGON_SMOOTH);
-
    for (i=0; i<nwindows; i++)
       window_render(&windows[i]);
-   
-   if (gl_has(OPENGL_AA_LINE)) glDisable(GL_LINE_SMOOTH);
-   if (gl_has(OPENGL_AA_POLYGON)) glDisable(GL_POLYGON_SMOOTH);
 }
 
 

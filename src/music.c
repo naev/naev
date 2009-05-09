@@ -23,6 +23,7 @@
 #include "nlua_music.h"
 #include "log.h"
 #include "ndata.h"
+#include "conf.h"
 
 
 #define MUSIC_PREFIX       "snd/music/" /**< Prefix of where tho find musics. */
@@ -35,7 +36,6 @@
 
 
 int music_disabled = 0; /**< Whether or not music is disabled. */
-double music_defVolume = 0.8; /**< Music default volume. */
 static double music_curVolume = 0.; /**< Music volume. */
 
 
@@ -148,7 +148,10 @@ int music_init (void)
 
    if (music_find() < 0) return -1;
    if (music_luaInit() < 0) return -1;
-   music_volume(music_defVolume);
+
+   if ((conf.music > 1.) || (conf.music < 0.))
+      WARN("Music has invalid value, clamping to [0:1].");
+   music_volume(conf.music);
 
    /* Create the lock. */
    music_lock = SDL_CreateMutex();
@@ -256,7 +259,7 @@ int music_volume( const double vol )
 {
    if (music_disabled) return 0;
 
-   music_curVolume = MIX_MAX_VOLUME*vol;
+   music_curVolume = MIX_MAX_VOLUME * CLAMP(0.,1.,vol);
    return Mix_VolumeMusic(music_curVolume);
 }
 

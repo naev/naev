@@ -23,6 +23,7 @@
 #include "ndata.h"
 #include "music.h"
 #include "physics.h"
+#include "conf.h"
 
 
 #define SOUND_CHANNEL_MAX  256 /**< Number of sound channels to allocate. Overkill. */
@@ -35,7 +36,6 @@
  * Global sound properties.
  */
 int sound_disabled = 0; /**< Whether sound is disabled. */
-double sound_defVolume = 0.4; /**< Sound default volume. */
 static double sound_curVolume = 0.; /**< Current sound volume. */
 static int sound_reserved = 0; /**< Amount of reserved channels. */
 static double sound_pos[3]; /**< Position of listener. */
@@ -120,6 +120,13 @@ static alVoice* voice_get( int id );
  */
 int sound_init (void)
 {
+   /* See if sound is disabled. */
+   if (conf.nosound) {
+      sound_disabled = 1;
+      music_disabled = 1;
+   }
+
+   /* Parse conf. */
    if (sound_disabled && music_disabled) return 0;
 
    SDL_InitSubSystem(SDL_INIT_AUDIO);
@@ -138,7 +145,9 @@ int sound_init (void)
    if (!sound_disabled) {
       /* load up all the sounds */
       sound_makeList();
-      sound_volume(sound_defVolume);
+      if ((conf.sound > 1.) || (conf.sound < 0.))
+         WARN("Sound has invalid value, clamping to [0:1].");
+      sound_volume(conf.sound);
 
       /* Finish function. */
       Mix_ChannelFinished( voice_markStopped );
@@ -559,7 +568,7 @@ int sound_volume( const double vol )
 {
    if (sound_disabled) return 0;
 
-   sound_curVolume = MIX_MAX_VOLUME*vol;
+   sound_curVolume = MIX_MAX_VOLUME * CLAMP(0., 1., vol);
    return Mix_Volume( -1, sound_curVolume);
 }
 

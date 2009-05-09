@@ -26,6 +26,7 @@
 #include "gui.h"
 #include "weapon.h"
 #include "console.h"
+#include "conf.h"
 
 
 #define KEY_PRESS    ( 1.) /**< Key is pressed. */
@@ -135,7 +136,6 @@ const char *keybindDescription[] = {
  * accel hacks
  */
 static unsigned int input_accelLast = 0; /**< Used to see if double tap */
-unsigned int input_afterburnSensitivity = 250; /**< ms between taps to afterburn */
 
 
 /*
@@ -481,9 +481,9 @@ static void input_key( int keynum, double value, double kabs )
 
          /* double tap accel = afterburn! */
          t = SDL_GetTicks();
-         if ((input_afterburnSensitivity != 0) &&
+         if ((conf.afterburn_sens!= 0) &&
                (value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD() &&
-               (t-input_accelLast <= input_afterburnSensitivity))
+               (t-input_accelLast <= conf.afterburn_sens))
             player_afterburn();
          else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_AFTERBURNER))
             player_afterburnOver();

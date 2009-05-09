@@ -49,6 +49,7 @@
 #include "opengl_ext.h"
 #include "ndata.h"
 #include "gui.h"
+#include "conf.h"
 
 
 /*
@@ -369,7 +370,7 @@ static int gl_setupFullscreen( unsigned int *flags, const SDL_VideoInfo *vidinfo
 
    /* Try to use desktop resolution if nothing is specifically set. */
 #if SDL_VERSION_ATLEAST(1,2,10)
-   if (!gl_has(OPENGL_DIM_DEF)) {
+   if (!conf.explicit_dim) {
       gl_screen.w = vidinfo->current_w;
       gl_screen.h = vidinfo->current_h;
    }
@@ -580,8 +581,21 @@ int gl_init (void)
    const SDL_VideoInfo *vidinfo;
 
    /* Defaults. */
+   memset( &gl_screen, 0, sizeof(gl_screen) );
    flags  = SDL_OPENGL;
-   flags |= SDL_FULLSCREEN * (gl_has(OPENGL_FULLSCREEN) ? 1 : 0);
+
+   /* Load configuration. */
+   if (conf.vsync)
+      gl_screen.flags |= OPENGL_VSYNC;
+   if (conf.fsaa > 1)
+      gl_screen.fsaa = conf.fsaa;
+   gl_screen.w = conf.width;
+   gl_screen.h = conf.height;
+   gl_setScale( conf.scalefactor );
+   if (conf.fullscreen) {
+      gl_screen.flags |= OPENGL_FULLSCREEN;
+      flags |= SDL_FULLSCREEN;
+   }
 
    /* Initializes Video */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
@@ -596,13 +610,13 @@ int gl_init (void)
    gl_setupAttributes();
 
    /* See if should set up fullscreen. */
-   if (gl_has(OPENGL_FULLSCREEN))
+   if (conf.fullscreen)
       gl_setupFullscreen( &flags, vidinfo );
 
    /* Check to see if trying to create above screen resolution without player
     * asking for such a large size. */
 #if SDL_VERSION_ATLEAST(1,2,10)
-   if (!gl_has(OPENGL_DIM_DEF)) {
+   if (!conf.explicit_dim) {
       gl_screen.w = MIN(gl_screen.w, vidinfo->current_w);
       gl_screen.h = MIN(gl_screen.h, vidinfo->current_h);
    }
