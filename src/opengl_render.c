@@ -249,7 +249,7 @@ static void gl_blitTexture(  const glTexture* texture,
 void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
       const int sx, const int sy, const glColour* c )
 {
-   double x,y, tx,ty, cx,cy, gx,gy;
+   double x,y, w,h, tx,ty, cx,cy, gx,gy;
 
    /* Get parameters. */
    gl_cameraGet( &cx, &cy );
@@ -259,16 +259,20 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
    x = (bx - cx - sprite->sw/2. + gx) * gl_cameraZ;
    y = (by - cy - sprite->sh/2. + gy) * gl_cameraZ;
 
+   /* Scaled sprite dimensions. */
+   w = sprite->sw*gl_cameraZ;
+   h = sprite->sh*gl_cameraZ;
+
    /* check if inbounds */
-   if ((fabs(x) > SCREEN_W/2 + sprite->sw) ||
-         (fabs(y) > SCREEN_H/2 + sprite->sh) )
+   if ((fabs(x) > SCREEN_W/2 + w) ||
+         (fabs(y) > SCREEN_H/2 + h) )
       return;
 
    /* texture coords */
    tx = sprite->sw*(double)(sx)/sprite->rw;
    ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
 
-   gl_blitTexture( sprite, x, y, sprite->sw*gl_cameraZ, sprite->sh*gl_cameraZ,
+   gl_blitTexture( sprite, x, y, w, h,
          tx, ty, sprite->srw, sprite->srh, c );
 }
 
