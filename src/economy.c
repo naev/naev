@@ -370,7 +370,7 @@ static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
    (void) price;
    int i;
    double I;
-   double prodfactor, p, pp;
+   double prodfactor, p;
    double ddt;
    Planet *planet;
 
@@ -395,9 +395,6 @@ static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
          planet->cur_prodfactor = prodfactor;
          /* We base off the sqrt of the population otherwise it changes too fast. */
          p += prodfactor * sqrt(planet->population);
-
-         /* Add it to the current system production. */
-         p += pp;
       }
    }
 
