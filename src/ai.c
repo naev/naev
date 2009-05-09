@@ -145,7 +145,7 @@ void ai_getDistress( Pilot* p, const Pilot* distressed ); /* pilot.c */
 /* C Routines made External */
 int ai_pinit( Pilot *p, const char *ai );
 void ai_destroy( Pilot* p );
-void ai_think( Pilot* pilot ); /* pilot.c */
+void ai_think( Pilot* pilot, const double dt ); /* pilot.c */
 void ai_setPilot( Pilot *p ); /* escort.c */
 
 
@@ -619,8 +619,10 @@ void ai_exit (void)
  *
  *    @param pilot Pilot that needs to think.
  */
-void ai_think( Pilot* pilot )
+void ai_think( Pilot* pilot, const double dt )
 {
+   (void) dt;
+
    lua_State *L;
 
    ai_setPilot(pilot);

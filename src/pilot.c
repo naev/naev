@@ -66,15 +66,13 @@ static double sensor_curRange = 0.; /**< Current base sensor range, used to calc
 extern void ai_getDistress( Pilot* p, const Pilot* distressed ); /**< from ai.c */
 extern AI_Profile* ai_pinit( Pilot *p, const char *ai ); /**< from ai.c */
 extern void ai_destroy( Pilot* p ); /**< from ai.c */
-extern void ai_think( Pilot* pilot ); /**< from ai.c */
+extern void ai_think( Pilot* pilot, const double dt ); /**< from ai.c */
 /* internal */
 /* update. */
 static int pilot_shootWeapon( Pilot* p, PilotOutfit* w );
 static void pilot_hyperspace( Pilot* pilot );
 static void pilot_refuel( Pilot *p, double dt );
 static void pilot_update( Pilot* pilot, const double dt );
-/* render */
-void pilot_render( Pilot* pilot ); /* externed in player.c */
 /* cargo. */
 static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup );
 static void pilot_calcCargo( Pilot* pilot );
@@ -1392,9 +1390,12 @@ void pilot_explode( double x, double y, double radius,
  * @brief Renders the pilot.
  *
  *    @param p Pilot to render.
+ *    @param dt Current deltatick.
  */
-void pilot_render( Pilot* p )
+void pilot_render( Pilot* p, const double dt )
 {
+   (void) dt;
+
    gl_blitSprite( p->ship->gfx_space,
          p->solid->pos.x, p->solid->pos.y,
          p->tsx, p->tsy, NULL );
@@ -2839,7 +2840,7 @@ void pilots_update( double dt )
          /* Must not be boarding to think. */
          else if (!pilot_isFlag(p, PILOT_BOARDING) &&
                !pilot_isFlag(p, PILOT_REFUELBOARDING))
-            p->think(p);
+            p->think(p, dt);
 
       }
 
@@ -2853,14 +2854,16 @@ void pilots_update( double dt )
 
 /**
  * @brief Renders all the pilots.
+ *
+ *    @param dt Current delta tick.
  */
-void pilots_render (void)
+void pilots_render( double dt )
 {
    int i;
    for (i=0; i<pilot_nstack; i++) {
       if (player == pilot_stack[i]) continue; /* skip player */
       if (pilot_stack[i]->render != NULL) /* render */
-         pilot_stack[i]->render(pilot_stack[i]);
+         pilot_stack[i]->render(pilot_stack[i], dt);
    }
 }
 

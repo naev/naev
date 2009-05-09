@@ -572,7 +572,7 @@ static void render_all (void)
    gui_renderBG(dt);
    weapons_render(WEAPON_LAYER_BG, dt);
    /* N */
-   pilots_render();
+   pilots_render(dt);
    weapons_render(WEAPON_LAYER_FG, dt);
    spfx_render(SPFX_LAYER_BACK);
    /* FG */

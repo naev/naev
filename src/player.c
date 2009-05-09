@@ -59,6 +59,7 @@
 
 #define ZOOM_OUT_MAX             0.5 /**< Maximum zoom out. */
 #define ZOOM_IN_MAX              1. /**< Maximum zoom in. */
+#define ZOOM_VEL                 10. /**< Zoom change velocity. */
 
 
 /*
@@ -141,10 +142,6 @@ extern int map_npath;
 /* 
  * prototypes
  */
-/*
- * external
- */
-extern void pilot_render( const Pilot* pilot ); /**< from pilot.c */
 /* 
  * internal
  */
@@ -767,7 +764,7 @@ void player_render( double dt )
       gui_renderTarget(dt);
 
       /* Player is ontop of targeting graphic */
-      pilot_render(player);
+      pilot_render(player, dt);
 
    /* Use to test and debug mounts. */
 #if 0
@@ -846,12 +843,12 @@ void player_abortAutonav( char *reason )
  *
  *    @param pplayer Player to think.
  */
-void player_think( Pilot* pplayer )
+void player_think( Pilot* pplayer, const double dt )
 {
    Pilot *target;
    double d;
    double turn;
-   double x,y, z, dx, dy;
+   double x,y, z,tz, dx, dy;
 
    /* last i heard, the dead don't think */
    if (pilot_isFlag(pplayer,PILOT_DEAD)) {
@@ -1003,11 +1000,14 @@ void player_think( Pilot* pplayer )
          dy = (SCREEN_H/2.) / (FABS(y) + 2*target->ship->gfx_space->sh);
 
          /* Get zoom. */
-         gl_cameraZoom( CLAMP( ZOOM_OUT_MAX, ZOOM_IN_MAX, MIN( dx, dy ) ) );
+         tz = MIN( dx, dy );
       }
    }
    else
-      gl_cameraZoom( 1. );
+      tz = 1.;
+
+   /* Gradually zoom in/out. */
+   gl_cameraZoom( CLAMP( ZOOM_OUT_MAX, ZOOM_IN_MAX, z + (tz - z) * dt) );
 }
 
 
