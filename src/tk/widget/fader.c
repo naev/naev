@@ -93,8 +93,8 @@ static void fad_render( Widget* fad, double bx, double by )
    /* Track. */
    tx = bx + fad->x + (h > w ? (w - 5.) / 2 : 0);
    ty = by + fad->y + (h < w ? (h - 5.) / 2 : 0);
-   tw = (h < w ? w : 5.);                                           
-   th = (h > w ? h : 5.);                                           
+   tw = (h < w ? w : 5.);
+   th = (h > w ? h : 5.);
    toolkit_drawRect(tx, ty, tw , th, toolkit_colDark, toolkit_colDark);
 
    /* Knob. */
@@ -138,26 +138,26 @@ static int fad_mmove( Widget* fad, SDL_MouseMotionEvent* mmove )
  *    @param name Name of the widget.
  */
 double window_getFaderValue( const unsigned int wid, char* name )
-{  
+{
    Widget *wgt;
-   
+
    /* Get the widget. */
    wgt = window_getwgt(wid,name);
    if (wgt == NULL)
       return 0.;
-   
+
    /* Check the type. */
    if (wgt->type != WIDGET_FADER) {
       WARN("Trying to get fader value from non-fader widget '%s'.", name);
       return 0.;
    }
-   
+
    /* Return the value. */
    return (wgt) ? wgt->dat.fad.value : 0.;
 }
 
 
-/** 
+/**
  * @brief Changes fader value
  *
  *    @param fad Fader to set value of.
@@ -212,25 +212,24 @@ void window_faderValue( const unsigned int wid,
  */
 void window_faderBounds( const unsigned int wid,
       char* name, double min, double max )
-{  
-   double value;
+{
    Widget *wgt;
-   
+
    /* Get the widget. */
    wgt = window_getwgt(wid,name);
    if (wgt == NULL)
       return;
-   
+
    /* Check the type. */
    if (wgt->type != WIDGET_FADER) {
       WARN("Not setting fader value on non-fader widget '%s'.", name);
       return;
    }
-   
+
    /* Set the fader boundries. */
    wgt->dat.fad.min = min;
    wgt->dat.fad.max = max;
-   
+
    /* Set the value. */
-   fad_setValue(wgt, value);                               
+   fad_setValue(wgt, wgt->dat.fad.value );
 }
