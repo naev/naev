@@ -32,6 +32,7 @@
 --]]
 --zoom_min = 0.5 -- Maximum zoom to go to (zoom out)
 --zoom_max = 1. -- Minimum zoom to go to (zoom in)
+--zoom_speed = 0.25 -- Maximum zoom speed change
 --afterburn_sensitivity = 250 -- ms between accel taps to trigger afterburner
 
 --[[

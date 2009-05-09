@@ -1020,8 +1020,10 @@ void player_think( Pilot* pplayer, const double dt )
    }
 
    /* Gradually zoom in/out. */
-   d = (tz - z) * dt / dt_mod;
-   if (d < 0)
+   d  = CLAMP(-conf.zoom_speed, conf.zoom_speed, tz - z);
+   DEBUG("d: %f, tz: %f, z :%f", d, tz, z );
+   d *= dt / dt_mod; /* Remove dt dependence. */
+   if (d < 0) /** Speed up if needed. */
       d *= 2.;
    gl_cameraZoom( CLAMP( ZOOM_OUT_MAX, ZOOM_IN_MAX, z + d) );
 }

@@ -45,6 +45,7 @@ typedef struct PlayerConf_s {
    /* Misc. */
    double zoom_max; /**< Maximum ingame zoom to use. */
    double zoom_min; /**< Minimum ingame zoom to use. */
+   double zoom_speed; /**< Maximum zoom speed change. */
    unsigned int afterburn_sens; /**< Afterburn sensibility. */
 
 } PlayerConf_t;

@@ -139,6 +139,7 @@ void conf_setDefaults (void)
    /* Misc. */
    conf.zoom_min     = 0.5;
    conf.zoom_max     = 1.;
+   conf.zoom_speed   = 0.25;
    conf.afterburn_sens = 250;
 
    /* Input */
@@ -224,6 +225,7 @@ int conf_loadConfig ( const char* file )
       /* Misc. */
       conf_loadFloat("zoom_min",conf.zoom_min);
       conf_loadFloat("zoom_max",conf.zoom_max);
+      conf_loadFloat("zoom_speed",conf.zoom_speed);
       conf_loadInt("afterburn_sensitivity",conf.afterburn_sens);
 
 
