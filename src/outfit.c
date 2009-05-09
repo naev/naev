@@ -663,8 +663,8 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    temp->u.blt.spfx_shield    = -1;
    temp->u.blt.sound          = -1;
    temp->u.blt.falloff        = -1.;
-   temp->u.blt.hue_start      = -360.;
-   temp->u.blt.hue_end        = -360.;
+   temp->u.blt.hue_start      = -3600.;
+   temp->u.blt.hue_end        = -3600.;
 
    node = parent->xmlChildrenNode;
    do { /* load all the data */
@@ -729,8 +729,10 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    /* Convert hue to unitary. */
    temp->u.blt.hue_start /= 360.;
    temp->u.blt.hue_end   /= 360.;
-   if (temp->u.blt.hue_start >= 0.)
-      DEBUG("hue_start: %f, hue_end: %f", temp->u.blt.hue_start, temp->u.blt.hue_end);
+   /* Store as relative to hue_start. */
+   temp->u.blt.hue_end    = temp->u.blt.hue_start - temp->u.blt.hue_end;
+   if (temp->u.blt.hue_start < temp->u.blt.hue_start)
+      temp->u.blt.hue_end += 1.; /**< Go around faster way. */
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */

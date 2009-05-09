@@ -631,11 +631,11 @@ static void weapon_render( Weapon* w, const double dt )
 
    /* Get colour. */
    if (outfit_isBolt(w->outfit) && (w->outfit->u.blt.hue_start>=0.)) {
-      if ((w->strength == 1.) || (w->outfit->u.blt.hue_end<0.))
+      if ((w->strength == 1.) || (w->outfit->u.blt.hue_end<-1.))
          h = w->outfit->u.blt.hue_start;
       else {
-         h = w->outfit->u.blt.hue_start - w->outfit->u.blt.hue_end;
-         h = fmod(h*w->strength, 1.);
+         h = w->outfit->u.blt.hue_start + w->outfit->u.blt.hue_end*(1.-w->strength);
+         h = fmod(h, 1.); /* Make sure wraps. */
       }
       col_hsv2rgb( &c.r, &c.g, &c.b, h, 1., 1. );
    }
