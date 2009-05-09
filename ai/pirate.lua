@@ -7,25 +7,30 @@ include("ai/tpl/generic.lua")
 --]]
 
 -- Settings
-aggressive     = true
-safe_distance  = 500
-armour_run     = 80
-armour_return  = 100
-atk_board      = true
-atk_kill       = false
+mem.aggressive     = true
+mem.safe_distance  = 500
+mem.armour_run     = 80
+mem.armour_return  = 100
+mem.atk_board      = true
+mem.atk_kill       = false
 
 
 function create ()
+
+   -- Some pirates do kill
+   if rnd.rnd() < 0.7 then
+      mem.atk_kill = true
+   end
 
    -- Not too much money
    ai.setcredits(ai.shipprice()/120 , ai.shipprice()/40 )
 
    -- Deal with bribeability
-   if rnd.int() < 0.05 then
+   if rnd.rnd() < 0.05 then
       mem.bribe_no = "\"You won't be able to slide out of this one!\""
    else
-      mem.bribe = math.sqrt( ai.shipmass() ) * (300. * rnd.int() + 850.)
-      if rnd.int() > 0.5 then
+      mem.bribe = math.sqrt( ai.shipmass() ) * (300. * rnd.rnd() + 850.)
+      if rnd.rnd() > 0.5 then
          mem.bribe_prompt = string.format("\"It'll cost you %d credits for me to ignore your pile of rubbish.\"", mem.bribe)
          mem.bribe_paid = "\"You're lucky I'm so kind.\""
       else
@@ -55,7 +60,7 @@ end
 function taunt ( target, offense )
 
    -- Only 50% of actually taunting.
-   if rnd.int(0,1) == 0 then
+   if rnd.rnd(0,1) == 0 then
       return
    end
 
@@ -75,6 +80,6 @@ function taunt ( target, offense )
       }
    end
 
-   ai.comm(target, taunts[ rnd.int(1,#taunts) ])
+   ai.comm(target, taunts[ rnd.rnd(1,#taunts) ])
 end
 

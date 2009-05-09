@@ -1,11 +1,11 @@
 include("ai/tpl/generic.lua")
 
 -- Settings
-aggressive     = true
-safe_distance  = 300
-armour_run     = 100
-shield_return  = 20
-land_planet    = false
+mem.aggressive     = true
+mem.safe_distance  = 300
+mem.armour_run     = 100
+mem.shield_return  = 20
+mem.land_planet    = false
 
 
 function create ()

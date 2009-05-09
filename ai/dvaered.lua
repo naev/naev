@@ -1,7 +1,7 @@
 include("ai/tpl/generic.lua")
 
 -- Settings
-aggressive = true
+mem.aggressive = true
 
 
 -- Create function

@@ -440,11 +440,23 @@ int ai_pinit( Pilot *p, const char *ai )
    p->fuel += HYPERSPACE_FUEL;
 
    /* Adds a new pilot memory in the memory table. */
-   lua_getglobal(L, "pilotmem");
-   lua_pushnumber(L, p->id);
-   lua_newtable(L);
-   lua_settable(L,-3);
-   lua_pop(L,1);
+   lua_getglobal(L, "pilotmem"); /* pm */
+   lua_newtable(L);              /* pm, nt */
+   lua_pushnumber(L, p->id);     /* pm, nt, n */
+   lua_pushvalue(L,-2);          /* pm, nt, n, nt */
+   lua_settable(L,-4);           /* pm, nt */
+
+   /* Copy defaults over. */
+   lua_pushstring(L, "default"); /* pm, nt, s */
+   lua_gettable(L, -3);          /* pm, nt, dt */
+   lua_pushnil(L);               /* pm, nt, dt, nil */
+   while (lua_next(L,-2) != 0) { /* pm, nt, dt, k, v */
+      lua_pushvalue(L,-2);       /* pm, nt, dt, k, v, k */
+      lua_pushvalue(L,-2);       /* pm, nt, dt, k, v, k, v */
+      lua_remove(L, -3);         /* pm, nt, dt, k, k, v */
+      lua_settable(L,-5);        /* pm, nt, dt, k */
+   }                             /* pm, nt, dt */
+   lua_pop(L,3);                 /* */
 
    /* Create the pilot. */
    ai_create( p, (n!=0) ? param : NULL );
@@ -560,6 +572,19 @@ static int ai_loadProfile( const char* filename )
    /* Metatables to register. */
    lua_loadVector(L);
 
+   /* Add the player memory table. */
+   lua_newtable(L);
+   lua_setglobal(L, "pilotmem");
+
+   /* Set "mem" to be default template. */
+   lua_getglobal(L, "pilotmem"); /* pm */
+   lua_newtable(L);              /* pm, nt */
+   lua_pushstring(L, "default"); /* pm, nt, s */
+   lua_pushvalue(L,-2);          /* pm, nt, s, nt */
+   lua_settable(L,-4);           /* pm, nt */
+   lua_setglobal(L, "mem");      /* pm */
+   lua_pop(L,1);                 /* */
+
    /* now load the file since all the functions have been previously loaded */
    buf = ndata_read( filename, &bufsize );
    if (luaL_dobuffer(L, buf, bufsize, filename) != 0) {
@@ -570,10 +595,6 @@ static int ai_loadProfile( const char* filename )
       return -1;
    }
    free(buf);
-
-   /* Add the player memory table. */
-   lua_newtable(L);
-   lua_setglobal(L, "pilotmem");
 
    return 0;
 }

@@ -2,11 +2,11 @@
 --    Generic attack functions
 --]]
 
-atk_changetarget  = 1.8 -- Distance at which target changes
-atk_approach      = 1.4 -- Distance that marks approach
-atk_aim           = 1.0 -- Distance that marks aim
-atk_board         = false -- Whether or not to board the target
-atk_kill          = true -- Whether or not to finish off the target
+mem.atk_changetarget  = 1.8 -- Distance at which target changes
+mem.atk_approach      = 1.4 -- Distance that marks approach
+mem.atk_aim           = 1.0 -- Distance that marks aim
+mem.atk_board         = false -- Whether or not to board the target
+mem.atk_kill          = true -- Whether or not to finish off the target
 
 
 --[[
@@ -28,7 +28,7 @@ function atk_g_think ()
       range = ai.getweaprange()
 
       -- Shouldn't switch targets if close
-      if dist > 400 and dist > range * atk_changetarget then
+      if dist > 400 and dist > range * mem.atk_changetarget then
          ai.poptask()
          ai.pushtask( 0, "attack", enemy )
       end
@@ -55,13 +55,13 @@ function atk_g ()
    end
 
    -- Check if we want to board
-   if atk_board and ai.canboard(target) then
+   if mem.atk_board and ai.canboard(target) then
       ai.pushtask( 0, "board", target );
       return
    end
 
    -- Check to see if target is disabled
-   if not atk_kill and ai.isdisabled(target) then
+   if not mem.atk_kill and ai.isdisabled(target) then
       ai.poptask()
       return
    end
@@ -71,15 +71,15 @@ function atk_g ()
    ai.settarget(target)
 
    -- Get stats about enemy
-	dist = ai.dist( target ) -- get distance
+	dist  = ai.dist( target ) -- get distance
    range = ai.getweaprange()
 
    -- We first bias towards range
-   if dist > range * atk_approach then
+   if dist > range * mem.atk_approach then
       atk_g_ranged( target, dist )
 
    -- Now we do an approach
-   elseif dist > range * atk_aim then
+   elseif dist > range * mem.atk_aim then
       atk_g_approach( target, dist )
 
    -- Close enough to melee

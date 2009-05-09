@@ -7,18 +7,10 @@ include("ai/include/attack_generic.lua")
 include("ai/include/attack_bomber.lua")
 
 
-atk_think = true
-
-
 --[[
 -- Wrapper for the think functions.
 --]]
 function attack_think ()
-   -- Not everyone wants to think.
-   if atk_think == false then
-      return
-   end
-
    if mem.atk_think ~= nil then
       mem.atk_think()
    else

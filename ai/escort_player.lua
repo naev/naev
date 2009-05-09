@@ -1,10 +1,10 @@
 include("ai/tpl/escort.lua")
 
 -- Settings
-armour_run = 40
-armour_return = 70
-aggressive = true
-command = false
+mem.armour_run = 40
+mem.armour_return = 70
+mem.aggressive = true
+mem.command = false
 
 
 function create ()

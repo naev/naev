@@ -1,9 +1,9 @@
 include("ai/tpl/generic.lua")
 
 -- Settings
-armour_run = 40
-armour_return = 70
-aggressive = true
+mem.armour_run = 40
+mem.armour_return = 70
+mem.aggressive = true
 
 
 function create ()

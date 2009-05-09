@@ -6,15 +6,15 @@ include("ai/include/attack.lua")
 --
 -- These variables can be used to adjust the generic AI to suit other roles.
 --]]
-armour_run     = 0 -- At which damage to run at
-armour_return  = 0 -- At which armour to return to combat
-shield_run     = 0 -- At which shield to run
-shield_return  = 0 -- At which shield to return to combat
-aggressive     = false -- Should pilot actively attack enemies?
-safe_distance  = 300 -- Safe distance from enemies to jump
-land_planet    = true -- Should land on planets?
-distressrate   = 3 -- Number of ticks before calling for help
-distressmsg    = nil -- Message when calling for help
+mem.armour_run     = 0 -- At which damage to run at
+mem.armour_return  = 0 -- At which armour to return to combat
+mem.shield_run     = 0 -- At which shield to run
+mem.shield_return  = 0 -- At which shield to return to combat
+mem.aggressive     = false -- Should pilot actively attack enemies?
+mem.safe_distance  = 300 -- Safe distance from enemies to jump
+mem.land_planet    = true -- Should land on planets?
+mem.distressrate   = 3 -- Number of ticks before calling for help
+mem.distressmsg    = nil -- Message when calling for help
 
 
 -- Required control rate
@@ -28,7 +28,7 @@ function control ()
    -- Get new task
    if task == "none" then
       -- We'll first check enemy.
-      if enemy ~= nil and aggressive then
+      if enemy ~= nil and mem.aggressive then
          taunt(enemy, true)
          ai.pushtask(0, "attack", enemy)
       else
@@ -51,9 +51,9 @@ function control ()
       end
 
       -- Runaway if needed
-      if (shield_run > 0 and ai.pshield() < shield_run
+      if (mem.shield_run > 0 and ai.pshield() < mem.shield_run
                and ai.pshield() < ai.pshield(target) ) or
-            (armour_run > 0 and ai.parmour() < armour_run
+            (mem.armour_run > 0 and ai.parmour() < mem.armour_run
                and ai.parmour() < ai.parmour(target) ) then
          ai.pushtask(0, "runaway", target)
 
@@ -78,12 +78,12 @@ function control ()
       dist = ai.dist( target )
 
       -- Should return to combat?
-      if aggressive and ((shield_return > 0 and ai.pshield() >= shield_return) or
-            (armour_return > 0 and ai.parmour() >= armour_return)) then
+      if mem.aggressive and ((mem.shield_return > 0 and ai.pshield() >= mem.shield_return) or
+            (mem.armour_return > 0 and ai.parmour() >= mem.armour_return)) then
          ai.poptask() -- "attack" should be above "runaway"
 
       -- Try to jump
-      elseif dist > safe_distance then
+      elseif dist > mem.safe_distance then
          ai.hyperspace()
       end
 
@@ -91,7 +91,7 @@ function control ()
       gen_distress()
 
    -- Enemy sighted, handled after running away
-   elseif enemy ~= nil and aggressive then
+   elseif enemy ~= nil and mem.aggressive then
       taunt(enemy, true)
       ai.pushtask(0, "attack", enemy)
 
@@ -135,7 +135,7 @@ end
 function idle ()
    planet = ai.landplanet()
    -- planet must exist
-   if planet == nil or land_planet == false then
+   if planet == nil or mem.land_planet == false then
       ai.settimer(0, rnd.int(1000, 3000))
       ai.pushtask(0, "enterdelay")
    else
@@ -172,7 +172,7 @@ function distress ( pilot, attacker )
    end
 
    -- Must be aggressive
-   if not aggressive then
+   if not mem.aggressive then
       return
    end
 
@@ -211,7 +211,7 @@ end
 function gen_distress ( target )
 
    -- Must have a valid distress rate
-   if distressrate <= 0 then
+   if mem.distressrate <= 0 then
       return
    end
 
@@ -228,8 +228,8 @@ function gen_distress ( target )
    end
 
    -- See if it's time to trigger distress
-   if mem.distressed > distressrate then
-      ai.distress( distressmsg )
+   if mem.distressed > mem.distressrate then
+      ai.distress( mem.distressmsg )
       mem.distressed = 1
    end
 

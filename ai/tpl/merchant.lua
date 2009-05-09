@@ -1,7 +1,7 @@
 include("ai/include/basic.lua")
 
 -- Variables
-enemy_close = 500 -- Distance enemy is too close for comfort
+mem.enemy_close = 500 -- Distance enemy is too close for comfort
 
 -- Required control rate
 control_rate = 2
@@ -13,7 +13,7 @@ function control ()
 
    -- Runaway if enemy is near
    if task ~= "runaway" and enemy ~= nil and
-         (ai.dist(enemy) < enemy_close or ai.haslockon()) then
+         (ai.dist(enemy) < mem.enemy_close or ai.haslockon()) then
       if task ~= "none" then
          ai.poptask()
       end
