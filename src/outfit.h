@@ -100,7 +100,8 @@ typedef struct OutfitBoltData_ {
    int sound; /**< sound to play */
    int spfx_armour; /**< special effect on hit */
    int spfx_shield; /**< special effect on hit */
-   
+   double hue_start; /**< Starting hue. */
+   double hue_end; /**< Ending hue. */
 } OutfitBoltData;
 
 /**

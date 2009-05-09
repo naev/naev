@@ -91,10 +91,10 @@ void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v 
    }
    else {
       var_h = h * 6;
-      var_i = floor( var_h );
-      var_1 = v * ( 1 - s );
-      var_2 = v * ( 1 - s * ( var_h - var_i ) );
-      var_3 = v * ( 1 - s * ( 1 - ( var_h - var_i ) ) );
+      var_i = floor(var_h);
+      var_1 = v * (1 - s);
+      var_2 = v * (1 - s * (var_h - var_i));
+      var_3 = v * (1 - s * (1 - (var_h - var_i)));
 
       if      (var_i == 0) { *r = v     ; *g = var_3 ; *b = var_1; }
       else if (var_i == 1) { *r = var_2 ; *g = v     ; *b = var_1; }

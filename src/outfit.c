@@ -659,10 +659,12 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    char *buf;
 
    /* Defaults */
-   temp->u.blt.spfx_armour = -1;
-   temp->u.blt.spfx_shield = -1;
-   temp->u.blt.sound = -1;
-   temp->u.blt.falloff = -1.;
+   temp->u.blt.spfx_armour    = -1;
+   temp->u.blt.spfx_shield    = -1;
+   temp->u.blt.sound          = -1;
+   temp->u.blt.falloff        = -1.;
+   temp->u.blt.hue_start      = -360.;
+   temp->u.blt.hue_end        = -360.;
 
    node = parent->xmlChildrenNode;
    do { /* load all the data */
@@ -715,11 +717,20 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          outfit_parseDamage( &temp->u.blt.dtype, &temp->u.blt.damage, node );
          continue;
       }
+
+      xmlr_float(node,"start_hue",temp->u.blt.hue_start);
+      xmlr_float(node,"end_hue",temp->u.blt.hue_end);
    } while (xml_nextNode(node));
 
    /* If not defined assume maximum. */
    if (temp->u.blt.falloff < 0.)
       temp->u.blt.falloff = temp->u.blt.range;
+
+   /* Convert hue to unitary. */
+   temp->u.blt.hue_start /= 360.;
+   temp->u.blt.hue_end   /= 360.;
+   if (temp->u.blt.hue_start >= 0.)
+      DEBUG("hue_start: %f, hue_end: %f", temp->u.blt.hue_start, temp->u.blt.hue_end);
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
