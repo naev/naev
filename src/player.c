@@ -1003,8 +1003,21 @@ void player_think( Pilot* pplayer, const double dt )
          tz = MIN( dx, dy );
       }
    }
-   else
-      tz = 1.;
+   else {
+      /* Depends on velocity normally.
+       *
+       * w*h = A, cte    area constant
+       * w/h = K, cte    proportion constant
+       * d^2 = A, cte    geometric longitud
+       *
+       * A_v = A*(1+v/d)   area of view is based on speed
+       * A_v / A = (1 + v/d)
+       *
+       * z = A / A_v = 1. / (1 + v/d)
+       */
+      d = sqrt(SCREEN_W*SCREEN_H);
+      tz = 1. / (1. + VMOD(player->solid->vel)/d);
+   }
 
    /* Gradually zoom in/out. */
    d = (tz - z) * dt / dt_mod;
