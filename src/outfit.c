@@ -692,7 +692,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       if (xml_isNode(node,"gfx")) {
          temp->u.blt.gfx_space = xml_parseTexture( node,
                OUTFIT_GFX"space/%s.png", 6, 6,
-               OPENGL_TEX_MAPTRANS );
+               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ); 
          xmlr_attr(node, "spin", buf);
          if (buf != NULL) {
             outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
@@ -784,7 +784,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       /* Graphic stuff. */
       if (xml_isNode(node,"gfx")) {
          temp->u.bem.gfx = xml_parseTexture( node,
-               OUTFIT_GFX"space/%s.png", 1, 1, 0 );
+               OUTFIT_GFX"space/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
          continue;
       }
       if (xml_isNode(node,"spfx_armour")) {
@@ -899,7 +899,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       if (xml_isNode(node,"gfx")) {
          temp->u.amm.gfx_space = xml_parseTexture( node,
                OUTFIT_GFX"space/%s.png", 6, 6,
-               OPENGL_TEX_MAPTRANS );
+               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
          xmlr_attr(node, "spin", buf);
          if (buf != NULL) {
             outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
@@ -1149,7 +1149,7 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
             xmlr_strd(cur,"description",temp->description);
             if (xml_isNode(cur,"gfx_store")) {
                temp->gfx_store = xml_parseTexture( cur,
-                     OUTFIT_GFX"store/%s.png", 1, 1, 0 );
+                     OUTFIT_GFX"store/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
             }
 
          } while (xml_nextNode(cur));

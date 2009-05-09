@@ -844,7 +844,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"space")) { /* load space gfx */
                planet->gfx_space = xml_parseTexture( cur,
-                     PLANET_GFX_SPACE"%s", 1, 1, 0 );
+                     PLANET_GFX_SPACE"%s", 1, 1, OPENGL_TEX_MIPMAPS );
             }
             else if (xml_isNode(cur,"exterior")) { /* load land gfx */
                snprintf( str, PATH_MAX, PLANET_GFX_EXTERIOR"%s", xml_get(cur));

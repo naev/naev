@@ -1848,10 +1848,10 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
    gui.gfx_frame = gl_newImage( buf, 0 );
    /* pilot */
    snprintf( buf, PATH_MAX, GUI_GFX"%s_pilot.png", tmp );
-   gui.gfx_targetPilot = gl_newSprite( buf, 2, 2, 0 );
+   gui.gfx_targetPilot = gl_newSprite( buf, 2, 2, OPENGL_TEX_MIPMAPS );
    /* planet */
    snprintf( buf, PATH_MAX, GUI_GFX"%s_planet.png", tmp );
-   gui.gfx_targetPlanet = gl_newSprite( buf, 2, 2, 0 );
+   gui.gfx_targetPlanet = gl_newSprite( buf, 2, 2, OPENGL_TEX_MIPMAPS );
    free(tmp);
 
    /*

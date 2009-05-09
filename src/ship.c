@@ -374,7 +374,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          /* Load the base graphic */
          temp->gfx_space = xml_parseTexture( node,
                SHIP_GFX"%s"SHIP_EXT, 6, 6,
-               OPENGL_TEX_MAPTRANS );
+               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
 
          /* Calculate mount angle. */
          temp->mangle  = 2.*M_PI;
