@@ -131,6 +131,7 @@
    <delay>400</delay>
    <speed>500</speed>
    <range>400</range>
+   <falloff>300</falloff>
    <accuracy>7</accuracy>
    <energy>21</energy>
    <damage type="ion">25</damage>

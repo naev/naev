@@ -80,6 +80,8 @@ typedef struct Weapon_ {
    int mount; /**< Used for beam weapons. */
    double falloff; /**< Point at which damage falls off. */
    double strength; /**< Calculated with falloff. */
+   int sx; /**< Current X sprite to use. */
+   int sy; /**< Current Y sprite to use. */
 
    /* position update and render */
    void (*update)(struct Weapon_*, const double, WeaponLayer); /**< Updates the weapon */
@@ -527,6 +529,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          case OUTFIT_TYPE_TURRET_BOLT:
             w->timer -= dt;
             if (w->timer < 0.) {
+               spfx = -1;
                /* See if we need armour death sprite. */
                if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_BLOWUP_ARMOUR))
                   spfx = outfit_spfxArmour(w->outfit);
@@ -621,10 +624,9 @@ void weapons_render( const WeaponLayer layer, const double dt )
  */
 static void weapon_render( Weapon* w, const double dt )
 {
-   int sx, sy;
    double x,y, cx,cy, gx,gy;
    glTexture *gfx;
-   glColour c = { .r = 1., .g = 1., .b = 1. }; 
+   glColour c = { .r = 1., .g = 1., .b = 1. };
 
    switch (w->outfit->type) {
       /* Weapons that use sprites. */
@@ -637,6 +639,9 @@ static void weapon_render( Weapon* w, const double dt )
       case OUTFIT_TYPE_MISSILE_DUMB_AMMO:
       case OUTFIT_TYPE_TURRET_DUMB_AMMO:
          gfx = outfit_gfx(w->outfit);
+
+         /* Alpha based on strength. */
+         c.a = w->strength;
 
          /* Outfit spins around. */
          if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_SPIN)) {
@@ -651,18 +656,13 @@ static void weapon_render( Weapon* w, const double dt )
                   w->sprite = 0;
             }
 
-            /* Alpha based on strength. */
-            c.a = w->strength;
-
             /* Render. */
             gl_blitSprite( gfx, w->solid->pos.x, w->solid->pos.y,
                   w->sprite % (int)gfx->sx, w->sprite / (int)gfx->sx, &c );
          }
          /* Outfit faces direction. */
-         else {
-            gl_getSpriteFromDir( &sx, &sy, gfx, w->solid->dir );
-            gl_blitSprite( gfx, w->solid->pos.x, w->solid->pos.y, sx, sy, NULL );
-         }
+         else
+            gl_blitSprite( gfx, w->solid->pos.x, w->solid->pos.y, w->sx, w->sy, &c );
          break;
 
       /* Beam weapons. */
@@ -812,7 +812,7 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
  */
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
-   int i, wsx,wsy, psx,psy;
+   int i, psx,psy;
    glTexture *gfx;
    Vector2d crash[2];
    Pilot *p;
@@ -820,7 +820,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    /* Get the sprite direction to speed up calculations. */
    if (!outfit_isBeam(w->outfit)) {
       gfx = outfit_gfx(w->outfit);
-      gl_getSpriteFromDir( &wsx, &wsy, gfx, w->solid->dir );
+      gl_getSpriteFromDir( &w->sx, &w->sy, gfx, w->solid->dir );
    }
 
    for (i=0; i<pilot_nstack; i++) {
@@ -851,7 +851,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
          if ((pilot_stack[i]->id == w->target) &&
                weapon_checkCanHit(w,p) &&
-               CollideSprite( gfx, wsx, wsy, &w->solid->pos,
+               CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
                      p->ship->gfx_space, psx, psy,
                      &p->solid->pos,
                      &crash[0] )) {
@@ -862,7 +862,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       /* dumb weapons hit anything not of the same faction */
       else {
          if (weapon_checkCanHit(w,p) &&
-               CollideSprite( gfx, wsx, wsy, &w->solid->pos,
+               CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
                      p->ship->gfx_space, psx, psy,
                      &p->solid->pos,
                      &crash[0] )) {
@@ -896,7 +896,7 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
    /* Must be a valid shooter. */
    if (shooter == NULL)
       return;
-     
+
    /* Player is handled differently. */
    if (shooter->faction == FACTION_PLAYER) {
 
@@ -1098,7 +1098,7 @@ static Weapon* weapon_create( const Outfit* outfit,
          vectcpy( &v, vel );
          vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
          w->timer = outfit->u.blt.range / outfit->u.blt.speed;
-         w->falloff = outfit->u.blt.falloff / outfit->u.blt.speed;
+         w->falloff = w->timer - outfit->u.blt.falloff / outfit->u.blt.speed;
          w->solid = solid_create( mass, rdir, pos, &v );
          w->voice = sound_playPos(w->outfit->u.blt.sound,
                w->solid->pos.x + w->solid->vel.x,
