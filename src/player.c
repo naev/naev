@@ -1007,7 +1007,7 @@ void player_think( Pilot* pplayer, const double dt )
       tz = 1.;
 
    /* Gradually zoom in/out. */
-   gl_cameraZoom( CLAMP( ZOOM_OUT_MAX, ZOOM_IN_MAX, z + (tz - z) * dt) );
+   gl_cameraZoom( CLAMP( ZOOM_OUT_MAX, ZOOM_IN_MAX, z + (tz - z) * dt / dt_mod) );
 }
 
 
