@@ -125,8 +125,8 @@ void conf_setDefaults (void)
 
    /* Sound. */
    conf.nosound      = 0;
-   conf.sound        = 0.6;
-   conf.music        = 0.4;
+   conf.sound        = 0.4;
+   conf.music        = 0.8;
 
    /* FPS. */
    conf.fps_show     = 0;
