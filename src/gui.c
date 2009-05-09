@@ -625,7 +625,7 @@ void gui_render( double dt )
    /* Lockon warning */
    if (player->lockons > 0)
       gl_printMid( NULL, SCREEN_W - gui_xoff, 0., SCREEN_H-gl_defFont.h-25.,
-            &cRed, "LOCKON DETECTED");
+            &cRed, "LOCK-ON DETECTED");
 
    /* Volatile environment. */
    if (cur_system->nebu_volatility > 0.)
