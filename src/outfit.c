@@ -730,7 +730,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    temp->u.blt.hue_start /= 360.;
    temp->u.blt.hue_end   /= 360.;
    /* Store as relative to hue_start. */
-   temp->u.blt.hue_end    = temp->u.blt.hue_start - temp->u.blt.hue_end;
+   temp->u.blt.hue_end   -= temp->u.blt.hue_start;
    if (temp->u.blt.hue_end < -0.5)
       temp->u.blt.hue_end += 1.; /**< Go around faster way. */
 
