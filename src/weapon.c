@@ -283,9 +283,8 @@ static void think_seeker( Weapon* w, const double dt )
    double vel;
    Pilot *p;
    int effect;
-   int spfx;
-            Vector2d v;
-            double t;
+   Vector2d v;
+   double t;
 
    if (w->target == w->parent) return; /* no self shooting */
 
@@ -312,10 +311,6 @@ static void think_seeker( Weapon* w, const double dt )
                   switch (effect) {
                      case 0: /* Blow up */
                         w->timer = -1.;
-                        spfx = outfit_spfxArmour(w->outfit);
-                        spfx_add( spfx, w->solid->pos.x, w->solid->pos.y,
-                              w->solid->vel.x, w->solid->vel.y,
-                              SPFX_LAYER_BACK ); /* presume back. */
                         break;
                      case 1: /* Stuck in left loop */
                         w->solid->dir_vel = w->outfit->u.amm.turn;
@@ -472,6 +467,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
    int *nlayer;
    Weapon *w;
    int i;
+   int spfx;
 
    /* Choose layer. */
    switch (layer) {
@@ -506,6 +502,25 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          case OUTFIT_TYPE_TURRET_DUMB_AMMO:
          case OUTFIT_TYPE_MISSILE_DUMB_AMMO: /* Dumb missiles are like bolts */
             limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );
+            w->timer -= dt;
+            if (w->timer < 0.) {
+               spfx = -1;
+               /* See if we need armour death sprite. */
+               if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_BLOWUP_ARMOUR))
+                  spfx = outfit_spfxArmour(w->outfit);
+               /* See if we need shield death sprite. */
+               else if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_BLOWUP_SHIELD))
+                  spfx = outfit_spfxShield(w->outfit);
+               /* Add death sprite if needed. */
+               if (spfx != -1)
+                  spfx_add( spfx, w->solid->pos.x, w->solid->pos.y,
+                        w->solid->vel.x, w->solid->vel.y,
+                        SPFX_LAYER_BACK ); /* presume back. */
+               weapon_destroy(w,layer);
+               break;
+            }
+            break;
+
          case OUTFIT_TYPE_BOLT:
          case OUTFIT_TYPE_TURRET_BOLT:
             w->timer -= dt;

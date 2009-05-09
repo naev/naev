@@ -224,7 +224,7 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
    d = 0.;
    for (i=0; i<pilot_nstack; i++) {
       /* Must not be bribed. */
-      if ((pilot_stack[i]->id == PLAYER_ID) && pilot_isFlag(p,PILOT_BRIBED))
+      if ((pilot_stack[i]->faction == FACTION_PLAYER) && pilot_isFlag(p,PILOT_BRIBED))
          continue;
 
       if ((areEnemies(p->faction, pilot_stack[i]->faction) || /* Enemy faction. */

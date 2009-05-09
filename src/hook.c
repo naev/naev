@@ -132,7 +132,9 @@ static int hook_runMisn( Hook *hook )
  */
 static int hook_runEvent( Hook *hook )
 {
+   (void) hook;
    /** @todo. */
+   return 0;
 }
 
 

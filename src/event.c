@@ -400,6 +400,13 @@ void events_exit (void)
       event_data  = NULL;
       event_ndata = 0;
    }
+
+   if (event_active != NULL) {
+      free(event_active);
+      event_active = NULL;
+      event_nactive = 0;
+      event_mactive = 0;
+   }
 }
 
 
