@@ -138,7 +138,8 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
    p = m+1;
    if (mode == 0) {
       while (p < pilot_nstack) {
-         if (pilot_inRangePilot( player, pilot_stack[p] ))
+         if ((pilot_stack[p]->faction != FACTION_PLAYER) &&
+               pilot_inRangePilot( player, pilot_stack[p] ))
             return pilot_stack[p]->id;
          p++;
       }
@@ -146,7 +147,8 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
    /* Get first hostile in range. */
    if (mode == 1) {
       while (p < pilot_nstack) {
-         if (pilot_inRangePilot( player, pilot_stack[p] ) &&
+         if ((pilot_stack[p]->faction != FACTION_PLAYER) &&
+               pilot_inRangePilot( player, pilot_stack[p] ) &&
                (pilot_isFlag(pilot_stack[p],PILOT_HOSTILE) ||
                   areEnemies( FACTION_PLAYER, pilot_stack[p]->faction)))
             return pilot_stack[p]->id;
@@ -187,7 +189,8 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
    /* Get first one in range. */
    if (mode == 0) {
       while (p >= 0) {
-         if (pilot_inRangePilot( player, pilot_stack[p] ))
+         if ((pilot_stack[p]->faction != FACTION_PLAYER) &&
+               pilot_inRangePilot( player, pilot_stack[p] ))
             return pilot_stack[p]->id;
          p--;
       }
@@ -195,7 +198,8 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
    /* Get first hostile in range. */
    else if (mode == 1) {
       while (p >= 0) {
-         if (pilot_inRangePilot( player, pilot_stack[p] ) &&
+         if ((pilot_stack[p]->faction != FACTION_PLAYER) &&
+               pilot_inRangePilot( player, pilot_stack[p] ) &&
                (pilot_isFlag(pilot_stack[p],PILOT_HOSTILE) ||
                   areEnemies( FACTION_PLAYER, pilot_stack[p]->faction)))
             return pilot_stack[p]->id;
@@ -265,23 +269,29 @@ unsigned int pilot_getNearestPilot( const Pilot* p )
 
    tp=PLAYER_ID;
    d=0;
-   for (i=0; i<pilot_nstack; i++)
-      if (pilot_stack[i] != p) {
+   for (i=0; i<pilot_nstack; i++) {
+      if (pilot_stack[i] == p)
+         continue;
 
-         /* Shouldn't be disabled. */
-         if (pilot_isDisabled(pilot_stack[i]))
-            continue;
+      /* Player doesn't select escorts. */
+      if ((p->faction == FACTION_PLAYER) &&
+            (pilot_stack[i]->faction == FACTION_PLAYER))
+         continue;
 
-         /* Must be in range. */
-         if (!pilot_inRangePilot( p, pilot_stack[i] ))
-            continue;
+      /* Shouldn't be disabled. */
+      if (pilot_isDisabled(pilot_stack[i]))
+         continue;
 
-         td = vect_dist2(&pilot_stack[i]->solid->pos, &player->solid->pos);       
-         if (((tp==PLAYER_ID) || (td < d))) {
-            d = td;
-            tp = pilot_stack[i]->id;
-         }
+      /* Must be in range. */
+      if (!pilot_inRangePilot( p, pilot_stack[i] ))
+         continue;
+
+      td = vect_dist2(&pilot_stack[i]->solid->pos, &player->solid->pos);       
+      if (((tp==PLAYER_ID) || (td < d))) {
+         d = td;
+         tp = pilot_stack[i]->id;
       }
+   }
    return tp;
 }
 
