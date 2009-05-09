@@ -662,6 +662,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    temp->u.blt.spfx_armour = -1;
    temp->u.blt.spfx_shield = -1;
    temp->u.blt.sound = -1;
+   temp->u.blt.falloff = -1.;
 
    node = parent->xmlChildrenNode;
    do { /* load all the data */
@@ -684,6 +685,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          temp->u.blt.range = xml_getFloat(node);
          continue;
       }
+      xmlr_float(node,"falloff",temp->u.blt.falloff);
 
       if (xml_isNode(node,"gfx")) {
          temp->u.blt.gfx_space = xml_parseTexture( node,
@@ -715,6 +717,10 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       }
    } while (xml_nextNode(node));
 
+   /* If not defined assume maximum. */
+   if (temp->u.blt.falloff < 0.)
+      temp->u.blt.falloff = temp->u.blt.range;
+
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.blt.gfx_space==NULL,"gfx");
@@ -726,6 +732,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT(temp->u.blt.range==0,"range");
    MELEMENT(temp->u.blt.accuracy==0,"accuracy");
    MELEMENT(temp->u.blt.damage==0,"damage");
+   MELEMENT(temp->u.blt.falloff > temp->u.blt.range,"falloff");
 #undef MELEMENT
 }
 

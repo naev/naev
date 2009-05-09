@@ -78,6 +78,8 @@ typedef struct Weapon_ {
    double anim; /**< Used for beam weapon graphics and others. */
    int sprite; /**< Used for spinning outfits. */
    int mount; /**< Used for beam weapons. */
+   double falloff; /**< Point at which damage falls off. */
+   double strength; /**< Calculated with falloff. */
 
    /* position update and render */
    void (*update)(struct Weapon_*, const double, WeaponLayer); /**< Updates the weapon */
@@ -525,9 +527,22 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          case OUTFIT_TYPE_TURRET_BOLT:
             w->timer -= dt;
             if (w->timer < 0.) {
+               /* See if we need armour death sprite. */
+               if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_BLOWUP_ARMOUR))
+                  spfx = outfit_spfxArmour(w->outfit);
+               /* See if we need shield death sprite. */
+               else if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_BLOWUP_SHIELD))
+                  spfx = outfit_spfxShield(w->outfit);
+               /* Add death sprite if needed. */
+               if (spfx != -1)
+                  spfx_add( spfx, w->solid->pos.x, w->solid->pos.y,
+                        w->solid->vel.x, w->solid->vel.y,
+                        SPFX_LAYER_BACK ); /* presume back. */
                weapon_destroy(w,layer);
                break;
             }
+            else if (w->timer < w->falloff)
+               w->strength = w->timer / w->falloff;
             break;
 
          /* Beam weapons handled a part. */
@@ -609,6 +624,7 @@ static void weapon_render( Weapon* w, const double dt )
    int sx, sy;
    double x,y, cx,cy, gx,gy;
    glTexture *gfx;
+   glColour c = { .r = 1., .g = 1., .b = 1. }; 
 
    switch (w->outfit->type) {
       /* Weapons that use sprites. */
@@ -635,9 +651,12 @@ static void weapon_render( Weapon* w, const double dt )
                   w->sprite = 0;
             }
 
+            /* Alpha based on strength. */
+            c.a = w->strength;
+
             /* Render. */
             gl_blitSprite( gfx, w->solid->pos.x, w->solid->pos.y,
-                  w->sprite % (int)gfx->sx, w->sprite / (int)gfx->sx, NULL );
+                  w->sprite % (int)gfx->sx, w->sprite / (int)gfx->sx, &c );
          }
          /* Outfit faces direction. */
          else {
@@ -928,7 +947,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
 
    /* Get general details. */
    parent = pilot_get(w->parent);
-   damage = outfit_damage(w->outfit);
+   damage = w->strength * outfit_damage(w->outfit);
    dtype = outfit_damageType(w->outfit);
 
    /* Add sprite, layer depends on whether player shot or not. */
@@ -1026,6 +1045,7 @@ static Weapon* weapon_create( const Outfit* outfit,
    w->outfit = outfit; /* non-changeable */
    w->update = weapon_update;
    w->status = WEAPON_STATUS_OK;
+   w->strength = 1.;
 
    switch (outfit->type) {
 
@@ -1077,7 +1097,8 @@ static Weapon* weapon_create( const Outfit* outfit,
          mass = 1; /* Lasers are presumed to have unitary mass */
          vectcpy( &v, vel );
          vect_cadd( &v, outfit->u.blt.speed*cos(rdir), outfit->u.blt.speed*sin(rdir));
-         w->timer = outfit->u.blt.range/outfit->u.blt.speed;
+         w->timer = outfit->u.blt.range / outfit->u.blt.speed;
+         w->falloff = outfit->u.blt.falloff / outfit->u.blt.speed;
          w->solid = solid_create( mass, rdir, pos, &v );
          w->voice = sound_playPos(w->outfit->u.blt.sound,
                w->solid->pos.x + w->solid->vel.x,
@@ -1202,7 +1223,7 @@ static Weapon* weapon_create( const Outfit* outfit,
       default:
          WARN("Weapon of type '%s' has no create implemented yet!",
                w->outfit->name);
-         w->solid = solid_create( mass, dir, pos, vel );
+         w->solid = solid_create( 1., dir, pos, vel );
          break;
    }
 

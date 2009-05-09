@@ -263,6 +263,9 @@ int sound_play( int sound )
    if ((sound < 0) || (sound > sound_nlist))
       return -1;
 
+   /* Gets a new voice. */
+   v = voice_new();
+
    v->channel = Mix_PlayChannel( -1, sound_list[sound].buffer, 0 );
   
    /*

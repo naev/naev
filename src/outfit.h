@@ -88,6 +88,7 @@ typedef struct OutfitBoltData_ {
    unsigned int delay; /**< delay between shots */
    double speed; /**< how fast it goes (not applicable to beam) */
    double range; /**< how far it goes */
+   double falloff; /**< Point at which damage falls off. */
    double accuracy; /**< desviation accuracy */
    double energy; /**< energy usage */
    DamageType dtype; /**< damage type */
