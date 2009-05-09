@@ -75,6 +75,12 @@ extern glColour cEnergy;
 extern glColour cFuel;
 
 
+/*
+ * Colourspace conversion routines.
+ */
+void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v );
+
+
 
 #endif /* COLOUR_H */
 

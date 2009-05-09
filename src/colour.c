@@ -11,6 +11,11 @@
 
 #include "colour.h"
 
+#include <math.h>
+
+#include "naev.h"
+#include "log.h"
+
 
 /*
  * default colours
@@ -61,4 +66,42 @@ glColour cShield        =  { .r = 0.2, .g = 0.2, .b = 0.8, .a = 1.  }; /**< Shie
 glColour cArmour        =  { .r = 0.5, .g = 0.5, .b = 0.5, .a = 1.  }; /**< Armour bar colour. */
 glColour cEnergy        =  { .r = 0.2, .g = 0.8, .b = 0.2, .a = 1.  }; /**< Energy bar colour. */
 glColour cFuel          =  { .r = 0.9, .g = 0.1, .b = 0.4, .a = 1.  }; /**< Fuel bar colour. */
+
+
+/**
+ * @brief Changes colourspace from HSV to RGB.
+ *
+ * All values go from 0 to 1.
+ *
+ *    @param[out] r Stores R.
+ *    @param[out] g Stores G.
+ *    @param[out] b Stores B.
+ *    @param h Hue to convert.
+ *    @param s Saturation to convert.
+ *    @param v Value to convert.
+ */
+void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v )
+{
+   double var_h, var_i, var_1, var_2, var_3;
+
+   if (s == 0) {
+      *r = v;
+      *g = v;
+      *b = v;
+   }
+   else {
+      var_h = h * 6;
+      var_i = floor( var_h );
+      var_1 = v * ( 1 - s );
+      var_2 = v * ( 1 - s * ( var_h - var_i ) );
+      var_3 = v * ( 1 - s * ( 1 - ( var_h - var_i ) ) );
+
+      if      (var_i == 0) { *r = v     ; *g = var_3 ; *b = var_1; }
+      else if (var_i == 1) { *r = var_2 ; *g = v     ; *b = var_1; }
+      else if (var_i == 2) { *r = var_1 ; *g = v     ; *b = var_3; }
+      else if (var_i == 3) { *r = var_1 ; *g = var_2 ; *b = v;     }
+      else if (var_i == 4) { *r = var_3 ; *g = var_1 ; *b = v;     }
+      else                 { *r = v     ; *g = var_1 ; *b = var_2; }
+   }
+}
 
