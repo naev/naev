@@ -8,38 +8,18 @@
 --data = "ndata"
 
 --[[
--- Window Dimensions.
+-- OpenGL.
 --]]
---width  = 800
---height = 600
+--fsaa = 8 -- Full Scene Anti Aliasing
+--vsync = false -- Syncronize rendering to vertical refresh rate
 
 --[[
--- FSAA.  Full Scene Anti Aliasing - can make the stars and such disappear.
+-- Window.
 --]]
---fsaa = 8
-
---[[
--- Fullscreen.
---]]
---fullscreen = 0
-
---[[
--- Scale factor of the screen.  2. would make screen twice as big.
---]]
---scalefactor = 1.
-
---[[
--- Anti aliasing.  Shouldn't be used, will probably be removed soon.
---]]
---aa = 0
---aa_point = 0
---aa_line = 0
---aa_polygon = 0
-
---[[
--- Vsync.  Doesn't work on all systems.
---]]
---vsync = 0
+--width  = 800 -- Window width.
+--height = 600 -- Window height.
+--fullscreen = false -- Whether or not to use fullscreen.
+--scalefactor = 1. -- Scale factor of the screen.  2. would make screen twice as big.
 
 --[[
 -- FPS.
@@ -48,14 +28,16 @@
 --maxfps = 200 -- 0 is unlimited fps
 
 --[[
--- Input.
+-- Misc.
 --]]
+--zoom_min = 0.5 -- Maximum zoom to go to (zoom out)
+--zoom_max = 1. -- Minimum zoom to go to (zoom in)
 --afterburn_sensitivity = 250 -- ms between accel taps to trigger afterburner
 
 --[[
 -- Sound.
 --]]
---nosound = 1
+--nosound = false
 --sound = 0.4
 --music = 0.8
 
