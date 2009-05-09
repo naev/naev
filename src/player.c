@@ -59,7 +59,6 @@
 
 #define ZOOM_OUT_MAX             0.5 /**< Maximum zoom out. */
 #define ZOOM_IN_MAX              1. /**< Maximum zoom in. */
-#define ZOOM_VEL                 10. /**< Zoom change velocity. */
 
 
 /*
@@ -1007,7 +1006,10 @@ void player_think( Pilot* pplayer, const double dt )
       tz = 1.;
 
    /* Gradually zoom in/out. */
-   gl_cameraZoom( CLAMP( ZOOM_OUT_MAX, ZOOM_IN_MAX, z + (tz - z) * dt / dt_mod) );
+   d = (tz - z) * dt / dt_mod;
+   if (d < 0)
+      d *= 2.;
+   gl_cameraZoom( CLAMP( ZOOM_OUT_MAX, ZOOM_IN_MAX, z + d) );
 }
 
 
