@@ -263,6 +263,7 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
       const double tw, const double th, const glColour *c )
 {
    GLfloat vertex[4*2], tex[4*2], col[4*4];
+   GLfloat mcol[4] = { 0., 0., 0. };
 
    /* No multitexture. */
    if (nglActiveTexture == NULL) {
@@ -273,29 +274,39 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    }
 
    /* Bind the textures. */
+   /* Texture 0. */
    nglActiveTexture( GL_TEXTURE0 );
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, ta->texture);
+   /* Texture 1. */
    nglActiveTexture( GL_TEXTURE1 );
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, tb->texture);
 
    /* Set the mode. */
-   glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE );
-   glTexEnvf( GL_TEXTURE_ENV, GL_COMBINE_RGB,      GL_INTERPOLATE );
+   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE );
+   glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_RGB,      GL_INTERPOLATE );
    glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_ALPHA,    GL_INTERPOLATE );
+   mcol[3] = inter;
+   glTexEnvfv( GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, mcol );
 
    /* Arguments. */
    /* Arg0. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_RGB, GL_CONSTANT );
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_ALPHA, GL_TEXTURE );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_COLOR );
+   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_RGB,    GL_TEXTURE0 );
+   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_ALPHA,  GL_TEXTURE0 );
+   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_RGB,   GL_SRC_COLOR );
    glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_ALPHA, GL_SRC_ALPHA );
    /* Arg1. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_RGB, GL_CONSTANT );
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_ALPHA, GL_PREVIOUS );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_RGB, GL_SRC_COLOR );
+   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_RGB,    GL_TEXTURE1 );
+   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_ALPHA,  GL_TEXTURE1 );
+   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_RGB,   GL_SRC_COLOR );
    glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_ALPHA, GL_SRC_ALPHA );
+   /* Arg2. */
+   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE2_RGB,    GL_CONSTANT );
+   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE2_ALPHA,  GL_CONSTANT );
+   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND2_RGB,   GL_SRC_ALPHA );
+   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND2_ALPHA, GL_SRC_ALPHA );
+
 
    /* Must have colour for now. */
    if (c == NULL)
@@ -357,7 +368,7 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    glDisable(GL_TEXTURE_2D);
    glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
    nglActiveTexture( GL_TEXTURE0 );
-   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
    glDisable(GL_TEXTURE_2D);
 
    /* anything failed? */
