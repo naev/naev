@@ -28,6 +28,7 @@ void gl_matrixPop (void);
  * Matrix manipulation.
  */
 void gl_matrixTranslate( double x, double y );
+void gl_matrixScale( double x, double y );
 
 
 #endif /* OPENGL_MATRIX_H */

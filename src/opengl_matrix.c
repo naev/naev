@@ -71,6 +71,22 @@ void gl_matrixTranslate( double x, double y )
 
 
 /**
+ * @brief Scales the matrix.
+ *
+ *    @param x X to scale by.
+ *    @param y Y to scale by.
+ */
+void gl_matrixScale( double x, double y )
+{
+   if (has_glsl) {
+   }
+   else {
+      glScaled( x, y, 0. );
+   }
+}
+
+
+/**
  * @brief Destroys the last pushed matrix.
  */
 void gl_matrixPop (void)
