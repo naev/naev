@@ -74,6 +74,7 @@ typedef struct Weapon_ {
 
    int voice; /**< Weapon's voice. */
    double lockon; /**< some weapons have a lockon delay */
+   double life; /**< Total life. */
    double timer; /**< mainly used to see when the weapon was fired */
    double anim; /**< Used for beam weapon graphics and others. */
    int sprite; /**< Used for spinning outfits. */
@@ -657,8 +658,9 @@ static void weapon_render( Weapon* w, const double dt )
             }
 
             /* Render. */
-            if (w->strength != 1. && outfit_isBolt(w->outfit) && w->outfit->u.blt.gfx_end)
-               gl_blitSpriteInterpolate( gfx, w->outfit->u.blt.gfx_end, w->strength,
+            if (outfit_isBolt(w->outfit) && w->outfit->u.blt.gfx_end)
+               gl_blitSpriteInterpolate( gfx, w->outfit->u.blt.gfx_end,
+                     w->timer / w->life,
                      w->solid->pos.x, w->solid->pos.y,
                      w->sprite % (int)gfx->sx, w->sprite / (int)gfx->sx, &c );
             else
@@ -667,8 +669,9 @@ static void weapon_render( Weapon* w, const double dt )
          }
          /* Outfit faces direction. */
          else {
-            if (w->strength != 1. && outfit_isBolt(w->outfit) && w->outfit->u.blt.gfx_end)
-               gl_blitSpriteInterpolate( gfx, w->outfit->u.blt.gfx_end, w->strength,
+            if (outfit_isBolt(w->outfit) && w->outfit->u.blt.gfx_end)
+               gl_blitSpriteInterpolate( gfx, w->outfit->u.blt.gfx_end,
+                     w->timer / w->life,
                      w->solid->pos.x, w->solid->pos.y, w->sx, w->sy, &c );
             else
                gl_blitSprite( gfx, w->solid->pos.x, w->solid->pos.y, w->sx, w->sy, &c );
@@ -1236,6 +1239,9 @@ static Weapon* weapon_create( const Outfit* outfit,
          w->solid = solid_create( 1., dir, pos, vel );
          break;
    }
+
+   /* Set life to timer. */
+   w->life = w->timer;
 
    return w;
 }
