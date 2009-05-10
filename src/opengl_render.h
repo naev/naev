@@ -34,6 +34,10 @@ void gl_cameraZoomGet( double * zoom );
 void gl_blitSprite( const glTexture* sprite,
       const double bx, const double by,
       const int sx, const int sy, const glColour *c );
+/* Blits a sprite interpolating between textures, relative pos. */
+void gl_blitSpriteInterpolate( const glTexture* sa, const glTexture *sb,
+      double inter, const double bx, const double by,
+      const int sx, const int sy, const glColour *c );
 /* blits a sprite, absolute pos */
 void gl_blitStaticSprite( const glTexture* sprite,
       const double bx, const double by,

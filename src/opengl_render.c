@@ -64,6 +64,12 @@ static void gl_blitTexture(  const glTexture* texture,
       const double w, const double h,
       const double tx, const double ty,
       const double tw, const double th, const glColour *c );
+static void gl_blitTextureInterpolate(  const glTexture* ta,
+      const glTexture* tb, const double inter,
+      const double x, const double y,
+      const double w, const double h,
+      const double tx, const double ty,
+      const double tw, const double th, const glColour *c );
 
 
 /**
@@ -234,6 +240,130 @@ static void gl_blitTexture(  const glTexture* texture,
 
 
 /**
+ * @brief Texture blitting backend for interpolated texture.
+ *
+ * Value blitted is  ta*inter + tb*(1.-inter).
+ *
+ *    @param ta Texture to blit.
+ *    @param x X position of the texture on the screen.
+ *    @param y Y position of the texture on the screen.
+ *    @param tx X position within the texture.
+ *    @param ty Y position within the texture.
+ *    @param tw Texture width.
+ *    @param th Texture height.
+ *    @param c Colour to use (modifies texture colour).
+ */
+static void gl_blitTextureInterpolate(  const glTexture* ta,
+      const glTexture* tb, const double inter,
+      const double x, const double y,
+      const double w, const double h,
+      const double tx, const double ty,
+      const double tw, const double th, const glColour *c )
+{
+   GLfloat vertex[4*2], tex[4*2], col[4*4];
+
+   /* No multitexture. */
+   if (nglActiveTexture == NULL) {
+      if (inter > 0.5)
+         gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c );
+      else
+         gl_blitTexture( tb, x, y, w, h, tx, ty, tw, th, c );
+   }
+
+   /* Bind the textures. */
+   nglActiveTexture( GL_TEXTURE0 );
+   glEnable(GL_TEXTURE_2D);
+   glBindTexture( GL_TEXTURE_2D, ta->texture);
+   nglActiveTexture( GL_TEXTURE1 );
+   glEnable(GL_TEXTURE_2D);
+   glBindTexture( GL_TEXTURE_2D, tb->texture);
+
+   /* Set the mode. */
+   glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE );
+   glTexEnvf( GL_TEXTURE_ENV, GL_COMBINE_RGB,      GL_INTERPOLATE );
+   glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_ALPHA,    GL_INTERPOLATE );
+
+   /* Arguments. */
+   /* Arg0. */
+   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_RGB, GL_CONSTANT );
+   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_ALPHA, GL_TEXTURE );
+   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_COLOR );
+   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_ALPHA, GL_SRC_ALPHA );
+   /* Arg1. */
+   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_RGB, GL_CONSTANT );
+   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_ALPHA, GL_PREVIOUS );
+   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_RGB, GL_SRC_COLOR );
+   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_ALPHA, GL_SRC_ALPHA );
+
+   /* Must have colour for now. */
+   if (c == NULL)
+      c = &cWhite;
+
+   /* Set the vertex. */
+   vertex[0] = (GLfloat)x;
+   vertex[4] = vertex[0];
+   vertex[2] = vertex[0] + (GLfloat)w;
+   vertex[6] = vertex[2];
+   vertex[1] = (GLfloat)y;
+   vertex[3] = vertex[1];
+   vertex[5] = vertex[1] + (GLfloat)h;
+   vertex[7] = vertex[5];
+   gl_vboSubData( gl_renderVBO, 0, 4*2*sizeof(GLfloat), vertex );
+   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+
+   /* Set the texture. */
+   tex[0] = (GLfloat)tx;
+   tex[4] = tex[0];
+   tex[2] = tex[0] + (GLfloat)tw;
+   tex[6] = tex[2];
+   tex[1] = (GLfloat)ty;
+   tex[3] = tex[1];
+   tex[5] = tex[1] + (GLfloat)th;
+   tex[7] = tex[5];
+   gl_vboSubData( gl_renderVBO, gl_renderVBOtexOffset, 4*2*sizeof(GLfloat), tex );
+   gl_vboActivateOffset( gl_renderVBO, GL_TEXTURE0,
+         gl_renderVBOtexOffset, 2, GL_FLOAT, 0 );
+   gl_vboActivateOffset( gl_renderVBO, GL_TEXTURE0,
+         gl_renderVBOtexOffset, 2, GL_FLOAT, 0 );
+
+   /* Set the colour. */
+   col[0] = c->r;
+   col[1] = c->g;
+   col[2] = c->b;
+   col[3] = c->a;
+   col[4] = col[0];
+   col[5] = col[1];
+   col[6] = col[2];
+   col[7] = col[3];
+   col[8] = col[0];
+   col[9] = col[1];
+   col[10] = col[2];
+   col[11] = col[3];
+   col[12] = col[0];
+   col[13] = col[1];
+   col[14] = col[2];
+   col[15] = col[3];
+   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, 4*4*sizeof(GLfloat), col );
+   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
+         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
+
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   gl_vboDeactivate();
+   glDisable(GL_TEXTURE_2D);
+   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+   nglActiveTexture( GL_TEXTURE0 );
+   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+   glDisable(GL_TEXTURE_2D);
+
+   /* anything failed? */
+   gl_checkErr();
+}
+
+
+/**
  * @brief Blits a sprite, position is relative to the player.
  *
  * Since position is in "game coordinates" it is subject to all
@@ -274,6 +404,51 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
 
    gl_blitTexture( sprite, x, y, w, h,
          tx, ty, sprite->srw, sprite->srh, c );
+}
+
+
+/**
+ * @brief Blits a sprite, position is relative to the player.
+ *
+ * Since position is in "game coordinates" it is subject to all
+ * sorts of position transformations.
+ *
+ *    @param sprite Sprite to blit.
+ *    @param bx X position of the texture relative to the player.
+ *    @param by Y position of the texture relative to the player.
+ *    @param sx X position of the sprite to use.
+ *    @param sy Y position of the sprite to use.
+ *    @param c Colour to use (modifies texture colour).
+ */
+void gl_blitSpriteInterpolate( const glTexture* sa, const glTexture *sb,
+      double inter, const double bx, const double by,
+      const int sx, const int sy, const glColour *c )
+{
+   double x,y, w,h, tx,ty, cx,cy, gx,gy;
+
+   /* Get parameters. */
+   gl_cameraGet( &cx, &cy );
+   gui_getOffset( &gx, &gy );
+
+   /* calculate position - we'll use relative coords to player */
+   x = (bx - cx - sa->sw/2. + gx) * gl_cameraZ;
+   y = (by - cy - sa->sh/2. + gy) * gl_cameraZ;
+
+   /* Scaled sprite dimensions. */
+   w = sa->sw*gl_cameraZ;
+   h = sa->sh*gl_cameraZ;
+
+   /* check if inbounds */
+   if ((fabs(x) > SCREEN_W/2 + w) ||
+         (fabs(y) > SCREEN_H/2 + h) )
+      return;
+
+   /* texture coords */
+   tx = sa->sw*(double)(sx)/sa->rw;
+   ty = sa->sh*(sa->sy-(double)sy-1)/sa->rh;
+
+   gl_blitTextureInterpolate( sa, sb, inter, x, y, w, h,
+         tx, ty, sa->srw, sa->srh, c );
 }
 
 
