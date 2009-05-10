@@ -41,6 +41,14 @@
   <gfx sx="6" sy="5">plam</gfx>
   <anim>450</anim>
  </spfx>
+ <spfx name="PlaS2">
+  <gfx sx="6" sy="5">plas2</gfx>
+  <anim>400</anim>
+ </spfx>
+ <spfx name="PlaM2">
+  <gfx sx="6" sy="5">plam2</gfx>
+  <anim>450</anim>  
+ </spfx>
  <spfx name="Dbr0">
   <gfx sx="6" sy="6">debris0</gfx>
   <ttl>15000</ttl>

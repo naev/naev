@@ -7,7 +7,7 @@
    <license>Medium Weapon License</license>
    <mass>12</mass>
    <price>95000</price>
-   <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
+   <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper Mk2, though it still shares the original's heavy power demands.</description>
    <gfx_store>medium</gfx_store>
   </general>
   <specific type="bolt">
@@ -17,10 +17,12 @@
    <spfx_armour>ExpS</spfx_armour>
    <delay>700</delay>
    <speed>700</speed>
-   <range>400</range>
+   <range>600</range>
+   <falloff>480</falloff>
+   <gfx_end>ripper-end</gfx_end>
    <accuracy>10</accuracy>
    <energy>22</energy>
-   <damage type="energy">28</damage>
+   <damage type="energy">18</damage>
   </specific>
  </outfit>
  <outfit name="Laser Cannon">
@@ -39,10 +41,36 @@
    <spfx_armour>ExpS</spfx_armour>
    <delay>500</delay>
    <speed>550</speed>
-   <range>300</range>
+   <range>390</range>
+   <falloff>300</falloff>
    <accuracy>18</accuracy>
    <energy>5</energy>
-   <damage type="energy">7.5</damage>
+   <damage type="energy">6</damage>
+  </specific>
+ </outfit>
+  <outfit name="Laser Cannon Mk2">
+  <general>
+   <max>4</max>
+   <tech>6</tech>
+   <license>Medium Weapon License</license>
+   <mass>8</mass>
+   <price>15000</price>
+   <description>A new offering developed from the newly declassified Ripper Mk2 specifications, the mark 2 laser cannon improves on the original in many ways. Featuring increased range and greater firepower while only moderately increasing power demands, it's become a favourite civilian armament.</description>
+   <gfx_store>lasercannon</gfx_store>
+   </general>
+  <specific type="bolt">
+   <gfx>laser2</gfx>
+   <sound>laser</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>500</delay>
+   <speed>550</speed>
+   <range>420</range>
+   <falloff>330</falloff>
+   <gfx_end>laser2-end</gfx_end>
+   <accuracy>18</accuracy>
+   <energy>11</energy>
+   <damage type="energy">10</damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret">
@@ -62,16 +90,42 @@
    <spfx_armour>ExpS</spfx_armour>
    <delay>250</delay>
    <speed>550</speed>
-   <range>300</range>
+   <range>390</range>
+   <falloff>300</falloff>
    <accuracy>18</accuracy>
-   <energy>9</energy>
-   <damage type="energy">11.25</damage>
+   <energy>8</energy>
+   <damage type="energy">8</damage>
+  </specific>
+ </outfit>
+ <outfit name="Laser Turret Mk2">
+ <general>
+   <max>4</max>
+   <tech>7</tech>
+   <license>Medium Weapon License</license>
+   <mass>25</mass>
+   <price>45000</price>
+   <description>A pair of mark 2 laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. This new offering has quickly won the hearts of high-value traders for its superior firepower and range, easily warding off most pirates.</description>
+   <gfx_store>turret</gfx_store>
+  </general>
+  <specific type="turret bolt">
+   <gfx>laser2</gfx>
+   <sound>laser</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>250</delay>
+   <speed>550</speed>
+   <range>420</range>
+   <falloff>330</falloff>
+   <gfx_end>laser2-end</gfx_end>
+   <accuracy>18</accuracy>
+   <energy>13</energy>
+   <damage type="energy">11</damage>
   </specific>
  </outfit>
  <outfit name="Plasma Blaster">
   <general>
    <max>4</max>
-   <tech>3</tech>
+   <tech>5</tech>
    <mass>5</mass>
    <price>9000</price>
    <description>Highly volatile, the plasma blaster is among the best choices for fast attacks. As a result of its volatility, it is a potent weapon against both shields and armour, though it is known for dissipating quickly after being fired.</description>
@@ -79,15 +133,41 @@
   </general>
   <specific type="bolt">
    <gfx>plasma</gfx>
-   <sound>laser</sound>
+   <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS</spfx_armour>
    <delay>375</delay>
    <speed>450</speed>
-   <range>250</range>
+   <range>325</range>
+   <falloff>250</falloff>
    <accuracy>25</accuracy>
    <energy>5</energy>
-   <damage type="energy">6.25</damage>
+   <damage type="energy">5</damage>
+  </specific>
+</outfit>
+ <outfit name="Plasma Blaster Mk2">
+  <general>
+   <max>4</max>
+   <tech>3</tech>
+   <license>Medium Weapon License</license>
+   <mass>8</mass>
+   <price>18000</price>
+   <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
+   <gfx_store>laser</gfx_store>
+  </general>
+  <specific type="bolt">
+   <gfx>plasma2</gfx>
+   <sound>plasma</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>PlaS2</spfx_armour>
+   <delay>375</delay>
+   <speed>450</speed>
+   <range>350</range>
+   <falloff>275</falloff>
+   <gfx_end>plasma2-end</gfx_end>
+   <accuracy>25</accuracy>
+   <energy>9</energy>
+   <damage type="energy">8.5</damage>
   </specific>
 </outfit>
 <outfit name="Ion Cannon">
@@ -96,7 +176,7 @@
    <tech>7</tech>
    <license>Medium Weapon License</license>
    <mass>9</mass>
-   <price>15000</price>
+   <price>20000</price>
    <description>Ion pulses were originally intended only to deactivate shields, which had completely nullified older radiation-based weaponry. It was thought that by figuring out a way to disable shields quickly, the radiation weapons would still be able to destroy the armour. By combining shield and armour destruction power, the perfect weapons could be designed. Ultimately, the ion pulses were highly effective against both armour and shields, rendering radiation-based weapons obsolete. With the latest generation of shields and armour materials, ion pulses have lost much of the terrain they had as newfound technology.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
@@ -107,10 +187,12 @@
    <spfx_armour>ExpS</spfx_armour>
    <delay>800</delay>
    <speed>500</speed>
-   <range>400</range>
+   <range>560</range>
+   <falloff>440</falloff>
+   <gfx_end>ion-end</gfx_end>
    <accuracy>13</accuracy>
    <energy>14</energy>
-   <damage type="ion">18.75</damage>
+   <damage type="ion">15</damage>
   </specific>
  </outfit>
  <outfit name="Heavy Ion Turret">
@@ -130,34 +212,35 @@
    <spfx_armour>ExpS</spfx_armour>
    <delay>400</delay>
    <speed>500</speed>
-   <range>400</range>
-   <falloff>300</falloff>
+   <range>560</range>
+   <falloff>440</falloff>
+   <gfx_end>ion-end</gfx_end>
    <accuracy>7</accuracy>
    <energy>21</energy>
-   <damage type="ion">25</damage>
+   <damage type="ion">20</damage>
   </specific>
  </outfit>
-  <outfit name="30mm Gatling Gun">
+  <outfit name="40mm Autocannon">
   <general>
    <max>4</max>
    <tech>4</tech>
    <license>Medium Weapon License</license>
-   <mass>12</mass>
+   <mass>15</mass>
    <price>25000</price>
-   <description>The Gatling design originated many centuries ago, though it has remained in service as an effective, if somewhat primitive design. The hail of shells it unleashes decimates armor while remaining useful against shielded enemies.</description>
+   <description>Though the autocannon's design originated many centuries ago, though it has remained in service as an effective, if somewhat primitive design. The hail of high-explosive shells it unleashes decimates armor while remaining useful against shielded enemies.</description>
    <gfx_store>gatling</gfx_store>
   </general>
   <specific type="bolt">
-   <gfx>gatling</gfx>
-   <sound>gatling</sound>
-   <spfx_shield>ShiS</spfx_shield>
+   <gfx>autocannon</gfx>
+   <sound>ac</sound>
+   <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>160</delay>
+   <delay>800</delay>
    <speed>500</speed>
-   <range>300</range>
-   <accuracy>20</accuracy>
-   <energy>3</energy>
-   <damage type="kinetic">5</damage>
+   <range blowup="armour">450</range>
+   <accuracy>12</accuracy>
+   <energy>25</energy>
+   <damage type="kinetic">24</damage>
   </specific>
  </outfit>
  <outfit name="150mm Railgun">
@@ -177,10 +260,12 @@
    <spfx_armour>ExpM</spfx_armour>
    <delay>1100</delay>
    <speed>650</speed>
-   <range>500</range>
+   <range>800</range>
+   <falloff>650</falloff>
+   <gfx_end>mass-end</gfx_end>
    <accuracy>10</accuracy>
    <energy>35</energy>
-   <damage type="kinetic">50</damage>
+   <damage type="kinetic">40</damage>
   </specific>
  </outfit>
  <outfit name="Orion Beam">
@@ -197,8 +282,8 @@
    <delay>6000</delay>
    <duration>3</duration>
    <range>300</range>
-   <energy>50</energy>
-   <damage type="energy">50</damage>
+   <energy>45</energy>
+   <damage type="energy">40</damage>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <gfx>beam_orion</gfx>
@@ -221,8 +306,8 @@
    <duration>5</duration>
    <range>400</range>
    <turn>35</turn>
-   <energy>130</energy>
-   <damage type="energy">200</damage>
+   <energy>180</energy>
+   <damage type="energy">150</damage>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <gfx>beam_ragnarok</gfx>
@@ -263,7 +348,7 @@
    <thrust>400</thrust>
    <turn>60</turn>
    <speed>800</speed>
-   <damage type="kinetic">25</damage>
+   <damage type="kinetic">20</damage>
   </specific>
  </outfit>
  <outfit name="Headhunter Launcher">
@@ -302,7 +387,7 @@
    <thrust>325</thrust>
    <turn>90</turn>
    <speed>550</speed>
-   <damage type="kinetic">25</damage>
+   <damage type="kinetic">20</damage>
   </specific>
  </outfit>
  <outfit name="Banshee Launcher">
@@ -339,7 +424,7 @@
    <accuracy>12</accuracy>
    <thrust>0</thrust>
    <speed>600</speed>
-   <damage type="emp">18.75</damage>
+   <damage type="emp">15</damage>
   </specific>
  </outfit>
  <outfit name="Neutron Disruptor">
@@ -359,10 +444,12 @@
    <spfx_armour>ExpS</spfx_armour>
    <delay>400</delay>
    <speed>650</speed>
-   <range>275</range>
+   <range>360</range>
+   <falloff>275</falloff>
+   <gfx_end>neutron-end</gfx_end>
    <accuracy>15</accuracy>
    <energy>5</energy>
-   <damage type="energy">8.75</damage>
+   <damage type="energy">7</damage>
   </specific>
  </outfit>
  <outfit name="Battery">

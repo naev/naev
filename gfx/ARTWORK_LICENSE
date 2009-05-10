@@ -39,13 +39,17 @@
    * outfit
      * space
        * ion.png
+       * ion-end.png
        * laserred.png
        * mass.png
+       * mass-end.png
        * missile.png
        * neutron.png
+       * neutron-end.png
        * particle.png
        * plasma.png
        * ripper.png
+       * ripper-end.png
      * store
        * capacitator.png
        * heavy.png
@@ -245,9 +249,18 @@
      * outfit
        * space
          * gatling.png
+         * autocannon.png
+         * laser2.png
+         * laser2-end.png
+         * plasma2.png
+         * plasma2-end.png
+     * spfx
+       * plas2.png
+       * plam2.png
 
  * Author: Thomas Fedor, License: PD
    * gfx
      * outfit
        * store
          * gatling.png
+
