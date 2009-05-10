@@ -95,13 +95,12 @@ typedef struct OutfitBoltData_ {
    double damage; /**< damage */
 
    /* Sound and graphics. */
-   glTexture* gfx_space; /**< graphic */
+   glTexture* gfx_space; /**< Normal graphic. */
+   glTexture* gfx_end; /**< End graphic with modified hue. */
    double spin; /**< Graphic spin rate. */
    int sound; /**< sound to play */
    int spfx_armour; /**< special effect on hit */
    int spfx_shield; /**< special effect on hit */
-   double hue_start; /**< Starting hue. */
-   double hue_end; /**< Ending hue. */
 } OutfitBoltData;
 
 /**

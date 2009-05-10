@@ -663,8 +663,6 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    temp->u.blt.spfx_shield    = -1;
    temp->u.blt.sound          = -1;
    temp->u.blt.falloff        = -1.;
-   temp->u.blt.hue_start      = -3600.;
-   temp->u.blt.hue_end        = -3600.;
 
    node = parent->xmlChildrenNode;
    do { /* load all the data */
@@ -689,6 +687,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       }
       xmlr_float(node,"falloff",temp->u.blt.falloff);
 
+      /* Graphics. */
       if (xml_isNode(node,"gfx")) {
          temp->u.blt.gfx_space = xml_parseTexture( node,
                OUTFIT_GFX"space/%s.png", 6, 6,
@@ -701,6 +700,14 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          }
          continue;
       }
+      if (xml_isNode(node,"gfx_end")) {
+         temp->u.blt.gfx_end = xml_parseTexture( node,
+               OUTFIT_GFX"space/%s.png", 6, 6,
+               OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ); 
+         continue;
+      }
+
+      /* Special effects. */
       if (xml_isNode(node,"spfx_shield")) {
          temp->u.blt.spfx_shield = spfx_get(xml_get(node));
          continue;
@@ -709,6 +716,8 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          temp->u.blt.spfx_armour = spfx_get(xml_get(node));
          continue;
       }
+
+      /* Misc. */
       if (xml_isNode(node,"sound")) {
          temp->u.blt.sound = sound_get( xml_get(node) );
          continue;
@@ -717,22 +726,11 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          outfit_parseDamage( &temp->u.blt.dtype, &temp->u.blt.damage, node );
          continue;
       }
-
-      xmlr_float(node,"start_hue",temp->u.blt.hue_start);
-      xmlr_float(node,"end_hue",temp->u.blt.hue_end);
    } while (xml_nextNode(node));
 
    /* If not defined assume maximum. */
    if (temp->u.blt.falloff < 0.)
       temp->u.blt.falloff = temp->u.blt.range;
-
-   /* Convert hue to unitary. */
-   temp->u.blt.hue_start /= 360.;
-   temp->u.blt.hue_end   /= 360.;
-   /* Store as relative to hue_start. */
-   temp->u.blt.hue_end   -= temp->u.blt.hue_start;
-   if (temp->u.blt.hue_end < -0.5)
-      temp->u.blt.hue_end += 1.; /**< Go around faster way. */
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
@@ -903,7 +901,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          xmlr_attr(node, "spin", buf);
          if (buf != NULL) {
             outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
-            temp->u.blt.spin = atof( buf );
+            temp->u.amm.spin = atof( buf );
             free(buf);
          }
          continue;
@@ -1287,6 +1285,8 @@ void outfit_free (void)
          gl_freeTexture(outfit_gfx(&outfit_stack[i]));
 
       /* Type specific. */
+      if (outfit_isBolt(o) && o->u.blt.gfx_end)
+         gl_freeTexture(o->u.blt.gfx_end);
       if (outfit_isLauncher(o) && o->u.lau.ammo_name)
          free(o->u.lau.ammo_name);
       if (outfit_isFighterBay(o) && o->u.bay.ammo_name)

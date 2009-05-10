@@ -626,24 +626,7 @@ static void weapon_render( Weapon* w, const double dt )
 {
    double x,y, cx,cy, gx,gy;
    glTexture *gfx;
-   glColour c;
-   double h;
-
-   /* Get colour. */
-   if (outfit_isBolt(w->outfit) && (w->outfit->u.blt.hue_start>=0.)) {
-      if ((w->strength == 1.) || (w->outfit->u.blt.hue_end<-1.))
-         h = w->outfit->u.blt.hue_start;
-      else {
-         h = w->outfit->u.blt.hue_start + w->outfit->u.blt.hue_end*(1.-w->strength);
-         h = fmod(h, 1.); /* Make sure wraps. */
-      }
-      col_hsv2rgb( &c.r, &c.g, &c.b, h, 1., 1. );
-   }
-   else {
-      c.r = 1.;
-      c.g = 1.;
-      c.b = 1.;
-   }
+   glColour c = { .r=1., .g=1., .b=1. };
 
    switch (w->outfit->type) {
       /* Weapons that use sprites. */
@@ -674,12 +657,22 @@ static void weapon_render( Weapon* w, const double dt )
             }
 
             /* Render. */
-            gl_blitSprite( gfx, w->solid->pos.x, w->solid->pos.y,
-                  w->sprite % (int)gfx->sx, w->sprite / (int)gfx->sx, &c );
+            if (outfit_isBolt(w->outfit) && w->outfit->u.blt.gfx_end)
+               gl_blitSpriteInterpolate( gfx, w->outfit->u.blt.gfx_end, w->strength,
+                     w->solid->pos.x, w->solid->pos.y,
+                     w->sprite % (int)gfx->sx, w->sprite / (int)gfx->sx, &c );
+            else
+               gl_blitSprite( gfx, w->solid->pos.x, w->solid->pos.y,
+                     w->sprite % (int)gfx->sx, w->sprite / (int)gfx->sx, &c );
          }
          /* Outfit faces direction. */
-         else
-            gl_blitSprite( gfx, w->solid->pos.x, w->solid->pos.y, w->sx, w->sy, &c );
+         else {
+            if (outfit_isBolt(w->outfit) && w->outfit->u.blt.gfx_end)
+               gl_blitSpriteInterpolate( gfx, w->outfit->u.blt.gfx_end, w->strength,
+                     w->solid->pos.x, w->solid->pos.y, w->sx, w->sy, &c );
+            else
+               gl_blitSprite( gfx, w->solid->pos.x, w->solid->pos.y, w->sx, w->sy, &c );
+         }
          break;
 
       /* Beam weapons. */
