@@ -657,7 +657,7 @@ static void weapon_render( Weapon* w, const double dt )
             }
 
             /* Render. */
-            if (outfit_isBolt(w->outfit) && w->outfit->u.blt.gfx_end)
+            if (w->strength != 1. && outfit_isBolt(w->outfit) && w->outfit->u.blt.gfx_end)
                gl_blitSpriteInterpolate( gfx, w->outfit->u.blt.gfx_end, w->strength,
                      w->solid->pos.x, w->solid->pos.y,
                      w->sprite % (int)gfx->sx, w->sprite / (int)gfx->sx, &c );
@@ -667,7 +667,7 @@ static void weapon_render( Weapon* w, const double dt )
          }
          /* Outfit faces direction. */
          else {
-            if (outfit_isBolt(w->outfit) && w->outfit->u.blt.gfx_end)
+            if (w->strength != 1. && outfit_isBolt(w->outfit) && w->outfit->u.blt.gfx_end)
                gl_blitSpriteInterpolate( gfx, w->outfit->u.blt.gfx_end, w->strength,
                      w->solid->pos.x, w->solid->pos.y, w->sx, w->sy, &c );
             else
