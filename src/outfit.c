@@ -464,7 +464,7 @@ double outfit_energy( const Outfit* o )
  */
 double outfit_range( const Outfit* o )
 {
-   if (outfit_isBolt(o)) return o->u.blt.range;
+   if (outfit_isBolt(o)) return o->u.blt.falloff + (o->u.blt.range - o->u.blt.falloff)/2.;
    else if (outfit_isBeam(o)) return o->u.bem.range;
    else if (outfit_isAmmo(o)) return 0.8*o->u.amm.speed*o->u.amm.duration;
    return -1.;
