@@ -627,6 +627,7 @@ static void weapon_render( Weapon* w, const double dt )
 {
    double x,y, cx,cy, gx,gy;
    glTexture *gfx;
+   double z;
    glColour c = { .r=1., .g=1., .b=1. };
 
    switch (w->outfit->type) {
@@ -683,11 +684,14 @@ static void weapon_render( Weapon* w, const double dt )
       case OUTFIT_TYPE_TURRET_BEAM:
          gfx = outfit_gfx(w->outfit);
 
+         /* Zoom. */
+         gl_cameraZoomGet( &z );
+
          /* Position. */
          gl_cameraGet( &cx, &cy );
          gui_getOffset( &gx, &gy );
-         x = w->solid->pos.x - cx + gx;
-         y = w->solid->pos.y - cy + gy;
+         x = (w->solid->pos.x - cx)*z + gx;
+         y = (w->solid->pos.y - cy)*z + gy;
 
          /* Set up the matrix. */
          glMatrixMode(GL_PROJECTION);
@@ -707,34 +711,34 @@ static void weapon_render( Weapon* w, const double dt )
             ACOLOUR(cWhite, 0.);
 
             glTexCoord2d( w->anim, 0. );
-            glVertex2d( -gfx->sh/2., 0. );
+            glVertex2d( -gfx->sh/2.*z, 0. );
 
             glTexCoord2d( w->anim, 1. );
-            glVertex2d( +gfx->sh/2., 0. );
+            glVertex2d( +gfx->sh/2.*z, 0. );
 
             /* Full strength. */
             COLOUR(cWhite);
 
             glTexCoord2d( w->anim + 10. / gfx->sw, 0. );
-            glVertex2d( -gfx->sh/2., 10. );
+            glVertex2d( -gfx->sh/2.*z, 10.*z );
 
             glTexCoord2d( w->anim + 10. / gfx->sw, 1. );
-            glVertex2d( +gfx->sh/2., 10. );
+            glVertex2d( +gfx->sh/2.*z, 10.*z );
 
             glTexCoord2d( w->anim + 0.8*w->outfit->u.bem.range / gfx->sw, 0. );
-            glVertex2d( -gfx->sh/2., 0.8*w->outfit->u.bem.range );
+            glVertex2d( -gfx->sh/2.*z, 0.8*w->outfit->u.bem.range*z );
 
             glTexCoord2d( w->anim + 0.8*w->outfit->u.bem.range / gfx->sw, 1. );
-            glVertex2d( +gfx->sh/2., 0.8*w->outfit->u.bem.range );
+            glVertex2d( +gfx->sh/2.*z, 0.8*w->outfit->u.bem.range*z );
 
             /* Fades out. */
             ACOLOUR(cWhite, 0.);
 
             glTexCoord2d( w->anim + w->outfit->u.bem.range / gfx->sw, 0. );
-            glVertex2d( -gfx->sh/2., w->outfit->u.bem.range );
+            glVertex2d( -gfx->sh/2.*z, w->outfit->u.bem.range*z );
 
             glTexCoord2d( w->anim + w->outfit->u.bem.range / gfx->sw, 1. );
-            glVertex2d( +gfx->sh/2., w->outfit->u.bem.range );
+            glVertex2d( +gfx->sh/2.*z, w->outfit->u.bem.range*z );
          glEnd(); /* GL_QUAD_STRIP */
 
          /* Do the beam movement. */
