@@ -244,7 +244,9 @@ static void gl_blitTexture(  const glTexture* texture,
  *
  * Value blitted is  ta*inter + tb*(1.-inter).
  *
- *    @param ta Texture to blit.
+ *    @param ta Texture A to blit.
+ *    @param tb Texture B to blit.
+ *    @param intere Amount of interpolation to do.
  *    @param x X position of the texture on the screen.
  *    @param y Y position of the texture on the screen.
  *    @param tx X position within the texture.
@@ -408,12 +410,16 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
 
 
 /**
- * @brief Blits a sprite, position is relative to the player.
+ * @brief Blits a sprite interpolating, position is relative to the player.
  *
  * Since position is in "game coordinates" it is subject to all
  * sorts of position transformations.
  *
- *    @param sprite Sprite to blit.
+ * Interpolation is:  sa*inter + sb*1.-inter)
+ *
+ *    @param sa Sprite A to blit.
+ *    @param sb Sprite B to blit.
+ *    @param inter Amount to interpolate.
  *    @param bx X position of the texture relative to the player.
  *    @param by Y position of the texture relative to the player.
  *    @param sx X position of the sprite to use.
