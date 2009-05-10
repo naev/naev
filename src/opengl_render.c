@@ -336,7 +336,7 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    gl_vboSubData( gl_renderVBO, gl_renderVBOtexOffset, 4*2*sizeof(GLfloat), tex );
    gl_vboActivateOffset( gl_renderVBO, GL_TEXTURE0,
          gl_renderVBOtexOffset, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( gl_renderVBO, GL_TEXTURE0,
+   gl_vboActivateOffset( gl_renderVBO, GL_TEXTURE1,
          gl_renderVBOtexOffset, 2, GL_FLOAT, 0 );
 
    /* Set the colour. */
