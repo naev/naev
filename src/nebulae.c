@@ -25,6 +25,7 @@
 #include "player.h"
 #include "pause.h"
 #include "gui.h"
+#include "conf.h"
 
 
 #define NEBULAE_Z             16 /**< Z plane */
@@ -374,9 +375,13 @@ static void nebu_genOverlay (void)
    GLfloat *data;
    double a;
    double gx, gy;
+   double z;
 
    /* Get GUI offsets. */
    gui_getOffset( &gx, &gy );
+
+   /* Calculate zoom. */
+   z = 1./conf.zoom_min;
 
    /* See if need to generate overlay. */
    if (nebu_vboOverlay == NULL) {
@@ -419,8 +424,8 @@ static void nebu_genOverlay (void)
    }
 
    /* Top Left */
-   data[(2+4)*18+0]  = -SCREEN_W/2.-gx;
-   data[(2+4)*18+1]  = SCREEN_H/2.-gy;
+   data[(2+4)*18+0]  = -SCREEN_W/2.*z-gx;
+   data[(2+4)*18+1]  = SCREEN_H/2.*z-gy;
    data[(2+4)*18+2]  = -nebu_view;
    data[(2+4)*18+3]  = 0.;
    data[(2+4)*18+4]  = -nebu_view*COS225;
@@ -431,12 +436,12 @@ static void nebu_genOverlay (void)
    data[(2+4)*18+9]  = nebu_view*COS225;
    data[(2+4)*18+10] = 0.;
    data[(2+4)*18+11] = nebu_view;
-   data[(2+4)*18+12] = SCREEN_W/2.-gx;
-   data[(2+4)*18+13] = SCREEN_H/2.-gy;
+   data[(2+4)*18+12] = SCREEN_W/2.*z-gx;
+   data[(2+4)*18+13] = SCREEN_H/2.*z-gy;
 
    /* Top Right */
-   data[(2+4)*18+14] = SCREEN_W/2.-gx;
-   data[(2+4)*18+15] = SCREEN_H/2.-gy;
+   data[(2+4)*18+14] = SCREEN_W/2.*z-gx;
+   data[(2+4)*18+15] = SCREEN_H/2.*z-gy;
    data[(2+4)*18+16] = 0.;
    data[(2+4)*18+17] = nebu_view;
    data[(2+4)*18+18] = nebu_view*SIN225;
@@ -447,12 +452,12 @@ static void nebu_genOverlay (void)
    data[(2+4)*18+23] = nebu_view*SIN225;
    data[(2+4)*18+24] = nebu_view;
    data[(2+4)*18+25] = 0.;
-   data[(2+4)*18+26] = SCREEN_W/2.-gx;
-   data[(2+4)*18+27] = -SCREEN_H/2.-gy;
+   data[(2+4)*18+26] = SCREEN_W/2.*z-gx;
+   data[(2+4)*18+27] = -SCREEN_H/2.*z-gy;
 
    /* Bottom Right */
-   data[(2+4)*18+28] = SCREEN_W/2.-gx;
-   data[(2+4)*18+29] = -SCREEN_H/2.-gy;
+   data[(2+4)*18+28] = SCREEN_W/2.*z-gx;
+   data[(2+4)*18+29] = -SCREEN_H/2.*z-gy;
    data[(2+4)*18+30] = nebu_view;
    data[(2+4)*18+31] = 0.;
    data[(2+4)*18+32] = nebu_view*COS225;
@@ -463,12 +468,12 @@ static void nebu_genOverlay (void)
    data[(2+4)*18+37] = -nebu_view*COS225;
    data[(2+4)*18+38] = 0.;
    data[(2+4)*18+39] = -nebu_view;
-   data[(2+4)*18+40] = -SCREEN_W/2.-gx;
-   data[(2+4)*18+41] = -SCREEN_H/2.-gy;
+   data[(2+4)*18+40] = -SCREEN_W/2.*z-gx;
+   data[(2+4)*18+41] = -SCREEN_H/2.*z-gy;
       
    /* Bottom left */
-   data[(2+4)*18+42] = -SCREEN_W/2.-gx;
-   data[(2+4)*18+43] = -SCREEN_H/2.-gy;
+   data[(2+4)*18+42] = -SCREEN_W/2.*z-gx;
+   data[(2+4)*18+43] = -SCREEN_H/2.*z-gy;
    data[(2+4)*18+44] = 0.;
    data[(2+4)*18+45] = -nebu_view;
    data[(2+4)*18+46] = -nebu_view*SIN225;
@@ -479,8 +484,8 @@ static void nebu_genOverlay (void)
    data[(2+4)*18+51] = -nebu_view*SIN225;
    data[(2+4)*18+52] = -nebu_view;
    data[(2+4)*18+53] = 0.;
-   data[(2+4)*18+54] = -SCREEN_W/2.-gx;
-   data[(2+4)*18+55] = SCREEN_H/2.-gy;
+   data[(2+4)*18+54] = -SCREEN_W/2.*z-gx;
+   data[(2+4)*18+55] = SCREEN_H/2.*z-gy;
 
    gl_vboUnmap( nebu_vboOverlay );
 }
@@ -498,9 +503,13 @@ void nebu_renderOverlay( const double dt )
 {
    double gx, gy;
    double ox, oy;
+   double z;
 
    /* Get GUI offsets. */
    gui_getOffset( &gx, &gy );
+
+   /* Get zoom. */
+   gl_cameraZoomGet( &z );
 
    /*
     * Renders the puffs
@@ -516,6 +525,7 @@ void nebu_renderOverlay( const double dt )
    }
    gl_matrixPush();
    gl_matrixTranslate( ox, oy );
+   gl_matrixScale( z, z );
 
    /*
     * Mask for area player can still see (partially)
