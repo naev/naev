@@ -2093,7 +2093,7 @@ void pilot_calcStats( Pilot* pilot )
       else if ((outfit_isWeapon(o) || outfit_isTurret(o)) && /* Primary weapon */
             !outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY)) {
          nweaps++;
-         wrange = MAX(wrange,outfit_range(o));
+         wrange += outfit_range(o);
          wspeed += outfit_speed(o);
       }
    }
@@ -2102,7 +2102,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
 
    /* Set weapon range and speed */
-   pilot->weap_range = wrange; /* Range is max */
+   pilot->weap_range = wrange / (double)nweaps;
    pilot->weap_speed = wspeed / (double)nweaps;
 
    /* Give the pilot his health proportion back */
