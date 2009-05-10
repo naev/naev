@@ -145,6 +145,7 @@ extern int map_npath;
 /* 
  * internal
  */
+static void player_updateZoom( double dt );
 /* creation */
 static int player_newMake (void);
 static void player_newShipMake( char *name );
@@ -848,7 +849,6 @@ void player_think( Pilot* pplayer, const double dt )
    Pilot *target;
    double d;
    double turn;
-   double x,y, z,tz, dx, dy;
 
    /* last i heard, the dead don't think */
    if (pilot_isFlag(pplayer,PILOT_DEAD)) {
@@ -981,6 +981,20 @@ void player_think( Pilot* pplayer, const double dt )
    sound_updateListener( pplayer->solid->dir,
          pplayer->solid->pos.x, pplayer->solid->pos.y );
 
+   /* Update zoom. */
+   player_updateZoom( dt );
+}
+
+
+/**
+ * @brief Updates the player zoom.
+ * 
+ *    @param dt Current deltatick.
+ */
+static void player_updateZoom( double dt )
+{
+   Pilot *target;
+   double d, x,y, z,tz, dx, dy;
 
    /*
     * Set Zoom to pilot target.
