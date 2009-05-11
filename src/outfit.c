@@ -472,6 +472,7 @@ double outfit_range( const Outfit* o )
 /**
  * @brief Gets the outfit's speed.
  *    @param o Outfit to get information from.
+ *    @return Outfit's speed.
  */
 double outfit_speed( const Outfit* o )
 {
@@ -482,11 +483,34 @@ double outfit_speed( const Outfit* o )
 /**
  * @brief Gets the outfit's animation spin.
  *    @param o Outfit to get information from.
+ *    @return Outfit's animation spin.
  */
 double outfit_spin( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.spin;
    else if (outfit_isAmmo(o)) return o->u.amm.spin;
+   return -1.;
+}
+/**
+ * @brief Gets the outfit's sound.
+ *    @param o Outfit to get sound from.
+ *    @return Outfit's sound.
+ */
+int outfit_sound( const Outfit* o )
+{
+   if (outfit_isBolt(o)) return o->u.blt.sound;
+   else if (outfit_isAmmo(o)) return o->u.amm.sound;
+   return -1.;
+}
+/**
+ * @brief Gets the outfit's hit sound.
+ *    @param o Outfit to get hit sound from.
+ *    @return Outfit's hit sound.
+ */
+int outfit_soundHit( const Outfit* o )
+{
+   if (outfit_isBolt(o)) return o->u.blt.sound_hit;
+   else if (outfit_isAmmo(o)) return o->u.amm.sound_hit;
    return -1.;
 }
 
@@ -662,6 +686,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    temp->u.blt.spfx_armour    = -1;
    temp->u.blt.spfx_shield    = -1;
    temp->u.blt.sound          = -1;
+   temp->u.blt.sound_hit      = -1;
    temp->u.blt.falloff        = -1.;
 
    node = parent->xmlChildrenNode;
@@ -720,6 +745,10 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       /* Misc. */
       if (xml_isNode(node,"sound")) {
          temp->u.blt.sound = sound_get( xml_get(node) );
+         continue;
+      }
+      if (xml_isNode(node,"sound_hit")) {
+         temp->u.blt.sound_hit = sound_get( xml_get(node) );
          continue;
       }
       if (xml_isNode(node,"damage")) {
@@ -867,7 +896,8 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    /* Defaults. */
    temp->u.amm.spfx_armour = -1;
    temp->u.amm.spfx_shield = -1;
-   temp->u.amm.sound = -1;
+   temp->u.amm.sound       = -1;
+   temp->u.amm.sound_hit   = -1;
 
    do { /* load all the data */
       /* Basic */
@@ -906,14 +936,26 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          }
          continue;
       }
-      else if (xml_isNode(node,"spfx_armour"))
+      if (xml_isNode(node,"spfx_armour")) {
          temp->u.amm.spfx_armour = spfx_get(xml_get(node));
-      else if (xml_isNode(node,"spfx_shield"))
+         continue;
+      }
+      if (xml_isNode(node,"spfx_shield")) {
          temp->u.amm.spfx_shield = spfx_get(xml_get(node));
-      else if (xml_isNode(node,"sound"))
+         continue;
+      }
+      if (xml_isNode(node,"sound")) {
          temp->u.amm.sound = sound_get( xml_get(node) );
-      else if (xml_isNode(node,"damage"))
+         continue;
+      }
+      if (xml_isNode(node,"sound_hit")) {
+         temp->u.amm.sound_hit = sound_get( xml_get(node) );
+         continue;
+      }
+      if (xml_isNode(node,"damage")) {
          outfit_parseDamage( &temp->u.amm.dtype, &temp->u.amm.damage, node );
+         continue;
+      }
    } while (xml_nextNode(node));
 
    /* Post-processing */

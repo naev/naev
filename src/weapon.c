@@ -473,6 +473,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
    Weapon *w;
    int i;
    int spfx;
+   int s;
 
    /* Choose layer. */
    switch (layer) {
@@ -517,10 +518,17 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                else if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_BLOWUP_SHIELD))
                   spfx = outfit_spfxShield(w->outfit);
                /* Add death sprite if needed. */
-               if (spfx != -1)
+               if (spfx != -1) {
                   spfx_add( spfx, w->solid->pos.x, w->solid->pos.y,
                         w->solid->vel.x, w->solid->vel.y,
                         SPFX_LAYER_BACK ); /* presume back. */
+                  /* Add sound if explodes and has it. */
+                  s = outfit_soundHit(w->outfit);
+                  if (s != -1)
+                     w->voice = sound_playPos(s,
+                           w->solid->pos.x + w->solid->vel.x,
+                           w->solid->pos.y + w->solid->vel.y);
+               }
                weapon_destroy(w,layer);
                break;
             }
@@ -538,10 +546,17 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                else if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_BLOWUP_SHIELD))
                   spfx = outfit_spfxShield(w->outfit);
                /* Add death sprite if needed. */
-               if (spfx != -1)
+               if (spfx != -1) {
                   spfx_add( spfx, w->solid->pos.x, w->solid->pos.y,
                         w->solid->vel.x, w->solid->vel.y,
                         SPFX_LAYER_BACK ); /* presume back. */
+                  /* Add sound if explodes and has it. */
+                  s = outfit_soundHit(w->outfit);
+                  if (s != -1)
+                     w->voice = sound_playPos(s,
+                           w->solid->pos.x + w->solid->vel.x,
+                           w->solid->pos.y + w->solid->vel.y);
+               }
                weapon_destroy(w,layer);
                break;
             }
@@ -952,6 +967,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    double damage;
    DamageType dtype;
    WeaponLayer spfx_layer;
+   int s;
 
    /* Choose spfx. */
    if (p->shield > 0.)
@@ -965,11 +981,17 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    /* Get general details. */
    parent = pilot_get(w->parent);
    damage = w->strength * outfit_damage(w->outfit);
-   dtype = outfit_damageType(w->outfit);
+   dtype  = outfit_damageType(w->outfit);
 
    /* Add sprite, layer depends on whether player shot or not. */
    spfx_add( spfx, pos->x, pos->y,
          VX(p->solid->vel), VY(p->solid->vel), spfx_layer );
+   /* Play sound if they have it. */
+   s = outfit_soundHit(w->outfit);
+   if (s != -1)
+      w->voice = sound_playPos( s,
+            w->solid->pos.x + w->solid->vel.x,
+            w->solid->pos.y + w->solid->vel.y);
 
    /* Have pilot take damage and get real damage done. */
    damage = pilot_hit( p, w->solid, w->parent, dtype, damage );
@@ -1117,7 +1139,7 @@ static Weapon* weapon_create( const Outfit* outfit,
          w->timer = outfit->u.blt.range / outfit->u.blt.speed;
          w->falloff = w->timer - outfit->u.blt.falloff / outfit->u.blt.speed;
          w->solid = solid_create( mass, rdir, pos, &v );
-         w->voice = sound_playPos(w->outfit->u.blt.sound,
+         w->voice = sound_playPos( w->outfit->u.blt.sound,
                w->solid->pos.x + w->solid->vel.x,
                w->solid->pos.y + w->solid->vel.y);
          break;
@@ -1140,7 +1162,7 @@ static Weapon* weapon_create( const Outfit* outfit,
          w->solid = solid_create( mass, rdir, pos, NULL );
          w->think = think_beam;
          w->timer = outfit->u.bem.duration;
-         w->voice = sound_playPos(w->outfit->u.bem.sound,
+         w->voice = sound_playPos( w->outfit->u.bem.sound,
                w->solid->pos.x + vel->x,
                w->solid->pos.y + vel->y);
          break;

@@ -99,6 +99,7 @@ typedef struct OutfitBoltData_ {
    glTexture* gfx_end; /**< End graphic with modified hue. */
    double spin; /**< Graphic spin rate. */
    int sound; /**< sound to play */
+   int sound_hit; /**< Sound to play on hit. */
    int spfx_armour; /**< special effect on hit */
    int spfx_shield; /**< special effect on hit */
 } OutfitBoltData;
@@ -164,6 +165,7 @@ typedef struct OutfitAmmoData_ {
    glTexture* gfx_space; /**< graphic */
    double spin; /**< Graphic spin rate. */
    int sound; /**< sound to play */
+   int sound_hit; /**< Sound to play on hit. */
    int spfx_armour; /**< special effect on hit */
    int spfx_shield; /**< special effect on hit */
 } OutfitAmmoData;
@@ -335,6 +337,8 @@ double outfit_energy( const Outfit* o );
 double outfit_range( const Outfit* o );
 double outfit_speed( const Outfit* o );
 double outfit_spin( const Outfit* o );
+int outfit_sound( const Outfit* o );
+int outfit_soundHit( const Outfit* o );
 
 /*
  * loading/freeing outfit stack
