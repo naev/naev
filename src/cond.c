@@ -69,10 +69,10 @@ int cond_check( const char* cond )
    switch (ret) {
       case  LUA_ERRSYNTAX:
          WARN("Lua conditional syntax error");
-         return 0;
+         goto cond_err;
       case LUA_ERRMEM:
          WARN("Lua Conditional ran out of memory");
-         return 0;
+         goto cond_err;
       default:
          break;
    }
@@ -82,13 +82,13 @@ int cond_check( const char* cond )
    switch (ret) {
       case LUA_ERRRUN:
          WARN("Lua Conditional had a runtime error: %s", lua_tostring(cond_L, -1));
-         return 0;
+         goto cond_err;
       case LUA_ERRMEM:
          WARN("Lua Conditional ran out of memory");
-         return 0;
+         goto cond_err;
       case LUA_ERRERR:
          WARN("Lua Conditional had an error while handling error function");
-         return 0;
+         goto cond_err;
       default:
          break;
    }
@@ -98,14 +98,19 @@ int cond_check( const char* cond )
       b = lua_toboolean(cond_L, -1);
       lua_pop(cond_L, 1);
       if (b)
-         return 1;
+         ret = 1;
       else
-         return 0;
+         ret = 0;
+
+      /* Clear the stack. */
+      lua_settop(cond_L, 0);
+
+      return ret;
    }
    WARN("Lua Conditional didn't return a boolean");
 
-   /* Clear stack. */
+cond_err:
+   /* Clear the stack. */
    lua_settop(cond_L, 0);
-
-   return 0;
+   return -1;
 }
