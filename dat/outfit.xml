@@ -7,18 +7,18 @@
    <license>Medium Weapon License</license>
    <mass>12</mass>
    <price>95000</price>
-   <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper Mk2, though it still shares the original's heavy power demands.</description>
+   <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
    <gfx_store>medium</gfx_store>
   </general>
   <specific type="bolt">
-   <gfx>ripper</gfx>
+   <gfx>ripper</gfx>390
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <delay>700</delay>
    <speed>700</speed>
    <range>600</range>
-   <falloff>480</falloff>
+   <falloff>450</falloff>
    <gfx_end>ripper-end</gfx_end>
    <accuracy>10</accuracy>
    <energy>22</energy>
@@ -41,14 +41,14 @@
    <spfx_armour>ExpS</spfx_armour>
    <delay>500</delay>
    <speed>550</speed>
-   <range>390</range>
-   <falloff>300</falloff>
+   <range>420</range>
+   <falloff>252</falloff>
    <accuracy>18</accuracy>
    <energy>5</energy>
    <damage type="energy">6</damage>
   </specific>
  </outfit>
-  <outfit name="Laser Cannon Mk2">
+  <outfit name="Laser Cannon MK2">
   <general>
    <max>4</max>
    <tech>6</tech>
@@ -65,8 +65,8 @@
    <spfx_armour>ExpS</spfx_armour>
    <delay>500</delay>
    <speed>550</speed>
-   <range>420</range>
-   <falloff>330</falloff>
+   <range>450</range>
+   <falloff>270</falloff>
    <gfx_end>laser2-end</gfx_end>
    <accuracy>18</accuracy>
    <energy>11</energy>
@@ -90,14 +90,14 @@
    <spfx_armour>ExpS</spfx_armour>
    <delay>250</delay>
    <speed>550</speed>
-   <range>390</range>
-   <falloff>300</falloff>
+   <range>420</range>
+   <falloff>252</falloff>
    <accuracy>18</accuracy>
    <energy>8</energy>
    <damage type="energy">8</damage>
   </specific>
  </outfit>
- <outfit name="Laser Turret Mk2">
+ <outfit name="Laser Turret MK2">
  <general>
    <max>4</max>
    <tech>7</tech>
@@ -114,8 +114,8 @@
    <spfx_armour>ExpS</spfx_armour>
    <delay>250</delay>
    <speed>550</speed>
-   <range>420</range>
-   <falloff>330</falloff>
+   <range>450</range>
+   <falloff>270</falloff>
    <gfx_end>laser2-end</gfx_end>
    <accuracy>18</accuracy>
    <energy>13</energy>
@@ -138,14 +138,14 @@
    <spfx_armour>PlaS</spfx_armour>
    <delay>375</delay>
    <speed>450</speed>
-   <range>325</range>
-   <falloff>250</falloff>
+   <range>350</range>
+   <falloff>210</falloff>
    <accuracy>25</accuracy>
    <energy>5</energy>
    <damage type="energy">5</damage>
   </specific>
 </outfit>
- <outfit name="Plasma Blaster Mk2">
+ <outfit name="Plasma Blaster MK2">
   <general>
    <max>4</max>
    <tech>3</tech>
@@ -162,8 +162,8 @@
    <spfx_armour>PlaS2</spfx_armour>
    <delay>375</delay>
    <speed>450</speed>
-   <range>350</range>
-   <falloff>275</falloff>
+   <range>375</range>
+   <falloff>225</falloff>
    <gfx_end>plasma2-end</gfx_end>
    <accuracy>25</accuracy>
    <energy>9</energy>
@@ -188,7 +188,7 @@
    <delay>800</delay>
    <speed>500</speed>
    <range>560</range>
-   <falloff>440</falloff>
+   <falloff>392</falloff>
    <gfx_end>ion-end</gfx_end>
    <accuracy>13</accuracy>
    <energy>14</energy>
@@ -213,7 +213,7 @@
    <delay>400</delay>
    <speed>500</speed>
    <range>560</range>
-   <falloff>440</falloff>
+   <falloff>392</falloff>
    <gfx_end>ion-end</gfx_end>
    <accuracy>7</accuracy>
    <energy>21</energy>
@@ -261,7 +261,7 @@
    <delay>1100</delay>
    <speed>650</speed>
    <range>800</range>
-   <falloff>650</falloff>
+   <falloff>600</falloff>
    <gfx_end>mass-end</gfx_end>
    <accuracy>10</accuracy>
    <energy>35</energy>
@@ -444,8 +444,8 @@
    <spfx_armour>ExpS</spfx_armour>
    <delay>400</delay>
    <speed>650</speed>
-   <range>360</range>
-   <falloff>275</falloff>
+   <range>420</range>
+   <falloff>252</falloff>
    <gfx_end>neutron-end</gfx_end>
    <accuracy>15</accuracy>
    <energy>5</energy>
