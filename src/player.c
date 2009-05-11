@@ -438,6 +438,7 @@ void player_swapShip( char* shipname )
 {
    int i, j;
    Pilot* ship;
+   Vector2d v;
 
    for (i=0; i<player_nstack; i++) {
       if (strcmp(shipname,player_stack[i]->name)==0) { /* swap player and ship */
@@ -448,6 +449,9 @@ void player_swapShip( char* shipname )
 
          /* move cargo over */
          pilot_moveCargo( ship, player );
+
+         /* Store position. */
+         vectcpy( &v, &player->solid->pos );
 
          /* extra pass to calculate stats */
          pilot_calcStats( ship );
@@ -461,6 +465,9 @@ void player_swapShip( char* shipname )
                pilot_stack[j] = ship;
                break;
             }
+
+         /* Copy position back. */
+         vectcpy( &player->solid->pos, &v );
 
          gl_cameraBind( &player->solid->pos ); /* don't forget the camera */
          return;
