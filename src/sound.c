@@ -28,8 +28,9 @@
 
 #define SOUND_CHANNEL_MAX  256 /**< Number of sound channels to allocate. Overkill. */
 
-#define SOUND_PREFIX "snd/sounds/" /**< Prefix of where to find sounds. */
-#define SOUND_SUFFIX ".wav" /**< Suffix of sounds. */
+#define SOUND_PREFIX       "snd/sounds/" /**< Prefix of where to find sounds. */
+#define SOUND_SUFFIX_WAV   ".wav" /**< Suffix of sounds. */
+#define SOUND_SUFFIX_OGG   ".ogg" /**< Suffix of sounds. */
 
 
 /*
@@ -520,31 +521,37 @@ static int sound_makeList (void)
 
    /* load the profiles */
    mem = 0;
-   suflen = strlen(SOUND_SUFFIX);
+   suflen = strlen(SOUND_SUFFIX_WAV);
    for (i=0; i<nfiles; i++) {
       flen = strlen(files[i]);
-      if ((flen > suflen) &&
-            strncmp( &files[i][flen - suflen], SOUND_SUFFIX, suflen)==0) {
 
-         /* grow the selection size */
-         sound_nlist++;
-         if (sound_nlist > mem) { /* we must grow */
-            mem += 32; /* we'll overallocate most likely */
-            sound_list = realloc( sound_list, mem*sizeof(alSound));
-         }
+      /* Must be longer then suffix. */
+      if (flen < suflen)
+         continue;
 
-         /* remove the suffix */
-         len = flen - suflen;
-         strncpy( tmp, files[i], len );
-         tmp[len] = '\0';
+      /* Make sure is wav or ogg. */
+      if ((strncmp( &files[i][flen - suflen], SOUND_SUFFIX_WAV, suflen)!=0) &&
+            (strncmp( &files[i][flen - suflen], SOUND_SUFFIX_OGG, suflen)!=0))
+         continue;
 
-         /* give it the new name */
-         sound_list[sound_nlist-1].name = strdup(tmp);
-
-         /* Load the sound. */
-         snprintf( path, PATH_MAX, SOUND_PREFIX"%s", files[i] );
-         sound_list[sound_nlist-1].buffer = sound_load( path );
+      /* grow the selection size */
+      sound_nlist++;
+      if (sound_nlist > mem) { /* we must grow */
+         mem += 32; /* we'll overallocate most likely */
+         sound_list = realloc( sound_list, mem*sizeof(alSound));
       }
+
+      /* remove the suffix */
+      len = flen - suflen;
+      strncpy( tmp, files[i], len );
+      tmp[len] = '\0';
+
+      /* give it the new name */
+      sound_list[sound_nlist-1].name = strdup(tmp);
+
+      /* Load the sound. */
+      snprintf( path, PATH_MAX, SOUND_PREFIX"%s", files[i] );
+      sound_list[sound_nlist-1].buffer = sound_load( path );
 
       /* Clean up. */
       free(files[i]);
