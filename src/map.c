@@ -302,7 +302,10 @@ static void map_update( unsigned int wid )
 
    /* Get security. */
    y -= 40;
-   snprintf(buf, PATH_MAX, "%.0f %%", sys->security * 100.);
+   if (sys->nfleets == 0)
+      snprintf(buf, PATH_MAX, "NA" );
+   else
+      snprintf(buf, PATH_MAX, "%.0f %%", sys->security * 100.);
    window_moveWidget( wid, "txtSSecurity", -20, y );
    window_moveWidget( wid, "txtSecurity", -20, y-gl_smallFont.h-5 );
    window_modifyText( wid, "txtSecurity", buf );
@@ -529,7 +532,7 @@ static void map_render( double bx, double by, double w, double h )
          continue;
 
       /* Draw the system. */
-      if (!sys_isKnown(sys)) col = &cInert;
+      if (!sys_isKnown(sys) || (sys->nfleets==0)) col = &cInert;
       else if (sys->security >= 1.) col = &cGreen;
       else if (sys->security >= 0.6) col = &cOrange;
       else if (sys->security >= 0.3) col = &cRed;
