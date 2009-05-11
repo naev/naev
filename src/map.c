@@ -515,7 +515,8 @@ static void map_render( double bx, double by, double w, double h )
    glColour* col;
    GLfloat vertex[8*(2+4)];
 
-   r = round(CLAMP( 5., 15., 6. * sqrt(map_zoom) ));
+   /* Parameters. */
+   r = round(CLAMP(5., 15., 6.*map_zoom));
    x = round((bx - map_xpos + w/2) * 1.);
    y = round((by - map_ypos + h/2) * 1.);
 
@@ -549,7 +550,7 @@ static void map_render( double bx, double by, double w, double h )
          else col = faction_getColour( sys->faction);
 
          /* Radius slightly shorter. */
-         gl_drawCircleInRect( tx, ty, r-4, bx, by, w, h, col, 1 );
+         gl_drawCircleInRect( tx, ty, 0.5*r, bx, by, w, h, col, 1 );
       }
 
       /* draw the system name */
@@ -668,13 +669,13 @@ static void map_render( double bx, double by, double w, double h )
    if (map_selected != -1) {
       sys = system_getIndex( map_selected );
       gl_drawCircleInRect( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
-            r+3., bx, by, w, h, &cRed, 0 );
+            1.5*r, bx, by, w, h, &cRed, 0 );
    }
 
    /* Current planet. */
    gl_drawCircleInRect( x + cur_system->pos.x * map_zoom,
          y + cur_system->pos.y * map_zoom,
-         r+3., bx, by, w, h, &cRadar_tPlanet, 0 );
+         1.5*r, bx, by, w, h, &cRadar_tPlanet, 0 );
 }
 /**
  * @brief Map custom widget mouse handling.
