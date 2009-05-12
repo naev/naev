@@ -18,6 +18,7 @@
 #include "SDL_version.h"
 
 #include "log.h"
+#include "conf.h"
 
 
 /*
@@ -31,19 +32,19 @@ static int gl_extMultitexture (void)
 {
    /* Multitexture. */
    if (gl_hasVersion( 1, 3 )) {
-      nglActiveTexture = SDL_GL_GetProcAddress("glActiveTexture");
-      nglClientActiveTexture = SDL_GL_GetProcAddress("glClientActiveTexture");
-      nglMultiTexCoord2d = SDL_GL_GetProcAddress("glMultiTexCoord2d");
+      nglActiveTexture        = SDL_GL_GetProcAddress("glActiveTexture");
+      nglClientActiveTexture  = SDL_GL_GetProcAddress("glClientActiveTexture");
+      nglMultiTexCoord2d      = SDL_GL_GetProcAddress("glMultiTexCoord2d");
    }
    else if (gl_hasExt("GL_ARB_multitexture")) {
-      nglActiveTexture = SDL_GL_GetProcAddress("glActiveTextureARB");
-      nglClientActiveTexture = SDL_GL_GetProcAddress("glClientActiveTextureARB");
-      nglMultiTexCoord2d = SDL_GL_GetProcAddress("glMultiTexCoord2dARB");
+      nglActiveTexture        = SDL_GL_GetProcAddress("glActiveTextureARB");
+      nglClientActiveTexture  = SDL_GL_GetProcAddress("glClientActiveTextureARB");
+      nglMultiTexCoord2d      = SDL_GL_GetProcAddress("glMultiTexCoord2dARB");
    }
    else {
-      nglActiveTexture = NULL;
-      nglClientActiveTexture = NULL;
-      nglMultiTexCoord2d = NULL;
+      nglActiveTexture        = NULL;
+      nglClientActiveTexture  = NULL;
+      nglMultiTexCoord2d      = NULL;
       WARN("GL_ARB_multitexture not found!");
    }
    return 0;
@@ -52,33 +53,36 @@ static int gl_extMultitexture (void)
 static int gl_extVBO (void)
 {
    /* Vertex Buffers. */
-   if (gl_hasVersion( 1, 5 )) {
-      nglGenBuffers = SDL_GL_GetProcAddress("glGenBuffers");
-      nglBindBuffer = SDL_GL_GetProcAddress("glBindBuffer");
-      nglBufferData = SDL_GL_GetProcAddress("glBufferData");
-      nglBufferSubData = SDL_GL_GetProcAddress("glBufferSubData");
-      nglMapBuffer = SDL_GL_GetProcAddress("glMapBuffer");
-      nglUnmapBuffer = SDL_GL_GetProcAddress("glUnmapBuffer");
-      nglDeleteBuffers = SDL_GL_GetProcAddress("glDeleteBuffers");
+   if (conf.vbo && gl_hasVersion( 1, 5 )) {
+      nglGenBuffers     = SDL_GL_GetProcAddress("glGenBuffers");
+      nglBindBuffer     = SDL_GL_GetProcAddress("glBindBuffer");
+      nglBufferData     = SDL_GL_GetProcAddress("glBufferData");
+      nglBufferSubData  = SDL_GL_GetProcAddress("glBufferSubData");
+      nglMapBuffer      = SDL_GL_GetProcAddress("glMapBuffer");
+      nglUnmapBuffer    = SDL_GL_GetProcAddress("glUnmapBuffer");
+      nglDeleteBuffers  = SDL_GL_GetProcAddress("glDeleteBuffers");
    }
-   else if (gl_hasExt("GL_ARB_vertex_buffer_object")) {
-      nglGenBuffers = SDL_GL_GetProcAddress("glGenBuffersARB");
-      nglBindBuffer = SDL_GL_GetProcAddress("glBindBufferARB");
-      nglBufferData = SDL_GL_GetProcAddress("glBufferDataARB");
-      nglBufferSubData = SDL_GL_GetProcAddress("glBufferSubDataARB");
-      nglMapBuffer = SDL_GL_GetProcAddress("glMapBufferARB");
-      nglUnmapBuffer = SDL_GL_GetProcAddress("glUnmapBufferARB");
-      nglDeleteBuffers = SDL_GL_GetProcAddress("glDeleteBuffersARB");
+   else if (conf.vbo && gl_hasExt("GL_ARB_vertex_buffer_object")) {
+      nglGenBuffers     = SDL_GL_GetProcAddress("glGenBuffersARB");
+      nglBindBuffer     = SDL_GL_GetProcAddress("glBindBufferARB");
+      nglBufferData     = SDL_GL_GetProcAddress("glBufferDataARB");
+      nglBufferSubData  = SDL_GL_GetProcAddress("glBufferSubDataARB");
+      nglMapBuffer      = SDL_GL_GetProcAddress("glMapBufferARB");
+      nglUnmapBuffer    = SDL_GL_GetProcAddress("glUnmapBufferARB");
+      nglDeleteBuffers  = SDL_GL_GetProcAddress("glDeleteBuffersARB");
    }
    else {
-      nglGenBuffers = NULL;
-      nglBindBuffer = NULL;
-      nglBufferData = NULL;
-      nglBufferSubData = NULL;
-      nglMapBuffer = NULL;
-      nglUnmapBuffer = NULL;
-      nglDeleteBuffers = NULL;
-      WARN("GL_ARB_vertex_buffer_object not found!");
+      nglGenBuffers     = NULL;
+      nglBindBuffer     = NULL;
+      nglBufferData     = NULL;
+      nglBufferSubData  = NULL;
+      nglMapBuffer      = NULL;
+      nglUnmapBuffer    = NULL;
+      nglDeleteBuffers  = NULL;
+      if (!conf.vbo)
+         DEBUG("VBOs disabled.");
+      else
+         WARN("GL_ARB_vertex_buffer_object not found!");
    }
    return 0;
 }

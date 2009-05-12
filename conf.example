@@ -12,6 +12,7 @@
 --]]
 --fsaa = 8 -- Full Scene Anti Aliasing
 --vsync = false -- Syncronize rendering to vertical refresh rate
+--vbo = true -- Enable/Disable Vertex Buffer Objects
 
 --[[
 -- Window.

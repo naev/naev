@@ -115,6 +115,7 @@ void conf_setDefaults (void)
    /* opengl. */
    conf.fsaa         = 1;
    conf.vsync        = 0;
+   conf.vbo          = 1;
 
    /* Window. */
    conf.width        = 800;
@@ -189,6 +190,7 @@ int conf_loadConfig ( const char* file )
       /* OpenGL. */
       conf_loadInt("fsaa",conf.fsaa);
       conf_loadBool("vsync",conf.vsync);
+      conf_loadBool("vbo",conf.vbo);
 
       /* Window. */
       w = h = 0;
