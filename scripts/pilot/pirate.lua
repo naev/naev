@@ -68,7 +68,8 @@ end
 function pirate_outfitTurret( p, o )
    turrets = {
       "Heavy Ion Turret",
-      "Laser Turret"
+      "Laser Turret",
+      "Laser Turret MK2"
    }
    return pilot_outfitAdd( p, o, turrets )
 end
@@ -79,9 +80,13 @@ function pirate_outfitCannon( p, o )
    cannons = {
       "Ripper MK2",
       "Laser Cannon",
+      "Laser Cannon MK2",
       "Ion Cannon",
+      "40mm Autocannon"
       "Plasma Blaster", -- Biased towards plasma
-      "Plasma Blaster"
+      "Plasma Blaster",
+      "Plasma Blaster MK2",
+      "Plasma Blaster MK2"
    }
    return pilot_outfitAdd( p, o, cannons )
 end
