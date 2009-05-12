@@ -823,8 +823,12 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
    /* Let hostiles hit player. */
    if (p->faction == FACTION_PLAYER) {
       parent = pilot_get(w->parent);
-      if ((parent != NULL) && pilot_isFlag(parent, PILOT_HOSTILE))
-         return 1;
+      if (parent != NULL) {
+         if (pilot_isFlag(parent, PILOT_BRIBED))
+            return 0;
+         if (pilot_isFlag(parent, PILOT_HOSTILE))
+            return 1;
+      }
    }
 
    /* Hit non-allies. */
