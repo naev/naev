@@ -82,7 +82,7 @@ function pirate_outfitCannon( p, o )
       "Laser Cannon",
       "Laser Cannon MK2",
       "Ion Cannon",
-      "40mm Autocannon"
+      "40mm Autocannon",
       "Plasma Blaster", -- Biased towards plasma
       "Plasma Blaster",
       "Plasma Blaster MK2",
