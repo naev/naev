@@ -207,7 +207,7 @@ void events_trigger( EventTrigger_t trigger )
          continue;
 
       /* Test conditional. */
-      if (!cond_check(event_data[i].cond))
+      if ((event_data[i].cond != NULL) && !cond_check(event_data[i].cond))
          continue;
 
       /* Create the event. */
@@ -288,7 +288,6 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
 #define MELEMENT(o,s) \
    if (o) WARN("Mission '%s' missing/invalid '"s"' element", temp->name)
    MELEMENT(temp->lua==NULL,"lua");
-   MELEMENT(temp->cond==NULL,"cond");
    MELEMENT(temp->chance==0.,"chance");
    MELEMENT(temp->trigger==EVENT_TRIGGER_NULL,"trigger");
 #undef MELEMENT
