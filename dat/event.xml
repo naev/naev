@@ -8,6 +8,6 @@
  <event name="Unique">
   <lua>neutral/unique</lua>
   <trigger>enter</trigger>
-  <chance>99</chance>
+  <chance>3</chance>
  </event>
 </Events>
