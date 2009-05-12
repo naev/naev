@@ -5,4 +5,9 @@
   <chance>3</chance>
   <cond>next(system.get():faction()) ~= nil</cond>
  </event>
+ <event name="Unique">
+  <lua>neutral/unique</lua>
+  <trigger>enter</trigger>
+  <chance>99</chance>
+ </event>
 </Events>
