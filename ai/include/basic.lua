@@ -165,6 +165,13 @@ function boardstop ()
       return
    end
 
+   -- Make sure can board
+   if not ai.canboard(target) then
+      ai.poptask()
+      return
+   end
+
+   -- Set target
    ai.settarget(target)
    vel = ai.relvel(target)
 
