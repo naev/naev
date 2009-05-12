@@ -774,36 +774,36 @@ void gui_render( double dt )
 
 
       /* target name */
-      gl_print( NULL,
+      gl_printMax( NULL, gui.target_name.w,
             gui.target_name.x,
             gui.target_name.y,
             NULL, "%s", p->name );
-      gl_print( &gl_smallFont,
+      gl_printMax( &gl_smallFont, gui.target_faction.w,
             gui.target_faction.x,
             gui.target_faction.y,
             NULL, "%s", faction_name(p->faction) );
 
       /* target status */
       if (pilot_isDisabled(p)) /* pilot is disabled */
-         gl_print( &gl_smallFont,
+         gl_printMaxRaw( &gl_smallFont, gui.target_health.w,
                gui.target_health.x,
                gui.target_health.y,
                NULL, "Disabled" );
 
       else if (p->shield > p->shield_max/100.) /* on shields */
-         gl_print( &gl_smallFont,
+         gl_printMax( &gl_smallFont, gui.target_health.w,
             gui.target_health.x,
                gui.target_health.y, NULL,
                "%s: %.0f%%", "Shield", p->shield/p->shield_max*100. );
 
       else /* on armour */
-         gl_print( &gl_smallFont,
+         gl_printMax( &gl_smallFont, gui.target_health.w,
                gui.target_health.x,
                gui.target_health.y, NULL, 
                "%s: %.0f%%", "Armour", p->armour/p->armour_max*100. );
    }
    else { /* no target */
-      gl_printMid( NULL, SHIP_TARGET_W,
+      gl_printMidRaw( NULL, SHIP_TARGET_W,
             gui.target.x, gui.target.y  + (SHIP_TARGET_H - gl_defFont.h)/2.,
             &cGrey, "No Target" );
    }
@@ -1952,17 +1952,20 @@ static int gui_parse( const xmlNodePtr parent, const char *name )
                gui.target.y -= SHIP_TARGET_H;
             }
             else if (xml_isNode(cur,"name")) {
-               rect_parse( cur, &gui.target_name.x, &gui.target_name.y, NULL, NULL );
+               rect_parse( cur, &gui.target_name.x, &gui.target_name.y,
+                     &gui.target_name.w, NULL );
                RELATIVIZE(gui.target_name);
                gui.target_name.y -= gl_defFont.h;
             }
             else if (xml_isNode(cur,"faction")) {
-               rect_parse( cur, &gui.target_faction.x, &gui.target_faction.y, NULL, NULL );
+               rect_parse( cur, &gui.target_faction.x, &gui.target_faction.y,
+                     &gui.target_faction.w, NULL );
                RELATIVIZE(gui.target_faction);
                gui.target_faction.y -= gl_smallFont.h;
             }
             else if (xml_isNode(cur,"health")) {
-               rect_parse( cur, &gui.target_health.x, &gui.target_health.y, NULL, NULL );
+               rect_parse( cur, &gui.target_health.x, &gui.target_health.y,
+                     &gui.target_health.w, NULL );
                RELATIVIZE(gui.target_health);
                gui.target_health.y -= gl_smallFont.h;
             }

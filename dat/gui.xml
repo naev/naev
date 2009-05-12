@@ -13,9 +13,9 @@
   <weapon w="110" h="32" x="60" y="274" />
   <target>
    <gfx     x="55" y="343" /> 
-   <name    x="65" y="330" />
-   <faction x="65" y="343" />
-   <health  x="65" y="430" />
+   <name    x="65" y="330" w="103" />
+   <faction x="65" y="343" w="103" />
+   <health  x="65" y="430" w="103" />
   </target>
   <misc w="110" h="104" x="60" y="460" />
  </gui>
