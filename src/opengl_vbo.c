@@ -273,7 +273,7 @@ void gl_vboActivateOffset( gl_vbo *vbo, GLuint class, GLuint offset,
       pointer = BUFFER_OFFSET(offset);
    }
    else
-      pointer = vbo->data;
+      pointer = &vbo->data[offset];
 
    /* Class specific. */
    switch (class) {
