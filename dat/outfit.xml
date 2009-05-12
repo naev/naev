@@ -1,30 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Outfits>
- <outfit name="Ripper MK2">
-  <general>
-   <max>3</max>
-   <tech>11</tech>
-   <license>Medium Weapon License</license>
-   <mass>12</mass>
-   <price>95000</price>
-   <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
-   <gfx_store>medium</gfx_store>
-  </general>
-  <specific type="bolt">
-   <gfx>ripper</gfx>390
-   <sound>laser</sound>
-   <spfx_shield>ShiS</spfx_shield>
-   <spfx_armour>ExpS</spfx_armour>
-   <delay>700</delay>
-   <speed>700</speed>
-   <range>600</range>
-   <falloff>450</falloff>
-   <gfx_end>ripper-end</gfx_end>
-   <accuracy>10</accuracy>
-   <energy>22</energy>
-   <damage type="energy">18</damage>
-  </specific>
- </outfit>
+<!-- Short Range Weapons -->
  <outfit name="Laser Cannon">
   <general>
    <max>6</max>
@@ -48,7 +24,7 @@
    <damage type="energy">6</damage>
   </specific>
  </outfit>
-  <outfit name="Laser Cannon MK2">
+ <outfit name="Laser Cannon MK2">
   <general>
    <max>4</max>
    <tech>6</tech>
@@ -170,7 +146,33 @@
    <damage type="energy">8.5</damage>
   </specific>
 </outfit>
-<outfit name="Ion Cannon">
+ <outfit name="Neutron Disruptor">
+  <general>
+   <max>3</max>
+   <tech>9999</tech>
+   <mass>8</mass>
+   <price>45000</price>
+   <license>Heavy Weapon License</license>
+   <description>The Neutron Disruptor uses high energy focused pulses that manage to modify the base composition of molecules causing heavy damage.  This weapon was originally designed for the Collective because of the instability issues it had (could damage biological forms).  This is an upgraded version that doesn't have that issue and thus is usable even with living crew.</description>
+   <gfx_store>neutron</gfx_store>
+  </general>
+  <specific type="bolt">
+   <gfx>neutron</gfx>
+   <sound>neutron</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>400</delay>
+   <speed>650</speed>
+   <range>420</range>
+   <falloff>252</falloff>
+   <gfx_end>neutron-end</gfx_end>
+   <accuracy>15</accuracy>
+   <energy>5</energy>
+   <damage type="energy">7</damage>
+  </specific>
+ </outfit>
+<!-- Medium Range Weapons -->
+ <outfit name="Ion Cannon">
  <general>
    <max>4</max>
    <tech>7</tech>
@@ -220,7 +222,7 @@
    <damage type="ion">20</damage>
   </specific>
  </outfit>
-  <outfit name="40mm Autocannon">
+ <outfit name="40mm Autocannon">
   <general>
    <max>4</max>
    <tech>4</tech>
@@ -232,7 +234,8 @@
   </general>
   <specific type="bolt">
    <gfx>autocannon</gfx>
-   <sound>ac</sound>
+   <sound>autocannon</sound>
+   <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <delay>800</delay>
@@ -243,6 +246,7 @@
    <damage type="kinetic">24</damage>
   </specific>
  </outfit>
+<!-- Long Range Weapons -->
  <outfit name="150mm Railgun">
   <general>
    <max>2</max>
@@ -256,6 +260,7 @@
   <specific type="bolt" secondary="1">
    <gfx>mass</gfx>
    <sound>mass</sound>
+   <sound_hit>medexp0</sound_hit>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
    <delay>1100</delay>
@@ -268,6 +273,32 @@
    <damage type="kinetic">40</damage>
   </specific>
  </outfit>
+ <outfit name="Ripper MK2">
+  <general>
+   <max>3</max>
+   <tech>11</tech>
+   <license>Medium Weapon License</license>
+   <mass>12</mass>
+   <price>95000</price>
+   <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
+   <gfx_store>medium</gfx_store>
+  </general>
+  <specific type="bolt">
+   <gfx>ripper</gfx>390
+   <sound>ripper</sound>
+   <spfx_shield>ShiS</spfx_shield>
+   <spfx_armour>ExpS</spfx_armour>
+   <delay>700</delay>
+   <speed>700</speed>
+   <range>600</range>
+   <falloff>450</falloff>
+   <gfx_end>ripper-end</gfx_end>
+   <accuracy>10</accuracy>
+   <energy>22</energy>
+   <damage type="energy">18</damage>
+  </specific>
+ </outfit>
+<!-- Beam Weapons -->
  <outfit name="Orion Beam">
   <general>
    <max>1</max>
@@ -315,6 +346,7 @@
    <sound_off>beam_off0</sound_off>
   </specific>
  </outfit>
+<!-- Missile Weapons -->
  <outfit name="Seeker Launcher">
   <general>
    <max>2</max>
@@ -340,7 +372,8 @@
   </general>
   <specific type="missile seek ammo">
    <gfx>missile</gfx>
-   <sound>missile</sound>
+   <sound>seeker</sound>
+   <sound_hit>medexp1</sound_hit>
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
    <duration blowup="armour">5</duration>
@@ -379,6 +412,7 @@
   <specific type="missile smart ammo">
    <gfx>headhunter</gfx>
    <sound>missile</sound>
+   <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
    <duration blowup="armour">7</duration>
@@ -418,6 +452,7 @@
   <specific type="missile dumb ammo">
    <gfx>banshee</gfx>
    <sound>missile</sound>
+   <sound_hit>bansheeexp</sound_hit>
    <spfx_shield>EmpS</spfx_shield>
    <spfx_armour>EmpS</spfx_armour>
    <duration blowup="shield">0.8</duration>
@@ -427,31 +462,79 @@
    <damage type="emp">15</damage>
   </specific>
  </outfit>
- <outfit name="Neutron Disruptor">
+ <outfit name="Mace Launcher">
   <general>
-   <max>3</max>
-   <tech>9999</tech>
-   <mass>8</mass>
-   <price>45000</price>
-   <license>Heavy Weapon License</license>
-   <description>The Neutron Disruptor uses high energy focused pulses that manage to modify the base composition of molecules causing heavy damage.  This weapon was originally designed for the Collective because of the instability issues it had (could damage biological forms).  This is an upgraded version that doesn't have that issue and thus is usable even with living crew.</description>
-   <gfx_store>neutron</gfx_store>
+   <max>2</max>
+   <tech>3</tech>
+   <license>Medium Weapon License</license>
+   <mass>10</mass>
+   <price>19000</price>
+   <description>A base for launching Dvaered Mace rockets.</description>
+   <gfx_store>mace</gfx_store>
   </general>
-  <specific type="bolt">
-   <gfx>neutron</gfx>
-   <sound>neutron</sound>
-   <spfx_shield>ShiS</spfx_shield>
-   <spfx_armour>ExpS</spfx_armour>
-   <delay>400</delay>
-   <speed>650</speed>
-   <range>420</range>
-   <falloff>252</falloff>
-   <gfx_end>neutron-end</gfx_end>
-   <accuracy>15</accuracy>
-   <energy>5</energy>
-   <damage type="energy">7</damage>
+  <specific type="missile dumb" secondary="1">
+   <ammo>Mace Rocket</ammo>
+   <delay>2000</delay>
   </specific>
  </outfit>
+ <outfit name="Mace Rocket">
+  <general>
+   <max>40</max>
+   <tech>2</tech>
+   <license>Medium Weapon License</license>
+   <mass>2</mass>
+   <price>700</price>
+   <description>The Mace rocket is a very heavy, quickly-accelerating rocket designed for high speed collisions. It has little explosive payload, instead carrying a large amount of fuel to facilitate its acceleration. Most of the damage it does is derived from the impact and not the explosion.</description>
+   <gfx_store>mace</gfx_store>
+  </general>
+  <specific type="missile dumb ammo">
+   <gfx>mace</gfx>
+   <sound>mace</sound>
+   <sound_hit>lrgexp0</sound_hit>
+   <spfx_shield>ExpM</spfx_shield>
+   <spfx_armour>ExpM</spfx_armour>
+   <duration blowup="armour">3</duration>
+   <thrust>300</thrust>
+   <speed>1000</speed>
+   <damage type="kinetic">44</damage>
+  </specific>
+ </outfit>
+ <outfit name="EMP Grenade Launcher">
+  <general>
+   <max>2</max>
+   <tech>7</tech>
+   <mass>17</mass>
+   <price>31000</price>
+   <gfx_store>empgrenadelauncher</gfx_store>
+   <description>This launcher can fire EMP grenades in any direction using a unique internal guidance system. These are favoured by traders for escaping from pirates.</description>
+  </general>
+  <specific type="turret dumb" secondary="1">
+   <ammo>EMP Grenade</ammo>
+   <delay>2000</delay>
+  </specific>
+ </outfit>
+ <outfit name="EMP Grenade">
+  <general>
+   <max>30</max>
+   <tech>6</tech>
+   <mass>1</mass>
+   <price>600</price>
+   <gfx_store>empgrenade</gfx_store>
+   <description>This is a grenade that can be launched to unleash an electromagnetic pulse, rapidly disabling the electronics of enemy ships. Useful for taking ships alive, as the EM pulses rarely destroy the ship; leaving it floating disabled in space.</description>
+  </general>
+  <specific type="turret dumb ammo">
+   <gfx spin="0.3">empgrenade</gfx>
+   <sound>grenadefire</sound>
+   <sound_hit>empexplode</sound_hit>
+   <spfx_shield>EmpS</spfx_shield>
+   <spfx_armour>EmpM</spfx_armour>
+   <duration blowup="shield">1.3</duration>
+   <thrust>0</thrust>
+   <speed>400</speed>
+   <damage type="emp">50</damage>
+  </specific>
+ </outfit>
+<!-- Energy-Related Outfits -->
  <outfit name="Battery">
   <general>
    <max>10</max>
@@ -478,6 +561,49 @@
    <energy_regen>100</energy_regen>
   </specific>
  </outfit>
+ <outfit name="Reactor Class I">
+  <general>
+   <max>1</max>
+   <tech>9</tech>
+   <mass>12</mass>
+   <price>170000</price>
+   <gfx_store>reactor_i</gfx_store>
+   <description>Adding a complementary reactor to your ship is a great way to get that extra energy boost you need. This does not replace the existing reactor but works alongside it and hooks up directly to the energy flux.</description>
+  </general>
+  <specific type="modification">
+   <energy>30</energy>
+   <energy_regen>490</energy_regen>
+  </specific>
+ </outfit>
+ <outfit name="Reactor Class II">
+  <general>
+   <max>1</max>
+   <tech>12</tech>
+   <mass>23</mass>
+   <price>530000</price>
+   <gfx_store>reactor_ii</gfx_store>
+   <description>The class II reactor uses a newer fusion technology than the class I, permitting it to have greater energy density. The result is a mid-sized reactor that is best used on ships with moderate energy demands.</description>
+  </general>
+  <specific type="modification">
+   <energy>80</energy>
+   <energy_regen>1050</energy_regen>
+  </specific>
+ </outfit>
+ <outfit name="Reactor Class III">
+  <general>
+   <max>1</max>
+   <tech>12</tech>
+   <mass>46</mass>
+   <price>970000</price>
+   <gfx_store>reactor_iii</gfx_store>
+   <description>The immense class III reactor provides enough power for nearly anything. The technology used in this reactor is particularly groundbreaking, with the best energy density of the three reactor classes. The huge size of the class III results in it only fitting comfortably on large vessels, though its energy output would be excessive for anything less.</description>
+  </general>
+  <specific type="modification">
+   <energy>300</energy>
+   <energy_regen>2020</energy_regen>
+  </specific>
+ </outfit>
+<!-- Shield and Armour-Related Outfits -->
  <outfit name="Shield Capacitor">
   <general>
    <max>12</max>
@@ -506,6 +632,63 @@
    <energy_regen>-50</energy_regen>
   </specific>
  </outfit>
+ <outfit name="Plasteel Plating">
+  <general>
+   <max>1</max>
+   <tech>6</tech>
+   <mass>15</mass>
+   <price>65000</price>
+   <gfx_store>plasteel</gfx_store>
+   <description>Plasteel was one of man's greatest improvements on materials. It's a cheap, very strong armour that seems to take the best from both plastic and steel. You can bend it relatively easily while keeping its incredible strength. The Second Growth was only possible with this amazing new material.
+By adding a dense layer of Plasteel to your ship you can increase its sturdiness substantially. Although with the advent of newer materials Plasteel is starting to fade in popularity, its lower price point maintains a loyal customer base.</description>
+  </general>
+  <specific type="modification">
+   <armour>35</armour>
+  </specific>
+ </outfit>
+ <outfit name="Nanobond Plating">
+  <general>
+   <max>1</max>
+   <tech>9</tech>
+   <mass>35</mass>
+   <price>365000</price>
+   <gfx_store>nanobond</gfx_store>
+   <description>Nanobond is the successor to Plasteel. It follows the same approach but has a greatly refined manufacturing process, providing greater particle density. The result is a much more robust material, although it is substantially more expensive.</description>
+  </general>
+  <specific type="modification">
+   <armour>240</armour>
+  </specific>
+ </outfit>
+ <outfit name="Biometal Armour">
+  <general>
+   <max>1</max>
+   <tech>15</tech>
+   <mass>57</mass>
+   <price>1120000</price>
+   <gfx_store>biometal</gfx_store>
+   <description>Biometal is a metal armour that regenerates itself due to genetically-engineered bacteria throughout it. Due to the compartmentalization to permit bacterial life, and the difficulty of culturing the bacteria, Biometal has greater bulk than alternatives, and is the most expensive hull plating. The results are formidable, but it's hard to equip such armour on anything short of a Destroyer.</description>
+  </general>
+  <specific type="modification">
+   <armour>300</armour>
+   <armour_regen>120</armour_regen>
+  </specific>
+ </outfit>
+ <outfit name="Droid Repair Crew">
+  <general>
+   <max>3</max>
+   <tech>11</tech>
+   <mass>3</mass>
+   <price>430000</price>
+   <gfx_store>droid</gfx_store>
+   <description>This low maintenance droid crew will scour your ship to repair any damages caused by space hazards. They are very small and able to work both on the interior or exterior of the ship. Power is drawn from the ship to feed the robots, although the load is generally very low compared to the benefits of having a robotic repair crew.</description>
+  </general>
+  <specific type="modification">
+   <armour_regen>50</armour_regen>
+   <energy>-5</energy>
+   <energy_regen>-40</energy_regen>
+  </specific>
+ </outfit>
+<!-- Movement-Related Outfits -->
  <outfit name="Engine Reroute">
   <general>
    <max>1</max>
@@ -587,6 +770,7 @@
    <energy>65</energy>
   </specific>
  </outfit>
+<!-- Miscellaneous Outfits (Expansion outfits, countermeasures, map.) -->
  <outfit name="Fuel Pod">
   <general>
    <max>4</max>
@@ -669,174 +853,7 @@
    <energy>10</energy>
   </specific>
  </outfit>
-  <outfit name="Mace Launcher">
-  <general>
-   <max>2</max>
-   <tech>3</tech>
-   <license>Medium Weapon License</license>
-   <mass>10</mass>
-   <price>19000</price>
-   <description>A base for launching Dvaered Mace rockets.</description>
-   <gfx_store>mace</gfx_store>
-  </general>
-  <specific type="missile dumb" secondary="1">
-   <ammo>Mace Rocket</ammo>
-   <delay>2000</delay>
-  </specific>
- </outfit>
- <outfit name="Mace Rocket">
-  <general>
-   <max>40</max>
-   <tech>2</tech>
-   <license>Medium Weapon License</license>
-   <mass>2</mass>
-   <price>700</price>
-   <description>The Mace rocket is a very heavy, quickly-accelerating rocket designed for high speed collisions. It has little explosive payload, instead carrying a large amount of fuel to facilitate its acceleration. Most of the damage it does is derived from the impact and not the explosion.</description>
-   <gfx_store>mace</gfx_store>
-  </general>
-  <specific type="missile dumb ammo">
-   <gfx>mace</gfx>
-   <sound>missile</sound>
-   <spfx_shield>ExpM</spfx_shield>
-   <spfx_armour>ExpM</spfx_armour>
-   <duration blowup="armour">3</duration>
-   <thrust>300</thrust>
-   <speed>1000</speed>
-   <damage type="kinetic">44</damage>
-  </specific>
- </outfit>
- <outfit name="EMP Grenade Launcher">
-  <general>
-   <max>2</max>
-   <tech>7</tech>
-   <mass>17</mass>
-   <price>31000</price>
-   <gfx_store>empgrenadelauncher</gfx_store>
-   <description>This launcher can fire EMP grenades in any direction using a unique internal guidance system. These are favoured by traders for escaping from pirates.</description>
-  </general>
-  <specific type="turret dumb" secondary="1">
-   <ammo>EMP Grenade</ammo>
-   <delay>2000</delay>
-  </specific>
- </outfit>
- <outfit name="EMP Grenade">
-  <general>
-   <max>30</max>
-   <tech>6</tech>
-   <mass>1</mass>
-   <price>600</price>
-   <gfx_store>empgrenade</gfx_store>
-   <description>This is a grenade that can be launched to unleash an electromagnetic pulse, rapidly disabling the electronics of enemy ships. Useful for taking ships alive, as the EM pulses rarely destroy the ship; leaving it floating disabled in space.</description>
-  </general>
-  <specific type="turret dumb ammo">
-   <gfx spin="0.3">empgrenade</gfx>
-   <sound>grenade</sound>
-   <spfx_shield>EmpS</spfx_shield>
-   <spfx_armour>EmpM</spfx_armour>
-   <duration blowup="shield">1.3</duration>
-   <thrust>0</thrust>
-   <speed>400</speed>
-   <damage type="emp">50</damage>
-  </specific>
- </outfit>
- <outfit name="Plasteel Plating">
-  <general>
-   <max>1</max>
-   <tech>6</tech>
-   <mass>15</mass>
-   <price>65000</price>
-   <gfx_store>plasteel</gfx_store>
-   <description>Plasteel was one of man's greatest improvements on materials. It's a cheap, very strong armour that seems to take the best from both plastic and steel. You can bend it relatively easily while keeping its incredible strength. The Second Growth was only possible with this amazing new material.
-By adding a dense layer of Plasteel to your ship you can increase its sturdiness substantially. Although with the advent of newer materials Plasteel is starting to fade in popularity, its lower price point maintains a loyal customer base.</description>
-  </general>
-  <specific type="modification">
-   <armour>35</armour>
-  </specific>
- </outfit>
- <outfit name="Nanobond Plating">
-  <general>
-   <max>1</max>
-   <tech>9</tech>
-   <mass>35</mass>
-   <price>365000</price>
-   <gfx_store>nanobond</gfx_store>
-   <description>Nanobond is the successor to Plasteel. It follows the same approach but has a greatly refined manufacturing process, providing greater particle density. The result is a much more robust material, although it is substantially more expensive.</description>
-  </general>
-  <specific type="modification">
-   <armour>240</armour>
-  </specific>
- </outfit>
- <outfit name="Biometal Armour">
-  <general>
-   <max>1</max>
-   <tech>15</tech>
-   <mass>57</mass>
-   <price>1120000</price>
-   <gfx_store>biometal</gfx_store>
-   <description>Biometal is a metal armour that regenerates itself due to genetically-engineered bacteria throughout it. Due to the compartmentalization to permit bacterial life, and the difficulty of culturing the bacteria, Biometal has greater bulk than alternatives, and is the most expensive hull plating. The results are formidable, but it's hard to equip such armour on anything short of a Destroyer.</description>
-  </general>
-  <specific type="modification">
-   <armour>300</armour>
-   <armour_regen>120</armour_regen>
-  </specific>
- </outfit>
- <outfit name="Droid Repair Crew">
-  <general>
-   <max>3</max>
-   <tech>11</tech>
-   <mass>3</mass>
-   <price>430000</price>
-   <gfx_store>droid</gfx_store>
-   <description>This low maintenance droid crew will scour your ship to repair any damages caused by space hazards. They are very small and able to work both on the interior or exterior of the ship. Power is drawn from the ship to feed the robots, although the load is generally very low compared to the benefits of having a robotic repair crew.</description>
-  </general>
-  <specific type="modification">
-   <armour_regen>50</armour_regen>
-   <energy>-5</energy>
-   <energy_regen>-40</energy_regen>
-  </specific>
- </outfit>
- <outfit name="Reactor Class I">
-  <general>
-   <max>1</max>
-   <tech>9</tech>
-   <mass>12</mass>
-   <price>170000</price>
-   <gfx_store>reactor_i</gfx_store>
-   <description>Adding a complementary reactor to your ship is a great way to get that extra energy boost you need. This does not replace the existing reactor but works alongside it and hooks up directly to the energy flux.</description>
-  </general>
-  <specific type="modification">
-   <energy>30</energy>
-   <energy_regen>490</energy_regen>
-  </specific>
- </outfit>
- <outfit name="Reactor Class II">
-  <general>
-   <max>1</max>
-   <tech>12</tech>
-   <mass>23</mass>
-   <price>530000</price>
-   <gfx_store>reactor_ii</gfx_store>
-   <description>The class II reactor uses a newer fusion technology than the class I, permitting it to have greater energy density. The result is a mid-sized reactor that is best used on ships with moderate energy demands.</description>
-  </general>
-  <specific type="modification">
-   <energy>80</energy>
-   <energy_regen>1050</energy_regen>
-  </specific>
- </outfit>
- <outfit name="Reactor Class III">
-  <general>
-   <max>1</max>
-   <tech>12</tech>
-   <mass>46</mass>
-   <price>970000</price>
-   <gfx_store>reactor_iii</gfx_store>
-   <description>The immense class III reactor provides enough power for nearly anything. The technology used in this reactor is particularly groundbreaking, with the best energy density of the three reactor classes. The huge size of the class III results in it only fitting comfortably on large vessels, though its energy output would be excessive for anything less.</description>
-  </general>
-  <specific type="modification">
-   <energy>300</energy>
-   <energy_regen>2020</energy_regen>
-  </specific>
- </outfit>
+<!-- Escort Outfits -->
  <outfit name="Lancelot Fighter Bay">
   <general>
    <max>1</max>
@@ -895,6 +912,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <ship>Drone</ship>
   </specific>
  </outfit>
+<!-- Licenses -->
  <outfit name="Large Civilian Vessel License">
   <general>
    <max>1</max>
