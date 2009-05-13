@@ -1033,7 +1033,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    }
 
    /* EMP don't kill. */
-   if ((dtype == DAMAGE_TYPE_EMP) &&
+   if (!pilot_isPlayer(p) && (dtype == DAMAGE_TYPE_EMP) &&
          (p->armour < PILOT_DISABLED_ARMOR * p->armour_max))
       p->armour = PILOT_DISABLED_ARMOR * p->armour_max - 1.;
 
