@@ -2,7 +2,6 @@
    * NAEV.png
    * loading00.png
    * gui
-     * minimal_pilot.png
      * minimal_planet.png
    * logo
      * dvaered_small.png
@@ -245,6 +244,8 @@
        * debris5.png
 
  * Author: Sean Hildebrand, License: CC-by v3.0
+   * gui
+     * minimal_pilot.png
    * gfx
      * outfit
        * space
