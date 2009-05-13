@@ -17,12 +17,12 @@ function pirate_create( pirate_create )
    end
 
    -- Choose pirate type
-   r = rnd.rnd()
-   if r < 0.25 then
+   z = rnd.rnd()
+   if z < 0.25 then
       p,o = pirate_createKestrel( pirate_create )
-   elseif r < 0.5 then
+   elseif z < 0.5 then
       p,o = pirate_createAdmonisher( pirate_create )
-   elseif r < 0.75 then
+   elseif z < 0.75 then
       p,o = pirate_createAncestor( pirate_create )
    else
       p,o = pirate_createVendetta( pirate_create )
@@ -100,7 +100,7 @@ function pirate_outfitSecondary( p, o )
       { "Headhunter Launcher", { "Headhunter Missile", 10 } },
       { "Banshee Launcher", { "Banshee Rocket", 30 } },
       { "Mace Launcher", { "Mace Rocket", 7 } },
-      { "EMP Grenade Launcher", { "EMP Grenade", 6 } }
+      { "EMP Grenade Launcher", { "EMP Grenade", 20 } }
    }
    return pilot_outfitAdd( p, o, sec )
 end
@@ -273,30 +273,49 @@ end
 -- @brief Generates pilot names
 --]]
 function pirate_name ()
+   articles = {
+      "The",
+   }
    descriptors = {
-      "The Lustful",
-      "The Black",
-      "The Red",
-      "The Green",
-      "The Blue",
-      "The Bloody",
-      "The Morbid",
-      "The Horrible",
-      "The Dark",
-      "The Evil",
+      "Lustful",
+      "Bloody",
+      "Morbid",
+      "Horrible",
+      "Terrible",
+      "Very Bad",
+      "No Good",
+      "Dark",
+      "Evil",
+      "Murderous",
+      "Fearsome",
+      "Defiant",
+      "Unsightly",
       "Pirate's",
       "Night's",
-      "Space's",
+      "Space",
       "Astro",
-      "Destroyer"
+      "Delicious",
+      "Fearless",
+      "Eternal",
+      "Mighty"
+   }
+   colours = {
+      "Red",
+      "Green",
+      "Blue",
+      "Cyan",
+      "Black",
+      "Brown",
+      "Mauve",
+      "Crimson",
+      "Yellow",
+      "Purple"
    }
    actors = {
-      "Green Beard",
-      "Black Beard",
-      "Brown Beard",
-      "Red Beard",
-      "Blue Beard",
-      "Corpsebride",
+      "Beard",
+      "Moustache",
+      "Neckbeard",
+      "Demon",
       "Vengeance",
       "Corsair",
       "Pride",
@@ -307,12 +326,60 @@ function pirate_name ()
       "Raider",
       "Devil",
       "Serpent",
-      "Executioner",
+      "Bulk",
       "Killer",
       "Thunder",
-      "Lance"
+      "Tyrant",
+      "Lance",
+      "Destroyer",
+      "Horror",
+      "Dread",
+      "Blargh",
+      "Terror"
    }
+   actorspecials = {
+      "Angle Grinder",
+      "Belt Sander",
+      "Chainsaw",
+      "Impact Wrench",
+      "Band Saw",
+      "Table Saw",
+      "Drill Press",
+      "Jigsaw",
+      "Turret Lathe",
+      "Claw Hammer",
+      "Rubber Mallet",
+      "Squeegee",
+      "Pipe Wrench",
+      "Bolt Cutter",
+      "Staple Gun",
+      "Crowbar",
+      "Pickaxe",
+      "Bench Grinder",
+      "Scythe"
+   }
+   article = articles[ rnd.rnd(1,#articles) ]
    descriptor = descriptors[ rnd.rnd(1,#descriptors) ]
+   colour = colours[ rnd.rnd(1,#colours) ]
    actor = actors[ rnd.rnd(1,#actors) ]
-   return descriptor .. " " .. actor
+   actorspecial = actorspecials[ rnd.rnd(1,#actorspecials) ]
+
+   if z < 0.25 then
+      return article .. " " .. actorspecial
+   else
+      r = rnd.rnd()
+      if r < 0.166 then
+         return article .. " " .. actor
+      elseif r < 0.333 then
+         return colour .. " " .. actor
+      elseif r < 0.50 then
+         return descriptor .. " " .. actor
+      elseif r < 0.666 then
+         return article .. " " .. descriptor .. " " .. actor
+      elseif r < 0.833 then
+         return article .. " " .. colour .. " " .. actor
+      else
+         return article .. " " .. descriptor .. " " .. colour .. " " .. actor
+      end
+   end
 end
