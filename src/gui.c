@@ -774,14 +774,16 @@ void gui_render( double dt )
 
 
       /* target name */
-      gl_printMax( NULL, gui.target_name.w,
+      i = gl_printWidth( NULL, p->name );
+      gl_printMaxRaw( (i>gui.target_name.w) ? &gl_smallFont : NULL,
+            gui.target_name.w,
             gui.target_name.x,
             gui.target_name.y,
-            NULL, "%s", p->name );
-      gl_printMax( &gl_smallFont, gui.target_faction.w,
+            NULL, p->name );
+      gl_printMaxRaw( &gl_smallFont, gui.target_faction.w,
             gui.target_faction.x,
             gui.target_faction.y,
-            NULL, "%s", faction_name(p->faction) );
+            NULL, faction_name(p->faction) );
 
       /* target status */
       if (pilot_isDisabled(p)) /* pilot is disabled */
