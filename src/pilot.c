@@ -1035,7 +1035,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    /* EMP don't kill. */
    if (!pilot_isPlayer(p) && (dtype == DAMAGE_TYPE_EMP) &&
          (p->armour < PILOT_DISABLED_ARMOR * p->armour_max))
-      p->armour = PILOT_DISABLED_ARMOR * p->armour_max - 1.;
+      p->armour = MIN(p->armour + dmg, PILOT_DISABLED_ARMOR * p->armour_max - 1.);
 
    /* Disabled always run before dead to ensure crating boost. */
    if (!pilot_isFlag(p,PILOT_DISABLED) && (p != player) &&
