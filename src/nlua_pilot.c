@@ -258,6 +258,7 @@ static int pilot_addFleet( lua_State *L )
    LuaPilot lp;
    LuaVector *lv;
    int jump;
+   unsigned int flags;
 
    /* Parse first argument - Fleet Name */
    fltname = luaL_checkstring(L,1);
@@ -330,6 +331,7 @@ static int pilot_addFleet( lua_State *L )
             if (jump) {
                a = vect_angle(&vp,&vn);
                vect_pset( &vv, HYPERSPACE_VEL, a );
+               flags |= PILOT_HYP_END;
             }
             else {
                a = RNGF() * 2.*M_PI;
@@ -339,6 +341,7 @@ static int pilot_addFleet( lua_State *L )
          else { /* Entering via hyperspace. */
             a = vect_angle(&vp,&vn);
             vect_pset( &vv, HYPERSPACE_VEL, a );
+            flags |= PILOT_HYP_END;
          }
 
          /* Make sure angle is sane. */
@@ -346,7 +349,7 @@ static int pilot_addFleet( lua_State *L )
             a += 2.*M_PI;
 
          /* Create the pilot. */
-         p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, 0 );
+         p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, flags );
 
          /* we push each pilot created into a table and return it */
          lua_pushnumber(L,++j); /* index, starts with 1 */
