@@ -591,6 +591,10 @@ void player_cleanup (void)
 
    /* just in case purge the pilot stack */
    pilots_cleanAll();
+
+   /* Reset some player stuff. */
+   player_credits = 0;
+   player_crating = 0;
 }
 
 
