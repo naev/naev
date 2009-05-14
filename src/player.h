@@ -125,7 +125,8 @@ int player_addEscorts (void);
  */
 void player_dead (void);
 void player_destroyed (void); 
-void player_think( Pilot* player, const double dt );
+void player_think( Pilot* pplayer, const double dt );
+void player_update( Pilot *pplayer, const double dt );
 void player_brokeHyperspace (void);
 double player_faceHyperspace (void);
 

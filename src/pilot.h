@@ -341,6 +341,7 @@ void pilot_free( Pilot* p );
 /*
  * update
  */
+void pilot_update( Pilot* pilot, const double dt );
 void pilots_update( double dt );
 void pilots_render( double dt );
 void pilot_render( Pilot* pilot, const double dt );

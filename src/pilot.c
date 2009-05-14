@@ -72,7 +72,6 @@ extern void ai_think( Pilot* pilot, const double dt ); /**< from ai.c */
 static int pilot_shootWeapon( Pilot* p, PilotOutfit* w );
 static void pilot_hyperspace( Pilot* pilot );
 static void pilot_refuel( Pilot *p, double dt );
-static void pilot_update( Pilot* pilot, const double dt );
 /* cargo. */
 static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup );
 static void pilot_calcCargo( Pilot* pilot );
@@ -1420,7 +1419,7 @@ void pilot_render( Pilot* p, const double dt )
  *    @param pilot Pilot to update.
  *    @param dt Current delta tick.
  */
-static void pilot_update( Pilot* pilot, const double dt )
+void pilot_update( Pilot* pilot, const double dt )
 {
    int i;
    unsigned int l;
@@ -2496,7 +2495,8 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* set flags and functions */
    if (flags & PILOT_PLAYER) {
-      pilot->think = player_think; /* players don't need to think! :P */
+      pilot->think  = player_think; /* players don't need to think! :P */
+      pilot->update = player_update; /* Players get special update. */
       pilot->render = NULL; /* render will get called from player_think */
       pilot_setFlag(pilot,PILOT_PLAYER); /* it is a player! */
       if (!(flags & PILOT_EMPTY)) { /* sort of a hack */
@@ -2505,15 +2505,14 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       }
    }
    else {
-      pilot->think = ai_think;
+      pilot->think  = ai_think;
+      pilot->update = pilot_update;
       pilot->render = pilot_render;
    }
+
    /* Set enter hyperspace flag if needed. */
    if (flags & PILOT_HYP_END)
       pilot_setFlag(pilot, PILOT_HYP_END);
-
-   /* all update the same way */
-   pilot->update = pilot_update;
 
    /* Escort stuff. */
    if (flags & PILOT_ESCORT) {
@@ -2853,13 +2852,11 @@ void pilots_update( double dt )
          else if (!pilot_isFlag(p, PILOT_BOARDING) &&
                !pilot_isFlag(p, PILOT_REFUELBOARDING))
             p->think(p, dt);
-
       }
 
       /* Just update the pilot. */
-      if (p->update) { /* update */
+      if (p->update) /* update */
          p->update( p, dt );
-      }
    }
 }
 

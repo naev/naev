@@ -857,6 +857,7 @@ void player_abortAutonav( char *reason )
  */
 void player_think( Pilot* pplayer, const double dt )
 {
+   (void) dt;
    Pilot *target;
    double d;
    double turn;
@@ -985,10 +986,21 @@ void player_think( Pilot* pplayer, const double dt )
    else
       vect_pset( &pplayer->solid->force, pplayer->thrust * player_acc,
             pplayer->solid->dir );
+}
 
-   /*
-    * Sound
-    */
+
+/**
+ * @brief Player update function.
+ *
+ *    @param pplayer Player to update.
+ *    @param dt Current deltatick.
+ */
+void player_update( Pilot *pplayer, const double dt )
+{
+   /* Now update normally. */
+   pilot_update( pplayer, dt );
+
+   /* Sound. */
    sound_updateListener( pplayer->solid->dir,
          pplayer->solid->pos.x, pplayer->solid->pos.y );
 
