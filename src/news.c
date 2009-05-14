@@ -79,13 +79,16 @@ static void news_render( double bx, double by, double w, double h )
    unsigned int t;
    double y, dt;
 
+   t = SDL_GetTicks();
+
    /* Calculate offset. */
    if (!news_drag) {
-      t = SDL_GetTicks();
       dt = (double)(t-news_tick)/1000.;
       news_tick = t;
       news_pos += dt * 25.;
    }
+   else
+      news_tick = t;
 
    /* Make sure user isn't silly and drags it to negative values. */
    if (news_pos < 0.)
