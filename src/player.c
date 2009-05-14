@@ -90,6 +90,7 @@ static int player_nlicenses   = 0; /**< Number of licenses player has. */
 int snd_target    = -1; /**< Sound when targetting. */
 int snd_jump      = -1; /**< Sound when can jump. */
 int snd_nav       = -1; /**< Sound when changing nav computer. */
+static int player_lastEngineSound = 0; /**< Last engine sound. */
 
 
 /* 
@@ -997,6 +998,23 @@ void player_think( Pilot* pplayer, const double dt )
  */
 void player_update( Pilot *pplayer, const double dt )
 {
+   int engsound;
+
+   /* Calculate engine sound to use. */
+   if (player_isFlag(PLAYER_AFTERBURNER))
+      engsound = player->afterburner->outfit->u.afb.sound;
+   else if (player_acc > 0.)
+      engsound = player->ship->sound;
+   else
+      engsound = 0;
+   /* See if sound must change. */
+   if (player_lastEngineSound != engsound) {
+      sound_stopGroup( PLAYER_ENGINE_CHANNEL );
+      if (engsound > 0)
+         sound_playGroup( PLAYER_ENGINE_CHANNEL, engsound, 0 );
+   }
+   player_lastEngineSound = engsound;
+
    /* Now update normally. */
    pilot_update( pplayer, dt );
 
@@ -1393,9 +1411,6 @@ void player_afterburn (void)
       player_setFlag(PLAYER_AFTERBURNER);
       pilot_setFlag(player,PILOT_AFTERBURNER);
       spfx_shake(player->afterburner->outfit->u.afb.rumble * SHAKE_MAX);
-      sound_stopGroup( PLAYER_ENGINE_CHANNEL );
-      sound_playGroup( PLAYER_ENGINE_CHANNEL, 
-            player->afterburner->outfit->u.afb.sound, 0 );
       if (toolkit_isOpen() || paused)
          player_soundPause();
    }
@@ -1410,7 +1425,6 @@ void player_afterburnOver (void)
    if ((player != NULL) && (player->afterburner!=NULL)) {
       player_rmFlag(PLAYER_AFTERBURNER);
       pilot_rmFlag(player,PILOT_AFTERBURNER);
-      sound_stopGroup( PLAYER_ENGINE_CHANNEL );
    }
 }
 
@@ -1428,9 +1442,6 @@ void player_accel( double acc )
 
 
    player_acc = acc;
-   sound_stopGroup( PLAYER_ENGINE_CHANNEL );
-   sound_playGroup( PLAYER_ENGINE_CHANNEL,
-         player->ship->sound, 0 );
    if (toolkit_isOpen() || paused)
       player_soundPause();
 }
@@ -1442,7 +1453,6 @@ void player_accel( double acc )
 void player_accelOver (void)
 {
    player_acc = 0.;
-   sound_stopGroup( PLAYER_ENGINE_CHANNEL );
 }
 
 
