@@ -526,13 +526,17 @@ static int sound_makeList (void)
       flen = strlen(files[i]);
 
       /* Must be longer then suffix. */
-      if (flen < suflen)
+      if (flen < suflen) {
+         free(files[i]);
          continue;
+      }
 
       /* Make sure is wav or ogg. */
       if ((strncmp( &files[i][flen - suflen], SOUND_SUFFIX_WAV, suflen)!=0) &&
-            (strncmp( &files[i][flen - suflen], SOUND_SUFFIX_OGG, suflen)!=0))
+            (strncmp( &files[i][flen - suflen], SOUND_SUFFIX_OGG, suflen)!=0)) {
+         free(files[i]);
          continue;
+      }
 
       /* grow the selection size */
       sound_nlist++;
