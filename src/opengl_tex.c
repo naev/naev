@@ -635,11 +635,6 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 
    (*x) = s % sx;
    (*y) = s / sx;
-
-#ifdef DEBUGGING
-   if ((*x > t->sx) || (*x < 0) || (*y > t->sy) || (*y < 0))
-      WARN("Invalid sprite from dir found form dir: %f -> %dx%d", dir, *x, *y);
-#endif
 }
 
 
