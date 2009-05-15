@@ -265,6 +265,16 @@
    <pilot name="Lancelot" chance="100" ship="Empire Lancelot"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Empire Hawking">
+  <ai>empire</ai>
+  <faction>Empire</faction>
+  <flags>
+   <guard />
+  </flags>
+  <pilots>
+   <pilot name="Hawking" chance="100" ship="Empire Hawking"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Empire Sml Defense">
   <ai>empire</ai>
   <faction>Empire</faction>
