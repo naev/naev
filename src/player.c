@@ -90,7 +90,7 @@ static int player_nlicenses   = 0; /**< Number of licenses player has. */
 int snd_target    = -1; /**< Sound when targetting. */
 int snd_jump      = -1; /**< Sound when can jump. */
 int snd_nav       = -1; /**< Sound when changing nav computer. */
-static int player_lastEngineSound = 0; /**< Last engine sound. */
+static int player_lastEngineSound = -1; /**< Last engine sound. */
 
 
 /* 
@@ -1006,11 +1006,11 @@ void player_update( Pilot *pplayer, const double dt )
    else if (player_acc > 0.)
       engsound = player->ship->sound;
    else
-      engsound = 0;
+      engsound = -1;
    /* See if sound must change. */
    if (player_lastEngineSound != engsound) {
       sound_stopGroup( PLAYER_ENGINE_CHANNEL );
-      if (engsound > 0)
+      if (engsound >= 0)
          sound_playGroup( PLAYER_ENGINE_CHANNEL, engsound, 0 );
    }
    player_lastEngineSound = engsound;
