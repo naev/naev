@@ -60,8 +60,8 @@ static double nebu_dt   = 0.; /**< How fast nebulae changes. */
 static glTexture *nebu_pufftexs[NEBULAE_PUFFS]; /**< Nebulae puffs. */
 
 /* VBOs */
-static gl_vbo *nebu_vboOverlay = NULL; /**< Overlay VBO. */
-static gl_vbo *nebu_vboBG = NULL; /**< BG VBO. */
+static gl_vbo *nebu_vboOverlay   = NULL; /**< Overlay VBO. */
+static gl_vbo *nebu_vboBG        = NULL; /**< BG VBO. */
 
 /**
  * @struct NebulaePuff
@@ -283,7 +283,7 @@ static void nebu_renderMultitexture( const double dt )
       temp = cur_nebu[0];
       cur_nebu[0] += cur_nebu[0] - cur_nebu[1];
       cur_nebu[1] = temp;
-      if (cur_nebu[0]+1 > NEBULAE_Z)
+      if (cur_nebu[0]+1 >= NEBULAE_Z)
          cur_nebu[0] = NEBULAE_Z - 2;
       else if (cur_nebu[0] < 0)
          cur_nebu[0] = 1;
