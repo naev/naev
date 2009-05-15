@@ -555,8 +555,8 @@ static void map_render( double bx, double by, double w, double h )
 
       /* draw the system name */
       if (sys_isKnown(sys) && (map_zoom > 0.5 )) {
-         tx = x + 7. + sys->pos.x * map_zoom;
-         ty = y - 5. + sys->pos.y * map_zoom;
+         tx = x + (sys->pos.x+11.) * map_zoom;
+         ty = y + (sys->pos.y-5.) * map_zoom;
          gl_print( &gl_smallFont,
                tx + SCREEN_W/2., ty + SCREEN_H/2.,
                &cWhite, sys->name );
