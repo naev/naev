@@ -548,6 +548,11 @@ void player_cleanup (void)
 {
    int i;
 
+   /* Reset controls. */
+   player_accelOver();
+   player_left  = 0.;
+   player_right = 0.;
+
    player_clear();
 
    /* clean up name */
