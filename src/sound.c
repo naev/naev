@@ -297,12 +297,15 @@ static int sound_updatePosVoice( alVoice *v, double x, double y )
    double d;
    int idist;
 
+   /* Update position. */
    v->pos[0] = x;
    v->pos[1] = y;
 
+   /* Get relative position. */
    px = v->pos[0] - sound_pos[0];
    py = v->pos[1] - sound_pos[1];
 
+   /* Exact calculations. */
    angle = sound_pos[2] - ANGLE(px,py)/M_PI*180.;
    dist = MOD(px,py);
 
@@ -310,6 +313,10 @@ static int sound_updatePosVoice( alVoice *v, double x, double y )
    d = CLAMP( 0., 1., (dist - 50.) / 2500. );
    d = 255. * sqrt(d);
    idist = MIN( (int)d, 255);
+
+   /* Panning also gets modulated at low distance. */
+   if (idist < 10)
+      angle *= d/10.;
 
    /* Try to play the song. */
    if (Mix_SetPosition( v->channel, (Sint16)angle, (Uint8)idist) < 0) {
