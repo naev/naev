@@ -9,6 +9,8 @@
 
 #include "SDL_opengl.h"
 
+/* GL_SGIS_generate_mipmap */
+void (APIENTRY *nglGenerateMipmap)(GLenum target);
 
 /* GL_ARB_multitexture */
 void (APIENTRY *nglActiveTexture)(GLenum texture);
