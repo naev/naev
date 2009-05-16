@@ -654,5 +654,13 @@ int gl_initTextures (void)
  */
 void gl_exitTextures (void)
 {
+   glTexList *tex;
+
+   /* Make sure there's no texture leak */
+   if (texture_list != NULL) {
+      DEBUG("Texture leak detected!");
+      for (tex=texture_list; tex!=NULL; tex=tex->next)
+         DEBUG("   '%s' opened %d times", tex->tex->name, tex->used );
+   }
 }
 

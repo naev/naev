@@ -61,19 +61,6 @@
 glInfo gl_screen; /**< Gives data of current opengl settings. */
 static int gl_activated = 0; /**< Whether or not a window is activated. */
 
-/*
- * graphic list
- */
-/**
- * @brief Represents a node in the texture list.
- */
-typedef struct glTexList_ {
-   struct glTexList_ *next; /**< Next in linked list */
-   glTexture *tex; /**< assosciated texture */
-   int used; /**< counts how many times texture is being used */
-} glTexList;
-static glTexList* texture_list = NULL; /**< Texture list. */
-
 
 /*
  * prototypes
@@ -696,21 +683,12 @@ void gl_defViewport (void)
  */
 void gl_exit (void)
 {
-   glTexList *tex;
-
    /* Exit the OpenGL subsystems. */
    gl_exitRender();
    gl_exitVBO();
    gl_exitTextures();
    gl_exitMatrix();
    gl_exitExtensions();
-
-   /* Make sure there's no texture leak */
-   if (texture_list != NULL) {
-      DEBUG("Texture leak detected!");
-      for (tex=texture_list; tex!=NULL; tex=tex->next)
-         DEBUG("   '%s' opened %d times", tex->tex->name, tex->used );
-   }
 
    /* Shut down the subsystem */
    SDL_QuitSubSystem(SDL_INIT_VIDEO);
