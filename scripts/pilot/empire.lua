@@ -2,7 +2,7 @@ include("scripts/pilot/generic.lua")
 
 
 --[[
--- @brief Creates a might Empire warship.
+-- @brief Creates a mighty Empire warship.
 --
 --    @param empire_create If nil or true actually creates a Empire warship
 --           with a random name and all, otherwise it'll give ship type and
@@ -245,7 +245,6 @@ end
 function empire_name ()
    actors = {
       "Warrior",
-      "Ocelot",
       "Invincible",
       "Enterprise",
       "Rising Star",
@@ -253,7 +252,88 @@ function empire_name ()
       "Defender",
       "Pride",
       "Glory",
-      "Segfault"
+      "Ardent", -- Thanks, British Navy.
+      "Argonaut",
+      "Ardent",
+      "Atlas",
+      "Bellerophon",
+      "Centurion",
+      "Centaur",
+      "Colossus",
+      "Conqueror",
+      "Conquest",
+      "Defiance",
+      "Defiant",
+      "Diligence",
+      "Dragon",
+      "Dreadnought",
+      "Expedition",
+      "Foresight",
+      "Gladiator",
+      "Goliath",
+      "Hecate",
+      "Hope",
+      "Impregnable",
+      "Intrepid",
+      "Leviathan",
+      "Loyalty",
+      "Magnificence",
+      "Majestic",
+      "Minotaur",
+      "Orion",
+      "Panther",
+      "Pegasus",
+      "Resolution",
+      "Revenge",
+      "Robust",
+      "Sceptre",
+      "Sovereign",
+      "Sterling",
+      "Tempest",
+      "Theseus",
+      "Thunderer",
+      "Tremendous",
+      "Trident",
+      "Triumph",
+      "Union",
+      "Unity",
+      "Valiant",
+      "Vengeance",
+      "Victorious",
+      "Victory",
+      "Vigilant",
+      "Zealous",
+      "Cougar", -- Animals
+      "Ocelot",
+      "Lynx",
+      "Bobcat",
+      "Serval",
+      "Leopard",
+      "Lion",
+      "Jaguar",
+      "Leopard",
+      "Tiger",
+      "Cheetah",
+      "Jackal",
+      "Wolf",
+      "Coyote",
+      "Kodiak",
+      "Osprey",
+      "Harrier",
+      "Falcon",
+      "Owl",
+      "Hawk",
+      "Eagle",
+      "Heron",
+      "Ham Sandwich", -- Silliness
+      "Platypus",
+      "Dodo",
+      "Turducken",
+      "Ridiculous",
+      "Rustbucket",
+      "Mediocrity",
+      "Segfault",
+      "Juice Box"
    }
    actor = actors[ rnd.rnd(1,#actors) ]
 
