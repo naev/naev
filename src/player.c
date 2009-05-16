@@ -1692,9 +1692,17 @@ void player_destroyed (void)
    if (player_isFlag(PLAYER_DESTROYED))
       return;
 
-   gl_cameraStatic( player->solid->pos.x, player->solid->pos.y );
+   /* Mark as destroyed. */
    player_setFlag(PLAYER_DESTROYED);
+
+   /* Stop camera. */
+   gl_cameraStatic( player->solid->pos.x, player->solid->pos.y );
+
+   /* Set timer for death menu. */
    player_timer = 5.;
+
+   /* Stop sounds. */
+   player_stopSound();
 }
 
 
