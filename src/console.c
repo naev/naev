@@ -321,6 +321,7 @@ static void cli_input( unsigned int wid, char *unused )
       lua_concat(L, 3);  /* join them */
    }
    status = luaL_loadbuffer( L, lua_tostring(L,-1), lua_strlen(L,-1), "=cli" );
+   lua_remove(L,-2); /**< Remove the string. */
    /* String isn't proper Lua yet. */
    if (status == LUA_ERRSYNTAX) {
       size_t lmsg;
@@ -340,8 +341,16 @@ static void cli_input( unsigned int wid, char *unused )
    }
    /* Print results - all went well. */
    else if (status == 0) {
-      if (lua_pcall(L, 0, LUA_MULTRET, 0))
+      if (lua_pcall(L, 0, LUA_MULTRET, 0)) {
          cli_addMessage( lua_tostring(L, -1) );
+      }
+      if (lua_gettop(L) > 0) {
+         lua_getglobal(L, "print");
+         lua_insert(L, 1);
+         if (lua_pcall(L, lua_gettop(L)-1, 0, 0) != 0)
+            cli_addMessage( "Error printing results." );
+      }
+
       /* Clear stack. */
       lua_settop(L, 0);
       cli_firstline = 1;
