@@ -19,7 +19,10 @@ function empire_create( empire_create )
    end
 
    -- Choose warship type
-   z = rnd.rnd()
+   local z = rnd.rnd()
+   local p
+   local o
+   local ship_name
    if z < 0.5 then
       p,o = empire_createHawking( empire_create )
       if rnd.rnd() < 0.33 then
@@ -45,8 +48,8 @@ end
 -- Creates an empty ship for the Empire warship
 function empire_createEmpty( ship )
    -- Create the pilot
-   pilots   = pilot.add( ship )
-   p        = pilots[1]
+   local pilots   = pilot.add( ship )
+   local p        = pilots[1]
 
    -- Remove outfits
    p:rmOutfit( "all" )
@@ -57,7 +60,7 @@ end
 
 -- Gets a generic empire outfit
 function empire_outfitGeneric( p, o )
-   r = rnd.rnd()
+   local r = rnd.rnd()
    if r < 0.25 then -- Get cannon
       return empire_outfitCannon( p, o )
    elseif r < 0.5 then -- Get turret
@@ -72,7 +75,7 @@ end
 
 -- Gets a Warship empire outfit
 function empire_outfitWarship( p, o )
-   r = rnd.rnd()
+   local r = rnd.rnd()
    if r < 0.25 then -- Get turret
       return empire_outfitTurret( p, o )
    elseif r < 0.4 then -- Get special weapon
@@ -85,7 +88,7 @@ end
 
 -- Tries to add a turret
 function empire_outfitTurret( p, o )
-   turrets = {
+   local turrets = {
       "Heavy Ion Turret",
       "Laser Turret MK2"
    }
@@ -95,7 +98,7 @@ end
 
 -- Tries to add a cannon
 function empire_outfitCannon( p, o )
-   cannons = {
+   local cannons = {
       "Ripper MK2",
       "Laser Cannon MK2",
       "Ion Cannon",
@@ -106,7 +109,7 @@ end
 
 -- Tries to add a secondary weapon
 function empire_outfitSecondary( p, o )
-   sec = {
+   local sec = {
       "150mm Railgun",
       { "Headhunter Launcher", { "Headhunter Missile", 10 } },
       { "EMP Grenade Launcher", { "EMP Grenade", 20 } }
@@ -117,7 +120,7 @@ end
 
 -- Tries to add a ranged weapon
 function empire_outfitRanged( p, o )
-   sec = {
+   local sec = {
       { "Headhunter Launcher", { "Headhunter Missile", 10 } }
    }
    return pilot_outfitAdd( p, o, sec )
@@ -126,7 +129,7 @@ end
 
 -- Tries to add a modification
 function empire_outfitModification( p, o )
-   mods = {
+   local mods = {
       -- Shield
       "Shield Capacitor",
       "Shield Booster",
@@ -146,11 +149,11 @@ function empire_outfitModification( p, o )
 end
 
 function empire_outfitWarshipBase( p, o )
-   armour = {
+   local armour = {
       "Plasteel Plating",
       "Nanobond Plating"
    }
-   reactor = {
+   local reactor = {
       "Reactor Class II",
       "Reactor Class III",
    }
@@ -168,6 +171,7 @@ function empire_createHawking( empire_create )
    end
 
    -- Create the empire ship
+   local p
    if empire_create then
       p = empire_createEmpty( "Empire Hawking" )
    else
@@ -175,7 +179,7 @@ function empire_createHawking( empire_create )
    end
 
    -- Kestrel gets some good stuff
-   o = {}
+   local o = {}
    empire_outfitWarshipBase(p,o)
    empire_outfitTurret(p,o)
    empire_outfitTurret(p,o)
@@ -203,6 +207,7 @@ function empire_createPacifier( empire_create )
    end
 
    -- Create the empire ship
+   local p
    if empire_create then
       p = empire_createEmpty( "Empire Pacifier" )
    else
@@ -210,7 +215,7 @@ function empire_createPacifier( empire_create )
    end
 
    -- Make sure Admonisher has at least one cannon
-   o = {}
+   local o = {}
    empire_outfitCannon(p,o)
    empire_outfitSecondary(p,o)
    empire_outfitModification(p,o)
@@ -230,8 +235,8 @@ end
 -- @brief Tries to get a name from an Empire planet.
 --]]
 function empire_namePlanet ()
-   plt = planet.get( faction.get( "Empire" ) )
-   k   = plt:class()
+   local plt = planet.get( faction.get( "Empire" ) )
+   local k   = plt:class()
    if k == "M" or k == "P" or k == "H" or k == "D" then
       return "ESS " .. plt:name()
    end
@@ -243,7 +248,7 @@ end
 -- @brief Generates pilot names
 --]]
 function empire_name ()
-   actors = {
+   local actors = {
       "Warrior",
       "Invincible",
       "Enterprise",
@@ -335,7 +340,7 @@ function empire_name ()
       "Segfault",
       "Juice Box"
    }
-   actor = actors[ rnd.rnd(1,#actors) ]
+   local actor = actors[ rnd.rnd(1,#actors) ]
 
    return "ESS " .. actor
 end

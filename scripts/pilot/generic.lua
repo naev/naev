@@ -13,7 +13,7 @@
 --    @param outfits Table of outfits to add.  Look at description for special formatting.
 --]]
 function pilot_outfitAdd( p, o, outfits )
-   r = rnd.rnd(1, #outfits)
+   local r = rnd.rnd(1, #outfits)
    if type(outfits[r]) == "string" then
       _insertOutfit( p, o, outfits[r], 1 )
    elseif type(outfits[r]) == "table" then
@@ -22,6 +22,7 @@ function pilot_outfitAdd( p, o, outfits )
    end
 end
 function _insertOutfit( p, o, name, quantity )
+   local q
    -- If pilot actually exists, add outfit
    if type(p) == "userdata" then
       q = p:addOutfit( name, quantity )

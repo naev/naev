@@ -17,7 +17,9 @@ function pirate_create( pirate_create )
    end
 
    -- Choose pirate type
-   z = rnd.rnd()
+   local z = rnd.rnd()
+   local p
+   local o
    if z < 0.25 then
       p,o = pirate_createKestrel( pirate_create )
    elseif z < 0.5 then
@@ -39,8 +41,8 @@ end
 -- Creates an empty ship for the pirate
 function pirate_createEmpty( ship )
    -- Create the pilot
-   pilots   = pilot.add( ship )
-   p        = pilots[1]
+   local pilots   = pilot.add( ship )
+   local p        = pilots[1]
 
    -- Remove outfits
    p:rmOutfit( "all" )
@@ -51,7 +53,7 @@ end
 
 -- Gets a generic pirate outfit
 function pirate_outfitGeneric( p, o )
-   r = rnd.rnd()
+   local r = rnd.rnd()
    if r < 0.25 then -- Get cannon
       return pirate_outfitCannon( p, o )
    elseif r < 0.5 then -- Get turret
@@ -66,7 +68,7 @@ end
 
 -- Tries to add a turret
 function pirate_outfitTurret( p, o )
-   turrets = {
+   local turrets = {
       "Heavy Ion Turret",
       "Laser Turret",
       "Laser Turret MK2"
@@ -77,7 +79,7 @@ end
 
 -- Tries to add a cannon
 function pirate_outfitCannon( p, o )
-   cannons = {
+   local cannons = {
       "Ripper MK2",
       "Laser Cannon",
       "Laser Cannon MK2",
@@ -94,7 +96,7 @@ end
 
 -- Tries to add a secondary weapon
 function pirate_outfitSecondary( p, o )
-   sec = {
+   local sec = {
       "150mm Railgun",
       { "Seeker Launcher", { "Seeker Missile", 15 } },
       { "Headhunter Launcher", { "Headhunter Missile", 10 } },
@@ -108,7 +110,7 @@ end
 
 -- Tries to add a ranged weapon
 function pirate_outfitRanged( p, o )
-   sec = {
+   local sec = {
       { "Seeker Launcher", { "Seeker Missile", 15 } },
       { "Headhunter Launcher", { "Headhunter Missile", 10 } }
    }
@@ -118,7 +120,7 @@ end
 
 -- Tries to add a modification
 function pirate_outfitModification( p, o )
-   mods = {
+   local mods = {
       -- Shield
       "Shield Capacitor",
       "Shield Booster",
@@ -158,6 +160,7 @@ function pirate_createKestrel( pirate_create )
    end
 
    -- Create the pirate ship
+   local p
    if pirate_create then
       p = pirate_createEmpty( "Pirate Kestrel" )
    else
@@ -165,7 +168,7 @@ function pirate_createKestrel( pirate_create )
    end
 
    -- Kestrel gets some good stuff
-   o = {}
+   local o = {}
    pirate_outfitTurret(p,o)
    pirate_outfitRanged(p,o)
    pirate_outfitModification(p,o)
@@ -190,6 +193,7 @@ function pirate_createAdmonisher( pirate_create )
    end
 
    -- Create the pirate ship
+   local p
    if pirate_create then
       p = pirate_createEmpty( "Pirate Admonisher" )
    else
@@ -197,7 +201,7 @@ function pirate_createAdmonisher( pirate_create )
    end
 
    -- Make sure Admonisher has at least one cannon
-   o = {}
+   local o = {}
    pirate_outfitCannon(p,o)
    pirate_outfitSecondary(p,o)
    pirate_outfitModification(p,o)
@@ -220,6 +224,7 @@ function pirate_createAncestor( pirate_create )
    end
 
    -- Create the pirate ship
+   local p
    if pirate_create then
       p = pirate_createEmpty( "Pirate Ancestor" )
    else
@@ -227,7 +232,7 @@ function pirate_createAncestor( pirate_create )
    end
 
    -- Should have at least one cannon and ranged
-   o = {}
+   local o = {}
    pirate_outfitCannon(p,o)
    pirate_outfitRanged(p,o)
    -- Probably won't have much room left
@@ -248,6 +253,7 @@ function pirate_createVendetta( pirate_create )
    end
 
    -- Create the pirate ship
+   local p
    if pirate_create then
       p = pirate_createEmpty( "Pirate Vendetta" )
    else
@@ -255,7 +261,7 @@ function pirate_createVendetta( pirate_create )
    end
 
    -- Biased towards cannons
-   o = {}
+   local o = {}
    pirate_outfitCannon(p,o)
    pirate_outfitCannon(p,o)
    pirate_outfitCannon(p,o)
@@ -273,10 +279,10 @@ end
 -- @brief Generates pilot names
 --]]
 function pirate_name ()
-   articles = {
+   local articles = {
       "The",
    }
-   descriptors = {
+   local descriptors = {
       "Lustful",
       "Bloody",
       "Morbid",
@@ -299,7 +305,7 @@ function pirate_name ()
       "Eternal",
       "Mighty"
    }
-   colours = {
+   local colours = {
       "Red",
       "Green",
       "Blue",
@@ -311,7 +317,7 @@ function pirate_name ()
       "Yellow",
       "Purple"
    }
-   actors = {
+   local actors = {
       "Beard",
       "Moustache",
       "Neckbeard",
@@ -337,7 +343,7 @@ function pirate_name ()
       "Blargh",
       "Terror"
    }
-   actorspecials = {
+   local actorspecials = {
       "Angle Grinder",
       "Belt Sander",
       "Chainsaw",
@@ -358,16 +364,16 @@ function pirate_name ()
       "Bench Grinder",
       "Scythe"
    }
-   article = articles[ rnd.rnd(1,#articles) ]
-   descriptor = descriptors[ rnd.rnd(1,#descriptors) ]
-   colour = colours[ rnd.rnd(1,#colours) ]
-   actor = actors[ rnd.rnd(1,#actors) ]
-   actorspecial = actorspecials[ rnd.rnd(1,#actorspecials) ]
+   local article = articles[ rnd.rnd(1,#articles) ]
+   local descriptor = descriptors[ rnd.rnd(1,#descriptors) ]
+   local colour = colours[ rnd.rnd(1,#colours) ]
+   local actor = actors[ rnd.rnd(1,#actors) ]
+   local actorspecial = actorspecials[ rnd.rnd(1,#actorspecials) ]
 
-   if z < 0.25 then
+   if rnd.rnd() < 0.25 then
       return article .. " " .. actorspecial
    else
-      r = rnd.rnd()
+      local r = rnd.rnd()
       if r < 0.166 then
          return article .. " " .. actor
       elseif r < 0.333 then
