@@ -118,11 +118,10 @@ function attacked ( attacker )
       -- now pilot fights back
       ai.pushtask(0, "attack", attacker)
 
+   -- Let attacker profile handle it.
    elseif task == "attack" then
-      if not ai.exists(target) or (target ~= attacker and 
-            ai.dist(attacker) < ai.dist(target)) then
-         ai.pushtask(0, "attack", attacker)
-      end
+      attack_attacked( attacker )
+
    elseif task == "runaway" then
       if ai.target() ~= attacker then
          ai.poptask()

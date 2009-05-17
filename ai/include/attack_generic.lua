@@ -13,8 +13,8 @@ mem.atk_kill          = true -- Whether or not to finish off the target
 -- Mainly manages targetting nearest enemy.
 --]]
 function atk_g_think ()
-   enemy = ai.getenemy()
-   target = ai.target()
+   local enemy = ai.getenemy()
+   local target = ai.target()
 
    -- Stop attacking if it doesn't exist
 	if not ai.exists(target) then
@@ -37,10 +37,23 @@ end
 
 
 --[[
+-- Attacked function.
+--]]
+function atk_g_attacked( attacker )
+   local target = ai.target()
+
+   if not ai.exists(target) or (target ~= attacker and
+      ai.dist(attacker) < ai.dist(target)) then
+      ai.pushtask(0, "attack", attacker)
+   end
+end
+
+
+--[[
 -- Generic "brute force" attack.  Doesn't really do anything interesting.
 --]]
 function atk_g ()
-	target = ai.target()
+	local target = ai.target()
 
 	-- make sure pilot exists
 	if not ai.exists(target) then
@@ -71,8 +84,8 @@ function atk_g ()
    ai.settarget(target)
 
    -- Get stats about enemy
-	dist  = ai.dist( target ) -- get distance
-   range = ai.getweaprange()
+	local dist  = ai.dist( target ) -- get distance
+   local range = ai.getweaprange()
 
    -- We first bias towards range
    if dist > range * mem.atk_approach then
@@ -93,8 +106,8 @@ end
 -- Enters ranged combat with the target
 --]]
 function atk_g_ranged( target, dist )
-   dir = ai.face(target) -- Normal face the target
-   secondary, special, ammo = ai.secondary("ranged")
+   local dir = ai.face(target) -- Normal face the target
+   local secondary, special, ammo = ai.secondary("ranged")
 
    -- Always use fighter bay
    if secondary == "" then

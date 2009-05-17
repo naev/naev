@@ -31,6 +31,18 @@ function attack ()
 end
 
 
+--[[
+-- Wrapper for the attacked function.
+--]]
+function attack_attacked( attacker )
+   if mem.atk_attacked ~= nil then
+      mem.atk_attacked( attacker )
+   else
+      atk_g_attacked( attacker )
+   end
+end
+
+
 -- [[
 -- Generic function to choose what attack functions match the ship best.
 -- ]]
