@@ -24,12 +24,11 @@ function atk_g_think ()
 
    -- Get new target if it's closer
    if enemy ~= target and enemy ~= nil then
-      dist = ai.dist( target )
-      range = ai.getweaprange()
+      local dist = ai.dist( target )
+      local range = ai.getweaprange()
 
       -- Shouldn't switch targets if close
       if dist > range * mem.atk_changetarget then
-         ai.poptask()
          ai.pushtask( 0, "attack", enemy )
       end
    end
@@ -42,8 +41,18 @@ end
 function atk_g_attacked( attacker )
    local target = ai.target()
 
-   if not ai.exists(target) or (target ~= attacker and
-      ai.dist(attacker) < ai.dist(target)) then
+   -- If no target automatically choose it
+   if not ai.exists(target) then
+      ai.pushtask(0, "attack", attacker)
+      return
+   end
+
+   local tdist  = ai.dist(target)
+   local dist   = ai.dist(attacker)
+   local range  = ai.getweaprange()
+
+   if target ~= attacker and dist < tdist and
+         dist < range * mem.atk_changetarget then
       ai.pushtask(0, "attack", attacker)
    end
 end
@@ -137,7 +146,7 @@ end
 -- Approaches the target
 --]]
 function atk_g_approach( target, dist )
-   dir = ai.aim(target)
+   local dir = ai.aim(target)
    if dir < 10 then
       ai.accel()
    end
@@ -148,9 +157,9 @@ end
 -- Melees the target
 --]]
 function atk_g_melee( target, dist )
-   secondary, special = ai.secondary("melee")
-   dir = ai.aim(target) -- We aim instead of face
-   range = ai.getweaprange()
+   local secondary, special = ai.secondary("melee")
+   local dir = ai.aim(target) -- We aim instead of face
+   local range = ai.getweaprange()
 
    -- Fire non-smart secondary weapons
    if (secondary == "Launcher" and special ~= "Smart") or
