@@ -1635,6 +1635,9 @@ void takeoff( int delay )
 
    if (!landed) return;
 
+   /* Stop player sounds. */
+   player_stopSound();
+
    /* ze music */
    music_choose("takeoff");
 
