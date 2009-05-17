@@ -402,6 +402,9 @@ char* nfile_readFile( int* filesize, const char* path, ... )
       n += pos;
    }
 
+   /* Close the file. */
+   fclose(file);
+
    *filesize = len;
    return buf;
 }
