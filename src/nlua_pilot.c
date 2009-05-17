@@ -246,7 +246,6 @@ static int pilot_getPlayer( lua_State *L )
  */
 static int pilot_addFleet( lua_State *L )
 {
-   NLUA_MIN_ARGS(1);
    Fleet *flt;
    const char *fltname, *fltai;
    int i, j;
@@ -262,6 +261,9 @@ static int pilot_addFleet( lua_State *L )
 
    /* Parse first argument - Fleet Name */
    fltname = luaL_checkstring(L,1);
+
+   /* Set flags to 0. */
+   flags = 0;
    
    /* Parse second argument - Fleet AI Override */
    if (lua_gettop(L) > 1) {
