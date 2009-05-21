@@ -1115,7 +1115,7 @@ static Weapon* weapon_create( const Outfit* outfit,
                else {
                   /* Try to predict where the enemy will be. */
                   /* Time for shots to reach that distance */
-                  t = dist / w->outfit->u.blt.speed;
+                  t = dist / (w->outfit->u.blt.speed + VMOD(*vel));
 
                   /* Position is calculated on where it should be */
                   x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
@@ -1220,7 +1220,10 @@ static Weapon* weapon_create( const Outfit* outfit,
                /* Aim. */
                /* Try to predict where the enemy will be. */
                /* Time for shots to reach that distance */
-               t = dist / w->outfit->u.amm.speed;
+               if (outfit->u.amm.thrust == 0.)
+                  t = dist / (w->outfit->u.amm.speed + VMOD(*vel));
+               else
+                  t = dist / w->outfit->u.amm.speed;
 
                /* Position is calculated on where it should be */
                x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
