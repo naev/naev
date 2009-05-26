@@ -225,7 +225,7 @@
   </mounts>
  </ship>
  <ship name="Mule">
-  <GFX>mule</GFX>
+  <GFX sx="10" sy="10">mule</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Freighter</class>
@@ -791,7 +791,7 @@
  </ship>
 <!-- Cruisers -->
  <ship name="Kestrel">
-  <GFX>kestrel</GFX>
+  <GFX sx="10" sy="10">kestrel</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
@@ -833,7 +833,7 @@
   </mounts>
  </ship>
  <ship name="Pirate Kestrel">
-  <GFX target="kestrel">kestrel_pirate</GFX>
+  <GFX sx="10" sy="10" target="kestrel">kestrel_pirate</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
@@ -874,7 +874,7 @@
   </mounts>
  </ship>
  <ship name="Hawking">
-  <GFX>hawking</GFX>
+  <GFX sx="12" sy="12">hawking</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
@@ -916,7 +916,7 @@
   </mounts>
  </ship>
  <ship name="Empire Hawking">
-  <GFX target="hawking">hawking_empire</GFX>
+  <GFX  sx="12" sy="12" target="hawking">hawking_empire</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
@@ -958,7 +958,7 @@
   </mounts>
  </ship>
  <ship name="Goddard">
-  <GFX>goddard</GFX>
+  <GFX sx="12" sy="12">goddard</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
@@ -1003,7 +1003,7 @@
   </mounts>
  </ship>
  <ship name="Dvaered Goddard">
-  <GFX target="goddard">goddard_dvaered</GFX>
+  <GFX sx="12" sy="12" target="goddard">goddard_dvaered</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
