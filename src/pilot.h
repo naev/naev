@@ -229,6 +229,7 @@ typedef struct Pilot_ {
    int *mounted; /**< Number of mounted outfits on the mount. */
    double player_damage; /**< Accumulates damage done by player for hostileness.
                               In per one of max shield + armour. */
+   double engine_glow; /**< Amount of engine glow to display. */
 
    /* Hook attached to the pilot */
    PilotHook *hooks; /**< Pilot hooks. */

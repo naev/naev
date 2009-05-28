@@ -1407,9 +1407,14 @@ void pilot_render( Pilot* p, const double dt )
 {
    (void) dt;
 
-   gl_blitSprite( p->ship->gfx_space,
-         p->solid->pos.x, p->solid->pos.y,
-         p->tsx, p->tsy, NULL );
+   if (p->ship->gfx_engine != NULL)
+      gl_blitSpriteInterpolate( p->ship->gfx_engine, p->ship->gfx_space, 
+            p->engine_glow, p->solid->pos.x, p->solid->pos.y,
+            p->tsx, p->tsy, NULL );
+   else
+      gl_blitSprite( p->ship->gfx_space,
+            p->solid->pos.x, p->solid->pos.y,
+            p->tsx, p->tsy, NULL );
 }
 
 
@@ -1575,6 +1580,20 @@ void pilot_update( Pilot* pilot, const double dt )
          if (pilot->ptimer < 0.)
             pilot_boardComplete(pilot);
       }
+   }
+
+
+   /* Set engine glow. @todo make it clean. */
+   if (VMOD(pilot->solid->force) > 0) {
+      /*pilot->engine_glow += pilot->thrust / pilot->speed * dt;*/
+      pilot->engine_glow += pilot->speed / pilot->thrust * dt * 1000.;
+      if (pilot->engine_glow > 1.)
+         pilot->engine_glow = 1.;
+   }
+   else if (pilot->engine_glow > 0.) {
+      pilot->engine_glow -= pilot->speed / pilot->thrust * dt * 1000.;
+      if (pilot->engine_glow < 0.)
+         pilot->engine_glow = 0.;
    }
 
    /* update the solid */

@@ -29,6 +29,7 @@
 #define SHIP_DATA    "dat/ship.xml" /**< XML file containing ships. */
 #define SHIP_GFX     "gfx/ship/" /**< Location of ship graphics. */
 #define SHIP_EXT     ".png" /**< Ship graphics extension format. */
+#define SHIP_ENGINE  "_engine" /**< Target graphic extension. */
 #define SHIP_TARGET  "_target" /**< Target graphic extension. */
 #define SHIP_COMM    "_comm" /**< Communicatio graphic extension. */
 
@@ -383,6 +384,16 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          /* Get the comm graphic for future loading. */
          temp->gfx_comm = xml_getStrd(node);
 
+         /* Try to load the engine sprite. */
+         xmlr_attr(node,"engine",stmp);
+         if (stmp != NULL) {
+            snprintf( str, PATH_MAX,
+                  SHIP_GFX"%s"SHIP_ENGINE SHIP_EXT, xml_get(node));
+            temp->gfx_engine = gl_newSprite(str,
+                  temp->gfx_space->sx, temp->gfx_space->sy, 0);
+            free(stmp);
+         }
+
          /* Load the target graphic. */
          xmlr_attr(node,"target",stmp);
          if (stmp != NULL) {
@@ -624,6 +635,8 @@ void ships_free (void)
 
       /* Free graphics. */
       gl_freeTexture(s->gfx_space);
+      if (s->gfx_engine != NULL)
+         gl_freeTexture(s->gfx_engine);
       gl_freeTexture(ship_stack[i].gfx_target);
       free(s->gfx_comm);
    }

@@ -96,6 +96,7 @@ typedef struct Ship_ {
 
    /* graphics */
    glTexture *gfx_space; /**< Space sprite sheet. */
+   glTexture *gfx_engine; /**< Space engine glow sprite sheet. */
    glTexture *gfx_target; /**< Targetting window graphic. */
    char* gfx_comm; /**< Name of graphic for communication. */
 
