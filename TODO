@@ -3,13 +3,9 @@
    VITAL
 
    *) Developer mode
-      *) Run missions
       *) See mount points
       *) Integrate the resource editor possibly.
    *) Asteroids
-   *) Event system
-      *) Like mission system, but they occur naturally/randomly
-      *) Has similar power to mission system
    *) More missions
        *) FLF Nebulae Campaign
        *) Space Trader Missions
@@ -20,12 +16,10 @@
 
    MAJOR
 
-   *) Unique pilot system (besides mission uniques)
    *) Escorts available for hire
    *) Better AI
       *) boids ship fleet movement (have them behave like fleets)
-   *) Options menu do something
-   *) Configuration app for keybindings
+   *) Have configuration save stuff and be able to configure keybindings.
    *) Secondary weapon revamp
       *) Players should be able to configure what outfit they want as secondary
       *) Players should also be able to set hotkeys for secondary weapons
