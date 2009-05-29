@@ -475,3 +475,56 @@ int nfile_touch( const char* path, ... )
    return 0;
 }
 
+
+/**
+ * @brief Tries to write a file.
+ *
+ *    @param data Pointer to the data to write.
+ *    @param len The size of data.
+ *    @param path Path of the file.
+ *    @return 0 on success, -1 on error.
+ */
+int nfile_writeFile( const char* data, int len, const char* path, ... )
+{
+   int n;
+   char base[PATH_MAX];
+   FILE *file;
+   size_t pos;
+   va_list ap;
+
+   if (path == NULL)
+      return -1;
+   else { /* get the message */
+      va_start(ap, path);
+      vsnprintf(base, PATH_MAX, path, ap);
+      va_end(ap);
+   }
+
+   /* Open file. */
+   file = fopen( base, "wb" );
+   if (file == NULL) {
+      WARN("Error occurred while opening '%s': %s", base, strerror(errno));
+      return -1;
+   }
+
+   /* Write the file. */
+   n = 0;
+   while (n < len) {
+      pos = fwrite( &data[n], 1, len-n, file );
+      if (pos <= 0) {
+         WARN("Error occurred while writing '%s': %s", base, strerror(errno));
+         fclose(file);  /* don't care about further errors */
+         return -1;
+      }
+      n += pos;
+   }
+
+   /* Close the file. */
+   if (fclose(file) == EOF) {
+      WARN("Error occurred while closing '%s': %s", base, strerror(errno));
+      return -1;
+   }
+
+   return 0;
+}
+
