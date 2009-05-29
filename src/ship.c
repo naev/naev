@@ -389,8 +389,9 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          if (stmp != NULL) {
             snprintf( str, PATH_MAX,
                   SHIP_GFX"%s"SHIP_ENGINE SHIP_EXT, xml_get(node));
-            temp->gfx_engine = gl_newSprite(str,
-                  temp->gfx_space->sx, temp->gfx_space->sy, 0);
+            temp->gfx_engine = gl_newSprite( str,
+                  temp->gfx_space->sx, temp->gfx_space->sy,
+                  OPENGL_TEX_MIPMAPS );
             free(stmp);
          }
 

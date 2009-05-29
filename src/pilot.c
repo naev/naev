@@ -1583,15 +1583,15 @@ void pilot_update( Pilot* pilot, const double dt )
    }
 
 
-   /* Set engine glow. @todo make it clean. */
+   /* Set engine glow. */
    if (VMOD(pilot->solid->force) > 0) {
       /*pilot->engine_glow += pilot->thrust / pilot->speed * dt;*/
-      pilot->engine_glow += pilot->speed / pilot->thrust * dt * 1000.;
+      pilot->engine_glow += pilot->speed / pilot->thrust * dt * pilot->solid->mass;
       if (pilot->engine_glow > 1.)
          pilot->engine_glow = 1.;
    }
    else if (pilot->engine_glow > 0.) {
-      pilot->engine_glow -= pilot->speed / pilot->thrust * dt * 1000.;
+      pilot->engine_glow -= pilot->speed / pilot->thrust * dt * pilot->solid->mass;
       if (pilot->engine_glow < 0.)
          pilot->engine_glow = 0.;
    }
