@@ -261,6 +261,9 @@ int main( int argc, char** argv )
    }
 
 
+   /* Save configuration. */
+   conf_saveConfig(buf);
+
    /* cleanup some stuff */
    player_cleanup(); /* cleans up the player stuff */
    gui_free(); /* cleans up the player's GUI */
