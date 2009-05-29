@@ -170,6 +170,41 @@ int nfile_fileExists( const char* path, ... )
 
 
 /**
+ * @brief Backup a file, if it exists.
+ *
+ *    @param path printf formatted string pointing to the file to backup.
+ *    @return 0 on success, or if file does not exist, -1 on error.
+ */
+int nfile_backupIfExists( const char* path, ... )
+{
+   char file[PATH_MAX];
+   va_list ap;
+
+   if (path == NULL)
+      return -1;
+   else { /* get the message */
+      va_start(ap, path);
+      vsnprintf(file, PATH_MAX, path, ap);
+      va_end(ap);
+   }
+   
+   if (nfile_fileExists(file)) {
+      char backup[PATH_MAX];
+      snprintf(backup, PATH_MAX, "%s.backup", file);
+      
+      /* To be "portable" */
+      if (nfile_fileExists(backup))
+         remove(backup);
+      if (rename(file, backup) < 0) {
+         WARN("Unable to create back up of '%s': %s", file, strerror(errno));
+         return -1;
+      }
+   }
+   return 0;
+}
+
+
+/**
  * @brief Lists all the visible files in a directory.
  *
  * Should also sort by last modified but that's up to the OS in question.

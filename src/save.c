@@ -99,7 +99,7 @@ static int save_data( xmlTextWriterPtr writer )
  */
 int save_all (void)
 {
-   char file[PATH_MAX], old[PATH_MAX];
+   char file[PATH_MAX];
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
 
@@ -142,15 +142,9 @@ int save_all (void)
    snprintf(file, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player_name);
 
    /* Back up old savegame. */
-   snprintf(old, PATH_MAX, "%s.backup", file);
-   if (nfile_fileExists(file)) {
-      /* To be "portable" */
-      if (nfile_fileExists(old))
-         remove(old);
-      if (rename(file, old) < 0) {
-         WARN("Unable to back up old save: %s. Not saving!", strerror(errno));
-         goto err_writer;
-      }
+   if (nfile_backupIfExists(file) < 0) {
+      WARN("Aborting save...");
+      goto err_writer;
    }
 
    /* Critical section, if crashes here player's game gets corrupted.
