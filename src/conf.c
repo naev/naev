@@ -421,6 +421,9 @@ pos += snprintf(&buf[pos], sizeof(buf)-pos, "-- %s\n", t);
 if (sizeof(buf) != pos) \
    buf[pos++] = '\n';
 
+#define  conf_saveInt(n,i)    \
+pos += snprintf(&buf[pos], sizeof(buf)-pos, n " = %d\n", i);
+
 
 /*
  * saves the current configuration
@@ -439,6 +442,17 @@ int conf_saveConfig ( const char* file )
    pos = 0;
    conf_saveComment(APPNAME " configuration file");
    conf_saveComment("This file is generated and will be rewritten by "APPNAME"!");
+   conf_saveEmptyLine();
+
+   conf_saveComment("The window size or screen resolution");
+   conf_saveComment("Set both of these to 0 to make "APPNAME" try the desktop resolution");
+   if (conf.explicit_dim) {
+      conf_saveInt("width",conf.width);
+      conf_saveInt("height",conf.height);
+   } else {
+      conf_saveInt("width",0);
+      conf_saveInt("height",0);
+   }
    conf_saveEmptyLine();
 
    /** @todo save conf */
