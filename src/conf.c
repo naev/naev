@@ -424,6 +424,12 @@ if (sizeof(buf) != pos) \
 #define  conf_saveInt(n,i)    \
 pos += snprintf(&buf[pos], sizeof(buf)-pos, n " = %d\n", i);
 
+#define  conf_saveBool(n,i)    \
+if (i) \
+   pos += snprintf(&buf[pos], sizeof(buf)-pos, n " = true\n"); \
+else \
+   pos += snprintf(&buf[pos], sizeof(buf)-pos, n " = false\n");
+
 
 /*
  * saves the current configuration
@@ -442,6 +448,19 @@ int conf_saveConfig ( const char* file )
    pos = 0;
    conf_saveComment(APPNAME " configuration file");
    conf_saveComment("This file is generated and will be rewritten by "APPNAME"!");
+   conf_saveEmptyLine();
+
+   conf_saveComment("The factor to use in Full-Scene Anti-Aliasing");
+   conf_saveComment("Anything lower than 2 will simply disable FSAA");
+   conf_saveInt("fsaa",conf.fsaa);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Synchronize framebuffer updates with the vertical blanking interval");
+   conf_saveBool("vsync",conf.vsync);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Use OpenGL Vertex Buffer Objects extensions");
+   conf_saveBool("vbo",conf.vbo);
    conf_saveEmptyLine();
 
    conf_saveComment("The window size or screen resolution");
