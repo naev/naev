@@ -350,10 +350,12 @@ glTexture* ship_loadCommGFX( Ship* s )
  */
 static int ship_parse( Ship *temp, xmlNodePtr parent )
 {
+   int i;
    xmlNodePtr cur, node;
    ShipOutfit *otemp, *ocur;
-   char str[PATH_MAX];
-   char* stmp;
+   char str[PATH_MAX], base[PATH_MAX];
+   char *stmp, *buf;
+   int sx, sy;
    int id;
 
    /* Clear memory. */
@@ -372,10 +374,54 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    do { /* load all the data */
       if (xml_isNode(node,"GFX")) {
 
-         /* Load the base graphic */
-         temp->gfx_space = xml_parseTexture( node,
-               SHIP_GFX"%s"SHIP_EXT, 8, 8,
+         /* Get base graphic name. */
+         buf = xml_get(node);
+
+         /* Get sprite size. */
+         xmlr_attr(node, "sx", stmp );
+         if (stmp != NULL) {
+            sx = atoi(stmp);
+            free(stmp);
+         }
+         else
+            sx = 8;
+         xmlr_attr(node, "sy", stmp );
+         if (stmp != NULL) {
+            sy = atoi(stmp);
+            free(stmp);
+         }
+         else
+            sy = 8;
+
+         /* Get base path. */
+         for (i=0; i<PATH_MAX; i++) {
+            if ((buf[i] == '\0') || (buf[i] == '_')) {
+               base[i] = '\0';
+               break;
+            }
+            base[i] = buf[i]; 
+         }
+         if (i>=PATH_MAX) {
+            WARN("Failed to get base path of '%s'.", buf);
+            continue;
+         }
+
+         /* Load the space sprite. */
+         snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_EXT, base, buf );
+         temp->gfx_space = gl_newSprite( str, sx, sy,
                OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
+
+         /* Load the engine sprite .*/
+         snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
+         temp->gfx_engine = gl_newSprite( str, sx, sy, OPENGL_TEX_MIPMAPS );
+         if (temp->gfx_engine == NULL)
+            WARN("Ship '%s' does not have an engine sprite (%s).", temp->name, str );
+
+         /* Load target graphic. */
+         snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_TARGET SHIP_EXT, base, base );
+         temp->gfx_target = gl_newImage(str, 0);
+         if (temp->gfx_target == NULL)
+            WARN("Ship '%s' does not have a target graphic (%s).", temp->name, str );
 
          /* Calculate mount angle. */
          temp->mangle  = 2.*M_PI;
@@ -383,31 +429,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
          /* Get the comm graphic for future loading. */
          temp->gfx_comm = xml_getStrd(node);
-
-         /* Try to load the engine sprite. */
-         xmlr_attr(node,"engine",stmp);
-         if (stmp != NULL) {
-            snprintf( str, PATH_MAX,
-                  SHIP_GFX"%s"SHIP_ENGINE SHIP_EXT, xml_get(node));
-            temp->gfx_engine = gl_newSprite( str,
-                  temp->gfx_space->sx, temp->gfx_space->sy,
-                  OPENGL_TEX_MIPMAPS );
-            free(stmp);
-         }
-
-         /* Load the target graphic. */
-         xmlr_attr(node,"target",stmp);
-         if (stmp != NULL) {
-            snprintf( str, PATH_MAX,
-                  SHIP_GFX"%s"SHIP_TARGET SHIP_EXT, stmp);
-            temp->gfx_target = gl_newImage(str, 0);
-            free(stmp);
-         }
-         else { /* Load standard target graphic */
-            snprintf( str, PATH_MAX,
-                  SHIP_GFX"%s"SHIP_TARGET SHIP_EXT, xml_get(node));
-            temp->gfx_target = gl_newImage(str, 0);
-         }
       }
 
       xmlr_strd(node,"GUI",temp->gui);

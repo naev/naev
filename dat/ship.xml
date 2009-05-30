@@ -307,7 +307,7 @@
   </mounts>
  </ship>
  <ship name="Empire Lancelot">
-  <GFX target="lancelot">lancelot_empire</GFX>
+  <GFX>lancelot_empire</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
@@ -386,7 +386,7 @@
   </mounts>
  </ship>
  <ship name="Dvaered Vendetta">
-  <GFX target="vendetta">vendetta_dvaered</GFX>
+  <GFX>vendetta_dvaered</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
@@ -425,7 +425,7 @@
   </mounts>
  </ship>
  <ship name="Pirate Vendetta">
-  <GFX target="vendetta">vendetta_pirate</GFX>
+  <GFX>vendetta_pirate</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
@@ -503,7 +503,7 @@
   </mounts>
  </ship>
  <ship name="Dvaered Ancestor">
-  <GFX target="ancestor">ancestor_dvaered</GFX>
+  <GFX>ancestor_dvaered</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Bomber</class>
@@ -543,7 +543,7 @@
   </mounts>
  </ship>
  <ship name="Pirate Ancestor">
-  <GFX target="ancestor">ancestor_pirate</GFX>
+  <GFX>ancestor_pirate</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Bomber</class>
@@ -624,7 +624,7 @@
   </mounts>
  </ship>
  <ship name="Pirate Admonisher">
-  <GFX target="admonisher">admonisher_pirate</GFX>
+  <GFX>admonisher_pirate</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
@@ -666,7 +666,7 @@
   </mounts>
  </ship>
  <ship name="Empire Admonisher">
-  <GFX target="admonisher">admonisher_empire</GFX>
+  <GFX>admonisher_empire</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
@@ -749,7 +749,7 @@
   </mounts>
  </ship>
  <ship name="Empire Pacifier">
-  <GFX target="pacifier">pacifier_empire</GFX>
+  <GFX>pacifier_empire</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
@@ -833,7 +833,7 @@
   </mounts>
  </ship>
  <ship name="Pirate Kestrel">
-  <GFX sx="10" sy="10" target="kestrel">kestrel_pirate</GFX>
+  <GFX sx="10" sy="10">kestrel_pirate</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
@@ -916,7 +916,7 @@
   </mounts>
  </ship>
  <ship name="Empire Hawking">
-  <GFX  sx="12" sy="12" target="hawking">hawking_empire</GFX>
+  <GFX  sx="12" sy="12">hawking_empire</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
@@ -1003,7 +1003,7 @@
   </mounts>
  </ship>
  <ship name="Dvaered Goddard">
-  <GFX sx="12" sy="12" target="goddard">goddard_dvaered</GFX>
+  <GFX sx="12" sy="12">goddard_dvaered</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
