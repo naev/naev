@@ -266,11 +266,11 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    GLfloat mcol[4] = { 0., 0., 0. };
 
    /* Corner cases. */
-   if (inter == 0.) {
+   if (inter == 1.) {
       gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c );
       return;
    }
-   else if (inter == 1.) {
+   else if (inter == 0.) {
       gl_blitTexture( tb, x, y, w, h, tx, ty, tw, th, c );
       return;
    }
@@ -297,7 +297,7 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    /* interpolateo texture, modulate alpha. */
    glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE );
    glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_RGB,      GL_INTERPOLATE );
-   glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_ALPHA,    GL_MODULATE );
+   glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_ALPHA,    GL_INTERPOLATE );
    mcol[3] = inter;
    glTexEnvfv( GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, mcol );
 
@@ -310,7 +310,7 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    /* Arg1. */
    glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_RGB,    GL_TEXTURE1 );
    glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_RGB,   GL_SRC_COLOR );
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_ALPHA,  GL_PRIMARY_COLOR );
+   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_ALPHA,  GL_TEXTURE1 );
    glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_ALPHA, GL_SRC_ALPHA );
    /* Arg2. */
    glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE2_RGB,    GL_CONSTANT );
