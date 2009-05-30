@@ -335,9 +335,7 @@ int ship_basePrice( Ship* s )
  */
 glTexture* ship_loadCommGFX( Ship* s )
 {
-   char buf[PATH_MAX];
-   snprintf( buf, PATH_MAX, SHIP_GFX"%s"SHIP_COMM SHIP_EXT, s->gfx_comm );
-   return gl_newImage( buf, 0 );
+   return gl_newImage( s->gfx_comm, 0 );
 }
 
 
@@ -428,7 +426,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          temp->mangle /= temp->gfx_space->sx * temp->gfx_space->sy;
 
          /* Get the comm graphic for future loading. */
-         temp->gfx_comm = xml_getStrd(node);
+         snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
+         temp->gfx_comm = strdup(str);
       }
 
       xmlr_strd(node,"GUI",temp->gui);
