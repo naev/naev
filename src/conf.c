@@ -614,6 +614,20 @@ int conf_saveConfig ( const char* file )
    conf_saveFloat("music",conf.music);
    conf_saveEmptyLine();
 
+   /* Joystick. */
+   conf_saveComment("The name or numeric index of the joystick to use");
+   conf_saveComment("Setting this to nil disables the joystick support");
+   if (conf.joystick_nam != NULL) {
+      conf_saveString("joystick",conf.joystick_nam);
+   }
+   else if (conf.joystick_ind >= 0) {
+      conf_saveInt("joystick",conf.joystick_ind);
+   }
+   else {
+      conf_saveString("joystick",NULL);
+   }
+   conf_saveEmptyLine();
+
    /* Misc. */
    conf_saveComment("Minimum and maximum zoom factor to use in-game");
    conf_saveComment("At 1.0, no sprites are scaled");
