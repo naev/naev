@@ -658,6 +658,9 @@ int conf_saveConfig ( const char* file )
    conf_saveComment("Keybindings");
    conf_saveEmptyLine();
 
+   /* Use an extra character in keyname to make sure it's always zero-terminated */
+   keyname[sizeof(keyname)-1] = '\0';
+
    /* Iterate over the keybinding names */
    for (keybind = keybindNames; strcmp(*keybind,"end"); keybind++) {
       /* Save a comment line containing the description */
@@ -695,8 +698,10 @@ int conf_saveConfig ( const char* file )
       }
 
       /* Determine the textual name for the key */
-      if (quoteLuaString(keyname, sizeof(keyname)-1, SDL_GetKeyName(key)) == sizeof(keyname)-1)
-         keyname[sizeof(keyname)-1] = '\0';  /* Always make sure we're zero-terminated */
+      quoteLuaString(keyname, sizeof(keyname)-1, SDL_GetKeyName(key));
+      /* If SDL can't describe the key, store it as an integer */
+      if (strcmp(keyname, "\"unknown key\"") == 0)
+         snprintf(keyname, sizeof(keyname)-1, "%d", key);
 
       /* Write out a simple Lua table containing the keybind info */
       pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = { type = \"%s\", mod = \"%s\", key = %s }\n", *keybind, typename, modname, keyname);
