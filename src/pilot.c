@@ -1408,8 +1408,8 @@ void pilot_render( Pilot* p, const double dt )
    (void) dt;
 
    if (p->ship->gfx_engine != NULL)
-      gl_blitSpriteInterpolate( p->ship->gfx_engine, p->ship->gfx_space, 
-            p->engine_glow, p->solid->pos.x, p->solid->pos.y,
+      gl_blitSpriteInterpolate( p->ship->gfx_space, p->ship->gfx_engine, 
+            1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
             p->tsx, p->tsy, NULL );
    else
       gl_blitSprite( p->ship->gfx_space,

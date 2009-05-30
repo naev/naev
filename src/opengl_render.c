@@ -265,6 +265,18 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    GLfloat vertex[4*2], tex[4*2], col[4*4];
    GLfloat mcol[4] = { 0., 0., 0. };
 
+   /* Corner cases. */
+   /*
+   if (inter == 1.) {
+      gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c );
+      return;
+   }
+   else if (inter == 0.) {
+      gl_blitTexture( tb, x, y, w, h, tx, ty, tw, th, c );
+      return;
+   }
+   */
+
    /* No multitexture. */
    if (nglActiveTexture == NULL) {
       if (inter > 0.5)
@@ -273,21 +285,22 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
          gl_blitTexture( tb, x, y, w, h, tx, ty, tw, th, c );
    }
 
+   /* Set default colour. */
+   if (c == NULL)
+      c = &cWhite;
+
    /* Bind the textures. */
    /* Texture 0. */
    nglActiveTexture( GL_TEXTURE0 );
    glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, ta->texture);
-   /* Texture 1. */
-   nglActiveTexture( GL_TEXTURE1 );
-   glEnable(GL_TEXTURE_2D);
-   glBindTexture( GL_TEXTURE_2D, tb->texture);
 
    /* Set the mode. */
-   /* interpolateo texture, modulate alpha. */
    glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE );
+
+   /* Interpolate texture and alpha. */
    glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_RGB,      GL_INTERPOLATE );
-   glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_ALPHA,    GL_MODULATE );
+   glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_ALPHA,    GL_INTERPOLATE );
    mcol[3] = inter;
    glTexEnvfv( GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, mcol );
 
@@ -300,16 +313,58 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    /* Arg1. */
    glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_RGB,    GL_TEXTURE1 );
    glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_RGB,   GL_SRC_COLOR );
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_ALPHA,  GL_PRIMARY_COLOR );
+   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_ALPHA,  GL_TEXTURE1 );
    glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_ALPHA, GL_SRC_ALPHA );
    /* Arg2. */
    glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE2_RGB,    GL_CONSTANT );
    glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND2_RGB,   GL_SRC_ALPHA );
+   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE2_ALPHA,  GL_CONSTANT );
+   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND2_ALPHA, GL_SRC_ALPHA );
 
+   /* Texture 1. */
+   nglActiveTexture( GL_TEXTURE1 );
+   glEnable(GL_TEXTURE_2D);
+   glBindTexture( GL_TEXTURE_2D, tb->texture);
 
-   /* Must have colour for now. */
-   if (c == NULL)
-      c = &cWhite;
+   /* Set the mode. */
+   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE );
+
+   /* Interpolate texture and alpha. */
+   glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_RGB,      GL_MODULATE );
+   glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_ALPHA,    GL_MODULATE );
+
+   /* Arguments. */
+   /* Arg0. */
+   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_RGB,    GL_PREVIOUS );
+   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_RGB,   GL_SRC_COLOR );
+   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_ALPHA,  GL_PREVIOUS );
+   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_ALPHA, GL_SRC_ALPHA );
+   /* Arg1. */
+   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_RGB,    GL_PRIMARY_COLOR );
+   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_RGB,   GL_SRC_COLOR );
+   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_ALPHA,  GL_PRIMARY_COLOR );
+   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_ALPHA, GL_SRC_ALPHA );
+
+   /* Set the colour. */
+   col[0] = c->r;
+   col[1] = c->g;
+   col[2] = c->b;
+   col[3] = c->a;
+   col[4] = col[0];
+   col[5] = col[1];
+   col[6] = col[2];
+   col[7] = col[3];
+   col[8] = col[0];
+   col[9] = col[1];
+   col[10] = col[2];
+   col[11] = col[3];
+   col[12] = col[0];
+   col[13] = col[1];
+   col[14] = col[2];
+   col[15] = col[3];
+   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, 4*4*sizeof(GLfloat), col );
+   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
+         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
 
    /* Set the vertex. */
    vertex[0] = (GLfloat)x;
@@ -338,34 +393,13 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    gl_vboActivateOffset( gl_renderVBO, GL_TEXTURE1,
          gl_renderVBOtexOffset, 2, GL_FLOAT, 0 );
 
-   /* Set the colour. */
-   col[0] = c->r;
-   col[1] = c->g;
-   col[2] = c->b;
-   col[3] = c->a;
-   col[4] = col[0];
-   col[5] = col[1];
-   col[6] = col[2];
-   col[7] = col[3];
-   col[8] = col[0];
-   col[9] = col[1];
-   col[10] = col[2];
-   col[11] = col[3];
-   col[12] = col[0];
-   col[13] = col[1];
-   col[14] = col[2];
-   col[15] = col[3];
-   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, 4*4*sizeof(GLfloat), col );
-   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
-         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
-
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
    gl_vboDeactivate();
-   glDisable(GL_TEXTURE_2D);
    glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+   glDisable(GL_TEXTURE_2D);
    nglActiveTexture( GL_TEXTURE0 );
    glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
    glDisable(GL_TEXTURE_2D);
