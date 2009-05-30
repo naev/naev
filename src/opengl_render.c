@@ -365,7 +365,6 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    /* Clear state. */
    gl_vboDeactivate();
    glDisable(GL_TEXTURE_2D);
-   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
    nglActiveTexture( GL_TEXTURE0 );
    glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
    glDisable(GL_TEXTURE_2D);
