@@ -516,19 +516,19 @@ if (sizeof(buf) != pos) \
    buf[pos++] = '\n';
 
 #define  conf_saveInt(n,i)    \
-pos += snprintf(&buf[pos], sizeof(buf)-pos, n " = %d\n", i);
+pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = %d\n", n, i);
 
 #define  conf_saveFloat(n,f)    \
-pos += snprintf(&buf[pos], sizeof(buf)-pos, n " = %f\n", f);
+pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = %f\n", n, f);
 
 #define  conf_saveBool(n,b)    \
 if (b) \
-   pos += snprintf(&buf[pos], sizeof(buf)-pos, n " = true\n"); \
+   pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = true\n", n); \
 else \
-   pos += snprintf(&buf[pos], sizeof(buf)-pos, n " = false\n");
+   pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = false\n", n);
 
 #define  conf_saveString(n,s) \
-pos += snprintf(&buf[pos], sizeof(buf)-pos, n " = "); \
+pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = ", n); \
 pos += quoteLuaString(&buf[pos], sizeof(buf)-pos, s); \
 if (sizeof(buf) != pos) \
    buf[pos++] = '\n';
