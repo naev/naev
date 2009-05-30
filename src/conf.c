@@ -779,10 +779,11 @@ int conf_saveConfig ( const char* file )
          default:          modname = "none";    break;
       }
 
-      /* Determine the textual name for the key */
-      quoteLuaString(keyname, sizeof(keyname)-1, SDL_GetKeyName(key));
+      /* Determine the textual name for the key, if a keyboard keybind */
+      if (type == KEYBIND_KEYBOARD)
+         quoteLuaString(keyname, sizeof(keyname)-1, SDL_GetKeyName(key));
       /* If SDL can't describe the key, store it as an integer */
-      if (strcmp(keyname, "\"unknown key\"") == 0)
+      if (type != KEYBIND_KEYBOARD || strcmp(keyname, "\"unknown key\"") == 0)
          snprintf(keyname, sizeof(keyname)-1, "%d", key);
 
       /* Write out a simple Lua table containing the keybind info */
