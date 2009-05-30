@@ -414,7 +414,7 @@ void conf_parseCLI( int argc, char** argv )
 }
 
 
-/* 
+/*
  * saves the current configuration
  */
 int conf_saveConfig ( const char* file )

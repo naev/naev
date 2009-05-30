@@ -187,11 +187,11 @@ int nfile_backupIfExists( const char* path, ... )
       vsnprintf(file, PATH_MAX, path, ap);
       va_end(ap);
    }
-   
+
    if (nfile_fileExists(file)) {
       char backup[PATH_MAX];
       snprintf(backup, PATH_MAX, "%s.backup", file);
-      
+
       /* To be "portable" */
       if (nfile_fileExists(backup))
          remove(backup);
