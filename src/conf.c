@@ -449,10 +449,13 @@ int conf_saveConfig ( const char* file )
    }
 
    pos = 0;
+
+   /* Header. */
    conf_saveComment(APPNAME " configuration file");
    conf_saveComment("This file is generated and will be rewritten by "APPNAME"!");
    conf_saveEmptyLine();
 
+   /* OpenGL. */
    conf_saveComment("The factor to use in Full-Scene Anti-Aliasing");
    conf_saveComment("Anything lower than 2 will simply disable FSAA");
    conf_saveInt("fsaa",conf.fsaa);
@@ -466,6 +469,7 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("vbo",conf.vbo);
    conf_saveEmptyLine();
 
+   /* Window. */
    conf_saveComment("The window size or screen resolution");
    conf_saveComment("Set both of these to 0 to make "APPNAME" try the desktop resolution");
    if (conf.explicit_dim) {
@@ -488,6 +492,7 @@ int conf_saveConfig ( const char* file )
 
    /** @todo save conf */
 
+   /* Footer. */
    conf_saveComment("End configuration file");
 
    if (nfile_writeFile(buf, pos, file) < 0) {
