@@ -415,12 +415,399 @@ void conf_parseCLI( int argc, char** argv )
 }
 
 
-/* 
+/**
+ * @brief snprintf-like function to quote and escape a string for use in Lua source code
+ *
+ *    @param str The destination buffer
+ *    @param size The maximum amount of space in str to use
+ *    @param text The string to quote and escape
+ *    @return The number of characters actually written to str
+ */
+static size_t quoteLuaString(char *str, size_t size, const char *text)
+{
+   const unsigned char *in;
+   char slashescape;
+   size_t count;
+
+   if (size == 0)
+      return 0;
+
+   /* Write a lua nil if we are given a NULL pointer */
+   if (text == NULL)
+      return snprintf(str, size, "nil");
+
+   count = 0;
+
+   /* Quote start */
+   str[count++] = '\"';
+   if (count == size)
+      return count;
+
+   /* Iterate over the characters in text */
+   for (in = (const unsigned char *)text; *in != '\0'; in++) {
+      /* Check if we can print this as a friendly backslash-escape */
+      switch (*in) {
+         case '\a':  slashescape = 'a';   break;
+         case '\b':  slashescape = 'b';   break;
+         case '\f':  slashescape = 'f';   break;
+         case '\n':  slashescape = 'n';   break;
+         case '\r':  slashescape = 'r';   break;
+         case '\t':  slashescape = 't';   break;
+         case '\v':  slashescape = 'v';   break;
+         case '\\':  slashescape = '\\';  break;
+         case '\"':  slashescape = '\"';  break;
+         case '\'':  slashescape = '\'';  break;
+         /* Technically, Lua can also represent \0, but we can't in our input */
+         default:    slashescape = 0;     break;
+      }
+      if (slashescape != 0)
+      {
+         /* Yes, we can use a backslash-escape! */
+         str[count++] = '\\';
+         if (count == size)
+            return count;
+
+         str[count++] = slashescape;
+         if (count == size)
+            return count;
+
+         continue;
+      }
+
+      /* Check if this is an otherwise printable ASCII character */
+      if (*in >= 0x20 && *in <= 0x7E)
+      {
+         /* Write it straight to the output if so */
+         str[count++] = *in;
+         if (count == size)
+            return count;
+
+         continue;
+      }
+
+      /* Otherwise, escape the character using a \ddd sequence */
+      str[count++] = '\\';
+      if (count == size)
+         return count;
+
+      count += snprintf(&str[count], size-count, "%03u", *in);
+      if (count == size)
+         return count;
+   }
+
+   /* Quote end */
+   str[count++] = '\"';
+   if (count == size)
+      return count;
+
+   /* zero-terminate, if possible */
+   if (count != size)
+      str[count] = '\0';   /* don't increase count, like snprintf */
+
+   /* return the amount of characters written */
+   return count;
+}
+
+
+/**
+ * @brief A bounded version of strstr
+ *
+ *    @param haystack The string to search in
+ *    @param size The size of haystack
+ *    @param needle The string to search for
+ *    @return A pointer to the first occurrence of needle in haystack, or NULL
+ */
+static const char *strnstr(const char *haystack, size_t size, const char *needle)
+{
+   size_t needlesize;
+   const char *i, *j, *k, *end, *giveup;
+
+   needlesize = strlen(needle);
+   /* We can give up if needle is empty, or haystack can never contain it */
+   if (needlesize == 0 || needlesize > size)
+      return NULL;
+   /* The pointer value that marks the end of haystack */
+   end = haystack + size;
+   /* The maximum value of i, because beyond this haystack cannot contain needle */
+   giveup = end - needlesize + 1;
+
+   /* i is used to iterate over haystack */
+   for (i = haystack; i != giveup; i++) {
+      /* j is used to iterate over part of haystack during comparison */
+      /* k is used to iterate over needle during comparison */
+      for (j = i, k = needle; j != end && *k != '\0'; j++, k++) {
+         /* Bail on the first character that doesn't match */
+         if (*j != *k)
+            break;
+      }
+      /* If we've reached the end of needle, we've found a match */
+      /* i contains the start of our match */
+      if (*k == '\0')
+         return i;
+   }
+   /* Fell through the loops, nothing found */
+   return NULL;
+}
+
+
+#define  conf_saveComment(t)     \
+pos += snprintf(&buf[pos], sizeof(buf)-pos, "-- %s\n", t);
+
+#define  conf_saveEmptyLine()     \
+if (sizeof(buf) != pos) \
+   buf[pos++] = '\n';
+
+#define  conf_saveInt(n,i)    \
+pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = %d\n", n, i);
+
+#define  conf_saveFloat(n,f)    \
+pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = %f\n", n, f);
+
+#define  conf_saveBool(n,b)    \
+if (b) \
+   pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = true\n", n); \
+else \
+   pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = false\n", n);
+
+#define  conf_saveString(n,s) \
+pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = ", n); \
+pos += quoteLuaString(&buf[pos], sizeof(buf)-pos, s); \
+if (sizeof(buf) != pos) \
+   buf[pos++] = '\n';
+
+#define GENERATED_START_COMMENT  "START GENERATED SECTION"
+#define GENERATED_END_COMMENT    "END GENERATED SECTION"
+
+
+/*
  * saves the current configuration
  */
-int conf_saveConfig (void)
+int conf_saveConfig ( const char* file )
 {
-   /** @todo save conf */
+   char *old;
+   const char *oldfooter;
+   int oldsize;
+   char buf[32*1024];
+   size_t pos;
+   const char **keybind;
+   SDLKey key;
+   char keyname[17];
+   KeybindType type;
+   const char *typename;
+   SDLMod mod;
+   const char *modname;
+
+   pos = 0;
+
+   /* Read the old configuration, if possible */
+   if (nfile_fileExists(file) && (old = nfile_readFile(&oldsize, file)) != NULL) {
+      /* See if we can find the generated section and preserve
+       * whatever the user wrote before it */
+      const char *tmp = strnstr(old, oldsize, "-- "GENERATED_START_COMMENT"\n");
+      if (tmp != NULL) {
+         /* Copy over the user content */
+         pos = SDL_min(sizeof(buf), (size_t)(tmp - old));
+         memcpy(buf, old, pos);
+
+         /* See if we can find the end of the section */
+         tmp = strnstr(tmp, oldsize-pos, "-- "GENERATED_END_COMMENT"\n");
+         if (tmp != NULL) {
+            /* Everything after this should also be preserved */
+            oldfooter = tmp + strlen("-- "GENERATED_END_COMMENT"\n");
+            oldsize -= (oldfooter - old);
+         }
+         else {
+            oldfooter = NULL;
+         }
+      }
+      else {
+         /* Treat the contents of the old file as a footer. */
+         oldfooter = old;
+      }
+   }
+   else {
+      old = NULL;
+
+      /* Write a nice header for new configuration files */
+      conf_saveComment(APPNAME " configuration file");
+      conf_saveEmptyLine();
+   }
+
+   /* Back up old configuration. */
+   if (nfile_backupIfExists(file) < 0) {
+      WARN("Not saving configuration.");
+      return -1;
+   }
+
+   /* Header. */
+   conf_saveComment(GENERATED_START_COMMENT);
+   conf_saveComment("The contents of this section will be rewritten by "APPNAME"!");
+   conf_saveEmptyLine();
+
+   /* ndata. */
+   conf_saveComment("The location of "APPNAME"'s data pack, usually called 'ndata'");
+   conf_saveString("data",conf.ndata);
+   conf_saveEmptyLine();
+
+   /* OpenGL. */
+   conf_saveComment("The factor to use in Full-Scene Anti-Aliasing");
+   conf_saveComment("Anything lower than 2 will simply disable FSAA");
+   conf_saveInt("fsaa",conf.fsaa);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Synchronize framebuffer updates with the vertical blanking interval");
+   conf_saveBool("vsync",conf.vsync);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Use OpenGL Vertex Buffer Objects extensions");
+   conf_saveBool("vbo",conf.vbo);
+   conf_saveEmptyLine();
+
+   /* Window. */
+   conf_saveComment("The window size or screen resolution");
+   conf_saveComment("Set both of these to 0 to make "APPNAME" try the desktop resolution");
+   if (conf.explicit_dim) {
+      conf_saveInt("width",conf.width);
+      conf_saveInt("height",conf.height);
+   } else {
+      conf_saveInt("width",0);
+      conf_saveInt("height",0);
+   }
+   conf_saveEmptyLine();
+
+   conf_saveComment("Factor used to divide the above resolution with");
+   conf_saveComment("This is used to lower the rendering resolution, and scale to the above");
+   conf_saveFloat("scalefactor",conf.scalefactor);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Run "APPNAME" in full-screen mode");
+   conf_saveBool("fullscreen",conf.fullscreen);
+   conf_saveEmptyLine();
+
+   /* FPS */
+   conf_saveComment("Display a framerate counter");
+   conf_saveBool("showfps",conf.fps_show);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Limit the rendering framerate");
+   conf_saveInt("maxfps",conf.fps_max);
+   conf_saveEmptyLine();
+
+   /* Sound. */
+   conf_saveComment("Disable all sound");
+   conf_saveBool("nosound",conf.nosound);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Volume of sound effects and music, between 0.0 and 1.0");
+   conf_saveFloat("sound",conf.sound);
+   conf_saveFloat("music",conf.music);
+   conf_saveEmptyLine();
+
+   /* Joystick. */
+   conf_saveComment("The name or numeric index of the joystick to use");
+   conf_saveComment("Setting this to nil disables the joystick support");
+   if (conf.joystick_nam != NULL) {
+      conf_saveString("joystick",conf.joystick_nam);
+   }
+   else if (conf.joystick_ind >= 0) {
+      conf_saveInt("joystick",conf.joystick_ind);
+   }
+   else {
+      conf_saveString("joystick",NULL);
+   }
+   conf_saveEmptyLine();
+
+   /* Misc. */
+   conf_saveComment("Minimum and maximum zoom factor to use in-game");
+   conf_saveComment("At 1.0, no sprites are scaled");
+   conf_saveFloat("zoom_min",conf.zoom_min);
+   conf_saveFloat("zoom_max",conf.zoom_max);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Zooming speed in factor increments per second");
+   conf_saveFloat("zoom_speed",conf.zoom_speed);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Afterburner sensitivity");
+   conf_saveInt("afterburn_sensitivity",conf.afterburn_sens);
+   conf_saveEmptyLine();
+
+
+   /*
+    * Keybindings.
+    */
+   conf_saveEmptyLine();
+   conf_saveComment("Keybindings");
+   conf_saveEmptyLine();
+
+   /* Use an extra character in keyname to make sure it's always zero-terminated */
+   keyname[sizeof(keyname)-1] = '\0';
+
+   /* Iterate over the keybinding names */
+   for (keybind = keybindNames; strcmp(*keybind,"end"); keybind++) {
+      /* Save a comment line containing the description */
+      conf_saveComment(input_getKeybindDescription(*keybind));
+
+      /* Get the keybind */
+      key = input_getKeybind(*keybind, &type, &mod);
+
+      /* Determine the textual name for the keybind type */
+      switch (type) {
+         case KEYBIND_KEYBOARD:  typename = "keyboard";  break;
+         case KEYBIND_JAXISPOS:  typename = "jaxispos";  break;
+         case KEYBIND_JAXISNEG:  typename = "jaxisneg";  break;
+         case KEYBIND_JBUTTON:   typename = "jbutton";   break;
+         default:                typename = NULL;        break;
+      }
+      /* Write a nil if an unknown type */
+      if (typename == NULL || key == SDLK_UNKNOWN) {
+         conf_saveString(*keybind,NULL);
+         continue;
+      }
+
+      /* Determine the textual name for the modifier */
+      switch (mod) {
+         case KMOD_LCTRL:  modname = "lctrl";   break;
+         case KMOD_RCTRL:  modname = "rctrl";   break;
+         case KMOD_LSHIFT: modname = "lshift";  break;
+         case KMOD_RSHIFT: modname = "rshift";  break;
+         case KMOD_LALT:   modname = "lalt";    break;
+         case KMOD_RALT:   modname = "ralt";    break;
+         case KMOD_LMETA:  modname = "lmeta";   break;
+         case KMOD_RMETA:  modname = "rmeta";   break;
+         case KMOD_ALL:    modname = "any";     break;
+         default:          modname = "none";    break;
+      }
+
+      /* Determine the textual name for the key */
+      quoteLuaString(keyname, sizeof(keyname)-1, SDL_GetKeyName(key));
+      /* If SDL can't describe the key, store it as an integer */
+      if (strcmp(keyname, "\"unknown key\"") == 0)
+         snprintf(keyname, sizeof(keyname)-1, "%d", key);
+
+      /* Write out a simple Lua table containing the keybind info */
+      pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = { type = \"%s\", mod = \"%s\", key = %s }\n", *keybind, typename, modname, keyname);
+   }
+   conf_saveEmptyLine();
+
+   /* Footer. */
+   conf_saveComment(GENERATED_END_COMMENT);
+
+   if (old != NULL) {
+      if (oldfooter != NULL) {
+         /* oldfooter and oldsize now reference the old content past the footer */
+         oldsize = SDL_min((size_t)oldsize, sizeof(buf)-pos);
+         memcpy(&buf[pos], oldfooter, oldsize);
+         pos += oldsize;
+      }
+      free(old);
+   }
+
+   if (nfile_writeFile(buf, pos, file) < 0) {
+      WARN("Failed to write configuration!  You'll most likely have to restore it by copying your backup configuration over your current configuration.");
+      return -1;
+   }
+
    return 0;
 }
 

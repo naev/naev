@@ -179,7 +179,7 @@ void input_setDefault (void)
    input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_TAB, KMOD_LCTRL );
    input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_t, KMOD_NONE );
    input_setKeybind( "target_nextHostile", KEYBIND_KEYBOARD, SDLK_r, KMOD_LCTRL );
-   input_setKeybind( "target_prevHostile", KEYBIND_KEYBOARD, SDLK_UNKNOWN, KMOD_NONE );
+   input_setKeybind( "target_prevHostile", KEYBIND_NULL, SDLK_UNKNOWN, KMOD_NONE );
    input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, KMOD_NONE );
    /* Combat. */
    input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, KMOD_ALL );

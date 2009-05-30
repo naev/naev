@@ -64,7 +64,7 @@ void conf_cleanup (void);
 /*
  * saving
  */
-int conf_saveConfig (void);
+int conf_saveConfig ( const char* file );
 
 
 #endif /* CONF_H */
