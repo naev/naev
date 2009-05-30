@@ -427,8 +427,8 @@ pos += snprintf(&buf[pos], sizeof(buf)-pos, n " = %d\n", i);
 #define  conf_saveFloat(n,f)    \
 pos += snprintf(&buf[pos], sizeof(buf)-pos, n " = %f\n", f);
 
-#define  conf_saveBool(n,i)    \
-if (i) \
+#define  conf_saveBool(n,b)    \
+if (b) \
    pos += snprintf(&buf[pos], sizeof(buf)-pos, n " = true\n"); \
 else \
    pos += snprintf(&buf[pos], sizeof(buf)-pos, n " = false\n");
