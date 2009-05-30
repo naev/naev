@@ -490,6 +490,40 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("fullscreen",conf.fullscreen);
    conf_saveEmptyLine();
 
+   /* FPS */
+   conf_saveComment("Display a framerate counter");
+   conf_saveBool("showfps",conf.fps_show);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Limit the rendering framerate");
+   conf_saveInt("maxfps",conf.fps_max);
+   conf_saveEmptyLine();
+
+   /* Sound. */
+   conf_saveComment("Disable all sound");
+   conf_saveBool("nosound",conf.nosound);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Volume of sound effects and music, between 0.0 and 1.0");
+   conf_saveFloat("sound",conf.sound);
+   conf_saveFloat("music",conf.music);
+   conf_saveEmptyLine();
+
+   /* Misc. */
+   conf_saveComment("Minimum and maximum zoom factor to use in-game");
+   conf_saveComment("At 1.0, no sprites are scaled");
+   conf_saveFloat("zoom_min",conf.zoom_min);
+   conf_saveFloat("zoom_max",conf.zoom_max);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Zooming speed in factor increments per second");
+   conf_saveFloat("zoom_speed",conf.zoom_speed);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Afterburner sensitivity");
+   conf_saveInt("afterburn_sensitivity",conf.afterburn_sens);
+   conf_saveEmptyLine();
+
    /** @todo save conf */
 
    /* Footer. */
