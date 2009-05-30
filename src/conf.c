@@ -541,6 +541,13 @@ int conf_saveConfig ( const char* file )
 {
    char buf[8096];
    size_t pos;
+   const char **keybind;
+   SDLKey key;
+   char keyname[17];
+   KeybindType type;
+   const char *typename;
+   SDLMod mod;
+   const char *modname;
 
    /* Back up old configuration. */
    if (nfile_backupIfExists(file) < 0) {
@@ -643,7 +650,58 @@ int conf_saveConfig ( const char* file )
    conf_saveInt("afterburn_sensitivity",conf.afterburn_sens);
    conf_saveEmptyLine();
 
-   /** @todo save conf */
+
+   /*
+    * Keybindings.
+    */
+   conf_saveEmptyLine();
+   conf_saveComment("Keybindings");
+   conf_saveEmptyLine();
+
+   /* Iterate over the keybinding names */
+   for (keybind = keybindNames; strcmp(*keybind,"end"); keybind++) {
+      /* Save a comment line containing the description */
+      conf_saveComment(input_getKeybindDescription(*keybind));
+
+      /* Get the keybind */
+      key = input_getKeybind(*keybind, &type, &mod);
+
+      /* Determine the textual name for the keybind type */
+      switch (type) {
+         case KEYBIND_KEYBOARD:  typename = "keyboard";  break;
+         case KEYBIND_JAXISPOS:  typename = "jaxispos";  break;
+         case KEYBIND_JAXISNEG:  typename = "jaxisneg";  break;
+         case KEYBIND_JBUTTON:   typename = "jbutton";   break;
+         default:                typename = NULL;        break;
+      }
+      /* Write a nil if an unknown type */
+      if (typename == NULL || key == SDLK_UNKNOWN) {
+         conf_saveString(*keybind,NULL);
+         continue;
+      }
+
+      /* Determine the textual name for the modifier */
+      switch (mod) {
+         case KMOD_LCTRL:  modname = "lctrl";   break;
+         case KMOD_RCTRL:  modname = "rctrl";   break;
+         case KMOD_LSHIFT: modname = "lshift";  break;
+         case KMOD_RSHIFT: modname = "rshift";  break;
+         case KMOD_LALT:   modname = "lalt";    break;
+         case KMOD_RALT:   modname = "ralt";    break;
+         case KMOD_LMETA:  modname = "lmeta";   break;
+         case KMOD_RMETA:  modname = "rmeta";   break;
+         case KMOD_ALL:    modname = "any";     break;
+         default:          modname = "none";    break;
+      }
+
+      /* Determine the textual name for the key */
+      if (quoteLuaString(keyname, sizeof(keyname)-1, SDL_GetKeyName(key)) == sizeof(keyname)-1)
+         keyname[sizeof(keyname)-1] = '\0';  /* Always make sure we're zero-terminated */
+
+      /* Write out a simple Lua table containing the keybind info */
+      pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = { type = \"%s\", mod = \"%s\", key = %s }\n", *keybind, typename, modname, keyname);
+   }
+   conf_saveEmptyLine();
 
    /* Footer. */
    conf_saveComment("End configuration file");
