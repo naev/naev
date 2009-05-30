@@ -508,6 +508,47 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
 }
 
 
+/**
+ * @brief A bounded version of strstr
+ *
+ *    @param haystack The string to search in
+ *    @param size The size of haystack
+ *    @param needle The string to search for
+ *    @return A pointer to the first occurrence of needle in haystack, or NULL
+ */
+static const char *strnstr(const char *haystack, size_t size, const char *needle)
+{
+   size_t needlesize;
+   const char *i, *j, *k, *end, *giveup;
+
+   needlesize = strlen(needle);
+   /* We can give up if needle is empty, or haystack can never contain it */
+   if (needlesize == 0 || needlesize > size)
+      return NULL;
+   /* The pointer value that marks the end of haystack */
+   end = haystack + size;
+   /* The maximum value of i, because beyond this haystack cannot contain needle */
+   giveup = end - needlesize + 1;
+
+   /* i is used to iterate over haystack */
+   for (i = haystack; i != giveup; i++) {
+      /* j is used to iterate over part of haystack during comparison */
+      /* k is used to iterate over needle during comparison */
+      for (j = i, k = needle; j != end && *k != '\0'; j++, k++) {
+         /* Bail on the first character that doesn't match */
+         if (*j != *k)
+            break;
+      }
+      /* If we've reached the end of needle, we've found a match */
+      /* i contains the start of our match */
+      if (*k == '\0')
+         return i;
+   }
+   /* Fell through the loops, nothing found */
+   return NULL;
+}
+
+
 #define  conf_saveComment(t)     \
 pos += snprintf(&buf[pos], sizeof(buf)-pos, "-- %s\n", t);
 
@@ -533,13 +574,19 @@ pos += quoteLuaString(&buf[pos], sizeof(buf)-pos, s); \
 if (sizeof(buf) != pos) \
    buf[pos++] = '\n';
 
+#define GENERATED_START_COMMENT  "START GENERATED SECTION"
+#define GENERATED_END_COMMENT    "END GENERATED SECTION"
+
 
 /*
  * saves the current configuration
  */
 int conf_saveConfig ( const char* file )
 {
-   char buf[8096];
+   char *old;
+   const char *oldfooter;
+   int oldsize;
+   char buf[32*1024];
    size_t pos;
    const char **keybind;
    SDLKey key;
@@ -549,17 +596,51 @@ int conf_saveConfig ( const char* file )
    SDLMod mod;
    const char *modname;
 
+   pos = 0;
+
+   /* Read the old configuration, if possible */
+   if (nfile_fileExists(file) && (old = nfile_readFile(&oldsize, file)) != NULL) {
+      /* See if we can find the generated section and preserve
+       * whatever the user wrote before it */
+      const char *tmp = strnstr(old, oldsize, "-- "GENERATED_START_COMMENT"\n");
+      if (tmp != NULL) {
+         /* Copy over the user content */
+         pos = SDL_min(sizeof(buf), (size_t)(tmp - old));
+         memcpy(buf, old, pos);
+
+         /* See if we can find the end of the section */
+         tmp = strnstr(tmp, oldsize-pos, "-- "GENERATED_END_COMMENT"\n");
+         if (tmp != NULL) {
+            /* Everything after this should also be preserved */
+            oldfooter = tmp + strlen("-- "GENERATED_END_COMMENT"\n");
+            oldsize -= (oldfooter - old);
+         }
+         else {
+            oldfooter = NULL;
+         }
+      }
+      else {
+         /* Treat the contents of the old file as a footer. */
+         oldfooter = old;
+      }
+   }
+   else {
+      old = NULL;
+
+      /* Write a nice header for new configuration files */
+      conf_saveComment(APPNAME " configuration file");
+      conf_saveEmptyLine();
+   }
+
    /* Back up old configuration. */
    if (nfile_backupIfExists(file) < 0) {
       WARN("Not saving configuration.");
       return -1;
    }
 
-   pos = 0;
-
    /* Header. */
-   conf_saveComment(APPNAME " configuration file");
-   conf_saveComment("This file is generated and will be rewritten by "APPNAME"!");
+   conf_saveComment(GENERATED_START_COMMENT);
+   conf_saveComment("The contents of this section will be rewritten by "APPNAME"!");
    conf_saveEmptyLine();
 
    /* ndata. */
@@ -709,7 +790,17 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    /* Footer. */
-   conf_saveComment("End configuration file");
+   conf_saveComment(GENERATED_END_COMMENT);
+
+   if (old != NULL) {
+      if (oldfooter != NULL) {
+         /* oldfooter and oldsize now reference the old content past the footer */
+         oldsize = SDL_min((size_t)oldsize, sizeof(buf)-pos);
+         memcpy(&buf[pos], oldfooter, oldsize);
+         pos += oldsize;
+      }
+      free(old);
+   }
 
    if (nfile_writeFile(buf, pos, file) < 0) {
       WARN("Failed to write configuration!  You'll most likely have to restore it by copying your backup configuration over your current configuration.");
