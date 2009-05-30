@@ -165,7 +165,7 @@ void conf_cleanup (void)
  */
 int conf_loadConfig ( const char* file )
 {
-   int i;
+   int i, t;
    double d;
    const char *str, *mod;
    SDLKey key;
@@ -255,11 +255,12 @@ int conf_loadConfig ( const char* file )
             /* gets the key */
             lua_pushstring(L, "key");
             lua_gettable(L, -2);
-            if (lua_isnumber(L, -1))
+            t = lua_type(L, -1);
+            if (t == LUA_TNUMBER)
                key = (int)lua_tonumber(L, -1);
-            else if (lua_isstring(L, -1))
+            else if (t == LUA_TSTRING)
                key = input_keyConv( lua_tostring(L, -1));
-            else if (lua_isnil(L, -1)) {
+            else if (t == LUA_TNIL) {
                WARN("Found keybind with no key field!");
                key = SDLK_UNKNOWN;
             }
