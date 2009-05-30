@@ -414,6 +414,100 @@ void conf_parseCLI( int argc, char** argv )
 }
 
 
+/**
+ * @brief snprintf-like function to quote and escape a string for use in Lua source code
+ *
+ *    @param str The destination buffer
+ *    @param size The maximum amount of space in str to use
+ *    @param text The string to quote and escape
+ *    @return The number of characters actually written to str
+ */
+static size_t quoteLuaString(char *str, size_t size, const char *text)
+{
+   const unsigned char *in;
+   char slashescape;
+   size_t count;
+
+   if (size == 0)
+      return 0;
+
+   /* Write a lua nil if we are given a NULL pointer */
+   if (text == NULL)
+      return snprintf(str, size, "nil");
+
+   count = 0;
+
+   /* Quote start */
+   str[count++] = '\"';
+   if (count == size)
+      return count;
+
+   /* Iterate over the characters in text */
+   for (in = (const unsigned char *)text; *in != '\0'; in++) {
+      /* Check if we can print this as a friendly backslash-escape */
+      switch (*in) {
+         case '\a':  slashescape = 'a';   break;
+         case '\b':  slashescape = 'b';   break;
+         case '\f':  slashescape = 'f';   break;
+         case '\n':  slashescape = 'n';   break;
+         case '\r':  slashescape = 'r';   break;
+         case '\t':  slashescape = 't';   break;
+         case '\v':  slashescape = 'v';   break;
+         case '\\':  slashescape = '\\';  break;
+         case '\"':  slashescape = '\"';  break;
+         case '\'':  slashescape = '\'';  break;
+         /* Technically, Lua can also represent \0, but we can't in our input */
+         default:    slashescape = 0;     break;
+      }
+      if (slashescape != 0)
+      {
+         /* Yes, we can use a backslash-escape! */
+         str[count++] = '\\';
+         if (count == size)
+            return count;
+
+         str[count++] = slashescape;
+         if (count == size)
+            return count;
+
+         continue;
+      }
+
+      /* Check if this is an otherwise printable ASCII character */
+      if (*in >= 0x20 && *in <= 0x7E)
+      {
+         /* Write it straight to the output if so */
+         str[count++] = *in;
+         if (count == size)
+            return count;
+
+         continue;
+      }
+
+      /* Otherwise, escape the character using a \ddd sequence */
+      str[count++] = '\\';
+      if (count == size)
+         return count;
+
+      count += snprintf(&str[count], size-count, "%03u", *in);
+      if (count == size)
+         return count;
+   }
+
+   /* Quote end */
+   str[count++] = '\"';
+   if (count == size)
+      return count;
+
+   /* zero-terminate, if possible */
+   if (count != size)
+      str[count] = '\0';   /* don't increase count, like snprintf */
+
+   /* return the amount of characters written */
+   return count;
+}
+
+
 #define  conf_saveComment(t)     \
 pos += snprintf(&buf[pos], sizeof(buf)-pos, "-- %s\n", t);
 
@@ -432,6 +526,12 @@ if (b) \
    pos += snprintf(&buf[pos], sizeof(buf)-pos, n " = true\n"); \
 else \
    pos += snprintf(&buf[pos], sizeof(buf)-pos, n " = false\n");
+
+#define  conf_saveString(n,s) \
+pos += snprintf(&buf[pos], sizeof(buf)-pos, n " = "); \
+pos += quoteLuaString(&buf[pos], sizeof(buf)-pos, s); \
+if (sizeof(buf) != pos) \
+   buf[pos++] = '\n';
 
 
 /*
@@ -453,6 +553,11 @@ int conf_saveConfig ( const char* file )
    /* Header. */
    conf_saveComment(APPNAME " configuration file");
    conf_saveComment("This file is generated and will be rewritten by "APPNAME"!");
+   conf_saveEmptyLine();
+
+   /* ndata. */
+   conf_saveComment("The location of "APPNAME"'s data pack, usually called 'ndata'");
+   conf_saveString("data",conf.ndata);
    conf_saveEmptyLine();
 
    /* OpenGL. */
