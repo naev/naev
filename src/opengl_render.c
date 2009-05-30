@@ -265,6 +265,16 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
    GLfloat vertex[4*2], tex[4*2], col[4*4];
    GLfloat mcol[4] = { 0., 0., 0. };
 
+   /* Corner cases. */
+   if (inter == 0.) {
+      gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c );
+      return;
+   }
+   else if (inter == 1.) {
+      gl_blitTexture( tb, x, y, w, h, tx, ty, tw, th, c );
+      return;
+   }
+
    /* No multitexture. */
    if (nglActiveTexture == NULL) {
       if (inter > 0.5)
