@@ -384,6 +384,10 @@ glTexture* gl_newImage( const char* path, const unsigned int flags )
 
    /* Load the image */
    cur->tex = gl_loadNewImage(path, flags);
+   if (cur->tex == NULL) {
+      free(cur);
+      return NULL;
+   }
 
    if (texture_list == NULL) /* special condition - creating new list */
       texture_list = cur;
@@ -411,13 +415,13 @@ static glTexture* gl_loadNewImage( const char* path, const unsigned int flags )
    /* load from packfile */
    rw = ndata_rwops( path );
    if (rw == NULL) {
-      ERR("Loading surface from ndata.");
+      WARN("Failed to load surface '%s' from ndata.", path);
       return NULL;
    }
    temp = IMG_Load_RW( rw, 1 );
 
    if (temp == NULL) {
-      ERR("'%s' could not be opened: %s", path, IMG_GetError());
+      WARN("'%s' could not be opened: %s", path, IMG_GetError());
       return NULL;
    }
 
