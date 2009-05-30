@@ -862,10 +862,11 @@ void gl_drawCircleInRect( const double cx, const double cy, const double r,
  */
 static glTexture *gl_genCircle( int radius )
 {
-   int i,j;
+   int i,j,k, n,m;
    SDL_Surface *sur;
-   uint32_t *pix;
+   uint8_t *pix, *buf;
    int h, w;
+   double a;
 
    /* Calculate parameters. */
    w = 2*radius+1;
@@ -880,13 +881,40 @@ static glTexture *gl_genCircle( int radius )
 
    /* Generate the circle. */
    SDL_LockSurface( sur );
-   for (i=0; i<h; i++) {
-      for (j=0; j<w; j++) {
-         /* In radius. */
-         if (pow2(i-radius)+pow2(j-radius) < pow2(radius))
-            pix[i*w+j] = RMASK + BMASK + GMASK + AMASK;
+
+   /* Create temporary buffer to draw circle in. */
+   k = 3;
+   buf = malloc( (h*k) * (w*k) );
+   for (i=0; i<k*h; i++) {
+      for (j=0; j<k*w; j++) {
+         if (pow2(i-k*radius)+pow2(j-k*radius) < pow2(k*radius))
+            buf[ i*k*w + j] = 0xFF;
+         else
+            buf[ i*k*w + j] = 0x00;
       }
    }
+
+   /* Draw the circle with filter. */
+   for (i=0; i<h; i++) {
+      for (j=0; j<w; j++) {
+         /* Calculate blur. */
+         a = 0;
+         for (n=0; n<k; n++) {
+            for (m=0; m<k; m++) {
+               a += buf[ (i+n)*k*k*w + (j+m)*k ];
+            }
+         }
+         a /= k*k;
+
+         /* Set pixel. */
+         pix[i*w*4 + j*4 + 0] = 0xFF;
+         pix[i*w*4 + j*4 + 1] = 0xFF;
+         pix[i*w*4 + j*4 + 2] = 0xFF;
+         pix[i*w*4 + j*4 + 3] = (uint8_t)a;
+      }
+   }
+
+   free(buf);
    SDL_UnlockSurface( sur );
 
    /* Return texture. */
