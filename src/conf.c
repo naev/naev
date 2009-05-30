@@ -424,6 +424,9 @@ if (sizeof(buf) != pos) \
 #define  conf_saveInt(n,i)    \
 pos += snprintf(&buf[pos], sizeof(buf)-pos, n " = %d\n", i);
 
+#define  conf_saveFloat(n,f)    \
+pos += snprintf(&buf[pos], sizeof(buf)-pos, n " = %f\n", f);
+
 #define  conf_saveBool(n,i)    \
 if (i) \
    pos += snprintf(&buf[pos], sizeof(buf)-pos, n " = true\n"); \
@@ -472,6 +475,15 @@ int conf_saveConfig ( const char* file )
       conf_saveInt("width",0);
       conf_saveInt("height",0);
    }
+   conf_saveEmptyLine();
+
+   conf_saveComment("Factor used to divide the above resolution with");
+   conf_saveComment("This is used to lower the rendering resolution, and scale to the above");
+   conf_saveFloat("scalefactor",conf.scalefactor);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Run "APPNAME" in full-screen mode");
+   conf_saveBool("fullscreen",conf.fullscreen);
    conf_saveEmptyLine();
 
    /** @todo save conf */
