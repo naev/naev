@@ -414,6 +414,14 @@ void conf_parseCLI( int argc, char** argv )
 }
 
 
+#define  conf_saveComment(t)     \
+pos += snprintf(&buf[pos], sizeof(buf)-pos, "-- %s\n", t);
+
+#define  conf_saveEmptyLine()     \
+if (sizeof(buf) != pos) \
+   buf[pos++] = '\n';
+
+
 /*
  * saves the current configuration
  */
@@ -429,10 +437,13 @@ int conf_saveConfig ( const char* file )
    }
 
    pos = 0;
-   pos += snprintf(&buf[pos], sizeof(buf)-pos, "-- "APPNAME" configuration file\n");
-   pos += snprintf(&buf[pos], sizeof(buf)-pos, "-- This file is generated and will be rewritten by "APPNAME"!\n\n");
+   conf_saveComment(APPNAME " configuration file");
+   conf_saveComment("This file is generated and will be rewritten by "APPNAME"!");
+   conf_saveEmptyLine();
 
    /** @todo save conf */
+
+   conf_saveComment("End configuration file");
 
    if (nfile_writeFile(buf, pos, file) < 0) {
       WARN("Failed to write configuration!  You'll most likely have to restore it by copying your backup configuration over your current configuration.");
