@@ -72,6 +72,7 @@ static int gl_createWindow( unsigned int flags );
 static int gl_getGLInfo (void);
 static int gl_defState (void);
 static int gl_setupScaling (void);
+static int gl_hint (void);
 /* png */
 static int write_png( const char *file_name, png_bytep *rows,
       int w, int h, int colourtype, int bitdepth );
@@ -559,6 +560,26 @@ static int gl_setupScaling (void)
 
 
 /**
+ * Sets up the opengl hints.
+ */
+static int gl_hint (void)
+{
+   GLenum mod;
+
+   /* Choose what quality to do it at. */
+   mod = GL_NICEST;
+
+   /* Do some hinting. */
+   if (nglGenerateMipmap != NULL)
+      glHint(GL_GENERATE_MIPMAP_HINT, mod);
+   if (nglCompressedTexImage2D != NULL)
+      glHint(GL_TEXTURE_COMPRESSION_HINT, mod);
+
+   return 0;
+}
+
+
+/**
  * @brief Initializes SDL/OpenGL and the works.
  *    @return 0 on success.
  */
@@ -631,8 +652,13 @@ int gl_init (void)
    glClear( GL_COLOR_BUFFER_BIT ); /* must clear the buffer first */
    gl_checkErr();
 
-   /* Initialize subsystems.*/
+   /* Load extenisons. */
    gl_initExtensions();
+
+   /* Start hinting. */
+   gl_hint();
+
+   /* Initialize subsystems.*/
    gl_initMatrix();
    gl_initTextures();
    gl_initVBO();

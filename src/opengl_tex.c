@@ -297,8 +297,8 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
    SDL_UnlockSurface( surface );
 
    /* Create mipmaps. */
-   if (flags & OPENGL_TEX_MIPMAPS) {
-      glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST);
+   if ((flags & OPENGL_TEX_MIPMAPS) && (nglGenerateMipmap != NULL)) {
+      /* Do fancy stuff. */
       if (gl_hasExt("GL_EXT_texture_filter_anisotropic")) {
          glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &param);
          glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, param);
@@ -306,8 +306,8 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 9);
 
-      if (nglGenerateMipmap)
-         nglGenerateMipmap(GL_TEXTURE_2D);
+      /* Now generate the mipmaps. */
+      nglGenerateMipmap(GL_TEXTURE_2D);
    }
 
    /* cleanup */

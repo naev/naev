@@ -116,6 +116,7 @@ void conf_setDefaults (void)
    conf.fsaa         = 1;
    conf.vsync        = 0;
    conf.vbo          = 1;
+   conf.mipmaps      = 1;
 
    /* Window. */
    conf.width        = 800;
@@ -191,6 +192,7 @@ int conf_loadConfig ( const char* file )
       conf_loadInt("fsaa",conf.fsaa);
       conf_loadBool("vsync",conf.vsync);
       conf_loadBool("vbo",conf.vbo);
+      conf_loadBool("mipmaps",conf.mipmaps);
 
       /* Window. */
       w = h = 0;
@@ -661,6 +663,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Use OpenGL Vertex Buffer Objects extensions");
    conf_saveBool("vbo",conf.vbo);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Use OpenGL MipMaps extensions");
+   conf_saveBool("mipmaps",conf.mipmaps);
    conf_saveEmptyLine();
 
    /* Window. */

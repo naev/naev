@@ -28,6 +28,7 @@ static void* gl_extGetProc( const char *proc );
 static int gl_extVBO (void);
 static int gl_extMultitexture (void);
 static int gl_extMipmaps (void);
+static int gl_extCompression (void);
 
 
 /**
@@ -123,11 +124,33 @@ static int gl_extVBO (void)
  */
 static int gl_extMipmaps (void)
 {
+   if (!conf.mipmaps) {
+      nglGenerateMipmap = NULL;
+      return 0;
+   }
+
    nglGenerateMipmap = SDL_GL_GetProcAddress("glGenerateMipmap");
    if (nglGenerateMipmap==NULL)
       nglGenerateMipmap = SDL_GL_GetProcAddress("glGenerateMipmapEXT");
    if (nglGenerateMipmap==NULL)
       WARN("glGenerateMipmap not found.");
+   return 0;
+}
+
+
+/**
+ * @brief Tries to initialize the texture compression.
+ */
+static int gl_extCompression (void)
+{
+   if (gl_hasVersion( 1, 3 )) {
+      nglCompressedTexImage2D = gl_extGetProc("glCompressedTexImage2D");
+   }
+   else if (gl_hasExt("GL_ARB_texture_compression")) {
+      nglCompressedTexImage2D = gl_extGetProc("glCompressedTexImage2DARB");
+   }
+   else
+      WARN("GL_ARB_texture_compression not found.");
    return 0;
 }
 
@@ -142,6 +165,7 @@ int gl_initExtensions (void)
    gl_extMultitexture();
    gl_extVBO();
    gl_extMipmaps();
+   gl_extCompression();
 
    return 0;
 }

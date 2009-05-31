@@ -22,6 +22,7 @@ typedef struct PlayerConf_s {
    int fsaa; /**< Full Scene Anti-Aliasing to use. */
    int vsync; /**< Whether or not to use vsync. */
    int vbo; /**< Use vbo. */
+   int mipmaps; /**< Use mipmaps. */
 
    /* Window dimensions. */
    int width; /**< Width of the window to use. */

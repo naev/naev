@@ -26,6 +26,9 @@ void* (APIENTRY *nglMapBuffer)(GLenum target, GLenum access);
 void (APIENTRY *nglUnmapBuffer)(GLenum target);
 void (APIENTRY *nglDeleteBuffers)(GLsizei n, const GLuint* ids);
 
+/* GL_ARB_texture_compression */
+void (APIENTRY *nglCompressedTexImage2D)(GLenum, GLint, GLenum, GLsizei, GLsizei, GLint, GLsizei, const GLvoid *);
+
 
 /*
  * Initializes the extensions.
