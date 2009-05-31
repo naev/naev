@@ -117,6 +117,7 @@ void conf_setDefaults (void)
    conf.vsync        = 0;
    conf.vbo          = 1;
    conf.mipmaps      = 1;
+   conf.compress     = 0;
 
    /* Window. */
    conf.width        = 800;
@@ -193,6 +194,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool("vsync",conf.vsync);
       conf_loadBool("vbo",conf.vbo);
       conf_loadBool("mipmaps",conf.mipmaps);
+      conf_loadBool("compress",conf.compress);
 
       /* Window. */
       w = h = 0;
@@ -665,8 +667,12 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("vbo",conf.vbo);
    conf_saveEmptyLine();
 
-   conf_saveComment("Use OpenGL MipMaps extensions");
+   conf_saveComment("Use OpenGL MipMaps");
    conf_saveBool("mipmaps",conf.mipmaps);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Use OpenGL Texture Compression");
+   conf_saveBool("compress",conf.compress);
    conf_saveEmptyLine();
 
    /* Window. */

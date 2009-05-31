@@ -154,6 +154,11 @@ static int gl_extCompression (void)
    int i, found;
    GLint num, *ext;
 
+   if (!conf.compress) {
+      nglCompressedTexImage2D = NULL;
+      return 0;
+   }
+
    /* Find the extension. */
    if (gl_hasVersion( 1, 3 )) {
       nglCompressedTexImage2D = gl_extGetProc("glCompressedTexImage2D");

@@ -23,6 +23,7 @@ typedef struct PlayerConf_s {
    int vsync; /**< Whether or not to use vsync. */
    int vbo; /**< Use vbo. */
    int mipmaps; /**< Use mipmaps. */
+   int compress; /**< Use texture compression. */
 
    /* Window dimensions. */
    int width; /**< Width of the window to use. */
