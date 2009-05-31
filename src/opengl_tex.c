@@ -292,8 +292,15 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
 
    /* now lead the texture data up */
    SDL_LockSurface( surface );
-   glTexImage2D( GL_TEXTURE_2D, 0, surface->format->BytesPerPixel,
-         surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
+   if (nglCompressedTexImage2D != NULL) {
+      glTexImage2D( GL_TEXTURE_2D, 0, surface->format->BytesPerPixel,
+            surface->w, surface->h, 0, GL_COMPRESSED_RGBA,
+            GL_UNSIGNED_BYTE, surface->pixels );
+   }
+   else {
+      glTexImage2D( GL_TEXTURE_2D, 0, surface->format->BytesPerPixel,
+            surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels );
+   }
    SDL_UnlockSurface( surface );
 
    /* Create mipmaps. */
