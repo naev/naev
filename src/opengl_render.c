@@ -885,12 +885,11 @@ static glTexture *gl_genCircle( int radius )
    /* Create temporary buffer to draw circle in. */
    k = 3;
    buf = malloc( (h*k) * (w*k) );
+   memset( buf, 0, (h*k) * (w*k) );
    for (i=0; i<k*h; i++) {
       for (j=0; j<k*w; j++) {
          if (pow2(i-k*radius)+pow2(j-k*radius) < pow2(k*radius))
             buf[ i*k*w + j] = 0xFF;
-         else
-            buf[ i*k*w + j] = 0x00;
       }
    }
 
@@ -898,10 +897,10 @@ static glTexture *gl_genCircle( int radius )
    for (i=0; i<h; i++) {
       for (j=0; j<w; j++) {
          /* Calculate blur. */
-         a = 0;
+         a = 0.;
          for (n=0; n<k; n++) {
             for (m=0; m<k; m++) {
-               a += buf[ (i+n)*k*k*w + (j+m)*k ];
+               a += buf[ (i*k+n)*k*w + (j*k+m) ];
             }
          }
          a /= k*k;
