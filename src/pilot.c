@@ -70,7 +70,7 @@ extern void ai_think( Pilot* pilot, const double dt ); /**< from ai.c */
 /* internal */
 /* update. */
 static int pilot_shootWeapon( Pilot* p, PilotOutfit* w );
-static void pilot_hyperspace( Pilot* pilot );
+static void pilot_hyperspace( Pilot* pilot, double dt );
 static void pilot_refuel( Pilot *p, double dt );
 /* cargo. */
 static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup );
@@ -1633,8 +1633,9 @@ void pilot_update( Pilot* pilot, const double dt )
  * @brief Handles pilot's hyperspace states.
  *
  *    @param p Pilot to handle hyperspace navigation.
+ *    @param dt Current deltatick.
  */
-static void pilot_hyperspace( Pilot* p )
+static void pilot_hyperspace( Pilot* p, double dt )
 {
    double diff;
 
@@ -1691,6 +1692,9 @@ static void pilot_hyperspace( Pilot* p )
          }
       }
    }
+
+   if (p == player)
+      player_updateSpecific( p, dt );
 }
 
 
@@ -2869,7 +2873,7 @@ void pilots_update( double dt )
 
          /* Hyperspace gets special treatment */
          if (pilot_isFlag(p, PILOT_HYP_PREP))
-            pilot_hyperspace(p);
+            pilot_hyperspace(p, dt);
          /* Entering hyperspace. */
          else if (pilot_isFlag(p, PILOT_HYP_END)) {
             if (VMOD(p->solid->vel) < 2*p->speed)

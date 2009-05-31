@@ -127,6 +127,7 @@ void player_dead (void);
 void player_destroyed (void); 
 void player_think( Pilot* pplayer, const double dt );
 void player_update( Pilot *pplayer, const double dt );
+void player_updateSpecific( Pilot *pplayer, const double dt );
 void player_brokeHyperspace (void);
 double player_faceHyperspace (void);
 

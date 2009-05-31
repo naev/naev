@@ -1003,13 +1003,29 @@ void player_think( Pilot* pplayer, const double dt )
  */
 void player_update( Pilot *pplayer, const double dt )
 {
+   /* Update normally. */
+   pilot_update( pplayer, dt );
+
+   /* Update player specific stuff. */
+   player_updateSpecific( pplayer, dt );
+}
+
+
+/**
+ * @brief Does a pleyr specific update.
+ *
+ *    @param pplayer Player to update.
+ *    @param dt Current deltatick.
+ */
+void player_updateSpecific( Pilot *pplayer, const double dt )
+{
    int engsound;
 
    /* Calculate engine sound to use. */
    if (player_isFlag(PLAYER_AFTERBURNER))
-      engsound = player->afterburner->outfit->u.afb.sound;
-   else if (player_acc > 0.)
-      engsound = player->ship->sound;
+      engsound = pplayer->afterburner->outfit->u.afb.sound;
+   else if (VMOD(pplayer->solid->force) > 0.)
+      engsound = pplayer->ship->sound;
    else
       engsound = -1;
    /* See if sound must change. */
@@ -1019,9 +1035,6 @@ void player_update( Pilot *pplayer, const double dt )
          sound_playGroup( PLAYER_ENGINE_CHANNEL, engsound, 0 );
    }
    player_lastEngineSound = engsound;
-
-   /* Now update normally. */
-   pilot_update( pplayer, dt );
 
    /* Sound. */
    sound_updateListener( pplayer->solid->dir,
