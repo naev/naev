@@ -1062,6 +1062,8 @@ static void player_updateZoom( double dt )
          /* Get zoom. */
          tz = MIN( dx, dy );
       }
+      else /* Avoid using uninitialized data .*/
+         tz = z;
    }
    else {
       /* Depends on velocity normally.
