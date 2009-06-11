@@ -12,6 +12,12 @@ DEBUG := 1
 OS ?= LINUX
 
 
+# Sound
+#
+USE_OPENAL ?= 0
+USE_SDLMIX ?= 1
+
+
 # Data path
 #NDATA_DEF := \"../ndata\"
 

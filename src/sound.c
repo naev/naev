@@ -17,16 +17,16 @@
 
 #include "SDL.h"
 #include "SDL_thread.h"
-#include "SDL_mixer.h"
 
+#include "sound_priv.h"
+#include "sound_openal.h"
+#include "sound_sdlmix.h"
 #include "log.h"
 #include "ndata.h"
 #include "music.h"
 #include "physics.h"
 #include "conf.h"
 
-
-#define SOUND_CHANNEL_MAX  256 /**< Number of sound channels to allocate. Overkill. */
 
 #define SOUND_PREFIX       "snd/sounds/" /**< Prefix of where to find sounds. */
 #define SOUND_SUFFIX_WAV   ".wav" /**< Suffix of sounds. */
@@ -36,82 +36,64 @@
 /*
  * Global sound properties.
  */
-int sound_disabled = 0; /**< Whether sound is disabled. */
-static double sound_curVolume = 0.; /**< Current sound volume. */
-static int sound_reserved = 0; /**< Amount of reserved channels. */
-static double sound_pos[3]; /**< Position of listener. */
-
-
-/**
- * @struct alSound
- *
- * @brief Contains a sound buffer.
- */
-typedef struct alSound_ {
-   char *name; /**< Buffer's name. */
-   Mix_Chunk *buffer; /**< Buffer data. */
-} alSound;
-
-
-/**
- * @typedef voice_state_t
- * @brief The state of a voice.
- * @sa alVoice
- */
-typedef enum voice_state_ {
-   VOICE_STOPPED, /**< Voice is stopped. */
-   VOICE_PLAYING, /**< Voice is playing. */
-   VOICE_DESTROY  /**< Voice should get destroyed asap. */
-} voice_state_t;
-
-
-/**
- * @struct alVoice
- *
- * @brief Represents a voice in the game.
- *
- * A voice would be any object that is creating sound.
- */
-typedef struct alVoice_ {
-   struct alVoice_ *prev; /**< Linked list previous member. */
-   struct alVoice_ *next; /**< Linked list next member. */
-
-   int id; /**< Identifier of the voice. */
-   double pos[2]; /**< Position of the voice. */
-   int channel; /**< Channel currently in use. */
-   unsigned int state; /**< Current state of the sound. */
-} alVoice;
+int sound_disabled            = 0; /**< Whether sound is disabled. */
+static int sound_reserved     = 0; /**< Amount of reserved channels. */
 
 
 /*
- * list of sounds available (all preloaded into a buffer)
+ * Sound list.
  */
-static int voice_genid = 0; /**< Voice identifier generator. */
-static alSound *sound_list = NULL; /**< List of available sounds. */
-static int sound_nlist = 0; /**< Number of available sounds. */
+static alSound *sound_list    = NULL; /**< List of available sounds. */
+static int sound_nlist        = 0; /**< Number of available sounds. */
 
 
 /*
- * voice linked list.
+ * Voices.
  */
-static alVoice *voice_active = NULL; /**< Active voices. */
-static alVoice *voice_pool = NULL; /**< Pool of free voices. */
+static int voice_genid        = 0; /**< Voice identifier generator. */
+alVoice *voice_active  = NULL; /**< Active voices. */
+static alVoice *voice_pool    = NULL; /**< Pool of free voices. */
+
+
+
+/*
+ * Function pointers for backends.
+ */
+/* Creation. */
+int  (*sound_sys_init) (void)          = NULL;
+void (*sound_sys_exit) (void)          = NULL;
+void (*sound_sys_update) (void)        = NULL;
+ /* Sound creation. */
+int  (*sound_sys_load) ( alSound *snd, const char *filename ) = NULL;
+void (*sound_sys_free) ( alSound *snd ) = NULL;
+ /* Sound settings. */
+int  (*sound_sys_volume) ( const double vol ) = NULL;
+double (*sound_sys_getVolume) (void)   = NULL;
+ /* Sound playing. */
+int  (*sound_sys_play) ( alVoice *v, alSound *s )   = NULL;
+int  (*sound_sys_playPos) ( alVoice *v, alSound *s,
+      double px, double py, double vx, double vy ) = NULL;
+int  (*sound_sys_updatePos) ( alVoice *v, double px, double py,
+      double vx, double vy )           = NULL;
+void (*sound_sys_updateVoice) ( alVoice *v ) = NULL;
+ /* Sound management. */
+void (*sound_sys_stop) ( alVoice *v )  = NULL;
+void (*sound_sys_pause) (void)         = NULL;
+void (*sound_sys_resume) (void)        = NULL;
+/* Listener. */
+int (*sound_sys_updateListener) ( double dir, double px, double py,
+      double vx, double vy )           = NULL;
+
 
 
 /*
  * prototypes
  */
 /* General. */
-static void print_MixerVersion (void);
 static int sound_makeList (void);
-static Mix_Chunk *sound_load( const char *filename );
+static int sound_load( alSound *snd, const char *filename );
 static void sound_free( alSound *snd );
 /* Voices. */
-static int sound_updatePosVoice( alVoice *v, double x, double y );
-static void voice_markStopped( int channel );
-static alVoice* voice_new (void);
-static int voice_add( alVoice* v );
-static alVoice* voice_get( int id );
 
 
 /**
@@ -121,6 +103,8 @@ static alVoice* voice_get( int id );
  */
 int sound_init (void)
 {
+   int ret;
+
    /* See if sound is disabled. */
    if (conf.nosound) {
       sound_disabled = 1;
@@ -128,69 +112,107 @@ int sound_init (void)
    }
 
    /* Parse conf. */
-   if (sound_disabled && music_disabled) return 0;
+   if (sound_disabled && music_disabled)
+      return 0;
 
-   SDL_InitSubSystem(SDL_INIT_AUDIO);
-   if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT , 2, 1024) < 0) {
-      WARN("Opening Audio: %s", Mix_GetError());
-      DEBUG();
-      sound_disabled = 1; /* Just disable sound then. */
+   /* Choose sound system. */
+   if (1) {
+#if USE_SDLMIX
+      /*
+       * SDL_mixer Sound.
+       */
+      /* Creation. */
+      sound_sys_init       = sound_mix_init;
+      sound_sys_exit       = sound_mix_exit;
+      sound_sys_update     = sound_mix_update;
+      /* Sound Creation. */
+      sound_sys_load       = sound_mix_load;
+      sound_sys_free       = sound_mix_free;
+      /* Sound settings. */
+      sound_sys_volume     = sound_mix_volume;
+      sound_sys_getVolume  = sound_mix_getVolume;
+      /* Sound playing. */
+      sound_sys_play       = sound_mix_play;
+      sound_sys_playPos    = sound_mix_playPos;
+      sound_sys_updatePos  = sound_mix_updatePos;
+      sound_sys_updateVoice = sound_mix_updateVoice;
+      /* Sound management. */
+      sound_sys_stop       = sound_mix_stop;
+      sound_sys_pause      = sound_mix_pause;
+      sound_sys_resume     = sound_mix_resume;
+      /* Listener. */
+      sound_sys_updateListener = sound_mix_updateListener;
+
+      /*
+       * SDL_mixer Music.
+       */
+#else /* USE_SDLMIX */
+      WARN("SDL_mixer support not compiled in!");
+      sound_disabled = 1;
       music_disabled = 1;
-      return -1;
+      return 0;
+#endif /* USE_SDLMIX */
    }
-   Mix_AllocateChannels(SOUND_CHANNEL_MAX);
+   else {
+#if USE_OPENAL
+      /*
+       * OpenAL Sound.
+       */
+      /* Creation. */
+      sound_sys_init       = sound_al_init;
+      sound_sys_exit       = sound_al_exit;
+      sound_sys_update     = sound_al_update;
+      /* Sound Creation. */
+      sound_sys_load       = sound_al_load;
+      sound_sys_exit       = sound_al_exit;
+      /* Sound settings. */
+      sound_sys_volume     = sound_al_volume;
+      sound_sys_getVolume  = sound_al_getVolume;
+      /* Sound playing. */
+      sound_sys_play       = sound_al_play;
+      sound_sys_playPos    = sound_al_playPos;
+      sound_sys_updatePos  = sound_al_updatePos;
+      /* Sound management. */
+      sound_sys_stop       = sound_al_stop;
+      sound_sys_pause      = sound_al_pause;
+      sound_sys_resume     = sound_al_resume;
+      /* Listener. */
+      sound_sys_updateListener = sound_al_updateListener;
 
-   /* Debug magic. */
-   print_MixerVersion();
-
-   if (!sound_disabled) {
-      /* load up all the sounds */
-      sound_makeList();
-      if ((conf.sound > 1.) || (conf.sound < 0.))
-         WARN("Sound has invalid value, clamping to [0:1].");
-      sound_volume(conf.sound);
-
-      /* Finish function. */
-      Mix_ChannelFinished( voice_markStopped );
+      /*
+       * OpenAL Music.
+       */
+#else /* USE_OPENAL */
+      WARN("OpenAL support not compiled in!");
+      sound_disabled = 1;
+      music_disabled = 1;
+      return 0;
+#endif /* USE_OPENAL */
    }
 
-   /* Initialize the music */
-   music_init();
+   /* Initialize subsystems. */
+   ret = sound_sys_init();
+   if (ret != 0) {
+      sound_disabled = 1;
+      music_disabled = 1;
+      return ret;
+   }
+   ret = music_init();
+   if (ret != 0) {
+      music_disabled = 1;
+   }
+
+   /* Load available sounds. */
+   ret = sound_makeList();
+   if (ret != 0)
+      return ret;
+
+   /* Set volume. */
+   if ((conf.sound > 1.) || (conf.sound < 0.))
+      WARN("Sound has invalid value, clamping to [0:1].");
+   sound_volume(conf.sound);
 
    return 0;
-}
-
-/**
- * @brief Prints the current and compiled SDL_Mixer versions.
- */
-static void print_MixerVersion (void)
-{
-   int frequency;
-   Uint16 format;
-   int channels;
-   SDL_version compiled;
-   const SDL_version *linked;
-   char device[PATH_MAX];
-
-   /* Query stuff. */
-   Mix_QuerySpec(&frequency, &format, &channels);
-   MIX_VERSION(&compiled);
-   linked = Mix_Linked_Version();
-   SDL_AudioDriverName(device, PATH_MAX);
-
-   /* Version itself. */
-   DEBUG("SDL_Mixer: %d.%d.%d [compiled: %d.%d.%d]", 
-         compiled.major, compiled.minor, compiled.patch,
-         linked->major, linked->minor, linked->patch);
-   /* Check if major/minor version differ. */
-   if ((linked->major*100 + linked->minor) > compiled.major*100 + compiled.minor)
-      WARN("SDL_Mixer is newer then compiled version");
-   if ((linked->major*100 + linked->minor) < compiled.major*100 + compiled.minor)
-      WARN("SDL_Mixer is older then compiled version.");
-   /* Print other debug info. */
-   DEBUG("Driver: %s",device);
-   DEBUG("Format: %d Hz %s", frequency, (channels == 2) ? "Stereo" : "Mono");
-   DEBUG();
 }
 
 
@@ -202,8 +224,8 @@ void sound_exit (void)
    int i;
    alVoice *v;
 
-   /* Close the audio. */
-   Mix_CloseAudio();
+   /* Exit sound subsystem. */
+   sound_sys_exit();
 
    /* free the voices. */
    while (voice_active != NULL) {
@@ -224,6 +246,7 @@ void sound_exit (void)
    sound_list = NULL;
    sound_nlist = 0;
 
+   /* Exit music subsystem. */
    music_exit();
 }
 
@@ -258,6 +281,7 @@ int sound_get( char* name )
 int sound_play( int sound )
 {
    alVoice *v;
+   alSound *s;
 
    if (sound_disabled) return 0;
 
@@ -267,13 +291,14 @@ int sound_play( int sound )
    /* Gets a new voice. */
    v = voice_new();
 
-   v->channel = Mix_PlayChannel( -1, sound_list[sound].buffer, 0 );
-  
-   /*
-   if (v->channel < 0)
-      WARN("Unable to play sound: %s", Mix_GetError());
-   */
+   /* Get the sound. */
+   s = &sound_list[sound];
 
+   /* Try to play the sound. */
+   if (sound_sys_play( v, s ))
+      return -1;
+
+   /* Set state and add to list. */
    v->state = VOICE_PLAYING;
    v->id = ++voice_genid;
    voice_add(v);
@@ -283,62 +308,19 @@ int sound_play( int sound )
 
 
 /**
- * @brief Updates the position of a voice.
- *
- *    @param v Voice to update.
- *    @param x New X position for the voice.
- *    @param y New Y position for the voice.
- *    @return 0 on success.
- */
-static int sound_updatePosVoice( alVoice *v, double x, double y )
-{
-   double angle, dist;
-   double px, py;
-   double d;
-   int idist;
-
-   /* Update position. */
-   v->pos[0] = x;
-   v->pos[1] = y;
-
-   /* Get relative position. */
-   px = v->pos[0] - sound_pos[0];
-   py = v->pos[1] - sound_pos[1];
-
-   /* Exact calculations. */
-   angle = sound_pos[2] - ANGLE(px,py)/M_PI*180.;
-   dist = MOD(px,py);
-
-   /* Need to make sure distance doesn't overflow. */
-   d = CLAMP( 0., 1., (dist - 50.) / 2500. );
-   d = 255. * sqrt(d);
-   idist = MIN( (int)d, 255);
-
-   /* Panning also gets modulated at low distance. */
-   if (idist < 10)
-      angle *= d/10.;
-
-   /* Try to play the song. */
-   if (Mix_SetPosition( v->channel, (Sint16)angle, (Uint8)idist) < 0) {
-      WARN("Unable to set sound position: %s", Mix_GetError());
-      return -1;
-   }
-
-   return 0;
-}
-
-
-/**
  * @brief Plays a sound based on position.
  *
  *    @param sound Sound to play.
- *    @param x X position of the sound.
- *    @param y Y position of the sound.
+ *    @param px X position of the sound.
+ *    @param py Y position of the sound.
+ *    @param vx X velocity of the sound.
+ *    @param vy Y velocity of the sound.
  *    @return 0 on success.
  */
-int sound_playPos( int sound, double x, double y )
+int sound_playPos( int sound, double px, double py, double vx, double vy )
 {
    alVoice *v;
+   alSound *s;
 
    if (sound_disabled) return 0;
 
@@ -348,19 +330,12 @@ int sound_playPos( int sound, double x, double y )
    /* Gets a new voice. */
    v = voice_new();
 
-   v->channel = Mix_PlayChannel( -1, sound_list[sound].buffer, 0 );
+   /* Get the sound. */
+   s = &sound_list[sound];
 
-   if (v->channel < 0) {
-      /*
-      WARN("Unable to play sound: %s", Mix_GetError());
+   /* Try to play the sound. */
+   if (sound_sys_playPos( v, s, px, py, vx, vy ))
       return -1;
-      */
-   }
-   else {
-      /* Update the voice. */
-      if (sound_updatePosVoice( v, x, y))
-         return -1;
-   }
 
    /* Actually add the voice to the list. */
    v->state = VOICE_PLAYING;
@@ -378,7 +353,7 @@ int sound_playPos( int sound, double x, double y )
  *    @param x New x position to update to.
  *    @param y New y position to update to.
  */
-int sound_updatePos( int voice, double x, double y )
+int sound_updatePos( int voice, double px, double py, double vx, double vy )
 {
    alVoice *v;
 
@@ -388,7 +363,7 @@ int sound_updatePos( int voice, double x, double y )
    if (v != NULL) {
 
       /* Update the voice. */
-      if (sound_updatePosVoice( v, x, y))
+      if (sound_sys_updatePos( v, px, py, vx, vy))
          return -1;
    }
 
@@ -408,9 +383,11 @@ int sound_update (void)
    /* Update music if needed. */
    music_update();
 
-   if (sound_disabled) return 0;
+   if (sound_disabled)
+      return 0;
 
-   if (voice_active == NULL) return 0;
+   if (voice_active == NULL)
+      return 0;
 
    /* The actual control loop. */
    for (v=voice_active; v!=NULL; v=v->next) {
@@ -435,7 +412,6 @@ int sound_update (void)
          v->next = voice_pool;
          v->prev = NULL;
          voice_pool = v;
-         v->channel = 0;
          if (v->next != NULL)
             v->next->prev = v;
 
@@ -443,6 +419,8 @@ int sound_update (void)
          v = (tv != NULL) ? tv->next : voice_active;
          if (v == NULL) break;
       }
+
+      sound_sys_updateVoice( v );
    }
 
    return 0;
@@ -454,7 +432,7 @@ int sound_update (void)
  */
 void sound_pause (void)
 {
-   Mix_Pause(-1);
+   sound_sys_pause();
 }
 
 
@@ -463,7 +441,7 @@ void sound_pause (void)
  */
 void sound_resume (void)
 {
-   Mix_Resume(-1);
+   sound_sys_resume();
 }
 
 
@@ -480,7 +458,7 @@ void sound_stop( int voice )
 
    v = voice_get(voice);
    if (v != NULL) {
-      Mix_HaltChannel(v->channel);
+      sound_sys_stop( v );
       v->state = VOICE_STOPPED;
    }
 
@@ -491,21 +469,20 @@ void sound_stop( int voice )
  * @brief Updates the sound listener.
  *
  *    @param dir Direction listener is facing.
- *    @param x X position of the listener.
- *    @param y Y position of the listener.
+ *    @param px X position of the listener.
+ *    @param py Y position of the listener.
+ *    @param vx X velocity of the listener.
+ *    @param vy Y velocity of the listener.
  *    @return 0 on success.
  *
  * @sa sound_playPos
  */
-int sound_updateListener( double dir, double x, double y )
+int sound_updateListener( double dir, double px, double py,
+      double vx, double vy )
 {
    if (sound_disabled) return 0;
 
-   sound_pos[0] = x;
-   sound_pos[1] = y;
-   sound_pos[2] = dir/M_PI*180.;
-
-   return 0;
+   return sound_sys_updateListener( dir, px, py, vx, vy );
 }
 
 
@@ -557,12 +534,12 @@ static int sound_makeList (void)
       strncpy( tmp, files[i], len );
       tmp[len] = '\0';
 
-      /* give it the new name */
-      sound_list[sound_nlist-1].name = strdup(tmp);
-
       /* Load the sound. */
+      sound_list[sound_nlist-1].name = strdup(tmp);
       snprintf( path, PATH_MAX, SOUND_PREFIX"%s", files[i] );
-      sound_list[sound_nlist-1].buffer = sound_load( path );
+      if (sound_load( &sound_list[sound_nlist-1], path )) {
+         sound_nlist--; /* Song not actually added. */
+      }
 
       /* Clean up. */
       free(files[i]);
@@ -589,8 +566,7 @@ int sound_volume( const double vol )
 {
    if (sound_disabled) return 0;
 
-   sound_curVolume = MIX_MAX_VOLUME * CLAMP(0., 1., vol);
-   return Mix_Volume( -1, sound_curVolume);
+   return sound_sys_volume( vol );
 }
 
 
@@ -601,35 +577,24 @@ int sound_volume( const double vol )
  */
 double sound_getVolume (void)
 {
-   return sound_curVolume / MIX_MAX_VOLUME;
+   return sound_sys_getVolume();
 }
 
 
 /**
  * @brief Loads a sound into the sound_list.
  *
+ *    @param snd Sound to load into.
  *    @param filename Name fo the file to load.
- *    @return The SDL_Mixer of the loaded chunk.
+ *    @return 0 on success.
  *
  * @sa sound_makeList
  */
-static Mix_Chunk* sound_load( const char *filename )
+static int sound_load( alSound *snd, const char *filename )
 {
-   SDL_RWops *rw;
-   Mix_Chunk *buffer;
+   if (sound_disabled) return -1;
 
-   if (sound_disabled) return NULL;
-
-   /* get the file data buffer from packfile */
-   rw = ndata_rwops( filename );
-
-   /* bind to OpenAL buffer */
-   buffer = Mix_LoadWAV_RW(rw,1);
-
-   if (buffer == NULL)
-      DEBUG("Unable to load sound '%s': %s", filename, Mix_GetError());
-
-   return buffer;
+   return sound_sys_load( snd, filename );
 }
 
 
@@ -640,13 +605,14 @@ static Mix_Chunk* sound_load( const char *filename )
  */
 static void sound_free( alSound *snd )
 {
-   /* free the stuff */
+   /* Free general stuff. */
    if (snd->name) {
       free(snd->name);
       snd->name = NULL;
    }
-   Mix_FreeChunk(snd->buffer);
-   snd->buffer = NULL;
+   
+   /* Free internals. */
+   sound_sys_free(snd);
 }
 
 
@@ -719,7 +685,7 @@ int sound_playGroup( int group, int sound, int once )
       return -1;
    }
 
-   ret = Mix_PlayChannel( channel, sound_list[sound].buffer,
+   ret = Mix_PlayChannel( channel, sound_list[sound].u.mix.buf,
          (once == 0) ? -1 : 0 );
    if (ret < 0) {
       WARN("Unable to play sound %d for group %d: %s",
@@ -738,26 +704,10 @@ int sound_playGroup( int group, int sound, int once )
  */
 void sound_stopGroup( int group )
 {
+   (void) group;
    if (sound_disabled) return;
 
-   Mix_HaltGroup(group);
-}
-
-
-/**
- * @brief Marks the voice to which channel belongs to as stopped.
- *
- * DO NOT CALL MIX_* FUNCTIONS FROM CALLBACKS!
- */
-static void voice_markStopped( int channel )
-{
-   alVoice *v;
-
-   for (v=voice_active; v!=NULL; v=v->next)
-      if (v->channel == channel) {
-         v->state = VOICE_STOPPED;
-         break;
-      }
+   /*sound_sys_stopGroup( group );*/
 }
 
 
@@ -766,7 +716,7 @@ static void voice_markStopped( int channel )
  *
  *    @return New voice ready to use.
  */
-static alVoice* voice_new (void)
+alVoice* voice_new (void)
 {
    alVoice *v;
 
@@ -790,7 +740,7 @@ static alVoice* voice_new (void)
  *    @param v Voice to add to the active voice stack.
  *    @return 0 on success.
  */
-static int voice_add( alVoice* v )
+int voice_add( alVoice* v )
 {
    alVoice *tv;
 
@@ -824,7 +774,7 @@ static int voice_add( alVoice* v )
  *    @param id Identifier to look for.
  *    @return Voice matching identifier or NULL if not found.
  */
-static alVoice* voice_get( int id )
+alVoice* voice_get( int id )
 {
    alVoice *v;
 
@@ -836,33 +786,5 @@ static alVoice* voice_get( int id )
       }
 
    return NULL;
-}
-
-
-/**
- * @brief Pauses a channel, should be eliminated to pause groups also.
- *
- *    @param num Channel to pause, not that channel != voice.
- */
-void sound_pauseChannel( int num )
-{
-   if (sound_disabled) return;
-
-   if (!Mix_Paused(num))
-      Mix_Pause(num);
-}
-
-
-/**
- * @brief Resumes a channel, should be eliminated to resume groups also.
- *
- *    @param num Channel to resume, not that channel != voice.
- */
-void sound_resumeChannel( int num )
-{
-   if (sound_disabled) return;
-
-   if (Mix_Paused(num))
-      Mix_Resume(num);
 }
 

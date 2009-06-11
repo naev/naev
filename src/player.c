@@ -15,6 +15,8 @@
 
 #include <stdlib.h>
 
+#include "SDL_mixer.h" /** @todo remove asap. */
+
 #include "nxml.h"
 #include "pilot.h"
 #include "log.h"
@@ -1038,7 +1040,8 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
 
    /* Sound. */
    sound_updateListener( pplayer->solid->dir,
-         pplayer->solid->pos.x, pplayer->solid->pos.y );
+         pplayer->solid->pos.x, pplayer->solid->pos.y,
+         pplayer->solid->vel.x, pplayer->solid->vel.y );
 
    /* Update zoom. */
    player_updateZoom( dt );
@@ -1484,7 +1487,8 @@ void player_accelOver (void)
  */
 void player_soundPause (void)
 {
-   sound_pauseChannel(0);
+   if (!Mix_Paused(0))
+      Mix_Pause(0);
 }
 
 
@@ -1496,7 +1500,8 @@ void player_soundPause (void)
  */
 void player_soundResume (void)
 {
-   sound_resumeChannel(0);
+   if (Mix_Paused(0))
+      Mix_Resume(0);
 }
 
 

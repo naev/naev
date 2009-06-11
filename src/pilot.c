@@ -1460,7 +1460,8 @@ void pilot_update( Pilot* pilot, const double dt )
          
          /* Play random explsion sound. */
          snprintf(buf, 16, "explosion%d", RNG(0,2));
-         sound_playPos( sound_get(buf), pilot->solid->pos.x, pilot->solid->pos.y );
+         sound_playPos( sound_get(buf), pilot->solid->pos.x, pilot->solid->pos.y,
+               pilot->solid->vel.x, pilot->solid->vel.y );
          
          pilot_setFlag(pilot,PILOT_DEATH_SOUND);
       }

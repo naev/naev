@@ -27,9 +27,18 @@ OBJS    := $(patsubst %.c,%.o,$(wildcard src/*.c src/tk/*.c src/tk/widget/*.c))
 #
 #   CFLAGS
 #
+COMMON_CFLAGS :=
 ifdef NDATA_DEF
-COMMON_CFLAGS := -DNDATA_DEF=$(NDATA_DEF)
+COMMON_CFLAGS += -DNDATA_DEF=$(NDATA_DEF)
 endif
+ifeq ($(USE_OPENAL),1)
+COMMON_CFLAGS += -DUSE_OPENAL=1
+endif
+ifeq ($(USE_SDLMIX),1)
+COMMON_CFLAGS += -DUSE_SDLMIX=1
+endif
+
+
 
 
 #

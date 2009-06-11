@@ -47,6 +47,7 @@ const char *music_playingName (void);
  */
 int lua_loadMusic( lua_State *L, int read_only );
 int music_choose( const char* situation );
+void music_rechoose (void);
 
 
 #endif /* MUSIC_H */

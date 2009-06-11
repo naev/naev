@@ -28,10 +28,11 @@ int sound_get( char* name );
 int sound_volume( const double vol );
 double sound_getVolume (void);
 int sound_play( int sound );
-int sound_playPos( int sound, double x, double y );
+int sound_playPos( int sound, double px, double py, double vx, double vy );
 void sound_stop( int voice );
-int sound_updatePos( int voice, double x, double y );
-int sound_updateListener( double dir, double x, double y );
+int sound_updatePos( int voice, double px, double py, double vx, double vy );
+int sound_updateListener( double dir, double px, double py,
+      double vx, double vy );
 
 
 /*

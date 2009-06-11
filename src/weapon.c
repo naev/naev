@@ -526,8 +526,10 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                   s = outfit_soundHit(w->outfit);
                   if (s != -1)
                      w->voice = sound_playPos(s,
-                           w->solid->pos.x + w->solid->vel.x,
-                           w->solid->pos.y + w->solid->vel.y);
+                           w->solid->pos.x,
+                           w->solid->pos.y,
+                           w->solid->vel.x,
+                           w->solid->vel.y);
                }
                weapon_destroy(w,layer);
                break;
@@ -554,8 +556,10 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                   s = outfit_soundHit(w->outfit);
                   if (s != -1)
                      w->voice = sound_playPos(s,
-                           w->solid->pos.x + w->solid->vel.x,
-                           w->solid->pos.y + w->solid->vel.y);
+                           w->solid->pos.x,
+                           w->solid->pos.y,
+                           w->solid->vel.x,
+                           w->solid->vel.y);
                }
                weapon_destroy(w,layer);
                break;
@@ -916,7 +920,8 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    (*w->solid->update)(w->solid, dt);
 
    /* Update the sound. */
-   sound_updatePos(w->voice, w->solid->pos.x, w->solid->pos.y);
+   sound_updatePos(w->voice, w->solid->pos.x, w->solid->pos.y,
+         w->solid->vel.x, w->solid->vel.y);
 }
 
 
@@ -994,8 +999,10 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    s = outfit_soundHit(w->outfit);
    if (s != -1)
       w->voice = sound_playPos( s,
-            w->solid->pos.x + w->solid->vel.x,
-            w->solid->pos.y + w->solid->vel.y);
+            w->solid->pos.x,
+            w->solid->pos.y,
+            w->solid->vel.x,
+            w->solid->vel.y);
 
    /* Have pilot take damage and get real damage done. */
    damage = pilot_hit( p, w->solid, w->parent, dtype, damage );
@@ -1144,8 +1151,10 @@ static Weapon* weapon_create( const Outfit* outfit,
          w->falloff = w->timer - outfit->u.blt.falloff / outfit->u.blt.speed;
          w->solid = solid_create( mass, rdir, pos, &v );
          w->voice = sound_playPos( w->outfit->u.blt.sound,
-               w->solid->pos.x + w->solid->vel.x,
-               w->solid->pos.y + w->solid->vel.y);
+               w->solid->pos.x,
+               w->solid->pos.y,
+               w->solid->vel.x,
+               w->solid->vel.y);
          break;
 
       /* Beam weapons are treated together. */
@@ -1167,8 +1176,10 @@ static Weapon* weapon_create( const Outfit* outfit,
          w->think = think_beam;
          w->timer = outfit->u.bem.duration;
          w->voice = sound_playPos( w->outfit->u.bem.sound,
-               w->solid->pos.x + vel->x,
-               w->solid->pos.y + vel->y);
+               w->solid->pos.x,
+               w->solid->pos.y,
+               w->solid->vel.x,
+               w->solid->vel.y);
          break;
 
       /* Treat seekers together. */
@@ -1201,8 +1212,10 @@ static Weapon* weapon_create( const Outfit* outfit,
          else if (outfit->type == OUTFIT_TYPE_MISSILE_SEEK_SMART_AMMO)
             w->think = think_smart;*/
          w->voice = sound_playPos(w->outfit->u.amm.sound,
-               w->solid->pos.x + w->solid->vel.x,
-               w->solid->pos.y + w->solid->vel.y);
+               w->solid->pos.x,
+               w->solid->pos.y,
+               w->solid->vel.x,
+               w->solid->vel.y);
          break;
 
       /* Dumb missiles and turrets. */
@@ -1260,8 +1273,10 @@ static Weapon* weapon_create( const Outfit* outfit,
          if (w->outfit->u.amm.thrust != 0.)
             vect_pset( &w->solid->force, w->outfit->u.amm.thrust * mass, rdir );
          w->voice = sound_playPos(w->outfit->u.amm.sound,
-               w->solid->pos.x + w->solid->vel.x,
-               w->solid->pos.y + w->solid->vel.y);
+               w->solid->pos.x,
+               w->solid->pos.y,
+               w->solid->vel.x,
+               w->solid->vel.y);
          break;
 
 
@@ -1500,7 +1515,9 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
       sound_stop( w->voice );
       sound_playPos(w->outfit->u.bem.sound_off,
             w->solid->pos.x,
-            w->solid->pos.y);
+            w->solid->pos.y,
+            w->solid->vel.x,
+            w->solid->vel.y);
    }
 
    switch (layer) {

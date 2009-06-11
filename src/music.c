@@ -13,10 +13,7 @@
 
 #include "naev.h"
 
-#include "SDL.h"
-#include "SDL_mixer.h"
-#include "SDL_mutex.h"
-
+#include "music_sdlmix.h"
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_var.h"
@@ -36,7 +33,6 @@
 
 
 int music_disabled = 0; /**< Whether or not music is disabled. */
-static double music_curVolume = 0.; /**< Music volume. */
 
 
 /*
@@ -71,8 +67,26 @@ static int nmusic_selection   = 0; /**< Size of available music selection. */
  * The current music.
  */
 static char *music_name       = NULL; /**< Current music name. */
-static SDL_RWops *music_rw    = NULL; /**< Current music RWops. */
-static Mix_Music *music_music = NULL; /**< Current music. */
+
+
+/*
+ * Function pointers for backend.
+ */
+/* Init/exit. */
+int  (*music_sys_init) (void)    = NULL;
+void (*music_sys_exit) (void)    = NULL;
+/* Loading. */
+int  (*music_sys_load) ( const char* name, SDL_RWops *rw ) = NULL;
+void (*music_sys_free) (void)    = NULL;
+ /* Music control. */
+int  (*music_sys_volume)( const double vol ) = NULL;
+double (*music_sys_getVolume) (void) = NULL;
+void (*music_sys_play) (void)    = NULL;
+void (*music_sys_stop) (void)    = NULL;
+void (*music_sys_pause) (void)   = NULL;
+void (*music_sys_resume) (void)  = NULL;
+void (*music_sys_setPos) ( double sec ) = NULL;
+int  (*music_sys_isPlaying) (void) = NULL;
 
 
 /*
@@ -82,7 +96,6 @@ static Mix_Music *music_music = NULL; /**< Current music. */
 static int music_find (void);
 static void music_free (void);
 /* lua stuff */
-static void music_rechoose (void);
 static int music_luaInit (void);
 static void music_luaQuit (void);
 
@@ -146,9 +159,51 @@ int music_init (void)
 {
    if (music_disabled) return 0;
 
-   if (music_find() < 0) return -1;
-   if (music_luaInit() < 0) return -1;
+   if (1) {
+#if USE_SDLMIX
+      /*
+       * SDL_mixer backend.
+       */
+      /* Init/exit. */
+      music_sys_init = music_mix_init;
+      music_sys_exit = music_mix_exit;
+      /* Loading. */
+      music_sys_load = music_mix_load;
+      music_sys_free = music_mix_free;
+      /* Music control. */
+      music_sys_volume = music_mix_volume;
+      music_sys_getVolume = music_mix_getVolume;
+      music_sys_load = music_mix_load;
+      music_sys_play = music_mix_play;
+      music_sys_stop = music_mix_stop;
+      music_sys_pause = music_mix_pause;
+      music_sys_resume = music_mix_resume;
+      music_sys_setPos = music_mix_setPos;
+      music_sys_isPlaying = music_mix_isPlaying;
+#else /* USE_SDLMIX */
+      WARN("SDL_mixer support not compiled in!");
+      return -1;
+#endif /* USE_SDLMIX */
+   }
+   else {
+      /*
+       * OpenAL.
+       */
+   }
 
+   /* Start the subsystem. */
+   if (music_sys_init())
+      return -1;
+
+   /* Load the music. */
+   if (music_find() < 0)
+      return -1;
+
+   /* Start up Lua. */
+   if (music_luaInit() < 0)
+      return -1;
+
+   /* Set the volume. */
    if ((conf.music > 1.) || (conf.music < 0.))
       WARN("Music has invalid value, clamping to [0:1].");
    music_volume(conf.music);
@@ -165,6 +220,8 @@ int music_init (void)
  */
 void music_exit (void)
 {
+   music_sys_exit();
+
    music_free();
 
    /* Destroy the lock. */
@@ -180,16 +237,12 @@ void music_exit (void)
  */
 static void music_free (void)
 {
-   if (music_music != NULL) {
-      Mix_HookMusicFinished(NULL);
-      Mix_HaltMusic();
-      Mix_FreeMusic(music_music);
-      /*SDL_FreeRW(music_rw);*/ /* FreeMusic frees it itself */
+   if (music_name != NULL) {
       free(music_name);
-      music_name  = NULL;
-      music_music = NULL;
-      music_rw    = NULL;
+      music_name = NULL;
    }
+
+   music_sys_free();
 }
 
 
@@ -259,8 +312,7 @@ int music_volume( const double vol )
 {
    if (music_disabled) return 0;
 
-   music_curVolume = MIX_MAX_VOLUME * CLAMP(0.,1.,vol);
-   return Mix_VolumeMusic(music_curVolume);
+   return music_sys_volume( vol );
 }
 
 
@@ -271,7 +323,7 @@ int music_volume( const double vol )
  */
 double music_getVolume (void)
 {
-   return music_curVolume / MIX_MAX_VOLUME;
+   return music_sys_getVolume();
 }
 
 
@@ -282,28 +334,23 @@ double music_getVolume (void)
  */
 int music_load( const char* name )
 {
+   SDL_RWops *rw;
    char filename[PATH_MAX];
 
    if (music_disabled) return 0;
 
+   /* Free current music if needed. */
    music_free();
 
-   /* Load the data */
-   snprintf( filename, PATH_MAX, MUSIC_PREFIX"%s"MUSIC_SUFFIX, name); 
+   /* Load new music. */
    music_name = strdup(name);
-   music_rw = ndata_rwops( filename );
-   if (music_rw == NULL) {
+   snprintf( filename, PATH_MAX, MUSIC_PREFIX"%s"MUSIC_SUFFIX, name); 
+   rw = ndata_rwops( filename );
+   if (rw == NULL) {
       WARN("Music '%s' not found.", filename);
       return -1;
    }
-   music_music = Mix_LoadMUS_RW(music_rw);
-   if (music_music == NULL) {
-      WARN("SDL_Mixer: %s", Mix_GetError());
-      Mix_HookMusicFinished(music_rechoose);
-      return -1;
-   }
-
-   Mix_HookMusicFinished(music_rechoose);
+   music_sys_load( name, rw );
 
    return 0;
 }
@@ -316,10 +363,7 @@ void music_play (void)
 {
    if (music_disabled) return;
 
-   if (music_music == NULL) return;
-
-   if (Mix_FadeInMusic( music_music, 0, 500 ) < 0)
-      WARN("SDL_Mixer: %s", Mix_GetError());
+   music_sys_play();
 }
 
 
@@ -330,10 +374,7 @@ void music_stop (void)
 {
    if (music_disabled) return;
 
-   if (music_music == NULL) return;
-
-   if (Mix_FadeOutMusic(2000) < 0)
-      WARN("SDL_Mixer: %s", Mix_GetError());
+   music_sys_stop();
 }
 
 
@@ -344,9 +385,7 @@ void music_pause (void)
 {
    if (music_disabled) return;
 
-   if (music_music == NULL) return;
-
-   Mix_PauseMusic();
+   music_sys_pause();
 }
 
 
@@ -357,9 +396,7 @@ void music_resume (void)
 {
    if (music_disabled) return;
 
-   if (music_music == NULL) return;
-
-   Mix_ResumeMusic();
+   music_sys_resume();
 }
 
 
@@ -370,9 +407,9 @@ void music_resume (void)
  */
 int music_isPlaying (void)
 {
-   if (music_disabled) return 0; /* Always playing when music is off. */
+   if (music_disabled) return 0; /* Always not playing when music is off. */
 
-   return Mix_PlayingMusic();
+   return music_sys_isPlaying();
 }
 
 
@@ -396,9 +433,7 @@ void music_setPos( double sec )
 {
    if (music_disabled) return;
 
-   if (music_music == NULL) return;
-
-   Mix_FadeInMusicPos( music_music, 1, 1000, sec );
+   music_sys_setPos( sec );
 }
 
 
@@ -476,7 +511,7 @@ int music_choose( const char* situation )
  *
  * DO NOT CALL MIX_* FUNCTIONS FROM WITHIN THE CALLBACKS!
  */
-static void music_rechoose (void)
+void music_rechoose (void)
 {
    if (music_disabled) return;
 
