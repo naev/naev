@@ -116,7 +116,7 @@ int sound_init (void)
 
    /* Choose sound system. */
    if ((conf.sound_backend != NULL) &&
-         strcmp(conf.sound_backend,"sdlmix")) {
+         (strcmp(conf.sound_backend,"sdlmix")==0)) {
 #if USE_SDLMIX
       /*
        * SDL_mixer Sound.
@@ -149,7 +149,7 @@ int sound_init (void)
 #endif /* USE_SDLMIX */
    }
    else if ((conf.sound_backend != NULL) &&
-         strcmp(conf.sound_backend,"openal")) {
+         (strcmp(conf.sound_backend,"openal")==0)) {
 #if USE_OPENAL
       /*
        * OpenAL Sound.

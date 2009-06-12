@@ -146,15 +146,12 @@ int sound_al_init (void)
    /* set active context */
    if (alcMakeContextCurrent( al_context )==AL_FALSE) {
       WARN("Failure to set default context");
-      ret =  -4;
+      ret = -4;
       goto snderr_act;
    }
 
    /* set the distance model */
    alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED );
-
-   /* we can unlock now */
-   soundUnlock();
 
    /* start allocating the sources - music has already taken his */
    alGetError(); /* another error clear */
@@ -171,6 +168,9 @@ int sound_al_init (void)
    source_mstack = source_nstack;
    source_stack  = realloc( source_stack, sizeof(ALuint) * source_mstack );
    source_active = malloc( sizeof(ALuint) * source_mstack );
+
+   /* we can unlock now */
+   soundUnlock();
 
    /* debug magic */
    DEBUG("OpenAL: %s", dev);

@@ -161,7 +161,7 @@ int music_init (void)
    if (music_disabled) return 0;
 
    if ((conf.sound_backend != NULL) &&
-         strcmp(conf.sound_backend,"sdlmix")) {
+         (strcmp(conf.sound_backend,"sdlmix")==0)) {
 #if USE_SDLMIX
       /*
        * SDL_mixer backend.
@@ -188,7 +188,7 @@ int music_init (void)
 #endif /* USE_SDLMIX */
    }
    else if ((conf.sound_backend != NULL) &&
-         strcmp(conf.sound_backend,"openal")) {
+         (strcmp(conf.sound_backend,"openal")==0)) {
 #if USE_OPENAL
       /*
        * OpenAL backend.
