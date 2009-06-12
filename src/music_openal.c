@@ -296,7 +296,11 @@ int music_al_load( const char* name, SDL_RWops *rw )
    
    /* Load new ogg. */
    music_vorbis.rw = rw;
-   ov_open_callbacks( &music_vorbis.rw, &music_vorbis.stream, NULL, 0, ovcall );
+   if (ov_open_callbacks( &music_vorbis.rw, &music_vorbis.stream, NULL, 0, ovcall ) < 0) {
+      WARN("Song '%s' does not appear to be a vorbis bitstream.", name);
+      musicUnlock();
+      return -1;
+   }
    music_vorbis.info = ov_info( &music_vorbis.stream, -1);
 
    /* Set the format */
@@ -426,8 +430,19 @@ void music_al_resume (void)
  */
 void music_al_setPos( double sec )
 {
-   (void) sec;
-   /** @todo implement seeking. */
+   int ret;
+
+   musicLock();
+
+   ret = 0;
+   if (music_vorbis.rw != NULL)
+      ret = ov_time_seek( &music_vorbis.stream, sec );
+
+   musicUnlock();
+
+   if (ret != 0) {
+      WARN("Unable to seek vorbis file.");
+   }
 }
 
 
