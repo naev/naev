@@ -25,7 +25,7 @@ ifeq ($(USE_SDLMIX),1)
 LDSOUND += -lSDL_mixer
 endif
 ifeq ($(USE_OPENAL),1)
-LDSOUND += -lopenal -lalut -lvorbisfile
+LDSOUND += -lopenal -lvorbisfile
 endif
 LDXML   := $(shell xml2-config --libs)
 LDTTF   := $(shell freetype-config --libs)

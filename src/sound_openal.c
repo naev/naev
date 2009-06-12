@@ -11,11 +11,12 @@
 #include <sys/stat.h>
 
 #include <AL/alc.h>
-#include <AL/alut.h>
+#include <vorbis/vorbisfile.h>
 
 #include "SDL.h"
 #include "SDL_thread.h"
 
+#include "music_openal.h"
 #include "sound.h"
 #include "ndata.h"
 #include "naev.h"
@@ -98,6 +99,39 @@ static ALfloat svolume        = 1.;
  * Prototypes.
  */
 static ALuint sound_al_getSource (void);
+static int sound_al_loadWav( alSound *snd, SDL_RWops *rw );
+static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf );
+
+
+/*
+ * Vorbis stuff.
+ */
+static size_t ovpack_read( void *ptr, size_t size, size_t nmemb, void *datasource )
+{  
+   SDL_RWops *rw = datasource;
+   return (size_t) rw->read( rw, ptr, size, nmemb );
+}
+static int ovpack_seek( void *datasource, ogg_int64_t offset, int whence )
+{  
+   SDL_RWops *rw = datasource;
+   return rw->seek( rw, offset, whence );
+}
+static int ovpack_close( void *datasource )
+{  
+   SDL_RWops *rw = datasource;
+   return rw->close( rw );
+}
+static long ovpack_tell( void *datasource )
+{  
+   SDL_RWops *rw = datasource;
+   return rw->seek( rw, 0, SEEK_CUR );
+}
+ov_callbacks sound_al_ovcall = {
+   .read_func = ovpack_read,
+   .seek_func = ovpack_seek,
+   .close_func = ovpack_close,
+   .tell_func = ovpack_tell
+}; /**< Vorbis call structure to handl rwops. */
 
 
 /**
@@ -117,9 +151,6 @@ int sound_al_init (void)
    /* we'll need a mutex */
    sound_lock = SDL_CreateMutex();
    soundLock();
-
-   /* initialize alut - i think it's worth it */
-   alutInitWithoutContext(NULL,NULL);
 
    /* Get the sound device. */
    dev = alcGetString( NULL, ALC_DEFAULT_DEVICE_SPECIFIER );
@@ -150,10 +181,13 @@ int sound_al_init (void)
       goto snderr_act;
    }
 
-   /* set the distance model */
+   /* Set the distance model */
    alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED );
 
-   /* start allocating the sources - music has already taken his */
+   /* Allocate source for music. */
+   alGenSources( 1, &music_source );
+
+   /* Start allocating the sources - music has already taken his */
    alGetError(); /* another error clear */
    source_mstack = 0;
    while (((err=alGetError())==AL_NO_ERROR) && (source_nstack < SOUND_MAX_SOURCES)) {
@@ -168,6 +202,9 @@ int sound_al_init (void)
    source_mstack = source_nstack;
    source_stack  = realloc( source_stack, sizeof(ALuint) * source_mstack );
    source_active = malloc( sizeof(ALuint) * source_mstack );
+
+   /* Check for errors. */
+   al_checkErr();
 
    /* we can unlock now */
    soundUnlock();
@@ -193,7 +230,6 @@ snderr_dev:
    soundUnlock();
    SDL_DestroyMutex( sound_lock );
    sound_lock = NULL;
-   WARN("Error initializing sound: %d", alGetError());
    return ret;
 }
 
@@ -233,9 +269,74 @@ void sound_al_exit (void)
       soundUnlock();
       SDL_DestroyMutex( sound_lock );
    }
+}
 
-   /* bye bye alut */
-   alutExit();
+
+/**
+ * @brief Loads a wav file from the rw if possible.
+ *
+ * @note Closes the rw.
+ *
+ *    @param snd Sound to load wav into.
+ *    @param rw Data for the wave.
+ */
+static int sound_al_loadWav( alSound *snd, SDL_RWops *rw )
+{
+   (void) snd;
+   (void) rw;
+
+   WARN("WAV unsupported atm.");
+   return -1;
+}
+
+
+/**
+ * @brief Loads an ogg file from a tested format if possible.
+ *
+ *    @param snd Sound to load ogg into.
+ *    @param vf Vorbisfile containing the song.
+ */
+static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf )
+{
+   long i;
+   int section;
+   vorbis_info *info;
+   ALenum format;
+   ogg_int64_t len;
+   char *buf;
+
+   /* Finish opening the file. */
+   if (ov_test_open(vf)) {
+      WARN("Failed to finish loading OGG file.");
+      return -1;
+   }
+
+   /* Get file information. */
+   info   = ov_info( vf, -1 );
+   format = (info->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+   len    = ov_raw_total( vf, -1 );
+
+   /* Create new buffer. */
+   alGenBuffers( 1, &snd->u.al.buf );
+
+   /* Allocate memory. */
+   buf = malloc( len );
+
+   /* Fill buffer. */
+   i = 0;
+   while (i < len) {
+      /* Fill buffer with data in the 16 bit signed samples format. */
+      i += ov_read( vf, &buf[i], len-i, 0, 2, 1, &section );
+   }
+
+   /* Put into buffer. */
+   alBufferData( snd->u.al.buf, format, buf, len, info->rate );
+
+   /* Clean up. */
+   free(buf);
+   ov_clear(vf);
+
+   return 0;
 }
 
 
@@ -244,37 +345,39 @@ void sound_al_exit (void)
  */
 int sound_al_load( alSound *snd, const char *filename )
 {
-   void* wavdata;
-   unsigned int size;
-   ALenum err;
+   int ret;
+   SDL_RWops *rw;
+   OggVorbis_File vf;
 
    /* get the file data buffer from packfile */
-   wavdata = ndata_read( filename, &size );
+   rw = ndata_rwops( filename );
 
    soundLock();
 
-   /* bind to OpenAL buffer */
-   snd->u.al.buf = alutCreateBufferFromFileImage( wavdata, size );
-   if ((snd->u.al.buf) == AL_NONE) {
-      WARN("OpenAL failed to load %s: %s", filename,
-            alutGetErrorString(alutGetError()));
-      free(wavdata);
-      return -1;
+   /* Check to see if it's an OGG. */
+   if (ov_test_callbacks( rw, &vf, NULL, 0, sound_al_ovcall )==0) {
+      ret = sound_al_loadOgg( snd, &vf );
    }
-   /*alGenBuffers( 1, buffer );
-   alBufferData( *buffer, AL_FORMAT_MONO16, wavdata, size, 22050 );*/
+   /* Otherwise try WAV. */
+   else {
+      /* Destroy the partially loaded vorbisfile. */
+      ov_clear(&vf);
 
-   /* errors? */
-   if ((err = alGetError()) != AL_NO_ERROR) {
-      WARN("OpenAL error '%d' loading sound '%s'.", err, filename );
-      free(wavdata);
-      return 0;
+      /* Try to load Wav. */
+      ret = sound_al_loadWav( snd, rw );
    }
+
+   /* Failed to load. */
+   if (ret != 0) {
+      soundUnlock();
+      return ret;
+   }
+
+   /* Check for errors. */
+   al_checkErr();
 
    soundUnlock();
 
-   /* finish */
-   free(wavdata);
    return 0;
 }
 
@@ -359,6 +462,9 @@ int sound_al_play( alVoice *v, alSound *s )
    /* Start playing. */
    alSourcePlay( v->u.al.source );
 
+   /* Check for errors. */
+   al_checkErr();
+
    soundUnlock();
 
    return 0;
@@ -410,6 +516,9 @@ int sound_al_playPos( alVoice *v, alSound *s,
 
    /* Start playing. */
    alSourcePlay( v->u.al.source );
+
+   /* Check for errors. */
+   al_checkErr();
 
    soundUnlock();
 
@@ -463,6 +572,9 @@ void sound_al_updateVoice( alVoice *v )
    alSource3f( v->u.al.source, AL_VELOCITY,
          v->u.al.vel[0], v->u.al.vel[1], 0. );
 
+   /* Check for errors. */
+   al_checkErr();
+
    soundUnlock();
 }
 
@@ -476,6 +588,9 @@ void sound_al_stop( alVoice* voice )
 
    if (voice->u.al.source != 0)
       alSourceStop(voice->u.al.source);
+
+   /* Check for errors. */
+   al_checkErr();
 
    soundUnlock();
 }
@@ -511,10 +626,59 @@ int sound_al_updateListener( double dir, double px, double py,
    alListener3f( AL_POSITION, px, py, 1. );
    alListener3f( AL_VELOCITY, vx, vy, 0. );
 
+   /* Check for errors. */
+   al_checkErr();
+
    soundUnlock();
 
    return 0;
 }
+
+
+#ifndef al_checkError
+/**
+ * @brief Converts an OpenAL error to a string.
+ *
+ *    @param err Error to convert to string.
+ *    @return String corresponding to the error.
+ */
+void al_checkErr (void)
+{
+   ALenum err;
+   const char *errstr;
+
+   /* Get the possible error. */
+   err = alGetError();
+
+   /* No error. */
+   if (err == AL_NO_ERROR)
+      return;
+
+   /* Get the message. */
+   switch (err) {
+      case AL_INVALID_NAME:
+         errstr = "a bad name (ID) was passed to an OpenAL function";
+         break;
+      case AL_INVALID_ENUM:
+         errstr = "an invalid enum value was passed to an OpenAL function";
+         break;
+      case AL_INVALID_VALUE:
+         errstr = "an invalid value was passed to an OpenAL function";
+         break;
+      case AL_INVALID_OPERATION:
+         errstr = "the requested operation is not valid";
+         break;
+      case AL_OUT_OF_MEMORY:
+         errstr = "the requested operation resulted in OpenAL running out of memory";
+         break;
+
+      default:
+         errstr = "unknown error";
+         break;
+   }
+   WARN("OpenAL error: %s", errstr);
+}
+#endif /* al_checkError */
 
 
 #endif /* USE_OPENAL */

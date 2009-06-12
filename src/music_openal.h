@@ -14,6 +14,16 @@
 #include "SDL_rwops.h"
 
 
+#include <AL/al.h>
+#include <AL/alc.h>
+
+
+/*
+ * Shared.
+ */
+extern ALuint music_source;
+
+
 /*
  * Init/exit.
  */

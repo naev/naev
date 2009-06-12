@@ -16,6 +16,7 @@
 #include <vorbis/vorbisfile.h>
 
 #include "music.h"
+#include "sound_openal.h"
 #include "naev.h"
 #include "log.h"
 #include "pack.h"
@@ -64,44 +65,13 @@ typedef struct alMusic_ {
 static SDL_mutex *music_vorbis_lock    = NULL; /**< Music lock. */
 static alMusic music_vorbis; /**< Current music. */
 static ALuint music_buffer[2]; /**< Front and back buffer. */
-static ALuint music_source             = 0; /**< Source assosciated to music. */
+ALuint music_source                    = 0; /**< Source assosciated to music. */
 
 
 /*
  * volume
  */
 static ALfloat music_vol = 1.; /**< Current volume level. */
-
-
-/*
- * vorbis stuff
- */
-static size_t ovpack_read( void *ptr, size_t size, size_t nmemb, void *datasource )
-{
-   SDL_RWops *rw = datasource;
-   return (size_t) rw->read( rw, ptr, size, nmemb );
-}
-static int ovpack_seek( void *datasource, ogg_int64_t offset, int whence )
-{
-   SDL_RWops *rw = datasource;
-   return rw->seek( rw, offset, whence );
-}
-static int ovpack_close( void *datasource )
-{
-   SDL_RWops *rw = datasource;
-   return rw->close( rw );
-}
-static long ovpack_tell( void *datasource )
-{
-   SDL_RWops *rw = datasource;
-   return rw->seek( rw, 0, SEEK_CUR );
-}
-ov_callbacks ovcall = {
-   .read_func = ovpack_read,
-   .seek_func = ovpack_seek,
-   .close_func = ovpack_close,
-   .tell_func = ovpack_tell
-}; /**< Vorbis call structure to handl rwops. */
 
 
 /*
@@ -123,6 +93,7 @@ static int music_thread( void* unused )
 
    int active; /* active buffer */
    ALint state;
+   ALenum value;
 
    /* main loop */
    while (!music_is(MUSIC_KILL)) {
@@ -151,6 +122,9 @@ static int music_thread( void* unused )
                music_rm(MUSIC_PLAYING);
             alSourceQueueBuffers( music_source, 1, &music_buffer[active] );
 
+            /* Check for errors. */
+            al_checkErr();
+
             soundUnlock();
 
             active = 0; /* dive into loop */
@@ -169,6 +143,9 @@ static int music_thread( void* unused )
 
                active = 1 - active;
             }
+
+            /* Check for errors. */
+            al_checkErr();
             
             soundUnlock();
 
@@ -177,8 +154,14 @@ static int music_thread( void* unused )
 
          soundLock();
 
+         /* Stop music. */
          alSourceStop( music_source );
-         alSourceUnqueueBuffers( music_source, 2, music_buffer );
+         alGetSourcei( music_source, AL_BUFFERS_PROCESSED, &value );
+         if (value > 0)
+            alSourceUnqueueBuffers( music_source, value, music_buffer );
+
+         /* Check for errors. */
+         al_checkErr();
 
          soundUnlock();
          musicUnlock();
@@ -249,12 +232,14 @@ int music_al_init (void)
 
    /* Generate buffers and sources. */
    alGenBuffers( 2, music_buffer );
-   alGenSources( 1, &music_source );
 
-   /* @brief Set up OpenAL properties. */
+   /* Set up OpenAL properties. */
    alSourcef( music_source, AL_GAIN, music_vol );
    alSourcef( music_source, AL_ROLLOFF_FACTOR, 0. );
    alSourcei( music_source, AL_SOURCE_RELATIVE, AL_FALSE );
+
+   /* Check for errors. */
+   al_checkErr();
 
    soundUnlock();
 
@@ -296,7 +281,8 @@ int music_al_load( const char* name, SDL_RWops *rw )
    
    /* Load new ogg. */
    music_vorbis.rw = rw;
-   if (ov_open_callbacks( &music_vorbis.rw, &music_vorbis.stream, NULL, 0, ovcall ) < 0) {
+   if (ov_open_callbacks( &music_vorbis.rw, &music_vorbis.stream,
+            NULL, 0, sound_al_ovcall ) < 0) {
       WARN("Song '%s' does not appear to be a vorbis bitstream.", name);
       musicUnlock();
       return -1;
@@ -349,6 +335,9 @@ int music_al_volume( double vol )
 
       alSourcef( music_source, AL_GAIN, vol );
 
+      /* Check for errors. */
+      al_checkErr();
+ 
       soundUnlock();
    }
 

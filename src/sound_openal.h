@@ -8,7 +8,28 @@
 #  define SOUND_OPENAL_H
 
 
+#if USE_OPENAL
+
+
 #include "sound_priv.h"
+
+#include <vorbis/vorbisfile.h>
+
+
+/*
+ * Vorbis stuff.
+ */
+extern ov_callbacks sound_al_ovcall;
+
+
+/*
+ * OpenAL stuff.
+ */
+#if DEBUG == 1
+void al_checkErr (void);
+#else /* DEBUG */
+#define al_checkErr() /**< Hack to ignore errors when debugging. */
+#endif /* DEBUG */
 
 
 /*
@@ -62,6 +83,9 @@ int sound_al_updateListener( double dir, double px, double py,
 int sound_al_createGroup( int tag, int size );
 int sound_al_playGroup( int tag, alSound *s, int once );
 void sound_al_stopGroup( int group );
+
+
+#endif /* USE_OPENAL */
 
 
 #endif /* SOUND_OPENAL_H */

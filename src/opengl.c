@@ -280,11 +280,13 @@ GLboolean gl_hasExt( char *name )
 void gl_checkErr (void)
 {
    GLenum err;
-   char* errstr;
+   const char* errstr;
 
    err = glGetError();
 
-   if (err == GL_NO_ERROR) return; /* no error */
+   /* No error. */
+   if (err == GL_NO_ERROR)
+      return;
 
    switch (err) {
       case GL_INVALID_ENUM:
@@ -313,7 +315,7 @@ void gl_checkErr (void)
          errstr = "GL unknown error";
          break;
    }
-   WARN("OpenGL error: %s",errstr);
+   WARN("OpenGL error: %s", errstr);
 }
 #endif /* DEBUG */
 
