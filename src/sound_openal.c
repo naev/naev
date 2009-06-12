@@ -314,7 +314,7 @@ static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf )
    /* Get file information. */
    info   = ov_info( vf, -1 );
    format = (info->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
-   len    = ov_raw_total( vf, -1 );
+   len    = ov_pcm_total( vf, -1 ) * info->channels * 2;
 
    /* Create new buffer. */
    alGenBuffers( 1, &snd->u.al.buf );
@@ -342,6 +342,9 @@ static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf )
 
 /**
  * @brief Loads the sound.
+ *
+ *    @param snd Sound to load.
+ *    @param filename Name of the file to load into sound.
  */
 int sound_al_load( alSound *snd, const char *filename )
 {
@@ -367,14 +370,14 @@ int sound_al_load( alSound *snd, const char *filename )
       ret = sound_al_loadWav( snd, rw );
    }
 
+   /* Check for errors. */
+   al_checkErr();
+
    /* Failed to load. */
    if (ret != 0) {
       soundUnlock();
       return ret;
    }
-
-   /* Check for errors. */
-   al_checkErr();
 
    soundUnlock();
 
