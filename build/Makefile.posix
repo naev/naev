@@ -19,12 +19,19 @@ CFLAGS := -Isrc $(CLUA) $(CCSPARSE) $(CSDL) $(CXML) $(CTTF) $(CPNG) $(CGL) $(VER
 #
 LDLUA   := lib/lua/liblua.a
 LDCSPARSE := lib/csparse/libcsparse.a
-LDSDL   := $(shell sdl-config --libs) -lSDL_image -lSDL_mixer
+LDSDL   := $(shell sdl-config --libs) -lSDL_image
+LDSOUND :=
+ifeq ($(USE_SDLMIX),1)
+LDSOUND += -lSDL_mixer
+endif
+ifeq ($(USE_OPENAL),1)
+LDSOUND += -lopenal -lalut -lvorbisfile
+endif
 LDXML   := $(shell xml2-config --libs)
 LDTTF   := $(shell freetype-config --libs)
 LDPNG   := $(shell libpng-config --libs)
 LDGL    := -lGL
-LDFLAGS := -lm $(LDLUA) $(LDCSPARSE) $(LDSDL) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
+LDFLAGS := -lm $(LDLUA) $(LDCSPARSE) $(LDSDL) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL) $(LDSOUND)
 
 # Debug stuff
 ifdef DEBUG

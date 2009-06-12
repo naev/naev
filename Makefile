@@ -14,7 +14,7 @@ OS ?= LINUX
 
 # Sound
 #
-USE_OPENAL ?= 0
+USE_OPENAL ?= 1
 USE_SDLMIX ?= 1
 
 

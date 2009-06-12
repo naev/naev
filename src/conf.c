@@ -51,6 +51,8 @@ lua_pop(L,1);
 #define  conf_loadString(n,s) \
 lua_getglobal(L, n); \
 if (lua_isstring(L, -1)) { \
+   if (s != NULL) \
+      free(s); \
    s = strdup(lua_tostring(L, -1));   \
 } \
 lua_pop(L,1);
@@ -127,6 +129,7 @@ void conf_setDefaults (void)
    conf.fullscreen   = 0.;
 
    /* Sound. */
+   conf.sound_backend = strdup("openal");
    conf.nosound      = 0;
    conf.sound        = 0.4;
    conf.music        = 0.8;
@@ -216,6 +219,7 @@ int conf_loadConfig ( const char* file )
       conf_loadInt("maxfps",conf.fps_max);
 
       /* Sound. */
+      conf_loadString("sound_backend",conf.sound_backend);
       conf_loadBool("nosound",conf.nosound);
       conf_loadFloat("sound",conf.sound);
       conf_loadFloat("music",conf.music);
@@ -706,6 +710,10 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    /* Sound. */
+   conf_saveComment("Sound backend (can be \"openal\" or \"sdlmix\")");
+   conf_saveString("sound_backend",conf.sound_backend);
+   conf_saveEmptyLine();
+
    conf_saveComment("Disable all sound");
    conf_saveBool("nosound",conf.nosound);
    conf_saveEmptyLine();

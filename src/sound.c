@@ -62,7 +62,6 @@ static alVoice *voice_pool    = NULL; /**< Pool of free voices. */
 /* Creation. */
 int  (*sound_sys_init) (void)          = NULL;
 void (*sound_sys_exit) (void)          = NULL;
-void (*sound_sys_update) (void)        = NULL;
  /* Sound creation. */
 int  (*sound_sys_load) ( alSound *snd, const char *filename ) = NULL;
 void (*sound_sys_free) ( alSound *snd ) = NULL;
@@ -116,7 +115,8 @@ int sound_init (void)
       return 0;
 
    /* Choose sound system. */
-   if (1) {
+   if ((conf.sound_backend != NULL) &&
+         strcmp(conf.sound_backend,"sdlmix")) {
 #if USE_SDLMIX
       /*
        * SDL_mixer Sound.
@@ -124,7 +124,6 @@ int sound_init (void)
       /* Creation. */
       sound_sys_init       = sound_mix_init;
       sound_sys_exit       = sound_mix_exit;
-      sound_sys_update     = sound_mix_update;
       /* Sound Creation. */
       sound_sys_load       = sound_mix_load;
       sound_sys_free       = sound_mix_free;
@@ -142,10 +141,6 @@ int sound_init (void)
       sound_sys_resume     = sound_mix_resume;
       /* Listener. */
       sound_sys_updateListener = sound_mix_updateListener;
-
-      /*
-       * SDL_mixer Music.
-       */
 #else /* USE_SDLMIX */
       WARN("SDL_mixer support not compiled in!");
       sound_disabled = 1;
@@ -153,7 +148,8 @@ int sound_init (void)
       return 0;
 #endif /* USE_SDLMIX */
    }
-   else {
+   else if ((conf.sound_backend != NULL) &&
+         strcmp(conf.sound_backend,"openal")) {
 #if USE_OPENAL
       /*
        * OpenAL Sound.
@@ -161,7 +157,6 @@ int sound_init (void)
       /* Creation. */
       sound_sys_init       = sound_al_init;
       sound_sys_exit       = sound_al_exit;
-      sound_sys_update     = sound_al_update;
       /* Sound Creation. */
       sound_sys_load       = sound_al_load;
       sound_sys_exit       = sound_al_exit;
@@ -178,16 +173,18 @@ int sound_init (void)
       sound_sys_resume     = sound_al_resume;
       /* Listener. */
       sound_sys_updateListener = sound_al_updateListener;
-
-      /*
-       * OpenAL Music.
-       */
 #else /* USE_OPENAL */
       WARN("OpenAL support not compiled in!");
       sound_disabled = 1;
       music_disabled = 1;
       return 0;
 #endif /* USE_OPENAL */
+   }
+   else {
+      WARN("Unknown sound backend '%s'.", conf.sound_backend);
+      sound_disabled = 1;
+      music_disabled = 1;
+      return 0;
    }
 
    /* Initialize subsystems. */
@@ -224,8 +221,8 @@ void sound_exit (void)
    int i;
    alVoice *v;
 
-   /* Exit sound subsystem. */
-   sound_sys_exit();
+   /* Exit music subsystem. */
+   music_exit();
 
    /* free the voices. */
    while (voice_active != NULL) {
@@ -246,8 +243,8 @@ void sound_exit (void)
    sound_list = NULL;
    sound_nlist = 0;
 
-   /* Exit music subsystem. */
-   music_exit();
+   /* Exit sound subsystem. */
+   sound_sys_exit();
 }
 
 

@@ -163,13 +163,9 @@ static int sound_mix_updatePosVoice( alVoice *v, double x, double y )
    double d;
    int idist;
 
-   /* Update position. */
-   v->pos[0] = x;
-   v->pos[1] = y;
-
    /* Get relative position. */
-   px = v->pos[0] - sound_pos[0];
-   py = v->pos[1] - sound_pos[1];
+   px = x - sound_pos[0];
+   py = y - sound_pos[1];
 
    /* Exact calculations. */
    angle = sound_pos[2] - ANGLE(px,py)/M_PI*180.;
@@ -244,15 +240,6 @@ int sound_mix_updatePos( alVoice *v,
       return -1;
 
    return 0;
-}
-
-
-/**
- * @brief Updates the sonuds removing obsolete ones and such.
- */
-void sound_mix_update (void)
-{
-   return;
 }
 
 

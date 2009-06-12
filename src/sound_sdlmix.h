@@ -16,7 +16,6 @@
  */
 int sound_mix_init (void);
 void sound_mix_exit (void);
-void sound_mix_update (void);
 
 
 /*

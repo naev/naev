@@ -14,6 +14,7 @@
 #include "naev.h"
 
 #include "music_sdlmix.h"
+#include "music_openal.h"
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_var.h"
@@ -159,7 +160,8 @@ int music_init (void)
 {
    if (music_disabled) return 0;
 
-   if (1) {
+   if ((conf.sound_backend != NULL) &&
+         strcmp(conf.sound_backend,"sdlmix")) {
 #if USE_SDLMIX
       /*
        * SDL_mixer backend.
@@ -185,10 +187,36 @@ int music_init (void)
       return -1;
 #endif /* USE_SDLMIX */
    }
-   else {
+   else if ((conf.sound_backend != NULL) &&
+         strcmp(conf.sound_backend,"openal")) {
+#if USE_OPENAL
       /*
-       * OpenAL.
+       * OpenAL backend.
        */
+      /* Init/exit. */
+      music_sys_init = music_al_init;
+      music_sys_exit = music_al_exit;
+      /* Loading. */
+      music_sys_load = music_al_load;
+      music_sys_free = music_al_free;
+      /* Music control. */
+      music_sys_volume = music_al_volume;
+      music_sys_getVolume = music_al_getVolume;
+      music_sys_load = music_al_load;
+      music_sys_play = music_al_play;
+      music_sys_stop = music_al_stop;
+      music_sys_pause = music_al_pause;
+      music_sys_resume = music_al_resume;
+      music_sys_setPos = music_al_setPos;
+      music_sys_isPlaying = music_al_isPlaying;
+#else /* USE_OPENAL */
+      WARN("OpenAL support not compiled in!");
+      return -1;
+#endif /* USE_OPENAL*/
+   }
+   else {
+      WARN("Unknown sound backend '%s'.", conf.sound_backend);
+      return -1;
    }
 
    /* Start the subsystem. */
@@ -220,9 +248,11 @@ int music_init (void)
  */
 void music_exit (void)
 {
-   music_sys_exit();
-
+   /* Free the music. */
    music_free();
+
+   /* Exit the subsystem. */
+   music_sys_exit();
 
    /* Destroy the lock. */
    if (music_lock != NULL) {
