@@ -96,16 +96,24 @@ static int music_thread( void* unused )
    ALenum value;
 
    /* main loop */
-   while (!music_is(MUSIC_KILL)) {
+   while (1) {
+
+      musicLock();
+
+      if (music_is(MUSIC_KILL)) {
+         musicUnlock();
+         break;
+      }
 
       if (music_is(MUSIC_PLAYING)) {
+
          if (music_vorbis.rw == NULL)
             music_rm(MUSIC_PLAYING);
+
          else {
 
             music_rm(MUSIC_STOPPED);
 
-            musicLock(); /* lock the mutex */
             soundLock();
 
             /* start playing current song */
@@ -129,7 +137,16 @@ static int music_thread( void* unused )
 
             active = 0; /* dive into loop */
          }
-         while (music_is(MUSIC_PLAYING)) {
+         
+         musicUnlock();
+
+         while (1) {
+
+            /* See if should still play. */
+            musicLock();
+            if (music_is(MUSIC_PLAYING)) {
+               break;
+            }
 
             soundLock();
 
@@ -138,7 +155,8 @@ static int music_thread( void* unused )
 
                /* refill active buffer */
                alSourceUnqueueBuffers( music_source, 1, &music_buffer[active] );
-               if (stream_loadBuffer( music_buffer[active] )) music_rm(MUSIC_PLAYING);
+               if (stream_loadBuffer( music_buffer[active] ))
+                  music_rm(MUSIC_PLAYING);
                alSourceQueueBuffers( music_source, 1, &music_buffer[active] );
 
                active = 1 - active;
@@ -148,6 +166,7 @@ static int music_thread( void* unused )
             al_checkErr();
             
             soundUnlock();
+            musicUnlock();
 
             SDL_Delay(0);
          }
@@ -164,10 +183,12 @@ static int music_thread( void* unused )
          al_checkErr();
 
          soundUnlock();
-         musicUnlock();
       }
 
+      /* Mark music as stopped. */
       music_set(MUSIC_STOPPED);
+      musicUnlock();
+
       SDL_Delay(0); /* we must not kill resources */
    }
 
@@ -189,7 +210,7 @@ static int stream_loadBuffer( ALuint buffer )
    while (size < BUFFER_SIZE) { /* fille up the entire data buffer */
 
       result = ov_read( &music_vorbis.stream, /* stream */
-            dat + size,             /* data */
+            &dat[size],             /* data */
             BUFFER_SIZE - size,     /* amount to read */
             VORBIS_ENDIAN,          /* big endian? */
             2,                      /* 16 bit */
@@ -220,8 +241,8 @@ static int stream_loadBuffer( ALuint buffer )
 }
 
 
-/*
- * init/exit
+/**
+ * @brief Initializes the OpenAL music subsystem.
  */
 int music_al_init (void)
 {
@@ -229,6 +250,8 @@ int music_al_init (void)
    music_vorbis.rw = NULL; /* indication it's not loaded */
 
    soundLock();
+
+   /* music_source created in sound_al_init. */
 
    /* Generate buffers and sources. */
    alGenBuffers( 2, music_buffer );
@@ -240,6 +263,9 @@ int music_al_init (void)
 
    /* Check for errors. */
    al_checkErr();
+
+   /* Set state to none. */
+   music_state = 0;
 
    soundUnlock();
 
@@ -259,17 +285,21 @@ void music_al_exit (void)
    music_kill();
    SDL_WaitThread( music_player, NULL );
 
+   soundLock();
+
    /* Free the music. */
    alDeleteBuffers( 2, music_buffer );
    alDeleteSources( 1, &music_source );
+
+   soundUnlock();
 
    /* Destroy the mutex. */
    SDL_DestroyMutex( music_vorbis_lock );
 }
 
 
-/*
- * internal music loading routines
+/**
+ * @brief Internal music loading routines.
  */
 int music_al_load( const char* name, SDL_RWops *rw )
 {
@@ -281,13 +311,13 @@ int music_al_load( const char* name, SDL_RWops *rw )
    
    /* Load new ogg. */
    music_vorbis.rw = rw;
-   if (ov_open_callbacks( &music_vorbis.rw, &music_vorbis.stream,
+   if (ov_open_callbacks( music_vorbis.rw, &music_vorbis.stream,
             NULL, 0, sound_al_ovcall ) < 0) {
       WARN("Song '%s' does not appear to be a vorbis bitstream.", name);
       musicUnlock();
       return -1;
    }
-   music_vorbis.info = ov_info( &music_vorbis.stream, -1);
+   music_vorbis.info = ov_info( &music_vorbis.stream, -1 );
 
    /* Set the format */
    if (music_vorbis.info->channels == 1)

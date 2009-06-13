@@ -120,28 +120,28 @@ static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf );
 static size_t ovpack_read( void *ptr, size_t size, size_t nmemb, void *datasource )
 {  
    SDL_RWops *rw = datasource;
-   return (size_t) rw->read( rw, ptr, size, nmemb );
+   return (size_t) SDL_RWread( rw, ptr, size, nmemb );
 }
 static int ovpack_seek( void *datasource, ogg_int64_t offset, int whence )
 {  
    SDL_RWops *rw = datasource;
-   return rw->seek( rw, offset, whence );
+   return SDL_RWseek( rw, offset, whence );
 }
 static int ovpack_close( void *datasource )
 {  
    SDL_RWops *rw = datasource;
-   return rw->close( rw );
+   return SDL_RWclose( rw );
 }
 static long ovpack_tell( void *datasource )
 {  
    SDL_RWops *rw = datasource;
-   return rw->seek( rw, 0, SEEK_CUR );
+   return SDL_RWseek( rw, 0, SEEK_CUR );
 }
 ov_callbacks sound_al_ovcall = {
-   .read_func = ovpack_read,
-   .seek_func = ovpack_seek,
+   .read_func  = ovpack_read,
+   .seek_func  = ovpack_seek,
    .close_func = ovpack_close,
-   .tell_func = ovpack_tell
+   .tell_func  = ovpack_tell
 }; /**< Vorbis call structure to handl rwops. */
 
 
