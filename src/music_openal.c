@@ -372,6 +372,12 @@ static int stream_loadBuffer( ALuint buffer )
 
    musicVorbisLock();
 
+   /* Make sure music is valid. */
+   if (music_vorbis.rw == NULL) {
+      musicVorbisUnlock();
+      return -1;
+   }
+
    ret  = 0;
    size = 0;
    while (size < BUFFER_SIZE) { /* fille up the entire data buffer */
@@ -386,18 +392,22 @@ static int stream_loadBuffer( ALuint buffer )
 
       /* End of file. */
       if (result == 0) {
-         if (size == 0)
+         if (size == 0) {
+            musicVorbisUnlock();
             return -2;
+         }
          ret = 1;
          break;
       }
       /* Hole error. */
       else if (result == OV_HOLE) {
+         musicVorbisUnlock();
          WARN("OGG: Vorbis hole detected in music!");
          return 0;
       }
       /* Bad link error. */
       else if (result == OV_EBADLINK) {
+         musicVorbisUnlock();
          WARN("OGG: Invalid stream section or corrupt link in music!");
          return -1;
       }
