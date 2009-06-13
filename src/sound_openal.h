@@ -13,6 +13,8 @@
 
 #include "sound_priv.h"
 
+#include "ncompat.h"
+
 #include <vorbis/vorbisfile.h>
 
 
