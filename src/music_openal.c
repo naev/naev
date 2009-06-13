@@ -119,6 +119,7 @@ static int music_thread( void* unused )
    int ret;
    int active; /* active buffer */
    ALint state;
+   ALuint removed[2];
    ALenum value;
    music_state_t cur_state;
 
@@ -233,7 +234,7 @@ static int music_thread( void* unused )
             alSourceStop( music_source );
             alGetSourcei( music_source, AL_BUFFERS_PROCESSED, &value );
             if (value > 0)
-               alSourceUnqueueBuffers( music_source, value, music_buffer );
+               alSourceUnqueueBuffers( music_source, value, removed );
 
             soundUnlock();
 
@@ -312,15 +313,21 @@ static int music_thread( void* unused )
             if (active < 0) {
                soundLock();
                alGetSourcei( music_source, AL_SOURCE_STATE, &state );
-               soundUnlock();
 
                if (state == AL_STOPPED) {
+                  alGetSourcei( music_source, AL_BUFFERS_PROCESSED, &value );
+                  if (value > 0)
+                     alSourceUnqueueBuffers( music_source, value, removed );
+                  soundUnlock();
+
                   musicLock();
                   music_state = MUSIC_STATE_IDLE;
                   music_rechoose();
                   musicUnlock();
                   break;
                }
+
+               soundUnlock();
 
                break;
             }
@@ -332,7 +339,7 @@ static int music_thread( void* unused )
             if (state > 0) {
 
                /* refill active buffer */
-               alSourceUnqueueBuffers( music_source, 1, &music_buffer[active] );
+               alSourceUnqueueBuffers( music_source, 1, removed );
                ret = stream_loadBuffer( music_buffer[active] );
                if (ret < 0) {
                   active = -1;
