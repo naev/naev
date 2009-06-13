@@ -326,7 +326,7 @@ static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf )
    i = 0;
    while (i < len) {
       /* Fill buffer with data in the 16 bit signed samples format. */
-      i += ov_read( vf, &buf[i], len-i, 0, 2, 1, &section );
+      i += ov_read( vf, &buf[i], len-i, VORBIS_ENDIAN, 2, 1, &section );
    }
 
    /* Put into buffer. */

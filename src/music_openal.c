@@ -191,7 +191,7 @@ static int stream_loadBuffer( ALuint buffer )
       result = ov_read( &music_vorbis.stream, /* stream */
             dat + size,             /* data */
             BUFFER_SIZE - size,     /* amount to read */
-            0,                      /* big endian? */
+            VORBIS_ENDIAN,          /* big endian? */
             2,                      /* 16 bit */
             1,                      /* signed */
             &section );             /* current bitstream */
