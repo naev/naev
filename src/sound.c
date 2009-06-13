@@ -37,7 +37,6 @@
  * Global sound properties.
  */
 int sound_disabled            = 0; /**< Whether sound is disabled. */
-static int sound_reserved     = 0; /**< Amount of reserved channels. */
 
 
 /*
@@ -640,31 +639,6 @@ static void sound_free( alSound *snd )
    
    /* Free internals. */
    sound_sys_free(snd);
-}
-
-
-/**
- * @brief Reserves num channels.
- *
- *    @param num Number of channels to reserve.
- *    @return 0 on success.
- */
-int sound_reserve( int num )
-{
-   int ret;
-
-   if (sound_disabled)
-      return 0;
-
-   sound_reserved += num;
-   ret = Mix_ReserveChannels(num);
-
-   if (ret != sound_reserved) {
-      WARN("Unable to reserve %d channels: %s", sound_reserved, Mix_GetError());
-      return -1;
-   }
-
-   return 0;
 }
 
 

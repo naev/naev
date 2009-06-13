@@ -613,7 +613,6 @@ static void player_initSound (void)
    if (player_soundReserved) return;
 
    /* Allocate channels. */
-   sound_reserve(PLAYER_RESERVED_CHANNELS);
    sound_createGroup(PLAYER_ENGINE_CHANNEL, 1); /* Channel for engine noises. */
    sound_createGroup(PLAYER_GUI_CHANNEL, PLAYER_RESERVED_CHANNELS-1);
    player_soundReserved = 1;
