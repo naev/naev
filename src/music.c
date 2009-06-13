@@ -136,7 +136,8 @@ void music_update (void)
  */
 static int music_runLua( const char *situation )
 {
-   if (music_disabled) return 0;
+   if (music_disabled)
+      return 0;
 
    /* Run the choose function in Lua. */
    lua_getglobal( music_lua, "choose" );
@@ -158,7 +159,8 @@ static int music_runLua( const char *situation )
  */
 int music_init (void)
 {
-   if (music_disabled) return 0;
+   if (music_disabled)
+      return 0;
 
    if ((conf.sound_backend != NULL) &&
          (strcmp(conf.sound_backend,"sdlmix")==0)) {
@@ -267,6 +269,9 @@ void music_exit (void)
  */
 static void music_free (void)
 {
+   if (music_disabled)
+      return;
+
    if (music_name != NULL) {
       free(music_name);
       music_name = NULL;
@@ -289,7 +294,8 @@ static int music_find (void)
    int len, suflen, flen;
    int mem;
 
-   if (music_disabled) return 0;
+   if (music_disabled)
+      return 0;
 
    /* get the file list */
    files = ndata_list( MUSIC_PREFIX, &nfiles );
@@ -340,7 +346,8 @@ static int music_find (void)
  */
 int music_volume( const double vol )
 {
-   if (music_disabled) return 0;
+   if (music_disabled)
+      return 0;
 
    return music_sys_volume( vol );
 }
@@ -367,7 +374,8 @@ int music_load( const char* name )
    SDL_RWops *rw;
    char filename[PATH_MAX];
 
-   if (music_disabled) return 0;
+   if (music_disabled)
+      return 0;
 
    /* Free current music if needed. */
    music_free();
@@ -437,7 +445,8 @@ void music_resume (void)
  */
 int music_isPlaying (void)
 {
-   if (music_disabled) return 0; /* Always not playing when music is off. */
+   if (music_disabled)
+      return 0; /* Always not playing when music is off. */
 
    return music_sys_isPlaying();
 }
@@ -480,7 +489,8 @@ static int music_luaInit (void)
    char *buf;
    uint32_t bufsize;
 
-   if (music_disabled) return 0;
+   if (music_disabled)
+      return 0;
 
    if (music_lua != NULL)
       music_luaQuit();
@@ -510,7 +520,8 @@ static int music_luaInit (void)
  */
 static void music_luaQuit (void)
 {
-   if (music_disabled) return;
+   if (music_disabled)
+      return;
 
    if (music_lua == NULL)
       return;
@@ -528,7 +539,8 @@ static void music_luaQuit (void)
  */
 int music_choose( const char* situation )
 {
-   if (music_disabled) return 0;
+   if (music_disabled)
+      return 0;
 
    music_runLua( situation );
 

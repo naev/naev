@@ -889,6 +889,51 @@ int sound_al_updateListener( double dir, double px, double py,
 }
 
 
+/**
+ * @brief Creates a group.
+ */
+int sound_al_createGroup( int tag, int size )
+{
+   return 0;
+}
+
+
+/**
+ * @brief Plays a sound in a group.
+ */
+int sound_al_playGroup( int tag, alSound *s, int once )
+{
+   return 0;
+}
+
+
+/**
+ * @brief Stops a group.
+ */
+void sound_al_stopGroup( int group )
+{
+   return;
+}
+
+
+/**
+ * @brief Pauses a group.
+ */
+void sound_al_pauseGroup( int group )
+{
+   return;
+}
+
+
+/**
+ * @brief Resumes a group.
+ */
+void sound_al_resumeGroup( int group )
+{
+   return;
+}
+
+
 #ifndef al_checkError
 /**
  * @brief Converts an OpenAL error to a string.

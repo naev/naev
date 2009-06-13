@@ -82,7 +82,12 @@ void (*sound_sys_resume) (void)        = NULL;
 /* Listener. */
 int (*sound_sys_updateListener) ( double dir, double px, double py,
       double vx, double vy )           = NULL;
-
+/* Groups. */
+int  (*sound_sys_createGroup) ( int tag, int size );
+int  (*sound_sys_playGroup) ( int tag, alSound *s, int once );
+void (*sound_sys_stopGroup) ( int group );
+void (*sound_sys_pauseGroup) (int group );
+void (*sound_sys_resumeGroup) (int group );
 
 
 /*
@@ -141,6 +146,12 @@ int sound_init (void)
       sound_sys_resume     = sound_mix_resume;
       /* Listener. */
       sound_sys_updateListener = sound_mix_updateListener;
+      /* Groups. */
+      sound_sys_createGroup = sound_mix_createGroup;
+      sound_sys_playGroup  = sound_mix_playGroup;
+      sound_sys_stopGroup  = sound_mix_stopGroup;
+      sound_sys_pauseGroup = sound_mix_pauseGroup;
+      sound_sys_resumeGroup = sound_mix_resumeGroup;
 #else /* USE_SDLMIX */
       WARN("SDL_mixer support not compiled in!");
       sound_disabled = 1;
@@ -167,12 +178,19 @@ int sound_init (void)
       sound_sys_play       = sound_al_play;
       sound_sys_playPos    = sound_al_playPos;
       sound_sys_updatePos  = sound_al_updatePos;
+      sound_sys_updateVoice = sound_al_updateVoice;
       /* Sound management. */
       sound_sys_stop       = sound_al_stop;
       sound_sys_pause      = sound_al_pause;
       sound_sys_resume     = sound_al_resume;
       /* Listener. */
       sound_sys_updateListener = sound_al_updateListener;
+      /* Groups. */
+      sound_sys_createGroup = sound_al_createGroup;
+      sound_sys_playGroup  = sound_al_playGroup;
+      sound_sys_stopGroup  = sound_al_stopGroup;
+      sound_sys_pauseGroup = sound_al_pauseGroup;
+      sound_sys_resumeGroup = sound_al_resumeGroup;
 #else /* USE_OPENAL */
       WARN("OpenAL support not compiled in!");
       sound_disabled = 1;
@@ -429,6 +447,9 @@ int sound_update (void)
  */
 void sound_pause (void)
 {
+   if (sound_disabled)
+      return;
+
    sound_sys_pause();
 }
 
@@ -438,6 +459,9 @@ void sound_pause (void)
  */
 void sound_resume (void)
 {
+   if (sound_disabled)
+      return;
+
    sound_sys_resume();
 }
 
@@ -477,7 +501,8 @@ void sound_stop( int voice )
 int sound_updateListener( double dir, double px, double py,
       double vx, double vy )
 {
-   if (sound_disabled) return 0;
+   if (sound_disabled)
+      return 0;
 
    return sound_sys_updateListener( dir, px, py, vx, vy );
 }
@@ -561,7 +586,8 @@ static int sound_makeList (void)
  */
 int sound_volume( const double vol )
 {
-   if (sound_disabled) return 0;
+   if (sound_disabled)
+      return 0;
 
    return sound_sys_volume( vol );
 }
@@ -574,6 +600,9 @@ int sound_volume( const double vol )
  */
 double sound_getVolume (void)
 {
+   if (sound_disabled)
+      return 0.;
+
    return sound_sys_getVolume();
 }
 
@@ -589,7 +618,8 @@ double sound_getVolume (void)
  */
 static int sound_load( alSound *snd, const char *filename )
 {
-   if (sound_disabled) return -1;
+   if (sound_disabled)
+      return -1;
 
    return sound_sys_load( snd, filename );
 }
@@ -623,7 +653,8 @@ int sound_reserve( int num )
 {
    int ret;
 
-   if (sound_disabled) return 0;
+   if (sound_disabled)
+      return 0;
 
    sound_reserved += num;
    ret = Mix_ReserveChannels(num);
@@ -645,20 +676,12 @@ int sound_reserve( int num )
  *    @param size Size of the group.
  *    @return 0 on success.
  */
-int sound_createGroup( int tag, int start, int size )
+int sound_createGroup( int tag, int size )
 {
-   int ret;
+   if (sound_disabled)
+      return 0;
 
-   if (sound_disabled) return 0;
-
-   ret = Mix_GroupChannels( start, start+size-1, tag );
-
-   if (ret != size) {
-      WARN("Unable to create sound group: %s", Mix_GetError());
-      return -1;
-   }
-
-   return 0;
+   return sound_sys_createGroup( tag, size );
 }
 
 
@@ -672,25 +695,13 @@ int sound_createGroup( int tag, int start, int size )
  */
 int sound_playGroup( int group, int sound, int once )
 {
-   int ret, channel;
+   if (sound_disabled)
+      return 0;
 
-   if (sound_disabled) return 0;
-
-   channel = Mix_GroupAvailable(group);
-   if (channel == -1) {
-      WARN("Group '%d' has no free channels!", group);
+   if ((sound < 0) || (sound > sound_nlist))
       return -1;
-   }
 
-   ret = Mix_PlayChannel( channel, sound_list[sound].u.mix.buf,
-         (once == 0) ? -1 : 0 );
-   if (ret < 0) {
-      WARN("Unable to play sound %d for group %d: %s",
-            sound, group, Mix_GetError());
-      return -1;
-   }
-
-   return 0;
+   return sound_sys_playGroup( group, &sound_list[sound], once );
 }
 
 
@@ -701,10 +712,38 @@ int sound_playGroup( int group, int sound, int once )
  */
 void sound_stopGroup( int group )
 {
-   (void) group;
-   if (sound_disabled) return;
+   if (sound_disabled)
+      return;
 
-   /*sound_sys_stopGroup( group );*/
+   sound_sys_stopGroup( group );
+}
+
+
+/**
+ * @brief Pauses all the sounds in a group.
+ *
+ *    @param Group to pause sounds.
+ */
+void sound_pauseGroup( int group )
+{
+   if (sound_disabled)
+      return;
+
+   sound_sys_pauseGroup( group );
+}
+
+
+/**
+ * @brief Resumes all the sounds in a group.
+ *
+ *    @param Group to resume sounds.
+ */
+void sound_resumeGroup( int group )
+{
+   if (sound_disabled)
+      return;
+
+   sound_sys_resumeGroup( group );
 }
 
 

@@ -15,8 +15,6 @@
 
 #include <stdlib.h>
 
-#include "SDL_mixer.h" /** @todo remove asap. */
-
 #include "nxml.h"
 #include "pilot.h"
 #include "log.h"
@@ -616,8 +614,8 @@ static void player_initSound (void)
 
    /* Allocate channels. */
    sound_reserve(PLAYER_RESERVED_CHANNELS);
-   sound_createGroup(PLAYER_ENGINE_CHANNEL, 0, 1); /* Channel for engine noises. */
-   sound_createGroup(PLAYER_GUI_CHANNEL, 1, PLAYER_RESERVED_CHANNELS-1);
+   sound_createGroup(PLAYER_ENGINE_CHANNEL, 1); /* Channel for engine noises. */
+   sound_createGroup(PLAYER_GUI_CHANNEL, PLAYER_RESERVED_CHANNELS-1);
    player_soundReserved = 1;
 
    /* Get sounds. */
@@ -1487,8 +1485,7 @@ void player_accelOver (void)
  */
 void player_soundPause (void)
 {
-   if (!Mix_Paused(0))
-      Mix_Pause(0);
+   sound_pauseGroup(0);
 }
 
 
@@ -1500,8 +1497,7 @@ void player_soundPause (void)
  */
 void player_soundResume (void)
 {
-   if (Mix_Paused(0))
-      Mix_Resume(0);
+   sound_resumeGroup(0);
 }
 
 

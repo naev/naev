@@ -436,6 +436,26 @@ void sound_mix_stopGroup( int group )
 
 
 /**
+ * @brief Pauses all the sounds in a group.
+ */
+void sound_mix_pauseGroup( int group )
+{
+   if (!Mix_Paused(0))
+      Mix_Pause(0);
+}
+
+
+/**
+ * @brief Pauses all the sounds in a gorup.
+ */
+void sound_mix_resumeGroup( int group )
+{
+   if (Mix_Paused(0))
+      Mix_Resume(0);
+}
+
+
+/**
  * @brief Does nothing atm.
  *
  *    @param v Unused.
