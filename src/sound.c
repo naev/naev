@@ -170,7 +170,7 @@ int sound_init (void)
       sound_sys_exit       = sound_al_exit;
       /* Sound Creation. */
       sound_sys_load       = sound_al_load;
-      sound_sys_exit       = sound_al_exit;
+      sound_sys_free       = sound_al_free;
       /* Sound settings. */
       sound_sys_volume     = sound_al_volume;
       sound_sys_getVolume  = sound_al_getVolume;
