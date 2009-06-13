@@ -254,11 +254,13 @@ snderr_dev:
  */
 void sound_al_exit (void)
 {
+   soundLock();
    /* Clean up the sources. */
    if (source_stack) {
       alDeleteSources( source_nstack, source_stack );
       alDeleteSources( source_nactive, source_active );
    }
+   soundUnlock();
 
    /* Free stacks. */
    if (source_stack != NULL)
@@ -272,18 +274,16 @@ void sound_al_exit (void)
    source_mstack     = 0;
 
    /* Clean up context and such. */
-   if (sound_lock) {
-      soundLock();
+   soundLock();
 
-      if (al_context) {
-         alcMakeContextCurrent(NULL);
-         alcDestroyContext( al_context );
-      }
-      if (al_device) alcCloseDevice( al_device );
-
-      soundUnlock();
-      SDL_DestroyMutex( sound_lock );
+   if (al_context) {
+      alcMakeContextCurrent(NULL);
+      alcDestroyContext( al_context );
    }
+   if (al_device) alcCloseDevice( al_device );
+
+   soundUnlock();
+   SDL_DestroyMutex( sound_lock );
 }
 
 
@@ -707,13 +707,13 @@ static ALuint sound_al_getSource (void)
  */
 int sound_al_play( alVoice *v, alSound *s )
 {
-   soundLock();
-
    /* Set up the source and buffer. */
    v->u.al.source = sound_al_getSource();
    if (v->u.al.source == 0)
       return -1;
    v->u.al.buffer = s->u.al.buf;
+
+   soundLock();
 
    /* Attach buffer. */
    alSourcei( v->u.al.source, AL_BUFFER, v->u.al.buffer );
@@ -747,13 +747,13 @@ int sound_al_play( alVoice *v, alSound *s )
 int sound_al_playPos( alVoice *v, alSound *s,
             double px, double py, double vx, double vy )
 {
-   soundLock();
-
    /* Set up the source and buffer. */
    v->u.al.source = sound_al_getSource();
    if (v->u.al.source == 0)
       return -1;
    v->u.al.buffer = s->u.al.buf;
+
+   soundLock();
 
    /* Attach buffer. */
    alSourcei( v->u.al.source, AL_BUFFER, v->u.al.buffer );
@@ -827,6 +827,8 @@ void sound_al_updateVoice( alVoice *v )
 
       /* Mark as stopped - erased next iteration. */
       v->state = VOICE_STOPPED;
+
+      soundUnlock();
       return;
    }
 
