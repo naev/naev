@@ -153,7 +153,6 @@ ov_callbacks sound_al_ovcall = {
 int sound_al_init (void)
 {
    int ret;
-   ALenum err;
    const ALchar* dev;
 
    /* Default values. */
@@ -205,13 +204,17 @@ int sound_al_init (void)
    source_nstack  = 0;
    source_mstack  = 0;
    source_nactive = 0;
-   while (((err=alGetError())==AL_NO_ERROR) && (source_nstack < SOUND_MAX_SOURCES)) {
+   while (source_nstack < SOUND_MAX_SOURCES) {
       if (source_mstack < source_nstack+1) { /* allocate more memory */
          source_mstack += 32;
          source_stack = realloc( source_stack, sizeof(ALuint) * source_mstack );
       }
       alGenSources( 1, &source_stack[source_nstack] );
-      source_nstack++;
+
+      /* Check for error. */
+      if (alGetError() == AL_NO_ERROR)
+         source_nstack++;
+      else break;
    }
    /* Reduce ram usage. */
    source_mstack = source_nstack;
@@ -691,8 +694,8 @@ static ALuint sound_al_getSource (void)
    source = source_stack[source_nstack];
 
    /* Throw it on the active stack. */
-   source_active[source_nactive] = source;
-   source_nactive++;
+   /*source_active[source_nactive] = source;
+   source_nactive++;*/
 
    return source;
 }
@@ -814,6 +817,12 @@ int sound_al_updatePos( alVoice *v,
 void sound_al_updateVoice( alVoice *v )
 {
    ALint state;
+
+   /* Invalid source, mark to delete. */
+   if (v->u.al.source == 0) {
+      v->state = VOICE_STOPPED;
+      return;
+   }
 
    soundLock();
 
