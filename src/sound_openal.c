@@ -524,11 +524,12 @@ static int sound_al_loadWav( alSound *snd, SDL_RWops *rw )
    /* Close file. */
    SDL_RWclose(rw);
 
+   soundLock();
    /* Create new buffer. */
    alGenBuffers( 1, &snd->u.al.buf );
-
    /* Put into the buffer. */
    alBufferData( snd->u.al.buf, format, buf, chunklen, rate );
+   soundUnlock();
 
    free(buf);
    return 0;
@@ -567,9 +568,6 @@ static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf )
    format = (info->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
    len    = ov_pcm_total( vf, -1 ) * info->channels * 2;
 
-   /* Create new buffer. */
-   alGenBuffers( 1, &snd->u.al.buf );
-
    /* Allocate memory. */
    buf = malloc( len );
 
@@ -580,8 +578,12 @@ static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf )
       i += ov_read( vf, &buf[i], len-i, VORBIS_ENDIAN, 2, 1, &section );
    }
 
+   soundLock();
+   /* Create new buffer. */
+   alGenBuffers( 1, &snd->u.al.buf );
    /* Put into buffer. */
    alBufferData( snd->u.al.buf, format, buf, len, info->rate );
+   soundUnlock();
 
    /* Clean up. */
    free(buf);
@@ -606,8 +608,6 @@ int sound_al_load( alSound *snd, const char *filename )
    /* get the file data buffer from packfile */
    rw = ndata_rwops( filename );
 
-   soundLock();
-
    /* Check to see if it's an OGG. */
    if (ov_test_callbacks( rw, &vf, NULL, 0, sound_al_ovcall )==0) {
       ret = sound_al_loadOgg( snd, &vf );
@@ -626,10 +626,11 @@ int sound_al_load( alSound *snd, const char *filename )
 
    /* Failed to load. */
    if (ret != 0) {
-      soundUnlock();
       WARN("Failed to load sound file '%s'.", filename);
       return ret;
    }
+
+   soundLock();
 
    /* Check for errors. */
    al_checkErr();

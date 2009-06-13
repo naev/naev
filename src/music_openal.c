@@ -247,11 +247,11 @@ static int music_thread( void* unused )
           * Load the song.
           */
          case MUSIC_STATE_LOADING:
-            soundLock();
 
             /* Load buffer and start playing. */
             active = 0; /* load first buffer */
             ret = stream_loadBuffer( music_buffer[active] );
+            soundLock();
             alSourceQueueBuffers( music_source, 1, &music_buffer[active] );
             /* Special case NULL file or error. */
             if (ret < 0) {
@@ -265,10 +265,10 @@ static int music_thread( void* unused )
             }
             /* Start playing. */
             alSourcePlay( music_source );
+            soundUnlock();
             /* Special case of a very short song. */
             if (ret > 1) {
                active = -1;
-               soundUnlock();
 
                /* Check for errors. */
                al_checkErr();
@@ -283,6 +283,7 @@ static int music_thread( void* unused )
             /* Load second buffer. */
             active = 1;
             ret = stream_loadBuffer( music_buffer[active] );
+            soundLock();
             if (ret < 0) {
                active = -1;
             }
@@ -418,8 +419,10 @@ static int stream_loadBuffer( ALuint buffer )
    musicVorbisUnlock();
 
    /* load the buffer up */
+   soundLock();
    alBufferData( buffer, music_vorbis.format,
          dat, size, music_vorbis.info->rate );
+   soundUnlock();
 
    return ret;
 }
