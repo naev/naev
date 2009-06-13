@@ -198,9 +198,13 @@ int sound_al_init (void)
    /* Allocate source for music. */
    alGenSources( 1, &music_source );
 
+   /* Check for errors. */
+   al_checkErr();
+
    /* Start allocating the sources - music has already taken his */
-   alGetError(); /* another error clear */
-   source_mstack = 0;
+   source_nstack  = 0;
+   source_mstack  = 0;
+   source_nactive = 0;
    while (((err=alGetError())==AL_NO_ERROR) && (source_nstack < SOUND_MAX_SOURCES)) {
       if (source_mstack < source_nstack+1) { /* allocate more memory */
          source_mstack += 32;
@@ -710,6 +714,9 @@ int sound_al_play( alVoice *v, alSound *s )
       return -1;
    v->u.al.buffer = s->u.al.buf;
 
+   /* Attach buffer. */
+   alSourcei( v->u.al.source, AL_BUFFER, v->u.al.buffer );
+
    /* Do not do positional sound. */
    alSourcei( v->u.al.source, AL_SOURCE_RELATIVE, AL_FALSE );
 
@@ -746,6 +753,9 @@ int sound_al_playPos( alVoice *v, alSound *s,
    if (v->u.al.source == 0)
       return -1;
    v->u.al.buffer = s->u.al.buf;
+
+   /* Attach buffer. */
+   alSourcei( v->u.al.source, AL_BUFFER, v->u.al.buffer );
 
    /* Enable positional sound. */
    alSourcei( v->u.al.source, AL_SOURCE_RELATIVE, AL_TRUE );
@@ -877,7 +887,7 @@ int sound_al_updateListener( double dir, double px, double py,
    /* set orientation */
    ALfloat ori[] = { cos(dir), sin(dir), 0.,  0., 0., 1. };
    alListenerfv( AL_ORIENTATION, ori );
-   alListener3f( AL_POSITION, px, py, 1. );
+   alListener3f( AL_POSITION, px, py, 0. );
    alListener3f( AL_VELOCITY, vx, vy, 0. );
 
    /* Check for errors. */
@@ -894,6 +904,8 @@ int sound_al_updateListener( double dir, double px, double py,
  */
 int sound_al_createGroup( int tag, int size )
 {
+   (void) tag;
+   (void) size;
    return 0;
 }
 
@@ -903,6 +915,9 @@ int sound_al_createGroup( int tag, int size )
  */
 int sound_al_playGroup( int tag, alSound *s, int once )
 {
+   (void) tag;
+   (void) s;
+   (void) once;
    return 0;
 }
 
@@ -912,6 +927,7 @@ int sound_al_playGroup( int tag, alSound *s, int once )
  */
 void sound_al_stopGroup( int group )
 {
+   (void) group;
    return;
 }
 
@@ -921,6 +937,7 @@ void sound_al_stopGroup( int group )
  */
 void sound_al_pauseGroup( int group )
 {
+   (void) group;
    return;
 }
 
@@ -930,6 +947,7 @@ void sound_al_pauseGroup( int group )
  */
 void sound_al_resumeGroup( int group )
 {
+   (void) group;
    return;
 }
 
