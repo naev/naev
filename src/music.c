@@ -555,7 +555,8 @@ int music_choose( const char* situation )
  */
 void music_rechoose (void)
 {
-   if (music_disabled) return;
+   if (music_disabled)
+      return;
 
    /* Lock so it doesn't run in between an update. */
    SDL_mutexP(music_lock);

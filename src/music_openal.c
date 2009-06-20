@@ -167,7 +167,6 @@ static int music_thread( void* unused )
       cur_state = music_state;
       musicUnlock();
 
-
       /*
        * Main processing loop.
        */
@@ -242,6 +241,7 @@ static int music_thread( void* unused )
             music_state = MUSIC_STATE_IDLE;
             SDL_CondBroadcast( music_state_cond );
             musicUnlock();
+            music_rechoose();
             break;
 
          /*
@@ -322,8 +322,8 @@ static int music_thread( void* unused )
 
                   musicLock();
                   music_state = MUSIC_STATE_IDLE;
-                  music_rechoose();
                   musicUnlock();
+                  music_rechoose();
                   break;
                }
 
@@ -454,7 +454,6 @@ int music_al_init (void)
 
    /* Set up OpenAL properties. */
    alSourcef( music_source, AL_GAIN, music_vol );
-   alSourcef( music_source, AL_ROLLOFF_FACTOR, 0. );
    alSourcei( music_source, AL_SOURCE_RELATIVE, AL_FALSE );
 
    /* Check for errors. */
@@ -602,6 +601,11 @@ void music_al_play (void)
    musicLock();
 
    music_command = MUSIC_CMD_PLAY;
+   while (1) {
+      SDL_CondWait( music_state_cond, music_state_lock );
+      if (music_state == MUSIC_STATE_PLAYING)
+         break;
+   }
 
    musicUnlock();
 }
@@ -615,6 +619,11 @@ void music_al_stop (void)
    musicLock();
 
    music_command = MUSIC_CMD_STOP;
+   while (1) {
+      SDL_CondWait( music_state_cond, music_state_lock );
+      if (music_state == MUSIC_STATE_IDLE)
+         break;
+   }
 
    musicUnlock();
 }
@@ -628,6 +637,11 @@ void music_al_pause (void)
    musicLock();
 
    music_command = MUSIC_CMD_PAUSE;
+   while (1) {
+      SDL_CondWait( music_state_cond, music_state_lock );
+      if (music_state == MUSIC_STATE_PAUSED)
+         break;
+   }
 
    musicUnlock();
 }
@@ -641,6 +655,11 @@ void music_al_resume (void)
    musicLock();
 
    music_command = MUSIC_CMD_PLAY;
+   while (1) {
+      SDL_CondWait( music_state_cond, music_state_lock );
+      if (music_state == MUSIC_STATE_IDLE)
+         break;
+   }
 
    musicUnlock();
 }
