@@ -154,6 +154,7 @@ int sound_al_init (void)
 {
    int ret;
    const ALchar* dev;
+   ALuint s;
 
    /* Default values. */
    ret = 0;
@@ -208,7 +209,13 @@ int sound_al_init (void)
          source_mstack += 32;
          source_stack = realloc( source_stack, sizeof(ALuint) * source_mstack );
       }
-      alGenSources( 1, &source_stack[source_nstack] );
+      alGenSources( 1, &s );
+      source_stack[source_nstack] = s;
+
+      /* Set defaults. */
+      alSourcef( s, AL_MAX_DISTANCE,       50. );
+      alSourcef( s, AL_ROLLOFF_FACTOR,     1. );
+      alSourcef( s, AL_REFERENCE_DISTANCE, 500. );
 
       /* Check for error. */
       if (alGetError() == AL_NO_ERROR)
@@ -224,8 +231,8 @@ int sound_al_init (void)
 
    /* Set up how sound works. */
    alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED );
-   alDopplerFactor( 1. );
-   alSpeedOfSound( 1. );
+   alDopplerFactor( 0.1 );
+   alSpeedOfSound(  343.3 );
 
    /* Check for errors. */
    al_checkErr();
@@ -764,13 +771,6 @@ int sound_al_playPos( alVoice *v, alSound *s,
    /* Enable positional sound. */
    alSourcei( v->u.al.source, AL_SOURCE_RELATIVE, AL_TRUE );
 
-   /* Distance model. */
-   /*
-   alSourcef( v->u.al.source, AL_ROLLOFF_FACTOR, SOUND_ROLLOFF_FACTOR );
-   alSourcef( v->u.al.source, AL_MAX_DISTANCE, SOUND_MAX_DIST );
-   alSourcef( v->u.al.source, AL_REFERENCE_DISTANCE, SOUND_REFERENCE_DIST );
-   */
-
    /* Update position. */
    v->u.al.pos[0] = px;
    v->u.al.pos[1] = py;
@@ -780,9 +780,9 @@ int sound_al_playPos( alVoice *v, alSound *s,
    v->u.al.vel[2] = 0.;
 
    /* Set up properties. */
-   alSourcef( v->u.al.source, AL_GAIN, svolume );
+   alSourcef(  v->u.al.source, AL_GAIN, svolume );
    alSourcefv( v->u.al.source, AL_POSITION, v->u.al.pos );
-   /*alSourcefv( v->u.al.source, AL_VELOCITY, v->u.al.vel );*/
+   alSourcefv( v->u.al.source, AL_VELOCITY, v->u.al.vel );
 
    /* Start playing. */
    alSourcePlay( v->u.al.source );
@@ -846,7 +846,7 @@ void sound_al_updateVoice( alVoice *v )
    /* Set up properties. */
    alSourcef(  v->u.al.source, AL_GAIN, svolume );
    alSourcefv( v->u.al.source, AL_POSITION, v->u.al.pos );
-   /*alSourcefv( v->u.al.source, AL_VELOCITY, v->u.al.vel );*/
+   alSourcefv( v->u.al.source, AL_VELOCITY, v->u.al.vel );
 
    /* Check for errors. */
    al_checkErr();
@@ -900,7 +900,7 @@ int sound_al_updateListener( double dir, double px, double py,
    ALfloat ori[] = { cos(dir), sin(dir), 0., 0., 0., 1. };
    alListenerfv( AL_ORIENTATION, ori );
    alListener3f( AL_POSITION, px, py, 0. );
-   /*alListener3f( AL_VELOCITY, vx, vy, 0. );*/
+   alListener3f( AL_VELOCITY, vx, vy, 0. );
 
    /* Check for errors. */
    al_checkErr();
