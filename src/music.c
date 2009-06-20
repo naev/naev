@@ -108,7 +108,8 @@ void music_update (void)
 {
    char buf[PATH_MAX];
 
-   if (music_disabled) return;
+   if (music_disabled)
+      return;
 
    /* Lock music and see if needs to update. */
    SDL_mutexP(music_lock);
@@ -119,7 +120,6 @@ void music_update (void)
    music_runchoose = 0;
    strncpy(buf, music_situation, PATH_MAX);
    SDL_mutexV(music_lock);
-
    music_runLua( buf );
 
    /* Make sure music is playing. */
