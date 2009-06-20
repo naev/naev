@@ -87,8 +87,8 @@ typedef struct alVoice_ {
    union {
 #if USE_OPENAL
       struct {
-         double pos[2]; /**< Position of the voice. */
-         double vel[2]; /**< Velocity of the voice. */
+         ALfloat pos[3]; /**< Position of the voice. */
+         ALfloat vel[3]; /**< Velocity of the voice. */
          ALuint source; /**< Source current in use. */
          ALuint buffer; /**< Buffer attached to the voice. */
       } al; /**< For OpenAL backend. */

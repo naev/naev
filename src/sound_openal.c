@@ -71,30 +71,30 @@
 /*
  * global sound lock
  */
-SDL_mutex *sound_lock = NULL;
+SDL_mutex *sound_lock = NULL; /**< Global sound lock, always lock this before
+                                   using any OpenAL functions. */
 
 
 /*
  * global device and contex
  */
-static ALCcontext *al_context = NULL;
-static ALCdevice *al_device   = NULL;
+static ALCcontext *al_context = NULL; /**< OpenAL context. */
+static ALCdevice *al_device   = NULL; /**< OpenAL device. */
 
 
 /*
  * struct to hold all the sources and currently attached voice
  */
-static ALuint *source_stack   = NULL; /* and it's stack */
-static int source_nstack      = 0;
-static ALuint *source_active  = NULL;
-static int source_nactive     = 0;
-static int source_mstack      = 0;
+static ALuint *source_stack   = NULL; /**< Free source pool. */
+static ALuint *source_total   = NULL; /**< Total source pool. */
+static int source_nstack      = 0; /**< Number of free sources in the pool. */
+static int source_mstack      = 0; /**< Memory allocated for sources in the pool. */
 
 
 /*
  * volume
  */
-static ALfloat svolume        = 1.;
+static ALfloat svolume        = 1.; /**< Sound global volume. */
 
 
 /*
@@ -203,7 +203,6 @@ int sound_al_init (void)
    /* Start allocating the sources - music has already taken his */
    source_nstack  = 0;
    source_mstack  = 0;
-   source_nactive = 0;
    while (source_nstack < SOUND_MAX_SOURCES) {
       if (source_mstack < source_nstack+1) { /* allocate more memory */
          source_mstack += 32;
@@ -219,7 +218,14 @@ int sound_al_init (void)
    /* Reduce ram usage. */
    source_mstack = source_nstack;
    source_stack  = realloc( source_stack, sizeof(ALuint) * source_mstack );
-   source_active = malloc( sizeof(ALuint) * source_mstack );
+   /* Copy allocated sources to total stack. */
+   source_total  = malloc( sizeof(ALuint) * source_mstack );
+   memcpy( source_total, source_stack, sizeof(ALuint) * source_mstack );
+
+   /* Set up how sound works. */
+   alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED );
+   alDopplerFactor( 1. );
+   alSpeedOfSound( 1. );
 
    /* Check for errors. */
    al_checkErr();
@@ -261,19 +267,17 @@ void sound_al_exit (void)
    /* Clean up the sources. */
    if (source_stack) {
       alDeleteSources( source_nstack, source_stack );
-      alDeleteSources( source_nactive, source_active );
    }
    soundUnlock();
 
    /* Free stacks. */
    if (source_stack != NULL)
       free(source_stack);
-   if (source_active != NULL)
-      free(source_active);
    source_stack      = NULL;
+   if (source_total != NULL)
+      free(source_total);
+   source_total      = NULL;
    source_nstack     = 0;
-   source_active     = NULL;
-   source_nactive    = 0;
    source_mstack     = 0;
 
    /* Clean up context and such. */
@@ -693,10 +697,6 @@ static ALuint sound_al_getSource (void)
    source_nstack--;
    source = source_stack[source_nstack];
 
-   /* Throw it on the active stack. */
-   /*source_active[source_nactive] = source;
-   source_nactive++;*/
-
    return source;
 }
 
@@ -765,22 +765,24 @@ int sound_al_playPos( alVoice *v, alSound *s,
    alSourcei( v->u.al.source, AL_SOURCE_RELATIVE, AL_TRUE );
 
    /* Distance model. */
+   /*
    alSourcef( v->u.al.source, AL_ROLLOFF_FACTOR, SOUND_ROLLOFF_FACTOR );
    alSourcef( v->u.al.source, AL_MAX_DISTANCE, SOUND_MAX_DIST );
    alSourcef( v->u.al.source, AL_REFERENCE_DISTANCE, SOUND_REFERENCE_DIST );
+   */
 
    /* Update position. */
    v->u.al.pos[0] = px;
    v->u.al.pos[1] = py;
+   v->u.al.pos[2] = 0.;
    v->u.al.vel[0] = vx;
    v->u.al.vel[1] = vy;
+   v->u.al.vel[2] = 0.;
 
    /* Set up properties. */
    alSourcef( v->u.al.source, AL_GAIN, svolume );
-   alSource3f( v->u.al.source, AL_POSITION,
-         v->u.al.pos[0], v->u.al.pos[1], 0. );
-   alSource3f( v->u.al.source, AL_VELOCITY,
-         v->u.al.vel[0], v->u.al.vel[1], 0. );
+   alSourcefv( v->u.al.source, AL_POSITION, v->u.al.pos );
+   alSourcefv( v->u.al.source, AL_VELOCITY, v->u.al.vel );
 
    /* Start playing. */
    alSourcePlay( v->u.al.source );
@@ -820,7 +822,7 @@ void sound_al_updateVoice( alVoice *v )
 
    /* Invalid source, mark to delete. */
    if (v->u.al.source == 0) {
-      v->state = VOICE_STOPPED;
+      v->state = VOICE_DESTROY;
       return;
    }
 
@@ -828,6 +830,9 @@ void sound_al_updateVoice( alVoice *v )
 
    /* Get status. */
    alGetSourcei( v->u.al.source, AL_SOURCE_STATE, &state );
+   ALfloat f;
+   alGetSourcef( v->u.al.source, AL_SEC_OFFSET, &f );
+   DEBUG("[%d] = %x (%f)", v->u.al.buffer, state, f);
    if (state == AL_STOPPED) {
       /* Put source back on the list. */
       source_stack[source_nstack] = v->u.al.source;
@@ -842,11 +847,9 @@ void sound_al_updateVoice( alVoice *v )
    }
 
    /* Set up properties. */
-   alSourcef( v->u.al.source, AL_GAIN, svolume );
-   alSource3f( v->u.al.source, AL_POSITION,
-         v->u.al.pos[0], v->u.al.pos[1], 0. );
-   alSource3f( v->u.al.source, AL_VELOCITY,
-         v->u.al.vel[0], v->u.al.vel[1], 0. );
+   alSourcef(  v->u.al.source, AL_GAIN, svolume );
+   alSourcefv( v->u.al.source, AL_POSITION, v->u.al.pos );
+   alSourcefv( v->u.al.source, AL_VELOCITY, v->u.al.vel );
 
    /* Check for errors. */
    al_checkErr();
@@ -863,7 +866,7 @@ void sound_al_stop( alVoice* voice )
    soundLock();
 
    if (voice->u.al.source != 0)
-      alSourceStop(voice->u.al.source);
+      alSourceStop( voice->u.al.source );
 
    /* Check for errors. */
    al_checkErr();
@@ -897,7 +900,7 @@ int sound_al_updateListener( double dir, double px, double py,
    soundLock();
 
    /* set orientation */
-   ALfloat ori[] = { cos(dir), sin(dir), 0.,  0., 0., 1. };
+   ALfloat ori[] = { cos(dir), sin(dir), 0., 0., 0., 1. };
    alListenerfv( AL_ORIENTATION, ori );
    alListener3f( AL_POSITION, px, py, 0. );
    alListener3f( AL_VELOCITY, vx, vy, 0. );

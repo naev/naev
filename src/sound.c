@@ -426,6 +426,9 @@ int sound_update (void)
    /* The actual control loop. */
    for (v=voice_active; v!=NULL; v=v->next) {
 
+      /* Run first to clear in same iteration. */
+      sound_sys_updateVoice( v );
+
       /* Destroy and toss into pool. */
       if ((v->state == VOICE_STOPPED) || (v->state == VOICE_DESTROY)) {
 
@@ -451,10 +454,9 @@ int sound_update (void)
 
          /* Avoid loop blockage. */
          v = (tv != NULL) ? tv->next : voice_active;
-         if (v == NULL) break;
+         if (v == NULL)
+            break;
       }
-
-      sound_sys_updateVoice( v );
    }
 
    voiceUnlock();
