@@ -830,9 +830,6 @@ void sound_al_updateVoice( alVoice *v )
 
    /* Get status. */
    alGetSourcei( v->u.al.source, AL_SOURCE_STATE, &state );
-   ALfloat f;
-   alGetSourcef( v->u.al.source, AL_SEC_OFFSET, &f );
-   DEBUG("[%d] = %x (%f)", v->u.al.buffer, state, f);
    if (state == AL_STOPPED) {
       /* Put source back on the list. */
       source_stack[source_nstack] = v->u.al.source;
