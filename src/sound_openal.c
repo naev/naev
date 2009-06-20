@@ -782,7 +782,7 @@ int sound_al_playPos( alVoice *v, alSound *s,
    /* Set up properties. */
    alSourcef( v->u.al.source, AL_GAIN, svolume );
    alSourcefv( v->u.al.source, AL_POSITION, v->u.al.pos );
-   alSourcefv( v->u.al.source, AL_VELOCITY, v->u.al.vel );
+   /*alSourcefv( v->u.al.source, AL_VELOCITY, v->u.al.vel );*/
 
    /* Start playing. */
    alSourcePlay( v->u.al.source );
@@ -846,7 +846,7 @@ void sound_al_updateVoice( alVoice *v )
    /* Set up properties. */
    alSourcef(  v->u.al.source, AL_GAIN, svolume );
    alSourcefv( v->u.al.source, AL_POSITION, v->u.al.pos );
-   alSourcefv( v->u.al.source, AL_VELOCITY, v->u.al.vel );
+   /*alSourcefv( v->u.al.source, AL_VELOCITY, v->u.al.vel );*/
 
    /* Check for errors. */
    al_checkErr();
@@ -900,7 +900,7 @@ int sound_al_updateListener( double dir, double px, double py,
    ALfloat ori[] = { cos(dir), sin(dir), 0., 0., 0., 1. };
    alListenerfv( AL_ORIENTATION, ori );
    alListener3f( AL_POSITION, px, py, 0. );
-   alListener3f( AL_VELOCITY, vx, vy, 0. );
+   /*alListener3f( AL_VELOCITY, vx, vy, 0. );*/
 
    /* Check for errors. */
    al_checkErr();

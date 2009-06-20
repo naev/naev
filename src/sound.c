@@ -293,7 +293,8 @@ int sound_get( char* name )
 {
    int i;
 
-   if (sound_disabled) return 0;
+   if (sound_disabled)
+      return 0;
 
    for (i=0; i<sound_nlist; i++)
       if (strcmp(name, sound_list[i].name)==0) {
@@ -315,7 +316,8 @@ int sound_play( int sound )
    alVoice *v;
    alSound *s;
 
-   if (sound_disabled) return 0;
+   if (sound_disabled)
+      return 0;
 
    if ((sound < 0) || (sound > sound_nlist))
       return -1;
@@ -354,7 +356,8 @@ int sound_playPos( int sound, double px, double py, double vx, double vy )
    alVoice *v;
    alSound *s;
 
-   if (sound_disabled) return 0;
+   if (sound_disabled)
+      return 0;
 
    if ((sound < 0) || (sound > sound_nlist))
       return -1;
@@ -389,7 +392,8 @@ int sound_updatePos( int voice, double px, double py, double vx, double vy )
 {
    alVoice *v;
 
-   if (sound_disabled) return 0;
+   if (sound_disabled)
+      return 0;
 
    v = voice_get(voice);
    if (v != NULL) {
@@ -498,7 +502,8 @@ void sound_stop( int voice )
 {
    alVoice *v;
 
-   if (sound_disabled) return;
+   if (sound_disabled)
+      return;
 
    v = voice_get(voice);
    if (v != NULL) {
@@ -543,7 +548,8 @@ static int sound_makeList (void)
    int len, suflen, flen;
    int mem;
 
-   if (sound_disabled) return 0;
+   if (sound_disabled)
+      return 0;
 
    /* get the file list */
    files = ndata_list( SOUND_PREFIX, &nfiles );
