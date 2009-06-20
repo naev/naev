@@ -17,6 +17,7 @@
 
 #include "SDL.h"
 #include "SDL_thread.h"
+#include "SDL_mutex.h"
 
 #include "sound_priv.h"
 #include "sound_openal.h"
@@ -31,6 +32,10 @@
 #define SOUND_PREFIX       "snd/sounds/" /**< Prefix of where to find sounds. */
 #define SOUND_SUFFIX_WAV   ".wav" /**< Suffix of sounds. */
 #define SOUND_SUFFIX_OGG   ".ogg" /**< Suffix of sounds. */
+
+
+#define voiceLock()        SDL_LockMutex(voice_mutex)
+#define voiceUnlock()      SDL_UnlockMutex(voice_mutex)
 
 
 /*
@@ -50,8 +55,9 @@ static int sound_nlist        = 0; /**< Number of available sounds. */
  * Voices.
  */
 static int voice_genid        = 0; /**< Voice identifier generator. */
-alVoice *voice_active  = NULL; /**< Active voices. */
+alVoice *voice_active         = NULL; /**< Active voices. */
 static alVoice *voice_pool    = NULL; /**< Pool of free voices. */
+static SDL_mutex *voice_mutex = NULL; /**< Lock for voices. */
 
 
 
@@ -216,6 +222,12 @@ int sound_init (void)
       music_disabled = 1;
    }
 
+   /* Create voice lock. */
+   voice_mutex = SDL_CreateMutex();
+   if (voice_mutex == NULL) {
+      WARN("Unable to create voice mutex.");
+   }
+
    /* Load available sounds. */
    ret = sound_makeList();
    if (ret != 0)
@@ -241,6 +253,7 @@ void sound_exit (void)
    /* Exit music subsystem. */
    music_exit();
 
+   voiceLock();
    /* free the voices. */
    while (voice_active != NULL) {
       v = voice_active;
@@ -252,6 +265,11 @@ void sound_exit (void)
       voice_pool = v->next;
       free(v);
    }
+   voiceUnlock();
+
+   /* Destroy voice lock. */
+   SDL_DestroyMutex(voice_mutex);
+   voice_mutex = NULL;
 
    /* free the sounds */
    for (i=0; i<sound_nlist; i++)
@@ -403,6 +421,8 @@ int sound_update (void)
    if (voice_active == NULL)
       return 0;
 
+   voiceLock();
+
    /* The actual control loop. */
    for (v=voice_active; v!=NULL; v=v->next) {
 
@@ -436,6 +456,8 @@ int sound_update (void)
 
       sound_sys_updateVoice( v );
    }
+
+   voiceUnlock();
 
    return 0;
 }
@@ -722,6 +744,24 @@ void sound_resumeGroup( int group )
 
 
 /**
+ * @brief Locks the voices.
+ */
+void voice_lock (void)
+{
+   voiceLock();
+}
+
+
+/**
+ * @brief Unlocks the voices.
+ */
+void voice_unlock (void)
+{
+   voiceUnlock();
+}
+
+
+/**
  * @brief Gets a new voice ready to be used.
  *
  *    @return New voice ready to use.
@@ -768,12 +808,14 @@ int voice_add( alVoice* v )
    }
 
    /* Insert to the front of active voices. */
+   voiceLock();
    tv = voice_active;
    v->next = tv;
    v->prev = NULL;
    voice_active = v;
    if (tv != NULL)
       tv->prev = v;
+   voiceUnlock();
    return 0;
 }
 
@@ -788,13 +830,16 @@ alVoice* voice_get( int id )
 {
    alVoice *v;
 
-   if (voice_active==NULL) return NULL;
+   /* Make sure there are voices. */
+   if (voice_active==NULL)
+      return NULL;
 
+   voiceLock();
    for (v=voice_active; v!=NULL; v=v->next)
-      if (v->id == id) {
-         return v;
-      }
+      if (v->id == id)
+         break;
+   voiceUnlock();
 
-   return NULL;
+   return v;
 }
 

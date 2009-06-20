@@ -475,10 +475,12 @@ static void voice_mix_markStopped( int channel )
 {
    alVoice *v;
 
+   voice_lock();
    for (v=voice_active; v!=NULL; v=v->next)
       if (v->u.mix.channel == channel) {
          v->state = VOICE_STOPPED;
          break;
       }
+   voice_unlock();
 }
 

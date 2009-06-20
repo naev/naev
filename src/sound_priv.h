@@ -111,6 +111,8 @@ extern alVoice *voice_active; /**< Active voices. */
 /*
  * Voice management.
  */
+void voice_lock (void);
+void voice_unlock (void);
 alVoice* voice_new (void);
 int voice_add( alVoice* v );
 alVoice* voice_get( int id );
