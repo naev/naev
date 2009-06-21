@@ -23,6 +23,7 @@
 
 
 #define BUFFER_SIZE        (32*1024) /**< Size of buffers to use. */
+#define MUSIC_FADEIN       2000 /**< Fadein in ms. */
 #define MUSIC_FADEOUT      1000 /**< Fadeout in ms. */
 
 
@@ -162,7 +163,7 @@ static int music_thread( void* unused )
             if (music_state == MUSIC_STATE_PAUSING)
                music_state = MUSIC_STATE_RESUMING;
             else if (music_state == MUSIC_STATE_FADEIN)
-               fade_timer = SDL_GetTicks() - MUSIC_FADEOUT;
+               fade_timer = SDL_GetTicks() - MUSIC_FADEIN;
             else
                music_state = MUSIC_STATE_LOADING;
             /* Disable fadein. */
@@ -394,8 +395,8 @@ static int music_thread( void* unused )
          case MUSIC_STATE_FADEIN:
             /* See if must still fade. */
             fade = SDL_GetTicks() - fade_timer;
-            if (fade < MUSIC_FADEOUT) {
-               d = (double)fade / (double)MUSIC_FADEOUT;
+            if (fade < MUSIC_FADEIN) {
+               d = (double)fade / (double)MUSIC_FADEIN;
                soundLock();
                alSourcef( music_source, AL_GAIN, d*music_vol );
                /* Check for errors. */

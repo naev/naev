@@ -135,7 +135,7 @@ void music_mix_play (void)
 {
    if (music_music == NULL) return;
 
-   if (Mix_FadeInMusic( music_music, 0, 500 ) < 0)
+   if (Mix_FadeInMusic( music_music, 0, 2000 ) < 0)
       WARN("SDL_Mixer: %s", Mix_GetError());
 }
 
@@ -147,7 +147,7 @@ void music_mix_stop (void)
 {
    if (music_music == NULL) return;
 
-   if (Mix_FadeOutMusic(2000) < 0)
+   if (Mix_FadeOutMusic(1000) < 0)
       WARN("SDL_Mixer: %s", Mix_GetError());
 }
 
