@@ -282,7 +282,7 @@ void sound_mix_resume (void)
  */
 void sound_mix_stop( alVoice *v )
 {
-   Mix_HaltChannel(v->u.mix.channel);
+   Mix_FadeOutChannel(v->u.mix.channel, 100);
 }
 
 
@@ -459,7 +459,7 @@ int sound_mix_playGroup( int group, alSound *s, int once )
  */
 void sound_mix_stopGroup( int group )
 {
-   Mix_HaltGroup(group);
+   Mix_FadeOutGroup(group, 100);
 }
 
 
