@@ -40,6 +40,13 @@ static double sound_pos[3]; /**< Position of listener. */
 /*
  * Groups.
  */
+typedef struct mixGroup_s {
+   int id; /**< ID of the group. */
+   int start; /**< Start channel of the group. */
+   int end; /**< End channel of the group. */
+} mixGroup_t;
+static mixGroup_t *groups     = NULL; /**< Allocated Mixer groups. */
+static int ngroups            = 0; /**< Number of allocated Mixer groups. */
 static int group_idgen        = 0; /**< Current group ID generator. */
 static int group_pos          = 0; /**< Current group position pointer. */
 
@@ -120,6 +127,12 @@ static void print_MixerVersion (void)
  */
 void sound_mix_exit (void)
 {
+   /* Free groups. */
+   if (groups != NULL)
+      free(groups);
+   groups  = NULL;
+   ngroups = 0;
+
    /* Close the audio. */
    Mix_CloseAudio();
 }
@@ -371,7 +384,13 @@ void sound_mix_free( alSound *snd )
  */
 int sound_mix_createGroup( int size )
 {
-   int ret, id;
+   int ret;
+   mixGroup_t *g;
+
+   /* Create new group. */
+   ngroups++;
+   groups = realloc( groups, sizeof(mixGroup_t) * ngroups );
+   g = &groups[ngroups-1];
 
    /* Reserve channels. */
    ret = Mix_ReserveChannels( group_pos + size );
@@ -381,19 +400,24 @@ int sound_mix_createGroup( int size )
    }
 
    /* Get a new ID. */
-   id = ++group_idgen;
+   g->id    = ++group_idgen;
+
+   /* Set group struct. */
+   g->start = group_pos;
+   g->end   = group_pos+size-1;
 
    /* Create group. */
-   ret = Mix_GroupChannels( group_pos, group_pos+size-1, id );
+   ret = Mix_GroupChannels( g->start, g->end, g->id );
    if (ret != size) {
       WARN("Unable to create sound group: %s", Mix_GetError());
+      ngroups--;
       return -1;
    }
 
    /* Add to stack. */
    group_pos += size;
 
-   return id;
+   return g->id;
 }
 
 
@@ -444,8 +468,19 @@ void sound_mix_stopGroup( int group )
  */
 void sound_mix_pauseGroup( int group )
 {
-   if (!Mix_Paused(0))
-      Mix_Pause(0);
+   int i, j;
+
+   for (i=0; i<ngroups; i++) {
+      if (groups[i].id == group) {
+         for (j=groups[i].start; j<=groups[i].end; j++) {
+            if (Mix_Playing(j))
+               Mix_Pause(j);
+         }
+         return;
+      }
+   }
+
+   WARN("Group '%d' not found.", group);
 }
 
 
@@ -454,8 +489,19 @@ void sound_mix_pauseGroup( int group )
  */
 void sound_mix_resumeGroup( int group )
 {
-   if (Mix_Paused(0))
-      Mix_Resume(0);
+   int i, j;
+
+   for (i=0; i<ngroups; i++) {
+      if (groups[i].id == group) {
+         for (j=groups[i].start; j<=groups[i].end; j++) {
+            if (Mix_Paused(j))
+               Mix_Resume(j);
+         }
+         return;
+      }
+   }
+
+   WARN("Group '%d' not found.", group);
 }
 
 
