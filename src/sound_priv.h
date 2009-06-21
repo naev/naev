@@ -61,6 +61,7 @@ typedef struct alSound_ {
 typedef enum voice_state_ {
    VOICE_STOPPED, /**< Voice is stopped. */
    VOICE_PLAYING, /**< Voice is playing. */
+   VOICE_FADEOUT, /**< Voice is fading out. */
    VOICE_DESTROY  /**< Voice should get destroyed asap. */
 } voice_state_t;
 

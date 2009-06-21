@@ -205,6 +205,14 @@ static int sound_mix_updatePosVoice( alVoice *v, double x, double y )
 
 
 /**
+ * @brief Not needed.
+ */
+void sound_mix_update (void)
+{
+}
+
+
+/**
  * @brief Plays a sound based on position.
  *
  *    @param v Voice to play sound.
@@ -436,8 +444,11 @@ int sound_mix_playGroup( int group, alSound *s, int once )
    /* Get the channel. */
    channel = Mix_GroupAvailable(group);
    if (channel == -1) {
-      WARN("Group '%d' has no free channels!", group);
-      return -1;
+      channel = Mix_GroupOldest(group);
+      if (channel == -1) {
+         WARN("Group '%d' has no free channels!", group);
+         return -1;
+      }
    }
 
    /* Play the sound. */

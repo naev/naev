@@ -57,11 +57,8 @@
  */
 
 
-/* sound parameters - TODO make it variable per source */
-#define SOUND_ROLLOFF_FACTOR  1.
-#define SOUND_REFERENCE_DIST  500.
-#define SOUND_MAX_DIST        1000.
 #define SOUND_MAX_SOURCES     256
+#define SOUND_FADEOUT         100
 
 
 #define soundLock()     SDL_mutexP(sound_lock)
@@ -107,6 +104,9 @@ typedef struct alGroup_s {
    /* Sources. */
    ALuint *sources; /**< Sources in the group. */
    int nsources; /**< Number of sources in the group. */
+
+   voice_state_t state; /**< Currenty global group state. */
+   int fade_timer; /**< Fadeout timer. */
 } alGroup_t;
 static alGroup_t *al_groups = NULL; /**< Created groups. */
 static int al_ngroups       = 0; /**< Number of created groups. */
@@ -296,13 +296,13 @@ void sound_al_exit (void)
 
    soundLock();
    /* Clean up the sources. */
-   if (source_stack) {
-      alDeleteSources( source_nstack, source_stack );
-   }
+   if (source_ntotal > 0)
+   if (source_stack)
 
    /* Free groups. */
    for (i=0; i<al_ngroups; i++) {
       if (al_groups[i].sources != NULL) {
+         alSourceStopv(   al_groups[i].nsources, al_groups[i].sources );
          alDeleteSources( al_groups[i].nsources, al_groups[i].sources );
          free(al_groups[i].sources);
       }
@@ -314,23 +314,19 @@ void sound_al_exit (void)
    al_groups  = NULL;
    al_ngroups = 0;
 
-   /* Check for errors. */
-   al_checkErr();
-   soundUnlock();
-
    /* Free stacks. */
+   if (source_total != NULL) {
+      alSourceStopv(   source_ntotal, source_total );
+      alDeleteSources( source_ntotal, source_total );
+      free(source_total);
+   }
+   source_total      = NULL;
+   source_ntotal     = 0;
    if (source_stack != NULL)
       free(source_stack);
    source_stack      = NULL;
    source_nstack     = 0;
-   if (source_total != NULL)
-      free(source_total);
-   source_total      = NULL;
-   source_ntotal     = 0;
    source_mstack     = 0;
-
-   /* Clean up context and such. */
-   soundLock();
 
    if (al_context) {
       alcMakeContextCurrent(NULL);
@@ -985,7 +981,8 @@ int sound_al_createGroup( int size )
    al_ngroups++;
    al_groups = realloc( al_groups, sizeof(alGroup_t) * al_ngroups );
    g = &al_groups[ al_ngroups-1 ];
-   g->id = id;
+   g->id     = id;
+   g->state  = VOICE_PLAYING;
 
    /* Allocate sources. */
    g->sources  = malloc( sizeof(ALuint) * size );
@@ -1033,28 +1030,39 @@ int sound_al_playGroup( int group, alSound *s, int once )
    for (i=0; i<al_ngroups; i++) {
       if (al_groups[i].id == group) {
          g = &al_groups[i];
+         g->state = VOICE_PLAYING;
          soundLock();
          for (j=0; j<g->nsources; j++) {
             alGetSourcei( g->sources[j], AL_SOURCE_STATE, &state );
-            if ((state != AL_PLAYING) && (state != AL_PAUSED)) {
-               /* Attach buffer. */
-               alSourcei( g->sources[j], AL_BUFFER, s->u.al.buf );
-
-               /* Do not do positional sound. */
-               alSourcei( g->sources[j], AL_SOURCE_RELATIVE, AL_FALSE );
-
-               /* See if should loop. */
-               alSourcei( g->sources[j], AL_LOOPING, (once) ? AL_FALSE : AL_TRUE );
-
-               /* Start playing. */
-               alSourcePlay( g->sources[j] );
-
-               /* Check for errors. */
-               al_checkErr();
-
-               soundUnlock();
-               return 0;
+          
+            /* No free ones, just smash the last one. */
+            if (j == g->nsources-1) {
+               if (state != AL_STOPPED) {
+                  alSourceStop( g->sources[j] );
+                  alSourcef( g->sources[j], AL_GAIN, svolume );
+               }
             }
+            /* Ignore playing/paused. */
+            else if ((state == AL_PLAYING) || (state == AL_PAUSED))
+               continue;
+
+            /* Attach buffer. */
+            alSourcei( g->sources[j], AL_BUFFER, s->u.al.buf );
+
+            /* Do not do positional sound. */
+            alSourcei( g->sources[j], AL_SOURCE_RELATIVE, AL_FALSE );
+
+            /* See if should loop. */
+            alSourcei( g->sources[j], AL_LOOPING, (once) ? AL_FALSE : AL_TRUE );
+
+            /* Start playing. */
+            alSourcePlay( g->sources[j] );
+
+            /* Check for errors. */
+            al_checkErr();
+
+            soundUnlock();
+            return 0;
          }
          soundUnlock();
 
@@ -1077,25 +1085,15 @@ int sound_al_playGroup( int group, alSound *s, int once )
  */
 void sound_al_stopGroup( int group )
 {
-   int i, j;
+   int i;
    alGroup_t *g;
 
    for (i=0; i<al_ngroups; i++) {
       if (al_groups[i].id == group) {
          g = &al_groups[i];
-         soundLock();
-         for (j=0; j<g->nsources; j++) {
-            /* Stop Source. */
-            alSourceStop( g->sources[j] );
-
-            /* Attach buffer. */
-            alSourcei( g->sources[j], AL_BUFFER, AL_NONE );
-
-            /* Check for errors. */
-            al_checkErr();
-         }
+         g->state      = VOICE_FADEOUT;
+         g->fade_timer = SDL_GetTicks();
       }
-      soundUnlock();
       break;
    }
 
@@ -1178,6 +1176,54 @@ static void al_resumev( ALint n, ALuint *s )
       alGetSourcei( s[i], AL_SOURCE_STATE, &state );
       if (state == AL_PAUSED)
          alSourcePlay( s[i] );
+   }
+}
+
+
+/**
+ * @brief Updates the group sounds.
+ */
+void sound_al_update (void)
+{
+   int i, j;
+   alGroup_t *g;
+   ALfloat d;
+   unsigned int t, f;
+
+   t = SDL_GetTicks();
+
+   for (i=0; i<al_ngroups; i++) {
+      g = &al_groups[i];
+      /* Handle fadeout. */
+      if (g->state == VOICE_FADEOUT) {
+
+         /* Calculate fadeout. */
+         f = t - g->fade_timer;
+         if (f < SOUND_FADEOUT) {
+            d = 1. - (ALfloat) f / (ALfloat) SOUND_FADEOUT;
+            soundLock();
+            for (j=0; j<g->nsources; j++)
+               alSourcef( g->sources[j], AL_GAIN, d*svolume );
+            /* Check for errors. */
+            al_checkErr();
+            soundUnlock();
+         }
+         /* Fadeout done. */
+         else {
+            soundLock();
+            for (j=0; j<g->nsources; j++) {
+               alSourceStop( g->sources[j] );
+               alSourcei( g->sources[j], AL_BUFFER, AL_NONE );
+               alSourcef( g->sources[j], AL_GAIN, svolume );
+            }
+            /* Check for errors. */
+            al_checkErr();
+            soundUnlock();
+
+            /* Mark as done. */
+            g->state = VOICE_PLAYING;
+         }
+      }
    }
 }
 

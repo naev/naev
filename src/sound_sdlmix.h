@@ -45,6 +45,7 @@ void sound_mix_updateVoice( alVoice *v );
 /*
  * Sound management.
  */
+void sound_mix_update (void);
 void sound_mix_stop( alVoice *v );
 void sound_mix_pause (void);
 void sound_mix_resume (void);

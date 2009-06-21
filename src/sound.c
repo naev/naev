@@ -81,6 +81,7 @@ int  (*sound_sys_updatePos) ( alVoice *v, double px, double py,
       double vx, double vy )           = NULL;
 void (*sound_sys_updateVoice) ( alVoice *v ) = NULL;
  /* Sound management. */
+void (*sound_sys_update) (void)        = NULL;
 void (*sound_sys_stop) ( alVoice *v )  = NULL;
 void (*sound_sys_pause) (void)         = NULL;
 void (*sound_sys_resume) (void)        = NULL;
@@ -146,6 +147,7 @@ int sound_init (void)
       sound_sys_updatePos  = sound_mix_updatePos;
       sound_sys_updateVoice = sound_mix_updateVoice;
       /* Sound management. */
+      sound_sys_update     = sound_mix_update;
       sound_sys_stop       = sound_mix_stop;
       sound_sys_pause      = sound_mix_pause;
       sound_sys_resume     = sound_mix_resume;
@@ -185,6 +187,7 @@ int sound_init (void)
       sound_sys_updatePos  = sound_al_updatePos;
       sound_sys_updateVoice = sound_al_updateVoice;
       /* Sound management. */
+      sound_sys_update     = sound_al_update;
       sound_sys_stop       = sound_al_stop;
       sound_sys_pause      = sound_al_pause;
       sound_sys_resume     = sound_al_resume;
@@ -421,6 +424,9 @@ int sound_update (void)
 
    if (sound_disabled)
       return 0;
+
+   /* System update. */
+   sound_sys_update();
 
    if (voice_active == NULL)
       return 0;

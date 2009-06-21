@@ -73,6 +73,7 @@ void sound_al_updateVoice( alVoice *v );
 /*
  * Sound management.
  */
+void sound_al_update (void);
 void sound_al_stop( alVoice *v );
 void sound_al_pause (void);
 void sound_al_resume (void);
