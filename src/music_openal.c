@@ -340,6 +340,9 @@ static int music_thread( void* unused )
                musicUnlock();
                break;
             }
+            /* Force volume level. */
+            alSourcef( music_source, AL_GAIN, (fadein_start) ? 0. : music_vol );
+
             /* Start playing. */
             alSourcePlay( music_source );
 
