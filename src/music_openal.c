@@ -557,6 +557,8 @@ static int stream_loadBuffer( ALuint buffer )
  */
 int music_al_init (void)
 {
+   ALfloat v[] = { 0., 0., 0. };
+
    music_state_cond  = SDL_CreateCond();
    music_state_lock  = SDL_CreateMutex();
    music_vorbis_lock = SDL_CreateMutex();
@@ -570,8 +572,10 @@ int music_al_init (void)
    alGenBuffers( 2, music_buffer );
 
    /* Set up OpenAL properties. */
-   alSourcef( music_source, AL_GAIN, music_vol );
-   alSourcei( music_source, AL_SOURCE_RELATIVE, AL_FALSE );
+   alSourcef(  music_source, AL_GAIN, music_vol );
+   alSourcei(  music_source, AL_SOURCE_RELATIVE, AL_TRUE );
+   alSourcefv( music_source, AL_POSITION, v );
+   alSourcefv( music_source, AL_VELOCITY, v );
 
    /* Check for errors. */
    al_checkErr();

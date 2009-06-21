@@ -27,13 +27,6 @@
 
 
 /*
- * this file controls all the routines for using a virtual voice
- * wrapper system around the openal library to get 3d sound.
- *
- * currently it is only using positional sound and no doppler effect
- */
-
-/*
  * SOUND OVERVIEW
  *
  *
@@ -126,6 +119,8 @@ static int sound_al_wavGetLen16( SDL_RWops *rw, uint16_t *out );
  * General.
  */
 static ALuint sound_al_getSource (void);
+static int al_playVoice( alVoice *v, alSound *s,
+      ALfloat px, ALfloat py, ALfloat vx, ALfloat vy, ALint relative );
 static int sound_al_loadWav( alSound *snd, SDL_RWops *rw );
 static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf );
 /*
@@ -234,7 +229,7 @@ int sound_al_init (void)
       source_stack[source_nstack] = s;
 
       /* Distance model defaults. */
-      alSourcef( s, AL_MAX_DISTANCE,       50. );
+      alSourcef( s, AL_MAX_DISTANCE,       5000. );
       alSourcef( s, AL_ROLLOFF_FACTOR,     1. );
       alSourcef( s, AL_REFERENCE_DISTANCE, 500. );
 
@@ -254,7 +249,7 @@ int sound_al_init (void)
    /* Set up how sound works. */
    alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED );
    alDopplerFactor( 0.1 );
-   alSpeedOfSound(  343.3 );
+   alSpeedOfSound(  1000. );
 
    /* Check for errors. */
    al_checkErr();
@@ -747,53 +742,10 @@ static ALuint sound_al_getSource (void)
 
 
 /**
- * @brief Plays a sound.
- *
- *    @param v Voice to play sound.
- *    @param s Sound to play.
- *    @return 0 on success.
+ * @brief Plays a voice.
  */
-int sound_al_play( alVoice *v, alSound *s )
-{
-   /* Set up the source and buffer. */
-   v->u.al.source = sound_al_getSource();
-   if (v->u.al.source == 0)
-      return -1;
-   v->u.al.buffer = s->u.al.buf;
-
-   soundLock();
-
-   /* Attach buffer. */
-   alSourcei( v->u.al.source, AL_BUFFER, v->u.al.buffer );
-
-   /* Do not do positional sound. */
-   alSourcei( v->u.al.source, AL_SOURCE_RELATIVE, AL_FALSE );
-
-   /* Start playing. */
-   alSourcePlay( v->u.al.source );
-
-   /* Check for errors. */
-   al_checkErr();
-
-   soundUnlock();
-
-   return 0;
-}
-
-
-/**
- * @brief Plays a sound at a position.
- *
- *    @param v Voice to play sound.
- *    @param s Sound to play.
- *    @param px X position of the sound.
- *    @param py Y position of the sound.
- *    @param vx X velocity of the sound.
- *    @param vy Y velocity of the sound.
- *    @return 0 on success.
- */
-int sound_al_playPos( alVoice *v, alSound *s,
-            double px, double py, double vx, double vy )
+static int al_playVoice( alVoice *v, alSound *s,
+      ALfloat px, ALfloat py, ALfloat vx, ALfloat vy, ALint relative )
 {
    /* Set up the source and buffer. */
    v->u.al.source = sound_al_getSource();
@@ -807,7 +759,7 @@ int sound_al_playPos( alVoice *v, alSound *s,
    alSourcei( v->u.al.source, AL_BUFFER, v->u.al.buffer );
 
    /* Enable positional sound. */
-   alSourcei( v->u.al.source, AL_SOURCE_RELATIVE, AL_TRUE );
+   alSourcei( v->u.al.source, AL_SOURCE_RELATIVE, relative );
 
    /* Update position. */
    v->u.al.pos[0] = px;
@@ -831,6 +783,37 @@ int sound_al_playPos( alVoice *v, alSound *s,
    soundUnlock();
 
    return 0;
+}
+
+
+/**
+ * @brief Plays a sound.
+ *
+ *    @param v Voice to play sound.
+ *    @param s Sound to play.
+ *    @return 0 on success.
+ */
+int sound_al_play( alVoice *v, alSound *s )
+{
+   return al_playVoice( v, s, 0., 0., 0., 0., AL_TRUE );
+}
+
+
+/**
+ * @brief Plays a sound at a position.
+ *
+ *    @param v Voice to play sound.
+ *    @param s Sound to play.
+ *    @param px X position of the sound.
+ *    @param py Y position of the sound.
+ *    @param vx X velocity of the sound.
+ *    @param vy Y velocity of the sound.
+ *    @return 0 on success.
+ */
+int sound_al_playPos( alVoice *v, alSound *s,
+            double px, double py, double vx, double vy )
+{
+   return al_playVoice( v, s, px, py, vx, vy, AL_FALSE );
 }
 
 
@@ -949,13 +932,29 @@ void sound_al_resume (void)
 int sound_al_updateListener( double dir, double px, double py,
       double vx, double vy )
 {
+   double c, s;
+   ALfloat ori[6], pos[3], vel[3];
+
+   c = cos(dir);
+   s = sin(dir);
+   
    soundLock();
 
-   /* set orientation */
-   ALfloat ori[] = { cos(dir), sin(dir), 0., 0., 0., 1. };
+   ori[0] = c;
+   ori[1] = s;
+   ori[2] = 0.;
+   ori[3] = 0.;
+   ori[4] = 0.;
+   ori[5] = 1.;
    alListenerfv( AL_ORIENTATION, ori );
-   alListener3f( AL_POSITION, px, py, 0. );
-   alListener3f( AL_VELOCITY, vx, vy, 0. );
+   pos[0] = px;
+   pos[1] = py;
+   pos[2] = 0.;
+   alListenerfv( AL_POSITION, pos );
+   vel[0] = vx;
+   vel[1] = vy;
+   vel[2] = 0.;
+   alListenerfv( AL_VELOCITY, vel );
 
    /* Check for errors. */
    al_checkErr();
@@ -1050,7 +1049,7 @@ int sound_al_playGroup( int group, alSound *s, int once )
             alSourcei( g->sources[j], AL_BUFFER, s->u.al.buf );
 
             /* Do not do positional sound. */
-            alSourcei( g->sources[j], AL_SOURCE_RELATIVE, AL_FALSE );
+            alSourcei( g->sources[j], AL_SOURCE_RELATIVE, AL_TRUE );
 
             /* See if should loop. */
             alSourcei( g->sources[j], AL_LOOPING, (once) ? AL_FALSE : AL_TRUE );
