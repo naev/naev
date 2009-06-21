@@ -129,7 +129,11 @@ void conf_setDefaults (void)
    conf.fullscreen   = 0.;
 
    /* Sound. */
+#if USE_OPENAL
    conf.sound_backend = strdup("openal");
+#else /* USE_OPENAL */
+   conf.sound_backend = strdup("sdlmix");
+#endif /* USE_OPENAL */
    conf.nosound      = 0;
    conf.sound        = 0.4;
    conf.music        = 0.8;
