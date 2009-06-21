@@ -128,6 +128,11 @@ static int sound_al_wavGetLen16( SDL_RWops *rw, uint16_t *out );
 static ALuint sound_al_getSource (void);
 static int sound_al_loadWav( alSound *snd, SDL_RWops *rw );
 static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf );
+/*
+ * Pausing.
+ */
+static void al_pausev( ALint n, ALuint *s );
+static void al_resumev( ALint n, ALuint *s );
 
 
 /*
@@ -922,7 +927,7 @@ void sound_al_stop( alVoice* voice )
 void sound_al_pause (void)
 {
    soundLock();
-   alSourcePausev( source_ntotal, source_total );
+   al_pausev( source_ntotal, source_total );
    /* Check for errors. */
    al_checkErr();
    soundUnlock();
@@ -935,7 +940,7 @@ void sound_al_pause (void)
 void sound_al_resume (void)
 {
    soundLock();
-   alSourcePlayv( source_ntotal, source_total );
+   al_resumev( source_ntotal, source_total );
    /* Check for errors. */
    al_checkErr();
    soundUnlock();
@@ -1111,7 +1116,7 @@ void sound_al_pauseGroup( int group )
       if (al_groups[i].id == group) {
          g = &al_groups[i];
          soundLock();
-         alSourcePausev( g->nsources, g->sources );
+         al_pausev( g->nsources, g->sources );
          soundUnlock();
          break;
       }
@@ -1134,7 +1139,7 @@ void sound_al_resumeGroup( int group )
       if (al_groups[i].id == group) {
          g = &al_groups[i];
          soundLock();
-         alSourcePlayv( g->nsources, g->sources );
+         al_resumev( g->nsources, g->sources );
          soundUnlock();
          break;
       }
@@ -1142,6 +1147,38 @@ void sound_al_resumeGroup( int group )
 
    if (i>=al_ngroups)
       WARN("Group '%d' not found.", group);
+}
+
+
+/**
+ * @brief Acts like alSourcePausev but with proper checks.
+ */
+static void al_pausev( ALint n, ALuint *s )
+{
+   int i;
+   ALint state;
+
+   for (i=0; i<n; i++) {
+      alGetSourcei( s[i], AL_SOURCE_STATE, &state );
+      if (state == AL_PLAYING)
+         alSourcePause( s[i] );
+   }
+}
+
+
+/**
+ * @brief Acts like alSourcePlayv but with proper checks to just resume.
+ */
+static void al_resumev( ALint n, ALuint *s )
+{
+   int i;
+   ALint state;
+
+   for (i=0; i<n; i++) {
+      alGetSourcei( s[i], AL_SOURCE_STATE, &state );
+      if (state == AL_PAUSED)
+         alSourcePlay( s[i] );
+   }
 }
 
 
