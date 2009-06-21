@@ -59,8 +59,8 @@ int sound_mix_updateListener( double dir, double px, double py,
 /*
  * Groups.
  */
-int sound_mix_createGroup( int tag, int size );
-int sound_mix_playGroup( int tag, alSound *s, int once );
+int sound_mix_createGroup( int size );
+int sound_mix_playGroup( int group, alSound *s, int once );
 void sound_mix_stopGroup( int group );
 void sound_mix_pauseGroup( int group );
 void sound_mix_resumeGroup( int group );

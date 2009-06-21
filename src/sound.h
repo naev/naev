@@ -39,7 +39,7 @@ int sound_updateListener( double dir, double px, double py,
  * Group functions.
  */
 int sound_reserve( int num );
-int sound_createGroup( int tag, int size );
+int sound_createGroup( int size );
 int sound_playGroup( int group, int sound, int once );
 void sound_stopGroup( int group );
 void sound_pauseGroup( int group );

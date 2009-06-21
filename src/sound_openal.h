@@ -87,8 +87,8 @@ int sound_al_updateListener( double dir, double px, double py,
 /*
  * Groups.
  */
-int sound_al_createGroup( int tag, int size );
-int sound_al_playGroup( int tag, alSound *s, int once );
+int sound_al_createGroup( int size );
+int sound_al_playGroup( int group, alSound *s, int once );
 void sound_al_stopGroup( int group );
 void sound_al_pauseGroup( int group );
 void sound_al_resumeGroup( int group );

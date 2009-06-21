@@ -595,7 +595,6 @@ int music_al_init (void)
 void music_al_exit (void)
 {
    /* Kill the thread. */
-   music_stop();
    music_kill();
    SDL_WaitThread( music_player, NULL );
 
@@ -604,6 +603,9 @@ void music_al_exit (void)
    /* Free the music. */
    alDeleteBuffers( 2, music_buffer );
    alDeleteSources( 1, &music_source );
+
+   /* Check for errors. */
+   al_checkErr();
 
    soundUnlock();
 

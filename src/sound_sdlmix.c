@@ -40,6 +40,7 @@ static double sound_pos[3]; /**< Position of listener. */
 /*
  * Groups.
  */
+static int group_idgen        = 0; /**< Current group ID generator. */
 static int group_pos          = 0; /**< Current group position pointer. */
 
 
@@ -366,11 +367,11 @@ void sound_mix_free( alSound *snd )
  *    @param tag Identifier of the group to create.
  *    @param start Where to start creating the group.
  *    @param size Size of the group.
- *    @return 0 on success.
+ *    @param ID of the group on success, otherwise 0.
  */
-int sound_mix_createGroup( int tag, int size )
+int sound_mix_createGroup( int size )
 {
-   int ret;
+   int ret, id;
 
    /* Reserve channels. */
    ret = Mix_ReserveChannels( group_pos + size );
@@ -379,8 +380,11 @@ int sound_mix_createGroup( int tag, int size )
       return -1;
    }
 
+   /* Get a new ID. */
+   id = ++group_idgen;
+
    /* Create group. */
-   ret = Mix_GroupChannels( group_pos, group_pos+size-1, tag );
+   ret = Mix_GroupChannels( group_pos, group_pos+size-1, id );
    if (ret != size) {
       WARN("Unable to create sound group: %s", Mix_GetError());
       return -1;
@@ -389,26 +393,26 @@ int sound_mix_createGroup( int tag, int size )
    /* Add to stack. */
    group_pos += size;
 
-   return 0;
+   return id;
 }
 
 
 /**
  * @brief Plays a sound in a group.
  *
- *    @param tag Group to play sound in.
+ *    @param group Group to play sound in.
  *    @param sound Sound to play.
  *    @param once Whether to play only once.
  *    @return 0 on success.
  */
-int sound_mix_playGroup( int tag, alSound *s, int once )
+int sound_mix_playGroup( int group, alSound *s, int once )
 {
    int ret, channel;
 
    /* Get the channel. */
-   channel = Mix_GroupAvailable(tag);
+   channel = Mix_GroupAvailable(group);
    if (channel == -1) {
-      WARN("Group '%d' has no free channels!", tag);
+      WARN("Group '%d' has no free channels!", group);
       return -1;
    }
 
@@ -416,7 +420,7 @@ int sound_mix_playGroup( int tag, alSound *s, int once )
    ret = Mix_PlayChannel( channel, s->u.mix.buf, (once == 0) ? -1 : 0 );
    if (ret < 0) {
       WARN("Unable to play sound %s for group %d: %s",
-            s->name, tag, Mix_GetError());
+            s->name, group, Mix_GetError());
       return -1;
    }
 

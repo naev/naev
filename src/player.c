@@ -54,10 +54,6 @@
 
 #define START_DATA   "dat/start.xml" /**< Module start information file. */
 
-#define PLAYER_RESERVED_CHANNELS 6 /**< Number of channels to reserve for player sounds. */
-#define PLAYER_ENGINE_CHANNEL    8 /**< Player channel for engine noises. */
-#define PLAYER_GUI_CHANNEL       9 /**< Player channel. */
-
 #define ZOOM_OUT_MAX             conf.zoom_min /**< Maximum zoom out. */
 #define ZOOM_IN_MAX              conf.zoom_max /**< Maximum zoom in. */
 
@@ -87,6 +83,8 @@ static int player_nlicenses   = 0; /**< Number of licenses player has. */
 /*
  * player sounds.
  */
+static int player_engine_group = 0; /**< Player engine sound group. */
+static int player_gui_group    = 0; /**< Player gui sound group. */
 int snd_target    = -1; /**< Sound when targetting. */
 int snd_jump      = -1; /**< Sound when can jump. */
 int snd_nav       = -1; /**< Sound when changing nav computer. */
@@ -613,8 +611,8 @@ static void player_initSound (void)
    if (player_soundReserved) return;
 
    /* Allocate channels. */
-   sound_createGroup(PLAYER_ENGINE_CHANNEL, 1); /* Channel for engine noises. */
-   sound_createGroup(PLAYER_GUI_CHANNEL, PLAYER_RESERVED_CHANNELS-1);
+   player_engine_group  = sound_createGroup(1); /* Channel for engine noises. */
+   player_gui_group     = sound_createGroup(4);
    player_soundReserved = 1;
 
    /* Get sounds. */
@@ -632,7 +630,7 @@ static void player_initSound (void)
  */
 void player_playSound( int sound, int once )
 {
-   sound_playGroup( PLAYER_GUI_CHANNEL, sound, once );
+   sound_playGroup( player_gui_group, sound, once );
 }
 
 
@@ -641,8 +639,8 @@ void player_playSound( int sound, int once )
  */
 void player_stopSound (void)
 {
-   sound_stopGroup( PLAYER_GUI_CHANNEL );
-   sound_stopGroup( PLAYER_ENGINE_CHANNEL );
+   sound_stopGroup( player_gui_group );
+   sound_stopGroup( player_engine_group );
 }
 
 
@@ -1029,9 +1027,9 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
       engsound = -1;
    /* See if sound must change. */
    if (player_lastEngineSound != engsound) {
-      sound_stopGroup( PLAYER_ENGINE_CHANNEL );
+      sound_stopGroup( player_engine_group );
       if (engsound >= 0)
-         sound_playGroup( PLAYER_ENGINE_CHANNEL, engsound, 0 );
+         sound_playGroup( player_engine_group, engsound, 0 );
    }
    player_lastEngineSound = engsound;
 
@@ -1478,25 +1476,19 @@ void player_accelOver (void)
 
 /**
  * @brief Pauses the ship's sounds.
- *
- * @todo Not use hardcoded PLAYER_ENGINE_CHANNEL sound...  Ideally add support
- *  for pausing/resuming groups in SDL_Mixer.
  */
 void player_soundPause (void)
 {
-   sound_pauseGroup(0);
+   sound_pauseGroup(player_engine_group);
 }
 
 
 /**
  * @brief Resumes the ship's sounds.
- *
- * @todo Not use hardcoded PLAYER_ENGINE_CHANNEL sound...  Ideally add support
- *  for pausing/resuming groups in SDL_Mixer.
  */
 void player_soundResume (void)
 {
-   sound_resumeGroup(0);
+   sound_resumeGroup(player_engine_group);
 }
 
 

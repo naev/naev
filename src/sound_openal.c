@@ -88,6 +88,7 @@ static ALCdevice *al_device   = NULL; /**< OpenAL device. */
 static ALuint *source_stack   = NULL; /**< Free source pool. */
 static ALuint *source_total   = NULL; /**< Total source pool. */
 static int source_nstack      = 0; /**< Number of free sources in the pool. */
+static int source_ntotal      = 0; /**< Number of general use sources. */
 static int source_mstack      = 0; /**< Memory allocated for sources in the pool. */
 
 
@@ -95,6 +96,21 @@ static int source_mstack      = 0; /**< Memory allocated for sources in the pool
  * volume
  */
 static ALfloat svolume        = 1.; /**< Sound global volume. */
+
+
+/**
+ * @brief Group implementation similar to SDL_Mixer.
+ */
+typedef struct alGroup_s {
+   int id; /**< Group ID. */
+
+   /* Sources. */
+   ALuint *sources; /**< Sources in the group. */
+   int nsources; /**< Number of sources in the group. */
+} alGroup_t;
+static alGroup_t *al_groups = NULL; /**< Created groups. */
+static int al_ngroups       = 0; /**< Number of created groups. */
+static int al_groupidgen    = 0; /**< Used to create group IDs. */
 
 
 /*
@@ -226,6 +242,7 @@ int sound_al_init (void)
    source_mstack = source_nstack;
    source_stack  = realloc( source_stack, sizeof(ALuint) * source_mstack );
    /* Copy allocated sources to total stack. */
+   source_ntotal = source_mstack;
    source_total  = malloc( sizeof(ALuint) * source_mstack );
    memcpy( source_total, source_stack, sizeof(ALuint) * source_mstack );
 
@@ -270,21 +287,41 @@ snderr_dev:
  */
 void sound_al_exit (void)
 {
+   int i;
+
    soundLock();
    /* Clean up the sources. */
    if (source_stack) {
       alDeleteSources( source_nstack, source_stack );
    }
+
+   /* Free groups. */
+   for (i=0; i<al_ngroups; i++) {
+      if (al_groups[i].sources != NULL) {
+         alDeleteSources( al_groups[i].nsources, al_groups[i].sources );
+         free(al_groups[i].sources);
+      }
+      al_groups[i].sources  = NULL;
+      al_groups[i].nsources = 0;
+   }
+   if (al_groups != NULL)
+      free(al_groups);
+   al_groups  = NULL;
+   al_ngroups = 0;
+
+   /* Check for errors. */
+   al_checkErr();
    soundUnlock();
 
    /* Free stacks. */
    if (source_stack != NULL)
       free(source_stack);
    source_stack      = NULL;
+   source_nstack     = 0;
    if (source_total != NULL)
       free(source_total);
    source_total      = NULL;
-   source_nstack     = 0;
+   source_ntotal     = 0;
    source_mstack     = 0;
 
    /* Clean up context and such. */
@@ -885,7 +922,7 @@ void sound_al_stop( alVoice* voice )
 void sound_al_pause (void)
 {
    soundLock();
-   alSourcePausev( source_mstack, source_total );
+   alSourcePausev( source_ntotal, source_total );
    /* Check for errors. */
    al_checkErr();
    soundUnlock();
@@ -898,7 +935,7 @@ void sound_al_pause (void)
 void sound_al_resume (void)
 {
    soundLock();
-   alSourcePlayv( source_mstack, source_total );
+   alSourcePlayv( source_ntotal, source_total );
    /* Check for errors. */
    al_checkErr();
    soundUnlock();
@@ -931,10 +968,50 @@ int sound_al_updateListener( double dir, double px, double py,
 /**
  * @brief Creates a group.
  */
-int sound_al_createGroup( int tag, int size )
+int sound_al_createGroup( int size )
 {
-   (void) tag;
-   (void) size;
+   int i, j, id;
+   alGroup_t *g;
+
+   /* Get new ID. */
+   id = ++al_groupidgen;
+
+   /* Grow group list. */
+   al_ngroups++;
+   al_groups = realloc( al_groups, sizeof(alGroup_t) * al_ngroups );
+   g = &al_groups[ al_ngroups-1 ];
+   g->id = id;
+
+   /* Allocate sources. */
+   g->sources  = malloc( sizeof(ALuint) * size );
+   g->nsources = size;
+
+   /* Add some sources. */
+   for (i=0; i<size; i++) {
+      /* Make sure there's enough. */
+      if (source_nstack <= 0)
+         goto group_err;
+
+      /* Pull one off the stack. */
+      source_nstack--;
+      g->sources[i] = source_stack[source_nstack];
+
+      /* Remove from total too. */
+      for (j=0; j<source_ntotal; j++) {
+         if (g->sources[i] == source_total[j]) {
+            source_ntotal--;
+            memmove( &source_total[j], &source_total[j+1],
+                  sizeof(ALuint) * (source_ntotal - j) );
+            break;
+         }
+      }
+   }
+
+   return id;
+
+group_err:
+   free(g->sources);
+   al_ngroups--;
    return 0;
 }
 
@@ -942,12 +1019,51 @@ int sound_al_createGroup( int tag, int size )
 /**
  * @brief Plays a sound in a group.
  */
-int sound_al_playGroup( int tag, alSound *s, int once )
+int sound_al_playGroup( int group, alSound *s, int once )
 {
-   (void) tag;
-   (void) s;
-   (void) once;
-   return 0;
+   int i, j;
+   alGroup_t *g;
+   ALint state;
+
+   for (i=0; i<al_ngroups; i++) {
+      if (al_groups[i].id == group) {
+         g = &al_groups[i];
+         soundLock();
+         for (j=0; j<g->nsources; j++) {
+            alGetSourcei( g->sources[j], AL_SOURCE_STATE, &state );
+            if ((state != AL_PLAYING) && (state != AL_PAUSED)) {
+               /* Attach buffer. */
+               alSourcei( g->sources[j], AL_BUFFER, s->u.al.buf );
+
+               /* Do not do positional sound. */
+               alSourcei( g->sources[j], AL_SOURCE_RELATIVE, AL_FALSE );
+
+               /* See if should loop. */
+               alSourcei( g->sources[j], AL_LOOPING, (once) ? AL_FALSE : AL_TRUE );
+
+               /* Start playing. */
+               alSourcePlay( g->sources[j] );
+
+               /* Check for errors. */
+               al_checkErr();
+
+               soundUnlock();
+               return 0;
+            }
+         }
+         soundUnlock();
+
+         WARN("Group '%d' has no free sounds.", group );
+
+         /* Group matched but not found. */
+         break;
+      }
+   }
+
+   if (i>=al_ngroups)
+      WARN("Group '%d' not found.", group);
+
+   return -1;
 }
 
 
@@ -956,8 +1072,30 @@ int sound_al_playGroup( int tag, alSound *s, int once )
  */
 void sound_al_stopGroup( int group )
 {
-   (void) group;
-   return;
+   int i, j;
+   alGroup_t *g;
+
+   for (i=0; i<al_ngroups; i++) {
+      if (al_groups[i].id == group) {
+         g = &al_groups[i];
+         soundLock();
+         for (j=0; j<g->nsources; j++) {
+            /* Stop Source. */
+            alSourceStop( g->sources[j] );
+
+            /* Attach buffer. */
+            alSourcei( g->sources[j], AL_BUFFER, AL_NONE );
+
+            /* Check for errors. */
+            al_checkErr();
+         }
+      }
+      soundUnlock();
+      break;
+   }
+
+   if (i>=al_ngroups)
+      WARN("Group '%d' not found.", group);
 }
 
 
@@ -966,8 +1104,21 @@ void sound_al_stopGroup( int group )
  */
 void sound_al_pauseGroup( int group )
 {
-   (void) group;
-   return;
+   int i;
+   alGroup_t *g;
+
+   for (i=0; i<al_ngroups; i++) {
+      if (al_groups[i].id == group) {
+         g = &al_groups[i];
+         soundLock();
+         alSourcePausev( g->nsources, g->sources );
+         soundUnlock();
+         break;
+      }
+   }
+
+   if (i>=al_ngroups)
+      WARN("Group '%d' not found.", group);
 }
 
 
@@ -976,8 +1127,21 @@ void sound_al_pauseGroup( int group )
  */
 void sound_al_resumeGroup( int group )
 {
-   (void) group;
-   return;
+   int i;
+   alGroup_t *g;
+
+   for (i=0; i<al_ngroups; i++) {
+      if (al_groups[i].id == group) {
+         g = &al_groups[i];
+         soundLock();
+         alSourcePlayv( g->nsources, g->sources );
+         soundUnlock();
+         break;
+      }
+   }
+
+   if (i>=al_ngroups)
+      WARN("Group '%d' not found.", group);
 }
 
 

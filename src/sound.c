@@ -88,11 +88,11 @@ void (*sound_sys_resume) (void)        = NULL;
 int (*sound_sys_updateListener) ( double dir, double px, double py,
       double vx, double vy )           = NULL;
 /* Groups. */
-int  (*sound_sys_createGroup) ( int tag, int size );
-int  (*sound_sys_playGroup) ( int tag, alSound *s, int once );
-void (*sound_sys_stopGroup) ( int group );
-void (*sound_sys_pauseGroup) (int group );
-void (*sound_sys_resumeGroup) (int group );
+int  (*sound_sys_createGroup) ( int size ) = NULL;
+int  (*sound_sys_playGroup) ( int group, alSound *s, int once ) = NULL;
+void (*sound_sys_stopGroup) ( int group ) = NULL;
+void (*sound_sys_pauseGroup) (int group ) = NULL;
+void (*sound_sys_resumeGroup) (int group ) = NULL;
 
 
 /*
@@ -675,17 +675,16 @@ static void sound_free( alSound *snd )
 /**
  * @brief Creates a sound group.
  *
- *    @param tag Identifier of the group to creat.
  *    @param start Where to start creating the group.
  *    @param size Size of the group.
- *    @return 0 on success.
+ *    @return ID of the group created on success, 0 on error.
  */
-int sound_createGroup( int tag, int size )
+int sound_createGroup( int size )
 {
    if (sound_disabled)
       return 0;
 
-   return sound_sys_createGroup( tag, size );
+   return sound_sys_createGroup( size );
 }
 
 
