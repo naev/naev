@@ -212,7 +212,7 @@ int sound_al_init (void)
       alGenSources( 1, &s );
       source_stack[source_nstack] = s;
 
-      /* Set defaults. */
+      /* Distance model defaults. */
       alSourcef( s, AL_MAX_DISTANCE,       50. );
       alSourcef( s, AL_ROLLOFF_FACTOR,     1. );
       alSourcef( s, AL_REFERENCE_DISTANCE, 500. );
@@ -831,6 +831,15 @@ void sound_al_updateVoice( alVoice *v )
    /* Get status. */
    alGetSourcei( v->u.al.source, AL_SOURCE_STATE, &state );
    if (state == AL_STOPPED) {
+
+      /* Remove buffer so it doesn't start up again if resume is called. */
+      alSourcei( v->u.al.source, AL_BUFFER, AL_NONE );
+
+      /* Check for errors. */
+      al_checkErr();
+
+      soundUnlock();
+
       /* Put source back on the list. */
       source_stack[source_nstack] = v->u.al.source;
       source_nstack++;
@@ -838,8 +847,6 @@ void sound_al_updateVoice( alVoice *v )
 
       /* Mark as stopped - erased next iteration. */
       v->state = VOICE_STOPPED;
-
-      soundUnlock();
       return;
    }
 
@@ -877,6 +884,11 @@ void sound_al_stop( alVoice* voice )
  */
 void sound_al_pause (void)
 {
+   soundLock();
+   alSourcePausev( source_mstack, source_total );
+   /* Check for errors. */
+   al_checkErr();
+   soundUnlock();
 }
 
 
@@ -885,6 +897,11 @@ void sound_al_pause (void)
  */
 void sound_al_resume (void)
 {
+   soundLock();
+   alSourcePlayv( source_mstack, source_total );
+   /* Check for errors. */
+   al_checkErr();
+   soundUnlock();
 }
 
 
