@@ -86,6 +86,8 @@ void al_checkErr (void);
 #define AL_REVERB_AIR_ABSORPTION_GAINHF                    0x000B
 #define AL_REVERB_ROOM_ROLLOFF_FACTOR                      0x000C
 #define AL_REVERB_DECAY_HFLIMIT                            0x000D
+/* Listener Object Extensions. */
+#define AL_METERS_PER_UNIT                                 0x20004
 /* Source Object Extensions. */
 #define AL_DIRECT_FILTER                                   0x20005
 #define AL_AUXILIARY_SEND_FILTER                           0x20006

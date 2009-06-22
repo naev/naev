@@ -89,7 +89,7 @@ static int source_mstack      = 0; /**< Memory allocated for sources in the pool
 /*
  * EFX stuff.
  */
-static ALuint efx_reverbSlot  = 0; /**< Reverb slot. */
+static ALuint efx_directSlot  = 0; /**< Direct 3d source slot. */
 static ALuint efx_reverb      = 0; /**< Reverb effect. */
 
 
@@ -180,6 +180,7 @@ int sound_al_init (void)
    int ret;
    const ALchar* dev;
    ALuint s;
+   ALint freq;
    ALint attribs[4] = { 0, 0, 0, 0 };
 
    /* Default values. */
@@ -207,7 +208,7 @@ int sound_al_init (void)
       attribs[1] = 4;
    }
 
-   /* create the OpenAL context */
+   /* Create the OpenAL context */
    al_context = alcCreateContext( al_device, attribs );
    if (sound_lock == NULL) {
       WARN("Unable to create OpenAL context");
@@ -215,15 +216,18 @@ int sound_al_init (void)
       goto snderr_ctx;
    }
 
-   /* clear the errors */
+   /* Clear the errors */
    alGetError();
 
-   /* set active context */
+   /* Set active context */
    if (alcMakeContextCurrent( al_context )==AL_FALSE) {
       WARN("Failure to set default context");
       ret = -4;
       goto snderr_act;
    }
+
+   /* Get context information. */
+   alcGetIntegerv( al_device, ALC_FREQUENCY, sizeof(freq), &freq );
 
    /* Try to enable EFX. */
    if (al_info.efx == AL_TRUE)
@@ -254,6 +258,10 @@ int sound_al_init (void)
       alSourcef( s, AL_ROLLOFF_FACTOR,     1. );
       alSourcef( s, AL_REFERENCE_DISTANCE, 500. );
 
+      /* Set the filter. */
+      if (al_info.efx_reverb == AL_TRUE)
+         alSource3i( s, AL_AUXILIARY_SEND_FILTER, efx_directSlot, 0, AL_FILTER_NULL );
+
       /* Check for error. */
       if (alGetError() == AL_NO_ERROR)
          source_nstack++;
@@ -280,13 +288,13 @@ int sound_al_init (void)
    soundUnlock();
 
    /* debug magic */
-   DEBUG("OpenAL: %s", dev);
+   DEBUG("OpenAL started: %d Hz", freq);
    DEBUG("Renderer: %s", alGetString(AL_RENDERER));
    if (al_info.efx == AL_FALSE)
-      DEBUG("Version: %s", alGetString(AL_VERSION));
+      DEBUG("Version: %s without EFX", alGetString(AL_VERSION));
    else
-      DEBUG("Version: %s with EFX %d.%d [%d]", alGetString(AL_VERSION),
-            al_info.efx_major, al_info.efx_minor, al_info.efx_auxSends);
+      DEBUG("Version: %s with EFX %d.%d", alGetString(AL_VERSION),
+            al_info.efx_major, al_info.efx_minor);
    DEBUG();
 
    return 0;
@@ -359,7 +367,6 @@ static int al_enableEFX (void)
       return -1;
    }
 
-#if 0
    /* Create reverb effect. */
    nalGenEffects( 1, &efx_reverb );
    nalEffecti( efx_reverb, AL_EFFECT_TYPE, AL_EFFECT_REVERB );
@@ -372,13 +379,15 @@ static int al_enableEFX (void)
       al_info.efx_reverb = AL_TRUE;
 
       /* Set Reverb parameters. */
-      nalEffectf( efx_reverb, AL_REVERB_DECAY_TIME, 15. );
-
-      /* Create auxiliary slot. */
-      nalGenAuxiliaryEffectSlots( 1, &efx_reverbSlot );
-      nalAuxiliaryEffectSloti( efx_reverbSlot, AL_EFFECTSLOT_EFFECT, efx_reverb );
+      /*nalEffectf( efx_reverb, AL_REVERB_DECAY_TIME, 15. );*/
    }
-#endif
+
+   /* Create auxiliary slot. */
+   nalGenAuxiliaryEffectSlots( 1, &efx_directSlot );
+   nalAuxiliaryEffectSloti( efx_directSlot, AL_EFFECTSLOT_EFFECT, efx_reverb );
+
+   /* Set up the listener. */
+   alListenerf( AL_METERS_PER_UNIT, 5. );
 
    /* Check for errors. */
    al_checkErr();
@@ -395,9 +404,6 @@ void sound_al_exit (void)
    int i;
 
    soundLock();
-   /* Clean up the sources. */
-   if (source_ntotal > 0)
-   if (source_stack)
 
    /* Free groups. */
    for (i=0; i<al_ngroups; i++) {
@@ -428,6 +434,15 @@ void sound_al_exit (void)
    source_nstack     = 0;
    source_mstack     = 0;
 
+   /* Clean up EFX stuff. */
+   if (al_info.efx == AL_TRUE) {
+      nalDeleteAuxiliaryEffectSlots( 1, &efx_directSlot );
+      if (al_info.efx_reverb == AL_TRUE) {
+         nalDeleteEffects( 1, &efx_reverb );
+      }
+   }
+
+   /* Clean up global stuff. */
    if (al_context) {
       alcMakeContextCurrent(NULL);
       alcDestroyContext( al_context );
@@ -1101,6 +1116,11 @@ int sound_al_createGroup( int size )
       /* Pull one off the stack. */
       source_nstack--;
       g->sources[i] = source_stack[source_nstack];
+
+      /* Disable direct filter, these don't get filtered. */
+      if (al_info.efx_reverb == AL_TRUE)
+         alSource3i( g->sources[i], AL_AUXILIARY_SEND_FILTER,
+               AL_EFFECTSLOT_NULL, 0, AL_FILTER_NULL );
 
       /* Remove from total too. */
       for (j=0; j<source_ntotal; j++) {

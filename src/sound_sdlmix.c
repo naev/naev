@@ -107,9 +107,8 @@ static void print_MixerVersion (void)
    SDL_AudioDriverName(device, PATH_MAX);
 
    /* Version itself. */
-   DEBUG("SDL_Mixer: %d.%d.%d [compiled: %d.%d.%d]", 
-         compiled.major, compiled.minor, compiled.patch,
-         linked->major, linked->minor, linked->patch);
+   DEBUG("SDL_Mixer Started: %d Hz %s", frequency,
+         (channels == 2) ? "Stereo" : "Mono" );
    /* Check if major/minor version differ. */
    if ((linked->major*100 + linked->minor) > compiled.major*100 + compiled.minor)
       WARN("SDL_Mixer is newer then compiled version");
@@ -117,7 +116,9 @@ static void print_MixerVersion (void)
       WARN("SDL_Mixer is older then compiled version.");
    /* Print other debug info. */
    DEBUG("Renderer: %s",device);
-   DEBUG("Format: %d Hz %s", frequency, (channels == 2) ? "Stereo" : "Mono");
+   DEBUG("Version: %d.%d.%d [compiled: %d.%d.%d]", 
+         compiled.major, compiled.minor, compiled.patch,
+         linked->major, linked->minor, linked->patch);
    DEBUG();
 }
 
