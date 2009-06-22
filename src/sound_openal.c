@@ -121,7 +121,6 @@ static int sound_al_wavGetLen16( SDL_RWops *rw, uint16_t *out );
 /*
  * General.
  */
-static void* al_getFunction( const char *func );
 static ALuint sound_al_getSource (void);
 static int al_playVoice( alVoice *v, alSound *s,
       ALfloat px, ALfloat py, ALfloat vx, ALfloat vy, ALint relative );
@@ -163,19 +162,6 @@ ov_callbacks sound_al_ovcall = {
    .close_func = ovpack_close,
    .tell_func  = ovpack_tell
 }; /**< Vorbis call structure to handl rwops. */
-
-
-/**
- * @brief Gets an OpenAL function.
- */
-static void* al_getFunction( const char *func )
-{
-   void *proc;
-   proc = alGetProcAddress( func );
-   if (proc == NULL)
-      WARN("Function '%s' not found in OpenAL library.", func);
-   return proc;
-}
 
 
 /**
@@ -284,12 +270,17 @@ int sound_al_init (void)
       alcGetIntegerv( al_device, ALC_EFX_MINOR_VERSION, 1, &al_info.efx_minor );
 
       /* Get function pointers. */
-      nalGenFilters     = al_getFunction( "alGenFilters" );
-      nalDeleteFilters  = al_getFunction( "alDeleteFilters" );
-      nalFilteri        = al_getFunction( "alFilteri" );
-      nalGenEffects     = al_getFunction( "alGenEffects" );
-      nalDeleteEffects  = al_getFunction( "alDeleteEffects" );
-      nalEffecti        = al_getFunction( "alEffecti" );
+      nalGenFilters     = alGetProcAddress( "alGenFilters" );
+      nalDeleteFilters  = alGetProcAddress( "alDeleteFilters" );
+      nalFilteri        = alGetProcAddress( "alFilteri" );
+      nalGenEffects     = alGetProcAddress( "alGenEffects" );
+      nalDeleteEffects  = alGetProcAddress( "alDeleteEffects" );
+      nalEffecti        = alGetProcAddress( "alEffecti" );
+      if (!nalGenFilters || !nalDeleteFilters || !nalFilteri ||
+            !nalGenEffects || !nalDeleteEffects || !nalEffecti) {
+         WARN("OpenAL EFX functions not found, disabling EFX.");
+         al_info.efx = AL_FALSE;
+      }
    }
 
    /* we can unlock now */
