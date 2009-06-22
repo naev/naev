@@ -259,7 +259,7 @@ int sound_al_init (void)
       alSourcef( s, AL_REFERENCE_DISTANCE, 500. );
 
       /* Set the filter. */
-      if (al_info.efx_reverb == AL_TRUE)
+      if (al_info.efx == AL_TRUE)
          alSource3i( s, AL_AUXILIARY_SEND_FILTER, efx_directSlot, 0, AL_FILTER_NULL );
 
       /* Check for error. */
@@ -278,8 +278,8 @@ int sound_al_init (void)
 
    /* Set up how sound works. */
    alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED );
-   alDopplerFactor( 0.1 );
-   alSpeedOfSound(  1000. );
+   alDopplerFactor( 1. );
+   alSpeedOfSound(  3433. );
 
    /* Check for errors. */
    al_checkErr();
@@ -1117,10 +1117,12 @@ int sound_al_createGroup( int size )
       source_nstack--;
       g->sources[i] = source_stack[source_nstack];
 
-      /* Disable direct filter, these don't get filtered. */
-      if (al_info.efx_reverb == AL_TRUE)
+      /* Disable EFX, they don't affect groups. */
+      if (al_info.efx_reverb == AL_TRUE) {
+         alSourcef(  g->sources[i], AL_AIR_ABSORPTION_FACTOR, 0. );
          alSource3i( g->sources[i], AL_AUXILIARY_SEND_FILTER,
                AL_EFFECTSLOT_NULL, 0, AL_FILTER_NULL );
+      }
 
       /* Remove from total too. */
       for (j=0; j<source_ntotal; j++) {
