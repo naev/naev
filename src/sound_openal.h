@@ -45,12 +45,19 @@ void al_checkErr (void);
  * EFX stuff.
  */
 #ifndef ALC_EXT_EFX
+/* Auxliary Effect Slot. */
+#define AL_EFFECTSLOT_NULL                                 0x0000
+#define AL_EFFECTSLOT_EFFECT                               0x0001
+#define AL_EFFECTSLOT_GAIN                                 0x0002
+#define AL_EFFECTSLOT_AUXILIARY_SEND_AUTO                  0x0003
+/* Filters. */
 #define AL_FILTER_TYPE                                     0x8001
-#define AL_EFFECT_TYPE                                     0x8001
 #define AL_FILTER_NULL                                     0x0000
 #define AL_FILTER_LOWPASS                                  0x0001
 #define AL_FILTER_HIGHPASS                                 0x0002
 #define AL_FILTER_BANDPASS                                 0x0003
+/* Effects. */
+#define AL_EFFECT_TYPE                                     0x8001
 #define AL_EFFECT_NULL                                     0x0000
 #define AL_EFFECT_EAXREVERB                                0x8000
 #define AL_EFFECT_REVERB                                   0x0001
@@ -65,6 +72,21 @@ void al_checkErr (void);
 #define AL_EFFECT_AUTOWAH                                  0x000A
 #define AL_EFFECT_COMPRESSOR                               0x000B
 #define AL_EFFECT_EQUALIZER                                0x000C
+/* Reverb Effect. */
+#define AL_REVERB_DENSITY                                  0x0001
+#define AL_REVERB_DIFFUSION                                0x0002
+#define AL_REVERB_GAIN                                     0x0003
+#define AL_REVERB_GAINHF                                   0x0004
+#define AL_REVERB_DECAY_TIME                               0x0005
+#define AL_REVERB_DECAY_HFRATIO                            0x0006
+#define AL_REVERB_REFLECTIONS_GAIN                         0x0007
+#define AL_REVERB_REFLECTIONS_DELAY                        0x0008
+#define AL_REVERB_LATE_REVERB_GAIN                         0x0009
+#define AL_REVERB_LATE_REVERB_DELAY                        0x000A
+#define AL_REVERB_AIR_ABSORPTION_GAINHF                    0x000B
+#define AL_REVERB_ROOM_ROLLOFF_FACTOR                      0x000C
+#define AL_REVERB_DECAY_HFLIMIT                            0x000D
+/* Context Object Extensions. */
 #define ALC_EFX_MAJOR_VERSION                              0x20001
 #define ALC_EFX_MINOR_VERSION                              0x20002
 #define ALC_MAX_AUXILIARY_SENDS                            0x20003
