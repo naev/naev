@@ -130,7 +130,7 @@ static int music_thread( void* unused )
    ALuint removed[2];
    ALenum value;
    music_state_t cur_state;
-   double d;
+   ALfloat gain;
    int fadein_start = 0;
    uint32_t fade, fade_timer = 0;
 
@@ -276,23 +276,6 @@ static int music_thread( void* unused )
             break;
 
          /*
-          * Fades out the music.
-          */
-         case MUSIC_STATE_FADEOUT:
-            /* Check to see if it has to still fade out or stop music. */
-            fade = SDL_GetTicks() - fade_timer;
-            if (fade < MUSIC_FADEOUT) {
-               d = 1. - (double)fade / (double)MUSIC_FADEOUT;
-               soundLock();
-               alSourcef( music_source, AL_GAIN, d*music_vol );
-               /* Check for errors. */
-               al_checkErr();
-               soundUnlock();
-               break;
-            }
-            /* Purpose fallthrough. */
-
-         /*
           * Stop song setting to IDLE.
           */
          case MUSIC_STATE_STOPPING:
@@ -392,30 +375,52 @@ static int music_thread( void* unused )
          /*
           * Fades in the music.
           */
+         case MUSIC_STATE_FADEOUT:
          case MUSIC_STATE_FADEIN:
             /* See if must still fade. */
             fade = SDL_GetTicks() - fade_timer;
-            if (fade < MUSIC_FADEIN) {
-               d = (double)fade / (double)MUSIC_FADEIN;
-               soundLock();
-               alSourcef( music_source, AL_GAIN, d*music_vol );
-               /* Check for errors. */
-               al_checkErr();
-               soundUnlock();
-            }
-            /* No need to fade anymore. */
-            else {
-               /* Set volume to normal level. */
-               soundLock();
-               alSourcef( music_source, AL_GAIN, music_vol );
-               /* Check for errors. */
-               al_checkErr();
-               soundUnlock();
+            if (cur_state == MUSIC_STATE_FADEIN) {
 
-               /* Change state to playing. */
-               musicLock();
-               music_state = MUSIC_STATE_PLAYING;
-               musicUnlock();
+               if (fade < MUSIC_FADEIN) {
+                  gain = (ALfloat)fade / (ALfloat)MUSIC_FADEIN;
+                  soundLock();
+                  alSourcef( music_source, AL_GAIN, gain*music_vol );
+                  /* Check for errors. */
+                  al_checkErr();
+                  soundUnlock();
+               }
+               /* No need to fade anymore. */
+               else {
+                  /* Set volume to normal level. */
+                  soundLock();
+                  alSourcef( music_source, AL_GAIN, music_vol );
+                  /* Check for errors. */
+                  al_checkErr();
+                  soundUnlock();
+
+                  /* Change state to playing. */
+                  musicLock();
+                  music_state = MUSIC_STATE_PLAYING;
+                  musicUnlock();
+               }
+            }
+            else if (cur_state == MUSIC_STATE_FADEOUT) {
+
+               if (fade < MUSIC_FADEOUT) {
+                  gain = 1. - (ALfloat)fade / (ALfloat)MUSIC_FADEOUT;
+                  soundLock();
+                  alSourcef( music_source, AL_GAIN, gain*music_vol );
+                  /* Check for errors. */
+                  al_checkErr();
+                  soundUnlock();
+               }
+               else {
+                  /* Music should stop. */
+                  musicLock();
+                  music_state = MUSIC_STATE_STOPPING;
+                  musicUnlock();
+                  break;
+               }
             }
 
             /* Purpose fallthrough. */
