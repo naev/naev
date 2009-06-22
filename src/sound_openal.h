@@ -86,6 +86,15 @@ void al_checkErr (void);
 #define AL_REVERB_AIR_ABSORPTION_GAINHF                    0x000B
 #define AL_REVERB_ROOM_ROLLOFF_FACTOR                      0x000C
 #define AL_REVERB_DECAY_HFLIMIT                            0x000D
+/* Source Object Extensions. */
+#define AL_DIRECT_FILTER                                   0x20005
+#define AL_AUXILIARY_SEND_FILTER                           0x20006
+#define AL_AIR_ABSORPTION_FACTOR                           0x20007
+#define AL_ROOM_ROLLOFF_FACTOR                             0x20008
+#define AL_CONE_OUTER_GAINHF                               0x20009
+#define AL_DIRECT_FILTER_GAINHF_AUTO                       0x2000A
+#define AL_AUXILIARY_SEND_FILTER_GAIN_AUTO                 0x2000B
+#define AL_AUXILIARY_SEND_FILTER_GAINHF_AUTO               0x2000C
 /* Context Object Extensions. */
 #define ALC_EFX_MAJOR_VERSION                              0x20001
 #define ALC_EFX_MINOR_VERSION                              0x20002
@@ -107,10 +116,16 @@ ALvoid (AL_APIENTRY *nalGetAuxiliaryEffectSlotfv)(ALuint,ALenum,ALfloat*);
 ALvoid (AL_APIENTRY *nalGenFilters)(ALsizei,ALuint*);
 ALvoid (AL_APIENTRY *nalDeleteFilters)(ALsizei,ALuint*);
 ALvoid (AL_APIENTRY *nalFilteri)(ALuint,ALenum,ALint);
+ALvoid (AL_APIENTRY *nalFilteriv)(ALuint,ALenum,ALint*);
+ALvoid (AL_APIENTRY *nalFilterf)(ALuint,ALenum,ALfloat);
+ALvoid (AL_APIENTRY *nalFilterfv)(ALuint,ALenum,ALfloat*);
 /* Effect. */
 ALvoid (AL_APIENTRY *nalGenEffects)(ALsizei,ALuint*);
 ALvoid (AL_APIENTRY *nalDeleteEffects)(ALsizei,ALuint*);
 ALvoid (AL_APIENTRY *nalEffecti)(ALuint,ALenum,ALint);
+ALvoid (AL_APIENTRY *nalEffectiv)(ALuint,ALenum,ALint*);
+ALvoid (AL_APIENTRY *nalEffectf)(ALuint,ALenum,ALfloat);
+ALvoid (AL_APIENTRY *nalEffectfv)(ALuint,ALenum,ALfloat*);
 
 
 /*
@@ -121,6 +136,8 @@ typedef struct alInfo_s {
    ALint efx_major; /**< EFX major version. */
    ALint efx_minor; /**< EFX minor version. */
    ALint efx_auxSends; /**< Number of auxiliary sends of the context. */
+   /* Effect types. */
+   ALint efx_reverb; /**< Reverb effect supported. */
 } alInfo_t;
 extern alInfo_t al_info;
 

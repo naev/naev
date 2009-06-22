@@ -61,17 +61,18 @@
 
 
 /*
- * global sound lock
+ * Global sound lock.
  */
 SDL_mutex *sound_lock = NULL; /**< Global sound lock, always lock this before
                                    using any OpenAL functions. */
 
 
 /*
- * global device and contex
+ * Global device and contex.
  */
 static ALCcontext *al_context = NULL; /**< OpenAL context. */
 static ALCdevice *al_device   = NULL; /**< OpenAL device. */
+static ALfloat svolume        = 1.; /**< Sound global volume. */
 alInfo_t al_info; /**< OpenAL context info. */
 
 
@@ -86,9 +87,10 @@ static int source_mstack      = 0; /**< Memory allocated for sources in the pool
 
 
 /*
- * volume
+ * EFX stuff.
  */
-static ALfloat svolume        = 1.; /**< Sound global volume. */
+static ALuint efx_reverbSlot  = 0; /**< Reverb slot. */
+static ALuint efx_reverb      = 0; /**< Reverb effect. */
 
 
 /**
@@ -226,6 +228,9 @@ int sound_al_init (void)
    /* Try to enable EFX. */
    if (al_info.efx == AL_TRUE)
       al_enableEFX();
+   else {
+      al_info.efx_reverb = AL_FALSE;
+   }
 
    /* Allocate source for music. */
    alGenSources( 1, &music_source );
@@ -252,7 +257,8 @@ int sound_al_init (void)
       /* Check for error. */
       if (alGetError() == AL_NO_ERROR)
          source_nstack++;
-      else break;
+      else
+         break;
    }
    /* Reduce ram usage. */
    source_mstack = source_nstack;
@@ -329,21 +335,53 @@ static int al_enableEFX (void)
    nalGenFilters               = alGetProcAddress( "alGenFilters" );
    nalDeleteFilters            = alGetProcAddress( "alDeleteFilters" );
    nalFilteri                  = alGetProcAddress( "alFilteri" );
+   nalFilteriv                 = alGetProcAddress( "alFilteriv" );
+   nalFilterf                  = alGetProcAddress( "alFilterf" );
+   nalFilterfv                 = alGetProcAddress( "alFilterfv" );
    nalGenEffects               = alGetProcAddress( "alGenEffects" );
    nalDeleteEffects            = alGetProcAddress( "alDeleteEffects" );
    nalEffecti                  = alGetProcAddress( "alEffecti" );
+   nalEffectiv                 = alGetProcAddress( "alEffectiv" );
+   nalEffectf                  = alGetProcAddress( "alEffectf" );
+   nalEffectfv                 = alGetProcAddress( "alEffectfv" );
    if (!nalGenAuxiliaryEffectSlots || !nalDeleteAuxiliaryEffectSlots ||
          !nalIsAuxiliaryEffectSlot ||
          !nalAuxiliaryEffectSloti || !nalAuxiliaryEffectSlotiv ||
          !nalAuxiliaryEffectSlotf || !nalAuxiliaryEffectSlotfv ||
          !nalGetAuxiliaryEffectSloti || !nalGetAuxiliaryEffectSlotiv ||
          !nalGetAuxiliaryEffectSlotf || !nalGetAuxiliaryEffectSlotfv ||
-         !nalGenFilters || !nalDeleteFilters || !nalFilteri ||
-         !nalGenEffects || !nalDeleteEffects || !nalEffecti) {
-      WARN("OpenAL EFX functions not found, disabling EFX.");
+         !nalGenFilters || !nalDeleteFilters ||
+         !nalFilteri || !nalFilteriv || !nalFilterf || !nalFilterfv ||
+         !nalGenEffects || !nalDeleteEffects ||
+         !nalEffecti || !nalEffectiv || !nalEffectf || !nalEffectfv) {
+      DEBUG("OpenAL EFX functions not found, disabling EFX.");
       al_info.efx = AL_FALSE;
       return -1;
    }
+
+#if 0
+   /* Create reverb effect. */
+   nalGenEffects( 1, &efx_reverb );
+   nalEffecti( efx_reverb, AL_EFFECT_TYPE, AL_EFFECT_REVERB );
+   if(alGetError() != AL_NO_ERROR) {
+      DEBUG("OpenAL Reverb not found, disabling.");
+      al_info.efx_reverb = AL_FALSE;
+      nalDeleteEffects( 1, &efx_reverb );
+   }
+   else {
+      al_info.efx_reverb = AL_TRUE;
+
+      /* Set Reverb parameters. */
+      nalEffectf( efx_reverb, AL_REVERB_DECAY_TIME, 15. );
+
+      /* Create auxiliary slot. */
+      nalGenAuxiliaryEffectSlots( 1, &efx_reverbSlot );
+      nalAuxiliaryEffectSloti( efx_reverbSlot, AL_EFFECTSLOT_EFFECT, efx_reverb );
+   }
+#endif
+
+   /* Check for errors. */
+   al_checkErr();
 
    return 0;
 }
