@@ -69,9 +69,23 @@ void al_checkErr (void);
 #define ALC_EFX_MINOR_VERSION                              0x20002
 #define ALC_MAX_AUXILIARY_SENDS                            0x20003
 #endif
+/* Auxiliary Effect Slot. */
+ALvoid (AL_APIENTRY *nalGenAuxiliaryEffectSlots)(ALsizei,ALuint*);
+ALvoid (AL_APIENTRY *nalDeleteAuxiliaryEffectSlots)(ALsizei,ALuint*);
+ALboolean (AL_APIENTRY *nalIsAuxiliaryEffectSlot)(ALuint);
+ALvoid (AL_APIENTRY *nalAuxiliaryEffectSloti)(ALuint,ALenum,ALint);
+ALvoid (AL_APIENTRY *nalAuxiliaryEffectSlotiv)(ALuint,ALenum,ALint*);
+ALvoid (AL_APIENTRY *nalAuxiliaryEffectSlotf)(ALuint,ALenum,ALfloat);
+ALvoid (AL_APIENTRY *nalAuxiliaryEffectSlotfv)(ALuint,ALenum,ALfloat*);
+ALvoid (AL_APIENTRY *nalGetAuxiliaryEffectSloti)(ALuint,ALenum,ALint*);
+ALvoid (AL_APIENTRY *nalGetAuxiliaryEffectSlotiv)(ALuint,ALenum,ALint*);
+ALvoid (AL_APIENTRY *nalGetAuxiliaryEffectSlotf)(ALuint,ALenum,ALfloat*);
+ALvoid (AL_APIENTRY *nalGetAuxiliaryEffectSlotfv)(ALuint,ALenum,ALfloat*);
+/* Filter. */
 ALvoid (AL_APIENTRY *nalGenFilters)(ALsizei,ALuint*);
 ALvoid (AL_APIENTRY *nalDeleteFilters)(ALsizei,ALuint*);
 ALvoid (AL_APIENTRY *nalFilteri)(ALuint,ALenum,ALint);
+/* Effect. */
 ALvoid (AL_APIENTRY *nalGenEffects)(ALsizei,ALuint*);
 ALvoid (AL_APIENTRY *nalDeleteEffects)(ALsizei,ALuint*);
 ALvoid (AL_APIENTRY *nalEffecti)(ALuint,ALenum,ALint);

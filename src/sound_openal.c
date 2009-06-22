@@ -113,6 +113,10 @@ static int al_groupidgen    = 0; /**< Used to create group IDs. */
  * Prototypes.
  */
 /*
+ * Loading.
+ */
+static int al_enableEFX (void);
+/*
  * Wav loading.
  */
 static int sound_al_wavReadCmp( SDL_RWops *rw, const char *cmp, int bytes );
@@ -219,6 +223,10 @@ int sound_al_init (void)
       goto snderr_act;
    }
 
+   /* Try to enable EFX. */
+   if (al_info.efx == AL_TRUE)
+      al_enableEFX();
+
    /* Allocate source for music. */
    alGenSources( 1, &music_source );
 
@@ -262,27 +270,6 @@ int sound_al_init (void)
    /* Check for errors. */
    al_checkErr();
 
-   /* Set up the EFX. */
-   if (al_info.efx == AL_TRUE) {
-      /* Get general information. */
-      alcGetIntegerv( al_device, ALC_MAX_AUXILIARY_SENDS, 1, &al_info.efx_auxSends );
-      alcGetIntegerv( al_device, ALC_EFX_MAJOR_VERSION, 1, &al_info.efx_major );
-      alcGetIntegerv( al_device, ALC_EFX_MINOR_VERSION, 1, &al_info.efx_minor );
-
-      /* Get function pointers. */
-      nalGenFilters     = alGetProcAddress( "alGenFilters" );
-      nalDeleteFilters  = alGetProcAddress( "alDeleteFilters" );
-      nalFilteri        = alGetProcAddress( "alFilteri" );
-      nalGenEffects     = alGetProcAddress( "alGenEffects" );
-      nalDeleteEffects  = alGetProcAddress( "alDeleteEffects" );
-      nalEffecti        = alGetProcAddress( "alEffecti" );
-      if (!nalGenFilters || !nalDeleteFilters || !nalFilteri ||
-            !nalGenEffects || !nalDeleteEffects || !nalEffecti) {
-         WARN("OpenAL EFX functions not found, disabling EFX.");
-         al_info.efx = AL_FALSE;
-      }
-   }
-
    /* we can unlock now */
    soundUnlock();
 
@@ -312,6 +299,53 @@ snderr_dev:
    SDL_DestroyMutex( sound_lock );
    sound_lock = NULL;
    return ret;
+}
+
+
+/**
+ * @brief Enables the OpenAL EFX extension.
+ *
+ *    @return 0 on success.
+ */
+static int al_enableEFX (void)
+{
+   /* Get general information. */
+   alcGetIntegerv( al_device, ALC_MAX_AUXILIARY_SENDS, 1, &al_info.efx_auxSends );
+   alcGetIntegerv( al_device, ALC_EFX_MAJOR_VERSION, 1, &al_info.efx_major );
+   alcGetIntegerv( al_device, ALC_EFX_MINOR_VERSION, 1, &al_info.efx_minor );
+
+   /* Get function pointers. */
+   nalGenAuxiliaryEffectSlots  = alGetProcAddress( "alGenAuxiliaryEffectSlots" );
+   nalDeleteAuxiliaryEffectSlots = alGetProcAddress( "alDeleteAuxiliaryEffectSlots" );
+   nalIsAuxiliaryEffectSlot    = alGetProcAddress( "alIsAuxiliaryEffectSlot" );
+   nalAuxiliaryEffectSloti     = alGetProcAddress( "alAuxiliaryEffectSloti" );
+   nalAuxiliaryEffectSlotiv    = alGetProcAddress( "alAuxiliaryEffectSlotiv" );
+   nalAuxiliaryEffectSlotf     = alGetProcAddress( "alAuxiliaryEffectSlotf" );
+   nalAuxiliaryEffectSlotfv    = alGetProcAddress( "alAuxiliaryEffectSlotfv" );
+   nalGetAuxiliaryEffectSloti  = alGetProcAddress( "alGetAuxiliaryEffectSloti" );
+   nalGetAuxiliaryEffectSlotiv = alGetProcAddress( "alGetAuxiliaryEffectSlotiv" );
+   nalGetAuxiliaryEffectSlotf  = alGetProcAddress( "alGetAuxiliaryEffectSlotf" );
+   nalGetAuxiliaryEffectSlotfv = alGetProcAddress( "alGetAuxiliaryEffectSlotfv" );
+   nalGenFilters               = alGetProcAddress( "alGenFilters" );
+   nalDeleteFilters            = alGetProcAddress( "alDeleteFilters" );
+   nalFilteri                  = alGetProcAddress( "alFilteri" );
+   nalGenEffects               = alGetProcAddress( "alGenEffects" );
+   nalDeleteEffects            = alGetProcAddress( "alDeleteEffects" );
+   nalEffecti                  = alGetProcAddress( "alEffecti" );
+   if (!nalGenAuxiliaryEffectSlots || !nalDeleteAuxiliaryEffectSlots ||
+         !nalIsAuxiliaryEffectSlot ||
+         !nalAuxiliaryEffectSloti || !nalAuxiliaryEffectSlotiv ||
+         !nalAuxiliaryEffectSlotf || !nalAuxiliaryEffectSlotfv ||
+         !nalGetAuxiliaryEffectSloti || !nalGetAuxiliaryEffectSlotiv ||
+         !nalGetAuxiliaryEffectSlotf || !nalGetAuxiliaryEffectSlotfv ||
+         !nalGenFilters || !nalDeleteFilters || !nalFilteri ||
+         !nalGenEffects || !nalDeleteEffects || !nalEffecti) {
+      WARN("OpenAL EFX functions not found, disabling EFX.");
+      al_info.efx = AL_FALSE;
+      return -1;
+   }
+
+   return 0;
 }
 
 
