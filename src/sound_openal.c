@@ -13,6 +13,8 @@
 #include <sys/stat.h>
 
 #include <AL/alc.h>
+#include <AL/al.h>
+#include <AL/alext.h>
 #include <vorbis/vorbisfile.h>
 
 #include "SDL.h"
@@ -70,6 +72,7 @@ SDL_mutex *sound_lock = NULL; /**< Global sound lock, always lock this before
  */
 static ALCcontext *al_context = NULL; /**< OpenAL context. */
 static ALCdevice *al_device   = NULL; /**< OpenAL device. */
+alInfo_t al_info; /**< OpenAL context info. */
 
 
 /*
@@ -118,6 +121,7 @@ static int sound_al_wavGetLen16( SDL_RWops *rw, uint16_t *out );
 /*
  * General.
  */
+static void* al_getFunction( const char *func );
 static ALuint sound_al_getSource (void);
 static int al_playVoice( alVoice *v, alSound *s,
       ALfloat px, ALfloat py, ALfloat vx, ALfloat vy, ALint relative );
@@ -162,6 +166,19 @@ ov_callbacks sound_al_ovcall = {
 
 
 /**
+ * @brief Gets an OpenAL function.
+ */
+static void* al_getFunction( const char *func )
+{
+   void *proc;
+   proc = alGetProcAddress( func );
+   if (proc == NULL)
+      WARN("Function '%s' not found in OpenAL library.", func);
+   return proc;
+}
+
+
+/**
  * @brief Initializes the sound subsystem.
  *
  *    @return 0 on success.
@@ -171,6 +188,7 @@ int sound_al_init (void)
    int ret;
    const ALchar* dev;
    ALuint s;
+   ALint attribs[4] = { 0, 0, 0, 0 };
 
    /* Default values. */
    ret = 0;
@@ -190,8 +208,15 @@ int sound_al_init (void)
       goto snderr_dev;
    }
 
+   /* Query EFX extension. */
+   al_info.efx = alcIsExtensionPresent( al_device, "ALC_EXT_EFX" );
+   if (al_info.efx == AL_TRUE) {
+      attribs[0] = ALC_MAX_AUXILIARY_SENDS;
+      attribs[1] = 4;
+   }
+
    /* create the OpenAL context */
-   al_context = alcCreateContext( al_device, NULL );
+   al_context = alcCreateContext( al_device, attribs );
    if (sound_lock == NULL) {
       WARN("Unable to create OpenAL context");
       ret = -2;
@@ -207,9 +232,6 @@ int sound_al_init (void)
       ret = -4;
       goto snderr_act;
    }
-
-   /* Set the distance model */
-   alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED );
 
    /* Allocate source for music. */
    alGenSources( 1, &music_source );
@@ -254,13 +276,33 @@ int sound_al_init (void)
    /* Check for errors. */
    al_checkErr();
 
+   /* Set up the EFX. */
+   if (al_info.efx == AL_TRUE) {
+      /* Get general information. */
+      alcGetIntegerv( al_device, ALC_MAX_AUXILIARY_SENDS, 1, &al_info.efx_auxSends );
+      alcGetIntegerv( al_device, ALC_EFX_MAJOR_VERSION, 1, &al_info.efx_major );
+      alcGetIntegerv( al_device, ALC_EFX_MINOR_VERSION, 1, &al_info.efx_minor );
+
+      /* Get function pointers. */
+      nalGenFilters     = al_getFunction( "alGenFilters" );
+      nalDeleteFilters  = al_getFunction( "alDeleteFilters" );
+      nalFilteri        = al_getFunction( "alFilteri" );
+      nalGenEffects     = al_getFunction( "alGenEffects" );
+      nalDeleteEffects  = al_getFunction( "alDeleteEffects" );
+      nalEffecti        = al_getFunction( "alEffecti" );
+   }
+
    /* we can unlock now */
    soundUnlock();
 
    /* debug magic */
    DEBUG("OpenAL: %s", dev);
    DEBUG("Renderer: %s", alGetString(AL_RENDERER));
-   DEBUG("Version: %s", alGetString(AL_VERSION));
+   if (al_info.efx == AL_FALSE)
+      DEBUG("Version: %s", alGetString(AL_VERSION));
+   else
+      DEBUG("Version: %s with EFX %d.%d [%d]", alGetString(AL_VERSION),
+            al_info.efx_major, al_info.efx_minor, al_info.efx_auxSends);
    DEBUG();
 
    return 0;

@@ -15,6 +15,9 @@
 
 #include "ncompat.h"
 
+#include <AL/alc.h>
+#include <AL/al.h>
+#include <AL/alext.h>
 #include <vorbis/vorbisfile.h>
 
 
@@ -37,6 +40,53 @@ void al_checkErr (void);
 #else /* HAS_BIGENDIAN */
 #  define VORBIS_ENDIAN    0
 #endif /* HAS_BIGENDIAN */
+
+/*
+ * EFX stuff.
+ */
+#ifndef ALC_EXT_EFX
+#define AL_FILTER_TYPE                                     0x8001
+#define AL_EFFECT_TYPE                                     0x8001
+#define AL_FILTER_NULL                                     0x0000
+#define AL_FILTER_LOWPASS                                  0x0001
+#define AL_FILTER_HIGHPASS                                 0x0002
+#define AL_FILTER_BANDPASS                                 0x0003
+#define AL_EFFECT_NULL                                     0x0000
+#define AL_EFFECT_EAXREVERB                                0x8000
+#define AL_EFFECT_REVERB                                   0x0001
+#define AL_EFFECT_CHORUS                                   0x0002
+#define AL_EFFECT_DISTORTION                               0x0003
+#define AL_EFFECT_ECHO                                     0x0004
+#define AL_EFFECT_FLANGER                                  0x0005
+#define AL_EFFECT_FREQUENCY_SHIFTER                        0x0006
+#define AL_EFFECT_VOCAL_MORPHER                            0x0007
+#define AL_EFFECT_PITCH_SHIFTER                            0x0008
+#define AL_EFFECT_RING_MODULATOR                           0x0009
+#define AL_EFFECT_AUTOWAH                                  0x000A
+#define AL_EFFECT_COMPRESSOR                               0x000B
+#define AL_EFFECT_EQUALIZER                                0x000C
+#define ALC_EFX_MAJOR_VERSION                              0x20001
+#define ALC_EFX_MINOR_VERSION                              0x20002
+#define ALC_MAX_AUXILIARY_SENDS                            0x20003
+#endif
+ALvoid (AL_APIENTRY *nalGenFilters)(ALsizei,ALuint*);
+ALvoid (AL_APIENTRY *nalDeleteFilters)(ALsizei,ALuint*);
+ALvoid (AL_APIENTRY *nalFilteri)(ALuint,ALenum,ALint);
+ALvoid (AL_APIENTRY *nalGenEffects)(ALsizei,ALuint*);
+ALvoid (AL_APIENTRY *nalDeleteEffects)(ALsizei,ALuint*);
+ALvoid (AL_APIENTRY *nalEffecti)(ALuint,ALenum,ALint);
+
+
+/*
+ * Context info.
+ */
+typedef struct alInfo_s {
+   ALint efx; /**< Whether or not context has efx extension. */
+   ALint efx_major; /**< EFX major version. */
+   ALint efx_minor; /**< EFX minor version. */
+   ALint efx_auxSends; /**< Number of auxiliary sends of the context. */
+} alInfo_t;
+extern alInfo_t al_info;
 
 
 /*
