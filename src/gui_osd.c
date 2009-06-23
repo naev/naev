@@ -2,12 +2,6 @@
  * See Licensing and Copyright notice in naev.h
  */
 
-/**
- * @file gui.c
- *
- * @brief Contains the GUI stuff for the player.
- */
-
 
 #include "gui_osd.h"
 
@@ -187,24 +181,46 @@ int osd_active( unsigned int osd, int msg )
 void osd_exit (void)
 {
    while (osd_list != NULL)
-      osd_free(osd_list);
-
-   osd_list = NULL;
+      osd_destroy(osd_list->id);
 }
 
 
 /**
  * @brief Renders all the OSD.
+ *
+ *    @param x X position to render at.
+ *    @param y Y position to render at.
+ *    @param w Width to render.
+ *    @param h Height to render.
  */
 void osd_render( double x, double y, double w, double h )
 {
    OSD_t *ll;
+   double p;
+   int i;
 
    /* Nothing to render. */
    if (osd_list == NULL)
       return;
 
+   /* Render each thingy. */
+   p = y;
    for (ll = osd_list; ll != NULL; ll = ll->next) {
+
+      /* Print title. */
+      gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, ll->title );
+      p -= gl_smallFont.h + 5.;
+      if (p < y-h)
+         return;
+
+      /* Print items. */
+      for (i=0; i<ll->nitems; i++) {
+         gl_printMaxRaw( &gl_smallFont, w, x+10., p,
+              (ll->active == i) ? &cHilight : NULL, ll->items[i] );
+         p -= gl_smallFont.h + 5.;
+         if (p < y-h)
+            return;
+      }
    }
 }
 
