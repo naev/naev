@@ -34,6 +34,7 @@ static int systemL_nebulae( lua_State *L );
 static int systemL_jumpdistance( lua_State *L );
 static int systemL_adjacent( lua_State *L );
 static int systemL_hasPresence( lua_State *L );
+static int systemL_planets( lua_State *L );
 static const luaL_reg system_methods[] = {
    { "get", systemL_get },
    { "__eq", systemL_eq },
@@ -44,6 +45,7 @@ static const luaL_reg system_methods[] = {
    { "jumpDist", systemL_jumpdistance },
    { "adjacentSystems", systemL_adjacent },
    { "hasPresence", systemL_hasPresence },
+   { "planets", systemL_planets },
    {0,0}
 }; /**< System metatable methods. */
 
@@ -413,6 +415,37 @@ static int systemL_hasPresence( lua_State *L )
    }
 
    lua_pushboolean(L, found);
+   return 1;
+}
+
+
+/**
+ * @brief Gets the planets in a system.
+ *
+ * @usage for k,v in pairs( sys:planets() ) do -- Iterate over planets in system
+ * @usage if #sys:planets() > 0then -- System has planets
+ *
+ *    @luaparam s System to get planets of
+ *    @luareturn A table with all the planets
+ * @luafunc planets( s )
+ */
+static int systemL_planets( lua_State *L )
+{
+   int i;
+   LuaSystem *sys;
+   LuaPlanet p;
+
+   sys = luaL_checksystem(L,1);
+
+   /* Push all planets. */
+   lua_newtable(L);
+   for (i=0; i<sys->s->nplanets; i++) {
+      p.p = sys->s->planets[i];
+      lua_pushnumber(L,i+1); /* key */
+      lua_pushplanet(L,p); /* value */
+      lua_rawset(L,-3);
+   }
+
    return 1;
 }
 
