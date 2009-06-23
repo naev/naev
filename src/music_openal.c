@@ -574,11 +574,11 @@ int music_al_init (void)
    music_state_cond  = SDL_CreateCond();
    music_state_lock  = SDL_CreateMutex();
    music_vorbis_lock = SDL_CreateMutex();
-   music_vorbis.rw = NULL; /* indication it's not loaded */
+   music_vorbis.rw   = NULL; /* indication it's not loaded */
 
    /* Create the buffer. */
-   music_bufSize = conf.al_bufsize*1024;
-   music_buf = malloc( music_bufSize );
+   music_bufSize     = conf.al_bufsize * 1024;
+   music_buf         = malloc( music_bufSize );
 
    soundLock();
 
