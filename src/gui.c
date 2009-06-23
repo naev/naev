@@ -46,6 +46,7 @@
 #include "ai.h"
 #include "music.h"
 #include "nmath.h"
+#include "gui_osd.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
@@ -859,6 +860,10 @@ void gui_render( double dt )
 
    /* Messages. */
    gui_renderMessages(dt);
+
+
+   /* OSD. */
+   osd_render( 20., SCREEN_H-40., 60., 200. );
 
 
    /*
@@ -2066,6 +2071,9 @@ void gui_free (void)
       gl_vboDestroy( gui_vbo );
       gui_vbo = NULL;
    }
+
+   /* Clean up the osd. */
+   osd_exit();
 }
 
 
@@ -2094,4 +2102,3 @@ void gui_getOffset( double *x, double *y )
    *x = gui_xoff;
    *y = gui_yoff;
 }
-
