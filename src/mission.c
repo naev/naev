@@ -491,6 +491,8 @@ void mission_cleanup( Mission* misn )
       if (misn->tfunc[i] != NULL)
          free(misn->tfunc[i]);
    }
+   if (misn->osd > 0)
+      osd_destroy(misn->osd);
    if (misn->L)
       lua_close(misn->L);
 
