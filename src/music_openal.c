@@ -23,10 +23,6 @@
 #include "conf.h"
 
 
-#define MUSIC_FADEIN       2000 /**< Fadein in ms. */
-#define MUSIC_FADEOUT      1000 /**< Fadeout in ms. */
-
-
 /* Lock for OpenAL operations. */
 #define soundLock()        SDL_mutexP(sound_lock)
 #define soundUnlock()      SDL_mutexV(sound_lock)
@@ -170,7 +166,7 @@ static int music_thread( void* unused )
             if (music_state == MUSIC_STATE_PAUSING)
                music_state = MUSIC_STATE_RESUMING;
             else if (music_state == MUSIC_STATE_FADEIN)
-               fade_timer = SDL_GetTicks() - MUSIC_FADEIN;
+               fade_timer = SDL_GetTicks() - MUSIC_FADEIN_DELAY;
             else
                music_state = MUSIC_STATE_LOADING;
             /* Disable fadein. */
@@ -388,8 +384,8 @@ static int music_thread( void* unused )
             fade = SDL_GetTicks() - fade_timer;
             if (cur_state == MUSIC_STATE_FADEIN) {
 
-               if (fade < MUSIC_FADEIN) {
-                  gain = (ALfloat)fade / (ALfloat)MUSIC_FADEIN;
+               if (fade < MUSIC_FADEIN_DELAY) {
+                  gain = (ALfloat)fade / (ALfloat)MUSIC_FADEIN_DELAY;
                   soundLock();
                   alSourcef( music_source, AL_GAIN, gain*music_vol );
                   /* Check for errors. */
@@ -413,8 +409,8 @@ static int music_thread( void* unused )
             }
             else if (cur_state == MUSIC_STATE_FADEOUT) {
 
-               if (fade < MUSIC_FADEOUT) {
-                  gain = 1. - (ALfloat)fade / (ALfloat)MUSIC_FADEOUT;
+               if (fade < MUSIC_FADEOUT_DELAY) {
+                  gain = 1. - (ALfloat)fade / (ALfloat)MUSIC_FADEOUT_DELAY;
                   soundLock();
                   alSourcef( music_source, AL_GAIN, gain*music_vol );
                   /* Check for errors. */

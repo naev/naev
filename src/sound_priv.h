@@ -27,6 +27,10 @@
 #define VOICE_STATIC       (1<<11) /* voice isn't relative */
 
 
+#define MUSIC_FADEOUT_DELAY   1000 /**< Time it takes to fade out. */
+#define MUSIC_FADEIN_DELAY    2000 /**< Time it takes to fade in. */
+
+
 /**
  * @struct alSound
  *

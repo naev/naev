@@ -20,6 +20,7 @@
 #include "SDL_mixer.h"
 #include "SDL_mutex.h"
 
+#include "sound_priv.h"
 #include "music.h"
 #include "nlua.h"
 #include "nluadef.h"
@@ -135,7 +136,7 @@ void music_mix_play (void)
 {
    if (music_music == NULL) return;
 
-   if (Mix_FadeInMusic( music_music, 0, 2000 ) < 0)
+   if (Mix_FadeInMusic( music_music, 0, MUSIC_FADEIN_DELAY ) < 0)
       WARN("SDL_Mixer: %s", Mix_GetError());
 }
 
@@ -147,7 +148,7 @@ void music_mix_stop (void)
 {
    if (music_music == NULL) return;
 
-   if (Mix_FadeOutMusic(1000) < 0)
+   if (Mix_FadeOutMusic( MUSIC_FADEOUT_DELAY ) < 0)
       WARN("SDL_Mixer: %s", Mix_GetError());
 }
 
@@ -194,7 +195,7 @@ void music_mix_setPos( double sec )
 {
    if (music_music == NULL) return;
 
-   Mix_FadeInMusicPos( music_music, 1, 1000, sec );
+   Mix_FadeInMusicPos( music_music, 1, MUSIC_FADEIN_DELAY, sec );
 }
 
 
