@@ -735,8 +735,8 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    conf_saveComment("Volume of sound effects and music, between 0.0 and 1.0");
-   conf_saveFloat("sound",conf.sound);
-   conf_saveFloat("music",conf.music);
+   conf_saveFloat("sound",sound_getVolume());
+   conf_saveFloat("music",music_getVolume());
    conf_saveEmptyLine();
 
    /* Joystick. */
