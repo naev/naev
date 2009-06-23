@@ -772,7 +772,7 @@ void sound_resumeGroup( int group )
 int sound_env( SoundEnv_t env, double param )
 {
    if (sound_disabled)
-      return;
+      return 0;
 
    return sound_sys_env( env, param );
 }
