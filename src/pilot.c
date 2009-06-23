@@ -1046,6 +1046,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       h = (pilot_isHostile(p)) ? 1 : 0;
       pilot_rmHostile(p);
       if (h == 1) /* Horrible hack to make sure player can hit it if it was hostile. */
+         /* Do not use pilot_setHostile here or music will change again. */
          pilot_setFlag(p,PILOT_HOSTILE);
 
       pshooter = pilot_get(shooter);
