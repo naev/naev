@@ -17,7 +17,7 @@
 
 #if USE_SDLMIX
 #include "SDL_mixer.h"
-#endif /* USE_SDLMIXER */
+#endif /* USE_SDLMIX */
 
 
 /*

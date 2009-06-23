@@ -2,12 +2,14 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+#if USE_SDLMIX
 
 
 #ifndef SOUND_SDLMIX_H
 #  define SOUND_SDLMIX_H
 
 
+#include "sound.h"
 #include "sound_priv.h"
 
 
@@ -67,4 +69,14 @@ void sound_mix_pauseGroup( int group );
 void sound_mix_resumeGroup( int group );
 
 
+/*
+ * Env.
+ */
+int sound_mix_env( SoundEnv_t env, double param );
+
+
+
 #endif /* SOUND_SDLMIX_H */
+
+
+#endif /* USE_SDLMIX */

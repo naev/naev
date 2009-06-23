@@ -28,6 +28,7 @@
 #include "spfx.h"
 #include "ntime.h"
 #include "nebulae.h"
+#include "sound.h"
 #include "music.h"
 #include "gui.h"
 #include "fleet.h"
@@ -683,6 +684,9 @@ void space_init ( const char* sysname )
       if (cur_system->nebu_density > 0.) {
          /* Background is Nebulae */
          nebu_prep( cur_system->nebu_density, cur_system->nebu_volatility );
+
+         /* Set up sound. */
+         sound_env( SOUND_ENV_NEBULAE, cur_system->nebu_density );
       }
       else {
          /* Backrgound is Stary */
@@ -724,6 +728,9 @@ void space_init ( const char* sysname )
          star_colourVBO = gl_vboCreateStatic(
                nstars * sizeof(GLfloat) * 8, star_colour );
       }
+
+      /* Set up sound. */
+      sound_env( SOUND_ENV_NORMAL, 0. );
    }
 
    /* Iterate through planets to clear bribes. */

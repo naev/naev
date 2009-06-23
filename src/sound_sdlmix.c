@@ -9,6 +9,9 @@
  */
 
 
+#if USE_SDLMIX
+
+
 #include "sound_sdlmix.h"
 
 #include "naev.h"
@@ -546,3 +549,16 @@ static void voice_mix_markStopped( int channel )
    voice_unlock();
 }
 
+
+/**
+ * @brief SDL_mixer doesn't handle this.
+ */
+int sound_mix_env( SoundEnv_t env, double param )
+{
+   (void) env;
+   (void) param;
+   return 0;
+}
+
+
+#endif /* USE_SDLMIX */

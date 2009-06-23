@@ -12,6 +12,15 @@ extern int sound_disabled;
 
 
 /*
+ * Environmental features.
+ */
+typedef enum SoundEnv_e {
+   SOUND_ENV_NORMAL, /**< Normal space. */
+   SOUND_ENV_NEBULAE /**< Nebulae space. */
+} SoundEnv_t; /**< Type of environment. */
+
+
+/*
  * sound subsystem
  */
 int sound_init (void);
@@ -44,6 +53,12 @@ int sound_playGroup( int group, int sound, int once );
 void sound_stopGroup( int group );
 void sound_pauseGroup( int group );
 void sound_resumeGroup( int group );
+
+
+/*
+ * Environmental functions.
+ */
+int sound_env( SoundEnv_t env, double param );
 
 
 #endif /* SOUND_H */

@@ -3,14 +3,14 @@
  */
 
 
+#if USE_OPENAL
+
 
 #ifndef SOUND_OPENAL_H
 #  define SOUND_OPENAL_H
 
 
-#if USE_OPENAL
-
-
+#include "sound.h"
 #include "sound_priv.h"
 
 #include "ncompat.h"
@@ -200,7 +200,14 @@ void sound_al_pauseGroup( int group );
 void sound_al_resumeGroup( int group );
 
 
-#endif /* USE_OPENAL */
+/*
+ * Env.
+ */
+int sound_al_env( SoundEnv_t env, double param );
 
 
 #endif /* SOUND_OPENAL_H */
+
+#endif /* USE_OPENAL */
+
+

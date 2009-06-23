@@ -279,7 +279,7 @@ int sound_al_init (void)
    /* Set up how sound works. */
    alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED );
    alDopplerFactor( 1. );
-   alSpeedOfSound(  3433. );
+   sound_al_env( SOUND_ENV_NORMAL, 0. );
 
    /* Check for errors. */
    al_checkErr();
@@ -1075,6 +1075,55 @@ int sound_al_updateListener( double dir, double px, double py,
    vel[1] = vy;
    vel[2] = 0.;
    alListenerfv( AL_VELOCITY, vel );
+
+   /* Check for errors. */
+   al_checkErr();
+
+   soundUnlock();
+
+   return 0;
+}
+
+
+/**
+ * @brief Creates a sound environment.
+ */
+int sound_al_env( SoundEnv_t env, double param )
+{
+   int i;
+   ALuint s;
+   ALfloat f;
+
+   soundLock();
+   switch (env) {
+      case SOUND_ENV_NORMAL:
+         /* Set global parameters. */
+         alSpeedOfSound( 3433. );
+
+         if (al_info.efx) {
+            /* Set per-source parameters. */
+            for (i=0; i<source_ntotal; i++) {
+               s = source_total[i];
+               alSourcef( s, AL_AIR_ABSORPTION_FACTOR, 0. );
+            }
+         }
+         break;
+
+      case SOUND_ENV_NEBULAE:
+         f = param / 1000.;
+
+         /* Set global parameters. */
+         alSpeedOfSound( 3433./(1. + f*2.) );
+
+         if (al_info.efx) {
+            /* Set per-source parameters. */
+            for (i=0; i<source_ntotal; i++) {
+               s = source_total[i];
+               alSourcef( s, AL_AIR_ABSORPTION_FACTOR, 3.*f );
+            }
+         }
+         break;
+   }
 
    /* Check for errors. */
    al_checkErr();

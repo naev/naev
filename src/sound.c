@@ -94,6 +94,8 @@ int  (*sound_sys_playGroup) ( int group, alSound *s, int once ) = NULL;
 void (*sound_sys_stopGroup) ( int group ) = NULL;
 void (*sound_sys_pauseGroup) (int group ) = NULL;
 void (*sound_sys_resumeGroup) (int group ) = NULL;
+/* Env. */
+int  (*sound_sys_env) ( SoundEnv_t env, double param ) = NULL;
 
 
 /*
@@ -159,6 +161,8 @@ int sound_init (void)
       sound_sys_stopGroup  = sound_mix_stopGroup;
       sound_sys_pauseGroup = sound_mix_pauseGroup;
       sound_sys_resumeGroup = sound_mix_resumeGroup;
+      /* Env. */
+      sound_sys_env        = sound_mix_env;
 #else /* USE_SDLMIX */
       WARN("SDL_mixer support not compiled in!");
       sound_disabled = 1;
@@ -199,6 +203,8 @@ int sound_init (void)
       sound_sys_stopGroup  = sound_al_stopGroup;
       sound_sys_pauseGroup = sound_al_pauseGroup;
       sound_sys_resumeGroup = sound_al_resumeGroup;
+      /* Env. */
+      sound_sys_env        = sound_al_env;
 #else /* USE_OPENAL */
       WARN("OpenAL support not compiled in!");
       sound_disabled = 1;
@@ -753,6 +759,22 @@ void sound_resumeGroup( int group )
       return;
 
    sound_sys_resumeGroup( group );
+}
+
+
+/**
+ * @brief Sets up the sound environment.
+ *
+ *    @param env Type of environment to set up.
+ *    @param param Environment parameter.
+ *    @return 0 on success.
+ */
+int sound_env( SoundEnv_t env, double param )
+{
+   if (sound_disabled)
+      return;
+
+   return sound_sys_env( env, param );
 }
 
 
