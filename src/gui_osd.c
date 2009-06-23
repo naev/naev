@@ -97,6 +97,8 @@ static OSD_t *osd_get( unsigned int osd )
          break;
    }
 
+   if (ll == NULL)
+      WARN("OSD '%d' not found.", osd);
    return ll;
 }
 
@@ -170,6 +172,11 @@ int osd_active( unsigned int osd, int msg )
    if (o == NULL)
       return -1;
 
+   if ((msg < 0) || (msg >= o->nitems)) {
+      WARN("OSD '%s' only has %d items (requested %d)", o->title, o->nitems, msg );
+      return -1;
+   }
+
    o->active = msg;
    return 0;
 }
@@ -216,7 +223,7 @@ void osd_render( double x, double y, double w, double h )
       /* Print items. */
       for (i=0; i<ll->nitems; i++) {
          gl_printMaxRaw( &gl_smallFont, w, x+10., p,
-              (ll->active == i) ? &cHilight : NULL, ll->items[i] );
+              (ll->active == i) ? &cConsole : NULL, ll->items[i] );
          p -= gl_smallFont.h + 5.;
          if (p < y-h)
             return;

@@ -863,8 +863,7 @@ void gui_render( double dt )
 
 
    /* OSD. */
-   osd_render( 20., SCREEN_H-40., 60., 200. );
-
+   osd_render( 30., SCREEN_H-90., 150., 300. );
 
    /*
     * hyperspace
