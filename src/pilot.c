@@ -1044,7 +1044,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       h = (pilot_isHostile(p)) ? 1 : 0;
       pilot_rmHostile(p);
       if (h == 1) /* Horrible hack to make sure player can hit it if it was hostile. */
-         pilot_setFlag(p, PILOT_HOSTILE);
+         pilot_setHostile(p);
 
       pshooter = pilot_get(shooter);
       if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
