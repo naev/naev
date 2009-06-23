@@ -131,6 +131,51 @@ Enjoy the game!]]
    -- Aborted mission
    msg_abortTitle = "Tutorial Aborted"
    msg_abort = [[You seem to know more then is needed for the tutorial.  Tutorial aborting.]]
+   -- OSD stuff
+   osd_title = {}
+   osd_msg   = {}
+   osd_title[1] = "Tutorial - Flight"
+   osd_msg[1]   = {
+      "Fly around with the arrow keys",
+      "Brake turning around and accelerating"
+   }
+   osd_title[2] = "Tutorial - Targetting"
+   osd_msg[2]   = {
+      "Target ships that appear with:",
+      "  'tab' cycles through ships.",
+      "  'ctrl + tab' cycles through ships backwards.",
+      "  't' targets nearest ship.",
+      "  'r' targets nearest hostile."
+   }
+   osd_title[3] = "Tutorial - Combat"
+   osd_msg[3]   = {
+      "Disable the Llama",
+      "Board the Llama",
+      "Fight off a Hyena",
+      "Combat contrals are the following:",
+      "  'space' shoots primary weapons.",
+      "  'w' selects secondary weapon.",
+      "  'shift' shoots secondary weapon.",
+      "To target:",
+      "  'tab' cycles through ships.",
+      "To autoface:",
+      "  'a' autofaces target.",
+      "To board:",
+      "  'b' boards target."
+   }
+   osd_title[4] = "Tutorial - Landing"
+   osd_msg[4]   = {
+      "Land on %s",
+      "Keys to land:",
+      "  'p' cycles throug planets.",
+      "  'l' lands or gets acknowledgement."
+   }
+   osd_title[5] = "Tutorial - Navigation"
+   osd_msg[5]   = {
+      "1) Select target with map 'm'",
+      "2) Get away from planet.",
+      "3) Use 'j' to initialize the jump."
+   }
 end
 
       
@@ -149,6 +194,9 @@ function create ()
       misn.setReward( misn_reward )
       misn.setDesc( misn_desc )
 
+      -- Create OSD
+      misn.osdCreate( osd_title[1], osd_msg[1] )
+
       -- Give indications on how to fly.
       misn_stage = 1
       tk.msg( title[1], text[2] )
@@ -164,6 +212,10 @@ end
 
 
 function flightOver ()
+   -- Update OSD
+   misn.osdActive( 1 )
+
+   -- Update mission stuff
    misn_stage = 2
    tk.msg( title[2], text[4] )
    misn.timerStart( "brakeOver", 1000 )
@@ -175,6 +227,11 @@ function brakeOver ()
 
    -- Check if player successfully braked
    if player:vel():mod() < 10 then
+
+      -- New OSD
+      misn.osdCreate( osd_title[2], osd_msg[2] )
+
+      -- Text and mission stuff
       misn_stage = 3
       tk.msg( title[2], text[5] )
       tk.msg( title[3], text[6] )
@@ -194,6 +251,9 @@ end
 
 function targetOver ()
    misn_stage = 4
+
+   -- New OSD
+   misn.osdCreate( osd_title[3], osd_msg[3] )
 
    -- Tell about combat.
    tk.msg( title[4], text[8] )
@@ -220,6 +280,9 @@ end
 
 
 function llamaDisabled ()
+   -- Update OSD
+   misn.osdActive( 1 )
+
    misn_stage = 5
    tk.msg( title[4], text[10] )
 end
@@ -227,6 +290,9 @@ end
 
 function llamaDead ()
    if misn_stage < 6 then
+      -- New OSD
+      misn.osdCreate( osd_title[3], osd_msg[3] )
+
       misn_stage = 4
       tk.msg( title[4], text[11] )
       addLlamaDummy()
@@ -235,6 +301,9 @@ end
 
 
 function llamaBoard ()
+   -- Update OSD
+   misn.osdActive( 2 )
+
    misn_stage = 6
    tk.msg( title[4], text[12] )
    misn.timerStart( "boardOver", 3000 )
@@ -262,6 +331,12 @@ end
 
 function hyenaDead ()
    misn_stage = 7
+
+   -- Create OSD
+   osd_msg[4][1] = string.format( osd_msg[4][1], system.get():planets()[1] )
+   misn.osdCreate( osd_title[4], osd_msg[4] )
+
+   -- Messages
    tk.msg( title[4], text[14] )
    tk.msg( title[5], text[15] )
    tk.msg( title[5], text[16] )
@@ -287,6 +362,9 @@ end
 
 
 function tutTakeoff ()
+   -- Create OSD
+   misn.osdCreate( osd_title[1], osd_msg[1] )
+
    misn_stage = 8
    misn_sys = system.get()
    tk.msg( title[11], text[24] )
