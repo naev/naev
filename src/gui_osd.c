@@ -16,6 +16,15 @@
 
 
 /**
+ * @brief On Screen Display message element.
+ */
+typedef struct OSDmsg_s {
+   char **chunks; /**< Chunks of the message. */
+   int nchunks; /**< Number of chunks message is chopped into. */
+} OSDmsg_s;
+
+
+/**
  * @brief On Screen Display element.
  */
 typedef struct OSD_s {
@@ -24,7 +33,8 @@ typedef struct OSD_s {
    unsigned int id; /**< OSD id. */
    char *title;
 
-   char **items; /**< Items on the list. */
+   char **msg; /**< Stored messages. */
+   OSDmsg_s *items; /**< Items on the list. */
    int nitems; /**< Number of items on the list. */
 
    int active; /**< Active item. */
@@ -36,6 +46,15 @@ typedef struct OSD_s {
  */
 static unsigned int osd_idgen = 0; /**< ID generator for OSD. */
 static OSD_t *osd_list        = NULL; /**< Linked list for OSD. */
+
+
+/*
+ * DImensions.
+ */
+static int osd_x = 0;
+static int osd_y = 0;
+static int osd_w = 0;
+static int osd_h = 0;
 
 
 /*
@@ -55,7 +74,7 @@ static int osd_free( OSD_t *osd );
  */
 unsigned int osd_create( const char *title, int nitems, const char **items )
 {
-   int i;
+   int i, j, n, m, l, s;
    OSD_t *osd, *ll;
 
    /* Create. */
@@ -66,10 +85,37 @@ unsigned int osd_create( const char *title, int nitems, const char **items )
 
    /* Copy text. */
    osd->title  = strdup(title);
-   osd->items  = malloc( sizeof(char *) );
+   osd->msg    = malloc( sizeof(char*) * nitems );
+   osd->items  = malloc( sizeof(OSDmsg_s) * nitems );
    osd->nitems = nitems;
-   for (i=0; i<osd->nitems; i++)
-      osd->items[i] = strdup( items[i] );
+   for (i=0; i<osd->nitems; i++) {
+      osd->msg[i] = strdup( items[i] );
+
+      l = strlen(osd->msg[i]);
+      n = 0;
+      j = 0;
+      m = 0;
+      osd->items[i].chunks = NULL;
+      while (n < l) {
+         /* Get text size. */
+         s = gl_printWidthForText( &gl_smallFont, &items[i][n], osd_w );
+
+         if (j+1 > m) {
+            m += 32;
+            osd->items[i].chunks = realloc( osd->items[i].chunks, m );
+         }
+
+         /* Copy text over. */
+         osd->items[i].chunks[j]    = malloc(s+1);
+         strncpy( osd->items[i].chunks[j], &items[i][n], s );
+         osd->items[i].chunks[j][s] = '\0';
+
+         /* Go t onext line. */
+         n += s + 1;
+         j++;
+      }
+      osd->items[i].nchunks = j;
+   }
 
    /* Append to linked list. */
    if (osd_list == NULL)
@@ -108,13 +154,17 @@ static OSD_t *osd_get( unsigned int osd )
  */
 static int osd_free( OSD_t *osd )
 {
-   int i;
+   int i, j;
 
    if (osd->title != NULL)
       free(osd->title);
 
-   for(i=0; i<osd->nitems; i++)
-      free( osd->items[i] );
+   for(i=0; i<osd->nitems; i++) {
+      free( osd->msg[i] );
+      for (j=0; j<osd->items[i].nchunks; j++)
+         free(osd->items[i].chunks[j]);
+   }
+   free(osd->msg);
    free(osd->items);
 
    free(osd);
@@ -183,6 +233,24 @@ int osd_active( unsigned int osd, int msg )
 
 
 /**
+ * @brief Sets up the OSD window.
+ *
+ *    @param x X position to render at.
+ *    @param y Y position to render at.
+ *    @param w Width to render.
+ *    @param h Height to render.
+ */
+int osd_setup( int x, int y, int w, int h )
+{
+   osd_x = x;
+   osd_y = y;
+   osd_w = w;
+   osd_h = h;
+   return 0;
+}
+
+
+/**
  * @brief Destroys all the OSD.
  */
 void osd_exit (void)
@@ -194,39 +262,36 @@ void osd_exit (void)
 
 /**
  * @brief Renders all the OSD.
- *
- *    @param x X position to render at.
- *    @param y Y position to render at.
- *    @param w Width to render.
- *    @param h Height to render.
  */
-void osd_render( double x, double y, double w, double h )
+void osd_render (void)
 {
    OSD_t *ll;
    double p;
-   int i;
+   int i, j;
 
    /* Nothing to render. */
    if (osd_list == NULL)
       return;
 
    /* Render each thingy. */
-   p = y;
+   p = osd_y;
    for (ll = osd_list; ll != NULL; ll = ll->next) {
 
       /* Print title. */
-      gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, ll->title );
+      gl_printMaxRaw( &gl_smallFont, osd_w, osd_x, p, NULL, ll->title );
       p -= gl_smallFont.h + 5.;
-      if (p < y-h)
+      if (p < osd_y-osd_h)
          return;
 
       /* Print items. */
       for (i=0; i<ll->nitems; i++) {
-         gl_printMaxRaw( &gl_smallFont, w, x+10., p,
-              (ll->active == i) ? &cConsole : NULL, ll->items[i] );
-         p -= gl_smallFont.h + 5.;
-         if (p < y-h)
-            return;
+         for (j=0; j<ll->items[i].nchunks; j++) {
+            gl_printMaxRaw( &gl_smallFont, osd_w, osd_x+10., p,
+                 (ll->active == i) ? &cConsole : NULL, ll->items[i].chunks[j] );
+            p -= gl_smallFont.h + 5.;
+            if (p < osd_y-osd_h)
+               return;
+         }
       }
    }
 }
@@ -267,7 +332,7 @@ char **osd_getItems( unsigned int osd, int *nitems )
    }
 
    *nitems = o->nitems;
-   return o->items;;
+   return o->msg;
 }
 
 

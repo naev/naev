@@ -21,8 +21,9 @@ char **osd_getItems( unsigned int osd, int *nitems );
 /*
  * Subsystem usage.
  */
+int osd_setup( int x, int y, int w, int h );
 void osd_exit (void);
-void osd_render( double x, double y, double w, double h );
+void osd_render (void);
 
 
 #endif /* OSD_H */

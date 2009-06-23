@@ -863,7 +863,7 @@ void gui_render( double dt )
 
 
    /* OSD. */
-   osd_render( 30., SCREEN_H-90., 150., 300. );
+   osd_render();
 
    /*
     * hyperspace
@@ -1556,6 +1556,11 @@ int gui_init (void)
       gui_vbo = gl_vboCreateStream( sizeof(GLfloat) * 8*(2+4), NULL );
       gui_vboColourOffset = sizeof(GLfloat) * 8*2;
    }
+
+   /*
+    * OSD
+    */
+   osd_setup( 30., SCREEN_H-90., 150., 300. );
 
    return 0;
 }
