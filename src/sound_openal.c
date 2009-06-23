@@ -1143,7 +1143,7 @@ int sound_al_env( SoundEnv_t env, double param )
 
          if (al_info.efx == AL_TRUE) {
 
-            if (al_info.reverb == AL_TRUE) {
+            if (al_info.efx_reverb == AL_TRUE) {
                /* Tweak the reverb. */
                nalEffectf( efx_reverb, AL_REVERB_DECAY_TIME, 10. );
                nalEffectf( efx_reverb, AL_REVERB_DECAY_HFRATIO, 0.5 );
