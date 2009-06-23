@@ -31,6 +31,7 @@
 #include "base64.h"
 #include "space.h"
 #include "cond.h"
+#include "gui_osd.h"
 
 
 #define XML_MISSION_ID        "Missions" /**< XML document identifier */
@@ -1075,6 +1076,8 @@ static int mission_unpersistData( lua_State *L, xmlNodePtr parent )
 int missions_saveActive( xmlTextWriterPtr writer )
 {
    int i,j;
+   int nitems;
+   char **items;
 
    xmlw_startElem(writer,"missions");
 
@@ -1116,6 +1119,22 @@ int missions_saveActive( xmlTextWriterPtr writer )
             }
          }
          xmlw_endElem(writer); /* "timers" */
+
+         /* OSD. */
+         if (player_missions[i].osd > 0) {
+            xmlw_startElem(writer,"osd");
+            
+            /* Save attributes. */
+            items = osd_getItems(player_missions[i].osd, &nitems);
+            xmlw_attr(writer,"title","%s",osd_getTitle(player_missions[i].osd));
+            xmlw_attr(writer,"nitems","%d",nitems);
+
+            /* Save messages. */
+            for (j=0; j<nitems; j++) {
+               xmlw_elem(writer,"msg",items[j]);
+            }
+            xmlw_endElem(writer); /* "osd" */
+         }
 
          /* write lua magic */
          xmlw_startElem(writer,"lua");
@@ -1170,6 +1189,8 @@ static int missions_parseActive( xmlNodePtr parent )
    MissionData *data;
    int m, i;
    char *buf;
+   char *title, **items;
+   int nitems;
 
    xmlNodePtr node, cur, nest;
 
@@ -1235,6 +1256,28 @@ static int missions_parseActive( xmlNodePtr parent )
                      misn->tfunc[i] = buf;
                   }
                } while (xml_nextNode(nest));
+            }
+
+            /* OSD. */
+            if (xml_isNode(cur,"osd")) {
+               nest = cur->xmlChildrenNode;
+               xmlr_attr(nest,"title",title);
+               xmlr_attr(nest,"nitems",buf);
+               nitems = atoi(buf);
+               free(buf);
+               items = malloc( nitems * sizeof(char*) );
+               i = 0;
+               do {
+                  if (xml_isNode(nest,"msg")) {
+                     items[i] = xml_get(nest);
+                     i++;
+                  }
+               } while (xml_nextNode(nest));
+
+               /* Create the osd. */
+               misn->osd = osd_create( title, nitems, (const char**)items );
+               free(items);
+               free(title);
             }
 
             if (xml_isNode(cur,"lua"))
