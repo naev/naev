@@ -134,6 +134,7 @@ void conf_setDefaults (void)
 #else /* USE_OPENAL */
    conf.sound_backend = strdup("sdlmix");
 #endif /* USE_OPENAL */
+   conf.efx          = 1;
    conf.nosound      = 0;
    conf.sound        = 0.4;
    conf.music        = 0.8;
@@ -224,6 +225,7 @@ int conf_loadConfig ( const char* file )
 
       /* Sound. */
       conf_loadString("sound_backend",conf.sound_backend);
+      conf_loadBool("efx",conf.efx);
       conf_loadBool("nosound",conf.nosound);
       conf_loadFloat("sound",conf.sound);
       conf_loadFloat("music",conf.music);
@@ -716,6 +718,10 @@ int conf_saveConfig ( const char* file )
    /* Sound. */
    conf_saveComment("Sound backend (can be \"openal\" or \"sdlmix\")");
    conf_saveString("sound_backend",conf.sound_backend);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Enables EFX extension for OpenAL backend.");
+   conf_saveBool("efx",conf.efx);
    conf_saveEmptyLine();
 
    conf_saveComment("Disable all sound");

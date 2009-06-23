@@ -34,6 +34,7 @@ typedef struct PlayerConf_s {
 
    /* Sound. */
    char *sound_backend; /**< Sound backend to use. */
+   int efx; /**< Should EFX extension be used? (only applicable for OpenAL) */
    int nosound; /**< Whether or not sound is on. */
    double sound; /**< Sound level for sound effects. */
    double music; /**< Sound level for music. */

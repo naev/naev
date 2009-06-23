@@ -26,6 +26,7 @@
 #include "ndata.h"
 #include "log.h"
 #include "pack.h"
+#include "conf.h"
 
 
 /*
@@ -203,11 +204,15 @@ int sound_al_init (void)
    }
 
    /* Query EFX extension. */
-   al_info.efx = alcIsExtensionPresent( al_device, "ALC_EXT_EFX" );
-   if (al_info.efx == AL_TRUE) {
-      attribs[0] = ALC_MAX_AUXILIARY_SENDS;
-      attribs[1] = 4;
+   if (conf.efx) {
+      al_info.efx = alcIsExtensionPresent( al_device, "ALC_EXT_EFX" );
+      if (al_info.efx == AL_TRUE) {
+         attribs[0] = ALC_MAX_AUXILIARY_SENDS;
+         attribs[1] = 4;
+      }
    }
+   else
+      al_info.efx = AL_FALSE;
 
    /* Create the OpenAL context */
    al_context = alcCreateContext( al_device, attribs );
