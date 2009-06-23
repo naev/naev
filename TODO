@@ -12,6 +12,12 @@
        *) Misc Empire Guard missions
        *) Pirate Missions
        *) FLF Missions
+   *) Mission improvements
+      *) Allow creation of OSD (On screen displays)
+   *) Landing improvements
+      *) Tabify instead of using subbuttons
+      *) Improve mission computer handling
+      *) Improve campaign handling
 
 
    MAJOR
@@ -44,7 +50,6 @@
    *) Graphic improvements
       *) have ships flying in nebulae leave traces
       *) missile smoke
-      *) engine glow -> need models
       *) more special effects
       *) cloaking effects
       *) fancy displacement effects for some ships
@@ -60,8 +65,6 @@
       *) objects always in sight (depending on resolution)
    *) Allow creating collision masks to make collision more realistic.
    *) Improve font system to handle unicode
-   *) Mission improvements
-      *) Allow creation of OSD (On screen displays)
 
 
    MAYBE... SOMEDAY...
