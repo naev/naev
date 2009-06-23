@@ -36,6 +36,7 @@
 #include "nxml.h"
 #include "nluadef.h"
 #include "music.h"
+#include "gui_osd.h"
 
 
 
@@ -74,6 +75,9 @@ static int misn_takeoff( lua_State *L );
 static int misn_addCargo( lua_State *L );
 static int misn_rmCargo( lua_State *L );
 static int misn_jetCargo( lua_State *L );
+static int misn_osdCreate( lua_State *L );
+static int misn_osdDestroy( lua_State *L );
+static int misn_osdActive( lua_State *L );
 static const luaL_reg misn_methods[] = {
    { "setTitle", misn_setTitle },
    { "setDesc", misn_setDesc },
@@ -88,6 +92,9 @@ static const luaL_reg misn_methods[] = {
    { "addCargo", misn_addCargo },
    { "rmCargo", misn_rmCargo },
    { "jetCargo", misn_jetCargo },
+   { "osdCreate", misn_osdCreate },
+   { "osdDestroy", misn_osdDestroy },
+   { "osdActive", misn_osdActive },
    {0,0}
 }; /**< Mission lua methods. */
 
@@ -204,21 +211,6 @@ static int misn_runTopStack( Mission *misn, const char *func)
 }
 
 
-/**
- * @defgroup MISN Misn Lua bindings
- *
- * @brief Generic mission Lua bindings.
- *
- * @luamod misn
- *
- * Functions should be called like:
- *
- * @code
- * misn.function( parameters )
- * @endcode
- *
- * @{
- */
 /**
  * @brief Sets the current mission title.
  *
@@ -566,7 +558,86 @@ static int misn_jetCargo( lua_State *L )
    lua_pushboolean(L,!ret);
    return 1;
 }
+
+
 /**
- * @}
+ * @brief Creates a mission OSD.
  */
+static int misn_osdCreate( lua_State *L )
+{
+   const char *title;
+   int nitems;
+   const char **items;
+   int i;
+
+   /* Check parameters. */
+   title  = luaL_checkstring(L,1);
+   luaL_checktype(L,2,LUA_TTABLE);
+   nitems = lua_objlen(L,2);
+
+   /* Destroy OSD if already exists. */
+   if (cur_mission->osd != 0) {
+      osd_destroy( cur_mission->osd );
+      cur_mission->osd = 0;
+   }
+
+   /* Allocate items. */
+   items = calloc( nitems, sizeof(char *) );
+
+   /* Get items. */
+   i = 0;
+   lua_pushnil(L); /* table, nil */
+   while (lua_next(L,-2) != 0) { /* table, key, val */
+      if (!lua_isstring(L,-1)) {
+         free(items);
+         luaL_typerror(L, -1, "string");
+         return 0;
+      }
+      items[i] = lua_tostring(L, -1);
+      lua_pop(L,1);
+      i++;
+      if (i >= nitems)
+         break;
+   }
+
+   /* Create OSD. */
+   cur_mission->osd = osd_create( title, nitems, items );
+
+   /* Free items. */
+   free(items);
+
+   return 0;
+}
+
+
+/**
+ * @brief Destroys a mission OSD.
+ */
+static int misn_osdDestroy( lua_State *L )
+{
+   (void) L;
+
+   if (cur_mission->osd != 0) {
+      osd_destroy( cur_mission->osd );
+      cur_mission->osd = 0;
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Sets active in mission OSD.
+ */
+static int misn_osdActive( lua_State *L )
+{
+   int n;
+
+   n = luaL_checkint(L,1);
+
+   if (cur_mission->osd != 0)
+      osd_active( cur_mission->osd, n );
+
+   return 0;
+}
 

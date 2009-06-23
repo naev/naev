@@ -162,7 +162,7 @@ static int mission_init( Mission* mission, MissionData* misn, int load )
    /* init lua */
    mission->L = nlua_newState();
    if (mission->L == NULL) {
-      ERR("Unable to create a new lua state.");
+      WARN("Unable to create a new lua state.");
       return -1;
    }
    nlua_loadBasic( mission->L ); /* pairs and such */

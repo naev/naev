@@ -99,6 +99,9 @@ typedef struct Mission_ {
    double timer[MISSION_TIMER_MAX]; /**< Mission timers. */
    char *tfunc[MISSION_TIMER_MAX]; /**< Functions assosciated to the timers. */
 
+   /* OSD. */
+   unsigned int osd; /**< On-Screen Display ID. */
+
    lua_State *L; /**< The state of the running lua code. */
 } Mission;
 
