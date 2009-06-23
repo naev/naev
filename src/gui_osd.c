@@ -232,4 +232,42 @@ void osd_render( double x, double y, double w, double h )
 }
 
 
+/**
+ * @brief Gets the title of an OSD.
+ *
+ *    @param osd OSD to get title of.
+ *    @return Title of the OSd.
+ */
+char *osd_getTitle( unsigned int osd )
+{
+   OSD_t *o;
+
+   o = osd_get(osd);
+   if (o == NULL)
+      return NULL;
+
+   return o->title;
+}
+
+
+/**
+ * @brief Gets the items of an OSD.
+ *
+ *    @param osd OSD to get items of.
+ *    @param[out] nitems Numeb of OSD items.
+ */
+char **osd_getItems( unsigned int osd, int *nitems )
+{
+   OSD_t *o;
+
+   o = osd_get(osd);
+   if (o == NULL) {
+      *nitems = 0;
+      return NULL;
+   }
+
+   *nitems = o->nitems;
+   return o->items;;
+}
+
 
