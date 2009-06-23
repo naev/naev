@@ -204,7 +204,7 @@ int sound_al_init (void)
    }
 
    /* Query EFX extension. */
-   if (conf.efx) {
+   if (conf.al_efx) {
       al_info.efx = alcIsExtensionPresent( al_device, "ALC_EXT_EFX" );
       if (al_info.efx == AL_TRUE) {
          attribs[0] = ALC_MAX_AUXILIARY_SENDS;

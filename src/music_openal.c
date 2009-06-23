@@ -20,9 +20,9 @@
 #include "naev.h"
 #include "log.h"
 #include "pack.h"
+#include "conf.h"
 
 
-#define BUFFER_SIZE        (32*1024) /**< Size of buffers to use. */
 #define MUSIC_FADEIN       2000 /**< Fadein in ms. */
 #define MUSIC_FADEOUT      1000 /**< Fadeout in ms. */
 
@@ -68,6 +68,13 @@ typedef enum music_state_e {
 
 
 static SDL_Thread *music_player = NULL; /**< Music player thread. */
+
+/*
+ * Playing buffers.
+ */
+static int music_bufSize            = 32*1024; /**< Size of music playing buffer. */
+static char *music_buf              = NULL; /**< Music playing buffer. */
+
 
 /*
  * Locks.
@@ -498,7 +505,6 @@ static int music_thread( void* unused )
 static int stream_loadBuffer( ALuint buffer )
 {
    int ret, size, section, result;
-   char dat[BUFFER_SIZE]; /* buffer to hold the data */
 
    musicVorbisLock();
 
@@ -510,11 +516,11 @@ static int stream_loadBuffer( ALuint buffer )
 
    ret  = 0;
    size = 0;
-   while (size < BUFFER_SIZE) { /* fille up the entire data buffer */
+   while (size < music_bufSize) { /* fille up the entire data buffer */
 
       result = ov_read( &music_vorbis.stream, /* stream */
-            &dat[size],             /* data */
-            BUFFER_SIZE - size,     /* amount to read */
+            &music_buf[size],             /* data */
+            music_bufSize - size,     /* amount to read */
             VORBIS_ENDIAN,          /* big endian? */
             2,                      /* 16 bit */
             1,                      /* signed */
@@ -550,7 +556,7 @@ static int stream_loadBuffer( ALuint buffer )
    /* load the buffer up */
    soundLock();
    alBufferData( buffer, music_vorbis.format,
-         dat, size, music_vorbis.info->rate );
+         music_buf, size, music_vorbis.info->rate );
    soundUnlock();
 
    return ret;
@@ -564,10 +570,15 @@ int music_al_init (void)
 {
    ALfloat v[] = { 0., 0., 0. };
 
+   /* Create threading mechanisms. */
    music_state_cond  = SDL_CreateCond();
    music_state_lock  = SDL_CreateMutex();
    music_vorbis_lock = SDL_CreateMutex();
    music_vorbis.rw = NULL; /* indication it's not loaded */
+
+   /* Create the buffer. */
+   music_bufSize = conf.al_bufsize*1024;
+   music_buf = malloc( music_bufSize );
 
    soundLock();
 
@@ -621,6 +632,11 @@ void music_al_exit (void)
    al_checkErr();
 
    soundUnlock();
+
+   /* Free the buffer. */
+   if (music_buf != NULL)
+      free(music_buf);
+   music_buf = NULL;
 
    /* Destroy the mutex. */
    SDL_DestroyMutex( music_vorbis_lock );
