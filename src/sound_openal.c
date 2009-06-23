@@ -91,6 +91,7 @@ static int source_mstack      = 0; /**< Memory allocated for sources in the pool
  */
 static ALuint efx_directSlot  = 0; /**< Direct 3d source slot. */
 static ALuint efx_reverb      = 0; /**< Reverb effect. */
+static ALuint efx_echo        = 0; /**< Echo effect. */
 
 
 /**
@@ -234,6 +235,7 @@ int sound_al_init (void)
       al_enableEFX();
    else {
       al_info.efx_reverb = AL_FALSE;
+      al_info.efx_echo   = AL_FALSE;
    }
 
    /* Allocate source for music. */
@@ -367,6 +369,9 @@ static int al_enableEFX (void)
       return -1;
    }
 
+   /* Create auxiliary slot. */
+   nalGenAuxiliaryEffectSlots( 1, &efx_directSlot );
+
    /* Create reverb effect. */
    nalGenEffects( 1, &efx_reverb );
    nalEffecti( efx_reverb, AL_EFFECT_TYPE, AL_EFFECT_REVERB );
@@ -382,9 +387,20 @@ static int al_enableEFX (void)
       /*nalEffectf( efx_reverb, AL_REVERB_DECAY_TIME, 15. );*/
    }
 
-   /* Create auxiliary slot. */
-   nalGenAuxiliaryEffectSlots( 1, &efx_directSlot );
-   nalAuxiliaryEffectSloti( efx_directSlot, AL_EFFECTSLOT_EFFECT, efx_reverb );
+   /* Create echo effect. */
+   nalGenEffects( 1, &efx_echo );
+   nalEffecti( efx_echo, AL_EFFECT_TYPE, AL_EFFECT_ECHO );
+   if(alGetError() != AL_NO_ERROR) {
+      DEBUG("OpenAL Echo not found, disabling.");
+      al_info.efx_echo = AL_FALSE;
+      nalDeleteEffects( 1, &efx_echo );
+   }
+   else {
+      al_info.efx_echo = AL_TRUE;
+
+      /* Set Echo parameters. */
+      nalEffectf( efx_echo, AL_ECHO_DELAY, 0.207 );
+   }
 
    /* Set up the listener. */
    alListenerf( AL_METERS_PER_UNIT, 5. );
@@ -437,9 +453,10 @@ void sound_al_exit (void)
    /* Clean up EFX stuff. */
    if (al_info.efx == AL_TRUE) {
       nalDeleteAuxiliaryEffectSlots( 1, &efx_directSlot );
-      if (al_info.efx_reverb == AL_TRUE) {
+      if (al_info.efx_reverb == AL_TRUE)
          nalDeleteEffects( 1, &efx_reverb );
-      }
+      if (al_info.efx_echo == AL_TRUE)
+         nalDeleteEffects( 1, &efx_echo );
    }
 
    /* Clean up global stuff. */
@@ -1114,6 +1131,12 @@ int sound_al_env( SoundEnv_t env, double param )
 
          /* Set global parameters. */
          alSpeedOfSound( 3433./(1. + f*2.) );
+
+         /* Connect the effect. */
+         /*
+         nalAuxiliaryEffectSloti( efx_directSlot,
+               AL_EFFECTSLOT_EFFECT, efx_echo );
+         */
 
          if (al_info.efx) {
             /* Set per-source parameters. */

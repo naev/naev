@@ -86,6 +86,12 @@ void al_checkErr (void);
 #define AL_REVERB_AIR_ABSORPTION_GAINHF                    0x000B
 #define AL_REVERB_ROOM_ROLLOFF_FACTOR                      0x000C
 #define AL_REVERB_DECAY_HFLIMIT                            0x000D
+/* Echo Effect. */
+#define AL_ECHO_DELAY                                      0x0001
+#define AL_ECHO_LRDELAY                                    0x0002
+#define AL_ECHO_DAMPING                                    0x0003
+#define AL_ECHO_FEEDBACK                                   0x0004
+#define AL_ECHO_SPREAD                                     0x0005
 /* Listener Object Extensions. */
 #define AL_METERS_PER_UNIT                                 0x20004
 /* Source Object Extensions. */
@@ -140,6 +146,7 @@ typedef struct alInfo_s {
    ALint efx_auxSends; /**< Number of auxiliary sends of the context. */
    /* Effect types. */
    ALint efx_reverb; /**< Reverb effect supported. */
+   ALint efx_echo; /**< Echo effect supported. */
 } alInfo_t;
 extern alInfo_t al_info;
 
