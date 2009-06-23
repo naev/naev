@@ -627,8 +627,10 @@ void pilot_rmHostile( Pilot* p )
       pilot_rmFlag(p, PILOT_HOSTILE);
 
       /* Change music back to ambient if no more enemies. */
-      if (player_enemies == 0)
+      if (player_enemies <= 0) {
          music_choose("ambient");
+         player_enemies = 0;
+      }
    }
 }
 
