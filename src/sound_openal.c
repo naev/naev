@@ -1122,6 +1122,10 @@ int sound_al_env( SoundEnv_t env, double param )
          /* Set global parameters. */
          alSpeedOfSound( 3433. );
 
+         /* Disconnect the effect. */
+         nalAuxiliaryEffectSloti( efx_directSlot,
+               AL_EFFECTSLOT_EFFECT, AL_EFFECT_NULL );
+
          if (al_info.efx) {
             /* Set per-source parameters. */
             for (i=0; i<source_ntotal; i++) {
@@ -1137,11 +1141,13 @@ int sound_al_env( SoundEnv_t env, double param )
          /* Set global parameters. */
          alSpeedOfSound( 3433./(1. + f*2.) );
 
+         /* Tweak the reverb. */
+         nalEffectf( efx_reverb, AL_REVERB_DECAY_TIME, 10. );
+         nalEffectf( efx_reverb, AL_REVERB_DECAY_HFRATIO, 0.5 );
+
          /* Connect the effect. */
-         /*
          nalAuxiliaryEffectSloti( efx_directSlot,
-               AL_EFFECTSLOT_EFFECT, efx_echo );
-         */
+               AL_EFFECTSLOT_EFFECT, efx_reverb );
 
          if (al_info.efx) {
             /* Set per-source parameters. */
