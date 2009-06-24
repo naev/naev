@@ -49,12 +49,14 @@ static OSD_t *osd_list        = NULL; /**< Linked list for OSD. */
 
 
 /*
- * DImensions.
+ * Dimensions.
  */
 static int osd_x = 0;
 static int osd_y = 0;
 static int osd_w = 0;
 static int osd_h = 0;
+static int osd_tabLen = 0;
+static int osd_hyphenLen = 0;
 
 
 /*
@@ -74,7 +76,7 @@ static int osd_free( OSD_t *osd );
  */
 unsigned int osd_create( const char *title, int nitems, const char **items )
 {
-   int i, j, n, m, l, s;
+   int i, j, n, m, l, s, w, t;
    OSD_t *osd, *ll;
 
    /* Create. */
@@ -91,14 +93,32 @@ unsigned int osd_create( const char *title, int nitems, const char **items )
    for (i=0; i<osd->nitems; i++) {
       osd->msg[i] = strdup( items[i] );
 
-      l = strlen(osd->msg[i]);
-      n = 0;
-      j = 0;
-      m = 0;
+      l = strlen(osd->msg[i]); /* Message length. */
+      n = 0; /* Text position. */
+      j = 0; /* Lines. */
+      m = 0; /* Allocated Memory. */
+      t = 0; /* Tabbed? */
       osd->items[i].chunks = NULL;
+      w = osd_w-osd_hyphenLen;
       while (n < l) {
+
+         /* Test if tabbed. */
+         if (j==0) {
+            if (items[i][n] == '\t') {
+               t  = 1;
+               w = osd_w - osd_tabLen;
+            }
+            else {
+               t = 0;
+               w = osd_w - osd_hyphenLen;
+            }
+         }
+
          /* Get text size. */
-         s = gl_printWidthForText( &gl_smallFont, &items[i][n], osd_w );
+         s = gl_printWidthForText( &gl_smallFont, &items[i][n], w );
+
+         if ((j==0) && (t==1))
+            w -= osd_hyphenLen;
 
          if (j+1 > m) {
             m += 32;
@@ -106,9 +126,24 @@ unsigned int osd_create( const char *title, int nitems, const char **items )
          }
 
          /* Copy text over. */
-         osd->items[i].chunks[j]    = malloc(s+1);
-         strncpy( osd->items[i].chunks[j], &items[i][n], s );
-         osd->items[i].chunks[j][s] = '\0';
+         if (j==0) {
+            if (t==1) {
+               osd->items[i].chunks[j] = malloc(s+4);
+               snprintf( osd->items[i].chunks[j], s+4, "   %s", &items[i][n+1] );
+            }
+            else {
+               osd->items[i].chunks[j] = malloc(s+3);
+               snprintf( osd->items[i].chunks[j], s+3, "- %s", &items[i][n] );
+            }
+         }
+         else if (t==1) {
+            osd->items[i].chunks[j] = malloc(s+4);
+            snprintf( osd->items[i].chunks[j], s+4, "   %s", &items[i][n] );
+         }
+         else {
+            osd->items[i].chunks[j] = malloc(s+1);
+            snprintf( osd->items[i].chunks[j], s+1, "%s", &items[i][n] );
+         }
 
          /* Go t onext line. */
          n += s + 1;
@@ -242,10 +277,16 @@ int osd_active( unsigned int osd, int msg )
  */
 int osd_setup( int x, int y, int w, int h )
 {
+   /* Set offsets. */
    osd_x = x;
    osd_y = y;
    osd_w = w;
    osd_h = h;
+
+   /* Calculate some font things. */
+   osd_tabLen = gl_printWidthRaw( &gl_smallFont, "   " );
+   osd_hyphenLen = gl_printWidthRaw( &gl_smallFont, "- " );
+
    return 0;
 }
 
@@ -268,6 +309,8 @@ void osd_render (void)
    OSD_t *ll;
    double p;
    int i, j;
+   int w, x;
+   glColour *c;
 
    /* Nothing to render. */
    if (osd_list == NULL)
@@ -276,18 +319,27 @@ void osd_render (void)
    /* Render each thingy. */
    p = osd_y;
    for (ll = osd_list; ll != NULL; ll = ll->next) {
+      x = osd_x;
+      w = osd_w;
 
       /* Print title. */
-      gl_printMaxRaw( &gl_smallFont, osd_w, osd_x, p, NULL, ll->title );
+      gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, ll->title );
       p -= gl_smallFont.h + 5.;
       if (p < osd_y-osd_h)
          return;
 
       /* Print items. */
       for (i=0; i<ll->nitems; i++) {
+         x = osd_x;
+         w = osd_w;
+         c = (ll->active == i) ? &cConsole : NULL;
          for (j=0; j<ll->items[i].nchunks; j++) {
-            gl_printMaxRaw( &gl_smallFont, osd_w, osd_x+10., p,
-                 (ll->active == i) ? &cConsole : NULL, ll->items[i].chunks[j] );
+            gl_printMaxRaw( &gl_smallFont, w, x, p,
+                  c, ll->items[i].chunks[j] );
+            if (j==0) {
+               w = osd_w - osd_hyphenLen;
+               x = osd_x + osd_hyphenLen;
+            }
             p -= gl_smallFont.h + 5.;
             if (p < osd_y-osd_h)
                return;

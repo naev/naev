@@ -142,10 +142,10 @@ Enjoy the game!]]
    osd_title[2] = "Tutorial - Targetting"
    osd_msg[2]   = {
       "Target ships that appear with:",
-      "  'tab' cycles through ships.",
-      "  'ctrl + tab' cycles through ships backwards.",
-      "  't' targets nearest ship.",
-      "  'r' targets nearest hostile."
+      "\t'tab' cycles through ships.",
+      "\t'ctrl + tab' cycles through ships backwards.",
+      "\t't' targets nearest ship.",
+      "\t'r' targets nearest hostile."
    }
    osd_title[3] = "Tutorial - Combat"
    osd_msg[3]   = {
@@ -153,22 +153,22 @@ Enjoy the game!]]
       "Board the Llama",
       "Fight off a Hyena",
       "Combat contrals are the following:",
-      "  'space' shoots primary weapons.",
-      "  'w' selects secondary weapon.",
-      "  'shift' shoots secondary weapon.",
+      "\t'space' shoots primary weapons.",
+      "\t'w' selects secondary weapon.",
+      "\t'shift' shoots secondary weapon.",
       "To target:",
-      "  'tab' cycles through ships.",
+      "\t'tab' cycles through ships.",
       "To autoface:",
-      "  'a' autofaces target.",
+      "\t'a' autofaces target.",
       "To board:",
-      "  'b' boards target."
+      "\t'b' boards target."
    }
    osd_title[4] = "Tutorial - Landing"
    osd_msg[4]   = {
       "Land on %s",
       "Keys to land:",
-      "  'p' cycles throug planets.",
-      "  'l' lands or gets acknowledgement."
+      "\t'p' cycles throug planets.",
+      "\t'l' lands or gets acknowledgement."
    }
    osd_title[5] = "Tutorial - Navigation"
    osd_msg[5]   = {
