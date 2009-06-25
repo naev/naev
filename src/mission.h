@@ -83,6 +83,7 @@ typedef struct MissionData_ {
 typedef struct Mission_ {
    MissionData *data; /**< Data to use. */
    unsigned int id; /**< Unique mission identifier, used for keeping track of hooks. */
+   int accepted; /**< Mission is a player mission. */
 
    char *title; /**< Not to be confused with name */
    char *desc; /**< Description of the mission */
@@ -101,6 +102,7 @@ typedef struct Mission_ {
 
    /* OSD. */
    unsigned int osd; /**< On-Screen Display ID. */
+   int osd_set; /**< OSD was set explicitly. */
 
    lua_State *L; /**< The state of the running lua code. */
 } Mission;

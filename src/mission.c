@@ -209,7 +209,8 @@ int mission_accept( Mission* mission )
 {
    int ret;
    ret = misn_run( mission, "accept" );
-   if (ret==0) return 1;
+   if (ret==0)
+      return 1;
    return 0;
 }
 
@@ -1210,8 +1211,10 @@ static int missions_parseActive( xmlNodePtr parent )
             free(buf);
             continue;
          }
-         else
+         else {
             mission_init( misn, data, 1 );
+            misn->accepted = 1;
+         }
          free(buf);
 
          /* this will orphan an identifier */
@@ -1263,10 +1266,14 @@ static int missions_parseActive( xmlNodePtr parent )
             /* OSD. */
             if (xml_isNode(cur,"osd")) {
                nest = cur->xmlChildrenNode;
-               xmlr_attr(nest,"title",title);
-               xmlr_attr(nest,"nitems",buf);
-               nitems = atoi(buf);
-               free(buf);
+               xmlr_attr(cur,"nitems",buf);
+               if (buf != NULL) {
+                  nitems = atoi(buf);
+                  free(buf);
+               }
+               else
+                  continue;
+               xmlr_attr(cur,"title",title);
                items = malloc( nitems * sizeof(char*) );
                i = 0;
                do {

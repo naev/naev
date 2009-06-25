@@ -212,6 +212,33 @@ static int misn_runTopStack( Mission *misn, const char *func)
 
 
 /**
+ * @brief Sets the mission OSD if applicable.
+ */
+static void setOSD (void)
+{
+   /* OSD set explicitly. */
+   if (cur_mission->osd_set)
+      return;
+
+   /* Needs title and description. */
+   if ((cur_mission->title==NULL) || (cur_mission->desc==NULL))
+      return;
+
+   /* Mission must be accepted. */
+   if (!cur_mission->accepted)
+      return;
+
+   /* Destroy existing OSD. */
+   if (cur_mission->osd > 0)
+      osd_destroy(cur_mission->osd);
+
+   /* Set the OSD. */
+   cur_mission->osd = osd_create( cur_mission->title, 1,
+         (const char **)&cur_mission->desc );
+}
+
+
+/**
  * @brief Sets the current mission title.
  *
  *    @luaparam title Title to use for mission.
@@ -226,6 +253,10 @@ static int misn_setTitle( lua_State *L )
    if (cur_mission->title) /* cleanup old title */
       free(cur_mission->title);
    cur_mission->title = strdup(str);
+
+   /* Set the OSD if needed. */
+   setOSD();
+
    return 0;
 }
 /**
@@ -243,6 +274,10 @@ static int misn_setDesc( lua_State *L )
    if (cur_mission->desc) /* cleanup old description */
       free(cur_mission->desc);
    cur_mission->desc = strdup(str);
+
+   /* Set the OSD if needed. */
+   setOSD();
+
    return 0;
 }
 /**
@@ -356,14 +391,18 @@ static int misn_accept( lua_State *L )
 
    /* find last mission */
    for (i=0; i<MISSION_MAX; i++)
-      if (player_missions[i].data == NULL) break;
+      if (player_missions[i].data == NULL)
+         break;
 
    /* no missions left */
-   if (i>=MISSION_MAX) ret = 1;
+   if (i>=MISSION_MAX)
+      ret = 1;
    else { /* copy it over */
       memcpy( &player_missions[i], cur_mission, sizeof(Mission) );
       memset( cur_mission, 0, sizeof(Mission) );
       cur_mission = &player_missions[i];
+      cur_mission->accepted = 1; /* Mark as accepted. */
+      setOSD(); /* Set OSD if applicable. */
    }
 
    lua_pushboolean(L,!ret); /* we'll convert C style return to lua */
