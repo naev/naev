@@ -198,7 +198,7 @@ static int osd_free( OSD_t *osd )
       free( osd->msg[i] );
       for (j=0; j<osd->items[i].nchunks; j++)
          free(osd->items[i].chunks[j]);
-      free(osd->items[i].chunjs);
+      free(osd->items[i].chunks);
    }
    free(osd->msg);
    free(osd->items);
