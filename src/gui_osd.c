@@ -122,7 +122,7 @@ unsigned int osd_create( const char *title, int nitems, const char **items )
 
          if (j+1 > m) {
             m += 32;
-            osd->items[i].chunks = realloc( osd->items[i].chunks, m );
+            osd->items[i].chunks = realloc( osd->items[i].chunks, m * sizeof(char*));
          }
 
          /* Copy text over. */

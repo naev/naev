@@ -216,6 +216,8 @@ static int misn_runTopStack( Mission *misn, const char *func)
  */
 static void setOSD (void)
 {
+   const char *buf[1];
+
    /* OSD set explicitly. */
    if (cur_mission->osd_set)
       return;
@@ -233,8 +235,8 @@ static void setOSD (void)
       osd_destroy(cur_mission->osd);
 
    /* Set the OSD. */
-   cur_mission->osd = osd_create( cur_mission->title, 1,
-         (const char **)&cur_mission->desc );
+   buf[0] = cur_mission->desc;
+   cur_mission->osd = osd_create( cur_mission->title, 1, buf );
 }
 
 

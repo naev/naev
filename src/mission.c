@@ -1192,7 +1192,8 @@ static int missions_parseActive( xmlNodePtr parent )
    MissionData *data;
    int m, i;
    char *buf;
-   char *title, **items;
+   char *title;
+   const char **items;
    int nitems;
 
    xmlNodePtr node, cur, nest;
@@ -1265,7 +1266,6 @@ static int missions_parseActive( xmlNodePtr parent )
 
             /* OSD. */
             if (xml_isNode(cur,"osd")) {
-               nest = cur->xmlChildrenNode;
                xmlr_attr(cur,"nitems",buf);
                if (buf != NULL) {
                   nitems = atoi(buf);
@@ -1276,15 +1276,20 @@ static int missions_parseActive( xmlNodePtr parent )
                xmlr_attr(cur,"title",title);
                items = malloc( nitems * sizeof(char*) );
                i = 0;
+               nest = cur->xmlChildrenNode;
                do {
                   if (xml_isNode(nest,"msg")) {
+                     if (i > nitems) {
+                        WARN("Inconsistency with 'nitems' in savefile.");
+                        break;
+                     }
                      items[i] = xml_get(nest);
                      i++;
                   }
                } while (xml_nextNode(nest));
 
                /* Create the osd. */
-               misn->osd = osd_create( title, nitems, (const char**)items );
+               misn->osd = osd_create( title, nitems, items );
                free(items);
                free(title);
             }
