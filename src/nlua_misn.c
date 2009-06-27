@@ -601,6 +601,14 @@ static int misn_jetCargo( lua_State *L )
 
 /**
  * @brief Creates a mission OSD.
+ *
+ * @note You can index elements by using '\t' as first character of an element.
+ *
+ * @usage misn.osdCreate( "My OSD", {"Element 1", "Element 2"})
+ *
+ *    @luaparam Title Title to give the OSD.
+ *    @luaparam list List of elements to put in the OSD.
+ * @luafunc osdCreate( title, list )
  */
 static int misn_osdCreate( lua_State *L )
 {
@@ -641,6 +649,7 @@ static int misn_osdCreate( lua_State *L )
 
    /* Create OSD. */
    cur_mission->osd = osd_create( title, nitems, items );
+   cur_mission->osd_set = 1; /* OSD was explicitly set. */
 
    /* Free items. */
    free(items);
@@ -650,7 +659,9 @@ static int misn_osdCreate( lua_State *L )
 
 
 /**
- * @brief Destroys a mission OSD.
+ * @brief Destroys the mission OSD.
+ *
+ * @luafunc osdDestroy()
  */
 static int misn_osdDestroy( lua_State *L )
 {
@@ -667,6 +678,9 @@ static int misn_osdDestroy( lua_State *L )
 
 /**
  * @brief Sets active in mission OSD.
+ *
+ *    @luaparam n Element of the OSD to make active. 
+ * @luafunc osdActive( n )
  */
 static int misn_osdActive( lua_State *L )
 {
