@@ -25,6 +25,7 @@
  * Vorbis stuff.
  */
 extern ov_callbacks sound_al_ovcall;
+extern ov_callbacks sound_al_ovcall_noclose;
 
 
 /*

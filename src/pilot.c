@@ -627,8 +627,10 @@ void pilot_rmHostile( Pilot* p )
       pilot_rmFlag(p, PILOT_HOSTILE);
 
       /* Change music back to ambient if no more enemies. */
-      if (player_enemies == 0)
+      if (player_enemies <= 0) {
          music_choose("ambient");
+         player_enemies = 0;
+      }
    }
 }
 
@@ -1044,7 +1046,8 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       h = (pilot_isHostile(p)) ? 1 : 0;
       pilot_rmHostile(p);
       if (h == 1) /* Horrible hack to make sure player can hit it if it was hostile. */
-         pilot_setHostile(p);
+         /* Do not use pilot_setHostile here or music will change again. */
+         pilot_setFlag(p,PILOT_HOSTILE);
 
       pshooter = pilot_get(shooter);
       if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {

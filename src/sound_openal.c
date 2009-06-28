@@ -169,7 +169,13 @@ ov_callbacks sound_al_ovcall = {
    .seek_func  = ovpack_seek,
    .close_func = ovpack_close,
    .tell_func  = ovpack_tell
-}; /**< Vorbis call structure to handl rwops. */
+}; /**< Vorbis call structure to handle rwops. */
+ov_callbacks sound_al_ovcall_noclose = {
+   .read_func  = ovpack_read,
+   .seek_func  = ovpack_seek,
+   .close_func = NULL,
+   .tell_func  = ovpack_tell
+}; /**< Vorbis call structure to handl rwops without closing. */
 
 
 /**
@@ -554,6 +560,9 @@ static int sound_al_loadWav( alSound *snd, SDL_RWops *rw )
    compressed = 0;
    channels   = 0;
 
+   /* Seek to start. */
+   SDL_RWseek( rw, 0, SEEK_SET );
+
    /* Check RIFF header. */
    if (sound_al_wavReadCmp( rw, "RIFF", 4 )) {
       WARN("RIFF header not found.");
@@ -710,9 +719,6 @@ static int sound_al_loadWav( alSound *snd, SDL_RWops *rw )
       goto chunk_err;
    }
 
-   /* Close file. */
-   SDL_RWclose(rw);
-
    soundLock();
    /* Create new buffer. */
    alGenBuffers( 1, &snd->u.al.buf );
@@ -726,7 +732,6 @@ static int sound_al_loadWav( alSound *snd, SDL_RWops *rw )
 chunk_err:
    free(buf);
 wav_err:
-   SDL_RWclose(rw);
    return -1;
 }
 
@@ -798,7 +803,7 @@ int sound_al_load( alSound *snd, const char *filename )
    rw = ndata_rwops( filename );
 
    /* Check to see if it's an OGG. */
-   if (ov_test_callbacks( rw, &vf, NULL, 0, sound_al_ovcall )==0) {
+   if (ov_test_callbacks( rw, &vf, NULL, 0, sound_al_ovcall_noclose )==0) {
       ret = sound_al_loadOgg( snd, &vf );
    }
    /* Otherwise try WAV. */
@@ -806,12 +811,12 @@ int sound_al_load( alSound *snd, const char *filename )
       /* Destroy the partially loaded vorbisfile. */
       ov_clear(&vf);
 
-      /* Reopen packfile. */
-      rw = ndata_rwops( filename );
-
       /* Try to load Wav. */
       ret = sound_al_loadWav( snd, rw );
    }
+
+   /* Close RWops. */
+   SDL_RWclose(rw);
 
    /* Failed to load. */
    if (ret != 0) {
@@ -1122,11 +1127,11 @@ int sound_al_env( SoundEnv_t env, double param )
          /* Set global parameters. */
          alSpeedOfSound( 3433. );
 
-         /* Disconnect the effect. */
-         nalAuxiliaryEffectSloti( efx_directSlot,
-               AL_EFFECTSLOT_EFFECT, AL_EFFECT_NULL );
+         if (al_info.efx == AL_TRUE) {
+            /* Disconnect the effect. */
+            nalAuxiliaryEffectSloti( efx_directSlot,
+                  AL_EFFECTSLOT_EFFECT, AL_EFFECT_NULL );
 
-         if (al_info.efx) {
             /* Set per-source parameters. */
             for (i=0; i<source_ntotal; i++) {
                s = source_total[i];
@@ -1141,15 +1146,18 @@ int sound_al_env( SoundEnv_t env, double param )
          /* Set global parameters. */
          alSpeedOfSound( 3433./(1. + f*2.) );
 
-         /* Tweak the reverb. */
-         nalEffectf( efx_reverb, AL_REVERB_DECAY_TIME, 10. );
-         nalEffectf( efx_reverb, AL_REVERB_DECAY_HFRATIO, 0.5 );
+         if (al_info.efx == AL_TRUE) {
 
-         /* Connect the effect. */
-         nalAuxiliaryEffectSloti( efx_directSlot,
-               AL_EFFECTSLOT_EFFECT, efx_reverb );
+            if (al_info.efx_reverb == AL_TRUE) {
+               /* Tweak the reverb. */
+               nalEffectf( efx_reverb, AL_REVERB_DECAY_TIME, 10. );
+               nalEffectf( efx_reverb, AL_REVERB_DECAY_HFRATIO, 0.5 );
 
-         if (al_info.efx) {
+               /* Connect the effect. */
+               nalAuxiliaryEffectSloti( efx_directSlot,
+                     AL_EFFECTSLOT_EFFECT, efx_reverb );
+            }
+
             /* Set per-source parameters. */
             for (i=0; i<source_ntotal; i++) {
                s = source_total[i];
