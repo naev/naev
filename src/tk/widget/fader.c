@@ -3,9 +3,9 @@
  */
 
 /**
- * @file text.c
+ * @file fader.c
  *
- * @brief Text widget.
+ * @brief Fader widget.
  */
 
 

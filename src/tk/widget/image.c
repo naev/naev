@@ -3,9 +3,9 @@
  */
 
 /**
- * @file text.c
+ * @file image.c
  *
- * @brief Text widget.
+ * @brief Image widget.
  */
 
 

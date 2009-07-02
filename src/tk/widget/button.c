@@ -3,7 +3,7 @@
  */
 
 /**
- * @file widget_button.c
+ * @file button.c
  *
  * @brief Button widget.
  */
