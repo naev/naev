@@ -88,6 +88,7 @@ typedef struct Widget_ {
    int (*textevent) ( struct Widget_ *wgt, const char *text ); /**< Text event function handler for the widget. */
    int (*mmoveevent) ( struct Widget_ *wgt, SDL_MouseMotionEvent *mmove ); /**< Mouse movement handler function for the widget. */
    int (*mclickevent) ( struct Widget_ *wgt, SDL_MouseButtonEvent *mclick ); /**< Mouse click event handler function for the widget. */
+   int (*rawevent) ( struct Widget_ *wgt, SDL_Event *event ); /**< Raw event handler function for widget. */
 
    /* Misc. routines. */
    void (*render) ( struct Widget_ *wgt, double x, double y ); /**< Render function for the widget. */
@@ -111,6 +112,14 @@ typedef struct Widget_ {
 } Widget;
 
 
+#define WINDOW_NOFOCUS     (1<<0) /**< Window can not be active window. */
+#define WINDOW_NOINPUT     (1<<1) /**< Window recieves no input. */
+#define WINDOW_NORENDER    (1<<2) /**< Window does not render even if it should. */
+#define window_isFlag(w,f) ((w)->flags & (f)) /**< Checks a window flag. */
+#define window_setFlag(w,f) ((w)->flags |= (f)) /**< Sets a window flag. */
+#define window_rmFlag(w,f) ((w)->flags &= ~(f)) /**< Removes a window flag. */
+
+
 /**
  * @struct Window                                                   
  *                                                                  
@@ -119,9 +128,7 @@ typedef struct Widget_ {
 typedef struct Window_ {
    unsigned int id; /**< Unique ID. */
    char *name; /**< Window name - should be unique. */
-
-   int hidden; /**< Is window hidden? - @todo use */
-   int focus; /**< Current focused widget. */
+   unsigned int flags; /**< Window flags. */
 
    unsigned int parent; /**< Parent window, will close if this one closes. */
    void (*close_fptr)(unsigned int,char*); /**< How to close the window. */
@@ -136,18 +143,24 @@ typedef struct Window_ {
    double w; /**< Window width. */
    double h; /**< Window height. */
 
+   int focus; /**< Current focused widget. */
    Widget *widgets; /**< Widget storage. */
    int nwidgets; /**< Total number of widgets. */
 } Window;
 
 
+/* Window stuff. */
+Window* toolkit_getActiveWindow (void);
+Window* window_wget( const unsigned int wid );
+int toolkit_inputWindow( Window *wdw, SDL_Event *event );
+
 
 /* Widget stuff. */
 Widget* window_newWidget( Window* w );
 void widget_cleanup( Widget *widget );
-Window* window_wget( const unsigned int wid );
 Widget* window_getwgt( const unsigned int wid, char* name );
 void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y );
+void toolkit_nextFocus (void);
 
 
 /* Render stuff. */
@@ -159,11 +172,6 @@ void toolkit_clip( double x, double y, double w, double h );
 void toolkit_unclip (void);
 void toolkit_drawRect( double x, double y,
       double w, double h, glColour* c, glColour* lc );
-
-
-/* Misc stuff. */
-void toolkit_nextFocus (void);
-Window* toolkit_getActiveWindow (void);
 
 
 #endif /* TOOLKIT_PRIV_H */

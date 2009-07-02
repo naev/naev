@@ -70,8 +70,8 @@ static GLsizei toolkit_vboColourOffset; /**< Colour offset. */
  * static prototypes
  */
 /* input */
-static void toolkit_mouseEvent( SDL_Event* event );
-static int toolkit_keyEvent( SDL_Event* event );
+static void toolkit_mouseEvent( Window *w, SDL_Event* event );
+static int toolkit_keyEvent( Window *wdw, SDL_Event* event );
 /* focus */
 static int toolkit_isFocusable( Widget *wgt );
 static Widget* toolkit_getFocus( Window *wdw );
@@ -1159,7 +1159,8 @@ void toolkit_render (void)
    int i;
 
    for (i=0; i<nwindows; i++)
-      window_render(&windows[i]);
+      if (!window_isFlag(&windows[i], WINDOW_NORENDER))
+         window_render(&windows[i]);
 }
 
 
@@ -1171,16 +1172,41 @@ void toolkit_render (void)
  */
 int toolkit_input( SDL_Event* event )
 {
+   int ret;
+   Window *wdw;
+   Widget *wgt;
+
+   /* Get active window. */
+   wdw = toolkit_getActiveWindow();
+   if (wdw != NULL) {
+      wgt = toolkit_getFocus( wdw );
+      if ((wgt != NULL) && (wgt->rawevent != NULL)) {
+         ret = wgt->rawevent( wgt, event );
+         if (ret != 0)
+            return ret;
+      }
+   }
+
+   /* Pass event to window. */
+   return toolkit_inputWindow( wdw, event );
+}
+
+
+/**
+ * @brief Toolkit window input is handled here.
+ */
+int toolkit_inputWindow( Window *wdw, SDL_Event *event )
+{
    switch (event->type) {
       case SDL_MOUSEMOTION:
       case SDL_MOUSEBUTTONDOWN:
       case SDL_MOUSEBUTTONUP:
-         toolkit_mouseEvent(event);
+         toolkit_mouseEvent(wdw, event);
          return 1; /* block input */
 
       case SDL_KEYDOWN:
       case SDL_KEYUP:
-         return toolkit_keyEvent(event);
+         return toolkit_keyEvent(wdw, event);
 
    }
    return 0; /* don't block input */
@@ -1190,17 +1216,14 @@ int toolkit_input( SDL_Event* event )
 /**
  * @brief Handles the mouse events.
  *
+ *    @param wdw Window recieving the mouse event.
  *    @param event Mouse event to handle.
  */
-static void toolkit_mouseEvent( SDL_Event* event )
+static void toolkit_mouseEvent( Window *w, SDL_Event* event )
 {
    int i;
    double x,y;
-   Window *w;
    Widget *wgt;
-
-   /* Get the window. */
-   w = toolkit_getActiveWindow();
 
    /* Extract the position as event. */
    if (event->type==SDL_MOUSEMOTION) {
@@ -1358,24 +1381,18 @@ void toolkit_clearKey (void)
 /**
  * @brief Handles keyboard events.
  *
+ *    @param wdw Window recieving the key event.
  *    @param event Keyboard event to handle.
  *    @return 1 if the event is used, 0 if it isn't.
  */
-static int toolkit_keyEvent( SDL_Event* event )
+static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 {
-   Window *wdw; 
    Widget *wgt;
    SDLKey key;
    SDLMod mod;
    char buf[2];
 
-   /* Needs to have at least one window. */
-   if (nwindows<=0)
-      return 0;
-
-   /* Get event and key. */
-   wdw = toolkit_getActiveWindow();
-   wgt = toolkit_getFocus( wdw );
+   /* Event info. */
    key = event->key.keysym.sym;
    mod = event->key.keysym.mod;
 
@@ -1384,6 +1401,13 @@ static int toolkit_keyEvent( SDL_Event* event )
       toolkit_regKey(key, event->key.keysym.unicode);
    else if (event->type == SDL_KEYUP)
       toolkit_unregKey(key);
+
+   /* See if window is valid. */
+   if (wdw == NULL)
+      return 0;
+
+   /* Get widget. */
+   wgt = toolkit_getFocus( wdw );
 
    /* We only want keydown from now on. */
    if (event->type != SDL_KEYDOWN)
@@ -1461,6 +1485,8 @@ void toolkit_update (void)
    /* Check to see what it affects. */
    if (nwindows > 0) {
       wdw = toolkit_getActiveWindow();
+      if (wdw == NULL)
+         return;
       wgt = toolkit_getFocus( wdw );
       if ((wgt != NULL) && (wgt->keyevent != NULL))
          wgt->keyevent( wgt, input_key, 0 );
@@ -1481,6 +1507,8 @@ void toolkit_nextFocus (void)
    Window *wdw;
 
    wdw = toolkit_getActiveWindow();
+   if (wdw == NULL)
+      return;
 
    if (wdw->nwidgets==0) /* special case no widgets */
       wdw->focus = -1;
@@ -1516,7 +1544,15 @@ static int toolkit_isFocusable( Widget *wgt )
  */
 Window* toolkit_getActiveWindow (void)
 {
-   return &windows[nwindows-1];
+   int i;
+
+   /* Get window that can be focused. */
+   for (i=nwindows-1; i>=0; i++)
+      if (!window_isFlag(&windows[i], WINDOW_NOFOCUS))
+         return &windows[i];
+
+   /* No window found. */
+   return NULL;
 }
 
 
