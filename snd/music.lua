@@ -165,7 +165,7 @@ function choose_ambient ()
    -- Get information about the current system
    sys = system.get()
    factions = sys:faction()
-   nebu_dens, nebu_vol = sys:nebulae()
+   nebu_dens, nebu_vol = sys:nebula()
 
    -- Check to see if changing faction zone
    if not factions[last_sysFaction] then
@@ -184,7 +184,7 @@ function choose_ambient ()
       end
    end
 
-   -- Check to see if entering nebulae
+   -- Check to see if entering nebula
    nebu = nebu_dens > 0
    if nebu ~= last_sysNebuDens then
       force = true
@@ -247,7 +247,7 @@ function choose_combat ()
 
    -- Get some data about the system
    sys = system.get()
-   nebu_dens, nebu_vol = sys:nebulae()
+   nebu_dens, nebu_vol = sys:nebula()
 
    nebu = nebu_dens > 0
    if nebu then

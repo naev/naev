@@ -2209,12 +2209,19 @@ static int player_parse( xmlNodePtr parent )
 static int player_parseDone( xmlNodePtr parent )
 {
    xmlNodePtr node;
+   int id;
 
    node = parent->xmlChildrenNode;
 
    do {
-      if (xml_isNode(node,"done"))
-         player_missionFinished( mission_getID( xml_get(node) ) );
+      if (xml_isNode(node,"done")) {
+         id = mission_getID( xml_get(node) );
+         if (id < 0)
+            DEBUG("Mission '%s' doesn't seem to exist anymore, removing from save.",
+                  xml_get(node));
+         else
+            player_missionFinished( id );
+      }
    } while (xml_nextNode(node));
 
    return 0;

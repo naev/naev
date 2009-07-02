@@ -149,8 +149,8 @@ typedef struct StarSystem_ {
    int stars; /**< Amount of "stars" it has. */
    int asteroids; /**< @todo implement asteroids */
    double interference; /**< in % @todo implement interference. */
-   double nebu_density; /**< Nebulae density (0. - 1000.) */
-   double nebu_volatility; /**< Nebulae volatility (0. - 1000.) */
+   double nebu_density; /**< Nebula density (0. - 1000.) */
+   double nebu_volatility; /**< Nebula volatility (0. - 1000.) */
 
    /* Fleets. */
    SystemFleet* fleets; /**< fleets that can appear in the current system */

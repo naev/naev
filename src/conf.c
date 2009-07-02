@@ -21,7 +21,7 @@
 #include "input.h"
 #include "opengl.h"
 #include "music.h"
-#include "nebulae.h"
+#include "nebula.h"
 #include "ndata.h"
 #include "nfile.h"
 
@@ -98,7 +98,7 @@ static void print_usage( char **argv )
    LOG("   -S, --sound           forces sound");
    LOG("   -m f, --mvol f        sets the music volume to f");
    LOG("   -s f, --svol f        sets the sound volume to f");
-   LOG("   -G                    regenerates the nebulae (slow)");
+   LOG("   -G                    regenerates the nebula (slow)");
    LOG("   -h, --help            display this message and exit");
    LOG("   -v, --version         print the version and exit");
 }

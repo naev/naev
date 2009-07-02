@@ -7,7 +7,7 @@
       *) Integrate the resource editor possibly.
    *) Asteroids
    *) More missions
-       *) FLF Nebulae Campaign
+       *) FLF Nebula Campaign
        *) Space Trader Missions
        *) Misc Empire Guard missions
        *) Pirate Missions
@@ -38,7 +38,7 @@
    MINOR
 
    *) Add more threads to speed up loading
-      *) Thread nebulae generation.
+      *) Thread nebula generation.
    *) Hybrid ships
       *) Start out with X skillpoints that get spread out by use, use fast at first
       *) Can't use normal gear
@@ -48,7 +48,7 @@
       *) all land graphics should be on land only (optionally)
       *) planet space graphics should be ondemand
    *) Graphic improvements
-      *) have ships flying in nebulae leave traces
+      *) have ships flying in nebula leave traces
       *) missile smoke
       *) more special effects
       *) cloaking effects

@@ -32,7 +32,7 @@
  *
  * Code tries to handle basically 2d/3d cases, without much genericness
  *  because it needs to be pretty fast.  Originally sped up the code from
- *  about 20 seconds to 8 seconds per Nebulae image with the manual loop
+ *  about 20 seconds to 8 seconds per Nebula image with the manual loop
  *  unrolling.
  *
  * @note Tried to optimize a while back with SSE and the works, but because
@@ -438,7 +438,7 @@ float* noise_genRadarInt( const int w, const int h, float rug )
       return NULL;
    }
 
-   /* Start to create the nebulae */
+   /* Start to create the nebula */
    for (y=0; y<h; y++) {
 
       f[1] = rug * (float)y / (float)h;
@@ -463,7 +463,7 @@ float* noise_genRadarInt( const int w, const int h, float rug )
 
 
 /**
- * @brief Generates a 3d nebulae map.
+ * @brief Generates a 3d nebula map.
  *
  *    @param w Width of the map.
  *    @param h Height of the map.
@@ -471,7 +471,7 @@ float* noise_genRadarInt( const int w, const int h, float rug )
  *    @param rug Rugosity of the map.
  *    @return The map generated.
  */
-float* noise_genNebulaeMap( const int w, const int h, const int n, float rug )
+float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
 {
    int x, y, z;
    float f[3];
@@ -479,7 +479,7 @@ float* noise_genNebulaeMap( const int w, const int h, const int n, float rug )
    float hurst;
    float lacunarity;
    perlin_data_t* noise;
-   float *nebulae;
+   float *nebula;
    float value;
    float zoom;
    float max;
@@ -493,8 +493,8 @@ float* noise_genNebulaeMap( const int w, const int h, const int n, float rug )
 
    /* create noise and data */
    noise       = TCOD_noise_new( 3, hurst, lacunarity );
-   nebulae     = malloc(sizeof(float)*w*h*n);
-   if (nebulae == NULL) {
+   nebula     = malloc(sizeof(float)*w*h*n);
+   if (nebula == NULL) {
       WARN("Out of memory!");
       return NULL;
    }
@@ -502,9 +502,9 @@ float* noise_genNebulaeMap( const int w, const int h, const int n, float rug )
    /* Some debug information and time setting */
    s = SDL_GetTicks();
    t = malloc(sizeof(unsigned int)*n);
-   DEBUG("Generating Nebulae of size %dx%dx%d", w, h, n);
+   DEBUG("Generating Nebula of size %dx%dx%d", w, h, n);
 
-   /* Start to create the nebulae */
+   /* Start to create the nebula */
    max = 0.;
    for (z=0; z<n; z++) {
 
@@ -521,7 +521,7 @@ float* noise_genNebulaeMap( const int w, const int h, const int n, float rug )
             value = TCOD_noise_turbulence3( noise, f, octaves );
             if (max < value) max = value;
 
-            nebulae[z*w*h + y*w + x] = value;
+            nebula[z*w*h + y*w + x] = value;
          }
       }
 
@@ -536,26 +536,26 @@ float* noise_genNebulaeMap( const int w, const int h, const int n, float rug )
    for (z=0; z<n; z++)
       for (y=0; y<h; y++)
          for (x=0; x<w; x++)
-            nebulae[z*w*h + y*w + x] += value;
+            nebula[z*w*h + y*w + x] += value;
 
    /* Clean up */
    TCOD_noise_delete( noise );
 
    /* Results */
-   DEBUG("Nebulae Generated in %d ms", SDL_GetTicks() - s );
-   return nebulae;
+   DEBUG("Nebula Generated in %d ms", SDL_GetTicks() - s );
+   return nebula;
 }
 
 
 /**
- * @brief Generates tiny nebulae puffs
+ * @brief Generates tiny nebula puffs
  *
  *    @param w Width of the puff to generate.
  *    @param h Height of the puff to generate.
  *    @param rug Rugosity of the puff.
  *    @return The puff generated.
  */
-float* noise_genNebulaePuffMap( const int w, const int h, float rug )
+float* noise_genNebulaPuffMap( const int w, const int h, float rug )
 {
    int x,y, hw,hh;
    float d;
@@ -564,7 +564,7 @@ float* noise_genNebulaePuffMap( const int w, const int h, float rug )
    float hurst;
    float lacunarity;
    perlin_data_t* noise;
-   float *nebulae;
+   float *nebula;
    float value;
    float zoom;
    float max;
@@ -577,13 +577,13 @@ float* noise_genNebulaePuffMap( const int w, const int h, float rug )
 
    /* create noise and data */
    noise       = TCOD_noise_new( 2, hurst, lacunarity );
-   nebulae     = malloc(sizeof(float)*w*h);
-   if (nebulae == NULL) {
+   nebula     = malloc(sizeof(float)*w*h);
+   if (nebula == NULL) {
       WARN("Out of memory!");
       return NULL;
    }
 
-   /* Start to create the nebulae */
+   /* Start to create the nebula */
    max   = 0.;
    hw    = w/2;
    hh    = h/2;
@@ -608,7 +608,7 @@ float* noise_genNebulaePuffMap( const int w, const int h, float rug )
             max = value;
 
          /* Set the value. */
-         nebulae[y*w + x] = value;
+         nebula[y*w + x] = value;
       }
    }
 
@@ -616,7 +616,7 @@ float* noise_genNebulaePuffMap( const int w, const int h, float rug )
    TCOD_noise_delete( noise );
 
    /* Results */
-   return nebulae;
+   return nebula;
 }
 
 

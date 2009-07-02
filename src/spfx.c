@@ -52,7 +52,7 @@
  */
 /* shake aka rumble */
 static double shake_rad = 0.; /**< Current shake radius (0 = no shake). */
-Vector2d shake_pos = { .x = 0., .y = 0. }; /**< Current shake position. Used in nebulae.c */
+Vector2d shake_pos = { .x = 0., .y = 0. }; /**< Current shake position. Used in nebula.c */
 static Vector2d shake_vel = { .x = 0., .y = 0. }; /**< Current shake velocity. */
 static int shake_off = 1; /**< 1 if shake is not active. */
 

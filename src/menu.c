@@ -28,7 +28,7 @@
 #include "save.h"
 #include "land.h"
 #include "rng.h"
-#include "nebulae.h"
+#include "nebula.h"
 #include "pause.h"
 #include "options.h"
 #include "intro.h"
@@ -124,7 +124,7 @@ void menu_main (void)
 
    /* Load background and friends. */
    tex = gl_newImage( "gfx/NAEV.png", 0 );
-   nebu_prep( 300., 0. ); /* Needed for nebulae to not spaz out */
+   nebu_prep( 300., 0. ); /* Needed for nebula to not spaz out */
 
    /* Calculate Logo and window offset. */
    freespace = SCREEN_H - tex->sh - MAIN_HEIGHT;

@@ -29,13 +29,13 @@ class Space:
    def loadSystems(self, xmlfile):
       self.systems = data.load(xmlfile, "ssys", True,
             ["jumps","planets","fleets"], None,
-            {"nebulae":"volatility"})
+            {"nebula":"volatility"})
 
 
    def saveSystems(self, xmlfile):
       data.save( "ssys.xml", self.systems, "Systems", "ssys", True,
             {"jumps":"jump","planets":"planet","fleets":"fleet"}, None,
-            {"nebulae":"volatility"})
+            {"nebula":"volatility"})
 
 
    def loadPlanets(self, xmlfile):
@@ -344,14 +344,14 @@ class Space:
          self.__swidget(key).set_text(str(value))
       self.modifyname = 0 
 
-      # load nebulae properties
+      # load nebula properties
       try:
-         for key, val in system["general"]["nebulae"].items():
+         for key, val in system["general"]["nebula"].items():
             self.__swidget("spiNebuDensity").set_text(str(key))
             self.__swidget("spiNebuVolatility").set_text(str(val))
       except:
-         system["general"]["nebulae"] = {}
-         nebu = system["general"]["nebulae"] = {'0':'0'}
+         system["general"]["nebula"] = {}
+         nebu = system["general"]["nebula"] = {'0':'0'}
          self.__swidget("spiNebuDensity").set_text("0")
          self.__swidget("spiNebuVolatility").set_text("0")
 
@@ -518,11 +518,11 @@ class Space:
       self.__sinpStore(system,"spiStars","general","stars") 
       self.__sinpStore(system,"spiInterference","general","interference")
       self.__sinpStore(system,"spiAsteroids","general","asteroids")
-      # nebulae
-      system["general"]["nebulae"] = {}
+      # nebula
+      system["general"]["nebula"] = {}
       density = self.__swidget("spiNebuDensity").get_text()
       volatility = self.__swidget("spiNebuVolatility").get_text()
-      system["general"]["nebulae"] = {density:volatility}
+      system["general"]["nebula"] = {density:volatility}
 
 
    def __pstore(self):
@@ -943,7 +943,7 @@ class Space:
    """
    def __snew(self, wgt=None, event=None):
       name = "new system"
-      gen = { "asteroids":0, "interference":0, "stars":100, "nebulae":{"0":"0"} }
+      gen = { "asteroids":0, "interference":0, "stars":100, "nebula":{"0":"0"} }
       pos = { "x":0,"y":0 }
       new_ssys = { "general":gen, "pos":pos, "jumps":[], "fleets":[], "planets":[] }
       self.systems[name] = new_ssys

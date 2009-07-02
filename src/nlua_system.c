@@ -30,7 +30,7 @@ static int systemL_get( lua_State *L );
 static int systemL_eq( lua_State *L );
 static int systemL_name( lua_State *L );
 static int systemL_faction( lua_State *L );
-static int systemL_nebulae( lua_State *L );
+static int systemL_nebula( lua_State *L );
 static int systemL_jumpdistance( lua_State *L );
 static int systemL_adjacent( lua_State *L );
 static int systemL_hasPresence( lua_State *L );
@@ -41,7 +41,7 @@ static const luaL_reg system_methods[] = {
    { "__tostring", systemL_name },
    { "name", systemL_name },
    { "faction", systemL_faction },
-   { "nebulae", systemL_nebulae },
+   { "nebula", systemL_nebula },
    { "jumpDist", systemL_jumpdistance },
    { "adjacentSystems", systemL_adjacent },
    { "hasPresence", systemL_hasPresence },
@@ -276,15 +276,15 @@ static int systemL_faction( lua_State *L )
 
 
 /**
- * @brief Gets the system's nebulae parameters.
+ * @brief Gets the system's nebula parameters.
  *
- * @usage density, volatility = sys:nebulae()
+ * @usage density, volatility = sys:nebula()
  *
- *    @luaparam s System to get nebulae parameters from.
+ *    @luaparam s System to get nebula parameters from.
  *    @luareturn The density and volatility of the system.
- * @luafunc nebulae( s )
+ * @luafunc nebula( s )
  */
-static int systemL_nebulae( lua_State *L )
+static int systemL_nebula( lua_State *L )
 {
    LuaSystem *sys;
    sys = luaL_checksystem(L,1);

@@ -1140,7 +1140,7 @@ int sound_al_env( SoundEnv_t env, double param )
          }
          break;
 
-      case SOUND_ENV_NEBULAE:
+      case SOUND_ENV_NEBULA:
          f = param / 1000.;
 
          /* Set global parameters. */

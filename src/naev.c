@@ -59,7 +59,7 @@
 #include "mission.h"
 #include "nlua_misn.h"
 #include "nfile.h"
-#include "nebulae.h"
+#include "nebula.h"
 #include "unidiff.h"
 #include "ndata.h"
 #include "gui.h"
@@ -103,7 +103,7 @@ static void update_all (void);
 static void update_routine( double dt );
 static void render_all (void);
 /* Misc. */
-void loadscreen_render( double done, const char *msg ); /* nebulae.c */
+void loadscreen_render( double done, const char *msg ); /* nebula.c */
 void main_loop (void); /* dialogue.c */
 
 
@@ -218,9 +218,9 @@ int main( int argc, char** argv )
    if (ai_init()) WARN("Error initializing AI");
 
    /* Misc graphics init */
-   if (nebu_init() != 0) { /* Initializes the nebulae */
+   if (nebu_init() != 0) { /* Initializes the nebula */
       /* An error has happened */
-      ERR("Unable to initialize the Nebulae subsystem!");
+      ERR("Unable to initialize the Nebula subsystem!");
       /* Weirdness will occur... */
    }
    gui_init(); /* initializes the GUI graphics */
@@ -290,7 +290,7 @@ int main( int argc, char** argv )
    ai_exit(); /* stops the Lua AI magic */
    joystick_exit(); /* releases joystick */
    input_exit(); /* cleans up keybindings */
-   nebu_exit(); /* destroys the nebulae */
+   nebu_exit(); /* destroys the nebula */
    gl_exit(); /* kills video output */
    sound_exit(); /* kills the sound */
    news_exit(); /* destroys the news. */

@@ -27,7 +27,7 @@
 #include "toolkit.h"
 #include "spfx.h"
 #include "ntime.h"
-#include "nebulae.h"
+#include "nebula.h"
 #include "sound.h"
 #include "music.h"
 #include "gui.h"
@@ -682,11 +682,11 @@ void space_init ( const char* sysname )
 
       /* Handle background */
       if (cur_system->nebu_density > 0.) {
-         /* Background is Nebulae */
+         /* Background is Nebula */
          nebu_prep( cur_system->nebu_density, cur_system->nebu_volatility );
 
          /* Set up sound. */
-         sound_env( SOUND_ENV_NEBULAE, cur_system->nebu_density );
+         sound_env( SOUND_ENV_NEBULA, cur_system->nebu_density );
       }
       else {
          /* Backrgound is Stary */
@@ -1256,7 +1256,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
                flags |= FLAG_INTERFERENCESET;
                sys->interference = xml_getFloat(cur);
             }
-            else if (xml_isNode(cur,"nebulae")) {
+            else if (xml_isNode(cur,"nebula")) {
                ptrc = xml_nodeProp(cur,"volatility");
                if (ptrc != NULL) { /* Has volatility  */
                   sys->nebu_volatility = atof(ptrc);

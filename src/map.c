@@ -193,7 +193,7 @@ void map_open (void)
    /*
     * Bottom stuff
     *
-    * [+] [-]  Nebulae, Asteroids, Interference
+    * [+] [-]  Nebula, Asteroids, Interference
     */
    /* Zoom buttons */
    window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", map_buttonZoom );
@@ -357,7 +357,7 @@ static void map_update( unsigned int wid )
     */
    buf[0] = '\0';
    p = 0;
-   /* Nebulae. */
+   /* Nebula. */
    if (sys->nebu_density > 0.) {
 
       /* Volatility */
@@ -373,7 +373,7 @@ static void map_update( unsigned int wid )
          p += snprintf(&buf[p], PATH_MAX-p, " Dense");
       else if (sys->nebu_density < 300.)
          p += snprintf(&buf[p], PATH_MAX-p, " Light");
-      p += snprintf(&buf[p], PATH_MAX-p, " Nebulae");
+      p += snprintf(&buf[p], PATH_MAX-p, " Nebula");
    }
    /* Interference. */
    if (sys->interference > 0.) {

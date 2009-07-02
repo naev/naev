@@ -24,7 +24,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>50</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -46,7 +46,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>50</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>160</stars>
   </general>
  </ssys>
@@ -73,7 +73,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>100</interference>
-   <nebulae volatility="0">100</nebulae>
+   <nebula volatility="0">100</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -96,7 +96,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>300</interference>
-   <nebulae volatility="0">250</nebulae>
+   <nebula volatility="0">250</nebula>
    <stars>400</stars>
   </general>
  </ssys>
@@ -117,7 +117,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>600</interference>
-   <nebulae volatility="100">600</nebulae>
+   <nebula volatility="100">600</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -143,7 +143,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -166,7 +166,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -189,7 +189,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>200</stars>
   </general>
  </ssys>
@@ -212,7 +212,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>200</stars>
   </general>
  </ssys>
@@ -232,7 +232,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>300</interference>
-   <nebulae volatility="0">250</nebulae>
+   <nebula volatility="0">250</nebula>
    <stars>400</stars>
   </general>
  </ssys>
@@ -255,7 +255,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -273,7 +273,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>500</interference>
-   <nebulae volatility="100">500</nebulae>
+   <nebula volatility="100">500</nebula>
    <stars>400</stars>
   </general>
  </ssys>
@@ -293,7 +293,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>100</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>120</stars>
   </general>
  </ssys>
@@ -320,7 +320,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>300</stars>
   </general>
  </ssys>
@@ -346,7 +346,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -366,7 +366,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>150</interference>
-   <nebulae volatility="0">150</nebulae>
+   <nebula volatility="0">150</nebula>
    <stars>400</stars>
   </general>
  </ssys>
@@ -389,7 +389,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -414,7 +414,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>400</interference>
-   <nebulae volatility="0">400</nebulae>
+   <nebula volatility="0">400</nebula>
    <stars>400</stars>
   </general>
  </ssys>
@@ -442,7 +442,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>100</stars>
   </general>
  </ssys>
@@ -470,7 +470,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -492,7 +492,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>100</stars>
   </general>
  </ssys>
@@ -513,7 +513,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>700</interference>
-   <nebulae volatility="250">750</nebulae>
+   <nebula volatility="250">750</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -537,7 +537,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>200</stars>
   </general>
  </ssys>
@@ -560,7 +560,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>350</interference>
-   <nebulae volatility="0">300</nebulae>
+   <nebula volatility="0">300</nebula>
    <stars>400</stars>
   </general>
  </ssys>
@@ -581,7 +581,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>150</stars>
   </general>
  </ssys>
@@ -605,7 +605,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>300</stars>
   </general>
  </ssys>
@@ -628,7 +628,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>200</interference>
-   <nebulae volatility="0">200</nebulae>
+   <nebula volatility="0">200</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -652,7 +652,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>300</stars>
   </general>
  </ssys>
@@ -676,7 +676,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>200</interference>
-   <nebulae volatility="0">150</nebulae>
+   <nebula volatility="0">150</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -700,7 +700,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>100</interference>
-   <nebulae volatility="0">100</nebulae>
+   <nebula volatility="0">100</nebula>
    <stars>600</stars>
   </general>
  </ssys>
@@ -728,7 +728,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>100</interference>
-   <nebulae volatility="0">100</nebulae>
+   <nebula volatility="0">100</nebula>
    <stars>600</stars>
   </general>
  </ssys>
@@ -747,7 +747,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>800</interference>
-   <nebulae volatility="300">800</nebulae>
+   <nebula volatility="300">800</nebula>
    <stars>400</stars>
   </general>
  </ssys>
@@ -767,7 +767,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>100</stars>
   </general>
  </ssys>
@@ -786,7 +786,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>300</interference>
-   <nebulae volatility="0">200</nebulae>
+   <nebula volatility="0">200</nebula>
    <stars>300</stars>
   </general>
  </ssys>
@@ -811,7 +811,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>200</stars>
   </general>
  </ssys>
@@ -837,7 +837,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>300</stars>
   </general>
  </ssys>
@@ -864,7 +864,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>400</stars>
   </general>
  </ssys>
@@ -887,7 +887,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>100</interference>
-   <nebulae volatility="0">100</nebulae>
+   <nebula volatility="0">100</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -908,7 +908,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>200</stars>
   </general>
  </ssys>
@@ -926,7 +926,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>450</interference>
-   <nebulae volatility="50">500</nebulae>
+   <nebula volatility="50">500</nebula>
    <stars>400</stars>
   </general>
  </ssys>
@@ -953,7 +953,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>50</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>400</stars>
   </general>
  </ssys>
@@ -977,7 +977,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>400</stars>
   </general>
  </ssys>
@@ -998,7 +998,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>350</interference>
-   <nebulae volatility="0">300</nebulae>
+   <nebula volatility="0">300</nebula>
    <stars>400</stars>
   </general>
  </ssys>
@@ -1019,7 +1019,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>200</stars>
   </general>
  </ssys>
@@ -1045,7 +1045,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -1073,7 +1073,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>400</stars>
   </general>
  </ssys>
@@ -1100,7 +1100,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -1126,7 +1126,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -1146,7 +1146,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>650</interference>
-   <nebulae volatility="150">700</nebulae>
+   <nebula volatility="150">700</nebula>
    <stars>400</stars>
   </general>
  </ssys>
@@ -1175,7 +1175,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -1200,7 +1200,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -1225,7 +1225,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>200</stars>
   </general>
  </ssys>
@@ -1246,7 +1246,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>300</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>100</stars>
   </general>
  </ssys>
@@ -1264,7 +1264,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>800</interference>
-   <nebulae volatility="400">800</nebulae>
+   <nebula volatility="400">800</nebula>
    <stars>400</stars>
   </general>
  </ssys>
@@ -1287,7 +1287,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>100</stars>
   </general>
  </ssys>
@@ -1312,7 +1312,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -1340,7 +1340,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>50</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>400</stars>
   </general>
  </ssys>
@@ -1359,7 +1359,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>950</interference>
-   <nebulae volatility="500">900</nebulae>
+   <nebula volatility="500">900</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -1376,7 +1376,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>50</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>140</stars>
   </general>
  </ssys>
@@ -1402,7 +1402,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>50</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -1425,7 +1425,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>200</stars>
   </general>
  </ssys>
@@ -1451,7 +1451,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>400</stars>
   </general>
  </ssys>
@@ -1478,7 +1478,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -1505,7 +1505,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -1525,7 +1525,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>100</stars>
   </general>
  </ssys>
@@ -1550,7 +1550,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>50</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>500</stars>
   </general>
  </ssys>
@@ -1578,7 +1578,7 @@
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
-   <nebulae volatility="0">0</nebulae>
+   <nebula volatility="0">0</nebula>
    <stars>500</stars>
   </general>
  </ssys>

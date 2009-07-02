@@ -3,8 +3,8 @@
  */
 
 
-#ifndef NEBULAE_H
-#  define NEBULAE_H
+#ifndef NEBULA_H
+#  define NEBULA_H
 
 
 /*
@@ -27,4 +27,4 @@ void nebu_prep( double density, double volatility );
 void nebu_forceGenerate (void);
 
 
-#endif /* NEBULAE_H */
+#endif /* NEBULA_H */

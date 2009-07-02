@@ -16,7 +16,7 @@ extern int sound_disabled;
  */
 typedef enum SoundEnv_e {
    SOUND_ENV_NORMAL, /**< Normal space. */
-   SOUND_ENV_NEBULAE /**< Nebulae space. */
+   SOUND_ENV_NEBULA /**< Nebula space. */
 } SoundEnv_t; /**< Type of environment. */
 
 
