@@ -1194,18 +1194,29 @@ void toolkit_render (void)
  */
 int toolkit_input( SDL_Event* event )
 {
-   int ret;
+   int ret, i;
    Window *wdw;
    Widget *wgt;
 
-   /* Get active window. */
-   wdw = toolkit_getActiveWindow();
+   /* Get window that can be focused. */
+   for (i=nwindows-1; i>=0; i--)
+      if (!window_isFlag(&windows[i], WINDOW_NOINPUT))
+         break;
+   if (i < 0)
+      return 0;
+   wdw = &windows[i];
+
+   /* See if widget needs event. */
    if (wdw != NULL) {
-      wgt = toolkit_getFocus( wdw );
-      if ((wgt != NULL) && (wgt->rawevent != NULL)) {
-         ret = wgt->rawevent( wgt, event );
-         if (ret != 0)
-            return ret;
+      for (i=0; i<wdw->nwidgets; i++) {
+         wgt = &wdw->widgets[i];
+         if (wgt_isFlag( wgt, WGT_FLAG_RAWINPUT )) {
+            if (wgt->rawevent != NULL) {
+               ret = wgt->rawevent( wgt, event );
+               if (ret != 0)
+                  return ret;
+            }
+         }
       }
    }
 
@@ -1569,7 +1580,7 @@ Window* toolkit_getActiveWindow (void)
    int i;
 
    /* Get window that can be focused. */
-   for (i=nwindows-1; i>=0; i++)
+   for (i=nwindows-1; i>=0; i--)
       if (!window_isFlag(&windows[i], WINDOW_NOFOCUS))
          return &windows[i];
 

@@ -52,6 +52,7 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
    wgt->wdw  = wid;
    
    /* specific */
+   wgt_setFlag( wgt, WGT_FLAG_RAWINPUT );
    wgt->rawevent           = tab_raw;
    wgt->render             = tab_render;
    wgt->cleanup            = tab_cleanup;

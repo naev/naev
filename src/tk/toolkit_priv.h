@@ -58,6 +58,7 @@ typedef enum WidgetStatus_ {
 
 
 #define WGT_FLAG_CANFOCUS     (1<<0)   /**< Widget can get focus. */
+#define WGT_FLAG_RAWINPUT     (1<<1)   /**< Widget should always get raw input. */
 #define wgt_setFlag(w,f)      ((w)->flags |= (f)) /**< Sets a widget flag. */
 #define wgt_rmFlag(w,f)       ((w)->flags &= ~(f)) /**< Removes a widget flag. */
 #define wgt_isFlag(w,f)       ((w)->flags & (f)) /**< Checks if a widget has a fla.g */
