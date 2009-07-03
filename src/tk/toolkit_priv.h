@@ -37,7 +37,8 @@ typedef enum WidgetType_ {
    WIDGET_CUST,
    WIDGET_INPUT,
    WIDGET_IMAGEARRAY,
-   WIDGET_FADER
+   WIDGET_FADER,
+   WIDGET_TABBEDWINDOW
 } WidgetType;
 
 
@@ -108,6 +109,7 @@ typedef struct Widget_ {
       WidgetInputData inp; /**< WIDGET_INPUT */
       WidgetImageArrayData iar; /**< WIDGET_IMAGEARRAY */
       WidgetFaderData fad; /**< WIDGET_FADER */
+      WidgetTabbedWindowData tab; /**< WIDGET_TABBEDWINDOW */
    } dat; /**< Stores the widget specific data. */
 } Widget;
 
@@ -153,6 +155,7 @@ typedef struct Window_ {
 Window* toolkit_getActiveWindow (void);
 Window* window_wget( const unsigned int wid );
 int toolkit_inputWindow( Window *wdw, SDL_Event *event );
+void window_render( Window* w );
 
 
 /* Widget stuff. */

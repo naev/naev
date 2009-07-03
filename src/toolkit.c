@@ -75,8 +75,6 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event );
 /* focus */
 static int toolkit_isFocusable( Widget *wgt );
 static Widget* toolkit_getFocus( Window *wdw );
-/* render */
-static void window_render( Window* w );
 
 
 /**
@@ -778,7 +776,7 @@ void toolkit_unclip (void)
  *
  *    @param w Window to render.
  */
-static void window_render( Window* w )
+void window_render( Window* w )
 {
    int i;
    GLfloat cx, cy;

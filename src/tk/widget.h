@@ -17,6 +17,7 @@
 #include "tk/widget/input.h"
 #include "tk/widget/imagearray.h"
 #include "tk/widget/cust.h"
+#include "tk/widget/tabwin.h"
 
 
 #endif /* WIDGET_H */
