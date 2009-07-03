@@ -22,11 +22,15 @@ endif
 #
 LDLUA   := lib/lua/liblua.a
 LDCSPARSE := lib/csparse/libcsparse.a
-LDSDL   := $(shell sdl-config --libs) -lSDL_image -lSDL_mixer
-LDXML   := $(shell xml2-config --libs)
-LDTTF   := $(shell freetype-config --libs)
-LDPNG   := $(shell libpng-config --libs)
-LDGL    := -lglu32 -lopengl32
+#LDSDL   := $(shell sdl-config --libs) -lSDL_image -lSDL_mixer
+#LDXML   := $(shell xml2-config --libs)
+#LDTTF   := $(shell freetype-config --libs)
+#LDPNG   := $(shell libpng-config --libs)
+LDSDL   := -lSDL -lSDL_image -lSDL_mixer -lm
+LDXML   := -lxml2
+LDTTF   := -lfreetype -lz
+LDPNG   := -lpng12
+LDGL    := -lopengl32
 LDFLAGS := -lmingw32 -mwindows -lm -lws2_32 -lwsock32 $(LDLUA) $(LDCSPARSE) $(LDSDL) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
 
 # Debug stuff
