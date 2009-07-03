@@ -178,5 +178,10 @@ void toolkit_drawRect( double x, double y,
       double w, double h, glColour* c, glColour* lc );
 
 
+/* Input stuff. */
+Uint8 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
+      int *x, int *y, int *rx, int *ry );
+
+
 #endif /* TOOLKIT_PRIV_H */
 

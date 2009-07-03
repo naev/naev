@@ -70,6 +70,7 @@ static GLsizei toolkit_vboColourOffset; /**< Colour offset. */
  * static prototypes
  */
 /* input */
+static void toolkit_mouseEventUpdate( SDL_Event *event, int x, int y, int rx, int ry );
 static void toolkit_mouseEvent( Window *w, SDL_Event* event );
 static int toolkit_keyEvent( Window *wdw, SDL_Event* event );
 /* focus */
@@ -1247,6 +1248,73 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event )
 
 
 /**
+ * @brief Translates the mouse coordinates.
+ *
+ *    @param w Window to translate coords for.
+ *    @param event Event to translate coords.
+ *    @param[out] x Resulting X coord in window space.
+ *    @param[out] y Resulting Y coord in window space.
+ *    @param[out] rx Relative X movement (only valid for motion).
+ *    @param[out] ry Relative Y movement (only valid for motion).
+ *    @return The type of the event.
+ */
+Uint8 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
+      int *x, int *y, int *rx, int *ry )
+{
+   /* Extract the position as event. */
+   if (event->type==SDL_MOUSEMOTION) {
+      *x = (double)event->motion.x;
+      *y = (double)gl_screen.rh - (double)event->motion.y;
+   }
+   else if ((event->type==SDL_MOUSEBUTTONDOWN) || (event->type==SDL_MOUSEBUTTONUP)) {
+      *x = (double)event->button.x;
+      *y = (double)gl_screen.rh - (double)event->button.y;
+   }
+
+   /* Handle possible window scaling. */
+   *x *= gl_screen.mxscale;
+   *y *= gl_screen.myscale;
+
+   /* Transform to relative to window. */
+   *x -= w->x;
+   *y -= w->y;
+
+   /* Relative only matter if mouse motion. */
+   if (event->type==SDL_MOUSEMOTION) {
+      *ry = (double)event->motion.yrel * gl_screen.mxscale;;
+      *rx = (double)event->motion.xrel * gl_screen.myscale;
+   }
+
+   return event->type;
+}
+
+
+/**
+ * @brief Updates a mouse event.
+ *
+ *    @param event Event to update.
+ *    @param x X position of event.
+ *    @param y Y position of event.
+ *    @param rx Relative X event movement.
+ *    @param ry Relative Y event movement.
+ */
+static void toolkit_mouseEventUpdate( SDL_Event *event, int x, int y, int rx, int ry )
+{
+   /* Relative only matter if mouse motion. */
+   if (event->type==SDL_MOUSEMOTION) {
+      event->motion.x = x;
+      event->motion.y = y;
+      event->motion.xrel = rx;
+      event->motion.yrel = ry;
+   }
+   else {
+      event->button.x = x;
+      event->button.y = y;
+   }
+}
+
+
+/**
  * @brief Handles the mouse events.
  *
  *    @param wdw Window recieving the mouse event.
@@ -1255,43 +1323,18 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event )
 static void toolkit_mouseEvent( Window *w, SDL_Event* event )
 {
    int i;
-   double x,y;
    Widget *wgt;
+   Uint8 type;
+   int x, y, rx, ry;
 
-   /* Extract the position as event. */
-   if (event->type==SDL_MOUSEMOTION) {
-      x = (double)event->motion.x;
-      y = (double)gl_screen.rh - (double)event->motion.y;
-   }
-   else if ((event->type==SDL_MOUSEBUTTONDOWN) || (event->type==SDL_MOUSEBUTTONUP)) {
-      x = (double)event->button.x;
-      y = (double)gl_screen.rh - (double)event->button.y;
-   }
-
-   /* Handle possible window scaling. */
-   x *= gl_screen.mxscale;
-   y *= gl_screen.myscale;
-
-   /* Transform to relative to window. */
-   x -= w->x;
-   y -= w->y;
+   /* Translate mouse coords. */
+   type = toolkit_inputTranslateCoords( w, event, &x, &y, &rx, &ry );
+   toolkit_mouseEventUpdate( event, x, y, rx, ry );
 
    /* Check if inbounds (always handle mouseup). */
-   if ((event->type!=SDL_MOUSEBUTTONUP) &&
+   if ((type!=SDL_MOUSEBUTTONUP) &&
       ((x < 0.) || (x > w->w) || (y < 0.) || (y > w->h)))
       return; /* not in current window */
-
-   /* Update the event. */
-   if (event->type==SDL_MOUSEMOTION) {
-      event->motion.x = x;
-      event->motion.y = y;
-      event->motion.yrel = (double)event->motion.yrel * gl_screen.mxscale;
-      event->motion.xrel = (double)event->motion.xrel * gl_screen.myscale;
-   }
-   else if ((event->type==SDL_MOUSEBUTTONDOWN) || (event->type==SDL_MOUSEBUTTONUP)) {
-      event->button.x = x;
-      event->button.y = y;
-   }
 
    for (i=0; i<w->nwidgets; i++) {
       wgt = &w->widgets[i];
@@ -1302,7 +1345,7 @@ static void toolkit_mouseEvent( Window *w, SDL_Event* event )
          if ((wgt->type==WIDGET_CUST) && wgt->dat.cst.mouse) 
             (*wgt->dat.cst.mouse)( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h );
          else
-            switch (event->type) {
+            switch (type) {
                case SDL_MOUSEMOTION:
                   /* Change the status of the widget if mouse isn't down. */
                   if (!(event->motion.state & SDL_BUTTON(SDL_BUTTON_LEFT)))

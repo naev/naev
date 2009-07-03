@@ -13,6 +13,8 @@
 
 #include "toolkit.h"
 
+
+static int tab_mouse( Widget* tab, SDL_Event *event );
 static int tab_raw( Widget* tab, SDL_Event *event );
 static void tab_render( Widget* tab, double bx, double by );
 static void tab_cleanup( Widget* tab );
@@ -94,7 +96,15 @@ static int tab_raw( Widget* tab, SDL_Event *event )
 {
    Window *wdw;
 
-   wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );;
+   /* First handle event internally. */
+   if ((event->type == SDL_MOUSEMOTION) ||
+         (event->type == SDL_MOUSEBUTTONDOWN) ||
+         (event->type == SDL_MOUSEBUTTONUP))
+      tab_mouse( tab, event );
+
+
+   /* Give event to window. */
+   wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
    if (wdw == NULL) {
       WARN("Active window in widget '%s' not found in stack.", tab->name);
       return 0;
@@ -103,6 +113,33 @@ static int tab_raw( Widget* tab, SDL_Event *event )
    /* Give the active window the input. */
    toolkit_inputWindow( wdw, event );
    return 0; /* Never block event. */
+}
+
+
+/**
+ * @brief Handles mouse events.
+ */
+static int tab_mouse( Widget* tab, SDL_Event *event )
+{
+   Window *parent;
+   int x, y, rx, ry;
+   Uint8 type;
+
+   /* Get parrent window. */
+   parent = window_wget( tab->wdw );
+   if (parent == NULL)
+      return 0;
+
+   /* Convert to window space. */
+   type = toolkit_inputTranslateCoords( parent, event, &x, &y, &rx, &ry );
+
+   /* Translate to widget space. */
+   x -= tab->x;
+   y -= tab->y;
+
+   /* Handle event. */
+
+   return 0;
 }
 
 
@@ -119,7 +156,7 @@ static void tab_render( Widget* tab, double bx, double by )
    (void) by;
    Window *wdw;
 
-   wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );;
+   wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
    if (wdw == NULL) {
       WARN("Active window in widget '%s' not found in stack.", tab->name);
       return;
