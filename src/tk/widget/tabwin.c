@@ -37,7 +37,7 @@ static void tab_cleanup( Widget* tab );
 unsigned int* window_addTabbedWindow( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
-      char* name, int ntabs, char **tabnames )
+      const char* name, int ntabs, const char **tabnames )
 {
    int i;
    Window *wdw, *wtmp;
@@ -62,6 +62,7 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
    wgt->h = (double) h;
    toolkit_setPos( wdw, wgt, x, y );
 
+   /* Copy tab information. */
    wgt->dat.tab.tabnames   = malloc( sizeof(char *) * ntabs );
    wgt->dat.tab.windows    = malloc( sizeof(unsigned int) * ntabs );
    for (i=0; i<ntabs; i++) {
@@ -98,6 +99,7 @@ static int tab_raw( Widget* tab, SDL_Event *event )
       return 0;
    }
 
+   /* Give the active window the input. */
    toolkit_inputWindow( wdw, event );
    return 0; /* Never block event. */
 }
@@ -122,6 +124,7 @@ static void tab_render( Widget* tab, double bx, double by )
       return;
    }
 
+   /* Render the active window. */
    window_render( wdw );
 }
 

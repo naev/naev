@@ -43,6 +43,7 @@ void window_handleKeys( const unsigned int wid,
 int window_exists( const char* wdwname );
 int widget_exists( const unsigned int wid, const char* wgtname );
 unsigned int window_get( const char* wdwname );
+void window_dimWindow( const unsigned int wid, int *w, int *h );
 void window_posWidget( const unsigned int wid,
       char* name, int *x, int *y );
 void window_moveWidget( const unsigned int wid,

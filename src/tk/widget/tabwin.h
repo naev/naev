@@ -23,7 +23,7 @@ typedef struct WidgetTabbedWindowData_ {
 unsigned int* window_addTabbedWindow( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
-      char* name, int ntabs, char **tabnames );
+      const char* name, int ntabs, const char **tabnames );
 
 
 #endif /* WGT_TABWIN_H */

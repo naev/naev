@@ -42,29 +42,9 @@
 #define BUTTON_WIDTH 200 /**< Default button width. */
 #define BUTTON_HEIGHT 40 /**< Default button height. */
 
-/* commodity window */
-#define COMMODITY_WIDTH 400 /**< Commodity window width. */
-#define COMMODITY_HEIGHT 400 /**< Commodity window height. */
-
-/* outfits */
-#define OUTFITS_WIDTH   800 /**< Outfits window width. */
-#define OUTFITS_HEIGHT  600 /**< Outfits window height. */
-
-/* shipyard */
-#define SHIPYARD_WIDTH  800 /**< Shipyard window width. */
-#define SHIPYARD_HEIGHT 600 /**< Shipyard window height. */
-
 /* news window */
 #define NEWS_WIDTH   400 /**< News window width. */
 #define NEWS_HEIGHT  500 /**< News window height. */
-
-/* bar window */
-#define BAR_WIDTH    460 /**< Bar window width. */
-#define BAR_HEIGHT   300 /**< Bar window height. */
-
-/* mission computer window */
-#define MISSION_WIDTH   700 /**< Mission computer window width. */
-#define MISSION_HEIGHT  600 /**< Mission computer window height. */
 
 
 /*
@@ -86,6 +66,15 @@ static unsigned int land_visited = 0; /**< Contains what the player visited. */
  */
 int landed = 0; /**< Is player landed. */
 static unsigned int land_wid = 0; /**< Land window ID. */
+static const char *land_windowNames[] = {
+   "Main",
+   "Bar",
+   "Mission",
+   "Outfits",
+   "Shipyard",
+   "Commodity"
+};
+static unsigned int *land_windows = NULL; /**< Landed window ids. */
 Planet* land_planet = NULL; /**< Planet player landed at. */
 static glTexture *gfx_exterior = NULL; /**< Exterior graphic of the landed planet. */
  
@@ -104,15 +93,16 @@ extern int hyperspace_target; /**< from player.c */
 /*
  * prototypes
  */
+static void land_createMainTab( unsigned int wid );
 static void land_cleanupWindow( unsigned int wid, char *name );
 static void land_buttonTakeoff( unsigned int wid, char *unused );
 /* commodity exchange */
-static void commodity_exchange_open( unsigned int parent, char* str );
+static void commodity_exchange_open( unsigned int wid );
 static void commodity_update( unsigned int wid, char* str );
 static void commodity_buy( unsigned int wid, char* str );
 static void commodity_sell( unsigned int wid, char* str );
 /* outfits */
-static void outfits_open( unsigned int parent, char* str );
+static void outfits_open( unsigned int wid );
 static void outfits_update( unsigned int wid, char* str );
 static int outfit_canBuy( Outfit* outfit, int q, int errmsg );
 static void outfits_buy( unsigned int wid, char* str );
@@ -121,7 +111,7 @@ static void outfits_sell( unsigned int wid, char* str );
 static int outfits_getMod (void);
 static void outfits_renderMod( double bx, double by, double w, double h );
 /* shipyard */
-static void shipyard_open( unsigned int parent, char* str );
+static void shipyard_open( unsigned int wid );
 static void shipyard_update( unsigned int wid, char* str );
 static void shipyard_info( unsigned int wid, char* str );
 static void shipyard_buy( unsigned int wid, char* str );
@@ -133,11 +123,11 @@ static void shipyard_yoursSell( unsigned int wid, char* str );
 static void shipyard_yoursTransport( unsigned int wid, char* str );
 static unsigned int shipyard_yoursTransportPrice( char* shipname );
 /* spaceport bar */
-static void spaceport_bar_open( unsigned int parent, char* str );
+static void spaceport_bar_open( unsigned int wid );
 /* news */
 static void news_open(unsigned int parent, char *str);
 /* mission computer */
-static void misn_open( unsigned int parent, char* str );
+static void misn_open( unsigned int wid );
 static void misn_close( unsigned int wid, char *name );
 static void misn_accept( unsigned int wid, char* str );
 static void misn_genList( unsigned int wid, int first );
@@ -154,17 +144,14 @@ extern unsigned int economy_getPrice( const Commodity *com,
 /**
  * @brief Opens the local market window.
  */
-static void commodity_exchange_open( unsigned int parent, char *str )
+static void commodity_exchange_open( unsigned int wid )
 {
-   (void) str;
    int i;
    char **goods;
-   unsigned int wid;
+   int w, h;
 
-   /* window */
-   wid = window_create( "Commodity Exchange",
-         -1, -1, COMMODITY_WIDTH, COMMODITY_HEIGHT );
-   window_setParent( wid, parent );
+   /* Get window dimensions. */
+   window_dimWindow( wid, &w, &h );
 
    /* buttons */
    window_addButton( wid, -20, 20,
@@ -187,7 +174,7 @@ static void commodity_exchange_open( unsigned int parent, char *str )
    window_addText( wid, -20, -40, BUTTON_WIDTH/2, 60, 0,
          "txtDInfo", &gl_smallFont, &cBlack, NULL );
    window_addText( wid, -40, -120, BUTTON_WIDTH-20,
-         COMMODITY_HEIGHT-140-BUTTON_HEIGHT, 0,
+         h-140-BUTTON_HEIGHT, 0,
          "txtDesc", &gl_smallFont, &cBlack, NULL );
 
    /* goods list */
@@ -195,7 +182,7 @@ static void commodity_exchange_open( unsigned int parent, char *str )
    for (i=0; i<land_planet->ncommodities; i++)
       goods[i] = strdup(land_planet->commodities[i]->name);
    window_addList( wid, 20, -40,
-         COMMODITY_WIDTH-BUTTON_WIDTH-60, COMMODITY_HEIGHT-80-BUTTON_HEIGHT,
+         w-BUTTON_WIDTH-60, h-80-BUTTON_HEIGHT,
          "lstGoods", goods, land_planet->ncommodities, 0, commodity_update );
 
    /* update */
@@ -293,23 +280,20 @@ static void commodity_sell( unsigned int wid, char* str )
 /**
  * @brief Opens the outfit exchange center window.
  */
-static void outfits_open( unsigned int parent, char* str )
+static void outfits_open( unsigned int wid )
 {
-   (void) str;
    int i;
    Outfit **outfits;
    char **soutfits;
    glTexture **toutfits;
    int noutfits;
-   char buf[128];
-   unsigned int wid;
+   int w, h;
 
-   /* create window */
-   snprintf(buf,128,"%s - Outfits", land_planet->name );
-   wid = window_create( buf, -1, -1,
-         OUTFITS_WIDTH, OUTFITS_HEIGHT );
-   window_setParent( wid, parent );
-   window_setAccept( wid, outfits_buy ); /* will allow buying from keyboard */
+   /* Get window dimensions. */
+   window_dimWindow( wid, &w, &h );
+
+   /* will allow buying from keyboard */
+   window_setAccept( wid, outfits_buy );
 
    /* buttons */
    window_addButton( wid, -20, 20,
@@ -346,7 +330,7 @@ static void outfits_open( unsigned int parent, char* str )
    window_addText( wid, 40+300+40+60, -60,
          250, 160, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
    window_addText( wid, 20+300+40, -240,
-         OUTFITS_WIDTH-400, 180, 0, "txtDescription",
+         w-400, 180, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 
    /* set up the outfits to buy/sell */
@@ -369,7 +353,7 @@ static void outfits_open( unsigned int parent, char* str )
       free(outfits);
    }
    window_addImageArray( wid, 20, 40,
-         310, OUTFITS_HEIGHT-80, "iarOutfits", 64, 64,
+         310, h-80, "iarOutfits", 64, 64,
          toutfits, soutfits, noutfits, outfits_update );
 
    /* write the outfits stuff */
@@ -678,22 +662,17 @@ static void outfits_renderMod( double bx, double by, double w, double h )
 /**
  * @brief Opens the shipyard window.
  */
-static void shipyard_open( unsigned int parent, char* str )
+static void shipyard_open( unsigned int wid )
 {
-   (void) str;
    int i;
    Ship **ships;
    char **sships;
    glTexture **tships;
    int nships;
-   char buf[128];
-   unsigned int wid;
+   int w, h;
 
-   /* window creation */
-   snprintf( buf, 128, "%s - Shipyard", land_planet->name );
-   wid = window_create( buf,
-         -1, -1, SHIPYARD_WIDTH, SHIPYARD_HEIGHT );
-   window_setParent( wid, parent );
+   /* Get window dimensions. */
+   window_dimWindow( wid, &w, &h );
 
    /* buttons */
    window_addButton( wid, -20, 20,
@@ -728,7 +707,7 @@ static void shipyard_open( unsigned int parent, char* str )
    window_addText( wid, 40+300+40+80, -55,
          130, 128, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
    window_addText( wid, 20+310+40, -55-128-20,
-         SHIPYARD_WIDTH-(20+310+40) - 20, 185, 0, "txtDescription",
+         w-(20+310+40) - 20, 185, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 
    /* set up the ships to buy/sell */
@@ -750,7 +729,7 @@ static void shipyard_open( unsigned int parent, char* str )
       free(ships);
    }
    window_addImageArray( wid, 20, 40,
-         310, SHIPYARD_HEIGHT-80, "iarShipyard", 64./96.*128., 64.,
+         310, h-80, "iarShipyard", 64./96.*128., 64.,
          tships, sships, nships, shipyard_update );
 
    /* write the shipyard stuff */
@@ -904,10 +883,14 @@ static void shipyard_yours_open( unsigned int parent, char* str )
    glTexture **tships;
    int nships;
    unsigned int wid;
+   int w, h;
+
+   /* Get window dimensions. */
+   window_dimWindow( parent, &w, &h );
 
    /* create window */
    wid = window_create( "Your Ships",
-         -1, -1, SHIPYARD_WIDTH, SHIPYARD_HEIGHT );
+         -1, -1, w, h);
    window_setParent( wid, parent );
 
    /* buttons */
@@ -951,7 +934,7 @@ static void shipyard_yours_open( unsigned int parent, char* str )
       "Outfits:\n"
       );
    window_addText( wid, 40+300+40, -255-gl_smallFont.h-5,
-      SHIPYARD_WIDTH-40-300-40-20, 200, 0, "txtDOutfits",
+      w-40-300-40-20, 200, 0, "txtDOutfits",
       &gl_smallFont, &cBlack, NULL );
 
    /* ship list */
@@ -960,7 +943,7 @@ static void shipyard_yours_open( unsigned int parent, char* str )
    tships = malloc(sizeof(glTexture*)*nships);
    player_ships( sships, tships );
    window_addImageArray( wid, 20, 40,
-         310, SHIPYARD_HEIGHT-80, "iarYourShips", 64./96.*128., 64.,
+         310, h-80, "iarYourShips", 64./96.*128., 64.,
          tships, sships, nships, shipyard_yoursUpdate );
 
    shipyard_yoursUpdate(wid, NULL);
@@ -1174,15 +1157,12 @@ static unsigned int shipyard_yoursTransportPrice( char* shipname )
 /**
  * @brief Opens the spaceport bar window.
  */
-static void spaceport_bar_open( unsigned int parent, char* str )
+static void spaceport_bar_open( unsigned int wid )
 {
-   (void) str;
-   unsigned int wid;
+   int w, h;
 
-   /* window */
-   wid = window_create( "Spaceport Bar",
-         -1, -1, BAR_WIDTH, BAR_HEIGHT );
-   window_setParent( wid, parent );
+   /* Get window dimensions. */
+   window_dimWindow( wid, &w, &h );
 
    /* buttons */
    window_addButton( wid, -20, 20,
@@ -1194,7 +1174,7 @@ static void spaceport_bar_open( unsigned int parent, char* str )
 
    /* text */
    window_addText( wid, 20, -50,
-         BAR_WIDTH - 40, BAR_HEIGHT - 60 - BUTTON_HEIGHT, 0,
+         w - 40, h - 60 - BUTTON_HEIGHT, 0,
          "txtDescription", &gl_smallFont, &cBlack, land_planet->bar_description );
 
    if (!has_visited(VISITED_BAR)) {
@@ -1244,16 +1224,15 @@ static void news_open( unsigned int parent, char *str )
 /**
  * @brief Opens the mission computer window.
  */
-static void misn_open( unsigned int parent, char* str )
+static void misn_open( unsigned int wid )
 {
-   (void) str;
-   unsigned int wid;
    char *buf;
+   int w, h;
 
-   /* create window */
-   wid = window_create( "Mission Computer",
-         -1, -1, MISSION_WIDTH, MISSION_HEIGHT );
-   window_setParent( wid, parent );
+   /* Get window dimensions. */
+   window_dimWindow( wid, &w, &h );
+
+   /* Set window functions. */
    window_onClose( wid, misn_close );
 
    /* buttons */
@@ -1265,27 +1244,27 @@ static void misn_open( unsigned int parent, char* str )
          "Accept", misn_accept );
 
    /* text */
-   window_addText( wid, MISSION_WIDTH/2 + 10, -60,
-         MISSION_WIDTH/2 - 30, 20, 0,
+   window_addText( wid, w/2 + 10, -60,
+         w/2 - 30, 20, 0,
          "txtSDate", NULL, &cDConsole, "Date:" );
    buf = ntime_pretty(0);
-   window_addText( wid, MISSION_WIDTH/2 + 70, -60,
-         MISSION_WIDTH/2 - 90, 20, 0,
+   window_addText( wid, w/2 + 70, -60,
+         w/2 - 90, 20, 0,
          "txtDate", NULL, &cBlack, buf );
    free(buf);
-   window_addText( wid, MISSION_WIDTH/2 + 10, -100,
-         MISSION_WIDTH/2 - 30, 20, 0,
+   window_addText( wid, w/2 + 10, -100,
+         w/2 - 30, 20, 0,
          "txtSReward", &gl_smallFont, &cDConsole, "Reward:" );
-   window_addText( wid, MISSION_WIDTH/2 + 70, -100,
-         MISSION_WIDTH/2 - 90, 20, 0,
+   window_addText( wid, w/2 + 70, -100,
+         w/2 - 90, 20, 0,
          "txtReward", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, MISSION_WIDTH/2 + 10, -120,
-         MISSION_WIDTH/2 - 30, MISSION_HEIGHT/2-90, 0,
+   window_addText( wid, w/2 + 10, -120,
+         w/2 - 30, h/2-90, 0,
          "txtDesc", &gl_smallFont, &cBlack, NULL );
 
    /* map */
    map_show( wid, 20, 20,
-         MISSION_WIDTH/2 - 30, MISSION_HEIGHT/2 - 35, 0.75 );
+         w/2 - 30, h/2 - 35, 0.75 );
 
 
    misn_genList(wid, 1);
@@ -1354,9 +1333,13 @@ static void misn_genList( unsigned int wid, int first )
 {
    int i,j;
    char** misn_names;
+   int w,h;
 
    if (!first)
       window_destroyWidget( wid, "lstMission" );
+
+   /* Get window dimensions. */
+   window_dimWindow( wid, &w, &h );
 
    /* list */
    j = 1; /* make sure we don't accidently free the memory twice. */
@@ -1375,7 +1358,7 @@ static void misn_genList( unsigned int wid, int first )
       j = 1;
    }
    window_addList( wid, 20, -40,
-         MISSION_WIDTH/2 - 30, MISSION_HEIGHT/2 - 35,
+         w/2 - 30, h/2 - 35,
          "lstMission", misn_names, j, 0, misn_update );
 
    misn_update(wid, NULL);
@@ -1457,31 +1440,31 @@ static void land_checkAddRefuel (void)
       return;
 
    /* Just enable button if it exists. */
-   if (widget_exists( land_wid, "btnRefuel" )) {
-      window_enableButton( land_wid, "btnRefuel");
+   if (widget_exists( land_windows[0], "btnRefuel" )) {
+      window_enableButton( land_windows[0], "btnRefuel");
       credits2str( cred, player->credits, 2 );
       snprintf( buf, 32, "Credits: %s", cred );
-      window_modifyText( land_wid, "txtRefuel", buf );
+      window_modifyText( land_windows[0], "txtRefuel", buf );
    }
    /* Else create it. */
    else {
       /* Refuel button. */
       credits2str( cred, refuel_price(), 2 );
       snprintf( buf, 32, "Refuel %s", cred );
-      window_addButton( land_wid, -20, 20 + 2*(BUTTON_HEIGHT + 20),
+      window_addButton( land_windows[0], -20, 20 + 2*(BUTTON_HEIGHT + 20),
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnRefuel",
             buf, spaceport_refuel );
       /* Player credits. */
       credits2str( cred, player->credits, 2 );
       snprintf( buf, 32, "Credits: %s", cred );
-      window_addText( land_wid, -20, 20 + 3*(BUTTON_HEIGHT + 20),
+      window_addText( land_windows[0], -20, 20 + 3*(BUTTON_HEIGHT + 20),
             BUTTON_WIDTH, gl_smallFont.h, 1, "txtRefuel",
             &gl_smallFont, &cBlack, buf );
    }
    
    /* Make sure player can click it. */
    if (player->credits < refuel_price())
-      window_disableButton( land_wid, "btnRefuel" );
+      window_disableButton( land_windows[0], "btnRefuel" );
 }
 
 
@@ -1525,10 +1508,12 @@ static void land_cleanupWindow( unsigned int wid, char *name )
  */
 void land( Planet* p )
 {
-   glTexture *logo;
-   int offset;
+   int j;
+   const char *names[6];
 
-   if (landed) return;
+   /* Do not land twice. */
+   if (landed)
+      return;
 
    /* Load stuff */
    land_planet = p;
@@ -1536,57 +1521,41 @@ void land( Planet* p )
    land_wid = window_create( p->name, -1, -1, LAND_WIDTH, LAND_HEIGHT );
    window_onClose( land_wid, land_cleanupWindow );
 
-   /*
-    * Faction logo.
-    */
-   offset = 20;
-   if (land_planet->faction != -1) {
-      logo = faction_logoSmall(land_planet->faction);
-      if (logo != NULL) {
-         window_addImage( land_wid, 440 + (LAND_WIDTH-460-logo->w)/2, -20,
-               "imgFaction", logo, 0 );
-         offset = 84;
-      }
-   }
+   /* generate mission computer stuff */
+   mission_computer = missions_computer( &mission_ncomputer,
+         land_planet->faction, land_planet->name, cur_system->name );
 
-   /*
-    * Pretty display.
-    */
-   window_addImage( land_wid, 20, -40, "imgPlanet", gfx_exterior, 1 );
-   window_addText( land_wid, 440, -20-offset,
-         LAND_WIDTH-460, LAND_HEIGHT-20-offset-60-BUTTON_HEIGHT*2, 0, 
-         "txtPlanetDesc", &gl_smallFont, &cBlack, p->description);
+   /* Generate the news. */
+   if (planet_hasService(land_planet, PLANET_SERVICE_BASIC))
+      news_load();
 
-   /*
-    * buttons
-    */
-   /* first column */
-   window_addButton( land_wid, -20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnTakeoff",
-         "Takeoff", land_buttonTakeoff );
-   if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
-      window_addButton( land_wid, -20, 20 + BUTTON_HEIGHT + 20,
-            BUTTON_WIDTH, BUTTON_HEIGHT, "btnCommodity",
-            "Commodity Exchange", commodity_exchange_open);
-   /* second column */
-   if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
-      window_addButton( land_wid, -20 - BUTTON_WIDTH - 20, 20,
-            BUTTON_WIDTH, BUTTON_HEIGHT, "btnShipyard",
-            "Shipyard", shipyard_open);
-   if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS))
-      window_addButton( land_wid, -20 - BUTTON_WIDTH - 20, 20 + BUTTON_HEIGHT + 20,
-            BUTTON_WIDTH, BUTTON_HEIGHT, "btnOutfits",
-            "Outfits", outfits_open);
-   /* third column */
+   /* See what is available. */
+   j = 0;
+   names[j++] = land_windowNames[0];
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
-      window_addButton( land_wid, 20, 20,
-            BUTTON_WIDTH, BUTTON_HEIGHT, "btnNews",
-            "Mission Terminal", misn_open);
-      window_addButton( land_wid, 20, 20 + BUTTON_HEIGHT + 20,
-            BUTTON_WIDTH, BUTTON_HEIGHT, "btnBar",
-            "Spaceport Bar", spaceport_bar_open);
+      names[j++] = land_windowNames[1];
+      names[j++] = land_windowNames[2];
    }
+   if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS))
+      names[j++] = land_windowNames[3];
+   if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
+      names[j++] = land_windowNames[4];
+   if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
+      names[j++] = land_windowNames[5];
 
+   /* Create tabbed window. */
+   land_windows = window_addTabbedWindow( land_wid, -1, -1, -1, -1, "tabLand", j, names );
+   land_createMainTab( land_windows[0] );
+   if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
+      spaceport_bar_open( land_windows[1] );
+      misn_open( land_windows[2] );
+   }
+   if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS))
+      outfits_open( land_windows[3] );
+   if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
+      shipyard_open( land_windows[4] );
+   if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
+      commodity_exchange_open( land_windows[5] );
 
    /* player is now officially landed */
    landed = 1;
@@ -1596,14 +1565,6 @@ void land( Planet* p )
 
    /* Run hooks, run after music in case hook wants to change music. */
    hooks_run("land");
-
-   /* generate mission computer stuff */
-   mission_computer = missions_computer( &mission_ncomputer,
-         land_planet->faction, land_planet->name, cur_system->name );
-
-   /* Generate the news. */
-   if (planet_hasService(land_planet, PLANET_SERVICE_BASIC))
-      news_load();
 
    /* Check land missions. */
    if (!has_visited(VISITED_LAND)) {
@@ -1620,6 +1581,51 @@ void land( Planet* p )
       landed = 1; /* ugly hack to make takeoff not complain. */
       takeoff(0);
    }
+}
+
+
+/**
+ * @brief Creates the main tab.
+ *
+ *    @param wid Window to create main tab.
+ */
+static void land_createMainTab( unsigned int wid )
+{
+   glTexture *logo;
+   int offset;
+   int w,h;
+
+   /* Get window dimensions. */
+   window_dimWindow( wid, &w, &h );
+
+   /*
+    * Faction logo.
+    */
+   offset = 20;
+   if (land_planet->faction != -1) {
+      logo = faction_logoSmall(land_planet->faction);
+      if (logo != NULL) {
+         window_addImage( wid, 440 + (w-460-logo->w)/2, -20,
+               "imgFaction", logo, 0 );
+         offset = 84;
+      }
+   }
+
+   /*
+    * Pretty display.
+    */
+   window_addImage( wid, 20, -40, "imgPlanet", gfx_exterior, 1 );
+   window_addText( wid, 440, -20-offset,
+         w-460, h-20-offset-60-BUTTON_HEIGHT*2, 0, 
+         "txtPlanetDesc", &gl_smallFont, &cBlack, land_planet->description);
+
+   /*
+    * buttons
+    */
+   /* first column */
+   window_addButton( wid, -20, 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT, "btnTakeoff",
+         "Takeoff", land_buttonTakeoff );
 }
 
 
