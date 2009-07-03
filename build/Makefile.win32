@@ -10,7 +10,7 @@ CXML   := $(shell xml2-config --cflags)
 CTTF   := $(shell freetype-config --cflags)
 CPNG   := $(shell libpng-config --cflags)
 CGL    :=
-CFLAGS := -Isrc $(CLUA) $(CCSPARSE) $(CSDL) $(CXML) $(CTTF) $(CPNG) $(CGL) $(VERSION) -D$(OS) $(COMMON_FLAGS)
+CFLAGS := -Isrc $(CLUA) $(CCSPARSE) $(CSDL) $(CXML) $(CTTF) $(CPNG) $(CGL) $(VERSION) -D$(OS) $(COMMON_CFLAGS)
 ifdef NDATA_DEF
 CFLAGS += -DNDATA_DEF=$(NDATA_DEF)
 endif
