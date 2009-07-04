@@ -67,6 +67,7 @@ static int misn_setDesc( lua_State *L );
 static int misn_setReward( lua_State *L );
 static int misn_setMarker( lua_State *L );
 static int misn_setNPC( lua_State *L );
+static int misn_setPriority( lua_State *L );
 static int misn_factions( lua_State *L );
 static int misn_accept( lua_State *L );
 static int misn_finish( lua_State *L );
@@ -85,6 +86,7 @@ static const luaL_reg misn_methods[] = {
    { "setReward", misn_setReward },
    { "setMarker", misn_setMarker },
    { "setNPC", misn_setNPC },
+   { "setPriority", misn_setPriority },
    { "factions", misn_factions },
    { "accept", misn_accept },
    { "finish", misn_finish },
@@ -357,7 +359,9 @@ static int misn_setMarker( lua_State *L )
 
 
 /**
- * @brief Sets the current mission reward description.
+ * @brief Sets the current mission NPC.
+ *
+ * This is used in bar missions where you talk to a person.
  *
  * @usage misn.setNPC( "Invisible Man", "none" )
  *
@@ -397,6 +401,19 @@ static int misn_setNPC( lua_State *L )
    snprintf( buf, PATH_MAX, "gfx/portrait/%s.png", str );
    cur_mission->portrait = gl_newImage( buf, 0 );
 
+   return 0;
+}
+
+
+/**
+ * @brief Sets the current mission priority for when organizing missions.
+ *
+ *    @luaparam pri Priority to set mission to.
+ * @luafunc setPriority( pri )
+ */
+static int misn_setPriority( lua_State *L )
+{
+   cur_mission->priority = CLAMP( 0, 100, luaL_checkint(L, 1) );
    return 0;
 }
 
