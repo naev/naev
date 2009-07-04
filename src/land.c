@@ -713,11 +713,11 @@ static void shipyard_open( unsigned int wid )
    /* set up the ships to buy/sell */
    ships = ship_getTech( &nships, land_planet->tech, PLANET_TECH_MAX );
    if (nships <= 0) {
-      sships = malloc(sizeof(char*));
+      sships    = malloc(sizeof(char*));
       sships[0] = strdup("None");
-      tships = malloc(sizeof(glTexture*));
+      tships    = malloc(sizeof(glTexture*));
       tships[0] = NULL;
-      nships = 1;
+      nships    = 1;
    }
    else {
       sships = malloc(sizeof(char*)*nships);
@@ -887,6 +887,7 @@ static void shipyard_yours_open( unsigned int parent, char* str )
 
    /* Get window dimensions. */
    window_dimWindow( parent, &w, &h );
+   h += 20;
 
    /* create window */
    wid = window_create( "Your Ships",
