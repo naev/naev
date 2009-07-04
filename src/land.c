@@ -67,8 +67,8 @@ static unsigned int land_visited = 0; /**< Contains what the player visited. */
 int landed = 0; /**< Is player landed. */
 static unsigned int land_wid = 0; /**< Land window ID. */
 static const char *land_windowNames[] = {
-   "Main",
-   "Bar",
+   "Landing Main",
+   "Spaceport Bar",
    "Mission",
    "Outfits",
    "Shipyard",
