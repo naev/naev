@@ -894,10 +894,20 @@ static void shipyard_yours_open( unsigned int parent, char* str )
    int nships;
    unsigned int wid;
    int w, h;
+   int iw, ih;
+   int bw, bh;
 
    /* Get window dimensions. */
    window_dimWindow( parent, &w, &h );
    h += 20;
+
+   /* Calculate image array dimensions. */
+   iw = 310;
+   ih = h - 60;
+
+   /* Calculate button dimensions. */
+   bw = (w - iw - 80) / 2;
+   bh = 30;
 
    /* create window */
    wid = window_create( "Your Ships",
@@ -906,16 +916,16 @@ static void shipyard_yours_open( unsigned int parent, char* str )
 
    /* buttons */
    window_addButton( wid, -20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseYourShips",
+         bw, bh, "btnCloseYourShips",
          "Shipyard", window_close );
-   window_addButton( wid, -40-BUTTON_WIDTH, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnChangeShip",
+   window_addButton( wid, -40-bw, 20,
+         bw, bh, "btnChangeShip",
          "Change Ship", shipyard_yoursChange );
-   window_addButton( wid, -40-BUTTON_WIDTH, 40+BUTTON_HEIGHT,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnTransportShip",
+   window_addButton( wid, -40-bw, 40+bh,
+         bw, bh, "btnTransportShip",
          "Transport Ship", shipyard_yoursTransport );
-   window_addButton( wid, -20, 40+BUTTON_HEIGHT,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnSellShip",
+   window_addButton( wid, -20, 40+bh,
+         bw, bh, "btnSellShip",
          "Sell Ship", shipyard_yoursSell );
 
    /* image */
@@ -953,8 +963,8 @@ static void shipyard_yours_open( unsigned int parent, char* str )
    sships = malloc(sizeof(char*)*nships);
    tships = malloc(sizeof(glTexture*)*nships);
    player_ships( sships, tships );
-   window_addImageArray( wid, 20, 40,
-         310, h-80, "iarYourShips", 64./96.*128., 64.,
+   window_addImageArray( wid, 20, 20,
+         iw, ih, "iarYourShips", 64./96.*128., 64.,
          tships, sships, nships, shipyard_yoursUpdate );
 
    shipyard_yoursUpdate(wid, NULL);
