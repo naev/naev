@@ -156,7 +156,7 @@ static void commodity_exchange_open( unsigned int wid )
    /* buttons */
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnCommodityClose",
-         "Close", window_close );
+         "Takeoff", land_buttonTakeoff );
    window_addButton( wid, -40-((BUTTON_WIDTH-20)/2), 20*2 + BUTTON_HEIGHT,
          (BUTTON_WIDTH-20)/2, BUTTON_HEIGHT, "btnCommodityBuy",
          "Buy", commodity_buy );
@@ -298,7 +298,7 @@ static void outfits_open( unsigned int wid )
    /* buttons */
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseOutfits",
-         "Close", window_close );
+         "Takeoff", land_buttonTakeoff );
    window_addButton( wid, -40-BUTTON_WIDTH, 40+BUTTON_HEIGHT,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnBuyOutfit",
          "Buy", outfits_buy );
@@ -677,7 +677,7 @@ static void shipyard_open( unsigned int wid )
    /* buttons */
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseShipyard",
-         "Close", window_close );
+         "Takeoff", land_buttonTakeoff );
    window_addButton( wid, -20, 40+BUTTON_HEIGHT,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnYourShips",
          "Your Ships", shipyard_yours_open );
@@ -1167,7 +1167,7 @@ static void spaceport_bar_open( unsigned int wid )
    /* buttons */
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseBar",
-         "Close", window_close );
+         "Takeoff", land_buttonTakeoff );
    window_addButton( wid, 20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnNews",
          "News", news_open);
@@ -1238,7 +1238,7 @@ static void misn_open( unsigned int wid )
    /* buttons */
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseMission",
-         "Close", window_close );
+         "Takeoff", land_buttonTakeoff );
    window_addButton( wid, -20, 40+BUTTON_HEIGHT,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnAcceptMission",
          "Accept", misn_accept );
