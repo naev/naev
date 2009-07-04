@@ -288,22 +288,32 @@ static void outfits_open( unsigned int wid )
    glTexture **toutfits;
    int noutfits;
    int w, h;
+   int iw, ih;
+   int bw, bh;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
+
+   /* Calculate image array dimensions. */
+   iw = 310;
+   ih = h - 60;
+
+   /* Calculate button dimensions. */
+   bw = (w - iw - 80) / 2;
+   bh = 30;
 
    /* will allow buying from keyboard */
    window_setAccept( wid, outfits_buy );
 
    /* buttons */
    window_addButton( wid, -20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseOutfits",
+         bw, bh, "btnCloseOutfits",
          "Takeoff", land_buttonTakeoff );
-   window_addButton( wid, -40-BUTTON_WIDTH, 40+BUTTON_HEIGHT,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnBuyOutfit",
+   window_addButton( wid, -40-bw, 40+bh,
+         bw, bh, "btnBuyOutfit",
          "Buy", outfits_buy );
-   window_addButton( wid, -40-BUTTON_WIDTH, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnSellOutfit",
+   window_addButton( wid, -40-bw, 20,
+         bw, bh, "btnSellOutfit",
          "Sell", outfits_sell );
 
    /* fancy 128x128 image */
@@ -311,8 +321,8 @@ static void outfits_open( unsigned int wid )
    window_addImage( wid, -20-128, -50-128, "imgOutfit", NULL, 1 );
 
    /* cust draws the modifier */
-   window_addCust( wid, -40-BUTTON_WIDTH, 60+2*BUTTON_HEIGHT,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "cstMod", 0, outfits_renderMod, NULL );
+   window_addCust( wid, -40-bw, 60+2*bh,
+         bw, bh, "cstMod", 0, outfits_renderMod, NULL );
 
    /* the descriptive text */
    window_addText( wid, 40+300+20, -60,
@@ -336,11 +346,11 @@ static void outfits_open( unsigned int wid )
    /* set up the outfits to buy/sell */
    outfits = outfit_getTech( &noutfits, land_planet->tech, PLANET_TECH_MAX);
    if (noutfits <= 0) { /* No outfits */
-      soutfits = malloc(sizeof(char*));
+      soutfits    = malloc(sizeof(char*));
       soutfits[0] = strdup("None");
-      toutfits = malloc(sizeof(glTexture*));
+      toutfits    = malloc(sizeof(glTexture*));
       toutfits[0] = NULL;
-      noutfits = 1;
+      noutfits    = 1;
    }
    else {
       /* Create the outfit arrays. */
@@ -352,8 +362,8 @@ static void outfits_open( unsigned int wid )
       }
       free(outfits);
    }
-   window_addImageArray( wid, 20, 40,
-         310, h-80, "iarOutfits", 64, 64,
+   window_addImageArray( wid, 20, 20,
+         iw, ih, "iarOutfits", 64, 64,
          toutfits, soutfits, noutfits, outfits_update );
 
    /* write the outfits stuff */
