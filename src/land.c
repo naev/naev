@@ -300,7 +300,7 @@ static void outfits_open( unsigned int wid )
 
    /* Calculate button dimensions. */
    bw = (w - iw - 80) / 2;
-   bh = 30;
+   bh = BUTTON_HEIGHT;
 
    /* will allow buying from keyboard */
    window_setAccept( wid, outfits_buy );
@@ -692,7 +692,7 @@ static void shipyard_open( unsigned int wid )
 
    /* Calculate button dimensions. */
    bw = (w - iw - 80) / 2;
-   bh = 30;
+   bh = BUTTON_HEIGHT;
 
    /* buttons */
    window_addButton( wid, -20, 20,
@@ -917,7 +917,7 @@ static void shipyard_yours_open( unsigned int parent, char* str )
 
    /* Calculate button dimensions. */
    bw = (w - iw - 80) / 2;
-   bh = 30;
+   bh = BUTTON_HEIGHT;
 
    /* create window */
    wid = window_create( "Your Ships",
