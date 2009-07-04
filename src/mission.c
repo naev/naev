@@ -183,7 +183,7 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
    free(buf);
 
    /* run create function */
-   if (!create) {
+   if (create) {
       /* Failed to create. */
       if (misn_run( mission, "create")) {
          mission_cleanup(mission);
