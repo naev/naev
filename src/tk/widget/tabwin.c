@@ -12,6 +12,7 @@
 #include "tk/toolkit_priv.h"
 
 #include "toolkit.h"
+#include "font.h"
 
 
 static int tab_mouse( Widget* tab, SDL_Event *event );
@@ -68,10 +69,15 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
    /* Copy tab information. */
    wgt->dat.tab.tabnames   = malloc( sizeof(char *) * ntabs );
    wgt->dat.tab.windows    = malloc( sizeof(unsigned int) * ntabs );
+   wgt->dat.tab.namelen    = malloc( sizeof(int) * ntabs );
    for (i=0; i<ntabs; i++) {
+      /* Get name and length. */
       wgt->dat.tab.tabnames[i] = strdup( tabnames[i] );
+      wgt->dat.tab.namelen[i]  = gl_printWidthRaw( &gl_smallFont,
+            wgt->dat.tab.tabnames[i] );
+      /* Create windows. */
       wgt->dat.tab.windows[i] = window_create( tabnames[i],
-            wdw->x + x, wdw->y + y, wdw->w, wdw->h );
+            wdw->x + x, wdw->y + y + 20., wdw->w, wdw->h - 20. );
       wtmp = window_wget( wgt->dat.tab.windows[i] );
       /* Set flags. */
       window_setFlag( wtmp, WINDOW_NOFOCUS );
@@ -97,9 +103,7 @@ static int tab_raw( Widget* tab, SDL_Event *event )
    Window *wdw;
 
    /* First handle event internally. */
-   if ((event->type == SDL_MOUSEMOTION) ||
-         (event->type == SDL_MOUSEBUTTONDOWN) ||
-         (event->type == SDL_MOUSEBUTTONUP))
+   if (event->type == SDL_MOUSEBUTTONDOWN)
       tab_mouse( tab, event );
 
 
@@ -121,6 +125,7 @@ static int tab_raw( Widget* tab, SDL_Event *event )
  */
 static int tab_mouse( Widget* tab, SDL_Event *event )
 {
+   int i, p;
    Window *parent;
    int x, y, rx, ry;
    Uint8 type;
@@ -134,10 +139,23 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
    type = toolkit_inputTranslateCoords( parent, event, &x, &y, &rx, &ry );
 
    /* Translate to widget space. */
-   x -= tab->x;
-   y -= tab->y;
+   x += parent->w - tab->x;
+   y += parent->h - tab->y;
+
+   /* Make sure event is in bottom 20 pixels. */
+   if ((y>=20) || (y<0))
+      return 0;
 
    /* Handle event. */
+   p = 0;
+   for (i=0; i<tab->dat.tab.ntabs; i++) {
+      p += 10 + tab->dat.tab.namelen[i];
+      /* Mark as active. */
+      if (x < p) {
+         tab->dat.tab.active = i;
+         break;
+      }
+   }
 
    return 0;
 }
@@ -152,10 +170,11 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
  */
 static void tab_render( Widget* tab, double bx, double by )
 {
-   (void) bx;
-   (void) by;
+   int i, x, h;
    Window *wdw;
+   glColour *c, *lc;
 
+   /** Get window. */
    wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
    if (wdw == NULL) {
       WARN("Active window in widget '%s' not found in stack.", tab->name);
@@ -164,6 +183,30 @@ static void tab_render( Widget* tab, double bx, double by )
 
    /* Render the active window. */
    window_render( wdw );
+
+   /* Render tabs ontop. */
+   x = 0;
+   h = 20;
+   for (i=0; i<tab->dat.tab.ntabs; i++) {
+      if (i==tab->dat.tab.active) {
+         lc = toolkit_colLight;
+         c  = toolkit_col;
+      }
+      else {
+         lc = toolkit_col;
+         c  = toolkit_colDark;
+      }
+      /* Draw border. */
+      toolkit_drawRect( bx+x, by+0, tab->dat.tab.namelen[i] + 10, h, c, lc );
+      toolkit_drawOutline( bx+x, by+0, tab->dat.tab.namelen[i] + 10, h, 1., &cBlack, c );
+      /* Draw text. */
+      gl_printRaw( &gl_smallFont, bx+x + 5 + SCREEN_W/2,
+            by + (h-gl_smallFont.h)/2 + SCREEN_H/2, &cBlack,
+            tab->dat.tab.tabnames[i] );
+
+      /* Go to next line. */
+      x += 10 + tab->dat.tab.namelen[i];
+   }
 }
 
 
@@ -183,4 +226,6 @@ static void tab_cleanup( Widget *tab )
       free( tab->dat.tab.tabnames );
    if (tab->dat.tab.windows != NULL)
       free( tab->dat.tab.windows );
+   if (tab->dat.tab.namelen != NULL)
+      free( tab->dat.tab.namelen );
 }

@@ -16,6 +16,9 @@ typedef struct WidgetTabbedWindowData_ {
    char **tabnames; /**< Names of the tabs. */
    unsigned int *windows; /**< Window IDs. */
    int active; /**< Currently active window. */
+
+   /* Internal usage. */
+   int *namelen;
 } WidgetTabbedWindowData;
 
 
