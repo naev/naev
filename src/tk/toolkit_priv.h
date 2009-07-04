@@ -118,6 +118,7 @@ typedef struct Widget_ {
 #define WINDOW_NOFOCUS     (1<<0) /**< Window can not be active window. */
 #define WINDOW_NOINPUT     (1<<1) /**< Window recieves no input. */
 #define WINDOW_NORENDER    (1<<2) /**< Window does not render even if it should. */
+#define WINDOW_NOBORDER    (1<<3) /**< Window does not need border. */
 #define window_isFlag(w,f) ((w)->flags & (f)) /**< Checks a window flag. */
 #define window_setFlag(w,f) ((w)->flags |= (f)) /**< Sets a window flag. */
 #define window_rmFlag(w,f) ((w)->flags &= ~(f)) /**< Removes a window flag. */

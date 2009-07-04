@@ -76,6 +76,8 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event );
 /* focus */
 static int toolkit_isFocusable( Widget *wgt );
 static Widget* toolkit_getFocus( Window *wdw );
+/* render */
+static void window_renderBorder( Window* w );
 
 
 /**
@@ -797,15 +799,15 @@ void toolkit_unclip (void)
 
 
 /**
- * @brief Renders a window.
+ * @brief Renders a window border.
  *
- *    @param w Window to render.
+ *    @param w Window to render
  */
-void window_render( Window* w )
+static void window_renderBorder( Window* w )
 {
    int i;
    GLfloat cx, cy;
-   double x, y, wid, hei;
+   double x, y;
    glColour *lc, *c, *dc, *oc;
    GLfloat vertex[31*4], colours[31*4];
 
@@ -1128,6 +1130,26 @@ void window_render( Window* w )
          x + (double)SCREEN_W/2.,
          y + w->h - 20. + (double)SCREEN_H/2.,
          &cBlack, w->name );
+}
+
+
+/**
+ * @brief Renders a window.
+ *
+ *    @param w Window to render.
+ */
+void window_render( Window *w )
+{
+   int i;
+   double x, y, wid, hei;
+
+   /* position */
+   x = w->x - (double)SCREEN_W/2.;
+   y = w->y - (double)SCREEN_H/2.;
+
+   /* See if needs border. */
+   if (!window_isFlag( w, WINDOW_NOBORDER ))
+      window_renderBorder(w);
 
    /*
     * widgets

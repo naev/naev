@@ -86,6 +86,7 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
       window_setFlag( wtmp, WINDOW_NOFOCUS );
       window_setFlag( wtmp, WINDOW_NORENDER );
       window_setFlag( wtmp, WINDOW_NOINPUT );
+      window_setFlag( wtmp, WINDOW_NOBORDER );
    }
 
    /* Return list of windows. */
@@ -190,19 +191,16 @@ static void tab_render( Widget* tab, double bx, double by )
    /* Render tabs ontop. */
    x = 20;
    for (i=0; i<tab->dat.tab.ntabs; i++) {
-      if (i==tab->dat.tab.active) {
-         lc = toolkit_colLight;
-         c  = toolkit_col;
-      }
-      else {
+      if (i!=tab->dat.tab.active) {
          lc = toolkit_col;
          c  = toolkit_colDark;
+
+         /* Draw border. */
+         toolkit_drawRect( bx+x, by+0, tab->dat.tab.namelen[i] + 10,
+               TAB_HEIGHT, c, lc );
+         toolkit_drawOutline( bx+x, by+0, tab->dat.tab.namelen[i] + 10,
+               TAB_HEIGHT, 1., &cBlack, c );
       }
-      /* Draw border. */
-      toolkit_drawRect( bx+x, by+0, tab->dat.tab.namelen[i] + 10,
-            TAB_HEIGHT, c, lc );
-      toolkit_drawOutline( bx+x, by+0, tab->dat.tab.namelen[i] + 10,
-            TAB_HEIGHT, 1., &cBlack, c );
       /* Draw text. */
       gl_printRaw( &gl_defFont, bx+x + 5 + SCREEN_W/2,
             by + (TAB_HEIGHT-gl_defFont.h)/2 + SCREEN_H/2, &cBlack,
