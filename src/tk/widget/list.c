@@ -253,7 +253,6 @@ static int lst_focus( Widget* lst, double bx, double by )
  */
 static int lst_mmove( Widget* lst, SDL_MouseMotionEvent *mmove )
 {
-   Window *wdw;
    int psel;
    double p;
    int h;
@@ -280,10 +279,8 @@ static int lst_mmove( Widget* lst, SDL_MouseMotionEvent *mmove )
 
       /* Run change if position changed. */
       if (lst->dat.lst.selected != psel)
-         if (lst->dat.lst.fptr) {
-            wdw = toolkit_getActiveWindow(); /* get active window */
-            (*lst->dat.lst.fptr)(wdw->id,lst->name);
-         }
+         if (lst->dat.lst.fptr)
+            lst->dat.lst.fptr( lst->wdw, lst->name );
 
       return 1;
    }
@@ -319,12 +316,10 @@ static void lst_cleanup( Widget* lst )
  */
 static void lst_scroll( Widget* lst, int direction )
 {
-   Window *wdw;
    int pos;
 
-   if (lst == NULL) return;
-
-   wdw = toolkit_getActiveWindow();
+   if (lst == NULL)
+      return;
 
    lst->dat.lst.selected -= direction;
 
@@ -343,7 +338,7 @@ static void lst_scroll( Widget* lst, int direction )
    }
 
    if (lst->dat.lst.fptr)
-      (*lst->dat.lst.fptr)(wdw->id,lst->name);
+      lst->dat.lst.fptr( lst->wdw, lst->name );
 }
 
 

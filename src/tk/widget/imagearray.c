@@ -242,7 +242,7 @@ static int iar_key( Widget* iar, SDLKey key, SDLMod mod )
 
    /* Run function pointer if needed. */
    if (iar->dat.iar.fptr)
-      (*iar->dat.iar.fptr)(iar->wdw, iar->name);
+      iar->dat.iar.fptr( iar->wdw, iar->name);
 
    return 1;
 }
@@ -308,7 +308,7 @@ static int iar_mmove( Widget* iar, SDL_MouseMotionEvent *mmove )
       iar->dat.iar.pos += mmove->yrel * hmax / (iar->h - 30.);
 
       /* Does boundry checks. */
-      iar_scroll(iar, 0);
+      iar_scroll( iar, 0 );
 
       return 1;
    }
@@ -349,11 +349,9 @@ static void iar_scroll( Widget* iar, int direction )
    double w,h;
    int xelem, yelem;
    double hmax;
-   Window *wdw;
 
-   if (iar == NULL) return;
-
-   wdw = toolkit_getActiveWindow();
+   if (iar == NULL)
+      return;
 
    /* element dimensions */
    w = iar->dat.iar.iw + 5.*2.; /* includes border */
@@ -374,7 +372,7 @@ static void iar_scroll( Widget* iar, int direction )
    /* Boundry check. */
    iar->dat.iar.pos = CLAMP( 0., hmax, iar->dat.iar.pos );
    if (iar->dat.iar.fptr)
-      (*iar->dat.iar.fptr)(wdw->id,iar->name);
+      iar->dat.iar.fptr( iar->wdw, iar->name );
 }
 
 
@@ -392,9 +390,6 @@ static void iar_focus( Widget* iar, double bx, double by )
    double x,y, w,h, ycurs,xcurs;
    double scroll_pos, hmax;
    int xelem, xspace, yelem;
-   Window *wdw;
-
-   wdw = toolkit_getActiveWindow();
 
    /* positions */
    x = bx + iar->x;
@@ -426,7 +421,7 @@ static void iar_focus( Widget* iar, double bx, double by )
                   (by > ycurs) && (by < ycurs+h-4.)) {
                iar->dat.iar.selected = j*xelem + i;
                if (iar->dat.iar.fptr != NULL)
-                  (*iar->dat.iar.fptr)(wdw->id, iar->name);
+                  iar->dat.iar.fptr( iar->wdw, iar->name );
                return;
             }
             xcurs += xspace + w;

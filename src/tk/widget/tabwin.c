@@ -147,7 +147,7 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
       return 0;
 
    /* Handle event. */
-   p = 0;
+   p = 20;
    for (i=0; i<tab->dat.tab.ntabs; i++) {
       p += 10 + tab->dat.tab.namelen[i];
       /* Mark as active. */
@@ -185,7 +185,7 @@ static void tab_render( Widget* tab, double bx, double by )
    window_render( wdw );
 
    /* Render tabs ontop. */
-   x = 0;
+   x = 20;
    h = 20;
    for (i=0; i<tab->dat.tab.ntabs; i++) {
       if (i==tab->dat.tab.active) {
