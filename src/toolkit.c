@@ -133,7 +133,7 @@ Widget* window_newWidget( Window* w )
    /* Set sane defaults. */
    wgt = &w->widgets[ w->nwidgets - 1 ]; 
    memset( wgt, 0, sizeof(Widget) );
-   wgt->type = WIDGET_NULL;
+   wgt->type   = WIDGET_NULL;
    wgt->status = WIDGET_STATUS_NORMAL;
 
    return wgt;
@@ -1195,34 +1195,33 @@ void toolkit_render (void)
  */
 int toolkit_input( SDL_Event* event )
 {
-   int ret, i;
+   int ret, i, j;
    Window *wdw;
    Widget *wgt;
 
    /* Get window that can be focused. */
-   for (i=nwindows-1; i>=0; i--)
-      if (!window_isFlag(&windows[i], WINDOW_NOINPUT))
+   for (i=nwindows-1; i>=0; i--) {
+      wdw = &windows[i];
+      if (!window_isFlag( wdw, WINDOW_NOINPUT ))
          break;
+   }
    if (i < 0)
       return 0;
-   wdw = &windows[i];
 
    /* See if widget needs event. */
-   if (wdw != NULL) {
-      for (i=0; i<wdw->nwidgets; i++) {
-         wgt = &wdw->widgets[i];
-         if (wgt_isFlag( wgt, WGT_FLAG_RAWINPUT )) {
-            if (wgt->rawevent != NULL) {
-               ret = wgt->rawevent( wgt, event );
-               if (ret != 0)
-                  return ret;
-            }
+   for (j=0; j<windows[i].nwidgets; j++) {
+      wgt = &windows[i].widgets[j]; /* For realloc. */
+      if (wgt_isFlag( wgt, WGT_FLAG_RAWINPUT )) {
+         if (wgt->rawevent != NULL) {
+            ret = wgt->rawevent( wgt, event );
+            if (ret != 0)
+               return ret;
          }
       }
    }
 
    /* Pass event to window. */
-   return toolkit_inputWindow( wdw, event );
+   return toolkit_inputWindow( &windows[i], event );
 }
 
 
