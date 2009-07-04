@@ -85,6 +85,12 @@ static Mission* mission_computer = NULL; /**< Missions at the computer. */
 static int mission_ncomputer = 0; /**< Number of missions at the computer. */
 
 /*
+ * mission bar stack
+ */
+static Mission* mission_bar = NULL; /**< Missions at the spaceport bar. */
+static int mission_nbar = 0; /**< Number of missions at the spaceport bar. */
+
+/*
  * player stuff
  */
 extern int hyperspace_target; /**< from player.c */
@@ -187,13 +193,6 @@ static void commodity_exchange_open( unsigned int wid )
 
    /* update */
    commodity_update(wid, NULL);
-
-   /* Check commodity exchange missions. */
-   if (!has_visited(VISITED_COMMODITY)) {
-      missions_run(MIS_AVAIL_COMMODITY, land_planet->faction,
-            land_planet->name, cur_system->name);
-      visited(VISITED_COMMODITY);
-   }
 }
 /**
  * @brief Updates the commodity window.
@@ -368,13 +367,6 @@ static void outfits_open( unsigned int wid )
 
    /* write the outfits stuff */
    outfits_update( wid, NULL );
-
-   /* Check outfit missions. */
-   if (!has_visited(VISITED_OUTFITS)) {
-      missions_run(MIS_AVAIL_OUTFIT, land_planet->faction,
-            land_planet->name, cur_system->name);
-      visited(VISITED_OUTFITS);
-   }
 }
 /**
  * @brief Updates the outfits in the outfit window.
@@ -754,13 +746,6 @@ static void shipyard_open( unsigned int wid )
 
    /* write the shipyard stuff */
    shipyard_update(wid, NULL);
-
-   /* Run available missions. */
-   if (!has_visited(VISITED_SHIPYARD)) {
-      missions_run(MIS_AVAIL_SHIPYARD, land_planet->faction,
-            land_planet->name, cur_system->name);
-      visited(VISITED_SHIPYARD);
-   }
 }
 /**
  * @brief Updates the ships in the shipyard window.
@@ -1207,12 +1192,6 @@ static void spaceport_bar_open( unsigned int wid )
    window_addText( wid, 20, -50,
          w - 40, h - 60 - BUTTON_HEIGHT, 0,
          "txtDescription", &gl_smallFont, &cBlack, land_planet->bar_description );
-
-   if (!has_visited(VISITED_BAR)) {
-      missions_run(MIS_AVAIL_BAR, land_planet->faction,
-            land_planet->name, cur_system->name);
-      visited(VISITED_BAR);
-   }
 }
 
 
@@ -1552,9 +1531,15 @@ void land( Planet* p )
    land_wid = window_create( p->name, -1, -1, LAND_WIDTH, LAND_HEIGHT );
    window_onClose( land_wid, land_cleanupWindow );
 
-   /* generate mission computer stuff */
-   mission_computer = missions_computer( &mission_ncomputer,
-         land_planet->faction, land_planet->name, cur_system->name );
+   /* Generate computer missions. */
+   mission_computer = missions_genList( &mission_ncomputer,
+         land_planet->faction, land_planet->name, cur_system->name,
+         MIS_AVAIL_COMPUTER );
+
+   /* Generate spaceport bar missions. */
+   mission_bar = missions_genList( &mission_nbar,
+         land_planet->faction, land_planet->name, cur_system->name,
+         MIS_AVAIL_BAR );
 
    /* Generate the news. */
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC))
@@ -1752,6 +1737,15 @@ void land_cleanup (void)
       free(mission_computer);
       mission_computer  = NULL;
       mission_ncomputer = 0;
+   }
+
+   /* Clean up bar missions. */
+   if (mission_bar != NULL) {
+      for (i=0; i<mission_nbar; i++)
+         mission_cleanup( &mission_bar[i] );
+      free(mission_bar);
+      mission_bar  = NULL;
+      mission_nbar = 0;
    }
 }
 

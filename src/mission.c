@@ -62,7 +62,7 @@ static int mission_nstack = 0; /**< Mssions in stack. */
  */
 /* static */
 static unsigned int mission_genID (void);
-static int mission_init( Mission* mission, MissionData* misn, int load );
+static int mission_init( Mission* mission, MissionData* misn, int genid, int create );
 static void mission_freeData( MissionData* mission );
 static int mission_alreadyRunning( MissionData* misn );
 static int mission_meetReq( int mission, int faction,
@@ -135,10 +135,11 @@ MissionData* mission_get( int id )
  *
  *    @param mission Mission to initialize.
  *    @param misn Data to use.
- *    @param load 1 if loading mision from save file, otherwise 0.
+ *    @param genid 1 if should generate id, 0 otherwise.
+ *    @param create 1 if should run create function, 0 otherwise.
  *    @return ID of the newly created mission.
  */
-static int mission_init( Mission* mission, MissionData* misn, int load )
+static int mission_init( Mission* mission, MissionData* misn, int genid, int create )
 {
    int i;
    char *buf;
@@ -147,11 +148,8 @@ static int mission_init( Mission* mission, MissionData* misn, int load )
    /* clear the mission */
    memset(mission,0,sizeof(Mission));
 
-   /* we only need an id if not loading */
-   if (load != 0)
-      mission->id = 0;
-   else
-      mission->id = mission_genID();
+   /* Create id if needed. */
+   mission->id = (genid) ? mission_genID() : 0;
    mission->data = misn;
 
    /* Init the timers. */
@@ -185,7 +183,7 @@ static int mission_init( Mission* mission, MissionData* misn, int load )
    free(buf);
 
    /* run create function */
-   if (load == 0) { /* never run when loading */
+   if (!create) {
       /* Failed to create. */
       if (misn_run( mission, "create")) {
          mission_cleanup(mission);
@@ -208,6 +206,7 @@ static int mission_init( Mission* mission, MissionData* misn, int load )
 int mission_accept( Mission* mission )
 {
    int ret;
+
    ret = misn_run( mission, "accept" );
    if (ret==0)
       return 1;
@@ -302,7 +301,7 @@ void missions_run( int loc, int faction, const char* planet, const char* sysname
             chance = 1.;
 
          if (RNGF() < chance) {
-            mission_init( &mission, misn, 0 );
+            mission_init( &mission, misn, 1, 1 );
             mission_cleanup(&mission); /* it better clean up for itself or we do it */
          }
       }
@@ -330,7 +329,7 @@ int mission_start( const char *name )
       return -1;
 
    /* Try to run the mission. */
-   mission_init( &mission, mdat, 0 );
+   mission_init( &mission, mdat, 1, 1 );
    mission_cleanup( &mission ); /* Clean up in case not accepted. */
 
    return 0;
@@ -470,16 +469,27 @@ void mission_cleanup( Mission* misn )
 {
    int i;
 
+   /* Hooks. */
    if (misn->id != 0)
       hook_rmParent( misn->id ); /* remove existing hooks */
+
+   /* Data. */
    if (misn->title != NULL)
       free(misn->title);
    if (misn->desc != NULL)
       free(misn->desc);
    if (misn->reward != NULL)
       free(misn->reward);
+   if (misn->portrait != NULL)
+      gl_freeTexture(misn->portrait);
+   if (misn->npc != NULL)
+      free(misn->npc);
+
+   /* Markers. */
    if (misn->sys_marker != NULL)
       free(misn->sys_marker);
+
+   /* Cargo. */
    if (misn->cargo != NULL) {
       for (i=0; i<misn->ncargo; i++) { /* must unlink all the cargo */
          if (player != NULL) /* Only remove if player exists. */
@@ -498,7 +508,9 @@ void mission_cleanup( Mission* misn )
       lua_close(misn->L);
 
    /* Clear the memory. */
+#ifdef DEBUGGING
    memset( misn, 0, sizeof(Mission) );
+#endif /* DEBUGGING */
 }
 
 
@@ -509,14 +521,25 @@ void mission_cleanup( Mission* misn )
  */
 static void mission_freeData( MissionData* mission )
 {
-   if (mission->name) free(mission->name);
-   if (mission->lua) free(mission->lua);
-   if (mission->avail.planet) free(mission->avail.planet);
-   if (mission->avail.system) free(mission->avail.system);
-   if (mission->avail.factions) free(mission->avail.factions);
-   if (mission->avail.cond) free(mission->avail.cond);
-   if (mission->avail.done) free(mission->avail.done);
+   if (mission->name)
+      free(mission->name);
+   if (mission->lua)
+      free(mission->lua);
+   if (mission->avail.planet)
+      free(mission->avail.planet);
+   if (mission->avail.system)
+      free(mission->avail.system);
+   if (mission->avail.factions)
+      free(mission->avail.factions);
+   if (mission->avail.cond)
+      free(mission->avail.cond);
+   if (mission->avail.done)
+      free(mission->avail.done);
+
+   /* Clear the memory. */
+#ifdef DEBUGGING
    memset( mission, 0, sizeof(MissionData) );
+#endif /* DEBUGGING */
 }
 
 
@@ -540,16 +563,18 @@ static int mission_matchFaction( MissionData* misn, int faction )
 
 
 /**
- * @brief Generates misisons for the computer - special case.
+ * @brief Generates a mission list. This runs create() so won't work with all
+ *        missions.
  *
  *    @param[out] n Missions created.
  *    @param faction Faction of the planet.
  *    @param planet Name of the planet.
  *    @param sysname Name of the current system.
+ *    @param loc Location 
  *    @return The stack of Missions created with n members.
  */
-Mission* missions_computer( int *n, int faction,
-      const char* planet, const char* sysname )
+Mission* missions_genList( int *n, int faction,
+      const char* planet, const char* sysname, int loc )
 {
    int i,j, m;
    double chance;
@@ -561,7 +586,7 @@ Mission* missions_computer( int *n, int faction,
    m = 0;
    for (i=0; i<mission_nstack; i++) {
       misn = &mission_stack[i];
-      if (misn->avail.loc==MIS_AVAIL_COMPUTER) {
+      if (misn->avail.loc == loc) {
 
          if (!mission_meetReq(i, faction, planet, sysname))
             continue;
@@ -573,7 +598,7 @@ Mission* missions_computer( int *n, int faction,
             if (RNGF() < chance) {
                m++;
                tmp = realloc( tmp, sizeof(Mission) * m);
-               if (mission_init( &tmp[m-1], misn, 0 ) < 0)
+               if (mission_init( &tmp[m-1], misn, 1, 1 ) < 0)
                   m--;
             }
       }
@@ -1213,7 +1238,7 @@ static int missions_parseActive( xmlNodePtr parent )
             continue;
          }
          else {
-            mission_init( misn, data, 1 );
+            mission_init( misn, data, 0, 0 );
             misn->accepted = 1;
          }
          free(buf);

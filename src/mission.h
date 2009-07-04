@@ -9,6 +9,8 @@
 
 #include "nlua_misn.h"
 
+#include "opengl.h"
+
 
 /* availability by location */
 #define  MIS_AVAIL_NONE       0 /**< Mission isn't available. */
@@ -25,7 +27,7 @@
 #define mis_setFlag(m,f)   ((m)->flags |= (f))
 #define mis_rmFlag(m,f)    ((m)->flags &= ~(f))
 /* actual flags */
-#define  MISSION_UNIQUE       1 /**< Unique missions can't be repeated */
+#define MISSION_UNIQUE        (1<<0) /**< Unique missions can't be repeated */
 
 #define MISSION_TIMER_MAX     4 /**< Maximum amount of timers in a mission. */
 
@@ -88,6 +90,8 @@ typedef struct Mission_ {
    char *title; /**< Not to be confused with name */
    char *desc; /**< Description of the mission */
    char *reward; /**< Rewards in text */
+   glTexture *portrait; /**< Portrait of the mission giver if applicable. */
+   char *npc; /**< Name of the NPC giving the mission. */
 
    /* mission cargo given to the player - need to cleanup */
    unsigned int *cargo; /**< Cargos given to player. */
@@ -118,9 +122,9 @@ extern Mission player_missions[MISSION_MAX]; /**< Player's active missions. */
 /*
  * creates missions for a planet and such
  */
-Mission* missions_computer( int *n, int faction,
-      const char* planet, const char* sysname ); /* for mission computer */
-int mission_accept( Mission* mission ); /* player accepted mission - mission computer */
+Mission* missions_genList( int *n, int faction,
+      const char* planet, const char* sysname, int loc );
+int mission_accept( Mission* mission ); /* player accepted mission for computer/bar */
 void missions_run( int loc, int faction, const char* planet, const char* sysname );
 int mission_start( const char *name );
 

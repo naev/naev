@@ -66,6 +66,7 @@ static int misn_setTitle( lua_State *L );
 static int misn_setDesc( lua_State *L );
 static int misn_setReward( lua_State *L );
 static int misn_setMarker( lua_State *L );
+static int misn_setNPC( lua_State *L );
 static int misn_factions( lua_State *L );
 static int misn_accept( lua_State *L );
 static int misn_finish( lua_State *L );
@@ -83,6 +84,7 @@ static const luaL_reg misn_methods[] = {
    { "setDesc", misn_setDesc },
    { "setReward", misn_setReward },
    { "setMarker", misn_setMarker },
+   { "setNPC", misn_setNPC },
    { "factions", misn_factions },
    { "accept", misn_accept },
    { "finish", misn_finish },
@@ -333,7 +335,6 @@ static int misn_setMarker( lua_State *L )
 
    /* Passing in a Star System */
    sys = luaL_checksystem(L,1);
-   sys = lua_tosystem(L,1);
    cur_mission->sys_marker = strdup(sys->s->name);
 
    /* Get the type. */
@@ -353,6 +354,53 @@ static int misn_setMarker( lua_State *L )
 
    return 0;
 }
+
+
+/**
+ * @brief Sets the current mission reward description.
+ *
+ * @usage misn.setNPC( "Invisible Man", "none" )
+ *
+ *    @luaparam name Name of the NPC.
+ *    @luaparam portrait Name of the portrait to use for the NPC.
+ * @luafunc setNPC( name, portrait )
+ */
+static int misn_setNPC( lua_State *L )
+{
+   char buf[PATH_MAX];
+   const char *name, *str;
+
+   /* Free if portrait is already set. */
+   if (cur_mission->portrait != NULL) {
+      gl_freeTexture(cur_mission->portrait);
+      cur_mission->portrait = NULL;
+   }
+
+   /* Free NPC name. */
+   if (cur_mission->npc != NULL) {
+      free(cur_mission->npc);
+      cur_mission->npc = NULL;
+   }
+
+   /* For no parameters just leave having freed NPC. */
+   if (lua_gettop(L) == 0)
+      return 0;
+
+   /* Get parameters. */
+   name = luaL_checkstring(L,1);
+   str  = luaL_checkstring(L,2);
+
+   /* Set NPC name. */
+   cur_mission->npc = strdup(name);
+
+   /* Set portrait. */
+   snprintf( buf, PATH_MAX, "gfx/portrait/%s.png", str );
+   cur_mission->portrait = gl_newImage( buf, 0 );
+
+   return 0;
+}
+
+
 /**
  * @brief Gets the factions the mission is available for.
  *
