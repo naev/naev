@@ -37,7 +37,7 @@
 
 
 /* global/main window */
-#define LAND_WIDTH   700 /**< Land window width. */
+#define LAND_WIDTH   800 /**< Land window width. */
 #define LAND_HEIGHT  600 /**< Land window height. */
 #define BUTTON_WIDTH 200 /**< Default button width. */
 #define BUTTON_HEIGHT 40 /**< Default button height. */
@@ -670,22 +670,32 @@ static void shipyard_open( unsigned int wid )
    glTexture **tships;
    int nships;
    int w, h;
+   int iw, ih;
+   int bw, bh;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
 
+   /* Calculate image array dimensions. */
+   iw = 310;
+   ih = h - 60;
+
+   /* Calculate button dimensions. */
+   bw = (w - iw - 80) / 2;
+   bh = 30;
+
    /* buttons */
    window_addButton( wid, -20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseShipyard",
+         bw, bh, "btnCloseShipyard",
          "Takeoff", land_buttonTakeoff );
-   window_addButton( wid, -20, 40+BUTTON_HEIGHT,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnYourShips",
+   window_addButton( wid, -20, 40+bh,
+         bw, bh, "btnYourShips",
          "Your Ships", shipyard_yours_open );
-   window_addButton( wid, -40-BUTTON_WIDTH, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnBuyShip",
+   window_addButton( wid, -40-bw, 20,
+         bw, bh, "btnBuyShip",
          "Buy", shipyard_buy );
-   window_addButton( wid, -40-BUTTON_WIDTH, 40+BUTTON_HEIGHT,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnInfoShip",
+   window_addButton( wid, -40-bw, 40+bh,
+         bw, bh, "btnInfoShip",
          "Info", shipyard_info );
 
    /* target gfx */
@@ -695,7 +705,7 @@ static void shipyard_open( unsigned int wid )
          "imgTarget", NULL, 1 );
 
    /* text */
-   window_addText( wid, 40+300+40, -55,
+   window_addText( wid, 40+iw+20, -55,
          80, 128, 0, "txtSDesc", &gl_smallFont, &cDConsole,
          "Name:\n"
          "Class:\n"
@@ -704,7 +714,7 @@ static void shipyard_open( unsigned int wid )
          "Price:\n"
          "Money:\n"
          "License:\n" );
-   window_addText( wid, 40+300+40+80, -55,
+   window_addText( wid, 40+iw+20+80, -55,
          130, 128, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
    window_addText( wid, 20+310+40, -55-128-20,
          w-(20+310+40) - 20, 185, 0, "txtDescription",
@@ -728,8 +738,8 @@ static void shipyard_open( unsigned int wid )
       }
       free(ships);
    }
-   window_addImageArray( wid, 20, 40,
-         310, h-80, "iarShipyard", 64./96.*128., 64.,
+   window_addImageArray( wid, 20, 20,
+         iw, ih, "iarShipyard", 64./96.*128., 64.,
          tships, sships, nships, shipyard_update );
 
    /* write the shipyard stuff */
