@@ -591,7 +591,10 @@ Mission* missions_genList( int *n, int faction,
          if (!mission_meetReq(i, faction, planet, sysname))
             continue;
 
-         chance = (double)(misn->avail.chance % 100)/100.;
+         if ((misn->avail.chance % 100) == 0)
+            chance = 1.;
+         else
+            chance = (double)(misn->avail.chance % 100)/100.;
          rep = misn->avail.chance / 100;
 
          for (j=0; j<rep; j++) /* random chance of rep appearances */
