@@ -449,9 +449,11 @@ static void iar_focus( Widget* iar, double bx, double by )
 }
 
 /**
- * @brief Gets what is selected currently in a list.
+ * @brief Gets what is selected currently in an Image Array.
  *
- * List includes Image Arrays.
+ *    @param wid Window where image array is.
+ *    @param name Name of the image array.
+ *    @return The name of the selected object.
  */
 char* toolkit_getImageArray( const unsigned int wid, char* name )
 {
@@ -475,4 +477,32 @@ char* toolkit_getImageArray( const unsigned int wid, char* name )
 
    return wgt->dat.iar.captions[ wgt->dat.iar.selected ];
 }
+
+
+/**
+ * @brief Gets what is selected currently in an Image Array.
+ *
+ *    @param wid Window where image array is.
+ *    @param name Name of the image array.
+ *    @return The position of selected object.
+ */
+int toolkit_getImageArrayPos( const unsigned int wid, char* name )
+{
+   Widget *wgt = window_getwgt(wid,name);
+
+   /* Must be found in stack. */
+   if (wgt == NULL) {
+      WARN("Widget '%s' not found", name);
+      return -1;
+   }
+
+   /* Must be an image array. */
+   if (wgt->type != WIDGET_IMAGEARRAY) {
+      WARN("Widget '%s' is not an image array.", name);
+      return -1;
+   }
+
+   return wgt->dat.iar.selected;
+}
+
 
