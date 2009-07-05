@@ -41,8 +41,8 @@
 #define LAND_HEIGHT  600 /**< Land window height. */
 #define BUTTON_WIDTH 200 /**< Default button width. */
 #define BUTTON_HEIGHT 40 /**< Default button height. */
-#define PORTRAIT_WIDTH 400
-#define PORTRAIT_HEIGHT 300
+#define PORTRAIT_WIDTH 200
+#define PORTRAIT_HEIGHT 150
 
 /* news window */
 #define NEWS_WIDTH   400 /**< News window width. */
@@ -1223,15 +1223,15 @@ static void spaceport_bar_open( unsigned int wid )
          land_planet->bar_description );
 
    /* Add portrait text. */
-   th = -40 - dh - 20;
+   th = -40 - dh - 40;
    window_addText( wid, iw + 40, th,
-         w - iw - 60, dh, 1,
+         w - iw - 60, gl_defFont.h, 1,
          "txtPortrait", &gl_defFont, &cDConsole, NULL );
 
    /* Add mission description text. */
-   th -= 20 + PORTRAIT_HEIGHT + 20;
-   window_addText( wid, iw + 40, th,
-         w - iw - 60, h + th - (2*bh+60), 1,
+   th -= 20 + PORTRAIT_HEIGHT + 20 + 20;
+   window_addText( wid, iw + 60, th,
+         w - iw - 100, h + th - (2*bh+60), 0,
          "txtMission", &gl_smallFont, &cBlack, NULL );
 
    /* Set up missions. */
@@ -1285,8 +1285,11 @@ static void spaceport_bar_update( unsigned int wid, char* str )
          /* Destroy portrait. */
          if (widget_exists(wid, "imgPortrait")) {
             window_destroyWidget(wid, "imgPortrait");
-            window_destroyWidget(wid, "rctPortrait");
          }
+
+         /* Clear text. */
+         window_modifyText(  wid, "txtPortrait", NULL );
+         window_modifyText(  wid, "txtMission",  NULL );
 
          /* Create news. */
          news_widget( wid, iw + 60, -40 - (40 + dh),
@@ -1305,10 +1308,9 @@ static void spaceport_bar_update( unsigned int wid, char* str )
 
    /* Create widgets if needed. */
    if (!widget_exists(wid, "imgPortrait")) {
-      window_addRect( wid, iw + 40 + (w-iw-60-PORTRAIT_WIDTH)/2, -(40 + dh + 20),
-            PORTRAIT_WIDTH, PORTRAIT_HEIGHT, "rctPortrait", &cBlack, 1 );
-      window_addImage( wid, iw + 40 + (w-iw-60-PORTRAIT_WIDTH)/2, -(40 + dh + 20),
-            "imgPortrait", NULL, 0 );
+      window_addImage( wid, iw + 40 + (w-iw-60-PORTRAIT_WIDTH)/2,
+            -(40 + dh + 40 + gl_defFont.h + 20 + PORTRAIT_HEIGHT),
+            "imgPortrait", NULL, 1 );
    }
 
    /* Set portrait. */
