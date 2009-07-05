@@ -41,6 +41,8 @@
 #define LAND_HEIGHT  600 /**< Land window height. */
 #define BUTTON_WIDTH 200 /**< Default button width. */
 #define BUTTON_HEIGHT 40 /**< Default button height. */
+#define PORTRAIT_WIDTH 400
+#define PORTRAIT_HEIGHT 300
 
 /* news window */
 #define NEWS_WIDTH   400 /**< News window width. */
@@ -89,6 +91,7 @@ static int mission_ncomputer = 0; /**< Number of missions at the computer. */
  */
 static Mission* mission_bar = NULL; /**< Missions at the spaceport bar. */
 static int mission_nbar = 0; /**< Number of missions at the spaceport bar. */
+static glTexture *mission_portrait = NULL; /**< Mission portrait. */
 
 /*
  * player stuff
@@ -129,9 +132,12 @@ static void shipyard_yoursSell( unsigned int wid, char* str );
 static void shipyard_yoursTransport( unsigned int wid, char* str );
 static unsigned int shipyard_yoursTransportPrice( char* shipname );
 /* spaceport bar */
+static void spaceport_bar_getDim( int wid,
+      int *w, int *h, int *iw, int *ih, int *bw, int *bh );
 static void spaceport_bar_open( unsigned int wid );
-/* news */
-static void news_open(unsigned int parent, char *str);
+static void spaceport_bar_update( unsigned int wid, char* str );
+static void spaceport_bar_close( unsigned int wid, char* str );
+static int news_load (void);
 /* mission computer */
 static void misn_open( unsigned int wid );
 static void misn_close( unsigned int wid, char *name );
@@ -1171,64 +1177,173 @@ static unsigned int shipyard_yoursTransportPrice( char* shipname )
 
 
 /**
+ * @brief Gets the dimensions of the spaceport bar window.
+ */
+static void spaceport_bar_getDim( int wid,
+      int *w, int *h, int *iw, int *ih, int *bw, int *bh )
+{
+   /* Get window dimensions. */
+   window_dimWindow( wid, w, h );
+
+   /* Calculate dimensions of portraits. */
+   *iw = 300;
+   *ih = *h - 60;
+
+   /* Calculate button dimensions. */
+   *bw = (*w - *iw - 80)/2;
+   *bh = BUTTON_HEIGHT;
+}
+/**
  * @brief Opens the spaceport bar window.
  */
 static void spaceport_bar_open( unsigned int wid )
 {
-   int w, h;
+   int i;
+   int w, h, iw, ih, bw, bh, dh, th;
+   glTexture **portraits;
+   char **names;
+   int n;
 
-   /* Get window dimensions. */
-   window_dimWindow( wid, &w, &h );
+   /* Set window functions. */
+   window_onClose( wid, spaceport_bar_close );
 
-   /* buttons */
+   /* Get dimensions. */
+   spaceport_bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
+   dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, land_planet->bar_description );
+
+   /* Buttons */
    window_addButton( wid, -20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseBar",
+         bw, bh, "btnCloseBar",
          "Takeoff", land_buttonTakeoff );
-   window_addButton( wid, 20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnNews",
-         "News", news_open);
 
-   /* text */
-   window_addText( wid, 20, -50,
-         w - 40, h - 60 - BUTTON_HEIGHT, 0,
-         "txtDescription", &gl_smallFont, &cBlack, land_planet->bar_description );
+   /* Bar description. */
+   window_addText( wid, iw + 40, -40,
+         w - iw - 60, dh, 0,
+         "txtDescription", &gl_smallFont, &cBlack,
+         land_planet->bar_description );
+
+   /* Add portrait text. */
+   th = -40 - dh - 20;
+   window_addText( wid, iw + 40, th,
+         w - iw - 60, dh, 1,
+         "txtPortrait", &gl_defFont, &cDConsole, NULL );
+
+   /* Add mission description text. */
+   th -= 20 + PORTRAIT_HEIGHT + 20;
+   window_addText( wid, iw + 40, th,
+         w - iw - 60, h + th - (2*bh+60), 1,
+         "txtMission", &gl_smallFont, &cBlack, NULL );
+
+   /* Set up missions. */
+   mission_portrait = gl_newImage( "gfx/portraits/none.png", 0 );
+   if (mission_nbar <= 0) {
+      portraits    = malloc(sizeof(glTexture*));
+      portraits[0] = mission_portrait;
+      names        = malloc(sizeof(char*));
+      names[0]     = strdup("News");
+      n            = 1;
+   }
+   else {
+      portraits    = malloc( sizeof(glTexture*) * mission_nbar + 1 );
+      portraits[0] = mission_portrait;
+      names        = malloc( sizeof(char*) * mission_nbar + 1 );
+      names[0]     = strdup("News");
+      n            = mission_nbar+1;
+      for (i=0; i<mission_nbar; i++) {
+         names[i+1]     = strdup( mission_bar->npc );
+         portraits[i+1] = mission_bar->portrait;
+      }
+   }
+   window_addImageArray( wid, 20, -40,
+         iw, ih, "iarMissions", 64, 48,
+         portraits, names, n, spaceport_bar_update );
+
+   /* write the outfits stuff */
+   spaceport_bar_update( wid, NULL );
 }
+/**
+ * @brief Updates the missions in the spaceport bar.
+ *    @param wid Window to update the outfits in.
+ *    @param str Unused.
+ */
+static void spaceport_bar_update( unsigned int wid, char* str )
+{
+   (void) str;
+   int pos;
+   int w, h, iw, ih, bw, bh, dh;
 
+   /* Get dimensions. */
+   spaceport_bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
+   dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, land_planet->bar_description );
 
+   /* Get array. */
+   pos = toolkit_getImageArrayPos( wid, "iarMissions" );
+
+   /* See if is news. */
+   if (pos==0) { /* News selected. */
+      if (!widget_exists(wid, "cstNews")) {
+         /* Destroy portrait. */
+         if (widget_exists(wid, "imgPortrait")) {
+            window_destroyWidget(wid, "imgPortrait");
+            window_destroyWidget(wid, "rctPortrait");
+         }
+
+         /* Create news. */
+         news_widget( wid, iw + 60, -40 - (40 + dh),
+               w - iw - 100, h - 40 - (dh+20) - 40 - bh - 20 );
+      }
+      return;
+   }
+
+   /* Shift to ignore news now. */
+   pos--;
+
+   /* Destroy news widget if needed. */
+   if (widget_exists(wid, "cstNews")) {
+      window_destroyWidget( wid, "cstNews" );
+   }
+
+   /* Create widgets if needed. */
+   if (!widget_exists(wid, "imgPortrait")) {
+      window_addRect( wid, iw + 40 + (w-iw-60-PORTRAIT_WIDTH)/2, -(40 + dh + 20),
+            PORTRAIT_WIDTH, PORTRAIT_HEIGHT, "rctPortrait", &cBlack, 1 );
+      window_addImage( wid, iw + 40 + (w-iw-60-PORTRAIT_WIDTH)/2, -(40 + dh + 20),
+            "imgPortrait", NULL, 0 );
+   }
+
+   /* Set portrait. */
+   window_modifyText(  wid, "txtPortrait", mission_bar[pos].npc );
+   window_modifyImage( wid, "imgPortrait", mission_bar[pos].portrait );
+
+   /* Set mission description. */
+   window_modifyText(  wid, "txtMission",  mission_bar[pos].desc );
+}
+/**
+ * @brief Closes the mission computer window.
+ *    @param wid Window to close.
+ *    @param name Unused.
+ */
+static void spaceport_bar_close( unsigned int wid, char *name )
+{
+   (void) wid;
+   (void) name;
+
+   if (mission_portrait != NULL) {
+      gl_freeTexture(mission_portrait);
+      mission_portrait = NULL;
+   }
+}
 /**
  * @brief Loads the news.
  *
- *    @return 0 on success.
- * */
+ * @return 0 on success.
+ */
 static int news_load (void)
 {
    news_generate( NULL, 10 );
    return 0;
 }
 
-
-/**
- * Opens the planetary news reports window.
- */
-static void news_open( unsigned int parent, char *str )
-{
-   (void) str;
-   unsigned int wid;
-
-   /* create window */
-   wid = window_create( "News Reports",
-         -1, -1, NEWS_WIDTH, NEWS_HEIGHT );
-   window_setParent( wid, parent );
-
-   /* buttons */
-   window_addButton( wid, -20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "btnCloseNews",
-         "Close", window_close );
-
-   /* Add the news. */
-   news_widget( wid, 20, -40,
-         NEWS_WIDTH-40, NEWS_HEIGHT-80 - BUTTON_HEIGHT );
-}
 
 
 /**
