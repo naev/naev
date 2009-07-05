@@ -40,6 +40,7 @@ void window_addImageArray( const unsigned int wid,
 
 /* Misc functions. */
 char* toolkit_getImageArray( const unsigned int wid, char* name );
+int toolkit_getImageArrayPos( const unsigned int wid, char* name );
 
 
 #endif /* WGT_IMAGEARRAY_H */
