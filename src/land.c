@@ -62,6 +62,17 @@
 static unsigned int land_visited = 0; /**< Contains what the player visited. */
 
 
+/*
+ * The window interfaces.
+ */
+#define LAND_WINDOW_MAIN         0 /**< Main window. */
+#define LAND_WINDOW_BAR          1 /**< Bar window. */
+#define LAND_WINDOW_MISSION      2 /**< Mission computer window. */
+#define LAND_WINDOW_OUTFITS      3 /**< Outfits window. */
+#define LAND_WINDOW_SHIPYARD     4 /**< Shipyard window. */
+#define LAND_WINDOW_COMMODITY    5 /**< Commodity window. */
+
+
 
 /*
  * land variables
@@ -104,6 +115,7 @@ static int last_window = 0; /**< Default window. */
 /*
  * prototypes
  */
+static unsigned int land_getWid( int window );
 static void land_createMainTab( unsigned int wid );
 static void land_cleanupWindow( unsigned int wid, char *name );
 static void land_buttonTakeoff( unsigned int wid, char *unused );
@@ -1082,7 +1094,7 @@ static void shipyard_yoursChange( unsigned int wid, char* str )
 
    /* recreate the window */
    window_destroy(wid);
-   shipyard_yours_open(0, NULL);
+   shipyard_yours_open( land_getWid(LAND_WINDOW_SHIPYARD), NULL);
 }
 /**
  * @brief Player tries to sell a ship.
@@ -1120,7 +1132,7 @@ static void shipyard_yoursSell( unsigned int wid, char* str )
 
    /* recreate the window */
    window_destroy(wid);
-   shipyard_yours_open(0, NULL);
+   shipyard_yours_open( land_getWid(LAND_WINDOW_SHIPYARD), NULL);
 }
 /**
  * @brief Player attempts to transport his ship to the planet he is at.
@@ -1707,6 +1719,20 @@ static void land_cleanupWindow( unsigned int wid, char *name )
 
 
 /**
+ * @brief Gets the WID of a window by type.
+ *
+ *    @param window Type of window to get wid (LAND_WINDOW_MAIN, ...).
+ *    @return 0 on error, otherwise the wid of the window.
+ */
+static unsigned int land_getWid( int window )
+{
+   if (land_windowsMap[window] == -1)
+      return 0;
+   return land_windows[ land_windowsMap[window] ];
+}
+
+
+/**
  * @brief Opens up all the land dialogue stuff.
  *    @param p Planet to open stuff for.
  */
@@ -1775,17 +1801,17 @@ void land( Planet* p )
    window_tabWinOnChange( land_wid, "tabLand", land_changeTab );
 
    /* Create each tab. */
-   land_createMainTab( land_windows[ land_windowsMap[0] ] );
+   land_createMainTab( land_getWid(LAND_WINDOW_MAIN) );
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
-      spaceport_bar_open( land_windows[ land_windowsMap[1] ] );
+      spaceport_bar_open( land_getWid(LAND_WINDOW_BAR) );
       misn_open( land_windows[2] );
    }
    if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS))
-      outfits_open( land_windows[ land_windowsMap[3] ] );
+      outfits_open( land_getWid(LAND_WINDOW_OUTFITS) );
    if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
-      shipyard_open( land_windows[ land_windowsMap[4] ] );
+      shipyard_open( land_getWid(LAND_WINDOW_SHIPYARD) );
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
-      commodity_exchange_open( land_windows[ land_windowsMap[5] ] );
+      commodity_exchange_open( land_getWid(LAND_WINDOW_COMMODITY) );
 
    /* player is now officially landed */
    landed = 1;
