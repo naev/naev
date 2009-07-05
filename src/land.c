@@ -917,7 +917,7 @@ static void shipyard_yours_open( unsigned int parent, char* str )
 
    /* Get window dimensions. */
    window_dimWindow( parent, &w, &h );
-   h += 20;
+   h += 30;
 
    /* Calculate image array dimensions. */
    iw = 310;
