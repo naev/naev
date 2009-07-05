@@ -76,6 +76,7 @@ static const char *land_windowNames[] = {
    "Shipyard",
    "Commodity"
 };
+static unsigned int land_windowsMap[6]; /**< Mapping of windows. */
 static unsigned int *land_windows = NULL; /**< Landed window ids. */
 Planet* land_planet = NULL; /**< Planet player landed at. */
 static glTexture *gfx_exterior = NULL; /**< Exterior graphic of the landed planet. */
@@ -1738,31 +1739,40 @@ void land( Planet* p )
 
    /* See what is available. */
    j = 0;
+   land_windowsMap[0] = j;
    names[j++] = land_windowNames[0];
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
+      land_windowsMap[1] = j;
       names[j++] = land_windowNames[1];
+      land_windowsMap[2] = j;
       names[j++] = land_windowNames[2];
    }
-   if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS))
+   if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS)) {
+      land_windowsMap[3] = j;
       names[j++] = land_windowNames[3];
-   if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
+   }
+   if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
+      land_windowsMap[4] = j;
       names[j++] = land_windowNames[4];
-   if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
+   }
+   if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY)) {
+      land_windowsMap[5] = j;
       names[j++] = land_windowNames[5];
+   }
 
    /* Create tabbed window. */
    land_windows = window_addTabbedWindow( land_wid, -1, -1, -1, -1, "tabLand", j, names );
-   land_createMainTab( land_windows[0] );
+   land_createMainTab( land_windows[ land_windowsMap[0] ] );
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
-      spaceport_bar_open( land_windows[1] );
+      spaceport_bar_open( land_windows[ land_windowsMap[1] ] );
       misn_open( land_windows[2] );
    }
    if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS))
-      outfits_open( land_windows[3] );
+      outfits_open( land_windows[ land_windowsMap[3] ] );
    if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
-      shipyard_open( land_windows[4] );
+      shipyard_open( land_windows[ land_windowsMap[4] ] );
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
-      commodity_exchange_open( land_windows[5] );
+      commodity_exchange_open( land_windows[ land_windowsMap[5] ] );
 
    /* player is now officially landed */
    landed = 1;
