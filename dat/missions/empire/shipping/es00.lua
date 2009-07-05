@@ -8,6 +8,7 @@ lang = naev.lang()
 if lang == "es" then
    -- not translated atm
 else -- default english
+   bar_desc = "You see an Empire Commander. He seems to have noticed you."
    misn_title = "Prisoner Exchange"
    misn_reward = "%d credits"
    misn_desc = {}
@@ -18,7 +19,7 @@ else -- default english
    title[2] = "Prisoner Exchange"
    title[3] = "Mission Report"
    text = {}
-   text[1] = [[You are approached by an Empire Commander.
+   text[1] = [[You approach the Empire Commander.
 "Hello, you must be %s.  I've heard about you.  I'm Commander Soldner.  We've got some harder missions for someone like you in the Empire Shipping division.  There would be real danger involved in these missions unlike the ones you've been doing recently for the division.  Would you be up for the challenge?"]]
    text[2] = [["We've got a prisoner exchange set up with the FLF to take place on %s in the %s system.  They want a more neutral pilot to do the exchange.  You would have to go to %s with some FLF prisoners aboard your ship and exchange them for some of our own.  You won't have visible escorts but we will have your movements watched by ships in nearby sectors."
 "Once we get the men they captured back bring them over to %s in %s for debriefing. You'll be compensated for your troubles.  Good luck."]]
@@ -34,36 +35,47 @@ end
 
 
 function create ()
+   -- Target destination
+   dest,destsys = planet.get( faction.get("Frontier") )
+   ret,retsys = planet.get( "Polaris Prime" )
+
+   -- Spaceport bar stuff
+   misn.setNPC( "Commander", "none" )
+   misn.setDesc( bar_desc )
+end
+
+
+function accept ()
 
    -- Intro text
-   if tk.yesno( title[1], string.format( text[1], player.name() ) )
-      then
-      misn.accept()
-
-      -- target destination
-      dest,destsys = planet.get( faction.get("Frontier") )
-      ret,retsys = planet.get( "Polaris Prime" )
-      misn.setMarker(destsys)
-
-      -- Mission details
-      misn_stage = 0
-      reward = 50000
-      misn.setTitle(misn_title)
-      misn.setReward( string.format(misn_reward, reward) )
-      misn.setDesc( string.format(misn_desc[1], dest:name(), destsys:name()))
-
-      -- Flavour text and mini-briefing
-      tk.msg( title[2], string.format( text[2], dest:name(), destsys:name(),
-            dest:name(), ret:name(), retsys:name() ))
-
-      -- Set up the goal
-      prisoners = misn.addCargo("Prisoners", 0)
-      tk.msg( title[2], text[3] )
-
-      -- Set hooks
-      hook.land("land")
-      hook.enter("enter")
+   if not tk.yesno( title[1], string.format( text[1], player.name() ) ) then
+      misn.finish()
    end
+
+   -- Accept mission
+   misn.accept()
+
+   -- target destination
+   misn.setMarker(destsys)
+
+   -- Mission details
+   misn_stage = 0
+   reward = 50000
+   misn.setTitle(misn_title)
+   misn.setReward( string.format(misn_reward, reward) )
+   misn.setDesc( string.format(misn_desc[1], dest:name(), destsys:name()))
+
+   -- Flavour text and mini-briefing
+   tk.msg( title[2], string.format( text[2], dest:name(), destsys:name(),
+         dest:name(), ret:name(), retsys:name() ))
+
+   -- Set up the goal
+   prisoners = misn.addCargo("Prisoners", 0)
+   tk.msg( title[2], text[3] )
+
+   -- Set hooks
+   hook.land("land")
+   hook.enter("enter")
 end
 
 

@@ -28,6 +28,7 @@ lang = naev.lang()
 if lang == "es" then
    -- not translated atm
 else -- default english
+   bar_desc = "Dimitri should be around here, but you can't see him. You should look for him."
    misn_title = "Operation Black Trinity"
    misn_reward = "None"
    misn_desc = {}
@@ -66,39 +67,48 @@ She goes on, "Things have gone out of hand.  We have had chances to crush Welsh,
 end
 
 
--- Creates the mission
 function create ()
+   misn.setNPC( "Dimitri?", "none" )
+   misn.setDesc( bar_desc )
+end
+
+
+-- Creates the mission
+function accept ()
 
    tk.msg( title[1], text[1] )
 
    -- Intro text
-   if tk.yesno( title[2], text[2] )
-      then
-      misn.accept()
-
-      -- Mission data
-      misn_stage = 0
-      misn_base, misn_base_sys = planet.get("Omega Station")
-      misn_target_sys = system.get("NGC-7690")
-      misn.setMarker(misn_target_sys)
-
-      -- Mission details
-      misn.setTitle(misn_title)
-      misn.setReward( misn_reward )
-      misn.setDesc( string.format(misn_desc[1], misn_target_sys:name() ))
-      tk.msg( title[2], string.format(text[3], misn_base:name() ) )
-      tk.msg( title[3], string.format(text[4], "Eiroik"))
-      tk.msg( title[4], string.format(text[5], misn_target_sys:name(), misn_target_sys:name() ) )
-
-      -- Escorts
-      esc_pacifier = true
-      esc_lancelot1 = true
-      esc_lancelot2 = true
-
-      hook.enter("jump")
-      hook.land("land")
+   if not tk.yesno( title[2], text[2] ) then
+      misn.finish()
    end
+
+   -- Accept the mission
+   misn.accept()
+
+   -- Mission data
+   misn_stage = 0
+   misn_base, misn_base_sys = planet.get("Omega Station")
+   misn_target_sys = system.get("NGC-7690")
+   misn.setMarker(misn_target_sys)
+
+   -- Mission details
+   misn.setTitle(misn_title)
+   misn.setReward( misn_reward )
+   misn.setDesc( string.format(misn_desc[1], misn_target_sys:name() ))
+   tk.msg( title[2], string.format(text[3], misn_base:name() ) )
+   tk.msg( title[3], string.format(text[4], "Eiroik"))
+   tk.msg( title[4], string.format(text[5], misn_target_sys:name(), misn_target_sys:name() ) )
+
+   -- Escorts
+   esc_pacifier = true
+   esc_lancelot1 = true
+   esc_lancelot2 = true
+
+   hook.enter("jump")
+   hook.land("land")
 end
+
 
 -- Handles jumping to target system
 function jump ()

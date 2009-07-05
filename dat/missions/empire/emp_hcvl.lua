@@ -10,6 +10,9 @@
 lang = naev.lang()
 if lang == "es" then
 else -- Default to English
+   -- Bar stuff
+   bar_desc "You see an Empire Official."
+
    -- Mission details
    misn_title  = "Kill %s"
    misn_reward = "Authorization for Heavy Combat Vessel License"
@@ -33,10 +36,16 @@ end
 include("scripts/pilot/pirate.lua")
 
 
+function create ()
+   misn.setNPC( "Official", "none" )
+   misn.setDesc( bar_desc )
+end
+
+
 --[[
 Mission entry point.
 --]]
-function create ()
+function accept ()
    -- Create the target pirate
    pir_name, pir_ship, pir_outfits = pir_generate()
 

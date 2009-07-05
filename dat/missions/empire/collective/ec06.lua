@@ -24,6 +24,7 @@ lang = naev.lang()
 if lang == "es" then
    -- not translated atm
 else -- default english
+   bar_desc = "You see Comodore Keer at a table with a couple other pilots. She motions you to sit down with them."
    misn_title = "Operation Cold Metal"
    misn_reward = "Fame and Glory"
    misn_desc = {}
@@ -36,7 +37,7 @@ else -- default english
    title[3] = "Mission Success"
    title[4] = "Cowardly Behaviour"
    text = {}
-   text[1] = [[You see Commodore Keer at a table with a couple other pilots.  She motions you over to sit down.
+   text[1] = [[You join Commodore Keer's table.
 She begins, "We're going to finally attack the Collective.  We've gotten the Emperor himself to bless the mission and send some of his better pilots.  Would you be interested in joining the destruction of the Collective?"]]
    text[2] = [["The Operation has been dubbed 'Cold Metal'.  Our goal is to head to C-00, we'll take the route of %s, %s then C-00.  Should we encounter the Starfire at any stage our goal will be to destroy it and head back.  We'll also clear each system completely of Collective presence before continuing to the next system.  See you in combat pilots."]]
    text[3] = [[As you do your approach to land on %s you notice big banners placed on the exterior of the station.  They seem to be in celebration of the final defeat of the Collective.  When you do land you are saluted by the welcoming committee in charge of saluting all the returning pilots.
@@ -55,32 +56,40 @@ The signature does seem valid.]]
 end
 
 
--- Creates the mission
 function create ()
+   misn.setNPC( "Keer", "none" )
+   misn.setDesc( bar_desc )
+end
+
+
+-- Creates the mission
+function accept ()
 
    -- Intro text
-   if tk.yesno( title[1], text[1] )
-      then
-      misn.accept()
-
-      -- Mission data
-      misn_stage = 0
-      misn_base, misn_base_sys = planet.get("Omega Station")
-      misn_target_sys = system.get("C-43")
-      misn_final_sys = system.get("C-28")
-      misn.setMarker(misn_target_sys)
-
-      -- Mission details
-      misn.setTitle(misn_title)
-      misn.setReward( misn_reward )
-      misn.setDesc( string.format(misn_desc[1], misn_target_sys:name() ))
-
-      tk.msg( title[2], string.format( text[2],
-            misn_target_sys:name(), misn_final_sys:name() ) )
-
-      hook.enter("jump")
-      hook.land("land")
+   if not tk.yesno( title[1], text[1] ) then
+      misn.finish()
    end
+
+   -- Accept the mission
+   misn.accept()
+
+   -- Mission data
+   misn_stage = 0
+   misn_base, misn_base_sys = planet.get("Omega Station")
+   misn_target_sys = system.get("C-43")
+   misn_final_sys = system.get("C-28")
+   misn.setMarker(misn_target_sys)
+
+   -- Mission details
+   misn.setTitle(misn_title)
+   misn.setReward( misn_reward )
+   misn.setDesc( string.format(misn_desc[1], misn_target_sys:name() ))
+
+   tk.msg( title[2], string.format( text[2],
+         misn_target_sys:name(), misn_final_sys:name() ) )
+
+   hook.enter("jump")
+   hook.land("land")
 end
 
 

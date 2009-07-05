@@ -12,6 +12,7 @@ lang = naev.lang()
 if lang == "es" then
    -- not translated atm
 else -- default english
+   bar_desc = "You see an Empire Sergeant who seems to be motioningi you over to the counter."
    misn_title = "Collective Scout"
    misn_reward = "None"
    misn_desc = {}
@@ -22,7 +23,7 @@ else -- default english
    title[2] = "Briefing"
    title[3] = "Mission Accomplished"
    text = {}
-   text[1] = [[As you enter the bar you notice some one signal to you from the counter.  You notice he's wearing an Empire insignia on his uniform.
+   text[1] = [[You approach the Sergeant.
 "Hello %s, we have a reconnaissance you might be interested.  Commander Soldner said you'd make a good candidate for the mission.  You up for the challenge?"]]
    text[2] = [["I don't think we've met.  I'm Sergeant Dimitri.  If all goes well you'll be reporting to me for the next assignments."
 "You've heard about the Collective right?  From what we know, the Collective seems to be a sort of 'hive' of robots.  They're a recent menace, had the timing to arrive more or less when the Incident happened, otherwise they would have been wiped out by the Emperor's Armada without sweating.  They completely wiped out all human life in the first worlds they hit like Eiroik.  We managed to stop them here, in %s and afterwards constructed this base.  Since then it's been more or less a stalemate."]]
@@ -34,32 +35,41 @@ else -- default english
 end
 
 
-function create()
-   -- Intro text
-   if tk.yesno( title[1], string.format(text[1], player.name()) )
-      then
-      misn.accept()
-
-      misn_stage = 0
-      misn_nearby = system.get("Coriolis")
-      misn_target = system.get("Dune")
-      misn_base,misn_base_sys = planet.get("Omega Station")
-      misn.setMarker(misn_nearby) -- Not exact target
-
-      -- Mission details
-      misn.setTitle(misn_title)
-      misn.setReward( misn_reward )
-      misn.setDesc( string.format(misn_desc[1],misn_nearby:name()))
-
-      -- Flavour text and mini-briefing
-      tk.msg( title[2], string.format( text[2], misn_base_sys:name() ) )
-      tk.msg( title[2], string.format( text[3], misn_nearby:name(),
-            misn_base:name(), misn_base_sys:name() ))
-
-      hook.enter("enter")
-      hook.land("land")
-   end
+function create ()
+   misn.setNPC( "Sergeant", "none" )
+   misn.setDesc( bar_desc )
 end
+
+
+function accept ()
+   -- Intro text
+   if not tk.yesno( title[1], string.format(text[1], player.name()) ) then
+      misn.finish()
+   end
+
+   -- Accept mission
+   misn.accept()
+
+   misn_stage = 0
+   misn_nearby = system.get("Coriolis")
+   misn_target = system.get("Dune")
+   misn_base,misn_base_sys = planet.get("Omega Station")
+   misn.setMarker(misn_nearby) -- Not exact target
+
+   -- Mission details
+   misn.setTitle(misn_title)
+   misn.setReward( misn_reward )
+   misn.setDesc( string.format(misn_desc[1],misn_nearby:name()))
+
+   -- Flavour text and mini-briefing
+   tk.msg( title[2], string.format( text[2], misn_base_sys:name() ) )
+   tk.msg( title[2], string.format( text[3], misn_nearby:name(),
+         misn_base:name(), misn_base_sys:name() ))
+
+   hook.enter("enter")
+   hook.land("land")
+end
+
 
 function enter()
    sys = system.get()

@@ -18,6 +18,7 @@ if lang == "es" then
    -- not translated atm
 else -- default english
    -- Mission details
+   bar_desc = "Commander Soldner is waiting for you."
    misn_title = "Empire Shipping Delivery"
    misn_reward = "%d credits"
    misn_desc = {}
@@ -43,34 +44,41 @@ else -- default english
    msg[2] = "MISSION FAILED: You left the VIP abandoned."
 end
 
-
 function create ()
+   misn.setNPC( "Soldner", "none" )
+   misn.setDesc( bar_desc )
+end
+
+
+function accept ()
 
    -- Intro text
-   if tk.yesno( title[1], string.format( text[1], player.name() ) )
-      then
-      misn.accept()
-
-      -- target destination
-      destsys = system.get( "Slaccid" )
-      ret,retsys = planet.get( "Polaris Prime" )
-      misn.setMarker(destsys)
-
-      -- Mission details
-      misn_stage = 0
-      reward = 75000
-      misn.setTitle(misn_title)
-      misn.setReward( string.format(misn_reward, reward) )
-      misn.setDesc( string.format(misn_desc[1], destsys:name() ))
-
-      -- Flavour text and mini-briefing
-      tk.msg( title[1], string.format( text[2], destsys:name(), destsys:name() ) )
-      tk.msg( title[1], string.format( text[3], reward ) )
-
-      -- Set hooks
-      hook.land("land")
-      hook.enter("enter")
+   if not tk.yesno( title[1], string.format( text[1], player.name() ) ) then
+      misn.finish()
    end
+
+   -- Accept the mission
+   misn.accept()
+
+   -- target destination
+   destsys = system.get( "Slaccid" )
+   ret,retsys = planet.get( "Polaris Prime" )
+   misn.setMarker(destsys)
+
+   -- Mission details
+   misn_stage = 0
+   reward = 75000
+   misn.setTitle(misn_title)
+   misn.setReward( string.format(misn_reward, reward) )
+   misn.setDesc( string.format(misn_desc[1], destsys:name() ))
+
+   -- Flavour text and mini-briefing
+   tk.msg( title[1], string.format( text[2], destsys:name(), destsys:name() ) )
+   tk.msg( title[1], string.format( text[3], reward ) )
+
+   -- Set hooks
+   hook.land("land")
+   hook.enter("enter")
 end
 
 

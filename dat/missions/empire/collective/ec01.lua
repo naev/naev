@@ -12,6 +12,7 @@ lang = naev.lang()
 if lang == "es" then
    -- not translated atm
 else -- default english
+   bar_desc = "You notice Sergeant Dimitri who seems to be motioning for you to come over."
    misn_title = "Collective Espionage"
    misn_reward = "None"
    misn_desc = {}
@@ -22,7 +23,7 @@ else -- default english
    title[2] = "Collective Espionage"
    title[3] = "Mission Accomplished"
    text = {}
-   text[1] = [[You notice Sergeant Dimitri at the bar you calls you over.
+   text[1] = [[You meet up with Sergeant Dimitri.
 "We managed to capture the drone after you located it.  It didn't seem to be in good health.  Our scientists are studying it as we speak, but we've found something strange in it.  Some sort of weird wireless module.  We'd like you to go run through the Collective systems to see if you can pick up any strange wireless communications.  Just do a quick run through, be careful of the Collective though.  You interested in doing the run?  It'll be dangerous."]]
    text[2] = [["Just run through some systems while keeping your communications system on logging.  We'll parse the results when you get back.  With just visiting 2 or 3 Collective systems it should be more then enough.  Good luck."]]
    text[3] = [[After landing Sergeant Dimitri greets you on the land pad.
@@ -30,27 +31,36 @@ else -- default english
 end
 
 
-function create()
-   -- Intro text
-   if tk.yesno( title[1], text[1] )
-      then
-      misn.accept()
-
-      misn_stage = 0      
-      systems_visited = 0 -- Number of Collective systems visited
-      misn_base,misn_base_sys = planet.get("Omega Station")
-
-      -- Mission details
-      misn.setTitle(misn_title)
-      misn.setReward( misn_reward )
-      misn.setDesc(misn_desc[1])
-      misn.setMarker( system.get("C-00"), "misc" )
-
-      tk.msg( title[2], text[2] )
-
-      hook.enter("enter")
-   end
+function create ()
+   misn.setNPC( "Dimitri", "none" )
+   misn.setDesc( bar_desc )
 end
+
+
+function accept ()
+   -- Intro text
+   if not tk.yesno( title[1], text[1] ) then
+      misn.finish()
+   end
+
+   -- Accept mission
+   misn.accept()
+
+   misn_stage = 0      
+   systems_visited = 0 -- Number of Collective systems visited
+   misn_base,misn_base_sys = planet.get("Omega Station")
+
+   -- Mission details
+   misn.setTitle(misn_title)
+   misn.setReward( misn_reward )
+   misn.setDesc(misn_desc[1])
+   misn.setMarker( system.get("C-00"), "misc" )
+
+   tk.msg( title[2], text[2] )
+
+   hook.enter("enter")
+end
+
 
 function enter()
    local sys = system.get()

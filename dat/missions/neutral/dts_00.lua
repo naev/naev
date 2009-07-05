@@ -95,7 +95,7 @@ end
 
 
 -- Create the mission on the current planet, and present the first Bar text.
-function create()
+function create ()
 
       this_planet, this_system = planet.get()
       if ( this_system:hasPresence( "Pirate") or 

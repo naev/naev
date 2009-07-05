@@ -10,6 +10,9 @@
 lang = naev.lang()
 if lang == "es" then
 else -- Default to English
+   -- Bar information
+   bar_desc = "You see an Empire Official handing out bounty information. There seems to be a crowd around him interested."
+
    -- Mission details
    misn_title  = "Pirate Bounty near %s"
    misn_reward = "%d credits"
@@ -19,7 +22,7 @@ else -- Default to English
    title    = {}
    text     = {}
    title[1] = "Spaceport Bar"
-   text[1]  = [[You are enjoying your drinks when an Empire official bursts in and declares a bounty on the head of a pirate terrorizing the area known as %s for %d credits.  It seems like he was last seen in the %s system. Quite a few other mercenaries seem interested and it looks like you'll have to outrace them.
+   text[1]  = [[It seems like the bounty is on the head of a pirate terrorizing the area known as %s for %d credits.  It seems like he was last seen in the %s system. Quite a few other mercenaries seem interested and it looks like you'll have to outrace them.
    
 Will you take up the bounty?]]
    text[2] = [[You roll up your sleeve and grab one of the pamphlets given out by the Empire official.]]
@@ -35,9 +38,6 @@ end
 include("scripts/pilot/pirate.lua")
 
 
---[[
-Mission entry point.
---]]
 function create ()
    -- Create the target pirate
    pir_name, pir_ship, pir_outfits = pir_generate()
@@ -48,23 +48,34 @@ function create ()
    -- Get credits
    credits  = rnd.rnd(5,10) * 10000
 
+   -- Spaceport bar stuff
+   misn.setNPC( "Official", "none" )
+   misn.setDesc( bar_desc )
+end
+
+
+--[[
+Mission entry point.
+--]]
+function accept ()
    -- Mission details:
-   if tk.yesno( title[1], string.format( text[1],
+   if not tk.yesno( title[1], string.format( text[1],
          pir_name, credits, near_sys:name() ) ) then
-      misn.accept()
-
-      -- Set mission details
-      misn.setTitle( string.format( misn_title, near_sys:name()) )
-      misn.setReward( string.format( misn_reward, credits) )
-      misn.setDesc( string.format( misn_desc, pir_name, near_sys:name() ) )
-      misn.setMarker( near_sys, "misc" )
-
-      -- Some flavour text
-      tk.msg( title[1], text[2] )
-
-      -- Set hooks
-      hook.enter("sys_enter")
+      misn.finish()
    end
+   misn.accept()
+
+   -- Set mission details
+   misn.setTitle( string.format( misn_title, near_sys:name()) )
+   misn.setReward( string.format( misn_reward, credits) )
+   misn.setDesc( string.format( misn_desc, pir_name, near_sys:name() ) )
+   misn.setMarker( near_sys, "misc" )
+
+   -- Some flavour text
+   tk.msg( title[1], text[2] )
+
+   -- Set hooks
+   hook.enter("sys_enter")
 end
 
 

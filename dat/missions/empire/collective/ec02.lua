@@ -12,6 +12,7 @@ lang = naev.lang()
 if lang == "es" then
    -- not translated atm
 else -- default english
+   bar_desc = "You notice Sergeant Dimitri at one of the booths."
    misn_title = "Collective Espionage"
    misn_reward = "None"
    misn_desc = {}
@@ -21,7 +22,7 @@ else -- default english
    title[1] = "Collective Espionage"
    title[2] = "Mission Accomplished"
    text = {}
-   text[1] = [[You notice Sergeant Dimitri at one of the booths.  You head over to see what the results are.
+   text[1] = [[You head over to Sergeant Dimitri see what the results are.
 "Hello again there %s.  Bad news on your latest run, you got nothing other then the usual robotic chatter.  We'll have to send you out again, this time we'll follow a different approach.  Interested in giving it another shot?]]
    text[2] = [["On your last run you were monitoring while out in the open, while you do get better signals, upon noticing your presence.  This mission will consist of hiding and monitoring from a safer spot, hopefully catching them more relaxed."
 "When the Collective struck, they quickly took many systems, one of the bigger hits was %s, an important gas giant rich in methane.  They destroyed the gas refineries and slaughtered the humans, there was nothing we could do.  The turbulence and dense atmosphere should be able to hide your ship."]]
@@ -33,28 +34,36 @@ else -- default english
 end
 
 
-function create()
+function create ()
+   misn.setNPC( "Dimitri", "none" )
+   misn.setDesc( bar_desc )
+end
+
+
+function accept ()
    -- Intro text
-   if tk.yesno( title[1], string.format(text[1], player.name()) )
-      then
-      misn.accept()
-
-      misn_stage = 0      
-      systems_visited = 0 -- Number of Collective systems visited
-      misn_base, misn_base_sys = planet.get("Omega Station")
-      misn_target, misn_target_sys = planet.get("Eiroik")
-      misn.setMarker(misn_target_sys)
-
-      -- Mission details
-      misn.setTitle(misn_title)
-      misn.setReward( misn_reward )
-      misn.setDesc( string.format(misn_desc[1], misn_target:name(), misn_target_sys:name() ))
-
-      tk.msg( title[1], string.format(text[2], misn_target:name()) )
-      tk.msg( title[1], string.format(text[3], misn_target:name(), misn_target_sys:name()) )
-
-      hook.land("land")
+   if not tk.yesno( title[1], string.format(text[1], player.name()) ) then
+      misn.finish()
    end
+
+   -- Accept the mission
+   misn.accept()
+
+   misn_stage = 0      
+   systems_visited = 0 -- Number of Collective systems visited
+   misn_base, misn_base_sys = planet.get("Omega Station")
+   misn_target, misn_target_sys = planet.get("Eiroik")
+   misn.setMarker(misn_target_sys)
+
+   -- Mission details
+   misn.setTitle(misn_title)
+   misn.setReward( misn_reward )
+   misn.setDesc( string.format(misn_desc[1], misn_target:name(), misn_target_sys:name() ))
+
+   tk.msg( title[1], string.format(text[2], misn_target:name()) )
+   tk.msg( title[1], string.format(text[3], misn_target:name(), misn_target_sys:name()) )
+
+   hook.land("land")
 end
 
 function land()

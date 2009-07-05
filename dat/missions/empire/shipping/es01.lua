@@ -9,6 +9,7 @@ if lang == "es" then
    -- not translated atm
 else -- default english
    -- Mission details
+   bar_desc = "You see Commander Soldner who is expecting you."
    misn_title = "Empire Shipping Delivery"
    misn_reward = "%d credits"
    misn_desc = {}
@@ -22,7 +23,7 @@ else -- default english
    title[3] = "Cargo Delivery"
    title[4] = "Mission Success"
    text = {}
-   text[1] = [[You enter the bar and see Commander Soldner waiting for you.
+   text[1] = [[You approach Commander Soldner who seems to be waiting for you,
 "Hello, ready for your next mission?"]]
    text[2] = [[Commander Soldner begins, "We have an important package that we must take from %s in the %s system to %s in the %s system.  We have reason to believe that it is also wanted by external forces."
 "The plan is to send an advanced convoy with guards to do the route in an attempt to confuse possible enemies.  You will then go in and actually do the delivery by yourself.  This way we shouldn't arouse suspicion.  You are to report here when you finish delivery and you'll be paid %d credits."]]
@@ -40,36 +41,42 @@ end
 
 
 function create ()
+   misn.setNPC( "Soldner", "none" )
+   misn.setDesc( bar_desc )
+end
 
-   -- Intro text
-   if tk.yesno( title[1], text[1] )
-      then
-      misn.accept()
+function accept ()
 
-      -- target destination
-      pickup,pickupsys = planet.get( "Selphod" )
-      dest,destsys = planet.get( "Cerberus" )
-      ret,retsys = planet.get( "Polaris Prime" )
-      misn.setMarker(pickupsys)
-
-      -- Mission details
-      misn_stage = 0
-      reward = 50000
-      misn.setTitle(misn_title)
-      misn.setReward( string.format(misn_reward, reward) )
-      misn.setDesc( string.format(misn_desc[1], pickup:name(), pickupsys:name()))
-
-      -- Flavour text and mini-briefing
-      tk.msg( title[1], string.format( text[2], pickup:name(), pickupsys:name(),
-            dest:name(), destsys:name(), reward ))
-
-      -- Set up the goal
-      tk.msg( title[1], text[3] )
-
-      -- Set hooks
-      hook.land("land")
-      hook.enter("enter")
+   -- See if accept mission
+   if not tk.yesno( title[1], text[1] ) then
+      misn.finish()
    end
+
+   misn.accept()
+
+   -- target destination
+   pickup,pickupsys = planet.get( "Selphod" )
+   dest,destsys = planet.get( "Cerberus" )
+   ret,retsys = planet.get( "Polaris Prime" )
+   misn.setMarker(pickupsys)
+
+   -- Mission details
+   misn_stage = 0
+   reward = 50000
+   misn.setTitle(misn_title)
+   misn.setReward( string.format(misn_reward, reward) )
+   misn.setDesc( string.format(misn_desc[1], pickup:name(), pickupsys:name()))
+
+   -- Flavour text and mini-briefing
+   tk.msg( title[1], string.format( text[2], pickup:name(), pickupsys:name(),
+         dest:name(), destsys:name(), reward ))
+
+   -- Set up the goal
+   tk.msg( title[1], text[3] )
+
+   -- Set hooks
+   hook.land("land")
+   hook.enter("enter")
 end
 
 
