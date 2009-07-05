@@ -163,7 +163,7 @@ void window_render( Window* w );
 /* Widget stuff. */
 Widget* window_newWidget( Window* w );
 void widget_cleanup( Widget *widget );
-Widget* window_getwgt( const unsigned int wid, char* name );
+Widget* window_getwgt( const unsigned int wid, const char* name );
 void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y );
 void toolkit_nextFocus (void);
 

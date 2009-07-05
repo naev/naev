@@ -76,7 +76,7 @@ static const char *land_windowNames[] = {
    "Shipyard",
    "Commodity"
 };
-static unsigned int land_windowsMap[6]; /**< Mapping of windows. */
+static int land_windowsMap[6]; /**< Mapping of windows. */
 static unsigned int *land_windows = NULL; /**< Landed window ids. */
 Planet* land_planet = NULL; /**< Planet player landed at. */
 static glTexture *gfx_exterior = NULL; /**< Exterior graphic of the landed planet. */
@@ -98,6 +98,7 @@ static glTexture *mission_portrait = NULL; /**< Mission portrait. */
  * player stuff
  */
 extern int hyperspace_target; /**< from player.c */
+static int last_window = 0; /**< Default window. */
 
 
 /*
@@ -106,6 +107,7 @@ extern int hyperspace_target; /**< from player.c */
 static void land_createMainTab( unsigned int wid );
 static void land_cleanupWindow( unsigned int wid, char *name );
 static void land_buttonTakeoff( unsigned int wid, char *unused );
+static void land_changeTab( unsigned int wid, char *wgt, int tab );
 /* commodity exchange */
 static void commodity_exchange_open( unsigned int wid );
 static void commodity_update( unsigned int wid, char* str );
@@ -1710,7 +1712,7 @@ static void land_cleanupWindow( unsigned int wid, char *name )
  */
 void land( Planet* p )
 {
-   int j;
+   int i, j;
    const char *names[6];
 
    /* Do not land twice. */
@@ -1737,6 +1739,10 @@ void land( Planet* p )
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC))
       news_load();
 
+   /* Set window map to invald. */
+   for (i=0; i<6; i++)
+      land_windowsMap[i] = -1;
+
    /* See what is available. */
    j = 0;
    land_windowsMap[0] = j;
@@ -1762,6 +1768,12 @@ void land( Planet* p )
 
    /* Create tabbed window. */
    land_windows = window_addTabbedWindow( land_wid, -1, -1, -1, -1, "tabLand", j, names );
+
+   /* Go to last open tab. */
+   window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
+   window_tabWinOnChange( land_wid, "tabLand", land_changeTab );
+
+   /* Create each tab. */
    land_createMainTab( land_windows[ land_windowsMap[0] ] );
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
       spaceport_bar_open( land_windows[ land_windowsMap[1] ] );
@@ -1843,6 +1855,28 @@ static void land_createMainTab( unsigned int wid )
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnTakeoff",
          "Takeoff", land_buttonTakeoff );
+}
+
+
+/**
+ * @brief Saves the last place the player was.
+ *
+ *    @param wid Unused.
+ *    @param wgt Unused.
+ *    @param tab Tab changed to.
+ */
+static void land_changeTab( unsigned int wid, char *wgt, int tab )
+{
+   int i;
+   (void) wid;
+   (void) wgt;
+
+   for (i=0; i<6; i++) {
+      if (land_windowsMap[i] == tab) {
+         last_window = tab;
+         break;
+      }
+   }
 }
 
 

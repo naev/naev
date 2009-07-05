@@ -157,6 +157,10 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
       /* Mark as active. */
       if (x < p) {
          tab->dat.tab.active = i;
+
+         /* Create event. */
+         if (tab->dat.tab.onChange != NULL)
+            tab->dat.tab.onChange( tab->wdw, tab->name, tab->dat.tab.active );
          break;
       }
    }
@@ -231,3 +235,69 @@ static void tab_cleanup( Widget *tab )
    if (tab->dat.tab.namelen != NULL)
       free( tab->dat.tab.namelen );
 }
+
+
+/**
+ * @brief Sets the active tab.
+ *
+ *    @param wid Window to which tabbed window belongs.
+ *    @param tab Name of the tabbed window.
+ *    @param active tab to set active.
+ */
+int window_tabWinSetActive( const unsigned int wid, const char *tab, int active )
+{
+   Widget *wgt = window_getwgt( wid, tab );
+
+   /* Must be found in stack. */
+   if (wgt == NULL) {
+      WARN("Widget '%s' not found", tab);
+      return -1;
+   }
+
+   /* Must be an image array. */
+   if (wgt->type != WIDGET_TABBEDWINDOW) {
+      WARN("Widget '%s' is not an image array.", tab);
+      return -1;
+   }
+
+   /* Set active window. */
+   wgt->dat.tab.active = active;
+
+   /* Create event. */
+   if (wgt->dat.tab.onChange != NULL)
+      wgt->dat.tab.onChange( wid, wgt->name, wgt->dat.tab.active );
+
+   return 0;
+}
+
+
+/**
+ * @brief Sets the onChange function callback.
+ *
+ *    @param wid Window to which tabbed window belongs.
+ *    @param tab Name of the tabbed window.
+ *    @param onChange Callback to use (NULL disables).
+ */
+int window_tabWinOnChange( const unsigned int wid, const char *tab,
+      void(*onChange)(unsigned int,char*,int) )
+{
+   Widget *wgt = window_getwgt( wid, tab );
+
+   /* Must be found in stack. */
+   if (wgt == NULL) {
+      WARN("Widget '%s' not found", tab);
+      return -1;
+   }
+
+   /* Must be an image array. */
+   if (wgt->type != WIDGET_TABBEDWINDOW) {
+      WARN("Widget '%s' is not an image array.", tab);
+      return -1;
+   }
+
+   /* Set on change function. */
+   wgt->dat.tab.onChange = onChange;
+
+   return 0;
+}
+

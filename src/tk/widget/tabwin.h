@@ -19,6 +19,7 @@ typedef struct WidgetTabbedWindowData_ {
 
    /* Internal usage. */
    int *namelen;
+   void(*onChange)(unsigned int,char*,int);
 } WidgetTabbedWindowData;
 
 
@@ -27,6 +28,11 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
       const char* name, int ntabs, const char **tabnames );
+
+
+int window_tabWinSetActive( const unsigned int wid, const char *tab, int active );
+int window_tabWinOnChange( const unsigned int wid, const char *tab,
+      void(*onChange)(unsigned int,char*,int) );
 
 
 #endif /* WGT_TABWIN_H */

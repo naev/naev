@@ -166,7 +166,7 @@ Window* window_wget( const unsigned int wid )
  *    @param name Name of the widget to get.
  *    @return Widget matching name in the window.
  */
-Widget* window_getwgt( const unsigned int wid, char* name )
+Widget* window_getwgt( const unsigned int wid, const char* name )
 {
    int i;
    Window *wdw;
