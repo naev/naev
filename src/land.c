@@ -135,8 +135,10 @@ static unsigned int shipyard_yoursTransportPrice( char* shipname );
 static void spaceport_bar_getDim( int wid,
       int *w, int *h, int *iw, int *ih, int *bw, int *bh );
 static void spaceport_bar_open( unsigned int wid );
+static int spaceport_bar_genList( unsigned int wid );
 static void spaceport_bar_update( unsigned int wid, char* str );
 static void spaceport_bar_close( unsigned int wid, char* str );
+static void spaceport_bar_approach( unsigned int wid, char* str );
 static int news_load (void);
 /* mission computer */
 static void misn_open( unsigned int wid );
@@ -1198,11 +1200,7 @@ static void spaceport_bar_getDim( int wid,
  */
 static void spaceport_bar_open( unsigned int wid )
 {
-   int i;
    int w, h, iw, ih, bw, bh, dh, th;
-   glTexture **portraits;
-   char **names;
-   int n;
 
    /* Set window functions. */
    window_onClose( wid, spaceport_bar_close );
@@ -1215,6 +1213,9 @@ static void spaceport_bar_open( unsigned int wid )
    window_addButton( wid, -20, 20,
          bw, bh, "btnCloseBar",
          "Takeoff", land_buttonTakeoff );
+   window_addButton( wid, -20 - bw - 20, 20,
+         bw, bh, "btnApproach",
+         "Approach", spaceport_bar_approach );
 
    /* Bar description. */
    window_addText( wid, iw + 40, -40,
@@ -1233,6 +1234,30 @@ static void spaceport_bar_open( unsigned int wid )
    window_addText( wid, iw + 60, th,
          w - iw - 100, h + th - (2*bh+60), 0,
          "txtMission", &gl_smallFont, &cBlack, NULL );
+
+   /* Generate the mission list. */
+   spaceport_bar_genList( wid );
+}
+
+/**
+ * @brief Generates the misison list for the bar.
+ *
+ *    @param wid Window to create mission list for.
+ */
+static int spaceport_bar_genList( unsigned int wid )
+{
+   int i;
+   glTexture **portraits;
+   char **names;
+   int w, h, iw, ih, bw, bh;
+   int n;
+
+   /* Get dimensions. */
+   spaceport_bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
+
+   /* Destroy widget if already exists. */
+   if (widget_exists( wid, "iarMissions" ))
+      window_destroyWidget( wid, "iarMissions" );
 
    /* Set up missions. */
    mission_portrait = gl_newImage( "gfx/portraits/none.png", 0 );
@@ -1260,6 +1285,8 @@ static void spaceport_bar_open( unsigned int wid )
 
    /* write the outfits stuff */
    spaceport_bar_update( wid, NULL );
+
+   return 0;
 }
 /**
  * @brief Updates the missions in the spaceport bar.
@@ -1287,6 +1314,9 @@ static void spaceport_bar_update( unsigned int wid, char* str )
             window_destroyWidget(wid, "imgPortrait");
          }
 
+         /* Disable button. */
+         window_disableButton( wid, "btnApproach" );
+
          /* Clear text. */
          window_modifyText(  wid, "txtPortrait", NULL );
          window_modifyText(  wid, "txtMission",  NULL );
@@ -1313,6 +1343,9 @@ static void spaceport_bar_update( unsigned int wid, char* str )
             "imgPortrait", NULL, 1 );
    }
 
+   /* Enable button. */
+   window_enableButton( wid, "btnApproach" );
+
    /* Set portrait. */
    window_modifyText(  wid, "txtPortrait", mission_bar[pos].npc );
    window_modifyImage( wid, "imgPortrait", mission_bar[pos].portrait );
@@ -1334,6 +1367,47 @@ static void spaceport_bar_close( unsigned int wid, char *name )
       gl_freeTexture(mission_portrait);
       mission_portrait = NULL;
    }
+}
+/**
+ * @brief Approaches guy in mission computer.
+ */
+static void spaceport_bar_approach( unsigned int wid, char *str )
+{
+   (void) str;
+   Mission* misn;
+   int pos;
+   int i;
+
+   /* Get position. */
+   pos = toolkit_getImageArrayPos( wid, "iarMissions" );
+
+   /* Should never happen, but in case news is selected */
+   if (pos == 0)
+      return;
+
+   /* Ignore news. */
+   pos--;
+
+   /* Make sure player can accept the mission. */
+   for (i=0; i<MISSION_MAX; i++)
+      if (player_missions[i].data == NULL) break;
+   if (i >= MISSION_MAX) {
+      dialogue_alert("You have too many active missions.");
+      return;
+   }
+
+   /* Get mission. */
+   misn = &mission_bar[pos];
+   if (mission_accept( misn )) { /* successs in accepting the mission */
+      memmove( &mission_bar[pos], &mission_bar[pos+1],
+            sizeof(Mission) * (mission_nbar-pos-1) );
+      mission_nbar--;
+
+      spaceport_bar_genList(wid);
+   }
+
+   /* Reset markers. */
+   mission_sysMark();
 }
 /**
  * @brief Loads the news.
