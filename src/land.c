@@ -1770,7 +1770,8 @@ void land( Planet* p )
    land_windows = window_addTabbedWindow( land_wid, -1, -1, -1, -1, "tabLand", j, names );
 
    /* Go to last open tab. */
-   window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
+   if (land_windowsMap[ last_window ] != -1)
+      window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
    window_tabWinOnChange( land_wid, "tabLand", land_changeTab );
 
    /* Create each tab. */
