@@ -42,6 +42,9 @@
 #define EVENT_CHUNK           32 /**< Size to grow event data by. */
 
 
+#define EVENT_FLAG_UNIQUE     (1<<0) /**< Unique event. */
+
+
 /**
  * @brief Event data structure.
  */
@@ -122,6 +125,28 @@ const char *event_getData( unsigned int eventid )
 
    WARN("Event ID '%u' not valid.", eventid);
    return NULL;
+}
+
+
+/**
+ * @brief Checks to see if an event is unique.
+ *
+ *    @param eventid ID of event to see if is unique.
+ *    @return 0 if isn't unique, 1 if is.
+ */
+int event_isUnique( unsigned int eventid )
+{
+   int i;
+   Event_t *ev;
+
+   for (i=0; i<event_nactive; i++) {
+      ev = &event_active[i];
+      if (ev->id == eventid)
+         return !!(event_data[ ev->data ].flags & EVENT_FLAG_UNIQUE);
+   }
+
+   WARN("Event ID '%u' not valid.", eventid);
+   return 0;
 }
 
 
@@ -309,7 +334,7 @@ void events_trigger( EventTrigger_t trigger )
  */
 static int event_parse( EventData_t *temp, const xmlNodePtr parent )
 {
-   xmlNodePtr node;
+   xmlNodePtr node, cur;
    char str[PATH_MAX] = "\0";
    char *buf;
 
@@ -358,6 +383,16 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
          else
             WARN("Event '%s' has invalid 'trigger' parameter: %s", temp->name, buf);
       }
+
+      /* Flags. */
+      else if (xml_isNode(node,"flags")) { /* set the various flags */
+         cur = node->children;
+         do {
+            if (xml_isNode(cur,"unique"))
+               temp->flags |= EVENT_FLAG_UNIQUE;
+         } while (xml_nextNode(cur));
+      }
+
 
       /* Condition. */
       else if (xml_isNode(node,"cond"))
@@ -484,10 +519,10 @@ void events_cleanup (void)
       event_cleanup( &event_active[i] );
    if (event_active != NULL) {
       free(event_active);
-      event_active = NULL;
-      event_nactive = 0;
-      event_mactive = 0;
    }
+   event_active = NULL;
+   event_nactive = 0;
+   event_mactive = 0;
 }
 
 
@@ -496,15 +531,48 @@ void events_cleanup (void)
  */
 void events_exit (void)
 {
+   int i;
+
    events_cleanup();
 
    /* Free data. */
+   for (i=0; i<event_ndata; i++)
+      event_freeData(&event_data[i]);
    if (event_data != NULL) {
       event_freeData(event_data);
       free(event_data);
-      event_data  = NULL;
-      event_ndata = 0;
    }
+   event_data  = NULL;
+   event_ndata = 0;
 }
 
+
+/**
+ * @brief Gets the event data id from name.
+ *
+ *    @param evdata Name of the data.
+ *    @return ID matching dataname.
+ */
+int event_dataID( const char *evdata )
+{
+   int i;
+
+   for (i=0; i<event_ndata; i++)
+      if (strcmp(event_data[i].name, evdata)==0)
+         return i;
+   WARN("No event data found matching name '%s'.", evdata);
+   return -1;
+}
+
+
+/**
+ * @brief Gets the event data name from id.
+ *
+ *    @param dataid ID of the event data to get name of.
+ *    @return Name of the event data.
+ */
+const char *event_dataName( int dataid )
+{
+   return event_data[dataid].name;
+}
 

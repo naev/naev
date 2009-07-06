@@ -62,6 +62,14 @@ void events_trigger( EventTrigger_t trigger );
  */
 void event_remove( unsigned int eventid );
 const char *event_getData( unsigned int eventid );
+int event_isUnique( unsigned int eventid );
+
+
+/*
+ * Data.
+ */
+int event_dataID( const char *evdata );
+const char *event_dataName( int dataid );
 
 
 #endif /* EVENT_H */

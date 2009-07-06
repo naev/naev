@@ -27,6 +27,7 @@
 #include "log.h"
 #include "event.h"
 #include "mission.h"
+#include "player.h"
 
 
 /**
@@ -212,15 +213,24 @@ static int evt_timerStop( lua_State *L )
 /**
  * @brief Finishes the event.
  *
- * @luafunc finish()
+ *    @luaparam properly If true and the event is unique it marks the event
+ *                     as completed.  If false or nil it deletes the event but
+ *                     doesn't mark it as completed.
+ * @luafunc finish( properly )
  */
 static int evt_finish( lua_State *L )
 {
+   int b;
+
+   b = lua_toboolean(L,1);
    evt_delete = 1;
+
+   if (b && event_isUnique(cur_event->id))
+      player_eventFinished( cur_event->data );
 
    lua_pushstring(L, "Event Done");
    lua_error(L); /* shouldn't return */
 
-   return 0;            
+   return 0;
 }
 
