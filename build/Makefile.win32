@@ -32,7 +32,7 @@ ifeq ($(USE_SDLMIX),1)
 LDSOUND += -lSDL_mixer
 endif
 ifeq ($(USE_OPENAL),1)
-LDSOUND += -lopenal -lvorbisfile
+LDSOUND += -lOpenAL32 -lvorbisfile
 endif
 LDXML   := -lxml2
 LDTTF   := -lfreetype -lz
