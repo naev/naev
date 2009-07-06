@@ -24,6 +24,12 @@ void events_exit (void);
 
 
 /*
+ * Updating.
+ */
+void events_update( double dt );
+
+
+/*
  * Triggering.
  */
 int event_run( int eventid, const char *func );

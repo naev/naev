@@ -536,6 +536,7 @@ static void update_routine( double dt )
    spfx_update(dt);
    pilots_update(dt);
    missions_update(dt);
+   events_update(dt);
 }
 
 

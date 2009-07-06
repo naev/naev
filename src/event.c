@@ -38,6 +38,8 @@
 
 #define EVENT_CHUNK           32 /**< Size to grow event data by. */
 
+#define EVENT_TIMER_MAX       3 /**< Maximum amount of event timers. */
+
 
 /**
  * @brief Event data structure.
@@ -59,6 +61,10 @@ typedef struct EventData_s {
 typedef struct Event_s {
    int data; /**< EventData parent. */
    lua_State *L; /**< Event Lua State. */
+
+   /* Timers. */
+   double timer[EVENT_TIMER_MAX]; /**< Event timers. */
+   char *tfunc[EVENT_TIMER_MAX]; /**< Functions assosciated to the timers. */
 } Event_t;
 
 
@@ -185,6 +191,46 @@ static int event_create( int dataid )
    lua_close(L);
 
    return 0;
+}
+
+
+/**
+ * @brief Runs event timer stuff.
+ */
+void events_update( double dt )
+{
+   int i, j;
+   Event_t *ev;
+   char *tfunc;
+
+   for (i=0; i<event_nactive; i++) {
+      ev = &event_active[i];
+     
+      /* Decrement timers see if must run. */
+      for (j=0; j<EVENT_TIMER_MAX; j++) {
+
+         if (ev->timer[j] > 0.) {
+
+            ev->timer[j] -= dt;
+
+            /* Timer is up - trigger function. */
+            if (ev->timer[j] < 0.) {
+
+               /* Destroy timer. */
+               ev->timer[j] = 0.;
+               tfunc = ev->tfunc[j];
+               ev->tfunc[j] = NULL;
+
+               /* Run function. */
+               event_runLua( ev, tfunc );
+
+               /* Free remainder stuff. */
+               free(tfunc);
+            }
+         }
+
+      }
+   }
 }
 
 
