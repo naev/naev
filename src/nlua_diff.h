@@ -9,7 +9,7 @@
 #include "lua.h"
 
 /* individual library stuff */
-int lua_loadDiff( lua_State *L, int readonly );
+int nlua_loadDiff( lua_State *L, int readonly );
 
 
 #endif /* NLUA_DIFF */

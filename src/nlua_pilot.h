@@ -26,7 +26,7 @@ typedef struct LuaPilot_s {
 /* 
  * Library loading
  */
-int lua_loadPilot( lua_State *L, int readonly );
+int nlua_loadPilot( lua_State *L, int readonly );
 
 /*
  * Pilot operations

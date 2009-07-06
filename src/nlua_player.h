@@ -10,7 +10,7 @@
 
 
 /* individual library stuff */
-int lua_loadPlayer( lua_State *L, int readonnly );
+int nlua_loadPlayer( lua_State *L, int readonnly );
 
 
 #endif /* NLUA_PLAYER */

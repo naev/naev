@@ -10,7 +10,7 @@
 #include "lua.h"
 
 
-int lua_loadTk( lua_State *L ); /* always read only */
+int nlua_loadTk( lua_State *L ); /* always read only */
 
 
 #endif /* NLUA_TK_H */

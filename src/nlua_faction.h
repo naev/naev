@@ -24,7 +24,7 @@ typedef struct LuaFaction_s {
 /* 
  * Load the space library.
  */
-int lua_loadFaction( lua_State *L, int readonly );
+int nlua_loadFaction( lua_State *L, int readonly );
 
 /*
  * Faction operations

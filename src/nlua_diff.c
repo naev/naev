@@ -49,7 +49,7 @@ static const luaL_reg diff_cond_methods[] = {
  *    @param readonly Load read only functions?
  *    @return 0 on success.
  */
-int lua_loadDiff( lua_State *L, int readonly )
+int nlua_loadDiff( lua_State *L, int readonly )
 {
    if (readonly == 0)
       luaL_register(L, "diff", diff_methods);

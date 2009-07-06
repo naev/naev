@@ -71,7 +71,7 @@ static const luaL_reg faction_methods_cond[] = {
  *    @param readonly Load as read only?
  *    @return 0 on success.
  */
-int lua_loadFaction( lua_State *L, int readonly )
+int nlua_loadFaction( lua_State *L, int readonly )
 {
    /* Create the metatable */
    luaL_newmetatable(L, FACTION_METATABLE);

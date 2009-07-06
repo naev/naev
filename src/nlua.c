@@ -184,16 +184,16 @@ int nlua_loadStandard( lua_State *L, int readonly )
 
    r = 0;
    r |= nlua_loadBasic(L);
-   r |= lua_loadNaev(L);
-   r |= lua_loadVar(L,readonly);
-   r |= lua_loadSpace(L,readonly); /* planet, system */
-   r |= lua_loadTime(L,readonly);
-   r |= lua_loadPlayer(L,readonly);
-   r |= lua_loadPilot(L,readonly);
-   r |= lua_loadRnd(L);
-   r |= lua_loadDiff(L,readonly);
-   r |= lua_loadFaction(L,readonly);
-   r |= lua_loadVector(L);
+   r |= nlua_loadNaev(L);
+   r |= nlua_loadVar(L,readonly);
+   r |= nlua_loadSpace(L,readonly); /* planet, system */
+   r |= nlua_loadTime(L,readonly);
+   r |= nlua_loadPlayer(L,readonly);
+   r |= nlua_loadPilot(L,readonly);
+   r |= nlua_loadRnd(L);
+   r |= nlua_loadDiff(L,readonly);
+   r |= nlua_loadFaction(L,readonly);
+   r |= nlua_loadVector(L);
 
    return r;
 }

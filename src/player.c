@@ -118,11 +118,19 @@ static double player_timer = 0.; /**< For death and such. */
 
 
 /* 
- * unique mission stack
+ * unique mission stack.
  */
 static int* missions_done  = NULL; /**< Saves position of completed missions. */
 static int missions_mdone  = 0; /**< Memory size of completed missions. */
 static int missions_ndone  = 0; /**< Number of completed missions. */
+
+
+/*
+ * unique event stack.
+ */
+static int* events_done  = NULL; /**< Saves position of completed events. */
+static int events_mdone  = 0; /**< Memory size of completed events. */
+static int events_ndone  = 0; /**< Number of completed events. */
 
 
 /*
@@ -155,7 +163,8 @@ static int player_saveEscorts( xmlTextWriterPtr writer );
 static int player_saveShip( xmlTextWriterPtr writer, 
       Pilot* ship, char* loc );
 static int player_parse( xmlNodePtr parent );
-static int player_parseDone( xmlNodePtr parent );
+static int player_parseDoneMissions( xmlNodePtr parent );
+static int player_parseDoneEvents( xmlNodePtr parent );
 static int player_parseLicenses( xmlNodePtr parent );
 static int player_parseShip( xmlNodePtr parent, int is_player );
 static int player_parseEscorts( xmlNodePtr parent );
@@ -194,6 +203,7 @@ void player_new (void)
    player_cleanup();
    var_cleanup();
    missions_cleanup();
+   events_cleanup();
    space_clearKnown();
    land_cleanup();
    factions_reset();
@@ -576,13 +586,19 @@ void player_cleanup (void)
       player_nstack = 0;
    }
 
-   /* clean up misions */
-   if (missions_ndone > 0) {
+   /* clean up missions */
+   if (missions_done != NULL)
       free(missions_done);
-      missions_done = NULL;
-      missions_ndone = 0;
-      missions_mdone = 0;
-   }
+   missions_done = NULL;
+   missions_ndone = 0;
+   missions_mdone = 0;
+
+   /* Clean up events. */
+   if (events_done != NULL)
+      free(events_done);
+   events_done = NULL;
+   events_ndone = 0;
+   events_mdone = 0;
 
    /* Clean up licenses. */
    if (player_nlicenses > 0) {
@@ -1842,6 +1858,38 @@ int player_missionAlreadyDone( int id )
 
 
 /**
+ * @brief Marks a event as completed.
+ *
+ *    @param id ID of the event to mark as completed.
+ */
+void player_eventFinished( int id )
+{
+   events_ndone++;
+   if (events_ndone > events_mdone) { /* need to grow */
+      events_mdone += 25;
+      events_done = realloc( events_done, sizeof(int) * events_mdone);
+   }
+   events_done[ events_ndone-1 ] = id;
+}
+
+
+/**
+ * @brief Checks to see if player has already completed a event.
+ *
+ *    @param id ID of the event to see if player has completed.
+ *    @return 1 if player has completed the event, 0 otherwise.
+ */
+int player_eventAlreadyDone( int id )
+{
+   int i;
+   for (i=0; i<events_ndone; i++)
+      if (events_done[i] == id)
+         return 1;
+   return 0;
+}
+
+
+/**
  * @brief Checks to see if player has license.
  *
  *    @param license License to check to see if the player has.
@@ -1972,6 +2020,7 @@ int player_save( xmlTextWriterPtr writer )
 {
    int i;
    MissionData *m;
+   const char *ev;
 
    xmlw_startElem(writer,"player");
 
@@ -1999,7 +2048,7 @@ int player_save( xmlTextWriterPtr writer )
 
    xmlw_endElem(writer); /* "player" */
 
-   /* Mission the player has done */
+   /* Mission the player has done. */
    xmlw_startElem(writer,"missions_done");
    for (i=0; i<missions_ndone; i++) {
       m = mission_get(missions_done[i]);
@@ -2007,6 +2056,15 @@ int player_save( xmlTextWriterPtr writer )
          xmlw_elem(writer,"done",m->name);
    }
    xmlw_endElem(writer); /* "missions_done" */
+
+   /* Events the player has done. */
+   xmlw_startElem(writer,"events_done");
+   for (i=0; i<events_ndone; i++) {
+      ev = event_dataName(events_done[i]);
+      if (ev != NULL) /* In case mission name changes between versions */
+         xmlw_elem(writer,"done",ev);
+   }
+   xmlw_endElem(writer); /* "events_done" */
 
    /* Escorts. */
    xmlw_startElem(writer, "escorts");
@@ -2118,7 +2176,9 @@ int player_load( xmlNodePtr parent )
       if (xml_isNode(node,"player"))
          player_parse( node );
       else if (xml_isNode(node,"missions_done"))
-         player_parseDone( node );
+         player_parseDoneMissions( node );
+      else if (xml_isNode(node,"events_done"))
+         player_parseDoneEvents( node );
       else if (xml_isNode(node,"escorts"))
          player_parseEscorts(node);
    } while (xml_nextNode(node));
@@ -2206,7 +2266,7 @@ static int player_parse( xmlNodePtr parent )
  *    @param parent Node of the missions.
  *    @return 0 on success.
  */
-static int player_parseDone( xmlNodePtr parent )
+static int player_parseDoneMissions( xmlNodePtr parent )
 {
    xmlNodePtr node;
    int id;
@@ -2221,6 +2281,34 @@ static int player_parseDone( xmlNodePtr parent )
                   xml_get(node));
          else
             player_missionFinished( id );
+      }
+   } while (xml_nextNode(node));
+
+   return 0;
+}
+
+
+/**
+ * @brief Parses player's done missions.
+ *
+ *    @param parent Node of the missions.
+ *    @return 0 on success.
+ */
+static int player_parseDoneEvents( xmlNodePtr parent )
+{
+   xmlNodePtr node;
+   int id;
+
+   node = parent->xmlChildrenNode;
+
+   do {
+      if (xml_isNode(node,"done")) {
+         id = event_dataID( xml_get(node) );
+         if (id < 0)
+            DEBUG("Event '%s' doesn't seem to exist anymore, removing from save.",
+                  xml_get(node));
+         else
+            player_eventFinished( id );
       }
    } while (xml_nextNode(node));
 

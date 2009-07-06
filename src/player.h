@@ -108,6 +108,12 @@ void player_missionFinished( int id );
 int player_missionAlreadyDone( int id );
 
 /*
+ * player events
+ */
+void player_eventFinished( int id );
+int player_eventAlreadyDone( int id );
+
+/*
  * licenses
  */
 void player_addLicense( char *license );

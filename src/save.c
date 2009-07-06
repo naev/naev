@@ -321,6 +321,7 @@ static int load_game( const char* file )
    diff_clear();
    var_cleanup();
    missions_cleanup();
+   events_cleanup();
 
    /* Now begin to load. */
    diff_load(node); /* Must load first to work properly. */

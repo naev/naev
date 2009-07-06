@@ -27,5 +27,7 @@ function create ()
       include("scripts/pilot/empire.lua")
       empire_create()
    end
+
+   evt.finish()
 end
 

@@ -10,7 +10,7 @@
 #include "lua.h"
 
 
-int lua_loadTime( lua_State *L, int readonly );
+int nlua_loadTime( lua_State *L, int readonly );
 
 
 #endif /* NLUA_TIME_H */

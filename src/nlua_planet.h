@@ -26,7 +26,7 @@ typedef struct LuaPlanet_s {
 /* 
  * Load the planet library.
  */
-int lua_loadPlanet( lua_State *L, int readonly );
+int nlua_loadPlanet( lua_State *L, int readonly );
 
 /*
  * Planet operations.

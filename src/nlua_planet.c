@@ -53,7 +53,7 @@ static const luaL_reg planet_methods[] = {
  *    @param readonly Load read only functions?
  *    @return 0 on success.
  */
-int lua_loadPlanet( lua_State *L, int readonly )
+int nlua_loadPlanet( lua_State *L, int readonly )
 {
    (void) readonly;
    /* Create the metatable */

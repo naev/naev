@@ -98,7 +98,7 @@ static const luaL_reg pilotL_methods[] = {
  *    @param L State to load space library into.
  *    @return 0 on success.
  */
-int lua_loadPilot( lua_State *L, int readonly )
+int nlua_loadPilot( lua_State *L, int readonly )
 {
    if (readonly) /* Nothing is read only */
       return 0;

@@ -39,11 +39,23 @@
 #include "gui_osd.h"
 
 
+/**
+ * @brief Mission Lua bindings.
+ *
+ * An example would be:
+ * @code
+ * misn.setNPC( "Keer", "keer" )
+ * misn.setDesc( "You see here Commodore Keer." )
+ * @endcode
+ *
+ * @luamod misn
+ */
+
 
 /*
  * current mission
  */
-Mission *cur_mission = NULL; /**< Contains the current mission for a running script. */
+static Mission *cur_mission = NULL; /**< Contains the current mission for a running script. */
 static int misn_delete = 0; /**< if 1 delete current mission */
 
 
@@ -112,10 +124,10 @@ static const luaL_reg misn_methods[] = {
 int misn_loadLibs( lua_State *L )
 {
    nlua_loadStandard(L,0);
-   lua_loadMisn(L);
-   lua_loadTk(L);
-   lua_loadHook(L);
-   lua_loadMusic(L,0);
+   nlua_loadMisn(L);
+   nlua_loadTk(L);
+   nlua_loadHook(L);
+   nlua_loadMusic(L,0);
    return 0;
 }
 /*
@@ -125,7 +137,7 @@ int misn_loadLibs( lua_State *L )
  * @brief Loads the mission lua library.
  *    @param L Lua state.
  */
-int lua_loadMisn( lua_State *L )
+int nlua_loadMisn( lua_State *L )
 {  
    luaL_register(L, "misn", misn_methods);
    return 0;
@@ -182,9 +194,11 @@ static int misn_runTopStack( Mission *misn, const char *func)
    const char* err;
    lua_State *L;
 
+   /* Set the environment. */
    cur_mission = misn;
    misn_delete = 0;
    L = misn->L;
+   nlua_hookTarget( cur_mission, NULL );
 
    ret = lua_pcall(L, 0, 0, 0);
    if (ret != 0) { /* error has occured */
@@ -209,7 +223,9 @@ static int misn_runTopStack( Mission *misn, const char *func)
          }
    }
 
+   /* Clear stuf. */
    cur_mission = NULL;
+   nlua_hookTarget( NULL, NULL );
 
    return ret;
 }

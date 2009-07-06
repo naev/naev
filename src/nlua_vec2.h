@@ -25,7 +25,7 @@ typedef struct LuaVector_s {
 /*
  * Vector library.
  */
-int lua_loadVector( lua_State *L );
+int nlua_loadVector( lua_State *L );
 
 /*
  * Vector operations.

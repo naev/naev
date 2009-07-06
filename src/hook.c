@@ -21,6 +21,7 @@
 #include "log.h"
 #include "nxml.h"
 #include "player.h"
+#include "event.h"
 
 
 #define HOOK_CHUNK   32 /**< Size to grow by when out of space */
@@ -132,9 +133,7 @@ static int hook_runMisn( Hook *hook )
  */
 static int hook_runEvent( Hook *hook )
 {
-   (void) hook;
-   /** @todo. */
-   return 0;
+   return event_run( hook->u.event.parent, hook->u.event.func );
 }
 
 
@@ -512,11 +511,14 @@ int hook_save( xmlTextWriterPtr writer )
             xmlw_elem(writer,"func","%s",h->u.misn.func);
             break;
 
+         /* Do not save events until they can be persistant. */
+#if 0
          case HOOK_TYPE_EVENT:
             xmlw_attr(writer,"type","event"); /* Save attribute. */
             xmlw_elem(writer,"parent","%u",h->u.event.parent);
             xmlw_elem(writer,"func","%s",h->u.event.func);
             break;
+#endif
 
          default:
             WARN("Something has gone screwy here...");

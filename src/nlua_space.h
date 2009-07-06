@@ -16,7 +16,7 @@
 /* 
  * Load the space library.
  */
-int lua_loadSpace( lua_State *L, int readonly );
+int nlua_loadSpace( lua_State *L, int readonly );
 
 
 #endif /* NLUA_SPACE_H */

@@ -14,7 +14,7 @@
 /*
  * lua control
  */
-int lua_loadMusic( lua_State *L, int read_only );
+int nlua_loadMusic( lua_State *L, int read_only );
 
 
 #endif /* NLUA_MUSIC_H */

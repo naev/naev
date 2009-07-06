@@ -498,7 +498,7 @@ static int music_luaInit (void)
    music_lua = nlua_newState();
    nlua_loadBasic(music_lua);
    nlua_loadStandard(music_lua,1);
-   lua_loadMusic(music_lua,0); /* write it */
+   nlua_loadMusic(music_lua,0); /* write it */
 
    /* load the actual lua music code */
    buf = ndata_read( MUSIC_LUA_PATH, &bufsize );

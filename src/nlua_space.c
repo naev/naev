@@ -30,10 +30,10 @@
  *    @param readonly Load read only functions?
  *    @return 0 on success.
  */
-int lua_loadSpace( lua_State *L, int readonly )
+int nlua_loadSpace( lua_State *L, int readonly )
 {
-   lua_loadPlanet( L, readonly );
-   lua_loadSystem( L, readonly );
+   nlua_loadPlanet( L, readonly );
+   nlua_loadSystem( L, readonly );
 
    return 0;
 }
