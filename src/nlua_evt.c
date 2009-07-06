@@ -43,10 +43,12 @@ static int evt_delete = 0; /**< if 1 delete current event */
 static int evt_misnStart( lua_State *L );
 static int evt_timerStart( lua_State *L );
 static int evt_timerStop( lua_State *L );
+static int evt_finish( lua_State *L );
 static const luaL_reg evt_methods[] = {
    { "misnStart", evt_misnStart },
    { "timerStart", evt_timerStart },
    { "timerStop", evt_timerStop },
+   { "finish", evt_finish },
    {0,0}
 }; /**< Mission lua methods. */
 
@@ -74,8 +76,10 @@ int event_runLua( Event_t *ev, const char *func )
    const char* err;
    lua_State *L;
 
+   /* Load event. */
    L = ev->L;
    cur_event = ev;
+   evt_delete = 0;
 
    /* Get function. */
    lua_getglobal(L, func );
@@ -85,12 +89,20 @@ int event_runLua( Event_t *ev, const char *func )
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
       if (strcmp(err,"Event Done")!=0) {
          WARN("Event '%s' -> '%s': %s",
-               event_getData(ev), func, (err) ? err : "unknown error");
+               event_getData(ev->id), func, (err) ? err : "unknown error");
          lua_pop(L, 1);
       }
       else
          ret = 1;
    }
+
+   /* Time to remove the event. */
+   if (evt_delete) {
+      event_remove( cur_event->id );
+   }
+
+   /* Unload event. */
+   cur_event = NULL;
 
    return ret;
 }
@@ -177,3 +189,20 @@ static int evt_timerStop( lua_State *L )
 
    return 0;
 }
+
+
+/**
+ * @brief Finishes the event.
+ *
+ * @luafunc finish()
+ */
+static int evt_finish( lua_State *L )
+{
+   evt_delete = 1;
+
+   lua_pushstring(L, "Event Done");
+   lua_error(L); /* shouldn't return */
+
+   return 0;            
+}
+

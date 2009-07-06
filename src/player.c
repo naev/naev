@@ -194,6 +194,7 @@ void player_new (void)
    player_cleanup();
    var_cleanup();
    missions_cleanup();
+   events_cleanup();
    space_clearKnown();
    land_cleanup();
    factions_reset();

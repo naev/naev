@@ -31,4 +31,5 @@ function create ()
       v:disable()
    end
 
+   evt.finish()
 end

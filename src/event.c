@@ -64,6 +64,7 @@ static int event_ndata           = 0; /**< Number of actual event data. */
 /*
  * Active events.
  */
+static unsigned int event_genid  = 0; /**< Event ID generator. */
 static Event_t *event_active     = NULL; /**< Active events. */
 static int event_nactive         = 0; /**< Number of active events. */
 static int event_mactive         = 0; /**< Allocated space for active events. */
@@ -84,20 +85,19 @@ static int event_create( int dataid );
  *    @param func Name of the function to run.
  *    @return 0 on success.
  */
-int event_run( int eventid, const char *func )
+int event_run( unsigned int eventid, const char *func )
 {
+   int i;
    Event_t *ev;
 
-#ifdef DEBUGGING
-   if ((eventid >= event_nactive) || (eventid < 0)) {
-      WARN("Event ID not valid.");
-      return -1;
+   for (i=0; i<event_nactive; i++) {
+      ev = &event_active[i];
+      if (ev->id == eventid)
+         return event_runLua( ev, func );
    }
-#endif /* DEBUGGING */
 
-   ev = &event_active[ eventid ];
-
-   return event_runLua( ev, func );
+   WARN("Event ID '%u' not valid.", eventid);
+   return -1;
 }
 
 
@@ -107,9 +107,19 @@ int event_run( int eventid, const char *func )
  *    @param ev Event to get name of data from.
  *    @return Name of data ev has.
  */
-const char *event_getData( Event_t *ev )
+const char *event_getData( unsigned int eventid )
 {
-   return event_data[ev->data].name;
+   int i;
+   Event_t *ev;
+
+   for (i=0; i<event_nactive; i++) {
+      ev = &event_active[i];
+      if (ev->id == eventid)
+         return event_data[ ev->data ].name;
+   }
+
+   WARN("Event ID '%u' not valid.", eventid);
+   return NULL;
 }
 
 
@@ -123,16 +133,26 @@ static int event_create( int dataid )
    lua_State *L;
    uint32_t bufsize;
    char *buf;
-   Event_t ev;
+   Event_t *ev;
    EventData_t *data;
 
+   /* Create the event. */
+   event_nactive++;
+   if (event_nactive > event_mactive) {
+      event_mactive += EVENT_CHUNK;
+      event_active = realloc( event_active, sizeof(Event_t) * event_mactive );
+   }
+   ev = &event_active[ event_nactive-1 ];
+   memset( ev, 0, sizeof(Event_t) );
+   ev->id = ++event_genid; /* Create unique ID. */
+
    /* Add the data. */
-   ev.data = dataid;
+   ev->data = dataid;
    data = &event_data[dataid];
 
    /* Open the new state. */
-   ev.L = nlua_newState();
-   L = ev.L;
+   ev->L = nlua_newState();
+   L = ev->L;
    nlua_loadStandard(L,0);
    nlua_loadEvt(L);
 
@@ -152,13 +172,60 @@ static int event_create( int dataid )
    free(buf);
 
    /* Run Lua. */
-   event_runLua( &ev, "create" );
-
-   /* For now destroy state.
-    * @todo save state if needed. */
-   lua_close(L);
+   event_runLua( ev, "create" );
 
    return 0;
+}
+
+
+/**
+ * @brief Cleans up an event.
+ *
+ *    @param ev Event to clean up.
+ */
+static void event_cleanup( Event_t *ev )
+{
+   int i;
+
+   /* Destroy Lua. */
+   lua_close(ev->L);
+
+   /* Free timers. */
+   for (i=0; i<EVENT_TIMER_MAX; i++) {
+      if (ev->tfunc[i] != NULL) {
+         free(ev->tfunc[i]);
+         ev->tfunc[i] = NULL;
+      }
+   }
+}
+
+
+/**
+ * @brief Removes an event by ID.
+ *
+ *    @param eventid ID of the event to remove.
+ */
+void event_remove( unsigned int eventid )
+{
+   int i;
+   Event_t *ev;
+
+   /* Find the event. */
+   for (i=0; i<event_nactive; i++) {
+      ev = &event_active[i];
+      if (ev->id == eventid) {
+         /* Clean up event. */
+         event_cleanup(ev);
+
+         /* Move memory. */
+         memmove( &event_active[i], &event_active[i+1],
+               sizeof(Event_t) * (event_nactive-i-1) );
+         event_nactive--;
+         return;
+      }
+   }
+
+   WARN("Event ID '%u' not valid.", eventid);
 }
 
 
@@ -196,7 +263,6 @@ void events_update( double dt )
                free(tfunc);
             }
          }
-
       }
    }
 }
@@ -403,22 +469,37 @@ static void event_freeData( EventData_t *event )
 
 
 /**
- * @brief Exits the event subsystem.
+ * @brief Cleans up and removes active events.
  */
-void events_exit (void)
+void events_cleanup (void)
 {
-   if (event_data != NULL) {
-      event_freeData(event_data);
-      free(event_data);
-      event_data  = NULL;
-      event_ndata = 0;
-   }
+   int i;
 
+   /* Free active events. */
+   for (i=0; i<event_nactive; i++)
+      event_cleanup( &event_active[i] );
    if (event_active != NULL) {
       free(event_active);
       event_active = NULL;
       event_nactive = 0;
       event_mactive = 0;
+   }
+}
+
+
+/**
+ * @brief Exits the event subsystem.
+ */
+void events_exit (void)
+{
+   events_cleanup();
+
+   /* Free data. */
+   if (event_data != NULL) {
+      event_freeData(event_data);
+      free(event_data);
+      event_data  = NULL;
+      event_ndata = 0;
    }
 }
 

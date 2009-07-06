@@ -17,6 +17,7 @@
  * @brief Activated event structure.
  */
 typedef struct Event_s {
+   unsigned int id; /**< Event ID. */
    int data; /**< EventData parent. */
    lua_State *L; /**< Event Lua State. */
 
@@ -40,6 +41,7 @@ typedef enum EventTrigger_s {
  */
 int events_load (void);
 void events_exit (void);
+void events_cleanup (void);
 
 
 /*
@@ -51,14 +53,15 @@ void events_update( double dt );
 /*
  * Triggering.
  */
-int event_run( int eventid, const char *func );
+int event_run( unsigned int eventid, const char *func );
 void events_trigger( EventTrigger_t trigger );
 
 
 /*
- * Misc.
+ * Handling.
  */
-const char *event_getData( Event_t *ev );
+void event_remove( unsigned int eventid );
+const char *event_getData( unsigned int eventid );
 
 
 #endif /* EVENT_H */
