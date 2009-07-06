@@ -13,7 +13,7 @@ lang = naev.lang()
 if lang == "es" then
    -- not translated atm
 else -- default english
-   bar_desc = "You see Sergeant Dimitri at the bar as usual."
+   bar_desc = "You see Lt. Commander Dimitri at the bar as usual."
    misn_title = "Collective Espionage"
    misn_reward = "None"
    misn_desc = {}
@@ -23,13 +23,13 @@ else -- default english
    title[1] = "Collective Espionage"
    title[2] = "Mission Accomplished"
    text = {}
-   text[1] = [[As you approach Sergeant Dimitri you notice he seems somewhat excited.
+   text[1] = [[As you approach Lt. Commander Dimitri you notice he seems somewhat excited.
 "It looks like you got something.  It's not very clear because of %s's atmosphere creating a lot of noise, but it does seem to be similar to Empire transmissions.  We've got another plan to try to try to get a cleaner signal.  It'll be uglier then the last one, you in?"]]
    text[2] = [["Here's the plan: we want to drop a commando team on %s to set up more sophisticated surveillance.  We've already got a team assembled.  Your job would be to provide a distraction."
 "The idea would be to have you fly deep into Collective territory and start causing disturbances.  This is no suicidal mission so you'll have to fly back when things start getting ugly.  Meanwhile we'll send a fast convoy with the commandos to %s who will start monitoring."]]
    text[3] = [["If all goes well the commandos will stay 10 STU before returning here with the results.  Then we'll have a definitive answer on the communications issues.  We aren't anticipating problems on the return, but we'll have some ships ready just in case they get chased."
 "Good luck and be careful out there", he adds before saluting you off onto your mission.]]
-   text[4] = [[You ship touches ground and once again you see the face of Sergeant Dimitri.
+   text[4] = [[You ship touches ground and once again you see the face of Lt. Commander Dimitri.
 "How was the trip?  I trust you didn't have too many issues evading the Collective.  We won't hear from the commandos until 10 STU from now when they get back, but I believe everything went well."
 "Stay alert.  We'll probably need your assistance when they get back.  Take the free time as vacation.  I heard the weather on Caladan is pretty nice this time of year, maybe you should visit them.  We'll keep in touch"]]
 end
