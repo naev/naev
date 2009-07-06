@@ -28,6 +28,19 @@
 #include "mission.h"
 
 
+/**
+ * @brief Event system Lua bindings.
+ *
+ * An example would be:
+ * @code
+ * evt.finish() -- finishes the event
+ * @endcode
+ *
+ * @luamod evt
+ */
+
+
+
 
 /*
  * current mission

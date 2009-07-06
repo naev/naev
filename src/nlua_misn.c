@@ -39,6 +39,18 @@
 #include "gui_osd.h"
 
 
+/**
+ * @brief Mission Lua bindings.
+ *
+ * An example would be:
+ * @code
+ * misn.setNPC( "Keer", "keer" )
+ * misn.setDesc( "You see here Commodore Keer." )
+ * @endcode
+ *
+ * @luamod misn
+ */
+
 
 /*
  * current mission
