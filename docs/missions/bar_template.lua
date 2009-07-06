@@ -20,8 +20,10 @@ else -- Default to English
 
 -- This section stores the strings (text) for the mission.
 
--- Mission details. We store some text for the mission with specific variables.
+-- Bar information, describes how he appears in the bar
+   bar_desc = ""
 
+-- Mission details. We store some text for the mission with specific variables.
    misn_title = "" 
    misn_reward = ""
    misn_desc = ""
@@ -49,12 +51,24 @@ end
 --[[ 
 First you need to *create* the mission.  This is *obligatory*.
 
+You have to set the NPC and the description, these will show up at the bar with
+the character that gives the mission and his description.
+--]]
+function create ()
+   misn.setNPC( "A Guy", "none" )
+   misn.setDesc( bar_desc )
+end
+
+
+--[[
+This is an *obligatory* part which is run when the player approaches the character.
+
  ===FOR MISSIONS FROM THE BAR or OTHER PLACES===
 Run misn.accept() here, this enables the mission to run when the player enters the bar.
 If the mission doesn't get accepted, it gets trashed.
 Also set the mission details.
 --]]
-function create ()
+function accept ()
    -- Most missions will need the following to avoid crashing NAEV
 
    -- This will create the typical "Yesn/No" dialogue when mission is created
