@@ -24,6 +24,7 @@
 #include "log.h"
 #include "nlua.h"
 #include "nluadef.h"
+#include "nlua_evt.h"
 #include "rng.h"
 #include "ndata.h"
 #include "nxml.h"
@@ -38,8 +39,6 @@
 
 #define EVENT_CHUNK           32 /**< Size to grow event data by. */
 
-#define EVENT_TIMER_MAX       3 /**< Maximum amount of event timers. */
-
 
 /**
  * @brief Event data structure.
@@ -53,19 +52,6 @@ typedef struct EventData_s {
    char *cond; /**< Conditional Lua code to execute. */
    double chance; /**< Chance of appearing. */
 } EventData_t;
-
-
-/**
- * @brief Activated event structure.
- */
-typedef struct Event_s {
-   int data; /**< EventData parent. */
-   lua_State *L; /**< Event Lua State. */
-
-   /* Timers. */
-   double timer[EVENT_TIMER_MAX]; /**< Event timers. */
-   char *tfunc[EVENT_TIMER_MAX]; /**< Functions assosciated to the timers. */
-} Event_t;
 
 
 /*
@@ -88,7 +74,6 @@ static int event_mactive         = 0; /**< Allocated space for active events. */
  */
 static int event_parse( EventData_t *temp, const xmlNodePtr parent );
 static void event_freeData( EventData_t *event );
-static int event_runLua( Event_t *ev, const char *func );
 static int event_create( int dataid );
 
 
@@ -117,32 +102,14 @@ int event_run( int eventid, const char *func )
 
 
 /**
- * @brief Runs the Lua for an event.
+ * @brief Gets the name of the event data.
+ *
+ *    @param ev Event to get name of data from.
+ *    @return Name of data ev has.
  */
-static int event_runLua( Event_t *ev, const char *func )
+const char *event_getData( Event_t *ev )
 {
-   int ret;
-   const char* err;
-   lua_State *L;
-
-   L = ev->L;
-
-   /* Get function. */
-   lua_getglobal(L, func );
-
-   ret = lua_pcall(L, 0, 0, 0);
-   if (ret != 0) { /* error has occured */
-      err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
-      if (strcmp(err,"Event Done")!=0) {
-         WARN("Event '%s' -> '%s': %s",
-               event_data[ev->data].name, func, (err) ? err : "unknown error");
-         lua_pop(L, 1);
-      }
-      else
-         ret = 1;
-   }
-
-   return ret;
+   return event_data[ev->data].name;
 }
 
 
@@ -167,6 +134,7 @@ static int event_create( int dataid )
    ev.L = nlua_newState();
    L = ev.L;
    nlua_loadStandard(L,0);
+   nlua_loadEvt(L);
 
    /* Load file. */
    buf = ndata_read( data->lua, &bufsize );
