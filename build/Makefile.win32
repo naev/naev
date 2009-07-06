@@ -22,11 +22,11 @@ endif
 #
 LDLUA   := lib/lua/liblua.a
 LDCSPARSE := lib/csparse/libcsparse.a
-#LDSDL   := $(shell sdl-config --libs) -lSDL_image -lSDL_mixer
+#LDSDL   := $(shell sdl-config --libs) -lSDL_image
 #LDXML   := $(shell xml2-config --libs)
 #LDTTF   := $(shell freetype-config --libs)
 #LDPNG   := $(shell libpng-config --libs)
-LDSDL   := -lSDL -lSDL_image -lm
+LDSDL   := -lmingw32 -lSDLmain -lSDL -mwindows -lSDL_image 
 LDSOUND :=
 ifeq ($(USE_SDLMIX),1)
 LDSOUND += -lSDL_mixer
@@ -38,7 +38,7 @@ LDXML   := -lxml2
 LDTTF   := -lfreetype -lz
 LDPNG   := -lpng12
 LDGL    := -lopengl32
-LDFLAGS := -lmingw32 -mwindows -lm -lws2_32 -lwsock32 $(LDLUA) $(LDCSPARSE) $(LDSDL) $(LDSOUND) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
+LDFLAGS := $(LDSDL) -lm -lws2_32 -lwsock32 $(LDLUA) $(LDCSPARSE) $(LDSOUND) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
 
 # Debug stuff
 ifdef DEBUG
