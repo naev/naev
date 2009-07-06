@@ -1445,7 +1445,7 @@ void sound_al_update (void)
 }
 
 
-#ifndef al_checkError
+#ifndef al_checkErr
 /**
  * @brief Converts an OpenAL error to a string.
  *
@@ -1488,7 +1488,7 @@ void al_checkErr (void)
    }
    WARN("OpenAL error: %s", errstr);
 }
-#endif /* al_checkError */
+#endif /* al_checkErr */
 
 
 #endif /* USE_OPENAL */
