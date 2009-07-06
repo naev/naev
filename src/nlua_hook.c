@@ -62,7 +62,7 @@ static unsigned int hook_generic( lua_State *L, const char* stack, int pos );
  *    @param L Lua state.
  *    @return 0 on success.
  */
-int lua_loadHook( lua_State *L )
+int nlua_loadHook( lua_State *L )
 {
    luaL_register(L, "hook", hook_methods);
    return 0;

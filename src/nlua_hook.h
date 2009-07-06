@@ -10,7 +10,7 @@
 
 
 /* individual library stuff */
-int lua_loadHook( lua_State *L );
+int nlua_loadHook( lua_State *L );
 
 
 #endif /* NLUA_HOOK */

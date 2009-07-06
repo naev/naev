@@ -120,10 +120,10 @@ static const luaL_reg misn_methods[] = {
 int misn_loadLibs( lua_State *L )
 {
    nlua_loadStandard(L,0);
-   lua_loadMisn(L);
-   lua_loadTk(L);
-   lua_loadHook(L);
-   lua_loadMusic(L,0);
+   nlua_loadMisn(L);
+   nlua_loadTk(L);
+   nlua_loadHook(L);
+   nlua_loadMusic(L,0);
    return 0;
 }
 /*
@@ -133,7 +133,7 @@ int misn_loadLibs( lua_State *L )
  * @brief Loads the mission lua library.
  *    @param L Lua state.
  */
-int lua_loadMisn( lua_State *L )
+int nlua_loadMisn( lua_State *L )
 {  
    luaL_register(L, "misn", misn_methods);
    return 0;

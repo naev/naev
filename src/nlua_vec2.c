@@ -55,7 +55,7 @@ static const luaL_reg vector_methods[] = {
  *    @param L State to load the vector metatable into.
  *    @return 0 on success.
  */
-int lua_loadVector( lua_State *L )
+int nlua_loadVector( lua_State *L )
 {
    /* Create the metatable */
    luaL_newmetatable(L, VECTOR_METATABLE);

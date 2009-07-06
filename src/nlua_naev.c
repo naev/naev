@@ -33,7 +33,7 @@ static const luaL_reg naev_methods[] = {
  *    @param L Lua state.
  *    @return 0 on success.
  */
-int lua_loadNaev( lua_State *L )
+int nlua_loadNaev( lua_State *L )
 {  
    luaL_register(L, "naev", naev_methods);
    return 0;

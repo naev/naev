@@ -75,7 +75,7 @@ static const luaL_reg player_cond_methods[] = {
  *    @param L Lua state.
  *    @param readonly Whether to open in read-only form.
  */
-int lua_loadPlayer( lua_State *L, int readonly )
+int nlua_loadPlayer( lua_State *L, int readonly )
 {
    if (readonly == 0)
       luaL_register(L, "player", player_methods);

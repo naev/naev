@@ -57,7 +57,7 @@ static const luaL_reg system_methods[] = {
  *    @param readonly Load read only functions?
  *    @return 0 on success.
  */
-int lua_loadSystem( lua_State *L, int readonly )
+int nlua_loadSystem( lua_State *L, int readonly )
 {
    (void)readonly; /* only read only atm */
 

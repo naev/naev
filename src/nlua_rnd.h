@@ -10,7 +10,7 @@
 #include "lua.h"
 
 
-int lua_loadRnd( lua_State *L ); /* always read only */
+int nlua_loadRnd( lua_State *L ); /* always read only */
 
 
 #endif /* NLUA_RND_H */

@@ -41,7 +41,7 @@ static const luaL_reg tk_methods[] = {
  *    @param L Lua state.
  *    @return 0 on success.
  */
-int lua_loadTk( lua_State *L )
+int nlua_loadTk( lua_State *L )
 {
    luaL_register(L, "tk", tk_methods);
    return 0;

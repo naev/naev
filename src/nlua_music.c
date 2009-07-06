@@ -58,7 +58,7 @@ static const luaL_reg music_methods[] = {
  *    @param read_only Load the write functions?
  *    @return 0 on success.
  */
-int lua_loadMusic( lua_State *L, int read_only )
+int nlua_loadMusic( lua_State *L, int read_only )
 {
    (void)read_only; /* future proof */
    luaL_register(L, "music", music_methods);

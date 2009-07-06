@@ -90,7 +90,7 @@ static const luaL_reg var_cond_methods[] = {
  *    @param readonly Whether to open in read-only form.
  *    @return 0 on success.
  */
-int lua_loadVar( lua_State *L, int readonly )
+int nlua_loadVar( lua_State *L, int readonly )
 {
    if (readonly == 0)
       luaL_register(L, "var", var_methods);

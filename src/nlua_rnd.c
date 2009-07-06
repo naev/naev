@@ -43,7 +43,7 @@ static const luaL_reg rnd_methods[] = {
  *    @param L Lua state.
  *    @return 0 on success.
  */
-int lua_loadRnd( lua_State *L )
+int nlua_loadRnd( lua_State *L )
 {
    luaL_register(L, "rnd", rnd_methods);
    return 0;

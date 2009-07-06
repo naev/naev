@@ -41,7 +41,7 @@ static const luaL_reg time_methods[] = {
  *    @param readonly Whether to open it as read only.
  *    @return 0 on success.
  */
-int lua_loadTime( lua_State *L, int readonly )
+int nlua_loadTime( lua_State *L, int readonly )
 {
    (void)readonly;
    luaL_register(L, "time", time_methods);
