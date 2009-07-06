@@ -512,11 +512,14 @@ int hook_save( xmlTextWriterPtr writer )
             xmlw_elem(writer,"func","%s",h->u.misn.func);
             break;
 
+         /* Do not save events until they can be persistant. */
+#if 0
          case HOOK_TYPE_EVENT:
             xmlw_attr(writer,"type","event"); /* Save attribute. */
             xmlw_elem(writer,"parent","%u",h->u.event.parent);
             xmlw_elem(writer,"func","%s",h->u.event.func);
             break;
+#endif
 
          default:
             WARN("Something has gone screwy here...");

@@ -32,7 +32,8 @@
 /*
  * Needed.
  */
-extern Mission *cur_mission;
+static Mission *running_mission = NULL; /**< Current running mission. */
+static Event_t *running_event = NULL; /**< Current running event. */
 
 
 /* hooks */
@@ -66,6 +67,21 @@ int nlua_loadHook( lua_State *L )
 {
    luaL_register(L, "hook", hook_methods);
    return 0;
+}
+
+
+/**
+ * @brief Sets the hook target.
+ *
+ * The hooks will attach to these targets. Set one to NULL always.
+ *
+ *    @param m Mission target.
+ *    @param ev Event target.
+ */
+void nlua_hookTarget( Mission *m, Event_t *ev )
+{
+   running_mission = m;
+   running_event   = ev;
 }
 
 
@@ -104,16 +120,24 @@ static unsigned int hook_generic( lua_State *L, const char* stack, int pos )
    /* Last parameter must be function to hook */
    func = luaL_checkstring(L,pos);
 
-   /* make sure mission is a player mission */
-   for (i=0; i<MISSION_MAX; i++)
-      if (player_missions[i].id == cur_mission->id)
-         break;
-   if (i>=MISSION_MAX) {
-      WARN("Mission not in stack trying to hook");
-      return 0;
+   if (running_mission != NULL) {
+      /* make sure mission is a player mission */
+      for (i=0; i<MISSION_MAX; i++)
+         if (player_missions[i].id == running_mission->id)
+            break;
+      if (i>=MISSION_MAX) {
+         WARN("Mission not in stack trying to hook");
+         return 0;
+      }
+
+      return hook_addMisn( running_mission->id, func, stack );
+   }
+   else if (running_event != NULL) {
+      return hook_addEvent( running_event->id, func, stack );
    }
 
-   return hook_addMisn( cur_mission->id, func, stack );
+   NLUA_ERROR(L,"No hook target was set.");
+   return 0;
 }
 /**
  * @brief Hooks the function to the player landing.

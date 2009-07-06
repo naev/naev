@@ -23,6 +23,7 @@
 
 #include "nlua.h"
 #include "nluadef.h"
+#include "nlua_hook.h"
 #include "log.h"
 #include "event.h"
 #include "mission.h"
@@ -93,6 +94,7 @@ int event_runLua( Event_t *ev, const char *func )
    L = ev->L;
    cur_event = ev;
    evt_delete = 0;
+   nlua_hookTarget( NULL, cur_event );
 
    /* Get function. */
    lua_getglobal(L, func );
@@ -136,6 +138,9 @@ static int evt_misnStart( lua_State *L )
    str = luaL_checkstring(L, 1);
    if (mission_start( str ))
       NLUA_ERROR(L,"Failed to start mission.");
+
+   /* Has to reset the hook target since mission overrides. */
+   nlua_hookTarget( NULL, cur_event );
 
    return 0;
 }

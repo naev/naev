@@ -55,7 +55,7 @@
 /*
  * current mission
  */
-Mission *cur_mission = NULL; /**< Contains the current mission for a running script. */
+static Mission *cur_mission = NULL; /**< Contains the current mission for a running script. */
 static int misn_delete = 0; /**< if 1 delete current mission */
 
 
@@ -190,9 +190,11 @@ static int misn_runTopStack( Mission *misn, const char *func)
    const char* err;
    lua_State *L;
 
+   /* Set the environment. */
    cur_mission = misn;
    misn_delete = 0;
    L = misn->L;
+   nlua_hookTarget( cur_mission, NULL );
 
    ret = lua_pcall(L, 0, 0, 0);
    if (ret != 0) { /* error has occured */
