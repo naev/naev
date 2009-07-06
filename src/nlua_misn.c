@@ -219,7 +219,9 @@ static int misn_runTopStack( Mission *misn, const char *func)
          }
    }
 
+   /* Clear stuf. */
    cur_mission = NULL;
+   nlua_hookTarget( NULL, NULL );
 
    return ret;
 }

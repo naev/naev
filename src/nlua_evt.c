@@ -119,6 +119,7 @@ int event_runLua( Event_t *ev, const char *func )
 
    /* Unload event. */
    cur_event = NULL;
+   nlua_hookTarget( NULL, NULL );
 
    return ret;
 }
