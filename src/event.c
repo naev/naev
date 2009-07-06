@@ -26,6 +26,7 @@
 #include "nluadef.h"
 #include "nlua_evt.h"
 #include "nlua_hook.h"
+#include "nlua_tk.h"
 #include "rng.h"
 #include "ndata.h"
 #include "nxml.h"
@@ -157,6 +158,7 @@ static int event_create( int dataid )
    nlua_loadStandard(L,0);
    nlua_loadEvt(L);
    nlua_loadHook(L);
+   nlua_loadTk(L);
 
    /* Load file. */
    buf = ndata_read( data->lua, &bufsize );
