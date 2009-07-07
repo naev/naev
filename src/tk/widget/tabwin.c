@@ -201,9 +201,9 @@ static void tab_render( Widget* tab, double bx, double by )
 
          /* Draw border. */
          toolkit_drawRect( bx+x, by+0, tab->dat.tab.namelen[i] + 10,
-               TAB_HEIGHT, c, lc );
+               TAB_HEIGHT, lc, c );
          toolkit_drawOutline( bx+x, by+0, tab->dat.tab.namelen[i] + 10,
-               TAB_HEIGHT, 1., &cBlack, c );
+               TAB_HEIGHT, 1., c, &cBlack );
       }
       /* Draw text. */
       gl_printRaw( &gl_defFont, bx+x + 5 + SCREEN_W/2,
