@@ -47,6 +47,7 @@ typedef struct Hook_ {
    unsigned int id; /**< unique id */
    char *stack; /**< stack it's a part of */
    HookType_t type; /**< Type of hook. */
+   int delete; /**< indicates it should be deleted when possible */
    union {
       struct {
          unsigned int parent; /**< mission it's connected to */
@@ -61,7 +62,6 @@ typedef struct Hook_ {
          void *data; /**< Data to pass to C function. */
       } func; /**< Normal C function hook. */
    } u;
-   int delete; /**< indicates it should be deleted when possible */
 } Hook;
 
 
@@ -140,10 +140,11 @@ static int hook_runMisn( Hook *hook )
  */
 static int hook_runEvent( Hook *hook )
 {
-   int ret;
+   int ret, id;
+   id = hook->id;
    ret = event_run( hook->u.event.parent, hook->u.event.func );
    if (ret != 0)
-      hook->delete = 1;
+      hook_rm( id );
    return 0;
 }
 
@@ -156,10 +157,11 @@ static int hook_runEvent( Hook *hook )
  */
 static int hook_runFunc( Hook *hook )
 {
-   int ret;
+   int ret, id;
+   id = hook->id;
    ret = hook->u.func.func( hook->u.func.data );
    if (ret != 0)
-      hook->delete = 1;
+      hook_rm( id );
    return 0;
 }
 
