@@ -105,6 +105,13 @@ static int hook_runMisn( Hook *hook )
    int i;
    Mission* misn;
 
+   /* Make sure it's valid. */
+   if (hook->u.misn.parent == 0) {
+      WARN("Trying to run hook with inexistant parent: deleting");
+      hook->delete = 1; /* so we delete it */
+      return -1;
+   }
+
    /* Locate the mission */
    for (i=0; i<MISSION_MAX; i++)
       if (player_missions[i].id == hook->u.misn.parent)

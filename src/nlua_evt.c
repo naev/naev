@@ -138,8 +138,11 @@ static int evt_misnStart( lua_State *L )
    const char *str;
 
    str = luaL_checkstring(L, 1);
-   if (mission_start( str ))
+   if (mission_start( str )) {
+      /* Reset the hook. */
+      nlua_hookTarget( NULL, cur_event );
       NLUA_ERROR(L,"Failed to start mission.");
+   }
 
    /* Has to reset the hook target since mission overrides. */
    nlua_hookTarget( NULL, cur_event );
