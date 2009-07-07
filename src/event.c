@@ -31,6 +31,7 @@
 #include "ndata.h"
 #include "nxml.h"
 #include "cond.h"
+#include "hook.h"
 
 
 #define XML_EVENT_ID          "Events" /**< XML document identifier */
@@ -101,7 +102,7 @@ int event_run( unsigned int eventid, const char *func )
          return event_runLua( ev, func );
    }
 
-   WARN("Event ID '%u' not valid.", eventid);
+   WARN( "Event '%u' not found in stack.", eventid );
    return -1;
 }
 
@@ -218,6 +219,9 @@ static void event_cleanup( Event_t *ev )
 
    /* Destroy Lua. */
    lua_close(ev->L);
+
+   /* Free events. */
+   hook_rmEventParent(ev->id);
 
    /* Free timers. */
    for (i=0; i<EVENT_TIMER_MAX; i++) {

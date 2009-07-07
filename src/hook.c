@@ -133,7 +133,11 @@ static int hook_runMisn( Hook *hook )
  */
 static int hook_runEvent( Hook *hook )
 {
-   return event_run( hook->u.event.parent, hook->u.event.func );
+   int ret;
+   ret = event_run( hook->u.event.parent, hook->u.event.func );
+   if (ret != 0)
+      hook->delete = 1;
+   return 0;
 }
 
 
@@ -336,16 +340,36 @@ int hook_rm( unsigned int id )
 
 
 /**
- * @brief Removes all hooks belonging to parent.
+ * @brief Removes all hooks belonging to parent mission.
  *
  *    @param parent Parent id to remove all hooks belonging to.
  */
-void hook_rmParent( unsigned int parent )
+void hook_rmMisnParent( unsigned int parent )
 {
    int i;
 
    for (i=0; i<hook_nstack; i++)
-      if (parent == hook_stack[i].u.misn.parent) {
+      if ((hook_stack[i].type==HOOK_TYPE_MISN) &&
+            (parent == hook_stack[i].u.misn.parent)) {
+         /* Only decrement if hook was actually removed. */
+         if (hook_rm( hook_stack[i].id ) == 1)
+            i--;
+      }
+}
+
+
+/**
+ * @brief Removes all hooks belonging to parent event.
+ *
+ *    @param parent Parent id to remove all hooks belonging to.
+ */
+void hook_rmEventParent( unsigned int parent )
+{
+   int i;
+
+   for (i=0; i<hook_nstack; i++)
+      if ((hook_stack[i].type==HOOK_TYPE_EVENT) &&
+            (parent == hook_stack[i].u.event.parent)) {
          /* Only decrement if hook was actually removed. */
          if (hook_rm( hook_stack[i].id ) == 1)
             i--;

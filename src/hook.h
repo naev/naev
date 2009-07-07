@@ -15,7 +15,8 @@ unsigned int hook_addMisn( unsigned int parent, const char *func, const char *st
 unsigned int hook_addEvent( unsigned int parent, const char *func, const char *stack );
 unsigned int hook_addFunc( int (*func)(void*), void* data, const char *stack );
 int hook_rm( unsigned int id );
-void hook_rmParent( unsigned int parent );
+void hook_rmMisnParent( unsigned int parent );
+void hook_rmEventParent( unsigned int parent );
 
 /* 
  * run hooks
