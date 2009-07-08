@@ -34,6 +34,7 @@ void sound_resume (void);
  * sound manipulation functions
  */
 int sound_get( char* name );
+double sound_length( int sound );
 int sound_volume( const double vol );
 double sound_getVolume (void);
 int sound_play( int sound );

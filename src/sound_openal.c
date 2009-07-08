@@ -798,6 +798,7 @@ int sound_al_load( alSound *snd, const char *filename )
    int ret;
    SDL_RWops *rw;
    OggVorbis_File vf;
+   ALint freq, bits, channels, size;
 
    /* get the file data buffer from packfile */
    rw = ndata_rwops( filename );
@@ -825,6 +826,13 @@ int sound_al_load( alSound *snd, const char *filename )
    }
 
    soundLock();
+
+   /* Get the length of the sound. */
+   alGetBufferi( snd->u.al.buf, AL_FREQUENCY, &freq );
+   alGetBufferi( snd->u.al.buf, AL_BITS, &bits );
+   alGetBufferi( snd->u.al.buf, AL_CHANNELS, &channels );
+   alGetBufferi( snd->u.al.buf, AL_SIZE, &size );
+   snd->length = (double)size / (double)(freq * (bits/8) * channels);
 
    /* Check for errors. */
    al_checkErr();

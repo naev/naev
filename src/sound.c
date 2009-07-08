@@ -315,6 +315,18 @@ int sound_get( char* name )
 
 
 /**
+ * @brief Gets the length of the sound buffer.
+ *
+ *    @param id ID of the buffer to get it's length.
+ *    @return The length of the buffer.
+ */
+double sound_length( int sound )
+{
+   return sound_list[sound].length;
+}
+
+
+/**
  * @brief Plays the sound in the first available channel.
  *
  *    @param sound Sound to play.

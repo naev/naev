@@ -38,6 +38,7 @@
  */
 typedef struct alSound_ {
    char *name; /**< Buffer's name. */
+   double length; /**< Length of the buffer. */
 
    /*
     * Backend specific.
