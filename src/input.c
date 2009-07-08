@@ -691,8 +691,10 @@ static void input_key( int keynum, double value, double kabs )
    } else if (KEY("pause") && NOHYP()) {
       if (value==KEY_PRESS) {
          if (!toolkit_isOpen()) {
-            if (paused) unpause_game();
-            else pause_game();
+            if (paused)
+               unpause_game();
+            else
+               pause_game();
          }
       }
    /* toggle speed mode */

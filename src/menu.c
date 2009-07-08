@@ -275,9 +275,6 @@ void menu_small (void)
             menu_isOpen(MENU_DEATH) ))
       return;
 
-   /* Pauses the player's sounds. */
-   player_soundPause();
-
    wid = window_create( "Menu", -1, -1, MENU_WIDTH, MENU_HEIGHT );
 
    window_setCancel( wid, menu_small_close );
@@ -302,9 +299,6 @@ static void menu_small_close( unsigned int wid, char* str )
    (void)str;
    window_destroy( wid );
    menu_Close(MENU_SMALL);
-
-   /* Resume player sounds. */
-   player_soundResume();
 }
 /**
  * @brief Closes the small ingame menu and goes back to the main menu.
@@ -377,9 +371,6 @@ void menu_info (void)
    /* Can't open menu twice. */
    if (menu_isOpen(MENU_INFO) || dialogue_isOpen()) return;
 
-   /* Pauses the player's sounds. */
-   player_soundPause();
-
    wid = window_create( "Info", -1, -1, INFO_WIDTH, INFO_HEIGHT );
 
    /* pilot generics */
@@ -438,9 +429,6 @@ static void menu_info_close( unsigned int wid, char* str )
 
    window_destroy( wid );
    menu_Close(MENU_INFO);
-
-   /* Resume player sounds. */
-   player_soundResume();
 }
 
 

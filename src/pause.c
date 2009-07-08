@@ -29,9 +29,14 @@ double dt_mod  = 1.; /**< dt modifier. */
  */
 void pause_game (void)
 {
-   if (paused) return; /* already paused */
+   if (paused)
+      return; /* already paused */
 
-   sound_pause();
+   /* Pause sounds. */
+   if (player != NULL) {
+      player_soundPause();
+      sound_pause();
+   }
 
    paused = 1; /* officially paused */
 }
@@ -42,9 +47,14 @@ void pause_game (void)
  */
 void unpause_game (void)
 {
-   if (!paused) return; /* already unpaused */
+   if (!paused)
+      return; /* already unpaused */
 
-   sound_resume();
+   /* Resume sounds. */
+   if (player != NULL) {
+      player_soundResume();
+      sound_resume();
+   }
 
    paused = 0; /* officially unpaused */
 }
