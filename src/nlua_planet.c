@@ -348,7 +348,7 @@ static int planetL_class(lua_State *L )
 /**
  * @brief Checks if a planet has services (any flag besides SERVICE_LAND).
  *
- * @usage if p:hasServices() > 0 then -- Planet has services
+ * @usage if p:hasServices() then -- Planet has services
  *    @luaparam p Planet to get the services of.
  *    @luareturn True f the planets has services.
  * @luafunc hasServices( p )
@@ -365,7 +365,7 @@ static int planetL_hasServices( lua_State *L )
 /**
  * @brief Checks if a planet has basic services (spaceport bar, mission computer).
  *
- * @usage if p:hasBasic() 0 then -- Planet has shipyard service
+ * @usage if p:hasBasic() then -- Planet has shipyard service
  *    @luaparam p Planet to get the services of.
  *    @luareturn True f the planets has basic services.
  * @luafunc hasBasic( p )
@@ -382,7 +382,7 @@ static int planetL_hasBasic( lua_State *L )
 /**
  * @brief Checks if a planet has commodities exchange service.
  *
- * @usage if p:hasCommodities() > 0 then -- Planet has services
+ * @usage if p:hasCommodities() then -- Planet has services
  *    @luaparam p Planet to get the services of.
  *    @luareturn True f the planets has commodity exchange service.
  * @luafunc hasCommodities( p )
@@ -399,7 +399,7 @@ static int planetL_hasCommodities( lua_State *L )
 /**
  * @brief Checks if a planet has outfit services.
  *
- * @usage if p:hasOutfits() > 0 then -- Planet has services
+ * @usage if p:hasOutfits() then -- Planet has services
  *    @luaparam p Planet to get the services of.
  *    @luareturn True f the planets has outfitting services.
  * @luafunc hasOutfits( p )
@@ -416,7 +416,7 @@ static int planetL_hasOutfits( lua_State *L )
 /**
  * @brief Checks if a planet has shipyard services.
  *
- * @usage if p:hasShipyard() 0 then -- Planet has shipyard service
+ * @usage if p:hasShipyard() then -- Planet has shipyard service
  *    @luaparam p Planet to get the services of.
  *    @luareturn True f the planets has shipyard services.
  * @luafunc hasShipyard( p )
