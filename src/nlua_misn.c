@@ -294,6 +294,8 @@ static int misn_setTitle( lua_State *L )
 /**
  * @brief Sets the current mission description.
  *
+ * Also sets the mission OSD unless you explicitly force an OSD.
+ *
  *    @luaparam desc Description to use for mission.
  * @luafunc setDesc( desc )
  */
