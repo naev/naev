@@ -53,6 +53,11 @@ extern int hyperspace_target; /**< Targetted hyperspace route. -1 is none. */
 extern int snd_target; /**< Sound when targetting. */
 extern int snd_jump; /**< Sound when can jump. */
 extern int snd_nav; /**< Sound when changing nav computer. */
+extern int snd_hypPowUp; /**< Hyperspace power up sound. */
+extern int snd_hypEng; /**< Hyperspace engine sound. */
+extern int snd_hypPowDown; /**< Hyperspace power down sound. */
+extern int snd_hypPowUpJump; /**< Hyperspace Power up to jump sound. */
+extern int snd_hypJump; /**< Hyperspace jump sound. */
 
 
 /*
