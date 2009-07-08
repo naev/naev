@@ -31,8 +31,12 @@ static int planetL_eq( lua_State *L );
 static int planetL_name( lua_State *L );
 static int planetL_faction( lua_State *L );
 static int planetL_class( lua_State *L );
-static int planetL_services( lua_State *L );
 static int planetL_position( lua_State *L );
+static int planetL_hasServices( lua_State *L );
+static int planetL_hasBasic( lua_State *L );
+static int planetL_hasCommodities( lua_State *L );
+static int planetL_hasOutfits( lua_State *L );
+static int planetL_hasShipyard( lua_State *L );
 static const luaL_reg planet_methods[] = {
    { "get", planetL_get },
    { "__eq", planetL_eq },
@@ -40,8 +44,12 @@ static const luaL_reg planet_methods[] = {
    { "name", planetL_name },
    { "faction", planetL_faction },
    { "class", planetL_class },
-   { "services", planetL_services },
    { "pos", planetL_position },
+   { "hasServices", planetL_hasServices },
+   { "hasBasic", planetL_hasBasic },
+   { "hasCommodities", planetL_hasCommodities },
+   { "hasOutfits", planetL_hasOutfits },
+   { "hasShipyard", planetL_hasShipyard },
    {0,0}
 }; /**< Planet metatable methods. */
 
@@ -336,24 +344,91 @@ static int planetL_class(lua_State *L )
    return 1;
 }
 
+
 /**
- * @brief Gets planet services.
+ * @brief Checks if a planet has services (any flag besides SERVICE_LAND).
  *
- * Bits are OR'd together.  Since there are no bit operations in Lua,
- * this basically checks to see if the planet has services like refueling...
- *
- * @usage if p:services() > 0 then -- Planet has services
+ * @usage if p:hasServices() > 0 then -- Planet has services
  *    @luaparam p Planet to get the services of.
- *    @luareturn The services the planet has it stored bitwise.
- * @luafunc services( p )
+ *    @luareturn True f the planets has services.
+ * @luafunc hasServices( p )
  */
-static int planetL_services( lua_State *L )
+static int planetL_hasServices( lua_State *L )
 {
    LuaPlanet *p;
    p = luaL_checkplanet(L,1);
-   lua_pushnumber(L, (p->p->services & (~PLANET_SERVICE_LAND)));
+   lua_pushboolean(L, (p->p->services & (~PLANET_SERVICE_LAND)));
    return 1;
 }
+
+
+/**
+ * @brief Checks if a planet has basic services (spaceport bar, mission computer).
+ *
+ * @usage if p:hasBasic() 0 then -- Planet has shipyard service
+ *    @luaparam p Planet to get the services of.
+ *    @luareturn True f the planets has basic services.
+ * @luafunc hasBasic( p )
+ */
+static int planetL_hasBasic( lua_State *L )
+{
+   LuaPlanet *p;
+   p = luaL_checkplanet(L,1);
+   lua_pushboolean(L, (p->p->services & PLANET_SERVICE_BASIC));
+   return 1;
+}
+
+
+/**
+ * @brief Checks if a planet has commodities exchange service.
+ *
+ * @usage if p:hasCommodities() > 0 then -- Planet has services
+ *    @luaparam p Planet to get the services of.
+ *    @luareturn True f the planets has commodity exchange service.
+ * @luafunc hasCommodities( p )
+ */
+static int planetL_hasCommodities( lua_State *L )
+{
+   LuaPlanet *p;
+   p = luaL_checkplanet(L,1);
+   lua_pushboolean(L, (p->p->services & PLANET_SERVICE_COMMODITY));
+   return 1;
+}
+
+
+/**
+ * @brief Checks if a planet has outfit services.
+ *
+ * @usage if p:hasOutfits() > 0 then -- Planet has services
+ *    @luaparam p Planet to get the services of.
+ *    @luareturn True f the planets has outfitting services.
+ * @luafunc hasOutfits( p )
+ */
+static int planetL_hasOutfits( lua_State *L )
+{
+   LuaPlanet *p;
+   p = luaL_checkplanet(L,1);
+   lua_pushboolean(L, (p->p->services & PLANET_SERVICE_OUTFITS));
+   return 1;
+}
+
+
+/**
+ * @brief Checks if a planet has shipyard services.
+ *
+ * @usage if p:hasShipyard() 0 then -- Planet has shipyard service
+ *    @luaparam p Planet to get the services of.
+ *    @luareturn True f the planets has shipyard services.
+ * @luafunc hasShipyard( p )
+ */
+static int planetL_hasShipyard( lua_State *L )
+{
+   LuaPlanet *p;
+   p = luaL_checkplanet(L,1);
+   lua_pushboolean(L, (p->p->services & PLANET_SERVICE_SHIPYARD));
+   return 1;
+}
+
 
 /**
  * @brief Gets the position of the planet in the system.
