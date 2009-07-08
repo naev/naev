@@ -270,6 +270,15 @@
    <faction>Dvaered</faction>
   </avail>
  </mission>
+ <mission name="The Space Family">
+  <lua>neutral/spacefamily</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <location>None</location>
+  </avail>
+ </mission>
  <mission name="NAEV Needs You!">
   <lua>naev_needs_YOU</lua>
   <flags>

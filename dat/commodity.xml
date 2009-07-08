@@ -22,6 +22,7 @@
  </commodity>
  <commodity name="Parcels"/>
  <commodity name="Colonists"/>
+ <commodity name="Civilians"/>
  <commodity name="Tourists"/>
  <commodity name="Pilgrims"/>
  <commodity name="Datapad"/>
