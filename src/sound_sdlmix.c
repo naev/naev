@@ -359,16 +359,33 @@ double sound_mix_getVolume (void)
 int sound_mix_load( alSound *s, const char *filename )
 {
    SDL_RWops *rw;
+   int freq, bytes, channels;
+   Uint16 format;
 
    /* get the file data buffer from packfile */
    rw = ndata_rwops( filename );
 
-   /* bind to OpenAL buffer */
+   /* bind to buffer */
    s->u.mix.buf = Mix_LoadWAV_RW(rw,1);
    if (s->u.mix.buf == NULL) {
       DEBUG("Unable to load sound '%s': %s", filename, Mix_GetError());
       return -1;
    }
+
+   /* Get spec. */
+   Mix_QuerySpec( &freq, &format, &channels );
+   switch (format) {
+      case AUDIO_U8:
+      case AUDIO_S8:
+         bytes = 1;
+         break;
+      default:
+         bytes = 2;
+         break;
+   }
+
+   /* Set length. */
+   s->length = (double)s->u.mix.buf->alen / (double)(freq*bytes*channels);
 
    return 0;
 }

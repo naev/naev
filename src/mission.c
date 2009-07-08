@@ -471,7 +471,7 @@ void mission_cleanup( Mission* misn )
 
    /* Hooks. */
    if (misn->id != 0)
-      hook_rmParent( misn->id ); /* remove existing hooks */
+      hook_rmMisnParent( misn->id ); /* remove existing hooks */
 
    /* Data. */
    if (misn->title != NULL)

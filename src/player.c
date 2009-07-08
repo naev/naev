@@ -88,6 +88,12 @@ static int player_gui_group    = 0; /**< Player gui sound group. */
 int snd_target    = -1; /**< Sound when targetting. */
 int snd_jump      = -1; /**< Sound when can jump. */
 int snd_nav       = -1; /**< Sound when changing nav computer. */
+/* Hyperspace sounds. */
+int snd_hypPowUp  = -1; /**< Hyperspace power up sound. */
+int snd_hypEng    = -1; /**< Hyperspace engine sound. */
+int snd_hypPowDown = -1; /**< Hyperspace power down sound. */
+int snd_hypPowUpJump = -1; /**< Hyperspace Power up to jump sound. */
+int snd_hypJump   = -1; /**< Hyperspace jump sound. */
 static int player_lastEngineSound = -1; /**< Last engine sound. */
 
 
@@ -632,9 +638,14 @@ static void player_initSound (void)
    player_soundReserved = 1;
 
    /* Get sounds. */
-   snd_target  = sound_get("target");
-   snd_jump    = sound_get("jump");
-   snd_nav     = sound_get("nav");
+   snd_target           = sound_get("target");
+   snd_jump             = sound_get("jump");
+   snd_nav              = sound_get("nav");
+   snd_hypPowUp         = sound_get("hyperspace_powerup");
+   snd_hypEng           = sound_get("hyperspace_engine");
+   snd_hypPowDown       = sound_get("hyperspace_powerdown");
+   snd_hypPowUpJump     = sound_get("hyperspace_powerupjump");
+   snd_hypJump          = sound_get("hyperspace_jump");
 }
 
 
@@ -1037,8 +1048,13 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
    /* Calculate engine sound to use. */
    if (player_isFlag(PLAYER_AFTERBURNER))
       engsound = pplayer->afterburner->outfit->u.afb.sound;
-   else if (VMOD(pplayer->solid->force) > 0.)
-      engsound = pplayer->ship->sound;
+   else if (VMOD(pplayer->solid->force) > 0.) {
+      /* See if is in hyperspace. */
+      if (pilot_isFlag(pplayer, PILOT_HYPERSPACE))
+         engsound = snd_hypEng;
+      else
+         engsound = pplayer->ship->sound;
+   }
    else
       engsound = -1;
    /* See if sound must change. */
@@ -1413,6 +1429,9 @@ void player_brokeHyperspace (void)
    /* run the jump hooks */
    hooks_run( "enter" );
    events_trigger( EVENT_TRIGGER_ENTER );
+
+   /* Player sound. */
+   player_playSound( snd_hypJump, 1 );
 }
 
 

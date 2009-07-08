@@ -63,6 +63,7 @@ static int misn_delete = 0; /**< if 1 delete current mission */
  * prototypes
  */
 /* static */
+static void misn_setEnv( Mission *misn );
 static int misn_runTopStack( Mission *misn, const char *func);
 /* externed */
 int misn_run( Mission *misn, const char *func );
@@ -181,6 +182,19 @@ int misn_run( Mission *misn, const char *func )
 
 
 /**
+ * @brief Sets the mission environment.
+ */
+static void misn_setEnv( Mission *misn )
+{
+   cur_mission = misn;
+   misn_delete = 0;
+
+   /* Needed to make sure hooks work. */
+   nlua_hookTarget( cur_mission, NULL );
+}
+
+
+/**
  * @brief Runs the function at the top of the stack.
  *
  *    @param misn Mission that owns the function.
@@ -194,11 +208,11 @@ static int misn_runTopStack( Mission *misn, const char *func)
    const char* err;
    lua_State *L;
 
-   /* Set the environment. */
-   cur_mission = misn;
-   misn_delete = 0;
-   L = misn->L;
-   nlua_hookTarget( cur_mission, NULL );
+   /* Set environment. */
+   misn_setEnv( misn );
+
+   /* Set the Lua state. */
+   L = cur_mission->L;
 
    ret = lua_pcall(L, 0, 0, 0);
    if (ret != 0) { /* error has occured */
@@ -283,6 +297,8 @@ static int misn_setTitle( lua_State *L )
 }
 /**
  * @brief Sets the current mission description.
+ *
+ * Also sets the mission OSD unless you explicitly force an OSD.
  *
  *    @luaparam desc Description to use for mission.
  * @luafunc setDesc( desc )
@@ -486,6 +502,8 @@ static int misn_accept( lua_State *L )
       cur_mission = &player_missions[i];
       cur_mission->accepted = 1; /* Mark as accepted. */
       setOSD(); /* Set OSD if applicable. */
+      /* Needed to make sure hooks work. */
+      nlua_hookTarget( cur_mission, NULL );
    }
 
    lua_pushboolean(L,!ret); /* we'll convert C style return to lua */

@@ -1442,12 +1442,12 @@ void pilot_update( Pilot* pilot, const double dt )
    pilot->ptimer -= dt;
    pilot->tcontrol -= dt;
    for (i=0; i<MAX_AI_TIMERS; i++)
-      pilot->timer[i] -= dt;
-   for (i=0; i<pilot->noutfits; i++) {
+      if (pilot->timer[i] >= 0.)
+         pilot->timer[i] -= dt;
+   for (i=0; i<pilot->noutfits; i++)
       o = &pilot->outfits[i];
       if (o->timer > 0.)
          o->timer -= dt;
-   }
 
    /* he's dead jim */
    if (pilot_isFlag(pilot,PILOT_DEAD)) {
@@ -1646,9 +1646,17 @@ static void pilot_hyperspace( Pilot* p, double dt )
    /* pilot is actually in hyperspace */
    if (pilot_isFlag(p, PILOT_HYPERSPACE)) {
 
+      /* Time to play sound. */
+      if ((p->id == PLAYER_ID) &&
+            (p->ptimer < sound_length(snd_hypPowUpJump)) &&
+            (p->timer[0] == -1.)) {
+         p->timer[0] = -2.;
+         player_playSound( snd_hypPowUpJump, 1 );
+      }
+
       /* has jump happened? */
       if (p->ptimer < 0.) {
-         if (p == player) { /* player just broke hyperspace */
+         if (p->id == PLAYER_ID) { /* player just broke hyperspace */
             player_brokeHyperspace();
          }
          else {
@@ -1667,6 +1675,9 @@ static void pilot_hyperspace( Pilot* p, double dt )
       if (p->ptimer < 0.) { /* engines ready */
          p->ptimer = HYPERSPACE_FLY_DELAY;
          pilot_setFlag(p, PILOT_HYPERSPACE);
+         if (p->id == PLAYER_ID) {
+            p->timer[0] = -1.;
+         }
       }
    }
    /* pilot is getting ready for hyperspace */
@@ -1686,13 +1697,19 @@ static void pilot_hyperspace( Pilot* p, double dt )
          vectnull( &p->solid->force ); /* stop accel */
 
          /* player should actually face the system he's headed to */
-         if (p==player) diff = player_faceHyperspace();
-         else diff = pilot_face( p, VANGLE(p->solid->pos) );
+         if (p==player)
+            diff = player_faceHyperspace();
+         else
+            diff = pilot_face( p, VANGLE(p->solid->pos) );
 
          if (ABS(diff) < MAX_DIR_ERR) { /* we can now prepare the jump */
             p->solid->dir_vel = 0.;
             p->ptimer = HYPERSPACE_ENGINE_DELAY;
             pilot_setFlag(p, PILOT_HYP_BEGIN);
+            /* Player plays sound. */
+            if (p->id == PLAYER_ID) {
+               player_playSound( snd_hypPowUp, 1 );
+            }
          }
       }
    }
@@ -1712,10 +1729,15 @@ static void pilot_hyperspace( Pilot* p, double dt )
 void pilot_hyperspaceAbort( Pilot* p )
 {
    if (!pilot_isFlag(p, PILOT_HYPERSPACE)) {
-      if (pilot_isFlag(p, PILOT_HYP_BEGIN))
-         pilot_rmFlag(p, PILOT_HYP_BEGIN);
-      if (pilot_isFlag(p, PILOT_HYP_PREP))
-         pilot_rmFlag(p, PILOT_HYP_PREP);
+      if (pilot_isFlag(p, PILOT_HYP_BEGIN)) {
+         /* Player plays sound. */
+         if (p->id == PLAYER_ID) {
+            player_stopSound();
+            player_playSound( snd_hypPowDown, 1 );
+         }
+      }
+      pilot_rmFlag(p, PILOT_HYP_BEGIN);
+      pilot_rmFlag(p, PILOT_HYP_PREP);
    }
 }
 

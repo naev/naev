@@ -10,4 +10,12 @@
   <trigger>enter</trigger>
   <chance>3</chance>
  </event>
+ <event name="Shipwreck">
+  <lua>neutral/shipwreck</lua>
+  <trigger>enter</trigger>
+  <chance>10</chance>
+  <flags>
+   <unique />
+  </flags>
+ </event>
 </Events>
