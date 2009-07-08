@@ -53,7 +53,7 @@
  */
 
 
-#define SOUND_MAX_SOURCES     256
+#define SOUND_MAX_SOURCES     128
 #define SOUND_FADEOUT         100
 
 
@@ -82,8 +82,10 @@ alInfo_t al_info; /**< OpenAL context info. */
  */
 static ALuint *source_stack   = NULL; /**< Free source pool. */
 static ALuint *source_total   = NULL; /**< Total source pool. */
+static ALuint *source_all     = NULL; /**< All the sources. */
 static int source_nstack      = 0; /**< Number of free sources in the pool. */
 static int source_ntotal      = 0; /**< Number of general use sources. */
+static int source_nall        = 0; /**< Total number of sources. */
 static int source_mstack      = 0; /**< Memory allocated for sources in the pool. */
 
 
@@ -288,6 +290,10 @@ int sound_al_init (void)
    source_ntotal = source_mstack;
    source_total  = malloc( sizeof(ALuint) * source_mstack );
    memcpy( source_total, source_stack, sizeof(ALuint) * source_mstack );
+   /* Copy allocated sources to all stack. */
+   source_nall   = source_mstack;
+   source_all    = malloc( sizeof(ALuint) * source_mstack );
+   memcpy( source_all, source_stack, sizeof(ALuint) * source_mstack );
 
    /* Set up how sound works. */
    alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED );
@@ -448,11 +454,15 @@ void sound_al_exit (void)
    al_ngroups = 0;
 
    /* Free stacks. */
-   if (source_total != NULL) {
-      alSourceStopv(   source_ntotal, source_total );
-      alDeleteSources( source_ntotal, source_total );
-      free(source_total);
+   if (source_all != NULL) {
+      alSourceStopv(   source_nall, source_all );
+      alDeleteSources( source_nall, source_all );
+      free(source_all);
    }
+   source_all        = NULL;
+   source_nall       = 0;
+   if (source_total)
+      free(source_total);
    source_total      = NULL;
    source_ntotal     = 0;
    if (source_stack != NULL)
@@ -1075,6 +1085,21 @@ void sound_al_resume (void)
 {
    soundLock();
    al_resumev( source_ntotal, source_total );
+   /* Check for errors. */
+   al_checkErr();
+   soundUnlock();
+}
+
+
+/**
+ * @brief Set the playing speed.
+ */
+void sound_al_setSpeed( double s )
+{
+   int i;
+   soundLock();
+   for (i=0; i<source_nall; i++)
+      alSourcef( source_all[i], AL_PITCH, s );
    /* Check for errors. */
    al_checkErr();
    soundUnlock();

@@ -17,6 +17,7 @@
 #include "naev.h"
 
 #include "player.h"
+#include "sound.h"
 
 
 int paused     = 0; /**< is paused? */
@@ -64,6 +65,7 @@ void pause_delay( unsigned int delay )
 void pause_setSpeed( double mod )
 {
    dt_mod = mod;
+   sound_setSpeed( mod );
 }
 
 

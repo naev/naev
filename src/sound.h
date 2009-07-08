@@ -43,6 +43,7 @@ void sound_stop( int voice );
 int sound_updatePos( int voice, double px, double py, double vx, double vy );
 int sound_updateListener( double dir, double px, double py,
       double vx, double vy );
+void sound_setSpeed( double s );
 
 
 /*

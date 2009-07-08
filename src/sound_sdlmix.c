@@ -538,6 +538,15 @@ void sound_mix_resumeGroup( int group )
 
 
 /**
+ * Unsupported.
+ */
+void sound_mix_setSpeed( double s )
+{
+   (void) s;
+}
+
+
+/**
  * @brief Does nothing atm.
  *
  *    @param v Unused.

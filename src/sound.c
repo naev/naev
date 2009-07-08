@@ -85,6 +85,7 @@ void (*sound_sys_update) (void)        = NULL;
 void (*sound_sys_stop) ( alVoice *v )  = NULL;
 void (*sound_sys_pause) (void)         = NULL;
 void (*sound_sys_resume) (void)        = NULL;
+void (*sound_sys_setSpeed) (double s ) = NULL;
 /* Listener. */
 int (*sound_sys_updateListener) ( double dir, double px, double py,
       double vx, double vy )           = NULL;
@@ -153,6 +154,7 @@ int sound_init (void)
       sound_sys_stop       = sound_mix_stop;
       sound_sys_pause      = sound_mix_pause;
       sound_sys_resume     = sound_mix_resume;
+      sound_sys_setSpeed   = sound_mix_setSpeed;
       /* Listener. */
       sound_sys_updateListener = sound_mix_updateListener;
       /* Groups. */
@@ -195,6 +197,7 @@ int sound_init (void)
       sound_sys_stop       = sound_al_stop;
       sound_sys_pause      = sound_al_pause;
       sound_sys_resume     = sound_al_resume;
+      sound_sys_setSpeed   = sound_al_setSpeed;
       /* Listener. */
       sound_sys_updateListener = sound_al_updateListener;
       /* Groups. */
@@ -557,6 +560,20 @@ int sound_updateListener( double dir, double px, double py,
       return 0;
 
    return sound_sys_updateListener( dir, px, py, vx, vy );
+}
+
+
+/**
+ * @brief Sets the speed to play the sound at.
+ *
+ *    @param s Speed to play sound at.
+ */
+void sound_setSpeed( double s )
+{
+   if (sound_disabled)
+      return 0;
+
+   return sound_sys_setSpeed( s );
 }
 
 
