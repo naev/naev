@@ -765,7 +765,8 @@ void pilot_shootStop( Pilot* p, const int secondary )
    int i;
    Outfit* o;
 
-   if (!p->outfits) return; /* no outfits */
+   if (!p->outfits)
+      return; /* no outfits */
 
    if (!secondary) { /* primary weapons */
 
@@ -781,7 +782,8 @@ void pilot_shootStop( Pilot* p, const int secondary )
    }
    else { /* secondary weapon */
       
-      if (p->secondary == NULL) return; /* No secondary weapon. */
+      if (p->secondary == NULL)
+         return; /* No secondary weapon. */
       
       o = p->secondary->outfit;
 
@@ -1444,10 +1446,11 @@ void pilot_update( Pilot* pilot, const double dt )
    for (i=0; i<MAX_AI_TIMERS; i++)
       if (pilot->timer[i] >= 0.)
          pilot->timer[i] -= dt;
-   for (i=0; i<pilot->noutfits; i++)
+   for (i=0; i<pilot->noutfits; i++) {
       o = &pilot->outfits[i];
-      if (o->timer > 0.)
+      if (o->timer >= 0.)
          o->timer -= dt;
+   }
 
    /* he's dead jim */
    if (pilot_isFlag(pilot,PILOT_DEAD)) {
