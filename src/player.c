@@ -891,6 +891,7 @@ void player_think( Pilot* pplayer, const double dt )
    Pilot *target;
    double d;
    double turn;
+   int facing;
 
    /* last i heard, the dead don't think */
    if (pilot_isFlag(pplayer,PILOT_DEAD)) {
@@ -899,6 +900,9 @@ void player_think( Pilot* pplayer, const double dt )
       vect_pset( &player->solid->force, 0., 0. );
       return;
    }
+
+   /* Not facing anything yet. */
+   facing = 0;
 
    /* Autonav takes over normal controls. */
    if (player_isFlag(PLAYER_AUTONAV)) {
@@ -921,6 +925,9 @@ void player_think( Pilot* pplayer, const double dt )
          if ((player_acc < 1.) && (d < MIN_DIR_ERR))
             player_accel( 1. );
       }
+
+      /* Disable turning. */
+      facing = 1;
    }
 
    /* turning taken over by PLAYER_FACE */
@@ -928,15 +935,23 @@ void player_think( Pilot* pplayer, const double dt )
       /* Try to face pilot target. */
       if (player->target != PLAYER_ID) {
          target = pilot_get(player->target);
-         if (target != NULL)
+         if (target != NULL) {
             pilot_face( pplayer,
                   vect_angle( &player->solid->pos, &target->solid->pos ));
+
+            /* Disable turning. */
+            facing = 1;
+         }
       }
       /* If not try to face planet target. */
-      else if (planet_target != -1)
+      else if (planet_target != -1) {
          pilot_face( pplayer,
                vect_angle( &player->solid->pos,
                   &cur_system->planets[ planet_target ]->pos ));
+
+         /* Disable turning. */
+         facing = 1;
+      }
    }
 
    /* turning taken over by PLAYER_REVERSE */
@@ -958,10 +973,13 @@ void player_think( Pilot* pplayer, const double dt )
        * I don't think automatic braking is good.
        */
       pilot_face( pplayer, VANGLE(player->solid->vel) + M_PI );
+
+      /* Disable turning. */
+      facing = 1;
    }
 
    /* normal turning scheme */
-   else {
+   if (!facing) {
       pplayer->solid->dir_vel = 0.;
       turn = 0;
       if (player_isFlag(PLAYER_TURN_LEFT))
