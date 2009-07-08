@@ -46,7 +46,7 @@ function create ()
     -- Set hooks
     hook.pilot(p[1], "board", "rescue")
     hook.time("endevent")
-    hook.pilot(p[1], "death", "endevent")
+    hook.pilot(p[1], "death", "destroyevent")
 end
 
 function broadcast()
@@ -59,10 +59,13 @@ function rescue()
     -- Player boards the shipwreck and rescues the crew, this spawns a new mission.
     evt.timerStop(bctimer)
     evt.misnStart("The Space Family")
-    evt.finish()
+    evt.finish(true)
 end
 
-function endevent()
-    -- The player has landed or jumped away, or killed the shipwreck. Destroy the event.
+function destroyevent ()
+    evt.finish(true)
+ end
+
+function endevent ()
     evt.finish()
 end
