@@ -31,8 +31,9 @@ extern ov_callbacks sound_al_ovcall_noclose;
 /*
  * OpenAL stuff.
  */
-#if DEBUG == 1
-void al_checkErr (void);
+#ifdef DEBUGGING
+#define al_checkErr()      al_checkHandleError( __func__ )
+void al_checkHandleError( const char *func );
 #else /* DEBUG */
 #define al_checkErr() /**< Hack to ignore errors when debugging. */
 #endif /* DEBUG */

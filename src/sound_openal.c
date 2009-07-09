@@ -1478,14 +1478,14 @@ void sound_al_update (void)
 }
 
 
-#ifndef al_checkErr
+#ifdef DEBUGGING
 /**
  * @brief Converts an OpenAL error to a string.
  *
  *    @param err Error to convert to string.
  *    @return String corresponding to the error.
  */
-void al_checkErr (void)
+void al_checkHandleError( const char *func )
 {
    ALenum err;
    const char *errstr;
@@ -1519,9 +1519,9 @@ void al_checkErr (void)
          errstr = "unknown error";
          break;
    }
-   WARN("OpenAL error: %s", errstr);
+   WARN("OpenAL error [%s]: %s", func, errstr);
 }
-#endif /* al_checkErr */
+#endif /* DEBUGGING */
 
 
 #endif /* USE_OPENAL */
