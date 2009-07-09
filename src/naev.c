@@ -139,6 +139,9 @@ int main( int argc, char** argv )
       return -1;
    }
 
+   /* We'll be parsing XML. */
+   xmlInitParser();
+
    /* Input must be initialized for config to work. */
    input_init(); 
 
