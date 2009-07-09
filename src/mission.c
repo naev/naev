@@ -508,9 +508,7 @@ void mission_cleanup( Mission* misn )
       lua_close(misn->L);
 
    /* Clear the memory. */
-#ifdef DEBUGGING
    memset( misn, 0, sizeof(Mission) );
-#endif /* DEBUGGING */
 }
 
 
