@@ -333,7 +333,7 @@ function hyenaDead ()
    misn_stage = 7
 
    -- Create OSD
-   osd_msg[4][1] = string.format( osd_msg[4][1], system.get():planets()[1] )
+   osd_msg[4][1] = string.format( osd_msg[4][1], system.get():planets()[1]:name() )
    misn.osdCreate( osd_title[4], osd_msg[4] )
 
    -- Messages
