@@ -36,7 +36,7 @@ end
 
 
 function create ()
-   misn.setNPC( "Lt. Commander", "none" )
+   misn.setNPC( "Lt. Commander", "dimitri" )
    misn.setDesc( bar_desc )
 end
 

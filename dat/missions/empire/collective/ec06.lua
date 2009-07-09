@@ -57,7 +57,7 @@ end
 
 
 function create ()
-   misn.setNPC( "Keer", "none" )
+   misn.setNPC( "Keer", "keer" )
    misn.setDesc( bar_desc )
 end
 

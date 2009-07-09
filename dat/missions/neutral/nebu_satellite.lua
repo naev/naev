@@ -48,7 +48,7 @@ function create ()
    cargo = misn.addCargo( "Satellite", 3 )
 
    -- Set stuff up for the spaceport bar
-   misn.setNPC( "Scientists", "none" )
+   misn.setNPC( "Scientists", "scientist" )
    misn.setDesc( bar_desc )
 end
 

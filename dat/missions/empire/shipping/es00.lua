@@ -40,7 +40,7 @@ function create ()
    ret,retsys = planet.get( "Polaris Prime" )
 
    -- Spaceport bar stuff
-   misn.setNPC( "Commander", "none" )
+   misn.setNPC( "Commander", "soldner" )
    misn.setDesc( bar_desc )
 end
 

@@ -45,7 +45,7 @@ else -- default english
 end
 
 function create ()
-   misn.setNPC( "Soldner", "none" )
+   misn.setNPC( "Soldner", "soldner" )
    misn.setDesc( bar_desc )
 end
 
