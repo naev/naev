@@ -779,7 +779,10 @@ void missions_free (void)
 {
    int i;
 
-   /* free the mission data */
+   /* Free all the player missions. */
+   missions_cleanup();
+
+   /* Free the mission data. */
    for (i=0; i<mission_nstack; i++)
       mission_freeData( &mission_stack[i] );
    free( mission_stack );

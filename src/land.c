@@ -1278,21 +1278,22 @@ static int spaceport_bar_genList( unsigned int wid )
    if (mission_portrait == NULL)
       mission_portrait = gl_newImage( "gfx/portraits/none.png", 0 );
    if (mission_nbar <= 0) {
+      n            = 1;
       portraits    = malloc(sizeof(glTexture*));
       portraits[0] = mission_portrait;
       names        = malloc(sizeof(char*));
       names[0]     = strdup("News");
-      n            = 1;
    }
    else {
-      portraits    = malloc( sizeof(glTexture*) * mission_nbar + 1 );
-      portraits[0] = mission_portrait;
-      names        = malloc( sizeof(char*) * mission_nbar + 1 );
-      names[0]     = strdup("News");
       n            = mission_nbar+1;
+      portraits    = malloc( sizeof(glTexture*) * n );
+      portraits[0] = mission_portrait;
+      names        = malloc( sizeof(char*) * n );
+      names[0]     = strdup("News");
       for (i=0; i<mission_nbar; i++) {
-         names[i+1]     = strdup( mission_bar->npc );
-         portraits[i+1] = mission_bar->portrait;
+         names[i+1]     = (mission_bar[i].npc != NULL) ?
+            strdup( mission_bar[i].npc ) : NULL;
+         portraits[i+1] = mission_bar[i].portrait;
       }
    }
    window_addImageArray( wid, 20, -40,
@@ -1379,10 +1380,9 @@ static void spaceport_bar_close( unsigned int wid, char *name )
    (void) wid;
    (void) name;
 
-   if (mission_portrait != NULL) {
+   if (mission_portrait != NULL)
       gl_freeTexture(mission_portrait);
-      mission_portrait = NULL;
-   }
+   mission_portrait = NULL;
 }
 /**
  * @brief Approaches guy in mission computer.
@@ -1982,33 +1982,29 @@ void land_cleanup (void)
    land_visited   = 0;
   
    /* Destroy window. */
-   if (land_wid > 0) {
+   if (land_wid > 0)
       window_destroy(land_wid);
-      land_wid    = 0;
-   }
+   land_wid       = 0;
 
    /* Clean up possible stray graphic. */
-   if (gfx_exterior != NULL) {
+   if (gfx_exterior != NULL)
       gl_freeTexture( gfx_exterior );
-      gfx_exterior = NULL;
-   }
+   gfx_exterior   = NULL;
 
    /* Clean up mission computer. */
-   if (mission_computer != NULL) {
-      for (i=0; i<mission_ncomputer; i++)
-         mission_cleanup( &mission_computer[i] );
+   for (i=0; i<mission_ncomputer; i++)
+      mission_cleanup( &mission_computer[i] );
+   if (mission_computer != NULL)
       free(mission_computer);
-      mission_computer  = NULL;
-      mission_ncomputer = 0;
-   }
+   mission_computer  = NULL;
+   mission_ncomputer = 0;
 
    /* Clean up bar missions. */
-   if (mission_bar != NULL) {
-      for (i=0; i<mission_nbar; i++)
-         mission_cleanup( &mission_bar[i] );
+   for (i=0; i<mission_nbar; i++)
+      mission_cleanup( &mission_bar[i] );
+   if (mission_bar != NULL)
       free(mission_bar);
-      mission_bar  = NULL;
-      mission_nbar = 0;
-   }
+   mission_bar    = NULL;
+   mission_nbar   = 0;
 }
 
