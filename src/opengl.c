@@ -273,11 +273,11 @@ GLboolean gl_hasExt( char *name )
 }
 
 
-#ifndef gl_checkErr /**< i agree it's a bit hackish :) */
+#ifdef DEBUGGING
 /**
  * @brief Checks and reports if there's been an error.
  */
-void gl_checkErr (void)
+void gl_checkHandleError( const char *func )
 {
    GLenum err;
    const char* errstr;
@@ -315,9 +315,9 @@ void gl_checkErr (void)
          errstr = "GL unknown error";
          break;
    }
-   WARN("OpenGL error: %s", errstr);
+   WARN("OpenGL error [%s]: %s", func, errstr);
 }
-#endif /* DEBUG */
+#endif /* DEBUGGING */
 
 
 /**

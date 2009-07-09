@@ -42,11 +42,7 @@ LDFLAGS := $(LDSDL) -lm -lws2_32 -lwsock32 $(LDLUA) $(LDCSPARSE) $(LDSOUND) $(LD
 
 # Debug stuff
 ifdef DEBUG
-CFLAGS += -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -DLUA_USE_APICHECK -std=c99
-
-ifdef DEBUG_PARANOID
-CFLAGS += -DDEBUG_PARANOID
-endif # DEBUG_PARANOID
+CFLAGS += -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -std=c99
 
 else # DEBUG
 CFLAGS += -O2 -funroll-loops -pipe -std=c99 -ansi

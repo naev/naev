@@ -108,11 +108,12 @@ double gl_setScale( double scalefactor );
 void gl_defViewport (void);
 void gl_screenshot( const char *filename );
 int SDL_SavePNG( SDL_Surface *surface, const char *file );
-#if DEBUG == 1
-void gl_checkErr (void);
-#else /* DEBUG */
+#ifdef DEBUGGING
+#define gl_checkErr()   gl_checkHandleError( __func__ )
+void gl_checkHandleError( const char *func );
+#else /* DEBUGGING */
 #define gl_checkErr() /**< Hack to ignore errors when debugging. */
-#endif /* DEBUG */
+#endif /* DEBUGGING */
 
 
 #endif /* OPENGL_H */

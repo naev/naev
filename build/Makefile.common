@@ -28,6 +28,12 @@ OBJS    := $(patsubst %.c,%.o,$(wildcard src/*.c src/tk/*.c src/tk/widget/*.c))
 #   CFLAGS
 #
 COMMON_CFLAGS :=
+ifdef DEBUG
+COMMON_CFLAGS += -DDEBUG -DDEBUGGING -DLUA_USE_APICHECK
+ifdef DEBUG_PARANOID
+COMMON_CFLAGS += -DDEBUG_PARANOID
+endif # DEBUG_PARANOID
+endif # DEBUG
 ifdef NDATA_DEF
 COMMON_CFLAGS += -DNDATA_DEF=$(NDATA_DEF)
 endif

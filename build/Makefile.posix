@@ -35,11 +35,7 @@ LDFLAGS := -lm $(LDLUA) $(LDCSPARSE) $(LDSDL) $(LDXML) $(LDTTF) $(LDPNG) $(LDGL)
 
 # Debug stuff
 ifdef DEBUG
-CFLAGS += -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -fstack-protector -fstack-protector-all -g -DDEBUG -DLUA_USE_APICHECK -ansi
-
-ifdef DEBUG_PARANOID
-CFLAGS += -DDEBUG_PARANOID
-endif # DEBUG_PARANOID
+CFLAGS += -W -Wall -Wextra -Wunused -Wshadow -Wpointer-arith -Wmissing-prototypes -Winline -Wcast-align -Wmissing-declarations -fstack-protector -fstack-protector-all -g -ansi
 
 # Handle OS Debug stuff here.
 #
