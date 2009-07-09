@@ -571,7 +571,7 @@ int sound_updateListener( double dir, double px, double py,
 void sound_setSpeed( double s )
 {
    if (sound_disabled)
-      return 0;
+      return;
 
    return sound_sys_setSpeed( s );
 }

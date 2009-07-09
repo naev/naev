@@ -1275,7 +1275,8 @@ static int spaceport_bar_genList( unsigned int wid )
       window_destroyWidget( wid, "iarMissions" );
 
    /* Set up missions. */
-   mission_portrait = gl_newImage( "gfx/portraits/none.png", 0 );
+   if (mission_portrait == NULL)
+      mission_portrait = gl_newImage( "gfx/portraits/none.png", 0 );
    if (mission_nbar <= 0) {
       portraits    = malloc(sizeof(glTexture*));
       portraits[0] = mission_portrait;
