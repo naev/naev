@@ -727,7 +727,7 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    conf_saveComment("Size of the OpenAL music buffer (in kilobytes).");
-   conf_saveBool("al_bufsize",conf.al_bufsize);
+   conf_saveInt("al_bufsize",conf.al_bufsize);
    conf_saveEmptyLine();
 
    conf_saveComment("Disable all sound");
