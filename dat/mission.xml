@@ -203,7 +203,7 @@
   <avail>
    <chance>33</chance>
    <cond>player.getRating() &gt; 50</cond>
-   <location>Bar</location>
+   <location>None</location>
    <faction>Independent</faction>
    <faction>Empire</faction>
    <faction>Dvaered</faction>
@@ -220,7 +220,7 @@
    <chance>33</chance>
    <cond>player.getRating() &gt; 54</cond>
    <done>Defend the System 1</done>
-   <location>Bar</location>
+   <location>None</location>
    <faction>Independent</faction>
    <faction>Empire</faction>
    <faction>Dvaered</faction>
@@ -237,7 +237,7 @@
    <chance>33</chance>
    <cond>player.getRating() &gt; 58</cond>
    <done>Defend the System 2</done>
-   <location>Bar</location>
+   <location>None</location>
    <faction>Independent</faction>
    <faction>Empire</faction>
    <faction>Dvaered</faction>
