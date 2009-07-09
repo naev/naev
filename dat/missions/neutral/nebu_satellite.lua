@@ -45,7 +45,6 @@ function create ()
    homeworld, homeworld_sys = planet.get( misn.factions() )
    satellite_sys = system.get("Arandon") -- Not too unstable
    credits = 75000
-   cargo = misn.addCargo( "Satellite", 3 )
 
    -- Set stuff up for the spaceport bar
    misn.setNPC( "Scientists", "scientist" )
@@ -64,6 +63,9 @@ function accept ()
       tk.msg( title[1], text[9] )
       return
    end
+
+   -- Add cargo
+   cargo = misn.addCargo( "Satellite", 3 )
 
    -- Set up mission information
    misn.setTitle( mtitle[1] )
