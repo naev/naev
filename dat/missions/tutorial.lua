@@ -363,7 +363,7 @@ end
 
 function tutTakeoff ()
    -- Create OSD
-   misn.osdCreate( osd_title[1], osd_msg[1] )
+   misn.osdCreate( osd_title[5], osd_msg[5] )
 
    misn_stage = 8
    misn_sys = system.get()
