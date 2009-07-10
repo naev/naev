@@ -896,17 +896,17 @@ static int pilotL_disable( lua_State *L )
  *
  *    @luaparam p Pilot to add outfit to.
  *    @luaparam outfit Name of the outfit to add.
- *    @luaparam q Amount to add.
- *    @luareturn The amount actually added.
- * @luafunc addOutfit( p, outfit, q )
+ *    @luareturn True is outfit was added successfully.
+ * @luafunc addOutfit( p, outfit )
  */
 static int pilotL_addOutfit( lua_State *L )
 {
+   int i;
    LuaPilot *lp;
    Pilot *p;
    const char *outfit;
-   int q, n;
    Outfit *o;
+   int ret;
 
    /* Get the pilot. */
    lp = luaL_checkpilot(L,1);
@@ -918,7 +918,6 @@ static int pilotL_addOutfit( lua_State *L )
 
    /* Get parameters. */
    outfit = luaL_checkstring(L,2);
-   q      = luaL_checkint(L,3);
 
    /* Get the outfit. */
    o = outfit_get( outfit );
@@ -926,8 +925,12 @@ static int pilotL_addOutfit( lua_State *L )
       return 0;
    
    /* Add outfit. */
-   n = pilot_addOutfit( p, o, q );
-   lua_pushnumber(L,n);
+   for (i=0; i<p->noutfits; i++) {
+      if (o->slot == p->outfits[i]->slot) {
+         ret = pilot_addOutfit( p, o, p->outfits[i] );
+      }
+   }
+   lua_pushboolean(L,!ret);
    return 1;
 }
 
@@ -942,16 +945,14 @@ static int pilotL_addOutfit( lua_State *L )
  *
  *    @luparam p Pilot to remove outfit from.
  *    @luaparam outfit Name of the outfit to remove.
- *    @luaparam q Amount to remove.
- *    @luareturn The amount actually removed.
- * @luafunc rmOutfit( p, outfit, q )
+ * @luafunc rmOutfit( p, outfit )
  */
 static int pilotL_rmOutfit( lua_State *L )
 {
+   int i;
    LuaPilot *lp;
    Pilot *p;
    const char *outfit;
-   int q, n;
    Outfit *o;
 
    /* Get the pilot. */
@@ -967,17 +968,11 @@ static int pilotL_rmOutfit( lua_State *L )
 
    /* If outfit is "all", we remove everything. */
    if (strcmp(outfit,"all")==0) {
-      n = 0;
-      while (p->outfits != NULL) {
-         pilot_rmOutfit( p, p->outfits[0].outfit, p->outfits[0].quantity );
-         n++;
+      for (i=0; i<p->noutfits; i++) {
+         pilot_rmOutfit( p, p->outfits[i] );
       }
-      lua_pushnumber(L,n);
-      return 1;
+      return 0;
    }
-
-   /* We'll need a quantity now. */
-   q      = luaL_checkint(L,3);
 
    /* Get the outfit. */
    o = outfit_get( outfit );
@@ -987,9 +982,13 @@ static int pilotL_rmOutfit( lua_State *L )
    }
    
    /* Add outfit. */
-   n = pilot_rmOutfit( p, o, q );
-   lua_pushnumber(L,n);
-   return 1;
+   for (i=0; i<p->noutfits; i++) {
+      if (p->outfits[i]->outfit == o) {
+         pilot_rmOutfit( p, p->outfits[i] );
+         break;
+      }
+   }
+   return 0;
 }
 
 /**

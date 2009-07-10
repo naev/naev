@@ -429,7 +429,7 @@ DamageType outfit_damageType( const Outfit* o )
  * @brief Gets the outfit's delay.
  *    @param o Outfit to get information from.
  */
-int outfit_delay( const Outfit* o )
+double outfit_delay( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.delay;
    else if (outfit_isBeam(o)) return o->u.bem.delay;
@@ -761,6 +761,9 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    if (temp->u.blt.falloff < 0.)
       temp->u.blt.falloff = temp->u.blt.range;
 
+   /* Post processing. */
+   temp->u.blt.delay /= 1000.;
+
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.blt.gfx_space==NULL,"gfx");
@@ -838,6 +841,9 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       }
    } while (xml_nextNode(node));
 
+   /* Post processing. */
+   temp->u.bem.delay /= 1000.;
+
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.bem.gfx==NULL,"gfx");
@@ -871,6 +877,9 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_int(node,"delay",temp->u.lau.delay);
       xmlr_strd(node,"ammo",temp->u.lau.ammo_name);
    } while (xml_nextNode(node));
+
+   /* Post processing. */
+   temp->u.lau.delay /= 1000.;
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing '"s"' element", temp->name) /**< Define to help check for data errors. */
@@ -1059,6 +1068,9 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
       xmlr_strd(node,"ammo",temp->u.bay.ammo_name);
    } while (xml_nextNode(node));
 
+   /* Post processing. */
+   temp->u.bay.delay /= 1000.;
+
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.bay.delay==0,"delay");
@@ -1168,6 +1180,7 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
 {
    xmlNodePtr cur, node;
    char *prop;
+   const char *cprop;
 
    /* Clear data. */
    memset( temp, 0, sizeof(Outfit) );
@@ -1181,15 +1194,25 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
       if (xml_isNode(node,"general")) {
          cur = node->children;
          do {
-            xmlr_int(cur,"max",temp->max);
             xmlr_int(cur,"tech",temp->tech);
             xmlr_strd(cur,"license",temp->license);
-            xmlr_int(cur,"mass",temp->mass);
+            xmlr_float(cur,"mass",temp->mass);
             xmlr_int(cur,"price",temp->price);
             xmlr_strd(cur,"description",temp->description);
             if (xml_isNode(cur,"gfx_store")) {
                temp->gfx_store = xml_parseTexture( cur,
                      OUTFIT_GFX"store/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+            }
+            else if (xml_isNode(cur,"slot")) {
+               cprop = xml_get(cur);
+               if (cprop == NULL)
+                  WARN("Outfit Slot type invalid.");
+               else if (strcmp(cprop,"low") == 0)
+                  temp->slot = OUTFIT_SLOT_LOW;
+               else if (strcmp(cprop,"medium") == 0)
+                  temp->slot = OUTFIT_SLOT_MEDIUM;
+               else if (strcmp(cprop,"high") == 0)
+                  temp->slot = OUTFIT_SLOT_HIGH;
             }
 
          } while (xml_nextNode(cur));
@@ -1240,7 +1263,7 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->name==NULL,"name");
-   MELEMENT(temp->max==0,"max");
+   MELEMENT(temp->slot==OUTFIT_SLOT_NULL,"slot");
    MELEMENT(temp->tech==0,"tech");
    MELEMENT(temp->gfx_store==NULL,"gfx_store");
    /*MELEMENT(temp->mass==0,"mass"); Not really needed */

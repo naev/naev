@@ -148,12 +148,12 @@ static int escort_disabled( void *data )
 
    /* Remove from deployed list. */
    for (i=0; i<p->noutfits; i++) {
-      o = p->outfits[i].outfit;
+      o = p->outfits[i]->outfit;
       if (outfit_isFighterBay(o)) {
          o = outfit_ammo(o);
          if (outfit_isFighter(o) &&
                (strcmp(pe->ship->name,o->u.fig.ship)==0)) {
-            p->outfits[i].u.deployed -= 1;
+            p->outfits[i]->u.deployed -= 1;
             break;
          }
       }

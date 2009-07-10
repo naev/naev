@@ -63,22 +63,20 @@ typedef struct ShipMount_ {
 } ShipMount;
 
 
-
 /**
- * @brief Little wrapper for outfits.
+ * @brief Ship outfit slot.
  */
-typedef struct ShipOutfit_ {
-   struct ShipOutfit_* next; /**< Linked list next. */
-   Outfit* data; /**< Data itself. */
-   int quantity; /**< Important difference. */
-} ShipOutfit;
+typedef struct ShipOutfitSlot_ {
+   OutfitSlotType slot; /**< Type of slot. */
+   Outfit *data; /**< Outfit by default if applicable. */
+   ShipMount mount; /**< Mountpoint. */
+} ShipOutfitSlot;
 
 
 /**
  * @brief Represents a space ship.
  */
 typedef struct Ship_ {
-
    char* name; /**< ship name */
    ShipClass class; /**< ship class */
 
@@ -94,6 +92,21 @@ typedef struct Ship_ {
    double turn; /**< Ship's turn in rad/s */
    double speed; /**< Ship's max speed in "pixel/sec" */
 
+   /* characteristics */
+   int crew; /**< Crew members. */
+   double mass; /**< Mass ship has. */
+   double cpu; /**< Amount of CPU the ship has. */
+   int fuel; /**< How many jumps by default. */
+   double cap_cargo; /**< Cargo capacity (in volume). */
+
+   /* health */
+   double armour; /**< Maximum base armour in MJ. */
+   double armour_regen; /**< Maximum armour regeneration in MJ/s. */
+   double shield; /**< Maximum base shield in MJ. */
+   double shield_regen; /**< Maximum shield regeneration in MJ/s. */
+   double energy; /**< Maximum base energy in MJ. */
+   double energy_regen; /**< Maximum energy regeneration in MJ/s. */
+
    /* graphics */
    glTexture *gfx_space; /**< Space sprite sheet. */
    glTexture *gfx_engine; /**< Space engine glow sprite sheet. */
@@ -106,29 +119,15 @@ typedef struct Ship_ {
    /* sound */
    int sound; /**< Sound motor uses. */
 
-   /* characteristics */
-   int crew; /**< Crew members. */
-   int mass; /**< Mass in tons. */
-   int fuel; /**< How many jumps by default. */
-
-   /* health */
-   double armour; /**< Maximum base armour in MJ. */
-   double armour_regen; /**< Maximum armour regeneration in MJ/s. */
-   double shield; /**< Maximum base shield in MJ. */
-   double shield_regen; /**< Maximum shield regeneration in MJ/s. */
-   double energy; /**< Maximum base energy in MJ. */
-   double energy_regen; /**< Maximum energy regeneration in MJ/s. */
-
-   /* capacity */
-   int cap_cargo; /**< Cargo capacity if empty. */
-   int cap_weapon;  /**< Weapon capacity with no outfits. */
-
    /* outfits */
-   ShipOutfit* outfit; /**< Linked list of outfits. */
+   int outfit_nlow; /**< Number of low energy outfit slots. */
+   ShipOutfitSlot *outfit_low; /**< Outfit low energy slots. */
+   int outfit_nmedium; /**< Number of medium energy outfit slots. */
+   ShipOutfitSlot *outfit_medium; /**< Outfit medium energy slots. */
+   int outfit_nhigh; /**< Number of high energy outfit slots. */
+   ShipOutfitSlot *outfit_high; /**< Outfit high energy slots. */
 
    /* mounts */
-   ShipMount* mounts; /**< Ship weapon mount points.  First is primary weapon. */
-   int nmounts; /**< Number of mount points ship has. */
    double mangle; /**< Mount angle to simplify mount calculations. */
 } Ship;
 
@@ -143,7 +142,6 @@ void ships_free (void);
 /*
  * get
  */
-int ship_getMount( Ship* s, double dir, const int id, Vector2d *p );
 Ship* ship_get( const char* name );
 Ship** ship_getTech( int *n, const int* tech, const int techmax );
 char* ship_class( Ship* s );

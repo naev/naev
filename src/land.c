@@ -353,8 +353,7 @@ static void outfits_open( unsigned int wid )
          "Type:\n"
          "Owned:\n"
          "\n"
-         "Space taken:\n"
-         "Free Space:\n"
+         "Mass:\n"
          "\n"
          "Price:\n"
          "Money:\n"
@@ -414,12 +413,10 @@ static void outfits_update( unsigned int wid, char* str )
             "NA\n"
             "\n"
             "NA\n"
-            "%d\n"
             "\n"
             "NA\n"
             "NA\n"
-            "NA\n",
-            pilot_freeSpace(player) );
+            "NA\n" );
       window_modifyText( wid,  "txtDDesc", buf );
       return;
    }
@@ -449,8 +446,7 @@ static void outfits_update( unsigned int wid, char* str )
          "%s\n"
          "%d\n"
          "\n"
-         "%d\n"
-         "%d\n"
+         "%f\n"
          "\n"
          "%s credits\n"
          "%s credits\n"
@@ -461,7 +457,6 @@ static void outfits_update( unsigned int wid, char* str )
                player_hasLicense(outfit->name) :
                player_outfitOwned(outfit),
          outfit->mass,
-         pilot_freeSpace(player),
          buf2,
          buf3,
          (outfit->license != NULL) ? outfit->license : "None" );
@@ -477,22 +472,8 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
 {
    char buf[16];
 
-   /* can player actually fit the outfit? */
-   if ((pilot_freeSpace(player) - outfit->mass) < 0) {
-      if (errmsg != 0)
-         dialogue_alert( "Not enough free space (you need %d more).",
-               outfit->mass - pilot_freeSpace(player) );
-      return 0;
-   }
-   /* has too many already */
-   else if (player_outfitOwned(outfit) >= outfit->max) {
-      if (errmsg != 0)
-         dialogue_alert( "You can only carry %d of this outfit.",
-               outfit->max );
-      return 0;
-   }
    /* can only have one afterburner */
-   else if (outfit_isAfterburner(outfit) && (player->afterburner!=NULL)) {
+   if (outfit_isAfterburner(outfit) && (player->afterburner!=NULL)) {
       if (errmsg != 0)
          dialogue_alert( "You can only have one afterburner." );
       return 0;
@@ -541,7 +522,9 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
  */
 static void outfits_buy( unsigned int wid, char* str )
 {
-   (void)str;
+   (void) str;
+   (void) wid;
+#if 0
    char *outfitname;
    Outfit* outfit;
    int q;
@@ -559,6 +542,7 @@ static void outfits_buy( unsigned int wid, char* str )
          MIN(q,outfit->max) );
    land_checkAddRefuel();
    outfits_update(wid, NULL);
+#endif
 }
 /**
  * @brief Checks to see if the player can sell the selected outfit.
@@ -582,17 +566,11 @@ static int outfit_canSell( Outfit* outfit, int q, int errmsg )
          dialogue_alert( "You currently have cargo in this modification." );
       return 0;
    }
-   /* has negative mass and player has no free space */
-   else if ((outfit->mass < 0) && (pilot_freeSpace(player) < -outfit->mass)) {
-      if (errmsg != 0)
-         dialogue_alert( "Get rid of other outfits first.");
-      return 0;
-   }
    /* Make sure no fighters are left stranded. */
    else if (outfit_isFighterBay(outfit)) {
       for (i=0; i<player->noutfits; i++) {
-         if (player->outfits[i].outfit == outfit) {
-            if (player->outfits[i].u.deployed > 0) {
+         if (player->outfits[i]->outfit == outfit) {
+            if (player->outfits[i]->u.deployed > 0) {
                if (errmsg != 0)
                   dialogue_alert( "You can't leave the fighters stranded, dock them first." );
                return 0;
@@ -604,7 +582,7 @@ static int outfit_canSell( Outfit* outfit, int q, int errmsg )
    /* Make sure they don't sell virtual fighters. */
    else if (outfit_isFighter(outfit)) {
       for (i=0; i<player->noutfits; i++)
-         if (player->outfits[i].outfit == outfit)
+         if (player->outfits[i]->outfit == outfit)
             break;
       if (i >= player->noutfits) {
          if (errmsg != 0)
@@ -622,6 +600,9 @@ static int outfit_canSell( Outfit* outfit, int q, int errmsg )
  */
 static void outfits_sell( unsigned int wid, char* str )
 {
+   (void) wid;
+   (void) str;
+#if 0
    (void)str;
    char *outfitname;
    Outfit* outfit;
@@ -639,6 +620,7 @@ static void outfits_sell( unsigned int wid, char* str )
    player->credits += outfit->price * pilot_rmOutfit( player, outfit, q );
    land_checkAddRefuel();
    outfits_update(wid, NULL);
+#endif
 }
 /**
  * @brief Gets the current modifier status.
@@ -961,7 +943,6 @@ static void shipyard_yours_open( unsigned int parent, char* str )
          "Where:\n"
          "\n"
          "Cargo free:\n"
-         "Weapons free:\n"
          "\n"
          "Transportation:\n"
          "Sell price:\n"
@@ -1025,7 +1006,6 @@ static void shipyard_yoursUpdate( unsigned int wid, char* str )
          "%s\n"
          "\n"
          "%d tons\n"
-         "%d tons\n"
          "\n"
          "%s credits\n"
          "%s credits\n",
@@ -1034,7 +1014,6 @@ static void shipyard_yoursUpdate( unsigned int wid, char* str )
          ship_class(ship->ship),
          loc,
          pilot_cargoFree(ship),
-         pilot_freeSpace(ship),
          buf2,
          buf3);
    window_modifyText( wid, "txtDDesc", buf );

@@ -75,57 +75,6 @@ Ship* ship_get( const char* name )
 
 
 /**
- * @brief Get the position of a ship mount point.
- *
- *    @param s Ship to get the mount point of.
- *    @param dir Direction ship is facing.
- *    @param id ID of the mount point to get.
- *    @param[out] p The position of the mount point.
- *    @return 0 on success.
- */
-int ship_getMount( Ship* s, double dir, const int id, Vector2d *p )
-{
-   ShipMount *m;
-   double cm, sm;
-
-   /* Special case no mounts. */
-   if ((id == 0) && (s->nmounts == 0)) {
-      p->x = 0.;
-      p->y = 0.;
-      return 0;
-   }
-
-   /* Check to see if mount is valid. */
-   if ((id >= s->nmounts) || (id < 0)) {
-      WARN("Invalid mount point id '%d' on ship class '%s'.", id,  s->name);
-      p->x = 0.;
-      p->y = 0.;
-      return 1;
-   }
-
-   m = &s->mounts[id];
-   /* 2d rotation matrix
-    * [ x' ]   [  cos  sin  ]   [ x ]
-    * [ y' ] = [ -sin  cos  ] * [ y ]
-    *
-    * dir is inverted so that rotation is counter-clockwise.
-    */
-   cm = cos(-dir);
-   sm = sin(-dir);
-   p->x = m->x * cm + m->y * sm;
-   p->y = m->x *-sm + m->y * cm;
-
-   /* Correction for ortho perspective. */
-   p->y *= M_SQRT1_2;
-
-   /* Don't forget to add height. */
-   p->y += m->h;
-
-   return 0;
-}
-
-
-/**
  * @brief Gets all the ships in text form matching tech.
  *
  * You have to free all the strings created in the string array too.
@@ -311,13 +260,18 @@ ShipClass ship_classFromString( char* str )
  */
 int ship_basePrice( Ship* s )
 {
-   int price;
-   ShipOutfit *o;
+   int i, price;
+
+   /* Get ship base price. */
+   price = s->price;
 
    /* Base price is ship's price minus it's outfits. */
-   price = s->price;
-   for (o=s->outfit; o!=NULL; o=o->next)
-      price -= o->quantity * o->data->price;
+   for (i=0; i<s->outfit_nlow; i++)
+      price -= s->outfit_low[i].data->price;
+   for (i=0; i<s->outfit_nmedium; i++)
+      price -= s->outfit_medium[i].data->price;
+   for (i=0; i<s->outfit_nhigh; i++)
+      price -= s->outfit_high[i].data->price;
 
    if (price < 0) {
       WARN("Negative ship base price!");
@@ -350,11 +304,10 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 {
    int i;
    xmlNodePtr cur, node;
-   ShipOutfit *otemp, *ocur;
    char str[PATH_MAX], base[PATH_MAX];
    char *stmp, *buf;
    int sx, sy;
-   int id;
+   int l, m, h;
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Ship) );
@@ -447,9 +400,9 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       if (xml_isNode(node,"movement")) {
          cur = node->children;
          do {
-            xmlr_int(cur,"thrust",temp->thrust);
-            xmlr_int(cur,"turn",temp->turn);
-            xmlr_int(cur,"speed",temp->speed);
+            xmlr_float(cur,"thrust",temp->thrust);
+            xmlr_float(cur,"turn",temp->turn);
+            xmlr_float(cur,"speed",temp->speed);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -468,66 +421,78 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          } while (xml_nextNode(cur));
          continue;
       }
-      if (xml_isNode(node,"caracteristics")) {
+      if (xml_isNode(node,"characteristics")) {
          cur = node->children;
          do {
             xmlr_int(cur,"crew",temp->crew);
             xmlr_float(cur,"mass",temp->mass);
+            xmlr_float(cur,"cpu",temp->cpu);
             xmlr_int(cur,"fuel",temp->fuel);
-            xmlr_int(cur,"cap_weapon",temp->cap_weapon);
-            xmlr_int(cur,"cap_cargo",temp->cap_cargo);
+            xmlr_float(cur,"cap_cargo",temp->cap_cargo);
          } while (xml_nextNode(cur));
          continue;
       }
-      if (xml_isNode(node,"outfits")) {
-         cur = node->children;
-         do {
-            if (xml_isNode(cur,"outfit")) {
-               otemp = malloc(sizeof(ShipOutfit));
-               otemp->data = outfit_get(xml_get(cur));
-               stmp = xml_nodeProp(cur,"quantity");
-               if (!stmp)
-                  WARN("Ship '%s' is missing tag 'quantity' for outfit '%s'",
-                        temp->name, otemp->data->name);
-               otemp->quantity = atoi(stmp);
-               free(stmp);
-               otemp->next = NULL;
-               
-               if ((ocur=temp->outfit) == NULL) temp->outfit = otemp;
-               else {
-                  while (ocur->next) ocur = ocur->next;
-                  ocur->next = otemp;
-               }
-            }
-         } while (xml_nextNode(cur));
-         continue;
-      }
-      if (xml_isNode(node,"mounts")) {
+      if (xml_isNode(node,"slots")) {
          /* First pass, get number of mounts. */
          cur = node->children;
          do {
-            if (xml_isNode(cur,"mount"))
-               temp->nmounts++;
+            if (xml_isNode(cur,"low"))
+               temp->outfit_nlow++;
+            else if (xml_isNode(cur,"medium"))
+               temp->outfit_nmedium++;
+            else if (xml_isNode(cur,"high"))
+               temp->outfit_nhigh++;
          } while (xml_nextNode(cur));
          /* Allocate the space. */
-         temp->mounts = calloc( temp->nmounts, sizeof(ShipMount) );
+         temp->outfit_low = calloc( temp->outfit_nlow, sizeof(ShipOutfitSlot) );
+         temp->outfit_medium = calloc( temp->outfit_nmedium, sizeof(ShipOutfitSlot) );
+         temp->outfit_high = calloc( temp->outfit_nhigh, sizeof(ShipOutfitSlot) );
          /* Second pass, initialize the mounts. */
+         l = m = h = 0;
          cur = node->children;
          do {
-            if (xml_isNode(cur,"mount")) {
-               id = xml_getInt(cur);
+            if (xml_isNode(cur,"low")) {
+               /* Set default outfit if applicable. */
+               xmlr_attr(cur,"outfit",stmp);
+               if (stmp!=NULL) {
+                  temp->outfit_high[l].data = outfit_get(stmp);
+                  free(stmp);
+               }
+               /* Increment l. */
+               l++;
+            }
+            if (xml_isNode(cur,"medium")) {
+               /* Set default outfit if applicable. */
+               xmlr_attr(cur,"outfit",stmp);
+               if (stmp!=NULL) {
+                  temp->outfit_high[m].data = outfit_get(stmp);
+                  free(stmp);
+               }
+               /* Increment m. */
+               m++;
+            }
+            if (xml_isNode(cur,"high")) {
+               /* Set default outfit if applicable. */
+               xmlr_attr(cur,"outfit",stmp);
+               if (stmp!=NULL) {
+                  temp->outfit_high[h].data = outfit_get(stmp);
+                  free(stmp);
+               }
+               /* Get mount point. */
                xmlr_attr(cur,"x",stmp);
-               temp->mounts[id].x = atof(stmp);
+               temp->outfit_high[h].mount.x = atof(stmp);
                free(stmp);
                xmlr_attr(cur,"y",stmp);
-               temp->mounts[id].y  = atof(stmp);
+               temp->outfit_high[h].mount.y = atof(stmp);
                /* Since we measure in pixels, we have to modify it so it
                 *  doesn't get corrected by the ortho correction. */
-               temp->mounts[id].y *= M_SQRT2;
+               temp->outfit_high[h].mount.y *= M_SQRT2;
                free(stmp);
                xmlr_attr(cur,"h",stmp);
-               temp->mounts[id].h = atof(stmp);
+               temp->outfit_high[h].mount.h = atof(stmp);
                free(stmp);
+               /* Increment h. */
+               h++;
             }
          } while (xml_nextNode(cur));
       }
@@ -555,10 +520,9 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    MELEMENT(temp->energy_regen==0,"energy_regen");
    MELEMENT(temp->fuel==0,"fuel");
    MELEMENT(temp->crew==0,"crew");
-   MELEMENT(temp->mass==0,"mass");
+   MELEMENT(temp->mass==0.,"mass");
+   MELEMENT(temp->cpu==0.,"cpu");
    MELEMENT(temp->cap_cargo==0,"cap_cargo");
-   MELEMENT(temp->cap_weapon==0,"cap_weapon");
-   MELEMENT(temp->mounts==NULL,"mounts");
 #undef MELEMENT
 
    return 0;
@@ -625,7 +589,6 @@ int ships_load (void)
 void ships_free (void)
 {
    Ship *s;
-   ShipOutfit *so, *sot;
    int i;
    for (i = 0; i < ship_nstack; i++) {
       s = &ship_stack[i];
@@ -643,16 +606,12 @@ void ships_free (void)
          free(s->license);
 
       /* Free outfits. */
-      so = s->outfit;
-      while (so) {
-         sot = so;
-         so = so->next;
-         free(sot);
-      }
-
-      /* Free mounts. */
-      if (s->nmounts > 0)
-         free(s->mounts);
+      if (s->outfit_low != NULL)
+         free(s->outfit_low);
+      if (s->outfit_medium != NULL)
+         free(s->outfit_medium);
+      if (s->outfit_high != NULL)
+         free(s->outfit_high);
 
       /* Free graphics. */
       gl_freeTexture(s->gfx_space);
@@ -696,7 +655,6 @@ void ship_view( unsigned int unused, char* shipname )
          "Armour:\n"
          "Energy:\n"
          "\n"
-         "Weapon Space:\n"
          "Cargo Space:\n"
          "Fuel:\n"
          );
@@ -709,7 +667,7 @@ void ship_view( unsigned int unused, char* shipname )
          "%s\n" /* Name */
          "%s\n" /* Class */
          "%d\n" /* Crew */
-         "%d Tons\n" /* Mass */
+         "%.2f Tons\n" /* Mass */
          "\n"
          "%.2f MN/ton\n" /* Thrust */
          "%.2f M/s\n" /* Speed */
@@ -719,14 +677,13 @@ void ship_view( unsigned int unused, char* shipname )
          "%.2f MJ (%.2f MJ/s)\n" /* Armour */
          "%.2f MJ (%.2f MJ/s)\n" /* Energy */
          "\n"
-         "%d Tons\n" /* Weapon */
-         "%d Tons\n" /* Cargo */
+         "%.2f Tons\n" /* Cargo */
          "%d Units\n" /* Fuel */
          , s->name, ship_class(s), s->crew, s->mass,
          s->thrust/s->mass, s->speed, s->turn,
          s->shield, s->shield_regen, s->armour, s->armour_regen,
          s->energy, s->energy_regen,
-         s->cap_weapon, s->cap_cargo, s->fuel );
+         s->cap_cargo, s->fuel );
    window_addText( wid, 120, -40, VIEW_WIDTH-140, h,
          0, "txtProperties", &gl_smallFont, &cBlack, buf );
 

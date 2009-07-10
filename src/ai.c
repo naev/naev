@@ -1881,7 +1881,7 @@ static int aiL_settarget( lua_State *L )
  *    @param p Pilot to check for.
  *    @param o Outfit to check.
  */
-static int outfit_isMelee( Pilot *p, PilotOutfit *o )
+static int outfit_isMelee( Pilot *p, PilotOutfitSlot *o )
 {
    (void) p;
    if (outfit_isBolt(o->outfit) || outfit_isBeam(o->outfit) ||
@@ -1895,7 +1895,7 @@ static int outfit_isMelee( Pilot *p, PilotOutfit *o )
  *    @param p Pilot to check for.
  *    @param o Outfit to check.
  */
-static int outfit_isRanged( Pilot *p, PilotOutfit *o )
+static int outfit_isRanged( Pilot *p, PilotOutfitSlot *o )
 {
    if (outfit_isFighterBay(o->outfit) ||
          (outfit_isLauncher(o->outfit) &&
@@ -1912,7 +1912,7 @@ static int outfit_isRanged( Pilot *p, PilotOutfit *o )
  */
 static int aiL_secondary( lua_State *L )
 {
-   PilotOutfit *co, *po;
+   PilotOutfitSlot *co, *po;
    int i, melee;
    const char *str;
    const char *otype;
@@ -1942,8 +1942,8 @@ static int aiL_secondary( lua_State *L )
 
       /* Iterate over the list */
       po = NULL;
-      for (i=0; i<cur_pilot->noutfits; i++) {
-         co = &cur_pilot->outfits[i];
+      for (i=0; i<cur_pilot->outfit_nhigh; i++) {
+         co = &cur_pilot->outfit_high[i];
 
          /* Not a secondary weapon. */
          if (!outfit_isProp(co->outfit, OUTFIT_PROP_WEAP_SECONDARY) ||

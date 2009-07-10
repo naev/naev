@@ -411,7 +411,6 @@ static void think_beam( Weapon* w, const double dt )
    }
 
    /* Use mount position. */
-   pilot_getMount( p, w->mount, &v );
    w->solid->pos.x = v.x;
    w->solid->pos.y = v.y;
 

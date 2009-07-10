@@ -104,18 +104,23 @@ typedef enum PilotOutfitState_ {
 /**
  * @brief Stores an outfit the pilot has.
  */
-typedef struct PilotOutfit_ {
+typedef struct PilotOutfitSlot_ {
+   /* Outfit slot properties. */
    Outfit* outfit; /**< Associated outfit. */
-   int quantity; /**< Number of outfits of this type pilot has. */
+   ShipMount mount; /**< Outfit mountpoint. */
+   OutfitSlotType slot; /**< Slot type. */
+
+   /* Current state. */
    PilotOutfitState state; /**< State of the outfit. */
+   double timer; /**< Used to store when it was last used. */
+   int quantity; /**< Quantty. */
+
+   /* Type-specific data. */
    union {
       int deployed; /**< Deployment status (if fighter craft). */
       int beamid; /**< ID of the beam used in this outfit, only used for beams. */
    } u;
-   int *mounts; /**< ID of each outfit mount. */
-   int lastshot; /**< ID of the outfit that last shot. */
-   double timer; /**< Used to store when it was last used. */
-} PilotOutfit;
+} PilotOutfitSlot;
 
 
 /**
@@ -175,6 +180,10 @@ typedef struct Pilot_ {
    int tsx; /**< current sprite x position., calculated on update. */
    int tsy; /**< current sprite y position, calculated on update. */
 
+   /* Properties. */
+   double cpu; /**< Amount of CPU the pilot has left. */
+   double cpu_max; /**< Maximum amount of CPU the pilot has. */
+
    /* Movement */
    double thrust; /**< Pilot's thrust. */
    double turn; /**< Pilot's turn. */
@@ -202,11 +211,20 @@ typedef struct Pilot_ {
    void (*render)(struct Pilot_*, const double); /**< for rendering the pilot */
 
    /* Outfit management */
-   PilotOutfit* outfits; /**< pilot outfit stack. */
-   int noutfits; /**< pilot number of outfits. */
-   PilotOutfit* secondary; /**< secondary weapon */
-   PilotOutfit* ammo; /**< secondary ammo if needed */
-   PilotOutfit* afterburner; /**< the afterburner */
+   /* Global outfits. */
+   int noutfits; /**< Total amount of slots. */
+   PilotOutfitSlot **outfits; /**< Total outfits. */
+   /* Per slot types. */
+   int outfit_nlow; /**< Number of low energy slots. */
+   PilotOutfitSlot *outfit_low; /**< The low energy slots. */
+   int outfit_nmedium; /**< Number of medium energy slots. */
+   PilotOutfitSlot *outfit_medium; /**< The medium energy slots. */
+   int outfit_nhigh; /**< Number of high energy slots. */
+   PilotOutfitSlot *outfit_high; /**< The high energy slots. */
+   /* For easier usage. */
+   PilotOutfitSlot *secondary; /**< secondary weapon */
+   PilotOutfitSlot *ammo; /**< secondary ammo if needed */
+   PilotOutfitSlot *afterburner; /**< the afterburner */
 
    /* Jamming */
    double jam_range; /**< Range at which pilot starts jamming. */
@@ -280,14 +298,16 @@ double pilot_face( Pilot* p, const double dir );
  */
 /* Generic stuff. */
 int pilot_freeSpace( Pilot* p ); /* weapon space */
-int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity );
-int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity );
+int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
+int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s );
+int pilot_addAmmo( Pilot* pilot, Outfit* ammo, int quantity );
+int pilot_rmAmmo( Pilot* pilot, Outfit* ammo, int quantity );
 char* pilot_getOutfits( Pilot* pilot );
 void pilot_calcStats( Pilot* pilot );
-int pilot_oquantity( Pilot* p, PilotOutfit* w );
+int pilot_oquantity( Pilot* p, PilotOutfitSlot* w );
 /* Special outfit stuff. */
-int pilot_getMount( Pilot *p, int id, Vector2d *v );
-void pilot_switchSecondary( Pilot* p, int i );
+int pilot_getMount( Pilot *p, PilotOutfitSlot *w, Vector2d *v );
+void pilot_switchSecondary( Pilot* p, PilotOutfitSlot *w );
 void pilot_setAmmo( Pilot* p );
 int pilot_getAmmo( Pilot* p, Outfit* o );
 void pilot_setAfterburner( Pilot* p );

@@ -69,7 +69,7 @@ extern void ai_destroy( Pilot* p ); /**< from ai.c */
 extern void ai_think( Pilot* pilot, const double dt ); /**< from ai.c */
 /* internal */
 /* update. */
-static int pilot_shootWeapon( Pilot* p, PilotOutfit* w );
+static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w );
 static void pilot_hyperspace( Pilot* pilot, double dt );
 static void pilot_refuel( Pilot *p, double dt );
 /* cargo. */
@@ -77,9 +77,6 @@ static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int c
 static void pilot_calcCargo( Pilot* pilot );
 static int pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
       int quantity, unsigned int id );
-/* outfits. */
-static int pilot_setOutfitMounts( Pilot *p, PilotOutfit* po, int o, int q );
-static void pilot_setSecondary( Pilot* p, Outfit* o );
 /* clean up. */
 void pilot_free( Pilot* p ); /* externed in player.c */
 static void pilot_dead( Pilot* p );
@@ -677,30 +674,11 @@ int pilot_getJumps( const Pilot* p )
  *    @param w Outfit to check quantity of.
  *    @return The amount of the outfit the pilot has.
  */
-int pilot_oquantity( Pilot* p, PilotOutfit* w )
+int pilot_oquantity( Pilot* p, PilotOutfitSlot* w )
 {
    return (outfit_isAmmo(w->outfit) && p->secondary) ?
       p->secondary->quantity : w->quantity ;
 }
-
-
-/**
- * @brief Gets pilot's free weapon space.
- *
- *    @param p Pilot to get free space of.
- *    @return Free weapon space of the pilot.
- */
-int pilot_freeSpace( Pilot* p )
-{
-   int i,s;
-   
-   s = p->ship->cap_weapon;
-   for (i=0; i<p->noutfits; i++)
-      s -= p->outfits[i].quantity * p->outfits[i].outfit->mass;
-   
-   return s;
-}
-
 
 
 /**
@@ -719,8 +697,8 @@ void pilot_shoot( Pilot* p, int group )
 
    if (!p->outfits) return; /* no outfits */
 
-   for (i=0; i<p->noutfits; i++) { /* cycles through outfits to find primary weapons */
-      o = p->outfits[i].outfit;
+   for (i=0; i<p->outfit_nhigh; i++) { /* cycles through outfits to find primary weapons */
+      o = p->outfit_high[i].outfit;
       if (!outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY) &&
             (outfit_isBolt(o) || outfit_isBeam(o))) {
 
@@ -728,7 +706,7 @@ void pilot_shoot( Pilot* p, int group )
          if ((group == 0) ||
                ((group == 1) && outfit_isTurret(o)) ||
                ((group == 2) && !outfit_isTurret(o))) {
-            ret = pilot_shootWeapon( p, &p->outfits[i] );
+            ret = pilot_shootWeapon( p, &p->outfit_high[i] );
             if (ret == 1)
                i--;
          }
@@ -770,13 +748,13 @@ void pilot_shootStop( Pilot* p, const int secondary )
 
    if (!secondary) { /* primary weapons */
 
-      for (i=0; i<p->noutfits; i++) { /* cycles through outfits to find primary weapons */
-         o = p->outfits[i].outfit;
+      for (i=0; i<p->outfit_nhigh; i++) { /* cycles through outfits to find primary weapons */
+         o = p->outfit_high[i].outfit;
          if (!outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY) &&
                outfit_isBeam(o)) /** @todo possibly make this neater. */
-            if (p->outfits[i].u.beamid > 0) {
-               beam_end( p->id, p->outfits[i].u.beamid );
-               p->outfits[i].u.beamid = 0;
+            if (p->outfit_high[i].u.beamid > 0) {
+               beam_end( p->id, p->outfit_high[i].u.beamid );
+               p->outfit_high[i].u.beamid = 0;
             }
       }
    }
@@ -803,17 +781,36 @@ void pilot_shootStop( Pilot* p, const int secondary )
  *    @param[out] v Position of the mount.
  *    @return 0 on success.
  */
-int pilot_getMount( Pilot *p, int id, Vector2d *v )
+int pilot_getMount( Pilot *p, PilotOutfitSlot *w, Vector2d *v )
 {
-   double a;
+   double a, x, y;
+   double cm, sm;
+   ShipMount *m;
 
    /* Calculate the sprite angle. */
    a  = (double)(p->tsy * p->ship->gfx_space->sx + p->tsx);
    a *= p->ship->mangle;
 
+   /* 2d rotation matrix
+    * [ x' ]   [  cos  sin  ]   [ x ]
+    * [ y' ] = [ -sin  cos  ] * [ y ]
+    *
+    * dir is inverted so that rotation is counter-clockwise.
+    */
+   m = &w->mount;
+   cm = cos(-a);
+   sm = sin(-a);
+   x = m->x * cm + m->y * sm;
+   y = m->x *-sm + m->y * cm;
+
+   /* Correction for ortho perspective. */
+   y *= M_SQRT1_2;
+
+   /* Don't forget to add height. */
+   y += m->h;
+
    /* Get the mount and add the player offset. */
-   ship_getMount( p->ship, a, id, v );
-   vect_cadd( v, p->solid->pos.x, p->solid->pos.y );
+   vect_cset( v, p->solid->pos.x + x, p->solid->pos.y + y );
 
    return 0;
 }
@@ -826,9 +823,8 @@ int pilot_getMount( Pilot *p, int id, Vector2d *v )
  *    @param w Pilot's outfit to shoot.
  *    @return 0 if successful, 1 if ran out of ammo.
  */
-static int pilot_shootWeapon( Pilot* p, PilotOutfit* w )
+static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 {
-   int id;
    Vector2d vp, vv;
    int rm_outfit;
 
@@ -840,11 +836,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfit* w )
    rm_outfit = 0;
 
    /* Get weapon mount position. */
-   if (w->mounts == NULL)
-      id = 0;
-   else if (outfit_isTurret(w->outfit))
-      id = w->mounts[w->lastshot];
-   pilot_getMount( p, id, &vp );
+   pilot_getMount( p, w, &vp );
 
    /* Modify velocity to take into account the rotation. */
    vect_cset( &vv, p->solid->vel.x + vp.x*p->solid->dir_vel,
@@ -876,7 +868,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfit* w )
       /** @todo Handle warmup stage. */
       w->state = PILOT_OUTFIT_ON;
       w->u.beamid = beam_start( w->outfit, p->solid->dir,
-            &vp, &p->solid->vel, p->id, p->target, id );
+            &vp, &p->solid->vel, p->id, p->target, 0 );
    }
 
    /*
@@ -933,18 +925,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfit* w )
    }
 
    /* Reset timer. */
-   w->timer += ((double)outfit_delay( w->outfit ) / (double)w->quantity)/1000.;
-
-   /* Mark last updated. */
-   w->lastshot++;
-   if (w->lastshot >= w->quantity)
-      w->lastshot = 0;
-
-   /* Remove outfit if needed last, to avoid possible free issues. */
-   if (rm_outfit) {
-      pilot_rmOutfit( p, p->ammo->outfit, 0 ); /* It'll set p->ammo to NULL */
-      return 1;
-   }
+   w->timer += outfit_delay( w->outfit );
 
    return 0;
 }
@@ -957,16 +938,12 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfit* w )
  *    @param p Pilot to set secondary weapon.
  *    @param i Index of the weapon to set to.
  */
-void pilot_switchSecondary( Pilot* p, int i )
+void pilot_switchSecondary( Pilot* p, PilotOutfitSlot* w )
 {
-   PilotOutfit *cur;
+   PilotOutfitSlot *cur;
 
    cur = player->secondary;
-
-   if ((i < 0) || (i >= player->noutfits))
-      player->secondary = NULL;
-   else
-      player->secondary = &player->outfits[i];
+   player->secondary = w;
 
    /* Check for weapon change. */
    if ((cur != NULL) && (player->secondary != cur)) {
@@ -1155,37 +1132,6 @@ void pilot_runHook( Pilot* p, int hook_type )
 
 
 /**
- * @brief Sets the pilot's secondary weapon.
- *
- *    @param p Pilot to set secondary weapon.
- *    @param o Outfit to set as secondary. 
- */
-static void pilot_setSecondary( Pilot* p, Outfit* o )
-{
-   int i;
-
-   /* no need for ammo if there is no secondary */
-   if (o == NULL) {
-      p->secondary   = NULL;
-      p->ammo        = NULL;
-      return;
-   }
-
-   /* find which is the secondary and set ammo appropriately */
-   for (i=0; i<p->noutfits; i++) {
-      if (p->outfits[i].outfit == o) {
-         p->secondary = &p->outfits[i];
-         pilot_setAmmo( p );
-         return;
-      }
-   }
-
-   p->secondary   = NULL;
-   p->ammo        = NULL;
-}
-
-
-/**
  * @brief Sets the pilot's ammo based on their secondary weapon.
  *
  *    @param p Pilot to set ammo.
@@ -1204,8 +1150,8 @@ void pilot_setAmmo( Pilot* p )
    /* find the ammo and set it */
    ammo = outfit_ammo(p->secondary->outfit);
    for (i=0; i<p->noutfits; i++)
-      if (p->outfits[i].outfit == ammo) {
-         p->ammo = &p->outfits[i];
+      if (p->outfits[i]->outfit == ammo) {
+         p->ammo = p->outfits[i];
          return;
       }
 
@@ -1233,8 +1179,8 @@ int pilot_getAmmo( Pilot* p, Outfit* o )
    /* Try to find the ammo. */
    ammo = o->u.lau.ammo;
    for (i=0; i<p->noutfits; i++)
-      if (p->outfits[i].outfit == ammo)
-         return p->outfits[i].quantity;
+      if (p->outfits[i]->outfit == ammo)
+         return p->outfits[i]->quantity;
 
    /* Assume none. */
    return 0;
@@ -1251,8 +1197,8 @@ void pilot_setAfterburner( Pilot* p )
    int i;
 
    for (i=0; i<p->noutfits; i++)
-      if (outfit_isAfterburner( p->outfits[i].outfit )) {
-         p->afterburner = &p->outfits[i];
+      if (outfit_isAfterburner( p->outfits[i]->outfit )) {
+         p->afterburner = p->outfits[i];
          return;
       }
    p->afterburner = NULL;
@@ -1285,12 +1231,12 @@ int pilot_dock( Pilot *p, Pilot *target, int deployed )
 
    /* Check to see if target has an available bay. */
    for (i=0; i<target->noutfits; i++) {
-      if (outfit_isFighterBay(target->outfits[i].outfit)) {
-         o = outfit_ammo(target->outfits[i].outfit);
+      if (outfit_isFighterBay(target->outfits[i]->outfit)) {
+         o = outfit_ammo(target->outfits[i]->outfit);
          if (outfit_isFighter(o) &&
                (strcmp(p->ship->name,o->u.fig.ship)==0)) {
             if (deployed)
-               target->outfits[i].u.deployed -= 1;
+               target->outfits[i]->u.deployed -= 1;
             break;
          }
       }
@@ -1299,7 +1245,7 @@ int pilot_dock( Pilot *p, Pilot *target, int deployed )
       return -1;
 
    /* Add the pilot's outfit. */
-   if (pilot_addOutfit(target, o, 1) != 1)
+   if (pilot_addAmmo(target, o, 1) != 1)
       return -1;
 
    /* Remove from pilot's escort list. */
@@ -1342,8 +1288,8 @@ int pilot_hasDeployed( Pilot *p )
 {
    int i;
    for (i=0; i<p->noutfits; i++)
-      if (outfit_isFighterBay(p->outfits[i].outfit))
-         if (p->outfits[i].u.deployed > 0)
+      if (outfit_isFighterBay(p->outfits[i]->outfit))
+         if (p->outfits[i]->u.deployed > 0)
             return 1;
    return 0;
 }
@@ -1436,7 +1382,7 @@ void pilot_update( Pilot* pilot, const double dt )
    Pilot *target;
    double a, px,py, vx,vy;
    char buf[16];
-   PilotOutfit *o;
+   PilotOutfitSlot *o;
 
    /*
     * Update timers.
@@ -1447,7 +1393,7 @@ void pilot_update( Pilot* pilot, const double dt )
       if (pilot->timer[i] >= 0.)
          pilot->timer[i] -= dt;
    for (i=0; i<pilot->noutfits; i++) {
-      o = &pilot->outfits[i];
+      o = pilot->outfits[i];
       if (o->timer >= 0.)
          o->timer -= dt;
    }
@@ -1816,145 +1762,56 @@ static void pilot_refuel( Pilot *p, double dt )
 
 
 /**
- * @brief Sets the mount points for an outfit.
- *
- *    @param p Pilot to set mounts on.
- *    @param po Outfit to set mount points for.
- *    @param o Original number of outfits.
- *    @param q Outfits added.
- *    @return 0 on success;
- */
-static int pilot_setOutfitMounts( Pilot *p, PilotOutfit* po, int o, int q )
-{
-   int i, n, k, min;
-
-   /* Grow the memory. */
-   po->mounts = realloc(po->mounts, (o+q) * sizeof(int));
-
-   /* Has to be done for each outfit added. */
-   for (n=o; n < o+q; n++) {
-
-      /* Special case no ship mounts. */
-      if (p->mounted == NULL) {
-         po->mounts[n] = 0;
-         continue;
-      }
-
-      /* Default to 0. */
-      k     = 0;
-      min   = INT_MAX;
-      /* Find mount with fewest spots. */
-      for (i=1; i<p->ship->nmounts; i++) {
-         if (p->mounted[i] < min) {
-            k     = i;
-            min   = p->mounted[i];
-         }
-      }
-
-      /* Add the mount point. */
-      po->mounts[n] = k;
-      p->mounted[k]++;
-   }
-
-   return 0;
-}
-
-
-/**
  * @brief Adds an outfit to the pilot.
  *
  *    @param pilot Pilot to add the outfit to.
  *    @param outfit Outfit to add to the pilot.
- *    @param quantity Amount of the outfit to add.
- *    @return Amount of the outfit added.
+ *    @param s Slot to add ammo to.
+ *    @return 0 on success.
  */
-int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
+int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
 {
-   int i;
-   int o, q, free_space;
-   Outfit *osec;
-   PilotOutfit *po;
-
-   free_space = pilot_freeSpace( pilot );
-   q = quantity;
-
    /* special case if it's a map */
    if (outfit_isMap(outfit)) {
       if (pilot == player) /* Only player can get it. */
          map_map(NULL,outfit->u.map.radius);
-      return 1; /* must return 1 for paying purposes */
+      return -1; /* must return 1 for paying purposes */
    }
    /* special case if it's a license. */
    else if (outfit_isLicense(outfit)) {
       if (pilot == player) /* Only player can get it. */
          player_addLicense(outfit->name);
-      return 1; /* must return 1 for paying purposes */
+      return -1; /* must return 1 for paying purposes */
    }
 
-   /* Mod quantity down if it doesn't fit */
-   if (q*outfit->mass > free_space)
-      q = free_space / outfit->mass;
-
-   /* Can we actually add any? */
-   if (q == 0)
-      return 0;
-
-   /* does outfit already exist? */
-   for (i=0; i<pilot->noutfits; i++)
-      if (pilot->outfits[i].outfit == outfit) {
-         po = &pilot->outfits[i];
-         o = po->quantity;
-         po->quantity += q;
-         /* can't be over max */
-         if (po->quantity > outfit->max) {
-            q -= po->quantity - outfit->max;
-            po->quantity = outfit->max;
-         }
-
-         /* If it's a turret we need to find a mount spot for it. */
-         if (outfit_isTurret(outfit))
-            pilot_setOutfitMounts( pilot, po, o, q );
-
-         /* recalculate the stats */
-         pilot_calcStats(pilot);
-         return q;
-      }
-
-   /* hacks in case it reallocs */
-   osec = (pilot->secondary) ? pilot->secondary->outfit : NULL;
-   /* no need for ammo since it's handled in setSecondary,
-    * since pilot has only one afterburner it's handled at the end */
-
-   /* grow the outfits */
-   pilot->noutfits++;
-   pilot->outfits = realloc(pilot->outfits, pilot->noutfits*sizeof(PilotOutfit));
-   po = &pilot->outfits[pilot->noutfits-1];
-   memset(po, 0, sizeof(PilotOutfit));
-   po->outfit = outfit;
-   po->quantity = q;
-
-   /* can't be over max */
-   if (po->quantity > outfit->max) {
-      q -= po->quantity - outfit->max;
-      po->quantity = outfit->max;
+   /* See if slot has space. */
+   if (s->outfit != NULL) {
+      WARN("Trying to add outfit '%s' to slot that already has an outfit", outfit->name);
+      return -1;
    }
 
+   /* Set the outfit. */
+   s->outfit = outfit;
+
+   /* Set some default parameters. */
+   s->timer = -1.;
+
+   /* Some per-case scenarios. */
+   if (outfit_isFighterBay(outfit)) {
+      s->u.deployed = 0;
+   }
    if (outfit_isTurret(outfit)) { /* used to speed up AI */
-      /* If it's a turret we need to find a mount spot for it. */
-      pilot_setOutfitMounts( pilot, po, 0, q );
       pilot_setFlag(pilot, PILOT_HASTURRET);
    }
-
-   if (outfit_isBeam(outfit)) /* Used to speed up some calculations. */
+   if (outfit_isBeam(outfit)) { /* Used to speed up some calculations. */
+      s->u.beamid = -1;
       pilot_setFlag(pilot, PILOT_HASBEAMS);
-
-   /* hack due to realloc possibility */
-   pilot_setSecondary( pilot, osec );
-   pilot_setAfterburner( pilot );
+   }
 
    /* recalculate the stats */
    pilot_calcStats(pilot);
-   return q;
+
+   return 0;
 }
 
 
@@ -1962,82 +1819,68 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, int quantity )
  * @brief Removes an outfit from the pilot.
  *
  *    @param pilot Pilot to remove the outfit from.
- *    @param outfit Outfit to remove from the pilot.
- *    @param quantity Amount of outfits to remove from the pilot.
- *    @return Number of outfits removed from the pilot.
+ *    @param s Slot to remove.
+ *    @return 0 on success.
  */
-int pilot_rmOutfit( Pilot* pilot, Outfit* outfit, int quantity )
+int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s )
 {
-   int i, j, q, c, o;
-   Outfit *osec;
-   PilotOutfit *po;
+   int ret;
 
-   c = (outfit_isMod(outfit)) ? outfit->u.mod.cargo : 0;
+   ret = (s->outfit==NULL);
+   s->outfit = NULL;
+
+   /* recalculate the stats */
+   pilot_calcStats(pilot);
+
+   return ret;
+}
+
+
+/**
+ * @brief Adds some ammo to the pilot stock.
+ *
+ *    @param pilot Pilot to add ammo to.
+ *    @param ammo Ammo to add.
+ *    @param quantity Amount to add.
+ *    @return Amount actually added.
+ */
+int pilot_addAmmo( Pilot* pilot, Outfit* ammo, int quantity )
+{
+   int q;
+   (void) pilot;
+
    q = quantity;
-   for (i=0; i<pilot->noutfits; i++) {
-      if (pilot->outfits[i].outfit != outfit)
-         continue;
 
-      po = &pilot->outfits[i];
-
-      /* Remove quantity. */
-      o = po->quantity;
-      po->quantity -= quantity;
-
-      /* Calculate q. */
-      if (po->quantity <= 0) {
-         /* we didn't actually remove the full amount */
-         q += po->quantity;
-         po->quantity = 0.;
-      }
-
-      /* Remove from mount points. */
-      if ((pilot->mounted != NULL) && (po->mounts != NULL)) {
-         for (j=o-1; j >= po->quantity; j--) {
-            if (po->mounts[j] != 0)
-               pilot->mounted[ po->mounts[j] ]--;
-         }
-      }
-
-      /* Need to remove the outfit. */
-      if (po->quantity <= 0) {
-
-         /* hack in case it reallocs - can happen even when shrinking */
-         osec = (pilot->secondary) ? pilot->secondary->outfit : NULL;
-
-         /* free some memory if needed. */
-         if (po->mounts != NULL) {
-            free(po->mounts);
-            po->mounts = NULL;
-         }
-
-         /* remove the outfit */
-         pilot->noutfits--;
-         if (pilot->noutfits <= 0) {
-            if (pilot->outfits != NULL) {
-                free(pilot->outfits);
-                pilot->outfits = NULL;
-            }
-            pilot->noutfits = 0;
-         }
-         else {
-            memmove( &pilot->outfits[i], &pilot->outfits[i+1],
-                  sizeof(PilotOutfit) * (pilot->noutfits-i) );
-            pilot->outfits = realloc( pilot->outfits,
-                  sizeof(PilotOutfit) * (pilot->noutfits) );
-         }
-
-         /* set secondary  and afterburner */
-         pilot_setSecondary( pilot, osec );
-         pilot_setAfterburner( pilot );
-      }
-
-      pilot_calcStats(pilot); /* recalculate stats */
-      return q;
+   if (!outfit_isAmmo(ammo)) {
+      WARN("Trying to add non-ammo type outfit '%s' as ammo.", ammo->name);
+      return 0;
    }
-   WARN("Failure attempting to remove %d '%s' from pilot '%s'",
-         quantity, outfit->name, pilot->name );
-   return 0;
+
+   return q;
+}
+
+
+/**
+ * @brief Removes some ammo from the pilot stock.
+ *
+ *    @param pilot Pilot to remove ammo from.
+ *    @param ammo Ammo to remove.
+ *    @param quantity Amount to remove.
+ *    @return Amount actually removed.
+ */
+int pilot_rmAmmo( Pilot* pilot, Outfit* ammo, int quantity )
+{
+   int q;
+   (void) pilot;
+
+   q = quantity;
+
+   if (!outfit_isAmmo(ammo)) {
+      WARN("Trying to remove non-ammo type outfit '%s' as ammo.", ammo->name);
+      return 0;
+   }
+
+   return q;
 }
 
 
@@ -2059,14 +1902,14 @@ char* pilot_getOutfits( Pilot* pilot )
    p = 0;
    /* first outfit */
    if (pilot->noutfits>0)
-      p += snprintf( &buf[p], len-p, "%dx %s",
-            pilot->outfits[0].quantity, pilot->outfits[0].outfit->name );
+      p += snprintf( &buf[p], len-p, "%s",
+             pilot->outfits[0]->outfit->name );
    else
       p += snprintf( &buf[p], len-p, "None" );
    /* rest of the outfits */
    for (i=1; i<pilot->noutfits; i++)
-      p += snprintf( &buf[p], len-p, ", %dx %s",
-            pilot->outfits[i].quantity, pilot->outfits[i].outfit->name );
+      p += snprintf( &buf[p], len-p, ", %s",
+            pilot->outfits[i]->outfit->name );
 
    return buf;
 }
@@ -2119,8 +1962,8 @@ void pilot_calcStats( Pilot* pilot )
    nweaps = 0;
    wrange = wspeed = 0.;
    for (i=0; i<pilot->noutfits; i++) {
-      o = pilot->outfits[i].outfit;
-      q = (double) pilot->outfits[i].quantity;
+      o = pilot->outfits[i]->outfit;
+      q = (double) pilot->outfits[i]->quantity;
 
       if (outfit_isMod(o)) { /* Modification */
          /* movement */
@@ -2140,7 +1983,7 @@ void pilot_calcStats( Pilot* pilot )
          pilot->cargo_free    += o->u.mod.cargo * q;
       }
       else if (outfit_isAfterburner(o)) /* Afterburner */
-         pilot->afterburner = &pilot->outfits[i]; /* Set afterburner */
+         pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
       else if (outfit_isJammer(o)) { /* Jammer */
          if (pilot->jam_chance < o->u.jam.chance) { /* substitute */
             /** @todo make more jammers improve overall */
@@ -2510,7 +2353,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const unsigned int flags )
 {
-   ShipOutfit* so;
+   int i, p;
 
    /* Clear memory. */
    memset(pilot, 0, sizeof(Pilot));
@@ -2530,17 +2373,38 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    /* solid */
    pilot->solid = solid_create(ship->mass, dir, pos, vel);
 
-   /* mounts */
-   if (ship->nmounts > 0)
-      pilot->mounted = calloc( ship->nmounts, sizeof(int) );
-
-   /* outfits */
-   if (!(flags & PILOT_NO_OUTFITS)) {
-      if (ship->outfit) {
-         for (so=ship->outfit; so; so=so->next) {
-            pilot_addOutfit( pilot, so->data, so->quantity );
-         }
-      }
+   /* Allocate outfit memory. */
+   /* Slot types. */
+   pilot->outfit_nlow    = ship->outfit_nlow;
+   pilot->outfit_low     = calloc( ship->outfit_nlow, sizeof(PilotOutfitSlot) );
+   pilot->outfit_nmedium = ship->outfit_nmedium;
+   pilot->outfit_medium  = calloc( ship->outfit_nmedium, sizeof(PilotOutfitSlot) );
+   pilot->outfit_nhigh   = ship->outfit_nhigh;
+   pilot->outfit_high    = calloc( ship->outfit_nhigh, sizeof(PilotOutfitSlot) );
+   /* Global. */
+   pilot->noutfits = pilot->outfit_nlow + pilot->outfit_nmedium + pilot->outfit_nhigh;
+   pilot->outfits  = malloc( pilot->noutfits * sizeof(PilotOutfitSlot*) );
+   p = 0;
+   for (i=0; i<pilot->outfit_nlow; i++) {
+      pilot->outfits[p] = &pilot->outfit_low[i];
+      memcpy( &pilot->outfits[p]->mount, &ship->outfit_low[i].mount, sizeof(ShipMount) );
+      if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_low[i].data != NULL))
+         pilot_addOutfit( pilot, ship->outfit_low[i].data, pilot->outfits[p] );
+      p++;
+   }
+   for (i=0; i<pilot->outfit_nmedium; i++) {
+      pilot->outfits[p] = &pilot->outfit_medium[i];
+      memcpy( &pilot->outfits[p]->mount, &ship->outfit_medium[i].mount, sizeof(ShipMount) );
+      if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_medium[i].data != NULL))
+         pilot_addOutfit( pilot, ship->outfit_medium[i].data, pilot->outfits[p] );
+      p++;
+   }
+   for (i=0; i<pilot->outfit_nhigh; i++) {
+      pilot->outfits[p] = &pilot->outfit_high[i];
+      memcpy( &pilot->outfits[p]->mount, &ship->outfit_high[i].mount, sizeof(ShipMount) );
+      if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_high[i].data != NULL))
+         pilot_addOutfit( pilot, ship->outfit_high[i].data, pilot->outfits[p] );
+      p++;
    }
 
    /* cargo - must be set before calcStats */
@@ -2660,7 +2524,7 @@ Pilot* pilot_createEmpty( Ship* ship, const char* name,
  */
 Pilot* pilot_copy( Pilot* src )
 {
-   int i;
+   int i, p;
    Pilot *dest = malloc(sizeof(Pilot));
 
    /* Copy data over, we'll have to reset all the pointers though. */
@@ -2676,11 +2540,31 @@ Pilot* pilot_copy( Pilot* src )
    dest->solid = malloc(sizeof(Solid));
    memcpy( dest->solid, src->solid, sizeof(Solid) );
 
-   /* Copy mountpoints. */
-   if (src->mounted != NULL) {
-      dest->mounted = malloc( sizeof(int)*src->ship->nmounts );
-      memcpy( dest->mounted, src->mounted, sizeof(int)*src->ship->nmounts );
-   }
+   /* Copy outfits. */
+   dest->noutfits = src->noutfits;
+   dest->outfits  = malloc( sizeof(PilotOutfitSlot*) * dest->noutfits );
+   dest->outfit_nlow = src->outfit_nlow;
+   dest->outfit_low  = malloc( sizeof(PilotOutfitSlot) * dest->outfit_nlow );
+   memcpy( dest->outfit_low, src->outfit_low,
+         sizeof(PilotOutfitSlot) * dest->outfit_nlow );
+   dest->outfit_nmedium = src->outfit_nmedium;
+   dest->outfit_medium  = malloc( sizeof(PilotOutfitSlot) * dest->outfit_nmedium );
+   memcpy( dest->outfit_medium, src->outfit_medium,
+         sizeof(PilotOutfitSlot) * dest->outfit_nmedium );
+   dest->outfit_nhigh = src->outfit_nhigh;
+   dest->outfit_high  = malloc( sizeof(PilotOutfitSlot) * dest->outfit_nhigh );
+   memcpy( dest->outfit_high, src->outfit_high,
+         sizeof(PilotOutfitSlot) * dest->outfit_nhigh );
+   p = 0;
+   for (i=0; i<dest->outfit_nlow; i++)
+      dest->outfits[p++] = &dest->outfit_low[i];
+   for (i=0; i<dest->outfit_nmedium; i++)
+      dest->outfits[p++] = &dest->outfit_medium[i];
+   for (i=0; i<dest->outfit_nhigh; i++)
+      dest->outfits[p++] = &dest->outfit_high[i];
+   dest->secondary   = NULL;
+   dest->ammo        = NULL;
+   dest->afterburner = NULL;
 
    /* Hooks get cleared. */
    dest->hooks          = NULL;
@@ -2694,22 +2578,11 @@ Pilot* pilot_copy( Pilot* src )
    dest->task           = NULL;
 
    /* Set pointers and friends to NULL. */
-   /* Outfits. */
-   dest->outfits        = NULL;
-   dest->noutfits       = 0;
-   dest->secondary      = NULL;
-   dest->ammo           = NULL;
-   dest->afterburner    = NULL;
    /* Commodities. */
    dest->commodities    = NULL;
    dest->ncommodities   = 0;
    /* Calculate stats. */
    pilot_calcStats(dest);
-
-   /* Copy outfits. */
-   for (i=0; i<src->noutfits; i++)
-      pilot_addOutfit( dest, src->outfits[i].outfit,
-            src->outfits[i].quantity );
 
    /* Copy commodities. */
    for (i=0; i<src->ncommodities; i++)
@@ -2739,9 +2612,15 @@ void pilot_free( Pilot* p )
    /* If hostile, must remove counter. */
    pilot_rmHostile(p);
 
-   /* Remove outfits. */
-   while (p->outfits != NULL)
-      pilot_rmOutfit( p, p->outfits[0].outfit, p->outfits[0].quantity );
+   /* Free outfits. */
+   if (p->outfits != NULL)
+      free(p->outfits);
+   if (p->outfit_low != NULL)
+      free(p->outfit_low);
+   if (p->outfit_medium != NULL)
+      free(p->outfit_medium);
+   if (p->outfit_high != NULL)
+      free(p->outfit_high);
 
    /* Remove commodities. */
    while (p->commodities != NULL)
@@ -2945,14 +2824,14 @@ void pilots_render( double dt )
 void pilot_clearTimers( Pilot *pilot )
 {
    int i;
-   PilotOutfit *o;
+   PilotOutfitSlot *o;
 
    pilot->ptimer = 0.;
    pilot->tcontrol = 0.;
    for (i=0; i<MAX_AI_TIMERS; i++)
       pilot->timer[i] = 0.;
    for (i=0; i<pilot->noutfits; i++) {
-      o = &pilot->outfits[i];
+      o = pilot->outfits[i];
       if (o->timer > 0.)
          o->timer = 0.;
    }

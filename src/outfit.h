@@ -28,9 +28,9 @@
 struct Outfit_;
 
 
+
+
 /**
- * @enum OutfitType
- *
  * @brief Different types of existing outfits.
  *
  * Outfits are organized by the order here 
@@ -65,8 +65,6 @@ typedef enum OutfitType_ {
 
 
 /**
- * @enum DamageType
- *
  * @brief Different types of damage.
  */
 typedef enum DamageType_ {
@@ -80,12 +78,30 @@ typedef enum DamageType_ {
 
 
 /**
- * @struct OutfitBoltData
- *
+ * @brief Outfit slot types.
+ */
+typedef enum OutfitSlotType_ {
+   OUTFIT_SLOT_NULL, /**< Invalid slot type. */
+   OUTFIT_SLOT_LOW, /**< Low energy slot. */
+   OUTFIT_SLOT_MEDIUM, /**< Medium energy slot. */
+   OUTFIT_SLOT_HIGH /**< High energy slot. */
+} OutfitSlotType;
+
+
+/**
+ * @brief Pilot slot that can contain outfits.
+ */
+typedef struct OutfitSlot_ {
+   OutfitSlotType type; /**< Type of outfit slot. */
+} OutfitSlot;
+
+
+
+/**
  * @brief Represents the particular properties of a bolt weapon.
  */
 typedef struct OutfitBoltData_ {
-   unsigned int delay; /**< delay between shots */
+   double delay; /**< delay between shots */
    double speed; /**< how fast it goes (not applicable to beam) */
    double range; /**< how far it goes */
    double falloff; /**< Point at which damage falls off. */
@@ -105,13 +121,11 @@ typedef struct OutfitBoltData_ {
 } OutfitBoltData;
 
 /**
- * @struct OutfitBeamData
- *
  * @brief Represents the particular properties of a beam weapon.
  */
 typedef struct OutfitBeamData_ {
    /* Time stuff. */
-   unsigned int delay; /**< Delay between usage. */
+   double delay; /**< Delay between usage. */
    double warmup; /**< How long beam takes to warm up. */
    double duration; /**< How long the beam lasts active. */
 
@@ -132,21 +146,17 @@ typedef struct OutfitBeamData_ {
 } OutfitBeamData;
 
 /**
- * @struct OutfitLauncherData
- *
  * @brief Represents a particular missile launcher.
  *
  * The properties of the weapon are highly dependent on the ammunition.
  */
 typedef struct OutfitLauncherData_ {
-   unsigned int delay; /**< Delay between shots. */
+   double delay; /**< Delay between shots. */
    char *ammo_name; /**< Name of the ammo to use. */
    struct Outfit_ *ammo; /**< Ammo to use. */
 } OutfitLauncherData;
 
 /**
- * @struct OutfitAmmoData
- *
  * @brief Represents ammunition for a launcher.
  */
 typedef struct OutfitAmmoData_ {
@@ -171,8 +181,6 @@ typedef struct OutfitAmmoData_ {
 } OutfitAmmoData;
 
 /**
- * @struct OutfitModificationData
- *
  * @brief Represents a ship modification.
  *
  * These modify the ship's basic properties when equipped on a pilot.
@@ -197,8 +205,6 @@ typedef struct OutfitModificationData_ {
 } OutfitModificationData;
 
 /**
- * @struct OutfitAfterburnerData
- *
  * @brief Represents an afterburner.
  */
 typedef struct OutfitAfterburnerData_ {
@@ -212,8 +218,6 @@ typedef struct OutfitAfterburnerData_ {
 } OutfitAfterburnerData;
 
 /**
- * @struct OutfitFighterBayData
- *
  * @brief Represents a fighter bay.
  */
 typedef struct OutfitFighterBayData_ {
@@ -223,8 +227,6 @@ typedef struct OutfitFighterBayData_ {
 } OutfitFighterBayData;
 
 /**
- * @struct OutfitFighterData
- *
  * @brief Represents a fighter for a fighter bay.
  */
 typedef struct OutfitFighterData_ {
@@ -233,8 +235,6 @@ typedef struct OutfitFighterData_ {
 } OutfitFighterData;
 
 /**
- * @struct OutfitMapData
- *
  * @brief Represents a map, is not actually stored on a ship but put into the nav system.
  *
  * Basically just marks an amount of systems when the player buys it as known.
@@ -244,8 +244,6 @@ typedef struct OutfitMapData_ {
 } OutfitMapData;
 
 /**
- * @struct OutfitJammerData
- *
  * @brief Represents a jammer.
  */
 typedef struct OutfitJammerData_ {
@@ -255,18 +253,16 @@ typedef struct OutfitJammerData_ {
 } OutfitJammerData;
 
 /**
- * @struct Outfit
- *
  * @brief A ship outfit, depends radically on the type.
  */
 typedef struct Outfit_ {
    char* name; /**< Name of the outfit. */
 
    /* general specs */
-   int max; /**< Maximum amount one can own. */
+   OutfitSlotType slot; /**< Type of slot the outfit needs. */
    int tech; /**< Tech needed to sell it. */
    char *license; /**< Licenses needed to buy it. */
-   int mass; /**< How much weapon capacity is needed. */
+   double mass; /**< How much weapon capacity is needed. */
 
    /* store stuff */
    unsigned int price; /**< Base sell price. */
@@ -331,7 +327,7 @@ int outfit_spfxArmour( const Outfit* o );
 int outfit_spfxShield( const Outfit* o );
 double outfit_damage( const Outfit* o );
 DamageType outfit_damageType( const Outfit* o );
-int outfit_delay( const Outfit* o );
+double outfit_delay( const Outfit* o );
 Outfit* outfit_ammo( const Outfit* o );
 double outfit_energy( const Outfit* o );
 double outfit_range( const Outfit* o );

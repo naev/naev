@@ -512,7 +512,7 @@ int player_shipPrice( char* shipname )
          /* Ship price is base price + outfit prices. */
          price = ship_basePrice( ship->ship );
          for (i=0; i<ship->noutfits; i++)
-            price += ship->outfits[i].quantity * ship->outfits[i].outfit->price;
+            price += ship->outfits[i]->outfit->price;
 
          return price;
       }
@@ -739,19 +739,19 @@ int player_outfitOwned( const Outfit* o )
    q = 0;
 
    /* Get base quantity. */
-   for (i=0; i<player->noutfits; i++)
-      if (player->outfits[i].outfit == o) {
-         q = player->outfits[i].quantity;
-         break;
+   for (i=0; i<player->noutfits; i++) {
+      if (player->outfits[i]->outfit == o) {
+         q++;
       }
+   }
 
    /* Fighter bays need to count deployed. */
    if (outfit_isFighter(o)) {
       deployed = 0;
       for (j=0; j<player->noutfits; j++) {
-         if (outfit_isFighterBay(player->outfits[j].outfit)) {
-            if (strcmp(o->name,player->outfits[j].outfit->u.bay.ammo_name)==0) {
-               deployed = player->outfits[j].u.deployed;
+         if (outfit_isFighterBay(player->outfits[j]->outfit)) {
+            if (strcmp(o->name,player->outfits[j]->outfit->u.bay.ammo_name)==0) {
+               deployed = player->outfits[j]->u.deployed;
                break;
             }
          }
@@ -1161,27 +1161,6 @@ static void player_updateZoom( double dt )
  */
 void player_secondaryNext (void)
 {
-   int i;
-   
-   /* get current secondary weapon pos */
-   if (player->secondary != NULL)   
-      i = player->secondary - player->outfits + 1;
-   else
-      i = 0;
-
-   /* get next secondary weapon */
-   for (; i<player->noutfits; i++)
-      if (outfit_isProp(player->outfits[i].outfit, OUTFIT_PROP_WEAP_SECONDARY)) {
-         pilot_switchSecondary( player, i );
-         break;
-      }
-
-   /* found no bugger outfit */
-   if (i >= player->noutfits)
-      pilot_switchSecondary( player, -1 );
-
-   /* set ammo */
-   pilot_setAmmo(player);
 }
 
 
@@ -1190,27 +1169,6 @@ void player_secondaryNext (void)
  */
 void player_secondaryPrev (void)
 {
-   int i;
-   
-   /* get current secondary weapon pos */
-   if (player->secondary != NULL)   
-      i = player->secondary - player->outfits - 1;
-   else
-      i = player->noutfits - 1;
-
-   /* get next secondary weapon */
-   for (; i>= 0; i--)
-      if (outfit_isProp(player->outfits[i].outfit, OUTFIT_PROP_WEAP_SECONDARY)) {
-         pilot_switchSecondary( player, i );
-         break;
-      }
-
-   /* found no bugger outfit */
-   if (i < 0)
-      pilot_switchSecondary( player, -1 );
-
-   /* set ammo */
-   pilot_setAmmo(player);
 }
 
 
@@ -1981,8 +1939,8 @@ void player_clearEscorts (void)
    int i;
 
    for (i=0; i<player->noutfits; i++) {
-      if (outfit_isFighterBay(player->outfits[i].outfit)) {
-         player->outfits[i].u.deployed = 0;
+      if (outfit_isFighterBay(player->outfits[i]->outfit)) {
+         player->outfits[i]->u.deployed = 0;
       }
    }
 }
@@ -2013,11 +1971,11 @@ int player_addEscorts (void)
       /* Update outfit if needed. */
       if (player->escorts[i].type == ESCORT_TYPE_BAY) {
          for (j=0; j<player->noutfits; j++) {
-            if (outfit_isFighterBay(player->outfits[j].outfit)) {
-               o = outfit_ammo(player->outfits[j].outfit);
+            if (outfit_isFighterBay(player->outfits[j]->outfit)) {
+               o = outfit_ammo(player->outfits[j]->outfit);
                if (outfit_isFighter(o) &&
                      (strcmp(player->escorts[i].ship,o->u.fig.ship)==0)) {
-                  player->outfits[j].u.deployed += 1;
+                  player->outfits[j]->u.deployed += 1;
                   break;
                }
             }
@@ -2136,16 +2094,36 @@ static int player_saveShip( xmlTextWriterPtr writer,
    xmlw_elem(writer,"fuel","%f",ship->fuel);
 
    /* save the outfits */
-   xmlw_startElem(writer,"outfits");
-   for (i=0; i<ship->noutfits; i++) {
+   xmlw_startElem(writer,"outfits_low");
+   for (i=0; i<ship->outfit_nlow; i++) {
+      if (ship->outfit_low[i].outfit==NULL)
+         continue;
       xmlw_startElem(writer,"outfit");
-
-      xmlw_attr(writer,"quantity","%d",ship->outfits[i].quantity);
-      xmlw_str(writer,ship->outfits[i].outfit->name);
-
+      xmlw_attr(writer,"slot","%d",i);
+      xmlw_str(writer,ship->outfit_low[i].outfit->name);
       xmlw_endElem(writer); /* "outfit" */
    }
-   xmlw_endElem(writer); /* "outfits" */
+   xmlw_endElem(writer); /* "outfits_low" */
+   xmlw_startElem(writer,"outfits_medium");
+   for (i=0; i<ship->outfit_nmedium; i++) {
+      if (ship->outfit_medium[i].outfit==NULL)
+         continue;
+      xmlw_startElem(writer,"outfit");
+      xmlw_attr(writer,"slot","%d",i);
+      xmlw_str(writer,ship->outfit_medium[i].outfit->name);
+      xmlw_endElem(writer); /* "outfit" */
+   }
+   xmlw_endElem(writer); /* "outfits_medium" */
+   xmlw_startElem(writer,"outfits_high");
+   for (i=0; i<ship->outfit_nhigh; i++) {
+      if (ship->outfit_high[i].outfit==NULL)
+         continue;
+      xmlw_startElem(writer,"outfit");
+      xmlw_attr(writer,"slot","%d",i);
+      xmlw_str(writer,ship->outfit_high[i].outfit->name);
+      xmlw_endElem(writer); /* "outfit" */
+   }
+   xmlw_endElem(writer); /* "outfits_high" */
 
    /* save the commodities */
    xmlw_startElem(writer,"commodities");
@@ -2452,21 +2430,67 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       /* get fuel */
       xmlr_float(node,"fuel",fuel);
 
-      if (xml_isNode(node,"outfits")) {
+      if (xml_isNode(node,"outfits_low")) {
          cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
-               xmlr_attr(cur,"quantity",q);
-               n = atoi(q);
-               free(q);
+               xmlr_attr(cur,"slot",q);
+               if (q != NULL) {
+                  n = atoi(q);
+                  free(q);
+               }
+               if ((n<0) || (n >= ship->outfit_nlow)) {
+                  WARN("Outfit slot out of range, not adding.");
+                  continue;
+               }
                /* adding the outfit */
-               o = outfit_get(xml_get(cur));
+               o = outfit_get( xml_get(cur) );
                if (o != NULL)
-                  pilot_addOutfit( ship, o, n );
+                  pilot_addOutfit( ship, o, &ship->outfit_low[n] );
             }
          } while (xml_nextNode(cur));
       }
-      if (xml_isNode(node,"commodities")) {
+      else if (xml_isNode(node,"outfits_medium")) {
+         cur = node->xmlChildrenNode;
+         do { /* load each outfit */
+            if (xml_isNode(cur,"outfit")) {
+               xmlr_attr(cur,"slot",q);
+               if (q != NULL) {
+                  n = atoi(q);
+                  free(q);
+               }
+               if ((n<0) || (n >= ship->outfit_nmedium)) {
+                  WARN("Outfit slot out of range, not adding.");
+                  continue;
+               }
+               /* adding the outfit */
+               o = outfit_get( xml_get(cur) );
+               if (o != NULL)
+                  pilot_addOutfit( ship, o, &ship->outfit_medium[n] );
+            }
+         } while (xml_nextNode(cur));
+      }
+      else if (xml_isNode(node,"outfits_high")) {
+         cur = node->xmlChildrenNode;
+         do { /* load each outfit */
+            if (xml_isNode(cur,"outfit")) {
+               xmlr_attr(cur,"slot",q);
+               if (q != NULL) {
+                  n = atoi(q);
+                  free(q);
+               }
+               if ((n<0) || (n >= ship->outfit_nhigh)) {
+                  WARN("Outfit slot out of range, not adding.");
+                  continue;
+               }
+               /* adding the outfit */
+               o = outfit_get( xml_get(cur) );
+               if (o != NULL)
+                  pilot_addOutfit( ship, o, &ship->outfit_high[n] );
+            }
+         } while (xml_nextNode(cur));
+      }
+      else if (xml_isNode(node,"commodities")) {
          cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur,"commodity")) {
