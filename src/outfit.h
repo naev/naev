@@ -82,6 +82,7 @@ typedef enum DamageType_ {
  */
 typedef enum OutfitSlotType_ {
    OUTFIT_SLOT_NULL, /**< Invalid slot type. */
+   OUTFIT_SLOT_NA, /**< Slot type not applicable. */
    OUTFIT_SLOT_LOW, /**< Low energy slot. */
    OUTFIT_SLOT_MEDIUM, /**< Medium energy slot. */
    OUTFIT_SLOT_HIGH /**< High energy slot. */
@@ -107,6 +108,7 @@ typedef struct OutfitBoltData_ {
    double falloff; /**< Point at which damage falls off. */
    double accuracy; /**< desviation accuracy */
    double energy; /**< energy usage */
+   double cpu; /**< CPU usage. */
    DamageType dtype; /**< damage type */
    double damage; /**< damage */
 
@@ -133,6 +135,7 @@ typedef struct OutfitBeamData_ {
    double range; /**< how far it goes */
    double turn; /**< How fast it can turn. Only for turrets. */
    double energy; /**< Amount of energy it drains (per second). */
+   double cpu; /**< CPU usage. */
    DamageType dtype; /**< Damage type. */
    double damage; /**< Damage amount. */
    
@@ -152,6 +155,7 @@ typedef struct OutfitBeamData_ {
  */
 typedef struct OutfitLauncherData_ {
    double delay; /**< Delay between shots. */
+   double cpu; /**< CPU usage. */
    char *ammo_name; /**< Name of the ammo to use. */
    struct Outfit_ *ammo; /**< Ammo to use. */
 } OutfitLauncherData;
@@ -199,6 +203,7 @@ typedef struct OutfitModificationData_ {
    double energy; /**< Maximum energy modifier. */
    double energy_regen; /**< Energy regeneration modifier. */
    double fuel; /**< Maximum fuel modifier. */
+   double cpu; /**< CPU modifier. */
 
    /* misc */
    int cargo; /**< Cargo space modifier. */
@@ -215,6 +220,7 @@ typedef struct OutfitAfterburnerData_ {
    double speed_perc; /**< % of speed to increase based on ship base. */
    double speed_abs; /**< Fixed absolute speed increase. */
    double energy; /**< Energy usage while active */
+   double cpu; /**< CPU usage. */
 } OutfitAfterburnerData;
 
 /**
@@ -224,6 +230,7 @@ typedef struct OutfitFighterBayData_ {
    char *ammo_name; /**< Name fo the ships to use as ammo. */
    struct Outfit_ *ammo; /**< Ships to use as ammo. */
    double delay; /**< Delay between launches. */
+   double cpu; /**< CPU usage. */
 } OutfitFighterBayData;
 
 /**
@@ -250,6 +257,7 @@ typedef struct OutfitJammerData_ {
    double range; /**< Range it starts to do effect */
    double chance; /**< Chance of it nullifying the missile */
    double energy; /**< Energy it uses to run */
+   double cpu; /**< CPU usage. */
 } OutfitJammerData;
 
 /**
@@ -330,6 +338,7 @@ DamageType outfit_damageType( const Outfit* o );
 double outfit_delay( const Outfit* o );
 Outfit* outfit_ammo( const Outfit* o );
 double outfit_energy( const Outfit* o );
+double outfit_cpu( const Outfit* o );
 double outfit_range( const Outfit* o );
 double outfit_speed( const Outfit* o );
 double outfit_spin( const Outfit* o );

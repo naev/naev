@@ -459,6 +459,20 @@ double outfit_energy( const Outfit* o )
    return -1.;
 }
 /**
+ * @brief Gets the outfit's cpu usage.
+ *    @param o Outfit to get information from.
+ */
+double outfit_cpu( const Outfit* o )
+{
+   if (outfit_isBolt(o)) return o->u.blt.cpu;
+   else if (outfit_isBeam(o)) return o->u.bem.cpu;
+   else if (outfit_isLauncher(o)) return o->u.lau.cpu;
+   else if (outfit_isAfterburner(o)) return o->u.afb.cpu;
+   else if (outfit_isJammer(o)) return o->u.jam.cpu;
+   else if (outfit_isFighterBay(o)) return o->u.bay.cpu;
+   return -1.;
+}
+/**
  * @brief Gets the outfit's range.
  *    @param o Outfit to get information from.
  */
@@ -695,6 +709,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"delay",temp->u.blt.delay);
       xmlr_float(node,"accuracy",temp->u.blt.accuracy);
       xmlr_float(node,"energy",temp->u.blt.energy);
+      xmlr_float(node,"cpu",temp->u.blt.cpu);
       if (xml_isNode(node,"range")) {
          buf = xml_nodeProp(node,"blowup");
          if (buf != NULL) {
@@ -775,6 +790,8 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT(temp->u.blt.range==0,"range");
    MELEMENT(temp->u.blt.accuracy==0,"accuracy");
    MELEMENT(temp->u.blt.damage==0,"damage");
+   MELEMENT(temp->u.blt.energy==0.,"energy");
+   MELEMENT(temp->u.blt.cpu==0.,"cpu");
    MELEMENT(temp->u.blt.falloff > temp->u.blt.range,"falloff");
 #undef MELEMENT
 }
@@ -802,6 +819,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"range",temp->u.bem.range);
       xmlr_float(node,"turn",temp->u.bem.turn);
       xmlr_float(node,"energy",temp->u.bem.energy);
+      xmlr_float(node,"cpu",temp->u.bem.cpu);
       xmlr_long(node,"delay",temp->u.bem.delay);
       xmlr_float(node,"warmup",temp->u.bem.warmup);
       xmlr_float(node,"duration",temp->u.bem.duration);
@@ -856,7 +874,8 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT(temp->u.bem.duration==0,"duration");
    MELEMENT(temp->u.bem.range==0,"range");
    MELEMENT((temp->type!=OUTFIT_TYPE_BEAM) && (temp->u.bem.turn==0),"turn");
-   MELEMENT(temp->u.bem.energy==0,"energy");
+   MELEMENT(temp->u.bem.energy==0.,"energy");
+   MELEMENT(temp->u.bem.cpu==0.,"cpu");
    MELEMENT(temp->u.bem.damage==0,"damage");
 #undef MELEMENT
 }
@@ -875,6 +894,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    node  = parent->xmlChildrenNode;
    do { /* load all the data */
       xmlr_int(node,"delay",temp->u.lau.delay);
+      xmlr_float(node,"cpu",temp->u.lau.cpu);
       xmlr_strd(node,"ammo",temp->u.lau.ammo_name);
    } while (xml_nextNode(node));
 
@@ -885,6 +905,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 if (o) WARN("Outfit '%s' missing '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.lau.ammo_name==NULL,"ammo");
    MELEMENT(temp->u.lau.delay==0,"delay");
+   MELEMENT(temp->u.lau.cpu==0.,"cpu");
 #undef MELEMENT
 }
 
@@ -985,6 +1006,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT(temp->u.amm.speed==0,"speed");
    MELEMENT(temp->u.amm.duration==0,"duration");
    MELEMENT(temp->u.amm.damage==0,"damage");
+   MELEMENT(temp->u.amm.energy==0.,"energy");
 #undef MELEMENT
 }
 
@@ -1017,6 +1039,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       else if (xml_isNode(node,"energy_regen"))
          temp->u.mod.energy_regen = xml_getFloat(node)/60.0;
       /* misc */
+      xmlr_float(node,"cpu",temp->u.mod.cpu);
       xmlr_int(node,"cargo",temp->u.mod.cargo);
    } while (xml_nextNode(node));
 }
@@ -1049,6 +1072,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
          temp->u.afb.speed_perc = 1. + xml_getFloat(node)/100.;
       xmlr_float(node,"speed_abs",temp->u.afb.speed_abs);
       xmlr_float(node,"energy",temp->u.afb.energy);
+      xmlr_float(node,"cpu",temp->u.afb.cpu);
    } while (xml_nextNode(node));
 }
 
@@ -1065,6 +1089,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
 
    do {
       xmlr_int(node,"delay",temp->u.bay.delay);
+      xmlr_float(node,"cpu",temp->u.afb.cpu);
       xmlr_strd(node,"ammo",temp->u.bay.ammo_name);
    } while (xml_nextNode(node));
 
@@ -1074,6 +1099,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.bay.delay==0,"delay");
+   MELEMENT(temp->u.bay.cpu==0.,"cpu");
    MELEMENT(temp->u.bay.ammo_name==NULL,"ammo");
 #undef MELEMENT
 }
@@ -1156,6 +1182,7 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
       xmlr_float(node,"range",temp->u.jam.range);
       xmlr_float(node,"chance",temp->u.jam.chance);
       xmlr_float(node,"energy",temp->u.jam.energy);
+      xmlr_float(node,"cpu",temp->u.jam.cpu);
    } while (xml_nextNode(node));
 
    temp->u.jam.chance /= 100.; /* Put in per one, instead of percent */
@@ -1165,6 +1192,7 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.jam.range==0.,"range");
    MELEMENT(temp->u.jam.chance==0.,"chance");
+   MELEMENT(temp->u.jam.cpu==0.,"cpu");
 #undef MELEMENT
 }
 
