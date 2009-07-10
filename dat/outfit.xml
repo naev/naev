@@ -3,6 +3,7 @@
 <!-- Short Range Weapons -->
  <outfit name="Laser Cannon">
   <general>
+   <slot>high</slot>
    <max>6</max>
    <tech>2</tech>
    <mass>5</mass>
@@ -26,6 +27,7 @@
  </outfit>
  <outfit name="Laser Cannon MK2">
   <general>
+   <slot>high</slot>
    <max>4</max>
    <tech>6</tech>
    <license>Medium Weapon License</license>
@@ -51,6 +53,7 @@
  </outfit>
  <outfit name="Laser Turret">
   <general>
+   <slot>high</slot>
    <max>4</max>
    <tech>4</tech>
    <license>Medium Weapon License</license>
@@ -75,6 +78,7 @@
  </outfit>
  <outfit name="Laser Turret MK2">
  <general>
+   <slot>high</slot>
    <max>4</max>
    <tech>7</tech>
    <license>Medium Weapon License</license>
@@ -100,6 +104,7 @@
  </outfit>
  <outfit name="Plasma Blaster">
   <general>
+   <slot>high</slot>
    <max>4</max>
    <tech>5</tech>
    <mass>5</mass>
@@ -123,6 +128,7 @@
 </outfit>
  <outfit name="Plasma Blaster MK2">
   <general>
+   <slot>high</slot>
    <max>4</max>
    <tech>3</tech>
    <license>Medium Weapon License</license>
@@ -148,6 +154,7 @@
 </outfit>
  <outfit name="Neutron Disruptor">
   <general>
+   <slot>high</slot>
    <max>3</max>
    <tech>9999</tech>
    <mass>8</mass>
@@ -174,6 +181,7 @@
 <!-- Medium Range Weapons -->
  <outfit name="Ion Cannon">
  <general>
+   <slot>high</slot>
    <max>4</max>
    <tech>7</tech>
    <license>Medium Weapon License</license>
@@ -199,6 +207,7 @@
  </outfit>
  <outfit name="Heavy Ion Turret">
   <general>
+   <slot>high</slot>
    <max>3</max>
    <tech>11</tech>
    <mass>35</mass>
@@ -224,6 +233,7 @@
  </outfit>
  <outfit name="40mm Autocannon">
   <general>
+   <slot>high</slot>
    <max>4</max>
    <tech>4</tech>
    <license>Medium Weapon License</license>
@@ -249,6 +259,7 @@
 <!-- Long Range Weapons -->
  <outfit name="150mm Railgun">
   <general>
+   <slot>high</slot>
    <max>2</max>
    <tech>8</tech>
    <license>Heavy Weapon License</license>
@@ -275,6 +286,7 @@
  </outfit>
  <outfit name="Ripper MK2">
   <general>
+   <slot>high</slot>
    <max>3</max>
    <tech>11</tech>
    <license>Medium Weapon License</license>
@@ -301,6 +313,7 @@
 <!-- Beam Weapons -->
  <outfit name="Orion Beam">
   <general>
+   <slot>high</slot>
    <max>1</max>
    <tech>11</tech>
    <license>Medium Weapon License</license>
@@ -324,6 +337,7 @@
  </outfit>
  <outfit name="Ragnarok Beam">
   <general>
+   <slot>high</slot>
    <max>1</max>
    <tech>13</tech>
    <license>Heavy Weapon License</license>
@@ -349,6 +363,7 @@
 <!-- Missile Weapons -->
  <outfit name="Seeker Launcher">
   <general>
+   <slot>high</slot>
    <max>2</max>
    <tech>4</tech>
    <mass>10</mass>
@@ -386,6 +401,7 @@
  </outfit>
  <outfit name="Headhunter Launcher">
   <general>
+   <slot>high</slot>
    <max>2</max>
    <tech>5</tech>
    <license>Medium Weapon License</license>
@@ -426,6 +442,7 @@
  </outfit>
  <outfit name="Banshee Launcher">
   <general>
+   <slot>high</slot>
    <max>2</max>
    <tech>9</tech>
    <license>Medium Weapon License</license>
@@ -464,6 +481,7 @@
  </outfit>
  <outfit name="Mace Launcher">
   <general>
+   <slot>high</slot>
    <max>2</max>
    <tech>3</tech>
    <license>Medium Weapon License</license>
@@ -501,6 +519,7 @@
  </outfit>
  <outfit name="EMP Grenade Launcher">
   <general>
+   <slot>high</slot>
    <max>2</max>
    <tech>7</tech>
    <mass>17</mass>
@@ -537,6 +556,7 @@
 <!-- Energy-Related Outfits -->
  <outfit name="Battery">
   <general>
+   <slot>low</slot>
    <max>10</max>
    <tech>3</tech>
    <mass>2</mass>
@@ -550,6 +570,7 @@
  </outfit>
  <outfit name="Solar Panel">
   <general>
+   <slot>low</slot>
    <max>5</max>
    <tech>5</tech>
    <mass>3</mass>
@@ -563,6 +584,7 @@
  </outfit>
  <outfit name="Reactor Class I">
   <general>
+   <slot>medium</slot>
    <max>1</max>
    <tech>9</tech>
    <mass>12</mass>
@@ -577,6 +599,7 @@
  </outfit>
  <outfit name="Reactor Class II">
   <general>
+   <slot>medium</slot>
    <max>1</max>
    <tech>12</tech>
    <mass>23</mass>
@@ -591,6 +614,7 @@
  </outfit>
  <outfit name="Reactor Class III">
   <general>
+   <slot>medium</slot>
    <max>1</max>
    <tech>12</tech>
    <mass>46</mass>
@@ -606,6 +630,7 @@
 <!-- Shield and Armour-Related Outfits -->
  <outfit name="Shield Capacitor">
   <general>
+   <slot>low</slot>
    <max>12</max>
    <tech>9</tech>
    <mass>3</mass>
@@ -619,6 +644,7 @@
  </outfit>
  <outfit name="Shield Booster">
   <general>
+   <slot>low</slot>
    <max>4</max>
    <tech>10</tech>
    <mass>5</mass>
@@ -634,6 +660,7 @@
  </outfit>
  <outfit name="Plasteel Plating">
   <general>
+   <slot>low</slot>
    <max>1</max>
    <tech>6</tech>
    <mass>15</mass>
@@ -648,6 +675,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
  </outfit>
  <outfit name="Nanobond Plating">
   <general>
+   <slot>low</slot>
    <max>1</max>
    <tech>9</tech>
    <mass>35</mass>
@@ -661,6 +689,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
  </outfit>
  <outfit name="Biometal Armour">
   <general>
+   <slot>low</slot>
    <max>1</max>
    <tech>15</tech>
    <mass>57</mass>
@@ -675,6 +704,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
  </outfit>
  <outfit name="Droid Repair Crew">
   <general>
+   <slot>low</slot>
    <max>3</max>
    <tech>11</tech>
    <mass>3</mass>
@@ -691,6 +721,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
 <!-- Movement-Related Outfits -->
  <outfit name="Engine Reroute">
   <general>
+   <slot>low</slot>
    <max>1</max>
    <tech>13</tech>
    <mass>1</mass>
@@ -705,6 +736,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
  </outfit>
  <outfit name="Improved Stabilizer">
   <general>
+   <slot>low</slot>
    <max>1</max>
    <tech>13</tech>
    <mass>1</mass>
@@ -720,6 +752,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
  </outfit>
  <outfit name="Steering Thrusters">
   <general>
+   <slot>low</slot>
    <max>1</max>
    <tech>13</tech>
    <mass>1</mass>
@@ -734,6 +767,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
  </outfit>
  <outfit name="Generic Afterburner">
   <general>
+   <slot>medium</slot>
    <max>1</max>
    <tech>3</tech>
    <mass>2</mass>
@@ -753,6 +787,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
  </outfit>
  <outfit name="Hellburner">
   <general>
+   <slot>medium</slot>
    <max>1</max>
    <tech>13</tech>
    <mass>4</mass>
@@ -773,6 +808,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
 <!-- Miscellaneous Outfits (Expansion outfits, countermeasures, map.) -->
  <outfit name="Fuel Pod">
   <general>
+   <slot>low</slot>
    <max>4</max>
    <tech>3</tech>
    <mass>5</mass>
@@ -786,6 +822,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
  </outfit>
  <outfit name="Cargo Pod">
   <general>
+   <slot>low</slot>
    <max>4</max>
    <tech>6</tech>
    <mass>15</mass>
@@ -799,6 +836,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
  </outfit>
  <outfit name="Weapon Rack">
   <general>
+   <slot>low</slot>
    <max>4</max>
    <tech>8</tech>
    <mass>-10</mass>
@@ -825,6 +863,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
  </outfit>
  <outfit name="Civilian Jammer">
   <general>
+   <slot>medium</slot>
    <max>1</max>
    <tech>7</tech>
    <mass>2</mass>
@@ -840,6 +879,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
  </outfit>
  <outfit name="Milspec Jammer">
   <general>
+   <slot>medium</slot>
    <max>1</max>
    <tech>13</tech>
    <mass>3</mass>
@@ -856,6 +896,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
 <!-- Escort Outfits -->
  <outfit name="Lancelot Fighter Bay">
   <general>
+   <slot>high</slot>
    <max>1</max>
    <tech>14</tech>
    <license>Light Combat Vessel License</license>
@@ -885,6 +926,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
  </outfit>
  <outfit name="Drone Fighter Bay">
   <general>
+   <slot>high</slot>
    <max>1</max>
    <tech>9999</tech>
    <license>Light Combat Vessel License</license>
