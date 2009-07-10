@@ -511,8 +511,11 @@ int player_shipPrice( char* shipname )
 
          /* Ship price is base price + outfit prices. */
          price = ship_basePrice( ship->ship );
-         for (i=0; i<ship->noutfits; i++)
+         for (i=0; i<ship->noutfits; i++) {
+            if (ship->outfits[i]->outfit == NULL)
+               continue;
             price += ship->outfits[i]->outfit->price;
+         }
 
          return price;
       }
@@ -749,6 +752,8 @@ int player_outfitOwned( const Outfit* o )
    if (outfit_isFighter(o)) {
       deployed = 0;
       for (j=0; j<player->noutfits; j++) {
+         if (player->outfits[i]->outfit == NULL)
+            continue;
          if (outfit_isFighterBay(player->outfits[j]->outfit)) {
             if (strcmp(o->name,player->outfits[j]->outfit->u.bay.ammo_name)==0) {
                deployed = player->outfits[j]->u.deployed;
@@ -1939,6 +1944,9 @@ void player_clearEscorts (void)
    int i;
 
    for (i=0; i<player->noutfits; i++) {
+      if (player->outfits[i]->outfit == NULL)
+         continue;
+
       if (outfit_isFighterBay(player->outfits[i]->outfit)) {
          player->outfits[i]->u.deployed = 0;
       }
@@ -1971,6 +1979,8 @@ int player_addEscorts (void)
       /* Update outfit if needed. */
       if (player->escorts[i].type == ESCORT_TYPE_BAY) {
          for (j=0; j<player->noutfits; j++) {
+            if (player->outfits[i]->outfit == NULL)
+               continue;
             if (outfit_isFighterBay(player->outfits[j]->outfit)) {
                o = outfit_ammo(player->outfits[j]->outfit);
                if (outfit_isFighter(o) &&

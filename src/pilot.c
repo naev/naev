@@ -2324,24 +2324,36 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    /* Global. */
    pilot->noutfits = pilot->outfit_nlow + pilot->outfit_nmedium + pilot->outfit_nhigh;
    pilot->outfits  = malloc( pilot->noutfits * sizeof(PilotOutfitSlot*) );
+   /* First pass copy data. */
    p = 0;
    for (i=0; i<pilot->outfit_nlow; i++) {
       pilot->outfits[p] = &pilot->outfit_low[i];
       memcpy( &pilot->outfits[p]->mount, &ship->outfit_low[i].mount, sizeof(ShipMount) );
-      if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_low[i].data != NULL))
-         pilot_addOutfit( pilot, ship->outfit_low[i].data, pilot->outfits[p] );
       p++;
    }
    for (i=0; i<pilot->outfit_nmedium; i++) {
       pilot->outfits[p] = &pilot->outfit_medium[i];
       memcpy( &pilot->outfits[p]->mount, &ship->outfit_medium[i].mount, sizeof(ShipMount) );
-      if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_medium[i].data != NULL))
-         pilot_addOutfit( pilot, ship->outfit_medium[i].data, pilot->outfits[p] );
       p++;
    }
    for (i=0; i<pilot->outfit_nhigh; i++) {
       pilot->outfits[p] = &pilot->outfit_high[i];
       memcpy( &pilot->outfits[p]->mount, &ship->outfit_high[i].mount, sizeof(ShipMount) );
+      p++;
+   }
+   /* Second pass add outfits. */
+   p = 0;
+   for (i=0; i<pilot->outfit_nlow; i++) {
+      if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_low[i].data != NULL))
+         pilot_addOutfit( pilot, ship->outfit_low[i].data, pilot->outfits[p] );
+      p++;
+   }
+   for (i=0; i<pilot->outfit_nmedium; i++) {
+      if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_medium[i].data != NULL))
+         pilot_addOutfit( pilot, ship->outfit_medium[i].data, pilot->outfits[p] );
+      p++;
+   }
+   for (i=0; i<pilot->outfit_nhigh; i++) {
       if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_high[i].data != NULL))
          pilot_addOutfit( pilot, ship->outfit_high[i].data, pilot->outfits[p] );
       p++;

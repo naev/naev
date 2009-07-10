@@ -450,44 +450,50 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"low")) {
                /* Set default outfit if applicable. */
-               xmlr_attr(cur,"outfit",stmp);
-               if (stmp!=NULL) {
+               stmp = xml_get(cur);
+               if (stmp!=NULL)
                   temp->outfit_high[l].data = outfit_get(stmp);
-                  free(stmp);
-               }
                /* Increment l. */
                l++;
             }
             if (xml_isNode(cur,"medium")) {
                /* Set default outfit if applicable. */
-               xmlr_attr(cur,"outfit",stmp);
-               if (stmp!=NULL) {
+               stmp = xml_get(cur);
+               if (stmp!=NULL)
                   temp->outfit_high[m].data = outfit_get(stmp);
-                  free(stmp);
-               }
                /* Increment m. */
                m++;
             }
             if (xml_isNode(cur,"high")) {
                /* Set default outfit if applicable. */
-               xmlr_attr(cur,"outfit",stmp);
-               if (stmp!=NULL) {
+               stmp = xml_get(cur);
+               if (stmp!=NULL)
                   temp->outfit_high[h].data = outfit_get(stmp);
-                  free(stmp);
-               }
                /* Get mount point. */
                xmlr_attr(cur,"x",stmp);
-               temp->outfit_high[h].mount.x = atof(stmp);
-               free(stmp);
+               if (stmp!=NULL) {
+                  temp->outfit_high[h].mount.x = atof(stmp);
+                  free(stmp);
+               }
+               else
+                  WARN("Ship '%s' missing 'x' element of 'high' slot.",temp->name);
                xmlr_attr(cur,"y",stmp);
-               temp->outfit_high[h].mount.y = atof(stmp);
-               /* Since we measure in pixels, we have to modify it so it
-                *  doesn't get corrected by the ortho correction. */
-               temp->outfit_high[h].mount.y *= M_SQRT2;
-               free(stmp);
+               if (stmp!=NULL) {
+                  temp->outfit_high[h].mount.y = atof(stmp);
+                  /* Since we measure in pixels, we have to modify it so it
+                   *  doesn't get corrected by the ortho correction. */
+                  temp->outfit_high[h].mount.y *= M_SQRT2;
+                  free(stmp);
+               }
+               else
+                  WARN("Ship '%s' missing 'y' element of 'high' slot.",temp->name);
                xmlr_attr(cur,"h",stmp);
-               temp->outfit_high[h].mount.h = atof(stmp);
-               free(stmp);
+               if (stmp!=NULL) {
+                  temp->outfit_high[h].mount.h = atof(stmp);
+                  free(stmp);
+               }
+               else
+                  WARN("Ship '%s' missing 'h' element of 'high' slot.",temp->name);
                /* Increment h. */
                h++;
             }
