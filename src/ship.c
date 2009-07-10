@@ -410,14 +410,11 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          cur = node->children;
          do {
             xmlr_float(cur,"armour",temp->armour);
+            xmlr_float(cur,"armour_regen",temp->armour_regen);
             xmlr_float(cur,"shield",temp->shield);
+            xmlr_float(cur,"shield_regen",temp->shield_regen);
             xmlr_float(cur,"energy",temp->energy);
-            if (xml_isNode(cur,"armour_regen"))
-               temp->armour_regen = (double)(xml_getInt(cur))/60.0;
-            else if (xml_isNode(cur,"shield_regen"))
-               temp->shield_regen = (double)(xml_getInt(cur))/60.0;
-            else if (xml_isNode(cur,"energy_regen"))
-               temp->energy_regen = (double)(xml_getInt(cur))/60.0;
+            xmlr_float(cur,"energy_regen",temp->energy_regen);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -497,7 +494,12 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
-   temp->thrust *= temp->mass; /* helps keep numbers sane */
+
+   /* Post processing. */
+   temp->armour_regen /= 60.;
+   temp->shield_regen /= 60.;
+   temp->energy_regen /= 60.;
+   temp->thrust *= temp->mass;
 
    /* ship validator */
 #define MELEMENT(o,s)      if (o) WARN("Ship '%s' missing '"s"' element", temp->name)

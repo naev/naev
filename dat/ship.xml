@@ -23,13 +23,13 @@
    <armour_regen>50</armour_regen>
    <energy_regen>500</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>2</crew>
    <mass>32</mass>
    <fuel>400</fuel>
    <cap_weapon>25</cap_weapon>
    <cap_cargo>20</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="1">Laser Cannon</outfit>
   </outfits>
@@ -60,13 +60,13 @@
    <armour_regen>60</armour_regen>
    <energy_regen>550</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>2</crew>
    <mass>25</mass>
    <fuel>300</fuel>
    <cap_weapon>30</cap_weapon>
    <cap_cargo>10</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="2">Laser Cannon</outfit>
   </outfits>
@@ -97,13 +97,13 @@
    <armour_regen>30</armour_regen>
    <energy_regen>400</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>2</crew>
    <mass>17</mass>
    <fuel>800</fuel>
    <cap_weapon>15</cap_weapon>
    <cap_cargo>15</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="1">Civilian Jammer</outfit>
   </outfits>
@@ -134,13 +134,13 @@
    <armour_regen>70</armour_regen>
    <energy_regen>700</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>2</crew>
    <mass>28</mass>
    <fuel>400</fuel>
    <cap_weapon>35</cap_weapon>
    <cap_cargo>15</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="1">Ion Cannon</outfit>
   </outfits>
@@ -171,13 +171,13 @@
    <armour_regen>420</armour_regen>
    <energy_regen>600</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>1</crew>
    <mass>15</mass>
    <fuel>1</fuel>
    <cap_weapon>24</cap_weapon>
    <cap_cargo>1</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="3">Neutron Disruptor</outfit>
   </outfits>
@@ -209,13 +209,13 @@
    <armour_regen>50</armour_regen>
    <energy_regen>500</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>3</crew>
    <mass>63</mass>
    <fuel>400</fuel>
    <cap_weapon>20</cap_weapon>
    <cap_cargo>45</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="1">Laser Cannon</outfit>
   </outfits>
@@ -247,13 +247,13 @@
    <armour_regen>40</armour_regen>
    <energy_regen>800</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>13</crew>
    <mass>1750</mass>
    <fuel>500</fuel>
    <cap_weapon>50</cap_weapon>
    <cap_cargo>250</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="1">Laser Turret</outfit>
    <outfit quantity="1">EMP Grenade Launcher</outfit>
@@ -289,13 +289,13 @@
    <armour_regen>60</armour_regen>
    <energy_regen>980</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>4</crew>
    <mass>90</mass>
    <fuel>400</fuel>
    <cap_weapon>50</cap_weapon>
    <cap_cargo>10</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="2">Laser Cannon</outfit>
    <outfit quantity="1">Seeker Launcher</outfit>
@@ -329,13 +329,13 @@
    <armour_regen>60</armour_regen>
    <energy_regen>980</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>4</crew>
    <mass>90</mass>
    <fuel>400</fuel>
    <cap_weapon>50</cap_weapon>
    <cap_cargo>10</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="2">Ripper MK2</outfit>
    <outfit quantity="1">Headhunter Launcher</outfit>
@@ -370,13 +370,13 @@
    <armour_regen>30</armour_regen>
    <energy_regen>600</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>4</crew>
    <mass>67</mass>
    <fuel>300</fuel>
    <cap_weapon>60</cap_weapon>
    <cap_cargo>5</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="6">Laser Cannon</outfit>
   </outfits>
@@ -407,13 +407,13 @@
    <armour_regen>30</armour_regen>
    <energy_regen>600</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>4</crew>
    <mass>67</mass>
    <fuel>300</fuel>
    <cap_weapon>60</cap_weapon>
    <cap_cargo>5</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="6">Laser Cannon</outfit>
    <outfit quantity="1">Mace Launcher</outfit>
@@ -446,13 +446,13 @@
    <armour_regen>32</armour_regen>
    <energy_regen>625</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>4</crew>
    <mass>65</mass>
    <fuel>300</fuel>
    <cap_weapon>60</cap_weapon>
    <cap_cargo>10</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="4">Plasma Blaster</outfit>
    <outfit quantity="2">Laser Cannon</outfit>
@@ -485,13 +485,13 @@
    <armour_regen>30</armour_regen>
    <energy_regen>700</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>6</crew>
    <mass>80</mass>
    <fuel>300</fuel>
    <cap_weapon>80</cap_weapon>
    <cap_cargo>10</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="3">Laser Cannon</outfit>
    <outfit quantity="1">Seeker Launcher</outfit>
@@ -525,13 +525,13 @@
    <armour_regen>30</armour_regen>
    <energy_regen>700</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>6</crew>
    <mass>80</mass>
    <fuel>300</fuel>
    <cap_weapon>80</cap_weapon>
    <cap_cargo>10</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="3">Laser Cannon</outfit>
    <outfit quantity="2">Mace Launcher</outfit>
@@ -564,13 +564,13 @@
    <armour_regen>35</armour_regen>
    <energy_regen>650</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>6</crew>
    <mass>74</mass>
    <fuel>400</fuel>
    <cap_weapon>75</cap_weapon>
    <cap_cargo>15</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="3">Plasma Blaster</outfit>
    <outfit quantity="1">Seeker Launcher</outfit>
@@ -605,13 +605,13 @@
    <armour_regen>90</armour_regen>
    <energy_regen>1180</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>13</crew>
    <mass>170</mass>
    <fuel>400</fuel>
    <cap_weapon>110</cap_weapon>
    <cap_cargo>20</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="1">Laser Cannon</outfit>
    <outfit quantity="2">Plasma Blaster</outfit>
@@ -645,13 +645,13 @@
    <armour_regen>60</armour_regen>
    <energy_regen>1180</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>13</crew>
    <mass>165</mass>
    <fuel>400</fuel>
    <cap_weapon>125</cap_weapon>
    <cap_cargo>15</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="2">Plasma Blaster</outfit>
    <outfit quantity="1">Banshee Launcher</outfit>
@@ -688,13 +688,13 @@
    <armour_regen>100</armour_regen>
    <energy_regen>1180</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>13</crew>
    <mass>170</mass>
    <fuel>400</fuel>
    <cap_weapon>110</cap_weapon>
    <cap_cargo>20</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="1">Ripper MK2</outfit>
    <outfit quantity="2">Ion Cannon</outfit>
@@ -730,13 +730,13 @@
    <armour_regen>90</armour_regen>
    <energy_regen>1380</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>17</crew>
    <mass>230</mass>
    <fuel>500</fuel>
    <cap_weapon>130</cap_weapon>
    <cap_cargo>30</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="2">Laser Cannon</outfit>
    <outfit quantity="1">Laser Turret</outfit>
@@ -771,13 +771,13 @@
    <armour_regen>100</armour_regen>
    <energy_regen>1380</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>17</crew>
    <mass>230</mass>
    <fuel>500</fuel>
    <cap_weapon>130</cap_weapon>
    <cap_cargo>30</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="2">Ion Cannon</outfit>
    <outfit quantity="1">Heavy Ion Turret</outfit>
@@ -813,13 +813,13 @@
    <armour_regen>100</armour_regen>
    <energy_regen>1400</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>27</crew>
    <mass>2800</mass>
    <fuel>300</fuel>
    <cap_weapon>150</cap_weapon>
    <cap_cargo>50</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="2">Heavy Ion Turret</outfit>
    <outfit quantity="2">Seeker Launcher</outfit>
@@ -854,13 +854,13 @@
    <armour_regen>90</armour_regen>
    <energy_regen>1300</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>28</crew>
    <mass>2725</mass>
    <fuel>300</fuel>
    <cap_weapon>160</cap_weapon>
    <cap_cargo>55</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="2">Heavy Ion Turret</outfit>
    <outfit quantity="2">Seeker Launcher</outfit>
@@ -896,13 +896,13 @@
    <armour_regen>80</armour_regen>
    <energy_regen>1600</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>35</crew>
    <mass>3750</mass>
    <fuel>300</fuel>
    <cap_weapon>200</cap_weapon>
    <cap_cargo>70</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="3">Laser Turret</outfit>
    <outfit quantity="2">Headhunter Launcher</outfit>
@@ -938,13 +938,13 @@
    <armour_regen>100</armour_regen>
    <energy_regen>1600</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>35</crew>
    <mass>3750</mass>
    <fuel>300</fuel>
    <cap_weapon>200</cap_weapon>
    <cap_cargo>70</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="3">Heavy Ion Turret</outfit>
    <outfit quantity="2">Headhunter Launcher</outfit>
@@ -980,13 +980,13 @@
    <armour_regen>90</armour_regen>
    <energy_regen>1700</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>52</crew>
    <mass>4350</mass>
    <fuel>500</fuel>
    <cap_weapon>250</cap_weapon>
    <cap_cargo>60</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="2">Heavy Ion Turret</outfit>
    <outfit quantity="2">Laser Turret</outfit>
@@ -1025,13 +1025,13 @@
    <armour_regen>90</armour_regen>
    <energy_regen>1700</energy_regen>
   </health>
-  <caracteristics>
+  <characteristics>
    <crew>52</crew>
    <mass>4350</mass>
    <fuel>500</fuel>
    <cap_weapon>250</cap_weapon>
    <cap_cargo>60</cap_cargo>
-  </caracteristics>
+  </characteristics>
   <outfits>
    <outfit quantity="4">Laser Turret</outfit>
    <outfit quantity="2">Mace Launcher</outfit>
