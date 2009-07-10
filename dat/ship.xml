@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Ships>
-<!-- Light Craft -->
+ <!-- Light Craft -->
  <ship name="Llama">
   <GFX>llama</GFX>
   <GUI>minimal</GUI>
@@ -27,16 +27,16 @@
    <crew>2</crew>
    <mass>32</mass>
    <fuel>400</fuel>
-   <cap_weapon>25</cap_weapon>
    <cap_cargo>20</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="1">Laser Cannon</outfit>
-  </outfits>
-  <mounts>
-   <mount x="7"  y="0" h="1">0</mount>
-   <mount x="-3" y="0" h="2">1</mount>
-  </mounts>
+  <slots>
+   <high x="7"   y="0" h="1">Laser Cannon</high>
+   <high x="-3"  y="0" h="2">Laser Cannon</high>
+   <medium/>
+   <medium/>
+   <low/>
+   <low/>
+  </slots>
  </ship>
  <ship name="Hyena">
   <GFX>hyena</GFX>
@@ -64,18 +64,17 @@
    <crew>2</crew>
    <mass>25</mass>
    <fuel>300</fuel>
-   <cap_weapon>30</cap_weapon>
    <cap_cargo>10</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="2">Laser Cannon</outfit>
-  </outfits>
-  <mounts>
-   <mount x="15" y="0" h="-3">0</mount>
-   <mount x="0"  y="0" h="0" >1</mount>
-  </mounts>
+  <slots>
+   <high x="15" y="0" h="-3">Laser Cannon</high>
+   <high x="15" y="0" h="-3">Laser Cannon</high>
+   <high x="0"  y="0" h="0" />
+   <medium/>
+   <low/>
+  </slots>
  </ship>
-  <ship name="Schroedinger">
+ <ship name="Schroedinger">
   <GFX>schroedinger</GFX>
   <GUI>minimal</GUI>
   <sound>engine</sound>
@@ -101,16 +100,16 @@
    <crew>2</crew>
    <mass>17</mass>
    <fuel>800</fuel>
-   <cap_weapon>15</cap_weapon>
    <cap_cargo>15</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="1">Civilian Jammer</outfit>
-  </outfits>
-  <mounts>
-   <mount x="9" y="0" h="-2">0</mount>
-   <mount x="0" y="0" h="0" >1</mount>
-  </mounts>
+  <slots>
+   <high x="9" y="0" h="-2" />
+   <medium>Civilian Jammer</medium>
+   <medium/>
+   <medium/>
+   <medium/>
+   <low/>
+  </slots>
  </ship>
  <ship name="Gawain">
   <GFX>gawain</GFX>
@@ -138,16 +137,17 @@
    <crew>2</crew>
    <mass>28</mass>
    <fuel>400</fuel>
-   <cap_weapon>35</cap_weapon>
    <cap_cargo>15</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="1">Ion Cannon</outfit>
-  </outfits>
-  <mounts>
-   <mount x="12" y="0" h="-2">0</mount>
-   <mount x="-5" y="0" h="1" >1</mount>
-  </mounts>
+  <slots>
+   <high x="12" y="0" h="-2">Ion Cannon</high>
+   <high x="-5" y="0" h="1" />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+  </slots>
  </ship>
  <ship name="Drone">
   <GFX>drone</GFX>
@@ -175,18 +175,17 @@
    <crew>1</crew>
    <mass>15</mass>
    <fuel>1</fuel>
-   <cap_weapon>24</cap_weapon>
    <cap_cargo>1</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="3">Neutron Disruptor</outfit>
-  </outfits>
-  <mounts>
-   <mount x="5" y="0" h="-5">0</mount>
-   <mount x="0" y="0" h="0" >1</mount>
-  </mounts>
+  <slots>
+   <high x="5" y="0" h="-5">Neutron Disruptor</high>
+   <high x="5" y="0" h="-5">Neutron Disruptor</high>
+   <high x="5" y="0" h="-5">Neutron Disruptor</high>
+   <medium/>
+   <low/>
+  </slots>
  </ship>
-<!-- Cargo Haulers -->
+ <!-- Cargo Haulers -->
  <ship name="Koala">
   <GFX>koala</GFX>
   <GUI>minimal</GUI>
@@ -213,16 +212,18 @@
    <crew>3</crew>
    <mass>63</mass>
    <fuel>400</fuel>
-   <cap_weapon>20</cap_weapon>
    <cap_cargo>45</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="1">Laser Cannon</outfit>
-  </outfits>
-  <mounts>
-   <mount x="11" y="0" h="-7">0</mount>
-   <mount x="-5" y="0" h="3">1</mount>
-  </mounts>
+  <slots>
+   <high x="11" y="0" h="-7">Laser Cannon</high>
+   <high x="-5" y="0" h="3" />
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+   <low />
+  </slots>
  </ship>
  <ship name="Mule">
   <GFX sx="10" sy="10">mule</GFX>
@@ -251,21 +252,24 @@
    <crew>13</crew>
    <mass>1750</mass>
    <fuel>500</fuel>
-   <cap_weapon>50</cap_weapon>
    <cap_cargo>250</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="1">Laser Turret</outfit>
-   <outfit quantity="1">EMP Grenade Launcher</outfit>
-   <outfit quantity="8">EMP Grenade</outfit>
-  </outfits>
-  <mounts>
-   <mount x="25"  y="0" h="0">0</mount>
-   <mount x="-15" y="0" h="4">1</mount>
-   <mount x="15"  y="0" h="4">2</mount>
-  </mounts>
+  <slots>
+   <high x="25"  y="0" h="0">Laser Turret</high>
+   <high x="-15" y="0" h="4">EMP Grenade Launcher</high>
+   <high x="15"  y="0" h="4" />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+   <low />
+   <low />
+   <low />
+  </slots>
  </ship>
-<!-- Fighters -->
+ <!-- Fighters -->
  <ship name="Lancelot">
   <GFX>lancelot</GFX>
   <GUI>minimal</GUI>
@@ -293,18 +297,19 @@
    <crew>4</crew>
    <mass>90</mass>
    <fuel>400</fuel>
-   <cap_weapon>50</cap_weapon>
    <cap_cargo>10</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="2">Laser Cannon</outfit>
-   <outfit quantity="1">Seeker Launcher</outfit>
-   <outfit quantity="5">Seeker Missile</outfit>
-  </outfits>
-  <mounts>
-   <mount x="12"  y="0" h="0">0</mount>
-   <mount x="-3"  y="0" h="2">1</mount>
-  </mounts>
+  <slots>
+   <high x="12" y="0" h="0">Laser Cannon</high>
+   <high x="12" y="0" h="0">Laser Cannon</high>
+   <high x="-3" y="0" h="2">Seeker Launcher</high>
+   <high x="-3" y="0" h="2" />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+  </slots>
  </ship>
  <ship name="Empire Lancelot">
   <GFX>lancelot_empire</GFX>
@@ -333,19 +338,19 @@
    <crew>4</crew>
    <mass>90</mass>
    <fuel>400</fuel>
-   <cap_weapon>50</cap_weapon>
    <cap_cargo>10</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="2">Ripper MK2</outfit>
-   <outfit quantity="1">Headhunter Launcher</outfit>
-   <outfit quantity="6">Headhunter Missile</outfit>
-   <outfit quantity="1">Milspec Jammer</outfit>
-  </outfits>
-  <mounts>
-   <mount x="12"  y="0" h="0">0</mount>
-   <mount x="-3"  y="0" h="2">1</mount>
-  </mounts>
+  <slots>
+   <high x="12" y="0" h="0">Ripper MK2</high>
+   <high x="12" y="0" h="0">Ripper MK2</high>
+   <high x="-3" y="0" h="2">Headhunter Launcher</high>
+   <high x="-3" y="0" h="2" />
+   <medium>Milspec Jammer</medium>
+   <medium />
+   <medium />
+   <low />
+   <low />
+  </slots>
  </ship>
  <ship name="Vendetta">
   <GFX>vendetta</GFX>
@@ -374,16 +379,18 @@
    <crew>4</crew>
    <mass>67</mass>
    <fuel>300</fuel>
-   <cap_weapon>60</cap_weapon>
    <cap_cargo>5</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="6">Laser Cannon</outfit>
-  </outfits>
-  <mounts>
-   <mount x="16" y="0" h="-1">0</mount>
-   <mount x="0"  y="0" h="2" >1</mount>
-  </mounts>
+  <slots>
+   <high x="16" y="-9"  h="0" >Laser Cannon</high>
+   <high x="16" y="9"   h="0" >Laser Cannon</high>
+   <high x="13" y="-13" h="0" >Laser Cannon</high>
+   <high x="13" y="13"  h="0" >Laser Cannon</high>
+   <high x="19" y="0"   h="-2" />
+   <high x="3"  y="0"   h="2" />
+   <medium />
+   <low />
+  </slots>
  </ship>
  <ship name="Dvaered Vendetta">
   <GFX>vendetta_dvaered</GFX>
@@ -411,18 +418,18 @@
    <crew>4</crew>
    <mass>67</mass>
    <fuel>300</fuel>
-   <cap_weapon>60</cap_weapon>
    <cap_cargo>5</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="6">Laser Cannon</outfit>
-   <outfit quantity="1">Mace Launcher</outfit>
-   <outfit quantity="5">Mace Rocket</outfit>
-  </outfits>
-  <mounts>
-   <mount x="16" y="0" h="-1">0</mount>
-   <mount x="0"  y="0" h="2" >1</mount>
-  </mounts>
+  <slots>
+   <high x="16" y="-9"  h="0" >Laser Cannon</high>
+   <high x="16" y="9"   h="0" >Laser Cannon</high>
+   <high x="13" y="-13" h="0" >Laser Cannon</high>
+   <high x="13" y="13"  h="0" >Laser Cannon</high>
+   <high x="19" y="0"   h="-2" >Mace Launcher</high>
+   <high x="3"  y="0"   h="2" />
+   <medium />
+   <low />
+  </slots>
  </ship>
  <ship name="Pirate Vendetta">
   <GFX>vendetta_pirate</GFX>
@@ -450,17 +457,18 @@
    <crew>4</crew>
    <mass>65</mass>
    <fuel>300</fuel>
-   <cap_weapon>60</cap_weapon>
    <cap_cargo>10</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="4">Plasma Blaster</outfit>
-   <outfit quantity="2">Laser Cannon</outfit>
-  </outfits>
-  <mounts>
-   <mount x="16" y="0" h="-1">0</mount>
-   <mount x="0"  y="0" h="2" >1</mount>
-  </mounts>
+  <slots>
+   <high x="16" y="-9"  h="0" >Plasma Blaster</high>
+   <high x="16" y="9"   h="0" >Plasma Blaster</high>
+   <high x="13" y="-13" h="0" >Laser Cannon</high>
+   <high x="13" y="13"  h="0" >Laser Cannon</high>
+   <high x="19" y="0"   h="-2" />
+   <high x="3"  y="0"   h="2" />
+   <medium />
+   <low />
+  </slots>
  </ship>
  <ship name="Ancestor">
   <GFX>ancestor</GFX>
@@ -489,18 +497,17 @@
    <crew>6</crew>
    <mass>80</mass>
    <fuel>300</fuel>
-   <cap_weapon>80</cap_weapon>
    <cap_cargo>10</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="3">Laser Cannon</outfit>
-   <outfit quantity="1">Seeker Launcher</outfit>
-   <outfit quantity="8">Seeker Missile</outfit>
-  </outfits>
-  <mounts>
-   <mount x="8"  y="0" h="0">0</mount>
-   <mount x="-3"  y="0" h="0">1</mount>
-  </mounts>
+  <slots>
+   <high x="8"  y="0"  h="0">Laser Cannon</high>
+   <high x="8"  y="0"  h="0">Laser Cannon</high>
+   <high x="-2" y="9"  h="-1">Seeker Launcher</high>
+   <high x="-2" y="-9" h="-1">Seeker Launcher</high>
+   <medium />
+   <medium />
+   <low />
+  </slots>
  </ship>
  <ship name="Dvaered Ancestor">
   <GFX>ancestor_dvaered</GFX>
@@ -529,18 +536,17 @@
    <crew>6</crew>
    <mass>80</mass>
    <fuel>300</fuel>
-   <cap_weapon>80</cap_weapon>
    <cap_cargo>10</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="3">Laser Cannon</outfit>
-   <outfit quantity="2">Mace Launcher</outfit>
-   <outfit quantity="10">Mace Rocket</outfit>
-  </outfits>
-  <mounts>
-   <mount x="8"  y="0" h="0">0</mount>
-   <mount x="-3"  y="0" h="0">1</mount>
-  </mounts>
+  <slots>
+   <high x="8"  y="0"  h="0">Laser Cannon</high>
+   <high x="8"  y="0"  h="0">Laser Cannon</high>
+   <high x="-2" y="9"  h="-1">Mace Rocket</high>
+   <high x="-2" y="-9" h="-1">Mace Rocket</high>
+   <medium />
+   <medium />
+   <low />
+  </slots>
  </ship>
  <ship name="Pirate Ancestor">
   <GFX>ancestor_pirate</GFX>
@@ -568,20 +574,19 @@
    <crew>6</crew>
    <mass>74</mass>
    <fuel>400</fuel>
-   <cap_weapon>75</cap_weapon>
    <cap_cargo>15</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="3">Plasma Blaster</outfit>
-   <outfit quantity="1">Seeker Launcher</outfit>
-   <outfit quantity="8">Seeker Missile</outfit>
-  </outfits>
-  <mounts>
-   <mount x="8"  y="0" h="0">0</mount>
-   <mount x="-3"  y="0" h="0">1</mount>
-  </mounts>
+  <slots>
+   <high x="8"  y="0"  h="0">Plasma Blaster</high>
+   <high x="8"  y="0"  h="0">Plasma Blaster</high>
+   <high x="-2" y="9"  h="-1">Seeker Launcher</high>
+   <high x="-2" y="-9" h="-1">Seeker Launcher</high>
+   <medium />
+   <medium />
+   <low />
+  </slots>
  </ship>
-<!-- Corvettes -->
+ <!-- Corvettes -->
  <ship name="Admonisher">
   <GFX>admonisher</GFX>
   <GUI>minimal</GUI>
@@ -609,19 +614,21 @@
    <crew>13</crew>
    <mass>170</mass>
    <fuel>400</fuel>
-   <cap_weapon>110</cap_weapon>
    <cap_cargo>20</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="1">Laser Cannon</outfit>
-   <outfit quantity="2">Plasma Blaster</outfit>
-   <outfit quantity="1">Headhunter Launcher</outfit>
-   <outfit quantity="10">Headhunter Missile</outfit>
-  </outfits>
-  <mounts>
-   <mount x="15"  y="0" h="2">0</mount>
-   <mount x="-5"  y="0" h="8">1</mount>
-  </mounts>
+  <slots>
+   <high x="15" y="0"  h="2">Laser Cannon</high>
+   <high x="4"  y="2"  h="-5">Plasma Blaster</high>
+   <high x="4"  y="-2" h="-5">Plasma Blaster</high>
+   <high x="-9" y="-5" h="-9">Headhunter Launcher</high>
+   <high x="-9" y="5"  h="-9" />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+  </slots>
  </ship>
  <ship name="Pirate Admonisher">
   <GFX>admonisher_pirate</GFX>
@@ -649,21 +656,21 @@
    <crew>13</crew>
    <mass>165</mass>
    <fuel>400</fuel>
-   <cap_weapon>125</cap_weapon>
    <cap_cargo>15</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="2">Plasma Blaster</outfit>
-   <outfit quantity="1">Banshee Launcher</outfit>
-   <outfit quantity="20">Banshee Rocket</outfit>
-   <outfit quantity="1">Seeker Launcher</outfit>
-   <outfit quantity="8">Seeker Missile</outfit>
-   <outfit quantity="1">Civilian Jammer</outfit>
-  </outfits>
-  <mounts>
-   <mount x="15"  y="0" h="2">0</mount>
-   <mount x="-5"  y="0" h="8">1</mount>
-  </mounts>
+  <slots>
+   <high x="15" y="0"  h="2">Plasma Blaster</high>
+   <high x="4"  y="2"  h="-5">Plasma Blaster</high>
+   <high x="4"  y="-2" h="-5">Plasma Blaster</high>
+   <high x="-9" y="-5" h="-9">Banshee Launcher</high>
+   <high x="-9" y="5"  h="-9">Banshee Launcher</high>
+   <medium>Civilian Jammer</medium>
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+  </slots>
  </ship>
  <ship name="Empire Admonisher">
   <GFX>admonisher_empire</GFX>
@@ -692,20 +699,21 @@
    <crew>13</crew>
    <mass>170</mass>
    <fuel>400</fuel>
-   <cap_weapon>110</cap_weapon>
    <cap_cargo>20</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="1">Ripper MK2</outfit>
-   <outfit quantity="2">Ion Cannon</outfit>
-   <outfit quantity="1">Headhunter Launcher</outfit>
-   <outfit quantity="10">Headhunter Missile</outfit>
-   <outfit quantity="1">Milspec Jammer</outfit>
-  </outfits>
-  <mounts>
-   <mount x="15"  y="0" h="2">0</mount>
-   <mount x="-5"  y="0" h="8">1</mount>
-  </mounts>
+  <slots>
+   <high x="15" y="0"  h="2">Ripper MK2</high>
+   <high x="4"  y="2"  h="-5">Ion Cannon</high>
+   <high x="4"  y="-2" h="-5">Ion Cannon</high>
+   <high x="-9" y="-5" h="-9">Headhunter Launcher</high>
+   <high x="-9" y="5"  h="-9" />
+   <medium>Milspec Jammer</medium>
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+  </slots>
  </ship>
  <ship name="Pacifier">
   <GFX>pacifier</GFX>
@@ -734,19 +742,22 @@
    <crew>17</crew>
    <mass>230</mass>
    <fuel>500</fuel>
-   <cap_weapon>130</cap_weapon>
    <cap_cargo>30</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="2">Laser Cannon</outfit>
-   <outfit quantity="1">Laser Turret</outfit>
-   <outfit quantity="2">Headhunter Launcher</outfit>
-   <outfit quantity="40">Headhunter Missile</outfit>
-  </outfits>
-  <mounts>
-   <mount x="15" y="0" h="-8">0</mount>
-   <mount x="-4" y="0" h="2" >1</mount>
-  </mounts>
+  <slots>
+   <high x="20"  y="0"   h="-10">Laser Turret</high>
+   <high x="4"   y="-5"  h="-10">Laser Cannon</high>
+   <high x="4"   y="5"   h="-10">Laser Cannon</high>
+   <high x="-15" y="-10" h="-10">Headhunter Launcher</high>
+   <high x="-15" y="10"  h="-10">Headhunter Launcher</high>
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+  </slots>
  </ship>
  <ship name="Empire Pacifier">
   <GFX>pacifier_empire</GFX>
@@ -775,21 +786,24 @@
    <crew>17</crew>
    <mass>230</mass>
    <fuel>500</fuel>
-   <cap_weapon>130</cap_weapon>
    <cap_cargo>30</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="2">Ion Cannon</outfit>
-   <outfit quantity="1">Heavy Ion Turret</outfit>
-   <outfit quantity="2">Headhunter Launcher</outfit>
-   <outfit quantity="20">Headhunter Missile</outfit>
-  </outfits>
-  <mounts>
-   <mount x="15" y="0" h="-8">0</mount>
-   <mount x="-4" y="0" h="2" >1</mount>
-  </mounts>
+  <slots>
+   <high x="20"  y="0"   h="-10">Heavy Ion Turret</high>
+   <high x="4"   y="-5"  h="-10">Ion Cannon</high>
+   <high x="4"   y="5"   h="-10">Ion Cannon</high>
+   <high x="-15" y="-10" h="-10">Headhunter Launcher</high>
+   <high x="-15" y="10"  h="-10">Headhunter Launcher</high>
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+  </slots>
  </ship>
-<!-- Cruisers -->
+ <!-- Cruisers -->
  <ship name="Kestrel">
   <GFX sx="10" sy="10">kestrel</GFX>
   <GUI>minimal</GUI>
@@ -817,14 +831,13 @@
    <crew>27</crew>
    <mass>2800</mass>
    <fuel>300</fuel>
-   <cap_weapon>150</cap_weapon>
    <cap_cargo>50</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="2">Heavy Ion Turret</outfit>
-   <outfit quantity="2">Seeker Launcher</outfit>
-   <outfit quantity="20">Seeker Missile</outfit>
-  </outfits>
+  <slots>
+   <high>Heavy Ion Turret</high>
+   <high>Seeker Launcher</high>
+   <high>Seeker Missile</high>
+  </slots>
   <mounts>
    <mount x="30"  y="0"  h="3">0</mount>
    <mount x="-18" y="-5" h="10">1</mount>
@@ -858,14 +871,13 @@
    <crew>28</crew>
    <mass>2725</mass>
    <fuel>300</fuel>
-   <cap_weapon>160</cap_weapon>
    <cap_cargo>55</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="2">Heavy Ion Turret</outfit>
-   <outfit quantity="2">Seeker Launcher</outfit>
-   <outfit quantity="20">Seeker Missile</outfit>
-  </outfits>
+  <slots>
+   <high>Heavy Ion Turret</high>
+   <high>Seeker Launcher</high>
+   <high>Seeker Missile</high>
+  </slots>
   <mounts>
    <mount x="30"  y="0"  h="3">0</mount>
    <mount x="-18" y="-5" h="10">1</mount>
@@ -900,14 +912,13 @@
    <crew>35</crew>
    <mass>3750</mass>
    <fuel>300</fuel>
-   <cap_weapon>200</cap_weapon>
    <cap_cargo>70</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="3">Laser Turret</outfit>
-   <outfit quantity="2">Headhunter Launcher</outfit>
-   <outfit quantity="40">Headhunter Missile</outfit>
-  </outfits>
+  <slots>
+   <high>Laser Turret</high>
+   <high>Headhunter Launcher</high>
+   <high>Headhunter Missile</high>
+  </slots>
   <mounts>
    <mount x="45"  y="0" h="2">0</mount>
    <mount x="20"  y="0" h="5">1</mount>
@@ -942,14 +953,13 @@
    <crew>35</crew>
    <mass>3750</mass>
    <fuel>300</fuel>
-   <cap_weapon>200</cap_weapon>
    <cap_cargo>70</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="3">Heavy Ion Turret</outfit>
-   <outfit quantity="2">Headhunter Launcher</outfit>
-   <outfit quantity="40">Headhunter Missile</outfit>
-  </outfits>
+  <slots>
+   <high>Heavy Ion Turret</high>
+   <high>Headhunter Launcher</high>
+   <high>Headhunter Missile</high>
+  </slots>
   <mounts>
    <mount x="45"  y="0" h="2">0</mount>
    <mount x="20"  y="0" h="5">1</mount>
@@ -984,15 +994,14 @@
    <crew>52</crew>
    <mass>4350</mass>
    <fuel>500</fuel>
-   <cap_weapon>250</cap_weapon>
    <cap_cargo>60</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="2">Heavy Ion Turret</outfit>
-   <outfit quantity="2">Laser Turret</outfit>
-   <outfit quantity="2">Headhunter Launcher</outfit>
-   <outfit quantity="40">Headhunter Missile</outfit>
-  </outfits>
+  <slots>
+   <high>Heavy Ion Turret</high>
+   <high>Laser Turret</high>
+   <high>Headhunter Launcher</high>
+   <high>Headhunter Missile</high>
+  </slots>
   <mounts>
    <mount x="35" y="0"   h="-2">0</mount>
    <mount x="5"  y="12"  h="3" >1</mount>
@@ -1029,14 +1038,13 @@
    <crew>52</crew>
    <mass>4350</mass>
    <fuel>500</fuel>
-   <cap_weapon>250</cap_weapon>
    <cap_cargo>60</cap_cargo>
   </characteristics>
-  <outfits>
-   <outfit quantity="4">Laser Turret</outfit>
-   <outfit quantity="2">Mace Launcher</outfit>
-   <outfit quantity="20">Mace Rocket</outfit>
-  </outfits>
+  <slots>
+   <high>Laser Turret</high>
+   <high>Mace Launcher</high>
+   <high>Mace Rocket</high>
+  </slots>
   <mounts>
    <mount x="35" y="0"   h="-2">0</mount>
    <mount x="5"  y="12"  h="3" >1</mount>
