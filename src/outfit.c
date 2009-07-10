@@ -928,6 +928,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    temp->u.amm.spfx_shield = -1;
    temp->u.amm.sound       = -1;
    temp->u.amm.sound_hit   = -1;
+   temp->slot              = OUTFIT_SLOT_NA;
 
    do { /* load all the data */
       /* Basic */
@@ -1115,6 +1116,8 @@ static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent )
    xmlNodePtr node;
    node = parent->children;
 
+   temp->slot              = OUTFIT_SLOT_NA;
+
    do {
       xmlr_strd(node,"ship",temp->u.fig.ship);
    } while (xml_nextNode(node));
@@ -1137,6 +1140,8 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    xmlNodePtr node;
    node = parent->children;
 
+   temp->slot              = OUTFIT_SLOT_NA;
+
    do {
       xmlr_int(node,"radius",temp->u.map.radius);
    } while (xml_nextNode(node));
@@ -1155,8 +1160,10 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
 {
    /* Licenses have no specific tidbits. */
-   (void) temp;
    (void) parent;
+
+   temp->slot              = OUTFIT_SLOT_NA;
+
    /*
    xmlNodePtr node;
    node = parent->children;
