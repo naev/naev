@@ -699,6 +699,10 @@ void pilot_shoot( Pilot* p, int group )
 
    for (i=0; i<p->outfit_nhigh; i++) { /* cycles through outfits to find primary weapons */
       o = p->outfit_high[i].outfit;
+
+      if (o==NULL)
+         continue;
+
       if (!outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY) &&
             (outfit_isBolt(o) || outfit_isBeam(o))) {
 
@@ -750,6 +754,10 @@ void pilot_shootStop( Pilot* p, const int secondary )
 
       for (i=0; i<p->outfit_nhigh; i++) { /* cycles through outfits to find primary weapons */
          o = p->outfit_high[i].outfit;
+
+         if (o==NULL)
+            continue;
+
          if (!outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY) &&
                outfit_isBeam(o)) /** @todo possibly make this neater. */
             if (p->outfit_high[i].u.beamid > 0) {
@@ -1132,80 +1140,6 @@ void pilot_runHook( Pilot* p, int hook_type )
 
 
 /**
- * @brief Sets the pilot's ammo based on their secondary weapon.
- *
- *    @param p Pilot to set ammo.
- */
-void pilot_setAmmo( Pilot* p )
-{
-   int i;
-   Outfit *ammo;
-
-   /* Weapon must use ammo. */
-   if ((p->secondary == NULL) || (outfit_ammo(p->secondary->outfit)==NULL)) {
-      p->ammo = NULL;
-      return;
-   }
-
-   /* find the ammo and set it */
-   ammo = outfit_ammo(p->secondary->outfit);
-   for (i=0; i<p->noutfits; i++)
-      if (p->outfits[i]->outfit == ammo) {
-         p->ammo = p->outfits[i];
-         return;
-      }
-
-   /* none found, so we assume it doesn't need ammo */
-   p->ammo = NULL;
-}
-
-
-/**
- * @brief Gets the amount of ammo pilot has for a certain outfit.
- *
- *    @param p Pilot to get amount of ammo for.
- *    @param o Outfit to get ammo for.
- *    @return Amount of ammo for o on p.
- */
-int pilot_getAmmo( Pilot* p, Outfit* o )
-{
-   int i;
-   Outfit *ammo;
-
-   /* Must be a launcher. */
-   if (!outfit_isLauncher(o))
-      return 0;
-
-   /* Try to find the ammo. */
-   ammo = o->u.lau.ammo;
-   for (i=0; i<p->noutfits; i++)
-      if (p->outfits[i]->outfit == ammo)
-         return p->outfits[i]->quantity;
-
-   /* Assume none. */
-   return 0;
-}
-
-
-/**
- * @brief Sets the pilot's afterburner if he has one.
- *
- *    @param p Pilot to set afterburner.
- */
-void pilot_setAfterburner( Pilot* p )
-{
-   int i;
-
-   for (i=0; i<p->noutfits; i++)
-      if (outfit_isAfterburner( p->outfits[i]->outfit )) {
-         p->afterburner = p->outfits[i];
-         return;
-      }
-   p->afterburner = NULL;
-}
-
-
-/**
  * @brief Docks the pilot on it's target pilot.
  *
  *    @param p Pilot that wants to dock.
@@ -1287,10 +1221,13 @@ int pilot_dock( Pilot *p, Pilot *target, int deployed )
 int pilot_hasDeployed( Pilot *p )
 {
    int i;
-   for (i=0; i<p->noutfits; i++)
+   for (i=0; i<p->noutfits; i++) {
+      if (p->outfits[i]->outfit == NULL)
+         continue;
       if (outfit_isFighterBay(p->outfits[i]->outfit))
          if (p->outfits[i]->u.deployed > 0)
             return 1;
+   }
    return 0;
 }
 
@@ -1900,16 +1837,15 @@ char* pilot_getOutfits( Pilot* pilot )
    buf = malloc(sizeof(char)*len);
    buf[0] = '\0';
    p = 0;
-   /* first outfit */
-   if (pilot->noutfits>0)
-      p += snprintf( &buf[p], len-p, "%s",
-             pilot->outfits[0]->outfit->name );
-   else
-      p += snprintf( &buf[p], len-p, "None" );
-   /* rest of the outfits */
-   for (i=1; i<pilot->noutfits; i++)
-      p += snprintf( &buf[p], len-p, ", %s",
+   for (i=1; i<pilot->noutfits; i++) {
+      if (pilot->outfits[i]->outfit == NULL)
+         continue;
+      p += snprintf( &buf[p], len-p, (p==0) ? "%s" : ", %s",
             pilot->outfits[i]->outfit->name );
+   }
+
+   if (p==0)
+      p += snprintf( &buf[p], len-p, "None" );
 
    return buf;
 }
@@ -1963,6 +1899,10 @@ void pilot_calcStats( Pilot* pilot )
    wrange = wspeed = 0.;
    for (i=0; i<pilot->noutfits; i++) {
       o = pilot->outfits[i]->outfit;
+
+      if (o==NULL)
+         continue;
+
       q = (double) pilot->outfits[i]->quantity;
 
       if (outfit_isMod(o)) { /* Modification */

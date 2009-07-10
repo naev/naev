@@ -1897,13 +1897,10 @@ static int outfit_isMelee( Pilot *p, PilotOutfitSlot *o )
  */
 static int outfit_isRanged( Pilot *p, PilotOutfitSlot *o )
 {
+   (void) p;
    if (outfit_isFighterBay(o->outfit) ||
          (outfit_isLauncher(o->outfit) &&
             (o->outfit->type != OUTFIT_TYPE_MISSILE_DUMB))) {
-      /* Must have ammo. */
-      if (pilot_getAmmo( p, o->outfit ) <= 0)
-         return 0;
-      return 1;
    }
    return 0;
 }
@@ -1968,7 +1965,6 @@ static int aiL_secondary( lua_State *L )
    /* Check to see if we have a good secondary weapon. */
    if (po != NULL) {
       cur_pilot->secondary = po;
-      pilot_setAmmo(cur_pilot);
       otype = outfit_getTypeBroad(po->outfit);
       lua_pushstring( L, otype );
 

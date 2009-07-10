@@ -308,9 +308,6 @@ int pilot_oquantity( Pilot* p, PilotOutfitSlot* w );
 /* Special outfit stuff. */
 int pilot_getMount( Pilot *p, PilotOutfitSlot *w, Vector2d *v );
 void pilot_switchSecondary( Pilot* p, PilotOutfitSlot *w );
-void pilot_setAmmo( Pilot* p );
-int pilot_getAmmo( Pilot* p, Outfit* o );
-void pilot_setAfterburner( Pilot* p );
 
 
 /*
