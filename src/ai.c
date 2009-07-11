@@ -1942,6 +1942,9 @@ static int aiL_secondary( lua_State *L )
       for (i=0; i<cur_pilot->outfit_nhigh; i++) {
          co = &cur_pilot->outfit_high[i];
 
+         if (co->outfit == NULL)
+            continue;
+
          /* Not a secondary weapon. */
          if (!outfit_isProp(co->outfit, OUTFIT_PROP_WEAP_SECONDARY) ||
                outfit_isAmmo(co->outfit))
