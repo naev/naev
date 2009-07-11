@@ -834,16 +834,22 @@
    <cap_cargo>50</cap_cargo>
   </characteristics>
   <slots>
-   <high>Heavy Ion Turret</high>
-   <high>Seeker Launcher</high>
-   <high>Seeker Missile</high>
+   <high x="-24" y="-8"  h="8">Heavy Ion Turret</high>
+   <high x="-24" y="8"   h="8">Heavy Ion Turret</high>
+   <high x="-23" y="-15" h="5">Seeker Launcher</high>
+   <high x="-23" y="15"  h="5">Seeker Launcher</high>
+   <high x="44"  y="0"   h="0" />
+   <high x="-6"  y="0"   h="12" />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+   <low />
   </slots>
-  <mounts>
-   <mount x="30"  y="0"  h="3">0</mount>
-   <mount x="-18" y="-5" h="10">1</mount>
-   <mount x="-18" y="5"  h="10">2</mount>
-   <mount x="30"  y="0"  h="3">3</mount>
-  </mounts>
  </ship>
  <ship name="Pirate Kestrel">
   <GFX sx="10" sy="10">kestrel_pirate</GFX>
@@ -874,16 +880,22 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <high>Heavy Ion Turret</high>
-   <high>Seeker Launcher</high>
-   <high>Seeker Missile</high>
+   <high x="-24" y="-8"  h="8">Heavy Ion Turret</high>
+   <high x="-24" y="8"   h="8">Heavy Ion Turret</high>
+   <high x="-23" y="-15" h="5">Seeker Launcher</high>
+   <high x="-23" y="15"  h="5">Seeker Launcher</high>
+   <high x="44"  y="0"   h="0" />
+   <high x="-6"  y="0"   h="12" />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+   <low />
   </slots>
-  <mounts>
-   <mount x="30"  y="0"  h="3">0</mount>
-   <mount x="-18" y="-5" h="10">1</mount>
-   <mount x="-18" y="5"  h="10">2</mount>
-   <mount x="30"  y="0"  h="3">3</mount>
-  </mounts>
  </ship>
  <ship name="Hawking">
   <GFX sx="12" sy="12">hawking</GFX>
@@ -915,16 +927,24 @@
    <cap_cargo>70</cap_cargo>
   </characteristics>
   <slots>
-   <high>Laser Turret</high>
-   <high>Headhunter Launcher</high>
-   <high>Headhunter Missile</high>
+   <high x="40"  y="0"  h="2">Laser Turret</high>
+   <high x="25"  y="0"  h="2">Laser Turret</high>
+   <high x="12"  y="-6" h="0">Headhunter Launcher</high>
+   <high x="12"  y="6"  h="0">Headhunter Launcher</high>
+   <high x="0"   y="0"  h="7">Laser Turret</high>
+   <high x="-15" y="0"  h="7" />
+   <high x="-33" y="0"  h="7" />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+   <low />
+   <low />
   </slots>
-  <mounts>
-   <mount x="45"  y="0" h="2">0</mount>
-   <mount x="20"  y="0" h="5">1</mount>
-   <mount x="-25" y="0" h="5">2</mount>
-   <mount x="-5"  y="0" h="5">3</mount>
-  </mounts>
  </ship>
  <ship name="Empire Hawking">
   <GFX  sx="12" sy="12">hawking_empire</GFX>
@@ -956,16 +976,24 @@
    <cap_cargo>70</cap_cargo>
   </characteristics>
   <slots>
-   <high>Heavy Ion Turret</high>
-   <high>Headhunter Launcher</high>
-   <high>Headhunter Missile</high>
+   <high x="40"  y="0"  h="2">Heavy Ion Turret</high>
+   <high x="25"  y="0"  h="2">Heavy Ion Turret</high>
+   <high x="12"  y="-6" h="0">Headhunter Launcher</high>
+   <high x="12"  y="6"  h="0">Headhunter Launcher</high>
+   <high x="0"   y="0"  h="7" />
+   <high x="-15" y="0"  h="7" />
+   <high x="-33" y="0"  h="7" />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+   <low />
+   <low />
   </slots>
-  <mounts>
-   <mount x="45"  y="0" h="2">0</mount>
-   <mount x="20"  y="0" h="5">1</mount>
-   <mount x="-25" y="0" h="5">2</mount>
-   <mount x="-5"  y="0" h="5">3</mount>
-  </mounts>
  </ship>
  <ship name="Goddard">
   <GFX sx="12" sy="12">goddard</GFX>
@@ -997,19 +1025,25 @@
    <cap_cargo>60</cap_cargo>
   </characteristics>
   <slots>
-   <high>Heavy Ion Turret</high>
-   <high>Laser Turret</high>
-   <high>Headhunter Launcher</high>
-   <high>Headhunter Missile</high>
+   <high x="-10" y="-13" h="2">Heavy Ion Turret</high>
+   <high x="-10" y="13"  h="2">Heavy Ion Turret</high>
+   <high x="-15" y="-25" h="3">Laser Turret</high>
+   <high x="-15" y="25"  h="3">Laser Turret</high>
+   <high x="16"  y="0" h="3">Headhunter Launcher</high>
+   <high x="0"   y="0" h="5">Headhunter Launcher</high>
+   <high x="-20" y="0" h="5" />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+   <low />
+   <low />
+   <low />
   </slots>
-  <mounts>
-   <mount x="35" y="0"   h="-2">0</mount>
-   <mount x="5"  y="12"  h="3" >1</mount>
-   <mount x="5"  y="-12" h="3" >2</mount>
-   <mount x="-3" y="22"  h="3" >3</mount>
-   <mount x="-3" y="-22" h="3" >4</mount>
-   <mount x="25" y="0"   h="3" >5</mount>
-  </mounts>
  </ship>
  <ship name="Dvaered Goddard">
   <GFX sx="12" sy="12">goddard_dvaered</GFX>
@@ -1041,17 +1075,24 @@
    <cap_cargo>60</cap_cargo>
   </characteristics>
   <slots>
-   <high>Laser Turret</high>
-   <high>Mace Launcher</high>
-   <high>Mace Rocket</high>
+   <high x="-10" y="-13" h="2">Laser Turret</high>
+   <high x="-10" y="13"  h="2">Laser Turret</high>
+   <high x="-15" y="-25" h="3">Laser Turret</high>
+   <high x="-15" y="25"  h="3">Laser Turret</high>
+   <high x="16"  y="0" h="3">Mace Launcher</high>
+   <high x="0"   y="0" h="5">Mace Launcher</high>
+   <high x="-20" y="0" h="5" />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <medium />
+   <low />
+   <low />
+   <low />
+   <low />
+   <low />
+   <low />
   </slots>
-  <mounts>
-   <mount x="35" y="0"   h="-2">0</mount>
-   <mount x="5"  y="12"  h="3" >1</mount>
-   <mount x="5"  y="-12" h="3" >2</mount>
-   <mount x="-3" y="22"  h="3" >3</mount>
-   <mount x="-3" y="-22" h="3" >4</mount>
-   <mount x="25" y="0"   h="3" >5</mount>
-  </mounts>
  </ship>
 </Ships>
