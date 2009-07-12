@@ -32,6 +32,7 @@
 #include "nxml.h"
 #include "cond.h"
 #include "hook.h"
+#include "player.h"
 
 
 #define XML_EVENT_ID          "Events" /**< XML document identifier */
@@ -317,6 +318,11 @@ void events_trigger( EventTrigger_t trigger )
 
       /* Make sure chance is succeeded. */
       if (RNGF() > event_data[i].chance)
+         continue;
+
+      /* Test uniqueness. */
+      if ((event_data[i].flags & EVENT_FLAG_UNIQUE) &&
+            player_eventAlreadyDone( i ))
          continue;
 
       /* Test conditional. */
