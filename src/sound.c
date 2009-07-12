@@ -262,26 +262,32 @@ void sound_exit (void)
    int i;
    alVoice *v;
 
+   /* Nothing to disable. */
+   if (sound_disabled)
+      return;
+
    /* Exit music subsystem. */
    music_exit();
 
-   voiceLock();
-   /* free the voices. */
-   while (voice_active != NULL) {
-      v = voice_active;
-      voice_active = v->next;
-      free(v);
-   }
-   while (voice_pool != NULL) {
-      v = voice_pool;
-      voice_pool = v->next;
-      free(v);
-   }
-   voiceUnlock();
+   if (voice_mutex != NULL) {
+      voiceLock();
+      /* free the voices. */
+      while (voice_active != NULL) {
+         v = voice_active;
+         voice_active = v->next;
+         free(v);
+      }
+      while (voice_pool != NULL) {
+         v = voice_pool;
+         voice_pool = v->next;
+         free(v);
+      }
+      voiceUnlock();
 
-   /* Destroy voice lock. */
-   SDL_DestroyMutex(voice_mutex);
-   voice_mutex = NULL;
+      /* Destroy voice lock. */
+      SDL_DestroyMutex(voice_mutex);
+      voice_mutex = NULL;
+   }
 
    /* free the sounds */
    for (i=0; i<sound_nlist; i++)
@@ -325,6 +331,9 @@ int sound_get( char* name )
  */
 double sound_length( int sound )
 {
+   if (sound_disabled)
+      return 0.;
+
    return sound_list[sound].length;
 }
 

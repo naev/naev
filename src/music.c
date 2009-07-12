@@ -250,6 +250,9 @@ int music_init (void)
  */
 void music_exit (void)
 {
+   if (music_disabled)
+      return;
+
    /* Free the music. */
    music_free();
 
@@ -360,6 +363,9 @@ int music_volume( const double vol )
  */
 double music_getVolume (void)
 {
+   if (music_disabled)
+      return 0.;
+
    return music_sys_getVolume();
 }
 
