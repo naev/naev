@@ -37,6 +37,7 @@
  * Global sound properties.
  */
 static double sound_curVolume = 0.; /**< Current sound volume. */
+static unsigned char sound_mixVolume = 0; /**< Actual in-game used volume. */
 static double sound_pos[3]; /**< Position of listener. */
 
 
@@ -154,7 +155,7 @@ int sound_mix_play( alVoice *v, alSound *s )
 
    v->u.mix.channel = Mix_PlayChannel( -1, s->u.mix.buf, 0 );
    if (v->u.mix.channel >= 0)
-      Mix_Volume( v->u.mix.channel, 128 );
+      Mix_Volume( v->u.mix.channel, sound_mixVolume );
  
    /* Check to see if played. */
    /*
@@ -240,7 +241,7 @@ int sound_mix_playPos( alVoice *v, alSound *s,
    if (v->u.mix.channel < 0)
       return -1;
    else
-      Mix_Volume( v->u.mix.channel, 128 );
+      Mix_Volume( v->u.mix.channel, sound_mixVolume );
 
    /* Update the voice. */
    if (sound_mix_updatePosVoice( v, px, py ))
@@ -337,7 +338,8 @@ int sound_mix_updateListener( double dir, double px, double py,
 int sound_mix_volume( const double vol )
 {
    sound_curVolume = MIX_MAX_VOLUME * CLAMP(0., 1., vol);
-   return Mix_Volume( -1, sound_curVolume);
+   sound_mixVolume = (unsigned char) sound_curVolume;
+   return Mix_Volume( -1, sound_mixVolume );
 }
 
 
@@ -484,7 +486,7 @@ int sound_mix_playGroup( int group, alSound *s, int once )
       return -1;
    }
    else
-      Mix_Volume( channel, 128 );
+      Mix_Volume( channel, sound_mixVolume );
 
    return 0;
 }
