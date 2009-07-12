@@ -1725,6 +1725,9 @@ void land( Planet* p )
    if (landed)
       return;
 
+   /* Stop player sounds. */
+   player_stopSound();
+
    /* Load stuff */
    land_planet = p;
    gfx_exterior = gl_newImage( p->gfx_exterior, 0 );
@@ -1898,9 +1901,6 @@ void takeoff( int delay )
    char *nt;
 
    if (!landed) return;
-
-   /* Stop player sounds. */
-   player_stopSound();
 
    /* ze music */
    music_choose("takeoff");

@@ -671,6 +671,9 @@ void player_stopSound (void)
 {
    sound_stopGroup( player_gui_group );
    sound_stopGroup( player_engine_group );
+
+   /* No last engine sound. */
+   player_lastEngineSound = -1;
 }
 
 

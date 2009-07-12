@@ -84,6 +84,7 @@ function create ()
    -- First stop; subsequent stops will be handled in the land function
    nextstop = 1
    targsys = getsysatdistance(nil, 3) -- Populate the array
+   targsys = getlandablesystems( targsys )
    if #targsys == 0 then targsys = {system.get("Apez")} end -- In case no systems were found.
    destsys = targsys[rnd.rnd(1, #targsys)] 
    destsysname = system.name(destsys)
@@ -126,6 +127,7 @@ function land()
       else
          nextstop = nextstop + 1
          targsys = getsysatdistance(nil, nextstop+1) -- Populate the array
+         targsys = getlandablesystems( targsys )
          if #targsys == 0 then targsys = {system.get("Apez")} end -- In case no systems were found.
          destsys = targsys[rnd.rnd(1, #targsys)] 
          destsysname = system.name(destsys)
@@ -137,6 +139,20 @@ function land()
       end
    end
    inspace = false
+end
+
+-- Only gets landable systems
+function getlandablesystems( systems )
+   t = {}
+   for k,v in ipairs(systems) do
+      for k,p in ipairs(v:planets()) do
+         if p:hasServices() then
+            t[#t+1] = v
+            break
+         end
+      end
+   end
+   return t
 end
 
 function takeoff()
