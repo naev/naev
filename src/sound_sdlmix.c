@@ -153,6 +153,8 @@ int sound_mix_play( alVoice *v, alSound *s )
 {
 
    v->u.mix.channel = Mix_PlayChannel( -1, s->u.mix.buf, 0 );
+   if (v->u.mix.channel >= 0)
+      Mix_Volume( v->u.mix.channel, 128 );
  
    /* Check to see if played. */
    /*
@@ -237,6 +239,8 @@ int sound_mix_playPos( alVoice *v, alSound *s,
    v->u.mix.channel = Mix_PlayChannel( -1, s->u.mix.buf, 0 );
    if (v->u.mix.channel < 0)
       return -1;
+   else
+      Mix_Volume( v->u.mix.channel, 128 );
 
    /* Update the voice. */
    if (sound_mix_updatePosVoice( v, px, py ))
@@ -479,6 +483,8 @@ int sound_mix_playGroup( int group, alSound *s, int once )
             s->name, group, Mix_GetError());
       return -1;
    }
+   else
+      Mix_Volume( channel, 128 );
 
    return 0;
 }
