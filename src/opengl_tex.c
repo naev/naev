@@ -333,11 +333,11 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
  */
 glTexture* gl_loadImage( SDL_Surface* surface, unsigned int flags )
 {
+   glTexture *texture;
    int rw, rh;
 
    /* set up the texture defaults */
-   glTexture *texture = malloc(sizeof(glTexture));
-   memset( texture, 0, sizeof(glTexture) );
+   texture = calloc( 1, sizeof(glTexture) );
 
    texture->w     = (double)surface->w;
    texture->h     = (double)surface->h;
