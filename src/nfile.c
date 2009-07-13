@@ -57,9 +57,9 @@ char* nfile_basePath (void)
       }
       snprintf( naev_base, PATH_MAX, "%s/.naev/", home );
 #elif HAS_WIN32
-      home = getenv("USERPROFILE");
+      home = getenv("APPDATA");
       if (home == NULL) {
-         WARN("%%USERPROFILE%% isn't set, using current directory.");
+         WARN("%%APPDATA%% isn't set, using current directory.");
          home = ".";
       }
       snprintf( naev_base, PATH_MAX, "%s/naev/", home );
