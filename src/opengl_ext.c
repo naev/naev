@@ -134,9 +134,14 @@ static int gl_extMipmaps (void)
       return 0;
    }
 
-   nglGenerateMipmap = SDL_GL_GetProcAddress("glGenerateMipmap");
+   /*
+    * We load the extension first instead of the normal mipmaps, since it seems
+    *  like otherwise it loads a buggy pointer on some platforms like notably
+    *  linux x86_32 with i915 chipset.
+    */
+   nglGenerateMipmap = SDL_GL_GetProcAddress("glGenerateMipmapEXT");
    if (nglGenerateMipmap == NULL)
-      nglGenerateMipmap = SDL_GL_GetProcAddress("glGenerateMipmapEXT");
+      nglGenerateMipmap = SDL_GL_GetProcAddress("glGenerateMipmap");
    if (nglGenerateMipmap == NULL) {
       WARN("glGenerateMipmap not found.");
       return -1;
