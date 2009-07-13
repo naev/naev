@@ -436,7 +436,8 @@ static int pilot_getPilots( lua_State *L )
       for (i=0; i<pilot_nstack; i++) {
          for (j=0; j<nfactions; j++) {
             if ((pilot_stack[i]->faction == factions[j]) &&
-                  !pilot_isDisabled(pilot_stack[i])) {
+                  !pilot_isDisabled(pilot_stack[i]) &&
+                  !pilot_isFlag(pilot_stack[i], PILOT_DELETE)) {
                lua_pushnumber(L, k++); /* key */
                p.pilot = pilot_stack[i]->id;
                lua_pushpilot(L, p); /* value */
@@ -454,7 +455,8 @@ static int pilot_getPilots( lua_State *L )
       lua_newtable(L);
       k = 1;
       for (i=0; i<pilot_nstack; i++) {
-         if (!pilot_isDisabled(pilot_stack[i])) {
+         if (!pilot_isDisabled(pilot_stack[i]) &&
+               !pilot_isFlag(pilot_stack[i], PILOT_DELETE)) {
             lua_pushnumber(L, k++); /* key */
             p.pilot = pilot_stack[i]->id;
             lua_pushpilot(L, p); /* value */

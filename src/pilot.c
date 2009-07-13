@@ -1546,8 +1546,8 @@ static void pilot_hyperspace( Pilot* p, double dt )
             player_brokeHyperspace();
          }
          else {
-            pilot_runHook( p, PILOT_HOOK_JUMP );
             pilot_setFlag(p, PILOT_DELETE); /* set flag to delete pilot */
+            pilot_runHook( p, PILOT_HOOK_JUMP );
          }
          return;
       }

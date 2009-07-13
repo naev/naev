@@ -140,6 +140,7 @@ int main( int argc, char** argv )
    }
 
    /* We'll be parsing XML. */
+   LIBXML_TEST_VERSION
    xmlInitParser();
 
    /* Input must be initialized for config to work. */

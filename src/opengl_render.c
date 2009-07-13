@@ -876,16 +876,12 @@ static glTexture *gl_genCircle( int radius )
    sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );
    pix = sur->pixels;
 
-   /* Clear pixels. */
-   memset( pix, 0, sizeof(uint32_t)*w*h );
-
    /* Generate the circle. */
    SDL_LockSurface( sur );
 
    /* Create temporary buffer to draw circle in. */
    k = 3;
    buf = malloc( (h*k) * (w*k) );
-   memset( buf, 0, (h*k) * (w*k) );
    for (i=0; i<k*h; i++) {
       for (j=0; j<k*w; j++) {
          if (pow2(i-k*radius)+pow2(j-k*radius) < pow2(k*radius))
@@ -906,14 +902,16 @@ static glTexture *gl_genCircle( int radius )
          a /= k*k;
 
          /* Set pixel. */
-         pix[i*w*4 + j*4 + 0] = 0xFF;
-         pix[i*w*4 + j*4 + 1] = 0xFF;
-         pix[i*w*4 + j*4 + 2] = 0xFF;
-         pix[i*w*4 + j*4 + 3] = (uint8_t)a;
+         pix[i*sur->pitch + j*4 + 0] = 0xFF;
+         pix[i*sur->pitch + j*4 + 1] = 0xFF;
+         pix[i*sur->pitch + j*4 + 2] = 0xFF;
+         pix[i*sur->pitch + j*4 + 3] = (uint8_t)a;
       }
    }
 
+   /* CLean up. */
    free(buf);
+
    SDL_UnlockSurface( sur );
 
    /* Return texture. */
