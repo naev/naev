@@ -80,6 +80,7 @@ static int event_mactive         = 0; /**< Allocated space for active events. */
 /*
  * Prototypes.
  */
+static int event_alreadyRunning( int data );
 static int event_parse( EventData_t *temp, const xmlNodePtr parent );
 static void event_freeData( EventData_t *event );
 static int event_create( int dataid );
@@ -303,6 +304,28 @@ void events_update( double dt )
 
 
 /**
+ * @brief Check to see if an event is already running.
+ *
+ *    @param data ID of data event to check if is already running.
+ */
+static int event_alreadyRunning( int data )
+{
+   int i;
+   Event_t *ev;
+
+   /* Find events. */
+   for (i=0; i<event_nactive; i++) {
+      ev = &event_active[i];
+      if (ev->data == data) {
+         return 1;
+      }
+   }
+
+   return 0;
+}
+
+
+/**
  * @brief Runs all the events matching a trigger.
  *
  *    @param trigger Trigger to match.
@@ -322,7 +345,7 @@ void events_trigger( EventTrigger_t trigger )
 
       /* Test uniqueness. */
       if ((event_data[i].flags & EVENT_FLAG_UNIQUE) &&
-            player_eventAlreadyDone( i ))
+            (player_eventAlreadyDone( i ) || event_alreadyRunning(i)))
          continue;
 
       /* Test conditional. */
