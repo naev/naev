@@ -336,6 +336,7 @@ static int player_newMake (void)
    /* Clean up. */
    xmlFreeDoc(doc);
    free(buf);
+   xmlCleanupParser();
 
    /* Monies. */
    player_credits = RNG(l,h);
