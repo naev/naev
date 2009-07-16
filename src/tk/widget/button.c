@@ -126,6 +126,35 @@ void window_enableButton( const unsigned int wid, char *name )
 
 
 /**
+ * @brief Changes the button caption.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the button to change caption.
+ *    @param display New caption to display.
+ */
+void window_buttonCaption( const unsigned int wid, char *name, char *display )
+{
+
+   Widget *wgt;
+  
+   /* Get widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+
+   /* Check type. */
+   if (wgt->type != WIDGET_BUTTON) {
+      DEBUG("Trying to enable a non-button widget '%s'", name);
+      return;
+   }
+
+   if (wgt->dat.btn.display != NULL)
+      free(wgt->dat.btn.display);
+   wgt->dat.btn.display = strdup(display);
+}
+
+
+/**
  * @brief Handles input for an button widget.
  *
  *    @param btn Button widget to handle event.

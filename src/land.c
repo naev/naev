@@ -65,12 +65,14 @@ static unsigned int land_visited = 0; /**< Contains what the player visited. */
 /*
  * The window interfaces.
  */
+#define LAND_NUMWINDOWS          7 /**< Number of land windows. */
 #define LAND_WINDOW_MAIN         0 /**< Main window. */
 #define LAND_WINDOW_BAR          1 /**< Bar window. */
 #define LAND_WINDOW_MISSION      2 /**< Mission computer window. */
 #define LAND_WINDOW_OUTFITS      3 /**< Outfits window. */
 #define LAND_WINDOW_SHIPYARD     4 /**< Shipyard window. */
-#define LAND_WINDOW_COMMODITY    5 /**< Commodity window. */
+#define LAND_WINDOW_EQUIPMENT    5 /**< Equipment window. */
+#define LAND_WINDOW_COMMODITY    6 /**< Commodity window. */
 
 
 
@@ -79,15 +81,16 @@ static unsigned int land_visited = 0; /**< Contains what the player visited. */
  */
 int landed = 0; /**< Is player landed. */
 static unsigned int land_wid = 0; /**< Land window ID. */
-static const char *land_windowNames[] = {
+static const char *land_windowNames[LAND_NUMWINDOWS] = {
    "Landing Main",
    "Spaceport Bar",
    "Mission",
    "Outfits",
    "Shipyard",
+   "Equipment",
    "Commodity"
 };
-static int land_windowsMap[6]; /**< Mapping of windows. */
+static int land_windowsMap[LAND_NUMWINDOWS]; /**< Mapping of windows. */
 static unsigned int *land_windows = NULL; /**< Landed window ids. */
 Planet* land_planet = NULL; /**< Planet player landed at. */
 static glTexture *gfx_exterior = NULL; /**< Exterior graphic of the landed planet. */
@@ -139,13 +142,17 @@ static void shipyard_open( unsigned int wid );
 static void shipyard_update( unsigned int wid, char* str );
 static void shipyard_info( unsigned int wid, char* str );
 static void shipyard_buy( unsigned int wid, char* str );
-/* your ships */
-static void shipyard_yours_open( unsigned int parent, char* str );
-static void shipyard_yoursUpdate( unsigned int wid, char* str );
-static void shipyard_yoursChange( unsigned int wid, char* str );
-static void shipyard_yoursSell( unsigned int wid, char* str );
-static void shipyard_yoursTransport( unsigned int wid, char* str );
-static unsigned int shipyard_yoursTransportPrice( char* shipname );
+/* equipment */
+static void equipment_open( unsigned int wid );
+static void equipment_genLists( unsigned int wid );
+static void equipment_update( unsigned int wid, char* str );
+static void equipment_close( unsigned int wid, char* str );
+static void equipment_sellShip( unsigned int wid, char* str );
+static void equipment_transChangeShip( unsigned int wid, char* str );
+static void equipment_changeShip( unsigned int wid );
+static void equipment_transportShip( unsigned int wid );
+static void equipment_unequipShip( unsigned int wid, char* str );
+static unsigned int equipment_transportPrice( char *shipname );
 /* spaceport bar */
 static void spaceport_bar_getDim( int wid,
       int *w, int *h, int *iw, int *ih, int *bw, int *bh );
@@ -523,8 +530,6 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
 static void outfits_buy( unsigned int wid, char* str )
 {
    (void) str;
-   (void) wid;
-#if 0
    char *outfitname;
    Outfit* outfit;
    int q;
@@ -538,11 +543,9 @@ static void outfits_buy( unsigned int wid, char* str )
    if (outfit_canBuy(outfit, q, 1) == 0)
       return;
 
-   player->credits -= outfit->price * pilot_addOutfit( player, outfit,
-         MIN(q,outfit->max) );
+   player->credits -= outfit->price * player_addOutfit( outfit, q );
    land_checkAddRefuel();
    outfits_update(wid, NULL);
-#endif
 }
 /**
  * @brief Checks to see if the player can sell the selected outfit.
@@ -552,43 +555,12 @@ static void outfits_buy( unsigned int wid, char* str )
  */
 static int outfit_canSell( Outfit* outfit, int q, int errmsg )
 {
-   int i;
-
+   (void) q;
    /* has no outfits to sell */
    if (player_outfitOwned(outfit) <= 0) {
       if (errmsg != 0)
          dialogue_alert( "You can't sell something you don't have." );
       return 0;
-   }
-   /* can't sell when you are using it */
-   else if (outfit_isMod(outfit) && (pilot_cargoFree(player) < outfit->u.mod.cargo*q)) {
-      if (errmsg != 0)
-         dialogue_alert( "You currently have cargo in this modification." );
-      return 0;
-   }
-   /* Make sure no fighters are left stranded. */
-   else if (outfit_isFighterBay(outfit)) {
-      for (i=0; i<player->noutfits; i++) {
-         if (player->outfits[i]->outfit == outfit) {
-            if (player->outfits[i]->u.deployed > 0) {
-               if (errmsg != 0)
-                  dialogue_alert( "You can't leave the fighters stranded, dock them first." );
-               return 0;
-            }
-            break;
-         }
-      }
-   }
-   /* Make sure they don't sell virtual fighters. */
-   else if (outfit_isFighter(outfit)) {
-      for (i=0; i<player->noutfits; i++)
-         if (player->outfits[i]->outfit == outfit)
-            break;
-      if (i >= player->noutfits) {
-         if (errmsg != 0)
-            dialogue_alert( "You can't sell undocked fighters." );
-         return 0;
-      }
    }
 
    return 1;
@@ -600,9 +572,6 @@ static int outfit_canSell( Outfit* outfit, int q, int errmsg )
  */
 static void outfits_sell( unsigned int wid, char* str )
 {
-   (void) wid;
-   (void) str;
-#if 0
    (void)str;
    char *outfitname;
    Outfit* outfit;
@@ -617,10 +586,9 @@ static void outfits_sell( unsigned int wid, char* str )
    if (outfit_canSell( outfit, q, 1 ) == 0)
       return;
 
-   player->credits += outfit->price * pilot_rmOutfit( player, outfit, q );
+   player->credits += outfit->price * player_rmOutfit( outfit, q );
    land_checkAddRefuel();
    outfits_update(wid, NULL);
-#endif
 }
 /**
  * @brief Gets the current modifier status.
@@ -695,9 +663,6 @@ static void shipyard_open( unsigned int wid )
    window_addButton( wid, -20, 20,
          bw, bh, "btnCloseShipyard",
          "Takeoff", land_buttonTakeoff );
-   window_addButton( wid, -20, 40+bh,
-         bw, bh, "btnYourShips",
-         "Your Ships", shipyard_yours_open );
    window_addButton( wid, -40-bw, 20,
          bw, bh, "btnBuyShip",
          "Buy", shipyard_buy );
@@ -784,10 +749,6 @@ static void shipyard_update( unsigned int wid, char* str )
    }
 
    ship = ship_get( shipname );
-
-   /* toggle your shipyard */
-   if (player_nships()==0) window_disableButton(wid,"btnYourShips");
-   else window_enableButton(wid,"btnYourShips");
 
    /* update image */
    window_modifyImage( wid, "imgTarget", ship->gfx_target );
@@ -881,52 +842,44 @@ static void shipyard_buy( unsigned int wid, char* str )
 
    shipyard_update(wid, NULL);
 }
+
+
 /**
- * @brief Opens the player's ship window.
- *    @param parent Unused.
- *    @param str Unused.
+ * @brief Opens the player's equipment window.
  */
-static void shipyard_yours_open( unsigned int parent, char* str )
+static void equipment_open( unsigned int wid )
 {
-   (void) str;
-   char **sships;
-   glTexture **tships;
-   int nships;
-   unsigned int wid;
    int w, h;
-   int iw, ih;
+   int sw, sh;
+   int ow, oh;
    int bw, bh;
 
    /* Get window dimensions. */
-   window_dimWindow( parent, &w, &h );
-   h += 30;
+   window_dimWindow( wid, &w, &h );
 
    /* Calculate image array dimensions. */
-   iw = 310;
-   ih = h - 60;
+   sw = 200;
+   sh = (h - 100)/2;
+   ow = sw;
+   oh = sh;
 
    /* Calculate button dimensions. */
-   bw = (w - iw - 80) / 2;
+   bw = (w - 20 - sw - 40 - 20 - 60) / 4;
    bh = BUTTON_HEIGHT;
-
-   /* create window */
-   wid = window_create( "Your Ships",
-         -1, -1, w, h);
-   window_setParent( wid, parent );
 
    /* buttons */
    window_addButton( wid, -20, 20,
-         bw, bh, "btnCloseYourShips",
-         "Shipyard", window_close );
-   window_addButton( wid, -40-bw, 20,
-         bw, bh, "btnChangeShip",
-         "Change Ship", shipyard_yoursChange );
-   window_addButton( wid, -40-bw, 40+bh,
-         bw, bh, "btnTransportShip",
-         "Transport Ship", shipyard_yoursTransport );
-   window_addButton( wid, -20, 40+bh,
+         bw, bh, "btnCloseEquipment",
+         "Takeoff", land_buttonTakeoff );
+   window_addButton( wid, -20 - (20+bw), 20,
          bw, bh, "btnSellShip",
-         "Sell Ship", shipyard_yoursSell );
+         "Sell Ship", equipment_sellShip );
+   window_addButton( wid, -20 - (20+bw)*2, 20,
+         bw, bh, "btnChangeShip",
+         "Swap Ships", equipment_transChangeShip );
+   window_addButton( wid, -20 - (20+bw)*3, 20,
+         bw, bh, "btnUnequipShip",
+         "Unequip", equipment_unequipShip );
 
    /* image */
    window_addRect( wid, -40, -50,
@@ -957,23 +910,71 @@ static void shipyard_yours_open( unsigned int parent, char* str )
       w-40-300-40-20, 200, 0, "txtDOutfits",
       &gl_smallFont, &cBlack, NULL );
 
-   /* ship list */
-   nships = MAX(1,player_nships());
-   sships = malloc(sizeof(char*)*nships);
-   tships = malloc(sizeof(glTexture*)*nships);
-   player_ships( sships, tships );
-   window_addImageArray( wid, 20, 20,
-         iw, ih, "iarYourShips", 64./96.*128., 64.,
-         tships, sships, nships, shipyard_yoursUpdate );
+   /* Generate lists. */
+   window_addText( wid, 30, -20,
+         130, 200, 0, "txtShipTitle", &gl_smallFont, &cBlack, "Available Ships" );
+   window_addText( wid, 30, -40-sw-40-20,
+         130, 200, 0, "txtOutfitTitle", &gl_smallFont, &cBlack, "Available Outfits" );
+   equipment_genLists( wid );
 
-   shipyard_yoursUpdate(wid, NULL);
+   /* Seperator. */
+   window_addRect( wid, 20 + sw + 20, -40, 2, h-60, "rctDivider", &cBlack, 0 );
+}
+/**
+ * @brief Generates a new ship/outfit lists if needed.
+ */
+static void equipment_genLists( unsigned int wid )
+{
+   char **sships;
+   glTexture **tships;
+   int nships;
+   char **soutfits;
+   glTexture **toutfits;
+   int noutfits;
+   int w, h;
+   int sw, sh;
+   int ow, oh;
+
+   /* Get window dimensions. */
+   window_dimWindow( wid, &w, &h );
+
+   /* Calculate image array dimensions. */
+   sw = 200;
+   sh = (h - 100)/2;
+   ow = sw;
+   oh = sh;
+
+   /* Ship list. */
+   if (!widget_exists( wid, "iarAvailShips" )) {
+      nships = MAX(1,player_nships());
+      sships = malloc(sizeof(char*)*nships);
+      tships = malloc(sizeof(glTexture*)*nships);
+      player_ships( sships, tships );
+      window_addImageArray( wid, 20, -40,
+            sw, sh, "iarAvailShips", 64./96.*128., 64.,
+            tships, sships, nships, equipment_update );
+   }
+
+   /* Outfit list. */
+   if (!widget_exists( wid ,"iarAvailOutfits" )) {
+      noutfits = MAX(1,player_numOutfits());
+      soutfits = malloc(sizeof(char*)*noutfits);
+      toutfits = malloc(sizeof(glTexture*)*noutfits);
+      player_getOutfits( soutfits, toutfits );
+      window_addImageArray( wid, 20, -40 - sh - 40,
+            sw, sh, "iarAvailOutfits", 64./96.*128., 64.,
+            toutfits, soutfits, noutfits, NULL );
+   }
+
+   /* Update window. */
+   equipment_update(wid, NULL);
 }
 /**
  * @brief Updates the player's ship window.
  *    @param wid Window to update.
  *    @param str Unused.
  */
-static void shipyard_yoursUpdate( unsigned int wid, char* str )
+static void equipment_update( unsigned int wid, char* str )
 {
    (void)str;
    char buf[256], buf2[16], buf3[16], *buf4;
@@ -982,16 +983,16 @@ static void shipyard_yoursUpdate( unsigned int wid, char* str )
    char* loc;
    unsigned int price;
 
-   shipname = toolkit_getImageArray( wid, "iarYourShips" );
+   shipname = toolkit_getImageArray( wid, "iarAvailShips" );
    if (strcmp(shipname,"None")==0) { /* no ships */
-      window_disableButton( wid, "btnChangeShip" );
-      window_disableButton( wid, "btnTransportShip" );
       window_disableButton( wid, "btnSellShip" );
+      window_disableButton( wid, "btnChangeShip" );
+      window_disableButton( wid, "btnUnequipShip" );
       return;
    }
-   ship = player_getShip( shipname );
-   loc = player_getLoc(ship->name);
-   price = shipyard_yoursTransportPrice(shipname);
+   ship  = player_getShip( shipname );
+   loc   = player_getLoc(ship->name);
+   price = equipment_transportPrice( shipname );
 
    /* update image */
    window_modifyImage( wid, "imgTarget", ship->ship->gfx_target );
@@ -1024,26 +1025,57 @@ static void shipyard_yoursUpdate( unsigned int wid, char* str )
 
    /* button disabling */
    if (strcmp(land_planet->name,loc)) { /* ship not here */
-      window_disableButton( wid, "btnChangeShip" );
+      window_buttonCaption( wid, "btnChangeShip", "Transport" );
       if (price > player->credits)
-         window_disableButton( wid, "btnTransportShip" );
-      else window_enableButton( wid, "btnTransportShip" );
+         window_disableButton( wid, "btnChangeShip" );
+      else
+         window_enableButton( wid, "btnChangeShip" );
    }
    else { /* ship is here */
+      window_buttonCaption( wid, "btnChangeShip", "Swap Ship" );
       window_enableButton( wid, "btnChangeShip" );
-      window_disableButton( wid, "btnTransportShip" );
    }
    /* If ship is there you can always sell. */
    window_enableButton( wid, "btnSellShip" );
 }
 /**
- * @brief Player attempts to change ship.
+ * @brief Closes the equipment window.
+ */
+static void equipment_close( unsigned int wid, char* str )
+{
+}
+/**
+ * @brief Changes or transport depending on what is active.
  *    @param wid Window player is attempting to change ships in.
  *    @param str Unused.
  */
-static void shipyard_yoursChange( unsigned int wid, char* str )
+static void equipment_transChangeShip( unsigned int wid, char* str )
 {
-   (void)str;
+   (void) str;
+   char *shipname;
+   Pilot *ship;
+   char* loc;
+
+   shipname = toolkit_getImageArray( wid, "iarAvailShips" );
+   if (strcmp(shipname,"None")==0) /* no ships */
+      return;
+   ship  = player_getShip( shipname );
+   loc   = player_getLoc( ship->name );
+
+   if (strcmp(land_planet->name,loc)) /* ship not here */
+      equipment_transportShip( wid );
+   else
+      equipment_changeShip( wid );
+
+   /* update the window to reflect the change */
+   equipment_update( wid, NULL );
+}
+/**
+ * @brief Player attempts to change ship.
+ *    @param wid Window player is attempting to change ships in.
+ */
+static void equipment_changeShip( unsigned int wid )
+{
    char *shipname, *loc;
    Pilot *newship;
 
@@ -1070,17 +1102,51 @@ static void shipyard_yoursChange( unsigned int wid, char* str )
    }
 
    player_swapShip(shipname);
+}
+/**
+ * @brief Player attempts to transport his ship to the planet he is at.
+ *    @param wid Window player is trying to transport his ship from.
+ */
+static void equipment_transportShip( unsigned int wid )
+{
+   unsigned int price;
+   char *shipname, buf[16];
 
-   /* recreate the window */
-   window_destroy(wid);
-   shipyard_yours_open( land_getWid(LAND_WINDOW_SHIPYARD), NULL);
+   shipname = toolkit_getImageArray( wid, "iarYourShips" );
+   if (strcmp(shipname,"None")==0) { /* no ships */
+      dialogue_alert( "You can't transport nothing here!" );
+      return;
+   }
+
+   price = equipment_transportPrice( shipname );
+   if (price==0) { /* already here */
+      dialogue_alert( "Your ship '%s' is already here.", shipname );
+      return;
+   }
+   else if (player->credits < price) { /* not enough money */
+      credits2str( buf, price-player->credits, 2 );
+      dialogue_alert( "You need %d more credits to transport '%s' here.",
+            buf, shipname );
+      return;
+   }
+
+   /* success */
+   player->credits -= price;
+   land_checkAddRefuel();
+   player_setLoc( shipname, land_planet->name );
+}
+/**
+ * @brief Unequips the player's ship.
+ */
+static void equipment_unequipShip( unsigned int wid, char* str )
+{
 }
 /**
  * @brief Player tries to sell a ship.
  *    @param wid Window player is selling ships in.
  *    @param str Unused.
  */
-static void shipyard_yoursSell( unsigned int wid, char* str )
+static void equipment_sellShip( unsigned int wid, char* str )
 {
    (void)str;
    char *shipname, buf[16];
@@ -1108,54 +1174,13 @@ static void shipyard_yoursSell( unsigned int wid, char* str )
    player_rmShip( shipname );
    dialogue_msg( "Ship Sold", "You have sold your ship %s for %s credits.",
          shipname, buf );
-
-   /* recreate the window */
-   window_destroy(wid);
-   shipyard_yours_open( land_getWid(LAND_WINDOW_SHIPYARD), NULL);
-}
-/**
- * @brief Player attempts to transport his ship to the planet he is at.
- *    @param wid Window player is trying to transport his ship from.
- *    @param str Unused.
- */
-static void shipyard_yoursTransport( unsigned int wid, char* str )
-{
-   (void)str;
-   unsigned int price;
-   char *shipname, buf[16];
-
-   shipname = toolkit_getImageArray( wid, "iarYourShips" );
-   if (strcmp(shipname,"None")==0) { /* no ships */
-      dialogue_alert( "You can't transport nothing here!" );
-      return;
-   }
-
-   price = shipyard_yoursTransportPrice( shipname );
-   if (price==0) { /* already here */
-      dialogue_alert( "Your ship '%s' is already here.", shipname );
-      return;
-   }
-   else if (player->credits < price) { /* not enough money */
-      credits2str( buf, price-player->credits, 2 );
-      dialogue_alert( "You need %d more credits to transport '%s' here.",
-            buf, shipname );
-      return;
-   }
-
-   /* success */
-   player->credits -= price;
-   land_checkAddRefuel();
-   player_setLoc( shipname, land_planet->name );
-
-   /* update the window to reflect the change */
-   shipyard_yoursUpdate(wid, NULL);
 }
 /**
  * @brief Gets the ship's transport price.
  *    @param shipname Name of the ship to get the transport price.
  *    @return The price to transport the ship to the current planet.
  */
-static unsigned int shipyard_yoursTransportPrice( char* shipname )
+static unsigned int equipment_transportPrice( char* shipname )
 {
    char *loc;
    Pilot* ship;
@@ -1719,7 +1744,7 @@ static unsigned int land_getWid( int window )
 void land( Planet* p )
 {
    int i, j;
-   const char *names[6];
+   const char *names[LAND_NUMWINDOWS];
 
    /* Do not land twice. */
    if (landed)
@@ -1749,30 +1774,32 @@ void land( Planet* p )
       news_load();
 
    /* Set window map to invald. */
-   for (i=0; i<6; i++)
+   for (i=0; i<LAND_NUMWINDOWS; i++)
       land_windowsMap[i] = -1;
 
    /* See what is available. */
    j = 0;
-   land_windowsMap[0] = j;
-   names[j++] = land_windowNames[0];
+   land_windowsMap[LAND_WINDOW_MAIN] = j;
+   names[j++] = land_windowNames[LAND_WINDOW_MAIN];
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
-      land_windowsMap[1] = j;
-      names[j++] = land_windowNames[1];
-      land_windowsMap[2] = j;
-      names[j++] = land_windowNames[2];
+      land_windowsMap[LAND_WINDOW_BAR] = j;
+      names[j++] = land_windowNames[LAND_WINDOW_BAR];
+      land_windowsMap[LAND_WINDOW_MISSION] = j;
+      names[j++] = land_windowNames[LAND_WINDOW_MISSION];
    }
    if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS)) {
-      land_windowsMap[3] = j;
-      names[j++] = land_windowNames[3];
+      land_windowsMap[LAND_WINDOW_OUTFITS] = j;
+      names[j++] = land_windowNames[LAND_WINDOW_OUTFITS];
    }
    if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
-      land_windowsMap[4] = j;
-      names[j++] = land_windowNames[4];
+      land_windowsMap[LAND_WINDOW_SHIPYARD] = j;
+      names[j++] = land_windowNames[LAND_WINDOW_SHIPYARD];
+      land_windowsMap[LAND_WINDOW_EQUIPMENT] = j;
+      names[j++] = land_windowNames[LAND_WINDOW_EQUIPMENT];
    }
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY)) {
-      land_windowsMap[5] = j;
-      names[j++] = land_windowNames[5];
+      land_windowsMap[LAND_WINDOW_COMMODITY] = j;
+      names[j++] = land_windowNames[LAND_WINDOW_COMMODITY];
    }
 
    /* Create tabbed window. */
@@ -1787,12 +1814,14 @@ void land( Planet* p )
    land_createMainTab( land_getWid(LAND_WINDOW_MAIN) );
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
       spaceport_bar_open( land_getWid(LAND_WINDOW_BAR) );
-      misn_open( land_windows[2] );
+      misn_open( land_getWid(LAND_WINDOW_MISSION) );
    }
    if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS))
       outfits_open( land_getWid(LAND_WINDOW_OUTFITS) );
-   if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
+   if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
       shipyard_open( land_getWid(LAND_WINDOW_SHIPYARD) );
+      equipment_open( land_getWid(LAND_WINDOW_EQUIPMENT) );
+   }
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
       commodity_exchange_open( land_getWid(LAND_WINDOW_COMMODITY) );
 
@@ -1881,7 +1910,7 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
    (void) wid;
    (void) wgt;
 
-   for (i=0; i<6; i++) {
+   for (i=0; i<LAND_NUMWINDOWS; i++) {
       if (land_windowsMap[i] == tab) {
          last_window = tab;
          break;

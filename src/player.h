@@ -90,12 +90,11 @@ void player_stopSound (void);
 void player_soundPause (void);
 void player_soundResume (void);
 /* cargo */
-int player_outfitOwned( const Outfit *o );
 int player_cargoOwned( const char* commodityname );
 
 
 /*
- * pilot ships
+ * player ships
  */
 void player_ships( char** sships, glTexture** tships );
 int player_nships (void);
@@ -106,17 +105,30 @@ void player_swapShip( char* shipname );
 int player_shipPrice( char* shipname );
 void player_rmShip( char* shipname );
 
+
+/*
+ * player outfits.
+ */
+int player_outfitOwned( const Outfit *o );
+void player_getOutfits( char** soutfits, glTexture** toutfits );
+int player_numOutfits (void);
+int player_addOutfit( const Outfit *o, int quantity );
+int player_rmOutfit( const Outfit *o, int quantity );
+
+
 /*
  * player missions
  */
 void player_missionFinished( int id );
 int player_missionAlreadyDone( int id );
 
+
 /*
  * player events
  */
 void player_eventFinished( int id );
 int player_eventAlreadyDone( int id );
+
 
 /*
  * licenses
@@ -125,11 +137,13 @@ void player_addLicense( char *license );
 int player_hasLicense( char *license );
 char **player_getLicenses( int *nlicenses );
 
+
 /*
  * escorts
  */
 void player_clearEscorts (void);
 int player_addEscorts (void);
+
 
 /*
  * pilot related stuff

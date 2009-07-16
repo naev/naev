@@ -105,6 +105,22 @@ static char** player_lstack   = NULL; /**< Names of the planet the ships are at.
 static int player_nstack      = 0; /**< Number of ships player has. */
 
 
+/*
+ * player outfit stack - outfits he has
+ */
+/**
+ * @brief Wrapper for outfits.
+ */
+typedef struct PlayerOutfit_s {
+   const Outfit *o; /**< Actual assosciated outfit. */
+   int q; /**< Amount of outfit owned. */
+} PlayerOutfit_t;
+static PlayerOutfit_t *player_outfits  = NULL; /**< Outfits player has. */
+static int player_noutfits             = 0; /**< Number of outfits player has. */
+static int player_moutfits             = 0; /**< Current allocated memory. */
+#define OUTFIT_CHUNKSIZE               32 /**< Allocation chunk size. */
+
+
 /* 
  * player global properties
  */
@@ -583,18 +599,25 @@ void player_cleanup (void)
    gui_cleanup();
 
    /* clean up the stack */
-   if (player_nstack > 0) {                
-      for (i=0; i<player_nstack; i++) {
-         pilot_free(player_stack[i]);
-         free(player_lstack[i]);
-      }
-      free(player_stack);
-      player_stack = NULL;
-      free(player_lstack);
-      player_lstack = NULL;
-      /* nothing left */
-      player_nstack = 0;
+   for (i=0; i<player_nstack; i++) {
+      pilot_free(player_stack[i]);
+      free(player_lstack[i]);
    }
+   if (player_stack != NULL)
+      free(player_stack);
+   player_stack = NULL;
+   if (player_lstack != NULL)
+      free(player_lstack);
+   player_lstack = NULL;
+   /* nothing left */
+   player_nstack = 0;
+
+   /* Free outfits. */
+   if (player_outfits != NULL)
+      free(player_outfits);
+   player_outfits  = NULL;
+   player_noutfits = 0;
+   player_moutfits = 0;
 
    /* clean up missions */
    if (missions_done != NULL)
@@ -727,48 +750,6 @@ const char* player_rating (void)
    else if (player_crating < 2500.) return player_ratings[5];
    else if (player_crating < 10000.) return player_ratings[6];
    else return player_ratings[7];
-}
-
-
-/**
- * @brief Gets how many of the outfit the player owns.
- *
- *    @param outfitname Outfit to check how many the player owns.
- *    @return The number of outfits matching outfitname owned.
- */
-int player_outfitOwned( const Outfit* o )
-{
-   int i, j;
-   int deployed;
-   int q;
-
-   /* Defaults. */
-   q = 0;
-
-   /* Get base quantity. */
-   for (i=0; i<player->noutfits; i++) {
-      if (player->outfits[i]->outfit == o) {
-         q++;
-      }
-   }
-
-   /* Fighter bays need to count deployed. */
-   if (outfit_isFighter(o)) {
-      deployed = 0;
-      for (j=0; j<player->noutfits; j++) {
-         if (player->outfits[i]->outfit == NULL)
-            continue;
-         if (outfit_isFighterBay(player->outfits[j]->outfit)) {
-            if (strcmp(o->name,player->outfits[j]->outfit->u.bay.ammo_name)==0) {
-               deployed = player->outfits[j]->u.deployed;
-               break;
-            }
-         }
-      }
-      q += deployed;
-   }
-
-   return q;
 }
 
 
@@ -1830,6 +1811,134 @@ void player_setLoc( char* shipname, char* loc )
 
 
 /**
+ * @brief Gets how many of the outfit the player owns.
+ *
+ *    @param outfitname Outfit to check how many the player owns.
+ *    @return The number of outfits matching outfitname owned.
+ */
+int player_outfitOwned( const Outfit* o )
+{
+   int i;
+
+   /* Try to find it. */
+   for (i=0; i<player_noutfits; i++) {
+      if (player_outfits[i].o == o) {
+         return player_outfits[i].q;
+      }
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Prepares two arrays for displaying in an image array.
+ *
+ *    @param[out] soutfits Names of outfits to .
+ *    @param[out] toutfits Textures of outfits for image array.
+ */
+void player_getOutfits( char** soutfits, glTexture** toutfits )
+{
+   int i;
+
+   if (player_noutfits == 0) {
+      soutfits[0] = strdup( "None" );
+      toutfits[0] = NULL;
+      return;
+   }
+
+   for (i=0; i<player_noutfits; i++) {
+      soutfits[i] = strdup( player_outfits[i].o->name );
+      toutfits[i] = player_outfits[i].o->gfx_store;
+   }
+}
+
+
+/**
+ * @brief Gets the amount of different outfits in the player outfit stack.
+ *
+ *    @return Amount of different outfits.
+ */
+int player_numOutfits (void)
+{
+   return player_noutfits;
+}
+
+
+/**
+ * @brief Adds an outfit to the player outfit stack.
+ *
+ *    @param o Outfit to add.
+ *    @param quantity Amount to add.
+ *    @return Amount added.
+ */
+int player_addOutfit( const Outfit *o, int quantity )
+{
+   int i;
+
+   /* Sanity check. */
+   if (quantity == 0)
+      return 0;
+
+   /* Try to find it. */
+   for (i=0; i<player_noutfits; i++) {
+      if (player_outfits[i].o == o) {
+         o += quantity;
+         return quantity;
+      }
+   }
+
+   /* Allocate if needed. */
+   player_noutfits++;
+   if (player_noutfits > player_moutfits) {
+      player_moutfits += OUTFIT_CHUNKSIZE;
+      player_outfits = realloc( player_outfits,
+            sizeof(PlayerOutfit_t) * player_moutfits );
+   }
+
+   /* Add the outfit. */
+   player_outfits[player_noutfits-1].o = o;
+   player_outfits[player_noutfits-1].q = quantity;
+   return quantity;
+}
+
+
+/**
+ * @brief Remove an outfit from the player's outfit stack.
+ *
+ *    @param o Outfit to remove.
+ *    @param quantity Amount to remove.
+ *    @return Amount removed.
+ */
+int player_rmOutfit( const Outfit *o, int quantity )
+{
+   int i, q;
+
+   /* Try to find it. */
+   for (i=0; i<player_noutfits; i++) {
+      if (player_outfits[i].o == o) {
+         /* See how many to remove. */
+         q = MIN( player_outfits[i].q, quantity );
+         player_outfits[i].q -= q;
+
+         /* See if must remove element. */
+         if (player_outfits[i].q <= 0) {
+            player_noutfits--;
+            memmove( &player_outfits[i], &player_outfits[i+1],
+                  sizeof(PlayerOutfit_t) * (player_noutfits-i) );
+         }
+
+         /* Return removed outfits. */
+         return q;
+      }
+   }
+
+   /* Nothing removed. */
+   return 0;
+}
+
+
+/**
  * @brief Marks a mission as completed.
  *
  *    @param id ID of the mission to mark as completed.
@@ -2049,6 +2158,16 @@ int player_save( xmlTextWriterPtr writer )
       player_saveShip( writer, player_stack[i], player_lstack[i] );
    xmlw_endElem(writer); /* "ships" */
 
+   /* Outfits. */
+   xmlw_startElem(writer,"outfits");
+   for (i=0; i<player_noutfits; i++) {
+      xmlw_startElem(writer,"outfit");
+      xmlw_attr(writer,"amount","%d",player_outfits[i].q);
+      xmlw_str(writer,player_outfits[i].o->name);
+      xmlw_endElem(writer); /* "outfit" */
+   }
+   xmlw_endElem(writer); /* "outfits" */
+
    /* Licenses. */
    xmlw_startElem(writer,"licenses");
    for (i=0; i<player_nlicenses; i++)
@@ -2225,10 +2344,12 @@ int player_load( xmlNodePtr parent )
 static int player_parse( xmlNodePtr parent )
 {
    unsigned int player_time;
-   char* planet;
+   char* planet, *str;
    Planet* pnt;
    int sw,sh;
    xmlNodePtr node, cur;
+   int q;
+   Outfit *o;
 
    node = parent->xmlChildrenNode;
 
@@ -2244,7 +2365,8 @@ static int player_parse( xmlNodePtr parent )
 
       if (xml_isNode(node,"ship"))
          player_parseShip(node, 1);
-      
+     
+      /* Parse ships. */
       else if (xml_isNode(node,"ships")) {
          cur = node->xmlChildrenNode;
          do {
@@ -2253,6 +2375,26 @@ static int player_parse( xmlNodePtr parent )
          } while (xml_nextNode(cur));
       }
 
+      /* Parse outfits. */
+      else if (xml_isNode(node,"outfits")) {
+         cur = node->xmlChildrenNode;
+         do {
+            if (xml_isNode(cur,"outfit")) {
+               xmlr_attr( node, "type", str );
+               if (str != NULL) {
+                  q = atoi(str);
+                  free(str);
+               }
+               else
+                  q = 0;
+               o = outfit_get( xml_get(cur) );
+               if (o != NULL)
+                  player_addOutfit( o, q );
+            }
+         } while (xml_nextNode(cur));
+      }
+
+      /* Parse licenses. */
       else if (xml_isNode(node,"licenses"))
          player_parseLicenses(node);
 
