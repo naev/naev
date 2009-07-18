@@ -932,6 +932,7 @@ static int pilotL_addOutfit( lua_State *L )
    for (i=0; i<p->noutfits; i++) {
       if (o->slot == p->outfits[i]->slot) {
          ret = pilot_addOutfit( p, o, p->outfits[i] );
+         break;
       }
    }
    lua_pushboolean(L,!ret);
