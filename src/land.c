@@ -1079,7 +1079,7 @@ static void equipment_changeShip( unsigned int wid )
    char *shipname, *loc;
    Pilot *newship;
 
-   shipname = toolkit_getImageArray( wid, "iarYourShips" );
+   shipname = toolkit_getImageArray( wid, "iarAvailShips" );
    newship = player_getShip(shipname);
    if (strcmp(shipname,"None")==0) { /* no ships */
       dialogue_alert( "You need another ship to change ships!" );
@@ -1101,7 +1101,12 @@ static void equipment_changeShip( unsigned int wid )
       return;
    }
 
+   /* Swap ship. */
    player_swapShip(shipname);
+
+   /* Destroy widget. */
+   window_destroyWidget( wid, "iarAvailShips" );
+   equipment_genLists( wid );
 }
 /**
  * @brief Player attempts to transport his ship to the planet he is at.
@@ -1112,7 +1117,7 @@ static void equipment_transportShip( unsigned int wid )
    unsigned int price;
    char *shipname, buf[16];
 
-   shipname = toolkit_getImageArray( wid, "iarYourShips" );
+   shipname = toolkit_getImageArray( wid, "iarAvailShips" );
    if (strcmp(shipname,"None")==0) { /* no ships */
       dialogue_alert( "You can't transport nothing here!" );
       return;
@@ -1152,7 +1157,7 @@ static void equipment_sellShip( unsigned int wid, char* str )
    char *shipname, buf[16];
    int price;
 
-   shipname = toolkit_getImageArray( wid, "iarYourShips" );
+   shipname = toolkit_getImageArray( wid, "iarAvailShips" );
    if (strcmp(shipname,"None")==0) { /* no ships */
       dialogue_alert( "You can't sell nothing!" );
       return;
