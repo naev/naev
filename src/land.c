@@ -1904,7 +1904,14 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
 
    for (i=0; i<6; i++) {
       if (land_windowsMap[i] == tab) {
-         last_window = tab;
+         last_window = i;
+
+         /* Must regenerate outfits. */
+         if (i==LAND_WINDOW_EQUIPMENT) {
+            window_destroyWidget( land_windows[i], "iarAvailOutfits" );
+            equipment_genLists( land_windows[i] );
+         }
+
          break;
       }
    }
