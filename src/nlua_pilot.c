@@ -271,13 +271,15 @@ static int pilot_addFleet( lua_State *L )
       if (strcmp(fltai, "def")==0) /* Check if set to default */
          fltai = NULL;
    }
-   else fltai = NULL;
+   else
+      fltai = NULL;
 
    /* Parse third argument - Position */
    if (lua_gettop(L) > 2) {
       lv = luaL_checkvector(L,3);
    }
-   else lv = NULL;
+   else
+      lv = NULL;
 
    if (lua_gettop(L) > 3) {
       jump = lua_toboolean(L,4);
