@@ -22,18 +22,27 @@ function pilot_outfitAdd( p, o, outfits )
    end
 end
 function _insertOutfit( p, o, name, quantity )
-   local q
+   local q = 0
    -- If pilot actually exists, add outfit
    if type(p) == "userdata" then
-      q = p:addOutfit( name, quantity )
+      local i = quantity
+      while i > 0 do
+         local added = p:addOutfit( name )
+         if not added then
+            break
+         end
+         i = i - 1
+         q = q + 1
+      end
    else
       q = quantity
    end
 
    -- Must have quantity
-   if q <= 0 then
+   if q > 0 then
       return
    end
+
    -- Try to find in table first
    for k,v in ipairs(o) do
       if v[1] == name then
