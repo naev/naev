@@ -1883,7 +1883,7 @@ int player_addOutfit( const Outfit *o, int quantity )
    /* Try to find it. */
    for (i=0; i<player_noutfits; i++) {
       if (player_outfits[i].o == o) {
-         o += quantity;
+         player_outfits[i].q += quantity;
          return quantity;
       }
    }
@@ -2162,7 +2162,7 @@ int player_save( xmlTextWriterPtr writer )
    xmlw_startElem(writer,"outfits");
    for (i=0; i<player_noutfits; i++) {
       xmlw_startElem(writer,"outfit");
-      xmlw_attr(writer,"amount","%d",player_outfits[i].q);
+      xmlw_attr(writer,"quantity","%d",player_outfits[i].q);
       xmlw_str(writer,player_outfits[i].o->name);
       xmlw_endElem(writer); /* "outfit" */
    }
@@ -2380,16 +2380,23 @@ static int player_parse( xmlNodePtr parent )
          cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur,"outfit")) {
-               xmlr_attr( node, "type", str );
+               o = outfit_get( xml_get(cur) );
+               if (o == NULL) {
+                  WARN("Outfit '%s' was saved but does not exist!", xml_get(cur));
+                  continue;
+               }
+
+               xmlr_attr( cur, "quantity", str );
                if (str != NULL) {
                   q = atoi(str);
                   free(str);
                }
-               else
-                  q = 0;
-               o = outfit_get( xml_get(cur) );
-               if (o != NULL)
-                  player_addOutfit( o, q );
+               else {
+                  WARN("Outfit '%s' was saved without quantity!", o->name);
+                  continue;
+               }
+
+               player_addOutfit( o, q );
             }
          } while (xml_nextNode(cur));
       }
