@@ -1145,6 +1145,25 @@ static void equipment_transportShip( unsigned int wid )
  */
 static void equipment_unequipShip( unsigned int wid, char* str )
 {
+   (void) str;
+   int ret;
+   int i;
+   char *shipname;
+   Pilot *ship;
+   Outfit *o;
+
+   shipname = toolkit_getImageArray( wid, "iarAvailShips" );
+   if (strcmp(shipname,"None")==0) /* no ships */
+      return;
+   ship  = player_getShip( shipname );
+
+   /* Remove all outfits. */
+   for (i=0; i<ship->noutfits; i++) {
+      o = ship->outfits[i]->outfit;
+      ret = pilot_rmOutfit( ship, ship->outfits[i] );
+      if (ret==0)
+         player_addOutfit( o, 1 );
+   }
 }
 /**
  * @brief Player tries to sell a ship.
@@ -1179,6 +1198,10 @@ static void equipment_sellShip( unsigned int wid, char* str )
    player_rmShip( shipname );
    dialogue_msg( "Ship Sold", "You have sold your ship %s for %s credits.",
          shipname, buf );
+
+   /* Destroy widget. */
+   window_destroyWidget( wid, "iarAvailShips" );
+   equipment_genLists( wid );
 }
 /**
  * @brief Gets the ship's transport price.
