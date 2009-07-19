@@ -366,7 +366,6 @@ static double econ_calcJumpR( StarSystem *A, StarSystem *B )
  */
 static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
 {
-   (void) dt;
    (void) price;
    int i;
    double I;
