@@ -34,10 +34,11 @@ end
 
 -- Scripts we need
 include("scripts/pilot/pirate.lua")
+include("dat/missions/empire/common.lua")
 
 
 function create ()
-   misn.setNPC( "Official", "none" )
+   misn.setNPC( "Official", emp_getOfficialRandomPortrait() )
    misn.setDesc( bar_desc )
 end
 

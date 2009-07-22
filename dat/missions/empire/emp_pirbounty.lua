@@ -34,6 +34,9 @@ Will you take up the bounty?]]
 end
 
 
+include("dat/missions/empire/common.lua")
+
+
 -- Scripts we need
 include("scripts/pilot/pirate.lua")
 
@@ -49,7 +52,7 @@ function create ()
    credits  = rnd.rnd(5,10) * 10000
 
    -- Spaceport bar stuff
-   misn.setNPC( "Official", "none" )
+   misn.setNPC( "Official", emp_getOfficialRandomPortrait() )
    misn.setDesc( bar_desc )
 end
 
