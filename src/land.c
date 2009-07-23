@@ -1901,17 +1901,40 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
    int i;
    (void) wid;
    (void) wgt;
+   unsigned int w;
 
    for (i=0; i<6; i++) {
       if (land_windowsMap[i] == tab) {
          last_window = i;
+         w = land_getWid( i );
 
          /* Must regenerate outfits. */
-         if (i==LAND_WINDOW_EQUIPMENT) {
-            window_destroyWidget( land_windows[i], "iarAvailOutfits" );
-            equipment_genLists( land_windows[i] );
-         }
+         switch (i) {
+            case LAND_WINDOW_OUTFITS:
+               outfits_update( w, NULL );
+               break;
+            case LAND_WINDOW_SHIPYARD:
+               shipyard_update( w, NULL );
+               break;
+            case LAND_WINDOW_BAR:
+               spaceport_bar_update( w, NULL );
+               break;
+            case LAND_WINDOW_MISSION:
+               misn_update( w, NULL );
+               break;
+            case LAND_WINDOW_COMMODITY:
+               commodity_update( w, NULL );
+               break;
+            /*
+            case LAND_WINDOW_EQUIPMENT:
+               window_destroyWidget( w, "iarAvailOutfits" );
+               equipment_genLists( w );
+               break;
+            */
 
+            default:
+               break;
+         }
          break;
       }
    }
