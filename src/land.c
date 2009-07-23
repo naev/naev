@@ -1483,7 +1483,6 @@ static void misn_open( unsigned int wid )
    map_show( wid, 20, 20,
          w/2 - 30, h/2 - 35, 0.75 );
 
-
    misn_genList(wid, 1);
 }
 /**
@@ -1577,8 +1576,6 @@ static void misn_genList( unsigned int wid, int first )
    window_addList( wid, 20, -40,
          w/2 - 30, h/2 - 35,
          "lstMission", misn_names, j, 0, misn_update );
-
-   misn_update(wid, NULL);
 }
 /**
  * @brief Updates the mission list.
@@ -1935,6 +1932,12 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
             default:
                break;
          }
+
+         /* Clear markers if closing Mission Computer. */
+         if (i != LAND_WINDOW_MISSION) {
+            space_clearComputerMarkers();
+         }
+
          break;
       }
    }
