@@ -75,7 +75,7 @@ void window_addImageArray( const unsigned int wid,
    wgt->dat.iar.iw         = iw;
    wgt->dat.iar.ih         = ih;
    wgt->dat.iar.fptr       = call;
-   wgt->dat.iar.xelem      = (int)((w - 10.) / wgt->dat.iar.iw);
+   wgt->dat.iar.xelem      = floor((w - 10.) / wgt->dat.iar.iw);
    wgt->dat.iar.yelem      = (wgt->dat.iar.xelem == 0) ? 0 :
          (int)wgt->dat.iar.nelements / wgt->dat.iar.xelem + 1;
 

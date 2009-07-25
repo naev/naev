@@ -146,7 +146,6 @@ static void shipyard_buy( unsigned int wid, char* str );
 static void equipment_open( unsigned int wid );
 static void equipment_genLists( unsigned int wid );
 static void equipment_update( unsigned int wid, char* str );
-static void equipment_close( unsigned int wid, char* str );
 static void equipment_sellShip( unsigned int wid, char* str );
 static void equipment_transChangeShip( unsigned int wid, char* str );
 static void equipment_changeShip( unsigned int wid );
@@ -946,9 +945,9 @@ static void equipment_genLists( unsigned int wid )
 
    /* Ship list. */
    if (!widget_exists( wid, "iarAvailShips" )) {
-      nships = MAX(1,player_nships());
-      sships = malloc(sizeof(char*)*nships);
-      tships = malloc(sizeof(glTexture*)*nships);
+      nships   = MAX(1,player_nships());
+      sships   = malloc(sizeof(char*)*nships);
+      tships   = malloc(sizeof(glTexture*)*nships);
       player_ships( sships, tships );
       window_addImageArray( wid, 20, -40,
             sw, sh, "iarAvailShips", 64./96.*128., 64.,
@@ -962,7 +961,7 @@ static void equipment_genLists( unsigned int wid )
       toutfits = malloc(sizeof(glTexture*)*noutfits);
       player_getOutfits( soutfits, toutfits );
       window_addImageArray( wid, 20, -40 - sh - 40,
-            sw, sh, "iarAvailOutfits", 64./96.*128., 64.,
+            sw, sh, "iarAvailOutfits", 50., 50.,
             toutfits, soutfits, noutfits, NULL );
    }
 
@@ -1037,12 +1036,6 @@ static void equipment_update( unsigned int wid, char* str )
    }
    /* If ship is there you can always sell. */
    window_enableButton( wid, "btnSellShip" );
-}
-/**
- * @brief Closes the equipment window.
- */
-static void equipment_close( unsigned int wid, char* str )
-{
 }
 /**
  * @brief Changes or transport depending on what is active.
