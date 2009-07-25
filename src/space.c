@@ -1655,7 +1655,7 @@ static void space_renderStars( const double dt )
          for (i=0; i < nstars; i++) {
 
             /* calculate new position */
-            b = 13.-10.*star_colour[8*i+3];
+            b = 9. - 10.*star_colour[8*i+3];
             star_vertex[4*i+0] = star_vertex[4*i+0] -
                (GLfloat)player->solid->vel.x / b*(GLfloat)dt;
             star_vertex[4*i+1] = star_vertex[4*i+1] -

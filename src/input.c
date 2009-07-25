@@ -170,7 +170,7 @@ void input_setDefault (void)
 {
    /* Movement. */
    input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, KMOD_ALL );
-   input_setKeybind( "afterburn", KEYBIND_NULL, SDLK_UNKNOWN, KMOD_NONE ); /* not set */
+   input_setKeybind( "afterburn", KEYBIND_NULL, SDLK_z, KMOD_ALL );
    input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, KMOD_ALL );
    input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, KMOD_ALL );
    input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, KMOD_ALL );
@@ -214,7 +214,7 @@ void input_setDefault (void)
    input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_KP_PLUS, KMOD_ALL );
    input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_KP_MINUS, KMOD_ALL );
    input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MULTIPLY, KMOD_ALL );
-   input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_z, KMOD_NONE );
+   input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_PAUSE, KMOD_ALL );
    input_setKeybind( "speed", KEYBIND_KEYBOARD, SDLK_BACKQUOTE, KMOD_ALL );
    input_setKeybind( "menu", KEYBIND_KEYBOARD, SDLK_ESCAPE, KMOD_ALL );
    input_setKeybind( "info", KEYBIND_KEYBOARD, SDLK_i, KMOD_NONE );

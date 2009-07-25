@@ -3,12 +3,6 @@
    * loading00.png
    * gui
      * minimal_planet.png
-   * logo
-     * dvaered_small.png
-     * empire_small.png
-     * goddard_small.png
-     * sirius_small.png
-     * zalek_small.png
    * outfit
      * space
        * lasergreen.png
@@ -274,4 +268,14 @@
        * none.png
        * scientist.png
        * soldner.png
+       * empire1.png
+       * empire2.png
+       * empire3.png
+       * empire4.png
+   * logo
+     * dvaered_small.png
+     * empire_small.png
+     * goddard_small.png
+     * sirius_small.png
+     * zalek_small.png
 

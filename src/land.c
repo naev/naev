@@ -1515,7 +1515,6 @@ static void misn_open( unsigned int wid )
    map_show( wid, 20, 20,
          w/2 - 30, h/2 - 35, 0.75 );
 
-
    misn_genList(wid, 1);
 }
 /**
@@ -1609,8 +1608,6 @@ static void misn_genList( unsigned int wid, int first )
    window_addList( wid, 20, -40,
          w/2 - 30, h/2 - 35,
          "lstMission", misn_names, j, 0, misn_update );
-
-   misn_update(wid, NULL);
 }
 /**
  * @brief Updates the mission list.
@@ -1937,15 +1934,42 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
    int i;
    (void) wid;
    (void) wgt;
+   unsigned int w;
 
    for (i=0; i<LAND_NUMWINDOWS; i++) {
       if (land_windowsMap[i] == tab) {
          last_window = i;
+         w = land_getWid( i );
 
          /* Must regenerate outfits. */
-         if (i==LAND_WINDOW_EQUIPMENT) {
-            window_destroyWidget( land_windows[i], "iarAvailOutfits" );
-            equipment_genLists( land_windows[i] );
+         switch (i) {
+            case LAND_WINDOW_OUTFITS:
+               outfits_update( w, NULL );
+               break;
+            case LAND_WINDOW_SHIPYARD:
+               shipyard_update( w, NULL );
+               break;
+            case LAND_WINDOW_BAR:
+               spaceport_bar_update( w, NULL );
+               break;
+            case LAND_WINDOW_MISSION:
+               misn_update( w, NULL );
+               break;
+            case LAND_WINDOW_COMMODITY:
+               commodity_update( w, NULL );
+               break;
+            case LAND_WINDOW_EQUIPMENT:
+               window_destroyWidget( w, "iarAvailOutfits" );
+               equipment_genLists( w );
+               break;
+
+            default:
+               break;
+         }
+
+         /* Clear markers if closing Mission Computer. */
+         if (i != LAND_WINDOW_MISSION) {
+            space_clearComputerMarkers();
          }
 
          break;
