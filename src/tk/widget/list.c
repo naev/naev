@@ -14,8 +14,8 @@
 
 static void lst_render( Widget* lst, double bx, double by );
 static int lst_key( Widget* lst, SDLKey key, SDLMod mod );
-static int lst_mclick( Widget* lst, SDL_MouseButtonEvent *mclick );
-static int lst_mmove( Widget* lst, SDL_MouseMotionEvent *mmove );
+static int lst_mclick( Widget* lst, int button, int x, int y );
+static int lst_mmove( Widget* lst, int x, int y, int rx, int ry );
 static void lst_cleanup( Widget* lst );
 
 static int lst_focus( Widget* lst, double bx, double by );
@@ -177,11 +177,11 @@ static int lst_key( Widget* lst, SDLKey key, SDLMod mod )
  *    @param mclick The event the widget should handle.
  *    @return 1 if the widget uses the event.
  */
-static int lst_mclick( Widget* lst, SDL_MouseButtonEvent *mclick )
+static int lst_mclick( Widget* lst, int button, int x, int y )
 {
-   switch (mclick->button) {
+   switch (button) {
       case SDL_BUTTON_LEFT:
-         lst_focus( lst, mclick->x, mclick->y );
+         lst_focus( lst, x, y );
          return 1;
       case SDL_BUTTON_WHEELUP:
          lst_scroll( lst, +5 );
@@ -251,15 +251,14 @@ static int lst_focus( Widget* lst, double bx, double by )
  *    @param mmove Mouse movement event.
  *    @return 1 if movement was used, 0 if movement wasn't used.
  */
-static int lst_mmove( Widget* lst, SDL_MouseMotionEvent *mmove )
+static int lst_mmove( Widget* lst, int x, int y, int rx, int ry )
 {
+   (void) x;
+   (void) rx;
+   (void) ry;
    int psel;
    double p;
    int h;
-
-   /* Ignore mouse downs. */
-   if (!(mmove->state & SDL_BUTTON(1)))
-      return 0;
 
    /* Handle the scrolling if scrolling. */
    if (lst->status == WIDGET_STATUS_SCROLLING) {
@@ -269,7 +268,7 @@ static int lst_mmove( Widget* lst, SDL_MouseMotionEvent *mmove )
       psel = lst->dat.lst.pos;
 
       /* Find absolute position. */
-      p  = (lst->h - mmove->y) / lst->h * (lst->dat.lst.height - lst->h);
+      p  = (lst->h - y) / lst->h * (lst->dat.lst.height - lst->h);
       p /= (2 + gl_defFont.h);
       lst->dat.lst.pos = (int)round(p);
 

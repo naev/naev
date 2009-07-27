@@ -70,8 +70,9 @@ static GLsizei toolkit_vboColourOffset; /**< Colour offset. */
  * static prototypes
  */
 /* input */
-static void toolkit_mouseEventUpdate( SDL_Event *event, int x, int y, int rx, int ry );
 static void toolkit_mouseEvent( Window *w, SDL_Event* event );
+static void toolkit_mouseEventWidget( Window *w, Widget *wgt, int i,
+      Uint8 type, Uint8 button, int x, int y, int rx, int ry );
 static int toolkit_keyEvent( Window *wdw, SDL_Event* event );
 /* focus */
 static int toolkit_isFocusable( Widget *wgt );
@@ -1277,10 +1278,11 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event )
  *    @param[out] y Resulting Y coord in window space.
  *    @param[out] rx Relative X movement (only valid for motion).
  *    @param[out] ry Relative Y movement (only valid for motion).
+ *    @param convert Should it convert the event also?
  *    @return The type of the event.
  */
 Uint8 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
-      int *x, int *y, int *rx, int *ry )
+      int *x, int *y, int *rx, int *ry, int convert )
 {
    /* Extract the position as event. */
    if (event->type==SDL_MOUSEMOTION) {
@@ -1305,33 +1307,27 @@ Uint8 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
       *ry = (double)event->motion.yrel * gl_screen.mxscale;;
       *rx = (double)event->motion.xrel * gl_screen.myscale;
    }
+   else {
+      *ry = 0;
+      *rx = 0;
+   }
+
+   /* See if should convert base event. */
+   if (convert) {
+      if (event->type == SDL_MOUSEMOTION) {
+         event->motion.x = *x;
+         event->motion.y = *y;
+         event->motion.xrel = *rx;
+         event->motion.yrel = *ry;
+      }
+      else if ((event->type==SDL_MOUSEBUTTONDOWN) ||
+            (event->type==SDL_MOUSEBUTTONUP)) {
+         event->button.x = *x;
+         event->button.y = *y;
+      }
+   }
 
    return event->type;
-}
-
-
-/**
- * @brief Updates a mouse event.
- *
- *    @param event Event to update.
- *    @param x X position of event.
- *    @param y Y position of event.
- *    @param rx Relative X event movement.
- *    @param ry Relative Y event movement.
- */
-static void toolkit_mouseEventUpdate( SDL_Event *event, int x, int y, int rx, int ry )
-{
-   /* Relative only matter if mouse motion. */
-   if (event->type==SDL_MOUSEMOTION) {
-      event->motion.x = x;
-      event->motion.y = y;
-      event->motion.xrel = rx;
-      event->motion.yrel = ry;
-   }
-   else {
-      event->button.x = x;
-      event->button.y = y;
-   }
 }
 
 
@@ -1345,98 +1341,115 @@ static void toolkit_mouseEvent( Window *w, SDL_Event* event )
 {
    int i;
    Widget *wgt;
-   Uint8 type;
+   Uint8 type, button;
    int x, y, rx, ry;
 
    /* Translate mouse coords. */
-   type = toolkit_inputTranslateCoords( w, event, &x, &y, &rx, &ry );
-   toolkit_mouseEventUpdate( event, x, y, rx, ry );
+   type = toolkit_inputTranslateCoords( w, event, &x, &y, &rx, &ry, 1 );
 
-   /* Check if inbounds (always handle mouseup). */
-   if ((type!=SDL_MOUSEBUTTONUP) &&
-      ((x < 0.) || (x > w->w) || (y < 0.) || (y > w->h)))
-      return; /* not in current window */
-
+   /* Check each widget. */
    for (i=0; i<w->nwidgets; i++) {
       wgt = &w->widgets[i];
-      /* widget in range? */
-      if ((x > wgt->x) && (x < (wgt->x + wgt->w)) &&
-            (y > wgt->y) && (y < (wgt->y + wgt->h))) {
-         /* custom widgets take it from here */
-         if ((wgt->type==WIDGET_CUST) && wgt->dat.cst.mouse) 
+
+      /* custom widgets take it from here */
+      if (wgt->type==WIDGET_CUST) {
+         if (wgt->dat.cst.mouse)
             (*wgt->dat.cst.mouse)( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h );
-         else
-            switch (type) {
-               case SDL_MOUSEMOTION:
-                  /* Change the status of the widget if mouse isn't down. */
-                  if (!(event->motion.state & SDL_BUTTON(SDL_BUTTON_LEFT)))
-                     wgt->status = WIDGET_STATUS_MOUSEOVER;
-
-                  /* Do a coordinate change for the event. */
-                  event->motion.x -= wgt->x;
-                  event->motion.y -= wgt->y;
-
-                  /* Try to give the event to the widget. */
-                  if (wgt->mmoveevent != NULL)
-                     if ((*wgt->mmoveevent)( wgt, (SDL_MouseMotionEvent*) event ))
-                        return;
-
-                  /* Undo coordinate change. */
-                  event->motion.x += wgt->x;
-                  event->motion.y += wgt->y;
-                  break;
-
-               case SDL_MOUSEBUTTONDOWN:
-                  /* Update the status. */
-                  if (event->button.button == SDL_BUTTON_LEFT)
-                     wgt->status = WIDGET_STATUS_MOUSEDOWN;
-
-                  if (toolkit_isFocusable(wgt))
-                     w->focus = i;
-
-                  /* Do a coordinate change for the event. */
-                  event->button.x -= wgt->x;
-                  event->button.y -= wgt->y;
-
-                  /* Try to give the event to the widget. */
-                  if (wgt->mclickevent != NULL)
-                     if ((*wgt->mclickevent)( wgt, (SDL_MouseButtonEvent*) event ))
-                        return;
-
-                  /* Undo coordinate change. */
-                  event->button.x += wgt->x;
-                  event->button.y += wgt->y;
-                  break;
-
-               case SDL_MOUSEBUTTONUP:
-                  /* Since basically only buttons are handled here, we ignore
-                   * it all except the left mouse button. */
-                  if (event->button.button != SDL_BUTTON_LEFT)
-                     break;
-
-                  if (wgt->status==WIDGET_STATUS_MOUSEDOWN) {
-                     if ((wgt->type==WIDGET_BUTTON) &&
-                           (wgt->dat.btn.disabled==0)) {
-                        if (wgt->dat.btn.fptr==NULL)
-                           DEBUG("Toolkit: Button '%s' of Window '%s' "
-                                 "doesn't have a function trigger",
-                                 wgt->name, w->name );
-                        else {
-                           (*wgt->dat.btn.fptr)(w->id, wgt->name);
-                           return;
-                        }
-                     }
-                  }
-                  wgt->status = WIDGET_STATUS_NORMAL;
-                  break;
-            }
       }
-      /* otherwise custom widgets can get stuck on mousedown */
-      else if ((wgt->type==WIDGET_CUST) &&
-            (event->type==SDL_MOUSEBUTTONUP) && wgt->dat.cst.mouse)
-         (*wgt->dat.cst.mouse)( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h );
-      else
-         wgt->status = WIDGET_STATUS_NORMAL;
+      else {
+         /* Handle mouse event. */
+         if (type == SDL_MOUSEMOTION)
+            button = event->motion.state;
+         else
+            button = event->button.button;
+         toolkit_mouseEventWidget( w, wgt, i, type, button, x, y, rx, ry );
+      }
+   }
+}
+
+
+/**
+ * @brief Handle widget mouse input.
+ *
+ *    @param w Window to which widget belongs.
+ *    @param wgt Widget recieving event.
+ *    @param event Event recieved by the window.
+ */
+static void toolkit_mouseEventWidget( Window *w, Widget *wgt, int i,
+      Uint8 type, Uint8 button, int x, int y, int rx, int ry )
+{
+   int inbounds;
+
+   /* Widget translations. */
+   x -= wgt->x;
+   y -= wgt->y;
+
+   /* Check inbounds. */
+   inbounds = !((x < 0) || (x >= wgt->w) || (y < 0) || (y >= wgt->h));
+
+   /* Regular widgets. */
+   switch (type) {
+      case SDL_MOUSEMOTION:
+         /* Change the status of the widget if mouse isn't down. */
+
+         /* Not scrolling. */
+         if (wgt->status != WIDGET_STATUS_SCROLLING) {
+            if (inbounds)
+               wgt->status = WIDGET_STATUS_MOUSEOVER;
+            else if (!(button & SDL_BUTTON(SDL_BUTTON_LEFT)))
+               wgt->status = WIDGET_STATUS_NORMAL;
+         }
+         else
+            inbounds = 1; /* Scrolling is always inbounds. */
+
+         /* Try to give the event to the widget. */
+         if (inbounds && (wgt->mmoveevent != NULL))
+            (*wgt->mmoveevent)( wgt, x, y, rx, ry );
+
+         break;
+
+      case SDL_MOUSEBUTTONDOWN:
+         if (!inbounds)
+            break;
+
+         /* Update the status. */
+         if (button == SDL_BUTTON_LEFT)
+            wgt->status = WIDGET_STATUS_MOUSEDOWN;
+
+         if (toolkit_isFocusable(wgt))
+            w->focus = i;
+
+         /* Try to give the event to the widget. */
+         if (wgt->mclickevent != NULL)
+            (*wgt->mclickevent)( wgt, button, x, y );
+         break;
+
+      case SDL_MOUSEBUTTONUP:
+         /* Since basically only buttons are handled here, we ignore
+          * it all except the left mouse button. */
+         if (button != SDL_BUTTON_LEFT)
+            break;
+
+         if (wgt->status==WIDGET_STATUS_MOUSEDOWN) {
+            if ((wgt->type==WIDGET_BUTTON) &&
+                  (wgt->dat.btn.disabled==0)) {
+               if (wgt->dat.btn.fptr==NULL)
+                  DEBUG("Toolkit: Button '%s' of Window '%s' "
+                        "doesn't have a function trigger",
+                        wgt->name, w->name );
+               else {
+                  (*wgt->dat.btn.fptr)(w->id, wgt->name);
+               }
+            }
+         }
+
+         /* Always goes normal unless is below mouse. */
+         if (inbounds)
+            wgt->status = WIDGET_STATUS_MOUSEOVER;
+         else
+            wgt->status = WIDGET_STATUS_NORMAL;
+
+         break;
    }
 }
 

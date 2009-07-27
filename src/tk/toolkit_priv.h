@@ -88,8 +88,8 @@ typedef struct Widget_ {
    /* Event abstraction. */
    int (*keyevent) ( struct Widget_ *wgt, SDLKey k, SDLMod m ); /**< Key event handler function for the widget. */
    int (*textevent) ( struct Widget_ *wgt, const char *text ); /**< Text event function handler for the widget. */
-   int (*mmoveevent) ( struct Widget_ *wgt, SDL_MouseMotionEvent *mmove ); /**< Mouse movement handler function for the widget. */
-   int (*mclickevent) ( struct Widget_ *wgt, SDL_MouseButtonEvent *mclick ); /**< Mouse click event handler function for the widget. */
+   int (*mmoveevent) ( struct Widget_ *wgt, int x, int y, int rx, int ry); /**< Mouse movement handler function for the widget. */
+   int (*mclickevent) ( struct Widget_ *wgt, int button, int x, int y ); /**< Mouse click event handler function for the widget. */
    int (*rawevent) ( struct Widget_ *wgt, SDL_Event *event ); /**< Raw event handler function for widget. */
 
    /* Misc. routines. */
@@ -181,7 +181,7 @@ void toolkit_drawRect( double x, double y,
 
 /* Input stuff. */
 Uint8 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
-      int *x, int *y, int *rx, int *ry );
+      int *x, int *y, int *rx, int *ry, int convert );
 
 
 #endif /* TOOLKIT_PRIV_H */

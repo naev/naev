@@ -13,7 +13,8 @@
 
 
 static void fad_render( Widget* fad, double bx, double by );
-static int fad_mmove( Widget* fad, SDL_MouseMotionEvent *mmove );
+static int fad_mclick( Widget* fad, int button, int x, int y );
+static int fad_mmove( Widget* fad, int x, int y, int rx, int ry );
 static void fad_setValue( Widget *fad, double value );
 
 
@@ -54,6 +55,7 @@ void window_addFader( const unsigned int wid,
    /* specific */
    wgt->render          = fad_render;
    /*wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);*/ /**< @todo Let faders focus. */
+   wgt->mclickevent     = fad_mclick;
    wgt->mmoveevent      = fad_mmove;
    wgt->dat.fad.value   = min;
    wgt->dat.fad.min     = min;
@@ -115,19 +117,58 @@ static void fad_render( Widget* fad, double bx, double by )
  *    @param fad The fader widget handling the mouse movements.
  *    @param mmove The event being generated.
  */
-static int fad_mmove( Widget* fad, SDL_MouseMotionEvent* mmove )
+static int fad_mmove( Widget* fad, int x, int y, int rx, int ry )
 {
    double d;
+   (void) x;
+   (void) y;
 
-   /* Must be dragging mouse. */
-   if (!(mmove->state & SDL_BUTTON(1)))
+   /* Must be scrolling. */
+   if (fad->status != WIDGET_STATUS_SCROLLING)
       return 0;
 
    /* Set the fader value. */
-   d = (fad->w > fad->h) ? mmove->xrel / fad->w : mmove->yrel / fad->h;
+   d = (fad->w > fad->h) ? rx / fad->w : ry / fad->h;
    fad_setValue(fad, fad->dat.fad.value + d);
 
    return 1;
+}
+
+
+/**
+ * @brief Handles fader mouse clicks.
+ */
+static int fad_mclick( Widget* fad, int button, int x, int y )
+{
+   int kx, ky, kw, kh;
+   double pos;
+
+   /* Only handle left mouse button. */
+   if (button != SDL_BUTTON_LEFT)
+      return 0;
+
+   /* Get position. */
+   pos = fad->dat.fad.value / (fad->dat.fad.max - fad->dat.fad.min);
+
+   /* Knob. */
+   if (fad->h < fad->w) {
+      kx = fad->w * pos - 5;
+      kw = 15;
+
+      /* See if is scrolling. */
+      if ((x >= kx) && (x < kx + kw))
+         fad->status = WIDGET_STATUS_SCROLLING;
+   }
+   else {
+      ky = fad->h * pos - 5;
+      kh = 15;
+
+      /* See if is scrolling. */
+      if ((y >= ky) && (y < ky + kh))
+         fad->status = WIDGET_STATUS_SCROLLING;
+   }
+
+   return 0;
 }
 
 

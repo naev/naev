@@ -14,8 +14,8 @@
 
 static void iar_render( Widget* iar, double bx, double by );
 static int iar_key( Widget* iar, SDLKey key, SDLMod mod );
-static int iar_mclick( Widget* iar, SDL_MouseButtonEvent *mclick );
-static int iar_mmove( Widget* iar, SDL_MouseMotionEvent *mmove );
+static int iar_mclick( Widget* iar, int button, int x, int y );
+static int iar_mmove( Widget* iar, int x, int y, int rx, int ry );
 static void iar_cleanup( Widget* iar );
 static void iar_focus( Widget* iar, double bx, double by );
 static void iar_scroll( Widget* iar, int direction );
@@ -255,12 +255,12 @@ static int iar_key( Widget* iar, SDLKey key, SDLMod mod )
  *    @param mclick The mouse click event.
  *    @return 1 if event is used.
  */
-static int iar_mclick( Widget* iar, SDL_MouseButtonEvent *mclick )
+static int iar_mclick( Widget* iar, int button, int x, int y )
 {
    /* Handle different mouse clicks. */
-   switch (mclick->button) {
+   switch (button) {
       case SDL_BUTTON_LEFT:
-         iar_focus( iar, mclick->x, mclick->y );
+         iar_focus( iar, x, y );
          return 1;
       case SDL_BUTTON_WHEELUP:
          iar_scroll( iar, +1 );
@@ -283,15 +283,14 @@ static int iar_mclick( Widget* iar, SDL_MouseButtonEvent *mclick )
  *    @param mmove Mouse motion event to handle.
  *    @return 1 if the event is used.
  */
-static int iar_mmove( Widget* iar, SDL_MouseMotionEvent *mmove )
+static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
 {
+   (void) x;
+   (void) y;
+   (void) rx;
    double w,h;
    int xelem, yelem;
    double hmax;
-
-   /* Only handle button 1. */
-   if (!(mmove->state & SDL_BUTTON(SDL_BUTTON_LEFT)))
-      return 0;
 
    if (iar->status == WIDGET_STATUS_SCROLLING) {
 
@@ -305,7 +304,7 @@ static int iar_mmove( Widget* iar, SDL_MouseMotionEvent *mmove )
 
       hmax = h * (yelem - (int)(iar->h / h));
 
-      iar->dat.iar.pos += mmove->yrel * hmax / (iar->h - 30.);
+      iar->dat.iar.pos += ry * hmax / (iar->h - 30.);
 
       /* Does boundry checks. */
       iar_scroll( iar, 0 );
