@@ -470,7 +470,7 @@ double outfit_cpu( const Outfit* o )
    else if (outfit_isAfterburner(o)) return o->u.afb.cpu;
    else if (outfit_isJammer(o)) return o->u.jam.cpu;
    else if (outfit_isFighterBay(o)) return o->u.bay.cpu;
-   return -1.;
+   return 0.;
 }
 /**
  * @brief Gets the outfit's range.

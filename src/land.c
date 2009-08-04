@@ -897,13 +897,13 @@ static void equipment_open( unsigned int wid )
          "Unequip", equipment_unequipShip );
 
    /* image */
-   window_addRect( wid, 20 + sw + 20 + 260, -50,
+   window_addRect( wid, -30, -50,
          128, 96, "rctTarget", &cBlack, 0 );
-   window_addImage( wid, 20 + sw + 20 + 260, -50-96,
+   window_addImage( wid, -30-128, -50-96,
          "imgTarget", NULL, 1 );
 
    /* text */
-   window_addText( wid, 20 + sw + 20 + 180 + 20 + 30, -170,
+   window_addText( wid, 20 + sw + 20 + 180 + 20 + 30, -230,
          100, 200, 0, "txtSDesc", &gl_smallFont, &cDConsole,
          "Name:\n"
          "Ship:\n"
@@ -915,7 +915,7 @@ static void equipment_open( unsigned int wid )
          "Transportation:\n"
          "Sell price:\n"
          );
-   window_addText( wid, 20 + sw + 20 + 180 + 20 + 130, -170,
+   window_addText( wid, 20 + sw + 20 + 180 + 20 + 130, -230,
       130, 200, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
 
    /* Generate lists. */
@@ -982,8 +982,10 @@ static void equipment_render( double bx, double by, double bw, double bh )
 {
    Pilot *p;
    int m;
+   double percent;
    double x, y;
    double w, h;
+   glColour *lc, *c, *dc;
 
    /* Must have selected ship. */
    if (equipment_selected == NULL)
@@ -1010,6 +1012,26 @@ static void equipment_render( double bx, double by, double bw, double bh )
    y = by + bh - 60 + (40-h)/2;
    equipment_renderColumn( x, y, w, h,
          p->outfit_nlow, p->outfit_low, "Low" );
+
+   /* Render CPU and energy bars. */
+   lc = &cWhite;
+   c = &cGrey80;
+   dc = &cGrey60;
+   w = 30;
+   h = 100;
+   x = bx + 10 + (40-w)/2 + 180 + 30;
+   y = by + bh - 30 - h;
+   percent = (p->cpu_max > 0.) ? p->cpu / p->cpu_max : 0.;
+   gl_printMidRaw( &gl_smallFont, w,
+         x + SCREEN_W/2., y + h + gl_smallFont.h + 10. + SCREEN_H/2.,
+         &cBlack, "CPU" );
+   toolkit_drawRect( x, y, w, h*percent, &cGreen, NULL );
+   toolkit_drawRect( x, y+h*percent, w, h*(1.-percent), &cRed, NULL );
+   toolkit_drawOutline( x, y, w, h, 1., lc, c  );
+   toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
+   gl_printMid( &gl_smallFont, 70,
+         x - 20 + SCREEN_W/2., y - 20 - gl_smallFont.h + SCREEN_H/2.,
+         &cBlack, "%.1f / %.1f", p->cpu, p->cpu_max );
 }
 /**
  * @brief Does mouse input for the custom equipment widget.
@@ -1075,7 +1097,7 @@ static void equipment_genLists( unsigned int wid )
 static void equipment_update( unsigned int wid, char* str )
 {
    (void)str;
-   char buf[256], buf2[16], buf3[16], *buf4;
+   char buf[256], buf2[16], buf3[16];
    char *shipname;
    Pilot *ship;
    char* loc;

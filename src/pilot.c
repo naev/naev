@@ -1872,6 +1872,9 @@ void pilot_calcStats( Pilot* pilot )
    pilot->thrust        = pilot->ship->thrust;
    pilot->turn          = pilot->ship->turn;
    pilot->speed         = pilot->ship->speed;
+   /* cpu */
+   pilot->cpu_max       = pilot->ship->cpu;
+   pilot->cpu           = pilot->cpu_max;
    /* health */
    ac = pilot->armour / pilot->armour_max;
    sc = pilot->shield / pilot->shield_max;
@@ -1904,6 +1907,9 @@ void pilot_calcStats( Pilot* pilot )
          continue;
 
       q = (double) pilot->outfits[i]->quantity;
+
+      /* Subtract CPU. */
+      pilot->cpu -= outfit_cpu(o);
 
       if (outfit_isMod(o)) { /* Modification */
          /* movement */
