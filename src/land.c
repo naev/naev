@@ -34,6 +34,7 @@
 #include "news.h"
 #include "escort.h"
 #include "event.h"
+#include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 
 /* global/main window */
@@ -114,6 +115,11 @@ static glTexture *mission_portrait = NULL; /**< Mission portrait. */
 extern int hyperspace_target; /**< from player.c */
 static int last_window = 0; /**< Default window. */
 
+/*
+ * equipment stuff
+ */
+static Pilot *equipment_selected = NULL; /**< Selected pilot ship. */
+
 
 /*
  * prototypes
@@ -144,6 +150,11 @@ static void shipyard_info( unsigned int wid, char* str );
 static void shipyard_buy( unsigned int wid, char* str );
 /* equipment */
 static void equipment_open( unsigned int wid );
+static void equipment_renderColumn( double x, double y, double w, double h,
+      int n, PilotOutfitSlot *lst, const char *txt );
+static void equipment_render( double bx, double by, double bw, double bh );
+static void equipment_mouse( unsigned int wid, SDL_Event* event,
+      double x, double y, double w, double h );
 static void equipment_genLists( unsigned int wid );
 static void equipment_update( unsigned int wid, char* str );
 static void equipment_sellShip( unsigned int wid, char* str );
@@ -852,6 +863,7 @@ static void equipment_open( unsigned int wid )
    int sw, sh;
    int ow, oh;
    int bw, bh;
+   int cw, ch;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -861,6 +873,10 @@ static void equipment_open( unsigned int wid )
    sh = (h - 100)/2;
    ow = sw;
    oh = sh;
+
+   /* Calculate custom widget. */
+   cw = w - 20 - sw - 20;
+   ch = h - 100;
 
    /* Calculate button dimensions. */
    bw = (w - 20 - sw - 40 - 20 - 60) / 4;
@@ -881,13 +897,13 @@ static void equipment_open( unsigned int wid )
          "Unequip", equipment_unequipShip );
 
    /* image */
-   window_addRect( wid, -40, -50,
+   window_addRect( wid, 20 + sw + 20 + 260, -50,
          128, 96, "rctTarget", &cBlack, 0 );
-   window_addImage( wid, -40-128, -50-96,
+   window_addImage( wid, 20 + sw + 20 + 260, -50-96,
          "imgTarget", NULL, 1 );
 
    /* text */
-   window_addText( wid, 40+300+40, -55,
+   window_addText( wid, 20 + sw + 20 + 180 + 20 + 30, -170,
          100, 200, 0, "txtSDesc", &gl_smallFont, &cDConsole,
          "Name:\n"
          "Ship:\n"
@@ -899,15 +915,8 @@ static void equipment_open( unsigned int wid )
          "Transportation:\n"
          "Sell price:\n"
          );
-   window_addText( wid, 40+300+40+100, -55,
+   window_addText( wid, 20 + sw + 20 + 180 + 20 + 130, -170,
       130, 200, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, 40+300+40, -255,
-      100, 20, 0, "txtSOutfits", &gl_smallFont, &cDConsole,
-      "Outfits:\n"
-      );
-   window_addText( wid, 40+300+40, -255-gl_smallFont.h-5,
-      w-40-300-40-20, 200, 0, "txtDOutfits",
-      &gl_smallFont, &cBlack, NULL );
 
    /* Generate lists. */
    window_addText( wid, 30, -20,
@@ -918,6 +927,96 @@ static void equipment_open( unsigned int wid )
 
    /* Seperator. */
    window_addRect( wid, 20 + sw + 20, -40, 2, h-60, "rctDivider", &cBlack, 0 );
+
+   /* Custom widget. */
+   window_addCust( wid, 20 + sw + 40, -40, cw, ch, "cstEquipment", 0,
+         equipment_render, equipment_mouse );
+}
+/**
+ * @brief Renders an outfit column.
+ */
+static void equipment_renderColumn( double x, double y, double w, double h,
+      int n, PilotOutfitSlot *lst, const char *txt )
+{
+   int i;
+   glColour *lc, *c, *dc;
+
+   /* Render text. */
+   gl_printMidRaw( &gl_smallFont, w,
+         x + SCREEN_W/2., y+h+10. + SCREEN_H/2.,
+         &cBlack, txt );
+
+   for (i=0; i<n; i++) {
+      if (lst[i].outfit != NULL) {
+         /* Draw background. */
+         toolkit_drawRect( x, y, w, h, &cBlack, NULL );
+         /* Draw bugger. */
+         gl_blitScale( lst[i].outfit->gfx_store, x, y, w, h, NULL );
+      }
+      else {
+         gl_printMidRaw( &gl_smallFont, w,
+               x + SCREEN_W/2., y + (h-gl_smallFont.h)/2 + SCREEN_H/2.,
+               &cBlack, "None" );
+      }
+      /* Draw outline. */
+      if (0) {
+         lc = &cWhite;
+         c = &cGrey80;
+         dc = &cGrey60;
+      }
+      else {
+         lc = toolkit_colLight;
+         c = toolkit_col;
+         dc = toolkit_colDark;
+      }
+      toolkit_drawOutline( x - 2., y-2., w+4., h+4., 1., lc, c  );
+      toolkit_drawOutline( x - 2., y-2., w+4., h+4., 2., dc, NULL  );
+      /* Go to next one. */
+      y -= 60;
+   }
+}
+/**
+ * @brief Renders the custom equipment widget.
+ */
+static void equipment_render( double bx, double by, double bw, double bh )
+{
+   Pilot *p;
+   int m;
+   double x, y;
+   double w, h;
+
+   /* Must have selected ship. */
+   if (equipment_selected == NULL)
+      return;
+
+   /* Calculate height of outfit widgets. */
+   p = equipment_selected;
+   m = MAX( MAX( p->outfit_nhigh, p->outfit_nmedium ), p->outfit_nlow );
+   h = (bh-30.)/m;
+   if (h > 40)
+      h = 40;
+   w = h;
+
+   /* Render high outfits. */
+   x = bx + 10 + (40-w)/2;
+   y = by + bh - 60 + (40-h)/2;
+   equipment_renderColumn( x, y, w, h,
+         p->outfit_nhigh, p->outfit_high, "High" );
+   x = bx + 10 + (40-w)/2 + 60;
+   y = by + bh - 60 + (40-h)/2;
+   equipment_renderColumn( x, y, w, h,
+         p->outfit_nmedium, p->outfit_medium, "Medium" );
+   x = bx + 10 + (40-w)/2 + 120;
+   y = by + bh - 60 + (40-h)/2;
+   equipment_renderColumn( x, y, w, h,
+         p->outfit_nlow, p->outfit_low, "Low" );
+}
+/**
+ * @brief Does mouse input for the custom equipment widget.
+ */
+static void equipment_mouse( unsigned int wid, SDL_Event* event,
+      double x, double y, double w, double h )
+{
 }
 /**
  * @brief Generates a new ship/outfit lists if needed.
@@ -992,6 +1091,7 @@ static void equipment_update( unsigned int wid, char* str )
    ship  = player_getShip( shipname );
    loc   = player_getLoc(ship->name);
    price = equipment_transportPrice( shipname );
+   equipment_selected = ship;
 
    /* update image */
    window_modifyImage( wid, "imgTarget", ship->ship->gfx_target );
@@ -1017,10 +1117,6 @@ static void equipment_update( unsigned int wid, char* str )
          buf2,
          buf3);
    window_modifyText( wid, "txtDDesc", buf );
-
-   buf4 = pilot_getOutfits( ship );
-   window_modifyText( wid, "txtDOutfits", buf4 );
-   free(buf4);
 
    /* button disabling */
    if (strcmp(land_planet->name,loc)) { /* ship not here */
@@ -2066,5 +2162,8 @@ void land_cleanup (void)
       free(mission_bar);
    mission_bar    = NULL;
    mission_nbar   = 0;
+
+   /* Set to sane defaults. */
+   equipment_selected = NULL;
 }
 
