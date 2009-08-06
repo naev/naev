@@ -119,6 +119,7 @@ static int last_window = 0; /**< Default window. */
  * equipment stuff
  */
 static Pilot *equipment_selected = NULL; /**< Selected pilot ship. */
+static int equipment_slot = -1; /**< Selected equipment slot. */
 
 
 /*
@@ -151,8 +152,9 @@ static void shipyard_buy( unsigned int wid, char* str );
 /* equipment */
 static void equipment_open( unsigned int wid );
 static void equipment_renderColumn( double x, double y, double w, double h,
-      int n, PilotOutfitSlot *lst, const char *txt );
+      int n, PilotOutfitSlot *lst, const char *txt, int selected );
 static void equipment_render( double bx, double by, double bw, double bh );
+static int equipment_mouseColumn( double y, double h, int n, double my );
 static void equipment_mouse( unsigned int wid, SDL_Event* event,
       double x, double y, double w, double h );
 static void equipment_genLists( unsigned int wid );
@@ -882,6 +884,10 @@ static void equipment_open( unsigned int wid )
    bw = (w - 20 - sw - 40 - 20 - 60) / 4;
    bh = BUTTON_HEIGHT;
 
+   /* Sane defaults. */
+   equipment_selected = NULL;
+   equipment_slot = -1;
+
    /* buttons */
    window_addButton( wid, -20, 20,
          bw, bh, "btnCloseEquipment",
@@ -936,7 +942,7 @@ static void equipment_open( unsigned int wid )
  * @brief Renders an outfit column.
  */
 static void equipment_renderColumn( double x, double y, double w, double h,
-      int n, PilotOutfitSlot *lst, const char *txt )
+      int n, PilotOutfitSlot *lst, const char *txt, int selected )
 {
    int i;
    glColour *lc, *c, *dc;
@@ -949,17 +955,18 @@ static void equipment_renderColumn( double x, double y, double w, double h,
    for (i=0; i<n; i++) {
       if (lst[i].outfit != NULL) {
          /* Draw background. */
-         toolkit_drawRect( x, y, w, h, &cBlack, NULL );
+         toolkit_drawRect( x, y, w, h,
+               (i==selected) ? &cDConsole : &cBlack, NULL );
          /* Draw bugger. */
          gl_blitScale( lst[i].outfit->gfx_store, x, y, w, h, NULL );
       }
       else {
          gl_printMidRaw( &gl_smallFont, w,
                x + SCREEN_W/2., y + (h-gl_smallFont.h)/2 + SCREEN_H/2.,
-               &cBlack, "None" );
+               (i==selected) ? &cDConsole : &cBlack, "None" );
       }
       /* Draw outline. */
-      if (0) {
+      if (i==selected) {
          lc = &cWhite;
          c = &cGrey80;
          dc = &cGrey60;
@@ -972,7 +979,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       toolkit_drawOutline( x - 2., y-2., w+4., h+4., 1., lc, c  );
       toolkit_drawOutline( x - 2., y-2., w+4., h+4., 2., dc, NULL  );
       /* Go to next one. */
-      y -= 60;
+      y -= h+20;
    }
 }
 /**
@@ -981,7 +988,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 static void equipment_render( double bx, double by, double bw, double bh )
 {
    Pilot *p;
-   int m;
+   int m, selected;
    double percent;
    double x, y;
    double w, h;
@@ -999,19 +1006,24 @@ static void equipment_render( double bx, double by, double bw, double bh )
       h = 40;
    w = h;
 
+   /* Get selected. */
+   selected = equipment_slot;
+
    /* Render high outfits. */
    x = bx + 10 + (40-w)/2;
    y = by + bh - 60 + (40-h)/2;
    equipment_renderColumn( x, y, w, h,
-         p->outfit_nhigh, p->outfit_high, "High" );
+         p->outfit_nhigh, p->outfit_high, "High", selected );
+   selected -= p->outfit_nhigh;
    x = bx + 10 + (40-w)/2 + 60;
    y = by + bh - 60 + (40-h)/2;
    equipment_renderColumn( x, y, w, h,
-         p->outfit_nmedium, p->outfit_medium, "Medium" );
+         p->outfit_nmedium, p->outfit_medium, "Medium", selected );
+   selected -= p->outfit_nmedium;
    x = bx + 10 + (40-w)/2 + 120;
    y = by + bh - 60 + (40-h)/2;
    equipment_renderColumn( x, y, w, h,
-         p->outfit_nlow, p->outfit_low, "Low" );
+         p->outfit_nlow, p->outfit_low, "Low", selected );
 
    /* Render CPU and energy bars. */
    lc = &cWhite;
@@ -1034,11 +1046,79 @@ static void equipment_render( double bx, double by, double bw, double bh )
          &cBlack, "%.1f / %.1f", p->cpu, p->cpu_max );
 }
 /**
+ * @brief Handles a mouse press in column.
+ */
+static int equipment_mouseColumn( double y, double h, int n, double my )
+{
+   int i;
+
+   for (i=0; i<n; i++) {
+      if ((my > y) && (my < y+h+20))
+         return i;
+      y -= h+20;
+   }
+
+   return -1;
+}
+/**
  * @brief Does mouse input for the custom equipment widget.
  */
 static void equipment_mouse( unsigned int wid, SDL_Event* event,
-      double x, double y, double w, double h )
+      double mx, double my, double bw, double bh )
 {
+   Pilot *p;
+   int m, selected, ret;
+   double x, y;
+   double w, h;
+
+   /* Must have selected ship. */
+   if (equipment_selected == NULL)
+      return;
+
+   /* Must be left click for now. */
+   if ((event->type != SDL_MOUSEBUTTONDOWN) ||
+         (event->button.button != SDL_BUTTON_LEFT))
+      return;
+
+   /* Calculate height of outfit widgets. */
+   p = equipment_selected;
+   m = MAX( MAX( p->outfit_nhigh, p->outfit_nmedium ), p->outfit_nlow );
+   h = (bh-30.)/m;
+   if (h > 40)
+      h = 40;
+   w = h;
+
+   /* Render high outfits. */
+   selected = 0;
+   x = 10 + (40-w)/2;
+   if ((mx > x-10) && (mx < x+w+10)) {
+      y = bh - 60 + (40-h)/2;
+      ret = equipment_mouseColumn( y, h, p->outfit_nhigh, my );
+      if (ret >= 0) {
+         equipment_slot = selected + ret;
+         return;
+      }
+   }
+   selected += p->outfit_nhigh;
+   x = 10 + (40-w)/2 + 60;
+   if ((mx > x-10) && (mx < x+w+10)) {
+      y = bh - 60 + (40-h)/2;
+      ret = equipment_mouseColumn( y, h, p->outfit_nmedium, my );
+      if (ret >= 0) {
+         equipment_slot = selected + ret;
+         return;
+      }
+   }
+   selected += p->outfit_nmedium;
+   x = 10 + (40-w)/2 + 120;
+   if ((mx > x-10) && (mx < x+w+10)) {
+      y = bh - 60 + (40-h)/2;
+      ret = equipment_mouseColumn( y, h, p->outfit_nlow, my );
+      if (ret >= 0) {
+         equipment_slot = selected + ret;
+         return;
+      }
+   }
 }
 /**
  * @brief Generates a new ship/outfit lists if needed.
