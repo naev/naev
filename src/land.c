@@ -989,6 +989,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
  */
 static void equipment_render( double bx, double by, double bw, double bh )
 {
+   (void) bw;
    Pilot *p;
    int m, selected;
    double percent;
@@ -1068,6 +1069,7 @@ static int equipment_mouseColumn( double y, double h, int n, double my )
 static void equipment_mouse( unsigned int wid, SDL_Event* event,
       double mx, double my, double bw, double bh )
 {
+   (void) bw;
    Pilot *p;
    int m, selected, ret;
    double x, y;
