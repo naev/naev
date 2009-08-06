@@ -1138,7 +1138,10 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    int ret;
    const char *oname;
    Outfit *o;
+   int regen;
 
+   /* Do not regenerate list by default. */
+   regen = 0;
 
    /* Remove outfit. */
    if (slot->outfit != NULL) {
@@ -1146,6 +1149,10 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
       ret = pilot_rmOutfit( player, slot );
       if (ret == 0)
          player_addOutfit( o, 1 );
+
+      /* See if should remake. */
+      if (player_outfitOwned(o) == 1)
+         regen = 1;
    }
    /* Add outfit. */
    else {
@@ -1164,11 +1171,18 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
       ret = player_rmOutfit( o, 1 );
       if (ret == 1)
          pilot_addOutfit( player, o, slot );
+
+      /* See if should remake. */
+      if (player_outfitOwned(o) == 0)
+         regen = 1;
    }
 
    /* Redo the outfits thingy. */
-   window_destroyWidget( wid, "iarAvailOutfits" );
-   equipment_genLists( wid );
+   if (regen) {
+      window_destroyWidget( wid, "iarAvailOutfits" );
+      equipment_genLists( wid );
+   }
+
    return 0;
 }
 /**
