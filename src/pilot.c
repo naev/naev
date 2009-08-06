@@ -2333,16 +2333,19 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    /* First pass copy data. */
    p = 0;
    for (i=0; i<pilot->outfit_nlow; i++) {
+      pilot->outfit_low[i].slot = OUTFIT_SLOT_LOW;
       pilot->outfits[p] = &pilot->outfit_low[i];
       memcpy( &pilot->outfits[p]->mount, &ship->outfit_low[i].mount, sizeof(ShipMount) );
       p++;
    }
    for (i=0; i<pilot->outfit_nmedium; i++) {
+      pilot->outfit_medium[i].slot = OUTFIT_SLOT_MEDIUM;
       pilot->outfits[p] = &pilot->outfit_medium[i];
       memcpy( &pilot->outfits[p]->mount, &ship->outfit_medium[i].mount, sizeof(ShipMount) );
       p++;
    }
    for (i=0; i<pilot->outfit_nhigh; i++) {
+      pilot->outfit_high[i].slot = OUTFIT_SLOT_HIGH;
       pilot->outfits[p] = &pilot->outfit_high[i];
       memcpy( &pilot->outfits[p]->mount, &ship->outfit_high[i].mount, sizeof(ShipMount) );
       p++;

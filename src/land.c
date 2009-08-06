@@ -157,6 +157,7 @@ static void equipment_render( double bx, double by, double bw, double bh );
 static int equipment_mouseColumn( double y, double h, int n, double my );
 static void equipment_mouse( unsigned int wid, SDL_Event* event,
       double x, double y, double w, double h );
+static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot );
 static void equipment_genLists( unsigned int wid );
 static void equipment_update( unsigned int wid, char* str );
 static void equipment_sellShip( unsigned int wid, char* str );
@@ -958,7 +959,8 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          toolkit_drawRect( x, y, w, h,
                (i==selected) ? &cDConsole : &cBlack, NULL );
          /* Draw bugger. */
-         gl_blitScale( lst[i].outfit->gfx_store, x, y, w, h, NULL );
+         gl_blitScale( lst[i].outfit->gfx_store,
+               x + SCREEN_W/2., y + SCREEN_H/2., w, h, NULL );
       }
       else {
          gl_printMidRaw( &gl_smallFont, w,
@@ -1076,8 +1078,7 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
       return;
 
    /* Must be left click for now. */
-   if ((event->type != SDL_MOUSEBUTTONDOWN) ||
-         (event->button.button != SDL_BUTTON_LEFT))
+   if (event->type != SDL_MOUSEBUTTONDOWN)
       return;
 
    /* Calculate height of outfit widgets. */
@@ -1095,7 +1096,10 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
       y = bh - 60 + (40-h)/2;
       ret = equipment_mouseColumn( y, h, p->outfit_nhigh, my );
       if (ret >= 0) {
-         equipment_slot = selected + ret;
+         if (event->button.button == SDL_BUTTON_LEFT)
+            equipment_slot = selected + ret;
+         else
+            equipment_swapSlot( wid, &p->outfit_high[ret] );
          return;
       }
    }
@@ -1105,7 +1109,10 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
       y = bh - 60 + (40-h)/2;
       ret = equipment_mouseColumn( y, h, p->outfit_nmedium, my );
       if (ret >= 0) {
-         equipment_slot = selected + ret;
+         if (event->button.button == SDL_BUTTON_LEFT)
+            equipment_slot = selected + ret;
+         else
+            equipment_swapSlot( wid, &p->outfit_medium[ret] );
          return;
       }
    }
@@ -1115,10 +1122,54 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
       y = bh - 60 + (40-h)/2;
       ret = equipment_mouseColumn( y, h, p->outfit_nlow, my );
       if (ret >= 0) {
-         equipment_slot = selected + ret;
+         if (event->button.button == SDL_BUTTON_LEFT)
+            equipment_slot = selected + ret;
+         else
+            equipment_swapSlot( wid, &p->outfit_low[ret] );
          return;
       }
    }
+}
+/**
+ * @brief Swaps an equipment slot.
+ */
+static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
+{
+   int ret;
+   const char *oname;
+   Outfit *o;
+
+
+   /* Remove outfit. */
+   if (slot->outfit != NULL) {
+      o = slot->outfit;
+      ret = pilot_rmOutfit( player, slot );
+      if (ret == 0)
+         player_addOutfit( o, 1 );
+   }
+   /* Add outfit. */
+   else {
+      /* Must have outfit. */
+      oname = toolkit_getImageArray( wid, "iarAvailOutfits" );
+      if (strcmp(oname,"None")==0) {
+         return 0;
+      }
+      o = outfit_get(oname);
+
+      /* Must fit slot. */
+      if (o->slot != slot->slot)
+         return 0;
+
+      /* Remove outfit. */
+      ret = player_rmOutfit( o, 1 );
+      if (ret == 1)
+         pilot_addOutfit( player, o, slot );
+   }
+
+   /* Redo the outfits thingy. */
+   window_destroyWidget( wid, "iarAvailOutfits" );
+   equipment_genLists( wid );
+   return 0;
 }
 /**
  * @brief Generates a new ship/outfit lists if needed.
@@ -1146,10 +1197,13 @@ static void equipment_genLists( unsigned int wid )
 
    /* Ship list. */
    if (!widget_exists( wid, "iarAvailShips" )) {
-      nships   = MAX(1,player_nships());
+      nships   = player_nships()+1;
       sships   = malloc(sizeof(char*)*nships);
       tships   = malloc(sizeof(glTexture*)*nships);
-      player_ships( sships, tships );
+      /* Add player's current ship. */
+      sships[0] = strdup(player->name);
+      tships[0] = player->ship->gfx_target;
+      player_ships( &sships[1], &tships[1] );
       window_addImageArray( wid, 20, -40,
             sw, sh, "iarAvailShips", 64./96.*128., 64.,
             tships, sships, nships, equipment_update );
@@ -1184,15 +1238,20 @@ static void equipment_update( unsigned int wid, char* str )
    unsigned int price;
 
    shipname = toolkit_getImageArray( wid, "iarAvailShips" );
-   if (strcmp(shipname,"None")==0) { /* no ships */
+   if (strcmp(shipname,player->name)==0) { /* no ships */
       window_disableButton( wid, "btnSellShip" );
       window_disableButton( wid, "btnChangeShip" );
-      window_disableButton( wid, "btnUnequipShip" );
-      return;
+      ship = player;
+      loc = "Onboard";
+      price = 0;
    }
-   ship  = player_getShip( shipname );
-   loc   = player_getLoc(ship->name);
-   price = equipment_transportPrice( shipname );
+   else {
+      window_enableButton( wid, "btnSellShip" );
+      window_enableButton( wid, "btnChangeShip" );
+      ship  = player_getShip( shipname );
+      loc   = player_getLoc(ship->name);
+      price = equipment_transportPrice( shipname );
+   }
    equipment_selected = ship;
 
    /* update image */

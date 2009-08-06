@@ -458,6 +458,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          cur = node->children;
          do {
             if (xml_isNode(cur,"low")) {
+               temp->outfit_low[l].slot = OUTFIT_SLOT_LOW;
                /* Set default outfit if applicable. */
                stmp = xml_get(cur);
                if (stmp!=NULL)
@@ -466,6 +467,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
                l++;
             }
             if (xml_isNode(cur,"medium")) {
+               temp->outfit_medium[m].slot = OUTFIT_SLOT_MEDIUM;
                /* Set default outfit if applicable. */
                stmp = xml_get(cur);
                if (stmp!=NULL)
@@ -474,6 +476,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
                m++;
             }
             if (xml_isNode(cur,"high")) {
+               temp->outfit_high[h].slot = OUTFIT_SLOT_HIGH;
                /* Set default outfit if applicable. */
                stmp = xml_get(cur);
                if (stmp!=NULL)

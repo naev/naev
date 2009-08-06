@@ -521,25 +521,34 @@ int player_shipPrice( char* shipname )
    int price;
    Pilot *ship;
 
-   /* Find the ship. */
-   for (i=0; i<player_nstack; i++) {
-      if (strcmp(shipname,player_stack[i]->name)==0) {
-         ship = player_stack[i];
-
-         /* Ship price is base price + outfit prices. */
-         price = ship_basePrice( ship->ship );
-         for (i=0; i<ship->noutfits; i++) {
-            if (ship->outfits[i]->outfit == NULL)
-               continue;
-            price += ship->outfits[i]->outfit->price;
+   if (strcmp(shipname,player->name)==0) {
+      ship = player;
+   }
+   else {
+      /* Find the ship. */
+      for (i=0; i<player_nstack; i++) {
+         if (strcmp(shipname,player_stack[i]->name)==0) {
+            ship = player_stack[i];
+            break;
          }
-
-         return price;
       }
    }
 
-   WARN( "Unable to find price for player's ship '%s': ship does not exist!", shipname );
-   return -1;
+   /* Not found. */
+   if (ship == NULL) {
+      WARN( "Unable to find price for player's ship '%s': ship does not exist!", shipname );
+      return -1;
+   }
+
+   /* Ship price is base price + outfit prices. */
+   price = ship_basePrice( ship->ship );
+   for (i=0; i<ship->noutfits; i++) {
+      if (ship->outfits[i]->outfit == NULL)
+         continue;
+      price += ship->outfits[i]->outfit->price;
+   }
+
+   return price;
 }
 
 
@@ -1726,15 +1735,12 @@ void player_ships( char** sships, glTexture** tships )
 {
    int i;
 
-   if (player_nstack==0) {
-      sships[0] = strdup("None");
-      tships[0] = NULL;
-   }
-   else {
-      for (i=0; i < player_nstack; i++) {
-         sships[i] = strdup(player_stack[i]->name);
-         tships[i] = player_stack[i]->ship->gfx_target;
-      }
+   if (player_nstack == 0)
+      return;
+
+   for (i=0; i < player_nstack; i++) {
+      sships[i] = strdup(player_stack[i]->name);
+      tships[i] = player_stack[i]->ship->gfx_target;
    }
 }
 
