@@ -57,6 +57,7 @@ void window_addCust( const unsigned int wid,
    wgt->dat.cst.border  = border;
    wgt->dat.cst.render  = render;
    wgt->dat.cst.mouse   = mouse;
+   wgt->dat.cst.clip    = 1;
 
    /* position/size */
    wgt->w = (double) w;
@@ -88,8 +89,37 @@ static void cst_render( Widget* cst, double bx, double by )
             toolkit_colDark, NULL );
    }
 
-   toolkit_clip( x, y, cst->w, cst->h );
+   if (cst->dat.cst.clip != 0)
+      toolkit_clip( x, y, cst->w, cst->h );
    (*cst->dat.cst.render) ( x, y, cst->w, cst->h );
-   toolkit_unclip();
+   if (cst->dat.cst.clip != 0)
+      toolkit_unclip();
+}
+
+
+/**
+ * @brief Changes clipping settings on a custom widget.
+ *
+ *    @param wid Window to which widget belongs.
+ *    @param name Name of the widget.
+ *    @param clip If 0 disables clipping, otherwise enables clipping.
+ */
+void window_custSetClipping( const unsigned int wid, const char *name, int clip )
+{
+   Widget *wgt;
+
+   /* Get widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+
+   /* Make sure it is a custom widget. */
+   if (wgt->type != WIDGET_CUST) {
+      DEBUG("Trying to change clipping setting on non-custom widget '%s'", name);
+      return;
+   }
+
+   /* Set the clipping. */
+   wgt->dat.cst.clip = clip;
 }
 

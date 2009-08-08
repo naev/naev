@@ -18,6 +18,7 @@ typedef struct WidgetCustData_ {
    int border; /**< 1 if widget should have border, 0 if it shouldn't. */
    void (*render) (double bx, double by, double bw, double bh); /**< Function to run when rendering. */
    void (*mouse) (unsigned int wid, SDL_Event* event, double bx, double by, double bw, double bh); /**< Function to run when recieving mouse events. */
+   int clip; /**< 1 if should clip with glScissors or the like, 0 otherwise. */
 } WidgetCustData;
 
 
@@ -28,6 +29,9 @@ void window_addCust( const unsigned int wid,
       char* name, const int border,
       void (*render) (double x, double y, double w, double h),
       void (*mouse) (unsigned int wid, SDL_Event* event, double x, double y, double w, double h) );
+
+
+void window_custSetClipping( const unsigned int wid, const char *name, int clip );
 
 
 #endif /* WGT_CUST_H */
