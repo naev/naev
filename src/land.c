@@ -120,6 +120,7 @@ static int last_window = 0; /**< Default window. */
  */
 static Pilot *equipment_selected = NULL; /**< Selected pilot ship. */
 static int equipment_slot = -1; /**< Selected equipment slot. */
+static int equipment_mouseover = -1; /**< Mouse over slot. */
 
 
 /*
@@ -152,7 +153,7 @@ static void shipyard_buy( unsigned int wid, char* str );
 /* equipment */
 static void equipment_open( unsigned int wid );
 static void equipment_renderColumn( double x, double y, double w, double h,
-      int n, PilotOutfitSlot *lst, const char *txt, int selected );
+      int n, PilotOutfitSlot *lst, const char *txt, int selected, int mover );
 static void equipment_render( double bx, double by, double bw, double bh );
 static int equipment_mouseColumn( double y, double h, int n, double my );
 static void equipment_mouse( unsigned int wid, SDL_Event* event,
@@ -938,15 +939,17 @@ static void equipment_open( unsigned int wid )
    /* Custom widget. */
    window_addCust( wid, 20 + sw + 40, -40, cw, ch, "cstEquipment", 0,
          equipment_render, equipment_mouse );
+   window_custSetClipping( wid, "cstEquipment", 0 );
 }
 /**
  * @brief Renders an outfit column.
  */
 static void equipment_renderColumn( double x, double y, double w, double h,
-      int n, PilotOutfitSlot *lst, const char *txt, int selected )
+      int n, PilotOutfitSlot *lst, const char *txt, int selected, int mover )
 {
    int i;
-   glColour *lc, *c, *dc;
+   glColour *lc, *c, *dc, tc;
+   int text_width, xoff;
 
    /* Render text. */
    gl_printMidRaw( &gl_smallFont, w,
@@ -980,6 +983,24 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       }
       toolkit_drawOutline( x - 2., y-2., w+4., h+4., 1., lc, c  );
       toolkit_drawOutline( x - 2., y-2., w+4., h+4., 2., dc, NULL  );
+      /* Draw bottom. */
+      if ((i==mover) && (lst[i].outfit != NULL)) {
+         text_width = gl_printWidthRaw( &gl_smallFont, lst[i].outfit->name );
+         xoff = (text_width - w)/2;
+         tc.r = 1.;
+         tc.g = 1.;
+         tc.b = 1.;
+         tc.a = 0.5;
+         toolkit_drawRect( x-xoff-5, y - gl_smallFont.h - 5,
+               text_width+10, gl_smallFont.h+5,
+               &tc, NULL );
+         tc.r = 0.;
+         tc.g = 0.;
+         tc.b = 0.;
+         gl_printMaxRaw( &gl_smallFont, text_width,
+               x-xoff + SCREEN_W/2., y - gl_smallFont.h -2. + SCREEN_H/2.,
+               &cDConsole, lst[i].outfit->name );
+      }
       /* Go to next one. */
       y -= h+20;
    }
@@ -991,7 +1012,7 @@ static void equipment_render( double bx, double by, double bw, double bh )
 {
    (void) bw;
    Pilot *p;
-   int m, selected;
+   int m, selected, mover;
    double percent;
    double x, y;
    double w, h;
@@ -1011,22 +1032,25 @@ static void equipment_render( double bx, double by, double bw, double bh )
 
    /* Get selected. */
    selected = equipment_slot;
+   mover    = equipment_mouseover;
 
    /* Render high outfits. */
    x = bx + 10 + (40-w)/2;
    y = by + bh - 60 + (40-h)/2;
    equipment_renderColumn( x, y, w, h,
-         p->outfit_nhigh, p->outfit_high, "High", selected );
+         p->outfit_nhigh, p->outfit_high, "High", selected, mover );
    selected -= p->outfit_nhigh;
+   mover    -= p->outfit_nhigh;
    x = bx + 10 + (40-w)/2 + 60;
    y = by + bh - 60 + (40-h)/2;
    equipment_renderColumn( x, y, w, h,
-         p->outfit_nmedium, p->outfit_medium, "Medium", selected );
+         p->outfit_nmedium, p->outfit_medium, "Medium", selected, mover );
    selected -= p->outfit_nmedium;
+   mover    -= p->outfit_nmedium;
    x = bx + 10 + (40-w)/2 + 120;
    y = by + bh - 60 + (40-h)/2;
    equipment_renderColumn( x, y, w, h,
-         p->outfit_nlow, p->outfit_low, "Low", selected );
+         p->outfit_nlow, p->outfit_low, "Low", selected, mover );
 
    /* Render CPU and energy bars. */
    lc = &cWhite;
@@ -1080,7 +1104,8 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
       return;
 
    /* Must be left click for now. */
-   if (event->type != SDL_MOUSEBUTTONDOWN)
+   if ((event->type != SDL_MOUSEBUTTONDOWN) &&
+         (event->type != SDL_MOUSEMOTION))
       return;
 
    /* Calculate height of outfit widgets. */
@@ -1098,10 +1123,15 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
       y = bh - 60 + (40-h)/2;
       ret = equipment_mouseColumn( y, h, p->outfit_nhigh, my );
       if (ret >= 0) {
-         if (event->button.button == SDL_BUTTON_LEFT)
-            equipment_slot = selected + ret;
-         else
-            equipment_swapSlot( wid, &p->outfit_high[ret] );
+         if (event->type == SDL_MOUSEBUTTONDOWN) {
+            if (event->button.button == SDL_BUTTON_LEFT)
+               equipment_slot = selected + ret;
+            else
+               equipment_swapSlot( wid, &p->outfit_high[ret] );
+         }
+         else {
+            equipment_mouseover = selected + ret;
+         }
          return;
       }
    }
@@ -1111,10 +1141,15 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
       y = bh - 60 + (40-h)/2;
       ret = equipment_mouseColumn( y, h, p->outfit_nmedium, my );
       if (ret >= 0) {
-         if (event->button.button == SDL_BUTTON_LEFT)
-            equipment_slot = selected + ret;
-         else
-            equipment_swapSlot( wid, &p->outfit_medium[ret] );
+         if (event->type == SDL_MOUSEBUTTONDOWN) {
+            if (event->button.button == SDL_BUTTON_LEFT)
+               equipment_slot = selected + ret;
+            else
+               equipment_swapSlot( wid, &p->outfit_medium[ret] );
+         }
+         else {
+            equipment_mouseover = selected + ret;
+         }
          return;
       }
    }
@@ -1124,13 +1159,21 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
       y = bh - 60 + (40-h)/2;
       ret = equipment_mouseColumn( y, h, p->outfit_nlow, my );
       if (ret >= 0) {
-         if (event->button.button == SDL_BUTTON_LEFT)
-            equipment_slot = selected + ret;
-         else
-            equipment_swapSlot( wid, &p->outfit_low[ret] );
+         if (event->type == SDL_MOUSEBUTTONDOWN) {
+            if (event->button.button == SDL_BUTTON_LEFT)
+               equipment_slot = selected + ret;
+            else
+               equipment_swapSlot( wid, &p->outfit_low[ret] );
+         }
+         else {
+            equipment_mouseover = selected + ret;
+         }
          return;
       }
    }
+
+   /* Not over anything. */
+   equipment_mouseover = -1;
 }
 /**
  * @brief Swaps an equipment slot.
