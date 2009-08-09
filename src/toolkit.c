@@ -1173,6 +1173,29 @@ void window_render( Window *w )
 
 
 /**
+ * @brief Renders the window overlays.
+ *
+ *    @param w Window to render overlays of.
+ */
+void window_renderOverlay( Window *w )
+{
+   int i;
+   double x, y;
+
+   /* position */
+   x = w->x - (double)SCREEN_W/2.;
+   y = w->y - (double)SCREEN_H/2.;
+
+   /*
+    * overlays
+    */
+   for (i=0; i<w->nwidgets; i++)
+      if (w->widgets[i].renderOverlay != NULL)
+         w->widgets[i].renderOverlay( &w->widgets[i], x, y );
+}
+
+
+/**
  * @brief Draws a scrollbar.
  *
  *    @param x X position of scrollbar.
@@ -1204,9 +1227,15 @@ void toolkit_render (void)
 {
    int i;
 
+   /* Render base. */
    for (i=0; i<nwindows; i++)
       if (!window_isFlag(&windows[i], WINDOW_NORENDER))
          window_render(&windows[i]);
+
+   /* Render overlay. */
+   for (i=0; i<nwindows; i++)
+      if (!window_isFlag(&windows[i], WINDOW_NORENDER))
+         window_renderOverlay(&windows[i]);
 }
 
 

@@ -13,6 +13,7 @@
 
 
 static void iar_render( Widget* iar, double bx, double by );
+static void iar_renderOverlay( Widget* iar, double bx, double by );
 static int iar_key( Widget* iar, SDLKey key, SDLMod mod );
 static int iar_mclick( Widget* iar, int button, int x, int y );
 static int iar_mmove( Widget* iar, int x, int y, int rx, int ry );
@@ -64,6 +65,7 @@ void window_addImageArray( const unsigned int wid,
 
    /* specific */
    wgt->render             = iar_render;
+   wgt->renderOverlay      = iar_renderOverlay;
    wgt->cleanup            = iar_cleanup;
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->keyevent           = iar_key;
@@ -102,7 +104,6 @@ static void iar_render( Widget* iar, double bx, double by )
    int xelem,yelem, xspace;
    glColour *c, *dc, *lc;
    int is_selected;
-   char *alt;
 
    /*
     * Calculations.
@@ -188,6 +189,17 @@ static void iar_render( Widget* iar, double bx, double by )
     */
    toolkit_drawOutline( x, y+1, iar->w-1, iar->h-1, 1., toolkit_colLight, toolkit_col );
    toolkit_drawOutline( x, y+1, iar->w-1, iar->h-1, 2., toolkit_colDark, NULL );
+}
+
+
+/**
+ * @brief Renders the overlay.
+ */
+static void iar_renderOverlay( Widget* iar, double bx, double by )
+{
+   char *alt;
+   double x, y;
+   double w, h;
 
    /*
     * Draw Alt text if applicable.

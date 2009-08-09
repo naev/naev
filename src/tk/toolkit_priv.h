@@ -94,6 +94,7 @@ typedef struct Widget_ {
 
    /* Misc. routines. */
    void (*render) ( struct Widget_ *wgt, double x, double y ); /**< Render function for the widget. */
+   void (*renderOverlay) ( struct Widget_ *wgt, double x, double y ); /**< Overlay render fuction for the widget. */
    void (*cleanup) ( struct Widget_ *wgt ); /**< Clean up function for the widget. */
 
    /* Status of the widget. */
@@ -158,6 +159,7 @@ Window* toolkit_getActiveWindow (void);
 Window* window_wget( const unsigned int wid );
 int toolkit_inputWindow( Window *wdw, SDL_Event *event );
 void window_render( Window* w );
+void window_renderOverlay( Window* w );
 
 
 /* Widget stuff. */

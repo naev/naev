@@ -21,6 +21,7 @@
 static int tab_mouse( Widget* tab, SDL_Event *event );
 static int tab_raw( Widget* tab, SDL_Event *event );
 static void tab_render( Widget* tab, double bx, double by );
+static void tab_renderOverlay( Widget* tab, double bx, double by );
 static void tab_cleanup( Widget* tab );
 
 
@@ -61,6 +62,7 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
    wgt_setFlag( wgt, WGT_FLAG_RAWINPUT );
    wgt->rawevent           = tab_raw;
    wgt->render             = tab_render;
+   wgt->renderOverlay      = tab_renderOverlay;
    wgt->cleanup            = tab_cleanup;
    wgt->dat.tab.ntabs      = ntabs;
 
@@ -221,6 +223,31 @@ static void tab_render( Widget* tab, double bx, double by )
       /* Go to next line. */
       x += 10 + tab->dat.tab.namelen[i];
    }
+}
+
+
+/**
+ * @brief Renders a button widget overlay.
+ *
+ *    @param tab WIDGET_BUTTON widget to render.
+ *    @param bx Base X position.
+ *    @param by Base Y position.
+ */
+static void tab_renderOverlay( Widget* tab, double bx, double by )
+{
+   (void) bx;
+   (void) by;
+   Window *wdw;
+
+   /** Get window. */
+   wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
+   if (wdw == NULL) {
+      WARN("Active window in widget '%s' not found in stack.", tab->name);
+      return;
+   }
+
+   /* Render overlay. */
+   window_renderOverlay( wdw );
 }
 
 
