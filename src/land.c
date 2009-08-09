@@ -34,6 +34,7 @@
 #include "news.h"
 #include "escort.h"
 #include "event.h"
+#include "opengl_vbo.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 
@@ -123,6 +124,7 @@ static int equipment_slot = -1; /**< Selected equipment slot. */
 static int equipment_mouseover = -1; /**< Mouse over slot. */
 static double equipment_dir = 0.; /**< Equipment dir. */
 static unsigned int equipment_lastick = 0; /**< Last tick. */
+static gl_vbo *equipment_vbo = NULL; /**< The VBO. */
 
 
 /*
@@ -157,6 +159,8 @@ static void equipment_open( unsigned int wid );
 static void equipment_renderColumn( double x, double y, double w, double h,
       int n, PilotOutfitSlot *lst, const char *txt, int selected, int mover );
 static void equipment_render( double bx, double by, double bw, double bh );
+static void equipment_renderShip( double bx, double by,
+      double bw, double bh, double x, double y, Pilot *p );
 static int equipment_mouseColumn( double y, double h, int n, double my );
 static void equipment_mouse( unsigned int wid, SDL_Event* event,
       double x, double y, double w, double h );
@@ -865,11 +869,26 @@ static void shipyard_buy( unsigned int wid, char* str )
  */
 static void equipment_open( unsigned int wid )
 {
+   int i;
    int w, h;
    int sw, sh;
    int ow, oh;
    int bw, bh;
    int cw, ch;
+   GLfloat colour[4*4];
+
+   /* Create the vbo if necessary. */
+   if (equipment_vbo == NULL) {
+      equipment_vbo = gl_vboCreateStream( sizeof(GLfloat) * (2+4)*4, NULL );
+      for (i=0; i<4; i++) {
+         colour[i*4+0] = cRadar_player.r;
+         colour[i*4+1] = cRadar_player.g;
+         colour[i*4+2] = cRadar_player.b;
+         colour[i*4+3] = cRadar_player.a;
+      }
+      gl_vboSubData( equipment_vbo, sizeof(GLfloat) * 2*4,
+            sizeof(GLfloat) * 4*4, colour );
+   }
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -1015,11 +1034,6 @@ static void equipment_render( double bx, double by, double bw, double bh )
    double x, y;
    double w, h;
    glColour *lc, *c, *dc;
-   int sx, sy;
-   unsigned int tick;
-   double dt;
-   double px, py;
-   double pw, ph;
 
    /* Must have selected ship. */
    if (equipment_selected == NULL)
@@ -1075,7 +1089,27 @@ static void equipment_render( double bx, double by, double bw, double bh )
          x - 20 + SCREEN_W/2., y - 20 - gl_smallFont.h + SCREEN_H/2.,
          &cBlack, "%.1f / %.1f", p->cpu, p->cpu_max );
 
-   /* Rotate ship graphic a bit. */
+   /* Render ship graphic. */
+   equipment_renderShip( bx, by, bw, bh, x, y, p );
+}
+
+
+/**
+ * @brief Renders the ship in the equipment window.
+ */
+static void equipment_renderShip( double bx, double by,
+      double bw, double bh, double x, double y, Pilot* p )
+{
+   int sx, sy;
+   glColour *lc, *c, *dc;
+   unsigned int tick;
+   double dt;
+   double px, py;
+   double pw, ph;
+   double w, h;
+   Vector2d v;
+   GLfloat vertex[2*4];
+
    tick = SDL_GetTicks();
    dt   = (double)(tick - equipment_lastick)/1000.;
    equipment_lastick = tick;
@@ -1101,8 +1135,33 @@ static void equipment_render( double bx, double by, double bw, double bh )
    y  = by + bh - 30 - h;
    toolkit_drawRect( x-5, y-5, w+10, h+10, &cBlack, NULL );
    gl_blitScaleSprite( p->ship->gfx_space,
-         px+SCREEN_W/2, py+SCREEN_H/2,
-         sx, sy, pw, ph, NULL );
+         px + SCREEN_W/2, py + SCREEN_H/2, sx, sy, pw, ph, NULL );
+   if ((equipment_slot >=0) && (equipment_slot < p->outfit_nhigh)) {
+      p->tsx = sx;
+      p->tsy = sy;
+      pilot_getMount( p, &p->outfit_high[equipment_slot], &v );
+      px += pw/2;
+      py += ph/2;
+      v.x *= pw / p->ship->gfx_space->sw;
+      v.y *= ph / p->ship->gfx_space->sh;
+      /* Render it. */
+      vertex[0] = px + v.x + 0.;
+      vertex[1] = py + v.y - 7;
+      vertex[2] = vertex[0];
+      vertex[3] = py + v.y + 7;
+      vertex[4] = px + v.x - 7.;
+      vertex[5] = py + v.y + 0.;
+      vertex[6] = px + v.x + 7.;
+      vertex[7] = vertex[5];
+      glLineWidth( 3. );
+      gl_vboSubData( equipment_vbo, 0, sizeof(GLfloat) * (2*4), vertex );
+      gl_vboActivateOffset( equipment_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+      gl_vboActivateOffset( equipment_vbo, GL_COLOR_ARRAY,
+            sizeof(GLfloat) * 2*4, 4, GL_FLOAT, 0 );
+      glDrawArrays( GL_LINES, 0, 4 );
+      gl_vboDeactivate();
+      glLineWidth( 1. );
+   }
    lc = toolkit_colLight;
    c  = toolkit_col;
    dc = toolkit_colDark;
@@ -1332,17 +1391,24 @@ static void equipment_update( unsigned int wid, char* str )
    unsigned int price;
    int onboard;
 
+   /* Clear defaults. */
+   equipment_slot       = -1;
+   equipment_mouseover  = -1;
+   equipment_lastick    = SDL_GetTicks();
+   equipment_dir        = 0.;
+
+   /* Get the ship. */
    shipname = toolkit_getImageArray( wid, "iarAvailShips" );
    if (strcmp(shipname,player->name)==0) { /* no ships */
-      ship = player;
-      loc = "Onboard";
-      price = 0;
+      ship    = player;
+      loc     = "Onboard";
+      price   = 0;
       onboard = 1;
    }
    else {
-      ship  = player_getShip( shipname );
-      loc   = player_getLoc(ship->name);
-      price = equipment_transportPrice( shipname );
+      ship   = player_getShip( shipname );
+      loc    = player_getLoc(ship->name);
+      price  = equipment_transportPrice( shipname );
       onboard = 0;
    }
    equipment_selected = ship;
@@ -2419,8 +2485,19 @@ void land_cleanup (void)
       free(mission_bar);
    mission_bar    = NULL;
    mission_nbar   = 0;
-
-   /* Set to sane defaults. */
-   equipment_selected = NULL;
 }
 
+
+/**
+ * @brief Exits all the landing stuff.
+ */
+void land_exit (void)
+{
+   land_cleanup();
+
+   /* Destroy the VBO. */
+   if (equipment_vbo != NULL) {
+      gl_vboDestroy( equipment_vbo );
+      equipment_vbo = NULL;
+   }
+}

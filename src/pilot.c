@@ -784,6 +784,8 @@ void pilot_shootStop( Pilot* p, const int secondary )
 /**
  * @brief Gets the mount position of a pilot.
  *
+ * Position is relative to the pilot.
+ *
  *    @param p Pilot to get mount position of.
  *    @param id ID of the mount.
  *    @param[out] v Position of the mount.
@@ -818,7 +820,7 @@ int pilot_getMount( Pilot *p, PilotOutfitSlot *w, Vector2d *v )
    y += m->h;
 
    /* Get the mount and add the player offset. */
-   vect_cset( v, p->solid->pos.x + x, p->solid->pos.y + y );
+   vect_cset( v, x, y );
 
    return 0;
 }
@@ -845,6 +847,8 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 
    /* Get weapon mount position. */
    pilot_getMount( p, w, &vp );
+   vp.x += p->solid->pos.x;
+   vp.y += p->solid->pos.y;
 
    /* Modify velocity to take into account the rotation. */
    vect_cset( &vv, p->solid->vel.x + vp.x*p->solid->dir_vel,

@@ -68,6 +68,7 @@
 #include "map.h"
 #include "event.h"
 #include "cond.h"
+#include "land.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -274,6 +275,7 @@ int main( int argc, char** argv )
    weapon_exit(); /* destroys all active weapons */
    pilots_free(); /* frees the pilots, they were locked up :( */
    cond_exit(); /* destroy conditional subsystem. */
+   land_exit(); /* Destroys landing vbo and friends. */
 
    /* data unloading */
    unload_all();

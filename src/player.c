@@ -806,25 +806,6 @@ void player_render( double dt )
 
       /* Player is ontop of targeting graphic */
       pilot_render(player, dt);
-
-   /* Use to test and debug mounts. */
-#if 0
-      int i;
-      Vector2d v;
-      double a;
-      for (i=0; i<player->ship->nmounts; i++) {
-         a  = (double)(player->tsy * player->ship->gfx_space->sx + player->tsx);
-         a *= player->ship->mangle;
-         ship_getMount( player->ship, a, i, &v );
-         glBegin(GL_LINES);
-            COLOUR(cRadar_player);
-            glVertex2d( v.x + 0., v.y + -3. );
-            glVertex2d( v.x + 0., v.y + 3. );
-            glVertex2d( v.x +-3., v.y + 0. );
-            glVertex2d( v.x + 3., v.y + 0. );
-         glEnd(); /* GL_LINES */
-      }
-#endif
    }
 }
 

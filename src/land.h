@@ -18,6 +18,7 @@ extern Planet* land_planet;
 void land ( Planet* p );
 void takeoff( int delay );
 void land_cleanup (void);
+void land_exit (void);
 
 
 #endif /* LAND_H */
