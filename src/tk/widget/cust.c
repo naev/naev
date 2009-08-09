@@ -13,6 +13,8 @@
 
 
 static void cst_render( Widget* cst, double bx, double by );
+static void cst_renderOverlay( Widget* cst, double bx, double by );
+static Widget *cst_getWidget( const unsigned int wid, const char *name );
 
 
 /**
@@ -54,6 +56,7 @@ void window_addCust( const unsigned int wid,
 
    /* specific */
    wgt->render          = cst_render;
+   wgt->renderOverlay   = cst_renderOverlay;
    wgt->dat.cst.border  = border;
    wgt->dat.cst.render  = render;
    wgt->dat.cst.mouse   = mouse;
@@ -98,6 +101,47 @@ static void cst_render( Widget* cst, double bx, double by )
 
 
 /**
+ * @brief Renders the widget overlay.
+ */
+static void cst_renderOverlay( Widget* cst, double bx, double by )
+{
+   double x,y;
+   
+   x = bx + cst->x;
+   y = by + cst->y;
+   
+   if (cst->dat.cst.clip != 0)
+      toolkit_clip( x, y, cst->w, cst->h );
+   if (cst->dat.cst.renderOverlay != NULL)
+      cst->dat.cst.renderOverlay ( x, y, cst->w, cst->h );
+   if (cst->dat.cst.clip != 0)
+      toolkit_unclip();
+}
+
+
+/**
+ * @brief Gets a custom widget.
+ */
+static Widget *cst_getWidget( const unsigned int wid, const char *name )
+{
+   Widget *wgt;
+
+   /* Get widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return NULL;
+
+   /* Make sure it is a custom widget. */
+   if (wgt->type != WIDGET_CUST) {
+      DEBUG("Widget is not a custom widget: '%s'", name);
+      return NULL;
+   }
+
+   return wgt;
+}
+
+
+/**
  * @brief Changes clipping settings on a custom widget.
  *
  *    @param wid Window to which widget belongs.
@@ -106,20 +150,29 @@ static void cst_render( Widget* cst, double bx, double by )
  */
 void window_custSetClipping( const unsigned int wid, const char *name, int clip )
 {
-   Widget *wgt;
-
-   /* Get widget. */
-   wgt = window_getwgt(wid,name);
+   Widget *wgt = cst_getWidget( wid, name );
    if (wgt == NULL)
       return;
 
-   /* Make sure it is a custom widget. */
-   if (wgt->type != WIDGET_CUST) {
-      DEBUG("Trying to change clipping setting on non-custom widget '%s'", name);
-      return;
-   }
-
    /* Set the clipping. */
    wgt->dat.cst.clip = clip;
+}
+
+
+/**
+ * @brief Sets the widget overlay.
+ *
+ *    @param wid Window to which widget belongs.
+ *    @param name Name of the widget.
+ *    @param renderOverlay Function to render widget overlay, NULL disables.
+ */
+void window_custSetOverlay( const unsigned int wid, const char *name,
+      void (*renderOverlay) (double bx, double by, double bw, double bh) )
+{
+   Widget *wgt = cst_getWidget( wid, name );
+   if (wgt == NULL)
+      return;
+
+   wgt->dat.cst.renderOverlay = renderOverlay;
 }
 
