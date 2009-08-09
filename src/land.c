@@ -120,12 +120,14 @@ static int last_window = 0; /**< Default window. */
  * equipment stuff
  */
 static Pilot *equipment_selected = NULL; /**< Selected pilot ship. */
-static Outfit *equipment_outfit = NULL; /**< Selected outfit. */
-static int equipment_slot = -1; /**< Selected equipment slot. */
-static int equipment_mouseover = -1; /**< Mouse over slot. */
-static double equipment_dir = 0.; /**< Equipment dir. */
+static Outfit *equipment_outfit  = NULL; /**< Selected outfit. */
+static int equipment_slot        = -1; /**< Selected equipment slot. */
+static int equipment_mouseover   = -1; /**< Mouse over slot. */
+static double equipment_dir      = 0.; /**< Equipment dir. */
+static double equipment_altx     = 0; /**< Alt X text position. */
+static double equipment_alty     = 0; /**< Alt Y text position. */
 static unsigned int equipment_lastick = 0; /**< Last tick. */
-static gl_vbo *equipment_vbo = NULL; /**< The VBO. */
+static gl_vbo *equipment_vbo     = NULL; /**< The VBO. */
 
 
 /*
@@ -160,6 +162,7 @@ static void equipment_open( unsigned int wid );
 static void equipment_renderColumn( double x, double y, double w, double h,
       int n, PilotOutfitSlot *lst, const char *txt, int selected, int mover );
 static void equipment_render( double bx, double by, double bw, double bh );
+static void equipment_renderOverlay( double bx, double by, double bw, double bh );
 static void equipment_renderShip( double bx, double by,
       double bw, double bh, double x, double y, Pilot *p );
 static int equipment_mouseColumn( double y, double h, int n, double my );
@@ -914,6 +917,8 @@ static void equipment_open( unsigned int wid )
    equipment_outfit     = NULL;
    equipment_slot       = -1;
    equipment_mouseover  = -1;
+   equipment_altx       = 0;
+   equipment_alty       = 0;
    equipment_lastick    = SDL_GetTicks();
    equipment_dir        = 0.;
 
@@ -961,6 +966,7 @@ static void equipment_open( unsigned int wid )
    window_addCust( wid, 20 + sw + 40, -40, cw, ch, "cstEquipment", 0,
          equipment_render, equipment_mouse );
    window_custSetClipping( wid, "cstEquipment", 0 );
+   window_custSetOverlay( wid, "cstEquipment", equipment_renderOverlay );
 }
 /**
  * @brief Renders an outfit column.
@@ -990,7 +996,8 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       else {
          gl_printMidRaw( &gl_smallFont, w,
                x + SCREEN_W/2., y + (h-gl_smallFont.h)/2 + SCREEN_H/2.,
-               (i==selected) ? &cDConsole : &cBlack, "None" );
+               (lst[i].slot == equipment_outfit->slot) ?
+                  &cDConsole : &cBlack, "None" );
       }
       /* Draw outline. */
       if (i==selected) {
@@ -1105,6 +1112,62 @@ static void equipment_render( double bx, double by, double bw, double bh )
 
    /* Render ship graphic. */
    equipment_renderShip( bx, by, bw, bh, x, y, p );
+}
+
+
+/**
+ * @brief Renders the equipment overlay.
+ */
+static void equipment_renderOverlay( double bx, double by, double bw, double bh )
+{
+   (void) bw;
+   (void) bh;
+   Pilot *p;
+   PilotOutfitSlot *slot;
+   double x, y, w, h;
+   const char *alt;
+
+   /* Mouse must be over something. */
+   if (equipment_mouseover < 0)
+      return;
+
+   /* Get the slot. */
+   p = equipment_selected;
+   if (equipment_mouseover < p->outfit_nhigh) {
+      slot = &p->outfit_high[equipment_mouseover];
+   }
+   else if (equipment_mouseover < p->outfit_nhigh + p->outfit_nmedium) {
+      slot = &p->outfit_medium[ equipment_mouseover - p->outfit_nhigh ];
+   }
+   else {
+      slot = &p->outfit_medium[ equipment_mouseover -
+            p->outfit_nhigh - p->outfit_nmedium ];
+   }
+
+   /* Slot is empty. */
+   if (slot->outfit == NULL)
+      return;
+
+   /* Get text. */
+   alt = slot->outfit->desc_short;
+   if (alt == NULL)
+      return;
+
+   /* Get dimensions. */
+   w = 120.;
+   h = gl_printHeightRaw( &gl_smallFont, w, alt );
+   /* One check to make bigger. */
+   if (h > 160.) {
+      w = 240;
+      h = gl_printHeightRaw( &gl_smallFont, w, alt );
+   }
+
+   /* Choose position. */
+   x = bx + equipment_altx + 10.;
+   y = by + equipment_alty - h - gl_smallFont.h - 10.;
+   toolkit_drawRect( x-3, y-3, w+6, h+6, &cWhite, NULL );
+   gl_printTextRaw( &gl_smallFont, w, h, x+SCREEN_W/2, y+SCREEN_H/2, &cBlack, alt );
+
 }
 
 
@@ -1240,7 +1303,9 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
                equipment_swapSlot( wid, &p->outfit_high[ret] );
          }
          else {
-            equipment_mouseover = selected + ret;
+            equipment_mouseover  = selected + ret;
+            equipment_altx       = mx;
+            equipment_alty       = my;
          }
          return;
       }
@@ -1258,6 +1323,8 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
          }
          else {
             equipment_mouseover = selected + ret;
+            equipment_altx       = mx;
+            equipment_alty       = my;
          }
          return;
       }
@@ -1275,6 +1342,8 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
          }
          else {
             equipment_mouseover = selected + ret;
+            equipment_altx       = mx;
+            equipment_alty       = my;
          }
          return;
       }
