@@ -1289,7 +1289,6 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
 static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
 {
    int ret;
-   const char *oname;
    Outfit *o;
    int regen;
 
@@ -1310,11 +1309,7 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    /* Add outfit. */
    else {
       /* Must have outfit. */
-      oname = toolkit_getImageArray( wid, "iarAvailOutfits" );
-      if (strcmp(oname,"None")==0) {
-         return 0;
-      }
-      o = outfit_get(oname);
+      o = equipment_outfit;
 
       /* Must fit slot. */
       if (o->slot != slot->slot)
@@ -1603,17 +1598,14 @@ static void equipment_transportShip( unsigned int wid )
  */
 static void equipment_unequipShip( unsigned int wid, char* str )
 {
+   (void) wid;
    (void) str;
    int ret;
    int i;
-   char *shipname;
    Pilot *ship;
    Outfit *o;
 
-   shipname = toolkit_getImageArray( wid, "iarAvailShips" );
-   if (strcmp(shipname,"None")==0) /* no ships */
-      return;
-   ship  = player_getShip( shipname );
+   ship = equipment_selected;
 
    /* Remove all outfits. */
    for (i=0; i<ship->noutfits; i++) {
