@@ -1455,6 +1455,8 @@ void outfit_free (void)
       /* strings */
       if (o->description)
          free(o->description);
+      if (o->desc_short)
+         free(o->desc_short);
       if (o->gfx_store)
          gl_freeTexture(o->gfx_store);
       if (o->license)
