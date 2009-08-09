@@ -19,10 +19,14 @@
 typedef struct WidgetImageArrayData_ {
    glTexture **images; /**< Image array. */
    char **captions; /**< Corresponding caption array. */
+   char **alts; /**< Alt text when mouse over. */
    int nelements; /**< Number of elements. */
    int xelem; /**< Number of horizontal elements. */
    int yelem; /**< Number of vertical elements. */
    int selected; /**< Currently selected element. */
+   int alt; /**< Currently displaying alt text. */
+   int altx; /**< Alt x position. */
+   int alty; /**< Alt y position. */
    double pos; /**< Current y position. */
    int iw; /**< Image width to use. */
    int ih; /**< Image height to use. */
@@ -39,8 +43,9 @@ void window_addImageArray( const unsigned int wid,
       void (*call) (unsigned int,char*) );
 
 /* Misc functions. */
-char* toolkit_getImageArray( const unsigned int wid, char* name );
-int toolkit_getImageArrayPos( const unsigned int wid, char* name );
+char* toolkit_getImageArray( const unsigned int wid, const char* name );
+int toolkit_getImageArrayPos( const unsigned int wid, const char* name );
+int toolkit_setImageArrayAlt( const unsigned int wid, const char* name, char **alt );
 
 
 #endif /* WGT_IMAGEARRAY_H */

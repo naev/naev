@@ -17,8 +17,10 @@ static int iar_key( Widget* iar, SDLKey key, SDLMod mod );
 static int iar_mclick( Widget* iar, int button, int x, int y );
 static int iar_mmove( Widget* iar, int x, int y, int rx, int ry );
 static void iar_cleanup( Widget* iar );
+static int iar_focusImage( Widget* iar, double bx, double by );
 static void iar_focus( Widget* iar, double bx, double by );
 static void iar_scroll( Widget* iar, int direction );
+static Widget *iar_getWidget( const unsigned int wid, const char *name );
 
 
 /**
@@ -72,6 +74,7 @@ void window_addImageArray( const unsigned int wid,
    wgt->dat.iar.nelements  = nelem;
    wgt->dat.iar.selected   = 0;
    wgt->dat.iar.pos        = 0;
+   wgt->dat.iar.alt        = -1;
    wgt->dat.iar.iw         = iw;
    wgt->dat.iar.ih         = ih;
    wgt->dat.iar.fptr       = call;
@@ -99,6 +102,7 @@ static void iar_render( Widget* iar, double bx, double by )
    int xelem,yelem, xspace;
    glColour *c, *dc, *lc;
    int is_selected;
+   char *alt;
 
    /*
     * Calculations.
@@ -184,6 +188,29 @@ static void iar_render( Widget* iar, double bx, double by )
     */
    toolkit_drawOutline( x, y+1, iar->w-1, iar->h-1, 1., toolkit_colLight, toolkit_col );
    toolkit_drawOutline( x, y+1, iar->w-1, iar->h-1, 2., toolkit_colDark, NULL );
+
+   /*
+    * Draw Alt text if applicable.
+    */
+   if ((iar->dat.iar.alts != NULL) &&
+         (iar->dat.iar.alt >= 0) &&
+         (iar->dat.iar.alts[iar->dat.iar.alt] != NULL)) {
+      /* Get dimensions. */
+      alt = iar->dat.iar.alts[iar->dat.iar.alt];
+      w = 120.;
+      h = gl_printHeightRaw( &gl_smallFont, w, alt );
+      /* One check to make bigger. */
+      if (h > 160.) {
+         w = 240;
+         h = gl_printHeightRaw( &gl_smallFont, w, alt );
+      }
+
+      /* Choose position. */
+      x = bx + iar->x + iar->dat.iar.altx + 10.;
+      y = by + iar->y + iar->dat.iar.alty - h - gl_smallFont.h - 10.;
+      toolkit_drawRect( x-3, y-3, w+6, h+6, &cWhite, NULL );
+      gl_printTextRaw( &gl_smallFont, w, h, x+SCREEN_W/2, y+SCREEN_H/2, &cBlack, alt );
+   }
 }
 
 
@@ -285,8 +312,6 @@ static int iar_mclick( Widget* iar, int button, int x, int y )
  */
 static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
 {
-   (void) x;
-   (void) y;
    (void) rx;
    double w,h;
    int xelem, yelem;
@@ -311,6 +336,11 @@ static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
 
       return 1;
    }
+   else {
+      iar->dat.iar.alt = iar_focusImage( iar, x, y );
+      iar->dat.iar.altx = x;
+      iar->dat.iar.alty = y;
+   }
 
    return 0;
 }
@@ -326,12 +356,17 @@ static void iar_cleanup( Widget* iar )
    int i;
 
    if (iar->dat.iar.nelements > 0) { /* Free each text individually */
-      for (i=0; i<iar->dat.iar.nelements; i++)
+      for (i=0; i<iar->dat.iar.nelements; i++) {
          if (iar->dat.iar.captions[i])
             free(iar->dat.iar.captions[i]);
+         if (iar->dat.iar.alts && iar->dat.iar.alts[i])
+            free(iar->dat.iar.alts[i]);
+      }  
       /* Free the arrays */
       free( iar->dat.iar.captions );
       free( iar->dat.iar.images );
+      if (iar->dat.iar.alts)
+         free(iar->dat.iar.alts);
    }
 }
 
@@ -375,19 +410,13 @@ static void iar_scroll( Widget* iar, int direction )
 }
 
 
-
 /**
- * @brief Mouse event focus on image array.
- *
- *    @param iar Image Array widget.
- *    @param bx X position click.
- *    @param by Y position click.
+ * @brief See what widget is being focused.
  */
-static void iar_focus( Widget* iar, double bx, double by )
+static int iar_focusImage( Widget* iar, double bx, double by )
 {
    int i,j;
    double x,y, w,h, ycurs,xcurs;
-   double scroll_pos, hmax;
    int xelem, xspace, yelem;
 
    /* positions */
@@ -402,8 +431,6 @@ static void iar_focus( Widget* iar, double bx, double by )
    xelem = iar->dat.iar.xelem;
    yelem = iar->dat.iar.yelem;
    xspace = (((int)iar->w - 10) % (int)w) / (xelem + 1);
-
-   /* Normal click. */
    if (bx < iar->w - 10.) {
 
       /* Loop through elements until finding collision. */
@@ -418,15 +445,45 @@ static void iar_focus( Widget* iar, double bx, double by )
             /* Check for collision. */
             if ((bx > xcurs) && (bx < xcurs+w-4.) &&
                   (by > ycurs) && (by < ycurs+h-4.)) {
-               iar->dat.iar.selected = j*xelem + i;
-               if (iar->dat.iar.fptr != NULL)
-                  iar->dat.iar.fptr( iar->wdw, iar->name );
-               return;
+               return j*xelem + i;
             }
             xcurs += xspace + w;
          }
          ycurs -= h;
       }
+   }
+
+   return -1;
+}
+
+
+
+/**
+ * @brief Mouse event focus on image array.
+ *
+ *    @param iar Image Array widget.
+ *    @param bx X position click.
+ *    @param by Y position click.
+ */
+static void iar_focus( Widget* iar, double bx, double by )
+{
+   double y, h;
+   double scroll_pos, hmax;
+   int yelem;
+   int selected;
+
+   /* element dimensions */
+   h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
+
+   /* number of elements */
+   yelem = iar->dat.iar.yelem;
+
+   /* Test for item click. */
+   selected = iar_focusImage( iar, bx, by );
+   if (selected >= 0) {
+      iar->dat.iar.selected = selected;
+      if (iar->dat.iar.fptr != NULL)
+         iar->dat.iar.fptr( iar->wdw, iar->name );
    }
    /* Scrollbar click. */
    else {
@@ -447,14 +504,11 @@ static void iar_focus( Widget* iar, double bx, double by )
    }
 }
 
+
 /**
- * @brief Gets what is selected currently in an Image Array.
- *
- *    @param wid Window where image array is.
- *    @param name Name of the image array.
- *    @return The name of the selected object.
+ * @brief Gets an image array.
  */
-char* toolkit_getImageArray( const unsigned int wid, char* name )
+static Widget *iar_getWidget( const unsigned int wid, const char *name )
 {
    Widget *wgt = window_getwgt(wid,name);
 
@@ -469,6 +523,24 @@ char* toolkit_getImageArray( const unsigned int wid, char* name )
       WARN("Widget '%s' is not an image array.", name);
       return NULL;
    }
+
+   return wgt;
+}
+
+
+
+/**
+ * @brief Gets what is selected currently in an Image Array.
+ *
+ *    @param wid Window where image array is.
+ *    @param name Name of the image array.
+ *    @return The name of the selected object.
+ */
+char* toolkit_getImageArray( const unsigned int wid, const char* name )
+{
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return NULL;
 
    /* Nothing selected. */
    if (wgt->dat.iar.selected == -1)
@@ -485,23 +557,31 @@ char* toolkit_getImageArray( const unsigned int wid, char* name )
  *    @param name Name of the image array.
  *    @return The position of selected object.
  */
-int toolkit_getImageArrayPos( const unsigned int wid, char* name )
+int toolkit_getImageArrayPos( const unsigned int wid, const char* name )
 {
-   Widget *wgt = window_getwgt(wid,name);
-
-   /* Must be found in stack. */
-   if (wgt == NULL) {
-      WARN("Widget '%s' not found", name);
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
       return -1;
-   }
-
-   /* Must be an image array. */
-   if (wgt->type != WIDGET_IMAGEARRAY) {
-      WARN("Widget '%s' is not an image array.", name);
-      return -1;
-   }
 
    return wgt->dat.iar.selected;
 }
 
+
+/**
+ * @brief Sets the alt text for the images in the image array.
+ *
+ *    @param wid Window where image array is.
+ *    @param name Name of the image array.
+ *    @param alt Array of alt text the size of the images in the array.
+ *    @return 0 on success.
+ */
+int toolkit_setImageArrayAlt( const unsigned int wid, const char* name, char **alt )
+{
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return -1;
+
+   wgt->dat.iar.alts = alt;
+   return 0;
+}
 
