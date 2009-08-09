@@ -1079,7 +1079,7 @@ static void equipment_render( double bx, double by, double bw, double bh )
    tick = SDL_GetTicks();
    dt   = (double)(tick - equipment_lastick)/1000.;
    equipment_lastick = tick;
-   equipment_dir += M_PI/4. * dt; /* Quarter of a turn per second. */
+   equipment_dir += p->turn * M_PI/180. * dt;
    if (equipment_dir > 2*M_PI)
       equipment_dir = fmod( equipment_dir, 2*M_PI );
    gl_getSpriteFromDir( &sx, &sy, p->ship->gfx_space, equipment_dir );
