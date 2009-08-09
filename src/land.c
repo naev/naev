@@ -121,6 +121,8 @@ static int last_window = 0; /**< Default window. */
 static Pilot *equipment_selected = NULL; /**< Selected pilot ship. */
 static int equipment_slot = -1; /**< Selected equipment slot. */
 static int equipment_mouseover = -1; /**< Mouse over slot. */
+static double equipment_dir = 0.; /**< Equipment dir. */
+static unsigned int equipment_lastick = 0; /**< Last tick. */
 
 
 /*
@@ -887,8 +889,11 @@ static void equipment_open( unsigned int wid )
    bh = BUTTON_HEIGHT;
 
    /* Sane defaults. */
-   equipment_selected = NULL;
-   equipment_slot = -1;
+   equipment_selected   = NULL;
+   equipment_slot       = -1;
+   equipment_mouseover  = -1;
+   equipment_lastick    = SDL_GetTicks();
+   equipment_dir        = 0.;
 
    /* buttons */
    window_addButton( wid, -20, 20,
@@ -903,12 +908,6 @@ static void equipment_open( unsigned int wid )
    window_addButton( wid, -20 - (20+bw)*3, 20,
          bw, bh, "btnUnequipShip",
          "Unequip", equipment_unequipShip );
-
-   /* image */
-   window_addRect( wid, -30, -50,
-         128, 96, "rctTarget", &cBlack, 0 );
-   window_addImage( wid, -30-128, -50-96,
-         "imgTarget", NULL, 1 );
 
    /* text */
    window_addText( wid, 20 + sw + 20 + 180 + 20 + 30, -230,
@@ -981,8 +980,8 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          c = toolkit_col;
          dc = toolkit_colDark;
       }
-      toolkit_drawOutline( x - 2., y-2., w+4., h+4., 1., lc, c  );
-      toolkit_drawOutline( x - 2., y-2., w+4., h+4., 2., dc, NULL  );
+      toolkit_drawOutline( x, y, w, h, 1., lc, c  );
+      toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
       /* Draw bottom. */
       if ((i==mover) && (lst[i].outfit != NULL)) {
          text_width = gl_printWidthRaw( &gl_smallFont, lst[i].outfit->name );
@@ -1010,13 +1009,17 @@ static void equipment_renderColumn( double x, double y, double w, double h,
  */
 static void equipment_render( double bx, double by, double bw, double bh )
 {
-   (void) bw;
    Pilot *p;
    int m, selected, mover;
    double percent;
    double x, y;
    double w, h;
    glColour *lc, *c, *dc;
+   int sx, sy;
+   unsigned int tick;
+   double dt;
+   double px, py;
+   double pw, ph;
 
    /* Must have selected ship. */
    if (equipment_selected == NULL)
@@ -1071,6 +1074,40 @@ static void equipment_render( double bx, double by, double bw, double bh )
    gl_printMid( &gl_smallFont, 70,
          x - 20 + SCREEN_W/2., y - 20 - gl_smallFont.h + SCREEN_H/2.,
          &cBlack, "%.1f / %.1f", p->cpu, p->cpu_max );
+
+   /* Rotate ship graphic a bit. */
+   tick = SDL_GetTicks();
+   dt   = (double)(tick - equipment_lastick)/1000.;
+   equipment_lastick = tick;
+   equipment_dir += M_PI/4. * dt; /* Quarter of a turn per second. */
+   if (equipment_dir > 2*M_PI)
+      equipment_dir = fmod( equipment_dir, 2*M_PI );
+   gl_getSpriteFromDir( &sx, &sy, p->ship->gfx_space, equipment_dir );
+
+   /* Render ship graphic. */
+   if (p->ship->gfx_space->sw > 128) {
+      pw = 128;
+      ph = 128;
+   }
+   else {
+      pw = p->ship->gfx_space->sw;
+      ph = p->ship->gfx_space->sh;
+   }
+   w  = 128;
+   h  = 128;
+   px = (x+30) + (bx+bw - (x+30) - pw)/2;
+   py = by + bh - 30 - h + (h-ph)/2;
+   x  = (x+30) + (bx+bw - (x+30) - w)/2;
+   y  = by + bh - 30 - h;
+   toolkit_drawRect( x-5, y-5, w+10, h+10, &cBlack, NULL );
+   gl_blitScaleSprite( p->ship->gfx_space,
+         px+SCREEN_W/2, py+SCREEN_H/2,
+         sx, sy, pw, ph, NULL );
+   lc = toolkit_colLight;
+   c  = toolkit_col;
+   dc = toolkit_colDark;
+   toolkit_drawOutline( x - 5., y-5., w+10., h+10., 1., lc, c  );
+   toolkit_drawOutline( x - 5., y-5., w+10., h+10., 2., dc, NULL  );
 }
 /**
  * @brief Handles a mouse press in column.
@@ -1118,9 +1155,9 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
 
    /* Render high outfits. */
    selected = 0;
+   y = bh - 60 + (40-h)/2 - 10;
    x = 10 + (40-w)/2;
    if ((mx > x-10) && (mx < x+w+10)) {
-      y = bh - 60 + (40-h)/2;
       ret = equipment_mouseColumn( y, h, p->outfit_nhigh, my );
       if (ret >= 0) {
          if (event->type == SDL_MOUSEBUTTONDOWN) {
@@ -1138,7 +1175,6 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
    selected += p->outfit_nhigh;
    x = 10 + (40-w)/2 + 60;
    if ((mx > x-10) && (mx < x+w+10)) {
-      y = bh - 60 + (40-h)/2;
       ret = equipment_mouseColumn( y, h, p->outfit_nmedium, my );
       if (ret >= 0) {
          if (event->type == SDL_MOUSEBUTTONDOWN) {
@@ -1156,7 +1192,6 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
    selected += p->outfit_nmedium;
    x = 10 + (40-w)/2 + 120;
    if ((mx > x-10) && (mx < x+w+10)) {
-      y = bh - 60 + (40-h)/2;
       ret = equipment_mouseColumn( y, h, p->outfit_nlow, my );
       if (ret >= 0) {
          if (event->type == SDL_MOUSEBUTTONDOWN) {
@@ -1295,26 +1330,22 @@ static void equipment_update( unsigned int wid, char* str )
    Pilot *ship;
    char* loc;
    unsigned int price;
+   int onboard;
 
    shipname = toolkit_getImageArray( wid, "iarAvailShips" );
    if (strcmp(shipname,player->name)==0) { /* no ships */
-      window_disableButton( wid, "btnSellShip" );
-      window_disableButton( wid, "btnChangeShip" );
       ship = player;
       loc = "Onboard";
       price = 0;
+      onboard = 1;
    }
    else {
-      window_enableButton( wid, "btnSellShip" );
-      window_enableButton( wid, "btnChangeShip" );
       ship  = player_getShip( shipname );
       loc   = player_getLoc(ship->name);
       price = equipment_transportPrice( shipname );
+      onboard = 0;
    }
    equipment_selected = ship;
-
-   /* update image */
-   window_modifyImage( wid, "imgTarget", ship->ship->gfx_target );
 
    /* update text */
    credits2str( buf2, price , 2 ); /* transport */
@@ -1339,19 +1370,25 @@ static void equipment_update( unsigned int wid, char* str )
    window_modifyText( wid, "txtDDesc", buf );
 
    /* button disabling */
-   if (strcmp(land_planet->name,loc)) { /* ship not here */
-      window_buttonCaption( wid, "btnChangeShip", "Transport" );
-      if (price > player->credits)
-         window_disableButton( wid, "btnChangeShip" );
-      else
+   if (onboard) {
+      window_disableButton( wid, "btnSellShip" );
+      window_disableButton( wid, "btnChangeShip" );
+   }
+   else {
+      if (strcmp(land_planet->name,loc)) { /* ship not here */
+         window_buttonCaption( wid, "btnChangeShip", "Transport" );
+         if (price > player->credits)
+            window_disableButton( wid, "btnChangeShip" );
+         else
+            window_enableButton( wid, "btnChangeShip" );
+      }
+      else { /* ship is here */
+         window_buttonCaption( wid, "btnChangeShip", "Swap Ship" );
          window_enableButton( wid, "btnChangeShip" );
+      }
+      /* If ship is there you can always sell. */
+      window_enableButton( wid, "btnSellShip" );
    }
-   else { /* ship is here */
-      window_buttonCaption( wid, "btnChangeShip", "Swap Ship" );
-      window_enableButton( wid, "btnChangeShip" );
-   }
-   /* If ship is there you can always sell. */
-   window_enableButton( wid, "btnSellShip" );
 }
 /**
  * @brief Changes or transport depending on what is active.
