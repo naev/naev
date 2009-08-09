@@ -37,6 +37,9 @@
 #define OUTFIT_GFX   "gfx/outfit/" /**< Path to outfit graphics. */
 
 
+#define OUTFIT_SHORTDESC_MAX  256
+
+
 #define CHUNK_SIZE            64 /**< Size to reallocate by. */
 
 
@@ -52,6 +55,7 @@ static int outfit_nstack = 0; /**< Size of the stack. */
  */
 /* misc */
 static DamageType outfit_strToDamageType( char *buf );
+static const char *outfit_damageTypeToStr( DamageType dmg );
 static OutfitType outfit_strToOutfitType( char *buf );
 /* parsing */
 static int outfit_parseDamage( DamageType *dtype, double *dmg, xmlNodePtr node );
@@ -610,6 +614,28 @@ static DamageType outfit_strToDamageType( char *buf )
 }
 
 
+/**
+ * @brief Gets the human readable string from damage type.
+ */
+static const char *outfit_damageTypeToStr( DamageType dmg )
+{
+   switch (dmg) {
+      case DAMAGE_TYPE_ENERGY:
+         return "energy";
+      case DAMAGE_TYPE_KINETIC:
+         return "kinetic";
+      case DAMAGE_TYPE_ION:
+         return "ion";
+      case DAMAGE_TYPE_RADIATION:
+         return "radiation";
+      case DAMAGE_TYPE_EMP:
+         return "emp";
+      default:
+         return "unknown";
+   }
+}
+
+
 #define O_CMP(s,t) \
 if (strcmp(buf,(s))==0) return t /**< Define to help with outfit_strToOutfitType. */
 /**
@@ -779,6 +805,22 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    /* Post processing. */
    temp->u.blt.delay /= 1000.;
 
+   /* Set short description. */
+   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+         "%s\n"
+         "%s\n"
+         "\n"
+         "%.2f shots/second\n"
+         "%.2f %s damage\n"
+         "%.2f range",
+         temp->name,
+         outfit_getType(temp),
+         1./temp->u.blt.delay,
+         temp->u.blt.damage, outfit_damageTypeToStr(temp->u.blt.dtype),
+         temp->u.blt.range );
+
+
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.blt.gfx_space==NULL,"gfx");
@@ -861,6 +903,22 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 
    /* Post processing. */
    temp->u.bem.delay /= 1000.;
+
+   /* Set short description. */
+   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+         "%s\n"
+         "%s\n"
+         "\n"
+         "%.2f %s damage/second\n"
+         "%.2f duration %.2f delay\n"
+         "%.2f range",
+         temp->name,
+         outfit_getType(temp),
+         temp->u.bem.damage, outfit_damageTypeToStr(temp->u.bem.dtype),
+         temp->u.bem.duration * 1000.,
+         temp->u.bem.delay * 1000.,
+         temp->u.bem.range );
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */

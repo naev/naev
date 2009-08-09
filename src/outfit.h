@@ -275,6 +275,7 @@ typedef struct Outfit_ {
    /* store stuff */
    unsigned int price; /**< Base sell price. */
    char* description; /**< Store description. */
+   char* desc_short; /**< Short outfit description. */
 
    glTexture* gfx_store; /**< Store graphic. */
 
