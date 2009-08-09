@@ -531,6 +531,38 @@ void gl_blitStaticSprite( const glTexture* sprite, const double bx, const double
 
 
 /**
+ * @brief Blits a scaled sprite, position is in absolute screen coordinates.
+ *
+ *    @param sprite Sprite to blit.
+ *    @param bx X position of the texture in screen coordinates.
+ *    @param by Y position of the texture in screen coordinates.
+ *    @param sx X position of the sprite to use.
+ *    @param sy Y position of the sprite to use.
+ *    @param bw Width of sprite to render at.
+ *    @param bh Height of sprite to render at.
+ *    @param c Colour to use (modifies texture colour).
+ */
+void gl_blitScaleSprite( const glTexture* sprite,
+      const double bx, const double by,
+      const int sx, const int sy,
+      const double bw, const double bh, const glColour* c )
+{
+   double x,y, tx,ty;
+
+   x = bx - (double)SCREEN_W/2.;
+   y = by - (double)SCREEN_H/2.;
+
+   /* texture coords */
+   tx = sprite->sw*(double)(sx)/sprite->rw;
+   ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
+
+   /* actual blitting */
+   gl_blitTexture( sprite, x, y, bw, bh,
+         tx, ty, sprite->srw, sprite->srh, c );
+}
+
+
+/**
  * @brief Blits a texture scaling it.
  *
  *    @param texture Texture to blit.

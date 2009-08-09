@@ -42,6 +42,11 @@ void gl_blitSpriteInterpolate( const glTexture* sa, const glTexture *sb,
 void gl_blitStaticSprite( const glTexture* sprite,
       const double bx, const double by,
       const int sx, const int sy, const glColour* c );
+/* blits a scaled sprite, absolute pos */
+void gl_blitScaleSprite( const glTexture* sprite,
+      const double bx, const double by,
+      const int sx, const int sy,
+      const double bw, const double bh, const glColour* c );
 /* blits a texture scaled, absolute pos */
 void gl_blitScale( const glTexture* texture,
       const double bx, const double by,
