@@ -120,6 +120,7 @@ static int last_window = 0; /**< Default window. */
  * equipment stuff
  */
 static Pilot *equipment_selected = NULL; /**< Selected pilot ship. */
+static Outfit *equipment_outfit = NULL; /**< Selected outfit. */
 static int equipment_slot = -1; /**< Selected equipment slot. */
 static int equipment_mouseover = -1; /**< Mouse over slot. */
 static double equipment_dir = 0.; /**< Equipment dir. */
@@ -166,7 +167,8 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
       double x, double y, double w, double h );
 static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot );
 static void equipment_genLists( unsigned int wid );
-static void equipment_update( unsigned int wid, char* str );
+static void equipment_updateShips( unsigned int wid, char* str );
+static void equipment_updateOutfits( unsigned int wid, char* str );
 static void equipment_sellShip( unsigned int wid, char* str );
 static void equipment_transChangeShip( unsigned int wid, char* str );
 static void equipment_changeShip( unsigned int wid );
@@ -909,6 +911,7 @@ static void equipment_open( unsigned int wid )
 
    /* Sane defaults. */
    equipment_selected   = NULL;
+   equipment_outfit     = NULL;
    equipment_slot       = -1;
    equipment_mouseover  = -1;
    equipment_lastick    = SDL_GetTicks();
@@ -968,10 +971,11 @@ static void equipment_renderColumn( double x, double y, double w, double h,
    int i;
    glColour *lc, *c, *dc, tc;
    int text_width, xoff;
+   const char *display;
 
    /* Render text. */
-   gl_printMidRaw( &gl_smallFont, w,
-         x + SCREEN_W/2., y+h+10. + SCREEN_H/2.,
+   gl_printMidRaw( &gl_smallFont, w+10.,
+         x + SCREEN_W/2.-5., y+h+10. + SCREEN_H/2.,
          &cBlack, txt );
 
    for (i=0; i<n; i++) {
@@ -1002,22 +1006,32 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       toolkit_drawOutline( x, y, w, h, 1., lc, c  );
       toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
       /* Draw bottom. */
-      if ((i==mover) && (lst[i].outfit != NULL)) {
-         text_width = gl_printWidthRaw( &gl_smallFont, lst[i].outfit->name );
-         xoff = (text_width - w)/2;
-         tc.r = 1.;
-         tc.g = 1.;
-         tc.b = 1.;
-         tc.a = 0.5;
-         toolkit_drawRect( x-xoff-5, y - gl_smallFont.h - 5,
-               text_width+10, gl_smallFont.h+5,
-               &tc, NULL );
-         tc.r = 0.;
-         tc.g = 0.;
-         tc.b = 0.;
-         gl_printMaxRaw( &gl_smallFont, text_width,
-               x-xoff + SCREEN_W/2., y - gl_smallFont.h -2. + SCREEN_H/2.,
-               &cDConsole, lst[i].outfit->name );
+      if (i==mover) {
+         if (lst[i].outfit != NULL)
+            display = "Right click to remove";
+         else if ((equipment_outfit != NULL) &&
+               (lst->slot == equipment_outfit->slot))
+            display = "Right click to add";
+         else
+            display = NULL;
+
+         if (display != NULL) {
+            text_width = gl_printWidthRaw( &gl_smallFont, display );
+            xoff = (text_width - w)/2;
+            tc.r = 1.;
+            tc.g = 1.;
+            tc.b = 1.;
+            tc.a = 0.5;
+            toolkit_drawRect( x-xoff-5, y - gl_smallFont.h - 5,
+                  text_width+10, gl_smallFont.h+5,
+                  &tc, NULL );
+            tc.r = 0.;
+            tc.g = 0.;
+            tc.b = 0.;
+            gl_printMaxRaw( &gl_smallFont, text_width,
+                  x-xoff + SCREEN_W/2., y - gl_smallFont.h -2. + SCREEN_H/2.,
+                  &cDConsole, display );
+         }
       }
       /* Go to next one. */
       y -= h+20;
@@ -1222,7 +1236,7 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
          if (event->type == SDL_MOUSEBUTTONDOWN) {
             if (event->button.button == SDL_BUTTON_LEFT)
                equipment_slot = selected + ret;
-            else
+            else if (event->button.button == SDL_BUTTON_RIGHT)
                equipment_swapSlot( wid, &p->outfit_high[ret] );
          }
          else {
@@ -1239,7 +1253,7 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
          if (event->type == SDL_MOUSEBUTTONDOWN) {
             if (event->button.button == SDL_BUTTON_LEFT)
                equipment_slot = selected + ret;
-            else
+            else if (event->button.button == SDL_BUTTON_RIGHT)
                equipment_swapSlot( wid, &p->outfit_medium[ret] );
          }
          else {
@@ -1256,7 +1270,7 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
          if (event->type == SDL_MOUSEBUTTONDOWN) {
             if (event->button.button == SDL_BUTTON_LEFT)
                equipment_slot = selected + ret;
-            else
+            else if (event->button.button == SDL_BUTTON_RIGHT)
                equipment_swapSlot( wid, &p->outfit_low[ret] );
          }
          else {
@@ -1362,7 +1376,7 @@ static void equipment_genLists( unsigned int wid )
       player_ships( &sships[1], &tships[1] );
       window_addImageArray( wid, 20, -40,
             sw, sh, "iarAvailShips", 64./96.*128., 64.,
-            tships, sships, nships, equipment_update );
+            tships, sships, nships, equipment_updateShips );
    }
 
    /* Outfit list. */
@@ -1373,7 +1387,7 @@ static void equipment_genLists( unsigned int wid )
       player_getOutfits( soutfits, toutfits );
       window_addImageArray( wid, 20, -40 - sh - 40,
             sw, sh, "iarAvailOutfits", 50., 50.,
-            toutfits, soutfits, noutfits, NULL );
+            toutfits, soutfits, noutfits, equipment_updateOutfits );
       /* Set alt text. */
       alt = malloc( sizeof(char*) * noutfits );
       for (i=0; i<noutfits; i++) {
@@ -1387,14 +1401,15 @@ static void equipment_genLists( unsigned int wid )
    }
 
    /* Update window. */
-   equipment_update(wid, NULL);
+   equipment_updateShips(wid, NULL);
+   equipment_updateOutfits(wid, NULL);
 }
 /**
  * @brief Updates the player's ship window.
  *    @param wid Window to update.
  *    @param str Unused.
  */
-static void equipment_update( unsigned int wid, char* str )
+static void equipment_updateShips( unsigned int wid, char* str )
 {
    (void)str;
    char buf[256], buf2[16], buf3[16];
@@ -1470,6 +1485,24 @@ static void equipment_update( unsigned int wid, char* str )
    }
 }
 /**
+ * @brief Updates the player's ship window.
+ *    @param wid Window to update.
+ *    @param str Unused.
+ */
+static void equipment_updateOutfits( unsigned int wid, char* str )
+{
+   (void) str;
+   const char *oname;
+
+   /* Must have outfit. */
+   oname = toolkit_getImageArray( wid, "iarAvailOutfits" );
+   if (strcmp(oname,"None")==0) {
+      equipment_outfit = NULL;
+      return;
+   }
+   equipment_outfit = outfit_get(oname);
+}
+/**
  * @brief Changes or transport depending on what is active.
  *    @param wid Window player is attempting to change ships in.
  *    @param str Unused.
@@ -1493,7 +1526,7 @@ static void equipment_transChangeShip( unsigned int wid, char* str )
       equipment_changeShip( wid );
 
    /* update the window to reflect the change */
-   equipment_update( wid, NULL );
+   equipment_updateShips( wid, NULL );
 }
 /**
  * @brief Player attempts to change ship.
