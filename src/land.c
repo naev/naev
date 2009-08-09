@@ -1329,6 +1329,7 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
  */
 static void equipment_genLists( unsigned int wid )
 {
+   int i;
    char **sships;
    glTexture **tships;
    int nships;
@@ -1338,6 +1339,8 @@ static void equipment_genLists( unsigned int wid )
    int w, h;
    int sw, sh;
    int ow, oh;
+   char **alt;
+   Outfit *o;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -1371,6 +1374,16 @@ static void equipment_genLists( unsigned int wid )
       window_addImageArray( wid, 20, -40 - sh - 40,
             sw, sh, "iarAvailOutfits", 50., 50.,
             toutfits, soutfits, noutfits, NULL );
+      /* Set alt text. */
+      alt = malloc( sizeof(char*) * noutfits );
+      for (i=0; i<noutfits; i++) {
+         o      = outfit_get( soutfits[i] );
+         if (o->desc_short == NULL)
+            alt[i] = NULL;
+         else
+            alt[i] = strdup( o->desc_short );
+      }
+      toolkit_setImageArrayAlt( wid, "iarAvailOutfits", alt );
    }
 
    /* Update window. */
