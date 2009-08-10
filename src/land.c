@@ -1135,7 +1135,6 @@ static void equipment_renderOverlay( double bx, double by, double bw, double bh 
    (void) bh;
    Pilot *p;
    PilotOutfitSlot *slot;
-   double x, y, w, h;
    const char *alt;
 
    /* Mouse must be over something. */
@@ -1164,21 +1163,8 @@ static void equipment_renderOverlay( double bx, double by, double bw, double bh 
    if (alt == NULL)
       return;
 
-   /* Get dimensions. */
-   w = 120.;
-   h = gl_printHeightRaw( &gl_smallFont, w, alt );
-   /* One check to make bigger. */
-   if (h > 160.) {
-      w = 240;
-      h = gl_printHeightRaw( &gl_smallFont, w, alt );
-   }
-
-   /* Choose position. */
-   x = bx + equipment_altx + 10.;
-   y = by + equipment_alty - h - gl_smallFont.h - 10.;
-   toolkit_drawRect( x-3, y-3, w+6, h+6, &cWhite, NULL );
-   gl_printTextRaw( &gl_smallFont, w, h, x+SCREEN_W/2, y+SCREEN_H/2, &cBlack, alt );
-
+   /* Draw the text. */
+   toolkit_drawAltText( bx + equipment_altx, by + equipment_alty, alt );
 }
 
 

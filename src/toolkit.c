@@ -774,6 +774,33 @@ void toolkit_drawRect( double x, double y,
    /* Deactivate VBO. */
    gl_vboDeactivate();
 }
+/**
+ * @brief Draws an alt text.
+ *
+ *    @param bx X position to draw at.
+ *    @param by Y position to draw at.
+ *    @param alt Text to draw.
+ */
+void toolkit_drawAltText( double bx, double by, const char *alt )
+{
+   double w, h;
+   double x, y;
+
+   /* Get dimensions. */
+   w = 120.;
+   h = gl_printHeightRaw( &gl_smallFont, w, alt );
+   /* One check to make bigger. */
+   if (h > 160.) {
+      w = 240;
+      h = gl_printHeightRaw( &gl_smallFont, w, alt );
+   }
+
+   /* Choose position. */
+   x = bx + 10.;
+   y = by - h - gl_smallFont.h - 10.;
+   toolkit_drawRect( x-3, y-3, w+6, h+6, &cWhite, NULL );
+   gl_printTextRaw( &gl_smallFont, w, h, x+SCREEN_W/2, y+SCREEN_H/2, &cBlack, alt );
+}
 
 
 /**

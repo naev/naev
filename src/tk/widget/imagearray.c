@@ -197,31 +197,16 @@ static void iar_render( Widget* iar, double bx, double by )
  */
 static void iar_renderOverlay( Widget* iar, double bx, double by )
 {
-   char *alt;
-   double x, y;
-   double w, h;
-
    /*
     * Draw Alt text if applicable.
     */
    if ((iar->dat.iar.alts != NULL) &&
          (iar->dat.iar.alt >= 0) &&
          (iar->dat.iar.alts[iar->dat.iar.alt] != NULL)) {
-      /* Get dimensions. */
-      alt = iar->dat.iar.alts[iar->dat.iar.alt];
-      w = 120.;
-      h = gl_printHeightRaw( &gl_smallFont, w, alt );
-      /* One check to make bigger. */
-      if (h > 160.) {
-         w = 240;
-         h = gl_printHeightRaw( &gl_smallFont, w, alt );
-      }
-
-      /* Choose position. */
-      x = bx + iar->x + iar->dat.iar.altx + 10.;
-      y = by + iar->y + iar->dat.iar.alty - h - gl_smallFont.h - 10.;
-      toolkit_drawRect( x-3, y-3, w+6, h+6, &cWhite, NULL );
-      gl_printTextRaw( &gl_smallFont, w, h, x+SCREEN_W/2, y+SCREEN_H/2, &cBlack, alt );
+      /* Draw alt text. */
+      toolkit_drawAltText( bx + iar->x + iar->dat.iar.altx,
+            by + iar->y + iar->dat.iar.alty,
+            iar->dat.iar.alts[iar->dat.iar.alt]);
    }
 }
 

@@ -179,6 +179,7 @@ void toolkit_clip( double x, double y, double w, double h );
 void toolkit_unclip (void);
 void toolkit_drawRect( double x, double y,
       double w, double h, glColour* c, glColour* lc );
+void toolkit_drawAltText( double bx, double by, const char *alt );
 
 
 /* Input stuff. */
