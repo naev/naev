@@ -678,6 +678,8 @@ static void shipyard_open( unsigned int wid )
    int w, h;
    int iw, ih;
    int bw, bh;
+   int th;
+   const char *buf;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -708,18 +710,23 @@ static void shipyard_open( unsigned int wid )
          "imgTarget", NULL, 1 );
 
    /* text */
-   window_addText( wid, 40+iw+20, -55,
-         80, 128, 0, "txtSDesc", &gl_smallFont, &cDConsole,
-         "Name:\n"
+   buf = "Name:\n"
          "Class:\n"
          "Fabricator:\n"
          "\n"
+         "High slots:\n"
+         "Medium slots:\n"
+         "Low slots:\n"
+         "\n"
          "Price:\n"
          "Money:\n"
-         "License:\n" );
-   window_addText( wid, 40+iw+20+80, -55,
-         130, 128, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, 20+310+40, -55-128-20,
+         "License:\n";
+   th = gl_printHeightRaw( &gl_smallFont, 80, buf );
+   window_addText( wid, 40+iw+20, -55,
+         100, 256, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
+   window_addText( wid, 40+iw+20+100, -55,
+         130, 256, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+   window_addText( wid, 20+310+40, -55-th-20,
          w-(20+310+40) - 20, 185, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 
@@ -774,6 +781,10 @@ static void shipyard_update( unsigned int wid, char* str )
             "\n"
             "NA\n"
             "NA\n"
+            "NA\n"
+            "\n"
+            "NA\n"
+            "NA\n"
             "NA\n" );
       window_modifyText( wid,  "txtDDesc", buf );
       return;
@@ -793,12 +804,19 @@ static void shipyard_update( unsigned int wid, char* str )
          "%s\n"
          "%s\n"
          "\n"
+         "%d\n"
+         "%d\n"
+         "%d\n"
+         "\n"
          "%s credits\n"
          "%s credits\n"
          "%s\n",
          ship->name,
          ship_class(ship),
          ship->fabricator,
+         ship->outfit_nhigh,
+         ship->outfit_nmedium,
+         ship->outfit_nlow,
          buf2,
          buf3,
          (ship->license != NULL) ? ship->license : "None" );
