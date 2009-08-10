@@ -757,7 +757,7 @@
    <energy_regen>1380</energy_regen>
   </health>
   <characteristics>
-   <cpu>73</cpu>
+   <cpu>83</cpu>
    <crew>17</crew>
    <mass>230</mass>
    <fuel>500</fuel>
@@ -802,7 +802,7 @@
    <energy_regen>1380</energy_regen>
   </health>
   <characteristics>
-   <cpu>74</cpu>
+   <cpu>84</cpu>
    <crew>17</crew>
    <mass>230</mass>
    <fuel>500</fuel>
