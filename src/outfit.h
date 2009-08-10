@@ -232,6 +232,7 @@ typedef struct OutfitFighterBayData_ {
    struct Outfit_ *ammo; /**< Ships to use as ammo. */
    double delay; /**< Delay between launches. */
    double cpu; /**< CPU usage. */
+   int amount; /**< Amount of ammo it can store. */
 } OutfitFighterBayData;
 
 /**
@@ -339,6 +340,7 @@ double outfit_damage( const Outfit* o );
 DamageType outfit_damageType( const Outfit* o );
 double outfit_delay( const Outfit* o );
 Outfit* outfit_ammo( const Outfit* o );
+int outfit_amount( const Outfit* o );
 double outfit_energy( const Outfit* o );
 double outfit_cpu( const Outfit* o );
 double outfit_range( const Outfit* o );

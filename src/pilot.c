@@ -1830,7 +1830,7 @@ int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity 
    s->u.ammo.outfit    = ammo;
    q                   = s->u.ammo.quantity;
    s->u.ammo.quantity += quantity;
-   s->u.ammo.quantity  = MIN( s->outfit->u.lau.amount, s->u.ammo.quantity );
+   s->u.ammo.quantity  = MIN( outfit_amount(s->outfit), s->u.ammo.quantity );
    q                   = s->u.ammo.quantity - q;
 
    return q;

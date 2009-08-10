@@ -1015,20 +1015,33 @@ static void equipment_renderColumn( double x, double y, double w, double h,
    glColour *lc, *c, *dc, tc;
    int text_width, xoff;
    const char *display;
+   int subtitle;
 
    /* Render text. */
    gl_printMidRaw( &gl_smallFont, w+10.,
          x + SCREEN_W/2.-5., y+h+10. + SCREEN_H/2.,
          &cBlack, txt );
 
+   /* Iterate for all the slots. */
    for (i=0; i<n; i++) {
+      subtitle = 0;
       if (lst[i].outfit != NULL) {
+         if (i==selected)
+            c = &cDConsole;
+         else
+            c = &cBlack;
          /* Draw background. */
-         toolkit_drawRect( x, y, w, h,
-               (i==selected) ? &cDConsole : &cBlack, NULL );
+         toolkit_drawRect( x, y, w, h, c, NULL );
          /* Draw bugger. */
          gl_blitScale( lst[i].outfit->gfx_store,
                x + SCREEN_W/2., y + SCREEN_H/2., w, h, NULL );
+
+         /* See if needs a subtitle. */
+         if ((outfit_isLauncher(lst[i].outfit) ||
+                  (outfit_isFighterBay(lst[i].outfit))) &&
+               ((lst[i].u.ammo.outfit == NULL) ||
+                  (lst[i].u.ammo.quantity < outfit_amount(lst[i].outfit))))
+            subtitle = 1;
       }
       else {
          if (lst[i].slot == equipment_outfit->slot) {
@@ -1056,27 +1069,43 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       toolkit_drawOutline( x, y, w, h, 1., lc, c  );
       toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
       /* Draw bottom. */
-      if (i==mover) {
+      if ((i==mover) || subtitle) {
          display = NULL;
-         if (lst[i].outfit != NULL) {
-            if ((outfit_cpu(lst[i].outfit) < 0) &&
-                  (fabs(outfit_cpu(lst[i].outfit)) > equipment_selected->cpu)) {
-               display = "Lower CPU usage first";
-               c = &cRed;
+         if (i==mover) {
+            if (lst[i].outfit != NULL) {
+               if ((outfit_cpu(lst[i].outfit) < 0) &&
+                     (fabs(outfit_cpu(lst[i].outfit)) > equipment_selected->cpu)) {
+                  display = "Lower CPU usage first";
+                  c = &cRed;
+               }
+               else {
+                  display = "Right click to remove";
+                  c = &cDConsole;
+               }
             }
-            else {
-               display = "Right click to remove";
-               c = &cDConsole;
+            else if (equipment_outfit != NULL) {
+               if (equipment_selected->cpu < outfit_cpu(equipment_outfit)) {
+                  display = "Not enough CPU";
+                  c = &cRed;
+               }
+               else if (lst->slot == equipment_outfit->slot) {
+                  display = "Right click to add";
+                  c = &cDConsole;
+               }
             }
          }
-         else if (equipment_outfit != NULL) {
-            if (equipment_selected->cpu < outfit_cpu(equipment_outfit)) {
-               display = "Not enough CPU";
-               c = &cRed;
-            }
-            else if (lst->slot == equipment_outfit->slot) {
-               display = "Right click to add";
-               c = &cDConsole;
+         else {
+            if (outfit_isLauncher(lst[i].outfit) ||
+                  (outfit_isFighterBay(lst[i].outfit))) {
+               if ((lst[i].u.ammo.outfit == NULL) ||
+                     (lst[i].u.ammo.quantity == 0)) {
+                  display = "Out of ammo.";
+                  c = &cRed;
+               }
+               else if (lst[i].u.ammo.quantity < outfit_amount(lst[i].outfit)) {
+                  display = "Low ammo.";
+                  c = &cYellow;
+               }
             }
          }
 
@@ -1436,10 +1465,17 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
       if (o->slot != slot->slot)
          return 0;
 
-      /* Remove outfit. */
+      /* Add outfit to ship. */
       ret = player_rmOutfit( o, 1 );
       if (ret == 1)
          pilot_addOutfit( equipment_selected, o, slot );
+
+      /* Add ammo if able to. */
+      if (outfit_isLauncher(o) || (outfit_isFighterBay(o))) {
+         ammo = outfit_ammo(o);
+         q    = player_outfitOwned(ammo);
+         pilot_addAmmo( equipment_selected, slot, ammo, q );
+      }
 
       /* See if should remake. */
       if (player_outfitOwned(o) == 0)

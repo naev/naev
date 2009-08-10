@@ -452,6 +452,16 @@ Outfit* outfit_ammo( const Outfit* o )
    return NULL;
 }
 /**
+ * @brief Gets the ammount an outfit can hold.
+ *    @param o Outfit to get information from.
+ */
+int outfit_amount( const Outfit* o )
+{
+   if (outfit_isLauncher(o)) return o->u.lau.amount;
+   else if (outfit_isFighterBay(o)) return o->u.bay.amount;
+   return -1;
+}
+/**
  * @brief Gets the outfit's energy usage.
  *    @param o Outfit to get information from.
  */
@@ -1250,6 +1260,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
       xmlr_int(node,"delay",temp->u.bay.delay);
       xmlr_float(node,"cpu",temp->u.bay.cpu);
       xmlr_strd(node,"ammo",temp->u.bay.ammo_name);
+      xmlr_int(node,"amount",temp->u.bay.amount);
    } while (xml_nextNode(node));
 
    /* Post processing. */
@@ -1262,19 +1273,20 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
          "%s\n"
          "Needs %.0f CPU\n"
          "\n"
-         "%s\n"
-         "%.1f launches/second",
+         "%.1f launches/second"
+         "Holds %d %s\n",
          temp->name,
          outfit_getType(temp),
          temp->u.bay.cpu,
-         temp->u.bay.ammo_name,
-         1./temp->u.bay.delay );
+         1./temp->u.bay.delay,
+         temp->u.bay.amount, temp->u.bay.ammo_name );
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.bay.delay==0,"delay");
    MELEMENT(temp->u.bay.cpu==0.,"cpu");
    MELEMENT(temp->u.bay.ammo_name==NULL,"ammo");
+   MELEMENT(temp->u.bay.amount==0,"amount");
 #undef MELEMENT
 }
 

@@ -948,6 +948,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <cpu>60</cpu>
    <ammo>Lancelot Fighter</ammo>
    <delay>4000</delay>
+   <amount>2</amount>
   </specific>
  </outfit>
  <outfit name="Lancelot Fighter">
@@ -979,6 +980,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <cpu>100</cpu>
    <ammo>Drone Fighter</ammo>
    <delay>1000</delay>
+   <amount>3</amount>
   </specific>
  </outfit>
  <outfit name="Drone Fighter">
