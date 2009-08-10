@@ -380,9 +380,9 @@ static void outfits_open( unsigned int wid )
 
    /* the descriptive text */
    window_addText( wid, 40+300+20, -60,
+         320, 160, 0, "txtDescShort", &gl_smallFont, &cBlack, NULL );
+   window_addText( wid, 40+300+20, -60,
          80, 160, 0, "txtSDesc", &gl_smallFont, &cDConsole,
-         "Name:\n"
-         "Type:\n"
          "Owned:\n"
          "\n"
          "Mass:\n"
@@ -433,6 +433,7 @@ static void outfits_update( unsigned int wid, char* str )
    char *outfitname;
    Outfit* outfit;
    char buf[PATH_MAX], buf2[16], buf3[16];
+   double h;
 
    outfitname = toolkit_getImageArray( wid, "iarOutfits" );
    if (strcmp(outfitname,"None")==0) { /* No outfits */
@@ -440,8 +441,6 @@ static void outfits_update( unsigned int wid, char* str )
       window_disableButton( wid, "btnBuyOutfit" );
       window_disableButton( wid, "btnSellOutfit" );
       snprintf( buf, PATH_MAX,
-            "None\n"
-            "NA\n"
             "NA\n"
             "\n"
             "NA\n"
@@ -449,7 +448,12 @@ static void outfits_update( unsigned int wid, char* str )
             "NA\n"
             "NA\n"
             "NA\n" );
-      window_modifyText( wid,  "txtDDesc", buf );
+      window_modifyText( wid, "txtDDesc", buf );
+      window_modifyText( wid, "txtDescShort", NULL );
+      /* Reposition. */
+      window_moveWidget( wid, "txtSDesc", 40+300+20, -60 );
+      window_moveWidget( wid, "txtDDesc", 40+300+20+60, -60 );
+      window_moveWidget( wid, "txtDescription", 20+300+40, -240 );
       return;
    }
 
@@ -474,8 +478,6 @@ static void outfits_update( unsigned int wid, char* str )
    credits2str( buf2, outfit->price, 2 );
    credits2str( buf3, player->credits, 2 );
    snprintf( buf, PATH_MAX,
-         "%s\n"
-         "%s\n"
          "%d\n"
          "\n"
          "%.0f tons\n"
@@ -483,8 +485,6 @@ static void outfits_update( unsigned int wid, char* str )
          "%s credits\n"
          "%s credits\n"
          "%s\n",
-         outfit->name,
-         outfit_getType(outfit),
          (outfit_isLicense(outfit)) ?
                player_hasLicense(outfit->name) :
                player_outfitOwned(outfit),
@@ -492,7 +492,13 @@ static void outfits_update( unsigned int wid, char* str )
          buf2,
          buf3,
          (outfit->license != NULL) ? outfit->license : "None" );
-   window_modifyText( wid,  "txtDDesc", buf );
+   window_modifyText( wid, "txtDDesc", buf );
+   window_modifyText( wid, "txtDescShort", outfit->desc_short );
+   h  = gl_printHeightRaw( &gl_smallFont, 320, outfit->desc_short );
+   window_moveWidget( wid, "txtSDesc", 40+300+20, -60-h-20 );
+   window_moveWidget( wid, "txtDDesc", 40+300+20+60, -60-h-20 );
+   h += gl_printHeightRaw( &gl_smallFont, 250, buf );
+   window_moveWidget( wid, "txtDescription", 20+300+40, -60-h-40 );
 }
 /**
  * @brief Checks to see if the player can buy the outfit.
