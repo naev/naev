@@ -1399,8 +1399,9 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
 static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
 {
    int ret;
-   Outfit *o;
+   Outfit *o, *ammo;
    int regen;
+   int q;
 
    /* Do not regenerate list by default. */
    regen = 0;
@@ -1408,7 +1409,17 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    /* Remove outfit. */
    if (slot->outfit != NULL) {
       o = slot->outfit;
-      ret = pilot_rmOutfit( player, slot );
+
+      /* Remove ammo first. */
+      if (outfit_isLauncher(o) || (outfit_isFighterBay(o))) {
+         ammo = slot->u.ammo.outfit;
+         q    = pilot_rmAmmo( equipment_selected, slot, slot->u.ammo.quantity );
+         if (q > 0)
+            player_addOutfit( ammo, q );
+      }
+
+      /* Remove outfit. */
+      ret = pilot_rmOutfit( equipment_selected, slot );
       if (ret == 0)
          player_addOutfit( o, 1 );
 
@@ -1428,7 +1439,7 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
       /* Remove outfit. */
       ret = player_rmOutfit( o, 1 );
       if (ret == 1)
-         pilot_addOutfit( player, o, slot );
+         pilot_addOutfit( equipment_selected, o, slot );
 
       /* See if should remake. */
       if (player_outfitOwned(o) == 0)
