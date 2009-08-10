@@ -785,6 +785,7 @@ void toolkit_drawAltText( double bx, double by, const char *alt )
 {
    double w, h;
    double x, y;
+   glColour c;
 
    /* Get dimensions. */
    w = 120.;
@@ -798,7 +799,11 @@ void toolkit_drawAltText( double bx, double by, const char *alt )
    /* Choose position. */
    x = bx + 10.;
    y = by - h - gl_smallFont.h - 10.;
-   toolkit_drawRect( x-3, y-3, w+6, h+6, &cWhite, NULL );
+   c.r = cWhite.r;
+   c.g = cWhite.g;
+   c.b = cWhite.b;
+   c.a = 0.8;
+   toolkit_drawRect( x-3, y-3, w+6, h+6, &c, NULL );
    gl_printTextRaw( &gl_smallFont, w, h, x+SCREEN_W/2, y+SCREEN_H/2, &cBlack, alt );
 }
 
