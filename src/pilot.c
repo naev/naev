@@ -836,14 +836,10 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v )
 static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 {
    Vector2d vp, vv;
-   int rm_outfit;
 
    /* check to see if weapon is ready */
    if (w->timer > 0.)
       return 0;
-
-   /* Defaults. */
-   rm_outfit = 0;
 
    /* Get weapon mount position. */
    pilot_getMount( p, w, &vp );
@@ -888,27 +884,25 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
     *
     * must be a secondary weapon
     */
-   else if (outfit_isLauncher(w->outfit) && (w==p->secondary)) {
+   else if (outfit_isLauncher(w->outfit)) {
 
       /* Shooter can't be the target - sanity check for the player */
       if ((w->outfit->type != OUTFIT_TYPE_MISSILE_DUMB) && (p->id==p->target))
          return 0;
 
       /* Must have ammo left. */
-      if ((p->ammo == NULL) || (p->ammo->quantity <= 0))
+      if ((w->u.ammo.outfit == NULL) || (w->u.ammo.quantity <= 0))
          return 0;
 
       /* enough energy? */
-      if (outfit_energy(w->outfit) > p->energy)
+      if (outfit_energy(w->u.ammo.outfit) > p->energy)
          return 0;
 
-      p->energy -= outfit_energy(w->outfit);
-      weapon_add( p->ammo->outfit, p->solid->dir,
+      p->energy -= outfit_energy(w->u.ammo.outfit);
+      weapon_add( w->u.ammo.outfit, p->solid->dir,
             &vp, &p->solid->vel, p->id, p->target );
 
-      p->ammo->quantity -= 1; /* we just shot it */
-      if (p->ammo->quantity <= 0) /* Out of ammo. */
-         rm_outfit = 1;
+      w->u.ammo.quantity -= 1; /* we just shot it */
    }
 
    /*
@@ -919,17 +913,15 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    else if (outfit_isFighterBay(w->outfit) && (w==p->secondary)) {
 
       /* Must have ammo left. */
-      if ((p->ammo == NULL) || (p->ammo->quantity <= 0))
+      if ((w->u.ammo.outfit == NULL) || (w->u.ammo.quantity <= 0))
          return 0;
 
       /* Create the escort. */
-      escort_create( p, p->ammo->outfit->u.fig.ship,
+      escort_create( p, w->u.ammo.outfit->u.fig.ship,
             &vp, &p->solid->vel, p->solid->dir, ESCORT_TYPE_BAY, 1 );
 
-      p->ammo->quantity -= 1; /* we just shot it */
+      w->u.ammo.quantity -= 1; /* we just shot it */
       p->secondary->u.deployed += 1; /* Mark as deployed. */
-      if (p->ammo->quantity <= 0) /* Out of ammo. */
-         rm_outfit = 1;
    }
 
    else {
@@ -1183,7 +1175,7 @@ int pilot_dock( Pilot *p, Pilot *target, int deployed )
       return -1;
 
    /* Add the pilot's outfit. */
-   if (pilot_addAmmo(target, o, 1) != 1)
+   if (pilot_addAmmo(target, target->outfits[i], o, 1) != 1)
       return -1;
 
    /* Remove from pilot's escort list. */
@@ -1756,6 +1748,10 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
       s->u.beamid = -1;
       pilot_setFlag(pilot, PILOT_HASBEAMS);
    }
+   if (outfit_isLauncher(outfit)) {
+      s->u.ammo.outfit   = NULL;
+      s->u.ammo.quantity = 0;
+   }
 
    /* recalculate the stats */
    pilot_calcStats(pilot);
@@ -1789,21 +1785,53 @@ int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s )
  * @brief Adds some ammo to the pilot stock.
  *
  *    @param pilot Pilot to add ammo to.
+ *    @param s Slot to add ammo to.
  *    @param ammo Ammo to add.
  *    @param quantity Amount to add.
  *    @return Amount actually added.
  */
-int pilot_addAmmo( Pilot* pilot, Outfit* ammo, int quantity )
+int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity )
 {
    int q;
    (void) pilot;
 
-   q = quantity;
-
-   if (!outfit_isAmmo(ammo)) {
-      WARN("Trying to add non-ammo type outfit '%s' as ammo.", ammo->name);
+   /* Failure cases. */
+   if (s->outfit == NULL) {
+      WARN("Pilot '%s': Trying to add ammo to unequiped slot.", pilot->name );
       return 0;
    }
+   else if (!outfit_isLauncher(s->outfit) && !outfit_isFighterBay(s->outfit)) {
+      WARN("Pilot '%s': Trying to add ammo to non-launcher/fighterbay type outfit '%s'",
+            pilot->name, s->outfit->name);
+      return 0;
+   }
+   else if (!outfit_isAmmo(ammo) && !outfit_isFighter(ammo)) {
+      WARN( "Pilot '%s': Trying to add non-ammo/fighter type outfit '%s' as ammo.",
+            pilot->name, ammo->name );
+      return 0;
+   }
+   else if (outfit_isLauncher(s->outfit) && outfit_isFighter(ammo)) {
+      WARN("Pilot '%s': Trying to add fighter '%s' as launcher '%s' ammo",
+            pilot->name, ammo->name, s->outfit->name );
+      return 0;
+   }
+   else if (outfit_isFighterBay(s->outfit) && outfit_isAmmo(ammo)) {
+      WARN("Pilot '%s': Trying to add ammo '%s' as fighter bay '%s' ammo",
+            pilot->name, ammo->name, s->outfit->name );
+      return 0;
+   }
+   else if ((s->u.ammo.outfit != NULL) && (s->u.ammo.quantity > 0)) {
+      WARN("Pilot '%s': Trying to add ammo to outfit that already has ammo.",
+            pilot->name );
+      return 0;
+   }
+
+   /* Add the ammo. */
+   s->u.ammo.outfit    = ammo;
+   q                   = s->u.ammo.quantity;
+   s->u.ammo.quantity += quantity;
+   s->u.ammo.quantity  = MIN( s->outfit->u.lau.amount, s->u.ammo.quantity );
+   q                   = s->u.ammo.quantity - q;
 
    return q;
 }
@@ -1813,21 +1841,35 @@ int pilot_addAmmo( Pilot* pilot, Outfit* ammo, int quantity )
  * @brief Removes some ammo from the pilot stock.
  *
  *    @param pilot Pilot to remove ammo from.
- *    @param ammo Ammo to remove.
+ *    @param s Slot to remove ammo from.
  *    @param quantity Amount to remove.
  *    @return Amount actually removed.
  */
-int pilot_rmAmmo( Pilot* pilot, Outfit* ammo, int quantity )
+int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
 {
    int q;
    (void) pilot;
 
-   q = quantity;
-
-   if (!outfit_isAmmo(ammo)) {
-      WARN("Trying to remove non-ammo type outfit '%s' as ammo.", ammo->name);
+   /* Failure cases. */
+   if (s->outfit == NULL) {
+      WARN("Pilot '%s': Trying to remove ammo from unequiped slot.", pilot->name );
       return 0;
    }
+   else if (!outfit_isLauncher(s->outfit)) {
+      WARN("Pilot '%s': Trying to remove ammo from non-launcher type outfit '%s'",
+            pilot->name, s->outfit->name);
+      return 0;
+   }
+
+   /* No ammo already. */
+   if (s->u.ammo.outfit == NULL) {
+      return 0;
+   }
+
+   /* Remove ammo. */
+   q                   = MIN( quantity, s->u.ammo.quantity );
+   s->u.ammo.quantity -= q;
+   /* We don't set the outfit to null so it "remembers" old ammo. */
 
    return q;
 }
@@ -2551,7 +2593,6 @@ Pilot* pilot_copy( Pilot* src )
    for (i=0; i<dest->outfit_nhigh; i++)
       dest->outfits[p++] = &dest->outfit_high[i];
    dest->secondary   = NULL;
-   dest->ammo        = NULL;
    dest->afterburner = NULL;
 
    /* Hooks get cleared. */

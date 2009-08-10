@@ -1992,10 +1992,10 @@ static int aiL_secondary( lua_State *L )
          }
 
          /* Get ammo. */
-         if (cur_pilot->ammo == NULL)
+         if (cur_pilot->secondary->u.ammo.outfit == NULL)
             lua_pushnumber( L, 0. );
          else
-            lua_pushnumber( L, cur_pilot->ammo->quantity );
+            lua_pushnumber( L, cur_pilot->secondary->u.ammo.quantity );
          r += 1;
       }
 
@@ -2090,8 +2090,9 @@ static int aiL_getweaprange( lua_State *L )
    if (lua_toboolean(L,1)) {
       if (cur_pilot->secondary != NULL) {
          /* get range, launchers use ammo's range */
-         if (outfit_isLauncher(cur_pilot->secondary->outfit) && (cur_pilot->ammo != NULL))
-            range = outfit_range(cur_pilot->ammo->outfit);
+         if (outfit_isLauncher(cur_pilot->secondary->outfit) &&
+               (cur_pilot->secondary->u.ammo.outfit != NULL))
+            range = outfit_range(cur_pilot->secondary->u.ammo.outfit);
          else
             range = outfit_range(cur_pilot->secondary->outfit);
 

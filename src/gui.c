@@ -601,7 +601,6 @@ void gui_render( double dt )
    glColour* c, col;
    glFont* f;
    StarSystem *sys;
-   int quantity, delay;
 
    /* If player is dead just render the cinematic mode. */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
@@ -718,43 +717,41 @@ void gui_render( double dt )
    else {
       f = &gl_defFont;
 
-      quantity = pilot_oquantity(player,player->secondary);
-      delay = outfit_delay(player->secondary->outfit);
-
       /* check to see if weapon is ready */
       if (player->secondary->timer > 0.)
          c = &cGrey;
       else
          c = &cConsole;
 
-
       /* Launcher. */
-      if (player->ammo != NULL) {
-         /* use the ammunition's name */
-         i = gl_printWidth( f, "%s", outfit_ammo(player->secondary->outfit)->name);
-         if (i > gui.weapon.w) /* font is too big */
-            f = &gl_smallFont;
+      if ((outfit_isLauncher(player->secondary->outfit) ||
+               outfit_isFighterBay(player->secondary->outfit)) &&
+            (player->secondary->u.ammo.outfit != NULL)) {
 
          /* Weapon name. */
-         gl_printMid( f, (int)gui.weapon.w,
+         gl_printMidRaw( f, (int)gui.weapon.w,
                gui.weapon.x, gui.weapon.y - 5,
-               (player->ammo) ? c : &cGrey, "%s",
-               outfit_ammo(player->secondary->outfit)->name );
+               c, player->secondary->u.ammo.outfit->name );
 
          /* Print ammo left underneath. */
          gl_printMid( &gl_smallFont, (int)gui.weapon.w,
                gui.weapon.x, gui.weapon.y - 10 - gl_defFont.h,
-               NULL, "%d", (player->ammo) ? player->ammo->quantity : 0 );
+               NULL, "%d", player->secondary->u.ammo.quantity );
       }
       /* Other. */
       else { /* just print the item name */
-         i = gl_printWidth( f, "%s", player->secondary->outfit->name);
+         /* Mark as out of ammo. */
+         if (outfit_isLauncher(player->secondary->outfit) ||
+                  outfit_isFighterBay(player->secondary->outfit))
+            c = &cGrey;
+
+         /* Render normally. */
+         i = gl_printWidthRaw( f, player->secondary->outfit->name);
          if (i > (int)gui.weapon.w) /* font is too big */
             f = &gl_smallFont;
-         gl_printMid( f, (int)gui.weapon.w,
+         gl_printMidRaw( f, (int)gui.weapon.w,
                gui.weapon.x, gui.weapon.y - (gui.weapon.h - f->h)/2.,
-               c, "%s", player->secondary->outfit->name );
-
+               c, player->secondary->outfit->name );
       }
    } 
 

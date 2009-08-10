@@ -102,6 +102,15 @@ typedef enum PilotOutfitState_ {
 
 
 /**
+ * @brief Stores outfit ammo.
+ */
+typedef struct PilotOutfitAmmo_ {
+   Outfit *outfit; /**< Type of ammo. */
+   int quantity; /**< Amount of ammo. */
+} PilotOutfitAmmo;
+
+
+/**
  * @brief Stores an outfit the pilot has.
  */
 typedef struct PilotOutfitSlot_ {
@@ -119,6 +128,7 @@ typedef struct PilotOutfitSlot_ {
    union {
       int deployed; /**< Deployment status (if fighter craft). */
       int beamid; /**< ID of the beam used in this outfit, only used for beams. */
+      PilotOutfitAmmo ammo; /**< Ammo for launchers. */
    } u;
 } PilotOutfitSlot;
 
@@ -225,7 +235,6 @@ typedef struct Pilot_ {
    PilotOutfitSlot *outfit_high; /**< The high energy slots. */
    /* For easier usage. */
    PilotOutfitSlot *secondary; /**< secondary weapon */
-   PilotOutfitSlot *ammo; /**< secondary ammo if needed */
    PilotOutfitSlot *afterburner; /**< the afterburner */
 
    /* Jamming */
@@ -302,8 +311,8 @@ double pilot_face( Pilot* p, const double dir );
 int pilot_freeSpace( Pilot* p ); /* weapon space */
 int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s );
-int pilot_addAmmo( Pilot* pilot, Outfit* ammo, int quantity );
-int pilot_rmAmmo( Pilot* pilot, Outfit* ammo, int quantity );
+int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity );
+int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity );
 char* pilot_getOutfits( Pilot* pilot );
 void pilot_calcStats( Pilot* pilot );
 int pilot_oquantity( Pilot* p, PilotOutfitSlot* w );
