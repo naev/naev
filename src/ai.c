@@ -1901,11 +1901,12 @@ static int outfit_isRanged( Pilot *p, PilotOutfitSlot *o )
    if (outfit_isFighterBay(o->outfit) ||
          (outfit_isLauncher(o->outfit) &&
             (o->outfit->type != OUTFIT_TYPE_MISSILE_DUMB))) {
+      return 1;
    }
    return 0;
 }
-/*
- * sets the secondary weapon, biased towards launchers
+/**
+ * @brief Sets the secondary weapon, biased towards launchers
  */
 static int aiL_secondary( lua_State *L )
 {
@@ -1914,8 +1915,6 @@ static int aiL_secondary( lua_State *L )
    const char *str;
    const char *otype;
    int r;
-
-   po = NULL;
 
    /* Parse the parameters. */
    str = luaL_checkstring(L,1);
@@ -1926,6 +1925,7 @@ static int aiL_secondary( lua_State *L )
    else NLUA_INVALID_PARAMETER();
 
    /* Pilot has secondary selected - use that */
+   po = NULL;
    if (cur_pilot->secondary != NULL) {
       co = cur_pilot->secondary;
       if (melee && outfit_isMelee(cur_pilot,co))
@@ -1936,18 +1936,16 @@ static int aiL_secondary( lua_State *L )
 
    /* Need to get new secondary */
    if (po==NULL)  {
-
       /* Iterate over the list */
-      po = NULL;
-      for (i=0; i<cur_pilot->outfit_nhigh; i++) {
-         co = &cur_pilot->outfit_high[i];
+      for (i=0; i<cur_pilot->noutfits; i++) {
+         co = cur_pilot->outfits[i];
 
+         /* Must have an outfit. */
          if (co->outfit == NULL)
             continue;
 
          /* Not a secondary weapon. */
-         if (!outfit_isProp(co->outfit, OUTFIT_PROP_WEAP_SECONDARY) ||
-               outfit_isAmmo(co->outfit))
+         if (!outfit_isProp(co->outfit, OUTFIT_PROP_WEAP_SECONDARY))
             continue;
 
          /* Get the first match. */

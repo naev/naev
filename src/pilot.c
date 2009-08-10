@@ -727,7 +727,7 @@ void pilot_shoot( Pilot* p, int group )
 void pilot_shootSecondary( Pilot* p )
 {
    /* No secondary weapon. */
-   if (!p->secondary)
+   if (p->secondary == NULL)
       return;
 
    pilot_shootWeapon( p, p->secondary );
