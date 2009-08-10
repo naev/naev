@@ -811,12 +811,12 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "%s\n"
-         "%.2f CPU\n"
+         "Needs %.1f CPU\n"
          "\n"
-         "%.2f shots/second\n"
-         "%.2f %s damage\n"
-         "%.2f energy\n"
-         "%.2f range",
+         "%.1f shots/second\n"
+         "%.1f %s damage\n"
+         "%.1f energy\n"
+         "%.1f range",
          temp->name,
          outfit_getType(temp),
          temp->u.blt.cpu,
@@ -914,12 +914,12 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "%s\n"
-         "%.2f CPU\n"
+         "Needs %.1f CPU\n"
          "\n"
-         "%.2f %s damage/second\n"
-         "%.2f energy/second\n"
-         "%.2f duration %.2f delay\n"
-         "%.2f range",
+         "%.1f %s damage/second\n"
+         "%.1f energy/second\n"
+         "%.1f duration %.1f delay\n"
+         "%.1f range",
          temp->name,
          outfit_getType(temp),
          temp->u.bem.cpu,
@@ -973,9 +973,9 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "%s\n"
-         "%.2f CPU\n"
+         "Needs %.1f CPU\n"
          "\n"
-         "%.2f shots/second\n"
+         "%.1f shots/second\n"
          "%s ammo",
          temp->name,
          outfit_getType(temp),
@@ -1080,11 +1080,11 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          "%s\n"
          "%s\n"
          "\n"
-         "%.2f %s damage\n"
-         "%.2f energy\n"
-         "%.2f speed\n"
-         "%.2f duration\n"
-         "%.2f lockon",
+         "%.1f %s damage\n"
+         "%.1f energy\n"
+         "%.1f speed\n"
+         "%.1f duration\n"
+         "%.1f lockon",
          temp->name,
          outfit_getType(temp),
          temp->u.amm.damage, outfit_damageTypeToStr(temp->u.amm.dtype),
@@ -1156,7 +1156,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 #define DESC_ADD(x, s) \
 if ((x) != 0.) \
    i += snprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, \
-         "\n%.2f "s, x )
+         "\n%+.1f "s, x )
    DESC_ADD( temp->u.mod.thrust, "thrust" );
    DESC_ADD( temp->u.mod.turn, "turn" );
    DESC_ADD( temp->u.mod.speed, "speed" );
@@ -1208,12 +1208,12 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "%s\n"
-         "%.2f CPU\n"
+         "Needs %.1f CPU\n"
          "\n"
-         "%.2f + %.0f%% thrust\n"
-         "%.2f + %.0f%% speed\n"
-         "%.2f energy/second\n"
-         "%.2f rumble",
+         "%.1f + %.0f%% thrust\n"
+         "%.1f + %.0f%% speed\n"
+         "%.1f energy/second\n"
+         "%.1f rumble",
          temp->name,
          outfit_getType(temp),
          temp->u.afb.cpu,
@@ -1248,10 +1248,10 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "%s\n"
-         "%.2f CPU\n"
+         "Needs %.1f CPU\n"
          "\n"
          "%s\n"
-         "%.2f launches/second",
+         "%.1f launches/second",
          temp->name,
          outfit_getType(temp),
          temp->u.bay.cpu,
@@ -1388,11 +1388,11 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "%s\n"
-         "%.2f CPU\n"
+         "Needs %.1f CPU\n"
          "\n"
-         "%.2f range\n"
+         "%.1f range\n"
          "%.0f%% chance\n"
-         "%.2f energy",
+         "%.1f energy",
          temp->name,
          outfit_getType(temp),
          temp->u.jam.cpu,
