@@ -1068,7 +1068,8 @@ static void equipment_renderColumn( double x, double y, double w, double h,
             subtitle = 1;
       }
       else {
-         if (lst[i].slot == equipment_outfit->slot) {
+         if ((equipment_outfit != NULL) &&
+               (lst[i].slot == equipment_outfit->slot)) {
             if (equipment_selected->cpu < outfit_cpu(equipment_outfit))
                c = &cRed;
             else
@@ -1484,6 +1485,8 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    else {
       /* Must have outfit. */
       o = equipment_outfit;
+      if (o==NULL)
+         return 0;
 
       /* Must fit slot. */
       if (o->slot != slot->slot)
@@ -1592,15 +1595,17 @@ static void equipment_genLists( unsigned int wid )
             sw, sh, "iarAvailOutfits", 50., 50.,
             toutfits, soutfits, noutfits, equipment_updateOutfits );
       /* Set alt text. */
-      alt = malloc( sizeof(char*) * noutfits );
-      for (i=0; i<noutfits; i++) {
-         o      = outfit_get( soutfits[i] );
-         if (o->desc_short == NULL)
-            alt[i] = NULL;
-         else
-            alt[i] = strdup( o->desc_short );
+      if (strcmp(soutfits[0],"None")!=0) {
+         alt = malloc( sizeof(char*) * noutfits );
+         for (i=0; i<noutfits; i++) {
+            o      = outfit_get( soutfits[i] );
+            if (o->desc_short == NULL)
+               alt[i] = NULL;
+            else
+               alt[i] = strdup( o->desc_short );
+         }
+         toolkit_setImageArrayAlt( wid, "iarAvailOutfits", alt );
       }
-      toolkit_setImageArrayAlt( wid, "iarAvailOutfits", alt );
    }
 
    /* Update window. */
