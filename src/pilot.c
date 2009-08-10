@@ -1716,18 +1716,25 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
    if (outfit_isMap(outfit)) {
       if (pilot == player) /* Only player can get it. */
          map_map(NULL,outfit->u.map.radius);
-      return -1; /* must return 1 for paying purposes */
+      return 0; /* Success. */
    }
    /* special case if it's a license. */
    else if (outfit_isLicense(outfit)) {
       if (pilot == player) /* Only player can get it. */
          player_addLicense(outfit->name);
-      return -1; /* must return 1 for paying purposes */
+      return 0; /* Success. */
    }
 
    /* See if slot has space. */
    if (s->outfit != NULL) {
-      WARN("Trying to add outfit '%s' to slot that already has an outfit", outfit->name);
+      WARN( "Pilot '%s': trying to add outfit '%s' to slot that already has an outfit",
+            pilot->name, outfit->name );
+      return -1;
+   }
+   else if ((outfit_cpu(outfit) > 0) &&
+         (pilot->cpu < outfit_cpu(outfit))) {
+      WARN( "Pilot '%s': Not enough CPU to add outfit '%s'",
+            pilot->name, outfit->name );
       return -1;
    }
 
@@ -1873,6 +1880,8 @@ void pilot_calcStats( Pilot* pilot )
    /*
     * set up the basic stuff
     */
+   /* mass */
+   pilot->solid->mass   = pilot->ship->mass;
    /* movement */
    pilot->thrust        = pilot->ship->thrust;
    pilot->turn          = pilot->ship->turn;
@@ -1905,6 +1914,7 @@ void pilot_calcStats( Pilot* pilot )
     */
    nweaps = 0;
    wrange = wspeed = 0.;
+   pilot->mass_outfit = 0.;
    for (i=0; i<pilot->noutfits; i++) {
       o = pilot->outfits[i]->outfit;
 
@@ -1914,7 +1924,10 @@ void pilot_calcStats( Pilot* pilot )
       q = (double) pilot->outfits[i]->quantity;
 
       /* Subtract CPU. */
-      pilot->cpu -= outfit_cpu(o) * q;
+      pilot->cpu           -= outfit_cpu(o) * q;
+
+      /* Add mass. */
+      pilot->mass_outfit   += o->mass;
 
       if (outfit_isMod(o)) { /* Modification */
          /* movement */
@@ -1938,7 +1951,7 @@ void pilot_calcStats( Pilot* pilot )
       else if (outfit_isJammer(o)) { /* Jammer */
          if (pilot->jam_chance < o->u.jam.chance) { /* substitute */
             /** @todo make more jammers improve overall */
-            pilot->jam_range = o->u.jam.range;
+            pilot->jam_range  = o->u.jam.range;
             pilot->jam_chance = o->u.jam.chance;
          }
          pilot->energy_regen -= o->u.jam.energy;
@@ -1963,6 +1976,9 @@ void pilot_calcStats( Pilot* pilot )
    pilot->shield = sc * pilot->shield_max;
    pilot->energy = ec * pilot->energy_max;
    pilot->fuel = fc * pilot->fuel_max;
+
+   /* Calculate mass. */
+   pilot->solid->mass = pilot->ship->mass + pilot->mass_cargo + pilot->mass_outfit;
 }
 
 
@@ -2121,12 +2137,9 @@ double pilot_cargoUsed( Pilot* pilot )
  */
 static void pilot_calcCargo( Pilot* pilot )
 {
-   int q;
-
-   q = pilot_cargoUsed( pilot );
-
-   pilot->cargo_free = pilot->ship->cap_cargo - q; /* reduce space left */
-   pilot->solid->mass = pilot->ship->mass + q; /* cargo affects weight */
+   pilot->mass_cargo  = pilot_cargoUsed( pilot );
+   pilot->cargo_free  = pilot->ship->cap_cargo - pilot->mass_cargo;
+   pilot->solid->mass = pilot->ship->mass + pilot->mass_cargo + pilot->mass_outfit;
 }
 
 
@@ -2327,6 +2340,13 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    /* solid */
    pilot->solid = solid_create(ship->mass, dir, pos, vel);
 
+   /* First pass to make sure requirements make sense. */
+   pilot->armour = pilot->armour_max = 1.; /* hack to have full armour */
+   pilot->shield = pilot->shield_max = 1.; /* ditto shield */
+   pilot->energy = pilot->energy_max = 1.; /* ditto energy */
+   pilot->fuel   = pilot->fuel_max   = 1.; /* ditto fuel */
+   pilot_calcStats(pilot);
+
    /* Allocate outfit memory. */
    /* Slot types. */
    pilot->outfit_nlow    = ship->outfit_nlow;
@@ -2380,10 +2400,6 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->cargo_free = pilot->ship->cap_cargo; /* should get redone with calcCargo */
 
    /* set the pilot stats based on his ship and outfits */
-   pilot->armour = pilot->armour_max = 1.; /* hack to have full armour */
-   pilot->shield = pilot->shield_max = 1.; /* ditto shield */
-   pilot->energy = pilot->energy_max = 1.; /* ditto energy */
-   pilot->fuel   = pilot->fuel_max   = 1.; /* ditto fuel */
    pilot_calcStats(pilot);
 
    /* set flags and functions */

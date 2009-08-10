@@ -1059,8 +1059,15 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       if (i==mover) {
          display = NULL;
          if (lst[i].outfit != NULL) {
-            display = "Right click to remove";
-            c = &cDConsole;
+            if ((outfit_cpu(lst[i].outfit) < 0) &&
+                  (fabs(outfit_cpu(lst[i].outfit)) > equipment_selected->cpu)) {
+               display = "Lower CPU usage first";
+               c = &cRed;
+            }
+            else {
+               display = "Right click to remove";
+               c = &cDConsole;
+            }
          }
          else if (equipment_outfit != NULL) {
             if (equipment_selected->cpu < outfit_cpu(equipment_outfit)) {

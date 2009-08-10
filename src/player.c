@@ -190,6 +190,7 @@ static int player_parseDoneEvents( xmlNodePtr parent );
 static int player_parseLicenses( xmlNodePtr parent );
 static int player_parseShip( xmlNodePtr parent, int is_player );
 static int player_parseEscorts( xmlNodePtr parent );
+static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 /* 
  * externed
  */
@@ -2539,6 +2540,21 @@ static int player_parseEscorts( xmlNodePtr parent )
 
 
 /**
+ * @brief Adds outfit to pilot if it can.
+ */
+static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
+{
+   int ret;
+   ret = pilot_addOutfit( pilot, outfit, s );
+   if (ret != 0) {
+      DEBUG("Outfit '%s' does not fit on player's pilot '%s', adding to stock.",
+            outfit->name, pilot->name);
+      player_addOutfit( outfit, 1 );
+   }
+}
+
+
+/**
  * @brief Parses a player's ship.
  *
  *    @param parent Node of the ship.
@@ -2596,8 +2612,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                }
                /* adding the outfit */
                o = outfit_get( xml_get(cur) );
-               if (o != NULL)
-                  pilot_addOutfit( ship, o, &ship->outfit_low[n] );
+               if (o != NULL) {
+                  player_addOutfitToPilot( ship, o, &ship->outfit_low[n] );
+               }
             }
          } while (xml_nextNode(cur));
       }
@@ -2617,7 +2634,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                /* adding the outfit */
                o = outfit_get( xml_get(cur) );
                if (o != NULL)
-                  pilot_addOutfit( ship, o, &ship->outfit_medium[n] );
+                  player_addOutfitToPilot( ship, o, &ship->outfit_medium[n] );
             }
          } while (xml_nextNode(cur));
       }
@@ -2637,7 +2654,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                /* adding the outfit */
                o = outfit_get( xml_get(cur) );
                if (o != NULL)
-                  pilot_addOutfit( ship, o, &ship->outfit_high[n] );
+                  player_addOutfitToPilot( ship, o, &ship->outfit_high[n] );
             }
          } while (xml_nextNode(cur));
       }
