@@ -1083,7 +1083,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          "%.2f energy\n"
          "%.2f speed\n"
          "%.2f duration\n"
-         "%.2f lockon\n",
+         "%.2f lockon",
          temp->name,
          outfit_getType(temp),
          temp->u.amm.damage, outfit_damageTypeToStr(temp->u.amm.dtype),
