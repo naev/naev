@@ -195,6 +195,7 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
+   <cpu>7</cpu>
    <delay>800</delay>
    <speed>500</speed>
    <range>560</range>

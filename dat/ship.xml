@@ -874,6 +874,7 @@
    <energy_regen>1300</energy_regen>
   </health>
   <characteristics>
+   <cpu>500</cpu>
    <crew>28</crew>
    <mass>2725</mass>
    <fuel>300</fuel>
