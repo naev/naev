@@ -182,12 +182,14 @@ static void player_newShipMake( char *name );
 static void player_initSound (void);
 /* save/load */
 static int player_saveEscorts( xmlTextWriterPtr writer );
+static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, int i );
 static int player_saveShip( xmlTextWriterPtr writer, 
       Pilot* ship, char* loc );
 static int player_parse( xmlNodePtr parent );
 static int player_parseDoneMissions( xmlNodePtr parent );
 static int player_parseDoneEvents( xmlNodePtr parent );
 static int player_parseLicenses( xmlNodePtr parent );
+static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot *slot );
 static int player_parseShip( xmlNodePtr parent, int is_player );
 static int player_parseEscorts( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
@@ -2236,6 +2238,28 @@ int player_save( xmlTextWriterPtr writer )
 
 
 /**
+ * @brief Saves an outfit slot.
+ */
+static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, int i )
+{
+   Outfit *o;
+   o = slot->outfit;
+   xmlw_startElem(writer,"outfit");
+   xmlw_attr(writer,"slot","%d",i);
+   if ((outfit_ammo(o) != NULL) &&
+         (slot->u.ammo.outfit != NULL) &&
+         (slot->u.ammo.quantity > 0)) {
+      xmlw_attr(writer,"ammo",slot->u.ammo.outfit->name);
+      xmlw_attr(writer,"quantity","%d", slot->u.ammo.quantity);
+   }
+   xmlw_str(writer,o->name);
+   xmlw_endElem(writer); /* "outfit" */
+
+   return 0;
+}
+
+
+/**
  * @brief Saves a ship.
  *
  *    @param writer XML writer.
@@ -2263,30 +2287,21 @@ static int player_saveShip( xmlTextWriterPtr writer,
    for (i=0; i<ship->outfit_nlow; i++) {
       if (ship->outfit_low[i].outfit==NULL)
          continue;
-      xmlw_startElem(writer,"outfit");
-      xmlw_attr(writer,"slot","%d",i);
-      xmlw_str(writer,ship->outfit_low[i].outfit->name);
-      xmlw_endElem(writer); /* "outfit" */
+      player_saveShipSlot( writer, &ship->outfit_low[i], i );
    }
    xmlw_endElem(writer); /* "outfits_low" */
    xmlw_startElem(writer,"outfits_medium");
    for (i=0; i<ship->outfit_nmedium; i++) {
       if (ship->outfit_medium[i].outfit==NULL)
          continue;
-      xmlw_startElem(writer,"outfit");
-      xmlw_attr(writer,"slot","%d",i);
-      xmlw_str(writer,ship->outfit_medium[i].outfit->name);
-      xmlw_endElem(writer); /* "outfit" */
+      player_saveShipSlot( writer, &ship->outfit_medium[i], i );
    }
    xmlw_endElem(writer); /* "outfits_medium" */
    xmlw_startElem(writer,"outfits_high");
    for (i=0; i<ship->outfit_nhigh; i++) {
       if (ship->outfit_high[i].outfit==NULL)
          continue;
-      xmlw_startElem(writer,"outfit");
-      xmlw_attr(writer,"slot","%d",i);
-      xmlw_str(writer,ship->outfit_high[i].outfit->name);
-      xmlw_endElem(writer); /* "outfit" */
+      player_saveShipSlot( writer, &ship->outfit_high[i], i );
    }
    xmlw_endElem(writer); /* "outfits_high" */
 
@@ -2599,6 +2614,50 @@ static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSl
 
 
 /**
+ * @brief Parses a ship outfit slot.
+ */
+static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot *slot )
+{
+   Outfit *o, *ammo;
+   char *buf;
+   int q;
+
+   /* Add the outfit. */
+   o = outfit_get( xml_get(node) );
+   if (o==NULL)
+      return;
+   player_addOutfitToPilot( ship, o, slot );
+
+   /* Doesn't have ammo. */
+   if (outfit_ammo(o)==NULL)
+      return;
+
+   /* See if has ammo. */
+   xmlr_attr(node,"ammo",buf);
+   if (buf == NULL)
+      return;
+
+   /* Get the ammo. */
+   ammo = outfit_get(buf);
+   free(buf);
+   if (ammo==NULL)
+      return;
+
+   /* See if has quantity. */
+   xmlr_attr(node,"quantity",buf);
+   if (buf == NULL)
+      return;
+
+   /* Get quantity. */
+   q = atoi(buf);
+   free(buf);
+
+   /* Add ammo. */
+   pilot_addAmmo( ship, slot, ammo, q );
+}
+
+
+/**
  * @brief Parses a player's ship.
  *
  *    @param parent Node of the ship.
@@ -2611,7 +2670,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    int i, n;
    double fuel;
    Pilot* ship;
-   Outfit* o;
    xmlNodePtr node, cur;
    double quantity;
    
@@ -2654,11 +2712,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                   WARN("Outfit slot out of range, not adding.");
                   continue;
                }
-               /* adding the outfit */
-               o = outfit_get( xml_get(cur) );
-               if (o != NULL) {
-                  player_addOutfitToPilot( ship, o, &ship->outfit_low[n] );
-               }
+               player_parseShipSlot( cur, ship, &ship->outfit_low[n] );
             }
          } while (xml_nextNode(cur));
       }
@@ -2675,10 +2729,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                   WARN("Outfit slot out of range, not adding.");
                   continue;
                }
-               /* adding the outfit */
-               o = outfit_get( xml_get(cur) );
-               if (o != NULL)
-                  player_addOutfitToPilot( ship, o, &ship->outfit_medium[n] );
+               player_parseShipSlot( cur, ship, &ship->outfit_medium[n] );
             }
          } while (xml_nextNode(cur));
       }
@@ -2695,10 +2746,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                   WARN("Outfit slot out of range, not adding.");
                   continue;
                }
-               /* adding the outfit */
-               o = outfit_get( xml_get(cur) );
-               if (o != NULL)
-                  player_addOutfitToPilot( ship, o, &ship->outfit_high[n] );
+               player_parseShipSlot( cur, ship, &ship->outfit_high[n] );
             }
          } while (xml_nextNode(cur));
       }
