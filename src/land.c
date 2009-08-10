@@ -994,10 +994,16 @@ static void equipment_renderColumn( double x, double y, double w, double h,
                x + SCREEN_W/2., y + SCREEN_H/2., w, h, NULL );
       }
       else {
+         if (lst[i].slot == equipment_outfit->slot) {
+            if (equipment_selected->cpu < outfit_cpu(equipment_outfit))
+               c = &cRed;
+            else
+               c = &cDConsole;
+         }
+         else
+            c = &cBlack;
          gl_printMidRaw( &gl_smallFont, w,
-               x + SCREEN_W/2., y + (h-gl_smallFont.h)/2 + SCREEN_H/2.,
-               (lst[i].slot == equipment_outfit->slot) ?
-                  &cDConsole : &cBlack, "None" );
+               x + SCREEN_W/2., y + (h-gl_smallFont.h)/2 + SCREEN_H/2., c, "None" );
       }
       /* Draw outline. */
       if (i==selected) {
