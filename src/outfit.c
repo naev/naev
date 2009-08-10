@@ -963,6 +963,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_int(node,"delay",temp->u.lau.delay);
       xmlr_float(node,"cpu",temp->u.lau.cpu);
       xmlr_strd(node,"ammo",temp->u.lau.ammo_name);
+      xmlr_int(node,"amount",temp->u.lau.amount);
    } while (xml_nextNode(node));
 
    /* Post processing. */
@@ -976,18 +977,19 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
          "Needs %.1f CPU\n"
          "\n"
          "%.1f shots/second\n"
-         "%s ammo",
+         "Holds %d %s",
          temp->name,
          outfit_getType(temp),
          temp->u.lau.cpu,
          1./temp->u.lau.delay,
-         temp->u.lau.ammo_name );
+         temp->u.lau.amount, temp->u.lau.ammo_name );
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.lau.ammo_name==NULL,"ammo");
    MELEMENT(temp->u.lau.delay==0,"delay");
    MELEMENT(temp->u.lau.cpu==0.,"cpu");
+   MELEMENT(temp->u.lau.amount==0.,"amount");
 #undef MELEMENT
 }
 

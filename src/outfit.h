@@ -158,6 +158,7 @@ typedef struct OutfitLauncherData_ {
    double cpu; /**< CPU usage. */
    char *ammo_name; /**< Name of the ammo to use. */
    struct Outfit_ *ammo; /**< Ammo to use. */
+   int amount; /**< Amount of ammo it can store. */
 } OutfitLauncherData;
 
 /**

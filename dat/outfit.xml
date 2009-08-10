@@ -389,6 +389,7 @@
    <cpu>7</cpu>
    <ammo>Seeker Missile</ammo>
    <delay>1800</delay>
+   <amount>20</amount>
   </specific>
  </outfit>
  <outfit name="Seeker Missile">
@@ -429,6 +430,7 @@
    <cpu>13</cpu>
    <ammo>Headhunter Missile</ammo>
    <delay>2000</delay>
+   <amount>15</amount>
   </specific>
  </outfit>
  <outfit name="Headhunter Missile">
@@ -471,6 +473,7 @@
    <cpu>5</cpu>
    <ammo>Banshee Rocket</ammo>
    <delay>375</delay>
+   <amount>40</amount>
   </specific>
  </outfit>
  <outfit name="Banshee Rocket">
@@ -511,6 +514,7 @@
    <cpu>1</cpu>
    <ammo>Mace Rocket</ammo>
    <delay>2000</delay>
+   <amount>10</amount>
   </specific>
  </outfit>
  <outfit name="Mace Rocket">
@@ -549,6 +553,7 @@
    <cpu>9</cpu>
    <ammo>EMP Grenade</ammo>
    <delay>2000</delay>
+   <amount>18</amount>
   </specific>
  </outfit>
  <outfit name="EMP Grenade">
