@@ -12,6 +12,7 @@
    <gfx_store>lasercannon</gfx_store>
    </general>
   <specific type="bolt">
+   <cpu>3</cpu>
    <gfx>laserred</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -37,6 +38,7 @@
    <gfx_store>lasercannon</gfx_store>
    </general>
   <specific type="bolt">
+   <cpu>6</cpu>
    <gfx>laser2</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -63,6 +65,7 @@
    <gfx_store>turret</gfx_store>
   </general>
   <specific type="turret bolt">
+   <cpu>25</cpu>
    <gfx>laserred</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -88,6 +91,7 @@
    <gfx_store>turret</gfx_store>
   </general>
   <specific type="turret bolt">
+   <cpu>34</cpu>
    <gfx>laser2</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -113,6 +117,7 @@
    <gfx_store>laser</gfx_store>
   </general>
   <specific type="bolt">
+   <cpu>2</cpu>
    <gfx>plasma</gfx>
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -138,6 +143,7 @@
    <gfx_store>laser</gfx_store>
   </general>
   <specific type="bolt">
+   <cpu>4</cpu>
    <gfx>plasma2</gfx>
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -164,6 +170,7 @@
    <gfx_store>neutron</gfx_store>
   </general>
   <specific type="bolt">
+   <cpu>12</cpu>
    <gfx>neutron</gfx>
    <sound>neutron</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -180,7 +187,7 @@
  </outfit>
 <!-- Medium Range Weapons -->
  <outfit name="Ion Cannon">
- <general>
+  <general>
    <slot>high</slot>
    <max>4</max>
    <tech>7</tech>
@@ -191,11 +198,11 @@
    <gfx_store>ioncannon</gfx_store>
   </general>
   <specific type="bolt">
+   <cpu>9</cpu>
    <gfx>ion</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <cpu>7</cpu>
    <delay>800</delay>
    <speed>500</speed>
    <range>560</range>
@@ -218,6 +225,7 @@
    <gfx_store>turret2</gfx_store>
   </general>
   <specific type="turret bolt">
+   <cpu>40</cpu>
    <gfx>ion</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -244,6 +252,7 @@
    <gfx_store>gatling</gfx_store>
   </general>
   <specific type="bolt">
+   <cpu>1</cpu>
    <gfx>autocannon</gfx>
    <sound>autocannon</sound>
    <sound_hit>medexp0</sound_hit>
@@ -270,6 +279,7 @@
    <gfx_store>heavy</gfx_store>
   </general>
   <specific type="bolt" secondary="1">
+   <cpu>15</cpu>
    <gfx>mass</gfx>
    <sound>mass</sound>
    <sound_hit>medexp0</sound_hit>
@@ -297,6 +307,7 @@
    <gfx_store>medium</gfx_store>
   </general>
   <specific type="bolt">
+   <cpu>11</cpu>
    <gfx>ripper</gfx>390
    <sound>ripper</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -324,6 +335,7 @@
    <gfx_store>orion</gfx_store>
   </general>
   <specific type="beam" secondary="1">
+   <cpu>17</cpu>
    <delay>6000</delay>
    <duration>3</duration>
    <range>300</range>
@@ -348,6 +360,7 @@
    <gfx_store>turret3</gfx_store>
   </general>
   <specific type="turret beam" secondary="1">
+   <cpu>70</cpu>
    <delay>10000</delay>
    <duration>5</duration>
    <range>400</range>
@@ -373,6 +386,7 @@
    <gfx_store>missile</gfx_store>
   </general>
   <specific type="missile seek" secondary="1">
+   <cpu>7</cpu>
    <ammo>Seeker Missile</ammo>
    <delay>1800</delay>
   </specific>
@@ -412,6 +426,7 @@
    <gfx_store>missile</gfx_store>
   </general>
   <specific type="missile smart" secondary="1">
+   <cpu>13</cpu>
    <ammo>Headhunter Missile</ammo>
    <delay>2000</delay>
   </specific>
@@ -453,6 +468,7 @@
    <description>The Banshee Launcher uses a quick-action firing mechanism to be able to quickly launch the Banshee rockets. The only drawback is that this mechanism can only be used with light rockets, limiting the payload the rockets can have.</description>
   </general>
   <specific type="missile dumb" secondary="1">
+   <cpu>5</cpu>
    <ammo>Banshee Rocket</ammo>
    <delay>375</delay>
   </specific>
@@ -492,6 +508,7 @@
    <gfx_store>mace</gfx_store>
   </general>
   <specific type="missile dumb" secondary="1">
+   <cpu>1</cpu>
    <ammo>Mace Rocket</ammo>
    <delay>2000</delay>
   </specific>
@@ -529,6 +546,7 @@
    <description>This launcher can fire EMP grenades in any direction using a unique internal guidance system. These are favoured by traders for escaping from pirates.</description>
   </general>
   <specific type="turret dumb" secondary="1">
+   <cpu>9</cpu>
    <ammo>EMP Grenade</ammo>
    <delay>2000</delay>
   </specific>
@@ -566,6 +584,7 @@
    <gfx_store>capacitor</gfx_store>
   </general>
   <specific type="modification">
+   <cpu>2</cpu>
    <energy>40</energy>
   </specific>
  </outfit>
@@ -594,6 +613,7 @@
    <description>Adding a complementary reactor to your ship is a great way to get that extra energy boost you need. This does not replace the existing reactor but works alongside it and hooks up directly to the energy flux.</description>
   </general>
   <specific type="modification">
+   <cpu>10</cpu>
    <energy>30</energy>
    <energy_regen>490</energy_regen>
   </specific>
@@ -609,6 +629,7 @@
    <description>The class II reactor uses a newer fusion technology than the class I, permitting it to have greater energy density. The result is a mid-sized reactor that is best used on ships with moderate energy demands.</description>
   </general>
   <specific type="modification">
+   <cpu>22</cpu>
    <energy>80</energy>
    <energy_regen>1050</energy_regen>
   </specific>
@@ -624,6 +645,7 @@
    <description>The immense class III reactor provides enough power for nearly anything. The technology used in this reactor is particularly groundbreaking, with the best energy density of the three reactor classes. The huge size of the class III results in it only fitting comfortably on large vessels, though its energy output would be excessive for anything less.</description>
   </general>
   <specific type="modification">
+   <cpu>40</cpu>
    <energy>300</energy>
    <energy_regen>2020</energy_regen>
   </specific>
@@ -640,6 +662,7 @@
    <gfx_store>capacitor</gfx_store>
   </general>
   <specific type="modification">
+   <cpu>2</cpu>
    <shield>30</shield>
   </specific>
  </outfit>
@@ -654,8 +677,9 @@
    <gfx_store>shield</gfx_store>
   </general>
   <specific type="modification">
+   <cpu>5</cpu>
    <shield>15</shield>
-   <shield_regen>15</shield_regen>
+   <shield_regen>30</shield_regen>
    <energy_regen>-50</energy_regen>
   </specific>
  </outfit>
@@ -699,6 +723,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <description>Biometal is a metal armour that regenerates itself due to genetically-engineered bacteria throughout it. Due to the compartmentalization to permit bacterial life, and the difficulty of culturing the bacteria, Biometal has greater bulk than alternatives, and is the most expensive hull plating. The results are formidable, but it's hard to equip such armour on anything short of a Destroyer.</description>
   </general>
   <specific type="modification">
+   <cpu>6</cpu>
    <armour>300</armour>
    <armour_regen>120</armour_regen>
   </specific>
@@ -714,7 +739,8 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <description>This low maintenance droid crew will scour your ship to repair any damages caused by space hazards. They are very small and able to work both on the interior or exterior of the ship. Power is drawn from the ship to feed the robots, although the load is generally very low compared to the benefits of having a robotic repair crew.</description>
   </general>
   <specific type="modification">
-   <armour_regen>50</armour_regen>
+   <cpu>15</cpu>
+   <armour_regen>100</armour_regen>
    <energy>-5</energy>
    <energy_regen>-40</energy_regen>
   </specific>
@@ -731,6 +757,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <gfx_store>reroute</gfx_store>
   </general>
   <specific type="modification">
+   <cpu>10</cpu>
    <thrust>70</thrust>
    <energy_regen>-50</energy_regen>
   </specific>
@@ -746,6 +773,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <gfx_store>stabilizer</gfx_store>
   </general>
   <specific type="modification">
+   <cpu>10</cpu>
    <speed>50</speed>
    <turn>5</turn>
    <energy_regen>-10</energy_regen>
@@ -762,6 +790,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <gfx_store>thruster</gfx_store>
   </general>
   <specific type="modification">
+   <cpu>10</cpu>
    <turn>25</turn>
    <energy_regen>-10</energy_regen>
   </specific>
@@ -777,6 +806,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <gfx_store>afterburner</gfx_store>
   </general>
   <specific type="afterburner">
+   <cpu>3</cpu>
    <rumble>0.5</rumble>
    <sound>afterburner</sound>
    <thrust_perc>100</thrust_perc>
@@ -797,6 +827,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <gfx_store>afterburner2</gfx_store>
   </general>
   <specific type="afterburner">
+   <cpu>9</cpu>
    <rumble>0.9</rumble>
    <sound>afterburner</sound>
    <thrust_perc>185</thrust_perc>
@@ -873,6 +904,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <gfx_store>jammer0</gfx_store>
   </general>
   <specific type="jammer">
+   <cpu>8</cpu>
    <range>400</range>
    <chance>20</chance>
    <energy>3</energy>
@@ -889,6 +921,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <gfx_store>jammer1</gfx_store>
   </general>
   <specific type="jammer">
+   <cpu>18</cpu>
    <range>600</range>
    <chance>40</chance>
    <energy>10</energy>
@@ -907,6 +940,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <description>This fighter bay allows your ship to carry a pair of Lancelot class fighters. It comes with all the devices required for the maintenance and flight of the fighters.</description>
   </general>
   <specific type="fighter bay" secondary="1">
+   <cpu>60</cpu>
    <ammo>Lancelot Fighter</ammo>
    <delay>4000</delay>
   </specific>
@@ -937,6 +971,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <description>The Drone Fighter bay uses the advanced collective technologies to sustain a trio of Drone Fighters.  Drone Fighters require no pilot making them a safer approach in dangerous situations.  They do however need some careful maintenance.  All the tools needed to take care of them are provided with the bay.</description>
   </general>
   <specific type="fighter bay" secondary="1">
+   <cpu>100</cpu>
    <ammo>Drone Fighter</ammo>
    <delay>1000</delay>
   </specific>
