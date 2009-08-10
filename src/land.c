@@ -1836,7 +1836,6 @@ static void equipment_transportShip( unsigned int wid )
  */
 static void equipment_unequipShip( unsigned int wid, char* str )
 {
-   (void) wid;
    (void) str;
    int ret;
    int i;
@@ -1852,6 +1851,10 @@ static void equipment_unequipShip( unsigned int wid, char* str )
       if (ret==0)
          player_addOutfit( o, 1 );
    }
+
+   /* Regenerate list. */
+   window_destroyWidget( wid, "iarAvailOutfits" );
+   equipment_genLists( wid );
 }
 /**
  * @brief Player tries to sell a ship.
