@@ -1856,8 +1856,8 @@ int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
       WARN("Pilot '%s': Trying to remove ammo from unequiped slot.", pilot->name );
       return 0;
    }
-   else if (!outfit_isLauncher(s->outfit)) {
-      WARN("Pilot '%s': Trying to remove ammo from non-launcher type outfit '%s'",
+   else if (!outfit_isLauncher(s->outfit) && !outfit_isFighterBay(s->outfit)) {
+      WARN("Pilot '%s': Trying to remove ammo from non-launcher/fighter bay type outfit '%s'",
             pilot->name, s->outfit->name);
       return 0;
    }
@@ -2424,18 +2424,42 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    /* Second pass add outfits. */
    p = 0;
    for (i=0; i<pilot->outfit_nlow; i++) {
-      if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_low[i].data != NULL))
+      if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_low[i].data != NULL)) {
          pilot_addOutfit( pilot, ship->outfit_low[i].data, pilot->outfits[p] );
+         /* Add ammo if necessary. */
+         if (!(flags & PILOT_PLAYER) &&
+               (outfit_isLauncher(ship->outfit_low[i].data) ||
+                  (outfit_isFighterBay(ship->outfit_low[i].data))))
+            pilot_addAmmo( pilot, pilot->outfits[p],
+                  outfit_ammo(ship->outfit_low[i].data),
+                  outfit_amount(ship->outfit_low[i].data));
+      }
       p++;
    }
    for (i=0; i<pilot->outfit_nmedium; i++) {
-      if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_medium[i].data != NULL))
+      if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_medium[i].data != NULL)) {
          pilot_addOutfit( pilot, ship->outfit_medium[i].data, pilot->outfits[p] );
+         /* Add ammo if necessary. */
+         if (!(flags & PILOT_PLAYER) &&
+               (outfit_isLauncher(ship->outfit_medium[i].data) ||
+                  (outfit_isFighterBay(ship->outfit_medium[i].data))))
+            pilot_addAmmo( pilot, pilot->outfits[p],
+                  outfit_ammo(ship->outfit_medium[i].data),
+                  outfit_amount(ship->outfit_medium[i].data));
+      }
       p++;
    }
    for (i=0; i<pilot->outfit_nhigh; i++) {
-      if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_high[i].data != NULL))
+      if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_high[i].data != NULL)) {
          pilot_addOutfit( pilot, ship->outfit_high[i].data, pilot->outfits[p] );
+         /* Add ammo if necessary. */
+         if (!(flags & PILOT_PLAYER) &&
+               (outfit_isLauncher(ship->outfit_high[i].data) ||
+                  (outfit_isFighterBay(ship->outfit_high[i].data))))
+            pilot_addAmmo( pilot, pilot->outfits[p],
+                  outfit_ammo(ship->outfit_high[i].data),
+                  outfit_amount(ship->outfit_high[i].data));
+      }
       p++;
    }
 
