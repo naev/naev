@@ -1331,11 +1331,11 @@ void pilot_update( Pilot* pilot, const double dt )
    pilot->ptimer -= dt;
    pilot->tcontrol -= dt;
    for (i=0; i<MAX_AI_TIMERS; i++)
-      if (pilot->timer[i] >= 0.)
+      if (pilot->timer[i] > 0.)
          pilot->timer[i] -= dt;
    for (i=0; i<pilot->noutfits; i++) {
       o = pilot->outfits[i];
-      if (o->timer >= 0.)
+      if (o->timer > 0.)
          o->timer -= dt;
    }
 
@@ -1380,7 +1380,7 @@ void pilot_update( Pilot* pilot, const double dt )
                   pilot->commodities[i].quantity );
       }
       /* reset random explosion timer */
-      else if (pilot->timer[1] < 0.) {
+      else if (pilot->timer[1] <= 0.) {
          pilot->timer[1] = 0.08 * (pilot->ptimer - pilot->timer[1]) /
                pilot->ptimer;
 
@@ -1736,7 +1736,7 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
    s->quantity = 1; /* Sort of pointless, but hey. */
 
    /* Set some default parameters. */
-   s->timer = -1.;
+   s->timer    = 0.;
 
    /* Some per-case scenarios. */
    if (outfit_isFighterBay(outfit)) {
@@ -2418,6 +2418,9 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->target = pilot->id; /* Self = no target. */
    if (ai != NULL)
       ai_pinit( pilot, ai ); /* Must run before ai_create */
+
+   /* Clear timers. */
+   pilot_clearTimers(pilot);
 
    /* Update the x and y sprite positions. */
    gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
