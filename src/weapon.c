@@ -78,7 +78,7 @@ typedef struct Weapon_ {
    double timer; /**< mainly used to see when the weapon was fired */
    double anim; /**< Used for beam weapon graphics and others. */
    int sprite; /**< Used for spinning outfits. */
-   int mount; /**< Used for beam weapons. */
+   const PilotOutfitSlot *mount; /**< Used for beam weapons. */
    double falloff; /**< Point at which damage falls off. */
    double strength; /**< Calculated with falloff. */
    int sx; /**< Current X sprite to use. */
@@ -411,8 +411,9 @@ static void think_beam( Weapon* w, const double dt )
    }
 
    /* Use mount position. */
-   w->solid->pos.x = v.x;
-   w->solid->pos.y = v.y;
+   pilot_getMount( p, w->mount, &v );
+   w->solid->pos.x = p->solid->pos.x + v.x;
+   w->solid->pos.y = p->solid->pos.y + v.y;
 
    /* Handle aiming. */
    switch (w->outfit->type) {
@@ -1382,7 +1383,7 @@ void weapon_add( const Outfit* outfit, const double dir,
 int beam_start( const Outfit* outfit,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const unsigned int parent, const unsigned int target,
-      const int mount )
+      const PilotOutfitSlot *mount )
 {
    WeaponLayer layer;
    Weapon *w;

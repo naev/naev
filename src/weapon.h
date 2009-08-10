@@ -10,6 +10,7 @@
 
 #include "outfit.h"
 #include "physics.h"
+#include "pilot.h"
 
 
 /**
@@ -34,7 +35,7 @@ void weapon_add( const Outfit* outfit,
 int beam_start( const Outfit* outfit,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const unsigned int parent, const unsigned int target,
-      const int mount );
+      const PilotOutfitSlot *mount );
 void beam_end( const unsigned int parent, int beam );
 
 

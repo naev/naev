@@ -308,7 +308,7 @@ char* pilot_getOutfits( Pilot* pilot );
 void pilot_calcStats( Pilot* pilot );
 int pilot_oquantity( Pilot* p, PilotOutfitSlot* w );
 /* Special outfit stuff. */
-int pilot_getMount( Pilot *p, PilotOutfitSlot *w, Vector2d *v );
+int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v );
 void pilot_switchSecondary( Pilot* p, PilotOutfitSlot *w );
 
 

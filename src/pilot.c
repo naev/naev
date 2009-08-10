@@ -791,11 +791,11 @@ void pilot_shootStop( Pilot* p, const int secondary )
  *    @param[out] v Position of the mount.
  *    @return 0 on success.
  */
-int pilot_getMount( Pilot *p, PilotOutfitSlot *w, Vector2d *v )
+int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v )
 {
    double a, x, y;
    double cm, sm;
-   ShipMount *m;
+   const ShipMount *m;
 
    /* Calculate the sprite angle. */
    a  = (double)(p->tsy * p->ship->gfx_space->sx + p->tsx);
@@ -880,7 +880,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
       /** @todo Handle warmup stage. */
       w->state = PILOT_OUTFIT_ON;
       w->u.beamid = beam_start( w->outfit, p->solid->dir,
-            &vp, &p->solid->vel, p->id, p->target, 0 );
+            &vp, &p->solid->vel, p->id, p->target, w );
    }
 
    /*
