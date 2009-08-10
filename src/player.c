@@ -2276,7 +2276,7 @@ static int player_saveShip( xmlTextWriterPtr writer,
 
       xmlw_startElem(writer,"commodity");
 
-      xmlw_attr(writer,"quantity","%d",ship->commodities[i].quantity);
+      xmlw_attr(writer,"quantity","%f",ship->commodities[i].quantity);
       if (ship->commodities[i].id > 0)
          xmlw_attr(writer,"id","%d",ship->commodities[i].id);
       xmlw_str(writer,ship->commodities[i].commodity->name);
@@ -2375,7 +2375,7 @@ static int player_parse( xmlNodePtr parent )
 
                xmlr_attr( cur, "quantity", str );
                if (str != NULL) {
-                  q = atoi(str);
+                  q = atof(str);
                   free(str);
                }
                else {
@@ -2553,6 +2553,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    Pilot* ship;
    Outfit* o;
    xmlNodePtr node, cur;
+   double quantity;
    
    xmlr_attr(parent,"name",name);
    xmlr_attr(parent,"model",model);
@@ -2646,14 +2647,14 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
             if (xml_isNode(cur,"commodity")) {
                xmlr_attr(cur,"quantity",q);
                xmlr_attr(cur,"id",id);
-               n = atoi(q);
+               quantity = atof(q);
                i = (id==NULL) ? 0 : atoi(id);
                free(q);
                if (id != NULL)
                   free(id);
 
                /* actually add the cargo with id hack */
-               pilot_addCargo( ship, commodity_get(xml_get(cur)), n );
+               pilot_addCargo( ship, commodity_get(xml_get(cur)), quantity );
                if (i != 0)
                   ship->commodities[ ship->ncommodities-1 ].id = i;
             }

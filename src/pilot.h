@@ -128,7 +128,7 @@ typedef struct PilotOutfitSlot_ {
  */
 typedef struct PilotCommodity_ {
    Commodity* commodity; /**< Assosciated commodity. */
-   int quantity; /**< Amount player has. */
+   double quantity; /**< Amount player has. */
    unsigned int id; /**< Special mission id for cargo, 0 means none. */
 } PilotCommodity;
 
@@ -234,7 +234,7 @@ typedef struct Pilot_ {
    unsigned int credits; /**< monies the pilot has */
    PilotCommodity* commodities; /**< commodity and quantity */
    int ncommodities; /**< number of commodities. */
-   int cargo_free; /**< Free commodity space. */
+   double cargo_free; /**< Free commodity space. */
 
    /* Weapon properties */
    double weap_range; /**< Average range of primary weapons */
@@ -314,13 +314,13 @@ void pilot_switchSecondary( Pilot* p, PilotOutfitSlot *w );
  * Cargo.
  */
 /* Normal. */
-int pilot_cargoUsed( Pilot* pilot ); /* gets how much cargo it has onboard */
-int pilot_cargoFree( Pilot* p ); /* cargo space */
-int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity );
-int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity );
+double pilot_cargoUsed( Pilot* pilot ); /* gets how much cargo it has onboard */
+double pilot_cargoFree( Pilot* p ); /* cargo space */
+double pilot_addCargo( Pilot* pilot, Commodity* cargo, double quantity );
+double pilot_rmCargo( Pilot* pilot, Commodity* cargo, double quantity );
 int pilot_moveCargo( Pilot* dest, Pilot* src );
 /* mission cargo - not to be confused with normal cargo */
-unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity );
+unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, double quantity );
 int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison );
 
 

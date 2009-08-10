@@ -535,7 +535,7 @@ static void info_cargo_menu( unsigned int parent, char* str )
       buf = malloc(sizeof(char*)*player->ncommodities);
       for (i=0; i<player->ncommodities; i++) {
          buf[i] = malloc(sizeof(char)*128);
-         snprintf(buf[i],128, "%s%s %d",
+         snprintf(buf[i],128, "%s%s %.1f",
                player->commodities[i].commodity->name,
                (player->commodities[i].id != 0) ? "*" : "",
                player->commodities[i].quantity);

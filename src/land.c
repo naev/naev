@@ -269,7 +269,7 @@ static void commodity_update( unsigned int wid, char* str )
          "%d tons\n"
          "%d credits/ton\n"
          "\n"
-         "%d tons\n",
+         "%.1f tons\n",
          player_cargoOwned( comname ),
          economy_getPrice(com, cur_system, land_planet),
          pilot_cargoFree(player));
@@ -904,7 +904,9 @@ static void equipment_open( unsigned int wid )
    int ow, oh;
    int bw, bh;
    int cw, ch;
+   int x, y;
    GLfloat colour[4*4];
+   const char *buf;
 
    /* Create the vbo if necessary. */
    if (equipment_vbo == NULL) {
@@ -961,20 +963,31 @@ static void equipment_open( unsigned int wid )
          "Unequip", equipment_unequipShip );
 
    /* text */
-   window_addText( wid, 20 + sw + 20 + 180 + 20 + 30, -230,
-         100, 200, 0, "txtSDesc", &gl_smallFont, &cDConsole,
-         "Name:\n"
+   buf = "Name:\n"
          "Ship:\n"
          "Class:\n"
-         "Where:\n"
-         "\n"
-         "Cargo free:\n"
-         "\n"
-         "Transportation:\n"
          "Sell price:\n"
-         );
-   window_addText( wid, 20 + sw + 20 + 180 + 20 + 130, -230,
-      130, 200, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+         "\n"
+         "Thrust:\n"
+         "Turn:\n"
+         "Speed:\n"
+         "\n"
+         "Shield:\n"
+         "Armour:\n"
+         "Energy:\n"
+         "\n"
+         "Cargo:\n"
+         "Fuel:\n"
+         "\n"
+         "Where:\n"
+         "Transportation:";
+   x = 20 + sw + 20 + 180 + 20 + 30;
+   y = -230;
+   window_addText( wid, x, y,
+         100, h+y, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
+   x += 100;
+   window_addText( wid, x, y,
+         w - x - 20, h+y, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
 
    /* Generate lists. */
    window_addText( wid, 30, -20,
@@ -1486,8 +1499,7 @@ static void equipment_genLists( unsigned int wid )
    }
 
    /* Update window. */
-   equipment_updateShips(wid, NULL);
-   equipment_updateOutfits(wid, NULL);
+   equipment_updateOutfits(wid, NULL); /* Will update ships also. */
 }
 /**
  * @brief Updates the player's ship window.
@@ -1497,12 +1509,13 @@ static void equipment_genLists( unsigned int wid )
 static void equipment_updateShips( unsigned int wid, char* str )
 {
    (void)str;
-   char buf[256], buf2[16], buf3[16];
+   char buf[512], buf2[16], buf3[16];
    char *shipname;
    Pilot *ship;
    char* loc;
    unsigned int price;
    int onboard;
+   double cargo;
 
    /* Clear defaults. */
    equipment_slot       = -1;
@@ -1529,23 +1542,45 @@ static void equipment_updateShips( unsigned int wid, char* str )
    /* update text */
    credits2str( buf2, price , 2 ); /* transport */
    credits2str( buf3, player_shipPrice(shipname), 2 ); /* sell price */
-   snprintf( buf, 256,
+   cargo = pilot_cargoFree(ship) + pilot_cargoUsed(ship);
+   snprintf( buf, sizeof(buf),
          "%s\n"
          "%s\n"
          "%s\n"
-         "%s\n"
-         "\n"
-         "%d tons\n"
-         "\n"
          "%s credits\n"
+         "\n"
+         "%.1f MN/ton\n"
+         "%.1f M/s\n"
+         "%.1f Grad/s\n"
+         "\n"
+         "%.1f MJ (%.1f MJ/s)\n"
+         "%.1f MJ (%.1f MJ/s)\n"
+         "%.1f MJ (%.1f MJ/s)\n"
+         "\n"
+         "%.1f / %.1f Tons\n"
+         "%.1f / %.1f Units\n"
+         "\n"
+         "%s\n"
          "%s credits\n",
+         /* Generic. */
          ship->name,
          ship->ship->name,
          ship_class(ship->ship),
+         buf3,
+         /* Movement. */
+         ship->thrust/ship->solid->mass,
+         ship->speed,
+         ship->turn,
+         /* Health. */
+         ship->shield_max, ship->shield_regen,
+         ship->armour_max, ship->armour_regen,
+         ship->energy_max, ship->energy_regen,
+         /* Misc. */
+         pilot_cargoUsed(ship), cargo,
+         ship->fuel, ship->fuel_max,
+         /* Transportation. */
          loc,
-         pilot_cargoFree(ship),
-         buf2,
-         buf3);
+         buf2 );
    window_modifyText( wid, "txtDDesc", buf );
 
    /* button disabling */
@@ -1586,6 +1621,9 @@ static void equipment_updateOutfits( unsigned int wid, char* str )
       return;
    }
    equipment_outfit = outfit_get(oname);
+
+   /* Also update ships. */
+   equipment_updateShips(wid, NULL);
 }
 /**
  * @brief Changes or transport depending on what is active.

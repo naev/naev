@@ -73,10 +73,10 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w );
 static void pilot_hyperspace( Pilot* pilot, double dt );
 static void pilot_refuel( Pilot *p, double dt );
 /* cargo. */
-static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup );
+static double pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, double quantity, int cleanup );
 static void pilot_calcCargo( Pilot* pilot );
-static int pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
-      int quantity, unsigned int id );
+static double pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
+      double quantity, unsigned int id );
 /* clean up. */
 void pilot_free( Pilot* p ); /* externed in player.c */
 static void pilot_dead( Pilot* p );
@@ -1732,7 +1732,8 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
    }
 
    /* Set the outfit. */
-   s->outfit = outfit;
+   s->outfit   = outfit;
+   s->quantity = 1; /* Sort of pointless, but hey. */
 
    /* Set some default parameters. */
    s->timer = -1.;
@@ -1913,7 +1914,7 @@ void pilot_calcStats( Pilot* pilot )
       q = (double) pilot->outfits[i]->quantity;
 
       /* Subtract CPU. */
-      pilot->cpu -= outfit_cpu(o);
+      pilot->cpu -= outfit_cpu(o) * q;
 
       if (outfit_isMod(o)) { /* Modification */
          /* movement */
@@ -1971,7 +1972,7 @@ void pilot_calcStats( Pilot* pilot )
  *    @param p Pilot to get the the free space of.
  *    @return Free cargo space on pilot.
  */
-int pilot_cargoFree( Pilot* p )
+double pilot_cargoFree( Pilot* p )
 {
    return p->cargo_free;
 }
@@ -2030,10 +2031,11 @@ int pilot_moveCargo( Pilot* dest, Pilot* src )
  *    @param quantity Quantity to add.
  *    @param id Mission ID to add (0 in none).
  */
-static int pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
-      int quantity, unsigned int id )
+static double pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
+      double quantity, unsigned int id )
 {
-   int i, q, f;
+   int i, f;
+   double q;
 
    q = quantity;
 
@@ -2087,7 +2089,7 @@ static int pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
  *    @param quantity Quantity to add.
  *    @return Quantity actually added.
  */
-int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )
+double pilot_addCargo( Pilot* pilot, Commodity* cargo, double quantity )
 {
    return pilot_addCargoRaw( pilot, cargo, quantity, 0 );
 }
@@ -2099,9 +2101,10 @@ int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )
  *    @param pilot Pilot to get used cargo space of.
  *    @return The used cargo space by pilot.
  */
-int pilot_cargoUsed( Pilot* pilot )
+double pilot_cargoUsed( Pilot* pilot )
 {
-   int i, q;
+   int i;
+   double q;
 
    q = 0; 
    for (i=0; i<pilot->ncommodities; i++)
@@ -2135,7 +2138,7 @@ static void pilot_calcCargo( Pilot* pilot )
  *    @param quantity Quantity to add.
  *    @return The Mission Cargo ID of created cargo. 
  */
-unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity )
+unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, double quantity )
 {
    int i;
    unsigned int id, max_id;
@@ -2215,9 +2218,10 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
  *    @param cleanup Whether we're cleaning up or not (removes mission cargo).
  *    @return Amount of cargo gotten rid of.
  */
-static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup )
+static double pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, double quantity, int cleanup )
 {
-   int i, q;
+   int i;
+   double q;
 
    /* check if pilot has it */
    q = quantity;
@@ -2264,7 +2268,7 @@ static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int c
  *    @param quantity Amount of cargo to get rid of.
  *    @return Amount of cargo gotten rid of.
  */
-int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
+double pilot_rmCargo( Pilot* pilot, Commodity* cargo, double quantity )
 {
    return pilot_rmCargoRaw( pilot, cargo, quantity, 0 );
 }
