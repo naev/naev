@@ -2093,7 +2093,7 @@ void player_clearEscorts (void)
          continue;
 
       if (outfit_isFighterBay(player->outfits[i]->outfit)) {
-         player->outfits[i]->u.deployed = 0;
+         player->outfits[i]->u.ammo.deployed = 0;
       }
    }
 }
@@ -2130,7 +2130,7 @@ int player_addEscorts (void)
                o = outfit_ammo(player->outfits[j]->outfit);
                if (outfit_isFighter(o) &&
                      (strcmp(player->escorts[i].ship,o->u.fig.ship)==0)) {
-                  player->outfits[j]->u.deployed += 1;
+                  player->outfits[j]->u.ammo.deployed += 1;
                   break;
                }
             }

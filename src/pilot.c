@@ -921,7 +921,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
             &vp, &p->solid->vel, p->solid->dir, ESCORT_TYPE_BAY, 1 );
 
       w->u.ammo.quantity -= 1; /* we just shot it */
-      p->secondary->u.deployed += 1; /* Mark as deployed. */
+      p->secondary->u.ammo.deployed += 1; /* Mark as deployed. */
    }
 
    else {
@@ -1166,7 +1166,7 @@ int pilot_dock( Pilot *p, Pilot *target, int deployed )
          if (outfit_isFighter(o) &&
                (strcmp(p->ship->name,o->u.fig.ship)==0)) {
             if (deployed)
-               target->outfits[i]->u.deployed -= 1;
+               target->outfits[i]->u.ammo.deployed -= 1;
             break;
          }
       }
@@ -1221,7 +1221,7 @@ int pilot_hasDeployed( Pilot *p )
       if (p->outfits[i]->outfit == NULL)
          continue;
       if (outfit_isFighterBay(p->outfits[i]->outfit))
-         if (p->outfits[i]->u.deployed > 0)
+         if (p->outfits[i]->u.ammo.deployed > 0)
             return 1;
    }
    return 0;
@@ -1739,7 +1739,7 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
 
    /* Some per-case scenarios. */
    if (outfit_isFighterBay(outfit)) {
-      s->u.deployed = 0;
+      s->u.ammo.deployed = 0;
    }
    if (outfit_isTurret(outfit)) { /* used to speed up AI */
       pilot_setFlag(pilot, PILOT_HASTURRET);
@@ -1820,7 +1820,8 @@ int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity 
             pilot->name, ammo->name, s->outfit->name );
       return 0;
    }
-   else if ((s->u.ammo.outfit != NULL) && (s->u.ammo.quantity > 0)) {
+   else if ((s->u.ammo.outfit != NULL) && (s->u.ammo.quantity > 0) &&
+         (s->u.ammo.outfit != ammo)) {
       WARN("Pilot '%s': Trying to add ammo to outfit that already has ammo.",
             pilot->name );
       return 0;

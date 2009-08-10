@@ -172,6 +172,7 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot );
 static void equipment_genLists( unsigned int wid );
 static void equipment_updateShips( unsigned int wid, char* str );
 static void equipment_updateOutfits( unsigned int wid, char* str );
+static void equipment_addAmmo (void);
 static void equipment_sellShip( unsigned int wid, char* str );
 static void equipment_transChangeShip( unsigned int wid, char* str );
 static void equipment_changeShip( unsigned int wid );
@@ -564,6 +565,7 @@ static void outfits_buy( unsigned int wid, char* str )
    char *outfitname;
    Outfit* outfit;
    int q;
+   unsigned int w;
 
    outfitname = toolkit_getImageArray( wid, "iarOutfits" );
    outfit = outfit_get( outfitname );
@@ -577,6 +579,12 @@ static void outfits_buy( unsigned int wid, char* str )
    player->credits -= outfit->price * player_addOutfit( outfit, q );
    land_checkAddRefuel();
    outfits_update(wid, NULL);
+
+   /* Update equipment. */
+   equipment_addAmmo();
+   w = land_getWid( LAND_WINDOW_EQUIPMENT );
+   window_destroyWidget( w, "iarAvailOutfits" );
+   equipment_genLists( w );
 }
 /**
  * @brief Checks to see if the player can sell the selected outfit.
@@ -607,6 +615,7 @@ static void outfits_sell( unsigned int wid, char* str )
    char *outfitname;
    Outfit* outfit;
    int q;
+   unsigned int w;
 
    outfitname = toolkit_getImageArray( wid, "iarOutfits" );
    outfit = outfit_get( outfitname );
@@ -620,6 +629,11 @@ static void outfits_sell( unsigned int wid, char* str )
    player->credits += outfit->price * player_rmOutfit( outfit, q );
    land_checkAddRefuel();
    outfits_update(wid, NULL);
+
+   /* Update equipment. */
+   w = land_getWid( LAND_WINDOW_EQUIPMENT );
+   window_destroyWidget( w, "iarAvailOutfits" );
+   equipment_genLists( w );
 }
 /**
  * @brief Gets the current modifier status.
@@ -849,6 +863,7 @@ static void shipyard_buy( unsigned int wid, char* str )
    (void)str;
    char *shipname, buf[16];
    Ship* ship;
+   unsigned int w;
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
    ship = ship_get( shipname );
@@ -889,7 +904,13 @@ static void shipyard_buy( unsigned int wid, char* str )
    player->credits -= ship->price; /* ouch, paying is hard */
    land_checkAddRefuel();
 
+   /* Update shipyard. */
    shipyard_update(wid, NULL);
+
+   /* Update equipment. */
+   w = land_getWid( LAND_WINDOW_EQUIPMENT );
+   window_destroyWidget( w, "iarAvailShips" );
+   equipment_genLists( w );
 }
 
 
@@ -907,6 +928,9 @@ static void equipment_open( unsigned int wid )
    int x, y;
    GLfloat colour[4*4];
    const char *buf;
+
+   /* Add ammo. */
+   equipment_addAmmo();
 
    /* Create the vbo if necessary. */
    if (equipment_vbo == NULL) {
@@ -1470,12 +1494,7 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
       if (ret == 1)
          pilot_addOutfit( equipment_selected, o, slot );
 
-      /* Add ammo if able to. */
-      if (outfit_isLauncher(o) || (outfit_isFighterBay(o))) {
-         ammo = outfit_ammo(o);
-         q    = player_outfitOwned(ammo);
-         pilot_addAmmo( equipment_selected, slot, ammo, q );
-      }
+      equipment_addAmmo();
 
       /* See if should remake. */
       if (player_outfitOwned(o) == 0)
@@ -1489,6 +1508,38 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    }
 
    return 0;
+}
+/**
+ * @brief Adds all the ammo it can to the player.
+ */
+static void equipment_addAmmo (void)
+{
+   int i;
+   Outfit *o, *ammo;
+   int q;
+   Pilot *p;
+
+   /* Get player. */
+   if (equipment_selected == NULL)
+      p = player;
+   else
+      p = equipment_selected;
+
+   /* Add ammo to all outfits. */
+   for (i=0; i<p->noutfits; i++) {
+      o = p->outfits[i]->outfit;
+
+      /* Must be valid outfit. */
+      if (o == NULL)
+         continue;
+
+      /* Add ammo if able to. */
+      if (outfit_isLauncher(o) || (outfit_isFighterBay(o))) {
+         ammo = outfit_ammo(o);
+         q    = player_outfitOwned(ammo);
+         pilot_addAmmo( p, p->outfits[i], ammo, q );
+      }
+   }
 }
 /**
  * @brief Generates a new ship/outfit lists if needed.
@@ -2591,8 +2642,8 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
                commodity_update( w, NULL );
                break;
             case LAND_WINDOW_EQUIPMENT:
-               window_destroyWidget( w, "iarAvailOutfits" );
-               equipment_genLists( w );
+               equipment_updateShips( w, NULL );
+               equipment_updateOutfits( w, NULL );
                break;
 
             default:

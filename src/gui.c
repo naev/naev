@@ -705,7 +705,7 @@ void gui_render( double dt )
    /* 
     * weapon
     */ 
-   if (player->secondary==NULL) { /* no secondary weapon */ 
+   if ((player->secondary==NULL) || (player->secondary->outfit == NULL)) {
       gl_printMid( NULL, (int)gui.weapon.w,
             gui.weapon.x, gui.weapon.y - 5,
             &cConsole, "Secondary" ); 

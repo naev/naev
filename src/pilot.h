@@ -107,6 +107,7 @@ typedef enum PilotOutfitState_ {
 typedef struct PilotOutfitAmmo_ {
    Outfit *outfit; /**< Type of ammo. */
    int quantity; /**< Amount of ammo. */
+   int deployed; /**< For fighter bays. */
 } PilotOutfitAmmo;
 
 
@@ -126,7 +127,6 @@ typedef struct PilotOutfitSlot_ {
 
    /* Type-specific data. */
    union {
-      int deployed; /**< Deployment status (if fighter craft). */
       int beamid; /**< ID of the beam used in this outfit, only used for beams. */
       PilotOutfitAmmo ammo; /**< Ammo for launchers. */
    } u;

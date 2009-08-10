@@ -153,7 +153,7 @@ static int escort_disabled( void *data )
          o = outfit_ammo(o);
          if (outfit_isFighter(o) &&
                (strcmp(pe->ship->name,o->u.fig.ship)==0)) {
-            p->outfits[i]->u.deployed -= 1;
+            p->outfits[i]->u.ammo.deployed -= 1;
             break;
          }
       }

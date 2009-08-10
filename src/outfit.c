@@ -1273,8 +1273,8 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
          "%s\n"
          "Needs %.0f CPU\n"
          "\n"
-         "%.1f launches/second"
-         "Holds %d %s\n",
+         "%.1f launches/second\n"
+         "Holds %d %s",
          temp->name,
          outfit_getType(temp),
          temp->u.bay.cpu,
