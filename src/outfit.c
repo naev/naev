@@ -810,14 +810,18 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "%s\n"
+         "%.2f CPU\n"
          "\n"
          "%.2f shots/second\n"
          "%.2f %s damage\n"
+         "%.2f energy\n"
          "%.2f range",
          temp->name,
          outfit_getType(temp),
+         temp->u.blt.cpu,
          1./temp->u.blt.delay,
          temp->u.blt.damage, outfit_damageTypeToStr(temp->u.blt.dtype),
+         temp->u.blt.energy,
          temp->u.blt.range );
 
 
@@ -909,13 +913,17 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "%s\n"
+         "%.2f CPU\n"
          "\n"
          "%.2f %s damage/second\n"
+         "%.2f energy/second\n"
          "%.2f duration %.2f delay\n"
          "%.2f range",
          temp->name,
          outfit_getType(temp),
+         temp->u.bem.cpu,
          temp->u.bem.damage, outfit_damageTypeToStr(temp->u.bem.dtype),
+         temp->u.bem.energy,
          temp->u.bem.duration * 1000.,
          temp->u.bem.delay * 1000.,
          temp->u.bem.range );
@@ -958,6 +966,21 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 
    /* Post processing. */
    temp->u.lau.delay /= 1000.;
+
+   /* Set short description. */
+   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+         "%s\n"
+         "%s\n"
+         "%.2f CPU\n"
+         "\n"
+         "%.2f shots/second\n"
+         "%s ammo",
+         temp->name,
+         outfit_getType(temp),
+         temp->u.lau.cpu,
+         1./temp->u.lau.delay,
+         temp->u.lau.ammo_name );
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing '"s"' element", temp->name) /**< Define to help check for data errors. */
@@ -1050,6 +1073,25 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    /* Post-processing */
    temp->u.amm.resist /= 100.; /* Set it in per one */
 
+   /* Set short description. */
+   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+         "%s\n"
+         "%s\n"
+         "\n"
+         "%.2f %s damage\n"
+         "%.2f energy\n"
+         "%.2f speed\n"
+         "%.2f duration\n"
+         "%.2f lockon\n",
+         temp->name,
+         outfit_getType(temp),
+         temp->u.amm.damage, outfit_damageTypeToStr(temp->u.amm.dtype),
+         temp->u.amm.energy,
+         temp->u.amm.speed,
+         temp->u.amm.duration * 1000.,
+         temp->u.amm.lockon * 1000. );
+
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.amm.gfx_space==NULL,"gfx");
@@ -1078,6 +1120,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
  */
 static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 {
+   int i;
    xmlNodePtr node;
    node = parent->children;
 
@@ -1099,8 +1142,33 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          temp->u.mod.energy_regen = xml_getFloat(node)/60.0;
       /* misc */
       xmlr_float(node,"cpu",temp->u.mod.cpu);
-      xmlr_int(node,"cargo",temp->u.mod.cargo);
+      xmlr_float(node,"cargo",temp->u.mod.cargo);
    } while (xml_nextNode(node));
+
+   /* Set short description. */
+   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   i = snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+         "%s\n"
+         "%s\n",
+         temp->name,
+         outfit_getType(temp) );
+#define DESC_ADD(x, s) \
+if ((x) != 0.) \
+   i += snprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, \
+         "\n%.2f "s, x )
+   DESC_ADD( temp->u.mod.thrust, "thrust" );
+   DESC_ADD( temp->u.mod.turn, "turn" );
+   DESC_ADD( temp->u.mod.speed, "speed" );
+   DESC_ADD( temp->u.mod.armour, "armour" );
+   DESC_ADD( temp->u.mod.shield, "shield" );
+   DESC_ADD( temp->u.mod.energy, "energy" );
+   DESC_ADD( temp->u.mod.fuel, "fuel" );
+   DESC_ADD( temp->u.mod.armour_regen*60., "armour regen" );
+   DESC_ADD( temp->u.mod.shield_regen*60., "shield regen" );
+   DESC_ADD( temp->u.mod.energy_regen*60., "energy regen" );
+   DESC_ADD( temp->u.mod.cpu, "cpu" );
+   DESC_ADD( temp->u.mod.cargo, "cargo" );
+#undef DESC_ADD
 }
 
 
@@ -1133,6 +1201,25 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"energy",temp->u.afb.energy);
       xmlr_float(node,"cpu",temp->u.afb.cpu);
    } while (xml_nextNode(node));
+
+   /* Set short description. */
+   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+         "%s\n"
+         "%s\n"
+         "%.2f CPU\n"
+         "\n"
+         "%.2f + %.0f%% thrust\n"
+         "%.2f + %.0f%% speed\n"
+         "%.2f energy/second\n"
+         "%.2f rumble",
+         temp->name,
+         outfit_getType(temp),
+         temp->u.afb.cpu,
+         temp->u.afb.thrust_abs, temp->u.afb.thrust_perc*100.,
+         temp->u.afb.speed_abs, temp->u.afb.speed_perc*100.,
+         temp->u.afb.energy,
+         temp->u.afb.rumble );
 }
 
 /**
@@ -1148,12 +1235,27 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
 
    do {
       xmlr_int(node,"delay",temp->u.bay.delay);
-      xmlr_float(node,"cpu",temp->u.afb.cpu);
+      xmlr_float(node,"cpu",temp->u.bay.cpu);
       xmlr_strd(node,"ammo",temp->u.bay.ammo_name);
    } while (xml_nextNode(node));
 
    /* Post processing. */
    temp->u.bay.delay /= 1000.;
+
+   /* Set short description. */
+   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+         "%s\n"
+         "%s\n"
+         "%.2f CPU\n"
+         "\n"
+         "%s\n"
+         "%.2f launches/second",
+         temp->name,
+         outfit_getType(temp),
+         temp->u.bay.cpu,
+         temp->u.bay.ammo_name,
+         1./temp->u.bay.delay );
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
@@ -1180,6 +1282,14 @@ static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent )
       xmlr_strd(node,"ship",temp->u.fig.ship);
    } while (xml_nextNode(node));
 
+   /* Set short description. */
+   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+         "%s\n"
+         "%s",
+         temp->name,
+         outfit_getType(temp) );
+
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 /**< Define to help check for data errors. */
@@ -1203,6 +1313,17 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    do {
       xmlr_int(node,"radius",temp->u.map.radius);
    } while (xml_nextNode(node));
+
+   /* Set short description. */
+   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+         "%s\n"
+         "%s\n"
+         "\n"
+         "%.0f jumps",
+         temp->name,
+         outfit_getType(temp),
+         temp->u.map.radius );
 
    if (temp->u.map.radius==0)
       WARN("Outfit '%s' missing/invalid 'radius' element", temp->name);
@@ -1229,6 +1350,14 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
    do {
    } while (xml_nextNode(node));
    */
+
+   /* Set short description. */
+   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+         "%s\n"
+         "%s",
+         temp->name,
+         outfit_getType(temp) );
 }
 
 
@@ -1252,6 +1381,23 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
 
    temp->u.jam.chance /= 100.; /* Put in per one, instead of percent */
    temp->u.jam.energy /= 60.; /* It's per minute */
+
+   /* Set short description. */
+   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+         "%s\n"
+         "%s\n"
+         "%.2f CPU\n"
+         "\n"
+         "%.2f range\n"
+         "%.0f%% chance\n"
+         "%.2f energy",
+         temp->name,
+         outfit_getType(temp),
+         temp->u.jam.cpu,
+         temp->u.jam.range,
+         temp->u.jam.chance*100.,
+         temp->u.jam.energy );
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */

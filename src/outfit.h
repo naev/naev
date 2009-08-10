@@ -206,7 +206,7 @@ typedef struct OutfitModificationData_ {
    double cpu; /**< CPU modifier. */
 
    /* misc */
-   int cargo; /**< Cargo space modifier. */
+   double cargo; /**< Cargo space modifier. */
 } OutfitModificationData;
 
 /**
