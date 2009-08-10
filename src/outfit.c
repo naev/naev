@@ -925,8 +925,8 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          temp->u.bem.cpu,
          temp->u.bem.damage, outfit_damageTypeToStr(temp->u.bem.dtype),
          temp->u.bem.energy,
-         temp->u.bem.duration * 1000.,
-         temp->u.bem.delay * 1000.,
+         temp->u.bem.duration,
+         temp->u.bem.delay,
          temp->u.bem.range );
 
 #define MELEMENT(o,s) \
@@ -1090,8 +1090,8 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          temp->u.amm.damage, outfit_damageTypeToStr(temp->u.amm.dtype),
          temp->u.amm.energy,
          temp->u.amm.speed,
-         temp->u.amm.duration * 1000.,
-         temp->u.amm.lockon * 1000. );
+         temp->u.amm.duration,
+         temp->u.amm.lockon );
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
