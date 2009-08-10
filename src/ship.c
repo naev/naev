@@ -707,9 +707,9 @@ void ship_view( unsigned int unused, char* shipname )
          "%.0f M/s\n" /* Speed */
          "%.0f Grad/s\n" /* Turn */
          "\n"
-         "%.0f MJ (%.0f MJ/s)\n" /* Shield */
-         "%.0f MJ (%.0f MJ/s)\n" /* Armour */
-         "%.0f MJ (%.0f MJ/s)\n" /* Energy */
+         "%.0f MJ (%.1f MJ/s)\n" /* Shield */
+         "%.0f MJ (%.1f MJ/s)\n" /* Armour */
+         "%.0f MJ (%.1f MJ/s)\n" /* Energy */
          "\n"
          "%.0f Tons\n" /* Cargo */
          "%d Units\n" /* Fuel */

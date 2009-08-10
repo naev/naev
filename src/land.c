@@ -1194,7 +1194,7 @@ static void equipment_renderOverlay( double bx, double by, double bw, double bh 
       slot = &p->outfit_medium[ equipment_mouseover - p->outfit_nhigh ];
    }
    else {
-      slot = &p->outfit_medium[ equipment_mouseover -
+      slot = &p->outfit_low[ equipment_mouseover -
             p->outfit_nhigh - p->outfit_nmedium ];
    }
 
@@ -1560,9 +1560,9 @@ static void equipment_updateShips( unsigned int wid, char* str )
          "%.0f M/s\n"
          "%.0f Grad/s\n"
          "\n"
-         "%.0f MJ (%.0f MJ/s)\n"
-         "%.0f MJ (%.0f MJ/s)\n"
-         "%.0f MJ (%.0f MJ/s)\n"
+         "%.0f MJ (%.1f MJ/s)\n"
+         "%.0f MJ (%.1f MJ/s)\n"
+         "%.0f MJ (%.1f MJ/s)\n"
          "\n"
          "%.0f / %.0f Tons\n"
          "%.0f / %.0f Units\n"

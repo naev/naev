@@ -589,7 +589,7 @@
    <gfx_store>capacitor</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>2</cpu>
+   <cpu>-2</cpu>
    <energy>40</energy>
   </specific>
  </outfit>
@@ -618,7 +618,7 @@
    <description>Adding a complementary reactor to your ship is a great way to get that extra energy boost you need. This does not replace the existing reactor but works alongside it and hooks up directly to the energy flux.</description>
   </general>
   <specific type="modification">
-   <cpu>10</cpu>
+   <cpu>-10</cpu>
    <energy>30</energy>
    <energy_regen>490</energy_regen>
   </specific>
@@ -634,7 +634,7 @@
    <description>The class II reactor uses a newer fusion technology than the class I, permitting it to have greater energy density. The result is a mid-sized reactor that is best used on ships with moderate energy demands.</description>
   </general>
   <specific type="modification">
-   <cpu>22</cpu>
+   <cpu>-22</cpu>
    <energy>80</energy>
    <energy_regen>1050</energy_regen>
   </specific>
@@ -650,7 +650,7 @@
    <description>The immense class III reactor provides enough power for nearly anything. The technology used in this reactor is particularly groundbreaking, with the best energy density of the three reactor classes. The huge size of the class III results in it only fitting comfortably on large vessels, though its energy output would be excessive for anything less.</description>
   </general>
   <specific type="modification">
-   <cpu>40</cpu>
+   <cpu>-40</cpu>
    <energy>300</energy>
    <energy_regen>2020</energy_regen>
   </specific>
@@ -667,7 +667,7 @@
    <gfx_store>capacitor</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>2</cpu>
+   <cpu>-2</cpu>
    <shield>30</shield>
   </specific>
  </outfit>
@@ -682,7 +682,7 @@
    <gfx_store>shield</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>5</cpu>
+   <cpu>-5</cpu>
    <shield>15</shield>
    <shield_regen>30</shield_regen>
    <energy_regen>-50</energy_regen>
@@ -728,7 +728,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <description>Biometal is a metal armour that regenerates itself due to genetically-engineered bacteria throughout it. Due to the compartmentalization to permit bacterial life, and the difficulty of culturing the bacteria, Biometal has greater bulk than alternatives, and is the most expensive hull plating. The results are formidable, but it's hard to equip such armour on anything short of a Destroyer.</description>
   </general>
   <specific type="modification">
-   <cpu>6</cpu>
+   <cpu>-6</cpu>
    <armour>300</armour>
    <armour_regen>120</armour_regen>
   </specific>
@@ -744,7 +744,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <description>This low maintenance droid crew will scour your ship to repair any damages caused by space hazards. They are very small and able to work both on the interior or exterior of the ship. Power is drawn from the ship to feed the robots, although the load is generally very low compared to the benefits of having a robotic repair crew.</description>
   </general>
   <specific type="modification">
-   <cpu>15</cpu>
+   <cpu>-15</cpu>
    <armour_regen>100</armour_regen>
    <energy>-5</energy>
    <energy_regen>-40</energy_regen>
@@ -762,7 +762,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <gfx_store>reroute</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>10</cpu>
+   <cpu>-10</cpu>
    <thrust>70</thrust>
    <energy_regen>-50</energy_regen>
   </specific>
@@ -778,7 +778,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <gfx_store>stabilizer</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>10</cpu>
+   <cpu>-10</cpu>
    <speed>50</speed>
    <turn>5</turn>
    <energy_regen>-10</energy_regen>
@@ -795,7 +795,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <gfx_store>thruster</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>10</cpu>
+   <cpu>-10</cpu>
    <turn>25</turn>
    <energy_regen>-10</energy_regen>
   </specific>

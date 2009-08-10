@@ -813,7 +813,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          "%s\n"
          "Needs %.0f CPU\n"
          "\n"
-         "%.0f shots/second\n"
+         "%.1f shots/second\n"
          "%.0f %s damage\n"
          "%.0f energy\n"
          "%.0f range",
@@ -918,7 +918,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          "\n"
          "%.0f %s damage/second\n"
          "%.0f energy/second\n"
-         "%.0f duration %.0f delay\n"
+         "%.1f duration %.1f delay\n"
          "%.0f range",
          temp->name,
          outfit_getType(temp),
@@ -976,7 +976,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
          "%s\n"
          "Needs %.0f CPU\n"
          "\n"
-         "%.0f shots/second\n"
+         "%.1f shots/second\n"
          "Holds %d %s",
          temp->name,
          outfit_getType(temp),
@@ -1085,8 +1085,8 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          "%.0f %s damage\n"
          "%.0f energy\n"
          "%.0f speed\n"
-         "%.0f duration\n"
-         "%.0f lockon",
+         "%.1f duration\n"
+         "%.1f lockon",
          temp->name,
          outfit_getType(temp),
          temp->u.amm.damage, outfit_damageTypeToStr(temp->u.amm.dtype),
@@ -1137,16 +1137,18 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"shield",temp->u.mod.shield);
       xmlr_float(node,"energy",temp->u.mod.energy);
       xmlr_float(node,"fuel",temp->u.mod.fuel);
-      if (xml_isNode(node,"armour_regen"))
-         temp->u.mod.armour_regen = xml_getFloat(node)/60.0;
-      else if (xml_isNode(node,"shield_regen"))
-         temp->u.mod.shield_regen = xml_getFloat(node)/60.0;
-      else if (xml_isNode(node,"energy_regen"))
-         temp->u.mod.energy_regen = xml_getFloat(node)/60.0;
+      xmlr_float(node,"armour_regen", temp->u.mod.armour_regen );
+      xmlr_float(node,"shield_regen", temp->u.mod.shield_regen );
+      xmlr_float(node,"energy_regen", temp->u.mod.energy_regen );
       /* misc */
       xmlr_float(node,"cpu",temp->u.mod.cpu);
       xmlr_float(node,"cargo",temp->u.mod.cargo);
    } while (xml_nextNode(node));
+
+   /* Process some variables. */
+   temp->u.mod.armour_regen /= 60.;
+   temp->u.mod.shield_regen /= 60.;
+   temp->u.mod.energy_regen /= 60.;
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -1155,23 +1157,31 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          "%s\n",
          temp->name,
          outfit_getType(temp) );
-#define DESC_ADD(x, s) \
+
+#define DESC_ADD(x, s, n) \
 if ((x) != 0.) \
    i += snprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, \
-         "\n%+.0f "s, x )
-   DESC_ADD( temp->u.mod.thrust, "thrust" );
-   DESC_ADD( temp->u.mod.turn, "turn" );
-   DESC_ADD( temp->u.mod.speed, "speed" );
-   DESC_ADD( temp->u.mod.armour, "armour" );
-   DESC_ADD( temp->u.mod.shield, "shield" );
-   DESC_ADD( temp->u.mod.energy, "energy" );
-   DESC_ADD( temp->u.mod.fuel, "fuel" );
-   DESC_ADD( temp->u.mod.armour_regen, "armour/second" );
-   DESC_ADD( temp->u.mod.shield_regen, "shield/second" );
-   DESC_ADD( temp->u.mod.energy_regen, "energy/second" );
-   DESC_ADD( temp->u.mod.cpu, "cpu" );
-   DESC_ADD( temp->u.mod.cargo, "cargo" );
+         "\n%+."n"f "s, x )
+#define DESC_ADD0(x, s)    DESC_ADD( x, s, "0" )
+#define DESC_ADD1(x, s)    DESC_ADD( x, s, "1" )
+   DESC_ADD0( temp->u.mod.thrust, "thrust" );
+   DESC_ADD0( temp->u.mod.turn, "turn" );
+   DESC_ADD0( temp->u.mod.speed, "speed" );
+   DESC_ADD0( temp->u.mod.armour, "armour" );
+   DESC_ADD0( temp->u.mod.shield, "shield" );
+   DESC_ADD0( temp->u.mod.energy, "energy" );
+   DESC_ADD0( temp->u.mod.fuel, "fuel" );
+   DESC_ADD1( temp->u.mod.armour_regen, "armour/second" );
+   DESC_ADD1( temp->u.mod.shield_regen, "shield/second" );
+   DESC_ADD1( temp->u.mod.energy_regen, "energy/second" );
+   DESC_ADD0( temp->u.mod.cpu, "cpu" );
+   DESC_ADD0( temp->u.mod.cargo, "cargo" );
+#undef DESC_ADD1
+#undef DESC_ADD0
 #undef DESC_ADD
+
+   /* More processing. */
+   temp->u.mod.cpu = -temp->u.mod.cpu; /* Invert sign so it works with outfit_cpu. */
 }
 
 
@@ -1214,8 +1224,8 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
          "\n"
          "%.0f + %.0f%% thrust\n"
          "%.0f + %.0f%% speed\n"
-         "%.0f energy/second\n"
-         "%.0f rumble",
+         "%.1f energy/second\n"
+         "%.1f rumble",
          temp->name,
          outfit_getType(temp),
          temp->u.afb.cpu,
@@ -1253,7 +1263,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
          "Needs %.0f CPU\n"
          "\n"
          "%s\n"
-         "%.0f launches/second",
+         "%.1f launches/second",
          temp->name,
          outfit_getType(temp),
          temp->u.bay.cpu,
