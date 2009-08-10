@@ -696,22 +696,22 @@ void ship_view( unsigned int unused, char* shipname )
          "%s\n" /* Fabricator */
          "\n"
          "%d\n" /* Crew */
-         "%.2f TFlops\n" /* CPU */
-         "%.2f Tons\n" /* Mass */
+         "%.0f TFlops\n" /* CPU */
+         "%.0f Tons\n" /* Mass */
          "\n"
          "%d\n" /* high slots */
          "%d\n" /* medium slots */
          "%d\n" /* low slots */
          "\n"
-         "%.2f MN/ton\n" /* Thrust */
-         "%.2f M/s\n" /* Speed */
-         "%.2f Grad/s\n" /* Turn */
+         "%.0f MN/ton\n" /* Thrust */
+         "%.0f M/s\n" /* Speed */
+         "%.0f Grad/s\n" /* Turn */
          "\n"
-         "%.2f MJ (%.2f MJ/s)\n" /* Shield */
-         "%.2f MJ (%.2f MJ/s)\n" /* Armour */
-         "%.2f MJ (%.2f MJ/s)\n" /* Energy */
+         "%.0f MJ (%.0f MJ/s)\n" /* Shield */
+         "%.0f MJ (%.0f MJ/s)\n" /* Armour */
+         "%.0f MJ (%.0f MJ/s)\n" /* Energy */
          "\n"
-         "%.2f Tons\n" /* Cargo */
+         "%.0f Tons\n" /* Cargo */
          "%d Units\n" /* Fuel */
          , s->name, ship_class(s), s->fabricator,
          s->crew, s->cpu, s->mass,
