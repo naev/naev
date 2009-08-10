@@ -1163,7 +1163,7 @@ static void equipment_render( double bx, double by, double bw, double bh )
    toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
    gl_printMid( &gl_smallFont, 70,
          x - 20 + SCREEN_W/2., y - 20 - gl_smallFont.h + SCREEN_H/2.,
-         &cBlack, "%.1f / %.1f", p->cpu, p->cpu_max );
+         &cBlack, "%.0f / %.0f", p->cpu, p->cpu_max );
 
    /* Render ship graphic. */
    equipment_renderShip( bx, by, bw, bh, x, y, p );
@@ -1556,16 +1556,16 @@ static void equipment_updateShips( unsigned int wid, char* str )
          "%s\n"
          "%s credits\n"
          "\n"
-         "%.1f MN/ton\n"
-         "%.1f M/s\n"
-         "%.1f Grad/s\n"
+         "%.0f MN/ton\n"
+         "%.0f M/s\n"
+         "%.0f Grad/s\n"
          "\n"
-         "%.1f MJ (%.1f MJ/s)\n"
-         "%.1f MJ (%.1f MJ/s)\n"
-         "%.1f MJ (%.1f MJ/s)\n"
+         "%.0f MJ (%.0f MJ/s)\n"
+         "%.0f MJ (%.0f MJ/s)\n"
+         "%.0f MJ (%.0f MJ/s)\n"
          "\n"
-         "%.1f / %.1f Tons\n"
-         "%.1f / %.1f Units\n"
+         "%.0f / %.0f Tons\n"
+         "%.0f / %.0f Units\n"
          "\n"
          "%s\n"
          "%s credits\n",
