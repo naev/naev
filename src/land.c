@@ -1014,13 +1014,15 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
       /* Draw bottom. */
       if (i==mover) {
+         display = NULL;
          if (lst[i].outfit != NULL)
             display = "Right click to remove";
-         else if ((equipment_outfit != NULL) &&
-               (lst->slot == equipment_outfit->slot))
-            display = "Right click to add";
-         else
-            display = NULL;
+         else if (equipment_outfit != NULL) {
+            if (equipment_selected->cpu < outfit_cpu(equipment_outfit))
+               display = "Not enough CPU";
+            else if (lst->slot == equipment_outfit->slot)
+               display = "Right click to add";
+         }
 
          if (display != NULL) {
             text_width = gl_printWidthRaw( &gl_smallFont, display );
