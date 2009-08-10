@@ -664,8 +664,15 @@ void ship_view( unsigned int unused, char* shipname )
    snprintf(buf, 1024,
          "Name:\n"
          "Class:\n"
+         "Fabricator:\n"
+         "\n"
          "Crew:\n"
+         "CPU:\n"
          "Mass:\n"
+         "\n"
+         "High slots:\n"
+         "Medium slots:\n"
+         "Low slots:\n"
          "\n"
          "Thrust:\n"
          "Max Speed:\n"
@@ -686,8 +693,15 @@ void ship_view( unsigned int unused, char* shipname )
    snprintf( buf, 1024,
          "%s\n" /* Name */
          "%s\n" /* Class */
+         "%s\n" /* Fabricator */
+         "\n"
          "%d\n" /* Crew */
+         "%.2f TFlops\n" /* CPU */
          "%.2f Tons\n" /* Mass */
+         "\n"
+         "%d\n" /* high slots */
+         "%d\n" /* medium slots */
+         "%d\n" /* low slots */
          "\n"
          "%.2f MN/ton\n" /* Thrust */
          "%.2f M/s\n" /* Speed */
@@ -699,7 +713,9 @@ void ship_view( unsigned int unused, char* shipname )
          "\n"
          "%.2f Tons\n" /* Cargo */
          "%d Units\n" /* Fuel */
-         , s->name, ship_class(s), s->crew, s->mass,
+         , s->name, ship_class(s), s->fabricator,
+         s->crew, s->cpu, s->mass,
+         s->outfit_nhigh, s->outfit_nmedium, s->outfit_nlow,
          s->thrust/s->mass, s->speed, s->turn,
          s->shield, s->shield_regen, s->armour, s->armour_regen,
          s->energy, s->energy_regen,
