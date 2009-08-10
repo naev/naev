@@ -1015,13 +1015,19 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       /* Draw bottom. */
       if (i==mover) {
          display = NULL;
-         if (lst[i].outfit != NULL)
+         if (lst[i].outfit != NULL) {
             display = "Right click to remove";
+            c = &cDConsole;
+         }
          else if (equipment_outfit != NULL) {
-            if (equipment_selected->cpu < outfit_cpu(equipment_outfit))
+            if (equipment_selected->cpu < outfit_cpu(equipment_outfit)) {
                display = "Not enough CPU";
-            else if (lst->slot == equipment_outfit->slot)
+               c = &cRed;
+            }
+            else if (lst->slot == equipment_outfit->slot) {
                display = "Right click to add";
+               c = &cDConsole;
+            }
          }
 
          if (display != NULL) {
@@ -1034,12 +1040,9 @@ static void equipment_renderColumn( double x, double y, double w, double h,
             toolkit_drawRect( x-xoff-5, y - gl_smallFont.h - 5,
                   text_width+10, gl_smallFont.h+5,
                   &tc, NULL );
-            tc.r = 0.;
-            tc.g = 0.;
-            tc.b = 0.;
             gl_printMaxRaw( &gl_smallFont, text_width,
                   x-xoff + SCREEN_W/2., y - gl_smallFont.h -2. + SCREEN_H/2.,
-                  &cDConsole, display );
+                  c, display );
          }
       }
       /* Go to next one. */
