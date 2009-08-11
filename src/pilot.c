@@ -753,35 +753,38 @@ void pilot_shootStop( Pilot* p, const int secondary )
    int i;
    Outfit* o;
 
-   if (!p->outfits)
-      return; /* no outfits */
+   /* Non beam secondaries don't matter. */
+   if (secondary && ((p->secondary == NULL) ||
+            (p->secondary->outfit == NULL) ||
+            !outfit_isBeam(p->secondary->outfit)))
+      return;
 
-   if (!secondary) { /* primary weapons */
+   /* Iterate over them all. */
+   for (i=0; i<p->outfit_nhigh; i++) {
+      o = p->outfit_high[i].outfit;
 
-      for (i=0; i<p->outfit_nhigh; i++) { /* cycles through outfits to find primary weapons */
-         o = p->outfit_high[i].outfit;
+      /* Must have outfit. */
+      if (o==NULL)
+         continue;
+      /* Must be beam. */
+      if (!outfit_isBeam(o))
+         continue;
 
-         if (o==NULL)
-            continue;
-
-         if (!outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY) &&
-               outfit_isBeam(o)) /** @todo possibly make this neater. */
+      if (secondary) {
+         if (o == p->secondary->outfit) {
             if (p->outfit_high[i].u.beamid > 0) {
                beam_end( p->id, p->outfit_high[i].u.beamid );
                p->outfit_high[i].u.beamid = 0;
             }
+         }
       }
-   }
-   else { /* secondary weapon */
-      
-      if (p->secondary == NULL)
-         return; /* No secondary weapon. */
-      
-      o = p->secondary->outfit;
-
-      if (outfit_isBeam(o) && (p->secondary->u.beamid > 0)) {
-         beam_end( p->id, p->secondary->u.beamid );
-         p->secondary->u.beamid = 0;
+      else {
+         if (!outfit_isProp(o, OUTFIT_PROP_WEAP_SECONDARY)) {
+            if (p->outfit_high[i].u.beamid > 0) {
+               beam_end( p->id, p->outfit_high[i].u.beamid );
+               p->outfit_high[i].u.beamid = 0;
+            }
+         }
       }
    }
 }
@@ -979,18 +982,8 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
  */
 void pilot_switchSecondary( Pilot* p, PilotOutfitSlot* w )
 {
-   PilotOutfitSlot *cur;
-
-   cur = player->secondary;
+   pilot_shootStop( p, 1 );
    player->secondary = w;
-
-   /* Check for weapon change. */
-   if ((cur != NULL) && (player->secondary != cur)) {
-      if (outfit_isBeam(cur->outfit) && (cur->u.beamid > 0)) {
-         beam_end( p->id, cur->u.beamid );
-         cur->u.beamid = 0;
-      }
-   }
 }
 
 
