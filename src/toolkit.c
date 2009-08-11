@@ -22,6 +22,7 @@
 #include "opengl.h"
 #include "input.h"
 #include "nstd.h"
+#include "dialogue.h"
 
 
 #define INPUT_DELAY     500 /**< Delay before starting to repeat. */
@@ -1397,7 +1398,7 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
    }
 
    /* Clean up the dead if needed. */
-   if (purge)
+   if (purge && !dialogue_isOpen()) /* Hack, since dialogues use secondary loop. */
       toolkit_purgeDead();
 
    return 0; /* don't block input */

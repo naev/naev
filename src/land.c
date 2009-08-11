@@ -1630,6 +1630,7 @@ static void equipment_genLists( unsigned int wid )
 
    /* Ship list. */
    if (!widget_exists( wid, "iarAvailShips" )) {
+      equipment_selected = NULL;
       nships   = player_nships()+1;
       sships   = malloc(sizeof(char*)*nships);
       tships   = malloc(sizeof(glTexture*)*nships);
@@ -1644,6 +1645,7 @@ static void equipment_genLists( unsigned int wid )
 
    /* Outfit list. */
    if (!widget_exists( wid ,"iarAvailOutfits" )) {
+      equipment_outfit = NULL;
       noutfits = MAX(1,player_numOutfits());
       soutfits = malloc(sizeof(char*)*noutfits);
       toutfits = malloc(sizeof(glTexture*)*noutfits);
@@ -1920,7 +1922,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
 static void equipment_sellShip( unsigned int wid, char* str )
 {
    (void)str;
-   char *shipname, buf[16];
+   char *shipname, buf[16], *name;
    int price;
 
    shipname = toolkit_getImageArray( wid, "iarAvailShips" );
@@ -1940,15 +1942,19 @@ static void equipment_sellShip( unsigned int wid, char* str )
    }
 
    /* Sold. */
+   name = strdup(shipname);
    player->credits += price;
    land_checkAddRefuel();
    player_rmShip( shipname );
-   dialogue_msg( "Ship Sold", "You have sold your ship %s for %s credits.",
-         shipname, buf );
 
-   /* Destroy widget. */
+   /* Destroy widget - must be before widget. */
    window_destroyWidget( wid, "iarAvailShips" );
    equipment_genLists( wid );
+
+   /* Display widget. */
+   dialogue_msg( "Ship Sold", "You have sold your ship %s for %s credits.",
+         name, buf );
+   free(name);
 }
 /**
  * @brief Gets the ship's transport price.
