@@ -426,6 +426,9 @@ static int toolkit_loop (void)
 {
    SDL_Event event;
 
+   /* Delay a toolkit iteration. */
+   toolkit_delay();
+
    loop_done = 0;
    while (!loop_done && toolkit_isOpen()) {
       /* Loop first so exit condition is checked before next iteration. */

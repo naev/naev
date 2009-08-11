@@ -80,5 +80,11 @@ int toolkit_init (void);
 void toolkit_exit (void);
 
 
+/*
+ * hacks
+ */
+void toolkit_delay (void);
+
+
 #endif /* TOOLKIT_H */
 

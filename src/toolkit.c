@@ -33,6 +33,8 @@ static unsigned int genwid = 0; /**< Generates unique window ids, > 0 */
 
 
 static int toolkit_open = 0; /**< 1 if toolkit is in use, 0 else. */
+static int toolkit_delayCounter = 0; /**< Horrible hack around secondary loop. */
+
 
 /* 
  * window stuff
@@ -95,6 +97,15 @@ static void toolkit_purgeDead (void);
 int toolkit_isOpen (void)
 {
    return !!toolkit_open;
+}
+
+
+/**
+ * @brief Delays the toolkit purge by an iteration, useful for dialogues.
+ */
+void toolkit_delay (void)
+{
+   toolkit_delayCounter++;
 }
 
 
@@ -1398,8 +1409,12 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
    }
 
    /* Clean up the dead if needed. */
-   if (purge && !dialogue_isOpen()) /* Hack, since dialogues use secondary loop. */
-      toolkit_purgeDead();
+   if (purge && !dialogue_isOpen()) { /* Hack, since dialogues use secondary loop. */
+      if (toolkit_delayCounter > 0)
+         toolkit_delayCounter--;
+      else
+         toolkit_purgeDead();
+   }
 
    return ret; /* don't block input */
 }
@@ -1490,7 +1505,7 @@ static void toolkit_mouseEvent( Window *w, SDL_Event* event )
       /* custom widgets take it from here */
       if (wgt->type==WIDGET_CUST) {
          if (wgt->dat.cst.mouse)
-            (*wgt->dat.cst.mouse)( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h );
+            wgt->dat.cst.mouse( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h );
       }
       else {
          /* Handle mouse event. */

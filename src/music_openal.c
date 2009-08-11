@@ -601,7 +601,7 @@ int music_al_init (void)
     * Start up thread and have it inform us when it already reaches the main loop.
     */
    musicLock();
-   music_state = MUSIC_STATE_STARTUP;
+   music_state  = MUSIC_STATE_STARTUP;
    music_player = SDL_CreateThread( music_thread, NULL );
    SDL_CondWait( music_state_cond, music_state_lock );
    musicUnlock();
