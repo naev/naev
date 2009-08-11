@@ -565,24 +565,25 @@ void player_rmShip( char* shipname )
    int i;
 
    for (i=0; i<player_nstack; i++) {
-      if (strcmp(shipname,player_stack[i]->name)==0) {
+      /* Not the ship we are looking for. */
+      if (strcmp(shipname,player_stack[i]->name)!=0)
+         continue;
 
-         /* Free player ship and location. */
-         pilot_free(player_stack[i]);
-         free(player_lstack[i]);
+      /* Free player ship and location. */
+      pilot_free(player_stack[i]);
+      free(player_lstack[i]);
 
-         /* Move memory to make adjacent. */
-         memmove( player_stack+i, player_stack+i+1,
-               sizeof(Pilot*) * (player_nstack-i-1) );
-         memmove( player_lstack+i, player_lstack+i+1,
-               sizeof(char*) * (player_nstack-i-1) );
-         player_nstack--; /* Shrink stack. */
-         /* Realloc memory to smaller size. */
-         player_stack = realloc( player_stack,
-               sizeof(Pilot*) * (player_nstack) );
-         player_lstack = realloc( player_lstack,
-               sizeof(char*) * (player_nstack) );
-      }
+      /* Move memory to make adjacent. */
+      memmove( player_stack+i, player_stack+i+1,
+            sizeof(Pilot*) * (player_nstack-i-1) );
+      memmove( player_lstack+i, player_lstack+i+1,
+            sizeof(char*) * (player_nstack-i-1) );
+      player_nstack--; /* Shrink stack. */
+      /* Realloc memory to smaller size. */
+      player_stack = realloc( player_stack,
+            sizeof(Pilot*) * (player_nstack) );
+      player_lstack = realloc( player_lstack,
+            sizeof(char*) * (player_nstack) );
    }
 }
 
