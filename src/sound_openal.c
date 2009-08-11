@@ -441,8 +441,6 @@ void sound_al_exit (void)
    /* Free groups. */
    for (i=0; i<al_ngroups; i++) {
       if (al_groups[i].sources != NULL) {
-         alSourceStopv(   al_groups[i].nsources, al_groups[i].sources );
-         alDeleteSources( al_groups[i].nsources, al_groups[i].sources );
          free(al_groups[i].sources);
       }
       al_groups[i].sources  = NULL;

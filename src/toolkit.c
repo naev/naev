@@ -346,7 +346,7 @@ unsigned int window_create( const char* name,
    Window *wdw;
 
    if (nwindows >= mwindows) { /* at memory limit */
-      windows = realloc(windows, sizeof(Window)*(++mwindows));
+      windows = realloc( windows, sizeof(Window)*(++mwindows) );
       if (windows==NULL) WARN("Out of memory");
    }
 
@@ -1371,14 +1371,14 @@ int toolkit_input( SDL_Event* event )
    }
 
    /* Pass event to window. */
-   return toolkit_inputWindow( &windows[i], event );
+   return toolkit_inputWindow( &windows[i], event, 1 );
 }
 
 
 /**
  * @brief Toolkit window input is handled here.
  */
-int toolkit_inputWindow( Window *wdw, SDL_Event *event )
+int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
 {
    int ret;
    ret = 0;
@@ -1397,7 +1397,8 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event )
    }
 
    /* Clean up the dead if needed. */
-   toolkit_purgeDead();
+   if (purge)
+      toolkit_purgeDead();
 
    return 0; /* don't block input */
 }

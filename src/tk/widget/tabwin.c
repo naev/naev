@@ -70,10 +70,12 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
    toolkit_setPos( wdw, wgt, x, y );
 
    /* Copy tab information. */
-   wgt->dat.tab.tabnames   = malloc( sizeof(char *) * ntabs );
+   wgt->dat.tab.tabnames   = malloc( sizeof(char*) * ntabs );
    wgt->dat.tab.windows    = malloc( sizeof(unsigned int) * ntabs );
    wgt->dat.tab.namelen    = malloc( sizeof(int) * ntabs );
    for (i=0; i<ntabs; i++) {
+      /* Hack to get around possible reallocs. */
+      wdw = window_wget(wid);
       /* Get name and length. */
       wgt->dat.tab.tabnames[i] = strdup( tabnames[i] );
       wgt->dat.tab.namelen[i]  = gl_printWidthRaw( &gl_defFont,
@@ -119,7 +121,7 @@ static int tab_raw( Widget* tab, SDL_Event *event )
    }
 
    /* Give the active window the input. */
-   toolkit_inputWindow( wdw, event );
+   toolkit_inputWindow( wdw, event, 0 );
    return 0; /* Never block event. */
 }
 
