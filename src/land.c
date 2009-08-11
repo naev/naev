@@ -1606,7 +1606,7 @@ static void equipment_addAmmo (void)
  */
 static void equipment_genLists( unsigned int wid )
 {
-   int i;
+   int i, l;
    char **sships;
    glTexture **tships;
    int nships;
@@ -1660,8 +1660,12 @@ static void equipment_genLists( unsigned int wid )
             o      = outfit_get( soutfits[i] );
             if (o->desc_short == NULL)
                alt[i] = NULL;
-            else
-               alt[i] = strdup( o->desc_short );
+            else {
+               l = strlen(o->desc_short) + 32;
+               alt[i] = malloc( l );
+               snprintf( alt[i], l, "%s\n\nQuantity %d",
+                     o->desc_short, player_outfitOwned(o) );
+            }
          }
          toolkit_setImageArrayAlt( wid, "iarAvailOutfits", alt );
       }
