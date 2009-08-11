@@ -511,14 +511,8 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
 {
    char buf[16];
 
-   /* can only have one afterburner */
-   if (outfit_isAfterburner(outfit) && (player->afterburner!=NULL)) {
-      if (errmsg != 0)
-         dialogue_alert( "You can only have one afterburner." );
-      return 0;
-   }
    /* takes away cargo space but you don't have any */
-   else if (outfit_isMod(outfit) && (outfit->u.mod.cargo < 0)
+   if (outfit_isMod(outfit) && (outfit->u.mod.cargo < 0)
          && (pilot_cargoFree(player) < -outfit->u.mod.cargo)) {
       if (errmsg != 0)
          dialogue_alert( "You need to empty your cargo first." );
@@ -576,6 +570,7 @@ static void outfits_buy( unsigned int wid, char* str )
    if (outfit_canBuy(outfit, q, 1) == 0)
       return;
 
+   /* Actually buy the outfit. */
    player->credits -= outfit->price * player_addOutfit( outfit, q );
    land_checkAddRefuel();
    outfits_update(wid, NULL);
