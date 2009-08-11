@@ -56,7 +56,7 @@ void window_addCheckbox( const unsigned int wid,
    wgt->render             = chk_render;
    wgt->cleanup            = chk_cleanup;
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
-   wgt->dat.chk.display    = strdup(display);
+   wgt->dat.chk.display    = (display == NULL) ? NULL : strdup(display);
    wgt->dat.chk.fptr       = call;
    wgt->dat.chk.state      = default_state;
 
@@ -165,7 +165,7 @@ static int chk_mclick( Widget* chk, int button, int x, int y )
 {
    (void) button;
    (void) y;
-   if ((x > 0) && (x <= 10) && (y > 0) && (y <= 10))
+   if ((x > 0) && (x <= chk->w) && (y > 0) && (y <= chk->h))
       chk_toggleState( chk );
    return 1;
 }
@@ -207,10 +207,15 @@ static void chk_render( Widget* chk, double bx, double by )
          break;
    }
 
+   /* Draw rect. */
+   toolkit_drawRect( x, y + (chk->h-10.)/2., 10., 10., &cWhite, NULL );
+   if (chk->dat.chk.state)
+      toolkit_drawRect( x+2., y+2. + (chk->h-10.)/2., 6., 6., &cDConsole, NULL );
+
    /* Inner outline */
-   toolkit_drawOutline( x, y, 10, 10, 0., lc, c );
+   toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 0., lc, c );
    /* Outter outline */
-   toolkit_drawOutline( x, y, 10, 10, 1., &cBlack, NULL );
+   toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 1., &cBlack, NULL );
 
    /* Draw the txt. */
    gl_printMaxRaw( NULL, chk->w - 20,

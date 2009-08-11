@@ -35,6 +35,7 @@
 #include "escort.h"
 #include "event.h"
 #include "opengl_vbo.h"
+#include "conf.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 
@@ -200,6 +201,7 @@ static void misn_update( unsigned int wid, char* str );
 static void land_checkAddRefuel (void);
 static unsigned int refuel_price (void);
 static void spaceport_refuel( unsigned int wid, char *str );
+static void land_toggleRefuel( unsigned int wid, char *name );
 /* external */
 extern unsigned int economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p ); /**< from economy.c */
@@ -2422,8 +2424,10 @@ static void spaceport_refuel( unsigned int wid, char *str )
 
    player->credits -= refuel_price();
    player->fuel = player->fuel_max;
-   window_destroyWidget( wid, "btnRefuel" );
-   window_destroyWidget( wid, "txtRefuel" );
+   if (widget_exists( land_windows[0], "btnRefuel" )) {
+      window_destroyWidget( wid, "btnRefuel" );
+      window_destroyWidget( wid, "txtRefuel" );
+   }
 }
 
 
@@ -2442,6 +2446,13 @@ static void land_checkAddRefuel (void)
    if (player->fuel >= player->fuel_max)
       return;
 
+   /* Autorefuel. */
+   if (conf.autorefuel) {
+      spaceport_refuel( land_windows[0], "btnRefuel" );
+      if (player->fuel >= player->fuel_max)
+         return;
+   }
+
    /* Just enable button if it exists. */
    if (widget_exists( land_windows[0], "btnRefuel" )) {
       window_enableButton( land_windows[0], "btnRefuel");
@@ -2454,13 +2465,13 @@ static void land_checkAddRefuel (void)
       /* Refuel button. */
       credits2str( cred, refuel_price(), 2 );
       snprintf( buf, 32, "Refuel %s", cred );
-      window_addButton( land_windows[0], -20, 20 + 2*(BUTTON_HEIGHT + 20),
+      window_addButton( land_windows[0], -20, 20 + (BUTTON_HEIGHT + 20),
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnRefuel",
             buf, spaceport_refuel );
       /* Player credits. */
       credits2str( cred, player->credits, 2 );
       snprintf( buf, 32, "Credits: %s", cred );
-      window_addText( land_windows[0], -20, 20 + 3*(BUTTON_HEIGHT + 20),
+      window_addText( land_windows[0], -20, 20 + 2*(BUTTON_HEIGHT + 20),
             BUTTON_WIDTH, gl_smallFont.h, 1, "txtRefuel",
             &gl_smallFont, &cBlack, buf );
    }
@@ -2676,6 +2687,25 @@ static void land_createMainTab( unsigned int wid )
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnTakeoff",
          "Takeoff", land_buttonTakeoff );
+
+   /*
+    * Checkboxes.
+    */
+   window_addCheckbox( wid, -20, 20 + 2*(BUTTON_HEIGHT + 20) + 40,
+         250, 20, "chkRefuel", NULL,
+         land_toggleRefuel, conf.autorefuel );
+   land_toggleRefuel( wid, "chkRefuel" );
+}
+
+
+/**
+ * @brief Refuel was toggled.
+ */
+static void land_toggleRefuel( unsigned int wid, char *name )
+{
+   conf.autorefuel = window_checkboxState( wid, name );
+   window_checkboxCaption( wid, name, (conf.autorefuel) ?
+         "Automatic refuel enabled" : "Automatic refuel disabled" );
 }
 
 
