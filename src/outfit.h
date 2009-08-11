@@ -191,8 +191,11 @@ typedef struct OutfitAmmoData_ {
 typedef struct OutfitModificationData_ {
    /* movement */
    double thrust; /**< Maximum thrust modifier. */
+   double thrust_rel; /**< Relative thrust modifier. */
    double turn; /**< Maximum turn modifier. */
+   double turn_rel; /**< Relative turn modifier. */
    double speed; /**< Maximum speed modifier. */
+   double speed_rel; /**< Relative speed modifier. */
 
    /* health */
    double armour; /**< Maximum armour modifier. */

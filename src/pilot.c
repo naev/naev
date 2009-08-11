@@ -2003,8 +2003,11 @@ void pilot_calcStats( Pilot* pilot )
       if (outfit_isMod(o)) { /* Modification */
          /* movement */
          pilot->thrust        += o->u.mod.thrust * q;
+         pilot->thrust        += o->u.mod.thrust_rel * pilot->ship->thrust * q;
          pilot->turn          += o->u.mod.turn * q;
+         pilot->turn          += o->u.mod.turn_rel * pilot->ship->turn * q;
          pilot->speed         += o->u.mod.speed * q;
+         pilot->speed         += o->u.mod.speed_rel * pilot->ship->speed * q;
          /* health */
          pilot->armour_max    += o->u.mod.armour * q;
          pilot->armour_regen  += o->u.mod.armour_regen * q;

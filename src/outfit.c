@@ -1140,8 +1140,11 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    do { /* load all the data */
       /* movement */
       xmlr_float(node,"thrust",temp->u.mod.thrust);
+      xmlr_float(node,"thrust_rel",temp->u.mod.thrust_rel);
       xmlr_float(node,"turn",temp->u.mod.turn);
+      xmlr_float(node,"turn_rel",temp->u.mod.turn_rel);
       xmlr_float(node,"speed",temp->u.mod.speed);
+      xmlr_float(node,"speed_rel",temp->u.mod.speed_rel);
       /* health */
       xmlr_float(node,"armour",temp->u.mod.armour);
       xmlr_float(node,"shield",temp->u.mod.shield);
@@ -1176,8 +1179,11 @@ if ((x) != 0.) \
 #define DESC_ADD0(x, s)    DESC_ADD( x, s, "0" )
 #define DESC_ADD1(x, s)    DESC_ADD( x, s, "1" )
    DESC_ADD0( temp->u.mod.thrust, "thrust" );
+   DESC_ADD0( temp->u.mod.thrust_rel, "%% thrust" );
    DESC_ADD0( temp->u.mod.turn, "turn" );
+   DESC_ADD0( temp->u.mod.turn_rel, "%% turn" );
    DESC_ADD0( temp->u.mod.speed, "speed" );
+   DESC_ADD0( temp->u.mod.speed_rel, "%% speed" );
    DESC_ADD0( temp->u.mod.armour, "armour" );
    DESC_ADD0( temp->u.mod.shield, "shield" );
    DESC_ADD0( temp->u.mod.energy, "energy" );
@@ -1193,8 +1199,11 @@ if ((x) != 0.) \
 #undef DESC_ADD
 
    /* More processing. */
-   temp->u.mod.mass_rel /= 100.;
-   temp->u.mod.cpu = -temp->u.mod.cpu; /* Invert sign so it works with outfit_cpu. */
+   temp->u.mod.thrust_rel /= 100.;
+   temp->u.mod.turn_rel   /= 100.;
+   temp->u.mod.speed_rel  /= 100.;
+   temp->u.mod.mass_rel   /= 100.;
+   temp->u.mod.cpu         = -temp->u.mod.cpu; /* Invert sign so it works with outfit_cpu. */
 }
 
 

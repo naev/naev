@@ -765,8 +765,9 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <gfx_store>reroute</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>-10</cpu>
-   <thrust>70</thrust>
+   <cpu>-6</cpu>
+   <thrust>30</thrust>
+   <thrust_rel>10</thrust_rel>
    <energy_regen>-50</energy_regen>
   </specific>
  </outfit>
@@ -781,9 +782,10 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <gfx_store>stabilizer</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>-10</cpu>
-   <speed>50</speed>
-   <turn>5</turn>
+   <cpu>-12</cpu>
+   <speed>20</speed>
+   <speed_rel>5</speed_rel>
+   <turn_rel>3</turn_rel>
    <energy_regen>-10</energy_regen>
   </specific>
  </outfit>
@@ -798,8 +800,9 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <gfx_store>thruster</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>-10</cpu>
-   <turn>25</turn>
+   <cpu>-8</cpu>
+   <turn>5</turn>
+   <turn_rel>10</turn_rel>
    <energy_regen>-10</energy_regen>
   </specific>
  </outfit>
