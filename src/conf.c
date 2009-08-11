@@ -148,6 +148,9 @@ void conf_setDefaults (void)
    conf.joystick_ind = -1;
    conf.joystick_nam = NULL;
 
+   /* Land. */
+   conf.autorefuel   = 0;
+
    /* Misc. */
    conf.zoom_min     = 0.5;
    conf.zoom_max     = 1.;
@@ -239,6 +242,9 @@ int conf_loadConfig ( const char* file )
       else if (lua_isstring(L, -1))
          conf.joystick_nam = strdup(lua_tostring(L, -1));
       lua_pop(L,1);
+
+      /* Land. */
+      conf_loadBool("autorefuel",conf.autorefuel);
 
       /* Misc. */
       conf_loadFloat("zoom_min",conf.zoom_min);
@@ -751,6 +757,11 @@ int conf_saveConfig ( const char* file )
    else {
       conf_saveString("joystick",NULL);
    }
+   conf_saveEmptyLine();
+
+   /* Land. */
+   conf_saveComment("Whether or not to autorefuel");
+   conf_saveBool("autorefuel",conf.autorefuel);
    conf_saveEmptyLine();
 
    /* Misc. */

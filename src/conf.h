@@ -48,6 +48,9 @@ typedef struct PlayerConf_s {
    int joystick_ind; /**< Index of joystick to use. */
    char *joystick_nam; /**< Name of joystick to use. */
 
+   /* Land. */
+   int autorefuel; /**< Whether or not to autorefuel when landing. */
+
    /* Misc. */
    double zoom_max; /**< Maximum ingame zoom to use. */
    double zoom_min; /**< Minimum ingame zoom to use. */
