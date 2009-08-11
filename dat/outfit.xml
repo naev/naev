@@ -898,7 +898,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <slot>high</slot>
    <tech>14</tech>
    <license>Light Combat Vessel License</license>
-   <mass>80</mass>
+   <mass>900</mass>
    <price>830000</price>
    <gfx_store>lancelot_fighter</gfx_store>
    <description>This fighter bay allows your ship to carry a pair of Lancelot class fighters. It comes with all the devices required for the maintenance and flight of the fighters.</description>
@@ -914,7 +914,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
   <general>
    <tech>12</tech>
    <license>Light Combat Vessel License</license>
-   <mass>0</mass>
+   <mass>90</mass>
    <price>500000</price>
    <gfx_store>lancelot_fighter</gfx_store>
    <description>This is a Lancelot class fighter adapted for usage in the Lancelot Fighter Bay. It contains all the features of the standalone Lancelot with improved encrypted communication.</description>
@@ -928,13 +928,13 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
    <slot>high</slot>
    <tech>9999</tech>
    <license>Light Combat Vessel License</license>
-   <mass>90</mass>
+   <mass>600</mass>
    <price>1200000</price>
    <gfx_store>drone_fighter</gfx_store>
    <description>The Drone Fighter bay uses the advanced collective technologies to sustain a trio of Drone Fighters.  Drone Fighters require no pilot making them a safer approach in dangerous situations.  They do however need some careful maintenance.  All the tools needed to take care of them are provided with the bay.</description>
   </general>
   <specific type="fighter bay" secondary="1">
-   <cpu>100</cpu>
+   <cpu>120</cpu>
    <ammo>Drone Fighter</ammo>
    <delay>1000</delay>
    <amount>3</amount>
@@ -944,7 +944,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
   <general>
    <tech>9999</tech>
    <license>Light Combat Vessel License</license>
-   <mass>0</mass>
+   <mass>15</mass>
    <price>700000</price>
    <gfx_store>drone_fighter</gfx_store>
    <description>The Drone is a fearsome craft using very advanced AI techniques to be able to pilot itself.  The fact it doesn't need a pilot nor life support systems makes it a much smaller and compact vessel.</description>
