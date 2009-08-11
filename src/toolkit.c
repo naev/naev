@@ -1341,12 +1341,14 @@ void toolkit_render (void)
 
    /* Render base. */
    for (w = windows; w!=NULL; w = w->next)
-      if (!window_isFlag(w, WINDOW_NORENDER))
+      if (!window_isFlag(w, WINDOW_NORENDER) &&
+               !window_isFlag(w, WINDOW_KILL))
          window_render(w);
 
    /* Render overlay. */
    for (w = windows; w!=NULL; w = w->next)
-      if (!window_isFlag(w, WINDOW_NORENDER))
+      if (!window_isFlag(w, WINDOW_NORENDER) &&
+            !window_isFlag(w, WINDOW_KILL))
          window_renderOverlay(w);
 }
 
