@@ -844,15 +844,16 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    Vector2d vp, vv;
    int i;
    PilotOutfitSlot *slot;
-   int first;
-   double q, cur;
+   int prev;
+   double q, cur, t;
 
    /* check to see if weapon is ready */
    if (w->timer > 0.)
       return 0;
 
    /* Count the outfits and current one. */
-   first = -1;
+   prev  = -1;
+   cur   = -1.;
    q     = 0.;
    for (i=0; i<p->outfit_nhigh; i++) {
       slot = &p->outfit_high[i];
@@ -860,14 +861,19 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
       if (slot->outfit != w->outfit)
          continue;
       /* Save some stuff. */
-      if (first < 0)
-         first = i;
       if (slot == w)
          cur = q;
+      if ((cur < 0.) && (slot->timer > 0.)) {
+         t    = q;
+         prev = i;
+      }
       q++;
    }
-   if (p->outfit_high[first].timer > outfit_delay(w->outfit) * ((q-cur) / q))
-      return 0;
+   if (prev >= 0) {
+      if (p->outfit_high[prev].timer > outfit_delay(w->outfit) * ((cur-t) / q))
+         return 0;
+   }
+
 
    /* Get weapon mount position. */
    pilot_getMount( p, w, &vp );
