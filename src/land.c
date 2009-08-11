@@ -1069,6 +1069,9 @@ static void equipment_renderColumn( double x, double y, double w, double h,
                (lst[i].slot == equipment_outfit->slot)) {
             if (equipment_selected->cpu < outfit_cpu(equipment_outfit))
                c = &cRed;
+            else if (outfit_isAfterburner(equipment_outfit) &&
+                  (equipment_selected->afterburner != NULL))
+               c = &cRed;
             else
                c = &cDConsole;
          }
@@ -1108,6 +1111,11 @@ static void equipment_renderColumn( double x, double y, double w, double h,
             else if (equipment_outfit != NULL) {
                if (equipment_selected->cpu < outfit_cpu(equipment_outfit)) {
                   display = "Not enough CPU";
+                  c = &cRed;
+               }
+               else if (outfit_isAfterburner(equipment_outfit) &&
+                     (equipment_selected->afterburner != NULL)) {
+                  display = "Already have an afterburner";
                   c = &cRed;
                }
                else if (lst->slot == equipment_outfit->slot) {

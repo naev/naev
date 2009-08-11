@@ -1745,8 +1745,8 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
    }
    else if ((outfit_cpu(outfit) > 0) &&
          (pilot->cpu < outfit_cpu(outfit))) {
-      WARN( "Pilot '%s': Not enough CPU to add outfit '%s'",
-            pilot->name, outfit->name );
+      /* WARN( "Pilot '%s': Not enough CPU to add outfit '%s'",
+            pilot->name, outfit->name ); */
       return -1;
    }
 
@@ -1791,8 +1791,15 @@ int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s )
 {
    int ret;
 
-   ret = (s->outfit==NULL);
-   s->outfit = NULL;
+   /* Remove the outfit. */
+   ret         = (s->outfit==NULL);
+   s->outfit   = NULL;
+
+   /* Remove secondary and such if necessary. */
+   if (pilot->secondary == s)
+      pilot->secondary = NULL;
+   if (pilot->afterburner == s)
+      pilot->afterburner = NULL;
 
    /* recalculate the stats */
    pilot_calcStats(pilot);
