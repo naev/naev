@@ -115,7 +115,7 @@ void player_board (void)
    window_addButton( wdw, 20+BUTTON_WIDTH+20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnStealCargo", "Cargo", board_stealCargo);
    window_addButton( wdw, 20+2*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnStealCargo", "Fuel", board_stealFuel);
+         "btnStealFuel", "Fuel", board_stealFuel);
 
    window_addButton( wdw, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnBoardingClose", "Leave", board_exit );
