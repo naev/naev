@@ -28,8 +28,6 @@
 struct Outfit_;
 
 
-
-
 /**
  * @brief Different types of existing outfits.
  *
@@ -208,6 +206,7 @@ typedef struct OutfitModificationData_ {
 
    /* misc */
    double cargo; /**< Cargo space modifier. */
+   double mass_rel; /**< Relative mass modification. */
 } OutfitModificationData;
 
 /**

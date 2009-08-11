@@ -701,6 +701,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
   </general>
   <specific type="modification">
    <armour>35</armour>
+   <mass_rel>5</mass_rel>
   </specific>
  </outfit>
  <outfit name="Nanobond Plating">
@@ -715,6 +716,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
   </general>
   <specific type="modification">
    <armour>240</armour>
+   <mass_rel>13</mass_rel>
   </specific>
  </outfit>
  <outfit name="Biometal Armour">
@@ -730,7 +732,8 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
   <specific type="modification">
    <cpu>-6</cpu>
    <armour>300</armour>
-   <armour_regen>120</armour_regen>
+   <armour_regen>60</armour_regen>
+   <mass_rel>20</mass_rel>
   </specific>
  </outfit>
  <outfit name="Droid Repair Crew">

@@ -1153,6 +1153,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       /* misc */
       xmlr_float(node,"cpu",temp->u.mod.cpu);
       xmlr_float(node,"cargo",temp->u.mod.cargo);
+      xmlr_float(node,"mass_rel",temp->u.mod.mass_rel);
    } while (xml_nextNode(node));
 
    /* Process some variables. */
@@ -1186,11 +1187,13 @@ if ((x) != 0.) \
    DESC_ADD1( temp->u.mod.energy_regen, "energy/second" );
    DESC_ADD0( temp->u.mod.cpu, "cpu" );
    DESC_ADD0( temp->u.mod.cargo, "cargo" );
+   DESC_ADD0( temp->u.mod.mass_rel, "%% mass" );
 #undef DESC_ADD1
 #undef DESC_ADD0
 #undef DESC_ADD
 
    /* More processing. */
+   temp->u.mod.mass_rel /= 100.;
    temp->u.mod.cpu = -temp->u.mod.cpu; /* Invert sign so it works with outfit_cpu. */
 }
 
