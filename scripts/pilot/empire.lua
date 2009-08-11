@@ -111,8 +111,8 @@ end
 function empire_outfitSecondary( p, o )
    local sec = {
       "150mm Railgun",
-      { "Headhunter Launcher", { "Headhunter Missile", 10 } },
-      { "EMP Grenade Launcher", { "EMP Grenade", 20 } }
+      "Headhunter Launcher",
+      "EMP Grenade Launcher",
    }
    return pilot_outfitAdd( p, o, sec )
 end

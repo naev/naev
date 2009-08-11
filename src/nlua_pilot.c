@@ -911,6 +911,7 @@ static int pilotL_addOutfit( lua_State *L )
    const char *outfit;
    Outfit *o;
    int ret;
+   int q;
 
    /* Get the pilot. */
    lp = luaL_checkpilot(L,1);
@@ -922,6 +923,9 @@ static int pilotL_addOutfit( lua_State *L )
 
    /* Get parameters. */
    outfit = luaL_checkstring(L,2);
+   q      = 1;
+   if (lua_gettop(L) > 2)
+      q = luaL_checkint(L,3);
 
    /* Get the outfit. */
    o = outfit_get( outfit );
@@ -930,10 +934,27 @@ static int pilotL_addOutfit( lua_State *L )
    
    /* Add outfit. */
    for (i=0; i<p->noutfits; i++) {
-      if (o->slot == p->outfits[i]->slot) {
-         ret = pilot_addOutfit( p, o, p->outfits[i] );
+      /* Must still have to add outfit. */
+      if (q <= 0)
          break;
-      }
+
+      /* Must not have outfit already. */
+      if (p->outfits[i]->outfit != NULL)
+         continue;
+
+      /* Must fit slot. */
+      if (o->slot != p->outfits[i]->slot)
+         continue;
+
+      /* Add outfit. */
+      ret = pilot_addOutfit( p, o, p->outfits[i] );
+
+      /* Add ammo if needed. */
+      if (outfit_ammo(o) != NULL)
+         pilot_addAmmo( p, p->outfits[i], outfit_ammo(o), outfit_amount(o) );
+
+      /* We added an outfit. */
+      q--;
    }
    lua_pushboolean(L,!ret);
    return 1;
@@ -946,7 +967,8 @@ static int pilotL_addOutfit( lua_State *L )
  * "all" will remove all outfits.
  *
  * @usage p:rmOutfit( "all" ) -- Leaves the pilot naked.
- * @usage p:rmOutfit( "Neutron Disruptor", 1 ) -- Removes a neutron disruptor.
+ * @usage p:rmOutfit( "Neutron Disruptor" ) -- Removes a neutron disruptor.
+ * @usage p:rmOutfit( "Neutron Disruptor", 2 ) -- Removes two neutron disruptor.
  *
  *    @luparam p Pilot to remove outfit from.
  *    @luaparam outfit Name of the outfit to remove.
@@ -959,6 +981,7 @@ static int pilotL_rmOutfit( lua_State *L )
    Pilot *p;
    const char *outfit;
    Outfit *o;
+   int q;
 
    /* Get the pilot. */
    lp = luaL_checkpilot(L,1);
@@ -970,6 +993,9 @@ static int pilotL_rmOutfit( lua_State *L )
 
    /* Get parameters. */
    outfit = luaL_checkstring(L,2);
+   q      = 1;
+   if (lua_gettop(L) > 2)
+      q = luaL_checkint(L,3);
 
    /* If outfit is "all", we remove everything. */
    if (strcmp(outfit,"all")==0) {
@@ -988,10 +1014,17 @@ static int pilotL_rmOutfit( lua_State *L )
    
    /* Add outfit. */
    for (i=0; i<p->noutfits; i++) {
-      if (p->outfits[i]->outfit == o) {
-         pilot_rmOutfit( p, p->outfits[i] );
+      /* Must still need to remove. */
+      if (q <= 0)
          break;
-      }
+
+      /* Not found. */
+      if (p->outfits[i]->outfit != o)
+         continue;
+
+      /* Remove outfit. */
+      pilot_rmOutfit( p, p->outfits[i] );
+      q--;
    }
    return 0;
 }

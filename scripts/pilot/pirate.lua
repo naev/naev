@@ -98,11 +98,11 @@ end
 function pirate_outfitSecondary( p, o )
    local sec = {
       "150mm Railgun",
-      { "Seeker Launcher", { "Seeker Missile", 15 } },
-      { "Headhunter Launcher", { "Headhunter Missile", 10 } },
-      { "Banshee Launcher", { "Banshee Rocket", 30 } },
-      { "Mace Launcher", { "Mace Rocket", 7 } },
-      { "EMP Grenade Launcher", { "EMP Grenade", 20 } }
+      "Seeker Launcher",
+      "Headhunter Launcher",
+      "Banshee Launcher",
+      "Mace Launcher",
+      "EMP Grenade Launcher"
    }
    return pilot_outfitAdd( p, o, sec )
 end
@@ -111,8 +111,8 @@ end
 -- Tries to add a ranged weapon
 function pirate_outfitRanged( p, o )
    local sec = {
-      { "Seeker Launcher", { "Seeker Missile", 15 } },
-      { "Headhunter Launcher", { "Headhunter Missile", 10 } }
+      "Seeker Launcher",
+      "Headhunter Launcher"
    }
    return pilot_outfitAdd( p, o, sec )
 end
