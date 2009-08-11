@@ -18,6 +18,7 @@
 #include "tk/widget/imagearray.h"
 #include "tk/widget/cust.h"
 #include "tk/widget/tabwin.h"
+#include "tk/widget/checkbox.h"
 
 
 #endif /* WIDGET_H */

@@ -38,7 +38,8 @@ typedef enum WidgetType_ {
    WIDGET_INPUT,
    WIDGET_IMAGEARRAY,
    WIDGET_FADER,
-   WIDGET_TABBEDWINDOW
+   WIDGET_TABBEDWINDOW,
+   WIDGET_CHECKBOX
 } WidgetType;
 
 
@@ -113,6 +114,7 @@ typedef struct Widget_ {
       WidgetImageArrayData iar; /**< WIDGET_IMAGEARRAY */
       WidgetFaderData fad; /**< WIDGET_FADER */
       WidgetTabbedWindowData tab; /**< WIDGET_TABBEDWINDOW */
+      WidgetCheckboxData chk; /**< WIDGET_CHECKBOX */
    } dat; /**< Stores the widget specific data. */
 } Widget;
 
