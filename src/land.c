@@ -2521,11 +2521,6 @@ void land( Planet* p )
    /* Create tabbed window. */
    land_windows = window_addTabbedWindow( land_wid, -1, -1, -1, -1, "tabLand", j, names );
 
-   /* Go to last open tab. */
-   if (land_windowsMap[ last_window ] != -1)
-      window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
-   window_tabWinOnChange( land_wid, "tabLand", land_changeTab );
-
    /* Create each tab. */
    land_createMainTab( land_getWid(LAND_WINDOW_MAIN) );
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
@@ -2540,6 +2535,11 @@ void land( Planet* p )
    }
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
       commodity_exchange_open( land_getWid(LAND_WINDOW_COMMODITY) );
+
+   /* Go to last open tab. */
+   if (land_windowsMap[ last_window ] != -1)
+      window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
+   window_tabWinOnChange( land_wid, "tabLand", land_changeTab );
 
    /* player is now officially landed */
    landed = 1;
