@@ -295,11 +295,11 @@ static void commodity_buy( unsigned int wid, char* str )
    price = economy_getPrice(com, cur_system, land_planet);
 
    if (player->credits < q * price) {
-      dialogue_alert( "Not enough credits!" );
+      dialogue_alert( "Insufficient credits!" );
       return;
    }
    else if (pilot_cargoFree(player) <= 0) {
-      dialogue_alert( "Not enough free space!" );
+      dialogue_alert( "Insufficient free space!" );
       return;
    }
 
@@ -867,7 +867,7 @@ static void shipyard_buy( unsigned int wid, char* str )
 
    /* Must have enough money. */
    if (ship->price > player->credits) {
-      dialogue_alert( "Not enough credits!" );
+      dialogue_alert( "Insufficient credits!" );
       return;
    }
    else if (pilot_hasDeployed(player)) {
@@ -1110,7 +1110,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
             }
             else if (equipment_outfit != NULL) {
                if (equipment_selected->cpu < outfit_cpu(equipment_outfit)) {
-                  display = "Not enough CPU";
+                  display = "Insufficient CPU";
                   c = &cRed;
                }
                else if (outfit_isAfterburner(equipment_outfit) &&
@@ -1636,7 +1636,6 @@ static void equipment_updateShips( unsigned int wid, char* str )
    equipment_slot       = -1;
    equipment_mouseover  = -1;
    equipment_lastick    = SDL_GetTicks();
-   equipment_dir        = 0.;
 
    /* Get the ship. */
    shipname = toolkit_getImageArray( wid, "iarAvailShips" );
