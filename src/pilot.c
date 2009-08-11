@@ -859,20 +859,15 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
       /* Not what we are looking for. */
       if (slot->outfit != w->outfit)
          continue;
+      /* Save some stuff. */
       if (first < 0)
          first = i;
       if (slot == w)
          cur = q;
       q++;
    }
-   /* See if is time to shoot. */
-   for (i=0; i<p->outfit_nhigh; i++) {
-      slot = &p->outfit_high[i];
-      if (slot->outfit == w->outfit) {
-         if (p->outfit_high[first].timer > outfit_delay(w->outfit) * (q-cur) / q)
-            return 0;
-      }
-   }
+   if (p->outfit_high[first].timer > outfit_delay(w->outfit) * ((q-cur) / q))
+      return 0;
 
    /* Get weapon mount position. */
    pilot_getMount( p, w, &vp );
