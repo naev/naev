@@ -1228,36 +1228,44 @@ int map_isMapped( const char* targ_sys, int r )
    A_gc = NULL;
    open = closed = NULL;
 
-   if (targ_sys == NULL) sys = cur_system;
-   else sys = system_get( targ_sys );
-   open = A_newNode( sys, NULL );
-   open->r = 0;
-   ret = 1;
-   
+   if (targ_sys == NULL)
+      sys = cur_system;
+   else
+      sys = system_get( targ_sys );
+   open     = A_newNode( sys, NULL );
+   open->r  = 0;
+   ret      = 1;
+
    while ((cur = A_lowest(open)) != NULL) {
 
-      /* mark system as known and go to next */
-      sys = cur->sys;
-      dep = cur->r;
+      /* Check if system is known. */
+      sys      = cur->sys;
+      dep      = cur->r;
       if (!sys_isFlag(sys,SYSTEM_KNOWN)) {
          ret = 0;
          break;
       }
-      open = A_rm( open, sys );
-      closed = A_add( closed, cur );
+
+      /* We close the current system. */
+      open     = A_rm( open, sys );
+      closed   = A_add( closed, cur );
+
+      /* System is past the limit. */
+      if (dep+1 > r)
+         continue;
 
       /* check it's jumps */
       for (i=0; i<sys->njumps; i++) {
-         jsys = system_getIndex( cur->sys->jumps[i] );
-         
-         /* System has already been parsed or is too deep */
-         if ((A_in(closed,jsys) != NULL) || (dep+1 > r))
+         jsys = system_getIndex( sys->jumps[i] );
+        
+         /* SYstem has already been parsed. */
+         if (A_in(closed,jsys) != NULL)
              continue;
 
          /* create new node and such */
-         neighbour = A_newNode( jsys, NULL );
-         neighbour->r = dep+1;
-         open = A_add( open, neighbour );
+         neighbour      = A_newNode( jsys, NULL );
+         neighbour->r   = dep+1;
+         open           = A_add( open, neighbour );
       }
    }
 

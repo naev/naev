@@ -488,7 +488,9 @@ static void outfits_update( unsigned int wid, char* str )
          "%s\n",
          (outfit_isLicense(outfit)) ?
                player_hasLicense(outfit->name) :
-               player_outfitOwned(outfit),
+               (outfit_isMap(outfit)) ?
+                  map_isMapped(NULL,outfit->u.map.radius) :
+                  player_outfitOwned(outfit),
          outfit->mass,
          buf2,
          buf3,

@@ -1737,19 +1737,6 @@ static void pilot_refuel( Pilot *p, double dt )
  */
 int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
 {
-   /* special case if it's a map */
-   if (outfit_isMap(outfit)) {
-      if (pilot == player) /* Only player can get it. */
-         map_map(NULL,outfit->u.map.radius);
-      return 0; /* Success. */
-   }
-   /* special case if it's a license. */
-   else if (outfit_isLicense(outfit)) {
-      if (pilot == player) /* Only player can get it. */
-         player_addLicense(outfit->name);
-      return 0; /* Success. */
-   }
-
    /* See if slot has space. */
    if (s->outfit != NULL) {
       WARN( "Pilot '%s': trying to add outfit '%s' to slot that already has an outfit",
