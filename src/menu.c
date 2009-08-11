@@ -72,6 +72,9 @@
 int menu_open = 0; /**< Stores the opened/closed menus. */
 
 
+static glTexture *main_naevLogo = NULL; /**< NAEV Logo texture. */
+
+
 /*
  * prototypes
  */
@@ -124,6 +127,7 @@ void menu_main (void)
 
    /* Load background and friends. */
    tex = gl_newImage( "gfx/NAEV.png", 0 );
+   main_naevLogo = tex;
    nebu_prep( 300., 0. ); /* Needed for nebula to not spaz out */
 
    /* Calculate Logo and window offset. */
@@ -249,7 +253,9 @@ static void menu_main_cleanBG( unsigned int wid, char* str )
     * nor anything of the likes (nor toolkit to stop rendering) while
     * not leaking any texture.
     */
-   gl_freeTexture( window_getImage(wid, "imgLogo") );
+   if (main_naevLogo != NULL)
+      gl_freeTexture(main_naevLogo);
+   main_naevLogo = NULL;
    window_modifyImage( wid, "imgLogo", NULL );
 }
 
