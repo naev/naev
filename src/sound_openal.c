@@ -872,7 +872,13 @@ void sound_al_free( alSound *snd )
  */
 int sound_al_volume( double vol )
 {
+   int i;
    svolume = (ALfloat) vol;
+
+   soundLock();
+   for (i=0; i<source_nall; i++)
+      alSourcef( source_all[i], AL_GAIN, svolume );
+   soundUnlock();
 
    return 0;
 }
