@@ -1401,7 +1401,7 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
    if (purge && !dialogue_isOpen()) /* Hack, since dialogues use secondary loop. */
       toolkit_purgeDead();
 
-   return 0; /* don't block input */
+   return ret; /* don't block input */
 }
 
 
@@ -1683,14 +1683,14 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 
       case SDLK_RETURN:
          if (wdw->accept_fptr != NULL) {
-            (*wdw->accept_fptr)( wdw->id, wdw->name );
+            wdw->accept_fptr( wdw->id, wdw->name );
             return 1;
          }
          break;
 
       case SDLK_ESCAPE:
          if (wdw->cancel_fptr != NULL) {
-            (*wdw->cancel_fptr)( wdw->id, wdw->name );
+            wdw->cancel_fptr( wdw->id, wdw->name );
             return 1;
          }
          break;
