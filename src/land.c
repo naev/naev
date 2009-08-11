@@ -990,8 +990,8 @@ static void equipment_open( unsigned int wid )
          "Sell price:\n"
          "\n"
          "Thrust:\n"
-         "Turn:\n"
          "Speed:\n"
+         "Turn:\n"
          "\n"
          "Shield:\n"
          "Armour:\n"
@@ -1514,6 +1514,9 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
       window_destroyWidget( wid, "iarAvailOutfits" );
       equipment_genLists( wid );
    }
+
+   /* Update ships. */
+   equipment_updateShips( wid, NULL );
 
    return 0;
 }
