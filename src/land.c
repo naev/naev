@@ -1639,13 +1639,17 @@ static void equipment_genLists( unsigned int wid )
    /* Ship list. */
    if (!widget_exists( wid, "iarAvailShips" )) {
       equipment_selected = NULL;
-      nships   = player_nships()+1;
+      if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
+         nships   = player_nships()+1;
+      else
+         nships   = 1;
       sships   = malloc(sizeof(char*)*nships);
       tships   = malloc(sizeof(glTexture*)*nships);
       /* Add player's current ship. */
       sships[0] = strdup(player->name);
       tships[0] = player->ship->gfx_target;
-      player_ships( &sships[1], &tships[1] );
+      if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
+         player_ships( &sships[1], &tships[1] );
       window_addImageArray( wid, 20, -40,
             sw, sh, "iarAvailShips", 64./96.*128., 64.,
             tships, sships, nships, equipment_updateShips );
@@ -2580,24 +2584,33 @@ void land( Planet* p )
 
    /* See what is available. */
    j = 0;
+   /* Main. */
    land_windowsMap[LAND_WINDOW_MAIN] = j;
    names[j++] = land_windowNames[LAND_WINDOW_MAIN];
+   /* Basic - bar + missions */
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
       land_windowsMap[LAND_WINDOW_BAR] = j;
       names[j++] = land_windowNames[LAND_WINDOW_BAR];
       land_windowsMap[LAND_WINDOW_MISSION] = j;
       names[j++] = land_windowNames[LAND_WINDOW_MISSION];
    }
+   /* Outfits. */
    if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS)) {
       land_windowsMap[LAND_WINDOW_OUTFITS] = j;
       names[j++] = land_windowNames[LAND_WINDOW_OUTFITS];
    }
+   /* Shipyard. */
    if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
       land_windowsMap[LAND_WINDOW_SHIPYARD] = j;
       names[j++] = land_windowNames[LAND_WINDOW_SHIPYARD];
+   }
+   /* Equipment. */
+   if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS) ||
+         planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
       land_windowsMap[LAND_WINDOW_EQUIPMENT] = j;
       names[j++] = land_windowNames[LAND_WINDOW_EQUIPMENT];
    }
+   /* Commodity. */
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY)) {
       land_windowsMap[LAND_WINDOW_COMMODITY] = j;
       names[j++] = land_windowNames[LAND_WINDOW_COMMODITY];
@@ -2607,17 +2620,24 @@ void land( Planet* p )
    land_windows = window_addTabbedWindow( land_wid, -1, -1, -1, -1, "tabLand", j, names );
 
    /* Create each tab. */
+   /* Main. */
    land_createMainTab( land_getWid(LAND_WINDOW_MAIN) );
+   /* Basic - bar + missions */
    if (planet_hasService(land_planet, PLANET_SERVICE_BASIC)) {
       spaceport_bar_open( land_getWid(LAND_WINDOW_BAR) );
       misn_open( land_getWid(LAND_WINDOW_MISSION) );
    }
+   /* Outfits. */
    if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS))
       outfits_open( land_getWid(LAND_WINDOW_OUTFITS) );
-   if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
+   /* Shipard. */
+   if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
       shipyard_open( land_getWid(LAND_WINDOW_SHIPYARD) );
+   /* Equipment. */
+   if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS) ||
+         planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
       equipment_open( land_getWid(LAND_WINDOW_EQUIPMENT) );
-   }
+   /* Commodity. */
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
       commodity_exchange_open( land_getWid(LAND_WINDOW_COMMODITY) );
 
