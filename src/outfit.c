@@ -821,6 +821,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "%s\n"
+         "%.0f Tons\n"
          "Needs %.0f CPU\n"
          "\n"
          "%.1f shots/second\n"
@@ -829,6 +830,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          "%.0f range",
          temp->name,
          outfit_getType(temp),
+         temp->mass,
          temp->u.blt.cpu,
          1./temp->u.blt.delay,
          temp->u.blt.damage, outfit_damageTypeToStr(temp->u.blt.dtype),
@@ -924,6 +926,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "%s\n"
+         "%.0f Tons\n"
          "Needs %.0f CPU\n"
          "\n"
          "%.0f %s damage/second\n"
@@ -932,6 +935,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          "%.0f range",
          temp->name,
          outfit_getType(temp),
+         temp->mass,
          temp->u.bem.cpu,
          temp->u.bem.damage, outfit_damageTypeToStr(temp->u.bem.dtype),
          temp->u.bem.energy,
@@ -984,12 +988,14 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "%s\n"
+         "%.0f Tons\n"
          "Needs %.0f CPU\n"
          "\n"
          "%.1f shots/second\n"
          "Holds %d %s",
          temp->name,
          outfit_getType(temp),
+         temp->mass,
          temp->u.lau.cpu,
          1./temp->u.lau.delay,
          temp->u.lau.amount, temp->u.lau.ammo_name );
@@ -1091,6 +1097,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "%s\n"
+         "%.0f Tons\n"
          "\n"
          "%.0f %s damage\n"
          "%.0f energy\n"
@@ -1099,6 +1106,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          "%.1f lockon",
          temp->name,
          outfit_getType(temp),
+         temp->mass,
          temp->u.amm.damage, outfit_damageTypeToStr(temp->u.amm.dtype),
          temp->u.amm.energy,
          temp->u.amm.speed,
@@ -1168,9 +1176,11 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    i = snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
-         "%s\n",
+         "%s\n"
+         "%.0f Tons\n",
          temp->name,
-         outfit_getType(temp) );
+         outfit_getType(temp),
+         temp->mass );
 
 #define DESC_ADD(x, s, n) \
 if ((x) != 0.) \
@@ -1242,6 +1252,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "%s\n"
+         "%.0f Tons\n"
          "Needs %.0f CPU\n"
          "\n"
          "%.0f + %.0f%% thrust\n"
@@ -1250,6 +1261,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
          "%.1f rumble",
          temp->name,
          outfit_getType(temp),
+         temp->mass,
          temp->u.afb.cpu,
          temp->u.afb.thrust_abs, temp->u.afb.thrust_perc*100.,
          temp->u.afb.speed_abs, temp->u.afb.speed_perc*100.,
@@ -1283,12 +1295,14 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "%s\n"
+         "%.0f Tons\n"
          "Needs %.0f CPU\n"
          "\n"
          "%.1f launches/second\n"
          "Holds %d %s",
          temp->name,
          outfit_getType(temp),
+         temp->mass,
          temp->u.bay.cpu,
          1./temp->u.bay.delay,
          temp->u.bay.amount, temp->u.bay.ammo_name );
@@ -1323,9 +1337,11 @@ static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent )
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
-         "%s",
+         "%s\n"
+         "%.0f Tons",
          temp->name,
-         outfit_getType(temp) );
+         outfit_getType(temp),
+         temp->mass );
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
@@ -1424,6 +1440,7 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "%s\n"
+         "%.0f Tons\n"
          "Needs %.0f CPU\n"
          "\n"
          "%.0f range\n"
@@ -1431,6 +1448,7 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
          "%.0f energy",
          temp->name,
          outfit_getType(temp),
+         temp->mass,
          temp->u.jam.cpu,
          temp->u.jam.range,
          temp->u.jam.chance*100.,
