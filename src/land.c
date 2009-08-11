@@ -993,6 +993,7 @@ static void equipment_open( unsigned int wid )
          "Class:\n"
          "Sell price:\n"
          "\n"
+         "Mass:\n"
          "Thrust:\n"
          "Speed:\n"
          "Turn:\n"
@@ -1007,7 +1008,7 @@ static void equipment_open( unsigned int wid )
          "Where:\n"
          "Transportation:";
    x = 20 + sw + 20 + 180 + 20 + 30;
-   y = -230;
+   y = -210;
    window_addText( wid, x, y,
          100, h+y, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
    x += 100;
@@ -1138,7 +1139,7 @@ static void equipment_render( double bx, double by, double bw, double bh )
    c = &cGrey80;
    dc = &cGrey60;
    w = 30;
-   h = 100;
+   h = 80;
    x = bx + 10 + (40-w)/2 + 180 + 30;
    y = by + bh - 30 - h;
    percent = (p->cpu_max > 0.) ? p->cpu / p->cpu_max : 0.;
@@ -1358,9 +1359,9 @@ static void equipment_renderShip( double bx, double by,
    w  = 128;
    h  = 128;
    px = (x+30) + (bx+bw - (x+30) - pw)/2;
-   py = by + bh - 30 - h + (h-ph)/2;
+   py = by + bh - 30 - h + (h-ph)/2 + 30;
    x  = (x+30) + (bx+bw - (x+30) - w)/2;
-   y  = by + bh - 30 - h;
+   y  = by + bh - 30 - h + 30;
    toolkit_drawRect( x-5, y-5, w+10, h+10, &cBlack, NULL );
    gl_blitScaleSprite( p->ship->gfx_space,
          px + SCREEN_W/2, py + SCREEN_H/2, sx, sy, pw, ph, NULL );
@@ -1728,6 +1729,7 @@ static void equipment_updateShips( unsigned int wid, char* str )
          "%s\n"
          "%s credits\n"
          "\n"
+         "%.0f Tons\n"
          "%.0f MN/ton\n"
          "%.0f M/s\n"
          "%.0f Grad/s\n"
@@ -1747,6 +1749,7 @@ static void equipment_updateShips( unsigned int wid, char* str )
          ship_class(ship->ship),
          buf3,
          /* Movement. */
+         ship->solid->mass,
          ship->thrust/ship->solid->mass,
          ship->speed,
          ship->turn,
