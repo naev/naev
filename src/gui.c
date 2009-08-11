@@ -601,6 +601,7 @@ void gui_render( double dt )
    glColour* c, col;
    glFont* f;
    StarSystem *sys;
+   int q;
 
    /* If player is dead just render the cinematic mode. */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
@@ -728,6 +729,16 @@ void gui_render( double dt )
                outfit_isFighterBay(player->secondary->outfit)) &&
             (player->secondary->u.ammo.outfit != NULL)) {
 
+         /* Get quantity. */
+         q = 0;
+         for (i=0; i<player->outfit_nhigh; i++) {
+            if (player->outfit_high[i].outfit != player->secondary->outfit)
+               continue;
+            
+            if (player->outfit_high[i].u.ammo.outfit == player->secondary->u.ammo.outfit)
+               q += player->outfit_high[i].u.ammo.quantity;
+         }
+
          /* Weapon name. */
          gl_printMidRaw( f, (int)gui.weapon.w,
                gui.weapon.x, gui.weapon.y - 5,
@@ -736,7 +747,7 @@ void gui_render( double dt )
          /* Print ammo left underneath. */
          gl_printMid( &gl_smallFont, (int)gui.weapon.w,
                gui.weapon.x, gui.weapon.y - 10 - gl_defFont.h,
-               NULL, "%d", player->secondary->u.ammo.quantity );
+               NULL, "%d", q );
       }
       /* Other. */
       else { /* just print the item name */
