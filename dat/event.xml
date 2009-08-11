@@ -13,7 +13,7 @@
  <event name="Shipwreck">
   <lua>neutral/shipwreck</lua>
   <trigger>enter</trigger>
-  <chance>10</chance>
+  <chance>3</chance>
   <flags>
    <unique />
   </flags>
