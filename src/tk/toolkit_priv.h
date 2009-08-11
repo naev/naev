@@ -135,6 +135,8 @@ typedef struct Widget_ {
  * @brief Represents a graphical window.
  */
 typedef struct Window_ {
+   struct Window_ *next; /* Linked list. */
+
    unsigned int id; /**< Unique ID. */
    char *name; /**< Window name - should be unique. */
    unsigned int flags; /**< Window flags. */
