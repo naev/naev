@@ -835,9 +835,9 @@
   <license>Heavy Combat Vessel License</license>
   <description>The ship that single-handedly put Krain Indusries on the map, the Kestrel was designed to be a sleek heavy assault cruiser. Generally more fragile then other cruisers, it manages to combine excellent manoeuvrability and firepower with state-of-the-art electronics, making for a truly fearsome ship in the hands of an able captain.</description>
   <movement>
-   <thrust>120</thrust>
-   <turn>100</turn>
-   <speed>140</speed>
+   <thrust>100</thrust>
+   <turn>80</turn>
+   <speed>110</speed>
   </movement>
   <health>
    <shield>1100</shield>
@@ -882,9 +882,9 @@
   <tech>9009</tech>
   <description>The Kestrel is the best ship offered by the Skull and Bones. It is extremely agile for a cruiser yet doesn't lack the firepower necessary to question the authority of the Empire. A very strong ship for those pirates who can afford it.</description>
   <movement>
-   <thrust>130</thrust>
-   <turn>110</turn>
-   <speed>150</speed>
+   <thrust>110</thrust>
+   <turn>85</turn>
+   <speed>110</speed>
   </movement>
   <health>
    <shield>1200</shield>
@@ -930,9 +930,9 @@
   <license>Heavy Combat Vessel License</license>
   <description>The Hawking is the flagship vessel of Nexus Shipyards. A large cruiser designed for extended engagements, it is widely used by the Empire to exert control over their territories. In terms of raw firepower, the Hawking is second only to the flagship of House Goddard, though its narrower frame allows it to present a smaller target to the enemy.</description>
   <movement>
-   <thrust>80</thrust>
-   <turn>70</turn>
-   <speed>100</speed>
+   <thrust>60</thrust>
+   <turn>50</turn>
+   <speed>70</speed>
   </movement>
   <health>
    <shield>1200</shield>
@@ -980,9 +980,9 @@
   <license>Heavy Combat Vessel License</license>
   <description>An Empire Hawking.</description>
   <movement>
-   <thrust>80</thrust>
-   <turn>70</turn>
-   <speed>100</speed>
+   <thrust>62</thrust>
+   <turn>53</turn>
+   <speed>75</speed>
   </movement>
   <health>
    <shield>1260</shield>
@@ -1030,9 +1030,9 @@
   <license>Heavy Combat Vessel License</license>
   <description>The archaic design of the Goddard is deceiving. Although it takes the shape of traditional flying intra-planet vessels, it's very suited for space travel. Production is entirely done on Zhiru in the Goddard system by House Goddard. Over time, specialization and improvements on the original design have kept it very competitive in the market. It's a classic of space.</description>
   <movement>
-   <thrust>100</thrust>
-   <turn>80</turn>
-   <speed>130</speed>
+   <thrust>60</thrust>
+   <turn>45</turn>
+   <speed>60</speed>
   </movement>
   <health>
    <shield>1600</shield>
@@ -1081,9 +1081,9 @@
   <license>Heavy Combat Vessel License</license>
   <description>A Dvaered Goddard.</description>
   <movement>
-   <thrust>100</thrust>
-   <turn>80</turn>
-   <speed>130</speed>
+   <thrust>60</thrust>
+   <turn>45</turn>
+   <speed>60</speed>
   </movement>
   <health>
    <shield>1600</shield>
