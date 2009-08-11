@@ -160,8 +160,10 @@ static void shipyard_buy( unsigned int wid, char* str );
 /* equipment */
 static void equipment_open( unsigned int wid );
 static void equipment_renderColumn( double x, double y, double w, double h,
-      int n, PilotOutfitSlot *lst, const char *txt, int selected, int mover );
+      int n, PilotOutfitSlot *lst, const char *txt, int selected );
 static void equipment_render( double bx, double by, double bw, double bh );
+static void equipment_renderOverlayColumn( double x, double y, double w, double h,
+      int n, PilotOutfitSlot *lst, int mover );
 static void equipment_renderOverlay( double bx, double by, double bw, double bh );
 static void equipment_renderShip( double bx, double by,
       double bw, double bh, double x, double y, Pilot *p );
@@ -1030,13 +1032,10 @@ static void equipment_open( unsigned int wid )
  * @brief Renders an outfit column.
  */
 static void equipment_renderColumn( double x, double y, double w, double h,
-      int n, PilotOutfitSlot *lst, const char *txt, int selected, int mover )
+      int n, PilotOutfitSlot *lst, const char *txt, int selected )
 {
    int i;
-   glColour *lc, *c, *dc, tc;
-   int text_width, xoff;
-   const char *display;
-   int subtitle;
+   glColour *lc, *c, *dc;
 
    /* Render text. */
    gl_printMidRaw( &gl_smallFont, w+10.,
@@ -1045,7 +1044,6 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
    /* Iterate for all the slots. */
    for (i=0; i<n; i++) {
-      subtitle = 0;
       if (lst[i].outfit != NULL) {
          if (i==selected)
             c = &cDConsole;
@@ -1056,13 +1054,6 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          /* Draw bugger. */
          gl_blitScale( lst[i].outfit->gfx_store,
                x + SCREEN_W/2., y + SCREEN_H/2., w, h, NULL );
-
-         /* See if needs a subtitle. */
-         if ((outfit_isLauncher(lst[i].outfit) ||
-                  (outfit_isFighterBay(lst[i].outfit))) &&
-               ((lst[i].u.ammo.outfit == NULL) ||
-                  (lst[i].u.ammo.quantity < outfit_amount(lst[i].outfit))))
-            subtitle = 1;
       }
       else {
          if ((equipment_outfit != NULL) &&
@@ -1093,6 +1084,101 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       }
       toolkit_drawOutline( x, y, w, h, 1., lc, c  );
       toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
+      /* Go to next one. */
+      y -= h+20;
+   }
+}
+/**
+ * @brief Renders the custom equipment widget.
+ */
+static void equipment_render( double bx, double by, double bw, double bh )
+{
+   Pilot *p;
+   int m, selected;
+   double percent;
+   double x, y;
+   double w, h;
+   glColour *lc, *c, *dc;
+
+   /* Must have selected ship. */
+   if (equipment_selected == NULL)
+      return;
+
+   /* Calculate height of outfit widgets. */
+   p = equipment_selected;
+   m = MAX( MAX( p->outfit_nhigh, p->outfit_nmedium ), p->outfit_nlow );
+   h = (bh-30.)/m;
+   if (h > 40)
+      h = 40;
+   w = h;
+
+   /* Get selected. */
+   selected = equipment_slot;
+
+   /* Render high outfits. */
+   x = bx + 10 + (40-w)/2;
+   y = by + bh - 60 + (40-h)/2;
+   equipment_renderColumn( x, y, w, h,
+         p->outfit_nhigh, p->outfit_high, "High", selected );
+   selected -= p->outfit_nhigh;
+   x = bx + 10 + (40-w)/2 + 60;
+   y = by + bh - 60 + (40-h)/2;
+   equipment_renderColumn( x, y, w, h,
+         p->outfit_nmedium, p->outfit_medium, "Medium", selected );
+   selected -= p->outfit_nmedium;
+   x = bx + 10 + (40-w)/2 + 120;
+   y = by + bh - 60 + (40-h)/2;
+   equipment_renderColumn( x, y, w, h,
+         p->outfit_nlow, p->outfit_low, "Low", selected );
+
+   /* Render CPU and energy bars. */
+   lc = &cWhite;
+   c = &cGrey80;
+   dc = &cGrey60;
+   w = 30;
+   h = 100;
+   x = bx + 10 + (40-w)/2 + 180 + 30;
+   y = by + bh - 30 - h;
+   percent = (p->cpu_max > 0.) ? p->cpu / p->cpu_max : 0.;
+   gl_printMidRaw( &gl_smallFont, w,
+         x + SCREEN_W/2., y + h + gl_smallFont.h + 10. + SCREEN_H/2.,
+         &cBlack, "CPU" );
+   toolkit_drawRect( x, y, w, h*percent, &cGreen, NULL );
+   toolkit_drawRect( x, y+h*percent, w, h*(1.-percent), &cRed, NULL );
+   toolkit_drawOutline( x, y, w, h, 1., lc, c  );
+   toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
+   gl_printMid( &gl_smallFont, 70,
+         x - 20 + SCREEN_W/2., y - 20 - gl_smallFont.h + SCREEN_H/2.,
+         &cBlack, "%.0f / %.0f", p->cpu, p->cpu_max );
+
+   /* Render ship graphic. */
+   equipment_renderShip( bx, by, bw, bh, x, y, p );
+}
+
+
+/**
+ * @brief Renders an outfit column.
+ */
+static void equipment_renderOverlayColumn( double x, double y, double w, double h,
+      int n, PilotOutfitSlot *lst, int mover )
+{
+   int i;
+   glColour *c, tc;
+   int text_width, xoff;
+   const char *display;
+   int subtitle;
+
+   /* Iterate for all the slots. */
+   for (i=0; i<n; i++) {
+      subtitle = 0;
+      if (lst[i].outfit != NULL) {
+         /* See if needs a subtitle. */
+         if ((outfit_isLauncher(lst[i].outfit) ||
+                  (outfit_isFighterBay(lst[i].outfit))) &&
+               ((lst[i].u.ammo.outfit == NULL) ||
+                  (lst[i].u.ammo.quantity < outfit_amount(lst[i].outfit))))
+            subtitle = 1;
+      }
       /* Draw bottom. */
       if ((i==mover) || subtitle) {
          display = NULL;
@@ -1160,86 +1246,48 @@ static void equipment_renderColumn( double x, double y, double w, double h,
    }
 }
 /**
- * @brief Renders the custom equipment widget.
- */
-static void equipment_render( double bx, double by, double bw, double bh )
-{
-   Pilot *p;
-   int m, selected, mover;
-   double percent;
-   double x, y;
-   double w, h;
-   glColour *lc, *c, *dc;
-
-   /* Must have selected ship. */
-   if (equipment_selected == NULL)
-      return;
-
-   /* Calculate height of outfit widgets. */
-   p = equipment_selected;
-   m = MAX( MAX( p->outfit_nhigh, p->outfit_nmedium ), p->outfit_nlow );
-   h = (bh-30.)/m;
-   if (h > 40)
-      h = 40;
-   w = h;
-
-   /* Get selected. */
-   selected = equipment_slot;
-   mover    = equipment_mouseover;
-
-   /* Render high outfits. */
-   x = bx + 10 + (40-w)/2;
-   y = by + bh - 60 + (40-h)/2;
-   equipment_renderColumn( x, y, w, h,
-         p->outfit_nhigh, p->outfit_high, "High", selected, mover );
-   selected -= p->outfit_nhigh;
-   mover    -= p->outfit_nhigh;
-   x = bx + 10 + (40-w)/2 + 60;
-   y = by + bh - 60 + (40-h)/2;
-   equipment_renderColumn( x, y, w, h,
-         p->outfit_nmedium, p->outfit_medium, "Medium", selected, mover );
-   selected -= p->outfit_nmedium;
-   mover    -= p->outfit_nmedium;
-   x = bx + 10 + (40-w)/2 + 120;
-   y = by + bh - 60 + (40-h)/2;
-   equipment_renderColumn( x, y, w, h,
-         p->outfit_nlow, p->outfit_low, "Low", selected, mover );
-
-   /* Render CPU and energy bars. */
-   lc = &cWhite;
-   c = &cGrey80;
-   dc = &cGrey60;
-   w = 30;
-   h = 100;
-   x = bx + 10 + (40-w)/2 + 180 + 30;
-   y = by + bh - 30 - h;
-   percent = (p->cpu_max > 0.) ? p->cpu / p->cpu_max : 0.;
-   gl_printMidRaw( &gl_smallFont, w,
-         x + SCREEN_W/2., y + h + gl_smallFont.h + 10. + SCREEN_H/2.,
-         &cBlack, "CPU" );
-   toolkit_drawRect( x, y, w, h*percent, &cGreen, NULL );
-   toolkit_drawRect( x, y+h*percent, w, h*(1.-percent), &cRed, NULL );
-   toolkit_drawOutline( x, y, w, h, 1., lc, c  );
-   toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
-   gl_printMid( &gl_smallFont, 70,
-         x - 20 + SCREEN_W/2., y - 20 - gl_smallFont.h + SCREEN_H/2.,
-         &cBlack, "%.0f / %.0f", p->cpu, p->cpu_max );
-
-   /* Render ship graphic. */
-   equipment_renderShip( bx, by, bw, bh, x, y, p );
-}
-
-
-/**
  * @brief Renders the equipment overlay.
  */
 static void equipment_renderOverlay( double bx, double by, double bw, double bh )
 {
    (void) bw;
-   (void) bh;
    Pilot *p;
+   int m, mover;
+   double x, y;
+   double w, h;
    PilotOutfitSlot *slot;
    const char *alt;
+
+   /* Must have selected ship. */
+   if (equipment_selected != NULL) {
+
+      /* Calculate height of outfit widgets. */
+      p = equipment_selected;
+      m = MAX( MAX( p->outfit_nhigh, p->outfit_nmedium ), p->outfit_nlow );
+      h = (bh-30.)/m;
+      if (h > 40)
+         h = 40;
+      w = h;
+
+      /* Get selected. */
+      mover    = equipment_mouseover;
+
+      /* Render high outfits. */
+      x = bx + 10 + (40-w)/2;
+      y = by + bh - 60 + (40-h)/2;
+      equipment_renderOverlayColumn( x, y, w, h,
+            p->outfit_nhigh, p->outfit_high, mover );
+      mover    -= p->outfit_nhigh;
+      x = bx + 10 + (40-w)/2 + 60;
+      y = by + bh - 60 + (40-h)/2;
+      equipment_renderOverlayColumn( x, y, w, h,
+            p->outfit_nmedium, p->outfit_medium, mover );
+      mover    -= p->outfit_nmedium;
+      x = bx + 10 + (40-w)/2 + 120;
+      y = by + bh - 60 + (40-h)/2;
+      equipment_renderOverlayColumn( x, y, w, h,
+            p->outfit_nlow, p->outfit_low, mover );
+   }
 
    /* Mouse must be over something. */
    if (equipment_mouseover < 0)
