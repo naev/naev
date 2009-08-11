@@ -1548,6 +1548,11 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
       if (o->slot != slot->slot)
          return 0;
 
+      /* Can't add more then one afterburner. */
+      if (outfit_isAfterburner(equipment_outfit) &&
+            (equipment_selected->afterburner != NULL))
+         return 0;
+
       /* Add outfit to ship. */
       ret = player_rmOutfit( o, 1 );
       if (ret == 1)
