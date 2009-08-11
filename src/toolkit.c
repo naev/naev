@@ -402,6 +402,7 @@ unsigned int window_create( const char* name,
    toolkit_clearKey();
 
    /* Add to list. */
+   wdw->next = NULL;
    if (windows == NULL)
       windows = wdw;
    else {
@@ -1274,8 +1275,8 @@ void window_render( Window *w )
     * focused widget
     */
    if (w->focus != -1) {
-      x += w->widgets[w->focus].x;
-      y += w->widgets[w->focus].y;
+      x  += w->widgets[w->focus].x;
+      y  += w->widgets[w->focus].y;
       wid = w->widgets[w->focus].w;
       hei = w->widgets[w->focus].h;
       toolkit_drawOutline( x, y, wid, hei, 3, &cBlack, NULL );
@@ -1752,9 +1753,10 @@ static void toolkit_purgeDead (void)
          if (wlast == NULL)
             windows = wdw->next;
          else
-            wlast   = wdw->next;
+            wlast->next = wdw->next;
          wdw = wlast;
          /* Kill target. */
+         wkill->next = NULL;
          window_kill( wkill );
       }
       else {
@@ -1767,11 +1769,11 @@ static void toolkit_purgeDead (void)
          }
       }
       /* Save position. */
-      wlast =  wdw;
+      wlast = wdw;
       if (wdw == NULL)
          wdw = windows;
       else
-         wdw   = wdw->next;
+         wdw = wdw->next;
    }
 
    /* Nothing left to purge. */
