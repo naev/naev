@@ -844,7 +844,7 @@ void gui_render( double dt )
          if (player->commodities[i].quantity > 0.) /* quantity is over */
             gl_printMax( &gl_smallFont, gui.misc.w - 15,
                   gui.misc.x + 13, j,
-                  NULL, "%.0f %s%s", player->commodities[i].quantity,
+                  NULL, "%d %s%s", player->commodities[i].quantity,
                   player->commodities[i].commodity->name,
                   (player->commodities[i].id) ? "*" : "" );
          else /* basically for weightless mission stuff */ 
@@ -860,10 +860,10 @@ void gui_render( double dt )
    gl_print( &gl_smallFont,
          gui.misc.x + 8, j,
          &cConsole, "Free:" );
-   i = gl_printWidth( &gl_smallFont, "%.0f", pilot_cargoFree(player) );
+   i = gl_printWidth( &gl_smallFont, "%d", pilot_cargoFree(player) );
    gl_print( &gl_smallFont,
          gui.misc.x + gui.misc.w - 8 - i, j,
-         NULL, "%.0f", pilot_cargoFree(player) );
+         NULL, "%d", pilot_cargoFree(player) );
 
 
    /* Messages. */

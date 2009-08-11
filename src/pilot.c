@@ -73,10 +73,10 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w );
 static void pilot_hyperspace( Pilot* pilot, double dt );
 static void pilot_refuel( Pilot *p, double dt );
 /* cargo. */
-static double pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, double quantity, int cleanup );
+static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup );
 static void pilot_calcCargo( Pilot* pilot );
-static double pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
-      double quantity, unsigned int id );
+static int pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
+      int quantity, unsigned int id );
 /* clean up. */
 void pilot_free( Pilot* p ); /* externed in player.c */
 static void pilot_dead( Pilot* p );
@@ -2059,7 +2059,7 @@ void pilot_calcStats( Pilot* pilot )
  *    @param p Pilot to get the the free space of.
  *    @return Free cargo space on pilot.
  */
-double pilot_cargoFree( Pilot* p )
+int pilot_cargoFree( Pilot* p )
 {
    return p->cargo_free;
 }
@@ -2118,11 +2118,10 @@ int pilot_moveCargo( Pilot* dest, Pilot* src )
  *    @param quantity Quantity to add.
  *    @param id Mission ID to add (0 in none).
  */
-static double pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
-      double quantity, unsigned int id )
+static int pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
+      int quantity, unsigned int id )
 {
-   int i, f;
-   double q;
+   int i, f, q;
 
    q = quantity;
 
@@ -2176,7 +2175,7 @@ static double pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
  *    @param quantity Quantity to add.
  *    @return Quantity actually added.
  */
-double pilot_addCargo( Pilot* pilot, Commodity* cargo, double quantity )
+int pilot_addCargo( Pilot* pilot, Commodity* cargo, int quantity )
 {
    return pilot_addCargoRaw( pilot, cargo, quantity, 0 );
 }
@@ -2188,10 +2187,9 @@ double pilot_addCargo( Pilot* pilot, Commodity* cargo, double quantity )
  *    @param pilot Pilot to get used cargo space of.
  *    @return The used cargo space by pilot.
  */
-double pilot_cargoUsed( Pilot* pilot )
+int pilot_cargoUsed( Pilot* pilot )
 {
-   int i;
-   double q;
+   int i, q;
 
    q = 0; 
    for (i=0; i<pilot->ncommodities; i++)
@@ -2222,7 +2220,7 @@ static void pilot_calcCargo( Pilot* pilot )
  *    @param quantity Quantity to add.
  *    @return The Mission Cargo ID of created cargo. 
  */
-unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, double quantity )
+unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity )
 {
    int i;
    unsigned int id, max_id;
@@ -2302,10 +2300,10 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
  *    @param cleanup Whether we're cleaning up or not (removes mission cargo).
  *    @return Amount of cargo gotten rid of.
  */
-static double pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, double quantity, int cleanup )
+static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup )
 {
    int i;
-   double q;
+   int q;
 
    /* check if pilot has it */
    q = quantity;
@@ -2352,7 +2350,7 @@ static double pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, double quantity,
  *    @param quantity Amount of cargo to get rid of.
  *    @return Amount of cargo gotten rid of.
  */
-double pilot_rmCargo( Pilot* pilot, Commodity* cargo, double quantity )
+int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
 {
    return pilot_rmCargoRaw( pilot, cargo, quantity, 0 );
 }

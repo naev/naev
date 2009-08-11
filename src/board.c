@@ -328,7 +328,7 @@ static void board_update( unsigned int wdw )
    else {
       for (i=0; i<p->ncommodities; i++)
          j += snprintf( &str[j], PATH_MAX-j,
-               "%.1f %s\n",
+               "%d %s\n",
                p->commodities[i].quantity, p->commodities[i].commodity->name );
    }
 

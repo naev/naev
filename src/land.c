@@ -274,7 +274,7 @@ static void commodity_update( unsigned int wid, char* str )
          "%d tons\n"
          "%d credits/ton\n"
          "\n"
-         "%.1f tons\n",
+         "%d tons\n",
          player_cargoOwned( comname ),
          economy_getPrice(com, cur_system, land_planet),
          pilot_cargoFree(player));
@@ -1700,7 +1700,7 @@ static void equipment_updateShips( unsigned int wid, char* str )
    char* loc;
    unsigned int price;
    int onboard;
-   double cargo;
+   int cargo;
 
    /* Clear defaults. */
    equipment_slot       = -1;
@@ -1742,7 +1742,7 @@ static void equipment_updateShips( unsigned int wid, char* str )
          "%.0f MJ (%.1f MJ/s)\n"
          "%.0f MJ (%.1f MJ/s)\n"
          "\n"
-         "%.0f / %.0f Tons\n"
+         "%d / %d Tons\n"
          "%.0f / %.0f Units\n"
          "\n"
          "%s\n"

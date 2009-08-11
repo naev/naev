@@ -2348,7 +2348,7 @@ static int player_saveShip( xmlTextWriterPtr writer,
 
       xmlw_startElem(writer,"commodity");
 
-      xmlw_attr(writer,"quantity","%f",ship->commodities[i].quantity);
+      xmlw_attr(writer,"quantity","%d",ship->commodities[i].quantity);
       if (ship->commodities[i].id > 0)
          xmlw_attr(writer,"id","%d",ship->commodities[i].id);
       xmlw_str(writer,ship->commodities[i].commodity->name);
@@ -2683,7 +2683,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    double fuel;
    Pilot* ship;
    xmlNodePtr node, cur;
-   double quantity;
+   int quantity;
    Outfit *o;
    
    xmlr_attr(parent,"name",name);
@@ -2798,7 +2798,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
             if (xml_isNode(cur,"commodity")) {
                xmlr_attr(cur,"quantity",q);
                xmlr_attr(cur,"id",id);
-               quantity = atof(q);
+               quantity = atoi(q);
                i = (id==NULL) ? 0 : atoi(id);
                free(q);
                if (id != NULL)
