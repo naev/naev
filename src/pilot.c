@@ -851,29 +851,30 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    if (w->timer > 0.)
       return 0;
 
-   /* Count the outfits and current one. */
-   prev  = -1;
-   cur   = -1.;
-   q     = 0.;
-   for (i=0; i<p->outfit_nhigh; i++) {
-      slot = &p->outfit_high[i];
-      /* Not what we are looking for. */
-      if (slot->outfit != w->outfit)
-         continue;
-      /* Save some stuff. */
-      if (slot == w)
-         cur = q;
-      if ((cur < 0.) && (slot->timer > 0.)) {
-         t    = q;
-         prev = i;
+   /* Count the outfits and current one - only affects non-beam. */
+   if (!outfit_isBeam(w->outfit)) {
+      prev  = -1;
+      cur   = -1.;
+      q     = 0.;
+      for (i=0; i<p->outfit_nhigh; i++) {
+         slot = &p->outfit_high[i];
+         /* Not what we are looking for. */
+         if (slot->outfit != w->outfit)
+            continue;
+         /* Save some stuff. */
+         if (slot == w)
+            cur = q;
+         if ((cur < 0.) && (slot->timer > 0.)) {
+            t    = q;
+            prev = i;
+         }
+         q++;
       }
-      q++;
+      if (prev >= 0) {
+         if (p->outfit_high[prev].timer > outfit_delay(w->outfit) * ((cur-t) / q))
+            return 0;
+      }
    }
-   if (prev >= 0) {
-      if (p->outfit_high[prev].timer > outfit_delay(w->outfit) * ((cur-t) / q))
-         return 0;
-   }
-
 
    /* Get weapon mount position. */
    pilot_getMount( p, w, &vp );
