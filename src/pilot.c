@@ -726,11 +726,17 @@ void pilot_shoot( Pilot* p, int group )
  */
 void pilot_shootSecondary( Pilot* p )
 {
+   int i;
+
    /* No secondary weapon. */
    if (p->secondary == NULL)
       return;
 
-   pilot_shootWeapon( p, p->secondary );
+   /* Fire all secondary weapon of same type. */
+   for (i=0; i<p->outfit_nhigh; i++) {
+      if (p->outfit_high[i].outfit == p->secondary->outfit)
+         pilot_shootWeapon( p, &p->outfit_high[i] );
+   }
 }
 
 
@@ -836,10 +842,37 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v )
 static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 {
    Vector2d vp, vv;
+   int i;
+   PilotOutfitSlot *slot;
+   int first;
+   double q, cur;
 
    /* check to see if weapon is ready */
    if (w->timer > 0.)
       return 0;
+
+   /* Count the outfits and current one. */
+   first = -1;
+   q     = 0.;
+   for (i=0; i<p->outfit_nhigh; i++) {
+      slot = &p->outfit_high[i];
+      /* Not what we are looking for. */
+      if (slot->outfit != w->outfit)
+         continue;
+      if (first < 0)
+         first = i;
+      if (slot == w)
+         cur = q;
+      q++;
+   }
+   /* See if is time to shoot. */
+   for (i=0; i<p->outfit_nhigh; i++) {
+      slot = &p->outfit_high[i];
+      if (slot->outfit == w->outfit) {
+         if (p->outfit_high[first].timer > outfit_delay(w->outfit) * (q-cur) / q)
+            return 0;
+      }
+   }
 
    /* Get weapon mount position. */
    pilot_getMount( p, w, &vp );
@@ -2400,7 +2433,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->outfit_high    = calloc( ship->outfit_nhigh, sizeof(PilotOutfitSlot) );
    /* Global. */
    pilot->noutfits = pilot->outfit_nlow + pilot->outfit_nmedium + pilot->outfit_nhigh;
-   pilot->outfits  = malloc( pilot->noutfits * sizeof(PilotOutfitSlot*) );
+   pilot->outfits  = calloc( pilot->noutfits, sizeof(PilotOutfitSlot*) );
    /* First pass copy data. */
    p = 0;
    for (i=0; i<pilot->outfit_nlow; i++) {
