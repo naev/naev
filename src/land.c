@@ -1108,7 +1108,8 @@ static void equipment_renderColumn( double x, double y, double w, double h,
                   c = &cDConsole;
                }
             }
-            else if (equipment_outfit != NULL) {
+            else if ((equipment_outfit != NULL) &&
+                  (lst->slot == equipment_outfit->slot)) {
                if (equipment_selected->cpu < outfit_cpu(equipment_outfit)) {
                   display = "Insufficient CPU";
                   c = &cRed;
@@ -1118,7 +1119,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
                   display = "Already have an afterburner";
                   c = &cRed;
                }
-               else if (lst->slot == equipment_outfit->slot) {
+               else {
                   display = "Right click to add";
                   c = &cDConsole;
                }
