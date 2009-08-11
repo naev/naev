@@ -59,6 +59,7 @@ typedef enum WidgetStatus_ {
 
 #define WGT_FLAG_CANFOCUS     (1<<0)   /**< Widget can get focus. */
 #define WGT_FLAG_RAWINPUT     (1<<1)   /**< Widget should always get raw input. */
+#define WGT_FLAG_KILL         (1<<9)   /**< Widget should die. */
 #define wgt_setFlag(w,f)      ((w)->flags |= (f)) /**< Sets a widget flag. */
 #define wgt_rmFlag(w,f)       ((w)->flags &= ~(f)) /**< Removes a widget flag. */
 #define wgt_isFlag(w,f)       ((w)->flags & (f)) /**< Checks if a widget has a fla.g */
@@ -120,6 +121,7 @@ typedef struct Widget_ {
 #define WINDOW_NOINPUT     (1<<1) /**< Window recieves no input. */
 #define WINDOW_NORENDER    (1<<2) /**< Window does not render even if it should. */
 #define WINDOW_NOBORDER    (1<<3) /**< Window does not need border. */
+#define WINDOW_KILL        (1<<9) /**< Window should die. */
 #define window_isFlag(w,f) ((w)->flags & (f)) /**< Checks a window flag. */
 #define window_setFlag(w,f) ((w)->flags |= (f)) /**< Sets a window flag. */
 #define window_rmFlag(w,f) ((w)->flags &= ~(f)) /**< Removes a window flag. */
@@ -163,7 +165,7 @@ void window_renderOverlay( Window* w );
 
 
 /* Widget stuff. */
-Widget* window_newWidget( Window* w );
+Widget* window_newWidget( Window* w, const char *name );
 void widget_cleanup( Widget *widget );
 Widget* window_getwgt( const unsigned int wid, const char* name );
 void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y );

@@ -33,12 +33,10 @@ void window_addImage( const unsigned int wid,
                       char* name, glTexture* image, int border )
 {
    Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw);
+   Widget *wgt = window_newWidget(wdw, name);
 
    /* generic */
    wgt->type   = WIDGET_IMAGE;
-   wgt->name   = strdup(name);
-   wgt->wdw    = wid;
 
    /* specific */
    wgt->render          = img_render;

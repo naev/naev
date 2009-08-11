@@ -40,6 +40,7 @@ static int toolkit_open = 0; /**< 1 if toolkit is in use, 0 else. */
 static Window *windows = NULL; /**< Window stacks, not to be confused with MS windows. */
 static int nwindows = 0; /**< Number of windows in the stack. */
 static int mwindows = 0; /**< Allocated windows in the stack. */
+static int window_dead = 0; /**< There are dead windows lying around. */
 
 
 /*
@@ -79,6 +80,10 @@ static int toolkit_isFocusable( Widget *wgt );
 static Widget* toolkit_getFocus( Window *wdw );
 /* render */
 static void window_renderBorder( Window* w );
+/* Death. */
+static void widget_kill( Window *wdw, Widget *wgt, int i );
+static void window_kill( Window *wdw, int i );
+static void toolkit_purgeDead (void);
 
 
 /**
@@ -122,22 +127,50 @@ void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
  *    @param w Window to create widget in.
  *    @return Newly allocated widget.
  */
-Widget* window_newWidget( Window* w )
+Widget* window_newWidget( Window* w, const char *name )
 {
+   int i;
    Widget* wgt = NULL;
 
-   /* Grow widget list. */
-   w->nwidgets++;
-   w->widgets = realloc( w->widgets,
-         sizeof(Widget)*w->nwidgets );
-   if (w->widgets == NULL)
-      WARN("Out of Memory");
+   /* Try to find one with the same name first. */
+   for (i=0; i<w->nwidgets; i++) {
+      /* Must match name. */
+      if (strcmp(name, w->widgets[i].name)!=0)
+         continue;
 
-   /* Set sane defaults. */
-   wgt = &w->widgets[ w->nwidgets - 1 ]; 
+      /* Should be destroyed. */
+      if (!wgt_isFlag( &w->widgets[i], WGT_FLAG_KILL )) {
+         WARN("Trying to create widget '%s' over existing one that hasn't been destroyed", 
+               name );
+         return NULL;
+      }
+
+      /* Prepare and return this widget. */
+      wgt = &w->widgets[i];
+      widget_cleanup(wgt);
+      break;
+   }
+
+   /* Must grow widgets. */
+   if (wgt == NULL) {
+      /* Grow widget list. */
+      w->nwidgets++;
+      w->widgets = realloc( w->widgets,
+            sizeof(Widget)*w->nwidgets );
+      if (w->widgets == NULL) {
+         WARN("Out of Memory");
+         return NULL;
+      }
+      /* Set sane defaults. */
+      wgt = &w->widgets[ w->nwidgets - 1 ]; 
+   }
+
+   /* Sane defaults. */
    memset( wgt, 0, sizeof(Widget) );
    wgt->type   = WIDGET_NULL;
    wgt->status = WIDGET_STATUS_NORMAL;
+   wgt->wdw    = w->id;
+   wgt->name   = strdup(name);
 
    return wgt;
 }
@@ -155,7 +188,6 @@ Window* window_wget( const unsigned int wid )
    for (i=0; i<nwindows; i++)
       if (windows[i].id == wid)
          return &windows[i];
-   DEBUG("Window '%d' not found in windows stack", wid);
    return NULL;
 }
 
@@ -277,7 +309,7 @@ int window_exists( const char* wdwname )
    int i;
    for (i=0; i<nwindows; i++)
       if (strcmp(windows[i].name,wdwname)==0)
-         return 1; /* exists */
+         return !window_isFlag(&windows[i], WINDOW_KILL); /* exists */
    return 0; /* doesn't exist */
 }
 
@@ -489,7 +521,7 @@ void widget_cleanup( Widget *widget )
 
    /* Type specific clean up. */
    if (widget->cleanup != NULL)
-      (*widget->cleanup)(widget);
+      widget->cleanup(widget);
 }
 
 
@@ -508,54 +540,64 @@ void window_close( unsigned int wid, char *str )
 
 
 /**
- * @brief Destroys a window.
+ * @brief Kills the window.
  *
  *    @param wid ID of window to destroy.
+ *    @return 1 if windows still need killing.
  */
 void window_destroy( const unsigned int wid )
 {
-   int i,j;
-
-   /* Destroy children first. */
-   for (i=0; i<nwindows; i++) {
-      if (windows[i].parent == wid) {
-         window_destroy( windows[i].id );
-         i = -1; /* Ugly hack in case a window gets destroyed midway. */
-      }
-   }
+   int i, j;
+   Window *wdw;
 
    /* Destroy the window */
-   for (i=0; i<nwindows; i++)
-      if (windows[i].id == wid) {
+   for (i=0; i<nwindows; i++) {
+      wdw = &windows[i];
 
-         /* Run the close function first. */
-         if (windows[i].close_fptr != NULL)
-            (*windows[i].close_fptr) (windows[i].id, windows[i].name);
+      /* Not the window we're looking for. */
+      if (wdw->id != wid)
+         continue;
 
-         /* Destroy the window. */
-         if (windows[i].name)
-            free(windows[i].name);
-         for (j=0; j<windows[i].nwidgets; j++)
-            widget_cleanup(&windows[i].widgets[j]);
-         free(windows[i].widgets);
-         break;
+      /* Mark children for death. */
+      for (j=0; j<nwindows; j++) {
+         if (windows[j].parent == wid)
+            window_destroy( windows[j].id );
       }
 
-   if (i==nwindows) { /* Not found */
-      WARN("Window of id '%u' not found in window stack!", wid);
-      return;
+      /* Mark for death. */
+      window_setFlag( wdw, WINDOW_KILL );
+      window_dead = 1;
+      break;
    }
+}
+
+
+/**
+ * @brief Kills the window.
+ *
+ *    @param wid ID of window to destroy.
+ */
+static void window_kill( Window *wdw, int i )
+{
+   int j;
+
+   /* Run the close function first. */
+   if (wdw->close_fptr != NULL)
+      wdw->close_fptr(windows[i].id, windows[i].name);
+
+   /* Destroy the window. */
+   if (wdw->name)
+      free(wdw->name);
+   for (j=0; j<wdw->nwidgets; j++)
+      widget_cleanup(&wdw->widgets[j]);
+   free(wdw->widgets);
 
    /* move other windows down a layer */
    for ( ; i<(nwindows-1); i++)
       windows[i] = windows[i+1];
 
+   /* One window less. */
    nwindows--;
-   if (nwindows==0) { /* no windows left */
-      SDL_ShowCursor(SDL_DISABLE);
-      toolkit_open = 0; /* disable toolkit */
-      if (paused) unpause_game();
-   }
 
    /* Clear key repeat, since toolkit could miss the keyup event. */
    toolkit_clearKey();
@@ -582,7 +624,7 @@ int widget_exists( const unsigned int wid, const char* wgtname )
    /* Check for widget. */
    for (i=0; i<w->nwidgets; i++)
       if (strcmp(wgtname,w->widgets[i].name)==0)
-         return 1;
+         return !wgt_isFlag(&w->widgets[i], WGT_FLAG_KILL);;
 
    return 0;
 }
@@ -596,28 +638,52 @@ int widget_exists( const unsigned int wid, const char* wgtname )
  */
 void window_destroyWidget( unsigned int wid, const char* wgtname )
 {
-   Window *w = window_wget(wid);
    int i;
+   Window *wdw;
+   Widget *wgt;
 
-   if (w==NULL) {
-      WARN("window '%d' does not exist", wid);
+   /* Get the window. */
+   wdw = window_wget( wid );
+   if (wdw == NULL)
       return;
-   }
 
-   for (i=0; i<w->nwidgets; i++)
-      if (strcmp(wgtname,w->widgets[i].name)==0)
+   /* Get the widget. */
+   /* get widget. */
+   wgt = NULL;
+   for (i=0; i<wdw->nwidgets; i++) {
+      if (strcmp(wdw->widgets[i].name, wgtname)==0) {
+         wgt = &wdw->widgets[i];
          break;
-   if (i >= w->nwidgets) {
-      DEBUG("widget '%s' not found in window %d", wgtname, wid);
+      }
+   }
+   if (wgt == NULL) {
+      WARN("Widget '%s' not found in window '%s'", wgtname, wdw->name );
       return;
    }
- 
-   if (w->focus == i) w->focus = -1;
-   widget_cleanup(&w->widgets[i]);
-   if (i < w->nwidgets-1) /* not last widget */
-      memmove(&w->widgets[i], &w->widgets[i+1],
-            sizeof(Widget) * (w->nwidgets-i-1) );
-   (w->nwidgets)--;
+
+   /* Defocus. */
+   if (wdw->focus == i)
+      wdw->focus = -1;
+
+   /* There's dead stuff now. */
+   window_dead = 1;
+   wgt_setFlag( wgt, WGT_FLAG_KILL );
+}
+
+
+/**
+ * @brief Destroy a widget really.
+ */
+static void widget_kill( Window *wdw, Widget *wgt, int i )
+{
+   /* Clean up. */
+   widget_cleanup(wgt);
+
+   /* Move memory around. */
+   if (i < wdw->nwidgets-1) /* not last widget */
+      memmove(&wdw->widgets[i], &wdw->widgets[i+1],
+            sizeof(Widget) * (wdw->nwidgets-i-1) );
+   (wdw->nwidgets)--;
 }
 
 
@@ -1314,18 +1380,25 @@ int toolkit_input( SDL_Event* event )
  */
 int toolkit_inputWindow( Window *wdw, SDL_Event *event )
 {
+   int ret;
+   ret = 0;
    switch (event->type) {
       case SDL_MOUSEMOTION:
       case SDL_MOUSEBUTTONDOWN:
       case SDL_MOUSEBUTTONUP:
          toolkit_mouseEvent(wdw, event);
-         return 1; /* block input */
+         ret = 1;
+         break;
 
       case SDL_KEYDOWN:
       case SDL_KEYUP:
-         return toolkit_keyEvent(wdw, event);
-
+         ret =  toolkit_keyEvent(wdw, event);
+         break;
    }
+
+   /* Clean up the dead if needed. */
+   toolkit_purgeDead();
+
    return 0; /* don't block input */
 }
 
@@ -1631,6 +1704,42 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 
 
 /**
+ * @brief Purges the dead windows.
+ */
+static void toolkit_purgeDead (void)
+{
+   int i, j;
+   Window *wdw;
+   Widget *wgt;
+
+   /* Only clean up if necessary. */
+   if (!window_dead)
+      return;
+
+   /* Destroy what is needed. */
+   for (i=0; i<nwindows; i++) {
+      wdw = &windows[i];
+      if (window_isFlag( wdw, WINDOW_KILL )) {
+         window_kill( wdw, i );
+         i--;
+      }
+      else {
+         for (j=0; j<wdw->nwidgets; j++) {
+            wgt = &wdw->widgets[j];
+            if (wgt_isFlag( wgt, WGT_FLAG_KILL )) {
+               widget_kill( wdw, wgt, j );
+               j--;
+            }
+         }
+      }
+   }
+
+   /* Nothing left to purge. */
+   window_dead = 0;
+}
+
+
+/**
  * @brief Updates the toolkit input for repeating keys.
  */
 void toolkit_update (void)
@@ -1640,11 +1749,19 @@ void toolkit_update (void)
    Widget *wgt;
    char buf[2];
 
-   t = SDL_GetTicks();
+   /* Killed all the windows. */
+   if (nwindows==0) { /* no windows left */
+      SDL_ShowCursor(SDL_DISABLE);
+      toolkit_open = 0; /* disable toolkit */
+      if (paused)
+         unpause_game();
+   }
 
    /* Must have a key pressed. */
    if (input_key == 0)
       return;
+
+   t = SDL_GetTicks();
 
    /* Should be repeating. */
    if (input_keyTime + INPUT_DELAY + input_keyCounter*INPUT_FREQ > t)
@@ -1719,7 +1836,8 @@ Window* toolkit_getActiveWindow (void)
 
    /* Get window that can be focused. */
    for (i=nwindows-1; i>=0; i--)
-      if (!window_isFlag(&windows[i], WINDOW_NOFOCUS))
+      if (!window_isFlag(&windows[i], WINDOW_NOFOCUS) &&
+            !window_isFlag(&windows[i], WINDOW_KILL))
          return &windows[i];
 
    /* No window found. */
@@ -1775,10 +1893,11 @@ void toolkit_exit (void)
 {
    /* Destroy the windows. */
    while (nwindows > 0)
-      window_destroy(windows[0].id);
+      window_kill(&windows[0], 0);
    free(windows);
 
    /* Free the VBO. */
    gl_vboDestroy( toolkit_vbo );
    toolkit_vbo = NULL;
 }
+

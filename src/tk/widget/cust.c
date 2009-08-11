@@ -47,12 +47,10 @@ void window_addCust( const unsigned int wid,
                                     double x, double y, double w, double h) )
 {
    Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw);
+   Widget *wgt = window_newWidget(wdw, name);
 
    /* generic */
    wgt->type   = WIDGET_CUST;
-   wgt->name   = strdup(name);
-   wgt->wdw    = wid;
 
    /* specific */
    wgt->render          = cst_render;

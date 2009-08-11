@@ -36,12 +36,10 @@ void window_addRect( const unsigned int wid,
                      char* name, glColour* colour, int border )
 {
    Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw);
+   Widget *wgt = window_newWidget(wdw, name);
 
    /* generic */
    wgt->type   = WIDGET_RECT;
-   wgt->name   = strdup(name);
-   wgt->wdw    = wid;
 
    /* specific */
    wgt->render          = rct_render;

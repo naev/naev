@@ -40,12 +40,10 @@ void window_addButton( const unsigned int wid,
                        void (*call) (unsigned int wgt, char* wdwname) )
 {
    Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw);
+   Widget *wgt = window_newWidget(wdw, name);
 
    /* generic */
    wgt->type = WIDGET_BUTTON;
-   wgt->name = strdup(name);
-   wgt->wdw  = wid;
    
    /* specific */
    wgt->keyevent           = btn_key;

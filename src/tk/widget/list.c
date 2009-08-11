@@ -47,12 +47,10 @@ void window_addList( const unsigned int wid,
                      void (*call) (unsigned int wdw, char* wgtname) )
 {
    Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw);
+   Widget *wgt = window_newWidget(wdw, name);
 
    /* generic */
    wgt->type   = WIDGET_LIST;
-   wgt->name   = strdup(name);
-   wgt->wdw    = wid;
 
    /* specific */
    wgt->render             = lst_render;

@@ -51,12 +51,10 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
    Widget *wgt;
    
    wdw = window_wget(wid);
-   wgt = window_newWidget(wdw);
+   wgt = window_newWidget(wdw, name);
 
    /* generic */
    wgt->type = WIDGET_TABBEDWINDOW;
-   wgt->name = strdup(name);
-   wgt->wdw  = wid;
    
    /* specific */
    wgt_setFlag( wgt, WGT_FLAG_RAWINPUT );

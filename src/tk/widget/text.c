@@ -40,12 +40,10 @@ void window_addText( const unsigned int wid,
                      glFont* font, glColour* colour, const char* string )
 {
    Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw);
+   Widget *wgt = window_newWidget(wdw, name);
 
    /* generic */
    wgt->type = WIDGET_TEXT;
-   wgt->name = strdup(name);
-   wgt->wdw  = wid;
 
    /* specific */
    wgt->render             = txt_render;

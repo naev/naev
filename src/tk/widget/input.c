@@ -42,12 +42,10 @@ void window_addInput( const unsigned int wid,
                       char* name, const int max, const int oneline )
 {
    Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw);                             
+   Widget *wgt = window_newWidget(wdw, name);
                                                                     
    /* generic */
    wgt->type   = WIDGET_INPUT;
-   wgt->name   = strdup(name);
-   wgt->wdw    = wid;
 
    /* specific */
    wgt->render          = inp_render;

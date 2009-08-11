@@ -170,7 +170,7 @@ void menu_main (void)
          "btnOptions", "Options", (void(*)(unsigned int,char*))menu_options );
    window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20),
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnOptions", "Credits", menu_main_credits );
+         "btnCredits", "Credits", menu_main_credits );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnExit", "Exit", menu_exit );
 

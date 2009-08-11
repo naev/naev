@@ -51,12 +51,10 @@ void window_addImageArray( const unsigned int wid,
                            void (*call) (unsigned int wdw, char* wgtname) )
 {
    Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw);
+   Widget *wgt = window_newWidget(wdw, name);
 
    /* generic */
    wgt->type   = WIDGET_IMAGEARRAY;
-   wgt->name   = strdup(name);
-   wgt->wdw    = wid;
 
    /* position/size */
    wgt->w = (double) w;
