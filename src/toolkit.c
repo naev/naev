@@ -1528,9 +1528,11 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt, int i,
 
          /* Not scrolling. */
          if (wgt->status != WIDGET_STATUS_SCROLLING) {
-            if (inbounds)
-               wgt->status = WIDGET_STATUS_MOUSEOVER;
-            else if (!(button & SDL_BUTTON(SDL_BUTTON_LEFT)))
+            if (inbounds) {
+               if (wgt->status != WIDGET_STATUS_MOUSEDOWN)
+                  wgt->status = WIDGET_STATUS_MOUSEOVER;
+            }
+            else
                wgt->status = WIDGET_STATUS_NORMAL;
          }
          else
