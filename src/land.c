@@ -1277,7 +1277,9 @@ static void equipment_renderOverlay( double bx, double by, double bw, double bh 
    double x, y;
    double w, h;
    PilotOutfitSlot *slot;
-   const char *alt;
+   char alt[512];
+   int pos;
+   Outfit *o;
 
    /* Must have selected ship. */
    if (equipment_selected != NULL) {
@@ -1327,14 +1329,26 @@ static void equipment_renderOverlay( double bx, double by, double bw, double bh 
             p->outfit_nhigh - p->outfit_nmedium ];
    }
 
+   /* For comfortability. */
+   o = slot->outfit;
+
    /* Slot is empty. */
-   if (slot->outfit == NULL)
+   if (o == NULL)
       return;
 
    /* Get text. */
-   alt = slot->outfit->desc_short;
-   if (alt == NULL)
+   if (o->desc_short == NULL)
       return;
+   pos = snprintf( alt, sizeof(alt),
+         "%s\n"
+         "\n"
+         "%s\n",
+         o->name,
+         o->desc_short );
+   if (o->mass > 0.)
+      pos += snprintf( &alt[pos], sizeof(alt)-pos,
+            "%.0f Tons",
+            o->mass );
 
    /* Draw the text. */
    toolkit_drawAltText( bx + equipment_altx, by + equipment_alty, alt );
