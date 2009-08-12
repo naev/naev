@@ -145,6 +145,8 @@ static void commodity_update( unsigned int wid, char* str );
 static void commodity_buy( unsigned int wid, char* str );
 static void commodity_sell( unsigned int wid, char* str );
 /* outfits */
+static void outfits_getSize( unsigned int wid, int *w, int *h,
+      int *iw, int *ih, int *bw, int *bh );
 static void outfits_open( unsigned int wid );
 static void outfits_update( unsigned int wid, char* str );
 static int outfit_canBuy( Outfit* outfit, int q, int errmsg );
@@ -338,6 +340,29 @@ static void commodity_sell( unsigned int wid, char* str )
 
 
 /**
+ * @brief Gets the size of the outfits window.
+ */
+static void outfits_getSize( unsigned int wid, int *w, int *h,
+      int *iw, int *ih, int *bw, int *bh )
+{
+   /* Get window dimen,sions. */
+   window_dimWindow( wid, w, h );
+
+   /* Calculate image array dimensions. */
+   if (iw != NULL)
+      *iw = 310;
+   if (ih != NULL)
+      *ih = *h - 60;
+
+   /* Calculate button dimensions. */
+   if (bw != NULL)
+      *bw = (*w - *iw - 80) / 2;
+   if (bh != NULL)
+      *bh = BUTTON_HEIGHT;
+}
+
+
+/**
  * @brief Opens the outfit exchange center window.
  */
 static void outfits_open( unsigned int wid )
@@ -351,16 +376,8 @@ static void outfits_open( unsigned int wid )
    int iw, ih;
    int bw, bh;
 
-   /* Get window dimensions. */
-   window_dimWindow( wid, &w, &h );
-
-   /* Calculate image array dimensions. */
-   iw = 310;
-   ih = h - 60;
-
-   /* Calculate button dimensions. */
-   bw = (w - iw - 80) / 2;
-   bh = BUTTON_HEIGHT;
+   /* Get dimensions. */
+   outfits_getSize( wid, &w, &h, &iw, &ih, &bw, &bh );
 
    /* will allow buying from keyboard */
    window_setAccept( wid, outfits_buy );
@@ -377,18 +394,20 @@ static void outfits_open( unsigned int wid )
          "Sell", outfits_sell );
 
    /* fancy 128x128 image */
-   window_addRect( wid, -20, -50, 128, 128, "rctImage", &cBlack, 0 );
-   window_addImage( wid, -20-128, -50-128, "imgOutfit", NULL, 1 );
+   window_addRect( wid, 20 + iw + 20, -50, 128, 128, "rctImage", &cBlack, 0 );
+   window_addImage( wid, 20 + iw + 20, -50-128, "imgOutfit", NULL, 1 );
 
    /* cust draws the modifier */
    window_addCust( wid, -40-bw, 60+2*bh,
          bw, bh, "cstMod", 0, outfits_renderMod, NULL );
 
    /* the descriptive text */
-   window_addText( wid, 40+300+20, -60,
+   window_addText( wid, 20 + iw + 20 + 128 + 20, -60,
+         320, 160, 0, "txtOutfitName", &gl_defFont, &cBlack, NULL );
+   window_addText( wid, 20 + iw + 20 + 128 + 20, -60 - gl_defFont.h - 20,
          320, 160, 0, "txtDescShort", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, 40+300+20, -60,
-         80, 160, 0, "txtSDesc", &gl_smallFont, &cDConsole,
+   window_addText( wid, 20 + iw + 20, -60-128-10,
+         60, 160, 0, "txtSDesc", &gl_smallFont, &cDConsole,
          "Owned:\n"
          "\n"
          "Mass:\n"
@@ -396,9 +415,9 @@ static void outfits_open( unsigned int wid )
          "Price:\n"
          "Money:\n"
          "License:\n" );
-   window_addText( wid, 40+300+40+60, -60,
+   window_addText( wid, 20 + iw + 20 + 60, -60-128-10,
          250, 160, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, 20+300+40, -240,
+   window_addText( wid, 20 + iw + 20, -60-128-10-160,
          w-400, 180, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 
@@ -439,8 +458,14 @@ static void outfits_update( unsigned int wid, char* str )
    char *outfitname;
    Outfit* outfit;
    char buf[PATH_MAX], buf2[16], buf3[16];
-   double h;
+   double th;
+   int iw, ih;
+   int w, h;
 
+   /* Get dimensions. */
+   outfits_getSize( wid, &w, &h, &iw, &ih, NULL, NULL );
+
+   /* Get and set parameters. */
    outfitname = toolkit_getImageArray( wid, "iarOutfits" );
    if (strcmp(outfitname,"None")==0) { /* No outfits */
       window_modifyImage( wid, "imgOutfit", NULL );
@@ -455,11 +480,12 @@ static void outfits_update( unsigned int wid, char* str )
             "NA\n"
             "NA\n" );
       window_modifyText( wid, "txtDDesc", buf );
+      window_modifyText( wid, "txtOutfitName", "None" );
       window_modifyText( wid, "txtDescShort", NULL );
       /* Reposition. */
-      window_moveWidget( wid, "txtSDesc", 40+300+20, -60 );
-      window_moveWidget( wid, "txtDDesc", 40+300+20+60, -60 );
-      window_moveWidget( wid, "txtDescription", 20+300+40, -240 );
+      window_moveWidget( wid, "txtSDesc", 20+iw+20, -60 );
+      window_moveWidget( wid, "txtDDesc", 20+iw+20+60, -60 );
+      window_moveWidget( wid, "txtDescription", 20+iw+40, -240 );
       return;
    }
 
@@ -501,12 +527,13 @@ static void outfits_update( unsigned int wid, char* str )
          buf3,
          (outfit->license != NULL) ? outfit->license : "None" );
    window_modifyText( wid, "txtDDesc", buf );
+   window_modifyText( wid, "txtOutfitName", outfit->name );
    window_modifyText( wid, "txtDescShort", outfit->desc_short );
-   h  = gl_printHeightRaw( &gl_smallFont, 320, outfit->desc_short );
-   window_moveWidget( wid, "txtSDesc", 40+300+20, -60-h-20 );
-   window_moveWidget( wid, "txtDDesc", 40+300+20+60, -60-h-20 );
-   h += gl_printHeightRaw( &gl_smallFont, 250, buf );
-   window_moveWidget( wid, "txtDescription", 20+300+40, -60-h-40 );
+   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 320, outfit->desc_short ) );
+   window_moveWidget( wid, "txtSDesc", 40+300+20, -60-th-20 );
+   window_moveWidget( wid, "txtDDesc", 40+300+20+60, -60-th-20 );
+   th += gl_printHeightRaw( &gl_smallFont, 250, buf );
+   window_moveWidget( wid, "txtDescription", 20+300+40, -60-th-40 );
 }
 /**
  * @brief Checks to see if the player can buy the outfit.
@@ -1740,7 +1767,7 @@ static void equipment_addAmmo (void)
  */
 static void equipment_genLists( unsigned int wid )
 {
-   int i, l;
+   int i, l, p;
    char **sships;
    glTexture **tships;
    int nships;
@@ -1799,10 +1826,21 @@ static void equipment_genLists( unsigned int wid )
             if (o->desc_short == NULL)
                alt[i] = NULL;
             else {
-               l = strlen(o->desc_short) + 32;
+               l = strlen(o->desc_short) + 128;
                alt[i] = malloc( l );
-               snprintf( alt[i], l, "%s\n\nQuantity %d",
-                     o->desc_short, player_outfitOwned(o) );
+               p = snprintf( alt[i], l,
+                     "%s\n"
+                     "\n"
+                     "%s\n",
+                     o->name,
+                     o->desc_short );
+               if (o->mass > 0.)
+                  p += snprintf( &alt[i][p], l-p,
+                        "%.0f Tons\n",
+                        o->mass );
+               p += snprintf( &alt[i][p], l-p,
+                     "Quantity %d",
+                     player_outfitOwned(o) );
             }
          }
          toolkit_setImageArrayAlt( wid, "iarAvailOutfits", alt );
