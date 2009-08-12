@@ -1991,7 +1991,7 @@ void pilot_calcStats( Pilot* pilot )
       /* Subtract CPU. */
       pilot->cpu           -= outfit_cpu(o) * q;
       if (outfit_cpu(o) < 0.)
-         pilot->cpu_max    += outfit_cpu(o) * q;
+         pilot->cpu_max    -= outfit_cpu(o) * q;
 
       /* Add mass. */
       pilot->mass_outfit   += o->mass;
