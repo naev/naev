@@ -1033,8 +1033,8 @@ static void equipment_open( unsigned int wid )
          "Cargo:\n"
          "Fuel:\n"
          "\n"
-         "Where:\n"
-         "Transportation:";
+         "Transportation:\n"
+         "Where:";
    x = 20 + sw + 20 + 180 + 20 + 30;
    y = -210;
    window_addText( wid, x, y,
@@ -1924,8 +1924,8 @@ static void equipment_updateShips( unsigned int wid, char* str )
          "%d / %d Tons\n"
          "%.0f / %.0f Units\n"
          "\n"
-         "%s%s\n"
-         "%s credits\n",
+         "%s credits\n"
+         "%s%s",
          /* Generic. */
          ship->name,
          ship->ship->name,
