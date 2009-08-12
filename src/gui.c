@@ -970,6 +970,18 @@ static void gui_renderRadar( double dt )
 
 
 /**
+ * @brief Clears the GUI messages.
+ */
+void gui_clearMessages (void)
+{
+   int i;
+   for (i=0; i<mesg_max; i++) {
+      mesg_stack[i].t = -1.;
+   }
+}
+
+
+/**
  * @brief Renders the player's messages on screen.
  *
  *    @param dt Current delta tick.

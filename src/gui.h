@@ -37,6 +37,7 @@ void gui_render( double dt );
 /*
  * misc
  */
+void gui_clearMessages (void);
 void gui_setDefaults (void);
 void player_message( const char *fmt, ... );
 void gui_setRadarRel( int mod );

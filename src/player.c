@@ -600,7 +600,11 @@ void player_cleanup (void)
    player_left  = 0.;
    player_right = 0.;
 
+   /* Clear player. */
    player_clear();
+
+   /* Clear messages. */
+   gui_clearMessages();
 
    /* clean up name */
    if (player_name != NULL) {
