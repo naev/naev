@@ -100,8 +100,14 @@ static int player_lastEngineSound = -1; /**< Last engine sound. */
 /* 
  * player pilot stack - ships he has 
  */
-static Pilot** player_stack   = NULL; /**< Stack of ships player has. */
-static char** player_lstack   = NULL; /**< Names of the planet the ships are at. */
+/**
+ * @brief Player ship.
+ */
+typedef struct PlayerShip_s {
+   Pilot* p; /**< Pilot. */
+   char *loc; /**< Location. */
+} PlayerShip_t;
+static PlayerShip_t* player_stack   = NULL; /**< Stack of ships player has. */
 static int player_nstack      = 0; /**< Number of ships player has. */
 
 
@@ -195,6 +201,7 @@ static int player_parseEscorts( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 /* Misc. */
 static int player_outfitCompare( const void *arg1, const void *arg2 );
+static int player_shipPriceRaw( Pilot *ship );
 /* 
  * externed
  */
@@ -429,10 +436,9 @@ static void player_newShipMake( char* name )
 
    /* store the current ship if it exists */
    if (player != NULL) {
-      player_stack = realloc(player_stack, sizeof(Pilot*)*(player_nstack+1));
-      player_stack[player_nstack] = pilot_copy( player );
-      player_lstack = realloc(player_lstack, sizeof(char*)*(player_nstack+1));
-      player_lstack[player_nstack] = strdup( land_planet->name );
+      player_stack = realloc(player_stack, sizeof(PlayerShip_t)*(player_nstack+1));
+      player_stack[player_nstack].p = pilot_copy( player );
+      player_stack[player_nstack].loc = strdup( land_planet->name );
       player_nstack++;
 
       player_credits = player->credits;
@@ -453,11 +459,11 @@ static void player_newShipMake( char* name )
 
    /* copy cargo over. */
    if (player_nstack > 0) { /* not during creation though. */
-      pilot_moveCargo( player, player_stack[player_nstack-1] );
+      pilot_moveCargo( player, player_stack[player_nstack-1].p );
 
       /* recalculate stats after cargo movement. */
       pilot_calcStats( player );
-      pilot_calcStats( player_stack[player_nstack-1] );
+      pilot_calcStats( player_stack[player_nstack-1].p );
    }
 
    /* money. */
@@ -478,8 +484,8 @@ void player_swapShip( char* shipname )
    Vector2d v;
 
    for (i=0; i<player_nstack; i++) {
-      if (strcmp(shipname,player_stack[i]->name)==0) { /* swap player and ship */
-         ship = player_stack[i];
+      if (strcmp(shipname,player_stack[i].p->name)==0) { /* swap player and ship */
+         ship = player_stack[i].p;
 
          /* move credits over */
          ship->credits = player->credits;
@@ -495,7 +501,7 @@ void player_swapShip( char* shipname )
          pilot_calcStats( player );
 
          /* now swap the players */
-         player_stack[i] = player;
+         player_stack[i].p = player;
          for (j=0; j<pilot_nstack; j++) /* find pilot in stack to swap */
             if (pilot_stack[j] == player) {
                player         = ship;
@@ -523,7 +529,6 @@ void player_swapShip( char* shipname )
 int player_shipPrice( char* shipname )
 {
    int i;
-   int price;
    Pilot *ship;
 
    if (strcmp(shipname,player->name)==0) {
@@ -532,8 +537,8 @@ int player_shipPrice( char* shipname )
    else {
       /* Find the ship. */
       for (i=0; i<player_nstack; i++) {
-         if (strcmp(shipname,player_stack[i]->name)==0) {
-            ship = player_stack[i];
+         if (strcmp(shipname,player_stack[i].p->name)==0) {
+            ship = player_stack[i].p;
             break;
          }
       }
@@ -544,6 +549,21 @@ int player_shipPrice( char* shipname )
       WARN( "Unable to find price for player's ship '%s': ship does not exist!", shipname );
       return -1;
    }
+
+   return player_shipPriceRaw( ship );
+}
+
+
+/**
+ * @brief Calculates the price of one of the player's ships.
+ *
+ *    @param ship Ship to calculate price of.
+ *    @return The price of the ship in credits.
+ */
+static int player_shipPriceRaw( Pilot *ship )
+{
+   int price;
+   int i;
 
    /* Ship price is base price + outfit prices. */
    price = ship_basePrice( ship->ship );
@@ -568,24 +588,20 @@ void player_rmShip( char* shipname )
 
    for (i=0; i<player_nstack; i++) {
       /* Not the ship we are looking for. */
-      if (strcmp(shipname,player_stack[i]->name)!=0)
+      if (strcmp(shipname,player_stack[i].p->name)!=0)
          continue;
 
       /* Free player ship and location. */
-      pilot_free(player_stack[i]);
-      free(player_lstack[i]);
+      pilot_free(player_stack[i].p);
+      free(player_stack[i].loc);
 
       /* Move memory to make adjacent. */
       memmove( player_stack+i, player_stack+i+1,
-            sizeof(Pilot*) * (player_nstack-i-1) );
-      memmove( player_lstack+i, player_lstack+i+1,
-            sizeof(char*) * (player_nstack-i-1) );
+            sizeof(PlayerShip_t) * (player_nstack-i-1) );
       player_nstack--; /* Shrink stack. */
       /* Realloc memory to smaller size. */
       player_stack = realloc( player_stack,
-            sizeof(Pilot*) * (player_nstack) );
-      player_lstack = realloc( player_lstack,
-            sizeof(char*) * (player_nstack) );
+            sizeof(PlayerShip_t) * (player_nstack) );
    }
 }
 
@@ -619,15 +635,12 @@ void player_cleanup (void)
 
    /* clean up the stack */
    for (i=0; i<player_nstack; i++) {
-      pilot_free(player_stack[i]);
-      free(player_lstack[i]);
+      pilot_free(player_stack[i].p);
+      free(player_stack[i].loc);
    }
    if (player_stack != NULL)
       free(player_stack);
    player_stack = NULL;
-   if (player_lstack != NULL)
-      free(player_lstack);
-   player_lstack = NULL;
    /* nothing left */
    player_nstack = 0;
 
@@ -1759,6 +1772,33 @@ void player_destroyed (void)
 
 
 /**
+ * @brief PlayerShip_t compare function for qsort().
+ */
+static int player_shipsCompare( const void *arg1, const void *arg2 )
+{
+   PlayerShip_t *ps1, *ps2;
+   int p1, p2;
+
+   /* Get the arguments. */
+   ps1 = (PlayerShip_t*) arg1;
+   ps2 = (PlayerShip_t*) arg2;
+
+   /* Get prices. */
+   p1 = player_shipPriceRaw( ps1->p );
+   p2 = player_shipPriceRaw( ps2->p );
+
+   /* Compare price INVERSELY */
+   if (p1 < p2)
+      return +1;
+   else if (p1 > p2)
+      return -1;
+
+   /* Same. */
+   return 0;
+}
+
+
+/**
  * @brief Returns a buffer with all the player's ships names
  *        or "None" if there are no ships.
  *
@@ -1773,9 +1813,13 @@ void player_ships( char** sships, glTexture** tships )
    if (player_nstack == 0)
       return;
 
+   /* Sort. */
+   qsort( player_stack, player_nstack, sizeof(PlayerShip_t), player_shipsCompare );
+
+   /* Create the struct. */
    for (i=0; i < player_nstack; i++) {
-      sships[i] = strdup(player_stack[i]->name);
-      tships[i] = player_stack[i]->ship->gfx_target;
+      sships[i] = strdup(player_stack[i].p->name);
+      tships[i] = player_stack[i].p->ship->gfx_target;
    }
 }
 
@@ -1802,8 +1846,8 @@ Pilot* player_getShip( char* shipname )
    int i;
 
    for (i=0; i < player_nstack; i++)
-      if (strcmp(player_stack[i]->name, shipname)==0)
-         return player_stack[i];
+      if (strcmp(player_stack[i].p->name, shipname)==0)
+         return player_stack[i].p;
 
    WARN("Player ship '%s' not found in stack", shipname);
    return NULL;
@@ -1821,8 +1865,8 @@ char* player_getLoc( char* shipname )
    int i;
 
    for (i=0; i < player_nstack; i++)
-      if (strcmp(player_stack[i]->name, shipname)==0)
-         return player_lstack[i];
+      if (strcmp(player_stack[i].p->name, shipname)==0)
+         return player_stack[i].loc;
 
    WARN("Player ship '%s' not found in stack", shipname);
    return NULL;
@@ -1840,9 +1884,9 @@ void player_setLoc( char* shipname, char* loc )
    int i;
 
    for (i=0; i < player_nstack; i++) {
-      if (strcmp(player_stack[i]->name, shipname)==0) {
-         free(player_lstack[i]);
-         player_lstack[i] = strdup(loc);
+      if (strcmp(player_stack[i].p->name, shipname)==0) {
+         free(player_stack[i].loc);
+         player_stack[i].loc = strdup(loc);
          return;
       }
    }
@@ -2228,7 +2272,7 @@ int player_save( xmlTextWriterPtr writer )
    /* Ships. */
    xmlw_startElem(writer,"ships");
    for (i=0; i<player_nstack; i++)
-      player_saveShip( writer, player_stack[i], player_lstack[i] );
+      player_saveShip( writer, player_stack[i].p, player_stack[i].loc );
    xmlw_endElem(writer); /* "ships" */
 
    /* Outfits. */
@@ -2856,10 +2900,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 
    /* add it to the stack if it's not what the player is in */
    if (is_player == 0) {
-      player_stack = realloc(player_stack, sizeof(Pilot*)*(player_nstack+1));
-      player_stack[player_nstack] = ship;
-      player_lstack = realloc(player_lstack, sizeof(char*)*(player_nstack+1));
-      player_lstack[player_nstack] = strdup(loc);
+      player_stack = realloc(player_stack, sizeof(PlayerShip_t)*(player_nstack+1));
+      player_stack[player_nstack].p = ship;
+      player_stack[player_nstack].loc = strdup(loc);
       player_nstack++;
    }
 

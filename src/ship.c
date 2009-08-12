@@ -50,6 +50,7 @@ static int ship_nstack = 0; /**< Number of ships in the stack. */
 /*
  * Prototypes
  */
+static int ship_compareTech( const void *arg1, const void *arg2 );
 static int ship_parse( Ship *temp, xmlNodePtr parent );
 
 
@@ -75,6 +76,34 @@ Ship* ship_get( const char* name )
 
 
 /**
+ * @brief Comparison function for qsort().
+ */
+static int ship_compareTech( const void *arg1, const void *arg2 )
+{
+   const Ship *s1, *s2;
+
+   /* Get ships. */
+   s1 = * (const Ship**) arg1;
+   s2 = * (const Ship**) arg2;
+
+   /* Compare class. */
+   if (s1->class < s2->class)
+      return -1;
+   else if (s1->class > s2->class)
+      return +1;
+
+   /* Compare price. */
+   if (s1->price < s2->price)
+      return -1;
+   else if (s1->price > s2->price)
+      return +1;
+
+   /* Same. */
+   return 0;
+}
+
+
+/**
  * @brief Gets all the ships in text form matching tech.
  *
  * You have to free all the strings created in the string array too.
@@ -86,8 +115,7 @@ Ship* ship_get( const char* name )
  */
 Ship** ship_getTech( int *n, const int *tech, const int techmax )
 {
-   int i,j,k, num, price;
-   Ship **result;
+   int i,j, num;
    Ship **ships;
   
    /* get available ships for tech */
@@ -99,48 +127,20 @@ Ship** ship_getTech( int *n, const int *tech, const int techmax )
          num++;
       }
       else {
-         for (j=0; j<techmax; j++) 
+         for (j=0; j<techmax; j++) {
             if (tech[j] == ship_stack[i].tech) { /* check vs special tech */
                ships[num] = &ship_stack[i];
                num++;
             }
-      }
-   }
-
-   /* now sort by price */
-   *n = 0;
-   price = -1;
-   result = malloc(sizeof(Ship*) * num);
-   /* until we fill the new stack */
-   for (i=0; i<num; i++) {
-
-      /* check for cheapest */
-      for (j=0; j<num; j++) {
-
-         /* is cheapest? */
-         if ((price == -1) || (ships[price]->price > ships[j]->price)) {
-
-            /* check if already in stack */
-            for (k=0; k<(*n); k++)
-               if (strcmp(result[k]->name,ships[j]->name)==0)
-                  break;
-
-            /* not in stack and therefore is cheapest */
-            if (k == (*n))
-               price = j;
          }
       }
-
-      /* add current cheapest to stack */
-      result[i] = ships[price];
-      (*n)++;
-      price = -1;
    }
 
-   /* cleanup */
-   free(ships);
+   /* Sort it. */
+   qsort( ships, num, sizeof(Ship*), ship_compareTech );
+   *n = num;
 
-   return result;
+   return ships;
 }
 
 
