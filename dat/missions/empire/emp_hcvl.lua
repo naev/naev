@@ -11,7 +11,7 @@ lang = naev.lang()
 if lang == "es" then
 else -- Default to English
    -- Bar stuff
-   bar_desc "You see an Empire Official."
+   bar_desc    = "You see an Empire Official."
 
    -- Mission details
    misn_title  = "Kill %s"
