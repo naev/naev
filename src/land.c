@@ -1642,6 +1642,10 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    if (slot->outfit != NULL) {
       o = slot->outfit;
 
+      /* Must be able to remove. */
+      if (equipment_canSwap( 0 ) != NULL)
+         return 0;
+
       /* Remove ammo first. */
       if (outfit_isLauncher(o) || (outfit_isFighterBay(o))) {
          ammo = slot->u.ammo.outfit;
@@ -1668,6 +1672,10 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
 
       /* Must fit slot. */
       if (o->slot != slot->slot)
+         return 0;
+
+      /* Must be able to add. */
+      if (equipment_canSwap( 1 ) != NULL)
          return 0;
 
       /* Add outfit to ship. */
