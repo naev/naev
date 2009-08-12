@@ -369,6 +369,8 @@ static int misn_setMarker( lua_State *L )
 
    /* Passing in a Star System */
    sys = luaL_checksystem(L,1);
+   if (cur_mission->sys_marker != NULL)
+      free(cur_mission->sys_marker);
    cur_mission->sys_marker = strdup(sys->s->name);
 
    /* Get the type. */
