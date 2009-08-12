@@ -190,7 +190,7 @@ static int player_parseDoneMissions( xmlNodePtr parent );
 static int player_parseDoneEvents( xmlNodePtr parent );
 static int player_parseLicenses( xmlNodePtr parent );
 static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot *slot );
-static int player_parseShip( xmlNodePtr parent, int is_player );
+static int player_parseShip( xmlNodePtr parent, int is_player, char *planet );
 static int player_parseEscorts( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 /* 
@@ -2414,27 +2414,32 @@ static int player_parse( xmlNodePtr parent )
    int q;
    Outfit *o;
 
-   node = parent->xmlChildrenNode;
-
    xmlr_attr(parent,"name",player_name);
 
+   /* Must get planet first. */
+   node = parent->xmlChildrenNode;
+   do {
+      xmlr_str(node,"location",planet);
+   } while (xml_nextNode(node));
+
+   /* Parse rest. */
+   node = parent->xmlChildrenNode;
    do {
 
       /* global stuff */
       xmlr_float(node,"rating",player_crating);
       xmlr_int(node,"credits",player_credits);
       xmlr_long(node,"time",player_time);
-      xmlr_str(node,"location",planet);
 
       if (xml_isNode(node,"ship"))
-         player_parseShip(node, 1);
+         player_parseShip(node, 1, planet);
      
       /* Parse ships. */
       else if (xml_isNode(node,"ships")) {
          cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur,"ship"))
-               player_parseShip(cur, 0);
+               player_parseShip(cur, 0, planet);
          } while (xml_nextNode(cur));
       }
 
@@ -2678,9 +2683,10 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
  *
  *    @param parent Node of the ship.
  *    @param is_player Is it the ship the player is currently in?
+ *    @param planet Default planet in case ship location not found.
  *    @return 0 on success.
  */
-static int player_parseShip( xmlNodePtr parent, int is_player )
+static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 {
    char *name, *model, *loc, *q, *id;
    int i, n;
@@ -2711,7 +2717,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    fuel = 0;
 
    do {
-      if (is_player == 0) xmlr_str(node,"location",loc);
+      /* Get location. */
+      if (is_player == 0)
+         xmlr_str(node,"location",loc);
 
       /* get fuel */
       xmlr_float(node,"fuel",fuel);
@@ -2817,9 +2825,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       }
    } while (xml_nextNode(node));
 
-   /* set fuel */
+   /* Test for sanity. */
    if (fuel != 0)
       ship->fuel = MIN(ship->fuel_max, fuel);
+   if ((is_player == 0) && (planet_get(loc)==NULL))
+      loc = planet;
 
    /* add it to the stack if it's not what the player is in */
    if (is_player == 0) {

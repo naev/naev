@@ -1870,7 +1870,7 @@ static void equipment_genLists( unsigned int wid )
 static void equipment_updateShips( unsigned int wid, char* str )
 {
    (void)str;
-   char buf[512], buf2[16], buf3[16];
+   char buf[512], sysname[128], buf2[16], buf3[16];
    char *shipname;
    Pilot *ship;
    char* loc;
@@ -1890,12 +1890,15 @@ static void equipment_updateShips( unsigned int wid, char* str )
       loc     = "Onboard";
       price   = 0;
       onboard = 1;
+      sysname[0] = '\0';
    }
    else {
       ship   = player_getShip( shipname );
       loc    = player_getLoc(ship->name);
       price  = equipment_transportPrice( shipname );
       onboard = 0;
+      snprintf( sysname, sizeof(sysname), " in the %s system",
+            planet_getSystem(loc) );
    }
    equipment_selected = ship;
 
@@ -1921,7 +1924,7 @@ static void equipment_updateShips( unsigned int wid, char* str )
          "%d / %d Tons\n"
          "%.0f / %.0f Units\n"
          "\n"
-         "%s\n"
+         "%s%s\n"
          "%s credits\n",
          /* Generic. */
          ship->name,
@@ -1941,7 +1944,7 @@ static void equipment_updateShips( unsigned int wid, char* str )
          pilot_cargoUsed(ship), cargo,
          ship->fuel, ship->fuel_max,
          /* Transportation. */
-         loc,
+         loc, sysname,
          buf2 );
    window_modifyText( wid, "txtDDesc", buf );
 
