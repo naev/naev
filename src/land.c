@@ -1623,13 +1623,13 @@ static const char* equipment_canSwap( PilotOutfitSlot *s, Outfit *o, int add )
           */
          if (((o->u.mod.thrust + o->u.mod.thrust_rel * p->ship->thrust) > 0) &&
                (o->u.mod.thrust + o->u.mod.thrust_rel * p->ship->thrust > p->thrust))
-            return "Lower thrust first";
+            return "Increase thrust first";
          if (((o->u.mod.speed + o->u.mod.speed_rel * p->ship->speed) > 0) &&
                (o->u.mod.speed + o->u.mod.speed_rel * p->ship->speed > p->speed))
-            return "Lower speed first";
+            return "Increase speed first";
          if (((o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn) > 0) &&
                (o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn > p->turn))
-            return "Lower turn first";
+            return "Increase turn first";
 
          /*
           * Health.
@@ -1640,10 +1640,10 @@ static const char* equipment_canSwap( PilotOutfitSlot *s, Outfit *o, int add )
             return "Increase armour first";
          if ((o->u.mod.shield > 0) &&
                (o->u.mod.shield > p->shield))
-            return "Lower shield first";
+            return "Increase shield first";
          if ((o->u.mod.energy > 0) &&
-               (o->u.mod.energy > p->armour))
-            return "Lower energy first";
+               (o->u.mod.energy > p->energy))
+            return "Increase energy first";
          /* Regen. */
          if ((o->u.mod.armour_regen > 0) &&
                (o->u.mod.armour_regen > p->armour_regen))
@@ -1660,7 +1660,7 @@ static const char* equipment_canSwap( PilotOutfitSlot *s, Outfit *o, int add )
           */
          if ((o->u.mod.fuel > 0) &&
                (o->u.mod.fuel > p->fuel_max))
-            return "Lower fuel usage first";
+            return "Increase fuel first";
       }
       else if (outfit_isFighterBay(o)) {
          if (s->u.ammo.deployed > 0)
