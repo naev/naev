@@ -185,6 +185,9 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    news_pos    = h/3;
    news_tick   = SDL_GetTicks();
 
+   /* Clean news lines. */
+   news_cleanLines();
+
    /* Load up the news in a string. */
    p = 0;
    for (i=0; i<news_nbuf; i++) {
