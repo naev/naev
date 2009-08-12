@@ -204,12 +204,12 @@ typedef struct OutfitModificationData_ {
    double shield_regen; /**< Shield regeneration modifier. */
    double energy; /**< Maximum energy modifier. */
    double energy_regen; /**< Energy regeneration modifier. */
-   double fuel; /**< Maximum fuel modifier. */
    double cpu; /**< CPU modifier. */
 
    /* misc */
    double cargo; /**< Cargo space modifier. */
    double mass_rel; /**< Relative mass modification. */
+   double fuel; /**< Maximum fuel modifier. */
 } OutfitModificationData;
 
 /**
