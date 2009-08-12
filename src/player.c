@@ -193,6 +193,8 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
 static int player_parseShip( xmlNodePtr parent, int is_player, char *planet );
 static int player_parseEscorts( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
+/* Misc. */
+static int player_outfitCompare( const void *arg1, const void *arg2 );
 /* 
  * externed
  */
@@ -1871,6 +1873,22 @@ int player_outfitOwned( const Outfit* o )
 
 
 /**
+ * @brief qsort() compare function for PlayerOutfit_t sorting.
+ */
+static int player_outfitCompare( const void *arg1, const void *arg2 )
+{
+   PlayerOutfit_t *po1, *po2;
+
+   /* Get type. */
+   po1 = (PlayerOutfit_t*) arg1;
+   po2 = (PlayerOutfit_t*) arg2;
+
+   /* Compare. */
+   return outfit_compareTech( &po1->o, &po2->o );
+}
+
+
+/**
  * @brief Prepares two arrays for displaying in an image array.
  *
  *    @param[out] soutfits Names of outfits to .
@@ -1886,6 +1904,11 @@ void player_getOutfits( char** soutfits, glTexture** toutfits )
       return;
    }
 
+   /* We'll sort. */
+   qsort( player_outfits, player_noutfits,
+         sizeof(PlayerOutfit_t), player_outfitCompare );
+
+   /* Now built name and texture structure. */
    for (i=0; i<player_noutfits; i++) {
       soutfits[i] = strdup( player_outfits[i].o->name );
       toutfits[i] = player_outfits[i].o->gfx_store;

@@ -108,19 +108,19 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
    o1 = * (const Outfit**) outfit1;
    o2 = * (const Outfit**) outfit2;
 
-   /* Compare types. */
+   /* Compare intrinsic types. */
    if (o1->type < o2->type)
       return -1;
    else if (o1->type > o2->type)
       return +1;
 
-   /* Compare subtypes. */
-   if ((o1->subtype == NULL) && (o2->subtype != NULL))
+   /* Compare named types. */
+   if ((o1->typename == NULL) && (o2->typename != NULL))
       return -1;
-   else if ((o1->subtype != NULL) && (o2->subtype == NULL))
+   else if ((o1->typename != NULL) && (o2->typename == NULL))
       return +1;
-   else if ((o1->subtype != NULL) && (o2->subtype != NULL)) {
-      ret = strcmp( o1->subtype, o2->subtype );
+   else if ((o1->typename != NULL) && (o2->typename != NULL)) {
+      ret = strcmp( o1->typename, o2->typename );
       if (ret != 0)
          return ret;
    }
@@ -1454,7 +1454,6 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
             xmlr_int(cur,"price",temp->price);
             xmlr_strd(cur,"description",temp->description);
             xmlr_strd(cur,"typename",temp->typename);
-            xmlr_strd(cur,"subtype",temp->subtype);
             if (xml_isNode(cur,"gfx_store")) {
                temp->gfx_store = xml_parseTexture( cur,
                      OUTFIT_GFX"store/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );

@@ -270,7 +270,6 @@ typedef struct OutfitJammerData_ {
 typedef struct Outfit_ {
    char *name; /**< Name of the outfit. */
    char *typename; /**< Overrides the base type. */
-   char *subtype; /**< Subtype name. */
 
    /* general specs */
    OutfitSlotType slot; /**< Type of slot the outfit needs. */
