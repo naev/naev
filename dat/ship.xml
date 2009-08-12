@@ -57,7 +57,7 @@
    <shield>140</shield>
    <armour>100</armour>
    <energy>360</energy>
-   <shield_regen>150</shield_regen>
+   <shield_regen>130</shield_regen>
    <armour_regen>60</armour_regen>
    <energy_regen>550</energy_regen>
   </health>
@@ -94,7 +94,7 @@
    <shield>120</shield>
    <armour>50</armour>
    <energy>360</energy>
-   <shield_regen>60</shield_regen>
+   <shield_regen>130</shield_regen>
    <armour_regen>30</armour_regen>
    <energy_regen>400</energy_regen>
   </health>
@@ -132,7 +132,7 @@
    <shield>180</shield>
    <armour>100</armour>
    <energy>480</energy>
-   <shield_regen>100</shield_regen>
+   <shield_regen>120</shield_regen>
    <armour_regen>70</armour_regen>
    <energy_regen>700</energy_regen>
   </health>
@@ -296,7 +296,7 @@
    <shield>280</shield>
    <armour>200</armour>
    <energy>560</energy>
-   <shield_regen>180</shield_regen>
+   <shield_regen>150</shield_regen>
    <armour_regen>60</armour_regen>
    <energy_regen>980</energy_regen>
   </health>
@@ -338,7 +338,7 @@
    <shield>300</shield>
    <armour>200</armour>
    <energy>560</energy>
-   <shield_regen>190</shield_regen>
+   <shield_regen>160</shield_regen>
    <armour_regen>60</armour_regen>
    <energy_regen>980</energy_regen>
   </health>
@@ -420,7 +420,7 @@
    <shield>140</shield>
    <armour>320</armour>
    <energy>800</energy>
-   <shield_regen>90</shield_regen>
+   <shield_regen>85</shield_regen>
    <armour_regen>30</armour_regen>
    <energy_regen>600</energy_regen>
   </health>
@@ -614,7 +614,7 @@
   <description>A very versatile combat ship. Nexus defines the Admonisher as a compromise between the ruggedness of the Pacifier and the agility of the Lancelot. Overall a very solid fighter.</description>
   <movement>
    <thrust>200</thrust>
-   <turn>105</turn>
+   <turn>115</turn>
    <speed>200</speed>
   </movement>
   <health>
@@ -657,7 +657,7 @@
   <description>The stock Admonisher is a powerful vessel, especially for its size. Through the usual Skull and Bones refit the Pirate Admonisher features improved manoeuvrability, more weapons space, and slightly improved defenses, at a cost of cargo capacity and armor regeneration rates.</description>
   <movement>
    <thrust>205</thrust>
-   <turn>110</turn>
+   <turn>120</turn>
    <speed>210</speed>
   </movement>
   <health>
@@ -701,7 +701,7 @@
   <description>An Empire Admonisher.</description>
   <movement>
    <thrust>200</thrust>
-   <turn>105</turn>
+   <turn>115</turn>
    <speed>200</speed>
   </movement>
   <health>
@@ -738,21 +738,21 @@
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
-  <price>1200000</price>
+  <price>1500000</price>
   <fabricator>Nexus Shipyards</fabricator>
   <tech>8</tech>
   <license>Medium Combat Vessel License</license>
   <description>The Pacifier is one of the older and trustier designs of Nexus Shipyards. It was designed primarily as a border-patrol vessel, and as such it is able to withstand heavy punishment from raiding parties. The Pacifier features high fuel capacity to facilitate lengthy patrol routes.</description>
   <movement>
-   <thrust>180</thrust>
-   <turn>115</turn>
-   <speed>200</speed>
+   <thrust>160</thrust>
+   <turn>95</turn>
+   <speed>170</speed>
   </movement>
   <health>
-   <shield>520</shield>
-   <armour>360</armour>
-   <energy>840</energy>
-   <shield_regen>240</shield_regen>
+   <shield>620</shield>
+   <armour>460</armour>
+   <energy>940</energy>
+   <shield_regen>280</shield_regen>
    <armour_regen>90</armour_regen>
    <energy_regen>1380</energy_regen>
   </health>
@@ -783,23 +783,23 @@
   <GUI>minimal</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
-  <price>1200000</price>
+  <price>1500000</price>
   <fabricator>Nexus Shipyards</fabricator>
   <tech>9999</tech>
   <license>Medium Combat Vessel License</license>
   <description>An Empire Pacifier.</description>
   <movement>
-   <thrust>180</thrust>
-   <turn>115</turn>
-   <speed>200</speed>
+   <thrust>160</thrust>
+   <turn>10</turn>
+   <speed>170</speed>
   </movement>
   <health>
-   <shield>550</shield>
-   <armour>400</armour>
-   <energy>840</energy>
-   <shield_regen>250</shield_regen>
+   <shield>650</shield>
+   <armour>480</armour>
+   <energy>960</energy>
+   <shield_regen>290</shield_regen>
    <armour_regen>100</armour_regen>
-   <energy_regen>1380</energy_regen>
+   <energy_regen>1400</energy_regen>
   </health>
   <characteristics>
    <cpu>84</cpu>
@@ -938,7 +938,7 @@
    <shield>1200</shield>
    <armour>800</armour>
    <energy>1800</energy>
-   <shield_regen>300</shield_regen>
+   <shield_regen>320</shield_regen>
    <armour_regen>80</armour_regen>
    <energy_regen>1600</energy_regen>
   </health>
@@ -988,7 +988,7 @@
    <shield>1260</shield>
    <armour>840</armour>
    <energy>1800</energy>
-   <shield_regen>330</shield_regen>
+   <shield_regen>340</shield_regen>
    <armour_regen>100</armour_regen>
    <energy_regen>1600</energy_regen>
   </health>
@@ -1038,7 +1038,7 @@
    <shield>1600</shield>
    <armour>1000</armour>
    <energy>4000</energy>
-   <shield_regen>330</shield_regen>
+   <shield_regen>350</shield_regen>
    <armour_regen>90</armour_regen>
    <energy_regen>1700</energy_regen>
   </health>
@@ -1089,7 +1089,7 @@
    <shield>1600</shield>
    <armour>1000</armour>
    <energy>4000</energy>
-   <shield_regen>330</shield_regen>
+   <shield_regen>320</shield_regen>
    <armour_regen>90</armour_regen>
    <energy_regen>1700</energy_regen>
   </health>
