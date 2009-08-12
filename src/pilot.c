@@ -704,7 +704,7 @@ void pilot_shoot( Pilot* p, int group )
          continue;
 
       if (!outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY) &&
-            (outfit_isBolt(o) || outfit_isBeam(o))) {
+            (outfit_isBolt(o) || outfit_isBeam(o) || outfit_isLauncher(o))) {
 
          /* Choose what to shoot dependent on type. */
          if ((group == 0) ||
