@@ -930,9 +930,6 @@ static void equipment_open( unsigned int wid )
    GLfloat colour[4*4];
    const char *buf;
 
-   /* Add ammo. */
-   equipment_addAmmo();
-
    /* Create the vbo if necessary. */
    if (equipment_vbo == NULL) {
       equipment_vbo = gl_vboCreateStream( sizeof(GLfloat) * (2+4)*4, NULL );
@@ -972,6 +969,9 @@ static void equipment_open( unsigned int wid )
    equipment_alty       = 0;
    equipment_lastick    = SDL_GetTicks();
    equipment_dir        = 0.;
+
+   /* Add ammo. */
+   equipment_addAmmo();
 
    /* buttons */
    window_addButton( wid, -20, 20,
