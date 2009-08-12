@@ -171,7 +171,7 @@ static void equipment_renderShip( double bx, double by,
 static int equipment_mouseColumn( double y, double h, int n, double my );
 static void equipment_mouse( unsigned int wid, SDL_Event* event,
       double x, double y, double w, double h );
-static const char* equipment_canSwap( int add );
+static const char* equipment_canSwap( Outfit *o, int add );
 static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot );
 static void equipment_genLists( unsigned int wid );
 static void equipment_updateShips( unsigned int wid, char* str );
@@ -1062,7 +1062,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       else {
          if ((equipment_outfit != NULL) &&
                (lst[i].slot == equipment_outfit->slot)) {
-            if (equipment_canSwap( 1 ) != NULL)
+            if (equipment_canSwap( equipment_outfit, 1 ) != NULL)
                c = &cRed;
             else
                c = &cDConsole;
@@ -1185,7 +1185,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
          display = NULL;
          if (i==mover) {
             if (lst[i].outfit != NULL) {
-               display = equipment_canSwap( 0 );
+               display = equipment_canSwap( lst[i].outfit, 0 );
                if (display != NULL)
                   c = &cRed;
                else {
@@ -1195,7 +1195,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
             }
             else if ((equipment_outfit != NULL) &&
                   (lst->slot == equipment_outfit->slot)) {
-               display = equipment_canSwap( 1 );
+               display = equipment_canSwap( equipment_outfit, 1 );
                if (display != NULL)
                   c = &cRed;
                else {
@@ -1501,14 +1501,16 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
  *
  *    @return NULL if can swap, or error message if can't.
  */
-static const char* equipment_canSwap( int add )
+static const char* equipment_canSwap( Outfit *o, int add )
 {
    Pilot *p;
-   Outfit *o;
 
    /* Get targets. */
    p = equipment_selected;
-   o = equipment_outfit;
+
+   /* Just in case. */
+   if ((p==NULL) || (o==NULL))
+      return "Nothing selected.";
 
    /* Adding outfit. */
    if (add) {
@@ -1643,7 +1645,7 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
       o = slot->outfit;
 
       /* Must be able to remove. */
-      if (equipment_canSwap( 0 ) != NULL)
+      if (equipment_canSwap( o, 0 ) != NULL)
          return 0;
 
       /* Remove ammo first. */
@@ -1675,7 +1677,7 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
          return 0;
 
       /* Must be able to add. */
-      if (equipment_canSwap( 1 ) != NULL)
+      if (equipment_canSwap( o, 1 ) != NULL)
          return 0;
 
       /* Add outfit to ship. */
