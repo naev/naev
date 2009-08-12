@@ -18,6 +18,7 @@
 
 #include <math.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "nxml.h"
 #include "SDL_thread.h"
@@ -92,6 +93,50 @@ Outfit* outfit_get( const char* name )
 
 
 /**
+ * @brief Function meant for use with C89, C99 algorithm qsort().
+ *
+ *    @param outfit1 First argument to compare.
+ *    @param outfit2 Second argument to compare.
+ *    @return -1 if first argument is inferior, +1 if it's superior, 0 if ties.
+ */
+int outfit_compareTech( const void *outfit1, const void *outfit2 )
+{
+   int ret;
+   const Outfit *o1, *o2;
+
+   /* Get outfits. */
+   o1 = * (const Outfit**) outfit1;
+   o2 = * (const Outfit**) outfit2;
+
+   /* Compare types. */
+   if (o1->type < o2->type)
+      return -1;
+   else if (o1->type > o2->type)
+      return +1;
+
+   /* Compare subtypes. */
+   if ((o1->subtype == NULL) && (o2->subtype != NULL))
+      return -1;
+   else if ((o1->subtype != NULL) && (o2->subtype == NULL))
+      return +1;
+   else if ((o1->subtype != NULL) && (o2->subtype != NULL)) {
+      ret = strcmp( o1->subtype, o2->subtype );
+      if (ret != 0)
+         return ret;
+   }
+
+   /* Compare price. */
+   if (o1->price < o2->price)
+      return -1;
+   else if (o1->price > o2->price)
+      return +1;
+
+   /* It turns out they're the same. */
+   return 0;
+}
+
+
+/**
  * @brief Gets all the outfits matching technology requirements.
  *
  * Function will already sort the outfits by type and then by price making
@@ -106,71 +151,32 @@ Outfit* outfit_get( const char* name )
  */
 Outfit** outfit_getTech( int *n, const int *tech, const int techmax )
 {
-   int i,j,k, num, price;
+   int i,j, num;
    Outfit **outfits;
-   Outfit **result;
-   OutfitType type;
    
    outfits = malloc(sizeof(Outfit*) * outfit_nstack);
 
    /* get the available techs */
    num = 0;
-   for (i=0; i < outfit_nstack; i++)
+   for (i=0; i < outfit_nstack; i++) {
       if (outfit_stack[i].tech <= tech[0]) { /* check vs base tech */
          outfits[num] = &outfit_stack[i];
          num++;
       }
       else {
          for(j=0; j<techmax; j++) /* check vs special techs */
-            if (tech[j] ==outfit_stack[i].tech) {
+            if (tech[j] == outfit_stack[i].tech) {
                outfits[num] = &outfit_stack[i];
                num++;
             }
       }
-
-   /* now sort by type and price */
-   *n = 0;
-   price = -1;
-   type = OUTFIT_TYPE_NULL+1; /* first type */
-   result = malloc(sizeof(Outfit*) * num);
-
-   /* sort by type */
-   while (type < OUTFIT_TYPE_SENTINEL) {
-
-      /* check for cheapest */
-      for (j=0; j<num; j++) {
-
-         /* must be of the current type */
-         if (outfits[j]->type != type) continue;
-
-         /* is cheapest? */
-         if ((price == -1) || (outfits[price]->price > outfits[j]->price)) {
-
-            /* check if already in stack */
-            for (k=0; k<(*n); k++)
-               if (strcmp(result[k]->name,outfits[j]->name)==0)
-                  break;
-
-            /* not in stack and therefore is cheapest */
-            if (k == (*n))
-               price = j;
-         }
-      }
-
-      if (price == -1)
-         type++; 
-      else {
-         /* add current cheapest to stack */
-         result[*n] = outfits[price];
-         (*n)++;
-         price = -1;
-      }
    }
-   
-   /* cleanup */
-   free(outfits);
 
-   return result;
+   /* Sort. */
+   qsort( outfits, num, sizeof(Outfit*), outfit_compareTech );
+   *n = num;
+
+   return outfits;
 }
 
 
@@ -578,6 +584,10 @@ const char* outfit_getType( const Outfit* o )
          "Map",
          "License"
    };
+
+   /* Name override. */
+   if (o->typename != NULL)
+      return o->typename;
    return outfit_typename[o->type];
 }
 
@@ -1443,6 +1453,8 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
             xmlr_float(cur,"mass",temp->mass);
             xmlr_int(cur,"price",temp->price);
             xmlr_strd(cur,"description",temp->description);
+            xmlr_strd(cur,"typename",temp->typename);
+            xmlr_strd(cur,"subtype",temp->subtype);
             if (xml_isNode(cur,"gfx_store")) {
                temp->gfx_store = xml_parseTexture( cur,
                      OUTFIT_GFX"store/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );

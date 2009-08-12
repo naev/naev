@@ -268,7 +268,9 @@ typedef struct OutfitJammerData_ {
  * @brief A ship outfit, depends radically on the type.
  */
 typedef struct Outfit_ {
-   char* name; /**< Name of the outfit. */
+   char *name; /**< Name of the outfit. */
+   char *typename; /**< Overrides the base type. */
+   char *subtype; /**< Subtype name. */
 
    /* general specs */
    OutfitSlotType slot; /**< Type of slot the outfit needs. */
@@ -278,8 +280,8 @@ typedef struct Outfit_ {
 
    /* store stuff */
    unsigned int price; /**< Base sell price. */
-   char* description; /**< Store description. */
-   char* desc_short; /**< Short outfit description. */
+   char *description; /**< Store description. */
+   char *desc_short; /**< Short outfit description. */
 
    glTexture* gfx_store; /**< Store graphic. */
 
@@ -313,6 +315,7 @@ void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
  * get
  */
 Outfit* outfit_get( const char* name );
+int outfit_compareTech( const void *outfit1, const void *outfit2 );
 Outfit** outfit_getTech( int *n, const int *tech, const int techmax );
 /* outfit types */
 int outfit_isWeapon( const Outfit* o );
