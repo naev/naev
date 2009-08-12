@@ -1553,13 +1553,13 @@ static const char* equipment_canSwap( Outfit *o, int add )
          /* Regen. */
          if ((o->u.mod.armour_regen < 0) &&
                (fabs(o->u.mod.armour_regen) > p->armour_regen))
-            return "Insufficient energy regen";
+            return "Insufficient energy regeneration";
          if ((o->u.mod.shield_regen < 0) &&
                (fabs(o->u.mod.shield_regen) > p->shield_regen))
-            return "Insufficient shield regen";
+            return "Insufficient shield regeneration";
          if ((o->u.mod.energy_regen < 0) &&
                (fabs(o->u.mod.energy_regen) > p->energy_regen))
-            return "Insufficient energy regen";
+            return "Insufficient energy regeneration";
 
          /* 
           * Misc.
@@ -1605,13 +1605,13 @@ static const char* equipment_canSwap( Outfit *o, int add )
          /* Regen. */
          if ((o->u.mod.armour_regen > 0) &&
                (o->u.mod.armour_regen > p->armour_regen))
-            return "Lower energy regen first";
+            return "Lower energy usage first";
          if ((o->u.mod.shield_regen > 0) &&
                (o->u.mod.shield_regen > p->shield_regen))
-            return "Lower shield regen first";
+            return "Lower shield usage first";
          if ((o->u.mod.energy_regen > 0) &&
                (o->u.mod.energy_regen > p->energy_regen))
-            return "Lower energy regen first";
+            return "Lower energy usage first";
 
          /* 
           * Misc.
