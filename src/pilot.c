@@ -941,6 +941,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
             &vp, &p->solid->vel, p->id, p->target );
 
       w->u.ammo.quantity -= 1; /* we just shot it */
+      p->mass_outfit     -= w->u.ammo.outfit->mass;
    }
 
    /*
@@ -959,6 +960,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
             &vp, &p->solid->vel, p->solid->dir, ESCORT_TYPE_BAY, 1 );
 
       w->u.ammo.quantity -= 1; /* we just shot it */
+      p->mass_outfit     -= w->u.ammo.outfit->mass;
       p->secondary->u.ammo.deployed += 1; /* Mark as deployed. */
    }
 
@@ -1860,9 +1862,10 @@ int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity 
    /* Add the ammo. */
    q                   = s->u.ammo.quantity; /* Amount have. */
    s->u.ammo.quantity += quantity;
-   s->u.ammo.quantity  = MIN( outfit_amount(s->outfit), s->u.ammo.quantity );
-   s->u.ammo.quantity -= s->u.ammo.deployed; /* Do not count deployed. */
+   s->u.ammo.quantity  = MIN( outfit_amount(s->outfit) - s->u.ammo.deployed,
+         s->u.ammo.quantity );
    q                   = s->u.ammo.quantity - q; /* Amount actually added. */
+   pilot->mass_outfit += q * s->u.ammo.outfit->mass;
 
    return q;
 }
@@ -1900,6 +1903,7 @@ int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
    /* Remove ammo. */
    q                   = MIN( quantity, s->u.ammo.quantity );
    s->u.ammo.quantity -= q;
+   pilot->mass_outfit -= q * s->u.ammo.outfit->mass;
    /* We don't set the outfit to null so it "remembers" old ammo. */
 
    return q;
@@ -1948,6 +1952,7 @@ void pilot_calcStats( Pilot* pilot )
    double wrange, wspeed;
    int nweaps;
    Outfit* o;
+   PilotOutfitSlot *slot;
    double ac, sc, ec, fc; /* temporary health coeficients to set */
 
    /*
@@ -1989,12 +1994,13 @@ void pilot_calcStats( Pilot* pilot )
    wrange = wspeed = 0.;
    pilot->mass_outfit = 0.;
    for (i=0; i<pilot->noutfits; i++) {
-      o = pilot->outfits[i]->outfit;
+      slot = pilot->outfits[i];
+      o    = slot->outfit;
 
       if (o==NULL)
          continue;
 
-      q = (double) pilot->outfits[i]->quantity;
+      q = (double) slot->quantity;
 
       /* Subtract CPU. */
       pilot->cpu           -= outfit_cpu(o) * q;
@@ -2035,11 +2041,16 @@ void pilot_calcStats( Pilot* pilot )
          }
          pilot->energy_regen -= o->u.jam.energy;
       }
-      else if ((outfit_isWeapon(o) || outfit_isTurret(o)) && /* Primary weapon */
+      if ((outfit_isWeapon(o) || outfit_isTurret(o)) && /* Primary weapon */
             !outfit_isProp(o,OUTFIT_PROP_WEAP_SECONDARY)) {
          nweaps++;
          wrange += outfit_range(o);
          wspeed += outfit_speed(o);
+      }
+      /* Add ammo mass. */
+      if (outfit_ammo(o) != NULL) {
+         if (slot->u.ammo.outfit != NULL)
+            pilot->mass_outfit += slot->u.ammo.quantity * slot->u.ammo.outfit->mass;
       }
    }
 
