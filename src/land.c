@@ -1958,8 +1958,8 @@ static void equipment_updateShips( unsigned int wid, char* str )
          pilot_cargoUsed(ship), cargo,
          ship->fuel, ship->fuel_max,
          /* Transportation. */
-         loc, sysname,
-         buf2 );
+         buf2,
+         loc, sysname );
    window_modifyText( wid, "txtDDesc", buf );
 
    /* button disabling */
