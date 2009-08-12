@@ -1189,6 +1189,8 @@ int pilot_dock( Pilot *p, Pilot *target, int deployed )
 
    /* Check to see if target has an available bay. */
    for (i=0; i<target->noutfits; i++) {
+      if (target->outfits[i]->outfit == NULL)
+         continue;
       if (outfit_isFighterBay(target->outfits[i]->outfit)) {
          o = outfit_ammo(target->outfits[i]->outfit);
          if (outfit_isFighter(o) &&
