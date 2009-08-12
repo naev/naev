@@ -1756,6 +1756,8 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
 
    /* Some per-case scenarios. */
    if (outfit_isFighterBay(outfit)) {
+      s->u.ammo.outfit   = NULL;
+      s->u.ammo.quantity = 0;
       s->u.ammo.deployed = 0;
    }
    if (outfit_isTurret(outfit)) { /* used to speed up AI */
@@ -1768,6 +1770,7 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
    if (outfit_isLauncher(outfit)) {
       s->u.ammo.outfit   = NULL;
       s->u.ammo.quantity = 0;
+      s->u.ammo.deployed = 0; /* Just in case. */
    }
 
    /* recalculate the stats */
@@ -1851,12 +1854,15 @@ int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity 
       return 0;
    }
 
-   /* Add the ammo. */
+   /* Set the ammo type. */
    s->u.ammo.outfit    = ammo;
-   q                   = s->u.ammo.quantity;
+
+   /* Add the ammo. */
+   q                   = s->u.ammo.quantity; /* Amount have. */
    s->u.ammo.quantity += quantity;
    s->u.ammo.quantity  = MIN( outfit_amount(s->outfit), s->u.ammo.quantity );
-   q                   = s->u.ammo.quantity - q;
+   s->u.ammo.quantity -= s->u.ammo.deployed; /* Do not count deployed. */
+   q                   = s->u.ammo.quantity - q; /* Amount actually added. */
 
    return q;
 }

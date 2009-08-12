@@ -2142,7 +2142,7 @@ int player_addEscorts (void)
       /* Update outfit if needed. */
       if (player->escorts[i].type == ESCORT_TYPE_BAY) {
          for (j=0; j<player->noutfits; j++) {
-            if (player->outfits[i]->outfit == NULL)
+            if (player->outfits[j]->outfit == NULL)
                continue;
             if (outfit_isFighterBay(player->outfits[j]->outfit)) {
                o = outfit_ammo(player->outfits[j]->outfit);
