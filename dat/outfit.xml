@@ -730,7 +730,7 @@ By adding a dense layer of Plasteel to your ship you can increase its sturdiness
   </general>
   <specific type="modification">
    <cpu>-6</cpu>
-   <thrust>30</thrust>
+   <thrust>3</thrust>
    <thrust_rel>10</thrust_rel>
    <energy_regen>-50</energy_regen>
   </specific>
