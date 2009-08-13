@@ -376,12 +376,16 @@ static void iar_cleanup( Widget* iar )
             free(iar->dat.iar.captions[i]);
          if (iar->dat.iar.alts && iar->dat.iar.alts[i])
             free(iar->dat.iar.alts[i]);
+         if (iar->dat.iar.quantity && iar->dat.iar.quantity[i])
+            free(iar->dat.iar.quantity[i]);
       }  
       /* Free the arrays */
       free( iar->dat.iar.captions );
       free( iar->dat.iar.images );
       if (iar->dat.iar.alts)
          free(iar->dat.iar.alts);
+      if (iar->dat.iar.quantity)
+         free(iar->dat.iar.quantity);
    }
 }
 
