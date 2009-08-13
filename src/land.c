@@ -306,7 +306,7 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
 
    /* Calculate image array dimensions. */
    if (iw != NULL)
-      *iw = 310;
+      *iw = 310 + (*w-800);
    if (ih != NULL)
       *ih = *h - 60;
 
@@ -374,7 +374,7 @@ static void outfits_open( unsigned int wid )
    window_addText( wid, 20 + iw + 20 + 60, -60-128-10,
          250, 160, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
    window_addText( wid, 20 + iw + 20, -60-128-10-160,
-         w-400, 180, 0, "txtDescription",
+         w-(iw+80), 180, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 
    /* set up the outfits to buy/sell */
@@ -486,10 +486,10 @@ static void outfits_update( unsigned int wid, char* str )
    window_modifyText( wid, "txtOutfitName", outfit->name );
    window_modifyText( wid, "txtDescShort", outfit->desc_short );
    th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 320, outfit->desc_short ) );
-   window_moveWidget( wid, "txtSDesc", 40+300+20, -60-th-20 );
-   window_moveWidget( wid, "txtDDesc", 40+300+20+60, -60-th-20 );
+   window_moveWidget( wid, "txtSDesc", 40+iw+20, -60-th-20 );
+   window_moveWidget( wid, "txtDDesc", 40+iw+20+60, -60-th-20 );
    th += gl_printHeightRaw( &gl_smallFont, 250, buf );
-   window_moveWidget( wid, "txtDescription", 20+300+40, -60-th-40 );
+   window_moveWidget( wid, "txtDescription", 20+iw+40, -60-th-40 );
 }
 /**
  * @brief Checks to see if the player can buy the outfit.
@@ -684,7 +684,7 @@ static void shipyard_open( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* Calculate image array dimensions. */
-   iw = 310;
+   iw = 310 + (w-800);
    ih = h - 60;
 
    /* Calculate button dimensions. */
@@ -727,8 +727,8 @@ static void shipyard_open( unsigned int wid )
          100, 256, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
    window_addText( wid, 40+iw+20+100, -55,
          130, 256, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, 20+310+40, -55-th-20,
-         w-(20+310+40) - 20, 185, 0, "txtDescription",
+   window_addText( wid, 20+iw+40, -55-th-20,
+         w-(20+iw+40) - 20, 185, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 
    /* set up the ships to buy/sell */
@@ -917,7 +917,7 @@ static void spaceport_bar_getDim( int wid,
    window_dimWindow( wid, w, h );
 
    /* Calculate dimensions of portraits. */
-   *iw = 300;
+   *iw = 300 + (*w - 800);
    *ih = *h - 60;
 
    /* Calculate button dimensions. */

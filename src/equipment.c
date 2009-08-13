@@ -53,6 +53,8 @@ static gl_vbo *equipment_vbo     = NULL; /**< The VBO. */
 /*
  * prototypes
  */
+static void equipment_getDim( unsigned int wid, int *w, int *h,
+      int *sw, int *sh, int *ow, int *oh, int *cw, int *ch, int *bw, int *bh );
 static void equipment_renderColumn( double x, double y, double w, double h,
       int n, PilotOutfitSlot *lst, const char *txt, int selected );
 static void equipment_render( double bx, double by, double bw, double bh );
@@ -73,6 +75,38 @@ static void equipment_transportShip( unsigned int wid );
 static void equipment_unequipShip( unsigned int wid, char* str );
 static unsigned int equipment_transportPrice( char *shipname );
 
+
+/**
+ * @brief Gets the window dimensions.
+ */
+static void equipment_getDim( unsigned int wid, int *w, int *h,
+      int *sw, int *sh, int *ow, int *oh, int *cw, int *ch, int *bw, int *bh )
+{
+   /* Get window dimensions. */
+   window_dimWindow( wid, w, h );
+
+   /* Calculate image array dimensions. */
+   if (sw != NULL)
+      *sw = 200 + (*w-800);
+   if (sh != NULL)
+      *sh = (*h - 100)/2;
+   if (ow != NULL)
+      *ow = *sw;
+   if (oh != NULL)
+      *oh = *sh;
+
+   /* Calculate custom widget. */
+   if (cw != NULL)
+      *cw = *w - 20 - *sw - 20;
+   if (ch != NULL)
+      *ch = *h - 100;
+
+   /* Calculate button dimensions. */
+   if (bw != NULL)
+      *bw = (*w - 20 - *sw - 40 - 20 - 60) / 4;
+   if (bh != NULL)
+      *bh = BUTTON_HEIGHT;
+}
 
 /**
  * @brief Opens the player's equipment window.
@@ -102,22 +136,8 @@ void equipment_open( unsigned int wid )
             sizeof(GLfloat) * 4*4, colour );
    }
 
-   /* Get window dimensions. */
-   window_dimWindow( wid, &w, &h );
-
-   /* Calculate image array dimensions. */
-   sw = 200;
-   sh = (h - 100)/2;
-   ow = sw;
-   oh = sh;
-
-   /* Calculate custom widget. */
-   cw = w - 20 - sw - 20;
-   ch = h - 100;
-
-   /* Calculate button dimensions. */
-   bw = (w - 20 - sw - 40 - 20 - 60) / 4;
-   bh = BUTTON_HEIGHT;
+   /* Get dimensions. */
+   equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh, &cw, &ch, &bw, &bh );
 
    /* Sane defaults. */
    equipment_selected   = NULL;
@@ -937,14 +957,8 @@ void equipment_genLists( unsigned int wid )
    char **alt;
    Outfit *o;
 
-   /* Get window dimensions. */
-   window_dimWindow( wid, &w, &h );
-
-   /* Calculate image array dimensions. */
-   sw = 200;
-   sh = (h - 100)/2;
-   ow = sw;
-   oh = sh;
+   /* Get dimensions. */
+   equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh, NULL, NULL, NULL, NULL );
 
    /* Ship list. */
    if (!widget_exists( wid, EQUIPMENT_SHIPS )) {
