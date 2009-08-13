@@ -341,7 +341,7 @@ void pilot_hyperspaceAbort( Pilot* p );
 void pilot_clearTimers( Pilot *pilot );
 int pilot_hasDeployed( Pilot *p );
 int pilot_dock( Pilot *p, Pilot *target, int deployed );
-void pilot_hyperspaceDelay( Pilot *p, unsigned int *tl, unsigned int *th );
+double pilot_hyperspaceDelay( Pilot *p );
 
 
 /*

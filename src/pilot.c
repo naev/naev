@@ -2380,24 +2380,12 @@ int pilot_rmCargo( Pilot* pilot, Commodity* cargo, int quantity )
  * @brief Calculates the hyperspace delay for a pilot.
  *
  *    @param p Pilot to calculate hyperspace delay for.
- *    @param[out] tl Minimum hyperspace delay.
- *    @param[out] th Maximum hyperspace delay.
+ *    @return Average hyperspace delay (in STU).
  */
-void pilot_hyperspaceDelay( Pilot *p, unsigned int *tl, unsigned int *th )
+double pilot_hyperspaceDelay( Pilot *p )
 {
-   double mod;
-   unsigned int low, high;
-
    /* Calculate jump delay. */
-   mod  = pow( p->solid->mass, 1./2.5 ) / 5.;
-   low  = (unsigned int) (mod*0.8*NTIME_UNIT_LENGTH);
-   high = (unsigned int) (mod*1.2*NTIME_UNIT_LENGTH);
-
-   /* Set values. */
-   if (tl != NULL)
-      *tl = low;
-   if (th != NULL)
-      *th = high;
+   return pow( p->solid->mass, 1./2.5 ) / 5.;
 }
 
 

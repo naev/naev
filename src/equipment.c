@@ -1022,8 +1022,6 @@ void equipment_updateShips( unsigned int wid, char* str )
    unsigned int price;
    int onboard;
    int cargo;
-   unsigned int tl, th;
-   double dl, dh;
 
    /* Clear defaults. */
    equipment_slot       = -1;
@@ -1048,11 +1046,6 @@ void equipment_updateShips( unsigned int wid, char* str )
             planet_getSystem(loc) );
    }
    equipment_selected = ship;
-
-   /* Get jump time. */
-   pilot_hyperspaceDelay( ship, &tl, &th );
-   dl = (double)tl / NTIME_UNIT_LENGTH;
-   dh = (double)th / NTIME_UNIT_LENGTH;
 
    /* update text */
    credits2str( buf2, price , 2 ); /* transport */
@@ -1085,7 +1078,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          buf3,
          /* Movement. */
          ship->solid->mass,
-         (dl+dh)/2.,
+         pilot_hyperspaceDelay( ship ),
          ship->thrust/ship->solid->mass,
          ship->speed,
          ship->turn,

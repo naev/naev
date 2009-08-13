@@ -1408,12 +1408,12 @@ void player_jump (void)
  */
 void player_brokeHyperspace (void)
 {
-   unsigned int tl, th;
    double d;
 
    /* calculates the time it takes, call before space_init */
-   pilot_hyperspaceDelay( player, &tl, &th );
-   ntime_inc( RNG( tl, th ) );
+   d  = pilot_hyperspaceDelay( player );
+   d += RNG_1SIGMA() * 0.2 * d;
+   ntime_inc( (unsigned int)(d*NTIME_UNIT_LENGTH) );
 
    /* enter the new system */
    space_init( system_getIndex( cur_system->jumps[hyperspace_target] )->name );
