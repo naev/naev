@@ -352,8 +352,8 @@ unsigned int window_get( const char* wdwname )
  *    @param name Name of the window to create.
  *    @param x X position of the window (-1 centers).
  *    @param y Y position of the window (-1 centers).
- *    @param w Width of the window.
- *    @param h Height of the window.
+ *    @param w Width of the window (-1 fullscreen).
+ *    @param h Height of the window (-1 fullscreen).
  *    @return Newly created window's ID.
  */
 unsigned int window_create( const char* name,
@@ -376,8 +376,10 @@ unsigned int window_create( const char* name,
    wdw->focus        = -1;
 
    /* Dimensions. */
-   wdw->w            = (double) w;
-   wdw->h            = (double) h;
+   wdw->w            = (w == -1) ? SCREEN_W : (double) w;
+   wdw->h            = (h == -1) ? SCREEN_H : (double) h;
+   if ((w == -1) && (h == -1))
+      window_setFlag( wdw, WINDOW_FULLSCREEN );
    /* x pos */
    if (x==-1) /* center */
       wdw->x = (SCREEN_W - wdw->w)/2.;
@@ -933,6 +935,21 @@ static void window_renderBorder( Window* w )
    c = &cGrey70;
    dc = &cGrey50;
    oc = &cGrey30;
+
+   /*
+    * Case fullscreen.
+    */
+   if (window_isFlag( w, WINDOW_FULLSCREEN )) {
+      /* Background. */
+      toolkit_drawRect( x, y,          w->w, 0.6*w->h, dc, c );
+      toolkit_drawRect( x, y+0.6*w->h, w->w, 0.4*w->h, c, NULL );
+      /* Name. */
+      gl_printMidRaw( &gl_defFont, w->w,
+            x + (double)SCREEN_W/2.,
+            y + w->h - 20. + (double)SCREEN_H/2.,
+            &cBlack, w->name );
+      return;
+   }
 
    /*
     * window shaded bg
