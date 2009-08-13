@@ -1986,12 +1986,12 @@ int player_addOutfit( const Outfit *o, int quantity )
    /* special case if it's a map */
    if (outfit_isMap(o)) {
       map_map(NULL,o->u.map.radius);
-      return 0; /* Success. */
+      return 1; /* Success. */
    }
    /* special case if it's a license. */
    else if (outfit_isLicense(o)) {
       player_addLicense(o->name);
-      return 0; /* Success. */
+      return 1; /* Success. */
    }
 
    /* Try to find it. */
