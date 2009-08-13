@@ -857,7 +857,7 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v )
  *
  *    @param p Pilot that is shooting.
  *    @param w Pilot's outfit to shoot.
- *    @return 0 if successful, 1 if ran out of ammo.
+ *    @return 0.
  */
 static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 {
@@ -866,10 +866,14 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    PilotOutfitSlot *slot;
    int prev;
    double q, cur, t;
+   int is_launcher;
 
    /* check to see if weapon is ready */
    if (w->timer > 0.)
       return 0;
+
+   /* See if is launcher. */
+   is_launcher = outfit_isLauncher(w->outfit);
 
    /* Count the outfits and current one - only affects non-beam. */
    if (!outfit_isBeam(w->outfit)) {
@@ -878,9 +882,15 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
       q     = 0.;
       for (i=0; i<p->outfit_nhigh; i++) {
          slot = &p->outfit_high[i];
+
          /* Not what we are looking for. */
          if (slot->outfit != w->outfit)
             continue;
+
+         /* Launcher only counts with ammo. */
+         if (is_launcher && ((w->u.ammo.outfit == NULL) || (w->u.ammo.quantity <= 0)))
+            continue;
+
          /* Save some stuff. */
          if (slot == w)
             cur = q;
@@ -890,6 +900,11 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
          }
          q++;
       }
+      /* Didn't find current one. */
+      if (cur == -1.)
+         return 0;
+
+      /* See if can shoot. */
       if (prev >= 0) {
          if (p->outfit_high[prev].timer > outfit_delay(w->outfit) * ((cur-t) / q))
             return 0;
