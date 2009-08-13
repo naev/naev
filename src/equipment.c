@@ -1315,7 +1315,7 @@ static unsigned int equipment_transportPrice( char* shipname )
    if (strcmp(loc,land_planet->name)==0) /* already here */
       return 0;
 
-   price = (unsigned int)(sqrt(ship->solid->mass)*5000.);
+   price = (unsigned int)(sqrt(ship->ship->mass)*5000.);
 
    return price;
 }
