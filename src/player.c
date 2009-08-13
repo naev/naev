@@ -1902,6 +1902,16 @@ int player_outfitOwned( const Outfit* o )
 {
    int i;
 
+   /* Special case map. */
+   if ((outfit_isMap(o)) &&
+         map_isMapped( NULL, o->u.map.radius ))
+      return 1;
+
+   /* Special case license. */
+   if (outfit_isLicense(o) &&
+         player_hasLicense(o->name))
+      return 1;
+
    /* Try to find it. */
    for (i=0; i<player_noutfits; i++) {
       if (player_outfits[i].o == o) {
