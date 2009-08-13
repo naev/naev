@@ -183,7 +183,7 @@ void input_setDefault (void)
    input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, KMOD_NONE );
    /* Combat. */
    input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, KMOD_ALL );
-   input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, KMOD_NONE );
+   input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, KMOD_ALL );
    input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, KMOD_NONE );
    input_setKeybind( "safety", KEYBIND_KEYBOARD, SDLK_s, KMOD_LCTRL );
    /* Weapon selection. */
