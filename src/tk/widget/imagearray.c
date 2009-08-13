@@ -78,12 +78,24 @@ void window_addImageArray( const unsigned int wid,
    wgt->dat.iar.iw         = iw;
    wgt->dat.iar.ih         = ih;
    wgt->dat.iar.fptr       = call;
-   wgt->dat.iar.xelem      = floor((w - 10.) / wgt->dat.iar.iw);
+   wgt->dat.iar.xelem      = floor((w - 10.) / (double)(wgt->dat.iar.iw+10));
    wgt->dat.iar.yelem      = (wgt->dat.iar.xelem == 0) ? 0 :
          (int)wgt->dat.iar.nelements / wgt->dat.iar.xelem + 1;
 
    if (wdw->focus == -1) /* initialize the focus */
       toolkit_nextFocus();
+}
+
+
+/**
+ * @brief Gets image array effective dimensions.
+ */
+static void iar_getDim( Widget* iar, double *w, double *h )
+{
+   if (w != NULL)
+      *w = iar->dat.iar.iw + 5.*2.;
+   if (h != NULL)
+      *h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
 }
 
 
@@ -99,7 +111,8 @@ static void iar_render( Widget* iar, double bx, double by )
    int i,j;
    double x,y, w,h, xcurs,ycurs;
    double scroll_pos;
-   int xelem,yelem, xspace;
+   int xelem, yelem;
+   double xspace;
    glColour *c, *dc, *lc;
    int is_selected;
 
@@ -111,13 +124,12 @@ static void iar_render( Widget* iar, double bx, double by )
    y = by + iar->y;
 
    /* element dimensions */
-   w = iar->dat.iar.iw + 5.*2.; /* includes border */
-   h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
+   iar_getDim( iar, &w, &h );
 
    /* number of elements */
    xelem = iar->dat.iar.xelem;
    yelem = iar->dat.iar.yelem;
-   xspace = (((int)iar->w - 10) % (int)w) / (xelem + 1);
+   xspace = (double)(((int)iar->w - 10) % (int)w) / (double)(xelem + 1);
 
    /* background */
    toolkit_drawRect( x, y, iar->w, iar->h, &cBlack, NULL );
@@ -248,7 +260,7 @@ static int iar_key( Widget* iar, SDLKey key, SDLMod mod )
    iar->dat.iar.selected = CLAMP( 0, iar->dat.iar.nelements-1, iar->dat.iar.selected);
 
    /* Move if needed. */
-   h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
+   iar_getDim( iar, NULL, &h );
    hmax = h * (iar->dat.iar.yelem - (int)(iar->h / h));
    yscreen = (double)iar->h / h;
    x = iar->dat.iar.selected % iar->dat.iar.xelem;
@@ -315,8 +327,7 @@ static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
    if (iar->status == WIDGET_STATUS_SCROLLING) {
 
       /* element dimensions */
-      w = iar->dat.iar.iw + 5.*2.; /* includes border */
-      h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
+      iar_getDim( iar, &w, &h );
 
       /* number of elements */
       xelem = iar->dat.iar.xelem;
@@ -383,8 +394,7 @@ static void iar_scroll( Widget* iar, int direction )
       return;
 
    /* element dimensions */
-   w = iar->dat.iar.iw + 5.*2.; /* includes border */
-   h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
+   iar_getDim( iar, &w, &h );
 
    /* number of elements */
    xelem = iar->dat.iar.xelem;
@@ -419,8 +429,7 @@ static int iar_focusImage( Widget* iar, double bx, double by )
    y = by + iar->y;
 
    /* element dimensions */
-   w = iar->dat.iar.iw + 5.*2.; /* includes border */
-   h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
+   iar_getDim( iar, &w, &h );
 
    /* number of elements */
    xelem = iar->dat.iar.xelem;
@@ -468,7 +477,7 @@ static void iar_focus( Widget* iar, double bx, double by )
    int selected;
 
    /* element dimensions */
-   h = iar->dat.iar.ih + 5.*2. + 2. + gl_smallFont.h;
+   iar_getDim( iar, NULL, &h );
 
    /* number of elements */
    yelem = iar->dat.iar.yelem;
