@@ -216,6 +216,7 @@ static int gui_parseBar( xmlNodePtr parent, HealthBar *bar, const glColour *col 
 static int gui_parse( const xmlNodePtr parent, const char *name );
 static void gui_cleanupBar( HealthBar *bar );
 /* Render GUI. */
+static void gui_renderTarget( double dt );
 static void gui_renderBorder( double dt );
 static void gui_renderRadar( double dt );
 static void gui_renderMessages( double dt );
@@ -342,7 +343,7 @@ void gui_renderBG( double dt )
  *
  *    @double dt Current delta tick.
  */
-void gui_renderTarget( double dt )
+static void gui_renderTarget( double dt )
 {
    (void) dt;
    Pilot *p;
@@ -612,7 +613,8 @@ void gui_render( double dt )
    }
 
    /* Make sure player is valid. */
-   if (player==NULL) return;
+   if (player==NULL)
+      return;
 
    /*
     * Countdown timers.
@@ -620,8 +622,9 @@ void gui_render( double dt )
    blink_pilot -= dt;
    blink_planet -= dt;
 
-   /* Render the border ships. */
+   /* Render the border ships and targets. */
    gui_renderBorder(dt);
+   gui_renderTarget(dt);
 
    /* Lockon warning */
    if (player->lockons > 0)

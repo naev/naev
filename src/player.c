@@ -823,11 +823,6 @@ void player_render( double dt )
     * Render the player.
     */
    if ((player != NULL) && !player_isFlag(PLAYER_CREATING)) {
-
-      /* Render player's target first. */
-      gui_renderTarget(dt);
-
-      /* Player is ontop of targeting graphic */
       pilot_render(player, dt);
    }
 }
