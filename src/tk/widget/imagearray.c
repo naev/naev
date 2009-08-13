@@ -175,7 +175,7 @@ static void iar_render( Widget* iar, double bx, double by )
          if (iar->dat.iar.quantity != NULL) {
             if (iar->dat.iar.quantity[j*xelem + i] != NULL) {
                gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
-                     xcurs + 2., ycurs + iar->dat.iar.ih + 7.,
+                     xcurs + 5., ycurs + iar->dat.iar.ih + 7.,
                      &cWhite, iar->dat.iar.quantity[j*xelem + i] );
             }
          }
@@ -609,10 +609,20 @@ int toolkit_setImageArrayPos( const unsigned int wid, const char* name, int pos 
  */
 int toolkit_setImageArrayAlt( const unsigned int wid, const char* name, char **alt )
 {
+   int i;
    Widget *wgt = iar_getWidget( wid, name );
    if (wgt == NULL)
       return -1;
 
+   /* Clean up. */
+   if (wgt->dat.iar.alts != NULL) {
+      for (i=0; i<wgt->dat.iar.nelements; i++)
+         if (wgt->dat.iar.alts[i] != NULL)
+            free(wgt->dat.iar.alts[i]);
+      free(wgt->dat.iar.alts);
+   }
+
+   /* Set. */
    wgt->dat.iar.alts = alt;
    return 0;
 }
@@ -629,10 +639,20 @@ int toolkit_setImageArrayAlt( const unsigned int wid, const char* name, char **a
 int toolkit_setImageArrayQuantity( const unsigned int wid, const char* name,
       char **quantity )
 {
+   int i;
    Widget *wgt = iar_getWidget( wid, name );
    if (wgt == NULL)
       return -1;
 
+   /* Clean up. */
+   if (wgt->dat.iar.quantity != NULL) {
+      for (i=0; i<wgt->dat.iar.nelements; i++)
+         if (wgt->dat.iar.quantity[i] != NULL)
+            free(wgt->dat.iar.quantity[i]);
+      free(wgt->dat.iar.quantity);
+   }
+
+   /* Set. */
    wgt->dat.iar.quantity = quantity;
    return 0;
 }
