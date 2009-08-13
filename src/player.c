@@ -984,7 +984,6 @@ void player_think( Pilot* pplayer, const double dt )
 
    /* normal turning scheme */
    if (!facing) {
-      pilot_setTurn( pplayer, 0. );
       turn = 0;
       if (player_isFlag(PLAYER_TURN_LEFT))
          turn -= player_left;
@@ -1070,7 +1069,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
    /* Calculate engine sound to use. */
    if (player_isFlag(PLAYER_AFTERBURNER))
       engsound = pplayer->afterburner->outfit->u.afb.sound;
-   else if (VMOD(pplayer->solid->force) > 0.) {
+   else if (pplayer->solid->force_x > 0.) {
       /* See if is in hyperspace. */
       if (pilot_isFlag(pplayer, PILOT_HYPERSPACE))
          engsound = snd_hypEng;

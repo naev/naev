@@ -325,7 +325,7 @@ Pilot* pilot_get( const unsigned int id )
  */
 void pilot_setThrust( Pilot *p, double thrust )
 {
-   vect_pset( &p->solid->force, thrust * p->thrust, p->solid->dir );
+   p->solid->force_x = p->thrust * thrust;
 }
 
 
@@ -1526,7 +1526,7 @@ void pilot_update( Pilot* pilot, const double dt )
 
 
    /* Set engine glow. */
-   if (VMOD(pilot->solid->force) > 0) {
+   if (pilot->solid->force_x > 0) {
       /*pilot->engine_glow += pilot->thrust / pilot->speed * dt;*/
       pilot->engine_glow += pilot->speed / pilot->thrust * dt * pilot->solid->mass;
       if (pilot->engine_glow > 1.)

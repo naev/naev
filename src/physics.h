@@ -65,7 +65,8 @@ typedef struct Solid_ {
    double dir_vel; /**< Velocity at which solid is rotating. */
    Vector2d vel; /**< Velocity of the solid. */
    Vector2d pos; /**< Position of the solid. */
-   Vector2d force; /**< Forces acting on the solid. */
+   double force_x; /**< X force in RELATIVE to solid position. */
+   /*double force_y;*/ /**< Y force in RELATIVE to solid position. */
    void (*update)( struct Solid_*, const double ); /**< Update method. */
 } Solid;
 

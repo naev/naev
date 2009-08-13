@@ -233,7 +233,7 @@ double vect_dot( Vector2d* a, Vector2d* b )
  */
 static void simple_update (Solid *obj, const double dt)
 {
-   double px,py, vx,vy, ax,ay;
+   double px,py, vx,vy, ax;
 
    /* make sure angle doesn't flip */
    obj->dir += M_PI/180.*obj->dir_vel*dt;
@@ -249,11 +249,11 @@ static void simple_update (Solid *obj, const double dt)
    vy = obj->vel.y;
 
    if (obj->force.mod) { /* force applied on object */
-      ax = obj->force.x / obj->mass;
-      ay = obj->force.y / obj->mass;
+      ax = obj->force_x / obj->mass;
+      /*ay = obj->force_x / obj->mass;*/
 
-      vx += ax*dt;
-      vy += ay*dt;
+      vx += ax*cos(obj->dir) * dt;
+      vy += ay*cos(obj->dir) * dt;
 
       px += vx*dt + 0.5*ax * dt*dt;
       py += vy*dt + 0.5*ay * dt*dt;
@@ -304,14 +304,7 @@ static void rk4_update (Solid *obj, const double dt)
 {
    int i, N; /* for iteration, and pass calcualtion */
    double h, px,py, vx,vy; /* pass, and position/velocity values */
-   double ix,iy, tx,ty, ax,ay; /* initial and temporary cartesian vector values */
-
-   /* make sure angle doesn't flip */
-   obj->dir += M_PI/180.*obj->dir_vel*dt;
-   if (obj->dir >= 2.*M_PI)
-      obj->dir -= 2*M_PI;
-   else if (obj->dir < 0.)
-      obj->dir += 2*M_PI;
+   double ix,iy, tx,ty, ax; /* initial and temporary cartesian vector values */
 
    /* Initial RK parameters. */
    N = (dt>RK4_MIN_H) ? (int)(dt/RK4_MIN_H) : 1 ;
@@ -323,11 +316,11 @@ static void rk4_update (Solid *obj, const double dt)
    vx = obj->vel.x;
    vy = obj->vel.y;
 
-   if (obj->force.mod) { /* force applied on object */
+   if (obj->force_x > 0.) { /* force applied on object */
 
       /* Movement Quantity Theorem:  m*a = \sum f */
-      ax = obj->force.x / obj->mass;
-      ay = obj->force.y / obj->mass;
+      ax = obj->force_x / obj->mass;
+      /*ay = obj->force.x / obj->mass;*/
 
       for (i=0; i < N; i++) { /* iterations */
 
@@ -339,7 +332,7 @@ static void rk4_update (Solid *obj, const double dt)
          tx *= h/6.;
 
          px += tx;
-         vx += ax*h;
+         vx += ax*cos(obj->dir) * h;
 
          /* y component */
          ty = iy = vy; 
@@ -349,15 +342,25 @@ static void rk4_update (Solid *obj, const double dt)
          ty *= h/6.;
 
          py += ty;
-         vy += ay*h;
+         vy += ax*sin(obj->dir) * h;
+
+         /* rotation. */
+         obj->dir += M_PI/180.*obj->dir_vel*h;
       }
       vect_cset( &obj->vel, vx, vy );
    }
    else { /* euler method -> p = v*t + 0.5*a*t^2 (no accel, so no error) */
       px += dt*vx;
       py += dt*vy;
+      obj->dir += M_PI/180.*obj->dir_vel*dt;
    }
    vect_cset( &obj->pos, px, py );
+
+   /* Sanity check. */
+   if (obj->dir >= 2.*M_PI)
+      obj->dir -= 2*M_PI;
+   else if (obj->dir < 0.)
+      obj->dir += 2*M_PI;
 }
 #endif /* !HAS_FREEBSD */
 
@@ -380,7 +383,8 @@ void solid_init( Solid* dest, const double mass, const double dir,
    dest->dir_vel = 0.;
 
    /* Set force. */
-   vectnull( &dest->force );
+   dest->force_x = 0.;
+   /*dest->force_y = 0.;*/
 
    /* Set direction. */
    dest->dir = dir;

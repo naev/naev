@@ -136,6 +136,9 @@ static void think_beam( Weapon* w, const double dt );
 /* externed */
 void weapon_minimap( const double res, const double w,
       const double h, const RadarShape shape, double alpha );
+/* movement. */
+static void weapon_setThrust( Weapon *w, double thrust );
+static void weapon_setTurn( Weapon *w, double turn );
 
 
 /**
@@ -277,6 +280,24 @@ void weapon_toggleSafety (void)
 
 
 /**
+ * @brief Sets the weapon's thrust.
+ */
+static void weapon_setThrust( Weapon *w, double thrust )
+{
+   w->solid->force_x = thrust;
+}
+
+
+/**
+ * @brief Sets the weapon's turn.
+ */
+static void weapon_setTurn( Weapon *w, double turn )
+{
+   w->solid->dir_vel = turn;
+}
+
+
+/**
  * @brief The AI of seeker missiles.
  *
  *    @param w Weapon to do the thinking.
@@ -295,8 +316,8 @@ static void think_seeker( Weapon* w, const double dt )
 
    p = pilot_get(w->target); /* no null pilot_nstack */
    if (p==NULL) {
-      w->solid->dir_vel = 0.; /* go straight */
-      vectnull( &w->solid->force ); /* no force */
+      weapon_setThrust( w, 0. );
+      weapon_setTurn( w, 0. );
       return;
    }
 
@@ -318,14 +339,14 @@ static void think_seeker( Weapon* w, const double dt )
                         w->timer = -1.;
                         break;
                      case 1: /* Stuck in left loop */
-                        w->solid->dir_vel = w->outfit->u.amm.turn;
+                        weapon_setTurn( w, w->outfit->u.amm.turn );
                         break;
                      case 2: /* Stuck in right loop */
-                        w->solid->dir_vel = -w->outfit->u.amm.turn;
+                        weapon_setTurn( w, -w->outfit->u.amm.turn );
                         break;
 
                      default: /* Go straight */
-                        w->solid->dir_vel = 0.;
+                        weapon_setTurn( w, 0. );
                         return;
                   }
                }
@@ -357,12 +378,9 @@ static void think_seeker( Weapon* w, const double dt )
                      vect_angle(&w->solid->pos, &p->solid->pos));
             }
 
-            w->solid->dir_vel = 10 * diff *  w->outfit->u.amm.turn; /* Face pos */
-            /* Check for under/overflows */
-            if (w->solid->dir_vel > w->outfit->u.amm.turn)
-               w->solid->dir_vel = w->outfit->u.amm.turn;
-            else if (w->solid->dir_vel < -w->outfit->u.amm.turn)
-               w->solid->dir_vel = -w->outfit->u.amm.turn;
+            /* Set turn. */
+            weapon_setTurn( w, CLAMP( -w->outfit->u.amm.turn, w->outfit->u.amm.turn,
+                     10 * diff * w->outfit->u.amm.turn ));
             break;
 
          case WEAPON_STATUS_JAMMED: /* Continue doing whatever */
@@ -425,7 +443,7 @@ static void think_beam( Weapon* w, const double dt )
          /* Get target, if target is dead beam stops moving. */
          t = pilot_get(w->target);
          if (t==NULL) {
-            w->solid->dir_vel = 0.;
+            weapon_setTurn( w, 0. );
             return;
          }
 
@@ -434,12 +452,8 @@ static void think_beam( Weapon* w, const double dt )
          else
             diff = angle_diff(w->solid->dir, /* Get angle to target pos */
                   vect_angle(&w->solid->pos, &t->solid->pos));
-         w->solid->dir_vel = 10 * diff *  w->outfit->u.bem.turn; /* Face pos */
-         /* Check for under/overflows */
-         if (w->solid->dir_vel > w->outfit->u.bem.turn)
-            w->solid->dir_vel = w->outfit->u.bem.turn;
-         else if (w->solid->dir_vel < -w->outfit->u.bem.turn)
-            w->solid->dir_vel = -w->outfit->u.bem.turn;
+         weapon_setTurn( w, CLAMP( -w->outfit->u.bem.turn, w->outfit->u.bem.turn,
+                  10 * diff *  w->outfit->u.bem.turn ));
          break;
 
       default:
@@ -1271,7 +1285,7 @@ static Weapon* weapon_create( const Outfit* outfit,
          w->timer = outfit->u.amm.duration;
          w->solid = solid_create( mass, rdir, pos, &v );
          if (w->outfit->u.amm.thrust != 0.)
-            vect_pset( &w->solid->force, w->outfit->u.amm.thrust * mass, rdir );
+            weapon_setThrust( w, w->outfit->u.amm.thrust * mass );
          w->voice = sound_playPos(w->outfit->u.amm.sound,
                w->solid->pos.x,
                w->solid->pos.y,
