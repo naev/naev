@@ -1622,6 +1622,8 @@ static void pilot_hyperspace( Pilot* p, double dt )
 
          if (ABS(diff) < MAX_DIR_ERR)
             pilot_setThrust( p, 1. );
+         else
+            pilot_setThrust( p, 0. );
 
       }
       /* face target */
