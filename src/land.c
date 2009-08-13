@@ -1553,9 +1553,9 @@ void land( Planet* p )
       commodity_exchange_open( land_getWid(LAND_WINDOW_COMMODITY) );
 
    /* Go to last open tab. */
+   window_tabWinOnChange( land_wid, "tabLand", land_changeTab );
    if (land_windowsMap[ last_window ] != -1)
       window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
-   window_tabWinOnChange( land_wid, "tabLand", land_changeTab );
 
    /* player is now officially landed */
    landed = 1;
