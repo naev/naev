@@ -790,7 +790,7 @@
   <description>An Empire Pacifier.</description>
   <movement>
    <thrust>160</thrust>
-   <turn>10</turn>
+   <turn>100</turn>
    <speed>170</speed>
   </movement>
   <health>
