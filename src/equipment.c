@@ -840,6 +840,7 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    Outfit *o, *ammo;
    int regen;
    int q;
+   int n;
 
    /* Do not regenerate list by default. */
    regen = 0;
@@ -897,10 +898,12 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    }
 
    /* Redo the outfits thingy. */
-   if (regen) {
-      window_destroyWidget( wid, EQUIPMENT_OUTFITS );
-      equipment_genLists( wid );
-   }
+   if (!regen)
+      n = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
+   window_destroyWidget( wid, EQUIPMENT_OUTFITS );
+   equipment_genLists( wid );
+   if (!regen)
+      toolkit_setImageArrayPos( wid, EQUIPMENT_OUTFITS, n );
 
    /* Update ships. */
    equipment_updateShips( wid, NULL );
@@ -962,6 +965,7 @@ void equipment_genLists( unsigned int wid )
    int sw, sh;
    int ow, oh;
    char **alt;
+   char **quantity;
    Outfit *o;
 
    /* Get dimensions. */
@@ -999,8 +1003,11 @@ void equipment_genLists( unsigned int wid )
       /* Set alt text. */
       if (strcmp(soutfits[0],"None")!=0) {
          alt = malloc( sizeof(char*) * noutfits );
+         quantity = malloc( sizeof(char*) * noutfits );
          for (i=0; i<noutfits; i++) {
             o      = outfit_get( soutfits[i] );
+
+            /* Short description. */
             if (o->desc_short == NULL)
                alt[i] = NULL;
             else {
@@ -1020,8 +1027,15 @@ void equipment_genLists( unsigned int wid )
                      "Quantity %d",
                      player_outfitOwned(o) );
             }
+
+            /* Quantity. */
+            p = player_outfitOwned(o);
+            l = p / 10 + 4;
+            quantity[i] = malloc( l );
+            snprintf( quantity[i], l, "%d", p );
          }
          toolkit_setImageArrayAlt( wid, EQUIPMENT_OUTFITS, alt );
+         toolkit_setImageArrayQuantity( wid, EQUIPMENT_OUTFITS, quantity );
       }
    }
 

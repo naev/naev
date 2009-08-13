@@ -171,6 +171,15 @@ static void iar_render( Widget* iar, double bx, double by )
                   (is_selected) ? &cBlack : &cWhite,
                   iar->dat.iar.captions[j*xelem + i] );
 
+         /* quantity. */
+         if (iar->dat.iar.quantity != NULL) {
+            if (iar->dat.iar.quantity[j*xelem + i] != NULL) {
+               gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
+                     xcurs + 2., ycurs + iar->dat.iar.ih + 7.,
+                     &cWhite, iar->dat.iar.quantity[j*xelem + i] );
+            }
+         }
+
          /* outline */
          if (is_selected) {
             lc = &cWhite;
@@ -572,6 +581,25 @@ int toolkit_getImageArrayPos( const unsigned int wid, const char* name )
 
 
 /**
+ * @brief Sets the active element in the Image Array.
+ *
+ *    @param wid Window where image array is.
+ *    @param name Name of the image array.
+ *    @param pos Position to set to.
+ *    @return 0 on success.
+ */
+int toolkit_setImageArrayPos( const unsigned int wid, const char* name, int pos )
+{
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return -1;
+
+   wgt->dat.iar.selected = CLAMP( 0, wgt->dat.iar.nelements, pos );
+   return 0;
+}
+
+
+/**
  * @brief Sets the alt text for the images in the image array.
  *
  *    @param wid Window where image array is.
@@ -586,6 +614,26 @@ int toolkit_setImageArrayAlt( const unsigned int wid, const char* name, char **a
       return -1;
 
    wgt->dat.iar.alts = alt;
+   return 0;
+}
+
+
+/**
+ * @brief Sets the quantity text for the images in the image array.
+ *
+ *    @param wid Window where image array is.
+ *    @param name Name of the image array.
+ *    @param alt Array of alt text the size of the images in the array.
+ *    @return 0 on success.
+ */
+int toolkit_setImageArrayQuantity( const unsigned int wid, const char* name,
+      char **quantity )
+{
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return -1;
+
+   wgt->dat.iar.quantity = quantity;
    return 0;
 }
 
