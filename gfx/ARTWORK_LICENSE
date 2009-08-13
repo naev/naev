@@ -40,14 +40,10 @@
        * neutron.png
        * neutron-end.png
        * particle.png
-       * plasma.png
        * ripper.png
        * ripper-end.png
      * store
-       * capacitator.png
-       * heavy.png
-       * laser.png
-       * medium.png
+       * capacitor.png
        * missile.png
        * orion.png
        * neutron.png
@@ -58,9 +54,6 @@
        * shield.png
        * stabilizer.png
        * thruster.png
-       * turret2.png
-       * turret3.png
-       * turret.png
        * lancelot_fighter.png
        * drone_fighter.png
    * planet
@@ -153,11 +146,6 @@
    * outfit
      * store
        * solar.png
-
- * Author: Dennis Myts, License: PD
-   * outfit
-     * store
-       * biometal.png
  
  * Author: Kristian Mølhave, License: CC-by v2.5
    * outfit
@@ -218,8 +206,18 @@
        * jammer0.png
        * jammer1.png
        * weapon_rack.png
-       * lasercannon.png
+       * laser.png
+       * laser2.png
+       * laserturret.png
+       * laserturret2.png
        * ioncannon.png
+       * ionturret.png
+       * plasma.png
+       * plasma2.png
+       * ragnarok.png
+       * railgun.png
+       * orion.png
+       * ripper.png
    * ship
      * kestrel.png
      * kestrel_comm.png
@@ -249,6 +247,11 @@
          * laser2-end.png
          * plasma2.png
          * plasma2-end.png
+       * store
+         * cpu_i.png
+         * cpu_ii.png
+         * cpu_iii.png
+         * biometal.png
      * spfx
        * plas2.png
        * plam2.png
