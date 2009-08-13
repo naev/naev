@@ -760,6 +760,9 @@ static const char* equipment_canSwap( PilotOutfitSlot *s, Outfit *o, int add )
          if ((o->u.mod.fuel < 0) &&
                (fabs(o->u.mod.fuel) > p->fuel_max))
             return "Insufficient fuel";
+         if ((o->u.mod.cargo < 0) &&
+               (fabs(o->u.mod.cargo) > p->cargo_free))
+            return "Insufficient cargo space";
       }
    }
    /* Removing outfit. */
@@ -812,6 +815,10 @@ static const char* equipment_canSwap( PilotOutfitSlot *s, Outfit *o, int add )
          if ((o->u.mod.fuel > 0) &&
                (o->u.mod.fuel > p->fuel_max))
             return "Increase fuel first";
+         if ((o->u.mod.cargo > 0) &&
+               (o->u.mod.cargo > p->cargo_free))
+            return "Increase free cargo space first";
+
       }
       else if (outfit_isFighterBay(o)) {
          if (s->u.ammo.deployed > 0)
