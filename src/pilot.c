@@ -2028,7 +2028,7 @@ void pilot_calcStats( Pilot* pilot )
 
       if (outfit_isMod(o)) { /* Modification */
          /* movement */
-         pilot->thrust        += o->u.mod.thrust * q;
+         pilot->thrust        += o->u.mod.thrust * pilot->ship->mass * q;
          pilot->thrust        += o->u.mod.thrust_rel * pilot->ship->thrust * q;
          pilot->turn          += o->u.mod.turn * q;
          pilot->turn          += o->u.mod.turn_rel * pilot->ship->turn * q;
@@ -2081,10 +2081,13 @@ void pilot_calcStats( Pilot* pilot )
    pilot->armour = ac * pilot->armour_max;
    pilot->shield = sc * pilot->shield_max;
    pilot->energy = ec * pilot->energy_max;
-   pilot->fuel = fc * pilot->fuel_max;
+   pilot->fuel   = fc * pilot->fuel_max;
 
    /* Calculate mass. */
    pilot->solid->mass = pilot->ship->mass + pilot->mass_cargo + pilot->mass_outfit;
+
+   /* Modulate by mass. */
+   pilot->turn *= pilot->ship->mass / pilot->solid->mass;
 }
 
 
