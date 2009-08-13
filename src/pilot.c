@@ -1983,7 +1983,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->solid->mass   = pilot->ship->mass;
    /* movement */
    pilot->thrust        = pilot->ship->thrust;
-   pilot->turn          = pilot->ship->turn;
+   pilot->turn_base     = pilot->ship->turn;
    pilot->speed         = pilot->ship->speed;
    /* cpu */
    pilot->cpu_max       = pilot->ship->cpu;
@@ -2035,8 +2035,8 @@ void pilot_calcStats( Pilot* pilot )
          /* movement */
          pilot->thrust        += o->u.mod.thrust * pilot->ship->mass * q;
          pilot->thrust        += o->u.mod.thrust_rel * pilot->ship->thrust * q;
-         pilot->turn          += o->u.mod.turn * q;
-         pilot->turn          += o->u.mod.turn_rel * pilot->ship->turn * q;
+         pilot->turn_base     += o->u.mod.turn * q;
+         pilot->turn_base     += o->u.mod.turn_rel * pilot->ship->turn * q;
          pilot->speed         += o->u.mod.speed * q;
          pilot->speed         += o->u.mod.speed_rel * pilot->ship->speed * q;
          /* health */
@@ -2101,7 +2101,7 @@ void pilot_calcStats( Pilot* pilot )
  */
 static void pilot_updateMass( Pilot *pilot )
 {
-   pilot->turn *= pilot->ship->mass / pilot->solid->mass;
+   pilot->turn = pilot->turn_base * pilot->ship->mass / pilot->solid->mass;
 }
 
 
@@ -2191,7 +2191,9 @@ static int pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
             /* Tweak results. */
             pilot->commodities[i].quantity += q;
             pilot->cargo_free              -= q;
+            pilot->mass_cargo              += q;
             pilot->solid->mass             += q;
+            pilot_updateMass( pilot );
             return q;
          }
    }
@@ -2212,8 +2214,10 @@ static int pilot_addCargoRaw( Pilot* pilot, Commodity* cargo,
 
    /* Tweak pilot. */
    pilot->cargo_free    -= q;
+   pilot->mass_cargo    += q;
    pilot->solid->mass   += q;
    pilot->ncommodities++;
+   pilot_updateMass( pilot );
 
    return q;
 }
@@ -2324,6 +2328,7 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
 
    /* remove cargo */
    pilot->cargo_free    += pilot->commodities[i].quantity;
+   pilot->mass_cargo    -= pilot->commodities[i].quantity;
    pilot->solid->mass   -= pilot->commodities[i].quantity;
    pilot->ncommodities--;
    if (pilot->ncommodities <= 0) {
@@ -2339,6 +2344,9 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
       pilot->commodities = realloc( pilot->commodities,
             sizeof(PilotCommodity) * pilot->ncommodities );
    }
+
+   /* Update mass. */
+   pilot_updateMass( pilot );
 
    return 0;
 }
@@ -2389,7 +2397,9 @@ static int pilot_rmCargoRaw( Pilot* pilot, Commodity* cargo, int quantity, int c
          else
             pilot->commodities[i].quantity -= q;
          pilot->cargo_free    += q;
+         pilot->mass_cargo    -= q;
          pilot->solid->mass   -= q;
+         pilot_updateMass( pilot );
          return q;
       }
    return 0; /* pilot didn't have it */

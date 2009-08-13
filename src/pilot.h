@@ -198,8 +198,9 @@ typedef struct Pilot_ {
 
    /* Movement */
    double thrust; /**< Pilot's thrust. */
-   double turn; /**< Pilot's turn. */
    double speed; /**< Pilot's speed. */
+   double turn; /**< Pilot's turn. */
+   double turn_base; /**< Pilot's base turn. */
 
    /* Current health */
    double armour; /**< Current armour. */
