@@ -895,12 +895,13 @@ void player_think( Pilot* pplayer, const double dt )
    double d;
    double turn;
    int facing;
+   Outfit *afb;
 
    /* last i heard, the dead don't think */
    if (pilot_isFlag(pplayer,PILOT_DEAD)) {
       /* no sense in accelerating or turning */
-      pplayer->solid->dir_vel = 0.;
-      vect_pset( &player->solid->force, 0., 0. );
+      pilot_setThrust( pplayer, 0. );
+      pilot_setTurn( pplayer, 0. );
       return;
    }
 
@@ -983,14 +984,14 @@ void player_think( Pilot* pplayer, const double dt )
 
    /* normal turning scheme */
    if (!facing) {
-      pplayer->solid->dir_vel = 0.;
+      pilot_setTurn( pplayer, 0. );
       turn = 0;
       if (player_isFlag(PLAYER_TURN_LEFT))
          turn -= player_left;
       if (player_isFlag(PLAYER_TURN_RIGHT))
          turn += player_right;
       turn = CLAMP( -1., 1., turn );
-      pplayer->solid->dir_vel -= pplayer->turn * turn;
+      pilot_setTurn( pplayer, -turn );
    }
 
    /*
@@ -1027,16 +1028,16 @@ void player_think( Pilot* pplayer, const double dt )
     * Afterburn!
     */
    if (player_isFlag(PLAYER_AFTERBURNER)) {
-      if (pilot_isFlag(player,PILOT_AFTERBURNER))
-         vect_pset( &pplayer->solid->force,
-               pplayer->thrust * pplayer->afterburner->outfit->u.afb.thrust_perc + 
-               pplayer->afterburner->outfit->u.afb.thrust_abs, pplayer->solid->dir );
+      if (pilot_isFlag(player,PILOT_AFTERBURNER)) {
+         afb = pplayer->afterburner->outfit;
+         pilot_setThrust( pplayer, 1. + afb->u.afb.thrust_perc +
+               afb->u.afb.thrust_abs*pplayer->solid->mass/pplayer->thrust );
+      }
       else /* Ran out of energy */
          player_afterburnOver();
    }
    else
-      vect_pset( &pplayer->solid->force, pplayer->thrust * player_acc,
-            pplayer->solid->dir );
+      pilot_setThrust( pplayer, player_acc );
 }
 
 

@@ -369,6 +369,13 @@ void pilot_free( Pilot* p );
 
 
 /*
+ * Movement.
+ */
+void pilot_setThrust( Pilot *p, double thrust );
+void pilot_setTurn( Pilot *p, double turn );
+
+
+/*
  * update
  */
 void pilot_update( Pilot* pilot, const double dt );

@@ -672,11 +672,9 @@ void ai_think( Pilot* pilot, const double dt )
    pilot_acc   = CLAMP( 0., 1., pilot_acc );
    pilot_turn  = CLAMP( -1., 1., pilot_turn );
 
-   cur_pilot->solid->dir_vel = 0.;
-   if (pilot_turn) /* set the turning velocity */
-      cur_pilot->solid->dir_vel += cur_pilot->turn * pilot_turn;
-   vect_pset( &cur_pilot->solid->force, /* set the velocity vector */
-         cur_pilot->thrust * pilot_acc, cur_pilot->solid->dir );
+   /* Set turn and thrust. */
+   pilot_setTurn( cur_pilot, pilot_turn );
+   pilot_setThrust( cur_pilot, pilot_acc );
 
    /* fire weapons if needed */
    if (ai_isFlag(AI_PRIMARY))

@@ -321,6 +321,24 @@ Pilot* pilot_get( const unsigned int id )
 
 
 /**
+ * @brief Sets the pilot's thrust.
+ */
+void pilot_setThrust( Pilot *p, double thrust )
+{
+   vect_pset( &p->solid->force, thrust * p->thrust, p->solid->dir );
+}
+
+
+/**
+ * @brief Sets the pilot's turn.
+ */
+void pilot_setTurn( Pilot *p, double turn )
+{
+   p->solid->dir_vel = p->turn * turn;
+}
+
+
+/**
  * @brief Checks to see if pilot is hostile to the player.
  *
  *    @param p Player to see if is hostile.
@@ -384,10 +402,7 @@ double pilot_face( Pilot* p, const double dir )
    
    diff = angle_diff( p->solid->dir, dir );
    turn = CLAMP( -1., 1., -10.*diff );
-
-   p->solid->dir_vel = 0.;
-   if (turn)
-      p->solid->dir_vel -= p->turn * turn;
+   pilot_setTurn( p, -turn );
 
    return diff;
 }
@@ -1432,8 +1447,8 @@ void pilot_update( Pilot* pilot, const double dt )
       vect_pset( &pilot->solid->vel, /* slowly brake */
          VMOD(pilot->solid->vel) * (1. - dt*0.10),
          VANGLE(pilot->solid->vel) );
-      vectnull( &pilot->solid->force ); /* no more accel */
-      pilot->solid->dir_vel = 0.; /* no more turning */
+      pilot_setThrust( pilot, 0. );
+      pilot_setTurn( pilot, 0. );
 
       /* update the solid */
       pilot->solid->update( pilot->solid, dt );
@@ -1582,7 +1597,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
       }
 
       /* keep acceling - hyperspace uses much bigger accel */
-      vect_pset( &p->solid->force, HYPERSPACE_THRUST*p->solid->mass, p->solid->dir );
+      pilot_setThrust( p, HYPERSPACE_THRUST*p->solid->mass/p->thrust );
    }
    /* engines getting ready for the jump */
    else if (pilot_isFlag(p, PILOT_HYP_BEGIN)) {
@@ -1603,13 +1618,13 @@ static void pilot_hyperspace( Pilot* p, double dt )
          diff = pilot_face( p, VANGLE(p->solid->vel) + M_PI );
 
          if (ABS(diff) < MAX_DIR_ERR)
-            vect_pset( &p->solid->force, p->thrust, p->solid->dir );
+            pilot_setThrust( p, 1. );
 
       }
       /* face target */
       else {
 
-         vectnull( &p->solid->force ); /* stop accel */
+         pilot_setThrust( p, 0. );
 
          /* player should actually face the system he's headed to */
          if (p==player)
@@ -1618,7 +1633,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
             diff = pilot_face( p, VANGLE(p->solid->pos) );
 
          if (ABS(diff) < MAX_DIR_ERR) { /* we can now prepare the jump */
-            p->solid->dir_vel = 0.;
+            pilot_setTurn( p, 0. );
             p->ptimer = HYPERSPACE_ENGINE_DELAY;
             pilot_setFlag(p, PILOT_HYP_BEGIN);
             /* Player plays sound. */
