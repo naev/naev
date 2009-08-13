@@ -119,8 +119,8 @@ function create()
             carg_mass * (150+rnd.int(75)) +
             rnd.int(1500)
    elseif misn_type == "Rush" then
-      misn_time = time.get() + time.units(2) +
-            rnd.int(time.units(2), time.units(4)) * misn_dist
+      misn_time = time.get() + time.units(3) +
+            rnd.int(time.units(3), time.units(5)) * misn_dist
       misn.setDesc( string.format( misn_desc[11], pnt:name(), sys:name(),
             carg_mass, carg_type,
             time.str(misn_time), time.str(misn_time-time.get()) ) )

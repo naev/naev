@@ -73,7 +73,7 @@ function create()
    end
 
    misn_time = time.get() + time.units(5) +
-         rnd.int(time.units(5), time.units(8)) * misn_dist
+         rnd.int(time.units(6), time.units(8)) * misn_dist
    misn.setDesc( string.format( misn_desc, carg_mass, carg_type,
          pnt:name(), sys:name(),
          time.str(misn_time), time.str(misn_time-time.get())) )
