@@ -577,7 +577,7 @@
    <mass>45</mass>
    <price>120000</price>
    <description>A large battery unit designed to hold 400 MJ of energy. Ideally mounted on medium-to-large vessels.</description>
-   <gfx_store>capacitor</gfx_store>
+   <gfx_store>capacitor2</gfx_store>
   </general>
   <specific type="modification">
    <cpu>-12</cpu>
@@ -592,7 +592,7 @@
    <mass>135</mass>
    <price>360000</price>
    <description>A massive battery unit designed to hold 800 MJ of energy. Given the mass of this battery, it's advisable to only mount it on capital ships.</description>
-   <gfx_store>capacitor</gfx_store>
+   <gfx_store>capacitor4</gfx_store>
   </general>
   <specific type="modification">
    <cpu>-36</cpu>
@@ -666,7 +666,7 @@
   <general>
    <typename>Shield Modifier</typename>
    <slot>low</slot>
-   <tech>9</tech>
+   <tech>7</tech>
    <mass>12</mass>
    <price>60000</price>
    <description>An enhancement for the shield power system, allowing it to resist heavier fire.</description>
@@ -681,30 +681,45 @@
   <general>
    <typename>Shield Modifier</typename>
    <slot>low</slot>
-   <tech>9</tech>
-   <mass>36</mass>
-   <price>120000</price>
+   <tech>8</tech>
+   <mass>24</mass>
+   <price>110000</price>
    <description>An enhancement for the shield power system, allowing it to resist heavier fire.</description>
-   <gfx_store>capacitor</gfx_store>
+   <gfx_store>capacitor2</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>-9</cpu>
-   <shield>100</shield>
+   <cpu>-7</cpu>
+   <shield>75</shield>
   </specific>
  </outfit>
-   <outfit name="Shield Capacitor III">
+ <outfit name="Shield Capacitor III">
   <general>
    <typename>Shield Modifier</typename>
    <slot>low</slot>
    <tech>9</tech>
-   <mass>108</mass>
-   <price>240000</price>
+   <mass>48</mass>
+   <price>220000</price>
    <description>An enhancement for the shield power system, allowing it to resist heavier fire.</description>
-   <gfx_store>capacitor</gfx_store>
+   <gfx_store>capacitor4</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>-27</cpu>
-   <shield>250</shield>
+   <cpu>-14</cpu>
+   <shield>145</shield>
+  </specific>
+ </outfit>
+ <outfit name="Shield Capacitor IV">
+  <general>
+   <typename>Shield Modifier</typename>
+   <slot>low</slot>
+   <tech>11</tech>
+   <mass>96</mass>
+   <price>400000</price>
+   <description>An enhancement for the shield power system, allowing it to resist heavier fire.</description>
+   <gfx_store>capacitor8</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>-29</cpu>
+   <shield>280</shield>
   </specific>
  </outfit>
  <outfit name="Shield Booster">
@@ -775,7 +790,7 @@
   <general>
    <typename>Armour Modifier</typename>
    <slot>low</slot>
-   <tech>11</tech>
+   <tech>8</tech>
    <mass>3</mass>
    <price>430000</price>
    <gfx_store>droid</gfx_store>
@@ -793,7 +808,7 @@
   <general>
    <typename>Manoevrability Modifier</typename>
    <slot>low</slot>
-   <tech>13</tech>
+   <tech>9</tech>
    <mass>1</mass>
    <price>125000</price>
    <description>This enhancement routes energy from the ship's energy supplies to the engine, giving the ship an increased thrust. It does not increase the ship's max speed nor turning abilities.</description>
@@ -886,7 +901,7 @@
    <typename>CPU Modifier</typename>
    <slot>medium</slot>
    <max>1</max>
-   <tech>9</tech>
+   <tech>8</tech>
    <mass>16</mass>
    <price>110000</price>
    <gfx_store>cpu_i</gfx_store>
@@ -956,19 +971,6 @@
    <cargo>15</cargo>
   </specific>
  </outfit>
- <outfit name="Weapon Rack">
-  <general>
-   <slot>low</slot>
-   <tech>8</tech>
-   <mass>-10</mass>
-   <price>65000</price>
-   <description>Adding a weapon rack to your ship will allow you to enjoy the benefits of more weapon space at the cost of cargo space. It's often wiser to have less cargo, but to guard it well.</description>
-   <gfx_store>weapon_rack</gfx_store>
-  </general>
-  <specific type="modification">
-   <cargo>-15</cargo>
-  </specific>
- </outfit>
  <outfit name="Star Map">
   <general>
    <tech>4</tech>
@@ -994,7 +996,7 @@
    <cpu>8</cpu>
    <range>400</range>
    <chance>20</chance>
-   <energy>3</energy>
+   <energy>15</energy>
   </specific>
  </outfit>
  <outfit name="Milspec Jammer">
@@ -1010,7 +1012,7 @@
    <cpu>18</cpu>
    <range>600</range>
    <chance>40</chance>
-   <energy>10</energy>
+   <energy>30</energy>
   </specific>
  </outfit>
 <!-- Escort Outfits -->
