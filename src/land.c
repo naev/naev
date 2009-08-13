@@ -36,6 +36,7 @@
 #include "event.h"
 #include "opengl_vbo.h"
 #include "conf.h"
+#include "gui.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 
@@ -3018,6 +3019,9 @@ void takeoff( int delay )
    player->armour = player->armour_max;
    player->shield = player->shield_max;
    player->energy = player->energy_max;
+
+   /* Clear messages first. */
+   gui_clearMessages();
 
    /* time goes by, triggers hook before takeoff */
    if (delay)
