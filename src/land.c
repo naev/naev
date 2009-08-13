@@ -130,6 +130,7 @@ static void commodity_sell( unsigned int wid, char* str );
 static void outfits_getSize( unsigned int wid, int *w, int *h,
       int *iw, int *ih, int *bw, int *bh );
 static void outfits_open( unsigned int wid );
+static void outfits_updateQuantities( unsigned int wid );
 static void outfits_update( unsigned int wid, char* str );
 static int outfit_canBuy( Outfit* outfit, int q, int errmsg );
 static void outfits_buy( unsigned int wid, char* str );
@@ -402,6 +403,35 @@ static void outfits_open( unsigned int wid )
 
    /* write the outfits stuff */
    outfits_update( wid, NULL );
+   outfits_updateQuantities( wid );
+}
+/**
+ * @brief Updates the quantity counter for the outfits.
+ *
+ *    @param wid Window to update counters of.
+ */
+static void outfits_updateQuantities( unsigned int wid )
+{
+   Outfit **outfits, *o;
+   int noutfits;
+   char **quantity;
+   int len, owned;
+   int i;
+
+   /* Get outfits. */
+   outfits = outfit_getTech( &noutfits, land_planet->tech, PLANET_TECH_MAX);
+   if (noutfits <= 0)
+      return;
+
+   quantity = malloc(sizeof(char*)*noutfits);
+   for (i=0; i<noutfits; i++) {
+      o = outfits[i];
+      owned = player_outfitOwned(o);
+      len = owned / 10 + 4;
+      quantity[i] = malloc( len );
+      snprintf( quantity[i], len, "%d", owned );
+   }
+   toolkit_setImageArrayQuantity( wid, "iarOutfits", quantity );
 }
 /**
  * @brief Updates the outfits in the outfit window.
@@ -473,11 +503,7 @@ static void outfits_update( unsigned int wid, char* str )
          "%s credits\n"
          "%s credits\n"
          "%s\n",
-         (outfit_isLicense(outfit)) ?
-               player_hasLicense(outfit->name) :
-               (outfit_isMap(outfit)) ?
-                  map_isMapped(NULL,outfit->u.map.radius) :
-                  player_outfitOwned(outfit),
+         player_outfitOwned(outfit),
          outfit->mass,
          buf2,
          buf3,
@@ -564,6 +590,7 @@ static void outfits_buy( unsigned int wid, char* str )
    player->credits -= outfit->price * player_addOutfit( outfit, q );
    land_checkAddRefuel();
    outfits_update(wid, NULL);
+   outfits_updateQuantities(wid);
 
    /* Update equipment. */
    equipment_addAmmo();
@@ -614,6 +641,7 @@ static void outfits_sell( unsigned int wid, char* str )
    player->credits += outfit->price * player_rmOutfit( outfit, q );
    land_checkAddRefuel();
    outfits_update(wid, NULL);
+   outfits_updateQuantities(wid);
 
    /* Update equipment. */
    w = land_getWid( LAND_WINDOW_EQUIPMENT );
