@@ -83,6 +83,7 @@ void pilot_free( Pilot* p ); /* externed in player.c */
 static void pilot_dead( Pilot* p );
 /* misc */
 static int pilot_getStackPos( const unsigned int id );
+static void pilot_updateMass( Pilot *pilot );
 
 
 /**
@@ -958,6 +959,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 
       w->u.ammo.quantity -= 1; /* we just shot it */
       p->mass_outfit     -= w->u.ammo.outfit->mass;
+      pilot_updateMass( p );
    }
 
    /*
@@ -978,6 +980,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
       w->u.ammo.quantity -= 1; /* we just shot it */
       p->mass_outfit     -= w->u.ammo.outfit->mass;
       p->secondary->u.ammo.deployed += 1; /* Mark as deployed. */
+      pilot_updateMass( p );
    }
 
    else {
@@ -1882,6 +1885,7 @@ int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity 
          s->u.ammo.quantity );
    q                   = s->u.ammo.quantity - q; /* Amount actually added. */
    pilot->mass_outfit += q * s->u.ammo.outfit->mass;
+   pilot_updateMass( pilot );
 
    return q;
 }
@@ -1920,6 +1924,7 @@ int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
    q                   = MIN( quantity, s->u.ammo.quantity );
    s->u.ammo.quantity -= q;
    pilot->mass_outfit -= q * s->u.ammo.outfit->mass;
+   pilot_updateMass( pilot );
    /* We don't set the outfit to null so it "remembers" old ammo. */
 
    return q;
@@ -2087,6 +2092,15 @@ void pilot_calcStats( Pilot* pilot )
    pilot->solid->mass = pilot->ship->mass + pilot->mass_cargo + pilot->mass_outfit;
 
    /* Modulate by mass. */
+   pilot_updateMass( pilot );
+}
+
+
+/**
+ * @brief Updates the pilot stats after mass change.
+ */
+static void pilot_updateMass( Pilot *pilot )
+{
    pilot->turn *= pilot->ship->mass / pilot->solid->mass;
 }
 
@@ -2247,6 +2261,7 @@ static void pilot_calcCargo( Pilot* pilot )
    pilot->mass_cargo  = pilot_cargoUsed( pilot );
    pilot->cargo_free  = pilot->ship->cap_cargo - pilot->mass_cargo;
    pilot->solid->mass = pilot->ship->mass + pilot->mass_cargo + pilot->mass_outfit;
+   pilot_updateMass( pilot );
 }
 
 
