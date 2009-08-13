@@ -598,7 +598,13 @@ int toolkit_setImageArrayPos( const unsigned int wid, const char* name, int pos 
    if (wgt == NULL)
       return -1;
 
+   /* Set position. */
    wgt->dat.iar.selected = CLAMP( 0, wgt->dat.iar.nelements, pos );
+
+   /* Call callback - dangerous if called from within callback. */
+   if (wgt->dat.iar.fptr != NULL)
+      wgt->dat.iar.fptr( wgt->wdw, wgt->name );
+
    return 0;
 }
 
