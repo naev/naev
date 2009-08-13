@@ -215,7 +215,7 @@ static void chk_render( Widget* chk, double bx, double by )
    /* Inner outline */
    toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 0., lc, c );
    /* Outter outline */
-   toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 1., &cBlack, NULL );
+   /*toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 1., &cBlack, NULL );*/
 
    /* Draw the txt. */
    gl_printMaxRaw( NULL, chk->w - 20,
