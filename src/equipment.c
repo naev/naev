@@ -153,6 +153,7 @@ void equipment_open( unsigned int wid )
          "Sell price:\n"
          "\n"
          "Mass:\n"
+         "Jump time:\n"
          "Thrust:\n"
          "Speed:\n"
          "Turn:\n"
@@ -160,14 +161,13 @@ void equipment_open( unsigned int wid )
          "Shield:\n"
          "Armour:\n"
          "Energy:\n"
-         "\n"
          "Cargo:\n"
          "Fuel:\n"
          "\n"
          "Transportation:\n"
          "Where:";
    x = 20 + sw + 20 + 180 + 20 + 30;
-   y = -210;
+   y = -190;
    window_addText( wid, x, y,
          100, h+y, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
    x += 100;
@@ -295,7 +295,7 @@ static void equipment_render( double bx, double by, double bw, double bh )
    c = &cGrey80;
    dc = &cGrey60;
    w = 30;
-   h = 80;
+   h = 70;
    x = bx + 10 + (40-w)/2 + 180 + 30;
    y = by + bh - 30 - h;
    percent = (p->cpu_max > 0.) ? p->cpu / p->cpu_max : 0.;
@@ -307,7 +307,7 @@ static void equipment_render( double bx, double by, double bw, double bh )
    toolkit_drawOutline( x, y, w, h, 1., lc, c  );
    toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
    gl_printMid( &gl_smallFont, 70,
-         x - 20 + SCREEN_W/2., y - 20 - gl_smallFont.h + SCREEN_H/2.,
+         x - 20 + SCREEN_W/2., y - 10 - gl_smallFont.h + SCREEN_H/2.,
          &cBlack, "%.0f / %.0f", p->cpu, p->cpu_max );
 
    /* Render ship graphic. */
@@ -1022,6 +1022,8 @@ void equipment_updateShips( unsigned int wid, char* str )
    unsigned int price;
    int onboard;
    int cargo;
+   unsigned int tl, th;
+   double dl, dh;
 
    /* Clear defaults. */
    equipment_slot       = -1;
@@ -1047,6 +1049,11 @@ void equipment_updateShips( unsigned int wid, char* str )
    }
    equipment_selected = ship;
 
+   /* Get jump time. */
+   pilot_hyperspaceDelay( ship, &tl, &th );
+   dl = (double)tl / NTIME_UNIT_LENGTH;
+   dh = (double)th / NTIME_UNIT_LENGTH;
+
    /* update text */
    credits2str( buf2, price , 2 ); /* transport */
    credits2str( buf3, player_shipPrice(shipname), 2 ); /* sell price */
@@ -1058,6 +1065,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          "%s credits\n"
          "\n"
          "%.0f Tons\n"
+         "%.1f STU average\n"
          "%.0f MN/ton\n"
          "%.0f M/s\n"
          "%.0f Grad/s\n"
@@ -1065,7 +1073,6 @@ void equipment_updateShips( unsigned int wid, char* str )
          "%.0f MJ (%.1f MJ/s)\n"
          "%.0f MJ (%.1f MJ/s)\n"
          "%.0f MJ (%.1f MJ/s)\n"
-         "\n"
          "%d / %d Tons\n"
          "%.0f / %.0f Units\n"
          "\n"
@@ -1078,6 +1085,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          buf3,
          /* Movement. */
          ship->solid->mass,
+         (dl+dh)/2.,
          ship->thrust/ship->solid->mass,
          ship->speed,
          ship->turn,
