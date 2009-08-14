@@ -27,6 +27,8 @@ function control ()
 
    -- Get new task
    if task == "none" then
+      -- Reset attacked
+      mem.attacked = nil
       -- We'll first check enemy.
       if enemy ~= nil and mem.aggressive then
          taunt(enemy, true)
