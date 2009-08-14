@@ -1489,6 +1489,7 @@ void land( Planet* p )
 {
    int i, j;
    const char *names[LAND_NUMWINDOWS];
+   int w, h;
 
    /* Do not land twice. */
    if (landed)
@@ -1500,7 +1501,17 @@ void land( Planet* p )
    /* Load stuff */
    land_planet = p;
    gfx_exterior = gl_newImage( p->gfx_exterior, 0 );
-   land_wid = window_create( p->name, -1, -1, -1, -1 );
+
+   /* Create window. */
+   if ((SCREEN_W < 1024) || (SCREEN_H < 768)) {
+      w = -1; /* Fullscreen. */
+      h = -1;
+   }
+   else {
+      w = 800 + 0.5 * (SCREEN_W - 800);
+      h = 600 + 0.5 * (SCREEN_H - 600);
+   }
+   land_wid = window_create( p->name, -1, -1, w, h );
    window_onClose( land_wid, land_cleanupWindow );
 
    /* Generate computer missions. */
