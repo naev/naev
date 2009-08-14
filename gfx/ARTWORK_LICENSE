@@ -47,6 +47,9 @@
        * capacitor2.png
        * capacitor4.png
        * capacitor8.png
+       * capacitor-g.png
+       * capacitor2-g.png
+       * capacitor4-g.png
        * missile.png
        * orion.png
        * neutron.png
@@ -221,6 +224,7 @@
        * railgun.png
        * orion.png
        * ripper.png
+       * railgunturret.png
    * ship
      * kestrel.png
      * kestrel_comm.png
