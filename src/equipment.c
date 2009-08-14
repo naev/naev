@@ -735,13 +735,13 @@ static const char* equipment_canSwap( PilotOutfitSlot *s, Outfit *o, int add )
           */
          /* Max. */
          if ((o->u.mod.armour < 0) &&
-               (fabs(o->u.mod.armour) > p->armour))
+               (fabs(o->u.mod.armour) > p->armour_max))
             return "Insufficient armour";
          if ((o->u.mod.shield < 0) &&
-               (fabs(o->u.mod.shield) > p->shield))
+               (fabs(o->u.mod.shield) > p->shield_max))
             return "Insufficient shield";
          if ((o->u.mod.energy < 0) &&
-               (fabs(o->u.mod.energy) > p->armour))
+               (fabs(o->u.mod.energy) > p->armour_max))
             return "Insufficient energy";
          /* Regen. */
          if ((o->u.mod.armour_regen < 0) &&
@@ -790,13 +790,13 @@ static const char* equipment_canSwap( PilotOutfitSlot *s, Outfit *o, int add )
           */
          /* Max. */
          if ((o->u.mod.armour > 0) &&
-               (o->u.mod.armour > p->armour))
+               (o->u.mod.armour > p->armour_max))
             return "Increase armour first";
          if ((o->u.mod.shield > 0) &&
-               (o->u.mod.shield > p->shield))
+               (o->u.mod.shield > p->shield_max))
             return "Increase shield first";
          if ((o->u.mod.energy > 0) &&
-               (o->u.mod.energy > p->energy))
+               (o->u.mod.energy > p->energy_max))
             return "Increase energy first";
          /* Regen. */
          if ((o->u.mod.armour_regen > 0) &&
