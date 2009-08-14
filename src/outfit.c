@@ -833,13 +833,13 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          "Needs %.0f CPU\n"
          "%.2f DPS [%.0f damage]\n"
          "%.1f shots/second\n"
-         "%.0f energy\n"
+         "%.1f energy/s [%.0f energy]\n"
          "%.0f range",
          outfit_getType(temp), outfit_damageTypeToStr(temp->u.blt.dtype),
          temp->u.blt.cpu,
          1./temp->u.blt.delay * temp->u.blt.damage, temp->u.blt.damage,
          1./temp->u.blt.delay,
-         temp->u.blt.energy,
+         1./temp->u.blt.delay * temp->u.blt.energy, temp->u.blt.energy,
          temp->u.blt.range );
 
 
