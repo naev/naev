@@ -268,8 +268,14 @@ static int iar_key( Widget* iar, SDLKey key, SDLMod mod )
    /* Check boundries. */
    iar->dat.iar.selected = CLAMP( 0, iar->dat.iar.nelements-1, iar->dat.iar.selected);
 
-   /* Move if needed. */
+   /* Get dimensions. */
    iar_getDim( iar, NULL, &h );
+
+   /* Ignore fancy stuff if smaller then height. */
+   if (h * iar->dat.iar.yelem < iar->h)
+      return 1;
+
+   /* Move if needed. */
    hmax = h * (iar->dat.iar.yelem - (int)(iar->h / h));
    yscreen = (double)iar->h / h;
    x = iar->dat.iar.selected % iar->dat.iar.xelem;
