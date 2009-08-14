@@ -1763,28 +1763,15 @@ static void pilot_refuel( Pilot *p, double dt )
 
 
 /**
- * @brief Adds an outfit to the pilot.
+ * @brief Adds an outfit to the pilot, ignoring CPU or other limits.
  *
  *    @param pilot Pilot to add the outfit to.
  *    @param outfit Outfit to add to the pilot.
  *    @param s Slot to add ammo to.
  *    @return 0 on success.
  */
-int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
+int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
 {
-   /* See if slot has space. */
-   if (s->outfit != NULL) {
-      WARN( "Pilot '%s': trying to add outfit '%s' to slot that already has an outfit",
-            pilot->name, outfit->name );
-      return -1;
-   }
-   else if ((outfit_cpu(outfit) > 0) &&
-         (pilot->cpu < outfit_cpu(outfit))) {
-      /* WARN( "Pilot '%s': Not enough CPU to add outfit '%s'",
-            pilot->name, outfit->name ); */
-      return -1;
-   }
-
    /* Set the outfit. */
    s->outfit   = outfit;
    s->quantity = 1; /* Sort of pointless, but hey. */
@@ -1815,6 +1802,34 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
    pilot_calcStats(pilot);
 
    return 0;
+}
+
+
+
+/**
+ * @brief Adds an outfit to the pilot.
+ *
+ *    @param pilot Pilot to add the outfit to.
+ *    @param outfit Outfit to add to the pilot.
+ *    @param s Slot to add ammo to.
+ *    @return 0 on success.
+ */
+int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
+{
+   /* See if slot has space. */
+   if (s->outfit != NULL) {
+      WARN( "Pilot '%s': trying to add outfit '%s' to slot that already has an outfit",
+            pilot->name, outfit->name );
+      return -1;
+   }
+   else if ((outfit_cpu(outfit) > 0) &&
+         (pilot->cpu < outfit_cpu(outfit))) {
+      /* WARN( "Pilot '%s': Not enough CPU to add outfit '%s'",
+            pilot->name, outfit->name ); */
+      return -1;
+   }
+
+   return pilot_addOutfitRaw( pilot, outfit, s );
 }
 
 

@@ -2694,7 +2694,7 @@ static int player_parseEscorts( xmlNodePtr parent )
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
 {
    int ret;
-   ret = pilot_addOutfit( pilot, outfit, s );
+   ret = pilot_addOutfitRaw( pilot, outfit, s );
    if (ret != 0) {
       DEBUG("Outfit '%s' does not fit on player's pilot '%s', adding to stock.",
             outfit->name, pilot->name);

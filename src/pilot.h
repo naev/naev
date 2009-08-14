@@ -310,6 +310,7 @@ double pilot_face( Pilot* p, const double dir );
  */
 /* Generic stuff. */
 int pilot_freeSpace( Pilot* p ); /* weapon space */
+int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s );
 int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity );
