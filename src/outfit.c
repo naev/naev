@@ -1407,7 +1407,7 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
          "Needs %.0f CPU\n"
          "%.0f range\n"
          "%.0f%% chance\n"
-         "%.0f energy",
+         "%.1f energy/second",
          outfit_getType(temp),
          temp->u.jam.cpu,
          temp->u.jam.range,
