@@ -697,13 +697,14 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
 
    t = 15.*15.; /* threshold */
 
-   mx -= w/2 - map_xpos;
-   my -= h/2 - map_ypos;
-
    switch (event->type) {
       
       case SDL_MOUSEBUTTONDOWN:
-         /* zooming */
+         /* Must be in bounds. */
+         if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
+            return;
+
+         /* Zooming */
          if (event->button.button == SDL_BUTTON_WHEELUP)
             map_buttonZoom( 0, "btnZoomIn" );
          else if (event->button.button == SDL_BUTTON_WHEELDOWN)
@@ -711,6 +712,9 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
 
          /* selecting star system */
          else {
+            mx -= w/2 - map_xpos;
+            my -= h/2 - map_ypos;
+
             for (i=0; i<systems_nstack; i++) {
                sys = system_getIndex( i );
 
@@ -733,7 +737,8 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
          break;
 
       case SDL_MOUSEBUTTONUP:
-         if (map_drag) map_drag = 0;
+         if (map_drag)
+            map_drag = 0;
          break;
 
       case SDL_MOUSEMOTION:
