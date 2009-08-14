@@ -16,7 +16,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>500</delay>
+   <delay>625</delay>
    <speed>550</speed>
    <range>420</range>
    <falloff>252</falloff>
@@ -41,7 +41,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>500</delay>
+   <delay>625</delay>
    <speed>550</speed>
    <range>450</range>
    <falloff>270</falloff>
@@ -67,7 +67,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>250</delay>
+   <delay>325</delay>
    <speed>550</speed>
    <range>420</range>
    <falloff>252</falloff>
@@ -92,7 +92,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>250</delay>
+   <delay>325</delay>
    <speed>550</speed>
    <range>450</range>
    <falloff>270</falloff>
@@ -117,7 +117,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS</spfx_armour>
-   <delay>375</delay>
+   <delay>470</delay>
    <speed>450</speed>
    <range>350</range>
    <falloff>210</falloff>
@@ -142,7 +142,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>375</delay>
+   <delay>470</delay>
    <speed>450</speed>
    <range>375</range>
    <falloff>225</falloff>
@@ -168,7 +168,7 @@
    <sound>neutron</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>400</delay>
+   <delay>500</delay>
    <speed>650</speed>
    <range>420</range>
    <falloff>252</falloff>
@@ -195,7 +195,7 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>800</delay>
+   <delay>1000</delay>
    <speed>500</speed>
    <range>560</range>
    <falloff>392</falloff>
@@ -221,7 +221,7 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>400</delay>
+   <delay>500</delay>
    <speed>500</speed>
    <range>560</range>
    <falloff>392</falloff>
@@ -248,7 +248,7 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>800</delay>
+   <delay>1000</delay>
    <speed>500</speed>
    <range blowup="armour">450</range>
    <accuracy>12</accuracy>
@@ -274,7 +274,7 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <delay>1100</delay>
+   <delay>1375</delay>
    <speed>650</speed>
    <range>800</range>
    <falloff>600</falloff>
@@ -300,7 +300,7 @@
    <sound>mass</sound>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <delay>600</delay>
+   <delay>750</delay>
    <speed>650</speed>
    <range>920</range>
    <falloff>690</falloff>
@@ -326,7 +326,7 @@
    <sound>ripper</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>700</delay>
+   <delay>875</delay>
    <speed>700</speed>
    <range>600</range>
    <falloff>450</falloff>
