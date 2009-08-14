@@ -378,20 +378,25 @@ unsigned int window_create( const char* name,
    /* Dimensions. */
    wdw->w            = (w == -1) ? SCREEN_W : (double) w;
    wdw->h            = (h == -1) ? SCREEN_H : (double) h;
-   if ((w == -1) && (h == -1))
+   if ((w == -1) && (h == -1)) {
       window_setFlag( wdw, WINDOW_FULLSCREEN );
-   /* x pos */
-   if (x==-1) /* center */
-      wdw->x = (SCREEN_W - wdw->w)/2.;
-   else if (x < 0)
-      wdw->x = SCREEN_W - wdw->w + (double) x;
-   else wdw->x = (double) x;
-   /* y pos */
-   if (y==-1) /* center */
-      wdw->y = (SCREEN_H - wdw->h)/2.;
-   else if (y < 0)
-      wdw->y = SCREEN_H - wdw->h + (double) y;
-   else wdw->y = (double) y;
+      wdw->x = 0.;
+      wdw->y = 0.;
+   }
+   else {
+      /* x pos */
+      if (x==-1) /* center */
+         wdw->x = (SCREEN_W - wdw->w)/2.;
+      else if (x < 0)
+         wdw->x = SCREEN_W - wdw->w + (double) x;
+      else wdw->x = (double) x;
+      /* y pos */
+      if (y==-1) /* center */
+         wdw->y = (SCREEN_H - wdw->h)/2.;
+      else if (y < 0)
+         wdw->y = SCREEN_H - wdw->h + (double) y;
+      else wdw->y = (double) y;
+   }
 
    if (toolkit_open==0) { /* toolkit is on */
       SDL_ShowCursor(SDL_ENABLE);
