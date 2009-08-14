@@ -257,6 +257,7 @@
    <location>Bar</location>
    <faction>Empire</faction>
    <faction>Dvaered</faction>
+   <faction>Goddard</faction>
   </avail>
  </mission>
  <mission name="Pirate Bounty">
@@ -268,6 +269,7 @@
    <location>Bar</location>
    <faction>Empire</faction>
    <faction>Dvaered</faction>
+   <faction>Goddard</faction>
   </avail>
  </mission>
  <mission name="The Space Family">
