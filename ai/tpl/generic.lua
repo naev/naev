@@ -25,10 +25,13 @@ function control ()
    task = ai.taskname()
    enemy = ai.getenemy()
 
+   -- Reset distress if not fighting/running
+   if task ~= "attack" and task ~= "runaway" then
+      mem.attacked = nil
+   end
+
    -- Get new task
    if task == "none" then
-      -- Reset attacked
-      mem.attacked = nil
       -- We'll first check enemy.
       if enemy ~= nil and mem.aggressive then
          taunt(enemy, true)
