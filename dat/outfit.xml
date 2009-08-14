@@ -652,7 +652,7 @@
   <specific type="modification">
    <cpu>-10</cpu>
    <energy>30</energy>
-   <energy_regen>490</energy_regen>
+   <energy_regen>980</energy_regen>
   </specific>
  </outfit>
  <outfit name="Reactor Class II">
@@ -668,7 +668,7 @@
   <specific type="modification">
    <cpu>-22</cpu>
    <energy>80</energy>
-   <energy_regen>1050</energy_regen>
+   <energy_regen>2100</energy_regen>
   </specific>
  </outfit>
  <outfit name="Reactor Class III">
@@ -684,7 +684,7 @@
   <specific type="modification">
    <cpu>-40</cpu>
    <energy>300</energy>
-   <energy_regen>2020</energy_regen>
+   <energy_regen>4040</energy_regen>
   </specific>
  </outfit>
 <!-- Shield and Armour-Related Outfits -->
@@ -934,7 +934,7 @@
    <description>The Advanced Nanosystems APU I is an obsolete design intended for light vessels It is relatively light weight, though it's less power efficient than its successors.</description>
   </general>
   <specific type="modification">
-   <cpu>8</cpu>
+   <cpu>16</cpu>
    <energy_regen>-250</energy_regen>
   </specific>
  </outfit>
@@ -950,7 +950,7 @@
    <description>The Advanced Nanosystems APU II is a mid-range design suitable for medium-sized vessels as well as lightly-equipped capital ships. Its substantial mass and power consumption make it unsuitable for light vessels.</description>
   </general>
   <specific type="modification">
-   <cpu>20</cpu>
+   <cpu>40</cpu>
    <energy_regen>-475</energy_regen>
   </specific>
  </outfit>
@@ -966,7 +966,7 @@
    <description>The Advanced Nanosystems APU III is a high-end general-purpose processor suitable for capital ships. Its high power-efficiency is achieved by using cutting-edge superconducting materials.</description>
   </general>
   <specific type="modification">
-   <cpu>50</cpu>
+   <cpu>100</cpu>
    <energy_regen>-900</energy_regen>
   </specific>
  </outfit>
