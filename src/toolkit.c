@@ -905,7 +905,12 @@ void toolkit_drawAltText( double bx, double by, const char *alt )
  */
 void toolkit_clip( double x, double y, double w, double h )
 {
-   glScissor( x + SCREEN_W/2, y + SCREEN_H/2, w, h );
+   double rx, ry, rw, rh;
+   rx = (x + (double)SCREEN_W/2) / gl_screen.mxscale;
+   ry = (y + (double)SCREEN_H/2) / gl_screen.myscale;
+   rw = w / gl_screen.mxscale;
+   rh = h / gl_screen.myscale;
+   glScissor( rx, ry, rw, rh );
    glEnable( GL_SCISSOR_TEST );
 }
 /**
