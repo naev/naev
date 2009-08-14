@@ -609,8 +609,14 @@ static void glFontMakeDList( FT_Face face, char ch,
 
    /* creating the opengl texture */
    glBindTexture( GL_TEXTURE_2D, tex_base[(int)ch]);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+   if (gl_screen.scale == 1.) {
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+   }
+   else {
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+   }
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,
@@ -688,7 +694,8 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    /* Allocage. */
    font->textures = malloc(sizeof(GLuint)*128);
    font->w = malloc(sizeof(int)*128);
-   font->h = (int)h;
+   font->h = (int)floor((double)h * gl_screen.scale);
+   DEBUG("%u -> %d", h, font->h );
    if ((font->textures==NULL) || (font->w==NULL)) {
       WARN("Out of memory!");
       return;
@@ -745,7 +752,8 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
  */
 void gl_freeFont( glFont* font )
 {
-   if (font == NULL) font = &gl_defFont;
+   if (font == NULL)
+      font = &gl_defFont;
    glDeleteLists(font->list_base,128);
    glDeleteTextures(128,font->textures);
    free(font->textures);
