@@ -143,11 +143,12 @@ typedef struct Window_ {
    unsigned int flags; /**< Window flags. */
 
    unsigned int parent; /**< Parent window, will close if this one closes. */
-   void (*close_fptr)(unsigned int,char*); /**< How to close the window. */
+   void (*close_fptr)(unsigned int wid, char* name); /**< How to close the window. */
 
-   void (*accept_fptr)(unsigned int,char*); /**< Triggered by hitting 'enter' with no widget that catches the keypress. */
-   void (*cancel_fptr)(unsigned int,char*); /**< Triggered by hitting 'escape' with no widget that catches the keypress. */
-   int (*keyevent)(unsigned int,SDLKey,SDLMod); /**< User defined custom key event handler. */
+   void (*accept_fptr)(unsigned int wid, char* name); /**< Triggered by hitting 'enter' with no widget that catches the keypress. */
+   void (*cancel_fptr)(unsigned int wid, char* name); /**< Triggered by hitting 'escape' with no widget that catches the keypress. */
+   int (*keyevent)(unsigned int wid,SDLKey,SDLMod); /**< User defined custom key event handler. */
+   int (*eventevent)(unsigned int wid,SDL_Event *evt); /**< User defined event handler. */
 
    /* Position and dimensions. */
    double x; /**< X position of the window. */

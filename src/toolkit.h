@@ -34,6 +34,8 @@ void window_setAccept( const unsigned int wid, void (*fptr)(unsigned int,char*) 
 void window_setCancel( const unsigned int wid, void (*cancel)(unsigned int,char*) );
 void window_handleKeys( const unsigned int wid,
       int (*keyhandler)(unsigned int,SDLKey,SDLMod) );
+void window_handleEvents( const unsigned int wid,
+      int (*eventhandler)(unsigned int,SDL_Event*) );
 
 
 /*

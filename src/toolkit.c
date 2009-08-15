@@ -537,6 +537,26 @@ void window_handleKeys( const unsigned int wid,
 
 
 /**
+ * @brief Sets the event handler for the window.
+ *
+ * This function is called every time the window recieves input.
+ */
+void window_handleEvents( const unsigned int wid,
+      int (*eventhandler)(unsigned int,SDL_Event*) )
+{
+   Window *wdw;
+
+   /* Get the window. */
+   wdw = window_wget( wid );
+   if (wdw == NULL)
+      return;
+
+   /* Set key event handler function. */
+   wdw->eventevent = eventhandler;;
+}
+
+
+/**
  * @brief Destroys a widget.
  *
  *    @param widget Widget to destroy.
@@ -1432,18 +1452,28 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
 {
    int ret;
    ret = 0;
-   switch (event->type) {
-      case SDL_MOUSEMOTION:
-      case SDL_MOUSEBUTTONDOWN:
-      case SDL_MOUSEBUTTONUP:
-         toolkit_mouseEvent(wdw, event);
-         ret = 1;
-         break;
 
-      case SDL_KEYDOWN:
-      case SDL_KEYUP:
-         ret =  toolkit_keyEvent(wdw, event);
-         break;
+   /* Event handler. */
+   if (wdw->eventevent != NULL)
+      wdw->eventevent( wdw->id, event );
+
+   /* Hack in case window got destroyed in eventevent. */
+   if (!window_isFlag(wdw, WINDOW_KILL)) {
+
+      /* Pass it on. */
+      switch (event->type) {
+         case SDL_MOUSEMOTION:
+         case SDL_MOUSEBUTTONDOWN:
+         case SDL_MOUSEBUTTONUP:
+            toolkit_mouseEvent(wdw, event);
+            ret = 1;
+            break;
+
+         case SDL_KEYDOWN:
+         case SDL_KEYUP:
+            ret =  toolkit_keyEvent(wdw, event);
+            break;
+      }
    }
 
    /* Clean up the dead if needed. */
