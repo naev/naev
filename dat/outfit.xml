@@ -16,13 +16,13 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>625</delay>
+   <delay>960</delay>
    <speed>550</speed>
    <range>420</range>
    <falloff>252</falloff>
    <accuracy>18</accuracy>
-   <energy>5</energy>
-   <damage type="energy">6</damage>
+   <energy>5.44</energy>
+   <damage type="energy">9.6</damage>
   </specific>
  </outfit>
  <outfit name="Laser Cannon MK2">
@@ -30,7 +30,7 @@
    <slot>high</slot>
    <tech>6</tech>
    <license>Medium Weapon License</license>
-   <mass>8</mass>
+   <mass>9</mass>
    <price>15000</price>
    <description>A new offering developed from the newly declassified Ripper Mk2 specifications, the mark 2 laser cannon improves on the original in many ways. Featuring increased range and greater firepower while only moderately increasing power demands, it's become a favourite civilian armament.</description>
    <gfx_store>laser2</gfx_store>
@@ -41,14 +41,14 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>625</delay>
+   <delay>960</delay>
    <speed>550</speed>
    <range>450</range>
    <falloff>270</falloff>
    <gfx_end>laser2-end</gfx_end>
    <accuracy>18</accuracy>
-   <energy>11</energy>
-   <damage type="energy">10</damage>
+   <energy>11.36</energy>
+   <damage type="energy">16</damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret">
@@ -62,18 +62,18 @@
    <gfx_store>laserturret</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>20</cpu>
+   <cpu>16</cpu>
    <gfx>laserred</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>325</delay>
+   <delay>576</delay>
    <speed>550</speed>
    <range>420</range>
    <falloff>252</falloff>
    <accuracy>18</accuracy>
-   <energy>8</energy>
-   <damage type="energy">8</damage>
+   <energy>7.84</energy>
+   <damage type="energy">10.4</damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret MK2">
@@ -81,49 +81,49 @@
    <slot>high</slot>
    <tech>6</tech>
    <license>Medium Weapon License</license>
-   <mass>25</mass>
+   <mass>35</mass>
    <price>45000</price>
    <description>A pair of mark 2 laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. This new offering has quickly won the hearts of high-value traders for its superior firepower and range, easily warding off most pirates.</description>
    <gfx_store>laserturret2</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>30</cpu>
+   <cpu>28</cpu>
    <gfx>laser2</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>325</delay>
+   <delay>576</delay>
    <speed>550</speed>
    <range>450</range>
    <falloff>270</falloff>
    <gfx_end>laser2-end</gfx_end>
    <accuracy>18</accuracy>
-   <energy>13</energy>
-   <damage type="energy">11</damage>
+   <energy>16.32</energy>
+   <damage type="energy">17.3</damage>
   </specific>
  </outfit>
  <outfit name="Plasma Blaster">
   <general>
    <slot>high</slot>
    <tech>3</tech>
-   <mass>5</mass>
+   <mass>7</mass>
    <price>9000</price>
    <description>Highly volatile, the plasma blaster is among the best choices for fast attacks. As a result of its volatility, it is a potent weapon against both shields and armour, though it is known for dissipating quickly after being fired.</description>
    <gfx_store>plasma</gfx_store>
   </general>
   <specific type="bolt">
-   <cpu>4</cpu>
+   <cpu>5</cpu>
    <gfx>plasma</gfx>
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS</spfx_armour>
-   <delay>470</delay>
+   <delay>720</delay>
    <speed>450</speed>
    <range>350</range>
    <falloff>210</falloff>
    <accuracy>25</accuracy>
-   <energy>5</energy>
-   <damage type="energy">5</damage>
+   <energy>4.8</energy>
+   <damage type="energy">9.6</damage>
   </specific>
 </outfit>
  <outfit name="Plasma Blaster MK2">
@@ -131,51 +131,51 @@
    <slot>high</slot>
    <tech>3</tech>
    <license>Medium Weapon License</license>
-   <mass>8</mass>
+   <mass>13</mass>
    <price>18000</price>
    <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
    <gfx_store>plasma2</gfx_store>
   </general>
   <specific type="bolt">
-   <cpu>8</cpu>
+   <cpu>10</cpu>
    <gfx>plasma2</gfx>
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>470</delay>
+   <delay>720</delay>
    <speed>450</speed>
    <range>375</range>
    <falloff>225</falloff>
    <gfx_end>plasma2-end</gfx_end>
    <accuracy>25</accuracy>
-   <energy>9</energy>
-   <damage type="energy">8.5</damage>
+   <energy>9.6</energy>
+   <damage type="energy">15.4</damage>
   </specific>
 </outfit>
  <outfit name="Neutron Disruptor">
   <general>
    <slot>high</slot>
    <tech>9999</tech>
-   <mass>8</mass>
+   <mass>12</mass>
    <price>45000</price>
    <license>Heavy Weapon License</license>
    <description>The Neutron Disruptor uses high-energy pulses that modify the base composition of molecules, causing heavy damage. This weapon was first popular with the Collective, as until recently, firing it would produce radiation lethal to humans aboard the ship.</description>
    <gfx_store>neutron</gfx_store>
   </general>
   <specific type="bolt">
-   <cpu>8</cpu>
+   <cpu>10</cpu>
    <gfx>neutron</gfx>
    <sound>neutron</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>500</delay>
+   <delay>960</delay>
    <speed>650</speed>
    <range>420</range>
    <falloff>252</falloff>
    <gfx_end>neutron-end</gfx_end>
    <accuracy>15</accuracy>
-   <energy>5</energy>
-   <damage type="energy">7</damage>
+   <energy>17.6</energy>
+   <damage type="energy">19.2</damage>
   </specific>
  </outfit>
 <!-- Medium Range Weapons -->
@@ -184,51 +184,51 @@
    <slot>high</slot>
    <tech>7</tech>
    <license>Medium Weapon License</license>
-   <mass>9</mass>
+   <mass>10</mass>
    <price>20000</price>
    <description>Ion pulses were designed to deactivate shields and complement radiation weaponry, which had been rendered useless in combat by shields. However, they were extremely effective against both armour and shields, supplanting radiation weaponry. With the latest generation of shields and armour materials, ion pulses are no longer as devesating.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
   <specific type="bolt">
-   <cpu>8</cpu>
+   <cpu>7</cpu>
    <gfx>ion</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1000</delay>
+   <delay>1536</delay>
    <speed>500</speed>
    <range>560</range>
    <falloff>392</falloff>
    <gfx_end>ion-end</gfx_end>
    <accuracy>13</accuracy>
-   <energy>14</energy>
-   <damage type="ion">15</damage>
+   <energy>19.2</energy>
+   <damage type="ion">24</damage>
   </specific>
  </outfit>
  <outfit name="Heavy Ion Turret">
   <general>
    <slot>high</slot>
    <tech>11</tech>
-   <mass>35</mass>
+   <mass>42</mass>
    <license>Heavy Weapon License</license>
    <price>75000</price>
    <description>The heavy ion turret uses a more powerful generator for each of its two ion cannons, giving each more punch than a lone ion cannon. The drawback is that this increases the power consumption considerably. Given their intended mounting on capital ships, their power consumption is eclipsed by the firepower they provide.</description>
    <gfx_store>ionturret</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>38</cpu>
+   <cpu>34</cpu>
    <gfx>ion</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>500</delay>
+   <delay>816</delay>
    <speed>500</speed>
    <range>560</range>
    <falloff>392</falloff>
    <gfx_end>ion-end</gfx_end>
    <accuracy>7</accuracy>
-   <energy>21</energy>
-   <damage type="ion">20</damage>
+   <energy>32</energy>
+   <damage type="ion">25.6</damage>
   </specific>
  </outfit>
  <outfit name="40mm Autocannon">
@@ -248,7 +248,7 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1000</delay>
+   <delay>1536</delay>
    <speed>500</speed>
    <range blowup="armour">450</range>
    <accuracy>12</accuracy>
@@ -274,40 +274,40 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <delay>1375</delay>
+   <delay>2112</delay>
    <speed>650</speed>
    <range>800</range>
    <falloff>600</falloff>
    <gfx_end>mass-end</gfx_end>
    <accuracy>10</accuracy>
-   <energy>35</energy>
-   <damage type="kinetic">40</damage>
+   <energy>67.2</energy>
+   <damage type="kinetic">56</damage>
   </specific>
  </outfit>
   <outfit name="150mm Railgun Turret">
   <general>
    <slot>high</slot>
    <tech>11</tech>
-   <mass>50</mass>
+   <mass>60</mass>
    <license>Heavy Weapon License</license>
    <price>190000</price>
-   <description>While one 150mm railgun is a formidable weapon, the ultimate in brute-force capital ship weaponry is the 150mm railgun turret. Mounting two railguns in a specialized turret housing, it manages to impart more velocity to its projectiles, and thus increased damage and range.</description>
+   <description>While one 150mm railgun is a formidable weapon, the ultimate in brute-force capital ship weaponry is the 150mm railgun turret. Mounting two railguns in a specialized turret housing, it manages to mitigate the recoil normally associated with railguns, at a slight velocity cost.</description>
    <gfx_store>railgunturret</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>48</cpu>
+   <cpu>50</cpu>
    <gfx>mass</gfx>
    <sound>mass</sound>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <delay>750</delay>
-   <speed>650</speed>
-   <range>920</range>
-   <falloff>690</falloff>
+   <delay>1176</delay>
+   <speed>625</speed>
+   <range>720</range>
+   <falloff>540</falloff>
    <gfx_end>mass-end</gfx_end>
    <accuracy>10</accuracy>
-   <energy>48</energy>
-   <damage type="kinetic">46</damage>
+   <energy>84.48</energy>
+   <damage type="kinetic">59.2</damage>
   </specific>
  </outfit>
  <outfit name="Ripper MK2">
@@ -321,19 +321,19 @@
    <gfx_store>ripper</gfx_store>
   </general>
   <specific type="bolt">
-   <cpu>11</cpu>
+   <cpu>12</cpu>
    <gfx>ripper</gfx>390
    <sound>ripper</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>875</delay>
+   <delay>1344</delay>
    <speed>700</speed>
    <range>600</range>
    <falloff>450</falloff>
    <gfx_end>ripper-end</gfx_end>
    <accuracy>10</accuracy>
-   <energy>22</energy>
-   <damage type="energy">18</damage>
+   <energy>32</energy>
+   <damage type="energy">28.8</damage>
   </specific>
  </outfit>
 <!-- Beam Weapons -->
@@ -342,7 +342,7 @@
    <slot>high</slot>
    <tech>11</tech>
    <license>Medium Weapon License</license>
-   <mass>20</mass>
+   <mass>30</mass>
    <price>184000</price>
    <description>The Orion Beam is a fixed-mount weapon designed to be mounted on heavy fighters and up. Based on a heavily-modified, liquid-cooled laser, it's capable of bursts of continuous fire, resulting in a destructive beam.</description>
    <gfx_store>orion</gfx_store>
@@ -352,8 +352,8 @@
    <delay>6000</delay>
    <duration>3</duration>
    <range>300</range>
-   <energy>45</energy>
-   <damage type="energy">40</damage>
+   <energy>65</energy>
+   <damage type="energy">50</damage>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <gfx>beam_orion</gfx>
@@ -372,12 +372,12 @@
    <gfx_store>ragnarok</gfx_store>
   </general>
   <specific type="turret beam" secondary="1">
-   <cpu>70</cpu>
+   <cpu>80</cpu>
    <delay>10000</delay>
    <duration>5</duration>
    <range>400</range>
    <turn>35</turn>
-   <energy>180</energy>
+   <energy>200</energy>
    <damage type="energy">150</damage>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
