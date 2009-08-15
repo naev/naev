@@ -695,7 +695,6 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    font->textures = malloc(sizeof(GLuint)*128);
    font->w = malloc(sizeof(int)*128);
    font->h = (int)floor((double)h * gl_screen.scale);
-   DEBUG("%u -> %d", h, font->h );
    if ((font->textures==NULL) || (font->w==NULL)) {
       WARN("Out of memory!");
       return;
