@@ -2902,7 +2902,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
       loc = planet;
    if (ship->cpu < 0) { /* Something is wrong. */
       DEBUG("Player ship '%s' has negative CPU, removing all outfits and adding to stock.",
-            name);
+            ship->name);
       /* Remove all outfits. */
       for (i=0; i<ship->noutfits; i++) {
          o = ship->outfits[i]->outfit;
