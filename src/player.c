@@ -1163,7 +1163,7 @@ void player_secondaryNext (void)
    int found;
    Outfit *o;
 
-   found = 0;
+   found = !!(player->secondary == NULL);
    for (i=0; i<player->noutfits; i++) {
       o = player->outfits[i]->outfit;
 
@@ -1171,8 +1171,13 @@ void player_secondaryNext (void)
       if ((o == NULL) || !(outfit_isProp(o, OUTFIT_PROP_WEAP_SECONDARY)))
          continue;
 
+      /* Make sure it isn't the same as the current one. */
+      if ((player->secondary != NULL) &&
+            (player->secondary->outfit == o))
+         continue;
+
       /* No secondary, grab first. */
-      if ((player->secondary == NULL) || (found==1)) {
+      if (found==1) {
          player->secondary = player->outfits[i];
          return;
       }
@@ -1193,16 +1198,21 @@ void player_secondaryPrev (void)
    int found;
    Outfit *o;
 
-   found = 0;
-   for (i=player_noutfits-1; i>=0; i--) {
+   found = !!(player->secondary == NULL);
+   for (i=player->noutfits-1; i>=0; i--) {
       o = player->outfits[i]->outfit;
 
       /* Make sure is secondary weapon. */
       if ((o == NULL) || !(outfit_isProp(o, OUTFIT_PROP_WEAP_SECONDARY)))
          continue;
 
+      /* Make sure it isn't the same as the current one. */
+      if ((player->secondary != NULL) &&
+            (player->secondary->outfit == o))
+         continue;
+
       /* No secondary, grab first. */
-      if ((player->secondary == NULL) || (found==1)) {
+      if (found==1) {
          player->secondary = player->outfits[i];
          return;
       }
