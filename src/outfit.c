@@ -642,17 +642,17 @@ static const char *outfit_damageTypeToStr( DamageType dmg )
 {
    switch (dmg) {
       case DAMAGE_TYPE_ENERGY:
-         return "energy";
+         return "Energy";
       case DAMAGE_TYPE_KINETIC:
-         return "kinetic";
+         return "Kinetic";
       case DAMAGE_TYPE_ION:
-         return "ion";
+         return "Ion";
       case DAMAGE_TYPE_RADIATION:
-         return "radiation";
+         return "Radiation";
       case DAMAGE_TYPE_EMP:
-         return "emp";
+         return "EMP";
       default:
-         return "unknown";
+         return "Unknown";
    }
 }
 
@@ -831,10 +831,10 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s [%s]\n"
          "Needs %.0f CPU\n"
-         "%.2f DPS [%.0f damage]\n"
-         "%.1f shots/second\n"
-         "%.1f EPS [%.0f energy]\n"
-         "%.0f range",
+         "%.2f DPS [%.0f Damage]\n"
+         "%.1f Shots Per Second\n"
+         "%.1f EPS [%.0f Energy]\n"
+         "%.0f Range",
          outfit_getType(temp), outfit_damageTypeToStr(temp->u.blt.dtype),
          temp->u.blt.cpu,
          1./temp->u.blt.delay * temp->u.blt.damage, temp->u.blt.damage,
@@ -932,9 +932,9 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          "%s [%s]\n"
          "Needs %.0f CPU\n"
          "%.2f %s DPS\n"
-         "%.1f energy/second\n"
-         "%.1f duration %.1f refire\n"
-         "%.0f range",
+         "%.1f EPS\n"
+         "%.1f Duration %.1f Cooldown\n"
+         "%.0f Range",
          outfit_getType(temp), outfit_damageTypeToStr(temp->u.blt.dtype),
          temp->u.bem.cpu,
          temp->u.bem.damage, outfit_damageTypeToStr(temp->u.bem.dtype),
@@ -988,7 +988,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "Needs %.0f CPU\n"
-         "%.1f shots/second\n"
+         "%.1f Shots Per Second\n"
          "Holds %d %s",
          outfit_getType(temp),
          temp->u.lau.cpu,
@@ -1090,13 +1090,13 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
-         "%s [%s]\n"
-         "%.0f damage\n"
-         "%.0f energy\n"
-         "%.0f speed\n"
-         "%.1f duration [%.1f lockon]",
-         outfit_getType(temp), outfit_damageTypeToStr(temp->u.amm.dtype),
-         temp->u.amm.damage,
+         "%s\n"
+         "%.0f Damage [%s]\n"
+         "%.0f Energy\n"
+         "%.0f Maximum Speed\n"
+         "%.1f duration [%.1f Lock-On]",
+         outfit_getType(temp),
+         temp->u.amm.damage, outfit_damageTypeToStr(temp->u.amm.dtype),
          temp->u.amm.energy,
          temp->u.amm.speed,
          temp->u.amm.duration, temp->u.amm.lockon );
@@ -1172,22 +1172,22 @@ if ((x) != 0.) \
          "\n%+."n"f "s, x )
 #define DESC_ADD0(x, s)    DESC_ADD( x, s, "0" )
 #define DESC_ADD1(x, s)    DESC_ADD( x, s, "1" )
-   DESC_ADD0( temp->u.mod.thrust, "thrust" );
-   DESC_ADD0( temp->u.mod.thrust_rel, "%% thrust" );
-   DESC_ADD0( temp->u.mod.turn, "turn" );
-   DESC_ADD0( temp->u.mod.turn_rel, "%% turn" );
-   DESC_ADD0( temp->u.mod.speed, "speed" );
-   DESC_ADD0( temp->u.mod.speed_rel, "%% speed" );
-   DESC_ADD0( temp->u.mod.armour, "armour" );
-   DESC_ADD0( temp->u.mod.shield, "shield" );
-   DESC_ADD0( temp->u.mod.energy, "energy" );
-   DESC_ADD0( temp->u.mod.fuel, "fuel" );
-   DESC_ADD1( temp->u.mod.armour_regen, "armour/second" );
-   DESC_ADD1( temp->u.mod.shield_regen, "shield/second" );
-   DESC_ADD1( temp->u.mod.energy_regen, "energy/second" );
-   DESC_ADD0( temp->u.mod.cpu, "cpu" );
-   DESC_ADD0( temp->u.mod.cargo, "cargo" );
-   DESC_ADD0( temp->u.mod.mass_rel, "%% mass" );
+   DESC_ADD0( temp->u.mod.thrust, "Thrust" );
+   DESC_ADD0( temp->u.mod.thrust_rel, "%% Thrust" );
+   DESC_ADD0( temp->u.mod.turn, "Turn Rate" );
+   DESC_ADD0( temp->u.mod.turn_rel, "%% Turn Rate" );
+   DESC_ADD0( temp->u.mod.speed, "Maximum Speed" );
+   DESC_ADD0( temp->u.mod.speed_rel, "%% Maximum Speed" );
+   DESC_ADD0( temp->u.mod.armour, "Armour" );
+   DESC_ADD0( temp->u.mod.shield, "Shield" );
+   DESC_ADD0( temp->u.mod.energy, "Energy" );
+   DESC_ADD0( temp->u.mod.fuel, "Fuel" );
+   DESC_ADD1( temp->u.mod.armour_regen, "Armour Per Second" );
+   DESC_ADD1( temp->u.mod.shield_regen, "Shield Per Second" );
+   DESC_ADD1( temp->u.mod.energy_regen, "Energy Per Second" );
+   DESC_ADD0( temp->u.mod.cpu, "CPU" );
+   DESC_ADD0( temp->u.mod.cargo, "Cargo" );
+   DESC_ADD0( temp->u.mod.mass_rel, "%% Mass" );
 #undef DESC_ADD1
 #undef DESC_ADD0
 #undef DESC_ADD
@@ -1235,11 +1235,11 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
-         "Needs %.0f CPU\n"
-         "%.0f + %.0f%% thrust\n"
-         "%.0f + %.0f%% speed\n"
-         "%.1f energy/second\n"
-         "%.1f rumble",
+         "Requires %.0f CPU\n"
+         "%.0f + %.0f%% Thrust\n"
+         "%.0f + %.0f%% Maximum Speed\n"
+         "%.1f EPS\n"
+         "%.1f Rumble",
          outfit_getType(temp),
          temp->u.afb.cpu,
          temp->u.afb.thrust_abs, temp->u.afb.thrust_perc*100.,
@@ -1274,7 +1274,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "Needs %.0f CPU\n"
-         "%.1f launches/second\n"
+         "%.1f Launches Per Second\n"
          "Holds %d %s",
          outfit_getType(temp),
          temp->u.bay.cpu,
@@ -1405,9 +1405,9 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "Needs %.0f CPU\n"
-         "%.0f range\n"
-         "%.0f%% chance\n"
-         "%.1f energy/second",
+         "%.0f Range\n"
+         "%.0f%% Chance\n"
+         "%.1f EPS",
          outfit_getType(temp),
          temp->u.jam.cpu,
          temp->u.jam.range,

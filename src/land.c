@@ -231,10 +231,10 @@ static void commodity_update( unsigned int wid, char* str )
 
    /* modify text */
    snprintf( buf, PATH_MAX,
-         "%d tons\n"
-         "%d credits/ton\n"
+         "%d Tons\n"
+         "%d Credits/Ton\n"
          "\n"
-         "%d tons\n",
+         "%d Tons\n",
          player_cargoOwned( comname ),
          economy_getPrice(com, cur_system, land_planet),
          pilot_cargoFree(player));
@@ -428,8 +428,13 @@ static void outfits_updateQuantities( unsigned int wid )
       o = outfits[i];
       owned = player_outfitOwned(o);
       len = owned / 10 + 4;
-      quantity[i] = malloc( len );
-      snprintf( quantity[i], len, "%d", owned );
+      if (owned >= 1) {
+         quantity[i] = malloc( len );
+         snprintf( quantity[i], len, "%d", owned );
+      }
+      else
+         quantity[i] = NULL;
+         /* FIXME. Also, quantity text is hard to read on a handful of outfits. I suggest a drop shadow by first drawing text +2 X/Y from where it ought to be, in Grey20 or so. Applicable to equipment tab as well. */
    }
    toolkit_setImageArrayQuantity( wid, "iarOutfits", quantity );
 }

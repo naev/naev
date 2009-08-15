@@ -202,7 +202,7 @@ void equipment_open( unsigned int wid )
    equipment_genLists( wid );
 
    /* Seperator. */
-   window_addRect( wid, 20 + sw + 20, -40, 2, h-60, "rctDivider", &cBlack, 0 );
+   window_addRect( wid, 20 + sw + 20, -40, 2, h-60, "rctDivider", &cGrey50, 0 );
 
    /* Custom widget. */
    window_addCust( wid, 20 + sw + 40, -40, cw, ch, "cstEquipment", 0,
@@ -1021,11 +1021,8 @@ void equipment_genLists( unsigned int wid )
                      o->desc_short );
                if (o->mass > 0.)
                   p += snprintf( &alt[i][p], l-p,
-                        "%.0f Tons\n",
+                        "%.0f Tons",
                         o->mass );
-               p += snprintf( &alt[i][p], l-p,
-                     "Quantity %d",
-                     player_outfitOwned(o) );
             }
 
             /* Quantity. */
@@ -1090,11 +1087,11 @@ void equipment_updateShips( unsigned int wid, char* str )
          "%s\n"
          "%s\n"
          "%s\n"
-         "%s credits\n"
+         "%s Credits\n"
          "\n"
          "%.0f Tons\n"
          "%.1f STU average\n"
-         "%.0f MN/ton\n"
+         "%.0f MN/Ton\n"
          "%.0f M/s\n"
          "%.0f Grad/s\n"
          "\n"
@@ -1104,7 +1101,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          "%d / %d Tons\n"
          "%.0f / %.0f Units\n"
          "\n"
-         "%s credits\n"
+         "%s Credits\n"
          "%s%s",
          /* Generic. */
          ship->name,
