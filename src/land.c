@@ -864,7 +864,8 @@ static void shipyard_update( unsigned int wid, char* str )
 
    if (ship->price > player->credits)
       window_disableButton( wid, "btnBuyShip");
-   else window_enableButton( wid, "btnBuyShip");
+   else
+      window_enableButton( wid, "btnBuyShip");
 }
 /**
  * @brief Opens the ship's information window.
