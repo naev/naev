@@ -113,8 +113,9 @@ static void iar_render( Widget* iar, double bx, double by )
    double scroll_pos;
    int xelem, yelem;
    double xspace;
-   glColour *c, *dc, *lc;
+   glColour *c, *dc, *lc, tc;
    int is_selected;
+   int tw;
 
    /*
     * Calculations.
@@ -174,6 +175,17 @@ static void iar_render( Widget* iar, double bx, double by )
          /* quantity. */
          if (iar->dat.iar.quantity != NULL) {
             if (iar->dat.iar.quantity[j*xelem + i] != NULL) {
+               /* Rectangle to hilight better. */
+               tw = gl_printWidthRaw( &gl_smallFont,
+                     iar->dat.iar.quantity[j*xelem + i] );
+               tc.r = cBlack.r;
+               tc.g = cBlack.g;
+               tc.b = cBlack.b;
+               tc.a = 0.75;
+               toolkit_drawRect( xcurs-(double)SCREEN_W/2. + 3.,
+                     ycurs-(double)SCREEN_H/2. + 5. + iar->dat.iar.ih,
+                     tw + 4., gl_smallFont.h + 4., &tc, NULL );
+               /* Quantity number. */
                gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
                      xcurs + 5., ycurs + iar->dat.iar.ih + 7.,
                      &cWhite, iar->dat.iar.quantity[j*xelem + i] );
