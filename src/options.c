@@ -23,6 +23,7 @@
 #include "sound.h"
 #include "music.h"
 #include "nstd.h"
+#include "dialogue.h"
 
 
 #define AUDIO_WIDTH  340 /**< Options menu width. */
@@ -335,6 +336,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
    KeybindType type;
    int key;
    SDLMod mod;
+   const char *str;
 
    /* See how to handle it. */
    switch (event->type) {
@@ -388,6 +390,13 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
       default:
          return 0;
    }
+
+   /* Warn if already bound. */
+   str = input_keyAlreadyBound( type, key, mod );
+   if ((str != NULL) && strcmp(str, opt_selectedKeybind))
+      dialogue_alert( "Key '%s' overlaps with key '%s' that was just set. "
+            "You may want to correct this.",
+            str, opt_selectedKeybind );
 
    /* Set keybinding. */
    input_setKeybind( opt_selectedKeybind, type, key, mod );

@@ -425,6 +425,52 @@ SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod )
 
 
 /**
+ * @brief Checks to see if a key is already bound.
+ *
+ *    @param type Type of key.
+ *    @param key Key.
+ *    @param mod Key modifiers.
+ *    @return Name of the key that is already bound to it.
+ */
+const char *input_keyAlreadyBound( KeybindType type, int key, SDLMod mod )
+{
+   int i;
+   Keybind *k;
+   for (i=0; strcmp(keybindNames[i],"end"); i++) {
+      k = input_keybinds[i];
+
+      /* Type must match. */
+      if (k->type != type)
+         continue;
+
+      /* Must match key. */
+      if (key != (int)k->key)
+         continue;
+
+      /* Handle per case. */
+      switch (type) {
+         case KEYBIND_KEYBOARD:
+            if ((k->mod == KMOD_ALL) || (mod == KMOD_ALL) ||
+                  (k->mod == mod))
+               return keybindNames[i];
+            break;
+
+         case KEYBIND_JAXISPOS:
+         case KEYBIND_JAXISNEG:
+         case KEYBIND_JBUTTON:
+            return keybindNames[i];
+
+         default:
+            break;
+      }
+   }
+
+   /* Not found. */
+   return NULL;
+}
+
+
+/**
  * @brief Gets the description of the keybinding.
  *
  *    @param keybind Keybinding to get the description of.
