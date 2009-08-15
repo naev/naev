@@ -25,8 +25,6 @@
 #include "nstd.h"
 
 
-#define KEYBINDS_WIDTH  440 /**< Options menu width. */
-#define KEYBINDS_HEIGHT 300 /**< Options menu height. */
 #define AUDIO_WIDTH  340 /**< Options menu width. */
 #define AUDIO_HEIGHT 200 /**< Options menu height. */
 
@@ -40,13 +38,49 @@
 extern const char *keybindNames[]; /**< from input.c */
 
 
+static char opt_selectedKeybind[32]; /**< Selected keybinding. */
+static int opt_lastKeyPress = 0; /**< Last keypress. */
+
+
 /*
  * prototypes
  */
 static const char* modToText( SDLMod mod );
+/* Keybind menu. */
+static void menuKeybinds_getDim( unsigned int wid, int *w, int *h,
+      int *lw, int *lh, int *bw, int *bh );
+static void menuKeybinds_genList( unsigned int wid );
 static void menuKeybinds_update( unsigned int wid, char *name );
+/* Music. */
 static void opt_setSFXLevel( unsigned int wid, char *str );
 static void opt_setMusicLevel( unsigned int wid, char *str );
+/* Setting keybindings. */
+static int opt_setKeyEvent( unsigned int wid, SDL_Event *event );
+static void opt_setKey( unsigned int wid, char *str );
+static void opt_unsetKey( unsigned int wid, char *str );
+
+
+/**
+ * @brief Gets the keybind menu dimensions.
+ */
+static void menuKeybinds_getDim( unsigned int wid, int *w, int *h,
+      int *lw, int *lh, int *bw, int *bh )
+{
+   /* Get window dimensions. */
+   window_dimWindow( wid, w, h );
+
+   /* Get button dimensions. */
+   if (bw != NULL)
+      *bw = BUTTON_WIDTH;
+   if (bh != NULL)
+      *bh = BUTTON_HEIGHT;
+
+   /* Get list dimensions. */
+   if (lw != NULL)
+      *lw = *w - 2*BUTTON_WIDTH - 80;
+   if (lh != NULL)
+      *lh = *h - 60;
+}
 
 
 /**
@@ -54,24 +88,49 @@ static void opt_setMusicLevel( unsigned int wid, char *str );
  */
 void opt_menuKeybinds (void)
 {
-   int i, j;
    unsigned int wid;
+   int w, h;
+   int bw, bh;
+   int lw;
+
+   /* Dimensions. */
+   w = 500;
+   h = 300;
+
+   /* Create the window. */
+   wid = window_create( "Keybindings", -1, -1, w, h );
+
+   menuKeybinds_getDim( wid, &w, &h, &lw, NULL, &bw, &bh );
+
+   /* Close button. */
+   window_addButton( wid, -20, 20, bw, bh,
+         "btnClose", "Close", window_close );
+   /* Set button. */
+   window_addButton( wid, -20 - bw - 20, 20, bw, bh,
+         "btnSet", "Set Key", opt_setKey );
+
+   /* Text stuff. */
+   window_addText( wid, 20+lw+20, -40, w-(20+lw+20), 30, 1, "txtName",
+         NULL, &cDConsole, NULL );
+   window_addText( wid, 20+lw+20, -90, w-(20+lw+20), h-70-60-bh,
+         0, "txtDesc", &gl_smallFont, NULL, NULL );
+
+   /* Generate the list. */
+   menuKeybinds_genList( wid );
+}
+
+static void menuKeybinds_genList( unsigned int wid )
+{
+   int i, j;
    char **str;
    SDLKey key;
    KeybindType type;
    SDLMod mod;
+   int w, h;
+   int lw, lh;
 
-   /* Create the window. */
-   wid = window_create( "Keybindings", -1, -1, KEYBINDS_WIDTH, KEYBINDS_HEIGHT );
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", "Close", window_close );
-
-   /* Text stuff. */
-   window_addText( wid, 240, -40, KEYBINDS_WIDTH-260, 30, 1, "txtName",
-         NULL, &cDConsole, NULL );
-   window_addText( wid, 240, -90,
-         KEYBINDS_WIDTH-260, KEYBINDS_HEIGHT-70-60-BUTTON_HEIGHT,
-         0, "txtDesc", &gl_smallFont, NULL, NULL );
+   /* Get dimensions. */
+   menuKeybinds_getDim( wid, &w, &h, &lw, &lh, NULL, NULL );
 
    /* Create the list. */
    for (i=0; strcmp(keybindNames[i],"end"); i++);
@@ -101,7 +160,7 @@ void opt_menuKeybinds (void)
             break;
       }
    }
-   window_addList( wid, 20, -40, 200, KEYBINDS_HEIGHT-60, "lstKeybinds",
+   window_addList( wid, 20, -40, lw, lh, "lstKeybinds",
          str, i, 0, menuKeybinds_update );
 
    /* Update the list. */
@@ -142,7 +201,7 @@ static void menuKeybinds_update( unsigned int wid, char *name )
 {
    (void) name;
    int i;
-   char *selected, keybind[32];
+   char *selected, *keybind;
    const char *desc;
    SDLKey key;
    KeybindType type;
@@ -155,8 +214,9 @@ static void menuKeybinds_update( unsigned int wid, char *name )
 
    /* Remove the excess. */
    for (i=0; (selected[i] != '\0') && (selected[i] != ' '); i++)
-      keybind[i] = selected[i];
-   keybind[i] = '\0';
+      opt_selectedKeybind[i] = selected[i];
+   opt_selectedKeybind[i] = '\0';
+   keybind                = opt_selectedKeybind;
    window_modifyText( wid, "txtName", keybind );
 
    /* Get information. */
@@ -263,6 +323,147 @@ void opt_menuAudio (void)
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", window_close );
+}
+
+
+/**
+ * @brief Tries to set the key from an event.
+ */
+static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
+{
+   unsigned int parent;
+   KeybindType type;
+   int key;
+   SDLMod mod;
+
+   /* See how to handle it. */
+   switch (event->type) {
+      case SDL_KEYDOWN:
+         key  = event->key.keysym.sym;
+         /* If control key make player hit twice. */
+         if (((key == SDLK_NUMLOCK) ||
+                  (key == SDLK_CAPSLOCK) ||
+                  (key == SDLK_SCROLLOCK) ||
+                  (key == SDLK_RSHIFT) ||
+                  (key == SDLK_LSHIFT) ||
+                  (key == SDLK_RCTRL) ||
+                  (key == SDLK_LCTRL) ||
+                  (key == SDLK_RALT) ||
+                  (key == SDLK_LALT) ||
+                  (key == SDLK_RMETA) ||
+                  (key == SDLK_LMETA) ||
+                  (key == SDLK_LSUPER) ||
+                  (key == SDLK_RSUPER))
+                  && (opt_lastKeyPress != key)) {
+            opt_lastKeyPress = key;
+            return 0;
+         }
+         type = KEYBIND_KEYBOARD;
+         if (window_checkboxState( wid, "chkAny" ))
+            mod = KMOD_ALL;
+         else
+            mod  = event->key.keysym.mod & ~(KMOD_CAPS | KMOD_NUM | KMOD_MODE);
+         /* Set key. */
+         opt_lastKeyPress = key;
+         break;
+
+      case SDL_JOYAXISMOTION:
+         if (event->jaxis.value > 0)
+            type = KEYBIND_JAXISPOS;
+         else if (event->jaxis.value < 0)
+            type = KEYBIND_JAXISNEG;
+         else
+            return 0; /* Not handled. */
+         key  = event->jaxis.axis;
+         mod  = KMOD_ALL;
+         break;
+
+      case SDL_JOYBUTTONDOWN:
+         type = KEYBIND_JBUTTON;
+         key  = event->jbutton.button;
+         mod  = KMOD_ALL;
+         break;
+
+      /* Not handled. */
+      default:
+         return 0;
+   }
+
+   /* Set keybinding. */
+   input_setKeybind( opt_selectedKeybind, type, key, mod );
+
+   /* Close window. */
+   window_close( wid, NULL );
+
+   /* Update parent window. */
+   parent = window_get("Keybindings");
+   window_destroyWidget( parent, "lstKeybinds" );
+   menuKeybinds_genList( parent );
+   menuKeybinds_update( parent, NULL );
+
+   return 0;
+}
+
+
+/**
+ * @brief Rebinds a key.
+ */
+static void opt_setKey( unsigned int wid, char *str )
+{
+   (void) wid;
+   (void) str;
+   unsigned int new_wid;
+   int w, h;
+
+   /* Reset key. */
+   opt_lastKeyPress = 0;
+
+   /* Create new window. */
+   w = 20 + 2*(BUTTON_WIDTH + 20);
+   h = 20 + BUTTON_HEIGHT + 20 + 20 + 80 + 40;
+   new_wid = window_create( "Set Keybinding", -1, -1, w, h );
+   window_handleEvents( new_wid, opt_setKeyEvent );
+
+   /* Set text. */
+   window_addText( new_wid, 20, -40, w-40, 60, 0, "txtInfo",
+         &gl_smallFont, &cBlack,
+         "To use a modifier key hit that key twice in a row, otherwise it "
+         "will register as a modifier. To set with any modifier click the checkbox." );
+
+   /* Create button to cancel. */
+   window_addButton( new_wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnCancel", "Cancel", window_close );
+
+   /* Button to unset. */
+   window_addButton( new_wid,  20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnUnset",  "Unset", opt_unsetKey );
+
+   /* Checkbox to set any modifier. */
+   window_addCheckbox( new_wid, -20, 20 + BUTTON_HEIGHT + 20, w-40, 20,
+         "chkAny", "Set any modifier", NULL, 0 );
+
+}
+
+
+/**
+ * @brief Unsets the key.
+ */
+static void opt_unsetKey( unsigned int wid, char *str )
+{
+   (void) str;
+   unsigned int parent;
+
+   /* Unsets the keybind. */
+   input_setKeybind( opt_selectedKeybind, KEYBIND_NULL, 0, 0 );
+
+   /* Close window. */
+   window_close( wid, NULL );
+
+   /* Update parent window. */
+   parent = window_get("Keybindings");
+   window_destroyWidget( parent, "lstKeybinds" );
+   menuKeybinds_genList( parent );
+   menuKeybinds_update( parent, NULL );
 }
 
 
