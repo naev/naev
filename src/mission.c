@@ -61,16 +61,21 @@ static int mission_nstack = 0; /**< Mssions in stack. */
  * prototypes
  */
 /* static */
+/* Generation. */
 static unsigned int mission_genID (void);
 static int mission_init( Mission* mission, MissionData* misn, int genid, int create );
 static void mission_freeData( MissionData* mission );
+/* Matching. */
+static int mission_compare( const void* arg1, const void* arg2 );
 static int mission_alreadyRunning( MissionData* misn );
 static int mission_meetReq( int mission, int faction,
       const char* planet, const char* sysname );
 static int mission_matchFaction( MissionData* misn, int faction );
 static int mission_location( const char* loc );
+/* Loading. */
 static int mission_parse( MissionData* temp, const xmlNodePtr parent );
 static int missions_parseActive( xmlNodePtr parent );
+/* Persistance. */
 static int mission_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int intable );
 static int mission_persistData( lua_State *L, xmlTextWriterPtr writer );
 static int mission_unpersistDataNode( lua_State *L, xmlNodePtr parent );
@@ -561,6 +566,36 @@ static int mission_matchFaction( MissionData* misn, int faction )
 
 
 /**
+ * @brief Compares to missions to see which has more priority.
+ */
+static int mission_compare( const void* arg1, const void* arg2 )
+{
+   Mission *m1, *m2;
+
+   /* Get arguments. */
+   m1 = (Mission*) arg1;
+   m2 = (Mission*) arg2;
+
+   /* Check priority - lower is more important. */
+   if (m1->data->avail.priority < m2->data->avail.priority)
+      return +1;
+   else if (m1->data->avail.priority > m2->data->avail.priority)
+      return -1;
+
+   /* Compare NPC. */
+   if ((m1->npc != NULL) && (m2->npc != NULL))
+      return strcmp( m1->npc, m2->npc );
+
+   /* Compare title. */
+   if ((m1->title != NULL) && (m2->title != NULL))
+      return strcmp( m1->title, m2->title );
+
+   /* Tied. */
+   return 0.;
+}
+
+
+/**
  * @brief Generates a mission list. This runs create() so won't work with all
  *        missions.
  *
@@ -574,21 +609,25 @@ static int mission_matchFaction( MissionData* misn, int faction )
 Mission* missions_genList( int *n, int faction,
       const char* planet, const char* sysname, int loc )
 {
-   int i,j, m;
+   int i,j, m, alloced;
    double chance;
    int rep;
    Mission* tmp;
    MissionData* misn;
 
-   tmp = NULL;
-   m = 0;
+   /* Find available missions. */
+   tmp      = NULL;
+   m        = 0;
+   alloced  = 0;
    for (i=0; i<mission_nstack; i++) {
       misn = &mission_stack[i];
       if (misn->avail.loc == loc) {
 
+         /* Must meet requirements. */
          if (!mission_meetReq(i, faction, planet, sysname))
             continue;
 
+         /* Must hit chance. */
          chance = (double)(misn->avail.chance % 100)/100.;
          if (chance == 0.) /* We want to consider 100 -> 100% not 0% */
             chance = 1.;
@@ -597,13 +636,20 @@ Mission* missions_genList( int *n, int faction,
          for (j=0; j<rep; j++) /* random chance of rep appearances */
             if (RNGF() < chance) {
                m++;
-               tmp = realloc( tmp, sizeof(Mission) * m);
+               /* Extra allocation. */
+               if (m > alloced) {
+                  alloced += 32;
+                  tmp      = realloc( tmp, sizeof(Mission) * alloced );
+               }
+               /* Initialize the mission. */
                if (mission_init( &tmp[m-1], misn, 1, 1 ) < 0)
                   m--;
             }
       }
    }
 
+   /* Sort. */
+   qsort( tmp, m, sizeof(Mission), mission_compare );
    (*n) = m;
    return tmp;
 }
@@ -649,6 +695,9 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
 
    /* Clear memory. */
    memset( temp, 0, sizeof(MissionData) );
+
+   /* Defaults. */
+   temp->avail.priority = 5;
 
    /* get the name */
    temp->name = xml_nodeProp(parent,"name");
@@ -703,6 +752,7 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
             }
             xmlr_strd(cur,"cond",temp->avail.cond);
             xmlr_strd(cur,"done",temp->avail.done);
+            xmlr_int(cur,"priority",temp->avail.priority);
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));

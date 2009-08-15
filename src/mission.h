@@ -59,6 +59,8 @@ typedef struct MissionAvail_s {
 
    char* cond; /**< Condition that must be met (Lua). */
    char* done; /**< Previous mission that must have been done. */
+
+   int priority; /**< Mission priority: 0 = main plot, 5 = default, 10 = insignificant. */
 } MissionAvail_t;
 
 
@@ -92,7 +94,6 @@ typedef struct Mission_ {
    char *reward; /**< Rewards in text */
    glTexture *portrait; /**< Portrait of the mission giver if applicable. */
    char *npc; /**< Name of the NPC giving the mission. */
-   int priority; /**< Priority of the mission [0 is low, 100 is main plot]. */
 
    /* mission cargo given to the player - need to cleanup */
    unsigned int *cargo; /**< Cargos given to player. */
