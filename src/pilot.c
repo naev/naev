@@ -864,8 +864,8 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    Vector2d vp, vv;
    int i;
    PilotOutfitSlot *slot;
-   int prev;
-   double q, cur, t;
+   int minp;
+   double q, mint;
    int is_launcher;
 
    /* check to see if weapon is ready */
@@ -877,9 +877,8 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 
    /* Count the outfits and current one - only affects non-beam. */
    if (!outfit_isBeam(w->outfit)) {
-      prev  = -1;
-      cur   = -1.;
       q     = 0.;
+      minp  = -1;
       for (i=0; i<p->outfit_nhigh; i++) {
          slot = &p->outfit_high[i];
 
@@ -892,23 +891,16 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
             continue;
 
          /* Save some stuff. */
-         if (slot == w)
-            cur = q;
-         if ((cur < 0.) && (slot->timer > 0.)) {
-            t    = q;
-            prev = i;
+         if ((minp < 0) || (slot->timer > mint)) {
+            minp = i;
+            mint = slot->timer;
          }
          q++;
       }
-      /* Didn't find current one. */
-      if (cur == -1.)
-         return 0;
 
-      /* See if can shoot. */
-      if (prev >= 0) {
-         if (p->outfit_high[prev].timer > outfit_delay(w->outfit) * ((cur-t) / q))
-            return 0;
-      }
+      /* Only fire if the last weapon to fire fired more then (q-1)/q ago. */
+      if (mint > outfit_delay(w->outfit) * ((q-1) / q))
+         return 0;
    }
 
    /* Get weapon mount position. */
