@@ -99,7 +99,7 @@ static void lst_render( Widget* lst, double bx, double by )
    y = by + lst->y;
 
    /* lst bg */
-   toolkit_drawRect( x, y, lst->w, lst->h, &cGrey80, NULL );
+   toolkit_drawRect( x, y, lst->w, lst->h, &cGrey90, NULL );
 
    /* inner outline */
    toolkit_drawOutline( x, y, lst->w, lst->h, 0.,
