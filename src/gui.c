@@ -804,7 +804,7 @@ void gui_render( double dt )
                gui.target_health.y,
                NULL, "Disabled" );
 
-      else if (p->shield > p->shield_max/100.) /* on shields */
+      else if (p->shield > p->shield_max * 5./100.) /* > 5% on shields */
          gl_printMax( &gl_smallFont, gui.target_health.w,
             gui.target_health.x,
                gui.target_health.y, NULL,
