@@ -1079,7 +1079,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
    /* Disabled always run before dead to ensure crating boost. */
    if (!pilot_isFlag(p,PILOT_DISABLED) && (p != player) &&
-         (p->armour < PILOT_DISABLED_ARMOR*p->armour_max)) { /* disabled */
+         (p->armour < PILOT_DISABLED_ARMOR*p->ship->armour)) { /* disabled */
 
       /* If hostile, must remove counter. */
       h = (pilot_isHostile(p)) ? 1 : 0;
