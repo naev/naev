@@ -2776,6 +2776,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    int quantity;
    Outfit *o;
    int ret;
+   const char *str;
    
    xmlr_attr(parent,"name",name);
    xmlr_attr(parent,"model",model);
@@ -2911,9 +2912,10 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
       ship->fuel = MIN(ship->fuel_max, fuel);
    if ((is_player == 0) && (planet_get(loc)==NULL))
       loc = planet;
-   if (ship->cpu < 0) { /* Something is wrong. */
-      DEBUG("Player ship '%s' has negative CPU, removing all outfits and adding to stock.",
-            ship->name);
+   str = pilot_checkSanity( ship );
+   if (str != NULL) {
+      DEBUG("Player ship '%s' failed sanity check (%s), removing all outfits and adding to stock.",
+            ship->name, str );
       /* Remove all outfits. */
       for (i=0; i<ship->noutfits; i++) {
          o = ship->outfits[i]->outfit;

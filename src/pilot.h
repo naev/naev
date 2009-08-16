@@ -318,6 +318,7 @@ int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s );
 int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity );
 int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity );
 /* Checks. */
+const char* pilot_checkSanity( Pilot *p );
 const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add );
 int pilot_oquantity( Pilot* p, PilotOutfitSlot* w );
 /* Other. */

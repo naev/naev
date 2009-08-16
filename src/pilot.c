@@ -1883,6 +1883,47 @@ int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s )
 
 
 /**
+ * @brief Pilot sanity check - makes sure stats are sane.
+ *
+ *    @param p Pilot to check.
+ */
+const char* pilot_checkSanity( Pilot *p )
+{
+   if (p->cpu < 0)
+      return "Negative CPU";
+
+   /* Movement. */
+   if (p->thrust < 0)
+      return "Negative Thrust";
+   if (p->speed < 0)
+      return "Negative Speed";
+   if (p->turn < 0)
+      return "Negative Turn";
+
+   /* Health. */
+   if (p->armour_max < 0)
+      return "Negative Armour";
+   if (p->armour_regen < 0)
+      return "Negative Armour Regeneration";
+   if (p->shield_max < 0)
+      return "Negative Shield";
+   if (p->shield_regen < 0)
+      return "Negative Shield Regeneration";
+   if (p->energy_max < 0)
+      return "Negative Energy";
+   if (p->energy_regen < 0)
+      return "Negative Energy Regeneration";
+
+   /* Misc. */
+   if (p->fuel_max < 0)
+      return "Negative Fuel Maximum";
+
+   /* All OK. */
+   return NULL;
+}
+
+
+/**
  * @brief Checks to see if can equip/remove an outfit from a slot.
  *
  *    @return NULL if can swap, or error message if can't.
@@ -2760,6 +2801,13 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* set the pilot stats based on his ship and outfits */
    pilot_calcStats(pilot);
+
+   /* Sanity check. */
+#ifdef DEBUGGING
+   const char *str = pilot_checkSanity( pilot );
+   if (str != NULL)
+      DEBUG( "Pilot '%s' failed sanity check: %s", pilot->name, str );
+#endif /* DEBUGGING */
 
    /* set flags and functions */
    if (flags & PILOT_PLAYER) {
