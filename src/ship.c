@@ -533,7 +533,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    MELEMENT(temp->turn==0,"turn");
    MELEMENT(temp->speed==0,"speed");
    MELEMENT(temp->armour==0,"armour");
-   MELEMENT(temp->armour_regen==0,"armour_regen");
    MELEMENT(temp->shield==0,"shield");
    MELEMENT(temp->shield_regen==0,"shield_regen");
    MELEMENT(temp->energy==0,"energy");

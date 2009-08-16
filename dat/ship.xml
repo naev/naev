@@ -20,7 +20,7 @@
    <armour>120</armour>
    <energy>320</energy>
    <shield_regen>80</shield_regen>
-   <armour_regen>50</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>500</energy_regen>
   </health>
   <characteristics>
@@ -58,7 +58,7 @@
    <armour>100</armour>
    <energy>360</energy>
    <shield_regen>120</shield_regen>
-   <armour_regen>60</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>550</energy_regen>
   </health>
   <characteristics>
@@ -95,7 +95,7 @@
    <armour>50</armour>
    <energy>360</energy>
    <shield_regen>120</shield_regen>
-   <armour_regen>30</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>400</energy_regen>
   </health>
   <characteristics>
@@ -133,7 +133,7 @@
    <armour>100</armour>
    <energy>480</energy>
    <shield_regen>140</shield_regen>
-   <armour_regen>70</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>700</energy_regen>
   </health>
   <characteristics>
@@ -210,7 +210,7 @@
    <armour>180</armour>
    <energy>405</energy>
    <shield_regen>90</shield_regen>
-   <armour_regen>50</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>500</energy_regen>
   </health>
   <characteristics>
@@ -251,7 +251,7 @@
    <armour>400</armour>
    <energy>600</energy>
    <shield_regen>100</shield_regen>
-   <armour_regen>40</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>800</energy_regen>
   </health>
   <characteristics>
@@ -297,7 +297,7 @@
    <armour>200</armour>
    <energy>560</energy>
    <shield_regen>150</shield_regen>
-   <armour_regen>60</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>980</energy_regen>
   </health>
   <characteristics>
@@ -339,7 +339,7 @@
    <armour>200</armour>
    <energy>560</energy>
    <shield_regen>160</shield_regen>
-   <armour_regen>60</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>980</energy_regen>
   </health>
   <characteristics>
@@ -381,7 +381,7 @@
    <armour>320</armour>
    <energy>800</energy>
    <shield_regen>90</shield_regen>
-   <armour_regen>30</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>600</energy_regen>
   </health>
   <characteristics>
@@ -421,7 +421,7 @@
    <armour>320</armour>
    <energy>800</energy>
    <shield_regen>85</shield_regen>
-   <armour_regen>30</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>600</energy_regen>
   </health>
   <characteristics>
@@ -461,7 +461,7 @@
    <armour>300</armour>
    <energy>820</energy>
    <shield_regen>95</shield_regen>
-   <armour_regen>32</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>625</energy_regen>
   </health>
   <characteristics>
@@ -502,7 +502,7 @@
    <armour>380</armour>
    <energy>600</energy>
    <shield_regen>90</shield_regen>
-   <armour_regen>30</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>700</energy_regen>
   </health>
   <characteristics>
@@ -542,7 +542,7 @@
    <armour>380</armour>
    <energy>600</energy>
    <shield_regen>90</shield_regen>
-   <armour_regen>30</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>700</energy_regen>
   </health>
   <characteristics>
@@ -581,7 +581,7 @@
    <armour>360</armour>
    <energy>600</energy>
    <shield_regen>100</shield_regen>
-   <armour_regen>35</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>650</energy_regen>
   </health>
   <characteristics>
@@ -622,7 +622,7 @@
    <armour>340</armour>
    <energy>760</energy>
    <shield_regen>240</shield_regen>
-   <armour_regen>90</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>1180</energy_regen>
   </health>
   <characteristics>
@@ -665,7 +665,7 @@
    <armour>350</armour>
    <energy>760</energy>
    <shield_regen>260</shield_regen>
-   <armour_regen>60</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>1180</energy_regen>
   </health>
   <characteristics>
@@ -709,7 +709,7 @@
    <armour>350</armour>
    <energy>760</energy>
    <shield_regen>250</shield_regen>
-   <armour_regen>100</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>1180</energy_regen>
   </health>
   <characteristics>
@@ -753,7 +753,7 @@
    <armour>460</armour>
    <energy>940</energy>
    <shield_regen>280</shield_regen>
-   <armour_regen>90</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>1380</energy_regen>
   </health>
   <characteristics>
@@ -798,7 +798,7 @@
    <armour>480</armour>
    <energy>960</energy>
    <shield_regen>290</shield_regen>
-   <armour_regen>100</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>1400</energy_regen>
   </health>
   <characteristics>
@@ -844,7 +844,7 @@
    <armour>600</armour>
    <energy>1600</energy>
    <shield_regen>360</shield_regen>
-   <armour_regen>100</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>1400</energy_regen>
   </health>
   <characteristics>
@@ -891,7 +891,7 @@
    <armour>560</armour>
    <energy>1630</energy>
    <shield_regen>380</shield_regen>
-   <armour_regen>90</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>1300</energy_regen>
   </health>
   <characteristics>
@@ -939,7 +939,7 @@
    <armour>800</armour>
    <energy>1800</energy>
    <shield_regen>320</shield_regen>
-   <armour_regen>80</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>1600</energy_regen>
   </health>
   <characteristics>
@@ -989,7 +989,7 @@
    <armour>840</armour>
    <energy>1800</energy>
    <shield_regen>340</shield_regen>
-   <armour_regen>100</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>1600</energy_regen>
   </health>
   <characteristics>
@@ -1039,7 +1039,7 @@
    <armour>1000</armour>
    <energy>4000</energy>
    <shield_regen>350</shield_regen>
-   <armour_regen>90</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>1700</energy_regen>
   </health>
   <characteristics>
@@ -1090,7 +1090,7 @@
    <armour>1000</armour>
    <energy>4000</energy>
    <shield_regen>320</shield_regen>
-   <armour_regen>90</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>1700</energy_regen>
   </health>
   <characteristics>
