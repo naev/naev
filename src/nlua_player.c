@@ -27,6 +27,7 @@
 #include "nlua_vec2.h"
 #include "log.h"
 #include "player.h"
+#include "board.h"
 
 
 /* player */
@@ -44,6 +45,7 @@ static int player_getPosition( lua_State *L );
 static int player_getPilot( lua_State *L );
 static int player_fuel( lua_State *L );
 static int player_refuel( lua_State *L );
+static int player_unboard( lua_State *L );
 static const luaL_reg player_methods[] = {
    { "name", player_getname },
    { "ship", player_shipname },
@@ -59,6 +61,7 @@ static const luaL_reg player_methods[] = {
    { "pilot", player_getPilot },
    { "fuel", player_fuel },
    { "refuel", player_refuel },
+   { "unboard", player_unboard },
    {0,0}
 }; /**< Player lua methods. */
 static const luaL_reg player_cond_methods[] = {
@@ -323,4 +326,22 @@ static int player_refuel( lua_State *L )
 
    return 0;
 }
+
+
+/**
+ * @brief Unboards the player from it's boarded target.
+ *
+ * Use from inside a board hook.
+ *
+ * @usage player.unboard()
+ *
+ * @luafunc unboard()
+ */
+static int player_unboard( lua_State *L )
+{
+   (void) L;
+   board_unboard();
+   return 0;
+}
+
 

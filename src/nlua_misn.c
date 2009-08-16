@@ -393,7 +393,9 @@ static int misn_setMarker( lua_State *L )
 /**
  * @brief Sets the current mission NPC.
  *
- * This is used in bar missions where you talk to a person.
+ * This is used in bar missions where you talk to a person. The portraits are
+ *  the ones found in gfx/portraits without the png extension. So for
+ *  gfx/portraits/none.png you would just use "none".
  *
  * @usage misn.setNPC( "Invisible Man", "none" )
  *

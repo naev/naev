@@ -30,6 +30,9 @@
 #define BUTTON_HEIGHT    30 /**< Boarding button height. */
 
 
+static int board_stopboard = 0; /**< Whether or not to unboard. */
+
+
 /*
  * prototypes
  */
@@ -122,11 +125,28 @@ void player_board (void)
 
    board_update(wdw);
 
+   /* Don't unboard. */
+   board_stopboard = 0;
+
    /*
     * run hook if needed
     */
    pilot_runHook(p, PILOT_HOOK_BOARD);
+
+   if (board_stopboard) {
+      board_exit( wdw, NULL );
+   }
 }
+
+
+/**
+ * @brief Forces unboarding of the pilot.
+ */
+void board_unboard (void)
+{
+   board_stopboard = 1;
+}
+
 
 /**
  * @brief Closes the boarding window.
