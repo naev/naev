@@ -1857,6 +1857,14 @@ void toolkit_update (void)
    Widget *wgt;
    char buf[2];
 
+   /* Clean up the dead if needed. */
+   if (!dialogue_isOpen()) { /* Hack, since dialogues use secondary loop. */
+      if (toolkit_delayCounter > 0)
+         toolkit_delayCounter--;
+      else
+         toolkit_purgeDead();
+   }
+
    /* Killed all the windows. */
    if (windows == NULL) {
       SDL_ShowCursor(SDL_DISABLE);
