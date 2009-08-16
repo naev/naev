@@ -939,8 +939,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          temp->u.bem.cpu,
          temp->u.bem.damage, outfit_damageTypeToStr(temp->u.bem.dtype),
          temp->u.bem.energy,
-         temp->u.bem.duration,
-         temp->u.bem.delay,
+         temp->u.bem.duration, temp->u.bem.delay - temp->u.bem.duration,
          temp->u.bem.range );
 
 #define MELEMENT(o,s) \
