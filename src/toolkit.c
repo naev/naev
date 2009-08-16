@@ -1421,7 +1421,8 @@ int toolkit_input( SDL_Event* event )
    /* Get window that can be focused. */
    wlast = NULL;
    for (wdw = windows; wdw!=NULL; wdw = wdw->next) {
-      if (!window_isFlag( wdw, WINDOW_NOINPUT ))
+      if (!window_isFlag( wdw, WINDOW_NOINPUT ) &&
+            !window_isFlag( wdw, WINDOW_KILL ))
          wlast = wdw;
    }
    if (wlast == NULL)
