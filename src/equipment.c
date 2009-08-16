@@ -1116,6 +1116,13 @@ static void equipment_transportShip( unsigned int wid )
       return;
    }
 
+   /* Obligatory annoying dialogue. */
+   credits2str( buf, price, 2 );
+   if (dialogue_YesNo("Are you sure?", /* confirm */
+            "Do you really want to spend %s transporting your ship %s here?",
+            buf, shipname )==0)
+      return;
+
    /* success */
    player->credits -= price;
    land_checkAddRefuel();
