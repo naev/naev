@@ -993,6 +993,8 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    else if (sys->nplanets > CHUNK_SIZE_SMALL)
       sys->planets = realloc( sys->planets, sizeof(Planet*) * sys->nplanets );
    planet = planet_get(planetname);
+   if (planet == NULL)
+      return -1;
    sys->planets[sys->nplanets-1] = planet;
 
    /* add planet <-> star system to name stack */
