@@ -374,7 +374,7 @@ static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
 
    if (iar->status == WIDGET_STATUS_SCROLLING) {
 
-      y = CLAMP( 0, iar->h, iar->h - y );
+      y = CLAMP( 15, iar->h - 15., iar->h - y );
 
       /* element dimensions */
       iar_getDim( iar, &w, &h );
@@ -384,7 +384,6 @@ static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
       yelem = iar->dat.iar.yelem;
 
       hmax = h * (yelem - (int)(iar->h / h));
-
       iar->dat.iar.pos = (y - 15.) * hmax / (iar->h - 30.);
 
       /* Does boundry checks. */
