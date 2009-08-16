@@ -43,7 +43,8 @@ int dialogue_open; /**< Number of dialogues open. */
 /* extern */
 extern void main_loop (void); /* from naev.c */
 /* dialogues */
-static glFont* dialogue_getSize( const char* msg, int* w, int* h );
+static glFont* dialogue_getSize( const char* title,
+      const char* msg, int* width, int* height );
 static void dialogue_alertClose( unsigned int wid, char* str );
 static void dialogue_msgClose( unsigned int wid, char* str );
 static void dialogue_YesNoClose( unsigned int wid, char* str );
@@ -115,13 +116,16 @@ static void dialogue_alertClose( unsigned int wid, char* str )
  *    @param[out] height Gets the height needed.
  *    @return The font that matches the size.
  */
-static glFont* dialogue_getSize( const char* msg, int* width, int* height )
+static glFont* dialogue_getSize( const char* title,
+      const char* msg, int* width, int* height )
 {
    glFont* font;
    double w, h, d;
-   int len;
+   int len, titlelen;
 
-   w = 300; /* Default width to try. */
+   /* Get title length. */
+   titlelen = gl_printWidthRaw( &gl_defFont, title );
+   w = MAX(300, titlelen+40); /* Default width to try. */
    len = strlen(msg);
 
    /* First we split by text length. */
@@ -185,7 +189,7 @@ void dialogue_msgRaw( const char* caption, const char *msg )
    glFont* font;
    unsigned int msg_wid;
 
-   font = dialogue_getSize( msg, &w, &h );
+   font = dialogue_getSize( caption, msg, &w, &h );
 
    /* create the window */
    msg_wid = window_create( caption, -1, -1, w, 110 + h );
@@ -251,7 +255,7 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
    int w,h;
    glFont* font;
 
-   font = dialogue_getSize( msg, &w, &h );
+   font = dialogue_getSize( caption, msg, &w, &h );
 
    /* create window */
    yesno_wid = window_create( caption, -1, -1, w, h+110 );
