@@ -896,11 +896,11 @@ void toolkit_drawAltText( double bx, double by, const char *alt )
    glColour c2;
 
    /* Get dimensions. */
-   w = 120.;
+   w = 160.;
    h = gl_printHeightRaw( &gl_smallFont, w, alt );
    /* One check to make bigger. */
    if (h > 160.) {
-      w = 240;
+      w = 200;
       h = gl_printHeightRaw( &gl_smallFont, w, alt );
    }
 
