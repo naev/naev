@@ -51,7 +51,7 @@ static Keybind** input_keybinds; /**< contains the players keybindings */
 const char *keybindNames[] = {
    /* Movement. */
    "accel", "left", "right", "reverse", "afterburn",
-  /* Targetting. */
+   /* Targetting. */
    "target_next", "target_prev", "target_nearest",
    "target_nextHostile", "target_prevHostile", "target_hostile",
    /* Fighting. */
