@@ -1145,6 +1145,7 @@ static void spaceport_bar_approach( unsigned int wid, char *str )
    Mission* misn;
    int pos;
    int i;
+   int ret;
 
    /* Get position. */
    pos = toolkit_getImageArrayPos( wid, "iarMissions" );
@@ -1166,7 +1167,10 @@ static void spaceport_bar_approach( unsigned int wid, char *str )
 
    /* Get mission. */
    misn = &mission_bar[pos];
-   if (mission_accept( misn )) { /* successs in accepting the mission */
+   ret  = mission_accept( misn );
+   if ((ret==0) || (ret==2) || (ret==-1)) { /* successs in accepting the mission */
+      if (ret==-1)
+         mission_cleanup( &mission_bar[pos] );
       memmove( &mission_bar[pos], &mission_bar[pos+1],
             sizeof(Mission) * (mission_nbar-pos-1) );
       mission_nbar--;
@@ -1261,7 +1265,7 @@ static void misn_accept( unsigned int wid, char* str )
    char* misn_name;
    Mission* misn;
    int pos;
-   int i;
+   int i, ret;
 
    misn_name = toolkit_getList( wid, "lstMission" );
 
@@ -1281,7 +1285,10 @@ static void misn_accept( unsigned int wid, char* str )
          "Are you sure you want to accept this mission?")) {
       pos = toolkit_getListPos( wid, "lstMission" );
       misn = &mission_computer[pos];
-      if (mission_accept( misn )) { /* successs in accepting the mission */
+      ret = mission_accept( misn );
+      if ((ret==0) || (ret==2) || (ret==-1)) { /* successs in accepting the mission */
+         if (ret==-1)
+            mission_cleanup( &mission_bar[pos] );
          memmove( &mission_computer[pos], &mission_computer[pos+1],
                sizeof(Mission) * (mission_ncomputer-pos-1) );
          mission_ncomputer--;

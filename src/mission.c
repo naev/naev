@@ -204,18 +204,14 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
  * @brief Small wrapper for misn_run.
  *
  *    @param mission Mission to accept.
- *    @return 0 on success.
+ *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
+ *            and 0 normally.
  *
  * @sa misn_run
  */
 int mission_accept( Mission* mission )
 {
-   int ret;
-
-   ret = misn_run( mission, "accept" );
-   if (ret==0)
-      return 1;
-   return 0;
+   return misn_run( mission, "accept" );
 }
 
 
