@@ -367,11 +367,14 @@ static int iar_mclick( Widget* iar, int button, int x, int y )
 static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
 {
    (void) rx;
+   (void) ry;
    double w,h;
    int xelem, yelem;
    double hmax;
 
    if (iar->status == WIDGET_STATUS_SCROLLING) {
+
+      y = CLAMP( 0, iar->h, iar->h - y );
 
       /* element dimensions */
       iar_getDim( iar, &w, &h );
@@ -382,7 +385,7 @@ static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
 
       hmax = h * (yelem - (int)(iar->h / h));
 
-      iar->dat.iar.pos += ry * hmax / (iar->h - 30.);
+      iar->dat.iar.pos = (y - 15.) * hmax / (iar->h - 30.);
 
       /* Does boundry checks. */
       iar_scroll( iar, 0 );
