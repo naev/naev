@@ -1475,18 +1475,22 @@ void pilot_update( Pilot* pilot, const double dt )
       return;
    }
 
-   /* still alive */
-   else if (pilot->armour < pilot->armour_max) /* regen armour */
-      pilot->armour += pilot->armour_regen * dt;
-   else /* regen shield */
-      pilot->shield += pilot->shield_regen * dt;
+   /* Pilot is still alive */
+   pilot->armour += pilot->armour_regen * dt;
+   if (pilot->armour > pilot->armour_max)
+      pilot->armour = pilot->armour_max;
+
+   /* regen shield */
+   pilot->shield += pilot->shield_regen * dt;
+   if (pilot->shield > pilot->shield_max)
+      pilot->shield = pilot->shield_max;
 
    /* Update energy */
    if ((pilot->energy < 1.) && pilot_isFlag(pilot, PILOT_AFTERBURNER))
-      pilot_rmFlag(pilot, PILOT_AFTERBURNER); /* Break efterburner */
+      pilot_rmFlag(pilot, PILOT_AFTERBURNER); /* Break afterburner */
 
    /*
-    * Using RC circuit eenergy loading.
+    * Using RC circuit energy loading.
     *
     * Calculations (using y = [0:1])
     *
@@ -1508,10 +1512,6 @@ void pilot_update( Pilot* pilot, const double dt )
       pilot->player_damage = 0.;
 
    /* check limits */
-   if (pilot->armour > pilot->armour_max)
-      pilot->armour = pilot->armour_max;
-   if (pilot->shield > pilot->shield_max)
-      pilot->shield = pilot->shield_max;
    if (pilot->energy > pilot->energy_max)
       pilot->energy = pilot->energy_max;
 
