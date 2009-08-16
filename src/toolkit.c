@@ -73,7 +73,7 @@ static GLsizei toolkit_vboColourOffset; /**< Colour offset. */
  */
 /* input */
 static void toolkit_mouseEvent( Window *w, SDL_Event* event );
-static void toolkit_mouseEventWidget( Window *w, Widget *wgt, int i,
+static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
       Uint8 type, Uint8 button, int x, int y, int rx, int ry );
 static int toolkit_keyEvent( Window *wdw, SDL_Event* event );
 /* focus */
@@ -82,7 +82,7 @@ static Widget* toolkit_getFocus( Window *wdw );
 /* render */
 static void window_renderBorder( Window* w );
 /* Death. */
-static void widget_kill( Window *wdw, Widget *wgt, int i );
+static void widget_kill( Widget *wgt );
 static void window_kill( Window *wdw );
 static void toolkit_purgeDead (void);
 
@@ -139,41 +139,39 @@ void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
  */
 Widget* window_newWidget( Window* w, const char *name )
 {
-   int i;
-   Widget* wgt = NULL;
+   Widget *wgt, *wlast;
 
    /* Try to find one with the same name first. */
-   for (i=0; i<w->nwidgets; i++) {
+   wlast = NULL;
+   for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
+
       /* Must match name. */
-      if (strcmp(name, w->widgets[i].name)!=0)
+      if (strcmp(name, wgt->name)!=0) {
+         wlast = wgt;
          continue;
+      }
 
       /* Should be destroyed. */
-      if (!wgt_isFlag( &w->widgets[i], WGT_FLAG_KILL )) {
+      if (!wgt_isFlag( wgt, WGT_FLAG_KILL )) {
          WARN("Trying to create widget '%s' over existing one that hasn't been destroyed", 
                name );
          return NULL;
       }
 
       /* Prepare and return this widget. */
-      wgt = &w->widgets[i];
       widget_cleanup(wgt);
       break;
    }
 
    /* Must grow widgets. */
-   if (wgt == NULL) {
-      /* Grow widget list. */
-      w->nwidgets++;
-      w->widgets = realloc( w->widgets,
-            sizeof(Widget)*w->nwidgets );
-      if (w->widgets == NULL) {
-         WARN("Out of Memory");
-         return NULL;
-      }
-      /* Set sane defaults. */
-      wgt = &w->widgets[ w->nwidgets - 1 ]; 
-   }
+   if (wgt == NULL)
+      wgt = malloc( sizeof(Widget) );
+
+   /* Set up. */
+   if (wlast == NULL)
+      w->widgets  = wgt;
+   else
+      wlast->next = wgt;
 
    /* Sane defaults. */
    memset( wgt, 0, sizeof(Widget) );
@@ -181,6 +179,7 @@ Widget* window_newWidget( Window* w, const char *name )
    wgt->status = WIDGET_STATUS_NORMAL;
    wgt->wdw    = w->id;
    wgt->name   = strdup(name);
+   wgt->id     = ++w->idgen;
 
    return wgt;
 }
@@ -213,8 +212,8 @@ Window* window_wget( const unsigned int wid )
  */
 Widget* window_getwgt( const unsigned int wid, const char* name )
 {
-   int i;
    Window *wdw;
+   Widget *wgt;
 
    /* Get the window. */
    wdw = window_wget(wid);
@@ -222,9 +221,9 @@ Widget* window_getwgt( const unsigned int wid, const char* name )
       return NULL;
 
    /* Find the widget. */
-   for (i=0; i<wdw->nwidgets; i++)
-      if (strcmp(wdw->widgets[i].name, name)==0)
-         return &wdw->widgets[i];
+   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
+      if (strcmp(wgt->name, name)==0)
+         return wgt;
 
    WARN("Widget '%s' not found in window '%u'!", name, wid );
    return NULL;
@@ -373,6 +372,7 @@ unsigned int window_create( const char* name,
    wdw->name         = strdup(name);
 
    /* Sane defaults. */
+   wdw->idgen        = -1;
    wdw->focus        = -1;
 
    /* Dimensions. */
@@ -563,13 +563,13 @@ void window_handleEvents( const unsigned int wid,
  */
 void widget_cleanup( Widget *widget )
 {
-   /* General freeing. */
-   if (widget->name)
-      free(widget->name);
-
    /* Type specific clean up. */
    if (widget->cleanup != NULL)
       widget->cleanup(widget);
+
+   /* General freeing. */
+   if (widget->name)
+      free(widget->name);
 }
 
 
@@ -626,7 +626,7 @@ void window_destroy( const unsigned int wid )
  */
 static void window_kill( Window *wdw )
 {
-   int j;
+   Widget *wgt, *wgtkill;
 
    /* Run the close function first. */
    if (wdw->close_fptr != NULL)
@@ -635,9 +635,12 @@ static void window_kill( Window *wdw )
    /* Destroy the window. */
    if (wdw->name)
       free(wdw->name);
-   for (j=0; j<wdw->nwidgets; j++)
-      widget_cleanup(&wdw->widgets[j]);
-   free(wdw->widgets);
+   wgt = wdw->widgets;
+   while (wgt != NULL) {
+      wgtkill = wgt;
+      wgt = wgtkill->next;
+      widget_kill(wgtkill);
+   }
    free(wdw);
 
    /* Clear key repeat, since toolkit could miss the keyup event. */
@@ -654,7 +657,7 @@ static void window_kill( Window *wdw )
 int widget_exists( const unsigned int wid, const char* wgtname )
 {
    Window *w = window_wget(wid);
-   int i;
+   Widget *wgt;
 
    /* Get window. */
    if (w==NULL) {
@@ -663,9 +666,9 @@ int widget_exists( const unsigned int wid, const char* wgtname )
    }
 
    /* Check for widget. */
-   for (i=0; i<w->nwidgets; i++)
-      if (strcmp(wgtname,w->widgets[i].name)==0)
-         return !wgt_isFlag(&w->widgets[i], WGT_FLAG_KILL);;
+   for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next)
+      if (strcmp(wgtname, wgt->name)==0)
+         return !wgt_isFlag(wgt, WGT_FLAG_KILL);
 
    return 0;
 }
@@ -679,7 +682,6 @@ int widget_exists( const unsigned int wid, const char* wgtname )
  */
 void window_destroyWidget( unsigned int wid, const char* wgtname )
 {
-   int i;
    Window *wdw;
    Widget *wgt;
 
@@ -690,10 +692,8 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
 
    /* Get the widget. */
    /* get widget. */
-   wgt = NULL;
-   for (i=0; i<wdw->nwidgets; i++) {
-      if (strcmp(wdw->widgets[i].name, wgtname)==0) {
-         wgt = &wdw->widgets[i];
+   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
+      if (strcmp(wgt->name, wgtname)==0) {
          break;
       }
    }
@@ -703,7 +703,7 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
    }
 
    /* Defocus. */
-   if (wdw->focus == i)
+   if (wdw->focus == wgt->id)
       wdw->focus = -1;
 
    /* There's dead stuff now. */
@@ -715,16 +715,11 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
 /**
  * @brief Destroy a widget really.
  */
-static void widget_kill( Window *wdw, Widget *wgt, int i )
+static void widget_kill( Widget *wgt )
 {
    /* Clean up. */
    widget_cleanup(wgt);
-
-   /* Move memory around. */
-   if (i < wdw->nwidgets-1) /* not last widget */
-      memmove(&wdw->widgets[i], &wdw->widgets[i+1],
-            sizeof(Widget) * (wdw->nwidgets-i-1) );
-   (wdw->nwidgets)--;
+   free(wgt);
 }
 
 
@@ -1306,8 +1301,8 @@ static void window_renderBorder( Window* w )
  */
 void window_render( Window *w )
 {
-   int i;
    double x, y, wid, hei;
+   Widget *wgt;
 
    /* position */
    x = w->x - (double)SCREEN_W/2.;
@@ -1320,18 +1315,19 @@ void window_render( Window *w )
    /*
     * widgets
     */
-   for (i=0; i<w->nwidgets; i++)
-      if (w->widgets[i].render != NULL)
-         w->widgets[i].render( &w->widgets[i], x, y );
+   for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next)
+      if (wgt->render != NULL)
+         wgt->render( wgt, x, y );
 
    /*
     * focused widget
     */
    if (w->focus != -1) {
-      x  += w->widgets[w->focus].x;
-      y  += w->widgets[w->focus].y;
-      wid = w->widgets[w->focus].w;
-      hei = w->widgets[w->focus].h;
+      wgt = toolkit_getFocus( w );
+      x  += wgt->x;
+      y  += wgt->y;
+      wid = wgt->w;
+      hei = wgt->h;
       toolkit_drawOutline( x, y, wid, hei, 3, &cBlack, NULL );
    }
 }
@@ -1344,8 +1340,8 @@ void window_render( Window *w )
  */
 void window_renderOverlay( Window *w )
 {
-   int i;
    double x, y;
+   Widget *wgt;
 
    /* position */
    x = w->x - (double)SCREEN_W/2.;
@@ -1354,9 +1350,9 @@ void window_renderOverlay( Window *w )
    /*
     * overlays
     */
-   for (i=0; i<w->nwidgets; i++)
-      if (w->widgets[i].renderOverlay != NULL)
-         w->widgets[i].renderOverlay( &w->widgets[i], x, y );
+   for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next)
+      if (wgt->renderOverlay != NULL)
+         wgt->renderOverlay( wgt, x, y );
 }
 
 
@@ -1414,7 +1410,7 @@ void toolkit_render (void)
  */
 int toolkit_input( SDL_Event* event )
 {
-   int ret, j;
+   int ret;
    Window *wdw, *wlast;
    Widget *wgt;
 
@@ -1430,8 +1426,7 @@ int toolkit_input( SDL_Event* event )
    wdw = wlast;
 
    /* See if widget needs event. */
-   for (j=0; j<wdw->nwidgets; j++) {
-      wgt = &wdw->widgets[j]; /* For realloc. */
+   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
       if (wgt_isFlag( wgt, WGT_FLAG_RAWINPUT )) {
          if (wgt->rawevent != NULL) {
             ret = wgt->rawevent( wgt, event );
@@ -1559,7 +1554,6 @@ Uint8 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
  */
 static void toolkit_mouseEvent( Window *w, SDL_Event* event )
 {
-   int i;
    Widget *wgt;
    Uint8 type, button;
    int x, y, rx, ry;
@@ -1568,8 +1562,7 @@ static void toolkit_mouseEvent( Window *w, SDL_Event* event )
    type = toolkit_inputTranslateCoords( w, event, &x, &y, &rx, &ry, 1 );
 
    /* Check each widget. */
-   for (i=0; i<w->nwidgets; i++) {
-      wgt = &w->widgets[i];
+   for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
 
       /* custom widgets take it from here */
       if (wgt->type==WIDGET_CUST) {
@@ -1582,7 +1575,7 @@ static void toolkit_mouseEvent( Window *w, SDL_Event* event )
             button = event->motion.state;
          else
             button = event->button.button;
-         toolkit_mouseEventWidget( w, wgt, i, type, button, x, y, rx, ry );
+         toolkit_mouseEventWidget( w, wgt, type, button, x, y, rx, ry );
       }
    }
 }
@@ -1595,7 +1588,7 @@ static void toolkit_mouseEvent( Window *w, SDL_Event* event )
  *    @param wgt Widget recieving event.
  *    @param event Event recieved by the window.
  */
-static void toolkit_mouseEventWidget( Window *w, Widget *wgt, int i,
+static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
       Uint8 type, Uint8 button, int x, int y, int rx, int ry )
 {
    int inbounds;
@@ -1643,7 +1636,7 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt, int i,
             wgt->status = WIDGET_STATUS_MOUSEDOWN;
 
          if (toolkit_isFocusable(wgt))
-            w->focus = i;
+            w->focus = wgt->id;
 
          /* Try to give the event to the widget. */
          if (wgt->mclickevent != NULL)
@@ -1800,9 +1793,8 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
  */
 static void toolkit_purgeDead (void)
 {
-   int j;
    Window *wdw, *wlast, *wkill;
-   Widget *wgt;
+   Widget *wgt, *wgtlast;
 
    /* Only clean up if necessary. */
    if (!window_dead)
@@ -1830,11 +1822,22 @@ static void toolkit_purgeDead (void)
          window_kill( wkill );
       }
       else {
-         for (j=0; j<wdw->nwidgets; j++) {
-            wgt = &wdw->widgets[j];
+         wgtlast = NULL;
+         wgt    = wdw->widgets;
+         while (wgt != NULL) {
             if (wgt_isFlag( wgt, WGT_FLAG_KILL )) {
-               widget_kill( wdw, wgt, j );
-               j--;
+               if (wgtlast == NULL) {
+                  wdw->widgets  = wgt->next;
+                  wgt           = wdw->widgets;
+               }
+               else {
+                  wgtlast->next = wgt->next;
+                  wgt           = wgtlast;
+               }
+            }
+            else {
+               wgtlast  = wgt;
+               wgt      = wgt->next;
             }
          }
       }
@@ -1856,7 +1859,6 @@ static void toolkit_purgeDead (void)
  */
 void toolkit_update (void)
 {
-   int i;
    unsigned int t;
    Window *wdw;
    Widget *wgt;
@@ -1902,8 +1904,7 @@ void toolkit_update (void)
 
 
       /* See if widget needs event. */
-      for (i=0; i<wdw->nwidgets; i++) {
-         wgt = &wdw->widgets[i]; /* For realloc. */
+      for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
          if (wgt_isFlag( wgt, WGT_FLAG_RAWINPUT )) {
             if (wgt->rawevent != NULL) {
                event.type           = SDL_KEYDOWN;
@@ -1937,20 +1938,31 @@ void toolkit_update (void)
 void toolkit_nextFocus (void)
 {
    Window *wdw;
+   Widget *wgt;
+   int next;
 
+   /* Get window. */
    wdw = toolkit_getActiveWindow();
    if (wdw == NULL)
       return;
 
-   if (wdw->nwidgets==0) /* special case no widgets */
-      wdw->focus = -1;
-   else if (wdw->focus+1 >= wdw->nwidgets)
-      wdw->focus = -1;
-   else if ((++wdw->focus+1) && /* just increment */
-         toolkit_isFocusable(&wdw->widgets[wdw->focus]) )
-      return;
-   else
-      toolkit_nextFocus();
+   /* See what to focus. */
+   next = (wdw->focus == -1);
+   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
+      if (toolkit_isFocusable(wgt)) {
+
+         if (next) {
+            wdw->focus = wgt->id;
+            return;
+         }
+         else if (wdw->focus == wgt->id)
+            next = 1;
+      }
+   }
+
+   /* Focus nothing. */
+   wdw->focus = -1;
+   return;
 }
 
 
@@ -1996,10 +2008,20 @@ Window* toolkit_getActiveWindow (void)
  */
 static Widget* toolkit_getFocus( Window *wdw )
 {
+   Widget *wgt;
+
+   /* No focus. */
    if (wdw->focus == -1)
       return NULL;
 
-   return &wdw->widgets[wdw->focus];
+   /* Find focus. */
+   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
+      if (wdw->focus == wgt->id)
+         return wgt;
+
+   /* Not found. */
+   wdw->focus = -1;
+   return NULL;
 }
 
 

@@ -73,9 +73,12 @@ typedef enum WidgetStatus_ {
  * @brief Represents a widget.
  */
 typedef struct Widget_ {
+   struct Widget_ *next; /**< Linked list. */
+
    /* Basic properties. */
    char* name; /**< Widget's name. */
    WidgetType type; /**< Widget's type. */
+   int id; /**< Widget ID. */
 
    /* Inheritance. */
    unsigned int wdw; /**< Widget's parent window. */
@@ -142,6 +145,7 @@ typedef struct Window_ {
    unsigned int id; /**< Unique ID. */
    char *name; /**< Window name - should be unique. */
    unsigned int flags; /**< Window flags. */
+   int idgen; /**< ID generator for widgets. */
 
    unsigned int parent; /**< Parent window, will close if this one closes. */
    void (*close_fptr)(unsigned int wid, char* name); /**< How to close the window. */
@@ -159,7 +163,6 @@ typedef struct Window_ {
 
    int focus; /**< Current focused widget. */
    Widget *widgets; /**< Widget storage. */
-   int nwidgets; /**< Total number of widgets. */
 } Window;
 
 
