@@ -16,13 +16,13 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>960</delay>
+   <delay>900</delay>
    <speed>550</speed>
    <range>420</range>
    <falloff>252</falloff>
    <accuracy>18</accuracy>
-   <energy>5.44</energy>
-   <damage type="energy">9.6</damage>
+   <energy>4.25</energy>
+   <damage type="energy">7.5</damage>
   </specific>
  </outfit>
  <outfit name="Laser Cannon MK2">
@@ -32,7 +32,7 @@
    <license>Medium Weapon License</license>
    <mass>9</mass>
    <price>15000</price>
-   <description>A new offering developed from the newly declassified Ripper Mk2 specifications, the mark 2 laser cannon improves on the original in many ways. Featuring increased range and greater firepower while only moderately increasing power demands, it's become a favourite civilian armament.</description>
+   <description>A new offering developed from the newly declassified Ripper MK2 specifications, the mark 2 laser cannon improves on the original in many ways. Featuring increased range and greater firepower while only moderately increasing power demands, it's become a favourite civilian armament.</description>
    <gfx_store>laser2</gfx_store>
    </general>
   <specific type="bolt">
@@ -41,14 +41,14 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>960</delay>
+   <delay>900</delay>
    <speed>550</speed>
    <range>450</range>
    <falloff>270</falloff>
    <gfx_end>laser2-end</gfx_end>
    <accuracy>18</accuracy>
-   <energy>11.36</energy>
-   <damage type="energy">16</damage>
+   <energy>8.87</energy>
+   <damage type="energy">12.5</damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret">
@@ -67,13 +67,13 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>576</delay>
+   <delay>540</delay>
    <speed>550</speed>
    <range>420</range>
    <falloff>252</falloff>
    <accuracy>18</accuracy>
-   <energy>7.84</energy>
-   <damage type="energy">10.4</damage>
+   <energy>6.12</energy>
+   <damage type="energy">8.1</damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret MK2">
@@ -92,14 +92,14 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>576</delay>
+   <delay>540</delay>
    <speed>550</speed>
    <range>450</range>
    <falloff>270</falloff>
    <gfx_end>laser2-end</gfx_end>
    <accuracy>18</accuracy>
-   <energy>16.32</energy>
-   <damage type="energy">17.3</damage>
+   <energy>12.75</energy>
+   <damage type="energy">13.5</damage>
   </specific>
  </outfit>
  <outfit name="Plasma Blaster">
@@ -117,13 +117,13 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS</spfx_armour>
-   <delay>720</delay>
+   <delay>675</delay>
    <speed>450</speed>
    <range>350</range>
    <falloff>210</falloff>
    <accuracy>25</accuracy>
-   <energy>4.8</energy>
-   <damage type="energy">9.6</damage>
+   <energy>3.75</energy>
+   <damage type="energy">7.5</damage>
   </specific>
 </outfit>
  <outfit name="Plasma Blaster MK2">
@@ -142,14 +142,14 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>720</delay>
+   <delay>675</delay>
    <speed>450</speed>
    <range>375</range>
    <falloff>225</falloff>
    <gfx_end>plasma2-end</gfx_end>
    <accuracy>25</accuracy>
-   <energy>9.6</energy>
-   <damage type="energy">15.4</damage>
+   <energy>7.5</energy>
+   <damage type="energy">12</damage>
   </specific>
 </outfit>
  <outfit name="Neutron Disruptor">
@@ -168,14 +168,14 @@
    <sound>neutron</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>960</delay>
+   <delay>900</delay>
    <speed>650</speed>
    <range>420</range>
    <falloff>252</falloff>
    <gfx_end>neutron-end</gfx_end>
    <accuracy>15</accuracy>
-   <energy>17.6</energy>
-   <damage type="energy">19.2</damage>
+   <energy>13.75</energy>
+   <damage type="energy">15</damage>
   </specific>
  </outfit>
 <!-- Medium Range Weapons -->
@@ -195,14 +195,14 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1536</delay>
+   <delay>1440</delay>
    <speed>500</speed>
    <range>560</range>
    <falloff>392</falloff>
    <gfx_end>ion-end</gfx_end>
    <accuracy>13</accuracy>
-   <energy>19.2</energy>
-   <damage type="ion">24</damage>
+   <energy>15</energy>
+   <damage type="ion">18.8</damage>
   </specific>
  </outfit>
  <outfit name="Heavy Ion Turret">
@@ -221,14 +221,14 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>816</delay>
+   <delay>765</delay>
    <speed>500</speed>
    <range>560</range>
    <falloff>392</falloff>
    <gfx_end>ion-end</gfx_end>
    <accuracy>7</accuracy>
-   <energy>32</energy>
-   <damage type="ion">25.6</damage>
+   <energy>25</energy>
+   <damage type="ion">22.5</damage>
   </specific>
  </outfit>
  <outfit name="40mm Autocannon">
@@ -248,12 +248,12 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1536</delay>
+   <delay>1440</delay>
    <speed>500</speed>
    <range blowup="armour">450</range>
    <accuracy>12</accuracy>
    <energy>25</energy>
-   <damage type="kinetic">24</damage>
+   <damage type="kinetic">30</damage>
   </specific>
  </outfit>
 <!-- Long Range Weapons -->
@@ -274,14 +274,14 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <delay>2112</delay>
+   <delay>1980</delay>
    <speed>650</speed>
    <range>800</range>
    <falloff>600</falloff>
    <gfx_end>mass-end</gfx_end>
    <accuracy>10</accuracy>
-   <energy>67.2</energy>
-   <damage type="kinetic">56</damage>
+   <energy>52.5</energy>
+   <damage type="kinetic">43.75</damage>
   </specific>
  </outfit>
   <outfit name="150mm Railgun Turret">
@@ -300,14 +300,14 @@
    <sound>mass</sound>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <delay>1176</delay>
+   <delay>1102</delay>
    <speed>625</speed>
    <range>720</range>
    <falloff>540</falloff>
    <gfx_end>mass-end</gfx_end>
    <accuracy>10</accuracy>
-   <energy>84.48</energy>
-   <damage type="kinetic">59.2</damage>
+   <energy>66</energy>
+   <damage type="kinetic">46.25</damage>
   </specific>
  </outfit>
  <outfit name="Ripper MK2">
@@ -326,14 +326,14 @@
    <sound>ripper</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1344</delay>
+   <delay>1260</delay>
    <speed>700</speed>
    <range>600</range>
    <falloff>450</falloff>
    <gfx_end>ripper-end</gfx_end>
    <accuracy>10</accuracy>
-   <energy>32</energy>
-   <damage type="energy">28.8</damage>
+   <energy>23.75</energy>
+   <damage type="energy">22.5</damage>
   </specific>
  </outfit>
 <!-- Beam Weapons -->
