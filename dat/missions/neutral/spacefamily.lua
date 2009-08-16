@@ -94,6 +94,9 @@ function create ()
    misn.setDesc(string.format(misn_desc[2], destplanetname, destsysname))
    misn.setMarker (destsys, "misc")
 
+   -- Force unboard
+   player.unboard()
+
    hook.land("land")
    hook.takeoff("takeoff")
    hook.enter("enter")

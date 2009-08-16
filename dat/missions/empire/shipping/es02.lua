@@ -192,6 +192,9 @@ function board ()
    misn_stage = 2
    misn.setMarker(retsys)
    misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name() ))
+
+   -- Force unboard
+   player.unboard()
 end
 
 
