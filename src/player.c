@@ -1047,7 +1047,8 @@ void player_update( Pilot *pplayer, const double dt )
    pilot_update( pplayer, dt );
 
    /* Update player specific stuff. */
-   player_updateSpecific( pplayer, dt );
+   if (!player_isFlag(PLAYER_DESTROYED))
+      player_updateSpecific( pplayer, dt );
 }
 
 
