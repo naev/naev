@@ -763,13 +763,16 @@ void player_clear (void)
 
 
 static char* player_ratings[] = {
-      "None",
+      "Harmless",
+      "Mostly Harmless",
       "Smallfry",
-      "Weak",
-      "Minor",
       "Average",
+      "Above Average",
       "Major",
+      "Intimidating",
       "Fearsome",
+      "Terrifying",
+      "Unstoppable",
       "Godlike"
 }; /**< Combat ratings. */
 /**
@@ -780,13 +783,16 @@ static char* player_ratings[] = {
 const char* player_rating (void)
 {
    if (player_crating == 0.) return player_ratings[0];
-   else if (player_crating < 50.) return player_ratings[1];
-   else if (player_crating < 200.) return player_ratings[2];
-   else if (player_crating < 500.) return player_ratings[3];
-   else if (player_crating < 1000.) return player_ratings[4];
-   else if (player_crating < 2500.) return player_ratings[5];
-   else if (player_crating < 10000.) return player_ratings[6];
-   else return player_ratings[7];
+   else if (player_crating < 25.) return player_ratings[1];
+   else if (player_crating < 50.) return player_ratings[2];
+   else if (player_crating < 100.) return player_ratings[3];
+   else if (player_crating < 200.) return player_ratings[4];
+   else if (player_crating < 500.) return player_ratings[5];
+   else if (player_crating < 1000.) return player_ratings[6];
+   else if (player_crating < 2000.) return player_ratings[7];
+   else if (player_crating < 5000.) return player_ratings[8];
+   else if (player_crating < 10000.) return player_ratings[9];
+   else return player_ratings[10];
 }
 
 
