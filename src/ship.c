@@ -260,27 +260,10 @@ ShipClass ship_classFromString( char* str )
  */
 int ship_basePrice( Ship* s )
 {
-   int i, price;
+   int price;
 
    /* Get ship base price. */
    price = s->price;
-
-   /* Base price is ship's price minus it's outfits. */
-   for (i=0; i<s->outfit_nlow; i++) {
-      if (s->outfit_low[i].data != NULL) {
-         price -= s->outfit_low[i].data->price;
-      }
-   }
-   for (i=0; i<s->outfit_nmedium; i++) {
-      if (s->outfit_medium[i].data != NULL) {
-         price -= s->outfit_medium[i].data->price;
-      }
-   }
-   for (i=0; i<s->outfit_nhigh; i++) {
-      if (s->outfit_high[i].data != NULL) {
-         price -= s->outfit_high[i].data->price;
-      }
-   }
 
    if (price < 0) {
       WARN("Negative ship base price!");
