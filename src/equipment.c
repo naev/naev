@@ -66,7 +66,6 @@ static void equipment_renderShip( double bx, double by,
 static int equipment_mouseColumn( double y, double h, int n, double my );
 static void equipment_mouse( unsigned int wid, SDL_Event* event,
       double x, double y, double w, double h );
-static const char* equipment_canSwap( PilotOutfitSlot *s, Outfit *o, int add );
 static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot );
 static void equipment_sellShip( unsigned int wid, char* str );
 static void equipment_transChangeShip( unsigned int wid, char* str );
@@ -240,7 +239,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       else {
          if ((equipment_outfit != NULL) &&
                (lst[i].slot == equipment_outfit->slot)) {
-            if (equipment_canSwap( NULL, equipment_outfit, 1 ) != NULL)
+            if (pilot_canEquip( equipment_selected, NULL, equipment_outfit, 1 ) != NULL)
                c = &cRed;
             else
                c = &cDConsole;
@@ -363,7 +362,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
          display = NULL;
          if (i==mover) {
             if (lst[i].outfit != NULL) {
-               display = equipment_canSwap( &lst[i], lst[i].outfit, 0 );
+               display = pilot_canEquip( equipment_selected, &lst[i], lst[i].outfit, 0 );
                if (display != NULL)
                   c = &cRed;
                else {
@@ -373,7 +372,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
             }
             else if ((equipment_outfit != NULL) &&
                   (lst->slot == equipment_outfit->slot)) {
-               display = equipment_canSwap( NULL, equipment_outfit, 1 );
+               display = pilot_canEquip( equipment_selected, NULL, equipment_outfit, 1 );
                if (display != NULL)
                   c = &cRed;
                else {
@@ -690,148 +689,6 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
 
 
 /**
- * @brief CHecks to see if can swap equipment.
- *
- *    @return NULL if can swap, or error message if can't.
- */
-static const char* equipment_canSwap( PilotOutfitSlot *s, Outfit *o, int add )
-{
-   Pilot *p;
-
-   /* Get targets. */
-   p = equipment_selected;
-
-   /* Just in case. */
-   if ((p==NULL) || (o==NULL))
-      return "Nothing selected.";
-
-   /* Adding outfit. */
-   if (add) {
-      if ((outfit_cpu(o) > 0) && (p->cpu < outfit_cpu(o)))
-         return "Insufficient CPU";
-
-      /* Can't add more then one afterburner. */
-      if (outfit_isAfterburner(o) &&
-            (p->afterburner != NULL))
-         return "Already have an afterburner";
-
-      /* Must not drive some things negative. */
-      if (outfit_isMod(o)) {
-         /*
-          * Movement.
-          */
-         if (((o->u.mod.thrust + o->u.mod.thrust_rel * p->ship->thrust) < 0) &&
-               (fabs(o->u.mod.thrust + o->u.mod.thrust_rel * p->ship->thrust) > p->thrust))
-            return "Insufficient thrust";
-         if (((o->u.mod.speed + o->u.mod.speed_rel * p->ship->speed) < 0) &&
-               (fabs(o->u.mod.speed + o->u.mod.speed_rel * p->ship->speed) > p->speed))
-            return "Insufficient speed";
-         if (((o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn) < 0) &&
-               (fabs(o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn) > p->turn))
-            return "Insufficient turn";
-
-         /*
-          * Health.
-          */
-         /* Max. */
-         if ((o->u.mod.armour < 0) &&
-               (fabs(o->u.mod.armour) > p->armour_max))
-            return "Insufficient armour";
-         if ((o->u.mod.shield < 0) &&
-               (fabs(o->u.mod.shield) > p->shield_max))
-            return "Insufficient shield";
-         if ((o->u.mod.energy < 0) &&
-               (fabs(o->u.mod.energy) > p->armour_max))
-            return "Insufficient energy";
-         /* Regen. */
-         if ((o->u.mod.armour_regen < 0) &&
-               (fabs(o->u.mod.armour_regen) > p->armour_regen))
-            return "Insufficient energy regeneration";
-         if ((o->u.mod.shield_regen < 0) &&
-               (fabs(o->u.mod.shield_regen) > p->shield_regen))
-            return "Insufficient shield regeneration";
-         if ((o->u.mod.energy_regen < 0) &&
-               (fabs(o->u.mod.energy_regen) > p->energy_regen))
-            return "Insufficient energy regeneration";
-
-         /* 
-          * Misc.
-          */
-         if ((o->u.mod.fuel < 0) &&
-               (fabs(o->u.mod.fuel) > p->fuel_max))
-            return "Insufficient fuel";
-         if ((o->u.mod.cargo < 0) &&
-               (fabs(o->u.mod.cargo) > p->cargo_free))
-            return "Insufficient cargo space";
-      }
-   }
-   /* Removing outfit. */
-   else {
-      if ((outfit_cpu(o) < 0) && (p->cpu < fabs(outfit_cpu(o))))
-         return "Lower CPU usage first";
-
-      /* Must not drive some things negative. */
-      if (outfit_isMod(o)) {
-         /*
-          * Movement.
-          */
-         if (((o->u.mod.thrust + o->u.mod.thrust_rel * p->ship->thrust) > 0) &&
-               (o->u.mod.thrust + o->u.mod.thrust_rel * p->ship->thrust > p->thrust))
-            return "Increase thrust first";
-         if (((o->u.mod.speed + o->u.mod.speed_rel * p->ship->speed) > 0) &&
-               (o->u.mod.speed + o->u.mod.speed_rel * p->ship->speed > p->speed))
-            return "Increase speed first";
-         if (((o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn) > 0) &&
-               (o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn > p->turn))
-            return "Increase turn first";
-
-         /*
-          * Health.
-          */
-         /* Max. */
-         if ((o->u.mod.armour > 0) &&
-               (o->u.mod.armour > p->armour_max))
-            return "Increase armour first";
-         if ((o->u.mod.shield > 0) &&
-               (o->u.mod.shield > p->shield_max))
-            return "Increase shield first";
-         if ((o->u.mod.energy > 0) &&
-               (o->u.mod.energy > p->energy_max))
-            return "Increase energy first";
-         /* Regen. */
-         if ((o->u.mod.armour_regen > 0) &&
-               (o->u.mod.armour_regen > p->armour_regen))
-            return "Lower energy usage first";
-         if ((o->u.mod.shield_regen > 0) &&
-               (o->u.mod.shield_regen > p->shield_regen))
-            return "Lower shield usage first";
-         if ((o->u.mod.energy_regen > 0) &&
-               (o->u.mod.energy_regen > p->energy_regen))
-            return "Lower energy usage first";
-
-         /* 
-          * Misc.
-          */
-         if ((o->u.mod.fuel > 0) &&
-               (o->u.mod.fuel > p->fuel_max))
-            return "Increase fuel first";
-         if ((o->u.mod.cargo > 0) &&
-               (o->u.mod.cargo > p->cargo_free))
-            return "Increase free cargo space first";
-
-      }
-      else if (outfit_isFighterBay(o)) {
-         if (s->u.ammo.deployed > 0)
-            return "Recall the fighters first";
-      }
-   }
-
-   /* Can equip. */
-   return NULL;
-}
-
-
-/**
  * @brief Swaps an equipment slot.
  */
 static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
@@ -850,7 +707,7 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
       o = slot->outfit;
 
       /* Must be able to remove. */
-      if (equipment_canSwap( slot, o, 0 ) != NULL)
+      if (pilot_canEquip( equipment_selected, slot, o, 0 ) != NULL)
          return 0;
 
       /* Remove ammo first. */
@@ -882,7 +739,7 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
          return 0;
 
       /* Must be able to add. */
-      if (equipment_canSwap( NULL, o, 1 ) != NULL)
+      if (pilot_canEquip( equipment_selected, NULL, o, 1 ) != NULL)
          return 0;
 
       /* Add outfit to ship. */

@@ -2917,7 +2917,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
       /* Remove all outfits. */
       for (i=0; i<ship->noutfits; i++) {
          o = ship->outfits[i]->outfit;
-         ret = pilot_rmOutfit( ship, ship->outfits[i] );
+         ret = pilot_rmOutfitRaw( ship, ship->outfits[i] );
          if (ret==0)
             player_addOutfit( o, 1 );
       }
