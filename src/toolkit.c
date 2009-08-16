@@ -1856,10 +1856,13 @@ static void toolkit_purgeDead (void)
  */
 void toolkit_update (void)
 {
+   int i;
    unsigned int t;
    Window *wdw;
    Widget *wgt;
    char buf[2];
+   SDL_Event event;
+   int ret;
 
    /* Clean up the dead if needed. */
    if (!dialogue_isOpen()) { /* Hack, since dialogues use secondary loop. */
@@ -1892,12 +1895,33 @@ void toolkit_update (void)
 
    /* Check to see what it affects. */
    if (windows != NULL) {
+      /* Get the window. */
       wdw = toolkit_getActiveWindow();
       if (wdw == NULL)
          return;
+
+
+      /* See if widget needs event. */
+      for (i=0; i<wdw->nwidgets; i++) {
+         wgt = &wdw->widgets[i]; /* For realloc. */
+         if (wgt_isFlag( wgt, WGT_FLAG_RAWINPUT )) {
+            if (wgt->rawevent != NULL) {
+               event.type           = SDL_KEYDOWN;
+               event.key.state      = SDL_PRESSED;
+               event.key.keysym.sym = input_key;
+               event.key.keysym.mod = 0;
+               ret = wgt->rawevent( wgt, &event );
+               if (ret != 0)
+                  return;
+            }
+         }
+      }
+
+      /* Handle the focused widget. */
       wgt = toolkit_getFocus( wdw );
-      if ((wgt != NULL) && (wgt->keyevent != NULL))
+      if ((wgt != NULL) && (wgt->keyevent != NULL)) {
          wgt->keyevent( wgt, input_key, 0 );
+      }
       if ((input_text != 0) && (wgt != NULL) && (wgt->textevent != NULL)) {
          buf[0] = input_text;
          buf[1] = '\0';
