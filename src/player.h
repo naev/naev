@@ -165,6 +165,7 @@ void player_targetNext( int mode );
 void player_targetPrev( int mode );
 void player_targetNearest (void);
 void player_targetEscort( int prev );
+void player_targetClear (void);
 void player_secondaryNext (void);
 void player_secondaryPrev (void);
 void player_targetPlanet (void);

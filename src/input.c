@@ -54,6 +54,7 @@ const char *keybindNames[] = {
    /* Targetting. */
    "target_next", "target_prev", "target_nearest",
    "target_nextHostile", "target_prevHostile", "target_hostile",
+   "target_clear",
    /* Fighting. */
    "primary", "face", "board", "safety",
    /* Weapon selection. */
@@ -89,6 +90,7 @@ const char *keybindDescription[] = {
    "Cycles through hostile ship targets.",
    "Cycles backwards through hostile ship targets.",
    "Targets the nearest hostile ship.",
+   "Clears current target.",
    /* Fighting. */
    "Fires your primary weapons.",
    "Faces your target (ship target if you have one, otherwise your planet target).",
@@ -181,6 +183,7 @@ void input_setDefault (void)
    input_setKeybind( "target_nextHostile", KEYBIND_KEYBOARD, SDLK_r, KMOD_LCTRL );
    input_setKeybind( "target_prevHostile", KEYBIND_NULL, SDLK_UNKNOWN, KMOD_NONE );
    input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, KMOD_NONE );
+   input_setKeybind( "target_clear", KEYBIND_KEYBOARD, SDLK_BACKSPACE, KMOD_ALL );
    /* Combat. */
    input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, KMOD_ALL );
    input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, KMOD_ALL );
@@ -617,6 +620,8 @@ static void input_key( int keynum, double value, double kabs )
       if (value==KEY_PRESS) player_targetPrev(1);
    } else if (INGAME() && NODEAD() && KEY("target_hostile")) {
       if (value==KEY_PRESS) player_targetHostile();
+   } else if (INGAME() && NODEAD() && KEY("target_clear")) {
+      if (value==KEY_PRESS) player_targetClear();
    /* face the target */
    } else if (KEY("face")) {
       if (value==KEY_PRESS) { 

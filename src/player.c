@@ -1624,6 +1624,15 @@ void player_targetPrev( int mode )
 
 
 /**
+ * @brief Clearcs the player's ship target.
+ */
+void player_targetClear (void)
+{
+   player->target = PLAYER_ID;
+}
+
+
+/**
  * @brief Targets the pilot.
  *
  *    @param prev 1 if is cycling backwards.
