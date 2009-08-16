@@ -139,7 +139,7 @@ void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
  */
 Widget* window_newWidget( Window* w, const char *name )
 {
-   Widget *wgt, *wlast;
+   Widget *wgt, *wlast, *wtmp;
 
    /* Try to find one with the same name first. */
    wlast = NULL;
@@ -158,6 +158,12 @@ Widget* window_newWidget( Window* w, const char *name )
          return NULL;
       }
 
+      /* Relink. */
+      if (wlast==NULL)
+         w->widgets  = wgt->next;
+      else
+         wlast->next = wgt->next;
+
       /* Prepare and return this widget. */
       widget_cleanup(wgt);
       break;
@@ -167,12 +173,6 @@ Widget* window_newWidget( Window* w, const char *name )
    if (wgt == NULL)
       wgt = malloc( sizeof(Widget) );
 
-   /* Set up. */
-   if (wlast == NULL)
-      w->widgets  = wgt;
-   else
-      wlast->next = wgt;
-
    /* Sane defaults. */
    memset( wgt, 0, sizeof(Widget) );
    wgt->type   = WIDGET_NULL;
@@ -180,6 +180,15 @@ Widget* window_newWidget( Window* w, const char *name )
    wgt->wdw    = w->id;
    wgt->name   = strdup(name);
    wgt->id     = ++w->idgen;
+
+   /* Set up. */
+   wlast = NULL;
+   for (wtmp=w->widgets; wtmp!=NULL; wtmp=wtmp->next)
+      wlast = wtmp;
+   if (wlast == NULL)
+      w->widgets  = wgt;
+   else
+      wlast->next = wgt;
 
    return wgt;
 }
@@ -653,6 +662,7 @@ static void window_kill( Window *wdw )
  *
  *    @param wid Window to check widget in.
  *    @param wgtname Name of the widget to check;
+ *    @return 1 if the widget exists.
  */
 int widget_exists( const unsigned int wid, const char* wgtname )
 {
@@ -662,7 +672,7 @@ int widget_exists( const unsigned int wid, const char* wgtname )
    /* Get window. */
    if (w==NULL) {
       WARN("window '%d' does not exist", wid);
-      return -1;
+      return 0;
    }
 
    /* Check for widget. */
@@ -1324,6 +1334,8 @@ void window_render( Window *w )
     */
    if (w->focus != -1) {
       wgt = toolkit_getFocus( w );
+      if (wgt == NULL)
+         return;
       x  += wgt->x;
       y  += wgt->y;
       wid = wgt->w;
@@ -1794,7 +1806,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 static void toolkit_purgeDead (void)
 {
    Window *wdw, *wlast, *wkill;
-   Widget *wgt, *wgtlast;
+   Widget *wgt, *wgtlast, *wgtkill;
 
    /* Only clean up if necessary. */
    if (!window_dead)
@@ -1806,7 +1818,7 @@ static void toolkit_purgeDead (void)
 
    /* Destroy what is needed. */
    wlast = NULL;
-   wdw = windows;
+   wdw   = windows;
    while (wdw != NULL) {
       if (window_isFlag( wdw, WINDOW_KILL )) {
          /* Save target. */
@@ -1823,22 +1835,27 @@ static void toolkit_purgeDead (void)
       }
       else {
          wgtlast = NULL;
-         wgt    = wdw->widgets;
+         wgt     = wdw->widgets;
          while (wgt != NULL) {
             if (wgt_isFlag( wgt, WGT_FLAG_KILL )) {
-               if (wgtlast == NULL) {
+               /* Save target. */
+               wgtkill = wgt;
+               /* Reattach linked list. */
+               if (wgtlast == NULL)
                   wdw->widgets  = wgt->next;
-                  wgt           = wdw->widgets;
-               }
-               else {
+               else
                   wgtlast->next = wgt->next;
-                  wgt           = wgtlast;
-               }
+               wgt = wgtlast;
+               /* Kill target. */
+               wgtkill->next = NULL;
+               widget_kill( wgtkill );
             }
-            else {
-               wgtlast  = wgt;
-               wgt      = wgt->next;
-            }
+            /* Save position. */
+            wgtlast = wgt;
+            if (wgt == NULL)
+               wgt = wdw->widgets;
+            else
+               wgt = wgt->next;
          }
       }
       /* Save position. */
