@@ -79,6 +79,10 @@ void player_board (void)
       player_message("You are going too fast to board the ship.");
       return;
    }
+   else if (pilot_isFlag(p,PILOT_NOBOARD)) {
+      player_message("Target ship can not be boarded.");
+      return;
+   }
    else if (pilot_isFlag(p,PILOT_BOARDED)) {
       player_message("Your target cannot be boarded again.");
       return;

@@ -64,6 +64,8 @@ static int pilotL_disable( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
 static int pilotL_rmOutfit( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
+static int pilotL_setHealth( lua_State *L );
+static int pilotL_setNoboard( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    { "player", pilot_getPlayer },
    { "add", pilot_addFleet },
@@ -86,6 +88,8 @@ static const luaL_reg pilotL_methods[] = {
    { "addOutfit", pilotL_addOutfit },
    { "rmOutfit", pilotL_rmOutfit },
    { "changeAI", pilotL_changeAI },
+   { "setHealth", pilotL_setHealth },
+   { "setNoboard", pilotL_setNoboard },
    {0,0}
 }; /**< Pilot metatable methods. */
 
@@ -1062,4 +1066,83 @@ static int pilotL_changeAI( lua_State *L )
    lua_pushboolean(L, ret);
    return 1;
 }
+
+
+/**
+ * @brief Sets the health of a pilot.
+ *
+ * @usage p:setHealth( 100, 100 ) -- Sets pilot to full health
+ * @usage p:setHealth(  70,   0 ) -- Sets pilot to 70% shield
+ *
+ *    @luaparam armour Value to set armour to, should be double from 0-100 (in percent).
+ *    @luaparam shield Value to set shield to, should be double from 0-100 (in percent).
+ * @luafunc setHealth( armour, shield )
+ */
+static int pilotL_setHealth( lua_State *L )
+{
+   LuaPilot *lp;
+   Pilot *p;
+   double a, s;
+
+   /* Get the pilot. */
+   lp = luaL_checkpilot(L,1);
+   p  = pilot_get(lp->pilot);
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   /* Handle parameters. */
+   a  = luaL_checknumber(L, 2);
+   s  = luaL_checknumber(L, 3);
+   a /= 100.;
+   s /= 100.;
+
+   /* Set health. */
+   p->armour = a * p->armour_max;
+   p->shield = s * p->shield_max;
+
+   /* Undisable if was disabled. */
+   pilot_rmFlag( p, PILOT_DISABLED );
+
+   return 0;
+}
+
+
+/**
+ * @brief Sets the ability to board the pilot.
+ *
+ * @usage p:setNoboard( true ) -- Pilot can not be boarded by anyone
+ *
+ *    @luaparam noboard If true it disallows boarding of the pilot, otherwise
+ *              it allows boarding which is the default.
+ * @luafunc setNoboard( noboard )
+ */
+static int pilotL_setNoboard( lua_State *L )
+{
+   LuaPilot *lp;
+   Pilot *p;
+   int disable;
+
+   /* Get the pilot. */
+   lp = luaL_checkpilot(L,1);
+   p  = pilot_get(lp->pilot);
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   /* Handle parameters. */
+   disable = !lua_toboolean(L, 2);
+
+   /* See if should mark as boarded. */
+   if (disable)
+      pilot_setFlag(p, PILOT_NOBOARD);
+   else
+      pilot_rmFlag(p, PILOT_NOBOARD);
+
+   return 0;
+}
+
+
 

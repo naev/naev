@@ -73,11 +73,12 @@
 #define PILOT_HYPERSPACE   (1<<17) /**< Pilot is in hyperspace. */
 #define PILOT_HYP_END      (1<<18) /**< Pilot is exiting hyperspace. */
 #define PILOT_BOARDED      (1<<19) /**< Pilot has been boarded already. */
-#define PILOT_BOARDING     (1<<20) /**< Pilot is currently boarding it's target. */
-#define PILOT_BRIBED       (1<<21) /**< Pilot has been bribed already. */
-#define PILOT_DISTRESSED   (1<<22) /**< Pilot has distressed once already. */
-#define PILOT_REFUELING    (1<<23) /**< Pilot is trying to refueling. */
-#define PILOT_REFUELBOARDING (1<<24) /**< Pilot is actively refueling. */
+#define PILOT_NOBOARD      (1<<20) /**< Pilot can't be boarded. */
+#define PILOT_BOARDING     (1<<21) /**< Pilot is currently boarding it's target. */
+#define PILOT_BRIBED       (1<<22) /**< Pilot has been bribed already. */
+#define PILOT_DISTRESSED   (1<<23) /**< Pilot has distressed once already. */
+#define PILOT_REFUELING    (1<<24) /**< Pilot is trying to refueling. */
+#define PILOT_REFUELBOARDING (1<<25) /**< Pilot is actively refueling. */
 #define PILOT_DISABLED     (1<<26) /**< Pilot is disabled. */
 #define PILOT_DEAD         (1<<27) /**< Pilot is in it's dying throes */
 #define PILOT_DEATH_SOUND  (1<<28) /**< Pilot just did death explosion. */
