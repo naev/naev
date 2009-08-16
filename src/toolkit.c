@@ -1624,6 +1624,10 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt, int i,
          else
             inbounds = 1; /* Scrolling is always inbounds. */
 
+         /* If always gets the event. */
+         if (wgt_isFlag( wgt, WGT_FLAG_ALWAYSMMOVE ))
+            inbounds = 1;
+
          /* Try to give the event to the widget. */
          if (inbounds && (wgt->mmoveevent != NULL))
             (*wgt->mmoveevent)( wgt, x, y, rx, ry );

@@ -12,17 +12,23 @@
 #include "tk/toolkit_priv.h"
 
 
+/* Render. */
 static void iar_render( Widget* iar, double bx, double by );
 static void iar_renderOverlay( Widget* iar, double bx, double by );
+/* Key. */
 static int iar_key( Widget* iar, SDLKey key, SDLMod mod );
+/* Mouse. */
 static int iar_mclick( Widget* iar, int button, int x, int y );
 static int iar_mmove( Widget* iar, int x, int y, int rx, int ry );
-static void iar_cleanup( Widget* iar );
+/* Focus. */
 static int iar_focusImage( Widget* iar, double bx, double by );
 static void iar_focus( Widget* iar, double bx, double by );
 static void iar_scroll( Widget* iar, int direction );
 static void iar_centerSelected( Widget *iar );
+/* Misc. */
 static Widget *iar_getWidget( const unsigned int wid, const char *name );
+/* Clean up. */
+static void iar_cleanup( Widget* iar );
 
 
 /**
@@ -70,6 +76,7 @@ void window_addImageArray( const unsigned int wid,
    wgt->keyevent           = iar_key;
    wgt->mclickevent        = iar_mclick;
    wgt->mmoveevent         = iar_mmove;
+   wgt_setFlag(wgt, WGT_FLAG_ALWAYSMMOVE);
    wgt->dat.iar.images     = tex;
    wgt->dat.iar.captions   = caption;
    wgt->dat.iar.nelements  = nelem;
@@ -349,6 +356,7 @@ static int iar_mclick( Widget* iar, int button, int x, int y )
 }
 
 
+
 /**
  * @brief Handles mouse movement for an image array.
  *
@@ -382,7 +390,9 @@ static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
       return 1;
    }
    else {
-      iar->dat.iar.alt = iar_focusImage( iar, x, y );
+      if ((x < 0) || (x >= iar->w) || (y < 0) || (y >= iar->h))
+         iar->dat.iar.alt  = -1;
+      iar->dat.iar.alt  = iar_focusImage( iar, x, y );
       iar->dat.iar.altx = x;
       iar->dat.iar.alty = y;
    }
