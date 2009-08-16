@@ -1615,6 +1615,8 @@ void outfit_free (void)
          free(o->u.fig.ship);
 
       /* strings */
+      if (o->typename)
+         free(o->typename);
       if (o->description)
          free(o->description);
       if (o->desc_short)

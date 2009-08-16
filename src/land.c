@@ -434,8 +434,8 @@ static void outfits_updateQuantities( unsigned int wid )
       }
       else
          quantity[i] = NULL;
-         /* FIXME. Also, quantity text is hard to read on a handful of outfits. I suggest a drop shadow by first drawing text +2 X/Y from where it ought to be, in Grey20 or so. Applicable to equipment tab as well. */
    }
+   free(outfits);
    toolkit_setImageArrayQuantity( wid, "iarOutfits", quantity );
 }
 /**
