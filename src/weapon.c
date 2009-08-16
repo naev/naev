@@ -992,23 +992,11 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    WeaponLayer spfx_layer;
    int s;
 
-   /* Choose spfx. */
-   if (p->shield > 0.)
-      spfx = outfit_spfxShield(w->outfit);
-   else
-      spfx = outfit_spfxArmour(w->outfit);
-
-   /* Get the layer. */
-   spfx_layer = (p==player) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
-
    /* Get general details. */
    parent = pilot_get(w->parent);
    damage = w->strength * outfit_damage(w->outfit);
    dtype  = outfit_damageType(w->outfit);
 
-   /* Add sprite, layer depends on whether player shot or not. */
-   spfx_add( spfx, pos->x, pos->y,
-         VX(p->solid->vel), VY(p->solid->vel), spfx_layer );
    /* Play sound if they have it. */
    s = outfit_soundHit(w->outfit);
    if (s != -1)
@@ -1020,6 +1008,17 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
 
    /* Have pilot take damage and get real damage done. */
    damage = pilot_hit( p, w->solid, w->parent, dtype, damage );
+
+   /* Get the layer. */
+   spfx_layer = (p==player) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
+   /* Choose spfx. */
+   if (p->shield > 0.)
+      spfx = outfit_spfxShield(w->outfit);
+   else
+      spfx = outfit_spfxArmour(w->outfit);
+   /* Add sprite, layer depends on whether player shot or not. */
+   spfx_add( spfx, pos->x, pos->y,
+         VX(p->solid->vel), VY(p->solid->vel), spfx_layer );
 
    /* Inform AI that it's been hit. */
    weapon_hitAI( p, parent, damage );
