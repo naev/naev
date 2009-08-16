@@ -1676,7 +1676,7 @@ static void land_createMainTab( unsigned int wid )
     * Checkboxes.
     */
    window_addCheckbox( wid, -20, 20 + 2*(BUTTON_HEIGHT + 20) + 40,
-         250, 20, "chkRefuel", NULL,
+         250, 20, "chkRefuel", "Automatic refuel",
          land_toggleRefuel, conf.autorefuel );
    land_toggleRefuel( wid, "chkRefuel" );
 }
@@ -1688,8 +1688,6 @@ static void land_createMainTab( unsigned int wid )
 static void land_toggleRefuel( unsigned int wid, char *name )
 {
    conf.autorefuel = window_checkboxState( wid, name );
-   window_checkboxCaption( wid, name, (conf.autorefuel) ?
-         "Automatic refuel enabled" : "Automatic refuel disabled" );
 }
 
 
