@@ -873,12 +873,12 @@ void equipment_genLists( unsigned int wid )
                p = snprintf( alt[i], l,
                      "%s\n"
                      "\n"
-                     "%s\n",
+                     "%s",
                      o->name,
                      o->desc_short );
                if (o->mass > 0.)
                   p += snprintf( &alt[i][p], l-p,
-                        "%.0f Tons",
+                        "\n%.0f Tons",
                         o->mass );
             }
 
