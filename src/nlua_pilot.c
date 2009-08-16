@@ -890,7 +890,7 @@ static int pilotL_disable( lua_State *L )
 
    /* Disable the pilot. */
    p->shield = 0.;
-   p->armour = PILOT_DISABLED_ARMOR * p->armour_max;
+   p->armour = PILOT_DISABLED_ARMOR * p->ship->armour;
    pilot_setFlag( p, PILOT_DISABLED );
 
    return 0;
@@ -1070,6 +1070,8 @@ static int pilotL_changeAI( lua_State *L )
 
 /**
  * @brief Sets the health of a pilot.
+ *
+ * This recovers the pilot's disabled state, although he may become disabled afterwards.
  *
  * @usage p:setHealth( 100, 100 ) -- Sets pilot to full health
  * @usage p:setHealth(  70,   0 ) -- Sets pilot to 70% shield
