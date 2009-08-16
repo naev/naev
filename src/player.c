@@ -2567,6 +2567,10 @@ static int player_parse( xmlNodePtr parent )
 
    /* set player in system */
    pnt = planet_get( planet );
+   if (pnt == NULL) {
+      WARN("Planet '%s' not found, starting player on random planet.", planet);
+      pnt = planet_get( space_getRndPlanet() );
+   }
    sw = pnt->gfx_space->sw;
    sh = pnt->gfx_space->sh;
    player_warp( pnt->pos.x + RNG(-sw/2,sw/2),
