@@ -746,6 +746,7 @@ static void shipyard_open( unsigned int wid )
          "Class:\n"
          "Fabricator:\n"
          "\n"
+         "CPU:\n"
          "Mass:\n"
          "Jump time:\n"
          "High slots:\n"
@@ -818,6 +819,7 @@ static void shipyard_update( unsigned int wid, char* str )
             "NA\n"
             "NA\n"
             "NA\n"
+            "NA\n"
             "\n"
             "NA\n"
             "NA\n"
@@ -840,6 +842,7 @@ static void shipyard_update( unsigned int wid, char* str )
          "%s\n"
          "%s\n"
          "\n"
+         "%.0f Teraflops\n"
          "%.1f Tons\n"
          "%.1f STU average\n"
          "%d\n"
@@ -852,6 +855,7 @@ static void shipyard_update( unsigned int wid, char* str )
          ship->name,
          ship_class(ship),
          ship->fabricator,
+         ship->cpu,
          ship->mass,
          pow( ship->mass, 1./2.5 ) / 5., /**< @todo make this more portable. */
          ship->outfit_nhigh,
