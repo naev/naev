@@ -433,8 +433,10 @@ int player_newShip( Ship* ship, double px, double py,
 static void player_newShipMake( char* name )
 {
    Vector2d vp, vv;
+   unsigned int flags;
 
    /* store the current ship if it exists */
+   flags = PILOT_PLAYER;
    if (player != NULL) {
       player_stack = realloc(player_stack, sizeof(PlayerShip_t)*(player_nstack+1));
       player_stack[player_nstack].p = pilot_copy( player );
@@ -443,6 +445,9 @@ static void player_newShipMake( char* name )
 
       player_credits = player->credits;
       pilot_destroy( player );
+
+      /* No outfits. */
+      flags |= PILOT_NO_OUTFITS;
    }
 
    /* in case we're respawning */
@@ -454,7 +459,7 @@ static void player_newShipMake( char* name )
 
    /* create the player */
    pilot_create( player_ship, name, faction_get("Player"), NULL,
-         player_dir,  &vp, &vv, PILOT_PLAYER );
+         player_dir,  &vp, &vv, flags );
    gl_cameraBind( &player->solid->pos ); /* set opengl camera */
 
    /* copy cargo over. */
