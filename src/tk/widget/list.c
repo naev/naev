@@ -260,6 +260,9 @@ static int lst_mmove( Widget* lst, int x, int y, int rx, int ry )
 
    /* Handle the scrolling if scrolling. */
    if (lst->status == WIDGET_STATUS_SCROLLING) {
+      /* Make sure Y inbounds. */
+      y = CLAMP( 0, lst->h, y );
+
       h = lst->h / (2 + gl_defFont.h) - 1;
 
       /* Save previous position. */
@@ -268,7 +271,7 @@ static int lst_mmove( Widget* lst, int x, int y, int rx, int ry )
       /* Find absolute position. */
       p  = (lst->h - y) / lst->h * (lst->dat.lst.height - lst->h);
       p /= (2 + gl_defFont.h);
-      lst->dat.lst.pos = (int)round(p);
+      lst->dat.lst.pos = (int)ceil(p);
 
       /* Does boundry checks. */
       lst->dat.lst.selected = CLAMP( lst->dat.lst.pos,
