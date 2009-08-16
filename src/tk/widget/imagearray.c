@@ -21,6 +21,7 @@ static void iar_cleanup( Widget* iar );
 static int iar_focusImage( Widget* iar, double bx, double by );
 static void iar_focus( Widget* iar, double bx, double by );
 static void iar_scroll( Widget* iar, int direction );
+static void iar_centerSelected( Widget *iar );
 static Widget *iar_getWidget( const unsigned int wid, const char *name );
 
 
@@ -253,11 +254,6 @@ static void iar_renderOverlay( Widget* iar, double bx, double by )
 static int iar_key( Widget* iar, SDLKey key, SDLMod mod )
 {
    (void) mod;
-   int x,y;
-   double h;
-   double hmax;
-   int yscreen;
-   double ypos;
 
    switch (key) {
       case SDLK_UP:
@@ -284,13 +280,30 @@ static int iar_key( Widget* iar, SDLKey key, SDLMod mod )
    if (iar->dat.iar.fptr)
       iar->dat.iar.fptr( iar->wdw, iar->name);
 
+   iar_centerSelected( iar );
+   return 1;
+}
+
+
+/**
+ * @brief Centers on the selection if needed.
+ *
+ *    @param iar Widget to center on selection.
+ */
+static void iar_centerSelected( Widget *iar )
+{
+   int x,y;
+   double h;
+   double hmax;
+   int yscreen;
+   double ypos;
+
    /* Get dimensions. */
    iar_getDim( iar, NULL, &h );
 
    /* Ignore fancy stuff if smaller then height. */
-   if (h * iar->dat.iar.yelem < iar->h) {
-      return 1;
-   }
+   if (h * iar->dat.iar.yelem < iar->h)
+      return;
 
    /* Move if needed. */
    hmax = h * (iar->dat.iar.yelem - (int)(iar->h / h));
@@ -305,8 +318,6 @@ static int iar_key( Widget* iar, SDLKey key, SDLMod mod )
    if (ypos+2.*h > iar->dat.iar.pos + iar->h)
       iar->dat.iar.pos += (ypos+2.*h) - (iar->dat.iar.pos + iar->h);
    iar->dat.iar.pos = CLAMP( 0., hmax, iar->dat.iar.pos );
-
-   return 1;
 }
 
 
@@ -623,6 +634,8 @@ int toolkit_setImageArrayPos( const unsigned int wid, const char* name, int pos 
    /* Call callback - dangerous if called from within callback. */
    if (wgt->dat.iar.fptr != NULL)
       wgt->dat.iar.fptr( wgt->wdw, wgt->name );
+
+   iar_centerSelected( wgt );
 
    return 0;
 }
