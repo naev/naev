@@ -1716,6 +1716,7 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
          switch (i) {
             case LAND_WINDOW_OUTFITS:
                outfits_update( w, NULL );
+               outfits_updateQuantities( w );
                break;
             case LAND_WINDOW_SHIPYARD:
                shipyard_update( w, NULL );
