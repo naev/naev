@@ -47,6 +47,9 @@ extern glColour cDarkBlue;
 extern glColour cBlue;
 extern glColour cLightBlue;
 extern glColour cPurple;
+extern glColour cBrown;
+extern glColour cGold;
+extern glColour cSilver;
 
 /*
  * game specific
@@ -73,6 +76,9 @@ extern glColour cShield;
 extern glColour cArmour;
 extern glColour cEnergy;
 extern glColour cFuel;
+
+
+glColour* col_fromName( const char* name );
 
 
 /*
