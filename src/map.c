@@ -498,6 +498,53 @@ static void map_drawMarker( double x, double y, double r,
    gl_vboDeactivate();
 }
 
+/**
+ * @brief Generates a texture to represent factions
+ *
+ * @param radius radius of the disk
+ * @return the texture
+ */
+static glTexture *gl_genFactionDisk( int radius )
+{
+   int i, j, k, n, m;
+   SDL_Surface *sur;
+   double a;
+
+   /* Calculate parameters. */
+   const int w = 2 * radius + 1;
+   const int h = 2 * radius + 1;
+
+   /* Create the surface. */
+   sur = SDL_CreateRGBSurface( SDL_SRCALPHA | SDL_HWSURFACE, w, h, 32, RGBAMASK );
+
+   uint8_t *pixels = sur->pixels;
+   memset(pixels, 0xff, sizeof(uint8_t) * 4 * h * w);
+
+   /* Generate the circle. */
+   SDL_LockSurface( sur );
+
+   /* Draw the circle with filter. */
+   for (i=0; i<h; i++) {
+      for (j=0; j<w; j++) {
+         /* Calculate blur. */
+         int dist = (i - radius) * (i - radius) + (j - radius) * (j - radius);
+         double alpha = 0.;
+
+         if (dist < radius * radius) {
+            a = 1. * dist / (radius * radius);
+            a = (exp(1 / (a + 1) - 0.5) - 1) * 0xFF;
+         }
+
+         /* Set pixel. */
+         pixels[i*sur->pitch + j*4 + 3] = (uint8_t)a;
+      }
+   }
+
+   SDL_UnlockSurface( sur );
+
+   /* Return texture. */
+   return gl_loadImage( sur, OPENGL_TEX_MIPMAPS );
+}
 
 /**
  * @brief Renders the custom map widget.
@@ -523,13 +570,18 @@ static void map_render( double bx, double by, double w, double h )
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
+   /* generates disk */
+   double disk = 50 * map_zoom;
+   glTexture *gl_faction_disk = gl_genFactionDisk(disk);
+
    /* render the star systems */
    for (i=0; i<systems_nstack; i++) {
-      
       sys = system_getIndex( i );
+      int faction = sys->faction;
 
       /* check to make sure system is known or adjacent to known (or marked) */
-      if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED) && !space_sysReachable(sys))
+      if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
+            && !space_sysReachable(sys))
          continue;
 
       /* Draw the system. */
@@ -538,12 +590,22 @@ static void map_render( double bx, double by, double w, double h )
       else if (sys->security >= 0.6) col = &cOrange;
       else if (sys->security >= 0.3) col = &cRed;
       else col = &cDarkRed;
+
       tx = x + sys->pos.x*map_zoom;
       ty = y + sys->pos.y*map_zoom;
+
+      /* draws the disk representing the faction */
+      if (sys->faction != -1)
+         gl_blitTexture(
+               gl_faction_disk,
+               tx - disk, ty - disk, 2. * disk + 1, 2. * disk + 1,
+               0., 0., gl_faction_disk->srw, gl_faction_disk->srw,
+               faction_colour(sys->faction) );
+
       gl_drawCircleInRect( tx, ty, r, bx, by, w, h, col, 0 );
+
       /* If system is known fill it. */
       if (sys_isKnown(sys) && (sys->nplanets > 0)) {
-
          /* Planet colours */
          if (!sys_isKnown(sys)) col = &cInert;
          else if (sys->nplanets==0) col = &cInert;
@@ -562,8 +624,8 @@ static void map_render( double bx, double by, double w, double h )
                &cWhite, sys->name );
       }
 
-
-      if (!sys_isKnown(sys)) continue; /* we don't draw hyperspace lines */
+      if (!sys_isKnown(sys))
+         continue; /* we don't draw hyperspace lines */
 
       /* draw the hyperspace paths */
       glShadeModel(GL_SMOOTH);
@@ -624,8 +686,10 @@ static void map_render( double bx, double by, double w, double h )
          glDrawArrays( GL_LINE_STRIP, 0, 3 );
          gl_vboDeactivate();
       }
-      glShadeModel(GL_FLAT);
+      glShadeModel( GL_FLAT );
    }
+
+   gl_freeTexture( gl_faction_disk );
 
    /* Second pass to put markers. */
    for (i=0; i<systems_nstack; i++) {
