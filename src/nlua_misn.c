@@ -296,7 +296,8 @@ static int misn_setTitle( lua_State *L )
 /**
  * @brief Sets the current mission description.
  *
- * Also sets the mission OSD unless you explicitly force an OSD.
+ * Also sets the mission OSD unless you explicitly force an OSD, however you
+ *  can't specify bullet points or other fancy things like with the real OSD.
  *
  *    @luaparam desc Description to use for mission.
  * @luafunc setDesc( desc )
@@ -697,7 +698,7 @@ static int misn_jetCargo( lua_State *L )
  *
  * @usage misn.osdCreate( "My OSD", {"Element 1", "Element 2"})
  *
- *    @luaparam Title Title to give the OSD.
+ *    @luaparam title Title to give the OSD.
  *    @luaparam list List of elements to put in the OSD.
  * @luafunc osdCreate( title, list )
  */
