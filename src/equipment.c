@@ -196,7 +196,7 @@ void equipment_open( unsigned int wid )
    /* Generate lists. */
    window_addText( wid, 30, -20,
          130, 200, 0, "txtShipTitle", &gl_smallFont, &cBlack, "Available Ships" );
-   window_addText( wid, 30, -40-sw-40-20,
+   window_addText( wid, 30, -40-sh-20,
          130, 200, 0, "txtOutfitTitle", &gl_smallFont, &cBlack, "Available Outfits" );
    equipment_genLists( wid );
 
