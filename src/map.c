@@ -530,15 +530,15 @@ static glTexture *gl_genFactionDisk( int radius )
          double alpha = 0.;
 
          if (dist < radius * radius) {
-            /* Computes alpha with an empirical chosen formula.
+            /* Computes alpha with an empirically chosen formula.
              * This formula accounts for the fact that the eyes
              * has a logarithmic sensitivity to light */
             alpha = 1. * dist / (radius * radius);
             alpha = (exp(1 / (alpha + 1) - 0.5) - 1) * 0xFF;
          }
 
-         /* Set pixel alpha which is the forth byte in the pixel
-          * representation. */
+         /* Sets the pixel alpha which is the forth byte
+          * in the pixel representation. */
          pixels[i*sur->pitch + j*4 + 3] = (uint8_t)alpha;
       }
    }
