@@ -1757,6 +1757,8 @@ static void pilot_refuel( Pilot *p, double dt )
 /**
  * @brief Adds an outfit to the pilot, ignoring CPU or other limits.
  *
+ * @note Does not call pilot_calcStats().
+ *
  *    @param pilot Pilot to add the outfit to.
  *    @param outfit Outfit to add to the pilot.
  *    @param s Slot to add ammo to.
@@ -1790,9 +1792,6 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
       s->u.ammo.deployed = 0; /* Just in case. */
    }
 
-   /* recalculate the stats */
-   pilot_calcStats(pilot);
-
    return 0;
 }
 
@@ -1809,6 +1808,7 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
 int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
 {
    const char *str;
+   int ret;
 
    /* See if slot has space. */
    if (s->outfit != NULL) {
@@ -1828,12 +1828,19 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
       return -1;
    }
 
-   return pilot_addOutfitRaw( pilot, outfit, s );
+   ret = pilot_addOutfitRaw( pilot, outfit, s );
+
+   /* recalculate the stats */
+   pilot_calcStats(pilot);
+
+   return ret;
 }
 
 
 /**
  * @brief Removes an outfit from the pilot without doing any checks.
+ *
+ * @note Does not run pilot_calcStats().
  *
  *    @param pilot Pilot to remove the outfit from.
  *    @param s Slot to remove.
@@ -1853,9 +1860,6 @@ int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s )
    if (pilot->afterburner == s)
       pilot->afterburner = NULL;
 
-   /* recalculate the stats */
-   pilot_calcStats(pilot);
-
    return ret;
 }
 
@@ -1870,6 +1874,7 @@ int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s )
 int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s )
 {
    const char *str;
+   int ret;
 
    str = pilot_canEquip( pilot, s, s->outfit, 0 );
    if (str != NULL) {
@@ -1878,7 +1883,12 @@ int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s )
       return -1;
    }
 
-   return pilot_rmOutfitRaw( pilot, s );
+   ret = pilot_rmOutfitRaw( pilot, s );
+
+   /* recalculate the stats */
+   pilot_calcStats(pilot);
+
+   return ret;
 }
 
 

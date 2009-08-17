@@ -2735,6 +2735,9 @@ static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSl
             outfit->name, pilot->name);
       player_addOutfit( outfit, 1 );
    }
+
+   /* Update stats. */
+   pilot_calcStats( pilot );
 }
 
 
@@ -2947,6 +2950,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
          if (ret==0)
             player_addOutfit( o, 1 );
       }
+      pilot_calcStats( ship );
    }
 
    /* add it to the stack if it's not what the player is in */

@@ -1004,7 +1004,7 @@ static int pilotL_rmOutfit( lua_State *L )
    /* If outfit is "all", we remove everything. */
    if (strcmp(outfit,"all")==0) {
       for (i=0; i<p->noutfits; i++) {
-         pilot_rmOutfit( p, p->outfits[i] );
+         pilot_rmOutfitRaw( p, p->outfits[i] );
       }
       return 0;
    }

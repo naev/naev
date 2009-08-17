@@ -1149,6 +1149,8 @@ static void equipment_unequipShip( unsigned int wid, char* str )
          player_addOutfit( o, 1 );
    }
 
+   pilot_calcStats( ship );
+
    /* Regenerate list. */
    window_destroyWidget( wid, EQUIPMENT_OUTFITS );
    equipment_genLists( wid );
