@@ -8,6 +8,7 @@
  </faction>
  <faction name="Independent">
   <player>3</player>
+  <colour>purple</colour>
   <allies>
    <ally>Trader</ally>
   </allies>
@@ -19,6 +20,7 @@
  <faction name="Frontier">
   <longname>Frontier Alliance</longname>
   <player>3</player>
+  <colour>yellow</colour>
   <allies>
    <ally>Trader</ally>
   </allies>
@@ -45,6 +47,7 @@
  <faction name="Pirate">
   <longname>Galactic Pirates</longname>
   <player>-20</player>
+  <colour>red</colour>
   <enemies>
    <enemy>Empire</enemy>
    <enemy>Dvaered</enemy>
@@ -59,6 +62,7 @@
  </faction>
  <faction name="Empire">
   <logo>empire</logo>
+  <colour>green</colour>
   <player>1</player>
   <allies>
    <ally>Dvaered</ally>
@@ -76,6 +80,7 @@
  <faction name="Collective">
   <static />
   <player>-100</player>
+  <colour>silver</colour>
   <enemies>
    <enemy>Empire</enemy>
    <enemy>Dvaered</enemy>
@@ -101,6 +106,7 @@
  </faction>
  <faction name="Dvaered">
   <logo>dvaered</logo>
+  <colour>brown</colour>
   <longname>House Dvaered</longname>
   <player>1</player>
   <allies>
@@ -126,6 +132,7 @@
  </faction>
  <faction name="Sirius">
   <logo>sirius</logo>
+  <colour>gold</colour>
   <longname>House Sirius</longname>
   <player>3</player>
   <allies>
@@ -138,6 +145,7 @@
  </faction>
  <faction name="Goddard">
   <logo>goddard</logo>
+  <colour>blue</colour>
   <longname>House Goddard</longname>
   <player>2</player>
   <allies>
@@ -157,6 +165,7 @@
  <faction name="Raider">
   <longname>Galactic Pirates</longname>
   <player>-20</player>
+  <colour>red</colour>
   <enemies>
    <enemy>Trader</enemy>
   </enemies>

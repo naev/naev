@@ -55,6 +55,7 @@ typedef struct Faction_ {
 
    /* Graphics. */
    glTexture *logo_small; /**< Small logo. */
+   glColour *colour;
 
    /* Enemies */
    int *enemies; /**< Enemies by ID of the faction. */
@@ -158,6 +159,18 @@ glTexture* faction_logoSmall( int f )
       return NULL;
    }
    return faction_stack[f].logo_small;
+}
+
+
+/**
+ * @brief Gets the colour of the faction
+ *
+ *    @param f Faction to get the colour of.
+ *    @return The faction's colour
+ */
+glColour* faction_colour( int f )
+{
+   return faction_stack[f].colour;
 }
 
 
@@ -560,6 +573,8 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       }
 
       xmlr_strd(node,"longname",temp->longname);
+      if (xml_isNode(node, "colour"))
+         temp->colour = col_fromName(xml_raw(node));
 
       if (xml_isNode(node,"logo")) {
          snprintf( buf, PATH_MAX, FACTION_LOGO_PATH"%s_small.png", xml_get(node));
@@ -573,7 +588,8 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       }
    } while (xml_nextNode(node));
 
-   if (player==0) DEBUG("Faction '%s' missing player tag.", temp->name);
+   if (player==0)
+      DEBUG("Faction '%s' missing player tag.", temp->name);
 
    return 0;
 }
