@@ -250,8 +250,8 @@ static int mission_meetReq( int mission, int faction,
       return 0;
 
    /* Must match planet, system or faction. */
-   if (!((misn->avail.planet && (strcmp(misn->avail.planet,planet)==0)) ||
-         (misn->avail.system && (strcmp(misn->avail.system,sysname)==0)) ||
+   if (!(((misn->avail.planet != NULL) && (strcmp(misn->avail.planet,planet)==0)) ||
+         ((misn->avail.system != NULL) && (strcmp(misn->avail.system,sysname)==0)) ||
          mission_matchFaction(misn,faction)))
       return 0;
 
@@ -553,6 +553,11 @@ static int mission_matchFaction( MissionData* misn, int faction )
 {
    int i;
 
+   /* No faction always accepted. */
+   if (misn->avail.nfactions <= 0)
+      return 1;
+
+   /* Check factions. */
    for (i=0; i<misn->avail.nfactions; i++)
       if (faction == misn->avail.factions[i])
          return 1;
