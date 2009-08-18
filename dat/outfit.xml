@@ -971,13 +971,13 @@
   <general>
    <slot>low</slot>
    <tech>3</tech>
-   <mass>5</mass>
+   <mass>8</mass>
    <price>15000</price>
    <description>The fuel pod allows a ship to store more fuel for hyperspace jumps. Each pod effectively increases a ship's range by a jump. Without these, long-range interstellar trade would slow to a crawl.</description>
    <gfx_store>fuel_pod</gfx_store>
   </general>
   <specific type="modification">
-   <fuel>100</fuel>
+   <fuel>200</fuel>
   </specific>
  </outfit>
  <outfit name="Cargo Pod">
