@@ -566,6 +566,7 @@ static void map_render( double bx, double by, double w, double h )
    StarSystem *sys, *jsys, *hsys;
    glColour* col;
    GLfloat vertex[8*(2+4)];
+   int sw, sh;
 
    /* Parameters. */
    r = round(CLAMP(5., 15., 6.*map_zoom));
@@ -578,7 +579,6 @@ static void map_render( double bx, double by, double w, double h )
    /* render the star systems */
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
-      int faction = sys->faction;
 
       /* check to make sure system is known or adjacent to known (or marked) */
       if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
@@ -597,8 +597,8 @@ static void map_render( double bx, double by, double w, double h )
 
       /* draws the disk representing the faction */
       if (sys->faction != -1) {
-         const int sw = gl_faction_disk->sw;
-         const int sh = gl_faction_disk->sw;
+         sw = gl_faction_disk->sw;
+         sh = gl_faction_disk->sw;
 
          gl_blitTexture(
                gl_faction_disk,
