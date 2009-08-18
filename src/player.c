@@ -420,6 +420,13 @@ int player_newShip( Ship* ship, double px, double py,
    if (ship_name == NULL)
       return -1;
 
+   /* Must not have same name. */
+   if (player_hasShip(ship_name)) {
+      dialogue_msg( "Name collision",
+            "Please do not give the ship the same name as another of your ships.");
+      return -1;
+   }
+
    player_newShipMake(ship_name);
 
    free(ship_name);
@@ -1855,6 +1862,23 @@ void player_ships( char** sships, glTexture** tships )
 int player_nships (void)
 {
    return player_nstack;
+}
+
+
+/**
+ * @brief Sees if player has a ship of a name.
+ *
+ *    @param shipname Nome of the ship to get.
+ *    @return 1 if ship exists.
+ */
+int player_hasShip( char* shipname )
+{
+   int i;
+
+   for (i=0; i < player_nstack; i++)
+      if (strcmp(player_stack[i].p->name, shipname)==0)
+         return 1;
+   return 0;
 }
 
 

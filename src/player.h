@@ -98,6 +98,7 @@ int player_cargoOwned( const char* commodityname );
  */
 void player_ships( char** sships, glTexture** tships );
 int player_nships (void);
+int player_hasShip( char* shipname );
 Pilot* player_getShip( char* shipname );
 char* player_getLoc( char* shipname );
 void player_setLoc( char* shipname, char* loc );
