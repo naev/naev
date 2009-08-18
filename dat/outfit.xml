@@ -267,7 +267,7 @@
    <description>The railgun is a cannon that uses heavy magnetic pulses to accelerate pieces of debris to extremely high velocities. The impact caused by the pieces of debris can tear apart even the strongest ship hulls.</description>
    <gfx_store>railgun</gfx_store>
   </general>
-  <specific type="bolt">
+  <specific type="bolt" secondary="1">
    <cpu>16</cpu>
    <gfx>mass</gfx>
    <sound>mass</sound>
@@ -366,7 +366,7 @@
    <slot>high</slot>
    <tech>13</tech>
    <license>Heavy Weapon License</license>
-   <mass>60</mass>
+   <mass>140</mass>
    <price>745000</price>
    <description>The Ragnarok Beam is one of the most powerful beam class weapons on the market. It's designed for capital ship combat, although its extremely large payload makes it somewhat useful for clearing enemy fighters.</description>
    <gfx_store>ragnarok</gfx_store>
@@ -591,7 +591,7 @@
    <gfx_store>capacitor-g</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>-4</cpu>
+   <cpu>0</cpu>
    <energy>200</energy>
   </specific>
  </outfit>
@@ -600,13 +600,13 @@
    <typename>Power Modifier</typename>
    <slot>low</slot>
    <tech>3</tech>
-   <mass>45</mass>
+   <mass>60</mass>
    <price>120000</price>
    <description>A large battery unit designed to hold 400 MJ of energy. Ideally mounted on medium-to-large vessels.</description>
    <gfx_store>capacitor2-g</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>-12</cpu>
+   <cpu>0</cpu>
    <energy>400</energy>
   </specific>
  </outfit>
@@ -615,13 +615,13 @@
    <typename>Power Modifier</typename>
    <slot>low</slot>
    <tech>5</tech>
-   <mass>135</mass>
+   <mass>240</mass>
    <price>360000</price>
    <description>A massive battery unit designed to hold 800 MJ of energy. Given the mass of this battery, it's advisable to only mount it on capital ships.</description>
    <gfx_store>capacitor4-g</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>-36</cpu>
+   <cpu>0</cpu>
    <energy>800</energy>
   </specific>
  </outfit>
@@ -631,44 +631,44 @@
    <slot>low</slot>
    <tech>5</tech>
    <mass>3</mass>
-   <price>55000</price>
+   <price>25000</price>
    <description>A large panel that generates energy by collecting light and converting it into electricity. This will allow your ship to regenerate its energy supplies more quickly.</description>
    <gfx_store>solar</gfx_store>
   </general>
   <specific type="modification">
-   <energy_regen>100</energy_regen>
+   <energy_regen>60</energy_regen>
   </specific>
  </outfit>
  <outfit name="Reactor Class I">
   <general>
    <typename>Energy Modifier</typename>
    <slot>medium</slot>
-   <tech>9</tech>
-   <mass>12</mass>
+   <tech>10</tech>
+   <mass>14</mass>
    <price>170000</price>
    <gfx_store>reactor_i</gfx_store>
    <description>Adding a complementary reactor to your ship is a great way to get that extra energy boost you need. This does not replace the existing reactor but works alongside it and hooks up directly to the energy flux.</description>
   </general>
   <specific type="modification">
-   <cpu>-10</cpu>
-   <energy>30</energy>
-   <energy_regen>980</energy_regen>
+   <cpu>-5</cpu>
+   <energy>20</energy>
+   <energy_regen>280</energy_regen>
   </specific>
  </outfit>
  <outfit name="Reactor Class II">
   <general>
    <typename>Energy Modifier</typename>
    <slot>medium</slot>
-   <tech>12</tech>
-   <mass>30</mass>
+   <tech>11</tech>
+   <mass>42</mass>
    <price>530000</price>
    <gfx_store>reactor_ii</gfx_store>
    <description>The class II reactor uses a newer fusion technology than the class I, permitting it to have greater energy density. The result is a mid-sized reactor that is best used on ships with moderate energy demands.</description>
   </general>
   <specific type="modification">
-   <cpu>-22</cpu>
-   <energy>80</energy>
-   <energy_regen>2100</energy_regen>
+   <cpu>-10</cpu>
+   <energy>60</energy>
+   <energy_regen>630</energy_regen>
   </specific>
  </outfit>
  <outfit name="Reactor Class III">
@@ -676,15 +676,15 @@
    <typename>Energy Modifier</typename>
    <slot>medium</slot>
    <tech>12</tech>
-   <mass>75</mass>
+   <mass>105</mass>
    <price>970000</price>
    <gfx_store>reactor_iii</gfx_store>
    <description>The immense class III reactor provides enough power for nearly anything. The technology used in this reactor is particularly groundbreaking, with the best energy density of the three reactor classes. The huge size of the class III results in it only fitting comfortably on large vessels, though its energy output would be excessive for anything less.</description>
   </general>
   <specific type="modification">
-   <cpu>-40</cpu>
-   <energy>300</energy>
-   <energy_regen>4040</energy_regen>
+   <cpu>-20</cpu>
+   <energy>180</energy>
+   <energy_regen>1420</energy_regen>
   </specific>
  </outfit>
 <!-- Shield and Armour-Related Outfits -->
@@ -751,7 +751,7 @@
  <outfit name="Shield Booster">
   <general>
    <typename>Shield Energy Modifier</typename>
-   <slot>low</slot>
+   <slot>medium</slot>
    <tech>10</tech>
    <mass>5</mass>
    <price>145000</price>
@@ -815,7 +815,7 @@
  <outfit name="Droid Repair Crew">
   <general>
    <typename>Armour Repair Modifier</typename>
-   <slot>low</slot>
+   <slot>medium</slot>
    <tech>8</tech>
    <mass>3</mass>
    <price>430000</price>
@@ -835,13 +835,13 @@
    <typename>Manoevrability Modifier</typename>
    <slot>low</slot>
    <tech>9</tech>
-   <mass>1</mass>
+   <mass>2</mass>
    <price>125000</price>
    <description>This enhancement routes energy from the ship's energy supplies to the engine, giving the ship an increased thrust. It does not increase the ship's max speed nor turning abilities.</description>
    <gfx_store>reroute</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>-6</cpu>
+   <cpu>0</cpu>
    <thrust>3</thrust>
    <thrust_rel>10</thrust_rel>
    <energy_regen>-50</energy_regen>
@@ -852,13 +852,13 @@
    <typename>Manoevrability Modifier</typename>
    <slot>low</slot>
    <tech>13</tech>
-   <mass>1</mass>
+   <mass>2</mass>
    <price>135000</price>
    <description>By improving your ship's stabilization systems drastically, this modification will allow you to reach higher speeds while still keeping the ship stable.</description>
    <gfx_store>stabilizer</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>-12</cpu>
+   <cpu>-2</cpu>
    <speed>20</speed>
    <speed_rel>5</speed_rel>
    <turn_rel>3</turn_rel>
@@ -870,13 +870,13 @@
    <typename>Manoevrability Modifier</typename>
    <slot>low</slot>
    <tech>13</tech>
-   <mass>1</mass>
+   <mass>4</mass>
    <price>130000</price>
    <description>With the addition of several additional steering thrusters, you can increase your ship's turning rate. A favourite among fighter pilots.</description>
    <gfx_store>thruster</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>-8</cpu>
+   <cpu>0</cpu>
    <turn>5</turn>
    <turn_rel>10</turn_rel>
    <energy_regen>-10</energy_regen>
@@ -886,13 +886,13 @@
   <general>
    <slot>medium</slot>
    <tech>3</tech>
-   <mass>2</mass>
+   <mass>6</mass>
    <price>20000</price>
    <description>Being able to run from your enemies has saved many a pilot, and a generic afterburner will allow you that luxury. Though it may not be as powerful as higher-end alternatives, it makes up for that difference by entering at a much lower price point.</description>
    <gfx_store>afterburner</gfx_store>
   </general>
   <specific type="afterburner">
-   <cpu>3</cpu>
+   <cpu>2</cpu>
    <rumble>0.5</rumble>
    <sound>afterburner</sound>
    <thrust>100</thrust>
@@ -904,13 +904,13 @@
   <general>
    <slot>medium</slot>
    <tech>13</tech>
-   <mass>4</mass>
+   <mass>10</mass>
    <price>95000</price>
    <description>The Hellburner is one of the best afterburners on the market. Through proprietary pressurization ducts, the Hellburner is able to generate far more thrust than generic alternatives, despite using only slightly more energy. A great asset to any pilot who seeks manoeuvrability and speed.</description>
    <gfx_store>afterburner2</gfx_store>
   </general>
   <specific type="afterburner">
-   <cpu>9</cpu>
+   <cpu>6</cpu>
    <rumble>0.9</rumble>
    <sound>afterburner</sound>
    <thrust>185</thrust>
@@ -924,14 +924,14 @@
    <slot>medium</slot>
    <max>1</max>
    <tech>8</tech>
-   <mass>16</mass>
-   <price>110000</price>
+   <mass>15</mass>
+   <price>80000</price>
    <gfx_store>cpu_i</gfx_store>
-   <description>The Advanced Nanosystems APU I is an obsolete design intended for light vessels It is relatively light weight, though it's less power efficient than its successors.</description>
+   <description>The Advanced Nanosystems APU I is an obsolete design intended for light vessels. It is relatively light weight, though it's less power efficient than its successors.</description>
   </general>
   <specific type="modification">
-   <cpu>16</cpu>
-   <energy_regen>-250</energy_regen>
+   <cpu>10</cpu>
+   <energy_regen>-200</energy_regen>
   </specific>
  </outfit>
  <outfit name="Auxiliary Processing Unit II">
@@ -940,14 +940,14 @@
    <slot>medium</slot>
    <max>1</max>
    <tech>10</tech>
-   <mass>48</mass>
-   <price>350000</price>
+   <mass>45</mass>
+   <price>170000</price>
    <gfx_store>cpu_ii</gfx_store>
    <description>The Advanced Nanosystems APU II is a mid-range design suitable for medium-sized vessels as well as lightly-equipped capital ships. Its substantial mass and power consumption make it unsuitable for light vessels.</description>
   </general>
   <specific type="modification">
-   <cpu>40</cpu>
-   <energy_regen>-475</energy_regen>
+   <cpu>20</cpu>
+   <energy_regen>-375</energy_regen>
   </specific>
  </outfit>
   <outfit name="Auxiliary Processing Unit III">
@@ -956,14 +956,14 @@
    <slot>medium</slot>
    <max>1</max>
    <tech>12</tech>
-   <mass>144</mass>
-   <price>1100000</price>
+   <mass>120</mass>
+   <price>360000</price>
    <gfx_store>cpu_iii</gfx_store>
    <description>The Advanced Nanosystems APU III is a high-end general-purpose processor suitable for capital ships. Its high power-efficiency is achieved by using cutting-edge superconducting materials.</description>
   </general>
   <specific type="modification">
-   <cpu>100</cpu>
-   <energy_regen>-900</energy_regen>
+   <cpu>40</cpu>
+   <energy_regen>-725</energy_regen>
   </specific>
  </outfit>
 <!-- Miscellaneous Outfits (Expansion outfits, countermeasures, map.) -->
@@ -971,13 +971,13 @@
   <general>
    <slot>low</slot>
    <tech>3</tech>
-   <mass>8</mass>
+   <mass>5</mass>
    <price>15000</price>
    <description>The fuel pod allows a ship to store more fuel for hyperspace jumps. Each pod effectively increases a ship's range by a jump. Without these, long-range interstellar trade would slow to a crawl.</description>
    <gfx_store>fuel_pod</gfx_store>
   </general>
   <specific type="modification">
-   <fuel>200</fuel>
+   <fuel>100</fuel>
   </specific>
  </outfit>
  <outfit name="Cargo Pod">
