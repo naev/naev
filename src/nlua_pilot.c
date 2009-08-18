@@ -261,14 +261,15 @@ static int pilot_addFleet( lua_State *L )
    LuaPilot lp;
    LuaVector *lv;
    int jump;
-   unsigned int flags;
+   unsigned int flags = 0;
+
+   /* Default values. */
+   flags = 0;
+   vectnull(&vn); /* Need to determine angle. */
 
    /* Parse first argument - Fleet Name */
    fltname = luaL_checkstring(L,1);
 
-   /* Set flags to 0. */
-   flags = 0;
-   
    /* Parse second argument - Fleet AI Override */
    if (lua_gettop(L) > 1) {
       fltai = luaL_checkstring(L,2);
@@ -285,6 +286,7 @@ static int pilot_addFleet( lua_State *L )
    else
       lv = NULL;
 
+   /* Parse Jump. */
    if (lua_gettop(L) > 3) {
       jump = lua_toboolean(L,4);
    }
@@ -295,9 +297,6 @@ static int pilot_addFleet( lua_State *L )
       else
          jump = 0;
    }
-
-   /* Needed to determine angle. */
-   vectnull(&vn);
 
    /* pull the fleet */
    flt = fleet_get( fltname );
@@ -321,8 +320,31 @@ static int pilot_addFleet( lua_State *L )
       vect_pset( &vp, d, RNGF() * 2.*M_PI);
    }
 
+   /* Set velocity only if no position is set.. */
+   if (lv != NULL) {
+      if (jump) {
+         a = vect_angle(&vp,&vn);
+         vect_pset( &vv, HYPERSPACE_VEL, a );
+         flags |= PILOT_HYP_END;
+      }
+      else {
+         a = RNGF() * 2.*M_PI;
+         vectnull( &vv );
+      }
+   }
+   else { /* Entering via hyperspace. */
+      a = vect_angle(&vp,&vn);
+      vect_pset( &vv, HYPERSPACE_VEL, a );
+      flags |= PILOT_HYP_END;
+   }
+
+   /* Make sure angle is sane. */
+   a = fmod( a, 2.*M_PI );
+   if (a < 0.)
+      a += 2.*M_PI;
+
    /* now we start adding pilots and toss ids into the table we return */
-   j = 0;
+   j     = 0;
    lua_newtable(L);
    for (i=0; i<flt->npilots; i++) {
 
@@ -333,28 +355,6 @@ static int pilot_addFleet( lua_State *L )
          /* fleet displacement */
          vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
                RNG(75,150) * (RNG(0,1) ? 1 : -1));
-
-         /* Set velocity only if no position is set.. */
-         if (lv != NULL) {
-            if (jump) {
-               a = vect_angle(&vp,&vn);
-               vect_pset( &vv, HYPERSPACE_VEL, a );
-               flags |= PILOT_HYP_END;
-            }
-            else {
-               a = RNGF() * 2.*M_PI;
-               vectnull( &vv );
-            }
-         }
-         else { /* Entering via hyperspace. */
-            a = vect_angle(&vp,&vn);
-            vect_pset( &vv, HYPERSPACE_VEL, a );
-            flags |= PILOT_HYP_END;
-         }
-
-         /* Make sure angle is sane. */
-         if (a < 0.)
-            a += 2.*M_PI;
 
          /* Create the pilot. */
          p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, flags );
