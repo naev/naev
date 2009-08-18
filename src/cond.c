@@ -30,7 +30,10 @@ int cond_init (void)
       return 0;
 
    cond_L = nlua_newState();
-   nlua_loadStandard(cond_L,1);
+   if (nlua_loadStandard(cond_L,1)) {
+      WARN("Failed to load standard Lua libraries.");
+      return -1;
+   }
 
    return 0;
 }
