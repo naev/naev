@@ -12,6 +12,7 @@
 #include "colour.h"
 
 #include <math.h>
+#include <string.h>
 
 #include "naev.h"
 #include "log.h"
@@ -42,6 +43,9 @@ glColour cDarkBlue   = { .r=0.10, .g=0.10, .b=0.60, .a=1. }; /**< Dark Blue */
 glColour cBlue       = { .r=0.20, .g=0.20, .b=0.80, .a=1. }; /**< Blue */
 glColour cLightBlue  = { .r=0.30, .g=0.30, .b=0.80, .a=1. }; /**< Light Blue */
 glColour cPurple     = { .r=0.90, .g=0.10, .b=0.90, .a=1. }; /**< Purple */
+glColour cBrown      = { .r=0.59, .g=0.28, .b=0.00, .a=1. }; /**< Brown */
+glColour cGold       = { .r=1.00, .g=0.84, .b=0.00, .a=1. }; /**< Gold */
+glColour cSilver     = { .r=0.75, .g=0.75, .b=0.75, .a=1. }; /**< Silver */
 
 
 /*
@@ -104,4 +108,67 @@ void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v 
       else                 { *r = v     ; *g = var_1 ; *b = var_2; }
    }
 }
+
+/**
+ * @brief Returns a colour from it's name
+ *
+ *    @param name Colour's name
+ *    @return the colour
+ */
+#define CHECK_COLOUR(colour) if (strcasecmp(name, #colour) == 0) return &c##colour
+glColour* col_fromName(const char* name) {
+   if (name[0] == 'b' || name[0] == 'B') {
+      CHECK_COLOUR(Blue);
+      CHECK_COLOUR(Black);
+      CHECK_COLOUR(Brown);
+   }
+
+   if (name[0] == 'd' || name[0] == 'D') {
+      CHECK_COLOUR(DarkRed);
+      CHECK_COLOUR(DarkBlue);
+   }
+
+   if (name[0] == 'g' || name[0] == 'G') {
+      CHECK_COLOUR(Gold);
+      CHECK_COLOUR(Green);
+      CHECK_COLOUR(Grey90);
+      CHECK_COLOUR(Grey80);
+      CHECK_COLOUR(Grey70);
+      CHECK_COLOUR(Grey60);
+      CHECK_COLOUR(Grey50);
+      CHECK_COLOUR(Grey40);
+      CHECK_COLOUR(Grey30);
+      CHECK_COLOUR(Grey20);
+      CHECK_COLOUR(Grey10);
+   }
+
+   if (name[0] == 'o' || name[0] == 'O') {
+      CHECK_COLOUR(Orange);
+   }
+
+   if (name[0] == 'p' || name[0] == 'P') {
+      CHECK_COLOUR(Purple);
+   }
+
+   if (name[0] == 'r' || name[0] == 'R') {
+      CHECK_COLOUR(Red);
+   }
+
+   if (name[0] == 's' || name[0] == 'S') {
+      CHECK_COLOUR(Silver);
+   }
+
+   if (name[0] == 'w' || name[0] == 'W') {
+      CHECK_COLOUR(White);
+   }
+
+   if (name[0] == 'y' || name[0] == 'Y') {
+      CHECK_COLOUR(Yellow);
+   }
+
+
+   WARN("Unknown colour %s", name);
+   return NULL;
+}
+#undef CHECK_COLOUR
 

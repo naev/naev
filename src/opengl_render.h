@@ -30,6 +30,12 @@ void gl_cameraZoomGet( double * zoom );
 /*
  * Rendering.
  */
+/* blits texture */
+void gl_blitTexture(  const glTexture* texture,
+      const double x, const double y,
+      const double w, const double h,
+      const double tx, const double ty,
+      const double tw, const double th, const glColour *c );
 /* blits a sprite, relative pos */
 void gl_blitSprite( const glTexture* sprite,
       const double bx, const double by,
