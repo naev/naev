@@ -13,6 +13,12 @@ Core Developement Team
       * Graphic Designer and Modeller
 
 
+   Deiz
+      * Everything guy (Renderer of Graphics, etc...)
+
+
+
+
 Contributions
 ---------------------------------------
 
@@ -82,26 +88,23 @@ Contributions
 
    Elderman
       * Many cool missions
-   The first non-bobbens mission developer!  Great focus on dialogues.
+    The first non-bobbens mission developer!  Great focus on dialogues.
 
-   Deiz
-      * Outfit balancing
-      * New outfits
-      * Found new sounds
-      * Tester Extraordinaire
-      * Great help with name generators
-      * Did all the engine effects.
-    Great work testing out and working on the balancing issues.  Fixed up the
-  overpowered lasers among other things.
-
-  BTAxis
+   BTAxis
       * New Mission
     Great to see more mission developers.
 
-  Ingo Ruhnke <grumbel@gmx.de>
+   Ingo Ruhnke <grumbel@gmx.de>
       * NPC Portraits
     The entire mission overhaul wouldn't have been possible without grumbel's
-  portraits.
+   portraits.
+
+   Alexandru Moșoi <brtzsnr@gmail.com>
+      * Coded cool features
+    First non-bobbens coder to make serious commits! Like the reason the maps
+   are all over or the faction in the maps.
+
+
 
 
 Testers
@@ -110,4 +113,5 @@ Testers
    John Schwartfeger
    Leonardo Valeri Manera
    Peter Johnson <zid@zid.yggdrasil.sk>
+   EvanR
 
