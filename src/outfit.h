@@ -218,10 +218,8 @@ typedef struct OutfitModificationData_ {
 typedef struct OutfitAfterburnerData_ {
    double rumble; /**< percent of rumble */
    int sound; /**< sound of the afterburner */
-   double thrust_perc; /**< % of thrust increase based on ship base. */
-   double thrust_abs; /**< Fixed absolute thrust increase. */
-   double speed_perc; /**< % of speed to increase based on ship base. */
-   double speed_abs; /**< Fixed absolute speed increase. */
+   double thrust; /**< % of thrust increase based on ship base. */
+   double speed; /**< % of speed to increase based on ship base. */
    double energy; /**< Energy usage while active */
    double cpu; /**< CPU usage. */
 } OutfitAfterburnerData;

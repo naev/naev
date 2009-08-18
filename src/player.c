@@ -1042,8 +1042,7 @@ void player_think( Pilot* pplayer, const double dt )
    if (player_isFlag(PLAYER_AFTERBURNER)) {
       if (pilot_isFlag(player,PILOT_AFTERBURNER)) {
          afb = pplayer->afterburner->outfit;
-         pilot_setThrust( pplayer, 1. + afb->u.afb.thrust_perc +
-               afb->u.afb.thrust_abs*pplayer->solid->mass/pplayer->thrust );
+         pilot_setThrust( pplayer, 1. + afb->u.afb.thrust );
       }
       else /* Ran out of energy */
          player_afterburnOver();

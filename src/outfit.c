@@ -1212,39 +1212,43 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    node = parent->children;
 
    /* must be >= 1. */
-   temp->u.afb.thrust_perc = 1.;
-   temp->u.afb.speed_perc = 1.;
+   temp->u.afb.thrust = 1.;
+   temp->u.afb.speed  = 1.;
    
    do { /* parse the data */
       xmlr_float(node,"rumble",temp->u.afb.rumble);
       if (xml_isNode(node,"sound"))
          temp->u.afb.sound = sound_get( xml_get(node) );
 
-      if (xml_isNode(node,"thrust_perc"))
-         temp->u.afb.thrust_perc = 1. + xml_getFloat(node)/100.;
-      xmlr_float(node,"thrust_abs",temp->u.afb.thrust_abs);
-      if (xml_isNode(node,"speed_perc"))
-         temp->u.afb.speed_perc = 1. + xml_getFloat(node)/100.;
-      xmlr_float(node,"speed_abs",temp->u.afb.speed_abs);
+      xmlr_float(node,"thrust",temp->u.afb.thrust);
+      xmlr_float(node,"speed",temp->u.afb.speed);
       xmlr_float(node,"energy",temp->u.afb.energy);
       xmlr_float(node,"cpu",temp->u.afb.cpu);
    } while (xml_nextNode(node));
+
+   /* Post processing. */
+   temp->u.afb.thrust += 100.;
+   temp->u.afb.speed  += 100.;
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "Requires %.0f CPU\n"
-         "%.0f + %.0f%% Thrust\n"
-         "%.0f + %.0f%% Maximum Speed\n"
+         "%.0f%% Thrust\n"
+         "%.0f%% Maximum Speed\n"
          "%.1f EPS\n"
          "%.1f Rumble",
          outfit_getType(temp),
          temp->u.afb.cpu,
-         temp->u.afb.thrust_abs, temp->u.afb.thrust_perc*100.,
-         temp->u.afb.speed_abs, temp->u.afb.speed_perc*100.,
+         temp->u.afb.thrust,
+         temp->u.afb.speed,
          temp->u.afb.energy,
          temp->u.afb.rumble );
+
+   /* Post processing. */
+   temp->u.afb.thrust /= 100.;
+   temp->u.afb.speed  /= 100.;
 }
 
 /**

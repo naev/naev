@@ -1559,8 +1559,7 @@ void pilot_update( Pilot* pilot, const double dt )
       if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && /* must have enough energy left */
                (pilot->energy > pilot->afterburner->outfit->u.afb.energy * dt)) {
          limit_speed( &pilot->solid->vel, /* limit is higher */
-               pilot->speed * pilot->afterburner->outfit->u.afb.speed_perc + 
-               pilot->afterburner->outfit->u.afb.speed_abs, dt );
+               pilot->speed * pilot->afterburner->outfit->u.afb.speed, dt );
 
          if (pilot->id == PLAYER_ID)
             spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */

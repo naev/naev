@@ -895,10 +895,8 @@
    <cpu>3</cpu>
    <rumble>0.5</rumble>
    <sound>afterburner</sound>
-   <thrust_perc>100</thrust_perc>
-   <thrust_abs>50</thrust_abs>
-   <speed_perc>50</speed_perc>
-   <speed_abs>30</speed_abs>
+   <thrust>100</thrust>
+   <speed>50</speed>
    <energy>60</energy>
   </specific>
  </outfit>
@@ -915,10 +913,8 @@
    <cpu>9</cpu>
    <rumble>0.9</rumble>
    <sound>afterburner</sound>
-   <thrust_perc>185</thrust_perc>
-   <thrust_abs>100</thrust_abs>
-   <speed_perc>85</speed_perc>
-   <speed_abs>50</speed_abs>
+   <thrust>185</thrust>
+   <speed>85</speed>
    <energy>65</energy>
   </specific>
  </outfit>
