@@ -473,7 +473,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    /* Check if he has the money. */
    if (player->credits < price) {
       dialogue_msg( "Request Fuel", "You need %u more credits!",
-            player->credits - price);
+            price - player->credits);
       return;
    }
 
