@@ -445,8 +445,8 @@ void spfx_begin( const double dt )
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* set defaults */
-   bx = (double)gl_screen.nw/2;
-   by = (double)gl_screen.nh/2;
+   bx = SCREEN_W/2;
+   by = SCREEN_H/2;
 
    if (!paused) {
       inc = dt*100000.;
@@ -502,8 +502,8 @@ void spfx_end (void)
       return;
 
    /* set defaults */
-   bx = (double)gl_screen.nw/2;
-   by = (double)gl_screen.nh/2;
+   bx = SCREEN_W/2;
+   by = SCREEN_H/2;
 
    /* shake stuff */
    if (!paused) {
