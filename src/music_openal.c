@@ -7,6 +7,8 @@
 
 #include "music_openal.h"
 
+#include <math.h>
+
 #include "SDL.h"
 #include "SDL_thread.h"
 #include "SDL_rwops.h"
@@ -21,6 +23,12 @@
 #include "log.h"
 #include "pack.h"
 #include "conf.h"
+
+
+/**
+ * @brief Default pre-amp in dB.
+ */
+#define RG_PREAMP_DB       0.0
 
 
 /* Lock for OpenAL operations. */
@@ -93,6 +101,9 @@ typedef struct alMusic_ {
    OggVorbis_File stream;
    vorbis_info* info;
    ALenum format;
+   /* Replygain information. */
+   ALfloat rg_scale_factor; /**< Scale factor. */
+   ALfloat rg_max_scale; /**< Maximum scale factor before clipping. */
 } alMusic;
 
 
@@ -113,6 +124,7 @@ static ALfloat music_vol = 1.; /**< Current volume level. */
 /*
  * prototypes
  */
+static void rg_filter( float **pcm, long channels, long samples, void *filter_param );
 static void music_kill (void);
 static int music_thread( void* unused );
 static int stream_loadBuffer( ALuint buffer );
@@ -492,6 +504,43 @@ static int music_thread( void* unused )
 }
 
 
+/**
+ * @brief This is the filter function for the decoded Ogg Vorbis stream.
+ *
+ * base on:
+ * vgfilter.c (c) 2007,2008 William Poetra Yoga Hadisoeseno
+ * based on:
+ * vgplay.c 1.0 (c) 2003 John Morton
+ */
+static void rg_filter( float **pcm, long channels, long samples, void *filter_param )
+{
+   int i, j;
+   float cur_sample;
+   alMusic *param       = filter_param;
+   float scale_factor   = param->rg_scale_factor;
+   float max_scale      = param->rg_max_scale;
+
+   /* Apply the gain, and any limiting necessary */
+   if (scale_factor > max_scale) {
+      for(i = 0; i < channels; i++)
+         for(j = 0; j < samples; j++) {
+            cur_sample = pcm[i][j] * scale_factor;
+            /* This is essentially the scaled hard-limiting algorithm */
+            /* It looks like the soft-knee to me */
+            /* I haven't found a better limiting algorithm yet... */
+            if (cur_sample < -0.5)
+               cur_sample = tanh((cur_sample + 0.5) / (1-0.5)) * (1-0.5) - 0.5;
+            else if (cur_sample > 0.5)
+               cur_sample = tanh((cur_sample - 0.5) / (1-0.5)) * (1-0.5) + 0.5;
+            pcm[i][j] = cur_sample;
+         }
+   } else if (scale_factor > 0.0) {
+      for(i = 0; i < channels; i++)
+         for(j = 0; j < samples; j++)
+            pcm[i][j] *= scale_factor;
+   }
+}
+
 
 /**
  * @brief Loads a buffer.
@@ -514,13 +563,16 @@ static int stream_loadBuffer( ALuint buffer )
    size = 0;
    while (size < music_bufSize) { /* fille up the entire data buffer */
 
-      result = ov_read( &music_vorbis.stream, /* stream */
-            &music_buf[size],             /* data */
-            music_bufSize - size,     /* amount to read */
+      result = ov_read_filter(
+            &music_vorbis.stream,   /* stream */
+            &music_buf[size],       /* data */
+            music_bufSize - size,   /* amount to read */
             VORBIS_ENDIAN,          /* big endian? */
             2,                      /* 16 bit */
             1,                      /* signed */
-            &section );             /* current bitstream */
+            &section,               /* current bitstream */
+            rg_filter,              /* filter function */
+            &music_vorbis );        /* filter parameter */
 
       /* End of file. */
       if (result == 0) {
@@ -646,6 +698,11 @@ void music_al_exit (void)
  */
 int music_al_load( const char* name, SDL_RWops *rw )
 {
+   int rg;
+   ALfloat track_gain_db, track_peak;
+   vorbis_comment *vc;
+   char *tag = NULL;
+
    musicVorbisLock();
 
    /* set the new name */
@@ -660,6 +717,24 @@ int music_al_load( const char* name, SDL_RWops *rw )
       return -1;
    }
    music_vorbis.info = ov_info( &music_vorbis.stream, -1 );
+
+   /* Get replaygain information. */
+   vc = ov_comment( &music_vorbis.stream, -1 );
+   track_gain_db  = 0.;
+   track_peak     = 1.;
+   rg             = 0;
+   if ((tag = vorbis_comment_query(vc, "replaygain_track_gain", 0))) {
+      track_gain_db  = atof(tag);
+      rg             = 1;
+   }
+   if ((tag = vorbis_comment_query(vc, "replaygain_track_peak", 0))) {
+      track_peak     = atof(tag);
+      rg             = 1;
+   }
+   music_vorbis.rg_scale_factor = pow(10.0, (track_gain_db + RG_PREAMP_DB)/20);
+   music_vorbis.rg_max_scale = 1.0 / track_peak;
+   if (!rg)
+      DEBUG("Song '%s' has no replaygain information.", name );
 
    /* Set the format */
    if (music_vorbis.info->channels == 1)
