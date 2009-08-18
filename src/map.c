@@ -1141,7 +1141,8 @@ static void A_freeList( SysNode *first )
 void map_setZoom(double zoom)
 {
    map_zoom = zoom;
-   gl_freeTexture( gl_faction_disk );
+   if (gl_faction_disk != NULL)
+      gl_freeTexture( gl_faction_disk );
    gl_faction_disk = gl_genFactionDisk( 50 * zoom );
 }
 
