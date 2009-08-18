@@ -13,6 +13,7 @@
 
 #include <math.h>
 #include <string.h>
+#include <strings.h>
 
 #include "naev.h"
 #include "log.h"
