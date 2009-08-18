@@ -13,10 +13,19 @@
 
 #include <math.h>
 #include <string.h>
-#include <strings.h>
 
 #include "naev.h"
 #include "log.h"
+#include "ncompat.h"
+
+#if HAS_WIN32
+#include <shlwapi.h>
+#define STRCASECMP      lstrcmpiA
+#else /* HAS_WIN32 */
+#include <strings.h>
+#define STRCASECMP      strcasecmp
+#endif /* HAS_WIN32 */
+
 
 
 /*
@@ -116,7 +125,8 @@ void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v 
  *    @param name Colour's name
  *    @return the colour
  */
-#define CHECK_COLOUR(colour) if (strcasecmp(name, #colour) == 0) return &c##colour
+#define CHECK_COLOUR(colour) \
+      if (STRCASECMP(name, #colour) == 0) return &c##colour
 glColour* col_fromName(const char* name) {
    if (name[0] == 'b' || name[0] == 'B') {
       CHECK_COLOUR(Blue);
