@@ -62,7 +62,7 @@ function accept ()
       misn.accept()
 
       -- Set mission details
-      misn.setTitle( string.format( misn_title, near_sys:name()) )
+      misn.setTitle( string.format( misn_title, pir_name) )
       misn.setReward( string.format( misn_reward, credits) )
       misn.setDesc( string.format( misn_desc, pir_name, near_sys:name() ) )
       misn.setMarker( near_sys, "misc" )
