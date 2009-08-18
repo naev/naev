@@ -38,7 +38,7 @@ static int map_drag           = 0; /**< Is the user dragging the map? */
 static int map_selected       = -1; /**< What system is selected on the map. */
 static StarSystem **map_path  = NULL; /**< The path to current selected system. */
 int map_npath                 = 0; /**< Number of systems in map_path. */
-
+glTexture *gl_faction_disk    = NULL; /**< Texture of the disk representing factions. */
 
 /* VBO. */
 static gl_vbo *map_vbo = NULL; /**< Map VBO. */
@@ -60,6 +60,7 @@ static int map_inPath( StarSystem *sys );
 static void map_render( double bx, double by, double w, double h );
 static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h );
+static void map_setZoom( double zoom );
 static void map_buttonZoom( unsigned int wid, char* str );
 static void map_selectCur (void);
 static void map_drawMarker( double x, double y, double r,
@@ -506,7 +507,8 @@ static void map_drawMarker( double x, double y, double r,
  */
 static glTexture *gl_genFactionDisk( int radius )
 {
-   int i, j, k, n, m;
+   int i, j;
+   uint8_t *pixels;
    SDL_Surface *sur;
 
    /* Calculate parameters. */
@@ -516,7 +518,7 @@ static glTexture *gl_genFactionDisk( int radius )
    /* Create the surface. */
    sur = SDL_CreateRGBSurface( SDL_SRCALPHA | SDL_HWSURFACE, w, h, 32, RGBAMASK );
 
-   uint8_t *pixels = sur->pixels;
+   pixels = sur->pixels;
    memset(pixels, 0xff, sizeof(uint8_t) * 4 * h * w);
 
    /* Generate the circle. */
@@ -573,10 +575,6 @@ static void map_render( double bx, double by, double w, double h )
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
-   /* generates disk */
-   double disk = 50 * map_zoom;
-   glTexture *gl_faction_disk = gl_genFactionDisk(disk);
-
    /* render the star systems */
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
@@ -598,12 +596,16 @@ static void map_render( double bx, double by, double w, double h )
       ty = y + sys->pos.y*map_zoom;
 
       /* draws the disk representing the faction */
-      if (sys->faction != -1)
+      if (sys->faction != -1) {
+         const int sw = gl_faction_disk->sw;
+         const int sh = gl_faction_disk->sw;
+
          gl_blitTexture(
                gl_faction_disk,
-               tx - disk, ty - disk, 2. * disk + 1, 2. * disk + 1,
+               tx - sw/2, ty - sh/2, sw, sh,
                0., 0., gl_faction_disk->srw, gl_faction_disk->srw,
                faction_colour(sys->faction) );
+      }
 
       gl_drawCircleInRect( tx, ty, r, bx, by, w, h, col, 0 );
 
@@ -692,7 +694,6 @@ static void map_render( double bx, double by, double w, double h )
       glShadeModel( GL_FLAT );
    }
 
-   gl_freeTexture( gl_faction_disk );
 
    /* Second pass to put markers. */
    for (i=0; i<systems_nstack; i++) {
@@ -841,6 +842,8 @@ static void map_buttonZoom( unsigned int wid, char* str )
       map_zoom = MAX(0.25, map_zoom);
    }
 
+   map_setZoom(map_zoom);
+
    /* Transform coords back. */
    map_xpos *= map_zoom;
    map_ypos *= map_zoom;
@@ -875,7 +878,8 @@ void map_close (void)
  */
 void map_clear (void)
 {
-   map_zoom = 1.;
+   map_setZoom(1.);
+
    if (cur_system != NULL) {
       map_xpos = cur_system->pos.x;
       map_ypos = cur_system->pos.y;
@@ -1132,6 +1136,15 @@ static void A_freeList( SysNode *first )
    } while ((n=n->gnext) != NULL);
    free(p);
 }
+
+/** @brief Sets map_zoom to zoom and recreats the faction disk texture. */
+void map_setZoom(double zoom)
+{
+   map_zoom = zoom;
+   gl_freeTexture( gl_faction_disk );
+   gl_faction_disk = gl_genFactionDisk( 50 * zoom );
+}
+
 /**
  * @brief Gets the jump path between two systems.
  *
@@ -1366,7 +1379,7 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
    map_ypos = cur_system->pos.y * zoom;
 
    /* Set zoom. */
-   map_zoom = zoom;
+   map_setZoom(zoom);
 
    window_addCust( wid, x, y, w, h,
          "cstMap", 1, map_render, map_mouse);
