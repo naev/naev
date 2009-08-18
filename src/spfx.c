@@ -445,8 +445,8 @@ void spfx_begin( const double dt )
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* set defaults */
-   bx = SCREEN_W/2;
-   by = SCREEN_H/2;
+   bx = (double)gl_screen.nw/2;
+   by = (double)gl_screen.nh/2;
 
    if (!paused) {
       inc = dt*100000.;
@@ -476,6 +476,10 @@ void spfx_begin( const double dt )
          y = 0.;
       }
    }
+   else {
+      x = 0.;
+      y = 0.;
+   }
 
    /* set the new viewport */
    glMatrixMode(GL_PROJECTION);
@@ -498,12 +502,18 @@ void spfx_end (void)
       return;
 
    /* set defaults */
-   bx = SCREEN_W/2;
-   by = SCREEN_H/2;
+   bx = (double)gl_screen.nw/2;
+   by = (double)gl_screen.nh/2;
 
    /* shake stuff */
-   x = shake_pos.x;
-   y = shake_pos.y;  
+   if (!paused) {
+      x = shake_pos.x;
+      y = shake_pos.y;  
+   }
+   else {
+      x = 0.;
+      y = 0.;
+   }
 
    /* set the new viewport */
    glMatrixMode(GL_PROJECTION);
