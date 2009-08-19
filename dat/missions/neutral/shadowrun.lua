@@ -31,7 +31,7 @@ else -- default english
    You begin to introduce yourself, but Rebina waves it away, perhaps because your name doesn't interest her, or possibly because she already knows who you are. "Let's not waste words on idle formalities," she says. "I am here to talk business, and I've got a proposition for you, if you're interested."]]
    text[2] = [[Rebina nods at you to acknowledge your existence. "We meet again. I'm glad to see you've not gotten yourself killed yet." She smiles meaningfully. "As it happens I haven't found anyone to take care of my business yet. Perhaps you would reconsider? Allow me to remind you what this is about."]]
    text[3] = [["What I need is a pilot and a ship. Specifically, I need a skilled pilot and a capable ship. Do you fit that description? I have a feeling you do. You see, what I am about to suggest you do is both profitable and dangerous." Rebina takes another sip of her drink before continuing, allowing what she just said to fully register. "I will not lie to you. There are... rivalries out there, and working for me will mean you'll take side in some of them. People will take notice of you, and some of them will try to kill you."
-   You explain that taking risks comes with being an independent pilot and that you took the captain's chair with appropriate resolve, but Rebina pins you with a piercing gaze. "These are no ordinary pirate raids we're talking about," she admonises you. "If you take this assignment, you will be a painted target. I want you to be well aware of this." There is another pause, but then she continues in a milder tone of voice. "That being said, I can assure you that the reward is well worth the risk. Pull this off, and you'll walk away considerably richer than you were."
+   You explain that taking risks comes with being an independent pilot and that you took the captain's chair with appropriate resolve, but Rebina pins you with a piercing gaze. "These are no ordinary pirate raids we're talking about," she admonishes you. "If you take this assignment, you will be a painted target. I want you to be well aware of this." There is another pause, but then she continues in a milder tone of voice. "That being said, I can assure you that the reward is well worth the risk. Pull this off, and you'll walk away considerably richer than you were."
    Rebina leans back, levelly meeting your gaze. "That's all I can tell you at this point. You'll get more details only once you accept this job. If you accept this job. What say you?"]]
    text[4] = [["Wonderful!" Rebina gives you a warm, sincere smile. "I don't mind admitting that it isn't easy finding pilots who measure up to my expectations, and finding ones willing to take a risk is more difficult still. I am pleased indeed."
    Then Rebina's expression changes to that of a businesswoman about to ply her trade. "Now, listen up. Contrary to what you may have thought, this assignment isn't about me. It's about a man who goes by the name of Jorek McArthy. The current state of affairs is that Jorek is staying on %s in the %s system, and this is not where me and my associates want him to be. Unfortunately, Jorek has attracted some unwanted attention, and we don't want him to focus that attention to us."
@@ -141,6 +141,7 @@ function enter()
         misn.osdCreate(osd_title[1], { string.format(osd_msg[3], sysname2, shipname),
                                        string.format(osd_msg[4], time.str(deadline2 - time.get()))
                                      })
+        misn.setMarker(sys2, "misc")
     else
         abort()
     end
@@ -153,9 +154,10 @@ function enter()
     elseif system.get():jumpDist(sys) < 3 and system.get():jumpDist(sys) > 0 and var.peek("shadowrun") == 3 then
         pilot.clear()
         pilot.toggleSpawn(false)
-        pirate1 = pilot.add("Pirate Ancestor", "pirate", vec2.new(0,0), false)
-        pirate2 = pilot.add("Pirate Ancestor", "pirate", vec2.new(0,0), false)
-        pirate3 = pilot.add("Pirate Ancestor", "pirate", vec2.new(0,0), false)
+        pirates = pilot.add("Pirate Hyena Pack", "pirate", vec2.new(0,0), false)
+        pirate1 = pilot.add("Pirate Ancestor", "pirate", vec2.new(0,20), false)
+        pirate2 = pilot.add("Pirate Ancestor", "pirate", vec2.new(-20,0), false)
+        pirate3 = pilot.add("Pirate Ancestor", "pirate", vec2.new(0,-20), false)
     end
     
     -- Empire ships around planet
