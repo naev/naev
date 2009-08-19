@@ -17,6 +17,12 @@ endif
 
 
 
+###################
+#  W A R N I N G  #
+###################
+# ORDER MATTERS A SHITLOAD ON WINDOWS SO BE EXTREMELY CAREFUL WHEN TOUCHING
+#  THIS SHIT!!!!!!
+#
 #
 #   LDFLAGS
 #
@@ -32,7 +38,7 @@ ifeq ($(USE_SDLMIX),1)
 LDSOUND += -lSDL_mixer
 endif
 ifeq ($(USE_OPENAL),1)
-LDSOUND += -lOpenAL32 -lvorbisfile
+LDSOUND += -lOpenAL32 -lvorbisfile -lvorbis -logg
 endif
 LDXML   := -lxml2
 LDTTF   := -lfreetype -lz
