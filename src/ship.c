@@ -21,6 +21,7 @@
 #include "log.h"
 #include "ndata.h"
 #include "toolkit.h"
+#include "array.h"
 
 
 #define XML_ID    "Ships"  /**< XML document identifier */
@@ -44,7 +45,6 @@
 
 
 static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
-static int ship_nstack = 0; /**< Number of ships in the stack. */
 
 
 /*
@@ -65,10 +65,10 @@ Ship* ship_get( const char* name )
    Ship* temp = ship_stack;
    int i;
 
-   for (i=0; i < ship_nstack; i++)
+   for (i=0; i < array_size(ship_stack); i++)
       if (strcmp((temp+i)->name, name)==0) break;
 
-   if (i == ship_nstack) /* ship does not exist, game will probably crash now */
+   if (i == array_size(ship_stack)) /* ship does not exist, game will probably crash now */
       WARN("Ship %s does not exist", name);
 
    return temp+i;
@@ -119,9 +119,9 @@ Ship** ship_getTech( int *n, const int *tech, const int techmax )
    Ship **ships;
   
    /* get available ships for tech */
-   ships = malloc(sizeof(Ship*) * ship_nstack);
+   ships = malloc(sizeof(Ship*) * array_size(ship_stack));
    num = 0;
-   for (i=0; i < ship_nstack; i++) {
+   for (i=0; i < array_size(ship_stack); i++) {
       if (ship_stack[i].tech <= tech[0]) { /* check vs base tech */
          ships[num] = &ship_stack[i];
          num++;
@@ -538,7 +538,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
  */
 int ships_load (void)
 {
-   int mem;
    uint32_t bufsize;
    char *buf = ndata_read( SHIP_DATA, &bufsize);
 
@@ -557,29 +556,18 @@ int ships_load (void)
       return -1;
    }
 
-   mem = 0;
+   ship_stack = array_create(Ship);
    do {
-      if (xml_isNode(node, XML_SHIP)) {
-         ship_nstack++;
-
-         /* Check to see if need to grow memory. */
-         if (ship_nstack > mem) {
-            mem += CHUNK_SIZE;
-            ship_stack = realloc(ship_stack, sizeof(Ship)*mem);
-         }
-
+      if (xml_isNode(node, XML_SHIP))
          /* Load the ship. */
-         ship_parse(&ship_stack[ship_nstack-1], node);
-      }
+         ship_parse(&array_grow(&ship_stack), node);
    } while (xml_nextNode(node));
-
-   /* Shrink to minimum size - won't change later. */
-   ship_stack = realloc(ship_stack, sizeof(Ship) * ship_nstack);
+   array_shrink(&ship_stack);
 
    xmlFreeDoc(doc);
    free(buf);
 
-   DEBUG("Loaded %d Ship%s", ship_nstack, (ship_nstack==1) ? "" : "s" );
+   DEBUG("Loaded %d Ship%s", array_size(ship_stack), (array_size(ship_stack)==1) ? "" : "s" );
 
    return 0;
 }
@@ -592,7 +580,7 @@ void ships_free (void)
 {
    Ship *s;
    int i;
-   for (i = 0; i < ship_nstack; i++) {
+   for (i = 0; i < array_size(ship_stack); i++) {
       s = &ship_stack[i];
 
       /* Free stored strings. */
@@ -622,7 +610,8 @@ void ships_free (void)
       gl_freeTexture(ship_stack[i].gfx_target);
       free(s->gfx_comm);
    }
-   free(ship_stack);
+
+   array_free(ship_stack);
    ship_stack = NULL;
 }
 

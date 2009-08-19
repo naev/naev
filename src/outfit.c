@@ -26,6 +26,7 @@
 #include "log.h"
 #include "ndata.h"
 #include "spfx.h"
+#include "array.h"
 
 
 #define outfit_setProp(o,p)      ((o)->properties |= p) /**< Checks outfit property. */
@@ -48,7 +49,6 @@
  * the stack
  */
 static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
-static int outfit_nstack = 0; /**< Size of the stack. */
 
 
 /*
@@ -83,7 +83,7 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
 Outfit* outfit_get( const char* name )
 {
    int i;
-   for (i=0; i<outfit_nstack; i++)
+   for (i=0; i<array_size(outfit_stack); i++)
       if (strcmp(name,outfit_stack[i].name)==0)
          return &outfit_stack[i];
 
@@ -154,11 +154,11 @@ Outfit** outfit_getTech( int *n, const int *tech, const int techmax )
    int i,j, num;
    Outfit **outfits;
    
-   outfits = malloc(sizeof(Outfit*) * outfit_nstack);
+   outfits = malloc(sizeof(Outfit*) * array_size(outfit_stack));
 
    /* get the available techs */
    num = 0;
-   for (i=0; i < outfit_nstack; i++) {
+   for (i=0; i < array_size(outfit_stack); i++) {
       if (outfit_stack[i].tech <= tech[0]) { /* check vs base tech */
          outfits[num] = &outfit_stack[i];
          num++;
@@ -1541,7 +1541,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
  */
 int outfit_load (void)
 {
-   int i, mem;
+   int i;
    uint32_t bufsize;
    char *buf = ndata_read( OUTFIT_DATA, &bufsize );
 
@@ -1561,23 +1561,16 @@ int outfit_load (void)
    }        
 
    /* First pass, loads up ammunition. */
-   mem = 0;
+   outfit_stack = array_create(Outfit);
    do {
-      if (xml_isNode(node,XML_OUTFIT_TAG)) {
-
-         outfit_nstack++;
-         if (outfit_nstack > mem) {
-            mem += CHUNK_SIZE;
-            outfit_stack = realloc(outfit_stack, sizeof(Outfit)*mem);
-         }
-         outfit_parse( &outfit_stack[outfit_nstack-1], node );               
-      }
+      if (xml_isNode(node,XML_OUTFIT_TAG))
+         outfit_parse( &array_grow(&outfit_stack), node );
    } while (xml_nextNode(node));
-   /* Shrink back to minimum - shouldn't change ever. */
-   outfit_stack = realloc(outfit_stack, sizeof(Outfit) * outfit_nstack);
+   array_shrink(&outfit_stack);
+
 
    /* Second pass, sets up ammunition relationships. */
-   for (i=0; i<outfit_nstack; i++) {
+   for (i=0; i<array_size(outfit_stack); i++) {
       if (outfit_isLauncher(&outfit_stack[i]))
          outfit_stack[i].u.lau.ammo = outfit_get( outfit_stack[i].u.lau.ammo_name );
       else if (outfit_isFighterBay(&outfit_stack[i]))
@@ -1587,7 +1580,7 @@ int outfit_load (void)
    xmlFreeDoc(doc);
    free(buf);
 
-   DEBUG("Loaded %d Outfit%s", outfit_nstack, (outfit_nstack==1) ? "" : "s" );
+   DEBUG("Loaded %d Outfit%s", array_size(outfit_stack), (array_size(outfit_stack)==1) ? "" : "s" );
 
    return 0;
 }
@@ -1600,7 +1593,7 @@ void outfit_free (void)
 {
    int i;
    Outfit *o;
-   for (i=0; i < outfit_nstack; i++) {
+   for (i=0; i < array_size(outfit_stack); i++) {
       o = &outfit_stack[i];
 
       /* free graphics */
@@ -1630,6 +1623,7 @@ void outfit_free (void)
          free(o->license);
       free(o->name);
    }
-   free(outfit_stack);
+
+   array_free(outfit_stack);
 }
 
