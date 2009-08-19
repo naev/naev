@@ -59,7 +59,7 @@ She goes on, "Things have gone out of hand.  We have had chances to crush Welsh,
    -- Conversation between pilots
    talk = {}
    talk[1] = "ESS Trinity:  Please turn off your engines and prepare to be boarded."
-   talk[2] = "You will never talk me alive!"
+   talk[2] = "You will never take me alive!"
    talk[3] = "Very well then.  All units engage ESS Trinity."
    talk[4] = "Incoming collective drones detected."
    talk[5] = "Mission Success: Return to base."
@@ -151,6 +151,9 @@ function jump ()
 
       misn_stage = 3
       player.msg( talk[6] )
+      misn.setDesc( string.format(misn_desc[2],
+            misn_base:name(), misn_base_sys:name() ))
+      misn.setMarker(misn_base_sys)
    end
 end
 
