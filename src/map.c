@@ -587,13 +587,6 @@ static void map_render( double bx, double by, double w, double h )
             && !space_sysReachable(sys))
          continue;
 
-      /* Draw the system. */
-      if (!sys_isKnown(sys) || (sys->nfleets==0)) col = &cInert;
-      else if (sys->security >= 1.) col = &cGreen;
-      else if (sys->security >= 0.6) col = &cOrange;
-      else if (sys->security >= 0.3) col = &cRed;
-      else col = &cDarkRed;
-
       tx = x + sys->pos.x*map_zoom;
       ty = y + sys->pos.y*map_zoom;
 
@@ -613,6 +606,13 @@ static void map_render( double bx, double by, double w, double h )
                tx - sw/2, ty - sh/2, sw, sh,
                0., 0., gl_faction_disk->srw, gl_faction_disk->srw, &c );
       }
+
+      /* Draw the system. */
+      if (!sys_isKnown(sys) || (sys->nfleets==0)) col = &cInert;
+      else if (sys->security >= 1.) col = &cGreen;
+      else if (sys->security >= 0.6) col = &cOrange;
+      else if (sys->security >= 0.3) col = &cRed;
+      else col = &cDarkRed;
 
       gl_drawCircleInRect( tx, ty, r, bx, by, w, h, col, 0 );
 
