@@ -1,0 +1,64 @@
+/**< Provides macros to work with dynamic arrays.
+ * NOTE: Except were noted, macros do not have side effects from
+ * expations */
+
+#ifndef ARRAY_H
+#  define ARRAY_H
+
+#include <stddef.h>
+
+typedef struct {
+   int _reserved;         /**< Number of elements reserved */
+   int _size;             /**< Number of elements in the array */
+   char _array[1];        /**< Begin of the array */
+} _private_container;
+
+
+void *_array_create_helper(size_t e_size);
+void *_array_grow_helper(void **a, size_t e_size);
+void _array_shrink_helper(void **a, size_t e_size);
+void _array_free_helper(void *a);
+
+static _private_container *_array_private_container(void *a)
+{
+   const int delta = (int)(&((_private_container *)NULL)->_array);
+   return (_private_container *)((char *)a - delta);
+}
+
+static void *_array_end_helper(void *a)
+{
+   _private_container *c = _array_private_container(a);
+   return c->_array + c->_size;
+}
+
+/**< Creates a new dynamic array of `basic_type' */
+#define array_create(basic_type) \
+      ((basic_type *)(_array_create_helper(sizeof(basic_type))))
+
+/**< Increases the number of elements by one and returns the last element.
+ * NOTE: Invalidates all iterators. */
+#define array_grow(ptr_array) \
+      (*(__typeof__((ptr_array)[0]))_array_grow_helper((void **)(ptr_array), sizeof((ptr_array)[0][0])))
+/**< Shrinks memory to fit only `size' elements.
+ * NOTE: Invalidates all iterators. */
+#define array_shrink(ptr_array) \
+      (_array_shrink_helper((void **)(ptr_array), sizeof((ptr_array)[0][0])))
+/**< Frees memory allocated and sets array to NULL.
+ * NOTE: Invalidates all iterators. */
+#define array_free(array) \
+      _array_free_helper((void *)(array))
+
+/**< Returns number of elements in the array */
+#define array_size(array) (_array_private_container(array)->_size)
+/**< Returns number of elements reserved */
+#define array_reserved(array) (_array_private_container(array)->_reserved)
+/**< Returns a pointer to the begining of the reserved memory space */
+#define array_begin(array) (array)
+/**< Returns a pointer to the end of the reserved memory space */
+#define array_end(array) ((__typeof__(array))_array_end_helper(array))
+/**< Returns the first element in the array */
+#define array_front(a) (*array_begin(a))
+/**< Returns the last element in the array */
+#define array_back(a) (*(array_end(a) - 1))
+
+#endif /* ARRAY_H */
