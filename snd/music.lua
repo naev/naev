@@ -10,48 +10,36 @@
 ]]--
 last = "idle"
 function choose( str )
+   -- Stores all the available sound types and their functions
+   choose_table = {
+      ["load"]    = choose_load,
+      ["intro"]   = choose_intro,
+      ["credits"] = choose_credits,
+      ["land"]    = choose_land,
+      ["takeoff"] = choose_takeoff,
+      ["ambient"] = choose_ambient,
+      ["combat"]  = choose_combat
+   }
 
    -- Means to only change song if needed
    if str == nil then
       str = "ambient"
    end
 
-   if str == "load" then
-
-      choose_load()
-
-   elseif str == "intro" then
-
-      choose_intro()
-
-   elseif str == "credits" then
-
-      choose_credits()
-
-   elseif str == "land" then
-
-      choose_land()
-
-   elseif str == "takeoff" then
-
-      choose_takeoff()
-
-   elseif str == "ambient" then
-
-      choose_ambient()
-
-   elseif str == "combat" then
-
-      choose_combat()
-
-   elseif str == "idle" and last ~= "idle" then
+   -- If we are over idling then we do weird stuff
+   local changed = false
+   if str == "idle" and last ~= "idle" then
 
       -- We'll play the same as last unless it was takeoff
       if last == "takeoff" then
-         choose_ambient()
+         changed = choose_ambient()
       else
-         choose(last)
+         changed = choose(last)
       end
+
+   -- Normal case
+   else
+      changed = choose_table[ str ]()
    end
 
    if str ~= "idle" then
@@ -83,10 +71,11 @@ function choose_load ()
    load_song = "machina"
    -- Don't play again if needed
    if checkIfPlayingOrStop( load_song ) then
-      return
+      return false
    end
    music.load( load_song )
    music.play()
+   return true
 end
 
 
@@ -97,10 +86,11 @@ function choose_intro ()
    intro_song = "intro"
    -- Don't play again if needed
    if checkIfPlayingOrStop( intro_song ) then
-      return
+      return false
    end
    music.load( intro_song )
    music.play()
+   return true
 end
 
 
@@ -111,10 +101,11 @@ function choose_credits ()
    credits_song = "empire1"
    -- Don't play again if needed
    if checkIfPlayingOrStop( credits_song ) then
-      return
+      return false
    end
    music.load( credits_song )
    music.play()
+   return true
 end
 
 
@@ -141,6 +132,7 @@ function choose_land ()
 
    music.load( mus[ rnd.rnd(1, #mus) ] )
    music.play()
+   return true
 end
 
 
@@ -148,11 +140,12 @@ end
 function choose_takeoff ()
    -- No need to restart
    if last == "takeoff" and music.isPlaying() then
-      return
+      return false
    end
    takeoff = { "liftoff", "launch2", "launch3chatstart" }
    music.load( takeoff[ rnd.rnd(1,#takeoff) ])
    music.play()
+   return true
 end
 
 
@@ -171,7 +164,7 @@ function choose_ambient ()
    -- Check to see if we want to update
    if music.isPlaying() then
       if last == "takeoff" then
-         return
+         return false
       elseif last == "ambient" then
          force = false
       end
@@ -182,7 +175,7 @@ function choose_ambient ()
 
       -- Do not change songs so soon
       if songpos < 15. then
-         return
+         return false
       end
       --]]
    end
@@ -247,18 +240,21 @@ function choose_ambient ()
          local cur = music.current()
          for k,v in pairs(ambient) do
             if cur == v then
-               return
+               return false
             end
          end
 
          music.stop()
-         return
+         return false
       end
 
       -- Load music and play
       music.load( ambient[ rnd.rnd(1,#ambient) ] )
       music.play()
+      return true
    end
+
+   return false
 end
 
 
@@ -269,7 +265,7 @@ function choose_combat ()
    -- Stop music first, but since it'll get saved it'll run this next
    if music.isPlaying() then
       music.stop()
-      return
+      return true
    end
 
    -- Get some data about the system
@@ -285,5 +281,6 @@ function choose_combat ()
 
    music.load( combat[ rnd.rnd(1,#combat) ] )
    music.play()
+   return true
 end
 
