@@ -6,8 +6,16 @@
 #  define ARRAY_H
 
 #include <stddef.h>
+#include <assert.h>
+
+#ifdef DEBUG
+#define SENTINEL ((int)0xbabecafe)
+#endif
 
 typedef struct {
+#ifdef DEBUG
+   int _sentinel;
+#endif
    int _reserved;         /**< Number of elements reserved */
    int _size;             /**< Number of elements in the array */
    char _array[1];        /**< Begin of the array */
@@ -21,8 +29,16 @@ void _array_free_helper(void *a);
 
 static _private_container *_array_private_container(void *a)
 {
+   assert("NULL array!" && (a != NULL));
+
    const int delta = (int)(&((_private_container *)NULL)->_array);
-   return (_private_container *)((char *)a - delta);
+   _private_container *c = (_private_container *)((char *)a - delta);
+
+#ifdef DEBUG
+   assert("Sentinel not found. Use array_create() to create the array." && (c->_sentinel == SENTINEL));
+#endif
+
+   return c;
 }
 
 static void *_array_end_helper(void *a)

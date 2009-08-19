@@ -6,10 +6,13 @@
 
 void *_array_create_helper(size_t e_size)
 {
-   _private_container *array = malloc(sizeof(_private_container) - 1 + e_size);
-   array->_reserved = 1;
-   array->_size = 0;
-   return array->_array;
+   _private_container *c = malloc(sizeof(_private_container) - 1 + e_size);
+#ifdef DEBUG
+   c->_sentinel = SENTINEL;
+#endif
+   c->_reserved = 1;
+   c->_size = 0;
+   return c->_array;
 }
 
 void *_array_grow_helper(void **a, size_t e_size) {
