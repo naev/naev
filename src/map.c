@@ -510,6 +510,8 @@ static glTexture *gl_genFactionDisk( int radius )
    int i, j;
    uint8_t *pixels;
    SDL_Surface *sur;
+   int dist;
+   double alpha;
 
    /* Calculate parameters. */
    const int w = 2 * radius + 1;
@@ -528,8 +530,8 @@ static glTexture *gl_genFactionDisk( int radius )
    for (i=0; i<h; i++) {
       for (j=0; j<w; j++) {
          /* Calculate blur. */
-         int dist = (i - radius) * (i - radius) + (j - radius) * (j - radius);
-         double alpha = 0.;
+         dist = (i - radius) * (i - radius) + (j - radius) * (j - radius);
+         alpha = 0.;
 
          if (dist < radius * radius) {
             /* Computes alpha with an empirically chosen formula.
@@ -564,7 +566,7 @@ static void map_render( double bx, double by, double w, double h )
    int i,j, n,m;
    double x,y,r, tx,ty;
    StarSystem *sys, *jsys, *hsys;
-   glColour* col;
+   glColour *col, c;
    GLfloat vertex[8*(2+4)];
    int sw, sh;
 
@@ -600,11 +602,16 @@ static void map_render( double bx, double by, double w, double h )
          sw = gl_faction_disk->sw;
          sh = gl_faction_disk->sw;
 
+         col = faction_colour(sys->faction);
+         c.r = col->r;
+         c.g = col->g;
+         c.b = col->b;
+         c.a = 0.5;
+
          gl_blitTexture(
                gl_faction_disk,
                tx - sw/2, ty - sh/2, sw, sh,
-               0., 0., gl_faction_disk->srw, gl_faction_disk->srw,
-               faction_colour(sys->faction) );
+               0., 0., gl_faction_disk->srw, gl_faction_disk->srw, &c );
       }
 
       gl_drawCircleInRect( tx, ty, r, bx, by, w, h, col, 0 );
