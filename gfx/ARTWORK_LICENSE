@@ -1,8 +1,6 @@
  * Author: Bobbens, License: PD
    * NAEV.png
    * loading00.png
-   * gui
-     * minimal_planet.png
    * outfit
      * space
        * lasergreen.png
@@ -244,6 +242,7 @@
 
  * Author: Sean Hildebrand, License: CC-by v3.0
    * gui
+     * minimal_planet.png
      * minimal_pilot.png
    * gfx
      * outfit
