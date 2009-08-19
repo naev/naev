@@ -48,34 +48,34 @@ static void *_array_end_helper(void *a)
    return c->_array + c->_size;
 }
 
-/**< Creates a new dynamic array of `basic_type' */
+/** @brief Creates a new dynamic array of `basic_type' */
 #define array_create(basic_type) \
       ((basic_type *)(_array_create_helper(sizeof(basic_type))))
 
-/**< Increases the number of elements by one and returns the last element.
+/** @brief Increases the number of elements by one and returns the last element.
  * NOTE: Invalidates all iterators. */
 #define array_grow(ptr_array) \
       (*(__typeof__((ptr_array)[0]))_array_grow_helper((void **)(ptr_array), sizeof((ptr_array)[0][0])))
-/**< Shrinks memory to fit only `size' elements.
+/** @brief Shrinks memory to fit only `size' elements.
  * NOTE: Invalidates all iterators. */
 #define array_shrink(ptr_array) \
       (_array_shrink_helper((void **)(ptr_array), sizeof((ptr_array)[0][0])))
-/**< Frees memory allocated and sets array to NULL.
+/** @brief Frees memory allocated and sets array to NULL.
  * NOTE: Invalidates all iterators. */
 #define array_free(array) \
       _array_free_helper((void *)(array))
 
-/**< Returns number of elements in the array */
+/** @brief Returns number of elements in the array */
 #define array_size(array) (_array_private_container(array)->_size)
-/**< Returns number of elements reserved */
+/** @brief Returns number of elements reserved */
 #define array_reserved(array) (_array_private_container(array)->_reserved)
-/**< Returns a pointer to the begining of the reserved memory space */
+/** @brief Returns a pointer to the begining of the reserved memory space */
 #define array_begin(array) (array)
-/**< Returns a pointer to the end of the reserved memory space */
+/** @brief Returns a pointer to the end of the reserved memory space */
 #define array_end(array) ((__typeof__(array))_array_end_helper(array))
-/**< Returns the first element in the array */
+/** @brief Returns the first element in the array */
 #define array_front(a) (*array_begin(a))
-/**< Returns the last element in the array */
+/** @brief Returns the last element in the array */
 #define array_back(a) (*(array_end(a) - 1))
 
 #endif /* ARRAY_H */
