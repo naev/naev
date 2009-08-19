@@ -443,60 +443,54 @@ static int map_inPath( StarSystem *sys )
 static void map_drawMarker( double x, double y, double r,
       int num, int cur, int type )
 {
+   const double beta = M_PI / 9;
+   static const glColour* colours[] = {
+      &cGreen, &cBlue, &cRed, &cOrange
+   };
+
    int i;
-   double a, c,s, d;
-   glColour *col;
+   double alpha, cos_alpha, sin_alpha;
    GLfloat vertex[3*(2+4)];
 
-   /* Get colour marking. */
-   switch (type) {
-      case 0:
-         col = &cGreen;
-         break;
-      case 1:
-         col = &cLightBlue;
-         break;
-      case 2:
-         col = &cRed;
-         break;
-      case 3:
-         col = &cOrange;
-         break;
-   }
 
    /* Calculate the angle. */
    if ((num == 1) || (num == 2) || (num == 4))
-      a = M_PI/4.;
+      alpha = M_PI/4.;
    else if (num == 3)
-      a = M_PI/6.;
+      alpha = M_PI/6.;
    else if (num == 5)
-      a = M_PI/10.;
+      alpha = M_PI/10.;
    else
-      a = M_PI/2.;
-   a += M_PI*2. * (double)cur/(double)num;
-   d = MAX(r, 8. * 1.5 * map_zoom);
-   c  = cos(a);
-   s  = sin(a);
+      alpha = M_PI/2.;
+
+   alpha += M_PI*2. * (double)cur/(double)num;
+   cos_alpha = r * cos(alpha);
+   sin_alpha = r * sin(alpha);
+   r = 3 * r;
 
    /* Draw the marking triangle. */
-   vertex[0] = x + (d)*c;
-   vertex[1] = y + (d)*s;
-   vertex[2] = x + (d+10.)*c - (5.)*s;
-   vertex[3] = y + (d+10.)*s + (5.)*c;
-   vertex[4] = x + (d+10.)*c - (-5.)*s;
-   vertex[5] = y + (d+10.)*s + (-5.)*c;
+   vertex[0] = x + cos_alpha;
+   vertex[1] = y + sin_alpha;
+   vertex[2] = x + cos_alpha + r * cos(beta + alpha);
+   vertex[3] = y + sin_alpha + r * sin(beta + alpha);
+   vertex[4] = x + cos_alpha + r * cos(beta - alpha);
+   vertex[5] = y + sin_alpha - r * sin(beta - alpha);
+
    for (i=0; i<3; i++) {
-      vertex[6 + 4*i + 0] = col->r;
-      vertex[6 + 4*i + 1] = col->g;
-      vertex[6 + 4*i + 2] = col->b;
-      vertex[6 + 4*i + 3] = col->a;
+      vertex[6 + 4*i + 0] = colours[type]->r;
+      vertex[6 + 4*i + 1] = colours[type]->g;
+      vertex[6 + 4*i + 2] = colours[type]->b;
+      vertex[6 + 4*i + 3] = colours[type]->a;
    }
+
+   glEnable(GL_POLYGON_SMOOTH);
    gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
    gl_vboActivateOffset( map_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
    gl_vboActivateOffset( map_vbo, GL_COLOR_ARRAY,
          sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLES, 0, 3 );
    gl_vboDeactivate();
+   glDisable(GL_POLYGON_SMOOTH);
 }
 
 /**
