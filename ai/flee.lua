@@ -15,10 +15,13 @@ end
 
 -- Required "control" function
 function control ()
-   task = ai.taskname()
-   enemy = ai.getenemy()
+   local task  = ai.taskname()
 
-   if task ~= "runaway" then
+   if task == "hyperspace" then
+      ai.hyperspace() -- try to hyperspace 
+
+   elseif task ~= "runaway" then
+      local enemy = ai.getenemy()
 
       if enemy ~= nil then
          ai.pushtask(0, "runaway", enemy)
@@ -38,19 +41,15 @@ function control ()
          ai.hyperspace()
       end
 
-   -- Enter hyperspace if possible
-   elseif task == "hyperspace" then 
-      ai.hyperspace() -- try to hyperspace 
-
    end
 end
 
 -- Required "attacked" function
 function attacked ( attacker )
-   task = ai.taskname()
+   local task = ai.taskname()
 
    if task == "runaway" then
-      target = ai.target()
+      local target = ai.target()
       if target == nil or ai.target() ~= attacker then
          ai.poptask()
          ai.pushtask(0, "runaway", attacker)
