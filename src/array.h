@@ -28,7 +28,7 @@ void *_array_grow_helper(void **a, size_t e_size);
 void _array_shrink_helper(void **a, size_t e_size);
 void _array_free_helper(void *a);
 
-static _private_container *_array_private_container(void *a)
+__inline__ static _private_container *_array_private_container(void *a)
 {
    assert("NULL array!" && (a != NULL));
 
@@ -42,7 +42,7 @@ static _private_container *_array_private_container(void *a)
    return c;
 }
 
-static void *_array_end_helper(void *a)
+__inline__ static void *_array_end_helper(void *a)
 {
    _private_container *c = _array_private_container(a);
    return c->_array + c->_size;
