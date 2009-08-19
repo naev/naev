@@ -249,10 +249,16 @@ static int mission_meetReq( int mission, int faction,
    if (misn == NULL) /* In case it doesn't exist */
       return 0;
 
-   /* Must match planet, system or faction. */
-   if (!(((misn->avail.planet != NULL) && (strcmp(misn->avail.planet,planet)==0)) ||
-         ((misn->avail.system != NULL) && (strcmp(misn->avail.system,sysname)==0)) ||
-         mission_matchFaction(misn,faction)))
+   /* If planet, must match planet. */
+   if ((misn->avail.planet != NULL) && (strcmp(misn->avail.planet,planet)!=0))
+      return 0;
+
+   /* If system, must match system. */
+   if ((misn->avail.system != NULL) && (strcmp(misn->avail.system,sysname)!=0))
+      return 0;
+
+   /* Match faction. */
+   if (!mission_matchFaction(misn,faction))
       return 0;
 
    /* Must not be already done or running if unique. */
