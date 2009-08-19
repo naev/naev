@@ -300,7 +300,7 @@
   <flags>
    <unique />
   </flags>
-  <chance>100</chance>
+  <chance>15</chance>
   <avail>
    <location>Bar</location>
    <cond>system.get("Klantar"):jumpDist() &lt; 3</cond>
