@@ -951,4 +951,31 @@
    <population>70000</population>
   </general>
  </planet>
+ <planet name="Durea">
+  <GFX>
+   <exterior>snow.png</exterior>
+   <space>G01.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.4</prodfactor>
+   <bar>This bar is the standard issue model that can be found on impopular mining colonies throughout the galaxy. It's essentially a regular prefab habitation unit converted to a bar. It has all the facilities and features you might expect in a public facility, but it offers none of the comfort that bars on metropolis planets tend to sport. The liquor served here is often pretty strong, which is in no small part due to the planet's harsh environment.</bar>
+   <description>Durea is not a terribly pleasant place to live, as it orbits its star a little too distantly for comfort, which leaves most of the planet covered in show and ice. Only a small portion of the surface thaws far enough in summer for the mining operations, but despite that the riches underneath the crust compel the hardy population to dig. Indeed, if one day resources in the galaxy grow sparse enough, Durea may well find itself in an economically superior position.</description>
+   <faction>Independent</faction>
+   <commodities>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>6</main>
+    <special>0</special>
+   </tech>
+   <services>3</services>
+   <class>M</class>
+   <population>2000000</population>
+  </general>
+ </planet>
 </Planets>

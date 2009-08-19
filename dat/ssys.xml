@@ -193,7 +193,7 @@
   <jumps>
    <jump>Coriolis</jump>
    <jump>NGC-7324</jump>
-   <jump>NGC-7549</jump>
+   <jump>Capricorn</jump>
    <jump>NGC-7693</jump>
   </jumps>
   <pos>
@@ -715,7 +715,7 @@
    <stars>400</stars>
   </general>
  </ssys>
- <ssys name="NGC-7549">
+ <ssys name="Capricorn">
   <fleets>
    <fleet>Pirate Light Prescence</fleet>
    <fleet>Empire Patrol Prescence</fleet>
@@ -727,12 +727,14 @@
    <y>148</y>
    <x>-74</x>
   </pos>
-  <planets/>
+  <planets>
+   <planet>Durea</planet>
+  </planets>
   <general>
    <asteroids>0</asteroids>
    <interference>0</interference>
    <nebula volatility="0">0</nebula>
-   <stars>100</stars>
+   <stars>200</stars>
   </general>
  </ssys>
  <ssys name="Haven">

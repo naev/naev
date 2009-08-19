@@ -295,6 +295,72 @@
    <location>None</location>
   </avail>
  </mission>
+ <mission name="Shadowrun">
+  <lua>neutral/shadowrun</lua>
+  <flags>
+   <unique />
+  </flags>
+  <chance>100</chance>
+  <avail>
+   <location>Bar</location>
+   <cond>system.get("Klantar"):jumpDist() &lt; 3</cond>
+  </avail>
+ </mission>
+ <mission name="Shadowrun_a">
+  <lua>neutral/shadowrun_a</lua>
+  <flags>
+   <unique />
+  </flags>
+  <chance>100</chance>
+  <avail>
+   <location>Bar</location>
+   <cond>var.peek("shadowrun_planet") ~= nil and planet.get() == planet.get(var.peek("shadowrun_planet"))</cond>
+  </avail>
+ </mission>
+ <mission name="Shadowrun_b">
+  <lua>neutral/shadowrun_b</lua>
+  <flags>
+   <unique />
+  </flags>
+  <chance>100</chance>
+  <avail>
+   <location>Bar</location>
+   <cond>var.peek("shadowrun_planet") ~= nil and planet.get() == planet.get(var.peek("shadowrun_planet"))</cond>
+  </avail>
+ </mission>
+ <mission name="Shadowrun_c">
+  <lua>neutral/shadowrun_c</lua>
+  <flags>
+   <unique />
+  </flags>
+  <chance>100</chance>
+  <avail>
+   <location>Bar</location>
+   <cond>var.peek("shadowrun_planet") ~= nil and planet.get() == planet.get(var.peek("shadowrun_planet"))</cond>
+  </avail>
+ </mission>
+ <mission name="Shadowrun_d">
+  <lua>neutral/shadowrun_d</lua>
+  <flags>
+   <unique />
+  </flags>
+  <chance>100</chance>
+  <avail>
+   <location>Bar</location>
+   <cond>var.peek("shadowrun_planet") ~= nil and planet.get() == planet.get(var.peek("shadowrun_planet"))</cond>
+  </avail>
+ </mission>
+ <mission name="Shadowrun_e">
+  <lua>neutral/shadowrun_e</lua>
+  <flags>
+   <unique />
+  </flags>
+  <chance>100</chance>
+  <avail>
+   <location>Bar</location>
+   <cond>var.peek("shadowrun_planet") ~= nil and planet.get() == planet.get(var.peek("shadowrun_planet"))</cond>
+  </avail>
+ </mission>
  <mission name="NAEV Needs You!">
   <lua>naev_needs_YOU</lua>
   <flags>
