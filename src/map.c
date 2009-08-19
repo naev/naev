@@ -481,10 +481,10 @@ static void map_drawMarker( double x, double y, double r,
    /* Draw the marking triangle. */
    vertex[0] = x + (d)*c;
    vertex[1] = y + (d)*s;
-   vertex[2] = x + (d+8.)*c - (4.)*s;
-   vertex[3] = y + (d+8.)*s + (4.)*c;
-   vertex[4] = x + (d+8.)*c - (-4.)*s;
-   vertex[5] = y + (d+8.)*s + (-4.)*c;
+   vertex[2] = x + (d+10.)*c - (5.)*s;
+   vertex[3] = y + (d+10.)*s + (5.)*c;
+   vertex[4] = x + (d+10.)*c - (-5.)*s;
+   vertex[5] = y + (d+10.)*s + (-5.)*c;
    for (i=0; i<3; i++) {
       vertex[6 + 4*i + 0] = col->r;
       vertex[6 + 4*i + 1] = col->g;
@@ -846,7 +846,7 @@ static void map_buttonZoom( unsigned int wid, char* str )
    }
    else if (strcmp(str,"btnZoomOut")==0) {
       map_zoom -= (map_zoom > 1.) ? 0.5 : 0.25;
-      map_zoom = MAX(0.25, map_zoom);
+      map_zoom = MAX(0.5, map_zoom);
    }
 
    map_setZoom(map_zoom);
