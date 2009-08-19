@@ -45,7 +45,8 @@ extern int pilot_nstack;
  * Prototypes.
  */
 /* Static. */
-static unsigned int comm_open( glTexture *gfx, int faction, int override, char *name );
+static unsigned int comm_open( glTexture *gfx, int faction,
+      int override, int bribed, char *name );
 static void comm_close( unsigned int wid, char *unused );
 static void comm_bribePilot( unsigned int wid, char *unused );
 static void comm_bribePlanet( unsigned int wid, char *unused );
@@ -93,6 +94,7 @@ int comm_openPilot( unsigned int pilot )
    wid = comm_open( ship_loadCommGFX( comm_pilot->ship ),
          comm_pilot->faction,
          pilot_isHostile(comm_pilot) ? -1 : pilot_isFriendly(comm_pilot) ? 1 : 0,
+         pilot_isFlag(comm_pilot, PILOT_BRIBED),
          comm_pilot->name );
 
    /* Add special buttons. */
@@ -132,7 +134,7 @@ int comm_openPlanet( Planet *planet )
 
    /* Create the generic comm window. */
    wid = comm_open( gl_dupTexture( comm_planet->gfx_space ),
-         comm_planet->faction, 0, comm_planet->name );
+         comm_planet->faction, 0, 0, comm_planet->name );
 
    /* Add special buttons. */
    if (areEnemies(player->faction, planet->faction) &&
@@ -153,7 +155,8 @@ int comm_openPlanet( Planet *planet )
  *    @param name Name of object talking to.
  *    @return The comm window id.
  */
-static unsigned int comm_open( glTexture *gfx, int faction, int override, char *name )
+static unsigned int comm_open( glTexture *gfx, int faction,
+      int override, int bribed, char *name )
 {
    int x,y, w;
    glTexture *logo;
@@ -173,17 +176,21 @@ static unsigned int comm_open( glTexture *gfx, int faction, int override, char *
    logo           = faction_logoSmall(faction);
 
    /* Get standing colour / text. */
-   if (override < 0) {
+   if (bribed) {
+      stand = "Neutral";
+      c     = &cNeutral;
+   }
+   else if (override < 0) {
       stand = "Hostile";
-      c = &cHostile;
+      c     = &cHostile;
    }
    else if (override > 0) {
       stand = "Friendly";
-      c = &cFriend;
+      c     = &cFriend;
    }
    else {
       stand = faction_getStandingBroad(faction_getPlayer( faction ));
-      c = faction_getColour( faction );
+      c     = faction_getColour( faction );
    }
    w = MAX(gl_printWidth( NULL, name ), gl_printWidth( NULL, stand ));
    y = gl_defFont.h*2 + 15;
