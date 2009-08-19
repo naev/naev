@@ -1,3 +1,7 @@
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
+
 /**< Provides macros to work with dynamic arrays.
  * NOTE: Except were noted, macros do not have side effects from
  * expations */
