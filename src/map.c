@@ -598,7 +598,7 @@ static void map_render( double bx, double by, double w, double h )
       ty = y + sys->pos.y*map_zoom;
 
       /* draws the disk representing the faction */
-      if (sys->faction != -1) {
+      if (sys_isKnown(sys) && (sys->faction != -1)) {
          sw = gl_faction_disk->sw;
          sh = gl_faction_disk->sw;
 
