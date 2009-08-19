@@ -60,6 +60,11 @@ function choose( str )
 end
 
 
+--[[
+-- @brief Checks to see if a song is being played, if it is it stops it.
+--
+--    @return true if music is playing.
+--]]
 function checkIfPlayingOrStop( song )
    if music.isPlaying() then
       if music.current() ~= song then
@@ -71,7 +76,9 @@ function checkIfPlayingOrStop( song )
 end
 
 
--- Loading songs.
+--[[
+-- @brief Chooses Loading songs.
+--]]
 function choose_load ()
    load_song = "machina"
    -- Don't play again if needed
@@ -83,7 +90,9 @@ function choose_load ()
 end
 
 
--- Intro music.
+--[[
+-- @brief Chooses Intro songs.
+--]]
 function choose_intro ()
    intro_song = "intro"
    -- Don't play again if needed
@@ -95,7 +104,9 @@ function choose_intro ()
 end
 
 
--- Credits music.
+--[[
+-- @brief Chooses Credit songs.
+--]]
 function choose_credits ()
    credits_song = "empire1"
    -- Don't play again if needed
@@ -107,10 +118,12 @@ function choose_credits ()
 end
 
 
--- Landing songs
+--[[
+-- @brief Chooses landing songs.
+--]]
 function choose_land ()
-   pnt = planet.get()
-   class = pnt:class()
+   local pnt   = planet.get()
+   local class = pnt:class()
 
    if class == "M" then
       mus = { "agriculture" }
@@ -144,14 +157,16 @@ end
 
 
 -- Save old data
-last_sysFaction = nil
+last_sysFaction  = nil
 last_sysNebuDens = nil
-last_sysNebuVol = nil
-ambient_neutral = { "ambient2", "mission",
+last_sysNebuVol  = nil
+ambient_neutral  = { "ambient2", "mission",
       "peace1", "peace2", "peace4", "peace6" }
--- Choose ambient songs
+--[[
+-- @brief Chooses ambient songs.
+--]]
 function choose_ambient ()
-   force = true
+   local force = true
 
    -- Check to see if we want to update
    if music.isPlaying() then
@@ -160,12 +175,22 @@ function choose_ambient ()
       elseif last == "ambient" then
          force = false
       end
+
+      -- Get music information.
+      --[[
+      local songname, songpos = music.current()
+
+      -- Do not change songs so soon
+      if songpos < 15. then
+         return
+      end
+      --]]
    end
 
    -- Get information about the current system
-   sys = system.get()
-   factions = sys:faction()
-   nebu_dens, nebu_vol = sys:nebula()
+   local sys                  = system.get()
+   local factions             = sys:faction()
+   local nebu_dens, nebu_vol  = sys:nebula()
 
    -- Check to see if changing faction zone
    if not factions[last_sysFaction] then
@@ -185,7 +210,7 @@ function choose_ambient ()
    end
 
    -- Check to see if entering nebula
-   nebu = nebu_dens > 0
+   local nebu = nebu_dens > 0
    if nebu ~= last_sysNebuDens then
       force = true
       last_sysNebuDens = nebu
@@ -194,7 +219,7 @@ function choose_ambient ()
    -- Must be forced
    if force then
       -- Choose the music, bias by faction first
-      add_neutral = false
+      local add_neutral = false
       if factions["Collective"] then
          ambient = { "collective1" }
       elseif factions["Empire"] then
@@ -219,7 +244,7 @@ function choose_ambient ()
       -- Make sure it's not already in the list or that we have to stop the
       -- currently playing song.
       if music.isPlaying() then
-         cur = music.current()
+         local cur = music.current()
          for k,v in pairs(ambient) do
             if cur == v then
                return
@@ -237,7 +262,9 @@ function choose_ambient ()
 end
 
 
--- Battle songs
+--[[
+-- @brief Chooses battle songs.
+--]]
 function choose_combat ()
    -- Stop music first, but since it'll get saved it'll run this next
    if music.isPlaying() then
@@ -246,10 +273,10 @@ function choose_combat ()
    end
 
    -- Get some data about the system
-   sys = system.get()
-   nebu_dens, nebu_vol = sys:nebula()
+   local sys                  = system.get()
+   local nebu_dens, nebu_vol  = sys:nebula()
 
-   nebu = nebu_dens > 0
+   local nebu = nebu_dens > 0
    if nebu then
       combat = { "nebu_battle1", "nebu_battle2", "battlesomething1" }
    else
