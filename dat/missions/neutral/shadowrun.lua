@@ -185,6 +185,7 @@ function enter()
 
         targship[1]:disable()
         hook.pilot(targship[1], "board", "board")
+        hook.pilot(targship[1], "death", "abort")
     end
 end
 
