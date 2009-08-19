@@ -30,8 +30,13 @@ void *_array_grow_helper(void **a, size_t e_size) {
 void _array_shrink_helper(void **a, size_t e_size)
 {
    _private_container *c = _array_private_container(*a);
-   c = realloc(c, sizeof(_private_container) - 1 + e_size * c->_size);
-   c->_reserved = c->_size;
+   if (c->_size != 0) {
+      c = realloc(c, sizeof(_private_container) - 1 + e_size * c->_size);
+      c->_reserved = c->_size;
+   } else {
+      c = realloc(c, sizeof(_private_container) - 1 + e_size);
+      c->_reserved = 1;
+   }
    *a = c->_array;
 }
 
