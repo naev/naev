@@ -7,13 +7,14 @@
 
 #include <stddef.h>
 #include <assert.h>
+#include <stdint.h>
 
-#ifdef DEBUG
+#ifdef DEBUGGING
 #define SENTINEL ((int)0xbabecafe)
 #endif
 
 typedef struct {
-#ifdef DEBUG
+#ifdef DEBUGGING
    int _sentinel;
 #endif
    int _reserved;         /**< Number of elements reserved */
@@ -31,10 +32,10 @@ static _private_container *_array_private_container(void *a)
 {
    assert("NULL array!" && (a != NULL));
 
-   const int delta = (int)(&((_private_container *)NULL)->_array);
+   const intptr_t delta = (intptr_t)(&((_private_container *)NULL)->_array);
    _private_container *c = (_private_container *)((char *)a - delta);
 
-#ifdef DEBUG
+#ifdef DEBUGGING
    assert("Sentinel not found. Use array_create() to create the array." && (c->_sentinel == SENTINEL));
 #endif
 
