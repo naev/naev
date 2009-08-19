@@ -179,7 +179,7 @@
    <cpu>70</cpu>
    <crew>1</crew>
    <mass>40</mass>
-   <fuel>1</fuel>
+   <fuel>200</fuel>
    <cap_cargo>1</cap_cargo>
   </characteristics>
   <slots>
