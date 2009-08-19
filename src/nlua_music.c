@@ -129,7 +129,10 @@ static int musicL_isPlaying( lua_State* L )
 /**
  * @brief Gets the name of the current playing song.
  *
- *    @luareturn The name of the current playing song or "none" if no song is playing.
+ * @usage songname, songplayed = music.current()
+ *
+ *    @luareturn The name of the current playing song or "none" if no song is playing,
+ *               and the current offset inside the song (0. if music is none).
  * @luafunc current()
  */
 static int musicL_current( lua_State* L )
@@ -139,7 +142,9 @@ static int musicL_current( lua_State* L )
    music_name = music_playingName();
 
    lua_pushstring(L, (music_name != NULL) ? music_name : "none" );
-   return 1;
+   lua_pushnumber(L, music_playingTime() );
+
+   return 2;
 }
 
 

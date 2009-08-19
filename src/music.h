@@ -40,6 +40,7 @@ void music_resume (void);
 void music_setPos( double sec );
 int music_isPlaying (void);
 const char *music_playingName (void);
+double music_playingTime (void);
 
 
 /*

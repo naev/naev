@@ -13,6 +13,8 @@
 
 #include "naev.h"
 
+#include "SDL.h"
+
 #include "music_sdlmix.h"
 #include "music_openal.h"
 #include "nlua.h"
@@ -68,6 +70,7 @@ static int nmusic_selection   = 0; /**< Size of available music selection. */
  * The current music.
  */
 static char *music_name       = NULL; /**< Current music name. */
+static unsigned int music_start = 0; /**< Music start playing time. */
 
 
 /*
@@ -279,6 +282,7 @@ static void music_free (void)
       free(music_name);
       music_name = NULL;
    }
+   music_start = 0;
 
    music_sys_free();
 }
@@ -387,7 +391,8 @@ int music_load( const char* name )
    music_free();
 
    /* Load new music. */
-   music_name = strdup(name);
+   music_name  = strdup(name);
+   music_start = SDL_GetTicks();
    snprintf( filename, PATH_MAX, MUSIC_PREFIX"%s"MUSIC_SUFFIX, name); 
    rw = ndata_rwops( filename );
    if (rw == NULL) {
@@ -465,7 +470,24 @@ int music_isPlaying (void)
  */
 const char *music_playingName (void)
 {
+   if (music_disabled)
+      return NULL;
+
    return music_name;
+}
+
+
+/**
+ * @brief Gets the time since the music started playing.
+ *
+ *    @return The time since the music started playing.
+ */
+double music_playingTime (void)
+{
+   if (music_disabled)
+      return 0.;
+
+   return (double)(SDL_GetTicks() - music_start) / 1000.;
 }
 
 
@@ -476,7 +498,8 @@ const char *music_playingName (void)
  */
 void music_setPos( double sec )
 {
-   if (music_disabled) return;
+   if (music_disabled)
+   return;
 
    music_sys_setPos( sec );
 }
