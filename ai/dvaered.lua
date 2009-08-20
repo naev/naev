@@ -14,7 +14,14 @@ function create ()
    if rnd.int() > 0.4 then
       mem.bribe_no = "\"I shall especially enjoy your death.\""
    else
-      mem.bribe_no = "\"You shall not buy my honour!\""
+      bribe_no = {
+            "\"You insult my honour.\"",
+            "\"I find your lack of honour disturbing.\"",
+            "\"You disgust me.\"",
+            "\"Bribery carries a harsh penalty.\"",
+            "\"House Dvaered does not lower itself to common scum.\""
+     }
+     mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
    end
 
    -- Handle refueling
@@ -39,7 +46,9 @@ function taunt ( target, offense )
    taunts = {
          "Prepare to face annihilation!",
          "I shall wash my hull in your blood!",
-         "Your head will make a great trophy!"
+         "Your head will make a great trophy!",
+       "You're no match for the Dvaered!",
+       "Death awaits you!"
    }
    ai.comm( target, taunts[ rnd.int(1,#taunts) ] )
 end

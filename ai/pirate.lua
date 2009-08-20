@@ -30,13 +30,20 @@ function create ()
       mem.bribe_no = "\"You won't be able to slide out of this one!\""
    else
       mem.bribe = math.sqrt( ai.shipmass() ) * (300. * rnd.rnd() + 850.)
-      if rnd.rnd() > 0.5 then
-         mem.bribe_prompt = string.format("\"It'll cost you %d credits for me to ignore your pile of rubbish.\"", mem.bribe)
-         mem.bribe_paid = "\"You're lucky I'm so kind.\""
-      else
-         mem.bribe_prompt = string.format("\"I'm in a good mood so I'll let you go for %d credits.\"", mem.bribe)
-         mem.bribe_paid = "\"Life doesn't get easier then this.\""
-      end
+      bribe_prompt = {
+            "\"It'll cost you %d credits for me to ignore your pile of rubbish.\"",
+            "\"I'm in a good mood so I'll let you go for %d credits.\"",
+            "\"Send me %d credits or you're dead.\"",
+            "\"Pay up %d credits or it's the end of the line.\""
+      }
+      mem.bribe_prompt = string.format(bribe_prompt[ rnd.rnd(1,#bribe_prompt) ], mem.bribe)
+      bribe_paid = {
+           "\"You're lucky I'm so kind.\"",
+            "\"Life doesn't get easier then this.\"",
+            "\"Pleasure doing business.\"",
+            "\"See you again, real soon.\""
+      }
+      mem.bribe_paid = bribe_paid[ rnd.rnd(1,#bribe_paid) ]
    end
 
    -- Deal with refueling
@@ -47,7 +54,7 @@ function create ()
       if standing > 60 then
          mem.refuel = mem.refuel * 0.5
       end
-      mem.refuel_msg = string.format("\"For you, only %d credits for fuel for a jump.\"",
+      mem.refuel_msg = string.format("\"For you, only %d credits for a jump's worth of fuel.\"",
             mem.refuel);
    end
 
@@ -69,7 +76,11 @@ function taunt ( target, offense )
       taunts = {
             "Prepare to be boarded!",
             "Yohoho!",
-            "What's a ship like you doing in a place like this?"
+            "Arr!",
+            "What's a ship like you doing in a place like this?",
+            "Prepare to have your booty plundered!",
+            "Give me your credits or die!",
+            "Your ship's mine!"
       }
    else
       taunts = {

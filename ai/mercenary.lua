@@ -18,7 +18,7 @@ function create ()
       if rnd.int() > 0.5 then
          mem.bribe_no = "\"You won't buy your way out of this one.\""
       else
-         mem.bribe_no = "\"The Empire likes to make examples out of scum like you.\""
+         mem.bribe_no = "\"I'm afraid you can't make it worth my while.\""
       end
    end
 
@@ -36,13 +36,15 @@ function taunt ( target, offense )
    -- some taunts
    if offense then
       taunts = {
-            "Don't take this personally."
+            "Don't take this personally.",
+            "It's just business."
       }
    else
       taunts = {
             "Your skull will make a great hood ornament.",
             "I've destroyed ships twice the size of yours!",
-            "I'll crush you like a grape!"
+            "I'll crush you like a grape!",
+            "This isn't what I signed up for!"
       }
    end
 

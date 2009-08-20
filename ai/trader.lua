@@ -8,6 +8,9 @@ function sos ()
       "Requesting assistance.  We are under attack!",
       "Merchant vessel under attack! Requesting help!",
       "Help! Ship under fire!",
+      "Taking hostile fire! Need assistance!",
+      "We are under attack, require support!",
+      "Mayday! Ship taking damage from hostiles!",
       string.format("Mayday! Merchant %s being assaulted!", ai.shipclass())
    }
    ai.settarget( ai.target() )
