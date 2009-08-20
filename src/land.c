@@ -1199,8 +1199,8 @@ static int news_load (void)
  */
 static void misn_open( unsigned int wid )
 {
-   char *buf;
    int w, h;
+   int y;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -1217,21 +1217,24 @@ static void misn_open( unsigned int wid )
          "Accept", misn_accept );
 
    /* text */
-   window_addText( wid, w/2 + 10, -60,
-         w/2 - 30, 20, 0,
-         "txtSDate", NULL, &cDConsole, "Date:" );
-   buf = ntime_pretty(0);
-   window_addText( wid, w/2 + 70, -60,
-         w/2 - 90, 20, 0,
-         "txtDate", NULL, &cBlack, buf );
-   free(buf);
-   window_addText( wid, w/2 + 10, -100,
+   y = -60;
+   window_addText( wid, w/2 + 10, y,
+         w/2 - 30, 40, 0,
+         "txtSDate", NULL, &cDConsole,
+         "Date:\n"
+         "Free Space:");
+   window_addText( wid, w/2 + 110, y,
+         w/2 - 90, 40, 0,
+         "txtDate", NULL, &cBlack, NULL );
+   y -= 2 * gl_defFont.h + 50;
+   window_addText( wid, w/2 + 10, y,
          w/2 - 30, 20, 0,
          "txtSReward", &gl_smallFont, &cDConsole, "Reward:" );
-   window_addText( wid, w/2 + 70, -100,
+   window_addText( wid, w/2 + 70, y,
          w/2 - 90, 20, 0,
          "txtReward", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, w/2 + 10, -120,
+   y -= 20;
+   window_addText( wid, w/2 + 10, y,
          w/2 - 30, h/2-90, 0,
          "txtDesc", &gl_smallFont, &cBlack, NULL );
 
@@ -1346,6 +1349,13 @@ static void misn_update( unsigned int wid, char* str )
    (void) str;
    char *active_misn;
    Mission* misn;
+   char txt[256], *buf;
+
+   /* Update date stuff. */
+   buf = ntime_pretty(0);
+   snprintf( txt, sizeof(txt), "%s\n%d Tons", buf, player->cargo_free );
+   free(buf);
+   window_modifyText( wid, "txtDate", txt );
 
    active_misn = toolkit_getList( wid, "lstMission" );
    if (strcmp(active_misn,"No Missions")==0) {
