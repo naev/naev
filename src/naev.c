@@ -331,6 +331,9 @@ void loadscreen_load (void)
    snprintf( file_path, PATH_MAX, "gfx/loading/%s", loadscreens[ RNG_SANE(0,nload-1) ] );
    loading = gl_newImage( file_path, 0 );
 
+   /* Create the stars. */
+   space_initStars( 1000 );
+
    /* Clean up. */
    for (i=0; i<nload; i++)
       free(loadscreens[i]);
@@ -347,20 +350,37 @@ void loadscreen_load (void)
 void loadscreen_render( double done, const char *msg )
 {
    glColour col;
+   double bx,by, bw,bh;
    double x,y, w,h, rh;
 
    /* Clear background. */
    glClear(GL_COLOR_BUFFER_BIT);
 
+   /* Draw stars. */
+   space_renderStars( 0. );
+
+   /*
+    * Dimensions.
+    */
+   /* Image. */
+   bw = 512.;
+   bh = 512.;
+   bx = (SCREEN_W-bw)/2.;
+   by = (SCREEN_H-bh)/2.;
+   /* Loading bar. */
+   w  = gl_screen.w * 0.4;
+   h  = gl_screen.h * 0.02;
+   rh = h + gl_defFont.h + 4.;
+   x  = -w/2.;
+   if (SCREEN_H < 768)
+      y  = -h/2.;
+   else
+      y  = -bw/2 - h - 5.;
+
    /* Draw loading screen image. */
-   gl_blitScale( loading, 0., 0., SCREEN_W, SCREEN_H, NULL );
+   gl_blitScale( loading, bx, by, bw, bh, NULL );
 
    /* Draw progress bar. */
-   w = gl_screen.w * 0.4;
-   h = gl_screen.h * 0.02;
-   rh = h + gl_defFont.h + 4.;
-   x = -w/2.;
-   y = -h/2.;
    /* BG. */
    col.r = cBlack.r;
    col.g = cBlack.g;
@@ -368,6 +388,11 @@ void loadscreen_render( double done, const char *msg )
    col.a = 0.7;
    gl_renderRect( x-2., y-2., w+4., rh+4., &col );
    /* FG. */
+   col.r = cDConsole.r;
+   col.g = cDConsole.g;
+   col.b = cDConsole.b;
+   col.a = 0.2;
+   gl_renderRect( x+done*w, y, (1.-done)*w, h, &col );
    col.r = cConsole.r;
    col.g = cConsole.g;
    col.b = cConsole.b;
