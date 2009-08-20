@@ -29,7 +29,7 @@
 
 
 #define INTRO_FONT_SIZE    18. /**< Intro text font size. */
-#define INTRO_SPEED        30. /**< Sped of text in characters / second. */
+#define INTRO_SPEED        30. /**< Speed of text in characters / second. */
 
 
 /*
