@@ -200,8 +200,8 @@ void input_setDefault (void)
    /* Escorts. */
    input_setKeybind( "e_targetNext", KEYBIND_KEYBOARD, SDLK_e, KMOD_NONE );
    input_setKeybind( "e_targetPrev", KEYBIND_KEYBOARD, SDLK_e, KMOD_LCTRL );
-   input_setKeybind( "e_attack", KEYBIND_KEYBOARD, SDLK_f, KMOD_NONE );
-   input_setKeybind( "e_hold", KEYBIND_KEYBOARD, SDLK_g, KMOD_NONE );
+   input_setKeybind( "e_attack", KEYBIND_KEYBOARD, SDLK_f, KMOD_ALL );
+   input_setKeybind( "e_hold", KEYBIND_KEYBOARD, SDLK_g, KMOD_ALL );
    input_setKeybind( "e_return", KEYBIND_KEYBOARD, SDLK_c, KMOD_LCTRL );
    input_setKeybind( "e_clear", KEYBIND_KEYBOARD, SDLK_c, KMOD_NONE );
    /* Space. */
