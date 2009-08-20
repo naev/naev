@@ -46,10 +46,10 @@ __inline__ static _private_container *_array_private_container(void *a)
    return c;
 }
 
-__inline__ static void *_array_end_helper(void *a)
+__inline__ static void *_array_end_helper(void *a, size_t e_size)
 {
    _private_container *c = _array_private_container(a);
-   return c->_array + c->_size;
+   return c->_array + c->_size * e_size;
 }
 
 /** @brief Creates a new dynamic array of `basic_type' */
@@ -76,7 +76,7 @@ __inline__ static void *_array_end_helper(void *a)
 /** @brief Returns a pointer to the begining of the reserved memory space */
 #define array_begin(array) (array)
 /** @brief Returns a pointer to the end of the reserved memory space */
-#define array_end(array) ((__typeof__(array))_array_end_helper(array))
+#define array_end(array) ((__typeof__(array))_array_end_helper((array), sizeof((array)[0])))
 /** @brief Returns the first element in the array */
 #define array_front(a) (*array_begin(a))
 /** @brief Returns the last element in the array */
