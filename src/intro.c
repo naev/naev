@@ -209,7 +209,7 @@ int intro_display( const char *text, const char *mus )
       }
 
       /* Only thing we actually care about updating is music. */
-      music_update();
+      music_update( 0. );
 
       /* Display stuff. */
       SDL_GL_SwapBuffers();

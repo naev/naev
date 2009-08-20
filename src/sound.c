@@ -445,12 +445,12 @@ int sound_updatePos( int voice, double px, double py, double vx, double vy )
  *
  *    @return 0 on success.
  */
-int sound_update (void)
+int sound_update( double dt )
 {
    alVoice *v, *tv;
 
    /* Update music if needed. */
-   music_update();
+   music_update(dt);
 
    if (sound_disabled)
       return 0;

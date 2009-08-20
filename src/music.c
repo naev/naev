@@ -71,6 +71,7 @@ static int nmusic_selection   = 0; /**< Size of available music selection. */
  */
 static char *music_name       = NULL; /**< Current music name. */
 static unsigned int music_start = 0; /**< Music start playing time. */
+static double music_timer     = 0.; /**< Music timer. */
 
 
 /*
@@ -107,12 +108,19 @@ static void music_luaQuit (void);
 /**
  * @brief Updates the music.
  */
-void music_update (void)
+void music_update( double dt )
 {
    char buf[PATH_MAX];
 
    if (music_disabled)
       return;
+
+   /* Timer stuff. */
+   if (music_timer > 0.) {
+      music_timer -= dt;
+      if (music_timer <= 0.)
+         music_runchoose = 1;
+   }
 
    /* Lock music and see if needs to update. */
    SDL_mutexP(music_lock);
@@ -571,7 +579,32 @@ int music_choose( const char* situation )
    if (music_disabled)
       return 0;
 
+   music_timer = 0.;
    music_runLua( situation );
+
+   return 0;
+}
+
+
+
+/**
+ * @brief Actually runs the music stuff, based on situation after a delay.
+ *
+ *    @param situation Choose a new music to play after delay.
+ *    @param delay Delay in seconds to delay the rechoose.
+ *    @return 0 on success.
+ */
+int music_chooseDelay( const char* situation, double delay )
+{
+   if (music_disabled)
+      return 0;
+
+   /* Lock so it doesn't run in between an update. */
+   SDL_mutexP(music_lock);
+   music_timer       = delay;
+   music_runchoose   = 0;
+   strncpy(music_situation, situation, PATH_MAX);
+   SDL_mutexV(music_lock);
 
    return 0;
 }
@@ -589,7 +622,8 @@ void music_rechoose (void)
 
    /* Lock so it doesn't run in between an update. */
    SDL_mutexP(music_lock);
-   music_runchoose = 1;
+   music_timer       = 0.;
+   music_runchoose   = 1;
    strncpy(music_situation, "idle", PATH_MAX);
    SDL_mutexV(music_lock);
 }
