@@ -246,21 +246,17 @@ void input_init (void)
    }
 #endif /* DEBUGGING */
 
-#if SDL_VERSION_ATLEAST(1,3,0)
    /* Window. */
-   SDL_EventState( SDL_WINDOWEVENT,     SDL_DISABLE );
    SDL_EventState( SDL_SYSWMEVENT,      SDL_DISABLE );
 
    /* Keyboard. */
    SDL_EventState( SDL_KEYDOWN,         SDL_ENABLE );
    SDL_EventState( SDL_KEYUP,           SDL_ENABLE );
-   SDL_EventState( SDL_TEXTINPUT,       SDL_DISABLE );
 
    /* Mice. */
    SDL_EventState( SDL_MOUSEMOTION,     SDL_ENABLE );
    SDL_EventState( SDL_MOUSEBUTTONDOWN, SDL_ENABLE );
    SDL_EventState( SDL_MOUSEBUTTONUP,   SDL_ENABLE );
-   SDL_EventState( SDL_MOUSEWHEEL,      SDL_ENABLE );
    
    /* Joystick, enabled in joystick.c if needed. */
    SDL_EventState( SDL_JOYAXISMOTION,   SDL_DISABLE );
@@ -270,6 +266,16 @@ void input_init (void)
 
    /* Quit. */
    SDL_EventState( SDL_QUIT,            SDL_ENABLE );
+
+#if SDL_VERSION_ATLEAST(1,3,0)
+   /* Window. */
+   SDL_EventState( SDL_WINDOWEVENT,     SDL_DISABLE );
+
+   /* Keyboard. */
+   SDL_EventState( SDL_TEXTINPUT,       SDL_DISABLE );
+
+   /* Mouse. */
+   SDL_EventState( SDL_MOUSEWHEEL,      SDL_DISABLE );
 
    /* Proximity. */
    SDL_EventState( SDL_PROXIMITYIN,     SDL_DISABLE );
