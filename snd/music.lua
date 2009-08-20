@@ -154,7 +154,8 @@ last_sysFaction  = nil
 last_sysNebuDens = nil
 last_sysNebuVol  = nil
 ambient_neutral  = { "ambient2", "mission",
-      "peace1", "peace2", "peace4", "peace6" }
+      "peace1", "peace2", "peace4", "peace6",
+      "void_sensor" }
 --[[
 -- @brief Chooses ambient songs.
 --]]
