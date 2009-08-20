@@ -507,7 +507,7 @@ double music_playingTime (void)
 void music_setPos( double sec )
 {
    if (music_disabled)
-   return;
+      return;
 
    music_sys_setPos( sec );
 }
