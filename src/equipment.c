@@ -386,12 +386,18 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                   (outfit_isFighterBay(lst[i].outfit))) {
                if ((lst[i].u.ammo.outfit == NULL) ||
                      (lst[i].u.ammo.quantity == 0)) {
-                  display = "Out of ammo.";
+                  if (outfit_isFighterBay(lst[i].outfit))
+                     display = "Bay empty";
+                  else
+                     display = "Out of ammo";
                   c = &cRed;
                }
                else if (lst[i].u.ammo.quantity + lst[i].u.ammo.deployed <
                      outfit_amount(lst[i].outfit)) {
-                  display = "Low ammo.";
+                  if (outfit_isFighterBay(lst[i].outfit))
+                     display = "Bay low";
+                  else
+                     display = "Low ammo";
                   c = &cYellow;
                }
             }
