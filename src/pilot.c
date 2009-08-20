@@ -637,7 +637,8 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
 void pilot_rmHostile( Pilot* p )
 {
    if (pilot_isFlag(p, PILOT_HOSTILE)) {
-      player_enemies--;
+      if (!pilot_isDisabled(p))
+         player_enemies--;
       pilot_rmFlag(p, PILOT_HOSTILE);
 
       /* Change music back to ambient if no more enemies. */
