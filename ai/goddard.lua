@@ -11,7 +11,14 @@ function create ()
    ai.setcredits( rnd.int(ai.shipprice()/300, ai.shipprice()/70) )
 
    -- Bribing
-   mem.bribe_no = "\"Be gone!\""
+   bribe_no = {
+         "\"You insult my honour.\"",
+         "\"I find your lack of honour disturbing.\"",
+         "\"You disgust me.\"",
+         "\"Bribery carries a harsh penalty.\"",
+         "\"House Goddard does not lower itself to common scum.\""
+   }
+   mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
 
    -- Refueling
    p = ai.getPlayer()
@@ -33,7 +40,9 @@ function taunt ( target, offense )
    taunts = {
          "Prepare to face annihilation!",
          "I shall wash my hull in your blood!",
-         "Your head will make a great trophy!"
+         "Your head will make a great trophy!",
+         "These moments will be your last!",
+         "You are a parasite!"
    }
    ai.comm( target, taunts[ rnd.int(1,#taunts) ] )
 end

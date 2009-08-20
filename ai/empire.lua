@@ -11,9 +11,12 @@ function create ()
    -- Not too many credits.
    ai.setcredits( rnd.rnd(ai.shipprice()/300, ai.shipprice()/70) )
 
-   -- Like to annoy the player
-   if rnd.rnd(0,2)==0 then
-      ai.broadcast("The Empire is watching you.")
+   -- Lines to annoy the player. Shouldn't be too common or Gamma Polaris and such get inundated.
+   r = rnd.rnd(0,20)
+   if r == 0 then
+     ai.broadcast("The Empire is watching you.")
+    elseif r == 1 then
+      ai.broadcast("The Emperor sees all.")
    end
 
    -- Get refuel chance
@@ -31,7 +34,7 @@ function create ()
          mem.refuel = mem.refuel * 0.6
       end
       -- Most likely no chance to refuel
-      mem.refuel_msg = string.format( "\"I suppose I could lose some fuel for %d credits\"", mem.refuel )
+      mem.refuel_msg = string.format( "\"I suppose I could spare some fuel for %d credits\"", mem.refuel )
    end
 
    -- See if can be bribed
@@ -40,11 +43,16 @@ function create ()
       mem.bribe_prompt = string.format("\"For some %d credits I could forget about seeing you.\"", mem.bribe )
       mem.bribe_paid = "\"Now scram before I change my mind.\""
    else
-      if rnd.rnd() > 0.5 then
-         mem.bribe_no = "\"You won't buy your way out of this one.\""
-      else
-         mem.bribe_no = "\"The Empire likes to make examples out of scum like you.\""
-      end
+     bribe_no = {
+            "\"You won't buy your way out of this one.\"",
+            "\"The Empire likes to make examples out of scum like you.\"",
+            "\"You've made a huge mistake.\"",
+            "\"Bribery carries a harsh penalty, scum.\"",
+            "\"I'm not interested in your blood money!\"",
+            "\"All the money in the world won't save you now!\""
+     }
+     mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
+     
    end
 
    -- Choose how to attack
@@ -64,14 +72,17 @@ function taunt ( target, offense )
       taunts = {
             "There is no room in this universe for scum like you!",
             "The Empire will enjoy your death!",
-            "Your head will make a fine gift for the Emperor!"
+            "Your head will make a fine gift for the Emperor!",
+            "None survive the wrath of the Emperor!",
+            "Enjoy your last moments, criminal!"
       }
    else
       taunts = {
             "You dare attack me!",
             "You are no match for the Empire!",
             "The Empire will have your head!",
-            "You'll regret this!"
+            "You'll regret that!",
+            "That was a fatal mistake!"
       }
    end
 
