@@ -23,12 +23,14 @@
 
 
 /* functions */
+static int musicL_delay( lua_State* L );
 static int musicL_load( lua_State* L );
 static int musicL_play( lua_State* L );
 static int musicL_stop( lua_State* L );
 static int musicL_isPlaying( lua_State* L );
 static int musicL_current( lua_State* L );
 static const luaL_reg music_methods[] = {
+   { "delay", musicL_delay },
    { "load", musicL_load },
    { "play", musicL_play },
    { "stop", musicL_stop },
@@ -62,6 +64,30 @@ int nlua_loadMusic( lua_State *L, int read_only )
 {
    (void)read_only; /* future proof */
    luaL_register(L, "music", music_methods);
+   return 0;
+}
+
+
+/**
+ * @brief Delays a rechoose.
+ *
+ * @usage music.delay( "ambient", 5.0 ) -- Rechooses ambient in 5 seconds
+ *
+ *    @luaparam situation Situation to choose.
+ *    @luaparam delay Delay in seconds.
+ * @luafunc delay( situation, delay )
+ */
+static int musicL_delay( lua_State* L )
+{
+   const char *situation;
+   double delay;
+
+   /* Get parameters. */
+   situation   = luaL_checkstring(L,1);
+   delay       = luaL_checknumber(L,2);
+
+   /* Delay. */
+   music_chooseDelay( situation, delay );
    return 0;
 }
 

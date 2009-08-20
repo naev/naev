@@ -42,7 +42,7 @@ function choose( str )
       changed = choose_table[ str ]()
    end
 
-   if str ~= "idle" then
+   if changed and str ~= "idle" then
       last = str -- save the last string so we can use it
    end
 end
@@ -71,7 +71,7 @@ function choose_load ()
    load_song = "machina"
    -- Don't play again if needed
    if checkIfPlayingOrStop( load_song ) then
-      return false
+      return true
    end
    music.load( load_song )
    music.play()
@@ -86,7 +86,7 @@ function choose_intro ()
    intro_song = "intro"
    -- Don't play again if needed
    if checkIfPlayingOrStop( intro_song ) then
-      return false
+      return true
    end
    music.load( intro_song )
    music.play()
@@ -101,7 +101,7 @@ function choose_credits ()
    credits_song = "empire1"
    -- Don't play again if needed
    if checkIfPlayingOrStop( credits_song ) then
-      return false
+      return true
    end
    music.load( credits_song )
    music.play()
@@ -140,7 +140,7 @@ end
 function choose_takeoff ()
    -- No need to restart
    if last == "takeoff" and music.isPlaying() then
-      return false
+      return true
    end
    takeoff = { "liftoff", "launch2", "launch3chatstart" }
    music.load( takeoff[ rnd.rnd(1,#takeoff) ])
@@ -165,20 +165,19 @@ function choose_ambient ()
    -- Check to see if we want to update
    if music.isPlaying() then
       if last == "takeoff" then
-         return false
+         return true
       elseif last == "ambient" then
          force = false
       end
 
       -- Get music information.
-      --[[
       local songname, songpos = music.current()
 
       -- Do not change songs so soon
       if songpos < 15. then
+         music.delay( "ambient", 15. - songpos )
          return false
       end
-      --]]
    end
 
    -- Get information about the current system
@@ -246,7 +245,7 @@ function choose_ambient ()
          end
 
          music.stop()
-         return false
+         return true
       end
 
       -- Load music and play
