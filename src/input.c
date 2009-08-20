@@ -172,7 +172,7 @@ void input_setDefault (void)
 {
    /* Movement. */
    input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, KMOD_ALL );
-   input_setKeybind( "afterburn", KEYBIND_NULL, SDLK_z, KMOD_ALL );
+   input_setKeybind( "afterburn", KEYBIND_KEYBOARD, SDLK_z, KMOD_ALL );
    input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, KMOD_ALL );
    input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, KMOD_ALL );
    input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, KMOD_ALL );
@@ -424,6 +424,29 @@ SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod )
       }
    WARN("Unable to get keybinding '%s', that command doesn't exist", keybind);
    return (SDLKey)-1;
+}
+
+
+/**
+ * @brief Gets the human readable version of mod.
+ *
+ *    @brief mod Mod to get human readable version from.
+ *    @return Human readable version of mod.
+ */
+const char* input_modToText( SDLMod mod )
+{
+   switch (mod) {
+      case KMOD_LCTRL:  return "lctrl";
+      case KMOD_RCTRL:  return "rctrl";
+      case KMOD_LSHIFT: return "lshift";
+      case KMOD_RSHIFT: return "rshift";
+      case KMOD_LALT:   return "lalt";
+      case KMOD_RALT:   return "ralt";
+      case KMOD_LMETA:  return "lmeta";
+      case KMOD_RMETA:  return "rmeta";
+      case KMOD_ALL:    return "any";
+      default:          return "unknown";
+   }
 }
 
 
