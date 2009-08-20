@@ -375,7 +375,7 @@ void loadscreen_render( double done, const char *msg )
    if (SCREEN_H < 768)
       y  = -h/2.;
    else
-      y  = -bw/2 - h - 5.;
+      y  = -bw/2 - rh - 5.;
 
    /* Draw loading screen image. */
    gl_blitScale( loading, bx, by, bw, bh, NULL );
