@@ -13,6 +13,7 @@ mem.shield_return  = 0 -- At which shield to return to combat
 mem.aggressive     = false -- Should pilot actively attack enemies?
 mem.safe_distance  = 300 -- Safe distance from enemies to jump
 mem.land_planet    = true -- Should land on planets?
+mem.distress       = true -- AI distresses
 mem.distressrate   = 3 -- Number of ticks before calling for help
 mem.distressmsg    = nil -- Message when calling for help
 
@@ -68,7 +69,9 @@ function control ()
       end
 
       -- Handle distress
-      gen_distress()
+      if mem.distress then
+         gen_distress()
+      end
 
    -- Pilot is running away
    elseif task == "runaway" then
@@ -171,7 +174,6 @@ function distress ( pilot, attacker )
 
    -- Make sure target exists
    if not ai.exists( attacker ) then
-      ai.poptask()
       return
    end
 
