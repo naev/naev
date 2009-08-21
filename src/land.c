@@ -746,9 +746,7 @@ static void shipyard_open( unsigned int wid )
          "Crew:\n"
          "Mass:\n"
          "Jump time:\n"
-         "High slots:\n"
-         "Medium slots:\n"
-         "Low slots:\n"
+         "Slots:\n"
          "Thrust:\n"
          "Speed:\n"
          "Turn:\n"
@@ -765,7 +763,7 @@ static void shipyard_open( unsigned int wid )
    window_addText( wid, 40+iw+20, y,
          100, th, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
    window_addText( wid, 40+iw+20+100, y,
-         130, th, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+         w-(40+iw+20+100)-20, th, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
    y -= th + 10;
    window_addText( wid, 20+iw+40, y,
          w-(20+iw+40) - 20, 185, 0, "txtDescription",
@@ -834,8 +832,6 @@ static void shipyard_update( unsigned int wid, char* str )
             "NA\n"
             "NA\n"
             "NA\n"
-            "NA\n"
-            "NA\n"
             "NA\n" );
       window_modifyText( wid,  "txtDDesc", buf );
       return;
@@ -858,9 +854,7 @@ static void shipyard_update( unsigned int wid, char* str )
          "%d\n"
          "%.1f Tons\n"
          "%.1f STU average\n"
-         "%d\n"
-         "%d\n"
-         "%d\n"
+         "%d / %d / %d (High/Medium/Low)\n"
          "%.0f MN/Ton\n"
          "%.0f M/s\n"
          "%.0f Grad/s\n"
@@ -879,9 +873,7 @@ static void shipyard_update( unsigned int wid, char* str )
          ship->crew,
          ship->mass,
          pow( ship->mass, 1./2.5 ) / 5., /**< @todo make this more portable. */
-         ship->outfit_nhigh,
-         ship->outfit_nmedium,
-         ship->outfit_nlow,
+         ship->outfit_nhigh, ship->outfit_nmedium, ship->outfit_nlow,
          ship->thrust / ship->mass,
          ship->speed,
          ship->turn,
