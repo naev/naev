@@ -2265,15 +2265,23 @@ int player_addEscorts (void)
       /* Update outfit if needed. */
       if (player->escorts[i].type == ESCORT_TYPE_BAY) {
          for (j=0; j<player->noutfits; j++) {
+            /* Must have outfit. */
             if (player->outfits[j]->outfit == NULL)
                continue;
-            if (outfit_isFighterBay(player->outfits[j]->outfit)) {
-               o = outfit_ammo(player->outfits[j]->outfit);
-               if (outfit_isFighter(o) &&
-                     (strcmp(player->escorts[i].ship,o->u.fig.ship)==0)) {
-                  player->outfits[j]->u.ammo.deployed += 1;
-                  break;
-               }
+
+            /* Must be fighter bay. */
+            if (!outfit_isFighterBay(player->outfits[j]->outfit))
+               continue;
+
+            /* Must not have all deployed. */
+            if (player->outfits[j]->u.ammo.deployed >= outfit_amount(player->outfits[j]->outfit))
+               continue;
+
+            o = outfit_ammo(player->outfits[j]->outfit);
+            if (outfit_isFighter(o) &&
+                  (strcmp(player->escorts[i].ship,o->u.fig.ship)==0)) {
+               player->outfits[j]->u.ammo.deployed += 1;
+               break;
             }
          }
       }
