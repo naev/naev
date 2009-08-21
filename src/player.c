@@ -48,6 +48,7 @@
 #include "escort.h"
 #include "event.h"
 #include "conf.h"
+#include "nebula.h"
 
 
 #define XML_START_ID "Start" /**< Module start xml document identifier. */
@@ -1118,6 +1119,31 @@ static void player_updateZoom( double dt )
 {
    Pilot *target;
    double d, x,y, z,tz, dx, dy;
+   double in, out;
+   double c;
+
+   /* Minimum depends on velocity normally.
+    *
+    * w*h = A, cte    area constant
+    * w/h = K, cte    proportion constant
+    * d^2 = A, cte    geometric longitud
+    *
+    * A_v = A*(1+v/d)   area of view is based on speed
+    * A_v / A = (1 + v/d)
+    *
+    * z = A / A_v = 1. / (1 + v/d)
+    */
+   d   = sqrt(SCREEN_W*SCREEN_H);
+   in = MAX( ZOOM_OUT_MAX, 1. / (1. + VMOD(player->solid->vel)/d) );
+
+   /* Maximum is limited by nebulae. */
+   if (cur_system->nebu_density > 0.) {
+      c   = MIN( SCREEN_W, SCREEN_H );
+      out = MAX( ZOOM_OUT_MAX, nebu_getSightRadius() / c );
+   }
+   else {
+      out = ZOOM_OUT_MAX;
+   }
 
    /*
     * Set Zoom to pilot target.
@@ -1143,19 +1169,7 @@ static void player_updateZoom( double dt )
          tz = z;
    }
    else {
-      /* Depends on velocity normally.
-       *
-       * w*h = A, cte    area constant
-       * w/h = K, cte    proportion constant
-       * d^2 = A, cte    geometric longitud
-       *
-       * A_v = A*(1+v/d)   area of view is based on speed
-       * A_v / A = (1 + v/d)
-       *
-       * z = A / A_v = 1. / (1 + v/d)
-       */
-      d = sqrt(SCREEN_W*SCREEN_H);
-      tz = 1. / (1. + VMOD(player->solid->vel)/d);
+      tz = in; /* Aim at in. */
    }
 
    /* Gradually zoom in/out. */
@@ -1163,7 +1177,7 @@ static void player_updateZoom( double dt )
    d *= dt / dt_mod; /* Remove dt dependence. */
    if (d < 0) /** Speed up if needed. */
       d *= 2.;
-   gl_cameraZoom( CLAMP( ZOOM_OUT_MAX, ZOOM_IN_MAX, z + d) );
+   gl_cameraZoom( CLAMP( out, in, z + d) );
 }
 
 
