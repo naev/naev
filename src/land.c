@@ -141,7 +141,6 @@ static void outfits_renderMod( double bx, double by, double w, double h );
 /* shipyard */
 static void shipyard_open( unsigned int wid );
 static void shipyard_update( unsigned int wid, char* str );
-static void shipyard_info( unsigned int wid, char* str );
 static void shipyard_buy( unsigned int wid, char* str );
 /* spaceport bar */
 static void spaceport_bar_getDim( int wid,
@@ -731,9 +730,6 @@ static void shipyard_open( unsigned int wid )
    window_addButton( wid, -40-bw, 20,
          bw, bh, "btnBuyShip",
          "Buy", shipyard_buy );
-   window_addButton( wid, -40-bw, 40+bh,
-         bw, bh, "btnInfoShip",
-         "Info", shipyard_info );
 
    /* target gfx */
    window_addRect( wid, -40, -50,
@@ -745,23 +741,30 @@ static void shipyard_open( unsigned int wid )
    buf = "Name:\n"
          "Class:\n"
          "Fabricator:\n"
-         "\n"
          "CPU:\n"
+         "Crew:\n"
          "Mass:\n"
          "Jump time:\n"
          "High slots:\n"
          "Medium slots:\n"
          "Low slots:\n"
-         "\n"
+         "Thrust:\n"
+         "Speed:\n"
+         "Turn:\n"
+         "Shield:\n"
+         "Armour:\n"
+         "Energy:\n"
+         "Cargo Space:\n"
+         "Fuel:\n"
          "Price:\n"
          "Money:\n"
          "License:\n";
-   th = gl_printHeightRaw( &gl_smallFont, 80, buf );
+   th = gl_printHeightRaw( &gl_smallFont, 100, buf );
    window_addText( wid, 40+iw+20, -55,
-         100, 256, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
+         100, th, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
    window_addText( wid, 40+iw+20+100, -55,
-         130, 256, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, 20+iw+40, -55-th-20,
+         130, th, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+   window_addText( wid, 20+iw+40, -55-th-10,
          w-(20+iw+40) - 20, 185, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 
@@ -813,14 +816,21 @@ static void shipyard_update( unsigned int wid, char* str )
             "None\n"
             "NA\n"
             "NA\n"
-            "\n"
             "NA\n"
             "NA\n"
             "NA\n"
             "NA\n"
             "NA\n"
             "NA\n"
-            "\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
             "NA\n"
             "NA\n"
             "NA\n" );
@@ -841,14 +851,21 @@ static void shipyard_update( unsigned int wid, char* str )
          "%s\n"
          "%s\n"
          "%s\n"
-         "\n"
          "%.0f Teraflops\n"
+         "%d\n"
          "%.1f Tons\n"
          "%.1f STU average\n"
          "%d\n"
          "%d\n"
          "%d\n"
-         "\n"
+         "%.0f MN/Ton\n"
+         "%.0f M/s\n"
+         "%.0f Grad/s\n"
+         "%.0f MJ (%.1f MW)\n"
+         "%.0f MJ (%.1f MW)\n"
+         "%.0f MJ (%.1f MW)\n"
+         "%.0f Tons\n"
+         "%d Units\n"
          "%s credits\n"
          "%s credits\n"
          "%s\n",
@@ -856,11 +873,20 @@ static void shipyard_update( unsigned int wid, char* str )
          ship_class(ship),
          ship->fabricator,
          ship->cpu,
+         ship->crew,
          ship->mass,
          pow( ship->mass, 1./2.5 ) / 5., /**< @todo make this more portable. */
          ship->outfit_nhigh,
          ship->outfit_nmedium,
          ship->outfit_nlow,
+         ship->thrust / ship->mass,
+         ship->speed,
+         ship->turn,
+         ship->shield, ship->shield_regen,
+         ship->armour, ship->armour_regen,
+         ship->energy, ship->energy_regen,
+         ship->cap_cargo,
+         ship->fuel,
          buf2,
          buf3,
          (ship->license != NULL) ? ship->license : "None" );
@@ -870,19 +896,6 @@ static void shipyard_update( unsigned int wid, char* str )
       window_disableButton( wid, "btnBuyShip");
    else
       window_enableButton( wid, "btnBuyShip");
-}
-/**
- * @brief Opens the ship's information window.
- *    @param wid Window to find out selected ship.
- *    @param str Unused.
- */
-static void shipyard_info( unsigned int wid, char* str )
-{
-   (void)str;
-   char *shipname;
-
-   shipname = toolkit_getImageArray( wid, "iarShipyard" );
-   ship_view(0, shipname);
 }
 /**
  * @brief Player attempts to buy a ship.
