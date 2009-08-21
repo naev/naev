@@ -186,6 +186,17 @@ int nebu_init (void)
 
 
 /**
+ * @brief Gets the nebula view radius.
+ *
+ *    @return The nebula view radius.
+ */
+double nebu_getSightRadius (void)
+{
+   return nebu_view;
+}
+
+
+/**
  * @brief Loads sur into tex, checks for expected size of w and h.
  *
  *    @param sur Surface to load into texture.
