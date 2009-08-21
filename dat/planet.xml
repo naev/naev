@@ -11,8 +11,8 @@
   </pos>
   <general>
    <prodfactor>0.5</prodfactor>
-   <bar>The bar is just off the starport with a great view of the harbor.  You could watch the fishermen run frantically about attending their duties for hours.</bar>
-   <description>The surface of the planet is predominantly covered with water and the planetary climate is characterized by abundant precipitation and strong winds, yet tolerable enough to make special and expensive weather control measures unnecessary. Habitable land is often characterized by soft meadows, swamps and dense forests. The resource base of Caladan consists mainly of agriculture and biomass, with the locally bred and grown pundi rice being its main export, and fishing a traditional source of sustenance for its people. Other traditional products include wine and various livestock, most prominently cattle. Cuisine on Caladan is rather refined, with most dishes containing meat.</description>
+   <bar>The bar is just off the starport with a great view of the harbor. You could watch the fishermen run frantically about attending their duties for hours.</bar>
+   <description>The surface of the planet is predominantly covered with water and the planetary climate is characterized by abundant precipitation and strong winds, though sufficiently tolerable to make costly weather modification equipment unnecessary. Habitable land is often characterized by soft meadows, swamps and dense forests. The resource base of Caladan consists mainly of agriculture and biomass, with the locally bred and grown pundi rice being its main export, and fishing a traditional source of sustenance for its people. Other traditional products include wine and various livestock, most prominently cattle. Cuisine on Caladan is rather refined, with most dishes containing meat.</description>
    <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -45,7 +45,7 @@
     <special>0</special>
    </tech>
    <class>J</class>
-   <description>Eiroik used to be a mining planet under the Empire rule until the Collective wiped out the human colonies on it.  The harsh atmosphere did the rest, erasing all tracks of former human life.</description>
+   <description>Eiroik was a former mining planet under Empire rule, known for its toxic atmosphere and difficult, rough terrain produced through millenia of volcanic activity. The few human colonies were eradicated by the Collective. The generators have failed and the former spaceport lies in ruins. All that remains is dust.</description>
   </general>
  </planet>
  <planet name="S23491">
@@ -78,8 +78,8 @@
   </pos>
   <general>
    <prodfactor>0.5</prodfactor>
-   <bar>Since you aren't allowed in the fancier bars you wander into the spaceport bar.  You can only imagine how the Emperor's bar itself can be like.</bar>
-   <description>Polaris Prime has become recent home to the Emperor himself as he plans and constructs his new stronghold on Emperor's Fist.  It is an immense station that has most things anyone would want.</description>
+   <bar>Since you aren't allowed in the fancier bars you wander into the spaceport bar. A simple, utilitarian bar patronized largely by off-duty dock workers and terraformers, it is nonetheless kept immaculately clean. You can only imagine how luxurious the Emperor's personal bar must be.</bar>
+   <description>Polaris Prime has recently become home to the Emperor himself as he plans and constructs his new stronghold on Emperor's Fist. It is an immense station with booming commerce, with a large loading area and frequent freight transfers between the station and Emperor's Fist below.</description>
    <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -108,8 +108,8 @@
   </pos>
   <general>
    <prodfactor>0.3</prodfactor>
-   <bar>Most of the drinks served at the bar are served very warm with heavy infusions of all kinds of spices.  They are designed to give a lot of energy to keep the body warm when walking in the cold base.</bar>
-   <description>Selphod is a very harsh and barren ice planet.  Most of the locals have never ventured outside the established bases.  The reason is that to be able to venture outside you have to wear really heavy thermal protection with a personal generator to keep the body temperature at optimal.  Even then, if the gear isn't worn properly the cold will quickly enter and kill the living being in less then a mTSU.</description>
+   <bar>Most of the drinks served at the bar are served very warm with heavy infusions of all kinds of spices. They are meant to bring warmth and energy in the cold corridors of the base.</bar>
+   <description>Selphod is a harsh and barren ice planet. Most of the locals have never ventured outside the established bases. Outdoor travels require heavy thermal protection with a personal generator to keep the wearer from succumbing to hypothermia. Many have met a swift, excruciatingly painful end by venturing out in ill-sealed thermal suits.</description>
    <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -136,8 +136,8 @@
   </pos>
   <general>
    <prodfactor>0.5</prodfactor>
-   <bar>The Raglan bar is a pretty small bar for Dvaered standards, and quite empty too.</bar>
-   <description>Raglan Outpost was established after the Dvaered-Frontier war broke out before the Incident.  To this day the Frontier still is demanding for its dismantling in the halls of the Emperor, although he has yet to make a statement.  Meanwhile the Dvaereds use this base intensively in their fight against the FLF.</description>
+   <bar>The Raglan bar is a utilitarian affair, quite small and nearly empty, given the standing orders for all outpost personnel to remain on alert given the threat of FLF attack.</bar>
+   <description>Raglan Outpost was established after the Dvaered-Frontier war broke out before the Incident. To this day the Frontier still is demanding for its dismantling in the halls of the Emperor, although he has yet to make a statement. Meanwhile the Dvaereds use this base extensively in their fight against the FLF.</description>
    <faction>Dvaered</faction>
    <tech>
     <main>7</main>
@@ -159,8 +159,8 @@
   </pos>
   <general>
    <prodfactor>0.5</prodfactor>
-   <bar>The bar is maintained by off-duty scientists and soldiers.  It's very small and doesn't have much offerings.  There's not much ambient noise, it seems like the boredom has gotten the best of most of the people.</bar>
-   <description>Named after the guardian dog of hell for its role in monitoring and observing the immense Sol nebula.  It was created shortly after the nebula stabilized.  Exact details are confidential and there's more then enough military influence to make it suspicious.  With all the conspiracy theories around the Incident, one can never be too sure where reality ends and fiction starts.</description>
+   <bar>The bar is maintained by off-duty scientists and soldiers. It's rather small and has a minuscule selection of beverages. There's little ambient noise; it seems as though boredom has gotten the best of most personnel.</bar>
+   <description>Named after the guardian dog of hell for its role in monitoring and observing the immense Sol nebula. It was created shortly after the nebula stabilized. Exact details are confidential and there's more then enough military influence to make it suspicious. With all the conspiracy theories around the Incident, one can never be too sure where reality ends and fiction starts.</description>
    <faction>Empire</faction>
    <tech>
     <main>0</main>
@@ -199,8 +199,8 @@
   </pos>
   <general>
    <prodfactor>0.8</prodfactor>
-   <bar>The Tau Prime algae has a very strong stench which seems to envelope the bar completely.  The smell is so strong you can actually taste it.  It doesn't taste nearly as good unprocessed. Most algae runners stop to grab drinks between runs to try to get the taste of the algae out of their mouth, although the usually use liquor made out of processed algae to do that.</bar>
-   <description>Tau Station was constructed with the sole purpose of exploiting the algae produced on Tau Prime.  Being a completely watery algae world with a very corrosive environment, it was deemed more profitable to build a space station then a city on the planet surface.   From the station windows you can see heavy algae collectors flying to and from the surface on their endless algae runs.</description>
+   <bar>The Tau Prime algae has a powerful odour which pervades the bar. The air is wreathed in the smell, such that you can taste it. It doesn't taste nearly as good unprocessed. Most algae runners stop to grab drinks between runs to try to get the taste of the algae out of their mouth, though the liquors the bar serves happen to be made with processed algae.</bar>
+   <description>Tau Station was constructed with the sole purpose of exploiting the algae produced on Tau Prime. Being a completely oceanic world with a highly corrosive atmosphere, it was deemed more profitable to build an orbiting station, rather than a platform city on the surface. From the station windows you can see heavy algae collectors flying to and from the surface on their endless algae runs.</description>
    <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -225,8 +225,8 @@
   </pos>
   <general>
    <prodfactor>0.2</prodfactor>
-   <bar>The Lost Drunk isn't much of a bar.  The high price of most liquids and the low population doesn't attract many people.  From what you can see it's mainly just shipping pilots and the odd mercenary sitting apart from each other.  Not a jolly place.</bar>
-   <description>Oma is one of the harsher desert worlds.  The outdoors temperature variates up to 400 degrees a day making it completely inhospitable.  The lack of proper terraforming equipment also makes it hard on the visitors by the drastic temperature changes they endure across the station.</description>
+   <bar>The Lost Drunk isn't much of a bar. The high price of most beverages and the low population results in few customers. From what you can see it's mainly shipping pilots and the odd mercenary sitting apart from each other. Not a jolly place.</bar>
+   <description>Oma is one of the harsher desert worlds. The external temperature varies nearly 400 degrees each day, making it completely incapable of sustaining human life outside of climate-controlled bases. The lack of proper terraforming equipment also makes it hard on the visitors by the drastic temperature changes they endure across the base.</description>
    <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -252,8 +252,8 @@
   </pos>
   <general>
    <prodfactor>0.7</prodfactor>
-   <bar>The drinks served in the Furnance, as the bar calls itself are of a pretty strange variety.  They are generally very strong and served at a warm temperature.  The house specialties also contain volcanic ash which is harvested on the planet surface.  A strange bar indeed.</bar>
-   <description>Doranthex Prime is a mostly molten planet.  The only exception is a small island that drifts around the surface mainly around the polar regions.  On this island the Dvaered have established a small base, mainly for research and military prototyping, although civilians are allowed in the main facilities.  Due to the intense temperatures they are shielded by over 50m of temperature isolating plating, which doesn't allow any views of the planet itself once you've landed.</description>
+   <bar>The drinks served in the Furnace, as the bar calls itself, are a rather curious sort. They are generally very strong and served at a warm temperature. The house specialties also contain volcanic ash which is harvested on the planet surface. A strange bar indeed.</bar>
+   <description>Doranthex Prime is a mostly-molten planet. One of the few pieces of solid land, a small island drifts around the around the northern polar region. On this island the Dvaered have established a small base, primarily for research and military prototyping, though civilians are allowed in the main facilities. Due to the intense temperatures, the base is shielded by over 50m of temperature isolation plating, which affords no view of the planet itself once a ship has landed.</description>
    <faction>Dvaered</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -278,8 +278,8 @@
   </pos>
   <general>
    <prodfactor>0.7</prodfactor>
-   <bar>The spaceport bar is carved into a rich mineral deposit giving the walls great reflections and colours.  The local drink are made partially with minerals giving all a rocky taste.</bar>
-   <description>Torloth is a heavy mining planet.  It has rich ores and minerals in abundance with no local life forms to speak of.  It's one of the strongholds of the Nexus corporation housing some of their important ship factories.  Of course the bigger ships have to get built off planet.</description>
+   <bar>The spaceport bar is carved from a rich mineral deposit lending the walls a glimmering, reflective quality. The local brews often include minerals in their production process, giving them a rich, somewhat saline taste.</bar>
+   <description>Torloth is a heavy mining planet. It has rich ores and minerals in abundance with no local fauna to speak of. It's one of the strongholds of the Nexus corporation, housing some of their important ship factories, though the heavy gravity of the planet necessitates constructing larger ships off-world. Torloth produces ships exclusively for delivery to Nexus depots and endorsed shipyards, and does not operate any publicly-accessible shipyards.</description>
    <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -307,7 +307,7 @@
   <general>
    <prodfactor>0.3</prodfactor>
    <bar>The Omega Canteen is a dark place that seems calm, although everytime a robotic drone approaches an alarm sounds sending pilots to man their ships to fight off the menace.</bar>
-   <description>Built to defend the Empire from the Collective.  The Omega Station has been the observer of countless battles fought in its sector.  It's helped keep a stalemate in the sector.</description>
+   <description>Built to defend the Empire from the Collective, the Omega Station has observed countless battles fought in its sector. Its presence has helped stem the flow of Collective drones into Empire space..</description>
    <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -333,8 +333,8 @@
   </pos>
   <general>
    <prodfactor>0.4</prodfactor>
-   <bar>The bar is designed for the workers of the terraforming project.  It's a simple dusty bar constantly full of workers.</bar>
-   <description>Emperor's Fist is intended to be the new homeworld of the Emperor itself since the last one was destroyed in the Incident.  It's a gigantic project that is attempting to completely adapt a C-class world to be suitable for the highest ranks of the Empire's aristocracy.  Currently it doesn't have much past the Starport.</description>
+   <bar>The bar is designed for those working on the terraforming project. Small compared to many planetary bars, it nonetheless has a steady f low of patrons, largely consisting of off-duty terraforming workers.</bar>
+   <description>Emperor's Fist is intended to be the new homeworld of the Emperor himself since the last one was destroyed in the Incident. It's a massive project that is attempting to completely transform a C-class world into that which is suitable for the highest ranks of the Empire's aristocracy. Currently it possesses few amenities beyond the Starport.</description>
    <faction>Empire</faction>
    <tech>
     <main>0</main>
@@ -373,7 +373,7 @@
   </pos>
   <general>
    <prodfactor>0.3</prodfactor>
-   <bar>The Arrakeen canteen is a shady place.  Many scoundrels and lowlifes make this their home to avoid notice from the universal police.</bar>
+   <bar>The Arrakeen canteen is one of the shadier bars in Empire space. Lying on the border of the Empire, few patrols come through, and many scoundrels and mercenaries can be found plying their trade.</bar>
    <description>Arrakis is a desert planet with no natural precipitation.</description>
    <faction>Empire</faction>
    <commodities>
@@ -400,8 +400,8 @@
   </pos>
   <general>
    <prodfactor>0.3</prodfactor>
-   <bar>The Ammu Spaceport Bar is usually known as "The Heatsink", due to the fact that it tends to be much colder then the rest of the station.  However it still serves some excellent flaming drinks.</bar>
-   <description>Ammu is a generally calm planet once you get accustomed to the constant intense noise of the lava flows not too far from beyond the sunken spaceport walls.  Occasionally there are big rumbles as lava erupts but the way it doesn't make the natives flinch makes you a bit less unsteady.</description>
+   <bar>The Ammu Spaceport Bar, known as "The Heatsink" due to its frigid temperatures, in contrast to the rest of the station. While primarily known for their temperature, that's not to say they can't whip up a mean Pan-Galactic Gargle Blaster.</bar>
+   <description>Ammu is a generally calm planet, once one is accustomed to the constant rumbling of the lava flows. Lava eruptions are often felt in the subterranean spaceport, but the way it doesn't seem to phase the locals reassures you.</description>
    <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -428,8 +428,8 @@
   </pos>
   <general>
    <prodfactor>0.5</prodfactor>
-   <bar>"The bar has a strange old meter on one of the walls that seems to dance erratically.  When you ask the bartender about it he mentions it measures the current pressure outside.</bar>
-   <description>Thar is a simple mining world owned by the Dvaered.  It has a very variable atmosphere that can go from a few kilometers wide to barely existent in no time.  The pressure changes are harmful to most lifeforms, making it an almost completely sterile planet.  With the advent of terraforming techniques it was finally made habitable for humans so they could exploit some of the resources it has.</description>
+   <bar>"The bar has a strange old meter on one of the walls that seems to dance erratically. When you ask the bartender about it he mentions it measures the current pressure outside.</bar>
+   <description>Thar is a simple mining world owned by the Dvaered. It has a very variable atmosphere that can rapidly alternate several kilometers wide to barely existent. The pressure changes are harmful to most lifeforms, making it an almost completely sterile planet. With the advent of terraforming techniques it was finally made habitable for humans so they could exploit some of its many resources.</description>
    <faction>Dvaered</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -475,8 +475,8 @@
   </pos>
   <general>
    <prodfactor>0.5</prodfactor>
-   <bar>The Jorlan people don't really have a habit for drinking.  You only seem to see other spacefarers in the bar, but no natives.</bar>
-   <description>Jorlan is a small moon that orbits Haleb IV.  It's inhabitants are mostly part of the ore refining process, as it supplies most of the Frontier with all sorts of alloys.  Gas miners are also sent down to Haleb IV every dozen STU when the planetary conditions are favorable, otherwise the incredible winds can crush many ships like tin cans.</description>
+   <bar>The Jorlan people don't really have a habit of drinking. You see numerous other spacefarers, but no natives.</bar>
+   <description>Jorlan is a small moon that orbits Haleb IV. It's inhabitants are mostly part of the ore refining process, as it supplies most of the Frontier with all sorts of alloys. Gas miners are also sent down to Haleb IV every dozen STU when the climate conditions are favorable, as outside of that narrow window, intense winds capable of severely damaging most ships persist.</description>
    <faction>Frontier</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -503,8 +503,8 @@
   </pos>
   <general>
    <prodfactor>0.5</prodfactor>
-   <bar>The one word that would describe the Jorcan spaceport bar would be dust.  It's everywhere: on the seats, on the counter, in the drinks, on everyone's faces...  It's not the usual finer dust you find on most worlds either, it's a thick, consistant, black, disgusting dust that you think you'll never be able to get off you.</bar>
-   <description>Jorcan is a very barren dull planet, like most mining worlds.  It's very poor in deposits, but mining is still done heavily in an attempt to remove every single drop of ore from the planet.</description>
+   <bar>The one word that would describe the Jorcan spaceport bar would be dust. It's everywhere: on the seats, on the counter, in the drinks, on everyone's faces. A coarse soot has coated your palm just holding your drink. You wonder if it will ever wash off.</bar>
+   <description>Jorcan is a very barren, dull planet, like most mining worlds. Having been mined for decades, its resources have been nearly exhausted. However, mining corporations are known to persist until there's no longer a profit to be made, leaving depleted, dead planets.</description>
    <faction>Dvaered</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -530,8 +530,8 @@
   </pos>
   <general>
    <prodfactor>0.5</prodfactor>
-   <bar>The Vlexair bar is small as far as Dvaered bars go.  There's not much variety of drink other then the standard Dvaered grogs.</bar>
-   <description>Vlexair is a harsh frozen world.  The planet wasn't always frozen though, it used to be a lush world until the planet's core froze.  Since then it's an extremely dangerous environment suitable only to the Dvaered workers.</description>
+   <bar>The Vlexair bar is small, as far as Dvaered bars go. There's not much variety of drink other then the standard Dvaered grogs.</bar>
+   <description>Vlexair is a harsh, frozen world. Formerly a lush paradise, an internal cataclysm caused its molten core to solidify, resulting in an ice age. Virtually no flora or fauna exist outside of the station. Due to its an extremely dangerous environment, it's proven suitable only to the Dvaered workers.</description>
    <faction>Dvaered</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -559,8 +559,8 @@
   </pos>
   <general>
    <prodfactor>0.5</prodfactor>
-   <bar>The bar is a nice clean place unlike most other bars.  It's been cleaned thoroughly for all the Empire officials that are starting to use the planet as their home.</bar>
-   <description>Nova Shakar was a somewhat abandoned Empire planet until the Emperor's Fist project was started.  Since then it's become a major producer of goods for the project and has started to gain importance.</description>
+   <bar>While not a grandiose affair, the spaceport bar is reasonably sized and immaculately clean. Due to the increasing number of Empire officials making their home here, it remains busy throughout the day.</bar>
+   <description>Nova Shakar was an utterly unremarkable Empire planet until the Emperor's Fist project began. Increasingly, Empire officials  are settling here, given its close proximity to Gamma Polaris. In the time since then, it's become a supplier of many materials for the project, gaining importance within the Empire.</description>
    <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -589,8 +589,8 @@
   <general>
    <prodfactor>0.6</prodfactor>
    <population>150000</population>
-   <bar>The Drunken Lobster has a plaque remembering the day the Emperor came to Em 5.  It seems unlikely he ever came in this bar though.</bar>
-   <description>Em 5 is a quiet world.  Never really had anyone pay attention to it until after the Incident, when it became a temporary refuge of the Emperor.  Since then it's started become a place for the aristocracy to meet.</description>
+   <bar>The Drunken Lobster has a plaque commemorating the time the Emperor spent on Em 5. It seems unlikely he ever visited this bar, though, given its less than refined patrons and threadbare furniture.</bar>
+   <description>Deep within Empire space, Em 5 is a quiet world. Few would have ranked it highly in the spectrum of galactic politics, yet after the Incident, it gained notability when it became a temporary refuge of the Emperor. In the time since, it's become a popular place for the aristocracy to meet.</description>
    <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -637,8 +637,8 @@
   </pos>
   <general>
    <prodfactor>0.7</prodfactor>
-   <bar>The Goddard Bar is unsurprisingly an old obsolete model remade as a bar.  It's surprisingly comfortable and  cozy as a bar, although every so often you can hear creaking in the ancient metal frame.</bar>
-   <description>Zhiru was a quiet planet, home of House Goddard, one of the minor Houses.  One day House Goddard began a plan to create a massive spacecraft, based on their air-born planes.  The result was the massive Goddard, named after the house that created it.  The ship was a massive success and went about to give House Goddard fame throughout the galaxy.  Now Zhiru is a booming ship factory, specialized in the creation and maintenance of the Goddard ships.  This is all possible due to the weak gravity and atmosphere that envelopes Zhiru that allows the massive spacecraft to land and take off without much difficulty.</description>
+   <bar>The Goddard Bar is, unsurprisingly, an obsolete model of their eponymous ship, stripped and refitted in the form of a bar. It's surprisingly comfortable and cozy as a bar, although every so often you can hear creaking in the ancient metal frame.</bar>
+   <description>Zhiru was a quiet planet, home of House Goddard, one of the minor Houses. House Goddard began designing a spacecraft, based on their airborne planes. The result was the massive Goddard, named after the house that created it. The ship was a massive success and granted House Goddard fame throughout the galaxy. Now Zhiru has a booming spacecraft industry, specialized in the creation and maintenance of the Goddard ships. This is all possible due to the weak gravity and atmosphere that envelops Zhiru, which allows the massive spacecraft to land and take off with little difficulty.</description>
    <faction>Goddard</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -684,8 +684,8 @@
   </pos>
   <general>
    <prodfactor>0.6</prodfactor>
-   <bar>The Slop and Grill is one of the nastiest taverns in the universe.  The food and drink doesn't exactly help.  Most of it is brewed on New Haven and wouldn't pass any of the minimal health insurance tests.  Some of the booze even doubles as ship fuel if needed, which says a lot about the quality.The clients are also deep space thugs, pirates, black marketers, mercenaries and other shady folk that insist on keeping the ground coated with blood and broken teeth.  Not a great place to bring the family.</bar>
-   <description>New Haven is a small planet located beyond the boundaries of law and justice.  Founded by Bartax the Great, one of the most successful pirates to ever live after the old Haven was annihilated.The planet is mostly covered by very toxic gases and has a lot of radiation if you stray from the stronghold.  These very features are what made the Empire qualify it as uninhabitable as it doesn't have any strategic resources.  It's distance from other civilized worlds also gives it a nice cover from prying eyes.</description>
+   <bar>The Slop and Grill is one of the nastiest taverns in the universe. The food and drink don't help matters. Most of it is brewed on New Haven and wouldn't pass any of the minimal health insurance tests. Some of the booze even doubles as ship fuel if needed.The clients are also deep space thugs, pirates, black marketers, mercenaries and other shady folk that insist on keeping the ground coated with blood and broken teeth. Not a great place to bring the family.</bar>
+   <description>New Haven is a small planet located beyond the boundaries of law and justice. Founded by Bartax the Great, one of the most successful pirates to ever live, after Haven was annihilated.The planet's atmosphere is highly toxic and has high levels of radiation outside of the stronghold. These very features are what made the Empire classify it as uninhabitable, as it lacks strategic resources necessary to justify the cost of terraforming. Its distance from other civilized worlds affords it protection from prying eyes.</description>
    <faction>Pirate</faction>
    <commodities>
     <commodity>Medicine</commodity>
@@ -712,8 +712,8 @@
   </pos>
   <general>
    <prodfactor>0.3</prodfactor>
-   <bar>The bar walls are covered with pictures of Empire soldiers fallen in the fight against Haven and piracy in general.  It has become a custom of the Empire to put pictures of the fallen from fighting piracy.  They are working on another addition to be able to fit more pictures.</bar>
-   <description>Zabween is an old station.  It was first created as an outpost to fight piracy, but with the destruction of the Haven it has calmed down a lot.  Now it's more of a gigantic commercial center selling all sorts of goods.  It keeps a museum with all sorts of ships and weapons that were used in the final fight against Haven.</description>
+   <bar>The bar walls are decorated with pictures of Empire soldiers who have fallen in the fight against Haven and piracy in general. It has become customary for the Empire to post pictures of the fallen, honouring those who gave their lives protecting the Empire's ideals. They are working on another addition to be able to fit more pictures.</bar>
+   <description>Zabween is an old station. It was first created as an outpost to fight piracy, but with the destruction of the Haven it has settled into a more traditional role. It presently functions as a largely commercial station, trading in many commodities. It keeps a museum with all sorts of ships and weapons that were used in the final fight against Haven.</description>
    <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -741,8 +741,8 @@
   </pos>
   <general>
    <prodfactor>0.6</prodfactor>
-   <bar>The bar is very large and not too full.  You notice the drink list has a "living" menu.  When you ask the bartender about them, he says they specialize in drinks containing living beings.  Generally jellyfish, but sometimes small cephalopods or more exotic beings.  What strange habits.</bar>
-   <description>Cetrat is a small aquatic planet known for its medical algae that grows.  No one has been able to reproduce it exactly as it is in the wild, but with the abundance of it all over there hasn't been too much effort in that field.</description>
+   <bar>The bar is very large, and yet has fairly few patrons. You notice the drink list has a "living" menu. When you ask the bartender about them, he says they specialize in drinks containing living creatures. Generally jellyfish, but sometimes small cephalopods, or more exotic beings. As exotic cultures go, Cetrat is among the stranger.</bar>
+   <description>Cetrat is a small aquatic planet known for its medical algae. No one has been able to reproduce it exactly as it is in the wild, but with the abundance of it throughout the planet's massive ocean, there has been little effort in that field.</description>
    <faction>Frontier</faction>
    <commodities>
     <commodity>Medicine</commodity>
@@ -768,8 +768,8 @@
   </pos>
   <general>
    <prodfactor>0.2</prodfactor>
-   <bar>Another big dirty bar full of hulking, smelly, sweaty Dvaereds.  They make a good brew though.</bar>
-   <description>Constructed by many captured and then enslaved FLF armsmen.  The design is pretty sturdy but you can't help to think there must be a hidden bomb somewhere, just waiting to go off and kill the Dvaered oppressors.</description>
+   <bar>The Raelid bar fits the Dvaered stereotype well. It's one of the more prominent areas as soon as you exit the docking area, and, as many Dvaered bars seem to be, it's much larger than it functionally needs to be. Far from the spotless bars of Polaris Prime, it's encrusted with dirt and you can sense the presence of other patrons by their smell alone. Truly, a Dvaered bar.</bar>
+   <description>Constructed by many captured and then enslaved FLF armsmen. The station seems sturdy, but you can't help wondering whether there's a bomb hidden somewhere, waiting to kill the Dvaered oppressors.</description>
    <faction>Dvaered</faction>
    <tech>
     <main>3</main>
@@ -791,8 +791,8 @@
   </pos>
   <general>
    <prodfactor>0.4</prodfactor>
-   <bar>The Dowue Spaceport Bar also known as the Frozen Shrimp after some ancient crustaceans found during the construction of the spaceport is a place where most of the personnel spends their time.  The dangers even with the headgear of the Dowue Syndrome persuades most people to stay indoors and the Bar lies in the heart of the spaceport.</bar>
-   <description>Dowue is a planet known for the infamous "Dowue Syndrome", a condition where patients will temporarily go insane with hysteria due to prolonged expose of certain visual wavelengths.  This was at first attributed a contaminated shipment of food, but later it was found that the sun in the Apez system emitted under abnormal wavelengths that when multiplied by the effect of Dowue's atmosphere would cause this condition.  Since then everyone is required to wear special headgear to avoid this.</description>
+   <bar>The Dowue Spaceport Bar is better known as the Frozen Shrimp after some ancient crustaceans found during the construction of the spaceport. It is a place where most of the personnel spend their time. The dangers, even with protective goggles, of the Dowue Syndrome persuade most people to stay indoors, and the bar lies in the heart of the spaceport.</bar>
+   <description>Dowue is a planet known for the infamous "Dowue Syndrome", a condition where patients will temporarily go insane with hysteria due to prolonged expose of certain visual wavelengths. This was at first attributed a contaminated shipment of food, but later it was found that the sun in the Apez system emitted abnormal wavelengths, whose effects where multiplied by contaminants in Dowue's atmosphere. Shortly thereafter, it became mandatory for all personnel to wear special goggles designed to filter out the harmful light.</description>
    <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -837,8 +837,8 @@
   </pos>
   <general>
    <prodfactor>0.8</prodfactor>
-   <bar>The Darkshed cantina is decorated with all sorts of odd artifacts that marked different tendencies in spaceship outfitting.</bar>
-   <description>Renowned for its outfit market and shipyards.  Almost the entire Darkshed station is dedicated to trading outfits and ships.  Mercenaries and bounty hunters from all over the galaxy come here to see the newest enhancements available in the market.  This tends to also attract many of the shadier characters in the universe winding up with frequent fights where they test their newly bought outfits.</description>
+   <bar>The Darkshed canteen is decorated with all sorts of odd artifacts that chronicle trends in spaceship outfitting in the years since the station was established. Scale models of many popular ships hang from the ceiling.</bar>
+   <description>Renowned for its outfit market and shipyards. Almost the entire Darkshed station is dedicated to trading outfits and ships. Mercenaries and bounty hunters from all over the galaxy come here to see try newest enhancements available on the market. This tends to also attract many of the shadier characters in the universe, winding up with frequent fights where they test their newly bought outfits.</description>
    <faction>Independent</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -867,8 +867,8 @@
   </pos>
   <general>
    <prodfactor>0.3</prodfactor>
-   <bar>There's nothing remarkable about the Nor spaceport bar.  It's full of drunken Dvaereds trying to forget their hard labour.</bar>
-   <description>Nor was one of the first Dvaered worlds to be terraformed.  It's abundance in gas and ores made it a strategic location and has since then been heavily reinforced after FLF attacks and sabotages.</description>
+   <bar>There's nothing remarkable about the Nor spaceport bar. It's full of drunken Dvaereds trying to forget their hard labour.</bar>
+   <description>Nor was one of the first Dvaered worlds to be terraformed. It's abundance in gas and ores made it a strategic location and has since then been heavily reinforced after FLF attacks and sabotages.</description>
    <faction>Dvaered</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -932,8 +932,8 @@
   </pos>
   <general>
    <prodfactor>0.4</prodfactor>
-   <bar>The spaceport bar is approximately 3 km below the surface of the planet.  Most of the walls are of a hardened transparent polymer that allows you to see into the darkness of the water.  Every so often you can notice a gelatinous creature slide around, barely illuminated by the bar lighting.</bar>
-   <description>Anecu is a completely aquatic planet.  It's surface is covered completely by water.  In the shallow areas great underwater cities are constructed, as the climate above the water can be very harsh (waves been recorded to be up to 2 km high).  The planet boasts of extensive ship designing facilities, using the high pressure water as a testbed for ships of all sorts.</description>
+   <bar>The spaceport bar is approximately 3 kilometres below the surface of the planet. The walls are constructed from a hardened, transparent polymer that allows you to see into the darkness of the water. Every so often you can see gelatinous creatures sliding around, barely illuminated by the bar lighting.</bar>
+   <description>Anecu is a completely aquatic planet. Its surface is covered completely by water. In the shallow areas great underwater cities are constructed, as the climate above the water can be very harsh (waves been recorded to be up to 2 kilometres high). The planet boasts extensive ship-designing facilities, using the high-pressure of the water as a benchmark against which ships are measured.</description>
    <faction>Dvaered</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -962,7 +962,7 @@
   </pos>
   <general>
    <prodfactor>0.4</prodfactor>
-   <bar>This bar is the standard issue model that can be found on impopular mining colonies throughout the galaxy. It's essentially a regular prefab habitation unit converted to a bar. It has all the facilities and features you might expect in a public facility, but it offers none of the comfort that bars on metropolis planets tend to sport. The liquor served here is often pretty strong, which is in no small part due to the planet's harsh environment.</bar>
+   <bar>This bar is the standard-issue model that can be found on unpopular mining colonies throughout the galaxy. It's essentially a regular prefab habitation unit converted to a bar. It has all the amenities and features you might expect in a public facility, but it offers none of the comfort that bars on metropolis planets tend to sport. The liquor served here is often pretty strong, which is in no small part due to the planet's harsh environment.</bar>
    <description>Durea is not a terribly pleasant place to live, as it orbits its star a little too distantly for comfort, which leaves most of the planet covered in show and ice. Only a small portion of the surface thaws far enough in summer for the mining operations, but despite that the riches underneath the crust compel the hardy population to dig. Indeed, if one day resources in the galaxy grow sparse enough, Durea may well find itself in an economically superior position.</description>
    <faction>Independent</faction>
    <commodities>
