@@ -103,11 +103,11 @@ struct Packcache_s {
  */
 #if HAS_FD
 #define READ(f,b,n)  if (read((f)->fd,(b),(n))!=(n)) { \
-   WARN("Fewer bytes read then expected"); \
+   WARN("Fewer bytes read than expected"); \
    return NULL; } /**< Helper define to check for errors. */
 #else /* not HAS_FD */
 #define READ(f,b,n)  if (fread((b),1,(n),(f)->fp)!=(n)) { \
-   WARN("Fewer bytes read then expected"); \
+   WARN("Fewer bytes read than expected"); \
    return NULL; } /**< Helper define to check for errors. */
 #endif /* HAS_FD */
 

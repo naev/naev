@@ -899,7 +899,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
          q++;
       }
 
-      /* Only fire if the last weapon to fire fired more then (q-1)/q ago. */
+      /* Only fire if the last weapon to fire fired more than (q-1)/q ago. */
       if (mint > outfit_delay(w->outfit) * ((q-1) / q))
          return 0;
    }
@@ -1958,7 +1958,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
       if ((outfit_cpu(o) > 0) && (p->cpu < outfit_cpu(o)))
          return "Insufficient CPU";
 
-      /* Can't add more then one afterburner. */
+      /* Can't add more than one afterburner. */
       if (outfit_isAfterburner(o) &&
             (p->afterburner != NULL))
          return "Already have an afterburner";

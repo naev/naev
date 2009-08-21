@@ -1355,7 +1355,7 @@ void weapon_add( const Outfit* outfit, const double dir,
          WARN("Unknown weapon layer!");
    }
 
-   if (*mLayer > *nLayer) /* more memory alloced then needed */
+   if (*mLayer > *nLayer) /* more memory alloced than needed */
       curLayer[(*nLayer)++] = w;
    else { /* need to allocate more memory */
       switch (layer) {
@@ -1433,7 +1433,7 @@ int beam_start( const Outfit* outfit,
          return -1;
    }
 
-   if (*mLayer > *nLayer) /* more memory alloced then needed */
+   if (*mLayer > *nLayer) /* more memory alloced than needed */
       curLayer[(*nLayer)++] = w;
    else { /* need to allocate more memory */
       switch (layer) {

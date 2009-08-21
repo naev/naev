@@ -65,7 +65,7 @@ void rng_init (void)
    need_init = 1; /* initialize by default */
 #if HAS_LINUX
    int fd;
-   fd = open("/dev/urandom", O_RDONLY); /* /dev/urandom is better then time seed */
+   fd = open("/dev/urandom", O_RDONLY); /* /dev/urandom is better than time seed */
    if (fd != -1) {
       i = sizeof(uint32_t)*624;
       if (read( fd, &MT, i ) == (ssize_t)i)

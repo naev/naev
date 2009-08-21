@@ -160,7 +160,7 @@
   <general>
    <prodfactor>0.5</prodfactor>
    <bar>The bar is maintained by off-duty scientists and soldiers. It's rather small and has a minuscule selection of beverages. There's little ambient noise; it seems as though boredom has gotten the best of most personnel.</bar>
-   <description>Named after the guardian dog of hell for its role in monitoring and observing the immense Sol nebula. It was created shortly after the nebula stabilized. Exact details are confidential and there's more then enough military influence to make it suspicious. With all the conspiracy theories around the Incident, one can never be too sure where reality ends and fiction starts.</description>
+   <description>Named after the guardian dog of hell for its role in monitoring and observing the immense Sol nebula. It was created shortly after the nebula stabilized. Exact details are confidential and there's more than enough military influence to make it suspicious. With all the conspiracy theories around the Incident, one can never be too sure where reality ends and fiction starts.</description>
    <faction>Empire</faction>
    <tech>
     <main>0</main>
@@ -530,7 +530,7 @@
   </pos>
   <general>
    <prodfactor>0.5</prodfactor>
-   <bar>The Vlexair bar is small, as far as Dvaered bars go. There's not much variety of drink other then the standard Dvaered grogs.</bar>
+   <bar>The Vlexair bar is small, as far as Dvaered bars go. There's not much variety of drink other than the standard Dvaered grogs.</bar>
    <description>Vlexair is a harsh, frozen world. Formerly a lush paradise, an internal cataclysm caused its molten core to solidify, resulting in an ice age. Virtually no flora or fauna exist outside of the station. Due to its an extremely dangerous environment, it's proven suitable only to the Dvaered workers.</description>
    <faction>Dvaered</faction>
    <commodities>

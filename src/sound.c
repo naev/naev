@@ -610,7 +610,7 @@ static int sound_makeList (void)
    for (i=0; i<nfiles; i++) {
       flen = strlen(files[i]);
 
-      /* Must be longer then suffix. */
+      /* Must be longer than suffix. */
       if (flen < suflen) {
          free(files[i]);
          continue;
