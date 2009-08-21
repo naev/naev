@@ -710,6 +710,7 @@ static void shipyard_open( unsigned int wid )
    int iw, ih;
    int bw, bh;
    int th;
+   int y;
    const char *buf;
 
    /* Get window dimensions. */
@@ -760,11 +761,13 @@ static void shipyard_open( unsigned int wid )
          "Money:\n"
          "License:\n";
    th = gl_printHeightRaw( &gl_smallFont, 100, buf );
-   window_addText( wid, 40+iw+20, -55,
+   y  = -55;
+   window_addText( wid, 40+iw+20, y,
          100, th, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
-   window_addText( wid, 40+iw+20+100, -55,
+   window_addText( wid, 40+iw+20+100, y,
          130, th, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, 20+iw+40, -55-th-10,
+   y -= th - 10;
+   window_addText( wid, 20+iw+40, y,
          w-(20+iw+40) - 20, 185, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 
