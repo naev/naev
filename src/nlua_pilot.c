@@ -1157,7 +1157,7 @@ static int pilotL_setNoboard( lua_State *L )
  * @usage armour, shield = p:getHealth()
  *
  *    @luaparam p Pilot to get health of.
- *    @luareturn The armour and shield of the pilot.
+ *    @luareturn The armour and shield of the pilot in % [0:100].
  * @luafunc getHealth( p )
  */
 static int pilotL_getHealth( lua_State *L )
@@ -1174,8 +1174,8 @@ static int pilotL_getHealth( lua_State *L )
    }
 
    /* Return parameters. */
-   lua_pushnumber(L, p->armour / p->armour_max );
-   lua_pushnumber(L, p->shield / p->shield_max );
+   lua_pushnumber(L, p->armour / p->armour_max * 100. );
+   lua_pushnumber(L, p->shield / p->shield_max * 100. );
 
    return 2;
 }
