@@ -10,20 +10,17 @@
 
 #include "array.h"
 
-typedef struct {
-   GLfloat coords[3];
-} Vertex;
 
 typedef struct {
-   GLushort indices[3];
-} Face;
-
-typedef struct {
-   Vertex *vertices;
-   Face *faces;
+   int num_corners;
+   GLuint object;
+   GLuint texture;
 } Object;
 
 
-void object_loadFromFile( const char *filename, Object *object);
+Object *object_loadFromFile( const char *filename);
+void object_render( Object *object );
+
+
 
 #endif
