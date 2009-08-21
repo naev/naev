@@ -22,7 +22,7 @@ else -- Default to English
    title    = {}
    text     = {}
    title[1] = "Spaceport Bar"
-   text[1]  = [[It seems like the bounty is on the head of a pirate terrorizing the area known as %s for %d credits.  It seems like he was last seen in the %s system. Quite a few other mercenaries seem interested and it looks like you'll have to outrace them.
+   text[1]  = [[It seems like the bounty is on the head of a pirate terrorizing the area known as %s for %d credits. It seems like he was last seen in the %s system. Quite a few other mercenaries seem interested and it looks like you'll have to outrace them.
    
 Will you take up the bounty?]]
    text[2] = [[You roll up your sleeve and grab one of the pamphlets given out by the Empire official.]]

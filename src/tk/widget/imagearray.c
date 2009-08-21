@@ -34,8 +34,8 @@ static void iar_cleanup( Widget* iar );
 /**
  * @brief Adds an Image Array widget.
  *
- * Position origin is 0,0 at bottom left.  If you use negative X or Y
- *  positions.  They actually count from the opposite side in.
+ * Position origin is 0,0 at bottom left. If you use negative X or Y
+ *  positions. They actually count from the opposite side in.
  *
  *    @param wid Window to add to.
  *    @param x X position.
@@ -308,7 +308,7 @@ static void iar_centerSelected( Widget *iar )
    /* Get dimensions. */
    iar_getDim( iar, NULL, &h );
 
-   /* Ignore fancy stuff if smaller then height. */
+   /* Ignore fancy stuff if smaller than height. */
    if (h * iar->dat.iar.yelem < iar->h)
       return;
 
@@ -436,7 +436,7 @@ static void iar_cleanup( Widget* iar )
  * @brief Tries to scroll a widget up/down by direction.
  *
  *    @param wgt Widget to scroll.
- *    @param direction Direction to scroll.  Positive is up, negative
+ *    @param direction Direction to scroll. Positive is up, negative
  *           is down and absolute value is number of elements to scroll.
  */
 static void iar_scroll( Widget* iar, int direction )

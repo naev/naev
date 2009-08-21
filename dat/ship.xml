@@ -450,7 +450,7 @@
   <price>450000</price>
   <fabricator>Skull and Bones</fabricator>
   <tech>9009</tech>
-  <description>The Pirate Vendetta is even more intimidating then its regular counterpart. It's been heavily tweaked to be more adjusted to the pirate style of flying. Some of the armour has been removed to make more room for loot, while the reactor has been jacked up by a dubious technician. The ship ends up being much more solid then the original, but every so often the reactor goes nova destroying the ship. You hope it won't happen to you if you get in one.</description>
+  <description>The Pirate Vendetta is even more intimidating than its regular counterpart. It's been heavily tweaked to be more adjusted to the pirate style of flying. Some of the armour has been removed to make more room for loot, while the reactor has been jacked up by a dubious technician. The ship ends up being substantially better than the original, but every so often the reactor goes nova destroying the ship. You hope it won't happen to you if you get in one.</description>
   <movement>
    <thrust>210</thrust>
    <turn>135</turn>
@@ -833,7 +833,7 @@
   <fabricator>Krain Industries</fabricator>
   <tech>12</tech>
   <license>Heavy Combat Vessel License</license>
-  <description>The ship that single-handedly put Krain Indusries on the map, the Kestrel was designed to be a sleek heavy assault cruiser. Generally more fragile then other cruisers, it manages to combine excellent manoeuvrability and firepower with state-of-the-art electronics, making for a truly fearsome ship in the hands of an able captain.</description>
+  <description>The ship that single-handedly put Krain Indusries on the map, the Kestrel was designed to be a sleek heavy assault cruiser. Generally more fragile than other cruisers, it manages to combine excellent manoeuvrability and firepower with state-of-the-art electronics, making for a truly fearsome ship in the hands of an able captain.</description>
   <movement>
    <thrust>100</thrust>
    <turn>80</turn>

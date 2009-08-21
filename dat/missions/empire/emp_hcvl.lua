@@ -16,13 +16,13 @@ else -- Default to English
    -- Mission details
    misn_title  = "Kill %s"
    misn_reward = "Authorization for Heavy Combat Vessel License"
-   misn_desc   = "There is a pirate knows as %s who must be terminated.  He was last seen near the %s system."
+   misn_desc   = "There is a pirate knows as %s who must be terminated. He was last seen near the %s system."
 
    -- Text
    title    = {}
    text     = {}
    title[1] = "Spaceport Bar"
-   text[1]  = [[You are greeted by an Empire official while at the bar, "Hello %s, Commander Soldner has spoken well of you.  We have an issue with a pirate known as %s near the system %s.  The mission would serve as your test for the Heavy Combat Vessel License.  Would you be interested?"]]
+   text[1]  = [[You are greeted by an Empire official while at the bar, "Hello %s, Commander Soldner has spoken well of you. We have an issue with a pirate known as %s near the system %s. The mission would serve as your test for the Heavy Combat Vessel License. Would you be interested?"]]
    text[2]  = [["Good luck!  The pirate has already killed his last contender, although I don't think he'll be a match for you."]]
 
    -- Messages

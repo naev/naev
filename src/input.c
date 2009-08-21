@@ -74,14 +74,14 @@ const char *keybindNames[] = {
    "end"
 }; /**< Names of possible keybindings. */
 /*
- * Keybinding descriptions.  Should match in position the names.
+ * Keybinding descriptions. Should match in position the names.
  */
 const char *keybindDescription[] = {
    /* Movement. */
    "Makes your ship accelerate forward.",
    "Makes your ship turn left.",
    "Makes your ship turn right.",
-   "Makes your ship turn around and face the direction you're moving from.  Good for braking.",
+   "Makes your ship turn around and face the direction you're moving from. Good for braking.",
    "Makes your ship afterburn if you have an afterburner installed.",
    /* Targetting. */
    "Cycles through ship targets.",
@@ -114,7 +114,7 @@ const char *keybindDescription[] = {
    /* Space navigation. */
    "Initializes the autonavigation system.",
    "Cycles through planet targets",
-   "Attempts to land on your targetted planet or targets the nearest landable planet.  Requests for landing if you don't have permission yet.",
+   "Attempts to land on your targetted planet or targets the nearest landable planet. Requests for landing if you don't have permission yet.",
    "Cycles through hyperspace targets.",
    "Opens the Star Map.",
    "Attempts to jump to your hyperspace target.",
@@ -130,7 +130,7 @@ const char *keybindDescription[] = {
    "Opens the information menu.",
    "Opens the Lua console.",
    NULL /* To match sentinel. */
-}; /**< Descriptions of the keybindings.  Should be in the same position as the
+}; /**< Descriptions of the keybindings. Should be in the same position as the
         matching keybinding name. */
 
 

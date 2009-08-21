@@ -702,9 +702,9 @@ static void print_SDLversion (void)
 
    /* Check if major/minor version differ. */
    if ((linked->major*100 + linked->minor) > compiled.major*100 + compiled.minor)
-      WARN("SDL is newer then compiled version");
+      WARN("SDL is newer than compiled version");
    if ((linked->major*100 + linked->minor) < compiled.major*100 + compiled.minor)
-      WARN("SDL is older then compiled version.");
+      WARN("SDL is older than compiled version.");
 }
 
 
