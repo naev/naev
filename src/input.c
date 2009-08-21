@@ -442,15 +442,15 @@ SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod )
 const char* input_modToText( SDLMod mod )
 {
    switch (mod) {
-      case KMOD_LCTRL:  return "lctrl";
-      case KMOD_RCTRL:  return "rctrl";
-      case KMOD_LSHIFT: return "lshift";
-      case KMOD_RSHIFT: return "rshift";
-      case KMOD_LALT:   return "lalt";
-      case KMOD_RALT:   return "ralt";
-      case KMOD_LMETA:  return "lmeta";
-      case KMOD_RMETA:  return "rmeta";
-      case KMOD_ALL:    return "any";
+      case KMOD_LCTRL:  return "LCtrl";
+      case KMOD_RCTRL:  return "RCtrl";
+      case KMOD_LSHIFT: return "LShift";
+      case KMOD_RSHIFT: return "RShift";
+      case KMOD_LALT:   return "Lalt";
+      case KMOD_RALT:   return "Ralt";
+      case KMOD_LMETA:  return "LMeta";
+      case KMOD_RMETA:  return "RMeta";
+      case KMOD_ALL:    return "Any";
       default:          return "unknown";
    }
 }

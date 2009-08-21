@@ -1305,7 +1305,7 @@ void player_land (void)
                player_playSound(snd_nav,1);
             }
             else /* Hostile */
-               player_message( "%s> Land request denied.", planet->name );
+               player_message( "%s> Landing request denied.", planet->name );
          }
          else { /* No shoes, no shirt, no lifeforms, no service. */
             player_message( "Ready to land on %s.", planet->name );
