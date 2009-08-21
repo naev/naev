@@ -766,7 +766,7 @@ static void shipyard_open( unsigned int wid )
          100, th, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
    window_addText( wid, 40+iw+20+100, y,
          130, th, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-   y -= th - 10;
+   y -= th + 10;
    window_addText( wid, 20+iw+40, y,
          w-(20+iw+40) - 20, 185, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
