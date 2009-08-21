@@ -262,12 +262,6 @@ end
 -- @brief Chooses battle songs.
 --]]
 function choose_combat ()
-   -- Stop music first, but since it'll get saved it'll run this next
-   if music.isPlaying() then
-      music.stop()
-      return true
-   end
-
    -- Get some data about the system
    local sys                  = system.get()
    local nebu_dens, nebu_vol  = sys:nebula()
@@ -277,6 +271,20 @@ function choose_combat ()
       combat = { "nebu_battle1", "nebu_battle2", "battlesomething1" }
    else
       combat = { "galacticbattle", "flf_battle1", "battlesomething1" }
+   end
+
+   -- Make sure it's not already in the list or that we have to stop the
+   -- currently playing song.
+   if music.isPlaying() then
+      local cur = music.current()
+      for k,v in pairs(combat) do
+         if cur == v then
+            return false
+         end
+      end
+
+      music.stop()
+      return true
    end
 
    music.load( combat[ rnd.rnd(1,#combat) ] )
