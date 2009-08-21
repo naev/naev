@@ -174,8 +174,8 @@ function choose_ambient ()
       local songname, songpos = music.current()
 
       -- Do not change songs so soon
-      if songpos < 15. then
-         music.delay( "ambient", 15. - songpos )
+      if songpos < 10. then
+         music.delay( "ambient", 10. - songpos )
          return false
       end
    end
