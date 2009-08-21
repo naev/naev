@@ -37,10 +37,7 @@ function control ()
          return
       end
 
-      if ai.dist(target) > 300 then
-         ai.hyperspace()
-      end
-
+      ai.hyperspace()
    end
 end
 
