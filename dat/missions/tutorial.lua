@@ -40,54 +40,74 @@ else -- default english
 
    title = {}
    text = {}
-   title[1] = "Tutorial"
+   title[1] = "NAEV Tutorial"
    text[1] = "Would you like to run the Tutorial to learn how to play NAEV?"
-   text[2] = [[Welcome to the NAEV Tutorial, %s.]]
+   text[2] = [[Welcome to the tutorial, %s.]]
    -- Step 1
    title[2] = "Flight Tutorial"
    text[3] = [[We'll start off by flying around. Use %s and %s to turn, and %s to accelerate. Try flying around the planet.]]
    -- Step 2
-   text[4] = [[Now we'll try braking. Since you can only accelerate forward, you'll have to turn around and accelerate to brake. To make this easier you can use %s to turn around automatically. The stars in the background are a good indication of your velocity. Try braking to a stop now.]]
-   text[5] = [[Now you're getting the hang of it.]]
+   text[4] = [[Now, we'll try braking. Since you can only accelerate forward, you'll have to turn around and accelerate to brake. To make this easier, you can use %s to turn around, facing the opposite direction that you're moving. The stars in the background are a good indication of your velocity. 
+   
+Try braking to a stop now.]]
+   text[5] = [[Now you're getting the hang of it. Moving well is integral to success in NAEV.]]
    -- Step 3
    title[3] = "Targeting Tutorial"
-   text[6] = [[Now we'll work on targeting. You have multiple options.
-   %s cycles through ships in the system.
-   %s cycles through ships backwards.
-   %s targets the nearest ship.
-   %s targets the nearest enemy.]]
-   text[7] = [[I'll bring in a couple of ships so you can try targeting. You'll notice your targeted ship is highlighted on the radar (Top right). You can use the %s and %s keys to change the scale of the radar. Yellow is neutral, red is hostile, green is friendly and grey is disabled. The new ships will be yellow.]]
+   text[6] = [[Next, we'll work on targeting.
+   
+You have multiple options:
+ %s cycles through ships in the system.
+ %s cycles the ships backwards.
+ %s targets the nearest ship.
+ %s targets the nearest enemy.]]
+   text[7] = [[I'll bring in several ships so you can try targeting. You'll notice your targeted ship is highlighted on the radar (Top right). You can use the %s and %s keys to change the scale of the radar. Yellow is neutral, red is hostile, green is friendly and grey is disabled. The new ships will be green.]]
    -- Step 4
    title[4] = "Combat Tutorial"
-   text[8] = [[Now, let's try using the weapon systems. There are primarily three keys:
-   %s fires primary weapons.
-   %s selects secondary weapon.
-   %s fires secondary weapon.]]
-   text[9] = [[Your ship, a Llama, has two Laser Cannons as its primary weapons, so we'll try using them. I'll put in a Llama so you can try disabling it. Target it with %s or %s, and then approach it and shoot it with %s until it is disabled. You can also use %s to auto-face the target you have selected.]]
+   text[8] = [[Now, let's try using the weapon systems.
+   
+There are three important keys:
+ %s fires primary weapons.
+ %s selects secondary weapon.
+ %s fires secondary weapon.]]
+   text[9] = [[Your ship, a Llama, has two laser cannons as its primary weapons, so we'll try using them. A Captain Target Practice, our designated test pilot, will soon enter. You can target him with %s, %s or %s. Following that, approach him and shoot him with %s until he has been disabled. You can also use %s to auto-face targets you have selected.
+   
+Do be warned that Captain T. Practice is known for his... talkative nature.]]
    -- Step 5
-   text[10] = [[Good. Now that the Llama is disabled you can board it. To board a ship you must target it and then stop directly above it. Once you're on top of the ship you can press %s which will allow you to board the ship to steal resources.
-Try to board the ship now.]]
+   text[10] = [[Good. Now that the Llama is disabled, you can board it. To board a ship you must target it and then stop directly above it.
+   
+Once you're on top of the ship you can press %s which will allow you to board the ship to steal resources.
+   
+Try boarding the ship now.]]
    -- Back to Step 4
-   text[11] = [[You weren't supposed to destroy the Llama!  I'll add another so you can try again.]]
-   text[12] = [[Good. If the Llama had money or cargo, you could attempt to steal it. Your probability of success is based on the size of your crew versus theirs. The larger your crew, the higher your odds of success. Since the ship has nothing just leave it be and we'll introduce real enemies.]]
+   text[11] = [[You killed Captain T. Practice! You should be ashamed. Admittedly, we do having a waiting list of pilots willing to fill the role.]]
+   text[12] = [[If the Llama had money or cargo, you could attempt to steal it. Your probability of success is based on the size of your crew versus theirs. The larger your crew, the higher your odds of success. Since Captain T. Practice has nothing, just take off and we'll introduce a real enemy.]]
    -- Step 6
-   text[13] = [[Now comes the real challenge. I'll bring in a real pirate to see how you fare with him. Don't worry, help is on the way.]]
-   text[14] = [[That wasn't so scary was it?  Now we'll learn more about other things like Landing. Landing allows you to not only regenerate your shield and armour, but to trade goods, purchase outfits for your ship and buy new ships. The only downside is that you take a while to land, so if you're in a hurry for some mission, it's good to try not to land.]]
+   text[13] = [[Now comes the real challenge. I'll bring in a real pirate to see how you fare with him. 
+   
+Don't worry, help is on the way.]]
+   text[14] = [[That wasn't so hard, was it? We'll now learn more about some essential non-combat skills.
+   
+Landing allows you to not only regenerate your shield and armour, but to trade goods, purchase outfits for your ship, and buy new ships.
+   
+It takes time to land, so if you're in a hurry for a mission, it's best to make as few stops as possible.]]
    -- Step 7
    title[5] = "Landing Tutorial"
-   text[15] = [[Landing is also how you save in NAEV. Every time you land, it'll save your game. So don't land if you just screwed up an important mission or pissed off a big faction. The keys involved with landing are:
-   %s cycles through planets.f
-   %s lands or targets the nearest planet if none selected. 
-   The first press acquires landing clearance, the second lands the ship.]]
+   text[15] = [[Landing is also how you save in NAEV. This can be beneficial, but it's best to be careful. If you've failed an important mission, you should reload before landing again.
+   
+The keys involved with landing are:
+ %s cycles through planets.
+ %s lands or targets the nearest planet if none selected. 
+   
+The first press acquires landing clearance, the second lands the ship.]]
    text[16] = [[In order to land, you need to come to a near-stop above the planet or station you're trying to land on, much like boarding a ship. 
    
-   Try landing now.]]
+Try landing now.]]
    text[17] = [[This is the land window. Here, you can see an image of where you are, along with a description. Depending on the location, you'll have various services available. Services include:
-   * Commodity Exchange
-   * Spaceport Bar
-   * Mission Computer
-   * Outfitting
-   * Shipyard]]
+ * Commodity Exchange
+ * Spaceport Bar
+ * Mission Computer
+ * Outfitting
+ * Shipyard]]
    title[6] = "Commodity Exchange"
    text[18] = [[In the Commodity Exchange you can buy or sell goods. The goods available depend on where you are. Not every place has everything.]]
    title[7] = "Spaceport Bar"
@@ -101,19 +121,23 @@ Try to board the ship now.]]
    text[23] = [[Try exploring a bit around the planet. When you're ready to leave click on 'Takeoff' and we'll continue the tutorial.]]
    -- Step 8
    title[11] = "Navigation Tutorial"
-   text[24] = [[In this part of the tutorial we'll deal with long-distance navigation. All ships in NAEV are equipped with a hyperspace drive and universe map. Important keys to remember:
-   %s opens the system map.
-   %s cycles through hyperspace targets.
-   %s attempts to enter hyperspace or aborts an attempt.
-   %s activates autopilot.]]
+   text[24] = [[In this part of the tutorial we'll deal with long-distance navigation. All ships in NAEV are equipped with a hyperspace drive and universe map.
+   
+Important keys to remember:
+ %s opens the system map.
+ %s cycles through hyperspace targets.
+ %s attempts to enter hyperspace or aborts an attempt.
+ %s activates autopilot.]]
    title[12] = "System Map"
-   text[25] = [[We'll first talk about the map. When you open your map you'll notice it's barren. As you explore or buy star maps, the visible area will expand. Each circle represents a system, and the interconnecting lines represent hyperspace routes. You can click on a system to select it as a hyperspace target. If it's far away, the autonav system will make a route to it which your autopilot can use. The colour of each jump indicates whether or not you have enough fuel to make it.]]
+   text[25] = [[We'll first talk about the map. When you open your map you'll notice it's barren. As you explore or buy star maps, the visible area will expand.
+   
+Each circle represents a system, and the interconnecting lines represent hyperspace routes. You can click on a system to select it as a hyperspace target. If it's far away, the autonav system will make a route to it which your autopilot can use. The colour of each jump indicates whether or not you have enough fuel to make it.]]
    title[13] = "Nav System"
-   text[26] = [[Once you have a target you'll notice it in your navigation system. If you are far enough to jump it will be green, otherwise it will be grey. It's impossible to jump near large gravity wells, such as planets and stations. Once you're far enough from any gravity wells, you can jump to another system.]]
+   text[26] = [[Once you have a target, you'll see it in your navigation system  on the HUD. If you are far enough to jump it will be green. It's impossible to jump near large gravity wells, such as planets and stations. If you're too close to a gravity well, the hyperspace indicator will be grey. Once you're far enough from any gravity wells, you can jump to another system.]]
    text[27] = [[Now we'll try to jump. Here's an overview of how it works:
-   Select a target with the map, or cycle through targets with %s.
-   Move away from gravity wells until navigation turns green, or use autopilot with %s.
-   Use %s to initialize the jump.
+ Select a target with the map, or cycle through targets with %s.
+ Move away from gravity wells until navigation turns green, or use autopilot with %s.
+ Use %s to initialize the jump.
    
 Try doing this now. Since you haven't explored any systems, just pick any one and try jumping.]]
    -- Stage 9
@@ -136,11 +160,11 @@ Enjoy the game!]]
    osd_title[1] = "Tutorial - Flight"
    osd_msg[1]   = {
       "Basic Movement",
-      "Braking"
+      "Come to a Stop"
    }
    osd_title[2] = "Tutorial - Targeting"
    osd_msg[2]   = {
-      "Target ships that appear with:",
+      "Target ships with:",
       naev.getKey("target_next") .. " cycles through ships.",
       naev.getKey("target_prev") .. " cycles backwards.",
       naev.getKey("target_nearest") .. " targets nearest ship.",
@@ -191,7 +215,7 @@ function create ()
       misn_stage = 1
       tk.msg( title[1], string.format(text[2], player.name()))
 	  tk.msg(title[2], string.format(text[3], naev.getKey("left"), naev.getKey("right"), naev.getKey("accel")))
-      misn.timerStart( "flightOver", 10000 ) -- 10 second timer to fly around
+      misn.timerStart( "flightOver", 5000 ) -- 15 second timer to fly around FIXME
 
       -- Set Hooks
       hook.land( "tutLand" )
@@ -226,31 +250,41 @@ function brakeOver ()
       tk.msg( title[2], text[5] )
       tk.msg( title[3], string.format(text[6], naev.getKey("target_next"), naev.getKey("target_prev"), naev.getKey("target_nearest"), naev.getKey("target_hostile")))
       tk.msg( title[3], string.format(text[7], naev.getKey("mapzoomin"), naev.getKey("mapzoomout")))
-      pilots = pilot.add( "Sml Trader Convoy", "dummy" )
-      for k,v in ipairs(pilots) do
+      traders = pilot.add( "Sml Trader Convoy", "dummy" )
+      for k,v in ipairs(traders) do
          v:setFaction("Dummy")
          v:rename("Dummy")
+		 v:setFriendly()
       end
-      misn.timerStart( "targetOver", 20000 ) -- 20 seconds to target
+      misn.timerStart( "targetEnding", 15000 ) -- 15 seconds to target
    else
-      -- Keep on trying until he braked
+      -- Keep on trying until player brakes
       misn.timerStart( "brakeOver", 1000 )
    end
 end
 
+function targetEnding ()
+   for k,v in ipairs(traders) do
+      v:changeAI("flee")
+      v:setHealth(100, 100)
+      v:setFriendly()
+   end
+   misn.timerStart( "targetOver", 10000) -- Affords targetting-practice ships 10 seconds before the new Llama flies in.
+end
 
 function targetOver ()
    misn_stage = 4
-
+   
+   
    -- New OSD
    misn.osdCreate( osd_title[3], osd_msg[3] )
 
    -- Tell about combat.
    tk.msg( title[4], string.format(text[8], naev.getKey("primary"), naev.getKey("secondary_next"), naev.getKey("secondary")))
-   tk.msg( title[4], string.format(text[9], naev.getKey("target_nearest"), naev.getKey("target_next"), naev.getKey("primary"), naev.getKey("face")))
+   tk.msg( title[4], string.format(text[9], naev.getKey("target_hostile"), naev.getKey("target_nearest"), naev.getKey("target_next"), naev.getKey("primary"), naev.getKey("face")))
 
    -- Clear pilots again.
-   pilot.clear()
+ --  pilot.clear()
 
    addLlamaDummy()
 end
@@ -258,19 +292,132 @@ end
 
 function addLlamaDummy ()
    -- Add the combat dummy.
-   pilots = pilot.add( "Trader Llama", "dummy" )
-   for k,v in ipairs(pilots) do
+   llamadummy = pilot.add( "Trader Llama", "dummy" )
+   for k,v in ipairs(llamadummy) do
       v:setFaction("Dummy")
-      v:rename("Dummy")
+      llamaname = v:rename("Target Practice")
       hook.pilot( v, "disable", "llamaDisabled" )
       hook.pilot( v, "death", "llamaDead" )
       hook.pilot( v, "board", "llamaBoard" )
+	  pilot.setHostile(v)
+	  v:comm("Your mother smells worse than the algae of Tau Prime!")
+      shieldtaunt = 0
+      armourtaunt = 0
+	  misn.timerStart("taunt", 5000)
    end
 end
 
+function taunt ()
+	for k,v in ipairs(llamadummy) do
+		armour, shield = v:getHealth()
+		misn.timerStart("taunt2", 1000)
+	end
+end
+
+function taunt2 ()
+      shield30 = {
+            "Bring on the pain!",
+            "You're no match for the fearsome T. Practice!",
+            "I've been shot by ships ten times your size!",
+            "Let's get it on!",
+            "I  haven't got all day.",
+            "You're as threatening as an unborn child!",
+            "I've snacked on foes much larger than yourself!",
+            "Who's your daddy? I am!",
+            "You're less intimidating than a fruit cake!",
+            "My ship is the best in the galaxy!",
+            "Bow down before me, and I may spare your life!",
+            "Someone's about to set you up the bomb.",
+            "Your crew quarters are as pungent as an over-ripe banana!",
+            "I'm invincible, I cannot be vinced!",
+            "You think you can take me?",
+            "When I'm done, you'll look like pastrami!",
+            "I've got better things to do. Hurry up and die!",
+            "You call that a barrage? Pah!",
+            "You mother isn't much to look at, either!",
+            "You're not exactly a crack-shot, are you?",
+            "I've had meals that gave me more resistance than you!",
+            "You're a pathetic excuse for a pilot!",
+            "Surrender or face destruction!",
+            "That all you got?",
+            "I am Iron Man!",
+            "My shields are holding fine!",
+            "You'd be dead if I'd remembered to pack my weapons!",
+            "I'll end you!",
+            "... Right after I finish eating this bucket of fried chicken!",
+            "Dowue Fried Chicken. Eat only the best.",
+            "This is your last chance to surrender!",
+            "Don't do school, stay in milk.",
+            "I'm going to report you to the NPC Rights watchdog.",
+            "Keep going, see what happens!",
+            "You don't scare me!",
+            "What do you think this is, knitting hour?",
+            "I mean, good lord, man.",
+            "It's been several minutes of non-stop banter!",
+            "Haven't I sufficiently annoyed you yet?",
+            "Go on, shoot me.",
+            "You can do it! I believe in you.",
+            "Shoot me!",
+            "Okay, listen. I'm doing this for attention.",
+            "But if you don't shoot me, I'll tell the galaxy your terrible secret.",
+            "...",
+            "...",
+            "...",
+            "Go away! There are no Easter Eggs here.",
+            }
+       armour31 = {
+            "Okay, that's about enough.",
+            "You can stop now.",
+            "I was wrong about you.",
+            "Forgive and forget?",
+            "Let's be pals, I'll buy you an ale!",
+            "Game over, you win.",
+            "I've got a wife and kids! And a cat!",
+            "Surely you must have some mercy?",
+            "Please stop!",
+            "I'm sorry!",
+            "Leave me alone!",
+            "What did I ever do to you?",
+            "I didn't sign up for this!",
+            "Not my ship, anything but my ship!",
+            "We can talk this out!",
+            "I'm scared! Hold me.",
+            "Make the bad man go away, mommy!",
+            "If you don't stop I'll cry!",
+            "Here I go, filling my cabin up with tears.",
+            "U- oh it a-pears my te-rs hav- da--age t-e co-mand cons-le.",
+            "I a- T. Pr-ct---! Y-- w--l fe-r m- na-e --- Bzzzt!"
+            }
+	for k,v in ipairs(llamadummy) do
+        if shield >= 40 then
+            if #shield30 > shieldtaunt then
+                shieldtaunt = shieldtaunt + 1
+                v:comm(shield30[shieldtaunt])
+                misn.timerStart("taunt", 4000)
+            else
+                return
+            end
+        elseif armour >= 31 then
+            if #armour31 > armourtaunt then
+                armourtaunt = armourtaunt + 1
+                v:comm(armour31[armourtaunt])
+                misn.timerStart("taunt", 4000)
+            else
+                tk.msg("Bzzzt!", "It appears our friend has suffered a systems failure. Oh well, he was getting tiresome anyhow.")
+                for k,v in ipairs(llamadummy) do
+                    v:disable()
+                    misn.timerStart( "llamaDisabled", 2000)
+                end
+            end
+        else
+            return
+        end
+	end
+end
 
 function llamaDisabled ()
    -- Update OSD
+   
    misn.osdActive( 1 )
 
    misn_stage = 5
@@ -296,18 +443,25 @@ function llamaBoard ()
 
    misn_stage = 6
    tk.msg( title[4], text[12] )
-   misn.timerStart( "boardOver", 3000 )
+   misn.timerStart( "boardEnding", 3000 )
 end
 
+function boardEnding ()
+   for k,v in ipairs(llamadummy) do
+   v:changeAI("flee")
+   v:setHealth(100, 100)
+   v:comm("I've restored my power! You'll rue the day you crossed T. Practice!")
+   end
+   misn.timerStart("boardOver", 8000)
+end
 
 function boardOver ()
    tk.msg( title[4], text[13] )
-   pilot.clear() -- Get rid of disabled llama
-   pilots = pilot.add( "Pirate Hyena" )
-   for k,v in ipairs(pilots) do
+   hyena = pilot.add( "Pirate Hyena" )
+   for k,v in ipairs(hyena) do
        v:rmOutfit( "Laser Cannon", 1 ) -- Make it weaker
-       hook.pilot( v, "death", "hyenaDead" )
-       hook.pilot( v, "jump", "hyenaDead" ) -- Treat jump as dead
+       hook.pilot( v, "death", "hyenaWait" )
+       hook.pilot( v, "jump", "hyenaWait" ) -- Treat jump as dead
    end
    misn.timerStart( "bringHelp", 5000 ) -- Player "should" surive 5 seconds
 end
@@ -318,6 +472,10 @@ function bringHelp ()
    pilot.add( "Empire Lancelot" ) -- Lancelot crushes Hyena
 end
 
+
+function hyenaWait ()
+   misn.timerStart("hyenaDead", 7500)
+end
 
 function hyenaDead ()
    misn_stage = 7
