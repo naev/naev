@@ -5,8 +5,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include "SDL_image.h"
-#include <GL/glu.h>
-#include <glm.h>
 
 #include "log.h"
 
@@ -17,7 +15,8 @@ typedef struct {
    GLfloat tex[2];
 } Vertex;
 
-GLuint texture_loadFromFile( const char *filename)
+
+static GLuint texture_loadFromFile( const char *filename)
 {
    /* Reads image and converts it to RGBA */
    SDL_Surface *brute = IMG_Load(filename);
@@ -34,6 +33,7 @@ GLuint texture_loadFromFile( const char *filename)
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
+   SDL_FreeSurface(brute);
    SDL_FreeSurface(image);
    return texture;
 }
@@ -54,10 +54,8 @@ static int readGLfloat(GLfloat *dest)
 
 Object *object_loadFromFile( const char *filename )
 {
-   GLMmodel *model = glmReadOBJ(filename);
    GLfloat *vertex = array_create(GLfloat);   /**< vertex coordinates */
    GLfloat *texture = array_create(GLfloat);  /**< texture coordinates */
-   GLfloat *normal = array_create(GLfloat);   /**< texture coordinates */
    Vertex *corners = array_create(Vertex);
 
    FILE *f = fopen(filename, "r");
@@ -111,8 +109,6 @@ Object *object_loadFromFile( const char *filename )
       }
    }
 
-
-   DEBUG("model corners = %d", model->numtriangles);
    DEBUG("Read vertex %d texture %d face %d %d",
          array_size(vertex), array_size(texture), array_size(corners), array_size(corners) / 3);
 
@@ -126,7 +122,7 @@ Object *object_loadFromFile( const char *filename )
    glBufferData(GL_ARRAY_BUFFER, array_size(corners) * sizeof(Vertex), corners, GL_STATIC_DRAW);
 
    /* texture */
-   object->texture = texture_loadFromFile("admonisher.png");
+   object->texture = texture_loadFromFile("/home/alexandru/src/admonisher.png");
 
    /* cleans up */
    fclose(f);
@@ -143,11 +139,15 @@ void object_render( Object *object )
    GLfloat* ver_offset = ((Vertex *)NULL)->ver;
    GLfloat* tex_offset = ((Vertex *)NULL)->tex;
 
+   GLint a1, a2;
+   glGetIntegerv(GL_TEXTURE_BINDING_2D, &a1);
+   glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &a2);
+
    /* texture is inially flipped vertically */
    glMatrixMode(GL_TEXTURE);
+   glPushMatrix();
    glLoadIdentity();
    glScalef(+1., -1., +1.);
-   glMatrixMode(GL_MODELVIEW);
 
    /* binds textures */
    glBindTexture(GL_TEXTURE_2D, object->texture);
@@ -173,4 +173,11 @@ void object_render( Object *object )
 
    glDisableClientState(GL_VERTEX_ARRAY);
    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+   glPopMatrix();
+   glMatrixMode(GL_MODELVIEW);
+
+   /* restores bindings */
+   glBindTexture(GL_TEXTURE_2D, a1);
+   glBindBuffer(GL_ARRAY_BUFFER, a2);
 }
