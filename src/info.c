@@ -24,16 +24,9 @@
 #include "player.h"
 #include "mission.h"
 #include "ntime.h"
-#include "save.h"
-#include "land.h"
-#include "rng.h"
-#include "nebula.h"
-#include "pause.h"
-#include "options.h"
-#include "intro.h"
-#include "music.h"
 #include "map.h"
-#include "nfile.h"
+#include "land.h"
+#include "equipment.h"
 
 
 #define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
@@ -55,6 +48,8 @@ static const char *info_names[INFO_WINDOWS] = {
 static unsigned int info_wid = 0;
 static unsigned int *info_windows = NULL;
 
+static CstSlotWidget info_eq;
+
 
 /*
  * prototypes
@@ -65,7 +60,6 @@ static void info_openMain( unsigned int wid );
 static void info_openShip( unsigned int wid );
 static void info_openCargo( unsigned int wid );
 static void info_openMissions( unsigned int wid );
-static void info_licenses_menu( unsigned int parent, char* str );
 static void cargo_genList( unsigned int wid );
 static void cargo_update( unsigned int wid, char* str );
 static void cargo_jettison( unsigned int wid, char* str );
@@ -122,7 +116,10 @@ static void info_close( unsigned int wid, char* str )
  */
 static void info_openMain( unsigned int wid )
 {
-   char str[128];
+   char str[128], **buf;
+   char **licenses;
+   int nlicenses;
+   int i;
    char *nt;
    int w, h;
 
@@ -148,11 +145,11 @@ static void info_openMain( unsigned int wid )
          "%s\n"
          "\n"
          "%s\n"
-         "%d (%d jumps)"
+         "%.0f (%d jumps)"
          , player_name, nt, player_rating(), player->name,
-         (int)player->fuel, pilot_getJumps(player) );
+         player->fuel, pilot_getJumps(player) );
    window_addText( wid, 80, 20,
-         w-120-BUTTON_WIDTH, h-60,
+         200, h-60,
          0, "txtPilot", &gl_smallFont, &cBlack, str );
    free(nt);
 
@@ -160,6 +157,14 @@ static void info_openMain( unsigned int wid )
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", info_close );
+
+   /* List. */
+   buf = player_getLicenses( &nlicenses );
+   licenses = malloc(sizeof(char*)*nlicenses);
+   for (i=0; i<nlicenses; i++)
+      licenses[i] = strdup(buf[i]);
+   window_addList( wid, -20, -40, w-80-200-40, h-80-BUTTON_HEIGHT,
+         "lstLicenses", licenses, nlicenses, 0, NULL );
 }
 
 
@@ -170,64 +175,20 @@ static void info_openMain( unsigned int wid )
  */
 static void info_openShip( unsigned int wid )
 {
-   char *buf;
    int w, h;
 
    /* Get the dimensions. */
    window_dimWindow( wid, &w, &h );
 
-   /* Text */
-   window_addText( wid, 20, -40, 100, h-40,
-         0, "txtLabel", &gl_smallFont, &cDConsole,
-         "Ship Outfits:" );
-   buf = pilot_getOutfits( player );
-   window_addText( wid, 20, -45-gl_smallFont.h,
-         w-40, h-60,
-         0, "txtOutfits", &gl_smallFont, &cBlack, buf );
-   free(buf);
-
    /* Buttons */
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "closeOutfits", "Close", window_close );
-   window_addButton( wid, -20-BUTTON_WIDTH-20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnLicenses", "Licenses", info_licenses_menu );
-}
+         "closeOutfits", "Close", info_close );
 
-
-/**
- * @brief Opens the licenses menu.
- */
-static void info_licenses_menu( unsigned int parent, char* str )
-{
-   (void) str;
-   unsigned int wid;
-   char **licenses;
-   int nlicenses;
-   int i;
-   char **buf;
-   int w, h;
-
-   /* Get the dimensions. */
-   window_dimWindow( parent, &w, &h );
-
-   /* Create window */
-   wid = window_create( "Licenses", -1, -1, w, h );
-   window_setParent( wid, parent );
-
-   /* List. */
-   buf = player_getLicenses( &nlicenses );
-   licenses = malloc(sizeof(char*)*nlicenses);
-   for (i=0; i<nlicenses; i++)
-      licenses[i] = strdup(buf[i]);
-   window_addList( wid, 20, -40, w-40, h-80-BUTTON_HEIGHT,
-         "lstLicenses", licenses, nlicenses, 0, NULL );
-
-   /* Buttons */
-   window_addButton( wid, -20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         "closeLicenses", "Close", window_close );
+   /* Custo widget. */
+   equipment_slotWidget( wid, -20, -40, 180, h-60, &info_eq );
+   info_eq.selected  = player;
+   info_eq.canmodify = 0;
 }
 
 

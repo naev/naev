@@ -211,6 +211,7 @@ void equipment_open( unsigned int wid )
 
    /* Slot widget. */
    equipment_slotWidget( wid, 20 + sw + 40, -40, ew, eh, &eq_wgt );
+   eq_wgt.canmodify = 1;
 
    /* Custom widget. */
    window_addCust( wid, 20 + sw + 40 + ew + 20, -40, cw, ch, "cstMisc", 0,
@@ -386,7 +387,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    dc = &cGrey60;
    w = 30;
    h = 70;
-   x = bx + (40-w)/2;
+   x = bx + (40-w)/2 + 10;
    y = by + bh - 30 - h;
    percent = (p->cpu_max > 0.) ? p->cpu / p->cpu_max : 0.;
    gl_printMidRaw( &gl_smallFont, w,
@@ -431,7 +432,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
       /* Draw bottom. */
       if ((i==mover) || subtitle) {
          display = NULL;
-         if (i==mover) {
+         if ((i==mover) && (wgt->canmodify)) {
             if (lst[i].outfit != NULL) {
                display = pilot_canEquip( wgt->selected, &lst[i], lst[i].outfit, 0 );
                if (display != NULL)
@@ -719,7 +720,8 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
          if (event->type == SDL_MOUSEBUTTONDOWN) {
             if (event->button.button == SDL_BUTTON_LEFT)
                wgt->slot = selected + ret;
-            else if (event->button.button == SDL_BUTTON_RIGHT)
+            else if ((event->button.button == SDL_BUTTON_RIGHT) &&
+                  wgt->canmodify)
                equipment_swapSlot( wid, &p->outfit_high[ret] );
          }
          else {
@@ -738,7 +740,8 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
          if (event->type == SDL_MOUSEBUTTONDOWN) {
             if (event->button.button == SDL_BUTTON_LEFT)
                wgt->slot = selected + ret;
-            else if (event->button.button == SDL_BUTTON_RIGHT)
+            else if ((event->button.button == SDL_BUTTON_RIGHT) &&
+                  wgt->canmodify)
                equipment_swapSlot( wid, &p->outfit_medium[ret] );
          }
          else {
@@ -757,7 +760,8 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
          if (event->type == SDL_MOUSEBUTTONDOWN) {
             if (event->button.button == SDL_BUTTON_LEFT)
                wgt->slot = selected + ret;
-            else if (event->button.button == SDL_BUTTON_RIGHT)
+            else if ((event->button.button == SDL_BUTTON_RIGHT) &&
+                  wgt->canmodify)
                equipment_swapSlot( wid, &p->outfit_low[ret] );
          }
          else {
