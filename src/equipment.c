@@ -713,7 +713,7 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
    /* Render high outfits. */
    selected = 0;
    x  = (tw-w)/2;
-   y  = bh - (h+20) + (h+20-h)/2;
+   y  = bh - (h+20) + (h+20-h)/2 - 10;
    if ((mx > x-10) && (mx < x+w+10)) {
       ret = equipment_mouseColumn( y, h, p->outfit_nhigh, my );
       if (ret >= 0) {
