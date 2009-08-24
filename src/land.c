@@ -1817,7 +1817,8 @@ void takeoff( int delay )
    int sw,sh, h;
    char *nt;
 
-   if (!landed) return;
+   if (!landed)
+      return;
 
    /* ze music */
    music_choose("takeoff");
