@@ -142,13 +142,35 @@ static unsigned int hook_generic( lua_State *L, const char* stack, int pos )
 /**
  * @brief Hooks the function to the player landing.
  *
+ * Can also be used to hook the various subparts of the landing menu. Possible targets
+ *  for where are:
+ *   - "land" - when landed (default with no parameter )
+ *   - "outfits" - when visited outfitter
+ *   - "shipyard" - when visited shipyard
+ *   - "bar" - when visited bar
+ *   - "mission" - when visited mission computer
+ *   - "commodity" - when visited commodity exchange
+ *   - "equipment" - when visiting equipment place
+ *
+ * @usage hook.land( "my_function" ) -- Land calls my_function
+ * @usage hook.land( "my_function", "equipment" ) -- Calls my_function at equipment screen
+ *
  *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam where Optional argument to specify where to hook the function.
  *    @luareturn Hook identifier.
- * @luafunc land( funcname )
+ * @luafunc land( funcname, where )
  */
 static int hook_land( lua_State *L )
 {
-   hook_generic( L, "land", 1 );
+   const char *where;
+
+   if (lua_gettop(L) < 2)
+      hook_generic( L, "land", 1 );
+   else {
+      where = luaL_checkstring(L, 2);
+      hook_generic( L, where, 1 );
+   }
+
    return 0;
 }
 /**
@@ -205,7 +227,6 @@ static int hook_enter( lua_State *L )
  */
 static int hook_pilot( lua_State *L )
 {
-   NLUA_MIN_ARGS(3);
    unsigned int h;
    LuaPilot *p;
    int type;

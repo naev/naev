@@ -22,10 +22,18 @@ void hook_rmEventParent( unsigned int parent );
  * run hooks
  *
  * Currently used:
- *    "land" - when landed
- *    "takeoff" - when taking off
- *    "jump" - when changing system
- *    "time" - when time is increment drastically (hyperspace and taking off)
+ *  - General
+ *    - "takeoff" - when taking off
+ *    - "jump" - when changing system
+ *    - "time" - when time is increment drastically (hyperspace and taking off)
+ *  - Landing
+ *    - "land" - when landed
+ *    - "outfits" - when visited outfitter
+ *    - "shipyard" - when visited shipyard
+ *    - "bar" - when visited bar
+ *    - "mission" - when visited mission computer
+ *    - "commodity" - when visited commodity exchange
+ *    - "equipment" - when visiting equipment place
  */
 int hooks_run( const char* stack );
 void hook_runID( unsigned int id ); /* runs hook of specific id */

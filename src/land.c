@@ -56,6 +56,8 @@
 #define VISITED_BAR           (1<<2) /**< Player already visited bar. */
 #define VISITED_OUTFITS       (1<<3) /**< Player already visited outfits. */
 #define VISITED_SHIPYARD      (1<<4) /**< Player already visited shipyard. */
+#define VISITED_EQUIPMENT     (1<<5) /**< Player already visited equipment. */
+#define VISITED_MISSION       (1<<6) /**< Player already visited mission computer. */
 #define visited(f)            (land_visited |= (f)) /**< Mark place is visited. */
 #define has_visited(f)        (land_visited & (f)) /**< Check if player has visited. */
 static unsigned int land_visited = 0; /**< Contains what the player visited. */
@@ -1626,11 +1628,6 @@ void land( Planet* p )
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
       commodity_exchange_open( land_getWid(LAND_WINDOW_COMMODITY) );
 
-   /* Go to last open tab. */
-   window_tabWinOnChange( land_wid, "tabLand", land_changeTab );
-   if (land_windowsMap[ last_window ] != -1)
-      window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
-
    /* player is now officially landed */
    landed = 1;
 
@@ -1646,6 +1643,11 @@ void land( Planet* p )
             land_planet->name, cur_system->name);
       visited(VISITED_LAND);
    }
+
+   /* Go to last open tab. */
+   window_tabWinOnChange( land_wid, "tabLand", land_changeTab );
+   if (land_windowsMap[ last_window ] != -1)
+      window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
 
    /* Add fuel button if needed - AFTER missions pay :). */
    land_checkAddRefuel();
@@ -1733,7 +1735,14 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
    (void) wid;
    (void) wgt;
    unsigned int w;
+   const char *torun_hook;
+   unsigned int to_visit;
 
+   /* Sane defaults. */
+   torun_hook = NULL;
+   to_visit   = 0;
+
+   /* Find what switched. */
    for (i=0; i<LAND_NUMWINDOWS; i++) {
       if (land_windowsMap[i] == tab) {
          last_window = i;
@@ -1744,22 +1753,34 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
             case LAND_WINDOW_OUTFITS:
                outfits_update( w, NULL );
                outfits_updateQuantities( w );
+               to_visit   = VISITED_OUTFITS;
+               torun_hook = "outfits";
                break;
             case LAND_WINDOW_SHIPYARD:
                shipyard_update( w, NULL );
+               to_visit   = VISITED_SHIPYARD;
+               torun_hook = "shipyard";
                break;
             case LAND_WINDOW_BAR:
                spaceport_bar_update( w, NULL );
+               to_visit   = VISITED_BAR;
+               torun_hook = "bar";
                break;
             case LAND_WINDOW_MISSION:
                misn_update( w, NULL );
+               to_visit   = VISITED_MISSION;
+               torun_hook = "mission";
                break;
             case LAND_WINDOW_COMMODITY:
                commodity_update( w, NULL );
+               to_visit   = VISITED_COMMODITY;
+               torun_hook = "commodity";
                break;
             case LAND_WINDOW_EQUIPMENT:
                equipment_updateShips( w, NULL );
                equipment_updateOutfits( w, NULL );
+               to_visit   = VISITED_EQUIPMENT;
+               torun_hook = "equipment";
                break;
 
             default:
@@ -1773,6 +1794,15 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
 
          break;
       }
+   }
+
+   /* Check land missions. */
+   if ((to_visit != 0) && !has_visited(to_visit)) {
+      /* Run hooks, run after music in case hook wants to change music. */
+      if (torun_hook != NULL)
+         hooks_run( torun_hook );
+
+      visited(to_visit);
    }
 }
 
