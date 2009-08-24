@@ -593,7 +593,7 @@ static void map_render( double bx, double by, double w, double h )
          c.r = col->r;
          c.g = col->g;
          c.b = col->b;
-         c.a = 0.5;
+         c.a = 0.7;
 
          gl_blitTexture(
                gl_faction_disk,
