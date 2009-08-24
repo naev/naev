@@ -2,6 +2,7 @@
 <Factions>
  <faction name="Dummy">
   <static />
+  <invisible />
   <player>0</player>
   <allies />
   <enemies />
@@ -157,12 +158,14 @@
   </enemies>
  </faction>
  <faction name="Mercenary">
+  <invisible />
   <static />
   <player>0</player>
   <allies />
   <enemies />
  </faction>
  <faction name="Raider">
+  <invisible />
   <longname>Galactic Pirates</longname>
   <player>-20</player>
   <colour>red</colour>
@@ -171,6 +174,7 @@
   </enemies>
  </faction>
  <faction name="Derelict">
+  <invisible />
   <static />
   <player>0</player>
   <allies />

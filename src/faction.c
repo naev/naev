@@ -39,6 +39,7 @@
 
 
 #define FACTION_STATIC        (1<<0) /**< Faction doesn't change standing with player. */
+#define FACTION_INVISIBLE     (1<<1) /**< Faction isn't exposed to the player. */
 
 #define faction_setFlag(fa,f) ((fa)->flags |= (f))
 #define faction_isFlag(fa,f)  ((fa)->flags & (f))
@@ -116,15 +117,19 @@ int* faction_getAll( int *n )
 {
    int i;
    int *f;
+   int m;
 
    /* Set up. */
-   *n = faction_nstack;
    f  = malloc( sizeof(int) * faction_nstack );
 
    /* Get IDs. */
-   for (i=0; i<faction_nstack; i++)
-      f[i] = i;
+   m = 0;
+   for (i=0; i<faction_nstack; i++) {
+      if (!faction_isFlag( &faction_stack[i], FACTION_INVISIBLE ))
+         f[m++] = i;
+   }
 
+   *n = m;
    return f;
 }
 
@@ -606,6 +611,11 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
          faction_setFlag(temp, FACTION_STATIC);
          continue;
       }
+
+      if (xml_isNode(node,"invisible")) {
+         faction_setFlag(temp, FACTION_INVISIBLE);
+         continue;
+      }
    } while (xml_nextNode(node));
 
    if (player==0)
@@ -719,6 +729,7 @@ int factions_load (void)
    faction_stack = malloc( sizeof(Faction) );
    memset(faction_stack, 0, sizeof(Faction) );
    faction_stack[0].name = strdup("Player");
+   faction_stack[0].flags = FACTION_STATIC | FACTION_INVISIBLE;
    faction_nstack++;
 
    /* First pass - gets factions */
