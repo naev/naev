@@ -128,12 +128,11 @@ static void info_openMain( unsigned int wid )
 
    /* pilot generics */
    nt = ntime_pretty( ntime_get() );
-   window_addText( wid, 20, 20, 120, h-60,
+   window_addText( wid, 40, 20, 120, h-80,
          0, "txtDPilot", &gl_smallFont, &cDConsole,
          "Pilot:\n"
          "Date:\n"
-         "Combat\n"
-         " Rating:\n"
+         "Combat Rating:\n"
          "\n"
          "Ship:\n"
          "Fuel:\n"
@@ -141,15 +140,14 @@ static void info_openMain( unsigned int wid )
    snprintf( str, 128, 
          "%s\n"
          "%s\n"
-         "\n"
          "%s\n"
          "\n"
          "%s\n"
          "%.0f (%d jumps)"
          , player_name, nt, player_rating(), player->name,
          player->fuel, pilot_getJumps(player) );
-   window_addText( wid, 80, 20,
-         200, h-60,
+   window_addText( wid, 140, 20,
+         200, h-80,
          0, "txtPilot", &gl_smallFont, &cBlack, str );
    free(nt);
 
@@ -163,7 +161,9 @@ static void info_openMain( unsigned int wid )
    licenses = malloc(sizeof(char*)*nlicenses);
    for (i=0; i<nlicenses; i++)
       licenses[i] = strdup(buf[i]);
-   window_addList( wid, -20, -40, w-80-200-40, h-80-BUTTON_HEIGHT,
+   window_addText( wid, -20, -40, w-80-200-40, 20, 1, "txtList",
+         NULL, &cDConsole, "Licenses" );
+   window_addList( wid, -20, -70, w-80-200-40, h-110-BUTTON_HEIGHT,
          "lstLicenses", licenses, nlicenses, 0, NULL );
 }
 
@@ -176,6 +176,8 @@ static void info_openMain( unsigned int wid )
 static void info_openShip( unsigned int wid )
 {
    int w, h;
+   char buf[1024];
+   int cargo;
 
    /* Get the dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -185,7 +187,68 @@ static void info_openShip( unsigned int wid )
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "closeOutfits", "Close", info_close );
 
-   /* Custo widget. */
+   /* Text. */
+   window_addText( wid, 40, -60, 100, h-60, 0, "txtSDesc", &gl_smallFont,
+         &cDConsole,
+         "Name:\n"
+         "Ship:\n"
+         "Class:\n"
+         "Crew:\n"
+         "Total CPU:\n"
+         "\n"
+         "Mass:\n"
+         "Jump time:\n"
+         "Thrust:\n"
+         "Speed:\n"
+         "Turn:\n"
+         "\n"
+         "Shield:\n"
+         "Armour:\n"
+         "Energy:\n"
+         "Fuel:\n"
+         "Cargo free:"
+         );
+   cargo = pilot_cargoUsed( player ) + pilot_cargoFree( player);
+   snprintf( buf, sizeof(buf),
+         "%s\n"
+         "%s\n"
+         "%s\n"
+         "%d\n"
+         "%.0f Teraflops\n"
+         "\n"
+         "%.0f Tons\n"
+         "%.1f STU average\n"
+         "%.0f MN/Ton\n"
+         "%.0f m/s\n"
+         "%.0f Grad/s\n"
+         "\n"
+         "%.0f / %.0f MJ (%.1f MJ/s)\n" /* Shield */
+         "%.0f / %.0f MJ (%.1f MJ/s)\n" /* Armour */
+         "%.0f / %.0f MJ (%.1f MJ/s)\n" /* Energy */
+         "%.0f / %.0f Units (%.0f jumps)\n"
+         "%d / %d Tons",
+         /* Genveric */
+         player->name,
+         player->ship->name,
+         ship_class(player->ship),
+         player->ship->crew,
+         player->cpu_max,
+         /* Movement. */
+         player->solid->mass,
+         pilot_hyperspaceDelay( player ),
+         player->thrust / player->solid->mass,
+         player->speed,
+         player->turn,
+         /* Health. */
+         player->shield, player->shield_max, player->shield_regen,
+         player->armour, player->armour_max, player->armour_regen,
+         player->energy, player->energy_max, player->energy_regen,
+         player->fuel, player->fuel_max, floor(player->fuel / 100),
+         pilot_cargoUsed( player ), cargo );
+   window_addText( wid, 140, -60, w-300., h-60, 0, "txtDDesc", &gl_smallFont,
+         &cBlack, buf );
+
+   /* Custom widget. */
    equipment_slotWidget( wid, -20, -40, 180, h-60, &info_eq );
    info_eq.selected  = player;
    info_eq.canmodify = 0;
