@@ -35,13 +35,14 @@
 #define menu_Open(f)    (menu_open |= (f)) /**< Marks a menu as opened. */
 #define menu_Close(f)   (menu_open &= ~(f)) /**< Marks a menu as closed. */
 
-#define INFO_WINDOWS      4 /**< Amount of windows in the tab. */
+#define INFO_WINDOWS      5 /**< Amount of windows in the tab. */
 
 static const char *info_names[INFO_WINDOWS] = {
    "Main",
    "Ship",
    "Cargo",
-   "Missions"
+   "Missions",
+   "Standings"
 }; /**< Name of the tab windows. */
 
 
@@ -49,6 +50,7 @@ static unsigned int info_wid = 0;
 static unsigned int *info_windows = NULL;
 
 static CstSlotWidget info_eq;
+static int *info_factions;
 
 
 /*
@@ -60,6 +62,10 @@ static void info_openMain( unsigned int wid );
 static void info_openShip( unsigned int wid );
 static void info_openCargo( unsigned int wid );
 static void info_openMissions( unsigned int wid );
+static void info_getDim( unsigned int wid, int *w, int *h, int *lw );
+static void standings_close( unsigned int wid, char *str );
+static void info_openStandings( unsigned int wid );
+static void standings_update( unsigned int wid, char* str );
 static void cargo_genList( unsigned int wid );
 static void cargo_update( unsigned int wid, char* str );
 static void cargo_jettison( unsigned int wid, char* str );
@@ -93,6 +99,7 @@ void menu_info (void)
    info_openShip( info_windows[1] );
    info_openCargo( info_windows[2] );
    info_openMissions( info_windows[3] );
+   info_openStandings( info_windows[4] );
 
    menu_Open(MENU_INFO);
 }
@@ -359,6 +366,122 @@ static void cargo_jettison( unsigned int wid, char* str )
    /* We reopen the menu to recreate the list now. */
    window_destroyWidget( wid, "lstCargo" );
    cargo_genList( wid );
+}
+
+
+/**
+ * @brief Gets the window standings window dimensions.
+ */
+static void info_getDim( unsigned int wid, int *w, int *h, int *lw )
+{
+   /* Get the dimensions. */
+   window_dimWindow( wid, w, h );
+   *lw = *w-60-BUTTON_WIDTH-120;
+}
+
+
+/**
+ * @brief Closes the faction stuff.
+ */
+static void standings_close( unsigned int wid, char *str )
+{
+   (void) wid;
+   (void) str;
+   if (info_factions != NULL)
+      free(info_factions);
+   info_factions = NULL;
+}
+
+
+/**
+ * @brief Displays the player's standings.
+ */
+static void info_openStandings( unsigned int wid )
+{
+   int i;
+   int n;
+   char **str;
+   int w, h, lw;
+
+   /* Get dimensions. */
+   info_getDim( wid, &w, &h, &lw );
+
+   /* On close. */
+   window_onClose( wid, standings_close );
+
+   /* Buttons */
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "closeMissions", "Close", info_close );
+
+   /* Graphics. */
+   window_addImage( wid, 0, 0, "imgLogo", NULL, 0 );
+
+   /* Text. */
+   window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 1, "txtName",
+         &gl_defFont, &cDConsole, NULL );
+   window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 1, "txtStanding",
+         &gl_smallFont, &cBlack, NULL );
+
+   /* Gets the faction standings. */
+   info_factions  = faction_getAll( &n );
+   str            = malloc( sizeof(char*) * n );
+
+   /* Create list. */
+   for (i=0; i<n; i++) {
+      str[i] = malloc( 256 );
+      snprintf( str[i], 256, "%s   [ %+.0f%% ]",
+            faction_name( info_factions[i] ),
+            faction_getPlayer( info_factions[i] ) );
+   }
+
+   /* Display list. */
+   window_addList( wid, 20, -40, lw, h-60,
+         "lstStandings", str, n, 0, standings_update );
+
+   standings_update( wid , NULL );
+}
+
+
+/**
+ * @brief Updates the standings menu.
+ */
+static void standings_update( unsigned int wid, char* str )
+{
+   (void) str;
+   int p, y;
+   glTexture *t;
+   int w, h, lw;
+   char buf[128];
+   int m;
+
+   /* Get dimensions. */
+   info_getDim( wid, &w, &h, &lw );
+
+   /* Get faction. */
+   p = toolkit_getListPos( wid, "lstStandings" );
+   y = 0;
+
+   /* Render logo. */
+   t = faction_logoSmall( info_factions[p] );
+   if (t != NULL) {
+      window_modifyImage( wid, "imgLogo", t );
+      y = -40 - t->h;
+      window_moveWidget( wid, "imgLogo", lw+40 + (w-(lw+60)-t->w)/2, y );
+   }
+   else {
+      window_modifyImage( wid, "imgLogo", NULL );
+      y = -20;
+   }
+
+   /* Modify text. */
+   y -= 30;
+   window_modifyText( wid, "txtName", faction_longname( info_factions[p] ) );
+   window_moveWidget( wid, "txtName", lw+40, y );
+   y -= 40;
+   m = faction_getPlayer( info_factions[p] );
+   snprintf( buf, sizeof(buf), "%+d%%   [ %s ]", m, faction_getStanding( m ) );
+   window_modifyText( wid, "txtStanding", buf );
+   window_moveWidget( wid, "txtStanding", lw+40, y );
 }
 
 

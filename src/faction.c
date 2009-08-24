@@ -110,6 +110,26 @@ int faction_get( const char* name )
 
 
 /**
+ * @brief Gets all the factions.
+ */
+int* faction_getAll( int *n )
+{
+   int i;
+   int *f;
+
+   /* Set up. */
+   *n = faction_nstack;
+   f  = malloc( sizeof(int) * faction_nstack );
+
+   /* Get IDs. */
+   for (i=0; i<faction_nstack; i++)
+      f[i] = i;
+
+   return f;
+}
+
+
+/**
  * @brief Get's a factions short name.
  *
  *    @param f Faction to get the name of.
