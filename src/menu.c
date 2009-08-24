@@ -60,6 +60,7 @@ int menu_open = 0; /**< Stores the opened/closed menus. */
 
 
 static glTexture *main_naevLogo = NULL; /**< NAEV Logo texture. */
+static unsigned int menu_main_lasttick = 0;
 
 
 /*
@@ -69,6 +70,7 @@ static glTexture *main_naevLogo = NULL; /**< NAEV Logo texture. */
 static void menu_exit( unsigned int wid, char* str );
 /* main menu */
 void menu_main_close (void); /**< Externed in save.c */
+static void menu_main_nebu( double x, double y, double w, double h, void *data );
 static void menu_main_load( unsigned int wid, char* str );
 static void menu_main_new( unsigned int wid, char* str );
 static void menu_main_credits( unsigned int wid, char* str );
@@ -82,6 +84,9 @@ static void menu_death_continue( unsigned int wid, char* str );
 static void menu_death_restart( unsigned int wid, char* str );
 static void menu_death_main( unsigned int wid, char* str );
 /* Options menu. */
+static void menu_options_button( unsigned int wid, char *str );
+static void menu_options_keybinds( unsigned int wid, char *str );
+static void menu_options_audio( unsigned int wid, char *str );
 static void menu_options_close( unsigned int parent, char* str );
 
 
@@ -127,7 +132,7 @@ void menu_main (void)
    window_onClose( bwid, menu_main_cleanBG );
    window_addRect( bwid, 0, 0, SCREEN_W, SCREEN_H, "rctBG", &cBlack, 0 );
    window_addCust( bwid, 0, 0, SCREEN_W, SCREEN_H, "cstBG", 0,
-         (void(*)(double,double,double,double)) nebu_render, NULL );
+         menu_main_nebu, NULL, &menu_main_lasttick );
    window_addImage( bwid, (SCREEN_W-tex->sw)/2., offset_logo, "imgLogo", tex, 0 );
    window_addText( bwid, 0., 10, SCREEN_W, 30., 1, "txtBG", NULL,
          &cWhite, naev_version() );
@@ -143,7 +148,7 @@ void menu_main (void)
          "btnNew", "New Game", menu_main_new );
    window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20)*2,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnOptions", "Options", (void(*)(unsigned int,char*))menu_options );
+         "btnOptions", "Options", menu_options_button );
    window_addButton( wid, 20, 20 + (BUTTON_HEIGHT+20),
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnCredits", "Credits", menu_main_credits );
@@ -154,6 +159,27 @@ void menu_main (void)
    window_setParent( bwid, wid );
 
    menu_Open(MENU_MAIN);
+}
+/**
+ * @brief Renders the nebula.
+ */
+static void menu_main_nebu( double x, double y, double w, double h, void *data )
+{
+   (void) x;
+   (void) y;
+   (void) w;
+   (void) h;
+   unsigned int *t, tick;
+   double dt;
+
+   /* Get time dt. */
+   t     = (unsigned int *)data;
+   tick  = SDL_GetTicks();
+   dt    = (double)(tick - *t) / 1000.;
+   *t    = tick;
+
+   /* Render. */
+   nebu_render( dt );
 }
 /**
  * @brief Closes the main menu.
@@ -262,7 +288,7 @@ void menu_small (void)
          "btnResume", "Resume", menu_small_close );
    window_addButton( wid, 20, 20 + BUTTON_HEIGHT + 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnOptions", "Options", (void(*)(unsigned int,char*))menu_options );
+         "btnOptions", "Options", menu_options_button );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT, 
          "btnExit", "Exit", menu_small_exit );
 
@@ -403,6 +429,15 @@ static void menu_death_main( unsigned int wid, char* str )
 
 
 /**
+ * @brief Opens the menu options from a button.
+ */
+static void menu_options_button( unsigned int wid, char *str )
+{
+   (void) wid;
+   (void) str;
+   menu_options();
+}
+/**
  * @brief Opens the options menu.
  */
 void menu_options (void)
@@ -414,11 +449,29 @@ void menu_options (void)
          "btnClose", "Close", menu_options_close );
    window_addButton( wid, -20 - (BUTTON_WIDTH+20), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnKeybinds", "Keybindings", (void(*)(unsigned int,char*))opt_menuKeybinds );
+         "btnKeybinds", "Keybindings", menu_options_keybinds );
    window_addButton( wid, -20 - 2 * (BUTTON_WIDTH+20), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnAudio", "Audio", (void(*)(unsigned int,char*))opt_menuAudio );
+         "btnAudio", "Audio", menu_options_audio );
    menu_Open(MENU_OPTIONS);
+}
+/**
+ * @brief Wrapper for opt_menuKeybinds.
+ */
+static void menu_options_keybinds( unsigned int wid, char *str )
+{
+   (void) wid;
+   (void) str;
+   opt_menuKeybinds();
+}
+/**
+ * @brief Wrapper for opt_menuAudio.
+ */
+static void menu_options_audio( unsigned int wid, char *str )
+{
+   (void) wid;
+   (void) str;
+   opt_menuAudio();
 }
 /**
  * @brief Closes the options menu.

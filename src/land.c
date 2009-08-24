@@ -139,7 +139,7 @@ static void outfits_buy( unsigned int wid, char* str );
 static int outfit_canSell( Outfit* outfit, int q, int errmsg );
 static void outfits_sell( unsigned int wid, char* str );
 static int outfits_getMod (void);
-static void outfits_renderMod( double bx, double by, double w, double h );
+static void outfits_renderMod( double bx, double by, double w, double h, void *data );
 /* shipyard */
 static void shipyard_open( unsigned int wid );
 static void shipyard_update( unsigned int wid, char* str );
@@ -357,7 +357,7 @@ static void outfits_open( unsigned int wid )
 
    /* cust draws the modifier */
    window_addCust( wid, -40-bw, 60+2*bh,
-         bw, bh, "cstMod", 0, outfits_renderMod, NULL );
+         bw, bh, "cstMod", 0, outfits_renderMod, NULL, NULL );
 
    /* the descriptive text */
    window_addText( wid, 20 + iw + 20 + 128 + 20, -60,
@@ -679,8 +679,9 @@ static int outfits_getMod (void)
  *    @param w Width to render at.
  *    @param h Height to render at.
  */
-static void outfits_renderMod( double bx, double by, double w, double h )
+static void outfits_renderMod( double bx, double by, double w, double h, void *data )
 {
+   (void) data;
    (void) h;
    int q;
    char buf[8];

@@ -57,9 +57,9 @@ extern int systems_nstack;
  */
 static void map_update( unsigned int wid );
 static int map_inPath( StarSystem *sys );
-static void map_render( double bx, double by, double w, double h );
+static void map_render( double bx, double by, double w, double h, void *data );
 static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h );
+      double w, double h, void *data );
 static void map_setZoom( double zoom );
 static void map_buttonZoom( unsigned int wid, char* str );
 static void map_selectCur (void);
@@ -555,8 +555,9 @@ static glTexture *gl_genFactionDisk( int radius )
  *    @param w Width of the widget.
  *    @param h Height of the widget.
  */
-static void map_render( double bx, double by, double w, double h )
+static void map_render( double bx, double by, double w, double h, void *data )
 {
+   (void) data;
    int i,j, n,m;
    double x,y,r, tx,ty;
    StarSystem *sys, *jsys, *hsys;
@@ -757,9 +758,10 @@ static void map_render( double bx, double by, double w, double h )
  *    @param h Height of the widget.
  */
 static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h )
+      double w, double h, void *data )
 {
    (void) wid;
+   (void) data;
    int i;
    double x,y, t;
    StarSystem *sys;
@@ -1384,7 +1386,7 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
    map_setZoom(zoom);
 
    window_addCust( wid, x, y, w, h,
-         "cstMap", 1, map_render, map_mouse);
+         "cstMap", 1, map_render, map_mouse, NULL );
 }
 
 

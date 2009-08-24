@@ -8,6 +8,10 @@
 #  define EQUIPMENT_H
 
 
+#include "pilot.h"
+#include "outfit.h"
+
+
 /*
  * Image array names.
  */
@@ -29,6 +33,22 @@ void equipment_addAmmo (void);
 void equipment_genLists( unsigned int wid );
 void equipment_updateShips( unsigned int wid, char* str );
 void equipment_updateOutfits( unsigned int wid, char* str );
+
+
+/*
+ * Slot widget.
+ */
+typedef struct CstSlotWidget_ {
+   Pilot *selected; /**< Selected pilot ship. */
+   Outfit *outfit; /**< Selected outfit. */
+   int slot; /**< Selected equipment slot. */
+   int mouseover; /**< Mouse vore slot. */
+   double altx; /**< Alt X text position. */
+   double alty; /**< Alt Y text position. */
+} CstSlotWidget; /**< Slot widget. */
+void equipment_slotWidget( unsigned int wid,
+      double x, double y, double w, double h,
+      CstSlotWidget *data );
 
 
 #endif /* EQUIPMENT_H */
