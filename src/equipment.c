@@ -345,7 +345,7 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
          p->outfit_nhigh, p->outfit_high, "High", 
-         wgt->slot, wgt->outfit, wgt->selected );
+         selected, wgt->outfit, wgt->selected );
 
    /* Draw medium outfits. */
    selected -= p->outfit_nhigh;
@@ -353,7 +353,7 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
          p->outfit_nmedium, p->outfit_medium, "Medium",
-         wgt->slot, wgt->outfit, wgt->selected );
+         selected, wgt->outfit, wgt->selected );
 
    /* Draw low outfits. */
    selected -= p->outfit_nmedium;
@@ -361,7 +361,7 @@ static void equipment_renderSlots( double bx, double by, double bw, double bh, v
    y  = by + bh - (h+20) + (h+20-h)/2;
    equipment_renderColumn( x, y, w, h,
          p->outfit_nlow, p->outfit_low, "Low",
-         wgt->slot, wgt->outfit, wgt->selected );
+         selected, wgt->outfit, wgt->selected );
 }
 /**
  * @brief Renders the custom equipment widget.
