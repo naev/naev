@@ -345,7 +345,7 @@ static void cargo_update( unsigned int wid, char* str )
    pos = toolkit_getListPos( wid, "lstCargo" );
 
    /* Can jettison all but mission cargo when not landed*/
-   if (landed || (player->commodities[pos].id != 0))
+   if (landed)
       window_disableButton( wid, "btnJettisonCargo" );
    else
       window_enableButton( wid, "btnJettisonCargo" );
@@ -357,18 +357,63 @@ static void cargo_update( unsigned int wid, char* str )
 static void cargo_jettison( unsigned int wid, char* str )
 {
    (void)str;
-   int pos;
+   int i, j, f, pos, ret;
+   Mission *misn;
 
    if (player->ncommodities==0)
       return; /* No cargo, redundant check */
 
    pos = toolkit_getListPos( wid, "lstCargo" );
 
-   /* Remove the cargo */
-   commodity_Jettison( player->id, player->commodities[pos].commodity,
-         player->commodities[pos].quantity );
-   pilot_rmCargo( player, player->commodities[pos].commodity,
-         player->commodities[pos].quantity );
+   /* Special case mission cargo. */
+   if (player->commodities[pos].id != 0) {
+      if (!dialogue_YesNo( "Abort Mission", 
+               "Are you sure you want to abort this mission?" ))
+         return;
+
+      /* Get the mission. */
+      f = 0;
+      for (i=0; i<MISSION_MAX; i++) {
+         for (j=0; j<player_missions[i].ncargo; j++) {
+            if (player_missions[i].cargo[j] == player->commodities[pos].id) {
+               f = 1;
+               break;
+            }
+         }
+         if (f==1)
+            break;
+      }
+      if (!f) {
+         WARN("Cargo '%d' does not belong to any active mission.",
+               player->commodities[pos].id);
+         return;
+      }
+      misn = &player_missions[i];
+
+      /* We run the "abort" function if it's found. */
+      ret = misn_tryRun( misn, "abort" );
+
+      /* Now clean up mission. */
+      if (ret != 2) {
+         mission_cleanup( misn );
+         memmove( misn, &player_missions[i+1], 
+               sizeof(Mission) * (MISSION_MAX-i-1) );
+         memset( &player_missions[MISSION_MAX-1], 0, sizeof(Mission) );
+      }
+
+      /* Reset markers. */
+      mission_sysMark();
+
+      /* Regenerate list. */
+      mission_menu_genList( info_windows[3] ,0);
+   }
+   else {
+      /* Remove the cargo */
+      commodity_Jettison( player->id, player->commodities[pos].commodity,
+            player->commodities[pos].quantity );
+      pilot_rmCargo( player, player->commodities[pos].commodity,
+            player->commodities[pos].quantity );
+   }
 
    /* We reopen the menu to recreate the list now. */
    window_destroyWidget( wid, "lstCargo" );
