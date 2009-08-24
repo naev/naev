@@ -212,6 +212,7 @@ int sound_init (void)
    if (sound_sys_init == NULL) {
       WARN("Unknown/Unavailable sound backend '%s'.", conf.sound_backend);
       sound_disabled = 1;
+      WARN("Sound disabled.");
       music_disabled = 1;
       return 0;
    }
@@ -221,11 +222,13 @@ int sound_init (void)
    if (ret != 0) {
       sound_disabled = 1;
       music_disabled = 1;
+      WARN("Sound disabled.");
       return ret;
    }
    ret = music_init();
    if (ret != 0) {
       music_disabled = 1;
+      WARN("Music disabled.");
    }
 
    /* Create voice lock. */
