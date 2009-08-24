@@ -123,7 +123,7 @@ static void info_close( unsigned int wid, char* str )
  */
 static void info_openMain( unsigned int wid )
 {
-   char str[128], **buf;
+   char str[128], **buf, creds[16];
    char **licenses;
    int nlicenses;
    int i;
@@ -141,17 +141,24 @@ static void info_openMain( unsigned int wid )
          "Date:\n"
          "Combat Rating:\n"
          "\n"
+         "Money:\n"
          "Ship:\n"
          "Fuel:\n"
          );
+   credits2str( creds, player->credits, 2 );
    snprintf( str, 128, 
          "%s\n"
          "%s\n"
          "%s\n"
          "\n"
+         "%s credits\n"
          "%s\n"
-         "%.0f (%d jumps)"
-         , player_name, nt, player_rating(), player->name,
+         "%.0f (%d jumps)",
+         player_name,
+         nt,
+         player_rating(),
+         creds,
+         player->name,
          player->fuel, pilot_getJumps(player) );
    window_addText( wid, 140, 20,
          200, h-80,
@@ -232,7 +239,7 @@ static void info_openShip( unsigned int wid )
          "%.0f / %.0f MJ (%.1f MJ/s)\n" /* Shield */
          "%.0f / %.0f MJ (%.1f MJ/s)\n" /* Armour */
          "%.0f / %.0f MJ (%.1f MJ/s)\n" /* Energy */
-         "%.0f / %.0f Units (%.0f jumps)\n"
+         "%.0f / %.0f Units (%d jumps)\n"
          "%d / %d Tons",
          /* Genveric */
          player->name,
@@ -250,7 +257,7 @@ static void info_openShip( unsigned int wid )
          player->shield, player->shield_max, player->shield_regen,
          player->armour, player->armour_max, player->armour_regen,
          player->energy, player->energy_max, player->energy_regen,
-         player->fuel, player->fuel_max, floor(player->fuel / 100),
+         player->fuel, player->fuel_max, pilot_getJumps(player),
          pilot_cargoUsed( player ), cargo );
    window_addText( wid, 140, -60, w-300., h-60, 0, "txtDDesc", &gl_smallFont,
          &cBlack, buf );
