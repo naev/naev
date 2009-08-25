@@ -453,7 +453,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                }
             }
          }
-         else {
+         else if (lst[i].outfit != NULL) {
             if (outfit_isLauncher(lst[i].outfit) ||
                   (outfit_isFighterBay(lst[i].outfit))) {
                if ((lst[i].u.ammo.outfit == NULL) ||
