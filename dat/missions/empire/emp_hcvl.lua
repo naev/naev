@@ -16,7 +16,7 @@ else -- Default to English
    -- Mission details
    misn_title  = "Kill %s"
    misn_reward = "Authorization for Heavy Combat Vessel License"
-   misn_desc   = "There is a pirate knows as %s who must be terminated. He was last seen near the %s system."
+   misn_desc   = "There is a pirate known as %s who must be terminated. He was last seen near the %s system."
 
    -- Text
    title    = {}

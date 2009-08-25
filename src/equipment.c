@@ -173,12 +173,12 @@ void equipment_open( unsigned int wid )
 
    /* text */
    buf = "Name:\n"
-         "Ship:\n"
+         "Model:\n"
          "Class:\n"
-         "Sell price:\n"
+         "Value:\n"
          "\n"
          "Mass:\n"
-         "Jump time:\n"
+         "Jump Time:\n"
          "Thrust:\n"
          "Speed:\n"
          "Turn:\n"
@@ -186,7 +186,7 @@ void equipment_open( unsigned int wid )
          "Shield:\n"
          "Armour:\n"
          "Energy:\n"
-         "Cargo:\n"
+         "Cargo Space:\n"
          "Fuel:\n"
          "\n"
          "Transportation:\n"
@@ -659,8 +659,8 @@ static void equipment_renderShip( double bx, double by,
    lc = toolkit_colLight;
    c  = toolkit_col;
    dc = toolkit_colDark;
-   toolkit_drawOutline( x - 5., y-5., w+10., h+10., 1., lc, c  );
-   toolkit_drawOutline( x - 5., y-5., w+10., h+10., 2., dc, NULL  );
+   toolkit_drawOutline( x - 5., y-4., w+8., h+2., 1., lc, c  );
+   toolkit_drawOutline( x - 5., y-4., w+8., h+2., 2., dc, NULL  );
 }
 /**
  * @brief Handles a mouse press in column.
@@ -1038,16 +1038,16 @@ void equipment_updateShips( unsigned int wid, char* str )
          "%s Credits\n"
          "\n"
          "%.0f Tons\n"
-         "%.1f STU average\n"
-         "%.0f MN/Ton\n"
+         "%.1f STU Average\n"
+         "%.0f KN/Ton\n"
          "%.0f M/s\n"
          "%.0f Grad/s\n"
          "\n"
-         "%.0f MJ (%.1f MJ/s)\n"
-         "%.0f MJ (%.1f MJ/s)\n"
-         "%.0f MJ (%.1f MJ/s)\n"
+         "%.0f MJ (%.1f MW)\n"
+         "%.0f MJ (%.1f MW)\n"
+         "%.0f MJ (%.1f MW)\n"
          "%d / %d Tons\n"
-         "%.0f / %.0f Units\n"
+         "%.0f / %.0f Units (%d Jumps)\n"
          "\n"
          "%s Credits\n"
          "%s%s",
@@ -1068,7 +1068,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          ship->energy_max, ship->energy_regen,
          /* Misc. */
          pilot_cargoUsed(ship), cargo,
-         ship->fuel, ship->fuel_max,
+         ship->fuel, ship->fuel_max, pilot_getJumps(player),
          /* Transportation. */
          buf2,
          loc, sysname );

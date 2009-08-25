@@ -151,9 +151,9 @@ static void info_openMain( unsigned int wid )
          "%s\n"
          "%s\n"
          "\n"
-         "%s credits\n"
+         "%s Credits\n"
          "%s\n"
-         "%.0f (%d jumps)",
+         "%.0f (%d Jumps)",
          player_name,
          nt,
          player_rating(),
@@ -205,13 +205,13 @@ static void info_openShip( unsigned int wid )
    window_addText( wid, 40, -60, 100, h-60, 0, "txtSDesc", &gl_smallFont,
          &cDConsole,
          "Name:\n"
-         "Ship:\n"
+         "Model:\n"
          "Class:\n"
          "Crew:\n"
-         "Total CPU:\n"
          "\n"
+         "Total CPU:\n"
          "Mass:\n"
-         "Jump time:\n"
+         "Jump Time:\n"
          "Thrust:\n"
          "Speed:\n"
          "Turn:\n"
@@ -219,8 +219,8 @@ static void info_openShip( unsigned int wid )
          "Shield:\n"
          "Armour:\n"
          "Energy:\n"
+         "Cargo Space:"
          "Fuel:\n"
-         "Cargo free:"
          );
    cargo = pilot_cargoUsed( player ) + pilot_cargoFree( player);
    snprintf( buf, sizeof(buf),
@@ -228,20 +228,20 @@ static void info_openShip( unsigned int wid )
          "%s\n"
          "%s\n"
          "%d\n"
-         "%.0f Teraflops\n"
          "\n"
+         "%.0f Teraflops\n"
          "%.0f Tons\n"
-         "%.1f STU average\n"
-         "%.0f MN/Ton\n"
-         "%.0f m/s\n"
+         "%.1f STU Average\n"
+         "%.0f KN/Ton\n"
+         "%.0f M/s\n"
          "%.0f Grad/s\n"
          "\n"
-         "%.0f / %.0f MJ (%.1f MJ/s)\n" /* Shield */
-         "%.0f / %.0f MJ (%.1f MJ/s)\n" /* Armour */
-         "%.0f / %.0f MJ (%.1f MJ/s)\n" /* Energy */
-         "%.0f / %.0f Units (%d jumps)\n"
-         "%d / %d Tons",
-         /* Genveric */
+         "%.0f / %.0f MJ (%.1f MW)\n" /* Shield */
+         "%.0f / %.0f MJ (%.1f MW)\n" /* Armour */
+         "%.0f / %.0f MJ (%.1f MW)\n" /* Energy */
+         "%d / %d Tons"
+         "%.0f / %.0f Units (%d Jumps)\n",
+         /* Generic */
          player->name,
          player->ship->name,
          ship_class(player->ship),
@@ -257,8 +257,8 @@ static void info_openShip( unsigned int wid )
          player->shield, player->shield_max, player->shield_regen,
          player->armour, player->armour_max, player->armour_regen,
          player->energy, player->energy_max, player->energy_regen,
-         player->fuel, player->fuel_max, pilot_getJumps(player),
-         pilot_cargoUsed( player ), cargo );
+         pilot_cargoUsed( player ), cargo,
+         player->fuel, player->fuel_max, pilot_getJumps(player));
    window_addText( wid, 140, -60, w-300., h-60, 0, "txtDDesc", &gl_smallFont,
          &cBlack, buf );
 

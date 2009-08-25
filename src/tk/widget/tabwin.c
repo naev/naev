@@ -204,16 +204,16 @@ static void tab_render( Widget* tab, double bx, double by )
          /* Draw border. */
          toolkit_drawRect( bx+x, by+0, tab->dat.tab.namelen[i] + 10,
                TAB_HEIGHT, lc, c );
-         toolkit_drawOutline( bx+x, by+0, tab->dat.tab.namelen[i] + 10,
-               TAB_HEIGHT, 1., c, &cBlack );
+         toolkit_drawOutline( bx+x+1, by+1, tab->dat.tab.namelen[i] + 8,
+               TAB_HEIGHT-1, 1., c, &cBlack );
       }
       else {
          if (i==0)
-            toolkit_drawRect( bx+x, by+0,
-                  1, TAB_HEIGHT, toolkit_colDark, &cBlack );
+            toolkit_drawRect( bx+x-1, by+0,
+                  1, TAB_HEIGHT+1, toolkit_colDark, &cGrey20 );
          else if (i==tab->dat.tab.ntabs-1)
-            toolkit_drawRect( bx+x+tab->dat.tab.namelen[i]+10, by+0,
-                  1, TAB_HEIGHT, toolkit_colDark, &cBlack );
+            toolkit_drawRect( bx+x+tab->dat.tab.namelen[i]+9, by+0,
+                  1, TAB_HEIGHT+1, toolkit_colDark, &cGrey20 );
       }
       /* Draw text. */
       gl_printRaw( &gl_defFont, bx+x + 5 + SCREEN_W/2,

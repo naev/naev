@@ -352,7 +352,7 @@ static void outfits_open( unsigned int wid )
          "Sell", outfits_sell );
 
    /* fancy 128x128 image */
-   window_addRect( wid, 20 + iw + 20, -50, 128, 128, "rctImage", &cBlack, 0 );
+   window_addRect( wid, 19 + iw + 20, -50, 128, 129, "rctImage", &cBlack, 0 );
    window_addImage( wid, 20 + iw + 20, -50-128, "imgOutfit", NULL, 1 );
 
    /* cust draws the modifier */
@@ -736,23 +736,25 @@ static void shipyard_open( unsigned int wid )
          "Buy", shipyard_buy );
 
    /* target gfx */
-   window_addRect( wid, -40, -50,
-         128, 96, "rctTarget", &cBlack, 0 );
+   window_addRect( wid, -41, -50,
+         129, 96, "rctTarget", &cBlack, 0 );
    window_addImage( wid, -40-128, -50-96,
          "imgTarget", NULL, 1 );
 
    /* text */
-   buf = "Name:\n"
+   buf = "Model:\n"
          "Class:\n"
          "Fabricator:\n"
-         "CPU:\n"
          "Crew:\n"
-         "Mass:\n"
-         "Jump time:\n"
+         "\n"
+         "CPU:\n"
          "Slots:\n"
+         "Mass:\n"
+         "Jump Time:\n"
          "Thrust:\n"
          "Speed:\n"
          "Turn:\n"
+         "\n"
          "Shield:\n"
          "Armour:\n"
          "Energy:\n"
@@ -854,32 +856,36 @@ static void shipyard_update( unsigned int wid, char* str )
          "%s\n"
          "%s\n"
          "%.0f Teraflops\n"
+         "\n"
          "%d\n"
-         "%.1f Tons\n"
-         "%.1f STU average\n"
-         "%d / %d / %d (High/Medium/Low)\n"
-         "%.0f MN/Ton\n"
+         "%d / %d / %d (High/Med/Low)\n"
+         "%.0f Tons\n"
+         "%.1f STU Average\n"
+         "%.0f KN/Ton\n"
          "%.0f M/s\n"
          "%.0f Grad/s\n"
+         "\n"
          "%.0f MJ (%.1f MW)\n"
          "%.0f MJ (%.1f MW)\n"
          "%.0f MJ (%.1f MW)\n"
          "%.0f Tons\n"
          "%d Units\n"
-         "%s credits\n"
-         "%s credits\n"
+         "%s Credits\n"
+         "%s Credits\n"
          "%s\n",
          ship->name,
          ship_class(ship),
          ship->fabricator,
          ship->cpu,
+         /* Weapons & Manoeuvrability */
          ship->crew,
+         ship->outfit_nhigh, ship->outfit_nmedium, ship->outfit_nlow,
          ship->mass,
          pow( ship->mass, 1./2.5 ) / 5., /**< @todo make this more portable. */
-         ship->outfit_nhigh, ship->outfit_nmedium, ship->outfit_nlow,
          ship->thrust / ship->mass,
          ship->speed,
          ship->turn,
+         /* Misc */
          ship->shield, ship->shield_regen,
          ship->armour, ship->armour_regen,
          ship->energy, ship->energy_regen,
@@ -1708,7 +1714,7 @@ static void land_createMainTab( unsigned int wid )
     * Checkboxes.
     */
    window_addCheckbox( wid, -20, 20 + 2*(BUTTON_HEIGHT + 20) + 40,
-         250, 20, "chkRefuel", "Automatic refuel",
+         175, 20, "chkRefuel", "Automatic Refuel",
          land_toggleRefuel, conf.autorefuel );
    land_toggleRefuel( wid, "chkRefuel" );
 }
