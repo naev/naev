@@ -11,32 +11,12 @@
 
 #define DELIM " \t"
 
+
 typedef struct {
    GLfloat ver[3];
    GLfloat tex[2];
 } Vertex;
 
-static GLuint texture_loadFromFile( const char *filename)
-{
-   /* Reads image and converts it to RGBA */
-   SDL_Surface *brute = IMG_Load(filename);
-   SDL_Surface *image = SDL_DisplayFormatAlpha(brute);
-
-   DEBUG("image = %p bpp %d", image, (int)image->format->BytesPerPixel);
-
-   GLuint texture;
-   glGenTextures(1, &texture);
-   glBindTexture(GL_TEXTURE_2D, texture);
-
-   glTexImage2D(GL_TEXTURE_2D, 0, 4, image->w, image->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-   SDL_FreeSurface(brute);
-   SDL_FreeSurface(image);
-   return texture;
-}
 
 static int readGLfloat(GLfloat *dest)
 {
@@ -52,7 +32,8 @@ static int readGLfloat(GLfloat *dest)
    return num;
 }
 
-Object *object_loadFromFile( const char *filename )
+
+static gl_vbo *mesh_loadFromFile( const char *filename, int *num_corners )
 {
    GLfloat *vertex = array_create(GLfloat);   /**< vertex coordinates */
    GLfloat *texture = array_create(GLfloat);  /**< texture coordinates */
@@ -109,30 +90,82 @@ Object *object_loadFromFile( const char *filename )
       }
    }
 
-   DEBUG("Read vertex %d texture %d face %d %d",
-         array_size(vertex), array_size(texture), array_size(corners), array_size(corners) / 3);
-
-   /* creates the object */
-   Object *object = (Object *)malloc(sizeof(Object));
-   object->num_corners = array_size(corners);
-
-   /* stores the mesh in a vbo */
-   object->object = gl_vboCreateStatic(
+   /* creates the vbo */
+   *num_corners = array_size(corners);
+   gl_vbo* vbo = gl_vboCreateStatic(
       array_size(corners) * sizeof(Vertex), corners);
-   assert(!glGetError());
-
-   /* texture */
-   object->texture = texture_loadFromFile("/home/alexandru/src/admonisher.png");
 
    /* cleans up */
-   fclose(f);
-   /*
    array_free(vertex);
    array_free(texture);
    array_free(corners);
-   */
+   fclose(f);
+
+   return vbo;
+}
+
+
+static GLuint texture_loadFromFile( const char *filename )
+{
+   /* Reads image and converts it to RGBA */
+   SDL_Surface *brute = IMG_Load(filename);
+   SDL_Surface *image = SDL_DisplayFormatAlpha(brute);
+
+   GLuint texture;
+   glGenTextures(1, &texture);
+   glBindTexture(GL_TEXTURE_2D, texture);
+
+   glTexImage2D(GL_TEXTURE_2D, 0, 4, image->w, image->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+   SDL_FreeSurface(brute);
+   SDL_FreeSurface(image);
+   return texture;
+}
+
+
+/**
+ * @brief Loads object
+ *    mesh from filename + '.obj'
+ *       and
+ *    texture from filename + '.png'
+ *
+ * Object file format is described here
+ * http://local.wasp.uwa.edu.au/~pbourke/dataformats/obj/
+ *
+ * Normals and material are not understood.
+ *
+ * @param filename base file name
+ * @return and Object containing the 3d model
+ */
+Object *object_loadFromFile( const char *filename )
+{
+   const int length = strlen(filename);
+   char temp[length + 5];
+   memcpy(temp, filename, length);
+
+   Object *object = (Object *)malloc(sizeof(Object));
+
+   memcpy(temp + length, ".obj", 5);
+   object->mesh = mesh_loadFromFile(temp, &object->num_corners);
+
+   memcpy(temp + length, ".png", 5);
+   object->texture = texture_loadFromFile(temp);
 
    return object;
+}
+
+
+/**
+ * @brief Frees memory reserved for the object
+ */
+void object_free( Object *object )
+{
+   gl_vboDestroy(object->mesh);
+   glDeleteTextures(1, &object->texture);
+   free(object);
 }
 
 void object_render( Object *object )
@@ -165,9 +198,9 @@ void object_render( Object *object )
    glLoadIdentity();
 
    /* activates vertices and texture coords */
-   gl_vboActivateOffset(object->object,
+   gl_vboActivateOffset(object->mesh,
          GL_VERTEX_ARRAY, ver_offset, 3, GL_FLOAT, sizeof(Vertex));
-   gl_vboActivateOffset(object->object,
+   gl_vboActivateOffset(object->mesh,
          GL_TEXTURE_COORD_ARRAY, tex_offset, 2, GL_FLOAT, sizeof(Vertex));
 
    /* binds textures */
