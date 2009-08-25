@@ -8,12 +8,13 @@
 
 #include <GL/gl.h>
 
-#include "array.h"
+#include "opengl_vbo.h"
 
+struct gl_vbo;
 
 typedef struct {
    int num_corners;
-   GLuint object;
+   gl_vbo *object;
    GLuint texture;
 } Object;
 

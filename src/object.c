@@ -7,6 +7,7 @@
 #include "SDL_image.h"
 
 #include "log.h"
+#include "array.h"
 
 #define DELIM " \t"
 
@@ -14,7 +15,6 @@ typedef struct {
    GLfloat ver[3];
    GLfloat tex[2];
 } Vertex;
-
 
 static GLuint texture_loadFromFile( const char *filename)
 {
@@ -116,19 +116,21 @@ Object *object_loadFromFile( const char *filename )
    Object *object = (Object *)malloc(sizeof(Object));
    object->num_corners = array_size(corners);
 
-   /* mesh */
-   glGenBuffers(1, &object->object);
-   glBindBuffer(GL_ARRAY_BUFFER, object->object);
-   glBufferData(GL_ARRAY_BUFFER, array_size(corners) * sizeof(Vertex), corners, GL_STATIC_DRAW);
+   /* stores the mesh in a vbo */
+   object->object = gl_vboCreateStatic(
+      array_size(corners) * sizeof(Vertex), corners);
+   assert(!glGetError());
 
    /* texture */
    object->texture = texture_loadFromFile("/home/alexandru/src/admonisher.png");
 
    /* cleans up */
    fclose(f);
+   /*
    array_free(vertex);
    array_free(texture);
    array_free(corners);
+   */
 
    return object;
 }
@@ -136,48 +138,57 @@ Object *object_loadFromFile( const char *filename )
 void object_render( Object *object )
 {
    /* computes relative addresses of the vertice and texture coords */
-   GLfloat* ver_offset = ((Vertex *)NULL)->ver;
-   GLfloat* tex_offset = ((Vertex *)NULL)->tex;
+   int ver_offset = (int)(&((Vertex *)NULL)->ver);
+   int tex_offset = (int)(&((Vertex *)NULL)->tex);
 
-   GLint a1, a2;
-   glGetIntegerv(GL_TEXTURE_BINDING_2D, &a1);
-   glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &a2);
+   /* FIXME how much to scale the object */
+   const double scale = 1. / 40.;
 
-   /* texture is inially flipped vertically */
+   /* rotates the object to match projection */
+   double zoom;
+   gl_cameraZoomGet(&zoom);
+
+   glMatrixMode(GL_MODELVIEW);
+   glPushMatrix();
+   glScalef(scale * zoom, scale * zoom, scale * zoom);
+   glRotatef(180., 0., 1., 0.);
+   glRotatef(90., 1., 0., 0.);
+
+   /* texture is initially flipped vertically */
    glMatrixMode(GL_TEXTURE);
    glPushMatrix();
-   glLoadIdentity();
    glScalef(+1., -1., +1.);
+
+   /* XXX wrong projection */
+   glMatrixMode(GL_PROJECTION);
+   glPushMatrix();
+   glLoadIdentity();
+
+   /* activates vertices and texture coords */
+   gl_vboActivateOffset(object->object,
+         GL_VERTEX_ARRAY, ver_offset, 3, GL_FLOAT, sizeof(Vertex));
+   gl_vboActivateOffset(object->object,
+         GL_TEXTURE_COORD_ARRAY, tex_offset, 2, GL_FLOAT, sizeof(Vertex));
 
    /* binds textures */
    glBindTexture(GL_TEXTURE_2D, object->texture);
    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-   /* bindes vertices and texture coords */
-   glBindBuffer(GL_ARRAY_BUFFER, object->object);
-   glVertexPointer(3, GL_FLOAT, sizeof(Vertex), ver_offset);
-   glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), tex_offset);
-
-   glEnableClientState(GL_VERTEX_ARRAY);
-   glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
    glEnable(GL_TEXTURE_2D);
    glEnable(GL_DEPTH_TEST);
-   glDepthFunc(GL_LESS);
+   glDepthFunc(GL_LESS);  /* this changes the global DepthFunc */
 
    glColor4f(1.0, 1.0, 1.0, 1.0);
    glDrawArrays(GL_TRIANGLES, 0, object->num_corners);
 
+   gl_vboDeactivate();
    glDisable(GL_TEXTURE_2D);
    glDisable(GL_DEPTH_TEST);
 
-   glDisableClientState(GL_VERTEX_ARRAY);
-   glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
+   /* restores all matrices */
+   glPopMatrix();
+   glMatrixMode(GL_TEXTURE);
    glPopMatrix();
    glMatrixMode(GL_MODELVIEW);
-
-   /* restores bindings */
-   glBindTexture(GL_TEXTURE_2D, a1);
-   glBindBuffer(GL_ARRAY_BUFFER, a2);
+   glPopMatrix();
 }
