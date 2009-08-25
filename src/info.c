@@ -143,7 +143,7 @@ static void info_openMain( unsigned int wid )
          "\n"
          "Money:\n"
          "Ship:\n"
-         "Fuel:\n"
+         "Fuel:"
          );
    credits2str( creds, player->credits, 2 );
    snprintf( str, 128, 
@@ -219,7 +219,7 @@ static void info_openShip( unsigned int wid )
          "Shield:\n"
          "Armour:\n"
          "Energy:\n"
-         "Cargo Space:"
+         "Cargo Space:\n"
          "Fuel:\n"
          );
    cargo = pilot_cargoUsed( player ) + pilot_cargoFree( player);
@@ -239,8 +239,8 @@ static void info_openShip( unsigned int wid )
          "%.0f / %.0f MJ (%.1f MW)\n" /* Shield */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Armour */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Energy */
-         "%d / %d Tons"
-         "%.0f / %.0f Units (%d Jumps)\n",
+         "%d / %d Tons\n"
+         "%.0f / %.0f Units (%d Jumps)",
          /* Generic */
          player->name,
          player->ship->name,
