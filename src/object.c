@@ -109,6 +109,8 @@ static GLuint texture_loadFromFile( const char *filename )
 {
    /* Reads image and converts it to RGBA */
    SDL_Surface *brute = IMG_Load(filename);
+   if (brute == NULL)
+      ERR("Cannot load texture from %s", filename);
    SDL_Surface *image = SDL_DisplayFormatAlpha(brute);
 
    GLuint texture;
