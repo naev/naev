@@ -678,6 +678,8 @@ void space_initStars( int n )
       /* Set the position. */
       star_vertex[4*i+0] = RNGF()*w - hw;
       star_vertex[4*i+1] = RNGF()*h - hh;
+      star_vertex[4*i+2] = 0.;
+      star_vertex[4*i+3] = 0.;
       /* Set the colour. */
       star_colour[8*i+0] = 1.;
       star_colour[8*i+1] = 1.;
