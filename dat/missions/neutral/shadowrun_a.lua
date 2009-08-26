@@ -35,7 +35,7 @@ else -- default english
 end
 
 function create ()
-    misn.setNPC( "An unpleasant man", "none" )
+    misn.setNPC( "An unpleasant man", "jorek" )
     misn.setDesc( bar_desc ) 
 end
 

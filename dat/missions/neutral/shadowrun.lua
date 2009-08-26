@@ -82,7 +82,7 @@ else -- default english
 end
 
 function create ()
-    misn.setNPC( "A dark-haired woman", "none" )
+    misn.setNPC( "A dark-haired woman", "rebina" )
     misn.setDesc( bar_desc ) 
 end
 
