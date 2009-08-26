@@ -139,7 +139,7 @@ Try landing now.]]
 end
 
 
-function create ()
+function create()
    if tk.yesno( title[1], text[1] ) then
       misn.accept()
 
@@ -171,7 +171,7 @@ function create ()
 end
 
 
-function flightOver ()
+function flightOver()
    -- Update OSD
    misn.osdActive( 1 )
 
@@ -182,7 +182,7 @@ function flightOver ()
 end
 
 
-function brakeOver ()
+function brakeOver()
    player = pilot.player()
 
    -- Check if player successfully braked
@@ -209,7 +209,7 @@ function brakeOver ()
    end
 end
 
-function targetEnding ()
+function targetEnding()
    for k,v in ipairs(traders) do
       v:changeAI("flee")
       v:setHealth(100, 100)
@@ -218,7 +218,7 @@ function targetEnding ()
    misn.timerStart( "targetOver", 10000) -- Affords targetting-practice ships 10 seconds before the new Llama flies in.
 end
 
-function targetOver ()
+function targetOver()
    misn_stage = 4
    
    
@@ -236,7 +236,7 @@ function targetOver ()
 end
 
 
-function addLlamaDummy ()
+function addLlamaDummy()
    -- Add the combat dummy.
    llamadummy = pilot.add( "Trader Llama", "dummy" )
    for k,v in ipairs(llamadummy) do
@@ -253,14 +253,14 @@ function addLlamaDummy ()
    end
 end
 
-function taunt ()
+function taunt()
 	for k,v in ipairs(llamadummy) do
 		armour, shield = v:getHealth()
 		misn.timerStart("taunt2", 1000)
 	end
 end
 
-function taunt2 ()
+function taunt2()
       shield30 = {
             "Bring on the pain!",
             "You're no match for the fearsome T. Practice!",
@@ -361,7 +361,7 @@ function taunt2 ()
 	end
 end
 
-function llamaDisabled ()
+function llamaDisabled()
    -- Update OSD
    
    misn.osdActive( 1 )
@@ -371,7 +371,7 @@ function llamaDisabled ()
 end
 
 
-function llamaDead ()
+function llamaDead()
    if misn_stage < 6 then
       -- New OSD
       misn.osdCreate( osd_title[3], osd_msg[3] )
@@ -383,7 +383,7 @@ function llamaDead ()
 end
 
 
-function llamaBoard ()
+function llamaBoard()
    -- Update OSD
    misn.osdActive( 2 )
 
@@ -392,7 +392,7 @@ function llamaBoard ()
    misn.timerStart( "boardEnding", 3000 )
 end
 
-function boardEnding ()
+function boardEnding()
    for k,v in ipairs(llamadummy) do
    v:changeAI("flee")
    v:setHealth(100, 100)
@@ -401,7 +401,7 @@ function boardEnding ()
    misn.timerStart("boardOver", 8000)
 end
 
-function boardOver ()
+function boardOver()
    tk.msg( title[4], text[13] )
    hyena = pilot.add( "Pirate Hyena" )
    for k,v in ipairs(hyena) do
@@ -413,17 +413,17 @@ function boardOver ()
 end
 
 
-function bringHelp ()
+function bringHelp()
    pilot.add( "Empire Lancelot" )
    pilot.add( "Empire Lancelot" ) -- Lancelot crushes Hyena
 end
 
 
-function hyenaWait ()
+function hyenaWait()
    misn.timerStart("hyenaDead", 7500)
 end
 
-function hyenaDead ()
+function hyenaDead()
    misn_stage = 7
 
    -- Create OSD
@@ -437,27 +437,28 @@ function hyenaDead ()
 end
 
 
-function tutLand ()
+function tutLand()
    -- Shouldn't be landing yet.
    if misn_stage ~= 7 then
       tk.msg( msg_abortTitle, msg_abort )
       misn.finish(false)
    else
-      tutEnd ()
+      tutEnd()
    end
+end
 
-function tutEnter ()
+function tutEnter()
    enter_sys = system.get()
    if misn_stage ~= 8 then
       tk.msg( msg_abortTitle, msg_abort )
       misn.finish(false)
    elseif enter_sys ~= misn_sys then
       misn.timerStart( "tutEnd", 5000 )
-      end
+
    end
 end
 
-function tutEnd ()
+function tutEnd()
 	misn_stage = 9
 	misn.finish(true)
    
