@@ -1634,7 +1634,6 @@ void space_renderStars( const double dt )
    GLfloat hh, hw, h, w;
    GLfloat x, y, m, b;
    GLfloat brightness;
-   GLfloat buf;
    double z;
 
    /*
@@ -1646,10 +1645,6 @@ void space_renderStars( const double dt )
    gl_matrixMode( GL_PROJECTION );
    gl_matrixPush();
       gl_matrixScale( z, z );
-
-   /* Calculate star buffer. */
-   buf   = STAR_BUF;
-   buf  /= conf.zoom_min;
 
    /* Enable vertex arrays. */
    glEnableClientState(GL_VERTEX_ARRAY);
@@ -1720,8 +1715,8 @@ void space_renderStars( const double dt )
       }
 
       /* Render. */
-      gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 0 );
-      gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 0 );
+      gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 2 * sizeof(GLfloat) );
+      gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
       glDrawArrays( GL_POINTS, 0, nstars );
    }
 
