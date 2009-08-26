@@ -53,7 +53,8 @@ You have multiple options:
  %s cycles through ships in the system.
  %s cycles the ships backwards.
  %s targets the nearest ship.
- %s targets the nearest enemy.]]
+ %s targets the nearest enemy.
+ %s clears the current target.]]
    text[7] = [[I'll bring in several ships so you can try targeting. You'll notice your targeted ship is highlighted on the radar (Top right). You can use the %s and %s keys to change the scale of the radar. Yellow is neutral, red is hostile, green is friendly and grey is disabled. The new ships will be green.]]
    -- Step 4
    title[4] = "Combat Tutorial"
@@ -73,7 +74,7 @@ Once you're on top of the ship you can press %s which will allow you to board th
 
 Try boarding the ship now.]]
    -- Back to Step 4
-   text[11] = [[You killed Captain T. Practice! You should be ashamed. Admittedly, we do having a waiting list of pilots willing to fill the role.]]
+   text[11] = [[You killed Captain T. Practice! You should be ashamed. Oh well, we'll ship out a replacement momentarily.]]
    text[12] = [[If the Llama had money or cargo, you could attempt to steal it. Your probability of success is based on the size of your crew versus theirs. The larger your crew, the higher your odds of success. Since Captain T. Practice has nothing, just take off and we'll introduce a real enemy.]]
    -- Step 6
    text[13] = [[Now comes the real challenge. I'll bring in a real pirate to see how you fare with him. 
@@ -118,7 +119,8 @@ Try landing now.]]
       naev.getKey("target_next") .. " cycles through ships.",
       naev.getKey("target_prev") .. " cycles backwards.",
       naev.getKey("target_nearest") .. " targets nearest ship.",
-      naev.getKey("target_hostile") .. " targets nearest hostile."
+      naev.getKey("target_hostile") .. " targets nearest hostile.",
+      naev.getKey("target_clear") .. " clears the target."
    }
    
    osd_title[3] = "Tutorial - Combat"
@@ -192,7 +194,7 @@ function brakeOver ()
       -- Text and mission stuff
       misn_stage = 3
       tk.msg( title[2], text[5] )
-      tk.msg( title[3], string.format(text[6], naev.getKey("target_next"), naev.getKey("target_prev"), naev.getKey("target_nearest"), naev.getKey("target_hostile")))
+      tk.msg( title[3], string.format(text[6], naev.getKey("target_next"), naev.getKey("target_prev"), naev.getKey("target_nearest"), naev.getKey("target_hostile"), naev.getKey("target_clear")))
       tk.msg( title[3], string.format(text[7], naev.getKey("mapzoomin"), naev.getKey("mapzoomout")))
       traders = pilot.add( "Sml Trader Convoy", "dummy" )
       for k,v in ipairs(traders) do
