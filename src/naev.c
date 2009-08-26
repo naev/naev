@@ -334,6 +334,9 @@ void loadscreen_load (void)
       return;
    }
 
+   /* Set the zoom. */
+   gl_cameraZoom( conf.zoom_min );
+
    /* Load the texture */
    snprintf( file_path, PATH_MAX, "gfx/loading/%s", loadscreens[ RNG_SANE(0,nload-1) ] );
    loading = gl_newImage( file_path, 0 );
