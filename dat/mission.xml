@@ -6,6 +6,7 @@
    <unique />
   </flags>
   <avail>
+   <chance>100</chance>
    <location>None</location>
   </avail>
  </mission>
@@ -15,6 +16,7 @@
    <unique />
   </flags>
   <avail>
+   <chance>100</chance>
    <cond>var.peek("tutorial_aborted") ~= true</cond>
    <location>Land</location>
 	<done>Tutorial</done>
@@ -26,6 +28,7 @@
    <unique />
   </flags>
   <avail>
+   <chance>100</chance>
    <cond>var.peek("tutorial_aborted") ~= true</cond>
    <location>None</location>
 	<done>Tutorial</done>
@@ -315,6 +318,7 @@
    <unique />
   </flags>
   <avail>
+   <chance>100</chance>
    <location>None</location>
   </avail>
  </mission>
@@ -323,8 +327,8 @@
   <flags>
    <unique />
   </flags>
-  <chance>15</chance>
   <avail>
+   <chance>15</chance>
    <location>Bar</location>
    <cond>system.get("Klantar"):jumpDist() &lt; 3</cond>
   </avail>
@@ -334,8 +338,8 @@
   <flags>
    <unique />
   </flags>
-  <chance>100</chance>
   <avail>
+   <chance>100</chance>
    <location>Bar</location>
    <cond>var.peek("shadowrun_planet") ~= nil and planet.get() == planet.get(var.peek("shadowrun_planet"))</cond>
   </avail>
@@ -345,8 +349,8 @@
   <flags>
    <unique />
   </flags>
-  <chance>100</chance>
   <avail>
+   <chance>100</chance>
    <location>Bar</location>
    <cond>var.peek("shadowrun_planet") ~= nil and planet.get() == planet.get(var.peek("shadowrun_planet"))</cond>
   </avail>
@@ -356,8 +360,8 @@
   <flags>
    <unique />
   </flags>
-  <chance>100</chance>
   <avail>
+   <chance>100</chance>
    <location>Bar</location>
    <cond>var.peek("shadowrun_planet") ~= nil and planet.get() == planet.get(var.peek("shadowrun_planet"))</cond>
   </avail>
@@ -367,8 +371,8 @@
   <flags>
    <unique />
   </flags>
-  <chance>100</chance>
   <avail>
+   <chance>100</chance>
    <location>Bar</location>
    <cond>var.peek("shadowrun_planet") ~= nil and planet.get() == planet.get(var.peek("shadowrun_planet"))</cond>
   </avail>
@@ -378,8 +382,8 @@
   <flags>
    <unique />
   </flags>
-  <chance>100</chance>
   <avail>
+   <chance>100</chance>
    <location>Bar</location>
    <cond>var.peek("shadowrun_planet") ~= nil and planet.get() == planet.get(var.peek("shadowrun_planet"))</cond>
   </avail>
