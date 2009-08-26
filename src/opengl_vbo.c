@@ -149,6 +149,9 @@ void gl_vboData( gl_vbo *vbo, GLsizei size, void* data )
       else
          memcpy( vbo->data, data, size );
    }
+
+   /* Check for errors. */
+   gl_checkErr();
 }
 
 
@@ -169,6 +172,9 @@ void gl_vboSubData( gl_vbo *vbo, GLint offset, GLsizei size, void* data )
    else {
       memcpy( &vbo->data[offset], data, size );
    }
+
+   /* Check for errors. */
+   gl_checkErr();
 }
 
 
@@ -184,6 +190,9 @@ gl_vbo* gl_vboCreateStream( GLsizei size, void* data )
    
    vbo = gl_vboCreate( GL_ARRAY_BUFFER, size, data, GL_STREAM_DRAW );
    vbo->type = NGL_VBO_STREAM;
+
+   /* Check for errors. */
+   gl_checkErr();
 
    return vbo;
 }
@@ -201,6 +210,9 @@ gl_vbo* gl_vboCreateStatic( GLsizei size, void* data )
    
    vbo = gl_vboCreate( GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW );
    vbo->type = NGL_VBO_STATIC;
+
+   /* Check for errors. */
+   gl_checkErr();
 
    return vbo;
 }
@@ -233,6 +245,9 @@ void gl_vboUnmap( gl_vbo *vbo )
    (void) vbo;
    if (has_vbo)
       nglUnmapBuffer( GL_ARRAY_BUFFER );
+
+   /* Check for errors. */
+   gl_checkErr();
 }
 
 
@@ -294,20 +309,23 @@ void gl_vboActivateOffset( gl_vbo *vbo, GLuint class, GLuint offset,
 
       case GL_TEXTURE0:
          nglClientActiveTexture( GL_TEXTURE0 );
-         glTexCoordPointer( size, type, stride, pointer );
          glEnableClientState(GL_TEXTURE_COORD_ARRAY); 
+         glTexCoordPointer( size, type, stride, pointer );
          break;
 
       case GL_TEXTURE1:
          nglClientActiveTexture( GL_TEXTURE1 );
-         glTexCoordPointer( size, type, stride, pointer );
          glEnableClientState(GL_TEXTURE_COORD_ARRAY); 
+         glTexCoordPointer( size, type, stride, pointer );
          break;
 
       default:
          WARN("Unknown VBO class.");
          break;
    }
+
+   /* Check for errors. */
+   gl_checkErr();
 }
 
 
