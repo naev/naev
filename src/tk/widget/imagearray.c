@@ -394,9 +394,11 @@ static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
    else {
       if ((x < 0) || (x >= iar->w) || (y < 0) || (y >= iar->h))
          iar->dat.iar.alt  = -1;
-      iar->dat.iar.alt  = iar_focusImage( iar, x, y );
-      iar->dat.iar.altx = x;
-      iar->dat.iar.alty = y;
+      else {
+         iar->dat.iar.alt  = iar_focusImage( iar, x, y );
+         iar->dat.iar.altx = x;
+         iar->dat.iar.alty = y;
+      }
    }
 
    return 0;
