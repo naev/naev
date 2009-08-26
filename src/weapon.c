@@ -967,6 +967,7 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
          /* Set as hostile. */
          pilot_setHostile(p);
          pilot_rmFlag( p, PILOT_BRIBED );
+         pilot_rmFlag( p, PILOT_FRIENDLY );
       }
    }
    /* Otherwise just inform of being attacked. */
