@@ -805,6 +805,10 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
 {
    Pilot *parent;
 
+   /* Can't hit invincible stuff. */
+   if (pilot_isFlag(p, PILOT_INVINCIBLE))
+      return 0;
+
    /* Can never hit same faction. */
    if (p->faction == w->faction)
       return 0;
@@ -967,6 +971,7 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
          /* Set as hostile. */
          pilot_setHostile(p);
          pilot_rmFlag( p, PILOT_BRIBED );
+         pilot_rmFlag( p, PILOT_FRIENDLY );
       }
    }
    /* Otherwise just inform of being attacked. */

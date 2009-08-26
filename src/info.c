@@ -451,7 +451,7 @@ static void standings_close( unsigned int wid, char *str )
 static void info_openStandings( unsigned int wid )
 {
    int i;
-   int n;
+   int n, m;
    char **str;
    int w, h, lw;
 
@@ -481,9 +481,9 @@ static void info_openStandings( unsigned int wid )
    /* Create list. */
    for (i=0; i<n; i++) {
       str[i] = malloc( 256 );
-      snprintf( str[i], 256, "%s   [ %+.0f%% ]",
-            faction_name( info_factions[i] ),
-            faction_getPlayer( info_factions[i] ) );
+      m = round( faction_getPlayer( info_factions[i] ) );
+      snprintf( str[i], 256, "%s   [ %+d%% ]",
+            faction_name( info_factions[i] ), m );
    }
 
    /* Display list. */
@@ -530,7 +530,7 @@ static void standings_update( unsigned int wid, char* str )
    window_modifyText( wid, "txtName", faction_longname( info_factions[p] ) );
    window_moveWidget( wid, "txtName", lw+40, y );
    y -= 40;
-   m = faction_getPlayer( info_factions[p] );
+   m = round( faction_getPlayer( info_factions[p] ) );
    snprintf( buf, sizeof(buf), "%+d%%   [ %s ]", m, faction_getStanding( m ) );
    window_modifyText( wid, "txtStanding", buf );
    window_moveWidget( wid, "txtStanding", lw+40, y );

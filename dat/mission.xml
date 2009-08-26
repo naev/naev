@@ -9,6 +9,29 @@
    <location>None</location>
   </avail>
  </mission>
+  <mission name="Tutorial Landing">
+  <lua>tutorial-landing</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <cond>var.peek("tutorial_aborted") ~= true</cond>
+   <location>Land</location>
+	<done>Tutorial</done>
+  </avail>
+ </mission>
+ <mission name="Tutorial Navigation">
+  <lua>tutorial-navigation</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <cond>var.peek("tutorial_aborted") ~= true</cond>
+   <location>None</location>
+	<done>Tutorial</done>
+	<done>Tutorial Landing</done>
+  </avail>
+ </mission>
  <mission name="Cargo">
   <lua>neutral/cargo</lua>
   <avail>

@@ -18,4 +18,13 @@
    <unique />
   </flags>
  </event>
+ <event name="Tutorial Navigation">
+  <lua>neutral/tutorial</lua>
+  <trigger>enter</trigger>
+  <chance>100</chance>
+  <cond>var.peek("tutorial_done") == 2</cond>
+  <flags>
+   <unique />
+  </flags>
+ </event>
 </Events>

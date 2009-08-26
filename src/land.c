@@ -855,9 +855,9 @@ static void shipyard_update( unsigned int wid, char* str )
          "%s\n"
          "%s\n"
          "%s\n"
-         "%.0f Teraflops\n"
-         "\n"
          "%d\n"
+         "\n"
+         "%.0f Teraflops\n"
          "%d / %d / %d (High/Med/Low)\n"
          "%.0f Tons\n"
          "%.1f STU Average\n"
@@ -876,9 +876,9 @@ static void shipyard_update( unsigned int wid, char* str )
          ship->name,
          ship_class(ship),
          ship->fabricator,
-         ship->cpu,
-         /* Weapons & Manoeuvrability */
          ship->crew,
+         /* Weapons & Manoeuvrability */
+         ship->cpu,
          ship->outfit_nhigh, ship->outfit_nmedium, ship->outfit_nlow,
          ship->mass,
          pow( ship->mass, 1./2.5 ) / 5., /**< @todo make this more portable. */
