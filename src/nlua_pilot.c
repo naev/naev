@@ -60,6 +60,7 @@ static int pilotL_comm( lua_State *L );
 static int pilotL_setFaction( lua_State *L );
 static int pilotL_setHostile( lua_State *L );
 static int pilotL_setFriendly( lua_State *L );
+static int pilotL_setInvincible( lua_State *L );
 static int pilotL_disable( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
 static int pilotL_rmOutfit( lua_State *L );
@@ -85,6 +86,7 @@ static const luaL_reg pilotL_methods[] = {
    { "setFaction", pilotL_setFaction },
    { "setHostile", pilotL_setHostile },
    { "setFriendly", pilotL_setFriendly },
+   { "setInvincible", pilotL_setInvincible },
    { "disable", pilotL_disable },
    { "addOutfit", pilotL_addOutfit },
    { "rmOutfit", pilotL_rmOutfit },
@@ -835,6 +837,7 @@ static int pilotL_setHostile( lua_State *L )
    }
 
    /* Set as hostile. */
+   pilot_rmFlag(p, PILOT_FRIENDLY);
    pilot_setHostile(p);
 
    return 0;
@@ -864,6 +867,47 @@ static int pilotL_setFriendly( lua_State *L )
 
    /* Remove hostile and mark as friendly. */
    pilot_setFriendly(p);
+
+   return 0;
+}
+
+
+/**
+ * @brief Sets the pilot's invincibility status.
+ *
+ * @usage p:setInvincible() -- p can not be hit anymore
+ * @usage p:setInvincible(true) -- p can not be hit anymore
+ * @usage p:setInvincible(false) -- p can be hit again
+ *
+ *    @luaparam p Pilot to set invincibility status of.
+ *    @luaparam state State to set invincibility, if omitted defaults to true.
+ * @luafunc setInvincible( p, state )
+ */
+static int pilotL_setInvincible( lua_State *L )
+{
+   LuaPilot *lp;
+   Pilot *p;
+   int state;
+
+   /* Get the pilot. */
+   lp = luaL_checkpilot(L,1);
+   p = pilot_get(lp->pilot);
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
+   /* Set status. */
+   if (state)
+      pilot_setFlag(p, PILOT_INVINCIBLE);
+   else
+      pilot_rmFlag(p, PILOT_INVINCIBLE);
 
    return 0;
 }

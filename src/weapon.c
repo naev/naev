@@ -805,6 +805,10 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
 {
    Pilot *parent;
 
+   /* Can't hit invincible stuff. */
+   if (pilot_isFlag(p, PILOT_INVINCIBLE))
+      return 0;
+
    /* Can never hit same faction. */
    if (p->faction == w->faction)
       return 0;
