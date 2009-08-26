@@ -33,7 +33,7 @@ Each circle represents a system, and the interconnecting lines represent hypersp
  Move away from gravity wells until navigation turns green, or use autopilot with %s.
  Use %s to initialize the jump.
    
-Try doing this now. Since you haven't explored any systems, just pick any one and try jumping.]]
+Try doing this now. Since you haven't explored any systems, only one other system is visible on the map.]]
    title[4] = "Tutorial Finished"
    text[6] = [[This concludes the tutorial. You should now know how to fly, target, fight, land, and hyperspace between systems.
 
