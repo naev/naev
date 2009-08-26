@@ -33,6 +33,7 @@
 #include "gui.h"
 #include "fleet.h"
 #include "mission.h"
+#include "conf.h"
 
 
 #define XML_PLANET_ID         "Planets" /**< Planet xml document tag. */
@@ -645,13 +646,27 @@ static void space_addFleet( Fleet* fleet, int init )
 
 /**
  * @brief Initilaizes background stars.
+ *
+ *    @param n Number of stars to add (stars per 800x640 screen).
  */
 void space_initStars( int n )
 {
    int i;
+   int size;
+   GLfloat w, h, hw, hh;
+
+   /* Calculate size. */
+   size  = SCREEN_W*SCREEN_H+STAR_BUF*STAR_BUF;
+   size /= conf.zoom_min;
+
+   /* Calculate star buffer. */
+   w  = (SCREEN_W + 2.*STAR_BUF) / conf.zoom_min;
+   h  = (SCREEN_H + 2.*STAR_BUF) / conf.zoom_min;
+   hw = w / 2.;
+   hh = h / 2.;
 
    /* Calculate stars. */
-   nstars = (int)((double)(n*SCREEN_W*SCREEN_H+STAR_BUF*STAR_BUF)/(800.*640.));
+   nstars = (int)((double)(n*size)/(800.*640.));
 
    if (mstars < nstars) {
       /* Create data. */
@@ -661,8 +676,8 @@ void space_initStars( int n )
    }
    for (i=0; i < nstars; i++) {
       /* Set the position. */
-      star_vertex[4*i+0] = RNGF()*(SCREEN_W + 2.*STAR_BUF) - STAR_BUF - SCREEN_W/2.;
-      star_vertex[4*i+1] = RNGF()*(SCREEN_H + 2.*STAR_BUF) - STAR_BUF - SCREEN_H/2.;
+      star_vertex[4*i+0] = RNGF()*w - hw;
+      star_vertex[4*i+1] = RNGF()*h - hh;
       /* Set the colour. */
       star_colour[8*i+0] = 1.;
       star_colour[8*i+1] = 1.;
@@ -1619,10 +1634,22 @@ void space_renderStars( const double dt )
    GLfloat hh, hw, h, w;
    GLfloat x, y, m, b;
    GLfloat brightness;
+   GLfloat buf;
+   double z;
 
    /*
     * gprof claims it's the slowest thing in the game!
     */
+
+   /* Do some scaling for now. */
+   gl_cameraZoomGet( &z );
+   gl_matrixMode( GL_PROJECTION );
+   gl_matrixPush();
+      gl_matrixScale( z, z );
+
+   /* Calculate star buffer. */
+   buf   = STAR_BUF;
+   buf  /= conf.zoom_min;
 
    /* Enable vertex arrays. */
    glEnableClientState(GL_VERTEX_ARRAY);
@@ -1662,8 +1689,8 @@ void space_renderStars( const double dt )
             !player_isFlag(PLAYER_CREATING)) { /* update position */
 
          /* Calculate some dimensions. */
-         hw = SCREEN_W / 2. + STAR_BUF;
-         hh = SCREEN_H / 2. + STAR_BUF;
+         hw = (SCREEN_W / 2. + STAR_BUF) / conf.zoom_min;
+         hh = (SCREEN_H / 2. + STAR_BUF) / conf.zoom_min;
          w  = 2.*hw;
          h  = 2.*hh;
 
@@ -1700,6 +1727,9 @@ void space_renderStars( const double dt )
 
    /* Disable vertex array. */
    gl_vboDeactivate();
+
+   /* Pop matrix. */
+   gl_matrixPop();
 }
 
 
