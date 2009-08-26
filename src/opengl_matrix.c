@@ -41,6 +41,19 @@ void gl_exitMatrix (void)
 
 
 /**
+ * @brief like glMatrixMode.
+ */
+void gl_matrixMode( GLenum mode )
+{
+   if (has_glsl) {
+   }
+   else {
+      glMatrixMode( mode );
+   }
+}
+
+
+/**
  * @brief Pushes a new matrix on the stack.
  */
 void gl_matrixPush (void)
@@ -48,7 +61,6 @@ void gl_matrixPush (void)
    if (has_glsl) {
    }
    else {
-      glMatrixMode(GL_PROJECTION);
       glPushMatrix();
    }
 }
