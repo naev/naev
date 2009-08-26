@@ -205,12 +205,12 @@ end
 
 function tutEnd()
 	tk.msg( title[1], text[11] )
+   var.push("tutorial_done", 2)
 	misn.finish(true)
    
 end
 
 function abort()
     var.push("tutorial_aborted", true)
-    var.push("tutorial_done", true)
     misn.finish(true)
 end
