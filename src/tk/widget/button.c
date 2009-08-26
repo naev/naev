@@ -202,14 +202,14 @@ static void btn_render( Widget* btn, double bx, double by )
             dc = &cGrey40;
             break;
          case WIDGET_STATUS_MOUSEOVER:
-            lc = &cWhite;
-            c = &cGrey80;
-            dc = &cGrey60;
+            lc = &cGrey90;
+            c = &cGrey70;
+            dc = &cGrey50;
             break;
          case WIDGET_STATUS_MOUSEDOWN:
-            lc = &cGreen;
-            c = &cGreen;
-            dc = &cGrey40;
+            lc = &cGrey90;
+            c = &cGrey50;
+            dc = &cGrey70;
             break;
          default:
             break;

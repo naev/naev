@@ -120,7 +120,7 @@ static void lst_render( Widget* lst, double bx, double by )
    /* draw selected */
    toolkit_drawRect( x, y - 1. + lst->h -
          (1 + lst->dat.lst.selected - lst->dat.lst.pos)*(gl_defFont.h+2.),
-         w, gl_defFont.h + 2., &cHilight, NULL );
+         w-1, gl_defFont.h + 2., &cHilight, NULL );
 
    /* draw content */
    tx = (double)SCREEN_W/2. + x + 2.;

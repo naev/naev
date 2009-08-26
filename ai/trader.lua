@@ -5,12 +5,12 @@ include("ai/tpl/merchant.lua")
 function sos ()
    msg = {
       "Mayday! We are under attack!",
-      "Requesting assistance.  We are under attack!",
+      "Requesting assistance. We are under attack!",
       "Merchant vessel under attack! Requesting help!",
       "Help! Ship under fire!",
       "Taking hostile fire! Need assistance!",
       "We are under attack, require support!",
-      "Mayday! Ship taking damage from hostiles!",
+      "Mayday! Ship taking damage!",
       string.format("Mayday! Merchant %s being assaulted!", ai.shipclass())
    }
    ai.settarget( ai.target() )

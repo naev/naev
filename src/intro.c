@@ -29,7 +29,7 @@
 
 
 #define INTRO_FONT_SIZE    18. /**< Intro text font size. */
-#define INTRO_SPEED        30. /**< Sped of text in characters / second. */
+#define INTRO_SPEED        30. /**< Speed of text in characters / second. */
 
 
 /*
@@ -209,7 +209,7 @@ int intro_display( const char *text, const char *mus )
       }
 
       /* Only thing we actually care about updating is music. */
-      music_update();
+      music_update( 0. );
 
       /* Display stuff. */
       SDL_GL_SwapBuffers();

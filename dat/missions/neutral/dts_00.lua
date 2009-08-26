@@ -36,15 +36,15 @@ else -- default english
    title = {}
    text = {}
    title[1] = "In the bar"
-   text[1] = [[The bar is buzzing when you walk in.  All the pilots are talking at once.  Every screen in sight carries the same news feed: live footage of a space battle in orbit around %s.
+   text[1] = [[The bar is buzzing when you walk in. All the pilots are talking at once. Every screen in sight carries the same news feed: live footage of a space battle in orbit around %s.
 
-"A big fleet of pirates have just invaded the system," a woman wearing a Nexus insignia explains.  "They swarm any ship that tries to take off.  Shipping is at a standstill.  It's a disaster."
+"A big fleet of pirates have just invaded the system," a woman wearing a Nexus insignia explains. "They swarm any ship that tries to take off. Shipping is at a standstill. It's a disaster."
 
-There's a shout and you turn to see the portmaster standing at the door.  "Listen up," he bellows.  "The thugs out there have caught us without a defense fleet in system and somehow they've jammed our link with the rest of the Empire.  So, I'm here looking for volunteers.  Everyone who steps forward will get forty thousand credits when they get back and of course the thanks of a grateful planet and the pride of serving the Empire.
+There's a shout and you turn to see the portmaster standing at the door. "Listen up," he bellows. "The thugs out there have caught us without a defense fleet in system and somehow they've jammed our link with the rest of the Empire. So, I'm here looking for volunteers. Everyone who steps forward will get forty thousand credits when they get back and of course the thanks of a grateful planet and the pride of serving the Empire.
 
 "Are you brave enough?"]]
    title[11] = "Volunteers"
-   text[11] = [[You step forward and eight other pilots join you.  Together, all of you march off to the your ships and take off to face the pirate horde.]]
+   text[11] = [[You step forward and eight other pilots join you. Together, all of you march off to the your ships and take off to face the pirate horde.]]
 
 -- Stage two: Vicious comm chatter
    comm = {}
@@ -56,37 +56,37 @@ There's a shout and you turn to see the portmaster standing at the door.  "Liste
 
 -- Stage three: Victorious comm chatter
    comm[6] = "That's right, run away you cowards."
-   comm[7] = "Good job, everyone.  Let's get back planetside and get our reward."
+   comm[7] = "Good job, everyone. Let's get back planetside and get our reward."
 
 -- Stage four: the portmaster greets you when you return to the planet
    title[2] = "Welcome back"
    text[2] = [[The portmaster greets the crowd of volunteers on the spaceport causeway.
 
-"Well done.  You got those pirates on the run!"  He exclaims.  "Maybe they'll think twice now before bothering our peace.  I hope you all feel proud.  You've spared this planet millions in shipping, and saved countless lives.  And you've earned a reward.  Before you takeoff today, the port authority will give you each forty thousand credits.  Congratulations!"
+"Well done. You got those pirates on the run!"  He exclaims. "Maybe they'll think twice now before bothering our peace. I hope you all feel proud. You've spared this planet millions in shipping, and saved countless lives. And you've earned a reward. Before you takeoff today, the port authority will give you each forty thousand credits. Congratulations!"
 
-Your comrades raise a cheer everyone shakes the postmasters hand.  One of them kisses the master on both cheeks in the Goddard style, then the whole crowd moves toward the bar.]]
+Your comrades raise a cheer everyone shakes the postmasters hand. One of them kisses the master on both cheeks in the Goddard style, then the whole crowd moves toward the bar.]]
 
 -- Stage five: talking afterward in the bar
    title[3] = "Over drinks"
-   text[3] = [[Many hours later, the celebration has wound down.  You find yourself drinking with a small group of 'veterans of the battle of %s,' as some of them are calling it.  A older pilot sits across the table and stares pensively into his drink.
+   text[3] = [[Many hours later, the celebration has wound down. You find yourself drinking with a small group of 'veterans of the battle of %s,' as some of them are calling it. A older pilot sits across the table and stares pensively into his drink.
 
-"It's strange, though," he mutters.  "I've never seen pirates swarm like that before."]]
+"It's strange, though," he mutters. "I've never seen pirates swarm like that before."]]
 
 -- Other text for the mission
-   comm[8] = "You fled battle.  The Empire wont forget."
+   comm[8] = "You fled battle. The Empire wont forget."
    comm[9] = "Comm Trader>You're a coward, %s. You better hope I never see you again."
    comm[10] = "Comm Trader>You're running away now, %s? The fight's finished, you know..."
    title[4] = "Good job"
-   text[4] = [[You jump out of %s the sweat still running down your face.  The fight to clear the system was brief but intense.  After a moment, another ship enters on the same vector.  The blast marks on the sides of his craft show it too comes from combat with the pirates.  Your comm beeps.
+   text[4] = [[You jump out of %s the sweat still running down your face. The fight to clear the system was brief but intense. After a moment, another ship enters on the same vector. The blast marks on the sides of his craft show it too comes from combat with the pirates. Your comm beeps.
 
-"Good flying, mate.  We got those pirates on the run!"  The pilot exclaims.  "You didn't want to go back for the cash either, eh?  I don't blame you.  I hate pirates, but I don't want the Empire's money!"  He smiles grimly.  "It's strange, though.  I've never seen pirates swarm that way before."
+"Good flying, mate. We got those pirates on the run!"  The pilot exclaims. "You didn't want to go back for the cash either, eh?  I don't blame you. I hate pirates, but I don't want the Empire's money!"  He smiles grimly. "It's strange, though. I've never seen pirates swarm that way before."
 ]]
    title[5] = "Left behind"
-   text[5] = [[Eight pilots step forward.  The rest of you stand and watch as they file out the door.  The portmaster spares a withering glance for those left behind.
+   text[5] = [[Eight pilots step forward. The rest of you stand and watch as they file out the door. The portmaster spares a withering glance for those left behind.
 
-"Don't get your petticoats caught in the crossfire on your way out of atmo," he sneers.  Then he turns to follow his volunteers.]]
+"Don't get your petticoats caught in the crossfire on your way out of atmo," he sneers. Then he turns to follow his volunteers.]]
    bounce_title = "Not done yet."
-   bounce_text = "The system isn't safe yet.  Get back out there!"
+   bounce_text = "The system isn't safe yet. Get back out there!"
    noReward = "No reward for you."
    noDesc = "Watch others defend the system."
    noTitle = "Watch the action."
@@ -160,7 +160,7 @@ end
 -- There's a battle to defend the system
 function defend_system()
 
-  -- Makes the system empty except for the two fleets.  No help coming.
+  -- Makes the system empty except for the two fleets. No help coming.
       pilot.clear ()
       pilot.toggleSpawn( false )
 

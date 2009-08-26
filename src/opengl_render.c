@@ -39,7 +39,7 @@
 
 
 static Vector2d* gl_camera  = NULL; /**< Camera we are using. */
-static double gl_cameraZ    = 0.5; /**< Current in-game zoom. */
+static double gl_cameraZ    = 1.; /**< Current in-game zoom. */
 static double gl_cameraX    = 0.; /**< X position of camera. */
 static double gl_cameraY    = 0.; /**< Y position of camera. */
 static gl_vbo *gl_renderVBO = 0; /**< VBO for rendering stuff. */

@@ -39,13 +39,8 @@
 /*
  * equipment stuff
  */
-static Pilot *equipment_selected = NULL; /**< Selected pilot ship. */
-static Outfit *equipment_outfit  = NULL; /**< Selected outfit. */
-static int equipment_slot        = -1; /**< Selected equipment slot. */
-static int equipment_mouseover   = -1; /**< Mouse over slot. */
+static CstSlotWidget eq_wgt; /**< Equipment widget. */
 static double equipment_dir      = 0.; /**< Equipment dir. */
-static double equipment_altx     = 0; /**< Alt X text position. */
-static double equipment_alty     = 0; /**< Alt Y text position. */
 static unsigned int equipment_lastick = 0; /**< Last tick. */
 static gl_vbo *equipment_vbo     = NULL; /**< The VBO. */
 
@@ -54,18 +49,25 @@ static gl_vbo *equipment_vbo     = NULL; /**< The VBO. */
  * prototypes
  */
 static void equipment_getDim( unsigned int wid, int *w, int *h,
-      int *sw, int *sh, int *ow, int *oh, int *cw, int *ch, int *bw, int *bh );
+      int *sw, int *sh, int *ow, int *oh,
+      int *ew, int *eh,
+      int *cw, int *ch, int *bw, int *bh );
+/* Widget. */
 static void equipment_renderColumn( double x, double y, double w, double h,
-      int n, PilotOutfitSlot *lst, const char *txt, int selected );
-static void equipment_render( double bx, double by, double bw, double bh );
+      int n, PilotOutfitSlot *lst, const char *txt,
+      int selected, Outfit *o, Pilot *p );
+static void equipment_renderSlots( double bx, double by, double bw, double bh, void *data );
+static void equipment_renderMisc( double bx, double by, double bw, double bh, void *data );
 static void equipment_renderOverlayColumn( double x, double y, double w, double h,
-      int n, PilotOutfitSlot *lst, int mover );
-static void equipment_renderOverlay( double bx, double by, double bw, double bh );
+      int n, PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt );
+static void equipment_renderOverlaySlots( double bx, double by, double bw, double bh,
+      void *data );
 static void equipment_renderShip( double bx, double by,
       double bw, double bh, double x, double y, Pilot *p );
 static int equipment_mouseColumn( double y, double h, int n, double my );
-static void equipment_mouse( unsigned int wid, SDL_Event* event,
-      double x, double y, double w, double h );
+static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
+      double x, double y, double w, double h, void *data );
+/* Misc. */
 static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot );
 static void equipment_sellShip( unsigned int wid, char* str );
 static void equipment_transChangeShip( unsigned int wid, char* str );
@@ -79,7 +81,9 @@ static unsigned int equipment_transportPrice( char *shipname );
  * @brief Gets the window dimensions.
  */
 static void equipment_getDim( unsigned int wid, int *w, int *h,
-      int *sw, int *sh, int *ow, int *oh, int *cw, int *ch, int *bw, int *bh )
+      int *sw, int *sh, int *ow, int *oh,
+      int *ew, int *eh,
+      int *cw, int *ch, int *bw, int *bh )
 {
    /* Get window dimensions. */
    window_dimWindow( wid, w, h );
@@ -94,9 +98,15 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
    if (oh != NULL)
       *oh = *sh;
 
+   /* Calculate slot widget. */
+   if (ew != NULL)
+      *ew = 180.;
+   if (eh != NULL)
+      *eh = *h - 100;
+
    /* Calculate custom widget. */
    if (cw != NULL)
-      *cw = *w - 20 - *sw - 20;
+      *cw = *w - 20 - *sw - 20 - *ew - 20.;
    if (ch != NULL)
       *ch = *h - 100;
 
@@ -117,6 +127,7 @@ void equipment_open( unsigned int wid )
    int sw, sh;
    int ow, oh;
    int bw, bh;
+   int ew, eh;
    int cw, ch;
    int x, y;
    GLfloat colour[4*4];
@@ -136,15 +147,10 @@ void equipment_open( unsigned int wid )
    }
 
    /* Get dimensions. */
-   equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh, &cw, &ch, &bw, &bh );
+   equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
+         &ew, &eh, &cw, &ch, &bw, &bh );
 
    /* Sane defaults. */
-   equipment_selected   = NULL;
-   equipment_outfit     = NULL;
-   equipment_slot       = -1;
-   equipment_mouseover  = -1;
-   equipment_altx       = 0;
-   equipment_alty       = 0;
    equipment_lastick    = SDL_GetTicks();
    equipment_dir        = 0.;
 
@@ -167,12 +173,12 @@ void equipment_open( unsigned int wid )
 
    /* text */
    buf = "Name:\n"
-         "Ship:\n"
+         "Model:\n"
          "Class:\n"
-         "Sell price:\n"
+         "Value:\n"
          "\n"
          "Mass:\n"
-         "Jump time:\n"
+         "Jump Time:\n"
          "Thrust:\n"
          "Speed:\n"
          "Turn:\n"
@@ -180,7 +186,7 @@ void equipment_open( unsigned int wid )
          "Shield:\n"
          "Armour:\n"
          "Energy:\n"
-         "Cargo:\n"
+         "Cargo Space:\n"
          "Fuel:\n"
          "\n"
          "Transportation:\n"
@@ -203,17 +209,38 @@ void equipment_open( unsigned int wid )
    /* Seperator. */
    window_addRect( wid, 20 + sw + 20, -40, 2, h-60, "rctDivider", &cGrey50, 0 );
 
+   /* Slot widget. */
+   equipment_slotWidget( wid, 20 + sw + 40, -40, ew, eh, &eq_wgt );
+   eq_wgt.canmodify = 1;
+
    /* Custom widget. */
-   window_addCust( wid, 20 + sw + 40, -40, cw, ch, "cstEquipment", 0,
-         equipment_render, equipment_mouse );
+   window_addCust( wid, 20 + sw + 40 + ew + 20, -40, cw, ch, "cstMisc", 0,
+         equipment_renderMisc, NULL, NULL );
+}
+void equipment_slotWidget( unsigned int wid,
+      double x, double y, double w, double h,
+      CstSlotWidget *data )
+{
+   /* Initialize data. */
+   data->selected = NULL;
+   data->outfit   = NULL;
+   data->slot     = -1;
+   data->mouseover = -1;
+   data->altx     = 0.;
+   data->alty     = 0.;
+
+   /* Create the widget. */
+   window_addCust( wid, x, y, w, h, "cstEquipment", 0,
+         equipment_renderSlots, equipment_mouseSlots, data );
    window_custSetClipping( wid, "cstEquipment", 0 );
-   window_custSetOverlay( wid, "cstEquipment", equipment_renderOverlay );
+   window_custSetOverlay( wid, "cstEquipment", equipment_renderOverlaySlots );
 }
 /**
  * @brief Renders an outfit column.
  */
 static void equipment_renderColumn( double x, double y, double w, double h,
-      int n, PilotOutfitSlot *lst, const char *txt, int selected )
+      int n, PilotOutfitSlot *lst, const char *txt,
+      int selected, Outfit *o, Pilot *p )
 {
    int i;
    glColour *lc, *c, *dc;
@@ -237,9 +264,9 @@ static void equipment_renderColumn( double x, double y, double w, double h,
                x + SCREEN_W/2., y + SCREEN_H/2., w, h, NULL );
       }
       else {
-         if ((equipment_outfit != NULL) &&
-               (lst[i].slot == equipment_outfit->slot)) {
-            if (pilot_canEquip( equipment_selected, NULL, equipment_outfit, 1 ) != NULL)
+         if ((o != NULL) &&
+               (lst[i].slot == o->slot)) {
+            if (pilot_canEquip( p, NULL, o, 1 ) != NULL)
                c = &cRed;
             else
                c = &cDConsole;
@@ -266,48 +293,93 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       y -= h+20;
    }
 }
+static void equipment_calculateSlots( Pilot *p, double bw, double bh,
+      double *w, double *h, int *n, int *m )
+{
+   double tw, th, s;
+   int tm;
+
+   /* Calculate size. */
+   tm = MAX( MAX( p->outfit_nhigh, p->outfit_nmedium ), p->outfit_nlow );
+   th = bh / (double)tm;
+   tw = bw / 3.;
+   s  = MIN( th, tw ) - 20.;
+   th = s;
+   tw = s;
+
+   /* Return. */
+   *w = tw;
+   *h = th;
+   *n = 3;
+   *m = tm;
+}
+/**
+ * @brief Renders the equipment slots.
+ */
+static void equipment_renderSlots( double bx, double by, double bw, double bh, void *data )
+{
+   double x, y;
+   double w, h;
+   double tw, th;
+   int n, m;
+   CstSlotWidget *wgt;
+   Pilot *p;
+   int selected;
+
+   /* Get data. */
+   wgt = (CstSlotWidget*) data;
+   p   = wgt->selected;
+   selected = wgt->slot;
+
+   /* Must have selected ship. */
+   if (p == NULL)
+      return;
+
+   /* Get dimensions. */
+   equipment_calculateSlots( p, bw, bh, &w, &h, &n, &m );
+   tw = bw / (double)n;
+   th = bh / (double)m;
+
+   /* Draw high outfits. */
+   x  = bx + (tw-w)/2;
+   y  = by + bh - (h+20) + (h+20-h)/2;
+   equipment_renderColumn( x, y, w, h,
+         p->outfit_nhigh, p->outfit_high, "High", 
+         selected, wgt->outfit, wgt->selected );
+
+   /* Draw medium outfits. */
+   selected -= p->outfit_nhigh;
+   x += tw;
+   y  = by + bh - (h+20) + (h+20-h)/2;
+   equipment_renderColumn( x, y, w, h,
+         p->outfit_nmedium, p->outfit_medium, "Medium",
+         selected, wgt->outfit, wgt->selected );
+
+   /* Draw low outfits. */
+   selected -= p->outfit_nmedium;
+   x += tw;
+   y  = by + bh - (h+20) + (h+20-h)/2;
+   equipment_renderColumn( x, y, w, h,
+         p->outfit_nlow, p->outfit_low, "Low",
+         selected, wgt->outfit, wgt->selected );
+}
 /**
  * @brief Renders the custom equipment widget.
  */
-static void equipment_render( double bx, double by, double bw, double bh )
+static void equipment_renderMisc( double bx, double by, double bw, double bh, void *data )
 {
+   (void) data;
    Pilot *p;
-   int m, selected;
    double percent;
    double x, y;
    double w, h;
    glColour *lc, *c, *dc;
 
    /* Must have selected ship. */
-   if (equipment_selected == NULL)
+   if (eq_wgt.selected == NULL)
       return;
 
-   /* Calculate height of outfit widgets. */
-   p = equipment_selected;
-   m = MAX( MAX( p->outfit_nhigh, p->outfit_nmedium ), p->outfit_nlow );
-   h = (bh-30.)/m;
-   if (h > 40)
-      h = 40;
-   w = h;
-
-   /* Get selected. */
-   selected = equipment_slot;
-
-   /* Render high outfits. */
-   x = bx + 10 + (40-w)/2;
-   y = by + bh - 60 + (40-h)/2;
-   equipment_renderColumn( x, y, w, h,
-         p->outfit_nhigh, p->outfit_high, "High", selected );
-   selected -= p->outfit_nhigh;
-   x = bx + 10 + (40-w)/2 + 60;
-   y = by + bh - 60 + (40-h)/2;
-   equipment_renderColumn( x, y, w, h,
-         p->outfit_nmedium, p->outfit_medium, "Medium", selected );
-   selected -= p->outfit_nmedium;
-   x = bx + 10 + (40-w)/2 + 120;
-   y = by + bh - 60 + (40-h)/2;
-   equipment_renderColumn( x, y, w, h,
-         p->outfit_nlow, p->outfit_low, "Low", selected );
+   p = eq_wgt.selected;
 
    /* Render CPU and energy bars. */
    lc = &cWhite;
@@ -315,7 +387,7 @@ static void equipment_render( double bx, double by, double bw, double bh )
    dc = &cGrey60;
    w = 30;
    h = 70;
-   x = bx + 10 + (40-w)/2 + 180 + 30;
+   x = bx + (40-w)/2 + 10;
    y = by + bh - 30 - h;
    percent = (p->cpu_max > 0.) ? p->cpu / p->cpu_max : 0.;
    gl_printMidRaw( &gl_smallFont, w,
@@ -338,7 +410,7 @@ static void equipment_render( double bx, double by, double bw, double bh )
  * @brief Renders an outfit column.
  */
 static void equipment_renderOverlayColumn( double x, double y, double w, double h,
-      int n, PilotOutfitSlot *lst, int mover )
+      int n, PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt )
 {
    int i;
    glColour *c, tc;
@@ -360,9 +432,9 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
       /* Draw bottom. */
       if ((i==mover) || subtitle) {
          display = NULL;
-         if (i==mover) {
+         if ((i==mover) && (wgt->canmodify)) {
             if (lst[i].outfit != NULL) {
-               display = pilot_canEquip( equipment_selected, &lst[i], lst[i].outfit, 0 );
+               display = pilot_canEquip( wgt->selected, &lst[i], lst[i].outfit, 0 );
                if (display != NULL)
                   c = &cRed;
                else {
@@ -370,9 +442,9 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                   c = &cDConsole;
                }
             }
-            else if ((equipment_outfit != NULL) &&
-                  (lst->slot == equipment_outfit->slot)) {
-               display = pilot_canEquip( equipment_selected, NULL, equipment_outfit, 1 );
+            else if ((wgt->outfit != NULL) &&
+                  (lst->slot == wgt->outfit->slot)) {
+               display = pilot_canEquip( wgt->selected, NULL, wgt->outfit, 1 );
                if (display != NULL)
                   c = &cRed;
                else {
@@ -381,17 +453,23 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                }
             }
          }
-         else {
+         else if (lst[i].outfit != NULL) {
             if (outfit_isLauncher(lst[i].outfit) ||
                   (outfit_isFighterBay(lst[i].outfit))) {
                if ((lst[i].u.ammo.outfit == NULL) ||
                      (lst[i].u.ammo.quantity == 0)) {
-                  display = "Out of ammo.";
+                  if (outfit_isFighterBay(lst[i].outfit))
+                     display = "Bay empty";
+                  else
+                     display = "Out of ammo";
                   c = &cRed;
                }
                else if (lst[i].u.ammo.quantity + lst[i].u.ammo.deployed <
                      outfit_amount(lst[i].outfit)) {
-                  display = "Low ammo.";
+                  if (outfit_isFighterBay(lst[i].outfit))
+                     display = "Bay low";
+                  else
+                     display = "Low ammo";
                   c = &cYellow;
                }
             }
@@ -419,63 +497,68 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
 /**
  * @brief Renders the equipment overlay.
  */
-static void equipment_renderOverlay( double bx, double by, double bw, double bh )
+static void equipment_renderOverlaySlots( double bx, double by, double bw, double bh,
+      void *data )
 {
    (void) bw;
    Pilot *p;
-   int m, mover;
+   int mover;
    double x, y;
    double w, h;
+   double tw, th;
+   int n, m;
    PilotOutfitSlot *slot;
    char alt[512];
    int pos;
    Outfit *o;
+   CstSlotWidget *wgt;
+
+   /* Get data. */
+   wgt = (CstSlotWidget*) data;
+   p   = wgt->selected;
 
    /* Must have selected ship. */
-   if (equipment_selected != NULL) {
+   if (wgt->selected != NULL) {
 
-      /* Calculate height of outfit widgets. */
-      p = equipment_selected;
-      m = MAX( MAX( p->outfit_nhigh, p->outfit_nmedium ), p->outfit_nlow );
-      h = (bh-30.)/m;
-      if (h > 40)
-         h = 40;
-      w = h;
+      /* Get dimensions. */
+      equipment_calculateSlots( p, bw, bh, &w, &h, &n, &m );
+      tw = bw / (double)n;
+      th = bh / (double)m;
 
       /* Get selected. */
-      mover    = equipment_mouseover;
+      mover    = wgt->mouseover;
 
       /* Render high outfits. */
-      x = bx + 10 + (40-w)/2;
-      y = by + bh - 60 + (40-h)/2;
+      x  = bx + (tw-w)/2;
+      y  = by + bh - (h+20) + (h+20-h)/2;
       equipment_renderOverlayColumn( x, y, w, h,
-            p->outfit_nhigh, p->outfit_high, mover );
+            p->outfit_nhigh, p->outfit_high, mover, wgt );
       mover    -= p->outfit_nhigh;
-      x = bx + 10 + (40-w)/2 + 60;
-      y = by + bh - 60 + (40-h)/2;
+      x += tw;
+      y  = by + bh - (h+20) + (h+20-h)/2;
       equipment_renderOverlayColumn( x, y, w, h,
-            p->outfit_nmedium, p->outfit_medium, mover );
+            p->outfit_nmedium, p->outfit_medium, mover, wgt );
       mover    -= p->outfit_nmedium;
-      x = bx + 10 + (40-w)/2 + 120;
-      y = by + bh - 60 + (40-h)/2;
+      x += tw;
+      y  = by + bh - (h+20) + (h+20-h)/2;
       equipment_renderOverlayColumn( x, y, w, h,
-            p->outfit_nlow, p->outfit_low, mover );
+            p->outfit_nlow, p->outfit_low, mover, wgt );
    }
 
    /* Mouse must be over something. */
-   if (equipment_mouseover < 0)
+   if (wgt->mouseover < 0)
       return;
 
    /* Get the slot. */
-   p = equipment_selected;
-   if (equipment_mouseover < p->outfit_nhigh) {
-      slot = &p->outfit_high[equipment_mouseover];
+   p = wgt->selected;
+   if (wgt->mouseover < p->outfit_nhigh) {
+      slot = &p->outfit_high[wgt->mouseover];
    }
-   else if (equipment_mouseover < p->outfit_nhigh + p->outfit_nmedium) {
-      slot = &p->outfit_medium[ equipment_mouseover - p->outfit_nhigh ];
+   else if (wgt->mouseover < p->outfit_nhigh + p->outfit_nmedium) {
+      slot = &p->outfit_medium[ wgt->mouseover - p->outfit_nhigh ];
    }
    else {
-      slot = &p->outfit_low[ equipment_mouseover -
+      slot = &p->outfit_low[ wgt->mouseover -
             p->outfit_nhigh - p->outfit_nmedium ];
    }
 
@@ -501,7 +584,7 @@ static void equipment_renderOverlay( double bx, double by, double bw, double bh 
             o->mass );
 
    /* Draw the text. */
-   toolkit_drawAltText( bx + equipment_altx, by + equipment_alty, alt );
+   toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
 }
 
 
@@ -547,10 +630,10 @@ static void equipment_renderShip( double bx, double by,
    toolkit_drawRect( x-5, y-5, w+10, h+10, &cBlack, NULL );
    gl_blitScaleSprite( p->ship->gfx_space,
          px + SCREEN_W/2, py + SCREEN_H/2, sx, sy, pw, ph, NULL );
-   if ((equipment_slot >=0) && (equipment_slot < p->outfit_nhigh)) {
+   if ((eq_wgt.slot >=0) && (eq_wgt.slot < p->outfit_nhigh)) {
       p->tsx = sx;
       p->tsy = sy;
-      pilot_getMount( p, &p->outfit_high[equipment_slot], &v );
+      pilot_getMount( p, &p->outfit_high[eq_wgt.slot], &v );
       px += pw/2;
       py += ph/2;
       v.x *= pw / p->ship->gfx_space->sw;
@@ -576,8 +659,8 @@ static void equipment_renderShip( double bx, double by,
    lc = toolkit_colLight;
    c  = toolkit_col;
    dc = toolkit_colDark;
-   toolkit_drawOutline( x - 5., y-5., w+10., h+10., 1., lc, c  );
-   toolkit_drawOutline( x - 5., y-5., w+10., h+10., 2., dc, NULL  );
+   toolkit_drawOutline( x - 5., y-4., w+8., h+2., 1., lc, c  );
+   toolkit_drawOutline( x - 5., y-4., w+8., h+2., 2., dc, NULL  );
 }
 /**
  * @brief Handles a mouse press in column.
@@ -597,17 +680,24 @@ static int equipment_mouseColumn( double y, double h, int n, double my )
 /**
  * @brief Does mouse input for the custom equipment widget.
  */
-static void equipment_mouse( unsigned int wid, SDL_Event* event,
-      double mx, double my, double bw, double bh )
+static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
+      double mx, double my, double bw, double bh, void *data )
 {
    (void) bw;
    Pilot *p;
-   int m, selected, ret;
+   int selected, ret;
    double x, y;
    double w, h;
+   double tw, th;
+   CstSlotWidget *wgt;
+   int n, m;
+
+   /* Get data. */
+   wgt = (CstSlotWidget*) data;
+   p   = wgt->selected;
 
    /* Must have selected ship. */
-   if (equipment_selected == NULL)
+   if (p == NULL)
       return;
 
    /* Must be left click for now. */
@@ -615,76 +705,76 @@ static void equipment_mouse( unsigned int wid, SDL_Event* event,
          (event->type != SDL_MOUSEMOTION))
       return;
 
-   /* Calculate height of outfit widgets. */
-   p = equipment_selected;
-   m = MAX( MAX( p->outfit_nhigh, p->outfit_nmedium ), p->outfit_nlow );
-   h = (bh-30.)/m;
-   if (h > 40)
-      h = 40;
-   w = h;
+   /* Get dimensions. */
+   equipment_calculateSlots( p, bw, bh, &w, &h, &n, &m );
+   tw = bw / (double)n;
+   th = bh / (double)m;
 
    /* Render high outfits. */
    selected = 0;
-   y = bh - 60 + (40-h)/2 - 10;
-   x = 10 + (40-w)/2;
+   x  = (tw-w)/2;
+   y  = bh - (h+20) + (h+20-h)/2 - 10;
    if ((mx > x-10) && (mx < x+w+10)) {
       ret = equipment_mouseColumn( y, h, p->outfit_nhigh, my );
       if (ret >= 0) {
          if (event->type == SDL_MOUSEBUTTONDOWN) {
             if (event->button.button == SDL_BUTTON_LEFT)
-               equipment_slot = selected + ret;
-            else if (event->button.button == SDL_BUTTON_RIGHT)
+               wgt->slot = selected + ret;
+            else if ((event->button.button == SDL_BUTTON_RIGHT) &&
+                  wgt->canmodify)
                equipment_swapSlot( wid, &p->outfit_high[ret] );
          }
          else {
-            equipment_mouseover  = selected + ret;
-            equipment_altx       = mx;
-            equipment_alty       = my;
+            wgt->mouseover  = selected + ret;
+            wgt->altx       = mx;
+            wgt->alty       = my;
          }
          return;
       }
    }
    selected += p->outfit_nhigh;
-   x = 10 + (40-w)/2 + 60;
+   x += tw;
    if ((mx > x-10) && (mx < x+w+10)) {
       ret = equipment_mouseColumn( y, h, p->outfit_nmedium, my );
       if (ret >= 0) {
          if (event->type == SDL_MOUSEBUTTONDOWN) {
             if (event->button.button == SDL_BUTTON_LEFT)
-               equipment_slot = selected + ret;
-            else if (event->button.button == SDL_BUTTON_RIGHT)
+               wgt->slot = selected + ret;
+            else if ((event->button.button == SDL_BUTTON_RIGHT) &&
+                  wgt->canmodify)
                equipment_swapSlot( wid, &p->outfit_medium[ret] );
          }
          else {
-            equipment_mouseover = selected + ret;
-            equipment_altx       = mx;
-            equipment_alty       = my;
+            wgt->mouseover = selected + ret;
+            wgt->altx      = mx;
+            wgt->alty      = my;
          }
          return;
       }
    }
    selected += p->outfit_nmedium;
-   x = 10 + (40-w)/2 + 120;
+   x += tw;
    if ((mx > x-10) && (mx < x+w+10)) {
       ret = equipment_mouseColumn( y, h, p->outfit_nlow, my );
       if (ret >= 0) {
          if (event->type == SDL_MOUSEBUTTONDOWN) {
             if (event->button.button == SDL_BUTTON_LEFT)
-               equipment_slot = selected + ret;
-            else if (event->button.button == SDL_BUTTON_RIGHT)
+               wgt->slot = selected + ret;
+            else if ((event->button.button == SDL_BUTTON_RIGHT) &&
+                  wgt->canmodify)
                equipment_swapSlot( wid, &p->outfit_low[ret] );
          }
          else {
-            equipment_mouseover = selected + ret;
-            equipment_altx       = mx;
-            equipment_alty       = my;
+            wgt->mouseover = selected + ret;
+            wgt->altx      = mx;
+            wgt->alty      = my;
          }
          return;
       }
    }
 
    /* Not over anything. */
-   equipment_mouseover = -1;
+   wgt->mouseover = -1;
 }
 
 
@@ -707,19 +797,19 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
       o = slot->outfit;
 
       /* Must be able to remove. */
-      if (pilot_canEquip( equipment_selected, slot, o, 0 ) != NULL)
+      if (pilot_canEquip( eq_wgt.selected, slot, o, 0 ) != NULL)
          return 0;
 
       /* Remove ammo first. */
       if (outfit_isLauncher(o) || (outfit_isFighterBay(o))) {
          ammo = slot->u.ammo.outfit;
-         q    = pilot_rmAmmo( equipment_selected, slot, slot->u.ammo.quantity );
+         q    = pilot_rmAmmo( eq_wgt.selected, slot, slot->u.ammo.quantity );
          if (q > 0)
             player_addOutfit( ammo, q );
       }
 
       /* Remove outfit. */
-      ret = pilot_rmOutfit( equipment_selected, slot );
+      ret = pilot_rmOutfit( eq_wgt.selected, slot );
       if (ret == 0)
          player_addOutfit( o, 1 );
 
@@ -730,7 +820,7 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
    /* Add outfit. */
    else {
       /* Must have outfit. */
-      o = equipment_outfit;
+      o = eq_wgt.outfit;
       if (o==NULL)
          return 0;
 
@@ -739,13 +829,13 @@ static int equipment_swapSlot( unsigned int wid, PilotOutfitSlot *slot )
          return 0;
 
       /* Must be able to add. */
-      if (pilot_canEquip( equipment_selected, NULL, o, 1 ) != NULL)
+      if (pilot_canEquip( eq_wgt.selected, NULL, o, 1 ) != NULL)
          return 0;
 
       /* Add outfit to ship. */
       ret = player_rmOutfit( o, 1 );
       if (ret == 1)
-         pilot_addOutfit( equipment_selected, o, slot );
+         pilot_addOutfit( eq_wgt.selected, o, slot );
 
       equipment_addAmmo();
 
@@ -778,10 +868,10 @@ void equipment_addAmmo (void)
    Pilot *p;
 
    /* Get player. */
-   if (equipment_selected == NULL)
+   if (eq_wgt.selected == NULL)
       p = player;
    else
-      p = equipment_selected;
+      p = eq_wgt.selected;
 
    /* Add ammo to all outfits. */
    for (i=0; i<p->noutfits; i++) {
@@ -826,11 +916,12 @@ void equipment_genLists( unsigned int wid )
    Outfit *o;
 
    /* Get dimensions. */
-   equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh, NULL, NULL, NULL, NULL );
+   equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
+         NULL, NULL, NULL, NULL, NULL, NULL );
 
    /* Ship list. */
    if (!widget_exists( wid, EQUIPMENT_SHIPS )) {
-      equipment_selected = NULL;
+      eq_wgt.selected = NULL;
       if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
          nships   = player_nships()+1;
       else
@@ -849,7 +940,7 @@ void equipment_genLists( unsigned int wid )
 
    /* Outfit list. */
    if (!widget_exists( wid ,EQUIPMENT_OUTFITS )) {
-      equipment_outfit = NULL;
+      eq_wgt.outfit = NULL;
       noutfits = MAX(1,player_numOutfits());
       soutfits = malloc(sizeof(char*)*noutfits);
       toutfits = malloc(sizeof(glTexture*)*noutfits);
@@ -913,8 +1004,8 @@ void equipment_updateShips( unsigned int wid, char* str )
    int cargo;
 
    /* Clear defaults. */
-   equipment_slot       = -1;
-   equipment_mouseover  = -1;
+   eq_wgt.slot          = -1;
+   eq_wgt.mouseover     = -1;
    equipment_lastick    = SDL_GetTicks();
 
    /* Get the ship. */
@@ -934,7 +1025,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       snprintf( sysname, sizeof(sysname), " in the %s system",
             planet_getSystem(loc) );
    }
-   equipment_selected = ship;
+   eq_wgt.selected = ship;
 
    /* update text */
    credits2str( buf2, price , 2 ); /* transport */
@@ -947,16 +1038,16 @@ void equipment_updateShips( unsigned int wid, char* str )
          "%s Credits\n"
          "\n"
          "%.0f Tons\n"
-         "%.1f STU average\n"
-         "%.0f MN/Ton\n"
+         "%.1f STU Average\n"
+         "%.0f KN/Ton\n"
          "%.0f M/s\n"
          "%.0f Grad/s\n"
          "\n"
-         "%.0f MJ (%.1f MJ/s)\n"
-         "%.0f MJ (%.1f MJ/s)\n"
-         "%.0f MJ (%.1f MJ/s)\n"
+         "%.0f MJ (%.1f MW)\n"
+         "%.0f MJ (%.1f MW)\n"
+         "%.0f MJ (%.1f MW)\n"
          "%d / %d Tons\n"
-         "%.0f / %.0f Units\n"
+         "%.0f / %.0f Units (%d Jumps)\n"
          "\n"
          "%s Credits\n"
          "%s%s",
@@ -977,7 +1068,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          ship->energy_max, ship->energy_regen,
          /* Misc. */
          pilot_cargoUsed(ship), cargo,
-         ship->fuel, ship->fuel_max,
+         ship->fuel, ship->fuel_max, pilot_getJumps(player),
          /* Transportation. */
          buf2,
          loc, sysname );
@@ -1017,10 +1108,10 @@ void equipment_updateOutfits( unsigned int wid, char* str )
    /* Must have outfit. */
    oname = toolkit_getImageArray( wid, EQUIPMENT_OUTFITS );
    if (strcmp(oname,"None")==0) {
-      equipment_outfit = NULL;
+      eq_wgt.outfit = NULL;
       return;
    }
-   equipment_outfit = outfit_get(oname);
+   eq_wgt.outfit = outfit_get(oname);
 
    /* Also update ships. */
    equipment_updateShips(wid, NULL);
@@ -1139,7 +1230,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
    Pilot *ship;
    Outfit *o;
 
-   ship = equipment_selected;
+   ship = eq_wgt.selected;
 
    /* Remove all outfits. */
    for (i=0; i<ship->noutfits; i++) {

@@ -60,9 +60,9 @@ static int news_mlines        = 0; /**< Lines allocated. */
  */
 static void news_cleanBuffer (void);
 static void news_cleanLines (void);
-static void news_render( double bx, double by, double w, double h );
+static void news_render( double bx, double by, double w, double h, void *data );
 static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
-      double w, double h );
+      double w, double h, void *mouse );
 
 
 /**
@@ -73,8 +73,9 @@ static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my
  *    @param w Width of the widget.
  *    @param h Height of the widget.
  */
-static void news_render( double bx, double by, double w, double h )
+static void news_render( double bx, double by, double w, double h, void *data )
 {
+   (void) data;
    int i;
    unsigned int t;
    double y, dt;
@@ -137,9 +138,10 @@ static void news_render( double bx, double by, double w, double h )
  *    @param h Height of the widget.
  */
 static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
-      double w, double h )
+      double w, double h, void *data )
 {
    (void) wid;
+   (void) data;
 
    switch (event->type) {
       case SDL_MOUSEBUTTONDOWN:
@@ -221,7 +223,7 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
 
    /* Create the custom widget. */
    window_addCust( wid, x, y, w, h,
-         "cstNews", 1, news_render, news_mouse );
+         "cstNews", 1, news_render, news_mouse, NULL );
 }
 
 

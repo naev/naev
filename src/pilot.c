@@ -621,7 +621,7 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
 
       /* Modify faction, about 1 for a llama, 4.2 for a hawking */
       if ((t != NULL) && (t->faction == FACTION_PLAYER) && r)
-         faction_modPlayer( p->faction, pow(p->ship->mass, 0.2) - 1. );
+         faction_modPlayer( p->faction, -(pow(p->ship->mass, 0.2) - 1.) );
 
       /* Set flag to avoid a second faction hit. */
       pilot_setFlag(p, PILOT_DISTRESSED);
@@ -637,7 +637,8 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
 void pilot_rmHostile( Pilot* p )
 {
    if (pilot_isFlag(p, PILOT_HOSTILE)) {
-      player_enemies--;
+      if (!pilot_isDisabled(p))
+         player_enemies--;
       pilot_rmFlag(p, PILOT_HOSTILE);
 
       /* Change music back to ambient if no more enemies. */
@@ -898,7 +899,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
          q++;
       }
 
-      /* Only fire if the last weapon to fire fired more then (q-1)/q ago. */
+      /* Only fire if the last weapon to fire fired more than (q-1)/q ago. */
       if (mint > outfit_delay(w->outfit) * ((q-1) / q))
          return 0;
    }
@@ -971,10 +972,8 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 
    /*
     * Fighter bays.
-    *
-    * Must be secondary weapon.
     */
-   else if (outfit_isFighterBay(w->outfit) && (w==p->secondary)) {
+   else if (outfit_isFighterBay(w->outfit)) {
 
       /* Must have ammo left. */
       if ((w->u.ammo.outfit == NULL) || (w->u.ammo.quantity <= 0))
@@ -986,7 +985,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 
       w->u.ammo.quantity -= 1; /* we just shot it */
       p->mass_outfit     -= w->u.ammo.outfit->mass;
-      p->secondary->u.ammo.deployed += 1; /* Mark as deployed. */
+      w->u.ammo.deployed += 1; /* Mark as deployed. */
       pilot_updateMass( p );
    }
 
@@ -1217,16 +1216,27 @@ int pilot_dock( Pilot *p, Pilot *target, int deployed )
 
    /* Check to see if target has an available bay. */
    for (i=0; i<target->noutfits; i++) {
+
+      /* Must have outfit. */
       if (target->outfits[i]->outfit == NULL)
          continue;
-      if (outfit_isFighterBay(target->outfits[i]->outfit)) {
-         o = outfit_ammo(target->outfits[i]->outfit);
-         if (outfit_isFighter(o) &&
-               (strcmp(p->ship->name,o->u.fig.ship)==0)) {
-            if (deployed)
-               target->outfits[i]->u.ammo.deployed -= 1;
-            break;
-         }
+
+      /* Must be fighter bay. */
+      if (!outfit_isFighterBay(target->outfits[i]->outfit))
+         continue;
+
+      /* Must have deployed. */
+      if (deployed && (target->outfits[i]->u.ammo.deployed <= 0))
+         continue;
+
+      o = outfit_ammo(target->outfits[i]->outfit);
+
+      /* Try to add fighter. */
+      if (outfit_isFighter(o) &&
+            (strcmp(p->ship->name,o->u.fig.ship)==0)) {
+         if (deployed)
+            target->outfits[i]->u.ammo.deployed -= 1;
+         break;
       }
    }
    if (i >= target->noutfits)
@@ -1948,7 +1958,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
       if ((outfit_cpu(o) > 0) && (p->cpu < outfit_cpu(o)))
          return "Insufficient CPU";
 
-      /* Can't add more then one afterburner. */
+      /* Can't add more than one afterburner. */
       if (outfit_isAfterburner(o) &&
             (p->afterburner != NULL))
          return "Already have an afterburner";

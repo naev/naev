@@ -42,7 +42,7 @@ function choose( str )
       changed = choose_table[ str ]()
    end
 
-   if str ~= "idle" then
+   if changed and str ~= "idle" then
       last = str -- save the last string so we can use it
    end
 end
@@ -71,7 +71,7 @@ function choose_load ()
    load_song = "machina"
    -- Don't play again if needed
    if checkIfPlayingOrStop( load_song ) then
-      return false
+      return true
    end
    music.load( load_song )
    music.play()
@@ -86,7 +86,7 @@ function choose_intro ()
    intro_song = "intro"
    -- Don't play again if needed
    if checkIfPlayingOrStop( intro_song ) then
-      return false
+      return true
    end
    music.load( intro_song )
    music.play()
@@ -101,7 +101,7 @@ function choose_credits ()
    credits_song = "empire1"
    -- Don't play again if needed
    if checkIfPlayingOrStop( credits_song ) then
-      return false
+      return true
    end
    music.load( credits_song )
    music.play()
@@ -140,7 +140,7 @@ end
 function choose_takeoff ()
    -- No need to restart
    if last == "takeoff" and music.isPlaying() then
-      return false
+      return true
    end
    takeoff = { "liftoff", "launch2", "launch3chatstart" }
    music.load( takeoff[ rnd.rnd(1,#takeoff) ])
@@ -165,20 +165,19 @@ function choose_ambient ()
    -- Check to see if we want to update
    if music.isPlaying() then
       if last == "takeoff" then
-         return false
+         return true
       elseif last == "ambient" then
          force = false
       end
 
       -- Get music information.
-      --[[
       local songname, songpos = music.current()
 
       -- Do not change songs so soon
-      if songpos < 15. then
+      if songpos < 10. then
+         music.delay( "ambient", 10. - songpos )
          return false
       end
-      --]]
    end
 
    -- Get information about the current system
@@ -246,7 +245,7 @@ function choose_ambient ()
          end
 
          music.stop()
-         return false
+         return true
       end
 
       -- Load music and play
@@ -263,12 +262,6 @@ end
 -- @brief Chooses battle songs.
 --]]
 function choose_combat ()
-   -- Stop music first, but since it'll get saved it'll run this next
-   if music.isPlaying() then
-      music.stop()
-      return true
-   end
-
    -- Get some data about the system
    local sys                  = system.get()
    local nebu_dens, nebu_vol  = sys:nebula()
@@ -278,6 +271,20 @@ function choose_combat ()
       combat = { "nebu_battle1", "nebu_battle2", "battlesomething1" }
    else
       combat = { "galacticbattle", "flf_battle1", "battlesomething1" }
+   end
+
+   -- Make sure it's not already in the list or that we have to stop the
+   -- currently playing song.
+   if music.isPlaying() then
+      local cur = music.current()
+      for k,v in pairs(combat) do
+         if cur == v then
+            return false
+         end
+      end
+
+      music.stop()
+      return true
    end
 
    music.load( combat[ rnd.rnd(1,#combat) ] )

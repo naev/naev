@@ -16,6 +16,7 @@
 
 /* get stuff */
 int faction_get( const char* name );
+int* faction_getAll( int *n );
 char* faction_name( int f );
 char* faction_longname( int f );
 glTexture* faction_logoSmall( int f );

@@ -33,6 +33,7 @@
 #include "gui.h"
 #include "fleet.h"
 #include "mission.h"
+#include "conf.h"
 
 
 #define XML_PLANET_ID         "Planets" /**< Planet xml document tag. */
@@ -137,7 +138,6 @@ static void system_parseJumps( const xmlNodePtr parent );
 /* misc */
 static int system_calcSecurity( StarSystem *sys );
 static void system_setFaction( StarSystem *sys );
-static void space_renderStars( const double dt );
 static void space_addFleet( Fleet* fleet, int init );
 static PlanetClass planetclass_get( const char a );
 /*
@@ -645,6 +645,71 @@ static void space_addFleet( Fleet* fleet, int init )
 
 
 /**
+ * @brief Initilaizes background stars.
+ *
+ *    @param n Number of stars to add (stars per 800x640 screen).
+ */
+void space_initStars( int n )
+{
+   int i;
+   int size;
+   GLfloat w, h, hw, hh;
+
+   /* Calculate size. */
+   size  = SCREEN_W*SCREEN_H+STAR_BUF*STAR_BUF;
+   size /= conf.zoom_min;
+
+   /* Calculate star buffer. */
+   w  = (SCREEN_W + 2.*STAR_BUF) / conf.zoom_min;
+   h  = (SCREEN_H + 2.*STAR_BUF) / conf.zoom_min;
+   hw = w / 2.;
+   hh = h / 2.;
+
+   /* Calculate stars. */
+   nstars = (int)((double)(n*size)/(800.*640.));
+
+   if (mstars < nstars) {
+      /* Create data. */
+      star_vertex = realloc( star_vertex, nstars * sizeof(GLfloat) * 4 );
+      star_colour = realloc( star_colour, nstars * sizeof(GLfloat) * 8 );
+      mstars = nstars;
+   }
+   for (i=0; i < nstars; i++) {
+      /* Set the position. */
+      star_vertex[4*i+0] = RNGF()*w - hw;
+      star_vertex[4*i+1] = RNGF()*h - hh;
+      star_vertex[4*i+2] = 0.;
+      star_vertex[4*i+3] = 0.;
+      /* Set the colour. */
+      star_colour[8*i+0] = 1.;
+      star_colour[8*i+1] = 1.;
+      star_colour[8*i+2] = 1.;
+      star_colour[8*i+3] = RNGF()*0.6 + 0.2;
+      star_colour[8*i+4] = 1.;
+      star_colour[8*i+5] = 1.;
+      star_colour[8*i+6] = 1.;
+      star_colour[8*i+7] = 0.;
+   }
+
+   /* Destroy old VBO. */
+   if (star_vertexVBO != NULL) {
+      gl_vboDestroy( star_vertexVBO );
+      star_vertexVBO = NULL;
+   }
+   if (star_colourVBO != NULL) {
+      gl_vboDestroy( star_colourVBO );
+      star_colourVBO = NULL;
+   }
+
+   /* Create now VBO. */
+   star_vertexVBO = gl_vboCreateStream(
+         nstars * sizeof(GLfloat) * 4, star_vertex );
+   star_colourVBO = gl_vboCreateStatic(
+         nstars * sizeof(GLfloat) * 8, star_colour );
+}
+
+
+/**
  * @brief Initializes the system.
  *
  *    @param sysname Name of the system to initialize.
@@ -691,47 +756,11 @@ void space_init ( const char* sysname )
       }
       else {
          /* Backrgound is Stary */
-         nstars = (int)((double)(cur_system->stars*SCREEN_W*SCREEN_H+STAR_BUF*STAR_BUF)/(800.*640.));
-         if (mstars < nstars) {
-            /* Create data. */
-            star_vertex = realloc( star_vertex, nstars * sizeof(GLfloat) * 4 );
-            star_colour = realloc( star_colour, nstars * sizeof(GLfloat) * 8 );
-            mstars = nstars;
-         }
-         for (i=0; i < nstars; i++) {
-            /* Set the position. */
-            star_vertex[4*i+0] = RNGF()*(SCREEN_W + 2.*STAR_BUF) - STAR_BUF - SCREEN_W/2.;
-            star_vertex[4*i+1] = RNGF()*(SCREEN_H + 2.*STAR_BUF) - STAR_BUF - SCREEN_H/2.;
-            /* Set the colour. */
-            star_colour[8*i+0] = 1.;
-            star_colour[8*i+1] = 1.;
-            star_colour[8*i+2] = 1.;
-            star_colour[8*i+3] = RNGF()*0.6 + 0.2;
-            star_colour[8*i+4] = 1.;
-            star_colour[8*i+5] = 1.;
-            star_colour[8*i+6] = 1.;
-            star_colour[8*i+7] = 0.;
-         }
+         space_initStars( cur_system->stars  );
 
-         /* Destroy old VBO. */
-         if (star_vertexVBO != NULL) {
-            gl_vboDestroy( star_vertexVBO );
-            star_vertexVBO = NULL;
-         }
-         if (star_colourVBO != NULL) {
-            gl_vboDestroy( star_colourVBO );
-            star_colourVBO = NULL;
-         }
-
-         /* Create now VBO. */
-         star_vertexVBO = gl_vboCreateStream(
-               nstars * sizeof(GLfloat) * 4, star_vertex );
-         star_colourVBO = gl_vboCreateStatic(
-               nstars * sizeof(GLfloat) * 8, star_colour );
+         /* Set up sound. */
+         sound_env( SOUND_ENV_NORMAL, 0. );
       }
-
-      /* Set up sound. */
-      sound_env( SOUND_ENV_NORMAL, 0. );
    }
 
    /* Iterate through planets to clear bribes. */
@@ -1601,22 +1630,30 @@ void space_renderOverlay( const double dt )
  *
  *    @param dt Current delta tick.
  */
-static void space_renderStars( const double dt )
+void space_renderStars( const double dt )
 {
    int i;
    GLfloat hh, hw, h, w;
    GLfloat x, y, m, b;
    GLfloat brightness;
+   double z;
 
    /*
     * gprof claims it's the slowest thing in the game!
     */
 
+   /* Do some scaling for now. */
+   gl_cameraZoomGet( &z );
+   gl_matrixMode( GL_PROJECTION );
+   gl_matrixPush();
+      gl_matrixScale( z, z );
+
    /* Enable vertex arrays. */
    glEnableClientState(GL_VERTEX_ARRAY);
    glEnableClientState(GL_COLOR_ARRAY);
 
-   if (!player_isFlag(PLAYER_DESTROYED) && !player_isFlag(PLAYER_CREATING) &&
+   if ((player != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
+         !player_isFlag(PLAYER_CREATING) &&
          pilot_isFlag(player,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
          (player->ptimer < HYPERSPACE_STARS_BLUR)) {
 
@@ -1645,12 +1682,12 @@ static void space_renderStars( const double dt )
       glShadeModel(GL_FLAT);
    }
    else { /* normal rendering */
-      if (!paused && !player_isFlag(PLAYER_DESTROYED) &&
+      if (!paused && (player != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
             !player_isFlag(PLAYER_CREATING)) { /* update position */
 
          /* Calculate some dimensions. */
-         hw = SCREEN_W / 2. + STAR_BUF;
-         hh = SCREEN_H / 2. + STAR_BUF;
+         hw = (SCREEN_W / 2. + STAR_BUF) / conf.zoom_min;
+         hh = (SCREEN_H / 2. + STAR_BUF) / conf.zoom_min;
          w  = 2.*hw;
          h  = 2.*hh;
 
@@ -1680,13 +1717,16 @@ static void space_renderStars( const double dt )
       }
 
       /* Render. */
-      gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 0 );
-      gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 0 );
+      gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 2 * sizeof(GLfloat) );
+      gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
       glDrawArrays( GL_POINTS, 0, nstars );
    }
 
    /* Disable vertex array. */
    gl_vboDeactivate();
+
+   /* Pop matrix. */
+   gl_matrixPop();
 }
 
 

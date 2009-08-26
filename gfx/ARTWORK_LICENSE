@@ -1,6 +1,5 @@
  * Author: Bobbens, License: PD
    * NAEV.png
-   * loading00.png
    * outfit
      * space
        * lasergreen.png
@@ -117,6 +116,22 @@
      * vendetta_dvaered.png
      * vendetta_pirate.png
      * vendetta_target.png
+   * loading
+     * admonisher-pirate.png
+     * admonisher.png
+     * ancestor-pirate.png
+     * ancestor.png
+     * drone.png
+     * gawain.png
+     * goddard.png
+     * hawking.png
+     * koala.png
+     * lancelot.png
+     * llama.png
+     * mule.png
+     * pacifier.png
+     * vendetta-pirate.png
+     * vendetta.png
  
  * Author: Joel Hans, License: PD
    * planet

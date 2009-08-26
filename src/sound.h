@@ -25,7 +25,7 @@ typedef enum SoundEnv_e {
  */
 int sound_init (void);
 void sound_exit (void);
-int sound_update (void);
+int sound_update( double dt );
 void sound_pause (void);
 void sound_resume (void);
 

@@ -56,6 +56,8 @@
 #define VISITED_BAR           (1<<2) /**< Player already visited bar. */
 #define VISITED_OUTFITS       (1<<3) /**< Player already visited outfits. */
 #define VISITED_SHIPYARD      (1<<4) /**< Player already visited shipyard. */
+#define VISITED_EQUIPMENT     (1<<5) /**< Player already visited equipment. */
+#define VISITED_MISSION       (1<<6) /**< Player already visited mission computer. */
 #define visited(f)            (land_visited |= (f)) /**< Mark place is visited. */
 #define has_visited(f)        (land_visited & (f)) /**< Check if player has visited. */
 static unsigned int land_visited = 0; /**< Contains what the player visited. */
@@ -137,11 +139,10 @@ static void outfits_buy( unsigned int wid, char* str );
 static int outfit_canSell( Outfit* outfit, int q, int errmsg );
 static void outfits_sell( unsigned int wid, char* str );
 static int outfits_getMod (void);
-static void outfits_renderMod( double bx, double by, double w, double h );
+static void outfits_renderMod( double bx, double by, double w, double h, void *data );
 /* shipyard */
 static void shipyard_open( unsigned int wid );
 static void shipyard_update( unsigned int wid, char* str );
-static void shipyard_info( unsigned int wid, char* str );
 static void shipyard_buy( unsigned int wid, char* str );
 /* spaceport bar */
 static void spaceport_bar_getDim( int wid,
@@ -351,12 +352,12 @@ static void outfits_open( unsigned int wid )
          "Sell", outfits_sell );
 
    /* fancy 128x128 image */
-   window_addRect( wid, 20 + iw + 20, -50, 128, 128, "rctImage", &cBlack, 0 );
+   window_addRect( wid, 19 + iw + 20, -50, 128, 129, "rctImage", &cBlack, 0 );
    window_addImage( wid, 20 + iw + 20, -50-128, "imgOutfit", NULL, 1 );
 
    /* cust draws the modifier */
    window_addCust( wid, -40-bw, 60+2*bh,
-         bw, bh, "cstMod", 0, outfits_renderMod, NULL );
+         bw, bh, "cstMod", 0, outfits_renderMod, NULL, NULL );
 
    /* the descriptive text */
    window_addText( wid, 20 + iw + 20 + 128 + 20, -60,
@@ -678,8 +679,9 @@ static int outfits_getMod (void)
  *    @param w Width to render at.
  *    @param h Height to render at.
  */
-static void outfits_renderMod( double bx, double by, double w, double h )
+static void outfits_renderMod( double bx, double by, double w, double h, void *data )
 {
+   (void) data;
    (void) h;
    int q;
    char buf[8];
@@ -711,6 +713,7 @@ static void shipyard_open( unsigned int wid )
    int iw, ih;
    int bw, bh;
    int th;
+   int y;
    const char *buf;
 
    /* Get window dimensions. */
@@ -731,37 +734,43 @@ static void shipyard_open( unsigned int wid )
    window_addButton( wid, -40-bw, 20,
          bw, bh, "btnBuyShip",
          "Buy", shipyard_buy );
-   window_addButton( wid, -40-bw, 40+bh,
-         bw, bh, "btnInfoShip",
-         "Info", shipyard_info );
 
    /* target gfx */
-   window_addRect( wid, -40, -50,
-         128, 96, "rctTarget", &cBlack, 0 );
+   window_addRect( wid, -41, -50,
+         129, 96, "rctTarget", &cBlack, 0 );
    window_addImage( wid, -40-128, -50-96,
          "imgTarget", NULL, 1 );
 
    /* text */
-   buf = "Name:\n"
+   buf = "Model:\n"
          "Class:\n"
          "Fabricator:\n"
+         "Crew:\n"
          "\n"
          "CPU:\n"
+         "Slots:\n"
          "Mass:\n"
-         "Jump time:\n"
-         "High slots:\n"
-         "Medium slots:\n"
-         "Low slots:\n"
+         "Jump Time:\n"
+         "Thrust:\n"
+         "Speed:\n"
+         "Turn:\n"
          "\n"
+         "Shield:\n"
+         "Armour:\n"
+         "Energy:\n"
+         "Cargo Space:\n"
+         "Fuel:\n"
          "Price:\n"
          "Money:\n"
          "License:\n";
-   th = gl_printHeightRaw( &gl_smallFont, 80, buf );
-   window_addText( wid, 40+iw+20, -55,
-         100, 256, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
-   window_addText( wid, 40+iw+20+100, -55,
-         130, 256, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, 20+iw+40, -55-th-20,
+   th = gl_printHeightRaw( &gl_smallFont, 100, buf );
+   y  = -55;
+   window_addText( wid, 40+iw+20, y,
+         100, th, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
+   window_addText( wid, 40+iw+20+100, y,
+         w-(40+iw+20+100)-20, th, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+   y -= th + 10;
+   window_addText( wid, 20+iw+40, y,
          w-(20+iw+40) - 20, 185, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 
@@ -813,14 +822,19 @@ static void shipyard_update( unsigned int wid, char* str )
             "None\n"
             "NA\n"
             "NA\n"
-            "\n"
             "NA\n"
             "NA\n"
             "NA\n"
             "NA\n"
             "NA\n"
             "NA\n"
-            "\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
             "NA\n"
             "NA\n"
             "NA\n" );
@@ -841,26 +855,42 @@ static void shipyard_update( unsigned int wid, char* str )
          "%s\n"
          "%s\n"
          "%s\n"
+         "%d\n"
          "\n"
          "%.0f Teraflops\n"
-         "%.1f Tons\n"
-         "%.1f STU average\n"
-         "%d\n"
-         "%d\n"
-         "%d\n"
+         "%d / %d / %d (High/Med/Low)\n"
+         "%.0f Tons\n"
+         "%.1f STU Average\n"
+         "%.0f KN/Ton\n"
+         "%.0f M/s\n"
+         "%.0f Grad/s\n"
          "\n"
-         "%s credits\n"
-         "%s credits\n"
+         "%.0f MJ (%.1f MW)\n"
+         "%.0f MJ (%.1f MW)\n"
+         "%.0f MJ (%.1f MW)\n"
+         "%.0f Tons\n"
+         "%d Units\n"
+         "%s Credits\n"
+         "%s Credits\n"
          "%s\n",
          ship->name,
          ship_class(ship),
          ship->fabricator,
+         ship->crew,
+         /* Weapons & Manoeuvrability */
          ship->cpu,
+         ship->outfit_nhigh, ship->outfit_nmedium, ship->outfit_nlow,
          ship->mass,
          pow( ship->mass, 1./2.5 ) / 5., /**< @todo make this more portable. */
-         ship->outfit_nhigh,
-         ship->outfit_nmedium,
-         ship->outfit_nlow,
+         ship->thrust / ship->mass,
+         ship->speed,
+         ship->turn,
+         /* Misc */
+         ship->shield, ship->shield_regen,
+         ship->armour, ship->armour_regen,
+         ship->energy, ship->energy_regen,
+         ship->cap_cargo,
+         ship->fuel,
          buf2,
          buf3,
          (ship->license != NULL) ? ship->license : "None" );
@@ -870,19 +900,6 @@ static void shipyard_update( unsigned int wid, char* str )
       window_disableButton( wid, "btnBuyShip");
    else
       window_enableButton( wid, "btnBuyShip");
-}
-/**
- * @brief Opens the ship's information window.
- *    @param wid Window to find out selected ship.
- *    @param str Unused.
- */
-static void shipyard_info( unsigned int wid, char* str )
-{
-   (void)str;
-   char *shipname;
-
-   shipname = toolkit_getImageArray( wid, "iarShipyard" );
-   ship_view(0, shipname);
 }
 /**
  * @brief Player attempts to buy a ship.
@@ -1199,8 +1216,8 @@ static int news_load (void)
  */
 static void misn_open( unsigned int wid )
 {
-   char *buf;
    int w, h;
+   int y;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -1217,21 +1234,24 @@ static void misn_open( unsigned int wid )
          "Accept", misn_accept );
 
    /* text */
-   window_addText( wid, w/2 + 10, -60,
-         w/2 - 30, 20, 0,
-         "txtSDate", NULL, &cDConsole, "Date:" );
-   buf = ntime_pretty(0);
-   window_addText( wid, w/2 + 70, -60,
-         w/2 - 90, 20, 0,
-         "txtDate", NULL, &cBlack, buf );
-   free(buf);
-   window_addText( wid, w/2 + 10, -100,
+   y = -60;
+   window_addText( wid, w/2 + 10, y,
+         w/2 - 30, 40, 0,
+         "txtSDate", NULL, &cDConsole,
+         "Date:\n"
+         "Free Space:");
+   window_addText( wid, w/2 + 110, y,
+         w/2 - 90, 40, 0,
+         "txtDate", NULL, &cBlack, NULL );
+   y -= 2 * gl_defFont.h + 50;
+   window_addText( wid, w/2 + 10, y,
          w/2 - 30, 20, 0,
          "txtSReward", &gl_smallFont, &cDConsole, "Reward:" );
-   window_addText( wid, w/2 + 70, -100,
+   window_addText( wid, w/2 + 70, y,
          w/2 - 90, 20, 0,
          "txtReward", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, w/2 + 10, -120,
+   y -= 20;
+   window_addText( wid, w/2 + 10, y,
          w/2 - 30, h/2-90, 0,
          "txtDesc", &gl_smallFont, &cBlack, NULL );
 
@@ -1346,6 +1366,13 @@ static void misn_update( unsigned int wid, char* str )
    (void) str;
    char *active_misn;
    Mission* misn;
+   char txt[256], *buf;
+
+   /* Update date stuff. */
+   buf = ntime_pretty(0);
+   snprintf( txt, sizeof(txt), "%s\n%d Tons", buf, player->cargo_free );
+   free(buf);
+   window_modifyText( wid, "txtDate", txt );
 
    active_misn = toolkit_getList( wid, "lstMission" );
    if (strcmp(active_misn,"No Missions")==0) {
@@ -1608,11 +1635,6 @@ void land( Planet* p )
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY))
       commodity_exchange_open( land_getWid(LAND_WINDOW_COMMODITY) );
 
-   /* Go to last open tab. */
-   window_tabWinOnChange( land_wid, "tabLand", land_changeTab );
-   if (land_windowsMap[ last_window ] != -1)
-      window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
-
    /* player is now officially landed */
    landed = 1;
 
@@ -1628,6 +1650,11 @@ void land( Planet* p )
             land_planet->name, cur_system->name);
       visited(VISITED_LAND);
    }
+
+   /* Go to last open tab. */
+   window_tabWinOnChange( land_wid, "tabLand", land_changeTab );
+   if (land_windowsMap[ last_window ] != -1)
+      window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
 
    /* Add fuel button if needed - AFTER missions pay :). */
    land_checkAddRefuel();
@@ -1687,7 +1714,7 @@ static void land_createMainTab( unsigned int wid )
     * Checkboxes.
     */
    window_addCheckbox( wid, -20, 20 + 2*(BUTTON_HEIGHT + 20) + 40,
-         250, 20, "chkRefuel", "Automatic refuel",
+         175, 20, "chkRefuel", "Automatic Refuel",
          land_toggleRefuel, conf.autorefuel );
    land_toggleRefuel( wid, "chkRefuel" );
 }
@@ -1715,7 +1742,14 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
    (void) wid;
    (void) wgt;
    unsigned int w;
+   const char *torun_hook;
+   unsigned int to_visit;
 
+   /* Sane defaults. */
+   torun_hook = NULL;
+   to_visit   = 0;
+
+   /* Find what switched. */
    for (i=0; i<LAND_NUMWINDOWS; i++) {
       if (land_windowsMap[i] == tab) {
          last_window = i;
@@ -1726,22 +1760,34 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
             case LAND_WINDOW_OUTFITS:
                outfits_update( w, NULL );
                outfits_updateQuantities( w );
+               to_visit   = VISITED_OUTFITS;
+               torun_hook = "outfits";
                break;
             case LAND_WINDOW_SHIPYARD:
                shipyard_update( w, NULL );
+               to_visit   = VISITED_SHIPYARD;
+               torun_hook = "shipyard";
                break;
             case LAND_WINDOW_BAR:
                spaceport_bar_update( w, NULL );
+               to_visit   = VISITED_BAR;
+               torun_hook = "bar";
                break;
             case LAND_WINDOW_MISSION:
                misn_update( w, NULL );
+               to_visit   = VISITED_MISSION;
+               torun_hook = "mission";
                break;
             case LAND_WINDOW_COMMODITY:
                commodity_update( w, NULL );
+               to_visit   = VISITED_COMMODITY;
+               torun_hook = "commodity";
                break;
             case LAND_WINDOW_EQUIPMENT:
                equipment_updateShips( w, NULL );
                equipment_updateOutfits( w, NULL );
+               to_visit   = VISITED_EQUIPMENT;
+               torun_hook = "equipment";
                break;
 
             default:
@@ -1756,6 +1802,15 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
          break;
       }
    }
+
+   /* Check land missions. */
+   if ((to_visit != 0) && !has_visited(to_visit)) {
+      /* Run hooks, run after music in case hook wants to change music. */
+      if (torun_hook != NULL)
+         hooks_run( torun_hook );
+
+      visited(to_visit);
+   }
 }
 
 
@@ -1769,7 +1824,8 @@ void takeoff( int delay )
    int sw,sh, h;
    char *nt;
 
-   if (!landed) return;
+   if (!landed)
+      return;
 
    /* ze music */
    music_choose("takeoff");

@@ -178,6 +178,7 @@ extern int space_spawn; /**< 1 if spawning is enabled. */
 /*
  * loading/exiting
  */
+void space_initStars( int n );
 void space_init( const char* sysname );
 int space_load (void);
 void space_exit (void);
@@ -202,6 +203,7 @@ int system_rmFleetGroup( StarSystem *sys, FleetGroup *fltgrp );
 /*
  * render
  */
+void space_renderStars( const double dt );
 void space_render( const double dt );
 void space_renderOverlay( const double dt );
 void planets_render (void);

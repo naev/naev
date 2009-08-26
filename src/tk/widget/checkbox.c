@@ -55,7 +55,6 @@ void window_addCheckbox( const unsigned int wid,
    wgt->mclickevent        = chk_mclick;
    wgt->render             = chk_render;
    wgt->cleanup            = chk_cleanup;
-   wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->dat.chk.display    = (display == NULL) ? NULL : strdup(display);
    wgt->dat.chk.fptr       = call;
    wgt->dat.chk.state      = default_state;
@@ -64,9 +63,6 @@ void window_addCheckbox( const unsigned int wid,
    wgt->w = (double) w;
    wgt->h = (double) h;
    toolkit_setPos( wdw, wgt, x, y );
-
-   if (wdw->focus == -1) /* initialize the focus */
-      toolkit_nextFocus();
 }
 
 
@@ -113,7 +109,7 @@ void window_checkboxCaption( const unsigned int wid, const char *name, char *dis
 
 
 /**
- * @brief Gets the staet of a checkbox.
+ * @brief Gets the state of a checkbox.
  *
  *    @return 1 = pressed, 0 = not pressed, -1 = error.
  */
@@ -208,12 +204,13 @@ static void chk_render( Widget* chk, double bx, double by )
    }
 
    /* Draw rect. */
-   toolkit_drawRect( x, y + (chk->h-10.)/2., 10., 10., &cWhite, NULL );
+   toolkit_drawRect( x-1, y-1 + (chk->h-10.)/2., 12., 12., &cGrey40, NULL );
+   toolkit_drawRect( x, y + (chk->h-10.)/2., 10., 10., &cGrey90, NULL );
    if (chk->dat.chk.state)
-      toolkit_drawRect( x+2., y+2. + (chk->h-10.)/2., 6., 6., &cDConsole, NULL );
+      toolkit_drawRect( x+1., y+1. + (chk->h-10.)/2., 8., 8., &cGrey20, NULL );
 
    /* Inner outline */
-   toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 0., lc, c );
+   /*  toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 0., lc, c ); */
    /* Outter outline */
    /*toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 1., &cBlack, NULL );*/
 

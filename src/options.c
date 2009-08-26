@@ -46,7 +46,6 @@ static int opt_lastKeyPress = 0; /**< Last keypress. */
 /*
  * prototypes
  */
-static const char* modToText( SDLMod mod );
 /* Keybind menu. */
 static void menuKeybinds_getDim( unsigned int wid, int *w, int *h,
       int *lw, int *lh, int *bw, int *bh );
@@ -170,29 +169,6 @@ static void menuKeybinds_genList( unsigned int wid )
 
 
 /**
- * @brief Gets the human readable version of mod.
- *
- *    @brief mod Mod to get human readable version from.
- *    @return Human readable version of mod.
- */
-static const char* modToText( SDLMod mod )
-{
-   switch (mod) {
-      case KMOD_LCTRL:  return "lctrl";
-      case KMOD_RCTRL:  return "rctrl";
-      case KMOD_LSHIFT: return "lshift";
-      case KMOD_RSHIFT: return "rshift";
-      case KMOD_LALT:   return "lalt";
-      case KMOD_RALT:   return "ralt";
-      case KMOD_LMETA:  return "lmeta";
-      case KMOD_RMETA:  return "rmeta";
-      case KMOD_ALL:    return "any";
-      default:          return "unknown";
-   }
-}
-
-
-/**
  * @brief Updates the keybindings menu.
  *
  *    @param wid Window to update.
@@ -233,12 +209,12 @@ static void menuKeybinds_update( unsigned int wid, char *name )
          /* SDL_GetKeyName returns lowercase which is ugly. */
          if (nstd_isalpha(key))
             snprintf(binding, 32, "keyboard:   %s%s%c",
-                  (mod != KMOD_NONE) ? modToText(mod) : "",
+                  (mod != KMOD_NONE) ? input_modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
                   nstd_toupper(key));
          else
             snprintf(binding, 32, "keyboard:   %s%s%s",
-                  (mod != KMOD_NONE) ? modToText(mod) : "",
+                  (mod != KMOD_NONE) ? input_modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
                   SDL_GetKeyName(key));
          break;

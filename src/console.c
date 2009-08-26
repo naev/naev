@@ -76,7 +76,7 @@ static const luaL_Reg cli_methods[] = {
  */
 static int cli_keyhandler( unsigned int wid, SDLKey key, SDLMod mod );
 static void cli_addMessage( const char *msg );
-static void cli_render( double bx, double by, double w, double h );
+static void cli_render( double bx, double by, double w, double h, void *data );
 
 
 /**
@@ -155,8 +155,9 @@ static void cli_addMessage( const char *msg )
 /**
  * @brief Render function for the custom widget.
  */
-static void cli_render( double bx, double by, double w, double h )
+static void cli_render( double bx, double by, double w, double h, void *data )
 {
+   (void) data;
    int i, y;
    glColour *c;
 
@@ -397,7 +398,7 @@ void cli_open (void)
    /* Custom console widget. */
    window_addCust( wid, 20, -40,
          cli_width-40, cli_height-80-BUTTON_HEIGHT,
-         "cstConsole", 0, cli_render, NULL );
+         "cstConsole", 0, cli_render, NULL, NULL );
 }
 
 

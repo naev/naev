@@ -18,6 +18,12 @@ void gl_exitMatrix (void);
 
 
 /*
+ * Matrix mode.
+ */
+void gl_matrixMode( GLenum mode );
+
+
+/*
  * Push/pop matrix.
  */
 void gl_matrixPush (void);

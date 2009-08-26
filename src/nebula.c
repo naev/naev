@@ -186,6 +186,17 @@ int nebu_init (void)
 
 
 /**
+ * @brief Gets the nebula view radius.
+ *
+ *    @return The nebula view radius.
+ */
+double nebu_getSightRadius (void)
+{
+   return nebu_view;
+}
+
+
+/**
  * @brief Loads sur into tex, checks for expected size of w and h.
  *
  *    @param sur Surface to load into texture.
@@ -330,6 +341,7 @@ static void nebu_renderMultitexture( const double dt )
 
    /* Compensate possible rumble */
    if (!paused) {
+      gl_matrixMode( GL_PROJECTION );
       gl_matrixPush();
       gl_matrixTranslate( shake_pos.x, shake_pos.y );
    }
@@ -516,6 +528,7 @@ void nebu_renderOverlay( const double dt )
       ox += shake_pos.x;
       oy += shake_pos.y;
    }
+   gl_matrixMode( GL_PROJECTION );
    gl_matrixPush();
    gl_matrixTranslate( ox, oy );
    gl_matrixScale( z, z );

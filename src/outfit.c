@@ -143,7 +143,7 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
  *  it much easier to handle later on.
  *
  *    @param[out] n Number of outfits found.
- *    @param[in] tech Technologies to check against.  The first one represents
+ *    @param[in] tech Technologies to check against. The first one represents
  *                    overall technology, the others are specific technologies.
  *    @param[in] techmax Number of technologies in tech.
  *    @return An allocated array of allocated strings with the names of outfits

@@ -149,6 +149,8 @@ static int escort_disabled( void *data )
    /* Remove from deployed list. */
    for (i=0; i<p->noutfits; i++) {
       o = p->outfits[i]->outfit;
+      if (o==NULL)
+         continue;
       if (outfit_isFighterBay(o)) {
          o = outfit_ammo(o);
          if (outfit_isFighter(o) &&

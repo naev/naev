@@ -61,9 +61,10 @@
 #define PILOT_CREATED_AI   (1<<3) /** Pilot has already created AI. */
 #define PILOT_EMPTY        (1<<5) /**< Do not add pilot to stack. */
 #define PILOT_NO_OUTFITS   (1<<6) /**< Do not create the pilot with outfits. */
-#define PILOT_HASTURRET    (1<<9) /**< Pilot has turrets. */
-#define PILOT_HASBEAMS     (1<<10) /**< Pilot has beam weapons. */
+#define PILOT_HASTURRET    (1<<8) /**< Pilot has turrets. */
+#define PILOT_HASBEAMS     (1<<9) /**< Pilot has beam weapons. */
 /* dynamic */
+#define PILOT_INVINCIBLE   (1<<10) /**< Pilot can't be hit ever. */
 #define PILOT_HOSTILE      (1<<11) /**< Pilot is hostile to the player. */
 #define PILOT_FRIENDLY     (1<<12) /**< Pilot is friendly to the player. */
 #define PILOT_COMBAT       (1<<13) /**< Pilot is engaged in combat. */

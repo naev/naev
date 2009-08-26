@@ -35,15 +35,15 @@ else -- default english
    title = {}
    text = {}
    title[1] = "In the bar"
-   text[1] = [[The barman has just asked you for your order when the portmaster bursts though the door, out of breath.  "Pirates, all over the system!  The navy's on maneuvers.  Quickly, we need to organize a defense."
+   text[1] = [[The barman has just asked you for your order when the portmaster bursts though the door, out of breath. "Pirates, all over the system!  The navy's on maneuvers. Quickly, we need to organize a defense."
 
-All the pilots in the room scramble to their feet.  "How many are there?" someone asks.  "How long have they been in system?" another calls out.
+All the pilots in the room scramble to their feet. "How many are there?" someone asks. "How long have they been in system?" another calls out.
 
-Into the confusion steps a steely-haired, upright, uniformed figure.  Her stripes mark her as a navy Commodore.
+Into the confusion steps a steely-haired, upright, uniformed figure. Her stripes mark her as a navy Commodore.
 
-"I'm with the navy and I will organize the defense," her voice cuts through the commotion.  "Who here is a pilot?  We must strike back quickly.  I will arrange a reward for everyone who volunteers.  We'll need as many pilots as possible.  Follow me."]]
+"I'm with the navy and I will organize the defense," her voice cuts through the commotion. "Who here is a pilot?  We must strike back quickly. I will arrange a reward for everyone who volunteers. We'll need as many pilots as possible. Follow me."]]
    title[11] = "Volunteers"
-   text[11] = [["Take as many out of the fight early as you can," advises the Commodore before you board your ships.  "If you can't chase them off, you might at least improve the odds.  Good luck."]]
+   text[11] = [["Take as many out of the fight early as you can," advises the Commodore before you board your ships. "If you can't chase them off, you might at least improve the odds. Good luck."]]
 
 -- Stage two: Vicious comm chatter
    comm = {}
@@ -55,31 +55,31 @@ Into the confusion steps a steely-haired, upright, uniformed figure.  Her stripe
 
 -- Stage three: Victorious comm chatter
    comm[6] = "We've got them on the run!"
-   comm[7] = "Well done, pilots.  Return to port."
+   comm[7] = "Well done, pilots. Return to port."
 
 -- Stage four: the commander is getting instructions when you land
    title[2] = "On the way in"
-   text[2] = [[As you taxi in to land, you can make out the tiny figure of the Commodore saluting a small group of individuals to the side of the landing pads.  After you and your fellow volunteers alight, she greets you with the portmaster by her side.]]
+   text[2] = [[As you taxi in to land, you can make out the tiny figure of the Commodore saluting a small group of individuals to the side of the landing pads. After you and your fellow volunteers alight, she greets you with the portmaster by her side.]]
 
 -- Stage five: the commander welcomes you back
    title[3] = "Thank you"
-   text[3] = [["That was good flying," the Commodore says with a tight smile.  "Thank you all for your help.  This gentleman has arranged a transfer of forty thousand credits to each of you.  You can be proud of what you've done today."]]
+   text[3] = [["That was good flying," the Commodore says with a tight smile. "Thank you all for your help. This gentleman has arranged a transfer of forty thousand credits to each of you. You can be proud of what you've done today."]]
 
 -- Other text for the mission
-   comm[8] = "You fled battle.  The Empire wont forget."
+   comm[8] = "You fled battle. The Empire wont forget."
    comm[9] = "Comm Trader>You're a coward, %s. You better hope I never see you again."
    comm[10] = "Comm Trader>You're running away now, %s? The fight's finished, you know..."
    title[4] = "Good job"
-   text[4] = [[The debris from the battle disappears behind you in a blur of light.  A moment after you emerge from hyperspace, a Imperial ship jumps in behind you and hails you.
+   text[4] = [[The debris from the battle disappears behind you in a blur of light. A moment after you emerge from hyperspace, a Imperial ship jumps in behind you and hails you.
 
-"Please hold course and confirm your identity, %s."  You send your license code and wait for a moment.  "Ok, that's fine.  We're just making sure no pirates escaped.  You were part of the battle, weren't you?  Surprised you didn't return for the bounty, pilot.  Listen, I appreciate what you did back there.  I have family on %s.  When I'm not flying overhead, it's good to know there are good samaritans like you who will step up.  Thanks."
+"Please hold course and confirm your identity, %s."  You send your license code and wait for a moment. "Ok, that's fine. We're just making sure no pirates escaped. You were part of the battle, weren't you?  Surprised you didn't return for the bounty, pilot. Listen, I appreciate what you did back there. I have family on %s. When I'm not flying overhead, it's good to know there are good samaritans like you who will step up. Thanks."
 ]]
    title[5] = "Left behind"
-   text[5] = [[The Commodore turns and walks off.  Eight men and women follow her, but you stay put.
+   text[5] = [[The Commodore turns and walks off. Eight men and women follow her, but you stay put.
    
-A man in a jumpsuit at the next table nods at you.  "What, they expect me to do their dirty work for them?" he shakes his head.  "It's going to be a hot ride out of the system though, with all that going on upstairs."]]
+A man in a jumpsuit at the next table nods at you. "What, they expect me to do their dirty work for them?" he shakes his head. "It's going to be a hot ride out of the system though, with all that going on upstairs."]]
    bounce_title = "Not done yet."
-   bounce_text = "The system isn't safe yet.  Get back out there!"
+   bounce_text = "The system isn't safe yet. Get back out there!"
    noReward = "No reward for you."
    noDesc = "Watch others defend the system."
    noTitle = "Observe the action."
@@ -153,7 +153,7 @@ end
 -- There's a battle to defend the system
 function defend_system()
 
-  -- Makes the system empty except for the two fleets.  No help coming.
+  -- Makes the system empty except for the two fleets. No help coming.
       pilot.clear ()
       pilot.toggleSpawn( false )
 

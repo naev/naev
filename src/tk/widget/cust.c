@@ -42,9 +42,10 @@ void window_addCust( const unsigned int wid,
                      const int x, const int y, /* position */
                      const int w, const int h, /* size */
                      char* name, const int border,
-                     void (*render) (double x, double y, double w, double h),
+                     void (*render) (double x, double y, double w, double h, void *data),
                      void (*mouse) (unsigned int wid, SDL_Event* event,
-                                    double x, double y, double w, double h) )
+                                    double x, double y, double w, double h, void *data),
+                     void *data )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
@@ -59,6 +60,7 @@ void window_addCust( const unsigned int wid,
    wgt->dat.cst.render  = render;
    wgt->dat.cst.mouse   = mouse;
    wgt->dat.cst.clip    = 1;
+   wgt->dat.cst.userdata = data;
 
    /* position/size */
    wgt->w = (double) w;
@@ -92,7 +94,7 @@ static void cst_render( Widget* cst, double bx, double by )
 
    if (cst->dat.cst.clip != 0)
       toolkit_clip( x, y, cst->w, cst->h );
-   (*cst->dat.cst.render) ( x, y, cst->w, cst->h );
+   cst->dat.cst.render ( x, y, cst->w, cst->h, cst->dat.cst.userdata );
    if (cst->dat.cst.clip != 0)
       toolkit_unclip();
 }
@@ -111,7 +113,7 @@ static void cst_renderOverlay( Widget* cst, double bx, double by )
    if (cst->dat.cst.clip != 0)
       toolkit_clip( x, y, cst->w, cst->h );
    if (cst->dat.cst.renderOverlay != NULL)
-      cst->dat.cst.renderOverlay ( x, y, cst->w, cst->h );
+      cst->dat.cst.renderOverlay ( x, y, cst->w, cst->h, cst->dat.cst.userdata );
    if (cst->dat.cst.clip != 0)
       toolkit_unclip();
 }
@@ -165,7 +167,7 @@ void window_custSetClipping( const unsigned int wid, const char *name, int clip 
  *    @param renderOverlay Function to render widget overlay, NULL disables.
  */
 void window_custSetOverlay( const unsigned int wid, const char *name,
-      void (*renderOverlay) (double bx, double by, double bw, double bh) )
+      void (*renderOverlay) (double bx, double by, double bw, double bh, void *data) )
 {
    Widget *wgt = cst_getWidget( wid, name );
    if (wgt == NULL)
@@ -173,4 +175,22 @@ void window_custSetOverlay( const unsigned int wid, const char *name,
 
    wgt->dat.cst.renderOverlay = renderOverlay;
 }
+
+
+/**
+ * @brief Gets the widget user data.
+ *
+ *    @param wid Window to which widget belongs.
+ *    @param name Name of the widget.
+ *    @return A pointer to the widget user data.
+ */
+void* window_custGetData( const unsigned int wid, const char *name )
+{
+   Widget *wgt = cst_getWidget( wid, name );
+   if (wgt == NULL)
+      return NULL;
+
+   return wgt->dat.cst.userdata;
+}
+
 

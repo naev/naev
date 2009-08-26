@@ -23,7 +23,7 @@ else -- default english
    title[22] = "Ferry %s to %s"
    full = {}
    full[1] = "Ship is full"
-   full[2] = "Your ship is too full.  You need to make room for %d more tons if you want to be able to accept the mission."
+   full[2] = "Your ship is too full. You need to make room for %d more tons if you want to be able to accept the mission."
    accept_title = "Mission Accepted"
    accept_msg = {}
    accept_msg[1] = "The workers load the %d tons of %s onto your ship."

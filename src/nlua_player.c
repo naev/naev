@@ -180,7 +180,7 @@ static int player_msg( lua_State *L )
    return 0;
 }
 /**
- * @brief Increases the player's standing to a faction by an amount.  This will
+ * @brief Increases the player's standing to a faction by an amount. This will
  *  affect player's standing with that faction's allies and enemies also.
  *
  *    @luaparam faction Name of the faction.

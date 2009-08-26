@@ -1401,16 +1401,13 @@ void toolkit_render (void)
    Window *w;
 
    /* Render base. */
-   for (w = windows; w!=NULL; w = w->next)
+   for (w = windows; w!=NULL; w = w->next) {
       if (!window_isFlag(w, WINDOW_NORENDER) &&
-               !window_isFlag(w, WINDOW_KILL))
+               !window_isFlag(w, WINDOW_KILL)) {
          window_render(w);
-
-   /* Render overlay. */
-   for (w = windows; w!=NULL; w = w->next)
-      if (!window_isFlag(w, WINDOW_NORENDER) &&
-            !window_isFlag(w, WINDOW_KILL))
          window_renderOverlay(w);
+      }
+   }
 }
 
 
@@ -1579,7 +1576,8 @@ static void toolkit_mouseEvent( Window *w, SDL_Event* event )
       /* custom widgets take it from here */
       if (wgt->type==WIDGET_CUST) {
          if (wgt->dat.cst.mouse)
-            wgt->dat.cst.mouse( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h );
+            wgt->dat.cst.mouse( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h,
+                  wgt->dat.cst.userdata );
       }
       else {
          /* Handle mouse event. */

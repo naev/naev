@@ -367,7 +367,7 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
    dialogue_open++;
    input = NULL;
    while (!input_cancelled && (!input ||
-         ((int)strlen(input) < min))) { /* must be longer then min */
+         ((int)strlen(input) < min))) { /* must be longer than min */
 
       if (input) {
          dialogue_alert( "Input must be at least %d character%s long!",

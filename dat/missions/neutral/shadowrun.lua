@@ -184,6 +184,8 @@ function enter()
         targship[1]:setFaction(faction.get("Independent")) -- Make sure the ship has no enemies here
 
         targship[1]:disable()
+        targship[1]:setInvincible(true)
+        
         hook.pilot(targship[1], "board", "board")
         hook.pilot(targship[1], "death", "abort")
     end

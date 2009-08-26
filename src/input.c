@@ -74,14 +74,14 @@ const char *keybindNames[] = {
    "end"
 }; /**< Names of possible keybindings. */
 /*
- * Keybinding descriptions.  Should match in position the names.
+ * Keybinding descriptions. Should match in position the names.
  */
 const char *keybindDescription[] = {
    /* Movement. */
    "Makes your ship accelerate forward.",
    "Makes your ship turn left.",
    "Makes your ship turn right.",
-   "Makes your ship turn around and face the direction you're moving from.  Good for braking.",
+   "Makes your ship turn around and face the direction you're moving from. Good for braking.",
    "Makes your ship afterburn if you have an afterburner installed.",
    /* Targetting. */
    "Cycles through ship targets.",
@@ -114,7 +114,7 @@ const char *keybindDescription[] = {
    /* Space navigation. */
    "Initializes the autonavigation system.",
    "Cycles through planet targets",
-   "Attempts to land on your targetted planet or targets the nearest landable planet.  Requests for landing if you don't have permission yet.",
+   "Attempts to land on your targetted planet or targets the nearest landable planet. Requests for landing if you don't have permission yet.",
    "Cycles through hyperspace targets.",
    "Opens the Star Map.",
    "Attempts to jump to your hyperspace target.",
@@ -130,7 +130,7 @@ const char *keybindDescription[] = {
    "Opens the information menu.",
    "Opens the Lua console.",
    NULL /* To match sentinel. */
-}; /**< Descriptions of the keybindings.  Should be in the same position as the
+}; /**< Descriptions of the keybindings. Should be in the same position as the
         matching keybinding name. */
 
 
@@ -172,7 +172,7 @@ void input_setDefault (void)
 {
    /* Movement. */
    input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, KMOD_ALL );
-   input_setKeybind( "afterburn", KEYBIND_NULL, SDLK_z, KMOD_ALL );
+   input_setKeybind( "afterburn", KEYBIND_KEYBOARD, SDLK_z, KMOD_ALL );
    input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, KMOD_ALL );
    input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, KMOD_ALL );
    input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, KMOD_ALL );
@@ -200,8 +200,8 @@ void input_setDefault (void)
    /* Escorts. */
    input_setKeybind( "e_targetNext", KEYBIND_KEYBOARD, SDLK_e, KMOD_NONE );
    input_setKeybind( "e_targetPrev", KEYBIND_KEYBOARD, SDLK_e, KMOD_LCTRL );
-   input_setKeybind( "e_attack", KEYBIND_KEYBOARD, SDLK_f, KMOD_NONE );
-   input_setKeybind( "e_hold", KEYBIND_KEYBOARD, SDLK_g, KMOD_NONE );
+   input_setKeybind( "e_attack", KEYBIND_KEYBOARD, SDLK_f, KMOD_ALL );
+   input_setKeybind( "e_hold", KEYBIND_KEYBOARD, SDLK_g, KMOD_ALL );
    input_setKeybind( "e_return", KEYBIND_KEYBOARD, SDLK_c, KMOD_LCTRL );
    input_setKeybind( "e_clear", KEYBIND_KEYBOARD, SDLK_c, KMOD_NONE );
    /* Space. */
@@ -246,21 +246,17 @@ void input_init (void)
    }
 #endif /* DEBUGGING */
 
-#if SDL_VERSION_ATLEAST(1,3,0)
    /* Window. */
-   SDL_EventState( SDL_WINDOWEVENT,     SDL_DISABLE );
    SDL_EventState( SDL_SYSWMEVENT,      SDL_DISABLE );
 
    /* Keyboard. */
    SDL_EventState( SDL_KEYDOWN,         SDL_ENABLE );
    SDL_EventState( SDL_KEYUP,           SDL_ENABLE );
-   SDL_EventState( SDL_TEXTINPUT,       SDL_DISABLE );
 
    /* Mice. */
    SDL_EventState( SDL_MOUSEMOTION,     SDL_ENABLE );
    SDL_EventState( SDL_MOUSEBUTTONDOWN, SDL_ENABLE );
    SDL_EventState( SDL_MOUSEBUTTONUP,   SDL_ENABLE );
-   SDL_EventState( SDL_MOUSEWHEEL,      SDL_ENABLE );
    
    /* Joystick, enabled in joystick.c if needed. */
    SDL_EventState( SDL_JOYAXISMOTION,   SDL_DISABLE );
@@ -270,6 +266,16 @@ void input_init (void)
 
    /* Quit. */
    SDL_EventState( SDL_QUIT,            SDL_ENABLE );
+
+#if SDL_VERSION_ATLEAST(1,3,0)
+   /* Window. */
+   SDL_EventState( SDL_WINDOWEVENT,     SDL_DISABLE );
+
+   /* Keyboard. */
+   SDL_EventState( SDL_TEXTINPUT,       SDL_DISABLE );
+
+   /* Mouse. */
+   SDL_EventState( SDL_MOUSEWHEEL,      SDL_DISABLE );
 
    /* Proximity. */
    SDL_EventState( SDL_PROXIMITYIN,     SDL_DISABLE );
@@ -424,6 +430,29 @@ SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod )
       }
    WARN("Unable to get keybinding '%s', that command doesn't exist", keybind);
    return (SDLKey)-1;
+}
+
+
+/**
+ * @brief Gets the human readable version of mod.
+ *
+ *    @brief mod Mod to get human readable version from.
+ *    @return Human readable version of mod.
+ */
+const char* input_modToText( SDLMod mod )
+{
+   switch (mod) {
+      case KMOD_LCTRL:  return "LCtrl";
+      case KMOD_RCTRL:  return "RCtrl";
+      case KMOD_LSHIFT: return "LShift";
+      case KMOD_RSHIFT: return "RShift";
+      case KMOD_LALT:   return "Lalt";
+      case KMOD_RALT:   return "Ralt";
+      case KMOD_LMETA:  return "LMeta";
+      case KMOD_RMETA:  return "RMeta";
+      case KMOD_ALL:    return "Any";
+      default:          return "unknown";
+   }
 }
 
 

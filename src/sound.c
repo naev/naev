@@ -129,50 +129,7 @@ int sound_init (void)
       return 0;
 
    /* Choose sound system. */
-   if ((conf.sound_backend != NULL) &&
-         (strcmp(conf.sound_backend,"sdlmix")==0)) {
-#if USE_SDLMIX
-      /*
-       * SDL_mixer Sound.
-       */
-      /* Creation. */
-      sound_sys_init       = sound_mix_init;
-      sound_sys_exit       = sound_mix_exit;
-      /* Sound Creation. */
-      sound_sys_load       = sound_mix_load;
-      sound_sys_free       = sound_mix_free;
-      /* Sound settings. */
-      sound_sys_volume     = sound_mix_volume;
-      sound_sys_getVolume  = sound_mix_getVolume;
-      /* Sound playing. */
-      sound_sys_play       = sound_mix_play;
-      sound_sys_playPos    = sound_mix_playPos;
-      sound_sys_updatePos  = sound_mix_updatePos;
-      sound_sys_updateVoice = sound_mix_updateVoice;
-      /* Sound management. */
-      sound_sys_update     = sound_mix_update;
-      sound_sys_stop       = sound_mix_stop;
-      sound_sys_pause      = sound_mix_pause;
-      sound_sys_resume     = sound_mix_resume;
-      sound_sys_setSpeed   = sound_mix_setSpeed;
-      /* Listener. */
-      sound_sys_updateListener = sound_mix_updateListener;
-      /* Groups. */
-      sound_sys_createGroup = sound_mix_createGroup;
-      sound_sys_playGroup  = sound_mix_playGroup;
-      sound_sys_stopGroup  = sound_mix_stopGroup;
-      sound_sys_pauseGroup = sound_mix_pauseGroup;
-      sound_sys_resumeGroup = sound_mix_resumeGroup;
-      /* Env. */
-      sound_sys_env        = sound_mix_env;
-#else /* USE_SDLMIX */
-      WARN("SDL_mixer support not compiled in!");
-      sound_disabled = 1;
-      music_disabled = 1;
-      return 0;
-#endif /* USE_SDLMIX */
-   }
-   else if ((conf.sound_backend != NULL) &&
+   if ((sound_sys_init == NULL) && (conf.sound_backend != NULL) &&
          (strcmp(conf.sound_backend,"openal")==0)) {
 #if USE_OPENAL
       /*
@@ -210,14 +167,52 @@ int sound_init (void)
       sound_sys_env        = sound_al_env;
 #else /* USE_OPENAL */
       WARN("OpenAL support not compiled in!");
-      sound_disabled = 1;
-      music_disabled = 1;
-      return 0;
 #endif /* USE_OPENAL */
    }
-   else {
-      WARN("Unknown sound backend '%s'.", conf.sound_backend);
+   if ((sound_sys_init == NULL) && (conf.sound_backend != NULL) &&
+         (strcmp(conf.sound_backend,"sdlmix")==0)) {
+#if USE_SDLMIX
+      /*
+       * SDL_mixer Sound.
+       */
+      /* Creation. */
+      sound_sys_init       = sound_mix_init;
+      sound_sys_exit       = sound_mix_exit;
+      /* Sound Creation. */
+      sound_sys_load       = sound_mix_load;
+      sound_sys_free       = sound_mix_free;
+      /* Sound settings. */
+      sound_sys_volume     = sound_mix_volume;
+      sound_sys_getVolume  = sound_mix_getVolume;
+      /* Sound playing. */
+      sound_sys_play       = sound_mix_play;
+      sound_sys_playPos    = sound_mix_playPos;
+      sound_sys_updatePos  = sound_mix_updatePos;
+      sound_sys_updateVoice = sound_mix_updateVoice;
+      /* Sound management. */
+      sound_sys_update     = sound_mix_update;
+      sound_sys_stop       = sound_mix_stop;
+      sound_sys_pause      = sound_mix_pause;
+      sound_sys_resume     = sound_mix_resume;
+      sound_sys_setSpeed   = sound_mix_setSpeed;
+      /* Listener. */
+      sound_sys_updateListener = sound_mix_updateListener;
+      /* Groups. */
+      sound_sys_createGroup = sound_mix_createGroup;
+      sound_sys_playGroup  = sound_mix_playGroup;
+      sound_sys_stopGroup  = sound_mix_stopGroup;
+      sound_sys_pauseGroup = sound_mix_pauseGroup;
+      sound_sys_resumeGroup = sound_mix_resumeGroup;
+      /* Env. */
+      sound_sys_env        = sound_mix_env;
+#else /* USE_SDLMIX */
+      WARN("SDL_mixer support not compiled in!");
+#endif /* USE_SDLMIX */
+   }
+   if (sound_sys_init == NULL) {
+      WARN("Unknown/Unavailable sound backend '%s'.", conf.sound_backend);
       sound_disabled = 1;
+      WARN("Sound disabled.");
       music_disabled = 1;
       return 0;
    }
@@ -227,11 +222,13 @@ int sound_init (void)
    if (ret != 0) {
       sound_disabled = 1;
       music_disabled = 1;
+      WARN("Sound disabled.");
       return ret;
    }
    ret = music_init();
    if (ret != 0) {
       music_disabled = 1;
+      WARN("Music disabled.");
    }
 
    /* Create voice lock. */
@@ -445,12 +442,12 @@ int sound_updatePos( int voice, double px, double py, double vx, double vy )
  *
  *    @return 0 on success.
  */
-int sound_update (void)
+int sound_update( double dt )
 {
    alVoice *v, *tv;
 
    /* Update music if needed. */
-   music_update();
+   music_update(dt);
 
    if (sound_disabled)
       return 0;
@@ -610,7 +607,7 @@ static int sound_makeList (void)
    for (i=0; i<nfiles; i++) {
       flen = strlen(files[i]);
 
-      /* Must be longer then suffix. */
+      /* Must be longer than suffix. */
       if (flen < suflen) {
          free(files[i]);
          continue;

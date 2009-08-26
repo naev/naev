@@ -85,6 +85,13 @@ static unsigned int time = 0; /**< used to calculate FPS and movement. */
 static char version[VERSION_LEN]; /**< Contains version. */
 static glTexture *loading; /**< Loading screen. */
 
+/*
+ * FPS stuff.
+ */
+static double fps_dt  = 1.; /**< Display fps accumulator. */
+static double game_dt = 0.; /**< Current game deltatick (uses dt_mod). */
+static double real_dt = 0.; /**< Real deltatick. */
+
 
 /*
  * prototypes
@@ -327,9 +334,15 @@ void loadscreen_load (void)
       return;
    }
 
+   /* Set the zoom. */
+   gl_cameraZoom( conf.zoom_min );
+
    /* Load the texture */
    snprintf( file_path, PATH_MAX, "gfx/loading/%s", loadscreens[ RNG_SANE(0,nload-1) ] );
    loading = gl_newImage( file_path, 0 );
+
+   /* Create the stars. */
+   space_initStars( 1000 );
 
    /* Clean up. */
    for (i=0; i<nload; i++)
@@ -347,20 +360,37 @@ void loadscreen_load (void)
 void loadscreen_render( double done, const char *msg )
 {
    glColour col;
+   double bx,by, bw,bh;
    double x,y, w,h, rh;
 
    /* Clear background. */
    glClear(GL_COLOR_BUFFER_BIT);
 
+   /* Draw stars. */
+   space_renderStars( 0. );
+
+   /*
+    * Dimensions.
+    */
+   /* Image. */
+   bw = 512.;
+   bh = 512.;
+   bx = (SCREEN_W-bw)/2.;
+   by = (SCREEN_H-bh)/2.;
+   /* Loading bar. */
+   w  = gl_screen.w * 0.4;
+   h  = gl_screen.h * 0.02;
+   rh = h + gl_defFont.h + 4.;
+   x  = -w/2.;
+   if (SCREEN_H < 768)
+      y  = -h/2.;
+   else
+      y  = -bw/2 - rh - 5.;
+
    /* Draw loading screen image. */
-   gl_blitScale( loading, 0., 0., SCREEN_W, SCREEN_H, NULL );
+   gl_blitScale( loading, bx, by, bw, bh, NULL );
 
    /* Draw progress bar. */
-   w = gl_screen.w * 0.4;
-   h = gl_screen.h * 0.02;
-   rh = h + gl_defFont.h + 4.;
-   x = -w/2.;
-   y = -h/2.;
    /* BG. */
    col.r = cBlack.r;
    col.g = cBlack.g;
@@ -368,6 +398,11 @@ void loadscreen_render( double done, const char *msg )
    col.a = 0.7;
    gl_renderRect( x-2., y-2., w+4., rh+4., &col );
    /* FG. */
+   col.r = cDConsole.r;
+   col.g = cDConsole.g;
+   col.b = cDConsole.b;
+   col.a = 0.2;
+   gl_renderRect( x+done*w, y, (1.-done)*w, h, &col );
    col.r = cConsole.r;
    col.g = cConsole.g;
    col.b = cConsole.b;
@@ -455,10 +490,11 @@ void main_loop (void)
 
    fps_control(); /* everyone loves fps control */
 
-   sound_update(); /* Update sounds. */
+   sound_update( real_dt ); /* Update sounds. */
    if (tk) toolkit_update(); /* to simulate key repetition */
    if (!menu_isOpen(MENU_MAIN)) {
-      if (!paused) update_all(); /* update game */
+      if (!paused)
+         update_all(); /* update game */
       render_all();
    }
    /* Toolkit is rendered on top. */
@@ -471,8 +507,6 @@ void main_loop (void)
 }
 
 
-static double fps_dt = 1.; /**< Display fps accumulator. */
-static double cur_dt = 0.; /**< Current deltatick. */
 /**
  * @brief Controls the FPS.
  */
@@ -483,35 +517,38 @@ static void fps_control (void)
 
    /* dt in s */
    t = SDL_GetTicks();
-   cur_dt  = (double)(t - time); /* Get the elapsed ms. */
-   cur_dt *= dt_mod; /* Apply the modifier. */
-   cur_dt /= 1000.; /* Convert to seconds. */
+   real_dt  = (double)(t - time); /* Get the elapsed ms. */
+   real_dt /= 1000.; /* Convert to seconds. */
+   game_dt  = real_dt * dt_mod; /* Apply the modifier. */
    time = t;
 
    /* if fps is limited */                       
-   if ((conf.fps_max != 0) && (cur_dt < 1./conf.fps_max)) {
-      delay = 1./conf.fps_max - cur_dt;
+   if ((conf.fps_max != 0) && (real_dt < 1./conf.fps_max)) {
+      delay = 1./conf.fps_max - real_dt;
       SDL_Delay( (unsigned int)(delay * 1000) );
       fps_dt += delay; /* makes sure it displays the proper fps */
    }
 }
 
 
-static const double fps_min = 1./50.; /**< Minimum fps to run at. */
 /**
  * @brief Updates the game itself (player flying around and friends).
+ *
+ *    @brief Mainly uses game dt.
  */
 static void update_all (void)
 {
    double tempdt;
+   static const double fps_min = 1./50.; /**< Minimum fps to run at. */
 
-   if (cur_dt > 0.25*dt_mod) { /* slow timers down and rerun calculations */
-      pause_delay((unsigned int)cur_dt*1000);
+   if (real_dt > 0.25) { /* slow timers down and rerun calculations */
+      pause_delay((unsigned int)game_dt*1000);
       return;
    }
-   else if (cur_dt > fps_min) { /* we'll force a minimum of 50 FPS */
+   else if (game_dt > fps_min) { /* we'll force a minimum of 50 FPS */
 
-      tempdt = cur_dt - fps_min;
+      /* First iteration. */
+      tempdt = game_dt - fps_min;
       pause_delay( (unsigned int)(tempdt*1000));
       update_routine(fps_min);
 
@@ -523,10 +560,10 @@ static void update_all (void)
       }
 
       update_routine(tempdt); /* leftovers */
-      /* Note we don't touch cur_dt so that fps_display works well */
+      /* Note we don't touch game_dt so that fps_display works well */
    }
    else /* Standard, just update with the last dt */
-      update_routine(cur_dt);
+      update_routine(game_dt);
 }
 
 
@@ -568,7 +605,7 @@ static void render_all (void)
 {
    double dt;
 
-   dt = (paused) ? 0. : cur_dt;
+   dt = (paused) ? 0. : game_dt;
 
    /* setup */
    spfx_begin(dt);
@@ -587,11 +624,11 @@ static void render_all (void)
    space_renderOverlay(dt);
    spfx_end();
    gui_render(dt);
-   display_fps(cur_dt); /* Exception. */
+   display_fps( real_dt ); /* Exception. */
 }
 
 
-static double fps = 0.; /**< FPS to finally display. */
+static double fps     = 0.; /**< FPS to finally display. */
 static double fps_cur = 0.; /**< FPS accumulator to trigger change. */
 /**
  * @brief Displays FPS on the screen.
@@ -602,7 +639,7 @@ static void display_fps( const double dt )
 {
    double x,y;
 
-   fps_dt += dt / dt_mod;
+   fps_dt  += dt;
    fps_cur += 1.;
    if (fps_dt > 1.) { /* recalculate every second */
       fps = fps_cur / fps_dt;
@@ -668,9 +705,9 @@ static void print_SDLversion (void)
 
    /* Check if major/minor version differ. */
    if ((linked->major*100 + linked->minor) > compiled.major*100 + compiled.minor)
-      WARN("SDL is newer then compiled version");
+      WARN("SDL is newer than compiled version");
    if ((linked->major*100 + linked->minor) < compiled.major*100 + compiled.minor)
-      WARN("SDL is older then compiled version.");
+      WARN("SDL is older than compiled version.");
 }
 
 

@@ -6,7 +6,7 @@ mem.command = true
 
 -- Simple create function
 function create ( master )
-   mem.escort = master
+   mem.escort  = master
    mem.carrier = true
    attack_choose()
 
@@ -67,10 +67,9 @@ end
 -- Tries to fly back to carrier
 function flyback ()
    target = mem.escort
-
-   dir = ai.face(target)
-   dist = ai.dist(target)
-   bdist = ai.minbrakedist()
+   dir    = ai.face(target)
+   dist   = ai.dist(target)
+   bdist  = ai.minbrakedist()
 
    -- Try to brake
    if not ai.isstopped() and dist < bdist then

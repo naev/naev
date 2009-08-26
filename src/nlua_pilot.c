@@ -60,12 +60,14 @@ static int pilotL_comm( lua_State *L );
 static int pilotL_setFaction( lua_State *L );
 static int pilotL_setHostile( lua_State *L );
 static int pilotL_setFriendly( lua_State *L );
+static int pilotL_setInvincible( lua_State *L );
 static int pilotL_disable( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
 static int pilotL_rmOutfit( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
 static int pilotL_setNoboard( lua_State *L );
+static int pilotL_getHealth( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    { "player", pilot_getPlayer },
    { "add", pilot_addFleet },
@@ -84,12 +86,14 @@ static const luaL_reg pilotL_methods[] = {
    { "setFaction", pilotL_setFaction },
    { "setHostile", pilotL_setHostile },
    { "setFriendly", pilotL_setFriendly },
+   { "setInvincible", pilotL_setInvincible },
    { "disable", pilotL_disable },
    { "addOutfit", pilotL_addOutfit },
    { "rmOutfit", pilotL_rmOutfit },
    { "changeAI", pilotL_changeAI },
    { "setHealth", pilotL_setHealth },
    { "setNoboard", pilotL_setNoboard },
+   { "getHealth", pilotL_getHealth },
    {0,0}
 }; /**< Pilot metatable methods. */
 
@@ -833,6 +837,7 @@ static int pilotL_setHostile( lua_State *L )
    }
 
    /* Set as hostile. */
+   pilot_rmFlag(p, PILOT_FRIENDLY);
    pilot_setHostile(p);
 
    return 0;
@@ -862,6 +867,47 @@ static int pilotL_setFriendly( lua_State *L )
 
    /* Remove hostile and mark as friendly. */
    pilot_setFriendly(p);
+
+   return 0;
+}
+
+
+/**
+ * @brief Sets the pilot's invincibility status.
+ *
+ * @usage p:setInvincible() -- p can not be hit anymore
+ * @usage p:setInvincible(true) -- p can not be hit anymore
+ * @usage p:setInvincible(false) -- p can be hit again
+ *
+ *    @luaparam p Pilot to set invincibility status of.
+ *    @luaparam state State to set invincibility, if omitted defaults to true.
+ * @luafunc setInvincible( p, state )
+ */
+static int pilotL_setInvincible( lua_State *L )
+{
+   LuaPilot *lp;
+   Pilot *p;
+   int state;
+
+   /* Get the pilot. */
+   lp = luaL_checkpilot(L,1);
+   p = pilot_get(lp->pilot);
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
+   /* Set status. */
+   if (state)
+      pilot_setFlag(p, PILOT_INVINCIBLE);
+   else
+      pilot_rmFlag(p, PILOT_INVINCIBLE);
 
    return 0;
 }
@@ -954,7 +1000,7 @@ static int pilotL_addOutfit( lua_State *L )
       ret = pilot_addOutfit( p, o, p->outfits[i] );
 
       /* Add ammo if needed. */
-      if (outfit_ammo(o) != NULL)
+      if ((ret==0) && (outfit_ammo(o) != NULL))
          pilot_addAmmo( p, p->outfits[i], outfit_ammo(o), outfit_amount(o) );
 
       /* We added an outfit. */
@@ -1076,9 +1122,10 @@ static int pilotL_changeAI( lua_State *L )
  * @usage p:setHealth( 100, 100 ) -- Sets pilot to full health
  * @usage p:setHealth(  70,   0 ) -- Sets pilot to 70% shield
  *
+ *    @luaparam p Pilot to set health of.
  *    @luaparam armour Value to set armour to, should be double from 0-100 (in percent).
  *    @luaparam shield Value to set shield to, should be double from 0-100 (in percent).
- * @luafunc setHealth( armour, shield )
+ * @luafunc setHealth( p, armour, shield )
  */
 static int pilotL_setHealth( lua_State *L )
 {
@@ -1116,9 +1163,10 @@ static int pilotL_setHealth( lua_State *L )
  *
  * @usage p:setNoboard( true ) -- Pilot can not be boarded by anyone
  *
+ *    @luaparam p Pilot to set disable boarding.
  *    @luaparam noboard If true it disallows boarding of the pilot, otherwise
  *              it allows boarding which is the default.
- * @luafunc setNoboard( noboard )
+ * @luafunc setNoboard( p, noboard )
  */
 static int pilotL_setNoboard( lua_State *L )
 {
@@ -1147,4 +1195,32 @@ static int pilotL_setNoboard( lua_State *L )
 }
 
 
+/**
+ * @brief Gets the pilot's health.
+ *
+ * @usage armour, shield = p:getHealth()
+ *
+ *    @luaparam p Pilot to get health of.
+ *    @luareturn The armour and shield of the pilot in % [0:100].
+ * @luafunc getHealth( p )
+ */
+static int pilotL_getHealth( lua_State *L )
+{
+   LuaPilot *lp;
+   Pilot *p;
+
+   /* Get the pilot. */
+   lp = luaL_checkpilot(L,1);
+   p  = pilot_get(lp->pilot);
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   /* Return parameters. */
+   lua_pushnumber(L, p->armour / p->armour_max * 100. );
+   lua_pushnumber(L, p->shield / p->shield_max * 100. );
+
+   return 2;
+}
 

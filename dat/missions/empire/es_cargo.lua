@@ -15,7 +15,7 @@ else -- default english
    title[2] = "ES: Delivery to %s"
    full = {}
    full[1] = "Ship is full"
-   full[2] = "Your ship is too full.  You need to make room for %d more tons if you want to be able to accept the mission."
+   full[2] = "Your ship is too full. You need to make room for %d more tons if you want to be able to accept the mission."
    msg_title = {}
    msg_title[1] = "Mission Accepted"
    msg_title[2] = "Too many missions"

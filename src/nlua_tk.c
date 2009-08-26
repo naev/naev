@@ -115,7 +115,7 @@ static int tk_yesno( lua_State *L )
  * @usage name = tk.input( "Name", 3, 20, "Enter your name:" )
  *
  *    @luaparam title Title of the window.
- *    @luaparam min Minimum characters to accept (must be greater then 0).
+ *    @luaparam min Minimum characters to accept (must be greater than 0).
  *    @luaparam max Maximum characters to accept.
  *    @luaparam str Text to display in the window.
  *    @luareturn nil if input was canceled or a string with the text written.
