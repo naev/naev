@@ -155,6 +155,7 @@ void conf_setDefaults (void)
    conf.zoom_min     = 0.5;
    conf.zoom_max     = 1.;
    conf.zoom_speed   = 0.25;
+   conf.zoom_stars   = 1.;
    conf.afterburn_sens = 250;
 
    /* Input */
@@ -250,6 +251,7 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat("zoom_min",conf.zoom_min);
       conf_loadFloat("zoom_max",conf.zoom_max);
       conf_loadFloat("zoom_speed",conf.zoom_speed);
+      conf_loadFloat("zoom_stars",conf.zoom_stars);
       conf_loadInt("afterburn_sensitivity",conf.afterburn_sens);
 
 
@@ -773,6 +775,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Zooming speed in factor increments per second");
    conf_saveFloat("zoom_speed",conf.zoom_speed);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Zooming modulation factor for the starry background");
+   conf_saveFloat("zoom_stars",conf.zoom_stars);
    conf_saveEmptyLine();
 
    conf_saveComment("Afterburner sensitivity");
