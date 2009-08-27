@@ -64,42 +64,77 @@ Unfortunately the economy is currently not terribly dynamic, so there's much mor
    misn_desc = "Overview of the landing tabs."
    -- Aborted mission
    msg_abortTitle = "Tutorial Aborted"
-   msg_abort = [[Very well. It seems you're ahead of the curve, so I'll cut you loose.]]
+   msg_abort = [[It seems you're ahead of the curve, so I'll cut you loose. Good luck out there.]]
+   -- Rejected mission
+   msg_rejectTitle = "NAEV Tutorial - Landing Tabs"
+   msg_reject = [[Are you sure? If you reject this portion of the tutorial, you will be unable to complete the other portions.
+   
+Press yes to abort the tutorial, or no to continue it.]]
+
+   viewedTabs = {}
+   viewedTabs[1] = "\nSpaceport Bar"
+   viewedTabs[2] = "\nMission Computer"
+   viewedTabs[3] = "\nOutfitter"
+   viewedTabs[4] = "\nShipyard"
+   viewedTabs[5] = "\nEquipment Screen"
+   viewedTabs[6] = "\nCommodity Exchange"
+
    -- OSD stuff
    osd_title = {}
    osd_msg   = {}
-   osd_title[1] = "Tutorial - Landing"
-   osd_msg[1]   = {
-      "Explore the landing window."
+   osd_title[1] = "Tutorial - Landing Tabs"
+   osd_msg[1] = "Visit the: %s %s %s %s %s %s"
+   osd_msg[2] = { "Foo!"
    }
+   
 end
 
-      
-function create ()
-   if tk.yesno( title[1], text[1] ) then
-      misn.accept()
-      tutLand()
-      
-      -- Set basic mission information.
-      misn.setTitle( misn_title )
-      misn.setReward( misn_reward )
-      misn.setDesc( misn_desc )
-
-      -- Create OSD
-      misn.osdCreate( osd_title[1], osd_msg[1] )
-
-      -- Set Hooks
-      hook.land( "tutBar", "bar" )
-      hook.land( "tutMission", "mission" )
-      hook.land( "tutOutfits", "outfits" )
-      hook.land( "tutShipyard", "shipyard" )
-      hook.land( "tutEquipment", "equipment" )
-      hook.land( "tutCommodity", "commodity" )
-      hook.takeoff( "tutEarly" )
+function create()
+   if forced == 1 then
+      start()
    else
-      var.push( "tutorial_aborted", true)
-      misn.finish(false)
+      if tk.yesno(title[1], text[1]) then
+         start()
+      else
+         reject()
+      end
    end
+end
+
+function start()
+   misn.accept()
+   
+   -- Create OSD
+   osdCreation()
+   
+   tutLand()
+   
+   -- Set basic mission information.
+   misn.setTitle(misn_title)
+   misn.setReward(misn_reward)
+   misn.setDesc(misn_desc)
+
+   -- Aborted mission
+   msg_abortTitle = "Tutorial Aborted"
+   msg_abort = [[Well, now. Seems you've already done some studying, I'll leave you to your own devices. Good luck out there.]]
+   -- Rejected mission
+   msg_rejectTitle = "NAEV Tutorial"
+   msg_reject = [[Are you sure? If you reject this portion of the tutorial, you will be unable to complete the other portions.
+   
+Press yes to abort the tutorial, or no to continue it.]]
+
+   -- Set Hooks
+   hook.land("tutBar", "bar")
+   hook.land("tutMission", "mission")
+   hook.land("tutOutfits", "outfits")
+   hook.land("tutShipyard", "shipyard")
+   hook.land("tutEquipment", "equipment")
+   hook.land("tutCommodity", "commodity")
+   hook.takeoff("tutEarly")
+end
+
+function osdCreation()
+   misn.osdCreate(osd_title[1], { string.format(osd_msg[1],viewedTabs[1], viewedTabs[2], viewedTabs[3], viewedTabs[4], viewedTabs[5], viewedTabs[6]) } )
 end
 
 function tutLand()
@@ -107,7 +142,7 @@ function tutLand()
       return
    else
       viewedLand = 1
-      tk.msg ( title[1], text[2] )
+      tk.msg (title[1], text[2])
    end
 end
 
@@ -116,8 +151,10 @@ function tutBar()
       return
    else
       viewedBar = 1
+      viewedTabs[1] = ""
+      osdCreation()
       stagesDone = stagesDone + 1
-      tk.msg ( title[2], text[3] )
+      tk.msg (title[2], text[3])
       if stagesDone == 6 then
          tutEnd()
       end
@@ -129,8 +166,10 @@ function tutMission()
       return
    else
       viewedMission = 1
+      viewedTabs[2] = ""
+      osdCreation()
       stagesDone = stagesDone + 1
-      tk.msg ( title[3], text[4] )
+      tk.msg (title[3], text[4])
       if stagesDone == 6 then
          tutEnd()
       end
@@ -142,8 +181,10 @@ function tutOutfits()
       return
    else
       viewedOutfits = 1
+      viewedTabs[3] = ""
+      osdCreation()
       stagesDone = stagesDone + 1
-      tk.msg ( title[4], text[5] )
+      tk.msg (title[4], text[5])
       if stagesDone == 6 then
          tutEnd()
       end
@@ -155,8 +196,10 @@ function tutShipyard()
       return
    else
       viewedShipyard = 1
+      viewedTabs[4] = ""
+      osdCreation()
       stagesDone = stagesDone + 1
-      tk.msg ( title[5], text[6] )
+      tk.msg (title[5], text[6])
       if stagesDone == 6 then
          tutEnd()
       end
@@ -168,10 +211,12 @@ function tutEquipment()
       return
    else
       viewedEquipment = 1
+      viewedTabs[5] = ""
+      osdCreation()
       stagesDone = stagesDone + 1
-      tk.msg ( title[6], text[7] )
-      tk.msg ( title[6], text[8] )
-      tk.msg ( title[6], text[9] )
+      tk.msg (title[6], text[7])
+      tk.msg (title[6], text[8])
+      tk.msg (title[6], text[9])
       if stagesDone == 6 then
          tutEnd()
       end
@@ -183,8 +228,10 @@ function tutCommodity()
       return
    else
       viewedCommodity = 1
+      viewedTabs[6] = ""
+      osdCreation()
       stagesDone = stagesDone + 1
-      tk.msg ( title[7], text[10] )
+      tk.msg (title[7], text[10])
       if stagesDone == 6 then
          tutEnd()
       end
@@ -194,9 +241,9 @@ end
 function tutEarly()
    if earlyTakeoff == 0 then
       earlyTakeoff = 1
-      tk.msg ( title[1], text[12] )
+      tk.msg (title[1], text[12])
    elseif earlyTakeoff == 1 then
-      tk.msg ( title[1], text[13] )
+      tk.msg (title[1], text[13])
       earlyTakeoff = 2
    else
       return
@@ -204,13 +251,21 @@ function tutEarly()
 end
 
 function tutEnd()
-	tk.msg( title[1], text[11] )
+	tk.msg(title[1], text[11])
    var.push("tutorial_done", 2)
 	misn.finish(true)
-   
 end
 
 function abort()
-    var.push("tutorial_aborted", true)
-    misn.finish(true)
+   tk.msg(msg_abortTitle, msg_abort)
+   var.push("tutorial_aborted", true)
+   misn.finish(false)
+end
+
+function reject()
+   if tk.yesno(msg_rejectTitle, msg_reject) then
+      abort()
+   else
+      start()
+   end
 end

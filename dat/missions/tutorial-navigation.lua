@@ -47,7 +47,12 @@ Enjoy the game!]]
    misn_desc = "Overview of the map and hyperspace navigation."
    -- Aborted mission
    msg_abortTitle = "Tutorial Aborted"
-   msg_abort = [[You seem to know more than is needed for the tutorial. Tutorial aborting.]]
+   msg_abort = [[Seems you're ready to go on your own. Enjoy the game!]]
+   -- Rejected mission
+   msg_rejectTitle = "NAEV Tutorial - Navigation"
+   msg_reject = [[Are you sure? If you reject this portion of the tutorial, you will be unable to complete the other portions.
+   
+Press yes to abort the tutorial, or no to continue it.]]
    -- OSD stuff
    osd_title = {}
    osd_msg   = {}
@@ -59,45 +64,65 @@ Enjoy the game!]]
    }
 end
 
-      
-function create ()
-   if tk.yesno( title[1], text[1] ) then
-      misn.accept()
-
-      -- Set basic mission information.
-      misn.setTitle( misn_title )
-      misn.setReward( misn_reward )
-      misn.setDesc( misn_desc )
-
-      -- Create OSD
-      misn.osdCreate( osd_title[1], osd_msg[1] )
-
-      -- Set Hooks
-      tutTakeoff()
-      hook.enter( "tutEnter" )
+function create()
+   if forced == 1 then
+      start()
    else
-      var.push( "tutorial_aborted", true)
-      misn.finish(false)
+      if tk.yesno(title[1], text[1]) then
+         start()
+      else
+         reject()
+      end
    end
 end
 
-function tutTakeoff ()
+function start()
+   misn.accept()
+
+   -- Set basic mission information.
+   misn.setTitle(misn_title)
+   misn.setReward(misn_reward)
+   misn.setDesc(misn_desc)
+
+   -- Create OSD
+   misn.osdCreate(osd_title[1], osd_msg[1])
+
+   -- Set Hooks
+   tutTakeoff()
+   hook.enter("tutEnter")
+end
+
+function tutTakeoff()
    misn_sys = system.get()
-   tk.msg( title[1], string.format(text[2], naev.getKey("starmap"), naev.getKey("thyperspace"), naev.getKey("jump"), naev.getKey("autonav")))
-   tk.msg( title[2], text[3] )
-   tk.msg( title[3], text[4] )
-   tk.msg( title[3], string.format(text[5], naev.getKey("thyperspace"), naev.getKey("autonav"), naev.getKey("jump")))
+   tk.msg(title[1], string.format(text[2], naev.getKey("starmap"), naev.getKey("thyperspace"), naev.getKey("jump"), naev.getKey("autonav")))
+   tk.msg(title[2], text[3])
+   tk.msg(title[3], text[4])
+   tk.msg(title[3], string.format(text[5], naev.getKey("thyperspace"), naev.getKey("autonav"), naev.getKey("jump")))
 end
 
 
-function tutEnter ()
+function tutEnter()
    enter_sys = system.get()
    if enter_sys ~= misn_sys then
-	     misn.timerStart( "tutEnd", 5000 )
+      misn.timerStart("tutEnd", 5000)
    end
 end
    
-function tutEnd ()
-	tk.msg( title[4], text [6] )
+function tutEnd()
+	tk.msg(title[4], text[6])
 	misn.finish(true)
+end
+
+function abort()
+   tk.msg(msg_abortTitle, msg_abort)
+   var.push("tutorial_aborted", true)
+   misn.finish(false)
+end
+
+function reject()
+   if tk.yesno(msg_rejectTitle, msg_reject) then
+      abort()
+   else
+      start()
+   end
 end
