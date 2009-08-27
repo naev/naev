@@ -10,6 +10,7 @@
 #include "space.h"
 
 
+int comm_isOpen (void);
 int comm_openPilot( unsigned int pilot );
 int comm_openPlanet( Planet *planet );
 

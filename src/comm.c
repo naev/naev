@@ -59,6 +59,17 @@ extern void ai_setPilot( Pilot *p ); /**< from ai.c */
 
 
 /**
+ * @brief Checks to see if comm is open.
+ *
+ *    @return 1 if comm is open.
+ */
+int comm_isOpen (void)
+{
+   return window_exists( "Communication Channel" );
+}
+
+
+/**
  * @brief Opens the communication dialogue with a pilot.
  *
  *    @param pilot Pilot to communicate with.

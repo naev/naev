@@ -36,6 +36,7 @@
 #include "map.h"
 #include "nfile.h"
 #include "info.h"
+#include "comm.h"
 
 
 #define MAIN_WIDTH      130 /**< Main menu width. */
@@ -273,6 +274,7 @@ void menu_small (void)
    /* Check if menu should be openable. */
    if ((player == NULL) || player_isFlag(PLAYER_DESTROYED) ||
          pilot_isFlag(player,PILOT_DEAD) ||
+         comm_isOpen() ||
          dialogue_isOpen() || /* Shouldn't open over dialogues. */
          (menu_isOpen(MENU_MAIN) ||
             menu_isOpen(MENU_SMALL) ||
