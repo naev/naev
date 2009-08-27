@@ -214,7 +214,8 @@ static void map_update( unsigned int wid )
 {
    int i;
    StarSystem* sys;
-   int f, y, h, standing, nstanding;
+   int f, y, h;
+   double standing, nstanding;
    unsigned int services;
    char buf[PATH_MAX];
    int p;
@@ -262,9 +263,9 @@ static void map_update( unsigned int wid )
    /* System is known */
    window_modifyText( wid, "txtSysname", sys->name );
 
-   standing = 0;
-   nstanding = 0;
-   f = -1;
+   standing  = 0.;
+   nstanding = 0.;
+   f         = -1;
    for (i=0; i<sys->nplanets; i++) {
       if ((f==-1) && (sys->planets[i]->faction>0)) {
          f = sys->planets[i]->faction;
