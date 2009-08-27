@@ -103,4 +103,7 @@ function tutEnd()
 end
 
 function abort()
+   var.push("Tutorial Aborted", "Seems you're ready to go on your own. Enjoy the game!")
+   var.push("tutorial_aborted", true)
+   misn.finish(false)
 end

@@ -438,7 +438,7 @@ end
 function tutLand()
    -- Shouldn't be landing yet.
    if misn_stage ~= 7 then
-      abort()
+      succeed()
    else
       tutEnd()
    end
@@ -461,11 +461,12 @@ function tutEnd()
 end
 
 function succeed()
-   tk.msg("")
+   tk.msg("Tutorial Skipped", "You're a little early, but since you're here, I'll let you proceed with the next stage of the tutorial.")
+   misn.finish(true)
 end
 
 function abort()
-   tk.msg("Tutorial Aborted", "Well, now. Seems you've already done some studying, I'll leave you be. Tutorial aborted.")
+   tk.msg("Tutorial Aborted", "Well, now. Seems you've already done some studying, I'll leave you to your own devices. Good luck out there.")
    var.push("tutorial_aborted", true)
    misn.finish(false)
 end

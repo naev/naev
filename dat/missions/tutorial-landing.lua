@@ -208,7 +208,7 @@ function tutEnd()
 end
 
 function abort()
-   var.push("Tutorial Aborted", "It seems you're ahead of the curve, so I'll cut you loose.")
+   var.push("Tutorial Aborted", "It seems you're ahead of the curve, so I'll cut you loose. Good luck out there.")
    var.push("tutorial_aborted", true)
    misn.finish(false)
 end
