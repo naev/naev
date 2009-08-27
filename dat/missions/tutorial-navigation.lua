@@ -60,44 +60,47 @@ Enjoy the game!]]
 end
 
       
-function create ()
-   if tk.yesno( title[1], text[1] ) then
+function create()
+   if tk.yesno(title[1], text[1]) then
       misn.accept()
 
       -- Set basic mission information.
-      misn.setTitle( misn_title )
-      misn.setReward( misn_reward )
-      misn.setDesc( misn_desc )
+      misn.setTitle(misn_title)
+      misn.setReward(misn_reward)
+      misn.setDesc(misn_desc)
 
       -- Create OSD
-      misn.osdCreate( osd_title[1], osd_msg[1] )
+      misn.osdCreate(osd_title[1], osd_msg[1])
 
       -- Set Hooks
       tutTakeoff()
-      hook.enter( "tutEnter" )
+      hook.enter("tutEnter")
    else
-      var.push( "tutorial_aborted", true)
+      var.push("tutorial_aborted", true)
       misn.finish(false)
    end
 end
 
-function tutTakeoff ()
+function tutTakeoff()
    misn_sys = system.get()
-   tk.msg( title[1], string.format(text[2], naev.getKey("starmap"), naev.getKey("thyperspace"), naev.getKey("jump"), naev.getKey("autonav")))
-   tk.msg( title[2], text[3] )
-   tk.msg( title[3], text[4] )
-   tk.msg( title[3], string.format(text[5], naev.getKey("thyperspace"), naev.getKey("autonav"), naev.getKey("jump")))
+   tk.msg(title[1], string.format(text[2], naev.getKey("starmap"), naev.getKey("thyperspace"), naev.getKey("jump"), naev.getKey("autonav")))
+   tk.msg(title[2], text[3])
+   tk.msg(title[3], text[4])
+   tk.msg(title[3], string.format(text[5], naev.getKey("thyperspace"), naev.getKey("autonav"), naev.getKey("jump")))
 end
 
 
-function tutEnter ()
+function tutEnter()
    enter_sys = system.get()
    if enter_sys ~= misn_sys then
-	     misn.timerStart( "tutEnd", 5000 )
+	     misn.timerStart("tutEnd", 5000)
    end
 end
    
-function tutEnd ()
-	tk.msg( title[4], text [6] )
+function tutEnd()
+	tk.msg(title[4], text[6])
 	misn.finish(true)
+end
+
+function abort()
 end

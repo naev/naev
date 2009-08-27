@@ -102,9 +102,7 @@ Try landing now.]]
    misn_title = "NAEV Tutorial"
    misn_reward = "Gameplay knowledge in spades."
    misn_desc = "Learning how to survive in the universe."
-   -- Aborted mission
-   msg_abortTitle = "Tutorial Aborted"
-   msg_abort = [[Well, now. Seems you've already done some studying, I'll leave you be. Tutorial aborting.]]
+   
    -- OSD stuff
    osd_title = {}
    osd_msg   = {}
@@ -140,7 +138,7 @@ end
 
 
 function create()
-   if tk.yesno( title[1], text[1] ) then
+   if tk.yesno(title[1], text[1]) then
       misn.accept()
 
       -- Clear area of enemies.
@@ -148,24 +146,24 @@ function create()
       pilot.toggleSpawn(false)
 
       -- Set basic mission information.
-      misn.setTitle( misn_title )
-      misn.setReward( misn_reward )
-      misn.setDesc( misn_desc )
+      misn.setTitle(misn_title)
+      misn.setReward(misn_reward)
+      misn.setDesc(misn_desc)
 
       -- Create OSD
-      misn.osdCreate( osd_title[1], osd_msg[1] )
+      misn.osdCreate(osd_title[1], osd_msg[1])
 
       -- Give indications on how to fly.
       misn_stage = 1
-      tk.msg( title[1], string.format(text[2], player.name()))
+      tk.msg(title[1], string.format(text[2], player.name()))
 	  tk.msg(title[2], string.format(text[3], naev.getKey("left"), naev.getKey("right"), naev.getKey("accel")))
-      misn.timerStart( "flightOver", 15000 ) -- 15 second timer to fly around
+      misn.timerStart("flightOver", 15000) -- 15 second timer to fly around
 
       -- Set Hooks
-      hook.land( "tutLand" )
-      hook.enter( "tutEnter" )
+      hook.land("tutLand")
+      hook.enter("tutEnter")
    else
-      var.push( "tutorial_aborted", true )
+      var.push("tutorial_aborted", true)
       misn.finish(false)
    end
 end
@@ -173,12 +171,12 @@ end
 
 function flightOver()
    -- Update OSD
-   misn.osdActive( 1 )
+   misn.osdActive(1)
 
    -- Update mission stuff
    misn_stage = 2
-   tk.msg( title[2], string.format(text[4], naev.getKey("reverse")))
-   misn.timerStart( "brakeOver", 1000 )
+   tk.msg(title[2], string.format(text[4], naev.getKey("reverse")))
+   misn.timerStart("brakeOver", 1000)
 end
 
 
@@ -189,23 +187,23 @@ function brakeOver()
    if player:vel():mod() < 10 then
 
       -- New OSD
-      misn.osdCreate( osd_title[2], osd_msg[2] )
+      misn.osdCreate(osd_title[2], osd_msg[2])
 
       -- Text and mission stuff
       misn_stage = 3
-      tk.msg( title[2], text[5] )
-      tk.msg( title[3], string.format(text[6], naev.getKey("target_next"), naev.getKey("target_prev"), naev.getKey("target_nearest"), naev.getKey("target_hostile"), naev.getKey("target_clear")))
-      tk.msg( title[3], string.format(text[7], naev.getKey("mapzoomin"), naev.getKey("mapzoomout")))
-      traders = pilot.add( "Sml Trader Convoy", "dummy" )
+      tk.msg(title[2], text[5])
+      tk.msg(title[3], string.format(text[6], naev.getKey("target_next"), naev.getKey("target_prev"), naev.getKey("target_nearest"), naev.getKey("target_hostile"), naev.getKey("target_clear")))
+      tk.msg(title[3], string.format(text[7], naev.getKey("mapzoomin"), naev.getKey("mapzoomout")))
+      traders = pilot.add("Sml Trader Convoy", "dummy")
       for k,v in ipairs(traders) do
          v:setFaction("Dummy")
          v:rename("Dummy")
 		 v:setInvincible()
       end
-      misn.timerStart( "targetEnding", 15000 ) -- 15 seconds to target
+      misn.timerStart("targetEnding", 15000) -- 15 seconds to target
    else
       -- Keep on trying until player brakes
-      misn.timerStart( "brakeOver", 1000 )
+      misn.timerStart("brakeOver", 1000)
    end
 end
 
@@ -214,7 +212,7 @@ function targetEnding()
       v:changeAI("flee")
       v:setHealth(100, 100)
    end
-   misn.timerStart( "targetOver", 10000) -- Affords targetting-practice ships 10 seconds before the new Llama flies in.
+   misn.timerStart("targetOver", 10000) -- Affords targetting-practice ships 10 seconds before the new Llama flies in.
 end
 
 function targetOver()
@@ -222,11 +220,11 @@ function targetOver()
    
    
    -- New OSD
-   misn.osdCreate( osd_title[3], osd_msg[3] )
+   misn.osdCreate(osd_title[3], osd_msg[3])
 
    -- Tell about combat.
-   tk.msg( title[4], string.format(text[8], naev.getKey("primary"), naev.getKey("secondary_next"), naev.getKey("secondary")))
-   tk.msg( title[4], string.format(text[9], naev.getKey("target_hostile"), naev.getKey("target_nearest"), naev.getKey("target_next"), naev.getKey("primary"), naev.getKey("face")))
+   tk.msg(title[4], string.format(text[8], naev.getKey("primary"), naev.getKey("secondary_next"), naev.getKey("secondary")))
+   tk.msg(title[4], string.format(text[9], naev.getKey("target_hostile"), naev.getKey("target_nearest"), naev.getKey("target_next"), naev.getKey("primary"), naev.getKey("face")))
 
    -- Clear pilots again.
  --  pilot.clear()
@@ -237,13 +235,13 @@ end
 
 function addLlamaDummy()
    -- Add the combat dummy.
-   llamadummy = pilot.add( "Trader Llama", "dummy" )
+   llamadummy = pilot.add("Trader Llama", "dummy")
    for k,v in ipairs(llamadummy) do
       v:setFaction("Dummy")
       llamaname = v:rename("Target Practice")
-      hook.pilot( v, "disable", "llamaDisabled" )
-      hook.pilot( v, "death", "llamaDead" )
-      hook.pilot( v, "board", "llamaBoard" )
+      hook.pilot(v, "disable", "llamaDisabled")
+      hook.pilot(v, "death", "llamaDead")
+      hook.pilot(v, "board", "llamaBoard")
 	  pilot.setHostile(v)
 	  v:comm("Your mother smells worse than the algae of Tau Prime!")
       shieldtaunt = 0
@@ -351,7 +349,7 @@ function taunt2()
                 tk.msg("Bzzzt!", "It appears our friend has suffered a systems failure. Oh well, he was getting tiresome anyhow.")
                 for k,v in ipairs(llamadummy) do
                     v:disable()
-                    misn.timerStart( "llamaDisabled", 2000)
+                    misn.timerStart("llamaDisabled", 2000)
                 end
             end
         else
@@ -363,20 +361,20 @@ end
 function llamaDisabled()
    -- Update OSD
    
-   misn.osdActive( 1 )
+   misn.osdActive(1)
 
    misn_stage = 5
-   tk.msg( title[4], string.format(text[10], naev.getKey("board")))
+   tk.msg(title[4], string.format(text[10], naev.getKey("board")))
 end
 
 
 function llamaDead()
    if misn_stage < 6 then
       -- New OSD
-      misn.osdCreate( osd_title[3], osd_msg[3] )
+      misn.osdCreate(osd_title[3], osd_msg[3])
 
       misn_stage = 4
-      tk.msg( title[4], text[11] )
+      tk.msg(title[4], text[11])
       addLlamaDummy()
    end
 end
@@ -384,11 +382,11 @@ end
 
 function llamaBoard()
    -- Update OSD
-   misn.osdActive( 2 )
+   misn.osdActive(2)
 
    misn_stage = 6
-   tk.msg( title[4], text[12] )
-   misn.timerStart( "boardEnding", 3000 )
+   tk.msg(title[4], text[12])
+   misn.timerStart("boardEnding", 3000)
 end
 
 function boardEnding()
@@ -402,20 +400,20 @@ function boardEnding()
 end
 
 function boardOver()
-   tk.msg( title[4], text[13] )
-   hyena = pilot.add( "Pirate Hyena" )
+   tk.msg(title[4], text[13])
+   hyena = pilot.add("Pirate Hyena")
    for k,v in ipairs(hyena) do
-       v:rmOutfit( "Laser Cannon", 1 ) -- Make it weaker
-       hook.pilot( v, "death", "hyenaWait" )
-       hook.pilot( v, "jump", "hyenaWait" ) -- Treat jump as dead
+       v:rmOutfit("Laser Cannon", 1) -- Make it weaker
+       hook.pilot(v, "death", "hyenaWait")
+       hook.pilot(v, "jump", "hyenaWait") -- Treat jump as dead
    end
-   misn.timerStart( "bringHelp", 5000 ) -- Player "should" surive 5 seconds
+   misn.timerStart("bringHelp", 5000) -- Player "should" surive 5 seconds
 end
 
 
 function bringHelp()
-   pilot.add( "Empire Lancelot" )
-   pilot.add( "Empire Lancelot" ) -- Lancelot crushes Hyena
+   pilot.add("Empire Lancelot")
+   pilot.add("Empire Lancelot") -- Lancelot crushes Hyena
 end
 
 
@@ -427,21 +425,20 @@ function hyenaDead()
    misn_stage = 7
 
    -- Create OSD
-   osd_msg[4][1] = string.format( osd_msg[4][1], system.get():planets()[1]:name() )
-   misn.osdCreate( osd_title[4], osd_msg[4] )
+   osd_msg[4][1] = string.format(osd_msg[4][1], system.get():planets()[1]:name())
+   misn.osdCreate(osd_title[4], osd_msg[4])
 
    -- Messages
-   tk.msg( title[4], text[14] )
-   tk.msg( title[5], string.format(text[15], naev.getKey("target_planet"), naev.getKey("land")))
-   tk.msg( title[5], text[16] )
+   tk.msg(title[4], text[14])
+   tk.msg(title[5], string.format(text[15], naev.getKey("target_planet"), naev.getKey("land")))
+   tk.msg(title[5], text[16])
 end
 
 
 function tutLand()
    -- Shouldn't be landing yet.
    if misn_stage ~= 7 then
-      tk.msg( msg_abortTitle, msg_abort )
-      misn.finish(false)
+      abort()
    else
       tutEnd()
    end
@@ -450,10 +447,9 @@ end
 function tutEnter()
    enter_sys = system.get()
    if misn_stage ~= 8 then
-      tk.msg( msg_abortTitle, msg_abort )
-      misn.finish(false)
+      abort()
    elseif enter_sys ~= misn_sys then
-      misn.timerStart( "tutEnd", 5000 )
+      misn.timerStart("tutEnd", 5000)
 
    end
 end
@@ -462,4 +458,14 @@ function tutEnd()
 	misn_stage = 9
 	misn.finish(true)
    
+end
+
+function succeed()
+   tk.msg("")
+end
+
+function abort()
+   tk.msg("Tutorial Aborted", "Well, now. Seems you've already done some studying, I'll leave you be. Tutorial aborted.")
+   var.push("tutorial_aborted", true)
+   misn.finish(false)
 end
