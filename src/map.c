@@ -574,7 +574,9 @@ static void map_render( double bx, double by, double w, double h, void *data )
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
-   /* render the star systems */
+   /*
+    * First pass renders everything almost (except names and markers).
+    */
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
 
@@ -621,15 +623,6 @@ static void map_render( double bx, double by, double w, double h, void *data )
 
          /* Radius slightly shorter. */
          gl_drawCircleInRect( tx, ty, 0.5*r, bx, by, w, h, col, 1 );
-      }
-
-      /* draw the system name */
-      if (sys_isKnown(sys) && (map_zoom > 0.5 )) {
-         tx = x + (sys->pos.x+11.) * map_zoom;
-         ty = y + (sys->pos.y-5.) * map_zoom;
-         gl_print( &gl_smallFont,
-               tx + SCREEN_W/2., ty + SCREEN_H/2.,
-               &cWhite, sys->name );
       }
 
       if (!sys_isKnown(sys))
@@ -698,7 +691,27 @@ static void map_render( double bx, double by, double w, double h, void *data )
    }
 
 
-   /* Second pass to put markers. */
+   /*
+    * Second pass - System names
+    */
+   for (i=0; i<systems_nstack; i++) {
+      sys = system_getIndex( i );
+
+      /* Skip system. */
+      if (!sys_isKnown(sys) || (map_zoom <= 0.5 ))
+         continue;
+
+      tx = x + (sys->pos.x+11.) * map_zoom;
+      ty = y + (sys->pos.y-5.) * map_zoom;
+      gl_print( &gl_smallFont,
+            tx + SCREEN_W/2., ty + SCREEN_H/2.,
+            &cWhite, sys->name );
+   }
+
+
+   /*
+    * Third pass - system markers
+    */
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
 
