@@ -70,13 +70,23 @@ Unfortunately the economy is currently not terribly dynamic, so there's much mor
    msg_reject = [[Are you sure? If you reject this portion of the tutorial, you will be unable to complete the other portions.
    
 Press yes to abort the tutorial, or no to continue it.]]
+
+   viewedTabs = {}
+   viewedTabs[1] = "\nSpaceport Bar"
+   viewedTabs[2] = "\nMission Computer"
+   viewedTabs[3] = "\nOutfitter"
+   viewedTabs[4] = "\nShipyard"
+   viewedTabs[5] = "\nEquipment Screen"
+   viewedTabs[6] = "\nCommodity Exchange"
+
    -- OSD stuff
    osd_title = {}
    osd_msg   = {}
-   osd_title[1] = "Tutorial - Landing"
-   osd_msg[1]   = {
-      "Explore the landing window."
+   osd_title[1] = "Tutorial - Landing Tabs"
+   osd_msg[1] = "Visit the: %s %s %s %s %s %s"
+   osd_msg[2] = { "Foo!"
    }
+   
 end
 
 function create()
@@ -93,6 +103,10 @@ end
 
 function start()
    misn.accept()
+   
+   -- Create OSD
+   osdCreation()
+   
    tutLand()
    
    -- Set basic mission information.
@@ -109,9 +123,6 @@ function start()
    
 Press yes to abort the tutorial, or no to continue it.]]
 
-   -- Create OSD
-   misn.osdCreate(osd_title[1], osd_msg[1])
-
    -- Set Hooks
    hook.land("tutBar", "bar")
    hook.land("tutMission", "mission")
@@ -120,6 +131,10 @@ Press yes to abort the tutorial, or no to continue it.]]
    hook.land("tutEquipment", "equipment")
    hook.land("tutCommodity", "commodity")
    hook.takeoff("tutEarly")
+end
+
+function osdCreation()
+   misn.osdCreate(osd_title[1], { string.format(osd_msg[1],viewedTabs[1], viewedTabs[2], viewedTabs[3], viewedTabs[4], viewedTabs[5], viewedTabs[6]) } )
 end
 
 function tutLand()
@@ -136,6 +151,8 @@ function tutBar()
       return
    else
       viewedBar = 1
+      viewedTabs[1] = ""
+      osdCreation()
       stagesDone = stagesDone + 1
       tk.msg (title[2], text[3])
       if stagesDone == 6 then
@@ -149,6 +166,8 @@ function tutMission()
       return
    else
       viewedMission = 1
+      viewedTabs[2] = ""
+      osdCreation()
       stagesDone = stagesDone + 1
       tk.msg (title[3], text[4])
       if stagesDone == 6 then
@@ -162,6 +181,8 @@ function tutOutfits()
       return
    else
       viewedOutfits = 1
+      viewedTabs[3] = ""
+      osdCreation()
       stagesDone = stagesDone + 1
       tk.msg (title[4], text[5])
       if stagesDone == 6 then
@@ -175,6 +196,8 @@ function tutShipyard()
       return
    else
       viewedShipyard = 1
+      viewedTabs[4] = ""
+      osdCreation()
       stagesDone = stagesDone + 1
       tk.msg (title[5], text[6])
       if stagesDone == 6 then
@@ -188,6 +211,8 @@ function tutEquipment()
       return
    else
       viewedEquipment = 1
+      viewedTabs[5] = ""
+      osdCreation()
       stagesDone = stagesDone + 1
       tk.msg (title[6], text[7])
       tk.msg (title[6], text[8])
@@ -203,6 +228,8 @@ function tutCommodity()
       return
    else
       viewedCommodity = 1
+      viewedTabs[6] = ""
+      osdCreation()
       stagesDone = stagesDone + 1
       tk.msg (title[7], text[10])
       if stagesDone == 6 then

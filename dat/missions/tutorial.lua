@@ -35,7 +35,7 @@ else -- default english
    title = {}
    text = {}
    title[1] = "NAEV Tutorial"
-   text[1] = "Would you like to run the Tutorial to learn how to play NAEV?"
+   text[1] = [[Would you like to run the tutorial to learn how to play NAEV?]]
    text[2] = [[Welcome to the tutorial, %s.]]
    -- Step 1
    title[2] = "Flight Tutorial"
