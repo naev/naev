@@ -102,7 +102,14 @@ Try landing now.]]
    misn_title = "NAEV Tutorial"
    misn_reward = "Gameplay knowledge in spades."
    misn_desc = "Learning how to survive in the universe."
+   -- Aborted mission
+   msg_abortTitle = "Tutorial Aborted"
+   msg_abort = [[Well, now. Seems you've already done some studying, I'll leave you to your own devices. Good luck out there.]]
+   -- Rejected mission
+   msg_rejectTitle = "NAEV Tutorial"
+   msg_reject = [[Are you sure? If you reject this portion of the tutorial, you will be unable to complete the other portions.
    
+Press yes to abort the tutorial, or no to continue it.]]
    -- OSD stuff
    osd_title = {}
    osd_msg   = {}
@@ -120,7 +127,6 @@ Try landing now.]]
       naev.getKey("target_hostile") .. " targets nearest hostile.",
       naev.getKey("target_clear") .. " clears the target."
    }
-   
    osd_title[3] = "Tutorial - Combat"
    osd_msg[3]   = {
       "Disable the Llama",
@@ -136,38 +142,43 @@ Try landing now.]]
    }
 end
 
-
 function create()
-   if tk.yesno(title[1], text[1]) then
-      misn.accept()
-
-      -- Clear area of enemies.
-      pilot.clear()
-      pilot.toggleSpawn(false)
-
-      -- Set basic mission information.
-      misn.setTitle(misn_title)
-      misn.setReward(misn_reward)
-      misn.setDesc(misn_desc)
-
-      -- Create OSD
-      misn.osdCreate(osd_title[1], osd_msg[1])
-
-      -- Give indications on how to fly.
-      misn_stage = 1
-      tk.msg(title[1], string.format(text[2], player.name()))
-	  tk.msg(title[2], string.format(text[3], naev.getKey("left"), naev.getKey("right"), naev.getKey("accel")))
-      misn.timerStart("flightOver", 15000) -- 15 second timer to fly around
-
-      -- Set Hooks
-      hook.land("tutLand")
-      hook.enter("tutEnter")
+   if forced == 1 then
+      start()
    else
-      var.push("tutorial_aborted", true)
-      misn.finish(false)
+      if tk.yesno(title[1], text[1]) then
+         start()
+      else
+         reject()
+      end
    end
 end
 
+function start()
+   misn.accept()
+
+   -- Clear area of enemies.
+   pilot.clear()
+   pilot.toggleSpawn(false)
+
+   -- Set basic mission information.
+   misn.setTitle(misn_title)
+   misn.setReward(misn_reward)
+   misn.setDesc(misn_desc)
+
+   -- Create OSD
+   misn.osdCreate(osd_title[1], osd_msg[1])
+
+   -- Give indications on how to fly.
+   misn_stage = 1
+   tk.msg(title[1], string.format(text[2], player.name()))
+   tk.msg(title[2], string.format(text[3], naev.getKey("left"), naev.getKey("right"), naev.getKey("accel")))
+   misn.timerStart("flightOver", 15000) -- 15 second timer to fly around
+
+   -- Set Hooks
+   hook.land("tutLand")
+   hook.enter("tutEnter")
+end
 
 function flightOver()
    -- Update OSD
@@ -178,7 +189,6 @@ function flightOver()
    tk.msg(title[2], string.format(text[4], naev.getKey("reverse")))
    misn.timerStart("brakeOver", 1000)
 end
-
 
 function brakeOver()
    player = pilot.player()
@@ -231,7 +241,6 @@ function targetOver()
 
    addLlamaDummy()
 end
-
 
 function addLlamaDummy()
    -- Add the combat dummy.
@@ -332,30 +341,32 @@ function taunt2()
             "I a- T. Pr-ct---! Y-- w--l fe-r m- na-e --- Bzzzt!"
             }
 	for k,v in ipairs(llamadummy) do
-        if shield >= 40 then
+      if misn_stage >= 5 then
+         return
+      else
+         if shield >= 40 then
             if #shield30 > shieldtaunt then
-                shieldtaunt = shieldtaunt + 1
-                v:comm(shield30[shieldtaunt])
-                misn.timerStart("taunt", 4000)
+               shieldtaunt = shieldtaunt + 1
+               v:comm(shield30[shieldtaunt])
+               misn.timerStart("taunt", 4000)
             else
                 misn.timerStart("taunt", 4000)
             end
-        elseif armour >= 31 then
+         elseif armour >= 31 then
             if #armour31 > armourtaunt then
-                armourtaunt = armourtaunt + 1
-                v:comm(armour31[armourtaunt])
-                misn.timerStart("taunt", 4000)
+               armourtaunt = armourtaunt + 1
+               v:comm(armour31[armourtaunt])
+               misn.timerStart("taunt", 4000)
             else
-                tk.msg("Bzzzt!", "It appears our friend has suffered a systems failure. Oh well, he was getting tiresome anyhow.")
-                for k,v in ipairs(llamadummy) do
-                    v:disable()
-                    misn.timerStart("llamaDisabled", 2000)
-                end
+               tk.msg("Bzzzt!", "It appears our friend has suffered a systems failure. Oh well, he was getting tiresome anyhow.")
+               for k,v in ipairs(llamadummy) do
+                  v:disable()
+                  misn.timerStart("llamaDisabled", 2000)
+               end
             end
-        else
-            return
-        end
-	end
+         end
+      end
+   end
 end
 
 function llamaDisabled()
@@ -378,7 +389,6 @@ function llamaDead()
       addLlamaDummy()
    end
 end
-
 
 function llamaBoard()
    -- Update OSD
@@ -410,12 +420,14 @@ function boardOver()
    misn.timerStart("bringHelp", 5000) -- Player "should" surive 5 seconds
 end
 
-
 function bringHelp()
    pilot.add("Empire Lancelot")
-   pilot.add("Empire Lancelot") -- Lancelot crushes Hyena
+   pilot.add("Empire Lancelot")
+   lancelots = pilot.get( { faction.get("Empire") } )
+   for k,v in ipairs(lancelots) do
+      v:setInvincible()
+   end
 end
-
 
 function hyenaWait()
    misn.timerStart("hyenaDead", 7500)
@@ -433,7 +445,6 @@ function hyenaDead()
    tk.msg(title[5], string.format(text[15], naev.getKey("target_planet"), naev.getKey("land")))
    tk.msg(title[5], text[16])
 end
-
 
 function tutLand()
    -- Shouldn't be landing yet.
@@ -466,7 +477,15 @@ function succeed()
 end
 
 function abort()
-   tk.msg("Tutorial Aborted", "Well, now. Seems you've already done some studying, I'll leave you to your own devices. Good luck out there.")
+   tk.msg(msg_abortTitle, msg_abort)
    var.push("tutorial_aborted", true)
    misn.finish(false)
+end
+
+function reject()
+   if tk.yesno(msg_rejectTitle, msg_reject) then
+      abort()
+   else
+      start()
+   end
 end

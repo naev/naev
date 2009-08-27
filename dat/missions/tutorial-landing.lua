@@ -62,7 +62,14 @@ Unfortunately the economy is currently not terribly dynamic, so there's much mor
    misn_title = "NAEV Tutorial - Landing Tabs"
    misn_reward = "Knowledge of the landing window."
    misn_desc = "Overview of the landing tabs."
-
+   -- Aborted mission
+   msg_abortTitle = "Tutorial Aborted"
+   msg_abort = [[It seems you're ahead of the curve, so I'll cut you loose. Good luck out there.]]
+   -- Rejected mission
+   msg_rejectTitle = "NAEV Tutorial - Landing Tabs"
+   msg_reject = [[Are you sure? If you reject this portion of the tutorial, you will be unable to complete the other portions.
+   
+Press yes to abort the tutorial, or no to continue it.]]
    -- OSD stuff
    osd_title = {}
    osd_msg   = {}
@@ -72,32 +79,47 @@ Unfortunately the economy is currently not terribly dynamic, so there's much mor
    }
 end
 
-      
 function create()
-   if tk.yesno(title[1], text[1]) then
-      misn.accept()
-      tutLand()
-      
-      -- Set basic mission information.
-      misn.setTitle(misn_title)
-      misn.setReward(misn_reward)
-      misn.setDesc(misn_desc)
-
-      -- Create OSD
-      misn.osdCreate(osd_title[1], osd_msg[1])
-
-      -- Set Hooks
-      hook.land("tutBar", "bar")
-      hook.land("tutMission", "mission")
-      hook.land("tutOutfits", "outfits")
-      hook.land("tutShipyard", "shipyard")
-      hook.land("tutEquipment", "equipment")
-      hook.land("tutCommodity", "commodity")
-      hook.takeoff("tutEarly")
+   if forced == 1 then
+      start()
    else
-      var.push("tutorial_aborted", true)
-      misn.finish(false)
+      if tk.yesno(title[1], text[1]) then
+         start()
+      else
+         reject()
+      end
    end
+end
+
+function start()
+   misn.accept()
+   tutLand()
+   
+   -- Set basic mission information.
+   misn.setTitle(misn_title)
+   misn.setReward(misn_reward)
+   misn.setDesc(misn_desc)
+
+   -- Aborted mission
+   msg_abortTitle = "Tutorial Aborted"
+   msg_abort = [[Well, now. Seems you've already done some studying, I'll leave you to your own devices. Good luck out there.]]
+   -- Rejected mission
+   msg_rejectTitle = "NAEV Tutorial"
+   msg_reject = [[Are you sure? If you reject this portion of the tutorial, you will be unable to complete the other portions.
+   
+Press yes to abort the tutorial, or no to continue it.]]
+
+   -- Create OSD
+   misn.osdCreate(osd_title[1], osd_msg[1])
+
+   -- Set Hooks
+   hook.land("tutBar", "bar")
+   hook.land("tutMission", "mission")
+   hook.land("tutOutfits", "outfits")
+   hook.land("tutShipyard", "shipyard")
+   hook.land("tutEquipment", "equipment")
+   hook.land("tutCommodity", "commodity")
+   hook.takeoff("tutEarly")
 end
 
 function tutLand()
@@ -208,7 +230,15 @@ function tutEnd()
 end
 
 function abort()
-   var.push("Tutorial Aborted", "It seems you're ahead of the curve, so I'll cut you loose. Good luck out there.")
+   tk.msg(msg_abortTitle, msg_abort)
    var.push("tutorial_aborted", true)
    misn.finish(false)
+end
+
+function reject()
+   if tk.yesno(msg_rejectTitle, msg_reject) then
+      abort()
+   else
+      start()
+   end
 end

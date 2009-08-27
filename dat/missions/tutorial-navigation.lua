@@ -47,7 +47,12 @@ Enjoy the game!]]
    misn_desc = "Overview of the map and hyperspace navigation."
    -- Aborted mission
    msg_abortTitle = "Tutorial Aborted"
-   msg_abort = [[You seem to know more than is needed for the tutorial. Tutorial aborting.]]
+   msg_abort = [[Seems you're ready to go on your own. Enjoy the game!]]
+   -- Rejected mission
+   msg_rejectTitle = "NAEV Tutorial - Navigation"
+   msg_reject = [[Are you sure? If you reject this portion of the tutorial, you will be unable to complete the other portions.
+   
+Press yes to abort the tutorial, or no to continue it.]]
    -- OSD stuff
    osd_title = {}
    osd_msg   = {}
@@ -59,26 +64,32 @@ Enjoy the game!]]
    }
 end
 
-      
 function create()
-   if tk.yesno(title[1], text[1]) then
-      misn.accept()
-
-      -- Set basic mission information.
-      misn.setTitle(misn_title)
-      misn.setReward(misn_reward)
-      misn.setDesc(misn_desc)
-
-      -- Create OSD
-      misn.osdCreate(osd_title[1], osd_msg[1])
-
-      -- Set Hooks
-      tutTakeoff()
-      hook.enter("tutEnter")
+   if forced == 1 then
+      start()
    else
-      var.push("tutorial_aborted", true)
-      misn.finish(false)
+      if tk.yesno(title[1], text[1]) then
+         start()
+      else
+         reject()
+      end
    end
+end
+
+function start()
+   misn.accept()
+
+   -- Set basic mission information.
+   misn.setTitle(misn_title)
+   misn.setReward(misn_reward)
+   misn.setDesc(misn_desc)
+
+   -- Create OSD
+   misn.osdCreate(osd_title[1], osd_msg[1])
+
+   -- Set Hooks
+   tutTakeoff()
+   hook.enter("tutEnter")
 end
 
 function tutTakeoff()
@@ -103,7 +114,15 @@ function tutEnd()
 end
 
 function abort()
-   var.push("Tutorial Aborted", "Seems you're ready to go on your own. Enjoy the game!")
+   tk.msg(msg_abortTitle, msg_abort)
    var.push("tutorial_aborted", true)
    misn.finish(false)
+end
+
+function reject()
+   if tk.yesno(msg_rejectTitle, msg_reject) then
+      abort()
+   else
+      start()
+   end
 end
