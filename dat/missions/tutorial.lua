@@ -55,7 +55,7 @@ You have multiple options:
  %s targets the nearest ship.
  %s targets the nearest enemy.
  %s clears the current target.]]
-   text[7] = [[I'll bring in several ships so you can try targeting. You'll notice your targeted ship is highlighted on the radar (Top right). You can use the %s and %s keys to change the scale of the radar. Yellow is neutral, red is hostile, green is friendly and grey is disabled. The new ships will be green.]]
+   text[7] = [[I'll bring in several ships so you can try targeting. You'll notice your targeted ship is highlighted on the radar (Top right). You can use the %s and %s keys to change the scale of the radar. Yellow is neutral, red is hostile, green is friendly and grey is disabled. The new ships will be yellow.]]
    -- Step 4
    title[4] = "Combat Tutorial"
    text[8] = [[Now, let's try using the weapon systems.
@@ -200,7 +200,7 @@ function brakeOver()
       for k,v in ipairs(traders) do
          v:setFaction("Dummy")
          v:rename("Dummy")
-		 v:setFriendly()
+		 v:setInvincible()
       end
       misn.timerStart( "targetEnding", 15000 ) -- 15 seconds to target
    else
@@ -213,7 +213,6 @@ function targetEnding()
    for k,v in ipairs(traders) do
       v:changeAI("flee")
       v:setHealth(100, 100)
-      v:setFriendly()
    end
    misn.timerStart( "targetOver", 10000) -- Affords targetting-practice ships 10 seconds before the new Llama flies in.
 end
@@ -291,7 +290,7 @@ function taunt2()
             "You'd be dead if I'd remembered to pack my weapons!",
             "I'll end you!",
             "... Right after I finish eating this bucket of fried chicken!",
-            "Dowue Fried Chicken. Eat only the best.",
+            "Em 5 Fried Chicken. Eat only the best.",
             "This is your last chance to surrender!",
             "Don't do school, stay in milk.",
             "I'm going to report you to the NPC Rights watchdog.",
@@ -341,7 +340,7 @@ function taunt2()
                 v:comm(shield30[shieldtaunt])
                 misn.timerStart("taunt", 4000)
             else
-                return
+                misn.timerStart("taunt", 4000)
             end
         elseif armour >= 31 then
             if #armour31 > armourtaunt then
@@ -397,6 +396,7 @@ function boardEnding()
    v:changeAI("flee")
    v:setHealth(100, 100)
    v:comm("I've restored my power! You'll rue the day you crossed T. Practice!")
+   v:setInvincible()
    end
    misn.timerStart("boardOver", 8000)
 end
