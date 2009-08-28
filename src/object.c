@@ -18,7 +18,13 @@ typedef struct {
 } Vertex;
 
 
-static int readGLfloat(GLfloat *dest, int how_many)
+static void mesh_init( Mesh *mesh )
+{
+   memset(mesh, 0x00, sizeof(Mesh));
+   mesh->material = -1;
+}
+
+static int readGLfloat( GLfloat *dest, int how_many )
 {
    char *token;
    int num = 0;
@@ -57,14 +63,13 @@ static GLuint texture_loadFromFile( const char *filename )
    return texture;
 }
 
-static Material *materials_readFromFile( const char *filename )
+static void materials_readFromFile( const char *filename, Material **materials )
 {
    FILE *f = fopen(filename, "r");
    if (!f)
-      ERR("Cannot open material file |%s| (%p)", filename, f);
+      ERR("Cannot open material file %s", filename);
 
-   Material *materials = array_create(Material);
-   Material *curr = NULL;
+   Material *curr = &array_back(*materials);
 
    char line[256];
    while (fgets(line, sizeof(line), f)) {
@@ -76,9 +81,9 @@ static Material *materials_readFromFile( const char *filename )
          /* Missing */
       } else if (strcmp(token, "newmtl") == 0) {
          token = strtok(NULL, DELIM);
-         curr = &array_grow(&materials);
-         memset(curr, 0x00, sizeof(Material));
+         curr = &array_grow(materials);
          curr->name = strdup(token);
+         DEBUG("Reading new material %s", curr->name);
       } else if (strcmp(token, "Ns") == 0) {
          readGLfloat(&curr->Ns, 1);
       } else if (strcmp(token, "Ni") == 0) {
@@ -116,7 +121,6 @@ static Material *materials_readFromFile( const char *filename )
    }
 
    fclose(f);
-   return materials;
 }
 
 
@@ -131,17 +135,18 @@ static Material *materials_readFromFile( const char *filename )
  */
 Object *object_loadFromFile( const char *filename )
 {
-   GLfloat *vertex = array_create(GLfloat);   /**< vertex coordinates */
-   GLfloat *texture = array_create(GLfloat);  /**< texture coordinates */
-   Vertex *corners = array_create(Vertex);
+   GLfloat *vertex = array_create(GLfloat, NULL);   /**< vertex coordinates */
+   GLfloat *texture = array_create(GLfloat, NULL);  /**< texture coordinates */
+   Vertex *corners = array_create(Vertex, NULL);
 
    FILE *f = fopen(filename, "r");
    if (!f)
       ERR("Cannot open object file %s", filename);
 
    Object *object = calloc(1, sizeof(Object));
-   object->meshes = array_create(Mesh);
-   object->materials = NULL;
+   object->meshes = array_create(Mesh, mesh_init);
+   object->materials = array_create(Material, clear_memory);
+
    Mesh *curr = &array_grow(&object->meshes);
 
    char line[256];
@@ -153,24 +158,22 @@ Object *object_loadFromFile( const char *filename )
       if (token == NULL) {
          /* Missing */
       } else if (strcmp(token, "mtllib") == 0) {
-         if (object->materials)
-            ERR("Materials already loaded for object %s", filename);
+         while ((token = strtok(NULL, DELIM)) != NULL) {
+            /* token contains the filename describing materials */
 
-         /* get filename containing the material */
-         token = strtok(NULL, DELIM);
+            /* computes the path to materials */
+            char *copy_filename = strdup(filename);
+            char *dn = dirname(copy_filename);
+            char *material_filename = malloc(strlen(filename) + 1 + strlen(token) + 1);
+            strcpy(material_filename, dn);
+            strcat(material_filename, "/");
+            strcat(material_filename, token);
 
-         /* computes the path to materials */
-         char *copy_filename = strdup(filename);
-         char *dn = dirname(copy_filename);
-         char *material_filename = malloc(strlen(filename) + 1 + strlen(token) + 1);
-         strcpy(material_filename, dn);
-         strcat(material_filename, "/");
-         strcat(material_filename, token);
-
-         DEBUG("material_filename = %s", material_filename);
-         object->materials = materials_readFromFile(material_filename);
-         free(copy_filename);
-         free(material_filename);
+            DEBUG("material_filename = %s", material_filename);
+            materials_readFromFile(material_filename, &object->materials);
+            free(copy_filename);
+            free(material_filename);
+         }
       } else if (strcmp(token, "o") == 0) {
          token = strtok(NULL, DELIM);
 
@@ -212,6 +215,22 @@ Object *object_loadFromFile( const char *filename )
          }
 
          assert("Too few or too many vertices for a face." && (num == 3));
+      } else if (strcmp(token, "usemtl") == 0) {
+         int i;
+
+         if (curr->material != -1)
+            ERR("Current object part already has material");
+
+         token = strtok(NULL, DELIM);
+         if (!object->materials)
+            ERR("No materials available. Cannot usemtl %s", token);
+
+         for (i = 0; i < array_size(object->materials); ++i)
+            if (strcmp(token, object->materials[i].name) == 0)
+               curr->material = i;
+
+         if (curr->material == -1)
+            ERR("No such material %s", token);
       } else if (token[0] == '#') {
          /* Comment */
       } else {

@@ -24,9 +24,9 @@ typedef struct Material_ {
 
 typedef struct Mesh_ {
    char *name;
-   int num_corners;
    gl_vbo *vbo;
-   Material *material;
+   int num_corners;
+   int material;
 } Mesh;
 
 typedef struct Object_ {
