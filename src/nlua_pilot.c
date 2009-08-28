@@ -956,8 +956,9 @@ static int pilotL_disable( lua_State *L )
  *
  *    @luaparam p Pilot to add outfit to.
  *    @luaparam outfit Name of the outfit to add.
+ *    @lusparam q Amount of the outfit to add (defaults to 1).
  *    @luareturn True is outfit was added successfully.
- * @luafunc addOutfit( p, outfit )
+ * @luafunc addOutfit( p, outfit, q )
  */
 static int pilotL_addOutfit( lua_State *L )
 {
