@@ -546,8 +546,8 @@
   </pos>
   <general>
    <prodfactor>0.3</prodfactor>
-   <bar>The Arrakeen canteen is one of the shadier bars in Empire space. Lying on the border of the Empire, few patrols come through, and many scoundrels and mercenaries can be found plying their trade.</bar>
-   <description>Arrakis is a desert planet with no natural precipitation.</description>
+   <bar>The Arrakeen canteen is one of the shadier bars in Empire space. Lying on the border of the Empire, few patrols come through, and many scoundrels and mercenaries can be found plying their trade. The spice must flow, they said. It may not, but at least the rum does.</bar>
+   <description>Arrakis is a desert planet with no natural precipitation. The locals are continuously discussing sandworms, though you're not sure what to make of it.</description>
    <faction>Empire</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -648,7 +648,7 @@
   </pos>
   <general>
    <prodfactor>0.5</prodfactor>
-   <bar>Rather out of character for a heavy-industry station, the people of Jorlan don't really have a habit of drinking. You see numerous other spacefarers, but no natives.</bar>
+   <bar>Rather out of character for a heavy-industry station, the people of Jorlan people don't really have a habit of drinking. You see numerous other spacefarers, but no natives.</bar>
    <description>Jorlan is a small moon that orbits Haleb IV. It's inhabitants are mostly part of the ore refining process, as it supplies most of the Frontier with all sorts of alloys. Gas miners are also sent down to Haleb IV every dozen STU when the climate conditions are favorable, as outside of that narrow window, intense winds capable of severely damaging most ships persist.</description>
    <faction>Frontier</faction>
    <commodities>
