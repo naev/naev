@@ -1152,6 +1152,23 @@
    <class>J</class>
   </general>
  </planet>
+ <planet name="Saturn VI">
+  <GFX>
+   <space>J00.png</space>
+  </GFX>
+  <pos>
+   <y>240</y>
+   <x>220</x>
+  </pos>
+  <general>
+   <services>0</services>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <class>J</class>
+  </general>
+ </planet>
  <planet name="Anecu">
   <GFX>
    <exterior>aquatic.png</exterior>
