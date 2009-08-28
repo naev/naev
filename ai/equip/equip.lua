@@ -132,7 +132,7 @@ function equip_fillSlots( p, high, medium, low, use_high, use_medium, use_low )
 end
 
 
---[[[
+--[[
 -- @brief Does generic pilot equipping
 --
 --    @param p Pilot to equip
