@@ -30,7 +30,7 @@
 #define SHIP_DATA    "dat/ship.xml" /**< XML file containing ships. */
 #define SHIP_GFX     "gfx/ship/" /**< Location of ship graphics. */
 #define SHIP_EXT     ".png" /**< Ship graphics extension format. */
-#define SHIP_ENGINE  "_engine" /**< Target graphic extension. */
+#define SHIP_ENGINE  "_engine" /**< Engine graphic extension. */
 #define SHIP_TARGET  "_target" /**< Target graphic extension. */
 #define SHIP_COMM    "_comm" /**< Communicatio graphic extension. */
 
