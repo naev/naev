@@ -926,7 +926,7 @@
     <special>0</special>
    </tech>
    <services>15</services>
-   <class>A</class>
+   <class>O</class>
    <population>930000</population>
   </general>
  </planet>
@@ -1195,7 +1195,7 @@
     <special>0</special>
    </tech>
    <services>31</services>
-   <class>M</class>
+   <class>O</class>
    <population>70000</population>
   </general>
  </planet>
