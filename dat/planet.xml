@@ -70,7 +70,35 @@
     <special>0</special>
    </tech>
    <services>7</services>
-   <class>A</class>
+   <class>H</class>
+   <population>12000</population>
+  </general>
+ </planet>
+ 
+  <planet name="Bon Sebb">
+  <GFX>
+   <exterior>forest.png</exterior>
+   <space>M06.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.2</prodfactor>
+   <bar>The Bon Sebbian bar has a large plaque hung above the entry commemorating Silver Wraith II, a local hero who defended the system from the mighty pirate Ax Bits in centuries past, when it was a frontier world.</bar>
+   <description>While Bon Sebb was once a popular tourist destination, the stop in neighbouring Apez, with its well-known Dowue Syndrome, has resulted in the tourism industry waning. It is now primarily known for its all-natural crops and herbal remedies.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+   </commodities>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>7</services>
+   <class>M</class>
    <population>40000</population>
   </general>
  </planet>
@@ -410,6 +438,36 @@
    <population>350000</population>
   </general>
  </planet>
+ 
+  <planet name="Paxsor">
+  <GFX>
+   <exterior>mining6.png</exterior>
+   <space>G01.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.7</prodfactor>
+   <bar>The Paxsorian bar is a rather simple one, patronized mostly by traders trafficking ore. Given the limited nature of the planet's public facilities, it's impossible to know whether the Nexus employees are hard at work or drinking at a bar of their own.</bar>
+   <description>Paxsor is the primary Nexus mining asset within Empire spaced, supplying ore to their shipyards and sending surplus ore to help with the Emperor's Fist project.</description>
+   <faction>Empire</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>7</services>
+   <class>G</class>
+   <population>65000</population>
+  </general>
+ </planet>
+ 
  <planet name="Omega Station">
   <GFX>
    <exterior>station00.png</exterior>

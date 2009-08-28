@@ -148,6 +148,7 @@
    <jump>Arcturus</jump>
 	<jump>Gamma Polaris</jump>
 	<jump>Hekaras</jump>
+	<jump>Zied</jump>
   </jumps>
   <pos>
    <y>-320</y>
@@ -202,6 +203,28 @@
   </pos>
   <planets>
    <planet>Hurada</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+  <ssys name="Zied">
+  <fleets>
+   <fleet>Empire Light Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Apez</jump>
+  </jumps>
+  <pos>
+   <y>-340</y>
+   <x>-10</x>
+  </pos>
+  <planets>
+   <planet>Bon Sebb</planet>
   </planets>
   <general>
    <asteroids>0</asteroids>
@@ -710,6 +733,7 @@
    <jump>Shakar</jump>
 	<jump>Arcturus</jump>
 	<jump>Apez</jump>
+	<jump>Koralis</jump>
   </jumps>
   <pos>
    <y>-296</y>
@@ -726,6 +750,31 @@
    <stars>500</stars>
   </general>
  </ssys>
+ 
+  <ssys name="Koralis">
+  <fleets>
+   <fleet>Trader Light Prescence</fleet>
+   <fleet>Empire Light Prescence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Qex</jump>
+	<jump>Gamma Polaris</jump>
+  </jumps>
+  <pos>
+   <y>-330</y>
+   <x>-222</x>
+  </pos>
+  <planets>
+   <planet>Paxsor</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ 
  <ssys name="Cygnus">
   <fleets>
    <fleet>Pirate Light Prescence</fleet>
@@ -1522,6 +1571,7 @@
    <jump>Uhriabi</jump>
    <jump>Gamma Polaris</jump>
    <jump>Eneguoz</jump>
+	<jump>Koralis</jump>
   </jumps>
   <pos>
    <y>-383</y>
