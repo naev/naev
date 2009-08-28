@@ -329,7 +329,7 @@
  </planet>
   <planet name="Praxis">
   <GFX>
-   <exterior>oceanic.png</exterior>
+   <exterior>oceanic2.png</exterior>
    <space>M00.png</space>
   </GFX>
   <pos>
@@ -716,7 +716,7 @@
  </planet>
  <planet name="Zhiru">
   <GFX>
-   <exterior>oceanic2.png</exterior>
+   <exterior>oceanic.png</exterior>
    <space>M04.png</space>
   </GFX>
   <pos>
