@@ -21,18 +21,21 @@ typedef struct {
 #ifdef DEBUGGING
    int _sentinel;
 #endif
-   int _reserved;         /**< Number of elements reserved */
-   int _size;             /**< Number of elements in the array */
-   char _array[1];        /**< Begin of the array */
+   int _reserved;             /**< Number of elements reserved */
+   int _size;                 /**< Number of elements in the array */
+   void (*_init)(char *);     /**< Function to call when a new element is created */
+   char _array[1];            /**< Begin of the array */
 } _private_container;
 
 
-void *_array_create_helper(size_t e_size);
+void clear_memory(char *);
+void *_array_create_helper(size_t e_size, void (*init_func)(char *));
 void *_array_grow_helper(void **a, size_t e_size);
+void *_array_end_helper(const void *a, size_t e_size);
 void _array_shrink_helper(void **a, size_t e_size);
 void _array_free_helper(void *a);
 
-__inline__ static _private_container *_array_private_container(void *a)
+__inline__ static _private_container *_array_private_container(const void *a)
 {
    assert("NULL array!" && (a != NULL));
 
@@ -46,15 +49,10 @@ __inline__ static _private_container *_array_private_container(void *a)
    return c;
 }
 
-__inline__ static void *_array_end_helper(void *a, size_t e_size)
-{
-   _private_container *c = _array_private_container(a);
-   return c->_array + c->_size * e_size;
-}
 
 /** @brief Creates a new dynamic array of `basic_type' */
-#define array_create(basic_type) \
-      ((basic_type *)(_array_create_helper(sizeof(basic_type))))
+#define array_create(basic_type, init_func) \
+      ((basic_type *)(_array_create_helper(sizeof(basic_type), (void (*)(char *))(init_func))))
 
 /** @brief Increases the number of elements by one and returns the last element.
  * NOTE: Invalidates all iterators. */
@@ -81,5 +79,13 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
 #define array_front(a) (*array_begin(a))
 /** @brief Returns the last element in the array */
 #define array_back(a) (*(array_end(a) - 1))
+
+/** @brief Clears the array
+ * NOTE: Invalidates all iterators. */
+#define array_clear(array) \
+   do { \
+      _array_private_container(array)->_size = 0; \
+   } while (0)
+
 
 #endif /* ARRAY_H */
