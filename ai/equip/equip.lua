@@ -158,8 +158,10 @@ end
 -- @brief Equips a generic civilian type ship.
 --]]
 function equip_genericCivilian( p, shipsize )
+   local nhigh, nmedium, nlow = p:shipSlots()
    local high, medium, low
    local use_high, use_medium, use_low
+   use_high = rnd.rnd(nhigh) -- Use fewer slots
    if shipsize == "small" then
       high   = { "Laser Cannon", "Plasma Blaster" }
       medium = { "Civilian Jammer" }
@@ -188,8 +190,10 @@ end
 -- @brief Equips a generic merchant type ship.
 --]]
 function equip_genericMerchant( p, shipsize )
+   local nhigh, nmedium, nlow = p:shipSlots()
    local high, medium, low
    local use_high, use_medium, use_low
+   use_high = rnd.rnd(1,nhigh) -- Use fewer slots
    if shipsize == "small" then
       high   = { "Laser Cannon", "Plasma Blaster" }
       medium = { "Civilian Jammer" }
@@ -262,6 +266,8 @@ function equip_genericMilitary( p, shipsize )
       medium = { }
       low    = { }
    end
+   equip_fillSlots( p, high,     medium,     low,
+                       use_high, use_medium, use_low)
 end
 
 
