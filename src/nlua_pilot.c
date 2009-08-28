@@ -68,6 +68,9 @@ static int pilotL_changeAI( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
 static int pilotL_setNoboard( lua_State *L );
 static int pilotL_getHealth( lua_State *L );
+static int pilotL_shipName( lua_State *L );
+static int pilotL_shipClass( lua_State *L );
+static int pilotL_shipSlots( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    { "player", pilot_getPlayer },
    { "add", pilot_addFleet },
@@ -94,6 +97,9 @@ static const luaL_reg pilotL_methods[] = {
    { "setHealth", pilotL_setHealth },
    { "setNoboard", pilotL_setNoboard },
    { "getHealth", pilotL_getHealth },
+   { "shipName", pilotL_shipName },
+   { "shipClass", pilotL_shipClass },
+   { "shipSlots", pilotL_shipSlots },
    {0,0}
 }; /**< Pilot metatable methods. */
 
@@ -950,8 +956,9 @@ static int pilotL_disable( lua_State *L )
  *
  *    @luaparam p Pilot to add outfit to.
  *    @luaparam outfit Name of the outfit to add.
+ *    @lusparam q Amount of the outfit to add (defaults to 1).
  *    @luareturn True is outfit was added successfully.
- * @luafunc addOutfit( p, outfit )
+ * @luafunc addOutfit( p, outfit, q )
  */
 static int pilotL_addOutfit( lua_State *L )
 {
@@ -1222,5 +1229,90 @@ static int pilotL_getHealth( lua_State *L )
    lua_pushnumber(L, p->shield / p->shield_max * 100. );
 
    return 2;
+}
+
+
+/**
+ * @brief Gets the name of the pilot's ship.
+ *
+ * @usage shipname = p:shipName()
+ *
+ *    @luaparam p Pilot to get ship name.
+ *    @luareturn The name of the pilot's ship.
+ * @luafunc shipName( p )
+ */
+static int pilotL_shipName( lua_State *L )
+{
+   LuaPilot *lp;
+   Pilot *p;
+
+   /* Get the pilot. */
+   lp = luaL_checkpilot(L,1);
+   p  = pilot_get(lp->pilot);
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   /** Return the ship name. */
+   lua_pushstring(L, p->ship->name);
+   return 1;
+}
+
+
+/**
+ * @brief Gets the name of the pilot's ship class.
+ *
+ * @usage shipclass = p:shipClass()
+ *
+ *    @luaparam p Pilot to get ship class name.
+ *    @luareturn The name of the pilot's ship class.
+ * @luafunc shipClass( p )
+ */
+static int pilotL_shipClass( lua_State *L )
+{
+   LuaPilot *lp;
+   Pilot *p;
+
+   /* Get the pilot. */
+   lp = luaL_checkpilot(L,1);
+   p  = pilot_get(lp->pilot);
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   lua_pushstring(L, ship_class(p->ship));
+   return 1;
+}
+
+
+/**
+ * @brief Gets the amount of the pilot's ship slots.
+ *
+ * @usage slots_high, slots_medium, slots_low = p:shipSlots()
+ *
+ *    @luaparam p Pilot to get ship slots of.
+ *    @luareturn Number of high, medium and low slots.
+ * @luafunc shipSlots( p )
+ */
+static int pilotL_shipSlots( lua_State *L )
+{
+   LuaPilot *lp;
+   Pilot *p;
+
+   /* Get the pilot. */
+   lp = luaL_checkpilot(L,1);
+   p  = pilot_get(lp->pilot);
+   if (p==NULL) {
+      NLUA_ERROR(L,"Pilot is invalid.");
+      return 0;
+   }
+
+   /* Push slot numbers. */
+   lua_pushnumber(L, p->outfit_nhigh);
+   lua_pushnumber(L, p->outfit_nmedium);
+   lua_pushnumber(L, p->outfit_nlow);
+   return 3;
 }
 

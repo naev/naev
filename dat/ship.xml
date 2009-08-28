@@ -31,8 +31,8 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <high x="7"   y="0" h="1">Laser Cannon</high>
-   <high x="-3"  y="0" h="2">Laser Cannon</high>
+   <high x="7"   y="0" h="1" />
+   <high x="-3"  y="0" h="2" />
    <medium/>
    <medium/>
    <low/>
@@ -69,8 +69,8 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="0" h="-3">Laser Cannon</high>
-   <high x="15" y="0" h="-3">Laser Cannon</high>
+   <high x="15" y="0" h="-3" />
+   <high x="15" y="0" h="-3" />
    <high x="0"  y="0" h="0" />
    <medium/>
    <low/>
@@ -107,7 +107,7 @@
   </characteristics>
   <slots>
    <high x="9" y="0" h="-2" />
-   <medium>Civilian Jammer</medium>
+   <medium/>
    <medium/>
    <medium/>
    <medium/>
@@ -144,7 +144,7 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <high x="12" y="0" h="-2">Ion Cannon</high>
+   <high x="12" y="0" h="-2" />
    <high x="-5" y="0" h="1" />
    <medium />
    <medium />
@@ -183,9 +183,9 @@
    <cap_cargo>1</cap_cargo>
   </characteristics>
   <slots>
-   <high x="5" y="0" h="-5">Neutron Disruptor</high>
-   <high x="5" y="0" h="-5">Neutron Disruptor</high>
-   <high x="5" y="0" h="-5">Neutron Disruptor</high>
+   <high x="5" y="0" h="-5" />
+   <high x="5" y="0" h="-5" />
+   <high x="5" y="0" h="-5" />
    <medium/>
    <low/>
   </slots>
@@ -221,7 +221,7 @@
    <cap_cargo>75</cap_cargo>
   </characteristics>
   <slots>
-   <high x="11" y="0" h="-7">Laser Cannon</high>
+   <high x="11" y="0" h="-7" />
    <high x="-5" y="0" h="3" />
    <medium />
    <medium />
@@ -262,8 +262,8 @@
    <cap_cargo>350</cap_cargo>
   </characteristics>
   <slots>
-   <high x="25"  y="0" h="0">Laser Turret</high>
-   <high x="-15" y="0" h="4">EMP Grenade Launcher</high>
+   <high x="25"  y="0" h="0" />
+   <high x="-15" y="0" h="4" />
    <high x="15"  y="0" h="4" />
    <medium />
    <medium />
@@ -308,9 +308,9 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="12" y="0" h="0">Laser Cannon</high>
-   <high x="12" y="0" h="0">Laser Cannon</high>
-   <high x="-3" y="0" h="2">Seeker Launcher</high>
+   <high x="12" y="0" h="0" />
+   <high x="12" y="0" h="0" />
+   <high x="-3" y="0" h="2" />
    <high x="-3" y="0" h="2" />
    <medium />
    <medium />
@@ -350,11 +350,11 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="12" y="0" h="0">Ripper MK2</high>
-   <high x="12" y="0" h="0">Ripper MK2</high>
-   <high x="-3" y="0" h="2">Headhunter Launcher</high>
+   <high x="12" y="0" h="0" />
+   <high x="12" y="0" h="0" />
    <high x="-3" y="0" h="2" />
-   <medium>Milspec Jammer</medium>
+   <high x="-3" y="0" h="2" />
+   <medium />
    <medium />
    <medium />
    <low />
@@ -392,10 +392,10 @@
    <cap_cargo>5</cap_cargo>
   </characteristics>
   <slots>
-   <high x="16" y="-9"  h="0" >Laser Cannon</high>
-   <high x="16" y="9"   h="0" >Laser Cannon</high>
-   <high x="13" y="-13" h="0" >Laser Cannon</high>
-   <high x="13" y="13"  h="0" >Laser Cannon</high>
+   <high x="16" y="-9"  h="0" />
+   <high x="16" y="9"   h="0" />
+   <high x="13" y="-13" h="0" />
+   <high x="13" y="13"  h="0" />
    <high x="19" y="0"   h="-2" />
    <high x="3"  y="0"   h="2" />
    <medium />
@@ -432,11 +432,11 @@
    <cap_cargo>5</cap_cargo>
   </characteristics>
   <slots>
-   <high x="16" y="-9"  h="0" >Laser Cannon</high>
-   <high x="16" y="9"   h="0" >Laser Cannon</high>
-   <high x="13" y="-13" h="0" >Laser Cannon</high>
-   <high x="13" y="13"  h="0" >Laser Cannon</high>
-   <high x="19" y="0"   h="-2" >Mace Launcher</high>
+   <high x="16" y="-9"  h="0" />
+   <high x="16" y="9"   h="0" />
+   <high x="13" y="-13" h="0" />
+   <high x="13" y="13"  h="0" />
+   <high x="19" y="0"   h="-2" />
    <high x="3"  y="0"   h="2" />
    <medium />
    <low />
@@ -472,10 +472,10 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="16" y="-9"  h="0" >Plasma Blaster</high>
-   <high x="16" y="9"   h="0" >Plasma Blaster</high>
-   <high x="13" y="-13" h="0" >Laser Cannon</high>
-   <high x="13" y="13"  h="0" >Laser Cannon</high>
+   <high x="16" y="-9"  h="0" />
+   <high x="16" y="9"   h="0" />
+   <high x="13" y="-13" h="0" />
+   <high x="13" y="13"  h="0" />
    <high x="19" y="0"   h="-2" />
    <high x="3"  y="0"   h="2" />
    <medium />
@@ -513,10 +513,10 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="8"  y="0"  h="0">Laser Cannon</high>
-   <high x="8"  y="0"  h="0">Laser Cannon</high>
-   <high x="-2" y="9"  h="-1">Seeker Launcher</high>
-   <high x="-2" y="-9" h="-1">Seeker Launcher</high>
+   <high x="8"  y="0"  h="0" />
+   <high x="8"  y="0"  h="0" />
+   <high x="-2" y="9"  h="-1" />
+   <high x="-2" y="-9" h="-1" />
    <medium />
    <medium />
    <low />
@@ -553,10 +553,10 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <high x="8"  y="0"  h="0">Laser Cannon</high>
-   <high x="8"  y="0"  h="0">Laser Cannon</high>
-   <high x="-2" y="9"  h="-1">Mace Rocket</high>
-   <high x="-2" y="-9" h="-1">Mace Rocket</high>
+   <high x="8"  y="0"  h="0" />
+   <high x="8"  y="0"  h="0" />
+   <high x="-2" y="9"  h="-1" />
+   <high x="-2" y="-9" h="-1" />
    <medium />
    <medium />
    <low />
@@ -592,10 +592,10 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <high x="8"  y="0"  h="0">Plasma Blaster</high>
-   <high x="8"  y="0"  h="0">Plasma Blaster</high>
-   <high x="-2" y="9"  h="-1">Seeker Launcher</high>
-   <high x="-2" y="-9" h="-1">Seeker Launcher</high>
+   <high x="8"  y="0"  h="0" />
+   <high x="8"  y="0"  h="0" />
+   <high x="-2" y="9"  h="-1" />
+   <high x="-2" y="-9" h="-1" />
    <medium />
    <medium />
    <low />
@@ -633,10 +633,10 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="0"  h="2">Laser Cannon</high>
-   <high x="4"  y="2"  h="-5">Plasma Blaster</high>
-   <high x="4"  y="-2" h="-5">Plasma Blaster</high>
-   <high x="-9" y="-5" h="-9">Headhunter Launcher</high>
+   <high x="15" y="0"  h="2" />
+   <high x="4"  y="2"  h="-5" />
+   <high x="4"  y="-2" h="-5" />
+   <high x="-9" y="-5" h="-9" />
    <high x="-9" y="5"  h="-9" />
    <medium />
    <medium />
@@ -676,12 +676,12 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="0"  h="2">Plasma Blaster</high>
-   <high x="4"  y="2"  h="-5">Plasma Blaster</high>
-   <high x="4"  y="-2" h="-5">Plasma Blaster</high>
-   <high x="-9" y="-5" h="-9">Banshee Launcher</high>
-   <high x="-9" y="5"  h="-9">Banshee Launcher</high>
-   <medium>Civilian Jammer</medium>
+   <high x="15" y="0"  h="2" />
+   <high x="4"  y="2"  h="-5" />
+   <high x="4"  y="-2" h="-5" />
+   <high x="-9" y="-5" h="-9" />
+   <high x="-9" y="5"  h="-9" />
+   <medium />
    <medium />
    <medium />
    <low />
@@ -720,12 +720,12 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <high x="15" y="0"  h="2">Ripper MK2</high>
-   <high x="4"  y="2"  h="-5">Ion Cannon</high>
-   <high x="4"  y="-2" h="-5">Ion Cannon</high>
-   <high x="-9" y="-5" h="-9">Headhunter Launcher</high>
+   <high x="15" y="0"  h="2" />
+   <high x="4"  y="2"  h="-5" />
+   <high x="4"  y="-2" h="-5" />
+   <high x="-9" y="-5" h="-9" />
    <high x="-9" y="5"  h="-9" />
-   <medium>Milspec Jammer</medium>
+   <medium />
    <medium />
    <medium />
    <low />
@@ -764,11 +764,11 @@
    <cap_cargo>30</cap_cargo>
   </characteristics>
   <slots>
-   <high x="20"  y="0"   h="-10">Laser Turret</high>
-   <high x="4"   y="-5"  h="-10">Laser Cannon</high>
-   <high x="4"   y="5"   h="-10">Laser Cannon</high>
-   <high x="-15" y="-10" h="-10">Headhunter Launcher</high>
-   <high x="-15" y="10"  h="-10">Headhunter Launcher</high>
+   <high x="20"  y="0"   h="-10" />
+   <high x="4"   y="-5"  h="-10" />
+   <high x="4"   y="5"   h="-10" />
+   <high x="-15" y="-10" h="-10" />
+   <high x="-15" y="10"  h="-10" />
    <medium />
    <medium />
    <medium />
@@ -809,11 +809,11 @@
    <cap_cargo>30</cap_cargo>
   </characteristics>
   <slots>
-   <high x="20"  y="0"   h="-10">Heavy Ion Turret</high>
-   <high x="4"   y="-5"  h="-10">Ion Cannon</high>
-   <high x="4"   y="5"   h="-10">Ion Cannon</high>
-   <high x="-15" y="-10" h="-10">Headhunter Launcher</high>
-   <high x="-15" y="10"  h="-10">Headhunter Launcher</high>
+   <high x="20"  y="0"   h="-10" />
+   <high x="4"   y="-5"  h="-10" />
+   <high x="4"   y="5"   h="-10" />
+   <high x="-15" y="-10" h="-10" />
+   <high x="-15" y="10"  h="-10" />
    <medium />
    <medium />
    <medium />
@@ -855,10 +855,10 @@
    <cap_cargo>50</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-24" y="-8"  h="8">Heavy Ion Turret</high>
-   <high x="-24" y="8"   h="8">Heavy Ion Turret</high>
-   <high x="-23" y="-15" h="5">Seeker Launcher</high>
-   <high x="-23" y="15"  h="5">Seeker Launcher</high>
+   <high x="-24" y="-8"  h="8" />
+   <high x="-24" y="8"   h="8" />
+   <high x="-23" y="-15" h="5" />
+   <high x="-23" y="15"  h="5" />
    <high x="44"  y="0"   h="0" />
    <high x="-6"  y="0"   h="12" />
    <medium />
@@ -902,10 +902,10 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-24" y="-8"  h="8">Heavy Ion Turret</high>
-   <high x="-24" y="8"   h="8">Heavy Ion Turret</high>
-   <high x="-23" y="-15" h="5">Seeker Launcher</high>
-   <high x="-23" y="15"  h="5">Seeker Launcher</high>
+   <high x="-24" y="-8"  h="8" />
+   <high x="-24" y="8"   h="8" />
+   <high x="-23" y="-15" h="5" />
+   <high x="-23" y="15"  h="5" />
    <high x="44"  y="0"   h="0" />
    <high x="-6"  y="0"   h="12" />
    <medium />
@@ -950,11 +950,11 @@
    <cap_cargo>70</cap_cargo>
   </characteristics>
   <slots>
-   <high x="40"  y="0"  h="2">Laser Turret</high>
-   <high x="25"  y="0"  h="2">Laser Turret</high>
-   <high x="12"  y="-6" h="0">Headhunter Launcher</high>
-   <high x="12"  y="6"  h="0">Headhunter Launcher</high>
-   <high x="0"   y="0"  h="7">Laser Turret</high>
+   <high x="40"  y="0"  h="2" />
+   <high x="25"  y="0"  h="2" />
+   <high x="12"  y="-6" h="0" />
+   <high x="12"  y="6"  h="0" />
+   <high x="0"   y="0"  h="7" />
    <high x="-15" y="0"  h="7" />
    <high x="-33" y="0"  h="7" />
    <medium />
@@ -1000,10 +1000,10 @@
    <cap_cargo>70</cap_cargo>
   </characteristics>
   <slots>
-   <high x="40"  y="0"  h="2">Heavy Ion Turret</high>
-   <high x="25"  y="0"  h="2">Heavy Ion Turret</high>
-   <high x="12"  y="-6" h="0">Headhunter Launcher</high>
-   <high x="12"  y="6"  h="0">Headhunter Launcher</high>
+   <high x="40"  y="0"  h="2" />
+   <high x="25"  y="0"  h="2" />
+   <high x="12"  y="-6" h="0" />
+   <high x="12"  y="6"  h="0" />
    <high x="0"   y="0"  h="7" />
    <high x="-15" y="0"  h="7" />
    <high x="-33" y="0"  h="7" />
@@ -1050,12 +1050,12 @@
    <cap_cargo>60</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-10" y="-13" h="2">Heavy Ion Turret</high>
-   <high x="-10" y="13"  h="2">Heavy Ion Turret</high>
-   <high x="-15" y="-25" h="3">Laser Turret</high>
-   <high x="-15" y="25"  h="3">Laser Turret</high>
-   <high x="16"  y="0" h="3">Headhunter Launcher</high>
-   <high x="0"   y="0" h="5">Headhunter Launcher</high>
+   <high x="-10" y="-13" h="2" />
+   <high x="-10" y="13"  h="2" />
+   <high x="-15" y="-25" h="3" />
+   <high x="-15" y="25"  h="3" />
+   <high x="16"  y="0" h="3" />
+   <high x="0"   y="0" h="5" />
    <high x="-20" y="0" h="5" />
    <medium />
    <medium />
@@ -1101,12 +1101,12 @@
    <cap_cargo>60</cap_cargo>
   </characteristics>
   <slots>
-   <high x="-10" y="-13" h="2">Laser Turret</high>
-   <high x="-10" y="13"  h="2">Laser Turret</high>
-   <high x="-15" y="-25" h="3">Laser Turret</high>
-   <high x="-15" y="25"  h="3">Laser Turret</high>
-   <high x="16"  y="0" h="3">Mace Launcher</high>
-   <high x="0"   y="0" h="5">Mace Launcher</high>
+   <high x="-10" y="-13" h="2" />
+   <high x="-10" y="13"  h="2" />
+   <high x="-15" y="-25" h="3" />
+   <high x="-15" y="25"  h="3" />
+   <high x="16"  y="0" h="3" />
+   <high x="0"   y="0" h="5" />
    <high x="-20" y="0" h="5" />
    <medium />
    <medium />

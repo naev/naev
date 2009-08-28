@@ -2773,47 +2773,6 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       memcpy( &pilot->outfits[p]->mount, &ship->outfit_high[i].mount, sizeof(ShipMount) );
       p++;
    }
-   /* Second pass add outfits. */
-   p = 0;
-   for (i=0; i<pilot->outfit_nlow; i++) {
-      if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_low[i].data != NULL)) {
-         pilot_addOutfitRaw( pilot, ship->outfit_low[i].data, pilot->outfits[p] );
-         /* Add ammo if necessary. */
-         if (!(flags & PILOT_PLAYER) &&
-               (outfit_isLauncher(ship->outfit_low[i].data) ||
-                  (outfit_isFighterBay(ship->outfit_low[i].data))))
-            pilot_addAmmo( pilot, pilot->outfits[p],
-                  outfit_ammo(ship->outfit_low[i].data),
-                  outfit_amount(ship->outfit_low[i].data));
-      }
-      p++;
-   }
-   for (i=0; i<pilot->outfit_nmedium; i++) {
-      if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_medium[i].data != NULL)) {
-         pilot_addOutfitRaw( pilot, ship->outfit_medium[i].data, pilot->outfits[p] );
-         /* Add ammo if necessary. */
-         if (!(flags & PILOT_PLAYER) &&
-               (outfit_isLauncher(ship->outfit_medium[i].data) ||
-                  (outfit_isFighterBay(ship->outfit_medium[i].data))))
-            pilot_addAmmo( pilot, pilot->outfits[p],
-                  outfit_ammo(ship->outfit_medium[i].data),
-                  outfit_amount(ship->outfit_medium[i].data));
-      }
-      p++;
-   }
-   for (i=0; i<pilot->outfit_nhigh; i++) {
-      if (!(flags & PILOT_NO_OUTFITS) && (ship->outfit_high[i].data != NULL)) {
-         pilot_addOutfitRaw( pilot, ship->outfit_high[i].data, pilot->outfits[p] );
-         /* Add ammo if necessary. */
-         if (!(flags & PILOT_PLAYER) &&
-               (outfit_isLauncher(ship->outfit_high[i].data) ||
-                  (outfit_isFighterBay(ship->outfit_high[i].data))))
-            pilot_addAmmo( pilot, pilot->outfits[p],
-                  outfit_ammo(ship->outfit_high[i].data),
-                  outfit_amount(ship->outfit_high[i].data));
-      }
-      p++;
-   }
 
    /* cargo - must be set before calcStats */
    pilot->cargo_free = pilot->ship->cap_cargo; /* should get redone with calcCargo */
@@ -2884,23 +2843,26 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
       const unsigned int flags )
 {
    Pilot *dyn;
-   
+
+   /* Allocate pilot memory. */
    dyn = malloc(sizeof(Pilot));
    if (dyn == NULL) {
       WARN("Unable to allocate memory");
       return 0;
    }
-   pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags );
 
-   /* see if memory needs to grow */
+   /* See if memory needs to grow */
    if (pilot_nstack+1 > pilot_mstack) { /* needs to grow */
       pilot_mstack += PILOT_CHUNK;
       pilot_stack = realloc( pilot_stack, pilot_mstack*sizeof(Pilot*) );
    }
 
-   /* set the pilot in the stack */
+   /* Set the pilot in the stack -- must be there before initializing */
    pilot_stack[pilot_nstack] = dyn;
    pilot_nstack++; /* there's a new pilot */
+  
+   /* Initialize the pilot. */
+   pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags );
 
    return dyn->id;
 }
