@@ -118,7 +118,7 @@ function choose_land ()
 
    if class == "M" then
       mus = { "agriculture" }
-   elseif name == "Anecu" then -- TODO we need a way to differenciate aquatics
+   elseif class == "O" then
       mus = { "ocean" }
    elseif class == "P" then
       mus = { "snow" }
