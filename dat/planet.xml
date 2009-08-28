@@ -497,7 +497,7 @@
  </planet>
  <planet name="Emperor's Fist">
   <GFX>
-   <exterior>mining3.png</exterior>
+   <exterior>mining5.png</exterior>
    <space>C00.png</space>
   </GFX>
   <pos>
