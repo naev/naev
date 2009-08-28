@@ -11,7 +11,7 @@
   </jumps>
   <pos>
    <y>-148</y>
-   <x>131</x>
+   <x>201</x>
   </pos>
   <planets>
    <planet>Anecu</planet>
@@ -279,6 +279,7 @@
    <jump>Dakron</jump>
    <jump>Tuoladis</jump>
 	<jump>Ogat</jump>
+	<jump>Tarsus</jump>
   </jumps>
   <pos>
    <y>-353</y>
@@ -286,6 +287,30 @@
   </pos>
   <planets>
    <planet>Doranthex Prime</planet>
+  </planets>
+  <general>
+   <asteroids>0</asteroids>
+   <interference>0</interference>
+   <nebula volatility="0">0</nebula>
+   <stars>500</stars>
+  </general>
+ </ssys>
+ <ssys name="Tarsus">
+  <fleets>
+   <fleet>FLF Light Guerrilla</fleet>
+   <fleet>Dvaered Light Prescence</fleet>
+   <fleet>Trader Light Prescence</fleet>
+  </fleets>
+  <jumps>
+   <jump>Dakron</jump>
+	<jump>Doranthex</jump>
+  </jumps>
+  <pos>
+   <y>-403</y>
+   <x>247</x>
+  </pos>
+  <planets>
+  	<planet>Valt</planet>
   </planets>
   <general>
    <asteroids>0</asteroids>
@@ -689,7 +714,7 @@
   </jumps>
   <pos>
    <y>-81</y>
-   <x>100</x>
+   <x>60</x>
   </pos>
   <planets>
    <planet>Torloth</planet>
@@ -714,7 +739,7 @@
   </jumps>
   <pos>
    <y>-94</y>
-   <x>177</x>
+   <x>197</x>
   </pos>
   <planets>
    <planet>Tau Prime</planet>
@@ -1081,6 +1106,7 @@
    <jump>Klantar</jump>
 	<jump>Doranthex</jump>
 	<jump>Theras</jump>
+	<jump>Tarsus</jump>
   </jumps>
   <pos>
    <y>-370</y>

@@ -100,7 +100,7 @@
  
   <planet name="Arcturus Gamma">
   <GFX>
-   <exterior>traderoom.png</exterior>
+   <exterior>station03.png</exterior>
    <space>002.png</space>
   </GFX>
   <pos>
@@ -222,7 +222,7 @@
  </planet>
  <planet name="Tau Station">
   <GFX>
-   <exterior>station00.png</exterior>
+   <exterior>station04.png</exterior>
    <space>000.png</space>
   </GFX>
   <pos>
@@ -248,7 +248,7 @@
  </planet>
  <planet name="Oma">
   <GFX>
-   <exterior>desertic.png</exterior>
+   <exterior>desertic2.png</exterior>
    <space>H01.png</space>
   </GFX>
   <pos>
@@ -296,7 +296,35 @@
    </tech>
    <services>3</services>
    <class>A</class>
-   <population>20000</population>
+   <population>40000</population>
+  </general>
+ </planet>
+  <planet name="Valt">
+  <GFX>
+   <exterior>mining5.png</exterior>
+   <space>K00.png</space>
+  </GFX>
+  <pos>
+   <y>0</y>
+   <x>0</x>
+  </pos>
+  <general>
+   <prodfactor>0.7</prodfactor>
+   <bar>The Valt spaceport bar is nothing special. It's rather clean for a Dvaered bar, though that may speak more about the small size of the settlement than the pride the proprietor takes in keeping his establishment clean.</bar>
+   <description>Valt is recent home to a Dvaered mining colony. An utterly inhospitable world, the extremely thin atmosphere makes the surface highly dangerous due to its perpetual bombardment by asteroids and solar radiation. The colony is situated nearly a kilometre below the planet's surface, in an immense, resource-rich cavern.</description>
+   <faction>Dvaered</faction>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <tech>
+    <main>0</main>
+    <special>0</special>
+   </tech>
+   <services>7</services>
+   <class>K</class>
+   <population>15000</population>
   </general>
  </planet>
   <planet name="Praxis">
@@ -329,7 +357,7 @@
  </planet>
  <planet name="Torloth">
   <GFX>
-   <exterior>mining.png</exterior>
+   <exterior>mining2.png</exterior>
    <space>G00.png</space>
   </GFX>
   <pos>
@@ -384,7 +412,7 @@
  </planet>
  <planet name="Emperor's Fist">
   <GFX>
-   <exterior>mining.png</exterior>
+   <exterior>mining3.png</exterior>
    <space>C00.png</space>
   </GFX>
   <pos>
@@ -479,7 +507,7 @@
  </planet>
  <planet name="Thar">
   <GFX>
-   <exterior>mining.png</exterior>
+   <exterior>mining4.png</exterior>
    <space>L00.png</space>
   </GFX>
   <pos>
@@ -489,7 +517,7 @@
   <general>
    <prodfactor>0.5</prodfactor>
    <bar>"The bar has a strange old meter on one of the walls that seems to dance erratically. When you ask the bartender about it he mentions it measures the current pressure outside.</bar>
-   <description>Thar is a simple mining world owned by the Dvaered. It has a very variable atmosphere that can rapidly alternate from several kilometers wide to barely existent. The pressure changes are harmful to most lifeforms, making it an almost completely sterile planet. With the advent of terraforming techniques it was finally made habitable for humans so they could exploit some of its many resources.</description>
+   <description>Thar is a simple mining world owned by the Dvaered. It has a very variable atmosphere that can rapidly alternate from several kilometres wide to barely existent. The pressure changes are harmful to most lifeforms, making it an almost completely sterile planet. With the advent of terraforming techniques it was finally made habitable for humans so they could exploit some of its many resources.</description>
    <faction>Dvaered</faction>
    <commodities>
     <commodity>Food</commodity>
@@ -610,7 +638,7 @@
  </planet>
  <planet name="Nova Shakar">
   <GFX>
-   <exterior>oceanic.png</exterior>
+   <exterior>forest2.png</exterior>
    <space>M05.png</space>
   </GFX>
   <pos>
@@ -639,7 +667,7 @@
  </planet>
  <planet name="Em 5">
   <GFX>
-   <exterior>oceanic.png</exterior>
+   <exterior>oceanic2.png</exterior>
    <space>M03.png</space>
   </GFX>
   <pos>
@@ -688,7 +716,7 @@
  </planet>
  <planet name="Zhiru">
   <GFX>
-   <exterior>oceanic.png</exterior>
+   <exterior>oceanic2.png</exterior>
    <space>M04.png</space>
   </GFX>
   <pos>
@@ -792,7 +820,7 @@
  </planet>
  <planet name="Cetrat">
   <GFX>
-   <exterior>aquatic.png</exterior>
+   <exterior>aquatic2.png</exterior>
    <space>O01.png</space>
   </GFX>
   <pos>
@@ -819,7 +847,7 @@
  </planet>
   <planet name="Norpin II">
   <GFX>
-   <exterior>desertic.png</exterior>
+   <exterior>desertic3.png</exterior>
    <space>H02.png</space>
   </GFX>
   <pos>
@@ -900,7 +928,7 @@
  </planet>
   <planet name="Antica">
   <GFX>
-   <exterior>aquatic.png</exterior>
+   <exterior>aquatic3.png</exterior>
    <space>O01.png</space>
   </GFX>
   <pos>
@@ -946,7 +974,7 @@
  </planet>
  <planet name="Darkshed">
   <GFX>
-   <exterior>station02.png</exterior>
+   <exterior>station05.png</exterior>
    <space>002.png</space>
   </GFX>
   <pos>
